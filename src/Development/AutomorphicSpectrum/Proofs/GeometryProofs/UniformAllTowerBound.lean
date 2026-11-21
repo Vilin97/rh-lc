@@ -195,11 +195,11 @@ theorem vs_fin : Top.Given → ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
   have hex : Cθ ≤ if p ∈ o.toTowerOrigin.S B then exTwo E p else 0 := by
     rw [hCθ]
     split_ifs with h1' h2'
-    · simp only [exTwo, GlobalTheory.CovHt.htEx, if_pos h2', padicValInt]
-      have : (0 : ℝ) ≤ (padicValNat p (discr E).natAbs : ℝ) / Module.finrank ℚ E := by positivity
+    · simp only [exTwo, GlobalTheory.CovHt.htEx, if_pos h2', padicValInt, Nat.padicValNat_def]
+      have : (0 : ℝ) ≤ (multiplicity p (discr E).natAbs : ℝ) / Module.finrank ℚ E := by positivity
       linarith
-    · simp only [exTwo, GlobalTheory.CovHt.htEx, if_neg h2', padicValInt]
-      have : (0 : ℝ) ≤ (padicValNat p (discr E).natAbs : ℝ) / Module.finrank ℚ E := by positivity
+    · simp only [exTwo, GlobalTheory.CovHt.htEx, if_neg h2', padicValInt, Nat.padicValNat_def]
+      have : (0 : ℝ) ≤ (multiplicity p (discr E).natAbs : ℝ) / Module.finrank ℚ E := by positivity
       linarith
     · exact le_rfl
   rw [← hval, hs₀]

@@ -61,7 +61,7 @@ theorem isBasisAt_of_isLocBasis {T : ℕ} (hT : T.Prime) (Q : HeightOneSpectrum 
 variable {K ι : Type} [Field K] [NumberField K] [Fintype ι]
 
 theorem mem_localization_delAtr_fn (emb : ι → E →+* K) (σ : K →+* ℂ) (lam : ι → DomWeight n) (w : HeightOneSpectrum (𝓞 K))
-    {L : Submodule (𝓞 E) (Fin n → E)} (hL : Submodule.IsLattice E L) (B : ι → GL (Fin n) E)
+    {L : Submodule (𝓞 E) (Fin n → E)} (hL : Submodule.IsFullLattice E L) (B : ι → GL (Fin n) E)
     (hB : ∀ τ, IsBasisAt (bcBelow (emb τ) w) L (B τ)) (F : Formalism.L2.DIV.VV K lam) :
     F ∈ localization₂ w.asIdeal (delAtr emb lam L) ↔ ∃ z ∈ localization₂ w.asIdeal (delStd K lam),
       evV emb 1 lam σ F = fnOf _ (shiftOf lam)
@@ -109,7 +109,12 @@ theorem mem_localization_ker (emb : ι → E →+* K) (σ : K →+* ℂ) (lam : 
       evV emb 1 lam σ F = fnOf _ (shiftOf lam)
         (fun τ => if τ = e P then atInf (embAt σ emb) ((B'⁻¹ : GL (Fin n) E) : Matrix (Fin n) (Fin n) E) τ
           else atInf (embAt σ emb) ((B⁻¹ : GL (Fin n) E) : Matrix (Fin n) (Fin n) E) τ) (MvPolynomial.map σ z) := by
-  rw [mem_localization_delAtr_fn emb σ lam w (hd.LshKer_lattice ha P) (fun τ => if τ = e P then B' else B)]
+  have hfull : Submodule.IsFullLattice E (d.LshKer P) := by
+    letI := hd.L_full_lattice
+    letI := hd.LshKer_lattice ha P
+    exact Submodule.IsFullLattice.of_le E (fun x hx =>
+      (hd.mem_LshKer ha P x).2 ⟨hd.L_le_Lsh hx, ((hd.mem_L x).1 hx).2 P⟩)
+  rw [mem_localization_delAtr_fn emb σ lam w hfull (fun τ => if τ = e P then B' else B)]
   · have e1 : (fun τ => atInf (embAt σ emb) (((if τ = e P then B' else B)⁻¹ : GL (Fin n) E) : Matrix (Fin n) (Fin n) E) τ) =
         fun τ => if τ = e P then atInf (embAt σ emb) ((B'⁻¹ : GL (Fin n) E) : Matrix (Fin n) (Fin n) E) τ
           else atInf (embAt σ emb) ((B⁻¹ : GL (Fin n) E) : Matrix (Fin n) (Fin n) E) τ := by

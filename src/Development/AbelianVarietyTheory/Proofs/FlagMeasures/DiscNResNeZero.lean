@@ -155,10 +155,18 @@ theorem discN_top (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (𝓞 K) V) 
 
 theorem isIntLat_latIn (h : V →ₗ⋆[K] V →ₗ[K] K) {L : Submodule (𝓞 K) V} (hL : IsIntLat h L)
     (U : Submodule K V) : IsIntLat (hRes h U) (latIn U L) := by
-  refine ⟨⟨?_, ?_⟩, fun x hx y hy => hL.2 x hx y hy⟩
-  · apply Submodule.fg_of_fg_map_injective (U.subtype.restrictScalars (𝓞 K)) U.injective_subtype
+  haveI : Submodule.IsLattice K (latIn U L) := by
+    apply Submodule.IsLattice.of_fg K
+    apply Submodule.fg_of_fg_map_injective (U.subtype.restrictScalars (𝓞 K)) U.injective_subtype
     exact hL.1.fg.of_le (Submodule.map_comap_le _ _)
-  · exact fun _ _ => (LinearIndependent.iff_fractionRing (𝓞 K) K).mp
+  refine ⟨⟨?_⟩, fun x hx y hy => hL.2 x hx y hy⟩
+  refine eq_top_iff.mpr fun x _ => ?_
+  obtain ⟨a, hax⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 K)) K _ (x : V)
+    (show (x : V) ∈ Submodule.span K (L : Set V) by rw [hL.1.span_eq_top]; trivial)
+  rw [Submodule.span_eq] at hax
+  have ha' : algebraMap (𝓞 K) K a ≠ 0 := by simpa using nonZeroDivisors.coe_ne_zero a
+  rw [← Submodule.smul_mem_iff _ ha', algebraMap_smul]
+  exact Submodule.subset_span hax
 
 omit [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 theorem pd_nondeg (h : V →ₗ⋆[K] V →ₗ[K] K) (hp : PD h) : h.Nondegenerate := by
@@ -350,7 +358,7 @@ theorem main : MinkowskiBound → GlobalTheory.Mass.MaxMass → Formalism.Hermit
       intro L hL
       obtain ⟨hLi, hLd⟩ := hgen L hL
       rw [hd] at hLd
-      have hG : GenBy (Formalism.HermitianLatticesTheory.dual H.B.flip L) L 1 := genBy_of_genus _ hs hL₀.1 hL
+      have hG : GenBy (Formalism.HermitianLatticesTheory.dual H.B.flip L) L 1 := genBy_of_genus _ hs hL₀.1.toIsLattice hL
         (fun x hx => (Formalism.HermitianLatticesTheory.isomAct_mem_dual _ L x).2 fun y hy => hLi.2 y hy x hx)
         (by rw [hLd]; omega) t ht htM
       have ps := fun s n U => GlobalTheory.T.count_isometry_pairs_with_given_fixed_space hMk K V H hK hpd L g j D hLi hLd hG hg x x' s n U hx hx'

@@ -46,21 +46,21 @@ theorem jFactN_all : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (hF : FinX Y)
       Formalism.L2.SG.TermOp.rk1 (X.Wloc u v (r * y)) (X.Wloc u' v ((hex.choose.pt.1 v)⁻¹ * (r * y))) =
         Formalism.L2.SG.TermOp.rk1 (X.Wloc u v y) (X.Wloc u' v ((hex.choose.pt.1 v)⁻¹ * y)) := by
     intro v
-    obtain ⟨τ, rfl⟩ : ∃ τ, v = vOf X τ := ⟨X.pl v, by simp [vOf]⟩
+    obtain ⟨τ, rfl⟩ : ∃ τ, vOf X τ = v := X.pl.symm.surjective v
     obtain ⟨p, hp⟩ := GlobalTheory.T.relevant_term_has_real_relative_point D X Y hF hI 1 C u u' t hex.choose hs hG hr τ
     exact GlobalTheory.StabInv.stab_inv D X 1 C hB u u' τ (hex.choose.pt.1 (vOf X τ)) p hGap hp
   obtain ⟨μl, νl, hH, hQ, hR, hA⟩ := GlobalTheory.T.normalisedLift_amplitude_eq_covolume_mul_local D X Y 1 C u u' hex.choose hP.choose hrel hsG hx.1 hx.2.1 hx.2.2 hinv
   have hloc : ∀ τ, j1 hI C hB t τ = Complex.normSq ((((cOf hB u τ : ℝ) : ℂ))⁻¹ * sclOf hB u u' τ) *
-      hsNormSq (haveI := FiniteDimensional.complete ℂ (X.Vloc u (vOf X τ));
+      hsNormSq (haveI := FiniteDimensional.completeSpace ℂ (X.Vloc u (vOf X τ));
         Formalism.L2.SG.RealObj.Jv (νl (vOf X τ)) (X.Wloc u (vOf X τ)) (X.Wloc u' (vOf X τ)) (hex.choose.pt.1 (vOf X τ))) := by
     intro τ
-    haveI : SigmaFinite (μl (vOf X τ)) := (hH (vOf X τ)).1
+    have : SigmaFinite (μl (vOf X τ)) := (hH (vOf X τ)).1
     exact GlobalTheory.T.localAmplitude_wittLift_eq_quotientIntegral D X Y hF hI C hB u u' t hex.choose hs hG hr hGap τ (μl (vOf X τ)) (νl (vOf X τ)) inferInstance
       (hQ (vOf X τ)) (hR τ)
   have hK := GlobalTheory.T.amplitudeConstant_eq_prod_covolumes D X Y hF 1 C hB u u' one_pos hGap
-  have hre : (∏ τ, hsNormSq (haveI := FiniteDimensional.complete ℂ (X.Vloc u (vOf X τ));
+  have hre : (∏ τ, hsNormSq (haveI := FiniteDimensional.completeSpace ℂ (X.Vloc u (vOf X τ));
         Formalism.L2.SG.RealObj.Jv (νl (vOf X τ)) (X.Wloc u (vOf X τ)) (X.Wloc u' (vOf X τ)) (hex.choose.pt.1 (vOf X τ)))) =
-      ∏ v, hsNormSq (haveI := FiniteDimensional.complete ℂ (X.Vloc u v);
+      ∏ v, hsNormSq (haveI := FiniteDimensional.completeSpace ℂ (X.Vloc u v);
         Formalism.L2.SG.RealObj.Jv (νl v) (X.Wloc u v) (X.Wloc u' v) (hex.choose.pt.1 v)) :=
     Fintype.prod_equiv X.pl.symm _ _ (fun τ => rfl)
   have hcov : covN (Y := Y) C u * covN (Y := Y) C u' =

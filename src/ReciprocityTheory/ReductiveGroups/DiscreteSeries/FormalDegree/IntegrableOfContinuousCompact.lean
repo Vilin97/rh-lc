@@ -167,8 +167,8 @@ theorem fF_eq_integral {ε : Fin n → Bool} (lam : Fin n → ℝ) {Λ : Fin n �
     (X : Matrix (Fin n) (Fin n) ℂ) :
     fF ε lam T X = ((Module.finrank ℂ T.V : ℝ) : ℂ) • ∫ k, ((Real.exp (-Ph lam (toMK k⁻¹ * X * toMK k)) : ℝ) : ℂ) •
       (T.op k * projW T * T.op k⁻¹) ∂(dk ε) := by
-  unfold fF
-  delta dk
+  delta fF
+  rw [dk_def]
   rw [integral_smul_measure, ← Complex.coe_smul, smul_smul]
   congr 1
   rw [ENNReal.toReal_inv]

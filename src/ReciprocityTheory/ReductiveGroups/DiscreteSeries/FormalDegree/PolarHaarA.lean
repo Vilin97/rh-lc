@@ -16,20 +16,19 @@ open ReciprocityTheory.ChartRestriction.DS.S7
 
 variable {n : ℕ}
 
-local instance (ε : Fin n → Bool) : (muK ε).IsHaarMeasure :=
-  Measure.isHaarMeasure_haarMeasure _
-
 lemma fdph_muK_univ_ne_zero (ε : Fin n → Bool) : muK ε Set.univ ≠ 0 := by
   exact isOpen_univ.measure_ne_zero (muK ε) Set.univ_nonempty
 
 lemma fdph_muK_univ_ne_top (ε : Fin n → Bool) : muK ε Set.univ ≠ ⊤ := by
   exact (isCompact_univ.measure_lt_top (μ := muK ε)).ne
 
-instance fdph_dk_finite (ε : Fin n → Bool) : IsFiniteMeasure (dk ε) :=
-  IsFiniteMeasure.average (μ := muK ε)
+instance fdph_dk_finite (ε : Fin n → Bool) : IsFiniteMeasure (dk ε) := by
+  rw [dk_def]
+  exact IsFiniteMeasure.average (μ := muK ε)
 
-instance fdph_dk_openPos (ε : Fin n → Bool) : Measure.IsOpenPosMeasure (dk ε) :=
-  Measure.isOpenPosMeasure_smul (muK ε) (ENNReal.inv_ne_zero.mpr (fdph_muK_univ_ne_top ε))
+instance fdph_dk_openPos (ε : Fin n → Bool) : Measure.IsOpenPosMeasure (dk ε) := by
+  rw [dk_def]
+  exact Measure.isOpenPosMeasure_smul (muK ε) (ENNReal.inv_ne_zero.mpr (fdph_muK_univ_ne_top ε))
 
 lemma fdph_shc_pos (u : ℝ) : 0 < shc u := pb_shc_pos u
 
@@ -73,16 +72,10 @@ lemma fdph_phi_continuous (ε : Fin n → Bool) : Continuous (fdphPhi ε) := by
 lemma fdph_preimage (ε : Fin n → Bool) (S : Set (UJ ε)) :
     Set.preimage (β := Fin n → Fin n → ℂ) polarM (Set.image (β := Fin n → Fin n → ℂ) (fun g : UJ ε => toM g) S) =
       fdphPhi ε ⁻¹' S := by
-  ext kz
-  simp only [Set.mem_preimage]
-  constructor
-  · rintro ⟨g, hg, hgeq⟩
-    have hge : g = fdphPhi ε kz :=
-      Subtype.ext (Units.ext (hgeq.trans (fdph_toM_phi ε kz).symm))
-    rw [← hge]
-    exact hg
-  · intro h
-    exact ⟨fdphPhi ε kz, h, fdph_toM_phi ε kz⟩
+  let embed : UJ ε → Fin n → Fin n → ℂ := toM
+  have he : Function.Injective embed := (isClosedEmbedding_toM ε).injective
+  change (embed ∘ fdphPhi ε) ⁻¹' (embed '' S) = fdphPhi ε ⁻¹' S
+  rw [Set.preimage_comp, Set.preimage_image_eq S he]
 
 lemma fdph_apply (ε : Fin n → Bool) {S : Set (UJ ε)} (hS : MeasurableSet S) :
     muPolar ε S = ((dk ε).prod (fdphNu ε)) (fdphPhi ε ⁻¹' S) := by

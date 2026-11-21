@@ -24,7 +24,7 @@ theorem isLattice_map_equiv {E : Type} [Field E] [NumberField E] {V W : Type} [A
 theorem term_lat_isLattice : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word) (Z : LocDat D) {T T' : D.host.E} (F0 : LFlag (D.sp.Y 0) D.R.rS T) (F0' : LFlag (D.sp.Y 0) D.R.rS T') (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS) (G : GFrames (placesOf Z) D.R.rS D.R.k) (c : GCoord Z F0 F0' FP G) (t : TauC Y u u') (ρ : (VS D).V ≃ₗ[D.host.E] (VS D).V), Submodule.IsLattice D.host.E (c.lat ρ t.lam) := by
   intro D X Y u u' Z T T' F0 F0' FP G c t ρ
   have hrow := (Y.rowsOK u).1 t.lam t.mem
-  have hL : Submodule.IsLattice D.host.E t.lam := hrow.1.1
+  have hL : Submodule.IsLattice D.host.E t.lam := hrow.1.1.toIsLattice
   exact isLattice_map_equiv (ρ.trans c.e) t.lam hL
 
 end GlobalTheory.HL

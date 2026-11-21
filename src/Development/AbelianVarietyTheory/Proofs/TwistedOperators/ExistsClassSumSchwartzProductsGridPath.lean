@@ -119,7 +119,9 @@ theorem exists_classSum_schwartzProducts_pathInduction {μ₀ : T} (hL : L.Is μ
         z.2 h0 w hw (edgeOf a) hm
       rw [Function.update_self] at h
       exact GlobalTheory.SplitFlip.mem_matLat_stdLat.1 h r c
-    obtain ⟨ι₁, s₁, φa, r₁, hφa, hexp⟩ := arrow_sb B ρ hL (t := t) he n ha F hF1 hF2
+    have hArrowExpansion :=
+      arrow_sb B ρ hL (t := t) (e := e) he n (a := a) ha (Y := ArgT G p × U) F hF1 hF2
+    obtain ⟨ι₁, s₁, φa, r₁, hφa, hexp⟩ := hArrowExpansion
     let K' (x : ∀ w, (locGrid G t w).Args) (y : ι₁ × U) : ℂ :=
       K (fun w => Function.update (x w) (edgeOf a) (locArg B t w a (r₁ y.1))) y.2
     have hK'1 : ∀ x z y, (∀ w ∈ locPl G t, ∀ b,

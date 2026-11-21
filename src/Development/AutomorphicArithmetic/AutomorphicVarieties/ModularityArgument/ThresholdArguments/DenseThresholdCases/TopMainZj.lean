@@ -3,11 +3,11 @@ module
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PeriodComparisonHolds
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImportsSideExtra
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.GoodReduction.SerreTate
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.LitAut
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.TemperedProductOfSquareIntegrable
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ThresholdArguments.DenseThresholdCases.WindowBoundOfLiteratureLevel
 public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.BaseChangeIsobaricNOf
 public import Development.WeilBound.CoreStatements.AbelianHeightsDuality.DividedPowerAlgebras.CrystallineDeRham
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.AutomorphyLifting.WeakOfAtt
 
 @[expose] public section
 
@@ -55,7 +55,11 @@ theorem UpperTheory.One.Join.automorphic_inputs_from_literature (O : _root_.Uppe
 theorem UpperTheory.One.Join.v_window_of_depth_zero_residual_bc_cm (O : _root_.UpperTheory.LiteratureTheorems.OpenImageCondition)
  (bc : _root_.PositivityTheory.Rg.BcN.BaseChangeIsobaricN) (gal : _root_.UpperTheory.V.Z.Win.RowT) (cm : _root_.GlobalTheory.Mem.LiteralAutomorphy.LiteratureCMHypothesis) :
     UpperTheory.Top.VWin :=
-  _root_.UpperTheory.V.v_window_of_literal_automorphy_n ⟨_root_.UpperTheory.One.Join.local_inputs_from_literature O, _root_.UpperTheory.One.Join.automorphic_inputs_from_literature O bc gal, _root_.UpperTheory.LiteratureTheorems.galois_cohomology_from_literature O, cm⟩
+  _root_.UpperTheory.V.v_window_of_literal_automorphy_n
+    { loc := _root_.UpperTheory.One.Join.local_inputs_from_literature O
+      aut := _root_.UpperTheory.One.Join.automorphic_inputs_from_literature O bc gal
+      coh := _root_.UpperTheory.LiteratureTheorems.galois_cohomology_from_literature O
+      cm := cm }
 theorem UpperTheory.One.Join.cm_abelian_inputs_from_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenImageCondition) : _root_.GlobalTheory.Mem.LiteralAutomorphy.LiteratureCMHypothesis :=
   { gm := (_root_.UpperTheory.LiteratureTheorems.grothendieck_deformation_of_open O)
     dr := (_root_.UpperTheory.LiteratureTheorems.abelian_de_rham_of_open O)

@@ -306,9 +306,13 @@ theorem partners_le : ∀ Cg cb Cu cT CT C0 A : ℝ, ∃ C : ℝ, ∀ (D : D7) (
     rwa [sub_add_sub_cancel] at this
   have hPL0 : seen D (lf D F0) (Thp Λ (lf D F0) F') ≤ L0X D Λ (lf D F0) :=
     seen_le_L0X (lf D F0) (Hp Λ (lf D F0) F') hHle
+  have hfull : Submodule.IsFullLattice D.host.E Λ :=
+    { toIsLattice := hlat
+      span_eq_top := GlobalTheory.LoopC.Base.span_eq_top_of_unimodular
+        (hS D).hT (hS D).herm (hS D).nondeg hlat huni }
   have hrk : rkW D (seen D (lf D F0) (Thp Λ (lf D F0) F')) = D.R.k - 1 := by
     rw [← hrank]
-    exact rk_seen (lf D F0) hlat hW (Hp Λ (lf D F0) F') hHle hHX
+    exact rk_seen (lf D F0) hfull hW (Hp Λ (lf D F0) F') hHle hHX
   have hXle : Xplus (lf D F0) ≤ spanE (hS D) (UU Λ (lf D F0) F') := by
     show Xplus (lf D F0) ≤ UUE Λ (lf D F0) F'
     rw [hUUE]

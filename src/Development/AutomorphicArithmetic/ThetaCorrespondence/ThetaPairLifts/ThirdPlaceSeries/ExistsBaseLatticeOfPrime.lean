@@ -326,9 +326,16 @@ theorem exists_baseLattice_of_prime_alt : _root_.GlobalTheory.Mem.Top.Bl.HypAAlt
   have has3 := _root_.GlobalTheory.Mem.Top.Bl.has3_neo_of_localLanglands_alt
     hL cDep hW sA sMt sRat sCusp settings series points sC fin SExt.none (geoCl anyGeometry)
   have lv := _root_.GlobalTheory.T.lv3Mv_extensionWithOrigin_and_NEog hL cDep SExt.none (geoCl anyGeometry)
-  exact _root_.GlobalTheory.Mem.Top.Bl.exists_baseLattice_of_pair_alt hA hE hH hL hN (_root_.GlobalTheory.HeightCounting.Up.extensionWithOrigin hL cDep) (_root_.GlobalTheory.HeightCounting.Up.GeometricNormExtension hL cDep) (fun _ _ _ _ _ _ _ _ _ _ _ _ _ h => ⟨h.1.1⟩)
-    (fun _ _ _ _ _ _ _ _ _ _ _ _ _ h => ⟨⟨h.1⟩, h.2.down⟩) has3 lv.1 lv.2 (_root_.GlobalTheory.T.slot_mv_extension_with_origin_geo_cl hL cDep anyGeometry)
+  refine exists_baseLattice_of_pair_alt hA hE hH hL hN
+    (_root_.GlobalTheory.HeightCounting.Up.extensionWithOrigin hL cDep)
+    (_root_.GlobalTheory.HeightCounting.Up.GeometricNormExtension hL cDep)
+    ?_ ?_ has3 lv.1 lv.2
+    (_root_.GlobalTheory.T.slot_mv_extension_with_origin_geo_cl hL cDep anyGeometry)
     (second SExt.none (geoCl anyGeometry)) hMQ
+  · intro K B f T w Z Wt p0 t nch n xd c h
+    exact ⟨h.1.1⟩
+  · intro K B f T w Z Wt p0 t nch n xd c h
+    exact ⟨⟨h.1⟩, h.2.down⟩
 end GlobalTheory.Mem.Top.Bl
 end
 section

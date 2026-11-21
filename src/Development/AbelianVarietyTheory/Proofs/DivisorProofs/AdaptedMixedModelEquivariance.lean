@@ -27,7 +27,7 @@ theorem incM_mul_one {n n₁ d₁ : ℕ} (ι : Matrix (Fin n) (Fin n₁) E) (U :
   rw [Matrix.map_mul]
 
 theorem exists_split_left {n n₁ d₁ : ℕ} {X : Spc F E n} {X₁ : Spc F E n₁} {B : Base F E} {H : Plane E n n₁} {j₀ j₁ : ℕ}
-    (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hL : X.L.IsLattice E) (x : Matrix (Fin n) (Fin d₁) E) :
+    (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hL : X.L.IsFullLattice E) (x : Matrix (Fin n) (Fin d₁) E) :
     ∃ (s t : Fin d₁ → E) (U : Matrix (Fin n₁) (Fin d₁) E),
       x = Matrix.vecMulVec H.x s + H.ι * U + Matrix.vecMulVec H.y t := by
   obtain ⟨s, t, U, h⟩ := GlobalTheory.ThetaExpandInv.exists_split (n := d₁) hH hL xᵀ

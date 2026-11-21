@@ -48,7 +48,7 @@ theorem adAt_inv {P : HeightOneSpectrum (𝓞 E)} {g : GL (Fin n) (AfE F E)} {γ
 variable [StarRing E]
 
 theorem glEquiv_mem_iff {P : HeightOneSpectrum (𝓞 E)} {g : GL (Fin n) (AfE F E)} {γ : GL (Fin n) E}
-    (hN : Submodule.IsLattice E (Formalism.UG.CS.globLat g (stdLat E n)))
+    (hN : IsSdLat (Formalism.UG.CS.globLat g (stdLat E n)))
     (h : ∀ r s, adAt F P ((g : Matrix (Fin n) (Fin n) (AfE F E)) r s) = algebraMap E (P.adicCompletion E) ((γ : Matrix (Fin n) (Fin n) E) r s))
     (x : Sp E n) : glEquiv γ x ∈ Formalism.HermitianLatticesTheory.localization₂ P.asIdeal (Formalism.UG.CS.globLat g (stdLat E n)) ↔ x ∈ stdAt E n P := by
   have hi := adAt_inv h
@@ -107,7 +107,8 @@ theorem exists_isPtOf_of_rat : ∀ {F E : Type} [Field F] [NumberField F] [Field
   choose! γ hγ using hQ
   obtain ⟨p₀, hd, -⟩ := GlobalTheory.Mem.ColAd.exists_near (ST := ST) (SG := SG) (Q := Q) hc 0 hg
   have hN : Formalism.UG.CS.globLat g (stdLat E n) = p₀.deco.1.N := congrArg Deco.N hd
-  have hlat : Submodule.IsLattice E (Formalism.UG.CS.globLat g (stdLat E n)) := hN ▸ p₀.deco.2.lat
+  have hlat : IsSdLat (Formalism.UG.CS.globLat g (stdLat E n)) :=
+    hN ▸ ⟨p₀.deco.2.lat, p₀.deco.2.uni⟩
   let p : DecoF E n ST SG Q := ⟨(p₀.deco, fun P => glEquiv (γ P.1)), fun P x => by
     show glEquiv (γ P.1) x ∈ Formalism.HermitianLatticesTheory.localization₂ P.1.asIdeal p₀.deco.1.N ↔ _
     rw [← hN]

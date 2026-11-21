@@ -58,6 +58,18 @@ theorem index_integral_image : ∀ (k : Type) [Field k] [ValuativeRel k] [Topolo
     refine Submodule.FG.of_le (Submodule.fg_range φ) fun m hm => ⟨Matrix.of fun i j => ⟨m i j, hm i j⟩, ?_⟩
     ext i j
     rfl
+  haveI : Submodule.IsFullLattice k M := by
+    constructor
+    apply top_unique
+    rw [← (Matrix.stdBasis k Y Y').span_eq]
+    apply Submodule.span_le.mpr
+    rintro _ ⟨⟨i, j⟩, rfl⟩
+    apply Submodule.subset_span
+    change ∀ r q, Matrix.stdBasis k Y Y' (i, j) r q ∈ 𝒪[k]
+    rw [Matrix.stdBasis_eq_single]
+    intro r q
+    simp only [Matrix.single_apply]
+    split <;> simp
   obtain ⟨Bl, hBl, hd⟩ := exists_mul_map (↑(hk⁻¹) : Matrix Y Y k) (↑gk : Matrix Y' Y' k)
   have hbij : Function.Bijective Bl := by
     refine Function.bijective_iff_has_inverse.2

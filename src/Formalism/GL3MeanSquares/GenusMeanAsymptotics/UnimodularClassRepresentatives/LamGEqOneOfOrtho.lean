@@ -70,7 +70,7 @@ theorem lamG_eq_one_of_ortho (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
     obtain ⟨P, hP, hP𝔭⟩ := exists_maximal_over hK hF 𝔭.2
     apply localMassFactor_of_valuation_eq_zero hK hF hs hd hL hLi 𝔭.2
     rw [← hP𝔭]
-    exact (isUnimodularAt_iff_vd hK hF hs hd hL.toIsLattice hLi hP).mp (isUnimodularAt_of_ortho hK hs hI P hP)
+    exact (isUnimodularAt_iff_vd hK hF hs hd hL hLi hP).mp (isUnimodularAt_of_ortho hK hs hI P hP)
   simp only [this, tprod_one]
 
 end Formalism.HermitianLattices.Ext.L3

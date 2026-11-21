@@ -404,8 +404,7 @@ theorem xLeavesP_of_pinsPG (hJ : CompanionTheory.Lime.BM.UniqGap) (hP : XPinsP) 
     have h1 : Real.exp (2 * L.sc.L) < Real.exp 1 := Real.exp_lt_exp.mpr (by linarith)
     have h2 : Real.exp 1 < 3 := by have := Real.exp_one_lt_d9; linarith
     linarith
-  have hf : 2 ≤ D.R.f := by
-    unfold Ranks.f Ranks.n; have := D.R.two_le_m; have := D.R.m_le_f; omega
+  have hf : 2 ≤ D.R.f := le_trans D.R.two_le_m D.R.m_le_f
   have hfR : (2 : ℝ) ≤ (D.R.f : ℝ) := by exact_mod_cast hf
   have hf5 : (32 : ℝ) ≤ (D.R.f : ℝ) ^ 5 := by
     have : (2 : ℝ) ^ 5 ≤ (D.R.f : ℝ) ^ 5 := pow_le_pow_left₀ (by norm_num) hfR 5
@@ -548,8 +547,8 @@ theorem vIndepAtAllP_ofG (hJ : CompanionTheory.Lime.BM.UniqGap) (hNZ : KFinNZ) :
   have hW := fun j => Formalism.L2.SG.Pf.AmpWinRX.goodW_all Ch u u' (e (plE D j))
   have hA := fun j => goodS_of hB u u' (e (plE D j)) (Formalism.L2.SG.Pf.goodSRest_all hG hTies.dsig_tie hB u u' (e (plE D j)))
   have hcO : ∀ j, cOf hB u (e (plE D j)) ≠ 0 := fun j => (hc u _).ne'
-  have hfpos : 0 < D.R.f := by
-    unfold Ranks.f Ranks.n; have := D.R.two_le_m; have := D.R.m_le_f; omega
+  have hf : 2 ≤ D.R.f := le_trans D.R.two_le_m D.R.m_le_f
+  have hfpos : 0 < D.R.f := lt_of_lt_of_le (by decide) hf
   haveI : Nonempty D.what₂.Tau := Fintype.card_pos_iff.1 (by rw [Formalism.MainNotions.BridgeLemma.szf_card_Tau]; exact hfpos)
   obtain ⟨τ⟩ := (inferInstance : Nonempty D.what₂.Tau)
   have hrS : 2 * D.R.rS + 2 = D.R.m := Ranks.rS_two D.R
@@ -562,8 +561,6 @@ theorem vIndepAtAllP_ofG (hJ : CompanionTheory.Lime.BM.UniqGap) (hNZ : KFinNZ) :
     have h1 : Real.exp (2 * L.sc.L) < Real.exp 1 := Real.exp_lt_exp.mpr (by linarith)
     have h2 : Real.exp 1 < 3 := by have := Real.exp_one_lt_d9; linarith
     linarith
-  have hf : 2 ≤ D.R.f := by
-    unfold Ranks.f Ranks.n; have := D.R.two_le_m; have := D.R.m_le_f; omega
   have hfR : (2 : ℝ) ≤ (D.R.f : ℝ) := by exact_mod_cast hf
   have hf5 : (32 : ℝ) ≤ (D.R.f : ℝ) ^ 5 := by
     have : (2 : ℝ) ^ 5 ≤ (D.R.f : ℝ) ^ 5 := pow_le_pow_left₀ (by norm_num) hfR 5

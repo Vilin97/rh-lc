@@ -1,8 +1,8 @@
 module
 
 public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TraceGap.ActDiagMemOfWK
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TraceGap.CoordSpan
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TraceGap.ProdModeCharExp
 
 @[expose] public section
 
@@ -27,14 +27,11 @@ theorem fockCoordinates_span_finiteDimensional (n : ℕ) (ε : Fin n → Bool) (
   induction hv using Submodule.span_induction with
   | mem x hx =>
     obtain ⟨s, y, hy, rfl⟩ := hx
-    have e := tco_diagE (ε := ε) E a b y s
-    have e2 := tcoef_eq_sum ((fockBasis n).coord s ∘ₗ sgE ε (cpFock (n := n)) cmFock a b) y
-    have h1 : E a b (tcoef ((fockBasis n).coord s) y) =
-        tcoef ((fockBasis n).coord s) (diagE ε (eT E) cpT cmT a b y) -
-          tcoef ((fockBasis n).coord s ∘ₗ sgE ε (cpFock (n := n)) cmFock a b) y := by
-      rw [e]; abel
+    let X := Matrix.single a b (1 : ℂ)
+    have e := tco_actDiag (ε := ε) E X y s
+    simp only [X, TRGap.actM_single'] at e
     show E a b (tcoef ((fockBasis n).coord s) y) ∈ coordSpan Z
-    rw [h1, e2]
+    rw [eq_sub_of_add_eq e.symm, tcoef_eq_sum ((fockBasis n).coord s ∘ₗ sgX ε X) y]
     refine Submodule.sub_mem _ (Submodule.subset_span ⟨s, _, hK a b hab y hy, rfl⟩) ?_
     refine Submodule.sum_mem _ fun s' _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨s', y, hy, rfl⟩)
   | zero => simp

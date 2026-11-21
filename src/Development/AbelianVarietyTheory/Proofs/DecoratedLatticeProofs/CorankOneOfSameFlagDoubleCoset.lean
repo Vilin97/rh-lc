@@ -5,6 +5,7 @@ public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.CorankO
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.CorankRelation
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.SatGram
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ThetaCocycleProductOfRationalUnipotents
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.StandardBaseFlagComplementIntegralLattice
 
 @[expose] public section
 
@@ -78,7 +79,10 @@ theorem corankOne_of_same_flagDoubleCoset : ∀ (D : D7) (X : HidaSetting D) (Y 
   have hlam' : t.lam' = t'.lam' := congrArg (fun r => (r.2.1 : Submodule (𝓞 D.host.E) (VS D).V)) hr
   have hdim := Formalism.L2.SG.Corank.finrank_VS D
   have hrow := (Y.rowsOK u).1 t.lam t.mem
-  have hlat : Submodule.IsLattice D.host.E t.lam := hrow.2.1.1
+  have hlat : Submodule.IsFullLattice D.host.E t.lam :=
+    { toIsLattice := hrow.2.1.1
+      span_eq_top := GlobalTheory.LoopC.Base.span_eq_top_of_unimodular
+        (VS D).hT (VS D).herm (VS D).nondeg hrow.2.1.1 hrow.2.1.2.1 }
   have hLF : IsLift t.lam (lf D (X.Fu u)) := hrow.2.1.2.2.1
   have hLt : IsLift t.lam t.frame := t.rep.2.2.2.2.1
   have hLt' : IsLift t'.lam t'.frame := t'.rep.2.2.2.2.1

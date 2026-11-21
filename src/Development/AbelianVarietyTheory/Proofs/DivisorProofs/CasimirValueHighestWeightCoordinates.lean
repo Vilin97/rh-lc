@@ -25,7 +25,7 @@ theorem casimirValue_highestWeightCoordinates : CasCoord := by
       ((dot (rhoHol ε) (gaW ε lam) : ℝ) : ℂ) • z := by
     simp only [dot, Complex.ofReal_sum, Complex.ofReal_mul, sum_smul, hz.1, smul_smul]
   have h0 : ((2 : ℂ) • ((dOp ε (eT E) cpT + dOp' ε (eT E) cmT) * (dOp ε (eT E) cpT + dOp' ε (eT E) cmT))) z = 0 := by
-    rw [LinearMap.smul_apply, Module.End.mul_apply]
+    rw [LinearMap.smul_apply, mul_apply_eq_comp]
     have : (dOp ε (eT E) cpT + dOp' ε (eT E) cmT) z = 0 := hD
     rw [this, map_zero, smul_zero]
   rw [h0] at h2
@@ -41,7 +41,7 @@ theorem casimirValue_highestWeightCoordinates : CasCoord := by
           (2 : ℂ) • (((dot (rhoHol ε) (gaW ε lam) : ℝ) : ℂ) • z) := by
       linear_combination (norm := module) h2
     rw [e, casVal, ← hid]
-    simp only [Complex.ofReal_sub, Complex.ofReal_mul, Complex.ofReal_ofNat, mul_smul]
+    simp only [Complex.ofReal_sub, Complex.ofReal_mul, Complex.ofReal_ofNat, sub_smul, smul_smul]
   have hcoord := congrArg (tco s) hc
   rw [TRGap.casimir_eT, tco_map_left] at hcoord
   simpa only [tco, map_smul] using hcoord

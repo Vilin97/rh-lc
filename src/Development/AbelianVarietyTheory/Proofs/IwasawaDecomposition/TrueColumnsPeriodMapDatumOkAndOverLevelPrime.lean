@@ -48,7 +48,7 @@ theorem stX_ok (a : I.ι) : (I.stX a).Ok := by
     { fin_orb := stepY_fin_orb (ST := ∅) y Unit (fun _ => Λ) (fun _ => Θ) (fun _ => True) hX
         (fun _ => levQX_finiteIndex I.sel (I.tup a)) (fun _ _ => Set.finite_singleton _)
       fin_stab b p := by
-        have := autO_finite (posStar_of_ok hX) p.1.1.deco.2.lat
+        have := autO_finite (posStar_of_ok hX) p.1.1.deco.full_lattice
         exact Finite.of_injective _ (stabAut_inj y Unit (fun _ => Λ) (fun _ => Θ) (fun _ => True) b p)
       unit _ g := by
         let M : Matrix (Fin (B.R.N B.R.m - 1)) (Fin (B.R.N B.R.m - 1)) B.fields.E := ↑(toGLm _ _ g.1.1)
@@ -62,7 +62,7 @@ theorem stX_ok (a : I.ι) : (I.stX a).Ok := by
         show (↑(toGLm _ _ g.1.1) : Matrix _ _ _) *ᵥ x ∈ (p.1.1.deco.1.act g.1.1 g.2.1.1).Lsh ↔
           x ∈ p.1.1.deco.1.Lsh
         rw [toGLm_mulVec, Deco.Lsh_act _ g.1.2, mem_gmap, LinearEquiv.symm_apply_apply]
-      lsh_lat _ p := p.1.1.deco.2.Lsh_lattice
+      lsh_full_lat _ p := p.1.1.deco.2.Lsh_full_lattice
       stab_inj b g p h h₁ :=
         stepY_eq_one y Unit (fun _ => Λ) (fun _ => Θ) (fun _ => True) b g p h
           (Subtype.ext ((toGLm B.fields.E (B.R.N B.R.m - 1)).injective (h₁.trans (map_one _).symm))) }

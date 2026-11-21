@@ -31,10 +31,7 @@ theorem exists_place_normV_eq : ∀ (E Ω : Type) [Field E] [NumberField E] [Fie
   obtain ⟨w', hw', i, hi⟩ := GlobalTheory.PlaceIsoDec.exists_placeIso_of_dec_le_range E Ω (↥Q.K) w A hA hD
   refine ⟨w', ?_, hw', ?_⟩
   · have hl := GlobalTheory.PlaceIsoDec.liesOver_of_isPlaceOver hA hw'
-    ext x
-    show x ∈ (w'.under (𝓞 E)).asIdeal ↔ x ∈ w.asIdeal
-    rw [hl.over]
-    rfl
+    exact HeightOneSpectrum.ext hl.over.symm
   · obtain ⟨c, -, -, hq, -⟩ := GlobalTheory.WeilTransport.weil_equiv E Ω A w hA (↥Q.K) Ω A w' hw' (RingEquiv.refl Ω) (algebraMap E ↥Q.K) i hi
     exact hq
 

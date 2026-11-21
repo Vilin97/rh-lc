@@ -108,7 +108,7 @@ theorem lamG_eq_lamMax (hK : IsCMUnram K) (hF : IsFixF K F) {h : V →ₗ⋆[K] 
   · exact Finset.prod_congr rfl fun P _ => localMassFactor_eq_of_mem_badPrimes hK hF hs hd hM (hfin.mem_toFinset.1 P.2)
   · intro 𝔭 h𝔭
     obtain ⟨P, hP, hP𝔭⟩ := exists_maximal_over hK hF 𝔭.2
-    have hlat := hM.1.1.toIsLattice
+    have hlat := hM.1.1
     apply localMassFactor_of_valuation_eq_zero hK hF hs hd hlat hM.1.2 𝔭.2
     rw [← hP𝔭]
     refine (isUnimodularAt_iff_vd hK hF hs hd hlat hM.1.2 hP).1 (by_contra fun hb => h𝔭 ?_)
@@ -121,6 +121,6 @@ theorem main : MaxMass := by
   obtain ⟨c₁, -, hall⟩ := massConst_all binary_hermitian_represents liStat hK hF
   refine ⟨c₁ * ∏ j ∈ Finset.Icc 2 n, massRatioRightSide K j, fun V _ _ _ _ _ h hs hp hr M hM => ?_⟩
   have hd : IsTotPosDef h := fun x hx φ => hp φ x hx
-  rw [hall n hn V h M hs hd hr hM.1.1.toIsLattice hM.1.2, lamG_eq_lamMax hK hF hs hd hM]
+  rw [hall n hn V h M hs hd hr hM.1.1 hM.1.2, lamG_eq_lamMax hK hF hs hd hM]
 
 end GlobalTheory.Mass.MaxFormula

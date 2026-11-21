@@ -7,7 +7,7 @@ public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.FdLo
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.FdPointwise
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.FdConst
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.IntegrableOfContinuousCompact
-public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TensorRepresentations.Sandwich
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TensorRepresentations.Transported
 
 @[expose] public section
 

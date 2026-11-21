@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Formalism.LocalToGlobal.Columns.CmUnramifiedOfFieldConditions
 public import Formalism.LocalToGlobal.Columns.InputsLemmas
+public import Formalism.LocalToGlobal.Columns.HeckeSpCount
 public import Formalism.LocalToGlobal.Columns.FiniteSumNonzeroLargeDepth
 public import Formalism.LocalRingCardinality.MinkMEqMinkowskiNumber
 
@@ -59,7 +60,7 @@ theorem card_autU_dvd_minkM (hE : PosStar E) (N : UniLat E n) :
       obtain ⟨y, hy, e⟩ := hx
       have : y = x := (a.1 : UF E n).1.injective e
       rwa [← this]
-  have h1 := mk_card_dvd minkowskiBound_holds N.1 N.2.1 φ.range hfin' hst
+  have h1 := mk_card_dvd minkowskiBound_holds N.1 (hcnt_isFullLattice_of_unimodular N.2.1 N.2.2) φ.range hfin' hst
   rw [← Nat.card_congr (MonoidHom.ofInjective hφ).toEquiv] at h1
   exact h1
 

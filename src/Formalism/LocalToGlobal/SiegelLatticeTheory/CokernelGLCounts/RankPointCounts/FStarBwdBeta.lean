@@ -81,7 +81,7 @@ theorem bwdBeta'_of_core (hR : RepG u u' F0 what₂) (hB : BetaCore Zd u u' F0 w
   have hfix := hrow.2.1
   refine ⟨x, hmk, hG, β, hx ▸ hP, ?_, hx ▸ hsc⟩
   rw [hx]
-  refine (Formalism.L2.SG.NGCut.CorankRelation.s0_eq_one_iff_Th_eq_Hp D.R.k (Corank.finrank_VS D) γ.lam hfix.1 (lf D F0) (repF γ) _ β
+  refine (Formalism.L2.SG.NGCut.CorankRelation.s0_eq_one_iff_Th_eq_Hp D.R.k (Corank.finrank_VS D) γ.lam hrow.1.1 (lf D F0) (repF γ) _ β
     hfix.2.2.1 hPD.1 hG').2 ?_
   exact le_antisymm (PI.PairCorankPos.W.Th_le_Hp _ _ _ _ _) hle
 

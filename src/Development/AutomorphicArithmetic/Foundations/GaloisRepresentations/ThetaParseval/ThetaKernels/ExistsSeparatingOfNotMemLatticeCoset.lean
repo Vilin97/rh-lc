@@ -285,8 +285,8 @@ theorem UpperTheory.exists_separating_of_not_mem_lattice_coset :
   have hSat : ∀ z ∈ S, At (evFin F v) z := by
     rintro _ ⟨a, ha, b, hb, rfl⟩ u hu
     rw [smul_add, hat a ha u hu, hmulat _ b (hat b hb) u hu, add_zero]
-  obtain ⟨c₁, hc₁0, hc₁⟩ := GlobalTheory.LatBound.locCo_latAtV_bounded X W v M.co hX.lat hW.lat
-  obtain ⟨Mt, _, gm, hgm⟩ := GlobalTheory.LatParam.latAtV_param X W hX.lat hW.lat v
+  obtain ⟨c₁, hc₁0, hc₁⟩ := GlobalTheory.LatBound.locCo_latAtV_bounded X W v M.co hX.lat.toIsLattice hW.lat.toIsLattice
+  obtain ⟨Mt, _, gm, hgm⟩ := GlobalTheory.LatParam.latAtV_param X W hX.lat.toIsLattice hW.lat.toIsLattice v
   obtain ⟨c₂, hc₂0, hc₂⟩ := GlobalTheory.LatBound.exists_mul_mem_integers v
     (fun t : Bool × Mt × (Fin n × Fin d) =>
       if t.1 then (GlobalTheory.LatVac.locCo M.co v (mat g⁻¹ * incM F (gm t.2.1))).1 t.2.2

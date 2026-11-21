@@ -149,7 +149,7 @@ theorem stepY_ok (hX : X.Ok) (hI : ∀ b P, (Θ b P).H.FiniteIndex)
   exact {
     fin_orb := stepY_fin_orb y β Λ Θ pref hX hI hy
     fin_stab b p :=
-      haveI := autO_finite (posStar_of_ok hX) p.1.1.deco.2.lat
+      haveI := autO_finite (posStar_of_ok hX) p.1.1.deco.full_lattice
       Finite.of_injective _ (stabAut_inj y β Λ Θ pref b p)
     unit b g := by
       have h : Formalism.UG.cT (starRingEnd X.E) (toGLm X.E n g.1.1 : Matrix (Fin n) (Fin n) X.E) * (1 : Matrix (Fin n) (Fin n) X.E) *
@@ -168,7 +168,7 @@ theorem stepY_ok (hX : X.Ok) (hI : ∀ b P, (Θ b P).H.FiniteIndex)
       rw [stepY_gam]
       show _ ∈ (p.1.1.deco.1.act g.1.1 g.2.1.1).Lsh ↔ _
       rw [Deco.Lsh_act _ g.1.2, mem_gmap, LinearEquiv.symm_apply_apply]
-    lsh_lat b p := p.1.1.deco.2.Lsh_lattice
+    lsh_full_lat b p := p.1.1.deco.2.Lsh_full_lattice
     stab_inj b g p h h1 := stepY_eq_one y β Λ Θ pref b g p h
       (Subtype.ext ((toGLm X.E n).injective (h1.trans (map_one _).symm)))
   }

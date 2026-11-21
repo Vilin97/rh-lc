@@ -44,7 +44,7 @@ theorem connection_fixes_split_subspace : _root_.GlobalTheory.FunPr.ThetaLocalIn
   set Φ := GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R) with hΦdef
   have hLine : ∃ c : ℂ, omd n Φ = c • Φ := by
     obtain ⟨hSB, h0, θ, hθ, hvac⟩ := hTr.geo.hM'.vac v
-    refine dbl_line_co hTr.base.std v hψ hTr.geo.hW.lat hTr.geo.hV'.lat ?_ d' (G.M'.vac v)
+    refine dbl_line_co hTr.base.std v hψ hTr.geo.hW.lat.toIsLattice hTr.geo.hV'.lat.toIsLattice ?_ d' (G.M'.vac v)
       ⟨hSB, h0, θ, hθ, ?_⟩ dd omd hdc hws.2.1 R hRv n hn.1
     · intro z hz
       have h := GlobalTheory.LatSelfDualAll.latAtV_selfDual F E σ B _ _ G.V' G.W _ _ _ _
@@ -94,8 +94,8 @@ theorem connection_fixes_split_subspace : _root_.GlobalTheory.FunPr.ThetaLocalIn
       fun w h hm => hT (h ▸ hm)
     have ha : (X.α / X.β) (Matrix.GeneralLinearGroup.det t) = 1 := by
       rw [MonoidHom.div_apply,
-        chr_det_eq_one G.V' hTr.geo.hV'.lat v X.α (fun w h => hTr.chars.unrα w (hw w h)) t hts.1 hts.2,
-        chr_det_eq_one G.V' hTr.geo.hV'.lat v X.β (fun w h => hTr.chars.unrβ w (hw w h)) t hts.1 hts.2, div_one]
+        chr_det_eq_one G.V' hTr.geo.hV'.lat.toIsLattice v X.α (fun w h => hTr.chars.unrα w (hw w h)) t hts.1 hts.2,
+        chr_det_eq_one G.V' hTr.geo.hV'.lat.toIsLattice v X.β (fun w h => hTr.chars.unrβ w (hw w h)) t hts.1 hts.2, div_one]
     have hb := GlobalTheory.IntegralDetModule.modu_norm_det G.V' hTr.geo.hV'.lat v t hts.1 hts.2
     rw [ha, hb] at hS
     simp only [Circle.coe_one, NNReal.coe_one, Real.one_rpow, Complex.ofReal_one, one_mul] at hS

@@ -32,7 +32,8 @@ theorem doubleLine_eigenfunction_split : _root_.GlobalTheory.FunPr.ThetaLocalInp
     ∀ g ∈ GlobalTheory.InertDbl.KAtD σ G.W v, ∃ c : ℂ, omd g (GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R)) =
       c • GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R) := by
   intro _ F E _ _ _ _ _ σ B a a' G X om om' hT v _ _ hunr _ _ dd omd hdd hS R hR g hg
-  exact GlobalTheory.DblVacLine.dbl_line hT.base.std v hunr hT.geo.hV'.lat hT.geo.hW.lat
+  exact GlobalTheory.DblVacLine.dbl_line (X := G.V') (Y := G.W) hT.base.std v hunr
+    hT.geo.hV'.lat.toIsLattice hT.geo.hW.lat.toIsLattice
     (GlobalTheory.LatSelfDualAll.latAtV_selfDual F E σ B _ _ G.V' G.W _ _ _ _ hT.base hT.geo.hV' hT.geo.hW v)
     G.M' _ (hT.geo.hM'.vac v) dd omd hdd hS.2.1 R hR g hg
 end GlobalTheory.SplitDblLine

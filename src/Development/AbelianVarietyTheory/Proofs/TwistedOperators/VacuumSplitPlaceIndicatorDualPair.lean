@@ -167,7 +167,7 @@ theorem dbl_line_coord {σ : E →ₐ[F] E} {n d : ℕ} {X : Spc F E n} {Y : Spc
     (fun i => hloc φd hrest _ i.1.2 _ i.2.2 (hΦt ▸ h1 _ i.1.2 _ i.2.2)) hφd0
   exact ⟨c', by rw [hT, hc', GlobalTheory.VacTransport.tens_smul, ← hΦt]⟩
 
-theorem det_mem_of_keeps {n : ℕ} (w : HeightOneSpectrum (𝓞 E)) (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.IsLattice E)
+theorem det_mem_of_keeps {n : ℕ} (w : HeightOneSpectrum (𝓞 E)) (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.IsFullLattice E)
     (T : Matrix (Fin n) (Fin n) (w.adicCompletion E)) (hT : ∀ z ∈ latAt w L, T *ᵥ z ∈ latAt w L) :
     T.det ∈ Formalism.UG.Ov E w := by
   obtain ⟨k, S, Φ, h1, hS, hΦ⟩ := GlobalTheory.AdelicU.SelfDual.exists_frame L hL
@@ -209,7 +209,7 @@ theorem det_mem_of_keeps {n : ℕ} (w : HeightOneSpectrum (𝓞 E)) (L : Submodu
   rw [e3, ← RingHom.map_det]
   exact m.det.2
 
-theorem chr_det_eq_one {n : ℕ} (Y : Spc F E n) (hL : Y.L.IsLattice E) (v : Pl (F := F)) (χ : Chr F E)
+theorem chr_det_eq_one {n : ℕ} (Y : Spc F E n) (hL : Y.L.IsFullLattice E) (v : Pl (F := F)) (χ : Chr F E)
     (hχ : ∀ w : HeightOneSpectrum (𝓞 E), w.under (𝓞 F) = v → UnrAt χ w) (t : GL (Fin n) (AE F E))
     (h1 : At (evFin F v) ((t : Matrix (Fin n) (Fin n) (AE F E)) - 1))
     (h2 : ∀ z ∈ GlobalTheory.InertSph.latAt Y v, (t : Matrix (Fin n) (Fin n) (AE F E)) *ᵥ z ∈ GlobalTheory.InertSph.latAt Y v ∧
@@ -252,7 +252,7 @@ theorem dblFun_eigen_left {σ : E →ₐ[F] E} {B : Base F E} {a a' : ℕ} {G : 
       c • GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R) := by
   obtain ⟨hSB, h0, θ, -, hvac⟩ := hG.hM'.vac v
   have hsd := GlobalTheory.LatSelfDualAll.latAtV_selfDual F E σ B _ _ G.V' G.W _ _ _ _ hB hG.hV' hG.hW v
-  refine dbl_line_coord hB.std v hunr hG.hW.lat hG.hV'.lat (fun z hz => ?_) d' _ hSB h0 (θ : E) (fun γ hγ => ?_)
+  refine dbl_line_coord hB.std v hunr hG.hW.lat.toIsLattice hG.hV'.lat.toIsLattice (fun z hz => ?_) d' _ hSB h0 (θ : E) (fun γ hγ => ?_)
     dd omd hdc hS R hR g hg
   · have hzt : At (evFin F v) zᵀ := fun u hu => by
       rw [← Matrix.transpose_smul, hz u hu, Matrix.transpose_zero]

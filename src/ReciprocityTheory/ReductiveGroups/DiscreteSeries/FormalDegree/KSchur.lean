@@ -20,51 +20,44 @@ namespace CompactHaarProbability
 
 variable {ε : Fin n → Bool} {Λ : Fin n → ℝ}
 
-local instance compactHaar (ε : Fin n → Bool) : (muK ε).IsHaarMeasure := by
-  delta muK
-  exact Measure.isHaarMeasure_haarMeasure _
+lemma muK_univ_ne_zero (ε : Fin n → Bool) : muK ε Set.univ ≠ 0 := ((ENNReal.toReal_pos_iff.mp (muK_univ_pos ε)).1).ne'
 
-lemma muK_univ_ne_zero (ε : Fin n → Bool) : muK ε Set.univ ≠ 0 :=
-  isOpen_univ.measure_ne_zero (muK ε) Set.univ_nonempty
-
-lemma muK_univ_ne_top (ε : Fin n → Bool) : muK ε Set.univ ≠ ⊤ :=
-  (isCompact_univ.measure_lt_top (μ := muK ε)).ne
-
-private theorem eq_muK_of_univ (ε : Fin n → Bool) (ν : Measure (KG ε))
-    [ν.IsMulLeftInvariant] [IsFiniteMeasureOnCompacts ν]
-    (hν : ν Set.univ = muK ε Set.univ) : ν = muK ε := by
-  have h := Measure.isMulInvariant_eq_smul_of_compactSpace ν (muK ε)
-  rw [h, smul_apply, ENNReal.smul_def, smul_eq_mul] at hν
-  have hfactor : (ν.haarScalarFactor (muK ε) : ENNReal) = 1 :=
-    (ENNReal.mul_eq_right (muK_univ_ne_zero ε) (muK_univ_ne_top ε)).mp hν
-  rw [h, ENNReal.coe_eq_one.mp hfactor, one_smul]
-
-private theorem muK_right (ε : Fin n → Bool) : (muK ε).IsMulRightInvariant := by
-  refine ⟨fun k => eq_muK_of_univ ε (Measure.map (· * k) (muK ε)) ?_⟩
-  rw [Measure.map_apply (measurable_mul_const k) MeasurableSet.univ, Set.preimage_univ]
+lemma muK_univ_ne_top (ε : Fin n → Bool) : muK ε Set.univ ≠ ⊤ := ((ENNReal.toReal_pos_iff.mp (muK_univ_pos ε)).2).ne
 
 instance dk_isProb (ε : Fin n → Bool) : IsProbabilityMeasure (dk ε) := by
-  let _ : IsFiniteMeasure (muK ε) := ⟨(muK_univ_ne_top ε).lt_top⟩
-  let _ : NeZero (muK ε) := ⟨Measure.measure_univ_ne_zero.mp (muK_univ_ne_zero ε)⟩
+  rw [dk_def]
+  letI : IsFiniteMeasure (muK ε) := ⟨(muK_univ_ne_top ε).lt_top⟩
+  letI : NeZero (muK ε) := ⟨Measure.measure_univ_ne_zero.mp (muK_univ_ne_zero ε)⟩
   exact isProbabilityMeasureSMul (μ := muK ε)
 
 instance dk_left (ε : Fin n → Bool) : (dk ε).IsMulLeftInvariant := by
-  exact isMulLeftInvariant_smul (μ := muK ε) (muK ε Set.univ)⁻¹
+  rw [dk_def]
+  letI := kf_isHaar ε
+  exact MeasureTheory.isMulLeftInvariant_smul (μ := muK ε) (muK ε Set.univ)⁻¹
 
 instance dk_right (ε : Fin n → Bool) : (dk ε).IsMulRightInvariant := by
-  have := muK_right ε
-  exact isMulRightInvariant_smul (μ := muK ε) (muK ε Set.univ)⁻¹
+  rw [dk_def]
+  letI := muK_rightInvariant ε
+  exact MeasureTheory.isMulRightInvariant_smul (μ := muK ε) (muK ε Set.univ)⁻¹
 
 lemma muK_inv (ε : Fin n → Bool) : Measure.map (fun x : KG ε => x⁻¹) (muK ε) = muK ε := by
-  have := muK_right ε
-  have : IsFiniteMeasure (muK ε) := ⟨isCompact_univ.measure_lt_top⟩
-  have : IsFiniteMeasure (muK ε).inv := Measure.isFiniteMeasure_map _ _
-  refine eq_muK_of_univ ε (muK ε).inv ?_
-  rw [Measure.inv_def, Measure.map_apply measurable_inv MeasurableSet.univ, Set.preimage_univ]
+  haveI := muK_rightInvariant ε
+  set ν := Measure.map (fun x : KG ε => x⁻¹) (muK ε) with hν
+  haveI : ν.IsMulLeftInvariant := by
+    change (muK ε).inv.IsMulLeftInvariant
+    infer_instance
+  haveI : IsFiniteMeasure ν := by rw [hν]; infer_instance
+  have e := Measure.isMulInvariant_eq_smul_of_compactSpace ν (muK ε)
+  have huniv : ν Set.univ = muK ε Set.univ := by
+    rw [hν, Measure.map_apply measurable_inv MeasurableSet.univ, Set.preimage_univ]
+  rw [e] at huniv
+  rw [smul_apply, ENNReal.smul_def, smul_eq_mul] at huniv
+  have hc : (ν.haarScalarFactor (muK ε) : ℝ≥0∞) = 1 :=
+    (ENNReal.mul_eq_right (muK_univ_ne_zero ε) (muK_univ_ne_top ε)).mp huniv
+  rw [e, ENNReal.coe_eq_one.mp hc, one_smul]
 
 lemma dk_inv (ε : Fin n → Bool) : Measure.map (fun x : KG ε => x⁻¹) (dk ε) = dk ε := by
-  delta dk
-  rw [Measure.map_smul _ measurable_inv.aemeasurable, muK_inv]
+  rw [dk_def, Measure.map_smul _ measurable_inv.aemeasurable, muK_inv]
 
 end CompactHaarProbability
 

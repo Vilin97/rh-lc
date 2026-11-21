@@ -239,7 +239,10 @@ theorem mov_split {V : HSp D} {e : AE D} (he : IsSplitIdem D e) {h h' : GA D V}
     have := congrArg (fun a => finPart D (cA D a)) (congrFun (congrFun hM i) j)
     simp only [Matrix.smul_apply, smul_eq_mul, map_mul, hs] at this
     exact this
-  refine exists_split (F := D.host.F) (Submodule.IsLattice.of_fg D.host.E v0.1) (Submodule.IsLattice.of_fg D.host.E v'.1) (Submodule.IsLattice.of_fg D.host.E v1.1)
+  refine exists_split (F := D.host.F)
+    { toIsLattice := Submodule.IsLattice.of_fg D.host.E v0.1, span_eq_top := span_of_vset v0 }
+    { toIsLattice := Submodule.IsLattice.of_fg D.host.E v'.1, span_eq_top := span_of_vset v' }
+    { toIsLattice := Submodule.IsLattice.of_fg D.host.E v1.1, span_eq_top := span_of_vset v1 }
     (z := finPart D t • toAf v) ?_ (hst _ _ hv') ?_
   · rw [e0, key t h' 1 hc (by rw [h1, AdelicLatMove.mt_one]), fmtC_one, Matrix.one_mulVec]
     exact hst _ _ hu

@@ -61,7 +61,6 @@ theorem main : ∀ (D : D7), D.host.F = maximalRealSubfield D.host.E → ∀ (Pp
     ∃ (v : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E))) (_ : InertDatum D.host.E D.R.nV v Pp),
       NG.OverPl Pp v := by
   intro D hF Pp hI
-  rw [hF] at hI
   obtain ⟨Dv⟩ := exists_inertDatum_of_isInertAt D.host.E D.R.nV Pp hI
   exact ⟨_, Dv, rfl⟩
 

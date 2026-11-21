@@ -47,7 +47,7 @@ theorem GlobalTheory.RowEvalHH.conj_eval_mem_HH : ∀ {D : D7} {G : Type} [Group
     apply ContinuousLinearMap.ext_on hdense
     rintro _ ⟨y, rfl⟩
     obtain ⟨y', hy1, hy2⟩ := GlobalTheory.T.conjTranslatedRowEvaluation_intertwines_realGroup R F X h hLev hGrp hMod hHost hιE t c ht hc S hS g y
-    simp only [ContinuousLinearMap.coe_comp', Function.comp_apply]
+    simp only [ContinuousLinearMap.coe_comp, Function.comp_apply]
     change Aop (X.B.σs g (u y)) = X.B.R (g, 1) (Aop (u y))
     rw [← hy1]
     change Aop (u y') = _
@@ -55,7 +55,7 @@ theorem GlobalTheory.RowEvalHH.conj_eval_mem_HH : ∀ {D : D7} {G : Type} [Group
   have hRe : X.B.Re.comp Aop = Aop := by
     apply ContinuousLinearMap.ext_on hdense
     rintro _ ⟨y, rfl⟩
-    simp only [ContinuousLinearMap.coe_comp', Function.comp_apply]
+    simp only [ContinuousLinearMap.coe_comp, Function.comp_apply]
     rw [hA]
     exact GlobalTheory.T.conj_translatedRowEvaluation_levelProjector_fixed R F X h hLev hGrp hMod hHost hιE t c ht hLM S hS y
   have heHom : Aop ∈ X.B.I.eHom X.B.σs X.B.μf X.B.fund X.B.R X.B.Re :=
@@ -80,7 +80,7 @@ theorem GlobalTheory.RowEvalHH.conj_eval_mem_HH : ∀ {D : D7} {G : Type} [Group
   obtain ⟨hmem, -, -⟩ := hnorm v₀ hunit S hS
   have hval : Aop (X.B.tens X.B.w) = star φ := by
     rw [← hu0, hA]
-    unfold evF
+    delta evF
     rw [hvec, dite_eq_left hmem]
     congr 1
     exact (Lp.ext (hφ.trans hmem.coeFn_toLp.symm)).symm

@@ -106,7 +106,7 @@ theorem iwasawa (B : Base F E) {n n₁ : ℕ} {X : Spc F E n} {X₁ : Spc F E n�
     (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (hH : H.IsAdapted σ B X X₁ i₀ i₁) (g : UA σ X.J) :
     ∃ p ∈ lineStab σ X.J H.x, ∃ k ∈ GlobalTheory.StabHaar.stabK (σ := σ) B X, g = p * k := by
   classical
-  haveI : X.L.IsLattice E := hX.lat
+  haveI : X.L.IsFullLattice E := hX.lat
   have hσ : IsCMExt F E σ := hB.cm
   have hs : ∀ z : E, σ (σ z) = z := fun z => by
     obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
@@ -135,7 +135,7 @@ theorem iwasawa (B : Base F E) {n n₁ : ℕ} {X : Spc F E n} {X₁ : Spc F E n�
       ∃ β : GL (Fin 1) (Fv F v ⊗[F] E), (matHom _ σ X.Jᵀ q).1 * xc.map (inclR (F := F) (Fv F v)) =
         xc.map (inclR (F := F) (Fv F v)) * β.1 := fun v y =>
     if hv : Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v then
-      GlobalTheory.T.hyperbolic_pair_lattice_local_split F E σ hσ n X.Jᵀ hND xc yc hxx hyy hxy hyx X.L hX.lat v hv (hSD v) y
+      GlobalTheory.T.hyperbolic_pair_lattice_local_split F E σ hσ n X.Jᵀ hND xc yc hxx hyy hxy hyx X.L hX.lat.toIsLattice v hv (hSD v) y
     else GlobalTheory.T.isotropic_vector_lattice_local F E σ hσ hB.unram n X.Jᵀ hND xc yc hxx hyx X.L hX.lat v hv (hSD v) y
   obtain ⟨a, ha, haK⟩ := GlobalTheory.T.majorant_frame_commutes_cartan F E σ B n X r s hB hX
   set g' := (ofGAd σ X.J).symm g with hg'
@@ -159,7 +159,7 @@ theorem iwasawa (B : Base F E) {n n₁ : ℕ} {X : Spc F E n} {X₁ : Spc F E n�
     funext i
     have := congrFun (congrFun hl i) 0
     simpa [adMat, xc, incV, Matrix.mul_apply, Matrix.mulVec, dotProduct] using this
-  · refine GlobalTheory.T.majorant_stabilizer_iwasawa_line F E σ B n X hX.lat _ (fun w => ?_) (fun v => ?_)
+  · refine GlobalTheory.T.majorant_stabilizer_iwasawa_line F E σ B n X hX.lat.toIsLattice _ (fun w => ?_) (fun v => ?_)
     · have e : projArch σ X.Jᵀ w (p⁻¹ * g') = ka w := by
         rw [map_mul, map_inv, pA w, hga w, inv_mul_cancel_left]
       rw [e]; exact haK w (ka w) (hka w)

@@ -113,8 +113,8 @@ theorem snd_val_eq_zero (y : Sp (DualNumber R) ⟶ X)
           TrivSqZeroExt.inr (algebraMap R R' c.snd)
         map_one' := by ext <;> simp
         map_zero' := by ext <;> simp
-        map_add' := fun a b ↦ by ext <;> simp <;> ring
-        map_mul' := fun a b ↦ by ext <;> simp [MulOpposite.smul_eq_mul_unop] <;> ring
+        map_add' := fun a b ↦ by ext <;> simp [Algebra.smul_def] <;> ring
+        map_mul' := fun a b ↦ by ext <;> simp [MulOpposite.smul_eq_mul_unop, Algebra.smul_def, TrivSqZeroExt.algebraMap_eq_inl'] <;> ring
         commutes' := fun r ↦ by ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl'] }
     let y' := spMap (φ : DualNumber R →+* TrivSqZeroExt R' R') ≫ y
     have hy' : y' ≫ s = spMap (algebraMap R (TrivSqZeroExt R' R')) := by
@@ -145,7 +145,7 @@ theorem snd_val_eq_zero (y : Sp (DualNumber R) ⟶ X)
     have h1 := snd_val_affine ⟨U, hU⟩ α y' hy' hα f (h0 _)
     rw [hv] at h1
     have h2 : algebraMap R R' (TrivSqZeroExt.snd (R := R) ((SqExt.dual R).val y hy f.1)) = 0 := by
-      simpa [φ] using h1
+      simpa [φ, Algebra.smul_def, TrivSqZeroExt.algebraMap_eq_inl'] using h1
     obtain ⟨⟨t, ht⟩, ht'⟩ := (IsLocalization.map_eq_zero_iff m.primeCompl R' _).1 h2
     exact ⟨t, ht, ht'⟩
   by_contra hx

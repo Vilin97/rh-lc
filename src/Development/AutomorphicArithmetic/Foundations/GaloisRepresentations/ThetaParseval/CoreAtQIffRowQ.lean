@@ -82,12 +82,13 @@ theorem frobIdQ (hDI : DenseId) (hCp : CpFacts) (hQ : GoodGuard Ω l Q) (ι : Qb
     intro s e hs
     have h := (hs A hA).2 g⁻¹ hF
     rw [inv_inv] at h
-    rw [cp, h, Multiset.map_add (f := _), Multiset.prod_add, Multiset.map_map]
-    rfl
+    rw [cp, h, Multiset.map_add (f := _), Multiset.prod_add, Multiset.map_map,
+      Finset.prod_map_val]
+    simp only [Function.comp_apply]
   apply Polynomial.map_injective ι.toRingHom ι.injective
   rw [Polynomial.map_mul, Polynomial.map_mul, cp_map r c h1, cp_map r' c' h2, lin_map a' c' h4,
     lin_map a c h3]
-  ring
+  exact mul_right_comm _ _ _
 
 theorem weakIsoQ (hA : SatAE) (hQ : GoodGuard Ω l Q) (ι : Qbar l ≃+* ℂ) {a : ℕ} (U : Submodule ℂ (UA E a → ℂ)) (hU : IsAutRepU U)
     (r r' : G E Ω →* GL (Fin a) (Qbar l)) (hr : WeakQ Q ι U r) (hr' : WeakQ Q ι U r') : RepIso r r' := by

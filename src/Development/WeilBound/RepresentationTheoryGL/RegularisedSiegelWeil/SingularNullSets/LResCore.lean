@@ -40,7 +40,7 @@ theorem resCore : Polar → CfFJ → IdemEx → GoodEv → FixW → WMaj → JPo
   obtain ⟨-, hP2, -⟩ := hPolar D n W.rank t hn hbig ψ hψ χ hχ hη (fun h0 => absurd h0 (by omega)) θ hθ H hH _ hφc hφlaw
     U d E σ hcont ε hrad
   obtain ⟨UH, hUHo, hUH⟩ := hHlev
-  have : Submodule.IsLattice D.host.E (stdLattice D.host.E (n + n)) := isLattice_stdLattice
+  have : Submodule.IsFullLattice D.host.E (stdLattice D.host.E (n + n)) := isLattice_stdLattice
   obtain ⟨S₁, hS₁⟩ := GlobalTheory.PlaceGen.exists_levelOff_le D.sp.cm.sig (Jst D n) (stdLattice D.host.E (n + n)) UH hUHo
   obtain ⟨S₂, hS₂⟩ := hFixW D n B ψ hψ χ hχ hηB θ hθ μB hμB ωB hωB
   obtain ⟨S₃, hS₃⟩ := hGoodEv D θ hθ B.rank n Φ.1 Φ.2

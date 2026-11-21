@@ -43,7 +43,7 @@ variable {K G}
 
 structure Mat1.Laws (m : Mat1 K G) (σ : K →+* ℂ) (e : MonoidAlgebra K G) : Prop where
   pos : (m.H.map σ).PosDef
-  lat : Submodule.IsLattice K m.N
+  lat : Submodule.IsFullLattice K m.N
   add : ∀ a b, m.op (a + b) = m.op a + m.op b
   smul : ∀ (c : K) a, m.op (c • a) = c • m.op a
   one : m.op 1 = 1

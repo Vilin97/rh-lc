@@ -189,10 +189,8 @@ variable {p q : ℕ}
 def sgnC : Formalism.BasicNotions.TH.Ix p q → ℂ := Sum.elim (fun _ => 1) (fun _ => -1)
 
 theorem Jpq_diagC : Formalism.UG.Jpq p q = diagonal (sgnC (p := p) (q := q)) := by
-  ext a b
-  rcases a with a | a <;> rcases b with b | b <;>
-    simp [Formalism.UG.Jpq, sgnC, diagonal_apply, Matrix.one_apply]
-  split_ifs <;> simp
+  simpa only [Formalism.UG.Jpq, sgnC, ← Matrix.diagonal_neg, Matrix.diagonal_one] using
+    (Matrix.fromBlocks_diagonal (fun _ : Fin p => (1 : ℂ)) (fun _ : Fin q => (-1 : ℂ)))
 
 theorem sgn_neC {a b : Formalism.BasicNotions.TH.Ix p q} (h : ¬ Formalism.BasicNotions.TH.sameBlock a b) : sgnC b - sgnC a ≠ 0 := by
   rcases a with a | a <;> rcases b with b | b <;> simp_all [Formalism.BasicNotions.TH.sameBlock, sgnC] <;> norm_num

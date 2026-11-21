@@ -1,6 +1,5 @@
 module
 
-public import Mathlib.Tactic.Eqns
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.IsInfUnitary
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DefsRep
 public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.IsClosedEmbeddingToM
@@ -23,10 +22,9 @@ variable {n : ℕ}
 
 def dk (ε : Fin n → Bool) : Measure (KG ε) := (muK ε Set.univ)⁻¹ • muK ε
 
+/-- The compact Haar measure normalized by its total mass. Use this lemma to rewrite `dk`
+so separate import branches do not generate duplicate equation theorems. -/
 theorem dk_def (ε : Fin n → Bool) : dk ε = (muK ε Set.univ)⁻¹ • muK ε := rfl
-
--- Use the same rewrite theorem in the Schur and polar Haar import branches.
-attribute [eqns dk_def] dk
 
 abbrev PCoord (ε : Fin n → Bool) : Type := {ab : Fin n × Fin n // ab.2 < ab.1 ∧ ε ab.1 ≠ ε ab.2}
 

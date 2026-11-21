@@ -267,7 +267,14 @@ theorem local_index_twisted_ideal (lam : ι → DomWeight n) (M : ι → Submodu
     rw [Set.range_const, Submodule.one_eq_span]
   have hlat : Submodule.IsLattice K (Submodule.span (𝓞 K) (Set.range fun _ : Fin 1 => (1 : K))) :=
     brp_span_lattice K _ (by rw [Set.range_const]; exact Ideal.span_singleton_one)
-  rw [bridge_lidx_det_holds K K w _ (twId lam M) (LinearEquiv.smulOfNeZero K K (detTwK lam B) (det_twist_ne_zero lam B)) hlat ?_]
+  have hfull : Submodule.IsFullLattice K (Submodule.span (𝓞 K) (Set.range fun _ : Fin 1 => (1 : K))) := by
+    refine { toIsLattice := hlat, span_eq_top := ?_ }
+    apply eq_top_iff.mpr
+    intro x _
+    have h1 : (1 : K) ∈ Submodule.span K (↑(Submodule.span (𝓞 K) (Set.range fun _ : Fin 1 => (1 : K))) : Set K) :=
+      Submodule.subset_span (Submodule.subset_span ⟨0, rfl⟩)
+    simpa using Submodule.smul_mem _ x h1
+  rw [bridge_lidx_det_holds K K w _ (twId lam M) (LinearEquiv.smulOfNeZero K K (detTwK lam B) (det_twist_ne_zero lam B)) hfull ?_]
   · have e : ((LinearEquiv.smulOfNeZero K K (detTwK lam B) (det_twist_ne_zero lam B) : K ≃ₗ[K] K) : K →ₗ[K] K) =
         detTwK lam B • LinearMap.id := by
       ext; simp

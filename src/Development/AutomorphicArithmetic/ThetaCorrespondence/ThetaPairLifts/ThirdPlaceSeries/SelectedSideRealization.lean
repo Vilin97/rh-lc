@@ -36,13 +36,11 @@ theorem de_pin_alt {hL : _root_.UpperTheory.Zero.LLC.RecTExists} {p : _root_.Glo
     (q.core_data_of_point.a.Pq v).under (𝓞 (q.w.D q.Z).host.K) = q.x.pin.d3b.pK := by
   have hm : q.core_data_of_point.a.Pq v ∈ Set.range q.w.I.sel := q.core_data_of_point.sel ▸ Set.mem_range_self v
   obtain ⟨v', hv'⟩ := hm
-  have ha := q.x.pin.above v'
   have hv : OverPF q.B.host q.B.host.pde v' := by
     unfold OverPF
-    have h1 : (q.w.I.sel v').asIdeal.comap (algebraMap (𝓞 q.B.host.F) (𝓞 q.B.host.E)) = v'.asIdeal := by
-      have := (Set.Finite.mem_toFinset _).1 ha
-      first | exact this | exact this.symm | exact congrArg HeightOneSpectrum.asIdeal this
-    rw [← h1, Ideal.mem_comap, map_natCast, hv']
+    have hunder : (q.w.I.sel v').under (𝓞 q.B.host.F) = v' :=
+      (Set.Finite.mem_toFinset _).mp (q.x.pin.above v')
+    rw [← hunder, HeightOneSpectrum.under_asIdeal, Ideal.mem_under, map_natCast, hv']
     exact h
   have := (q.x.pin.d3b.P_mem v' hv).2
   rw [← q.x.pin.selectedPlacesAgree.1 v' hv] at this
@@ -53,13 +51,11 @@ theorem under_Pq_eq_pK'_of_pde'_mem {hL : _root_.UpperTheory.Zero.LLC.RecTExists
     (q.core_data_of_point.a.Pq v).under (𝓞 (q.w.D q.Z).host.K) = q.x.pin.d3b.pK' := by
   have hm : q.core_data_of_point.a.Pq v ∈ Set.range q.w.I.sel := q.core_data_of_point.sel ▸ Set.mem_range_self v
   obtain ⟨v', hv'⟩ := hm
-  have ha := q.x.pin.above v'
   have hv : OverPF q.B.host q.B.host.pde' v' := by
     unfold OverPF
-    have h1 : (q.w.I.sel v').asIdeal.comap (algebraMap (𝓞 q.B.host.F) (𝓞 q.B.host.E)) = v'.asIdeal := by
-      have := (Set.Finite.mem_toFinset _).1 ha
-      first | exact this | exact this.symm | exact congrArg HeightOneSpectrum.asIdeal this
-    rw [← h1, Ideal.mem_comap, map_natCast, hv']
+    have hunder : (q.w.I.sel v').under (𝓞 q.B.host.F) = v' :=
+      (Set.Finite.mem_toFinset _).mp (q.x.pin.above v')
+    rw [← hunder, HeightOneSpectrum.under_asIdeal, Ideal.mem_under, map_natCast, hv']
     exact h
   have := (q.x.pin.d3b.P'_mem v' hv).2
   rw [← q.x.pin.selectedPlacesAgree.2 v' hv] at this

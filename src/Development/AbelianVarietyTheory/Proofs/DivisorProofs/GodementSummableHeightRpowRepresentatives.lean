@@ -23,7 +23,7 @@ theorem summable_height_rpow_reps : ∀ (F E : Type) [Field F] [NumberField F] [
     obtain ⟨p, β, hp, k, hk, rfl⟩ := hD.iwa x
     rw [hD.ht p β hp k hk]
     exact NNReal.coe_nonneg _
-  have hS := GlobalTheory.T.summable_height_rpow_parabolicCosets F E σ n J (r + 1) m X Y Z J₀ hFr L a hD.lat.toIsLattice hD.iwa (fun x => Real.toNNReal (h x))
+  have hS := GlobalTheory.T.summable_height_rpow_parabolicCosets F E σ n J (r + 1) m X Y Z J₀ hFr L a hD.lat hD.iwa (fun x => Real.toNNReal (h x))
     (fun p β hp k hk => by simp only [hD.ht p β hp k hk, Real.toNNReal_coe]) g e (by push_cast; linarith)
   have hXinv : adMat F (Formalism.UG.cT (σ : E →+* E) Y * J) * adMat F X = 1 := by
     simp only [adMat, ← Matrix.map_mul, hFr.dc, Matrix.map_one _ (map_zero _) (map_one _)]

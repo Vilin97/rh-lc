@@ -78,11 +78,8 @@ theorem evalOn_all : GlobalTheory.Dec.DSInfChar → GlobalTheory.Published.CuspR
     intro S hS
     have h1 := hLn S
     rw [hS] at h1
-    simp only [ZeroMemClass.coe_zero, norm_zero] at h1
-    have h2 : (ipM (MP R) R.ν0 R.fd0 (S : MMap (MP R)) (S : MMap (MP R))).re = 0 := by
-      rcases mul_eq_zero.mp (by rw [← h1]; ring : c0 * (ipM (MP R) R.ν0 R.fd0 (S : MMap (MP R)) (S : MMap (MP R))).re = 0) with h' | h'
-      · exact absurd h' hc0.ne'
-      · exact h'
+    simp only [ZeroMemClass.coe_zero, norm_zero, zero_pow two_ne_zero] at h1
+    have h2 := (mul_eq_zero_iff_left hc0.ne').mp h1.symm
     exact Subtype.ext ((hN v₀ hnorm S S.2).2.2 h2)
   have hsurj : Function.Surjective L := by
     intro Fx

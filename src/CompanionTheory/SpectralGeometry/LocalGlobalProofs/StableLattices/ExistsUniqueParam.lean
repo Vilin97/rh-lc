@@ -1,6 +1,7 @@
 module
 
 public import Formalism.FormalDegreeBessel.StatementDS
+import Mathlib.Data.Fin.Tuple.Sort
 
 @[expose] public section
 
@@ -31,27 +32,17 @@ theorem exists_unique_param {n : ℕ} (χ : Fin n → ℂ) (hχ : Function.Injec
   let r : Fin n → ℝ := fun a => (χ a).re
   have hr : Function.Injective r := fun a b hab => hχ (by
     rw [← hval a, ← hval b]; exact congrArg _ hab)
-  let τ₀ : Equiv.Perm (Fin n) := Fin.revPerm.trans (Tuple.sort r)
-  have hmono : StrictMono (r ∘ Tuple.sort r) :=
-    (Tuple.monotone_sort r).strictMono_of_injective (hr.comp (Tuple.sort r).injective)
-  have hanti : StrictAnti (r ∘ τ₀) := fun a b hab => hmono (Fin.rev_lt_rev.2 hab)
+  let τ₀ : Equiv.Perm (Fin n) := Tuple.sortDesc r
+  have hanti : StrictAnti (r ∘ τ₀) :=
+    (Tuple.antitone_sortDesc r).strictAnti_of_injective (hr.comp τ₀.injective)
   refine ⟨r ∘ τ₀, fun m => ⟨?_, ?_⟩⟩
   · rintro ⟨⟨hm, -⟩, τ, hτ⟩
-    have hmr : ∀ a, m a = r (τ a) := fun a => by
-      have e := hτ a
-      rw [← hval] at e
-      exact_mod_cast e
-    let σ : Equiv.Perm (Fin n) := τ.trans τ₀.symm
-    have hσ : ∀ a, m a = (r ∘ τ₀) (σ a) := fun a => by simp [σ, hmr]
-    have hσm : StrictMono σ := fun a b hab => by
-      have e := hm hab
-      rw [hσ a, hσ b] at e
-      exact hanti.lt_iff_gt.1 e
-    have hid : (σ : Fin n → Fin n) = id :=
-      (StrictMono.range_inj_of_wellFoundedLT hσm strictMono_id).1 (by simp [σ.surjective.range_eq])
-    funext a
-    rw [hσ a, hid]
-    rfl
+    have hmr : m = r ∘ τ := by
+      funext a
+      change m a = (χ (τ a)).re
+      simpa only [Complex.ofReal_re] using congrArg Complex.re (hτ a)
+    rw [hmr] at hm ⊢
+    exact Tuple.unique_antitone hm.antitone hanti.antitone
   · rintro rfl
     exact ⟨⟨hanti, fun a => (h _).2⟩, τ₀, fun a => hval _⟩
 

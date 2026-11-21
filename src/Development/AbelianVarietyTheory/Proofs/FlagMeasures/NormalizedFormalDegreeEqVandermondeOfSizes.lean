@@ -52,7 +52,7 @@ theorem vv_eq_vand_of_sizes : ∃ thr : ℝ, ∀ (D : D7) (large₂ : SizeData�
   have hSF : (0 : ℝ) < ∏ i ∈ Finset.range (2 * D.R.rS + D.R.k + 1), (i.factorial : ℝ) :=
     Finset.prod_pos fun i _ => by exact_mod_cast Nat.factorial_pos i
   unfold VV
-  rw [hds, Formalism.MainNotions.BridgeLemma.szh_fdegHC _ hanti, ← dimS_eq]
-  field_simp
+  rw [hds, Formalism.MainNotions.BridgeLemma.szh_fdegHC _ hanti, ← dimS_eq D.R]
+  exact div_mul_cancel₀ _ hSF.ne'
 
 end GlobalTheory.Core.Deg.CritVand

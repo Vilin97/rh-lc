@@ -184,7 +184,7 @@ theorem mem_localization_delAtr_of_basis {E K : Type} [Field E] [NumberField E] 
     {ι : Type} [Fintype ι] {n : ℕ} (emb : ι → E →+* K) (s : K →+* ℂ) (eT : ι → E →+* ℂ)
     (he : embAt s emb = eT) (J : Matrix (Fin n) (Fin n) E)
     (lam lam' : ι → DomWeight n) (hn : ∀ τ, (lam τ).natW = (lam' τ).natW)
-    (M : Submodule (𝓞 E) (Fin n → E)) (hM : Submodule.IsLattice E M) (F : VV K lam) (w : Pl.Pl) (B : GL (Fin n) E)
+    (M : Submodule (𝓞 E) (Fin n → E)) (hM : Submodule.IsFullLattice E M) (F : VV K lam) (w : Pl.Pl) (B : GL (Fin n) E)
     (hB : IsLocBasis (Pl.resChar w) (M : Set (Fin n → E)) B)
     (h : Formalism.L2.Forms.fnInv (gramC J eT) (shiftOf lam) (atInf eT (B : Matrix (Fin n) (Fin n) E)⁻¹)
       (fnOf (gramC J eT) (shiftOf lam) 1 (MvPolynomial.map s F.1)) ∈ vlIntSpan s Pl w lam') :
@@ -203,7 +203,7 @@ theorem local_of_mem_delAtr {E K : Type} [Field E] [NumberField E] [Field K] [Nu
     {ι : Type} [Fintype ι] {n : ℕ} (emb : ι → E →+* K) (s : K →+* ℂ) (eT : ι → E →+* ℂ)
     (he : embAt s emb = eT) (hpw : Function.Surjective pw) (J : Matrix (Fin n) (Fin n) E)
     (lam lam' : ι → DomWeight n) (hn : ∀ τ, (lam τ).natW = (lam' τ).natW)
-    (M : Submodule (𝓞 E) (Fin n → E)) (hM : Submodule.IsLattice E M) (F : VV K lam) (hF : F ∈ delAtr emb lam M)
+    (M : Submodule (𝓞 E) (Fin n → E)) (hM : Submodule.IsFullLattice E M) (F : VV K lam) (hF : F ∈ delAtr emb lam M)
     (w : Pl.Pl) (B : GL (Fin n) E) (hB : IsLocBasis (Pl.resChar w) (M : Set (Fin n → E)) B) :
     ∃ P ∈ vlIntSpan s Pl w lam',
       fnOf (gramC J eT) (shiftOf lam) 1 (MvPolynomial.map s F.1) =
@@ -227,7 +227,8 @@ theorem mem_SP_of_coord_integral (D : D7) (u : D.what₂.Word) (Ch : ℕ → Typ
         Formalism.MainNotions.product_first_zeroth_parts.IntSpan D w (D.fm u).sg) : y ∈ (D.fm u).SP w := by
   classical
   obtain ⟨val, hval⟩ := GlobalTheory.Core.exists_ptVal D u Tf.clsP Tf.valP
-  have hK := fun c => (GlobalTheory.ClassLatticeSelfDual.classLattice_selfDual D u Tf.clsP c).1
+  have hK := fun c => Formalism.MainNotions.G.ChF.isLattice_of_hat Tf.clsP.lev.Lb
+    (Tf.clsP.lat c) Tf.clsP.lev.Lb_fin Tf.clsP.lev.Lb_span (Tf.clsP.y c).1 (Tf.clsP.y_lat c)
   have he : embAt D.what₂.embLL (fun τ : D.what₂.Tau =>
       D.embE.comp (D.host.sigmaOf (D.eTau τ : D.R.GG) : D.host.E →+* D.host.E)) = embT D := by
     funext τ

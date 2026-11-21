@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.AllRowsOf
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RowDict
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.EvalTOntoPhi
 public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.SphericalFunctionConvolutionIdentity
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.AllRowsRMul
 
@@ -166,7 +165,7 @@ theorem invInvariant_muf : X.B.μf.IsInvInvariant := by
   have he1 : X.B.e 1 ≠ 0 := by
     rw [X.e_eq]
     have h1 : (1 : X.B.I.Gf) ∈ X.K2 := hK.1
-    rw [if_pos (show (1 : X.B.I.Gf) ∈ Formalism.L2.SG.HidaSetting.K2set X.B.I X.B.g X.e0 X.z0 X.bw from h1)]
+    rw [ite_eq_left (show (1 : X.B.I.Gf) ∈ Formalism.L2.SG.HidaSetting.K2set X.B.I X.B.g X.e0 X.z0 X.bw from h1)]
     have hc : X.chi2 1 ≠ 0 := by
       intro h0; have := hK.2.2.2.2 1 h1; rw [h0, norm_zero] at this; exact zero_ne_one this
     have hv : ((X.B.μf X.K2).toReal : ℂ) ≠ 0 := by
@@ -178,13 +177,17 @@ theorem invInvariant_muf : X.B.μf.IsInvInvariant := by
 def EtSA : Prop := ∀ (S : Set (Tup2 D)) (x : X.B.I.Gf), star (eT X S x⁻¹) = eT X S x
 
 theorem etAdj_of (hSA : EtSA X) : EtAdj X := by
-  haveI := invInvariant_muf X
+  have := invInvariant_muf X
   intro S φ ψ
   have hT := reT_spec X (etInt_holds X) S
+  have := X.B.sf
+  have := X.B.haar
+  obtain ⟨hmul, hone, hiso⟩ := Formalism.L2.SG.Pf.reg_alg
+    Formalism.L2.SG.Closed.UnimodGf_holds X.B.I X.B.μf X.B.fund X.B.fund_spec X.B.R X.B.R_spec
   have hreg : ∀ g : X.B.I.Gf, ⟪X.B.R ((1, g) : X.B.I.GA) φ, ψ⟫_ℂ = ⟪φ, X.B.R ((1, g⁻¹) : X.B.I.GA) ψ⟫_ℂ := by
     intro g
-    have := Formalism.L2.SG.EvalTOntoPhi.inner_reg X ((1, g⁻¹) : X.B.I.GA) φ ψ
-    rw [this, Prod.inv_mk, inv_one, inv_inv]
+    have h := Formalism.L2.SG.Pf.inner_orbit X.B.R hmul hiso ((1, g) : X.B.I.GA) 1 φ ψ
+    simpa only [hone, one_apply_eq_self, mul_one, Prod.inv_mk, inv_one] using h
   calc ⟪ReT X S φ, ψ⟫_ℂ = star ⟪ψ, ReT X S φ⟫_ℂ := (inner_conj_symm _ _).symm
     _ = star (∫ g, eT X S g * ⟪ψ, X.B.R ((1, g) : X.B.I.GA) φ⟫_ℂ ∂X.B.μf) := by rw [hT.2]
     _ = ∫ g, star (eT X S g) * ⟪φ, X.B.R ((1, g⁻¹) : X.B.I.GA) ψ⟫_ℂ ∂X.B.μf := by

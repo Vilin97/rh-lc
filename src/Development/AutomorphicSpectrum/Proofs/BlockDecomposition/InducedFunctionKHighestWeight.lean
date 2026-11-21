@@ -34,12 +34,13 @@ theorem muZ_antitone {lam : Fin n → ℤ} (hl : Antitone lam) {lev : Fin n → 
     exact_mod_cast Finset.card_le_card fun c hc => by
       simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hc ⊢
       omega
-  simp only [muZ]
+  delta muZ
   omega
 
 theorem dif_nonneg {v : Fin n → ℤ} (hv : Antitone v) (j : Fin n) (hj : (j : ℕ) + 1 < n) : 0 ≤ dif v j := by
   have : v ⟨j + 1, hj⟩ ≤ v j := hv (show j ≤ ⟨j + 1, hj⟩ by rw [Fin.le_def]; simp)
-  simp only [dif, hj, dite_true]
+  delta dif
+  simp only [hj, dite_true]
   omega
 
 theorem sum_range_ite (w : ℕ → ℤ) (a : ℕ) (N : ℕ) (h : a ≤ N) :
@@ -57,7 +58,9 @@ theorem sum_dif (v : Fin n → ℤ) (a : Fin n) : ∑ j, (if a ≤ j then dif v 
   have e : ∀ j : Fin n, (if a ≤ j then dif v j else 0) =
       (fun i : ℕ => if (a : ℕ) ≤ i then w i - w (i + 1) else 0) j := by
     intro j
-    have : dif v j = w j - w (j + 1) := by simp [dif, hw]
+    have : dif v j = w j - w (j + 1) := by
+      delta dif
+      simp [hw]
     simp only [Fin.le_def, this]
   rw [Finset.sum_congr rfl fun j _ => e j, Fin.sum_univ_eq_sum_range
     (fun i : ℕ => if (a : ℕ) ≤ i then w i - w (i + 1) else 0) n, sum_range_ite w a n a.isLt.le]
@@ -161,7 +164,7 @@ theorem lm_line_lt (g : Mat n) {a b : Fin n} (hab : a < b) (t : ℂ) (j : Fin n)
         simp [hib, hia, Matrix.updateCol_self]
       · have : ini j c ≠ b := fun h => hc ((ini_injective j) (h.trans hib.symm))
         simp [this, Matrix.updateCol_ne hc]
-    unfold lm
+    delta lm
     rw [e, det_updateCol_add_smul_self _ hne]
   · have e : (g + t • (g * Matrix.single a b (1 : ℂ))).submatrix (ini j) (ini j) =
         g.submatrix (ini j) (ini j) := by
@@ -172,10 +175,11 @@ theorem lm_line_lt (g : Mat n) {a b : Fin n} (hab : a < b) (t : ℂ) (j : Fin n)
         apply hb
         rw [← h, Fin.le_def]
         have := c.isLt
-        simp only [ini, Fin.val_castLE]
+        delta ini
+        simp only [Fin.val_castLE]
         omega
       simp [this]
-    unfold lm
+    delta lm
     rw [e]
 
 theorem lm_line_eq (g : Mat n) (a : Fin n) (t : ℂ) (j : Fin n) :
@@ -194,7 +198,7 @@ theorem lm_line_eq (g : Mat n) (a : Fin n) (t : ℂ) (j : Fin n) :
         ring
       · have : ini j c ≠ a := fun h => hc ((ini_injective j) (h.trans hia.symm))
         simp [this, Matrix.updateCol_ne hc]
-    unfold lm
+    delta lm
     rw [e, det_updateCol_smul, if_pos hb]
     congr 2
     ext r c
@@ -211,10 +215,11 @@ theorem lm_line_eq (g : Mat n) (a : Fin n) (t : ℂ) (j : Fin n) :
         apply hb
         rw [← h, Fin.le_def]
         have := c.isLt
-        simp only [ini, Fin.val_castLE]
+        delta ini
+        simp only [Fin.val_castLE]
         omega
       simp [this]
-    unfold lm
+    delta lm
     rw [e, if_neg hb, one_mul]
 
 def Pf (d : Fin n → ℤ) (x : Mat n) : ℂ := ∏ j, lm j x ^ d j
@@ -247,7 +252,7 @@ theorem gm_skew (g : Mat n) {X : Mat n} (hX : Xᴴ = -X) (j : Fin n) :
     have h2 : (1 + (t : ℂ) • X)ᴴ = 1 - (t : ℂ) • X := by
       rw [conjTranspose_add, conjTranspose_one, conjTranspose_smul, hX]
       simp [sub_eq_add_neg]
-    unfold gm
+    delta gm
     rw [h1, conjTranspose_mul, h2]
     congr 1
     simp only [M₀, N, Matrix.mul_assoc]
@@ -359,7 +364,8 @@ theorem Qf_kill (y : Fin n → ℤ) {g : Mat n} (hg : g ∈ GLs n) (a b : Fin n)
 theorem Kf_apply (a b : Fin n) (h : SmF n) {g : Mat n} (hg : g ∈ GLs n) :
     (Kf a b h).1 g = Eu true a b h.1 g - Eu false b a h.1 g := by
   have : Kf a b h = e1 DR a b h - f1 DR b a h := by
-    simp [Kf, GlobalTheory.CompanionTheory.GLK.e2, sub_eq_add_neg]
+    delta Kf GlobalTheory.CompanionTheory.GLK.e2
+    simp [sub_eq_add_neg]
   rw [this, Submodule.coe_sub, Pi.sub_apply, orderedCechToCatCochainsOne_apply_valueAtSubset _ _ _ hg, liftOneFormsToCompatible_apply _ _ _ hg]
 
 theorem Kf_fRaw {d y : Fin n → ℤ} (hd : ∀ j : Fin n, (j : ℕ) + 1 < n → 0 ≤ d j) (F : SmF n)
@@ -390,7 +396,9 @@ theorem GlobalTheory.CompanionTheory.ModelS.f_highest (n : ℕ) (lam : Fin n →
   have hP : ∀ x ∈ GLs n, F.1 x = GlobalTheory.CompanionTheory.ModelS.Fhw.Pf (GlobalTheory.CompanionTheory.ModelS.dif (GlobalTheory.CompanionTheory.ModelS.muZ lam lev)) x *
       GlobalTheory.CompanionTheory.ModelS.Fhw.Qf (GlobalTheory.CompanionTheory.ModelS.dif (GlobalTheory.CompanionTheory.ModelS.yZ lam lev)) x := by
     intro x hx
-    rw [hF, GlobalTheory.CompanionTheory.ModelS.fRaw, Set.indicator_of_mem hx, Finset.prod_mul_distrib]
+    rw [hF]
+    delta GlobalTheory.CompanionTheory.ModelS.fRaw
+    rw [Set.indicator_of_mem hx, Finset.prod_mul_distrib]
     rfl
   refine ⟨fun a b hab => ?_, fun a => ?_⟩
   · apply Subtype.ext

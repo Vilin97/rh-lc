@@ -15,7 +15,6 @@ public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.IntegrablePhL
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsIsFdegSmulOfIsDS
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.RowDictPf
 public import Formalism.SharpRestriction.CuspSpanNormBounds.NonemptyParameterModels.UnitaryPointsRankZeroSubsingleton
-public import Formalism.LocalToGlobal.IndefiniteReal.RankZerothComponentEq
 
 @[expose] public section
 
@@ -30,7 +29,7 @@ namespace GlobalTheory.DSGapData
 theorem two_mul_rkR_le {n : ℕ} (ε : Fin n → Bool) : 2 * GlobalTheory.Count.rkR ε ≤ n := by
   have h := Finset.card_filter_add_card_filter_not (s := (Finset.univ : Finset (Fin n))) (fun a => ε a = true)
   simp only [Bool.not_eq_true, Finset.card_univ, Fintype.card_fin] at h
-  unfold GlobalTheory.Count.rkR
+  delta GlobalTheory.Count.rkR
   omega
 
 theorem rank_bound (n q : ℕ) (hq : 2 * q ≤ n) :
@@ -129,8 +128,13 @@ theorem dsData_gap_integrable : ∀ {D : D7} (X : Formalism.L2.SG.HidaSetting.Hi
   have hgap : GlobalTheory.Count.GapGe X.B (100 * (D.R.r : ℝ) ^ 4) := by
     intro v a b hab
     have hne : (a : ℕ) ≠ (b : ℕ) := fun h => hab (by rw [Fin.ext h])
-    rw [X.lam_eq, X.lam_eq, Formalism.IndefR.ModelConjugation.lamS_eq, Formalism.IndefR.ModelConjugation.lamS_eq]
-    simp only [Fin.val_cast]
+    have hlam (i : Fin X.B.I.n) :
+        X.B.lam v i = (Formalism.L2.NTheta.lamAt (D.hc (X.pl v)) i : ℝ) := by
+      rw [X.lam_eq]
+      delta Formalism.MainNotions.S.lamS Formalism.L2.NTheta.lamAt
+      simp only [Fin.val_cast]
+      split_ifs <;> simp
+    rw [hlam a, hlam b]
     rcases lt_or_gt_of_ne hne with h | h
     · have g := lamAt_gap hH (X.pl v) a b h (by have := b.2; have := X.n_eq; omega)
       have g' : (100 * (D.R.r : ℝ) ^ 4) ≤ ((Formalism.L2.NTheta.lamAt (D.hc (X.pl v)) a : ℚ) : ℝ) -

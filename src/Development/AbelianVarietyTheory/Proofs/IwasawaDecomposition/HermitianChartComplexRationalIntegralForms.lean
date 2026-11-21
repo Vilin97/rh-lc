@@ -481,7 +481,7 @@ theorem val_tied : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.P
       ((I.rec7 l Z).mem_locW_iff w _ x).trans
         (mem_localization_latticeOf (I.stp u a i) B.fields.emb (GlobalTheory.Mem.Col2.lamT (B.hcW u) i) ((l.fmL u a).fam i) _ w x)
     refine h1.trans (forall_congr' fun c => ?_)
-    have l1 := ((I.stp u a i).rep c).1.1.deco.2.Lsh_lattice
+    have l1 := ((I.stp u a i).rep c).1.1.deco.2.Lsh_full_lattice
     have hbel : ∀ τ, (((I.rec7 l Z).what₂.places.resChar w : ℕ) : 𝓞 B.fields.E) ∈ (bcBelow (B.fields.emb τ) w).asIdeal := fun τ => by
       show bcO (B.fields.emb τ) _ ∈ w.asIdeal
       rw [map_natCast]
@@ -494,7 +494,7 @@ theorem val_tied : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.P
           fnOf _ (shiftOf (lamTG (D := I.rec7 l Z) (I.fm l u a) i))
             (atInf (Formalism.L2.Forms.embT (I.rec7 l Z)) (Bm⁻¹ : GL (Fin (B.R.N i)) B.host.E).1) P (eY z)) := by
       intro Bm hB
-      refine (mem_localization_delAtr_fn B.fields.emb B.embLL (GlobalTheory.Mem.Col2.lamT (B.hcW u) i) w l1 (fun _ => Bm)
+      refine (mem_localization_delAtr_fn B.fields.emb B.embLL (GlobalTheory.Mem.Col2.lamT (B.hcW u) i) w (by first | exact l1 | exact l1.toIsLattice) (fun _ => Bm)
         (fun τ => isBasisAt_of_isLocBasis hp _ (hbel τ) hB) (x.1 c)).trans ?_
       constructor
       · rintro ⟨z, hz, e⟩

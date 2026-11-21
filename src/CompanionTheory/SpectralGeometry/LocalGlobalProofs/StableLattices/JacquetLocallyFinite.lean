@@ -57,7 +57,7 @@ theorem step_down {M : GMod n} {A : Matrix (Fin n) (Fin n) ℂ} (F : Filt M A) (
   obtain ⟨m, Y, v, hY, hu⟩ := hnil u
   have key : aeval T (g * p) u = ∑ k, aeval T g (actM M.E (Y k) (v k)) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_mul, Module.End.mul_apply, hu, map_sum]
+      rw [map_mul, mul_apply_eq_comp, hu, map_sum]
   rw [key]
   refine Submodule.sum_mem _ fun k _ => ?_
   obtain ⟨Y₁, Y₂, hk, h₁, h₂⟩ := hY k
@@ -70,8 +70,8 @@ theorem step_down {M : GMod n} {A : Matrix (Fin n) (Fin n) ℂ} (F : Filt M A) (
     have e : aeval T g (actM M.E Y₁ (v k)) =
         actM M.E Y₁ (aeval T q (aeval (T + algebraMap ℂ _ (-1)) (q.comp (X + C 2)) (v k))) := by
       have := congrArg (fun f : Module.End ℂ M.V => f (v k)) hc
-      simp only [Module.End.mul_apply] at this
-      rw [this, hg, map_mul, aeval_shift T (-1) 1 (by norm_num), Module.End.mul_apply]
+      simp only [mul_apply_eq_comp] at this
+      rw [this, hg, map_mul, aeval_shift T (-1) 1 (by norm_num), mul_apply_eq_comp]
     rw [e]
     have := F.shift Y₁ (-1) (by simpa using h₁') s _ (hq (aeval (T + algebraMap ℂ _ (-1)) (q.comp (X + C 2)) (v k)))
     simpa [sub_eq_add_neg] using this
@@ -80,8 +80,8 @@ theorem step_down {M : GMod n} {A : Matrix (Fin n) (Fin n) ℂ} (F : Filt M A) (
     have e : aeval T g (actM M.E Y₂ (v k)) =
         actM M.E Y₂ (aeval T q (aeval (T + algebraMap ℂ _ (-2)) (q.comp (X + C 1)) (v k))) := by
       have := congrArg (fun f : Module.End ℂ M.V => f (v k)) hc
-      simp only [Module.End.mul_apply] at this
-      rw [this, hg, mul_comm, map_mul, aeval_shift T (-2) 2 (by norm_num), Module.End.mul_apply]
+      simp only [mul_apply_eq_comp] at this
+      rw [this, hg, mul_comm, map_mul, aeval_shift T (-2) 2 (by norm_num), mul_apply_eq_comp]
     rw [e]
     have := F.shift Y₂ (-2) (by simpa using h₂') s _ (hq (aeval (T + algebraMap ℂ _ (-2)) (q.comp (X + C 1)) (v k)))
     refine F.mono _ _ ?_ this

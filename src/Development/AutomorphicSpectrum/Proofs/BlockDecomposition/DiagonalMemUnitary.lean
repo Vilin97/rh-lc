@@ -95,10 +95,9 @@ theorem diagonal_mem_unitary {n : ℕ} (z : Fin n → ℂ) (hz : ∀ a, ‖z a�
     (diagonal z : Matrix (Fin n) (Fin n) ℂ) ∈ Matrix.unitaryGroup (Fin n) ℂ := by
   rw [Matrix.mem_unitaryGroup_iff, Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose,
     Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
-  congr 1
-  funext a
+  refine congrArg Matrix.diagonal (funext fun a => ?_)
   change z a * (starRingEnd ℂ) (z a) = 1
-  rw [Complex.mul_conj, Complex.normSq_eq_norm_sq, hz a]
+  rw [Complex.mul_conj', hz a]
   simp
 
 theorem dualtr {n : ℕ} (lam : Fin n → ℤ) (hl : Antitone lam) (E : KMod n) (T : E.V →L[ℂ] E.V) (hT : IsLefK lam E T)

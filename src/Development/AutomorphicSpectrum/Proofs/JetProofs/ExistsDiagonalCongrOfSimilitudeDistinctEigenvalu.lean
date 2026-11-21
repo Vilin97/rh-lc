@@ -1,18 +1,17 @@
 module
 
-public import Mathlib
 public import Development.AutomorphicSpectrum.Definitions.JetCones.KTypePosCone
-public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.EigenspaceCyclicDensity.TopUniq
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.IsDerivedOnOfIsKMod
+public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.EigenspaceCyclicDensity.LowKTypeMultiplicityOneUnconditional
 
 @[expose] public section
 
-open GroundTheory.Automorphic.HarishChandra Finset GlobalTheory.CompanionTheory.DS
-open scoped InnerProductSpace
-
 namespace GlobalTheory.CompanionTheory.DS
 
-theorem dsUnique : GlobalTheory.CompanionTheory.DS.DSUnique :=
-  fun n ε lam H H' _ _ _ _ σ σ' a b c =>
-    CompanionTheory.D.LK.discrete_series_unique_of n ε lam H' H σ' σ a c b
+open CompanionTheory.D.LK (hMultAlg hKModExists hOrthCyc)
+
+theorem dsUnique : DSUnique :=
+  fun n ε lam H H' _ _ _ _ σ σ' hlam hσ hσ' =>
+    DSUniq.ds_unique hMultAlg hKModExists hOrthCyc n ε lam H' H σ' σ hlam hσ' hσ
 
 end GlobalTheory.CompanionTheory.DS

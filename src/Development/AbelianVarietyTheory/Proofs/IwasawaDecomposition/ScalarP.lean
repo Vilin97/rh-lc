@@ -144,17 +144,8 @@ def serP (hu : GlobalTheory.UnivChar.IsUnivChar (DN x N₁).nexp) (ho : NoOff (D
   ch := (p.ch)
   join := by
     intro i j b k Q ψ hA hOK
-    obtain ⟨ω, hω, hval⟩ := p.join (pvP p PV) (fun j => hPV j) i j b k Q ψ hA hOK
-    refine ⟨{ toFun := fun v => ω v, map_add' := ?_, map_smul' := ?_ }, ?_, ?_⟩
-    -- Infer the module instances from the type of the original witness.
-    · intro v v'
-      with_unfolding_all exact @LinearMap.map_add' _ _ _ _ _ _ _ _ _ _ _ ω v v'
-    · intro a v
-      with_unfolding_all exact @LinearMap.map_smul' _ _ _ _ _ _ _ _ _ _ _ ω a v
-    · intro v v' e
-      exact hω e
-    · intro f' g
-      with_unfolding_all exact hval f' g
+    have hjoin := p.join (pvP p PV) (fun j => hPV j) i j b k Q ψ hA hOK
+    with_unfolding_all exact hjoin
   sup := (hs)
   off := (ho)
   lam := Z

@@ -167,7 +167,7 @@ theorem layer_covolume (E : Type) [Field E] [NumberField E] [StarRing E] (hE : I
         · rw [Matrix.smul_mulVec]; exact zsmul_mem (h1 y hy) k
         · have : (k • Z).map (φ v) = k • Z.map (φ v) := by ext p q; simp
           rw [this, Matrix.mul_smul, Matrix.smul_mul, ← h2]; rfl }
-  have hM := fun b : Fin m => GlobalTheory.T.homLatticeCovolume_embedding_family E hE ι φ hX.1 _ _ (Λ b) (Λ (b + c + 1)) (hΛ _).toIsLattice (hΛ _).toIsLattice
+  have hM := fun b : Fin m => GlobalTheory.T.homLatticeCovolume_embedding_family E hE ι φ hX.1 _ _ (Λ b) (Λ (b + c + 1)) (by first | exact hΛ _ | exact (hΛ _).toIsLattice) (by first | exact hΛ _ | exact (hΛ _).toIsLattice)
     (fun v => G v b) (fun v => G v (b + c + 1)) (fun v => hdet v _) (fun v => hdet v _) (M b)
     (fun z => Iff.rfl)
   obtain ⟨dL, lL, hcov⟩ := GlobalTheory.T.covolume_pi_lattice_unitary_coordinates ι {i : Fin d // deg i = c} (Fin m) (fun b => r b)

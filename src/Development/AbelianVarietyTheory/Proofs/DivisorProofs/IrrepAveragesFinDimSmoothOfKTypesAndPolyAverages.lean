@@ -61,9 +61,7 @@ theorem irrepAveragesFinDimSmooth_of_kTypes_and_polyAverages : SumTypes → Poly
     rw [mir_isURepOn_iff, mir_UJset_eq]; exact hσ
   have hMD : M ≤ smD ε σ := fun v hv => CompanionTheory.D.gk.HC.mem_smD_of_isKFin hσ' hirr ⟨M, hMf, hv, hMK⟩
   refine ⟨M.comap (smD ε σ).subtype, ?_, ?_, ?_⟩
-  · exact Module.Finite.of_injective
-      ((smD ε σ).subtype.restrict (p := M.comap (smD ε σ).subtype) (q := M) fun x hx => hx)
-      (fun x y h => Subtype.ext (Subtype.ext (by simpa using congrArg Subtype.val h)))
+  · exact (Submodule.comapSubtypeEquivOfLe hMD).symm.finiteDimensional
   · intro k hk x hx
     show σ k (x : H) ∈ M
     exact hMK k (by rw [mir_Kset_eq]; exact hk) x hx

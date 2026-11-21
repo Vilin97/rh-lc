@@ -68,7 +68,7 @@ theorem isVac_indicator_of_theta_k {σ : E →ₐ[F] E} (B : Base F E) (hB : _ro
       (Set.indicator {x | ∀ k, x k ∈ v.adicCompletionIntegers F} 1) := by
   classical
   obtain ⟨θ, hθ⟩ := hθ
-  obtain ⟨G, hG⟩ := exists_gen X.L Y.L hX.lat hY.lat
+  obtain ⟨G, hG⟩ := exists_gen X.L Y.L hX.lat.toIsLattice hY.lat.toIsLattice
   choose yc zc hc using hrat
   have e1 := eventually_psiLoc_eq_one B.ψ hB.std.1
   have e2 := eventually_int (F := F) (1 / 2)

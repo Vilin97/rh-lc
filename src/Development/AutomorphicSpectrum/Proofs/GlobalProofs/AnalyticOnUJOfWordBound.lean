@@ -26,7 +26,8 @@ def projJ (ε : Fin n → Bool) (Y : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n
   (1 / 2 : ℝ) • (Y - Jε ε * Yᴴ * Jε ε)
 
 theorem Jm_herm (ε : Fin n → Bool) : (Jε ε)ᴴ = Jε ε := by
-  simp only [ReciprocityTheory.ChartRestriction.DS.Jm, diagonal_conjTranspose]
+  delta ReciprocityTheory.ChartRestriction.DS.Jm
+  rw [diagonal_conjTranspose]
   congr 1; funext a; by_cases h : ε a <;> simp [h]
 
 theorem inG_projJ (ε : Fin n → Bool) (Y : Matrix (Fin n) (Fin n) ℂ) : ReciprocityTheory.ChartRestriction.DS.inG ε (projJ ε Y) := by
@@ -79,7 +80,8 @@ theorem mnorm_projL_le (ε : Fin n → Bool) (Y : Fin n → Fin n → ℂ) : mno
     have e : projL ε Y a b = (1 / 2 : ℝ) • (Y a b - (if ε a = true then (1 : ℂ) else -1) * star (Y b a) *
         (if ε b = true then (1 : ℂ) else -1)) := by
       show projJ ε (Matrix.of Y) a b = _
-      simp only [projJ, ReciprocityTheory.ChartRestriction.DS.Jm, Matrix.smul_apply, Matrix.sub_apply, Matrix.mul_diagonal,
+      delta projJ ReciprocityTheory.ChartRestriction.DS.Jm
+      simp only [Matrix.smul_apply, Matrix.sub_apply, Matrix.mul_diagonal,
         Matrix.diagonal_mul, conjTranspose_apply, Matrix.of_apply]
     rw [e, norm_smul]
     have h3 : ‖Y a b - (if ε a = true then (1 : ℂ) else -1) * star (Y b a) *
@@ -145,12 +147,12 @@ def act (hG : IsLinRed (UJset ε)) (hrep : Formalism.QuantumDeterminants.IsCRepO
   map_add' Y Z := by
     refine LinearMap.ext fun x => Subtype.ext ?_
     show dRep π (projL ε (Y + Z)) x = dRep π (projL ε Y) x + dRep π (projL ε Z) x
-    rw [map_add (f := _)]
+    rw [(projL ε).map_add]
     exact (GlobalTheory.T.derived_action_additive hG hrep x.2 x.2 (projL_mem ε Y) (projL_mem ε Z)).1
   map_smul' r Y := by
     refine LinearMap.ext fun x => Subtype.ext ?_
     show dRep π (projL ε (r • Y)) x = r • dRep π (projL ε Y) x
-    rw [map_smul]
+    rw [(projL ε).map_smul]
     exact dRep_smul hG hrep x.2 (projL_mem ε Y) r
 
 theorem word_eq (hG : IsLinRed (UJset ε)) (hrep : Formalism.QuantumDeterminants.IsCRepOn (UJset ε) π)

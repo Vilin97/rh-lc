@@ -13,7 +13,7 @@ noncomputable section
 open MeasureTheory
 open Formalism.REAL (UJ KG toM toMK muK)
 open GlobalTheory.PsCo.Pc1
-open ReciprocityTheory.ChartRestriction.DS (PCoord pmat Jac dk dk_def muCD cPQ polarM)
+open ReciprocityTheory.ChartRestriction.DS (PCoord pmat Jac dk muCD cPQ polarM)
 open scoped NNReal ENNReal
 
 namespace GlobalTheory.PsCo.Pc3.Polar
@@ -33,7 +33,7 @@ theorem map_kap (ε : Fin n → Bool) : Measure.map (kap ε) (dk ε) = muK ε :=
       ReciprocityTheory.ChartRestriction.DS.S7.muK ε Set.univ • Measure.haarMeasure ⊤ := by
     simpa using Measure.haarMeasure_unique (ReciprocityTheory.ChartRestriction.DS.S7.muK ε) ⊤
   have hdk : dk ε = Measure.haarMeasure ⊤ := by
-    rw [dk_def]
+    delta dk
     calc (ReciprocityTheory.ChartRestriction.DS.S7.muK ε Set.univ)⁻¹ • ReciprocityTheory.ChartRestriction.DS.S7.muK ε
         = (ReciprocityTheory.ChartRestriction.DS.S7.muK ε Set.univ)⁻¹ •
             (ReciprocityTheory.ChartRestriction.DS.S7.muK ε Set.univ • Measure.haarMeasure ⊤) := congrArg _ key

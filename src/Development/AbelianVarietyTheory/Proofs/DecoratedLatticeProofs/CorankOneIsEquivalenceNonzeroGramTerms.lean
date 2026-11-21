@@ -24,7 +24,7 @@ theorem corankOne_isEquivalence_nonzeroGram_terms : CorankOneIsEquivalenceOnRow 
     unfold Formalism.L2.SG.TermOp.Gt
     rw [if_pos ((Formalism.L2.SG.Pf.SatGram.gterm_G Y t).trans h)]
   have hlat : ∀ t : Formalism.L2.SG.TermOp.GTerm X u u' (X.Fu u) (X.Fu u') (Y.what₂ u) (Y.what₂ u'),
-      Submodule.IsLattice D.host.E t.lam := fun t => ((Y.rowsOK u).1 t.lam t.mem).2.1.1
+      Submodule.IsFullLattice D.host.E t.lam := fun t => ((Y.rowsOK u).1 t.lam t.mem).1.1
   have hLF : ∀ t : Formalism.L2.SG.TermOp.GTerm X u u' (X.Fu u) (X.Fu u') (Y.what₂ u) (Y.what₂ u'),
       IsLift t.lam (lf D (X.Fu u)) := fun t => ((Y.rowsOK u).1 t.lam t.mem).2.1.2.2.1
   have hLt : ∀ t : Formalism.L2.SG.TermOp.GTerm X u u' (X.Fu u) (X.Fu u') (Y.what₂ u) (Y.what₂ u'), IsLift t.lam t.frame :=

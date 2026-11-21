@@ -39,10 +39,13 @@ theorem finrank_loc (p : PlF D) :
 
 theorem localLattice_fg (Z : LocDat D) (Λ : LV D) (h : Submodule.IsLattice D.host.E Λ) (p : PlF D) :
     (lattice₂ D Z.M p Λ).FG := by
-  have := (GlobalTheory.HL.PlacesRec.lattice_local (GlobalTheory.HL.placesOf Z) (nV D) (LatLoc.cL Λ)
-    (LatLoc.isLattice_map _ _ h)).2.1 p
+  obtain ⟨S, hS, hspan⟩ := Submodule.fg_def.mp (LatLoc.isLattice_map (LatLoc.cE D) Λ h).fg
+  change Submodule.span (𝓞 D.host.E) S = LatLoc.cL Λ at hspan
+  have hfg : ((GlobalTheory.HL.placesOf Z).lat p (LatLoc.cL Λ)).FG := by
+    rw [← hspan, GlobalTheory.HL.PlacesRec.lat_span]
+    exact Submodule.fg_span (hS.image _)
   rw [LatLoc.localLattice_eq]
-  exact this.1
+  exact hfg
 
 theorem orbit (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS) {Tn T'n : ℕ}
     (F G : LFlag (D.sp.Y 0) D.R.rS (Tn : D.host.E)) (F' G' : LFlag (D.sp.Y 0) D.R.rS (T'n : D.host.E))

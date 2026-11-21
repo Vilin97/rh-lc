@@ -8,6 +8,7 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Exi
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsInjectiveModel
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HomLatticeIndicatorOnSplitHalfEqHalfIndicator
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SelfDualSplitComponentIsLatticeStabilizerEq
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IndicatorHomSelfDualComponentsSchwartzBruhat
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsGLEmbeddingUnitaryAdelicSplitPlaceBasisStatement
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsClopenIsCompactMapsPair
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.GlobalFormOfSiegelWeil
@@ -41,6 +42,8 @@ theorem exists_latInd (q : GlobalTheory.FinPl.SplitPt D k) (hU : q.UnitAA) (FS :
   let β : GlobalTheory.FinPl.Frame q T Y := ⟨FT.β, FT.γ, FT.βγ, FT.γβ, gT, hT1, hT2⟩
   obtain ⟨ΛS, i1, hα, -⟩ := GlobalTheory.FinPl.FrameLat.exists_lat D k q S Y' α M hM
   obtain ⟨ΛT, i2, hβ, -⟩ := GlobalTheory.FinPl.FrameLat.exists_lat D k q T Y β M' hM'
+  haveI : ΛS.IsFullLattice k := GlobalTheory.FinPl.isLattice_of_isLat_selfDual α M hM ΛS hα
+  haveI : ΛT.IsFullLattice k := GlobalTheory.FinPl.isLattice_of_isLat_selfDual β M' hM' ΛT hβ
   refine ⟨⟨GlobalTheory.LatPair.latInd ΛS ΛT, GlobalTheory.LatPair.latInd_mem_SB ΛS ΛT⟩, funext fun x => ?_⟩
   have hh := GlobalTheory.FinPl.HalfInd.isHalf_wr α β x
   have mulvec (z : Y' → k) : (GlobalTheory.FinPl.HalfInd.wr α β x) *ᵥ (fun j => q.sec ((α.b *ᵥ z) j)) =
@@ -82,8 +85,8 @@ theorem exists_latInd (q : GlobalTheory.FinPl.SplitPt D k) (hU : q.UnitAA) (FS :
   change GlobalTheory.LatPair.latInd ΛS ΛT x = _
   unfold GlobalTheory.LatPair.latInd
   by_cases h : ∀ y ∈ ΛS, x *ᵥ y ∈ ΛT
-  · rw [if_pos h, Set.indicator_of_mem (by exact key.2 h)]
-  · rw [if_neg h, Set.indicator_of_notMem (by exact fun h' => h (key.1 h'))]
+  · rw [ite_eq_left h, Set.indicator_of_mem (by exact key.2 h)]
+  · rw [ite_eq_right h, Set.indicator_of_notMem (by exact fun h' => h (key.1 h'))]
 
 end Rel
 

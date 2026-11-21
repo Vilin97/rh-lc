@@ -134,7 +134,12 @@ private theorem rc_hom (𝔪 : GroundTheory.Global.Modulus K) (f : Ideal (𝓞 K
   refine ⟨QuotientGroup.lift _ F₀ ?_, fun w hw => rcExt_prime f w⟩
   intro I hI
   obtain ⟨a, ha, e⟩ := 𝔪.mem_principalRay.1 hI
-  obtain ⟨c, d, hc0, hc1, hd, hcd⟩ := rc_frac 𝔪.ideal 𝔪.ideal_ne_bot ((a : K) - 1) (𝔪.mem_rayUnits.1 ha).1
+  have hval : ∀ v : HeightOneSpectrum (𝓞 K), v.asIdeal ∣ 𝔪.ideal →
+      v.valuation K ((a : K) - 1) ≤ WithZero.exp (-(multiplicity v.asIdeal 𝔪.ideal : ℤ)) := by
+    intro v hv
+    simpa [GroundTheory.Global.Modulus.exponent,
+      FiniteMultiplicity.of_prime_left v.prime 𝔪.ideal_ne_bot] using (𝔪.mem_rayUnits.1 ha).1 v hv
+  obtain ⟨c, d, hc0, hc1, hd, hcd⟩ := rc_frac 𝔪.ideal 𝔪.ideal_ne_bot ((a : K) - 1) hval
   have hcK : algebraMap (𝓞 K) K c ≠ 0 := (map_ne_zero_iff _ (IsFractionRing.injective (𝓞 K) K)).2 hc0
   have e2 : (a : K) * algebraMap (𝓞 K) K c = algebraMap (𝓞 K) K (c + d) := by
     rw [map_add (f := _), ← hcd]; ring

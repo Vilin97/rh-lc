@@ -7,8 +7,7 @@ public import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWa
 
 namespace PositivityTheory.CWB
 
-open PositivityTheory.CW
-
-theorem casselmanWallach : GlobalTheory.Published.CasselmanWallach := cw_of maxPr
+theorem casselmanWallach : GlobalTheory.Published.CasselmanWallach :=
+  PositivityTheory.CW.cw_of maxPr
 
 end PositivityTheory.CWB

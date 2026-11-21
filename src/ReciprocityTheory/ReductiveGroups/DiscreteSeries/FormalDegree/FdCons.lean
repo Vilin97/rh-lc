@@ -43,20 +43,7 @@ theorem fdc_cd {ε : Fin n → Bool} (hp : 1 ≤ pOf ε) (hq : 1 ≤ qOf ε) {la
     obtain ⟨j, hiso, hk, -, hform⟩ := anyF hDS hstd hP
     have hΨ : ∀ z : PCoord ε → ℂ, PsiM T m (NormedSpace.exp (pmat z)) = fF ε (lamT lam t) T (pmat z) := by
       intro z
-      have hex : ∃ (k' : KG ε) (X' : Matrix (Fin n) (Fin n) ℂ), inP ε X' ∧
-          toMK (1 : KG ε) * NormedSpace.exp (pmat z) = toMK k' * NormedSpace.exp X' :=
-        ⟨1, pmat z, pmat_inP z, rfl⟩
-      have heq : PsiM T m (toMK (1 : KG ε) * NormedSpace.exp (pmat z)) =
-          T.op 1 * psM T m (NormedSpace.exp (pmat z)) := by
-        unfold PsiM
-        rw [dite_eq_left hex]
-        obtain ⟨hP, hEq⟩ := hex.choose_spec.choose_spec
-        obtain ⟨h1, h2⟩ := polar_unique (pmat_inP z) hP hEq
-        rw [← h2, ← h1]
-      have e : toMK (1 : KG ε) = 1 := rfl
-      have o : T.op (1 : KG ε) = 1 := by simp [KType.op, map_one]
-      rw [e, Matrix.one_mul, o, one_mul] at heq
-      rw [heq, psM_exp_pmat hm T z]
+      rw [psiM_exp_pmat, psM_exp_pmat hm T z]
     obtain ⟨H', i1', i2', σ', w', hsm, hlink⟩ := Lap.Base.link n ε _ T (PsiM T m) hstd hP
     refine ⟨H, i1, i2, inferInstance, σ, T, j, ⟨hDS.2.2.1, hiso, hk, fun z => ?_⟩,
       ⟨H', i1', i2', σ', w', hsm, fun z => ?_⟩, ?_⟩
@@ -78,30 +65,7 @@ theorem fdCons_cd {ε : Fin n → Bool} (hp : 1 ≤ pOf ε) (hq : 1 ≤ qOf ε) 
   obtain ⟨d, hd⟩ := fdcGood_of_isDS hσ
   have hgood : FdcGood ε lam d := ⟨H, inferInstance, inferInstance, σ, hσ, hd⟩
   have h1 : fdcD ε lam = d := fdcD_eq hlam hgap hh hgood
-  rw [← fdc_cd hp hq hlam hgap hh, h1]
-  obtain ⟨hdpos, hint⟩ := hd
-  obtain ⟨-, hI⟩ := hint v v v v
-  have h3 : (fun g : Formalism.REAL.UJ ε => Formalism.MainNotions.S.coefOn σ v v g * star (Formalism.MainNotions.S.coefOn σ v v g)) =
-      fun g : Formalism.REAL.UJ ε => ((‖Formalism.MainNotions.S.coefOn σ v v g‖ ^ 2 : ℝ) : ℂ) := by
-    funext g
-    first
-      | (rw [RCLike.star_def, RCLike.mul_conj]; push_cast; ring_nf; done)
-      | (rw [Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq]; push_cast; ring_nf; done)
-      | (simp [Complex.mul_conj, Complex.normSq_eq_norm_sq]; done)
-      | (simp [Complex.mul_conj, Complex.normSq_eq_norm_sq, Complex.sq_norm]; done)
-      | (simp [RCLike.mul_conj]; done)
-  rw [h3] at hI
-  first | rw [integral_complex_ofReal] at hI | rw [integral_ofReal] at hI
-  rw [inner_self_eq_norm_sq_to_K] at hI
-  have hJ : ∫ g, ‖Formalism.MainNotions.S.coefOn σ v v g‖ ^ 2 ∂(muCD ε) = ‖v‖ ^ 4 / d := by
-    have h4 : ((∫ g, ‖Formalism.MainNotions.S.coefOn σ v v g‖ ^ 2 ∂(muCD ε) : ℝ) : ℂ) = ((‖v‖ ^ 4 / d : ℝ) : ℂ) := by
-      rw [hI]
-      first | (push_cast; ring_nf; done) | (simp; done) | (norm_cast; ring_nf; done) | (simp; ring_nf; done)
-    exact_mod_cast h4
-  have hv4 : ‖v‖ ^ 4 ≠ 0 := pow_ne_zero _ (norm_ne_zero_iff.2 hv)
-  unfold Formalism.MainNotions.S.fdegOf
-  rw [hJ]
-  field_simp
+  rw [← fdc_cd hp hq hlam hgap hh, h1, fdegOf_of_isFdeg' hd hv]
 
 theorem fdCons_muG (n : ℕ) (ε : Fin n → Bool) : ∃ c : ℝ, 0 < c ∧
     ∀ (lam : Fin n → ℝ) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
@@ -112,25 +76,19 @@ theorem fdCons_muG (n : ℕ) (ε : Fin n → Bool) : ∃ c : ℝ, 0 < c ∧
         ∃ (T : KType ε (lowK ε μ)) (Ψ : Matrix (Fin n) (Fin n) ℂ → (T.V →L[ℂ] T.V)), IsPsiFor ε μ T Ψ) →
       v ≠ 0 → Formalism.MainNotions.S.fdegOf (Formalism.REAL.muG ε) σ v = c * Formalism.QuantumDeterminants.fdegHC lam := by
   haveI := muCD_isHaar ε
-  obtain ⟨κ, hκ0, hκtop, hκ⟩ : ∃ κ : ENNReal, κ ≠ 0 ∧ κ ≠ ⊤ ∧ muCD ε = κ • Formalism.REAL.muG ε := by
-    first
-      | exact MeasureTheory.Measure.isHaarMeasure_eq_smul_isHaarMeasure _ _
-      | exact ⟨muCD ε (Classical.arbitrary (TopologicalSpace.PositiveCompacts (Formalism.REAL.UJ ε))),
-          (MeasureTheory.Measure.measure_pos_of_nonempty_interior _
-            (Classical.arbitrary (TopologicalSpace.PositiveCompacts (Formalism.REAL.UJ ε))).interior_nonempty).ne',
-          (Classical.arbitrary (TopologicalSpace.PositiveCompacts (Formalism.REAL.UJ ε))).isCompact.measure_lt_top.ne,
-          MeasureTheory.Measure.haarMeasure_unique _ _⟩
-  refine ⟨κ.toReal, ENNReal.toReal_pos hκ0 hκtop, ?_⟩
+  let κ := Measure.haarScalarFactor (muCD ε) (Formalism.REAL.muG ε)
+  have hκpos : (0 : ℝ) < κ :=
+    NNReal.coe_pos.mpr (Measure.haarScalarFactor_pos_of_isHaarMeasure (muCD ε) (Formalism.REAL.muG ε))
+  have hκ : muCD ε = κ • Formalism.REAL.muG ε :=
+    Measure.isMulLeftInvariant_eq_smul (muCD ε) (Formalism.REAL.muG ε)
+  refine ⟨κ, hκpos, ?_⟩
   intro lam H _ _ _ σ v hlam hσ h hgap hh hp hq hΨ hv
   have hcd := fdCons_cd hp hq hlam hgap hh hΨ hσ hv
   have hfd : Formalism.QuantumDeterminants.fdegHC lam = dimVlam lam := rfl
   rw [hκ] at hcd
-  unfold Formalism.MainNotions.S.fdegOf at hcd ⊢
-  rw [MeasureTheory.integral_smul_measure, smul_eq_mul] at hcd
+  delta Formalism.MainNotions.S.fdegOf at hcd ⊢
+  rw [integral_smul_nnreal_measure, NNReal.smul_def, smul_eq_mul] at hcd
   rw [hfd, ← hcd]
-  have hκ' : κ.toReal ≠ 0 := (ENNReal.toReal_pos hκ0 hκtop).ne'
-  by_cases hI : ∫ g, ‖Formalism.MainNotions.S.coefOn σ v v g‖ ^ 2 ∂(Formalism.REAL.muG ε) = 0
-  · rw [hI]; simp
-  · field_simp
+  rw [div_mul_eq_div_div_swap, mul_comm (κ : ℝ), div_mul_cancel₀ _ hκpos.ne']
 
 end ReciprocityTheory.ChartRestriction.DS

@@ -95,7 +95,7 @@ theorem rest_conj (fa : ∀ w, GArch σ J w → ℂ) (ff : ∀ v, GLoc σ J v �
       simp only [map_mul, projArch_embArch_ne σ J (Finset.ne_of_mem_erase hu), one_mul, mul_one]
   · simp only [map_mul, proj_embArch, one_mul, mul_one]
 
-theorem continuous_rest {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsLattice E L] {fa : ∀ w, GArch σ J w → ℂ}
+theorem continuous_rest {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsFullLattice E L] {fa : ∀ w, GArch σ J w → ℂ}
     {ff : ∀ v, GLoc σ J v → ℂ} (hfa : ∀ w, fa w ∈ CcArch σ J w) (hff : IsFinFamily σ J L ff) (w : InfinitePlace F) :
     Continuous (rest fa ff w) := by
   classical

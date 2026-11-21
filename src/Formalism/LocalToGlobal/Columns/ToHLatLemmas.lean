@@ -137,6 +137,34 @@ theorem intNab_isLattice (h : S.Ok) (hD : ∀ d, Submodule.IsLattice K (S.Nab d)
   let _ : Fintype S.Cl := h.fintypeCl
   exact ValuationLatticeField.valLatF_isLattice _ (S.toCSD h).I_injective _ fun c => hD _
 
+theorem intNab_isFullLattice (h : S.Ok) (hD : ∀ d, Submodule.IsFullLattice K (S.Nab d)) :
+    Submodule.IsFullLattice K S.intNab := by
+  classical
+  letI : Fintype S.Cl := h.fintypeCl
+  letI := S.intNab_isLattice h (fun d => (hD d).toIsLattice)
+  refine { span_eq_top := top_unique ?_ }
+  intro φ _
+  have hex (c : S.Cl) : ∃ a : 𝓞 K, a ≠ 0 ∧
+      a • (φ : S.D → S.V) (S.outSec.rep c) ∈ S.Nab (S.outSec.rep c) := by
+    have hs : (φ : S.D → S.V) (S.outSec.rep c) ∈
+        Submodule.span K (S.Nab (S.outSec.rep c) : Set S.V) := by
+      rw [(hD (S.outSec.rep c)).span_eq_top]
+      exact Submodule.mem_top
+    obtain ⟨a, ha⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 K)) K _ _ hs
+    rw [Submodule.span_eq] at ha
+    exact ⟨a, nonZeroDivisors.coe_ne_zero a, ha⟩
+  choose a ha ha_mem using hex
+  have ha : (∏ c, a c) ≠ 0 := Finset.prod_ne_zero_iff.mpr fun c _ => ha c
+  have haK : ((∏ c, a c : 𝓞 K) : K) ≠ 0 := by exact_mod_cast ha
+  apply (Submodule.smul_mem_iff _ haK).mp
+  rw [algebraMap_smul]
+  apply Submodule.subset_span
+  apply (S.mem_intNab_iff h S.outSec _).mpr
+  intro c
+  change (∏ c', a c') • (φ : S.D → S.V) (S.outSec.rep c) ∈ S.Nab (S.outSec.rep c)
+  rw [← Finset.mul_prod_erase Finset.univ a (Finset.mem_univ c), mul_comm, mul_smul]
+  exact (S.Nab (S.outSec.rep c)).smul_mem _ (ha_mem c)
+
 variable {S}
 
 theorem PosH.good {h : S.Ok} (hp : S.PosH h) {L : Submodule (𝓞 K) S.EqFun} (hL : Submodule.IsFullLattice K L) :
@@ -418,7 +446,10 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
 
 theorem MtildeH_good (P : LevFam X.E X.K R.r Pr.vGs) : (MtildeH W Ch hX sel mu P).Good :=
   ((mtilde_rat W Ch sel mu hX P).posH (mtildeOk W Ch sel mu hX P)).good
-    ((mtildeGSD W Ch sel mu P).intNab_isLattice (mtildeOk W Ch sel mu hX P) (mtilde_good W Ch sel mu hX P).nab_lat)
+    ((mtildeGSD W Ch sel mu P).intNab_isFullLattice (mtildeOk W Ch sel mu hX P) (fun d =>
+      (nabDelLattice X.K X.Tau _ W.sgTrue _ fun τ =>
+        tauLatLattice X.E X.K X.Tau _ X.emb τ _
+          (hcnt_isFullLattice_of_unimodular d.2.lat d.2.uni)).1))
 
 end Rows
 

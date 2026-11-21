@@ -23,7 +23,7 @@ theorem pm_pow_eig (A : Module.End ℂ W) {z : ℂ} {f : W} (h : A f = z • f) 
     (A ^ k) f = z ^ k • f := by
   induction k with
   | zero => simp
-  | succ k ih => rw [pow_succ', Module.End.mul_apply, ih, map_smul, h, smul_smul, pow_succ]
+  | succ k ih => rw [pow_succ', mul_apply_eq_comp, ih, map_smul, h, smul_smul, pow_succ]
 
 theorem pm_proj_decomp (A Q : Module.End ℂ W) (T : Submodule ℂ W) (B : Finset ℝ) (z : ℂ)
     (hQ1 : ∀ f ∈ T, A f = z • f → Q f = f) (hQ0 : ∀ f ∈ T, ∀ z' : ℂ, z' ≠ z → A f = z' • f → Q f = 0)
@@ -65,7 +65,7 @@ end Generic
 
 theorem pm_single_mem {M : Type*} [AddCommGroup M] [Module ℂ M] (S : Submodule ℂ M) {x : M} (hx : x ∈ S)
     (c : Fin n) : Pi.single c x ∈ tensSub (n := n) S := by
-  refine (Submodule.mem_pi).2 fun i _ => ?_
+  refine tset_mem.2 fun i => ?_
   by_cases h : i = c <;> simp [h, hx]
 
 theorem pm_ptr {M : Type*} [AddCommGroup M] [Module ℂ M] (S : Submodule ℂ M)

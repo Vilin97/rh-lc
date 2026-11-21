@@ -49,12 +49,14 @@ theorem locW_lat_iff (hS : S.Ok) {G : ι → Matrix (Fin n) (Fin n) ℂ} {sh : �
         fnOf G sh (Formalism.L2.Forms.atInf e (B⁻¹ : GL (Fin n) E).1) Q := by
   subst hsh he
   have hL : ∀ c, Submodule.IsLattice E (lat c) := fun c => hlat c ▸ hS.lsh_lat c.1 _
+  have hfull : ∀ c, Submodule.IsFullLattice E (lat c) := fun c =>
+    { toIsLattice := hL c, span_eq_top := hspan c }
   have key : ∀ (c : S.Cl) (B : GL (Fin n) E), IsLocBasis (Pl.resChar w) (lat c : Set _) B →
       (x.1 c ∈ Formalism.HermitianLatticesTheory.localization₂ (pw w).asIdeal (delAtr emb lam (lat c)) ↔
       ∃ Q ∈ Sp, (show Frames G → ℂ from S.embF emb σ lam h x c) =
         fnOf G (shiftOf lam) (Formalism.L2.Forms.atInf (embAt σ emb) (B⁻¹ : GL (Fin n) E).1) Q) := by
     intro c B hB
-    refine (BwLat.mem_localization_delAtr_fn emb σ lam (pw w) (hL c) (fun _ => B) (fun τ => BwLat.isBasisAt_of_isLocBasis
+    refine (BwLat.mem_localization_delAtr_fn emb σ lam (pw w) (by first | exact hfull c | exact (hfull c).toIsLattice) (fun _ => B) (fun τ => BwLat.isBasisAt_of_isLocBasis
       (Pl.resChar_prime w) _ ((bc_mem_below _ _ _).2 (by rw [map_natCast]; exact Formalism.L2.Col.vl_resChar_mem Pl pw hval w)) hB)
       (x.1 c)).trans ⟨?_, ?_⟩
     · rintro ⟨z, hz, e⟩

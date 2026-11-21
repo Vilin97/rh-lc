@@ -41,8 +41,8 @@ theorem GlobalTheory.TopVal.exists_jVal_smul_alt : ∀ {B : GlobalTheory.Mem.Bas
     (Formalism.L2.Forms.rankP (I.rec7 l Z)) B.wts.sgTrue B.embLL B.fields.emb
     (fun τ x => DFunLike.congr_fun (B.fields_embC τ) x) cv hcv h0 _ _ _ e j₀ hJ.inj hr hJ.eqv
   refine ⟨a, ha, fun w v => (h w v).trans ?_⟩
-  unfold GlobalTheory.TopVal.pairVal
+  delta GlobalTheory.TopVal.pairVal
   rw [LinearMap.smul_apply]
-  erw [map_smul, map_smul, LinearMap.smul_apply]
+  erw [LinearMap.map_smul, LinearMap.map_smul, LinearMap.smul_apply]
   rfl
 end

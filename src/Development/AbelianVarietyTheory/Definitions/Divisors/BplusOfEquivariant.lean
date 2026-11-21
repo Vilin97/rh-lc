@@ -93,8 +93,8 @@ theorem node_isV (G : GridData L sc) {μ0 : T} (hL : L.Is μ0) {X : Node} (h : X
 theorem levJ_open_compact (G : GridData L sc) {μ0 : T} (hL : L.Is μ0) (t : T) {X : Node} (h : X.InRange D.R.m) :
     IsOpen (((levJ G t X).comap (Lev.finE (G.V X)) : Subgroup (GA D (G.V X))) : Set (GA D (G.V X))) ∧
       IsCompact ((Lev.levA (G.V X) (levJ G t X) : Subgroup (GA D (G.V X))) : Set (GA D (G.V X))) := by
-  have hc := congLev_open_compact _ (node_isV G hL h).sd.1 (G.pl.modul_ne_bot sc)
-  have hm := congLev_open_compact _ (node_isV G hL h).sd.1 (𝔪 := ⊤) top_ne_bot
+  have hc := congLev_open_compact _ (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice _ _ (node_isV G hL h).sd) (G.pl.modul_ne_bot sc)
+  have hm := congLev_open_compact _ (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice _ _ (node_isV G hL h).sd) (𝔪 := ⊤) top_ne_bot
   have key : ∀ (Y : LSp D) (V : HSp D) Λ β (d : Formalism.L2.DIV.LevDat D.host.E ℂ V.rank)
       (K : Subgroup (GL (Fin Y.sp.rank) (Lev.EAf D))), Y = ⟨V, Λ⟩ → HEq K (Formalism.L2.DIV.lev D.sp.cm V.gram β d) →
       IsOpen ((K.comap (Lev.finE Y.sp) : Subgroup (GA D Y.sp)) : Set (GA D Y.sp)) ∧

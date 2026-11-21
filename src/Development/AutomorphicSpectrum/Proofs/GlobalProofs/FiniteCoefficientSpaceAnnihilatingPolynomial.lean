@@ -1,17 +1,14 @@
 module
 
 public import Mathlib
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.IoInjective
-public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.SkewOfCommute
+public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HarishChandraFinite
 
 @[expose] public section
 
 noncomputable section
 
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta MeasureTheory Matrix
-open scoped TensorProduct Topology InnerProductSpace
-
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
+open MeasureTheory
+open scoped Topology
 
 namespace GlobalTheory.CompanionTheory.HcFinite.OneParam
 
@@ -70,7 +67,7 @@ theorem exists_generator {K W : Type} [Group K] [TopologicalSpace K] [AddCommGro
     intro a c
     simp only [M, hadd, map_mul, LinearMap.toMatrix_mul]
   have hMc : Continuous M := by
-    refine continuous_pi fun i => continuous_pi fun j => ?_
+    refine continuous_matrix fun i j => ?_
     simp only [M, LinearMap.toMatrix_apply]
     exact (hρ (b.coord i) (b j)).comp hs
   obtain ⟨D₀, hD₀⟩ := hasDerivAt_of_oneParam M hMc hM0 hMadd
@@ -86,7 +83,6 @@ theorem exists_generator {K W : Type} [Group K] [TopologicalSpace K] [AddCommGro
   convert hk using 1
   show L (ρ (s t) * Matrix.toLin b b D₀) = L (Matrix.toLin b b (LinearMap.toMatrix b b (ρ (s t)) * D₀))
   rw [Matrix.toLin_mul b b b, Matrix.toLin_toMatrix, Module.End.mul_eq_comp]
-  all_goals rfl
 
 theorem iteratedDeriv_eq {K W : Type} [Group K] [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ K W) (s : ℝ → K)
     (D : Module.End ℂ W)

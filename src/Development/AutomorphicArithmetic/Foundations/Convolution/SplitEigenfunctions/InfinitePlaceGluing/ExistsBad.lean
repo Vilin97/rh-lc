@@ -1,10 +1,6 @@
 module
 
 public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.Entire
-public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.Imports
-public import CompanionTheory.EightfoldTheory.VariationTheory.AutomorphicForms.RealStructures.Imports
-public import CompanionTheory.EightfoldTheory.VariationTheory.AutomorphicForms.ImportsBis
 public import PositivityTheory.AutomorphicForms.PublishedInputs.RealGaloisRepresentations.IwahoriSphericalTransfer.HeckeCharacterEqOfCofinite
 
 @[expose] public section

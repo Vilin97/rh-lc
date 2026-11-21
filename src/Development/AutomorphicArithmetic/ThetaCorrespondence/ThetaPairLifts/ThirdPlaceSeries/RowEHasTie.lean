@@ -72,11 +72,16 @@ theorem tie_of_rpk_alt {D : D7} {O : Obj D} {c : ℝ} (b : _root_.GlobalTheory.F
     (hpsi : PsiPPTie D (divisionPairOfAdelicFormsFaceColumnsData x).P0 (divisionPairOfAdelicFormsFaceColumnsData x).ψ0 (divisionPairOfAdelicFormsFaceColumnsData x).Ps (divisionPairOfAdelicFormsFaceColumnsData x).ψs (divisionPairOfAdelicFormsFaceColumnsData x).I.eG)
     (h3 : _root_.Formalism.IndefR.IndefiniteRealisationNormalisationDegreeThree (_root_.GlobalTheory.Mem.R3.realisationOfInput y)) (hp : ∃ pins : _root_.Formalism.IndefR.IndefiniteRealisationNormalisation (_root_.GlobalTheory.Mem.R3.realisationOfInput y), _root_.Formalism.IndefR.IndefiniteRealisationCompatible pins (_root_.GlobalTheory.Mem.R3.realisationRecursionOfInput r)) :
     Nonempty b.Comparison₂ := by
-  have key : ∀ z : _root_.GlobalTheory.Mem.Top.Bl.RealPackage b.R b.S, z = _root_.GlobalTheory.Mem.Top.Bl.realPackageOfRealInput y → ∃ Rr : _root_.Formalism.IndefR.IndefiniteRealisationRecursion z.B.Q, PsiPPTie D z.P.P0 z.P.ψ0 z.P.Ps z.P.ψs z.P.I.eG ∧
-      _root_.Formalism.IndefR.IndefiniteRealisationNormalisationDegreeThree z.B.Q ∧ ∃ pins : _root_.Formalism.IndefR.IndefiniteRealisationNormalisation z.B.Q, _root_.Formalism.IndefR.IndefiniteRealisationCompatible pins Rr := by
-    rintro z rfl
-    exact ⟨_root_.GlobalTheory.Mem.R3.realisationRecursionOfInput r, hpsi, h3, hp⟩
-  obtain ⟨Rr, h⟩ := key _ e
+  let hasPins (z : _root_.GlobalTheory.Mem.Top.Bl.RealPackage b.R b.S) : Prop :=
+    ∃ Rr : _root_.Formalism.IndefR.IndefiniteRealisationRecursion z.B.Q,
+      PsiPPTie D z.P.P0 z.P.ψ0 z.P.Ps z.P.ψs z.P.I.eG ∧
+      _root_.Formalism.IndefR.IndefiniteRealisationNormalisationDegreeThree z.B.Q ∧
+      ∃ pins : _root_.Formalism.IndefR.IndefiniteRealisationNormalisation z.B.Q,
+        _root_.Formalism.IndefR.IndefiniteRealisationCompatible pins Rr
+  have hInput : hasPins (_root_.GlobalTheory.Mem.Top.Bl.realPackageOfRealInput y) :=
+    ⟨_root_.GlobalTheory.Mem.R3.realisationRecursionOfInput r, hpsi, h3, hp⟩
+  have hBundle : hasPins (_root_.GlobalTheory.Mem.Top.Bl.realPackageOfBundle b) := e.symm ▸ hInput
+  obtain ⟨Rr, h⟩ := hBundle
   exact ⟨⟨Rr, h⟩⟩
 variable {hL : _root_.UpperTheory.Zero.LLC.RecTExists} {p : _root_.GlobalTheory.Mem.Top.Bl.Parameters hL} {K : Ctx}
 theorem nonempty_tie_of_wit (q : WPt p.s K) {c : ℝ} (b : _root_.GlobalTheory.Fc.BundleCondition (q.w.D q.Z) q.O c) (w : _root_.GlobalTheory.Mem.Top.Bl.BundleWitness q b)

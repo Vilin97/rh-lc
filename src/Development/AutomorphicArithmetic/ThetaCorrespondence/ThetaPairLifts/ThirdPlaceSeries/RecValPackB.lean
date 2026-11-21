@@ -42,17 +42,15 @@ theorem row_of_btw_alt (b : _root_.GlobalTheory.Fc.BundleCondition D O c) (x : R
     intro t F F' hF
     have e : F = F' := eq_of_heq hF
     subst e
+    change x.T at t
+    change (Fin ((x.A3.A.fam.R t).nV (x.A3.A.fam.lvl x.F.P1 x.F.ψ1)) → D.what₂.LL) at F
     refine ⟨t, (rV0 D x.A3.A x.F.P1 x.F.ψ1 t).mulVec F, rfl, heq_of_eq ?_, HEq.rfl⟩
     have hOk := y.intersectionNumber_baseChange.ok
     have hb : BlockHyp (x.A3.A.fam.R t) (x.A3.A.fam.lvl x.F.P1 x.F.ψ1) x.A3.A.fam.v0 1 :=
       ⟨hOk.ok2.conj, hOk.ok2.irr, hOk.ok2.what₂ t⟩
-    have key := BlockDat.lf_lvl_vE hb
     unfold R3.rowForm rV0
     show (x.A3.A.fam.R t).S.basis.equivFun.symm (((x.A3.A.fam.R t).vE (x.A3.A.fam.lvl x.F.P1 x.F.ψ1)) *ᵥ F) = _
-    congr 1
-    conv_lhs => rw [← key]
-    rw [Matrix.mul_assoc]
-    exact (Matrix.mulVec_mulVec _ _ _).symm
+    rw [Matrix.mulVec_mulVec, ← Matrix.mul_assoc, BlockDat.lf_lvl_vE hb]
   exact key (_root_.GlobalTheory.Mem.Top.Bl.realPackageOfBundle b) y.eq t F F' hF
 end Generic
 section Rows

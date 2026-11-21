@@ -52,7 +52,7 @@ theorem isThetaFunO_placeModel_apply : ∀ {D : D7} {ψ : AddChar (AF D.host.F) 
   intro D ψ hψ S T ΛS ΛT hS hT a f₀ Φ Tm ha hinf h₁ hf₀ hΦ
   have hdual := (GlobalTheory.LatVac.latO_selfDual_approx_sign D ψ S T _ _ hψ hS hT).1
   have hfin := GlobalTheory.LatFinMod.latO_finite_mod D S T _ _ hS.1.fg hT.1.fg fun _ => True
-  have hmul := exists_nsmul_mem_latO hS.1 hT.1
+  have hmul := exists_nsmul_mem_latO (selfDual_isFullLattice S ΛS hS) (selfDual_isFullLattice T ΛT hT)
   have hsm : ∀ {b : AE D}, b * b = b → ∀ u ∈ (latO S T ΛS ΛT fun _ => True),
       b • u ∈ (latO S T ΛS ΛT fun _ => True) ⊓ half S T b := fun {b} hb u hu =>
     ⟨GlobalTheory.LatticeStable.smul_mem_latO D S T _ _ _ b

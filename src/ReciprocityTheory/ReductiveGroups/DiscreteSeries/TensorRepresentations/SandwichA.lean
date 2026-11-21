@@ -68,7 +68,7 @@ theorem swB_isFdeg_pull {ε : Fin n → Bool} {A B : Type*} [NormedAddCommGroup 
   have hc : ∀ v w : A, Formalism.MainNotions.S.coefOn (ε := ε) τA v w = Formalism.MainNotions.S.coefOn (ε := ε) τB (U v) (U w) := by
     intro v w
     funext g
-    simp only [Formalism.MainNotions.S.coefOn]
+    delta Formalism.MainNotions.S.coefOn
     rw [← hU _ g.2, LinearIsometryEquiv.inner_map_map]
   refine ⟨hd0, fun v w v' w' => ?_⟩
   obtain ⟨hi, he⟩ := h (U v) (U w) (U v') (U w')
@@ -124,7 +124,8 @@ theorem swC_gap_shift {ε : Fin n → Bool} {μ : Fin n → ℝ} {h : ℝ} (hμ 
   cases dual
   · exact key _ (hsingle 1 (by simp))
   · have : shiftF true μ s = μ + Pi.single s (-1) := by
-      simp only [shiftF, cond_true]
+      delta shiftF
+      simp only [Bool.cond_true]
       rw [sub_eq_add_neg, Pi.single_neg]
     rw [this]
     exact key _ (hsingle (-1) (by simp))
@@ -133,14 +134,15 @@ theorem swC_hc_shift {μ : Fin n → ℝ} (hμ : S7.IsHCParam μ) (dual : Bool) 
     (hs : StrictAnti (shiftF dual μ s)) : S7.IsHCParam (shiftF dual μ s) := by
   refine ⟨hs, fun a => ?_⟩
   obtain ⟨m, hm⟩ := hμ.2 a
+  delta shiftF
   by_cases ha : a = s
   · subst ha
     cases dual
-    · exact ⟨m + 1, by simp only [shiftF, cond_false, Pi.add_apply, Pi.single_eq_same]; push_cast; linarith⟩
-    · exact ⟨m - 1, by simp only [shiftF, cond_true, Pi.sub_apply, Pi.single_eq_same]; push_cast; linarith⟩
+    · exact ⟨m + 1, by simp only [Bool.cond_false, Pi.add_apply, Pi.single_eq_same]; push_cast; linarith⟩
+    · exact ⟨m - 1, by simp only [Bool.cond_true, Pi.sub_apply, Pi.single_eq_same]; push_cast; linarith⟩
   · cases dual
-    · exact ⟨m, by simp only [shiftF, cond_false, Pi.add_apply, Pi.single_eq_of_ne ha, add_zero]; exact hm⟩
-    · exact ⟨m, by simp only [shiftF, cond_true, Pi.sub_apply, Pi.single_eq_of_ne ha, sub_zero]; exact hm⟩
+    · exact ⟨m, by simp only [Bool.cond_false, Pi.add_apply, Pi.single_eq_of_ne ha, add_zero]; exact hm⟩
+    · exact ⟨m, by simp only [Bool.cond_true, Pi.sub_apply, Pi.single_eq_of_ne ha, sub_zero]; exact hm⟩
 
 theorem swC_main (dual : Bool) {ε : Fin n → Bool} (hp : 1 ≤ pOf ε) (hq : 1 ≤ qOf ε) {μ : Fin n → ℝ}
     (hμ : S7.IsHCParam μ) {h : ℝ} (hgap : GapAtLeast ε μ h) (hh : thrStar ε + 1 < h) (s : Fin n)

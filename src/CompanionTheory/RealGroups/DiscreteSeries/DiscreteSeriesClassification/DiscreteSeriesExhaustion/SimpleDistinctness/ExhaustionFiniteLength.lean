@@ -22,20 +22,21 @@ public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.
 namespace CompanionTheory.RgExh.Fin
 
 theorem exhaustion_finite_length : CompanionTheory.RgExh.Finish :=
-  GlobalTheory.CompanionTheory.RgExhFin.finish (GlobalTheory.CompanionTheory.RgStart.startMod : StartMod)
-    (GlobalTheory.CompanionTheory.RgSteps.pathFin : PathFin)
-    (GlobalTheory.CompanionTheory.RgPath.pathExists : PathExists)
-    (GlobalTheory.CompanionTheory.RgPath.pathEndNat : PathEndNat)
-    (GlobalTheory.CompanionTheory.RgExhFin.simpleDistinct : SimpleDistinct)
-    (GlobalTheory.CompanionTheory.AdjointSignNormality.scalar_of_separating_smooth_l2_maps : ScalarCharacterOfL2Embedding)
-    (GlobalTheory.CompanionTheory.RgExhFin.unitarizable_of_separating_smooth_l2_maps : UnitarizableOfL2Embedding)
-    (GlobalTheory.CompanionTheory.RgIso.isoFacts : IsoFacts)
-    (GlobalTheory.CompanionTheory.CharOfLowK.charOfAlgDS : CharOfAlgDS)
-    (GlobalTheory.CompanionTheory.LowestDataIso.algUniq : AlgUniq)
-    (GlobalTheory.CompanionTheory.LowestData.dataUniq : DataUniq)
-    (GlobalTheory.CompanionTheory.RenumDS.dsOfArr : DSOfArr)
-    (GlobalTheory.CompanionTheory.DSData.dsOfData : DSOfData)
-    (GlobalTheory.CompanionTheory.KModOfStep.kModOf : KModOf)
-    (GlobalTheory.CompanionTheory.ArrCount.arrCount : ArrCount)
+  GlobalTheory.CompanionTheory.RgExhFin.finish
+    GlobalTheory.CompanionTheory.RgStart.startMod
+    GlobalTheory.CompanionTheory.RgSteps.pathFin
+    GlobalTheory.CompanionTheory.RgPath.pathExists
+    GlobalTheory.CompanionTheory.RgPath.pathEndNat
+    GlobalTheory.CompanionTheory.RgExhFin.simpleDistinct
+    GlobalTheory.CompanionTheory.AdjointSignNormality.scalar_of_separating_smooth_l2_maps
+    GlobalTheory.CompanionTheory.RgExhFin.unitarizable_of_separating_smooth_l2_maps
+    GlobalTheory.CompanionTheory.RgIso.isoFacts
+    GlobalTheory.CompanionTheory.CharOfLowK.charOfAlgDS
+    GlobalTheory.CompanionTheory.LowestDataIso.algUniq
+    GlobalTheory.CompanionTheory.LowestData.dataUniq
+    GlobalTheory.CompanionTheory.RenumDS.dsOfArr
+    GlobalTheory.CompanionTheory.DSData.dsOfData
+    GlobalTheory.CompanionTheory.KModOfStep.kModOf
+    GlobalTheory.CompanionTheory.ArrCount.arrCount
 
 end CompanionTheory.RgExh.Fin

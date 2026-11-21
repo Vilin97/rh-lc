@@ -65,11 +65,11 @@ theorem kfinDense_coverC
     simp only [D, mul_add, add_mul, smul_mul_assoc, mul_smul_comm, mul_one, one_mul, hZc]
   have hZi : ∀ a b, ⟪Z a, Z b⟫_ℂ = ⟪a, b⟫_ℂ := fun a b => hZ ▸ inner_piC πU z a b
   have hZa : ∀ a b, ⟪Z a, b⟫_ℂ = ⟪a, Z b⟫_ℂ := fun a b => by
-    rw [← hZi a (Z b), ← ContinuousLinearMap.mul_apply Z Z, hZZ]; rfl
+    rw [← hZi a (Z b), ← mul_apply_eq_comp Z Z, hZZ, one_apply_eq_self]
   have hDi : ∀ c : ℂ, ‖c‖ = 1 → ∀ v, ‖D c v‖ = ‖v‖ := fun c hc v => by
     have h1 : (starRingEnd ℂ) c * c = 1 := by rw [Complex.conj_mul', hc]; simp
     have h2 : ⟪D c v, D c v⟫_ℂ = ⟪v, v⟫_ℂ := by
-      simp only [D, ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, ContinuousLinearMap.one_apply,
+      simp only [D, add_apply, smul_apply, one_apply_eq_self,
         inner_add_left, inner_add_right, inner_smul_left, inner_smul_right, hZi, hZa v v, map_div₀, map_add, map_sub,
         map_one, map_ofNat]
       linear_combination ((⟪v, v⟫_ℂ - ⟪v, Z v⟫_ℂ) / 2) * h1
@@ -116,9 +116,13 @@ theorem harish_chandra_third_clause (hD : ∀ (p q : ℕ) (T : GrpData p q) (πU
   refine ⟨hinj.nontrivial, fun S hS hinv => ?_⟩
   have : CompleteSpace S := hS.completeSpace_coe
   have hP : ∀ g v, S.starProjection (πU.π g v) = πU.π g (S.starProjection v) := fun g v => by
-    refine Submodule.eq_starProjection_of_mem_orthogonal (hinv g _ (S.starProjection_apply_mem v)) fun w hw => ?_
-    rw [← map_sub, ← inner_piC πU g⁻¹, ← pi_mulC, inv_mul_cancel, map_one]
-    exact S.sub_starProjection_mem_orthogonal v _ (hinv _ w hw)
+    refine Submodule.eq_starProjection_of_mem_of_inner_eq_zero
+      (hinv g _ (S.starProjection_apply_mem v)) ?_
+    intro w hw
+    have hw' : πU.π g (πU.π g⁻¹ w) = w := by
+      rw [← pi_mulC, mul_inv_cancel, map_one, one_apply_eq_self]
+    rw [← hw', ← map_sub, inner_piC]
+    exact S.starProjection_inner_eq_zero v _ (hinv g⁻¹ w hw)
   have hK : ∀ v : M.V, ∃ u, io u = S.starProjection (io v) := fun v => by
     refine (hran _).2 ?_
     have : FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k : T.Kset => πU.π k (io v))) := (hran _).1 ⟨v, rfl⟩

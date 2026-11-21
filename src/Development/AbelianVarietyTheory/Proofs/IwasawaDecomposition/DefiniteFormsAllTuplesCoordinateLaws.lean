@@ -80,12 +80,10 @@ theorem zero_laws [NumberField K] [StarRing K] (σ : K →+* ℂ) {e : MonoidAlg
   · show ((0 : Matrix (Fin 0) (Fin 0) K).map σ).PosDef
     rw [Subsingleton.elim ((0 : Matrix (Fin 0) (Fin 0) K).map σ) 1]
     exact Matrix.PosDef.one
-  · show Submodule.IsLattice K (⊤ : Submodule (𝓞 K) (Fin 0 → K))
-    refine ⟨?_, ?_⟩
-    · rw [Subsingleton.elim (⊤ : Submodule (𝓞 K) (Fin 0 → K)) ⊥]
-      exact Submodule.fg_bot
-    · intro s _ hs
-      simpa only [LinearIndepOn, linearIndependent_subsingleton_iff] using hs
+  · change Submodule.IsFullLattice K (⊤ : Submodule (𝓞 K) (Fin 0 → K))
+    refine { toIsLattice := Submodule.IsLattice.of_fg K ?_, span_eq_top := Subsingleton.elim _ _ }
+    rw [Subsingleton.elim (⊤ : Submodule (𝓞 K) (Fin 0 → K)) ⊥]
+    exact Submodule.fg_bot
   · intro x y
     rw [hform_eq_dot, hform_eq_dot]
     rfl
@@ -106,7 +104,7 @@ theorem lvlMat_laws {σ : K →+* ℂ} (hσ : ∀ a, σ (star a) = starRingEnd �
   have hproj := (orthogonal_projection_spec K _ h0 S (hpos _) G r hr _ hP.idem hP.selfAdj).1.1
   have hop := level_operator_spec K _ h0 S (hpos _) G r hr P ψ
   refine ⟨posDef_of_mk (cut_posDef S.H (S.lvlE r P ψ) hinj hE (Nat.card P) Nat.card_pos _ (hpos _)),
-    Formalism.DivisionValues.exponent_index_lattice.cut_isLattice _ (fun _ _ hxy => hinj hxy) _ (S.lf_nabLat_isLattice hS), fun a b => ?_, fun c a => ?_, ?_,
+    S.lf_lvlNab_isFullLattice hS r P ψ, fun a b => ?_, fun c a => ?_, ?_,
     fun a _ b hb => (hop b (Subalgebra.mem_center_iff.1 hb _).symm).2 a, rfl, Subalgebra.mem_center_iff.2 hI.2, hI.1.idem,
     hform_sa ?_⟩
   · show S.lvlOp r P ψ (a + b) = S.lvlOp r P ψ a + S.lvlOp r P ψ b

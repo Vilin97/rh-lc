@@ -12,7 +12,6 @@ public import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWa
 public import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.Imports
 public import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.ZeroOnDense
 public import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.C7
-public import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.ExistsNormingFunctional
 public import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.SlopeLimitConstant
 public import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.PageTheorem
 public import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.ZetaClassicalZeroFreeRegion

@@ -37,15 +37,11 @@ theorem finiteDimensional_of_parts {G : Type} [Group G] {ι : Type} [Fintype ι]
     refine finiteDimensional_of_slices (fun i => Submodule.span ℂ (sliceSet 𝓒 (H i) L b)) _ ?_
     rintro _ ⟨φ, hφ, rfl⟩ i x
     have e : ∀ t : H i, Function.update x i t = Pi.mulSingle i t * Function.update x i 1 := fun t => by
-      funext j
-      by_cases h : j = i
-      · subst h; simp
-      · simp [h]
+      simpa only [Pi.mulSingle, one_mul, mul_one] using
+        (Function.update_mul (1 : ∀ j, H j) x i t 1)
     have e' : ∀ t : H i, Function.update x i t = Function.update x i 1 * Pi.mulSingle i t := fun t => by
-      funext j
-      by_cases h : j = i
-      · subst h; simp
-      · simp [h]
+      simpa only [Pi.mulSingle, one_mul, mul_one] using
+        (Function.update_mul x (1 : ∀ j, H j) i 1 t)
     refine Submodule.subset_span ⟨φ, hφ, P (Function.update x i 1), hrange ▸ ⟨_, rfl⟩, fun t ht => ?_, ?_⟩
     · have h1 := congrArg P ((e ⟨t, ht⟩).symm.trans (e' ⟨t, ht⟩))
       rwa [map_mul, map_mul, hP] at h1

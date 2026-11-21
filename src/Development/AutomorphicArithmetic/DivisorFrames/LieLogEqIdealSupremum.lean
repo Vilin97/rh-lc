@@ -103,12 +103,14 @@ theorem UpperTheory.lie_log_eq_ideal_supremum :
     exact eq_of_heq (Sigma.mk.inj_iff.1 this).2
   have hqe : q = e ⟨i, hi⟩ := linj (((hl _ _).1 hq).trans (hpl _).symm)
   let U : Fin F.P₀.g → (Sp (DualNumber ℂ_[p]) ⟶ O.s.T.Z.t.G.left) :=
-    fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ y.u (l k).1 (l k).2
+    fun k => spMap (Formalism.L2.Pj.dualMap io) ≫ y.u (l k).1 (l k).2
   have hU : ∀ (k : Fin F.P₀.g) (x : Letter O.S.Dw), (letters O.S.Dw)[(k : ℕ)]? = some x →
-      U k = spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ y.u x.1 x.2 := fun k x h => by
+      U k = spMap (Formalism.L2.Pj.dualMap io) ≫ y.u x.1 x.2 := fun k x h => by
     rw [← (hl k x).1 h]
   have key := grNorm_sub O.s.T.Z.t (spMap io ≫ y.y ≫ genι O.s.T.Z) e he U
-    (fun k => GlobalTheory.FactorDepth.isTanAtG_map _ io (y.tan (l k).1 (l k).2)) (fun a => spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ y.u τ a)
+    (fun k => by
+      change IsTanAtG _ _ (spMap (Formalism.L2.Pj.dualMap io) ≫ y.u (l k).1 (l k).2)
+      exact GlobalTheory.FactorDepth.isTanAtG_map _ io (y.tan (l k).1 (l k).2)) (fun a => spMap (Formalism.L2.Pj.dualMap io) ≫ y.u τ a)
     (fun a => (hU _ ⟨τ, a⟩ ((hl _ _).2 (hpl _))).symm) _ _ (UpperTheory.dual_number_tangent_coordinates D O y K F ι hT p io U hU) ⟨i, hi⟩
     {k : Fin F.P₀.g | ∃ x : Letter O.S.Dw, x.1 = τ ∧ (x.2 : ℕ) < i + 1 ∧ (letters O.S.Dw)[(k : ℕ)]? = some x}
     (fun k => by

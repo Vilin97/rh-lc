@@ -2,10 +2,12 @@ module
 
 public import Mathlib
 public import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.DiscreteSeriesExhaustion.SimpleDistinctness.ScalarCharacterOfL2Embedding
-public import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.AnalyticIntertwiners.HarishChandraModulesIndefiniteUnitaryGroup
+public import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.AnalyticIntertwiners.KSpanFinB
+public import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.AnalyticIntertwiners.NilpotentOfPowerTraces
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KFiniteModuleIrreducibleOfIrreducibleUnitaryRep
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactTypeInCompactStableSubmodule
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalFiniteIdem
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffMemSubmoduleOfComplexPolyValuesMem
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ShiftedCapelliDeterminantSubleadingCoeffTraceStatement
 public import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
 
 @[expose] public section
@@ -126,7 +128,8 @@ theorem scalar_of_commute [Nontrivial H] (hσ : Formalism.MainNotions.S.IsURepOn
   obtain ⟨ι, hι, hKF, hc⟩ := exists_emb hσ hirr hK
   let P : Submodule ℂ (ReciprocityTheory.ChartRestriction.DS.smD ε σ) := Submodule.span ℂ
     {w | w ∈ CompanionTheory.D.gk.HC.KF ε σ ∧ ReciprocityTheory.ChartRestriction.DS.IsKHWVec ε (ReciprocityTheory.ChartRestriction.DS.smE ε σ) μ w}
-  haveI hP : FiniteDimensional ℂ P := CompanionTheory.D.gk.HC.uAdm n ε H σ hσ hirr μ
+  haveI hP : FiniteDimensional ℂ P :=
+    (CompanionTheory.D.gk.HC.uAdm_of CompanionTheory.D.gk.HC.K_finite_smooth_vectors) n ε H σ hσ hirr μ
   let S : Submodule ℂ D := Submodule.span ℂ {x | KHighest ε E μ x}
   have hSP : ∀ x ∈ S, ι x ∈ P := fun x hx => by
     have : S ≤ P.comap ι := Submodule.span_le.2 fun y hy => Submodule.subset_span

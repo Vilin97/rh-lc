@@ -33,7 +33,7 @@ theorem regAlg : (∀ a b, X.B.R (a * b) = (X.B.R a).comp (X.B.R b)) ∧ X.B.R 1
 theorem inner_reg (a : X.B.I.GA) (x z : L2X X) : ⟪x, X.B.R a z⟫_ℂ = ⟪X.B.R a⁻¹ x, z⟫_ℂ := by
   obtain ⟨hmul, hone, hiso⟩ := regAlg X
   have := Formalism.L2.SG.Pf.inner_orbit X.B.R hmul hiso a⁻¹ 1 x z
-  rw [hone, ContinuousLinearMap.one_apply, inv_inv, mul_one] at this
+  rw [hone, one_apply_eq_self, inv_inv, mul_one] at this
   exact this.symm
 
 variable {X}

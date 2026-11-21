@@ -141,7 +141,7 @@ private def cellL_pz {hρ : ρ.Good} {rd : Rd ρ (Dof x).nexp ((i)) ((j)) c} (t 
     exact_by_kernel t.thU_eq (kc% Q) M (kc% d) (kc% hQ) (kc% coeffs) (kc% hcoeffs)
   thU_off := by
     intro Q M d hOff
-    simp only [xi_eq_pz L ρ i j c] at hOff
+    rewrite [xi_eq_pz L ρ i j c] at hOff
     exact_by_kernel t.thU_off (kc% Q) M (kc% d) (kc% hOff)
   rdV_inj := (by with_unfolding_all exact (t.rdV_inj :))
   mtLat_iff := by exact_by_kernel t.mtLat_iff

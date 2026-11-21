@@ -113,7 +113,7 @@ theorem form_cc (dual : Bool) {ε : Fin n → Bool} {lam lam' : Fin n → ℝ} {
       q f ∈ genSub (smE ε (rreg ε)) (datumV ε Ψ' v₀') ∧ P f = ι (q f) := by
     intro f hf
     have h := hqex f hf
-    have e : q f = h.choose := dif_pos h
+    have e : q f = h.choose := dite_eq_left h
     rw [e]
     exact h.choose_spec
   refine ⟨c.re, q, ?_, hform, hq, ?_, ?_, ?_⟩

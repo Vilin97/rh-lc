@@ -36,7 +36,7 @@ variable {E K₀ K ι : Type} [Field E] [NumberField E] [Field K₀] [NumberFiel
   {n : ℕ}
 
 theorem map_mem_nabAtr_comp (f : K₀ →+* K) (emb : ι → E →+* K₀) (lam : ι → DomWeight n) (M : Submodule (𝓞 E) (Fin n → E))
-    (hM : Submodule.IsLattice E M) {x : VV K₀ lam} (hx : x ∈ nabAtr emb lam M) :
+    (hM : Submodule.IsFullLattice E M) {x : VV K₀ lam} (hx : x ∈ nabAtr emb lam M) :
     (⟨MvPolynomial.map f x.1, GlobalTheory.Proof.TensorMapDescent.map_mem_VV f lam _ x.2⟩ : VV K lam) ∈
       nabAtr (fun τ => f.comp (emb τ)) lam M := by
   classical
@@ -56,13 +56,20 @@ theorem map_mem_nabAtr_comp (f : K₀ →+* K) (emb : ι → E →+* K₀) (lam 
   have hw : ∀ t : 𝓞 K₀, t ∉ w₀.asIdeal → RingOfIntegers.mapRingHom f t ∉ w.asIdeal :=
     fun t ht h => ht ((hw₀ t).2 h)
   obtain ⟨hLoc, -, -⟩ := GlobalTheory.TransLoc.nabDelLoc_free_leVV
-  have hT : ∀ τ, Submodule.IsLattice K₀ (tauLat emb τ M) := fun τ => tauLatLattice E K₀ ι n emb τ M hM
+  have hT : ∀ τ, Submodule.IsFullLattice K₀ (tauLat emb τ M) := fun τ => tauLatLattice E K₀ ι n emb τ M hM
   choose C hC using fun τ => basisAtEx K₀ n (tauLat emb τ M) (hT τ) w₀
   let B₀ : ι → GL (Fin n) K₀ := fun τ => inside₂ K₀ n (C τ)
   have hB₀ : ∀ τ, IsBasisAt w₀ (dualFr (tauLat emb τ M)) (B₀ τ) := fun τ =>
     GlobalTheory.DualWeylDual.isBasisAt_dualFr w₀ (hT τ).fg (hC τ)
   have hB : ∀ τ, IsBasisAt w (dualFr (tauLat (fun τ => f.comp (emb τ)) τ M)) (Formalism.UG.bc f (B₀ τ)) := fun τ =>
-    GlobalTheory.NabBC.isBasisAt_dualFr_tauLat_comp f emb τ M hM w₀ w hw (C τ) (hC τ)
+    by
+      change IsBasisAt w (dualFr (tauLat (fun τ => f.comp (emb τ)) τ M))
+        (Formalism.UG.bc f (inside₂ K₀ n (C τ)))
+      rw [← GlobalTheory.NabBC.invTr_bc]
+      refine GlobalTheory.DualWeylDual.isBasisAt_dualFr w
+        (tauLatLattice E K ι n _ τ M hM).fg ?_
+      rw [GlobalTheory.NabBC.tauLat_comp]
+      exact GlobalTheory.NabBC.isBasisAt_span_vmap f w₀ w hw (hC τ)
   have L1 := (hLoc K ι n lam _ (fun τ => dualFr_tauLat_isLattice (fun τ => f.comp (emb τ)) τ M hM) w _ hB).1
   have L0 := (hLoc K₀ ι n lam _ (fun τ => dualFr_tauLat_isLattice emb τ M hM) w₀ B₀ hB₀).1
   have hx0 : x.1 ∈ Formalism.HermitianLatticesTheory.localization₂ w₀.asIdeal (nabP lam fun τ => dualFr (tauLat emb τ M)) :=

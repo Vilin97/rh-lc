@@ -207,7 +207,7 @@ theorem exists_gram_inv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
     simp [Matrix.mulVec, dotProduct, Pi.single_apply]
 
   have hdet := GlobalTheory.InertSelfDual.det_ne_zero_of_herm σ B hX
-  obtain ⟨k, S, T, hS, hT, hTS⟩ := GlobalTheory.InertSelfDual.exists_formFrame σ X.J hdet X.L hX.lat
+  obtain ⟨k, S, T, hS, hT, hTS⟩ := GlobalTheory.InertSelfDual.exists_formFrame σ X.J hdet X.L hX.lat.toIsLattice
     (fun y hy => (hX.dual y).2 fun x hx => by
       obtain ⟨r, hr⟩ := hy x hx
       rw [← hr]; exact RingOfIntegers.isIntegral_coe r)

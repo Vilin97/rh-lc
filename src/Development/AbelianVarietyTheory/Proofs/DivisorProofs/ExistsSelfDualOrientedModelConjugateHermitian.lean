@@ -195,11 +195,11 @@ theorem GlobalTheory.ConjSpace.main : ∀ (D : D7) (Bs : GlobalTheory.Indefinite
     obtain ⟨w⟩ : Nonempty (InfinitePlace D.host.F) := inferInstance
     exact (hV.sig w).1
   have hgram := GlobalTheory.WeilSchrodinger.gram_hspOf V.J (GlobalTheory.ConjSpace.sesq_herm hV) (GlobalTheory.ConjSpace.sesq_nondeg hV)
-    (GlobalTheory.ConjSpace.conjLat V.L) (GlobalTheory.ConjSpace.isLattice_conjLat hV.lat) (GlobalTheory.ConjSpace.sesq_unimod hV)
+    (GlobalTheory.ConjSpace.conjLat V.L) (GlobalTheory.ConjSpace.isLattice_conjLat hV.lat.toIsLattice) (GlobalTheory.ConjSpace.sesq_unimod hV)
     (fun _ => (n - p, p))
   refine ⟨GlobalTheory.WeilSchrodinger.hspOf D V.J (GlobalTheory.ConjSpace.sesq_herm hV) (GlobalTheory.ConjSpace.sesq_nondeg hV)
-    (GlobalTheory.ConjSpace.conjLat V.L) (GlobalTheory.ConjSpace.isLattice_conjLat hV.lat) (GlobalTheory.ConjSpace.sesq_unimod hV)
-    (fun _ => (n - p, p)), GlobalTheory.ConjSpace.conjLat V.L, ⟨GlobalTheory.ConjSpace.isLattice_conjLat hV.lat, fun y => ?_⟩,
+    (GlobalTheory.ConjSpace.conjLat V.L) (GlobalTheory.ConjSpace.isLattice_conjLat hV.lat.toIsLattice) (GlobalTheory.ConjSpace.sesq_unimod hV)
+    (fun _ => (n - p, p)), GlobalTheory.ConjSpace.conjLat V.L, ⟨GlobalTheory.ConjSpace.isLattice_conjLat hV.lat.toIsLattice, fun y => ?_⟩,
     fun τ => ?_, ⟨rfl, ?_, fun y => ?_⟩⟩
   · rw [hgram]
     refine (GlobalTheory.ConjSpace.mem_conjLat_iff (n := n) hV y).trans ?_

@@ -9,6 +9,7 @@ public import Formalism.LocalToGlobal.Columns.PolyFn
 public import Formalism.LocalToGlobal.Columns.CoefModB
 public import Formalism.LocalToGlobal.Divisibility.Frames
 public import Formalism.LocalToGlobal.Columns.FiniteSumNonzeroLargeDepth
+public import Formalism.LocalToGlobal.Columns.HeckeSpCount
 public import Formalism.LocalToGlobal.KernelLattices.ThDistC
 
 @[expose] public section
@@ -105,8 +106,13 @@ structure Ok (S : GStep E K n) : Prop where
   root : ∀ b (g : S.G b), ∃ m : ℕ, 0 < m ∧ S.chr b g ^ m = 1
   lsh_smul : ∀ b (g : S.G b) (d : S.D b) (x : Fin n → E),
     (S.gam b g : Matrix (Fin n) (Fin n) E) *ᵥ x ∈ S.Lsh b (g • d) ↔ x ∈ S.Lsh b d
-  lsh_lat : ∀ b (d : S.D b), Submodule.IsLattice E (S.Lsh b d)
+  lsh_full_lat : ∀ b (d : S.D b), Submodule.IsFullLattice E (S.Lsh b d)
   stab_inj : ∀ b (g : S.G b) (d : S.D b), g • d = d → S.gam b g = 1 → g = 1
+
+omit [NumberField K] [StarRing K] in
+theorem Ok.lsh_lat {S : GStep E K n} (hS : S.Ok) (b : S.β) (d : S.D b) :
+    Submodule.IsLattice E (S.Lsh b d) :=
+  (hS.lsh_full_lat b d).toIsLattice
 
 def Free (S : GStep E K n) : Prop := ∀ b (g : S.G b) (d : S.D b), g • d = d → g = 1
 
@@ -338,7 +344,7 @@ variable (E) in
 open Classical in
 def DGam (R : Ranks) : ℕ := if h : (gamOrd E R).Finite then h.toFinset.lcm id else 0
 
-theorem autO_finite (hE : PosStar E) {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N) : Finite (autO N) :=
+theorem autO_finite (hE : PosStar E) {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsFullLattice E N) : Finite (autO N) :=
   Formalism.HermitianLatticesTheory.final_autFinite E (Sp E n) (hStd E n) hStd_isSymm (hStd_pos hE) N hN
 
 theorem card_autO_gmap {g : Sp E n ≃ₗ[E] Sp E n} (hg : g ∈ UF E n) (N : Submodule (𝓞 E) (Sp E n)) :
@@ -385,8 +391,8 @@ theorem DGam_pos (hE : PosStar E) (R : Ranks) : 0 < DGam E R := by
   unfold DGam
   rw [dite_eq_left (gamOrd_finite hE R), Ne, Finset.lcm_eq_zero_iff]
   rintro ⟨a, ha, h0⟩
-  obtain ⟨n, -, N, h1, -, rfl⟩ := Set.mem_iUnion₂.1 ((Set.Finite.mem_toFinset _).1 ha)
-  haveI := autO_finite hE h1
+  obtain ⟨n, -, N, hN, hUni, rfl⟩ := Set.mem_iUnion₂.1 ((Set.Finite.mem_toFinset _).1 ha)
+  have := autO_finite hE (hcnt_isFullLattice_of_unimodular hN hUni)
   exact Nat.card_pos.ne' h0
 
 theorem N_mem_gamRanks (R : Ranks) {j : ℕ} (h1 : 1 ≤ j) (h2 : j ≤ R.m) : R.N j ∈ gamRanks R :=

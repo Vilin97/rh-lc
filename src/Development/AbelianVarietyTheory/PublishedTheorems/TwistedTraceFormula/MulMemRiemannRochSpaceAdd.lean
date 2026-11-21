@@ -234,7 +234,7 @@ theorem exists_isGood {D : D7} (V : HSp D) : ∃ (Φ : WittFrame V) (L : _) (a :
   choose b ε hb hb' using fun w : InfinitePlace D.host.F =>
     exists_majorant_of_frame D.sp.cm V V' ι hι e f ee ff fe he hf' hr w.Completion (ρ w) (hρ w) _ _ (hc w)
   obtain ⟨a, -, ha⟩ := Frames.exists_GL_of_components ∅ (fun _ => 1) (fun _ _ => rfl) b
-  refine ⟨Φ, frameLat V₂, a, SelfDual.isLattice_frameLat V₂, SelfDual.isSelfDualAt_frameLat D V₂, fun i => ?_,
+  refine ⟨Φ, frameLat V₂, a, (SelfDual.isLattice_frameLat V₂).toIsLattice, SelfDual.isSelfDualAt_frameLat D V₂, fun i => ?_,
     fun w => ⟨ε w, ha w ▸ hb w⟩, fun w i => ?_⟩
   · have : ∀ x ∈ L, V.frame.equivFun x ∈ frameLat V₂ := fun x hx =>
       show V.frame.equivFun.symm (V.frame.equivFun x) ∈ L by rwa [LinearEquiv.symm_apply_apply]

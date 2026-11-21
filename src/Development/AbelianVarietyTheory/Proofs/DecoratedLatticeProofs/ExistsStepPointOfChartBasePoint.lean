@@ -22,6 +22,7 @@ public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MemberLevelPrimeNotUnderTwistPrime
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsIsPtOfOfRat
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LatEqOfCarries
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
 
 @[expose] public section
 
@@ -43,7 +44,9 @@ theorem pointOf_base : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → 
   obtain ⟨p, hpk, hpN⟩ := hR.k_std β
   have hqN : q.deco.1.N = Formalism.L2.Col.stdLat B.fields.E (B.R.N i) := by
     rw [← hpN]
-    exact GlobalTheory.BaseCosetPt.lat_eq_of_carries q.deco.2.lat p.deco.2.lat hqk.lat hpk.lat
+    exact GlobalTheory.BaseCosetPt.lat_eq_of_carries
+      (Formalism.L2.Ker.full_of_sd ⟨q.deco.2.lat, q.deco.2.uni⟩)
+      (Formalism.L2.Ker.full_of_sd ⟨p.deco.2.lat, p.deco.2.uni⟩) hqk.lat hpk.lat
   obtain ⟨r', hr'1, hr'2, hr'3⟩ := ChExM.exists_pt_inv hd ((I.stp u a i).rep c₀) q
   have hcos : cosetIn r' = cosetIn ((I.stp u a i).rep c₀) :=
     (ChExM.cosetIn_iff hd (MemChart.hqG hPr) _ _).2 ⟨hr'2, hr'3⟩

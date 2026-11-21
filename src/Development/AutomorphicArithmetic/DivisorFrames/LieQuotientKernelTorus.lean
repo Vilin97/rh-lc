@@ -10,6 +10,7 @@ public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.Torus
 @[expose] public section
 
 open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
+open GlobalTheory.QCoh GlobalTheory.DualExact GlobalTheory.Twist
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open GlobalTheory GlobalTheory.VB GlobalTheory.LieVB GlobalTheory.CurveRootGeometry GlobalTheory.NeronCurve GlobalTheory.SS GlobalTheory.UU
 open scoped CategoryTheory.Obj
@@ -319,9 +320,8 @@ theorem UpperTheory.lie_quotient_kernel_torus :
     change (unitSec _ ≫ _) y ∈ V
     rw [unitSec_comp hφ]
     exact y.2
-  open GlobalTheory.QCoh GlobalTheory.DualExact GlobalTheory.Twist in
   have shortExact_dual : ∀ (X : Scheme.{0}) (S : ShortComplex X.Modules) (s : ℕ),
-      S.ShortExact → IsVB S.X₃ s → (ShortComplex.mk (GlobalTheory.CompanionTheory.Ar.dualMap S.g) (GlobalTheory.CompanionTheory.Ar.dualMap S.f)
+      S.ShortExact → IsVB S.X₃ s → (ShortComplex.mk (dualMap S.g) (dualMap S.f)
         (by rw [← dualMap_comp, S.zero, dualMap_zero])).ShortExact := by
     intro X S s hS h₃
     have := hS.mono_f
@@ -335,7 +335,7 @@ theorem UpperTheory.lie_quotient_kernel_torus :
     refine ShortComplex.ShortExact.mk' (DualExact.exact_of_locally _ fun V x hx => ?_)
       (mono_dualMap S.g) (QCoh.epi_of_locally_app_surjective _ fun V x hx => ?_)
     · obtain ⟨U, hU, hxU, σ, hσ, hg⟩ := DualExact.exists_local_section S.g h₃ hx
-      refine ⟨U, hU, hxU, fun (l : Γ(dual S.X₂, U)) (hl : (GlobalTheory.CompanionTheory.Ar.dualMap S.f).app U l = 0) =>
+      refine ⟨U, hU, hxU, fun (l : Γ(dual S.X₂, U)) (hl : (dualMap S.f).app U l = 0) =>
         ⟨dualMk (fun W h => dualApp l h ∘ₗ σ W h) fun W W' h h' t => ?_, ?_⟩⟩
       · rw [LinearMap.comp_apply, LinearMap.comp_apply, hσ W W' h h', dualApp_resM]
       · refine dual_ext fun W h t => ?_

@@ -338,7 +338,7 @@ theorem unrCorr_at (hC : Core R F) (i : Fin D.R.m) (t : T)
 
 end Real
 
-theorem unrCorr_split : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.LiftRows.Given R F → R.FullP → ∀ i t, UnrCorr R i t (fun w => ¬ IsConjPl w w) := by
+theorem unrCorr_split : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.LiftRows.Given R F → R.FullP → ∀ i t, UnrCorr R i t (fun w => ¬ Formalism.IndefR.Lev.IsConjPl w w) := by
   intro D G _ _ Pl0 T A Ks _ _ _ R F hG _ i t h hh s c y hy h0 hc B B' hB hB' w hw hok
   refine unrCorr_at hG.core i t h hh s c y hy h0 hc B B' hB hB' w hw fun e => hok ?_
   exact GlobalTheory.GoodPrimes.isConjPl_iff.2 e.symm

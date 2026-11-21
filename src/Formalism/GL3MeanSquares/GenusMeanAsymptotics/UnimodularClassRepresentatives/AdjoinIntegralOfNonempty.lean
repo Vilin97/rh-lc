@@ -124,6 +124,15 @@ private theorem patch_exists_common_multiple {N : Submodule (𝓞 K) V}
   · rw [hBs 𝔭 h𝔭]
     exact zsmul_mem hx _
 
+private theorem span_le_of_smul_mem_span (A B : Set V) (a : K) (ha : a ≠ 0)
+    (h : ∀ x ∈ A, a • x ∈ Submodule.span K B) :
+    Submodule.span K A ≤ Submodule.span K B := by
+  apply Submodule.span_le.mpr
+  intro x hx
+  have hx' := (Submodule.span K B).smul_mem a⁻¹ (h x hx)
+  rw [inv_smul_smul₀ ha] at hx'
+  exact hx'
+
 private theorem patch_isFullLattice {N : Submodule (𝓞 K) V}
     (hN : Submodule.IsFullLattice K N)
     (s : Finset {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal})
@@ -134,16 +143,13 @@ private theorem patch_isFullLattice {N : Submodule (𝓞 K) V}
   classical
   refine { toIsLattice := hMlat, span_eq_top := ?_ }
   obtain ⟨n, hn, hnx⟩ := patch_exists_common_multiple hN s B hBlat hBs
-  have hnK : (n : K) ≠ 0 := by exact_mod_cast hn
+  have hnK : (n : K) ≠ 0 := Int.cast_ne_zero.mpr hn
   rw [eq_top_iff, ← hN.span_eq_top]
-  apply Submodule.span_le.mpr
+  apply span_le_of_smul_mem_span _ _ (n : K) hnK
   intro x hx
-  have hxN : (n : K) • x ∈ Submodule.span K ((⨅ 𝔭, locF 𝔭.1 (B 𝔭) : Submodule (𝓞 K) V) : Set V) := by
-    apply Submodule.subset_span
-    rw [Int.cast_smul_eq_zsmul]
-    exact hnx x hx
-  have := Submodule.smul_mem (Submodule.span K ((⨅ 𝔭, locF 𝔭.1 (B 𝔭) : Submodule (𝓞 K) V) : Set V)) (n : K)⁻¹ hxN
-  simpa [smul_smul, hnK] using this
+  apply Submodule.subset_span
+  rw [Int.cast_smul_eq_zsmul]
+  exact hnx x hx
 
 theorem card_fibG_eq_card_pi (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (S : VecSplit h h')
     {L : Submodule (𝓞 K) V} (hL : Submodule.IsFullLattice K L) {Λ' : Submodule (𝓞 K) V'}

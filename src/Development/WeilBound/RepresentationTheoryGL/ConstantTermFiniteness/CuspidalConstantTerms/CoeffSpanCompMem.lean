@@ -12,7 +12,6 @@ public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.StandardThreeB
 public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.IsCuspFunSlice
 public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.ConstantTermParabolicFiniteTypeStatement
 public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.CasimirAnnihilatedCuspFormsFiniteDimensionalStatement
-public import GroundTheory.PAdicHodge.NormalizedTrace
 
 @[expose] public section
 

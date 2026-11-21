@@ -48,7 +48,7 @@ theorem isCompact_and_continuous : ∀ (F E : Type) [Field F] [NumberField F] [F
     IsCompact (levelAll σ J L a : Set (GAd σ J)) ∧ Continuous h := by
   intro F E _ _ _ _ _ σ n J r X Y L a h hS
   obtain ⟨hCM, -, -, hW, hA, hI1, hI2⟩ := hS
-  haveI := hA.lat
+  let _ : Submodule.IsFullLattice E L := hA.lat
   haveI := GlobalTheory.Doubling.isTopologicalRing_tens (F := F) (E := E) (R := AF F)
   haveI := GlobalTheory.AdelicUnitaryTop.t2Space_adeleRing_numberField F
   haveI := GlobalTheory.Doubling.t2Space_tensorProduct_finiteExtension (F := F) (E := E) (R := AF F)

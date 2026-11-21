@@ -66,7 +66,7 @@ theorem span_values_dense : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar
     rintro _ ⟨Φ, hΦ, y, rfl⟩
     refine Submodule.subset_span ⟨Φ, hΦ, Function.update y τ (dsRep M τ x (y τ)), ?_⟩
     exact (((Φ : homDS M π ⊤).2).2 τ x y).symm
-  haveI : Submodule.IsLattice D.host.E (stdLattice D.host.E V.rank) := isLattice_stdLattice
+  haveI : Submodule.IsFullLattice D.host.E (stdLattice D.host.E V.rank) := isLattice_stdLattice
   have htop : Mon = ⊤ := GlobalTheory.PlaceGen.eq_top_of_local D.sp.cm.sig V.gram (stdLattice D.host.E V.rank) Mon ∅
     (fun v x => hfin (locFin V v x)) hinf (fun k hk => hfin ⟨k, (mem_levelOff.1 hk).1⟩)
   have hinvW : ∀ g, ∀ v ∈ W, π g v ∈ W := fun g v hv =>

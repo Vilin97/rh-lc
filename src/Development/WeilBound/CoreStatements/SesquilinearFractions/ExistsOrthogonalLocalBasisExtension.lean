@@ -101,7 +101,7 @@ theorem exists_orthogonal_local_basis_extension (D : Datum H) (p q : ℕ) (ℓ :
   haveI := D.proj
   set L2 := orthogonalFamilyAlt D x' with hL2
   have hfr : Module.finrank (𝓞 E) L2 = q := finrank_orthogonal_family D x' ℓ hpq hdet m hm0 hm
-  obtain ⟨b0, hb0⟩ := exists_local_basis_cm_order.locBasis' (𝓞 E) (ℓ : ℕ) (M := L2)
+  obtain ⟨b0, hb0⟩ := exists_local_basis_cm_order.locBasis' (𝓞 E) (ℓ : ℕ) ℓ.prop (M := L2)
   let b : Fin q → L2 := b0 ∘ Fin.cast hfr.symm
   have hbli : LinearIndependent (𝓞 E) b := hb0.1.comp _ (Fin.cast_injective _)
   obtain ⟨n, hnℓ, hn⟩ := hb0.2

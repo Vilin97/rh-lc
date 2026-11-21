@@ -1,7 +1,6 @@
 module
 
 public import Mathlib
-public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.EvalTPh
 public import Formalism.LocalToGlobal.IndefiniteReal.EqZeroOfVec
 public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.DensLow
 public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.ContinuousSplitInv

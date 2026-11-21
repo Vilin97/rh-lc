@@ -64,7 +64,8 @@ theorem realIn_exists_alt : GlobalTheory.Published.DiscreteSeriesCover → Globa
   rw [eax] at hsee hev
   obtain ⟨hH, -, -, hpos, -, -, hV, hX⟩ := hHost (q.w.st q.Z) q.x.isOver
   have hc : R.T.cols = q.x.col.C := hPin.s.cols
-  have hF : (fun u => (R.T.cols.forms u).to0) = fun u => (q.x.col.C.forms u).to0 := by rw [hc]
+  have hF : (fun u => (R.T.cols.forms u).to0) = fun u => (q.x.col.C.forms u).to0 :=
+    congrArg (fun C u => (C.forms u).to0) hc
   have e : (⟨_, sP⟩ : Σ F : ∀ u, Formalism.L2.Forms.Forms0 (q.w.D q.Z) u, GlobalTheory.Mem.SRe.SPack (q.w.D q.Z) F) = ⟨_, q.saturationAtWeightedPoint.P⟩ :=
     Sigma.ext hF hsP
   have hm := (congrArg (fun z : (Σ F : ∀ u, Formalism.L2.Forms.Forms0 (q.w.D q.Z) u, GlobalTheory.Mem.SRe.SPack (q.w.D q.Z) F) =>

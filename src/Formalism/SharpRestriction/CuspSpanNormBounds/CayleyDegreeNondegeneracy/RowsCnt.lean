@@ -535,13 +535,15 @@ theorem rows_PairSymm_holds (X : TermTie D) (u u' : D.what₂.Word) : wordPairSy
   intro p hG1 hG2 hs
   have hP := X.isPair p
   have hF := X.fixed (D.s.pfst p)
+  have hFull := Formalism.MainNotions.LatticeGluingRadicals.a_full
+    (S := hS D) (X.abelian₂ (D.s.pfst p)) hF.1 hF.2.1
   have hne : ∀ t : D.s.Term u u', D.s.Gterm t ≠ 0 → Gval (X.fl t) (X.fl' t) ≠ 0 := by
     intro t hG
     rw [← X.G_eq t]
     exact (map_ne_zero_iff _ (algebraMap D.host.F D.host.E).injective).2 hG
-  have hU' := Formalism.MainNotions.LatticeGluingRadicals.a_HU (X.abelian₂ (D.s.pfst p)) hF.1 (X.fl (D.s.pfst p)) (X.fl' (D.s.pfst p)) hF.2.2.1.2
+  have hU' := Formalism.MainNotions.LatticeGluingRadicals.a_HU (X.abelian₂ (D.s.pfst p)) hFull (X.fl (D.s.pfst p)) (X.fl' (D.s.pfst p)) hF.2.2.1.2
     (X.lift' (D.s.pfst p)).2
-  have hU'' := Formalism.MainNotions.LatticeGluingRadicals.a_HU (X.abelian₂ (D.s.pfst p)) hF.1 (X.fl (D.s.pfst p)) (X.fl' (D.s.psnd p)) hF.2.2.1.2
+  have hU'' := Formalism.MainNotions.LatticeGluingRadicals.a_HU (X.abelian₂ (D.s.pfst p)) hFull (X.fl (D.s.pfst p)) (X.fl' (D.s.psnd p)) hF.2.2.1.2
     (X.lift' (D.s.psnd p)).2
   have hN' := Formalism.MainNotions.LatticeGluingRadicals.a_HNd (X.fl (D.s.pfst p)) (X.fl' (D.s.pfst p)) (hne _ hG1)
   have hN'' : Formalism.MainNotions.LatticeGluingRadicals.HNd (X.fl (D.s.pfst p)) (X.fl' (D.s.psnd p)) := by

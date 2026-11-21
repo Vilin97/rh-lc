@@ -24,17 +24,17 @@ theorem tf_kstable_fin (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn ε σ D 
   obtain ⟨Z, hZ, rfl⟩ := exists_exp_eq_of_mem_Kset hk
   have hE := hD.glRep
   have hv0 : v ∈ layer ε E V0 0 := hv
-  obtain ⟨C, hC0, hC⟩ := exists_norm_actM_pow_le_of_inK hE hVK hVf hZ 0
+  obtain ⟨C, _, hC⟩ := exists_norm_actM_pow_le_of_inK hE hVK hVf hZ 0
   have hs : Summable fun m : ℕ => C ^ m * ‖v‖ * |(1 : ℝ) - 0| ^ m / (m.factorial : ℝ) := by
     have := (Real.summable_pow_div_factorial C).mul_right ‖v‖
     refine this.congr fun m => ?_
-    simp
+    simp only [sub_zero, abs_one, one_pow, mul_one]
     ring
   have hsum := hasSum_orbit_of_bound hσ hD hZ.1 v (fun m => C ^ m * ‖v‖) (fun m => hC v hv0 m) 0 1 hs
   rw [exp_zero_smul, hσ.1.1] at hsum
-  simp only [Complex.ofReal_one, one_smul, ContinuousLinearMap.one_apply] at hsum
+  simp only [Complex.ofReal_one, one_smul, one_apply_eq_self] at hsum
   have : FiniteDimensional ℂ (V0.map D.subtype) := Module.Finite.map _ _
-  have hcl : IsClosed ((V0.map D.subtype : Submodule ℂ H) : Set H) := Submodule.closed_of_finiteDimensional _
+  have hcl : IsClosed ((V0.map D.subtype : Submodule ℂ H) : Set H) := Submodule.isClosed_of_finiteDimensional _
   refine hcl.mem_of_tendsto hsum.tendsto_sum_nat (Filter.Eventually.of_forall fun N => ?_)
   refine Submodule.sum_mem _ fun m _ => Submodule.smul_mem _ _ ?_
   exact Submodule.mem_map_of_mem (actM_pow_mem_layer_of_inK hE hVK hZ hv0 m)

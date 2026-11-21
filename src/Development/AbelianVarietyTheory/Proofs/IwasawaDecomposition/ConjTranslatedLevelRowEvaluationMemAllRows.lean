@@ -38,7 +38,8 @@ theorem GlobalTheory.Mem.SRe.conj_ev_mem_HHX : GlobalTheory.Dec.DSInfChar → Gl
     (PiTensorProduct.tprod ℂ v₀)
   have hfx : ∀ x, evS X h t (PiTensorProduct.lift S (PiTensorProduct.tprod ℂ v₀)) x =
       S v₀ ((iotaX X h).symm x * t) := fun x => by
-    simp only [evS, PiTensorProduct.lift.tprod]
+    delta evS
+    rw [PiTensorProduct.lift.tprod]
   generalize evS X h t (PiTensorProduct.lift S (PiTensorProduct.tprod ℂ v₀)) = f at hRow hMem hfx
   have hφ2 : (φ : X.B.I.GA → ℂ) =ᵐ[muX X] f := hφ.trans (Filter.Eventually.of_forall fun x => (hfx x).symm)
   have hφ' : φ = hMem.toLp f := Lp.ext (hφ2.trans hMem.coeFn_toLp.symm)

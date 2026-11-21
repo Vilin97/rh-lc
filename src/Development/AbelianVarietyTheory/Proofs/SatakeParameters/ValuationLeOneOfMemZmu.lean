@@ -385,9 +385,14 @@ section Point
 theorem latWithBasis_of_stdOver {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] [NumberField K] {ι : Type} [Fintype ι]
     (emb : ι → E →+* K) {n p : ℕ} (hp : p ≠ 0) {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N) (hs : StdOver p N)
     (w : HeightOneSpectrum (𝓞 K)) (hw : (p : 𝓞 K) ∈ w.asIdeal) : LatWithBasis w (fun τ => tauLat emb τ N) 1 := by
+  classical
   intro τ
   let _ : StarRing K := starRingOfComm
-  refine ⟨(GlobalTheory.TauLat.tauLatLattice E K ι n emb τ N hN).fg, ?_⟩
+  have hfg : (tauLat emb τ N).FG := by
+    obtain ⟨S, hS⟩ := hN.fg
+    rw [du_tauLat_eq, ← hS, du_tl_span]
+    exact ⟨S.image (du_f (emb τ)), by rw [Finset.coe_image]⟩
+  refine ⟨hfg, ?_⟩
   let φ : 𝓞 E →+* 𝓞 K := RingOfIntegers.mapRingHom (emb τ)
   have hpm : (p : 𝓞 E) ∈ w.asIdeal.comap φ := by
     rw [Ideal.mem_comap, map_natCast]

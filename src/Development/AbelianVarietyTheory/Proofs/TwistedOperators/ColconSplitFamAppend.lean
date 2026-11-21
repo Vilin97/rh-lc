@@ -135,14 +135,15 @@ theorem colcon_gen (G : GridData L sc) (W : G.Weil) (t : T) {M : Vol G} (hM : M.
         (biL W M t j φ (conAt W hM Φ h' j))
       apply congrArg (jPer W M t (conAt W hM Φ h') F σ (j + 1 + 1) hj')
       have hx : j + 2 * ((D.R.m - 4 - j) / 2 + 1) + 2 = D.R.m := by omega
+      have hlast : ¬ (j + 2 * 0 + 2 = D.R.m) := by omega
       have hC : conAt W hM Φ h' j = _ :=
-        (dite_eq_right (show ¬ (j + 2 * 0 + 2 = D.R.m) by omega)).trans (dite_eq_left hx)
+        (dite_eq_right hlast).trans (dite_eq_left hx)
       rw [hC]
       obtain rfl : σ = (D.R.m - 4 - j) / 2 := by omega
-      simp only [e0, e1, e2, colcon_getD_downFam]
-      dsimp only [biL, GlobalTheory.SeeSaw.biLift, volAt, contr, flatBF, flatFB, Link.κ,
-        stepAt, linkAt, besAt, jacAt]
-      rfl
+      -- The contraction uses only Bessel data independent of vN.
+      simp only [e0, e1, e2, colcon_getD_downFam] <;>
+        (dsimp only [biL, GlobalTheory.SeeSaw.biLift, volAt, contr, flatBF, flatFB, Link.κ,
+          stepAt, linkAt, besAt, jacAt]; rfl)
 
 theorem nIter_conAt_of_colPer : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc) (W : G.Weil) (t : T) {M : Vol G} (hM : M.Is t) (Φ : SchDown G t) (F : Fn G (.grid D.R.m D.R.m)) (φ : Fn G (.top 0)) (z : ℂ), (chain G W t hM).Iter (colPer W hM _ 0 top_idx (topVN hM) (chainData G W t hM (downFam t D.R.m D.R.m Φ)) F φ 1) z → ∀ (ρ : ∀ j, Measure (rowGrp G j)), (∀ j σ (hj : j + 2 * σ + 1 = D.R.m), HEq (ρ j) (jacAt G hM j σ hj).μR) → (∀ j σ (hj : j + 2 * σ + 2 = D.R.m), HEq (ρ j) (besAt G hM j σ hj (GlobalTheory.Unf.Inhab.nonempty_volN _).some).μR) → NIter ρ (fun j => M.ν (.grid D.R.m j)) (fun h => jPer W M t (conAt W hM Φ h) F _ 0 top_idx φ) (idx D) 1 z := by
   intro D T L sc G W t M hM Φ F φ z hz ρ hJ hB

@@ -151,11 +151,11 @@ theorem exists_flag_basis (τ : E →ₐ[F] Fv F v) (hJ : IsHermND σ J) {e e' :
     (by rw [hf, Matrix.map_one _ (map_zero _) (map_one _)])
 
 theorem iwasawa_of_triangular (h : IsCMExt F E σ) (hJ : IsHermND σ J) (τ : E →ₐ[F] Fv F v)
-    (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L] (hL : IsSelfDualAt σ J L v) (Q : Subgroup (GLoc σ J v))
+    (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L] (hL : IsSelfDualAt σ J L v) (Q : Subgroup (GLoc σ J v))
     (B : GL (Fin n) (Fv F v)) (lv : Fin n → ℕ)
     (hQ : ∀ g : GLoc σ J v, (B⁻¹ * splitHom σ J τ g * B).1.BlockTriangular lv → g ∈ Q) (y : GLoc σ J v) :
     ∃ q k : GLoc σ J v, q ∈ Q ∧ k ∈ stabLoc σ J L v ∧ y = q * k := by
-  obtain ⟨β, hβ⟩ := exists_isSplitBasis τ L h
+  obtain ⟨β, hβ⟩ : ∃ β, IsSplitBasis τ L β := exists_isSplitBasis τ L h
   have iw : ∀ x : GL (Fin n) (Fv F v), ∃ q ∈ Q, ∃ k ∈ stabLoc σ J L v,
       x * β = splitHom σ J τ q * B * β⁻¹ * splitHom σ J τ k * β := fun x => by
     letI := GlobalTheory.LocalData.complRel v

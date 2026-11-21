@@ -200,33 +200,11 @@ theorem step_gram_posDef (hF : FOk emb σ) (hS : S.Ok) (h : (S.fam emb lam).Ok) 
 
 omit [StarRing K] in
 theorem dualFr_isFullLattice {n : ℕ} (M : Submodule (𝓞 K) (Fin n → K))
-    (hM : Submodule.IsLattice K M) : Submodule.IsFullLattice K (dualFr M) := by
-  classical
-  letI := GlobalTheory.DualLat.isLattice_dualFr M hM
-  refine ⟨?_⟩
-  apply eq_top_iff.mpr
-  intro x _
-  obtain ⟨S, hS⟩ := hM.fg
-  obtain ⟨d, hd, hdS⟩ := GlobalTheory.DualLat.exists_den_finset (S.image (fun y => x ⬝ᵥ y))
-  have hdx : d • x ∈ dualFr M := by
-    intro y hy
-    rw [← hS] at hy
-    induction hy using Submodule.span_induction with
-    | mem y hy =>
-      rw [smul_dotProduct]
-      exact hdS _ (Finset.mem_image.mpr ⟨y, hy, rfl⟩)
-    | zero => simp
-    | add y z _ _ hy hz => rw [dotProduct_add]; exact add_mem hy hz
-    | smul a y _ hy => rw [dotProduct_smul]; exact Submodule.smul_mem _ _ hy
-  have hdK : algebraMap (𝓞 K) K d ≠ 0 := fun h =>
-    hd ((IsFractionRing.injective (𝓞 K) K) (by simpa using h))
-  have h := (Submodule.span K (dualFr M : Set (Fin n → K))).smul_mem
-    (algebraMap (𝓞 K) K d)⁻¹ (Submodule.subset_span hdx)
-  rw [← algebraMap_smul K d x, smul_smul, inv_mul_cancel₀ hdK, one_smul] at h
-  exact h
+    (hM : Submodule.IsFullLattice K M) : Submodule.IsFullLattice K (dualFr M) :=
+  GlobalTheory.DualLat.isLattice_dualFr M hM
 
 omit [StarRing E] [StarRing K] in
-theorem delAtr_isLattice (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsLattice E L) :
+theorem delAtr_isLattice (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsFullLattice E L) :
     Submodule.IsFullLattice K (delAtr emb lam L) :=
   (GlobalTheory.TransLattice.nabDelLattice K ι n lam _ fun τ =>
     dualFr_isFullLattice _ (GlobalTheory.TauLat.tauLatLattice E K ι n emb τ L hL)).2
@@ -237,6 +215,6 @@ theorem lawGood : ∀ {E K ι : Type} [Field E] [NumberField E] [StarRing E] [Fi
   intro E K ι _ _ _ _ _ _ _ n S emb σ lam hF hS h
   exact ⟨fun v => (frameOfSpec _ _ (step_gram_posDef S emb σ lam hF hS h v.embedding)).1,
     values_isLattice (S.csd emb lam h) (fun c => delAtr emb lam (S.Lsh c.1 (S.rep c)))
-      (fun c => delAtr_isLattice emb lam _ (hS.lsh_lat c.1 _)) _ fun _ => Iff.rfl⟩
+      (fun c => delAtr_isLattice emb lam _ (hS.lsh_full_lat c.1 (S.rep c))) _ fun _ => Iff.rfl⟩
 
 end GlobalTheory.Mem.LatGood

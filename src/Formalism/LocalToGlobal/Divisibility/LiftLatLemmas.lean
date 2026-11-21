@@ -273,6 +273,24 @@ private theorem lf_delLat_locS {s : ℕ} (hS : S.Good s) (x : Fin S.dim → K) :
     rw [← algebraMap_smul K r y, LinearMap.map_smulₛₗ₂, starRingEnd_apply, ← ht, algebraMap_smul]
     exact Submodule.smul_mem _ t hy
 
+theorem lf_lvlNab_isFullLattice {s : ℕ} (hS : S.Good s) {G : Type} [Group G] [Fintype G]
+    (r : Representation K G S.Forms) (P : Subgroup G) (ψ : P →* Kˣ) :
+    Submodule.IsFullLattice K (S.lvlNab r P ψ) := by
+  have hinj : Function.Injective (S.lvlE r P ψ).mulVec := (image_idempotent_spec K _ _).1
+  change Submodule.IsFullLattice K (cutLat (S.lvlE r P ψ) S.nabLat)
+  refine { toIsLattice := exponent_index_lattice.cut_isLattice _ hinj _ (S.lf_nabLat_isLattice hS)
+           span_eq_top := ?_ }
+  refine eq_top_iff.mpr fun z _ => ?_
+  obtain ⟨a, ha, haz⟩ := S.lf_delLat_locS hS ((S.lvlE r P ψ).mulVec z)
+  have haK : algebraMap (𝓞 K) K a ≠ 0 :=
+    IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors ha
+  apply (Submodule.smul_mem_iff _ haK).mp
+  rw [algebraMap_smul K]
+  apply Submodule.subset_span
+  change a • z ∈ cutLat (S.lvlE r P ψ) S.nabLat
+  rw [exponent_index_lattice.mem_cutLat, exponent_index_lattice.mulVec_osmul]
+  exact S.lf_delLat_le hS haz
+
 end CSD
 
 namespace BlockDat

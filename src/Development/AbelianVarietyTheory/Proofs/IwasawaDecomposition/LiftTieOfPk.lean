@@ -76,7 +76,7 @@ theorem read_of_fits : ∀ (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B
     cases b
     · exact Or.inr k'
     · exact Or.inl k'
-  refine ⟨{
+  let Y : Read m.z.R.toRealDat m.z.F.lv2 s.p0 := {
     tup := m.y.tup
     tupT := m.y.tupT
     tupT_tup := m.y.tupT_tup
@@ -141,13 +141,15 @@ theorem read_of_fits : ∀ (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B
     occ := by exact hocc
     kap := q.kap o.η o.hη o.V o.S o.N o.G
     bu := hN.bu
-    ze := hN.ze }, by exact (Eq.refl m.y.tup), by exact (Eq.refl m.y.tupT), by exact (Eq.refl m.y.PY), by exact (Eq.refl m.y.PW),
-    fun t => by exact (HEq.refl ((m.t.tA true (m.y.tup t)).cast (m.t.hA true t)).j),
-    fun t => by exact (HEq.refl ((m.t.tA false (m.y.tup t)).cast (m.t.hA false t)).j),
-    fun i t x => by exact (heq_funCongr (K := B.LL) (congrArg Mat1.n (m.t.hL i t)) x),
-    fun π => by exact (heF π).1,
-    fun x => by exact (heq_of_eq (h1E x)), fun x => by exact (heq_of_eq (h0E x)),
-    fun i x => by exact (heq_of_eq (hEW i x)), fun μ h i x => by exact (heq_of_eq (hMt μ h i x))⟩
+    ze := hN.ze }
+  refine ⟨Y, rfl, rfl, rfl, rfl, fun _ => HEq.rfl, fun _ => HEq.rfl, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · intro i t x
+    exact heq_funCongr (K := B.LL) (congrArg Mat1.n (m.t.hL i t)) x
+  · exact fun π => (heF π).1
+  · exact fun x => heq_of_eq (h1E x)
+  · exact fun x => heq_of_eq (h0E x)
+  · exact fun i x => heq_of_eq (hEW i x)
+  · exact fun μ h i x => heq_of_eq (hMt μ h i x)
 
 end GlobalTheory.Mem.R3.Rw.CopyRead
 

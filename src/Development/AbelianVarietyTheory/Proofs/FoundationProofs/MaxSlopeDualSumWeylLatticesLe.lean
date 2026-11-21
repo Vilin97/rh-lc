@@ -26,12 +26,98 @@ open scoped Matrix ComplexOrder
 
 namespace GlobalTheory.TestLat
 
+private theorem selfDual_full {K : Type} [Field K] [NumberField K] [StarRing K]
+    {n : ℕ} (G : Matrix (Fin n) (Fin n) K) (M : Submodule (𝓞 K) (Fin n → K))
+    (hM : IsSelfDualK G M) : Submodule.IsFullLattice K M := by
+  classical
+  letI := hM.1
+  refine ⟨?_⟩
+  apply eq_top_iff.mpr
+  intro x _
+  obtain ⟨s, hs⟩ := hM.1.fg
+  obtain ⟨d, hd, hden⟩ := GlobalTheory.DualLat.exists_den_finset
+    (s.image (fun y => star y ⬝ᵥ (G *ᵥ x)))
+  have hdx : d • x ∈ M := by
+    rw [← hM.2]
+    intro y hy
+    rw [← hs] at hy
+    induction hy using Submodule.span_induction with
+    | mem y hy =>
+      rw [Matrix.mulVec_smul, dotProduct_smul]
+      exact hden _ (Finset.mem_image.mpr ⟨y, hy, rfl⟩)
+    | zero => simp
+    | add y z _ _ hy hz =>
+      simpa [star_add, add_dotProduct] using add_mem hy hz
+    | smul a y _ hy =>
+      obtain ⟨b, hb⟩ := Submodule.mem_one.mp (GlobalTheory.DualLat.star_mem_one
+        (Submodule.mem_one.mpr ⟨a, rfl⟩ : (algebraMap (𝓞 K) K a) ∈ (1 : Submodule (𝓞 K) K)))
+      have heq : star (a • y) = (algebraMap (𝓞 K) K b) • star y := by
+        ext i
+        change star (algebraMap (𝓞 K) K a * y i) = algebraMap (𝓞 K) K b * star (y i)
+        rw [star_mul, hb, mul_comm]
+      rw [heq, smul_dotProduct]
+      exact Submodule.smul_mem (1 : Submodule (𝓞 K) K) b hy
+  have hdK : algebraMap (𝓞 K) K d ≠ 0 := fun h =>
+    hd ((IsFractionRing.injective (𝓞 K) K) (by simpa using h))
+  have hx := (Submodule.span K (M : Set (Fin n → K))).smul_mem
+    (algebraMap (𝓞 K) K d)⁻¹ (Submodule.subset_span hdx)
+  rwa [← algebraMap_smul K d x, smul_smul, inv_mul_cancel₀ hdK, one_smul] at hx
+
+private theorem sumLat_full {K : Type} [Field K] [NumberField K]
+    {ι : Type} [Fintype ι] {n N : ℕ} {C : Type} [Fintype C]
+    (lam : ι → DomWeight n) (e : Fin N ≃ C × VVIdx lam)
+    (T : C → Submodule (𝓞 K) (VV K lam))
+    (hT : ∀ c, Submodule.IsFullLattice K (T c))
+    (hL : Submodule.IsLattice K (sumLat lam e T)) :
+    Submodule.IsFullLattice K (sumLat lam e T) := by
+  classical
+  letI := hL
+  refine ⟨?_⟩
+  let f := SumLat.valEquiv (K := K) lam e
+  let g : C → VV K lam →ₗ[K] (Fin N → K) := fun c =>
+    f.symm.toLinearMap ∘ₗ LinearMap.single K (fun _ : C => VV K lam) c
+  have hval : ∀ c c' t, valAt lam e c' (g c t) = (Pi.single c t : C → VV K lam) c' := by
+    intro c c' t
+    exact congrFun (f.apply_symm_apply (Pi.single c t : C → VV K lam)) c'
+  have hmem : ∀ c t, t ∈ T c → g c t ∈ sumLat lam e T := by
+    intro c t ht
+    rw [Model.mem_sumLat]
+    intro c'
+    rw [hval]
+    by_cases hc : c' = c
+    · subst hc; simpa using ht
+    · simp [hc]
+  have key : ∀ c t, t ∈ Submodule.span K (T c : Set (VV K lam)) →
+      g c t ∈ Submodule.span K (sumLat lam e T : Set (Fin N → K)) := by
+    intro c t ht
+    induction ht using Submodule.span_induction with
+    | mem t ht => exact Submodule.subset_span (hmem c t ht)
+    | zero => simp
+    | add x y _ _ hx hy => simpa using add_mem hx hy
+    | smul a x _ hx => simpa using Submodule.smul_mem _ a hx
+  apply eq_top_iff.mpr
+  intro u _
+  have hsum : ∑ c, g c (valAt lam e c u) = u := by
+    apply f.injective
+    rw [map_sum]
+    have h : ∀ c, f (g c (valAt lam e c u)) =
+        Pi.single c (valAt lam e c u) := fun c => f.apply_symm_apply _
+    simp only [h]
+    exact Finset.univ_sum_single (fun c => valAt lam e c u)
+  rw [← hsum]
+  apply Submodule.sum_mem
+  intro c _
+  apply key
+  rw [(hT c).span_eq_top]
+  trivial
+
 theorem testLatticeCondition_dualFr_sumLat_delK : ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (v₀ : InfinitePlace K), IsConjAt v₀ → ∀ (ι : Type) [Fintype ι] (n : ℕ) (lam : ι → DomWeight n) (R : ℝ), 1 ≤ R → SpreadLe lam R → ∀ (G : ι → Matrix (Fin n) (Fin n) K), (∀ τ, IsDefGram (G τ)) → ∀ (C : Type) [Nonempty C] (M : C → ι → Submodule (𝓞 K) (Fin n → K)), (∀ c τ, IsSelfDualK (G τ) (M c τ)) → ∀ (N : ℕ) (e : Fin N ≃ C × VVIdx lam) (X : InfinitePlace K → Matrix (Fin N) (Fin N) ℂ), IsMetric ((sumGram lam e G)⁻¹)ᵀ X → TestLatticeCondition N X (dualFr (sumLat lam e fun c => delK lam (M c))) (bound (Fintype.card ι) n R) := by
   intro K _ _ _ _ v₀ hv ι _ n lam R hR hsp G hG C _ M hM N e X hX
   have hGh : ∀ τ, (G τ)ᴴ = G τ := fun τ => (hG τ).1
-  have hdel : ∀ c, Submodule.IsLattice K (delK lam (M c)) := fun c =>
-    (GlobalTheory.T.nablaDeltaOperator_lattice_preserved K ι n lam (M c) fun τ => (hM c τ).1).2
-  obtain ⟨hlat, hN, hdual⟩ := GlobalTheory.T.orthogonalSumCoefficientLattice_isLattice_and_dual K ι n lam C N e (fun c => delK lam (M c)) hdel
+  have hMfull : ∀ c τ, Submodule.IsFullLattice K (M c τ) := fun c τ => selfDual_full _ _ (hM c τ)
+  have hdel : ∀ c, Submodule.IsFullLattice K (delK lam (M c)) := fun c =>
+    (GlobalTheory.T.nablaDeltaOperator_lattice_preserved K ι n lam (M c) (hMfull c)).2
+  obtain ⟨hlat, hN, hdual⟩ := GlobalTheory.T.orthogonalSumCoefficientLattice_isLattice_and_dual K ι n lam C N e (fun c => delK lam (M c)) (fun c => (hdel c).toIsLattice)
   haveI : Finite C := by
     let i₀ : VVIdx lam := (e ⟨0, hN⟩).2
     refine Finite.of_injective (fun c : C => e.symm (c, i₀)) ?_
@@ -53,7 +139,7 @@ theorem testLatticeCondition_dualFr_sumLat_delK : ∀ (K : Type) [Field K] [Numb
     rw [hdual G hGh]
     congr 1
     funext c
-    rw [(GlobalTheory.T.transported_weylLattice_hermitianDuality K ι n lam G (M c) hGh hGu fun τ => (hM c τ).1).2]
+    rw [(GlobalTheory.T.transported_weylLattice_hermitianDuality K ι n lam G (M c) hGh hGu (hMfull c)).2]
     congr 1
     funext τ
     exact (hM c τ).2
@@ -69,7 +155,7 @@ theorem testLatticeCondition_dualFr_sumLat_delK : ∀ (K : Type) [Field K] [Numb
     exact GlobalTheory.T.extNorm_mul_weylPairing_integral_selfDual K ι n lam G (M c) hGh hGu (hM c) _
       ((Submodule.mem_iInf _).1 hx c) _ ((Submodule.mem_iInf _).1 hy c)
   have hint' := dualForm_integral_on_dualFr K N (sumGram lam e G) hH.1 hHu _ s hint
-  have hD := (GlobalTheory.T.dualLattice_isLattice_and_hermitianDual.1 K N (sumGram lam e G) _ hHu hlat).1
+  have hD := (GlobalTheory.T.dualLattice_isLattice_and_hermitianDual.1 K N (sumGram lam e G) _ hHu (sumLat_full lam e _ hdel hlat)).1
   have hne : dualFr (sumLat lam e fun c => delK lam (M c)) ≠ ⊥ := by
     classical
     let i : Fin N := ⟨0, hN⟩

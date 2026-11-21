@@ -5,6 +5,7 @@ public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.AtBas
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.NGData
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.FStarBetaIIota
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.RationalIsometryExtendsLocalIsometry
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.GluedUnimodularLatticeIffLocalCompletions
 public import Development.AbelianVarietyTheory.Counterexamples.TransversalityLocal.FramePairFixatorUnitaryAndFixesFrame
 public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.LocFacts
 
@@ -78,7 +79,7 @@ theorem locglob : ∀ (D : D7) (Z : LocDat D) (p : PlF D), (Z.M p).split ≠ non
     exact Formalism.L2.SG.Pf.LocalDenominators.smul_mem_localLattice Z p hw
       (sub_mem (BwdNP.baseChange_mem_localLattice Z hμ p) (Formalism.L2.SG.Pf.LocalDenominators.smul_mem_localLattice Z p ho hyp))
   · rintro ⟨A, hA, B, hB, C, hC, hBX, hCX, he⟩
-    refine BwdNP.mem_of_bcP Z (IotaBP.isLattice_NgX hΛ F F') fun p' => ?_
+    refine GlobalTheory.GenMass.GlueLoc.mem_of_bcP Z (IotaBP.isLattice_NgX_aux hΛ F F').fg fun p' => ?_
     by_cases hp : p' = p
     · rw [hp, bcP_osmul]
       have e : (D.s.atP p).ιE (a : D.host.E) • baseChange₂ D p y =
