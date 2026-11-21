@@ -47,7 +47,9 @@ theorem autLzFin_main (D : D7) : PI.AutLzFinite.AutLzFin D := by
       simp [Formalism.BasicNotions.Ranks.sigY0]
     exact pos_perp (S := VS D) hstar τ (hsig τ) hq F0.e F0.e_indep F0.e_iso F0.z F0.z_orth (hzz τ) y
       (fun a => hy _ (Submodule.subset_span ⟨a, rfl⟩)) hzy hyX
-  have hspan : Submodule.span D.host.E (Λ : Set (VS D).V) = ⊤ := hlat.span_eq_top
+  have hspan : Submodule.span D.host.E (Λ : Set (VS D).V) = ⊤ := by
+    letI := hlat
+    exact Submodule.IsFullLattice.span_eq_top
   have hint : ∀ x ∈ Λ, ∀ y ∈ Λ, IsIntegral ℤ ((VS D).hT x y) := by
     intro x hx y hy
     have hd : Formalism.HermitianLatticesTheory.dual (VS D).hT Λ = Λ := hunimod

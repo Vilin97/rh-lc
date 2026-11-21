@@ -20,7 +20,7 @@ theorem detAdm_gen {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E
     (h : ∀ Φ, IsAdm F E Φ → ∫ X, Φ X ∂ν1 = ∫ X, Φ X ∂ν2) : ν1 = ν2 := by
   classical
   let ι := Fin a × Fin M × Fin (Module.finrank F E)
-  let Ψ := psiH F E a M
+  let Ψ := psiH (F := F) (E := E) (a := a) (M := M)
   let Ψm := Ψ.toMeasurableEquiv
   have hfin : ∀ ν : Measure (Fin a → Fin M → AF F ⊗[F] E), (∀ K, IsCompact K → ν K < ⊤) →
       ∀ K, IsCompact K → ν.map Ψm K < ⊤ := by

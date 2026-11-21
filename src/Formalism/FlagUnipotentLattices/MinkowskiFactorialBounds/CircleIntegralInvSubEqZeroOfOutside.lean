@@ -344,7 +344,7 @@ lemma paired_sum_exp_bound {ι κ : Type} [DecidableEq ι] [DecidableEq κ] (I I
           Finset.prod_le_prod₀ (fun i hi => hN i (hsub hi)) hp
       _ = ∏ a ∈ I'.image φ, (Real.exp (t a) * D a) := (Finset.prod_image (f := fun a => Real.exp (t a) * D a) hinj).symm
       _ ≤ ∏ a ∈ J, (Real.exp (t a) * D a) :=
-          Finset.prod_le_prod_of_subset_of_one_le him
+          Finset.prod_le_prod_of_subset_of_one_le₀ him
             (fun a ha => le_trans zero_le_one (h1 a (him ha))) (fun a ha _ => h1 a ha)
   have e4 : ∏ a ∈ J, (Real.exp (t a) * D a) = Real.exp (∑ a ∈ J, t a) * ∏ a ∈ J, D a := by
     rw [Finset.prod_mul_distrib, Real.exp_sum]

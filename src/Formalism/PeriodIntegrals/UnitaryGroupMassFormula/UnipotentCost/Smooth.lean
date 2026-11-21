@@ -112,7 +112,7 @@ lemma sm_of {s : ℕ} (Z : G.Mat s) : ContDiffAt ℝ n (fun Z' : G.Mat s => Matr
   rw [sm_iff]
   intro i j
   simp only [Matrix.of_apply]
-  exact (contDiff_apply_apply ℝ ℂ i j).contDiffAt
+  exact (contDiff_apply_apply ℝ i j).contDiffAt
 
 lemma mMap_sm {k j ρ : ℕ} {M : X → Matrix (Fin j) (Fin j) ℂ} (hM : ContDiffAt ℝ n M x₀)
     (hdet : (M x₀).det ≠ 0) (γ : B.Mat k ρ) : ContDiffAt ℝ n (fun x => mMap k j ρ (M x) γ) x₀ := by

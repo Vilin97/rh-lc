@@ -13,7 +13,6 @@ open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory
 open Formalism.MainNotions.SumRepresentations.At (sumRep)
 open GlobalTheory.TripleGal (rk1)
 open UpperTheory.V.Af (FrobEig algSat RepIso)
-open UpperTheory.Gal.TP.Sub (Cl Above unrPol)
 open UpperTheory.Gal.crystallineComparison (GenericMul rootPol)
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
@@ -48,7 +47,8 @@ def LocIso : Prop :=
 
 def SatConj : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a : ℕ) (U : Submodule ℂ (UA E a → ℂ)), IsAutRepU U →
-    ∀ w : HeightOneSpectrum (𝓞 E), IsSplitAt w → (∃ B, SatU U w B) → ∃ B, SatU U (cpl w) B
+    ∀ w : HeightOneSpectrum (𝓞 E), IsSplitAt w →
+      (∃ B, UpperTheory.Gal.TP.Sub.SatU U w B) → ∃ B, UpperTheory.Gal.TP.Sub.SatU U (cpl w) B
 
 def TyConj : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (l a : ℕ) (U : Submodule ℂ (UA E a → ℂ))

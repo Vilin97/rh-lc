@@ -50,7 +50,7 @@ theorem Assemble_bc_span (ψ : (Fin n → E) →ₗ[E] E) (Λ : Set (Fin n → E
     rw [Assemble_bc_ratV]
     exact Submodule.subset_span ⟨_, hS l hl, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul t x _ hx =>
     rw [Assemble_smul_eq, map_smul, smul_eq_mul, ← Assemble_smul_eq']
     exact Submodule.smul_mem _ t hx

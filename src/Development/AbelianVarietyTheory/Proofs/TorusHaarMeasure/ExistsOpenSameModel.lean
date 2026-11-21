@@ -69,6 +69,7 @@ theorem exists_model (U : Formalism.L2.PjFree.Unf Xo c σ r) (hU : Formalism.L2.
   obtain ⟨k, x, t, ht⟩ := hU.2.2.1 w
   exact ⟨k, algOf P hP, w, x, t, hw, ht⟩
 
+attribute [local instance 100] IntermediateField.instAlgebraSubtypeMem in
 theorem exists_comp (U : Formalism.L2.PjFree.Unf Xo c σ r) (hσ : Formalism.L2.PjFree.GoodEmb c σ)
     (hU : Formalism.L2.PjFree.IsUnf U) (h : GenFrEx Xo c) (k : U.Comp) : ∃ Z, CarriesGeneric U h k Z := by
   classical

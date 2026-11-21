@@ -61,7 +61,7 @@ theorem trace_at (c d : ℂ_[p]) (hc : IntegralMv (mulBy l ex c (Xv ()) : MvPowe
     exact be_add_right hSub hex0 hinv hB _ _ _ hcw0 hdw0 w0 hcw hdw wI
   have S4 := be_zp hE hSub hex0 hinv hB hC hD hph hIA w w w0 w0 wI wI t
   have S5 : Simeq (be l ex ph w w) (MvPowerSeries.C 2 * phAt ph w) := by
-    have n2 := norm_at hSub hex0 hinv 2 (2 * 2) hU2 w w0 wI
+    have n2 := PI.PhNormUnits.UnitaryGroupMassFormula.norm_at hSub hex0 hinv 2 (2 * 2) hU2 w w0 wI
     have e : be l ex ph w w = phAt ph (mulBy l ex 2 w) - phAt ph w - phAt ph w := by
       rw [be, add_self hex0 hinv w w0]
     rw [e]

@@ -51,6 +51,7 @@ theorem char_transport (e : A ≃ₜ+ B) (φ : A ≃ₜ+ A) :
   rw [Measure.map_map (map_continuous _).measurable (map_continuous e).measurable, hcomp,
     ← Measure.map_map (map_continuous e).measurable (map_continuous φ).measurable,
     map_char (addHaar : Measure A) φ, Measure.map_smul]
+  exact e.continuous.measurable.aemeasurable
 
 def prodE (φ : A ≃ₜ+ A) (ψ : B ≃ₜ+ B) : A × B ≃ₜ+ A × B where
   toFun p := (φ p.1, ψ p.2)

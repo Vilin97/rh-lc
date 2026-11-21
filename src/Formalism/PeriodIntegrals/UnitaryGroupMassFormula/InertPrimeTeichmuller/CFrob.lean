@@ -79,7 +79,7 @@ theorem c_frob (hK : Module.finrank ℚ K = 2) (c : K →+* K) (hc : ∃ x, c x 
     have hp1 : 1 < p := hp.out.one_lt
     have hsub : (Finset.univ : Finset (𝓞 K ⧸ Ideal.span {(p : 𝓞 K)})) ⊆ ((Polynomial.X ^ p - Polynomial.X : Polynomial (𝓞 K ⧸ Ideal.span {(p : 𝓞 K)})).roots.toFinset) := by
       intro y _
-      rw [Multiset.mem_toFinset, Polynomial.mem_roots (FiniteField.X_pow_card_sub_X_ne_zero (𝓞 K ⧸ Ideal.span {(p : 𝓞 K)}) hp1)]
+      rw [Multiset.mem_toFinset, Polynomial.mem_roots (Polynomial.X_pow_sub_X_ne_zero hp1)]
       simp [Polynomial.IsRoot, hcon y]
     have h1 := Finset.card_le_card hsub
     rw [Finset.card_univ] at h1

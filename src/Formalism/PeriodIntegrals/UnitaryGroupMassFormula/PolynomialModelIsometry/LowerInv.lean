@@ -71,6 +71,8 @@ lemma lowerInv_torus_zero {N : ℕ} : torus (0 : Fin N → ℝ) = 1 := by
   unfold torus
   rw [← Matrix.diagonal_one]
   congr 1
+  funext i
+  simp
 
 lemma lowerInv_det_ne {N : ℕ} (θ : Fin N → ℝ) : (torus θ).det ≠ 0 := by
   unfold torus

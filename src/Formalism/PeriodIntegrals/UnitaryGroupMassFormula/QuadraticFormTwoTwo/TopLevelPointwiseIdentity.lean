@@ -121,9 +121,12 @@ def ffaZetaLin (z z' : Fin (2 * r + k + 1) → ℂ) : Mx k r →ₗ[ℝ] ℂ whe
 theorem ffa_GG_contDiff (z z' : Fin (2 * r + k + 1) → ℂ) :
     ContDiff ℝ ∞ (fun x : Mx k r => (GGl k r z z' x : ℂ)) := by
   have hζ : ContDiff ℝ ∞ (fun x : Mx k r => zetaL k r z z' (Fin.last r) x) := by
-    have h1 := (LinearMap.toContinuousLinearMap (ffaZetaLin z z')).contDiff (n := ∞)
+    let f : Mx k r →L[ℝ] ℂ := LinearMap.toContinuousLinearMap (ffaZetaLin z z')
+    have h1 := f.contDiff (n := ∞)
     convert h1 using 1
-    rfl
+    funext x
+    simp only [zetaL, ffa_fvec_last]
+    with_unfolding_all rfl
   have hc : ContDiff ℝ ∞ (fun x : Mx k r => Complex.conjCLE (zetaL k r z z' (Fin.last r) x)) :=
     Complex.conjCLE.contDiff.comp hζ
   have he : (fun x : Mx k r => (GGl k r z z' x : ℂ)) = fun x =>

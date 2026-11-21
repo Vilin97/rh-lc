@@ -34,7 +34,7 @@ theorem incGL_mem_GA {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ
   rw [e, ← Matrix.map_mul, h0, Matrix.map_one _ (map_zero _) (map_one _)]
 
 theorem ratHom_surjective : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) (γ₀ : GL (Fin n) L),
-    γ₀ ∈ GQ0 L n → ∃ γ : GQ L n, GlobalTheory.AlgWtF.ratHom γ = γ₀ := by
+    γ₀ ∈ GQ0 L n → ∃ γ : GQ L n, GlobalTheory.AlgWtF.ratHom (L := L) (n := n) γ = γ₀ := by
   intro L _ _ _ n γ₀ h
   let g : GA L n := ⟨incGL (L := L) (n := n) γ₀, incGL_mem_GA γ₀ h⟩
   have hg : g ∈ GQ L n := Subgroup.mem_subgroupOf.2 (Subgroup.mem_map.2 ⟨γ₀, h, rfl⟩)

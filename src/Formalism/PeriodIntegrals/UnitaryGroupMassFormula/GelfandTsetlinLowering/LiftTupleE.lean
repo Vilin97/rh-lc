@@ -190,12 +190,10 @@ theorem colWt_eq {n N : ℕ} (h : n + 1 = N) (lam : DomWeight N) (sg : DomWeight
     · subst ht0
       have hw2 : initW N (0 + 1) ⟨0, htv⟩ = 1 := by simp [initW]
       rw [hw2, mul_one, if_pos rfl]
-      simp only at e1 e2 e3 e4 ⊢
       have := sg.anti (show (⟨0, htn⟩ : Fin n) ≤ ⟨n - 1, by omega⟩ by rw [Fin.le_def]; simp)
       omega
     · have hw2 : initW N (0 + 1) ⟨tv, htv⟩ = 0 := by simp only [initW]; rw [if_neg (by simp; omega)]
       rw [hw2, mul_zero, if_neg ht0]
-      simp only at e1 e2 e3 e4 ⊢
       omega
   · have htn' : tv = n := by omega
     subst htn'

@@ -47,6 +47,8 @@ theorem comp_nonempty (h : T.Pins) (hj : InR D j) : Nonempty (Comp Xo c) :=
     have := D.R.m_add_three_le_k
     simp only [Ranks.r]; omega)).1
 
+set_option synthInstance.maxHeartbeats 100000
+
 variable [StarRing c.F] (h : T.Pins) (hj : InR D j) (CI C2 : ℝ) (Vs : ValFam Xo c) (Hb : Type) [Fintype Hb]
   (NN : Submodule (𝓞 c.F) (cuspW Xo c U (gKap T j)))
   (Ph : cuspW Xo c U (gKapMinus T j) →ₗ[c.F] (Hb → cuspW Xo c U (gKap T j)))

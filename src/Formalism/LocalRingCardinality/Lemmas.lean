@@ -1171,8 +1171,10 @@ theorem frac_of_ties (hT : GatTies D) (u : D.what₂.Word) (w : D.what₂.places
     IsFractionRing (D.gat u w hg).O (D.gat u w hg).Kf := by
   have h : 0 < Fintype.card D.what₂.Tau := by
     rw [D.what₂.card_Tau]
-    unfold Ranks.f Ranks.n
-    positivity
+    have h₁ := D.R.two_le_m
+    have h₂ := D.R.m_le_f
+    unfold Ranks.f Ranks.n at *
+    omega
   obtain ⟨τ⟩ := Fintype.card_pos_iff.1 h
   exact ((D.gat u w hg).P.setting ((hT.gat_pos u w hg).symm τ).1).frac_O
 

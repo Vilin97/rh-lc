@@ -82,7 +82,7 @@ theorem noVar_of_pderiv_eq_zero {P : MvPolynomial σ ℂ} {v : σ} (h : pderiv v
         rw [← tsub_add_cancel_of_le h1, ← tsub_add_cancel_of_le h2, hb]
     · intro h'
       exact absurd he h'
-  rw [h, coeff_zero] at hc
+  simp only [h, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at hc
   exact mul_ne_zero (mem_support_iff.mp he) (Nat.cast_ne_zero.mpr hev) hc.symm
 
 theorem exists_mem_support {P : MvPolynomial σ ℂ} (hP : P ≠ 0) : ∃ e, e ∈ P.support := by

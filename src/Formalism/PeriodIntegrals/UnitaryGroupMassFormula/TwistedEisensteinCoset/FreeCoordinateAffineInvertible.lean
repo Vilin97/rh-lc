@@ -68,9 +68,9 @@ theorem xxw_res {n c : ℕ} {ρ : (Fin (n + c) → E) ≃ₗ[E] (Fin (n + c) →
       have := p.isLt
       omega
   funext l
-  by_cases hl : l.1 < n
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [hsum, map_sum]
+   by_cases hl : l.1 < n
+  · rw [hsum, map_sum]
     simp only [map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     simp only [inX, LinearMap.pi_apply, dif_pos hl, LinearMap.proj_apply, resX, Matrix.toLin'_apply,
       Matrix.mulVec, dotProduct, Matrix.of_apply]

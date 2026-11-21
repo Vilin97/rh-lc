@@ -33,6 +33,7 @@ theorem factV {O : Type} [CommRing O] [IsLocalRing O] {ℓ : ℕ} {u x : Oˣ} (h
     obtain ⟨ε, hε⟩ := key r hr
     refine ⟨-ε, ?_⟩
     rw [zpow_natCast, Units.val_pow_eq_pow_val, padicValInt.of_nat, Units.val_neg]
+    rw [← Nat.padicValNat_def]
     linear_combination -hε
   · have hr : 1 ≤ r := by
       rcases Nat.eq_zero_or_pos r with rfl | h
@@ -40,7 +41,8 @@ theorem factV {O : Type} [CommRing O] [IsLocalRing O] {ℓ : ℕ} {u x : Oˣ} (h
       · exact h
     obtain ⟨ε, hε⟩ := key r hr
     refine ⟨(u ^ r)⁻¹ * ε, ?_⟩
-    have hv : padicValInt ℓ (-(r : ℤ)) = padicValNat ℓ r := by simp [padicValInt]
+    have hv : padicValInt ℓ (-(r : ℤ)) = padicValNat ℓ r := by
+      simp [padicValInt, Nat.padicValNat_def]
     have hinv : (((u ^ r)⁻¹ : Oˣ) : O) * (u : O) ^ r = 1 := by
       rw [← Units.val_pow_eq_pow_val, Units.inv_mul]
     rw [zpow_neg, zpow_natCast, hv, Units.val_mul]

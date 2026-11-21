@@ -34,13 +34,11 @@ private theorem kbar_smul {K : Type} [Field K] [NumberField K] {n : ℕ}
 
 private theorem tensFun_support_bound {K : Type} [Field K] [NumberField K] {n : ℕ}
     (hn : 0 < n) (β : TI K n) (e : TF K n) :
-    IsCompact (archP K n '' tsupport β * MultiplicityOne.finProj '' tsupport e) ∧
+    IsCompact (archP K n '' tsupport β * MultiplicityOne.finProj K n '' tsupport e) ∧
       Function.support (tensFun β e) ⊆
-        archP K n '' tsupport β * MultiplicityOne.finProj '' tsupport e := by
-  have hfin : Continuous (MultiplicityOne.finProj (K := K) (n := n)) :=
-    continuous_retractOne.comp continuous_finEmb
+        archP K n '' tsupport β * MultiplicityOne.finProj K n '' tsupport e := by
   refine ⟨(β.hasCompactSupport.isCompact.image continuous_archP).mul
-    (e.hasCompactSupport.isCompact.image hfin), ?_⟩
+    (e.hasCompactSupport.isCompact.image MultiplicityOne.continuous_finProj), ?_⟩
   intro x hx
   let a := infPart K n (x : AdelicGLn.AdelicGL K n)
   let h := finPart K n (x : AdelicGLn.AdelicGL K n)
@@ -50,8 +48,8 @@ private theorem tensFun_support_bound {K : Type} [Field K] [NumberField K] {n : 
     by_contra h0
     simp only [not_exists, ne_eq, not_not] at h0
     exact left_ne_zero_of_mul hx (by simp [kbar, h0])
-  have hproj : archP K n (a * zInf K n s) * MultiplicityOne.finProj h = x := by
-    have hf : MultiplicityOne.finProj h = retractOne (finEmb K n h) := rfl
+  have hproj : archP K n (a * zInf K n s) * MultiplicityOne.finProj K n h = x := by
+    have hf : MultiplicityOne.finProj K n h = retractOne (finEmb K n h) := rfl
     rw [archimedeanProjection_mul_positiveScalar hn, hf, ← retract_infEmb, ← retractOne_mul]
     change retractOne (infEmb K n (infPart K n (x : AdelicGLn.AdelicGL K n)) *
       finEmb K n (finPart K n (x : AdelicGLn.AdelicGL K n))) = x
@@ -75,7 +73,7 @@ private theorem tens_apply' {K : Type} [Field K] [NumberField K] {n : ℕ} (hn :
 
 theorem UpperTheory.ConvolutionTheory.Tf.tensApply :
     ∀ (K : Type) [Field K] [NumberField K] (n : ℕ), 0 < n → ∀ (β : TI K n) (e : TF K n), (∀ x, tens β e x = tensFun β e x) ∧
-      (tsupport (tens β e) ⊆ archP K n '' tsupport β * MultiplicityOne.finProj '' tsupport e) ∧
+      (tsupport (tens β e) ⊆ archP K n '' tsupport β * MultiplicityOne.finProj K n '' tsupport e) ∧
       (∀ β', tens (β + β') e = tens β e + tens β' e) ∧ (∀ e', tens β (e + e') = tens β e + tens β e') ∧
       ∀ c : ℂ, tens (c • β) e = c • tens β e ∧ tens β (c • e) = c • tens β e := by
   intro K _ _ n hn β e

@@ -58,6 +58,7 @@ theorem conjugation_invariant_measure : ConjInv := by
     ⟨hG.1, hG.2.1, hG.2.2.1, hG.2.2.2.1⟩
   obtain ⟨c, -, -, hc⟩ := haarOn_unique (PI.ScMuExists.UnitaryGroupMassFormula.NSub I e z) hN hν (haarOn_of I e z μ hμ)
   rw [hc, Measure.map_smul, hconj]
+  fun_prop
 
 theorem nMeasInv_of (hC : Contract) : Target := by
   exact ⟨finite_compact_measure, rightInv_of hC, invInv_of (rightInv_of hC), conjugation_invariant_measure⟩

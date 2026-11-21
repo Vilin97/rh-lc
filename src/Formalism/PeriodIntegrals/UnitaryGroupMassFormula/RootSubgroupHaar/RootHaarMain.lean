@@ -74,6 +74,7 @@ theorem rootHaar_main : PI.AmpRootH.RootHaar := by
       exact rootCoords_conj hz hz' hg hP hx
     rw [Measure.map_congr hae, ← Measure.map_map (phiR_mp p).measurable
       (continuous_rootCoords L.z' p).measurable, hmap, Measure.map_smul, (phiR_mp p).map_eq]
+    exact (phiR_mp p).measurable.aemeasurable
   have hc0 : c ≠ 0 := by
     rw [hc_def, ne_eq, ENNReal.ofReal_eq_zero, not_le]
     exact pow_pos (div_pos (norm_pos_iff.2 hc) (by positivity)) _
@@ -127,5 +128,6 @@ theorem rootHaar_main : PI.AmpRootH.RootHaar := by
       exact e6
     rw [Measure.map_congr hae, ← Measure.map_map (lm_mp p s').measurable hfc.measurable, hνf,
       Measure.map_smul, (lm_mp p s').map_eq]
+    exact (lm_mp p s').measurable.aemeasurable
 
 end PI.AmpRootHaarW

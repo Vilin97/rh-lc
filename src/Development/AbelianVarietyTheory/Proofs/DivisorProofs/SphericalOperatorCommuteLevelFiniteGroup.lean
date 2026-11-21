@@ -17,8 +17,6 @@ namespace GlobalTheory.HeckeKeepsGood
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-open GlobalTheory.IndefiniteRowSideFullHecke.GoodReductionModelReading
-
 variable {D : D7}
 
 variable {V : HSp D} {β : GL (Fin V.rank) (EAf D)} {L : Formalism.L2.DIV.LevDat D.host.E ℂ V.rank}

@@ -402,12 +402,7 @@ theorem lidx_latOf (w : HeightOneSpectrum (𝓞 K)) {ι : Type} [Fintype ι] [De
     unfold famOf
     simp
   have hlat : Submodule.IsLattice K (latOf (K := K) e) :=
-    { fg := Submodule.fg_span (Set.finite_range e)
-      span_eq_top := by
-        rw [span_latOf]
-        have := (Pi.basisFun K ι).span_eq
-        have he : (⇑(Pi.basisFun K ι)) = e := by funext i; simp [e]
-        rwa [he] at this }
+    Submodule.IsLattice.of_fg K (Submodule.fg_span (Set.finite_range e))
   rw [← h1, ← h2, lidx_map w _ hinj,
     Formalism.L2.Col.bridge_lidx_det_holds K (ι → K) w (latOf (K := K) e) _ γ hlat rfl]
   congr 1

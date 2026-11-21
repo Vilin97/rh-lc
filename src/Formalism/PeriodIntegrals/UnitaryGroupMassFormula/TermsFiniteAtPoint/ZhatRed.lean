@@ -103,7 +103,8 @@ theorem zhatReduce_of (hC : CellReduce) (hF : FrameOp) (hR : CarrierRow) (hI : Z
   have hBo : UpB ((b2 : ℕ) : 𝓞 D.host.E) Bo := upB_sgn D D.R.rS b1 b2 B hB
   obtain ⟨hrow, hlf⟩ := hR D u u' F0 Λ hΛ x.1 x.2
   obtain ⟨m, hm, hmact⟩ := hF2 x.1.fl Λ hrow Bo hBo
-  rw [hlf] at hm hmact
+  set_option backward.isDefEq.respectTransparency false in
+    rw [hlf] at hm hmact
   choose st hst using fun i j => star_int D (A j i)
   have hAo := starO_upB D b1 b2 A hA st hst
   obtain ⟨n0, hn0, hn0act⟩ := hF1 F0 Λ hΛ st hAo

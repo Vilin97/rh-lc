@@ -110,6 +110,7 @@ end Val
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
 
+attribute [local instance 100] IntermediateField.instAlgebraSubtypeMem in
 theorem generic_of_ne_zero (h : GenFrEx Xo c) (Z : Comp Xo c) (L : Type) [Field L] [Algebra c.F L]
     (y : FrPt Xo c L)
     (hZ : ∃ a n, ∃ f ∈ sec Xo c a n, evR Xo c f y ≠ 0 ∧ ∀ Z', Z' ≠ Z → evC h Z' f = 0)

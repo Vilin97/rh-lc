@@ -202,7 +202,8 @@ theorem term_eq [DecidableEq k] {k₀ m t j n' c n : ℕ} (hN : Nums k₀ m t j 
   unfold PI.OneCosetSharp.PhiS
   dsimp only
   split_ifs with h
-  · rw [prod_blocks hN χ τ, top_block hN χ τ h, sum_eq_chArg hN τ]
+  · letI : DecidableEq k := fun a b => Classical.propDecidable (a = b)
+    rw [prod_blocks hN χ τ, top_block hN χ τ h, sum_eq_chArg hN τ]
     rw [inv_one, mul_one, mul_one, ← AddChar.map_add_eq_mul, add_neg_cancel, AddChar.map_zero_eq_one]
   · rw [zero_mul]
 

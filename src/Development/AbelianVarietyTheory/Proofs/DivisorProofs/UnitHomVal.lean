@@ -47,8 +47,9 @@ def basMat {E : Type} [Field E] {n m : ℕ} (H : Plane E n m) (e : Ix m ≃ Fin 
 
 
 def basGL {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {v : Pl (F := F)} (t : E →ₐ[F] Fv F v) {n m : ℕ}
-    (H : Plane E n m) (e : Ix m ≃ Fin n) : GL (Fin n) (Fv F v) :=
-  if h : IsUnit ((basMat H e).map t).det then Matrix.nonsingInvUnit _ h else 1
+    (H : Plane E n m) (e : Ix m ≃ Fin n) : GL (Fin n) (Fv F v) := by
+  classical
+  exact if h : IsUnit ((basMat H e).map t).det then Matrix.nonsingInvUnit _ h else 1
 
 def gT {R : Type} [CommRing R] {m : ℕ} (g : GL (Fin m) R) : GL (Fin m) R :=
   ⟨(g : Matrix (Fin m) (Fin m) R)ᵀ, ((g⁻¹ : GL (Fin m) R) : Matrix (Fin m) (Fin m) R)ᵀ,

@@ -375,12 +375,15 @@ theorem torsionFree_RW (LL : FinExt l) (x : RW LL) (hx : (l : RW LL) * x = 0) : 
   let e := TensorProduct.equivFinsuppOfBasisLeft (N := WCb l)
     (Module.Free.chooseBasis ℤ_[l] ↥(OL LL))
   apply e.injective
-  rw [map_zero]
+  rw [e.map_zero]
   ext i : 1
-  have h : e ((l : RW LL) * x) i = 0 := by rw [hx, map_zero]; rfl
-  rw [← nsmul_eq_mul, map_nsmul, Finsupp.smul_apply, nsmul_eq_mul] at h
+  have h : e ((l : RW LL) * x) i = 0 := by rw [hx, e.map_zero]; rfl
+  have hsmul : e (l • x) = l • e x := by
+    simpa only [Nat.cast_smul_eq_nsmul] using e.map_smul (l : ℤ_[l]) x
+  rw [← nsmul_eq_mul, hsmul, Finsupp.smul_apply, nsmul_eq_mul] at h
   exact (mul_eq_zero.1 h).resolve_left (WittVector.irreducible l (k := Cb l)).ne_zero
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem faithfullyFlat_RW {P : LocPrime l} {AI : LocAinf l P} {H : LocHW l P} (E : LocFon l P AI H)
     (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL) :
     letI := (E.E K s LL h).tie.ioE.toRingHom.toAlgebra

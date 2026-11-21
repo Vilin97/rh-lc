@@ -114,7 +114,7 @@ theorem chordZ {xP yP : K} (hP : W.toAffine.Equation xP yP) :
           * v ^ 2 * E * ((E * q) ^ 2 + E * q + 1)) * h
 
 theorem isFlow_subst {a b : K⟦X⟧} (h : IsFlow (curveS W) (D W) a b) :
-    IsFlow (curveS W) (derivative K) (a.subst (expSer W)) (b.subst (expSer W)) := by
+    IsFlow (curveS W) (derivative (R := K)) (a.subst (expSer W)) (b.subst (expSer W)) := by
   obtain ⟨hE, hDa, hDb⟩ := h
   have hφ : ∀ f : K⟦X⟧, f.subst (expSer W) = PowerSeries.substAlgHom (he W) f := fun f => by
     rw [PowerSeries.coe_substAlgHom]

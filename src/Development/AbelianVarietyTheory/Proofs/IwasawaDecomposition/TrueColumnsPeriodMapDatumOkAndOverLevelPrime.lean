@@ -32,10 +32,40 @@ theorem pref_m (u : B.Word) (a : I.ι) (b : (I.stp0 u a B.R.m).β) (q : (I.stp0 
   rw [← topLev_pref_m I.Ch I.sel (I.tup a) (I.cst a) I.Ps u]
   exact ⟨fun h => h.2.2, fun h => ⟨fun e => by omega, fun e => by omega, h⟩⟩
 
-theorem stX_ok (a : I.ι) : (I.stX a).Ok :=
-  stepY_ok (Ys.triv B.fields _) Unit (fun _ => rowTyG I.Ch I.Ps) (fun _ => levQX B.R I.sel (I.tup a)) (fun _ => True)
-    (base_fields_primes_ok B X).1 (fun _ => levQX_finiteIndex I.sel (I.tup a))
-    (fun _ P g => (levQX_root (R := B.R) I.sel (I.tup a) P).imp fun _ hm => ⟨hm.1, hm.2 g⟩) fun _ _ => Set.finite_singleton _
+theorem stX_ok (a : I.ι) : (I.stX a).Ok := by
+  have hX := (base_fields_primes_ok B X).1
+  let y := Ys.triv B.fields (B.R.N B.R.m - 1)
+  let Λ := rowTyG I.Ch I.Ps
+  let Θ := levQX B.R I.sel (I.tup a)
+  have hRoot (g : Θ.grp) : IsOfFinOrder (Θ.chr g) := by
+    rw [show Θ.chr g = ∏ P, (Θ P).lam (piProj (fun P => (Θ P).H) P g) from
+      piChar_apply (fun P => (Θ P).H) (fun P => (Θ P).lam) g]
+    refine Finset.prod_induction _ IsOfFinOrder (fun _ _ => IsOfFinOrder.mul) IsOfFinOrder.one ?_
+    intro P _
+    obtain ⟨m, hm, hpow⟩ := levQX_root (R := B.R) I.sel (I.tup a) P
+    exact isOfFinOrder_iff_pow_eq_one.2 ⟨m, hm, hpow _⟩
+  refine
+    { fin_orb := stepY_fin_orb (ST := ∅) y Unit (fun _ => Λ) (fun _ => Θ) (fun _ => True) hX
+        (fun _ => levQX_finiteIndex I.sel (I.tup a)) (fun _ _ => Set.finite_singleton _)
+      fin_stab b p := by
+        have := autO_finite (posStar_of_ok hX) p.1.1.deco.2.lat
+        exact Finite.of_injective _ (stabAut_inj y Unit (fun _ => Λ) (fun _ => Θ) (fun _ => True) b p)
+      unit _ g := by
+        let M : Matrix (Fin (B.R.N B.R.m - 1)) (Fin (B.R.N B.R.m - 1)) B.fields.E := ↑(toGLm _ _ g.1.1)
+        have h : Mᴴ * 1 * M = 1 := toGLm_mem_UJ g.1
+        rw [Matrix.mul_one] at h
+        exact h
+      root _ g :=
+        isOfFinOrder_iff_pow_eq_one.1
+          ((MonoidHom.isOfFinOrder Λ.chr (isOfFinOrder_of_finite g.2.1)).mul (hRoot g.2.2))
+      lsh_smul _ g p x := by
+        show (↑(toGLm _ _ g.1.1) : Matrix _ _ _) *ᵥ x ∈ (p.1.1.deco.1.act g.1.1 g.2.1.1).Lsh ↔
+          x ∈ p.1.1.deco.1.Lsh
+        rw [toGLm_mulVec, Deco.Lsh_act _ g.1.2, mem_gmap, LinearEquiv.symm_apply_apply]
+      lsh_lat _ p := p.1.1.deco.2.Lsh_lattice
+      stab_inj b g p h h₁ :=
+        stepY_eq_one y Unit (fun _ => Λ) (fun _ => Θ) (fun _ => True) b g p h
+          (Subtype.ext ((toGLm B.fields.E (B.R.N B.R.m - 1)).injective (h₁.trans (map_one _).symm))) }
 
 
 set_option maxHeartbeats 1600000 in

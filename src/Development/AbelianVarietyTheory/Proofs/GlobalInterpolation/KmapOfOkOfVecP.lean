@@ -109,10 +109,51 @@ theorem map_kerOf (A : Amb X) {a b : ℕ} (Sa SB : Finset (HeightOneSpectrum (�
         jetMap (jetC A.cD (thC (X.embC A.σ₀) A.δ A.d A.sc A.AA Sa N N' (cA * cB) (fun x => A.σ₀ (Ξ x)) (A.e a b N N'))) 0
           (MvPolynomial.map A.σ₀ (F.1 * ∏ τ, frDet X.K a τ ^ n τ)) := by
   classical
-  have hfin := GlobalTheory.finite_divLat_quot_mulLat_homAt X.E a b Sa N N' cA cB hN.1 hN'.1 hA hB
+  have span_of_self_dual {n : ℕ} {L : Submodule (𝓞 X.E) (Sp X.E n)} (hLat : IsSdLat L) :
+      Submodule.span X.E (L : Set (Sp X.E n)) = ⊤ := by
+    apply Submodule.dualAnnihilator_eq_bot_iff.mp
+    apply le_antisymm ?_ bot_le
+    intro f hf
+    let v : Sp X.E n := fun i => star (f (Pi.single i 1))
+    have hpair : hStd X.E n v = f := by
+      apply (Pi.basisFun X.E (Fin n)).ext
+      intro i
+      rw [Pi.basisFun_apply, hStd_apply, Finset.sum_eq_single i]
+      · simp [v]
+      · intro j _ hj
+        simp [hj]
+      · simp
+    have hline (r : X.E) : r • v ∈ L := by
+      rw [← show dual (hStd X.E n) L = L from hLat.2, dualBasic_mem_dual]
+      intro y hy
+      have hy0 : hStd X.E n v y = 0 := by
+        rw [hpair]
+        exact (Submodule.mem_dualAnnihilator f).mp hf y (Submodule.subset_span hy)
+      have hz : hStd X.E n y v = 0 := by
+        simpa [hy0] using ((hStd_isSymm (E := X.E) (n := n)).eq v y).symm
+      simp [hz]
+    have hv : v = 0 := by
+      funext i
+      change v i = 0
+      by_contra hi
+      -- A nonzero coordinate would make the field finite over its ring of integers.
+      let coord := (LinearMap.proj i : Sp X.E n →ₗ[X.E] X.E).restrictScalars (𝓞 X.E)
+      have htop : L.map coord = ⊤ := by
+        rw [eq_top_iff]
+        intro x _
+        exact ⟨(x / v i) • v, hline _, div_mul_cancel₀ _ hi⟩
+      have : Module.Finite (𝓞 X.E) X.E := Module.finite_def.mpr (htop ▸ hLat.1.fg.map coord)
+      exact RingOfIntegers.not_isField X.E
+        (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 X.E) X.E) (Field.toIsField X.E))
+    rw [Submodule.mem_bot]
+    simpa [hv] using hpair.symm
+  have hNfull : Submodule.IsFullLattice X.E N :=
+    { toIsLattice := hN.1, span_eq_top := span_of_self_dual hN }
+  have hfin := GlobalTheory.finite_divLat_quot_mulLat_homAt X.E a b Sa N N' cA cB hNfull hN'.1 hA hB
   have hth := GlobalTheory.latSum_thInd_eq_thC X A a b Sa N N' cA cB (fun x => A.σ₀ (Ξ x)) (indTieD_of_la A a b Sa _ (Nat.mul_pos hA hB) hL)
-    hN hN' hA hB (GlobalTheory.ThetaMove.VolumePos.volC_pos X.E a b A.AA Sa N N' hN.1.fg hN'.1.fg hN.1.span_eq_top hN'.1.span_eq_top
-      hL.2.2.2.2.1 h0) hfin (fun x hx => hΞ.1 x ((map_ne_zero A.σ₀).1 hx)) fun x y hy => congrArg A.σ₀ (hΞ.2 x y hy)
+    hN hN' hA hB (GlobalTheory.ThetaMove.VolumePos.volC_pos X.E a b A.AA Sa N N' hN.1.fg hN'.1.fg
+      hNfull.span_eq_top (span_of_self_dual hN') hL.2.2.2.2.1 h0) hfin
+    (fun x hx => hΞ.1 x ((map_ne_zero A.σ₀).1 hx)) fun x y hy => congrArg A.σ₀ (hΞ.2 x y hy)
   let _ := Fintype.ofFinite (↥(divLat cA (homAt Sa N N')) ⧸ (mulLat cB (homAt Sa N N')).comap (divLat cA (homAt Sa N N')).subtype)
   rw [kerOf_thDistC, ← funext hth]
   unfold latSum

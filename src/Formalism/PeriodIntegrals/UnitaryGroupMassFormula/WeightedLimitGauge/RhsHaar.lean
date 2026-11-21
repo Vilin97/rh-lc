@@ -364,6 +364,7 @@ theorem rhsHaar_of (hInv : RhsWInv) : RhsHaar := by
     nu_ball hD, fun φ hφ => repr hD φ hφ⟩
   rw [nuR, Measure.map_apply (meas_chartF hD.sec) (s := {x : Mt k r | Matrix.of x ∉ UWb k r})
     HU.amb_closed.isOpen_compl.measurableSet]
-  exact measure_mono_null (fun q hq hg => hq (mem_chart hD hg)) (src_null hD)
+  exact measure_mono_null (t := (goodS k r z z')ᶜ)
+    (fun q hq hg => hq (mem_chart hD hg)) (src_null hD)
 
 end PI.RhsWLim.W

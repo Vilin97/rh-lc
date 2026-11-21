@@ -86,7 +86,7 @@ variable (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v : Heig
 theorem continuous_hR_right (x : Fin n → Fv F v ⊗[F] E) :
     Continuous (fun y : Fin n → Fv F v ⊗[F] E => hR (Fv F v) σ J x y) := by
   simp only [hR, Formalism.UG.hform]
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact continuous_const.mul (continuous_apply j)
 
 theorem isClosed_latLoc (Λ : Set (Fin n → E)) (hSD : IsSDLoc σ J v Λ) :

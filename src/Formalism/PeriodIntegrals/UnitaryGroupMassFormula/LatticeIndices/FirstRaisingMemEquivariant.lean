@@ -68,13 +68,17 @@ theorem firstLattice_mem_local (h : UnitElt X p θ) (y : Fin X.B.I.n → FpX X p
     obtain ⟨l, hl, rfl⟩ := hy
     exact first_raising_mem_equivariant X p θ h l hl
   | zero =>
-    convert Submodule.zero_mem (latLoc (E := X.B.I.E) p.1 (X.B.I.L : Set (Fin X.B.I.n → X.B.I.E))) using 1
+    convert Submodule.zero_mem (latLoc (E := X.B.I.E) p.1 (X.B.I.L : Set (Fin X.B.I.n → X.B.I.E))) using 1 <;> funext j <;> simp
   | add y y' _ _ hy hy' =>
     convert Submodule.add_mem _ hy hy' using 1
-    rw [← map_add (f := _), Prod.mk_add_mk, add_zero]
+    funext j
+    simp only [Pi.add_apply]
+    rw [← map_add, Prod.mk_add_mk, add_zero]
   | smul c y _ hy =>
     convert Submodule.smul_mem _ c hy using 1
-    rw [osmul_eq X p, ← map_smul, Prod.smul_mk, smul_zero]
+    funext j
+    simp only [Pi.smul_apply, osmul_eq X p]
+    rw [← map_smul, Prod.smul_mk, smul_zero]
     rfl
 
 theorem secondLattice_mem_local (h : UnitElt X p θ) (z : Fin X.B.I.n → FpX X p) (hz : z ∈ Mlat2 X p θ) :
@@ -86,17 +90,23 @@ theorem secondLattice_mem_local (h : UnitElt X p θ) (z : Fin X.B.I.n → FpX X 
     have h2 : ratV (F := X.B.I.F) (FpX X p) l ∈ latLoc (E := X.B.I.E) p.1 (X.B.I.L : Set (Fin X.B.I.n → X.B.I.E)) :=
       Submodule.subset_span ⟨l, hl, rfl⟩
     convert Submodule.sub_mem _ h2 h1 using 1
+    funext j
     apply θ.injective
+    change θ (θ.symm (0, iota2 X p θ (l j))) = θ (inclR (FpX X p) (l j) - θ.symm (iota1 X p θ (l j), 0))
     rw [map_sub, AlgEquiv.apply_symm_apply, AlgEquiv.apply_symm_apply, th_incl]
     ext <;> simp
   | zero =>
-    convert Submodule.zero_mem (latLoc (E := X.B.I.E) p.1 (X.B.I.L : Set (Fin X.B.I.n → X.B.I.E))) using 1
+    convert Submodule.zero_mem (latLoc (E := X.B.I.E) p.1 (X.B.I.L : Set (Fin X.B.I.n → X.B.I.E))) using 1 <;> funext j <;> simp
   | add y y' _ _ hy hy' =>
     convert Submodule.add_mem _ hy hy' using 1
-    rw [← map_add (f := _), Prod.mk_add_mk, zero_add]
+    funext j
+    simp only [Pi.add_apply]
+    rw [← map_add, Prod.mk_add_mk, zero_add]
   | smul c y _ hy =>
     convert Submodule.smul_mem _ c hy using 1
-    rw [osmul_eq X p, ← map_smul, Prod.smul_mk, smul_zero]
+    funext j
+    simp only [Pi.smul_apply, osmul_eq X p]
+    rw [← map_smul, Prod.smul_mk, smul_zero]
     rfl
 
 theorem latSplit_of (h : UnitElt X p θ) : LatSplitP X p θ := by

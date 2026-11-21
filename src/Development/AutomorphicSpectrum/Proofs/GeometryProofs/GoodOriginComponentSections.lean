@@ -182,6 +182,7 @@ def gaugeT {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTh
     (Or : RootOrigin Y S RM Fx) (t : Ix Dw → (RM.Ω)ˣ) (u : GlobalTheory.AllWt.Weight Dw) : RM.Ω :=
   ((∏ i, t i ^ GlobalTheory.AllWt.exOf Dw u 0 i : (RM.Ω)ˣ) : RM.Ω) * ∏ r : RootIx Dw, Or.e r ^ u r.1 r.2
 
+attribute [local instance 100] IntermediateField.instAlgebraSubtypeMem in
 theorem mem_val_of_chart (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (S : Finset ℕ) (RM : Top.RootModel (CMType H) (Dw.p + Dw.q)) (Sys : PB.AnSys (Top.dimFl (CMType H) (Dw.p + Dw.q)) (Option (RootIx Dw))) (Fx : FixedData Y Sys) (Or : RootOrigin Y S RM Fx) (Fr : Small.GenFrame Or) (h : GenFrEx Xo c) (C : GlobalTheory.Reg.FChart h) : letI := Small.cstAlg Or
     ∀ (φ : Om C.Z →ₐ[c.F] RM.Ω) (P : FrPt Xo c RM.Ω) (t : Ix Dw → (RM.Ω)ˣ), FrMap φ (genFr h C.Z) P → FrBor t P Fr.y₀ →
     ∀ (u : GlobalTheory.AllWt.Weight Dw), ∀ s ∈ chartLatNm RM.y (degOf RM u) 1, ∀ V : ValuationSubring RM.Ω, (∀ a : C.R, φ a ∈ V) →

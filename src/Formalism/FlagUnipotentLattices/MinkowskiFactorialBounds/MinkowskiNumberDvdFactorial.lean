@@ -94,7 +94,7 @@ theorem minkowski_number_dvd_factorial : Formalism.HermitianLatticeCounting.S6.M
       have h2 : 2 ^ (N + 2) = 4 * 2 ^ N := by ring
       have h3 : 2 ^ (N + 2) ≤ p ^ (N + 2) := Nat.pow_le_pow_left hp2 _
       omega
-  rw [padicValNat_factorial hlog, Finset.sum_Ico_eq_sum_range]
+  rw [Nat.padicValNat_def, multiplicity_factorial hlog, Finset.sum_Ico_eq_sum_range]
   unfold minkowskiExp
   have e : N + 2 - 1 = N + 1 := by omega
   rw [e]
@@ -562,7 +562,7 @@ theorem det_form_bound_field : Formalism.HermitianLatticeCounting.S6.DetBBoundK 
         simp only [map_sub, map_add (f := _), LinearMap.sub_apply, LinearMap.add_apply, hη]
         ring
       have h1 : (σ (h (x - η x) (x - η x) + h (x + η x) (x + η x))).re = (σ (4 * h x x)).re := by rw [e]
-      rw [σ.map_add (f := _), σ.map_mul, Complex.add_re] at h1
+      rw [map_add, map_mul, Complex.add_re] at h1
       have h2 : (σ 4 * σ (h x x)).re = 4 * (σ (h x x)).re := by
         have : σ 4 = ((4:ℝ) : ℂ) := by
           rw [map_ofNat]; norm_num

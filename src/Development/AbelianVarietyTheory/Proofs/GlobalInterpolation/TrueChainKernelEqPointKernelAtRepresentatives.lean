@@ -15,7 +15,7 @@ open _root_.Formalism.L2.Col
 
 attribute [local instance] GlobalTheory.Mem.Col2.starE
 
-local instance datNumberField {B : Base} {X : PreX B.toPre} (I : TC B X)
+instance datNumberField {B : Base} {X : PreX B.toPre} (I : TC B X)
     (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) :
     @NumberField (dat I l Z u a).E (dat I l Z u a).fE :=
   (dat I l Z u a).nE

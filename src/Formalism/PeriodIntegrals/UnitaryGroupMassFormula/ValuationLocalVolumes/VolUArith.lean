@@ -130,7 +130,9 @@ theorem locDeg_one_below (l : ℕ) [hl : Fact l.Prime]
   have hQ0 : Q ≠ ⊥ := by
     intro hb
     apply p.ne_bot
-    rw [← hc, hb, Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective _ _)]
+    rw [← hc, hb]
+    change Ideal.comap (algebraMap (𝓞 F) (𝓞 E)) ⊥ = ⊥
+    exact Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective _ _)
   have hw : ((l : ℕ) : 𝓞 E) ∈ Q := by
     rw [← hc] at hp
     simpa using Ideal.mem_comap.mp hp

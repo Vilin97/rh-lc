@@ -92,7 +92,7 @@ theorem hermLatFin_main : HermLatFin := by
     (fun M hM x hx y hy => by
       rw [Nat.cast_one, one_mul, hform_eq_herm σ hst]
       exact Submodule.mem_one.mpr ⟨⟨_, hM.2.1 x hx y hy⟩, rfl⟩)
-    (fun M hM => hlat M ⟨hM.1.1, hM.1.2⟩)
+    (fun M hM => hlat M (Submodule.IsLattice.of_fg E hM.1.1))
     (fun M hM _ _ => covol_le σ hst J T N ι hι M hM hT)
   refine ⟨(s : Set _), s.finite_toSet, fun L hL => ?_⟩
   obtain ⟨N', hN', g, hg, hgN⟩ := hsall L hL

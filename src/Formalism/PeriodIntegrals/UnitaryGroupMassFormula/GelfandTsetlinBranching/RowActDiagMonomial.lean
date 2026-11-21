@@ -111,7 +111,8 @@ theorem comp_sum_B {σ M : Type*} [AddCommMonoid M] [DecidableEq M] (w : σ → 
 theorem comp_zero_B {σ M : Type*} [AddCommMonoid M] [DecidableEq M] (w : σ → M) (f : MvPolynomial σ ℂ) (m : M)
     (hm : ∀ e ∈ f.support, Finsupp.weight w e ≠ m) : weightedHomogeneousComponent w m f = 0 := by
   ext e
-  rw [coeff_weightedHomogeneousComponent, coeff_zero]
+  rw [coeff_weightedHomogeneousComponent]
+  change (if Finsupp.weight w e = m then f.coeff e else 0) = 0
   split_ifs with h
   · by_contra hne
     exact hm e (mem_support_iff.mpr hne) h

@@ -49,10 +49,10 @@ theorem detSplit_prodMem {N K : ℕ} (sz : Fin K → ℕ) (hsz : ∀ k, sz k ≤
     have h2 := (Formalism.GradedWeylDivisibility.dualWeylMul ℂ N N _ _ _ _).1 h1 ih
     rw [Finset.prod_insert ha]
     convert h2 using 2
-    split_ifs with ht
-    · rw [Finset.card_insert_of_notMem (by simp [ha])]
-      simp [ht, add_comm]
-    · simp [ht]
+    funext t
+    by_cases ht : t.val < sz a
+    · simp [shapeDeg, ht, ha, Finset.filter_insert, add_comm]
+    · simp [shapeDeg, ht, Finset.filter_insert]
 
 theorem determinant_splitting_formula : DetSplit := by
   intro N ν c hν f hf

@@ -113,9 +113,7 @@ lemma sa_scalar (hirr : Irr π) (A : H →L[ℂ] H) (hA : IsSelfAdjoint A)
       have h1 : v ∈ S := by rw [hS]; exact Submodule.mem_top
       exact h1
   obtain ⟨r, hr⟩ : (spectrum ℝ A).Nonempty := by
-    first
-    | exact CFC.spectrum_nonempty ℝ A hA
-    | exact hA.spectrum_nonempty
+    exact ContinuousFunctionalCalculus.spectrum_nonempty A hA
   refine ⟨r, ?_⟩
   have heq : Set.EqOn (fun x : ℝ => x) (fun _ => r) (spectrum ℝ A) := by
     intro x hx

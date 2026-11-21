@@ -31,10 +31,10 @@ theorem crd_sigR (σ : E →ₐ[F] E) (z : Fv F v ⊗[F] E) (l : Fin d) :
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [sigR_smul, hB, hs, crd, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
+    simp only [sigR_smul, hB, hs, crd, map_sum, map_smul, Finset.sum_apply,
     Finsupp.smul_apply, smul_eq_mul, Algebra.TensorProduct.basis_repr_tmul,
     Finsupp.mapRange_apply, one_smul]
-  rfl
+  simp [Finsupp.smul_apply, Finsupp.mapRange_apply, hBdef]
 
 theorem ev_sig (σ : E →ₐ[F] E) :
     ∀ᶠ v in cofinite, ∀ z ∈ latA v b, sigR (Fv F v) σ z ∈ latA v b := by

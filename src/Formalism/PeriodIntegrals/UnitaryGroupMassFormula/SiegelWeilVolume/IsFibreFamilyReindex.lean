@@ -79,7 +79,7 @@ theorem isFibreFamily_smul {B : Set X} {c : ℝ≥0∞} (hc : c ≠ ⊤)
     IsFibreFamily (c • μ) f ι U ν B (fun b => c • fib b) := by
   obtain ⟨h1, h2, h3⟩ := hfib
   refine ⟨fun b => ?_, fun φ hφ => ?_, fun φ hφc hφs hφU => ?_⟩
-  · simp [h1 b]
+  · simp only [Measure.smul_apply, h1 b, smul_zero]
   · rw [Measure.restrict_smul, lintegral_smul_measure, h2 φ hφ, smul_eq_mul, ← lintegral_const_mul' _ _ hc]
     simp only [lintegral_smul_measure, smul_eq_mul]
   · obtain ⟨hi, hcont⟩ := h3 φ hφc hφs hφU

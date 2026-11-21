@@ -39,6 +39,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
 
 attribute [local instance 1100] Subalgebra.algebra in
+attribute [local instance 100] IntermediateField.instAlgebraSubtypeMem in
 theorem chart_value {h : GenFrEx Xo c} (C : GlobalTheory.Reg.FChart h) {L : Type} [Field L] [Algebra c.F L]
     (ψ : C.R →ₐ[c.F] L) (z w : FrPt Xo c L) (t : Ix Dw → Lˣ) (hz : FrMap ψ C.y z) (hb : FrBor t z w)
     {a : WZ E} {g : Rul Xo c} (hg : g ∈ GlobalTheory.CompanionTheory.Ar.Rec.secZ Xo c a) :
@@ -154,6 +155,7 @@ theorem exists_ratio {h : GenFrEx Xo c} (hT : GenFromTest Xo c h) {Z : Comp Xo c
     · rw [evC_mul_geometry]; exact mul_ne_zero h1 h2
     · rw [evC_mul_geometry, evC_mul_geometry, ← e1, ← e2]; ring
 
+attribute [local instance 100] IntermediateField.instAlgebraSubtypeMem in
 theorem frame_of_birOn {h : GenFrEx Xo c} (hT : GenFromTest Xo c h) {Z : Comp Xo c} {L : Type} [Field L]
     [Algebra c.F L] (y : FrPt Xo c L) (φ : Om Z →ₐ[c.F] L) (t : Ix Dw → Lˣ)
     (hrd : ∀ (a : WZ E), ∀ f ∈ GlobalTheory.CompanionTheory.Ar.Rec.secZ Xo c a,
