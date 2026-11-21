@@ -132,7 +132,7 @@ def NeatLev : Prop :=
       (∀ c ∈ C, cLoc v' c ∈ GlobalTheory.LFun.KGL v' (n := a)) ∧ f ∈ fixedBy W (C ⊓ Kv.comap (cLoc v'))
 
 def EllC : Prop :=
-  ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a : ℕ) (C : Subgroup (UA E a)), C ≤ finU E a →
+  ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a : ℕ) (C : Subgroup (UA E a)), C ≤ finU (E := E) (n := a) →
     (∀ g : UA E a, ∀ γ ∈ ratU E a, ∀ c ∈ C, ∀ x ∈ infU E a, γ * g = g * c * x → c = 1) → ∃ ℓ : UA E a → C, IsEll C ℓ
 
 def Twist : Prop :=
@@ -184,7 +184,7 @@ def FamEx : Prop :=
     ∀ (W : Wt E a) (f : algForms W), f ∈ UpperTheory.Gal.Gen.fixedBy W (K ⊓ Kv.comap (cLoc v')) →
     ∀ τ : E →+* ℂ, GlobalTheory.CongL.OverPl ι τ v' → ∀ (X : Type) (b : UA E a → X → W.Sp),
     (∀ F : algForms W, ∃ R : ℝ, ∀ g i, ‖ι.symm (F.1 (b g i) g)‖ ≤ R) → ∀ ε : ℝ, 0 < ε →
-    ∃ (d : ℕ) (M : UA E a → GL (Fin a) ℂ), (∀ g, ∀ h ∈ finU E a, cLoc v' h = 1 → M (g * h) = M g) ∧
+    ∃ (d : ℕ) (M : UA E a → GL (Fin a) ℂ), (∀ g, ∀ h ∈ finU (E := E) (n := a), cLoc v' h = 1 → M (g * h) = M g) ∧
       ∀ ν : DomWeight a, ∃ B : GL (Fin a) ℂ → GL (Fin a) ℂ → W.Sp →ₗ[ℂ] (UA E a → ℂ), Fam τ W K ν d B ∧
         ∀ g i, ‖ι.symm (f.1 (b g i) g - B (M g) (M g) (b g i) g)‖ ≤ ε
 

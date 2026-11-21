@@ -22,7 +22,7 @@ theorem UpperTheory.Gal.TP.Sub.satAE_holds :
     SatAE := by
   intro E _ _ _ a U hU
   obtain ⟨φ, hφ, hφ0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hU.ne_bot
-  let L : Subgroup (finU E a) :=
+  let L : Subgroup (finU (E := E) (n := a)) :=
     { carrier := {k | RU E a k φ = φ}
       one_mem' := by simp
       mul_mem' := by
@@ -34,7 +34,7 @@ theorem UpperTheory.Gal.TP.Sub.satAE_holds :
         simp only [Set.mem_setOf_eq] at *
         conv_lhs => rw [← hx]
         rw [← Module.End.mul_apply, ← map_mul, Subgroup.coe_inv, inv_mul_cancel, map_one, Module.End.one_apply] }
-  have hLo : IsOpen (L : Set (finU E a)) := (hU.aut φ hφ).level
+  have hLo : IsOpen (L : Set (finU (E := E) (n := a))) := (hU.aut φ hφ).level
   filter_upwards [GlobalTheory.T.eventually_localIntegralPoints_mem_openSubgroup_definiteUnitary E a L hLo] with w hw hs
   obtain ⟨hJo, hJc⟩ := GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL w a
   obtain ⟨σ, hσ, v, hv0, hv⟩ := GlobalTheory.T.exists_localComponent_eigenvector_splitPlace E a U hU w hs (GlobalTheory.LFun.KGL w (n := a)) hJo hJc 1 φ hφ hφ0

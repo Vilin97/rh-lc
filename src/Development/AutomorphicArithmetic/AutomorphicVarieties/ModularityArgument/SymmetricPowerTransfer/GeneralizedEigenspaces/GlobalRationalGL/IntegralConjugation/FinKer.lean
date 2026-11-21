@@ -45,7 +45,7 @@ private theorem fin_mem {L : Type} [Field L] [NumberField L] [IsCMField L] {n : 
 
 open Formalism.UG GlobalTheory.BCT.FinPtLoc in
 private theorem fin_ker {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} (g : GL (Fin n) (Af L))
-    (h : finGL L n g ∈ UA L n) : (⟨_, h⟩ : UA L n) ∈ finU L n := by
+    (h : finGL L n g ∈ UA L n) : (⟨_, h⟩ : UA L n) ∈ finU (E := L) (n := n) := by
   show cInf (⟨_, h⟩ : UA L n) = 1
   apply Units.ext
   refine Matrix.ext fun i j => ?_
@@ -54,7 +54,7 @@ private theorem fin_ker {L : Type} [Field L] [NumberField L] [IsCMField L] {n : 
   by_cases h : i = j <;> simp [Matrix.one_apply, h]
 
 theorem UpperTheory.V.Z.Sym.Dict.Br.adEx :
-    ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (R : RingBr L) (n : ℕ) (x : ∀ v : Pl (Lp L), Matrix (Fin n) (Fin n) (Lsq (Kv v) (cv v R.Δ))), (∀ v, star (x v) * x v = 1) → (∀ᶠ v in Filter.cofinite, ∀ i j, IsIntegral (Ov v) (x v i j)) → ∃ g ∈ finU L n, ∀ w, mL w g = (x (un w)).map (R.ρ _ w rfl) := by
+    ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (R : RingBr L) (n : ℕ) (x : ∀ v : Pl (Lp L), Matrix (Fin n) (Fin n) (Lsq (Kv v) (cv v R.Δ))), (∀ v, star (x v) * x v = 1) → (∀ᶠ v in Filter.cofinite, ∀ i j, IsIntegral (Ov v) (x v i j)) → ∃ g ∈ finU (E := L) (n := n), ∀ w, mL w g = (x (un w)).map (R.ρ _ w rfl) := by
   intro L _ _ _ R n x hx hint
   have ev : ∀ i j, ∀ᶠ w : Plc L in Filter.cofinite, R.ρ _ w rfl (x (un w) i j) ∈ w.adicCompletionIntegers L :=
     fun i j => ((GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.tendsto_under (Lp L) L).eventually hint).mono

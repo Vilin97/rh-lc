@@ -34,12 +34,6 @@ private lemma valR_one_degeneration {L : Type} [Field L] {X : Scheme} (x : _root
   rw [dite_eq_left h, map_one, map_one]
 
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-attribute [local instance] Over.cartesianMonoidalCategory in
-open Classical in
-attribute [local instance] MvPolynomial.gradedAlgebra in
-variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {M : _root_.GlobalTheory.ZH.RatModel o Ω} in
 theorem _root_.GlobalTheory.ZH.RatModel.exists_isCl_of_isProjOver (h : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsProjOver M.s) :
     ∃ (n : ℕ) (t : Fin (n + 1) → Ω), M.IsCl t := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsProjOver at h
@@ -57,10 +51,10 @@ theorem _root_.GlobalTheory.ZH.RatModel.exists_isCl_of_isProjOver (h : _root_.Re
     rw [hsub q p]
     exact hk
   set t : Fin (N + 1) → Ω := fun j =>
-    _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valR (M.pt ≫ π) (_root_.GlobalTheory.ProjSpace.chart o N k) (_root_.GlobalTheory.ProjSpace.ratio o N k j) with ht_def
+    _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.valR (M.pt ≫ π) (_root_.GlobalTheory.ProjSpace.chart o N k) (_root_.GlobalTheory.ProjSpace.ratio (R := o) (N := N) k j) with ht_def
   have htk : t k = 1 := by
     simp only [ht_def]
-    have : _root_.GlobalTheory.ProjSpace.ratio o N k k = 1 := by
+    have : _root_.GlobalTheory.ProjSpace.ratio (R := o) (N := N) k k = 1 := by
       unfold _root_.GlobalTheory.ProjSpace.ratio
       exact _root_.GlobalTheory.ProjSpace.ratioOn_self
     rw [this]
@@ -128,13 +122,6 @@ private theorem mem_span_range_iff_vecMul_inv_mem {o Ω : Type} [CommRing o] [Fi
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
 
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
-open scoped CategoryTheory.Obj in
-attribute [local instance] Over.cartesianMonoidalCategory in
-open Classical in
-attribute [local instance] MvPolynomial.gradedAlgebra in
-variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {M : _root_.GlobalTheory.ZH.RatModel o Ω} in
-variable {J : Type} [Fintype J] [DecidableEq J] in
 theorem _root_.GlobalTheory.ZH.RatModel.exists_isCl_lat_eq_span : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω]
     [IsNoetherianRing o] (M : _root_.GlobalTheory.ZH.RatModel o Ω), _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsProjOver M.s → ∀ (J : Type) [Fintype J]
     (EE : M.Lat J), ∃ (n : ℕ) (t : Fin (n + 1) → Ω) (e m : ℕ) (v : Fin m → J → Ω),

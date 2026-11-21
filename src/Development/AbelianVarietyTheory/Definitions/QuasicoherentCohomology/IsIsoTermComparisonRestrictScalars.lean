@@ -832,13 +832,13 @@ noncomputable def Cube.directSum (A : κ → Cube.{v} ι R) : Cube.{v} ι R :=
 
 
 noncomputable def Cube.directSumIncl (A : κ → Cube.{v} ι R) (k : κ) : A k ⟶ Cube.directSum A :=
-  Cube.homMk (fun s => DirectSum.lof R κ (fun k => (A k).obj s) k)
+  Cube.homMk ι R (fun s => DirectSum.lof R κ (fun k => (A k).obj s) k)
     fun h x => (DirectSum.lmap_lof (fun k => Cube.res (A k) h) k x).symm
 
 
 omit [DecidableEq κ] in
 noncomputable def Cube.directSumProj (A : κ → Cube.{v} ι R) (k : κ) : Cube.directSum A ⟶ A k :=
-  Cube.homMk (fun s => DirectSum.component R κ (fun k => (A k).obj s) k) fun _ _ => rfl
+  Cube.homMk ι R (fun s => DirectSum.component R κ (fun k => (A k).obj s) k) fun _ _ => rfl
 
 theorem Cube.directSumIncl_proj (A : κ → Cube.{v} ι R) (k : κ) :
     Cube.directSumIncl A k ≫ Cube.directSumProj A k = 𝟙 _ := by

@@ -84,7 +84,7 @@ theorem tendsto_val_locU (x : HeightOneSpectrum (𝓞 E) → UA E n) (hx : ∀ w
 theorem eventually_isUnramU {π : Submodule ℂ (UA E n → ℂ)} (hπ : IsAutRepU π) :
     ∀ᶠ w : HeightOneSpectrum (𝓞 E) in cofinite, IsUnramU π w := by
   obtain ⟨φ, hφ, h0⟩ := (Submodule.ne_bot_iff _).1 hπ.ne_bot
-  have hS : {k : finU E n | RU E n k φ = φ} ∈ 𝓝 (1 : finU E n) :=
+  have hS : {k : finU (E := E) (n := n) | RU E n k φ = φ} ∈ 𝓝 (1 : finU (E := E) (n := n)) :=
     (hπ.aut φ hφ).level.mem_nhds (by simp)
   have hy : ∀ w : HeightOneSpectrum (𝓞 E), ∃ y : UA E n, y ∈ locU n w ∧ cLoc w y ∈ GlobalTheory.LFun.KGL w (n := n) ∧
       (RU E n y φ = φ → ∀ x ∈ locU n w, cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n) → RU E n x φ = φ) := by
@@ -95,8 +95,8 @@ theorem eventually_isUnramU {π : Submodule ℂ (UA E n → ℂ)} (hπ : IsAutRe
       obtain ⟨x, hx, hk, hne⟩ := h
       exact ⟨x, hx, hk, fun e => absurd e hne⟩
   choose y hyl hyK hyi using hy
-  have hyf : ∀ w, y w ∈ finU E n := fun w => (Subgroup.mem_inf.1 (hyl w)).1
-  have ht : Tendsto (fun w => (⟨y w, hyf w⟩ : finU E n)) cofinite (𝓝 1) := by
+  have hyf : ∀ w, y w ∈ finU (E := E) (n := n) := fun w => (Subgroup.mem_inf.1 (hyl w)).1
+  have ht : Tendsto (fun w => (⟨y w, hyf w⟩ : finU (E := E) (n := n))) cofinite (𝓝 1) := by
     rw [tendsto_subtype_rng, tendsto_subtype_rng, Units.isEmbedding_embedProduct.tendsto_nhds_iff]
     exact (tendsto_val_locU y hyl hyK).prodMk_nhds ((MulOpposite.continuous_op.tendsto _).comp
       (tendsto_val_locU (fun w => (y w)⁻¹) (fun w => inv_mem (hyl w)) fun w => by

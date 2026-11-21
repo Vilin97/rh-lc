@@ -46,7 +46,7 @@ def Dense {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (W : Wt E a) (K : Sub
     ∀ v g, f.1 v g - G.1 v g = e g * f.1 v g
 
 def Negl (w₀ : HeightOneSpectrum (𝓞 E)) (K : Subgroup (UA E a)) (B : Submodule ℂ (UA E a → ℂ) → Prop) : Prop :=
-  ∀ δ : ℝ, 0 < δ → ∃ h : UA E a →₀ ℂ, (∀ g ∈ h.support, g ∈ finU E a ∧ ∀ u, ¬ Apart u w₀ → cLoc u g = 1) ∧
+  ∀ δ : ℝ, 0 < δ → ∃ h : UA E a →₀ ℂ, (∀ g ∈ h.support, g ∈ finU (E := E) (n := a) ∧ ∀ u, ¬ Apart u w₀ → cLoc u g = 1) ∧
     (∀ g ∈ h.support, ∀ g' ∈ h.support, g⁻¹ * g' ∈ K → g = g') ∧ ∑ g ∈ h.support, ‖h g‖ ^ 2 ≤ δ ∧
     ∀ U, IsAutRepU U → B U → ∀ φ ∈ U, (∀ x ∈ K, RU E a x φ = φ) → opOf (RU E a) h φ = φ
 

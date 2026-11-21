@@ -20,8 +20,8 @@ theorem psubst_one {ι : Type} {a : MvPowerSeries ι K} (ha : HasSubst a) :
     (1 : PowerSeries K).subst a = 1 := by
   rw [← coe_substAlgHom ha, map_one]
 
-theorem one_add_X_mul_deriv_log : (1 + X : PowerSeries K) * derivative K (log K) = 1 := by
-  have hd : ∀ n : ℕ, coeff n (derivative K (log K)) = (-1 : K) ^ n := by
+theorem one_add_X_mul_deriv_log : (1 + X : PowerSeries K) * derivative (R := K) (log K) = 1 := by
+  have hd : ∀ n : ℕ, coeff n (derivative (R := K) (log K)) = (-1 : K) ^ n := by
     intro n
     rw [PowerSeries.coeff_derivative]
     simp [PowerSeries.log]
@@ -39,7 +39,7 @@ theorem one_add_X_subst {ι : Type} {a : MvPowerSeries ι K} (ha : HasSubst a) :
   rw [← coe_substAlgHom ha, map_add (f := _), map_one, coe_substAlgHom, subst_X ha]
 
 theorem one_add_mul_deriv_log_subst {ι : Type} {a : MvPowerSeries ι K} (ha : HasSubst a) :
-    (1 + a) * (derivative K (log K)).subst a = 1 := by
+    (1 + a) * (derivative (R := K) (log K)).subst a = 1 := by
   have h := congrArg (PowerSeries.substAlgHom ha) (one_add_X_mul_deriv_log (K := K))
   rw [map_mul, map_one, coe_substAlgHom, one_add_X_subst ha] at h
   exact h
@@ -60,14 +60,14 @@ private theorem constantCoeff_log_eq_zero' : constantCoeff (log K) = 0 := by
   rw [← coeff_zero_eq_constantCoeff_apply]
   simp [PowerSeries.log]
 
-private theorem derivative_exp_eq_exp : derivative K (exp K) = exp K := by
+private theorem derivative_exp_eq_exp : derivative (R := K) (exp K) = exp K := by
   ext n
   rw [PowerSeries.coeff_derivative]
   simp [coeff_exp, Nat.factorial_succ]
   field_simp
 
 private theorem derivative_eq_pderiv_unit (f : PowerSeries K) :
-    derivative K f = MvPowerSeries.pderiv (R := K) () f := by
+    derivative (R := K) f = MvPowerSeries.pderiv (R := K) () f := by
   ext n
   rw [PowerSeries.coeff_derivative]
   change _ = MvPowerSeries.coeff (Finsupp.single () n) _
@@ -76,7 +76,7 @@ private theorem derivative_eq_pderiv_unit (f : PowerSeries K) :
 
 private theorem derivative_subst_eq_chain_rule {g : PowerSeries K} (hg : constantCoeff g = 0)
     (φ : PowerSeries K) :
-    derivative K (φ.subst g) = (derivative K φ).subst g * derivative K g := by
+    derivative (R := K) (φ.subst g) = (derivative (R := K) φ).subst g * derivative (R := K) g := by
   have h := Formalism.G.LogCR.pderiv_psubst (R := K) (τ := Unit) (a := g) hg φ ()
   simp only [derivative_eq_pderiv_unit]
   exact h
@@ -101,7 +101,7 @@ theorem constantCoeff_exp_subst {ι : Type} {f : MvPowerSeries ι K}
   simp
 
 private theorem eq_zero_of_one_add_X_mul_derivative_eq_self {F : PowerSeries K}
-    (h : (1 + X) * derivative K F = F) (h0 : constantCoeff F = 0) : F = 0 := by
+    (h : (1 + X) * derivative (R := K) F = F) (h0 : constantCoeff F = 0) : F = 0 := by
   ext n
   rw [map_zero]
   induction n with
@@ -118,8 +118,8 @@ private theorem eq_zero_of_one_add_X_mul_derivative_eq_self {F : PowerSeries K}
 
 theorem exp_subst_log : (exp K).subst (log K) = 1 + X := by
   have hl : constantCoeff (log K) = 0 := constantCoeff_log_eq_zero'
-  have hE : derivative K ((exp K).subst (log K)) =
-      (exp K).subst (log K) * derivative K (log K) := by
+  have hE : derivative (R := K) ((exp K).subst (log K)) =
+      (exp K).subst (log K) * derivative (R := K) (log K) := by
     rw [derivative_subst_eq_chain_rule hl, derivative_exp_eq_exp]
   rw [← sub_eq_zero]
   apply eq_zero_of_one_add_X_mul_derivative_eq_self

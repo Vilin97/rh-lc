@@ -67,10 +67,15 @@ theorem mem_nonzeroLocus_prodSec {X Y : Scheme.{0}} (L : LB X) {K : Type} [Finty
 theorem exists_point_powObj {S : Scheme.{0}} (G : Over S) (s : S) :
     ∀ (n : ℕ) (x : Fin n → G.left), (∀ i, G.hom (x i) = s) →
       ∃ y : (Out.powObj G n).left, (Out.powObj G n).hom y = s ∧
-        ∀ i, (Out.powPr G i).left y = x i
-  | 0, _, _ => ⟨s, rfl, fun i => i.elim0⟩
-  | n + 1, x, hx => by
-    obtain ⟨z, hz, hz'⟩ := exists_point_powObj G s n (fun i => x i.succ) (fun i => hx _)
+        ∀ i, (Out.powPr G i).left y = x i := by
+  intro n
+  induction n with
+  | zero =>
+    intro _ _
+    exact ⟨s, rfl, fun i => i.elim0⟩
+  | succ n ih =>
+    intro x hx
+    obtain ⟨z, hz, hz'⟩ := ih (fun i => x i.succ) (fun i => hx i.succ)
     obtain ⟨y, h1, h2⟩ := Scheme.Pullback.exists_preimage_pullback (f := G.hom)
       (g := (Out.powObj G n).hom) (x 0) z ((hx 0).trans hz.symm)
     refine ⟨y, ?_, fun i => Fin.cases ?_ (fun i => ?_) i⟩

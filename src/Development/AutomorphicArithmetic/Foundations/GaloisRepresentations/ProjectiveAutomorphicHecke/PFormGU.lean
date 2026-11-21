@@ -69,7 +69,7 @@ theorem pFormGU_of (hExt : ExtEig2) (hCl : ClassFin) (hXi : XiZeta) (hKer : KerF
       simp only [Kw', Function.update_self]
       exact (hS.opn w hw).isOpenMap_subtype_val _ hχ
     · simp only [Kw', Function.update_of_ne e]; exact hS.opn w hw
-  have hfix' : ∀ u : finU E n, ofU u ∈ lev S Kw' → algRep W u f = f := fun u hu => by
+  have hfix' : ∀ u : finU (E := E) (n := n), ofU u ∈ lev S Kw' → algRep W u f = f := fun u hu => by
     obtain ⟨a, h, e⟩ := (mem' _).1 hu
     have := hfix u a h
     rwa [show χ ⟨cLoc w₀ u.1, h⟩ = 1 from e, Units.val_one, one_smul] at this

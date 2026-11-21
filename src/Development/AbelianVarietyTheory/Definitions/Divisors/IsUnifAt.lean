@@ -111,20 +111,20 @@ def SatUL {w : Pl E} (b : GLw n w) (ϖ : w.adicCompletion E) (q : ℕ) (σ : SmI
 def UE (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) : Subgroup (GL (Fin n) E) :=
   UJ (IsCMField.complexConj E).toRingEquiv.toRingHom 1
 
-def finPt (γ : UE E n) : finU E n := toSub _ (toSub _ (finGL E n (ratF E n γ.1)))
+def finPt (γ : UE E n) : finU (E := E) (n := n) := toSub _ (toSub _ (finGL E n (ratF E n γ.1)))
 
-def ratFinU (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) : Subgroup (finU E n) :=
-  (((UE E n).map ((finGL E n).comp (ratF E n))).comap (UA E n).subtype).comap (finU E n).subtype
+def ratFinU (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) : Subgroup (finU (E := E) (n := n)) :=
+  (((UE E n).map ((finGL E n).comp (ratF E n))).comap (UA E n).subtype).comap (finU (E := E) (n := n)).subtype
 
 def locPt (w : Pl E) (γ : UE E n) : UL n w := toSub _ (GeneralLinearGroup.map (algebraMap E (w.adicCompletion E)) γ.1)
 
-def globLev (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w)) : Subgroup (finU E n) :=
-  ⨅ w ∈ S, ((K' w).map (UL n w).subtype).comap ((cLoc w).comp (finU E n).subtype)
+def globLev (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w)) : Subgroup (finU (E := E) (n := n)) :=
+  ⨅ w ∈ S, ((K' w).map (UL n w).subtype).comap ((cLoc w).comp (finU (E := E) (n := n)).subtype)
 
-def globFn (S : Set (Pl E)) (f : ∀ w : Pl E, UL n w → ℂ) (x : finU E n) : ℂ := ∏ᶠ w ∈ S, f w (toSub _ (cLoc w x.1))
+def globFn (S : Set (Pl E)) (f : ∀ w : Pl E, UL n w → ℂ) (x : finU (E := E) (n := n)) : ℂ := ∏ᶠ w ∈ S, f w (toSub _ (cLoc w x.1))
 
-def RF (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) : Representation ℂ (finU E n) (UA E n → ℂ) :=
-  (RU E n).comp (finU E n).subtype
+def RF (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) : Representation ℂ (finU (E := E) (n := n)) (UA E n → ℂ) :=
+  (RU E n).comp (finU (E := E) (n := n)).subtype
 
 def forms (S : Set (Pl E)) (lam : InfinitePlace E → DomWeight n) (K' : ∀ w : Pl E, Subgroup (UL n w)) :
     Submodule ℂ (UA E n → ℂ) :=

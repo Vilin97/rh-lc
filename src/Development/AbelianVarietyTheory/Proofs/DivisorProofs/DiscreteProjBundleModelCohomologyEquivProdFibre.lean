@@ -103,13 +103,13 @@ theorem ptPull_zero {n : ℤ} {U : Scheme.{0}} (x : F.obj (op U)) :
     ptPull (0 : Cochain ((chains R).obj (disc.obj F ⨯ fibQ q N)) I n) x = 0 := Cochain.comp_zero _ _
 
 theorem ev_zero_of_v {E : Spc} {L : Cx R} {n : ℤ} (β : Cochain ((chains R).obj E) L n) (p : ℕ) (s : ℤ)
-    (h : -(p : ℤ) + n = s) (hβ : β.v (-(p : ℤ)) s h = 0) (U : Scheme.{0}) (x : Sx E p U) : ev β p s h U x = 0 := by
+    (h : -(p : ℤ) + n = s) (hβ : β.v (-(p : ℤ)) s h = 0) (U : Scheme.{0}) (x : Sx E p U) : ev R β p s h U x = 0 := by
   rw [ev_def, hβ, comp_zero]
   rfl
 
 theorem conc_δ {L : Cx R} {n m : ℤ} (hm : n + 1 = m) (β : Cochain ((chains R).obj (disc.obj F)) L n)
-    (hβ : ∀ (p : ℕ) s h U x, ev β (p + 1) s h U x = 0) :
-    ∀ (p : ℕ) s h U x, ev (δ n m β) (p + 1) s h U x = 0 := by
+    (hβ : ∀ (p : ℕ) s h U x, ev R β (p + 1) s h U x = 0) :
+    ∀ (p : ℕ) s h U x, ev R (δ n m β) (p + 1) s h U x = 0 := by
   intro p s h U x
   rw [ev_δ_succ hm β U p (s - m + n) s (by omega) h x, hβ, sec_map_at_zero, zero_add]
   cases p with
@@ -131,8 +131,8 @@ def aS {n : ℤ} (γ : Cochain ((chains R).obj (disc.obj F ⨯ fibQ q N)) I n) :
 
 theorem exS {n : ℤ} (γ : Cochain ((chains R).obj (disc.obj F ⨯ fibQ q N)) I n) :
     ∃ β : Cochain ((chains R).obj (disc.obj F)) (Jcx R q N I) n,
-      (∀ (U : Scheme.{0}) (x : F.obj (op U)), ev β 0 n (by simp) U x = Jsec (ptPull γ x)) ∧
-      ∀ (p : ℕ) s h U x, ev β (p + 1) s h U x = 0 := by
+      (∀ (U : Scheme.{0}) (x : F.obj (op U)), ev R β 0 n (by simp) U x = Jsec (ptPull γ x)) ∧
+      ∀ (p : ℕ) s h U x, ev R β (p + 1) s h U x = 0 := by
   obtain ⟨β, hβ⟩ := ev_exists (E := disc.obj F) (I := Jcx R q N I) (n := n) (aS γ) (by
     intro p s h V U g x
     cases p with
@@ -142,7 +142,7 @@ theorem exS {n : ℤ} (γ : Cochain ((chains R).obj (disc.obj F ⨯ fibQ q N)) I
     | succ p => exact map_zero _)
   exact ⟨β, fun U x => hβ 0 n _ U x, fun p s h U x => hβ (p + 1) s h U x⟩
 
-theorem model : ∀ (R : Type) [CommRing R] (q N : ℕ) (I : Cx R) (F : PSh) (n : ℤ), ∃ e : CohomologyClass ((chains R).obj (disc.obj F)) (Jcx R q N I) n ≃+ CohomologyClass ((chains R).obj (disc.obj F ⨯ fibQ q N)) I n, ∀ (β : Cocycle ((chains R).obj (disc.obj F)) (Jcx R q N I) n) (γ : Cocycle ((chains R).obj (disc.obj F ⨯ fibQ q N)) I n), (∀ (p : ℕ), 0 < p → ∀ (s : ℤ) (h : -(p : ℤ) + n = s), β.1.v (-(p : ℤ)) s h = 0) → (∀ (U : Scheme.{0}) (x : F.obj (op U)), ∃ c : Cochain ((chains R).obj (sch.obj U ⨯ fibQ q N)) I n, ev β.1 0 n (by simp) U x = Jsec c ∧ ∀ (k : ℕ) (s : ℤ) (hs : -(k : ℤ) + n = s) (V : Scheme.{0}) (y : Sx (sch.obj U ⨯ fibQ q N) k V), ev c k s hs V y = ev γ.1 k s hs V (Sx.map (prod.map (disc.map (yonedaEquiv.symm x)) (𝟙 (fibQ q N))) y)) → e (CohomologyClass.mk β) = CohomologyClass.mk γ := by
+theorem model : ∀ (R : Type) [CommRing R] (q N : ℕ) (I : Cx R) (F : PSh) (n : ℤ), ∃ e : CohomologyClass ((chains R).obj (disc.obj F)) (Jcx R q N I) n ≃+ CohomologyClass ((chains R).obj (disc.obj F ⨯ fibQ q N)) I n, ∀ (β : Cocycle ((chains R).obj (disc.obj F)) (Jcx R q N I) n) (γ : Cocycle ((chains R).obj (disc.obj F ⨯ fibQ q N)) I n), (∀ (p : ℕ), 0 < p → ∀ (s : ℤ) (h : -(p : ℤ) + n = s), β.1.v (-(p : ℤ)) s h = 0) → (∀ (U : Scheme.{0}) (x : F.obj (op U)), ∃ c : Cochain ((chains R).obj (sch.obj U ⨯ fibQ q N)) I n, ev R β.1 0 n (by simp) U x = Jsec c ∧ ∀ (k : ℕ) (s : ℤ) (hs : -(k : ℤ) + n = s) (V : Scheme.{0}) (y : Sx (sch.obj U ⨯ fibQ q N) k V), ev R c k s hs V y = ev R γ.1 k s hs V (Sx.map (prod.map (disc.map (yonedaEquiv.symm x)) (𝟙 (fibQ q N))) y)) → e (CohomologyClass.mk β) = CohomologyClass.mk γ := by
   intro R _ q N I F n
   choose S hS0 hS1 using fun (m : ℤ) (γ : Cochain ((chains R).obj (disc.obj F ⨯ fibQ q N)) I m) => exS γ
   have hSδ : ∀ (m m' : ℤ) (hm : m + 1 = m') (η : Cochain ((chains R).obj (disc.obj F ⨯ fibQ q N)) I m),
@@ -192,7 +192,7 @@ theorem model : ∀ (R : Type) [CommRing R] (q N : ℕ) (I : Cx R) (F : PSh) (n 
   let Φ := CohomologyClass.descAddMonoidHom Sc hcob
   have hnat : ∀ (m : ℤ) (b : Cochain ((chains R).obj (disc.obj F)) (Jcx R q N I) m)
       (c' : ∀ U : Scheme.{0}, F.obj (op U) → Cochain ((chains R).obj (sch.obj U ⨯ fibQ q N)) I m),
-      (∀ U x, Jsec (c' U x) = ev b 0 m (by simp) U x) →
+      (∀ U x, Jsec (c' U x) = ev R b 0 m (by simp) U x) →
       ∀ (V U : Scheme.{0}) (g : V ⟶ U) (x : F.obj (op U)), c' V (F.map g.op x) =
         (Cochain.ofHom ((chains R).map (prod.map (sch.map g) (𝟙 (fibQ q N))))).comp (c' U x) (zero_add m) := by
     intro m b c' hc' V U g x
@@ -208,7 +208,7 @@ theorem model : ∀ (R : Type) [CommRing R] (q N : ℕ) (I : Cx R) (F : PSh) (n 
     rw [CohomologyClass.mk_eq_zero_iff] at hc
     obtain ⟨n', hn', β', hβ'⟩ := hc
     have hc' : ∀ (U : Scheme.{0}) (x : F.obj (op U)), ∃ c : Cochain ((chains R).obj (sch.obj U ⨯ fibQ q N)) I n',
-        Jsec c = ev β' 0 n' (by simp) U x := fun U x => (jsec_bij R q N I n' U).2 _
+        Jsec c = ev R β' 0 n' (by simp) U x := fun U x => (jsec_bij R q N I n' U).2 _
     choose c' hc' using hc'
     obtain ⟨η, hη, -⟩ := glue R q N I F n' c' (hnat n' β' c' hc')
     have h2 : ∀ (U : Scheme.{0}) (x : F.obj (op U)), ptPull (δ n' n η) x = ptPull γ.1 x := by
@@ -218,7 +218,6 @@ theorem model : ∀ (R : Type) [CommRing R] (q N : ℕ) (I : Cx R) (F : PSh) (n 
       apply (jsec_bij R q N I n U).1
       change Jsec _ = Jsec _
       rw [← jsec_d hn', hc', ← ev_δ_zero hn' β' U n' n (by simp) (by simp) x]
-      change ev (δ n' n β') 0 n _ U x = _
       rw [hβ']
       exact hS0 n γ.1 U x
     have huniq := (glue R q N I F n (fun U x => ptPull γ.1 x) (fun V U g x => ptPull_res γ.1 g x)).unique
@@ -229,7 +228,7 @@ theorem model : ∀ (R : Type) [CommRing R] (q N : ℕ) (I : Cx R) (F : PSh) (n 
     intro c
     obtain ⟨α, hαc, hα0⟩ := GlobalTheory.T.exists_discreteSpace_cocycle_vanishing_pos R F (Jcx R q N I) n c
     have hc' : ∀ (U : Scheme.{0}) (x : F.obj (op U)), ∃ c : Cochain ((chains R).obj (sch.obj U ⨯ fibQ q N)) I n,
-        Jsec c = ev α.1 0 n (by simp) U x := fun U x => (jsec_bij R q N I n U).2 _
+        Jsec c = ev R α.1 0 n (by simp) U x := fun U x => (jsec_bij R q N I n U).2 _
     choose c' hc' using hc'
     obtain ⟨γ, hγ, -⟩ := glue R q N I F n c' (hnat n α.1 c' hc')
     have hδ : δ n (n + 1) γ = 0 := by
@@ -251,10 +250,10 @@ theorem model : ∀ (R : Type) [CommRing R] (q N : ℕ) (I : Cx R) (F : PSh) (n 
     cases p with
     | zero =>
       obtain rfl : n = s := by omega
-      show ev (S n γ) 0 n h U x = ev α.1 0 n h U x
+      show ev R (S n γ) 0 n h U x = ev R α.1 0 n h U x
       rw [hS0, show ptPull γ x = c' U x from hγ U x, hc']
     | succ p =>
-      show ev (S n γ) (p + 1) s h U x = ev α.1 (p + 1) s h U x
+      show ev R (S n γ) (p + 1) s h U x = ev R α.1 (p + 1) s h U x
       rw [hS1, ev_zero_of_v _ _ _ _ (hα0 (p + 1) (by omega) s h)]
   refine ⟨(AddEquiv.ofBijective Φ ⟨hΦinj, hΦsurj⟩).symm, fun β γ hβ0 hβc => ?_⟩
   rw [AddEquiv.symm_apply_eq]
@@ -267,7 +266,7 @@ theorem model : ∀ (R : Type) [CommRing R] (q N : ℕ) (I : Cx R) (F : PSh) (n 
   | zero =>
     obtain rfl : n = s := by omega
     obtain ⟨c, hc1, hc2⟩ := hβc U x
-    show ev β.1 0 n h U x = ev (S n γ.1) 0 n h U x
+    show ev R β.1 0 n h U x = ev R (S n γ.1) 0 n h U x
     rw [hS0, hc1]
     congr 1
     apply ev_ext
@@ -275,7 +274,7 @@ theorem model : ∀ (R : Type) [CommRing R] (q N : ℕ) (I : Cx R) (F : PSh) (n 
     rw [hc2]
     exact (ev_pull _ γ.1 k s hs V y).symm
   | succ p =>
-    show ev β.1 (p + 1) s h U x = ev (S n γ.1) (p + 1) s h U x
+    show ev R β.1 (p + 1) s h U x = ev R (S n γ.1) (p + 1) s h U x
     rw [hS1, ev_zero_of_v _ _ _ _ (hβ0 (p + 1) (by omega) s h)]
 
 end GlobalTheory.EtC.DiscCoch

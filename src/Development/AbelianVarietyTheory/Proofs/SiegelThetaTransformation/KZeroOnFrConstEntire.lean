@@ -47,7 +47,7 @@ theorem kZero_onFr_const_entire : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     exact hsub (hon x hx)
   ·
 
-    rw [GlobalTheory.SW.KernSym.kZero_ortho idx hx]
+    rw [GlobalTheory.SW.KernSym.kZero_ortho X idx hx]
     simp only [Pi.zero_apply, mul_zero, Finset.sum_const_zero, Complex.exp_zero, mul_one]
     congr 1
     exact Finset.prod_congr rfl fun τ _ => by rw [normSq_det_of_isONFr hx τ]

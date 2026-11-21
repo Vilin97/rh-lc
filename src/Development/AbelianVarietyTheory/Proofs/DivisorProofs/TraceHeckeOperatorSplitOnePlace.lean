@@ -22,7 +22,7 @@ namespace GlobalTheory.BCT.Peel
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 theorem globFn_eq (hU : Unr E) {S : Set (Pl E)} {f : ∀ w : Pl E, UL n w → ℂ}
-    (hf : ∀ᶠ w in cofinite, f w = (KL n w : Set (UL n w)).indicator 1) {w : Pl E} (hw : w ∈ S) (x : finU E n) :
+    (hf : ∀ᶠ w in cofinite, f w = (KL n w : Set (UL n w)).indicator 1) {w : Pl E} (hw : w ∈ S) (x : finU (E := E) (n := n)) :
     globFn S f x = f w (toSub _ (cLoc w x.1)) * ∏ᶠ u ∈ S \ {w}, f u (toSub _ (cLoc u x.1)) := by
   have hfin : (Function.mulSupport fun w : Pl E => f w (toSub (UL n w) (cLoc w (x : UA E n)))).Finite := by
     have h := (GlobalTheory.BCT.LocAE.eventually_mem_KL E hU n x).and hf
@@ -40,9 +40,9 @@ theorem globFn_eq (hU : Unr E) {S : Set (Pl E)} {f : ∀ w : Pl E, UL n w → �
 theorem trOn_hop_peel : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, 1 ≤ n → ∀ π : Submodule ℂ (UA E n → ℂ), IsAutRepU π → ∀ S : Set (Pl E), IsSection S → ∀ K' : ∀ w : Pl E, Subgroup (UL n w), IsLevelFam (fun w : Pl E => MonoidHom.id (UL n w)) (KL n) K' → ∀ f : ∀ w : Pl E, UL n w → ℂ, IsTest (KL n) K' f → ∀ w ∈ S, ∀ σ : SmIrr (UL n w), IsCompU π w σ → trOn (π ⊓ fixed (RF E n) (globLev S K')) (hop S K' f) * twTr σ.ρ (KL n w) (K' w) ((K' w : Set (UL n w)).indicator 1) LinearMap.id = twTr σ.ρ (KL n w) (K' w) (f w) LinearMap.id * trOn (π ⊓ fixed (RF E n) (globLev S K')) (hop S K' (Function.update f w ((K' w : Set (UL n w)).indicator 1))) := by
   intro E _ _ _ hU n hn π hπ S hS K' hK' f hf w hw σ hσ
   obtain ⟨e, he⟩ := LocCompU.exists_equiv hU n w
-  let ι : UL n w →* finU E n := (Subgroup.inclusion (inf_le_left : locU n w ≤ finU E n)).comp
+  let ι : UL n w →* finU (E := E) (n := n) := (Subgroup.inclusion (inf_le_left : locU n w ≤ finU (E := E) (n := n))).comp
     e.toMulEquiv.symm.toMonoidHom
-  let r : finU E n →* UL n w := ((cLoc w).comp (finU E n).subtype).codRestrict _ fun x => GlobLev.cLoc_mem_UL w x.1
+  let r : finU (E := E) (n := n) →* UL n w := ((cLoc w).comp (finU (E := E) (n := n)).subtype).codRestrict _ fun x => GlobLev.cLoc_mem_UL w x.1
   have hιw : ∀ h, cLoc w (ι h).1 = h.1 := fun h => by
     change cLoc w ((e.symm h : locU n w) : UA E n) = _
     rw [← he, e.apply_symm_apply]
@@ -100,14 +100,14 @@ theorem trOn_hop_peel : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], 
     exact this.symm
   have hopen := (GlobLev.globLev_isOpen_isCompact_isLevel E hU n hn S hS K' hK').2.2.1
   have hbfin : {q : r.ker ⧸ (globLev S K').subgroupOf r.ker | b q.out ≠ 0}.Finite := by
-    refine Set.Finite.of_finite_image (f := fun q => (((q.out : r.ker) : finU E n) : finU E n ⧸ globLev S K'))
+    refine Set.Finite.of_finite_image (f := fun q => (((q.out : r.ker) : finU (E := E) (n := n)) : finU (E := E) (n := n) ⧸ globLev S K'))
       ((GlobalTheory.TwTrLin.finite_out_support hopen hH'.1).subset ?_) fun p _ q _ h => ?_
     · rintro _ ⟨q, hq, rfl⟩
-      obtain ⟨k, hk⟩ := QuotientGroup.mk_out_eq_mul (globLev S K') ((q.out : r.ker) : finU E n)
+      obtain ⟨k, hk⟩ := QuotientGroup.mk_out_eq_mul (globLev S K') ((q.out : r.ker) : finU (E := E) (n := n))
       change globFn S _ _ ≠ 0
       rw [hk, (hH'.2 _ k.2 _).2, ← hb]
       exact hq
-    · have h' : ((((p.out : r.ker) : finU E n)) : finU E n ⧸ globLev S K') = ((q.out : r.ker) : finU E n) := h
+    · have h' : ((((p.out : r.ker) : finU (E := E) (n := n))) : finU (E := E) (n := n) ⧸ globLev S K') = ((q.out : r.ker) : finU (E := E) (n := n)) := h
       rw [← QuotientGroup.out_eq' p, ← QuotientGroup.out_eq' q]
       refine QuotientGroup.eq.2 (Subgroup.mem_subgroupOf.2 ?_)
       have := QuotientGroup.eq.1 h'
@@ -117,7 +117,7 @@ theorem trOn_hop_peel : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], 
     obtain ⟨p, hp, -, φ, hφ0, hφm, hφ⟩ := hσ
     have hpe : ∀ g, p (e.symm g) = g := fun g => Subtype.ext ((hp _).trans (hιw g))
     let π' : GlobalTheory.DefU.AutSub E n := ⟨π, hπ⟩
-    let s : UL n w →* UA E n := (finU E n).subtype.comp ι
+    let s : UL n w →* UA E n := (finU (E := E) (n := n)).subtype.comp ι
     let Φ : σ.ρ.IntertwiningMap (π'.rep.comp s) :=
       ⟨φ.codRestrict π hφm, fun g => LinearMap.ext fun v => Subtype.ext (by
         have := hφ (e.symm g) v

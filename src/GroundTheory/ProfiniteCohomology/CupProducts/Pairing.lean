@@ -56,11 +56,13 @@ theorem cupPairing_cohomologyπ (μ : A ⊗ B ⟶ C) (h : p + q = n) (x : cocycl
 
 theorem cochainOf_cocycleι_cyclesMap_cupCocycles (μ : A ⊗ B ⟶ C) (h : p + q = n)
     (x : cocycles A p) (y : cocycles B q) (s : Fin n → G) :
-    cochainOf C (cocycleι C n
+    cochainOf (A := C) (cocycleι (A := C) (p := n)
         (HomologicalComplex.cyclesMap (cochainsMap μ) n (cupCocycles h x y))) s =
-      μ.hom (cochainOf A (cocycleι A p x) (fun i : Fin p => s ⟨i, by omega⟩) ⊗ₜ[k]
+      μ.hom (cochainOf (A := A) (cocycleι (A := A) (p := p) x)
+          (fun i : Fin p => s ⟨i, by omega⟩) ⊗ₜ[k]
         B.ρ (Fin.partialProd s ⟨p, by omega⟩)
-          (cochainOf B (cocycleι B q y) fun j : Fin q => s ⟨p + j, by omega⟩)) := by
+          (cochainOf (A := B) (cocycleι (A := B) (p := q) y)
+            fun j : Fin q => s ⟨p + j, by omega⟩)) := by
   rw [cochainOf_cocycleι_cyclesMap, cocycleι_cupCocycles, cochainOf_cupLocallyConstant]
   rfl
 

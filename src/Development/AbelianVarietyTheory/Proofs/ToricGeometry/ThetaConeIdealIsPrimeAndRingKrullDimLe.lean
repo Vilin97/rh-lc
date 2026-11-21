@@ -121,7 +121,8 @@ theorem finrank_quotPiece_le [Finite ι] {φ : ι → E → ℂ} {I : Ideal (MvP
   classical
   by_cases hfin : FiniteDimensional ℂ (quotPiece I d)
   swap
-  · rw [Module.finrank_of_not_finite hfin]
+  · set_option synthInstance.maxHeartbeats 100000 in
+    rw [Module.finrank_of_not_finite hfin]
     exact Nat.zero_le _
   let b := Module.finBasis ℂ (quotPiece I d)
 

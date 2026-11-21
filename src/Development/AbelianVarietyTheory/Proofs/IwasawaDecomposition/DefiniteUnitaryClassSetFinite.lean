@@ -179,12 +179,12 @@ theorem cT_toGL (g : HF E n) : cT (conjFin (cc E)) (toGL E n g).val * (toGL E n 
 
 
 variable (E n) in
-def toFin : HF E n →* finU E n where
+def toFin : HF E n →* finU (E := E) (n := n) where
   toFun g := ⟨⟨finGL E n (toGL E n g), finGL_mem_UA _ (cT_toGL g)⟩, pInf_finGL _⟩
   map_one' := Subtype.ext (Subtype.ext (by simp))
   map_mul' a b := Subtype.ext (Subtype.ext (by simp))
 
-theorem finGL_pFin (k : finU E n) : finGL E n (GeneralLinearGroup.map (pFin E) k.1.1) = k.1.1 :=
+theorem finGL_pFin (k : finU (E := E) (n := n)) : finGL E n (GeneralLinearGroup.map (pFin E) k.1.1) = k.1.1 :=
   ga_ext ((pInf_finGL _).trans (Eq.symm k.2)) (pFin_finGL _)
 
 theorem toFin_surjective : Function.Surjective (toFin E n) := fun k => by
@@ -236,7 +236,7 @@ theorem mul_inv_mem_infU {u v : UA E n}
   change GeneralLinearGroup.map (pFin E) (u * v⁻¹).1 = 1
   rw [Subgroup.coe_mul, Subgroup.coe_inv, map_mul, map_inv, h, mul_inv_cancel]
 
-theorem assemble {g γ f₁ s k x₀ x₁ : UA E n} (hx₀ : x₀ ∈ infU E n) (hx₁ : x₁ ∈ infU E n) (hs : s ∈ finU E n)
+theorem assemble {g γ f₁ s k x₀ x₁ : UA E n} (hx₀ : x₀ ∈ infU E n) (hx₁ : x₁ ∈ infU E n) (hs : s ∈ finU (E := E) (n := n))
     (h1 : g = x₀ * (f₁ * s * k)) (h2 : γ = x₁ * f₁) :
     ∃ x ∈ infU E n, g = γ * s * x * k := by
   have hy : γ⁻¹ * (x₀ * x₁⁻¹) * γ ∈ infU E n := by
@@ -249,7 +249,7 @@ theorem assemble {g γ f₁ s k x₀ x₁ : UA E n} (hx₀ : x₀ ∈ infU E n) 
 
 
 variable (E n) in
-theorem classSet_finite (K : Subgroup (finU E n)) (hK : IsOpen (K : Set (finU E n))) :
+theorem classSet_finite (K : Subgroup (finU (E := E) (n := n))) (hK : IsOpen (K : Set (finU (E := E) (n := n)))) :
     ∃ S : Finset (UA E n), ∀ g : UA E n, ∃ γ ∈ ratU E n, ∃ s ∈ S, ∃ x ∈ infU E n, ∃ k ∈ K,
       g = γ * s * x * (k : UA E n) := by
   classical
@@ -270,8 +270,8 @@ theorem classSet_finite (K : Subgroup (finU E n)) (hK : IsOpen (K : Set (finU E 
   have hf := (GlobalTheory.Mass.finiteClasses_unitary hcm hnd hstd.2.1 hc ho).1
   haveI := Fintype.ofFinite (ClassSet (GlobalTheory.Mass.ratIn (AFr E) (sg E) (1 : Matrix (Fin n) (Fin n) E)) K')
   refine ⟨Finset.univ.image fun c : ClassSet (GlobalTheory.Mass.ratIn (AFr E) (sg E) (1 : Matrix (Fin n) (Fin n) E)) K' =>
-    ((toFin E n (Quotient.out c) : finU E n) : UA E n), fun g => ?_⟩
-  let f : finU E n := ⟨⟨finGL E n (GeneralLinearGroup.map (pFin E) g.1), finGL_mem_UA _ (cT_pFin g)⟩, pInf_finGL _⟩
+    ((toFin E n (Quotient.out c) : finU (E := E) (n := n)) : UA E n), fun g => ?_⟩
+  let f : finU (E := E) (n := n) := ⟨⟨finGL E n (GeneralLinearGroup.map (pFin E) g.1), finGL_mem_UA _ (cT_pFin g)⟩, pInf_finGL _⟩
   obtain ⟨h, hh⟩ := toFin_surjective f
   obtain ⟨a, b, ha, hb, e⟩ := DoubleCoset.mk_out_eq_mul
     (GlobalTheory.Mass.ratIn (AFr E) (sg E) (1 : Matrix (Fin n) (Fin n) E)) K' h
@@ -280,12 +280,12 @@ theorem classSet_finite (K : Subgroup (finU E n)) (hK : IsOpen (K : Set (finU E 
     rw [e]
     group
   have hbK : b⁻¹ ∈ K' := inv_mem hb
-  have hmap : ∀ t : HF E n, GeneralLinearGroup.map (pFin E) ((toFin E n t : finU E n) : UA E n).1 = toGL E n t :=
+  have hmap : ∀ t : HF E n, GeneralLinearGroup.map (pFin E) ((toFin E n t : finU (E := E) (n := n)) : UA E n).1 = toGL E n t :=
     fun t => pFin_finGL _
-  obtain ⟨x, hx, hg⟩ := assemble (g := g) (γ := γ) (f₁ := ((toFin E n a⁻¹ : finU E n) : UA E n))
-    (s := ((toFin E n (Quotient.out (DoubleCoset.mk (GlobalTheory.Mass.ratIn (AFr E) (sg E) (1 : Matrix (Fin n) (Fin n) E)) K' h)) : finU E n) : UA E n))
-    (k := ((toFin E n b⁻¹ : finU E n) : UA E n)) (x₀ := g * (f : UA E n)⁻¹)
-    (x₁ := γ * ((toFin E n a⁻¹ : finU E n) : UA E n)⁻¹)
+  obtain ⟨x, hx, hg⟩ := assemble (g := g) (γ := γ) (f₁ := ((toFin E n a⁻¹ : finU (E := E) (n := n)) : UA E n))
+    (s := ((toFin E n (Quotient.out (DoubleCoset.mk (GlobalTheory.Mass.ratIn (AFr E) (sg E) (1 : Matrix (Fin n) (Fin n) E)) K' h)) : finU (E := E) (n := n)) : UA E n))
+    (k := ((toFin E n b⁻¹ : finU (E := E) (n := n)) : UA E n)) (x₀ := g * (f : UA E n)⁻¹)
+    (x₁ := γ * ((toFin E n a⁻¹ : finU (E := E) (n := n)) : UA E n)⁻¹)
     (mul_inv_mem_infU (pFin_finGL _).symm) (mul_inv_mem_infU (hγe.trans (hmap _).symm)) (SetLike.coe_mem _)
     (by
       have : (f : UA E n) = _ * _ * _ := congrArg Subtype.val (hh.symm.trans (congrArg (toFin E n) hout |>.trans

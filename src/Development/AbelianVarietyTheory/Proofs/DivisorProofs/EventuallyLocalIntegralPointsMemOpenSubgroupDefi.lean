@@ -55,7 +55,7 @@ theorem entry_eq_one_add {w : Pl E} {N N' : Set (Af E)} (h0 : (0 : Af E) ∈ N')
     ∃ a ∈ N, ((z : GA E n) : Matrix (Fin n) (Fin n) (Ad E)) i j =
       (1 : Matrix (Fin n) (Fin n) (Ad E)) i j + (show Ad E from ((0 : InfiniteAdeleRing E), a)) := by
   have hKc := integral_conjSrc z w hK
-  have hfin : z ∈ finU E n := (Subgroup.mem_inf.1 hz).1
+  have hfin : z ∈ finU (E := E) (n := n) := (Subgroup.mem_inf.1 hz).1
   have hout : ∀ u : Pl E, u ≠ w → u ≠ conjSrc (conjE E) w → cLoc u z = 1 := by
     intro u huw huc
     have hne : u.under (𝓞 (maximalRealSubfield E)) ≠ w.under (𝓞 (maximalRealSubfield E)) := fun h =>
@@ -101,11 +101,11 @@ theorem entry_eq_one_add {w : Pl E} {N N' : Set (Af E)} (h0 : (0 : Af E) ∈ N')
         · simp
         · rw [pLoc_singleNU_ne huc]; simp
 
-theorem eventually_locU_mem : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (L : Subgroup (finU E n)),
-    IsOpen (L : Set (finU E n)) → ∀ᶠ w in cofinite, ∀ x : UA E n, x ∈ locU n w → cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n) →
-      ∀ h : x ∈ finU E n, (⟨x, h⟩ : finU E n) ∈ L := by
+theorem eventually_locU_mem : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (L : Subgroup (finU (E := E) (n := n))),
+    IsOpen (L : Set (finU (E := E) (n := n))) → ∀ᶠ w in cofinite, ∀ x : UA E n, x ∈ locU n w → cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n) →
+      ∀ h : x ∈ finU (E := E) (n := n), (⟨x, h⟩ : finU (E := E) (n := n)) ∈ L := by
   intro E _ _ _ n L hL
-  have h1 : (L : Set (finU E n)) ∈ 𝓝 (1 : finU E n) := hL.mem_nhds L.one_mem
+  have h1 : (L : Set (finU (E := E) (n := n))) ∈ 𝓝 (1 : finU (E := E) (n := n)) := hL.mem_nhds L.one_mem
   rw [nhds_subtype, Filter.mem_comap] at h1
   obtain ⟨V1, hV1, hV1L⟩ := h1
   rw [nhds_subtype, Filter.mem_comap] at hV1

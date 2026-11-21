@@ -217,29 +217,31 @@ structure Rat : Prop where
   act_rat : ∀ (g : S.G) i j, S.bV.repr (S.ρ g (S.bV j)) i ∈ cmMax K
   pos : ∀ v : InfinitePlace K, (S.gramV.map v.embedding).PosDef
 
-theorem toCSDOf_good {n : ℕ} (G : S.Good n) (s : S.Sec) : (S.toCSDOf G.ok s).Good n where
-  symm := G.symm
-  nondeg := G.nondeg
-  inv := fun c γ x y => G.ok.inv ((γ : MulAction.stabilizer S.G (s.rep c)) : S.G) x y
-  nab_lat := fun c => G.nab_lat (s.rep c)
-  del_le := fun c => G.del_le (s.rep c)
-  del_stable := by
-    intro c γ y hy
-    have h1 := G.ok.del_smul ((γ : MulAction.stabilizer S.G (s.rep c)) : S.G) (s.rep c)
-    have h2 : ((γ : MulAction.stabilizer S.G (s.rep c)) : S.G) • s.rep c = s.rep c :=
-      (γ : MulAction.stabilizer S.G (s.rep c)).2
-    rw [h2] at h1
-    show S.ρ ((γ : MulAction.stabilizer S.G (s.rep c)) : S.G) y ∈ S.Del (s.rep c)
-    rw [h1]
-    exact Submodule.mem_map_of_mem hy
-  s_pos := G.s_pos
-  dual_le := fun c => G.dual_le (s.rep c)
-  del_dual := fun c => G.del_dual (s.rep c)
+theorem toCSDOf_good {n : ℕ} (G : S.Good n) (s : S.Sec) : (S.toCSDOf G.ok s).Good n := by
+  refine
+    { symm := G.symm
+      nondeg := G.nondeg
+      inv := fun c γ x y => G.ok.inv ((γ : MulAction.stabilizer S.G (s.rep c)) : S.G) x y
+      nab_lat := fun c => G.nab_lat (s.rep c)
+      del_le := fun c => G.del_le (s.rep c)
+      del_stable := ?_
+      s_pos := G.s_pos
+      dual_le := fun c => G.dual_le (s.rep c)
+      del_dual := fun c => G.del_dual (s.rep c) }
+  intro c γ y hy
+  have h1 := G.ok.del_smul ((γ : MulAction.stabilizer S.G (s.rep c)) : S.G) (s.rep c)
+  have h2 : ((γ : MulAction.stabilizer S.G (s.rep c)) : S.G) • s.rep c = s.rep c :=
+    (γ : MulAction.stabilizer S.G (s.rep c)).2
+  rw [h2] at h1
+  show S.ρ ((γ : MulAction.stabilizer S.G (s.rep c)) : S.G) y ∈ S.Del (s.rep c)
+  rw [h1]
+  exact Submodule.mem_map_of_mem hy
 
-theorem toCSDOf_rat (h : S.Ok) (R : S.Rat) (s : S.Sec) : (S.toCSDOf h s).Rat where
-  pair_rat := R.pair_rat
-  act_rat := fun c γ i j => R.act_rat ((γ : MulAction.stabilizer S.G (s.rep c)) : S.G) i j
-  pos := R.pos
+theorem toCSDOf_rat (h : S.Ok) (R : S.Rat) (s : S.Sec) : (S.toCSDOf h s).Rat := by
+  exact
+    { pair_rat := R.pair_rat
+      act_rat := fun c γ i j => R.act_rat ((γ : MulAction.stabilizer S.G (s.rep c)) : S.G) i j
+      pos := R.pos }
 
 end GSD
 

@@ -34,6 +34,8 @@ theorem hasseNorm : GlobalTheory.Published.HasseNorm := by
     { InfinitePlace.Completion.extensionEmbeddingOfIsReal hv with
       commutes' := fun x => by
         rw [← hσ]
+        rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+          Algebra.algebraMap_self_apply]
         exact InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hv ((WithAbs.equiv v.1).symm x) }
   exact (GlobalTheory.T.isNormFromBaseChange_base_change_properties K L).1 v.Completion ℝ φ a (hi v)
 

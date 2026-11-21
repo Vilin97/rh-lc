@@ -35,7 +35,7 @@ theorem infSpan_stable (φ : UA E n → ℂ) (k : infU E n) : ∀ ψ ∈ infSpan
   | add _ _ _ _ h₁ h₂ => rw [map_add (f := _)]; exact Submodule.add_mem _ h₁ h₂
   | smul c _ _ h => rw [map_smul]; exact Submodule.smul_mem _ c h
 
-def finStab (φ : UA E n → ℂ) : Subgroup (finU E n) where
+def finStab (φ : UA E n → ℂ) : Subgroup (finU (E := E) (n := n)) where
   carrier := {k | RU E n k φ = φ}
   one_mem' := by
     change RU E n 1 φ = φ
@@ -49,7 +49,7 @@ def finStab (φ : UA E n → ℂ) : Subgroup (finU E n) where
     conv_lhs => rw [← show RU E n a φ = φ from ha]
     rw [RU_RU, inv_mul_cancel, map_one]; rfl
 
-theorem isAutFormU_of_mem (hc : ∀ k : infU E n, ∀ g ∈ finU E n, k.1 * g = g * k.1) {φ : UA E n → ℂ}
+theorem isAutFormU_of_mem (hc : ∀ k : infU E n, ∀ g ∈ finU (E := E) (n := n), k.1 * g = g * k.1) {φ : UA E n → ℂ}
     (hφ : IsAutFormU φ) (ψ : UA E n → ℂ) (hψ : ψ ∈ infSpan φ) : IsAutFormU ψ := by
   refine ⟨?_, ?_, ?_, ?_⟩
   · induction hψ using Submodule.span_induction with

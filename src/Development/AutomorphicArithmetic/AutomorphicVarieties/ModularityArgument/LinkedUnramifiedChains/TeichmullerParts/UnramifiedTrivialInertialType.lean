@@ -111,8 +111,8 @@ def InfDim : Prop :=
     (s : HidaSetting l L Ω) (n : ℕ), 1 ≤ n → ∀ (V : s.Lev), V.S' = s.S → ∀ (Q : QData V) (c : Coef l) (ι : Qbar l ≃+* ℂ) (m : ℕ) (τ₀ : KT n (wt s) →* GL (Fin m) c.O)
     (lam : Wt L l n) (d : ℕ) (e : (Fin d → ℂ) ≃ₗ[ℂ] ⨂[ℂ] e : Emb l (fun v : V.frame.Vl => s.w v.1), nablaSq ℂ n (lam e.res))
     (ξ : GV n (fun v : V.frame.Vl => s.w v.1) →* GL (Fin d) ℂ), IsBasis ι e ξ → ∀ lam', WtLink V ι lam lam' → ∀ σ, IsAutRepU σ → (∀ v, HasWeightAt σ v.embedding (lam' v)) →
-    ∀ (U : Subgroup (finU L n)) (U' : Subgroup (Ga l L n × GL' n V)),
-    U' = U.map ((MonoidHom.prod (away l L n).rangeRestrict (Pi.monoidHom fun v : V.frame.Vl => cLoc (s.w v.1))).comp (finU L n).subtype) →
+    ∀ (U : Subgroup (finU (E := L) (n := n))) (U' : Subgroup (Ga l L n × GL' n V)),
+    U' = U.map ((MonoidHom.prod (away l L n).rangeRestrict (Pi.monoidHom fun v : V.frame.Vl => cLoc (s.w v.1))).comp (finU (E := L) (n := n)).subtype) →
     Module.rank ℂ ↥(σ ⊓ GlobalTheory.PRep.fixed (GlobalTheory.BCT.RF L n) U) = Module.rank ℂ ↥((hset Q τ₀).X.AF ξ ⊓ Submodule.span ℂ {F | ∀ ℓ, toForm ι e F ℓ ∈ σ} ⊓
       fixd (rtr ℂ (Ga l L n × GL' n V) (Fin d → ℂ)) U') * d ∧ (d : ℂ) = GlobalTheory.BCT.dimW lam'
 

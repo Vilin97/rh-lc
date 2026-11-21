@@ -353,7 +353,7 @@ theorem at_point {n a g : ℕ} {Λ : Type} [AddCommGroup Λ] (L : Flat.LogPeriod
       · simp
     have h1 := (Finset.sum_eq_zero_iff_of_nonneg hnn).1 h0 j (Finset.mem_univ j)
     rw [if_pos hj] at h1
-    exact ((hB j).dotProduct_mulVec_zero_iff v).1 (by simpa using h1)
+    exact ((hB j).dotProduct_mulVec_zero_iff).1 (by simpa using h1)
   have htm : ∀ m, (-(r m : ℂ)) / (2 * Real.pi * Complex.I) = t m := by
     intro m
     rw [div_eq_iff h2pi]

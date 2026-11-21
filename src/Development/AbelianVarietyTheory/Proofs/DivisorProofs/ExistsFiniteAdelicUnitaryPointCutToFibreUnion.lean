@@ -104,7 +104,7 @@ theorem corner_mem (P : Set (Pl E))
 
 theorem exists_cut : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (P : Set (Pl E)),
     (∀ u v : Pl E, u.under (𝓞 (maximalRealSubfield E)) = v.under (𝓞 (maximalRealSubfield E)) → u ∈ P → v ∈ P) →
-    ∀ g ∈ finU E n, ∃ x ∈ finU E n, ∀ v : Pl E, cLoc v x = if v ∈ P then cLoc v g else 1 := by
+    ∀ g ∈ finU (E := E) (n := n), ∃ x ∈ finU (E := E) (n := n), ∀ v : Pl E, cLoc v x = if v ∈ P then cLoc v g else 1 := by
   intro E _ _ _ n P hP g _
   refine ⟨⟨cornerGL n (sIdem P) g.1, corner_mem P hP g⟩, ?_, fun v => ?_⟩
   · exact MonoidHom.mem_ker.2 (map_cornerGL_of_zero _ _ (pInf_sIdem P) _)

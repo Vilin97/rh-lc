@@ -57,10 +57,10 @@ def Desc : Prop :=
     InScope .csd l π (quadChar E ^ a) → ∃ U : Submodule ℂ (UA E a → ℂ), Match U π
 
 structure IsLevelAway (w₀ : HeightOneSpectrum (𝓞 E)) (K : Subgroup (UA E a)) : Prop where
-  fin : K ≤ finU E a
+  fin : K ≤ finU (E := E) (n := a)
   one : ∀ x ∈ K, ∀ u, ¬ Apart u w₀ → cLoc u x = 1
   compact : IsCompact (K : Set (UA E a))
-  isOpen : ∃ N : Set (UA E a), IsOpen N ∧ 1 ∈ N ∧ ∀ x ∈ N, x ∈ finU E a → (∀ u, ¬ Apart u w₀ → cLoc u x = 1) → x ∈ K
+  isOpen : ∃ N : Set (UA E a), IsOpen N ∧ 1 ∈ N ∧ ∀ x ∈ N, x ∈ finU (E := E) (n := a) → (∀ u, ¬ Apart u w₀ → cLoc u x = 1) → x ∈ K
 
 def ActsBy {J : Type} (K : Subgroup (UA E a)) (t : J → (UA E a →₀ ℂ)) (η : Submodule ℂ (UA E a → ℂ) → J → ℂ) : Prop :=
   ∀ U, IsAutRepU U → ∀ φ ∈ U, (∀ x ∈ K, RU E a x φ = φ) → ∀ j, opOf (RU E a) (t j) φ = η U j • φ
@@ -74,7 +74,7 @@ def FinU : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (a : ℕ), 1 ≤ a →
     ∀ (w₀ : HeightOneSpectrum (𝓞 E)) (K : Subgroup (UA E a)), IsLevelAway w₀ K →
     ∀ (lam : (E →+* ℂ) → DomWeight a) (J : Type) (t : J → (UA E a →₀ ℂ)) (η : Submodule ℂ (UA E a → ℂ) → J → ℂ),
-      (∀ j, ∀ g ∈ (t j).support, g ∈ finU E a ∧ ∃ q : ℚ, t j g = q) → ActsBy K t η → ∀ U, OfType lam K U →
+      (∀ j, ∀ g ∈ (t j).support, g ∈ finU (E := E) (n := a) ∧ ∃ q : ℚ, t j g = q) → ActsBy K t η → ∀ U, OfType lam K U →
       ∃ L : FinExt l, ∀ j, ι.symm (η U j) ∈ L.1
 
 def ClosedAtL : Prop :=

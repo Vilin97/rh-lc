@@ -25,15 +25,15 @@ theorem cLoc_mem_UL' (w : Pl E) (x : UA E n) : cLoc w x ∈ UL n w := by
   · unfold UL; rw [if_pos hsp]; trivial
   · exact GlobalTheory.LocInj.cLoc_mem_UL hsp x
 
-def cw (w : Pl E) : finU E n →* UL n w where
+def cw (w : Pl E) : finU (E := E) (n := n) →* UL n w where
   toFun x := ⟨cLoc w (x : UA E n), cLoc_mem_UL' w _⟩
   map_one' := Subtype.ext (by simp)
   map_mul' x y := Subtype.ext (by simp)
 
-theorem toSub_eq (w : Pl E) (x : finU E n) : toSub (UL n w) (cLoc w (x : UA E n)) = cw w x :=
+theorem toSub_eq (w : Pl E) (x : finU (E := E) (n := n)) : toSub (UL n w) (cLoc w (x : UA E n)) = cw w x :=
   dif_pos (cLoc_mem_UL' w _)
 
-theorem cw_val (w : Pl E) (x : finU E n) : (cw w x).1 = cLoc w (x : UA E n) := rfl
+theorem cw_val (w : Pl E) (x : finU (E := E) (n := n)) : (cw w x).1 = cLoc w (x : UA E n) := rfl
 
 theorem ne_zero_of_finprod {S : Set (Pl E)} {g : Pl E → ℂ} (hg : ∀ᶠ w in cofinite, g w = 1)
     (h : ∏ᶠ w ∈ S, g w ≠ 0) : ∀ w ∈ S, g w ≠ 0 := by
@@ -49,17 +49,17 @@ end GlobalTheory.BCT.ClsSupp
 
 
 open GlobalTheory.BCT.ClsSupp in
-theorem GlobalTheory.BCT.ClsSupp.finite_supp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, 1 ≤ n → ∀ (S : Set (Pl E)), IsSection S → ∀ (K' : ∀ w : Pl E, Subgroup (UL n w)), IsLevelFam (fun w : Pl E => MonoidHom.id (UL n w)) (KL n) K' → ∀ f : ∀ w : Pl E, UL n w → ℂ, IsTest (KL n) K' f → ∀ γ : UE E n, γ.1.val.charpoly.Separable → {q : DoubleCoset.Quotient (twCent (MonoidHom.id (finU E n)) (finPt γ) : Set (finU E n)) (globLev S K' : Set (finU E n)) | globFn S f ((Quotient.out q)⁻¹ * finPt γ * (MonoidHom.id (finU E n)) (Quotient.out q)) ≠ 0}.Finite := by
+theorem GlobalTheory.BCT.ClsSupp.finite_supp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, 1 ≤ n → ∀ (S : Set (Pl E)), IsSection S → ∀ (K' : ∀ w : Pl E, Subgroup (UL n w)), IsLevelFam (fun w : Pl E => MonoidHom.id (UL n w)) (KL n) K' → ∀ f : ∀ w : Pl E, UL n w → ℂ, IsTest (KL n) K' f → ∀ γ : UE E n, γ.1.val.charpoly.Separable → {q : DoubleCoset.Quotient (twCent (MonoidHom.id (finU (E := E) (n := n))) (finPt γ) : Set (finU (E := E) (n := n))) (globLev S K' : Set (finU (E := E) (n := n))) | globFn S f ((Quotient.out q)⁻¹ * finPt γ * (MonoidHom.id (finU (E := E) (n := n))) (Quotient.out q)) ≠ 0}.Finite := by
   intro E _ _ _ hU n hn S hS K' hK' f hf γ hγ
   set δ := finPt γ with hδ
   have hych : ∀ w, (cw w δ).1.val.charpoly = atPl w γ.1.val.charpoly := fun w =>
     by rw [cw_val, RegVan.cLoc_finPt_val, Matrix.charpoly_map]
   have hysep : ∀ w, (cw w δ).1.val.charpoly.Separable := fun w => by rw [hych]; exact hγ.map
-  have hconj : ∀ (w : Pl E) (x : finU E n),
-      cw w (x⁻¹ * δ * (MonoidHom.id (finU E n)) x) = (cw w x)⁻¹ * cw w δ * cw w x := by
+  have hconj : ∀ (w : Pl E) (x : finU (E := E) (n := n)),
+      cw w (x⁻¹ * δ * (MonoidHom.id (finU (E := E) (n := n))) x) = (cw w x)⁻¹ * cw w δ * cw w x := by
     intro w x; simp [map_mul, map_inv]
 
-  have hsupp : ∀ x : finU E n, globFn S f x ≠ 0 → ∀ w ∈ S, f w (cw w x) ≠ 0 := by
+  have hsupp : ∀ x : finU (E := E) (n := n), globFn S f x ≠ 0 → ∀ w ∈ S, f w (cw w x) ≠ 0 := by
     intro x hx
     refine ne_zero_of_finprod (g := fun w => f w (cw w x)) ?_ ?_
     · filter_upwards [RegVan.eventually_toSub_mem x, hf.2] with w a b
@@ -114,11 +114,11 @@ theorem GlobalTheory.BCT.ClsSupp.finite_supp : ∀ (E : Type) [Field E] [NumberF
       ∃ a ∈ twCent (MonoidHom.id (UL n w)) (cw w δ), ∃ k ∈ K' w, g = a * k := fun w hw hwB =>
     by_contra fun h => hwB ⟨hw, h⟩
   haveI : Finite B := hB.to_subtype
-  have hq0 : ∀ q : DoubleCoset.Quotient (twCent (MonoidHom.id (finU E n)) δ : Set (finU E n)) (globLev S K' : Set (finU E n)),
-      globFn S f ((Quotient.out q)⁻¹ * δ * (MonoidHom.id (finU E n)) (Quotient.out q)) ≠ 0 → ∀ w ∈ S,
+  have hq0 : ∀ q : DoubleCoset.Quotient (twCent (MonoidHom.id (finU (E := E) (n := n))) δ : Set (finU (E := E) (n := n))) (globLev S K' : Set (finU (E := E) (n := n))),
+      globFn S f ((Quotient.out q)⁻¹ * δ * (MonoidHom.id (finU (E := E) (n := n))) (Quotient.out q)) ≠ 0 → ∀ w ∈ S,
       f w ((cw w (Quotient.out q))⁻¹ * cw w δ * cw w (Quotient.out q)) ≠ 0 := fun q hq w hw => by
     rw [← hconj]; exact hsupp _ hq w hw
-  let Φ := fun (q : DoubleCoset.Quotient (twCent (MonoidHom.id (finU E n)) δ : Set (finU E n)) (globLev S K' : Set (finU E n)))
+  let Φ := fun (q : DoubleCoset.Quotient (twCent (MonoidHom.id (finU (E := E) (n := n))) δ : Set (finU (E := E) (n := n))) (globLev S K' : Set (finU (E := E) (n := n))))
       (w : B) => DoubleCoset.mk (twCent (MonoidHom.id (UL n (w : Pl E))) (cw (w : Pl E) δ)) (K' w) (cw (w : Pl E) (Quotient.out q))
   refine Set.Finite.of_finite_image (f := Φ) ?_ ?_
   · refine (Set.Finite.pi fun w : B => hLfin (w : Pl E)).subset ?_
@@ -154,8 +154,8 @@ theorem GlobalTheory.BCT.ClsSupp.finite_supp : ∀ (E : Type) [Field E] [NumberF
     obtain ⟨tt, htt⟩ := exists_finU_of_loc E hU n S hS t htint
     obtain ⟨kk, hkk⟩ := exists_finU_of_loc E hU n S hS k (Filter.Eventually.of_forall fun w => hKle w (hk w))
     simp only [toSub_eq] at htt hkk
-    have httT : tt ∈ twCent (MonoidHom.id (finU E n)) δ := by
-      show tt * δ = δ * (MonoidHom.id (finU E n)) tt
+    have httT : tt ∈ twCent (MonoidHom.id (finU (E := E) (n := n))) δ := by
+      show tt * δ = δ * (MonoidHom.id (finU (E := E) (n := n))) tt
       apply finU_eq_of_loc E hU n S hS
       intro w hw
       have h1 : t w * cw w δ = cw w δ * (MonoidHom.id (UL n w)) (t w) := ht w
@@ -171,6 +171,6 @@ theorem GlobalTheory.BCT.ClsSupp.finite_supp : ∀ (E : Type) [Field E] [NumberF
       intro w hw
       simp only [toSub_eq, map_mul, htt w hw, hkk w hw]
       exact hte w hw
-    rw [← DoubleCoset.out_eq' (twCent (MonoidHom.id (finU E n)) δ) (globLev S K') q,
-      ← DoubleCoset.out_eq' (twCent (MonoidHom.id (finU E n)) δ) (globLev S K') q', DoubleCoset.eq]
+    rw [← DoubleCoset.out_eq' (twCent (MonoidHom.id (finU (E := E) (n := n))) δ) (globLev S K') q,
+      ← DoubleCoset.out_eq' (twCent (MonoidHom.id (finU (E := E) (n := n))) δ) (globLev S K') q', DoubleCoset.eq]
     exact ⟨tt, httT, kk, hkkK, hgg⟩

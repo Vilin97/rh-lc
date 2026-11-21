@@ -132,7 +132,7 @@ theorem addVal_algebraMap (x : R) :
   · obtain ⟨ϖ, hϖ⟩ := exists_irreducible R
     obtain ⟨n, u, rfl⟩ := eq_unit_mul_pow_irreducible hx hϖ
     rw [addVal_def' u hϖ, map_mul, map_pow, addVal_mul, addVal_pow,
-      addVal_algebraMap_uniformizer R S hϖ,
+      addVal_algebraMap_uniformizer S hϖ,
       addVal_eq_zero_iff.mpr (u.isUnit.map (algebraMap R S)), zero_add, nsmul_eq_mul]
 
 variable (X : Type*) [AddCommGroup X] [Module R X]

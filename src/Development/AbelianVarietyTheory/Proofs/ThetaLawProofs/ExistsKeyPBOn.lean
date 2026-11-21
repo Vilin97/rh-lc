@@ -36,7 +36,13 @@ theorem isLieBasis_cast {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] {m 
 theorem exists_keyPB_on : ∀ (R R' : Type) [CommRing R] [CommRing R'] (f : R →+* R') (y : KeyIn R) (P' : Out.PolAV (Sp R')) (φ : P'.A.left ⟶ y.P.A.left) (hg : 1 ≤ P'.g), P'.g = y.P.g → IsGrpPullback P'.A y.P.A (spMap f) φ → LBIso P'.L (y.P.L.pull φ) → ∃ rig hr th hth v hv, KeyPB ⟨P', hg, rig, hr, th, hth, v, hv⟩ y f := by
   intro R R' _ _ f x P' φ hg e h ⟨w, hw₀⟩
   have hL' := P'.isLB
-  have hw := (isGen_iff _).1 hw₀
+  have hw : PGen w := by
+    intro Y f y j j' k k' hj hj' hk hk'
+    have hW : f y ∈ ((x.P.L.pull φ).U (fun _ => j) ⊓ P'.L.U k ⊓ ((x.P.L.pull φ).U (fun _ => j') ⊓ P'.L.U k')) :=
+      ⟨⟨mem_pull (J := fun _ => j) |>.2 hj, hk⟩, ⟨mem_pull (J := fun _ => j') |>.2 hj', hk'⟩⟩
+    have e := congrArg (gm f y _) (hw₀ (fun _ => j, k) (fun _ => j', k'))
+    erw [map_mul, gm_res f y _ hW, gm_res f y _ hW, gm_div_g f y j j' k k' hj hj' hk hk'] at e
+    exact e
   have he : eSec P'.A ≫ φ = spMap f ≫ eSec x.P.A := PolBaseChange.eSec_comm h
   have hr₀ : (rigPullOf φ (spMap f) he x.P.L x.rig).IsGen :=
     Out.LBxP.isGen_pullAlong x.P.L φ (spMap f) (fun _ : PUnit => eSec x.P.A) (fun _ => 1) (fun _ => eSec P'.A)

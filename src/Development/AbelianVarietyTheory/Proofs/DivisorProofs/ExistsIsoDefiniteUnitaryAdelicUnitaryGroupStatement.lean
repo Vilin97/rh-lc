@@ -18,7 +18,7 @@ theorem _root_.GlobalTheory.T.exists_iso_definiteUnitary_adelicUnitaryGroup : �
     ∃ (j : UA D.host.E V.rank ≃ₜ* GA D V) (M : Matrix (Fin V.rank) (Fin V.rank) D.host.E),
       cT (D.sp.cm.sig : D.host.E →+* D.host.E) M * V.gram * M = 1 ∧
       (∀ x, x ∈ ratU D.host.E V.rank ↔ j x ∈ GQ V) ∧
-      (∀ x, x ∈ finU D.host.E V.rank ↔ j x ∈ GfC V) ∧
+      (∀ x, x ∈ finU (E := D.host.E) (n := V.rank) ↔ j x ∈ GfC V) ∧
       (∀ x, x ∈ infU D.host.E V.rank ↔ j x ∈ GinfC V) ∧
       (∃ A : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ, (∀ τ, IsUnit (A τ)) ∧
         ∀ τ x, infMat D.sp.cm.sig V.gram (θ τ) (j x) =

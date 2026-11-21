@@ -33,6 +33,8 @@ theorem dual_ext : ∀ (Ω Ω' : Type) [Field Ω] [Field Ω'] (i : Ω →+* Ω')
         (Subtype.val_injective.comp s.equivFin.symm.injective))
     have h2 := h.comp s.equivFin s.equivFin.injective
     convert h2 using 1
+    funext k
+    simp
   have hsp : ⊤ ≤ Submodule.span Ω' (Set.range fun k => j (b k)) := by
     rw [← hspan, Submodule.span_le]
     rintro _ ⟨e, rfl⟩
@@ -42,6 +44,8 @@ theorem dual_ext : ∀ (Ω Ω' : Type) [Field Ω] [Field Ω'] (i : Ω →+* Ω')
   refine ⟨AddMonoidHom.mk' (fun w => b'.constr Ω' fun k => i (w (b k))) fun w₁ w₂ => ?_, fun w e => ?_⟩
   · rw [← map_add (f := _)]
     congr 1
+    funext k
+    simp
   · show b'.constr Ω' (fun k => i (w (b k))) (j e) = i (w e)
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hj e, Finsupp.sum, map_sum]

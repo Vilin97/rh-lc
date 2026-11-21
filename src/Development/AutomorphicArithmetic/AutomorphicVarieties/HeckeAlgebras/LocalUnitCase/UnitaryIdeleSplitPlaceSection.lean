@@ -88,7 +88,7 @@ theorem RU_form (F : Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d 
   have : JU V (g * x) = JU V g * JU V x := Prod.ext (map_mul _ _ _) (funext fun v => map_mul _ _ _)
   rw [this, mul_inv_rev, map_mul, Module.End.mul_apply]
 
-theorem RU_fin (F : Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d → ℂ) (ℓ) {x : UA L n} (hx : x ∈ finU L n) :
+theorem RU_fin (F : Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d → ℂ) (ℓ) {x : UA L n} (hx : x ∈ finU (E := L) (n := n)) :
     RU L n x (toForm ι e F ℓ) = toForm ι e (fun g => F (g * JU V x)) ℓ := by
   have h : infRep (V := V) ι lam x⁻¹ = 1 := by
     have h1 : cInf x⁻¹ = 1 := inv_mem hx

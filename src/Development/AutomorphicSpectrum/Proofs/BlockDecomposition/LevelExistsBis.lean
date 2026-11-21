@@ -269,9 +269,9 @@ theorem exists_fix_off {φ : UA E n → ℂ} (hφ : IsAutFormU φ) :
       (∀ t ∈ T, t.under (𝓞 (maximalRealSubfield E)) ≠ w.under (𝓞 (maximalRealSubfield E))) →
       ∀ x ∈ locU n w, cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n) → RU E n x φ = φ := by
   obtain ⟨T, hT⟩ := GlobalTheory.FixLevOpen.mem_of_isOpen_of_eq_one_on_finset E n
-    {k : finU E n | RU E n (k : UA E n) φ = φ} hφ.level (by simp)
+    {k : finU (E := E) (n := n) | RU E n (k : UA E n) φ = φ} hφ.level (by simp)
   refine ⟨T, fun w hw x hx hc => ?_⟩
-  have hxf : x ∈ finU E n := GlobalTheory.DefU.LocAdm.locU_le_finU w hx
+  have hxf : x ∈ finU (E := E) (n := n) := GlobalTheory.DefU.LocAdm.locU_le_finU w hx
   have h := hT ⟨x, hxf⟩ (fun v hv => GlobalTheory.DefU.LocRet.mem_locU_ne hx (hw v hv))
     (fun v i j => GlobalTheory.UnramDict.cLoc_entry_mem hx hc v i j)
     (fun v i j => by

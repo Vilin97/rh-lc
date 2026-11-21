@@ -37,6 +37,8 @@ theorem iotaMulti_rows {K V : Type} [Field K] [AddCommGroup V] [Module K V] {n :
         ext i j; simp [Matrix.one_apply, Pi.single_apply, eq_comm], Matrix.det_one]
     rw [AlternatingMap.smulRight_apply, e1, one_smul, AlternatingMap.compLinearMap_apply]
     congr 1
+    funext i
+    simp [Fintype.linearCombination_apply, Pi.basisFun_apply]
   exact AlternatingMap.congr_fun hA M
 
 variable {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Spec (CommRingCat.of Ω) ⟶ X}

@@ -124,7 +124,9 @@ theorem first_inequality_sUnits_prime :
   have hN : ∀ y : sUnits E SE, (((nrm τ p y : sUnits E SE) : Eˣ) : E) =
       ∏ i ∈ Finset.range p, σ^[i] ((y : Eˣ) : E) := by
     intro y
-    rw [nrm_apply, Subgroup.val_finset_prod, Units.coe_prod]
+    rw [nrm_apply]
+    change ((sUnits E SE).subtype (∏ i ∈ Finset.range p, τ^[i] y) : E) = _
+    rw [map_prod, Units.coe_prod]
     exact Finset.prod_congr rfl (fun i _ => hτi i y)
   let j : sUnits F S →* sUnits E SE :=
     ((Units.map (algebraMap F E : F →* E)).comp (sUnits F S).subtype).codRestrict _

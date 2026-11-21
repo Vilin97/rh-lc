@@ -29,7 +29,7 @@ open GlobalTheory.Cong.AdaptLev
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {a : ℕ}
 
-theorem eq_one_of_forall_cLoc {x : UA E a} (hx : x ∈ finU E a) (h : ∀ u, cLoc u x = 1) : x = 1 := by
+theorem eq_one_of_forall_cLoc {x : UA E a} (hx : x ∈ finU (E := E) (n := a)) (h : ∀ u, cLoc u x = 1) : x = 1 := by
   have hinf : cInf x = 1 := MonoidHom.mem_ker.1 hx
   refine Subtype.ext (ga_ext ?_ ?_)
   · exact hinf.trans (map_one _).symm
@@ -41,21 +41,21 @@ theorem eq_one_of_forall_cLoc {x : UA E a} (hx : x ∈ finU E a) (h : ∀ u, cLo
     split_ifs with hij <;> simp [hij]
 
 theorem isCompact_integral :
-    IsCompact {k : finU E a | ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a)} := by
-  have e' : ∀ k : finU E a, k ∈ (GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E a).comap
+    IsCompact {k : finU (E := E) (n := a) | ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a)} := by
+  have e' : ∀ k : finU (E := E) (n := a), k ∈ (GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E a).comap
       (GlobalTheory.BCT.GlobLev.finPart E a) ↔ ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a) := by
     intro k
     rw [Subgroup.mem_comap, GroundTheory.Automorphic.AdelicGLn.mem_integralFiniteGL_iff, ← map_inv]
     simp only [GlobalTheory.BCT.GlobLev.mem_KGL_iff_val, ← map_inv, GroundTheory.Global.mem_integralFiniteAdeles]
     exact ⟨fun h u => ⟨fun i j => h.1 i j u, fun i j => h.2 i j u⟩,
       fun h => ⟨fun i j u => (h u).1 i j, fun i j u => (h u).2 i j⟩⟩
-  have e : {k : finU E a | ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a)} =
+  have e : {k : finU (E := E) (n := a) | ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a)} =
       ((GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E a).comap (GlobalTheory.BCT.GlobLev.finPart E a) :
-        Set (finU E a)) := by
+        Set (finU (E := E) (n := a))) := by
     ext k
     exact (e' k).symm
   have hO : IsOpen ((GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E a).comap (GlobalTheory.BCT.GlobLev.finPart E a) :
-      Set (finU E a)) :=
+      Set (finU (E := E) (n := a))) :=
     (GroundTheory.Automorphic.AdelicGLn.isOpen_integralFiniteGL E a).preimage GlobalTheory.BCT.GlobLev.continuous_finPart
   rw [e]
   refine IsCompact.of_isClosed_subset (GlobalTheory.BCT.GlobLev.isClosedEmbedding_finU.isCompact_preimage
@@ -65,13 +65,13 @@ theorem isCompact_integral :
   exact ga_ext (by rw [pInf_finGL, h1]) (by rw [pFin_finGL]; rfl)
 
 theorem exists_finite_fix {φ : UA E a → ℂ} (hφ : IsAutFormU φ) :
-    ∃ t : Finset (HeightOneSpectrum (𝓞 E)), ∀ k ∈ finU E a, (∀ u, cLoc u k ∈ GlobalTheory.LFun.KGL u (n := a)) →
+    ∃ t : Finset (HeightOneSpectrum (𝓞 E)), ∀ k ∈ finU (E := E) (n := a), (∀ u, cLoc u k ∈ GlobalTheory.LFun.KGL u (n := a)) →
       (∀ u ∈ t, cLoc u k = 1) → RU E a k φ = φ := by
   haveI : ∀ u : HeightOneSpectrum (𝓞 E), T2Space (GL (Fin a) (u.adicCompletion E)) := fun u =>
     Units.isEmbedding_embedProduct.t2Space
   have hc := (isCompact_integral (E := E) (a := a)).diff hφ.level
-  have hcov : {k : finU E a | ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a)} \ {k : finU E a | RU E a k φ = φ} ⊆
-      ⋃ u, {k : finU E a | cLoc u k.1 ≠ 1} := by
+  have hcov : {k : finU (E := E) (n := a) | ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a)} \ {k : finU (E := E) (n := a) | RU E a k φ = φ} ⊆
+      ⋃ u, {k : finU (E := E) (n := a) | cLoc u k.1 ≠ 1} := by
     rintro k ⟨-, hk⟩
     simp only [Set.mem_iUnion, Set.mem_setOf_eq]
     by_contra hne
@@ -84,7 +84,7 @@ theorem exists_finite_fix {φ : UA E a → ℂ} (hφ : IsAutFormU φ) :
     ((GlobalTheory.BCT.GlobLev.continuous_cLoc u).comp continuous_subtype_val) continuous_const) hcov
   refine ⟨t, fun k hk hint h1 => ?_⟩
   by_contra hne
-  have := ht (show (⟨k, hk⟩ : finU E a) ∈ _ from ⟨hint, hne⟩)
+  have := ht (show (⟨k, hk⟩ : finU (E := E) (n := a)) ∈ _ from ⟨hint, hne⟩)
   simp only [Set.mem_iUnion, Set.mem_setOf_eq] at this
   obtain ⟨u, hu, hne'⟩ := this
   exact hne' (h1 u hu)
@@ -98,9 +98,9 @@ theorem one_of_cLoc_eq_one {q : HeightOneSpectrum (𝓞 E)} {z : UA E a} (h : cL
     exact h
 
 theorem peel (φ : UA E a → ℂ) (S : Set (HeightOneSpectrum (𝓞 E)))
-    (hS : ∀ k ∈ finU E a, (∀ u, cLoc u k ∈ GlobalTheory.LFun.KGL u (n := a)) → (∀ u ∈ S, cLoc u k = 1) → RU E a k φ = φ)
+    (hS : ∀ k ∈ finU (E := E) (n := a), (∀ u, cLoc u k ∈ GlobalTheory.LFun.KGL u (n := a)) → (∀ u ∈ S, cLoc u k = 1) → RU E a k φ = φ)
     (Q : Finset (HeightOneSpectrum (𝓞 E))) :
-    ∀ x ∈ finU E a, (∀ u, (∀ q ∈ Q, Apart u q) → (u ∈ S → cLoc u x = 1) ∧ cLoc u x ∈ GlobalTheory.LFun.KGL u (n := a)) →
+    ∀ x ∈ finU (E := E) (n := a), (∀ u, (∀ q ∈ Q, Apart u q) → (u ∈ S → cLoc u x = 1) ∧ cLoc u x ∈ GlobalTheory.LFun.KGL u (n := a)) →
       (∀ q ∈ Q, ∃ y ∈ locU a q, RU E a y φ = φ ∧ cLoc q y = cLoc q x) → RU E a x φ = φ := by
   classical
   induction Q using Finset.induction_on with
@@ -110,7 +110,7 @@ theorem peel (φ : UA E a → ℂ) (S : Set (HeightOneSpectrum (𝓞 E)))
   | @insert q Q hqQ ih =>
     intro x hx h1 h2
     obtain ⟨y, hyl, hyφ, hyq⟩ := h2 q (Finset.mem_insert_self q Q)
-    have hyf : y ∈ finU E a := ((GlobalTheory.Cong.LevelExt.mem_locU_iff y).1 hyl).1
+    have hyf : y ∈ finU (E := E) (n := a) := ((GlobalTheory.Cong.LevelExt.mem_locU_iff y).1 hyl).1
     have hya : ∀ u, Apart u q → cLoc u y = 1 := ((GlobalTheory.Cong.LevelExt.mem_locU_iff y).1 hyl).2
     have hq1 : cLoc q (y⁻¹ * x) = 1 := by rw [map_mul, map_inv, hyq, inv_mul_cancel]
     have hfib : ∀ u, ¬ Apart u q → cLoc u (y⁻¹ * x) = 1 := one_of_cLoc_eq_one hq1

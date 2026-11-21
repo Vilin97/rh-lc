@@ -25,8 +25,8 @@ theorem exists_th_scale : AllIso fun {_} _ _ {_} {_} {F} _ _ {N} {N'} ν ν' {_}
   obtain ⟨y⟩ : Nonempty (TF (R := R) F).left := inferInstanceAs (Nonempty (PrimeSpectrum F))
   have hJ := good ν y
   have hJ' := good ν' y
-  obtain ⟨th, ρ, hth, vth⟩ := GlobalTheory.ThetaInValues.exists_th ν y
-  obtain ⟨th', ρ', -, vth'⟩ := GlobalTheory.ThetaInValues.exists_th ν' y
+  obtain ⟨th, ρ, hth, vth⟩ := exists_th ν y
+  obtain ⟨th', ρ', -, vth'⟩ := exists_th ν' y
   have e : φ.hom.left ≫ (snd (TF (R := R) F) D'.P.A).left = 𝟙 _ ≫ (φ.hom ≫ snd (TF (R := R) F) D'.P.A).left :=
     (Category.id_comp _).symm
   let b := VVRank.pullTo (φ := fun _ : Fin 1 => (snd (TF (R := R) F) D'.P.A).left) (ε := fun _ => 1)

@@ -49,7 +49,7 @@ end Generic
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
-def finPtHom : UE E n →* finU E n where
+def finPtHom : UE E n →* finU (E := E) (n := n) where
   toFun := finPt
   map_one' := by
     apply Subtype.ext

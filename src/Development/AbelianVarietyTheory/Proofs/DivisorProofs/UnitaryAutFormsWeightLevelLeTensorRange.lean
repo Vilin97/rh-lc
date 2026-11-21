@@ -32,7 +32,7 @@ theorem RU_mul (a b : UA E n) (φ : UA E n → ℂ) : RU E n (a * b) φ = RU E n
   rw [map_mul]; rfl
 
 theorem comp_mem_infHom (lam : InfinitePlace E → DomWeight n) {T : Wsp lam →ₗ[ℂ] (UA E n → ℂ)} (hT : T ∈ infHom lam)
-    (k : finU E n) : RU E n k.1 ∘ₗ T ∈ infHom lam := by
+    (k : finU (E := E) (n := n)) : RU E n k.1 ∘ₗ T ∈ infHom lam := by
   intro x hx w
   simp only [LinearMap.comp_apply, hT x hx, ← RU_mul, GlobalTheory.DefU.fin_mul_inf k.2 hx]
 
@@ -135,7 +135,7 @@ theorem mem_range_of_mem (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w))
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [LinearMap.sub_apply, LinearMap.comp_apply, Finset.sum_sub_distrib, ← map_sum, h1, sub_self]
     exact sub_eq_zero.1 (eq_zero_of_sum lam b _ (fun i => sub_mem (comp_mem_infHom lam (hT i) k) (hT i)) h2 j)
-  obtain ⟨F, hFa⟩ : ∃ F : Fin (Module.finrank ℂ (Wsp lam)) → finU E n → Module.Dual ℂ (Wsp lam),
+  obtain ⟨F, hFa⟩ : ∃ F : Fin (Module.finrank ℂ (Wsp lam)) → finU (E := E) (n := n) → Module.Dual ℂ (Wsp lam),
       ∀ j x w, F j x w = T j w x.1 :=
     ⟨fun j x => LinearMap.proj (R := ℂ) (φ := fun _ : UA E n => ℂ) x.1 ∘ₗ T j, fun _ _ _ => rfl⟩
   have hphi : ∀ j, phiFun lam (F j) = T j := by

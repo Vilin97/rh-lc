@@ -18,7 +18,7 @@ namespace GlobalTheory.Cong.LevelExt
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 theorem mem_locU_iff {w : HeightOneSpectrum (𝓞 E)} (x : UA E n) :
-    x ∈ locU n w ↔ x ∈ finU E n ∧ ∀ u, Apart u w → cLoc u x = 1 := by
+    x ∈ locU n w ↔ x ∈ finU (E := E) (n := n) ∧ ∀ u, Apart u w → cLoc u x = 1 := by
   unfold locU Apart
   simp only [Subgroup.mem_inf, Subgroup.mem_iInf, MonoidHom.mem_ker]
 

@@ -191,7 +191,7 @@ def mulElem (r : R) (hr : r ∈ I ^ a) : (M ⧸ (I • ⊤ : Submodule R M)) →
 
 variable {I M a} in
 theorem mulElem_mk (r : R) (hr : r ∈ I ^ a) (x : M) :
-    mulElem I M a r hr (Submodule.Quotient.mk x) =
+    mulElem M r hr (Submodule.Quotient.mk x) =
       mk I M a ⟨r • x, Submodule.smul_mem_smul hr trivial⟩ := rfl
 
 end powGr
@@ -212,16 +212,13 @@ variable (M : Type*) [AddCommGroup M] [Module R M]
 noncomputable def monoToPowGr (f : ι → R) (a : ℕ) :
     (MonoDeg ι a → M ⧸ (Ideal.span (Set.range f) • ⊤ : Submodule R M)) →ₗ[R ⧸
       Ideal.span (Set.range f)] powGr (Ideal.span (Set.range f)) M a :=
-  ∑ α : MonoDeg ι a,
-    powGr.mulElem (Ideal.span (Set.range f)) M a (monoVal f α.1) (monoVal_mem_pow f α) ∘ₗ
-      LinearMap.proj α
+  ∑ α : MonoDeg ι a, powGr.mulElem M (monoVal f α.1) (monoVal_mem_pow f α) ∘ₗ LinearMap.proj α
 
 variable {M}
 
 theorem monoToPowGr_apply (f : ι → R) (a : ℕ)
     (c : MonoDeg ι a → M ⧸ (Ideal.span (Set.range f) • ⊤ : Submodule R M)) :
-    monoToPowGr M f a c = ∑ α,
-      powGr.mulElem (Ideal.span (Set.range f)) M a (monoVal f α.1) (monoVal_mem_pow f α) (c α) := by
+    monoToPowGr M f a c = ∑ α, powGr.mulElem M (monoVal f α.1) (monoVal_mem_pow f α) (c α) := by
   simp only [monoToPowGr, LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.proj_apply]
 
 theorem monoToPowGr_mk (f : ι → R) (a : ℕ) (c : MonoDeg ι a → M) :
@@ -250,7 +247,7 @@ theorem monoToPowGr_injective_iff (f : ι → R) (a : ℕ) :
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   constructor
   · intro h c hc α
-    have := h _ ((monoToPowGr_mk f a c).trans ((powGr.mk_eq_zero _ M a _).mpr hc))
+    have := h _ ((monoToPowGr_mk f a c).trans ((powGr.mk_eq_zero _).mpr hc))
     exact (Submodule.Quotient.mk_eq_zero _).mp (congrFun this α)
   · intro h c hc
     choose d hd using fun α => Submodule.Quotient.mk_surjective _ (c α)
@@ -265,7 +262,7 @@ theorem isQuasiRegularSeq_iff_injective (f : ι → R) :
 theorem isQuasiRegularSeq_iff_bijective (f : ι → R) :
     IsQuasiRegularSeq M f ↔ ∀ a, Function.Bijective (monoToPowGr M f a) :=
   (isQuasiRegularSeq_iff_injective f).trans <| forall_congr' fun a =>
-    ⟨fun h => ⟨h, monoToPowGr_surjective f a⟩, fun h => h.1⟩
+    ⟨fun h => ⟨h, monoToPowGr_surjective M f a⟩, fun h => h.1⟩
 
 theorem isQuasiRegularSeq_self_iff (f : ι → R) :
     IsQuasiRegularSeq R f ↔ ∀ (a : ℕ) (p : MvPolynomial ι R), p.IsHomogeneous a →

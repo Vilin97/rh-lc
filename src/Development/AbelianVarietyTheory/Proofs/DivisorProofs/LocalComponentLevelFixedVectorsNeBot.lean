@@ -42,8 +42,8 @@ theorem fixed_ne_bot : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], U
 
   have hfixx : ∀ x : locU n w, p x ∈ K' w → RU E n (x : UA E n) φ = φ := by
     intro x hx
-    have hxfin : (x : UA E n) ∈ finU E n := (Subgroup.mem_inf.1 x.2).1
-    have hy : (⟨x, hxfin⟩ : finU E n) ∈ globLev S K' := by
+    have hxfin : (x : UA E n) ∈ finU (E := E) (n := n) := (Subgroup.mem_inf.1 x.2).1
+    have hy : (⟨x, hxfin⟩ : finU (E := E) (n := n)) ∈ globLev S K' := by
       simp only [globLev, Subgroup.mem_iInf]
       intro w' hw'
       rw [Subgroup.mem_comap, Subgroup.mem_map]

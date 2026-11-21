@@ -21,6 +21,8 @@ variable {n : ℕ}
 
 namespace Ps1
 
+local notation "𝕄" => Fin n → Fin n → ℂ
+
 lemma contDiffAt_zpow {f : 𝕄 → ℂ} {x : 𝕄}
     (hf : ContDiffAt ℂ 1 f x) (hx : f x ≠ 0) (m : ℤ) : ContDiffAt ℂ 1 (fun y => f y ^ m) x := by
   obtain ⟨k, rfl | rfl⟩ := Int.eq_nat_or_neg m
@@ -39,7 +41,7 @@ lemma contDiff_lead (i : ℕ) : ContDiff ℂ 1 (fun z : 𝕄 => lead i z) := by
       rfl
     rw [e]
     exact ContDiff.sum fun σ _ => contDiff_const.mul
-      (contDiff_prod fun j _ => contDiff_apply_apply ℂ ℂ _ _)
+      (contDiff_prod fun j _ => contDiff_apply_apply ℂ _ _)
   · have e : (fun z : 𝕄 => lead i z) = fun _ => 0 := by
       funext z
       simp only [lead, dif_neg h]

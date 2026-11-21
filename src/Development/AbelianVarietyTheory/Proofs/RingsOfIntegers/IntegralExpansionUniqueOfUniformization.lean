@@ -36,7 +36,9 @@ theorem main : lemmaBSt.{0} → ∀ (V : Type) [CommRing V] [IsDomain V] [IsDisc
   refine hB V D.toPre.P.A _ (linComb_isLB _ D.toPre.P.isLB _ _) (d α) ϖ hϖ (fun i e => ?_) j
   obtain ⟨τ, hτ⟩ := (GlobalTheory.ExtDiv.main V ϖ hϖ D A G U e k α (d α)).1
     (WeightPf.weightIndep V _ D A G U e k SecOps.secZero d (fun _ => map_zero _) (h0 e) α)
-  rw [hτ i, Ideal.span_singleton_pow, Ideal.mem_span_singleton]
+  rw [hτ i]
+  change _ ∈ Ideal.span {resTop ((D.toPre.P.L.LinComb (D.toPre.famφB α) (DegPre.famε k)).U i) (scal D.toPre.P.A.hom ϖ)} ^ e
+  rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton]
   refine Dvd.dvd.mul_right ?_ _
   simp only [scal, pow_succ, map_mul, map_pow]
   exact Dvd.dvd.mul_right (dvd_refl _) _

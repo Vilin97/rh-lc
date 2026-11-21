@@ -41,7 +41,7 @@ private theorem pLoc_one (w : Plc L) (i j : Fin n) :
   simp only [Matrix.one_apply]; split_ifs <;> simp
 
 private theorem mem_iff {m : ℕ} (hm : m ≠ 0) (x : UA L n) :
-    (x ∈ finU L n ∧ fp x ∈ UpperTheory.V.Af.KLev L n m) ↔
+    (x ∈ finU (E := L) (n := n) ∧ fp x ∈ UpperTheory.V.Af.KLev L n m) ↔
       x ∈ Kall L n ∧ ∀ w i j, ∃ a ∈ w.adicCompletionIntegers L, (mL w x - 1) i j = (m : Kw w) * a := by
   have hd : ∀ (w : Plc L) (i j : Fin n), (mL w x - 1) i j =
       pLoc L w ((fp x).1 i j - (1 : Matrix (Fin n) (Fin n) (Af L)) i j) := fun w i j => by
@@ -73,13 +73,13 @@ private theorem mem_iff {m : ℕ} (hm : m ≠ 0) (x : UA L n) :
       rwa [this, one_mul]
     · rw [← mul_assoc, mul_comm _ u, hu, one_mul]
 
-private def cong (m : ℕ) : Subgroup (UA L n) := finU L n ⊓ (UpperTheory.V.Af.KLev L n m).comap fp
+private def cong (m : ℕ) : Subgroup (UA L n) := finU (E := L) (n := n) ⊓ (UpperTheory.V.Af.KLev L n m).comap fp
 
 private theorem isCong {m : ℕ} (hm : m ≠ 0) : IsCong m (cong (L := L) (n := n) m) := fun x => mem_iff hm x
 
 private theorem isLevel {m : ℕ} (hm : m ≠ 0) : IsLevel (cong (L := L) (n := n) m) := by
   refine ⟨fun x hx => ((isCong hm x).1 hx).1, ?_⟩
-  have hc : Continuous fun x : finU L n => fp (x : UA L n) :=
+  have hc : Continuous fun x : finU (E := L) (n := n) => fp (x : UA L n) :=
     GlobalTheory.CuspRep.continuous_mapFin.comp (continuous_subtype_val.comp continuous_subtype_val)
   convert (UpperTheory.V.Af.isOpen_KLev (F := L) (n := n) (M := m) (Nat.one_le_iff_ne_zero.2 hm)).preimage hc using 1
   ext x

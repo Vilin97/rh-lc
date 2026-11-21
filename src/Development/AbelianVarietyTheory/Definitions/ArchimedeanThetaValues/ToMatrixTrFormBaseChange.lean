@@ -28,6 +28,7 @@ instance instAddCommGroup : AddCommGroup (ConjDual H) :=
 def toDual (H : Host E) : ConjDual H ≃ₗ[ℤ] Module.Dual ℤ (𝓞 E) :=
   (AddEquiv.refl (Module.Dual ℤ (𝓞 E)) : ConjDual H ≃+ Module.Dual ℤ (𝓞 E)).toIntLinearEquiv
 
+@[ext] theorem ext {f g : ConjDual H} (h : ∀ x, toDual H f x = toDual H g x) : f = g :=
   (toDual H).injective (LinearMap.ext h)
 
 instance instSMul : SMul (𝓞 E) (ConjDual H) :=

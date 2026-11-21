@@ -22,7 +22,7 @@ set_option synthInstance.maxHeartbeats 200000
 private theorem form_inj {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω]
     [IsAlgClosure L Ω] {s : HidaSetting l L Ω} {n : ℕ} (V : s.Lev) (ι : Qbar l ≃+* ℂ) (lam : Wt L l n) (d : ℕ)
     (e : (Fin d → ℂ) ≃ₗ[ℂ] ⨂[ℂ] e : Emb l (fun v : V.frame.Vl => s.w v.1), nablaSq ℂ n (lam e.res))
-    (hs : Function.Surjective fun k : finU L n =>
+    (hs : Function.Surjective fun k : finU (E := L) (n := n) =>
       (((away l L n).rangeRestrict k, fun v : V.frame.Vl => cLoc (s.w v.1) k) : Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1)))
     (F F' : Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d → ℂ) (h : ∀ ℓ, toForm ι e F ℓ = toForm ι e F' ℓ) :
     F = F' := by

@@ -87,12 +87,12 @@ def conjEquiv (J : Type) [Fintype J] : (J → ℂ) ≃ᵐ (J → ℂ) where
   measurable_toFun := continuous_conjPt.measurable
   measurable_invFun := continuous_conjPt.measurable
 
-theorem wgt_conjPt {m : ConeMetric ℂ J} (hm : IsConjInvariant m) (n : ℕ) (z : J → ℂ) :
+theorem wgt_conjPt {m : ConeMetric (C := ℂ) (ι := J)} (hm : IsConjInvariant m) (n : ℕ) (z : J → ℂ) :
     wgt m n (conjPt z) = wgt m n z := by
   unfold wgt conjPt
   rw [hm z]
 
-theorem conj_bGram {m : ConeMetric ℂ J} {μ : Measure (J → ℂ)} (hm : IsConjInvariant m)
+theorem conj_bGram {m : ConeMetric (C := ℂ) (ι := J)} {μ : Measure (J → ℂ)} (hm : IsConjInvariant m)
     (hμ : μ.map conjPt = μ) (n : ℕ) {r : ℕ} (b : Fin r → MvPolynomial J ℚ) (i j : Fin r) :
     starRingEnd ℂ (bGram μ (fun k => secFun (b k)) (wgt m n) i j) =
       bGram μ (fun k => secFun (b k)) (wgt m n) i j := by

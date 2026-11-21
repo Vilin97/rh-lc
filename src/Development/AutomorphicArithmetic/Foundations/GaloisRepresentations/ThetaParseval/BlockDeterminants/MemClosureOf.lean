@@ -348,7 +348,7 @@ private theorem toAdele_brE (g : GlobalTheory.UnitaryBC.UA E n) (i j : Fin n) :
 private theorem pInf_zero (y : Ad E) : pInf E y = 0 ↔ y.1 = 0 := (GlobalTheory.CuspRep.infEq E).symm.map_eq_zero_iff
 
 private theorem mem_finU (g : GlobalTheory.UnitaryBC.UA E n) :
-    g ∈ GlobalTheory.UnitaryBC.finU E n ↔ ∀ i j, ((g.1.1 - 1 : Matrix (Fin n) (Fin n) (Ad E)) i j).1 = 0 :=
+    g ∈ GlobalTheory.UnitaryBC.finU (E := E) (n := n) ↔ ∀ i j, ((g.1.1 - 1 : Matrix (Fin n) (Fin n) (Ad E)) i j).1 = 0 :=
   (gl_map_eq_one (pInf E) g.1).trans (forall₂_congr fun _ _ => pInf_zero _)
 
 private theorem mem_infU (g : GlobalTheory.UnitaryBC.UA E n) :
@@ -386,7 +386,7 @@ private theorem brE_isBr : IsBr X (brE X δ hδ hJ) := by
       exact h i j
   · refine mem_closure_of' (brE X δ hδ hJ) _ _ (fun g => ?_) g
     refine (at_evFin_iff cmE _ _).trans ?_
-    have hl : g ∈ GlobalTheory.UnitaryBC.locU n w ↔ g ∈ GlobalTheory.UnitaryBC.finU E n ∧ ∀ u : HeightOneSpectrum (𝓞 E),
+    have hl : g ∈ GlobalTheory.UnitaryBC.locU n w ↔ g ∈ GlobalTheory.UnitaryBC.finU (E := E) (n := n) ∧ ∀ u : HeightOneSpectrum (𝓞 E),
         u.under (𝓞 (maximalRealSubfield E)) ≠ w.under (𝓞 (maximalRealSubfield E)) → g ∈ (GlobalTheory.UnitaryBC.cLoc (n := n) u).ker := by
       unfold GlobalTheory.UnitaryBC.locU
       rw [Subgroup.mem_inf]

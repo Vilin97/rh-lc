@@ -22,11 +22,11 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 theorem RU_RU (x y : UA E n) (φ : UA E n → ℂ) : RU E n x (RU E n y φ) = RU E n (x * y) φ := by
   rw [map_mul]; rfl
 
-instance : (finU E n).Normal := MonoidHom.normal_ker _
+instance : (finU (E := E) (n := n)).Normal := MonoidHom.normal_ker _
 
 instance : (infU E n).Normal := MonoidHom.normal_ker _
 
-theorem fin_mul_inf {k x : UA E n} (hk : k ∈ finU E n) (hx : x ∈ infU E n) : k * x = x * k := by
+theorem fin_mul_inf {k x : UA E n} (hk : k ∈ finU (E := E) (n := n)) (hx : x ∈ infU E n) : k * x = x * k := by
   have h1 : GeneralLinearGroup.map (pInf E) k.1 = 1 := hk
   have h2 : GeneralLinearGroup.map (pFin E) x.1 = 1 := hx
   refine Subtype.ext (ga_ext ?_ ?_)
@@ -39,7 +39,7 @@ def autU : Submodule ℂ (UA E n → ℂ) where
   carrier := {φ | IsAutFormU φ}
   add_mem' {a b} ha hb := by
     refine ⟨ha.cont.add hb.cont, fun γ hγ g => by simp [ha.left γ hγ g, hb.left γ hγ g],
-      (smoothPart ((RU E n).comp (finU E n).subtype)).add_mem ha.level hb.level, ?_⟩
+      (smoothPart ((RU E n).comp (finU (E := E) (n := n)).subtype)).add_mem ha.level hb.level, ?_⟩
     have := ha.kfin
     have := hb.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℂ (Set.range fun k : infU E n => RU E n k a) ⊔
@@ -47,13 +47,13 @@ def autU : Submodule ℂ (UA E n → ℂ) where
     rintro _ ⟨k, rfl⟩
     exact Submodule.add_mem_sup (Submodule.subset_span ⟨k, rfl⟩) (Submodule.subset_span ⟨k, rfl⟩)
   zero_mem' := by
-    refine ⟨continuous_const, fun _ _ _ => rfl, (smoothPart ((RU E n).comp (finU E n).subtype)).zero_mem, ?_⟩
+    refine ⟨continuous_const, fun _ _ _ => rfl, (smoothPart ((RU E n).comp (finU (E := E) (n := n)).subtype)).zero_mem, ?_⟩
     refine Submodule.finiteDimensional_of_le (S₂ := ⊥) (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
     exact map_zero (RU E n k)
   smul_mem' c {a} ha := by
     refine ⟨ha.cont.const_smul c, fun γ hγ g => by simp [ha.left γ hγ g],
-      (smoothPart ((RU E n).comp (finU E n).subtype)).smul_mem c ha.level, ?_⟩
+      (smoothPart ((RU E n).comp (finU (E := E) (n := n)).subtype)).smul_mem c ha.level, ?_⟩
     have := ha.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℂ (Set.range fun k : infU E n => RU E n k a))
       (Submodule.span_le.2 ?_)
@@ -81,7 +81,7 @@ theorem smooth_normal {G V : Type} [Group G] [TopologicalSpace G] [IsTopological
 theorem RU_mem_autU (x : UA E n) (φ : UA E n → ℂ) (h : φ ∈ autU E n) : RU E n x φ ∈ autU E n := by
   refine ⟨h.cont.comp (continuous_mul_const x), fun γ hγ g => ?_, ?_, ?_⟩
   · rw [RU_apply, RU_apply, mul_assoc, h.left γ hγ]
-  · exact smooth_normal (RU E n) (finU E n) x h.level
+  · exact smooth_normal (RU E n) (finU (E := E) (n := n)) x h.level
   · have := h.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ (Set.range fun k : infU E n => RU E n k φ)).map
       (RU E n x)) (Submodule.span_le.2 ?_)
@@ -157,20 +157,20 @@ def algForms (W : Wt E n) : Submodule ℂ (W.Sp →ₗ[ℂ] (UA E n → ℂ)) wh
   smul_mem' c _ ha := ⟨fun v => Submodule.smul_mem _ c (ha.1 v), fun x v => by
     rw [LinearMap.smul_apply, LinearMap.smul_apply, ha.2, map_smul]⟩
 
-def postRep (W : Wt E n) : Representation ℂ (finU E n) (W.Sp →ₗ[ℂ] (UA E n → ℂ)) where
+def postRep (W : Wt E n) : Representation ℂ (finU (E := E) (n := n)) (W.Sp →ₗ[ℂ] (UA E n → ℂ)) where
   toFun k := LinearMap.llcomp ℂ _ _ _ (RU E n k)
   map_one' := LinearMap.ext fun f => LinearMap.ext fun v => funext fun g => congrArg (f v) (mul_one g)
   map_mul' a b := LinearMap.ext fun f => LinearMap.ext fun v => funext fun g => congrArg (f v) (mul_assoc g a b).symm
 
-@[simp] theorem postRep_apply (W : Wt E n) (k : finU E n) (f : W.Sp →ₗ[ℂ] (UA E n → ℂ)) (v : W.Sp) :
+@[simp] theorem postRep_apply (W : Wt E n) (k : finU (E := E) (n := n)) (f : W.Sp →ₗ[ℂ] (UA E n → ℂ)) (v : W.Sp) :
     postRep W k f v = RU E n k (f v) := rfl
 
-theorem postRep_mem (W : Wt E n) (k : finU E n) (f : W.Sp →ₗ[ℂ] (UA E n → ℂ)) (h : f ∈ algForms W) :
+theorem postRep_mem (W : Wt E n) (k : finU (E := E) (n := n)) (f : W.Sp →ₗ[ℂ] (UA E n → ℂ)) (h : f ∈ algForms W) :
     postRep W k f ∈ algForms W :=
   ⟨fun v => RU_mem_autU _ _ (h.1 v), fun x v => by
     rw [postRep_apply, postRep_apply, h.2, RU_RU, RU_RU, fin_mul_inf k.2 x.2]⟩
 
-def algRep (W : Wt E n) : Representation ℂ (finU E n) (algForms W) := sub (postRep W) (algForms W) (postRep_mem W)
+def algRep (W : Wt E n) : Representation ℂ (finU (E := E) (n := n)) (algForms W) := sub (postRep W) (algForms W) (postRep_mem W)
 
 theorem isSmooth_algRep (W : Wt E n) : IsSmooth (algRep W) := fun f => by
   let b := Module.finBasis ℂ W.Sp
@@ -189,7 +189,7 @@ theorem algForms.val_right {W : Wt E n} (f : algForms W) (g : UA E n) (x : infU 
   rw [Representation.dual_apply, inv_inv]
   exact (congrFun (f.2.2 x v) g).symm
 
-theorem algForms.val_algRep {W : Wt E n} (f : algForms W) (k : finU E n) (g : UA E n) :
+theorem algForms.val_algRep {W : Wt E n} (f : algForms W) (k : finU (E := E) (n := n)) (g : UA E n) :
     algForms.val (algRep W k f) g = algForms.val f (g * k) := rfl
 
 

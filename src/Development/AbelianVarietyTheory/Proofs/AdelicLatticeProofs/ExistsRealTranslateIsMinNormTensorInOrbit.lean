@@ -32,6 +32,8 @@ private lemma posDef_det_one_eq_unitary_conj_exp_diagonal {ι : Type} [Fintype �
   · conv_lhs => rw [hP.1.spectral_theorem]
     rw [Unitary.conjStarAlgAut_apply, Matrix.star_eq_conjTranspose]
     congr 3
+    funext i
+    simp only [Function.comp_apply]
     rw [mul_div_cancel₀ _ two_ne_zero, Real.exp_log (hP.eigenvalues_pos i)]
     rfl
 
@@ -97,7 +99,7 @@ private lemma map_conj_mul_conjTranspose_eq_one {ι : Type} [Fintype ι] [Decida
   simp only [Matrix.map_mul] at this
   convert this using 2
   · ext i j; simp
-  · ext i j; by_cases h : i = j <;> simp [one_apply, h]
+  · ext i j; simp only [Matrix.map_apply, Matrix.one_apply]; split_ifs <;> simp
 
 open Matrix in
 open scoped Kronecker ComplexOrder TensorProduct MatrixOrder in

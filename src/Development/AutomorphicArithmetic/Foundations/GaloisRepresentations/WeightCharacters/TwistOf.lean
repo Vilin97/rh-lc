@@ -14,7 +14,7 @@ theorem UpperTheory.Gal.Wt.twist_of :
     UpperTheory.Gal.Wt.AutCrit → UpperTheory.Gal.Wt.Twist := by
   intro hA E _ _ _ a C hC ℓ hℓ W f c
   let e : UA E a → UA E a := fun g => (((ℓ g)⁻¹ * c : C) : UA E a)
-  have he : ∀ g, e g ∈ finU E a := fun g => hC.fin ((ℓ g)⁻¹ * c).2
+  have he : ∀ g, e g ∈ finU (E := E) (n := a) := fun g => hC.fin ((ℓ g)⁻¹ * c).2
   let F : W.Sp →ₗ[ℂ] (UA E a → ℂ) :=
     { toFun := fun v g => f.1 v (g * e g)
       map_add' := fun v w => by funext g; simp

@@ -53,12 +53,12 @@ private theorem ne_zero_of_irr {G H W M : Type} [Group G] [Group H] [AddCommGrou
     exact hf (LinearMap.ker_eq_top.1 h1)
 
 theorem UpperTheory.exists_nonzero_form_fixed_by_level_of_unramified :
-    ∀ (l : ℕ) [Fact l.Prime] (L Ω : Type) [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω] (s : HidaSetting l L Ω) (n : ℕ), 1 ≤ n → ∀ (V : s.Lev) (Q : QData V) (σ : Submodule ℂ (UA L n → ℂ)), IsAutRepU σ → (∀ w : Plc L, w.under (𝓞 (Lp L)) ∉ V.S' → IsUnramU σ w) → (∃ τ : SmIrr (GLw n (s.w s.v0)), IsCompAlong σ (locU n (s.w s.v0)) ((cLoc (s.w s.v0)).comp (locU n (s.w s.v0)).subtype) τ.ρ ∧ fixd τ.ρ (Kc _ n 1) ≠ ⊥) → ∃ φ ∈ σ, φ ≠ 0 ∧ ∀ k ∈ GlobalTheory.UnitaryBC.finU L n, (∀ u : Plc L, u.under (𝓞 (Lp L)) ∉ V.S' → cLoc u k ∈ KO (u.adicCompletion L) (Fin n)) → cLoc (s.w s.v0) k ∈ Kc _ n 1 → (∀ v : V.frame.Vl, cLoc (s.w v.1) k = 1) → (∀ u : s.St, cLoc (s.w u) k = 1) → (∀ q : Q.Q, cLoc (Q.wq q) k = 1) → RU L n k φ = φ := by
+    ∀ (l : ℕ) [Fact l.Prime] (L Ω : Type) [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω] (s : HidaSetting l L Ω) (n : ℕ), 1 ≤ n → ∀ (V : s.Lev) (Q : QData V) (σ : Submodule ℂ (UA L n → ℂ)), IsAutRepU σ → (∀ w : Plc L, w.under (𝓞 (Lp L)) ∉ V.S' → IsUnramU σ w) → (∃ τ : SmIrr (GLw n (s.w s.v0)), IsCompAlong σ (locU n (s.w s.v0)) ((cLoc (s.w s.v0)).comp (locU n (s.w s.v0)).subtype) τ.ρ ∧ fixd τ.ρ (Kc _ n 1) ≠ ⊥) → ∃ φ ∈ σ, φ ≠ 0 ∧ ∀ k ∈ GlobalTheory.UnitaryBC.finU (E := L) (n := n), (∀ u : Plc L, u.under (𝓞 (Lp L)) ∉ V.S' → cLoc u k ∈ KO (u.adicCompletion L) (Fin n)) → cLoc (s.w s.v0) k ∈ Kc _ n 1 → (∀ v : V.frame.Vl, cLoc (s.w v.1) k = 1) → (∀ u : s.St, cLoc (s.w u) k = 1) → (∀ q : Q.Q, cLoc (Q.wq q) k = 1) → RU L n k φ = φ := by
   intro l _ L Ω _ _ _ _ _ _ s n hn V Q σ hσ hun hτ
   obtain ⟨hund, hspl⟩ := UpperTheory.under_chosen_place_and_isSplitAt_of_decomp_le l L Ω s
   have hsplit : ∀ w : Plc L, w.under (𝓞 (Lp L)) ∈ V.S' → IsSplitAt w := fun w hw => hspl w (V.split _ hw)
   let K : Subgroup (UA L n) :=
-    { carrier := {k | k ∈ GlobalTheory.UnitaryBC.finU L n ∧
+    { carrier := {k | k ∈ GlobalTheory.UnitaryBC.finU (E := L) (n := n) ∧
         (∀ u : Plc L, u.under (𝓞 (Lp L)) ∉ V.S' → cLoc u k ∈ KO (u.adicCompletion L) (Fin n)) ∧
         cLoc (s.w s.v0) k ∈ Kc _ n 1 ∧ (∀ v : V.frame.Vl, cLoc (s.w v.1) k = 1) ∧ (∀ u : s.St, cLoc (s.w u) k = 1) ∧
         (∀ q : Q.Q, cLoc (Q.wq q) k = 1)}

@@ -66,7 +66,9 @@ theorem bb_of_dvd {g N l d : ℕ} (hl : l.Prime) (h1 : 1 ≤ d) (h2 : d ≤ N) (
     (h4 : g ^ d < l ^ 4) : BB g N l := by
   haveI := Fact.mk hl
   refine bb_iff.2 (Or.inr ⟨hl, d, h1, h2, h4.trans_le (Nat.pow_le_pow_right hl.pos ?_)⟩)
-  have := one_le_padicValNat_of_dvd h0 h3
+  have hval : 1 ≤ padicValNat l (g ^ d - 1) := by
+    rw [Nat.padicValNat_def]
+    exact one_le_multiplicity_of_dvd h0 h3
   omega
 
 section part
@@ -152,7 +154,7 @@ theorem _root_.GlobalTheory.BadShare.samePart_iff (hl : l.Prime) {x y : k} (hx :
     have hcy : (orderOf y / l ^ (orderOf y).factorization l).Coprime l :=
       (Nat.coprime_ordCompl hl hy.orderOf_pos.ne').symm
     refine _root_.GlobalTheory.BadShare.eq_of_pow_eq
-      (a := max a (max ((orderOf x).factorization l) ((orderOf y).factorization l))) (hcx.Nat.Coprime.mul_left hcy) ?_ ?_
+      (a := max a (max ((orderOf x).factorization l) ((orderOf y).factorization l))) (Nat.Coprime.mul_left hcx hcy) ?_ ?_
       (mul_ne_zero (Nat.ordCompl_pos l hx.orderOf_pos.ne').ne' (Nat.ordCompl_pos l hy.orderOf_pos.ne').ne') ?_
     · rw [pow_mul, primeToPart_pow_orderOf_div_prime_pow_eq_one, one_pow]
     · rw [mul_comm, pow_mul, primeToPart_pow_orderOf_div_prime_pow_eq_one, one_pow]

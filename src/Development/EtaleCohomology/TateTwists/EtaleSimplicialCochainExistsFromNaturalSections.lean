@@ -10,13 +10,13 @@ open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComp
 
 namespace LateralTheory.EtaleFoundations
 
-def EtaleSimplicialCochainExistsFromNaturalSections : Prop := ∀ (R : Type) [CommRing R] {E : Spc} {I : Cx R} {n : ℤ} (a : ∀ (p : ℕ) (s : ℤ), -(p : ℤ) + n = s → ∀ U : Scheme.{0}, Sx E p U → Sec (I.X s) U), (∀ p s h (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E p U), Sec.res g (a p s h U x) = a p s h V (x.res g)) → ∃ α : Cochain ((chains R).obj E) I n, ∀ p s h U x, ev α p s h U x = a p s h U x
+def EtaleSimplicialCochainExistsFromNaturalSections : Prop := ∀ (R : Type) [CommRing R] {E : Spc} {I : Cx R} {n : ℤ} (a : ∀ (p : ℕ) (s : ℤ), -(p : ℤ) + n = s → ∀ U : Scheme.{0}, Sx E p U → Sec (I.X s) U), (∀ p s h (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E p U), Sec.res g (a p s h U x) = a p s h V (x.res g)) → ∃ α : Cochain ((chains R).obj E) I n, ∀ p s h U x, ev R α p s h U x = a p s h U x
 
-def EtaleSimplicialCochainEvaluationDifferentialFormula : Prop := ∀ (R : Type) [CommRing R] {E : Spc} {I : Cx R} {n m : ℤ} (hm : n + 1 = m) (α : Cochain ((chains R).obj E) I n) (U : Scheme.{0}), (∀ (x : Sx E 0 U), ev (δ n m α) 0 m (by simp) U x = Sec.map (I.d n m) (ev α 0 n (by simp) U x)) ∧ ∀ (p : ℕ) (s t : ℤ) (hs : -((p + 1 : ℕ) : ℤ) + n = s) (ht : -((p + 1 : ℕ) : ℤ) + m = t) (x : Sx E (p + 1) U), ev (δ n m α) (p + 1) t ht U x = Sec.map (I.d s t) (ev α (p + 1) s hs U x) + m.negOnePow • ∑ i : Fin (p + 2), (-1 : ℤ) ^ (i : ℕ) • ev α p t (by omega) U (x.face i)
+def EtaleSimplicialCochainEvaluationDifferentialFormula : Prop := ∀ (R : Type) [CommRing R] {E : Spc} {I : Cx R} {n m : ℤ} (hm : n + 1 = m) (α : Cochain ((chains R).obj E) I n) (U : Scheme.{0}), (∀ (x : Sx E 0 U), ev R (δ n m α) 0 m (by simp) U x = Sec.map (I.d n m) (ev R α 0 n (by simp) U x)) ∧ ∀ (p : ℕ) (s t : ℤ) (hs : -((p + 1 : ℕ) : ℤ) + n = s) (ht : -((p + 1 : ℕ) : ℤ) + m = t) (x : Sx E (p + 1) U), ev R (δ n m α) (p + 1) t ht U x = Sec.map (I.d s t) (ev R α (p + 1) s hs U x) + m.negOnePow • ∑ i : Fin (p + 2), (-1 : ℤ) ^ (i : ℕ) • ev R α p t (by omega) U (x.face i)
 
-def EtaleSimplicialCochainEvaluationProperties : Prop := ∀ (R : Type) [CommRing R] {E : Spc} {I : Cx R} {n : ℤ}, (∀ (α β : Cochain ((chains R).obj E) I n) p s h U x, ev (α + β) p s h U x = ev α p s h U x + ev β p s h U x ∧ ev (α - β) p s h U x = ev α p s h U x - ev β p s h U x ∧ ev (0 : Cochain ((chains R).obj E) I n) p s h U x = 0 ∧ ∀ c : ℤ, ev (c • α) p s h U x = c • ev α p s h U x) ∧ (∀ (α : Cochain ((chains R).obj E) I n) p s h (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E p U), Sec.res g (ev α p s h U x) = ev α p s h V (x.res g)) ∧ (∀ α β : Cochain ((chains R).obj E) I n, (∀ p s h U x, ev α p s h U x = ev β p s h U x) → α = β) ∧ (∀ {E' : Spc} (f : E' ⟶ E) (α : Cochain ((chains R).obj E) I n) p s h U (x : Sx E' p U), ev ((Cochain.ofHom ((chains R).map f)).comp α (zero_add n)) p s h U x = ev α p s h U (x.map f)) ∧ ∀ {J : Cx R} (m : I ⟶ J) (α : Cochain ((chains R).obj E) I n) p s h U x, ev (α.comp (Cochain.ofHom m) (add_zero n)) p s h U x = Sec.map (m.f s) (ev α p s h U x)
+def EtaleSimplicialCochainEvaluationProperties : Prop := ∀ (R : Type) [CommRing R] {E : Spc} {I : Cx R} {n : ℤ}, (∀ (α β : Cochain ((chains R).obj E) I n) p s h U x, ev R (α + β) p s h U x = ev R α p s h U x + ev R β p s h U x ∧ ev R (α - β) p s h U x = ev R α p s h U x - ev R β p s h U x ∧ ev R (0 : Cochain ((chains R).obj E) I n) p s h U x = 0 ∧ ∀ c : ℤ, ev R (c • α) p s h U x = c • ev R α p s h U x) ∧ (∀ (α : Cochain ((chains R).obj E) I n) p s h (V U : Scheme.{0}) (g : V ⟶ U) (x : Sx E p U), Sec.res g (ev R α p s h U x) = ev R α p s h V (x.res g)) ∧ (∀ α β : Cochain ((chains R).obj E) I n, (∀ p s h U x, ev R α p s h U x = ev R β p s h U x) → α = β) ∧ (∀ {E' : Spc} (f : E' ⟶ E) (α : Cochain ((chains R).obj E) I n) p s h U (x : Sx E' p U), ev R ((Cochain.ofHom ((chains R).map f)).comp α (zero_add n)) p s h U x = ev R α p s h U (x.map f)) ∧ ∀ {J : Cx R} (m : I ⟶ J) (α : Cochain ((chains R).obj E) I n) p s h U x, ev R (α.comp (Cochain.ofHom m) (add_zero n)) p s h U x = Sec.map (m.f s) (ev R α p s h U x)
 
-def EtaleSimplicialSchemeCocycleVanishingAtIdIsCoboundary : Prop := ∀ (R : Type) [CommRing R] (X : Scheme.{0}) (I : Cx R) (m n : ℤ), m + 1 = n → ∀ α : Cocycle ((chains R).obj (sch.obj X)) I n, ev α.1 0 n (by simp) X (𝟙 X) = 0 → ∃ β : Cochain ((chains R).obj (sch.obj X)) I m, δ m n β = α.1
+def EtaleSimplicialSchemeCocycleVanishingAtIdIsCoboundary : Prop := ∀ (R : Type) [CommRing R] (X : Scheme.{0}) (I : Cx R) (m n : ℤ), m + 1 = n → ∀ α : Cocycle ((chains R).obj (sch.obj X)) I n, ev R α.1 0 n (by simp) X (𝟙 X) = 0 → ∃ β : Cochain ((chains R).obj (sch.obj X)) I m, δ m n β = α.1
 
 def a0 {R : Type} [CommRing R] (X : Scheme.{0}) (I : Cx R) (n : ℤ) (z : Sec (I.X n) X) :
     ∀ (p : ℕ) (s : ℤ), -(p : ℤ) + n = s → ∀ U : Scheme.{0}, Sx (sch.obj X) p U → Sec (I.X s) U
@@ -56,7 +56,7 @@ theorem LateralTheory.EtaleFoundations.etaleSimplicialCochain_scheme_class_of_ev
   intro R _ X I m n k hmn hnk
 
   have v0 : ∀ {q : ℤ} (β : Cochain ((chains R).obj (sch.obj X)) I q) (U : Scheme.{0}) (x : Sx (sch.obj X) 0 U),
-      ev β 0 q (by simp) U x = Sec.res (x : U ⟶ X) (ev β 0 q (by simp) X (𝟙 X)) := by
+      ev R β 0 q (by simp) U x = Sec.res (x : U ⟶ X) (ev R β 0 q (by simp) X (𝟙 X)) := by
     intro q β U x
     rw [(hb R).2.1 β 0 q (by simp) U X x (𝟙 X)]
     rfl
@@ -86,14 +86,14 @@ theorem LateralTheory.EtaleFoundations.etaleSimplicialCochain_scheme_class_of_ev
     · intro U x; exact hα 0 n (by simp) U x
     · intro p s h U x; rw [show (Cocycle.mk α k hnk hδ).1 = α from rfl, hα]; rfl
   · intro α
-    have hd0 : Sec.map (I.d n k) (ev α.1 0 n (by simp) X (𝟙 X)) = 0 := by
+    have hd0 : Sec.map (I.d n k) (ev R α.1 0 n (by simp) X (𝟙 X)) = 0 := by
       rw [← (hdl R hnk α.1 X).1 (𝟙 X), Cocycle.δ_eq_zero]
       exact ((hb R (E := sch.obj X) (I := I) (n := k)).1 0 0 0 k (by simp) X (𝟙 X)).2.2.1
     refine ⟨hd0, ?_⟩
     rw [CohomologyClass.mk_eq_zero_iff, mem_coboundaries_iff α m hmn]
     constructor
     · rintro ⟨β, hβ⟩
-      refine ⟨ev β 0 m (by simp) X (𝟙 X), ?_⟩
+      refine ⟨ev R β 0 m (by simp) X (𝟙 X), ?_⟩
       rw [← (hdl R hmn β X).1 (𝟙 X), hβ]
     · rintro ⟨y, hy⟩
       obtain ⟨γ, hγ⟩ := hmk R (a0 X I m y) (etaleSimplicialCochain_scheme_section_extension_naturality X I m y)
@@ -101,10 +101,10 @@ theorem LateralTheory.EtaleFoundations.etaleSimplicialCochain_scheme_class_of_ev
         rw [δ_sub, Cocycle.δ_eq_zero, δ_δ, sub_zero]
       obtain ⟨β, hβ⟩ := hcob R X I m n hmn (Cocycle.mk (α.1 - δ m n γ) k hnk hc) (by
         have e := ((hb R).1 (α : Cochain ((chains R).obj (sch.obj X)) I n) (δ m n γ) 0 n (by simp) X (𝟙 X)).2.1
-        have e2 : ev (δ m n γ) 0 n (by simp) X (𝟙 X) = Sec.map (I.d m n) y := by
+        have e2 : ev R (δ m n γ) 0 n (by simp) X (𝟙 X) = Sec.map (I.d m n) y := by
           rw [(hdl R hmn γ X).1 (𝟙 X)]
           exact congrArg (Sec.map (I.d m n)) ((hγ 0 m (by simp) X (𝟙 X)).trans (res_id y))
-        exact e.trans ((congrArg (ev (α : Cochain ((chains R).obj (sch.obj X)) I n) 0 n (by simp) X (𝟙 X) - ·) e2).trans
+        exact e.trans ((congrArg (ev R (α : Cochain ((chains R).obj (sch.obj X)) I n) 0 n (by simp) X (𝟙 X) - ·) e2).trans
           (sub_eq_zero.mpr hy.symm)))
       refine ⟨β + γ, ?_⟩
       rw [δ_add, hβ]

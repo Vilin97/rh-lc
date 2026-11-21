@@ -21,7 +21,7 @@ theorem UpperTheory.Gal.Wt.autMul_of :
   refine ⟨hφ.cont.mul hψ.cont, fun γ hγ g => ?_, ?_, ?_⟩
   · change φ (γ * g) * ψ (γ * g) = φ g * ψ g
     rw [hφ.left γ hγ, hψ.left γ hγ]
-  · refine isOpen_stab_of_mem_nhds ((RU E a).comp (finU E a).subtype) (fun g => φ g * ψ g) ?_
+  · refine isOpen_stab_of_mem_nhds ((RU E a).comp (finU (E := E) (n := a)).subtype) (fun g => φ g * ψ g) ?_
     refine Filter.mem_of_superset ((hφ.level.inter hψ.level).mem_nhds ⟨?_, ?_⟩) fun k hk => ?_
     · change RU E a 1 φ = φ
       simp

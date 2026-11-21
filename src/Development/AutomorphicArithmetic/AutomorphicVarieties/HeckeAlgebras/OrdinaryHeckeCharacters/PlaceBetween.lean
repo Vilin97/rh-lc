@@ -99,7 +99,7 @@ private theorem cLoc_inf {x : UA L n} (h : x ∈ infU L n) (u : Plc L) : cLoc u 
   have e : cLoc u x = Matrix.GeneralLinearGroup.map (pLoc L u) (Matrix.GeneralLinearGroup.map (pFin L) x.1) := Units.ext rfl
   rw [e, h1, map_one]
 
-private theorem exists_fin : ∃ p : UA L n → finU L n, Continuous p ∧ p 1 = 1 ∧ ∀ x u, cLoc u (p x : UA L n) = cLoc u x := by
+private theorem exists_fin : ∃ p : UA L n → finU (E := L) (n := n), Continuous p ∧ p 1 = 1 ∧ ∀ x u, cLoc u (p x : UA L n) = cLoc u x := by
   have hfin : Continuous (finGL L n) :=
     Continuous.units_map _ (continuous_const.add (continuous_id.matrix_map
       (continuous_const.prodMk continuous_id : Continuous fun x : Af L => ((0, x) : InfiniteAdeleRing L × Af L))))
@@ -114,7 +114,7 @@ private theorem exists_fin : ∃ p : UA L n → finU L n, Continuous p ∧ p 1 =
 
 private theorem exists_adjust {V : Type} (w : V → Plc L) (hw : ∀ v, IsSplitAt (w v))
     (hi : Function.Injective fun v => (w v).under (𝓞 (Lp L))) (x : UA L n) (b : ∀ v, GLw n (w v)) (t : Finset V) :
-    ∃ k : finU L n, (∀ u : Plc L, (∀ v, u.under (𝓞 (Lp L)) ≠ (w v).under (𝓞 (Lp L))) → cLoc u (k : UA L n) = cLoc u x) ∧
+    ∃ k : finU (E := L) (n := n), (∀ u : Plc L, (∀ v, u.under (𝓞 (Lp L)) ≠ (w v).under (𝓞 (Lp L))) → cLoc u (k : UA L n) = cLoc u x) ∧
       ∀ v ∈ t, cLoc (w v) (k : UA L n) = b v := by
   classical
   induction t using Finset.induction_on with
@@ -191,7 +191,7 @@ private theorem cont_cEmb {E : Type} [Field E] [NumberField E] [IsCMField E] {n 
 
 private theorem aut_coef {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} {X : Type} [AddCommGroup X]
     [Module ℂ X] [FiniteDimensional ℂ X] (R : UA E n →* Module.End ℂ X) (F : UA E n → X)
-    (hfin : ∀ k ∈ finU E n, R k = 1) (hcont : ∀ (u : X) (ℓ : Module.Dual ℂ X), Continuous fun g => ℓ (R g u))
+    (hfin : ∀ k ∈ finU (E := E) (n := n), R k = 1) (hcont : ∀ (u : X) (ℓ : Module.Dual ℂ X), Continuous fun g => ℓ (R g u))
     (hinf : ∀ y ∈ infU E n, ∀ g, F (g * y) = F g) (hrat : ∀ γ ∈ ratU E n, ∀ g, F (γ * g) = R γ (F g))
     (hsm : ∀ᶠ y in nhds (1 : UA E n), ∀ g, F (g * y) = F g) (ℓ : Module.Dual ℂ X) :
     IsAutFormU fun g => ℓ (R g⁻¹ (F g)) := by
@@ -208,11 +208,11 @@ private theorem aut_coef {E : Type} [Field E] [NumberField E] [IsCMField E] {n :
     rw [e]
   · intro γ hγ g
     rw [hrat γ hγ g, ← Module.End.mul_apply, ← map_mul, mul_inv_rev, inv_mul_cancel_right]
-  · refine GlobalTheory.CuspRep.isOpen_stab_of_mem_nhds ((RU E n).comp (finU E n).subtype) _ ?_
-    filter_upwards [(continuous_subtype_val.tendsto (1 : finU E n)).eventually hsm] with k hk
+  · refine GlobalTheory.CuspRep.isOpen_stab_of_mem_nhds ((RU E n).comp (finU (E := E) (n := n)).subtype) _ ?_
+    filter_upwards [(continuous_subtype_val.tendsto (1 : finU (E := E) (n := n))).eventually hsm] with k hk
     funext g
     change ℓ (R (g * (k : UA E n))⁻¹ (F (g * k))) = ℓ (R g⁻¹ (F g))
-    rw [hk g, mul_inv_rev, map_mul, hfin _ ((finU E n).inv_mem k.2), one_mul]
+    rw [hk g, mul_inv_rev, map_mul, hfin _ ((finU (E := E) (n := n)).inv_mem k.2), one_mul]
   · let C : Module.Dual ℂ X →ₗ[ℂ] (UA E n → ℂ) :=
       { toFun := fun μ g => μ (R g⁻¹ (F g))
         map_add' := fun _ _ => rfl
@@ -226,10 +226,10 @@ private theorem aut_coef {E : Type} [Field E] [NumberField E] [IsCMField E] {n :
 
 private theorem core {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} {X H : Type} [AddCommGroup X]
     [Module ℂ X] [FiniteDimensional ℂ X] [Group H] (R : UA E n →* Module.End ℂ X) (J : UA E n →* H)
-    (hfin : ∀ k ∈ finU E n, R k = 1) (hcont : ∀ (u : X) (ℓ : Module.Dual ℂ X), Continuous fun g => ℓ (R g u))
+    (hfin : ∀ k ∈ finU (E := E) (n := n), R k = 1) (hcont : ∀ (u : X) (ℓ : Module.Dual ℂ X), Continuous fun g => ℓ (R g u))
     (hker : ∀ x, J x = 1 ↔ x ∈ infU E n) (hs : Function.Surjective J) :
     (∀ F : H → X, (∀ (ℓ : Module.Dual ℂ X) g, ℓ (R g⁻¹ (F (J g))) = 0) → F = 0) ∧
-    (∀ F : H → X, (∀ γ ∈ ratU E n, ∀ g, F (J γ * g) = R γ (F g)) → IsOpen {k : finU E n | ∀ g, F (g * J k) = F g} →
+    (∀ F : H → X, (∀ γ ∈ ratU E n, ∀ g, F (J γ * g) = R γ (F g)) → IsOpen {k : finU (E := E) (n := n) | ∀ g, F (g * J k) = F g} →
       ∀ ℓ : Module.Dual ℂ X, IsAutFormU fun g => ℓ (R g⁻¹ (F (J g)))) ∧
     ∀ Φ : Module.Dual ℂ X →ₗ[ℂ] (UA E n → ℂ), (∀ ℓ, IsAutFormU (Φ ℓ)) →
       (∀ ℓ, ∀ x ∈ infU E n, RU E n x (Φ ℓ) = Φ (ℓ ∘ₗ R x⁻¹)) →
@@ -246,7 +246,7 @@ private theorem core {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ
     · simp only [map_mul, (hker y).2 hy, mul_one]
     · simp only [map_mul, hF γ hγ]
     · obtain ⟨p, hp, hp1, hp2⟩ := exists_fin (L := E) (n := n)
-      have hn : {k : finU E n | ∀ g, F (g * J k) = F g} ∈ nhds (p 1) := ho.mem_nhds (by
+      have hn : {k : finU (E := E) (n := n) | ∀ g, F (g * J k) = F g} ∈ nhds (p 1) := ho.mem_nhds (by
         intro g
         rw [hp1]
         simp)
@@ -280,7 +280,7 @@ theorem UpperTheory.V.Hi.formU :
     ∀ (l : ℕ) [Fact l.Prime] (L Ω : Type) [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω] (s : HidaSetting l L Ω) (n : ℕ), 1 ≤ n →
     ∀ (V : s.Lev) (Q : QData V) (c : Coef l), ∀ (m : ℕ) (τ₀ : KT n (wt s) →* GL (Fin m) c.O), ∀ ι : Qbar l ≃+* ℂ, ∀ (lam : Wt L l n) (d : ℕ) (e : (Fin d → ℂ) ≃ₗ[ℂ] ⨂[ℂ] e : Emb l (fun v : V.frame.Vl => s.w v.1), nablaSq ℂ n (lam e.res)) (ξ : GV n (fun v : V.frame.Vl => s.w v.1) →* GL (Fin d) ℂ), IsBasis ι e ξ →
     ∀ J : UA L n → Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1), (∀ x, J x = ((away l L n).rangeRestrict x, fun v : V.frame.Vl => cLoc (s.w v.1) x)) →
-    (∀ F ∈ (hset Q τ₀).X.AF ξ, (∀ ℓ, toForm ι e F ℓ = 0) → F = 0) ∧ (∀ F : Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d → ℂ, F ∈ (hset Q τ₀).X.AF ξ → IsOpen {k : finU L n | ∀ g, F (g * J k) = F g} → ∀ ℓ, IsAutFormU (toForm ι e F ℓ)) ∧ (∀ (F : Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d → ℂ) ℓ (x : UA L n), RU L n x (toForm ι e F ℓ) = toForm ι e (fun g => F (g * J x)) (ℓ ∘ₗ infRep ι lam x⁻¹)) ∧ Function.Surjective (fun k : finU L n => J k) ∧ ∀ Φ : Module.Dual ℂ (⨂[ℂ] e : Emb l (fun v : V.frame.Vl => s.w v.1), nablaSq ℂ n (lam e.res)) →ₗ[ℂ] (UA L n → ℂ), (∀ ℓ, IsAutFormU (Φ ℓ)) → (∀ ℓ, ∀ x ∈ infU L n, RU L n x (Φ ℓ) = Φ (ℓ ∘ₗ infRep ι lam x⁻¹)) → ∃ F ∈ (hset Q τ₀).X.AF ξ, ∀ ℓ, toForm ι e F ℓ = Φ ℓ := by
+    (∀ F ∈ (hset Q τ₀).X.AF ξ, (∀ ℓ, toForm ι e F ℓ = 0) → F = 0) ∧ (∀ F : Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d → ℂ, F ∈ (hset Q τ₀).X.AF ξ → IsOpen {k : finU (E := L) (n := n) | ∀ g, F (g * J k) = F g} → ∀ ℓ, IsAutFormU (toForm ι e F ℓ)) ∧ (∀ (F : Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d → ℂ) ℓ (x : UA L n), RU L n x (toForm ι e F ℓ) = toForm ι e (fun g => F (g * J x)) (ℓ ∘ₗ infRep ι lam x⁻¹)) ∧ Function.Surjective (fun k : finU (E := L) (n := n) => J k) ∧ ∀ Φ : Module.Dual ℂ (⨂[ℂ] e : Emb l (fun v : V.frame.Vl => s.w v.1), nablaSq ℂ n (lam e.res)) →ₗ[ℂ] (UA L n → ℂ), (∀ ℓ, IsAutFormU (Φ ℓ)) → (∀ ℓ, ∀ x ∈ infU L n, RU L n x (Φ ℓ) = Φ (ℓ ∘ₗ infRep ι lam x⁻¹)) → ∃ F ∈ (hset Q τ₀).X.AF ξ, ∀ ℓ, toForm ι e F ℓ = Φ ℓ := by
   intro l _ L Ω _ _ _ _ _ _ s n _ V Q c m τ₀ ι lam d e ξ hξ J hJ
   let J' : UA L n →* Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) :=
     MonoidHom.prod (away l L n).rangeRestrict (Pi.monoidHom fun v : V.frame.Vl => cLoc (s.w v.1))
@@ -293,7 +293,7 @@ theorem UpperTheory.V.Hi.formU :
   have hl : ∀ u : Plc L, ((l : ℕ) : 𝓞 L) ∈ u.asIdeal ↔ ((l : ℕ) : 𝓞 (Lp L)) ∈ (u.under (𝓞 (Lp L))).asIdeal := fun u => by
     change _ ↔ algebraMap (𝓞 (Lp L)) (𝓞 L) (l : 𝓞 (Lp L)) ∈ u.asIdeal
     rw [map_natCast]
-  have hsurj : Function.Surjective fun k : finU L n => J' k := by
+  have hsurj : Function.Surjective fun k : finU (E := L) (n := n) => J' k := by
     rintro ⟨a, b⟩
     obtain ⟨x, rfl⟩ := (away l L n).rangeRestrict_surjective a
     haveI := V.frame.finV
@@ -309,7 +309,7 @@ theorem UpperTheory.V.Hi.formU :
     · let v : V.frame.Vl := ⟨u.under (𝓞 (Lp L)), (hl u).1 hu⟩
       exact cLoc_conj (hsp v) x (congrFun (congrArg Prod.snd h) v) (w_under s v.1).symm
     · exact congrFun (congrArg (fun y => y.1.1) h) ⟨u, hu⟩
-  have hfin : ∀ k ∈ finU L n, infRep (V := V) ι lam k = 1 := fun k hk => by
+  have hfin : ∀ k ∈ finU (E := L) (n := n), infRep (V := V) ι lam k = 1 := fun k hk => by
     have h1 : ∀ τ : L →+* ℂ, cEmb τ k = 1 := fun τ => by
       change Matrix.GeneralLinearGroup.map (coord τ) (cInf k) = 1
       rw [MonoidHom.mem_ker.1 hk, map_one]

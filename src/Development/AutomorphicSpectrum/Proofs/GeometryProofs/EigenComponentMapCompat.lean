@@ -32,7 +32,7 @@ theorem eigSp_sum_eq_zero (ρ : O →+* Module.End k V) (s : Finset (O →+* k))
       have hne : t ≠ t₀ := fun e => ht₀ (e ▸ ht)
       obtain ⟨a, ha⟩ : ∃ a, t a ≠ t₀ a := by
         by_contra hcon
-        push_neg at hcon
+        push Not at hcon
         exact hne (RingHom.ext hcon)
       have hz : ∑ u ∈ s, (u a - t₀ a) • f u = 0 := by
         have h1 : ρ a (f t₀ + ∑ u ∈ s, f u) - t₀ a • (f t₀ + ∑ u ∈ s, f u) = 0 := by
@@ -57,7 +57,7 @@ theorem eigSp_sum_eq_zero (ρ : O →+* Module.End k V) (s : Finset (O →+* k))
     · exact hs t ht
 
 theorem iSupIndep_eigSp (ρ : O →+* Module.End k V) : iSupIndep (fun σ : O →+* k => eigSp ρ σ) :=
-  (iSupIndep_iff_finset_sum_eq_zero_imp_eq_zero _).2 fun s v hv h0 i hi =>
+  (iSupIndep_iff_finsetSum_eq_zero_imp_eq_zero _).2 fun s v hv h0 i hi =>
     eigSp_sum_eq_zero ρ s v hv h0 i hi
 
 theorem eq_zero_of_mem_eigSp_of_mem_iSup (ρ : O →+* Module.End k V) (σ : O →+* k) {y : V}

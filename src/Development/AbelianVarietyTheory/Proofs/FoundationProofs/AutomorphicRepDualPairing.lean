@@ -30,20 +30,20 @@ def forms (ρ : Representation ℂ (infU E n) S) : Submodule ℂ (S →ₗ[ℂ] 
 
 
 variable (E n S) in
-def post : Representation ℂ (finU E n) (S →ₗ[ℂ] (UA E n → ℂ)) where
+def post : Representation ℂ (finU (E := E) (n := n)) (S →ₗ[ℂ] (UA E n → ℂ)) where
   toFun k := LinearMap.llcomp ℂ _ _ _ (RU E n k)
   map_one' := LinearMap.ext fun f => LinearMap.ext fun v => funext fun g => congrArg (f v) (mul_one g)
   map_mul' a b := LinearMap.ext fun f => LinearMap.ext fun v => funext fun g => congrArg (f v) (mul_assoc g a b).symm
 
-@[simp] theorem post_apply (k : finU E n) (f : S →ₗ[ℂ] (UA E n → ℂ)) (v : S) :
+@[simp] theorem post_apply (k : finU (E := E) (n := n)) (f : S →ₗ[ℂ] (UA E n → ℂ)) (v : S) :
     post E n S k f v = RU E n k (f v) := rfl
 
-theorem post_mem (ρ : Representation ℂ (infU E n) S) (k : finU E n) (f : S →ₗ[ℂ] (UA E n → ℂ))
+theorem post_mem (ρ : Representation ℂ (infU E n) S) (k : finU (E := E) (n := n)) (f : S →ₗ[ℂ] (UA E n → ℂ))
     (h : f ∈ forms ρ) : post E n S k f ∈ forms ρ :=
   ⟨fun v => RU_mem_autU _ _ (h.1 v), fun x v => by
     rw [post_apply, post_apply, h.2, RU_RU, RU_RU, fin_mul_inf k.2 x.2]⟩
 
-def rep (ρ : Representation ℂ (infU E n) S) : Representation ℂ (finU E n) (forms ρ) :=
+def rep (ρ : Representation ℂ (infU E n) S) : Representation ℂ (finU (E := E) (n := n)) (forms ρ) :=
   GlobalTheory.PRep.sub (post E n S) (forms ρ) (post_mem ρ)
 
 end GlobalTheory.FrameAut.VecProj
@@ -104,21 +104,21 @@ theorem form_def (B : autU E n →ₗ⋆[ℂ] autU E n →ₗ[ℂ] ℂ) (hh : �
 
 theorem form_inv (B : autU E n →ₗ⋆[ℂ] autU E n →ₗ[ℂ] ℂ)
     (hi : ∀ g u v, B (autRep E n g u) (autRep E n g v) = B u v)
-    (ρ : Representation ℂ (infU E n) S) (k : finU E n) (f g : forms ρ) :
+    (ρ : Representation ℂ (infU E n) S) (k : finU (E := E) (n := n)) (f g : forms ρ) :
     form B ρ (rep ρ k f) (rep ρ k g) = form B ρ f g := by
   rw [form_apply, form_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   exact hi (k : UA E n) (ev ρ (Module.finBasis ℂ S i) f) (ev ρ (Module.finBasis ℂ S i) g)
 
 theorem rep_smooth (ρ : Representation ℂ (infU E n) S) (f : forms ρ) :
-    IsOpen {k : finU E n | rep ρ k f = f} := by
+    IsOpen {k : finU (E := E) (n := n) | rep ρ k f = f} := by
   let b := Module.finBasis ℂ S
   convert isOpen_iInter_of_finite fun i => (f.2.1 (b i)).level using 1
   ext k
   rw [Set.mem_iInter]
   exact ⟨fun h i => LinearMap.congr_fun (congrArg Subtype.val h) (b i), fun h => Subtype.ext (b.ext h)⟩
 
-theorem rep_fd (ρ : Representation ℂ (infU E n) S) (K : Subgroup (finU E n)) (hK : IsOpen (K : Set (finU E n))) :
+theorem rep_fd (ρ : Representation ℂ (infU E n) S) (K : Subgroup (finU (E := E) (n := n))) (hK : IsOpen (K : Set (finU (E := E) (n := n)))) :
     FiniteDimensional ℂ (GlobalTheory.PRep.fixed (rep ρ) K) := by
   have hM := GlobalTheory.T.finiteDimensional_vectorValued_definiteUnitaryForms E n S ρ K hK ((GlobalTheory.PRep.fixed (rep ρ) K).map (forms ρ).subtype) (by
     rintro _ ⟨g, hg, rfl⟩

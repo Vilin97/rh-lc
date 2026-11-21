@@ -16,13 +16,13 @@ namespace UpperTheory.Gal.CertificateRingHomMap.PNbhdU
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 private noncomputable def th {w : Plc E} (hw : IsSplitAt w) : GLw n w →* GLw n (cj w) :=
-  (cLoc (cj w)).comp ((finU E n).subtype.comp (locF hw))
+  (cLoc (cj w)).comp ((finU (E := E) (n := n)).subtype.comp (locF hw))
 
 private theorem continuous_th {w : Plc E} (hw : IsSplitAt w) : Continuous (th (n := n) hw) :=
   (GlobalTheory.BCT.GlobLev.continuous_cLoc (cj w)).comp
     ((continuous_subtype_val (p := (· ∈ locU n w))).comp (locE hw).symm.continuous)
 
-private theorem cLoc_cj_eq {w : Plc E} (hw : IsSplitAt w) (u : finU E n) :
+private theorem cLoc_cj_eq {w : Plc E} (hw : IsSplitAt w) (u : finU (E := E) (n := n)) :
     cLoc (cj w) u.1 = th hw (cLoc w u.1) :=
   GlobalTheory.LocInj.cLoc_conj_eq w u.1 (locF hw (cLoc w u.1)).1 (cLoc_locF hw _).symm
 

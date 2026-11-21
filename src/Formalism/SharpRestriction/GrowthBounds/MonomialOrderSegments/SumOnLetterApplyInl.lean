@@ -50,12 +50,13 @@ def CostA (n : ℕ) (f : D.EA → K) : Prop :=
 theorem costM_ok : CostOK (CostV (K := K) (r := D.r) D.msg Set.univ) :=
   costV_ok D.msg Set.univ (fun _ _ _ _ _ h1 h2 => vala_add h1 h2) (fun _ _ _ a _ h => vala_smul a h)
 
-theorem costA_ok : CostOK (D.CostA p) where
-  one := fun _ => D.costM_ok.one
-  mul := fun m n _ _ hf hg ρ => D.costM_ok.mul m n _ _ (hf ρ) (hg ρ)
-  add := fun n _ _ hf hg ρ => D.costM_ok.add n _ _ (hf ρ) (hg ρ)
-  smul := fun n a _ hf ρ => D.costM_ok.smul n a _ (hf ρ)
-  mono := fun m n _ hmn hf ρ => D.costM_ok.mono m n _ hmn (hf ρ)
+theorem costA_ok : CostOK (D.CostA p) := by
+  constructor
+  · exact fun _ => D.costM_ok.one
+  · exact fun m n _ _ hf hg ρ => D.costM_ok.mul m n _ _ (hf ρ) (hg ρ)
+  · exact fun n _ _ hf hg ρ => D.costM_ok.add n _ _ (hf ρ) (hg ρ)
+  · exact fun n a _ hf ρ => D.costM_ok.smul n a _ (hf ρ)
+  · exact fun m n _ hmn hf ρ => D.costM_ok.mono m n _ hmn (hf ρ)
 
 theorem costM_choose [NeZero D.r] (hV2 : V2 K) (x : D.ML × Fin D.r) (k : ℕ) :
     CostV (K := K) D.msg Set.univ k (fun ζ => ((ζ x).choose k : K)) :=

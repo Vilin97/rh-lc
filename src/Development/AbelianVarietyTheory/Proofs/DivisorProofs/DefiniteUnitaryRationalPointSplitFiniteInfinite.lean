@@ -34,7 +34,7 @@ theorem ratU_split : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n :
       FinPtLoc.map_cT (algebraMap E (Ad E)) _ (conjAd E) (fun x => (conjAd_algebraMap x).symm),
       Matrix.map_one _ (map_zero _) (map_one _), ← hval, h2]
   refine ⟨⟨g0, hU⟩, ?_, ?_⟩
-  · set a : finU E n := finPt ⟨g0, hU⟩ with ha
+  · set a : finU (E := E) (n := n) := finPt ⟨g0, hU⟩ with ha
     have haval : ((a : UA E n) : GA E n) = finGL E n (ratF E n g0) := by
       rw [ha, FinPtLoc.finPt_eq]
     have hb : (a : UA E n)⁻¹ * γ ∈ infU E n := by

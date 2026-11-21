@@ -16,7 +16,7 @@ theorem UpperTheory.exists_invariant_posDef_hermitian_form_autForm_unitary :
     ∀ (D : D7) [IsCMField D.host.E] (V : HSp D), V.SigOK → V.IsPosDef → ∀ (j : UA D.host.E V.rank ≃ₜ* GA D V),
         (∀ x, x ∈ ratU D.host.E V.rank ↔ j x ∈ GQ V) →
         ∃ B : (UA D.host.E V.rank → ℂ) →ₗ⋆[ℂ] (UA D.host.E V.rank → ℂ) →ₗ[ℂ] ℂ, (∀ φ, IsAutFormU φ → φ ≠ 0 → 0 < (B φ φ).re) ∧
-          ∀ k ∈ finU D.host.E V.rank, ∀ φ ψ, IsAutFormU φ → IsAutFormU ψ →
+          ∀ k ∈ finU (E := D.host.E) (n := V.rank), ∀ φ ψ, IsAutFormU φ → IsAutFormU ψ →
             B (RU D.host.E V.rank k φ) (RU D.host.E V.rank k ψ) = B φ ψ := by
   intro D _ V hs hp j hj
   classical

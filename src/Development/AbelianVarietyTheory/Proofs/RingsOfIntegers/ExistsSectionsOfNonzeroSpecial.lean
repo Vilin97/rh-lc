@@ -74,7 +74,7 @@ theorem main : GlobalFnsSt → ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscr
   refine ⟨θ, hθ, (GlobalTheory.integralFamily_levelOne V ϖ hϖ D Q hQ F v hv θ g hθ).1, ?_⟩
   rintro ⟨r, hr, hν⟩
   refine hind (secIsMul_of_vge hϖ D F v hv (hθ 0) ?_ (hν 0))
-  rw [QForm.Q_zero hϖ D hQ]
+  rw [QForm.Q_zero D hQ]
   simpa using hr
 
 end GlobalTheory.NonzeroClosedFibre

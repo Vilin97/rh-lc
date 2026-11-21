@@ -23,7 +23,7 @@ private def eqForms (ρ : Representation ℂ (infU E n) S) : Submodule ℂ (S �
   smul_mem' c _ ha := ⟨fun v => Submodule.smul_mem _ c (ha.1 v), fun x v => by
     rw [LinearMap.smul_apply, LinearMap.smul_apply, ha.2, map_smul]⟩
 
-private noncomputable def eqRep (ρ : Representation ℂ (infU E n) S) : Representation ℂ (finU E n) (eqForms ρ) where
+private noncomputable def eqRep (ρ : Representation ℂ (infU E n) S) : Representation ℂ (finU (E := E) (n := n)) (eqForms ρ) where
   toFun k := (LinearMap.llcomp ℂ _ _ _ (RU E n k)).restrict (p := eqForms ρ) (q := eqForms ρ) fun f h =>
     ⟨fun v => RU_mem_autU _ _ (h.1 v), fun x v => by
       change RU E n k (f (ρ x v)) = RU E n x (RU E n k (f v))
@@ -33,7 +33,7 @@ private noncomputable def eqRep (ρ : Representation ℂ (infU E n) S) : Represe
     congrArg (f.1 v) (mul_assoc g a b).symm)
 
 private theorem eqRep_adm [FiniteDimensional ℂ S] (ρ : Representation ℂ (infU E n) S) (f : eqForms ρ) :
-    ∃ K : Subgroup (finU E n), (∀ k ∈ K, eqRep ρ k f = f) ∧ FiniteDimensional ℂ (GlobalTheory.PRep.fixed (eqRep ρ) K) ∧
+    ∃ K : Subgroup (finU (E := E) (n := n)), (∀ k ∈ K, eqRep ρ k f = f) ∧ FiniteDimensional ℂ (GlobalTheory.PRep.fixed (eqRep ρ) K) ∧
       ∀ w, (Set.range fun k : K => eqRep ρ k w).Finite :=
   _root_.UpperTheory.Reformulated.B.Gr38.eqRep_adm ρ f
 
@@ -67,7 +67,7 @@ theorem UpperTheory.admissible_equivariantForms_representation :
   have hdef : ∀ u, B' u u = 0 → u = 0 := fun u hu => hev u (hdefB _ (u.2.1 v) hu)
   have hinv' : ∀ g u w, B' (eqRep ρ g u) (eqRep ρ g w) = B' u w := fun g u w =>
     hinv g _ _ (u.2.1 _) (w.2.1 _)
-  have hmem := UpperTheory.mem_iSup_irreducible_of_admissible_unitary (finU E n) (eqForms ρ) (eqRep ρ) B' hdef hinv' (eqRep_adm ρ) ⟨f, hfa, hfe⟩
+  have hmem := UpperTheory.mem_iSup_irreducible_of_admissible_unitary (finU (E := E) (n := n)) (eqForms ρ) (eqRep ρ) B' hdef hinv' (eqRep_adm ρ) ⟨f, hfa, hfe⟩
   refine (iSup_le ?_ : _ ≤ (⨆ σ : {σ : Submodule ℂ (UA E n → ℂ) // IsAutRepU σ}, σ.1).comap ev) hmem
   rintro ⟨U, hU0, hU, hirr⟩
   let j : U →ₗ[ℂ] S →ₗ[ℂ] (UA E n → ℂ) := (eqForms ρ).subtype ∘ₗ U.subtype
@@ -95,7 +95,7 @@ theorem UpperTheory.admissible_equivariantForms_representation :
       rw [h, Submodule.mem_bot] at this
       exact hev u this
     · refine Pairs.eq_bot_or_eq_img hsp (R := fun x => RU E n x.1) hj
-        (Q := fun k : finU E n => (eqRep ρ k).restrict (hU k)) (T := fun k => RU E n k.1) (fun _ _ _ => rfl)
+        (Q := fun k : finU (E := E) (n := n) => (eqRep ρ k).restrict (hU k)) (T := fun k => RU E n k.1) (fun _ _ _ => rfl)
         (fun P hP => ?_) hle (fun x => hN x.1) (fun k => hN k.1)
       rcases hirr (P.map U.subtype) (Submodule.map_subtype_le U P) (by
         rintro g _ ⟨p, hp, rfl⟩

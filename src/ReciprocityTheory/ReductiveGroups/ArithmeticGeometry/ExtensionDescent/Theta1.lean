@@ -34,6 +34,10 @@ def theta1 (k : ℤ) : ThetaGrp (zeroPolAV S).A (zeroPolAV S).L k T where
     erw [linComb_triv_g, _root_.one_mul]; repeat erw [map_one]
 
 def oneSec (a : ℤ) (T : Over S) : LB.Sec (LPow (zeroPolAV S).A (zeroPolAV S).L a T) :=
-  ⟨fun _ => 1, by intro i j; erw [linComb_triv_g]; simp only [Units.val_one]; ones; rfl⟩
+  ⟨fun _ => 1, by
+    intro i j
+    erw [linComb_triv_g]
+    simp only [Units.val_one, map_one]
+    exact (_root_.one_mul _).symm⟩
 
 end ReciprocityTheory.ChartRestriction.G.Out.InhVV

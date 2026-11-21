@@ -46,8 +46,8 @@ theorem exists_const (i : Fin 2) (u : Γ(PSpace R 1, chart R 1 i)ˣ) :
 
 theorem not_exists_gen : ¬ ∃ t : LB.Gen (O1 R 1), t.IsGen := by
   rintro ⟨t, ht⟩
-  obtain ⟨c₀, h₀, e₀⟩ := exists_const R 0 (t.s (0 : Fin 2))
-  obtain ⟨c₁, h₁, e₁⟩ := exists_const R 1 (t.s (1 : Fin 2))
+  obtain ⟨c₀, h₀, e₀⟩ := GlobalTheory.LB.SheafModel.exists_const R 0 (t.s (0 : Fin 2))
+  obtain ⟨c₁, h₁, e₁⟩ := GlobalTheory.LB.SheafModel.exists_const R 1 (t.s (1 : Fin 2))
   let W : (PSpace R 1).Opens := chart R 1 0 ⊓ chart R 1 1
   have hW : W ≤ chart R 1 0 := inf_le_left
   have e : resG _ hW (t.s (0 : Fin 2)).val = ratioOn W 0 hW 1 *

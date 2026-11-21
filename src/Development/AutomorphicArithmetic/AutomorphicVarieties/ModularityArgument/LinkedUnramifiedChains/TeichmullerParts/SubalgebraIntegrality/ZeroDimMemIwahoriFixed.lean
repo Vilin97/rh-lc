@@ -166,10 +166,10 @@ variable {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMF
 
 variable (n : ℕ) (s : HidaSetting l L Ω) in
 private def kS : Subgroup (UA L n) :=
-  GlobalTheory.UnitaryBC.finU L n ⊓ (⨅ (u : Plc L) (_ : u.under (𝓞 (Lp L)) ∉ s.S), (KO (u.adicCompletion L) (Fin n)).comap (cLoc u)) ⊓
+  GlobalTheory.UnitaryBC.finU (E := L) (n := n) ⊓ (⨅ (u : Plc L) (_ : u.under (𝓞 (Lp L)) ∉ s.S), (KO (u.adicCompletion L) (Fin n)).comap (cLoc u)) ⊓
     ⨅ (v : Plc (Lp L)) (_ : v ∈ s.S), (cLoc (s.w v)).ker
 
-private theorem mem_kS {n : ℕ} {s : HidaSetting l L Ω} {k : UA L n} : k ∈ kS n s ↔ k ∈ GlobalTheory.UnitaryBC.finU L n ∧
+private theorem mem_kS {n : ℕ} {s : HidaSetting l L Ω} {k : UA L n} : k ∈ kS n s ↔ k ∈ GlobalTheory.UnitaryBC.finU (E := L) (n := n) ∧
     (∀ u : Plc L, u.under (𝓞 (Lp L)) ∉ s.S → cLoc u k ∈ KO (u.adicCompletion L) (Fin n)) ∧
     ∀ v ∈ s.S, cLoc (s.w v) k = 1 := by
   simp only [kS, Subgroup.mem_inf, Subgroup.mem_iInf, Subgroup.mem_comap, MonoidHom.mem_ker, and_assoc]
@@ -225,7 +225,7 @@ private theorem toGS_cmp {n : ℕ} {s : HidaSetting l L Ω} {k : Ga l L n} (hk :
   ⟨fun u => congrFun (congrArg Prod.fst hk) u, congrArg Prod.snd hk⟩
 
 private theorem KS_lift {n : ℕ} {s : HidaSetting l L Ω} (V : s.Lev) {k : Ga l L n} (hk : k ∈ KS n s) {x : UA L n}
-    (hx : x ∈ GlobalTheory.UnitaryBC.finU L n) (h1 : (away l L n).rangeRestrict x = k)
+    (hx : x ∈ GlobalTheory.UnitaryBC.finU (E := L) (n := n)) (h1 : (away l L n).rangeRestrict x = k)
     (h2 : ∀ v : V.frame.Vl, cLoc (s.w v.1) x = 1) : x ∈ kS n s := by
   obtain ⟨hk1, hk2⟩ := Subgroup.mem_inf.1 hk
   obtain ⟨c1, c2⟩ := toGS_cmp (MonoidHom.mem_ker.1 hk1)
@@ -262,7 +262,7 @@ private theorem vs_ne (hn : 1 ≤ n) (hV : V.S' = s.S) (Q : QData V) {c : Coef l
     VS V ι e ξ Q τ₀ σ ≠ ⊥ := by
   obtain ⟨φ, hφ, hφ0, hφK⟩ := kS_vec (n := n) V hV hσ hun
   obtain ⟨hfin, hbij⟩ := UpperTheory.placeEmbeddings_bijective_infinitePlaces l L Ω s V ι
-  have hcomm : ∀ x ∈ infU L n, ∀ k ∈ GlobalTheory.UnitaryBC.finU L n, ∀ ψ, RU L n k (RU L n x ψ) = RU L n x (RU L n k ψ) :=
+  have hcomm : ∀ x ∈ infU L n, ∀ k ∈ GlobalTheory.UnitaryBC.finU (E := L) (n := n), ∀ ψ, RU L n k (RU L n x ψ) = RU L n x (RU L n k ψ) :=
     fun x hx k hk ψ => by rw [GlobalTheory.DefU.RU_RU, GlobalTheory.DefU.RU_RU, GlobalTheory.DefU.fin_mul_inf hk hx]
   let M : Submodule ℂ (UA L n → ℂ) := σ ⊓ fixd (RU L n) (kS n s)
   let N : Submodule ℂ (Fin 1 → UA L n → ℂ) := M.comap (LinearMap.proj 0)

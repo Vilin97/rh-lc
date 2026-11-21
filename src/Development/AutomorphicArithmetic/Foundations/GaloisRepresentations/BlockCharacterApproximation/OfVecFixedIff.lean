@@ -23,9 +23,9 @@ namespace UpperTheory.Gal.CharacterCongruences
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {a : ℕ}
 
 structure IsLevel (C : Subgroup (UA E a)) : Prop where
-  fin : C ≤ finU E a
+  fin : C ≤ finU (E := E) (n := a)
   compact : IsCompact (C : Set (UA E a))
-  isOpen : ∃ N : Set (UA E a), IsOpen N ∧ 1 ∈ N ∧ N ∩ finU E a ⊆ C
+  isOpen : ∃ N : Set (UA E a), IsOpen N ∧ 1 ∈ N ∧ N ∩ finU (E := E) (n := a) ⊆ C
 
 def TorsFreeAt (K : Subgroup (UA E a)) (u : HeightOneSpectrum (𝓞 E)) : Prop :=
   ∀ k ∈ K, IsOfFinOrder (cLoc u k) → cLoc u k = 1

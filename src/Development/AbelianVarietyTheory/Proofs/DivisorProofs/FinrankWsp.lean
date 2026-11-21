@@ -23,7 +23,7 @@ def wAt (lam : InfinitePlace E → DomWeight n) (γ : UE E n) : Wsp lam →ₗ[�
   PiTensorProduct.map fun v => GlobalTheory.Branching.sqRep ℂ n (lam v) (GeneralLinearGroup.map v.embedding γ.1)
 
 def vecM (S : Set (Pl E)) (lam : InfinitePlace E → DomWeight n) (K' : ∀ w : Pl E, Subgroup (UL n w)) :
-    Submodule ℂ (finU E n → Module.Dual ℂ (Wsp lam)) where
+    Submodule ℂ (finU (E := E) (n := n) → Module.Dual ℂ (Wsp lam)) where
   carrier := {F | (∀ (γ : UE E n) x, F (finPt γ * x) = (wAt lam γ⁻¹).dualMap (F x)) ∧
     ∀ k ∈ globLev S K', ∀ x, F (x * k) = F x}
   add_mem' := by
@@ -40,8 +40,8 @@ def vecM (S : Set (Pl E)) (lam : InfinitePlace E → DomWeight n) (K' : ∀ w : 
 
 def hopM (S : Set (Pl E)) (lam : InfinitePlace E → DomWeight n) (K' : ∀ w : Pl E, Subgroup (UL n w))
     (f : ∀ w : Pl E, UL n w → ℂ) :
-    (finU E n → Module.Dual ℂ (Wsp lam)) →ₗ[ℂ] (finU E n → Module.Dual ℂ (Wsp lam)) :=
-  levOp (rightReg ℂ (finU E n) (Module.Dual ℂ (Wsp lam))) (globLev S (KL n)) (globLev S K') (globFn S f)
+    (finU (E := E) (n := n) → Module.Dual ℂ (Wsp lam)) →ₗ[ℂ] (finU (E := E) (n := n) → Module.Dual ℂ (Wsp lam)) :=
+  levOp (rightReg ℂ (finU (E := E) (n := n)) (Module.Dual ℂ (Wsp lam))) (globLev S (KL n)) (globLev S K') (globFn S f)
     LinearMap.id
 
 end GlobalTheory.BCT.TrKer

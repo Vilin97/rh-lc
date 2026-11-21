@@ -58,7 +58,7 @@ theorem exists_powAct : ∀ (S : Scheme.{0}) (G' G : Over S) [GrpObj G'] [IsComm
         rw [r.map_mul, hcomp],
       fun a b => by
         try dsimp only
-        rw [r.map_add (f := _)]
+        rw [r.map_add]
         exact hadd (r.act a) (r.act b)⟩,
       fun a i => hlf _ i⟩,
     fun O _ r => ⟨⟨fun a => lf (r.act a), fun a => hmon _ (r.hom a),

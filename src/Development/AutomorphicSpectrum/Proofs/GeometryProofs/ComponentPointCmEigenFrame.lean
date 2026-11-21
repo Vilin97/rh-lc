@@ -176,9 +176,10 @@ theorem valAt_act {X : Scheme.{0}} {G : Over X} [GrpObj G] {Ω : Type} [Field Ω
     [AddCommGroup V] [Module Ω V] (M : LieModel G ξ V) (f : G ⟶ G) [IsMonHom f] (A : V →ₗ[Ω] V)
     (hA : M.IsDiffOf f A) {R : Type} [CommRing R] [IsLocalRing R] {z : Sp R ⟶ X} {e : V} {w : epsAt z ⟶ G}
     (h : M.ValAt z e w) : M.ValAt z (A e) (w ≫ f) := by
-  rw [LieModel.valAt_iff] at *
-  obtain ⟨h1, v, hv, rfl⟩ := h
-  exact ⟨h1, v ≫ f, extends_act M f A hA _ hv, Category.assoc _ _ _⟩
+  obtain ⟨h1, v, hv, hw⟩ := h
+  refine ⟨h1, v ≫ f, extends_act M f A hA _ hv, ?_⟩
+  rw [Over.comp_left, hw, Over.comp_left]
+  exact Category.assoc _ _ _
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Level H}
   {Xo : Moduli D l} {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F} {Y : Model Xo c β} {U : Set (Xo.XF c)}

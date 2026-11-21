@@ -92,7 +92,7 @@ theorem twice : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ)
 
 end GlobalTheory.BCT.LocGlue
 
-theorem GlobalTheory.BCT.exists_finU_of_loc : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, ∀ S : Set (Pl E), IsSection S → ∀ y : ∀ w : Pl E, UL n w, (∀ᶠ w in cofinite, y w ∈ KL n w) → ∃ x : finU E n, ∀ w ∈ S, toSub (UL n w) (cLoc w (x : UA E n)) = y w := by
+theorem GlobalTheory.BCT.exists_finU_of_loc : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, ∀ S : Set (Pl E), IsSection S → ∀ y : ∀ w : Pl E, UL n w, (∀ᶠ w in cofinite, y w ∈ KL n w) → ∃ x : finU (E := E) (n := n), ∀ w ∈ S, toSub (UL n w) (cLoc w (x : UA E n)) = y w := by
   intro E _ _ _ _ n S hS y hy
   set c := GlobalTheory.SplitPts.conjE E with hc
   have hnotS : ∀ v, v ∉ S → conjSrc c v ∈ S := by
@@ -150,7 +150,7 @@ theorem GlobalTheory.BCT.exists_finU_of_loc : ∀ (E : Type) [Field E] [NumberFi
       change ((GeneralLinearGroup.map (conjLoc c u) (y (conjSrc c u)).1).val)ᵀ *
         (((GeneralLinearGroup.map (conjLoc c u) (y (conjSrc c u)).1)⁻¹ : GLw n u).val)ᵀ = 1
       rw [← Matrix.transpose_mul, Units.inv_mul, Matrix.transpose_one]
-  let x : finU E n := ⟨⟨finGL E n k, GlobalTheory.SplitPts.finGL_mem_UA k hk'⟩, MonoidHom.mem_ker.2 (pInf_finGL k)⟩
+  let x : finU (E := E) (n := n) := ⟨⟨finGL E n k, GlobalTheory.SplitPts.finGL_mem_UA k hk'⟩, MonoidHom.mem_ker.2 (pInf_finGL k)⟩
   refine ⟨x, fun w hw => ?_⟩
   show toSub (UL n w) (cLoc w ⟨finGL E n k, GlobalTheory.SplitPts.finGL_mem_UA k hk'⟩) = y w
   rw [GlobalTheory.SplitPts.cLoc_finGL, hk, hz_in w hw]

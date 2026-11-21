@@ -115,10 +115,11 @@ def lb : LB X where
   U := D.U
   g := D.trans
 
-theorem isLB_lb : D.lb.IsLB where
-  cover := D.cover
-  g_self i := Units.ext (D.eq_trans_on i i le_rfl le_rfl (c := 1) (one_mul _).symm).symm
-  cocycle i j k := by
+theorem isLB_lb : D.lb.IsLB := by
+  refine { cover := D.cover, g_self := ?_, cocycle := ?_ }
+  · intro i
+    exact Units.ext (D.eq_trans_on i i le_rfl le_rfl (c := 1) (one_mul _).symm).symm
+  · intro i j k
     have hi : D.U i ⊓ D.U j ⊓ D.U k ≤ D.U i := inf_le_left.trans inf_le_left
     have hj : D.U i ⊓ D.U j ⊓ D.U k ≤ D.U j := inf_le_left.trans inf_le_right
     have hk : D.U i ⊓ D.U j ⊓ D.U k ≤ D.U k := inf_le_right

@@ -29,7 +29,7 @@ private theorem neu_comm {L : Type} [Field L] [NumberField L] [IsCMField L] {n :
 private theorem ne_J {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {St : Type} [Fintype St] [DecidableEq St]
     {wt : St → Plc L} (hinj : Function.Injective fun u => (wt u).under (𝓞 (Lp L))) (j : ∀ u, GLw n (wt u) →* UA L n)
     (h1 : ∀ u g, j u g ∈ locU n (wt u)) (h2 : ∀ u g, cLoc (wt u) (j u g) = g) (h3 : ∀ u, ∀ x ∈ locU n (wt u), x = j u (cLoc (wt u) x)) :
-    ∃ J : GV n wt →* UA L n, (∀ u g, J (Pi.mulSingle u g) = j u g) ∧ (∀ g, J g ∈ GlobalTheory.UnitaryBC.finU L n) ∧
+    ∃ J : GV n wt →* UA L n, (∀ u g, J (Pi.mulSingle u g) = j u g) ∧ (∀ g, J g ∈ GlobalTheory.UnitaryBC.finU (E := L) (n := n)) ∧
       (∀ g u, cLoc (wt u) (J g) = g u) ∧
       (∀ g (v : Plc L), (∀ u, v.under (𝓞 (Lp L)) ≠ (wt u).under (𝓞 (Lp L))) → cLoc v (J g) = 1) ∧
       ∀ g k, (∀ u, cLoc (wt u) k = 1) → Commute k (J g) := by
@@ -88,7 +88,7 @@ private theorem ne_type {L Ω : Type} [Field L] [NumberField L] [IsCMField L] [F
     (hτ : ∀ u, IsCompAlong σ (locU n (wt u)) ((cLoc (wt u)).comp (locU n (wt u)).subtype) (τ u).ρ)
     (hwd : ∀ u rc, _root_.UpperTheory.Zero.LLC.IsRecT (ht u) rc → IsTypeWD (ht u) (χ u) (rc (algNorm (τ u))))
     (K : Subgroup (UA L n)) (hK : ∀ k ∈ K, ∀ u, cLoc (wt u) k = 1) (h0 : σ ⊓ fixd (RU L n) K ≠ ⊥) :
-    ∃ J : GV n wt →* UA L n, (∀ g, J g ∈ GlobalTheory.UnitaryBC.finU L n) ∧ (∀ g u, cLoc (wt u) (J g) = g u) ∧
+    ∃ J : GV n wt →* UA L n, (∀ g, J g ∈ GlobalTheory.UnitaryBC.finU (E := L) (n := n)) ∧ (∀ g u, cLoc (wt u) (J g) = g u) ∧
       (∀ g (v : Plc L), (∀ u, v.under (𝓞 (Lp L)) ≠ (wt u).under (𝓞 (Lp L))) → cLoc v (J g) = 1) ∧
       ∃ F : Fin m → UA L n → ℂ, F ≠ 0 ∧ (∀ i, F i ∈ σ ⊓ fixd (RU L n) K) ∧
         ∀ (k : KT n wt) i, ∑ a, τ₀ k i a • RU L n (J k) (F a) = F i := by
@@ -146,18 +146,18 @@ section
 variable {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω]
   {s : HidaSetting l L Ω} (n : ℕ) {V : s.Lev} (Q : QData V)
 private noncomputable def neK : Subgroup (UA L n) :=
-  GlobalTheory.UnitaryBC.finU L n ⊓
+  GlobalTheory.UnitaryBC.finU (E := L) (n := n) ⊓
     (⨅ (u : Plc L) (_ : u.under (𝓞 (Lp L)) ∉ V.S'), (KO (u.adicCompletion L) (Fin n)).comap (cLoc u)) ⊓
     (Kc _ n 1).comap (cLoc (s.w s.v0)) ⊓ (⨅ v : V.frame.Vl, (cLoc (s.w v.1)).ker) ⊓ (⨅ u : s.St, (cLoc (s.w u)).ker) ⊓
     ⨅ q : Q.Q, (cLoc (Q.wq q)).ker
 variable {n Q}
-private theorem mem_neK {k : UA L n} : k ∈ neK n Q ↔ k ∈ GlobalTheory.UnitaryBC.finU L n ∧
+private theorem mem_neK {k : UA L n} : k ∈ neK n Q ↔ k ∈ GlobalTheory.UnitaryBC.finU (E := L) (n := n) ∧
     (∀ u : Plc L, u.under (𝓞 (Lp L)) ∉ V.S' → cLoc u k ∈ KO (u.adicCompletion L) (Fin n)) ∧ cLoc (s.w s.v0) k ∈ Kc _ n 1 ∧
     (∀ v : V.frame.Vl, cLoc (s.w v.1) k = 1) ∧ (∀ u : s.St, cLoc (s.w u) k = 1) ∧ ∀ q : Q.Q, cLoc (Q.wq q) k = 1 := by
   simp only [neK, Subgroup.mem_inf, Subgroup.mem_iInf, Subgroup.mem_comap, MonoidHom.mem_ker, and_assoc]
-private theorem ne_dec (J : GV n (wt s) →* UA L n) (j1 : ∀ g, J g ∈ GlobalTheory.UnitaryBC.finU L n) (j2 : ∀ g u, cLoc (wt s u) (J g) = g u)
+private theorem ne_dec (J : GV n (wt s) →* UA L n) (j1 : ∀ g, J g ∈ GlobalTheory.UnitaryBC.finU (E := L) (n := n)) (j2 : ∀ g u, cLoc (wt s u) (J g) = g u)
     (j3 : ∀ g (v : Plc L), (∀ u, v.under (𝓞 (Lp L)) ≠ (wt s u).under (𝓞 (Lp L))) → cLoc v (J g) = 1)
-    (u : Ub n s) (hu : u ∈ UQ n Q) (x : UA L n) (hx : x ∈ GlobalTheory.UnitaryBC.finU L n) (h1 : (away l L n).rangeRestrict x = u)
+    (u : Ub n s) (hu : u ∈ UQ n Q) (x : UA L n) (hx : x ∈ GlobalTheory.UnitaryBC.finU (E := L) (n := n)) (h1 : (away l L n).rangeRestrict x = u)
     (h2 : ∀ v : V.frame.Vl, cLoc (s.w v.1) x = 1) : (J (toKT n s u))⁻¹ * x ∈ neK n Q := by
   have hw := (UpperTheory.under_chosen_place_and_isSplitAt_of_decomp_le l L Ω s).1
   have j4 : ∀ v : Plc L, v.under (𝓞 (Lp L)) ∉ s.St → cLoc v ((J (toKT n s u))⁻¹ * x) = cLoc v x := fun v hv => by
@@ -179,7 +179,7 @@ private theorem ne_dec (J : GV n (wt s) →* UA L n) (j1 : ∀ g, J g ∈ Global
     exact inv_mul_cancel _
   · rw [j4 _ fun h => Q.notS q (Or.inr (Or.inl h)), hc _ fun h => Q.notS q (Or.inl h)]
     exact Subgroup.mem_iInf.1 hu2 q
-private theorem ne_inf (ι : Qbar l ≃+* ℂ) (lam : Wt L l n) {x : UA L n} (hx : x ∈ GlobalTheory.UnitaryBC.finU L n) :
+private theorem ne_inf (ι : Qbar l ≃+* ℂ) (lam : Wt L l n) {x : UA L n} (hx : x ∈ GlobalTheory.UnitaryBC.finU (E := L) (n := n)) :
     infRep (V := V) ι lam x = 1 := by
   have h : ∀ τ, cEmb τ x = 1 := fun τ => by
     unfold cEmb
@@ -225,7 +225,7 @@ theorem UpperTheory.V.Hi.nonempty_unitary_hecke_parts :
       smul_mem' := fun z a ha => ⟨fun i => Submodule.smul_mem _ z (ha.1 i), fun k i => by
         simp only [Pi.smul_apply, map_smul, smul_comm _ z, ← Finset.smul_sum, ha.2]⟩ }
   obtain ⟨hfin, hbij⟩ := UpperTheory.placeEmbeddings_bijective_infinitePlaces l L Ω s V ι
-  have hcomm : ∀ x ∈ infU L n, ∀ k ∈ GlobalTheory.UnitaryBC.finU L n, ∀ ψ, RU L n k (RU L n x ψ) = RU L n x (RU L n k ψ) :=
+  have hcomm : ∀ x ∈ infU L n, ∀ k ∈ GlobalTheory.UnitaryBC.finU (E := L) (n := n), ∀ ψ, RU L n k (RU L n x ψ) = RU L n x (RU L n k ψ) :=
     fun x hx k hk ψ => by rw [GlobalTheory.DefU.RU_RU, GlobalTheory.DefU.RU_RU, GlobalTheory.DefU.fin_mul_inf hk hx]
   obtain ⟨Φ, hΦ0, hΦN, hΦ⟩ := UpperTheory.exists_tensor_dual_embedding_of_hasWeightAt L n hn _ _ hbij (fun x => lam x.res) σ hσ hwt m N
     ((Submodule.ne_bot_iff _).2 ⟨F₀, ⟨hF1, hF2⟩, hF0⟩) (fun F hF k => (hF.1 k).1) fun x hx F hF =>

@@ -136,7 +136,7 @@ theorem congUWG_of (H : StepSt) (hFin : FinU) (D : ∀ a : ℕ, MvPolynomial (Fi
   have hlev : ∀ U', IsAutRepU U' → (∃ φ ∈ U', φ ≠ 0 ∧ ∀ x ∈ K', RU E a x φ = φ) → HasLevelOff w₀ v' Kw U' :=
     fun U' h1 h2 w g1 g2 g3 σ hσ => fixed_ne_bot h1 g1 (hloc U' h2 w g1 g2 g3) σ hσ
   refine ⟨Kw, hlev U hU.1 hfix, hoc, fun w h1 _ h3 h4 => hsph w h1 h3 h4, fun Z W hZ hW => ?_⟩
-  have hfin : ∀ {w} {f : UA E a →₀ ℂ}, (∀ g ∈ f.support, g ∈ locU a w) → ∀ g ∈ f.support, g ∈ finU E a :=
+  have hfin : ∀ {w} {f : UA E a →₀ ℂ}, (∀ g ∈ f.support, g ∈ locU a w) → ∀ g ∈ f.support, g ∈ finU (E := E) (n := a) :=
     fun h g hg => (Subgroup.mem_inf.1 (h g hg)).1
   have hhyp : ∀ w, IsSplitAt w → Apart w w₀ → Apart w v' → (∃ B, SatU U w B) → HypAt K' w := fun w h1 h2 h3 h4 x hx => by
     rw [hKs' w h1 h2 h3 x hx, hsph w h1 h3 h4]
@@ -183,7 +183,7 @@ theorem congUWG_of (H : StepSt) (hFin : FinU) (D : ∀ a : ℕ, MvPolynomial (Fi
     · exact ⟨_, (hZ z.1 z.2).2.1, (hZ z.1 z.2).2.2.1, fun g hg => htz z g (Finsupp.support_smul hg)⟩
   have hint : ∀ j, IntW ι lam (t j) ∧ Loc.IntL ι lam (t j) := by
     rintro ((j | p) | z)
-    · have key : ∀ g ∈ (tj j).support, g ∈ finU E a ∧ DenomLe l 0 g ∧ ‖ι.symm (tj j g)‖ ≤ 1 := fun g hg => by
+    · have key : ∀ g ∈ (tj j).support, g ∈ finU (E := E) (n := a) ∧ DenomLe l 0 g ∧ ‖ι.symm (tj j g)‖ ≤ 1 := fun g hg => by
         obtain ⟨h1, h2⟩ := htj j g hg
         refine ⟨(Subgroup.mem_inf.1 h1).1, fun u hu => ?_, by rw [h2]; exact O.int j _⟩
         have h3 : cLoc u g = 1 := hone (apart_of_not_mem hu (O.away j)) g h1 u (not_apart_self u)

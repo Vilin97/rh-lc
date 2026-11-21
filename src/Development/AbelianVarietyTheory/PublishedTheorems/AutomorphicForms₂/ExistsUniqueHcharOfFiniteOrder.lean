@@ -111,7 +111,8 @@ theorem finite_contEmbInf (w : InfinitePlace E) :
   have hd : DenseRange (algebraMap E w.Completion) := by
     refine Dense.mono ?_ (InfinitePlace.Completion.denseRange_coe w)
     rintro _ ⟨a, rfl⟩
-    exact ⟨WithAbs.equiv w.1 a, rfl⟩
+    refine ⟨WithAbs.equiv w.1 a, ?_⟩
+    simp [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply]
   refine hd.equalizer a.2 b.2 ?_
   funext k
   exact DFunLike.congr_fun h k
@@ -427,8 +428,9 @@ theorem isAlgPos_zero_of_orderDvd {χ : HChar E} {m : ℕ} (hm : 0 < m) (h : χ.
   have h2 : ∀ w : InfinitePlace E, ∃ y : w.Completion, y ^ m = algebraMap E w.Completion (k : E) := fun w => by
     rcases w.isReal_or_isComplex with hw | hw
     · let e := InfinitePlace.Completion.ringEquivRealOfIsReal hw
-      have he : e (algebraMap E w.Completion (k : E)) = InfinitePlace.embedding_of_isReal hw (k : E) :=
-        InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hw ((WithAbs.equiv w.1).symm (k : E))
+      have he : e (algebraMap E w.Completion (k : E)) = InfinitePlace.embedding_of_isReal hw (k : E) := by
+        simpa [e, AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply] using
+          InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hw ((WithAbs.equiv w.1).symm (k : E))
       refine ⟨e.symm ((InfinitePlace.embedding_of_isReal hw (k : E)) ^ ((m : ℝ)⁻¹)), e.injective ?_⟩
       rw [map_pow, e.apply_symm_apply, he, Real.rpow_inv_natCast_pow (hk _).le hm.ne']
     · let e := InfinitePlace.Completion.ringEquivComplexOfIsComplex hw

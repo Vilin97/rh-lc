@@ -21,7 +21,7 @@ namespace GlobalTheory.WeightRealExt
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
-theorem dense_rat_fin : Dense ((ratU E n : Set (UA E n)) * (finU E n : Set (UA E n))) := by
+theorem dense_rat_fin : Dense ((ratU E n : Set (UA E n)) * (finU (E := E) (n := n) : Set (UA E n))) := by
   intro g
   obtain ⟨k, hk, x, hx, rfl⟩ := GlobalTheory.DefU.exists_finU_mul_infU E n g
   rw [GlobalTheory.DefU.fin_mul_inf hk hx]
@@ -29,7 +29,7 @@ theorem dense_rat_fin : Dense ((ratU E n : Set (UA E n)) * (finU E n : Set (UA E
   refine closure_mono ?_
     (image_closure_subset_closure_image hc ⟨x, GlobalTheory.DefiniteDense.mem_closure_rat_fin x hx, rfl⟩)
   rintro _ ⟨_, ⟨γ, hγ, k', hk', rfl⟩, rfl⟩
-  exact ⟨γ, hγ, k' * k, (finU E n).mul_mem hk' hk, (mul_assoc _ _ _).symm⟩
+  exact ⟨γ, hγ, k' * k, (finU (E := E) (n := n)).mul_mem hk' hk, (mul_assoc _ _ _).symm⟩
 
 theorem mem_rationalGL_of_unitaryGroupGram_unitGram (γ : UA E n) (γ₀ : GL (Fin n) E) (h : γ.1 = ratGL E n γ₀) : γ₀ ∈ GQ0 E n := by
   have h0 : Formalism.UG.cT (conjAd E) (γ.1 : Matrix (Fin n) (Fin n) (Ad E)) * 1 * γ.1 = 1 := γ.2
@@ -128,7 +128,7 @@ theorem mul_of_rat {M : Type} [Mul M] [TopologicalSpace M] [ContinuousMul M] [T2
   have e2 : cInf y = cInf δ := by rw [← hy, map_mul, hl', mul_one]
   rw [hi x γ e1, hi y δ e2, hi (x * y) (γ * δ) (by rw [map_mul, map_mul, e1, e2]), h γ hγ δ hδ]
 
-theorem exists_extension : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) (a : NG.AlgWt L n), ∃ R : UA L n →* Module.End ℂ a.W, (∀ k ∈ finU L n, R k = 1) ∧ (∀ (γ : UA L n) (γQ : GQ L n) (γ₀ : GL (Fin n) L), γ.1 = ratGL L n γ₀ → (((γQ : GAf L n) : GL (Fin n) (AL L)) : Matrix (Fin n) (Fin n) (AL L)) = (γ₀ : Matrix (Fin n) (Fin n) L).map Algebra.TensorProduct.includeLeftRingHom → R γ = a.ρ γQ) ∧ ∀ (v : a.W) (μ : Module.Dual ℂ a.W), Continuous fun g : UA L n => μ (R g v) := by
+theorem exists_extension : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) (a : NG.AlgWt L n), ∃ R : UA L n →* Module.End ℂ a.W, (∀ k ∈ finU (E := L) (n := n), R k = 1) ∧ (∀ (γ : UA L n) (γQ : GQ L n) (γ₀ : GL (Fin n) L), γ.1 = ratGL L n γ₀ → (((γQ : GAf L n) : GL (Fin n) (AL L)) : Matrix (Fin n) (Fin n) (AL L)) = (γ₀ : Matrix (Fin n) (Fin n) L).map Algebra.TensorProduct.includeLeftRingHom → R γ = a.ρ γQ) ∧ ∀ (v : a.W) (μ : Module.Dual ℂ a.W), Continuous fun g : UA L n => μ (R g v) := by
   intro L _ _ _ n a
   obtain ⟨_, ι, _, _, b, P, hP⟩ := a.alg
   have hrat : ∀ (γ : UA L n) (γQ : GQ L n) (γ₀ : GL (Fin n) L), γ.1 = ratGL L n γ₀ →

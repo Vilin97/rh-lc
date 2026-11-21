@@ -102,7 +102,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 theorem finPtHom_injective : Function.Injective (finPtHom (E := E) (n := n)) := by
   intro a b h
   have h1 : finGL E n (ratF E n a.1) = finGL E n (ratF E n b.1) := by
-    have := congrArg (fun k : finU E n => (k : UA E n).1) h
+    have := congrArg (fun k : finU (E := E) (n := n) => (k : UA E n).1) h
     simpa only [finPtHom_apply, FinPtLoc.finPt_eq] using this
   have h2 : ratF E n a.1 = ratF E n b.1 := by
     have := congrArg (GeneralLinearGroup.map (pFin E)) h1
@@ -132,19 +132,19 @@ end GlobalTheory.BCT.TraceBlocks
 
 
 open GlobalTheory.BCT.TraceBlocks in
-theorem GlobalTheory.BCT.TrKer.trOn_vecM_hopM : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, 1 ≤ n → ∀ (S : Set (Pl E)), IsSection S → ∀ (lam : InfinitePlace E → DomWeight n) (K' : ∀ w : Pl E, Subgroup (UL n w)), IsLevelFam (fun w : Pl E => MonoidHom.id (UL n w)) (KL n) K' → ∀ f : ∀ w : Pl E, UL n w → ℂ, IsTest (KL n) K' f → trOn (GlobalTheory.BCT.TrKer.vecM S lam K') (GlobalTheory.BCT.TrKer.hopM S lam K' f) = (((globLev S K').relIndex (globLev S (KL n)) : ℕ) : ℂ)⁻¹ * ∑ᶠ q : DoubleCoset.Quotient (ratFinU E n : Set (finU E n)) (globLev S K' : Set (finU E n)), ((Nat.card (ratFinU E n ⊓ (globLev S K').map (MulAut.conj (Quotient.out q)).toMonoidHom : Subgroup (finU E n)) : ℂ))⁻¹ * ∑ᶠ γ : UE E n, globFn S f ((Quotient.out q)⁻¹ * finPt γ * Quotient.out q) * LinearMap.trace ℂ _ (GlobalTheory.BCT.TrKer.wAt lam γ⁻¹) := by
+theorem GlobalTheory.BCT.TrKer.trOn_vecM_hopM : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, 1 ≤ n → ∀ (S : Set (Pl E)), IsSection S → ∀ (lam : InfinitePlace E → DomWeight n) (K' : ∀ w : Pl E, Subgroup (UL n w)), IsLevelFam (fun w : Pl E => MonoidHom.id (UL n w)) (KL n) K' → ∀ f : ∀ w : Pl E, UL n w → ℂ, IsTest (KL n) K' f → trOn (GlobalTheory.BCT.TrKer.vecM S lam K') (GlobalTheory.BCT.TrKer.hopM S lam K' f) = (((globLev S K').relIndex (globLev S (KL n)) : ℕ) : ℂ)⁻¹ * ∑ᶠ q : DoubleCoset.Quotient (ratFinU E n : Set (finU (E := E) (n := n))) (globLev S K' : Set (finU (E := E) (n := n))), ((Nat.card (ratFinU E n ⊓ (globLev S K').map (MulAut.conj (Quotient.out q)).toMonoidHom : Subgroup (finU (E := E) (n := n))) : ℂ))⁻¹ * ∑ᶠ γ : UE E n, globFn S f ((Quotient.out q)⁻¹ * finPt γ * Quotient.out q) * LinearMap.trace ℂ _ (GlobalTheory.BCT.TrKer.wAt lam γ⁻¹) := by
   intro E _ _ _ hU n _ S hS lam K' hK f hf
   have hV : GlobalTheory.BCT.TrKer.vecM S lam K' = eqvM finPtHom (wDual lam) (globLev S K') := rfl
   have hT : GlobalTheory.BCT.TrKer.hopM S lam K' f =
-      levOp (rightReg ℂ (finU E n) (Module.Dual ℂ (GlobalTheory.BCT.TrKer.Wsp lam))) (globLev S (KL n)) (globLev S K')
+      levOp (rightReg ℂ (finU (E := E) (n := n)) (Module.Dual ℂ (GlobalTheory.BCT.TrKer.Wsp lam))) (globLev S (KL n)) (globLev S K')
         (globFn S f) LinearMap.id := rfl
   have hF := globFn_inv S K' f fun w => (hf.1 w).2
-  have hdc : Finite (DoubleCoset.Quotient ((finPtHom (E := E) (n := n)).range : Set (finU E n))
-      (globLev S K' : Set (finU E n))) := by
+  have hdc : Finite (DoubleCoset.Quotient ((finPtHom (E := E) (n := n)).range : Set (finU (E := E) (n := n)))
+      (globLev S K' : Set (finU (E := E) (n := n)))) := by
     rw [finPtHom_range]
     exact GlobalTheory.T.finite_doubleCoset_definiteUnitaryRational_of_isOpen E n _ (GlobalTheory.T.isOpen_productOfLocalLevelsUnitary E hU n S K' hK)
-  have hst : ∀ x : finU E n, Finite ((finPtHom (E := E) (n := n)).range ⊓
-      (globLev S K').map (MulAut.conj x).toMonoidHom : Subgroup (finU E n)) := fun x => by
+  have hst : ∀ x : finU (E := E) (n := n), Finite ((finPtHom (E := E) (n := n)).range ⊓
+      (globLev S K').map (MulAut.conj x).toMonoidHom : Subgroup (finU (E := E) (n := n))) := fun x => by
     rw [finPtHom_range]
     exact GlobalTheory.T.finite_definiteUnitary_rational_inf_conj_level E hU n S hS K' hK x
   rw [hV, hT, trOn_eqvM finPtHom finPtHom_injective (wDual lam) _ _ _ hF (GlobalTheory.T.finite_productOfLocalFunctionsUnitary_ne_zero E hU n S K' hK f hf) hdc hst]

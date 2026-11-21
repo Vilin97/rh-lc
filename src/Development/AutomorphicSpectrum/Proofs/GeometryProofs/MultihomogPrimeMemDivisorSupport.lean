@@ -83,7 +83,7 @@ theorem mem_minimalPrimes_of_coord (B : Type) [Fintype B] (J : B → Type) [∀ 
     intro h0
     have h1 : r = 0 := by simpa [h0] using hr
     exact div_ne_zero hw (hwc k) (congrArg Subtype.val h1)
-  have hmax := chart_prime_isMaximal (p := p) w hbir c hwc _ hpQ hne
+  have hmax := chart_prime_isMaximal w hbir c hwc _ hpQ hne
   have heq := hmax.eq_of_le hpW.ne_top (chartIdeal_mono hwc hQW)
 
   obtain ⟨S, hS, hSe⟩ := hWh

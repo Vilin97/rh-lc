@@ -33,7 +33,7 @@ def intU (a : ℕ) (w : HeightOneSpectrum (𝓞 E)) : Subgroup (UA E a) :=
 
 def levelOf (a : ℕ) (w₀ : HeightOneSpectrum (𝓞 E)) (H : HeightOneSpectrum (𝓞 E) → Subgroup (UA E a)) :
     Subgroup (UA E a) :=
-  finU E a ⊓ (⨅ (u : HeightOneSpectrum (𝓞 E)) (_ : ¬ Apart u w₀), (cLoc u).ker) ⊓
+  finU (E := E) (n := a) ⊓ (⨅ (u : HeightOneSpectrum (𝓞 E)) (_ : ¬ Apart u w₀), (cLoc u).ker) ⊓
     ⨅ (w : HeightOneSpectrum (𝓞 E)) (_ : Apart w w₀), ((H w).map (cLoc w)).comap (cLoc w)
 
 variable {a : ℕ}
@@ -43,7 +43,7 @@ theorem mem_intU {w : HeightOneSpectrum (𝓞 E)} {x : UA E a} :
   simp only [intU, Subgroup.mem_inf, Subgroup.mem_iInf, Subgroup.mem_comap]
 
 theorem mem_levelOf {w₀ : HeightOneSpectrum (𝓞 E)} {H : HeightOneSpectrum (𝓞 E) → Subgroup (UA E a)} {x : UA E a} :
-    x ∈ levelOf a w₀ H ↔ x ∈ finU E a ∧ (∀ u, ¬ Apart u w₀ → cLoc u x = 1) ∧
+    x ∈ levelOf a w₀ H ↔ x ∈ finU (E := E) (n := a) ∧ (∀ u, ¬ Apart u w₀ → cLoc u x = 1) ∧
       ∀ w, Apart w w₀ → ∃ y ∈ H w, cLoc w y = cLoc w x := by
   simp only [levelOf, Subgroup.mem_inf, Subgroup.mem_iInf, Subgroup.mem_comap, MonoidHom.mem_ker, Subgroup.mem_map, and_assoc]
 
@@ -66,7 +66,7 @@ theorem intU_congr {w u : HeightOneSpectrum (𝓞 E)} (h : ¬ Apart u w) : intU 
 theorem intU_le_locU (w : HeightOneSpectrum (𝓞 E)) : intU a w ≤ locU a w := inf_le_left
 
 theorem levelOf_le_finU (w₀ : HeightOneSpectrum (𝓞 E)) (H : HeightOneSpectrum (𝓞 E) → Subgroup (UA E a)) :
-    levelOf a w₀ H ≤ finU E a := fun _ hx => (mem_levelOf.1 hx).1
+    levelOf a w₀ H ≤ finU (E := E) (n := a) := fun _ hx => (mem_levelOf.1 hx).1
 
 theorem eq_of_not_apart_of_not_split {w u : HeightOneSpectrum (𝓞 E)} (hw : ¬ IsSplitAt w) (h : ¬ Apart u w) : u = w := by
   by_contra hne

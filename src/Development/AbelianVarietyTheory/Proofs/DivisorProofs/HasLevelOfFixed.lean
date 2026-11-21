@@ -41,8 +41,8 @@ theorem hasLevel_of_fixed {S : Set (Pl E)} (hS : IsSection S) {π : Submodule �
   obtain ⟨φ, hφ, hφ0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot h
   refine ⟨φ, (Submodule.mem_inf.1 hφ).1, hφ0, fun w hw x hx hk => ?_⟩
   obtain ⟨k, hk, hkx⟩ := hk
-  have hxf : x ∈ finU E n := hx.1
-  have hmem : (⟨x, hxf⟩ : finU E n) ∈ globLev S K' := by
+  have hxf : x ∈ finU (E := E) (n := n) := hx.1
+  have hmem : (⟨x, hxf⟩ : finU (E := E) (n := n)) ∈ globLev S K' := by
     simp only [globLev, Subgroup.mem_iInf, Subgroup.mem_comap, Subgroup.mem_map]
     intro w' hw'
     by_cases hww : w' = w

@@ -151,7 +151,7 @@ def cst (d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) : ℂ := (ν ϖ : ℂ) * (res
 
 def scal (n : ℕ) (u : kˣ) : GL (Fin n) k := diagGL fun _ => u
 
-theorem ord_one_eq : ord k 1 = 0 := ord_eq_zero (by simp)
+theorem ord_one_eq : ord k 1 = 0 := ord_eq_zero k (by simp)
 
 theorem ord_prod_eq {ι : Type} (s : Finset ι) (f : ι → kˣ) : ord k (∏ i ∈ s, f i) = ∑ i ∈ s, ord k (f i) := by
   classical
@@ -166,19 +166,18 @@ theorem ord_zpow_eq (u : kˣ) (m : ℤ) : ord k (u ^ m) = m * ord k u := by
   rw [toAdd_zpow, smul_eq_mul] at h
   exact h
 
-
 omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
-theorem shellSet_eq_cell {n : ℕ} (ϖ : kˣ) (e : Fin n → ℤ) : shellSet ϖ e = GlobalTheory.GLDoubling.cell k (Fin n) ϖ e := by
-  have h : (diagGL fun i => ϖ ^ e i) = GlobalTheory.GLDoubling.torusElt k (Fin n) ϖ e :=
-    Units.ext (by rw [GlobalTheory.GLDoubling.val_torusElt, diagGL_val]; simp)
-  rw [shellSet, h, GlobalTheory.GLDoubling.cell]
+theorem shellSet_eq_cell {n : ℕ} (ϖ : kˣ) (e : Fin n → ℤ) : shellSet ϖ e = _root_.GlobalTheory.GLDoubling.cell k (Fin n) ϖ e := by
+  have h : (diagGL fun i => ϖ ^ e i) = _root_.GlobalTheory.GLDoubling.torusElt k (Fin n) ϖ e :=
+    Units.ext (by rw [_root_.GlobalTheory.GLDoubling.val_torusElt, diagGL_val]; simp)
+  rw [shellSet, h, _root_.GlobalTheory.GLDoubling.cell]
 
 theorem ord_of_mem_shellSet {ϖ : kˣ} (hϖ : IsUnif ϖ) {n : ℕ} {e : Fin n → ℤ} {g : GL (Fin n) k}
     (hg : g ∈ shellSet ϖ e) : ord k (gdet g) = ∑ i, e i := by
   obtain ⟨x, hx, y, hy, rfl⟩ := mem_shellSet.1 hg
-  rw [gdet_mul, gdet_mul, ord_mul, ord_mul, ord_eq_zero (valuation_gdet_of_mem_KO hx),
-    ord_eq_zero (valuation_gdet_of_mem_KO hy), zero_add, add_zero, gdet, det_diagGL, ord_prod_eq]
-  exact Finset.sum_congr rfl fun i _ => by rw [ord_zpow_eq, ord_eq_one hϖ, mul_one]
+  rw [gdet_mul, gdet_mul, ord_mul, ord_mul, ord_eq_zero k (valuation_gdet_of_mem_KO hx),
+    ord_eq_zero k (valuation_gdet_of_mem_KO hy), zero_add, add_zero, gdet, det_diagGL, ord_prod_eq]
+  exact Finset.sum_congr rfl fun i _ => by rw [ord_zpow_eq, ord_eq_one k hϖ, mul_one]
 
 theorem dShell_eq_iUnion {ϖ : kˣ} (hϖ : IsUnif ϖ) (n : ℕ) (m : ℤ) :
     dShell (k := k) n m = ⋃ e : {e : Fin n → ℤ // Antitone e ∧ ∑ i, e i = m}, shellSet ϖ e.1 := by
@@ -186,8 +185,8 @@ theorem dShell_eq_iUnion {ϖ : kˣ} (hϖ : IsUnif ϖ) (n : ℕ) (m : ℤ) :
   rw [Set.mem_iUnion]
   constructor
   · intro hg
-    have h : g ∈ ⋃ e : {e : Fin n → ℤ // Antitone e}, GlobalTheory.GLDoubling.cell k (Fin n) ϖ e := by
-      rw [GlobalTheory.GLDoubling.iUnion_cell hϖ]; trivial
+    have h : g ∈ ⋃ e : {e : Fin n → ℤ // Antitone e}, _root_.GlobalTheory.GLDoubling.cell k (Fin n) ϖ e := by
+      rw [_root_.GlobalTheory.GLDoubling.iUnion_cell hϖ]; trivial
     obtain ⟨e, he⟩ := Set.mem_iUnion.1 h
     rw [← shellSet_eq_cell] at he
     exact ⟨⟨e.1, e.2, (ord_of_mem_shellSet hϖ he).symm.trans hg⟩, he⟩
@@ -195,16 +194,15 @@ theorem dShell_eq_iUnion {ϖ : kˣ} (hϖ : IsUnif ϖ) (n : ℕ) (m : ℤ) :
     exact (ord_of_mem_shellSet hϖ he).trans e.2.2
 
 theorem isOpen_shellSet {n : ℕ} (ϖ : kˣ) (e : Fin n → ℤ) : IsOpen (shellSet ϖ e) := by
-  rw [shellSet_eq_cell]; exact GlobalTheory.GLDoubling.isOpen_cell ϖ e
+  rw [shellSet_eq_cell]; exact _root_.GlobalTheory.GLDoubling.isOpen_cell ϖ e
 
 theorem isCompact_shellSet {n : ℕ} (ϖ : kˣ) (e : Fin n → ℤ) : IsCompact (shellSet ϖ e) := by
-  rw [shellSet_eq_cell]; exact GlobalTheory.GLDoubling.isCompact_cell ϖ e
+  rw [shellSet_eq_cell]; exact _root_.GlobalTheory.GLDoubling.isCompact_cell ϖ e
 
 theorem isOpen_dShell (n : ℕ) (m : ℤ) : IsOpen (dShell (k := k) n m) := by
   obtain ⟨ϖ, hϖ⟩ := exists_isUnif (k := k)
   rw [dShell_eq_iUnion hϖ]
   exact isOpen_iUnion fun e => isOpen_shellSet ϖ e.1
-
 
 open GlobalTheory.IwahoriInj in
 theorem le_of_mem_shellSet {ϖ : kˣ} (hϖ : IsUnif ϖ) {n : ℕ} {e : Fin n → ℤ} {g : GL (Fin n) k}
@@ -214,10 +212,10 @@ theorem le_of_mem_shellSet {ϖ : kˣ} (hϖ : IsUnif ϖ) {n : ℕ} {e : Fin n →
   have hx' : ∀ i j, Deep 0 ((x⁻¹).val i j) := fun i j => deep_zero_iff.2 (((mem_KO_iff x).1 hx).2 i j)
   have hy' : ∀ i j, Deep 0 ((y⁻¹).val i j) := fun i j => deep_zero_iff.2 (((mem_KO_iff y).1 hy).2 i j)
   have h2 : Deep a ((x⁻¹ * g * y⁻¹).val i i) := by
-    rw [Units.val_mul, Units.val_mul, mul_apply]
+    rw [Units.val_mul, Units.val_mul, Matrix.mul_apply]
     refine Deep.sum fun l _ => ?_
     have h3 : Deep a (((x⁻¹).val * g.val) i l) := by
-      rw [mul_apply]
+      rw [Matrix.mul_apply]
       exact Deep.sum fun r _ => ((hx' i r).mul (ha r l)).mono (by omega)
     exact (h3.mul (hy' l i)).mono (by omega)
   rw [← h1, diagGL_val, diagonal_apply_eq, Deep, Units.val_zpow_eq_zpow_val, map_zpow₀, hϖ] at h2
@@ -250,12 +248,12 @@ theorem wt_of_mem {ϖ : kˣ} (hϖ : IsUnif ϖ) {ν : kˣ →* ℂˣ} (hν : IsUn
     (hg : g ∈ dShell n m) : wt d ν g = cst d ϖ ν ^ m := by
   have hm : ord k (gdet g) = m := hg
   have hu : valuation k ((gdet g / ϖ ^ m : kˣ) : k) = 1 := by
-    refine ord_eq_zero_iff.1 ?_
+    refine (ord_eq_zero_iff k).1 ?_
     have h := ord_mul k (gdet g / ϖ ^ m) (ϖ ^ m)
-    rw [div_mul_cancel, ord_zpow_eq, ord_eq_one hϖ, hm] at h
+    rw [div_mul_cancel, ord_zpow_eq, ord_eq_one k hϖ, hm] at h
     omega
   have hϖd : apow ϖ ((d : ℂ) / 2) = (resCard k : ℂ) ^ (-(d : ℂ) / 2) := by
-    rw [apow, GlobalTheory.GLDoubling.nabs_unif hϖ, Complex.ofReal_inv, Complex.ofReal_natCast,
+    rw [apow, _root_.GlobalTheory.GLDoubling.nabs_unif hϖ, Complex.ofReal_inv, Complex.ofReal_natCast,
       Complex.inv_cpow _ _ (by rw [Complex.natCast_arg]; exact Real.pi_ne_zero.symm), ← Complex.cpow_neg, neg_div]
   let w : kˣ →* ℂ :=
     { toFun := fun x => (ν x : ℂ) * apow x ((d : ℂ) / 2)
@@ -297,7 +295,7 @@ theorem zCoeff_eq {ϖ : kˣ} (hϖ : IsUnif ϖ) {ν : kˣ →* ℂˣ} (hν : IsUn
     rw [← h, wt]; ring
   have hdis : Pairwise (Function.onFun Disjoint
       fun e : {e : Fin n → ℤ // Antitone e ∧ ∑ i, e i = m} => shellSet ϖ e.1) := fun a b hab => by
-    have h := GlobalTheory.GLDoubling.pairwise_disjoint_cell (N := n) hϖ (i := ⟨a.1, a.2.1⟩) (j := ⟨b.1, b.2.1⟩)
+    have h := _root_.GlobalTheory.GLDoubling.pairwise_disjoint_cell (N := n) hϖ (i := ⟨a.1, a.2.1⟩) (j := ⟨b.1, b.2.1⟩)
       fun h => hab (Subtype.ext (Subtype.mk.inj h))
     simpa only [Function.onFun, shellSet_eq_cell] using h
   have hint := integrableOn_dShell hφ m
@@ -425,13 +423,11 @@ theorem dvd_hermMat_sub {R : Type} [CommRing R] {n : ℕ} (p : R) (a : Fin n →
   · rw [hermMat_gt _ h, hermMat_gt _ h, sub_self]; exact dvd_zero _
 
 
-omit [MeasurableSpace k] [BorelSpace k] in
 theorem finite_hermIdx {p : 𝒪[k]} (hp : Irreducible p) {n : ℕ} (a : Fin n → ℕ) : Finite (HermIdx p a) := by
   have hq := GlobalTheory.IndefiniteRowSideFullHecke.SatakeTrivialRangeBound.one_lt_resCard k
   exact Nat.finite_of_card_ne_zero (by rw [card_hermIdx hp]; positivity)
 
 
-omit [MeasurableSpace k] [BorelSpace k] in
 theorem exists_hermGL {p : 𝒪[k]} (hp : Irreducible p) {n : ℕ} {g : GL (Fin n) k} (hg : ∀ i j, g.val i j ∈ 𝒪[k]) :
     ∃ (a : Fin n → ℕ) (c : HermIdx p a), (hermGL hp a c)⁻¹ * g ∈ KO k (Fin n) := by
   obtain ⟨b, hb, w, hw, e⟩ := iwasawa_blockTriangular k (Fin n) Fin.val g
@@ -453,23 +449,21 @@ theorem exists_hermGL {p : 𝒪[k]} (hp : Irreducible p) {n : ℕ} {g : GL (Fin 
   exact mul_mem (inv_mem (MonoidHom.mem_range.2 ⟨U, rfl⟩)) hw
 
 
-omit [MeasurableSpace k] [BorelSpace k] in
 theorem ord_gdet_of_mem_coset {ϖ : kˣ} (hϖ : IsUnif ϖ) {n : ℕ} {a : Fin n → ℕ} {c : HermIdx _ a} {g : GL (Fin n) k}
     (hg : (hermGL hϖ.irreducible a c)⁻¹ * g ∈ KO k (Fin n)) : ord k (gdet g) = (∑ i, a i : ℕ) := by
   have h1 : ∀ m : ℕ, ord k (ϖ ^ m) = m := fun m => by
     induction m with
-    | zero => exact ord_eq_zero (by simp)
-    | succ m ih => rw [pow_succ, ord_mul, ih, ord_eq_one hϖ]; simp
+    | zero => simpa only [pow_zero, Nat.cast_zero] using (ord_one_eq (k := k))
+    | succ m ih => rw [pow_succ, ord_mul, ih, ord_eq_one k hϖ]; simp
   have h2 : gdet (hermGL hϖ.irreducible a c) = ϖ ^ ∑ i, a i := by
     apply Units.ext
     rw [Matrix.GeneralLinearGroup.val_det_apply, val_hermGL, ← RingHom.map_det, det_hermMat, map_pow,
       Units.val_pow_eq_pow_val]
     rfl
   rw [← mul_inv_cancel_left (hermGL hϖ.irreducible a c) g, gdet_mul, ord_mul, h2, h1,
-    ord_eq_zero (valuation_gdet_of_mem_KO hg), add_zero]
+    ord_eq_zero k (valuation_gdet_of_mem_KO hg), add_zero]
 
 
-omit [MeasurableSpace k] [BorelSpace k] in
 theorem int_of_mem_coset {p : 𝒪[k]} (hp : Irreducible p) {n : ℕ} {a : Fin n → ℕ} {c : HermIdx p a} {g : GL (Fin n) k}
     (hg : (hermGL hp a c)⁻¹ * g ∈ KO k (Fin n)) (i j : Fin n) : g.val i j ∈ 𝒪[k] := by
   rw [← mul_inv_cancel_left (hermGL hp a c) g, Units.val_mul, Matrix.mul_apply]
@@ -647,18 +641,15 @@ theorem conv_finite_of_polys {P : Polynomial ℂ} {n : ℕ} (hP : P.natDegree �
     exact hc ⟨h0, by exact_mod_cast not_lt.1 hl⟩
 
 
-omit [MeasurableSpace k] [BorelSpace k] in
 theorem resCard_cast_ne_zero : (resCard k : ℂ) ≠ 0 :=
   Nat.cast_ne_zero.2 (Nat.card_pos (α := 𝓀[k])).ne'
 
 
-omit [MeasurableSpace k] [BorelSpace k] in
 theorem cst_ne_zero (d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) : cst d ϖ ν ≠ 0 := by
   refine mul_ne_zero (ν ϖ).ne_zero fun h => ?_
   exact resCard_cast_ne_zero (k := k) ((Complex.cpow_eq_zero_iff _ _).1 h).1
 
 
-omit [MeasurableSpace k] [BorelSpace k] in
 theorem invL_eq_prod (n d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) :
     invL n d ϖ ν = ∏ i : Fin n,
       (1 - Polynomial.C (cst d ϖ ν * (resCard k : ℂ) ^ (n - 1 - (i : ℕ))) * Polynomial.X) := by
@@ -671,7 +662,6 @@ theorem invL_eq_prod (n d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) :
   ring
 
 
-omit [MeasurableSpace k] [BorelSpace k] in
 theorem natDegree_invL_le (n d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) : (invL n d ϖ ν).natDegree ≤ n := by
   rw [invL]
   refine (Polynomial.natDegree_prod_le _ _).trans ?_
@@ -679,7 +669,6 @@ theorem natDegree_invL_le (n d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) : (invL n
   compute_degree
 
 
-omit [MeasurableSpace k] [BorelSpace k] in
 theorem coe_invL (n d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) :
     (invL n d ϖ ν : PowerSeries ℂ) = ∏ i : Fin n,
       (1 - PowerSeries.C (cst d ϖ ν * (resCard k : ℂ) ^ (n - 1 - (i : ℕ))) * PowerSeries.X) := by
@@ -689,19 +678,16 @@ theorem coe_invL (n d : ℕ) (ϖ : kˣ) (ν : kˣ →* ℂˣ) :
     Polynomial.coe_C, Polynomial.coe_X]
 
 
-omit [MeasurableSpace k] [BorelSpace k] in
 theorem sb_mul_left {n : ℕ} {φ : Matrix (Fin n) (Fin n) k → ℂ} (hφ : φ ∈ SB _) (g : GL (Fin n) k) :
     (fun x => φ (g.val * x)) ∈ SB (Matrix (Fin n) (Fin n) k) := by
   simpa using comp_mul_mem_SB g 1 hφ
 
 
-omit [MeasurableSpace k] [BorelSpace k] in
 theorem sb_mul_right {n : ℕ} {φ : Matrix (Fin n) (Fin n) k → ℂ} (hφ : φ ∈ SB _) (g : GL (Fin n) k) :
     (fun x => φ (x * g.val)) ∈ SB (Matrix (Fin n) (Fin n) k) := by
   simpa using comp_mul_mem_SB 1 g hφ
 
 
-omit [MeasurableSpace k] [BorelSpace k] in
 theorem sb_indicator_sq (n : ℕ) :
     Set.indicator {X : Matrix (Fin n) (Fin n) k | ∀ i j, X i j ∈ 𝒪[k]} (1 : Matrix (Fin n) (Fin n) k → ℂ) ∈ SB _ := by
   obtain ⟨_, _⟩ := Model.secondCountable_and_t2_local_field (k := k)
@@ -1041,27 +1027,24 @@ theorem indicator_int_mul {A B C : Type} [Fintype B] [Fintype C] [DecidableEq B]
 section Frames
 variable {A A' D : Type} [Fintype A] [DecidableEq A] [Fintype A'] [DecidableEq A'] [Fintype D] [DecidableEq D]
 
-
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
-theorem upperProjection_mul_transpose (σ : A ⊕ A' ≃ D) : X0 k σ * (X0 k σ)ᵀ = 1 := by
+theorem upperProjection_mul_transpose (σ : A ⊕ A' ≃ D) : X0 (k := k) σ * (X0 (k := k) σ)ᵀ = 1 := by
   ext i j
   simp [X0, Matrix.mul_apply, Matrix.one_apply, σ.injective.eq_iff]
 
-
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
-theorem Y0_mul_transpose (σ : A ⊕ A' ≃ D) : Y0 k σ * (Y0 k σ)ᵀ = 1 := by
+theorem Y0_mul_transpose (σ : A ⊕ A' ≃ D) : Y0 (k := k) σ * (Y0 (k := k) σ)ᵀ = 1 := by
   ext i j
   simp [Y0, Matrix.mul_apply, Matrix.one_apply, σ.injective.eq_iff]
 
 
-omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem invT_mul_transpose (h : GL D k) : (invT h).val * h.valᵀ = 1 := by
   rw [invT_val, ← Matrix.transpose_mul, Units.mul_inv, Matrix.transpose_one]
 
-theorem upperProjection_integral (σ : A ⊕ A' ≃ D) : ∀ i j, X0 k σ i j ∈ 𝒪[k] := fun i j => by
+theorem upperProjection_integral (σ : A ⊕ A' ≃ D) : ∀ i j, X0 (k := k) σ i j ∈ 𝒪[k] := fun i j => by
   simp only [X0, of_apply]; split_ifs <;> simp
 
-theorem lowerProjection_integral (σ : A ⊕ A' ≃ D) : ∀ i j, Y0 k σ i j ∈ 𝒪[k] := fun i j => by
+theorem lowerProjection_integral (σ : A ⊕ A' ≃ D) : ∀ i j, Y0 (k := k) σ i j ∈ 𝒪[k] := fun i j => by
   simp only [Y0, of_apply]; split_ifs <;> simp
 
 end Frames
@@ -1070,12 +1053,13 @@ variable [MeasurableSpace k] [BorelSpace k]
 
 theorem pUnr_eq (a a' : ℕ) (ϖ : kˣ) (ν β : kˣ →* ℂˣ) (Φ : Matrix (Fin a) (Fin (a + a')) k → ℂ)
     (h : GL (Fin (a + a')) k) : pUnr a a' ϖ ν β Φ h = (β (gdet h) : ℂ) * apow (gdet h) (-(a : ℂ) / 2) *
-      zetaUnr a (a + a') ϖ ν (fun g => Φ (g * (X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT h).val))) := by
+      zetaUnr a (a + a') ϖ ν (fun g => Φ (g * (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT h).val))) := by
   rw [← zetaUnr_const_mul]
-  unfold pUnr
-  congr 1
-  congr 2
-  exact Matrix.mul_assoc _ _ _
+  simp only [pUnr, omA, map_one, inv_one, Units.val_one, apow_one, one_mul, mul_one,
+    Fintype.card_fin, Matrix.one_mul]
+  apply congrArg (zetaUnr a (a + a') ϖ ν)
+  funext g
+  erw [Matrix.mul_assoc g (X0 (k := k) finSumFinEquiv) (invT h).val]
 
 end Main
 
@@ -1083,7 +1067,6 @@ section Main2
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem transpose_mul_invT {D : Type} [Fintype D] [DecidableEq D] (h : GL D k) : h.valᵀ * (invT h).val = 1 := by
   rw [invT_val, ← Matrix.transpose_mul, Units.inv_mul, Matrix.transpose_one]
 
@@ -1111,7 +1094,6 @@ theorem gdet_blkDGL {a a' : ℕ} (b : GL (Fin (a + a')) k) (dD : kˣ) (h : (dD :
   Units.ext (by rw [Matrix.GeneralLinearGroup.val_det_apply, h]; rfl)
 
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem gdet_of_isBlockUpper {a a' : ℕ} {b : GL (Fin (a + a')) k} (hb : IsBlockUpper b) {dA dD : kˣ}
     (h1 : (dA : k) = (blkA b).det) (h2 : (dD : k) = (blkD b).det) : gdet b = dA * dD := by
   refine Units.ext ?_
@@ -1124,30 +1106,28 @@ theorem gdet_of_isBlockUpper {a a' : ℕ} {b : GL (Fin (a + a')) k} (hb : IsBloc
   ext (i | i) (j | j) <;> simp [blkA, blkD] <;> exact hb _ _
 
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem upperProjection_inverse_transpose_block {a a' : ℕ} {b : GL (Fin (a + a')) k} (hb : IsBlockUpper b) {dA : kˣ}
     (h1 : (dA : k) = (blkA b).det) :
-    (X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT b).val : Matrix (Fin a) (Fin (a + a')) k) =
-      (invT (blkAGL b dA h1)).val * X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) := by
-  have key : ((blkAGL b dA h1).val)ᵀ * X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) =
-      X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * b.valᵀ := by
+    (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT b).val : Matrix (Fin a) (Fin (a + a')) k) =
+      (invT (blkAGL b dA h1)).val * X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) := by
+  have key : ((blkAGL b dA h1).val)ᵀ * X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) =
+      X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * b.valᵀ := by
     ext i j
     obtain ⟨j | j, rfl⟩ := finSumFinEquiv.surjective j
     · simp [X0, Matrix.mul_apply, blkAGL, blkA, -finSumFinEquiv_apply_left, -finSumFinEquiv_apply_right]
     · simp [X0, Matrix.mul_apply, blkAGL, blkA, -finSumFinEquiv_apply_left, -finSumFinEquiv_apply_right]
       exact (hb j i).symm
-  calc (X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT b).val : Matrix (Fin a) (Fin (a + a')) k)
-      = (invT (blkAGL b dA h1)).val * (((blkAGL b dA h1).val)ᵀ * X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a'))) * (invT b).val := by
+  calc (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT b).val : Matrix (Fin a) (Fin (a + a')) k)
+      = (invT (blkAGL b dA h1)).val * (((blkAGL b dA h1).val)ᵀ * X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a'))) * (invT b).val := by
         rw [← Matrix.mul_assoc (invT (blkAGL b dA h1)).val, invT_mul_transpose, Matrix.one_mul]
-    _ = (invT (blkAGL b dA h1)).val * X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) := by
+    _ = (invT (blkAGL b dA h1)).val * X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) := by
         rw [key, Matrix.mul_assoc, Matrix.mul_assoc, transpose_mul_invT, Matrix.mul_one]
 
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem lowerProjection_blockUpper {a a' : ℕ} {b : GL (Fin (a + a')) k} (hb : IsBlockUpper b) {dD : kˣ}
     (h2 : (dD : k) = (blkD b).det) :
-    (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * b.val : Matrix (Fin a') (Fin (a + a')) k) =
-      (blkDGL b dD h2).val * Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) := by
+    (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * b.val : Matrix (Fin a') (Fin (a + a')) k) =
+      (blkDGL b dD h2).val * Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) := by
   ext i j
   obtain ⟨j | j, rfl⟩ := finSumFinEquiv.surjective j
   · simp [Y0, Matrix.mul_apply, blkDGL, blkD, -finSumFinEquiv_apply_left, -finSumFinEquiv_apply_right]
@@ -1155,17 +1135,15 @@ theorem lowerProjection_blockUpper {a a' : ℕ} {b : GL (Fin (a + a')) k} (hb : 
   · simp [Y0, Matrix.mul_apply, blkDGL, blkD, -finSumFinEquiv_apply_left, -finSumFinEquiv_apply_right]
 
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem upperProjection_inverse_transpose_right_inverse {a a' : ℕ} (h : GL (Fin (a + a')) k) :
-    (X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT h).val : Matrix (Fin a) (Fin (a + a')) k) *
-      (h.valᵀ * (X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')))ᵀ) = 1 := by
+    (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT h).val : Matrix (Fin a) (Fin (a + a')) k) *
+      (h.valᵀ * (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')))ᵀ) = 1 := by
   rw [Matrix.mul_assoc, ← Matrix.mul_assoc (invT h).val, invT_mul_transpose, Matrix.one_mul, upperProjection_mul_transpose]
 
 
-omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem lowerProjection_mul_right_inverse {a a' : ℕ} (h : GL (Fin (a + a')) k) :
-    (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val : Matrix (Fin a') (Fin (a + a')) k) *
-      ((h⁻¹).val * (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')))ᵀ) = 1 := by
+    (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val : Matrix (Fin a') (Fin (a + a')) k) *
+      ((h⁻¹).val * (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')))ᵀ) = 1 := by
   rw [Matrix.mul_assoc, ← Matrix.mul_assoc h.val, Units.mul_inv, Matrix.one_mul, Y0_mul_transpose]
 
 theorem wt_ne_zero {n : ℕ} (d : ℕ) (ν : kˣ →* ℂˣ) (g : GL (Fin n) k) : wt d ν g ≠ 0 :=
@@ -1176,15 +1154,13 @@ variable {a a' : ℕ} {ϖ : kˣ} {α β ν : kˣ →* ℂˣ}
 
 theorem pUnr'_eq (hS : HidaSetting a a' ϖ α β ν) (hν : IsUnram ν) {Ψ : Matrix (Fin a') (Fin (a + a')) k → ℂ}
     (hΨ : Ψ ∈ SB _) (h : GL (Fin (a + a')) k) : pUnr' a a' ϖ ν α Ψ h = (α (gdet h) : ℂ) * apow (gdet h) ((a' : ℂ) / 2) *
-      zetaUnr a' (a + a') ϖ ν (fun g => Ψ (g * (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val : Matrix (Fin a') (Fin (a + a')) k))) := by
+      zetaUnr a' (a + a') ϖ ν (fun g => Ψ (g * (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val : Matrix (Fin a') (Fin (a + a')) k))) := by
   have hb := zetaUnr_eq_integral hS.unif hν (norm_nu hS ϖ) (n := a') (d := a + a') (by have := hS.lt; omega)
     (sb_comp_right (lowerProjection_mul_right_inverse h) hΨ)
-  have e : smallF (haarVol (KO k (Fin a'))) ν Ψ (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val) =
-      ∫ g, Ψ (g.val * (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val : Matrix (Fin a') (Fin (a + a')) k)) * wt (a + a') ν g
+  have e : smallF (haarVol (KO k (Fin a'))) ν Ψ (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val) =
+      ∫ g, Ψ (g.val * (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val : Matrix (Fin a') (Fin (a + a')) k)) * wt (a + a') ν g
         ∂haarVol (KO k (Fin a')) := by
-    unfold smallF
-    congr 1
-    ring
+    simp only [smallF, wt, Fintype.card_fin, mul_assoc]
   show (invL a' (a + a') ϖ ν).eval 1 * smallP _ _ ν α Ψ h = _
   unfold smallP
   rw [e, ← hb.2, Fintype.card_fin]
@@ -1223,19 +1199,19 @@ theorem p_mem (hS : HidaSetting a a' ϖ α β ν) (hν : IsUnram ν) (hβ : IsUn
     have hu1 : invT u ∈ U := Subgroup.mem_comap.1 (Subgroup.mem_inf.1 hu).1
     have hu2 : u ∈ KO k _ := (Subgroup.mem_inf.1 hu).2
     have hv := valuation_gdet_of_mem_KO hu2
-    have e : (fun g : Matrix (Fin a) (Fin a) k => Φ (g * (X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT (h * u)).val))) =
-        fun g => Φ (g * (X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT h).val)) := by
+    have e : (fun g : Matrix (Fin a) (Fin a) k => Φ (g * (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT (h * u)).val))) =
+        fun g => Φ (g * (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT h).val)) := by
       funext g
-      rw [map_mul, Units.val_mul, show g * (X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * ((invT h).val * (invT u).val)) =
-        (g * (X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT h).val)) * (invT u).val by simp only [Matrix.mul_assoc], hU _ hu1]
+      rw [map_mul, Units.val_mul, show g * (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * ((invT h).val * (invT u).val)) =
+        (g * (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT h).val)) * (invT u).val by simp only [Matrix.mul_assoc], hU _ hu1]
     rw [pUnr_eq, pUnr_eq, e, gdet_mul, map_mul, apow_mul, hβ _ hv, apow_of_valuation_eq_one hv]
     simp
   · have hdet := gdet_of_isBlockUpper hb h1 h2
-    have e : (fun g : Matrix (Fin a) (Fin a) k => Φ (g * (X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT (b * h)).val))) =
-        fun g => (fun y => Φ (y * (X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT h).val))) (g * (invT (blkAGL b dA h1)).val) := by
+    have e : (fun g : Matrix (Fin a) (Fin a) k => Φ (g * (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT (b * h)).val))) =
+        fun g => (fun y => Φ (y * (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT h).val))) (g * (invT (blkAGL b dA h1)).val) := by
       funext g
       simp only [map_mul, Units.val_mul]
-      rw [← Matrix.mul_assoc (X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a'))), upperProjection_inverse_transpose_block hb h1]
+      rw [← Matrix.mul_assoc (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a'))), upperProjection_inverse_transpose_block hb h1]
       simp only [Matrix.mul_assoc]
     rw [pUnr_eq, pUnr_eq, e, zetaUnr_mul_right hS.unif hν _ _ (sb_comp_right (upperProjection_inverse_transpose_right_inverse h) hΦ), gdet_mul, hdet]
     simp only [indFac, wt, gdet_invT, gdet_blkAGL, map_mul, map_inv, Units.val_mul, Units.val_inv_eq_inv_val,
@@ -1262,19 +1238,19 @@ theorem p'_mem (hS : HidaSetting a a' ϖ α β ν) (hν : IsUnram ν) (hα : IsU
     refine ⟨U ⊓ KO k _, hUo.inter isOpen_KO, fun u hu h => ?_⟩
     have hu1 : u ∈ U := (Subgroup.mem_inf.1 hu).1
     have hv := valuation_gdet_of_mem_KO (Subgroup.mem_inf.1 hu).2
-    have e : (fun g : Matrix (Fin a') (Fin a') k => Ψ (g * (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (h * u).val))) =
-        fun g => Ψ (g * (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val)) := by
+    have e : (fun g : Matrix (Fin a') (Fin a') k => Ψ (g * (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (h * u).val))) =
+        fun g => Ψ (g * (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val)) := by
       funext g
-      rw [Units.val_mul, show g * (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (h.val * u.val)) = (g * (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val)) * u.val by
+      rw [Units.val_mul, show g * (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (h.val * u.val)) = (g * (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val)) * u.val by
         simp only [Matrix.mul_assoc], hU _ hu1]
     rw [pUnr'_eq hS hν hΨ, pUnr'_eq hS hν hΨ, e, gdet_mul, map_mul, apow_mul, hα _ hv, apow_of_valuation_eq_one hv]
     simp
   · have hdet := gdet_of_isBlockUpper hb h1 h2
-    have e : (fun g : Matrix (Fin a') (Fin a') k => Ψ (g * (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (b * h).val))) =
-        fun g => (fun y => Ψ (y * (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val))) (g * (blkDGL b dD h2).val) := by
+    have e : (fun g : Matrix (Fin a') (Fin a') k => Ψ (g * (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (b * h).val))) =
+        fun g => (fun y => Ψ (y * (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val))) (g * (blkDGL b dD h2).val) := by
       funext g
       simp only [Units.val_mul]
-      rw [← Matrix.mul_assoc (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a'))), lowerProjection_blockUpper hb h2]
+      rw [← Matrix.mul_assoc (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a'))), lowerProjection_blockUpper hb h2]
       simp only [Matrix.mul_assoc]
     rw [pUnr'_eq hS hν hΨ, pUnr'_eq hS hν hΨ, e,
       zetaUnr_mul_right hS.unif hν _ _ (sb_comp_right (lowerProjection_mul_right_inverse h) hΨ), gdet_mul, hdet]
@@ -1295,8 +1271,8 @@ theorem p_inv (hS : HidaSetting a a' ϖ α β ν) (hν : IsUnram ν) :
   have e1 : omA ν β 1 h (omA ν β g 1 Φ) = omA ν β g 1 (omA ν β 1 h Φ) := by
     rw [← omA_mul, ← omA_mul, one_mul, mul_one, mul_one, one_mul]
   have hΦ' := omA_mem_SB ν β 1 h hΦ
-  have e2 : (fun x : Matrix (Fin a) (Fin a) k => omA ν β g 1 (omA ν β 1 h Φ) (x * X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')))) =
-      fun x => wt (a + a') ν g⁻¹ * (fun y => omA ν β 1 h Φ (y * X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')))) ((g⁻¹).val * x) := by
+  have e2 : (fun x : Matrix (Fin a) (Fin a) k => omA ν β g 1 (omA ν β 1 h Φ) (x * X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')))) =
+      fun x => wt (a + a') ν g⁻¹ * (fun y => omA ν β 1 h Φ (y * X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')))) ((g⁻¹).val * x) := by
     funext x
     simp only [omA, wt, map_one, map_inv, Units.val_inv_eq_inv_val, Units.val_one, apow_one, apow_inv, mul_one,
       Fintype.card_fin, Matrix.mul_one, Matrix.mul_assoc]
@@ -1316,8 +1292,8 @@ theorem p'_inv (hS : HidaSetting a a' ϖ α β ν) (hν : IsUnram ν) :
   have hΨ' := omB_mem_SB ν α g 1 hΨ
   have hg : gdet (invT g)⁻¹ = gdet g := by
     rw [show gdet (invT g)⁻¹ = (gdet (invT g))⁻¹ from map_inv _ _, gdet_invT, inv_inv]
-  have e2 : (fun x : Matrix (Fin a') (Fin a') k => omB ν α g 1 Ψ (x * (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val))) =
-      fun x => wt (a + a') ν (invT g)⁻¹ * (fun y => Ψ (y * (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val))) (((invT g)⁻¹).val * x) := by
+  have e2 : (fun x : Matrix (Fin a') (Fin a') k => omB ν α g 1 Ψ (x * (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val))) =
+      fun x => wt (a + a') ν (invT g)⁻¹ * (fun y => Ψ (y * (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val))) (((invT g)⁻¹).val * x) := by
     funext x
     simp only [omB, wt, hg, invT_inv_val, map_one, Units.val_one, apow_one, mul_one, Fintype.card_fin,
       Matrix.mul_one, Matrix.mul_assoc]
@@ -1346,7 +1322,7 @@ theorem p_unit (hS : HidaSetting a a' ϖ α β ν) (hν : IsUnram ν) (hβ : IsU
   have hK := (mem_KO_iff h).1 hh
   have hK' := (mem_KO_iff (invT h)).1 (invT_mem_KO hh)
   have e : (fun g : Matrix (Fin a) (Fin a) k =>
-      Set.indicator {X : Matrix (Fin a) (Fin (a + a')) k | ∀ i j, X i j ∈ 𝒪[k]} (1 : Matrix (Fin a) (Fin (a + a')) k → ℂ) (g * (X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT h).val))) =
+      Set.indicator {X : Matrix (Fin a) (Fin (a + a')) k | ∀ i j, X i j ∈ 𝒪[k]} (1 : Matrix (Fin a) (Fin (a + a')) k → ℂ) (g * (X0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * (invT h).val))) =
       Set.indicator {X : Matrix (Fin a) (Fin a) k | ∀ i j, X i j ∈ 𝒪[k]} (1 : Matrix (Fin a) (Fin a) k → ℂ) := by
     funext g
     exact indicator_int_mul (int_mul (upperProjection_integral _) hK'.1) (int_mul (fun i j => hK.1 j i) (fun i j => upperProjection_integral _ j i))
@@ -1360,7 +1336,7 @@ theorem p'_unit (hS : HidaSetting a a' ϖ α β ν) (hν : IsUnram ν) (hα : Is
   have hv := valuation_gdet_of_mem_KO hh
   have hK := (mem_KO_iff h).1 hh
   have e : (fun g : Matrix (Fin a') (Fin a') k =>
-      Set.indicator {X : Matrix (Fin a') (Fin (a + a')) k | ∀ i j, X i j ∈ 𝒪[k]} (1 : Matrix (Fin a') (Fin (a + a')) k → ℂ) (g * (Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val))) =
+      Set.indicator {X : Matrix (Fin a') (Fin (a + a')) k | ∀ i j, X i j ∈ 𝒪[k]} (1 : Matrix (Fin a') (Fin (a + a')) k → ℂ) (g * (Y0 (k := k) (finSumFinEquiv : Fin a ⊕ Fin a' ≃ Fin (a + a')) * h.val))) =
       Set.indicator {X : Matrix (Fin a') (Fin a') k | ∀ i j, X i j ∈ 𝒪[k]} (1 : Matrix (Fin a') (Fin a') k → ℂ) := by
     funext g
     exact indicator_int_mul (int_mul (lowerProjection_integral _) hK.1) (int_mul hK.2 (fun i j => lowerProjection_integral _ j i)) (lowerProjection_mul_right_inverse h) g

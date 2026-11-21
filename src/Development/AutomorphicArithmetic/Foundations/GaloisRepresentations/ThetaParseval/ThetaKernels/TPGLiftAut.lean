@@ -131,7 +131,7 @@ theorem aut_lift_k (T : _root_.UpperTheory.TP.Tools_k) (hp : _root_.GlobalTheory
     rw [map_mul]
     exact _root_.UpperTheory.TP.lift_left_k T hp hs ψ ((he'.rat γ).2 hγ) _
   · let f := lift M om Φ ψ ∘ e'
-    let H : Subgroup (GlobalTheory.UnitaryBC.finU E d) :=
+    let H : Subgroup (GlobalTheory.UnitaryBC.finU (E := E) (n := d)) :=
       { carrier := {k | GlobalTheory.UnitaryBC.RU E d k f = f}
         one_mem' := by show GlobalTheory.UnitaryBC.RU E d 1 f = f; rw [map_one]; rfl
         mul_mem' := fun {a b} ha hb => by
@@ -144,7 +144,7 @@ theorem aut_lift_k (T : _root_.UpperTheory.TP.Tools_k) (hp : _root_.GlobalTheory
           rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one]; rfl }
     refine Subgroup.isOpen_of_mem_nhds H (g := 1) ?_
     have h1 := _root_.PositivityTheory.ThKEnd.Grp.level_sch_k _root_.PositivityTheory.ThKEst.level_k hp hs
-    have c : Tendsto (fun k : GlobalTheory.UnitaryBC.finU E d => e' k.1) (𝓝 1) (𝓝 1) :=
+    have c : Tendsto (fun k : GlobalTheory.UnitaryBC.finU (E := E) (n := d) => e' k.1) (𝓝 1) (𝓝 1) :=
       (e'.continuous.comp continuous_subtype_val).tendsto' _ _ (map_one e')
     filter_upwards [c.eventually h1] with k hk
     show GlobalTheory.UnitaryBC.RU E d k.1 f = f

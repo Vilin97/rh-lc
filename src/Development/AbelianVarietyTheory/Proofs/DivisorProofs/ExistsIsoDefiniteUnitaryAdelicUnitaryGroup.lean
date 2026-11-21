@@ -178,7 +178,7 @@ theorem bc_eq_one_iff {R S : Type} [CommRing R] [CommRing S] (φ : R ≃+* S) (x
 theorem exists_group (J : Matrix (Fin n) (Fin n) E) (M : GL (Fin n) E) (hM : cT (σ₀ : E →+* E) M.val * J * M.val = 1) :
     ∃ j : UA E n ≃ₜ* HA (AF F₀) σ₀ J,
       (∀ x, x ∈ ratU E n ↔ j x ∈ HFinIn (AF F₀) σ₀ J) ∧
-      (∀ x, x ∈ finU E n ↔
+      (∀ x, x ∈ finU (E := E) (n := n) ↔
         bc (Algebra.TensorProduct.map (fstA F₀) (AlgHom.id F₀ E)).toRingHom (HA.mat (AF F₀) σ₀ J (j x)) = 1) ∧
       (∀ x, x ∈ infU E n ↔
         bc (Algebra.TensorProduct.map (sndA F₀) (AlgHom.id F₀ E)).toRingHom (HA.mat (AF F₀) σ₀ J (j x)) = 1) ∧
@@ -273,7 +273,7 @@ theorem exists_iso : ∀ (D : D7) [IsCMField D.host.E] (V : HSp D) (θ : D.what�
     ∃ (j : UA D.host.E V.rank ≃ₜ* GA D V) (M : Matrix (Fin V.rank) (Fin V.rank) D.host.E),
       cT (D.sp.cm.sig : D.host.E →+* D.host.E) M * V.gram * M = 1 ∧
       (∀ x, x ∈ ratU D.host.E V.rank ↔ j x ∈ GQ V) ∧
-      (∀ x, x ∈ finU D.host.E V.rank ↔ j x ∈ GfC V) ∧
+      (∀ x, x ∈ finU (E := D.host.E) (n := V.rank) ↔ j x ∈ GfC V) ∧
       (∀ x, x ∈ infU D.host.E V.rank ↔ j x ∈ GinfC V) ∧
       (∃ A : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ, (∀ τ, IsUnit (A τ)) ∧
         ∀ τ x, infMat D.sp.cm.sig V.gram (θ τ) (j x) =

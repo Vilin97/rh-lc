@@ -172,8 +172,8 @@ def jU (n : ℕ) : HA (FiniteAdeleRing (𝓞 F₀) F₀) (IsCMField.complexConj 
 
 variable (E) in
 def jF (n : ℕ) : HA (FiniteAdeleRing (𝓞 F₀) F₀) (IsCMField.complexConj E : E →ₐ[F₀] E) (1 : Matrix (Fin n) (Fin n) E) →*
-    finU E n :=
-  (jU E n).codRestrict (finU E n) fun x => MonoidHom.mem_ker.2 (pInf_finGL (psi E n x))
+    finU (E := E) (n := n) :=
+  (jU E n).codRestrict (finU (E := E) (n := n)) fun x => MonoidHom.mem_ker.2 (pInf_finGL (psi E n x))
 
 theorem continuous_finGL (n : ℕ) : Continuous (finGL E n) := by
   have hs : Continuous (sFin E) :=
@@ -200,7 +200,7 @@ open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 namespace GlobalTheory.UnitaryBC.ClassTransport
 
 theorem exists_finset_double_cosets : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ),
-    ∀ L : Subgroup (finU E n), IsOpen (L : Set (finU E n)) → ∃ S : Finset (UA E n), ∀ g : UA E n,
+    ∀ L : Subgroup (finU (E := E) (n := n)), IsOpen (L : Set (finU (E := E) (n := n))) → ∃ S : Finset (UA E n), ∀ g : UA E n,
       ∃ γ ∈ ratU E n, ∃ s ∈ S, ∃ k ∈ L, ∃ y ∈ infU E n, g = γ * s * (k : UA E n) * y := by
   classical
   intro E _ _ _ n L hL

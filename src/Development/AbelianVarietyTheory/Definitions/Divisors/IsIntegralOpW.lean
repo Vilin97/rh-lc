@@ -24,7 +24,7 @@ def IntMat (u : HeightOneSpectrum (𝓞 E)) (x : Matrix (Fin a) (Fin a) (u.adicC
 
 def IsIntegralOpW (ι : Qbar l ≃+* ℂ) (lam : (E →+* ℂ) → DomWeight a) (w₀ : HeightOneSpectrum (𝓞 E))
     (f : UA E a →₀ ℂ) : Prop :=
-  ∀ g ∈ f.support, g ∈ finU E a ∧ (∀ u, ¬ Apart u w₀ → cLoc u g = 1) ∧
+  ∀ g ∈ f.support, g ∈ finU (E := E) (n := a) ∧ (∀ u, ¬ Apart u w₀ → cLoc u g = 1) ∧
     ∃ d : ℕ, (∀ u : HeightOneSpectrum (𝓞 E), ((l : ℕ) : 𝓞 E) ∈ u.asIdeal →
         IntMat u (((l : u.adicCompletion E) ^ d) • ((cLoc u g : GL (Fin a) (u.adicCompletion E)) :
           Matrix (Fin a) (Fin a) (u.adicCompletion E))) ∧

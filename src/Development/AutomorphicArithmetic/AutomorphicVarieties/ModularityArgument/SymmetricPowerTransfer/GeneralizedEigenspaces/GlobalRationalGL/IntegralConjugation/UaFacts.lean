@@ -47,7 +47,7 @@ private theorem inf_of_cLoc {k : UA L n} (h : ∀ u : Plc L, cLoc u k = 1) : k �
 private noncomputable def fp (x : UA L n) : UA L n :=
   ⟨finGL L n (GeneralLinearGroup.map (pFin L) x.1), finGL_mem_UA _ fun u => comp_eq x u⟩
 
-private theorem fp_fin (x : UA L n) : fp x ∈ finU L n := pInf_finGL _
+private theorem fp_fin (x : UA L n) : fp x ∈ finU (E := L) (n := n) := pInf_finGL _
 
 private theorem cLoc_fp (u : Plc L) (x : UA L n) : cLoc u (fp x) = cLoc u x :=
   (cLoc_finGL u _ _).trans (cLoc_eq u x).symm
@@ -62,7 +62,7 @@ private theorem under_iff (w u : Plc L) : un u = un w ↔ u = w ∨ u = conjSrc 
   · rfl
   · exact (key _).2 (Or.inr (conjPl_self_conjSrc w))
 
-private theorem cut (w : Plc L) (x : UA L n) (hx : x ∈ finU L n) :
+private theorem cut (w : Plc L) (x : UA L n) (hx : x ∈ finU (E := L) (n := n)) :
     ∃ a ∈ locU n w, ∀ u, un u = un w → cLoc u a = cLoc u x := by
   classical
   set T : Finset (Plc L) := {w, conjSrc (conjE L) w} with hT

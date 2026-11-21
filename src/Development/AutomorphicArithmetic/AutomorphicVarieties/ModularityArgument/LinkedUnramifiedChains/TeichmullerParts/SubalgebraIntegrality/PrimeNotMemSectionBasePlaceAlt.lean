@@ -91,7 +91,7 @@ private theorem sec_val (hb : Function.Bijective ((toGS n s).comp (GaS n s).subt
 private abbrev JJ (V : s.Lev) (x : UA L n) : Ga l L n × GL' n V :=
   ((away l L n).rangeRestrict x, fun v => cLoc (s.w v.1) x)
 
-private theorem infRep_one (V : s.Lev) (ι : Qbar l ≃+* ℂ) (lam : Wt L l n) {k : UA L n} (hk : k ∈ finU L n) :
+private theorem infRep_one (V : s.Lev) (ι : Qbar l ≃+* ℂ) (lam : Wt L l n) {k : UA L n} (hk : k ∈ finU (E := L) (n := n)) :
     infRep (V := V) ι lam k = 1 := by
   have h1 : ∀ τ : L →+* ℂ, cEmb τ k = 1 := fun τ => by
     change Matrix.GeneralLinearGroup.map (coord τ) (cInf k) = 1
@@ -106,11 +106,11 @@ variable {V : s.Lev} {ι : Qbar l ≃+* ℂ} {lam : Wt L l n} {d : ℕ}
   {ξ : GV n (fun v : V.frame.Vl => s.w v.1) →* GL (Fin d) ℂ}
 
 private theorem form_fin (hn : 1 ≤ n) (Q : QData V) (c : Coef l) {m : ℕ} (τ₀ : KT n (wt s) →* GL (Fin m) c.O)
-    (hξ : IsBasis ι e ξ) {k : UA L n} (hk : k ∈ finU L n) (F : Ga l L n × GL' n V → Fin d → ℂ)
+    (hξ : IsBasis ι e ξ) {k : UA L n} (hk : k ∈ finU (E := L) (n := n)) (F : Ga l L n × GL' n V → Fin d → ℂ)
     (ℓ : Module.Dual ℂ (⨂[ℂ] e : Emb l (fun v : V.frame.Vl => s.w v.1), nablaSq ℂ n (lam e.res))) :
     toForm ι e (fun g => F (g * JJ V k)) ℓ = RU L n k (toForm ι e F ℓ) := by
   have h := (formU l L Ω s n hn V Q c m τ₀ ι lam d e ξ hξ _ fun _ => rfl).2.2.1 F ℓ k
-  rw [infRep_one V ι lam ((finU L n).inv_mem hk)] at h
+  rw [infRep_one V ι lam ((finU (E := L) (n := n)).inv_mem hk)] at h
   exact h.symm
 
 private def formLin (ι : Qbar l ≃+* ℂ)

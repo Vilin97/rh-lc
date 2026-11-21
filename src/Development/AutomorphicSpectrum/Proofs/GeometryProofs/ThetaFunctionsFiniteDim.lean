@@ -57,7 +57,7 @@ theorem pos_of_theta_power : ∀ (g : ℕ) (Λ : Submodule ℤ (Fin g → ℂ)),
     rw [star_star] at h1 h2
     exact Complex.le_def.mpr ⟨h1, h2.symm⟩
   have hker : Hm.mulVec (star z) = 0 :=
-    (hpsd.dotProduct_mulVec_zero_iff (star z)).mp (by
+    hpsd.dotProduct_mulVec_zero_iff.mp (by
       rw [star_star]
       exact Complex.ext h0.symm (him z))
   have hker' : ∀ t : ℂ, H'.mulVec (star (t • z)) = 0 := by

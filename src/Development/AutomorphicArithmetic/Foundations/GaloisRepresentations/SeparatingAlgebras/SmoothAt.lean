@@ -14,15 +14,15 @@ theorem UpperTheory.Gal.Gen.smoothAt_pf :
     UpperTheory.Gal.Gen.SmoothAt := by
   intro E _ _ _ a w₀ hw W f
   obtain ⟨e, he⟩ := GlobalTheory.locU_equiv_GL E a w₀ hw
-  let p : GL (Fin a) (w₀.adicCompletion E) → finU E a := fun y =>
+  let p : GL (Fin a) (w₀.adicCompletion E) → finU (E := E) (n := a) := fun y =>
     ⟨(e.symm y).1, (Subgroup.mem_inf.1 (e.symm y).2).1⟩
   have hp : Continuous p :=
     Continuous.subtype_mk (continuous_subtype_val.comp e.symm.continuous) _
   have hp1 : p 1 = 1 := by
     apply Subtype.ext
     simp [p]
-  have hS : IsOpen {k : finU E a | algRep W k f = f} := GlobalTheory.DefU.isSmooth_algRep W f
-  refine ⟨p ⁻¹' {k : finU E a | algRep W k f = f},
+  have hS : IsOpen {k : finU (E := E) (n := a) | algRep W k f = f} := GlobalTheory.DefU.isSmooth_algRep W f
+  refine ⟨p ⁻¹' {k : finU (E := E) (n := a) | algRep W k f = f},
     (hS.preimage hp).mem_nhds (by simp [hp1]), fun x hx hxN v g => ?_⟩
   have h1 : e.symm (cLoc w₀ x) = ⟨x, hx⟩ := by
     rw [← he ⟨x, hx⟩]

@@ -46,7 +46,7 @@ theorem exists_continuous_inv_cLoc {E : Type} [Field E] [NumberField E] [IsCMFie
       GlobalTheory.DefU.Inert.continuous_finGL.comp (GlobalTheory.CuspRep.CuspSub.continuous_locGL w₀), by simp,
       fun x hx => GlobalTheory.DefU.Inert.finGL_cLoc hw ⟨x, hx⟩⟩
 
-theorem exists_algForm_ofType : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (lam : (E →+* ℂ) → DomWeight n) (K : Subgroup (UA E n)) (U : Submodule ℂ (UA E n → ℂ)), K ≤ finU E n → OfType lam K U → ∀ w₀ : HeightOneSpectrum (𝓞 E), ∃ (W : Wt E n) (f : algForms W), (∀ τ, W.at τ = lam τ) ∧ f ≠ 0 ∧ (∀ v, f.1 v ∈ U) ∧ (∀ k ∈ K, ∀ v g, f.1 v (g * k) = f.1 v g) ∧ ∃ N ∈ nhds (1 : GL (Fin n) (w₀.adicCompletion E)), ∀ x ∈ locU n w₀, cLoc w₀ x ∈ N → ∀ v g, f.1 v (g * x) = f.1 v g := by
+theorem exists_algForm_ofType : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (lam : (E →+* ℂ) → DomWeight n) (K : Subgroup (UA E n)) (U : Submodule ℂ (UA E n → ℂ)), K ≤ finU (E := E) (n := n) → OfType lam K U → ∀ w₀ : HeightOneSpectrum (𝓞 E), ∃ (W : Wt E n) (f : algForms W), (∀ τ, W.at τ = lam τ) ∧ f ≠ 0 ∧ (∀ v, f.1 v ∈ U) ∧ (∀ k ∈ K, ∀ v g, f.1 v (g * k) = f.1 v g) ∧ ∃ N ∈ nhds (1 : GL (Fin n) (w₀.adicCompletion E)), ∀ x ∈ locU n w₀, cLoc w₀ x ∈ N → ∀ v g, f.1 v (g * x) = f.1 v g := by
   intro E _ _ _ n lam K U hK hU w₀
   classical
   let π : AutSub E n := ⟨U, hU.aut⟩
@@ -83,9 +83,9 @@ theorem exists_algForm_ofType : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     apply hφ0
     rw [← hc, Pairs.total_apply]
     simp [h]
-  have hS : IsOpen {k : finU E n | algRep W k (c a).1 = (c a).1} := isSmooth_algRep W (c a).1
+  have hS : IsOpen {k : finU (E := E) (n := n) | algRep W k (c a).1 = (c a).1} := isSmooth_algRep W (c a).1
   obtain ⟨ι, hι, hι1, hιx⟩ := exists_continuous_inv_cLoc n w₀
-  have hS1 : {k : finU E n | algRep W k (c a).1 = (c a).1} ∈ nhds (1 : finU E n) :=
+  have hS1 : {k : finU (E := E) (n := n) | algRep W k (c a).1 = (c a).1} ∈ nhds (1 : finU (E := E) (n := n)) :=
     hS.mem_nhds (by
       show algRep W 1 (c a).1 = (c a).1
       rw [map_one]
@@ -97,9 +97,9 @@ theorem exists_algForm_ofType : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
   refine ⟨W, (c a).1, hWat, fun h => ha (Subtype.ext h), fun v => AutSub.mem_finPart.1 (c a).2 v,
     fun k hk v g => congrFun (hcF a v k hk) g, ι ⁻¹' T, hι.continuousAt.preimage_mem_nhds (by rw [hι1]; exact hT),
     fun x hx hxN v g => ?_⟩
-  have hxfin : x ∈ finU E n := (Subgroup.mem_inf.1 hx).1
+  have hxfin : x ∈ finU (E := E) (n := n) := (Subgroup.mem_inf.1 hx).1
   have h2 : x.1 ∈ T := hιx x hx ▸ hxN
-  have hk : (⟨x, hxfin⟩ : finU E n) ∈ {k : finU E n | algRep W k (c a).1 = (c a).1} := hT1S (hTT1 h2)
+  have hk : (⟨x, hxfin⟩ : finU (E := E) (n := n)) ∈ {k : finU (E := E) (n := n) | algRep W k (c a).1 = (c a).1} := hT1S (hTT1 h2)
   exact congrFun (LinearMap.congr_fun (congrArg Subtype.val hk) v) g
 
 end GlobalTheory.Cong

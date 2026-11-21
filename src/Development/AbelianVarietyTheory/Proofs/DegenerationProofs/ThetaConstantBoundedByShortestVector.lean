@@ -50,12 +50,7 @@ theorem exists_scale (hL : Laws) (hL₂ : Laws2) {ρ : S.Real} {p : ℕ} [Fact p
       (∀ a, sc ≠ 0 → ‖y₀ ⟨S.th a, S.th_mem a⟩‖ = sc → a ∈ l.yy.ker) ∧
       ∀ n : ℕ, 2 ≤ n → n ∣ S.r * S.N → ∀ a ∈ l.yy.ker, ∃ a' ∈ l.yy.ker, n • (a' - a) = 0 ∧
         ‖y₀ ⟨S.th a', S.th_mem a'⟩‖ = sc := by
-  have hy : LL ∧ TwistBCSpanStatement ∧ TWM.VRatioGtStatement ∧ TWStatement ∧ UUStatement := by
-    obtain ⟨h₃, h₄, h₅, -⟩ := GlobalTheory.furtherLaws_of_laws hL GlobalTheory.twistBaseChange
-    have t := twistBCSpan_of GlobalTheory.twistBaseChange
-    have r : TWM.VRatioGtStatement := GlobalTheory.RatioVal.main
-    exact ⟨⟨hL, hL₂, h₃, h₄, h₅⟩, t, r, TWM.tw_of hL.globalFns t r, GlobalTheory.UnitBallFree.main hL.globalFns GlobalTheory.twistBaseChange⟩
-  obtain ⟨H, h₁, h₂, h₃, h₄⟩ := hy
+  obtain ⟨H, h₁, h₂, h₃, h₄⟩ := hyps hL hL₂
   have := charZero u
   have hm := odd_level ρ
   have hA : AdmBase u.V (IsLocalRing.maximalIdeal u.V) := ⟨inferInstance, inferInstance, inferInstance, u.complete⟩

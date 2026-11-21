@@ -198,7 +198,7 @@ private theorem glob_dim (hU : GlobalTheory.BCT.Unr E) (hn : 1 ≤ n) {σ : Subm
     (sw : Plc (Lp E) → Plc E) (hsw : ∀ v, (sw v).under (𝓞 (Lp E)) = v) (T : Finset (Plc (Lp E)))
     (hsp : ∀ v ∈ T, IsSplitAt (sw v)) (hun : ∀ w : Plc E, w.under (𝓞 (Lp E)) ∉ T → IsUnramU σ w)
     (lam : InfinitePlace E → DomWeight n) (hlam : ∀ v, HasWeightAt σ v.embedding (lam v)) :
-    ∃ (K : ∀ w : Plc E, Subgroup (GLw n w)) (a : Plc (Lp E) → ℕ) (U : Subgroup (finU E n)),
+    ∃ (K : ∀ w : Plc E, Subgroup (GLw n w)) (a : Plc (Lp E) → ℕ) (U : Subgroup (finU (E := E) (n := n))),
       (∀ x ∈ U, ∀ v, cLoc (sw v) x.1 ∈ K (sw v)) ∧ (∀ w, K w ≤ KO (w.adicCompletion E) (Fin n)) ∧
       (∀ v ∈ T, ∀ τ, Cp σ (sw v) τ → Module.finrank ℂ (fixd τ.ρ (K (sw v))) = a v) ∧ (∀ v, 0 < a v) ∧
       (Module.finrank ℂ ↥(σ ⊓ fixed (GlobalTheory.BCT.RF E n) U) : ℂ) = GlobalTheory.BCT.dimW lam * (∏ v ∈ T, a v : ℕ) := by
@@ -379,7 +379,7 @@ private theorem span_form (σ : Submodule ℂ (UA L n → ℂ)) (F : Ga l L n ×
       simp only [toForm, Pi.smul_apply, map_smul]
     rw [this]; exact σ.smul_mem a (hx ℓ)
 
-private theorem infRep_fin {k : UA L n} (hk : k ∈ finU L n) : infRep (V := V) ι lam k = 1 := by
+private theorem infRep_fin {k : UA L n} (hk : k ∈ finU (E := L) (n := n)) : infRep (V := V) ι lam k = 1 := by
   have h1 : ∀ τ : L →+* ℂ, cEmb τ k = 1 := fun τ => by
     change Matrix.GeneralLinearGroup.map (coord τ) (cInf k) = 1
     rw [MonoidHom.mem_ker.1 hk, map_one]
@@ -432,7 +432,7 @@ private theorem form_unr
     · rw [show cLoc u x = 1 from GlobalTheory.DefU.LocRet.mem_locU_ne hx h]
       exact one_mem _
   have hl : (fun v : V.frame.Vl => cLoc (s.w v.1) x) = 1 := funext fun v => hS v.1 (Or.inl v.2)
-  rw [h3, hl, infRep_fin ι ((finU L n).inv_mem (Subgroup.mem_inf.1 hx).1)]
+  rw [h3, hl, infRep_fin ι ((finU (E := L) (n := n)).inv_mem (Subgroup.mem_inf.1 hx).1)]
   exact congrArg (fun G => toForm ι e G ℓ) (h1 _ hm)
 
 end Glob
@@ -466,13 +466,13 @@ private theorem model_rank [Fintype V.frame.Vl] (K : ∀ w : Plc L, Subgroup (GL
   exact (mul_le_mul' rl ((mul_le_mul' ru ro).trans (box_fix _ _ _ _))).trans (box_fix _ _ _ _)
 
 private theorem level_le (hb : Function.Bijective ((toGS n s).comp (GaS n s).subtype)) {d : ℕ}
-    (K : ∀ w : Plc L, Subgroup (GLw n w)) (hK : ∀ w, K w ≤ KO (w.adicCompletion L) (Fin n)) (U : Subgroup (finU L n))
+    (K : ∀ w : Plc L, Subgroup (GLw n w)) (hK : ∀ w, K w ≤ KO (w.adicCompletion L) (Fin n)) (U : Subgroup (finU (E := L) (n := n)))
     (hU : ∀ x ∈ U, ∀ v, cLoc (s.w v) x.1 ∈ K (s.w v)) (B : Submodule ℂ (Ga l L n × GL' n V → Fin d → ℂ)) :
     (B ⊓ fixd ((rtr ℂ (Ga l L n × GL' n V) (Fin d → ℂ)).comp (MonoidHom.inl _ _)) (KS n s)) ⊓
       fixd (actS n V d) ((Subgroup.pi Set.univ fun v : V.frame.Vl => K (s.w v.1)).prod
         ((Subgroup.pi Set.univ fun u : s.St => K (s.w u)).prod (K (s.w s.v0)))) ≤
     B ⊓ fixd (rtr ℂ (Ga l L n × GL' n V) (Fin d → ℂ)) (U.map ((MonoidHom.prod (away l L n).rangeRestrict
-      (Pi.monoidHom fun v : V.frame.Vl => cLoc (s.w v.1))).comp (finU L n).subtype)) := by
+      (Pi.monoidHom fun v : V.frame.Vl => cLoc (s.w v.1))).comp (finU (E := L) (n := n)).subtype)) := by
   refine fun G hG => ⟨hG.1.1, ?_⟩
   rintro _ ⟨x, hx, rfl⟩
   exact fix_J V hb K hK G hG.1.2 hG.2 x.1 (hU x hx)

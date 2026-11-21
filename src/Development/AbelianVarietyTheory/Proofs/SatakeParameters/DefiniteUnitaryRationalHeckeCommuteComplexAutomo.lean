@@ -19,7 +19,7 @@ noncomputable section
 
 namespace GlobalTheory.EigenConj
 
-theorem opOf_conj : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (σ : ℂ ≃+* ℂ) (t : UA E n →₀ ℂ), (∀ g ∈ t.support, g ∈ finU E n ∧ ∃ q : ℚ, t g = q) → ∀ (φ φ' : UA E n → ℂ) (z : ℂ), IsAutFormU φ → IsAutFormU φ' → (∀ g ∈ finU E n, φ' g = σ (φ g)) → opOf (RU E n) t φ = z • φ → opOf (RU E n) t φ' = σ z • φ' := by
+theorem opOf_conj : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (σ : ℂ ≃+* ℂ) (t : UA E n →₀ ℂ), (∀ g ∈ t.support, g ∈ finU (E := E) (n := n) ∧ ∃ q : ℚ, t g = q) → ∀ (φ φ' : UA E n → ℂ) (z : ℂ), IsAutFormU φ → IsAutFormU φ' → (∀ g ∈ finU (E := E) (n := n), φ' g = σ (φ g)) → opOf (RU E n) t φ = z • φ → opOf (RU E n) t φ' = σ z • φ' := by
   intro E _ _ _ n σ t ht φ φ' z hφ hφ' hfin heig
   have key : ∀ (f : UA E n → ℂ) (x : UA E n),
       opOf (RU E n) t f x = ∑ g ∈ t.support, t g * f (x * g) := by
@@ -39,7 +39,7 @@ theorem opOf_conj : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : 
   have hl2 : ∀ γ ∈ ratU E n, ∀ x, (σ z • φ') (γ * x) = (σ z • φ') x := by
     intro γ hγ x
     simp only [Pi.smul_apply, hφ'.left γ hγ]
-  have hfinEq : ∀ h ∈ finU E n, opOf (RU E n) t φ' h = (σ z • φ') h := by
+  have hfinEq : ∀ h ∈ finU (E := E) (n := n), opOf (RU E n) t φ' h = (σ z • φ') h := by
     intro h hh
     have e := congrFun heig h
     rw [key, Pi.smul_apply, smul_eq_mul] at e
@@ -47,11 +47,11 @@ theorem opOf_conj : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : 
     calc ∑ g ∈ t.support, t g * φ' (h * g) = ∑ g ∈ t.support, σ (t g * φ (h * g)) :=
           Finset.sum_congr rfl fun g hg => by
             obtain ⟨hgU, q, hq⟩ := ht g hg
-            rw [map_mul, hfin _ ((finU E n).mul_mem hh hgU), hq, map_ratCast]
+            rw [map_mul, hfin _ ((finU (E := E) (n := n)).mul_mem hh hgU), hq, map_ratCast]
       _ = σ (∑ g ∈ t.support, t g * φ (h * g)) := (map_sum σ _ _).symm
       _ = σ (z * φ h) := by rw [e]
       _ = σ z * φ' h := by rw [map_mul, hfin h hh]
-  have hon : Set.EqOn (opOf (RU E n) t φ') (σ z • φ') ((ratU E n : Set (UA E n)) * (finU E n : Set (UA E n))) := by
+  have hon : Set.EqOn (opOf (RU E n) t φ') (σ z • φ') ((ratU E n : Set (UA E n)) * (finU (E := E) (n := n) : Set (UA E n))) := by
     rintro _ ⟨γ, hγ, g, hg, rfl⟩
     rw [hl1 γ hγ, hl2 γ hγ]
     exact hfinEq g hg

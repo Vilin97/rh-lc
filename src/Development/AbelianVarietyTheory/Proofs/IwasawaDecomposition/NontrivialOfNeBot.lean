@@ -111,7 +111,7 @@ section Concrete
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
-theorem exists_inf_mul_fin (x : UA E n) : ∃ a ∈ infU E n, ∃ k ∈ finU E n, x = a * k := by
+theorem exists_inf_mul_fin (x : UA E n) : ∃ a ∈ infU E n, ∃ k ∈ finU (E := E) (n := n), x = a * k := by
   let y : GL (Fin n) (Cinf E) := cInf x
   have hx : cT (conjAd E) x.1.val * 1 * x.1.val = 1 := x.2
   have h1 : x.1.val.map (pInf E) = y.val := rfl
@@ -131,7 +131,7 @@ theorem exists_inf_mul_fin (x : UA E n) : ∃ a ∈ infU E n, ∃ k ∈ finU E n
   exact inv_mul_cancel y
 
 theorem stable_of {U : Submodule ℂ (UA E n → ℂ)} (h1 : ∀ x : infU E n, ∀ φ ∈ U, RU E n x.1 φ ∈ U)
-    (h2 : ∀ k : finU E n, ∀ φ ∈ U, RU E n k.1 φ ∈ U) (x : UA E n) (φ : UA E n → ℂ) (hφ : φ ∈ U) : RU E n x φ ∈ U := by
+    (h2 : ∀ k : finU (E := E) (n := n), ∀ φ ∈ U, RU E n k.1 φ ∈ U) (x : UA E n) (φ : UA E n → ℂ) (hφ : φ ∈ U) : RU E n x φ ∈ U := by
   obtain ⟨a, ha, k, hk, rfl⟩ := exists_inf_mul_fin x
   rw [← RU_RU]
   exact h1 ⟨a, ha⟩ _ (h2 ⟨k, hk⟩ _ hφ)

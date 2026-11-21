@@ -81,22 +81,22 @@ def rat : Gam0 E n →* GUf E n :=
         by_cases hij : i = j <;> simp [hij, Matrix.one_apply]
       exact (congrArg (· * _) e1).trans (h'.trans e2.symm)
 
-def ofU : finU E n →* GUf E n :=
-  ((((GeneralLinearGroup.map (pFin E)).comp (UA E n).subtype).comp (finU E n).subtype).prod 1).codRestrict _ fun u => by
+def ofU : finU (E := E) (n := n) →* GUf E n :=
+  ((((GeneralLinearGroup.map (pFin E)).comp (UA E n).subtype).comp (finU (E := E) (n := n)).subtype).prod 1).codRestrict _ fun u => by
     refine mem_Sim.2 ?_
     have h := GlobalTheory.DefU.ClassFin.cT_pFin u.1
     exact h.trans (by simp)
 
-@[simp] theorem sim_ofU (u : finU E n) : sim (ofU u) = 1 := rfl
+@[simp] theorem sim_ofU (u : finU (E := E) (n := n)) : sim (ofU u) = 1 := rfl
 
-@[simp] theorem comp_ofU (w : Plc E) (u : finU E n) : comp w (ofU u) = cLoc w u.1 := rfl
+@[simp] theorem comp_ofU (w : Plc E) (u : finU (E := E) (n := n)) : comp w (ofU u) = cLoc w u.1 := rfl
 
 def locE {w : Plc E} (hw : IsSplitAt w) : locU n w ≃ₜ* GL (Fin n) (w.adicCompletion E) := (GlobalTheory.locU_equiv_GL E n w hw).choose
 
 theorem locE_apply {w : Plc E} (hw : IsSplitAt w) (x : locU n w) : locE hw x = cLoc w x.1 := (GlobalTheory.locU_equiv_GL E n w hw).choose_spec x
 
-def locF {w : Plc E} (hw : IsSplitAt w) : GL (Fin n) (w.adicCompletion E) →* finU E n :=
-  (Subgroup.inclusion (inf_le_left : locU n w ≤ finU E n)).comp (locE hw).symm.toMulEquiv.toMonoidHom
+def locF {w : Plc E} (hw : IsSplitAt w) : GL (Fin n) (w.adicCompletion E) →* finU (E := E) (n := n) :=
+  (Subgroup.inclusion (inf_le_left : locU n w ≤ finU (E := E) (n := n))).comp (locE hw).symm.toMulEquiv.toMonoidHom
 
 theorem locF_mem {w : Plc E} (hw : IsSplitAt w) (x : GL (Fin n) (w.adicCompletion E)) : (locF hw x).1 ∈ locU n w :=
   ((locE hw).symm x).2

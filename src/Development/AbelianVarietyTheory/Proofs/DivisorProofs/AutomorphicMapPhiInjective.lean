@@ -84,14 +84,14 @@ theorem Phi_injective : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], 
     conv_lhs => rw [← e.symm_apply_apply x]
     rw [TensorProduct.equivFinsuppOfBasisRight_symm_apply, Finsupp.sum_fintype]
     simp
-  have hval : ∀ (x₀ : finU E n) (k : infU E n), ∑ j, (e x j).1 x₀ (wInf lam k.1 (b j)) = 0 := by
+  have hval : ∀ (x₀ : finU (E := E) (n := n)) (k : infU E n), ∑ j, (e x j).1 x₀ (wInf lam k.1 (b j)) = 0 := by
     intro x₀ k
     have h := congrFun hx (x₀.1 * k.1)
     have hw : wInf lam (x₀.1 * k.1) = wInf lam k.1 := by rw [map_mul, wInf_fin, one_mul]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hxe, map_sum] at h
     simpa only [Phi_tmul, phiFun_apply, splitFin_mul, hw, Finset.sum_apply, Pi.zero_apply] using h
-  have hall : ∀ (x₀ : finU E n) (T : Module.End ℂ (Wsp lam)), ∑ j, (e x j).1 x₀ (T (b j)) = 0 := by
+  have hall : ∀ (x₀ : finU (E := E) (n := n)) (T : Module.End ℂ (Wsp lam)), ∑ j, (e x j).1 x₀ (T (b j)) = 0 := by
     intro x₀ T
     let Λ : Module.End ℂ (Wsp lam) →ₗ[ℂ] ℂ :=
       { toFun := fun T => ∑ j, (e x j).1 x₀ (T (b j))

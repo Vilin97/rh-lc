@@ -65,7 +65,7 @@ private theorem conj_cmp {A A' : Type} [CommRing A] [CommRing A'] (ρ : A →+* 
 end UpperTheory.V.Z.Sym.Dict.Br
 
 theorem UpperTheory.V.Z.Sym.Dict.Br.okConj :
-    ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (B : Bridge L), ∀ x ∈ finU L 2, ∃ y : DA B.Δ, (∀ v, (∀ w, un w = v → cLoc w x = 1) → y.1 v = 1) ∧ ∀ g : SA B.Δ, ∃ g' : SA B.Δ, (g' : DA B.Δ) = y⁻¹ * g * y ∧ (B.bS g' : UA L 2) = x⁻¹ * B.bS g * x := by
+    ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (B : Bridge L), ∀ x ∈ finU (E := L) (n := 2), ∃ y : DA B.Δ, (∀ v, (∀ w, un w = v → cLoc w x = 1) → y.1 v = 1) ∧ ∀ g : SA B.Δ, ∃ g' : SA B.Δ, (g' : DA B.Δ) = y⁻¹ * g * y ∧ (B.bS g' : UA L 2) = x⁻¹ * B.bS g * x := by
   intro L _ _ _ B x hx
   obtain ⟨X, hXu, hXi, hXw⟩ := adSurj L B.toRingBr 2 x
   have hΔ : B.Δ ≠ 0 := by

@@ -31,9 +31,9 @@ def finPart : UA E n →* UA E n where
   map_one' := Subtype.ext (by simp)
   map_mul' a b := Subtype.ext (by simp)
 
-theorem finPart_mem (g : UA E n) : finPart g ∈ finU E n := pInf_finGL _
+theorem finPart_mem (g : UA E n) : finPart g ∈ finU (E := E) (n := n) := pInf_finGL _
 
-theorem finPart_of_finU {k : UA E n} (hk : k ∈ finU E n) : finPart k = k :=
+theorem finPart_of_finU {k : UA E n} (hk : k ∈ finU (E := E) (n := n)) : finPart k = k :=
   Subtype.ext (GlobalTheory.DefU.ClassFin.finGL_pFin ⟨k, hk⟩)
 
 theorem finPart_of_infU {x : UA E n} (hx : x ∈ infU E n) : finPart x = 1 := by

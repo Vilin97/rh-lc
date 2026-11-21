@@ -121,7 +121,7 @@ end GlobalTheory.BCT.LocCpt
 open GlobalTheory.BCT.LocCpt in
 theorem GlobalTheory.BCT.LocCpt.loc_cpt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, ∀ S : Set (Pl E),
     IsSection S → ∀ C : ∀ w : Pl E, Set (UL n w), (∀ w, IsCompact (C w)) → (∀ᶠ w in cofinite, C w = KL n w) →
-    IsCompact {x : finU E n | ∀ w ∈ S, toSub (UL n w) (cLoc w (x : UA E n)) ∈ C w} := by
+    IsCompact {x : finU (E := E) (n := n) | ∀ w ∈ S, toSub (UL n w) (cLoc w (x : UA E n)) ∈ C w} := by
   intro E _ _ _ hU n S hS C hC hCK
   set c := GlobalTheory.SplitPts.conjE E
   let φ : ∀ w : Pl E, GL (Fin n) ((conjSrc c w).adicCompletion E) → GL (Fin n) (w.adicCompletion E) :=
@@ -157,7 +157,7 @@ theorem GlobalTheory.BCT.LocCpt.loc_cpt : ∀ (E : Type) [Field E] [NumberField 
         exact hO _ (entry_mem_of_mem_KGL hk' b a)
   have hB := isCompact_box D hD hDK
 
-  have hmem : ∀ (x : finU E n) (w : Pl E), toSub (UL n w) (cLoc w (x : UA E n)) ∈ C w ↔
+  have hmem : ∀ (x : finU (E := E) (n := n)) (w : Pl E), toSub (UL n w) (cLoc w (x : UA E n)) ∈ C w ↔
       cLoc w (x : UA E n) ∈ Subtype.val '' C w := by
     intro x w
     have hx := GlobalTheory.BCT.ThBasic.cLoc_mem_UL hU n w (x : UA E n)
@@ -167,7 +167,7 @@ theorem GlobalTheory.BCT.LocCpt.loc_cpt : ∀ (E : Type) [Field E] [NumberField 
     · rintro ⟨k, hk, e⟩
       have : k = ⟨_, hx⟩ := Subtype.ext e
       rwa [← this]
-  have hclosed : IsClosed {x : finU E n | ∀ w ∈ S, toSub (UL n w) (cLoc w (x : UA E n)) ∈ C w} := by
+  have hclosed : IsClosed {x : finU (E := E) (n := n) | ∀ w ∈ S, toSub (UL n w) (cLoc w (x : UA E n)) ∈ C w} := by
     simp only [hmem, Set.setOf_forall]
     refine isClosed_iInter fun w => isClosed_iInter fun _ => ?_
     haveI : T2Space (GL (Fin n) (w.adicCompletion E)) := Units.isEmbedding_embedProduct.t2Space
@@ -175,11 +175,11 @@ theorem GlobalTheory.BCT.LocCpt.loc_cpt : ∀ (E : Type) [Field E] [NumberField 
       ((GlobalTheory.DefU.Inert.continuous_cLoc w).comp continuous_subtype_val)
 
   haveI := GlobalTheory.DefU.LocAdm.t2Space_adelicGL_cmField (E := E) (n := n)
-  have hfc : IsClosed ((finU E n : Subgroup (UA E n)) : Set (UA E n)) := by
+  have hfc : IsClosed ((finU (E := E) (n := n) : Subgroup (UA E n)) : Set (UA E n)) := by
     haveI : T2Space (GL (Fin n) (Cinf E)) := Units.isEmbedding_embedProduct.t2Space
     have hc := GlobalTheory.CuspRep.ContAut.continuous_map_pInf E n
     exact isClosed_eq (hc.comp continuous_subtype_val) continuous_const
-  have hι : Topology.IsClosedEmbedding (fun x : finU E n => ((x : UA E n) : GA E n)) :=
+  have hι : Topology.IsClosedEmbedding (fun x : finU (E := E) (n := n) => ((x : UA E n) : GA E n)) :=
     GlobalTheory.DefU.LocAdm.isClosed_UA.isClosedEmbedding_subtypeVal.comp hfc.isClosedEmbedding_subtypeVal
   refine IsCompact.of_isClosed_subset (hι.isCompact_preimage (hB.image GlobalTheory.DefU.LocAdm.continuous_finGL)) hclosed ?_
   intro x hx

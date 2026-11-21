@@ -72,14 +72,21 @@ theorem isLieBasis_iff_isUnit_det (hv : IsLieBasis v) (M : Matrix (Fin n) (Fin n
       tanExp (fun i => tanExp v (M i)) c = tanExp v (Matrix.vecMul c M) := fun c => by
     rw [Matrix.vecMul_eq_sum]
     exact tanExp_tanExp hv.1 (fun i => M i) c
-  obtain ⟨hinj, -⟩ := isLieBasisOver_self hv
+  have hinj : Function.Injective (fun c : Fin n → R => tanExp v c) := by
+    intro a b hab
+    obtain ⟨c, hc, hu⟩ := hv.2 (tanExp v b) (isTangent_tanExp hv.1 b)
+    have ha : IsLieComb a v (tanExp v b) :=
+      (isLieComb_iff_tanExp _ _).2 hab.symm
+    have hb : IsLieComb b v (tanExp v b) :=
+      (isLieComb_iff_tanExp _ _).2 rfl
+    exact (hu a ha).trans (hu b hb).symm
   rw [← Matrix.isUnit_iff_isUnit_det]
   constructor
   · intro h
     refine Matrix.vecMul_surjective_iff_isUnit.1 fun d => ?_
     obtain ⟨c, hc, -⟩ := h.2 _ (isTangent_tanExp hv.1 d)
     rw [isLieComb_iff_tanExp, key] at hc
-    exact ⟨c, (hinj _ _ hc).symm⟩
+    exact ⟨c, (hinj hc).symm⟩
   · intro h
     refine ⟨fun i => isTangent_tanExp hv.1 _, fun w hw => ?_⟩
     obtain ⟨d, hd, -⟩ := hv.2 w hw
@@ -91,7 +98,7 @@ theorem isLieBasis_iff_isUnit_det (hv : IsLieBasis v) (M : Matrix (Fin n) (Fin n
       rw [isLieComb_iff_tanExp, key, hc', hd]
     · change IsLieComb _ _ _ at h'
       rw [isLieComb_iff_tanExp, key, hd, ← hc'] at h'
-      exact Matrix.vecMul_injective_of_isUnit h (hinj _ _ h').symm
+      exact Matrix.vecMul_injective_of_isUnit h (hinj h').symm
 
 theorem lieComb_algebra (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G]
     (n : ℕ) (v : Fin n → (epsR R ⟶ G)) (hv : ∀ i, IsTangent (v i)) :

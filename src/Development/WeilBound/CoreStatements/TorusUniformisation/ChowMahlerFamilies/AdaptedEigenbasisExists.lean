@@ -43,7 +43,8 @@ theorem inr_mem_iff {ρ : 𝓞 E →+* Module.End K W} {ρH : 𝓞 E →+* Modul
     {bar : 𝓞 E ≃+* 𝓞 E} {σ σ' : E →+* K} (h : ∀ a φ, ρH a (0, φ) = (0, φ ∘ₗ ρ (bar a)))
     (hσ : ∀ a : 𝓞 E, σ' (a : E) = σ (bar a : 𝓞 E)) (hb : ∀ a, bar (bar a) = a) (φ : Module.Dual K W) :
     ((0, φ) : W × Module.Dual K W) ∈ HT.eigSp ρH σ ↔ ∀ (b : 𝓞 E) x, φ (ρ b x) = σ' (b : E) * φ x := by
-  rw [HT.LatBasic.mem_eigSp]
+  simp only [HT.eigSp, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply,
+    LinearMap.smul_apply, Module.End.one_apply, sub_eq_zero]
   constructor
   · intro H b x
     have h1 := H (bar b)

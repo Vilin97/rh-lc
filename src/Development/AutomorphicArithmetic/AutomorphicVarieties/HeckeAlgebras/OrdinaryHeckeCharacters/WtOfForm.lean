@@ -36,7 +36,7 @@ private theorem wt_of_form {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [Num
     (hJ : ∀ x, J x = ((away l L n).rangeRestrict x, fun v : V.frame.Vl => cLoc (s.w v.1) x))
     (h3 : ∀ (F : Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d → ℂ) ℓ (x : UA L n),
       RU L n x (toForm ι e F ℓ) = toForm ι e (fun g => F (g * J x)) (ℓ ∘ₗ infRep ι lam x⁻¹))
-    (h4 : Function.Surjective (fun k : finU L n => J k))
+    (h4 : Function.Surjective (fun k : finU (E := L) (n := n) => J k))
     (σ : Submodule ℂ (UA L n → ℂ)) (F : Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d → ℂ) (hF : F ≠ 0)
     (hσ : ∀ ℓ, toForm ι e F ℓ ∈ σ) (y : Emb l (fun v : V.frame.Vl => s.w v.1)) :
     HasWeightAt σ (ι.toRingHom.comp y.res) (lam y.res).dual := by

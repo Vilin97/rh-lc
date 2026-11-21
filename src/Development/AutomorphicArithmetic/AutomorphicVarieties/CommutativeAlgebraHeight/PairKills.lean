@@ -89,7 +89,7 @@ private theorem pk_bc (R B : Type) [CommRing R] [Algebra O R] [CommRing B] [Alge
 end
 
 theorem UpperTheory.V.CA.pair_kills :
-    ∀ {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [CommRing O] [IsLocalRing O] [IsNoetherianRing O] [IsAdicComplete (maximalIdeal O) O] [Finite (ResidueField O)] [CharP (ResidueField O) l] [Algebra ℤ_[l] O] {n : ℕ} (r : Resid F O n) {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (p : Pair r R), PhiCond F.G₀ l → 1 ≤ n → F.IsPolar O p.D ∧ (∀ y, p.D.Kills y → p.D.Kills (F.star O R n y)) ∧ (∀ z ∈ TwoSidedIdeal.span p.D.CH, F.star O R n z ∈ TwoSidedIdeal.span p.D.CH) ∧ (∀ v g, p.D.Kills (F.oEl v (p.ψ v) g)) ∧ ∀ u, ∀ g ∈ r.Ip u, p.D.Kills (MonoidAlgebra.single g 1 - 1) := by
+    ∀ {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [CommRing O] [IsLocalRing O] [IsNoetherianRing O] [IsAdicComplete (maximalIdeal O) O] [Finite (ResidueField O)] [CharP (ResidueField O) l] [Algebra ℤ_[l] O] {n : ℕ} (r : Resid F O n) {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (p : Pair r R), PhiCond (Γ := F.G₀) l → 1 ≤ n → F.IsPolar O p.D ∧ (∀ y, p.D.Kills y → p.D.Kills (F.star O R n y)) ∧ (∀ z ∈ TwoSidedIdeal.span p.D.CH, F.star O R n z ∈ TwoSidedIdeal.span p.D.CH) ∧ (∀ v g, p.D.Kills (F.oEl v (p.ψ v) g)) ∧ ∀ u, ∀ g ∈ r.Ip u, p.D.Kills (MonoidAlgebra.single g 1 - 1) := by
   intro l _ F O _ _ _ _ _ _ _ n r R _ _ _ p hphi hn
   have hspan : Submodule.span R (↑(MonoidHom.mrange (MonoidAlgebra.of R F.G₀)) : Set (MonoidAlgebra R F.G₀)) = ⊤ := by
     rw [eq_top_iff]

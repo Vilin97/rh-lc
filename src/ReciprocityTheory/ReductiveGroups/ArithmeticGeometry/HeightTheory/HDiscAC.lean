@@ -157,7 +157,7 @@ theorem mem_integralClosure_iff (y : L) :
     y ∈ integralClosure O L ↔ ∀ w ∈ PlacesOver O L, 0 ≤ w y := by
   constructor
   · intro hy w hw
-    obtain ⟨v, rfl⟩ := addv_eq_of_mem hw
+    obtain ⟨v, rfl⟩ := addv_eq_of_mem O F hw
     by_cases hy0 : y = 0
     · subst hy0
       rw [AddValuation.map_zero]
@@ -254,7 +254,7 @@ theorem exists_val_eq (n : AddValuation L (WithTop ℤ) → ℤ) :
       rw [if_neg (Ne.symm hv), one_zpow]
     · simp
   refine ⟨g, hg0, fun w hw => ?_⟩
-  obtain ⟨v, rfl⟩ := addv_eq_of_mem hw
+  obtain ⟨v, rfl⟩ := addv_eq_of_mem O F hw
   rw [addv_apply v hg0, hgv, log_exp, neg_neg]
 
 end HDiscVal

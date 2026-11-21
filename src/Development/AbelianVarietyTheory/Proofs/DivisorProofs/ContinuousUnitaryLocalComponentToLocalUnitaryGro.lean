@@ -15,7 +15,7 @@ noncomputable section
 namespace GlobalTheory.BCT
 
 theorem cLoc_fin_continuous {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} (w : Pl E) :
-    Continuous (fun x : finU E n => cLoc w (x : UA E n)) := by
+    Continuous (fun x : finU (E := E) (n := n) => cLoc w (x : UA E n)) := by
   have hf : Continuous ((pLoc E w).comp (pFin E)) := by
     show Continuous (fun x => pLoc E w (pFin E x))
     exact (RestrictedProduct.continuous_eval w).comp continuous_snd
@@ -31,12 +31,12 @@ theorem continuous_toSub {X G : Type} [TopologicalSpace X] [Group G] [Topologica
   exact hf.subtype_mk _
 
 theorem toSub_cLoc_continuous_of_mem {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} (w : Pl E)
-    (hmem : ∀ x : finU E n, cLoc w (x : UA E n) ∈ UL n w) :
-    Continuous (fun x : finU E n => toSub (UL n w) (cLoc w (x : UA E n))) :=
+    (hmem : ∀ x : finU (E := E) (n := n), cLoc w (x : UA E n) ∈ UL n w) :
+    Continuous (fun x : finU (E := E) (n := n) => toSub (UL n w) (cLoc w (x : UA E n))) :=
   continuous_toSub _ (cLoc_fin_continuous w) hmem
 
 theorem toSub_cLoc_fin_continuous : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ,
-    ∀ w : Pl E, Continuous (fun x : finU E n => toSub (UL n w) (cLoc w (x : UA E n))) := by
+    ∀ w : Pl E, Continuous (fun x : finU (E := E) (n := n) => toSub (UL n w) (cLoc w (x : UA E n))) := by
   intro E _ _ _ hE n w
   exact toSub_cLoc_continuous_of_mem w (GlobalTheory.T.finiteAdelicUnitaryPoint_localComponent_mem_localUnitary E hE n w)
 

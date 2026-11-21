@@ -124,7 +124,7 @@ private theorem apart_of_primes {w u : Plc E} {a b : ℕ} (hab : a.Coprime b) (h
   have h2 : algebraMap _ (𝓞 E) (b : 𝓞 (maximalRealSubfield E)) ∈ w.asIdeal := h1
   exact nat_not_mem w.isPrime.ne_top hab ha (by simpa using h2)
 
-private theorem comp_cj_ofU (w : Plc E) (a b : finU E n)
+private theorem comp_cj_ofU (w : Plc E) (a b : finU (E := E) (n := n))
     (h : comp w (CertificateRingHomMap.ofU a) = comp w (CertificateRingHomMap.ofU b)) : comp (cj w) (CertificateRingHomMap.ofU a) = comp (cj w) (CertificateRingHomMap.ofU b) := by
   have ha := GlobalTheory.LadicPair.cT_cLoc_conjSrc_mul a.1 w
   have hb := GlobalTheory.LadicPair.cT_cLoc_conjSrc_mul b.1 w

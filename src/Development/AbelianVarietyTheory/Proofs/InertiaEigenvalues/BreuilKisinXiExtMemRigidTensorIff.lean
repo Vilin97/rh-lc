@@ -110,7 +110,7 @@ end Seq
 variable [NormedAlgebra ℚ_[l] K] [NeZero e] [NeZero a]
 
 theorem mulVec_mem {B : Subalgebra O K⟦X⟧} {M : Matrix ι ι K⟦X⟧} (hM : ∀ i j, M i j ∈ B)
-    {v : ι → K⟦X⟧} (hv : v ∈ vecs ι B) : M *ᵥ v ∈ vecs ι B := fun i => by
+    {v : ι → K⟦X⟧} (hv : v ∈ vecs B) : M *ᵥ v ∈ vecs B := fun i => by
   simp only [Matrix.mulVec, dotProduct]
   exact Subalgebra.sum_mem _ fun j _ => mul_mem (hM i j) (hv j)
 

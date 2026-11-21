@@ -51,8 +51,8 @@ private theorem exists_avg {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V
       exact M.sum_mem fun q _ => hM _ v hv)
 
 private theorem is_compact_integral_level {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} {S : Set (Pl E)} (hS : IsSection S) :
-    IsCompact (globLev S (KL n) : Set (finU E n)) := by
-  have hO : IsOpen (globLev S (KL n) : Set (finU E n)) := by
+    IsCompact (globLev S (KL n) : Set (finU (E := E) (n := n))) := by
+  have hO : IsOpen (globLev S (KL n) : Set (finU (E := E) (n := n))) := by
     rw [globLev_KL_eq hS]
     exact (AdelicGLn.isOpen_integralFiniteGL E n).preimage continuous_finPart
   refine IsCompact.of_isClosed_subset (isClosedEmbedding_finU.isCompact_preimage
@@ -64,7 +64,7 @@ private theorem is_compact_integral_level {E : Type} [Field E] [NumberField E] [
     exact ga_ext (by rw [pInf_finGL, h1]) (by rw [pFin_finGL]; rfl)
 
 private theorem finite_quot {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} {S : Set (Pl E)} (hS : IsSection S)
-    {K' : ∀ w : Pl E, Subgroup (UL n w)} (hle : ∀ w, K' w ≤ KL n w) (U : Subgroup (finU E n)) (hU : IsOpen (U : Set (finU E n))) :
+    {K' : ∀ w : Pl E, Subgroup (UL n w)} (hle : ∀ w, K' w ≤ KL n w) (U : Subgroup (finU (E := E) (n := n))) (hU : IsOpen (U : Set (finU (E := E) (n := n)))) :
     Finite (globLev S K' ⧸ U.subgroupOf (globLev S K')) := by
   have hK : globLev S K' ≤ globLev S (KL n) := fun k hk =>
     (mem_globLev S _ k).2 fun w hw => hle w ((mem_globLev S _ k).1 hk w hw)
@@ -112,7 +112,7 @@ theorem indepS : IndepS := by
   have hsum' : ∑ j, f j = φ := by
     rw [← hsum]
     exact (Finset.sum_subset (Finset.subset_univ _) fun j _ hj => Finsupp.notMem_support_iff.1 hj).symm
-  have hopen : IsOpen ((⨅ j, stabG (RF E n) (f j) : Subgroup (finU E n)) : Set (finU E n)) := by
+  have hopen : IsOpen ((⨅ j, stabG (RF E n) (f j) : Subgroup (finU (E := E) (n := n))) : Set (finU (E := E) (n := n))) := by
     rw [Subgroup.coe_iInf]
     exact isOpen_iInter_of_finite fun j => ((h1 j).1.aut _ (hfσ j)).level
   obtain ⟨A, hA1, hA2, hA3⟩ := exists_avg (RF E n) (globLev S K') (⨅ j, stabG (RF E n) (f j))

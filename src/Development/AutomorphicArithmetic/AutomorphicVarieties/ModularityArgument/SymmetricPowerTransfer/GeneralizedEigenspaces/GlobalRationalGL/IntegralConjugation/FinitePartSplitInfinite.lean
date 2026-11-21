@@ -12,7 +12,7 @@ open UpperTheory.V.W (Plc Lp)
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 private theorem finite_part_split_infinite {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} (f x : UA L n)
-    (hf : f ∈ finU L n) (hw : ∀ w : Plc L, mL w f = mL w x) :
+    (hf : f ∈ finU (E := L) (n := n)) (hw : ∀ w : Plc L, mL w f = mL w x) :
     f⁻¹ * x ∈ infU L n ∧ x = f * (f⁻¹ * x) ∧ ∀ τ, cEmb τ (f⁻¹ * x) = cEmb τ x := by
   obtain ⟨-, -, -, -, -, h6, -, -⟩ := uaFacts L n
   refine ⟨((h6 _).2).2 fun w => ?_, by group, fun τ => ?_⟩

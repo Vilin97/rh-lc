@@ -30,7 +30,7 @@ theorem UpperTheory.exists_compact_fundamental_set_unitary :
   have hP : Continuous P :=
     continuous_list_prod _ fun v _ => continuous_subtype_val.comp (continuous_apply v)
   have hPc : IsCompact (Set.range P) := isCompact_range hP
-  have hKc' : IsCompact (Subtype.val '' (K : Set (finU E n))) := hKc.image continuous_subtype_val
+  have hKc' : IsCompact (Subtype.val '' (K : Set (finU (E := E) (n := n)))) := hKc.image continuous_subtype_val
   refine ⟨_, (S.finite_toSet.isCompact.mul hPc).mul hKc', fun g => ?_⟩
   obtain ⟨γ, hγ, s, hs, x, hx, k, hk, e⟩ := hS g
   obtain ⟨y, hy, -, hyx⟩ := GlobalTheory.T.definiteUnitaryInfinitePoint_eq_list_prod_placeParts E n x hx

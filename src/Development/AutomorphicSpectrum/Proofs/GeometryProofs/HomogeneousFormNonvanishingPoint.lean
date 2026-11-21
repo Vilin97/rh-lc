@@ -139,7 +139,7 @@ theorem aeval_mem_int {Ω : Type} [Field Ω] [Algebra ℚ Ω] {σ : Type} (A : S
     (hv : ∀ p, v p ∈ A) (g : MvPolynomial σ ℤ) : aeval v g ∈ A := by
   induction g using MvPolynomial.induction_on with
   | C n => simpa using intCast_mem A n
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | add p q hp hq => rw [map_add]; exact add_mem hp hq
   | mul_X p i hp => rw [map_mul, aeval_X]; exact mul_mem hp (hv i)
 
 
@@ -220,7 +220,8 @@ theorem aeval_ratios_segForm (y : (Σ k, ι k) → Ω) (x' : Fin (r + 1) → Ω)
       aeval (fun j => (∏ k, y ⟨k, E j k⟩) / ∏ k, y ⟨k, E a k⟩) (map (algebraMap ℤ ℚ) Gz) := by
   rw [aeval_rename, aeval_segForm, aeval_map_algebraMap]
   congr 2
-  rfl
+  funext j
+  simp [joinInl, joinPt, joinVec, hEa, Finset.prod_div_distrib]
 
 theorem isSncModel_joinPt (y : (Σ k, ι k) → Ω) (x' : Fin (r + 1) → Ω) (e : ℕ) {N : ℕ}
     (E : Fin (N + 1) ≃ ((k : K) → ι k)) (Gz : MvPolynomial (Fin (N + 1)) ℤ)

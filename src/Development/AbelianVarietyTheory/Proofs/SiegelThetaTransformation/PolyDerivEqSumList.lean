@@ -103,7 +103,7 @@ theorem lineDerivList_exp (ℓ : W →L[ℂ] ℂ) (C : ℂ) (l : List W) :
     lineDerivList ℂ l (fun w => C * Complex.exp (ℓ w)) =
       fun w => (l.map ℓ).prod * (C * Complex.exp (ℓ w)) := by
   induction l with
-  | nil => simp
+  | nil => simp [lineDerivList]
   | cons v l ih =>
     funext w
     rw [lineDerivList_cons, ih]

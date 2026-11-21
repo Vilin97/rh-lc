@@ -78,7 +78,7 @@ end GlobalTheory.LocInj
 
 open GlobalTheory.LocInj in
 theorem GlobalTheory.BCT.finU_eq_of_loc : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ,
-    ∀ S : Set (Pl E), IsSection S → ∀ x y : finU E n,
+    ∀ S : Set (Pl E), IsSection S → ∀ x y : finU (E := E) (n := n),
       (∀ w ∈ S, toSub (UL n w) (cLoc w (x : UA E n)) = toSub (UL n w) (cLoc w (y : UA E n))) → x = y := by
   intro E _ _ _ _ n S hS x y hxy
 

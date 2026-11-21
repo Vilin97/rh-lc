@@ -126,9 +126,9 @@ theorem UpperTheory.V.Z.Int.vecForm :
     congr 1
     rw [hcg v]
     rfl
-  let Kint : Subgroup (finU E n) :=
+  let Kint : Subgroup (finU (E := E) (n := n)) :=
     (GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E n).comap (GlobalTheory.BCT.GlobLev.finPart E n)
-  let Kst : Subgroup (finU E n) :=
+  let Kst : Subgroup (finU (E := E) (n := n)) :=
     { carrier := {k | ∀ x, RU E n k.1 (f x) = f x}
       one_mem' := fun x => by simp
       mul_mem' := fun {a b} ha hb x => by
@@ -137,12 +137,12 @@ theorem UpperTheory.V.Z.Int.vecForm :
         calc RU E n (a⁻¹).1 (f x) = RU E n (a⁻¹).1 (RU E n a.1 (f x)) := by rw [ha x]
           _ = RU E n ((a⁻¹).1 * a.1) (f x) := by rw [GlobalTheory.DefU.RU_RU]
           _ = f x := by simp }
-  have hO1 : IsOpen (Kint : Set (finU E n)) :=
+  have hO1 : IsOpen (Kint : Set (finU (E := E) (n := n))) :=
     (GroundTheory.Automorphic.AdelicGLn.isOpen_integralFiniteGL E n).preimage GlobalTheory.BCT.GlobLev.continuous_finPart
-  have hO2 : IsOpen (Kst : Set (finU E n)) := by
+  have hO2 : IsOpen (Kst : Set (finU (E := E) (n := n))) := by
     let B := fun v => Module.finBasis ℂ (nablaSq ℂ n (lam v))
-    have e : (Kst : Set (finU E n)) = ⋂ t : (∀ v, Fin (Module.finrank ℂ (nablaSq ℂ n (lam v)))),
-        {k : finU E n | RU E n k.1 (f fun v => B v (t v)) = f fun v => B v (t v)} := by
+    have e : (Kst : Set (finU (E := E) (n := n))) = ⋂ t : (∀ v, Fin (Module.finrank ℂ (nablaSq ℂ n (lam v)))),
+        {k : finU (E := E) (n := n) | RU E n k.1 (f fun v => B v (t v)) = f fun v => B v (t v)} := by
       ext k
       simp only [Set.mem_iInter]
       refine ⟨fun h t => h _, fun h x => ?_⟩

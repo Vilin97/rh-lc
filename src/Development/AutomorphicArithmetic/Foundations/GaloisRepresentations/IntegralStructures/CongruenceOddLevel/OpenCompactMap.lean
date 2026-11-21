@@ -48,8 +48,8 @@ theorem exists_locLev {U : Submodule ℂ (UA E a → ℂ)} (hU : IsAutRepU U) (w
     · exact (GlobalTheory.T.definiteUnitaryIntegralBelowPlace_compact_open E a r).2
     · have e : (((intU a r ⊓ stab).subgroupOf (locU a r)) : Set (locU a r)) =
           (((intU a r).subgroupOf (locU a r)) : Set (locU a r)) ∩
-            (fun x : locU a r => (⟨x.1, ((GlobalTheory.Cong.LevelExt.mem_locU_iff x.1).1 x.2).1⟩ : finU E a)) ⁻¹'
-              {k : finU E a | RU E a k φ₀ = φ₀} := by
+            (fun x : locU a r => (⟨x.1, ((GlobalTheory.Cong.LevelExt.mem_locU_iff x.1).1 x.2).1⟩ : finU (E := E) (n := a))) ⁻¹'
+              {k : finU (E := E) (n := a) | RU E a k φ₀ = φ₀} := by
         ext x; exact Iff.rfl
       rw [e]
       exact (GlobalTheory.T.definiteUnitaryIntegralBelowPlace_compact_open E a r).2.inter (hφ₀aut.level.preimage (Continuous.subtype_mk continuous_subtype_val _))

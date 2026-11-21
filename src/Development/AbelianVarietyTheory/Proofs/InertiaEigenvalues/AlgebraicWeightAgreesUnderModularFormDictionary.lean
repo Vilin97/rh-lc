@@ -115,7 +115,7 @@ theorem polyMat_embU {ι : Type} (P : ι → ι → MvPolynomial ((L →+* ℂ) 
     simp [Matrix.one_apply, h3]
 
 theorem pair_ext {W : Type} [AddCommGroup W] [Module ℂ W] {ρ : Representation ℂ (GQ L n) W} (a : NG.AlgWt L n)
-    (R : UA L n →* Module.End ℂ W) (hfin : ∀ k ∈ finU L n, R k = 1)
+    (R : UA L n →* Module.End ℂ W) (hfin : ∀ k ∈ finU (E := L) (n := n), R k = 1)
     (hrat : ∀ (γ : UA L n) (γQ : GQ L n) (γ₀ : GL (Fin n) L), γ.1 = ratGL L n γ₀ →
       (((γQ : GAf L n) : GL (Fin n) (AL L)) : Matrix (Fin n) (Fin n) (AL L)) =
         (γ₀ : Matrix (Fin n) (Fin n) L).map Algebra.TensorProduct.includeLeftRingHom → R γ = ρ γQ)
@@ -146,13 +146,13 @@ theorem pair_ext {W : Type} [AddCommGroup W] [Module ℂ W] {ρ : Representation
     rw [← b.equivFun_apply, ← b.equivFun_apply, LinearEquiv.apply_symm_apply] at this
     exact this
   have e2 : ρ (GlobalTheory.WeightRealExt.ratPt γ₀) (R (γ * k)⁻¹ w) = w := by
-    rw [_root_.mul_inv_rev, map_mul, hfin _ ((finU L n).inv_mem hk), one_mul, ← hR, ← Module.End.mul_apply, ← map_mul,
+    rw [_root_.mul_inv_rev, map_mul, hfin _ ((finU (E := L) (n := n)).inv_mem hk), one_mul, ← hR, ← Module.End.mul_apply, ← map_mul,
       mul_inv_cancel, map_one, Module.End.one_apply]
   change B (R (γ * k)⁻¹ w) _ = B w _
   rw [e1, ← hB (GlobalTheory.WeightRealExt.ratPt γ₀), e2]
 
 theorem phi_mem {F : FinIso L n} {π : NG.AutRep L n} {U : Submodule ℂ (UA L n → ℂ)} (hU : Dict F π U)
-    (R : UA L n →* Module.End ℂ π.W) (hfin : ∀ k ∈ finU L n, R k = 1)
+    (R : UA L n →* Module.End ℂ π.W) (hfin : ∀ k ∈ finU (E := L) (n := n), R k = 1)
     (hrat : ∀ (γ : UA L n) (γQ : GQ L n) (γ₀ : GL (Fin n) L), γ.1 = ratGL L n γ₀ →
       (((γQ : GAf L n) : GL (Fin n) (AL L)) : Matrix (Fin n) (Fin n) (AL L)) =
         (γ₀ : Matrix (Fin n) (Fin n) L).map Algebra.TensorProduct.includeLeftRingHom → R γ = π.ρ γQ)

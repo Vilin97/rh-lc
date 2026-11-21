@@ -130,7 +130,7 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pSatVal_of :
   intro E _ _ _ n π W f hf hf0 w hw hK B hB
   obtain ⟨τ, hc, hS⟩ := hB
   have hmem := AutSub.mem_finPart.1 hf
-  have hval : ∀ (k : finU E n) v, (algRep W k f).1 v = RU E n k.1 (f.1 v) := fun _ _ => rfl
+  have hval : ∀ (k : finU (E := E) (n := n)) v, (algRep W k f).1 v = RU E n k.1 (f.1 v) := fun _ _ => rfl
   have hfix : ∀ v, ∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w (n := n) → RU E n y (f.1 v) = f.1 v := by
     intro v y hy hk
     have h1 : ((locF hw (cLoc w y)).1 : UA E n) = y := by

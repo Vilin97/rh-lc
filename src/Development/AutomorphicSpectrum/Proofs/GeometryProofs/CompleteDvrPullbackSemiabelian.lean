@@ -38,7 +38,17 @@ theorem exists_extended_identification : ∀ (E : Type) [Field E] [NumberField E
   have hj : GlobalTheory.IsGenericPointHom (Spec.map (CommRingCat.ofHom (algebraMap T.V T.Fr))) :=
     GlobalTheory.IsGenericPointHom.fractionField T.V T.Fr
   have hS := GlobalTheory.Published.SemiAbelianHomExtension.isNormalScheme_spec T.V
-  have hH' := IsSemiAbelian.pullback zV tX.G tX.semi
+  have hH' : ReciprocityTheory.ChartRestriction.G.Semi.IsSemiAbelian ((Over.pullback zV).obj tX.G) := by
+    have h := tX.semi
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+    · have := h.comm; infer_instance
+    · have := h.smooth; show Smooth (Limits.pullback.snd tX.G.hom zV); infer_instance
+    · have := h.separated; show IsSeparated (Limits.pullback.snd tX.G.hom zV); infer_instance
+    · have := h.quasiCompact; show QuasiCompact (Limits.pullback.snd tX.G.hom zV); infer_instance
+    · have := h.geomConnected; show GeometricallyConnected (Limits.pullback.snd tX.G.hom zV); infer_instance
+    · intro Ω _ _ q
+      obtain ⟨F⟩ := h.fibres Ω (q ≫ zV)
+      exact ⟨torusExtOfIso (pullCompIso q zV tX.G) F⟩
   obtain ⟨e, ⟨hmon, heq⟩, -⟩ := hE.generic_existsUnique_iso_of_extensions hS hj G.semi hH' m2.cart hψ
   obtain ⟨_, _⟩ := hj.quasiCompact_and_dominant
   obtain ⟨_, _⟩ := GlobalTheory.ExtUnique.flat_and_isSeparated_of_isSemiAbelian G.G G.semi
@@ -57,7 +67,7 @@ theorem exists_extended_identification : ∀ (E : Type) [Field E] [NumberField E
         change _ ≫ ((Over.pullback zV).obj tX.G).hom = _ ≫ ((Over.pullback zV).obj tX.G).hom
         rw [Category.assoc, Category.assoc, h₂, h₁, ← Category.assoc, h₃]
     have key : G.act.act a ≫ e.hom = e.hom ≫ (Over.pullback zV).map (tX.act.act a) := by
-      refine GlobalTheory.ExtUnique.over_hom_ext_of_isPullback m2.cart.1 ?_
+      refine GlobalTheory.ExtUnique.over_hom_ext_of_isPullback _ m2.cart.1 ?_
       rw [Over.comp_left, Over.comp_left, ← Category.assoc, ← m2.act a, Category.assoc, heq, hψa,
         ← Category.assoc, heq]
     have key' := congrArg (fun f => f.left ≫ Limits.pullback.fst tX.G.hom zV) key

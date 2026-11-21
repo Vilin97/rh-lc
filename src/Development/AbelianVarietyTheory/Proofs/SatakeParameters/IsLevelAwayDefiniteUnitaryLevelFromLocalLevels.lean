@@ -40,16 +40,16 @@ theorem integral_iff (x : UA E a) :
     fun h => ⟨fun i j u => (h u).1 i j, fun i j u => (h u).2 i j⟩⟩
 
 theorem exists_compact_integral : ∃ C : Set (UA E a), IsCompact C ∧
-    ∀ x ∈ finU E a, (∀ u, cLoc u x ∈ GlobalTheory.LFun.KGL u (n := a)) → x ∈ C := by
-  let Kf : Subgroup (finU E a) := (AdelicGLn.integralFiniteGL E a).comap (finPart E a)
-  have hO : IsOpen (Kf : Set (finU E a)) := (AdelicGLn.isOpen_integralFiniteGL E a).preimage continuous_finPart
-  have hc : IsCompact (Kf : Set (finU E a)) := by
+    ∀ x ∈ finU (E := E) (n := a), (∀ u, cLoc u x ∈ GlobalTheory.LFun.KGL u (n := a)) → x ∈ C := by
+  let Kf : Subgroup (finU (E := E) (n := a)) := (AdelicGLn.integralFiniteGL E a).comap (finPart E a)
+  have hO : IsOpen (Kf : Set (finU (E := E) (n := a))) := (AdelicGLn.isOpen_integralFiniteGL E a).preimage continuous_finPart
+  have hc : IsCompact (Kf : Set (finU (E := E) (n := a))) := by
     refine IsCompact.of_isClosed_subset (isClosedEmbedding_finU.isCompact_preimage
       ((AdelicGLn.isCompact_integralFiniteGL E a).image continuous_finGL_ad))
       (Subgroup.isClosed_of_isOpen _ hO) fun x hx => ⟨finPart E a x, hx, ?_⟩
     have h1 : GeneralLinearGroup.map (pInf E) ((x : UA E a) : GA E a) = 1 := x.2
     exact ga_ext (by rw [pInf_finGL, h1]) (by rw [pFin_finGL]; rfl)
-  refine ⟨Subtype.val '' (Kf : Set (finU E a)), hc.image continuous_subtype_val, fun x hx hi => ⟨⟨x, hx⟩, ?_, rfl⟩⟩
+  refine ⟨Subtype.val '' (Kf : Set (finU (E := E) (n := a))), hc.image continuous_subtype_val, fun x hx hi => ⟨⟨x, hx⟩, ?_, rfl⟩⟩
   exact (integral_iff x).2 hi
 
 theorem exists_loc (w : HeightOneSpectrum (𝓞 E)) : ∃ f : UA E a → UA E a, Continuous f ∧
@@ -80,7 +80,7 @@ theorem exists_loc (w : HeightOneSpectrum (𝓞 E)) : ∃ f : UA E a → UA E a,
       exact pLoc_locGL_of_ne (fun e => hu (by rw [e])) _
     · rw [cLoc_finGL]; exact pLoc_locGL _ _
 
-theorem isClosed_finU : IsClosed ((finU E a : Subgroup (UA E a)) : Set (UA E a)) := by
+theorem isClosed_finU : IsClosed ((finU (E := E) (n := a) : Subgroup (UA E a)) : Set (UA E a)) := by
   haveI : T2Space (GL (Fin a) (Cinf E)) := Units.isEmbedding_embedProduct.t2Space
   have hc : Continuous (cInf (E := E) (n := a)) :=
     (Continuous.units_map _ (continuous_id.matrix_map continuous_pInf_ad)).comp continuous_subtype_val
@@ -91,7 +91,7 @@ theorem t2GL (w : HeightOneSpectrum (𝓞 E)) : T2Space (GL (Fin a) (w.adicCompl
 
 theorem isClosed_levelOf (w₀ : HeightOneSpectrum (𝓞 E)) (H : HeightOneSpectrum (𝓞 E) → Subgroup (UA E a))
     (hc : ∀ w, IsCompact (H w : Set (UA E a))) : IsClosed (levelOf a w₀ H : Set (UA E a)) := by
-  have e : (levelOf a w₀ H : Set (UA E a)) = (finU E a : Set (UA E a)) ∩
+  have e : (levelOf a w₀ H : Set (UA E a)) = (finU (E := E) (n := a) : Set (UA E a)) ∩
       ((⋂ u, ⋂ (_ : ¬ Apart u w₀), {x | cLoc u x = 1}) ∩
         ⋂ w, ⋂ (_ : Apart w w₀), cLoc w ⁻¹' (cLoc w '' (H w : Set (UA E a)))) := by
     ext x
@@ -107,7 +107,7 @@ theorem isClosed_levelOf (w₀ : HeightOneSpectrum (𝓞 E)) (H : HeightOneSpect
 
 theorem exists_compact_of_finset (H : HeightOneSpectrum (𝓞 E) → Subgroup (UA E a)) (hle : ∀ w, H w ≤ locU a w)
     (hc : ∀ w, IsCompact (H w : Set (UA E a))) (R : Finset (HeightOneSpectrum (𝓞 E))) :
-    ∃ C : Set (UA E a), IsCompact C ∧ ∀ x ∈ finU E a, (∀ u, (∀ r ∈ R, Apart u r) → cLoc u x ∈ GlobalTheory.LFun.KGL u (n := a)) →
+    ∃ C : Set (UA E a), IsCompact C ∧ ∀ x ∈ finU (E := E) (n := a), (∀ u, (∀ r ∈ R, Apart u r) → cLoc u x ∈ GlobalTheory.LFun.KGL u (n := a)) →
       (∀ r ∈ R, ∃ y ∈ H r, cLoc r y = cLoc r x) → x ∈ C := by
   classical
   induction R using Finset.induction_on with
@@ -121,7 +121,7 @@ theorem exists_compact_of_finset (H : HeightOneSpectrum (𝓞 E) → Subgroup (U
     by_cases hap : ∀ r' ∈ R, Apart r' r
     · have hyl := hle r hy
       have hy1 : ∀ u, Apart u r → cLoc u y = 1 := fun u hu => ((GlobalTheory.Cong.LevelExt.mem_locU_iff y).1 hyl).2 u hu
-      have hyf : y ∈ finU E a := (Subgroup.mem_inf.1 hyl).1
+      have hyf : y ∈ finU (E := E) (n := a) := (Subgroup.mem_inf.1 hyl).1
       refine ⟨x * y⁻¹, hsub _ (mul_mem hx (inv_mem hyf)) ?_ ?_, y, hy, inv_mul_cancel_right x y⟩
       · intro u hu
         by_cases hur : Apart u r

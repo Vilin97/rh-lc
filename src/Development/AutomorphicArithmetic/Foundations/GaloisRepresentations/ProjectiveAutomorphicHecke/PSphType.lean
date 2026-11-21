@@ -38,11 +38,11 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pSphType_of :
       simpa using key x hx h2
   · rintro J χ ⟨φ, hφ, h0, hact⟩
     have hlev := (π.isAut.aut φ hφ).level
-    have hc : Continuous fun k : J => (locF hw k.1 : finU E n) := by
-      have h1 : Continuous fun k : GLw n w => (locF hw k : finU E n) :=
+    have hc : Continuous fun k : J => (locF hw k.1 : finU (E := E) (n := n)) := by
+      have h1 : Continuous fun k : GLw n w => (locF hw k : finU (E := E) (n := n)) :=
         Continuous.subtype_mk (continuous_subtype_val.comp (locE hw).symm.continuous) _
       exact h1.comp continuous_subtype_val
-    have hset : {k : J | χ k = 1} = (fun k : J => (locF hw k.1 : finU E n)) ⁻¹' {k : finU E n | RU E n k φ = φ} := by
+    have hset : {k : J | χ k = 1} = (fun k : J => (locF hw k.1 : finU (E := E) (n := n))) ⁻¹' {k : finU (E := E) (n := n) | RU E n k φ = φ} := by
       ext k
       have hk : cLoc w (locF hw k.1).1 ∈ J := by rw [cLoc_locF]; exact k.2
       have h1 := hact (locF hw k.1).1 (locF_mem hw k.1) hk

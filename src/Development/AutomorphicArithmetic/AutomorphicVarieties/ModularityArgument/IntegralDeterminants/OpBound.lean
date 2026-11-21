@@ -187,7 +187,7 @@ section Rep
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 private noncomputable def mv {u : HeightOneSpectrum (𝓞 E)} (ψ : u.adicCompletion E →+* ℂ) (lam : DomWeight n) {d : ℕ}
-    (e : Module.Basis (Fin d) ℂ (nablaSq ℂ n lam)) : finU E n →* Matrix (Fin d) (Fin d) ℂ where
+    (e : Module.Basis (Fin d) ℂ (nablaSq ℂ n lam)) : finU (E := E) (n := n) →* Matrix (Fin d) (Fin d) ℂ where
   toFun g := LinearMap.toMatrix e e (GlobalTheory.Branching.sqRep ℂ n lam (GeneralLinearGroup.map ψ (cLoc u g.1)))
   map_one' := by
     simp only [OneMemClass.coe_one, map_one]
@@ -197,7 +197,7 @@ private noncomputable def mv {u : HeightOneSpectrum (𝓞 E)} (ψ : u.adicComple
     exact LinearMap.toMatrix_mul e _ _
 
 private theorem mv_apply {u : HeightOneSpectrum (𝓞 E)} (ψ : u.adicCompletion E →+* ℂ) (lam : DomWeight n) {d : ℕ}
-    (e : Module.Basis (Fin d) ℂ (nablaSq ℂ n lam)) (g : finU E n) :
+    (e : Module.Basis (Fin d) ℂ (nablaSq ℂ n lam)) (g : finU (E := E) (n := n)) :
     mv ψ lam e g = LinearMap.toMatrix e e (GlobalTheory.Branching.sqRep ℂ n lam (GeneralLinearGroup.map ψ (cLoc u g.1))) := rfl
 
 private theorem expand {V : Type} [Fintype V] {W : V → Type} [∀ v, AddCommGroup (W v)] [∀ v, Module ℂ (W v)]
@@ -213,7 +213,7 @@ private theorem expand {V : Type} [Fintype V] {W : V → Type} [∀ v, AddCommGr
     MultilinearMap.map_sum]
   exact Finset.sum_congr rfl fun j _ => f.map_smul_univ _ _
 
-private theorem inf_comm (k : infU E n) (g : finU E n) : k.1 * g.1 = g.1 * k.1 := by
+private theorem inf_comm (k : infU E n) (g : finU (E := E) (n := n)) : k.1 * g.1 = g.1 * k.1 := by
   have h := GlobalTheory.BCT.TrKer.eq_splitFin_mul_splitInf (k.1 * g.1)
   have h1 : GlobalTheory.BCT.TrKer.splitFin E n (k.1 * g.1) = g := by
     rw [map_mul, GlobalTheory.BCT.TrKer.splitFin_inf, GlobalTheory.BCT.TrKer.splitFin_fin, one_mul]
@@ -252,9 +252,9 @@ private theorem F_ne {V : Type} [Fintype V] {lamv : V → DomWeight n} {φ : V �
     (e : ∀ v, Module.Basis (Fin (d v)) ℂ (nablaSq ℂ n (lamv v)))
     (f : MultilinearMap ℂ (fun v => nablaSq ℂ n (lamv v)) (UA E n → ℂ)) (hf0 : f ≠ 0)
     (hinf : ∀ g ∈ infU E n, ∀ x, f (fun v => GlobalTheory.Branching.sqRep ℂ n (lamv v) (cEmb (φ v) g) (x v)) = RU E n g (f x)) :
-    (fun (g : finU E n) (i : ∀ v, Fin (d v)) => f (fun v => e v (i v)) g.1) ≠ 0 := by
+    (fun (g : finU (E := E) (n := n)) (i : ∀ v, Fin (d v)) => f (fun v => e v (i v)) g.1) ≠ 0 := by
   intro h
-  have h1 : ∀ (g : finU E n) x, f x g.1 = 0 := by
+  have h1 : ∀ (g : finU (E := E) (n := n)) x, f x g.1 = 0 := by
     intro g x
     have h2 : (LinearMap.proj g.1 : (UA E n → ℂ) →ₗ[ℂ] ℂ).compMultilinearMap f = 0 :=
       Module.Basis.ext_multilinear e fun i => congrFun (congrFun h g) i
@@ -275,7 +275,7 @@ private theorem F_aut {V : Type} [Fintype V] {lamv : V → DomWeight n} {φ : V 
     (f : MultilinearMap ℂ (fun v => nablaSq ℂ n (lamv v)) (UA E n → ℂ))
     (hleft : ∀ x, ∀ γ ∈ ratU E n, ∀ g, f x (γ * g) = f x g)
     (hinf : ∀ g ∈ infU E n, ∀ x, f (fun v => GlobalTheory.Branching.sqRep ℂ n (lamv v) (cEmb (φ v) g) (x v)) = RU E n g (f x))
-    (γ : finU E n) (hγ : γ ∈ GlobalTheory.BCT.ratFinU E n) (g : finU E n) :
+    (γ : finU (E := E) (n := n)) (hγ : γ ∈ GlobalTheory.BCT.ratFinU E n) (g : finU (E := E) (n := n)) :
     (fun i : ∀ v, Fin (d v) => f (fun v => e v (i v)) (γ * g).1) =
       tens (fun v => mv (ψ v) (lamv v) (e v)) γ *ᵥ (fun i => f (fun v => e v (i v)) g.1) := by
   obtain ⟨γ₀, rfl⟩ := ((GlobalTheory.BCT.FinPart.finPt_props E n).2.2 γ).1 hγ
@@ -345,10 +345,10 @@ private theorem core (hn : 1 ≤ n) (σ : Submodule ℂ (UA E n → ℂ)) (hσ :
   have hD0 : ∀ v, 0 ≤ D v := fun v => zero_le_one.trans (hD1 v)
   let M := fun v => mv (ψ v) (lam (φ v)) (e v)
   letI : DecidableEq (∀ v, Fin (d v)) := fun a b => Classical.propDecidable (a = b)
-  let F : finU E n → (∀ v, Fin (d v)) → ℂ := fun g i => f (fun v => e v (i v)) g.1
-  have hsF : ∀ x ∈ s, x ∈ finU E n := fun x hx => (Subgroup.mem_inf.1 (hsU x hx)).1
+  let F : finU (E := E) (n := n) → (∀ v, Fin (d v)) → ℂ := fun g i => f (fun v => e v (i v)) g.1
+  have hsF : ∀ x ∈ s, x ∈ finU (E := E) (n := n) := fun x hx => (Subgroup.mem_inf.1 (hsU x hx)).1
   have hleft : ∀ x, ∀ γ ∈ ratU E n, ∀ g, f x (γ * g) = f x g := fun x => (hσ.aut (f x) (hfσ x)).left
-  have hinv : ∀ (u' : HeightOneSpectrum (𝓞 E)) (y : finU E n), cLoc u' (y⁻¹).1 = (cLoc u' y.1)⁻¹ :=
+  have hinv : ∀ (u' : HeightOneSpectrum (𝓞 E)) (y : finU (E := E) (n := n)), cLoc u' (y⁻¹).1 = (cLoc u' y.1)⁻¹ :=
     fun _ _ => map_inv _ _
   have hKb : ∀ k ∈ K, ∀ i j, nu ι (tens M k i j) ≤ ∏ v, D v := by
     intro k hk i j
@@ -374,14 +374,14 @@ private theorem core (hn : 1 ≤ n) (σ : Submodule ℂ (UA E n → ℂ)) (hσ :
   have hprod : ∀ m : ℕ, (∏ τ ∈ Ov ι w, B τ) ^ m = ∏ v, if u v = w then B (φ v) ^ m else 1 := by
     intro m
     rw [← Finset.prod_pow, himg, Finset.prod_image hinj.injOn, Finset.prod_filter]
-  have hLb : ∀ L : List (finU E n), (∀ x ∈ L, x ∈ s.subtype (· ∈ finU E n)) → ∀ i j,
+  have hLb : ∀ L : List (finU (E := E) (n := n)), (∀ x ∈ L, x ∈ s.subtype (· ∈ finU (E := E) (n := n))) → ∀ i j,
       nu ι (tens M L.prod i j) ≤ (∏ v, D v) * (∏ τ ∈ Ov ι w, B τ) ^ L.length := by
     intro L hL i j
     have hL' : ∀ x ∈ L.map Subtype.val, x ∈ s := by
       intro x hx
       obtain ⟨y, hy, rfl⟩ := List.mem_map.1 hx
       exact Finset.mem_subtype.1 (hL y hy)
-    have hp : (L.prod).1 = (L.map Subtype.val).prod := map_list_prod (finU E n).subtype L
+    have hp : (L.prod).1 = (L.map Subtype.val).prod := map_list_prod (finU (E := E) (n := n)).subtype L
     have hloc : (L.prod).1 ∈ locU n w := by
       rw [hp]
       exact Subgroup.list_prod_mem _ fun x hx => hsU x (hL' x hx)
@@ -408,7 +408,7 @@ private theorem core (hn : 1 ≤ n) (σ : Submodule ℂ (UA E n → ℂ)) (hσ :
         exact hD1 v
       · rw [nu_zero]
         exact hD0 v
-  refine absBound _ ι (finU E n) (GlobalTheory.BCT.ratFinU E n) K (∀ v, Fin (d v)) (tens M) F (s.subtype (· ∈ finU E n)) a
+  refine absBound _ ι (finU (E := E) (n := n)) (GlobalTheory.BCT.ratFinU E n) K (∀ v, Fin (d v)) (tens M) F (s.subtype (· ∈ finU (E := E) (n := n))) a
     (∏ τ ∈ Ov ι w, B τ) (∏ v, D v) (Finset.prod_nonneg fun τ _ => hB τ)
     (GlobalTheory.BCT.finite_doubleCoset_ratFinU_isOpen E n K hKo) (F_ne e f hf0 hfinf)
     (fun γ hγ g => F_aut ψ hψ e f hleft hfinf γ hγ g) ?_ ?_ hKb hLb

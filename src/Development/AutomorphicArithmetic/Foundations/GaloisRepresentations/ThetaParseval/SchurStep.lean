@@ -64,7 +64,7 @@ abbrev cj : E →ₐ[maximalRealSubfield E] E := (IsCMField.complexConj E).toAlg
 structure IsBr {n : ℕ} (X : Spc (maximalRealSubfield E) E n) (e : GlobalTheory.UnitaryBC.UA E n ≃ₜ* UA (cj E) X.J) : Prop where
   rat : ∀ g, e g ∈ ratU (cj E) X.J ↔ g ∈ GlobalTheory.UnitaryBC.ratU E n
   inf : ∀ g, e g ∈ gInf (cj E) X ↔ g ∈ GlobalTheory.UnitaryBC.infU E n
-  fin : ∀ g, e g ∈ gOff (cj E) X ∅ ↔ g ∈ GlobalTheory.UnitaryBC.finU E n
+  fin : ∀ g, e g ∈ gOff (cj E) X ∅ ↔ g ∈ GlobalTheory.UnitaryBC.finU (E := E) (n := n)
   loc : ∀ (w : HeightOneSpectrum (𝓞 E)) g,
     e g ∈ locGrp (cj E) X (w.under (𝓞 (maximalRealSubfield E))) ↔ g ∈ GlobalTheory.UnitaryBC.locU n w
   emb : ∀ (w : InfinitePlace (maximalRealSubfield E)) (τ : EmbOver E w) g,

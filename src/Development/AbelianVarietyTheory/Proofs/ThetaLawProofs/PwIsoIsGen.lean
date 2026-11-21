@@ -35,16 +35,20 @@ theorem chart_le (j : (L.pull φ).ι) : (L.pull φ).U j ≤ φ ⁻¹ᵁ L.U (j P
 theorem Via.unique (hL : L.IsLB) {w : LB.Iso L' (L.pull φ)} {l : ℕ} {a' b' : ∀ i, Γ(Y, L'.U i)}
     {a : ∀ j, Γ(X, L.U j)} (ha : Via w l a' a) (hb : Via w l b' a) : a' = b' := by
   funext i
-  refine fn_ext fun y hy => ?_
-  obtain ⟨j, hj⟩ := exists_chart (DVR.linComb_isLB L hL (fun _ : PUnit => φ) (fun _ => 1)) y
+  apply TopCat.Presheaf.section_ext Y.sheaf (L'.U i) (a' i) (b' i)
+  intro y hy
+  have hc := (DVR.linComb_isLB L hL (fun _ : PUnit => φ) (fun _ => 1)).cover
+  have hyc : y ∈ ⨆ j, (L.pull φ).U j := by rw [hc]; trivial
+  obtain ⟨j, hj⟩ := TopologicalSpace.Opens.mem_iSup.mp hyc
   have h : (L.pull φ).U j ⊓ L'.U i ≤ φ ⁻¹ᵁ L.U (j PUnit.unit) := inf_le_left.trans (chart_le j)
   have e := (ha j i h).symm.trans (hb j i h)
   have hu : IsUnit ((show Γ(Y, (L.pull φ).U j ⊓ L'.U i) from (w.s (j, i)).val) ^ l) :=
     (Units.isUnit (w.s (j, i))).pow l
   have e' := hu.mul_left_cancel e
-  have hm : (𝟙 Y : Y ⟶ Y) y ∈ (L.pull φ).U j ⊓ L'.U i := ⟨hj, hy⟩
-  exact (gs_res (𝟙 Y) y inf_le_right hm _).symm.trans ((congrArg (gs (𝟙 Y) y _) e').trans
-    (gs_res (𝟙 Y) y inf_le_right hm _))
+  have hm : y ∈ (L.pull φ).U j ⊓ L'.U i := ⟨hj, hy⟩
+  rw [← TopCat.Presheaf.germ_res_apply _ (homOfLE inf_le_right) y hm,
+      ← TopCat.Presheaf.germ_res_apply _ (homOfLE inf_le_right) y hm]
+  exact congrArg (fun v => (Y.presheaf.germ _ y hm).hom v) e'
 
 def pwIso {A B : LB Y} (w : LB.Iso A B) (t : ℤ) : LB.Iso (pw A t) (pw B t) := ⟨fun p => w.s p ^ t⟩
 
@@ -84,6 +88,16 @@ def pullSec (φ : Y ⟶ X) {t : ℤ} (s : LB.Sec (pw L t)) : LB.Sec (pw (L.pull 
 
 theorem exists_via (hL : L.IsLB) (hL' : L'.IsLB) {w : LB.Iso L' (L.pull φ)} (hw : w.IsGen) (l : ℕ)
     (s : LB.Sec (pw L (l : ℤ))) : ∃ s' : LB.Sec (pw L' (l : ℤ)), Via w l s'.f s.f := by
+  have isLB_pw {Z : Scheme.{0}} {H : LB Z} (hH : H.IsLB) (t : ℤ) : (pw H t).IsLB := by
+    refine ⟨hH.cover, ?_, ?_⟩
+    · intro i
+      have e := congrArg (· ^ t) (hH.g_self i)
+      simp only [one_zpow, ← map_zpow] at e
+      exact e
+    · intro i j k
+      have e := congrArg (· ^ t) (hH.cocycle i j k)
+      simp only [mul_zpow, ← map_zpow] at e
+      exact e
   have hu := pwIso_isGen hw (l : ℤ)
   have hA := isLB_pw hL' (l : ℤ)
   have hB := isLB_pw (DVR.linComb_isLB L hL (fun _ : PUnit => φ) (fun _ => 1)) (l : ℤ)

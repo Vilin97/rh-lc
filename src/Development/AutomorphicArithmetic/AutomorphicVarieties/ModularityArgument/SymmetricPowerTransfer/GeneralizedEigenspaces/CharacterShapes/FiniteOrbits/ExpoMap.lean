@@ -44,14 +44,14 @@ private theorem map_inj {k k' : Type} [Field k] [Field k'] {n : ℕ} (i : k ≃+
   have := congrArg (fun x : GL (Fin n) k' => (x : Matrix (Fin n) (Fin n) k') a b) h
   simpa using this
 
-private theorem levCore (hF : Fit T S VL A) {n : ℕ} (x : UA L n) (hx : x ∈ finU L n)
+private theorem levCore (hF : Fit T S VL A) {n : ℕ} (x : UA L n) (hx : x ∈ finU (E := L) (n := n))
     (P : Pl (Lp L) → Prop) (E : ∀ v, v ∈ A.Sg → GL (Fin n) (Kv v))
     (hK : ∀ v, P v ↔ ∀ w, un w = v → cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n))
     (hE : ∀ w (_ : w ∈ S) (h : IsSplitAt w) (hv : un w ∈ A.Sg),
       cLoc w x = Matrix.GeneralLinearGroup.map ((T w h).i : Kv (un w) →+* Kw w) (E (un w) hv)) :
     ((∀ v (h : v ∈ A.Sg), E v h ∈ (A.V v).J n) ∧ ∀ v ∉ A.Sg, P v) ↔ x ∈ lev (Kall L n) S VL := by
   have memL : x ∈ lev (Kall L n) S VL ↔
-      (x ∈ finU L n ∧ ∀ w, cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n)) ∧ ∀ w ∈ S, cLoc w x ∈ (VL w).J n := by
+      (x ∈ finU (E := L) (n := n) ∧ ∀ w, cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n)) ∧ ∀ w ∈ S, cLoc w x ∈ (VL w).J n := by
     simp [lev, Kall, Subgroup.mem_inf, Subgroup.mem_iInf]
   rw [memL]
   have loc : ∀ w (hw : w ∈ S) (h : IsSplitAt w) (hv : un w ∈ A.Sg),
@@ -77,7 +77,7 @@ private theorem levCore (hF : Fit T S VL A) {n : ℕ} (x : UA L n) (hx : x ∈ f
     obtain ⟨w0, hw0, rfl⟩ := (hF.sg _).1 hv
     exact (loc w0 hw0 (hF.pl.split w0 hw0) hv).1 (h2 w0 hw0)
 
-private theorem elCore (hF : Fit T S VL A) {n : ℕ} (x : UA L n) (hx : x ∈ finU L n)
+private theorem elCore (hF : Fit T S VL A) {n : ℕ} (x : UA L n) (hx : x ∈ finU (E := L) (n := n))
     (O : Pl (Lp L) → Prop) (E : ∀ v, v ∈ A.Sg → GL (Fin n) (Kv v)) (d : ParN (Lp L) n)
     (hO : ∀ v, O v ↔ ∀ w, un w = v → cLoc w x = 1)
     (hE : ∀ w (_ : w ∈ S) (h : IsSplitAt w) (hv : un w ∈ A.Sg),
@@ -146,7 +146,7 @@ private theorem hsS (w : Plc L) (hw : w ∈ S) (h : IsSplitAt w) (hv : un w ∈ 
       Matrix.GeneralLinearGroup.map ((T w h).i : Kv (un w) →+* Kw w) (eD (A.hs _ hv) ((g : DA B.Δ).1 (un w))) := by
   rw [hB.splS w (T w h) g, eD_congr (hF.s w hw h) (A.hs _ hv) (T w h).hs]
 
-private theorem hfS (g : SA B.Δ) : (B.bS g : UA L 2) ∈ finU L 2 := (B.bS g).2.1
+private theorem hfS (g : SA B.Δ) : (B.bS g : UA L 2) ∈ finU (E := L) (n := 2) := (B.bS g).2.1
 
 include hB hF in
 private theorem cl1 (hA : A.Ok) (g : GA B.Δ) : g ∈ A.dat.UG ↔ (B.bG g : UA L 3) ∈ lev (Kall L 3) S VL :=

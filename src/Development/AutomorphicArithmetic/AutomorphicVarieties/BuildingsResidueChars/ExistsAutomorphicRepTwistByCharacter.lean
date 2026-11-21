@@ -45,8 +45,8 @@ private theorem form_mulCh (ho : IsOpen (χ.ker : Set (UA E n))) (hr : ∀ g ∈
   refine ⟨(cont_ch χ ho).mul h.cont, fun γ hγ g => ?_, ?_, ?_⟩
   · change (χ (γ * g) : ℂ) * φ (γ * g) = (χ g : ℂ) * φ g
     rw [map_mul, hr γ hγ, one_mul, h.left γ hγ]
-  · refine isOpen_stab_of_mem_nhds ((RU E n).comp (finU E n).subtype) (mulCh χ φ) ?_
-    have h2 : IsOpen ((Subtype.val : finU E n → UA E n) ⁻¹' (χ.ker : Set (UA E n))) := ho.preimage continuous_subtype_val
+  · refine isOpen_stab_of_mem_nhds ((RU E n).comp (finU (E := E) (n := n)).subtype) (mulCh χ φ) ?_
+    have h2 : IsOpen ((Subtype.val : finU (E := E) (n := n) → UA E n) ⁻¹' (χ.ker : Set (UA E n))) := ho.preimage continuous_subtype_val
     refine Filter.mem_of_superset ((h.level.inter h2).mem_nhds ⟨?_, ?_⟩) fun k hk => ?_
     · change RU E n 1 φ = φ
       simp

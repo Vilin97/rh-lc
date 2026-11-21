@@ -11,7 +11,7 @@ open UpperTheory.Gal.Gen (IsLevel fixedBy)
 open UpperTheory.Gal.Wt
 
 private theorem cEmb_fin {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} (τ : E →+* ℂ) {c : UA E n}
-    (hc : c ∈ finU E n) : cEmb τ c = 1 := by
+    (hc : c ∈ finU (E := E) (n := n)) : cEmb τ c = 1 := by
   have : cInf c = 1 := hc
   simp [cEmb, this]
 

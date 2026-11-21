@@ -64,9 +64,9 @@ def Tower : Prop :=
       ∀ n, ∀ x ∈ J 0, x ^ l ^ n ∈ J n
 
 structure IsLevel {E : Type} [Field E] [NumberField E] [IsCMField E] {a : ℕ} (C : Subgroup (UA E a)) : Prop where
-  fin : C ≤ finU E a
+  fin : C ≤ finU (E := E) (n := a)
   compact : IsCompact (C : Set (UA E a))
-  isOpen : ∃ N : Set (UA E a), IsOpen N ∧ 1 ∈ N ∧ N ∩ finU E a ⊆ C
+  isOpen : ∃ N : Set (UA E a), IsOpen N ∧ 1 ∈ N ∧ N ∩ finU (E := E) (n := a) ⊆ C
 
 def LevFacts : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a : ℕ) (w₀ : HeightOneSpectrum (𝓞 E)), IsSplitAt w₀ →
@@ -123,7 +123,7 @@ def Cover : Prop :=
 def Sep : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a : ℕ) (w₀ : HeightOneSpectrum (𝓞 E)), IsSplitAt w₀ →
     ∀ K : Subgroup (UA E a), IsLevelAway w₀ K → ∀ J : ℕ → Subgroup (GL (Fin a) (w₀.adicCompletion E)), IsTower J →
-    ∀ S T : Finset (UA E a), (∀ g ∈ T, g ∈ finU E a ∧ ∀ u, ¬ Apart u w₀ → cLoc u g = 1) →
+    ∀ S T : Finset (UA E a), (∀ g ∈ T, g ∈ finU (E := E) (n := a) ∧ ∀ u, ¬ Apart u w₀ → cLoc u g = 1) →
     (∀ g ∈ T, ∀ g' ∈ T, g⁻¹ * g' ∈ K → g = g') → ∃ n₀, ∀ n, n₀ ≤ n →
       Separates (lev K w₀ (J n)) (fun y : S × {j : UA E a // j ∈ locU a w₀ ∧ cLoc w₀ j ∈ J 0} => y.1.1 * y.2.1) T
 
@@ -147,13 +147,13 @@ def PartFacts : Prop :=
     (P : Submodule ℂ (UA E a → ℂ) → Prop),
     fixedBy W C ≤ part W C P ⊔ part W C (fun U => ¬ P U) ∧ part W C P ≤ fixedBy W C ∧
     (∀ K : Subgroup (UA E a), K ≤ C → part W C P ≤ part W K P) ∧
-    (∀ x : finU E a, (∀ c ∈ C, x.1⁻¹ * c * x.1 ∈ C) → ∀ f ∈ part W C P, algRep W x f ∈ part W C P) ∧
+    (∀ x : finU (E := E) (n := a), (∀ c ∈ C, x.1⁻¹ * c * x.1 ∈ C) → ∀ f ∈ part W C P, algRep W x f ∈ part W C P) ∧
     ∀ G ∈ part W C P, ∃ (I : Finset (AutSub E a)) (F : AutSub E a → algForms W),
       (∀ π ∈ I, P π.V ∧ F π ∈ π.finPart W ∧ F π ∈ fixedBy W C ∧ F π ≠ 0) ∧ G = ∑ π ∈ I, F π
 
 def StepCore : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (a : ℕ) (W : Wt E a)
-    (C C' : Subgroup (UA E a)), C ≤ finU E a → ∀ (H : Type) [Group H] [Finite H], IsPGroup l H → ∀ lam : C →* H,
+    (C C' : Subgroup (UA E a)), C ≤ finU (E := E) (n := a) → ∀ (H : Type) [Group H] [Finite H], IsPGroup l H → ∀ lam : C →* H,
     Function.Surjective lam → C' ≤ C → (∀ c : C, c.1 ∈ C' ↔ lam c = 1) → ∀ ℓ : UA E a → H,
     (∀ g, ∀ x ∈ infU E a, ℓ (g * x) = ℓ g) → (∀ g (c : C), ℓ (g * c) = ℓ g * lam c) → (∀ φ : H → ℂ, IsAutFormU fun g => φ (ℓ g)) →
     ∀ P : Submodule ℂ (UA E a → ℂ) → Prop, FiniteDimensional ℂ (part W C' fun U => ¬ P U) →

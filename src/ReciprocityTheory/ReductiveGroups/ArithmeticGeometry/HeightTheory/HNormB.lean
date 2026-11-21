@@ -31,9 +31,9 @@ noncomputable def fz (w : AddValuation L (WithTop ℤ)) : ℕ :=
 theorem local_norm [FiniteDimensional F L] [Algebra.IsSeparable F L]
     (p : Ideal R) [p.IsPrime] (hp : p.height = 1) (g : R) (hg : p = Ideal.span {g})
     (y : L) (hy : y ≠ 0) :
-    (OverR (F := F) (L := L) p).Finite ∧ ∃ a s : R, a ∉ p ∧ s ∉ p ∧
+    (OverR (R := R) (F := F) (L := L) p).Finite ∧ ∃ a s : R, a ∉ p ∧ s ∉ p ∧
       Algebra.norm F y * algebraMap R F s = algebraMap R F g ^
-        (∑ᶠ (w : AddValuation L (WithTop ℤ)) (_ : w ∈ OverR (F := F) p),
+        (∑ᶠ (w : AddValuation L (WithTop ℤ)) (_ : w ∈ OverR (R := R) (F := F) (L := L) p),
           (fz (F := F) w : ℤ) * WithTop.untopD 0 (w y)) * algebraMap R F a := by
   classical
   obtain ⟨hdvr, hirr⟩ := ValUFD.loc_dvr p hp g hg
@@ -54,7 +54,7 @@ theorem local_norm [FiniteDimensional F L] [Algebra.IsSeparable F L]
   haveI : IsScalarTower R (Localization.AtPrime p) L := IsScalarTower.of_algebraMap_eq
     (fun x => congrArg (algebraMap F L)
       (IsLocalization.lift_eq (M := p.primeCompl) (S := Localization.AtPrime p) hunit x).symm)
-  have hset : OverR (F := F) p = ValPl.PlacesOver (Localization.AtPrime p) L := by
+  have hset : OverR (R := R) (F := F) (L := L) p = ValPl.PlacesOver (Localization.AtPrime p) L := by
     ext w
     simp only [OverR, ValPl.PlacesOver, Set.mem_ofPred_eq]
     exact and_congr_right fun _ => ValPl.placesOver_iff_loc (R := R) (O := Localization.AtPrime p) (L := L) p w
@@ -89,7 +89,7 @@ theorem local_norm [FiniteDimensional F L] [Algebra.IsSeparable F L]
 
 theorem fin_support [FiniteDimensional F L] (y : L) (hy : y ≠ 0) :
     {p : Ideal R | p.IsPrime ∧ p.height = 1 ∧
-      ∃ w ∈ OverR (F := F) (L := L) p, w y ≠ 0}.Finite := by
+      ∃ w ∈ OverR (R := R) (F := F) (L := L) p, w y ≠ 0}.Finite := by
   classical
   letI : Algebra R L := ((algebraMap F L).comp (algebraMap R F)).toAlgebra
   haveI : IsScalarTower R F L := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
@@ -99,7 +99,8 @@ theorem fin_support [FiniteDimensional F L] (y : L) (hy : y ≠ 0) :
   obtain ⟨e, he0, he⟩ := (halg y⁻¹).exists_integral_multiple
   have hD0 : d * e ≠ 0 := mul_ne_zero hd0 he0
 
-  have key : ∀ p : Ideal R, (∃ w ∈ OverR (F := F) (L := L) p, w y ≠ 0) → d * e ∈ p := by
+  have key : ∀ p : Ideal R, (∃ w ∈ OverR (R := R) (F := F) (L := L) p, w y ≠ 0) →
+      d * e ∈ p := by
     rintro p ⟨w, hw, hwy⟩
     simp only [OverR, Set.mem_ofPred_eq] at hw
     by_contra hde
@@ -118,7 +119,7 @@ theorem fin_support [FiniteDimensional F L] (y : L) (hy : y ≠ 0) :
       rw [← AddValuation.map_mul w y y⁻¹, mul_inv_cancel₀ hy, AddValuation.map_one]
     exact hwy (wt_add_eq_zero h1 h2 h3)
   have hsub : {p : Ideal R | p.IsPrime ∧ p.height = 1 ∧
-      ∃ w ∈ OverR (F := F) (L := L) p, w y ≠ 0} ⊆
+      ∃ w ∈ OverR (R := R) (F := F) (L := L) p, w y ≠ 0} ⊆
       (fun q : R => Ideal.span {q}) '' {q | q ∈ UniqueFactorizationMonoid.factors (d * e)} := by
     rintro p ⟨hp, hh, hw⟩
     haveI := hp

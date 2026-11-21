@@ -20,7 +20,7 @@ theorem mem_GLint_of_entries_inv {L : Type} [Field L] {k : ℕ} (O : Subring L) 
   · simp only [Matrix.map_mul, Matrix.map_one _ (map_zero _) (map_one _)]
     exact g.inv_mul
 
-theorem eventually_mem_KL : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, ∀ x : finU E n,
+theorem eventually_mem_KL : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, ∀ x : finU (E := E) (n := n),
     ∀ᶠ w in cofinite, toSub (UL n w) (cLoc w (x : UA E n)) ∈ KL n w := by
   intro E _ _ _ _ n x
   have h : ∀ y : FiniteAdeleRing (𝓞 E) E, ∀ᶠ w in cofinite, pLoc E w y ∈ Formalism.UG.Ov E w := fun y => y.2

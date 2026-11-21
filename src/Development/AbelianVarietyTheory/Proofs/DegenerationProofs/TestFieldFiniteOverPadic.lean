@@ -229,6 +229,10 @@ theorem _root_.GlobalTheory.ZH.FieldOfTest.exists_finiteDimensional_of_isComplet
       simp [A]
     rw [hA]
     apply isClosedMap_snd_of_compactSpace
+    change IsClosed ({q : (Fin (n + 1) → ℤ_[p]) × L | ∃ i, ‖q.1 i‖ = 1} ∩
+      {q : (Fin (n + 1) → ℤ_[p]) × L |
+        ∑ i, algebraMap ℚ_[p] (PadicAlgCl p) (q.1 i : ℚ_[p]) *
+          (q.2 : PadicAlgCl p) ^ (i : ℕ) = 0})
     apply IsClosed.inter
     · have hset : {q : (Fin (n + 1) → ℤ_[p]) × L | ∃ i, ‖q.1 i‖ = 1} =
           ⋃ i, {q : (Fin (n + 1) → ℤ_[p]) × L | ‖q.1 i‖ = 1} := by
@@ -240,7 +244,7 @@ theorem _root_.GlobalTheory.ZH.FieldOfTest.exists_finiteDimensional_of_isComplet
           isClosed_eq (continuous_norm.comp ((continuous_apply i).comp continuous_fst))
             continuous_const
       exact hcl
-    · exact isClosed_eq (continuous_finset_sum _ fun i _ =>
+    · exact isClosed_eq (continuous_finsetSum _ fun i _ =>
         (hc.comp ((continuous_apply i).comp continuous_fst)).mul
           ((continuous_subtype_val.comp continuous_snd).pow _)) continuous_const
   have hcover : ⋃ n, A n = Set.univ := by
@@ -256,6 +260,7 @@ theorem _root_.GlobalTheory.ZH.FieldOfTest.exists_finiteDimensional_of_isComplet
       rw [h0, norm_zero] at this
       exact Polynomial.leadingCoeff_eq_zero.1 (norm_le_zero_iff.1 this)
     let c : Fin (f.natDegree + 1) → ℤ_[p] := fun i => ⟨f.coeff i / f.coeff i₀, by
+      rw [PadicInt.mem_subring_iff]
       rw [norm_div]
       exact div_le_one_of_le₀ (hmax i (Finset.mem_range.2 i.2)) (norm_nonneg _)⟩
     refine ⟨f.natDegree, c, ⟨⟨i₀, Finset.mem_range.1 hi₀⟩, ?_⟩, ?_⟩

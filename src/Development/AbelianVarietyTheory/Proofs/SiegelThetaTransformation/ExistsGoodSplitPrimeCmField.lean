@@ -89,7 +89,7 @@ private theorem exists_prime_dvd_eval_not_dvd_of_natDegree_pos (h : ℤ[X]) (hh 
     rw [hr, Ne, comp_eq_zero_iff]
     rintro (h0 | ⟨-, h1⟩)
     · exact hq0 h0
-    · have := congrArg (coeff · 1) h1
+    · have := congrArg (AddMonoidAlgebra.coeff · 1) h1
       simp only [coeff_C_mul_X, coeff_C] at this
       simp at this
       exact this.elim hc hM
@@ -146,7 +146,7 @@ private theorem span_prime_sup_span_proper_of_dvd_norm {E : Type} [Field E] [Num
     rcases hu with h | h <;> omega
   · set I := Ideal.span {x}
     have hcard : Nat.card (𝓞 E ⧸ I) = (Algebra.norm ℤ x).natAbs := by
-      rw [← Ideal.absNorm_span_singleton]; exact (Nat.add_zero _).symm
+      rw [← Ideal.absNorm_span_singleton]; exact (Ideal.absNorm_eq_natCard I).symm
     have hne : (Algebra.norm ℤ x).natAbs ≠ 0 := by
       rw [Int.natAbs_ne_zero, Ne, Algebra.norm_eq_zero_iff]; exact hx
     haveI : Finite (𝓞 E ⧸ I) := Nat.finite_of_card_ne_zero (hcard ▸ hne)
@@ -232,7 +232,7 @@ theorem _root_.GlobalTheory.SW.SplitPrime.absNorm_prime {E : Type} [Field E] [Nu
     (P : Ideal (𝓞 E)) (hP : P.IsMaximal)
     (hs : Function.Surjective (Int.castRingHom (𝓞 E ⧸ P))) : (Ideal.absNorm P).Prime := by
   letI := Ideal.Quotient.field P
-  have hN : Ideal.absNorm P = Nat.card (𝓞 E ⧸ P) := Nat.add_zero _
+  have hN : Ideal.absNorm P = Nat.card (𝓞 E ⧸ P) := Ideal.absNorm_eq_natCard P
   obtain ⟨p, hp⟩ := CharP.exists (𝓞 E ⧸ P)
   haveI := hp
   have hp' : p.Prime := (CharP.char_is_prime_or_zero (𝓞 E ⧸ P) p).resolve_right (by

@@ -43,8 +43,8 @@ theorem UpperTheory.Gal.Wt.autCrit_of :
     have := hkey g _ hy
     rw [mul_inv_cancel_left] at this
     exact this.symm
-  · refine GlobalTheory.CuspRep.isOpen_stab_of_mem_nhds ((RU E a).comp (finU E a).subtype) _ ?_
-    have ho : IsOpen ((Subtype.val : finU E a → UA E a) ⁻¹' Wn) := hWo.preimage continuous_subtype_val
+  · refine GlobalTheory.CuspRep.isOpen_stab_of_mem_nhds ((RU E a).comp (finU (E := E) (n := a)).subtype) _ ?_
+    have ho : IsOpen ((Subtype.val : finU (E := E) (n := a) → UA E a) ⁻¹' Wn) := hWo.preimage continuous_subtype_val
     refine Filter.mem_of_superset (ho.mem_nhds hW1) fun k hk => ?_
     have hk' : (k : UA E a) ∈ C := by
       refine hNC ⟨?_, k.2⟩

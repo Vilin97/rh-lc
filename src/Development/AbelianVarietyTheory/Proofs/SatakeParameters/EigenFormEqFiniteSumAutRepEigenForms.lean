@@ -65,9 +65,9 @@ theorem values_mem_sSup (W : Wt E n) [Nontrivial W.Sp] (f : W.Sp →ₗ[ℂ] (UA
     rw [hB2 _ (ρC g x).2 _ (ρC g y).2, hB2 _ x.2 _ y.2]
     exact form_inv B hi W.rep g x y
   obtain ⟨K0, hK0o, hK0c⟩ := GlobalTheory.DefU.Petersson.exists_isOpen_isCompact_finU E n
-  have hsm : ∀ x : C, IsOpen {k : finU E n | ρC k x = x} := fun x => rep_smooth W.rep x
-  let K : Subgroup (finU E n) := K0 ⊓ GlobalTheory.AdmissibleProjection.stab ρC ⟨f, hf⟩
-  have hKo : IsOpen (K : Set (finU E n)) := by
+  have hsm : ∀ x : C, IsOpen {k : finU (E := E) (n := n) | ρC k x = x} := fun x => rep_smooth W.rep x
+  let K : Subgroup (finU (E := E) (n := n)) := K0 ⊓ GlobalTheory.AdmissibleProjection.stab ρC ⟨f, hf⟩
+  have hKo : IsOpen (K : Set (finU (E := E) (n := n))) := by
     rw [Subgroup.coe_inf]
     exact hK0o.inter (hsm _)
   let F : Submodule ℂ C :=
@@ -79,11 +79,11 @@ theorem values_mem_sSup (W : Wt E n) [Nontrivial W.Sp] (f : W.Sp →ₗ[ℂ] (UA
   haveI := rep_fd W.rep K hKo
   haveI : FiniteDimensional ℂ F := by
     let ι : F →ₗ[ℂ] fixed (rep W.rep) K := F.subtype.codRestrict _ (fun w k => by
-      show rep W.rep (k : finU E n) w.1 = ((1 : ℂˣ) : ℂ) • w.1
+      show rep W.rep (k : finU (E := E) (n := n)) w.1 = ((1 : ℂˣ) : ℂ) • w.1
       rw [Units.val_one, one_smul]
       exact w.2 k k.2)
     exact FiniteDimensional.of_injective ι (fun a b h => Subtype.ext (congrArg (fun z : fixed (rep W.rep) K => (z : C)) h))
-  have horb : ∀ y : C, ((fun k => ρC k y) '' (K : Set (finU E n))).Finite := by
+  have horb : ∀ y : C, ((fun k => ρC k y) '' (K : Set (finU (E := E) (n := n)))).Finite := by
     intro y
     refine (GlobalTheory.AdmissibleProjection.orbit_finite ρC hsm K0 hK0c y).subset ?_
     rintro _ ⟨k, hk, rfl⟩

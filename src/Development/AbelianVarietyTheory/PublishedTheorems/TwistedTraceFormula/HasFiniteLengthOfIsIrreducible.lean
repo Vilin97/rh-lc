@@ -70,9 +70,9 @@ theorem hasFiniteLength_iff_wellFounded (ρ : Representation F G V) :
   rw [HasFiniteLength, isFiniteLength_iff_isNoetherian_isArtinian, isNoetherian_iff', isArtinian_iff]
   refine and_congr ⟨fun _ => φ.toOrderEmbedding.wellFoundedGT,
     fun _ => φ.symm.toOrderEmbedding.wellFoundedGT⟩ ⟨fun h => ?_, fun _ => ?_⟩
-  · haveI : WellFoundedLT (Submodule (MonoidAlgebra F G) ρ.asModule) := ⟨h⟩
+  · haveI : WellFoundedLT (Submodule (MonoidAlgebra F G) ρ.asModule) := h
     exact φ.toOrderEmbedding.wellFoundedLT
-  · exact φ.symm.toOrderEmbedding.wellFoundedLT.wf
+  · exact φ.symm.toOrderEmbedding.wellFoundedLT
 
 theorem hasFiniteLength_comp_iff (ρ : Representation F G V) (s : H →* G) (hs : Function.Surjective s) :
     HasFiniteLength (ρ.comp s : Representation F H V) ↔ HasFiniteLength ρ := by

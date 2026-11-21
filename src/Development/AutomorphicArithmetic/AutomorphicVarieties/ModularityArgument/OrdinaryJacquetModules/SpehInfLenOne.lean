@@ -32,7 +32,7 @@ private theorem ev_offL {K : Type} [Field K] [NumberField K] (l : ℕ) [Fact l.P
 private theorem unram_ev {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} {σ : Submodule ℂ (UA E n → ℂ)}
     (hσ : IsAutRepU σ) : ∀ᶠ w : HeightOneSpectrum (𝓞 E) in Filter.cofinite, IsUnramU σ w := by
   obtain ⟨φ, hφ, hφ0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hσ.ne_bot
-  let L : Subgroup (finU E n) :=
+  let L : Subgroup (finU (E := E) (n := n)) :=
     { carrier := {k | RU E n k φ = φ}
       one_mem' := by simp
       mul_mem' := by
@@ -44,7 +44,7 @@ private theorem unram_ev {E : Type} [Field E] [NumberField E] [IsCMField E] {n :
         simp only [Set.mem_setOf_eq] at *
         conv_lhs => rw [← ha]
         rw [← Module.End.mul_apply, ← map_mul, Subgroup.coe_inv, inv_mul_cancel, map_one, Module.End.one_apply] }
-  have hLo : IsOpen (L : Set (finU E n)) := (hσ.aut φ hφ).level
+  have hLo : IsOpen (L : Set (finU (E := E) (n := n))) := (hσ.aut φ hφ).level
   filter_upwards [GlobalTheory.T.eventually_localIntegralPoints_mem_openSubgroup_definiteUnitary E n L hLo] with w hw
   exact ⟨φ, hφ, hφ0, fun x hx hxK => hw x hx hxK hx.1⟩
 

@@ -178,8 +178,7 @@ theorem extForm_apply (hβ : IsBaseChange B β) (f : Module.Dual R L) (y : L) :
 
 theorem expand (hβ : IsBaseChange B β) (he : ∀ y, ∑ k, w k y • e k = y) (l : L') :
     l = ∑ k, extForm hβ (w k) l • β (e k) := by
-  refine hβ.inductionOn l (fun l => l = ∑ k, extForm hβ (w k) l • β (e k)) ?_ ?_ ?_ ?_
-  · simp
+  refine hβ.inductionOn l ?_ ?_ ?_
   · intro y
     simp only [extForm_apply, algebraMap_smul]
     conv_lhs => rw [← he y]

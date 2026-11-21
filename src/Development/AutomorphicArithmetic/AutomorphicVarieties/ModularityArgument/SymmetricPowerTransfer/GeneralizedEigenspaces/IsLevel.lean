@@ -41,11 +41,11 @@ variable (L) in
 def infC (n : ℕ) : UA L n →* (InfinitePlace L → GL (Fin n) ℂ) := Pi.monoidHom fun v => cEmb v.embedding
 
 
-def Kall (n : ℕ) : Subgroup (UA L n) := finU L n ⊓ ⨅ w : Plc L, (GlobalTheory.LFun.KGL w (n := n)).comap (cLoc w)
+def Kall (n : ℕ) : Subgroup (UA L n) := finU (E := L) (n := n) ⊓ ⨅ w : Plc L, (GlobalTheory.LFun.KGL w (n := n)).comap (cLoc w)
 
 variable {n : ℕ}
 
-def IsLevel (U : Subgroup (UA L n)) : Prop := U ≤ Kall L n ∧ IsOpen {x : finU L n | (x : UA L n) ∈ U}
+def IsLevel (U : Subgroup (UA L n)) : Prop := U ≤ Kall L n ∧ IsOpen {x : finU (E := L) (n := n) | (x : UA L n) ∈ U}
 
 def lev (U : Subgroup (UA L n)) (S : Finset (Plc L)) (V : ∀ w : Plc L, Sig.Lev (Kw w)) : Subgroup (UA L n) :=
   U ⊓ ⨅ w ∈ S, ((V w).J n).comap (cLoc w)

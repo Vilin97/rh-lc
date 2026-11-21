@@ -84,7 +84,7 @@ theorem integral_conjSrc (x : UA E n) (u : Pl E) (h : cLoc u x ∈ GlobalTheory.
   rw [map_inv, map_inv, inv_inv] at h2
   exact h2 ▸ h.1 j i
 
-theorem mem_globLev (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w)) (k : finU E n) :
+theorem mem_globLev (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w)) (k : finU (E := E) (n := n)) :
     k ∈ globLev S K' ↔ ∀ w ∈ S, (⟨cLoc w k.1, cLoc_mem_UL w k.1⟩ : UL n w) ∈ K' w := by
   simp only [globLev, Subgroup.mem_iInf, Subgroup.mem_comap]
   refine forall₂_congr fun w _ => ⟨?_, fun h => ⟨_, h, rfl⟩⟩
@@ -94,8 +94,8 @@ theorem mem_globLev (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w)) (k :
 
 
 variable (E n) in
-def finPart : finU E n →* GL (Fin n) (Af E) :=
-  (GeneralLinearGroup.map (pFin E)).comp ((UA E n).subtype.comp (finU E n).subtype)
+def finPart : finU (E := E) (n := n) →* GL (Fin n) (Af E) :=
+  (GeneralLinearGroup.map (pFin E)).comp ((UA E n).subtype.comp (finU (E := E) (n := n)).subtype)
 
 theorem continuous_finPart : Continuous (finPart E n) :=
   (Continuous.units_map _ (continuous_id.matrix_map (continuous_snd : Continuous (pFin E)))).comp
@@ -125,7 +125,7 @@ theorem continuous_conj_ad : Continuous (conjAd E) :=
   ((continuous_infEq E).comp (continuous_star.comp continuous_pInf_ad)).prodMk
     ((continuous_conjFin _).comp continuous_snd)
 
-theorem isClosedEmbedding_finU : Topology.IsClosedEmbedding (fun x : finU E n => ((x : UA E n) : GA E n)) := by
+theorem isClosedEmbedding_finU : Topology.IsClosedEmbedding (fun x : finU (E := E) (n := n) => ((x : UA E n) : GA E n)) := by
   haveI : T2Space (FiniteAdeleRing (𝓞 E) E) :=
     inferInstanceAs (T2Space (RestrictedProduct (fun v : HeightOneSpectrum (𝓞 E) => v.adicCompletion E)
       (fun v => (v.adicCompletionIntegers E : Set (v.adicCompletion E))) Filter.cofinite))
@@ -136,7 +136,7 @@ theorem isClosedEmbedding_finU : Topology.IsClosedEmbedding (fun x : finU E n =>
       (g : Matrix (Fin n) (Fin n) (Ad E)) = 1}
     exact isClosed_eq (((Units.continuous_val.matrix_map continuous_conj_ad).matrix_transpose.matrix_mul
       continuous_const).matrix_mul Units.continuous_val) continuous_const
-  have h2 : IsClosed ((finU E n : Subgroup (UA E n)) : Set (UA E n)) := by
+  have h2 : IsClosed ((finU (E := E) (n := n) : Subgroup (UA E n)) : Set (UA E n)) := by
     haveI : T2Space (GL (Fin n) (Cinf E)) := Units.isEmbedding_embedProduct.t2Space
     have hc : Continuous (cInf (E := E) (n := n)) :=
       (Continuous.units_map _ (continuous_id.matrix_map continuous_pInf_ad)).comp continuous_subtype_val
@@ -154,10 +154,10 @@ theorem continuous_cLoc (w : Pl E) : Continuous (cLoc (n := n) w) :=
 theorem globLev_isOpen_isCompact_isLevel : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, 1 ≤ n →
     ∀ (S : Set (Pl E)), IsSection S → ∀ (K' : ∀ w : Pl E, Subgroup (UL n w)),
     IsLevelFam (fun w : Pl E => MonoidHom.id (UL n w)) (KL n) K' →
-    IsOpen (globLev S (KL n) : Set (finU E n)) ∧ IsCompact (globLev S (KL n) : Set (finU E n)) ∧
+    IsOpen (globLev S (KL n) : Set (finU (E := E) (n := n))) ∧ IsCompact (globLev S (KL n) : Set (finU (E := E) (n := n))) ∧
       IsLevel (MonoidHom.id _) (globLev S (KL n)) (globLev S K') := by
   intro E _ _ _ _ n _ S hS K' hK
-  have hO : IsOpen (globLev S (KL n) : Set (finU E n)) := by
+  have hO : IsOpen (globLev S (KL n) : Set (finU (E := E) (n := n))) := by
     rw [globLev_KL_eq hS]
     exact (AdelicGLn.isOpen_integralFiniteGL E n).preimage continuous_finPart
   have hle : globLev S K' ≤ globLev S (KL n) := fun k hk =>
@@ -171,9 +171,9 @@ theorem globLev_isOpen_isCompact_isLevel : ∀ (E : Type) [Field E] [NumberField
     · have h1 : GeneralLinearGroup.map (pInf E) ((x : UA E n) : GA E n) = 1 := x.2
       exact ga_ext (by rw [pInf_finGL, h1]) (by rw [pFin_finGL]; rfl)
   · have hfin : {w | w ∈ S ∧ K' w ≠ KL n w}.Finite := (Filter.eventually_cofinite.1 hK.2).subset fun w hw => hw.2
-    have e : (globLev S K' : Set (finU E n)) = (globLev S (KL n) : Set (finU E n)) ∩
+    have e : (globLev S K' : Set (finU (E := E) (n := n))) = (globLev S (KL n) : Set (finU (E := E) (n := n))) ∩
         ⋂ w ∈ {w | w ∈ S ∧ K' w ≠ KL n w},
-          (fun k : finU E n => (⟨cLoc w k.1, cLoc_mem_UL w k.1⟩ : UL n w)) ⁻¹' (K' w : Set (UL n w)) := by
+          (fun k : finU (E := E) (n := n) => (⟨cLoc w k.1, cLoc_mem_UL w k.1⟩ : UL n w)) ⁻¹' (K' w : Set (UL n w)) := by
       ext k
       simp only [Set.mem_inter_iff, Set.mem_iInter, Set.mem_preimage, SetLike.mem_coe]
       refine ⟨fun hk => ⟨hle hk, fun w hw => (mem_globLev S _ k).1 hk w hw.1⟩, fun hk => ?_⟩

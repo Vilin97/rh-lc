@@ -26,7 +26,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {a : ℕ}
 theorem rU_mul (x y : UA E a) (f : UA E a → ℂ) : RU E a (x * y) f = RU E a x (RU E a y f) := by
   rw [map_mul]; rfl
 
-theorem locU_le_finU (w : HeightOneSpectrum (𝓞 E)) : locU a w ≤ finU E a :=
+theorem locU_le_finU (w : HeightOneSpectrum (𝓞 E)) : locU a w ≤ finU (E := E) (n := a) :=
   fun _ hx => (Subgroup.mem_inf.1 hx).1
 
 theorem commute_of_apart {w u : HeightOneSpectrum (𝓞 E)} (h : Apart w u) {x y : UA E a}
@@ -125,7 +125,7 @@ theorem mend (U : Submodule ℂ (UA E a → ℂ)) (hU : IsAutRepU U) (w : Height
     intro g
     rw [← rU_mul, (hd g (r g) (hr g)).eq, mul_inv_cancel_left]
 
-  have hKf : K ≤ finU E a := hKw.trans (locU_le_finU w)
+  have hKf : K ≤ finU (E := E) (n := a) := hKw.trans (locU_le_finU w)
   haveI : CompactSpace K := isCompact_iff_compactSpace.1 hKc
   let K' : Subgroup K :=
     { carrier := {k | ∀ g ∈ c.support, RU E a (k : UA E a) (RU E a (r g) φ) = RU E a (r g) φ}
@@ -149,7 +149,7 @@ theorem mend (U : Submodule ℂ (UA E a → ℂ)) (hU : IsAutRepU U) (w : Height
     rw [e]
     refine isOpen_biInter_finset fun g _ => ?_
     have ho := (hU.aut _ (hU.stable (r g) φ hφU)).level
-    have hcont : Continuous fun k : K => (⟨(k : UA E a), hKf k.2⟩ : finU E a) :=
+    have hcont : Continuous fun k : K => (⟨(k : UA E a), hKf k.2⟩ : finU (E := E) (n := a)) :=
       continuous_subtype_val.subtype_mk _
     exact ho.preimage hcont
   haveI : Finite (K ⧸ K') := Subgroup.quotient_finite_of_isOpen K' hK'o
@@ -181,7 +181,7 @@ theorem fix_prod : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a : �
   intro E _ _ _ a U hU w₀ K hKl hKeq hKc hKint _ hφ'
   classical
   obtain ⟨φ₀, hφ₀U, hφ₀⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hU.ne_bot
-  let L : Subgroup (finU E a) :=
+  let L : Subgroup (finU (E := E) (n := a)) :=
     { carrier := {k | RU E a (k : UA E a) φ₀ = φ₀}
       mul_mem' := fun {x y} hx hy => by
         show RU E a ((x : UA E a) * (y : UA E a)) φ₀ = φ₀
@@ -195,7 +195,7 @@ theorem fix_prod : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (a : �
         have hx' : RU E a (x : UA E a) φ₀ = φ₀ := hx
         calc _ = RU E a ((x : UA E a)⁻¹) (RU E a (x : UA E a) φ₀) := by rw [hx']
           _ = _ := by rw [← rU_mul, inv_mul_cancel, map_one]; rfl }
-  have hLo : IsOpen (L : Set (finU E a)) := (hU.aut φ₀ hφ₀U).level
+  have hLo : IsOpen (L : Set (finU (E := E) (n := a))) := (hU.aut φ₀ hφ₀U).level
   have hev := GlobalTheory.BCT.GlobLev.eventually_locU_mem E a L hLo
   have hgood : ∀ᶠ w in Filter.cofinite, ∀ x ∈ K w, RU E a x φ₀ = φ₀ := by
     filter_upwards [hev, hKint] with w h1 h2 x hx

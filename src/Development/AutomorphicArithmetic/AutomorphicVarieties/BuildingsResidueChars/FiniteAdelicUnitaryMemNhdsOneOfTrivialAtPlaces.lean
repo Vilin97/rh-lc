@@ -11,10 +11,10 @@ open NumberField IsDedekindDomain GlobalTheory.CuspRep GlobalTheory.UnitaryBC Fo
 open scoped TensorProduct
 
 theorem UpperTheory.finiteAdelicUnitary_mem_nhds_one_of_trivial_at_places :
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (T : Set (HeightOneSpectrum (𝓞 E))), T.Finite → ∀ U ∈ nhds (1 : finU E n), ∃ S : Finset (HeightOneSpectrum (𝓞 E)), ∀ k : finU E n, (∀ u ∉ T, cLoc u (k : UA E n) ∈ GlobalTheory.LFun.KGL u (n := n)) → (∀ u ∈ S, cLoc u (k : UA E n) = 1) → k ∈ U := by
+    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (T : Set (HeightOneSpectrum (𝓞 E))), T.Finite → ∀ U ∈ nhds (1 : finU (E := E) (n := n)), ∃ S : Finset (HeightOneSpectrum (𝓞 E)), ∀ k : finU (E := E) (n := n), (∀ u ∉ T, cLoc u (k : UA E n) ∈ GlobalTheory.LFun.KGL u (n := n)) → (∀ u ∈ S, cLoc u (k : UA E n) = 1) → k ∈ U := by
   classical
   intro E _ _ _ n T hT U hU
-  have hι : Topology.IsInducing (fun x : finU E n => ((x : UA E n) : GA E n)) :=
+  have hι : Topology.IsInducing (fun x : finU (E := E) (n := n) => ((x : UA E n) : GA E n)) :=
     Topology.IsInducing.subtypeVal.comp Topology.IsInducing.subtypeVal
   rw [hι.nhds_eq_comap, Filter.mem_comap] at hU
   obtain ⟨V, hV, hVU⟩ := hU

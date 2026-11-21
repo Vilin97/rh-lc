@@ -31,7 +31,7 @@ def proj (S : Set (Pl E)) : InfinitePlace E ⊕ S → UA E n →* UA E n :=
   Sum.elim (fun v => (embU n v.embedding).subtype.comp (embRet v.embedding)) fun w => ret0 w.1 n
 
 def lev (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w)) : Subgroup (UA E n) :=
-  (globLev S K').map (finU E n).subtype
+  (globLev S K').map (finU (E := E) (n := n)).subtype
 
 theorem mem_lev {S : Set (Pl E)} {K' : ∀ w : Pl E, Subgroup (UL n w)} {g : UA E n} :
     g ∈ lev S K' ↔ cInf g = 1 ∧ ∀ w ∈ S, (⟨cLoc w g, cLoc_mem_UL w g⟩ : UL n w) ∈ K' w := by
@@ -150,12 +150,12 @@ theorem finite_proj_notMem (hS : IsSection S) (hK : ∀ᶠ w in cofinite, K' w =
   exact h'.2
 
 theorem exists_finset_subset (hU : Unr E) (hn : 1 ≤ n) (hS : IsSection S)
-    (hK : IsLevelFam (fun w : Pl E => MonoidHom.id (UL n w)) (KL n) K') (O : Set (finU E n)) (hO : IsOpen O)
+    (hK : IsLevelFam (fun w : Pl E => MonoidHom.id (UL n w)) (KL n) K') (O : Set (finU (E := E) (n := n))) (hO : IsOpen O)
     (h1 : 1 ∈ O) : ∃ T : Finset S, ∀ k ∈ globLev S K', (∀ w ∈ T, proj n S (.inr w) k = 1) → k ∈ O := by
   obtain ⟨-, hc, -, hle, -⟩ := globLev_isOpen_isCompact_isLevel E hU n hn S hS K' hK
   haveI := GlobalTheory.DefU.LocAdm.t2Space_adelicGL_cmField (E := E) (n := n)
   obtain ⟨T, hT⟩ := (hc.diff hO).elim_finite_subfamily_closed
-    (fun w : S => {k : finU E n | proj n S (.inr w) k = 1})
+    (fun w : S => {k : finU (E := E) (n := n) | proj n S (.inr w) k = 1})
     (fun w => isClosed_eq ((continuous_subtype_val.comp (continuous_ret (w := w.1))).comp continuous_subtype_val)
       continuous_const) (by
       refine Set.eq_empty_of_forall_notMem fun k ⟨hk, hk'⟩ => hk.2 ?_

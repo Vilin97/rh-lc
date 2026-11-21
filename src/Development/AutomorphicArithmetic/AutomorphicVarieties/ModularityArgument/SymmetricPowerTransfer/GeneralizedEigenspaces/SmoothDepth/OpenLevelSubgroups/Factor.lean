@@ -127,9 +127,9 @@ theorem UpperTheory.V.Z.Sym.Al.factor :
     Subgroup.mem_iInf.2 fun u => Subgroup.mem_iInf.2 fun hu => MonoidHom.mem_ker.2 (h u hu)
   have hK : ∀ {x : UA L n}, x ∈ Kall L n → ∀ u : Plc L, cLoc u x ∈ GlobalTheory.LFun.KGL u (n := n) := fun hx u =>
     Subgroup.mem_comap.1 (Subgroup.mem_iInf.1 (Subgroup.mem_inf.1 hx).2 u)
-  have hKmk : ∀ {x : UA L n}, x ∈ finU L n → (∀ u : Plc L, cLoc u x ∈ GlobalTheory.LFun.KGL u (n := n)) → x ∈ Kall L n :=
+  have hKmk : ∀ {x : UA L n}, x ∈ finU (E := L) (n := n) → (∀ u : Plc L, cLoc u x ∈ GlobalTheory.LFun.KGL u (n := n)) → x ∈ Kall L n :=
     fun h1 h2 => Subgroup.mem_inf.2 ⟨h1, Subgroup.mem_iInf.2 fun u => Subgroup.mem_comap.2 (h2 u)⟩
-  have hKf : ∀ {x : UA L n}, x ∈ Kall L n → x ∈ finU L n := fun hx => (Subgroup.mem_inf.1 hx).1
+  have hKf : ∀ {x : UA L n}, x ∈ Kall L n → x ∈ finU (E := L) (n := n) := fun hx => (Subgroup.mem_inf.1 hx).1
   refine ⟨fun x hx y hy => ?_, fun g => ?_, fun w' hw' x hx => ?_, fun x hx => ?_, fun x hx => ⟨fun h => hK h w, fun h => ?_⟩,
     fun x hx y hy => ⟨fun h => ?_, fun h => mul_mem h.1 h.2⟩⟩
   · refine FactorizationTer.ua_ext ?_ fun u => ?_

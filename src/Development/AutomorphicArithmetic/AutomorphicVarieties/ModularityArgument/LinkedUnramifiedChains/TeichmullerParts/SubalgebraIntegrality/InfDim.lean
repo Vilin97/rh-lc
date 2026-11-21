@@ -259,13 +259,13 @@ private theorem span_emb {I : Type} [Finite I] (emb : I → E →+* ℂ)
       GlobalTheory.Branching.sqRep ℂ n (lam i) (GlobalTheory.Branching.unitaryIncl n (e x))
     rw [he]
 
-private theorem mem_fixed (U : Subgroup (finU E n)) (φ : UA E n → ℂ) :
+private theorem mem_fixed (U : Subgroup (finU (E := E) (n := n))) (φ : UA E n → ℂ) :
     φ ∈ GlobalTheory.PRep.fixed (GlobalTheory.BCT.RF E n) U ↔ ∀ k ∈ U, RU E n k φ = φ :=
   ⟨fun h k hk => by simpa [GlobalTheory.BCT.RF] using h ⟨k, hk⟩, fun h k => by simpa [GlobalTheory.BCT.RF] using h k k.2⟩
 
 private theorem mid {P D : Type} [Group P] [AddCommGroup D] [Module ℂ D] {d : ℕ} (b : Module.Basis (Fin d) ℂ D)
     (τ : UA E n → Module.End ℂ D) (hτ : Submodule.span ℂ (Set.range fun x : infU E n => τ x) = ⊤)
-    (hfin : ∀ k ∈ finU E n, ∀ v, τ k v = v) (J : UA E n →* P) (hJ : ∀ x ∈ infU E n, J x = 1)
+    (hfin : ∀ k ∈ finU (E := E) (n := n), ∀ v, τ k v = v) (J : UA E n →* P) (hJ : ∀ x ∈ infU E n, J x = 1)
     (A : Submodule ℂ (P → Fin d → ℂ)) (hA : ∀ F ∈ A, ∀ p, (fun g => F (g * p)) ∈ A)
     (tf : (P → Fin d → ℂ) →ₗ[ℂ] D →ₗ[ℂ] (UA E n → ℂ)) (hinj : ∀ F ∈ A, (∀ ℓ, tf F ℓ = 0) → F = 0)
     (htr : ∀ F ℓ x, RU E n x (tf F ℓ) = tf (fun g => F (g * J x)) (τ x ℓ))
@@ -275,10 +275,10 @@ private theorem mid {P D : Type} [Group P] [AddCommGroup D] [Module ℂ D] {d : 
     (hw : ∀ v, HasWeightAt σ v.embedding (lam' v))
     (hex : ∀ N : Submodule ℂ (UA E n → ℂ), N ≠ ⊥ → N ≤ σ → (∀ x ∈ infU E n, ∀ φ ∈ N, RU E n x φ ∈ N) →
       ∃ Φ : D →ₗ[ℂ] (UA E n → ℂ), Φ ≠ 0 ∧ (∀ ℓ, Φ ℓ ∈ N) ∧ ∀ x ∈ infU E n, ∀ ℓ, RU E n x (Φ ℓ) = Φ (τ x ℓ))
-    (U : Subgroup (finU E n)) :
+    (U : Subgroup (finU (E := E) (n := n))) :
     Module.rank ℂ ↥(σ ⊓ GlobalTheory.PRep.fixed (GlobalTheory.BCT.RF E n) U) =
       Module.rank ℂ ↥(A ⊓ Submodule.span ℂ {F | ∀ ℓ, tf F ℓ ∈ σ} ⊓
-        fixd (rtr ℂ P (Fin d → ℂ)) (U.map (J.comp (finU E n).subtype))) * d ∧ (d : ℂ) = GlobalTheory.BCT.dimW lam' := by
+        fixd (rtr ℂ P (Fin d → ℂ)) (U.map (J.comp (finU (E := E) (n := n)).subtype))) * d ∧ (d : ℂ) = GlobalTheory.BCT.dimW lam' := by
   obtain ⟨T, hT0, hT1, hT2⟩ := GlobalTheory.BCT.TrKer.exists_ne_zero_wsp_intertwining E n lam' σ hσ hw
   have hTσ : LinearMap.range T ≤ σ := by
     rintro _ ⟨w, rfl⟩
@@ -286,10 +286,10 @@ private theorem mid {P D : Type} [Group P] [AddCommGroup D] [Module ℂ D] {d : 
   obtain ⟨Φ, h0, h1, h2⟩ := hex (LinearMap.range T) (fun h => hT0 (LinearMap.range_eq_bot.1 h)) hTσ (by
     rintro x hx _ ⟨w, rfl⟩
     exact ⟨_, hT2 x hx w⟩)
-  have hk : ∀ F ℓ (k : finU E n), RU E n k (tf F ℓ) = tf (fun g => F (g * J k)) ℓ := fun F ℓ k => by
+  have hk : ∀ F ℓ (k : finU (E := E) (n := n)), RU E n k (tf F ℓ) = tf (fun g => F (g * J k)) ℓ := fun F ℓ k => by
     rw [htr, hfin k k.2]
   constructor
-  · refine rank_eq (R := RU E n) (Gf := finU E n) hτ
+  · refine rank_eq (R := RU E n) (Gf := finU (E := E) (n := n)) hτ
       (fun g => ⟨_, (GlobalTheory.BCT.TrKer.splitFin E n g).2, _, (GlobalTheory.BCT.TrKer.splitInf E n g).2,
         GlobalTheory.BCT.TrKer.eq_splitFin_mul_splitInf g⟩) (fun k hk x hx => GlobalTheory.DefU.fin_mul_inf hk hx) hσ.stable hσ.irred
       Φ h0 (fun v => hTσ (h1 v)) h2 b U _ (fun φ => Submodule.mem_inf.trans (and_congr_right' (mem_fixed U φ))) _ tf
@@ -369,7 +369,7 @@ theorem UpperTheory.V.Z.J.D.infDim :
     (ex_emb hn _ hb (fun y : Emb l (fun v : V.frame.Vl => s.w v.1) => lam y.res) σ hσ ((hl σ hσ).2 hw)) U
   have h1 : infRep (V := V) ι lam k⁻¹ = LinearMap.id := by
     rw [hrep]
-    simp only [GlobalTheory.BCT.TrKer.cEmb_fin _ ⟨k⁻¹, (finU L n).inv_mem hk⟩, map_one]
+    simp only [GlobalTheory.BCT.TrKer.cEmb_fin _ ⟨k⁻¹, (finU (E := L) (n := n)).inv_mem hk⟩, map_one]
     exact PiTensorProduct.map_id
   rw [h1]
   rfl

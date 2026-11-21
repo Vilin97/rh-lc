@@ -189,6 +189,7 @@ def mkSec {V : X.Opens} (f : ∀ i, Γ(X, V ⊓ L.U i)) (hf : f ∈ secOn L V) :
 @[simp] theorem coord_mkSec {V : X.Opens} (f : ∀ i, Γ(X, V ⊓ L.U i)) (hf : f ∈ secOn L V) :
     coord (mkSec f hf) = f := rfl
 
+@[ext] theorem sec_ext {V : X.Opens} {s t : Γ(toMod L, V)} (h : ∀ i, coord s i = coord t i) :
     s = t := Subtype.ext (funext h)
 
 
@@ -364,7 +365,7 @@ def chartEquiv (hL : L.IsLB) (i : L.ι) {V : X.Opens} (h : V ≤ L.U i) :
     simp only [coord_smul, coord_map, coord_chartSec, resG_resG]
     rw [mul_comm, ← coord_rel s j i le_rfl, resG_self]
   right_inv a := by
-    simp only [coord_smul, coord_map, coord_chartSec, map_mul, resG_resG, resG_self,
+    simp only [coord_smul, coord_map, coord_chartSec, resG_resG, resG_self,
       resG_g_self hL, map_one, mul_one]
 
 theorem chartEquiv_apply (hL : L.IsLB) (i : L.ι) {V : X.Opens} (h : V ≤ L.U i)
@@ -753,11 +754,10 @@ def twoChart (U₀ U₁ : X.Opens) (u : Γ(X, U₀ ⊓ U₁)ˣ) : LB X where
     | false, false => 1
 
 theorem twoChart_isLB {U₀ U₁ : X.Opens} (h : U₀ ⊔ U₁ = ⊤) (u : Γ(X, U₀ ⊓ U₁)ˣ) :
-    (twoChart U₀ U₁ u).IsLB where
-  cover := (iSup_bool_eq (f := fun i => cond i U₀ U₁)).trans h
-  g_self := by rintro (_ | _) <;> exact map_one _
-  cocycle := by
-    have aux {W : X.Opens} (h₁ : W ≤ U₁ ⊓ U₀) (h₂ : W ≤ U₀ ⊓ U₁) :
+    (twoChart U₀ U₁ u).IsLB := by
+  refine ⟨(iSup_bool_eq (f := fun i => cond i U₀ U₁)).trans h, ?_, ?_⟩
+  · rintro (_ | _) <;> exact map_one _
+  · have aux {W : X.Opens} (h₁ : W ≤ U₁ ⊓ U₀) (h₂ : W ≤ U₀ ⊓ U₁) :
         res h₁ (res (le_inf inf_le_right inf_le_left) u)⁻¹ * res h₂ u = 1 := by
       rw [map_inv, Semi.LB.res_res, inv_mul_cancel]
     rintro (_ | _) (_ | _) (_ | _)

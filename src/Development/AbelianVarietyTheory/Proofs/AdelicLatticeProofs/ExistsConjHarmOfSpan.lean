@@ -112,6 +112,8 @@ private lemma isLog_isHermitian {ι : Type} [Fintype ι] [DecidableEq ι] {H A :
   obtain ⟨U, d, hU, rfl, -⟩ := hH
   simp [conjTranspose_mul, Matrix.mul_assoc, diagonal_conjTranspose]
   congr 3
+  ext i
+  simp
 
 open Matrix Polynomial in
 open scoped Kronecker ComplexOrder TensorProduct in

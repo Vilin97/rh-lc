@@ -15,13 +15,13 @@ namespace GlobalTheory.UnitaryBC
 
 theorem exists_conj_isAutFormU (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (σ : ℂ ≃+* ℂ)
     (φ : UA E n → ℂ) (hφ : IsAutFormU φ) :
-    ∃ φ' : UA E n → ℂ, IsAutFormU φ' ∧ ∀ g ∈ finU E n, φ' g = σ (φ g) := by
+    ∃ φ' : UA E n → ℂ, IsAutFormU φ' ∧ ∀ g ∈ finU (E := E) (n := n), φ' g = σ (φ g) := by
   obtain ⟨m, p, e, hpe, hdec⟩ := GlobalTheory.T.autFormDefiniteUnitary_eq_sum_polynomial_mul_autForm E n φ hφ
   choose p' hp' hpp using fun i => GlobalTheory.T.exists_conj_polynomial_definiteUnitary_rational E n σ (p i) (hpe i).1
   obtain ⟨hD, -, -, a, b, -, -, hab, -⟩ := GlobalTheory.T.definiteUnitary_realApprox_and_finite_infinite_split E n
   obtain ⟨φ', hc, hl, hk, hv⟩ := GlobalTheory.T.exists_definiteUnitary_function_polynomial_mul_smooth E n m p' (fun i g => σ (e i g.1)) hp' (fun i => by
     refine ⟨
-      { carrier := {k : finU E n | RU E n k (e i) = e i}
+      { carrier := {k : finU (E := E) (n := n) | RU E n k (e i) = e i}
         one_mem' := by simp
         mul_mem' := fun {x y} hx hy => by
           simp only [Set.mem_setOf_eq] at hx hy ⊢

@@ -111,7 +111,7 @@ open Polynomial in
 theorem jet_basis (k : Type) [Field k] (m : ℕ) :
     ∃ b : Module.Basis (Fin (m + 1)) k (Jet k Unit m),
       ∀ i : Fin (m + 1), b i = (Ideal.Quotient.mk (orig k Unit ^ (m + 1)) (MvPolynomial.X ())) ^ (i : ℕ) := by
-  let φ : MvPolynomial Unit k ≃ₐ[k] k[X] := MvPolynomial.pUnitAlgEquiv k
+  let φ : MvPolynomial Unit k ≃ₐ[k] k[X] := MvPolynomial.uniqueAlgEquiv k Unit
   have hX : φ (MvPolynomial.X ()) = X := by simp [φ]
   have hI : Ideal.span {(X : k[X]) ^ (m + 1)} = (orig k Unit ^ (m + 1)).map (φ : MvPolynomial Unit k →+* k[X]) := by
     rw [Ideal.map_pow, orig, Ideal.map_span, ← Ideal.span_singleton_pow]

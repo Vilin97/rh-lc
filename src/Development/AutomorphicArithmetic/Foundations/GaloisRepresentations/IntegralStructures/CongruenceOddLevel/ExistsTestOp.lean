@@ -143,7 +143,7 @@ theorem exists_testOp (K : Subgroup (UA E a)) {w : HeightOneSpectrum (𝓞 E)} (
 
 open UpperTheory.Gal.Gen in
 theorem exists_scale {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (lam : (E →+* ℂ) → DomWeight a) (f : UA E a →₀ ℂ)
-    (hf : ∀ g ∈ f.support, g ∈ finU E a) : ∃ c : ℂ, c ≠ 0 ∧ IntW ι lam (c • f) ∧ Loc.IntL ι lam (c • f) := by
+    (hf : ∀ g ∈ f.support, g ∈ finU (E := E) (n := a)) : ∃ c : ℂ, c ≠ 0 ∧ IntW ι lam (c • f) ∧ Loc.IntL ι lam (c • f) := by
   have hl : Nat.Prime l := Fact.out
   obtain ⟨d, hd⟩ := denomBdd_holds E l hl a (f.support : Set (UA E a)) f.support.finite_toSet.isCompact
   have hl1 : (1 : ℝ) < (l : ℝ) := by exact_mod_cast hl.one_lt

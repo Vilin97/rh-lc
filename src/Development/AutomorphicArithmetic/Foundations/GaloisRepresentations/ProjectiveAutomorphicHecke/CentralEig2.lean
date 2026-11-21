@@ -125,7 +125,7 @@ def IntSim : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n :
   (∀ w, comp w k ∈ KGL w (n := n)) → sim k ∈ ZU
 
 def OfUBij : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ),
-  Function.Injective (ofU : finU E n → GUf E n) ∧ ∀ g : GUf E n, sim g = 1 → ∃ u, ofU u = g
+  Function.Injective (ofU : finU (E := E) (n := n) → GUf E n) ∧ ∀ g : GUf E n, sim g = 1 → ∃ u, ofU u = g
 
 def LocComm : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (w : Plc E) (hw : IsSplitAt w),
   (∀ k : GUf E n, comp w k = 1 → ∀ y, k * loc hw y = loc hw y * k) ∧ (∀ u, Apart u w ↔ u ≠ w ∧ u ≠ cj w) ∧
@@ -144,13 +144,13 @@ def IntCompact : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
 def LevCompact : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (Up : Plc E → Prop) (w₀ : Plc E), IsSplitAt w₀ →
   ∀ (S : Finset (Plc E)) (Kw : ∀ w : Plc E, Subgroup (GLw n w)), Shape Up w₀ S Kw → IsCompact (lev S Kw : Set (GUf E n))
 
-def Nbhd2 : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (O : Subgroup (finU E n)), IsOpen (O : Set (finU E n)) →
+def Nbhd2 : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (O : Subgroup (finU (E := E) (n := n))), IsOpen (O : Set (finU (E := E) (n := n))) →
   ∃ (S : Finset (Plc E)) (Kw : ∀ w : Plc E, Subgroup (GLw n w)), (∀ w, IsOpen (Kw w : Set (GLw n w)) ∧ Kw w ≤ KGL w (n := n)) ∧
-    ∀ u : finU E n, (∀ w, cLoc w u.1 ∈ KGL w (n := n)) → (∀ w ∈ S, cLoc w u.1 ∈ Kw w) → u ∈ O
+    ∀ u : finU (E := E) (n := n), (∀ w, cLoc w u.1 ∈ KGL w (n := n)) → (∀ w ∈ S, cLoc w u.1 ∈ Kw w) → u ∈ O
 
-def NbhdU : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (O : Subgroup (finU E n)), IsOpen (O : Set (finU E n)) →
+def NbhdU : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (O : Subgroup (finU (E := E) (n := n))), IsOpen (O : Set (finU (E := E) (n := n))) →
   ∀ Up : Plc E → Prop, (∀ w, IsSplitAt w → Up w ∨ Up (cj w)) → ∀ w₀ : Plc E, IsSplitAt w₀ → Up w₀ →
-  ∃ (S : Finset (Plc E)) (Kw : ∀ w : Plc E, Subgroup (GLw n w)), Shape Up w₀ S Kw ∧ ∀ u : finU E n, ofU u ∈ lev S Kw → u ∈ O
+  ∃ (S : Finset (Plc E)) (Kw : ∀ w : Plc E, Subgroup (GLw n w)), Shape Up w₀ S Kw ∧ ∀ u : finU (E := E) (n := n), ofU u ∈ lev S Kw → u ∈ O
 
 def SphType : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (π : AutSub E n) (w : Plc E), IsSplitAt w →
   ((∃ B, SatU π.V w B) → HasType π.V w (KGL w (n := n)) 1 ∧ HasType π.V (cj w) (KGL (cj w) (n := n)) 1) ∧
@@ -158,9 +158,9 @@ def SphType : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n 
 
 def StepAt : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (π : AutSub E n) (W : Wt E n) (f : algForms W),
   f ∈ π.finPart W → f ≠ 0 → ∀ (S : Finset (Plc E)) (Kw : ∀ w : Plc E, Subgroup (GLw n w)) (w : Plc E), IsSplitAt w → w ∈ S → cj w ∉ S →
-  (∀ u : finU E n, ofU u ∈ lev S Kw → algRep W u f = f) →
+  (∀ u : finU (E := E) (n := n), ofU u ∈ lev S Kw → algRep W u f = f) →
   ∀ (J : Subgroup (GLw n w)) (χ : J →* ℂˣ), IsCompact (J : Set (GLw n w)) → HasType π.V w J χ →
-  ∃ f' ∈ π.finPart W, f' ≠ 0 ∧ ∀ u : finU E n, ofU u ∈ lev S (Function.update Kw w J) → ∀ h : cLoc w u.1 ∈ J,
+  ∃ f' ∈ π.finPart W, f' ≠ 0 ∧ ∀ u : finU (E := E) (n := n), ofU u ∈ lev S (Function.update Kw w J) → ∀ h : cLoc w u.1 ∈ J,
     algRep W u f' = ((χ ⟨cLoc w u.1, h⟩ : ℂˣ) : ℂ) • f'
 
 def VecU : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (π : AutSub E n) (W : Wt E n), π.finPart W ≠ ⊥ →
@@ -168,7 +168,7 @@ def VecU : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : �
   ∀ (J : Subgroup (GLw n w₀)) (χ : J →* ℂˣ), IsOpen (J : Set (GLw n w₀)) → IsCompact (J : Set (GLw n w₀)) → HasType π.V w₀ J χ →
   ∃ (S : Finset (Plc E)) (Kw : ∀ w : Plc E, Subgroup (GLw n w)), Shape Up w₀ S Kw ∧ Kw w₀ = J ∧
     (∀ w, IsSplitAt w → Apart w w₀ → (∃ B, SatU π.V w B) → w ∉ S ∧ cj w ∉ S) ∧
-    ∃ f ∈ π.finPart W, f ≠ 0 ∧ ∀ u : finU E n, ofU u ∈ lev S Kw → ∀ h : cLoc w₀ u.1 ∈ J,
+    ∃ f ∈ π.finPart W, f ≠ 0 ∧ ∀ u : finU (E := E) (n := n), ofU u ∈ lev S Kw → ∀ h : cLoc w₀ u.1 ∈ J,
       algRep W u f = ((χ ⟨cLoc w₀ u.1, h⟩ : ℂˣ) : ℂ) • f
 
 def SatVal : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (π : AutSub E n) (W : Wt E n) (f : algForms W),
@@ -176,8 +176,8 @@ def SatVal : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n :
   ∀ B, SatU π.V w B → IsSatVecGL w ((algRep W).comp (locF hw)) f B
 
 def KerFormU : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (W : Wt E n) (j : ℤ) (f : algForms W), f ≠ 0 →
-  ∀ K : Subgroup (GUf E n), (∀ k ∈ K, sim k ∈ ZU) → (∀ u : finU E n, ofU u ∈ K → algRep W u f = f) →
-  ∃ φ : GUf E n → Module.Dual ℂ W.Sp, KerForm rat K (xi0 W j) sim φ ∧ (∀ u : finU E n, φ (ofU u) = algForms.val f u.1) ∧
+  ∀ K : Subgroup (GUf E n), (∀ k ∈ K, sim k ∈ ZU) → (∀ u : finU (E := E) (n := n), ofU u ∈ K → algRep W u f = f) →
+  ∃ φ : GUf E n → Module.Dual ℂ W.Sp, KerForm rat K (xi0 W j) sim φ ∧ (∀ u : finU (E := E) (n := n), φ (ofU u) = algForms.val f u.1) ∧
     ∃ g, sim g = 1 ∧ φ g ≠ 0
 
 def HeckePres : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (w : Plc E) (hw : IsSplitAt w)
@@ -191,7 +191,7 @@ def HeckePres : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
 def FormGU : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (x : E) (ζ : (Af E)ˣ →* GUf E n), IsZeta x ζ →
   ∀ (π : AutSub E n) (W : Wt E n) (j : ℤ) (Up : Plc E → Prop) (w₀ : Plc E), IsSplitAt w₀ →
   ∀ (S : Finset (Plc E)) (Kw : ∀ w : Plc E, Subgroup (GLw n w)), Shape Up w₀ S Kw → ∀ χ : Kw w₀ →* ℂˣ, IsOpen {k : Kw w₀ | χ k = 1} →
-  ∀ f ∈ π.finPart W, f ≠ 0 → (∀ u : finU E n, ofU u ∈ lev S Kw → ∀ h : cLoc w₀ u.1 ∈ Kw w₀,
+  ∀ f ∈ π.finPart W, f ≠ 0 → (∀ u : finU (E := E) (n := n), ofU u ∈ lev S Kw → ∀ h : cLoc w₀ u.1 ∈ Kw w₀,
       algRep W u f = ((χ ⟨cLoc w₀ u.1, h⟩ : ℂˣ) : ℂ) • f) →
   ∃ (Φ : GUf E n → Module.Dual ℂ W.Sp) (ψ : (Af E)ˣ →* ℂˣ), IsForm π.V W j w₀ (Kw w₀) χ S Kw Φ ∧
     ∀ y g, Φ (g * ζ y) = (ψ y : ℂ) • Φ g

@@ -36,14 +36,14 @@ def DenomLe (l d : ℕ) (g : UA E a) : Prop :=
       Matrix (Fin a) (Fin a) (u.adicCompletion E)))
 
 def IntW {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (lam : (E →+* ℂ) → DomWeight a) (f : UA E a →₀ ℂ) : Prop :=
-  ∀ g ∈ f.support, g ∈ finU E a ∧ ∃ d : ℕ, DenomLe l d g ∧ ‖ι.symm (f g)‖ ≤ ((l : ℝ)⁻¹) ^ (a * d * wtSize lam)
+  ∀ g ∈ f.support, g ∈ finU (E := E) (n := a) ∧ ∃ d : ℕ, DenomLe l d g ∧ ‖ι.symm (f g)‖ ≤ ((l : ℝ)⁻¹) ^ (a * d * wtSize lam)
 
 def CoefLe {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) {σ : Type} (R : ℝ) (x : MvPolynomial σ ℂ) : Prop :=
   ∀ m, ‖ι.symm (AddMonoidAlgebra.coeff x m)‖ ≤ R
 
 def ToPolyX : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (a : ℕ)
-    (w₀ : HeightOneSpectrum (𝓞 E)) (K : Subgroup (UA E a)), K ≤ finU E a → ∀ (lam : (E →+* ℂ) → DomWeight a)
+    (w₀ : HeightOneSpectrum (𝓞 E)) (K : Subgroup (UA E a)), K ≤ finU (E := E) (n := a) → ∀ (lam : (E →+* ℂ) → DomWeight a)
     (P : Submodule ℂ (UA E a → ℂ) → Prop), Dense ι (Wt.ofFam lam) K P → ∀ (J : Type) (t : J → (UA E a →₀ ℂ))
     (η : Submodule ℂ (UA E a → ℂ) → J → ℂ), FramedX ι (Wt.ofFam lam) t → ActsBy K t η → ∀ U, OfType lam K U →
       PolyApprox (fun j => ι.symm (η U j)) {θ | ∃ U', OfType lam K U' ∧ P U' ∧ θ = fun j => ι.symm (η U' j)}

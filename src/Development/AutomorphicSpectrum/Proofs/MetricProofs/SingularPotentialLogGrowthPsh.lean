@@ -274,9 +274,9 @@ theorem localBound {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e 
     (fun j y hy w => hpsh x j y ⟨hy.1, ⟨hy.2.1, trivial⟩, hy.2.2⟩ w)
     a (ρ : ℂ) hVo
     (fun z hz => ⟨(hball (hwz z hz.1)).1.1, (hball (hwz z hz.1)).1.2, hoff z hz⟩)
-  obtain ⟨hbd, -⟩ := ReciprocityTheory.AnForm.A.pshExtension_thm e S' (Metric.ball 0 1) _ Cc Metric.isOpen_ball
-    subset_rfl hpull.1 hpull.2 hFb
-  obtain ⟨Bm, hBm⟩ := hbd (Metric.closedBall 0 (1 / 2)) (isCompact_closedBall _ _)
+  obtain ⟨Bm, hBm⟩ := ReciprocityTheory.AnForm.A.PlurisubharmonicExtension.part_a
+    Metric.isOpen_ball subset_rfl hpull.1 hpull.2 hFb
+    (Metric.closedBall 0 (1 / 2)) (isCompact_closedBall _ _)
     (Metric.closedBall_subset_ball (by norm_num))
   refine ⟨ψ.source ∩ ψ ⁻¹' Metric.ball a (ρ / 2), ψ.isOpen_inter_preimage Metric.isOpen_ball,
     ⟨hxψ, Set.mem_preimage.mpr (Metric.mem_ball_self (half_pos hρ))⟩, Bm + M₁, ?_⟩

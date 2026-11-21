@@ -685,8 +685,8 @@ theorem good_curve [NeZero d] {g : Fin 2} (H : X.CartHyp V g) {a : ZMod d} {w : 
   have c2 : ∀ y : ℕ → C, PowerSeries.coeff (V.l * V.l) (tyS V.l y) = y 2 := fun y => by
     simpa [pow_two] using coeff_tyS_pow hl2 y 2
   refine ⟨γ, hγ, fun i n hd hn => ?_, fun i => ?_, fun i => ?_, fun q => ⟨_, (hlam q).2 V.l, ?_⟩⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [h1, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum]
     refine Finset.sum_eq_zero fun c _ => ?_
     rw [PowerSeries.coeff_smul]
     by_cases hs : ∃ s, V.l ^ s = n
@@ -700,13 +700,13 @@ theorem good_curve [NeZero d] {g : Fin 2} (H : X.CartHyp V g) {a : ZMod d} {w : 
       rw [show s = 1 by omega, coeff_tyS_pow hl2, hx.2 c, smul_zero]
     · push Not at hs
       rw [coeff_tyS_of_ne _ _ hs, smul_zero]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [h1, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [PowerSeries.coeff_smul, c0, hx.1.2.1]
     rfl
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [h1, map_sum, Finset.mul_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [PowerSeries.coeff_smul, c2, smul_eq_mul, Cart.V2]
     ring

@@ -153,11 +153,11 @@ theorem levFam (hfin : s.S.Finite) :
   unfold Kf GlobalTheory.BCT.KL Pc
   rw [if_neg hw]
 
-theorem loc_of_glob (hU : GlobalTheory.BCT.Unr L) {k : finU L n} (hk : k ∈ GlobalTheory.BCT.globLev (Set.range s.w) (Kf s n c))
+theorem loc_of_glob (hU : GlobalTheory.BCT.Unr L) {k : finU (E := L) (n := n)} (hk : k ∈ GlobalTheory.BCT.globLev (Set.range s.w) (Kf s n c))
     (v : Plc (Lp L)) : cLoc (s.w v) (k : UA L n) ∈ Pc s n c (s.w v) :=
   (GlobalTheory.BCT.HopLev.mem_globLev hU _ _ k).1 hk (s.w v) ⟨v, rfl⟩
 
-theorem glob_of_loc (hU : GlobalTheory.BCT.Unr L) {k : finU L n} (h : ∀ v, cLoc (s.w v) (k : UA L n) ∈ Pc s n c (s.w v)) :
+theorem glob_of_loc (hU : GlobalTheory.BCT.Unr L) {k : finU (E := L) (n := n)} (h : ∀ v, cLoc (s.w v) (k : UA L n) ∈ Pc s n c (s.w v)) :
     k ∈ GlobalTheory.BCT.globLev (Set.range s.w) (Kf s n c) :=
   (GlobalTheory.BCT.HopLev.mem_globLev hU _ _ k).2 (by
     rintro _ ⟨v, rfl⟩
@@ -185,7 +185,7 @@ theorem Q_empty {V : s.Lev} (hV : V.S' = s.S) (Q : QData V) : IsEmpty Q.Q := ⟨
 
 theorem goodOf {V : s.Lev} (hV : V.S' = s.S) (Q : QData V) {cf : Coef l} {m : ℕ} (τ₀ : KT n (wt s) →* GL (Fin m) cf.O)
     (b : ℕ) (hc : ∀ g : KT n (wt s), (∀ u, (g : GV n (wt s)) u ∈ Kc _ n c) → τ₀ g = 1) (h1 : 1 ≤ c) (hb : b + 1 ≤ c)
-    (hU : GlobalTheory.BCT.Unr L) (k : finU L n) (hk : k ∈ GlobalTheory.BCT.globLev (Set.range s.w) (Kf s n c)) :
+    (hU : GlobalTheory.BCT.Unr L) (k : finU (E := L) (n := n)) (hk : k ∈ GlobalTheory.BCT.globLev (Set.range s.w) (Kf s n c)) :
     (∃ u : Ub n s, u ∈ UQ n Q ∧ (u : Ga l L n) = (away l L n).rangeRestrict (k : UA L n) ∧ τ₀ (toKT n s u) = 1) ∧
       (fun v : V.frame.Vl => cLoc (s.w v.1) (k : UA L n)) ∈ (hset Q τ₀).X.I.I1 b := by
   haveI := Q_empty hV Q
@@ -248,8 +248,8 @@ theorem unramOf (hU : GlobalTheory.BCT.Unr L) (π : Submodule ℂ (UA L n → �
     (hw : w.under (𝓞 (Lp L)) ∉ s.S) : IsUnramU π w := by
   obtain ⟨φ, hφ, h0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hne
   refine ⟨φ, hφ.1, h0, fun x hx hK => ?_⟩
-  have hxf : x ∈ finU L n := (Subgroup.mem_inf.1 hx).1
-  have hmem : (⟨x, hxf⟩ : finU L n) ∈ GlobalTheory.BCT.globLev (Set.range s.w) (Kf s n c) := glob_of_loc hU fun v => by
+  have hxf : x ∈ finU (E := L) (n := n) := (Subgroup.mem_inf.1 hx).1
+  have hmem : (⟨x, hxf⟩ : finU (E := L) (n := n)) ∈ GlobalTheory.BCT.globLev (Set.range s.w) (Kf s n c) := glob_of_loc hU fun v => by
     by_cases e : v = w.under (𝓞 (Lp L))
     · subst e
       rw [Pc_notS (by rwa [under_w])]

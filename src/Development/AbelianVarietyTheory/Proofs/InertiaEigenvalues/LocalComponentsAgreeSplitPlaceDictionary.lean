@@ -187,7 +187,7 @@ theorem locComp_agree : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (
   let R : U →ₗ[ℂ] (GAf L n → ℂ) := (LinearMap.funLeft ℂ ℂ F.j).comp U.subtype
   have hRinj : Function.Injective R := by
     refine (injective_iff_map_eq_zero R).2 fun φ hφ => ?_
-    have h0 : ∀ y ∈ finU L n, (φ : UA L n → ℂ) y = 0 := fun y hy => by
+    have h0 : ∀ y ∈ finU (E := L) (n := n), (φ : UA L n → ℂ) y = 0 := fun y hy => by
       obtain ⟨x, rfl⟩ := F.onto y hy
       exact congrFun hφ x
     exact Subtype.ext (GlobalTheory.T.definiteUnitaryAutForm_eq_zero_of_finitePoints L n φ (hD.1.aut φ φ.2) h0)

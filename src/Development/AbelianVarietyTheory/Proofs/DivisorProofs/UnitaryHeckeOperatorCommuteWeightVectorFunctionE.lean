@@ -28,16 +28,16 @@ theorem finsum_comp_eq_comp_finsum {ι V W : Type} [AddCommGroup V] [Module ℂ 
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
-theorem RF_apply' (x : finU E n) (φ : UA E n → ℂ) (g : UA E n) : RF E n x φ g = φ (g * x.1) := rfl
+theorem RF_apply' (x : finU (E := E) (n := n)) (φ : UA E n → ℂ) (g : UA E n) : RF E n x φ g = φ (g * x.1) := rfl
 
-theorem RF_ne_zero (x : finU E n) : RF E n x ≠ 0 := by
+theorem RF_ne_zero (x : finU (E := E) (n := n)) : RF E n x ≠ 0 := by
   intro h
   have := congrFun (LinearMap.congr_fun h (fun _ => (1 : ℂ))) 1
   simp at this
   exact one_ne_zero this
 
-theorem rightReg_dual_ne_zero (lam : InfinitePlace E → DomWeight n) [Nontrivial (Wsp lam)] (x : finU E n) :
-    rightReg ℂ (finU E n) (Module.Dual ℂ (Wsp lam)) x ≠ 0 := by
+theorem rightReg_dual_ne_zero (lam : InfinitePlace E → DomWeight n) [Nontrivial (Wsp lam)] (x : finU (E := E) (n := n)) :
+    rightReg ℂ (finU (E := E) (n := n)) (Module.Dual ℂ (Wsp lam)) x ≠ 0 := by
   obtain ⟨v, hv⟩ := exists_ne (0 : Wsp lam)
   obtain ⟨φ, hφ⟩ : ∃ φ : Module.Dual ℂ (Wsp lam), φ v ≠ 0 := by
     by_contra hc
@@ -49,14 +49,14 @@ theorem rightReg_dual_ne_zero (lam : InfinitePlace E → DomWeight n) [Nontrivia
   exact hφ (by rw [h2]; rfl)
 
 theorem hop_phiFun (S : Set (Pl E)) (lam : InfinitePlace E → DomWeight n) (K' : ∀ w : Pl E, Subgroup (UL n w))
-    (f : ∀ w : Pl E, UL n w → ℂ) (F : finU E n → Module.Dual ℂ (Wsp lam)) (w : Wsp lam) :
+    (f : ∀ w : Pl E, UL n w → ℂ) (F : finU (E := E) (n := n) → Module.Dual ℂ (Wsp lam)) (w : Wsp lam) :
     hop S K' f (phiFun lam F w) = phiFun lam (hopM S lam K' f F) w := by
   rcases subsingleton_or_nontrivial (Wsp lam) with hW | hW
   · rw [Subsingleton.elim w 0]; simp
-  set T : (finU E n → Module.Dual ℂ (Wsp lam)) →ₗ[ℂ] (UA E n → ℂ) := (phiFun lam).flip w with hT
-  have key : (∑ᶠ q : finU E n ⧸ globLev S K', globFn S f q.out • (RF E n q.out ∘ₗ LinearMap.id)) ∘ₗ T =
-      T ∘ₗ ∑ᶠ q : finU E n ⧸ globLev S K', globFn S f q.out •
-        (rightReg ℂ (finU E n) (Module.Dual ℂ (Wsp lam)) q.out ∘ₗ LinearMap.id) := by
+  set T : (finU (E := E) (n := n) → Module.Dual ℂ (Wsp lam)) →ₗ[ℂ] (UA E n → ℂ) := (phiFun lam).flip w with hT
+  have key : (∑ᶠ q : finU (E := E) (n := n) ⧸ globLev S K', globFn S f q.out • (RF E n q.out ∘ₗ LinearMap.id)) ∘ₗ T =
+      T ∘ₗ ∑ᶠ q : finU (E := E) (n := n) ⧸ globLev S K', globFn S f q.out •
+        (rightReg ℂ (finU (E := E) (n := n)) (Module.Dual ℂ (Wsp lam)) q.out ∘ₗ LinearMap.id) := by
     refine finsum_comp_eq_comp_finsum T _ _ (fun q => ?_) (fun q => ?_)
     · ext G g
       simp only [LinearMap.comp_apply, LinearMap.smul_apply, LinearMap.id_apply, hT, LinearMap.flip_apply,
@@ -68,7 +68,7 @@ theorem hop_phiFun (S : Set (Pl E)) (lam : InfinitePlace E → DomWeight n) (K' 
   simp only [LinearMap.comp_apply, hT, LinearMap.flip_apply] at this
   simp only [hop, hopM, levOp, LinearMap.smul_apply, this, LinearMap.map_smul]
 
-theorem hop_phiFun_comm : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (S : Set (Pl E)) (lam : InfinitePlace E → DomWeight n) (K' : ∀ w : Pl E, Subgroup (UL n w)) (f : ∀ w : Pl E, UL n w → ℂ) (F : finU E n → Module.Dual ℂ (Wsp lam)) (w : Wsp lam), hop S K' f (phiFun lam F w) = phiFun lam (hopM S lam K' f F) w :=
+theorem hop_phiFun_comm : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (S : Set (Pl E)) (lam : InfinitePlace E → DomWeight n) (K' : ∀ w : Pl E, Subgroup (UL n w)) (f : ∀ w : Pl E, UL n w → ℂ) (F : finU (E := E) (n := n) → Module.Dual ℂ (Wsp lam)) (w : Wsp lam), hop S K' f (phiFun lam F w) = phiFun lam (hopM S lam K' f F) w :=
   fun _ _ _ _ _ S lam K' f F w => hop_phiFun S lam K' f F w
 
 end GlobalTheory.BCT.TrKer

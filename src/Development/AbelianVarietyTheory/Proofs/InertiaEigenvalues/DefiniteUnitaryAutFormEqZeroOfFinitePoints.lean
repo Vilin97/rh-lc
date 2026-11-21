@@ -37,7 +37,7 @@ theorem continuous_infPt : Continuous (infPt (E := E) (n := n)) :=
   (GlobalTheory.DefU.continuous_infGL.comp continuous_subtype_val).subtype_mk _
 
 theorem mem_closure_rat_fin (x : UA E n) (hx : x ∈ infU E n) :
-    x ∈ closure ((ratU E n : Set (UA E n)) * (finU E n : Set (UA E n))) := by
+    x ∈ closure ((ratU E n : Set (UA E n)) * (finU (E := E) (n := n) : Set (UA E n))) := by
   have hne : ∃ z, (IsCMField.complexConj E : E →+* E) z ≠ z := by
     by_contra h
     push_neg at h
@@ -80,7 +80,7 @@ theorem mem_closure_rat_fin (x : UA E n) (hx : x ∈ infU E n) :
     rw [e, mul_one, ← Matrix.map_mul, hγ0, Matrix.map_one _ (map_zero _) (map_one _)]
   let r : UA E n := ⟨ratGL E n γ, hr⟩
   have hrU : r ∈ ratU E n := Subgroup.mem_subgroupOf.2 ⟨γ, rfl⟩
-  have hk : r⁻¹ * infPt h ∈ finU E n := by
+  have hk : r⁻¹ * infPt h ∈ finU (E := E) (n := n) := by
     have e1 : GeneralLinearGroup.map (pInf E) (ratGL E n γ) = h.1 := by
       rw [← hγh]
       exact Units.ext rfl
@@ -89,9 +89,9 @@ theorem mem_closure_rat_fin (x : UA E n) (hx : x ∈ infU E n) :
   exact ⟨r, hrU, r⁻¹ * infPt h, hk, mul_inv_cancel_left r _⟩
 
 theorem eq_zero_of_finU : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) (φ : UA L n → ℂ),
-    IsAutFormU φ → (∀ y ∈ finU L n, φ y = 0) → φ = 0 := by
+    IsAutFormU φ → (∀ y ∈ finU (E := L) (n := n), φ y = 0) → φ = 0 := by
   intro L _ _ _ n φ hφ h0
-  have hS : ((ratU L n : Set (UA L n)) * (finU L n : Set (UA L n))) ⊆ {g | φ g = 0} := by
+  have hS : ((ratU L n : Set (UA L n)) * (finU (E := L) (n := n) : Set (UA L n))) ⊆ {g | φ g = 0} := by
     rintro _ ⟨γ, hγ, k, hk, rfl⟩
     change φ (γ * k) = 0
     rw [hφ.left γ hγ k]
@@ -101,10 +101,10 @@ theorem eq_zero_of_finU : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L]
   obtain ⟨k, hk, x, hx, rfl⟩ := GlobalTheory.DefU.exists_finU_mul_infU L n g
   rw [GlobalTheory.DefU.fin_mul_inf hk hx]
   have hc : Continuous (· * k : UA L n → UA L n) := continuous_mul_const k
-  have hxk : x * k ∈ closure ((ratU L n : Set (UA L n)) * (finU L n : Set (UA L n))) := by
+  have hxk : x * k ∈ closure ((ratU L n : Set (UA L n)) * (finU (E := L) (n := n) : Set (UA L n))) := by
     refine closure_mono ?_ (image_closure_subset_closure_image hc ⟨x, mem_closure_rat_fin x hx, rfl⟩)
     rintro _ ⟨_, ⟨γ, hγ, k', hk', rfl⟩, rfl⟩
-    exact ⟨γ, hγ, k' * k, (finU L n).mul_mem hk' hk, (mul_assoc _ _ _).symm⟩
+    exact ⟨γ, hγ, k' * k, (finU (E := L) (n := n)).mul_mem hk' hk, (mul_assoc _ _ _).symm⟩
   exact hZ.closure_subset_iff.2 hS hxk
 
 end GlobalTheory.DefiniteDense

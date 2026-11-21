@@ -89,7 +89,7 @@ theorem exists_forall_hypS : ∀ (R K : Type) [CommRing R] [IsDomain R] [IsNoeth
   have hw : IsMonHom w := ExtUnique.isMonHom_of_isGrpPullback h h w₀ w ew.symm
   have hwd : IsMonHom wd := ExtUnique.isMonHom_of_isGrpPullback h h wd₀ wd ewd.symm
   have hsum : w * wd = 𝟙 G := by
-    refine ExtUnique.over_hom_ext_of_isPullback h.1 ?_
+    refine ExtUnique.over_hom_ext_of_isPullback (spMap (algebraMap R K)) h.1 ?_
     have b : pushPt h.1.w (w₀ * wd₀) = pushPt h.1.w w₀ * pushPt h.1.w wd₀ := map_mul (pushHom h A) _ _
     have c := pushPt_comp h ew (𝟙 A)
     have d := pushPt_comp h ewd (𝟙 A)

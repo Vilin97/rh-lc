@@ -136,7 +136,8 @@ theorem count [IsDomain O] [Module.Finite O M] [Module.Projective O M] (P : Idea
   have : Finite (M →ₗ[O] O ⧸ P) :=
     Nat.finite_of_card_ne_zero (by rw [hcard]; exact pow_ne_zero _ Nat.card_pos.ne')
   let φ : ℙ (O ⧸ P) (M →ₗ[O] O ⧸ P) → Submodule O M :=
-    Projectivization.lift (fun f => LinearMap.ker f.1) (by
+    Projectivization.lift (K := O ⧸ P) (V := M →ₗ[O] O ⧸ P)
+      (fun f => LinearMap.ker f.1) (by
       rintro ⟨a, ha⟩ ⟨b, hb⟩ t (hab : a = t • b)
       have ht : t ≠ 0 := by
         rintro rfl

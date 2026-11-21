@@ -154,7 +154,7 @@ theorem rho_inv
   have r1 := res_appTop (WeightPf.act (U.gt e)).left (W := W w) (fun _ _ => trivial) ρ.val
   have r2 := res_appTop (snd (WeightPf.Te D.toPre I e) (thickObj R I e G)).left (W := W w)
     (fun _ _ => trivial) ρ.val
-  exact r1.trans ((rho_inv_loc U ιD ιG e a χ u hi ρ hρ _ _ (fun k1 k2 h => congrArg (idx w) h)
+  exact r1.trans ((rho_inv_loc U ιD ιG e a χ hO u hi ρ hρ _ _ (fun k1 k2 h => congrArg (idx w) h)
     (fun k1 k2 h => congrArg (idx w) h) (fun k k' h => congrArg (idx w) h) (W w) le_rfl
     (fun _ _ => trivial) (fun _ _ => trivial)).trans r2.symm)
 

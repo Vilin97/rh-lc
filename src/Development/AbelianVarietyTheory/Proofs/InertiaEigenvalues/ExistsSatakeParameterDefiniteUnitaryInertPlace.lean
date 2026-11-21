@@ -152,7 +152,7 @@ theorem coef_mem (φ : UA E n → ℂ) (g : UA E n) :
     (fun y : infU E n => φ (g * (y : UA E n))) ∈ LinearMap.range (coefMap φ) :=
   ⟨(LinearMap.proj g).comp (Submodule.subtype _), rfl⟩
 
-def typeU (π : Submodule ℂ (UA E n → ℂ)) (w : HeightOneSpectrum (𝓞 E)) (L : Subgroup (finU E n))
+def typeU (π : Submodule ℂ (UA E n → ℂ)) (w : HeightOneSpectrum (𝓞 E)) (L : Subgroup (finU (E := E) (n := n)))
     (C : Submodule ℂ (infU E n → ℂ)) : Submodule ℂ π where
   carrier := {ψ | (∀ k ∈ L, cLoc w (k : UA E n) = 1 → RU E n k ψ.1 = ψ.1) ∧
     ∀ g, (fun y : infU E n => ψ.1 (g * (y : UA E n))) ∈ C}
@@ -164,7 +164,7 @@ def typeU (π : Submodule ℂ (UA E n → ℂ)) (w : HeightOneSpectrum (𝓞 E))
 
 variable {π : Submodule ℂ (UA E n → ℂ)} {w : HeightOneSpectrum (𝓞 E)} {H : Type} [Group H]
 
-theorem typeU_act {hst : ∀ x, ∀ φ ∈ π, rightReg ℂ (UA E n) ℂ x φ ∈ π} {L : Subgroup (finU E n)}
+theorem typeU_act {hst : ∀ x, ∀ φ ∈ π, rightReg ℂ (UA E n) ℂ x φ ∈ π} {L : Subgroup (finU (E := E) (n := n))}
     {C : Submodule ℂ (infU E n → ℂ)} {j : H →* UA E n} (hZ : ∀ x, cLoc w x = 1 → ∀ h, x * j h = j h * x) (h : H)
     (v : π) (hv : v ∈ typeU π w L C) : pull π hst j h v ∈ typeU π w L C := by
   refine ⟨fun k h1 h2 => ?_, fun g => ?_⟩
@@ -178,18 +178,18 @@ theorem typeU_act {hst : ∀ x, ∀ φ ∈ π, rightReg ℂ (UA E n) ℂ x φ �
     exact hv.2 _
 
 theorem finiteDimensional_typeU [TopologicalSpace H] (hπ : IsAutRepU π) {j : H →* UA E n} {p : UA E n →* H}
-    (hjf : ∀ h, j h ∈ finU E n) (hjc : Continuous j) (hpc : Continuous p)
-    (hdec : ∀ x, cLoc w ((j (p x))⁻¹ * x) = 1) {L : Subgroup (finU E n)} (hL : IsOpen (L : Set (finU E n)))
+    (hjf : ∀ h, j h ∈ finU (E := E) (n := n)) (hjc : Continuous j) (hpc : Continuous p)
+    (hdec : ∀ x, cLoc w ((j (p x))⁻¹ * x) = 1) {L : Subgroup (finU (E := E) (n := n))} (hL : IsOpen (L : Set (finU (E := E) (n := n))))
     {C : Submodule ℂ (infU E n → ℂ)}
-    (hfin : ∀ L : Subgroup (finU E n), IsOpen (L : Set (finU E n)) → FiniteDimensional ℂ (Submodule.span ℂ
+    (hfin : ∀ L : Subgroup (finU (E := E) (n := n)), IsOpen (L : Set (finU (E := E) (n := n))) → FiniteDimensional ℂ (Submodule.span ℂ
       {ψ : UA E n → ℂ | (∀ γ ∈ ratU E n, ∀ g, ψ (γ * g) = ψ g) ∧ (∀ k ∈ L, ∀ g, ψ (g * (k : UA E n)) = ψ g) ∧
         ∀ g, (fun y : infU E n => ψ (g * (y : UA E n))) ∈ C}))
     (K' : Subgroup H) (hK' : IsOpen (K' : Set H)) :
     FiniteDimensional ℂ ↥(typeU π w L C ⊓ fixed (pull π hπ.stable j) K') := by
-  let jp : finU E n →* finU E n := ((j.comp p).comp (finU E n).subtype).codRestrict (finU E n) fun k => hjf _
+  let jp : finU (E := E) (n := n) →* finU (E := E) (n := n) := ((j.comp p).comp (finU (E := E) (n := n)).subtype).codRestrict (finU (E := E) (n := n)) fun k => hjf _
   have hjp : Continuous jp := (hjc.comp (hpc.comp continuous_subtype_val)).subtype_mk _
-  let L' : Subgroup (finU E n) := L ⊓ K'.comap (p.comp (finU E n).subtype) ⊓ L.comap jp
-  have ho : IsOpen (L' : Set (finU E n)) :=
+  let L' : Subgroup (finU (E := E) (n := n)) := L ⊓ K'.comap (p.comp (finU (E := E) (n := n)).subtype) ⊓ L.comap jp
+  have ho : IsOpen (L' : Set (finU (E := E) (n := n))) :=
     (hL.inter (hK'.preimage (hpc.comp continuous_subtype_val))).inter (hL.preimage hjp)
   have := hfin L' ho
   refine FiniteDimensional.of_injective ((π.subtype ∘ₗ (typeU π w L C ⊓ fixed (pull π hπ.stable j) K').subtype).codRestrict
@@ -211,7 +211,7 @@ end Concrete
 theorem exists_hasSatAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (w : HeightOneSpectrum (𝓞 E))
     (s : w.adicCompletion E →+* w.adicCompletion E) (ϖ : w.adicCompletion E) (q : ℕ),
     (∀ x : E, s (algebraMap E _ x) = algebraMap E _ (IsCMField.complexConj E x)) → Formalism.UG.IsUnramInv ϖ s q →
-    (∀ L : Subgroup (finU E n), IsOpen (L : Set (finU E n)) → ∀ C : Submodule ℂ (infU E n → ℂ),
+    (∀ L : Subgroup (finU (E := E) (n := n)), IsOpen (L : Set (finU (E := E) (n := n))) → ∀ C : Submodule ℂ (infU E n → ℂ),
       FiniteDimensional ℂ C → FiniteDimensional ℂ (Submodule.span ℂ {ψ : UA E n → ℂ |
         (∀ γ ∈ ratU E n, ∀ g, ψ (γ * g) = ψ g) ∧ (∀ k ∈ L, ∀ g, ψ (g * (k : UA E n)) = ψ g) ∧
           ∀ g, (fun y : infU E n => ψ (g * (y : UA E n))) ∈ C})) →
@@ -243,11 +243,11 @@ theorem exists_hasSatAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     (inv_mul_eq_one.1 (hι1 _ (mul_mem (inv_mem (hjl _)) hx) (hdec x)))
   have hjc : Continuous j := hιc.comp (continuous_toAnti b e).2
   have hpc : Continuous p := (continuous_toAnti b e).1.comp ((continuous_cLoc w).subtype_mk _)
-  have hjf : ∀ h, j h ∈ finU E n := fun h => (hjl h).1
+  have hjf : ∀ h, j h ∈ finU (E := E) (n := n) := fun h => (hjl h).1
   have hsm : IsSmooth (pull π hπ.stable j) := fun v => by
     have h1 := (hπ.aut _ v.2).level.preimage (hjc.subtype_mk hjf)
     have h2 : {g : GU s n | pull π hπ.stable j g v = v} =
-        (fun g => (⟨j g, hjf g⟩ : finU E n)) ⁻¹' {k : finU E n | RU E n k v.1 = v.1} :=
+        (fun g => (⟨j g, hjf g⟩ : finU (E := E) (n := n))) ⁻¹' {k : finU (E := E) (n := n) | RU E n k v.1 = v.1} :=
       Set.ext fun g => Subtype.ext_iff
     rw [h2]
     exact h1
@@ -261,8 +261,8 @@ theorem exists_hasSatAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
   have hC : FiniteDimensional ℂ (LinearMap.range (coefMap φ)) := by
     have : FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k : infU E n => RU E n k φ)) := (hπ.aut φ hφ).kfin
     infer_instance
-  let L₀ : Subgroup (finU E n) := stab ((RU E n).comp (finU E n).subtype) φ
-  have hL₀ : IsOpen (L₀ : Set (finU E n)) := (hπ.aut φ hφ).level
+  let L₀ : Subgroup (finU (E := E) (n := n)) := stab ((RU E n).comp (finU (E := E) (n := n)).subtype) φ
+  have hL₀ : IsOpen (L₀ : Set (finU (E := E) (n := n))) := (hπ.aut φ hφ).level
   obtain ⟨σ, ha, hsph, f, hf0, hf⟩ := exists_spherical (p := p) (Z := (cLoc w).ker) hπ.irred hdec
     (fun x hx => hZ x hx) hsm hKo hKc h0' hφ' (typeU π w L₀ (LinearMap.range (coefMap φ)))
     (fun g v hv => typeU_act hZ g v hv) ⟨fun k hk _ => hk, fun g => coef_mem φ g⟩

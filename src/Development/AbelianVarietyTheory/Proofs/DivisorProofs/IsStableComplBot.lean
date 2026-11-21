@@ -35,7 +35,7 @@ def IsTransfer [IsCMField D.host.E] (V : HSp D) (θ : D.what₂.Tau → (Ainf D.
     (j : UA D.host.E V.rank ≃ₜ* GA D V) (h₀ : GA D V) : Prop :=
   h₀ ∈ GfC V ∧
   (∀ x, x ∈ ratU D.host.E V.rank ↔ j x ∈ GQ V) ∧
-  (∀ x, x ∈ finU D.host.E V.rank ↔ j x ∈ GfC V) ∧
+  (∀ x, x ∈ finU (E := D.host.E) (n := V.rank) ↔ j x ∈ GfC V) ∧
   (∀ x, x ∈ infU D.host.E V.rank ↔ j x ∈ GinfC V) ∧
   (∃ A : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ, (∀ τ, IsUnit (A τ)) ∧
     ∀ τ x, infMat D.sp.cm.sig V.gram (θ τ) (j x) =

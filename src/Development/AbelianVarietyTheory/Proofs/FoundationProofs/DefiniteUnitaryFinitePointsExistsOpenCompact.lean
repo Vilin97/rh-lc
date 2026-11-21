@@ -16,20 +16,20 @@ noncomputable section
 namespace GlobalTheory.DefU.FinCompact
 
 theorem exists_open_compact : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ),
-    ∃ K : Subgroup (finU E n), IsOpen (K : Set (finU E n)) ∧ IsCompact (K : Set (finU E n)) := by
+    ∃ K : Subgroup (finU (E := E) (n := n)), IsOpen (K : Set (finU (E := E) (n := n))) ∧ IsCompact (K : Set (finU (E := E) (n := n))) := by
   intro E _ _ _ n
   obtain ⟨U0, hU0o, hU0c⟩ := GlobalTheory.GLIntegral.exists_isOpen_isCompact E n
-  let p : finU E n →* GL (Fin n) (Af E) :=
-    (GeneralLinearGroup.map (pFin E)).comp ((UA E n).subtype.comp (finU E n).subtype)
+  let p : finU (E := E) (n := n) →* GL (Fin n) (Af E) :=
+    (GeneralLinearGroup.map (pFin E)).comp ((UA E n).subtype.comp (finU (E := E) (n := n)).subtype)
   have hp : Continuous p := continuous_map_pFin.comp (continuous_subtype_val.comp continuous_subtype_val)
-  let K : Subgroup (finU E n) := U0.comap p
-  have hKo : IsOpen (K : Set (finU E n)) := hU0o.preimage hp
+  let K : Subgroup (finU (E := E) (n := n)) := U0.comap p
+  have hKo : IsOpen (K : Set (finU (E := E) (n := n))) := hU0o.preimage hp
   haveI := GlobalTheory.DefU.LocAdm.t2Space_adelicGL_cmField (E := E) (n := n)
-  have hfc : IsClosed ((finU E n : Subgroup (UA E n)) : Set (UA E n)) := by
+  have hfc : IsClosed ((finU (E := E) (n := n) : Subgroup (UA E n)) : Set (UA E n)) := by
     haveI : T2Space (GL (Fin n) (Cinf E)) := Units.isEmbedding_embedProduct.t2Space
     have hc := GlobalTheory.CuspRep.ContAut.continuous_map_pInf E n
     exact isClosed_eq (hc.comp continuous_subtype_val) continuous_const
-  have hι : Topology.IsClosedEmbedding (fun x : finU E n => ((x : UA E n) : GA E n)) :=
+  have hι : Topology.IsClosedEmbedding (fun x : finU (E := E) (n := n) => ((x : UA E n) : GA E n)) :=
     GlobalTheory.DefU.LocAdm.isClosed_UA.isClosedEmbedding_subtypeVal.comp hfc.isClosedEmbedding_subtypeVal
   refine ⟨K, hKo, IsCompact.of_isClosed_subset (hι.isCompact_preimage (hU0c.image GlobalTheory.DefU.LocAdm.continuous_finGL))
     (Subgroup.isClosed_of_isOpen K hKo) fun x hx => ⟨p x, hx, ?_⟩⟩

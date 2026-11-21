@@ -11,7 +11,7 @@ open GlobalTheory.GalCut GlobalTheory.UnitaryBC GlobalTheory.Cong GlobalTheory.D
 open UpperTheory.Gal.Gen
 
 private theorem cAll_fin' {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} {c : UA E n}
-    (hc : c ∈ finU E n) : cAll c = 1 := by
+    (hc : c ∈ finU (E := E) (n := n)) : cAll c = 1 := by
   funext v
   have : cInf c = 1 := hc
   simp [cAll, cEmb, this]
@@ -36,7 +36,7 @@ theorem UpperTheory.Gal.Gen.frameW_pf :
       have h := hκd c d hc τ i j
       simp only [Pi.inv_apply, inv_inv]
       exact ⟨h.2, h.1⟩) x hx
-  have hval : ∀ f : algForms W, ∀ γ ∈ ratU E a, ∀ s x, x ∈ infU E a → ∀ c : finU E a,
+  have hval : ∀ f : algForms W, ∀ γ ∈ ratU E a, ∀ s x, x ∈ infU E a → ∀ c : finU (E := E) (n := a),
       (∀ v g, f.1 v (g * (c : UA E a)) = f.1 v g) → ∀ v,
       f.1 (ρ (M (γ * s * x * c)) v) (γ * s * x * c) = f.1 (ρ (M s) (ρ (κ (c : UA E a)) v)) s := by
     intro f γ hγ s x hx c hf v
@@ -58,8 +58,8 @@ theorem UpperTheory.Gal.Gen.frameW_pf :
   · intro f
     obtain ⟨C, hC, hfC⟩ := hE E a W f
     obtain ⟨d, hd⟩ := hD E l hlp a C hC.compact
-    let C₃ : Subgroup (finU E a) := C.subgroupOf (finU E a)
-    have hC₃o : IsOpen (C₃ : Set (finU E a)) := by
+    let C₃ : Subgroup (finU (E := E) (n := a)) := C.subgroupOf (finU (E := E) (n := a))
+    have hC₃o : IsOpen (C₃ : Set (finU (E := E) (n := a))) := by
       obtain ⟨N, hNo, hN1, hNC⟩ := hC.isOpen
       refine Subgroup.isOpen_of_mem_nhds _ (g := 1)
         (Filter.mem_of_superset ((hNo.preimage continuous_subtype_val).mem_nhds hN1) ?_)

@@ -45,7 +45,8 @@ theorem exists_primeInvolution_of_ringInvolution {R : Type} [CommRing R] [IsDede
   refine ⟨hf.toPerm f, hf, ?_, ?_, ?_⟩
   · intro P
     show Ideal.absNorm (P.asIdeal.map s) = _
-    simp only [Ideal.absNorm_apply, Submodule.cardQuot_apply]
+    rw [Ideal.absNorm_of_ne_bot (f P).ne_bot, Ideal.absNorm_of_ne_bot P.ne_bot,
+      Submodule.cardQuot_apply, Submodule.cardQuot_apply]
     exact (Nat.card_congr (Ideal.quotientEquiv P.asIdeal (P.asIdeal.map s) s rfl).toEquiv).symm
   · intro P x
     exact hm _ x

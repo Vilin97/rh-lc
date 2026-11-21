@@ -17,7 +17,7 @@ theorem UpperTheory.Gal.Int.Core.autT_holds : UpperTheory.Gal.Int.Core.AutT := b
   classical
   intro E _ _ _ a U hU
   obtain ⟨φ, hφ, hφ0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hU.ne_bot
-  let L : Subgroup (finU E a) :=
+  let L : Subgroup (finU (E := E) (n := a)) :=
     { carrier := {k | RU E a k φ = φ}
       one_mem' := by simp
       mul_mem' := by
@@ -29,7 +29,7 @@ theorem UpperTheory.Gal.Int.Core.autT_holds : UpperTheory.Gal.Int.Core.AutT := b
         simp only [Set.mem_setOf_eq] at *
         conv_lhs => rw [← hx]
         rw [← Module.End.mul_apply, ← map_mul, Subgroup.coe_inv, inv_mul_cancel, map_one, Module.End.one_apply] }
-  have hLo : IsOpen (L : Set (finU E a)) := (hU.aut φ hφ).level
+  have hLo : IsOpen (L : Set (finU (E := E) (n := a))) := (hU.aut φ hφ).level
   have hunr : ∀ᶠ w in Filter.cofinite, IsUnramU U w := by
     filter_upwards [GlobalTheory.T.eventually_localIntegralPoints_mem_openSubgroup_definiteUnitary E a L hLo] with w hw
     exact ⟨φ, hφ, hφ0, fun x hx hxK => hw x hx hxK hx.1⟩

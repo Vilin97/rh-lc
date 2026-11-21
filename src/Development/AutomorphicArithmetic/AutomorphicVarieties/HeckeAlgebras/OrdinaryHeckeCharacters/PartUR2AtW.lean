@@ -75,7 +75,7 @@ private theorem toKT_sec (hn : 1 ≤ n) {w : Plc L} (hw : IsSplitAt w) (hS : w.u
     exact fun h => hS (Or.inr (Or.inl (h ▸ u.2)))))
 
 private theorem infRep_fin {s : HidaSetting l L Ω} (V : s.Lev) (ι : Qbar l ≃+* ℂ) (lam : Wt L l n) {k : UA L n}
-    (hk : k ∈ finU L n) : infRep (V := V) ι lam k = 1 := by
+    (hk : k ∈ finU (E := L) (n := n)) : infRep (V := V) ι lam k = 1 := by
   have h1 : ∀ τ : L →+* ℂ, cEmb τ k = 1 := fun τ => by
     change Matrix.GeneralLinearGroup.map (coord τ) (cInf k) = 1
     rw [MonoidHom.mem_ker.1 hk, map_one]
@@ -111,7 +111,7 @@ theorem UpperTheory.V.Hi.partUR2AtW :
     rw [w_under]
     exact fun h => hS (Or.inl (h ▸ v.2)))
   have h4 : infRep (V := V) ι lam (x * j g)⁻¹ = infRep (V := V) ι lam x⁻¹ := by
-    rw [mul_inv_rev, map_mul, infRep_fin V ι lam ((finU L n).inv_mem (Subgroup.mem_inf.1 (hj1 g)).1), one_mul]
+    rw [mul_inv_rev, map_mul, infRep_fin V ι lam ((finU (E := L) (n := n)).inv_mem (Subgroup.mem_inf.1 (hj1 g)).1), one_mul]
   have h5 : (show Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) from
         ((away l L n).rangeRestrict x, fun v : V.frame.Vl => cLoc (s.w v.1) x)) *
       (show Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) from (((sec n s w g : Ub n s) : Ga l L n), 1)) =

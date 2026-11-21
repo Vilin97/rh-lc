@@ -170,7 +170,7 @@ theorem UpperTheory.V.Hi.finU :
     refine (fu_open.inter ((fu_Kc n).preimage (GlobalTheory.DefU.Inert.continuous_cLoc _))).inter (IsOpen.inter ?_ ?_)
     · exact fu_iInf _ fun q => (K.2 q).1.preimage (GlobalTheory.DefU.Inert.continuous_cLoc _)
     · exact fu_iInf _ fun v => ((glBridge _ n ℂ 1).2.2.1 0).1.preimage (GlobalTheory.DefU.Inert.continuous_cLoc _)
-  obtain ⟨S, hS⟩ := GlobalTheory.DefU.ClassFin.classSet_finite L n (K0.comap (GlobalTheory.UnitaryBC.finU L n).subtype)
+  obtain ⟨S, hS⟩ := GlobalTheory.DefU.ClassFin.classSet_finite L n (K0.comap (GlobalTheory.UnitaryBC.finU (E := L) (n := n)).subtype)
     (ho.preimage continuous_subtype_val)
   refine ⟨S.image Φ, fun g => ?_⟩
   obtain ⟨g, rfl⟩ := hsurj g

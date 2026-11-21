@@ -270,9 +270,10 @@ theorem exists_eq_smul_of_isTheta1 : ∀ (E : Type) [Field E] [NumberField E] [I
   obtain ⟨hsymm, hposx, him, -, -, hinj, -, -⟩ := hx_laws E r X g bas idx n hs hn x hxd
   have hspE := TensLat.span_of_selfD X hL
   obtain ⟨hLfg, hLd⟩ := hL
-  set Hm := ThFr.Hm X bas idx x with hHm
+  set Hm := ThFr.Hm bas idx x with hHm
   have hform : ∀ z z', hx X bas idx x z z' = z ⬝ᵥ Hm.mulVec (star z') := fun z z' => by
-    rw [hx_eq_hermForm idx x z z']; rfl
+    change hermForm _ _ _ = hermForm (ThFr.Hm bas idx x) z z'
+    exact RiemannRel.hermForm_mulVec _ _ _ z z'
   have hH : Hm.IsHermitian := Matrix.IsHermitian.ext fun i j => by
     have h := hsymm (Pi.single j 1) (Pi.single i 1)
     rw [hform, hform, SiegelNormalForm.form_single, SiegelNormalForm.form_single] at h

@@ -159,7 +159,7 @@ private theorem norm_natCast_le_one_unramified_integrals (n : ℕ) : ‖(n : K)�
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ih (by simp))
 
 theorem divBy_derivative {x : K} {f : PowerSeries K} (hf : DivBy x f) :
-    DivBy x (derivative K f) := by
+    DivBy x (derivative f) := by
   unfold DivBy at hf ⊢
   intro n
   rw [PowerSeries.coeff_derivative, norm_mul]
@@ -171,7 +171,7 @@ theorem divBy_derivative {x : K} {f : PowerSeries K} (hf : DivBy x f) :
         mul_le_mul (hf _) h1 (norm_nonneg _) (norm_nonneg _)
     _ = ‖x‖ := mul_one _
 theorem integralPS_derivative {f : PowerSeries K} (hf : IntegralPS f) :
-    IntegralPS (derivative K f) := by
+    IntegralPS (derivative f) := by
   rw [integralPS_iff_divBy_one] at *
   exact divBy_derivative hf
 

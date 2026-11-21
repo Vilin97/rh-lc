@@ -110,7 +110,8 @@ variable {I J K : Cx R} (μ : Pair I J K) {n m k : ℤ} (hk : n + m = k) (α : C
 def crossVal (a b : ℕ) (s : ℤ) (h : -((a + b : ℕ) : ℤ) + k = s) (U : Scheme.{0}) (y : BSx (twX E V) a b U) :
     Sec (K.X s) U :=
   (m * (a : ℤ)).negOnePow • μ.mul U (-(a : ℤ) + n) (-(b : ℤ) + m) s (by push_cast at h; omega)
-    (ev α a _ rfl U (baseS V y)) (ev z b _ rfl U (vertS V ℓ y))
+    (_root_.GlobalTheory.EtC.ev R α a _ rfl U (baseS V y))
+    (_root_.GlobalTheory.EtC.ev R z b _ rfl U (vertS V ℓ y))
 
 theorem crossVal_res (a b : ℕ) (s : ℤ) (h : -((a + b : ℕ) : ℤ) + k = s) {W U : Scheme.{0}} (g : W ⟶ U)
     (y : BSx (twX E V) a b U) :
@@ -124,7 +125,8 @@ def crossT : Cochain (totChains R (twX E V)) K k :=
 theorem evT_crossT (a b : ℕ) (s : ℤ) (h : -((a + b : ℕ) : ℤ) + k = s) (U : Scheme.{0}) (y : BSx (twX E V) a b U) :
     evT (crossT V ℓ μ hk α z) a b s h U y =
       (m * (a : ℤ)).negOnePow • μ.mul U (-(a : ℤ) + n) (-(b : ℤ) + m) s (by push_cast at h; omega)
-        (ev α a _ rfl U (baseS V y)) (ev z b _ rfl U (vertS V ℓ y)) :=
+        (_root_.GlobalTheory.EtC.ev R α a _ rfl U (baseS V y))
+        (_root_.GlobalTheory.EtC.ev R z b _ rfl U (vertS V ℓ y)) :=
   (evT_exists (crossVal V ℓ μ hk α z) (fun a b s h W U g y => crossVal_res V ℓ μ hk α z a b s h g y)).choose_spec a b s h U y
 
 theorem evT_add {X : SimplicialObject Spc} {L : Cx R} {t : ℤ} (γ γ' : Cochain (totChains R X) L t) (a b : ℕ) (s : ℤ)
