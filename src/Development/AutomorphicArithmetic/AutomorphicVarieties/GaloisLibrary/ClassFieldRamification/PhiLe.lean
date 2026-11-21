@@ -14,7 +14,7 @@ theorem UpperTheory.V.CF.phiLe :
   intro p _ P _ _ hP K hK
   have hnil : Group.IsNilpotent P := hP.isNilpotent
   have hN : K.Normal :=
-    Subgroup.NormalizerCondition.normal_of_coatom K normalizerCondition_of_isNilpotent hK
+    Subgroup.NormalizerCondition.normal_of_coatom K Group.normalizerCondition_of_isNilpotent hK
   refine ⟨hN, ?_⟩
   have hQp : IsPGroup p (P ⧸ K) := hP.to_quotient K
   have hne : Nontrivial (P ⧸ K) := by

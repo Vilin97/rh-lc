@@ -139,7 +139,7 @@ theorem UpperTheory.V.Pa.BC.oprime :
   haveI hloc : IsLocalRing (AdjoinRoot P) := by
     refine IsLocalRing.of_unique_max_ideal ⟨M, hMmax, fun Q hQ => ?_⟩
     have hc : (Q.comap (algebraMap O (AdjoinRoot P))).IsMaximal :=
-      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal Q
+      Ideal.isMaximal_under_of_isIntegral_of_isMaximal Q
     have hle : M ≤ Q := Ideal.map_le_iff_le_comap.mpr (IsLocalRing.eq_maximalIdeal hc).symm.le
     exact (hMmax.eq_of_le hQ.ne_top hle).symm
   have hMeq : M = maximalIdeal (AdjoinRoot P) := IsLocalRing.eq_maximalIdeal hMmax

@@ -114,8 +114,10 @@ private theorem step (C : Subgroup 𝓀[k]ˣ) (w : Equiv.Perm (Fin n)) (i j : Fi
       rw [conj_apply, hz]
       simp only [Matrix.add_apply, one_apply, single_apply, Equiv.apply_eq_iff_eq]
       congr 2
-      rw [← Equiv.symm_apply_eq, ← Equiv.symm_apply_eq, Equiv.symm_swap, Equiv.swap_apply_left,
-        Equiv.swap_apply_right]
+      · change (1 : Matrix (Fin n) (Fin n) k) _ _ = (1 : Matrix (Fin n) (Fin n) k) _ _
+        simp [Matrix.one_apply]
+      · rw [← Equiv.symm_apply_eq, ← Equiv.symm_apply_eq, Equiv.symm_swap, Equiv.swap_apply_left,
+          Equiv.swap_apply_right]
     have h5 := hlow _ h _ _ hw
     rw [conj_apply, Units.val_mul, Units.val_mul, hy, mul_add, add_mul, mul_one, Matrix.add_apply] at h5
     simp only [Equiv.Perm.coe_inv, Equiv.apply_symm_apply] at h5

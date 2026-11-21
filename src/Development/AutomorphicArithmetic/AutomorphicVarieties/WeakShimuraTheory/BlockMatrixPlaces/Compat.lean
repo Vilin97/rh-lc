@@ -27,7 +27,12 @@ theorem UpperTheory.V.Ws.Bl.compat :
   have hf : ∀ n, Finite (S n) := fun n => by
     have := hT n
     have h : ((Zn ρ c N H P n) ×ˢ (Set.univ : Set (T ⧸ lev A T n))).Finite := (hZ n).prod Set.finite_univ
-    exact (h.subset (fun p (hp : IsZn ρ c N H P n p.1 p.2 ∧ (0 < n → Prim p.1)) => ⟨⟨p.2, hp.1⟩, trivial⟩)).to_subtype
+    have h' : {p : (Γ → T ⧸ lev A T n) × (T ⧸ lev A T n) |
+        IsZn ρ c N H P n p.1 p.2 ∧ (0 < n → Prim p.1)}.Finite :=
+      h.subset (by
+        intro p hp
+        exact ⟨⟨p.2, hp.1⟩, trivial⟩)
+    exact h'.to_subtype
   have hn : ∀ n, Nonempty (S n) := fun n => by
     obtain ⟨z, ⟨y, hz⟩, hp⟩ := hP (n + 1) n.succ_pos
     exact ⟨t n ⟨(z, y), hz, fun _ => hp⟩⟩

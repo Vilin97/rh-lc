@@ -40,7 +40,6 @@ theorem UpperTheory.V.CF.kwRam :
   haveI : IsCyclotomicExtension {a * b} ℚ (CyclotomicField (a * b) ℚ) := by
     convert CyclotomicField.isCyclotomicExtension (a * b) ℚ
     · rfl
-    · exact Subsingleton.elim _ _
   obtain ⟨ζ, hζ⟩ : ∃ z : CyclotomicField (a * b) ℚ, IsPrimitiveRoot z (a * b) :=
     ⟨_, IsCyclotomicExtension.zeta_spec _ ℚ _⟩
   let F : IntermediateField ℚ (CyclotomicField (a * b) ℚ) := f.fieldRange
@@ -61,7 +60,6 @@ theorem UpperTheory.V.CF.kwRam :
   haveI : IsCyclotomicExtension {M ^ n} ℚ (CyclotomicField (M ^ n) ℚ) := by
     convert CyclotomicField.isCyclotomicExtension (M ^ n) ℚ
     · rfl
-    · exact Subsingleton.elim _ _
   obtain ⟨ω, hω⟩ : ∃ z : CyclotomicField (M ^ n) ℚ, IsPrimitiveRoot z (M ^ n) :=
     ⟨_, IsCyclotomicExtension.zeta_spec _ ℚ _⟩
   have hq0 : M ^ n / a ≠ 0 :=

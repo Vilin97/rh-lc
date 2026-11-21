@@ -31,11 +31,10 @@ theorem eInf_add_eFin : eInf D + eFin D = 1 := by
 theorem cA_smul (c : AF D.host.F) (z : AE D) : cA D (c • z) = c • cA D z := by
 
   unfold cA sigR
-  refine TensorProduct.induction_on z ?_ ?_ ?_
-  · simp
-  · intro a b
-    simp [TensorProduct.smul_tmul', Algebra.TensorProduct.map_tmul]
-  · intro x y hx hy
+  induction z using TensorProduct.induction_on with
+  | zero => simp
+  | tmul a b => simp [TensorProduct.smul_tmul', Algebra.TensorProduct.map_tmul]
+  | add x y hx hy =>
     rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem hO_smul_right (c : AF D.host.F) (x y : WO S T) : hO S T x (c • y) = c • hO S T x y := by

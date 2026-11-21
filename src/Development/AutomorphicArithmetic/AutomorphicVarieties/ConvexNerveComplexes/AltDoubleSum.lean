@@ -64,7 +64,7 @@ private theorem UpperTheory.V.ConeExtensionAcyclic.alt_double_sum {M : Type*} [A
     rw [two_nsmul, smul_zero]
     nth_rewrite 1 [hneg]
     exact neg_add_cancel S
-  exact nsmul_right_injective (by norm_num) h2
+  exact eq_of_nsmul_eq_nsmul_of_addCommute (by norm_num) (AddCommute.all _ _) h2
 
 theorem UpperTheory.V.ConeExtensionAcyclic.bd_bd :
     ∀ (I : Type) (n : ℕ) (c : Ch I (n + 2)), bd I n (bd I (n + 1) c) = 0 := by
@@ -88,5 +88,7 @@ theorem UpperTheory.V.ConeExtensionAcyclic.bd_bd :
     rw [UpperTheory.V.ConeExtensionAcyclic.alt_double_sum n (fun i j => Finsupp.single ((t ∘ i.succAbove) ∘ j.succAbove) (1 : ℤ)), smul_zero]
     intro i j
     congr 1
+    funext k
+    simp only [Function.comp_apply]
     rw [Fin.succAbove_succAbove_succAbove_predAbove]
   exact LinearMap.congr_fun hlin c

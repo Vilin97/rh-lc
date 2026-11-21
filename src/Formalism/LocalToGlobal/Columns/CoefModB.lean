@@ -147,7 +147,6 @@ theorem pairP_trivial (lam : ι → DomWeight n) (F F' : Pol K ι n) :
   simp only [pairP, LinearMap.smul_apply, LinearMap.compl₂_apply, AlgHom.toLinearMap_apply, fockL,
     LinearMap.mk₂'ₛₗ_apply, pb_gramTw_one, pb_blockAct_one_tr, pb_fockS_triv, pb_extNorm_triv, smul_eq_mul,
     one_div]
-  rfl
 
 end Triv
 

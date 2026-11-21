@@ -107,8 +107,8 @@ private theorem pf_step (hg : ∀ s, ι (g (MvPowerSeries.X s)) = t (Multiplicat
     refine Finset.sum_congr rfl fun m hm => ?_
     rw [map_mul ι, map_mul ξ, hc m, hgm m hm]
     ring
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [hFb, map_sum, ← Finset.sum_sub_distrib]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [hFb, map_sum, ← Finset.sum_sub_distrib]
     refine Ideal.sum_mem _ fun m hm => ?_
     rw [map_mul, ← sub_mul]
     exact Ideal.mul_mem_mul (hcI m) (hJ m (hμS (Finset.mem_coe.mpr hm)))

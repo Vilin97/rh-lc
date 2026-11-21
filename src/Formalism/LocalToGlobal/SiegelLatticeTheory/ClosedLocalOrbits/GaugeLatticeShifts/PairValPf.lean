@@ -281,17 +281,20 @@ theorem pts_inj : ∀ (bs bs' : List (K × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 ∧ 1
     have := (hv (t, s) (by simp)).2
     simp only [List.map_nil, List.sum_nil, List.map_cons, List.sum_cons] at hs; omega
   | (t, s) :: b1, (t', s') :: b1', hv, hv', hs, h => by
-    simp only [List.map_cons, List.sum_cons] at hs h
+    simp only [List.map_cons, List.sum_cons] at hs
     have hs1 := (hv (t, s) (by simp)).2
     have hs1' := (hv' (t', s') (by simp)).2
-    have hzero : 0 < s + (b1.map Prod.snd).sum := by omega
+    have hzero : 0 < (((t, s) :: b1).map Prod.snd).sum := by
+      simp only [List.map_cons, List.sum_cons]
+      omega
     obtain ⟨e1, e2⟩ := h 0 hzero
     simp only [pσ, pv, if_pos (show 0 < s by omega), if_pos (show 0 < s' by omega)] at e1 e2
     have ess : s = s' := by omega
     subst ess e2
     have := pts_inj b1 b1' (fun b hb => hv b (by simp [hb])) (fun b hb => hv' b (by simp [hb])) (by omega)
       (fun i hi => by
-        have hindex : s + i < s + (b1.map Prod.snd).sum := by omega
+        have hindex : s + i < (((t, s) :: b1).map Prod.snd).sum := by
+          simpa only [List.map_cons, List.sum_cons] using Nat.add_lt_add_left hi s
         obtain ⟨a, b⟩ := h (s + i) hindex
         simp only [pσ, pv, if_neg (show ¬ (s + i < s) by omega), Nat.add_sub_cancel_left] at a b
         exact ⟨by omega, b⟩)

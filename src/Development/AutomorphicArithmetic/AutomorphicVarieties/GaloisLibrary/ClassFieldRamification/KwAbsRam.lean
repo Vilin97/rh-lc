@@ -36,7 +36,6 @@ private theorem abelian_ramification_cyclotomic_bound (Ω : Type) [Field Ω] [Ch
   haveI : IsGalois ℚ L := by
     have := (InfiniteGalois.normal_iff_isGalois L).1 (by rw [hLV]; exact hVn)
     convert this
-    exact Subsingleton.elim _ _
   have hres : ∀ σ : G ℚ Ω, resTo ℚ L Ω σ = 1 ↔ σ ∈ V := by
     intro σ
     rw [← hLV, IntermediateField.mem_fixingSubgroup_iff]

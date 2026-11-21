@@ -25,7 +25,7 @@ private theorem coeff_scale {A : Type} [CommRing A] {m : ℕ} (P : MvPolynomial 
     · rw [MvPolynomial.coeff_monomial, if_pos h2]
     · rw [MvPolynomial.coeff_monomial, if_neg h2]
     · exact absurd (congrArg Finsupp.degree h2) h1
-    · rw [MvPolynomial.coeff_zero]
+    · simp
   | add p q hp hq =>
     rw [map_add (f := _), Polynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
 
@@ -35,14 +35,26 @@ theorem UpperTheory.V.AlgebraTools.Det.genHomog :
   intro n A G _ _ D m y
   have hφ : (MvPolynomial.aeval (fun j => (C (MvPolynomial.X j) : (MvPolynomial (Fin m) A)[X]))) =
       (Polynomial.CAlgHom : MvPolynomial (Fin m) A →ₐ[A] (MvPolynomial (Fin m) A)[X]) :=
-    MvPolynomial.algHom_ext fun i => by simp [Polynomial.CAlgHom]
+    MvPolynomial.algHom_ext fun i => by
+      change _ = Polynomial.C (MvPolynomial.X i)
+      simp
   have hC : MvPolynomial.aeval (fun j => (C (MvPolynomial.X j) : (MvPolynomial (Fin m) A)[X]))
       (D.D (MvPolynomial (Fin m) A) (GDet.gen y)) = C (D.D (MvPolynomial (Fin m) A) (GDet.gen y)) := by
     rw [hφ]
     rfl
+  have hgen (B : Type) [CommRing B] [Algebra A B] (b : Fin m → B) :
+      D.D B (∑ j, b j • MonoidAlgebra.mapRingHom G (algebraMap A B) (y j)) =
+        MvPolynomial.aeval b (D.D (MvPolynomial (Fin m) A) (GDet.gen y)) := by
+    rw [← D.nat (MvPolynomial (Fin m) A) B (MvPolynomial.aeval b)]
+    congr 1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GDet.gen, map_sum]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    ext g
+    simp [MonoidAlgebra.mapRingHom]
   have key : MvPolynomial.aeval (fun j => (X * C (MvPolynomial.X j) : (MvPolynomial (Fin m) A)[X]))
       (D.D (MvPolynomial (Fin m) A) (GDet.gen y)) = X ^ n * C (D.D (MvPolynomial (Fin m) A) (GDet.gen y)) := by
-    rw [← UpperTheory.V.AlgebraTools.Det.genEval D _ m y, ← hC, ← UpperTheory.V.AlgebraTools.Det.genEval D _ m y, ← D.homog,
+    rw [← hgen _, ← hC, ← hgen _, ← D.homog,
       Finset.smul_sum]
     simp only [mul_smul]
   intro d hd
@@ -53,5 +65,5 @@ theorem UpperTheory.V.AlgebraTools.Det.genHomog :
     rfl
   rw [hw]
   by_contra hne
-  rw [if_neg (Ne.symm hne), MvPolynomial.coeff_zero] at h1
+  simp [hne] at h1
   exact hd h1.symm

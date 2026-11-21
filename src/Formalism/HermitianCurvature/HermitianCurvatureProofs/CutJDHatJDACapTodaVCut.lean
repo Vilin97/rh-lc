@@ -90,7 +90,7 @@ theorem jDACapTodaV_of_parts (h1 : TVCoef) (h2 : TVGrp) (h3 : TVCrd) : JDACapTod
     simp only [gaugeF, Q.resG, smul_eq_mul, mul_one]
   have hsm : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞)
       (fun c' => gaugeF P.k P.r c' • J (Q.wCell P.k P.r (Fin.last P.r) c' * g)) U' := by
-    refine ((hF.comp hemb.contDiffOn (fun c' hc' => hc'.1))).congr (fun c' hc' => ?_)
+    refine ((hF.comp (s := U') hemb.contDiffOn (fun c' hc' => hc'.1))).congr (fun c' hc' => ?_)
     rw [hgauge c']
     exact hFeq (c', g) hc'.1 hg
   have e3 := h3 P.k P.r (Wq →L[ℂ] Wp) y (fun c' => J (Q.wCell P.k P.r (Fin.last P.r) c' * g)) U' c hU'o

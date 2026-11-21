@@ -101,7 +101,7 @@ theorem hfsJ_li (F : CoefFrame ι) : LinearIndependent L fun i => hfsJ ι lam (b
     ext d
     have h1 := congrArg (AddMonoidAlgebra.coeff · d) hpol
     simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_map, smul_eq_mul,
-      MvPolynomial.coeff_zero] at h1 ⊢
+      AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h1 ⊢
     have h2 := congrArg (fun y => F.c y k) h1
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_zero, Finset.sum_apply, Pi.zero_apply] at h2

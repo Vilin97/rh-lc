@@ -92,8 +92,9 @@ theorem ext_general {E : Type} [Field E] (φ : E →+* R) {N : ℕ} (hN : n + 1 
     Matrix.of (fun a (b : Fin (n + 1)) => if hb : (b : ℕ) < n then A a ⟨b, hb⟩ else z a) with hBdef
   have hBA : B * inclusionAlt = A := by
     ext a b
-    simp only [mul_apply, inclusionAlt, of_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
-      Finset.mem_univ, if_true, hBdef, Fin.coe_castSucc, b.isLt, dif_pos]
+    change (∑ k : Fin (n + 1), B a k * inclusionAlt k b) = A a b
+    simp only [hBdef, inclusionAlt, of_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
+      Finset.mem_univ, if_true, Fin.coe_castSucc, b.isLt, dif_pos]
   have hBz : B *ᵥ Pi.single (Fin.last n) 1 = z := by
     ext a
     rw [Matrix.mulVec_single_one]

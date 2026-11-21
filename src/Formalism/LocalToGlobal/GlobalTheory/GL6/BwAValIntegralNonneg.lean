@@ -89,7 +89,7 @@ theorem bwA_val_integral_nonneg (x : LL) (hx : IsIntegral ℤ x) : (0 : WithTop 
   obtain ⟨p, hpm, hpx⟩ := hx
   have hsum : x ^ p.natDegree = -∑ i ∈ Finset.range p.natDegree, ((p.coeff i : ℤ) : LL) * x ^ i := by
     rw [hpm.as_sum] at hpx
-    simp only [Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finset_sum, Polynomial.eval₂_mul,
+    simp only [Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finsetSum, Polynomial.eval₂_mul,
       Polynomial.eval₂_C, algebraMap_int_eq, Int.coe_castRingHom] at hpx
     exact eq_neg_of_add_eq_zero_left hpx
   have hlow : ((((p.natDegree : ℤ) - 1) * z : ℤ) : WithTop ℤ) ≤
@@ -279,7 +279,7 @@ theorem bwA_G_C (a b : Fin r) (c : R) : bwA_G (n := n) a b (MvPolynomial.C c) 0 
   · subst hk
     simpa using MvPolynomial.isWeightedHomogeneous_C (bwA_wZ r n) c
   · intro d hd
-    exact absurd (MvPolynomial.coeff_zero d) hd
+    simp at hd
 
 theorem bwA_G_X (a b : Fin r) (v : Fin r × Fin n) : bwA_G (R := R) a b (MvPolynomial.X v) (bwA_wZ r n v) := by
   intro k
@@ -306,14 +306,14 @@ theorem bwA_G_X (a b : Fin r) (v : Fin r × Fin n) : bwA_G (R := R) a b (MvPolyn
         simp [Formalism.GradedWeylDivisibility.rowGen, hv]
       rw [h]
       intro d hd
-      exact absurd (MvPolynomial.coeff_zero d) hd
+      simp at hd
   | k + 2 =>
     have h : Formalism.GradedWeylDivisibility.rowDiv R a b (k + 2) (MvPolynomial.X v : MvPolynomial (Fin r × Fin n) R) = 0 := by
       unfold Formalism.GradedWeylDivisibility.rowDiv
       by_cases hv : v.1 = b <;> simp [Formalism.GradedWeylDivisibility.rowGen, hv, Polynomial.coeff_X_mul, Polynomial.coeff_C]
     rw [h]
     intro d hd
-    exact absurd (MvPolynomial.coeff_zero d) hd
+    simp at hd
 
 theorem bwA_G_add (a b : Fin r) {p q : MvPolynomial (Fin r × Fin n) R} {μ : Fin r → ℤ} (hp : bwA_G a b p μ)
     (hq : bwA_G a b q μ) : bwA_G a b (p + q) μ := by

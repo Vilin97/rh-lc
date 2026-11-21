@@ -289,7 +289,7 @@ def IntF (y : AE D) : Prop := y * fI D = y ∧ finPart D y ∈ intAE D
 lemma intF_zero : IntF (0 : AE D) := ⟨zero_mul _, by rw [map_zero]; exact zero_mem _⟩
 
 lemma intF_add {y y' : AE D} (h : IntF y) (h' : IntF y') : IntF (y + y') :=
-  ⟨by rw [add_mul, h.1, h'.1], by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h.2 h'.2⟩
+  ⟨by rw [add_mul, h.1, h'.1], by rw [map_add]; exact add_mem h.2 h'.2⟩
 
 lemma intF_neg {y : AE D} (h : IntF y) : IntF (-y) :=
   ⟨by rw [neg_mul, h.1], by rw [map_neg]; exact neg_mem h.2⟩

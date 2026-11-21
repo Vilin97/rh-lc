@@ -155,7 +155,8 @@ theorem exists_lat (L : IsLoc O Δ) (hc : c = (τ ^ 2 - 4) * algebraMap O K ε *
       rw [map_mul, ← hμ2, ← mul_assoc, hinvE, one_mul, sq, sub_self]
     exact IsIntegrallyClosed.isIntegral_iff.mp hint
   obtain ⟨Λ, hΛ⟩ : ∃ Λ : Set (Etau K τ), ∀ b, b ∈ Λ ↔
-      ∃ p q : O, b = algebraMap O K p • y1 + algebraMap O K q • y2 := ⟨_, fun _ => Iff.rfl⟩
+      ∃ p q : O, b = algebraMap O K p • y1 + algebraMap O K q • y2 :=
+    ⟨{b | ∃ p q : O, b = algebraMap O K p • y1 + algebraMap O K q • y2}, fun _ => Iff.rfl⟩
   have hy1Λ : y1 ∈ Λ := (hΛ _).mpr ⟨1, 0, by simp⟩
   have hy2Λ : y2 ∈ Λ := (hΛ _).mpr ⟨0, 1, by simp⟩
   have hLat : IsLat O τ Λ := by

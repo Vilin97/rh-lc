@@ -217,8 +217,11 @@ theorem partPr_other {p q : Bs.Ix} {x : Fin (Df.dQ t) → K} (hx : x ∈ Df.Qp t
     (partPr Df t q).mulVec x = 0 := by
   obtain ⟨hc, heq⟩ := partPr_eq Df t hi ht q
   rw [heq, LinearMap.toMatrix'_mulVec, LinearMap.comp_apply]
-  have hx' : x ∈ ⨆ (p' : Bs.Ix) (_ : p' ≠ q), Df.Qp t p' :=
-    (le_biSup (fun p' => Df.Qp t p') (Ne.symm hq)) hx
+  have hx' : x ∈ ⨆ (p' : Bs.Ix) (_ : p' ≠ q), Df.Qp t p' := by
+    have hle : Df.Qp t p ≤ ⨆ (p' : Bs.Ix) (_ : p' ≠ q), Df.Qp t p' := by
+      apply le_iSup_of_le p
+      exact le_iSup (fun _ : p ≠ q => Df.Qp t p) (Ne.symm hq)
+    exact hle hx
   have := Submodule.linearProjOfIsCompl_apply_right hc ⟨x, hx'⟩
   rw [this]
   rfl

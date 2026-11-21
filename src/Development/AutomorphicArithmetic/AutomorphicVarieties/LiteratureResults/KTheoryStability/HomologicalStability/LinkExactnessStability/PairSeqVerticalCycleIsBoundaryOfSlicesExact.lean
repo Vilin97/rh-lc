@@ -101,7 +101,7 @@ theorem GlobalTheory.SeqCx.vertical_exact_of_columns : ∀ (V W : Type) (D : Set
     exact ⟨this.1, (hpre l hl).1, this.2⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, hdec]
-    exact Finset.sum_congr rfl (fun l hl => by rw [vbd_mapDomain, hybd l hl])
+      exact Finset.sum_congr rfl (fun l hl => by rw [vbd_mapDomain, hybd l hl])
 
 section
 open GlobalTheory.SeqCx

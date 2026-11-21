@@ -41,7 +41,7 @@ private theorem rank_span_range_le_of_linearForm_comp_mem {X k₀ k : Type} [Fie
     have h2 := hψL (j : Submodule.span k₀ (Set.range z)).2
     rw [LinearMap.mem_ker, LinearMap.sum_apply] at h2
     simp only [LinearMap.smul_apply, hφ, smul_eq_mul, mul_ite, mul_one, mul_zero,
-      Finset.sum_ite_eq', Finset.sum_ite_eq, hj, if_true] at h2
+      Finset.sum_ite_eq, hj, ite_true] at h2
     exact h2
   have hc := hw.cardinal_le_rank
   rw [Cardinal.mk_coe_finset] at hc
@@ -53,7 +53,7 @@ private theorem mem_span_image_algebraMap_of_linearForm_comp_mem {X k₀ k : Typ
     z ∈ Submodule.span k ((fun w : X → k₀ => fun x => algebraMap k₀ k (w x)) '' (W₀ : Set (X → k₀))) := by
   have hr := rank_span_range_le_of_linearForm_comp_mem W₀ n hW₀ z hz
   haveI : Module.Finite k₀ (Submodule.span k₀ (Set.range z)) :=
-    Module.rank_lt_aleph0_iff.1 (hr.trans_lt (Cardinal.nat_lt_aleph0 n))
+    Module.rank_lt_aleph0_iff.1 (hr.trans_lt Cardinal.natCast_lt_aleph0)
   set L := Submodule.span k₀ (Set.range z)
   let e := Module.finBasis k₀ L
   have hext : ∀ j, ∃ φ : k →ₗ[k₀] k₀, φ ∘ₗ L.subtype = e.coord j :=

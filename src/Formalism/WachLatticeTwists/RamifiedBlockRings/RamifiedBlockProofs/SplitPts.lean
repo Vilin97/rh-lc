@@ -26,11 +26,11 @@ theorem splitPts : StatSplitPts := by
     rw [h]; exact Polynomial.monic_prod_of_monic _ _ fun i _ => Polynomial.monic_X_sub_C _
   have hdegP : ∀ x, (P x).natDegree = t := fun x => by
     obtain ⟨α, -, h⟩ := hPr x
-    rw [h, Polynomial.natDegree_finset_prod_X_sub_C_eq_card]; simp
+    rw [h, Polynomial.natDegree_finsetProd_X_sub_C_eq_card]; simp
   let PT : Polynomial T := ∑ k ∈ range (t + 1), Polynomial.monomial k ⟨fun x => (P x).coeff k, hPc k⟩
   have hcoef : ∀ k, PT.coeff k = if k ≤ t then ⟨fun x => (P x).coeff k, hPc k⟩ else 0 := by
     intro k
-    simp only [PT, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq',
+    simp only [PT, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial_apply, Finset.sum_ite_eq',
       Finset.mem_range, Nat.lt_succ_iff]
   have hmap : ∀ x, PT.map (evT x) = P x := by
     intro x
@@ -96,7 +96,7 @@ theorem splitPts : StatSplitPts := by
     | algebraMap τ =>
       rw [hΨa]
       exact Algebra.subset_adjoin (Or.inl ⟨τ.1, τ.2, rfl⟩)
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   refine ⟨fun k => Ψ (bas k), fun k => hmemΨ _, ?_, ?_⟩
   · intro f' hf'

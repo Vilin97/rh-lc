@@ -46,7 +46,22 @@ theorem self_dual_lattice_is_self_dual (V : HSp D) : Datum.IsSelfDualC V (l0s V)
     refine ⟨hL.fg.map _, ?_⟩
     have hc : (↑(Submodule.map (f.toLinearMap.restrictScalars (𝓞 D.host.E)) V.L0) : Set (Fin V.rank → D.host.E)) =
         f.toLinearMap '' (V.L0 : Set V.V) := by ext; simp
-    rw [hc, Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearEquiv.range]
+    rw [hc]
+    intro s hs hi
+    have hi' : LinearIndependent (𝓞 D.host.E) (fun x : s => f.symm x) := by
+      simpa only [Function.comp_def, id_eq, LinearMap.restrictScalars_apply, LinearEquiv.coe_coe] using
+        hi.map' (f.symm.toLinearMap.restrictScalars (𝓞 D.host.E))
+          (LinearMap.ker_eq_bot.mpr f.symm.injective)
+    have hm : ∀ x : s, f.symm x ∈ V.L0 := by
+      intro x
+      obtain ⟨z, hz, hze⟩ := hs x.property
+      change f z = x at hze
+      rw [← hze, LinearEquiv.symm_apply_apply]
+      exact hz
+    let _ := hL
+    have hk := Submodule.IsLattice.linearIndependent D.host.E V.L0 hm hi'
+    simpa only [LinearIndepOn, Function.comp_def, id_eq, LinearEquiv.coe_coe, LinearEquiv.apply_symm_apply] using
+      hk.map' f.toLinearMap (LinearMap.ker_eq_bot.mpr f.injective)
   · have key : ∀ b : 𝓞 D.host.E, LinearMap.toSpanSingleton (𝓞 D.host.E) D.host.E 1 b = (b : D.host.E) := fun b => by
       simp [LinearMap.toSpanSingleton_apply, Algebra.smul_def]
     have hU := V.baseLattice_isUnimodular

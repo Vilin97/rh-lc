@@ -63,7 +63,7 @@ theorem smooth_oneProd {G : Matrix (Fin n) (Fin n) ℂ} {π : Matrix (Fin n) (Fi
       simp [oneProd, List.ofFn_succ]
     obtain ⟨h1, h2⟩ := ih (fun i => Y i.succ) (fun i => hY _) (fun i => t i.succ)
     rw [e, hπ.2.1 _ (expS_mem_UH (hY 0) _) _ h2]
-    exact ⟨OrbStPf.smoothVec_rep_exp (one_mem_UH G) (mul_mem_UH₂ G) hπ.2.1 (fun Y hY t => expS_mem_UH hY t) (hY 0) (t 0) h1,
+    exact ⟨OrbStPf.smoothVec_rep_exp (U := Formalism.QuantumDeterminants.UH G) (one_mem_UH G) (mul_mem_UH₂ G) hπ.2.1 (fun Y hY t => expS_mem_UH hY t) (hY 0) (t 0) h1,
       mul_mem_UH₂ G _ (expS_mem_UH (hY 0) _) _ h2⟩
 
 end Gen
@@ -149,7 +149,7 @@ end Append
 theorem foldCont_holds : FoldCont := by
   intro n H _ _ G π hπ w hw l hl d Y hY
   have hexp : ∀ Y ∈ lieG G, ∀ t : ℝ, NormedSpace.exp (t • Y) ∈ Formalism.QuantumDeterminants.UH G := fun Y hY t => expS_mem_UH hY t
-  obtain ⟨Z, L, hZ, -, hval⟩ := OrbStPf.word_eval (one_mem_UH G) (mul_mem_UH₂ G) hπ.2.1 hexp l hl (zero_mem_lieG G)
+  obtain ⟨Z, L, hZ, -, hval⟩ := OrbStPf.word_eval (U := Formalism.QuantumDeterminants.UH G) (ρ := π) (Lie := lieG G) (one_mem_UH G) (mul_mem_UH₂ G) hπ.2.1 hexp l hl (zero_mem_lieG G)
   set W : Fin (l.length + 1 + d) → Matrix (Fin n) (Fin n) ℂ := Fin.append Z Y with hWdef
   have hW : ∀ i, W i ∈ lieG G := fun i =>
     Fin.addCases (fun a => by simpa [W, Fin.append_left] using hZ a) (fun b => by simpa [W, Fin.append_right] using hY b) i

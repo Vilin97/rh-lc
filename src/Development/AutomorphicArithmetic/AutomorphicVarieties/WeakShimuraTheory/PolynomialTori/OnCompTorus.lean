@@ -72,7 +72,7 @@ theorem UpperTheory.V.Ws.Po.onCompTorus :
     · simp [h2]
   have y1 : y' t.1 = s.1 := by rw [ht1, map_add (f := _), map_one, yX]; simp
   have y2 : y' t.2 = s.2 := by rw [ht2, map_add (f := _), map_one, yX]; simp
-  obtain ⟨ρ', hρ'⟩ := conj_lift (ρ.map c) t (by rw [← res_map x', x1, map_one]) (by rw [← res_map x', x2, map_one])
+  obtain ⟨ρ', hρ'⟩ := conj_lift (ρ.map c) t (by rw [← UpperTheory.V.Alg.res_map x' _, x1, map_one]) (by rw [← UpperTheory.V.Alg.res_map x' _, x2, map_one])
   have he : ∀ g a b, ρ'.hom g a b = (wv t (wt a b)).val * MvPowerSeries.C (ρ.hom g a b) :=
     fun g a b => by rw [hρ']; rfl
   refine ⟨MvPowerSeries (Fin 2) B, inferInstance, inferInstance, inferInstance, inferInstance, ρ',

@@ -130,7 +130,7 @@ theorem absIrrExt : StatAbsIrrExt := by
     induction hA using Submodule.span_induction with
     | mem A hA => obtain ⟨g, rfl⟩ := hA; exact Submodule.subset_span ⟨g, rfl⟩
     | zero => rw [Matrix.map_zero f f.map_zero]; exact Submodule.zero_mem _
-    | add A B _ _ hA hB => rw [Matrix.map_add f f.map_add (f := _)]; exact Submodule.add_mem _ hA hB
+    | add A B _ _ hA hB => rw [Matrix.map_add f f.map_add]; exact Submodule.add_mem _ hA hB
     | smul c A _ hA =>
       have h1 : (c • A).map f = f c • A.map f := by
         ext i j; simp
@@ -276,7 +276,7 @@ theorem stageC : StatStageC := by
     let X0 : Matrix d d O := eB x * r g₀ x * eB x + s x
     have hX0 : (bcM O' eB x * bcR O' r g₀ x * bcM O' eB x + bcM O' s x) = X0.map j := by
       show (eB x).map j * (r g₀ x).map j * (eB x).map j + (s x).map j = _
-      rw [← Matrix.map_mul, ← Matrix.map_mul, ← Matrix.map_add j j.map_add (f := _)]
+      rw [← Matrix.map_mul, ← Matrix.map_mul, ← Matrix.map_add j j.map_add]
     have hpoly : blockPoly ((bcM O' eB x).map ι') ((X0.map j).map ι') =
         (blockPoly (eB x) X0).map (ι'.comp j) := by
       show blockPoly (((eB x).map j).map ι') _ = _

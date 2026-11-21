@@ -66,34 +66,26 @@ theorem finProj_of_mem {u : AdelicGLn.FiniteAdelicGL K n} (hu : finEmb K n u ∈
   rw [coe_finProj, (mem_normOneGL_iff_detModule).1 hu, map_one, inv_one, mul_one]
 
 theorem finProj_eq_finOne (u : AdelicGLn.integralFiniteGL K n) :
-    finProj K n u = finOne u :=
+    finProj K n u = finOne K n u :=
   finProj_of_mem (maxCompact_le_normOneGL (finEmb_mem_maxCompact u.2))
 
 theorem finProj_mul_archProj_comm (u : AdelicGLn.FiniteAdelicGL K n) (A : ArchUnits K n) :
-    finProj K n u * archProj A = archProj A * finProj K n u := by
-  have hIncl : archIncl K n A * finEmb K n u = finEmb K n u * archIncl K n A :=
-    infEmb_mul_finEmb_comm _ u
-  have hComm : (archProj A : AdelicGLn.AdelicGL K n) * finEmb K n u =
-      finEmb K n u * archProj A := by
-    let c := centralSection K n (detModule K n (archIncl K n A))
-    change (archIncl K n A * c⁻¹) * finEmb K n u =
-      finEmb K n u * (archIncl K n A * c⁻¹)
-    rw [mul_assoc, centralSection_inv_mul_comm, ← mul_assoc, hIncl, mul_assoc]
+    finProj K n u * archProj K n A = archProj K n A * finProj K n u := by
   refine Subtype.ext ?_
-  change (finProj K n u : AdelicGLn.AdelicGL K n) * archProj A =
-    (archProj A : AdelicGLn.AdelicGL K n) * finProj K n u
+  change (finProj K n u : AdelicGLn.AdelicGL K n) * archProj K n A =
+    (archProj K n A : AdelicGLn.AdelicGL K n) * finProj K n u
   rw [coe_finProj, mul_assoc, centralSection_inv_mul_comm, ← mul_assoc,
-    ← hComm, mul_assoc]
+    ← archProj_mul_finEmb_comm A u, mul_assoc]
 
 theorem exists_archProj_mul_finProj (x : normOneGL (K := K) (n := n)) :
-    ∃ (A : ArchUnits K n) (u : AdelicGLn.FiniteAdelicGL K n), archProj A * finProj K n u = x := by
+    ∃ (A : ArchUnits K n) (u : AdelicGLn.FiniteAdelicGL K n), archProj K n A * finProj K n u = x := by
   set g : AdelicGLn.AdelicGL K n := (x : AdelicGLn.AdelicGL K n)
   set A : ArchUnits K n := ((archEquiv K n (AdelicGLn.prodEquiv K n g).1 : archGroup K n) : ArchUnits K n)
   set u := (AdelicGLn.prodEquiv K n g).2
   refine ⟨A, u, Subtype.ext ?_⟩
   have hg : archIncl K n A * finEmb K n u = g := infEmb_mul_finEmb g
   have hx : detModule K n g = 1 := (mem_normOneGL_iff_detModule).1 x.2
-  change (archProj A : AdelicGLn.AdelicGL K n) * finProj K n u = g
+  change (archProj K n A : AdelicGLn.AdelicGL K n) * finProj K n u = g
   rw [coe_finProj]
   set a := detModule K n (archIncl K n A)
   set b := detModule K n (finEmb K n u)

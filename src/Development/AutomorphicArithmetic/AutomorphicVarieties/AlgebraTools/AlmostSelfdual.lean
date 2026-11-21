@@ -112,7 +112,8 @@ theorem UpperTheory.V.AlgebraTools.almost_selfdual :
         have hWl : Submodule.IsLattice F (Y ⊔ maximalIdeal A ^ (k + 1) • Bf.dualSubmodule Y) := by
           haveI := hY
           haveI := hDY
-          refine Submodule.IsLattice.of_le_of_isLattice_of_fg F hYW ?_
+          refine Submodule.IsLattice.of_fg F ?_
+          haveI : Module.Finite A ↥(Bf.dualSubmodule Y) := Submodule.IsLattice.finite F _
           have : IsNoetherian A ↥(Bf.dualSubmodule Y) := inferInstance
           have : IsNoetherian A
               ↥(Y ⊔ maximalIdeal A ^ (k + 1) • Bf.dualSubmodule Y : Submodule A V) :=

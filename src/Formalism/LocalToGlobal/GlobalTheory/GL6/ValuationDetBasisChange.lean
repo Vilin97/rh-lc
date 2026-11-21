@@ -23,7 +23,7 @@ theorem not_dvd_prod_of_not_dvd {ι : Type} (s : Finset ι) (f : ι → ℕ) (h 
     ¬ (D.mem u).A.T ∣ ∏ i ∈ s, f i := by
   have hT : Nat.Prime (D.mem u).A.T := (D.mem u).A.2
   intro hd
-  obtain ⟨i, hi, hdi⟩ := (Prime.dvd_finset_prod_iff hT.prime f).mp hd
+  obtain ⟨i, hi, hdi⟩ := (Prime.dvd_finsetProd_iff hT.prime f).mp hd
   exact h i hi hdi
 
 end Formalism.L2.GlobalTheoryTheory.LocalLatticeBases

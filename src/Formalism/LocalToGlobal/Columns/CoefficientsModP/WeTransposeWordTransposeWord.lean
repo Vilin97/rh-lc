@@ -237,13 +237,8 @@ theorem we_weyl_lattice (hν : Antitone ν) :
       (dualWeyl ℚ r n ν).injective_subtype ?_
     rw [himg]
     exact (Submodule.FG.of_le (we_nabla_fg r n ν) (weylLeDual ℤ r n hn ν hν)).map _
-  · apply Submodule.map_injective_of_injective (f := (dualWeyl ℚ r n ν).subtype) (dualWeyl ℚ r n ν).injective_subtype
-    rw [Submodule.map_top, Submodule.range_subtype, Submodule.map_span]
-    have h2 : ((dualWeyl ℚ r n ν).subtype '' (weCut r n ν ((weyl ℤ r n hn ν).map (intQ r n)) : Set (dualWeyl ℚ r n ν))) =
-        (((weyl ℤ r n hn ν).map (intQ r n) : Submodule ℤ _) : Set (MvPolynomial (Fin r × Fin n) ℚ)) := by
-      conv_rhs => rw [← himg]
-      rfl
-    rw [h2, we_span_weyl hn ν hν]
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing ℤ ℚ).mp hli
 
 end Double
 

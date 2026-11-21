@@ -51,6 +51,8 @@ private theorem ch_prod_zero {R : Type} [CommRing R] {n : ℕ} (M : Matrix (Fin 
     rw [← List.prod_ofFn, map_list_prod, List.map_ofFn]
     congr 1
     congr 1
+    funext k
+    simp [Algebra.algebraMap_eq_smul_one]
   rw [e, ← h, aeval_self_charpoly]
 
 theorem UpperTheory.V.Pa.rep_gens :

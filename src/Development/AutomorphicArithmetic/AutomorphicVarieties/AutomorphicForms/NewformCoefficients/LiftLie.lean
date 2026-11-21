@@ -43,7 +43,9 @@ private theorem chart_near {k M : ℕ} {f : ℍ → ℂ} {φ : GA ℚ 2 → ℂ}
   have hc : Continuous fun x : Fin 2 → Fin 2 → ℝ => (Matrix.of x).det :=
     Continuous.matrix_det continuous_id
   have ho : {x : Fin 2 → Fin 2 → ℝ | 0 < (Matrix.of x).det} ∈ 𝓝 (Matrix.of.symm (1 : Matrix (Fin 2) (Fin 2) ℝ)) :=
-    (isOpen_lt continuous_const hc).mem_nhds (by simp)
+    (isOpen_lt continuous_const hc).mem_nhds (by
+      change 0 < (1 : Matrix (Fin 2) (Fin 2) ℝ).det
+      simp)
   refine Filter.eventually_of_mem ho fun x hx => ?_
   have hx' : 0 < (Matrix.of x).det := hx
   let y : GL (Fin 2) ℝ := Matrix.GeneralLinearGroup.mkOfDetNeZero (Matrix.of x) hx'.ne'

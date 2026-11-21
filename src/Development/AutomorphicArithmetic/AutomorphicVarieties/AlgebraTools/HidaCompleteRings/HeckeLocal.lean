@@ -47,7 +47,7 @@ private theorem pow_mem_map {A N T : Type} [CommRing A] [IsNoetherianRing A] [Ad
     rw [map_pow]
     exact h1
   obtain ⟨p, hp, -, hc, h0⟩ :=
-    LinearMap.exists_monic_and_coeff_mem_pow_and_aeval_eq_zero_of_range_le_smul A (j (u ^ n)) J hr
+    LinearMap.exists_monic_and_natDegree_eq_and_coeff_mem_pow_and_aeval_eq_zero A (j (u ^ n)) J hr
   rw [Polynomial.aeval_algHom_apply] at h0
   have h1 : Polynomial.aeval (u ^ n) p = 0 := hj (by rw [h0, map_zero])
   refine ⟨n * p.natDegree, ?_⟩

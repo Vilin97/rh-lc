@@ -51,8 +51,7 @@ private theorem card_eq {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Alge
   have habove : ∀ (A : ValuationSubring Ω) (u : HeightOneSpectrum (𝓞 F)), IsPlaceOver A u →
       (A.valuation (l : Ω) < 1 ↔ (l : 𝓞 F) ∈ u.asIdeal) := by
     intro A u hu
-    rw [(places F Ω l A).2.2.1 u hu]
-    rfl
+    simpa only [map_natCast] using (hu (l : 𝓞 F))
   rw [← Nat.card_range_of_injective hinj', _root_.Nat.card_coe_set_eq]
   congr 1
   ext P

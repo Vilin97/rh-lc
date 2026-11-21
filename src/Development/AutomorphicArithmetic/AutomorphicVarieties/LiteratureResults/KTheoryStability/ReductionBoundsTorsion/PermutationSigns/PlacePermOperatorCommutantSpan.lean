@@ -128,6 +128,8 @@ theorem herm_of_unit (φ : Matrix (Fin q → Ix W m) (Fin q → Ix W m) ℂ →�
     rw [mem_unitaryGroup_iff, star_eq_conjTranspose, diagonal_conjTranspose, diagonal_mul_diagonal,
       ← diagonal_one]
     congr 1
+    funext a
+    simp only [Pi.star_apply, Pi.one_apply]
     rw [Complex.star_def, Complex.mul_conj', hc (w, a)]
     simp
   have hq : 0 < q + 1 := Nat.succ_pos q
@@ -295,8 +297,8 @@ theorem nu_iff (f : Fin q → Fin q) :
       by_contra hk
       push_neg at hk
       have := congrArg (fun g : Fin q →₀ ℕ => g k) h
-      simp only [Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.single_apply] at this
-      simp [hk] at this
+      simp only [Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.single_apply] at this
+      simpa [hk] using this
     exact ⟨Finite.injective_iff_surjective.2 hs, hs⟩
   · intro h
     exact Fintype.sum_bijective f h _ _ fun _ => rfl
@@ -323,8 +325,8 @@ theorem sym_zero (φ : Matrix (Fin q → ι) (Fin q → ι) ℂ →ₗ[ℂ] ℂ)
     (h0 : ∀ t : Fin q → ℂ, φ (tp q (∑ j, t j • x j)) = 0) :
     φ (∑ σ : Equiv.Perm (Fin q), mt (fun j => x (σ j))) = 0 := by
   have hP : polyOf φ x = 0 := MvPolynomial.funext fun t => by rw [eval_polyOf, h0, map_zero]
-  have hc := congrArg (coeff (∑ j : Fin q, Finsupp.single j 1)) hP
-  rw [coeff_zero, polyOf, coeff_sum] at hc
+  have hc := congrArg (fun p => AddMonoidAlgebra.coeff p (∑ j : Fin q, Finsupp.single j 1)) hP
+  simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, polyOf, coeff_sum] at hc
   have hX : ∀ f : Fin q → Fin q, (∏ j, X (f j) : MvPolynomial (Fin q) ℂ) =
       monomial (∑ j, Finsupp.single (f j) 1) 1 := fun f => by
     rw [monomial_sum_one]; rfl
@@ -339,8 +341,7 @@ theorem sym_zero (φ : Matrix (Fin q → ι) (Fin q → ι) ℂ →ₗ[ℂ] ℂ)
     exact ⟨fun h => ⟨Equiv.ofBijective f h, rfl⟩, fun ⟨σ, hσ⟩ => hσ ▸ σ.bijective⟩
   rw [hfil, Finset.sum_map] at hc
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum]
-  exact hc
+    simpa only [map_sum, Function.Embedding.coeFn_mk] using hc
 
 end Sym
 

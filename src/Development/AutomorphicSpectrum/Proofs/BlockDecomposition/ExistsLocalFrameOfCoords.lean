@@ -30,12 +30,13 @@ theorem dividedPowerFiltration_dividedPowersBot_of_one_le {K : Type} [CommRing K
   rw [e]
   exact (dividedPowersBot K).dpow_eval_zero h0
 
-theorem tfBase_dpBot {K : Type} [Field K] [CharZero K] {s : ℕ} (hs : 1 ≤ s) : TFBase (dividedPowersBot K) 1 s where
-  nil := dividedPowerFiltration_dividedPowersBot_of_one_le hs
-  tf := fun _ _ h => by simpa using h
-  dv := fun n hn => ⟨0, (n : K)⁻¹, by
-    have : (n : K) ≠ 0 := Nat.cast_ne_zero.2 hn
-    simp [this]⟩
+theorem tfBase_dpBot {K : Type} [Field K] [CharZero K] {s : ℕ} (hs : 1 ≤ s) : TFBase (dividedPowersBot K) 1 s := by
+  refine ⟨dividedPowerFiltration_dividedPowersBot_of_one_le hs, ?_, ?_⟩
+  · intro r x h
+    simpa only [Nat.cast_one, one_mul] using h
+  · intro n hn
+    refine ⟨0, (n : K)⁻¹, ?_⟩
+    rw [pow_zero, mul_inv_cancel₀ (Nat.cast_ne_zero.2 hn)]
 
 theorem exists_loc : ∀ {K : Type} [Field K] [CharZero K] {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of K)) {W : X.Opens} {d : ℕ} (c : Coord q W d) (s : ℕ), 1 ≤ s →
     ∃ (E : Frame (sP (KS q s {W})) d) (ε : Γ(X, W) ≃+* (sP (KS q s {W})).A.obj E.D), IsLoc q s c.t E ε := by

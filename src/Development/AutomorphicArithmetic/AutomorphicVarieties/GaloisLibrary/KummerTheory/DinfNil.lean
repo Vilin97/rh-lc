@@ -41,7 +41,7 @@ private theorem exists_prime_pow_smul_eq_zero_qz (l : ℕ) [Fact l.Prime] (v : Q
   rw [← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero]
   unfold ZlSub
   refine ⟨(⟨(l : ℚ_[l]) ^ m * q, ?_⟩ : ℤ_[l]), ?_⟩
-  · rw [norm_mul, norm_pow, Padic.norm_p, inv_pow, inv_mul_le_iff₀ (pow_pos (by exact_mod_cast (Fact.out : l.Prime).pos) m)]
+  · rw [PadicInt.mem_subring_iff, norm_mul, norm_pow, Padic.norm_p, inv_pow, inv_mul_le_iff₀ (pow_pos (by exact_mod_cast (Fact.out : l.Prime).pos) m)]
     simpa using hm.le
   · show (l : ℚ_[l]) ^ m * q = _
     simp [Algebra.smul_def]

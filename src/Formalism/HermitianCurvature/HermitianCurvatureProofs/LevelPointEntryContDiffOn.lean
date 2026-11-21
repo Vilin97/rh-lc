@@ -155,7 +155,7 @@ theorem contDiff_zfull (τ : ℂ) (c d : Fin (j + 1)) {n : WithTop ℕ∞} :
     ContDiff ℝ n (fun Z : MJ j => zfull Z τ c d) := by
   simp only [zfull_apply]
   split_ifs
-  · exact contDiff_apply_apply ℝ ℂ _ _
+  · exact contDiff_apply_apply ℝ _ _
   · exact contDiff_const
   · exact contDiff_const
   · exact contDiff_const
@@ -177,7 +177,7 @@ theorem contDiffOn_inv_zfull (τ : ℂ) (c d : Fin (j + 1)) :
     rw [Matrix.inv_def, Matrix.smul_apply, det_zfull, Ring.inverse_eq_inv', mul_inv, smul_eq_mul]
   simp only [he]
   have hdet : ContDiff ℝ ⊤ (fun Z : MJ j => Z.det) :=
-    PBG.contDiff_det' (fun Z : MJ j => Z) (fun a b => contDiff_apply_apply ℝ ℂ a b)
+    PBG.contDiff_det' (fun Z : MJ j => Z) (fun a b => contDiff_apply_apply ℝ a b)
   exact ((((hdet.of_le le_top).contDiffOn.inv (fun Z hZ => hZ)).mul contDiffOn_const).mul
     ((contDiff_adj_zfull τ c d).of_le le_top).contDiffOn)
 

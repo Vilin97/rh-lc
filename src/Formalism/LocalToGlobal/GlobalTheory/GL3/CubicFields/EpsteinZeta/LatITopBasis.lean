@@ -111,7 +111,7 @@ lemma covA_span (K : Type) [Field K] [NumberField K] (d : ℕ) [Fact d.Prime] (h
         rw [hab]
         simp
       have h2 : IsIntegral ℤ a := by
-        rw [← isIntegral_algebraMap_iff , ← h1]
+        rw [← isIntegral_algebraMap_iff (B := K), ← h1]
         exact hyint
       obtain ⟨z, hz⟩ := IsIntegrallyClosed.isIntegral_iff.mp h2
       refine ⟨2 * z, by simp [← hz], z ^ 2, by simp [← hz]⟩

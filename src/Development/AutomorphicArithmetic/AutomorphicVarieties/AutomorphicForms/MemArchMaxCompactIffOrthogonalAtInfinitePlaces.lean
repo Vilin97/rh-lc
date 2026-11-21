@@ -26,16 +26,19 @@ private theorem real_unitary_iff {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) :
   ext i j
   have := hb (Pi.single i 1) (Pi.single j 1)
   rw [single_one_vecMul, single_one_vecMul, single_one_dotProduct] at this
-  rw [Matrix.mul_apply, one_apply]
-  simp only [star_apply, star_trivial]
-  refine Eq.trans this ?_
-  simp [Pi.single_apply]
+  simpa [Matrix.mul_apply, dotProduct, Matrix.one_apply, Pi.single_apply, eq_comm] using this
 
 private theorem pi_unitary_iff {ι : Type} {n : ℕ} (M : Matrix (Fin n) (Fin n) (ι → ℝ)) :
     M ∈ unitaryGroup (Fin n) (ι → ℝ) ↔ ∀ w, M.map (fun x => x w) ∈ unitaryGroup (Fin n) ℝ := by
-  simp only [mem_unitaryGroup_iff, ← Matrix.ext_iff, funext_iff, Matrix.mul_apply, one_apply, star_apply, map_apply,
-    Finset.sum_apply, Pi.mul_apply, Pi.star_apply, ite_apply, Pi.one_apply, Pi.zero_apply]
-  exact ⟨fun h w i j => h i j w, fun h i j w => h w i j⟩
+  simp only [mem_unitaryGroup_iff, ← Matrix.ext_iff, funext_iff, Matrix.mul_apply, star_apply, map_apply,
+    Finset.sum_apply, Pi.mul_apply, Pi.star_apply]
+  constructor
+  · intro h w i j
+    have h' := h i j w
+    simpa [Matrix.one_apply, ite_apply, Pi.one_apply, Pi.zero_apply] using h'
+  · intro h i j w
+    have h' := h w i j
+    simpa [Matrix.one_apply, ite_apply, Pi.one_apply, Pi.zero_apply] using h'
 
 private theorem infAt_grpEq {E : Type} [Field E] [NumberField E] [IsTotallyReal E] {a : ℕ}
     (y : GL (Fin a) (TR.Rinf E)) (w : InfinitePlace E) (i j : Fin a) :

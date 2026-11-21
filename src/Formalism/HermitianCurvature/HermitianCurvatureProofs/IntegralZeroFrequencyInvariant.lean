@@ -294,7 +294,7 @@ theorem intZero : IntRdZeroInv := by
   have hR : ∀ s : ℝ, Measurable (rmulF (E s)) := fun s => hΨ.comp measurable_prodMk_right
   set ν : Measure ℝ := volume.restrict (Set.Ioc 0 1) with hν
   have hq : Measure.QuasiMeasurePreserving Ψ (μ.prod ν) μ := by
-    refine ⟨hΨ, Measure.AbsolutelyContinuous.mk fun s hs h0 => ?_⟩
+    refine ⟨hΨ.aemeasurable, Measure.AbsolutelyContinuous.mk fun s hs h0 => ?_⟩
     rw [Measure.map_apply hΨ hs, Measure.prod_apply_symm (hΨ hs)]
     have : ∀ y : ℝ, μ ((fun x => (x, y)) ⁻¹' (Ψ ⁻¹' s)) = 0 := by
       intro y

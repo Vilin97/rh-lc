@@ -54,7 +54,9 @@ theorem twoSplitIdem (D : D7) : TwoSplitIdem D := by
   let P : HeightOneSpectrum (𝓞 D.host.E) := ⟨Q, hQm.isPrime, hQ0⟩
   have h2 : (2 : 𝓞 D.host.E) ∈ P.asIdeal := by
     have h2' : algebraMap (𝓞 D.host.F) (𝓞 D.host.E) 2 ∈ Q := by
-      rw [← Ideal.mem_comap, hQ]
+      rw [← Ideal.mem_comap]
+      change (2 : 𝓞 D.host.F) ∈ Ideal.under (𝓞 D.host.F) Q
+      rw [hQ]
       exact hv
     rw [map_ofNat] at h2'
     exact h2'

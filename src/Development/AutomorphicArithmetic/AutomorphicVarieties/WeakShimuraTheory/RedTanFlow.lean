@@ -35,16 +35,17 @@ theorem rank_le_of_lowest : ∀ {k V : Type} [Field k] [AddCommGroup V] [Module 
     exact (Submodule.equivMapOfInjective _ (W ⊓ K p).subtype_injective _).rank_eq
   have main : ∀ p ≤ max hi lo, Module.rank k ↥(T ⊓ K p) ≤ Module.rank k ↥(U ⊓ K p) := by
     intro p hp
-    induction p, hp using Int.le_induction_down with
-    | base =>
+    induction p using Int.inductionOn' (b := max hi lo) with
+    | zero =>
       have : T ⊓ K (max hi lo) = ⊥ := by
         rw [eq_bot_iff]
         intro x hx
         exact hhi x fun q hq => (hK _ _).1 hx.2 q (lt_max_of_lt_left hq)
       rw [this]; simp
+    | succ n hn ih => omega
     | pred n hn ih =>
       rw [step T, step U, sub_add_cancel]
-      refine add_le_add (Submodule.rank_mono ?_) ih
+      refine add_le_add (Submodule.rank_mono ?_) (ih hn)
       rintro _ ⟨x, ⟨h1, h2⟩, rfl⟩
       refine ⟨π (n - 1) x, ⟨H _ x h1 ((hK _ _).1 h2), (hK _ _).2 fun q hq => ?_⟩, ?_⟩
       · rw [h, if_neg hq.ne]

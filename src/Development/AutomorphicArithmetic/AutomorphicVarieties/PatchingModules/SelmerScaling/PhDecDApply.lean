@@ -45,7 +45,14 @@ private theorem UpperTheory.V.Pa.phDecD_mem {l : ℕ} [Fact l.Prime] (S : Ctx l)
     simp only [add_smul, map_add (f := _), map_mul, h1, h2 _ hqq, hm q hq, hm q' hq']
     ring
   · rw [phDecD_apply, h1, sub_self]
-  · rw [phDecD_apply, h2 b (Ideal.mem_sup_right hb), hm b ((prAdd l S).2.2.2.2.2.1 hb)]
+  · have hi : ired S.U.N ≤ maximalIdeal S.Bh := by
+      refine Ideal.span_le.2 ?_
+      rintro a ⟨x, hx, z, hz, e⟩
+      obtain ⟨c, hc, e'⟩ := S.U.mul_mem x hx z hz
+      have : a = c := S.U.inj (e.symm.trans e')
+      rw [this]
+      exact hc
+    rw [phDecD_apply, h2 b (Ideal.mem_sup_right hb), hm b (hi hb)]
     simp
 
 private theorem UpperTheory.V.Pa.phDec_expand {F A : Type} [Field F] [AddCommGroup A] (T : Submodule F (A →+ F)) {e : ℕ}

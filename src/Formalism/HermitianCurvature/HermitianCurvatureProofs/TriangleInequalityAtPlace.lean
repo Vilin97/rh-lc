@@ -53,25 +53,11 @@ theorem ae_inSS {k r : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProduct
   have key : ∀ {α β : Type} [MeasurableSpace α] [MeasurableSpace β] (μ : Measure α) (ν : Measure β)
       (P : α → Prop), (∀ᵐ x ∂μ, P x) → ∀ᵐ p ∂(μ.prod ν), P p.1 := by
     intro α β _ _ μ ν P h
-    rw [ae_iff] at h ⊢
-    refine le_antisymm ?_ zero_le
-    calc (μ.prod ν) {p | ¬P p.1} = (μ.prod ν) ({x | ¬P x} ×ˢ Set.univ) := by
-          congr 1
-          ext p
-          simp
-      _ ≤ μ {x | ¬P x} * ν Set.univ := Measure.prod_prod_le _ _
-      _ = 0 := by rw [h, zero_mul]
+    exact Measure.quasiMeasurePreserving_fst.ae h
   have key2 : ∀ {α β : Type} [MeasurableSpace α] [MeasurableSpace β] (μ : Measure α) (ν : Measure β)
       (P : β → Prop), (∀ᵐ y ∂ν, P y) → ∀ᵐ p ∂(μ.prod ν), P p.2 := by
     intro α β _ _ μ ν P h
-    rw [ae_iff] at h ⊢
-    refine le_antisymm ?_ zero_le
-    calc (μ.prod ν) {p | ¬P p.2} = (μ.prod ν) (Set.univ ×ˢ {y | ¬P y}) := by
-          congr 1
-          ext p
-          simp
-      _ ≤ μ Set.univ * ν {y | ¬P y} := Measure.prod_prod_le _ _
-      _ = 0 := by rw [h, mul_zero]
+    exact Measure.quasiMeasurePreserving_snd.ae h
   have h1 : ∀ᵐ x ∂Ds.μW, Matrix.of x ∈ UWset k r Ds.z := ae_iff.mpr Ds.haarW.conc
   have h2 : ∀ᵐ x ∂Ds.μN, Matrix.of x ∈ Nset k r := ae_iff.mpr Ds.haarN.conc
   have h3 : ∀ᵐ x ∂Ds.μW', Matrix.of x ∈ UWset k r Ds.z' := ae_iff.mpr Ds.haarW'.conc

@@ -16,7 +16,7 @@ open GlobalTheory.K5.Basic
 
 variable {p : ℕ} [hp : Fact p.Prime] {Ω : Type} [Field Ω] [Algebra (O0 p) Ω]
 
-theorem zcong (n : ℕ) (A B : ℤ) (h : (A : ZMod (p ^ n)) = B) : Cong p n (A : Ω) (B : Ω) := by
+theorem zcong (n : ℕ) (A B : ℤ) (h : (A : ZMod (p ^ n)) = B) : Cong (p := p) n (A : Ω) (B : Ω) := by
   rw [ZMod.intCast_eq_intCast_iff_dvd_sub] at h
   obtain ⟨k, hk⟩ := h
   refine ⟨((-k : ℤ) : Ω), isInt_intCast _, ?_⟩
@@ -127,7 +127,8 @@ theorem edge_class_cup : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∀ c₁ : �
     have e2 := hS2 h (fun z hz => hS z (Finset.mem_union_right _ hz))
     simp only [a, e1]
     exact cong_sub (cong_refl _ _) e2
-  have haCoc : ∀ g ∈ (Ggeo p Ω ⊓ Gn T L), ∀ h ∈ (Ggeo p Ω ⊓ Gn T L), Cong p n (a (g * h)) (a g + g (a h)) := by
+  have haCoc : ∀ g ∈ (Ggeo p Ω ⊓ Gn T L), ∀ h ∈ (Ggeo p Ω ⊓ Gn T L),
+      Cong (p := p) n (a (g * h)) (a g + g (a h)) := by
     intro g hg h hh
     have hgG := (Subgroup.mem_inf.1 hg).2
     have hhG := (Subgroup.mem_inf.1 hh).2

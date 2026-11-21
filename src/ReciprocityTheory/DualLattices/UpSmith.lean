@@ -158,7 +158,8 @@ theorem smith_gen (hv : v.Integers R) : ∀ (b : ℕ) {ι : Type} [Fintype ι] (
       ((i : Fin b) → R ⧸ Ideal.span {c i}))
   | 0, _, _, g => ⟨Fin.elim0, ⟨LinearEquiv.ofSubsingleton _ _⟩⟩
   | b + 1, ι, _, g => by
-    obtain ⟨i0, a, u, s, hu, hau, hs, -, -⟩ := exists_pivot hv (b := b) (ι := ι) g
+    have hp := exists_pivot hv (b := b) (ι := ι) g
+    obtain ⟨i0, a, u, s, hu, hau, hs, -, -⟩ := hp
     obtain ⟨e1⟩ := pivot_equiv g i0 a u s hu hau hs
     obtain ⟨c', ⟨e2⟩⟩ := smith_gen hv b (fun j => Fin.removeNth i0 (g j - s j • a • u))
     exact ⟨Fin.cons a c', ⟨(e1.trans ((LinearEquiv.refl R _).prodCongr e2)).trans (consEquiv a c')⟩⟩
@@ -205,8 +206,8 @@ theorem smith_sq (hv : v.Integers R) : ∀ (b : ℕ) (X : Matrix (Fin b) (Fin b)
     set g : Fin (b + 1) → Fin (b + 1) → R := fun j i => X i j with hg
     have hrange : LinearMap.range X.mulVecLin = Submodule.span R (Set.range g) := by
       rw [Matrix.range_mulVecLin]; rfl
-    obtain ⟨i0, a, u, s, hu, hau, hs, hz, hnz⟩ :=
-      exists_pivot hv (b := b) (ι := Fin (b + 1)) g
+    have hp := exists_pivot hv (b := b) (ι := Fin (b + 1)) g
+    obtain ⟨i0, a, u, s, hu, hau, hs, hz, hnz⟩ := hp
     obtain ⟨e1⟩ := pivot_equiv g i0 a u s hu hau hs
     set h : Fin (b + 1) → Fin (b + 1) → R := fun j => g j - s j • a • u with hh
     have e0 := Submodule.quotEquivOfEq _ _ hrange

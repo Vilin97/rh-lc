@@ -33,7 +33,7 @@ private theorem swap_one {R : Type} [CommRing R] {n : ℕ} {q : R} {H : Type} [R
     omega
   have e := (hA a c h 1 hlt).2.2
   rw [mul_one, show invN (1 : Perm (Fin n)) = 0 by rw [invN, h1, Finset.card_empty], zero_add] at e
-  rw [(UpperTheory.V.AlgebraTools.hkOne R n q H b).1, e, pow_one]
+  rw [(UpperTheory.V.AlgebraTools.hkOne R n q H b).1 (swap a c), e, pow_one]
 
 private theorem step {R : Type} [CommRing R] [IsDomain R] {n : ℕ} {q : R} {H : Type} [Ring H] [Algebra R H]
     (b : Bern n q H) (K : Type) [Field K] [Algebra (MvPolynomial (Fin n) R) K]

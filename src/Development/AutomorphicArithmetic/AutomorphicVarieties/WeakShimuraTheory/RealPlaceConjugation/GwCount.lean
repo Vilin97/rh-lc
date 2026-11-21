@@ -31,7 +31,7 @@ theorem UpperTheory.V.Ws.greenberg_wiles_count_mod_l :
     rw [Module.natCard_eq_pow_finrank (K := ZMod (l ^ 1)) (V := Module.Dual (ZMod (l ^ 1)) M),
       Subspace.dual_finrank_eq, ← Module.natCard_eq_pow_finrank]
   have hsha := (tate_shafarevich_card_mod_l F Ω l (TDual (ZMod (l ^ 1)) M) S (twDual μ ρ) Av K r hA hN hK (fun g hg y => by
-    refine TDual.ext fun m => ?_
+    refine DFunLike.ext _ _ fun m => ?_
     have h1 : μ (toGS Ω _ g) = 1 := by
       have := hKc hg
       rw [← hμ] at this

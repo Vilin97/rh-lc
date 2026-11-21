@@ -48,11 +48,9 @@ theorem sign_list_injective {K : Type} [Ring K] (r : ℕ) :
   | _, [], _ :: _, h => by simp [DataInst.signAux] at h
   | _, _ :: _, [], h => by simp [DataInst.signAux] at h
   | b, (s, t) :: xs, (s', t') :: ys, h => by
-    simp only [DataInst.signAux] at h
-    obtain ⟨hh, hr⟩ := List.cons.inj h
-    have hs : s = s' := congrArg Prod.fst hh
+    simp only [DataInst.signAux, List.cons.injEq, Prod.mk.injEq] at h
+    obtain ⟨⟨hs, ht⟩, hr⟩ := h
     subst s'
-    have ht := congrArg Prod.snd hh
     have hu : IsUnit ((-1 : K) ^ (r + 1 - (b + s - 1))) := isUnit_one.neg.pow _
     rw [hu.mul_left_cancel ht, sign_list_injective r (b + s) xs ys hr]
 

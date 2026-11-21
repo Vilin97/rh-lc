@@ -84,7 +84,7 @@ theorem UpperTheory.siegelSet_height_bound :
     have ha₁1 : 1 ≤ a₁ := le_max_left _ _
     have ha₂1 : 1 ≤ a₂ := le_max_left _ _
     set e := 2 * Fintype.card (InfinitePlace K) with he
-    set c := heightConst K (m + 1) with hc
+    set c := AutomorphicForm.heightConst (K := K) (n := m + 1) with hc
     have hc0 : 0 ≤ c := zero_le_one.trans one_le_heightConst
     refine ⟨c * (c * M * (a₂ * ((s ^ m)⁻¹ * a₁) ^ (m + 1)) ^ e), (N₂ + N₁ * (m + 1)) * e, ?_⟩
     rintro g γ ⟨b, hb, _, ⟨r, hr, hratio, rfl⟩, k, hk, heq⟩

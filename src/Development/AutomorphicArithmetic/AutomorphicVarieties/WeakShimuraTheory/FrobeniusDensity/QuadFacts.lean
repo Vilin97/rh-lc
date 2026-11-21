@@ -122,7 +122,7 @@ private theorem split_facts {K : Type} [Field K] [NumberField K] (h : Module.fin
     rwa [map_natCast] at this
   have hnorm : Ideal.absNorm w.asIdeal = p := by
     have hmem : (p : 𝓞 K) ∈ Ideal.span {((Ideal.absNorm w.asIdeal : ℕ) : 𝓞 K)} := by
-      rw [← hτ, ← Ideal.inf_eq_mul_of_isCoprime hcop]
+      rw [← hτ, Ideal.mul_eq_inf_of_isCoprime hcop]
       exact ⟨hw, hpτ⟩
     have hdvd := dvd_of_mem h hmem
     rcases (Nat.dvd_prime hp).mp hdvd with h1 | h1
@@ -139,7 +139,7 @@ private theorem split_facts {K : Type} [Field K] [NumberField K] (h : Module.fin
         rwa [map_natCast] at this
       have hmem : (x : 𝓞 K) ∈ Ideal.span {((p ^ n : ℕ) : 𝓞 K)} := by
         rw [Nat.cast_pow, ← Ideal.span_singleton_pow, ← hnorm, ← hτ, mul_pow,
-          ← Ideal.inf_eq_mul_of_isCoprime hcop.pow]
+          Ideal.mul_eq_inf_of_isCoprime hcop.pow]
         exact ⟨hx, hx'⟩
       exact dvd_of_mem h hmem
     · rintro ⟨c, rfl⟩

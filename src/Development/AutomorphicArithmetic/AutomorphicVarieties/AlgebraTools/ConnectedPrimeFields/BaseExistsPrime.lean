@@ -44,7 +44,8 @@ private theorem base_exists_out {A R : Type} [CommRing A] [IsLocalRing A] [CommR
   have hmax : (P.comap (algebraMap A R)).IsMaximal := by
     rw [heq]
     exact maximalIdeal.isMaximal A
-  exact hm (Ideal.isMaximal_of_isIntegral_of_isMaximal_comap P hmax)
+  exact hm (Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (algebraMap A R)
+    (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) P hmax)
 
 private theorem base_ofList_le {A : Type} [CommRing A] {xs : List A} {I : Ideal A}
     (h : ∀ x ∈ xs, x ∈ I) : Ideal.ofList xs ≤ I :=

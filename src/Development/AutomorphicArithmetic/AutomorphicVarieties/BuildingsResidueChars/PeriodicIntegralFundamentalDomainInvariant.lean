@@ -28,7 +28,7 @@ private theorem perMean_key {A : Type} [AddCommGroup A] [TopologicalSpace A] [Is
     (he : μ.map e = c • μ) (σ : Γ → Γ) (hσ : Function.Bijective σ) (hs : ∀ (g : Γ) x, e ((σ g : A) + x) = (g : A) + e x)
     (f : A → ℂ) (hf : ∀ γ ∈ Γ, ∀ x, f (γ + x) = f x) :
     ∫ x in D, f (e x) ∂μ = ∫ x in D, f x ∂μ := by
-  have hq : QuasiMeasurePreserving e μ μ := ⟨e.measurable, by rw [he]; exact Measure.smul_absolutelyContinuous⟩
+  have hq : QuasiMeasurePreserving e μ μ := ⟨e.measurable.aemeasurable, by rw [he]; exact Measure.smul_absolutelyContinuous⟩
   have hD' : IsAddFundamentalDomain Γ (e ⁻¹' D) μ := hD.preimage_of_equiv hq hσ (fun g x => hs g x)
   have hm : μ (e ⁻¹' D) = μ D := by
     have := hD'.measure_set_eq hD MeasurableSet.univ (fun g => by simp)

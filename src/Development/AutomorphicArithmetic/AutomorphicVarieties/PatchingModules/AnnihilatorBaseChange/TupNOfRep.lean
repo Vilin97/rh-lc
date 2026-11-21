@@ -68,7 +68,9 @@ theorem UpperTheory.V.Pa.Core.tupN :
   · intro i M
     have h2 := ((A.A N).p.cont i M).comp_continuous (Λ.π0_cont N)
     convert h2 using 1
-    try rfl
+    funext g
+    simp only [Function.comp_apply, tupN_lam]
+    rfl
   · show ((A.A N).p.D.map (res O (A.A N).R : (A.A N).R →+* ResidueField O)).comap (πN0 Λ N) = _
     rw [(A.A N).p.red]
     simp only [Resid.Dbar, tupN_ofRep]

@@ -10,7 +10,7 @@ open UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite TensorProduct
 theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.completeFin :
     ∀ {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M] [IsNoetherianRing R] (I : Ideal R) [IsAdicComplete I R] [Module.Finite R M], IsAdicComplete I M := by
   intro R _ M _ _ _ I _ _
-  have hH : IsHausdorff I M := IsHausdorff.of_le_jacobson I M (IsAdicComplete.le_jacobson_bot I)
+  have hH : IsHausdorff I M := IsHausdorff.of_le_jacobson I M (IsAdicComplete.le_jacobson I)
   have hP : IsPrecomplete I M := by
     rw [← AdicCompletion.of_surjective_iff]
     have hR : Function.Surjective (AdicCompletion.of I R) := AdicCompletion.of_surjective_iff.mpr inferInstance

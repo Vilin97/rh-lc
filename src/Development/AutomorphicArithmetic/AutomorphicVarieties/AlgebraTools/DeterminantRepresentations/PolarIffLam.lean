@@ -13,7 +13,7 @@ private theorem star_single_X_sub_mapRingHom_C {l : ℕ} [Fact l.Prime] (F : GFr
     F.star O R[X] n (MonoidAlgebra.single 1 X - MonoidAlgebra.mapRingHom F.G₀ C x) = MonoidAlgebra.single 1 X - MonoidAlgebra.mapRingHom F.G₀ C (F.star O R n x) := by
   have h1 : pushCh (C : R →+* R[X]) (F.eps O R) = F.eps O R[X] := by
     ext x
-    simp [GFrame.eps, pushCh, Polynomial.algebraMap_apply]
+    simp [GFrame.eps, pushCh, Polynomial.coeff_C, Finsupp.single_apply, eq_comm]
   have he : ∀ (h : F.G₀) (k : ℤ), (C : R →+* R[X]) ((F.eps O R h ^ k : Rˣ) : R) = ((F.eps O R[X] h ^ k : R[X]ˣ) : R[X]) := by
     intro h k
     rw [← h1, pushCh, MonoidHom.comp_apply, ← map_zpow (Units.map ((C : R →+* R[X]) : R →* R[X]))]

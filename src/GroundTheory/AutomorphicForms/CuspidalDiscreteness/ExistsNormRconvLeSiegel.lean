@@ -25,7 +25,7 @@ variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 local notation "Γ₁" => rationalGLOne (K := K) (n := n)
 
 theorem exists_archProj_eq {g : normOneGL (K := K) (n := n)} (hg : (AdelicGLn.prodEquiv K n g).2 = 1) :
-    ∃ C : ArchUnits K n, archProj C = g ∧
+    ∃ C : ArchUnits K n, archProj K n C = g ∧
       (C : ArchMatrix K n) = archMat K n ((g : AdelicGLn.AdelicGL K n) :
         Matrix (Fin n) (Fin n) 𝔸[K]) := by
   set h := (AdelicGLn.prodEquiv K n g).1
@@ -75,7 +75,7 @@ theorem conjArch_mul_conjArch {r : ℕ} (x : AdelicGLn.AdelicGL K n) (P Q : UPos
 
 theorem exists_archProj_eq_conj {r : ℕ} (x : normOneGL (K := K) (n := n)) (P : UPos n r → 𝔸[K])
     (hP : ∀ p, (P p).2 = 0) :
-    ∃ C : ArchUnits K n, archProj C = x⁻¹ * unipOne r P * x ∧
+    ∃ C : ArchUnits K n, archProj K n C = x⁻¹ * unipOne r P * x ∧
       (C : ArchMatrix K n) = 1 + conjArch K n (x : AdelicGLn.AdelicGL K n) P := by
   obtain ⟨C, hC1, hC2⟩ := exists_archProj_eq (g := x⁻¹ * unipOne r P * x)
     (prodEquiv_conj_snd (x : AdelicGLn.AdelicGL K n) P hP)
@@ -175,7 +175,7 @@ theorem exists_norm_rconv_le_siegel {β : ArchMatrix K n → ℝ}
   obtain ⟨c, hc⟩ := exists_norm_sum_altSign_archConvFun_le ν hβ hβc hβu h k R₁
   set c' := max c 0
   have h𝒞 := isCompact_unipBall (K := K) (n := n) (k * R₁)
-  set Q := archProj '' unipBall (K := K) (n := n) (k * R₁) * tsupport (f : normOneGL (K := K) (n := n) → ℂ)
+  set Q := archProj K n '' unipBall (K := K) (n := n) (k * R₁) * tsupport (f : normOneGL (K := K) (n := n) → ℂ)
   have hQ : IsCompact Q := (h𝒞.image continuous_archProj).mul f.hasCompactSupport
   obtain ⟨s, -, hs⟩ := hQ.elim_nhds_subcover (fun g => (fun y => y * g) '' V₀) fun g _ => by
     have := (Homeomorph.mulRight g).isOpenMap.image_mem_nhds hV₀
@@ -232,7 +232,7 @@ theorem exists_norm_rconv_le_siegel {β : ArchMatrix K n → ℝ}
       have hYR : ∀ i, ‖Y i‖ ≤ R₁ := fun i =>
         (hYn i).trans (mul_le_mul_of_nonneg_left hgain hC₁'0)
       have hex : ∀ ε : Fin k → Bool, ∃ C : ArchUnits K n,
-          archProj C = x⁻¹ * unipOne r (truncInf (altPoint y ε)) * x ∧
+          archProj K n C = x⁻¹ * unipOne r (truncInf (altPoint y ε)) * x ∧
             (C : ArchMatrix K n) = 1 + altPoint Y ε := by
         intro ε
         obtain ⟨C, hC1, hC2⟩ := exists_archProj_eq_conj x (truncInf (altPoint y ε)) fun p => rfl
@@ -242,7 +242,7 @@ theorem exists_norm_rconv_le_siegel {β : ArchMatrix K n → ℝ}
         rfl
       choose Cε hCε1 hCε2 using hex
       have hsum : altSum k (fun s => rconv Γ₁ μ f φ (unipOne r (truncInf s) * x)) y 0 =
-          ∑ ε, (altSign ε : ℂ) * rconv Γ₁ μ f φ (x * archProj (Cε ε)) := by
+          ∑ ε, (altSign ε : ℂ) * rconv Γ₁ μ f φ (x * archProj K n (Cε ε)) := by
         rw [altSum_eq_sum]
         refine Finset.sum_congr rfl fun ε _ => ?_
         rw [zero_add, hCε1 ε, zsmul_eq_mul]
@@ -250,7 +250,7 @@ theorem exists_norm_rconv_le_siegel {β : ArchMatrix K n → ℝ}
             unipOne r (truncInf (altPoint y ε)) * x := by group
         rw [this]
       rw [hsum]
-      have hb' : ∀ w, ‖∑ ε, (altSign ε : ℂ) * f ((archProj (Cε ε))⁻¹ * w)‖ ≤ b₀ := by
+      have hb' : ∀ w, ‖∑ ε, (altSign ε : ℂ) * f ((archProj K n (Cε ε))⁻¹ * w)‖ ≤ b₀ := by
         intro w
         refine (hc Y hYY hYR Cε hCε2 w).trans ?_
         have hprod : ∏ i, ‖Y i‖ ≤ (C₁' * gain) ^ k := by

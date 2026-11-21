@@ -12,7 +12,7 @@ theorem UpperTheory.V.AlgebraTools.ord_ext :
   let φ : Fin n → (MonoidAlgebra R Γ →ₗ[R] E) := fun i =>
     (MonoidAlgebra.lift R E Γ r).toLinearMap -
       (Algebra.linearMap R E).comp (MonoidAlgebra.lift R R Γ (ψ i)).toLinearMap
-  let F : MultilinearMap R (fun _ : Fin n => MonoidAlgebra R Γ) E :=
+  let F : (∀ _ : Fin n, MonoidAlgebra R Γ) →ₘₗ[R] E :=
     (MultilinearMap.mkPiAlgebraFin R n E).compLinearMap φ
   have hF : F = 0 := by
     refine Module.Basis.ext_multilinear (f := F) (g := 0)

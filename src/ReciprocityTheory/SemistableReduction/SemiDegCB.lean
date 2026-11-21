@@ -82,8 +82,8 @@ theorem lattice_split (K : Type) [Field K] [NumberField K] : ∀ (k : ℕ)
     have hC01 : 1 ≤ C0 := by
       intro a ha
       exact Submodule.mem_map.2 ⟨Pi.single 0 a, hstd (single_mem_intVec K 0 ha), by simp [p0]⟩
-    obtain ⟨v, hv1, hv⟩ :=
-      exists_section_of_image (K := K) (V := Fin (k + 1) → K) X p0 hC0fg hC01
+    obtain ⟨v, hv1, hv⟩ : ∃ v : Fin (k + 1) → K, p0 v = 1 ∧ ∀ t ∈ C0, t • v ∈ X :=
+      exists_section_of_image X p0 hC0fg hC01
     let cz := (consZero K k).restrictScalars (𝓞 K)
     let X' : Submodule (𝓞 K) (Fin k → K) := X.comap cz
     have hX'fg : X'.FG := by

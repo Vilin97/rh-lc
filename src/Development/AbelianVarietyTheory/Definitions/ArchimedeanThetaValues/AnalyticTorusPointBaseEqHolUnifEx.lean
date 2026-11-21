@@ -89,7 +89,7 @@ variable (c : Coeff l) (bF : c.F →+* ℂ) [Algebra (FractionRing ℂ) ℂ] [Is
 def model : letI := H.starRing; GtAn (arcIn c ℂ bF) :=
   letI := H.starRing
   letI : IsEmpty (Fin (splitArc l).gB) := inferInstanceAs (IsEmpty (Fin 0))
-  let d := GlobalTheory.ToricDict.dict (splitArc l) (fun _ => 1) (fun _ => by simp [splitArc]) (polar_one_smul ℂ)
+  let d := dict (splitArc l) (fun _ => 1) (fun _ => by simp [splitArc]) (polar_one_smul ℂ)
   { star_eq := rfl
     A := splitArc l
     ε := LinearEquiv.refl _ _

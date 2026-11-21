@@ -16,7 +16,10 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.component :
     by_contra hne
     exact Set.disjoint_left.1 (Ideal.disjoint_nonZeroDivisors_of_mem_minimalPrimes hP) ha (hreg a hne)
   refine ⟨hbot, fun p hp => ?_, ?_⟩
-  · obtain ⟨Q, hQ, hQp, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral p P (by rw [hbot]; exact bot_le)
+  · obtain ⟨Q, hQ, hQp, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral p P (by
+      change P.comap (algebraMap Λ T) ≤ p
+      rw [hbot]
+      exact bot_le)
     exact ⟨Q, hQ, hQp, hQc⟩
   · haveI : FaithfulSMul Λ (T ⧸ P) := by
       rw [faithfulSMul_iff_algebraMap_injective]

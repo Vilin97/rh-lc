@@ -130,9 +130,9 @@ theorem alg_step (cc : Ideal (𝓞 D.host.K)) (hcc : cc ≠ ⊥) {N N' : ℕ}
     Ideal.dvd_iff_le.mpr ((Ideal.span_singleton_le_iff_mem _).mpr hc0)
   obtain ⟨cc', hcc'⟩ := hdvd
   have hc0K : ((c0 : D.host.K)) ≠ 0 := by
-    intro h; apply hc0ne; exact RingOfIntegers.ext (by simpa using h)
+    intro h; apply hc0ne; exact RingOfIntegers.ext h
   have hc0E : (((c0 : D.host.K) : D.host.E)) ≠ 0 := by
-    intro h; apply hc0K; exact Subtype.ext (by simpa using h)
+    intro h; apply hc0K; exact Subtype.ext h
   have key : ∀ e ∈ cc', ((((e : D.host.K) / (c0 : D.host.K) : D.host.K) : D.host.E)) • X ∈
       YYl D L L' := by
     intro e he

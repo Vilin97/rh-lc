@@ -108,6 +108,7 @@ theorem UpperTheory.V.Kum.homExt :
     hclosed
     (U := {a | ∃ c ∈ cycU l U, ∃ w ∈ E.fixingSubgroup, a = c * w})
     (by
+      apply mem_nhdsSet_iff_forall.mpr
       intro x hx
       have hxc := hinter x hx
       refine Filter.mem_of_superset

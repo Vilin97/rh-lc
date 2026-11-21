@@ -40,7 +40,9 @@ theorem UpperTheory.center_tensorProduct_le_sup_map_center :
   clear hv' hv hw' hw hz' hz
   induction v using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]; exact Subalgebra.zero_mem _
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Subalgebra.add_mem _ hx hy
+  | add x y hx hy =>
+    rw [map_add, map_add]
+    exact Subalgebra.add_mem _ hx hy
   | tmul a b =>
     have e : Algebra.TensorProduct.map (Subalgebra.center ℂ A).val (AlgHom.id ℂ B)
         (Algebra.TensorProduct.map (AlgHom.id ℂ (Subalgebra.center ℂ A))

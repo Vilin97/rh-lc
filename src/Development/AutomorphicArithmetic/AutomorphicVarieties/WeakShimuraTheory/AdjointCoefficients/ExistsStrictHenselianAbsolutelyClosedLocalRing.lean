@@ -82,14 +82,14 @@ theorem UpperTheory.V.Ws.X1.obCor :
   have Tres : ∀ Y, (T Y).map (res Λ A) = 0 := fun Y => by
     rw [← T0]; ext a b
     show res Λ A (μ _) = 0
-    rw [← res_map p, m3, map_zero]
+    rw [← UpperTheory.V.Alg.res_map p, m3, map_zero]
   have TT : ∀ Y Y', T Y * T Y' = 0 := fun Y Y' => by rw [Tl, Tres, zero_mul, map_zero]
   have rtres : ∀ s, (D.rt s).map (res Λ A) = rb s := fun s => by
     ext a b
-    rw [Matrix.map_apply, ← res_map p, ← hr, ← D.rt_map, Matrix.map_apply, Matrix.map_apply]
+    rw [Matrix.map_apply, ← UpperTheory.V.Alg.res_map p, ← hr, ← D.rt_map, Matrix.map_apply, Matrix.map_apply]
   have ntres : ∀ v, (D.nt v).map (res Λ A) = nb v := fun s => by
     ext a b
-    rw [Matrix.map_apply, ← res_map p, ← hn, ← D.nt_map, Matrix.map_apply, Matrix.map_apply]
+    rw [Matrix.map_apply, ← UpperTheory.V.Alg.res_map p, ← hn, ← D.nt_map, Matrix.map_apply, Matrix.map_apply]
   have pert : ∀ (c : A) (g : M4 A) (Y : M4 (ResidueField Λ)), IsGSp c g → Y ∈ sp4 (ResidueField Λ) →
       IsGSp c (g + T (Y * g.map (res Λ A))) := fun c g Y hg hY => by
     have hY' : adj Y = -Y := hY
@@ -131,7 +131,7 @@ theorem UpperTheory.V.Ws.X1.obCor :
     rw [Matrix.map_sub _ (map_sub p), Tp, D.rt_map, sub_zero]
   have fres : ∀ s, (f s).map (res Λ A) = rb s := fun s => by
     ext a b
-    rw [Matrix.map_apply, ← res_map p, ← hr, ← fp, Matrix.map_apply, Matrix.map_apply]
+    rw [Matrix.map_apply, ← UpperTheory.V.Alg.res_map p, ← hr, ← fp, Matrix.map_apply, Matrix.map_apply]
   refine ⟨{ toFun := f, map_one' := fone, map_mul' := fmul }, fun v => D.nt v + T ((y v).1 * nb v),
     ⟨fH, fun v => ?_, fun v s => ?_⟩, fun a b N => ?_, fp, fun v => ?_⟩
   · have := pert _ _ _ (D.nt_sp v) (y v).2

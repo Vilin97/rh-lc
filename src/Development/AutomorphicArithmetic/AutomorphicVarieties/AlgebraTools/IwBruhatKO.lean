@@ -104,7 +104,7 @@ private lemma rowsReduced_step (h : GL (Fin n) k) (t : ℕ) (ht : t < n)
     intro a c hca
     replace hca : c < a := hca
     simp only [E₂, Matrix.add_apply, one_apply, vecMulVec_apply, Pi.single_apply]
-    rw [if_neg (ne_of_lt hca).symm]
+    rw [Matrix.one_apply_ne (ne_of_lt hca).symm]
     by_cases haj : a = j
     · subst haj
       simp [v, not_lt.mpr hca.le]
@@ -141,7 +141,7 @@ private lemma rowsReduced_step (h : GL (Fin n) k) (t : ℕ) (ht : t < n)
     intro a c hca
     replace hca : c < a := hca
     simp only [E₁, Matrix.add_apply, one_apply, vecMulVec_apply, Pi.single_apply]
-    rw [if_neg (ne_of_lt hca).symm]
+    rw [Matrix.one_apply_ne (ne_of_lt hca).symm]
     by_cases hci : c = i₀
     · subst hci
       simp [u, not_lt.mpr hca.le]

@@ -95,7 +95,9 @@ private theorem infDiag_inv_unit_eq_infinite_one {F : Type} [Field F] [NumberFie
       ((algebraMap F (NumberField.InfiniteAdeleRing F) u, 1) : NumberField.InfiniteAdeleRing F ×
         IsDedekindDomain.FiniteAdeleRing (NumberField.RingOfIntegers F) F) := by
   classical
-  rw [Formalism.L2.Host.infDiag, MonoidHom.finset_prod_apply, Units.coe_prod]
+  letI : IsOneApply (Fˣ →* Neutral.B1.Ideles F) := ⟨fun _ => rfl⟩
+  letI : IsMulApply (Fˣ →* Neutral.B1.Ideles F) := ⟨fun _ _ _ => rfl⟩
+  rw [Formalism.L2.Host.infDiag, prod_apply, Units.coe_prod]
   let p2 : NumberField.AdeleRing (NumberField.RingOfIntegers F) F →*
       IsDedekindDomain.FiniteAdeleRing (NumberField.RingOfIntegers F) F :=
     ⟨⟨Prod.snd, rfl⟩, fun _ _ => rfl⟩

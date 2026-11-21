@@ -27,7 +27,6 @@ theorem UpperTheory.V.FW.ambCyc :
   haveI : IsCyclotomicExtension {f * l ^ ee l} ℚ (CyclotomicField (f * l ^ ee l) ℚ) := by
     convert CyclotomicField.isCyclotomicExtension (f * l ^ ee l) ℚ
     · rfl
-    · exact Subsingleton.elim _ _
   haveI : NumberField (CyclotomicField (f * l ^ ee l) ℚ) :=
     IsCyclotomicExtension.numberField {f * l ^ ee l} ℚ _
   obtain ⟨z, hz⟩ : ∃ z : CyclotomicField (f * l ^ ee l) ℚ, IsPrimitiveRoot z (f * l ^ ee l) :=

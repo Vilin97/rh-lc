@@ -15,6 +15,8 @@ namespace CyclotomicSymbol
 
 open FiniteSubfield RationalSymbol _root_.GroundTheory.Global.Cyclotomic
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 theorem exists_le_sup_rootsOfUnityField (K L : FiniteSubfield) (hL : L.1 ≤ K.1 ⊔ maxCyclotomic) :
     ∃ m : ℕ+, L.1 ≤ K.1 ⊔ rootsOfUnityField m := by
   obtain ⟨α, hα⟩ : ∃ α : L.1,

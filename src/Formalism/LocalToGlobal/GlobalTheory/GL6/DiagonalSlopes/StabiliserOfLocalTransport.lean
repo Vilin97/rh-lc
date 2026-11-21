@@ -44,7 +44,7 @@ set_option maxHeartbeats 1000000 in
 theorem dual_base_lattice_full (K : ClsTied u i hi) :
     Formalism.L2.GlobalTheoryTheory.Comp.IsLat (Formalism.L2.GlobalTheoryTheory.Comp.dl (sigD D) (gramN D i hi) K.lev.Lb) := by
   have hLb : Submodule.IsLattice D.host.E K.lev.Lb :=
-    ⟨Module.Finite.iff_fg.1 K.lev.Lb_fin, K.lev.Lb_span⟩
+    Submodule.IsLattice.of_fg D.host.E (Module.Finite.iff_fg.1 K.lev.Lb_fin)
   have := Formalism.L2.GlobalTheoryTheory.TraceIntegrality.isLattice_between K.lev.Lb
     (Formalism.L2.GlobalTheoryTheory.Comp.dl (sigD D) (gramN D i hi) K.lev.Lb) hLb
     (fun x hx => Submodule.subset_span (K.lev.Lb_int x hx)) _ (D.mem u).A.T_prime.ne_zero (by
@@ -54,7 +54,9 @@ theorem dual_base_lattice_full (K : ClsTied u i hi) :
       | zero => rw [smul_zero]; exact zero_mem _
       | add x z _ _ hx hz => rw [smul_add]; exact add_mem hx hz
       | smul b x _ hx => rw [smul_comm]; exact Submodule.smul_mem _ b hx)
-  exact ⟨Module.Finite.iff_fg.2 this.fg, this.span_eq_top⟩
+  refine ⟨Module.Finite.iff_fg.2 this.fg, ?_⟩
+  rw [eq_top_iff, ← K.lev.Lb_span]
+  exact Submodule.span_mono (fun x hx => Submodule.subset_span (K.lev.Lb_int x hx))
 
 
 set_option maxHeartbeats 2000000 in

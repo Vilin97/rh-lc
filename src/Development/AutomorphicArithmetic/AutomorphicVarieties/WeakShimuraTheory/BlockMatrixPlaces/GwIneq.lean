@@ -46,7 +46,8 @@ theorem UpperTheory.V.Ws.Bl.gwIneq :
   have htw : Nat.card (H0 (twDual μ ρ)) = 1 := by
     refine card_one_of _ (fun φ hφ => ?_)
     have hfix := (mem_riemannRochSpace_iff_regularAt_everywhere _ φ).mp hφ (toGS Ω _ s)
-    apply TDual.ext
+    change (φ : Module.Dual (ZMod (l ^ r)) M) = 0
+    apply LinearMap.ext
     intro m
     obtain ⟨x, rfl⟩ := hsbij.2 m
     have hx : φ (ρ (toGS Ω _ s) x) = φ x := by

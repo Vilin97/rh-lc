@@ -26,8 +26,8 @@ theorem UpperTheory.V.Pa.claim2 :
   refine ⟨fun j => ⟨∑ k, c k j • α k, Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (hα k)⟩, ?_, ?_⟩
   · intro j b
     show (∑ k, c k j • α k) b = _
-    rw [hΦd, add_sub_cancel_left, AddMonoidHom.finset_sum_apply]
-    exact Finset.sum_congr rfl fun k _ => by simp [c, mul_comm]
+    rw [hΦd, add_sub_cancel_left]
+    simp [c, mul_comm]
   · have e2 : (fun j => S.alC (∑ k, c k j • α k)) = epC' S.h S.x u'' := by
       funext j
       rw [h2'' j, (alSel l S).2.2.1 (Fin e) (fun k => c k j) α]

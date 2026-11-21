@@ -129,7 +129,7 @@ private theorem isClosed_sx (q : ℕ) : IsClosed (sx q) := by
   refine IsClosed.inter ?_ ?_
   · simp only [Set.setOf_forall]
     exact isClosed_iInter fun j => isClosed_le continuous_const (continuous_apply j)
-  · exact isClosed_le (continuous_finset_sum _ fun j _ => continuous_apply j) continuous_const
+  · exact isClosed_le (continuous_finsetSum _ fun j _ => continuous_apply j) continuous_const
 
 private theorem isCompact_sx (q : ℕ) : IsCompact (sx q) := by
   refine (isCompact_Icc (a := (0 : Fin q → ℝ)) (b := 1)).of_isClosed_subset (isClosed_sx q) ?_

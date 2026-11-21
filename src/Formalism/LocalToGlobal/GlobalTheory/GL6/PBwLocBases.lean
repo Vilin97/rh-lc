@@ -21,8 +21,19 @@ private theorem isLattice_map_restrictScalars_linearEquiv {K R V W : Type*} [Com
     Submodule.IsLattice K (L.map ((e : V →ₗ[K] W).restrictScalars R)) := by
   obtain ⟨hfg, hsp⟩ := hL
   refine ⟨hfg.map _, ?_⟩
-  rw [Submodule.map_coe, LinearMap.coe_restrictScalars, Submodule.span_image, hsp, Submodule.map_top,
-    LinearEquiv.range]
+  rw [Submodule.map_coe, LinearMap.coe_restrictScalars]
+  intro s hs hli
+  have hsub : e.symm '' s ⊆ L := by
+    rintro x ⟨y, hy, rfl⟩
+    obtain ⟨z, hz, rfl⟩ := hs hy
+    simpa using hz
+  have hli' : LinearIndepOn R id (e.symm '' s) := by
+    apply (linearIndepOn_id_imageₛ_iff (f := (e.symm : W →ₗ[K] V).restrictScalars R)
+      e.symm.injective.injOn).2
+    exact hli
+  have hk := hsp _ hsub hli'
+  have := (linearIndepOn_id_imageₛ_iff (f := (e : V →ₗ[K] W)) e.injective.injOn).2 hk
+  simpa [Set.image_image, Function.comp_def] using this
 
 theorem bwB_clsCrd_lat (i : ℕ) (hi : i ≤ D.R.m) (c : (D.mem u).C.cls i) :
     Submodule.IsLattice D.host.E (clsCrd D u i hi c) := by

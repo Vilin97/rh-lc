@@ -30,7 +30,7 @@ private theorem cbc_span {B R E : Type} [CommRing B] [Ring R] [Algebra B R] [Rin
   induction hy using TwoSidedIdeal.span_induction with
   | mem x hx => exact hS x hx
   | zero => rw [map_zero]; exact zero_mem _
-  | add x z _ _ hx hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hz
+  | add x z _ _ hx hz => rw [map_add]; exact add_mem hx hz
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | left_absorb a x _ hx =>
     rw [map_mul]
@@ -88,7 +88,7 @@ theorem UpperTheory.V.Pa.BC.closure_bc :
       rw [hψ, hsing]
       exact Submodule.subset_span ⟨u, hu, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul a x _ hx => rw [hψs]; exact Submodule.smul_mem _ _ hx
   have hfin : Module.Finite B' J.ringCon.Quotient := by
     refine ⟨Submodule.fg_def.2 ⟨_, s.finite_toSet.image (fun u => π (MonoidAlgebra.single u 1)), ?_⟩⟩
@@ -97,7 +97,7 @@ theorem UpperTheory.V.Pa.BC.closure_bc :
     obtain ⟨y, rfl⟩ := hπ x
     induction y using MonoidAlgebra.induction_linear with
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx trivial) (hy trivial)
+    | add x y hx hy => rw [map_add]; exact add_mem (hx trivial) (hy trivial)
     | single u a =>
       have : (MonoidAlgebra.single u a : MonoidAlgebra B' G) = a • MonoidAlgebra.single u 1 := by
         rw [MonoidAlgebra.smul_single, smul_eq_mul, mul_one]
@@ -130,7 +130,7 @@ theorem UpperTheory.V.Pa.BC.closure_bc :
       refine Submodule.smul_induction_on hx (fun a ha y _ => ?_) (fun x y hx hy => ?_)
       · rw [hψs]
         exact Submodule.smul_mem_smul (hle (Ideal.mem_map_of_mem g ha)) Submodule.mem_top
-      · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      · rw [map_add]; exact add_mem hx hy
     have := key _ (hU u hu)
     rw [map_sub, map_one, hψ, hsing] at this
     rw [map_sub, map_one]

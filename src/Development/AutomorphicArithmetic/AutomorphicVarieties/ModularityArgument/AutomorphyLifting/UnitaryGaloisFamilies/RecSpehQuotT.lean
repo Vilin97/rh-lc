@@ -19,6 +19,12 @@ private theorem segSum_nu {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Al
     (l : List (Segment (w.adicCompletion E))) (c : ℝ) :
     segSum rc (l.map fun Γ => Γ.nu (c : ℂ)) = (segSum rc l).lpTw c := by
   simp only [segSum]
+  rw [← GlobalTheory.NuShift.sumList_lpTw, List.map_map, List.map_map]
+  congr 1
+  refine List.map_congr_left fun Γ _ => ?_
+  show ((rc (Γ.first.nu (c : ℂ))).lpTw _).lpChar _ = _
+  rw [hnu, WD.lpTw_add, add_comm, ← WD.lpTw_add, GlobalTheory.NuShift.lpChar_lpTw]
+  rfl
 
 private theorem rec_spehQuotT {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
     {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}

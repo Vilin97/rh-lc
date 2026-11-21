@@ -296,6 +296,7 @@ theorem embG_conj_Rn (y : B.Mat k ρ) (hy : y ∈ B.GV k ρ) (x : U.RC k j ρ) :
   · simp only [Matrix.one_mul, Matrix.mul_one, Matrix.zero_mul, Matrix.mul_zero, add_zero, zero_add]
     exact Matrix.nonsing_inv_mul _ hu
   · simp [rnAct]
+    rfl
   · simp
   · simp
   · simp

@@ -272,7 +272,8 @@ theorem lenLoc_atT_zero (hAtT : NuAtTDef D L) {X : ErrX D} {K : G.Consts} {c : E
     unfold EatT at h1
     rw [if_pos ht] at h1
     have hf : (0 : ℝ) < (D.R.f : ℝ) := by
-      have : 0 < D.R.f := by unfold Ranks.f Ranks.n; positivity
+      have : 0 < D.R.f := by
+        exact lt_of_lt_of_le (by have := D.R.two_le_m; omega) D.R.m_le_f
       exact_mod_cast this
     have hN : (0 : ℝ) < G.Nm D := by
       unfold G.Nm

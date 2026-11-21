@@ -20,7 +20,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.finMax :
   have h3 : IsArtinianRing (T ⧸ I) := IsArtinianRing.of_finite (Λ ⧸ maximalIdeal Λ) (T ⧸ I)
   have hcomap : ∀ m : Ideal T, m.IsMaximal → m.comap (algebraMap Λ T) = maximalIdeal Λ := by
     intro m hm
-    haveI := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := Λ) m
+    haveI := Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := Λ) m
     exact IsLocalRing.eq_maximalIdeal this
   have hIm : ∀ m : Ideal T, m.IsMaximal → I ≤ m := fun m hm =>
     Ideal.map_le_iff_le_comap.2 (hcomap m hm).ge

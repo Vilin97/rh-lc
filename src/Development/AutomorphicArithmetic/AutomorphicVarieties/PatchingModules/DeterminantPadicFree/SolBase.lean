@@ -21,9 +21,11 @@ theorem UpperTheory.V.Pa.Det.solBase :
     simp only [Matrix.smul_apply, Matrix.mul_apply, Matrix.map_apply, smul_eq_mul, Matrix.of_apply] at hac ⊢
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [hs, mul_comm (X _ _) (f _), ← Finset.smul_sum, map_sum, map_smul, Finsupp.smul_apply,
-      Finsupp.coe_finset_sum, Finset.sum_apply, smul_eq_mul] at hac
-    rw [hac]
-    exact Finset.sum_congr rfl fun m _ => mul_comm _ _
+      smul_eq_mul] at hac
+    change e i * (Finsupp.applyAddHom k : (_ →₀ F) →+ F) (∑ x, r i a x • b.repr (X x c)) =
+      (Finsupp.applyAddHom k : (_ →₀ F) →+ F) (∑ x, r i x c • b.repr (X a x)) at hac
+    simp only [map_sum, Finsupp.applyAddHom_apply, Finsupp.smul_apply, smul_eq_mul] at hac
+    simpa only [mul_comm] using hac
   ext a c
   have hk : b.repr (X a c) = 0 := by
     ext k

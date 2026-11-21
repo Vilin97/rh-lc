@@ -144,9 +144,12 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R)
 theorem chF_ok_of_finIdx (hX : X.Ok) (u : Pr.Word) (j : ℕ)
     (hfi : ∀ (b : L.β j) (P : QE sel (mu : Chr X.F X.E X.K)), Finite (↥(GLint X.E (R.N j) P.1) ⧸ (L.levQ j b P).H))
     (hroot : ∀ (b : L.β j) (c : ↥(L.levQ j b).grp), ∃ m : ℕ, 0 < m ∧ (((L.levQ j b).chr c : X.Kˣ) : X.K) ^ m = 1) :
-    (chF W sel mu L u j).Ok := fun b =>
-  frmGSD_ok_of_finIdx (L.levG j b) (L.levQ j b) hX (colVal W u j (Pr.vT u) Pr.vGs)
-    (colVal_eqv W hX u j _ _) (hfi b) (hroot b)
+    (chF W sel mu L u j).Ok := by
+  intro b
+  have hC : (colVal W u j (Pr.vT u) Pr.vGs).Eqv :=
+    ⟨colVal_nab_smul W u j, colVal_del_smul W u j, roundPk_inv X _ _ hX.emb_star⟩
+  exact frmGSD_ok_of_finIdx (L.levG j b) (L.levQ j b) hX (colVal W u j (Pr.vT u) Pr.vGs)
+    hC (hfi b) (hroot b)
 
 end Chain
 

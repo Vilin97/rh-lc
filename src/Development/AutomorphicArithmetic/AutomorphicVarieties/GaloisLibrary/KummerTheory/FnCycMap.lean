@@ -19,7 +19,7 @@ private theorem apply_mem_fn_of_isLift (F Ω : Type) [Field F] [Field Ω] [Algeb
   have hx' : x ∈ IntermediateField.adjoin F ((Polynomial.X ^ l ^ n - 1 : Polynomial F).rootSet Ω) := hx
   show σ x ∈ IntermediateField.adjoin F ((Polynomial.X ^ l ^ n - 1 : Polynomial F).rootSet Ω)
   refine IntermediateField.adjoin_induction F
-    (p := fun x _ => σ x ∈ IntermediateField.adjoin F ((Polynomial.X ^ l ^ n - 1 : Polynomial F).rootSet Ω))
+    (motive := fun x _ => σ x ∈ IntermediateField.adjoin F ((Polynomial.X ^ l ^ n - 1 : Polynomial F).rootSet Ω))
     ?_ ?_ ?_ ?_ ?_ hx'
   · intro y hy
     apply IntermediateField.subset_adjoin

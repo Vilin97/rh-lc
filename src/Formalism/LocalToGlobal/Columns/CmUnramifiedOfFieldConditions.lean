@@ -64,7 +64,7 @@ variable {E n}
 
 theorem gmap_unimodular {g : Sp E n ≃ₗ[E] Sp E n} (hg : g ∈ UF E n) {N : Submodule (𝓞 E) (Sp E n)}
     (hN : IsUnimodular (hStd E n) N) : IsUnimodular (hStd E n) (gmap g N) := by
-  unfold IsUnimodular at *
+  unfold Formalism.HermitianLatticesTheory.IsUnimodular at *
   rw [dual_gmap g hg, hN]
 
 instance : MulAction (UF E n) (UniLat E n) where
@@ -125,7 +125,8 @@ end FormCount
 section IdxQ
 
 theorem card_res {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) :
-    Nat.card (𝓞 E ⧸ w.asIdeal) = Ideal.absNorm w.asIdeal := rfl
+    Nat.card (𝓞 E ⧸ w.asIdeal) = Ideal.absNorm w.asIdeal := by
+  exact (Ideal.absNorm_eq_natCard w.asIdeal).symm
 
 end IdxQ
 

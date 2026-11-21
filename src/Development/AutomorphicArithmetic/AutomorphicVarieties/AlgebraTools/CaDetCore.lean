@@ -23,6 +23,7 @@ theorem UpperTheory.V.AlgebraTools.under_le_of_det_mem :
   have hinj : Function.Injective (algebraMap B A) := FaithfulSMul.algebraMap_injective B A
   obtain ⟨Z', -, hZ'p, hZ'c⟩ := Ideal.exists_ideal_over_prime_of_isIntegral Z (⊥ : Ideal A) (by
     rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]; exact bot_le)
+  change Ideal.comap (algebraMap B A) Z' = Z at hZ'c
   haveI := hZ'p
   haveI := hQ'
   obtain ⟨j, hj⟩ := hm Z' hZ'p hZ'c

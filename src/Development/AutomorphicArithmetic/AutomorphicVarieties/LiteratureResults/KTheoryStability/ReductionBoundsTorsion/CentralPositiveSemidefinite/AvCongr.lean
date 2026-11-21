@@ -211,7 +211,7 @@ theorem join (hSp : TSpan) (hSc : TScal) (hSi : TSimp) (hA : TAv) (hEv : SEv) : 
     | mem x hx =>
       rcases hx with rfl | ⟨u, hu, rfl⟩
       · intro σ
-        convert hdiag σ using 1
+        convert hdiag σ using 1 <;> ext w <;> simp
       · exact hlf u hu
     | zero => intro σ; rw [smul_zero]; exact fix_zero hadd
     | add x y _ _ hx hy => intro σ; rw [smul_add]; exact fix_add hadd (hx σ) (hy σ)

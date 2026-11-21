@@ -29,7 +29,7 @@ theorem firstPage_split : ∀ (R : Type) [CommRing R] (s : ℕ), StableRangeLe R
         if Even p then grpHMap (stab R (n - (p + 1)) (n - p) (by omega)) q ≫ e p q else 0 := by
   intro R _ s hs n
   refine ⟨fun p q => if h : p ≤ n then
-      ptH ℤ (stab R (n - p) n (Nat.sub_le _ _)) (stdSeq R n p h) (stab_smul_stdSeq R n p h) q else 0, ?_, ?_⟩
+      ptH (k := ℤ) (stab R (n - p) n (Nat.sub_le _ _)) (stdSeq R n p h) (stab_smul_stdSeq R n p h) q else 0, ?_, ?_⟩
   · intro p q hp
     have h : p ≤ n := by omega
     simp only [dif_pos h]

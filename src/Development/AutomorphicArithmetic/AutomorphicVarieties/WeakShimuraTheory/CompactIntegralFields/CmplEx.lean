@@ -26,12 +26,10 @@ theorem UpperTheory.V.Ws.cmplEx :
   · intro R' _ _ _ P' hP'
     obtain ⟨g, hg⟩ := X.univ R' _ P' hres hP'
     have hgx : (res Λ R').comp g = x := by
-      apply X.hom_ext
-      rw [← hmap, hg, hP'.red]
+      exact X.hom_ext _ _ (by rw [← hmap, hg, hP'.red])
     obtain ⟨h, hh, hu⟩ := huniv R' g hgx
     refine ⟨h, ?_, fun h' hh' => hu h' ?_⟩
     · dsimp only
       rw [hmap, hh, hg]
     · dsimp only at hh' ⊢
-      apply X.hom_ext
-      rw [← hmap, hh', hg]
+      exact X.hom_ext _ _ (by rw [← hmap, hh', hg])

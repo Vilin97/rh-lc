@@ -22,7 +22,7 @@ theorem UpperTheory.V.Stick.carryPrime :
     intro s hs
     unfold primeCl
     simp only [class_map_mk0]
-    rw [← map_prod, ClassGroup.mk0_eq_one_iff, Submonoid.coe_finset_prod]
+    rw [← map_prod, ClassGroup.mk0_eq_one_iff, Submonoid.coe_finsetProd]
     simp only [idMap_inv]
     rw [← hv]
     exact hs

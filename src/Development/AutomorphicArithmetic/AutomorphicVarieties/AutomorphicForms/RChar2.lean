@@ -98,7 +98,7 @@ theorem contDiffAt_extZero (ψ : (ι → ℝ)ˣ →* ℂˣ) (hψ : Continuous ψ
   obtain ⟨L, hL⟩ := exists_lin ψ hψ
   refine ContDiffAt.congr_of_eventuallyEq ?_ (extZero_eventually hL u)
   refine contDiffAt_const.mul (ContDiffAt.cexp (L.contDiff.contDiffAt.comp _ (contDiffAt_pi.2 fun i => ?_)))
-  exact ((contDiffAt_apply ℝ ℝ i _).div_const _).log (by rw [div_self (unit_ne_zero u i)]; exact one_ne_zero)
+  exact ((contDiffAt_apply ℝ (fun _ : ι => ℝ) i _).div_const _).log (by rw [div_self (unit_ne_zero u i)]; exact one_ne_zero)
 
 theorem fderiv_extZero {ψ : (ι → ℝ)ˣ →* ℂˣ} {L : (ι → ℝ) →L[ℝ] ℂ} (hψ : Continuous ψ)
     (hL : ∀ z, ((ψ (expU z) : ℂˣ) : ℂ) = Complex.exp (L z)) : fderiv ℝ (extZero ψ) 1 = L := by

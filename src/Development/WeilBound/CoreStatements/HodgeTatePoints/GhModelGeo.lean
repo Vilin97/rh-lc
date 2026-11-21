@@ -28,16 +28,38 @@ theorem exists_base {S : Scheme.{0}} {G : Over S} [GrpObj G] [Smooth G.hom] {A R
     ∃ j : E →+ F, (∀ e, (N.pt (j e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) ≫ (M.pt e).left) ∧
       (∀ (a : A) e, j (a • e) = φ a • j e) ∧
       ∀ (n : ℕ) (b : Module.Basis (Fin n) A E), ∃ b' : Module.Basis (Fin n) R F, ∀ i, b' i = j (b i) := by
-  have ht (e : E) : IsTanAt G z (epsBase φ hz ≫ M.pt e) := by
+  have h_alg : Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) ≫ Spec.map (CommRingCat.ofHom (algebraMap A (DualNumber A))) =
+      Spec.map (CommRingCat.ofHom (algebraMap R (DualNumber R))) ≫ Spec.map (CommRingCat.ofHom φ) := by
+    rw [spec_comp, spec_comp]
+    congr 2
+    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  have h_fst : Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom R R R).toRingHom) ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) =
+      Spec.map (CommRingCat.ofHom φ) ≫ Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom A A A).toRingHom) := by
+    rw [spec_comp, spec_comp]
+    congr 2
+    refine RingHom.ext fun a => ?_
+    simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  have h_eps (a : A) : Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) ≫ Spec.map (CommRingCat.ofHom (epsMul a)) =
+      Spec.map (CommRingCat.ofHom (epsMul (φ a))) ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) := by
+    rw [spec_comp, spec_comp]
+    congr 2
+    refine RingHom.ext fun b => ?_
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, mul_comm]
+  let base : epsAt z ⟶ epsAt x := Over.homMk (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ))) (by
+    change _ ≫ _ ≫ x = _ ≫ z
+    rw [← Category.assoc, h_alg, Category.assoc, hz])
+  have hbase (a : A) : base ≫ epsScale x a = epsScale z (φ a) ≫ base :=
+    Over.OverMorphism.ext (h_eps a)
+  have ht (e : E) : IsTanAt G z (base ≫ M.pt e) := by
     change _ ≫ Spec.map _ ≫ (M.pt e).left = _
-    rw [← Category.assoc, spec_fst_dual, Category.assoc, M.tan e]
+    rw [← Category.assoc, h_fst, Category.assoc, M.tan e]
     exact congrArg (·.left)
       (comp_one (M := G) (Over.homMk (Spec.map (CommRingCat.ofHom φ)) hz : Over.mk z ⟶ Over.mk x))
   choose j hj using fun (e : E) => N.onto _ (ht e)
   have hadd : ∀ e e', j (e + e') = j e + j e' := fun e e' => N.inj (by
     rw [hj, N.add, hj, hj, M.add, MonObj.comp_mul])
   have hsm : ∀ (a : A) e, j (a • e) = φ a • j e := fun a e => N.inj (by
-    rw [hj, N.pt_smul, M.pt_smul, hj, ← Category.assoc, base_scale, Category.assoc])
+    rw [hj, N.pt_smul, M.pt_smul, hj, ← Category.assoc, hbase, Category.assoc])
   have hl : ∀ e, (N.pt (j e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) ≫ (M.pt e).left :=
     fun e => congrArg CommaMorphism.left (hj e)
   refine ⟨AddMonoidHom.mk' j hadd, hl, hsm, fun n b => ?_⟩
