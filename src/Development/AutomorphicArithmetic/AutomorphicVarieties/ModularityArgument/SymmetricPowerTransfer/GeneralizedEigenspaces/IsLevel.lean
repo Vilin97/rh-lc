@@ -41,6 +41,7 @@ variable (L) in
 def infC (n : ℕ) : UA L n →* (InfinitePlace L → GL (Fin n) ℂ) := Pi.monoidHom fun v => cEmb v.embedding
 
 
+variable (L) in
 def Kall (n : ℕ) : Subgroup (UA L n) := finU (E := L) (n := n) ⊓ ⨅ w : Plc L, (GlobalTheory.LFun.KGL w (n := n)).comap (cLoc w)
 
 variable {n : ℕ}

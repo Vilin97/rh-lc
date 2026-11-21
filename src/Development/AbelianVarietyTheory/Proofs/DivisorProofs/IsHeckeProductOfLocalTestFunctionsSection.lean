@@ -29,6 +29,7 @@ theorem isHecke_globFn : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E],
       ext x; simp
     rw [this, Set.inter_univ, hc.closure_eq]
   have hcpt := GlobalTheory.BCT.LocCpt.loc_cpt E hU n S hS (fun w => tsupport (f w)) (fun w => (hf.1 w).1) hC
+  set_option synthInstance.maxHeartbeats 200000 in
   refine HasCompactSupport.intro hcpt fun x hx => ?_
   simp only [Set.mem_setOf_eq, not_forall] at hx
   obtain ⟨w, hw, hxw⟩ := hx

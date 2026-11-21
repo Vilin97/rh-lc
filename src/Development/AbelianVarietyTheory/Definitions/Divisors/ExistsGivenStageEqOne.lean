@@ -41,10 +41,13 @@ theorem canFlip_append {γ : List Edge} {l l' : List (ℕ × ℕ)} (h : CanFlip 
 theorem canFlip_col {m i : ℕ} (hi : i < m) : ∀ j, j ≤ m →
     CanFlip ((List.range (m + m)).map (midEdge m i 0)) ((List.range j).map fun j => (i, j)) ∧
     ((List.range j).map fun j => (i, j)).foldl (fun γ x => flipPath x.1 x.2 γ) ((List.range (m + m)).map (midEdge m i 0)) =
-      (List.range (m + m)).map (midEdge m i j)
-  | 0, _ => ⟨.nil _, rfl⟩
-  | j + 1, hj => by
-    obtain ⟨h1, h2⟩ := canFlip_col hi j (by omega)
+      (List.range (m + m)).map (midEdge m i j) := by
+  intro j
+  induction j with
+  | zero => exact fun _ => ⟨.nil _, rfl⟩
+  | succ j ih =>
+    intro hj
+    obtain ⟨h1, h2⟩ := ih (by omega)
     rw [List.range_succ, List.map_append, List.foldl_append, h2]
     refine ⟨canFlip_append h1 (h2 ▸ .cons ?_ (.nil _)), ?_⟩
     · have := infix_map_range (midEdge m i j) (p := i + m - j - 1) (n := m + m) (by omega)
@@ -61,10 +64,13 @@ theorem canFlip_col {m i : ℕ} (hi : i < m) : ∀ j, j ≤ m →
 theorem canFlip_cols {m : ℕ} : ∀ i, i ≤ m →
     CanFlip ((List.range (m + m)).map (midEdge m 0 0)) ((List.range i).flatMap fun i => (List.range m).map fun j => (i, j)) ∧
     ((List.range i).flatMap fun i => (List.range m).map fun j => (i, j)).foldl (fun γ x => flipPath x.1 x.2 γ)
-      ((List.range (m + m)).map (midEdge m 0 0)) = (List.range (m + m)).map (midEdge m i 0)
-  | 0, _ => ⟨.nil _, rfl⟩
-  | i + 1, hi => by
-    obtain ⟨h1, h2⟩ := canFlip_cols i (by omega : i ≤ m)
+      ((List.range (m + m)).map (midEdge m 0 0)) = (List.range (m + m)).map (midEdge m i 0) := by
+  intro i
+  induction i with
+  | zero => exact fun _ => ⟨.nil _, rfl⟩
+  | succ i ih =>
+    intro hi
+    obtain ⟨h1, h2⟩ := ih (by omega)
     obtain ⟨h3, h4⟩ := canFlip_col (by omega : i < m) m le_rfl
     rw [List.range_succ, List.flatMap_append, List.foldl_append, h2, List.flatMap_singleton, h4]
     refine ⟨canFlip_append h1 (h2 ▸ h3), List.map_congr_left fun p _ => ?_⟩

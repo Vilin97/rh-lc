@@ -54,7 +54,7 @@ theorem norm_not_mem_iff (A B : Type) [CommRing A] [CommRing B] [Algebra A B]
     haveI : Module.Finite Rₘ Sₘ := Module.Finite.of_basis
       ((Module.Free.chooseBasis A B).localizationLocalization Rₘ P.asIdeal.primeCompl Sₘ)
     have hMc : M.comap (algebraMap Rₘ Sₘ) = IsLocalRing.maximalIdeal Rₘ :=
-      IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M)
+      IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := Rₘ) M)
     refine h ⟨M.comap (algebraMap B Sₘ), hM.isPrime.comap _⟩ ?_ hfM
     show (M.comap (algebraMap B Sₘ)).comap (algebraMap A B) = P.asIdeal
     rw [Ideal.comap_comap, ← IsScalarTower.algebraMap_eq, IsScalarTower.algebraMap_eq A Rₘ Sₘ,

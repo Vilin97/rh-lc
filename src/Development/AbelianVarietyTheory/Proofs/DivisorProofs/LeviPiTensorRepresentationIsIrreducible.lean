@@ -98,7 +98,7 @@ theorem eq_bot_or_top_of_map_stable [∀ i, FiniteDimensional ℂ (V i)]
         simp [funext_iff]
       rw [LinearMap.smulRight_apply, Module.Basis.coord_apply, Module.Basis.repr_self, Finsupp.single_apply]
       simp only [B, Basis.piTensorProduct_apply, PiTensorProduct.map_tprod, hc,
-        MultilinearMap.map_smul_univ, hq]
+        MultilinearMap.map_smul_univ, RingHom.id_apply, hq]
     have hm := h f x hx
     rw [hf, LinearMap.smulRight_apply, Module.Basis.coord_apply] at hm
     exact (W.smul_mem_iff hI).1 hm

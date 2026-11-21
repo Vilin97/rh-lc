@@ -156,11 +156,15 @@ theorem height_pull_vertical : ∀ (k : Type) [CommRing k] (X Y : Scheme.{0}) (p
   have ei : (g ≫ cloι (π y)) ≫ p = g ≫ cloι (π y) ≫ p := Category.assoc _ _ _
   have t1 : topSelfIntersection (ZMod l) ((L.pull π hπ).B.pull (cloι y)) d = topSelfIntersection (ZMod l) (L.B.pull (cloι y ≫ π)) d :=
     topSelf_congr (ZMod l) ((L.pull π hπ).pull (cloι y) rfl).isLB (L.pull (cloι y ≫ π) ej).isLB
-      (L.refines_pull_pull π hπ (cloι y) rfl ej).lbIso d
+      (LBIso.chartPull (chartPullLinComb L.B π (fun _ : PUnit => cloι y)
+        (fun _ => cloι y ≫ π) (fun _ => 1) (𝟙 _) fun _ => (Category.id_comp _).symm)
+        (chartPullId _) (PolBaseChange.lbIso_refl (LB.isLB_pull L.isLB _))) d
   have t2 : topSelfIntersection (ZMod l) (L.B.pull (g ≫ cloι (π y))) d =
       topSelfIntersection (ZMod l) ((L.B.pull (cloι (π y))).pull g) d :=
     topSelf_congr (ZMod l) (L.pull (g ≫ cloι (π y)) ei).isLB ((L.pull (cloι (π y)) rfl).pull g rfl).isLB
-      (L.refines_pull_comp (cloι (π y)) rfl g rfl ei).lbIso d
+      (LBIso.symm (LBIso.chartPull (chartPullLinComb L.B (cloι (π y)) (fun _ : PUnit => g)
+        (fun _ => g ≫ cloι (π y)) (fun _ => 1) (𝟙 _) fun _ => (Category.id_comp _).symm)
+        (chartPullId _) (PolBaseChange.lbIso_refl (LB.isLB_pull L.isLB _)))) d
   rw [t1, ← hgc, t2] at e1
   rw [e1, e2]
   suffices key : topSelfIntersection (ZMod l) ((L.B.pull (cloι (π y))).pull g) d =

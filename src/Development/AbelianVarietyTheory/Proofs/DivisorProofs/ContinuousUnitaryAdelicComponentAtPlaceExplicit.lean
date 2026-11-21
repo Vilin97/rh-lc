@@ -37,7 +37,7 @@ theorem continuous_tensorMap {R R' : Type} [CommRing R] [Algebra ℚ R] [Topolog
       Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
   have e : (⇑(Algebra.TensorProduct.map f (AlgHom.id ℚ C))) = fun x => ∑ i, f (bA.repr x i) • bB i := funext key
   rw [e]
-  refine continuous_finset_sum _ fun i _ => ?_
+  refine continuous_finsetSum _ fun i _ => ?_
   exact (hf.comp (IsModuleTopology.continuous_of_linearMap (bA.coord i))).smul continuous_const
 
 theorem continuous_piV : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (v : AwayP p), Continuous (piV G v) := by

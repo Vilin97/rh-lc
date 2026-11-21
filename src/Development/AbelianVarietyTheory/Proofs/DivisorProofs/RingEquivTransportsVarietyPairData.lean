@@ -240,17 +240,16 @@ theorem effAt_iff {n : ℕ} (R : Subring K) (η : Forms c n) (φ : K →₀ ℚ)
 
 
 include he in
-theorem isLocModel_map {R : Subring K} (h : IsLocModel c R) : IsLocModel c' (R.map e.toRingHom) where
-  const_mem a := ⟨c a, h.const_mem a, he a⟩
-  isLocalRing := by
-    haveI := h.isLocalRing
-    exact (e.subringMap (s := R)).isLocalRing
-  essFiniteType := by
-    have h3 := h.essFiniteType.comp (RingHom.FiniteType.of_surjective
-      (e.subringMap (s := R)).toRingHom (e.subringMap (s := R)).surjective).essFiniteType
-    convert h3 using 1
+theorem isLocModel_map {R : Subring K} (h : IsLocModel c R) : IsLocModel c' (R.map e.toRingHom) := by
+  let eR := e.subringMap (s := R)
+  refine ⟨fun a => ⟨c a, h.const_mem a, he a⟩, ?_, ?_, ?_⟩
+  · have := h.isLocalRing
+    exact eR.isLocalRing
+  · have hcomp := h.essFiniteType.comp
+      (RingHom.FiniteType.of_surjective eR.toRingHom eR.surjective).essFiniteType
+    convert hcomp using 1
     exact RingHom.ext fun a => Subtype.ext (he a).symm
-  frac f := by
+  · intro f
     obtain ⟨a, ha, b, hb, hb0, hab⟩ := h.frac (e.symm f)
     refine ⟨e a, ⟨a, ha, rfl⟩, e b, ⟨b, hb, rfl⟩, (map_ne_zero e).2 hb0, ?_⟩
     rw [← hab, map_mul, e.apply_symm_apply]

@@ -34,7 +34,7 @@ theorem isIntegral_of_trace_integral :
     rw [Algebra.traceForm_apply]
     have ht := Formalism.FourierDecayAlt.P.S6x3.trace_eq E (w * algebraMap (𝓞 E) E b)
     have hi : IsIntegral ℤ (Algebra.trace F E (w * algebraMap (𝓞 E) E b)) := by
-      rw [← isIntegral_algebraMap_iff , ht]
+      rw [← isIntegral_algebraMap_iff (B := E), ht]
       exact hw _ (RingOfIntegers.isIntegral_coe b)
     exact ⟨⟨_, hi⟩, rfl⟩
   rw [hdual] at hmem

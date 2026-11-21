@@ -45,7 +45,7 @@ theorem Emb.chart_injective : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalR
   have hx'π : (spMap io ≫ x) ≫ M.π = spMap (io.comp κ) ≫ spMap (residue R) := by
     rw [Category.assoc, hx]; unfold spMap; rw [← Spec.map_comp, ← Spec.map_comp]; rfl
   have hψ : (l ≫ Φ) ≫ pullback.snd p M.π = pullback.snd G'.hom (spMap io ≫ x) ≫ (spMap io ≫ x) := by
-    have : Φ ≫ pullback.snd p M.π = E.H.ι ≫ G'.hom := by rw [hΦ]
+    have : Φ ≫ pullback.snd p M.π = E.H.ι ≫ G'.hom := by rw [hΦ]; exact pullback.lift_snd _ _ _
     rw [Category.assoc, this, ← Category.assoc, hl]; exact pullback.condition
   let ψ : pullback G'.hom (spMap io ≫ x) ⟶ pullback (pullback.snd p M.π) (spMap io ≫ x) :=
     pullback.lift (l ≫ Φ) (pullback.snd _ _) hψ
@@ -64,7 +64,7 @@ theorem Emb.chart_injective : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalR
     haveI : Mono (spMap (residue R)) := by
       have : IsClosedImmersion (spMap (residue R)) := IsClosedImmersion.spec_of_surjective _ residue_surjective
       infer_instance
-    have hΦs : Φ ≫ pullback.snd p M.π = E.H.ι ≫ G'.hom := by rw [hΦ]
+    have hΦs : Φ ≫ pullback.snd p M.π = E.H.ι ≫ G'.hom := by rw [hΦ]; exact pullback.lift_snd _ _ _
     have hρ : pullback.fst E.j h ≫ E.Y.hom = (pullback.snd E.j h ≫ pullback.snd _ _) ≫ spMap (io.comp κ) := by
       rw [← cancel_mono (spMap (residue R))]
       calc pullback.fst E.j h ≫ E.Y.hom ≫ spMap (residue R) = pullback.fst E.j h ≫ E.j ≫ p := by rw [E.j_over]
@@ -98,7 +98,7 @@ theorem Emb.chart_injective : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalR
   obtain ⟨τ⟩ : Nonempty (Sp Ω') := inferInstance
   have hτ : (spMap io ≫ x) τ = s := by
     rw [Scheme.Hom.comp_apply]; exact Scheme.fromSpecResidueField_apply _ _
-  have hΦs : Φ ≫ pullback.snd p M.π = E.H.ι ≫ G'.hom := by rw [hΦ]
+  have hΦs : Φ ≫ pullback.snd p M.π = E.H.ι ≫ G'.hom := by rw [hΦ]; exact pullback.lift_snd _ _ _
   have hq : pullback.snd p M.π (Φ z) = (spMap io ≫ x) τ := by
     rw [hτ, ← Scheme.Hom.comp_apply, hΦs, Scheme.Hom.comp_apply]
   obtain ⟨c, hc1, hc2⟩ := Scheme.Pullback.exists_preimage_pullback (f := pullback.snd p M.π) (g := spMap io ≫ x) _ _ hq
@@ -114,7 +114,7 @@ theorem Emb.chart_injective : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalR
   have hm2 : m ≫ ψ = pullback.snd _ _ := by
     apply pullback.hom_ext
     · rw [Category.assoc, pullback.lift_fst, ← Category.assoc, hm1, pullback.condition]
-    · rw [Category.assoc, pullback.lift_snd]
+    · rw [Category.assoc, pullback.lift_snd]; exact pullback.lift_snd _ _ _
   have lift_pt : ∀ u : E.H.toScheme, Φ u = Φ z → ∃ a, l a = u ∧ ψ a = c := by
     intro u hu
     obtain ⟨pu, h1, h2⟩ := Scheme.Pullback.exists_preimage_pullback

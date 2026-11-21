@@ -63,7 +63,8 @@ theorem generic_props : IsPreimmersion (spMap (algebraMap O K)) ∧ Flat (spMap 
 
 theorem pic_generic [IsLocalRing O] [IsNoetherianRing O] [IsIntegrallyClosed O] (X : Over (Sp O)) [Smooth X.hom]
     [GeometricallyIntegral X.hom] (e : 𝟙_ (Over (Sp O)) ⟶ X) {X' : Scheme.{0}} {t : X' ⟶ Sp K} {ψ : X' ⟶ X.left}
-    (h : IsPullback ψ t X.hom (spMap (algebraMap O K))) {a b : Pic X.left} (hab : pull ψ a = pull ψ b) : a = b := by
+    (h : IsPullback ψ t X.hom (spMap (algebraMap O K))) {a b : Pic X.left}
+    (hab : CechPic.pull ψ a = CechPic.pull ψ b) : a = b := by
   obtain ⟨_, _, _⟩ := generic_props (O := O) (K := K)
   refine ZH.EndoExtend.pic_ext (spMap (algebraMap O K)) (ZJ.isNormalScheme_sp O) X e.left (Over.w e)
     ((pic_local _).trans (pic_local _).symm) ?_
@@ -113,7 +114,7 @@ theorem exists_bundle [IsRegularLocalRing O] {A : Over (Sp O)} [GrpObj A] {A' : 
   have : IsProper (A ⊗ A).hom := inferInstanceAs (IsProper (pullback.fst A.hom A.hom ≫ A.hom))
   have h₂ := AbDual.isPullback_prod h.1 h.1 sq.1 sq.2
   obtain ⟨P, hP, e⟩ := exists_extension (A ⊗ A) h₂ P' hP'
-  have e₀ : pull φ₂ (cls P hP) = cls P' hP' := (cls_eq_iff (pull_isLB hP φ₂) hP').2 e
+  have e₀ : CechPic.pull φ₂ (cls P hP) = cls P' hP' := (cls_eq_iff (pull_isLB hP φ₂) hP').2 e
   have one : (1 : A' ⟶ A').left ≫ φ = φ ≫ (1 : A ⟶ A).left := by
     have a := congrArg (fun q => q.left) (map_one (pushHom h A'))
     have b := congrArg (fun q => q.left) (GlobalTheory.Mum.Cover.comp_one_pt (G := A) (Over.homMk φ h.1.w :

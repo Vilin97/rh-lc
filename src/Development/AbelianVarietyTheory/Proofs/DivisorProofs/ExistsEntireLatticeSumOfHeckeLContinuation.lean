@@ -143,7 +143,7 @@ theorem box_entire (hu : IsUnitary χ) {Λ : ℂ → ℂ} (hΛ : IsHeckeL χ Λ)
   classical
   by_cases h : ∀ u ∈ congr r, finPart χ u = 1
   · refine ⟨fun s => U.relIndex (congr r) * (Λ s * ∏ w ∈ hfin.toFinset, (eulerFactor χ s w)⁻¹), ?_, fun s hs => ?_⟩
-    · refine Differentiable.const_mul (hΛ.1.mul (Differentiable.fun_finset_prod fun w _ => ?_)) _
+    · refine Differentiable.const_mul (hΛ.1.mul (Differentiable.fun_finsetProd fun w _ => ?_)) _
       unfold eulerFactor
       by_cases hw : χ.UnrAt w
       · simp only [if_pos hw, inv_inv]

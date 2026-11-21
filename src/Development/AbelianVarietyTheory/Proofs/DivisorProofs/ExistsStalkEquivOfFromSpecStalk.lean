@@ -90,7 +90,7 @@ theorem ord_algebraMap_ne_zero (x : X) (hx : Order.coheight x = 1) (g : X.preshe
   intro h0
   rw [Scheme.ord_eq_iff hx hne] at h0
   change Ring.ordFrac _ _ = _ at h0
-  rw [Ring.ordFrac_eq_ord _ hg0] at h0
+  rw [Ring.ordFrac_eq_ord _] at h0
   obtain ⟨m, hm⟩ := ENat.ne_top_iff_exists.mp (Ring.ord_ne_top (mem_nonZeroDivisors_of_ne_zero hg0))
   rw [Ring.ordMonoidWithZeroHom_eq_coe _ (mem_nonZeroDivisors_of_ne_zero hg0) hm.symm] at h0
   have hm0 : m = 0 := by

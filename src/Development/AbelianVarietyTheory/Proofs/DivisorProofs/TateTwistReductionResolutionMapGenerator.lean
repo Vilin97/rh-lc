@@ -80,7 +80,7 @@ theorem twRed_sec : ∀ (Q q : ℕ) [NeZero Q] [NeZero q], q ∣ Q → ∀ (i : 
     (∀ (V U : Scheme.{0}) (g : V ⟶ U) (a : Sec (tw Q i) U), Sec.res g (f U a) = f V (Sec.res g a)) ∧
     ∀ (U : Scheme.{0}) (ζ : Prim Q Γ(U, ⊤)) (ξ : Prim q Γ(U, ⊤)), ξ.1 = ζ.1 ^ (Q / q) → f U (twGen i ζ) = twGen i ξ := by
   intro Q q _ _ hq i
-  let M : Shv (ZMod Q) := (restr (ZMod.castHom hq (ZMod q))).obj (tw q i)
+  let M : Shv (ZMod Q) := (GlobalTheory.EtC.restr (ZMod.castHom hq (ZMod q))).obj (tw q i)
   let e : ∀ U : Scheme.{0}, Prim Q Γ(U, ⊤) → Sec M U := fun U ζ => (twGen i (powPrim hq ζ) : Sec (tw q i) U)
   have ts := GlobalTheory.T.tateTwist_sections_locally_generated q i
   have he1 : ∀ (V U : Scheme.{0}) (g : V ⟶ U) (ζ : Prim Q Γ(U, ⊤)), Sec.res g (e U ζ) = e V (ζ.map g.appTop.hom) := by

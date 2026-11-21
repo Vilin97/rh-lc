@@ -108,7 +108,8 @@ theorem card_le_globalSectionsDim_of_localFnOfPowerSection {k : Type} [Field k] 
     {ι : Type} [Fintype ι] {f : ι → Γ(X, V)} (hf : LinearIndependent k f)
     (a : ∀ i, IsLocalFn h n (f i)) : Fintype.card ι ≤ lbH0 k (lbPow L n) := by
   choose u hu using a
-  let E := cohZeroTwistEquiv (lbPow L n)
+  let E := (cohOn.mapIso Γ(X, ⊤) ⊤ 0 (Twist.unitTwistIso (lbPow L n))).trans
+    ((coh.zeroEquiv _).trans (LB.globalEquiv (lbPow L n)))
   let φ : coh (twist (structureModule X) (lbPow L n)) 0 →ₗ[k] Γ(X, V) :=
     { toFun := fun w => resG X h (powFn (E w) J)
       map_add' := fun w w' => by

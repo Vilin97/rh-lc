@@ -108,7 +108,7 @@ theorem exists_dual {K R : Type} [CommRing K] [CommRing R] [Algebra K R]
     rw [← hD', ← D'.liftKaehlerDifferential_comp_D r, ← bΩ.sum_repr (KaehlerDifferential.D K R r), map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, hb, D'.liftKaehlerDifferential_comp_D, hD']
-  simp [hd', mul_comm]
+  simp [Derivation.coeFnAddMonoidHom_apply, hd', mul_comm]
 
 theorem exists_sum_of_coords {K B R : Type} [Field K] [CharZero K] [CommRing B] [Algebra K B] [IsNoetherianRing B]
     [CommRing R] (I : Ideal R) {n m : ℕ} (z : Fin n → B) (bΩ : Module.Basis (Fin n) B Ω[B⁄K])
@@ -145,7 +145,7 @@ theorem exists_sum_of_coords {K B R : Type} [Field K] [CharZero K] [CommRing B] 
         have h3 := congrFun this (z (e i))
         rw [Finset.sum_apply, h2] at h3
         refine h3.trans ?_
-        simp [hb']
+        simp [Derivation.coeFnAddMonoidHom_apply, hb']
       refine ⟨_, z (e i) • d (e i), h1 i _ hc, hv _ _ fun j hj => by rw [hj], ?_⟩
       rw [smul_smul, ← hc]
     · exact ⟨D (z k), (1 : B) • d k, h0 _, hv _ _ fun j hj => absurd ⟨j, hj.symm⟩ hk, by rw [one_smul]⟩
@@ -289,7 +289,7 @@ theorem mem_smul_top_of_chart {K : Type} [Field K] [CharZero K] {X : Scheme.{0}}
   have hχU : ⊤ ≤ χ ⁻¹ᵁ U.1 := (top_le_iff χ U.1).2 hx
   have hval : ∀ g, valHom χ W.1 hχ (algebraMap Γ(X, U.1) Γ(X, W.1) g) = valR χ U.1 g := fun g =>
     (valR_eq χ W.1 hχ _).symm.trans (valR_res χ hW hχ g)
-  refine mem_smul_top_of_coords (K := K) (B := Γ(X, W.1)) f (algX p U.1) hφ (GlobalTheory.TopForm.resG_comp_algX p hW)
+  refine mem_smul_top_of_coords (K := K) (B := Γ(X, W.1)) f (algX p U.1) hφ (GlobalTheory.TopForm.resG_comp_algX (p := p) hW)
     (I.ideal U) m hm (fun h => hxm f h hxf) z bΩ hb (e ∘ ix) (he.comp hix)
     ((I.map_ideal (U := W) (V := U) hW).trans hideal) (valHom χ W.1 hχ) (fun g hg => ?_) D δ
     (fun g => by rw [hval, hval]; exact hδ g) h0 (fun i => ?_)

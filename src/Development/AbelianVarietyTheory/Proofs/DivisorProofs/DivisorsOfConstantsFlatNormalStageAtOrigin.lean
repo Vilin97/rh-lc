@@ -28,7 +28,7 @@ theorem local_props (A' : Type) [CommRing A'] [IsDomain A'] [IsNoetherianRing A'
   haveI : IsIntegrallyClosed (Polynomial A') := by
     haveI := GlobalTheory.isIntegrallyClosed_mvPolynomial_fin A' 1
     exact IsIntegrallyClosed.of_equiv
-      ((MvPolynomial.renameEquiv A' (Equiv.equivPUnit.{1, 1} (Fin 1))).trans (MvPolynomial.pUnitAlgEquiv.{0, 0} A')).toRingEquiv
+      (MvPolynomial.uniqueAlgEquiv A' (Fin 1)).toRingEquiv
   obtain ⟨h1, h2⟩ := GlobalTheory.etale_localization_atPrime_isDomain_isIntegrallyClosed (Polynomial A') E Q
   haveI : IsNoetherianRing E := Algebra.FiniteType.isNoetherianRing (Polynomial A') E
   refine ⟨h1, IsLocalization.isNoetherianRing Q.primeCompl _ inferInstance, h2, ?_⟩

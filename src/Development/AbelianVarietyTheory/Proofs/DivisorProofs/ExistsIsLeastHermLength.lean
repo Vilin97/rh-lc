@@ -33,17 +33,17 @@ theorem exists_isUnif_posDef (s : K →+* ℂ) :
   obtain ⟨v', hb, hv'⟩ := exists_isLieBasis_baseChange K ℂ s F.P₀.A Q.A ψ h.2.1
     (SmoothOfRelativeDimension.smooth F.P₀.g _) _ F.v F.basis
   obtain ⟨rig, hrig⟩ := Q.rigid
-  obtain ⟨u, Hm, χ, -, hA, -, hd, hd', -⟩ := thetaUnifAV_all Q rig hrig
+  obtain ⟨u, Hm, χ, Ef, hA, -, hd, hd', -⟩ := thetaUnifAV_all Q rig hrig
   choose W hW using fun i => (hd _ (hb.1 i)).exists
   have hpd := CM.LieMetric.posDef_gram hA.1 hA.2.1 (CM.LieMetric.linearIndependent_of_isLieBasis u hd' hb hW)
   clear hd hd'
   revert u Hm χ W
   rw [h.1]
-  intro u Hm χ hA W hW hpd
+  intro u Hm χ Ef hA W hW hpd
   exact ⟨_, Hm, W, isUnif_of_fibre F h.1 u h hA fun i => ⟨hv' i, hW i⟩, hpd⟩
 
 theorem exists_isHerm : ∃ h, F.IsHerm h := by
-  choose Λ Hm W hU hG using F.exists_isUnif_posDef
+  choose Λ Hm W hU hG using fun s => F.exists_isUnif_posDef s
   exact ⟨CM.LieMetric.ofGram _ hG, fun s => ⟨Λ s, Hm s, W s, hU s, fun i j => by
     rw [CM.LieMetric.ofGram_single, Matrix.of_apply]⟩⟩
 

@@ -150,7 +150,7 @@ theorem normStep_exists (p : ℕ) [Fact p.Prime] (G : HTGroup p) (v : AwayP p) (
     rw [Ideal.mem_jacobson_bot] at ha ⊢
     intro b
     have := (ha (τ b)).map τ
-    rwa [map_add, map_mul, hτinv, map_one] at this
+    rwa [τ.map_add, τ.map_mul, hτinv, τ.map_one] at this
   have h2A : IsUnit (2 : A) := IsUnit.of_mul_eq_one (a := (2 : A)) (⟨h, hhg, hhi⟩ : A) (Subtype.ext (by
     show ((2 : A) : Qv v ⊗[ℚ] G.C) * h = 1
     rw [show ((2 : A) : Qv v ⊗[ℚ] G.C) = 2 from map_ofNat A.subtype 2]

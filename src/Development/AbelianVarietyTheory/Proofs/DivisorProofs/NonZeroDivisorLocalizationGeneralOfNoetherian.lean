@@ -22,7 +22,8 @@ theorem model_data (A B : Type) [CommRing A] [CommRing B] [Algebra A B] [Algebra
   obtain ⟨S, hS, hsub⟩ := exists_fg_subset_range_incl (C₁ := B₀) ({β b, β g} : Finset _)
   obtain ⟨b₁, hb₁⟩ := hsub (by simp : β b ∈ _)
   obtain ⟨g₁, hg₁⟩ := hsub (by simp : β g ∈ _)
-  refine ⟨S, S ⊗[A₀] B₀, inferInstance, isNoetherianRing_of_fg hS, inferInstance, inferInstance,
+  set_option synthInstance.maxHeartbeats 200000 in
+   refine ⟨S, S ⊗[A₀] B₀, inferInstance, isNoetherianRing_of_fg hS, inferInstance, inferInstance,
     inferInstance, inferInstance,
     (Algebra.TensorProduct.cancelBaseChange A₀ S A A B₀).trans β.symm, b₁, g₁, ?_, ?_, ?_⟩
   · intro x y h

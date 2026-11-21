@@ -80,8 +80,7 @@ theorem exists_unique_formExt : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀]
   refine ⟨θ, ⟨fun b w => ?_, fun w => hmem _, hev⟩, fun y ⟨hy1, _, hy3⟩ => ?_⟩
   · rw [hθ, hθ, LinearEquiv.map_smul, hsm]
   · ext x
-    refine hb.inductionOn x _ ?_ ?_ ?_ ?_
-    · simp
+    refine hb.inductionOn x ?_ ?_ ?_
     · intro w
       exact (hy3 w).trans (hev w).symm
     · intro s n hn

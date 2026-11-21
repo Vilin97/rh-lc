@@ -150,7 +150,9 @@ variable {u₁ u₂ : Oˣ} {G : PDivGroup p O} {h : ℕ} {D : Datum ε h ℤ_[p]
 theorem al_coordO (R : IndefiniteRowSideFullHecke.EpsilonPairingZeta.Realizes hε u₁ u₂ G G.padicAction D e fil lie) (x : O ⊗[ℤ_[p]] G.Tate) :
     D.al (coordO e x) = (u₁ : O) • (fil (G.hodgeTateLinear x) : Fin h → O) := by
   induction x using TensorProduct.induction_on with
-  | zero => simp
+  | zero =>
+    rw [(coordO e).map_zero, D.al.map_zero, G.hodgeTateLinear.map_zero, fil.map_zero]
+    simp
   | tmul c t =>
     rw [coordO_tmul, map_smul, R.al_eq, hodgeTateLinear_tmul, hodgeTate_eq_omegaMap, map_smul,
       Submodule.coe_smul, smul_comm]

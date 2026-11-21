@@ -19,9 +19,9 @@ def imSp (E : Type) [Field E] [NumberField E] [IsCMField E] : Submodule ℚ E wh
   carrier := {a | cc a = -a}
   zero_mem' := by simp [cc]
   add_mem' {a b} ha hb := by
-    simp only [Set.mem_setOf_eq, cc, map_add (f := _)] at ha hb ⊢; rw [ha, hb, neg_add]
+    simp only [Set.mem_ofPred_eq, cc, map_add (f := _)] at ha hb ⊢; rw [ha, hb, neg_add]
   smul_mem' q a ha := by
-    simp only [Set.mem_setOf_eq, cc] at ha ⊢
+    simp only [Set.mem_ofPred_eq, cc] at ha ⊢
     rw [map_rat_smul, ha, smul_neg]
 
 theorem mem_imSp {a : E} : a ∈ imSp E ↔ cc a = -a := Iff.rfl
@@ -101,8 +101,11 @@ theorem finrank_imLat : Module.finrank ℤ (imLat E) = fdeg E := by
         rw [hx, smul_neg]
       have hsum := b.sum_repr ⟨n • x, hy⟩
       have hmem : n • x ∈ Submodule.span ℚ (Set.range v) := by
-        rw [show n • x = ((⟨n • x, hy⟩ : imLat E) : E) from rfl, ← hsum, AddSubgroup.val_finset_sum]
+        rw [show n • x = ((⟨n • x, hy⟩ : imLat E) : E) from rfl, ← hsum]
+        change (imLat E).subtype (∑ i, (b.repr ⟨n • x, hy⟩) i • b i) ∈ _
+        rw [map_sum]
         refine Submodule.sum_mem _ fun i _ => ?_
+        change (((b.repr ⟨n • x, hy⟩) i • b i : imLat E) : E) ∈ _
         rw [AddSubgroup.coe_zsmul, ← Int.cast_smul_eq_zsmul ℚ]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
       have hx' : x = ((n : ℚ)⁻¹) • (n • x) := by

@@ -37,8 +37,8 @@ theorem delta_toFam {m : ℕ} (hm : 0 < m)
   funext t
   unfold DI.delta toFam
   by_cases ht : t.card = m + 1
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [dite_eq_left ht, Cube.d_apply, map_sum, ← Finset.sum_coe_sort t]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [dite_eq_left ht, Cube.d_apply, map_sum, ← Finset.sum_coe_sort t]
     refine Finset.sum_congr rfl fun i _ => ?_
     have hc : (t.erase i.1).card = m := by rw [Finset.card_erase_of_mem i.2, ht]; rfl
     rw [dite_eq_left hc, map_zsmul, hres _ _ _ (nonempty_of_card hm hc)]
@@ -113,8 +113,10 @@ theorem cechZero_latSec_iff_subsingleton_coh : ∀ (X : Scheme.{0}) [IsIntegral 
     (∀ i, IsAffineOpen (U i)) → (∀ i, genericPoint X ∈ U i) → ⨆ i, U i = ⊤ → ∀ b : ℕ, 0 < b →
     (DI.CechZero (fun s => latSec M (inter U s)) b ↔ Subsingleton (coh F b)) := by
   intro X _ hsepX V _ _ M F _ ι _ _ U hL hA hg hc b hb
-  have hsep := (cech_computes_coh_of_affine_cover.{0, 0, 0} X ℤ).1 (Or.inl hsepX) ι U hA
-  obtain ⟨e, -⟩ := ((cech_computes_coh_of_affine_cover.{0, 0, 0} X ℤ).2.1 ι U hc hsep).1
+  letI : X.IsSeparated := hsepX
+  have hsep : ∀ s : Finset ι, s.Nonempty → IsAffineOpen (⨅ i ∈ s, U i) :=
+    isAffineOpen_finset_biInf hA
+  let e := fun (F : X.Modules) [F.IsQuasicoherent] (n : ℕ) => cechHEquivCoh ℤ hc hsep F n
   have hO : ∀ s : Finset ι, cechOpen ⊤ U s = inter U s := fun s => by
     simp [cechOpen, inter, Finset.inf_eq_iInf]
   have hgen : ∀ s : Finset ι, genericPoint X ∈ cechOpen ⊤ U s := fun s => by

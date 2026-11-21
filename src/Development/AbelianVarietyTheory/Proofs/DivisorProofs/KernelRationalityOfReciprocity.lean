@@ -93,7 +93,7 @@ theorem restr_mem_schA (eq : κ ≃ κ' ⊕ κ₁) (Φ : (κ → AF F) → ℂ) 
     rw [restr_pureA]
     exact Submodule.subset_span ⟨_, _, restr_mem_SB eq g hg, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
 
 theorem restr_pure (eq : κ ≃ κ' ⊕ κ₁) (f : SInf F κ) (φ : ∀ v : Pl (F := F), (κ → Fv F v) → ℂ) :
@@ -112,6 +112,8 @@ theorem restr_pure (eq : κ ≃ κ' ⊕ κ₁) (f : SInf F κ) (φ : ∀ v : Pl 
   · congr 1
     funext v
     congr 1
+    funext k
+    simp only [glue]
     rcases eq k with i | j
     · exact map_zero _
     · rfl
@@ -141,13 +143,20 @@ theorem restr_isEv : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
   · funext x
     have h1 := he ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) ι * z * ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) ι')ᵀ)
     rw [hblk z] at h1
-    simp only [restr_apply, Darboux.rho, schr, h1, glue_dot, dotProduct_zero, zero_dotProduct, zero_add,
+    simp only [restr_apply, Darboux.rho, schr]
+    change (glueDarboux M₁.co eq T hf).e (incM F ι * z * (incM F ι')ᵀ) = _ at h1
+    set_option backward.isDefEq.respectTransparency false in
+      rw [h1]
+    simp only [glue_dot, dotProduct_zero, zero_dotProduct, zero_add,
       glue_add_zero]
   · funext x
     have h1 := he u
     obtain ⟨hu1, hu2⟩ := hI u hu
     rw [hu1, hu2, map_zero] at h1
-    simp only [restr_apply, Darboux.rho, schr, h1, Prod.fst_zero, Prod.snd_zero, glue_dot, dotProduct_zero,
+    simp only [restr_apply, Darboux.rho, schr]
+    set_option backward.isDefEq.respectTransparency false in
+      rw [h1]
+    simp only [Prod.fst_zero, Prod.snd_zero, glue_dot, dotProduct_zero,
       zero_dotProduct, add_zero, mul_zero, AddChar.map_zero_eq_one, one_mul]
     rw [glue_add_zero, add_zero]
   · refine ⟨GlobalTheory.ThK.AdaptEv.Restr.restrS F eq, fun v => restr eq, GlobalTheory.ThK.AdaptEv.Restr.restrS_ne_zero F eq,

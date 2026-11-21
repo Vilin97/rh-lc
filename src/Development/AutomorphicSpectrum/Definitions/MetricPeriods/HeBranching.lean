@@ -35,7 +35,7 @@ def colSq {m : ℕ} (g : Matrix (Fin m) (Fin m) ℂ) (j : Fin m) : ℝ := ∑ i,
 def HeWord (ε : Fin (n + 1) → Bool) (lam : Fin (n + 1) → ℝ) (ε' : Fin n → Bool) (mu : Fin n → ℝ) : Prop :=
   ∀ x y : Fin (n + 1) ⊕ Fin n, Sum.elim lam mu y < Sum.elim lam mu x →
     (∀ z, ¬ (Sum.elim lam mu y < Sum.elim lam mu z ∧ Sum.elim lam mu z < Sum.elim lam mu x)) →
-    Xor' (x.isLeft = y.isLeft) (Sum.elim ε ε' x = Sum.elim ε ε' y)
+    Xor (x.isLeft = y.isLeft) (Sum.elim ε ε' x = Sum.elim ε ε' y)
 
 structure Par (ε : Fin (n + 1) → Bool) (lam : Fin (n + 1) → ℝ) (ε' : Fin n → Bool) (mu : Fin n → ℝ) (B : ℝ) : Prop where
   two : 2 ≤ n

@@ -20,7 +20,8 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} {Ch : Chars X Pr R.m}
   {sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)} {S : Set ℕ} {mu : Tup X.F X.E X.K S}
   {cst : LocCst X (rowSG Pr sel mu)} {L : ChIdx X Pr R (QE sel (mu : Chr X.F X.E X.K))} {G : ChGlob X R.m} {m2 : ℕ}
 
-theorem clL_base (hok : L.Ok Ch sel mu cst G m2) (hX : X.Ok) (hPr : Pr.Ok) (hCh : Ch.Ok) (hs : cst.sharp = true) :
+theorem clL_base (hok : ChIdx.Ok Ch sel mu cst L G m2) (hX : X.Ok) (hPr : Pr.Ok) (hCh : Ch.Ok)
+    (hs : cst.sharp = true) :
     OcbBase Ch sel mu cst m2 where
   hX := hX
   hPr := hPr

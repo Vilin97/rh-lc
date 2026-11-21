@@ -46,7 +46,7 @@ theorem list_prod_map_ite {α M : Type} [Monoid M] [DecidableEq α] (a : M) (σ 
       obtain ⟨z, hz, rfl⟩ := List.mem_map.1 hy
       exact if_neg fun (e : z = x) => hn.1 (e ▸ hz)
     · rw [if_neg hx, one_mul]
-      exact list_prod_map_ite a σ l hn.2 ((List.mem_cons.1 h).resolve_left fun e => hx e.symm)
+      exact list_prod_map_ite a σ l hn.2 ((List.mem_cons.mp h).resolve_left fun e => hx e.symm)
 
 def IsRealAll (θ : InfFam D) (V : HSp D) (M : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ) (h : GA D V) : Prop :=
   h ∈ GinfC V ∧ ∀ ρ, infMat D.sp.cm.sig V.gram (θ ρ) h = M ρ
@@ -89,7 +89,7 @@ theorem IsRealAll.unique (hθ : IsInfFam θ) {M : D.what₂.Tau → Matrix (Fin 
 
 
 open Classical in
-def realAll (M : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ) : GA D V :=
+def realAll (θ : InfFam D) (V : HSp D) (M : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ) : GA D V :=
   if h : ∃ x, IsRealAll θ V M x then h.choose else 1
 
 theorem realAll_mem (M : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ) : realAll θ V M ∈ GinfC V := by

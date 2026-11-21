@@ -179,6 +179,7 @@ theorem main (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (C : Type) [Co
     have : a ∈ P.comap (algebraMap R C) := by
       rw [Ideal.mem_comap, ← Ideal.Quotient.eq_zero_iff_mem]
       exact ha
+    change a ∈ Ideal.under R P at this
     rwa [hPc] at this
   haveI : FaithfulSMul R (C ⧸ P) := (faithfulSMul_iff_algebraMap_injective _ _).2 hD
   obtain ⟨R', i1, i2, i3, ρ, σ, h1, h2, h3, h4, h5⟩ := exists_normal R (C ⧸ P) hR

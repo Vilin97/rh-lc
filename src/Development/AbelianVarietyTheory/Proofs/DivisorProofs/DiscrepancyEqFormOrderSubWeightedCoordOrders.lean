@@ -100,6 +100,7 @@ theorem IsSncChart.discrep_eq_formOrd_sub_sum : ∀ (Y : Scheme.{0}) [IsIntegral
       (∑ j ∈ J, (Θ.mult (w j) : ℚ) * E.ord (u j)) / m := by
     rw [Finset.sum_div]; exact Finset.sum_congr rfl fun j _ => div_mul_eq_mul_div _ _ _
   rw [hs]
+  unfold DivOver.formOrd
   field_simp
   ring
 

@@ -70,7 +70,7 @@ theorem smul_eq_zero_of_infPartF {z : AEF F E} (hz : infPartF F E z = 0) : (pair
       (pairA F 1 0) • z = LinearMap.rTensor E (LinearMap.inl F (Ainf F) (Af F)) (infPartF F E z) := by
     intro z
     induction z using TensorProduct.induction_on with
-    | zero => rw [smul_zero, map_zero, map_zero]; rfl
+    | zero => rw [smul_zero, map_zero, map_zero]
     | tmul a e =>
       have h1 : infPartF F E (a ⊗ₜ[F] e) = fstA F a ⊗ₜ[F] e := Algebra.TensorProduct.map_tmul _ _ _ _
       rw [TensorProduct.smul_tmul', h1, LinearMap.rTensor_tmul]
@@ -80,15 +80,15 @@ theorem smul_eq_zero_of_infPartF {z : AEF F E} (hz : infPartF F E z = 0) : (pair
         rw [one_mul]
       · show 0 * a.2 = 0
         rw [zero_mul]
-    | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]; rfl
-  rw [key, hz, map_zero]; rfl
+    | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]
+  rw [key, hz, map_zero]
 
 theorem smul_eq_zero_of_finPartF {z : AEF F E} (hz : finPartF F E z = 0) : (pairA F 0 1) • z = 0 := by
   have key : ∀ z : AEF F E,
       (pairA F 0 1) • z = LinearMap.rTensor E (LinearMap.inr F (Ainf F) (Af F)) (finPartF F E z) := by
     intro z
     induction z using TensorProduct.induction_on with
-    | zero => rw [smul_zero, map_zero, map_zero]; rfl
+    | zero => rw [smul_zero, map_zero, map_zero]
     | tmul a e =>
       have h1 : finPartF F E (a ⊗ₜ[F] e) = sndA F a ⊗ₜ[F] e := Algebra.TensorProduct.map_tmul _ _ _ _
       rw [TensorProduct.smul_tmul', h1, LinearMap.rTensor_tmul]
@@ -98,8 +98,8 @@ theorem smul_eq_zero_of_finPartF {z : AEF F E} (hz : finPartF F E z = 0) : (pair
         rw [zero_mul]
       · show 1 * a.2 = a.2
         rw [one_mul]
-    | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]; rfl
-  rw [key, hz, map_zero]; rfl
+    | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]
+  rw [key, hz, map_zero]
 
 end Parts
 
@@ -130,8 +130,8 @@ theorem continuous_symplOHF_left (y : WOF F E nS nT) : Continuous fun x => sympl
   have ht := continuous_trace_AEF (F := F) (E := E)
   unfold symplOHF symplOF hOF
   refine continuous_const.mul (ht.comp (continuous_const.mul ?_))
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ =>
-    continuous_finset_sum _ fun c _ => continuous_finset_sum _ fun d _ => ?_
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ =>
+    continuous_finsetSum _ fun c _ => continuous_finsetSum _ fun d _ => ?_
   exact continuous_const.mul ((continuous_apply a).comp (continuous_apply d))
 
 theorem continuous_symplOHF_right (x : WOF F E nS nT) : Continuous fun y => symplOHF σ JS JT xi0 x y := by
@@ -140,8 +140,8 @@ theorem continuous_symplOHF_right (x : WOF F E nS nT) : Continuous fun y => symp
   have hc := continuous_cAF (F := F) (E := E) (σ := σ)
   unfold symplOHF symplOF hOF
   refine continuous_const.mul (ht.comp (continuous_const.mul ?_))
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ =>
-    continuous_finset_sum _ fun c _ => continuous_finset_sum _ fun d _ => ?_
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ =>
+    continuous_finsetSum _ fun c _ => continuous_finsetSum _ fun d _ => ?_
   exact ((continuous_const.mul (hc.comp ((continuous_apply b).comp (continuous_apply c)))).mul
     continuous_const).mul continuous_const
 

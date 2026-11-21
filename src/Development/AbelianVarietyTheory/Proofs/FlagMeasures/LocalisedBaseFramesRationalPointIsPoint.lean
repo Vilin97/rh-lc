@@ -39,7 +39,8 @@ theorem modBlocks_map' {A S : Type} [CommRing S] (f : ℕ → ℕ → A → S) :
   | (t, s) :: l, a, L, h => by
     simp only [modBlocks] at h
     split_ifs at h with hu
-    obtain ⟨L1, hL1, rfl⟩ := Option.map_eq_some_iff.1 h
+    rw [Option.map_eq_some_iff] at h
+    obtain ⟨L1, hL1, rfl⟩ := h
     simp only [List.map_cons, mapBlocks, modBlocks_map' f l (a + s) L1 hL1]
     rfl
 
@@ -53,8 +54,10 @@ theorem modBlocks_some {A S : Type} [CommRing S] (f : ℕ → ℕ → A → S) :
       ∃ L, modBlocks f a l = some L
   | [], a, _, _ => ⟨[], rfl⟩
   | (t, s) :: l, a, h1, h2 => by
-    obtain ⟨L1, hL1⟩ := modBlocks_some f l (a + s) (fun b hb => h1 b (List.mem_cons_of_mem _ hb))
-      (fun b hb => h2 b (List.mem_cons_of_mem _ hb))
+    have htail : ∃ L1, modBlocks f (a + s) l = some L1 :=
+      modBlocks_some f l (a + s) (fun b hb => h1 b (List.mem_cons_of_mem _ hb))
+        (fun b hb => h2 b (List.mem_cons_of_mem _ hb))
+    obtain ⟨L1, hL1⟩ := htail
     have hu : IsUnit (f a s t) ∧ 0 < s := ⟨h2 (t, s) List.mem_cons_self a s, h1 (t, s) List.mem_cons_self⟩
     rw [modBlocks, dite_eq_left hu, hL1]
     exact ⟨_, rfl⟩

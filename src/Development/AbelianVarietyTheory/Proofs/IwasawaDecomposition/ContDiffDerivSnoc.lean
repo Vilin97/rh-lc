@@ -127,6 +127,8 @@ theorem linOn_Rder {τ : D.what₂.Tau} {X : Matrix (Fin V.rank) (Fin V.rank) �
       | cast j => simpa using hXs j
     have hF := hφ (k + 1) (Fin.snoc τs τ) (Fin.snoc Xs X) hX' g
     convert contDiff_deriv_snoc hF using 1
+    funext t
+    simp only [Rder, List.ofFn_succ', Fin.snoc_castSucc, Fin.snoc_last, List.concat_eq_append, List.prod_append,
       List.prod_cons, List.prod_nil, mul_one, mul_assoc]
   · funext g
     simp only [Rder, Pi.add_apply]
@@ -354,40 +356,42 @@ private theorem isAutFunSm_zero' : IsAutFunSm θ V (0 : GA D V → ℂ) := {
     rw [this]
     simp }
 
-theorem isMultMap_zero : IsMultMap θ M J χ 0 where
-  aut _ := isAutFunSm_zero'
-  cusp _ := by
-    intro r C hC μ 𝓕 hμ h𝓕 g
+theorem isMultMap_zero : IsMultMap θ M J χ 0 := by
+  refine ⟨fun _ => isAutFunSm_zero', ?_, ?_, ?_, ?_⟩
+  · intro v r C hC μ 𝓕 hμ h𝓕 g
     simp
-  lev _ _ _ _ := by simp
-  equiv _ _ _ _ _ _ := rfl
-  cont _ _ _ := ⟨0, sobCont_zero, fun _ => by simp⟩
+  · intros
+    simp
+  · intros
+    rfl
+  · intros
+    exact ⟨0, sobCont_zero, fun _ => by simp⟩
 
 theorem isMultMap_add {T T' : MMap M} (h : IsMultMap θ M J χ T) (h' : IsMultMap θ M J χ T') :
-    IsMultMap θ M J χ (T + T') where
-  aut v := isAutFunSm_add (h.aut v) (h'.aut v)
-  cusp v := isCuspFun_add (h.aut v).toIsAutFun (h'.aut v).toIsAutFun (h.cusp v) (h'.cusp v)
-  lev v k hk g := by
+    IsMultMap θ M J χ (T + T') := by
+  refine ⟨fun v => isAutFunSm_add (h.aut v) (h'.aut v), ?_, ?_, ?_, ?_⟩
+  · intro v
+    exact isCuspFun_add (h.aut v).toIsAutFun (h'.aut v).toIsAutFun (h.cusp v) (h'.cusp v)
+  · intro v k hk g
     simp only [_root_.add_apply, Pi.add_apply, h.lev v k hk g, h'.lev v k hk g, mul_add]
-  equiv τ g hg v w hw := by
+  · intro τ g hg v w hw
     simp only [_root_.add_apply, h.equiv τ g hg v w hw, h'.equiv τ g hg v w hw]
     rfl
-  cont τ v x := by
+  · intro τ v x
     obtain ⟨ℓ, hℓ, e⟩ := h.cont τ v x
     obtain ⟨ℓ', hℓ', e'⟩ := h'.cont τ v x
     exact ⟨ℓ + ℓ', sobCont_add hℓ hℓ', fun w => by simp only [LinearMap.add_apply, e w, e' w,
       _root_.add_apply, Pi.add_apply]⟩
 
-theorem isMultMap_smul (c : ℂ) {T : MMap M} (h : IsMultMap θ M J χ T) : IsMultMap θ M J χ (c • T) where
-  aut v := isAutFunSm_smul c (h.aut v)
-  cusp v := isCuspFun_smul c (h.cusp v)
-  lev v k hk g := by
+theorem isMultMap_smul (c : ℂ) {T : MMap M} (h : IsMultMap θ M J χ T) : IsMultMap θ M J χ (c • T) := by
+  refine ⟨fun v => isAutFunSm_smul c (h.aut v), fun v => isCuspFun_smul c (h.cusp v), ?_, ?_, ?_⟩
+  · intro v k hk g
     simp only [_root_.smul_apply, Pi.smul_apply, smul_eq_mul, h.lev v k hk g]
     ring
-  equiv τ g hg v w hw := by
+  · intro τ g hg v w hw
     simp only [_root_.smul_apply, h.equiv τ g hg v w hw]
     rfl
-  cont τ v x := by
+  · intro τ v x
     obtain ⟨ℓ, hℓ, e⟩ := h.cont τ v x
     exact ⟨c • ℓ, sobCont_smul c hℓ, fun w => by simp only [LinearMap.smul_apply, e w,
       _root_.smul_apply, Pi.smul_apply]⟩

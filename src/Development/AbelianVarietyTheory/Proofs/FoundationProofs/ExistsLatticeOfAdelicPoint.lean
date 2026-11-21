@@ -22,6 +22,10 @@ section General
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {n : Type} [Fintype n] [DecidableEq n]
 
+local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
+local notation "𝒮" => tensInt (F := F) (FiniteAdeleRing (𝓞 F) F) (intOE E) (intAd F)
+local notation "ι" => inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
+
 def lat (g : GL n 𝒜) : Submodule (𝓞 E) (n → E) :=
   Formalism.UG.CS.globLat g (stdLat (n := n) (A := E) (𝓞 E))
 
@@ -33,8 +37,8 @@ theorem mem_lat (g : GL n 𝒜) (x : n → E) :
     x ∈ lat g ↔ ∀ i, (((g⁻¹ : GL n 𝒜) : Matrix n n 𝒜) *ᵥ (fun j => ι (x j))) i ∈ 𝒮 :=
   mem_latS_std _
 
-theorem lat_isLattice (g : GL n 𝒜) : Submodule.IsLattice E (lat g) :=
-  global_lattice_isLattice_holds F E n _ (standard_lattice_full_holds E n).1 (standard_lattice_full_holds E n).2 g
+theorem lat_isLattice (g : GL n 𝒜) : Submodule.IsFullLattice E (lat g) :=
+  csGlob_lattice _ (standard_lattice_full_holds E n).1 (standard_lattice_full_holds E n).2 g
 
 theorem lat_span (g : GL n 𝒜) (u : n → 𝒜) :
     u ∈ Submodule.span 𝒮 ((fun x : n → E => fun i => ι (x i)) '' (lat g : Set (n → E))) ↔

@@ -143,6 +143,9 @@ theorem diagonal_mem_Kset {n : ℕ} (ε : Fin n → Bool) (s : Fin n → ℝ) :
   refine ⟨?_, ?_⟩
   · rw [Matrix.mem_unitaryGroup_iff, star_eq_conjTranspose, diagonal_conjTranspose, diagonal_mul_diagonal, ← diagonal_one]
     congr 1
+    funext i
+    simp only [Pi.star_apply]
+    change Complex.exp ((s i : ℂ) * Complex.I) * (starRingEnd ℂ) (Complex.exp ((s i : ℂ) * Complex.I)) = 1
     rw [← Complex.exp_conj, ← Complex.exp_add]
     simp
   · unfold Formalism.REAL.Jm

@@ -45,7 +45,8 @@ theorem update_comp (φ : ∀ a, X a →ₛₗ[starRingEnd ℂ] Y a) [DecidableE
   funext a
   exact Function.apply_update (fun a => φ a) x i w a
 
-def mlin (φ : ∀ a, X a →ₛₗ[starRingEnd ℂ] Y a) : MultilinearMap ℂ X (Cj (⨂[ℂ] a, Y a)) where
+def mlin (φ : ∀ a, X a →ₛₗ[starRingEnd ℂ] Y a) :
+    MultilinearMap (RingHom.id ℂ) X (Cj (⨂[ℂ] a, Y a)) where
   toFun x := (PiTensorProduct.tprod ℂ (fun a => φ a (x a)) : ⨂[ℂ] a, Y a)
   map_update_add' x i u v := by
     show (PiTensorProduct.tprod ℂ (fun a => φ a (Function.update x i (u + v) a)) : ⨂[ℂ] a, Y a) =
@@ -55,7 +56,7 @@ def mlin (φ : ∀ a, X a →ₛₗ[starRingEnd ℂ] Y a) : MultilinearMap ℂ X
   map_update_smul' x i c u := by
     show (PiTensorProduct.tprod ℂ (fun a => φ a (Function.update x i (c • u) a)) : ⨂[ℂ] a, Y a) =
       starRingEnd ℂ c • PiTensorProduct.tprod ℂ (fun a => φ a (Function.update x i u a))
-    rw [update_comp, update_comp, map_smulₛₗ, MultilinearMap.map_update_smul]
+    rw [update_comp, update_comp, map_smulₛₗ, MultilinearMap.map_update_smul, RingHom.id_apply]
 
 def tmap (φ : ∀ a, X a →ₛₗ[starRingEnd ℂ] Y a) : (⨂[ℂ] a, X a) →ₛₗ[starRingEnd ℂ] (⨂[ℂ] a, Y a) where
   toFun t := (PiTensorProduct.lift (mlin φ) t : Cj (⨂[ℂ] a, Y a))

@@ -47,7 +47,8 @@ lemma _root_.GlobalTheory.WpFam.hasSum_rows_G2_add_weierstrassP (τ : ℍ) (z : 
   have hf : HasSum f (L.weierstrassP z) := by
     have := (L.latticeEquivProd.symm.toEquiv.hasSum_iff).mpr hg
     convert this using 1
-      hfdef, mul_one]
+    funext p
+    simp [hfdef, latticeEquivProd_symm_coe, hω₁, hω₂]
   have hrow : HasSum (fun n : ℤ => ∑' m : ℤ, f (n, m)) (L.weierstrassP z) :=
     hf.prod_fiberwise fun n => (hf.summable.prod_factor n).hasSum
   have hG : HasSum (fun n : ℤ => EisensteinSeries.e2Summand n τ) (EisensteinSeries.G2 τ) := by
@@ -75,8 +76,11 @@ lemma _root_.GlobalTheory.WpFam.hasSum_rows_G2_add_weierstrassP (τ : ℍ) (z : 
     exact this
   have hneg := (Equiv.neg ℤ).hasSum_iff.mpr hF
   convert hneg using 1
+  funext n
   rw [← (Equiv.neg ℤ).tsum_eq]
   congr 1
-  ring_nf
+  funext m
+  simp only [Equiv.neg_apply, Int.cast_neg, Function.comp_apply]
+  ring
 
 end GlobalTheory.WpFam

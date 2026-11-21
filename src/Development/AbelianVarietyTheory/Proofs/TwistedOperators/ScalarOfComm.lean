@@ -36,7 +36,7 @@ theorem eq_of_tform {t t' : ⨂[ℂ] i, K i} (h : ∀ w, tform w t = tform w t')
   rw [← this] at h2
   simpa using h2
 
-def ctrM (i : ι) (w : ∀ i, Module.Dual ℂ (K i)) : MultilinearMap ℂ K (K i) :=
+def ctrM (i : ι) (w : ∀ i, Module.Dual ℂ (K i)) : (Π j, K j) →ₘₗ[ℂ] K i :=
   GlobalTheory.MultilinearContraction.contractMultilinear w i
 
 def ctr (i : ι) (w : ∀ i, Module.Dual ℂ (K i)) : (⨂[ℂ] i, K i) →ₗ[ℂ] K i :=

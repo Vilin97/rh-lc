@@ -27,13 +27,15 @@ abbrev dC (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Alge
 def half : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E) := algebraMap (AF F) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (⅟(2 : AF F))
 
 def diagonalFixingDoublingMatrix (c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (d : ℕ) : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
-  1 + (half * c) • (dC F E d ⬝ₘ (GlobalTheory.InertDbl.antiCols d)ᵀ)
+  1 + (half * c) • (dC F E d * (GlobalTheory.InertDbl.antiCols d)ᵀ)
 
 def splitDoublingNBlock {d : ℕ} (c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (K K' : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
   ((half : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * half * half) • ((1 - c) • (K - 1) - (1 + c) • (K' - 1))
 
 def nMat {d : ℕ} (c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (K K' : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
-  1 + (GlobalTheory.InertDbl.antiCols d ⬝ₘ splitDoublingNBlock c K K') ⬝ₘ (dC F E d)ᵀ
+  let nBlock : Matrix (Fin d ⊕ Fin d) (Fin d) _ :=
+    GlobalTheory.InertDbl.antiCols d * splitDoublingNBlock c K K'
+  1 + nBlock * (dC F E d)ᵀ
 
 def tMat {d : ℕ} (c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (K : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :=
   1 + (half * (1 + c)) • (K - 1)

@@ -64,14 +64,16 @@ theorem main : ∀ (R : Type) [CommRing R] (F : Shv R) (S : Scheme.{0}) (E E' : 
   have hsq : (bcMap α p).app U0 ≫ pullback.fst p (sch.map U0.hom) =
       pullback.fst (α ≫ p) (sch.map U0.hom) ≫ α := by
     simp only [bcMap, pullback.map]
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact pullback.lift_fst _ _ _
   haveI hI : IsIso (sch.map U0.hom) := by
     change IsIso (sch.map (𝟙 S))
     rw [CategoryTheory.Functor.map_id]
     infer_instance
   have key : Eqv R ((bcMap α p).app U0 ≫ pullback.fst p (sch.map U0.hom)) F :=
-    (hcomp _ _ _ _ _).1 h2 (hiso _ _ _ (fst_isIso _ _))
+    (hcomp _ _ _ _ _).1 h2 (hiso _ _ _ (fst_isIso p (sch.map U0.hom)))
   rw [hsq] at key
-  exact (hcomp _ _ _ _ _).2.1 (hiso _ _ _ (fst_isIso _ _)) key
+  exact (hcomp _ _ _ _ _).2.1 (hiso _ _ _ (fst_isIso (α ≫ p) (sch.map U0.hom))) key
 
 end GlobalTheory.EtC.LocGlobSp
 

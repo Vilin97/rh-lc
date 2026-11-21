@@ -27,11 +27,15 @@ theorem map_inL (φ : R →+* S) (f : MvPowerSeries (Fin d) R) : map φ (inL f) 
   unfold inL
   rw [map_subst (hasSubst_cc fun _ => constantCoeff_X _)]
   congr 1
+  funext i
+  exact map_X φ _
 
 theorem map_inR (φ : R →+* S) (f : MvPowerSeries (Fin d) R) : map φ (inR f) = inR (map φ f) := by
   unfold inR
   rw [map_subst (hasSubst_cc fun _ => constantCoeff_X _)]
   congr 1
+  funext i
+  exact map_X φ _
 
 theorem mvPowerSeriesMap_evalTwoGroups {τ : Type} [Finite τ] (φ : R →+* S) (c : MvPowerSeries (Fin d ⊕ Fin d) R)
     (u v : Fin d → MvPowerSeries τ R) (hu : ∀ i, constantCoeff (u i) = 0)

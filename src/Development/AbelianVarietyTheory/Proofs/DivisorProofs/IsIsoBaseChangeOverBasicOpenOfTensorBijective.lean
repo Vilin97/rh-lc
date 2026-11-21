@@ -109,7 +109,6 @@ theorem exists_smooth_basicOpen_iso : ∀ (R R' : Type) [CommRing R] [CommRing R
       Algebra.TensorProduct.includeLeftRingHom φ H (Submonoid.powers (f * g))
     have Q := (Q1.flip.paste_vert Q2).flip
     convert Q using 1
-    · ext c; simp [← IsScalarTower.algebraMap_apply]
     · ext r; simp [RingHom.algebraMap_toAlgebra, Φ, ← IsScalarTower.algebraMap_apply]
   have hs : (spMap (algebraMap C' A') ≫ j) ≫ s = spMap (algebraMap R' A') := by
     rw [Category.assoc, hj, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← IsScalarTower.algebraMap_eq]

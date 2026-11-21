@@ -54,7 +54,7 @@ theorem isEtCoord_baseChange : ∀ (R R' : Type) [CommRing R] [CommRing R'] (φ 
     · change (π.appLE U W hle).hom (MvPolynomial.eval₂Hom _ _ (MvPolynomial.X a)) =
         MvPolynomial.eval₂Hom _ _ (MvPolynomial.map φ (MvPolynomial.X a))
       rw [MvPolynomial.map_X, MvPolynomial.eval₂Hom_X', MvPolynomial.eval₂Hom_X']
-  have h₄ := key _ inf_le_left (isPushout_sections f f' π H U hU)
+  have h₄ := key _ inf_le_left (ReciprocityTheory.ChartRestriction.G.DVR.FlatBC.isPushout_sections f f' π H U hU)
   have tr : ∀ (W : X'.Opens) (hle : W ≤ π ⁻¹ᵁ U), W = π ⁻¹ᵁ U →
       (MvPolynomial.eval₂Hom (algX f' W) fun a => (π.appLE U W hle).hom (t a)).Etale →
       IsEtCoord f' (π ⁻¹ᵁ U) (fun a => (π.app U).hom (t a)) := by

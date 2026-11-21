@@ -232,12 +232,12 @@ theorem exists_rat_unitary [CharZero F] [CharZero E] (σ : E →ₐ[F] E) (hσ :
     simp only [Matrix.mul_apply, map_apply, one_apply] at this
     simp only [mulVec, dotProduct]
     rw [this]
-    simp [eq_comm]
+    simp [Matrix.one_apply, eq_comm]
   have h₁ : (Matrix.of fun s j => lagCol x ι (e j) s)ᵀ * dbl J * (Matrix.of fun s j => lagCol x ι (e j) s).map σ = 0 := by
     ext j j'; rw [entry_eq]; exact iso _ _
   have k₁ : (Matrix.of fun s j => lagCol x ι (e j) s)ᵀ * dbl J *
       (Matrix.of fun s j => lagDual y ι V (e j) s).map σ = 1 := by
-    ext j j'; rw [entry_eq]; exact (dual _ _).trans (by simp [one_apply, e.injective.eq_iff])
+    ext j j'; rw [entry_eq]; exact (dual _ _).trans (by simp [Matrix.one_apply, e.injective.eq_iff])
   have h₂ : (diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) E)ᵀ * dbl J *
       (diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) E).map σ = 0 := (isLagr_diagCols σ J).1
   have hm : (fromRows (J⁻¹.map σ) (0 : Matrix (Fin d) (Fin d) E)).map σ = fromRows J⁻¹ (0 : Matrix (Fin d) (Fin d) E) := by

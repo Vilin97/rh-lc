@@ -9,7 +9,6 @@ public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsTa
 noncomputable section
 
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.MainNotions.BlochKatoReduction Formalism.MainNotions.BlochKatoReduction.Gen GlobalTheory.TwSys
-open GlobalTheory.IndefiniteRowSideFullHecke.ResidualBoundAdmissible
 
 namespace GlobalTheory.TwSys.ResidualCompare
 

@@ -19,7 +19,8 @@ private theorem haar_one {G : Type*} [Group G] [TopologicalSpace G] [IsTopologic
   exact ⟨Measure.haarMeasure K₀, inferInstance, Measure.haarMeasure_self (K₀ := K₀)⟩
 
 private theorem poly_mem {n : ℕ} (p : MvPolynomial (Fin n) ℂ) :
-    polyEmb n (aeval (fun i : Fin n => esymm (Fin n) ℂ (i + 1)) p) ∈ symmetricLaurent n := fun σ => by
+    polyEmb (n := n) (aeval (fun i : Fin n => esymm (Fin n) ℂ (i + 1)) p) ∈
+      symmetricLaurent (n := n) := fun σ => by
   rw [← polyEmb_rename]
   congr 1
   rw [← AlgHom.comp_apply, MvPolynomial.comp_aeval]

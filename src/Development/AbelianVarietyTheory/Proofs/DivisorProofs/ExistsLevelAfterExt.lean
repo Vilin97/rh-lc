@@ -75,7 +75,14 @@ theorem exists_ext_torsion (K : Type) [Field K] (P₀ : PolAV (Sp K)) (N : ℕ) 
     exact Category.id_comp _
   obtain ⟨w, hw⟩ := H K'' Ω σ t0.left ((Over.w t0).trans hs)
   have hw2 : w ≫ (torsion P₀.A N).hom = (𝟙_ (Over (Sp K''))).hom ≫ spMap f := by
-    refine spec_map_field_cancel σ _ _ ?_
+    haveI : Epi (spMap σ) := by
+      letI := σ.toAlgebra
+      haveI : Flat (spMap σ) := by
+        rw [HasRingHomProperty.Spec_iff (P := @Flat)]
+        exact RingHom.flat_algebraMap_iff.2 inferInstance
+      haveI : Surjective (spMap σ) := ⟨fun p => ⟨IsLocalRing.closedPoint Ω, Subsingleton.elim _ _⟩⟩
+      exact Flat.epi_of_flat_of_surjective _
+    apply (cancel_epi (spMap σ)).1
     rw [← Category.assoc, hw, Over.w t0]
     refine hs.trans ?_
     rw [← spMap_comp_spMap]
@@ -109,8 +116,15 @@ theorem exists_ext_level (K : Type) [Field K] [CharZero K] (P₀ : PolAV (Sp K))
   obtain ⟨Q, φ, hQ⟩ := exists_isPolFibre GlobalTheory.laws_without_cohomology.2.2.1 σ P
   obtain ⟨l, h₁, h₂, h₃⟩ := SiegPt.exists_level (O := Ω) (C := Ω) Q g N (Units.map σ.toMonoidHom ze) (hQ.1.trans hg)
     (IsUnit.mk0 _ (Nat.cast_ne_zero.2 (by omega))) (hze.map_of_injective σ.injective)
+  haveI : Epi (spMap σ) := by
+    letI := σ.toAlgebra
+    haveI : Flat (spMap σ) := by
+      rw [HasRingHomProperty.Spec_iff (P := @Flat)]
+      exact RingHom.flat_algebraMap_iff.2 inferInstance
+    haveI : Surjective (spMap σ) := ⟨fun p => ⟨IsLocalRing.closedPoint Ω, Subsingleton.elim _ _⟩⟩
+    exact Flat.epi_of_flat_of_surjective _
   have hinj : Function.Injective (ObjPull.secPull hQ.2.1) := fun a b h =>
-    Over.OverMorphism.ext (spec_map_field_cancel σ _ _ (by
+    Over.OverMorphism.ext ((cancel_epi (spMap σ)).1 (by
       rw [← ObjPull.secPull_left hQ.2.1, ← ObjPull.secPull_left hQ.2.1, h]))
   choose t ht using fun a => H K'' Ω i f hf P ψ hP σ Q φ hQ (l a) (h₂ a)
   have tors : ∀ a, t a ^ N = 1 := fun a => hinj (by rw [map_pow, ht, map_one, h₂])

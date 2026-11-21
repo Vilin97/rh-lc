@@ -32,9 +32,11 @@ theorem sep_char : ∀ {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F)
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
 def Lev (d : 𝓞 F) (u : κ → FiniteAdeleRing (𝓞 F) F) : Prop :=
-  ∀ i, algebraMap F (FiniteAdeleRing (𝓞 F) F) ((d : F)⁻¹) * u i ∈ Ô
+  ∀ i, algebraMap F (FiniteAdeleRing (𝓞 F) F) ((d : F)⁻¹) * u i ∈
+    GroundTheory.Global.integralFiniteAdeles (𝓞 F) F
 
-theorem int_mem (r : 𝓞 F) : algebraMap F (FiniteAdeleRing (𝓞 F) F) (r : F) ∈ Ô :=
+theorem int_mem (r : 𝓞 F) : algebraMap F (FiniteAdeleRing (𝓞 F) F) (r : F) ∈
+    GroundTheory.Global.integralFiniteAdeles (𝓞 F) F :=
   fun v => GroundTheory.Global.coe_algebraMap_mem_adicCompletionIntegers v r
 
 theorem lev_zero (d : 𝓞 F) : Lev d (0 : κ → FiniteAdeleRing (𝓞 F) F) := fun i => by
@@ -55,7 +57,8 @@ theorem lev_of_mul {d e : 𝓞 F} (he : e ≠ 0) {u : κ → FiniteAdeleRing (�
 theorem isOpen_lev (d : 𝓞 F) (a : κ → FiniteAdeleRing (𝓞 F) F) :
     IsOpen {z : κ → FiniteAdeleRing (𝓞 F) F | Lev d (z - a)} := by
   have e : {z : κ → FiniteAdeleRing (𝓞 F) F | Lev d (z - a)} = ⋂ i, (fun z : κ → FiniteAdeleRing (𝓞 F) F =>
-      algebraMap F (FiniteAdeleRing (𝓞 F) F) ((d : F)⁻¹) * (z i - a i)) ⁻¹' (Ô : Set _) := by
+      algebraMap F (FiniteAdeleRing (𝓞 F) F) ((d : F)⁻¹) * (z i - a i)) ⁻¹'
+        (GroundTheory.Global.integralFiniteAdeles (𝓞 F) F : Set _) := by
     ext z
     simp only [Set.mem_setOf_eq, Set.mem_iInter, Set.mem_preimage, Lev, Pi.sub_apply, SetLike.mem_coe]
   rw [e]

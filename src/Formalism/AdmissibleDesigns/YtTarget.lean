@@ -24,6 +24,8 @@ variable {D : D7} (i : D.nd.Loc) (dc : TruncatedSeriesCountingIdentities.Decl D 
 
 abbrev YtM : Type := ↥(Ymod Dd.r Dd.χ Dd.E) × D.nd.O i
 
+instance instAddCommGroupYtM : AddCommGroup (YtM i Dd) := Prod.instAddCommGroup
+
 abbrev ytRepW (n : ℕ) : Representation (D.nd.O i) ↥(Dw i dc n) (YtM i Dd) :=
   resRep (ytRep (D.nd.O i) Dd.r Dd.χ Dd.E) (Dw i dc n)
 

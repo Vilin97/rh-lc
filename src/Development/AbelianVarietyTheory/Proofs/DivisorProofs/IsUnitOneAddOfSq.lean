@@ -110,7 +110,7 @@ theorem toL_altPoint {m : ℕ} (Y : Fin m → Mat E a) (ε : Fin m → Bool) :
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← toLA_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  split_ifs <;> simp [toLA_apply]
+  split_ifs <;> simp [← toLA_apply]
 
 theorem norm_toL_altPoint_le {m : ℕ} {Y : Fin m → Mat E a} {R : ℝ} (hR : ∀ i, ‖toL (Y i)‖ ≤ R)
     (ε : Fin m → Bool) : ‖toL (altPoint Y ε)‖ ≤ m * R := by

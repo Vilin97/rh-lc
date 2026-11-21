@@ -13,7 +13,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralMulC
 noncomputable section
 
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR.Datum MeasureTheory
-open GlobalTheory.RawLift GlobalTheory.IndefiniteRowSideFullHecke.RallisInnerProductFormula
+open GlobalTheory.RawLift
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 

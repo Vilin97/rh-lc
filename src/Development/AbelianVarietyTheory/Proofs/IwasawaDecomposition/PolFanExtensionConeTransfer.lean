@@ -25,7 +25,7 @@ theorem isTorsionFree_int (X : Type) [AddCommGroup X] [Module (𝓞 E) X] [Modul
     Module.IsTorsionFree ℤ X := by
   refine ⟨fun r hr x y hxy => ?_⟩
   have h0 : r ≠ 0 := hr.ne_zero
-  have h1 : IsRegular (r : 𝓞 E) := isRegular_of_ne_zero (by exact_mod_cast h0)
+  have h1 : IsRegular (r : 𝓞 E) := IsRegular.of_ne_zero (by exact_mod_cast h0)
   refine Module.IsTorsionFree.isSMulRegular h1 ?_
   have hxy' : r • x = r • y := hxy
   simp only [Int.cast_smul_eq_zsmul]
@@ -193,9 +193,8 @@ theorem isDomT_zero : IsDomT H q n (fun _ _ => 0) := by
   obtain ⟨i, -⟩ := Function.ne_iff.1 hc
   exact (hx.ne_zero i (Subsingleton.elim _ _)).elim
 
-
 open Classical in
-def extFun (φ : InvFun (𝓞 E)) : InvFun (𝓞 E) where
+def extFun (H : Host E) (q : ℕ) (φ : InvFun (𝓞 E)) : InvFun (𝓞 E) where
   toFun n B := if IsDomT H q n B then φ.toFun n B else (InvFun.minVal (𝓞 E)).toFun n B
   inv n m r hr B := by
     by_cases h : IsDomT H q m B

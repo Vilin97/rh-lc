@@ -155,6 +155,8 @@ theorem projective_tensor_of_fibre_projective :
       map_add' := fun x y => by
         rw [← map_add (f := _)]
         congr 1
+        funext i
+        simp
       map_smul' := fun r x => by
         show pb _ = τ r • pb _
         rw [← map_smul]

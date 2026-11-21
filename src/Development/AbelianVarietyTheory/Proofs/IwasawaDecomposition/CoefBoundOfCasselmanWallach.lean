@@ -60,7 +60,10 @@ theorem wcomp_le {I : Type} {c : I → ℂ} {B : ℝ} (hB : ∀ i, ‖c i‖ ≤
 def wcomp {I : Type} (c : I → ℂ) (B : ℝ) (hB0 : 0 ≤ B) (hB : ∀ i, ‖c i‖ ≤ B) (φ : I → I) : Bd I →L[ℂ] Bd I :=
   LinearMap.mkContinuous
     { toFun := fun F => mkBd (fun i => c i * F (φ i)) ⟨_, wcomp_le hB φ F⟩
-      map_add' := fun F G => by ext i; simp [mkBd, mul_add]
+      map_add' := fun F G => by
+        ext i
+        change c i * (F (φ i) + G (φ i)) = c i * F (φ i) + c i * G (φ i)
+        exact mul_add _ _ _
       map_smul' := fun a F => by ext i; simp [mkBd]; ring } B
     fun F => lp.norm_le_of_forall_le (by positivity) (wcomp_le hB φ F)
 
@@ -198,8 +201,11 @@ theorem exists_map (h : Std ε σ) {a : H} (ha : Sm ε σ a) (ha0 : a ≠ 0) (N 
         refine ⟨C, fun i => ?_⟩
         rw [norm_div, norm_wt, div_le_iff₀ (wt_pos _ _)]
         exact hC _ _ i.2.2)
-      map_add' := fun v w => by ext i; simp [add_div]
-      map_smul' := fun c v => by ext i; simp [mul_div_assoc] }
+      map_add' := fun v w => by
+        ext i
+        simp [mkBd, add_div]
+        rfl
+      map_smul' := fun c v => by ext i; simp [mkBd, mul_div_assoc] }
   obtain ⟨T, hT⟩ := LinearMap.exists_extend f
   refine ⟨T, fun v hv i => ?_⟩
   have : T v = f ⟨v, hv⟩ := LinearMap.congr_fun hT ⟨v, hv⟩

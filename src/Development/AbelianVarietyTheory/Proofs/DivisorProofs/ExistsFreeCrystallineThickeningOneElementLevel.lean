@@ -141,11 +141,11 @@ theorem exists_isFree_one_qAt : ∀ (R : Type) [CommRing R] (I : Ideal R) (κ : 
         rw [← S.ker, map_sub, map_sub, sub_eq_zero] at h2
         exact h2.symm,
        hgdp, a.pt⟩
-    refine ⟨g, ⟨Thick.hom_ext fun b ↦ hG1 b, fun _ ↦ ?_⟩, ?_⟩
+    refine ⟨g, ⟨Thick.Hom.ext' (AlgHom.ext fun b ↦ hG1 b), fun _ ↦ ?_⟩, ?_⟩
     · change G (Q.e 1) = c ()
       rw [hG2 1, S.δ.dpow_one (hc ())]
     · rintro g' ⟨h1, h2⟩
-      refine Thick.hom_ext fun b' ↦ ?_
+      refine Thick.Hom.ext' (AlgHom.ext fun b' ↦ ?_)
       obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective b'
       change ((g'.φ : F.B →+* S.B).comp (Ideal.Quotient.mk K)) p = G p
       have hHdp : IsDPMorphism η S.δ ((g'.φ : F.B →+* S.B).comp (Ideal.Quotient.mk K)) :=

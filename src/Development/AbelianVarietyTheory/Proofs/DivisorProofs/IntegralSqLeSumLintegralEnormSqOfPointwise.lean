@@ -34,8 +34,9 @@ theorem sq_le_sum_enorm_sq_lintegral_bound
                 refine Finset.sum_congr rfl (fun a _ => ?_)
                 rw [ENNReal.ofReal_pow (norm_nonneg _), ofReal_norm_eq_enorm]
       _ = ENNReal.ofReal C * ∑ a, ∫⁻ x, ‖g a x‖ₑ ^ 2 ∂μ := by
-          rw [MeasureTheory.lintegral_const_mul _ (Finset.measurable_sum _ (fun a _ => hm a)),
-            MeasureTheory.lintegral_finset_sum _ (fun a _ => hm a)]
+          rw [MeasureTheory.lintegral_const_mul _ (Finset.measurable_sum _ (fun a _ => hm a))]
+          congr 1
+          exact MeasureTheory.lintegral_finsetSum Finset.univ (fun a _ => hm a)
   · rw [MeasureTheory.integral_undef hi, ENNReal.ofReal_zero]
     exact zero_le
 

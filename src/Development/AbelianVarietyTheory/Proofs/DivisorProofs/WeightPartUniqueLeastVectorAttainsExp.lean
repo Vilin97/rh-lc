@@ -140,18 +140,18 @@ theorem exists_lab {X₁ : Setup F W i} {ε₁} (D : Deep X₁ ε₁) {L : Type}
   refine ⟨ν, ?_⟩
   simp only [nsmulAddMonoidHom_apply]
   rw [hd, mul_comm (X₁.S.r * X₁.S.N) d, mul_nsmul] at hν
-  refine (nsmul_right_inj hdpos).1 ?_
+  apply eq_of_nsmul_eq_nsmul_of_addCommute hdpos (AddCommute.all _ _)
   rw [← hν]
   exact smul_comm _ _ _
 
 private theorem isAddTorsionFree_of_free_int {X : Type} [AddCommGroup X] [Module.Free ℤ X] : IsAddTorsionFree X := by
   refine ⟨fun n hn a b hab => ?_⟩
+  intro h
   let e := (Module.Free.chooseBasis ℤ X).repr
   apply e.injective
   have h1 : n • e a = n • e b := by
-    simp only at hab
-    rw [← map_nsmul, ← map_nsmul, hab]
-  exact IsAddTorsionFree.nsmul_right_injective hn h1
+    rw [← map_nsmul, ← map_nsmul, h]
+  exact nsmul_right_injective hn h1
 
 private theorem rechart_proj {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (S : ThetaSys o Ω) (c : Ω)
     (hc : c ≠ 0) (R' : Subalgebra o Ω) (fg : R'.FG) (frac : ∀ x : Ω, ∃ a ∈ R', ∃ b ∈ R', x = a / b)

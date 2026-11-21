@@ -200,7 +200,7 @@ theorem exists_balTau : ∀ (R : Type) [CommRing R] [IsLocalRing R] (B : Over (S
     have a1 := hadd (a • y) (b • y) z p J hJ
     have a2 := hadd2 y (star a • z) (star b • z) p J hJ
     have r := GlobalTheory.T.rosatiGenerator_value_add_endomorphisms_cubical cub hG hA (act.act a) (act.act (star a)) (act.act b) (act.act (star b)) (act.act (a + b))
-      (act.act (star (a + b))) (act.map_add a b) (by rw [star_add, act.map_add (f := _)]) (u a) (u b) (u (a + b)) (hug a) (hug b)
+      (act.act (star (a + b))) (act.map_add a b) (by rw [star_add, act.map_add]) (u a) (u b) (u (a + b)) (hug a) (hug b)
       (hug (a + b)) (hu0 a) (hu0 b) (hu0 (a + b)) hJ (c y) (c z)
     rw [← c_lin, ← c_lin, ← c_lin, ← c_lin] at r
     rw [add_smul, show star (a + b) • z = star a • z + star b • z by rw [star_add, add_smul]] at e1

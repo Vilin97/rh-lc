@@ -76,7 +76,40 @@ theorem horizGen_zpow_mul_rdU_mem_span : ∀ (E : Type) [Field E] [NumberField E
       simp only [h0, mul_zero]
     · rw [mulAt_ne _ _ _ _ hkk]
       rfl
-  have hsp := (cuspOn_fd_and_span_rdU E H Dw l Xo c r U x hL Z σ hσ b' n hb' hpos hn).2 _ hLP hoff
+  have hsp : mulAt (U σ).X k0 (fun y => horizGen τ' y ^ m) (rdU (U σ) f) ∈
+      Submodule.span ℂ (rdU (U σ) '' (cuspOn U Z (wtZ b' n) : Set (Rul Xo c))) := by
+    let P := mulAt (U σ).X k0 (fun y => horizGen τ' y ^ m) (rdU (U σ) f)
+    have hpts : HasPts U Z := GlobalTheory.FlatLine.hasPts U hL.pos hL.good hL.unf Z
+    have e : goodOf c σ = σ := if_pos hσ
+    have htest := (hpts.1 σ).2
+    rw [e] at htest
+    have hoff' : P ∈ offZero (U σ).X := fun k y hy => hoff k y fun hz => hy hz.1
+    have hP0 : P ∈ holSub0 (U σ).X (laU (U σ) b' n) := ⟨by rwa [← modelWt_wtZ], hoff'⟩
+    have hsp' := hL.onto σ hσ b' n hb' hpos hn hP0
+    have hfix : rdU (U σ) (idem Z) * P = P := by
+      funext k y
+      show rdU (U σ) (idem Z) k y * P k y = P k y
+      by_cases hz : (⟨k, y⟩ : Σ k, Frame ((U σ).X k).Ψ r) ∈ framesOn (U σ) Z
+      · obtain ⟨hd, hl⟩ := hz
+        have h1 : rdU (U σ) (idem Z) k y = 1 := by
+          simp only [rdU, LinearMap.coe_mk, AddHom.coe_mk, hd, dif_pos]
+          rw [evR_idem hl (htest _ ⟨hd, hl⟩ hd)]
+          rfl
+        rw [h1, one_mul]
+      · have hzero : P k y = 0 := hoff k y hz
+        rw [hzero, mul_zero]
+    let g : FDSec (U σ).X →ₗ[ℂ] FDSec (U σ).X := LinearMap.mulLeft ℂ (rdU (U σ) (idem Z))
+    have hmap := Submodule.mem_map_of_mem (f := g) hsp'
+    rw [Submodule.map_span] at hmap
+    have hg : g P = P := hfix
+    rw [hg] at hmap
+    refine Submodule.span_mono ?_ hmap
+    rintro _ ⟨_, ⟨f, hf, rfl⟩, rfl⟩
+    refine ⟨idem Z * f, ⟨?_, ?_⟩, ?_⟩
+    · rw [← cuspW_wtZ] at hf
+      exact GlobalTheory.CompRestr.idem_mul_mem_cuspW hL.unf Z hf
+    · rw [mul_comm]; exact mul_mem_suppOn _ (idem_mem_suppOn Z)
+    · exact AllWt.rdU_mul (U σ) _ _
   let R : FDSec (U σ).X →ₗ[ℂ] (↥((U σ).X k0).dom → ℂ) :=
     { toFun := fun Q y => Q k0 y.1
       map_add' := fun _ _ => rfl

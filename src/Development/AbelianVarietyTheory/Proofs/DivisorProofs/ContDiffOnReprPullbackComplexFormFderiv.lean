@@ -16,8 +16,8 @@ theorem repr_mul {m : ℕ} (a b : Alt m) (S : Finset (Fin (m + m))) :
       (bas m).repr (bas m S₁ * bas m S₂) S := by
   conv_lhs => rw [← (bas m).sum_repr a, ← (bas m).sum_repr b]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, map_sum, map_smul, Finsupp.coe_finset_sum,
-    Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
+    simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, map_sum, map_smul]
+  simp only [Finset.sum_apply', Finsupp.smul_apply, smul_eq_mul]
   rw [Finset.sum_comm]
 
 theorem entries_smooth {m n : ℕ} {τ : V m → V n} {U : Set (V m)} (hU : IsOpen U) (hτ : DifferentiableOn ℂ τ U)

@@ -21,6 +21,8 @@ namespace GlobalTheory.CompanionTheory.RSLift
 set_option linter.unusedSectionVars false
 set_option linter.unnecessarySimpa false
 
+local notation "𝔸f" => FiniteAdeleRing (𝓞 ℚ) ℚ
+
 variable (N : ℕ) [NeZero N]
 
 theorem levelIdeal_sub_int {x : 𝔸f} (hx : x ∈ levelIdeal N) : x ∈ integralFiniteAdeles (𝓞 ℚ) ℚ := by

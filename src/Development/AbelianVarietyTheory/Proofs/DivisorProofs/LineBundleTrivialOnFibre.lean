@@ -36,10 +36,10 @@ theorem kTriv_of_quotient : ∀ (R : Type) [CommRing R] [IsNoetherianRing R] (J 
     obtain ⟨U, hU, H⟩ := GlobalTheory.KTrivGlob.exists_open hM hN₀ hB hA hb e hK q
     exact ⟨U, hq.mem_open U.2 hU, H⟩
   choose U hU hK using key
-  have hL := fun p => pull_isLB hM (pullback.fst B.hom (U p).ι)
+  have hL := fun p => LB.isLB_pull hM (pullback.fst B.hom (U p).ι)
   exact GlobalTheory.CoverGlue.kTriv_of_cover _ _ U B _ _
     (top_le_iff.1 fun p _ => TopologicalSpace.Opens.mem_iSup.2 ⟨p, hU p⟩)
     (fun p => isGrpPullback_pullback B (U p).ι) _ _ hM hL (fun p => GlobalTheory.lbIso_refl (hL p)) hB
-    (fun p => GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback hB (isGrpPullback_pullback B (U p).ι)) hK
+    (fun p => GlobalTheory.isAbelianScheme_pullback_obj (U p).ι B hB) hK
 
 end GlobalTheory.KTrivJacobson

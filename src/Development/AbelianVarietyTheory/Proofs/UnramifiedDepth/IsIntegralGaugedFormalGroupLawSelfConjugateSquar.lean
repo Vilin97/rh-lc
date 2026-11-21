@@ -387,7 +387,8 @@ end Chart
 
 theorem rlaw_rawSelf (C : Type) [Field C] [CharZero C] (V : VF C) (O : Type) [CommRing O] [StarRing O] (dd : ℕ)
     (Y : FBChart C V O dd) (d : ℕ) [NeZero d] (I0 : Type) [Fintype I0] (p : SelfData Y d I0) :
-    RLaw (Y.rawSelf p) V where
+    RLaw (Y.rawSelf p) V := by
+  exact {
   charZero := inferInstance
   closed := Y.algClosed
   odd := Y.l_odd
@@ -502,5 +503,6 @@ theorem rlaw_rawSelf (C : Type) [Field C] [CharZero C] (V : VF C) (O : Type) [Co
       have hg : 1 - g ≠ g := by fin_cases g <;> decide
       rw [key, hew, p.gm_hyp, ite_eq_right hg, ite_eq_left rfl, one_mul]
     · rw [key, hew, ite_eq_right h, mul_zero]
+  }
 
 end GlobalTheory.RowLawSquare

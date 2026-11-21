@@ -47,7 +47,17 @@ theorem liftMor_pull_eq_const_add_eps : GlobalTheory.Published.AbelianDeRham →
       (liftMor (epsDP K) h).pull x = (constMor A).pull ((fibMor h).pull x) +
         (DualNumber.eps : DualNumber K) • (constMor A).pull b := by
   intro P K _ A _ A' _ i h g hA hg x
-  have a₀ := PolPull.isAbelianScheme_of_isGrpPullback hA h
+  have a₀ : IsAbelianScheme A := by
+    haveI := hA.comm
+    haveI : IsCommMonObj A := by
+      rw [isCommMonObj_iff_isMulCommutative]
+      intro T
+      refine ⟨⟨fun x y => Over.OverMorphism.ext (h.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+      rw [← h.2 T x y (pushPt h.1.w x) (pushPt h.1.w y) rfl rfl,
+        ← h.2 T y x (pushPt h.1.w y) (pushPt h.1.w x) rfl rfl, _root_.mul_comm]
+    exact ⟨inferInstance, MorphismProperty.of_isPullback (P := @Smooth) h.1 hA.smooth,
+      MorphismProperty.of_isPullback (P := @IsProper) h.1 hA.proper,
+      MorphismProperty.of_isPullback (P := @GeometricallyConnected) h.1 hA.geomConnected⟩
   have g₀ := (smoothOfRelativeDimension_isStableUnderBaseChange g).of_isPullback h.1 hg
   obtain ⟨z, hz⟩ := constMor_surjective P a₀ g₀ ((liftMor (epsDP K) h).pull x)
   obtain ⟨a, b, e⟩ := exists_const_add_eps_const z

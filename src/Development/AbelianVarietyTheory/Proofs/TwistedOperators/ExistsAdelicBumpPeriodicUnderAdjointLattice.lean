@@ -44,13 +44,13 @@ theorem continuous_smul_mx {X : Type} [TopologicalSpace X] {m n : ℕ} (c : AE D
 variable (S : HSp D) (σ : ℕ)
 
 def adjMap : Mx D S.rank σ →+ Mx D σ S.rank where
-  toFun y := incA D (-D.host.xi0⁻¹) • (adj y ⬝ gA S)
+  toFun y := incA D (-D.host.xi0⁻¹) • (adj y * gA S)
   map_zero' := by rw [adj_zero, Matrix.zero_mul, smul_zero]
   map_add' _ _ := by rw [adj_add, Matrix.add_mul, smul_add]
 
-def adjInv (η : Mx D σ S.rank) : Mx D S.rank σ := incA D D.host.xi0 • (giA S ⬝ adj η)
+def adjInv (η : Mx D σ S.rank) : Mx D S.rank σ := incA D D.host.xi0 • (giA S * adj η)
 
-theorem adjMap_apply (y : Mx D S.rank σ) : adjMap S σ y = incA D (-D.host.xi0⁻¹) • (adj y ⬝ gA S) := rfl
+theorem adjMap_apply (y : Mx D S.rank σ) : adjMap S σ y = incA D (-D.host.xi0⁻¹) • (adj y * gA S) := rfl
 
 theorem adjInv_adjMap (y : Mx D S.rank σ) : adjInv S σ (adjMap S σ y) = y := by
   rw [adjInv, adjMap_apply, adj_smul, adj_mul, adj_adj, adj_gA, Matrix.mul_smul, giA_gA_cancel, smul_smul,
@@ -65,11 +65,11 @@ theorem adjMap_adjInv (η : Mx D σ S.rank) : adjMap S σ (adjInv S σ η) = η 
     Matrix.mul_one, smul_smul, h, one_smul]
 
 theorem continuous_adjMap : Continuous (adjMap S σ) :=
-  continuous_smul_mx _ (f := fun y : Mx D S.rank σ => (adj y ⬝ gA S : Mx D σ S.rank))
+  continuous_smul_mx _ (f := fun y : Mx D S.rank σ => (adj y * gA S : Mx D σ S.rank))
     (continuous_adj.matrix_mul continuous_const)
 
 theorem continuous_adjInv : Continuous (adjInv S σ) :=
-  continuous_smul_mx _ (f := fun η : Mx D σ S.rank => (giA S ⬝ adj η : Mx D S.rank σ))
+  continuous_smul_mx _ (f := fun η : Mx D σ S.rank => (giA S * adj η : Mx D S.rank σ))
     (continuous_const.matrix_mul continuous_adj)
 
 theorem adjMap_fin {y : Mx D S.rank σ} (h : y.map (infPart D) = 0) : (adjMap S σ y).map (infPart D) = 0 :=
@@ -102,7 +102,7 @@ theorem exists_bump_adj : ∀ (D : D7) (V₀ W W₀ : HSp D) (σ : ℕ) (dW : Hy
   intro D V₀ W W₀ σ dW B₂ hB y
   obtain ⟨b, hb, hby, -, hs, hp⟩ := exists_bump_le y (B₂.comap (adjMap V₀ σ)) (finLat_comap V₀ σ hB) Set.univ Filter.univ_mem
   refine ⟨fun z => (b z : ℂ), hb, by simp [hby], fun η hη c hc z => ?_, fun z hz => ?_⟩
-  · have h1 : dW.pY ⬝ (dW.jY ⬝ adjMap V₀ σ c) = dW.pY ⬝ (dW.jY ⬝ η) := congrArg (fun w : WO V₀ W => dW.pY ⬝ (show Mx D W.rank V₀.rank from w)) hc
+  · have h1 : dW.pY * (dW.jY * adjMap V₀ σ c) = dW.pY * (dW.jY * η) := congrArg (fun w : WO V₀ W => dW.pY * (show Mx D W.rank V₀.rank from w)) hc
     rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, dW.pY_jY, Matrix.one_mul, Matrix.one_mul] at h1
     have h2 : c ∈ B₂.comap (adjMap V₀ σ) := by
       rw [AddSubgroup.mem_comap, h1]; exact hη

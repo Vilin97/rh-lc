@@ -23,7 +23,7 @@ theorem integral_mul_star_ne_zero (F : Type) [Field F] [NumberField F] (κ : Typ
   haveI : (MeasureTheory.volume : MeasureTheory.Measure (κ → mixedEmbedding.mixedSpace F)).HasTemperateGrowth :=
     haveI : BorelSpace (κ → mixedEmbedding.mixedSpace F) := inferInstance
     MeasureTheory.Measure.IsAddHaarMeasure.instHasTemperateGrowth
-  have hL2 : MeasureTheory.MemLp (f : (κ → mixedEmbedding.mixedSpace F) → ℂ) 2 := f.memLp 2
+  have hL2 : MeasureTheory.MemLp (f : (κ → mixedEmbedding.mixedSpace F) → ℂ) 2 MeasureTheory.volume := f.memLp 2 MeasureTheory.volume
   have hint : MeasureTheory.Integrable (fun x => ‖f x‖ ^ 2) := hL2.integrable_norm_pow (by norm_num)
   have h1 : ∀ x, f x * star (f x) = (((‖f x‖ ^ 2 : ℝ)) : ℂ) := by
     intro x

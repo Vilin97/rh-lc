@@ -142,7 +142,9 @@ theorem equicontinuous_band : ∀ (E : Type) [Field E] [NumberField E] [IsTotall
   rw [nhdsWithin_univ] at hv
 
   refine ⟨{u | Matrix.GeneralLinearGroup.map (pInf E) u ∈ v ∩ V ∧ Matrix.GeneralLinearGroup.map (pFin E) u ∈ L}, ?_, ?_⟩
-  · refine Filter.inter_mem ?_ ?_
+  · change ((Matrix.GeneralLinearGroup.map (pInf E)) ⁻¹' (v ∩ V) ∩
+      (Matrix.GeneralLinearGroup.map (pFin E)) ⁻¹' (L : Set _)) ∈ 𝓝 (1 : GA E a)
+    refine Filter.inter_mem ?_ ?_
     · exact continuous_mapInf.continuousAt.preimage_mem_nhds (by rw [map_one]; exact Filter.inter_mem hv hV1)
     · exact continuous_mapFin.continuousAt.preimage_mem_nhds (by rw [map_one]; exact hL.mem_nhds L.one_mem)
   intro φ hφ M hM g hg u hu _
@@ -160,6 +162,8 @@ theorem equicontinuous_band : ∀ (E : Type) [Field E] [NumberField E] [IsTotall
     rw [← hrep φ hφ (g * infGL E a y),
       ← integral_mul_left_eq_self (fun z => φ.1 (g * infGL E a z) * α (y⁻¹ * z)) y]
     congr 1
+    funext x
+    simp [map_mul, mul_assoc]
   have hi1 : Integrable (fun z => φ.1 (g * infGL E a z) * α (y⁻¹ * z)) μ :=
     ((continuous_along φ g).mul (hαc.comp (continuous_const.mul continuous_id))).integrable_of_hasCompactSupport
       (HasCompactSupport.mul_left (hαs.comp_homeomorph (Homeomorph.mulLeft y⁻¹)))

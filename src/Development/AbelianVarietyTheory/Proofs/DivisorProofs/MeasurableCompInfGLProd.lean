@@ -55,7 +55,8 @@ theorem kerInf_mem_bddForms {ω : HChar E} {F : GA E a → ℂ} (h : F ∈ bddFo
   have hki := hk.integrable_norm
   have hm := measurable_comp_infGL_prod h.1 hk.2.1
   refine ⟨?_, fun γ' g => ?_, fun z g => ?_, ∫ x, ‖k x‖ * C ∂ν, fun g => ?_⟩
-  · refine continuous_of_dominated (bound := fun x => ‖k x‖ * C)
+  · set_option synthInstance.maxHeartbeats 200000 in
+    refine continuous_of_dominated (bound := fun x => ‖k x‖ * C)
       (fun g => (hk.1.mul (hm.comp (measurable_const.prodMk measurable_id))).aestronglyMeasurable)
       (fun g => .of_forall fun x => ?_) (hki.mul_const C)
       (.of_forall fun x => continuous_const.mul (h.1.comp (continuous_mul_const _)))

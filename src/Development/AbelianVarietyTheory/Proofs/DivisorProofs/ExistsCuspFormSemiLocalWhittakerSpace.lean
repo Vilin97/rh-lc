@@ -26,6 +26,8 @@ theorem whit_smul_fun (c : ℂ) (F : GA E a → ℂ) (g : GA E a) : whit (c • 
   unfold whit whittaker
   rw [← integral_const_mul]
   congr 1
+  funext X
+  simp only [Pi.smul_apply, smul_eq_mul, mul_assoc]
 
 theorem whit_mul_right_fun (F : GA E a → ℂ) (g h : GA E a) : whit F (g * h) = whit (fun z => F (z * h)) g := by
   simp only [whit, whittaker, mul_assoc]

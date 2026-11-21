@@ -57,7 +57,7 @@ theorem exists_frac_closure : ∀ (S K L : Type) [CommRing S] [IsDomain S] [IsDi
     | add u v hu hv =>
       obtain ⟨b1, h1, m1⟩ := hu
       obtain ⟨b2, h2, m2⟩ := hv
-      exact ⟨b1 + b2, by simp [h1, h2], by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem m1 m2⟩
+      exact ⟨b1 + b2, by simp [h1, h2], by rw [(algebraMap (integralClosure D (TensorProduct S D L)) (Localization.AtPrime Q)).map_add]; exact add_mem m1 m2⟩
   have hI : ∀ y : TensorProduct S D L, ∃ σ : S, σ ≠ 0 ∧ ∃ u : TensorProduct S D (integralClosure S L),
       Algebra.TensorProduct.map (AlgHom.id S D) (integralClosure S L).val u = σ • y := by
     intro y

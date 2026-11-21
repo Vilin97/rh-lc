@@ -21,6 +21,7 @@ theorem injective_of_comp {Λ : Type} [CommRing Λ] [IsDomain Λ] [Algebra ℤ_[
     Function.Injective φ := by
   rw [RingHom.injective_iff_ker_eq_bot]
   apply Ideal.eq_bot_of_comap_eq_bot (R := ℤ_[p])
+  change Ideal.comap (algebraMap ℤ_[p] Λ) (RingHom.ker φ) = ⊥
   rw [RingHom.comap_ker, h, ← RingHom.injective_iff_ker_eq_bot,
     IsScalarTower.algebraMap_eq ℤ_[p] ℚ_[p] (PadicAlgCl p), RingHom.coe_comp]
   exact (algebraMap ℚ_[p] (PadicAlgCl p)).injective.comp (IsFractionRing.injective ℤ_[p] ℚ_[p])

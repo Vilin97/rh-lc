@@ -279,7 +279,8 @@ theorem locD (X : Data E r) (x0 : Frame X.Ψ r) (la : Wt X.Ψ r) (W : Frame X.Ψ
     rw [lact_rmul', hP.2 _ (lactDom X γ.2 hyd) b0 hb0]
   have hbn : 0 < ‖bchar la b0‖ := norm_pos_iff.2 (bchar_ne X la hb0)
   rw [le_div_iff₀ hbn, mul_comm, ← norm_mul, ← heq]
-  have hfin : K * I γ ^ (1 / 2 : ℝ) ≠ ⊤ := ne_top_of_le_ne_top hsumfin (ENNReal.le_tsum γ)
+  have hfin : K * I γ ^ (1 / 2 : ℝ) ≠ ⊤ :=
+    ne_top_of_le_ne_top hsumfin (le_tsum (fun γ : X.Γ => K * I γ ^ (1 / 2 : ℝ)) γ)
   exact (ENNReal.ofReal_le_iff_le_toReal hfin).1 (by rw [ofReal_norm]; exact hB)
 
 end

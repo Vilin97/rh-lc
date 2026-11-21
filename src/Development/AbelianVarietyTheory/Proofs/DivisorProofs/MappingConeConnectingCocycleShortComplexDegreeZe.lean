@@ -49,7 +49,6 @@ theorem cone_connecting_class : ∀ (R : Type) [CommRing R] (S : ShortComplex (S
       (mappingCone.fst (S.map (CochainComplex.singleFunctor (Shv R) 0)).f).1.comp
         (Cochain.ofHom (resAug S.X₁)) (add_zero 1) := by
     simp [mappingCone.map, mappingCone.ofHom_desc, mappingCone.descCochain, Cochain.add_comp]
-    rfl
   symm
   refine sub_eq_zero.1 ((CohomologyClass.mk_sub _ _).symm.trans ?_)
   refine (CohomologyClass.mk_eq_zero_iff _).2 ((mem_coboundaries_iff _ 0 (zero_add 1)).2

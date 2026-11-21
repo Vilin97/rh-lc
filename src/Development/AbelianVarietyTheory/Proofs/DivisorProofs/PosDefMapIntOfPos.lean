@@ -57,7 +57,7 @@ theorem posDef_map_int_of_pos {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ) (hs : L
     exact ((Int.castRingHom ℝ).map_det L).symm
   refine posDef_iff_dotProduct_mulVec.2 ⟨hH, fun x hx => ?_⟩
   refine lt_of_le_of_ne ((posSemidef_iff_dotProduct_mulVec.1 hpsd).2 x) fun h0 => hdet ?_
-  have hk : M *ᵥ x = 0 := (hpsd.dotProduct_mulVec_zero_iff x).1 h0.symm
+  have hk : M *ᵥ x = 0 := hpsd.dotProduct_mulVec_zero_iff.1 (by simpa using h0.symm)
   have : M.det = 0 := Matrix.exists_mulVec_eq_zero_iff.1 ⟨x, hx, hk⟩
   rw [hdetM] at this
   exact_mod_cast this
@@ -71,7 +71,9 @@ theorem exists_supports_int : ∀ (φ : InvFun ℤ) (X : Type) [AddCommGroup X] 
       ∃ (d m : ℕ) (a : Fin m → X), 1 ≤ d ∧ Supports id φ d γ a := by
   intro φ X _ _ _ hφ r γ hγ
   classical
-  obtain ⟨N, ℓ, hN, h1, h2, h3⟩ := hγ.strict
+  have hstrict := hγ.strict
+  unfold IsStrict at hstrict
+  obtain ⟨N, ℓ, hN, h1, h2, h3⟩ := hstrict
   let b := Module.finBasis ℤ X
   let S : Fin (Module.finrank ℤ X) → Fin (Module.finrank ℤ X) → LinearMap.BilinForm ℤ X := fun i j =>
     (LinearMap.mul ℤ ℤ).compl₁₂ (b.coord i) (b.coord j) + (LinearMap.mul ℤ ℤ).compl₁₂ (b.coord j) (b.coord i)

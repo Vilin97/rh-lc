@@ -156,10 +156,10 @@ private lemma fderiv_prod_logCutoff_coordVec {n : ℕ} (k : ℕ) (S : Finset (Fi
   have hcoord : ∀ (t : ℝ) (a : Fin n), (v + t • (c • _root_.GlobalTheory.GoodMetric.coordVec b)) a =
       if a = b then v b + (t : ℂ) * c else v a := by
     intro t a
-    simp only [_root_.GlobalTheory.GoodMetric.coordVec, PiLp.add_apply, PiLp.smul_apply, EuclideanSpace.single_apply]
+    simp only [_root_.GlobalTheory.GoodMetric.coordVec, PiLp.add_apply, PiLp.smul_apply, PiLp.single_apply]
     split_ifs with h
     · subst h; simp [Complex.real_smul]
-    · simp
+    · simp [h]
   have hψline : HasDerivAt (fun t : ℝ => _root_.GlobalTheory.GoodTop.logCutoff k (v b + (t : ℂ) * c))
       (fderiv ℝ (_root_.GlobalTheory.GoodTop.logCutoff k) (v b) c) 0 := by
     have hl : HasDerivAt (fun t : ℝ => v b + (t : ℂ) * c) c 0 := by

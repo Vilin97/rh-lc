@@ -104,10 +104,12 @@ def pullChart (π : Y ⟶ X) [IsIso π] (hπ : π ≫ p = q) (c : AlgChart p σ 
   source_subset y hy := (mem_ptsIn_preimage (m := ptMap π hπ σ) (fun _ => rfl)).2 (c.source_subset hy)
   apply_eq y hy a := (c.apply_eq _ hy a).trans (ev_of_comp (m := ptMap π hπ σ) (fun _ => rfl) _ _ _)
   holo W f := by
-    refine ((c.holo (inv π ⁻¹ᵁ W) ((inv π).app W f)).mono fun v hv => ⟨hv.1,
-      (mem_ptsIn_preimage (m := ptMap (inv π) (inv_comp π hπ) σ) (f := inv π) (fun _ => rfl)).2 hv.2⟩).congr
-      fun v _ => ?_
-    exact ev_of_comp (m := ptMap (inv π) (inv_comp π hπ) σ) (f := inv π) (fun _ => rfl) W f _
+    refine (c.holo (inv π ⁻¹ᵁ W) ((inv π).app W f)).congr_mono ?_ ?_
+    · intro v _
+      exact ev_of_comp (m := ptMap (inv π) (inv_comp π hπ) σ) (f := inv π) (fun _ => rfl) W f _
+    · intro v hv
+      exact ⟨hv.1, (mem_ptsIn_preimage (m := ptMap (inv π) (inv_comp π hπ) σ)
+        (f := inv π) (fun _ => rfl)).2 hv.2⟩
 
 theorem pullChart_symm (π : Y ⟶ X) [IsIso π] (hπ : π ≫ p = q) (c : AlgChart p σ D) (v : ReciprocityTheory.L2DbarEstimates.V D) :
     (pullChart π hπ c).e.symm v = ptMap (inv π) (inv_comp π hπ) σ (c.e.symm v) := rfl

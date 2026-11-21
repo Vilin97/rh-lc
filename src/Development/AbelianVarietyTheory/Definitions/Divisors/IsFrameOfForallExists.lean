@@ -481,6 +481,7 @@ def lift (φ : G ⟶ F) (h : ∀ V s, φ.app V s ∈ N.sec V) : G ⟶ N.toMod :=
   homOfLinear (G := N.toMod) (fun V => (appLinear φ V).codRestrict (N.sec V) (h V))
     fun hW s => Subtype.ext (app_resM φ hW s)
 
+@[reassoc (attr := simp)] theorem lift_incl (φ : G ⟶ F) (h : ∀ V s, φ.app V s ∈ N.sec V) :
     N.lift φ h ≫ N.incl = φ := rfl
 
 theorem isQuasicoherent [F.IsQuasicoherent]

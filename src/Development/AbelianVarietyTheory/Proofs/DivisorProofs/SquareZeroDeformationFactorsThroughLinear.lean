@@ -36,7 +36,7 @@ lemma derOf_injective (h h' : B →+* DualNumber K) (hfst : ∀ b, (h b).fst = a
   ext b
   · rw [hfst, hfst']
   · have := congrArg (fun D : Derivation R₀ B K => D b) e
-    simpa using this
+    simpa [derOf] using this
 
 lemma derivation_eq_of_basis {ι : Type} (e : Module.Basis ι B Ω[B⁄R₀]) (D D' : Derivation R₀ B K)
     (h : ∀ j, D.liftKaehlerDifferential (e j) = D'.liftKaehlerDifferential (e j)) : D = D' := by
@@ -102,7 +102,7 @@ theorem exists_linearCombination_eq :
   let D : (ι → K) → Derivation R₀ B K := fun M => derOf (hM M) (hMfst M) (hMc M)
   have hD : ∀ M x, D M x = ∑ i, M i * D (Pi.single i 1) x := by
     intro M x
-    simp [D, hM, Fintype.linearCombination_apply, Pi.single_apply, mul_comm]
+    simp [D, derOf, hM, Fintype.linearCombination_apply, Pi.single_apply, mul_comm]
   let w : ι → (Fin n → K) := fun i j => (D (Pi.single i 1)).liftKaehlerDifferential (e j)
   let L := Fintype.linearCombination K w
   have hL : ∀ M, L M = fun j => (D M).liftKaehlerDifferential (e j) := by

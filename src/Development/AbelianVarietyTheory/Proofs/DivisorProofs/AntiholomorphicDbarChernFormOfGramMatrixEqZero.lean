@@ -148,8 +148,9 @@ theorem dbar_form_mem {v : V n} {θ : Fin n → V n → ℂ} (hθ : ∀ a, ContD
 theorem coeff_charpolyRev_map {A B r : Type} [CommRing A] [CommRing B] [Fintype r] [DecidableEq r] (f : A →+* B)
     (M : Matrix r r A) (j : ℕ) : (M.map f).charpolyRev.coeff j = f (M.charpolyRev.coeff j) := by
   rw [← Polynomial.coeff_map, charpolyRev, charpolyRev, ← Polynomial.coe_mapRingHom, RingHom.map_det]
-  congr 2
-  ext i k : 2
+  apply congrArg (fun p : Polynomial B => p.coeff j)
+  apply congrArg Matrix.det
+  ext i k
   by_cases h : i = k <;> simp [h, Matrix.one_apply]
 
 theorem dbarAt_chernAt : ∀ {n : ℕ} {r : Type} [Fintype r] [DecidableEq r] (H : V n → Matrix r r ℂ) (s : Set (V n)),
@@ -164,8 +165,8 @@ theorem dbarAt_chernAt : ∀ {n : ℕ} {r : Type} [Fintype r] [DecidableEq r] (H
     have h1 := coeff_charpolyRev_map (MvPolynomial.aeval (R := ℂ) (sym (n := n))).toRingHom (-curvPoly H w) j
     have h2 := coeff_charpolyRev_map ((Pi.evalRingHom (fun _ : V n => Ev n) w).comp (closedRing v).subtype) M j
     refine h1.symm.trans (Eq.trans ?_ h2)
-    congr 2
-    ext i k : 2
+    apply congrArg (fun N : Matrix r r (Ev n) => N.charpolyRev.coeff j)
+    ext i k
     simp [M, curvPoly, curv, Algebra.smul_def]
   have hm : IsClosedAt v _ := (closedRing v).mul_mem (const_mem v (algebraMap ℂ _ (kappa ^ j))) (M.charpolyRev.coeff j).2
   have e : (fun w => (chernAt H w j : Alt n)) = fun w =>

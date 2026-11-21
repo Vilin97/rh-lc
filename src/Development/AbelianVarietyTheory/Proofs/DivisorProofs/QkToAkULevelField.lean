@@ -244,13 +244,14 @@ theorem qkToAkU_level_field : LL → FieldUF fun {R} _ _ {I} {D} {A} {G} _ _ U F
   have hN1 : 1 ≤ N := hN ▸ Nat.mul_pos hk hn
   have hf : (algebraMap F (AlgebraicClosure F)).comp (algebraMap (FractionRing R) F) = algebraMap _ _ :=
     (IsScalarTower.algebraMap_eq _ _ _).symm
-  have hp := (TorusExt.qkExt_iff D.tau_bimult _ hf p _).2 rfl
-  have hq := (TorusExt.qkExt_iff D.tau_bimult _ hf q _).2 rfl
+  obtain ⟨p', hp⟩ := qkExtExists R D.toPre F (AlgebraicClosure F) (algebraMap F _) (fun r => DFunLike.congr_fun hf r) k p
+  obtain ⟨q', hq⟩ := qkExtExists R D.toPre F (AlgebraicClosure F) (algebraMap F _) (fun r => DFunLike.congr_fun hf r) N q
   refine (TorsionExt.qkToAkU_iff_of_algebra hL.1.globalFns hL.1.kerPow U hN1 hq x).2 ?_
   refine DvrAnyChar.qkToAkU_level_any hL R I hI D A G hG U _ k n N hk hn hN
-    (TorusExt.qkExt D.tau_bimult _ hf p) _ _ hy ?_
-    ((TorsionExt.qkToAkU_iff_of_algebra hL.1.globalFns hL.1.kerPow U hk hp x).1 hx)
-  exact congrArg (TorusExt.gtExt D.toPre _ hf) hg
+    p' q' _ ?_ ?_ ((TorsionExt.qkToAkU_iff_of_algebra hL.1.globalFns hL.1.kerPow U hk hp x).1 hx)
+  · rw [hq.1, hp.1, hy]
+  · exact ((TorusExt.eq_gtExt_iff _ hf _ _).2 hq.2).trans
+      (((TorusExt.eq_gtExt_iff _ hf _ _).2 hp.2).trans (congrArg (TorusExt.gtExt D.toPre _ hf) hg).symm).symm
 
 theorem exists_sumI_smul {R : Type} [CommRing R] {I : Ideal R} [IsAdicComplete I R] {E Ix : Type} [AddCommGroup E]
     [Module R E] {x : Ix → E} {s : E} (h : SumI I x s) (a : Ix → R) : ∃ s', SumI I (fun i => a i • x i) s' := by

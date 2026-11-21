@@ -135,8 +135,8 @@ theorem fibres_of_gluing_facts (D : D7) (u : D.what₂.Word) (hpos : IsPosDef (D
   have g2 := h2 hT hT3 hsp F0 he hz
   have g3 := h3 hT hT3 hsp F0 he hz
   obtain ⟨g4f, g4c⟩ := h4 hT hT3 hsp F0 he hz Λ hΛ M hM
-  letI := unitaryActOnLatticesWLine D
-  letI := unitaryActOnLatticesW D
+  let := unitaryActOnLatticesWLine D
+  let := unitaryActOnLatticesW D
   have hinj : Set.InjOn (latticeWithZ D F0) (s : Set (LatV D)) := by
     intro Λ₁ hΛ₁ Λ₂ hΛ₂ heq
     rw [Finset.mem_coe] at hΛ₁ hΛ₂

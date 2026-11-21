@@ -205,9 +205,11 @@ def tensorLie (π : CuspSub E a) (Ξ : AlgRep E a) : Lie E a →ₗ[ℝ] Module.
   toFun X := (lieOp π X).rTensor _ + (Matrix.toLin' (Ξ.dmat X)).lTensor _
   map_add' X Y := by simp only [map_add (f := _), LinearMap.rTensor_add, LinearMap.lTensor_add]; abel
   map_smul' c X := by
-    rw [map_smul, map_smul, RingHom.id_apply, ← algebraMap_smul ℂ c (lieOp π X), ← algebraMap_smul ℂ c (Ξ.dmat X),
-      ← algebraMap_smul ℂ c (_ + _ : Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))), map_smul,
-      LinearMap.rTensor_smul, LinearMap.lTensor_smul, smul_add]
+    rw [map_smul (lieOp π), map_smul Ξ.dmat, RingHom.id_apply,
+      ← IsScalarTower.algebraMap_smul ℂ c (lieOp π X),
+      ← IsScalarTower.algebraMap_smul ℂ c (Ξ.dmat X),
+      map_smul Matrix.toLin', LinearMap.rTensor_smul, LinearMap.lTensor_smul,
+      ← smul_add, IsScalarTower.algebraMap_smul ℂ]
 
 theorem tensorLie_tmul (π : CuspSub E a) (Ξ : AlgRep E a) (X : Lie E a) (φ : π.V) (v : Fin Ξ.d → ℂ) :
     tensorLie π Ξ X (φ ⊗ₜ v) = π.op (.lie X) φ ⊗ₜ v + φ ⊗ₜ (Ξ.dmat X *ᵥ v) := rfl

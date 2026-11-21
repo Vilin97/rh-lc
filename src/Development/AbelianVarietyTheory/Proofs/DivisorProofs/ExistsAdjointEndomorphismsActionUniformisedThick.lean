@@ -34,7 +34,7 @@ theorem q_comm_of_coordEnd {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D
   · rw [Over.comp_left, Over.comp_left, Category.assoc, Category.assoc]
     have h2 : ((Over.pullback (thick R I e)).map a).left ≫ pullback.fst D.P.A.hom (thick R I e) =
         pullback.fst D.P.A.hom (thick R I e) ≫ a.left := by
-      simp; exact pullback.lift_fst _ _ _
+      simp
     rw [h2]
     exact hF.1
   · rw [Over.comp_left, Over.comp_left, Category.assoc, Category.assoc]

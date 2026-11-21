@@ -150,8 +150,8 @@ theorem contDiff_mulL {n : ℕ} :
   refine contDiff_pi.2 fun i => contDiff_pi.2 fun j => ?_
   change ContDiff ℝ ∞ fun p : Lie E n × Lie E n => ∑ k, p.1 i k * p.2 k j
   exact ContDiff.sum fun k _ =>
-    ((contDiff_apply_apply ℝ (Cinf E) i k).comp contDiff_fst).mul
-      ((contDiff_apply_apply ℝ (Cinf E) k j).comp contDiff_snd)
+    ((contDiff_apply_apply ℝ i k).comp contDiff_fst).mul
+      ((contDiff_apply_apply ℝ k j).comp contDiff_snd)
 
 
 omit [IsTotallyComplex E] in
@@ -163,7 +163,7 @@ theorem contDiff_blkMat_entry (hr : r ≤ a) (i k : Fin a) :
   · simp only [Matrix.fromBlocks_apply₁₁]; exact contDiff_const
   · simp only [Matrix.fromBlocks_apply₁₂]; exact contDiff_const
   · simp only [Matrix.fromBlocks_apply₂₁]; exact contDiff_const
-  · simp only [Matrix.fromBlocks_apply₂₂, Matrix.of_apply]; exact contDiff_apply_apply ℝ (Cinf E) i k
+  · simp only [Matrix.fromBlocks_apply₂₂, Matrix.of_apply]; exact contDiff_apply_apply ℝ i k
 
 
 omit [IsTotallyComplex E] in

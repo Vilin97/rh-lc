@@ -134,7 +134,8 @@ theorem main : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ
       rw [← hT, ← hT, ← hinv (fun i => pairA F ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (Y i)) 0)
         (pureA F f g) (mem_schA f hg)]
       congr 1
-      ring)
+      funext x
+      simp only [pureA, hff', psi_dot_inf hψ, hY, mul_assoc])
     exact ⟨α, fun f => (hT f).trans (hα f)⟩
 
   obtain ⟨f₀, hf₀⟩ := exists_schwartz_one (κ → mixedEmbedding.mixedSpace F)
@@ -143,11 +144,13 @@ theorem main : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ
       map_add' := fun g g' => by
         rw [← map_add (f := _)]
         congr 1
-        ring
+        funext x
+        simp [pureA, mul_add]
       map_smul' := fun s g => by
         rw [RingHom.id_apply, ← map_smul]
         congr 1
-        ring }
+        funext x
+        simp [pureA, mul_comm, mul_assoc] }
   obtain ⟨c, hc⟩ := GlobalTheory.CharForm.exists_eq_mul_apply_zero (κ → Af F) {χ | ∃ y : κ → Af F, χ = fun x => ψ (pairA F 0 (x ⬝ᵥ y))}
     (by
       intro N hN
@@ -163,7 +166,8 @@ theorem main : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ
       show l (pureA F f₀ _) = l (pureA F f₀ g)
       rw [← hinv (fun i => pairA F 0 (y i)) (pureA F f₀ g) (mem_schA f₀ hg)]
       congr 1
-      ring)
+      funext x
+      simp [pureA, dot_pairA_fin, mul_left_comm])
   refine ⟨c, fun φ hφ => ?_⟩
   induction hφ using Submodule.span_induction with
   | mem Φ hΦ =>

@@ -21,7 +21,7 @@ def pMinus (M : DSModel W S) (τ : D.what₂.Tau) : Set (Matrix (Fin W.rank) (Fi
   {Z | ∀ a b, ¬ (M.ε τ a = false ∧ M.ε τ b = true) → (M.fr τ * Z * (M.fr τ)⁻¹) a b = 0}
 
 abbrev KMap (M : DSModel W S) : Type :=
-  MultilinearMap ℂ (fun τ : D.what₂.Tau => lowT M τ) (GA D W → ℂ)
+  MultilinearMap (RingHom.id ℂ) (fun τ : D.what₂.Tau => lowT M τ) (GA D W → ℂ)
 
 
 variable (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))
@@ -41,7 +41,7 @@ def IsUnifModGrowth (φ : GA D W → ℂ) : Prop :=
       ‖(l.foldr (fun p f => Rder θ W p.1 p.2 f) φ) (x * g)‖ ≤ C * normInf θ W g ^ N
 
 
-def RestrictsTo (M : DSModel W S) (T : MMap M) (U : KMap M) : Prop :=
+def RestrictsTo (M : DSModel W S) (T : Formalism.IndefR.Mult.MMap M) (U : KMap M) : Prop :=
   ∀ e : ∀ τ, lowT M τ, T (fun τ => (e τ : M.sm τ)) = U e
 
 theorem single_mem_pMinus (M : DSModel W S) (τ : D.what₂.Tau) {a b : Fin W.rank} (ha : M.ε τ a = false)
@@ -51,7 +51,7 @@ theorem single_mem_pMinus (M : DSModel W S) (τ : D.what₂.Tau) {a b : Fin W.ra
     rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, Matrix.mul_nonsing_inv _ hu, Matrix.one_mul, Matrix.mul_assoc,
       Matrix.mul_nonsing_inv _ hu, Matrix.mul_one]
   intro c d hcd
-  rw [h, Matrix.single_apply, if_neg]
+  rw [h, Matrix.single_apply, ite_eq_right]
   rintro ⟨rfl, rfl⟩
   exact hcd ⟨ha, hb⟩
 

@@ -88,11 +88,9 @@ theorem continuous_realAd : Continuous (realAd F) :=
 
 theorem realAd_add (s t : ℝ) : realAd F (s + t) = realAd F s + realAd F t := by
   simp only [realAd, map_add (f := _)]
-  rfl
 
 theorem realAd_zero : realAd F 0 = 0 := by
   simp only [realAd, map_zero]
-  rfl
 
 theorem schr_smul_add {R : Type} [CommRing R] [Invertible (2 : R)] (ψ : AddChar R ℂ) {κ : Type} [Fintype κ]
     (v : (κ → R) × (κ → R)) (a b : R) (Φ : (κ → R) → ℂ) (z : κ → R) :

@@ -283,7 +283,7 @@ theorem dRho_dir {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) (h
     have a1 := congrFun (congrFun hw i) j
     have a2 := congrFun (congrFun (hfin t) i) j
     simp only [Matrix.map_apply, Matrix.zero_apply] at a1 a2 ⊢
-    rw [Matrix.add_apply, (finPart D).map_add (f := _), a1, a2, add_zero]
+    rw [Matrix.add_apply, map_add (finPart D), a1, a2, add_zero]
   have hfun : (fun t : ℝ => heisO ψ S T (L t) G w) = fun t : ℝ =>
       Complex.exp (-(Real.pi * Complex.I) * ((t * om : ℝ) : ℂ)) *
         (Complex.exp (-((Real.pi * Formalism.L2.Pj.xiR D : ℝ) : ℂ) * nrm (z + ((t : ℂ) * α) • Formalism.MainNotions.TaylorLogMetric.coordV D v)) *

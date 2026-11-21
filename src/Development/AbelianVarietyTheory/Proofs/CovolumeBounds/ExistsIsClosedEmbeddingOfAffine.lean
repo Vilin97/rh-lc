@@ -26,7 +26,8 @@ theorem PtsOver.t2Space [T1Space C] (p : X ⟶ S) [IsSeparated p] (s : Sp C ⟶ 
   let h := PtsOver.prodHomeomorph (IsPullback.of_hasPullback p p) s
   have hd : pullback.diagonal p ≫ pullback.fst p p ≫ p = p := by simp
   have key : ∀ x, h (PtsOver.map (pullback.diagonal p) hd s x) = (x, x) := fun x =>
-    Prod.ext (Subtype.ext (by simp [h])) (Subtype.ext (by simp [h]))
+    Prod.ext (Subtype.ext (by simp [h, PtsOver.prodHomeomorph, PtsOver.map, Category.assoc]))
+      (Subtype.ext (by simp [h, PtsOver.prodHomeomorph, PtsOver.map, Category.assoc]))
   have hc := (h.isClosedEmbedding.comp (PtsOver.isClosedEmbedding_map (pullback.diagonal p) hd s)).isClosed_range
   rw [show h ∘ PtsOver.map (pullback.diagonal p) hd s = fun x => (x, x) from funext key] at hc
   rwa [← Set.range_diag]
@@ -101,8 +102,8 @@ theorem continuousMul_over (A : Over (Sp C)) [MonObj A] : ContinuousMul (𝟙_ (
 
 open scoped MonObj in
 theorem isTopologicalGroup_over (A : Over (Sp C)) [GrpObj A] : IsTopologicalGroup (𝟙_ (Over (Sp C)) ⟶ A) where
-  continuous_mul := (continuousMul_over A).continuous_mul
-  continuous_inv := continuous_over_comp (GrpObj.inv (X := A))
+  toContinuousMul := continuousMul_over A
+  toContinuousInv := ⟨continuous_over_comp (GrpObj.inv (X := A))⟩
 
 variable {R : Type} [CommRing R] {N : ℕ}
 
@@ -110,7 +111,11 @@ variable {R : Type} [CommRing R] {N : ℕ}
 omit [TopologicalSpace C] [IsTopologicalRing C] [IsLocalRing C] [IsOpenUnits C] in
 theorem le_pt_preimage_chart_iff (c : R →+* C) (v : Fin (N + 1) → C) (hv : Ideal.span (Set.range v) = ⊤)
     (i : Fin (N + 1)) : ⊤ ≤ pt c v hv ⁻¹ᵁ chart R N i ↔ IsUnit (v i) := by
-  rw [pt_preimage_chart, top_le_iff]
+  have hchart : pt c v hv ⁻¹ᵁ chart R N i = spOpen (v i) := by
+    rw [pt, chart, ProjPoint.ofHom_preimage_basicOpen _ _ _ one_pos (X_mem R N i),
+      MvPolynomial.eval₂Hom_X']
+    rfl
+  rw [hchart, top_le_iff]
   rw [← Ideal.span_singleton_eq_top, ← Set.range_const (ι := Unit), ← iSup_spOpen_eq_top_iff, iSup_const]
 
 
@@ -121,13 +126,27 @@ theorem valR_pt_ratio (c : R →+* C) (v : Fin (N + 1) → C) (hv : Ideal.span (
   have h := (le_pt_preimage_chart_iff c v hv i).2 hi
   have e : ∀ a : C, (Scheme.ΓSpecIso (CommRingCat.of C)).hom.hom (fnOn ⊤ a) = a := fun a =>
     (congrArg _ (GlobalTheory.Cartier.resG_self (X := Sp C) le_top _)).trans (Iso.inv_hom_id_apply (Scheme.ΓSpecIso (CommRingCat.of C)) a)
-  have h1 := congrArg (Scheme.ΓSpecIso (CommRingCat.of C)).hom.hom (pullRatio_pt_top_mul c v hv i j hi h)
+  have hmul : pullRatio (pt c v hv) ⊤ i h j * fnOn ⊤ (v i) = fnOn ⊤ (v j) := by
+    have hu : IsUnit (MvPolynomial.eval₂Hom c v (MvPolynomial.X i)) := by
+      simpa only [MvPolynomial.eval₂Hom_X'] using hi
+    have hpt : pt c v hv =
+        spMap (ProjPoint.awayLift (grading R N) (MvPolynomial.eval₂Hom c v) (MvPolynomial.X i) hu) ≫ _ :=
+      ProjPoint.ofHom_eq_awayι _ _ _ one_pos (X_mem R N i) hu
+    have hratio := ProjPoint.awayLift_mk_mul (grading R N) (MvPolynomial.eval₂Hom c v) hu
+      (X_mem R N i) 1 (MvPolynomial.X j) (X_mem R N j)
+    rw [pullRatio_of_eq hpt h (hpt ▸ h), pullRatio_spMap_awayι, ← map_mul]
+    exact congrArg (fnOn ⊤) (by simpa only [ratioAway, MvPolynomial.eval₂Hom_X', pow_one] using hratio)
+  have h1 := congrArg (Scheme.ΓSpecIso (CommRingCat.of C)).hom.hom hmul
   rw [map_mul, e, e] at h1
   rw [valR_eq _ _ h, ← h1, mul_assoc, Ring.mul_inverse_cancel _ hi, mul_one]
   rfl
 
 def projPt (c : R →+* C) (v : Unimodular C N) : PtsOver (PSpace.str R N) (spMap c) :=
-  ⟨pt c v.1 v.2, pt_str c v.1 v.2⟩
+  ⟨pt c v.1 v.2, by
+    rw [pt, PSpace.str, ProjPoint.ofHom_toSpecZero_assoc, ← Spec.map_comp]
+    congr 1
+    ext1
+    exact RingHom.ext fun r => MvPolynomial.eval₂Hom_C c v.1 r⟩
 
 
 omit [TopologicalSpace C] [IsTopologicalRing C] [IsOpenUnits C] in

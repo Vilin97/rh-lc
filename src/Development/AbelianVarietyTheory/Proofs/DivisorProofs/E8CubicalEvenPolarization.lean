@@ -52,14 +52,31 @@ theorem exists_cp_evenOn : Laws → Laws2 → GlobalTheory.LN.Ega → ∀ (V₁ 
   have hwL' : LBIso Pc.L.L (cubeLB (powObj G₀ 8) ![𝟙 _, w] Pc.L.L) := by rw [hPc]; exact hwL
   obtain ⟨P₀, v, hv⟩ := GlobalTheory.UU.exists_isLevelCP (maximalIdeal V₁) 0 Pc
   have hB' : IsAbelianScheme (thickObj V₁ (maximalIdeal V₁) 0 D'.toPre.P.A) :=
-    GlobalTheory.isAbelianScheme_pullback_obj _ _ D'.toPre.P.isAb
+    by
+      have h := D'.toPre.P.isAb
+      have := h.comm
+      have := h.smooth
+      have := h.proper
+      have := h.geomConnected
+      refine ⟨inferInstance, ?_, ?_, ?_⟩
+      · change Smooth (pullback.snd D'.toPre.P.A.hom (thick V₁ (maximalIdeal V₁) 0))
+        infer_instance
+      · change IsProper (pullback.snd D'.toPre.P.A.hom (thick V₁ (maximalIdeal V₁) 0))
+        infer_instance
+      · change GeometricallyConnected (pullback.snd D'.toPre.P.A.hom (thick V₁ (maximalIdeal V₁) 0))
+        infer_instance
   let Q₀ := GlobalTheory.Mum.tqOfGtCoord (U'.gt 0) hB'
   have hm : (maximalIdeal V₁ ^ (0 + 1)).IsMaximal := by
     rw [zero_add, pow_one]; infer_instance
   letI : Field (V₁ ⧸ maximalIdeal V₁ ^ (0 + 1)) := Ideal.Quotient.field _
-  have hS0 := IsSemiAbelian.pullback (thick V₁ (maximalIdeal V₁) 0) (powObj G₀ 8) hS8
-  have := hS0.smooth
-  have := hS0.geomConnected
+  have : Smooth (thickObj V₁ (maximalIdeal V₁) 0 (powObj G₀ 8)).hom := by
+    have := hS8.smooth
+    change Smooth (pullback.snd (powObj G₀ 8).hom (thick V₁ (maximalIdeal V₁) 0))
+    infer_instance
+  have : GeometricallyConnected (thickObj V₁ (maximalIdeal V₁) 0 (powObj G₀ 8)).hom := by
+    have := hS8.geomConnected
+    change GeometricallyConnected (pullback.snd (powObj G₀ 8).hom (thick V₁ (maximalIdeal V₁) 0))
+    infer_instance
   have := Q₀.i_hom
   letI := D'.toPre.addX
   haveI := D'.toPre.freeX

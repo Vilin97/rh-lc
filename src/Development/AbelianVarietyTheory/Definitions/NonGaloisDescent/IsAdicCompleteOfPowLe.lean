@@ -41,7 +41,7 @@ theorem isAdicComplete_of_pow_le {A : Type} [CommRing A] {I J : Ideal A} {N : �
     have := hx n
     simp only [SModEq.zero, smul_eq_mul, Ideal.mul_top] at this ⊢
     exact Ideal.pow_right_mono hJ n this
-  toIsPrecomplete := ⟨fun f hf => by
+  prec' f hf := by
     simp only [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top] at hf ⊢
     obtain ⟨L, hL⟩ := IsPrecomplete.prec' (I := I) f fun {m n} hmn => by
       simp only [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top]
@@ -51,7 +51,7 @@ theorem isAdicComplete_of_pow_le {A : Type} [CommRing A] {I J : Ideal A} {N : �
     have h1 := hf (m := n) (n := (N + 1) * n) (Nat.le_mul_of_pos_left n N.succ_pos)
     have h2 := hL ((N + 1) * n)
     rw [pow_mul] at h2
-    simpa using add_mem h1 (Ideal.pow_right_mono h n h2)⟩
+    simpa using add_mem h1 (Ideal.pow_right_mono h n h2)
 
 theorem ringHom_ext_of_sep {R B : Type} [CommRing R] [CommRing B] (f g : R⟦X⟧ →+* B)
     (hC : ∀ r, f (C r) = g (C r)) (hX : f X = g X) (hs : ∀ x : B, (∀ n, f X ^ n ∣ x) → x = 0) : f = g := by

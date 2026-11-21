@@ -150,7 +150,7 @@ private theorem conj_mem (c : Fin n → ℤ) {g : GL (Fin n) F} (hg : g ∈ iwah
   · rw [diagPow_conj_apply]
     simp [h3]
 
-private abbrev Lw (F : Type*) [Field F] [ValuativeRel F] [TopologicalSpace F]
+private noncomputable abbrev Lw (F : Type*) [Field F] [ValuativeRel F] [TopologicalSpace F]
     [IsNonarchimedeanLocalField F] (n : ℕ) : Set (GL (Fin n) F) :=
   ((iwahori F n ⊓ oppositeUnipotentRadical F n (id : Fin n → Fin n) : Subgroup _) : Set _)
 

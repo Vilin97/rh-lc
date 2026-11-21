@@ -214,8 +214,27 @@ theorem levelSumX (h : (mtildeGSD W Ch sel mu P).Ok) (h' : (mtildeKGSD W Ch sel 
     (φ ψ : DecoSet (E := X.E) (n := R.N R.m - 1) (ST := ∅) (SG := rowSG Pr sel mu) → VV X.K W.sgTrue)
     (hφ : φ ∈ (mtildeGSD W Ch sel mu P).EqFun) (hψ : ψ ∈ (mtildeGSD W Ch sel mu P).EqFun) :
     (mtildeGSD W Ch sel mu P).ip h φ ψ = ((Nat.card P.grp : X.K))⁻¹ * (mtildeKGSD W Ch sel mu).ip h' φ ψ := by
-  exact rf_ip_split (rowVal W (rowSG Pr sel mu)) (rowTy_split Ch sel mu P).inv
-    (fun a ha => Subtype.ext (rf_g0Hat_injX Ch sel mu a.1 ha)) h h' φ ψ hφ hψ
+  let ΛP := rowTy Ch sel mu P
+  let ΛK := rowTyKK Ch sel mu
+  let ι := unipotentGroupBlockEmbedding Pr sel mu (r_le_X' R)
+  have H : LevFam.Split ι ΛP ΛK P := rowTy_split Ch sel mu P
+  have Hinv : LevFam.Split ι ΛP.inv ΛK.inv P.inv :=
+    { fac := by
+        intro g
+        obtain ⟨a, k, hfac, hchr⟩ := H.fac ⟨g.1, g.2⟩
+        refine ⟨⟨a.1, a.2⟩, ⟨k.1, k.2⟩, hfac, ?_⟩
+        rw [ΛP.inv_chr ⟨g.1, g.2⟩, P.inv_chr a, ΛK.inv_chr k, hchr, mul_inv]
+      emb := by
+        intro a
+        obtain ⟨hm, hchr⟩ := H.emb ⟨a.1, a.2⟩
+        exact ⟨hm, by rw [ΛP.inv_chr ⟨_, hm⟩, P.inv_chr ⟨a.1, a.2⟩, hchr]⟩
+      sub := by
+        intro k
+        obtain ⟨hm, hchr⟩ := H.sub ⟨k.1, k.2⟩
+        exact ⟨hm, by rw [ΛP.inv_chr ⟨_, hm⟩, ΛK.inv_chr ⟨k.1, k.2⟩, hchr]⟩ }
+  have hinj : ∀ a : ↥P.inv.grp, ι a.1 ∈ ΛK.inv.grp → a = 1 := fun a ha =>
+    Subtype.ext (rf_g0Hat_injX Ch sel mu a.1 ha)
+  exact rf_ip_split (rowVal W (rowSG Pr sel mu)) Hinv hinj h h' φ ψ hφ hψ
 
 end Rows
 

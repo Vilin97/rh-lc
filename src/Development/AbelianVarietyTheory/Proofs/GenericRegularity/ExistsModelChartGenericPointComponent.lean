@@ -150,9 +150,9 @@ theorem exists_section (hT : Out.SecTwistSt) (Y : Model Xo c (algebraMap (𝓞 c
   obtain ⟨w, hw, -⟩ := n.lin
   have iso : LBIso t'.PP.L ((Y.t.PP.L.pull m₀.φ).pull m₂.φ) := LBIso.chartPull (chartPullId _) (chartPullLinComb Y.t.PP.L m₀.φ (K := PUnit) (fun _ => m₂.φ)
     (fun _ => n.φ) (fun _ => 1) (𝟙 _) (fun _ => by rw [Category.id_comp]; exact hn.symm)) ⟨w, hw⟩
-  have hL₀ := pull_isLB Y.t.PP.isLB m₀.φ
+  have hL₀ := LB.isLB_pull Y.t.PP.isLB m₀.φ
   obtain ⟨h, h0, θ, hθ, nz⟩ := SecSpread.main R t₀.G t₀.semi _ hL₀ K _ m₂.φ _ m₂.cart.1
-    (exists_sec_ne_zero_of_iso t'.PP.isLB (pull_isLB hL₀ _) iso b k hk)
+    (exists_sec_ne_zero_of_iso t'.PP.isLB (LB.isLB_pull hL₀ _) iso b k hk)
   have : IsOpenImmersion m₀.φ :=
     MorphismProperty.of_isPullback (P := @IsOpenImmersion) m₀.cart.1.flip inferInstance
   have pre : ∀ p : Sp R, hU.fromSpec p ∈ Y.X.basicOpen h ↔ p ∈ PrimeSpectrum.basicOpen h := fun p =>

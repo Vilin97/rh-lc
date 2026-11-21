@@ -53,6 +53,8 @@ theorem invV_heisV_snd {ν : Measure (AF F)} (hν : IsCov1 ν) {𝓓 : Set (Fin 
     unfold invV
     rw [← integral_const_mul]
     congr 1
+    funext y
+    simp only [heisV, P, Prod.mk_add_mk, add_zero]
     rw [mul_right_comm, ← AddChar.map_add_eq_mul, mul_left_comm, ← AddChar.map_add_eq_mul, mul_comm]
     congr 2
     simp only [symV, dotProduct_add, zero_dotProduct]

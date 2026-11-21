@@ -142,7 +142,7 @@ theorem bounded_of_fg (he : ∀ x, x ∈ (algebraMap K.O K.E).range ↔ Valued.v
     rw [mulHom_apply]
     simp only [mulHom_apply, Finset.sum_mul, smul_mul_assoc]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [← algebraMap_smul K.E (f _), map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
+      simp only [← algebraMap_smul K.E (f _), map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply,
       Finsupp.smul_apply, smul_eq_mul, map_mul]
   rw [hsum]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun y _ => ?_)

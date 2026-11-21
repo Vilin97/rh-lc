@@ -23,6 +23,8 @@ theorem exists_factor_of_isogeny : ∀ (K : Type) [Field K] (A B C : AbVar K) (q
   have hqc : QuasiCompact q.hom.left := inferInstance
   obtain ⟨⟨ψ, hψ, hc⟩, -⟩ := GlobalTheory.exists_monHom_factor_of_flat_surjective _ A.X B.X C.X q.hom f.hom
     inferInstance inferInstance hflat hsurj hqc hker
-  exact ⟨Hom.mk ψ, hom_ext (by simpa using hc)⟩
+  refine ⟨Hom.mk ψ, ?_⟩
+  apply Subtype.ext
+  exact hc
 
 end GlobalTheory.AV.AbVar

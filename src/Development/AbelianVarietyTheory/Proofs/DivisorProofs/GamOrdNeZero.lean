@@ -62,7 +62,7 @@ theorem finite_finCl (V : HSp D) (K : Subgroup (GL (Fin V.rank) (Lev.EAf D)))
   choose x hx using fun a => gfcToGf_surjective V (c a)
   refine Finite.of_surjective (fun a : Fin m => (DoubleCoset.mk (ratFin V) (K.comap (finG V)) (x a) : FinCl V K)) ?_
   intro q
-  rw [← DoubleCoset.out_eq' _ _ q]
+  rw [← DoubleCoset.out_eq' q]
   set y := Quotient.out q
   obtain ⟨a, γ, k, e⟩ := hc (gfcToGf V y)
   obtain ⟨z, hz⟩ := gfcToGf_surjective V (Bridge.ratF V γ)

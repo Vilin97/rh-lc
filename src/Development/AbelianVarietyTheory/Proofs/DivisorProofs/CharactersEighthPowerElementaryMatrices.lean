@@ -27,11 +27,18 @@ theorem isMonHom_of_coords {S : Scheme.{0}} {B C X : Over S} [GrpObj B] [GrpObj 
     (pr : Fin 8 → (B ⟶ C)) (hpr : ∀ a, IsMonHom (pr a))
     (huniv : ∀ (T : Over S) (y : Fin 8 → (T ⟶ C)), ∃! x : T ⟶ B, ∀ a, x ≫ pr a = y a)
     (z : X ⟶ B) (h : ∀ a, IsMonHom (z ≫ pr a)) : IsMonHom z := by
-  refine GlobalTheory.GrpPullPow.isMonHom_of_mul_pts z fun T x y => ?_
-  refine (huniv T (fun a => (x * y) ≫ z ≫ pr a)).unique (fun a => Category.assoc _ _ _) (fun a => ?_)
-  haveI := hpr a
-  haveI := h a
-  rw [MonObj.mul_comp, Category.assoc, Category.assoc, ← MonObj.mul_comp]
+  have hm : ∀ (T : Over S) (x y : T ⟶ X), (x * y) ≫ z = (x ≫ z) * (y ≫ z) := by
+    intro T x y
+    refine (huniv T (fun a => (x * y) ≫ z ≫ pr a)).unique (fun a => Category.assoc _ _ _) (fun a => ?_)
+    haveI := hpr a
+    haveI := h a
+    rw [MonObj.mul_comp, Category.assoc, Category.assoc, ← MonObj.mul_comp]
+  exact { one_hom := by
+            rw [MonObj.one_eq_one, MonObj.one_eq_one]
+            exact map_one (MonoidHom.mk' (fun x : 𝟙_ (Over S) ⟶ X ↦ x ≫ z) (hm _))
+          mul_hom := by
+            rw [MonObj.mul_eq_mul, hm, MonObj.mul_eq_mul, MonObj.comp_mul]
+            simp }
 
 theorem isMonHom_one {S : Scheme.{0}} {B C : Over S} [GrpObj B] [GrpObj C] : IsMonHom (1 : B ⟶ C) :=
   inferInstanceAs (IsMonHom (toUnit B ≫ η[C]))
@@ -167,7 +174,7 @@ theorem characters_eighthPower_elementaryMatrices : ∀ (R : Type) [CommRing R] 
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [map_sum, e, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     · have := DFunLike.congr_fun hcd x
-      simpa [AddMonoidHom.finset_sum_apply] using this
+      simpa using this
   · intro a b f f₁ m hf hf₁ hff₁ hm w x
     haveI := hf
     haveI := hpG w

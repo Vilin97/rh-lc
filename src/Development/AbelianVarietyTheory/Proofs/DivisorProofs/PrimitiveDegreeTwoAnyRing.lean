@@ -19,7 +19,7 @@ theorem primE2_any_ring : PrimitiveExtendedDegTwoVanish := by
   apply GlobalTheory.T.primitive_degree_two_extension
   apply GlobalTheory.T.additiveClassDegreeTwo_structureSheaf_vanish
   intro R _ A _ g hA hs
-  obtain ⟨⟨hfin, hproj, hrk⟩, hw, -, -⟩ := GlobalTheory.T.abelian_structure_cohomology_statement R A g hA hs
-  exact ⟨⟨hfin, hproj, hrk⟩, hw⟩
+  exact ⟨(GlobalTheory.T.abelian_structure_cohomology_statement R A g hA hs).1,
+    (GlobalTheory.T.abelian_structure_cohomology_statement R A g hA hs).2.1⟩
 
 end GlobalTheory.Obs

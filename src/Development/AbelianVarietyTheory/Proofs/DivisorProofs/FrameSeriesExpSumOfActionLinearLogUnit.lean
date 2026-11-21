@@ -39,7 +39,10 @@ theorem frame_subst_ev_pt {C : Type} [CommRing C] {d n : ℕ} {σ : Type} (b : F
     subst t (ev ![pt C d b] f) = subst (fun p : Fin 1 × Fin d => t (b, p.2)) f := by
   rw [frame_subst_ev _ (frame_cc_pt b) ht]
   congr 1
-  exact subst_X ht _
+  funext p
+  rcases p with ⟨j, i⟩
+  fin_cases j
+  simpa [pt] using (subst_X (R := C) ht (b, i))
 
 theorem frame_exp_zero {C : Type} [CommRing C] [Algebra ℚ C] {σ : Type} :
     PowerSeries.subst (0 : MvPowerSeries σ C) (PowerSeries.exp C) = 1 := by

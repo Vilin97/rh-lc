@@ -23,7 +23,7 @@ theorem sep_of_covBy : ∀ {R : Type} [CommRing R] {C : Type} [Category.{0} C] {
   intro R _ C _ C' _ F G _ _ H _ t Sg _ hcov
   obtain ⟨n, b, hb, hc⟩ := hcov
   intro x hx
-  refine sep_std H hb x fun S u ⟨i, hi⟩ ↦ ?_
+  refine Desc.sep_std H hb x fun S u ⟨i, hi⟩ ↦ ?_
   obtain ⟨t', a, ha, ⟨w⟩⟩ := hc i S u hi
   have e : u = G.map a ≫ w := Subsingleton.elim _ _
   have h0 : mp F (G.map a) x = 0 := hx t' a ha

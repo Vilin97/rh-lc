@@ -92,8 +92,21 @@ theorem unitLat_isLat_selfDual : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
   refine ⟨⟨?_, ?_⟩, ?_⟩
   · rw [hmap]
     exact (intVec_fg K n).map _
-  · intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  · apply top_unique
+    intro y _
+    rw [← hGP y, ← Finset.univ_sum_single (P *ᵥ ψ y), map_sum]
+    apply Submodule.sum_mem
+    intro i _
+    have hi : G (Pi.single i (1 : K.E)) ∈ unitLat e B ψ q := by
+      rw [hmemL, hPG]
+      exact single_mem_intVec K i
+    have hs : G (Pi.single i (1 : K.E)) ∈ Submodule.span K.E (unitLat e B ψ q : Set B.A) :=
+      Submodule.subset_span hi
+    have heq : Pi.single i ((P *ᵥ ψ y) i) = (P *ᵥ ψ y) i • Pi.single i (1 : K.E) := by
+      ext j
+      simp [Pi.single_apply]
+    rw [heq, map_smul]
+    exact Submodule.smul_mem _ _ hs
   · intro y
     rw [hmemL]
     constructor

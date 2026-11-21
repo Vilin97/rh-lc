@@ -53,9 +53,9 @@ theorem cocycle_descends : ∀ (R : Type) [CommRing R] (D D' : Type) [CommRing D
         restrictR hT hE (Algebra.TensorProduct.lift f g (fun _ _ ↦ Commute.all _ _))
       have hn := hnat (D' ⊗[D] D') E i₁ i₂ ρ h12
       have e1 : ρ.comp i₁ = restrictR h' hE f := by
-        ext x; simp [ρ, i₁]
+        ext x; simp [ρ, i₁, restrictR]
       have e2 : ρ.comp i₂ = restrictR h' hE g := by
-        ext x; simp [ρ, i₂]
+        ext x; simp [ρ, i₂, restrictR]
       rw [e1, e2] at hn
       exact hn.symm
     have hc : ∀ f g : D' →ₐ[D] E, (restrictR h' hE f).comp ψ = (restrictR h' hE g).comp ψ := by
@@ -77,9 +77,9 @@ theorem cocycle_descends : ∀ (R : Type) [CommRing R] (D D' : Type) [CommRing D
     restrictR hT hE (Algebra.TensorProduct.lift α' β' (fun _ _ ↦ Commute.all _ _))
   have hn := hnat (D' ⊗[D] D') E i₁ i₂ ρ h12
   have e1 : ρ.comp i₁ = α := by
-    ext x; simp [ρ, i₁, α']
+    ext x; simp [ρ, i₁, α', restrictR]
   have e2 : ρ.comp i₂ = β := by
-    ext x; simp [ρ, i₂, β']
+    ext x; simp [ρ, i₂, β', restrictR]
   rw [e1, e2] at hn
   rw [hn]
   show Algebra.TensorProduct.lift α' β' (fun _ _ ↦ Commute.all _ _) (c (D' ⊗[D] D') i₁ i₂) = _

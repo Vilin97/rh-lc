@@ -51,14 +51,32 @@ def stalkLie (hξ : IsCptGen ξ) (M : LieModel G ξ E) (p : Cpt ξ) :
   pt e := e.tan
   tan e := e.tan_spec.1
   inj e e' h := by
-    refine Stalk.ext (M.inj ?_)
-    have a := ((M.extends_iff _ _ _).1 e.tan_spec).2
-    have b := ((M.extends_iff _ _ _).1 e'.tan_spec).2
-    rw [a, b]
-    exact congrArg _ h
+    refine Stalk.ext (M.inj (Over.OverMorphism.ext ?_))
+    rw [e.tan_spec.2, e'.tan_spec.2, show e.tan = e'.tan from h]
   onto v hv := by
-    obtain ⟨e, he⟩ := M.onto _ (isTanAt_base (genMap ξ p) (spec_genMap ξ p) hv)
-    have hx : M.Extends p e v := (M.extends_iff _ _ _).2 ⟨hv, he⟩
+    let φ := genMap ξ p
+    let d := GlobalTheory.CompanionTheory.Ar.dualMap φ
+    have halg : d.comp (algebraMap (X.presheaf.stalk p.1) (DualNumber (X.presheaf.stalk p.1))) =
+        (algebraMap Ω (DualNumber Ω)).comp φ := by
+      refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;>
+        simp [d, GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    let base : epsAt ξ ⟶ epsAt (R := X.presheaf.stalk p.1) (X.fromSpecStalk p.1) :=
+      Over.homMk (Spec.map (CommRingCat.ofHom d)) (by
+        change _ ≫ _ ≫ X.fromSpecStalk p.1 = _ ≫ ξ
+        rw [← Category.assoc, spec_comp, halg, ← spec_comp, Category.assoc, spec_genMap])
+    have ht : IsTanAt G ξ (base ≫ v) := by
+      have hfst : (TrivSqZeroExt.fstHom Ω Ω Ω).toRingHom.comp d =
+          φ.comp (TrivSqZeroExt.fstHom (X.presheaf.stalk p.1) (X.presheaf.stalk p.1)
+            (X.presheaf.stalk p.1)).toRingHom := by
+        refine RingHom.ext fun a => ?_
+        simp [d, GlobalTheory.CompanionTheory.Ar.dualMap]
+      change Spec.map _ ≫ Spec.map (CommRingCat.ofHom d) ≫ v.left = _
+      rw [← Category.assoc, spec_comp, hfst, ← spec_comp, Category.assoc, hv]
+      exact congrArg (·.left) (comp_one (M := G)
+        (Over.homMk (Spec.map (CommRingCat.ofHom φ)) (spec_genMap ξ p) :
+          Over.mk ξ ⟶ Over.mk (X.fromSpecStalk p.1)))
+    obtain ⟨e, he⟩ := M.onto _ ht
+    have hx : M.Extends p e v := ⟨hv, congrArg (·.left) he⟩
     let e' : Stalk M p := ⟨e, (M.mem_lat_iff _ _).2 ⟨v, hx⟩⟩
     exact ⟨e', e'.tan_spec.unique (hξ.inj p) hx⟩
   add e e' := (e + e').tan_spec.unique (hξ.inj p) (e.tan_spec.add e'.tan_spec)
@@ -113,7 +131,9 @@ theorem exists_lieFunctional : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsC
   let f' : Stalk M ⟨centre z, h⟩ →ₗ[X.presheaf.stalk (centre z)] R :=
     { toFun := fun e => ψ (σ e)
       map_add' := fun e e' => by
-        have : σ (e + e') = σ e + σ e' := hgi (by simp [hσ])
+        have : σ (e + e') = σ e + σ e' := hgi (by
+          simp only [map_add, hσ]
+          exact map_add f e.val e'.val)
         rw [this, map_add (f := _)]
       map_smul' := fun s e => by
         have : σ (s • e) = s * σ e := hgi (by

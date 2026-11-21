@@ -31,7 +31,7 @@ theorem krullDimLE_isLocalRing_quot_pow {R : Type} [CommRing R] (m : Ideal R)
     exact (Ideal.map_comap_of_surjective _ Ideal.Quotient.mk_surjective P).symm.trans
       (congrArg _ (hm.eq_of_le hc.ne_top h1).symm)
   obtain ⟨P, hP⟩ := Ideal.exists_maximal (R ⧸ m ^ (n + 1))
-  exact ((Ring.krullDimLE_zero_and_isLocalRing_tfae (R ⧸ m ^ (n + 1))).out 1 0 rfl rfl).mp
+  exact ((Ring.krullDimLE_zero_and_isLocalRing_tfae (R ⧸ m ^ (n + 1))).out 2 1 rfl rfl).mp
     ⟨P, hP.isPrime, fun Q hQ => (key Q hQ).trans (key P hP.isPrime).symm⟩
 
 variable {R : Type} [CommRing R]
@@ -100,7 +100,7 @@ theorem projective_coker_of_approx [IsNoetherianRing R] {A B : Type} [AddCommGro
   obtain ⟨l, hl⟩ := GlobalTheory.split_injective_of_forall_lTensor_residueField_injective
     (LinearMap.range f).subtype hinj
   have hex := (Function.Exact.split_tfae (LinearMap.exact_subtype_mkQ (LinearMap.range f))
-    Subtype.val_injective (Submodule.mkQ_surjective _)).out 0 1
+    Subtype.val_injective (Submodule.mkQ_surjective _)).out 1 2
   obtain ⟨s, hs⟩ := hex.2 ⟨l, hl⟩
   exact Module.Projective.of_split s _ hs
 

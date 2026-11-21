@@ -557,8 +557,7 @@ theorem isLB_detLie [IsNoetherianRing O] (hP : PushInvertible Y.t.G Y.t.PP.L) : 
       TopologicalSpace.Opens.mem_iSup.2 ⟨M.toMChart, hM⟩)
     fun i j k _ _ z => ev_detChg_mul i j k z
 
-theorem isLB_detOm [IsNoetherianRing O] (hP : PushInvertible Y.t.G Y.t.PP.L) : (detOm Y).IsLB :=
-by
+theorem isLB_detOm [IsNoetherianRing O] (hP : PushInvertible Y.t.G Y.t.PP.L) : (detOm Y).IsLB := by
   have hA := isLB_detLie hP
   refine ⟨hA.cover, ?_, ?_⟩
   · intro i

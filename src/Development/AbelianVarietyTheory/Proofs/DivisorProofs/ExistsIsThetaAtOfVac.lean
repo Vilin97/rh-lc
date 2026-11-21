@@ -40,19 +40,7 @@ theorem mem_colLat_iff (B : GL (Fin n) K) (x : Fin n → K) :
   rw [key]
 
 theorem isLattice_colLat (B : GL (Fin n) K) : Submodule.IsLattice K (colLat B) := by
-  refine ⟨Submodule.fg_span (Set.finite_range _), eq_top_iff.2 fun x _ => ?_⟩
-  have e : x = ∑ j, (((B⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) *ᵥ x) j •
-      fun a : Fin n => (B : Matrix (Fin n) (Fin n) K) a j := by
-    have h : (B : Matrix (Fin n) (Fin n) K) *ᵥ (((B⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) *ᵥ x) = x := by
-      rw [Matrix.mulVec_mulVec, Units.mul_inv, Matrix.one_mulVec]
-    funext a
-    rw [Finset.sum_apply]
-    refine (congrFun h a).symm.trans ?_
-    generalize ((B⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) *ᵥ x = y
-    simp only [Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct]
-    exact Finset.sum_congr rfl fun j _ => mul_comm _ _
-  rw [e]
-  exact sum_mem fun j _ => Submodule.smul_mem _ _ (Submodule.subset_span (Submodule.subset_span ⟨j, rfl⟩))
+  exact Submodule.IsLattice.of_fg K (Submodule.fg_span (Set.finite_range _))
 
 
 omit [NumberField K] in

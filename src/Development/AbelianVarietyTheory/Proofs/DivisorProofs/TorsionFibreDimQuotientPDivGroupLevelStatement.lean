@@ -52,7 +52,7 @@ theorem _root_.GlobalTheory.T.torsion_fibreDim_quotient_pDivGroupLevel :
   have hmul := fibreDim_eq_ker_mul_range mul q
   have hlin : jₗ ∘ₗ mulₗ = μₗ ∘ₗ rjₗ := by
     ext b
-    change j (mulBy (R := O) (p ^ m) b) = μ (r (j b))
+    change j (mulBy (R := O) (A := B) (p ^ m) b) = μ (r (j b))
     rw [map_mulBy, hμ]
   have hrank : fibreRank mulₗ q = fibreRank rjₗ q := by
     rw [← (FibreRanks.fibre_ranks O B B (G.A (k + m)) mulₗ).2.1 jₗ q hjq, hlin,

@@ -24,7 +24,7 @@ theorem exists_coords {O : Type} [CommRing O] [StarRing O] [IsDedekindDomain O]
   have := Forms.projective_of_int O X
   have := Forms.finite_balTensor (O := O) (X := X)
   have := Forms.free_balTensor (X := X) hw
-  let e := Module.Free.chooseBasis ℤ ((TensorProduct ℤ X X) ⧸ Forms.balTensorRel O X)
+  let e := Module.Free.chooseBasis ℤ ((TensorProduct ℤ X X) ⧸ Forms.balTensorRel (O := O) (X := X))
   have hm := Forms.balTensorMk_mem_balForms O X
   let β : _ → PolFan.balForms (star : O → O) X := fun j =>
     ⟨(Forms.balTensorMk O).compr₂ (e.coord j),

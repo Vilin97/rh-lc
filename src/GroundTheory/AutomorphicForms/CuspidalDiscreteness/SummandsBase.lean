@@ -36,7 +36,7 @@ def archP : archGroup K n →* Reduction.normOneGL (K := K) (n := n) :=
   (archProj (K := K) (n := n)).comp (archGroup K n).subtype
 
 @[simp] theorem archimedeanProjection_apply (a : archGroup K n) :
-    archP K n a = archProj (a : ArchUnits K n) := rfl
+    archP K n a = archProj K n (a : ArchUnits K n) := rfl
 
 theorem continuous_archP : Continuous (archP K n) := by
   have hProj : Continuous (archProj (K := K) (n := n)) := by

@@ -216,8 +216,7 @@ theorem bc_facts (P : AbelianDeRham) {S R : Type} [CommRing S] [CommRing R] {σ 
   refine ⟨top_le_iff.1 fun c _ ↦ ?_, h₁.exists, h₂⟩
   obtain ⟨z, rfl⟩ := h₁.2 c
   induction z with
-  | zero => simp
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx trivial) (hy trivial)
+  | add x y hx hy => simpa only [map_add] using add_mem (hx trivial) (hy trivial)
   | tmul x c => rw [liftSemi_tmul]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨c, rfl⟩)
 
 theorem exists_noeth_model (P : AbelianDeRham) {R : Type} [CommRing R] {g : ℕ} (A : Over (Sp R)) [GrpObj A]

@@ -86,7 +86,7 @@ theorem tensComp_map {C D : Type} [AddCommGroup C] [Module Qp C] [AddCommGroup D
       AlgebraTensorModule.map (φ i) ψ (tensComp E C x i) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | tmul v c => simp [h]
+  | tmul v c => simp [tensComp, h]
   | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
 
 end Tensor

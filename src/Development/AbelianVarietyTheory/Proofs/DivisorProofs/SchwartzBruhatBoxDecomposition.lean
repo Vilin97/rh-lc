@@ -46,9 +46,10 @@ theorem exists_box_subset {ϖ : kˣ} (hϖ : IsUnif ϖ) {X : Matrix A D k} {U : S
   refine exists_subset_nhds_of_isCompact' (V := fun n : ℕ => box ϖ X (fun _ => n))
     (Antitone.directed_ge fun a b h => box_mono hϖ X h) (fun n => isCompact_box ϖ X _)
     (fun n => (isClopen_box ϖ X _).isClosed) ?_
+  apply mem_nhdsSet_iff_forall.2
   intro Y hY
-  rw [eq_of_forall_mem_box hϖ (Set.mem_iInter.1 hY)]
-  exact hU
+  have hYX : Y = X := eq_of_forall_mem_box hϖ (Set.mem_iInter.1 hY)
+  simpa only [hYX] using hU
 
 theorem exists_sum_boxFn (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (A D : Type) [Fintype A] [DecidableEq A] [Fintype D] [DecidableEq D] (ϖ : kˣ) (hϖ : GlobalTheory.SplitFlip.IsUnif ϖ) :

@@ -88,5 +88,4 @@ theorem exists_spread : ∀ (F Ω : Type) [Field F] [Field Ω] (em : F →+* Ω)
   · change (y i).left ≫ φ ≫ P.A.hom = spMap jT ≫ Gp.1.lift (spMap incl ≫ y' i) (𝟙 _) (hu i) ≫ P.A.hom
     rw [hφ', Gp.1.lift_snd, ← Category.assoc, Over.w (y i)]
     exact (Category.id_comp _).trans (Category.comp_id _).symm
-
 end GlobalTheory.SpreadPolAV

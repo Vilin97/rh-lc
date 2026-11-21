@@ -76,7 +76,8 @@ theorem cubV_through (hG : GlobalFnsSt) (hA : IsAbelianScheme G') {f : S' ⟶ S}
     (fun y I' hI' => by
       obtain ⟨I, hI⟩ := GlobalTheory.ConstFam.exists_good' L.isLB y
       have E := ev (T := 𝟙_ (Over S')) y hI hI' 1 1 1
-      rw [map_one, (isCub_cubV c hI).face] at E
+      have C : IsCub (cubV c (T := Over.mk ((𝟙_ (Over S')).hom ≫ f)) y I) := isCub_cubV c hI
+      rw [map_one, C.face] at E
       refine Eq.trans ?_ ((isCub_cubV (T := 𝟙_ (Over S')) c' hI').face 1 1).symm
       have fin : ∀ {A U : Type} [Group A] [CommGroup U] (h : A → U) (b : U), 1 = h (1 * 1 * 1) * (h (1 * 1))⁻¹ *
         (h (1 * 1))⁻¹ * (h (1 * 1))⁻¹ * h 1 * h 1 * h 1 * (h 1)⁻¹ * b → b = 1 := fun h b e => by
@@ -155,7 +156,8 @@ theorem cube_torsFrame_pow (hG : GlobalFnsSt) (P : PolAV S) [IsCommMonObj P.A] {
       simp only [ofMul_mul, ofMul_pow, ofMul_inv, ofMul_zpow, ofMul_one]
       module) (pt a'') 1
   simp only [MonObj.comp_mul, MonObj.comp_one, pt_snd, hp', hq', _root_.mul_one] at r
-  rw [(isCub_cubV c hJ).face₃] at r
+  have C : IsCub (cubV c (T := T) z J) := isCub_cubV c hJ
+  rw [C.face₃] at r
   have t := fun b => congrArg Additive.ofMul (torsFrame_pow hG P hα (hfr b) hJ)
   have t₁ := t (a + a' + a'')
   have t₂ := t (a + a')

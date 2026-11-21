@@ -79,7 +79,7 @@ theorem GlobalTheory.BCT.ClsSupp.finite_supp : ∀ (E : Type) [Field E] [NumberF
       (Quotient.out (DoubleCoset.mk (twCent (MonoidHom.id (UL n w)) (cw w δ)) (K' w) g))⁻¹ * cw w δ *
         Quotient.out (DoubleCoset.mk (twCent (MonoidHom.id (UL n w)) (cw w δ)) (K' w) g) ∈ tsupport (f w) := by
     intro w g hg
-    obtain ⟨h, k, hh, hk, he⟩ := DoubleCoset.mk_out_eq_mul (twCent (MonoidHom.id (UL n w)) (cw w δ)) (K' w) g
+    obtain ⟨h, hh, k, hk, he⟩ := DoubleCoset.mk_out_eq_mul (twCent (MonoidHom.id (UL n w)) (cw w δ)) (K' w) g
     rw [he]
     apply subset_tsupport
     have hh' : h * cw w δ = cw w δ * h := hh
@@ -171,6 +171,6 @@ theorem GlobalTheory.BCT.ClsSupp.finite_supp : ∀ (E : Type) [Field E] [NumberF
       intro w hw
       simp only [toSub_eq, map_mul, htt w hw, hkk w hw]
       exact hte w hw
-    rw [← DoubleCoset.out_eq' (twCent (MonoidHom.id (finU (E := E) (n := n))) δ) (globLev S K') q,
-      ← DoubleCoset.out_eq' (twCent (MonoidHom.id (finU (E := E) (n := n))) δ) (globLev S K') q', DoubleCoset.eq]
+    rw [← DoubleCoset.out_eq' q,
+      ← DoubleCoset.out_eq' q', DoubleCoset.eq]
     exact ⟨tt, httT, kk, hkkK, hgg⟩

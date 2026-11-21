@@ -7,6 +7,8 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.Commutative
 
 noncomputable section
 
+set_option synthInstance.maxHeartbeats 200000
+
 open NumberField Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.GalOfCusp IsLocalRing UpperTheory.V.HV UpperTheory.V.U3 UpperTheory.V.Base UpperTheory.V.Af UpperTheory.V.Pr UpperTheory.V.Alg
 
 namespace UpperTheory.V.J

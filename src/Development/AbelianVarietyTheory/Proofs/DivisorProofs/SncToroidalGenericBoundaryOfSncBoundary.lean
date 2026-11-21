@@ -93,7 +93,8 @@ theorem snc_genBdIdeal_of_snc_boundary {E : Type} [Field E] [NumberField E] [IsC
     {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {Y : Model Xo c (RingHom.id c.F)} :
     ReciprocityTheory.AnForm.R.FinalTheorems.Snc (GlobalTheory.LogKS.boundary Y) → ReciprocityTheory.AnForm.R.FinalTheorems.Snc (GlobalTheory.Toroidal.genBdIdeal Y) := by
   intro h
-  refine GlobalTheory.SncIso.snc_vanishingIdeal_of_isIso (genι Y) (GlobalTheory.LogKS.interior Y).compl (genBd Y) (fun a => ?_) h
+  refine GlobalTheory.SncIso.snc_vanishingIdeal_of_isIso (genι Y) (GlobalTheory.LogKS.interior Y).compl (genBd Y) ?_ h
+  intro a
   have hinj : Function.Injective (genι Y) := (genι Y).isOpenEmbedding.injective
   rw [mem_genBd]
   show a ∉ Set.range Y.jQ ↔ genι Y a ∉ Set.range Y.j

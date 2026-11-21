@@ -51,8 +51,20 @@ variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R} (N : NData R H what₂
 def Gw {w : PlE H} (y : A.LP w) : Prop := A.unr y ∨ (thr w (A.lpDim y) = 2 ∧ Sep N A y)
 
 variable {N A}
-theorem Gw.nc (T : GlobalTheory.RowTie.WDTie N A) {w : PlE H} {y : A.LP w} (h : Gw N A y) : Nc N A y :=
-  h.elim Nc.of_unr fun k => nc_of_sep T k.1 k.2
+theorem Gw.nc (T : GlobalTheory.RowTie.WDTie N A) {w : PlE H} {y : A.LP w} (h : Gw N A y) : Nc N A y := by
+  refine h.elim Nc.of_unr fun ⟨ht, hs⟩ => ?_
+  obtain ⟨htame, σ, hσ, hsep⟩ := hs
+  have hwd : SepW (T.e w y) := by
+    refine ⟨(WD.tame_iff_inePol _).2 ?_, σ, hσ, ?_⟩
+    · intro γ hγ
+      have hI := GlobalTheory.TameEig.wild_mem_Ine (N.plOm.1 w) γ hγ
+      rw [← T.inePol w y γ hI, T.dim]
+      exact htame γ hI hγ
+    · rwa [← T.inePol w y σ hσ]
+  have hn := hwd.ncW (by rwa [T.dim])
+  refine ⟨htame, (T.mono0 w y).2 hn.2.1, ?_⟩
+  intro γ hγ z hz
+  exact hn.2.2 γ hγ.1 hγ.2 z (by rwa [← T.inePol w y γ hγ.1, T.dim])
 end
 
 section

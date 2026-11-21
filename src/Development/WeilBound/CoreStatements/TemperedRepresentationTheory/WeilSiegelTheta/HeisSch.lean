@@ -28,7 +28,8 @@ def zy {m n : ℕ} (y : Mx D m n) : Mx D m (n + n) :=
 
 def Heisenberg₂ (ψ : AddChar (AF D.host.F) ℂ) (V : HSp D) {n : ℕ} (v : Mx D V.rank (n + n)) (Φ : Mx D V.rank n → ℂ) :
     Mx D V.rank n → ℂ :=
-  fun z => ψ (trA (Matrix.trace (inner V z (yPart v))) + halfTr (Matrix.trace (inner V (xPart v) (yPart v)))) *
+  fun z => ψ (trA (Matrix.trace (GlobalTheory.StdUnn.inner V z (yPart v))) +
+    halfTr (Matrix.trace (GlobalTheory.StdUnn.inner V (xPart v) (yPart v)))) *
     Φ (z + xPart v)
 
 def HeisSch : Prop :=

@@ -149,6 +149,9 @@ theorem isNormOn_supC (x : ℝ) (h : SupDef Xo c U) {a n} (hd : Dom a n) {σ : c
 
 variable (U)
 
+-- Prefer the same-scalar submodule instance when elaborating the L² constructions.
+attribute [local instance 2000] Submodule.module
+
 def rdC (σ : c.F →+* ℂ) (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) : cusp Xo c U a n →ₛₗ[σ] FDSec (U σ).X :=
   (rdU (U σ)).comp (cusp Xo c U a n).subtype
 

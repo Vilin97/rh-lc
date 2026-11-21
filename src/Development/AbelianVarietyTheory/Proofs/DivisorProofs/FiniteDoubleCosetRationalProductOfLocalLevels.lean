@@ -61,7 +61,7 @@ theorem finite_doubleCoset_of_isOpen (K : Subgroup (finU (E := E) (n := n))) (hK
   let φ : T → DoubleCoset.Quotient (ratFinU E n : Set (finU (E := E) (n := n))) (K : Set (finU (E := E) (n := n))) :=
     fun s => DoubleCoset.mk _ _ (finPart (s : UA E n))
   refine Finite.of_surjective φ fun q => ?_
-  obtain ⟨g, rfl⟩ : ∃ g, DoubleCoset.mk _ _ g = q := ⟨q.out, DoubleCoset.out_eq' _ _ q⟩
+  obtain ⟨g, rfl⟩ : ∃ g, DoubleCoset.mk _ _ g = q := ⟨q.out, DoubleCoset.out_eq' q⟩
   obtain ⟨γ, hγ, s, hs, x, hx, k, hk, e⟩ := hT (g : UA E n)
   refine ⟨⟨s, hs⟩, ?_⟩
   have hg : g = finPart γ * finPart s * k := by

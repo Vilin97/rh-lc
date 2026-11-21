@@ -18,15 +18,17 @@ namespace GlobalTheory.FrameCplx
 theorem gram_eq {E : Type} [Field E] {r : ℕ} (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (x : Matrix (Fin r) (Fin r) ℂ) :
     FD.gram τ (-Gᵀ) x = -(xᴴ * G.map τ * x)ᵀ := by
   ext a b
-  simp only [FD.gram, hermC, FD.col, of_apply, Matrix.neg_apply, transpose_apply, mul_apply, map_neg, map_apply,
-    conjTranspose_apply, Finset.sum_mul, ← Finset.sum_neg_distrib, RCLike.star_def]
+  simp only [FD.gram, hermC, FD.col, of_apply, Matrix.neg_apply, transpose_apply, Matrix.mul_apply, map_neg, map_apply,
+    conjTranspose_apply, Finset.sum_mul, RCLike.star_def]
+  simp_rw [← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
 theorem hermC_eq {E : Type} [Field E] {r : ℕ} (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (x : Matrix (Fin r) (Fin r) ℂ)
     (a : Fin r) (v : Fin r → ℂ) :
     hermC τ (-Gᵀ) (FD.col x a) v = -((star v ᵥ* (G.map τ * x)) a) := by
-  simp only [hermC, FD.col, Matrix.neg_apply, transpose_apply, mul_apply, map_neg, map_apply, vecMul, dotProduct,
-    Finset.mul_sum, ← Finset.sum_neg_distrib, Pi.star_apply, RCLike.star_def]
+  simp only [hermC, FD.col, Matrix.neg_apply, transpose_apply, Matrix.mul_apply, map_neg, map_apply, vecMul, dotProduct,
+    Finset.mul_sum, Pi.star_apply, RCLike.star_def]
+  simp_rw [← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -129,7 +131,7 @@ theorem cplx_of_frame : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfF
     by_cases e : hτ.choose = ρ
     · simp only [if_pos e]
       have := per_cplx X τ.1 (HSpace.gram W) (mat x τ) (s ρ) (hG τ) (hs' ρ τ (e ▸ hτ.choose_spec)) (fun k => u k b) a
-      convert this using 3 <;> (try funext k) <;> simp [cplxO, mul_apply, mulVec, dotProduct]
+      convert this using 3 <;> (try funext k) <;> simp [cplxO, Matrix.mul_apply, mulVec, dotProduct]
     · simp only [if_neg e]
       simp [hermC, mulVec, dotProduct]
 

@@ -131,14 +131,15 @@ theorem dpow_idl (κ : DividedPowers I) {N : ℕ} (hN : NilExp κ (N + 2)) :
     rw [smul_eq_mul, κ.dpow_mul (idl_le κ N hxm), hx n hn, mul_zero]
 
 theorem isSubDPIdeal (κ : DividedPowers I) {N : ℕ} (hN : NilExp κ (N + 2)) :
-    IsSubDPIdeal κ (idl κ (N + 1) ⊓ I) where
-  isSubideal := inf_le_right
-  dpow_mem := by
-    intro n hn j hj
-    rcases Nat.lt_or_ge n 2 with h | h
-    · obtain rfl : n = 1 := by omega
-      rw [κ.dpow_one hj.2]; exact hj
-    · rw [dpow_idl κ hN j hj.1 n h]; exact Submodule.zero_mem _
+    IsSubDPIdeal κ (idl κ (N + 1) ⊓ I) := by
+  refine DividedPowers.IsSubDPIdeal.mk inf_le_right ?_
+  intro n hn j hj
+  rcases Nat.lt_or_ge n 2 with h | h
+  · obtain rfl : n = 1 := by omega
+    rw [κ.dpow_one hj.2]
+    exact hj
+  · rw [dpow_idl κ hN j hj.1 n h]
+    exact Ideal.zero_mem _
 
 end GlobalTheory.SqLift.DPStep
 

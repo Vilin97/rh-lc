@@ -132,7 +132,7 @@ theorem GlobalTheory.Mum.fibre_etale_near : ∀ (R : Type) [CommRing R] [IsDomai
       (by rw [Category.comp_id, he2]) (by simp)
   haveI : MorphismProperty.IsStableUnderComposition @Etale := MorphismProperty.IsMultiplicative.toIsStableUnderComposition
   have heΩ : Etale eΩ :=
-    MorphismProperty.pullback_map (P := @Etale) (f := O.ι ≫ E.Y.hom) (g := k') (f' := pullback.snd A (spMap (residue R)))
+    MorphismProperty.pullbackMap (P := @Etale) (f := O.ι ≫ E.Y.hom) (g := k') (f' := pullback.snd A (spMap (residue R)))
       (g' := k') (i₁ := e) (i₂ := 𝟙 _) he inferInstance he2.symm (by simp)
   let θ : pullback (pullback.snd A (spMap (residue R))) k' ⟶ pullback (pullback.snd A M.π) x' :=
     (pullbackLeftPullbackSndIso A (spMap (residue R)) k').hom ≫ (pullback.congrHom rfl hxk.symm).hom ≫
@@ -161,10 +161,10 @@ theorem GlobalTheory.Mum.fibre_etale_near : ∀ (R : Type) [CommRing R] [IsDomai
   let jO : Oy ⟶ pullback E.Y.hom k' :=
     pullback.map (O.ι ≫ E.Y.hom) k' E.Y.hom k' O.ι (𝟙 _) (𝟙 _) (by simp) (by simp)
   haveI : IsOpenImmersion jO :=
-    MorphismProperty.pullback_map (P := @IsOpenImmersion) (f := O.ι ≫ E.Y.hom) (g := k') (f' := E.Y.hom) (g' := k')
+    MorphismProperty.pullbackMap (P := @IsOpenImmersion) (f := O.ι ≫ E.Y.hom) (g := k') (f' := E.Y.hom) (g' := k')
       (i₁ := O.ι) (i₂ := 𝟙 _) inferInstance inferInstance rfl (by simp)
   haveI : IsOpenImmersion mG :=
-    MorphismProperty.pullback_map (P := @IsOpenImmersion) (f := p) (g := x') (f' := G'.hom) (g' := x')
+    MorphismProperty.pullbackMap (P := @IsOpenImmersion) (f := p) (g := x') (f' := G'.hom) (g' := x')
       (i₁ := iV) (i₂ := 𝟙 _) (by dsimp only [iV]; infer_instance) inferInstance rfl (by simp)
   haveI : IsIso eG.hom.left := by
     show IsIso ((Over.forget _).map eG.hom); infer_instance

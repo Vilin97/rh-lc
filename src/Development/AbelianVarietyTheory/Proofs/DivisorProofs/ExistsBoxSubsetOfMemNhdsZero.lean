@@ -113,7 +113,7 @@ theorem one_add_small_near_one (k : Type) [Field k] [ValuativeRel k] [Topologica
     refine Filter.Tendsto.congr' ?_ h3
     filter_upwards [hv] with N hN
     simp only [Function.comp, Units.embedProduct_apply, Matrix.coe_units_inv, hval N hN]
-  obtain ⟨d, hd, hS⟩ := exists_box_subset_of_mem_nhds_zero (hv.and (hb.and (hGL hU)))
+  obtain ⟨d, hd, hS⟩ := exists_box_subset_of_mem_nhds_zero (p := n) (q := n) (hv.and (hb.and (hGL hU)))
   refine ⟨d, hd, fun N hN => ?_⟩
   obtain ⟨h1, h2, h3⟩ := hS hN
   refine ⟨toGL (1 + N), hval N h1, h3, ?_, fun i j => ?_⟩

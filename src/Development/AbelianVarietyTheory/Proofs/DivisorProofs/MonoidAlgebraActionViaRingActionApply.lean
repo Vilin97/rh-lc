@@ -64,9 +64,9 @@ theorem mSub_rAct (σ : O →+* Module.End k H) (χ : C →+* k) (G : Submodule 
   ext z
   constructor
   · rintro ⟨w, ⟨c, x, _, rfl⟩, rfl⟩
-    exact ⟨c, x, x.2, by simp⟩
+    exact ⟨c, x, x.2, by simp [rAct]⟩
   · rintro ⟨c, x, hx, rfl⟩
-    exact ⟨_, ⟨c, ⟨x, hx⟩, trivial, rfl⟩, by simp⟩
+    exact ⟨_, ⟨c, ⟨x, hx⟩, trivial, rfl⟩, by simp [rAct]⟩
 
 theorem mSub_qAct {V : Type*} [AddCommGroup V] [Module k V] (τ : O →+* Module.End k V) (χ : C →+* k)
     (X : Submodule k V) (h : ∀ a, ∀ x ∈ X, τ a x ∈ X) :
@@ -218,7 +218,7 @@ theorem inf_le_sup {Idx : Type*} [Fintype Idx] (σ : O →+* Module.End k H) (χ
       simp only [map_sub, map_smul, smul_sub, Finset.sum_sub_distrib, smul_smul]
       rw [sub_eq_add_neg]
     | zero => simp
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
   have hpE : p - E p ∈ mSub σ (χ i) G := by
     have : p - E p = -∑ d ∈ S, lam d • (σ (algebraMap C O d) p - χ i d • p) := by

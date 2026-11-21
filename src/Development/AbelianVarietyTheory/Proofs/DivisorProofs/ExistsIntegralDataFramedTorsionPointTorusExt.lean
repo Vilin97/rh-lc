@@ -60,9 +60,12 @@ theorem exists_data : ∀ (V : Type) [CommRing V] [IsDomain V] [IsLocalRing V], 
     GlobalTheory.Poinc.Sep.LiesPair.exists_pair_of_liesOver V hCN D A G hG U w₀ hw₀ N hN _ w x fr hg hw hfr hlies
   have hf : (algebraMap (FractionRing V) (AlgebraicClosure (FractionRing V))).comp
       (algebraMap (FractionRing V) (FractionRing V)) = algebraMap _ _ := RingHom.comp_id _
-  have hq := (GlobalTheory.TorsionExt.qkToAkU_iff_of_algebra hL.1.globalFns hL.1.kerPow U hN
-    ((GlobalTheory.TorusExt.qkExt_iff hB _ hf p _).2 rfl) x).1 hp
-  obtain ⟨h, g', -, -, hform, hext, hpull⟩ := GlobalTheory.Poinc.TorsLift.lift V hCN D A G hG U N hN x _ _ rfl hy hq
+  obtain ⟨p', hp', -⟩ := GlobalTheory.TorusExt.existsUnique_qkExt hB _ hf p
+  have hq := (GlobalTheory.TorsionExt.qkToAkU_iff_of_algebra hL.1.globalFns hL.1.kerPow U hN hp' x).1 hp
+  obtain ⟨h, g', -, -, hform, hext, hpull⟩ := GlobalTheory.Poinc.TorsLift.lift V hCN D A G hG U N hN x _ _ rfl (hp'.1.trans hy) hq
+  have eg : p'.g = GlobalTheory.TorusExt.gtExt D.toPre _ hf p.g :=
+    (GlobalTheory.TorusExt.eq_gtExt_iff _ hf _ _).2 hp'.2
+  rw [eg] at hpull
   obtain ⟨g₁, hg₁⟩ := GlobalTheory.FieldRestrictionTest.exists_isPullF (toUnit (TF (R := V) (FractionRing V))) g'
   have e : g₁ = p.g := GlobalTheory.Balanced.gtExt_injective _ hf D.toPre
     (GlobalTheory.FieldRestrictionTest.isPullF_unique (isPullF_gtExt _ hf hg₁) hpull)

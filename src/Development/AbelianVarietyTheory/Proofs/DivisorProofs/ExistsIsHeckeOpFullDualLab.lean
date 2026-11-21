@@ -178,11 +178,7 @@ theorem exists_skew (D : D7) : ∃ δ : D.host.E, δ ≠ 0 ∧ D.sp.cm.sig δ = 
   omega
 
 theorem isLattice_frameLat (V : HSp D) : Submodule.IsLattice D.host.E (GlobalTheory.AdelicU.frameLat V) := by
-  refine ⟨GlobalTheory.AdelicU.frameLat_fg V, ?_⟩
-  have : (GlobalTheory.AdelicU.frameLat V : Set (Fin V.rank → D.host.E)) =
-      V.frame.equivFun.toLinearMap '' (V.L0 : Set V.V) :=
-    (V.frame.equivFun.toEquiv.image_eq_preimage_symm _).symm
-  rw [this, ← Submodule.map_span, V.standardTuple_isLattice.span_eq_top, Submodule.map_top, LinearEquiv.range]
+  exact Submodule.IsLattice.of_fg D.host.E (GlobalTheory.AdelicU.frameLat_fg V)
 
 end Host
 

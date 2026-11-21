@@ -29,6 +29,8 @@ theorem list_prod_matrixActionAfterRingHom_sub_apply {O T : Type} [CommRing O] [
         (Matrix.toLinAlgEquiv' (R := T) (n := Fin n)) := by
     rw [List.map_ofFn]
     congr 1
+    funext i
+    simp only [Function.comp_apply, map_sub, AlgEquiv.commutes]
     rfl
   rw [h, ← map_list_prod]
   rfl

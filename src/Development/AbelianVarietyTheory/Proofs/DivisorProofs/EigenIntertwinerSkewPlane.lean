@@ -33,7 +33,9 @@ theorem evFin_archPt (a : κ → mixedEmbedding.mixedSpace F) (w : Pl (F := F)) 
   exact map_zero _
 
 theorem evI_archPt (a : κ → mixedEmbedding.mixedSpace F) (i : κ) : evI F (archPt a i) = a i := by
-  simp [evI, archPt]
+  change (InfiniteAdeleRing.ringEquiv_mixedSpace F)
+    ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (a i)) = a i
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply (a i)
 
 theorem cancel (v : Pl (F := F)) (g : SInf F κ) (hg : g ≠ 0) (r : (κ → AF F) → ℂ)
     (hr : ∀ x z, At (evFin F v) z → r (x + z) = r x)

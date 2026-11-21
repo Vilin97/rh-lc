@@ -36,7 +36,7 @@ theorem exists_finExt_realising : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLo
   have hloc' : IsLocalHom (algebraMap R₁ R₂) := by
     haveI : Module.Finite R₁ R₂ := RingHom.finite_algebraMap.1 hfe.2.2
     have : (Ideal.comap (algebraMap R₁ R₂) (maximalIdeal R₂)).IsMaximal :=
-      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal R₂)
+      Ideal.isMaximal_under_of_isIntegral_of_isMaximal (maximalIdeal R₂)
     exact ((local_hom_tfae (algebraMap R₁ R₂)).out 1 5).mpr (IsLocalRing.eq_maximalIdeal this)
   refine ⟨R₂, inferInstance, inferInstance, hloc, algebraMap R₁ R₂, eqv.toRingHom.comp incl.toRingHom, hfe,
     ⟨hfe.1, hfe.2.1.comp hinj, hfe.2.2.comp hfin⟩, hloc', fun r => ?_⟩

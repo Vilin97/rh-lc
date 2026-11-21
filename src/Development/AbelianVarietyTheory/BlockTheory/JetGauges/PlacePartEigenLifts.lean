@@ -16,7 +16,7 @@ noncomputable section
 namespace GlobalTheory.IndefiniteRowSideFullHecke.PlacePartEigenLifts
 
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open ReciprocityTheory.ChartRestriction.G.TB ReciprocityTheory.ChartRestriction.G.PullbackSections
+open ReciprocityTheory.ChartRestriction.G.TB
 
 section Types
 

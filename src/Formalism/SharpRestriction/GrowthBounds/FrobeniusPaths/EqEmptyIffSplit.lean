@@ -226,7 +226,7 @@ lemma KG_card_pos (hc : 1 ≤ c) (x : ℕ → Fin n → P) (h0 : hs 0 = 0)
     have hj := hst j
     rcases lt_trichotomy (hs j) (hs (j + 1)) with h1 | h1 | h1
     · rw [KG_rise_pos hc h1] at h
-      obtain ⟨m, hm, hK⟩ := wedgeR_ne (y := x j) (Kv := KG c hs x j) (J := J) h
+      obtain ⟨m, hm, hK⟩ : ∃ m ∈ J, KG c hs x j (J.erase m) ≠ 0 := wedgeR_ne h
       have h2 := ih _ hK
       rw [Finset.card_erase_of_mem hm] at h2
       have h3 := Finset.card_pos.mpr ⟨m, hm⟩
@@ -234,7 +234,7 @@ lemma KG_card_pos (hc : 1 ≤ c) (x : ℕ → Fin n → P) (h0 : hs 0 = 0)
     · rw [KG_eq h1] at h
       rw [ih _ h, h1]
     · rw [KG_fall_pos hc h1] at h
-      obtain ⟨m, hm, hK⟩ := contrR_ne (y := x j) (Kv := KG c hs x j) (J := J) h
+      obtain ⟨m, hm, hK⟩ : ∃ m, m ∉ J ∧ KG c hs x j (insert m J) ≠ 0 := contrR_ne h
       have h2 := ih _ hK
       rw [Finset.card_insert_of_notMem hm] at h2
       omega

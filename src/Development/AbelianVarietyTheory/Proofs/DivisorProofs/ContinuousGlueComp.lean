@@ -109,8 +109,12 @@ attribute [local instance] GlobalTheory.AdelicUnitaryTop.locallyCompact_finiteAd
 
 theorem pureA_glue (f : SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ) (g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ)
     (p : DiagForm.Vi F κ × DiagForm.Vf F κ) : pureA F f g (DiagForm.glue p) = f (DiagForm.eI F κ p.1) * g p.2 := by
-  simp only [pureA, DiagForm.glue]
-  congr 2 <;> funext i <;> simp
+  change f (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F
+    ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (DiagForm.eI F κ p.1 i))) * g p.2 = _
+  congr 1
+  congr 1
+  funext i
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
 
 theorem continuous_glue_comp {a : (κ → AF F) → ℂ} (ha : a ∈ schA F κ) : Continuous fun p => a (DiagForm.glue p) := by
   induction ha using Submodule.span_induction with
@@ -126,7 +130,8 @@ theorem glue_zero : DiagForm.glue (0 : DiagForm.Vi F κ × DiagForm.Vf F κ) = 0
   funext i
   refine Prod.ext ?_ ?_
   · show (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (DiagForm.eI F κ 0 i) = 0
-    simp
+    rw [map_zero]
+    exact map_zero (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm
   · rfl
 
 theorem exists_glue_eq (x : κ → AF F) : ∃ p, DiagForm.glue p = x :=

@@ -23,7 +23,7 @@ theorem exists_nhds_translate_eq {V : Type} [AddCommGroup V] [TopologicalSpace V
   have hW : ∀ x : V, ∃ W : OpenAddSubgroup V, ∀ w ∈ (W : Set V), f (x + w) = f x := by
     intro x
     have h1 : {w : V | f (x + w) = f x} ∈ nhds (0 : V) := by
-      have h2 := (hf.comp_continuous (continuous_add_left x)).eventually_eq 0
+      have h2 := (hf.comp_continuous (show Continuous (fun w : V => x + w) from continuous_const.add continuous_id)).eventually_eq 0
       simp only [Function.comp, add_zero] at h2
       exact h2
     obtain ⟨W, hW⟩ := NonarchimedeanAddGroup.is_nonarchimedean _ h1

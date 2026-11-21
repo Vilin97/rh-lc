@@ -55,7 +55,7 @@ theorem exists_psi_rLaws : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing
   obtain ⟨u, hu, hu0⟩ := exists_ros GlobalTheory.globalFns_holds D₀.P.isAb D₀.P.isLB (onB.act w0) (onB.act (star w0))
     (onB.rosati w0)
   have hfg : padd D₀.P.A (onB.act w0) (onB.act (star w0)) = 𝟙 _ := by
-    rw [← onB.map_add (f := _), hw, onB.map_one]
+    rw [← onB.map_add, hw, onB.map_one]
   have cadd : ∀ a b, D₀.c (a + b) = D₀.c a * D₀.c b := fun a b => D₀.c_add a b
   have c0 : D₀.c 0 = 1 := by
     have := cadd 0 0

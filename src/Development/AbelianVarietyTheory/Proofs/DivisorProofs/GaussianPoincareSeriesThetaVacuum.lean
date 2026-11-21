@@ -158,7 +158,7 @@ theorem chiLat_add_lat (hA : SelfDual (gamF ψ S T) (latF S T LS LT)) {w : 𝓞 
   have hy := fin_smul_fin x
   generalize (1 - realIdem D) • x = y at hy ⊢
   by_cases h : y ∈ latO S T LS LT fun _ => True
-  · rw [if_pos h, if_pos (add_mem h hu)]
+  · rw [ite_eq_left h, ite_eq_left (add_mem h hu)]
     have h0 : ψ (symplO S T (intA D w • y) u) = 1 :=
       (hA _).1 ((latF S T LS LT).smul_mem w (show XF.mk y hy ∈ latF S T LS LT from h)) u hu
     rw [phase, ← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul, quad_identity hw, AddChar.map_add_eq_mul, h0,
@@ -166,7 +166,7 @@ theorem chiLat_add_lat (hA : SelfDual (gamF ψ S T) (latF S T LS LT)) {w : 𝓞 
   · have h2 : y + (u : WO S T) ∉ latO S T LS LT fun _ => True := fun h' => h (by
       have h3 := sub_mem h' (mem_latF.1 hu)
       rwa [add_sub_cancel_right] at h3)
-    rw [if_neg h, if_neg h2, mul_zero, mul_zero]
+    rw [ite_eq_right h, ite_eq_right h2, mul_zero, mul_zero]
 
 theorem series_theta_vacuum : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsStdChar D ψ (-1)) (θ : InfFam D) (σ : (D.what₂.Tau → ℂ) →+ AE D), Chart θ σ → ∀ (S T : HSp D) (sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ) (sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ), (∀ τ, IsCartanInv (gramAt D S τ) (sS τ)) → (∀ τ, IsCartanInv (gramAt D T τ) (sT τ)) → ∀ (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)), IsSelfDualC S ΛS → IsSelfDualC T ΛT → ∀ w : 𝓞 D.host.E, w + GlobalTheory.FinWeil.sgO D w = 1 → ∀ a : RW T S, ∃ hf : IsThetaFunO ψ S T (serO ψ θ σ S T sS sT ΛS ΛT w a), Fixes (opF hψ.1 S T w) (latF S T ΛS ΛT) (⟨serO ψ θ σ S T sS sT ΛS ΛT w a, hf⟩ : thetaSub ψ S T) ∧ ∀ τ, IsFockVacAt (heisO ψ S T) θ τ (cplxO (sS τ) (sT τ)) (serO ψ θ σ S T sS sT ΛS ΛT w a) := by
   classical
@@ -224,7 +224,7 @@ theorem series_theta_vacuum : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (hψ
       · rw [← comp_incA hθ]
         let y : RW T S := piW θ T S (ratW T S g)
         exact ((norm_le_pi_norm (y τ i) j).trans ((norm_le_pi_norm (y τ) i).trans (norm_le_pi_norm y τ))).trans h2)
-    (fun x hx => if_neg hx)
+    (fun x hx => ite_eq_right hx)
     (fun x => by
       rw [chiLat]
       split_ifs

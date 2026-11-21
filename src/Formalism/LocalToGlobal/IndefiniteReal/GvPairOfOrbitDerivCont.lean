@@ -696,7 +696,7 @@ theorem gp_foldr_conj (M : DSModel V S) (τ : D.what₂.Tau) {g g' : Matrix (Fin
     have hl' : ∀ Y ∈ l, Y ∈ lieAt V τ := fun Y hY => hl Y (List.mem_cons_of_mem _ hY)
     have hlm : ∀ Y ∈ l.map (fun X => g' * X * g), Y ∈ lieAt V τ := by
       intro Y hY
-      obtain ⟨Z, hZ, rfl⟩ := List.exists_of_mem_map (f := fun Z => g' * Z * g) hY
+      obtain ⟨Z, hZ, rfl⟩ := List.mem_map.1 hY
       exact gp_lie_conj hg hgg' (hl' Z hZ)
     rw [List.foldr_cons, List.map_cons, List.foldr_cons, gp_foldr_conj M τ hg hgg' l hl' hx]
     exact gp_dRep_conj M τ hg hgg' (hl X (by simp)) (gp_sv_foldr _ hlm hx)

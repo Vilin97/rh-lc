@@ -10,7 +10,7 @@ public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LocalAlg
 
 @[expose] public section
 
-open GlobalTheory.BCT GlobalTheory.CompanionTheory.SplitConvTw
+open GlobalTheory.BCT
 open scoped Classical Pointwise
 
 noncomputable section

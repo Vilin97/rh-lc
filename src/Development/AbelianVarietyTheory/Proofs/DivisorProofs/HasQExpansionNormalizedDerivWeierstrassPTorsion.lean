@@ -19,6 +19,7 @@ theorem tsum_inv_cube : ∑' m : ℤ, 1 / (m : ℂ) ^ 3 = 0 := by
     rw [← tsum_neg]
     congr 1
     funext b
+    simp only [Equiv.neg_apply, Int.cast_neg]
     change 1 / ((-(b : ℂ)) ^ 3) = -(1 / (b : ℂ) ^ 3)
     rw [show (-(b : ℂ)) ^ 3 = -((b : ℂ) ^ 3) by ring, div_neg]
   linear_combination h / 2

@@ -133,7 +133,7 @@ theorem _root_.GlobalTheory.PDivGroup.KerGrp.exists_kernel (p : ℕ) [Fact p.Pri
       ∀ n, I n = _root_.GlobalTheory.PDiv.kerIdeal (u.app n) := ⟨_, fun n => rfl⟩
   haveI hH : ∀ n, (I n).IsHopfIdeal k := fun n => by
     rw [hIdef]
-    exact _root_.GlobalTheory.PDiv.isHopfIdeal_kerIdeal_of_bialgHom k _ _ (u.app n)
+    exact _root_.GlobalTheory.T.isHopfIdeal_kerIdeal_of_bialgHom' k _ _ (u.app n)
   have hq : ∀ n, Function.Surjective (Bialgebra.Quotient.mkBialgHom (R := k) (I n)) := by
     intro n x
     obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
@@ -191,7 +191,7 @@ theorem _root_.GlobalTheory.PDivGroup.KerGrp.exists_kernel (p : ℕ) [Fact p.Pri
     obtain ⟨b, rfl⟩ := G.10 n a
     exact ⟨Ideal.Quotient.mk _ b, hr n b⟩
   have hker : ∀ n, RingHom.ker (r n) =
-      _root_.GlobalTheory.PDiv.torsionIdeal k (G.A (n + 1) ⧸ I (n + 1)) (p ^ n) := by
+      _root_.GlobalTheory.PDiv.torsionIdeal (R := k) (A := G.A (n + 1) ⧸ I (n + 1)) (p ^ n) := by
     intro n
     ext x
     obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x

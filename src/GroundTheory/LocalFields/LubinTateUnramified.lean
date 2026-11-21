@@ -72,6 +72,12 @@ instance isGalois_sup (E₁ E₂ : IntermediateField K Ω) [IsGalois K E₁] [Is
     IsGalois K (E₁ ⊔ E₂ : IntermediateField K Ω) :=
   isGalois_iff.mpr ⟨inferInstance, inferInstance⟩
 
+local instance lubinTateField_isGalois_of_card (hf : IsLubinTateSeries π f) (n : ℕ) :
+    IsGalois K (lubinTateField Ω hπ hf n) :=
+  IsGalois.of_card_aut_eq_finrank K _
+    ((Nat.card_congr (lubinTateGalEquiv (Ω := Ω) hπ hf n).toEquiv).trans
+      (card_units_quotient_eq_finrank (Ω := Ω) (hπ := hπ) hf n))
+
 variable (hf : IsLubinTateSeries π f) {n : ℕ} (hn : 0 < n) {E : IntermediateField K Ω}
   (hE : IsUnramifiedSubextension E)
 
@@ -91,7 +97,8 @@ theorem bijective_restrictAut_prod :
   refine hinj.bijective_of_nat_card_le ?_
   rw [Nat.card_prod, IsGalois.card_aut_eq_finrank, IsGalois.card_aut_eq_finrank,
     IsGalois.card_aut_eq_finrank]
-  have he := ramificationIndex_dvd_of_le (le_sup_left (a := lubinTateField Ω hπ hf n) (b := E))
+  have he : ramificationIndex K (lubinTateField Ω hπ hf n) ∣ ramificationIndex K M :=
+    ramificationIndex_dvd_of_le le_sup_left
   have hf' := residueDegree_dvd_of_le (le_sup_right (a := lubinTateField Ω hπ hf n) (b := E))
   rw [ramificationIndex_lubinTateField hπ hf hn] at he
   rw [residueDegree_eq_finrank_of_unramified K E hE.ramificationIndex_eq_one] at hf'

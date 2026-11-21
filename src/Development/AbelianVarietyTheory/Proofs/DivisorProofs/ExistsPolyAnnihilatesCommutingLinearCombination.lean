@@ -16,8 +16,11 @@ theorem exists_poly_annihilates_linear_combination : ∀ {M : Type} [AddCommGrou
         Polynomial.aeval (∑ i, c i • A i) p v = 0 := by
   intro M _ _ ι _ A hc c P hP
   classical
-  letI : CommRing (Algebra.adjoin ℂ (Set.range A)) := Algebra.isMulCommutative_adjoin ℂ
-    (by rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩; exact hc i j)
+  letI : IsMulCommutative (Algebra.adjoin ℂ (Set.range A)) :=
+    Algebra.isMulCommutative_adjoin ℂ (by
+      rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩ _
+      exact hc i j)
+  open scoped IsMulCommutative in
   let S := Algebra.adjoin ℂ (Set.range A)
   let I : Ideal S :=
     { carrier := {a | ∀ v : M, (∀ i, Polynomial.aeval (A i) (P i) v = 0) → (a : Module.End ℂ M) v = 0}

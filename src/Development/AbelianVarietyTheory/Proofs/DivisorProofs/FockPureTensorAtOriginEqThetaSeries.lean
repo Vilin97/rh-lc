@@ -155,7 +155,7 @@ theorem dRho_eq (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (hV : V.gram = 1
     have a1 := congrFun (congrFun hw i) j
     have a2 := congrFun (congrFun h2 i) j
     simp only [Matrix.map_apply, Matrix.zero_apply] at a1 a2 ⊢
-    rw [Matrix.add_apply, (finPart D).map_add (f := _), a1, a2, add_zero]
+    rw [Matrix.add_apply, map_add (finPart D), a1, a2, add_zero]
   rw [heisO, hsym w _ hw, hG _ hreal, hadd, hz, Complex.im_sum]
 
 theorem crea_eq (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (hV : V.gram = 1) (hn : Even V.rank)

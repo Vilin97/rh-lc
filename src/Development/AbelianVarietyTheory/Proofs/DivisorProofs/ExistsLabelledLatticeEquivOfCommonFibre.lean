@@ -254,7 +254,7 @@ theorem exists_equiv_of_fibre : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W :
   have hζκ : ∀ (κ : Type) [Field κ] (a : X₁.o₁ →+* κ), IsPrimitiveRoot (a ζ) (X₁.S.r * X₁.S.N) := fun κ _ a => by
     have : NeZero ((X₁.S.r * X₁.S.N : ℕ) : κ) := ⟨by simpa using (X₁.S.unit.map a).ne_zero⟩
     rw [← Polynomial.isRoot_cyclotomic_iff, ← Polynomial.map_cyclotomic _ a]
-    exact (hζp.isRoot_cyclotomic hL).map
+    exact (hζp.isRoot_cyclotomic hL).map a
   obtain ⟨A₀, _, a₀, ψ, ha₀, hψ, hend, hpts⟩ := GlobalTheory.T.genericFibre_semiAbelian_endo_torsion_extend _ _ X₁.S X₁.ρ Y U₀ EE FinalForm hO.ne
   choose adj hadj using exists_adj hW
   choose f hf hf' using fun E => hend (ε₁ (adj E)) (Sep.IsAct.isMonHom hε _)

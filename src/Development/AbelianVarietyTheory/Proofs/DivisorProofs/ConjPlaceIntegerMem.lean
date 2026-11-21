@@ -31,7 +31,7 @@ theorem cpt_sg_mem_integers : ∀ {D : D7} (Q : Pl D.host.E) (z : Lev.EAf D),
     cpt Q z ∈ Q.adicCompletionIntegers D.host.E →
       cpt (GlobalTheory.IdemSupport.cP Q) (sg D z) ∈ (GlobalTheory.IdemSupport.cP Q).adicCompletionIntegers D.host.E := by
   intro D Q z hz
-  obtain ⟨e, -, -, h1, h0⟩ := exists_idem (D := D) ({Q} : Set (Pl D.host.E))
+  obtain ⟨e, -, -, h1, h0⟩ := GlobalTheory.StdFrames.exists_idem (D := D) ({Q} : Set (Pl D.host.E))
   have he1 : cpt Q e = 1 := h1 Q rfl
   have hez : e * z ∈ OA D := (mem_OA_iff _).2 fun P => by
     by_cases hP : P = Q

@@ -34,7 +34,24 @@ namespace GlobalTheory.GSep.DeepDivG
 theorem tower_same {I : Type} {X₁ : GlobalTheory.GSep.GSet} {act : I → (X₁.ρ.P.A ⟶ X₁.ρ.P.A)} (𝔗 : GlobalTheory.GSep.Tower X₁ act) :
     GlobalTheory.Poinc.Same X₁.ρ (fun _ => 𝟙 _) 𝔗.X₂.ρ (fun _ => 𝟙 _) 𝔗.lam (algebraMap X₁.Ω₁ 𝔗.X₂.Ω₁) := by
   let f₂ : Sp 𝔗.X₂.Ω₁ ⟶ Sp 𝔗.X₂.S.R := spMap 𝔗.X₂.S.R.val.toRingHom
-  let P₀ := GlobalTheory.StrictPull.polPull 𝔗.X₂.ρ.P f₂
+  let polPull {S S' : Scheme.{0}} (P : PolAV S) (f : S' ⟶ S) : PolAV S' := by
+    exact {
+      A := (Over.pullback f).obj P.A,
+      isAb := TLinPf.isAb_pullback f P.A P.isAb,
+      g := P.g,
+      smoothDim := (smoothOfRelativeDimension_isStableUnderBaseChange _).of_isPullback
+        (isGrpPullback_pullback P.A f).1 P.smoothDim,
+      L := P.L.pull (pullback.fst P.A.hom f),
+      isLB := LB.isLB_pull P.isLB _,
+      rigid := PolBaseChange.rigidified_pull (isGrpPullback_pullback P.A f) P.rigid,
+      sym := PolBaseChange.sym_pull (isGrpPullback_pullback P.A f) P.sym,
+      ample := by
+        haveI := P.isAb.proper
+        exact AmpleBaseChange.relAmple_of_isPullback P.isLB P.ample (IsPullback.of_hasPullback P.A.hom f)
+      ktriv := by
+        obtain ⟨w, hw⟩ := PolBaseChange.lbIso_refl (LB.isLB_pull P.isLB (pullback.fst P.A.hom f))
+        exact kTriv_pull (isGrpPullback_pullback P.A f) P.isLB (LB.isLB_pull P.isLB _) ((isGen_iff w).1 hw) P.ktriv } 
+  let P₀ := polPull 𝔗.X₂.ρ.P f₂
   let a' : P₀.A.left ⟶ 𝔗.X₂.ρ.P.A.left := pullback.fst 𝔗.X₂.ρ.P.A.hom f₂
   have hring : (algebraMap X₁.Ω₁ 𝔗.X₂.Ω₁).comp X₁.S.R.val.toRingHom = 𝔗.X₂.S.R.val.toRingHom.comp 𝔗.om := by
     ext x; exact (𝔗.om_eq x).symm

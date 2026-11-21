@@ -224,7 +224,7 @@ theorem tendsto_of_bounds {g Φ Ψ : ℕ → ℝ} {G : ℝ} (hΦ : Tendsto Φ at
     linarith
 
 theorem tendsto_multilinear {M : Type} [AddCommGroup M] {n : ℕ}
-    (g : MultilinearMap ℤ (fun _ : Fin n => M) ℤ) (β e : M) :
+    (g : MultilinearMap (RingHom.id ℤ) (fun _ : Fin n => M) ℤ) (β e : M) :
     Tendsto (fun q : ℕ => (g (fun _ => (q : ℤ) • β + e) : ℝ) / (q : ℝ) ^ n) atTop
       (𝓝 (g (fun _ => β) : ℝ)) := by
   classical
@@ -239,7 +239,7 @@ theorem tendsto_multilinear {M : Type} [AddCommGroup M] {n : ℕ}
           (s.piecewise (fun _ => β) (fun _ => e)) := by
       funext i
       by_cases hi : i ∈ s <;> simp [Finset.piecewise, hi]
-    rw [e2, h2, Finset.prod_const, smul_eq_mul]
+    rw [e2, h2, Finset.prod_const, RingHom.id_apply, smul_eq_mul]
   have h3 : ∀ q : ℕ, (g (fun _ => (q : ℤ) • β + e) : ℝ) / (q : ℝ) ^ n = ∑ s : Finset (Fin n),
       (g (s.piecewise (fun _ => β) (fun _ => e)) : ℝ) * ((q : ℝ) ^ s.card / (q : ℝ) ^ n) := by
     intro q
@@ -489,8 +489,9 @@ section Nef
 variable {F : Type} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {Ω : Type} [Field Ω] [Algebra F Ω]
 
-def fixLast {M : Type} [AddCommGroup M] {d : ℕ} (f : MultilinearMap ℤ (fun _ : Fin (d + 1) => M) ℤ) (e : M) :
-    MultilinearMap ℤ (fun _ : Fin d => M) ℤ :=
+def fixLast {M : Type} [AddCommGroup M] {d : ℕ}
+    (f : MultilinearMap (RingHom.id ℤ) (fun _ : Fin (d + 1) => M) ℤ) (e : M) :
+    MultilinearMap (RingHom.id ℤ) (fun _ : Fin d => M) ℤ :=
   (LinearMap.applyₗ e).compMultilinearMap (f.curryRight)
 
 theorem tendsto_finrank_nef (hK : GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Kleiman2.VeryAmpleNefPlusAmple.Statement)
@@ -562,7 +563,7 @@ theorem tendsto_finrank_nef (hK : GroundTheory.Heights₂.Heights.IndefiniteRowS
       (m : ℤ) ^ (d + 1) * f (fun _ => (q : ℤ) • β + e) := by
     intro p m q hpq
     have h := f.map_smul_univ (fun _ => (m : ℤ)) (fun _ => (q : ℤ) • β + e)
-    simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin, smul_eq_mul] at h
+    simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin, RingHom.id_apply, smul_eq_mul] at h
     rw [hν hpq]
     exact h
   have hX : ∀ {p m q : ℕ}, 1 ≤ q → 1 ≤ m → p = q * m →

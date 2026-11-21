@@ -60,7 +60,10 @@ theorem del_compat {α : A.Fld} (hα : A.IsForm α) (x x' : A.Pt) (h : x.pt = x'
       ReciprocityTheory.L2DbarEstimates.contDiffOn_of_differentiableOn n _ _ hW
         ((EuclideanSpace.proj c : V n →L[ℂ] ℂ).differentiable.comp_differentiableOn hd)
     exact (hs.contDiffAt (hW.mem_nhds hv)).of_le (WithTop.coe_le_coe.2 le_top)
-  have hφv : φ x.crd = x'.crd := by simp only [hφdef, Function.comp_apply, x.ch.left_inv x.2, h]
+  have hφv : φ x.crd = x'.crd := by
+    change x'.ch (x.ch.symm (x.ch x.pt)) = x'.ch x'.pt
+    rw [x.ch.left_inv x.2]
+    exact congrArg x'.ch h
   have hloc : A.loc α x.1.1 =ᶠ[𝓝 x.crd] fun w => pull (fderiv ℂ φ w) (A.loc α x'.1.1 (φ w)) := by
     filter_upwards [hW.mem_nhds hv] with w hw
     let p : A.Pt := ⟨(x.1.1, x.ch.symm w), x.ch.map_target hw.1⟩

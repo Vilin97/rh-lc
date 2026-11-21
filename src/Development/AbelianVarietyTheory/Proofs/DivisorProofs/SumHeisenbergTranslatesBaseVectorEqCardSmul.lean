@@ -71,7 +71,10 @@ theorem sum_heisO_base_eq : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStd
   set_option synthInstance.maxHeartbeats 100000 in
     rw [Finset.sum_congr rfl h1, ← map_sum, ← map_smul]
   congr 1
+  funext t
+  simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   rw [← Finset.sum_mul]
+  simp only [actPull, inv_one]
   set Λ := latAll S T ΛS ΛT with hΛ
   set x := actO S T z⁻¹ 1 t with hx
   by_cases hte : IsHalf e t

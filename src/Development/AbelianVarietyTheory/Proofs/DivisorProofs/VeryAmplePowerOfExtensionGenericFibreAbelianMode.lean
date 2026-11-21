@@ -86,7 +86,16 @@ theorem exists_generating_sq (W K' : Type) [CommRing W] [IsDomain W] [IsDiscrete
   let B : Over (Sp O) := (Over.pullback (spMap g)).obj G
   let π : B.left ⟶ G.left := pullback.fst G.hom (spMap g)
   have h : IsGrpPullback B G (spMap g) π := isGrpPullback_pullback G _
-  have hB := GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback hG h
+  have hB : IsAbelianScheme B := by
+    have hc : IsCommMonObj B := by
+      rw [isCommMonObj_iff_isMulCommutative]
+      intro T
+      refine ⟨⟨fun x y => Over.OverMorphism.ext (h.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+      rw [← h.2 T x y (pushPt h.1.w x) (pushPt h.1.w y) rfl rfl,
+        ← h.2 T y x (pushPt h.1.w y) (pushPt h.1.w x) rfl rfl, _root_.mul_comm]
+    exact ⟨hc, MorphismProperty.of_isPullback (P := @Smooth) h.1 hG.smooth,
+      MorphismProperty.of_isPullback (P := @IsProper) h.1 hG.proper,
+      MorphismProperty.of_isPullback (P := @GeometricallyConnected) h.1 hG.geomConnected⟩
   have := hB.comm
   have : Surjective π := MorphismProperty.of_isPullback (P := @Surjective) h.1.flip inferInstance
   have hr : Out.Rigidified G N := DVR.exists_gen_of_isLB_local (V := W) _ (pull_isLB hN _)

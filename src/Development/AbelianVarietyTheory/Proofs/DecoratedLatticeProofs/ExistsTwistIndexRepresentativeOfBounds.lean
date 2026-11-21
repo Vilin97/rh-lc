@@ -23,23 +23,23 @@ theorem exists_rep_of_bounds : ∀ (X : Fields) (Pr : Primes X) (R : Ranks) (Ch 
       have hne : P' ≠ P := by
         rintro rfl
         exact hA.nmem hP'
-      simp only [hh, if_neg hne]
+      simp only [hh, ite_eq_right hne]
       exact hL.stabG (j + 1) b₀ P' hP')
     (by
       intro P' hP'
       by_cases hPP : P' = P
       · subst hPP
-        simp only [hh, if_pos rfl]
+        simp only [hh, ite_eq_left rfl]
         exact hγ
-      · simp only [hh, if_neg hPP]
+      · simp only [hh, ite_eq_right hPP]
         exact hL.boundQ (j + 1) b₀ P' hP')
     (by
       intro P'
       by_cases hPP : P' = P
       · subst hPP
-        simp only [hh, if_pos rfl]
+        simp only [hh, ite_eq_left rfl]
         exact hal
-      · simp only [hh, if_neg hPP]
+      · simp only [hh, ite_eq_right hPP]
         exact hL.nonvan j hj b₀ P')
   refine ⟨b, ?_⟩
   have := hb P

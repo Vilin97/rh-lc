@@ -55,7 +55,6 @@ theorem mixS_decay : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D 
     rw [pow_zero, ENNReal.ofReal_one, mul_one, ENNReal.coe_one, one_mul]
     have hs : supSob ψ θ 0 f = ⨆ w, ‖f w‖ₑ := GlobalTheory.Size.wordSum_zero _ _ _
     rw [hs]
-    unfold _root_.I195MixedCoordinates_0369f17677cfefcc2f91e8fc.source
     calc _ ≤ ∫⁻ a in v.𝓕, ‖heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w) f)) 0‖ₑ ∂v.μ :=
           enorm_integral_le_lintegral_enorm _
       _ ≤ ∫⁻ _ in v.𝓕, (⨆ w, ‖f w‖ₑ) ∂v.μ := lintegral_mono fun a => by

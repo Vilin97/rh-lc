@@ -124,7 +124,8 @@ theorem tendsto_lintegral_sq [MeasurableSpace V] [OpensMeasurableSpace V] [Secon
   refine h2.congr fun n => ?_
   simp only [Function.comp_apply, SchwartzMap.toLpCLM_apply]
   rw [Lp.enorm_def, eLpNorm_congr_ae (SchwartzMap.coeFn_toLp (u n) 2 μ)]
-  have := eLpNorm_nnreal_pow_eq_lintegral (f := (u n : V → ℂ)) (μ := μ) (p := 2) (by norm_num)
+  have := eLpNorm_nnreal_pow_eq_lintegral (f := (u n : V → ℂ)) (μ := μ) (p := 2)
+    (by norm_num) (u n).continuous.aestronglyMeasurable
   simpa using this
 
 end Real
@@ -149,8 +150,9 @@ theorem tendsto_l2A_diffQuot : ∀ (F : Type) [Field F] [NumberField F] [Inverti
   haveI := hμ
   have hG : ∀ i, ∫⁻ y, ‖g i y‖ₑ ^ 2 ∂μ ≠ ⊤ := by
     intro i
-    have h := ((hgc i).memLp_of_hasCompactSupport (p := 2) (μ := μ) (hg i).2).2
-    rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top (by norm_num) (by norm_num)] at h
+    have h := ((hgc i).memLp_of_hasCompactSupport (p := 2) (μ := μ) (hg i).2).eLpNorm_lt_top
+    rw [eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top (by norm_num) (by norm_num)
+      (hgc i).aestronglyMeasurable] at h
     simpa using h.ne
   let L : (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ := LinearMap.toContinuousLinearMap
     { toFun := fun x => -ℓ (∑ k, x k * h.2 k)

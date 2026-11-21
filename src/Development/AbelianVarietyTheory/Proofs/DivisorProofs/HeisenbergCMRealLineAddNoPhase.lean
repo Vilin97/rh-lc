@@ -126,8 +126,8 @@ theorem continuous_symplOF_left (ξ₀ : E) (y : WOF F E nS nT) :
   have ht : Continuous (Algebra.trace (AF F) (AEF F E)) := IsModuleTopology.continuous_of_linearMap _
   refine ht.comp (continuous_const.mul ?_)
   unfold hOF
-  exact continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ => continuous_finset_sum _ fun c _ =>
-    continuous_finset_sum _ fun d _ => continuous_const.mul (continuous_id.matrix_elem d a)
+  exact continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ => continuous_finsetSum _ fun c _ =>
+    continuous_finsetSum _ fun d _ => continuous_const.mul (continuous_id.matrix_elem d a)
 
 omit [Algebra F E] [Field E] [NumberField E] in
 theorem line_zero (g : ℝ →+ AF F) (hg : Continuous g) (t : ℝ) (ht : g t = 0) (u : ℝ) : g (u * t) = 0 := by

@@ -123,7 +123,7 @@ theorem lagSet_isLagrangian : ∀ {F E : Type} [Field F] [NumberField F] [Field 
           (Matrix.vecMulVec y' (incV F H'.x) + incM F (1 : Matrix (Fin n) (Fin n) E) * z' * (incM F H'.ι)ᵀ) := by
         rw [Matrix.add_vecMulVec, Matrix.mul_add, Matrix.add_mul]; abel
       rw [this]
-      ext : 1 <;> simp only [Prod.fst_add, Prod.snd_add, LinearEquiv.map_add (f := _), lagL_arch_add] <;> abel
+      ext : 1 <;> simp only [Prod.fst_add, Prod.snd_add, LinearEquiv.map_add (e := _), lagL_arch_add] <;> abel
   ·
     rintro t l ⟨u, ⟨y, rfl⟩, hu, z, hz, hz1, rfl⟩
     refine ⟨_, ⟨realAd F t • y, rfl⟩, ?_, realAd F t • z, lagL_at_smul _ hz, ?_, ?_⟩

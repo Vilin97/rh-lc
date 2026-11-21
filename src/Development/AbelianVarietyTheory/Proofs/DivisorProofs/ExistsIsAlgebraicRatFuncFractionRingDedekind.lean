@@ -51,7 +51,7 @@ theorem exists_finite_inj_polynomial (k B : Type) [Field k] [CommRing B] [IsDede
       (Field.toIsField k))
   obtain rfl : s = 1 := by omega
   let e : MvPolynomial (Fin 1) k ≃ₐ[k] Polynomial k :=
-    (MvPolynomial.renameEquiv k (Equiv.equivPUnit.{1, 1} (Fin 1))).trans (MvPolynomial.pUnitAlgEquiv k)
+    MvPolynomial.uniqueAlgEquiv k (Fin 1)
   refine ⟨g.toRingHom.comp e.symm.toRingEquiv.toRingHom, hg.comp e.symm.injective, ?_⟩
   exact RingHom.Finite.comp hfin (RingHom.Finite.of_surjective _ e.symm.surjective)
 

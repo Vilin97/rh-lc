@@ -193,8 +193,8 @@ theorem sum_tmul_eq_zero_of_cup : ∀ (K : Type) [Field K] (P Q : Type) [Categor
     funext T T' b
     simp only [Pi.sub_apply, Finset.sum_apply]
     exact step T T' b
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sub, kunneth_contraction_d0_vanishes _ _ _ hΛd, sub_zero, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, kunneth_contraction_d0_vanishes _ _ _ hΛd, sub_zero, map_sum]
     simp only [contr_tmul]
 
 end GlobalTheory.CatCoh.KunnethOne

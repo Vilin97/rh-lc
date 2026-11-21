@@ -177,7 +177,7 @@ theorem exists_kummer_enlargement : ∀ (T : Type) [CommRing T] [IsDomain T] [Is
   set P : Ideal B := p₁.comap (algebraMap B (loc S)) with hP
   have hPh : P.height = 1 := by
     rw [hP, ← hp₁]
-    exact IsLocalization.height_comap M p₁
+    exact IsLocalization.height_under M p₁
   have hcomap : p₁.comap f = P.comap (algebraMap A B) := by
     rw [hP, Ideal.comap_comap, ← IsScalarTower.algebraMap_eq]
     rfl

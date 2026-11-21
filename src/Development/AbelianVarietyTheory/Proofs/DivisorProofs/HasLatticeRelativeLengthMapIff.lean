@@ -149,8 +149,8 @@ theorem relLen_map_iff : ∀ (C : Type) [Field C] (v : AddValuation C (WithTop �
   haveI := isTorsionFree_submodule htM (X ⊓ LinearMap.ker f)
   haveI : Module.Finite (Int0 v) (X.map f) := Module.Finite.map X f
   haveI : Module.Finite (Int0 v) (X'.map f) := Module.Finite.map X' f
-  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (Int0 v) (X.map f)
-  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (Int0 v) (X'.map f)
+  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (R := Int0 v) (M := X.map f)
+  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (R := Int0 v) (M := X'.map f)
   let g : X →ₗ[Int0 v] X.map f := f.submoduleMap X
   have hg : Function.Surjective g := f.submoduleMap_surjective X
   haveI : Module.FinitePresentation (Int0 v) (X.map f) := Module.finitePresentation_of_projective _ _
@@ -168,7 +168,7 @@ theorem relLen_map_iff : ∀ (C : Type) [Field C] (v : AddValuation C (WithTop �
   haveI : Module.Finite (Int0 v) ↥(X ⊓ LinearMap.ker f) := by
     rw [Module.Finite.iff_fg, ← hK]
     exact hfg.map _
-  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (Int0 v) ↥(X ⊓ LinearMap.ker f)
+  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (R := Int0 v) (M := ↥(X ⊓ LinearMap.ker f))
   have hK' : X' ⊓ LinearMap.ker f = X ⊓ LinearMap.ker f :=
     le_antisymm (inf_le_inf_right _ hle) (le_inf hker inf_le_right)
   obtain ⟨q, ⟨d⟩⟩ : ∃ q : ℕ, Nonempty (Basis (Fin q) (Int0 v) ↥(X ⊓ LinearMap.ker f)) :=

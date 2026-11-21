@@ -37,8 +37,8 @@ theorem eq_zpow_of_map_eq {O K : Type} [CommRing O] [IsDomain O] [Field K] (κ :
   obtain ⟨i, hi, hiy⟩ := hζ'.eq_pow_of_pow_eq_one (ξ := (y : O)) (by rw [← Units.val_pow_eq_pow_val, hyN, Units.val_one])
   have hκ : IsPrimitiveRoot (κ ζ) N := by
     have : NeZero (N : K) := ⟨by simpa using (hu.map κ).ne_zero⟩
-    rw [← Polynomial.isRoot_cyclotomic_iff, ← Polynomial.map_cyclotomic N κ]
-    exact (hζ'.isRoot_cyclotomic hN).map
+    rw [← (Polynomial.isRoot_cyclotomic_iff (R := K) (n := N)), ← Polynomial.map_cyclotomic N κ]
+    exact (hζ'.isRoot_cyclotomic hN).map κ
   have hκy : κ (y : O) = 1 := by
     have h' : κ (w : O) = κ ((ζ ^ m : Oˣ) : O) := congrArg (fun u : Kˣ => (u : K)) h
     rw [hy, Units.val_mul, map_mul, h', ← map_mul, ← Units.val_mul, mul_inv_cancel, Units.val_one, map_one]

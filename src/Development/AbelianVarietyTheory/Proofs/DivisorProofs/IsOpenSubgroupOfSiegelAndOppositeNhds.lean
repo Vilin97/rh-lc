@@ -95,7 +95,7 @@ theorem continuous_blk₂₁ : Continuous fun g : UG c (stdJ ν E) => (mat c g).
   continuous_matrix fun _ _ => (continuous_mat c).matrix_elem _ _
 
 theorem blk₂₂_one : (mat c (1 : UG c (stdJ ν E))).toBlocks₂₂ = 1 := by
-  ext i j; simp [mat, toBlocks₂₂, one_apply]
+  ext i j; simp [mat, toBlocks₂₂, Matrix.one_apply]
 
 theorem blk₂₁_one : (mat c (1 : UG c (stdJ ν E))).toBlocks₂₁ = 0 := by
   ext i j; simp [mat, toBlocks₂₁, one_apply]

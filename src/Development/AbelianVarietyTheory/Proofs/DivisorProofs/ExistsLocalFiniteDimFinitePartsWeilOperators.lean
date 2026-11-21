@@ -27,8 +27,7 @@ namespace GlobalTheory.WeilCont
 theorem adeleJoin_zero_zero (F : Type) [Field F] [NumberField F] (κ : Type) :
     adeleJoin F (0 : κ → mixedEmbedding.mixedSpace F) 0 = 0 := by
   funext i
-  simp [adeleJoin]
-  rfl
+  simp only [adeleJoin, Pi.zero_apply, map_zero, Prod.mk_zero_zero]
 
 theorem sum_mul_zero_prod {κ : Type} [Fintype κ] {A B : Type} [CommRing A] [CommRing B] (z : κ → A × B)
     (y : κ → B) : (∑ i, z i * ((0 : A), y i)) = ((0 : A), ∑ i, (z i).2 * y i) := by

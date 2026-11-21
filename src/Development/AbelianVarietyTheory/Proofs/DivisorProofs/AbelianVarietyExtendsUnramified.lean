@@ -179,11 +179,9 @@ theorem GlobalTheory.UnramifiedClosure.closure_baseChange : ∀ (R K W K' : Type
   have hcomm : pullback.fst G.hom (spMap (algebraMap W K')) ≫ cG = v ≫ mW := by
     apply pullback.hom_ext
     · rw [Category.assoc, pullback.lift_fst, ← hcomp]
-      simp only [v, mW, n, Category.assoc]
-      try simp only [Category.assoc]
-      rw [pullback.lift_fst_assoc]
-      try simp only [Category.assoc]
-      rw [IsPullback.isoPullback_hom_fst_assoc, Scheme.Hom.toImage_imageι]
+      simp only [v, mW, n, pullback.map, Category.assoc]
+      simp only [pullback.lift_fst, pullback.lift_fst_assoc, Category.assoc,
+        IsPullback.isoPullback_hom_fst_assoc, Scheme.Hom.toImage_imageι]
     · rw [Category.assoc, pullback.lift_snd]
       simp only [v, mW, n, Category.assoc]
       rw [pullback.lift_snd, Category.comp_id (pullback.snd X.hom (spMap (algebraMap R W))),
@@ -213,3 +211,5 @@ theorem GlobalTheory.UnramifiedClosure.closure_baseChange : ∀ (R K W K' : Type
   have h3 : pullback.fst X.hom (spMap (algebraMap R W)) ≫ iA.imageι =
       mW ≫ pullback.fst P.hom (spMap (algebraMap R W)) := (pullback.lift_fst _ _ _).symm
   simp only [Category.assoc]
+  simp only [h3, ← Category.assoc, hψ, Scheme.Hom.toImage_imageι]
+  simpa only [Category.assoc, cG, pullback.lift_fst] using hcomp

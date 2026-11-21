@@ -63,8 +63,8 @@ theorem exists_dual {O κ : Type} [CommRing O] [Fintype κ] [DecidableEq κ] (b 
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [Finset.sum_mul, map_sum, smul_mul_assoc, map_smul, hc, smul_eq_mul, mul_ite, mul_zero]
     simp [mul_comm]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [Finset.sum_mul, map_sum, _root_.mul_assoc, hc2]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_mul, map_sum, _root_.mul_assoc, hc2]
     rw [← zsmul_eq_mul, map_smul, Algebra.trace_eq_matrix_trace b, smul_eq_mul, Matrix.trace, ← Finset.mul_sum]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_

@@ -42,7 +42,18 @@ theorem liftFil_le (k : Type) [Field k] (A₀ : Over (Sp k)) [GrpObj A₀] (A₁
     liftFil (epsDP k) h₁ ≤ liftFil (epsDP k) h₂ := by
   have P : AbelianDeRham := GlobalTheory.T.abelianScheme_firstDeRham_structure
   obtain ⟨g₁, hg₁⟩ := GlobalTheory.AbelianDim.exists_relDim (DualNumber k) A₁ hA₁
-  have hA₀ := GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback hA₁ h₁
+  have hA₀ : IsAbelianScheme A₀ := by
+    have := hA₁.comm
+    have hc : IsCommMonObj A₀ := by
+      rw [isCommMonObj_iff_isMulCommutative]
+      intro T
+      refine ⟨⟨fun x y => Over.OverMorphism.ext (h₁.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+      rw [← h₁.2 T x y (pushPt h₁.1.w x) (pushPt h₁.1.w y) rfl rfl,
+        ← h₁.2 T y x (pushPt h₁.1.w y) (pushPt h₁.1.w x) rfl rfl, _root_.mul_comm]
+    exact { comm := hc
+            smooth := MorphismProperty.of_isPullback (P := @Smooth) h₁.1 hA₁.smooth
+            proper := MorphismProperty.of_isPullback (P := @IsProper) h₁.1 hA₁.proper
+            geomConnected := MorphismProperty.of_isPullback (P := @GeometricallyConnected) h₁.1 hA₁.geomConnected }
   have gA₀ := (smoothOfRelativeDimension_isStableUnderBaseChange g₁).of_isPullback h₁.1 hg₁
   obtain ⟨C, _, φ, j, hφ, hic, e1⟩ := exists_const A₀
   have hBC := constMor_isBC P hA₀ gA₀ hφ hic e1

@@ -230,111 +230,72 @@ structure CovolumeOntoIsometryConditions (R : RealDat3 D A3 Ks) (F : Face3 D A3)
 theorem complex_data_conditions_base_level_of_primitive_links {s : ℕ} (hOk : A3.fam3.Ok3 s) (hsep : A3.fam3.TypesSep3) {R : RealDat3 D A3 Ks} {F : Face3 D A3}
     (hC : R.WeakCharacterisation F) (hP : PrimRows3 R F) :
     ComplexDataConditionsBaseLevel A3 F.P0 F.ψ0 F.P1 F.ψ1 F.Dc F.Sp F.Zsc (R.toCx3 F) s (U2.eigensystemChoice A3 (R.toCx3 F) F.P0 F.ψ0 F.P1 F.ψ1 hP.hecke.2.choose) hP.hecke.1.choose hP.hecke.2.choose (R.gEx F)
-      (R.gWx F) where
-  kFormR := RealDat3.kFormR_of hC.base.models
-  kFormL := RealDat3.kFormL_of hC.base.models
-  jIsoR := RealDat3.jIsoR_of hC.base.models
-  jIsoL := RealDat3.jIsoL_of hC.base.models
-  npTie := ⟨rfl, rfl⟩
-  ok := hOk
-  sep := hsep
-  heckeR := hP.heckeR
-  heckeL := hP.heckeL
-  thetaR := hP.hecke.1.choose_spec
-  thetaL := hP.hecke.2.choose_spec
-  gUnit := hP.gUnit.1
-  gEquiv := hP.gEquiv.1
-  lev0 := hP.levE.1
-  lev1 := hP.levE.2
-  h2P := hP.h2P
-  gUnitL := hP.gUnit.2
-  gEquivL := hP.gEquiv.2
-  lower_level_lift_type := hP.levW
-  inBlock := hP.block
-  rowTest := hP.rowTest
-  liftTest := hP.liftTest
-  pos := hP.pos
-  h0 := RealDat3.height_change_of_D0 hC.tup
-  h4pos := ⟨fun _ => hP.posScal.1, hP.posScal.2, RealDat.nP_pos⟩
-  thmBop := RealDat3.thmBop_of hP.thmB
-  partsE := hP.sumE
-  kForm := RealDat3.kForm_of hP.unif false
-  mLat := hP.mLat
-  ewNorm := RealDat3.ewNorm false
-  thmAop := RealDat3.thmAop_of hC.phase hP.thmA false
-  partsW := hP.sumW
-  base_lift_test := hP.liftTestB
-  galD := hP.scalConj
-  dimParts := hP.dimParts
-  eig0 := (U2.unitary_two_package A3 (R.toCx3 F) s F.P0 F.ψ0 F.P1 F.ψ1 F.Dc F.Sp F.Zsc hP.hecke.2.choose (R.gWx F) hOk
+      (R.gWx F) := by
+  have hUnitary := U2.unitary_two_package A3 (R.toCx3 F) s F.P0 F.ψ0 F.P1 F.ψ1 F.Dc F.Sp F.Zsc hP.hecke.2.choose (R.gWx F) hOk
     (RealDat3.kFormR_of hC.base.models) (RealDat3.kFormL_of hC.base.models) (RealDat3.jIsoR_of hC.base.models)
     (RealDat3.jIsoL_of hC.base.models) hP.rowTest hP.liftTest hP.heckeL hP.hecke.2.choose_spec hP.gUnit.2 hP.gEquiv.2 hP.levW
-    hP.sumW (hP.liftOnto _ hP.hecke.2.choose_spec)).1
-  typ0 := (U2.unitary_two_package A3 (R.toCx3 F) s F.P0 F.ψ0 F.P1 F.ψ1 F.Dc F.Sp F.Zsc hP.hecke.2.choose (R.gWx F) hOk
-    (RealDat3.kFormR_of hC.base.models) (RealDat3.kFormL_of hC.base.models) (RealDat3.jIsoR_of hC.base.models)
-    (RealDat3.jIsoL_of hC.base.models) hP.rowTest hP.liftTest hP.heckeL hP.hecke.2.choose_spec hP.gUnit.2 hP.gEquiv.2 hP.levW
-    hP.sumW (hP.liftOnto _ hP.hecke.2.choose_spec)).2
+    hP.sumW (hP.liftOnto _ hP.hecke.2.choose_spec)
+  exact {
+    kFormR := RealDat3.kFormR_of hC.base.models
+    kFormL := RealDat3.kFormL_of hC.base.models
+    jIsoR := RealDat3.jIsoR_of hC.base.models
+    jIsoL := RealDat3.jIsoL_of hC.base.models
+    npTie := ⟨rfl, rfl⟩
+    ok := hOk
+    sep := hsep
+    heckeR := hP.heckeR
+    heckeL := hP.heckeL
+    thetaR := hP.hecke.1.choose_spec
+    thetaL := hP.hecke.2.choose_spec
+    gUnit := hP.gUnit.1
+    gEquiv := hP.gEquiv.1
+    lev0 := hP.levE.1
+    lev1 := hP.levE.2
+    h2P := hP.h2P
+    gUnitL := hP.gUnit.2
+    gEquivL := hP.gEquiv.2
+    lower_level_lift_type := hP.levW
+    inBlock := hP.block
+    rowTest := hP.rowTest
+    liftTest := hP.liftTest
+    pos := hP.pos
+    h0 := RealDat3.height_change_of_D0 hC.tup
+    h4pos := ⟨fun _ => hP.posScal.1, hP.posScal.2, RealDat.nP_pos⟩
+    thmBop := RealDat3.thmBop_of hP.thmB
+    partsE := hP.sumE
+    kForm := RealDat3.kForm_of hP.unif false
+    mLat := hP.mLat
+    ewNorm := RealDat3.ewNorm false
+    thmAop := RealDat3.thmAop_of hC.phase hP.thmA false
+    partsW := hP.sumW
+    base_lift_test := hP.liftTestB
+    galD := hP.scalConj
+    dimParts := hP.dimParts
+    eig0 := hUnitary.1
+    typ0 := hUnitary.2
+  }
 
 theorem base_lifts_package_of_primitive_links {s : ℕ} (hOk : A3.fam3.Ok3 s) (hsep : A3.fam3.TypesSep3) {R : RealDat3 D A3 Ks} {F : Face3 D A3}
     {sEE : (R.toCx3 F).EE →ₗ⋆[ℂ] (F.fc (R.toCx3 F).zs).Sp.HH} {H : HkDat3 A3} {C CH : ℝ} (hC : R.WeakCharacterisation F)
     (hP : CovolumeOntoIsometryConditions R F sEE H C CH) :
     PrimitiveStatementsBaseLiftsOnly A3 F.P0 F.ψ0 F.P1 F.ψ1 F.Dc F.Sp F.Zsc (R.toCx3 F) s (U2.eigensystemChoice A3 (R.toCx3 F) F.P0 F.ψ0 F.P1 F.ψ1 hP.hecke.2.choose) (F.eV (R.toCx3 F).zs) sEE C CH hP.hecke.1.choose
-      hP.hecke.2.choose (R.gEx F) (R.gWx F) (R.convOf F H) where
-  kFormR := RealDat3.kFormR_of hC.base.models
-  kFormL := RealDat3.kFormL_of hC.base.models
-  jIsoR := RealDat3.jIsoR_of hC.base.models
-  jIsoL := RealDat3.jIsoL_of hC.base.models
-  npTie := ⟨rfl, rfl⟩
-  ok := hOk
-  sep := hsep
-  heckeR := hP.heckeR
-  heckeL := hP.heckeL
-  thetaR := hP.hecke.1.choose_spec
-  thetaL := hP.hecke.2.choose_spec
-  gUnit := hP.gUnit.1
-  gEquiv := hP.gEquiv.1
-  lev0 := hP.levE.1
-  lev1 := hP.levE.2
-  h2P := hP.h2P
-  gUnitL := hP.gUnit.2
-  gEquivL := hP.gEquiv.2
-  lower_level_lift_type := hP.levW
-  inBlock := hP.block
-  rowTest := hP.rowTest
-  liftTest := hP.liftTest
-  eig0 := (U2.unitary_two_package A3 (R.toCx3 F) s F.P0 F.ψ0 F.P1 F.ψ1 F.Dc F.Sp F.Zsc hP.hecke.2.choose (R.gWx F) hOk
-    (RealDat3.kFormR_of hC.base.models) (RealDat3.kFormL_of hC.base.models) (RealDat3.jIsoR_of hC.base.models)
-    (RealDat3.jIsoL_of hC.base.models) hP.rowTest hP.liftTest hP.heckeL hP.hecke.2.choose_spec hP.gUnit.2 hP.gEquiv.2 hP.levW
-    hP.sumW (hP.liftOnto _ hP.hecke.2.choose_spec)).1
-  typ0 := (U2.unitary_two_package A3 (R.toCx3 F) s F.P0 F.ψ0 F.P1 F.ψ1 F.Dc F.Sp F.Zsc hP.hecke.2.choose (R.gWx F) hOk
-    (RealDat3.kFormR_of hC.base.models) (RealDat3.kFormL_of hC.base.models) (RealDat3.jIsoR_of hC.base.models)
-    (RealDat3.jIsoL_of hC.base.models) hP.rowTest hP.liftTest hP.heckeL hP.hecke.2.choose_spec hP.gUnit.2 hP.gEquiv.2 hP.levW
-    hP.sumW (hP.liftOnto _ hP.hecke.2.choose_spec)).2
-  pos := hP.pos
-  h0 := RealDat3.height_change_of_D0 hC.tup
-  w1 := hP.w1
-  h4pos := ⟨fun _ => hP.posScal.1, hP.posScal.2, RealDat.nP_pos⟩
-  thmBop := RealDat3.thmBop_of hP.thmB
-  partsE := hP.sumE
-  kForm := RealDat3.kForm_of hP.unif false
-  mLat := hP.mLat
-  ewNorm := RealDat3.ewNorm false
-  thmAop := RealDat3.thmAop_of hC.phase hP.thmA false
-  partsW := hP.sumW
-  base_lift_test := hP.liftTestB
-  galD := hP.scalConj
-  dimParts := hP.dimParts
-  l3 := hP.covol
-  on := hP.onto
-  l6 := hP.lamLow
-  evTie := EvTie.evTie_of_ok hOk F _
-  seeIso := hP.seeIso
-  miStar := hP.miStar
-  conv := RealDat3.conv_of hC H
-  heckeRB := heckeRB_of (complex_data_conditions_base_level_of_primitive_links hOk hsep hC hP.toPrimRows3) _
-  heckeWB := heckeWB_of (complex_data_conditions_base_level_of_primitive_links hOk hsep hC hP.toPrimRows3) _
-  heckeRC := heckeRC_of (complex_data_conditions_base_level_of_primitive_links hOk hsep hC hP.toPrimRows3) _
-  fun0 := hP.fun0
+      hP.hecke.2.choose (R.gEx F) (R.gWx F) (R.convOf F H) := by
+  have hBase := complex_data_conditions_base_level_of_primitive_links hOk hsep hC hP.toPrimRows3
+  exact {
+    toComplexDataConditionsBaseLevel := hBase
+    w1 := hP.w1
+    l3 := hP.covol
+    on := hP.onto
+    l6 := hP.lamLow
+    evTie := EvTie.evTie_of_ok hOk F _
+    seeIso := hP.seeIso
+    miStar := hP.miStar
+    conv := RealDat3.conv_of hC H
+    heckeRB := heckeRB_of hBase _
+    heckeWB := heckeWB_of hBase _
+    heckeRC := heckeRC_of hBase _
+    fun0 := hP.fun0
+  }
 
 end Three2
 

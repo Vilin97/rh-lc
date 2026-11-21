@@ -71,10 +71,10 @@ def phase (y z : κ → Af F) (p : Af F × (κ → Af F)) : Af F :=
 theorem continuous_phase (y z : κ → Af F) : Continuous (phase y z) := by
   have h1 : Continuous fun p : Af F × (κ → Af F) => p.2 ⬝ᵥ (fun i => p.1 * z i) := by
     unfold dotProduct
-    exact continuous_finset_sum _ fun i _ => ((continuous_apply i).comp continuous_snd).mul (continuous_fst.mul continuous_const)
+    exact continuous_finsetSum _ fun i _ => ((continuous_apply i).comp continuous_snd).mul (continuous_fst.mul continuous_const)
   have h2 : Continuous fun p : Af F × (κ → Af F) => (fun i => p.1 * y i) ⬝ᵥ (fun i => p.1 * z i) := by
     unfold dotProduct
-    exact continuous_finset_sum _ fun i _ => (continuous_fst.mul continuous_const).mul (continuous_fst.mul continuous_const)
+    exact continuous_finsetSum _ fun i _ => (continuous_fst.mul continuous_const).mul (continuous_fst.mul continuous_const)
   exact h1.add (continuous_const.mul h2)
 
 theorem phase_zero (y z : κ → Af F) (u : κ → Af F) : phase y z (0, u) = 0 := by

@@ -60,11 +60,11 @@ theorem secondSlice_mem_finiteDimensional : ∀ (E : Type) [Field E] [NumberFiel
     obtain ⟨v, hv, ev⟩ := ihy
     refine ⟨u + v, add_mem hu hv, ?_⟩
     funext m₂
-    have := congrFun eu m₂
-    have := congrFun ev m₂
+    have eu₂ := congrFun eu m₂
+    have ev₂ := congrFun ev m₂
     simp only [Submodule.coe_subtype, Submodule.coe_add, Pi.add_apply] at *
     rw [integral_add (hint x hx _) (hint y hy _)]
-    simp_all
+    exact congrArg₂ (· + ·) eu₂ ev₂
   | smul c x hx ihx =>
     obtain ⟨u, hu, eu⟩ := ihx
     refine ⟨c • u, Submodule.smul_mem _ c hu, ?_⟩

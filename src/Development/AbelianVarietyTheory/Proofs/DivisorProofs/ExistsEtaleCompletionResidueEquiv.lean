@@ -59,7 +59,7 @@ theorem exists_finite_free_local_residue_equiv (B : Type) [CommRing B] [IsLocalR
     haveI : Algebra.IsIntegral B (AdjoinRoot F) := inferInstance
     refine IsLocalRing.of_unique_max_ideal ⟨_, hJ, fun P hP => ?_⟩
     have hc : (P.comap (algebraMap B (AdjoinRoot F))).IsMaximal :=
-      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P
+      Ideal.isMaximal_under_of_isIntegral_of_isMaximal P
     have h1 : P.comap (algebraMap B (AdjoinRoot F)) = maximalIdeal B := IsLocalRing.eq_maximalIdeal hc
     have hle : (maximalIdeal B).map (algebraMap B (AdjoinRoot F)) ≤ P := Ideal.map_le_iff_le_comap.2 h1.ge
     exact (hJ.eq_of_le hP.ne_top hle).symm

@@ -205,8 +205,7 @@ theorem eLpNorm_wordR_le (μ : @Measure (κ → AF F) (borel _)) (hμ : @Measure
       rw [wordR_concat, dR_expand T c b hΦ ζ, wordR_sum T c zs' _ _ fun i => dR_mem T c (b i) hΦ]
       calc eLpNorm (∑ i, ((b.repr ζ i : ℝ) : ℂ) • wordR F T c zs' (dR F T c (b i) Φ)) 2 μ
           ≤ ∑ i, eLpNorm (((b.repr ζ i : ℝ) : ℂ) • wordR F T c zs' (dR F T c (b i) Φ)) 2 μ :=
-            eLpNorm_sum_le (fun i _ => ((hL2 _ (wordR_mem T c zs' (dR_mem T c (b i) hΦ))).const_smul _).1)
-              one_le_two
+            eLpNorm_sum_le one_le_two
         _ ≤ ∑ i, ENNReal.ofReal (κ₀ * ρ * (C i * ρ ^ P)) := by
             refine Finset.sum_le_sum fun i _ => ?_
             rw [eLpNorm_const_smul, ← ofReal_norm_eq_enorm, Complex.norm_real,

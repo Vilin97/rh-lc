@@ -42,9 +42,11 @@ theorem _root_.GlobalTheory.AV.AbVar.tl_lev_surj_ker : ∀ (K : Type) [Field K]
   have hcast : ∀ s : _root_.GlobalTheory.AV.AbVar.Tl l A,
       (l : ℤ_[l]) ^ n • s = (l ^ n : ℕ) • s := by
     intro s
-    rw [← Nat.cast_smul_eq_nsmul ℤ_[l]]
-    push_cast
-    rfl
+    apply Subtype.ext
+    funext m
+    change ((l : ℤ_[l]) ^ n • s).lev m = ((l ^ n : ℕ) • s).lev m
+    rw [_root_.GlobalTheory.HTLat.Tate.lev_smul, tate_nsmul_lev, ← Nat.cast_pow]
+    exact _root_.GlobalTheory.PDiv.pow_digit_natCast (s.lev_pow m) (l ^ n)
   constructor
   · intro ht
     let u : ℕ → A.Pt := fun m => t.lev (m + n)
@@ -57,11 +59,12 @@ theorem _root_.GlobalTheory.AV.AbVar.tl_lev_surj_ker : ∀ (K : Type) [Field K]
         rw [show m + 1 + n = m + n + 1 by omega, _root_.GlobalTheory.HTLat.Tate.lev_succ]
     refine ⟨_root_.GlobalTheory.HTLat.Tate.mk u hu, ?_⟩
     rw [hcast]
-    refine _root_.GlobalTheory.HTLat.Tate.ext fun m => ?_
+    apply Subtype.ext
+    funext m
+    change t.lev m = ((l ^ n : ℕ) • _root_.GlobalTheory.HTLat.Tate.mk u hu).lev m
     rw [tate_nsmul_lev,
       _root_.GlobalTheory.HTLat.Tate.lev_mk]
-    simp only [u]
-    rw [_root_.GlobalTheory.HTLat.Tate.lev_add_pow]
+    simp only [u, _root_.GlobalTheory.HTLat.Tate.lev_add_pow]
   · rintro ⟨s, rfl⟩
     rw [hcast, tate_nsmul_lev, _root_.GlobalTheory.HTLat.Tate.lev_pow]
 

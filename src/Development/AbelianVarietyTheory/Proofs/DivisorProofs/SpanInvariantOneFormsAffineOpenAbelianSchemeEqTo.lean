@@ -134,7 +134,6 @@ theorem span_eq_top_of_tanRep [IsCommMonObj A] (T : TanRep A W) (U : AffOp A.lef
   rw [eq_top_iff]
   intro x _
   induction x using (eU_isBaseChange T tr_bij tr_nat U.unop).inductionOn with
-  | zero => exact zero_mem _
   | tmul w => exact Submodule.subset_span ⟨⟨form T w, isInv_form T w⟩, rfl⟩
   | smul s n hn => exact Submodule.smul_mem _ _ (hn trivial)
   | add a b ha hb => exact add_mem (ha trivial) (hb trivial)

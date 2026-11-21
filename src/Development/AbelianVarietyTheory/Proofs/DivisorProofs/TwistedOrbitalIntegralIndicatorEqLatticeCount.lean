@@ -148,7 +148,7 @@ theorem twOrb_eq_N : ∀ (K : GlobalTheory.UnitLemma.UQ) (B : GlobalTheory.UnitL
     induction o using Quot.ind with
     | mk L =>
       obtain ⟨q, hq⟩ := hsurj L.1 L.2
-      obtain ⟨t, k, ht, hk, hout⟩ := DoubleCoset.mk_out_eq_mul (twCent θ δ) Kg q
+      obtain ⟨t, ht, k, hk, hout⟩ := DoubleCoset.mk_out_eq_mul (twCent θ δ) Kg q
       have hf1 : f ((Quotient.out (DoubleCoset.mk (twCent θ δ) Kg q))⁻¹ * δ *
           θ (Quotient.out (DoubleCoset.mk (twCent θ δ) Kg q))) = 1 := by
         rw [hout, hdc t ht k hk q]

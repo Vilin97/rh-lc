@@ -82,7 +82,7 @@ theorem _root_.GlobalTheory.PDivGroup.exists_mulP_eq_of_transl_eq {p : ℕ} {R :
         simp only [Set.mem_setOf_eq, smul_eq_mul] at hx ⊢
         rw [← mul_assoc]
         exact hx _ }
-  have hK : _root_.GlobalTheory.PDiv.torsionIdeal R (_root_.GlobalTheory.CartierDual R (G.A (n + 1))) (p ^ n) ≤
+  have hK : _root_.GlobalTheory.PDiv.torsionIdeal (R := R) (A := _root_.GlobalTheory.CartierDual R (G.A (n + 1))) (p ^ n) ≤
       RingHom.ker (Ideal.Quotient.mkₐ R K) := by
     change _root_.GlobalTheory.PDiv.kerIdeal (_root_.GlobalTheory.PDiv.mulBy R _ (p ^ n)) ≤ _
     rw [Ideal.map_le_iff_le_comap]

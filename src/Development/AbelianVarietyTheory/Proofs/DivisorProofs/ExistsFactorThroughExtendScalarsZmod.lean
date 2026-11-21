@@ -30,7 +30,7 @@ theorem extSh_hom_ext (φ : R →+* S) {F : Shv R} {G : Shv S} (f g : (extSh φ)
     (h : ∀ (U : Scheme.{0}) (a : Sec F U), Sec.map f (extSh.sec φ F U a) = Sec.map g (extSh.sec φ F U a)) : f = g := by
   apply Sheaf.hom_ext
   refine sheafify_hom_ext (J := Scheme.etaleTopology) (P := F.obj ⋙ ModuleCat.extendScalars.{1, 1, 1} (uliftHom φ))
-    f.hom g.hom G.cond ?_
+    f.hom g.hom G.property ?_
   ext U : 2
   apply (ModuleCat.extendRestrictScalarsAdj.{1, 1, 1} (uliftHom φ)).homEquiv _ _ |>.injective
   rw [Adjunction.homEquiv_unit, Adjunction.homEquiv_unit]

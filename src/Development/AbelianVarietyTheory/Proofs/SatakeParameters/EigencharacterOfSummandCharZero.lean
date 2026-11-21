@@ -89,12 +89,17 @@ theorem eigen_sumL (χ : Γ →* Kˣ) : ∀ (L : List (Σ m : ℕ, Γ →* GL (F
     w ≠ 0 → (∀ g, (((sumL L).2 g : GL _ _) : Matrix (Fin (sumL L).1) (Fin (sumL L).1) K) *ᵥ w =
       ((χ g : Kˣ) : K) • w) →
     ∃ p ∈ L, ∃ v : Fin p.1 → K, v ≠ 0 ∧
-      ∀ g, ((p.2 g : GL _ _) : Matrix (Fin p.1) (Fin p.1) K) *ᵥ v = ((χ g : Kˣ) : K) • v
-  | [], w, hw, _ => (hw (funext fun i => (Nat.not_lt_zero _ i.2).elim)).elim
-  | p :: L, w, hw, he => by
+      ∀ g, ((p.2 g : GL _ _) : Matrix (Fin p.1) (Fin p.1) K) *ᵥ v = ((χ g : Kˣ) : K) • v := by
+  intro L
+  induction L with
+  | nil =>
+    intro w hw _
+    exact (hw (funext fun i => (Nat.not_lt_zero _ i.2).elim)).elim
+  | cons p L ih =>
+    intro w hw he
     rcases eigen_pair χ p.2 (sumL L).2 w hw he with ⟨v, hv0, hv⟩ | ⟨v, hv0, hv⟩
     · exact ⟨p, List.mem_cons_self, v, hv0, hv⟩
-    · obtain ⟨q, hq, u, hu0, hu⟩ := eigen_sumL χ L v hv0 hv
+    · obtain ⟨q, hq, u, hu0, hu⟩ := ih v hv0 hv
       exact ⟨q, List.mem_cons_of_mem _ hq, u, hu0, hu⟩
 
 theorem eigen_transfer {n m : ℕ} (ρ : Γ →* GL (Fin n) K) (σ : Γ →* GL (Fin m) K) (hρ : IsSSRep ρ)

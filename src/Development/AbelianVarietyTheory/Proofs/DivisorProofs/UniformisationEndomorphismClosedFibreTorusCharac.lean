@@ -39,7 +39,7 @@ theorem endChar_endU : ∀ (V₁ : Type) [CommRing V₁] [IsDomain V₁] [IsLoca
       GlobalTheory.TorusPart.thickLift ha h ≫ ((Over.pullback (thick V₁ (maximalIdeal V₁) 0)).map E.aG).left := by
     apply pullback.hom_ext
     · rw [Category.assoc, GlobalTheory.TorusPart.thickLift_fst, hf, Category.assoc]
-      simp only [GlobalTheory.TorusPart.thickLift, Over.pullback_map_left]
+      simp only [GlobalTheory.TorusPart.thickLift, Over.pullback_map_left, pullback.lift_fst, pullback.lift_fst_assoc]
     · simp only [GlobalTheory.TorusPart.thickLift, Over.pullback_map_left]
       rw [Category.assoc, pullback.lift_snd, Category.assoc, pullback.lift_snd, pullback.lift_snd, ← Category.assoc, Over.w]
   have hc := GlobalTheory.TorusPart.pullTorus_comp k k _ f₀ e (U.gt 0).i

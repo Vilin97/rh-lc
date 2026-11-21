@@ -318,7 +318,7 @@ section Level
 
 instance isLattice_sumLat (L : Submodule (𝓞 E) (Fin m → E)) (L' : Submodule (𝓞 E) (Fin n → E))
     [h : Submodule.IsFullLattice E L] [h' : Submodule.IsFullLattice E L'] :
-    Submodule.IsLattice E (sumLat finSumFinEquiv L L') := by
+    Submodule.IsFullLattice E (sumLat finSumFinEquiv L L') := by
   let φ : ((Fin m → E) × (Fin n → E)) ≃ₗ[E] (Fin (m + n) → E) :=
     (LinearEquiv.sumArrowLequivProdArrow _ _ E E).symm.trans (LinearEquiv.funCongrLeft E E finSumFinEquiv.symm)
   have hφ : ∀ x, φ x = pairVec finSumFinEquiv x.1 x.2 := fun x => rfl
@@ -327,7 +327,9 @@ instance isLattice_sumLat (L : Submodule (𝓞 E) (Fin m → E)) (L' : Submodule
     refine ⟨fun hw => ⟨(_, _), hw, pairVec_eta _ w⟩, ?_⟩
     rintro ⟨x, hx, rfl⟩
     exact (pairVec_mem_sumLat _).2 hx
-  refine ⟨e ▸ (h.fg.prod h'.fg).map _, ?_⟩
+  let : Submodule.IsLattice E (sumLat finSumFinEquiv L L') :=
+    Submodule.IsLattice.of_fg E (e ▸ (h.fg.prod h'.fg).map _)
+  refine ⟨?_⟩
   rw [e, Submodule.map_coe, LinearMap.coe_restrictScalars, Submodule.span_image, Submodule.prod_coe,
     Submodule.span_prod_eq E (zero_mem L) (zero_mem L'), h.span_eq_top, h'.span_eq_top, Submodule.prod_top,
     Submodule.map_top, LinearEquiv.range]
@@ -475,9 +477,10 @@ theorem isMajorantFrame_dbl (ha : IsMajorantFrame σ J a) : IsMajorantFrame σ Q
   dsimp only
   rw [dblGram, cT_blkMat, blkMat_mul, blkMat_mul, Matrix.mul_neg, Matrix.neg_mul, hε, Matrix.diagonal_neg, blkMat,
     Matrix.fromBlocks_diagonal, Matrix.submatrix_diagonal_equiv]
-  congr 1
+  apply congrArg Matrix.diagonal
+  funext k
   obtain ⟨k, rfl⟩ := finSumFinEquiv.surjective k
-  simp only [Equiv.symm_apply_apply]
+  simp only [Function.comp_apply, Equiv.symm_apply_apply]
   rcases k with i | i <;> simp <;> split_ifs <;> simp_all
 
 

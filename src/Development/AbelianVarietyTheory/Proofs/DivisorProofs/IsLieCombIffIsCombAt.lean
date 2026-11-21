@@ -144,11 +144,11 @@ theorem IsKS.of_frChg {Φ : Finset (E →+* ℂ)} {g : ∀ τ : E →+* ℂ, Mat
     exact smul_sum_smul_sum _ (fun a' b' => M' ⟨τ, a', b'⟩) _ _
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hd, smul_eq_mul]
-    by_cases hσ : σ = conjEmb τ.1
-    · subst hσ
-      have := congrFun (congrFun (e (conjEmb τ.1)) k) a
-      simpa [Matrix.mul_apply, Matrix.one_apply] using this
-    · simp [hσ]
+      by_cases hσ : σ = conjEmb τ.1
+      · subst hσ
+        have := congrFun (congrFun (e (conjEmb τ.1)) k) a
+        simpa [Matrix.mul_apply, Matrix.one_apply] using this
+      · simp [hσ]
 
 theorem isKS_frChg_iff (Φ : Finset (E →+* ℂ)) (g : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) K)
     (a : K) (y y' : FrPt Xo c K) (h : FrChg g a y y') (x' : Sp (DualNumber K) ⟶ Xo.X) (M' : HIx Dw Φ → K) :

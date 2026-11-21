@@ -5,10 +5,7 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContConeOfQcqsAffineStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateTwistFinitaryStatement
 
-@[expose] public section
-
 open CategoryTheory Limits AlgebraicGeometry NumberField GlobalTheory.EtC GlobalTheory.Et TensorProduct Polynomial
-open GlobalTheory.GalV (HTower Htot hop galV galTot)
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N
 open UpperTheory.Gal UpperTheory.Gal.Int.Geo
@@ -227,6 +224,8 @@ private theorem tr_affine {L L' : IntermediateField k Ω} (h : L ≤ L') : IsAff
 end Geo
 
 end UpperTheory.Gal.Int.Geo.HeightDescentDirectedColimits
+
+@[expose] public section
 
 open UpperTheory.Gal.Int.Geo.HeightDescentDirectedColimits in
 theorem UpperTheory.Gal.Int.Geo.htDesc_of :

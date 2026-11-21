@@ -69,7 +69,7 @@ theorem posW_one : PosW (!![(1 : ℤ)] : Matrix (Fin 1) (Fin 1) ℤ) := by
   unfold PosW
   have : ((!![(1 : ℤ)] + (!![(1 : ℤ)] : Matrix (Fin 1) (Fin 1) ℤ).transpose).map (Int.cast : ℤ → ℝ)) =
       Matrix.diagonal fun _ => (2 : ℝ) := by
-    ext i j; fin_cases i; fin_cases j; norm_num
+    ext i j; fin_cases i; fin_cases j; norm_num [Matrix.vecHead, Function.swap]
   rw [this]
   exact Matrix.PosDef.diagonal (fun _ => by norm_num)
 

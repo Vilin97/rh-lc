@@ -55,6 +55,7 @@ def bc {K A : Type} [CommRing K] [CommRing A] (i₀ : F →+* K) (i : F →+* A)
 theorem bc_fst {K A : Type} [CommRing K] [CommRing A] (i₀ : F →+* K) (i : F →+* A) (j : A →+* K) (hji : j.comp i = i₀) :
     bc f i₀ i j hji ≫ pullback.fst f (spMap i) = pullback.fst f (spMap i₀) := by
   simp only [bc, pullback.map, Category.comp_id]
+  exact pullback.lift_fst _ _ _
 
 theorem bc_snd {K A : Type} [CommRing K] [CommRing A] (i₀ : F →+* K) (i : F →+* A) (j : A →+* K) (hji : j.comp i = i₀) :
     bc f i₀ i j hji ≫ pullback.snd f (spMap i) = pullback.snd f (spMap i₀) ≫ spMap j := by

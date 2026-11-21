@@ -33,7 +33,7 @@ theorem GlobalTheory.EtC.toSheafify_loc_bij_lift : ∀ (R : Type) [CommRing R] (
     show (P.map g.op).hom x = 0
     rw [h', map_zero]
   · intro F φ
-    refine ⟨⟨sheafifyLift Scheme.etaleTopology φ F.cond⟩, toSheafify_sheafifyLift _ _ _, ?_⟩
+    refine ⟨⟨sheafifyLift Scheme.etaleTopology φ F.property⟩, toSheafify_sheafifyLift _ _ _, ?_⟩
     intro ψ hψ
     ext1
     exact sheafifyLift_unique _ _ _ _ hψ

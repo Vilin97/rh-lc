@@ -66,12 +66,13 @@ theorem exists_ringHom_integralClosure (p : ℕ) [Fact p.Prime] (K : Intermediat
     exact ⟨x, rfl⟩
   have hint : ∀ w : W, IsIntegral ℤ_[p] (τ (algebraMap W L w)) := fun w => by
     have h₁ : (algebraMap (integralClosure ℤ_[p] K) W).IsIntegralElem w := Algebra.IsIntegral.isIntegral w
-    letI : Algebra (integralClosure ℤ_[p] K) K' :=
+    letI alg : Algebra (integralClosure ℤ_[p] K) K' :=
       ((IntermediateField.inclusion h).toRingHom.comp (algebraMap (integralClosure ℤ_[p] K) K)).toAlgebra
-    haveI : IsScalarTower ℤ_[p] (integralClosure ℤ_[p] K) K' := IsScalarTower.of_algebraMap_eq fun _ => rfl
+    haveI tower : IsScalarTower ℤ_[p] (integralClosure ℤ_[p] K) K' := IsScalarTower.of_algebraMap_eq fun _ => rfl
     have h₂ := h₁.map (τ.comp (algebraMap W L))
     rw [RingHom.comp_assoc, e, ← RingHom.comp_assoc, hτ] at h₂
-    exact isIntegral_trans (A := integralClosure ℤ_[p] K) _ h₂
+    change IsIntegral (integralClosure ℤ_[p] K) (τ (algebraMap W L w)) at h₂
+    exact @isIntegral_trans _ _ _ _ _ _ alg _ _ tower _ _ h₂
   exact ⟨K', h, hK', τ, (τ.comp (algebraMap W L)).codRestrict _ hint, hτ, RingHom.ext fun _ => rfl⟩
 
 theorem exists_semiAbelian_model_padic_polAV : ∀ (p : ℕ) [Fact p.Prime] (K : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] K] (P : Out.PolAV (Sp K)), ∃ (K' : IntermediateField ℚ_[p] (PadicAlgCl p)) (h : K ≤ K'), FiniteDimensional ℚ_[p] K' ∧ ∃ (G : Over (Sp (integralClosure ℤ_[p] K'))) (_ : GrpObj G), IsSemiAbelian G ∧ ∃ φ : pullback G.hom (spMap (algebraMap (integralClosure ℤ_[p] K') K')) ⟶ P.A.left, IsGrpPullback ((Over.pullback (spMap (algebraMap (integralClosure ℤ_[p] K') K'))).obj G) P.A (spMap (IntermediateField.inclusion h).toRingHom) φ := by

@@ -214,7 +214,10 @@ theorem kFn_eq (m₁ : IsMor (dp0 R) (A.hom ≫ 𝟙 _) (dp0 R) ((A ⊗ B).hom �
         algebraMap R D (tanVal v β) * (show D from ev a (uA m₁ x)) := by
   have h : ∃ i : trivAt (ptV v x) ⟶ thickAt B x, ∀ r, i.φ r = r := ⟨i, hi⟩
   unfold kFn
-  rw [dite_eq_left h, show h.choose = i from Thick.hom_ext fun r ↦ (h.choose_spec r).trans (hi r).symm]
+  rw [dite_eq_left h]
+  congr 3
+  have he : h.choose = i := Thick.Hom.ext' (AlgHom.ext fun r ↦ (h.choose_spec r).trans (hi r).symm)
+  exact congrArg (fun j ↦ ev β.1 (m₂.functor.map j)) he
 
 end GlobalTheory.PtExt.CupA
 
@@ -231,9 +234,9 @@ theorem GlobalTheory.PtExt.cohom_contr_cupA : ∀ (R : Type) [CommRing R] (A B :
       (show DualNumber D' from τ.φ (ev a (m₁.functor.map i))) * (show DualNumber D' from ev β.1 (m₂.functor.map τ)) +
       (show DualNumber D' from i'.φ (ev a (m₁.functor.map b))) * (show DualNumber D' from ev β.1 (m₂.functor.map i'))) at hK
   have fAs : (show DualNumber D from ev a (m₁.functor.map s)) = (show DualNumber D from ev a (eA m₁ v x)) + (show DualNumber D from ev a (m₁.functor.map i)) := by
-    rw [show m₁.functor.map s = eA m₁ v x ≫ m₁.functor.map i from Thick.hom_ext fun r ↦ by
+    rw [show m₁.functor.map s = eA m₁ v x ≫ m₁.functor.map i from Thick.Hom.ext' (AlgHom.ext fun r ↦ by
       change s.φ r = i.φ (TrivSqZeroExt.inl r)
-      exact (hs r).trans (hi _).symm, ev_comp]
+      exact (hs r).trans (hi _).symm), ev_comp]
     change i.φ _ + _ = _
     erw [hi]
   have fAb := ev_sq a (m₁.functor.map a') (eA m₁ v (spOver φ ≫ x)) (eA m₁ v x) (m₁.functor.map b) (fun r ↦ by

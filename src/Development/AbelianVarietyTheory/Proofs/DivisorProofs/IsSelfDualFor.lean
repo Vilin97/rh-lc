@@ -19,7 +19,7 @@ variable {F : Type} [Field F] [NumberField F]
 def IsSelfDualFor {v : Pl (F := F)} (χ : AddChar (Fv F v) ℂ) (ν : Measure (Fv F v)) : Prop :=
   ν.IsAddHaarMeasure ∧ ∀ f ∈ SB (Fv F v), ∫ y, (∫ x, f x * χ (x * y) ∂ν) ∂ν = f 0
 
-
+open Classical in
 def measV (ψ : AddChar (AF F) ℂ) (v : Pl (F := F)) : Measure (Fv F v) :=
   if h : ∃ ν, IsSelfDualFor (GlobalTheory.LatVac.psiAt ψ v) ν then h.choose else 0
 

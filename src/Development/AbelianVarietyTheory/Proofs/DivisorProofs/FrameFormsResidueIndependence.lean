@@ -58,6 +58,7 @@ theorem neg_one_lt_formOrd_sub_sum : ∀ (Y : Scheme.{0}) [IsIntegral Y] [IsLoca
     rw [hv, ← hze j, algebraMap_germ]
   have hN := DivOver.formOrd_formOf_nonneg hn hy' hE (dOn q z) h0'
   have hnn : ∀ j, 0 ≤ E.ord (v j) := fun j => (E.ord_nonneg_iff _).2 (hE _ ⟨a j, (hv j).symm⟩)
+  change -1 < (E.formOrd (formOf U (gen_mem hy) ω) : ℚ) - ∑ j, c j * E.ord (v j)
   rw [hF E, hu0, zero_add]
   have hAq : (∑ j, (E.ord (v j) : ℚ)) - 1 ≤ (E.formOrd (formOf U' (gen_mem hy') (dOn q z)) : ℚ) := by
     exact_mod_cast hA

@@ -64,11 +64,9 @@ theorem leviEmb_torusToLevi (t : n → Rˣ) : leviEmb R f (torusToLevi R f t) = 
   obtain ⟨⟨b, j⟩, rfl⟩ := f.surjective j
   by_cases h : a = b
   · subst h
-    rw [leviEmb_apply_same]
-    rfl
-  · rw [leviEmb_apply_ne R f _ h, val_diagT, diagonal_apply_ne]
-    intro h'
-    exact h (congrArg Sigma.fst (f.injective h'))
+    simp [leviEmb, val_torusToLevi, val_diagT, diagonal_apply]
+  · have hij : f ⟨a, i⟩ ≠ f ⟨b, j⟩ := fun h' => h (congrArg Sigma.fst (f.injective h'))
+    simp [leviEmb, blockDiagonal'_apply, h, val_diagT, diagonal_apply_ne, hij]
 
 theorem det_torusToLevi (t : n → Rˣ) (j : β) :
     GeneralLinearGroup.det (torusToLevi R f t j) = ∏ x, t (f ⟨j, x⟩) := by
@@ -151,6 +149,14 @@ theorem jhMult_jac_eq_jacB (k : Type) [Field k] [ValuativeRel k] [TopologicalSpa
   show Submodule.quotEquivOfEq _ _ h3 (jac f π (torusToLevi k f t) (Submodule.Quotient.mk v)) =
     jac (points n) π (leviTorus k n t) (Submodule.Quotient.mk v)
   rw [jac_mk, jac_mk, map_smul, h2, leviEmb_torusToLevi]
-  rfl
+  simp only [Submodule.quotEquivOfEq_mk]
+  have heq : diagT k n t = leviEmb k (points n) (leviTorus k n t) := by
+    ext i j
+    rw [val_diagT]
+    simp [leviEmb, leviTorus, points, GeneralLinearGroup.coe_scalar, Matrix.scalar, diagonal_apply]
+  rw [heq]
+  congr 4
+  ext i j
+  simp [leviEmb, leviTorus, points, GeneralLinearGroup.coe_scalar, Matrix.scalar, diagonal_apply]
 
 end GlobalTheory.SmGL.EmptyBlocks

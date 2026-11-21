@@ -18,6 +18,8 @@ namespace GlobalTheory.GalClosure
 
 theorem exists_finExt_fractionRing_of_galois : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], Base R → ∀ (E : Type) [Field E] [Algebra (FractionRing R) E], FiniteDimensional (FractionRing R) E → IsGalois (FractionRing R) E → ∃ (R' : Type) (_ : CommRing R') (_ : IsDomain R') (_ : IsLocalRing R') (ρ : R →+* R') (t : E →+* FractionRing R'), FinExt ρ ∧ ∀ r : R, t (algebraMap (FractionRing R) E (algebraMap R (FractionRing R) r)) = algebraMap R' (FractionRing R') (ρ r) := by
   intro R _ _ _ hR E _ _ hfd hgal
+  letI := hfd
+  letI := hgal
   obtain ⟨hloc, hfe⟩ := finExt_integralClosure (E := E) hR
   letI : Algebra R E := (baseMap R E).toAlgebra
   haveI : IsScalarTower R (FractionRing R) E := IsScalarTower.of_algebraMap_eq' rfl

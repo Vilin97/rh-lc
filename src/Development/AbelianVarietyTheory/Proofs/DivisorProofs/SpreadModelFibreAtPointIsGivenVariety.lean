@@ -97,7 +97,23 @@ theorem fibre_descends : ∀ (F Ω T : Type) [Field F] [IsAlgClosed F] [CharZero
     rwa [unitOn_zpow] at this
   let tR : T →+* F := t.toRingHom
   have htζ : Units.map tR.toMonoidHom ζT = ζ := by ext; simp [ζT, tR]
-  let A₀ := GlobalTheory.AmpleSymModel.polPull P (spMap tR)
+  let polPull {S : Scheme.{0}} (Q : PolAV S) {R : Type} [CommRing R] (f : Sp R ⟶ S) : PolAV (Sp R) := by
+    have h := isGrpPullback_pullback Q.A f
+    have hL' := pull_isLB Q.isLB (pullback.fst Q.A.hom f)
+    have := Q.isAb.proper
+    exact { A := (Over.pullback f).obj Q.A
+            isAb := isAbelianScheme_pullback_obj f Q.A Q.isAb
+            g := Q.g
+            smoothDim := (smoothOfRelativeDimension_isStableUnderBaseChange _).of_isPullback h.1 Q.smoothDim
+            L := Q.L.pull (pullback.fst Q.A.hom f)
+            isLB := hL'
+            rigid := PolBaseChange.rigidified_pull h Q.rigid
+            sym := PolBaseChange.sym_pull h Q.sym
+            ample := AmpleBaseChange.relAmple_of_isPullback Q.isLB Q.ample h.1
+            ktriv := by
+              obtain ⟨w, hw⟩ := PolBaseChange.lbIso_refl hL'
+              exact kTriv_pull h Q.isLB hL' ((isGen_iff w).1 hw) Q.ktriv }
+  let A₀ := polPull P (spMap tR)
   let ψ₀ : A₀.A.left ⟶ P.A.left := pullback.fst P.A.hom (spMap tR)
   have hA₀ : IsGrpPullback A₀.A P.A (spMap tR) ψ₀ := isGrpPullback_pullback P.A (spMap tR)
   have hLA₀ : LBIso A₀.L (P.L.pull ψ₀) := PolBaseChange.lbIso_refl (pull_isLB P.isLB _)
@@ -129,7 +145,7 @@ theorem fibre_descends : ∀ (F Ω T : Type) [Field F] [IsAlgClosed F] [CharZero
     GlobalTheory.T.isThetaPt_fibre_spread_model_at_fieldPoint F Ω T em jT t hft hinj hcomp A P φ hP hL (n ^ J) (Fin (2 * A.g) → ZMod ((n ^ J) ^ 2))
       (GlobalTheory.levelPoint lev rfl) (fun a => linComb y₀ (fun i => (a i).val)) v' ho.pow hm3 hxF
       (fun a => linComb_pow_eq_one _ _ _ hyt) cover hv
-  let B := GlobalTheory.AmpleSymModel.polPull A₀ (spMap em)
+  let B := polPull A₀ (spMap em)
   let ψ₁ : B.A.left ⟶ A₀.A.left := pullback.fst A₀.A.hom (spMap em)
   have hB₁ : IsGrpPullback B.A A₀.A (spMap em) ψ₁ := isGrpPullback_pullback A₀.A (spMap em)
   have hLB₁ : LBIso B.L (A₀.L.pull ψ₁) := PolBaseChange.lbIso_refl (pull_isLB A₀.isLB _)

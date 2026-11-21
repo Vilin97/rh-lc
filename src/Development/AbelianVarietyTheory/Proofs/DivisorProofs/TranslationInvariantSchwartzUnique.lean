@@ -34,7 +34,7 @@ theorem eq_of_fourier_zero {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V]
   set C := SchwartzMap.compCLMOfContinuousLinearEquiv ℂ (F := ℂ) T.symm with hC
   let Ci := SchwartzMap.compCLMOfContinuousLinearEquiv ℂ (F := ℂ) T
   have hCi : ∀ h, Ci (C h) = h := fun h => by ext x; simp [Ci, C]
-  let Fe := SchwartzMap.fourierTransformCLE ℂ (E := 𝓢(EuclideanSpace ℝ (Fin (Module.finrank ℝ V)), ℂ))
+  let Fe := FourierTransform.fourierCLE ℂ 𝓢(EuclideanSpace ℝ (Fin (Module.finrank ℝ V)), ℂ)
   have hFe : ∀ h, Fe h = 𝓕 h := fun h => rfl
   let ℓ : 𝓢(EuclideanSpace ℝ (Fin (Module.finrank ℝ V)), ℂ) →L[ℂ] ℂ :=
     μ.comp (Ci.comp (Fe.symm : _ →L[ℂ] _))
@@ -69,7 +69,7 @@ theorem dim_le_one : ∀ {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [
     μ ≠ 0 → ∃ c : ℂ, μ' = c • μ := by
   intro V _ _ _ μ μ' hμ hμ' h0
   set C := SchwartzMap.compCLMOfContinuousLinearEquiv ℂ (F := ℂ) (toEuclidean (E := V)).symm with hC
-  let Fe := SchwartzMap.fourierTransformCLE ℂ (E := 𝓢(EuclideanSpace ℝ (Fin (Module.finrank ℝ V)), ℂ))
+  let Fe := FourierTransform.fourierCLE ℂ 𝓢(EuclideanSpace ℝ (Fin (Module.finrank ℝ V)), ℂ)
   let Φ : SchwartzMap V ℂ → ℂ := fun f => Fe (C f) 0
   have hΦs : ∀ (c : ℂ) f, Φ (c • f) = c * Φ f := fun c f => by
     show Fe (C (c • f)) 0 = c * Fe (C f) 0

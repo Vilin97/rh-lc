@@ -76,7 +76,10 @@ theorem exists_coord {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
   let g0 : AF F →+* ℂ := (InfinitePlace.Completion.extensionEmbedding w).comp
     ((Pi.evalRingHom (fun u : InfinitePlace F => u.Completion) w).comp
       (RingHom.fst (InfiniteAdeleRing F) (FiniteAdeleRing (𝓞 F) F)))
-  let g : AF F →ₐ[F] ℂ := ⟨g0, fun x => InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ x)⟩
+  let g : AF F →ₐ[F] ℂ := ⟨g0, fun x => by
+    change InfinitePlace.Completion.extensionEmbedding w ((algebraMap F (AF F) x).1 w) = _
+    rw [AdeleRing.algebraMap_fst_def, InfiniteAdeleRing.algebraMap_apply]
+    exact InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ x)⟩
   let θ : AF F ⊗[F] E →+* ℂ := (Algebra.TensorProduct.productMap g τ).toRingHom
   have hθ : ∀ a x, θ (a ⊗ₜ[F] x) = g0 a * τ x := fun a x => rfl
   haveI : IsModuleTopology (AF F) (AF F ⊗[F] E) := ⟨rfl⟩
@@ -172,11 +175,11 @@ theorem exists_arch_sign_char : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
     by_cases h : c w = 1
     · simp only [g, h, if_true]; exact continuous_const
     · simp only [g, h, if_false]; exact continuous_normChar _ (hθc w)
-  have happ : ∀ x, (∏ w, g w) x = ∏ w, g w x := fun x => MonoidHom.finset_prod_apply _ _ _
+  have happ : ∀ x, (∏ w, g w) x = ∏ w, g w x := fun x => MonoidHom.finsetProd_apply _ _ _
   have hc2 : ∀ w, c w = 1 ∨ c w = -1 := fun w => sq_eq_one _ (by simp only [c]; rw [← map_mul]; exact hsq _)
   refine ⟨∏ w, g w, ?_, fun b => ?_, fun b hb => ?_⟩
   · have : ⇑(∏ w, g w) = fun x => ∏ w, g w x := funext happ
-    rw [this]; exact continuous_finset_prod _ fun w _ => hgc w
+    rw [this]; exact continuous_finsetProd _ fun w _ => hgc w
   · apply sq_eq_one
     rw [happ, ← Finset.prod_mul_distrib]
     refine Finset.prod_eq_one fun w _ => ?_

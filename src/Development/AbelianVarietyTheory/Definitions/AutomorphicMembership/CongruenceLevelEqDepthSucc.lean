@@ -315,16 +315,20 @@ section Ok
 variable (hPr : Pr.Ok) (hQ : ∀ (u : Pr.Word) (Q : QE sel (mu : Chr X.F X.E X.K)), Pr.piT u ∉ Q.1.asIdeal)
 include hPr hQ
 
-theorem topLevAt_ok (c : ℕ) : (topLevAt Ch sel mu P c).Ok where
-  idx := topLevAt_finiteIndex Ch sel mu P c
-  root j Q g := by
+theorem topLevAt_ok (c : ℕ) : (topLevAt Ch sel mu P c).Ok := by
+  constructor
+  case idx => exact topLevAt_finiteIndex Ch sel mu P c
+  case root =>
+    intro j Q g
     obtain ⟨m, h, h'⟩ := topLevAt_root Ch sel mu P c j Q
     exact ⟨m, h, h' g⟩
-  levG_top a ha := by
+  case levG_top =>
+    intro a ha
     rw [topLevAt_levG_m] at ha
     obtain ⟨h, -, e⟩ := (mem_levGTop_grp Ch P a).1 ha
     exact ⟨h, e⟩
-  levQ_last Q k hk x hx := by
+  case levQ_last =>
+    intro Q k hk x hx
     rw [topLevAt_levQ_m] at hk
     obtain ⟨g, -, e⟩ := sup_prinCong_le _ _ _ _ hk
     have h2 := congrFun (redV_redGL k hx) (Br.iL (N_m_succ R))
@@ -334,7 +338,8 @@ theorem topLevAt_ok (c : ℕ) : (topLevAt Ch sel mu P c).Ok where
     have hh : ¬ (Br.iL (N_m_succ R)).1 < R.N R.m - 1 := lt_irrefl (R.N R.m - 1)
     simp only [diagMat_of_not_left _ _ hh]
     simp [Matrix.one_apply, redV]
-  levQ_ini Q k hk i := by
+  case levQ_ini =>
+    intro Q k hk i
     rw [topLevAt_levQ_m] at hk
     obtain ⟨g, -, e⟩ := sup_prinCong_le _ _ _ _ hk
     have h2 := congrFun (redV_redGL k (single_mem_stdAt (Br.iL (N_m_succ R)))) (Br.iC (N_m_succ R) i)
@@ -344,8 +349,9 @@ theorem topLevAt_ok (c : ℕ) : (topLevAt Ch sel mu P c).Ok where
     have hh : ¬ (Br.iL (N_m_succ R)).1 < R.N R.m - 1 := lt_irrefl (R.N R.m - 1)
     rw [diagMat_of_not_right _ _ hh, Matrix.one_apply_ne]
     exact fun h => absurd (congrArg Fin.val h) i.2.ne
-  pref_off u j h p := fun h' => absurd h' h
-  pref_top u p h := by
+  case pref_off => exact fun u j h p h' => absurd h' h
+  case pref_top =>
+    intro u p h
     obtain ⟨d, rfl⟩ : ∃ d, p = tilF sel mu u d := h rfl
     exact ⟨d.deco, tilF_deco sel mu hPr u (hQ u) d⟩
 

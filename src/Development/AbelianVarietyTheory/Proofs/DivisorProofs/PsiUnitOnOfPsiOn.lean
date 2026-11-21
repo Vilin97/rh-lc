@@ -41,7 +41,7 @@ theorem psiUnitOn_of_psiOn : ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPr
     rw [Scheme.Opens.opensRange_ι]; exact fun z hz => hVW hz
   haveI := (jK R ⁻¹ᵁ W).ι.isIso_app (jK R ⁻¹ᵁ V) hKr
   apply injective_of_isIso ((jK R ⁻¹ᵁ W).ι.app (jK R ⁻¹ᵁ V))
-  apply fn_ext
+  refine fn_ext ?_
   intro z hz
   have hι : (jK R ∣_ W) ≫ W.ι = (jK R ⁻¹ᵁ W).ι ≫ jK R := morphismRestrict_ι _ _
   have hzV : jK R ((jK R ⁻¹ᵁ W).ι z) ∈ V := hz
@@ -69,5 +69,6 @@ theorem psiUnitOn_of_psiOn : ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPr
   erw [gs_res _ z h hz]
   rw [gs_unit _ z _ (h hz)]
   exact congrArg Units.val e₃
+
 
 end GlobalTheory.PsiUnitOfPsiOn

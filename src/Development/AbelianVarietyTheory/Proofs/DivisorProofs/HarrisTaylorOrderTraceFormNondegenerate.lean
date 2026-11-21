@@ -71,7 +71,11 @@ theorem ringHom_padic_eq_algebraMap : ∀ (p : ℕ) [Fact p.Prime] (B : Type) [R
     conv_rhs => rw [hv]
     rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
     exact dvd_mul_right _ _
-  have := (PadicInt.mem_span_pow_iff_le_valuation _ hne _).1 hmem
+  have hne' : b.repr (f c - algebraMap ℤ_[p] B c) i ≠ 0 := by
+    intro h
+    apply hne
+    rw [h]
+  have := (PadicInt.mem_span_pow_iff_le_valuation _ hne' _).1 hmem
   omega
 
 theorem matrix_basis_repr {ι R A : Type} [CommRing R] [AddCommGroup A] [Module R A] (m : ℕ) (b : Module.Basis ι R A)

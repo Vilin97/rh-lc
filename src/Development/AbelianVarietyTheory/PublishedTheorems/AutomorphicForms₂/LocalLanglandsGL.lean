@@ -22,7 +22,7 @@ abbrev cls {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarch
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
-def sumList (l : List (WD h)) : WD h := l.foldr WD.lpSum (WD.lpZero h)
+def sumList (l : List (WD h)) : WD h := l.foldr WD.lpSum WD.lpZero
 
 def IsIrrWD (x : WD h) : Prop := ∃ (n : ℕ) (a : WDRep h (Fin n → ℂ)), WD.mk a = x ∧ a.ρ.IsIrreducible
 
@@ -55,7 +55,7 @@ structure Laws (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a) 
 
   langlands : ∀ (l : List (Segment (w.adicCompletion E))) (x : IrrGL (k := w.adicCompletion E)),
     IsL (l : Multiset (Segment (w.adicCompletion E))) x.rep →
-    rc x = sumList (l.map fun Δ => ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp h Δ.len))
+    rc x = sumList (l.map fun Δ => ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp Δ.len))
 
   det : ∀ (t : ℕ) χ hχ, rc (cls (IrrRep.det (Fin t) χ hχ)) =
     sumList ((List.range t).map fun j : ℕ => (rc (.ofChar χ hχ)).lpTw (((t : ℝ) - 1) / 2 - j))
@@ -75,7 +75,7 @@ structure Laws (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a) 
   depth : ∀ x : IrrGL (k := w.adicCompletion E),
     fixed x.rep (KOne (w.adicCompletion E) (Fin x.1)) ≠ ⊥ ↔ IsTameWD (rc x)
 
-
+variable (h) in
 def IsRec (rc : IrrGL (k := w.adicCompletion E) → WD h) : Prop :=
   ∃ (a : Weil h →* (w.adicCompletion E)ˣ) (ha : IsLocalArtin h a) (ε : EpsFamily A), IsDeligneEps ε ∧ Laws a ha ε rc
 
@@ -119,13 +119,11 @@ theorem lpChar_lpOfChar (x : WD h) (ξ : Weil h →* ℂˣ) (hξ : WeilDeligne.I
   rw [WD.lpOfChar, WD.lpChar_mk, WD.lpTwist_mk]
   refine WD.sound ⟨(TensorProduct.congr (.refl ℂ _) (LinearEquiv.funUnique (Fin 1) ℂ ℂ)).trans
     (TensorProduct.rid ℂ _), fun σ v => ?_, fun v => ?_⟩
-  · induction v using TensorProduct.induction_on with
-    | zero => simp
+  · induction v using TensorProduct.inductionOn with
     | tmul x y => simp [smul_smul, mul_comm]
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
-  · induction v using TensorProduct.induction_on with
-    | zero => simp
-    | tmul x y => simp
+  · induction v using TensorProduct.inductionOn with
+    | tmul x y => simp [WDRep.twist]
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 
@@ -142,7 +140,7 @@ theorem resCard_eq_normV : resCard (w.adicCompletion E) = normV w := by
   have hq : resCard (w.adicCompletion E) = Formalism.UG.qV E w := by
     rw [← Formalism.UG.P.tjcosets_card_residue]
     exact Nat.card_congr (IsLocalRing.ResidueField.mapEquiv (RingEquiv.subringCongr hO)).toEquiv
-  exact hq
+  simpa only [normV, Formalism.UG.qV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using hq
 
 variable {a : Weil h →* (w.adicCompletion E)ˣ}
 

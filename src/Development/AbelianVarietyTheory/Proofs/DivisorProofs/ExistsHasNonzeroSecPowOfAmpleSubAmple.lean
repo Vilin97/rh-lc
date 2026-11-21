@@ -21,7 +21,7 @@ theorem exists_hasNonzeroSec_pow_of_ample_sub_ample : ∀ (k : Type) [Field k] [
       ⟨ι, hι, φ ≫ (unitTwistIso (X := X) (L := lbPow B n)).hom, epi_comp _ _⟩
   obtain ⟨m, hmB, hm1⟩ := (hgen.and (eventually_ge_atTop 1)).exists
 
-  have hLm : IsAmpleLB (lbPow L m) := (isAmpleLB_basic.2.1 hL.isLB hm1).2 hL
+  have hLm : IsAmpleLB (lbPow L m) := (isAmpleLB_pow_iff hL.isLB hm1).2 hL
   have hMm : (lbPow M m).IsLB := isLB_lbPow hM m
   have hclsm : cls (lbPow L m) hLm.isLB = cls (lbPow M m) hMm + cls (lbPow B m) hmB.isLB := by
     rw [CechPic.cls_lbPow hL.isLB m, CechPic.cls_lbPow hM m, CechPic.cls_lbPow hB.isLB m, hcls,

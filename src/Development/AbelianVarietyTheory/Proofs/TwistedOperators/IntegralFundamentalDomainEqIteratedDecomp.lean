@@ -19,10 +19,9 @@ theorem isAddFundamentalDomain_prod {A B : Type} [AddGroup A] [AddGroup B] [Meas
     {μ : Measure A} {ν : Measure B} [SFinite μ] [SigmaFinite ν]
     {Γ : AddSubgroup A} {Δ : AddSubgroup B} {s : Set A} {t : Set B}
     (hs : IsAddFundamentalDomain Γ s μ) (ht : IsAddFundamentalDomain Δ t ν) :
-    IsAddFundamentalDomain (Γ.prod Δ) (s ×ˢ t) (μ.prod ν) where
-  nullMeasurableSet := hs.nullMeasurableSet.prod ht.nullMeasurableSet
-  ae_covers := by
-    have h1 : ∀ᵐ p ∂(μ.prod ν), ∃ g : Γ, g +ᵥ p.1 ∈ s :=
+    IsAddFundamentalDomain (Γ.prod Δ) (s ×ˢ t) (μ.prod ν) := by
+  refine ⟨hs.nullMeasurableSet.prod ht.nullMeasurableSet, ?_, ?_⟩
+  · have h1 : ∀ᵐ p ∂(μ.prod ν), ∃ g : Γ, g +ᵥ p.1 ∈ s :=
       Measure.quasiMeasurePreserving_fst.ae hs.ae_covers
     have h2 : ∀ᵐ p ∂(μ.prod ν), ∃ d : Δ, d +ᵥ p.2 ∈ t :=
       Measure.quasiMeasurePreserving_snd.ae ht.ae_covers
@@ -30,8 +29,7 @@ theorem isAddFundamentalDomain_prod {A B : Type} [AddGroup A] [AddGroup B] [Meas
     obtain ⟨g, hg⟩ := hg
     obtain ⟨d, hd⟩ := hd
     exact ⟨⟨((g : A), (d : B)), g.2, d.2⟩, hg, hd⟩
-  aedisjoint := by
-    rintro ⟨⟨g, d⟩, hg, hd⟩ ⟨⟨g', d'⟩, hg', hd'⟩ hne
+  · rintro ⟨⟨g, d⟩, hg, hd⟩ ⟨⟨g', d'⟩, hg', hd'⟩ hne
     have key : ((⟨(g, d), hg, hd⟩ : Γ.prod Δ) +ᵥ s ×ˢ t) ∩ ((⟨(g', d'), hg', hd'⟩ : Γ.prod Δ) +ᵥ s ×ˢ t) =
         (((⟨g, hg⟩ : Γ) +ᵥ s) ∩ ((⟨g', hg'⟩ : Γ) +ᵥ s)) ×ˢ (((⟨d, hd⟩ : Δ) +ᵥ t) ∩ ((⟨d', hd'⟩ : Δ) +ᵥ t)) := by
       ext ⟨x, y⟩
@@ -133,7 +131,7 @@ theorem integral_fundamentalDomain_eq_iterated : ∀ (D : D7) (V W : HSp D) (a b
     intro s hs
     rw [hνm, Measure.smul_apply] at hs
     exact (smul_eq_zero.1 hs).resolve_left hc.ne'
-  have hqmp : Measure.QuasiMeasurePreserving Me lam ν := ⟨Me.measurable, hac⟩
+  have hqmp : QuasiMeasurePreserving Me lam ν := ⟨Me.measurable.aemeasurable, hac⟩
   let eΓ : ratL W V → Γ := fun g => ⟨Ec.symm g, (hmemΓ _).2 (by simpa using g.2)⟩
   have heΓ : Function.Bijective eΓ := by
     refine ⟨fun g g' h => Subtype.ext ?_, fun p => ⟨⟨Ec p, (hmemΓ p).1 p.2⟩, Subtype.ext ?_⟩⟩
@@ -155,6 +153,9 @@ theorem integral_fundamentalDomain_eq_iterated : ∀ (D : D7) (V W : HSp D) (a b
   have e1 : ∫ u in 𝓕, T u ∂ν = (c : ℝ) • ∫ u in 𝓕, T u ∂m := by
     rw [hνm, Measure.restrict_smul, integral_smul_nnreal_measure, NNReal.smul_def]
   have e2 : ∫ u in 𝓕, T u ∂m = ∫ p in Me ⁻¹' 𝓕, T (Me p) ∂lam := setIntegral_map_equiv Me T 𝓕
+  haveI : VAddInvariantMeasure Γ _ lam :=
+    ⟨fun g _ hs => Measure.measure_preimage_of_map_eq_self (map_add_left_eq_self lam g.1)
+      (measurable_const_vadd g).aemeasurable hs.nullMeasurableSet⟩
   have e3 : ∫ p in Me ⁻¹' 𝓕, T (Me p) ∂lam = ∫ p in 𝓨 ×ˢ (𝓩 ×ˢ 𝓨), T (Me p) ∂lam :=
     hFDE.setIntegral_eq hFDP (fun g p => by
       show T (Me ((g : _) + p)) = T (Me p)

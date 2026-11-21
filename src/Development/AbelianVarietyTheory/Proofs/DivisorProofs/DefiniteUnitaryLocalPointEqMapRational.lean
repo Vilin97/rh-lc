@@ -22,7 +22,7 @@ theorem cj_algebraMap {E : Type} [Field E] [NumberField E] [IsCMField E] (w : Pl
     intro u hu f hf hk
     subst hu
     exact ⟨f, hf, hk⟩
-  have hex := key _ ((GlobalTheory.ConjAtPlace.conjSrc_eq_iff w).2 hw) (GlobalTheory.CuspRep.conjLoc (GlobalTheory.SplitPts.conjE E) w)
+  have hex := key _ ((GlobalTheory.ConjAtPlace.conjSrc_eq_iff w).2 hw) (GlobalTheory.CuspRep.conjLoc ((IsCMField.complexConj E).toRingEquiv) w)
     (GlobalTheory.CuspRep.conjLoc_spec _ w).1 (GlobalTheory.CuspRep.conjLoc_spec _ w).2.1
   unfold cj
   rw [dite_eq_left hex]

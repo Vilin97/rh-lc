@@ -58,7 +58,8 @@ theorem addValuation_natCast_eq_padicValNat :
     intro hd
     obtain ⟨c, rfl⟩ := hd
     have : p ^ (padicValNat p n + 1) ∣ n := ⟨c, by rw [pow_succ, mul_assoc, ← hm]⟩
-    exact pow_succ_padicValNat_not_dvd hn this
+    rw [Nat.padicValNat_def] at this
+    exact pow_succ_multiplicity_not_dvd (p := p) hn this
   have hcm : Nat.Coprime m p := ((Nat.Prime.coprime_iff_not_dvd hp).2 hnd).symm
   have hcast : (n : C) = (p : C) ^ (padicValNat p n) * (m : C) := by
     conv_lhs => rw [hm]

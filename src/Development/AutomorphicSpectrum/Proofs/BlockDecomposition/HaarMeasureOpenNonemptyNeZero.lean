@@ -13,7 +13,7 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.BZPhiPG.OntoO
 
 theorem muD_toReal_ne_zero : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (t : ℕ) (E C : Set (Fin t → k)) (hE : IsOpen E) (hn : E.Nonempty) (hC : IsCompact C) (hEC : E ⊆ C),
-    ((muD k t) E).toReal ≠ 0 := by
+    (muD (k := k) t E).toReal ≠ 0 := by
   intro k _ _ _ _ t E C hE hn hC hEC
   unfold muD
   rw [ENNReal.toReal_ne_zero]

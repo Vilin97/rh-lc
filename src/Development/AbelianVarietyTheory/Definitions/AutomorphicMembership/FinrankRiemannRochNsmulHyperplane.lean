@@ -73,14 +73,14 @@ theorem diffVanish_chi : DiffVanish (Y.dim + 1) Y.chi :=
   (diffVanish_chiPic_of_isProjOver Y.algebraMap_Γ (structureModule Y.X) Y.isProjOver
     (by rw [suppDim_structureModule, Y.topologicalKrullDim_eq])).comap toPic
 
-def interForm : MultilinearMap ℤ (fun _ : Fin Y.dim => Y.Dv) ℤ := Y.diffVanish_chi.form
+def interForm : MultilinearMap (RingHom.id ℤ) (fun _ : Fin Y.dim => Y.Dv) ℤ := Y.diffVanish_chi.form
 
 @[simp] theorem interForm_apply (Δ : Fin Y.dim → Y.Dv) : Y.interForm Δ = Y.inter Δ :=
   (Y.diffVanish_chi.form_apply Δ 0).trans (Y.inter_eq_multiDiff Δ).symm
 
 theorem inter_zsmul (n : Fin Y.dim → ℤ) (Δ : Fin Y.dim → Y.Dv) :
     Y.inter (fun i => n i • Δ i) = (∏ i, n i) * Y.inter Δ := by
-  simp only [← interForm_apply, MultilinearMap.map_smul_univ, smul_eq_mul]
+  simp only [← interForm_apply, MultilinearMap.map_smul_univ, RingHom.id_apply, smul_eq_mul]
 
 theorem exists_polynomial_chi (A Δ : Y.Dv) : ∃ p : Polynomial ℚ, p.natDegree ≤ Y.dim ∧
     (∀ n : ℤ, p.eval (n : ℚ) = Y.chi (A + n • Δ)) ∧

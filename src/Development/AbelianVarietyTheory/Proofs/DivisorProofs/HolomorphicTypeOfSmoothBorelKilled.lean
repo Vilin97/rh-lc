@@ -232,7 +232,7 @@ lemma upT_inv {b : Mt n} (hb : UpT b) : UpT b⁻¹ := by
 lemma upT_one : UpT (1 : Mt n) := ⟨by simp, fun _ _ h => one_apply_ne h.ne'⟩
 
 lemma upT_mul_diag {b b' : Mt n} (hb : UpT b) (hb' : UpT b') (a : Fin n) : (b * b') a a = b a a * b' a a := by
-  rw [mul_apply, Finset.sum_eq_single a]
+  rw [Matrix.mul_apply, Finset.sum_eq_single a]
   · intro c _ hc
     rcases lt_or_gt_of_ne hc with h | h
     · rw [hb.2 _ _ h, zero_mul]
@@ -274,7 +274,7 @@ lemma curve_deriv (A C : ι → Mt n) (τ : ι) (c : ℝ → Mt n) (Z : Mt n)
   by_cases h : ρ = τ
   · subst h
     simp only [Pi.mulSingle_eq_same, Pi.single_eq_same]
-    simp only [mul_apply]
+    simp only [Matrix.mul_apply]
     exact HasDerivAt.fun_sum fun k _ => (HasDerivAt.fun_sum fun l _ => (hc l k).const_mul _).mul_const _
   · simp only [Pi.mulSingle_eq_of_ne h, Pi.single_eq_of_ne h]
     exact hasDerivAt_const _ _
@@ -404,7 +404,7 @@ lemma cd_det {g : E → Mt n} (hg : ∀ a c, ContDiffOn ℝ ∞ (fun x => g x a 
 
 lemma cd_mulM {g g' : E → Mt n} (hg : ∀ a c, ContDiffOn ℝ ∞ (fun x => g x a c) U)
     (hg' : ∀ a c, ContDiffOn ℝ ∞ (fun x => g' x a c) U) (a c : Fin n) : ContDiffOn ℝ ∞ (fun x => (g x * g' x) a c) U := by
-  simp only [mul_apply]
+  simp only [Matrix.mul_apply]
   exact ContDiffOn.sum fun k _ => (hg _ _).mul (hg' _ _)
 
 lemma cd_inv {g : E → Mt n} (hg : ∀ a c, ContDiffOn ℝ ∞ (fun x => g x a c) U) (h0 : ∀ x ∈ U, (g x).det ≠ 0) (a c : Fin n) :

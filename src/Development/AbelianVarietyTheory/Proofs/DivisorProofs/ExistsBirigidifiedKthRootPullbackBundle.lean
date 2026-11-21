@@ -50,7 +50,11 @@ theorem finite_flat_surjective_mulN_any : ∀ (S : Scheme.{0}) (A : Over S) [Grp
 
 theorem exists_descent_mulN : ∀ (Y : Scheme.{0}) (A D : Over Y) [GrpObj A] [IsCommMonObj A] [GrpObj D] (h : A ⟶ D) (k : ℕ) (U : Scheme.{0}) (t : U ⟶ Y) (AU : Over U) [GrpObj AU] [IsCommMonObj AU] (φ : AU.left ⟶ A.left), IsAbelianScheme A → IsMonHom h → 0 < k → IsGrpPullback AU A t φ → (∀ (T : Over Y) (s : T.left ⟶ U), s ≫ t = T.hom → ∀ a : T ⟶ A, a ^ k = 1 → a ≫ h = 1) → ∃ y : AU ⟶ (Over.pullback t).obj D, IsMonHom y ∧ (mulN AU k ≫ y).left ≫ pullback.fst D.hom t = φ ≫ h.left := by
   intro Y A D _ _ _ h k U t AU _ _ φ hA hh hk hpb hker
-  have hAU : IsAbelianScheme AU := GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback hA hpb
+  have hAU : IsAbelianScheme AU :=
+    { comm := inferInstance
+      smooth := MorphismProperty.of_isPullback (P := @Smooth) hpb.1 hA.smooth
+      proper := MorphismProperty.of_isPullback (P := @IsProper) hpb.1 hA.proper
+      geomConnected := MorphismProperty.of_isPullback (P := @GeometricallyConnected) hpb.1 hA.geomConnected }
   have hψ := isGrpPullback_pullback D t
   obtain ⟨hU, ehU⟩ := GlobalTheory.SharpPull.exists_lift hpb hψ h
   have : IsMonHom hU := GlobalTheory.SharpPull.isMonHom_lift hpb hψ ehU

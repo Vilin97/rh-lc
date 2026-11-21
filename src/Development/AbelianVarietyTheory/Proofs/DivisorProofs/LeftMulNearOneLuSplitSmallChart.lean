@@ -35,6 +35,7 @@ theorem lmulC_split_near_one :
   have hzc : ContinuousAt (zF X x) x :=
     ((zF_diffOn (x0 := x)).continuousOn).continuousAt (hU.mem_nhds hxU)
   have hS : {y | y ∈ cellL X x ∧ ‖zF X x y‖ < δ} ∈ 𝓝 x := by
+    change cellL X x ∩ {y | ‖zF X x y‖ < δ} ∈ 𝓝 x
     refine Filter.inter_mem (hU.mem_nhds hxU) ?_
     have : ∀ᶠ y in 𝓝 x, ‖zF X x y‖ < δ :=
       hzc.norm.eventually (Iio_mem_nhds (by show ‖zF X x x‖ < δ; rw [hz0, norm_zero]; exact hδ))
@@ -43,7 +44,7 @@ theorem lmulC_split_near_one :
   let g : Frame X.Ψ r → Frame X.Ψ r := fun M τ a c => ∑ k, M τ a k * x τ k c
   have hg : Continuous g := by
     refine continuous_pi fun τ => continuous_pi fun a => continuous_pi fun c => ?_
-    refine continuous_finset_sum _ fun k _ => ?_
+    refine continuous_finsetSum _ fun k _ => ?_
     fun_prop
   have hg1 : g (ExtFPf.oneF X) = x := by
     funext τ a c

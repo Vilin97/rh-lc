@@ -62,8 +62,7 @@ theorem descent {R₁ E : Type} [CommRing R₁] [CommRing E] [IsLocalRing E] (a 
   have h2 := congrArg (fun z : Fin k →₀ R₁ => z l) (LinearMap.congr_fun hαf (ev i))
   simp only [LinearMap.comp_apply, LinearMap.zero_apply, Finsupp.coe_zero, Pi.zero_apply] at h2
   rw [LinearMap.pi_apply_eq_sum_univ α] at h2
-  simp only [Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.coe_smul, Pi.smul_apply, smul_eq_mul,
-    Fin.sum_univ_succ] at h2
+  simp only [Fin.sum_univ_succ] at h2
   have hA : ∀ c, (A.mulVecLin (ev i)) c = A c i := by
     intro c
     simp [Matrix.mulVec, dotProduct, ev]

@@ -74,7 +74,7 @@ abbrev extLat {LL LL' : FinExt l} (h : LL.1 ≤ LL'.1) (T : LocLat G ℚ_[l] ↥
   cont x := by
     refine continuous_pi fun i => ?_
     simp only [rep_apply, Matrix.mulVec, dotProduct]
-    refine continuous_finset_sum _ fun j _ => Continuous.mul ?_ continuous_const
+    refine continuous_finsetSum _ fun j _ => Continuous.mul ?_ continuous_const
     have h1 : Continuous fun g => b.coord i (T.ρ g (b j)) :=
       (IsModuleTopology.continuous_of_linearMap (b.coord i)).comp (T.cont (b j))
     have h2 : Continuous (incl h) := continuous_subtype_val.subtype_mk _

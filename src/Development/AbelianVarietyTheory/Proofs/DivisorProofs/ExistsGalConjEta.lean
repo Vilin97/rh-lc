@@ -41,7 +41,7 @@ theorem twVal_half (χ : HChar E) (P : HeightOneSpectrum (𝓞 E)) (h : ∀ u : 
   rw [hk, map_mul, h u hu, mul_one, map_zpow, Units.val_zpow_eq_zpow_val, mul_zpow]
   congr 1
   have hN : (0 : ℝ) ≤ (Nat.card (kP P) : ℕ) := Nat.cast_nonneg _
-  rw [show Ideal.absNorm P.asIdeal = Nat.card (kP P) from rfl, ← Complex.ofReal_zpow, Real.sqrt_eq_rpow,
+  rw [show Ideal.absNorm P.asIdeal = Nat.card (kP P) from Ideal.absNorm_eq_natCard _, ← Complex.ofReal_zpow, Real.sqrt_eq_rpow,
     ← Real.rpow_neg hN, ← Real.rpow_intCast, ← Real.rpow_mul hN, Complex.ofReal_cpow hN]
   push_cast
   congr 1

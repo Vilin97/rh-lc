@@ -159,8 +159,8 @@ theorem isPullUnif_comp_id : ∀ (R R' : Type) [CommRing R] [IsDomain R] [CommRi
     have := pullIdIso_fst φ G
     simp only [bc'', Iso.trans_hom, Over.comp_left, Category.assoc, this, Functor.mapIso_hom]
     congr 1
-    simp only [Over.pullback, pullback.map]
-    rfl
+    simp only [Over.pullback, Over.homMk_left]
+    rw [← Category.assoc, pullback.lift_fst, Category.assoc]
   refine ⟨r, bc'', GalMul.isPullUnif_comp (i := φ) (j := RingHom.id R') r₁ r₂ r₃ T
       (hb.trans (Category.assoc _ _ _).symm) H₁ H₂, fun x => congrArg (fun e => e x) r₂,
       r₁.trans (Category.assoc _ _ _), hb, fun m₁ m₂ => ?_⟩

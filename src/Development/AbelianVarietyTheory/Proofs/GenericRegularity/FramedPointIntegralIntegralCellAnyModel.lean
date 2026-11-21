@@ -24,7 +24,7 @@ theorem tie_integral_of_any_model : ReciprocityTheory.ChartRestriction.G.Out.Sec
   intro hS E _ _ _ H Dw l Xo c O _ β Y M T io f₀ ix u₀ hu
   letI := io.toAlgebra
   intro z ⟨Λ, hL, hT⟩
-  obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull (spMap f₀ ≫ M.hU.fromSpec) Y.t
+  obtain ⟨_, ⟨m⟩⟩ := GlobalTheory.ModFam.exists_sabPull (spMap f₀ ≫ M.hU.fromSpec) Y.t
   have e : spMap ((algebraMap T.V T.Fr).comp f₀) ≫ M.hU.fromSpec =
       spMap (algebraMap T.V T.Fr) ≫ spMap f₀ ≫ M.hU.fromSpec := by
     rw [← Category.assoc]

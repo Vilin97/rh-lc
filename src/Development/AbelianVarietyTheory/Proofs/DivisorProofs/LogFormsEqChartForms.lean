@@ -41,6 +41,7 @@ theorem spanForms_le_of_isComb (A : Subring K) {M : Set K} {H H' : Set Ω[K⁄�
       rw [← AlternatingMap.coe_multilinearMap, MultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [MultilinearMap.map_smul_univ]
+    simp only [RingHom.id_apply]
   rw [e, Finset.smul_sum]
   refine AddSubgroup.sum_mem _ fun r _ => AddSubgroup.subset_closure
     ⟨c * ∏ i, co i (r i), hM c hc _ (Subring.prod_mem _ fun i _ => hco i (r i)),

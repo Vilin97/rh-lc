@@ -40,7 +40,8 @@ theorem isFractional_J : IsFractional (nonZeroDivisors (𝓞 D.host.E)) (Jsub Λ
   simp only [brS, one_smul, map_smul, smul_eq_mul]
   ring
 
-def Jfrac : FI := ⟨Jsub Λ X y0, isFractional_J Λ X y0 hun hiso horth hy0 c0 hc0 hc0ne⟩
+def Jfrac : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E :=
+  ⟨Jsub Λ X y0, isFractional_J Λ X y0 hun hiso horth hy0 c0 hc0 hc0ne⟩
 
 theorem mem_Jfrac {l : D.host.E} : l ∈ Jfrac Λ X y0 hun hiso horth hy0 c0 hc0 hc0ne ↔ l • y0 ∈ Λ ⊔ X.restrictScalars (𝓞 D.host.E) := Iff.rfl
 

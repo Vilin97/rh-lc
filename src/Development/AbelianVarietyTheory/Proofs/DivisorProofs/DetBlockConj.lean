@@ -39,7 +39,7 @@ theorem thR_of_perC (x x' : Frame X.Ψ r) (M : Matrix (Fin g) (Fin g) ℂ) (hM :
   have hP : ∀ s, perMat X bas idx s x' = M * perMat X bas idx s x := by
     intro s
     ext i k
-    exact congrFun (h fun τ => Data.emb τ.1 (bas (Pi.single (s k) 1))) i
+    exact congrFun (h fun (τ : X.Ψ) => Data.emb τ.1 (bas (Pi.single (s k) 1))) i
   have hH : hMat X bas idx x' = hMat X bas idx x * M⁻¹ := by
     rw [hMat, hP, Matrix.mul_inv_rev, hMat]
   have hT : tauMat X bas idx x' = tauMat X bas idx x := by

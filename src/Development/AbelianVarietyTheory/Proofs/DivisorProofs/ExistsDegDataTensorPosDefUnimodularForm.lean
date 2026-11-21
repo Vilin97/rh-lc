@@ -92,7 +92,29 @@ theorem formula_trans (Q : Data R) {r : ℕ} (W : Matrix (Fin r) (Fin r) ℤ) {B
   let H : ((TK R).left ⟶ Q.B.left) → ((TK R).left.presheaf.stalk z)ˣ := fun ψ => gm ψ z _ (Q.M.L.g (J ψ) (J₀ ψ))
   let F : Fin r → Fin r → ((TK R).left.presheaf.stalk z)ˣ := fun i j =>
     ∏ a, H (lamPts (toUnit (TK R) ≫ Q.c (y i)) (toUnit (TK R) ≫ Q.c (y j)) a) ^ Oε a
-  have h₁ := gm_isGen hw x.left z _ _ k k₀ (hJ.mem (tensφ pr) x.left) (hJ₀.mem (tensφ pr) x.left) hk hk₀
+  have h₁ : gm x.left z _ (w.s (fun a => J (x.left ≫ tensφ pr a), k)) =
+      gm x.left z _ ((LB.LinComb Q.M.L (tensφ pr) (tensε W)).g
+        (fun a => J (x.left ≫ tensφ pr a)) (fun a => J₀ (x.left ≫ tensφ pr a))) *
+      (gm x.left z _ (L'.g k k₀))⁻¹ *
+      gm x.left z _ (w.s (fun a => J₀ (x.left ≫ tensφ pr a), k₀)) := by
+    let L := LB.LinComb Q.M.L (tensφ pr) (tensε W)
+    let j := fun a => J (x.left ≫ tensφ pr a)
+    let j₀ := fun a => J₀ (x.left ≫ tensφ pr a)
+    have hj : x.left z ∈ L.U j := hJ.mem (tensφ pr) x.left
+    have hj₀ : x.left z ∈ L.U j₀ := hJ₀.mem (tensφ pr) x.left
+    have hV : x.left z ∈ (L.U j ⊓ L'.U k) ⊓ (L.U j₀ ⊓ L'.U k₀) := ⟨⟨hj, hk⟩, ⟨hj₀, hk₀⟩⟩
+    have hw' : res (inf_le_left : (L.U j ⊓ L'.U k) ⊓ (L.U j₀ ⊓ L'.U k₀) ≤ L.U j ⊓ L'.U k) (w.s (j, k)) =
+        res (le_inf (inf_le_left.trans inf_le_left) (inf_le_right.trans inf_le_left) :
+          (L.U j ⊓ L'.U k) ⊓ (L.U j₀ ⊓ L'.U k₀) ≤ L.U j ⊓ L.U j₀) (L.g j j₀) *
+        (res (le_inf (inf_le_left.trans inf_le_right) (inf_le_right.trans inf_le_right) :
+          (L.U j ⊓ L'.U k) ⊓ (L.U j₀ ⊓ L'.U k₀) ≤ L'.U k ⊓ L'.U k₀) (L'.g k k₀))⁻¹ *
+        res (inf_le_right : (L.U j ⊓ L'.U k) ⊓ (L.U j₀ ⊓ L'.U k₀) ≤ L.U j₀ ⊓ L'.U k₀) (w.s (j₀, k₀)) :=
+      hw (j, k) (j₀, k₀)
+    have key := congrArg (gm x.left z ((L.U j ⊓ L'.U k) ⊓ (L.U j₀ ⊓ L'.U k₀))) hw' 
+    simp only [map_mul, map_inv, gm_res x.left z _ hV] at key
+    rw [gm_res x.left z (U := L.U j ⊓ L'.U k) _ hV (w.s (j, k)),
+      gm_res x.left z (U := L.U j₀ ⊓ L'.U k₀) _ hV (w.s (j₀, k₀))] at key
+    exact key
   have h₂ : gm x.left z _ ((LB.LinComb Q.M.L (tensφ pr) (tensε W)).g (fun a => J (x.left ≫ tensφ pr a))
       (fun a => J₀ (x.left ≫ tensφ pr a))) = ∏ i, ∏ j, F i j ^ W i j := by
     refine (gm_linComb Q.M.L (tensφ pr) (tensε W) x.left z _ _ (hJ.mem (tensφ pr) x.left) (hJ₀.mem (tensφ pr) x.left)).trans ?_
@@ -113,7 +135,7 @@ theorem formula_trans (Q : Data R) {r : ℕ} (W : Matrix (Fin r) (Fin r) ℤ) {B
     fin_cases a <;> rfl
   refine (congrArg₂ (· * ·) (h₁.trans (congrArg (· * _ * _) h₂)) (Finset.prod_congr rfl fun i _ =>
     Finset.prod_congr rfl fun j _ => congrArg (· ^ W i j) (h₃ i j))).trans ?_
-  simp only [mul_zpow, inv_zpow, Finset.prod_mul_distrib, Finset.prod_inv_distrib, gv]
+  simp only [mul_zpow, inv_zpow, Finset.prod_mul_distrib, Finset.prod_inv_distrib]
   apply Additive.ofMul.injective
   simp only [ofMul_mul, ofMul_inv]
   abel

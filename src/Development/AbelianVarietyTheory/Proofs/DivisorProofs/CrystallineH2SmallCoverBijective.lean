@@ -21,7 +21,7 @@ theorem small_descent_H2_bijective (R : Type) [CommRing R] (I : Ideal R) (κ : D
     exact ⟨T', l, by simpa only [mp_O] using h1, by simpa only [mp_O] using h2,
       by simpa only [mp_O] using h3, by simpa only [mp_O] using h4⟩
   · rintro S S' φ ⟨i, hi⟩
-    exact ⟨i, Thick.Hom.le_preimage φ hi⟩
+    exact ⟨i, GlobalTheory.Cris.Thick.Hom.le_preimage φ hi⟩
   · intro T
     obtain ⟨n, b, hb, h⟩ := exists_finite_small_cover R I κ X s K U hU T
     exact ⟨n, b, hb, fun i S u hu => h i S u (by simpa only [mp_O] using hu)⟩

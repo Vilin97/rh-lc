@@ -97,7 +97,7 @@ theorem GlobalTheory.FibOpen.fibre_universallyOpen : ∀ (R : Type) [CommRing R]
   haveI : IsProper (ψ ≫ pullback.snd _ _) := by rw [hψ₂]; infer_instance
   haveI : IsProper ψ := IsProper.of_comp ψ (pullback.snd ((pullback.fst (𝔸(Fin g; Sp R) ↘ Sp R) π).fiberToSpecResidueField (τ x)) (Spec.map (τ.residueFieldMap x)))
   haveI : UniversallyInjective ψ := by
-    refine ((tfae_universallyInjective ψ).out 0 1).mpr ?_
+    refine ((tfae_universallyInjective ψ).out 1 2).mpr ?_
     intro K _ q q' hq
     simp only at hq
     have e₂ : q ≫ a.fiberToSpecResidueField x = q' ≫ a.fiberToSpecResidueField x := by

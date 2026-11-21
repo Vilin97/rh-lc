@@ -41,11 +41,11 @@ instance : NormedAddCommGroup (archLie K n) := Submodule.normedAddCommGroup _
 
 instance : NormedSpace ℝ (archLie K n) := Submodule.normedSpace _
 
-theorem isExpLieAlgebra : IsExpLieAlgebra (archGroup K n) (archLie K n) where
-  expUnit_mem _ _ := Subgroup.mem_top _
-  exists_nhds := ⟨(expPartialHomeomorph ℝ (ArchMatrix K n)).source,
+theorem isExpLieAlgebra : IsExpLieAlgebra (archGroup K n) (archLie K n) := by
+  refine ⟨fun _ _ => Subgroup.mem_top _, ?_⟩
+  exact ⟨(expPartialHomeomorph ℝ (ArchMatrix K n)).source,
     (expPartialHomeomorph ℝ (ArchMatrix K n)).open_source,
-    zero_mem_expPartialHomeomorph_source ℝ _, subset_rfl, fun _ _ _ => Submodule.mem_top⟩
+    zero_mem_expPartialHomeomorph_source ℝ _, Set.Subset.rfl, fun _ _ _ => Submodule.mem_top⟩
 
 def archMatrixEquiv : Matrix (Fin n) (Fin n) (InfiniteAdeleRing K) ≃+* ArchMatrix K n :=
   RingEquiv.mapMatrix (m := Fin n) (InfiniteAdeleRing.ringEquiv_mixedSpace K)

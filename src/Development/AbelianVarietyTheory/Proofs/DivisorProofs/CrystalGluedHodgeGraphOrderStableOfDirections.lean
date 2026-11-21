@@ -36,7 +36,11 @@ theorem push_coord (A₀ : Over (Sp k)) [GrpObj A₀] (f : A₀ ⟶ A₀) [IsMon
       e ((GlobalTheory.FODef.constMorV k V A₀).pull (primPull (dp0 k) (𝟙 _) f c)) := by
   rw [push_apply]
   congr 1
-  have m := (homMor (dp0 k) (𝟙 _) f).comp (GlobalTheory.FODef.constMorV k V A₀)
+  have m : GrpMor (dp0 k) (𝟙 _) A₀ (divided₂ (GlobalTheory.FODef.sqZero k V))
+      (spMap (TrivSqZeroExt.fstHom k k V).toRingHom) A₀
+      (algebraMap k (TrivSqZeroExt k V)) (𝟙 _) f.left :=
+    ⟨(GlobalTheory.FODef.constMorV k V A₀).dp, (GlobalTheory.FODef.constMorV k V A₀).base,
+      (homMor (dp0 k) (𝟙 _) f).w, (homMor (dp0 k) (𝟙 _) f).mul⟩
   exact (GrpMor.pull_pull (GlobalTheory.FODef.constMorV k V A₀) (homMor _ _ f) m (fun _ => rfl) (by simp) c).trans
     (GrpMor.pull_pull (homMor (dp0 k) (𝟙 _) f) (GlobalTheory.FODef.constMorV k V A₀) m (fun _ => rfl) rfl c).symm
 

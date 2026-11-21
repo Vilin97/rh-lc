@@ -68,7 +68,7 @@ theorem sb_gp_self (f : PS C 2 dd) : sb ![gp C (Fin dd) (0 : Fin 2), gp C (Fin d
   rw [e, subst_self]
   rfl
 
-theorem rLaw_raw : RLaw (Y.raw p) V where
+theorem rLaw_raw : RLaw (Y.raw p) V := {
   charZero := inferInstance
   closed := Y.algClosed
   odd := Y.l_odd
@@ -119,7 +119,7 @@ theorem rLaw_raw : RLaw (Y.raw p) V where
   sat := fun g => by
     obtain ⟨w, hw, h⟩ := p.u_sat g
     exact ⟨w, hw, fun c c' => ⟨fun e => (h c c').trans (ite_eq_left e),
-      fun e => (h c c').trans (ite_eq_right e)⟩⟩
+      fun e => (h c c').trans (ite_eq_right e)⟩⟩ }
 
 theorem rLaw_pairData : ∀ (C : Type) [Field C] [CharZero C] (V : VF C) (O : Type) [CommRing O] [StarRing O] (dd : ℕ)
     (Y : FBChart C V O dd) (d : ℕ) [NeZero d] (I : Fin 2 → Type) [∀ g, Fintype (I g)] (p : PairData Y d I),

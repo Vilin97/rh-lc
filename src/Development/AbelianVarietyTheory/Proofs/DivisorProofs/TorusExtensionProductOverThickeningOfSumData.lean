@@ -77,8 +77,26 @@ theorem main : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (e : ℕ) 
   let j₂ : D₂.X →+ D.X := E.symm.toAddMonoidHom.comp (AddMonoidHom.inr D₁.X D₂.X)
   let τ₁ := GlobalTheory.SplitTorusPow.torusMap S₀ j₁
   let τ₂ := GlobalTheory.SplitTorusPow.torusMap S₀ j₂
-  haveI : IsMonHom τ₁ := GlobalTheory.SplitTorusPow.isMonHom_torusMap _
-  haveI : IsMonHom τ₂ := GlobalTheory.SplitTorusPow.isMonHom_torusMap _
+  have hτmon {X X' : Type} [AddCommGroup X] [AddCommGroup X'] (φ : X →+ X') :
+      IsMonHom (GlobalTheory.SplitTorusPow.torusMap S₀ φ) := by
+    refine ⟨?_, ?_⟩
+    · have h : (1 : 𝟙_ (Over S₀) ⟶ splitTorus S₀ X') ≫
+          GlobalTheory.SplitTorusPow.torusMap S₀ φ = 1 := by
+        apply (GlobalTheory.splitTorusPointsEquiv S₀ X _).injective
+        rw [GlobalTheory.SplitTorusPow.points_comp_torusMap, map_one, map_one, MonoidHom.one_comp]
+      simpa [Hom.one_def] using h
+    · have h {Z : Over S₀} (a b : Z ⟶ splitTorus S₀ X') :
+          (a * b) ≫ GlobalTheory.SplitTorusPow.torusMap S₀ φ =
+            (a ≫ GlobalTheory.SplitTorusPow.torusMap S₀ φ) *
+              (b ≫ GlobalTheory.SplitTorusPow.torusMap S₀ φ) := by
+        apply (GlobalTheory.splitTorusPointsEquiv S₀ X Z).injective
+        rw [map_mul, GlobalTheory.SplitTorusPow.points_comp_torusMap,
+          GlobalTheory.SplitTorusPow.points_comp_torusMap,
+          GlobalTheory.SplitTorusPow.points_comp_torusMap, map_mul, MonoidHom.mul_comp]
+      simpa only [Hom.mul_def, lift_fst_snd, Category.id_comp, lift_fst_comp_snd_comp] using
+        h (fst (splitTorus S₀ X') (splitTorus S₀ X')) (snd _ _)
+  haveI : IsMonHom τ₁ := hτmon j₁
+  haveI : IsMonHom τ₂ := hτmon j₂
   haveI hτ : IsIso (lift τ₁ τ₂) := isIso_lift_torusMap E
 
   haveI hG : IsIso (lift (F.map (fst G₁ G₂)) (F.map (snd G₁ G₂))) :=

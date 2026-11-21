@@ -41,7 +41,7 @@ theorem GlobalTheory.SpreadPoint.exists_away : ∀ (B : Type) [CommRing B] (X : 
       spMap g ≫ spMap f = spMap (g.comp f) := fun f g => (Spec.map_comp (CommRingCat.ofHom f) (CommRingCat.ofHom g)).symm
   let u₀ : Sp (Localization.AtPrime 𝔭) ⟶ pullback q (spMap β) :=
     pullback.lift f₀ (spMap σ) (by rw [hf₀, hcomp])
-  obtain ⟨a, ha, H⟩ := GlobalTheory.UPoinc.LocSpread.exists_hom hσ (𝟙 (Sp R)) q' hP u₀ (by rw [Category.comp_id])
+  obtain ⟨a, ha, H⟩ := GlobalTheory.UPoinc.LocSpread.exists_hom hσ (𝟙 (Sp R)) q' hP u₀ (by simp [u₀, q'])
   have ha' : a ∉ 𝔭 := by
     intro h
     exact (IsLocalization.AtPrime.isUnit_to_map_iff (Localization.AtPrime 𝔭) 𝔭 a).1 ha h

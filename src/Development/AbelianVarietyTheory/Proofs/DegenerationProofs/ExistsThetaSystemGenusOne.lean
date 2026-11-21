@@ -30,7 +30,7 @@ noncomputable section
 
 namespace GlobalTheory.ZH.RealDimOne
 
-open GlobalTheory.TorsionGenerators GlobalTheory.ZH.DimZero NumberField
+open GlobalTheory.TorsionGenerators NumberField
 
 theorem isPrimitiveRoot_unitOn {k : Type} [CommRing k] {u : kˣ} {M : ℕ} (h : IsPrimitiveRoot u M) :
     IsPrimitiveRoot (unitOn u) M :=

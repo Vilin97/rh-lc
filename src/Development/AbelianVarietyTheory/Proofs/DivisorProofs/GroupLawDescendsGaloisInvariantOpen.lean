@@ -111,8 +111,8 @@ theorem law_of_isAffineQuotient {Γ : Type} [Group Γ] [Finite Γ] {α : Γ →*
       (pullbackAction_snd α π hq.comp_eq y)
   have equiv : ∀ {Y : Scheme.{0}} (y : Y ⟶ Sp R) (j : Y ⟶ (N.U ⊗ N.U).left) (z : pullback π y ⟶ G.left),
       Prod N (pullback.fst π y) (pullback.snd π y ≫ j) z →
-      ∀ g, (pullbackAction α π hq.comp_eq y g).hom ≫ z = z ≫ φ g := fun y j z hz g => by
-    have h₁ := prod_comp N (pullbackAction α π hq.comp_eq y g).hom hz
+      ∀ g, (pullbackAction α π hq.comp_eq y g).asIso.hom ≫ z = z ≫ φ g := fun y j z hz g => by
+    have h₁ := prod_comp N (pullbackAction α π hq.comp_eq y g).asIso.hom hz
     rw [pullbackAction_fst, pullbackAction_snd_assoc] at h₁
     exact prod_unique N h₁ (prod_act N (hφ g) (hN g) hz)
   obtain ⟨z₀, hz₁⟩ := prod_exists N (pullback.condition (f := π) (g := (N.U ⊗ N.U).hom))
@@ -124,7 +124,7 @@ theorem law_of_isAffineQuotient {Γ : Type} [Group Γ] [Finite Γ] {α : Γ →*
     exact (pullback.lift_fst _ _ _).trans (Category.comp_id _)
   obtain ⟨V, hV⟩ := (quot (N.U ⊗ N.U).hom).exists_preimage_eq (U := z₀ ⁻¹ᵁ N.u.opensRange) fun g w hw => by
     obtain ⟨w', hw'⟩ := hw
-    change ((pullbackAction α π hq.comp_eq (N.U ⊗ N.U).hom g).hom ≫ z₀) w ∈ Set.range N.u
+    change ((pullbackAction α π hq.comp_eq (N.U ⊗ N.U).hom g).asIso.hom ≫ z₀) w ∈ Set.range N.u
     rw [equiv _ (𝟙 _) z₀ (by rw [Category.comp_id]; exact hz₁) g, Scheme.Hom.comp_apply, ← hw',
       ← Scheme.Hom.comp_apply, ← hrange g, Scheme.Hom.comp_apply]
     exact ⟨_, rfl⟩
@@ -148,7 +148,7 @@ theorem law_of_isAffineQuotient {Γ : Type} [Group Γ] [Finite Γ] {α : Γ →*
   have hf : N.Pt (pullback.fst π y) (l ≫ pullback.fst _ _) (k ≫ z₀) :=
     ⟨l, rfl, by rw [← N.u_over, ← Category.assoc, hl, prod_over N hz], hl⟩
   obtain ⟨m, hm⟩ := (quot y).exists_comp_eq (l ≫ pullback.fst _ _) fun g => by
-    have h₁ := pt_comp N (pullbackAction α π hq.comp_eq y g).hom hf
+    have h₁ := pt_comp N (pullbackAction α π hq.comp_eq y g).asIso.hom hf
     rw [equiv y V.ι _ hz g] at h₁
     exact pt_unique_left N h₁ (hN g _ _ _ _ hf)
   refine ⟨V, m, fun z hz₀ => ?_, (quot y).hom_ext ?_, fun T v s a b ha hb => ?_⟩
@@ -188,7 +188,7 @@ theorem law_of_galAct_invariant : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLo
   have : FaithfulSMul R R' := (faithfulSMul_iff_algebraMap_injective _ _).2 hρ.2.1
   have : Algebra.IsInvariant R R' (Gal ρ) := ⟨fun x hx => hG.2 x fun σ hσ => hx ⟨σ, hσ⟩⟩
   have hq : IsAffineQuotient (specAction (Gal ρ) R') (spMap ρ) := isAffineQuotient_spec R R'
-  have e : ∀ σ : Gal ρ, (specAction (Gal ρ) R' σ).hom = spMap (Gal.hom σ⁻¹) := fun σ => by
+  have e : ∀ σ : Gal ρ, (specAction (Gal ρ) R' σ).asIso.hom = spMap (Gal.hom σ⁻¹) := fun σ => by
     rw [specAction_hom]; rfl
   refine LawDesc.law_of_isAffineQuotient N hq (fun σ => a.act σ⁻¹) (fun σ => ?_) fun σ => ?_
   · rw [e]; exact a.cart σ⁻¹

@@ -182,8 +182,10 @@ variable {E : Type} [Field E] [NumberField E] {k : ℕ}
 def latS (S : Finset (Pl E)) (B : ∀ w : Pl E, AddSubgroup (w.adicCompletion E)) : AddSubgroup (Af E) where
   carrier := {a | (∀ w, w ∉ S → pLoc E w a ∈ Formalism.UG.Ov E w) ∧ ∀ w ∈ S, pLoc E w a ∈ B w}
   add_mem' := fun {a b} ha hb => ⟨fun w hw => by
-      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha.1 w hw) (hb.1 w hw), fun w hw => by
-      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha.2 w hw) (hb.2 w hw)⟩
+      rw [map_add (pLoc E w)]
+      exact add_mem (ha.1 w hw) (hb.1 w hw), fun w hw => by
+      rw [map_add (pLoc E w)]
+      exact add_mem (ha.2 w hw) (hb.2 w hw)⟩
   zero_mem' := ⟨fun w _ => by rw [map_zero]; exact zero_mem _, fun w _ => by rw [map_zero]; exact zero_mem _⟩
   neg_mem' := fun {a} ha => ⟨fun w hw => by
       rw [map_neg]; exact neg_mem (ha.1 w hw), fun w hw => by

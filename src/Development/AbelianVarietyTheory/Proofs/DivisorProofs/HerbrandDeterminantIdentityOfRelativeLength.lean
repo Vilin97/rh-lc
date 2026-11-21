@@ -348,13 +348,13 @@ theorem detIdentity_of_relLen : ∀ (C : Type) [Field C] (v : AddValuation C (Wi
         rw [Submodule.Quotient.mk_eq_zero]
         exact hsat c z hc h0
   haveI := hfLie
-  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (Int0 v)
-    (eigSub a τ ((Fin N → RS a) ⧸ Fil))
+  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (R := Int0 v)
+    (M := eigSub a τ ((Fin N → RS a) ⧸ Fil))
 
   haveI := hfFil
   haveI hfQ : Module.Finite (Int0 v) (eigQuot a Fil τ) :=
     Module.Finite.map (Fil.restrictScalars (Int0 v)) (comp a N τ)
-  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (Int0 v) (eigQuot a Fil τ)
+  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (R := Int0 v) (M := eigQuot a Fil τ)
   have hrk : finrank (Int0 v) (eigQuot a Fil τ) = eigRank v a Fil τ :=
     GlobalTheory.T.finrank_int0_submodule_eq_finrank_span C v N (eigQuot a Fil τ) hfQ
   have bF := Module.finBasisOfFinrankEq (Int0 v) (eigQuot a Fil τ) hrk

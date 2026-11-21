@@ -98,7 +98,7 @@ theorem main : ∀ (V₁ : Type) [CommRing V₁] [IsDomain V₁] [IsLocalRing V�
   refine ⟨c, hc, fun χ χ' h => funext fun w => ?_, fun z => ⟨fun v => d v z, ?_⟩⟩
   · rw [← dsum χ w, ← dsum χ' w]; exact congrArg (d w) h
   · have := DFunLike.congr_fun hsum z
-    rw [AddMonoidHom.finset_sum_apply] at this
+    rw [AddMonoidHom.finsetSum_apply] at this
     simpa using this
 
 end GlobalTheory.Poinc.Eq8.Chars8

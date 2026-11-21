@@ -16,15 +16,20 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 theorem setup_tr {m N : ℕ} (h : m + 2 ≤ N) (h' : m + 1 ≤ N) {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V) (hπ : IsSmooth π) :
-    Setup (fun x => π (colEl k m N h x)) (π.comp (blkAt k (m + 1) N h')) where
-  col_zero v := by simp [TrM.colEl_zero]
-  col_add x y v := by rw [TrM.colEl_add, map_mul, Module.End.mul_apply]
-  conj g x v := by
+    Setup (fun x => π (colEl k m N h x)) (π.comp (blkAt k (m + 1) N h')) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · intro v
+    simp [TrM.colEl_zero]
+  · intro x y v
+    rw [TrM.colEl_add, map_mul, Module.End.mul_apply]
+  · intro g x v
     show π (blkAt k (m + 1) N h' g) (π (colEl k m N h x) v) =
       π (colEl k m N h ((g : Matrix (Fin (m + 1)) (Fin (m + 1)) k) *ᵥ x)) (π (blkAt k (m + 1) N h' g) v)
     rw [← Module.End.mul_apply, ← map_mul, TrM.blkAt_mul_colEl m N h h', map_mul, Module.End.mul_apply]
-  smooth_col v := (hπ v).preimage (TrM.continuous_colEl m N h)
-  smooth_gl v := (hπ v).preimage (TrM.continuous_blkAt (m + 1) N h')
+  · intro v
+    exact (hπ v).preimage (TrM.continuous_colEl m N h)
+  · intro v
+    exact (hπ v).preimage (TrM.continuous_blkAt (m + 1) N h')
 
 theorem uLift_of_abs (H : @AbsLift k _ _ _ _) : PositivityTheory.RgUd.Form.U.ULift k := by
   intro ψ hψ hψ1 m N h V _ _ π hπ s B B' C A₀ hL hA₀ hD hC hCK hCM hle

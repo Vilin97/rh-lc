@@ -118,7 +118,7 @@ theorem exists_mat_herm : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     ring
   have hVA : vandermonde l * Cm.map τ = diagonal l * vandermonde l := by
     ext k j
-    rw [mul_apply, diagonal_mul, vandermonde_apply]
+    rw [Matrix.mul_apply, diagonal_mul, vandermonde_apply]
     show ∑ i : Fin pb.dim, l k ^ (i : ℕ) * τ (Algebra.leftMulMatrix pb.basis pb.gen i j) = l k * l k ^ (j : ℕ)
     have hC : ∀ i : Fin pb.dim, Algebra.leftMulMatrix pb.basis pb.gen i j = pb.basis.repr (pb.gen * pb.basis j) i :=
       fun i => Algebra.leftMulMatrix_eq_repr_mul _ _ _ _

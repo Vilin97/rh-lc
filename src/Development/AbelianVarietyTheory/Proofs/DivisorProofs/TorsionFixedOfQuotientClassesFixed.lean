@@ -68,8 +68,8 @@ theorem fixed_of_classes_fixed : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLoc
   obtain ⟨f, hf, hsurj, hfi, -, -⟩ :=
     GlobalTheory.TorsionIso.torsion_eq hL R (maximalIdeal R) hB.1 D A G hG U (AlgebraicClosure (FractionRing V)) k hk
   obtain ⟨p, hp⟩ := hsurj x₀ hx₀
-  let q := GlobalTheory.TorusExt.qkExt D.tau_bimult σ.toRingHom hσf p
-  have hpq : QkExt σ.toRingHom p q := (GlobalTheory.TorusExt.qkExt_iff D.tau_bimult σ.toRingHom hσf p q).2 rfl
+  obtain ⟨q, hpq⟩ := qkExtExists R D.toPre (AlgebraicClosure (FractionRing V))
+    (AlgebraicClosure (FractionRing V)) σ.toRingHom σ'.commutes k p
   have heq : f q = x₀ := ((hfi p q).2 (hQ p q hpq)).symm.trans hp
   have s₂ : spMap σ.toRingHom ≫ jFK (R := R) (AlgebraicClosure (FractionRing V)) =
       jFK (R := R) (AlgebraicClosure (FractionRing V)) := by

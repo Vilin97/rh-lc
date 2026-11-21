@@ -13,9 +13,9 @@ open NumberField
 namespace Formalism.L2.Th1.GD
 
 open Formalism.L2.Th1.H (cmL CmOK matH stdH stdLat blk4 pow4 imgLat relIdx IsIsom IsSelfDual Th alphaQ kernel4)
-open Formalism.L2.Th1.Top (IsLatH phC)
+open Formalism.L2.Th1.Top (phC)
 open Formalism.L2.Th1.E (IntCurve curveL)
-open Formalism.L2.Th1.A (logSer expSer)
+open Formalism.L2.Th1.A (logSer)
 open Formalism.L2.Th1.G (betaPair)
 open Formalism.L2.Th1.CM (MaximalUnramifiedExtension)
 open Formalism.DworkPowerSeriesWeights (JetsIntegral jetPair jetPairPoly minorProd)

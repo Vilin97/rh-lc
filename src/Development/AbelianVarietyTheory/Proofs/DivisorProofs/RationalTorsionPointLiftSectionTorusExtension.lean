@@ -67,7 +67,7 @@ theorem inj (V : Type) [CommRing V] [IsDomain V] [IsLocalRing V] (hR : GlobalThe
   obtain ⟨q, hq, hk1, e1⟩ := key n
   obtain ⟨q', hq', hk2, e2⟩ := key n'
   have hff : f (GlobalTheory.TorusExt.qkMk hB 0 q hk1) = f (GlobalTheory.TorusExt.qkMk hB 0 q' hk2) := by
-    rw [← cancel_mono U.gen.inv]
+    apply (cancel_mono U.gen.inv).1
     apply Over.OverMorphism.ext
     apply pullback.hom_ext
     · rw [Over.comp_left, Over.comp_left, Category.assoc, Category.assoc, e1, h, e2]

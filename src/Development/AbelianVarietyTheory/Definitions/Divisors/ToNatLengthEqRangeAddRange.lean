@@ -91,29 +91,56 @@ theorem chiLen_eq_of_surjective (k : Type) [CommRing k] [Algebra R k] [Algebra k
 
 variable {R}
 
+private theorem exists_coh_boundary_exact (hS : S.ShortExact) (n : ℕ) :
+    ∃ δ : coh S.X₃ n →ₗ[R] coh S.X₁ (n + 1),
+      Function.Exact (cohOn.map R S.g ⊤ n) δ ∧
+        Function.Exact δ (cohOn.map R S.f ⊤ (n + 1)) := by
+  have hAb := shortExact_toAbSheaf hS
+  let δ : coh S.X₃ n →ₗ[R] coh S.X₁ (n + 1) :=
+    WithAction.linearMap (cohOn.action S.X₃ ⊤ n) (cohOn.action S.X₁ ⊤ (n + 1)) R
+      (SheafLES.δ hAb n ⊤) fun r x => by
+        rw [cohOn.action_apply, cohOn.action_apply]
+        let φ : S ⟶ S :=
+          { τ₁ := smulHom S.X₁ r
+            τ₂ := smulHom S.X₂ r
+            τ₃ := smulHom S.X₃ r
+            comm₁₂ := smulHom_comp r S.f
+            comm₂₃ := smulHom_comp r S.g }
+        simpa only [SheafLES.map, SiteCoh.map, Functor.mapShortComplex_map_τ₁,
+          Functor.mapShortComplex_map_τ₃, φ] using
+          (SheafLES.δ_naturality hAb hAb ((toAbSheaf X).mapShortComplex.map φ) n ⊤ x).symm
+  exact ⟨δ, SheafLES.exact₃ hAb n ⊤, SheafLES.exact₁ hAb n ⊤⟩
+
 namespace FiniteLenCoh
 
 theorem of_iso (h : FiniteLenCoh R F) (e : F ≅ G) : FiniteLenCoh R G where
   ne_top n := (cohOn.mapIso R ⊤ n e).length_eq ▸ h.ne_top n
-  eventually_zero :=
-    have ⟨N, hN⟩ := h.eventually_zero
-    ⟨N, fun n hn => have := hN n hn; (cohOn.mapIso R ⊤ n e).symm.injective.subsingleton⟩
+  eventually_zero := by
+    obtain ⟨N, hN⟩ := h.eventually_zero
+    refine ⟨N, fun n hn => ?_⟩
+    have := hN n hn
+    exact (cohOn.mapIso R ⊤ n e).symm.injective.subsingleton
 
 theorem of_shortExact₂ (hS : S.ShortExact) (h₁ : FiniteLenCoh R S.X₁) (h₃ : FiniteLenCoh R S.X₃) :
     FiniteLenCoh R S.X₂ where
-  ne_top n := length_ne_top_of_exact (cohOn.exact₂ R hS ⊤ n) (h₁.ne_top n) (h₃.ne_top n)
-  eventually_zero :=
-    have ⟨N₁, h₁⟩ := h₁.eventually_zero
-    have ⟨N₃, h₃⟩ := h₃.eventually_zero
-    ⟨max N₁ N₃, fun n hn => cohOn.subsingleton₂ hS ⊤ n (h₁ n (by omega)) (h₃ n (by omega))⟩
+  ne_top n := by
+    have h₂ : Function.Exact (cohOn.map R S.f ⊤ n) (cohOn.map R S.g ⊤ n) :=
+      SheafLES.exact₂ (shortExact_toAbSheaf hS) n ⊤
+    exact length_ne_top_of_exact h₂ (h₁.ne_top n) (h₃.ne_top n)
+  eventually_zero := by
+    obtain ⟨N₁, hN₁⟩ := h₁.eventually_zero
+    obtain ⟨N₃, hN₃⟩ := h₃.eventually_zero
+    exact ⟨max N₁ N₃, fun n hn => cohOn.subsingleton₂ hS ⊤ n (hN₁ n (by omega)) (hN₃ n (by omega))⟩
 
 theorem of_shortExact₃ (hS : S.ShortExact) (h₁ : FiniteLenCoh R S.X₁) (h₂ : FiniteLenCoh R S.X₂) :
     FiniteLenCoh R S.X₃ where
-  ne_top n := length_ne_top_of_exact (cohOn.exact₃ R hS ⊤ n) (h₂.ne_top n) (h₁.ne_top (n + 1))
-  eventually_zero :=
-    have ⟨N₁, h₁⟩ := h₁.eventually_zero
-    have ⟨N₂, h₂⟩ := h₂.eventually_zero
-    ⟨max N₁ N₂, fun n hn => cohOn.subsingleton₃ hS ⊤ n (h₂ n (by omega)) (h₁ (n + 1) (by omega))⟩
+  ne_top n := by
+    obtain ⟨_, h₃, _⟩ := exists_coh_boundary_exact (R := R) hS n
+    exact length_ne_top_of_exact h₃ (h₂.ne_top n) (h₁.ne_top (n + 1))
+  eventually_zero := by
+    obtain ⟨N₁, hN₁⟩ := h₁.eventually_zero
+    obtain ⟨N₂, hN₂⟩ := h₂.eventually_zero
+    exact ⟨max N₁ N₂, fun n hn => cohOn.subsingleton₃ hS ⊤ n (hN₂ n (by omega)) (hN₁ (n + 1) (by omega))⟩
 
 end FiniteLenCoh
 
@@ -133,18 +160,22 @@ theorem chiLen_shortExact (hS : S.ShortExact) (h₁ : FiniteLenCoh R S.X₁)
     | succ N ih =>
       have e₁ := toNat_length_eq_range_add_range (LinearMap.exact_subtype_ker_map
         (cohOn.map R S.f ⊤ N)) (h₁.ne_top N)
-      have e₂ := toNat_length_eq_range_add_range (cohOn.exact₂ R hS ⊤ N) (h₂.ne_top N)
-      have e₃ := toNat_length_eq_range_add_range (cohOn.exact₃ R hS ⊤ N) (h₃.ne_top N)
+      have hfg : Function.Exact (cohOn.map R S.f ⊤ N) (cohOn.map R S.g ⊤ N) :=
+        SheafLES.exact₂ (shortExact_toAbSheaf hS) N ⊤
+      obtain ⟨δ, hgδ, hδf⟩ := exists_coh_boundary_exact (R := R) hS N
+      have e₂ := toNat_length_eq_range_add_range hfg (h₂.ne_top N)
+      have e₃ := toNat_length_eq_range_add_range hgδ (h₃.ne_top N)
       rw [Submodule.range_subtype] at e₁
-      rw [← (cohOn.exact₁ R hS ⊤ N).linearMap_ker_eq] at e₃
+      rw [← hδf.linearMap_ker_eq] at e₃
       simp only [Finset.sum_range_succ, pow_succ]
       change _ = a N + _ at e₁
       change _ = _ + a (N + 1) at e₃
       erw [e₁, e₂, e₃]
       linear_combination ih
   have a0 : a 0 = 0 := by
+    have := hS.mono_f
     simp only [a]
-    rw [LinearMap.ker_eq_bot.2 (cohOn.injective_zero R hS ⊤)]
+    rw [LinearMap.ker_eq_bot.2 (cohOn.map_zero_injective_of_mono R ⊤ S.f)]
     simp
   let N := max N₁ (max N₂ N₃)
   have aN : a N = 0 := by
@@ -240,10 +271,13 @@ theorem chiLenPic_shortExact (hS : S.ShortExact) (h₁ : FiniteLenTwists R S.X�
 theorem bwdDiff_chiLenPic {L : LB X} (hL : L.IsLB) (s : L.Sec) [Mono (cutHom F hL s)]
     (h : FiniteLenTwists R F) : FiniteLenTwists R (cut F hL s) ∧
       bwdDiff (cls L hL) (chiLenPic R F) = chiLenPic R (cut F hL s) := by
+  have hS : (cutComplex F hL s).ShortExact := by
+    exact ShortComplex.ShortExact.mk' (ShortComplex.exact_cokernel (cutHom F hL s))
+      (inferInstanceAs (Mono (cutHom F hL s))) (epi_cutπ F hL s)
   have h₁ := h.twist (isLB_lbZPow hL (-1))
-  have h₃ := h₁.of_shortExact₃ (shortExact_cutComplex F hL s) h
+  have h₃ := h₁.of_shortExact₃ hS h
   refine ⟨h₃, funext fun c => ?_⟩
-  have e := congrFun (chiLenPic_shortExact (shortExact_cutComplex F hL s) h₁ h₃) c
+  have e := congrFun (chiLenPic_shortExact hS h₁ h₃) c
   change chiLenPic R F c =
     chiLenPic R (twist F (lbZPow L (-1))) c + chiLenPic R (cut F hL s) c at e
   rw [chiLenPic_twist R F (isLB_lbZPow hL (-1)), cls_lbZPow hL, neg_one_zsmul,
@@ -351,12 +385,13 @@ theorem span_prod_symOf : Submodule.span ℚ
     rw [Algebra.algebraMap_eq_smul_one]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨0, by simp⟩)
   | ι x =>
-    induction x with
-    | zero => rw [map_zero]; exact zero_mem _
+    induction x using TensorProduct.inductionOn with
     | tmul a g =>
       rw [← mul_one a, ← smul_eq_mul, ← smul_tmul', map_smul]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨{g}, by simp [symOf_apply]⟩)
-    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b ha hb =>
+      rw [map_add]
+      exact add_mem ha hb
   | mul a b ha hb =>
     have := Submodule.mul_mem_mul ha hb
     rw [Submodule.span_mul_span] at this

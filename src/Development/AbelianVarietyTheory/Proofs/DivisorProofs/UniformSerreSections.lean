@@ -56,8 +56,8 @@ theorem comp_lift (e e' : ℕ) (P : MvPolynomial σ R) (hP : ∀ m, AddMonoidAlg
   show (Polynomial.monomial e (AddMonoidAlgebra.coeff P m)).coeff e' = _
   rw [Polynomial.coeff_monomial]
   by_cases h : e' = e
-  · subst h; rw [if_pos rfl, if_pos rfl]
-  · rw [if_neg (Ne.symm h), if_neg h, coeff_zero]
+  · subst h; simp
+  · simp [Finsupp.single_apply, h, Ne.symm h]
 
 theorem comp_sub (e : ℕ) (Q₁ Q₂ : MvPolynomial σ (reesAlgebra I)) :
     comp e (Q₁ - Q₂) = comp e Q₁ - comp e Q₂ := by
@@ -86,6 +86,7 @@ end GlobalTheory.UniformSerre
 
 
 theorem GlobalTheory.uniform_serre_sections : ∀ (R : Type) [CommRing R] [IsNoetherianRing R] (I : Ideal R), ∀ (n : ℕ) (J : ℕ → Ideal (MvPolynomial (Fin (n + 1)) R)), (∀ (e t : ℕ) (a : R) (F : MvPolynomial (Fin (n + 1)) R), a ∈ I → F.IsHomogeneous t → (∀ m, AddMonoidAlgebra.coeff F m ∈ I ^ e) → F ∈ J e → C a * F ∈ J (e + 1)) → ∃ d₀ : ℕ, ∀ d, d₀ ≤ d → ∀ e : ℕ, ∀ (N : ℕ) (F : Fin (n + 1) → MvPolynomial (Fin (n + 1)) R), (∀ i, (F i).IsHomogeneous (d + N)) → (∀ i m, AddMonoidAlgebra.coeff (F i) m ∈ I ^ e) → (∀ i j, ∃ L : ℕ, ((X i : MvPolynomial (Fin (n + 1)) R) * X j) ^ L * (X j ^ N * F i - X i ^ N * F j) ∈ J e) → ∃ G : MvPolynomial (Fin (n + 1)) R, G.IsHomogeneous d ∧ (∀ m, AddMonoidAlgebra.coeff G m ∈ I ^ e) ∧ ∀ i, ∃ L : ℕ, (X i : MvPolynomial (Fin (n + 1)) R) ^ L * (F i - X i ^ N * G) ∈ J e := by
+  open GlobalTheory.UniformSerre in
   intro R _ _ I n J hJ
   obtain ⟨𝔞, hgr, hmem⟩ := GlobalTheory.T.exists_homogeneous_ideal_over_reesAlgebra R I n J hJ
   obtain ⟨d₀, hd₀⟩ := GlobalTheory.T.exists_homogeneous_form_of_compatible_fractions (reesAlgebra I) n 𝔞 hgr

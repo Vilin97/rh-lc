@@ -102,7 +102,13 @@ theorem torus_pair (D : Datum H) {R : Type} [CommRing R] [IsDomain R] [IsLocalRi
     rw [← (hQ b).1, map_neg, smul_neg, ← map_nsmul, eq_neg_iff_add_eq_zero, ← map_add (f := _), ← hz]
     exact map_zero _
   · have h₁ := (G.2.2 _ _ _ _ (hQ b) (hQ b')).1 ((I.ker n hn b b').2 hbb)
-    have h₂ := (N.qEq_equivalence n).trans ((N.qEq_equivalence n).trans ((N.qEq_equivalence n).symm hq) h₁) hq'
+    have eqv : Equivalence (N.QEq (k := n)) := by
+      refine ⟨fun p => ⟨0, by simp, by simp⟩, ?_, ?_⟩
+      · rintro p p' ⟨z, h, h'⟩
+        exact ⟨-z, by rw [h, smul_neg, add_neg_cancel_right], by rw [h', N.io_neg, mul_inv_cancel_right]⟩
+      · rintro p p' p'' ⟨z, h, h'⟩ ⟨w, e, e'⟩
+        exact ⟨z + w, by rw [e, h, smul_add, add_assoc], by rw [e', h', N.io_add, _root_.mul_assoc]⟩
+    have h₂ := eqv.trans (eqv.trans (eqv.symm hq) h₁) hq'
     obtain ⟨z, hz, hz'⟩ := h₂
     have hz0 : z = 0 := by
       have e : (n : ℤ) • z = 0 := by

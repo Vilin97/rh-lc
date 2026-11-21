@@ -24,7 +24,7 @@ def kFin (M : DSModel V S) (τ : D.what₂.Tau) : Submodule ℂ (M.H τ) :=
 
 abbrev KVec (M : DSModel V S) : Type := ∀ τ : D.what₂.Tau, kFin M τ
 
-abbrev KMap (M : DSModel V S) : Type := MultilinearMap ℂ (fun τ : D.what₂.Tau => kFin M τ) (GA D V → ℂ)
+abbrev KMap (M : DSModel V S) : Type := (∀ τ : D.what₂.Tau, kFin M τ) →ₘₗ[ℂ] (GA D V → ℂ)
 
 def maxCpt (M : DSModel V S) (τ : D.what₂.Tau) : Set (Matrix (Fin V.rank) (Fin V.rank) ℂ) :=
   {g | M.fr τ * g * (M.fr τ)⁻¹ ∈ Formalism.REAL.Kset (M.ε τ)}

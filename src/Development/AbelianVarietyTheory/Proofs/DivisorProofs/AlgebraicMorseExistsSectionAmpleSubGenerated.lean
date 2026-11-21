@@ -50,10 +50,47 @@ theorem exists_sec_of_ample_sub_generated :
   have hcl : cls (lbPow L m) (isLB_lbPow hL.isLB m) =
       cls (lbPow M m) (isLB_lbPow hM m) + m • cls B hB.isLB := by
     rw [cls_lbPow hL.isLB, cls_lbPow hM, e, smul_add]
-  have hch := GlobalTheory.T.sectionsDim_le_add_mul_sectionsDim_cut k X hp (GlobalTheory.structureModule X) B (lbPow L m) hB.isLB (isLB_lbPow hL.isLB m)
-    s t hs ht m (lbPow M m) (isLB_lbPow hM m) hcl
+  have hmono : ∀ (j : ℕ) (M' : LB X) (hM' : M'.IsLB),
+      cls (lbPow L m) (isLB_lbPow hL.isLB m) = cls M' hM' + j • cls B hB.isLB →
+      hdim k (twist G M') 0 ≤ hdim k (twist G (lbPow L m)) 0 := by
+    intro j
+    induction j with
+    | zero =>
+      intro M' hM' h
+      rw [zero_nsmul, add_zero] at h
+      obtain ⟨e⟩ := nonempty_twist_iso_of_cls_eq G (isLB_lbPow hL.isLB m) hM' h
+      exact (hdim_congr k 0 e).ge
+    | succ j ih =>
+      intro M' hM' h
+      have h1 := cls_tens hM' hB.isLB (isLB_tens hM' hB.isLB)
+      have h2 := ih _ (isLB_tens hM' hB.isLB) (by rw [h1, h, succ_nsmul']; abel)
+      exact ((GlobalTheory.T.sheafCohomologyDim_twist_cut_inequalities k X hp G B _ M' hB.isLB _ hM' t ht h1).2.2).trans h2
+  have hch : ∀ (j : ℕ) (M' : LB X) (hM' : M'.IsLB),
+      cls (lbPow L m) (isLB_lbPow hL.isLB m) = cls M' hM' + j • cls B hB.isLB →
+      hdim k (twist (GlobalTheory.structureModule X) (lbPow L m)) 0 ≤
+        hdim k (twist (GlobalTheory.structureModule X) M') 0 + j * hdim k (twist G (lbPow L m)) 0 := by
+    intro j
+    induction j with
+    | zero =>
+      intro M' hM' h
+      rw [zero_nsmul, add_zero] at h
+      obtain ⟨e⟩ := nonempty_twist_iso_of_cls_eq (GlobalTheory.structureModule X) (isLB_lbPow hL.isLB m) hM' h
+      rw [hdim_congr k 0 e]
+      omega
+    | succ j ih =>
+      intro M' hM' h
+      have h1 := cls_tens hM' hB.isLB (isLB_tens hM' hB.isLB)
+      have h0 : cls (lbPow L m) (isLB_lbPow hL.isLB m) = cls (tens M' B) (isLB_tens hM' hB.isLB) + j • cls B hB.isLB := by
+        rw [h1, h, succ_nsmul']; abel
+      have h2 := ih _ (isLB_tens hM' hB.isLB) h0
+      have h3 := (GlobalTheory.T.sheafCohomologyDim_twist_cut_inequalities k X hp (GlobalTheory.structureModule X) B _ M' hB.isLB _ hM' s hs h1).1 0
+      change hdim k (twist (GlobalTheory.structureModule X) (tens M' B)) 0 ≤
+        hdim k (twist (GlobalTheory.structureModule X) M') 0 + hdim k (twist G (tens M' B)) 0 at h3
+      have h4 := hmono j _ (isLB_tens hM' hB.isLB) h0
+      rw [Nat.succ_mul]
+      omega
   have hch' : hdim k (twist (GlobalTheory.structureModule X) (lbPow L m)) 0 ≤
-      hdim k (twist (GlobalTheory.structureModule X) (lbPow M m)) 0 + m * hdim k (twist G (lbPow L m)) 0 := hch
+      hdim k (twist (GlobalTheory.structureModule X) (lbPow M m)) 0 + m * hdim k (twist G (lbPow L m)) 0 := hch m (lbPow M m) (isLB_lbPow hM m) hcl
   refine ⟨m, hm1, lineBundleHasNonzeroSection_of_globalSectionsDim_pos (k := k) ?_⟩
   show 0 < hdim k (twist (GlobalTheory.structureModule X) (lbPow M m)) 0
   have : m * hdim k (twist G (lbPow L m)) 0 < hdim k (twist (GlobalTheory.structureModule X) (lbPow L m)) 0 := hm

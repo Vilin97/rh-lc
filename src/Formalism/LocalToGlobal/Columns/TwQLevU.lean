@@ -19,6 +19,8 @@ variable {F E K : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Sta
   (hint : ∀ r : 𝓞 E, Valued.v (φ (algebraMap (𝓞 E) E r)) ≤ 1)
   (hPv : ∀ r : 𝓞 E, Valued.v (φ (algebraMap (𝓞 E) E r)) < 1 ↔ r ∈ P.asIdeal)
 
+local notation "Kv" => v.adicCompletion F
+
 def qbIota : ↥(GLint E n P) →* GL (Fin n) Kv :=
   (bc φ).comp ((toGLm E n).toMonoidHom.comp (GLint E n P).subtype)
 

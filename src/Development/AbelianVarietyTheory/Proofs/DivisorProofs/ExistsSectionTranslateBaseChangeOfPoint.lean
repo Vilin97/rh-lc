@@ -16,7 +16,7 @@ variable {S S' : Scheme.{0}} (f : S' ⟶ S) (G : Over S) [GrpObj G]
 
 theorem pullback_map_left_fst {A B : Over S} (g : A ⟶ B) :
     ((Over.pullback f).map g).left ≫ pullback.fst B.hom f = pullback.fst A.hom f ≫ g.left := by
-  simp only [Over.pullback_map_left]
+  simp only [Over.pullback_map_left, pullback.lift_fst]
 
 theorem mul_left_fst {X : Over S'} (u v : X ⟶ (Over.pullback f).obj G) :
     (u * v).left ≫ pullback.fst G.hom f =

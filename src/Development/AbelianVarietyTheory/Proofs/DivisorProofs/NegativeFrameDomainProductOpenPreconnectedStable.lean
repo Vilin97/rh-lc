@@ -61,6 +61,8 @@ theorem neg_gram_isHermitian (h : OrthFr Hm q x₀) (x : Mt n) : (-(xᴴ * Hm * 
   have hD : (x₀ᴴ * Hm * x₀)ᴴ = x₀ᴴ * Hm * x₀ := by
     rw [h.2, Matrix.diagonal_conjTranspose]
     congr 1
+    ext a
+    simp
   have hD' : x₀ᴴ * Hmᴴ * x₀ = x₀ᴴ * Hm * x₀ := by
     rw [← hD]
     simp only [conjTranspose_mul, conjTranspose_conjTranspose, Matrix.mul_assoc]

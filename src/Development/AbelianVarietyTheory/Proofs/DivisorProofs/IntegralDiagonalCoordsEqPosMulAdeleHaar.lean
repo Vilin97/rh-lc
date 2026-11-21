@@ -23,7 +23,9 @@ attribute [local instance] GlobalTheory.AdelicUnitaryTop.locallyCompact_finiteAd
 
 theorem shiftOf_glue (p : Vi F κ × Vf F κ) : shiftOf (glue p) = p := by
   refine Prod.ext ?_ rfl
-  simp [shiftOf, glue]
+  change (eI F κ).symm (fun i => (InfiniteAdeleRing.ringEquiv_mixedSpace F)
+    ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (eI F κ p.1 i))) = p.1
+  simp only [RingEquiv.apply_symm_apply, ContinuousLinearEquiv.symm_apply_apply]
 
 theorem glue_shiftOf (x : κ → AdeleRing (𝓞 F) F) : glue (shiftOf x) = x := by
   funext i

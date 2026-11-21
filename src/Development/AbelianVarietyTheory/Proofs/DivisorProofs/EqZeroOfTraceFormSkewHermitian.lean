@@ -73,8 +73,7 @@ theorem traceForm_nondegenerate : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     have h1 : Q.map cc * G = 1 := by
       rw [← hGmap, ← map_cc_mul, hQG]
       ext a b
-      simp only [map_apply, one_apply]
-      split_ifs <;> simp [cc]
+      simp [map_apply, Matrix.one_apply, cc]
     exact mul_eq_one_comm.mp h1
 
   have hskew : ∀ K : Matrix (Fin r) (Fin r) E, Kᵀ + K.map cc = 0 →
@@ -107,10 +106,10 @@ theorem traceForm_nondegenerate : ∀ (E : Type) [Field E] [NumberField E] [IsCM
         this, htrskew Y hY', neg_div]
     have hmap1 : (c • (1 : Matrix (Fin r) (Fin r) E)).map cc = -(c • 1) := by
       ext a b
-      simp only [map_apply, Matrix.smul_apply, one_apply, Matrix.neg_apply, smul_eq_mul]
       by_cases hab : a = b
-      · simp only [hab, if_true, mul_one]; exact hc
-      · simp [hab, cc]
+      · subst b
+        simp [Matrix.one_apply, hc]
+      · simp [Matrix.one_apply, hab, cc]
     have hmapY : (Y - c • (1 : Matrix (Fin r) (Fin r) E)).map cc = Y.map cc - (c • (1 : Matrix (Fin r) (Fin r) E)).map cc := by
       ext a b
       simp [cc]

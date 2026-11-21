@@ -36,7 +36,7 @@ theorem isIntV_of_eq_sum (G : HTGroup p) (v : AwayP p) {ι : Type*} (s : Finset 
     IsIntV G v (∑ i ∈ s, r i ⊗ₜ c i) := by
   intro k
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
+    rw [map_sum, Finsupp.coe_finsetSum, Finset.sum_apply]
   exact sum_mem fun i hi => by rw [basV_repr_tmul]; exact mul_mem (hr i hi) (hc i hi k)
 
 theorem intV_order_eventually : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p), ∀ᶠ v in (Filter.cofinite : Filter (AwayP p)), IsIntV G v 1 ∧ (∀ y z : Qv v ⊗[ℚ] G.C, IsIntV G v y → IsIntV G v z → IsIntV G v (y * z)) ∧ (∀ y : Qv v ⊗[ℚ] G.C, IsIntV G v y → IsIntV G v (starT G.star (Qv v) y).unop) := by

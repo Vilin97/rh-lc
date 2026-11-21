@@ -47,7 +47,11 @@ theorem etaT_isUnitArg : ∀ {R : Ranks} (H : Host R) (χ : HChar H.E), IsEtaT H
       exact h1.div (Complex.continuous_ofReal.comp h1.norm) fun u => by exact_mod_cast norm_ne_zero_iff.2 (h2 u)
     · funext k
       have e : f ((atInf _ k : ((InfinitePlace.mk (H.emb (g : R.GG))).Completion)ˣ) :
-          (InfinitePlace.mk (H.emb (g : R.GG))).Completion) = H.emb (g : R.GG) k := hfE k
+          (InfinitePlace.mk (H.emb (g : R.GG))).Completion) = H.emb (g : R.GG) k := by
+        change f (algebraMap H.E _ (k : H.E)) = H.emb (g : R.GG) k
+        rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+          Algebra.algebraMap_self_apply]
+        exact hfE k
       simp only [Function.comp_apply]
       rw [e]
       have := hloc k

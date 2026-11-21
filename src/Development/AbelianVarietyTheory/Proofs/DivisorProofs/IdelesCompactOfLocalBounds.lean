@@ -69,7 +69,7 @@ theorem eventually_repr_mem_of_mem_intLoc (F E : Type) [Field F] [NumberField F]
       conv_lhs => rw [← β.sum_repr x]
       simp
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [e, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply, map_sum]
+      rw [e, map_sum, Finsupp.coe_finsetSum, Finset.sum_apply, map_sum]
     refine Subring.sum_mem (v.adicCompletionIntegers F).toSubring fun k _ => ?_
     rw [map_zsmul, Finsupp.smul_apply, map_zsmul]
     exact Subring.zsmul_mem (v.adicCompletionIntegers F).toSubring (hv k) _
@@ -88,9 +88,8 @@ theorem repr_map_tens {n : ℕ} {F E R R' : Type} [Field F] [Field E] [Algebra F
     [Algebra F R'] (b : Module.Basis (Fin n) F E) (φ : R →ₐ[F] R') (z : R ⊗[F] E) (j : Fin n) :
     (Algebra.TensorProduct.basis R' b).repr (Algebra.TensorProduct.map φ (AlgHom.id F E) z) j =
       φ ((Algebra.TensorProduct.basis R b).repr z j) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
-  | tmul a x => simp [Algebra.TensorProduct.basis_repr_tmul, Algebra.smul_def]
+  induction z using TensorProduct.inductionOn with
+  | tmul a x => simp [Algebra.TensorProduct.basis_repr_tmul]
   | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 end GlobalTheory.IdeleCyl

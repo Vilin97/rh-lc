@@ -101,14 +101,12 @@ theorem exists_unitary_matLat_eq : ∀ {O K : Type} [CommRing O] [IsDomain O] [I
       matLat O t M = matLat O (aeval γ p) M := by
   intro O K _ _ _ _ _ _ _ n P₀ hcop γ hchar σ hσ hσO hγ M hML hMγ p hpu hpM
   set A := Algebra.adjoin K {γ} with hAdef
+  letI : IsMulCommutative A := Algebra.isMulCommutative_adjoin_singleton K γ
+  open scoped IsMulCommutative in
+  letI : CommRing A := inferInstance
   have hcomm : ∀ u ∈ A, ∀ v ∈ A, u * v = v * u := by
-    have hc : ∀ a ∈ ({γ} : Set (Matrix (Fin n) (Fin n) K)), ∀ b ∈ ({γ} : Set _), a * b = b * a := by
-      intro a ha b hb; rw [Set.mem_singleton_iff] at ha hb; rw [ha, hb]
-    letI : CommRing A := Algebra.isMulCommutative_adjoin K hc
     intro u hu v hv
-    exact congrArg Subtype.val (mul_comm (⟨u, hu⟩ : A) ⟨v, hv⟩)
-  letI : CommRing A := Algebra.isMulCommutative_adjoin K (by
-    intro a ha b hb; rw [Set.mem_singleton_iff] at ha hb; rw [ha, hb])
+    exact congrArg (fun z : A => z.1) (mul_comm (⟨u, hu⟩ : A) ⟨v, hv⟩)
   have hstar : ∀ a ∈ A, (a.map σ)ᵀ ∈ A := fun a ha => conjTranspose_mem_adjoin σ γ hγ ha
   let τ : A →+* A :=
     { toFun := fun a => ⟨(a.1.map σ)ᵀ, hstar a.1 a.2⟩
@@ -176,7 +174,9 @@ theorem exists_unitary_matLat_eq : ∀ {O K : Type} [CommRing O] [IsDomain O] [I
       (mem_matLat _ _ _).mpr ⟨v, hv, rfl⟩
     rwa [hpM] at this
   have hcinv : (τ ((x⁻¹ : Aˣ) : A) * ((x⁻¹ : Aˣ) : A)) * (τ x * x) = 1 := by
-    rw [mul_mul_mul_comm, ← map_mul, Units.inv_mul, map_one, one_mul]
+    calc
+      _ = (τ ((x⁻¹ : Aˣ) : A) * τ (x : A)) * (((x⁻¹ : Aˣ) : A) * (x : A)) := by ac_rfl
+      _ = 1 := by rw [← map_mul]; simp
   have hc'M : ∀ v ∈ M, (τ ((x⁻¹ : Aˣ) : A) * ((x⁻¹ : Aˣ) : A) : A).1 *ᵥ v ∈ M := by
     intro v hv
     rw [← hpM] at hv

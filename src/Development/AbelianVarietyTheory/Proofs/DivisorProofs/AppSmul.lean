@@ -78,7 +78,7 @@ theorem dD_zero {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] (f
   have e : ∀ t : ℝ, (x + fun i => infAd F (t • (0 : κ → mixedEmbedding.mixedSpace F) i)) = x := by
     intro t
     funext i
-    have h0 : infAd F (0 : mixedEmbedding.mixedSpace F) = 0 := by unfold infAd; rw [map_zero, map_zero]; rfl
+    have h0 : infAd F (0 : mixedEmbedding.mixedSpace F) = 0 := by unfold infAd; rw [map_zero, map_zero]
     show x i + infAd F (t • (0 : κ → mixedEmbedding.mixedSpace F) i) = x i
     rw [Pi.zero_apply, smul_zero, h0, add_zero]
   show deriv (fun t : ℝ => f (x + fun i => infAd F (t • (0 : κ → mixedEmbedding.mixedSpace F) i))) 0 = 0

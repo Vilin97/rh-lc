@@ -72,7 +72,7 @@ theorem oneCocycle_upwardFamily_isCoboundary : ∀ {R : Type} [CommRing R] {C : 
       hc i j S (hp i S u hi) (hp j S u hj) t S' ψ w ai aj]
     simp only [map_sub]
     ring
-  obtain ⟨e, he, he'⟩ := cech1 H hb (fun i j S (_ : G.obj t₀ ⟶ S) ↦ c i j S) hs hcc
+  obtain ⟨e, he, he'⟩ := Desc.cech1 H hb (fun i j S (_ : G.obj t₀ ⟶ S) ↦ c i j S) hs hcc
   have he'' : ∀ i j S (u : G.obj t₀ ⟶ S), IsUnit (mp F u (b i)) → IsUnit (mp F u (b j)) →
       c i j S = e j S u - e i S u := he'
 

@@ -32,13 +32,17 @@ theorem eq_zero_of_proj {ι : Type} [Fintype ι] [DecidableEq ι] (y : (ι → K
         TensorProduct.comm _ _ _ ((LinearMap.proj i : (ι → K) →ₗ[ℚ_[p]] K).rTensor (Qr p r) z) := by
     intro z i
     induction z using TensorProduct.induction_on with
-    | zero => simp
+    | zero =>
+      simp only [(TensorProduct.comm ℚ_[p] (ι → K) (Qr p r)).map_zero,
+        (TensorProduct.piRight ℚ_[p] ℚ_[p] (Qr p r) (fun _ : ι => K)).map_zero,
+        Pi.zero_apply, map_zero (f := (LinearMap.proj i : (ι → K) →ₗ[ℚ_[p]] K).rTensor (Qr p r)),
+        (TensorProduct.comm ℚ_[p] K (Qr p r)).map_zero]
     | tmul a q => simp
     | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
   have h0 : TensorProduct.piRight ℚ_[p] ℚ_[p] (Qr p r) (fun _ : ι => K) (TensorProduct.comm _ _ _ y) = 0 := by
     funext i
-    rw [e, h i, map_zero]
-    rfl
+    rw [e, h i]
+    exact (TensorProduct.comm ℚ_[p] K (Qr p r)).map_zero
   exact (LinearEquiv.map_eq_zero_iff _).1 ((LinearEquiv.map_eq_zero_iff _).1 h0)
 
 theorem phi_apply_entry (x : PolyAlg p K n γ ⊗[ℚ_[p]] Qr p r) (j k : Fin n) :

@@ -56,7 +56,7 @@ theorem exists_dvr_of_finite_etale : ∀ (A R V : Type) [CommRing A] [IsLocalRin
     Module.Finite.trans (V ⊗[A] R) _
   have hfl : IsLocalHom (algebraMap V (V ⊗[A] R ⧸ Ideal.span {1 - e})) := by
     refine ((local_hom_tfae _).out 1 5).2 ?_
-    have := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := V)
+    have := Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := V)
       (maximalIdeal (V ⊗[A] R ⧸ Ideal.span {1 - e}))
     exact IsLocalRing.eq_maximalIdeal this
   haveI := hfl
@@ -93,7 +93,7 @@ theorem exists_dvr_of_finite_etale : ∀ (A R V : Type) [CommRing A] [IsLocalRin
     have hA' : (Ideal.comap (algebraMap A R) (Ideal.comap ((Ideal.Quotient.mk (Ideal.span {1 - e})).comp
         (Algebra.TensorProduct.includeRight.toRingHom)) (maximalIdeal _))).IsMaximal := by
       rw [hA]; exact maximalIdeal.isMaximal A
-    have hm := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := A) _ hA'
+    have hm := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := A) _ hA'
     exact IsLocalRing.eq_maximalIdeal hm
   · exact hcomm
 

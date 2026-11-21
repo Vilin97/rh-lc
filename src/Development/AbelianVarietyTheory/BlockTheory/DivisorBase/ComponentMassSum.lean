@@ -30,7 +30,10 @@ def partLat (Z : Comp Xo c) (G : WTZ D.host.E) : Submodule (𝓞 c.F) (cuspW Xo 
 def normRes (Z : Comp Xo c) (G : WTZ D.host.E) (σ : c.F →+* ℂ) (f : cuspOn U Z G) : ℝ :=
   petW U (xiR D) V dict G σ f
 
-def degRes (Z : Comp Xo c) (G : WTZ D.host.E) : ℝ := deg (normRes U V dict Z G) (latOn U Z G)
+attribute [local instance high] Submodule.module
+
+def degRes (Z : Comp Xo c) (G : WTZ D.host.E) : ℝ :=
+  GlobalTheory.AllWt.deg (normRes U V dict Z G) (latOn U Z G)
 
 def mass (Z : Comp Xo c) (σ : c.F →+* ℂ) : ℝ :=
   (muQ1 (V (goodOf c σ))

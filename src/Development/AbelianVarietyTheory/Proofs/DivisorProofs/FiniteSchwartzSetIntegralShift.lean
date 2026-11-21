@@ -34,7 +34,6 @@ theorem schr_add {R : Type} [CommRing R] [Invertible (2 : R)] (ψ : AddChar R �
 theorem realAd_one_eq (F : Type) [Field F] [NumberField F] :
     realAd F 1 = ((1 : InfiniteAdeleRing F), (0 : FiniteAdeleRing (𝓞 F) F)) := by
   simp only [realAd, map_one, LinearMap.inl_apply]
-  rfl
 
 theorem norm_algebraMap_le_one {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) {o : F}
     (ho : IsIntegral ℤ o) : ‖algebraMap F (Fv F v) o‖ ≤ 1 :=

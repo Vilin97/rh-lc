@@ -114,6 +114,7 @@ theorem herKc0_le_waveJ (P : M.Par) (z z' : Fin (2 * P.r + P.k + 1) → ℂ) (π
       omega
   exact key 0 Φ hΦ rfl
 
+open Formalism.FourierDecayAlt.P.JCx2 (mnClosed BcGood mn_nice_zero mn_nice_add mn_nice_smul bc_JF_zero bc_JF_add bc_JF_smul) in
 theorem rr_pic (P : M.Par) (z z' : Fin (2 * P.r + P.k + 1) → ℂ) (π : Mx P.k P.r → (Wp →L[ℂ] Wp))
     (π' : Mx P.k P.r → (Wq →L[ℂ] Wq)) (X : ActualOps P.k P.r z z' π π') (μ : Measure (Mt P.k P.r))
     (L : R.LevelData (Pr (RadSp P.k P.r z z' π π')) P.r) (st : Fr.Start (Pr (RadSp P.k P.r z z' π π'))) (l0 : ℕ)
@@ -150,7 +151,29 @@ theorem rr_pic (P : M.Par) (z z' : Fin (2 * P.r + P.k + 1) → ℂ) (π : Mx P.k
     rw [Finset.sum_eq_single b (fun b' _ hb' => by simp only [Φv, if_neg hb', map_zero])
       (fun h => absurd (Finset.mem_univ b) h)]
     simp only [Φv, if_pos rfl]
-  have hR := Formalism.FourierDecayAlt.P.JCx2.mn_rrop_closure Formalism.FourierDecayAlt.P.JCx2.bcGood_closed
+  have hClosed : mnClosed (BcGood D ε) := {
+    zero := ⟨fun _ _ => mn_nice_zero, fun _ _ h _ => bc_JF_zero h,
+      fun _ _ _ _ _ _ => rfl⟩
+    one := ⟨fun _ hF => hF, fun _ _ _ _ => rfl, fun _ _ hff x hx hxG => hff x hx hxG⟩
+    add := fun a b ha hb => ⟨fun F hF => mn_nice_add (ha.1 F hF) (hb.1 F hF),
+      fun F hF h hh => by
+        show B.JF D (fun g => a F g + b F g) h = a (B.JF D F) h + b (B.JF D F) h
+        rw [bc_JF_add (ha.1 F hF) (hb.1 F hF) hh, ha.2.1 F hF h hh, hb.2.1 F hF h hh],
+      fun f f' hff x hx hxG => by
+        show a f x + b f x = a f' x + b f' x
+        rw [ha.2.2 f f' hff x hx hxG, hb.2.2 f f' hff x hx hxG]⟩
+    mul := fun a b ha hb => ⟨fun F hF => ha.1 _ (hb.1 F hF),
+      fun F hF h hh => by
+        show B.JF D (a (b F)) h = a (b (B.JF D F)) h
+        rw [ha.2.1 _ (hb.1 F hF) h hh]
+        exact ha.2.2 _ _ (fun x hx hxG => hb.2.1 F hF x ⟨hxG, hx⟩) h hh.2 hh.1,
+      fun f f' hff x hx hxG =>
+        ha.2.2 (b f) (b f') (fun y hy hyG => hb.2.2 f f' hff y hy hyG) x hx hxG⟩
+    cop := fun c => ⟨fun _ hF => mn_nice_smul c hF, fun F _ h _ => bc_JF_smul c F h,
+      fun f f' hff x hx hxG => by
+        show c • f x = c • f' x
+        rw [hff x hx hxG]⟩ }
+  have hR := Formalism.FourierDecayAlt.P.JCx2.mn_rrop_closure hClosed
     (Formalism.FourierDecayAlt.P.JCx2.rma_Qop P.k P.r D.z D.z' (M.sgn P l0))
     (fun Y p q => Formalism.FourierDecayAlt.P.JCx2.bcGood_tL (Bs := D) (ε := ε) (M.sgn P l0) Y p q) w
   refine ⟨Formalism.FourierDecayAlt.D.actOp (Formalism.FourierDecayAlt.D.RRop (Formalism.FourierDecayAlt.P.JCx2.rma_Qop P.k P.r D.z D.z' (M.sgn P l0)) w) F' a, ?_, ?_⟩

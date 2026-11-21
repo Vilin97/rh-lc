@@ -301,12 +301,13 @@ end below
 
 section final
 
-theorem ptSize_toStd' (r : ℕ) (g : ℝ) : ∀ (b : ℕ) (P : C.LPt), D.ptSize (D.toStd r g b P) = D.ptSize P
-  | _, [] => rfl
-  | b, (s, t) :: rest => by
-    have ih := ptSize_toStd' r g (b + s) rest
-    simp only [D.toStd, D.ptSize, List.map_cons, List.sum_cons] at ih ⊢
-    rw [ih]
+theorem ptSize_toStd' (r : ℕ) (g : ℝ) : ∀ (b : ℕ) (P : C.LPt), D.ptSize (D.toStd r g b P) = D.ptSize P := by
+  intro b P
+  induction P generalizing b with
+  | nil => rfl
+  | cons block rest ih =>
+    obtain ⟨s, t⟩ := block
+    simpa only [D.toStd, D.ptSize, List.map_cons, List.sum_cons] using congrArg (s + ·) (ih (b + s))
 
 theorem bS_app {E : Type} [Field E] [NumberField E] [IsCMField E] {Wp Wq : InfinitePlace E → Type}
     [∀ x, NormedAddCommGroup (Wp x)] [∀ x, InnerProductSpace ℂ (Wp x)] [∀ x, NormedAddCommGroup (Wq x)]
@@ -420,10 +421,19 @@ theorem level_forms_joint_continuity : GermFibreKernels.KerContB := by
     Complex.I ^ (m - 1) with hlQ
   have hlP0 : lP ≠ 0 := mul_ne_zero (Complex.ofReal_ne_zero.mpr (zpow_pos hg0 _).ne') (pow_ne_zero _ Complex.I_ne_zero)
   have hlQ0 : lQ ≠ 0 := mul_ne_zero (Complex.ofReal_ne_zero.mpr (zpow_pos hg0 _).ne') (pow_ne_zero _ Complex.I_ne_zero)
+  have std_append (h : C.LPt) (b : ℕ) (c : ℂ) :
+      D.toStd S.G.r (S.g : ℝ) b (h ++ [(m, c)]) = D.toStd S.G.r (S.g : ℝ) b h ++
+        [(m, ((((S.g : ℝ) / (2 * Real.pi)) ^ S6.nuBlock S.G.r
+          ((b + D.ptSize h : ℕ) : ℤ) (m : ℤ) : ℝ) : ℂ) * Complex.I ^ (m - 1) * c)] := by
+    induction h generalizing b with
+    | nil => simp [D.toStd, D.ptSize]
+    | cons block rest ih =>
+      obtain ⟨s, t⟩ := block
+      simp only [List.cons_append, D.toStd, ih, D.ptSize, List.map_cons, List.sum_cons, add_assoc]
   have eP : ∀ c : ℂ, PBL.stdS S (P ++ [(m, c)]) = PBL.stdS S P ++ [(m, lP * c)] := fun c =>
-    PBL.toStd_append_blkT _ _ _ _ _ _
+    std_append P 1 c
   have eQ : ∀ c : ℂ, PBL.stdS S (Q ++ [(m, c)]) = PBL.stdS S Q ++ [(m, lQ * c)] := fun c =>
-    PBL.toStd_append_blkT _ _ _ _ _ _
+    std_append Q 1 c
   have hgN : ∀ cc : ℂ × ℂ, KB.gN (PBL.setC S p (PBASM.cutSeq S p f χ n)) v ε i a (P ++ [(m, cc.1)]) (Q ++ [(m, cc.2)]) =
       (((√(PBL.nnS S (P ++ [(m, cc.1)])) * √(PBL.nnS S (Q ++ [(m, cc.2)])) : ℝ) : ℂ) *
         ((1 / (PBL.bS S (P ++ [(m, 1)]) * PBL.bS S (Q ++ [(m, 1)]) * PBL.ΓS S i) : ℝ) : ℂ) *

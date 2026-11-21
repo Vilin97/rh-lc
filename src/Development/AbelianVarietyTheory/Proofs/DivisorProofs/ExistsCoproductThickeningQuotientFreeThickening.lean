@@ -115,7 +115,9 @@ theorem exists_cop : ∀ (D : Data) (Λ : Lift D) (n : ℕ) (U : AffOp D.X) (T :
     rw [← hdp, hg'ψ, (RingHom.mem_ker).1 hk, map_zero, map_zero, dpow_eval_zero _ hj]
   obtain ⟨c0, hc0, hc0u⟩ := hquniv S g' hkill
   refine ⟨c0, ⟨by rw [Category.assoc, hc0, hg'u], ?_⟩, ?_⟩
-  · ext z
+  · apply Thick.Hom.ext'
+    apply AlgHom.ext
+    intro z
     obtain ⟨x, rfl⟩ := (Λ.e U).surjective z
     obtain ⟨p, rfl⟩ := hpres x
     rw [Thick.comp_φ, hr, hy, ← Thick.comp_φ, hc0, hg'ψ]

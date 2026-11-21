@@ -23,6 +23,8 @@ open Reduction AutomorphicForm RightCosetSpace
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
+local notation "Γ₁" => rationalGLOne (K := K) (n := n)
+
 theorem det_unipMatrix {r : ℕ} {R : Type*} [CommRing R] (X : UPos n r → R) :
     (unipMatrix X).det = 1 := by
   rw [Matrix.det_of_isUpperTriangular]
@@ -42,31 +44,33 @@ theorem unipGL_mem_normOneGL {r : ℕ} (X : UPos n r → 𝔸[K]) :
   rw [mem_normOneGL, h1, map_one]
   rfl
 
-
 def unipOne (r : ℕ) (X : UPos n r → 𝔸[K]) : normOneGL (K := K) (n := n) :=
   ⟨unipGL X, unipGL_mem_normOneGL X⟩
 
 @[simp] theorem coe_unipOne (r : ℕ) (X : UPos n r → 𝔸[K]) :
-    (unipOne K n r X : AdelicGLn.AdelicGL K n) = unipGL X := rfl
+    (unipOne r X : AdelicGLn.AdelicGL K n) = unipGL X := rfl
 
 theorem unipOne_add (r : ℕ) (X Y : UPos n r → 𝔸[K]) :
-    unipOne K n r (X + Y) = unipOne K n r X * unipOne K n r Y :=
+    unipOne r (X + Y) = unipOne r X * unipOne r Y :=
   Subtype.ext (unipGL_add X Y)
 
-theorem unipOne_zero (r : ℕ) : unipOne K n r 0 = 1 :=
+theorem unipOne_zero (r : ℕ) : unipOne (K := K) (n := n) r 0 = 1 :=
   Subtype.ext unipGL_zero
 
-theorem continuous_unipOne (r : ℕ) : Continuous (unipOne K n r) :=
+theorem continuous_unipOne (r : ℕ) : Continuous (unipOne (K := K) (n := n) r) :=
   continuous_induced_rng.2 continuous_unipGL
 
 theorem unipOne_mem_rationalGLOne (r : ℕ) (ξ : unipLattice K n r) :
-    unipOne K n r ξ ∈ rationalGLOne (K := K) (n := n) := by
+    unipOne r ξ ∈ rationalGLOne (K := K) (n := n) := by
   obtain ⟨_, ξ, rfl⟩ := ξ
   change unipGL (fun p => algebraMap K 𝔸[K] (ξ p)) ∈ AdelicGLn.rationalGL K n
   rw [← diagonal_unipGL]
   exact ⟨unipGL ξ, rfl⟩
 
 variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
+
+local instance : SFinite μ :=
+  @instSFiniteOfSigmaFinite _ _ μ (SigmaFinite.of_isFiniteMeasureOnCompacts μ)
 
 instance (r : ℕ) : SigmaFinite (unipMeasure K n r) := by
   unfold unipMeasure
@@ -79,7 +83,7 @@ theorem lintegral_lift_le {T : Set (normOneGL (K := K) (n := n))}
   refine ⟨μ T * N, ENNReal.mul_ne_top hT.measure_lt_top.ne (by simp), fun ψ => ?_⟩
   have h := L2Kernel.lintegral_mul_sq_le (μ.restrict T) (f := fun _ => 1)
     (g := fun y => ‖ψ (mk Γ₁ y)‖ₑ) aemeasurable_const
-    (stronglyMeasurable_lift Γ₁ μ ψ).measurable.enorm.aemeasurable
+    (stronglyMeasurable_lift Γ₁ μ ψ).measurable.eNorm.aemeasurable
   simp only [one_mul, one_pow, lintegral_const, Measure.restrict_apply_univ] at h
   refine h.trans ?_
   rw [mul_assoc]
@@ -93,7 +97,7 @@ theorem ae_of_forall_isCompact {p : normOneGL (K := K) (n := n) → Prop}
   rwa [iUnion_compactCovering, Measure.restrict_univ] at this
 
 theorem continuous_unipOne_mul (r : ℕ) :
-    Continuous fun p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) => unipOne K n r p.1 * p.2 :=
+    Continuous fun p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) => unipOne r p.1 * p.2 :=
   ((continuous_unipOne r).comp continuous_fst).mul continuous_snd
 
 theorem setLIntegral_mul_left (F : normOneGL (K := K) (n := n) → ℝ≥0∞) (g : normOneGL (K := K) (n := n))
@@ -113,56 +117,55 @@ theorem setLIntegral_mul_left (F : normOneGL (K := K) (n := n) → ℝ≥0∞) (
 theorem exists_lintegral_unip_sq_le (r : ℕ) {S : Set (normOneGL (K := K) (n := n))} (hS : IsCompact S) :
     ∃ C : ℝ≥0∞, C ≠ ⊤ ∧ ∀ φ : Lp ℂ 2 (quotientMeasure Γ₁ μ),
       (∫⁻ y in S, ∫⁻ X in unipFundamentalDomain K n r,
-        ‖φ (mk Γ₁ (unipOne K n r X * y))‖ₑ ∂unipMeasure K n r ∂μ) ^ 2 ≤ C * ‖φ‖ₑ ^ 2 := by
+        ‖φ (mk Γ₁ (unipOne r X * y))‖ₑ ∂unipMeasure K n r ∂μ) ^ 2 ≤ C * ‖φ‖ₑ ^ 2 := by
   obtain ⟨D', hD'c, hDD'⟩ := exists_isCompact_superset_unipFundamentalDomain (K := K) (n := n)
     (r := r)
-  set T := (fun p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) => unipOne K n r p.1 * p.2) '' (D' ×ˢ S)
+  set T := (fun p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) => unipOne r p.1 * p.2) '' (D' ×ˢ S)
   have hT : IsCompact T := (hD'c.prod hS).image (continuous_unipOne_mul r)
   obtain ⟨C, hC, hCφ⟩ := lintegral_lift_le μ hT
   refine ⟨C, hC, fun φ => le_trans (pow_le_pow_left₀ zero_le ?_ 2) (hCφ φ)⟩
   have hmeas : Measurable fun p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) =>
-      ‖φ (mk Γ₁ (unipOne K n r p.1 * p.2))‖ₑ :=
+      ‖φ (mk Γ₁ (unipOne r p.1 * p.2))‖ₑ :=
     ((Lp.stronglyMeasurable φ).measurable.comp ((measurable_mk Γ₁).comp
-      (continuous_unipOne_mul r).measurable)).enorm
+      (continuous_unipOne_mul r).measurable)).eNorm
   have hswap : ∫⁻ y in S, ∫⁻ X in unipFundamentalDomain K n r,
-        ‖φ (mk Γ₁ (unipOne K n r X * y))‖ₑ ∂unipMeasure K n r ∂μ =
+        ‖φ (mk Γ₁ (unipOne r X * y))‖ₑ ∂unipMeasure K n r ∂μ =
       ∫⁻ X in unipFundamentalDomain K n r, ∫⁻ y in S,
-        ‖φ (mk Γ₁ (unipOne K n r X * y))‖ₑ ∂μ ∂unipMeasure K n r := by
+        ‖φ (mk Γ₁ (unipOne r X * y))‖ₑ ∂μ ∂unipMeasure K n r := by
     refine lintegral_lintegral_swap ?_
     exact (hmeas.comp measurable_swap).aemeasurable
   rw [hswap]
   calc ∫⁻ X in unipFundamentalDomain K n r, ∫⁻ y in S,
-        ‖φ (mk Γ₁ (unipOne K n r X * y))‖ₑ ∂μ ∂unipMeasure K n r
+        ‖φ (mk Γ₁ (unipOne r X * y))‖ₑ ∂μ ∂unipMeasure K n r
       ≤ ∫⁻ _ in unipFundamentalDomain K n r, ∫⁻ y in T, ‖φ (mk Γ₁ y)‖ₑ ∂μ ∂unipMeasure K n r := by
         refine setLIntegral_mono' measurableSet_unipFundamentalDomain fun X hX => ?_
-        rw [setLIntegral_mul_left μ (fun z => ‖φ (mk Γ₁ z)‖ₑ) (unipOne K n r X) hS]
+        rw [setLIntegral_mul_left μ (fun z => ‖φ (mk Γ₁ z)‖ₑ) (unipOne r X) hS]
         refine lintegral_mono_set ?_
         rintro _ ⟨y, hy, rfl⟩
         exact ⟨(X, y), ⟨hDD' hX, hy⟩, rfl⟩
     _ = ∫⁻ y in T, ‖φ (mk Γ₁ y)‖ₑ ∂μ := by
         rw [setLIntegral_const, unipMeasure_unipFundamentalDomain, mul_one]
 
-
 def ctFun (r : ℕ) (F : RightCosetSpace Γ₁ → ℂ) (y : normOneGL (K := K) (n := n)) : ℂ :=
-  ∫ X in unipFundamentalDomain K n r, F (mk Γ₁ (unipOne K n r X * y)) ∂unipMeasure K n r
+  ∫ X in unipFundamentalDomain K n r, F (mk Γ₁ (unipOne r X * y)) ∂unipMeasure K n r
 
 def constantTermL2 (r : ℕ) (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)) (y : normOneGL (K := K) (n := n)) : ℂ :=
-  ctFun K n r φ y
+  ctFun r φ y
 
 theorem ae_ae_unip_notMem {Z : Set (RightCosetSpace Γ₁)} (hZ : quotientMeasure Γ₁ μ Z = 0)
-    (r : ℕ) : ∀ᵐ y ∂μ, ∀ᵐ X ∂unipMeasure K n r, mk Γ₁ (unipOne K n r X * y) ∉ Z := by
+    (r : ℕ) : ∀ᵐ y ∂μ, ∀ᵐ X ∂unipMeasure K n r, mk Γ₁ (unipOne r X * y) ∉ Z := by
   set Z' := toMeasurable (quotientMeasure Γ₁ μ) Z
   have hZ' : quotientMeasure Γ₁ μ Z' = 0 := by rw [measure_toMeasurable]; exact hZ
   have hmeas : MeasurableSet {p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) |
-      mk Γ₁ (unipOne K n r p.1 * p.2) ∉ Z'} :=
+      mk Γ₁ (unipOne r p.1 * p.2) ∉ Z'} :=
     ((measurableSet_toMeasurable _ _).preimage ((measurable_mk Γ₁).comp
       (continuous_unipOne_mul r).measurable)).compl
-  have h1 : ∀ᵐ X ∂unipMeasure K n r, ∀ᵐ y ∂μ, mk Γ₁ (unipOne K n r X * y) ∉ Z' := by
+  have h1 : ∀ᵐ X ∂unipMeasure K n r, ∀ᵐ y ∂μ, mk Γ₁ (unipOne r X * y) ∉ Z' := by
     refine Eventually.of_forall fun X => ?_
     rw [ae_iff]
     simp only [not_not]
-    have := measure_preimage_mul μ (unipOne K n r X) (mk Γ₁ ⁻¹' Z')
-    rw [(quasiMeasurePreserving_mk Γ₁ μ).preimage_null hZ'] at this
+    have := measure_preimage_mul μ (unipOne r X) (mk Γ₁ ⁻¹' Z')
+    rw [MeasureTheory.QuasiMeasurePreserving.preimage_null (quasiMeasurePreserving_mk Γ₁ μ) hZ'] at this
     exact this
   have h2 := (Measure.ae_ae_comm hmeas).1 h1
   filter_upwards [h2] with y hy
@@ -170,7 +173,7 @@ theorem ae_ae_unip_notMem {Z : Set (RightCosetSpace Γ₁)} (hZ : quotientMeasur
   exact fun h => hX (subset_toMeasurable _ _ h)
 
 theorem ae_ctFun_congr (r : ℕ) {F F' : RightCosetSpace Γ₁ → ℂ}
-    (h : F =ᵐ[quotientMeasure Γ₁ μ] F') : ∀ᵐ y ∂μ, ctFun K n r F y = ctFun K n r F' y := by
+    (h : F =ᵐ[quotientMeasure Γ₁ μ] F') : ∀ᵐ y ∂μ, ctFun r F y = ctFun r F' y := by
   have hZ : quotientMeasure Γ₁ μ {x | F x ≠ F' x} = 0 := ae_iff.1 h
   filter_upwards [ae_ae_unip_notMem μ hZ r] with y hy
   refine integral_congr_ae (ae_restrict_of_ae ?_)
@@ -178,20 +181,20 @@ theorem ae_ctFun_congr (r : ℕ) {F F' : RightCosetSpace Γ₁ → ℂ}
   simpa using hX
 
 theorem ae_integrableOn_unip (r : ℕ) (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)) :
-    ∀ᵐ y ∂μ, IntegrableOn (fun X => φ (mk Γ₁ (unipOne K n r X * y)))
+    ∀ᵐ y ∂μ, IntegrableOn (fun X => φ (mk Γ₁ (unipOne r X * y)))
       (unipFundamentalDomain K n r) (unipMeasure K n r) := by
   have hmeas : Measurable fun p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) =>
-      ‖φ (mk Γ₁ (unipOne K n r p.1 * p.2))‖ₑ :=
+      ‖φ (mk Γ₁ (unipOne r p.1 * p.2))‖ₑ :=
     ((Lp.stronglyMeasurable φ).measurable.comp ((measurable_mk Γ₁).comp
-      (continuous_unipOne_mul r).measurable)).enorm
+      (continuous_unipOne_mul r).measurable)).eNorm
   refine ae_of_forall_isCompact μ fun S hS => ?_
   obtain ⟨C, hC, hCφ⟩ := exists_lintegral_unip_sq_le μ r hS
   have hfin : ∫⁻ y in S, ∫⁻ X in unipFundamentalDomain K n r,
-      ‖φ (mk Γ₁ (unipOne K n r X * y))‖ₑ ∂unipMeasure K n r ∂μ ≠ ⊤ := by
+      ‖φ (mk Γ₁ (unipOne r X * y))‖ₑ ∂unipMeasure K n r ∂μ ≠ ⊤ := by
     refine (L2Kernel.lt_top_of_sq_lt_top ((hCφ φ).trans_lt ?_)).ne
-    exact ENNReal.mul_lt_top hC.lt_top (ENNReal.pow_lt_top enorm_lt_top)
+    exact ENNReal.mul_lt_top hC.lt_top (ENNReal.pow_lt_top eNorm_lt_top)
   have hm2 : Measurable fun y => ∫⁻ X in unipFundamentalDomain K n r,
-      ‖φ (mk Γ₁ (unipOne K n r X * y))‖ₑ ∂unipMeasure K n r :=
+      ‖φ (mk Γ₁ (unipOne r X * y))‖ₑ ∂unipMeasure K n r :=
     hmeas.lintegral_prod_left'
   filter_upwards [ae_lt_top' hm2.aemeasurable hfin] with y hy
   refine ⟨?_, hy⟩
@@ -199,9 +202,9 @@ theorem ae_integrableOn_unip (r : ℕ) (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)
     ((continuous_unipOne_mul r).comp (continuous_id.prodMk continuous_const)).measurable)).aestronglyMeasurable
 
 theorem stronglyMeasurable_ctFun (r : ℕ) {F : RightCosetSpace Γ₁ → ℂ} (hF : StronglyMeasurable F) :
-    StronglyMeasurable (ctFun K n r F) := by
+    StronglyMeasurable (ctFun r F) := by
   have : StronglyMeasurable (uncurry fun (X : UPos n r → 𝔸[K]) (y : normOneGL (K := K) (n := n)) =>
-      F (mk Γ₁ (unipOne K n r X * y))) :=
+      F (mk Γ₁ (unipOne r X * y))) :=
     hF.comp_measurable ((measurable_mk Γ₁).comp (continuous_unipOne_mul r).measurable)
   exact this.integral_prod_left (μ := (unipMeasure K n r).restrict (unipFundamentalDomain K n r))
 
@@ -233,7 +236,7 @@ theorem exists_lintegral_constantTermL2_sq_le (r : ℕ) {S : Set (normOneGL (K :
   obtain ⟨C, hC, hCφ⟩ := exists_lintegral_unip_sq_le μ r hS
   refine ⟨C, hC, fun φ => le_trans ?_ (hCφ φ)⟩
   gcongr with y
-  exact enorm_integral_le_lintegral_enorm _
+  exact eNorm_integral_le_lintegral_eNorm _
 
 instance isMulRightInvariant_haar : μ.IsMulRightInvariant := isMulRightInvariant_normOneGL μ
 
@@ -283,14 +286,14 @@ theorem isClosed_cuspidalL2 : IsClosed (cuspidalL2 μ : Set (Lp ℂ 2 (quotientM
     exact ge_of_tendsto ht (eventually_nhdsWithin_of_forall fun ε hε => hle ε hε)
   have hI' : I = 0 := pow_eq_zero_iff two_ne_zero |>.1 hI0
   have hm : AEMeasurable (fun y => ‖constantTermL2 μ r φ y‖ₑ) (μ.restrict S) :=
-    (stronglyMeasurable_ctFun r (Lp.stronglyMeasurable φ)).measurable.enorm.aemeasurable
+    (stronglyMeasurable_ctFun r (Lp.stronglyMeasurable φ)).measurable.eNorm.aemeasurable
   filter_upwards [(lintegral_eq_zero_iff' hm).1 hI'] with y hy
   simpa using hy
 
 theorem isInvariant_cuspidalL2 : (rightRegularRep Γ₁ μ).IsInvariant (cuspidalL2 μ) := by
   intro g φ hφ r hr hrn
   have h2 := ae_ctFun_congr μ r (coeFn_rightRegularRep Γ₁ μ g φ)
-  have h3 : ∀ y, ctFun K n r (fun z => φ (rightMul Γ₁ g z)) y = constantTermL2 μ r φ (y * g) := by
+  have h3 : ∀ y, ctFun r (fun z => φ (rightMul Γ₁ g z)) y = constantTermL2 μ r φ (y * g) := by
     intro y
     simp only [ctFun, constantTermL2, rightMul_mk, mul_assoc]
   have h4 : ∀ᵐ y ∂μ, constantTermL2 μ r φ (y * g) = 0 :=
@@ -301,7 +304,7 @@ theorem isInvariant_cuspidalL2 : (rightRegularRep Γ₁ μ).IsInvariant (cuspida
 theorem integral_rconv_unip_eq_zero (f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ)
     {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} (hφ : φ ∈ cuspidalL2 μ) {r : ℕ} (hr : 0 < r) (hrn : r < n)
     (x : normOneGL (K := K) (n := n)) :
-    ∫ X in unipFundamentalDomain K n r, rconv Γ₁ μ f φ (unipOne K n r X * x)
+    ∫ X in unipFundamentalDomain K n r, rconv Γ₁ μ f φ (unipOne r X * x)
       ∂unipMeasure K n r = 0 := by
   set S := (x * ·) '' tsupport (f : normOneGL (K := K) (n := n) → ℂ)
   have hS : IsCompact S := f.hasCompactSupport.isCompact.image (continuous_const_mul x)
@@ -309,7 +312,7 @@ theorem integral_rconv_unip_eq_zero (f : CompactlySupportedContinuousMap (normOn
   have hfS : ∀ z ∉ S, f (x⁻¹ * z) = 0 := fun z hz =>
     image_eq_zero_of_notMem_tsupport fun h => hz ⟨x⁻¹ * z, h, by simp⟩
   set F : (UPos n r → 𝔸[K]) → normOneGL (K := K) (n := n) → ℂ :=
-    fun X z => f (x⁻¹ * z) * φ (mk Γ₁ (unipOne K n r X * z))
+    fun X z => f (x⁻¹ * z) * φ (mk Γ₁ (unipOne r X * z))
   have hFm : StronglyMeasurable (uncurry F) :=
     (f.continuous.comp (continuous_const_mul x⁻¹ |>.comp continuous_snd)).stronglyMeasurable.mul
       ((Lp.stronglyMeasurable φ).comp_measurable ((measurable_mk Γ₁).comp
@@ -319,37 +322,37 @@ theorem integral_rconv_unip_eq_zero (f : CompactlySupportedContinuousMap (normOn
     refine ⟨hFm.aestronglyMeasurable, ?_⟩
     obtain ⟨C, hC, hCφ⟩ := exists_lintegral_unip_sq_le μ r hS
     have hfin : ∫⁻ z in S, ∫⁻ X in unipFundamentalDomain K n r,
-        ‖φ (mk Γ₁ (unipOne K n r X * z))‖ₑ ∂unipMeasure K n r ∂μ < ⊤ :=
+        ‖φ (mk Γ₁ (unipOne r X * z))‖ₑ ∂unipMeasure K n r ∂μ < ⊤ :=
       L2Kernel.lt_top_of_sq_lt_top ((hCφ φ).trans_lt
-        (ENNReal.mul_lt_top hC.lt_top (ENNReal.pow_lt_top enorm_lt_top)))
+        (ENNReal.mul_lt_top hC.lt_top (ENNReal.pow_lt_top eNorm_lt_top)))
     have hmeas : Measurable fun p : (UPos n r → 𝔸[K]) × normOneGL (K := K) (n := n) =>
-        ‖φ (mk Γ₁ (unipOne K n r p.1 * p.2))‖ₑ :=
+        ‖φ (mk Γ₁ (unipOne r p.1 * p.2))‖ₑ :=
       ((Lp.stronglyMeasurable φ).measurable.comp ((measurable_mk Γ₁).comp
-        (continuous_unipOne_mul r).measurable)).enorm
-    rw [hasFiniteIntegral_iff_enorm, lintegral_prod _ hFm.aestronglyMeasurable.enorm]
+        (continuous_unipOne_mul r).measurable)).eNorm
+    rw [hasFiniteIntegral_iff_eNorm, lintegral_prod _ hFm.aestronglyMeasurable.eNorm]
     calc ∫⁻ X in unipFundamentalDomain K n r, ∫⁻ z, ‖uncurry F (X, z)‖ₑ ∂μ ∂unipMeasure K n r
         ≤ ∫⁻ X in unipFundamentalDomain K n r, ∫⁻ z in S,
-            ENNReal.ofReal M * ‖φ (mk Γ₁ (unipOne K n r X * z))‖ₑ ∂μ ∂unipMeasure K n r := by
+            ENNReal.ofReal M * ‖φ (mk Γ₁ (unipOne r X * z))‖ₑ ∂μ ∂unipMeasure K n r := by
           refine lintegral_mono fun X => ?_
           rw [← lintegral_indicator hS.measurableSet]
           refine lintegral_mono fun z => ?_
           by_cases hz : z ∈ S
           · rw [indicator_of_mem hz]
-            simp only [F, uncurry_apply_pair, enorm_mul]
+            simp only [F, uncurry_apply_pair, eNorm_mul]
             gcongr
             rw [← ofReal_norm]
             exact ENNReal.ofReal_le_ofReal (hM _)
           · rw [indicator_of_notMem hz]
             simp [F, hfS z hz]
       _ = ENNReal.ofReal M * ∫⁻ z in S, ∫⁻ X in unipFundamentalDomain K n r,
-            ‖φ (mk Γ₁ (unipOne K n r X * z))‖ₑ ∂unipMeasure K n r ∂μ := by
+            ‖φ (mk Γ₁ (unipOne r X * z))‖ₑ ∂unipMeasure K n r ∂μ := by
           simp_rw [lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
           congr 1
           exact lintegral_lintegral_swap hmeas.aemeasurable
       _ < ⊤ := ENNReal.mul_lt_top ENNReal.ofReal_lt_top hfin
-  have hinner : ∀ X, rconv Γ₁ μ f φ (unipOne K n r X * x) = ∫ z, F X z ∂μ := by
+  have hinner : ∀ X, rconv Γ₁ μ f φ (unipOne r X * x) = ∫ z, F X z ∂μ := by
     intro X
-    rw [rconv, ← integral_mul_left_eq_self _ (unipOne K n r X)]
+    rw [rconv, ← integral_mul_left_eq_self _ (unipOne r X)]
     congr 1
     ext z
     simp only [F, mul_inv_rev, mul_assoc, inv_mul_cancel_left]

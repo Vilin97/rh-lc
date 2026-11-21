@@ -86,9 +86,9 @@ lemma toV_comp_eq [Flat qU.left] [Surjective qU.left] [QuasiCompact qU.left]
     Over.homMk (pullback.lift (s.left ≫ pullback.fst H.hom fU) (u ≫ pullback.snd _ _ ≫ pullback.snd _ _) hc1)
       (pullback.lift_snd _ _ _)
   let zu : Tk ⟶ (Over.pullback fV).obj A :=
-    Over.homMk (u ≫ toV fU fV A BU qU) (by simp [Tk])
+    Over.homMk (u ≫ toV fU fV A BU qU) (by simp [Tk, Category.assoc, toV_snd])
   let zv : Tk ⟶ (Over.pullback fV).obj A :=
-    Over.homMk (v ≫ toV fU fV A BU qU) (by simp [Tk, reassoc_of% huv])
+    Over.homMk (v ≫ toV fU fV A BU qU) (by simp [Tk, Category.assoc, toV_snd, reassoc_of% huv])
   have hc0 : (s.left ≫ pullback.fst H.hom fU ≫ i.left) ≫ A.hom = yv ≫ pullback.fst A.hom fU ≫ A.hom := by
     rw [Category.assoc, Category.assoc, Over.w i, pullback.condition, reassoc_of% hsw, pullback.condition]
   let x0 : Over.mk (yv ≫ pullback.fst A.hom fU ≫ A.hom) ⟶ A :=
@@ -98,12 +98,12 @@ lemma toV_comp_eq [Flat qU.left] [Surjective qU.left] [QuasiCompact qU.left]
   have mU := GlobalTheory.TorusToProper.mul_left_fst fU A (s ≫ (Over.pullback fU).map i) yv' x0 y0
     (by rw [Over.comp_left, Category.assoc, map_left_fst]; rfl) rfl
   have mV := GlobalTheory.TorusToProper.mul_left_fst fV A (s' ≫ (Over.pullback fV).map i) zv x0 y0
-    (by rw [Over.comp_left, Category.assoc, map_left_fst]; simp only [x0, s', Over.homMk_left]; rw [pullback.lift_fst_assoc, Category.assoc]) (by simp [y0, zv, hyv_def])
+    (by rw [Over.comp_left, Category.assoc, map_left_fst]; simp only [x0, s', Over.homMk_left]; rw [pullback.lift_fst_assoc, Category.assoc]) (by simp [y0, zv, hyv_def, Category.assoc, toV_fst])
   have key : zu = (s' ≫ (Over.pullback fV).map i) * zv := by
     apply Over.OverMorphism.ext
     apply pullback.hom_ext
     · rw [mV, ← mU, ← hyu]
-      simp [zu, yu', hyu_def]
+      simp [zu, yu', hyu_def, Category.assoc, toV_fst]
     · exact (Over.w zu).trans (Over.w ((s' ≫ (Over.pullback fV).map i) * zv)).symm
   have hk : zu ≫ qV = zv ≫ qV := by
     rw [key]

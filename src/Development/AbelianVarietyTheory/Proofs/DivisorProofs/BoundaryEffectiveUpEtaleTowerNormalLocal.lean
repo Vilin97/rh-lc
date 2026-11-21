@@ -64,7 +64,9 @@ theorem effAt_etTower : ∀ {K L : Type} [Field K] [Field L] (cK : ℂ →+* K) 
     rw [hq] at hθ'
     rw [Place.disc, map_add (f := _)]
     rcases GlobalTheory.T.dvrPlace_centre_on_base_of_etaleTowerOverNormalLocal cK cL r R T ι ψ τ P hT hP with h0 | ⟨P0, hP0, h0⟩
-    · rw [GlobalTheory.T.order_differential_form_et_tower cK cL n r R T ι ψ τ x P hT hx hP h0, hq, hq]
+    · have ho := GlobalTheory.T.order_differential_form_et_tower cK cL n r R T ι ψ τ x P hT hx hP h0
+      change P.formOrd (dForm cL (Fin.append (fun i => (τ i : L)) (fun i => (ι (x i) : L)))) = 0 at ho
+      rw [ho, hq, hq]
       have : (φ.sum fun g t => t * (P.ord (ι g : L) : ℚ)) = 0 :=
         Finset.sum_eq_zero fun g hg => by dsimp only; rw [h0 g (hφ g hg)]; simp
       rw [this]
@@ -73,7 +75,9 @@ theorem effAt_etTower : ∀ {K L : Type} [Field K] [Field L] (cK : ℂ →+* K) 
     · have h1 := GlobalTheory.T.dvrPlace_ord_eq_along_etaleTower cK cL r R T ι ψ τ P P0 hT hP hP0 h0
       have hd := hE.2.2 P0 hP0
       rw [Place.disc, hq] at hd
-      rw [GlobalTheory.T.formOrder_wedge_eq_of_etaleTower_heightOnePrime cK cL n r R T ι ψ τ x P P0 hT hx hP hP0 h1, hq, hq]
+      have ho := GlobalTheory.T.formOrder_wedge_eq_of_etaleTower_heightOnePrime cK cL n r R T ι ψ τ x P P0 hT hx hP hP0 h1
+      change P.formOrd (dForm cL (Fin.append (fun i => (τ i : L)) (fun i => (ι (x i) : L)))) = P0.formOrd (dForm cK (fun i => (x i : K))) at ho
+      rw [ho, hq, hq]
       have : (φ.sum fun g t => t * (P.ord (ι g : L) : ℚ)) =
           φ.sum fun g t => t * (P0.ord (g : K) : ℚ) :=
         Finset.sum_congr rfl fun g hg => by dsimp only; rw [h1 g (hφ g hg)]

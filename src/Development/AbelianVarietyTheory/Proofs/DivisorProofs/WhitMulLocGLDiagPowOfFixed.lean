@@ -33,11 +33,15 @@ theorem whit_add {F G : GA E a → ℂ} (hF : Continuous F) (hG : Continuous G) 
   unfold whit whittaker
   rw [← integral_add (integrableOn_whit hF y) (integrableOn_whit hG y)]
   congr 1
+  funext X
+  simp only [Pi.add_apply, add_mul]
 
 theorem whit_smul (c : ℂ) (F : GA E a → ℂ) (y : GA E a) : whit (c • F) y = c * whit F y := by
   unfold whit whittaker
   rw [← integral_const_mul]
   congr 1
+  funext X
+  simp only [Pi.smul_apply, smul_eq_mul, mul_assoc]
 
 def psiLocChar (w : HeightOneSpectrum (𝓞 E)) : AddChar (w.adicCompletion E) ℂ where
   toFun := psiLoc w

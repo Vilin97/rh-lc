@@ -12,7 +12,7 @@ public import Formalism.SatakeDualWeyl.KpqSubgroupCompact
 noncomputable section
 
 open NumberField IsDedekindDomain Matrix GlobalTheory.CuspRep GlobalTheory.PRep GlobalTheory.UnitaryBC Formalism.UG Formalism.BasicNotions GlobalTheory.DefU GlobalTheory.LFun
-open scoped TensorProduct Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
+open scoped TensorProduct NumberField.AdeleRing Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 
 namespace GlobalTheory.DefU.ClassFin
 
@@ -20,7 +20,7 @@ section Base
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem adMap_eq_complMap {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpectrum (𝓞 E)} (h : w.under (𝓞 F) = v) (a : AF) :
+theorem adMap_eq_complMap {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpectrum (𝓞 E)} (h : w.under (𝓞 F) = v) (a : 𝔸ᶠ[F]) :
     (GlobalTheory.AdeleBaseChange.adMap F E a) w = complMap h (a v) := by
   subst h
   rfl
@@ -36,7 +36,7 @@ theorem under_conjSrc (c : E ≃+* E) (hc : ∀ x : F, c (algebraMap F E x) = al
     rw [h1, h1, h2, ← conjPl_conjSrc c w, hc]
   exact HeightOneSpectrum.ext (Ideal.ext key)
 
-theorem conjFin_adMap (c : E ≃+* E) (hc : ∀ x : F, c (algebraMap F E x) = algebraMap F E x) (a : AF) :
+theorem conjFin_adMap (c : E ≃+* E) (hc : ∀ x : F, c (algebraMap F E x) = algebraMap F E x) (a : 𝔸ᶠ[F]) :
     conjFin c (GlobalTheory.AdeleBaseChange.adMap F E a) = GlobalTheory.AdeleBaseChange.adMap F E a := by
   refine FiniteAdeleRing.ext _ fun w => ?_
   have hu := under_conjSrc c hc w
@@ -51,8 +51,8 @@ theorem conjFin_adMap (c : E ≃+* E) (hc : ∀ x : F, c (algebraMap F E x) = al
       rw [complMap_algebraMap, complMap_algebraMap, (conjLoc_spec c w).2.1, hc])) (a (w.under (𝓞 F)))
   exact e1.trans (e3.trans e2.symm)
 
-theorem finAdEquiv_sigR (σ : E →ₐ[F] E) (c : E ≃+* E) (h : ∀ x, σ x = c x) (y : AF ⊗[F] E) :
-    finAdEquiv F E (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR AF σ y) = conjFin c (finAdEquiv F E y) := by
+theorem finAdEquiv_sigR (σ : E →ₐ[F] E) (c : E ≃+* E) (h : ∀ x, σ x = c x) (y : 𝔸ᶠ[F] ⊗[F] E) :
+    finAdEquiv F E (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR 𝔸ᶠ[F] σ y) = conjFin c (finAdEquiv F E y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | add a b ha hb => simp only [map_add (f := _), ha, hb]
@@ -71,10 +71,10 @@ theorem continuous_adMap : Continuous (GlobalTheory.AdeleBaseChange.adMap F E) :
 
 theorem continuous_finAdEquiv : Continuous (finAdEquiv F E) := by
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
-  haveI : IsModuleTopology AF (AF ⊗[F] E) := ⟨rfl⟩
-  letI : Algebra AF (FiniteAdeleRing (𝓞 E) E) := (GlobalTheory.AdeleBaseChange.adMap F E).toAlgebra
-  haveI : ContinuousSMul AF (FiniteAdeleRing (𝓞 E) E) := continuousSMul_of_algebraMap _ _ continuous_adMap
-  let f : AF ⊗[F] E →ₗ[AF] FiniteAdeleRing (𝓞 E) E :=
+  haveI : IsModuleTopology 𝔸ᶠ[F] (𝔸ᶠ[F] ⊗[F] E) := ⟨rfl⟩
+  letI : Algebra 𝔸ᶠ[F] (FiniteAdeleRing (𝓞 E) E) := (GlobalTheory.AdeleBaseChange.adMap F E).toAlgebra
+  haveI : ContinuousSMul 𝔸ᶠ[F] (FiniteAdeleRing (𝓞 E) E) := continuousSMul_of_algebraMap _ _ continuous_adMap
+  let f : 𝔸ᶠ[F] ⊗[F] E →ₗ[𝔸ᶠ[F]] FiniteAdeleRing (𝓞 E) E :=
     { toFun := finAdEquiv F E
       map_add' := map_add _
       map_smul' := fun r y => by
@@ -150,8 +150,9 @@ theorem JR_one : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.JR (F
 abbrev AEq : AFr E ⊗[Fr E] E →+* Af E := (finAdEquiv (Fr E) E : AFr E ⊗[Fr E] E →+* Af E)
 
 theorem AEq_sig (y : AFr E ⊗[Fr E] E) :
-    AEq (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (AFr E) (sg E) y) = conjFin (cc E) (AEq y) :=
-  finAdEquiv_sigR _ _ (fun _ => rfl) y
+    AEq (E := E) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (AFr E) (sg E) y) =
+      conjFin (cc E) (AEq (E := E) y) :=
+  finAdEquiv_sigR (sg E) (cc E) (fun _ => rfl) y
 
 theorem AEq_symm_sig (y : Af E) : (finAdEquiv (Fr E) E).symm (conjFin (cc E) y) =
     Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (AFr E) (sg E) ((finAdEquiv (Fr E) E).symm y) := by
@@ -166,7 +167,7 @@ def toGL : HF E n →* GL (Fin n) (Af E) :=
   (GeneralLinearGroup.map (AEq (E := E))).comp
     (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.HR (AFr E) (sg E) (1 : Matrix (Fin n) (Fin n) E)).subtype
 
-theorem toGL_val (g : HF E n) : (toGL E n g).val = g.1.val.map AEq := rfl
+theorem toGL_val (g : HF E n) : (toGL E n g).val = g.1.val.map (AEq (E := E)) := rfl
 
 theorem cT_toGL (g : HF E n) : cT (conjFin (cc E)) (toGL E n g).val * (toGL E n g).val = 1 := by
   have hg : cT (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (AFr E) (sg E)) g.1.val * Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.JR (AFr E) (1 : Matrix (Fin n) (Fin n) E) *
@@ -226,7 +227,7 @@ theorem toGL_rat (t : HF E n) (ht : t ∈ GlobalTheory.Mass.ratIn (AFr E) (sg E)
   refine ⟨⟨_, hm⟩, ⟨γ₀, rfl⟩, ?_⟩
   have e' : t.1 = Formalism.UG.bc (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (AFr E)) γ₀ := e.symm
   refine Units.ext (Matrix.ext fun i j => ?_)
-  change algebraMap E (Af E) (γ₀.val i j) = AEq (t.1.val i j)
+  change algebraMap E (Af E) (γ₀.val i j) = AEq (E := E) (t.1.val i j)
   rw [e']
   change _ = toFinAd (Fr E) E ((1 : AFr E) ⊗ₜ[Fr E] (γ₀.val i j))
   rw [toFinAd_tmul, map_one, one_mul]
@@ -273,7 +274,7 @@ theorem classSet_finite (K : Subgroup (finU (E := E) (n := n))) (hK : IsOpen (K 
     ((toFin E n (Quotient.out c) : finU (E := E) (n := n)) : UA E n), fun g => ?_⟩
   let f : finU (E := E) (n := n) := ⟨⟨finGL E n (GeneralLinearGroup.map (pFin E) g.1), finGL_mem_UA _ (cT_pFin g)⟩, pInf_finGL _⟩
   obtain ⟨h, hh⟩ := toFin_surjective f
-  obtain ⟨a, b, ha, hb, e⟩ := DoubleCoset.mk_out_eq_mul
+  obtain ⟨a, ha, b, hb, e⟩ := DoubleCoset.mk_out_eq_mul
     (GlobalTheory.Mass.ratIn (AFr E) (sg E) (1 : Matrix (Fin n) (Fin n) E)) K' h
   obtain ⟨γ, hγ, hγe⟩ := toGL_rat a⁻¹ (inv_mem ha)
   have hout : h = a⁻¹ * Quotient.out (DoubleCoset.mk (GlobalTheory.Mass.ratIn (AFr E) (sg E) (1 : Matrix (Fin n) (Fin n) E)) K' h) * b⁻¹ := by

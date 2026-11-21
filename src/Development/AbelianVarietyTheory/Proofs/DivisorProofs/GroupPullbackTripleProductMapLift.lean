@@ -278,8 +278,7 @@ theorem pmaps_cub (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (D : DegDat
       refine (val_pull hJ _ _ _).trans ((congrArg (fun q => val (L := U.LG.L) (φ := thφ G (x3 G)) (ε := thε)
         U.cubG.t q y J) heF).trans ?_)
       refine ((isCub_cubV (T := Over.mk s) U.cubG hJ).face 1 1).trans
-        (Eq.trans ?_ (congrArg₂ (· * ·) p ((isCub_cubV U.cubG hJ').face 1 1)).symm)
-      simp)
+        (Eq.trans (by simp [mul_assoc]) (congrArg₂ (· * ·) p ((isCub_cubV U.cubG hJ').face 1 1)).symm))
   intro Z r z p q hp hq
   refine Eq.trans ?_ (key Z r z p q hp hq)
   rw [Category.comp_id]

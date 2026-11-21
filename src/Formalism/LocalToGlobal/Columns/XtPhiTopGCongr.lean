@@ -51,13 +51,13 @@ theorem xtPhiTopG_congr (hX : X.Ok) (hPr : Pr.Ok) {i : ℕ} (hn : TopNum R i) (s
   have hq0 : ((qOf P : ℕ) : X.E) ≠ 0 := ciQ_ne_zero hu
   have hkr : R.k ≤ R.r := by unfold Ranks.r; have := R.two_le_m; omega
   unfold PhiTopG
-  rw [if_pos hP]
+  rw [ite_eq_left hP]
   cases sharp
-  · simp only [Bool.false_eq_true, if_false]
+  · simp only [Bool.false_eq_true, ite_false]
     refine ciPhiG_congr hq hq0 _ _ false x x' ?_ ?_ (Nat.le_add_right _ _) hn.a_le fun p p' hp hp' => hD p p' hp (hn.a_eq ▸ hp')
     · unfold Ranks.r; have := R.two_le_m; omega
     · unfold Ranks.r; have := R.two_le_m; omega
-  · simp only [if_true]
+  · simp only [ite_true]
     exact xtPhiGS_congr hq hq0 _ _ x x' hkr hn.a_le fun p p' hp hp' => hD p p' hp (hn.a_eq ▸ hp')
 
 theorem xtPhiTopG_int {i : ℕ} (hn : TopNum R i) (sharp : Bool) {P : HeightOneSpectrum (𝓞 X.E)} (hP : P ∈ Pr.vGs)
@@ -65,12 +65,12 @@ theorem xtPhiTopG_int {i : ℕ} (hn : TopNum R i) (sharp : Bool) {P : HeightOneS
     ∀ p p', p < (R.N (i + 1) - 1) + 0 → p' < R.N i →
       IntAt P (LocE.entB (qOf P) R.k (cOf R i) (R.N i) 0 (R.N (i + 1) - 1) (fun i => i + 1) (fun i => i + 1) x p p') := by
   unfold PhiTopG at h
-  rw [if_pos hP] at h
+  rw [ite_eq_left hP] at h
   intro p p' hp hp'
   cases sharp
-  · simp only [Bool.false_eq_true, if_false] at h
+  · simp only [Bool.false_eq_true, ite_false] at h
     exact ciPhiG_int _ _ false x h p p' hp (hn.a_eq.symm ▸ hp')
-  · simp only [if_true] at h
+  · simp only [ite_true] at h
     exact xtPhiGS_int _ _ x h p p' hp (hn.a_eq.symm ▸ hp')
 
 def topDat (i : ℕ) (P : rowSG Pr sel mu) (y : HomE X.E (R.N i) (R.N (i + 1))) (y'' : Sp X.E (R.N i)) : X.K :=
@@ -118,7 +118,7 @@ theorem topDat_congr (hX : X.Ok) (hPr : Pr.Ok) (hc : cst.Ok) {i : ℕ} (hn : Top
       rw [xt_atNL, xt_atNL]
       exact (H j).2 hall _⟩⟩) y'' hy
   unfold topDat ftY
-  rw [if_pos hP, if_pos hP]
+  rw [ite_eq_left hP, ite_eq_left hP]
   exact key
 
 theorem topDat_int {i : ℕ} (hn : TopNum R i) (P : rowSG Pr sel mu) (hP : P.1 ∈ Pr.vGs)
@@ -131,9 +131,9 @@ theorem topDat_int {i : ℕ} (hn : TopNum R i) (P : rowSG Pr sel mu) (hP : P.1 �
   · have := xtPhiTopG_int Ch mu hn cst.sharp hP _ h1 l.1 j.1 l.2 j.2
     rwa [xtEntB hn.c0 _ (by have := l.2; omega) j.2, LinearMap.comp_apply, LinearMap.comp_apply, xtRes j.2] at this
   · unfold ftY at h2
-    rw [if_pos hP] at h2
+    rw [ite_eq_left hP] at h2
     by_contra h3
-    exact h2 (if_neg fun hh => h3 (hh j))
+    exact h2 (ite_eq_right fun hh => h3 (hh j))
 
 end TopG
 

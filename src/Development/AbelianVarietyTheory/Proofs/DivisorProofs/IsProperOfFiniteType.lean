@@ -90,38 +90,53 @@ theorem isProper_of_finiteType : ∀ (S : Scheme.{0}) [IsLocallyNoetherian S] (A
             _ = u ≫ ΦK.left ≫ κB ≫ ψB := by rw [hκB1]; simp only [Category.assoc]
             _ = ((u ≫ κA) ≫ ΦV.left) ≫ ψB := by
                 rw [← Category.assoc ΦK.left, hΦV1]; simp only [Category.assoc]
-      refine LBIso.trans (B := L.pull ((u ≫ κA) ≫ ψA)) (by lbt) (by lbt) (by lbt)
+      refine LBIso.trans (B := L.pull ((u ≫ κA) ≫ ψA)) ?_ ?_ ?_
         (GlobalTheory.OriginCohom.lbIso_pull_pull_comp hL _ _) ?_
-      refine LBIso.trans (B := L.pull ((u ≫ pA) ≫ R.φA)) (by lbt) (by lbt) (by lbt)
+      rotate_left 3
+      refine LBIso.trans (B := L.pull ((u ≫ pA) ≫ R.φA)) ?_ ?_ ?_
         (lbIso_pull_eq hL (by simp only [Category.assoc, hκA1])) ?_
-      refine LBIso.trans (B := (L.pull R.φA).pull (u ≫ pA)) (by lbt) (by lbt) (by lbt)
+      rotate_left 3
+      refine LBIso.trans (B := (L.pull R.φA).pull (u ≫ pA)) ?_ ?_ ?_
         (LBIso.symm (GlobalTheory.OriginCohom.lbIso_pull_pull_comp hL _ _)) ?_
-      refine LBIso.trans (B := ((M.pull R.φB).pull R.Φ.left).pull (u ≫ pA)) (by lbt) (by lbt) (by lbt) i0 ?_
-      refine LBIso.trans (B := (M.pull R.φB).pull ((u ≫ pA) ≫ R.Φ.left)) (by lbt) (by lbt) (by lbt)
+      rotate_left 3
+      refine LBIso.trans (B := ((M.pull R.φB).pull R.Φ.left).pull (u ≫ pA)) ?_ ?_ ?_ i0 ?_
+      rotate_left 3
+      refine LBIso.trans (B := (M.pull R.φB).pull ((u ≫ pA) ≫ R.Φ.left)) ?_ ?_ ?_
         (GlobalTheory.OriginCohom.lbIso_pull_pull_comp hm _ _) ?_
-      refine LBIso.trans (B := M.pull (((u ≫ pA) ≫ R.Φ.left) ≫ R.φB)) (by lbt) (by lbt) (by lbt)
+      rotate_left 3
+      refine LBIso.trans (B := M.pull (((u ≫ pA) ≫ R.Φ.left) ≫ R.φB)) ?_ ?_ ?_
         (GlobalTheory.OriginCohom.lbIso_pull_pull_comp hM _ _) ?_
-      refine LBIso.trans (B := M.pull (((u ≫ κA) ≫ ΦV.left) ≫ ψB)) (by lbt) (by lbt) (by lbt)
+      rotate_left 3
+      refine LBIso.trans (B := M.pull (((u ≫ κA) ≫ ΦV.left) ≫ ψB)) ?_ ?_ ?_
         (lbIso_pull_eq hM eqM) ?_
-      refine LBIso.symm (LBIso.trans (B := (M.pull ψB).pull ((u ≫ κA) ≫ ΦV.left)) (by lbt) (by lbt) (by lbt)
+      rotate_left 3
+      refine LBIso.symm (LBIso.trans (B := (M.pull ψB).pull ((u ≫ κA) ≫ ΦV.left)) ?_ ?_ ?_
         (GlobalTheory.OriginCohom.lbIso_pull_pull_comp (pull_isLB hM _) _ _) ?_)
+      rotate_left 3
       exact GlobalTheory.OriginCohom.lbIso_pull_pull_comp hM _ _
+      all_goals (first | assumption | (apply pull_isLB; first | assumption | (apply pull_isLB; first | assumption | (apply pull_isLB; assumption))))
 
     obtain ⟨g, ⟨hg, χA, χB, hχA, hχB, hχA1, hχB1, hχΦ⟩, -⟩ :=
       R.rep (Sp V) y AV BV ψA ψB ΦV hVA hVB hΦV iso
     have isoK : LBIso (L.pull (pA ≫ R.φA)) ((M.pull (pB ≫ R.φB)).pull ΦK.left) := by
       have hm := pull_isLB hM R.φB
-      refine LBIso.trans (B := (L.pull R.φA).pull pA) (by lbt) (by lbt) (by lbt)
+      refine LBIso.trans (B := (L.pull R.φA).pull pA) ?_ ?_ ?_
         (LBIso.symm (GlobalTheory.OriginCohom.lbIso_pull_pull_comp hL _ _)) ?_
-      refine LBIso.trans (B := ((M.pull R.φB).pull R.Φ.left).pull pA) (by lbt) (by lbt) (by lbt)
+      rotate_left 3
+      refine LBIso.trans (B := ((M.pull R.φB).pull R.Φ.left).pull pA) ?_ ?_ ?_
         (lbIso_pull_pull R.iso pA) ?_
-      refine LBIso.trans (B := (M.pull R.φB).pull (pA ≫ R.Φ.left)) (by lbt) (by lbt) (by lbt)
+      rotate_left 3
+      refine LBIso.trans (B := (M.pull R.φB).pull (pA ≫ R.Φ.left)) ?_ ?_ ?_
         (GlobalTheory.OriginCohom.lbIso_pull_pull_comp hm _ _) ?_
-      refine LBIso.trans (B := M.pull ((pA ≫ R.Φ.left) ≫ R.φB)) (by lbt) (by lbt) (by lbt)
+      rotate_left 3
+      refine LBIso.trans (B := M.pull ((pA ≫ R.Φ.left) ≫ R.φB)) ?_ ?_ ?_
         (GlobalTheory.OriginCohom.lbIso_pull_pull_comp hM _ _) ?_
-      refine LBIso.trans (B := M.pull (ΦK.left ≫ pB ≫ R.φB)) (by lbt) (by lbt) (by lbt)
+      rotate_left 3
+      refine LBIso.trans (B := M.pull (ΦK.left ≫ pB ≫ R.φB)) ?_ ?_ ?_
         (lbIso_pull_eq hM (by rw [← Category.assoc, hΦK1])) ?_
+      rotate_left 3
       exact LBIso.symm (GlobalTheory.OriginCohom.lbIso_pull_pull_comp hM _ _)
+      all_goals (first | assumption | (apply pull_isLB; first | assumption | (apply pull_isLB; first | assumption | (apply pull_isLB; assumption))))
     obtain ⟨g0, -, huniq⟩ := R.rep (Sp (FractionRing V)) (x ≫ R.π) AK BK (pA ≫ R.φA) (pB ≫ R.φB) ΦK hKA hKB hΦK isoK
     have e1 : x = g0 := huniq x ⟨rfl, pA, pB, hK1A, hK1B, rfl, rfl, hΦK1⟩
     have e2 : Out.jK V ≫ g = g0 := huniq _ ⟨by rw [Category.assoc, hg, hxy], κA ≫ χA, κB ≫ χB,

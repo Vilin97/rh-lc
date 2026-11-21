@@ -99,7 +99,7 @@ theorem cube_tr (hw : PGen w) (c : CubicalStr G L) (c' : CubicalStr G L')
       choose J' hJ' using fun ψ : (𝟙_ (Over S)).left ⟶ G.left => exists_chart L'.isLB (ψ s)
       have v := vv (1 : 𝟙_ (Over S) ⟶ G) 1 1 hJ
       refine v.1.trans (Eq.trans ?_ v.2.symm)
-      rw [tv (1 : 𝟙_ (Over S) ⟶ G) 1 1 hJ hJ', (isCub_cubV c' (T := 𝟙_ (Over S)) hJ').face, _root_.mul_one, _root_.mul_one,
+      rw [tv (1 : 𝟙_ (Over S) ⟶ G) 1 1 hJ hJ', (isCub_cubV c' (T := 𝟙_ (Over S)) hJ').face _ _, _root_.mul_one, _root_.mul_one,
         prod_cub 1 1 1 (fun q => gw w q s (J (q ≫ (tr a).left)) (J' q))]
       simp) _ (lift x (lift x' y)).left z N hN
   exact (vv x x' y hN).1.symm.trans (key.trans ((vv x x' y hN).2.trans (congrArg (· * _) (tv x x' y hN hN'))))

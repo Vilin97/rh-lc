@@ -58,7 +58,7 @@ theorem twOrb_prod' (θ : G →* G) (θ' : G' →* G') (K : Subgroup G) (K' : Su
     GlobalTheory.BCT.OrbProd.twCent_prod θ θ' δ δ', ← finsum_prod_mul',
     ← finsum_comp_equiv (Equiv.ofBijective _ (GlobalTheory.BCT.OrbProd.dcPair_bij (twCent θ δ) K (twCent θ' δ') K'))]
   refine finsum_congr fun z => ?_
-  obtain ⟨t, k, ht, hk, hq⟩ := DoubleCoset.mk_out_eq_mul ((twCent θ δ).prod (twCent θ' δ')) (K.prod K')
+  obtain ⟨t, ht, k, hk, hq⟩ := DoubleCoset.mk_out_eq_mul ((twCent θ δ).prod (twCent θ' δ')) (K.prod K')
     (Quotient.out z.1, Quotient.out z.2)
   rw [Subgroup.mem_prod] at ht hk
   have hdc : GlobalTheory.BCT.OrbProd.dcPair (twCent θ δ) K (twCent θ' δ') K' z =
@@ -75,13 +75,11 @@ section Cl
 
 variable {G G' : Type} [Group G] [Group G']
 
-theorem twRel_equiv (θ : G →* G) : Equivalence (fun x y : G => ∃ g, y = g⁻¹ * x * θ g) where
-  refl x := ⟨1, by simp⟩
-  symm := by
-    rintro x y ⟨g, rfl⟩
+theorem twRel_equiv (θ : G →* G) : Equivalence (fun x y : G => ∃ g, y = g⁻¹ * x * θ g) := by
+  refine ⟨fun x => ⟨1, by simp⟩, ?_, ?_⟩
+  · rintro x y ⟨g, rfl⟩
     exact ⟨g⁻¹, by simp [mul_assoc]⟩
-  trans := by
-    rintro x y z ⟨g, rfl⟩ ⟨g', rfl⟩
+  · rintro x y z ⟨g, rfl⟩ ⟨g', rfl⟩
     exact ⟨g * g', by simp [mul_assoc]⟩
 
 def mkC (θ : G →* G) (x : G) : TwCl θ := Quot.mk _ x

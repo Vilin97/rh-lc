@@ -145,7 +145,7 @@ theorem ιTotal_tot_d (Y : SimplicialObject (SimplicialObject C)) (a b k : ℕ)
   change _ ≫ ((dbl Y).total (ComplexShape.down ℕ)).d (k + 1) k = _
   rw [HomologicalComplex₂.total_d, Preadditive.comp_add, ιTotal_D₁ Y a b k h, ιTotal_D₂ Y a b k h]
   refine Eq.trans Finset.sum_add_distrib.symm (Finset.sum_congr rfl (fun x _ => ?_))
-  rw [dT, Functor.map_add (f := _), Functor.map_zsmul]
+  rw [dT, (ev Y).map_add, (ev Y).map_zsmul]
   first
     | (rw [Preadditive.add_comp, Preadditive.zsmul_comp])
     | (simp only [Preadditive.add_comp, Preadditive.zsmul_comp])

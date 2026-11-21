@@ -107,7 +107,7 @@ theorem packing_count : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopolog
   calc (T.card : ℝ≥0∞) * μ U = ∑ t ∈ T, μ U := by rw [Finset.sum_const, nsmul_eq_mul]
     _ = ∑ t ∈ T, ∑' γ : Λ, ∫⁻ x, (γ • (t • U)).indicator 1 x ∂ν := Finset.sum_congr rfl key
     _ = ∫⁻ x, ∑ t ∈ T, ∑' γ : Λ, (γ • (t • U)).indicator (1 : G → ℝ≥0∞) x ∂ν := by
-      rw [lintegral_finset_sum']
+      rw [lintegral_finsetSum']
       · refine Finset.sum_congr rfl fun t _ => ?_
         rw [lintegral_tsum]
         exact fun γ => ((measurable_one.indicator (hmeasA γ t))).aemeasurable

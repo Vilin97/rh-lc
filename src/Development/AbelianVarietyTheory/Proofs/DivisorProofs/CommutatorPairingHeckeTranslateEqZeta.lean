@@ -80,7 +80,13 @@ theorem GlobalTheory.UPel.HT.Hecke.weil_value_translate : ∀ (p : ℕ) [Fact p.
   have hev : ∀ w : D.La, I.ev (n * k) (g w) = I.ev (n * (m * k ^ 2)) (m • g w) ≫ Out.mulA o.A k := fun w => by
     rw [Out.mulA, MonObj.comp_pow, Category.comp_id, ← TateIsoO.ev_nsmul, smul_smul, mul_comm k m,
       TateIsoO.ev_nsmul, eN, I.tower (n * k) (m * k) (by positivity) (by positivity) (by rw [← eN]; exact hNp)]
-  haveI := isMonHom_mulA (A := o.A) k
+  letI : IsCommMonObj o.A := o.ab.comm
+  haveI : IsMonHom (Out.mulA o.A k) := by
+    change IsMonHom ((𝟙 o.A) ^ k)
+    constructor
+    · rw [MonObj.comp_pow, Category.comp_id, MonObj.one_eq_one, one_pow]
+    · rw [MonObj.comp_pow, Category.comp_id, MonObj.mul_eq_mul, MonObj.comp_mul, tensorHom_fst,
+        tensorHom_snd, MonObj.comp_pow, MonObj.comp_pow, Category.comp_id, Category.comp_id, mul_pow]
   have hw := lbIso_mulA_diag o.ab o.isLB o.ample o.rig₁ o.rig₂ k
   rw [hev u, hev v] at he
   have h1 := GlobalTheory.WeilIsogeny.weilIs_pull_hom hG o.ab hL hL (Out.mulA o.A k) hw he

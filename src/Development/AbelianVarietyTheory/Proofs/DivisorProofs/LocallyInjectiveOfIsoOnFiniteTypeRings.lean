@@ -93,7 +93,6 @@ theorem locInj_of_finiteType : ∀ (N M : CommRingCat.{0} ⥤ AbCx) (ε : N ⟶ 
     have hwk : (N.map (D.map f)).f 0 w = 0 := by
       apply inj_of_iso ((ε.app (D.obj k)).f 0)
       rw [nat_apply, ← hx0, ← hιnat, hk, map_zero, map_zero]
-      rfl
     have hcw : ιD.app j = D.map f ≫ ιD.app k := by
       have := ιD.naturality f
       simp only [Functor.const_obj_obj, Functor.const_obj_map, Category.comp_id] at this

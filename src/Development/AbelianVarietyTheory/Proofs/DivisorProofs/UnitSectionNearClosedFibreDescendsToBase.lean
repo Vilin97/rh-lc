@@ -30,7 +30,7 @@ theorem one_left_pullback {S T : Scheme.{0}} (f : T ⟶ S) (G : Over S) [GrpObj 
     simpa using this
   have hm : ((Over.pullback f).map (η : 𝟙_ (Over S) ⟶ G)).left ≫ pullback.fst G.hom f =
       pullback.fst (𝟙_ (Over S)).hom f ≫ (η : 𝟙_ (Over S) ⟶ G).left := by
-    simp only [Over.pullback_map_left]
+    simp only [Over.pullback_map_left, pullback.lift_fst]
   simp only [Over.comp_left, Category.assoc] at hw ⊢
   rw [hm, hc, hb]
   simp only [← Category.assoc] at hw ⊢

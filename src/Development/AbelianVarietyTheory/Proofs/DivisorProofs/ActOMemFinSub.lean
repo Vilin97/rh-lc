@@ -262,7 +262,7 @@ theorem symplO_self (x : WO S T) : symplO S T x x = 0 := by
   exact h.symm
 
 theorem isHeis_opF (hψ : IsCharAF D.host.F ψ) (S T : HSp D) {w : 𝓞 D.host.E} (hw : w + sgO D w = 1) :
-    IsHeis (sgO D) w (gamF ψ S T) (opF hψ S T w) where
+    IsHeis (sgO D) w (gamF ψ S T) (opF hψ S T w) := {
   sg_sg r := by
     apply Subtype.ext
     show ((sgO D (sgO D r) : 𝓞 D.host.E) : D.host.E) = (r : D.host.E)
@@ -291,7 +291,7 @@ theorem isHeis_opF (hψ : IsCharAF D.host.F ψ) (S T : HSp D) {w : 𝓞 D.host.E
     have h3 := symplOH_smul (intA D w) (y : WO S T) x
     rw [symplOH_skew S T (cA D (intA D w) • (x : WO S T)) y] at h3
     rw [smul_add, symplOH_add_left, symplOH_add_right, symplOH_add_right, ← symplOH_add_self]
-    linear_combination h3 - h2
+    linear_combination h3 - h2 }
 
 theorem selfDual_latF {LS : Set (Fin S.rank → D.host.E)} {LT : Set (Fin T.rank → D.host.E)}
     (hd : ∀ u : WO S T, u.map (infPart D) = 0 → (u ∈ (latO S T LS LT fun _ => True) ↔

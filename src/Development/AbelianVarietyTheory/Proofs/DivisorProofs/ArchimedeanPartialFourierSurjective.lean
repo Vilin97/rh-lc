@@ -182,7 +182,7 @@ theorem shearOp_surjective : Function.Surjective (shearOp (F := F) (κ := κ)) :
 theorem shearOp_hop (a b : κ ⊕ κ → mixedEmbedding.mixedSpace F) (f g : SchwartzMap (κ ⊕ κ → mixedEmbedding.mixedSpace F) ℂ)
     (hg : ⇑g = hop a b f) : ⇑(shearOp g) = hop (shear.symm a) (shearT b) (shearOp f) := by
   funext u
-  rw [shearOp_apply, hg, hop, hop, shearOp_apply, ContinuousLinearEquiv.map_add (f := _),
+  rw [shearOp_apply, hg, hop, hop, shearOp_apply, ContinuousLinearEquiv.map_add (e := _),
     ContinuousLinearEquiv.apply_symm_apply, ← traceDot_shear, ← traceDot_shear, ContinuousLinearEquiv.apply_symm_apply]
 
 end GlobalTheory.DiagHeisFourier

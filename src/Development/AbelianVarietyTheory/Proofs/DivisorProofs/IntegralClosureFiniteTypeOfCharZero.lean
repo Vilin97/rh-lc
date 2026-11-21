@@ -25,6 +25,7 @@ theorem integralClosure_finiteType_of_charZero :
   have : IsIntegrallyClosed A := IsIntegrallyClosed.of_equiv e.toRingEquiv
   have : CharZero F := charZero_of_injective_algebraMap (algebraMap k F).injective
   have : Algebra.IsSeparable F K := inferInstance
+  set_option synthInstance.maxHeartbeats 200000 in
   have : Module.Finite A (integralClosure A K) := IsIntegralClosure.finite A F K (integralClosure A K)
   have : Algebra.FiniteType A (integralClosure A K) := inferInstance
   have : Algebra.FiniteType k (integralClosure A K) := Algebra.FiniteType.trans hAft this

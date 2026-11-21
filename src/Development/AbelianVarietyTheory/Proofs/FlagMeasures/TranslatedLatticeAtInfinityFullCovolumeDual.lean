@@ -252,20 +252,21 @@ theorem volume_fd_intB [IsTotallyComplex E] :
   simp [div_eq_inv_mul, Int.norm_eq_abs]
 
 theorem isLattice_int (Λ : Submodule (𝓞 E) (Fin j → E)) (h : Submodule.IsFullLattice E Λ) :
-    Submodule.IsFullLattice ℚ (Λ.restrictScalars ℤ) where
-  toIsLattice := Submodule.IsLattice.of_fg ℚ (Submodule.FG.restrictScalars h.fg)
-  span_eq_top := by
-    rw [eq_top_iff]
-    intro y _
-    have hy : y ∈ Submodule.span E (Λ : Set (Fin j → E)) := by rw [h.span_eq_top]; trivial
-    obtain ⟨n, c, v, rfl⟩ := Submodule.mem_span_set'.1 hy
-    refine Submodule.sum_mem _ fun i _ => ?_
-    rw [← (integralBasis E).sum_repr (c i), Finset.sum_smul]
-    refine Submodule.sum_mem _ fun k _ => ?_
-    rw [smul_assoc]
-    refine Submodule.smul_mem _ _ (Submodule.subset_span ?_)
-    rw [integralBasis_apply, algebraMap_smul]
-    exact Λ.smul_mem _ (v i).2
+    Submodule.IsFullLattice ℚ (Λ.restrictScalars ℤ) := by
+  have : Submodule.IsLattice ℚ (Λ.restrictScalars ℤ) :=
+    Submodule.IsLattice.of_fg ℚ (Submodule.FG.restrictScalars h.fg)
+  refine { span_eq_top := ?_ }
+  rw [eq_top_iff]
+  intro y _
+  have hy : y ∈ Submodule.span E (Λ : Set (Fin j → E)) := by rw [h.span_eq_top]; trivial
+  obtain ⟨n, c, v, rfl⟩ := Submodule.mem_span_set'.1 hy
+  refine Submodule.sum_mem _ fun i _ => ?_
+  rw [← (integralBasis E).sum_repr (c i), Finset.sum_smul]
+  refine Submodule.sum_mem _ fun k _ => ?_
+  rw [smul_assoc]
+  refine Submodule.smul_mem _ _ (Submodule.subset_span ?_)
+  rw [integralBasis_apply, algebraMap_smul]
+  exact Λ.smul_mem _ (v i).2
 
 theorem exists_basis [IsTotallyComplex E] (Λ : Submodule (𝓞 E) (Fin j → E)) (h : Submodule.IsFullLattice E Λ) :
     ∃ b : Basis (Idx E j) ℝ (VecInf E j),

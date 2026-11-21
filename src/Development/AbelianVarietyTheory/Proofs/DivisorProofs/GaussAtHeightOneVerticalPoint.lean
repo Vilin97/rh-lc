@@ -265,7 +265,7 @@ theorem exists_unram {R T : Type} [CommRing R] [IsDomain R] [IsNoetherianRing R]
   have h3 : IsIntegrallyClosed A ∧ ∀ P : Ideal A, P ≠ ⊥ → P.IsPrime → P = maximalIdeal A :=
     ⟨hic, fun P h h' => eq_maximalIdeal (Ring.krullDimLE_one_iff_of_noZeroDivisors.1 hd P h h')⟩
   have h4 : Submodule.IsPrincipal (maximalIdeal A) :=
-    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain A).out 3 4).1 h3
+    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain A).out 4 5).1 h3
   obtain ⟨π, hπ⟩ := h4
   refine ⟨A, inferInstance, inferInstance, inferInstance, hA, (Scheme.stalkClosedPointTo (spMap ρ)).hom, π,
     inferInstance, congrArg (·.hom) e, ?_, etc.2.2, unr⟩

@@ -48,6 +48,7 @@ theorem isIso_of_pullback_openCover {S : Scheme.{0}} (𝒰 : S.OpenCover) {X Y :
     · exact Over.w c
   · change _ = _ ≫ pullback.fst Y.hom (𝒰.f j)
     simp only [Over.pullback_map_left]
+    erw [pullback.lift_fst]
 
 theorem hom_ext_of_pullback_openCover {S : Scheme.{0}} (𝒰 : S.OpenCover) {X Y : Over S} (f g : X ⟶ Y)
     (h : ∀ j, (Over.pullback (𝒰.f j)).map f = (Over.pullback (𝒰.f j)).map g) : f = g := by
@@ -56,6 +57,7 @@ theorem hom_ext_of_pullback_openCover {S : Scheme.{0}} (𝒰 : S.OpenCover) {X Y
   have e := congrArg (fun u => u.left ≫ pullback.fst Y.hom (𝒰.f j)) (h j)
   change pullback.fst X.hom (𝒰.f j) ≫ f.left = pullback.fst X.hom (𝒰.f j) ≫ g.left
   simp only [Over.pullback_map_left] at e
+  erw [pullback.lift_fst, pullback.lift_fst] at e
   exact e
 
 theorem baseChange_translation {T T' : Scheme.{0}} (t : T' ⟶ T) (A H : Over T) [GrpObj A] [GrpObj H] (i : H ⟶ A) :

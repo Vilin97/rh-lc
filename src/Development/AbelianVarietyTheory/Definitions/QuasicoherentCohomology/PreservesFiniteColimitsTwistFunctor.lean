@@ -189,6 +189,7 @@ variable {X Y : Scheme.{0}} {F G H : X.Modules} {L M N : LB X}
 
 @[simp] theorem map_id (L : LB X) (F : X.Modules) : map L (𝟙 F) = 𝟙 (twist F L) := rfl
 
+@[reassoc] theorem map_comp (L : LB X) (φ : F ⟶ G) (ψ : G ⟶ H) :
     map L (φ ≫ ψ) = map L φ ≫ map L ψ := rfl
 
 instance (L : LB X) : (twistFunctor L).Additive where
@@ -295,8 +296,7 @@ theorem suppDim_twist (hL : L.IsLB) : QCoh.suppDim (twist F L) = QCoh.suppDim F 
 theorem assPoints_twist (hL : L.IsLB) : QCoh.assPoints (twist F L) = QCoh.assPoints F :=
   Set.ext fun x => by
     obtain ⟨e⟩ := nonempty_stalkEquiv (F := F) hL x
-    rw [QCoh.assPoints, QCoh.assPoints, Set.mem_setOf_eq, Set.mem_setOf_eq,
-      LinearEquiv.AssociatedPrimes.eq e]
+    simp only [QCoh.assPoints, Set.mem_ofPred_eq, LinearEquiv.AssociatedPrimes.eq e]
 
 theorem isFiniteQC_twist_iff (hL : L.IsLB) : QCoh.IsFiniteQC (twist F L) ↔ QCoh.IsFiniteQC F := by
   rw [QCoh.isFiniteQC_iff_isFiniteType, QCoh.isFiniteQC_iff_isFiniteType,
@@ -488,12 +488,6 @@ theorem isIso_divHom (hL : L.IsLB) (hN : N.IsLB) : IsIso (divHom F N hL) :=
         (chartEquiv (Semi.LB.isLB_div hN hL) p h).bijective) isUnit_one
       fun t => (chartEquiv_divHom_app hL hN p h t).trans (one_smul _ _).symm
 
-    map N φ ≫ divHom G N hL = divHom F N hL ≫ map (LB.div N L) (map L φ) :=
-  hom_ext fun V t p => sec_ext fun l => by
-    change _ • resM G _ (resM G _ (φ.app _ _)) = φ.app _ (_ • resM F _ (resM F _ _))
-    rw [Scheme.Modules.Hom.app_smul, app_resM, app_resM]
-
-
 variable (F) in
 def divIso (hL : L.IsLB) (hN : N.IsLB) : twist F N ≅ twist (twist F L) (LB.div N L) :=
   haveI := isIso_divHom (F := F) hL hN
@@ -501,7 +495,12 @@ def divIso (hL : L.IsLB) (hN : N.IsLB) : twist F N ≅ twist (twist F L) (LB.div
 
 def divNatIso (hL : L.IsLB) (hN : N.IsLB) :
     twistFunctor N ≅ twistFunctor L ⋙ twistFunctor (LB.div N L) :=
-  NatIso.ofComponents (fun F => divIso F hL hN) fun φ => divHom_naturality hL φ
+  NatIso.ofComponents (fun F => divIso F hL hN) fun {F G} φ => by
+    have h : map N φ ≫ divHom G N hL = divHom F N hL ≫ map (LB.div N L) (map L φ) :=
+      hom_ext fun V t p => sec_ext fun l => by
+        change _ • resM G _ (resM G _ (φ.app _ _)) = φ.app _ (_ • resM F _ (resM F _ _))
+        rw [Scheme.Modules.Hom.app_smul, app_resM, app_resM]
+    exact h
 
 theorem coord_divIso_inv_app (hL : L.IsLB) (hN : N.IsLB) {V : X.Opens}
     (s : Γ(twist (twist F L) (LB.div N L), V)) (n : N.ι) (l : L.ι) {W : X.Opens}
@@ -593,11 +592,6 @@ theorem coord_homOfSec_app (hL : L.IsLB) (hM : M.IsLB) (w : LB.Sec (LB.div M L))
     rw [coord_secHom_app, coord_smul, coord_resM, resM_smul, resM_resM, resG_resG, resG_resG]
   exact key (p, q) h'
 
-    (φ : F ⟶ G) : map L φ ≫ homOfSec G hL hM w = homOfSec F hL hM w ≫ map M φ := by
-  rw [homOfSec, homOfSec, secHom_naturality_assoc, Category.assoc]
-  exact congrArg _ ((divNatIso hL hM).inv.naturality φ)
-
-
 variable (F) in
 def isoOfGen (hL : L.IsLB) (hM : M.IsLB) (w : LB.Iso L M) (hw : w.IsGen) :
     twist F L ≅ twist F M :=
@@ -614,7 +608,12 @@ theorem coord_isoOfGen_hom_app (hL : L.IsLB) (hM : M.IsLB) (w : LB.Iso L M) (hw 
 
 def natIsoOfGen (hL : L.IsLB) (hM : M.IsLB) (w : LB.Iso L M) (hw : w.IsGen) :
     twistFunctor L ≅ twistFunctor M :=
-  NatIso.ofComponents (fun F => isoOfGen F hL hM w hw) fun φ => homOfSec_naturality hL hM _ φ
+  NatIso.ofComponents (fun F => isoOfGen F hL hM w hw) fun {F G} φ => by
+    let σ := DVR.genSec w hw
+    have h : map L φ ≫ homOfSec G hL hM σ = homOfSec F hL hM σ ≫ map M φ := by
+      rw [homOfSec, homOfSec, secHom_naturality_assoc, Category.assoc]
+      exact congrArg _ ((divNatIso hL hM).inv.naturality φ)
+    exact h
 
 theorem nonempty_iso_of_lbIso (hL : L.IsLB) (hM : M.IsLB) (h : LBIso L M) :
     Nonempty (twist F L ≅ twist F M) :=
@@ -653,11 +652,6 @@ def twistTwistNatIso (hL : L.IsLB) (hM : M.IsLB) (hN : N.IsLB)
     twistFunctor L ⋙ twistFunctor M ≅ twistFunctor N :=
   (twistFunctor L).isoWhiskerLeft (natIsoOfGen hM (Semi.LB.isLB_div hN hL) w hw) ≪≫
     (divNatIso hL hN).symm
-
-    (w : LB.Gen (LB.div (LB.div N L) M)) (hw : w.IsGen) (φ : F ⟶ G) :
-    map M (map L φ) ≫ (twistTwistIso G hL hM hN w hw).hom =
-      (twistTwistIso F hL hM hN w hw).hom ≫ map N φ :=
-  (twistTwistNatIso hL hM hN w hw).hom.naturality φ
 
 theorem nonempty_twistTwistIso (hL : L.IsLB) (hM : M.IsLB) (hN : N.IsLB)
     (h : LBIso M (LB.div N L)) : Nonempty (twist (twist F L) M ≅ twist F N) :=
@@ -1086,6 +1080,7 @@ theorem zchartEquiv_mulSecOfEq_app (hL : L.IsLB) (σ : LB.Sec (lbZPow L m)) (h :
       resG X hi (zfun σ i) • zchartEquiv hL n i hi s := by
   rw [zchartEquiv_apply, zchartEquiv_apply, zcoord_mulSecOfEq_app, resM_smul, resG_resG]
 
+@[reassoc] theorem mulSecOfEq_naturality (σ : LB.Sec (lbZPow L m)) (h : n + m = k) (φ : F ⟶ G) :
     map (lbZPow L n) φ ≫ mulSecOfEq G σ h = mulSecOfEq F σ h ≫ map (lbZPow L k) φ :=
   zhom_ext fun V s i => by
     change zcoord ((mulSecOfEq G σ h).app V ((map (lbZPow L n) φ).app V s)) i =
@@ -1102,14 +1097,13 @@ theorem mulSecOfEq_comp_of_zfun {m'' : ℤ} (σ : LB.Sec (lbZPow L m)) (τ : LB.
     rw [zcoord_mulSecOfEq_app, zcoord_mulSecOfEq_app, zcoord_mulSecOfEq_app, hρ, map_mul, mul_comm,
       mul_smul]
 
-    (h₁ : n + m = k) (h₂ : k + m' = l) (h₃ : n + (m + m') = l) :
-    mulSecOfEq F σ h₁ ≫ mulSecOfEq F τ h₂ = mulSecOfEq F (zmul σ τ) h₃ :=
-  mulSecOfEq_comp_of_zfun σ τ _ (zfun_zmul σ τ) h₁ h₂ h₃
-
+@[reassoc] theorem mulSecOfEq_comm (σ : LB.Sec (lbZPow L m)) (τ : LB.Sec (lbZPow L m'))
     (h₁ : n + m = k) (h₂ : k + m' = l) (h₃ : n + m' = k') (h₄ : k' + m = l) :
-    mulSecOfEq F σ h₁ ≫ mulSecOfEq F τ h₂ = mulSecOfEq F τ h₃ ≫ mulSecOfEq F σ h₄ :=
-  (mulSecOfEq_comp σ τ h₁ h₂ (by omega)).trans
-    (mulSecOfEq_comp_of_zfun τ σ _ (fun i => (zfun_zmul σ τ i).trans (mul_comm _ _)) h₃ h₄ _).symm
+    mulSecOfEq F σ h₁ ≫ mulSecOfEq F τ h₂ = mulSecOfEq F τ h₃ ≫ mulSecOfEq F σ h₄ := by
+  have h₅ : n + (m + m') = l := by omega
+  have hστ := mulSecOfEq_comp_of_zfun (F := F) σ τ (zmul σ τ) (zfun_zmul σ τ) h₁ h₂ h₅
+  exact hστ.trans
+    (mulSecOfEq_comp_of_zfun τ σ _ (fun i => (zfun_zmul σ τ i).trans (mul_comm _ _)) h₃ h₄ h₅).symm
 
 theorem bijective_mulSecOfEq_app (hL : L.IsLB) (σ : LB.Sec (lbZPow L m)) (h : n + m = k)
     {V : X.Opens} (hV : V ≤ Out.nonzeroLocus σ) :
@@ -1230,7 +1224,8 @@ theorem zcoord_twistZAddIso_hom_app (hL : L.IsLB) (h : n + m = k) {V : X.Opens}
 @[reassoc] theorem twistZAddIso_naturality (hL : L.IsLB) (h : n + m = k) (φ : F ⟶ G) :
     map (lbZPow L m) (map (lbZPow L n) φ) ≫ (twistZAddIso G hL h).hom =
       (twistZAddIso F hL h).hom ≫ map (lbZPow L k) φ :=
-  twistTwistIso_naturality _ _ _ _ _ φ
+  (twistTwistNatIso (isLB_lbZPow hL n) (isLB_lbZPow hL m) (isLB_lbZPow hL k)
+    _ (isGen_zaddGen hL h)).hom.naturality φ
 
 end Pow
 
@@ -1334,6 +1329,7 @@ def zpull (σ : LB.Sec (lbZPow L m)) : LB.Sec (lbZPow (L.pull f) m) :=
     zfun (zpull f σ) j = (f.appLE _ _ (LB.pull_U_le f j)).hom (zfun σ (j PUnit.unit)) :=
   zfun_zmkGlobal _ _ j
 
+@[reassoc] theorem projZIso_mulSecOfEq (hL : L.IsLB) (G : Y.Modules) (σ : LB.Sec (lbZPow L m))
     (h : n + m = k) :
     (Scheme.Modules.pushforward f).map (mulSecOfEq G (zpull f σ) h) ≫ (projZIso f hL G k).hom =
       (projZIso f hL G n).hom ≫ mulSecOfEq ((Scheme.Modules.pushforward f).obj G) σ h :=

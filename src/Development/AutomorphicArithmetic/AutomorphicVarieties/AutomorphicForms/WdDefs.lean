@@ -105,8 +105,10 @@ def Line : Prop :=
     (O : Type) [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O] (Bw : LocBridge l F Ω (Dec (F := F) A) O) (hj : Induces Bw)
     (L : FinExt l) (V : Type) [AddCommGroup V] [Module ↥L.1 V] [Module ℚ_[l] V] [IsScalarTower ℚ_[l] ↥L.1 V]
     [FiniteDimensional ↥L.1 V] (ρ : Representation ↥L.1 ↥(GK Bw.Kw) V), finrank ↥L.1 V = 1 → ∀ (hV : IsPst P ρ)
-    (x : ↥(Dpst P ρ)), x ≠ 0 → ∀ c : ↥L.1, c ≠ 0 → (phiD P ρ ^ resDeg l w) x = c • x →
-    ∀ (σ : ↥(Weil h)) (s : ↥L.1), actD P ρ (weilToGK Bw h σ) x = s • x → ∀ y,
+    (x : ↥(Dpst P ρ)), x ≠ 0 → ∀ c : ↥L.1, c ≠ 0 →
+    (phiD P ρ ^ resDeg l w) x = (Dpst P ρ).module.toSMul.smul c x →
+    ∀ (σ : ↥(Weil h)) (s : ↥L.1),
+      actD P ρ (weilToGK Bw h σ) x = (Dpst P ρ).module.toSMul.smul s x → ∀ y,
       haveI := hV.finite; wdRho P ι Bw h hj ρ σ y = ι ((c ^ (-deg σ) * s : ↥L.1) : Om l) • y
 
 def TiltFrob : Prop :=

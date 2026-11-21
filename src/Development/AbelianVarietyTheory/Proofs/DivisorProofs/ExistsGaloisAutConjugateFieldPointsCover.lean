@@ -29,8 +29,13 @@ theorem eq_of_val_eq_fibre {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] 
   have hxz' : q (y' (IsLocalRing.closedPoint K)) = x := by rw [hx, hyy]; rfl
   obtain ⟨V, hV, hxV, -⟩ := exists_isAffineOpen_mem_and_subset (U := (⊤ : X.Opens)) (x := x) trivial
   have hU : IsAffineOpen (q ⁻¹ᵁ V) := hV.preimage q
-  have hsub : ∀ a ∈ M.ringOn (q ⁻¹ᵁ V : Set M.Z), a ∈ M.ringOn {z | q z = x} := fun a ha =>
-    M.ringOn_anti (fun z (hz : q z = x) => show q z ∈ V by rw [hz]; exact hxV) ha
+  have hsub : ∀ a ∈ M.ringOn (q ⁻¹ᵁ V : Set M.Z), a ∈ M.ringOn {z | q z = x} := by
+    have hsubset : {z : M.Z | q z = x} ⊆ (q ⁻¹ᵁ V : Set M.Z) := by
+      intro z hz
+      change q z ∈ V
+      rw [hz]
+      exact hxV
+    exact fun a ha => M.ringOn_anti hsubset ha
   have hzU : y (IsLocalRing.closedPoint K) ∈ q ⁻¹ᵁ V := show q _ ∈ V by rw [hxz]; exact hxV
   have hzU' : y' (IsLocalRing.closedPoint K) ∈ q ⁻¹ᵁ V := show q _ ∈ V by rw [hxz']; exact hxV
   have hr := range_eq_singleton y (IsLocalRing.closedPoint K)

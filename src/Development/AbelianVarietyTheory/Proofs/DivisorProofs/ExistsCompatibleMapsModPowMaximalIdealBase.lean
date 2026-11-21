@@ -26,7 +26,9 @@ theorem exists_maximalIdeal_pow_le_map_maximalIdeal (R : Type) [CommRing R] [IsL
       · exact IsLocalRing.le_maximalIdeal (Ideal.IsPrime.comap (algebraMap R R')).ne_top
       · exact Ideal.map_le_iff_le_comap.1 hIP
     have hmax : P.IsMaximal :=
-      Ideal.isMaximal_of_isIntegral_of_isMaximal_comap P (by rw [hc]; infer_instance)
+      Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := R) P (by
+        change (P.comap (algebraMap R R')).IsMaximal
+        rw [hc]; infer_instance)
     exact (IsLocalRing.eq_maximalIdeal hmax).ge
   obtain ⟨n, hn⟩ := Ideal.exists_radical_pow_le_of_fg _
     (IsNoetherian.noetherian ((maximalIdeal R).map (algebraMap R R')).radical)

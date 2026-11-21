@@ -93,7 +93,8 @@ def filTop : Submodule k (H0 p B O) where
   carrier := {f | VanishesTo I a f}
   zero_mem' y _ hy i hi := by rw [map_zero]; exact zero_mem _
   add_mem' hf hg y hs hy i hi := by
-    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hf y hs hy i hi) (hg y hs hy i hi)
+    rw [map_add]
+    exact add_mem (hf y hs hy i hi) (hg y hs hy i hi)
   smul_mem' c f hf y hs hy i hi := by
     rw [germ_smul]; exact Ideal.mul_mem_left _ _ (hf y hs hy i hi)
 
@@ -134,7 +135,7 @@ theorem resTo_mul {P N : LB Y} (C : ProdChart P B N) (h : SuppIn O I) (σ : H0 p
   C.pull_mul _ _ σ f
 
 theorem resTo_eq_zero_iff (h : SuppIn O I) {f : H0 p B O} : resTo h f = 0 ↔ VanishesTo I 1 f := by
-  refine ⟨fun e y hs hy i hi => ?_, fun hf => LB.sec_ext fun j => fun_ext_ger fun z hz => ?_⟩
+  refine ⟨fun e y hs hy i hi => ?_, fun hf => GlobalTheory.LB.sec_ext fun j => fun_ext_ger fun z hz => ?_⟩
   · obtain ⟨z, rfl⟩ := exists_ι_eq hs
     rw [pow_one, ← ker_stalkMap]
     exact (germ_resTo h (fun _ => i) z (mem_pull.2 hi) f).symm.trans (by rw [e, map_zero])
@@ -778,8 +779,8 @@ theorem stalkMap_const_of_comm (hq : r ≫ p = q ≫ spMap φ) (z : T) (c : k) :
 def pullChart (a : ChartPull B' B r) (hq : r ≫ p = q ≫ spMap φ) (h : W ≤ r ⁻¹ᵁ O) :
     H0 p B O →ₛₗ[φ] H0 q B' W where
   toFun := pullChartFun a q h
-  map_add' f g := LB.sec_ext fun _ => map_add _ _ _
-  map_smul' c f := LB.sec_ext fun i => fun_ext_ger fun z hz => by
+  map_add' f g := GlobalTheory.LB.sec_ext fun _ => map_add _ _ _
+  map_smul' c f := GlobalTheory.LB.sec_ext fun i => fun_ext_ger fun z hz => by
     change germ i z hz.1 hz.2 _ = germ i z hz.1 hz.2 _
     rw [germ_smul, germ_pullChartFun, germ_pullChartFun, ← stalkMap_const_of_comm hq, ← map_mul]
     exact congrArg _ (germ_smul _ _ _ _ _ _)

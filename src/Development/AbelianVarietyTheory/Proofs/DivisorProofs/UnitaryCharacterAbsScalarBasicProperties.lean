@@ -110,7 +110,7 @@ theorem _root_.GlobalTheory.KSp.sc_basic : ∀ (F : Type) [Field F] [CharZero F]
         (_root_.GlobalTheory.SplitWeil.nabs F t)⁻¹ := fun t =>
       eq_inv_of_mul_eq_one_left (by rw [← hmul, inv_mul_cancel, _root_.GlobalTheory.SplitWeil.nabs_one])
     rw [h1, hNc, hunit,
-      _root_.GlobalTheory.WeilM.ResEtaPow.map_conj hE hχ z, inv_inv,
+      _root_.GlobalTheory.WeilM.ResEtaPow.map_conj (c := c) hE hχ z, inv_inv,
       habs_inv, Real.inv_rpow hs.le, ← rpow_natCast_div_two_sq hs m]
     have ha0 : ((_root_.GlobalTheory.SplitWeil.nabs F (Units.map (Algebra.norm F : E →* F) z) ^
         ((m : ℝ) / 2) : ℝ) : ℂ) ≠ 0 := by

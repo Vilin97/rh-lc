@@ -65,11 +65,13 @@ theorem mem_unipRad_iff_blk {e : (Σ a, m a) ≃ n} {g : GL n R} :
 
 
 omit [LinearOrder α] in
-theorem leviEmb_apply_of_blk_ne (e : (Σ a, m a) ≃ n) (g : Levi R m) {i j : n}
+theorem leviEmb_apply_of_blk_ne [DecidableEq α] (e : (Σ a, m a) ≃ n) (g : Levi R m) {i j : n}
     (h : blk e i ≠ blk e j) : (leviEmb R e g : Matrix n n R) i j = 0 := by
   obtain ⟨⟨a, x⟩, rfl⟩ := e.surjective i
   obtain ⟨⟨b, y⟩, rfl⟩ := e.surjective j
-  exact leviEmb_apply_ne R e g (by simpa using h) x y
+  have hab : a ≠ b := by simpa using h
+  simpa [leviEmb, Matrix.reindex_apply] using
+    (Matrix.blockDiagonal'_apply_ne (fun c => (g c : Matrix (m c) (m c) R)) x y hab)
 
 theorem leviEmb_leviProj_of_blk (e : (Σ a, m a) ≃ n) (p : parab R e)
     (h : ∀ i j, blk e i ≠ blk e j → ((p : GL n R) : Matrix n n R) i j = 0) :
@@ -79,15 +81,16 @@ theorem leviEmb_leviProj_of_blk (e : (Σ a, m a) ≃ n) (p : parab R e)
   obtain ⟨⟨b, y⟩, rfl⟩ := e.surjective j
   by_cases hab : a = b
   · subst hab
-    rw [leviEmb_apply_same, leviProj_apply]
-  · rw [leviEmb_apply_ne R e _ hab, h _ _ (by simpa using hab)]
+    simp [leviEmb, Matrix.reindex_apply, leviProj_apply]
+  · have hblk : blk e (e ⟨a, x⟩) ≠ blk e (e ⟨b, y⟩) := by simpa using hab
+    rw [leviEmb_apply_of_blk_ne e _ hblk, h _ _ hblk]
 
 theorem leviProj_eq_of_coe_eq (e : (Σ a, m a) ≃ n) (p : parab R e) (g : Levi R m)
     (h : (p : GL n R) = leviEmb R e g) : leviProj R e p = g := by
-  rcases p with ⟨p, hp⟩
-  simp only at h
-  subst h
-  exact leviProj_leviEmb R e g
+  funext a
+  refine Units.ext (Matrix.ext fun i j => ?_)
+  rw [leviProj_apply, h]
+  simp [leviEmb, Matrix.reindex_apply]
 
 end Blocks
 
@@ -150,15 +153,7 @@ theorem hasFiniteLength_jacU_reindex (e : (Σ b, m' b) ≃ n') (ψ : n' ≃ n)
       simpa using hu.2 a x y
   · refine Units.ext (Matrix.ext fun i j => ?_)
     rw [hΦ]
-    obtain ⟨⟨a, x⟩, rfl⟩ := (e.trans ψ).surjective i
-    obtain ⟨⟨b, y⟩, rfl⟩ := (e.trans ψ).surjective j
-    simp only [Equiv.trans_apply, Equiv.symm_apply_apply, MonoidHom.id_apply]
-    by_cases hab : a = b
-    · subst hab
-      rw [leviEmb_apply_same, show ψ (e ⟨a, x⟩) = (e.trans ψ) ⟨a, x⟩ from rfl,
-        show ψ (e ⟨a, y⟩) = (e.trans ψ) ⟨a, y⟩ from rfl, leviEmb_apply_same]
-    · rw [leviEmb_apply_ne k e _ hab, show ψ (e ⟨a, x⟩) = (e.trans ψ) ⟨a, x⟩ from rfl,
-        show ψ (e ⟨b, y⟩) = (e.trans ψ) ⟨b, y⟩ from rfl, leviEmb_apply_ne k _ _ hab]
+    rfl
 
 end Stages
 

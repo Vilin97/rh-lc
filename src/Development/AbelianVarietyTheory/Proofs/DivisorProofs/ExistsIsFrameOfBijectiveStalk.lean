@@ -165,7 +165,6 @@ theorem isVB_X₁_of_shortExact : ∀ (X : Scheme.{0}) (S : ShortComplex X.Modul
             ← LinearMap.range_eq_top, Fintype.range_linearCombination]
           exact ⟨β.linearIndependent, β.span_eq⟩)
       convert this using 3
-      · rfl
       funext k
       rcases k with i | j
       · rw [Sum.elim_inl, Sum.elim_inl, ← he, QCoh.stalkLinear_germ]

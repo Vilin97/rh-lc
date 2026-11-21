@@ -79,9 +79,10 @@ theorem continuous_finAvgFun (g : CompactlySupportedContinuousMap (normOneGL (K 
     rw [Measure.restrict_univ]
     rfl
   rw [this]
-  refine continuous_parametric_integral_of_continuous ?_ isCompact_univ
-  exact g.continuous.comp (((continuous_finOne.comp (continuous_subtype_val.comp
-    continuous_snd)).inv).mul continuous_fst)
+  set_option synthInstance.maxHeartbeats 100000 in
+    refine continuous_parametric_integral_of_continuous ?_ isCompact_univ
+    exact g.continuous.comp (((continuous_finOne.comp (continuous_subtype_val.comp
+      continuous_snd)).inv).mul continuous_fst)
 
 theorem finAvgFun_eq_zero_of_notMem (g : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ)
     {x : normOneGL (K := K) (n := n)}
@@ -98,6 +99,7 @@ theorem isCompact_finOne_image : IsCompact ((fun u : U => finOne K n (u : Adelic
   have := compactSpace_of_isOpen U hU
   isCompact_univ.image (continuous_finOne.comp continuous_subtype_val)
 
+set_option synthInstance.maxHeartbeats 100000 in
 def finAvg (g : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ) :
     CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ :=
   ⟨⟨finAvgFun U hU g, continuous_finAvgFun U hU g⟩,
@@ -176,7 +178,7 @@ theorem exists_smooth_approx (μ : Measure (normOneGL (K := K) (n := n))) [μ.Is
     hbsupp.trans (image_subset_range _ _)
   set c := ∫ A : ArchUnits K n, b A ∂ν
   have hc : 0 < c := by
-    refine (hbsmooth.continuous.comp Units.continuous_val).integral_pos_of_hasCompactSupport_nonneg_nonzero
+    refine (hbsmooth.continuous.comp Units.continuous_val).integral_pos_of_hasCompactSupport_nonneg_ne_zero
       (x := 1) ?_ (fun A => hb0 _) (by simp [hb1])
     exact HasCompactSupport.intro (isCompact_unitsSupport hbc hbu) fun A hA =>
       image_eq_zero_of_notMem_tsupport (f := b) hA

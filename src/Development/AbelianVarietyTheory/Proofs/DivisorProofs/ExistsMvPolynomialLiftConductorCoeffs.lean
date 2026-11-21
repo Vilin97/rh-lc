@@ -34,12 +34,12 @@ theorem exists_mvPolynomial_lift_of_mem_conductor :
   refine ⟨∑ m ∈ G.support, MvPolynomial.monomial m (y m), ?_, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    refine Finset.sum_eq_zero fun m _ => ?_
-    rw [MvPolynomial.map_monomial, Ideal.Quotient.eq_zero_iff_mem.mpr (hy m), map_zero]
+      refine Finset.sum_eq_zero fun m _ => ?_
+      rw [MvPolynomial.map_monomial, Ideal.Quotient.eq_zero_iff_mem.mpr (hy m), map_zero]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    conv_rhs => rw [G.as_sum]
-    refine Finset.sum_congr rfl fun m _ => ?_
-    rw [MvPolynomial.map_monomial, hyG]
+      conv_rhs => rw [G.as_sum]
+      refine Finset.sum_congr rfl fun m _ => ?_
+      rw [MvPolynomial.map_monomial, hyG]
 
 end GlobalTheory

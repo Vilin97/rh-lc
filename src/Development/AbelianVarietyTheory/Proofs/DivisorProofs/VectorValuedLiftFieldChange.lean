@@ -159,7 +159,7 @@ theorem map_mem_nabStd {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeigh
     rw [← e, GlobalTheory.NabStab.toK_apply, GlobalTheory.NabStab.toK_apply, map_map, map_map]
     rfl
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul a x _ hx =>
     rw [map_smul_alg j (RingOfIntegers.mapRingHom j) (fun _ => rfl)]
     exact Submodule.smul_mem _ _ hx
@@ -318,7 +318,7 @@ theorem exists_ioLFRec_over : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
       induction hm using Submodule.span_induction with
       | mem x hx => exact Submodule.subset_span (hHa x hx)
       | zero => rw [map_zero]; exact zero_mem _
-      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
       | smul s x _ hx => rw [map_smul']; exact Submodule.smul_mem _ _ hx
     · rw [Submodule.span_le]
       intro P hP
@@ -348,11 +348,11 @@ theorem exists_ioLFRec_over : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     have h9 : ∀ i, ∃ v ∈ nab0M c (fun t => embF c (pl t)) lam, io v = cf (φ i) P := fun i =>
       h8 ⟨cf_mem_HHa (incF c c' hle) (hφ i) hP.1, fun m => by rw [coeff_cf]; exact hint i _ (hP.2 m)⟩
     choose v hv hv' using h9
-    refine ⟨∑ i, (e i : c'.F) • up (v i), ?_, ?_⟩
-    · refine Submodule.sum_mem _ fun i _ => ?_
-      exact Submodule.smul_mem _ (e i) ((m1 (up (v i))).2 (map_mem_nabStd _ lam ((n1 _).1 (hv i))))
     set_option synthInstance.maxHeartbeats 100000 in
+      refine ⟨∑ i, (e i : c'.F) • up (v i), ?_, ?_⟩
+      · refine Submodule.sum_mem _ fun i _ => ?_
+        exact Submodule.smul_mem _ (e i) ((m1 (up (v i))).2 (map_mem_nabStd _ lam ((n1 _).1 (hv i))))
       · rw [eq_sum_cf (incF c c' hle) _ φ hsum P, map_sum]
-      simp only [map_smul, hup, hv']
+        simp only [map_smul, hup, hv']
 
 end GlobalTheory.IoExtend

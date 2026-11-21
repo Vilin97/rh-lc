@@ -9,7 +9,7 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
 noncomputable section
 
 open scoped TensorProduct NNReal Matrix
-open NumberField MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.EisRes
+open NumberField MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet
 open IsDedekindDomain
 open GlobalTheory.Doubling (absE absEv absEw)
 

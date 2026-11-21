@@ -41,12 +41,13 @@ def liftWeight : Weight D (Vc D i).rank where
   c := liftC D i
   lam := lamV D i
 
-theorem liftWeight_good : (liftWeight D i).Good where
-  le τ := by
+theorem liftWeight_good : (liftWeight D i).Good := by
+  refine ⟨?_, ?_⟩
+  · intro τ
     obtain ⟨h1, h2⟩ := (GlobalTheory.PairWeightArith.arithAt D i τ).rank
     change pS D i τ + qS D i τ ≤ _
     omega
-  lam_eq τ a := by
+  · intro τ a
     have h := GlobalTheory.PairWeightArith.arithAt D i τ
     obtain ⟨h1, h2⟩ := h.rank
     obtain ⟨z, hz⟩ := h.d_int
@@ -60,11 +61,11 @@ theorem liftWeight_good : (liftWeight D i).Good where
     rw [h4, hc, GlobalTheory.IndefiniteRowSideFullHecke.InfinityTypes.thetaWt]
     congr 1
     by_cases k1 : a.val < pS D i τ
-    · rw [if_pos k1, if_pos k1]
-    · rw [if_neg k1, if_neg k1]
+    · rw [ite_eq_left k1, ite_eq_left k1]
+    · rw [ite_eq_right k1, ite_eq_right k1]
       by_cases k2 : a.val < pS D i τ + D.R.t
-      · rw [if_pos k2, if_neg (by omega)]
-      · rw [if_neg k2, if_pos (by omega)]
+      · rw [ite_eq_left k2, ite_eq_right (by omega)]
+      · rw [ite_eq_right k2, ite_eq_left (by omega)]
         congr 3
         omega
 

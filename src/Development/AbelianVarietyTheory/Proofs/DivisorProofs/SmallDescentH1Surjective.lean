@@ -82,12 +82,12 @@ theorem exists_isLoc (T : Thick κ s) (x : T.B) : ∃ (L : Thick κ s) (ι : T �
           obtain ⟨b, rfl⟩ := T.surj b
           rw [RingHom.comp_apply, hj₀, a.comm, ← hg]
           rfl }
-    exact ⟨ψ, Thick.hom_ext hg⟩
+    exact ⟨ψ, Thick.Hom.ext' (AlgHom.ext hg)⟩
 
 theorem IsLoc.hom_ext {T L S : Thick κ s} {ι : T ⟶ L} {x : T.B} (h : IsLoc ι x) {ψ ψ' : L ⟶ S}
     (e : ι ≫ ψ = ι ≫ ψ') : ψ = ψ' := by
   have e' : ∀ b, ψ.φ (ι.φ b) = ψ'.φ (ι.φ b) := fun b ↦ congrArg (fun u : T ⟶ S ↦ u.φ b) e
-  refine Thick.hom_ext fun c ↦ ?_
+  refine Thick.Hom.ext' (AlgHom.ext fun c ↦ ?_)
   obtain ⟨n, N, hc⟩ := h.2.1 c
   refine ((h.1.map ψ.φ).pow N).mul_right_cancel ?_
   rw [← map_pow, ← map_mul, hc, ← map_pow, e', e', ← map_mul, map_pow, hc]

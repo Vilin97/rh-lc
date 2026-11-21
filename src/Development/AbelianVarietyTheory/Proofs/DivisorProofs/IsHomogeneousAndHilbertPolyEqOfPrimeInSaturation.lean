@@ -154,7 +154,7 @@ private lemma coe_decompose_homogeneousSubmodule_eq_homogeneousComponent {K : Ty
     ((DirectSum.decompose (homogeneousSubmodule (Fin N) K) g n : MvPolynomial (Fin N) K)) =
       homogeneousComponent n g := by
   conv_lhs => rw [← sum_homogeneousComponent g]
-  rw [DirectSum.decompose_sum, DFinsupp.finset_sum_apply, AddSubmonoidClass.coe_finsetSum,
+  rw [DirectSum.decompose_sum, DFinsupp.finsetSum_apply, AddSubmonoidClass.coe_finsetSum,
     Finset.sum_eq_single n]
   · exact DirectSum.decompose_of_mem_same _ (homogeneousComponent_mem n g)
   · intro i _ hi

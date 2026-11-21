@@ -23,7 +23,7 @@ include hc
 
 theorem segDual_eq (Δ : Segment k) : segDual Δ =
     Segment.ofFirst ((dualCl Δ.first).nu (1 - (Δ.len : ℂ))) ((hc _ Δ.isCusp_first).nu _) Δ.len Δ.len_pos :=
-  dif_pos (hc _ Δ.isCusp_first)
+  dite_eq_left (hc _ Δ.isCusp_first)
 
 theorem first_segDual (Δ : Segment k) : (segDual Δ).first = (dualCl Δ.first).nu (1 - (Δ.len : ℂ)) := by
   rw [segDual_eq hc]; rfl
@@ -111,7 +111,41 @@ end
 
 theorem segDual_precedes : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (Δ Δ' : Segment k),
-    (segDual Δ).Precedes (segDual Δ') ↔ Δ'.Precedes Δ := fun hA Δ Δ' =>
-  segDual_precedes_iff (fun x hx => (GlobalTheory.T.dual_class_cuspidal hA x hx).1) (GlobalTheory.T.dual_class_twist_neg hA) (GlobalTheory.T.dual_class_involutive hA) Δ Δ'
+    (segDual Δ).Precedes (segDual Δ') ↔ Δ'.Precedes Δ := by
+  intro k _ _ _ _ hA Δ Δ'
+  have hadm (x : IrrGL (k := k)) : IsAdmissible x.rep :=
+    hA k x.1 _ x.rep x.2.rep.smooth x.2.rep.irr
+  have hirr (x : IrrGL (k := k)) : (contra x.rep).IsIrreducible :=
+    GlobalTheory.ContraRefl.contra_isIrreducible
+      (GlobalTheory.SqIntUnit.compactOpen_basis k x.1) (hadm x) x.2.rep.irr
+  have hdual (x : IrrGL (k := k)) :
+      dualCl x = IrrGL.of (contra x.rep) (isSmooth_contra _) (hirr x) :=
+    dite_eq_left (hirr x)
+  have hc (x : IrrGL (k := k)) (hx : x.IsCusp) : (dualCl x).IsCusp := by
+    rw [hdual x, IrrGL.isCusp_of]
+    exact ⟨hx.1, GlobalTheory.SuperCusp.isCuspidal_of_isSupercuspidal k x.1 _ _
+      (GlobalTheory.CompanionTheory.DualCusp.isSupercuspidal_contra
+        (GlobalTheory.SqIntUnit.compactOpen_basis k x.1) (hadm x)
+        (GlobalTheory.CuspCoef.isSupercuspidal_of_isCuspidal k x.1 _ _ hx.2))⟩
+  have hn (x : IrrGL (k := k)) (s : ℂ) : dualCl (x.nu s) = (dualCl x).nu (-s) := by
+    have hs : IsSmoothChar (absPow k s) := isSmoothChar_absPow s
+    have hs_neg : IsSmoothChar (absPow k (-s)) := isSmoothChar_absPow (-s)
+    have hmul : absPow k s * absPow k (-s) = 1 := by
+      rw [absPow_neg, mul_inv_cancel]
+    obtain ⟨e⟩ := GlobalTheory.CompanionTheory.ZcDual.nonempty_equiv_contra_twist
+      hA x.rep x.2.rep.smooth x.2.rep.irr hs hs_neg hmul
+    rw [hdual (x.nu s), hdual x]
+    change IrrGL.of (contra (x.nu s).rep) _ _ =
+      (IrrGL.of (contra x.rep) _ _).tw (absPow k (-s)) hs_neg
+    rw [IrrGL.tw_of]
+    exact IrrGL.of_eq_of.mpr ⟨(GlobalTheory.ContraRefl.contraEquiv (x.twEquiv _ hs)).trans e.symm⟩
+  have hd (x : IrrGL (k := k)) : dualCl (dualCl x) = x := by
+    rw [hdual x, hdual]
+    conv_rhs => rw [← IrrGL.of_rep x]
+    exact IrrGL.of_eq_of.mpr ⟨
+      (GlobalTheory.ContraRefl.contraEquiv (IrrGL.equivOf (contra x.rep) _ _)).trans
+        (GlobalTheory.ContraRefl.evEquiv
+          (GlobalTheory.SqIntUnit.compactOpen_basis k x.1) (hadm x)).symm⟩
+  exact segDual_precedes_iff hc hn hd Δ Δ'
 
 end GlobalTheory.CompanionTheory.SegDualPrec

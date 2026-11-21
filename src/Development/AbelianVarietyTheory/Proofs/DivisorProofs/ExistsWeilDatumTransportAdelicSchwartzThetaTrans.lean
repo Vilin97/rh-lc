@@ -74,7 +74,7 @@ theorem isThetaFunO_thV (hψ : IsStdChar D ψ (-1)) (he : ∀ w w', symplO S T w
     rw [heisO_comp he, ← thV_schr, hU (e u) hu ((hinf u).1 h0).1 ((hinf u).1 h0).2]
   · refine GlobalTheory.T.contDiff_of_heisenbergDerivativeClosedClass D ψ hψ S T {f | ∃ Φ ∈ GlobalTheory.WeilM.schA D.host.F (Fin N), f = thV ψ Φ ∘ e} ?_ ?_ _ ⟨Φ, hΦ, rfl⟩
     · rintro _ ⟨Φ, hΦ, rfl⟩
-      exact hcont Φ hΦ
+      apply hcont Φ hΦ
     · rintro _ ⟨Φ, hΦ, rfl⟩ M hM hM0
       obtain ⟨Φ', hΦ', hd⟩ := GlobalTheory.T.hasDerivAt_heisenbergOperator_thetaTransform_realLine D.host.F N ψ hR hψ.1 Φ hΦ (e.toLinearMap.toAddMonoidHom.comp M)
         ⟨hc.comp hM, fun t => (hfin _).1 (hM0 t)⟩
@@ -322,6 +322,8 @@ theorem thetaTr_eq {N : ℕ} (σ : κ ≃ Fin N) (Φ : (κ → AF D.host.F) → 
   rw [e]
   simp only [GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr, comp_equiv_dotProduct_comp_equiv]
   congr 2
+  funext i
+  simp
 
 theorem thetaTr_bij (hψ : IsStdChar D ψ (-1)) (hA : JA = T.gramᵀ)
     (hB : ξ • incM D.host.F JB = incM D.host.F (D.host.xi0 • S.gram⁻¹))

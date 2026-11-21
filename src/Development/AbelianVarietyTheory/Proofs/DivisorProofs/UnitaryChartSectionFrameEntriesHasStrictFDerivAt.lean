@@ -34,6 +34,6 @@ theorem yF_hasStrictFDerivAt {E : Type} [Field E] [NumberField E] [IsCMField E] 
     simp only [Matrix.mul_apply]
     refine ContDiffAt.sum fun k _ => ?_
     exact (hN τ a k).mul (hB τ k b)
-  exact hY.hasStrictFDerivAt (by simp)
+  exact hY.hasStrictFDerivAt_fderiv (by simp)
 
 end GlobalTheory.SUChartSection

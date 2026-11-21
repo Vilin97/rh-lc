@@ -96,10 +96,10 @@ theorem exists_labels_finExt_emb : ∀ (R : Type) [CommRing R] [IsDomain R] [IsL
         IsPullGtF ρ hD (Kb R₁) p₁.g p'.g ∧ x.left ≫ a = spMap emK.toRingHom ≫ (lab k p).left := by
     intro k p'
     by_cases hk : 1 ≤ k
-    · obtain ⟨p₁, rfl⟩ := pullQk_surjective hD hGF c' hB D₁.tau_bimult p'
+    · obtain ⟨p₁, hy, hg⟩ := qkPullExists hGF R R₁ ρ D.toPre D₁.toPre hD (Kb R₁) c' k p'
       obtain ⟨p, hp⟩ := exists_of_ext hB emK hk p₁
       obtain ⟨x, hx⟩ := exists_lift_pt gpa.1 emK.toRingHom emK.comp_algebraMap (lab k p)
-      exact ⟨x, fun _ => ⟨p, p₁, hp, rfl, isPullGtF_pullGt hD hGF c' _, hx⟩⟩
+      exact ⟨x, fun _ => ⟨p, p₁, hp, hy, hg, hx⟩⟩
     · exact ⟨η[A₁.A] |> fun e => toUnit _ ≫ e, fun h => absurd h hk⟩
   choose lab₁ hlab₁ using ex
   refine ⟨inferInstance, emK, lab₁, c', ?_, ?_⟩

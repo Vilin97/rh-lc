@@ -51,7 +51,6 @@ theorem coc_mem_symCocycles (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A]
         rw [LinearMap.rTensor_tmul, lift_tmul]
         simp only [i12, AlgHom.convMul_apply, ofConv_toConv]
         induction (Coalgebra.comul (R := R) a : H ⊗[R] H) with
-        | zero => simp
         | add x y hx hy => simp only [add_tmul, map_add (f := _), hx, hy, add_mul]
         | tmul a1 a2 => simp [i1, i2, i3, Algebra.TensorProduct.tmul_mul_tmul, includeLeft_apply, includeRight_apply]
     have e3 : ∀ x : H ⊗[R] H, (Coalgebra.comul (R := R) (A := H)).lTensor H x = lift i1 i23 (fun _ _ ↦ Commute.all _ _) x := by
@@ -62,7 +61,6 @@ theorem coc_mem_symCocycles (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A]
         rw [LinearMap.lTensor_tmul, lift_tmul]
         simp only [i23, AlgHom.convMul_apply, ofConv_toConv]
         induction (Coalgebra.comul (R := R) b : H ⊗[R] H) with
-        | zero => simp
         | add x y hx hy => simp only [tmul_add, map_add (f := _), hx, hy, mul_add]
         | tmul b1 b2 => simp [i1, i2, i3, Algebra.TensorProduct.tmul_mul_tmul, includeLeft_apply, includeRight_apply]
     have e4 : ∀ x : H ⊗[R] H, ((TensorProduct.mk R H H).flip 1).lTensor H x =
@@ -72,9 +70,8 @@ theorem coc_mem_symCocycles (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A]
       | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
       | tmul a b => simp [i1, i2, Algebra.TensorProduct.tmul_mul_tmul, includeLeft_apply, includeRight_apply]
     rw [cobTwo_apply, e1, e2, e3, e4, V, V, V, V]
-    simp only [i12, i23, toConv_ofConv, M, mul_assoc]
+    simp only [i12, i23, toConv_ofConv, M, _root_.mul_assoc]
     have hc := (hg (H ⊗[R] (H ⊗[R] H))).2 (spOver i1 ≫ t.y n) (spOver i2 ≫ t.y n) (spOver i3 ≫ t.y n)
-    rw [mul_assoc (toConv i1)]
     linear_combination hc
   · have e : ∀ x : H ⊗[R] H, TensorProduct.comm R H H x =
         lift (includeRight : H →ₐ[R] H ⊗[R] H) (includeLeft : H →ₐ[R] H ⊗[R] H) (fun _ _ ↦ Commute.all _ _) x := by

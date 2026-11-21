@@ -23,7 +23,7 @@ theorem mulP_mem_kerIdeal_comp_of_app_eq_zero (p : ℕ) [Fact p.Prime] (R : Type
   have hx := (kerIdeal_le_ker_iff ((G.mulP 1).comp (f.app 1)) x).1
     fun c hc => Ideal.Quotient.eq_zero_iff_mem.2 hc
   let y := x.comp (f.app 2 : H.A 2 →ₐ[R] G.A 2)
-  have hy : torsionIdeal R (H.A 2) p ≤ RingHom.ker y :=
+  have hy : torsionIdeal (R := R) (A := H.A 2) p ≤ RingHom.ker y :=
     (kerIdeal_le_ker_iff _ y).2 fun z => by
       have e : f.app 2 (mulBy R _ p z) = G.mulP 1 (f.app 1 (H.res 1 z)) := by
         rw [map_mulBy, ← PDivGroup.res_app, mulP_res]
@@ -32,8 +32,8 @@ theorem mulP_mem_kerIdeal_comp_of_app_eq_zero (p : ℕ) [Fact p.Prime] (R : Type
       exact (congrArg x e).trans this
   obtain ⟨b, rfl⟩ := G.res_surjective 1 a
   rw [← PDivGroup.res_app] at ha
-  have hb : g.app 2 b ∈ torsionIdeal R (H.A 2) p := by
-    have : g.app 2 b ∈ torsionIdeal R (H.A 2) (p ^ 1) := by
+  have hb : g.app 2 b ∈ torsionIdeal (R := R) (A := H.A 2) p := by
+    have : g.app 2 b ∈ torsionIdeal (R := R) (A := H.A 2) (p ^ 1) := by
       rw [← H.ker_res 1]
       exact ha
     rwa [pow_one] at this

@@ -318,9 +318,9 @@ theorem depth_mul_of_disjoint_columns : ∀ (C : Type) [Field C] [CharZero C]
   intro C _ _ v κ _ _ d G ι _ _ u S P Q hP hQ
   classical
   have hP' : ∀ α ∈ P.support, ∀ y ∈ α.support, y ∈ {y : Σ b, ι b | y.1 ∈ S} :=
-    fun α hα y hy => hP y ((MvPolynomial.mem_vars y).2 ⟨α, hα, hy⟩)
+    fun α hα y hy => hP y ((MvPolynomial.mem_vars_iff_mem_support y).2 ⟨α, hα, hy⟩)
   have hQ' : ∀ α ∈ Q.support, ∀ y ∈ α.support, y ∉ {y : Σ b, ι b | y.1 ∈ S} :=
-    fun α hα y hy => hQ y ((MvPolynomial.mem_vars y).2 ⟨α, hα, hy⟩)
+    fun α hα y hy => hQ y ((MvPolynomial.mem_vars_iff_mem_support y).2 ⟨α, hα, hy⟩)
   let l : ((Σ b, Fin (d b)) →₀ ℕ) → ((Σ b, Fin (d b)) →₀ ℕ) := fun γ => γ.filter fun x => x.1 ∈ S
   let r : ((Σ b, Fin (d b)) →₀ ℕ) → ((Σ b, Fin (d b)) →₀ ℕ) := fun γ => γ.filter fun x => x.1 ∉ S
   have hsplit : ∀ γ, monAlong G u γ = monAlong G u (l γ) * monAlong G u (r γ) := fun γ => by

@@ -336,7 +336,7 @@ theorem exists_approx [IsLocalRing A] [Algebra.IsInvariant A B G] (q : Ideal B) 
   haveI : Algebra.IsIntegral A B := Algebra.IsInvariant.isIntegral A B G
   have hcomap : q.comap (algebraMap A B) = maximalIdeal A := by
     haveI : (q.comap (algebraMap A B)).IsMaximal :=
-      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal q
+      Ideal.isMaximal_under_of_isIntegral_of_isMaximal q
     exact IsLocalRing.eq_maximalIdeal this
   have hm : ∀ a ∈ maximalIdeal A, algebraMap A B a ∈ q := fun a ha => by
     rw [← hcomap] at ha; exact ha

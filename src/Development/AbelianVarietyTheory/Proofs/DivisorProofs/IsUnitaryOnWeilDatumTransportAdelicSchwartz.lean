@@ -55,7 +55,17 @@ theorem isUnitaryOn_transportF : ∀ (F E : Type) [Field F] [NumberField F] [Fie
      GlobalTheory.T.continuous_thetaTransform_schwartz_cm F E σ B hB hψ nS nT JS JT hS hT ξ₀ h0 hσ JA JB ξ hA hBm κ co hrat Φ hΦ,
      GlobalTheory.T.contDiff_thetaTransform_archimedean_cm F E σ B hB hψ nS nT JS JT hS hT ξ₀ h0 hσ JA JB ξ hA hBm κ co hrat Φ hΦ⟩
   have ht := hom a b g h hh hg Φ hΦ
-  rw [hiso _ ht.1, hiso _ hΦ, ht.2, hω.om_unit ν 𝓕 hν h𝓕 _ _ hth]
+  calc
+    _ = c * ∫⁻ w in 𝓕, ‖GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ ((om (a, b)) Φ) w‖ₑ ^ 2 ∂ν := hiso _ ht.1
+    _ = c * ∫⁻ w in 𝓕, ‖GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ Φ w‖ₑ ^ 2 ∂ν := by
+      calc
+        _ = c * ∫⁻ w in 𝓕, ‖(ω (g, h)) (GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ Φ) w‖ₑ ^ 2 ∂ν := by
+          congr 1
+          apply lintegral_congr
+          intro w
+          exact congrArg (fun z : ℂ => ‖z‖ₑ ^ 2) (congrFun ht.2 w)
+        _ = _ := congrArg (c * ·) (hω.om_unit ν 𝓕 hν h𝓕 _ _ hth)
+    _ = _ := (hiso _ hΦ).symm
 
 end GlobalTheory.WeilUnitaryTransportF
 

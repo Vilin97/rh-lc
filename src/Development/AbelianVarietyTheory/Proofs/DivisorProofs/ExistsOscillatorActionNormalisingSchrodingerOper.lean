@@ -73,7 +73,7 @@ theorem diagonal_sgn : (diagonal fun n : Ix R S × (ι × Ix P Q) => if sgn n th
   ext ⟨b, w, a⟩ ⟨b', w', a'⟩
   rcases a with a | a <;> rcases b with b | b <;> rcases b' with b' | b' <;>
     simp [diagonal_apply, blockDiagonal_apply, Jm, Formalism.UG.Jpq, sgn, linePos, one_apply, Prod.ext_iff] <;>
-    split_ifs <;> simp_all
+    split_ifs <;> simp_all [Matrix.one_apply]
 
 theorem blockDiagonal_mem (M : ι → Mat R S) (hM : ∀ w, (M w)ᴴ * Jm R S * M w = Jm R S) :
     (blockDiagonal fun o : ι × Ix P Q => M o.1)ᵀ *
@@ -205,7 +205,8 @@ theorem coordOf_mulVec {G : Type} [Group G] (k : G →* (ι → Mat R S)) (hk : 
   rw [numHom_apply, reindex_apply, submatrix_mulVec_equiv]
   funext w
   ext a b
-  simp [coordOf, mulVec, dotProduct, blockDiagonal_apply, Fintype.sum_prod_type, mul_apply, Finset.mul_sum, ite_mul]
+  simp only [Matrix.mul_apply, transpose_apply, coordOf]
+  simp [mulVec, dotProduct, blockDiagonal_apply, Fintype.sum_prod_type, ite_mul]
   rw [mul_add, Finset.mul_sum, Finset.mul_sum]
   congr 1 <;> exact Finset.sum_congr rfl fun _ _ => by ring
 

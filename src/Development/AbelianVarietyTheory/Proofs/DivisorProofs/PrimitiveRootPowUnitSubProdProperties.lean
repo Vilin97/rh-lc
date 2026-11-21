@@ -34,7 +34,7 @@ lemma transfer2 {q : ℕ} [NeZero q] {A : Type} [CommRing A] (ζ : Prim q A) (F 
   ext k
   rw [coeff_map, coeff_zero]
   apply transfer ζ
-  have := congrArg (fun G => coeff G k) hF
+  have := congrArg (fun G : ℂ[X] => G.coeff k) hF
   simpa [coeff_map] using this
 
 lemma nthRoots_eq (q : ℕ) [NeZero q] :

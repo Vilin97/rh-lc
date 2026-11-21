@@ -55,7 +55,7 @@ theorem henselianLocalRing_hens : ∀ (R : Type) [CommRing R] [IsLocalRing R],
   set ρ := algebraMap R (Hens R) r with hρdef
   have hρ : a₀ - ρ ∈ maximalIdeal (Hens R) := by
     haveI := hofloc i'
-    rw [← hb₀, hρdef, ← GlobalTheory.T.etaleNbhdLocalRingToHenselisation_algebraMap R i' r, ← map_sub]; exact map_nonunit _ _ hr
+    rw [← hb₀, hρdef, ← GlobalTheory.T.etaleNbhdLocalRingToHenselisation_algebraMap R i' r, ← (Hens.of i').map_sub b₀ ((algebraMap R i'.B) r)]; exact map_nonunit _ _ hr
   have hfρ : f.eval ρ ∈ maximalIdeal (Hens R) := by
     have hd := sub_dvd_eval_sub ρ a₀ f
     have : f.eval ρ - f.eval a₀ ∈ maximalIdeal (Hens R) := by
@@ -124,7 +124,7 @@ theorem henselianLocalRing_hens : ∀ (R : Type) [CommRing R] [IsLocalRing R],
     rw [← hhΦ, ← hΦj, ← Polynomial.map_map, eval_map, eval₂_at_apply, hc.eq_zero, map_zero]
   have hcm' : c' - u * ρ ∈ maximalIdeal (Hens R) := by
     have := map_nonunit (Hens.of j) _ hcm
-    rwa [map_sub, ← RingHom.comp_apply (Hens.of j) (EtNbhd.trans hij),
+    rwa [(Hens.of j).map_sub c ((EtNbhd.trans hij) (ψ a₀')), ← RingHom.comp_apply (Hens.of j) (EtNbhd.trans hij),
       ← RingHom.comp_apply ((Hens.of j).comp (EtNbhd.trans hij)) ψ, hofj,
       show (Hens.of i).comp ψ = Φ from rfl, hΦa₀'] at this
   refine ⟨↑hu.unit⁻¹ * c', ?_, ?_⟩

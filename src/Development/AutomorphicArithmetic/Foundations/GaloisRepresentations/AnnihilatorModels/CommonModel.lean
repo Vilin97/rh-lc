@@ -60,7 +60,8 @@ def DetCore : Prop :=
 def WdLift : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (ι : Om l ≃+* ℂ) (K LL : FinExt l) (V : Type) [AddCommGroup V] [Module ↥LL.1 V]
     [Module ℚ_[l] V] [IsScalarTower ℚ_[l] ↥LL.1 V] (ρ : Representation ↥LL.1 ↥(GK K) V) (N : Type) [AddCommGroup N] [Module ℂ N]
-    (κ : ↥(Dpst P ρ) → N), (∀ x y, κ (x + y) = κ x + κ y) → (∀ (c : ↥LL.1) x, κ (c • x) = ι (c : Om l) • κ x) →
+    (κ : ↥(Dpst P ρ) → N), (∀ x y, κ (x + y) = κ x + κ y) →
+    (∀ (c : ↥LL.1) x, κ ((Dpst P ρ).module.toSMul.smul c x) = ι (c : Om l) • κ x) →
     (∀ (c : ↥(MaximalUnramifiedExtension l)) x, κ (mulD P ρ c x) = ι (c : Om l) • κ x) → ∃ j : WDSpace P ι ρ →ₗ[ℂ] N, ∀ x, j (wdMk P ι ρ x) = κ x
 
 def DetMem : Prop :=
@@ -101,7 +102,8 @@ def DetE : Prop :=
     (∀ g, Matrix.GeneralLinearGroup.det (c g) = Matrix.GeneralLinearGroup.det (r g)) → IsSst P (Bw.repE LL r) →
     ∀ (hr : IsPst P (Bw.repE LL r)) (hc : IsPst P (Bw.repE LL c)) (g : ↥(Weil h)), deg g = -1 →
       haveI := hr.finite; haveI := hc.finite
-      LinearMap.det (wdRho P ι Bw h hj (Bw.repE LL r) g) = LinearMap.det (wdRho P ι Bw h hj (Bw.repE LL c) g)
+      LinearMap.det (GlobalTheory.Pst.wdRho P ι Bw h hj (Bw.repE LL r) g) =
+        LinearMap.det (GlobalTheory.Pst.wdRho P ι Bw h hj (Bw.repE LL c) g)
 
 def CommonModel : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P), Nonempty (LocTied l P AI) →

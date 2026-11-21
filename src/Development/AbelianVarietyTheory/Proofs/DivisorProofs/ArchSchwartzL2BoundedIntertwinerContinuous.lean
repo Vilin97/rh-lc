@@ -36,7 +36,14 @@ theorem realcont : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ
   have hnd : ∀ a, a ≠ 0 → ∃ b, β (a * b) ≠ 0 := by
     intro a ha
     have ha' : (InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F).symm a ≠ 0 := by
-      simpa using ha
+      intro h
+      apply ha
+      calc
+        a = (InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F)
+            ((InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F).symm a) :=
+          ((InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F).apply_symm_apply a).symm
+        _ = (InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F) 0 := congrArg _ h
+        _ = 0 := map_zero _
     obtain ⟨b, hb⟩ := GlobalTheory.T.realTrace_archimedeanEmbeddings_nondegenerate D θ hθ _ ha'
     refine ⟨InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F b, ?_⟩
     rw [hβ2, map_mul, RingEquiv.symm_apply_apply]

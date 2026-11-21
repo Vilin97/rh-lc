@@ -21,16 +21,17 @@ open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.
 namespace GlobalTheory.PDiv
 
 theorem isHopfIdeal_kerIdeal {R A C : Type} [CommRing R] [CommRing A] [CommRing C]
-    [HopfAlgebra R A] [HopfAlgebra R C] (f : C →ₐc[R] A) : (kerIdeal f).IsHopfIdeal R where
-  counit_eq_zero x hx := by
+    [HopfAlgebra R A] [HopfAlgebra R C] (f : C →ₐc[R] A) : (kerIdeal f).IsHopfIdeal R := by
+  refine { toIsCoideal := { counit_eq_zero := ?_, map_mkQ_comul_eq_zero := ?_ },
+           antipode_mem := ?_ }
+  · intro x hx
     have hle : kerIdeal f ≤ augIdeal R A := by
       refine Ideal.map_le_iff_le_comap.mpr fun c hc => ?_
       have hc' : counit (R := R) c = 0 := by simpa using hc
       rw [Ideal.mem_comap, RingHom.mem_ker]
       simpa [CoalgHomClass.counit_comp_apply] using hc'
     simpa using hle hx
-  map_mkQ_comul_eq_zero := by
-    intro x hx
+  · intro x hx
     let Q := A ⧸ kerIdeal f
     let q := Ideal.Quotient.mkₐ R (kerIdeal f)
     let Φ : A →ₐ[R] Q ⊗[R] Q := (Algebra.TensorProduct.map q q).comp (Bialgebra.comulAlgHom R A)
@@ -61,8 +62,7 @@ theorem isHopfIdeal_kerIdeal {R A C : Type} [CommRing R] [CommRing A] [CommRing 
       rw [hsplit, LinearMap.comp_apply, Coalgebra.rTensor_counit_comul, TensorProduct.map_tmul]
       simp [hc']
     exact hΦ hx
-  antipode_mem := by
-    have h0 : ((1 : WithConv (A →ₐ[R] A)).ofConv).comp (f : C →ₐ[R] A) =
+  · have h0 : ((1 : WithConv (A →ₐ[R] A)).ofConv).comp (f : C →ₐ[R] A) =
         (1 : WithConv (C →ₐ[R] A)).ofConv := by
       ext c
       simp [CoalgHomClass.counit_comp_apply]

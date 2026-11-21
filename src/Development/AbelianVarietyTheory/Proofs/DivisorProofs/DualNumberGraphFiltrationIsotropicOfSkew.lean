@@ -46,8 +46,23 @@ theorem graphFil_isotropic : ∀ (k : Type) [Field k] (A₀ : Over (Sp k)) [GrpO
   have := hA.smooth
   obtain ⟨g, hg⟩ := GlobalTheory.SerreDim.exists_dim_of_grpObj A₀
   have iso := GlobalTheory.PrincipalPolPairing.isotropic GlobalTheory.abelianDeRham hA hg hP hφ
-  have C := GlobalTheory.PolFormNabla.cupSquare_eps (AbelianSchemeGerms.isAbelianScheme_tensor A₀ A₀ hA hA)
-    (GlobalTheory.AbDual.smooth_prod hg hg)
+  have C : GlobalTheory.AbDual.CupSquare (epsDP k) (GlobalTheory.DeRham.epsRed k) (A₀ ⊗ A₀) := by
+    obtain ⟨C, _, φ, j, hφ, hic, -⟩ := exists_const (A₀ ⊗ A₀)
+    have hAB := AbelianSchemeGerms.isAbelianScheme_tensor A₀ A₀ hA hA
+    have hC : IsAbelianScheme C := by
+      have := hAB.comm
+      refine { comm := ?_, smooth := MorphismProperty.of_isPullback (P := @Smooth) hφ.1 hAB.smooth
+               proper := MorphismProperty.of_isPullback (P := @IsProper) hφ.1 hAB.proper
+               geomConnected := MorphismProperty.of_isPullback (P := @GeometricallyConnected) hφ.1 hAB.geomConnected }
+      rw [isCommMonObj_iff_isMulCommutative]
+      intro T
+      refine ⟨⟨fun x y => Over.OverMorphism.ext (hφ.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+      rw [← hφ.2 T x y (pushPt hφ.1.w x) (pushPt hφ.1.w y) rfl rfl,
+        ← hφ.2 T y x (pushPt hφ.1.w y) (pushPt hφ.1.w x) rfl rfl, _root_.mul_comm]
+    have gC := (smoothOfRelativeDimension_isStableUnderBaseChange _).of_isPullback hφ.1 (GlobalTheory.AbDual.smooth_prod hg hg)
+    have su : Function.Surjective (TrivSqZeroExt.fstHom k k k).toRingHom := fun r => ⟨TrivSqZeroExt.inl r, rfl⟩
+    exact GlobalTheory.Published.AbelianDualCrystal.cupSquare_crys GlobalTheory.abelianDeRham.1 GlobalTheory.abelianDualCrystal.2
+      (isDPNilpotent_squareZero _) su rfl hC gC hic.1 (liftMor (epsDP k) hic)
   have e : LBIso (P.pull (𝟙 _)) P :=
     (CechPic.cls_eq_iff (pull_isLB hP _) hP).1 (by rw [CechPic.cls_pull hP, CechPic.pull_id])
   obtain ⟨χ, hχ, hk⟩ := hφ.pull hP (constMor A₀) (constMor A₀) (h := 𝟙 _) (by simp) (by simp) hP e

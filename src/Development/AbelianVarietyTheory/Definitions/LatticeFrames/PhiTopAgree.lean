@@ -44,7 +44,7 @@ structure Comparison₂ (P : HeightOneSpectrum (𝓞 E)) (q : ℕ) (ι : E →+*
     (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K) (χ : ℕ → (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {s κ : ℕ} (S : SymData k s κ) : Prop where
   compl : IsCompl P q ι S.ϖ
   psi : ∀ a, IntAt P a → (S.ψ (ι (a / (q : E))) : ℂ) = σ₀ (ψ₀ (redP P a))
-  chi : ∀ i a (u : kˣ), IntAt P a → IsUnit (redP P a) → (u : k) = ι a → (S.μ (i + 1) u : ℂ) = σ₀ (LocE.unitV P (χ i) a)
+  chi : ∀ i a (u : kˣ), IntAt P a → IsUnit (redP P a) → (u : k) = ι a → (S.μ (i + 1) u : ℂ) = σ₀ (LocE.unitV (χ i) a)
 
 variable (P : HeightOneSpectrum (𝓞 E)) (q : ℕ) (ι : E →+* k) (σ₀ : K →+* ℂ)
   (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K) (χ : ℕ → (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {s κ : ℕ} (S : SymData k s κ)

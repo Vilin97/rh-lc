@@ -149,11 +149,9 @@ theorem quasiLog_pull : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP
     rw [lin_subst _ hΦ0]
     choose a ha ha' using hw
     refine ⟨∑ j, a j * WittVector.teichmuller p (lin (φ j) i), ?_, ?_⟩
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [pullLin, map_sum, map_mul, ha]
-      rfl
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [pullLin, map_sum, map_mul, ha', WittVector.teichmuller_coeff_zero]
-      rfl
+    · simp only [pullLin, map_sum, map_mul, ha]
+      simp only [lin, coeff_lift]
+    · simp only [pullLin, ← WittVector.constantCoeff_apply, map_sum, map_mul,
+        WittVector.constantCoeff_apply, ha', WittVector.teichmuller_coeff_zero]
 
 end GlobalTheory.KatzPull

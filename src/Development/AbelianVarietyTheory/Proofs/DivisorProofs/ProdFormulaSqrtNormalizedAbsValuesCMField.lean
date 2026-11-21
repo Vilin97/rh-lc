@@ -18,7 +18,7 @@ theorem absHalf_eq_sqrt_norm (w : Pl E) {y : w.adicCompletion E} (hy : y ≠ 0) 
   unfold absHalf
   congr 2
   rw [FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hv, ordL, dite_eq_right hv, neg_neg]
-  simp [qV]
+  simp [qV, WithZero.toAdd_unzero_eq_log]
 
 theorem absHalf_prodFormula : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (x : E), x ≠ 0 →
     (Function.mulSupport fun w : Pl E => absHalf w (algebraMap E (w.adicCompletion E) x)).Finite ∧

@@ -61,6 +61,8 @@ theorem thetaSum_schr_rat (F : Type) [Field F] [NumberField F] [Invertible (2 : 
   congr 1
   funext ξ
   congr 1
+  funext i
+  exact (map_add (algebraMap F (AdeleRing (𝓞 F) F)) (ξ i) (y i)).symm
 
 end GlobalTheory.ThetaQuasiRat
 

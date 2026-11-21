@@ -107,7 +107,8 @@ theorem commensurable_conj_range_GL_subring {B : Type} [CommRing B] (R : Subring
     Subgroup.Commensurable ((GeneralLinearGroup.map R.subtype).range.map (MulAut.conj g).toMonoidHom)
       (GeneralLinearGroup.map R.subtype).range := by
   set K := (GeneralLinearGroup.map (n := Fin n) R.subtype).range
-  refine ⟨glcong_relIndex_ne_zero R c hfin g hg hg', ?_⟩
+  refine ⟨⟨glcong_relIndex_ne_zero R c hfin g hg hg'⟩, ?_⟩
+  rw [Subgroup.isFiniteRelIndex_iff_relIndex_ne_zero]
   have e := Subgroup.relIndex_map_map_of_injective (f := (MulAut.conj g).toMonoidHom)
     (K.map (MulAut.conj g⁻¹).toMonoidHom) K (MulEquiv.injective _)
   have hK : (K.map (MulAut.conj g⁻¹).toMonoidHom).map (MulAut.conj g).toMonoidHom = K := by

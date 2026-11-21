@@ -259,8 +259,8 @@ theorem lie_descends : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.Da
     apply Additive.toMul.injective
     rw [toMul_sum]
     apply Subtype.ext
-    rw [SubmonoidClass.coe_finset_prod]
-    exact hjv
+    change j ≫ v = (↑(∏ l, Additive.toMul (m₃ l)) : epsPtR (x'' ≫ π) ⟶ A₀)
+    simpa [m₃] using hjv
   have eig₃ : ∀ l (c : 𝓞 D.F), Θ' (1 ⊗ₜ c) (m₃ l) = Θ' (b.t l c ⊗ₜ 1) (m₃ l) := fun l c => by
     rw [theta_tmul, theta_tmul]
     apply Subtype.ext

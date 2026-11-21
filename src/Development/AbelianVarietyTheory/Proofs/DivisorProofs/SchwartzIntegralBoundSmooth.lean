@@ -104,7 +104,7 @@ theorem measurable_toGLInf_entry (i j : Fin n) :
 
 theorem continuous_jacInf : Continuous (jacInf : Matrix (Fin n) (Fin n) (Cinf E) → ℝ) := by
   unfold jacInf
-  refine continuous_finset_prod _ fun w _ => ?_
+  refine continuous_finsetProd _ fun w _ => ?_
   exact (Complex.continuous_normSq.comp ((continuous_apply w).comp (continuous_id.matrix_det))).pow n
 
 theorem one_le_htInf' (y : GL (Fin n) (Cinf E)) : 1 ≤ htInf y := by

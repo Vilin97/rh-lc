@@ -115,7 +115,10 @@ theorem extend {K : Type} [Field K] [NumberField K] {g : ℕ} (ψ : 𝓞 K →+*
   have hcomm : ∀ a ∈ Set.range ψ, ∀ b ∈ Set.range ψ, a * b = b * a := by
     rintro _ ⟨a, rfl⟩ _ ⟨b, rfl⟩
     rw [← map_mul, mul_comm, map_mul]
-  letI : CommRing (Algebra.adjoin ℚ (Set.range ψ)) := Algebra.adjoinCommRingOfComm ℚ hcomm
+  letI : IsMulCommutative (Algebra.adjoin ℚ (Set.range ψ)) :=
+    Algebra.isMulCommutative_adjoin ℚ (fun a ha b hb _ => hcomm a ha b hb)
+  letI : CommRing (Algebra.adjoin ℚ (Set.range ψ)) := by
+    open scoped IsMulCommutative in infer_instance
   let ψ' : 𝓞 K →+* Algebra.adjoin ℚ (Set.range ψ) :=
     ψ.codRestrict (Algebra.adjoin ℚ (Set.range ψ)) fun x => Algebra.subset_adjoin ⟨x, rfl⟩
   have hu : ∀ y : nonZeroDivisors (𝓞 K), IsUnit (ψ' y) := by
@@ -125,8 +128,8 @@ theorem extend {K : Type} [Field K] [NumberField K] {g : ℕ} (ψ : 𝓞 K →+*
     rw [← mul_assoc, ← map_mul, hy, map_natCast, ← map_natCast (algebraMap ℚ (Algebra.adjoin ℚ (Set.range ψ))),
       ← map_mul, mul_inv_cancel₀ (by exact_mod_cast hN), map_one]
   refine ⟨(Algebra.adjoin ℚ (Set.range ψ)).val.toRingHom.comp
-    (IsLocalization.lift (M := nonZeroDivisors (𝓞 K)) (S := K) hu), fun c => ?_⟩
-  have := IsLocalization.lift_eq (M := nonZeroDivisors (𝓞 K)) (S := K) hu c
+    (IsLocalization.lift (M := nonZeroDivisors (𝓞 K)) (S := K) (g := ψ') hu), fun c => ?_⟩
+  have := IsLocalization.lift_eq (M := nonZeroDivisors (𝓞 K)) (S := K) (g := ψ') hu c
   simp only [RingHom.comp_apply]
   erw [this]
   rfl

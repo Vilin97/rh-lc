@@ -91,8 +91,8 @@ theorem isChern_linComb {L : LB X} {z : Cris.H2 κ s} (hz : IsChern κ s L z) {K
     · refine Eq.trans ?_ (Units.val_mul (Units.map (χ.hom.φ : T'.obj.B →* T''.obj.B) (∏ k, U k T T' ψ ^ ε k)) _)
       rw [map_prod, ← Finset.prod_mul_distrib]
       simp only [mul_zpow, map_zpow]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ ↦ ?_
     rw [map_zsmul, map_zsmul, ← (n k).pullCohomologyTwo_class, ← h3]
     obtain ⟨z, rfl⟩ := CatCoh.H2.mk_surjective _ z
@@ -243,7 +243,18 @@ theorem adjoint_of_lbIso (P : GlobalTheory.Published.AbelianDeRham.Free) {R : Ty
 
 theorem polForm_adjoint : GlobalTheory.Published.AbelianDeRham → ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H} (Xo : Moduli Dw l) {K : Type} [Field K] {x : Sp K ⟶ Xo.X} {A : Over (Sp K)} [GrpObj A] {π : A.left ⟶ Xo.univ.t.G.left}, IsGrpPullback A Xo.univ.t.G x π → ∀ (a : OAct (𝓞 E) A), (∀ z, (a.act z).left ≫ π = π ≫ (Xo.univ.t.act.act z).left) → ∀ {ψ : LinearMap.BilinForm K (HdR A)}, IsPolForm (dp0 K) (𝟙 _) A (Xo.univ.t.PP.L.pull π) ψ → IsAdjointFor a (fun z => H.bar z) ψ := by
   intro P E _ _ _ H Dw l Xo K _ x A _ π hπ a ha ψ hψ z u v
-  have hA := PolPull.isAbelianScheme_of_isGrpPullback (ObjDim.isAbelianScheme Xo.univ) hπ
+  have hA : IsAbelianScheme A := by
+    have hG := ObjDim.isAbelianScheme Xo.univ
+    have := hG.comm
+    have hc : IsCommMonObj A := by
+      rw [isCommMonObj_iff_isMulCommutative]
+      intro T
+      refine ⟨⟨fun x y => Over.OverMorphism.ext (hπ.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+      rw [← hπ.2 T x y (pushPt hπ.1.w x) (pushPt hπ.1.w y) rfl rfl,
+        ← hπ.2 T y x (pushPt hπ.1.w y) (pushPt hπ.1.w x) rfl rfl, _root_.mul_comm]
+    exact ⟨hc, MorphismProperty.of_isPullback (P := @Smooth) hπ.1 hG.smooth,
+      MorphismProperty.of_isPullback (P := @IsProper) hπ.1 hG.proper,
+      MorphismProperty.of_isPullback (P := @GeometricallyConnected) hπ.1 hG.geomConnected⟩
   have gA := (smoothOfRelativeDimension_isStableUnderBaseChange _).of_isPullback hπ.1
     (ObjDim.smoothOfRelativeDimension Xo.univ)
   have := hA.comm

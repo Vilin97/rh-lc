@@ -33,7 +33,9 @@ theorem cones_eq_min_linear : ∀ (O : Type) [CommRing O] (bar : O → O) (φ : 
       (∃ (i : Fin p) (k : ℕ) (cf : Fin (m i) → ℕ), 0 < k ∧ k • b' = ∑ j, cf j • γ i j) →
       (∀ i, (Nℓ : ℝ) * φ.evalZ b' ≤ ℓ i b') ∧ ∃ i, (Nℓ : ℝ) * φ.evalZ b' = ℓ i b' := by
   intro O _ bar φ Y _ _ _ p m γ hγ
-  choose N ℓ hN h1 h2 h3 using fun i => (hγ i).strict
+  have hs : ∀ i, IsStrict bar φ (γ i) := fun i => (hγ i).strict
+  unfold IsStrict at hs
+  choose N ℓ hN h1 h2 h3 using hs
   refine ⟨∏ i, N i, fun i => ((∏ j ∈ Finset.univ.erase i, N j : ℕ) : ℤ) • ℓ i,
     Finset.prod_pos fun i _ => hN i, ?_⟩
   rintro b' hb hp ⟨i, k, cf, hk, he⟩

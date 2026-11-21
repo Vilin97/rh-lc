@@ -62,6 +62,7 @@ theorem isLogEqn_changeForm_add : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocally
     (qWeil (CartierDiv.principal g + l • A) 1) η' x m₁ 1 g₁ (g * a ^ l) t hm₁ Nat.one_pos h2 hD'
   refine ⟨m₂, g₂, hm₂, h3, fun E => ?_⟩
   rw [hd3, hd2, hd1]
+  unfold DivOver.formOrd
   push_cast
   ring
 

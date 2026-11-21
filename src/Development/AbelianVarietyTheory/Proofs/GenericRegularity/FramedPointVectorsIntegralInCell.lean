@@ -78,7 +78,8 @@ theorem tie_vectors_integral : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
         fun j => algebraMap T.V T.Fr (tmap hxc (G.act.act a) cc j) := hM0
   have h1 := Λ.m1.cart
   have h2 : IsGrpPullback Λ.t'.G G.G (fB T.V T.Fr) m2.φ := m2.cart
-  choose vA hvA using fun e : Fin M.n → T.Fr => relA_exists_v z.x h1 h2 (tvec (x := x') e)
+  let vA := fun e : Fin M.n → T.Fr => Classical.choose (relA_exists_v z.x h1 h2 (tvec (x := x') e))
+  have hvA := fun e : Fin M.n → T.Fr => Classical.choose_spec (relA_exists_v z.x h1 h2 (tvec (x := x') e))
   have tanA : ∀ e, IsTanAt z.x (vA e).left := fun e =>
     ⟨Over.w (vA e), (relA_tan z.x h1 h2 (hvA e)).2 (isTan_tvec hx' e)⟩
   have eigA : ∀ (τ : E →+* ℂ) e, IsEigAt c τ (vA e).left ↔

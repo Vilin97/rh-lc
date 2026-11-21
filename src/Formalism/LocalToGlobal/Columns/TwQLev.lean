@@ -22,6 +22,8 @@ section QLev
 variable {F E K : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] [Field K]
 variable {hc : Formalism.BasicNotions.CMData F E} {n : ℕ} [NeZero n] {ST SG Q : Finset (Pl E)} {Θ : LevQFam E K n Q}
 
+local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
+
 abbrev qFst (q : QLoc hc n Q Θ) (P : Q) : GL (Fin n) (E ⊗[F] (qv F P.1).adicCompletion F) →* GL (Fin n) ((qv F P.1).adicCompletion F) :=
   bc ((RingHom.fst _ _).comp (q.sp P).toRingHom)
 

@@ -300,7 +300,7 @@ theorem exists_ext_of_reps : ∀ (D : D7) (c : Comm D) (v : VCom c) (B : GlobalT
         rw [hr]
         exact isOneComb_zero G δ hδ η ρ _ hρ _
       · unfold epsT
-        rw [if_pos rfl]
+        rw [ite_eq_left rfl]
         simp
     · have hP : (D.R.m - j) / 2 = ρ + 1 := by omega
       have H : ∃ e, IsOneComb G.ψk G.ν ((D.R.m - j) / 2) ((G.T δ hδ η).lev j (G.s - j + 1) (by omega))
@@ -315,11 +315,11 @@ theorem exists_ext_of_reps : ∀ (D : D7) (c : Comm D) (v : VCom c) (B : GlobalT
         rw [hP]
         exact id
       unfold epsT
-      rw [if_neg hj0, dite_eq_left (by omega), dite_eq_left H]
+      rw [ite_eq_right hj0, dite_eq_left (by omega), dite_eq_left H]
   ·
     intro α
     unfold epsT
-    rw [if_pos rfl]
+    rw [ite_eq_left rfl]
   ·
     intro j d h
     obtain rfl : d = G.s + 1 - j := by omega

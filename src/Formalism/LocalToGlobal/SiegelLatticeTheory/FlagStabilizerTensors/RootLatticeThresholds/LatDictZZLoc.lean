@@ -81,14 +81,15 @@ theorem isCompl_orth (hs : h.IsSymm) (hd : ∀ x, (∀ y, h x y = 0) → x = 0)
 
 theorem isSelfDualMod_res (hM : IsSelfDualMod S h M) (hsp : Splits h P M) :
     IsSelfDualMod S (h.domRestrict₁₂ (orth h P) (orth h P))
-      (M.comap (orth h P).subtype.toAddMonoidHom) where
-  smul_mem a ha m hm := by
+      (M.comap (orth h P).subtype.toAddMonoidHom) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro a ha m hm
     rw [mem_res, Submodule.coe_smul]
     exact hM.smul_mem a ha _ (mem_res.mp hm)
-  int x hx y hy := by
+  · intro x hx y hy
     rw [LinearMap.domRestrict₁₂_apply]
     exact hM.int _ (mem_res.mp hx) _ (mem_res.mp hy)
-  dual x hx := by
+  · intro x hx
     rw [mem_res]
     apply hM.dual
     intro m hm
@@ -101,7 +102,7 @@ theorem isSelfDualMod_res (hM : IsSelfDualMod S h M) (hsp : Splits h P M) :
     rw [LinearMap.domRestrict₁₂_apply] at e2
     rw [e, e1, zero_add]
     exact e2
-  span x := by
+  · intro x
     obtain ⟨t, ht0, htx⟩ := hM.span x
     exact ⟨t, ht0, mem_res.mpr (by rw [Submodule.coe_smul]; exact htx)⟩
 
@@ -181,17 +182,18 @@ theorem glue (hs : h.IsSymm) (hc : IsCompl P (orth h P))
     exact and_congr (hag _ (e.symm x).1.2) (hg'M _)
 
 theorem isSelfDualMod_comap (F : V ≃ₗ[K] V) (hF : ∀ x y, h (F x) (F y) = h x y)
-    (hM : IsSelfDualMod S h M) : IsSelfDualMod S h (M.comap F.symm.toLinearMap.toAddMonoidHom) where
-  smul_mem a ha m hm := by
+    (hM : IsSelfDualMod S h M) : IsSelfDualMod S h (M.comap F.symm.toLinearMap.toAddMonoidHom) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro a ha m hm
     change F.symm (a • m) ∈ M
     rw [map_smul]
     exact hM.smul_mem a ha _ hm
-  int x hx y hy := by
+  · intro x hx y hy
     have e := hF (F.symm x) (F.symm y)
     rw [F.apply_symm_apply, F.apply_symm_apply] at e
     rw [e]
     exact hM.int _ hx _ hy
-  dual x hx := by
+  · intro x hx
     change F.symm x ∈ M
     apply hM.dual
     intro m hm
@@ -202,7 +204,7 @@ theorem isSelfDualMod_comap (F : V ≃ₗ[K] V) (hF : ∀ x y, h (F x) (F y) = h
     change F.symm (F m) ∈ M
     rw [F.symm_apply_apply]
     exact hm
-  span x := by
+  · intro x
     obtain ⟨t, ht0, htx⟩ := hM.span (F.symm x)
     exact ⟨t, ht0, by change F.symm (t • x) ∈ M; rw [map_smul]; exact htx⟩
 

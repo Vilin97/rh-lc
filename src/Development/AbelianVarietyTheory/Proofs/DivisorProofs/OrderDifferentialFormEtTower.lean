@@ -204,7 +204,7 @@ theorem exists_basis_kaehler (σ : K →+* S) (hσR : ∀ a : R, σ (algebraMap 
     obtain ⟨t, rfl⟩ := (tensorKaehlerEquivOfFormallyEtale k A S).surjective ω
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b ha hb => rw [map_add]; exact add_mem ha hb
     | tmul s m =>
       rw [tensorKaehlerEquivOfFormallyEtale_apply, KaehlerDifferential.mapBaseChange_tmul]
       refine Submodule.smul_mem _ _ ?_
@@ -216,7 +216,7 @@ theorem exists_basis_kaehler (σ : K →+* S) (hσR : ∀ a : R, σ (algebraMap 
         rw [KaehlerDifferential.map_D]
         exact hA p
       | zero => simp
-      | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
       | smul a m _ hm =>
         rw [map_smul, ← algebraMap_smul S]
         exact Submodule.smul_mem _ _ hm

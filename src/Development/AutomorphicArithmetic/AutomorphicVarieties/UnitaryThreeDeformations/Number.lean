@@ -148,7 +148,7 @@ private theorem algClosure (K Ω : Type) [Field K] [NumberField K] [Field Ω] [C
   ⟨IsAlgClosure.isAlgClosed ℚ, Algebra.IsAlgebraic.tower_top (K := ℚ) K⟩
 
 private theorem cont_pt (hd : HostData l e ψ o₁) (hF : IsHostFrame Ω c e ψ S A F) {g₁ : Gam Ω S} (hg : F.Marked g₁)
-    {r : Gam Ω S →* GG 3 (PadicAlgCl l)} (hr : F.IsCharZeroPt g₁ r) : Continuous (mats r) := by
+    {r : Gam Ω S →* GG (m := 3) (R := PadicAlgCl l)} (hr : F.IsCharZeroPt g₁ r) : Continuous (mats r) := by
   haveI : IsGalois ℚ Ω := IsAlgClosure.isGalois ℚ Ω
   haveI hcl := isClosed_NS Ω (S : Set Pl)
   haveI : CompactSpace (Gam Ω S) := inferInstance
@@ -192,7 +192,8 @@ private theorem ker_lift (hK : IsQi K) (hF : IsHostFrame Ω c e ψ S A F) {g : G
   exact ⟨s, rfl⟩
 
 private theorem adm3 (hK : IsQi K) (hd : HostData l e ψ o₁) (hF : IsHostFrame Ω c e ψ S A F) {ι : Qbar l ≃+* ℂ}
-    {g₁ : Gam Ω S} (hg : F.Marked g₁) {r : Gam Ω S →* GG 3 (PadicAlgCl l)} (hr : F.IsCharZeroPt g₁ r) (hI : TypeI F.η r)
+    {g₁ : Gam Ω S} (hg : F.Marked g₁) {r : Gam Ω S →* GG (m := 3) (R := PadicAlgCl l)}
+    (hr : F.IsCharZeroPt g₁ r) (hI : TypeI F.η r)
     {ρ : Formalism.ConjugateSelfDual.G K Ω →* GL (Fin 3) (Qbar l)}
     (hρ : ∀ s : Formalism.ConjugateSelfDual.G K Ω, (ρ s : Matrix (Fin 3) (Fin 3) (Qbar l)) = (r (toGS Ω _ (s.restrictScalars ℚ))).mat)
     (ha : UpperTheory.V.Af.IsAutCsd ι (UpperTheory.V.Af.tw ρ (cycBar K Ω l ^ (-1 : ℤ)))) : UpperTheory.V.Af.Adm3 ι e N ρ := by
@@ -225,7 +226,8 @@ private theorem key (hK : IsQi K) {a b : ℕ} (hN : NB K a b) (hd : HostData l e
     (ι : Qbar l ≃+* ℂ) {g₁ : Gam Ω S} (hg : F.Marked g₁) {p : ℕ} (hp : p.Prime) (h4 : p % 4 = 3) (h7 : 7 ≤ p)
     (hpl : ¬ p ∣ l * N) {B : ValuationSubring Ω} (hB : B.valuation (p : Ω) < 1) {σ : Formalism.ConjugateSelfDual.G ℚ Ω}
     (hσ : σ ∈ (eta4 Ω).ker) (hfr : IsFrob B (p ^ 2) σ) {I : Type} (s : Finset I)
-    (r : I → (Gam Ω S →* GG 3 (PadicAlgCl l))) (hr : ∀ i ∈ s, F.IsCharZeroPt g₁ (r i) ∧ TypeI F.η (r i))
+    (r : I → (Gam Ω S →* GG (m := 3) (R := PadicAlgCl l)))
+    (hr : ∀ i ∈ s, F.IsCharZeroPt g₁ (r i) ∧ TypeI F.η (r i))
     (ha : ∀ i ∈ s, ∃ ρ : Formalism.ConjugateSelfDual.G K Ω →* GL (Fin 3) (Qbar l),
       (∀ t : Formalism.ConjugateSelfDual.G K Ω, (ρ t : Matrix (Fin 3) (Fin 3) (Qbar l)) = (r i (toGS Ω _ (t.restrictScalars ℚ))).mat) ∧
       UpperTheory.V.Af.IsAutCsd ι (UpperTheory.V.Af.tw ρ (cycBar K Ω l ^ (-1 : ℤ))))

@@ -154,7 +154,22 @@ theorem level_extends : ∀ {R₁ : Type} [CommRing R₁] (P₁ : PolAV (Sp R₁
   have hL := abelianSchemeLaws_all.1
   haveI : NeZero K := ⟨hK.ne'⟩
   let j := spMap (algebraMap R F)
-  let P : PolAV (Sp R) := StrictPull.polPull P₁ (spMap h)
+  let P : PolAV (Sp R) :=
+    { A := (Over.pullback (spMap h)).obj P₁.A
+      isAb := TLinPf.isAb_pullback (spMap h) P₁.A P₁.isAb
+      g := P₁.g
+      smoothDim := (smoothOfRelativeDimension_isStableUnderBaseChange _).of_isPullback
+        (isGrpPullback_pullback P₁.A (spMap h)).1 P₁.smoothDim
+      L := P₁.L.pull (pullback.fst P₁.A.hom (spMap h))
+      isLB := pull_isLB P₁.isLB _
+      rigid := PolBaseChange.rigidified_pull (isGrpPullback_pullback P₁.A (spMap h)) P₁.rigid
+      sym := PolBaseChange.sym_pull (isGrpPullback_pullback P₁.A (spMap h)) P₁.sym
+      ample := by
+        haveI := P₁.isAb.proper
+        exact AmpleBaseChange.relAmple_of_isPullback P₁.isLB P₁.ample (IsPullback.of_hasPullback P₁.A.hom (spMap h))
+      ktriv := by
+        obtain ⟨w, hw⟩ := PolBaseChange.lbIso_refl (pull_isLB P₁.isLB (pullback.fst P₁.A.hom (spMap h)))
+        exact kTriv_pull (isGrpPullback_pullback P₁.A (spMap h)) P₁.isLB (pull_isLB P₁.isLB _) ((isGen_iff w).1 hw) P₁.ktriv }
   let ψ : P.A.left ⟶ P₁.A.left := pullback.fst P₁.A.hom (spMap h)
   have hψ : IsGrpPullback P.A P₁.A (spMap h) ψ := isGrpPullback_pullback P₁.A (spMap h)
   have hc : spMap ((algebraMap R F).comp h) = j ≫ spMap h := by

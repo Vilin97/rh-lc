@@ -213,7 +213,8 @@ theorem dlt_twConj_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E],
     have hcol : ∀ i, crd e b ((a : B.A) * b i) = fun k => (mulGL e b a).val k i := by
       intro i; funext k; rw [mulGL_val, ← mulHom_eq, mulHom_apply]; rfl
     rw [hcol, hcol]
-    simp only [dotProduct, mulVec, mul_apply, transpose_apply, map_apply, Finset.sum_mul, Finset.mul_sum]
+    congr 1
+    simp only [dotProduct, mulVec, Matrix.mul_apply, transpose_apply, map_apply, Finset.sum_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     simp only [mul_assoc]
 

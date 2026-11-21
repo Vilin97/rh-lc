@@ -37,7 +37,6 @@ theorem ext_of_isBC (hm : m.IsBC) {h₁ h₂ : Crys κ' t' A'} (e : ∀ c, h₁ 
   refine LinearMap.ext fun c ↦ ?_
   obtain ⟨z, rfl⟩ := hm.2 c
   induction z with
-  | zero => simp
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x c => rw [liftSemi_tmul, map_smul, map_smul, e c]
 

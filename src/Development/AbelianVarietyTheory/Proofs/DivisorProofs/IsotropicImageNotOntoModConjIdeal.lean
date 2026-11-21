@@ -128,7 +128,7 @@ theorem mem_nsmul_of_img_eq_top (D : Datum H) {X : Type} [AddCommGroup X] [Modul
     have h4 : Module.rank ℤ (LinearMap.range g) = Module.finrank ℤ X := le_antisymm h3 h1
     rw [h4] at h2
     have h5 : Module.rank ℤ (LinearMap.ker g) = 0 := by
-      obtain ⟨k, hk⟩ := Cardinal.lt_aleph0.1 (lt_of_le_of_lt (le_add_self.trans h2.le) (Cardinal.nat_lt_aleph0 _))
+      obtain ⟨k, hk⟩ := Cardinal.lt_aleph0.1 (lt_of_le_of_lt (le_add_self.trans h2.le) Cardinal.natCast_lt_aleph0)
       rw [hk] at h2 ⊢
       norm_cast at h2 ⊢
       omega

@@ -17,7 +17,7 @@ open scoped NumberField.LiesOver
 noncomputable section
 
 variable {K : FiniteSubfield} {v : NumberField.InfinitePlace K.1}
-  (ι : ℚ̄ →ₐ[K.1] AlgebraicClosure v.Completion)
+  (ι : AlgebraicClosure ℚ →ₐ[K.1] AlgebraicClosure v.Completion)
 
 section Level
 
@@ -99,7 +99,7 @@ end Level
 
 theorem exists_level_infCompletionEmbedding_surjective :
     ∃ p₀ : GLevel K, ∀ p : GLevel K, p₀ ≤ p → Function.Surjective (infCompletionEmbedding ι p.1) := by
-  obtain ⟨r, hr⟩ := IsAlgClosed.exists_pow_nat_eq (-1 : ℚ̄) two_pos
+  obtain ⟨r, hr⟩ := IsAlgClosed.exists_pow_nat_eq (-1 : AlgebraicClosure ℚ) two_pos
   obtain ⟨p₀, hr₀⟩ := exists_level_mem (K := K) r
   refine ⟨p₀, fun p hp ↦ ?_⟩
   have hrp : r ∈ p.1.1 := (show p₀.1.1 ≤ p.1.1 from hp) hr₀

@@ -95,7 +95,7 @@ theorem finChar_eq_finprod (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (z : 
   have hsub : (Function.mulSupport fun v : Pl F => GlobalTheory.LatVac.psiAt ψ v (evalV F v z)) ⊆ hT.toFinset := by
     intro v hv
     by_contra hn
-    rw [Set.Finite.coe_toFinset, Set.mem_union, not_or, Set.mem_setOf_eq, not_not] at hn
+    simp only [Set.Finite.coe_toFinset, Set.mem_union, not_or, Set.mem_setOf_eq, not_not] at hn
     refine hv ((hloc v _).trans (h _ (fun u => ?_) fun u hu => ?_))
     · by_cases huv : u = v
       · subst huv
@@ -117,7 +117,7 @@ theorem finChar_eq_finprod (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (z : 
     · rw [map_sub, hev]
       split_ifs with hu
       · rw [sub_self]; exact zero_mem _
-      · rw [Set.Finite.mem_toFinset, Set.mem_union, not_or, Set.mem_setOf_eq, not_not] at hu
+      · simp only [Set.Finite.mem_toFinset, Set.mem_union, not_or, Set.mem_setOf_eq, not_not] at hu
         rw [sub_zero]; exact hu.2
     · rw [map_sub, hev, if_pos (hT.mem_toFinset.2 (Or.inl hu)), sub_self]
   have h2 : ∀ T : Finset (Pl (F := F)), finChar ψ (∑ v ∈ T, singleFin v (evalV F v z)) =
@@ -144,6 +144,10 @@ theorem hasOp_unipM : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF
     ∀ (κ : Type) [Fintype κ] [DecidableEq κ] (S : Matrix κ κ F), S.transpose = S →
     GlobalTheory.SympChange.HasOp ψ (GlobalTheory.SympChange.unipM S) := by
   intro F _ _ ψ hψ hunr _ κ _ _ S hS
+  have evFin_invOf_two (v : Pl F) : evFin F v (⅟(2 : AF F)) = ⅟(2 : Fv F v) := by
+    refine (invOf_eq_right_inv ?_).symm
+    have h : evFin F v (2 * ⅟(2 : AF F)) = 1 := by rw [mul_invOf_self, map_one]
+    rwa [map_mul, map_ofNat] at h
   let A : Matrix κ κ (AF F) := -S.map (algebraMap F (AF F))
   let Av : ∀ v : Pl (F := F), Matrix κ κ (Fv F v) := fun v => -S.map (algebraMap F (Fv F v))
   have hAv : ∀ v, A.map (evFin F v : AF F →+* Fv F v) = Av v := fun v => by
@@ -179,7 +183,7 @@ theorem hasOp_unipM : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF
     funext x
     rw [mulR_apply]
     by_cases hx : x ∈ {x : κ → Fv F v | ∀ i, x i ∈ v.adicCompletionIntegers F}
-    · rw [GlobalTheory.VacAny.evFin_invOf_two] at h2
+    · rw [(evFin_invOf_two v)] at h2
       have h4 := (hv 1).2 (one_mem _) _ (quad_mem (A := Av v) h2 (fun i j => by rw [← hAv v]; exact h3 i j) hx)
       rw [one_mul] at h4
       rw [GlobalTheory.LatVac.psiAt_apply, h4, one_mul]
@@ -196,7 +200,7 @@ theorem hasOp_unipM : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF
     have hq : ∀ v : Pl (F := F), evalV F v (p2 (quad (⅟2) A x)) = quad (⅟2) (Av v) fun i => evFin F v (x i) := fun v => by
       have := map_quad (evFin F v : AF F →+* Fv F v) (⅟2) A x
       rw [hAv] at this
-      exact this.trans (congrArg (fun t => quad t (Av v) fun i => evFin F v (x i)) GlobalTheory.VacAny.evFin_invOf_two)
+      exact this.trans (congrArg (fun t => quad t (Av v) fun i => evFin F v (x i)) (evFin_invOf_two v))
     obtain ⟨hs, hp⟩ := finChar_eq_finprod ψ hψ.1 (p2 (quad (⅟2) A x))
     simp only [hq] at hs hp
     have h3 : ψ (mk (p1 (quad (⅟2) A x)) 0) = archMul hi Ai fun i => evI F (x i) := by

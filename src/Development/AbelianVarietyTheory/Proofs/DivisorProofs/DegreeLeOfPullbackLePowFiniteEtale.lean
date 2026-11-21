@@ -97,7 +97,7 @@ theorem existsUnique_img {H : LB X} (hH : H.IsLB) (φ : X ⟶ X) (q t : ℕ) (σ
     (a : SecOn ((GlobalTheory.AbLaw.pw H t).pull φ) ⊤) :
     ∃! b : SecOn (GlobalTheory.AbLaw.pw H ((q * t : ℕ) : ℤ)) ⊤, ∀ p : H.ι × (PUnit.{1} → H.ι),
       rs X (le_inf le_top inf_le_left : (E H φ q).U p ≤ ⊤ ⊓ H.U p.1) (GlobalTheory.LB.coord b p.1) = loc H φ q t σ a p :=
-  SecOn.existsUnique_of_local (isLB_pw hH ((q * t : ℕ) : ℤ)) (fun p : H.ι × (PUnit.{1} → H.ι) => (E H φ q).U p) (fun _ => le_top)
+  SecOn.existsUnique_of_local (M := GlobalTheory.AbLaw.pw H ((q * t : ℕ) : ℤ)) (isLB_pw hH ((q * t : ℕ) : ℤ)) (fun p : H.ι × (PUnit.{1} → H.ι) => (E H φ q).U p) (fun _ => le_top)
     (top_le_iSup_E hH φ q) (fun p => p.1) (fun _ => inf_le_left) (loc H φ q t σ a)
     (fun p p' => loc_compat H φ q t σ a p p')
 
@@ -147,7 +147,7 @@ theorem imgLin_injective [IsIntegral X] {H : LB X} (hH : H.IsLB) (φ : X ⟶ X) 
     erw [GlobalTheory.LB.coord_zero, map_zero]
   unfold loc at h0
   have h1 := (mul_eq_zero.1 h0).resolve_left (pow_ne_zero _ hp₀)
-  have hz := GlobalTheory.SecGrowth.sec_eq_zero (M := (GlobalTheory.AbLaw.pw H t).pull φ) (SecOn.topEquiv _ a) (k₀ := p₀.2)
+  have hz := GlobalTheory.SecGrowth.sec_eq_zero (M := (GlobalTheory.AbLaw.pw H t).pull φ) (SecOn.topEquiv ((GlobalTheory.AbLaw.pw H t).pull φ) a) (k₀ := p₀.2)
     (W := (E H φ q).U p₀) inf_le_right (by erw [SecOn.topEquiv_f, rs_rs]; exact h1)
   apply (SecOn.topEquiv ((GlobalTheory.AbLaw.pw H t).pull φ)).injective
   rw [map_zero]

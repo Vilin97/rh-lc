@@ -259,10 +259,13 @@ theorem SmFam.deriv_dRep (hu : IsUnit Hm.det) (hσ : IsURepOn (Formalism.Quantum
 
 theorem SmFam.word (hu : IsUnit Hm.det) (hσ : IsURepOn (Formalism.QuantumDeterminants.UH Hm) σ) {c : ℝ → H} (hc : SmFam Hm σ c) :
     ∀ l : List (Mt n), (∀ X ∈ l, X ∈ lieH Hm) → SmFam Hm σ (fun t => l.foldr (Formalism.L2.Theta.dRep σ) (c t)) ∧
-      _root_.deriv (fun t => l.foldr (Formalism.L2.Theta.dRep σ) (c t)) 0 = l.foldr (Formalism.L2.Theta.dRep σ) (_root_.deriv c 0)
-  | [], _ => ⟨hc, rfl⟩
-  | X :: l, h => by
-    obtain ⟨h1, h2⟩ := SmFam.word hu hσ hc l fun Y hY => h Y (List.mem_cons_of_mem _ hY)
+      _root_.deriv (fun t => l.foldr (Formalism.L2.Theta.dRep σ) (c t)) 0 = l.foldr (Formalism.L2.Theta.dRep σ) (_root_.deriv c 0) := by
+  intro l
+  induction l with
+  | nil => exact fun _ => ⟨hc, rfl⟩
+  | cons X l ih =>
+    intro h
+    obtain ⟨h1, h2⟩ := ih fun Y hY => h Y (List.mem_cons_of_mem _ hY)
     have hX := h X List.mem_cons_self
     refine ⟨h1.dRep hu hσ hX, ?_⟩
     simp only [List.foldr_cons]

@@ -55,7 +55,7 @@ theorem exists_integralClosure_isCN_finite_local : ∀ (V₀ : Type) [CommRing V
     refine ⟨fun a ha => ?_⟩
     by_contra hna
     have hm : (maximalIdeal V₁).comap (algebraMap V₀ V₁) = maximalIdeal V₀ :=
-      IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _)
+      IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := V₀) (maximalIdeal V₁))
     have hmem : a ∈ (maximalIdeal V₁).comap (algebraMap V₀ V₁) := by
       rw [hm]; exact hna
     exact hmem ha

@@ -33,6 +33,6 @@ def polyMap (A : Subalgebra ℂ K) {m : ℕ} (v : Fin m → A) :
 
 @[simp] theorem coe_polyMap_C (A : Subalgebra ℂ K) {m : ℕ} (v : Fin m → A) (b : κ') :
     (polyMap (κ' := κ') A v (MvPolynomial.C b) : K ⊗[ℂ] κ') = 1 ⊗ₜ b := by
-  simp [polyMap]
+  simp [polyMap, rightInc]
 
 end GlobalTheory.GraphLocal

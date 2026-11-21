@@ -36,7 +36,9 @@ theorem frob_sp (R : Type) [CommRing R] (hR : (p : R) = 0) (h : (p : Γ(Sp R, �
 theorem frob_comp_hom (R : Type) [CommRing R] (hR : (p : R) = 0) {X : Scheme.{0}} (f : X ⟶ Sp R)
     (h : (p : Γ(X, ⊤)) = 0) : GlobalTheory.VB.frob X p h ≫ f = f ≫ spMap (frobR p R hR) := by
   have h0 : (p : Γ(Sp R, ⊤)) = 0 := GlobalTheory.SS.FrobField.cast_zero_sp R hR
-  rw [GlobalTheory.VB.frob_naturality p h0 f h, frob_sp p R hR h0]
+  have hn : GlobalTheory.VB.frob X p h ≫ f = f ≫ GlobalTheory.VB.frob (Sp R) p h0 :=
+    GlobalTheory.SS.FrobField.absFrob_nat f p 1 Fact.out h h0
+  rw [hn, frob_sp p R hR h0]
 
 theorem cast_left (R : Type) [CommRing R] (hR : (p : R) = 0) (A : Over (Sp R)) :
     (p : Γ(A.left, ⊤)) = 0 :=
@@ -51,16 +53,19 @@ theorem frobMor (R : Type) [CommRing R] (hR : (p : R) = 0) (A : Over (Sp R)) [Gr
   w := frob_comp_hom p R hR A.hom h
   mul T x y x₀ y₀ hx hy := by
     have hT : (p : Γ(T.left, ⊤)) = 0 := cast_left p R hR T
+    have hn (f : T.left ⟶ A.left) :
+        GlobalTheory.VB.frob T.left p hT ≫ f = f ≫ GlobalTheory.VB.frob A.left p h :=
+      GlobalTheory.SS.FrobField.absFrob_nat f p 1 Fact.out hT h
     let j : Over.mk (T.hom ≫ spMap (frobR p R hR)) ⟶ T :=
       Over.homMk (GlobalTheory.VB.frob T.left p hT) (by simpa using frob_comp_hom p R hR T.hom hT)
     have ex : x₀ = j ≫ x := Over.OverMorphism.ext (by
-      simp [j, hx, GlobalTheory.VB.frob_naturality p h x.left hT])
+      simp only [hx, Over.comp_left, Over.homMk_left, j, hn])
     have ey : y₀ = j ≫ y := Over.OverMorphism.ext (by
-      simp [j, hy, GlobalTheory.VB.frob_naturality p h y.left hT])
+      simp only [hy, Over.comp_left, Over.homMk_left, j, hn])
     subst ex ey
     rw [← MonObj.comp_mul]
     simp only [Over.comp_left, Over.homMk_left, j]
-    exact GlobalTheory.VB.frob_naturality p h (x * y).left hT
+    exact hn (x * y).left
 
 def frobDR (R : Type) [CommRing R] (hR : (p : R) = 0) (A : Over (Sp R)) [GrpObj A] :
     primDR A →ₛₗ[frobR p R hR] primDR A :=

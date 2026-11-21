@@ -265,7 +265,8 @@ theorem scalar_half_reps : ∀ (D : D7) (S T : HSp D) (ΛS : Submodule (𝓞 D.h
   let f : WO S T →+ WO S T := DistribSMul.toAddMonoidHom (WO S T) (cA D (incA D (ϖ : D.host.E)))
   have hf : ∀ w, f w = cA D (incA D (ϖ : D.host.E)) • w := fun w => rfl
   obtain ⟨R, hR⟩ := half_finite_mod S T ΛS ΛT hS hT (cA D e)
-    (by rw [← map_mul, Formalism.IndefR.Fin.LevelGroupLemmas.idemSum_sq he]) N (Nat.pos_of_ne_zero hN)
+    (by simpa only [map_mul] using (congrArg (fun x => cA D x)
+      (Formalism.IndefR.Fin.LevelGroupLemmas.idemSum_sq he))) N (Nat.pos_of_ne_zero hN)
   obtain ⟨Rr, hRr1, hRr2, hRr3⟩ := exists_reps' (latAll S T ΛS ΛT) (halfSub S T (cA D e)) f N hN
     (natCast_smul_cancel S T N hN) (fun w hw hh => by rw [hf]; exact hbL w hw)
     (fun w hh hfw => hNL w hh (by rw [← hf]; exact hfw)) R

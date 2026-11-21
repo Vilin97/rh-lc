@@ -34,7 +34,7 @@ theorem exists_finite_projective_model : ∀ (R : Type) [CommRing R] [IsNoetheri
   have hM : (LB.triv X).IsLB := LB.isLB_triv X
   have := Twist.isFiniteQC_twist (F := structureModule X) hM
   obtain ⟨K, φ, h1, h2, -, h4, -, -, h7⟩ :=
-    GlobalTheory.exists_finite_projective_complex_quasiIso.{0, 0} (GlobalTheory.AbLaw.cechLB s (LB.triv X) D) m
+    GlobalTheory.exists_finite_projective_complex_quasiIso.{0, 0} (R := R) (GlobalTheory.AbLaw.cechLB s (LB.triv X) D) m
       (fun p hp => GlobalTheory.AbLaw.isZero_cechLB_X s (LB.triv X) _ (by rw [Fintype.card_fin]; exact hp.le))
       (GlobalTheory.AbLaw.flat_cechLB_X s hM hD') (fun n => by
         obtain ⟨e⟩ := GlobalTheory.FieldChangeInter.nonempty_coh_equiv s hM hc hD' n

@@ -59,9 +59,7 @@ def kap (h d : ℕ) (k : Fin 8) : (Fin (8 * h) ⊕ Fin (8 * h) → ℤ) →+ (Fi
 
 theorem kap_apply (h d : ℕ) (k : Fin 8) (a : Fin (8 * h) ⊕ Fin (8 * h) → ℤ) :
     kap h d k a = ∑ l, vMat d (sig k) (sig l) • blk h l a := by
-  unfold kap
-  rw [AddMonoidHom.finset_sum_apply]
-  rfl
+  simp [kap]
 
 theorem inner_sum (d : ℕ) (m n : Fin 8) :
     ∑ k, ∑ l, vMat d (sig k) (sig m) * form d (sig k) (sig l) * vMat d (sig l) (sig n) =

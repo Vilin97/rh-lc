@@ -54,6 +54,17 @@ theorem kTriv_lift : ∀ (R R₀ : Type) [CommRing R] [IsNoetherianRing R] [Comm
   exact GlobalTheory.CoverGlue.kTriv_of_cover _ _ U Y _ _
     (top_le_iff.1 fun p _ => TopologicalSpace.Opens.mem_iSup.2 ⟨p, hU p⟩)
     (fun p => isGrpPullback_pullback Y (U p).ι) _ _ hL hL' (fun p => GlobalTheory.lbIso_refl (hL' p)) hY
-    (fun p => GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback hY (isGrpPullback_pullback Y (U p).ι)) hK
+    (fun p => by
+      have := hY.comm
+      have := hY.smooth
+      have := hY.proper
+      have := hY.geomConnected
+      refine ⟨inferInstance, ?_, ?_, ?_⟩
+      · change Smooth (pullback.snd Y.hom (U p).ι)
+        infer_instance
+      · change IsProper (pullback.snd Y.hom (U p).ι)
+        infer_instance
+      · change GeometricallyConnected (pullback.snd Y.hom (U p).ι)
+        infer_instance) hK
 
 end GlobalTheory.KTrivSqZero

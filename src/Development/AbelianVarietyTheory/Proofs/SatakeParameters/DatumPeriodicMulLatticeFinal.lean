@@ -62,7 +62,7 @@ theorem redP_det_congr {n : Type} [Fintype n] [DecidableEq n] (A B : Matrix n n 
   rw [key A hA, key B hB]
   simp only [h]
 
-theorem unitV_congr (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {a b : E} (h : redP P a = redP P b) : LocE.unitV P χ a = LocE.unitV P χ b := by
+theorem unitV_congr (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {a b : E} (h : redP P a = redP P b) : LocE.unitV χ a = LocE.unitV χ b := by
   unfold LocE.unitV
   rw [h]
 
@@ -94,16 +94,16 @@ theorem intAt_sum_div {ι : Type} (s : Finset ι) (f : ι → E) (h : ∀ i, Int
 
 theorem unitV_det_add (hq : (q : 𝓞 E) ∈ P.asIdeal) (hq0 : (q : E) ≠ 0) (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {t : ℕ}
     (M Z : ℕ → ℕ → E) (hZ : ∀ p p', IntAt P (Z p p' / q)) (f : Fin t → ℕ) (hM : ∀ s s', IntAt P (M (f s) (f s'))) :
-    LocE.unitV P χ (Matrix.det (Matrix.of fun s s' : Fin t => M (f s) (f s') + Z (f s) (f s'))) =
-      LocE.unitV P χ (Matrix.det (Matrix.of fun s s' : Fin t => M (f s) (f s'))) :=
+    LocE.unitV χ (Matrix.det (Matrix.of fun s s' : Fin t => M (f s) (f s') + Z (f s) (f s'))) =
+      LocE.unitV χ (Matrix.det (Matrix.of fun s s' : Fin t => M (f s) (f s'))) :=
   unitV_congr χ (redP_det_congr _ _ (fun s s' => (hM s s').add (intAt_of_div hq0 (hZ _ _))) hM
     fun s s' => redP_add_q hq hq0 _ (hZ _ _))
 
 theorem prod_det_add (hq : (q : 𝓞 E) ∈ P.asIdeal) (hq0 : (q : E) ≠ 0) (χ : ℕ → (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (r t j : ℕ)
     (M Z : ℕ → ℕ → E) (hZ : ∀ p p', IntAt P (Z p p' / q)) (hM : ∀ p p', p' < r + j * t → IntAt P (M p p')) :
-    ∏ i ∈ Finset.range j, LocE.unitV P (χ i) (Matrix.det (Matrix.of fun s s' : Fin t =>
+    ∏ i ∈ Finset.range j, LocE.unitV (χ i) (Matrix.det (Matrix.of fun s s' : Fin t =>
         M (r + i * t + s.1) (r + i * t + s'.1) + Z (r + i * t + s.1) (r + i * t + s'.1))) =
-      ∏ i ∈ Finset.range j, LocE.unitV P (χ i) (Matrix.det (Matrix.of fun s s' : Fin t =>
+      ∏ i ∈ Finset.range j, LocE.unitV (χ i) (Matrix.det (Matrix.of fun s s' : Fin t =>
         M (r + i * t + s.1) (r + i * t + s'.1))) := by
   refine Finset.prod_congr rfl fun i hi => ?_
   refine unitV_det_add hq hq0 (χ i) M Z hZ (fun s => r + i * t + s.1) fun s s' => hM _ _ ?_

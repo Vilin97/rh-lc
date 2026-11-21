@@ -266,8 +266,21 @@ theorem tilFr_isLiftFr (H : TilOk Pr sel mu u) (d : RowPt Pr R sel mu) (P : rowS
 
 
 open Classical in
-def tilTop (H : TilOk Pr sel mu u) (d : RowPt Pr R sel mu) : TopPt R sel mu u :=
-  ⟨((tilQ sel mu u d).res Finset.subset_union_left, fun P => tilFr H d (inQ Pr sel mu P)),
+def tilTop (H : TilOk Pr sel mu u) (d : RowPt Pr R sel mu) : TopPt R sel mu u := by
+  let q := tilQ sel mu u d
+  have hq : (Deco.res Finset.subset_union_left q.1 : Deco X.E (R.N R.m) (Pr.vT u) Pr.vGs).Ok :=
+    { lat := q.2.lat
+      uni := q.2.uni
+      f_add := q.2.f_add
+      f_smul := q.2.f_smul
+      f_off := q.2.f_off
+      f_ne := q.2.f_ne
+      be_add := fun w => q.2.be_add (inG sel mu w)
+      be_smul := fun w => q.2.be_smul (inG sel mu w)
+      be_off := fun w => q.2.be_off (inG sel mu w)
+      be_surj := fun w => q.2.be_surj (inG sel mu w)
+      be_ker := fun w => q.2.be_ker (inG sel mu w) }
+  exact ⟨(⟨_, hq⟩, fun P => tilFr H d (inQ Pr sel mu P)),
     fun P => (tilFr_isLiftFr H d (inQ Pr sel mu P)).1⟩
 
 theorem frsF_tilTop_g (H : TilOk Pr sel mu u) (d : RowPt Pr R sel mu) (P : rowSG Pr sel mu) (h : P.1 ∈ Pr.vGs) :

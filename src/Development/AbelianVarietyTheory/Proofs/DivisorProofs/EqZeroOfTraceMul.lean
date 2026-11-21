@@ -54,7 +54,8 @@ theorem trace_pairing_nondeg : ∀ (F E : Type) [Field F] [NumberField F] [Field
   push_neg at hne
   apply hm
   refine eq_zero_of_trace_mul m fun z => ?_
-  refine GlobalTheory.DiagNonvan.eq_zero_of_psi_mul hψ _ fun y => ?_
+  apply GlobalTheory.DiagNonvan.eq_zero_of_psi_mul hψ
+  intro y
   have e1 : Algebra.trace (AF F) (AEF F E) (m * z) * y = Algebra.trace (AF F) (AEF F E) (m * (y • z)) := by
     rw [mul_smul_comm, map_smul, smul_eq_mul, mul_comm]
   rw [e1]

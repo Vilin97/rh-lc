@@ -155,10 +155,10 @@ theorem GlobalTheory.unif_determined_by_data_normal : ∀ (R : Type) [CommRing R
   · obtain ⟨φ, h1, h2, h3⟩ := GlobalTheory.UT.exists_genericFibre_iso_of_model_iso R _ D D' A A' G G' U.toUnifPre
       U'.toUnifPre ψ hψm ⟨wL, hwL⟩
     exact ⟨ψ, bc, φ, hψm, mbc, hbc', hP, h1, h2, h3⟩
-  · refine (Geo.Tor.maps_iff _ _ (fun _ => eSec G) _ U'.LG.rig U.LG.rig (specOf (RingHom.id R)) _
-      (rigPull_le _ _ he U.LG.L) (fun _ => rfl)).2 (pmaps_pullCongr _ ?_)
-    exact (congrArg (PMaps wL (K := PUnit) (fun _ => eSec G') (fun _ => eSec G) (fun _ => 1) U'.LG.rig U.LG.rig)
-      hs).mpr hr
+  · exact (Geo.Tor.maps_iff _ _ (fun _ => eSec G) _ U'.LG.rig U.LG.rig (specOf (RingHom.id R)) _
+      (rigPull_le _ _ he U.LG.L) (fun _ => rfl)).2 (pmaps_pullCongr _
+        ((congrArg (PMaps wL (K := PUnit) (fun _ => eSec G') (fun _ => eSec G) (fun _ => 1) U'.LG.rig U.LG.rig)
+          hs).mpr hr))
   · rw [gw_pullCongr]
     refine H e Z r z jM jM' jL jL' h₁ h₂ ?_ h₄
     rw [hbc'] at h₃

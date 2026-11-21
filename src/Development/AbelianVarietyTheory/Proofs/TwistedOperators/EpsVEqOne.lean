@@ -110,6 +110,7 @@ def frRow (B : Frames G) (t : T) (w : Pl D.host.E) (j : ℕ) (hj : j ≤ D.R.m) 
   frOf (rank_vertex G t w (X := (D.R.m, j)) ⟨le_rfl, hj⟩) (B.β D.R.m j) w
 
 
+variable (G) in
 open Classical in
 def epsV (t : T) (w : Pl D.host.E) : (locGrid G t w).VertexGroup :=
   onColumn (G := locGrid G t w) fun j => if j ∈ idx D then sgnAt G t (-1) w j else 1

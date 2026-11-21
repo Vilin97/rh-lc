@@ -147,7 +147,20 @@ theorem polForm_exists : GlobalTheory.Published.AbelianDeRham → ∀ {E : Type}
       (∀ f ∈ Fil A, ∀ g ∈ Fil A, ψ f g = 0) ∧ LinearMap.IsPerfPair ψ ∧
       ∀ f, (∀ g ∈ Fil A, ψ f g = 0) → f ∈ Fil A := by
   intro P E _ _ _ H Dw l Xo S _ x A _ π hπ
-  have hA := PolPull.isAbelianScheme_of_isGrpPullback (ObjDim.isAbelianScheme Xo.univ) hπ
+  open ReciprocityTheory.ChartRestriction.G.Semi CategoryTheory.Limits
+    CategoryTheory.MonoidalCategory CategoryTheory.CartesianMonoidalCategory CategoryTheory.MonObj in
+  have hA : IsAbelianScheme A := by
+    have hG := ObjDim.isAbelianScheme Xo.univ
+    have := hG.comm
+    have hcomm : IsCommMonObj A := by
+      rw [isCommMonObj_iff_isMulCommutative]
+      intro T
+      refine ⟨⟨fun x y => Over.OverMorphism.ext (hπ.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+      rw [← hπ.2 T x y (pushPt hπ.1.w x) (pushPt hπ.1.w y) rfl rfl,
+        ← hπ.2 T y x (pushPt hπ.1.w y) (pushPt hπ.1.w x) rfl rfl, _root_.mul_comm]
+    exact ⟨hcomm, MorphismProperty.of_isPullback (P := @Smooth) hπ.1 hG.smooth,
+      MorphismProperty.of_isPullback (P := @IsProper) hπ.1 hG.proper,
+      MorphismProperty.of_isPullback (P := @GeometricallyConnected) hπ.1 hG.geomConnected⟩
   have gA := (smoothOfRelativeDimension_isStableUnderBaseChange _).of_isPullback hπ.1
     (ObjDim.smoothOfRelativeDimension Xo.univ)
   obtain ⟨h0, -, -, -, e, he⟩ := P.1 S A _ hA gA

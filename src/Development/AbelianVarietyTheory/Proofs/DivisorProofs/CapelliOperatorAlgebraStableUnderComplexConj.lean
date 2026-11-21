@@ -24,6 +24,8 @@ theorem map_qdet_semilinear {A B : Type} [Ring A] [Algebra ℂ A] [Ring B] [Alge
     simp only [Formalism.REAL.qdet, Formalism.REAL.qminor, map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn]
   refine Finset.sum_congr rfl fun s _ => ?_
   congr 3
+  funext k
+  by_cases h : s k = k <;> simp [Formalism.REAL.Tm, h, map_add, hf, map_sub, map_natCast]
 
 def conjBy (C : Sm E a ≃ₗ⋆[ℂ] Sm E a) : Module.End ℂ (Sm E a) →+* Module.End ℂ (Sm E a) where
   toFun z :=

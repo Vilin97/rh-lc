@@ -324,8 +324,8 @@ theorem exists_nat_mul {q : ℕ} (hq : q.Prime) {k : ℕ} (c : Fin k → 𝓞 E)
     obtain ⟨m, hm⟩ := (hd i).trans (Nat.cast_dvd_cast (Finset.dvd_prod_of_mem N (Finset.mem_univ i)))
     exact ⟨m, by rw [hm, mul_comm]⟩
   choose m hm using h4
-  refine ⟨_, m, fun hh => ?_, hm⟩
-  obtain ⟨i, -, hi⟩ := (hq.prime.dvd_finset_prod_iff _).1 hh
+  refine ⟨∏ j, N j, m, fun hh => ?_, hm⟩
+  obtain ⟨i, -, hi⟩ := (hq.prime.dvd_finsetProd_iff _).1 hh
   exact hN i hi
 
 theorem eventually_pos (A B C : ℝ) (hC : 0 < C) {q : ℕ} (hq : 0 < q) :

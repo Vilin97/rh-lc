@@ -286,7 +286,8 @@ def trR (V : Y.Opens) (V' : X.Opens) (e : f ⁻¹ᵁ V ≤ V') :
 variable (L) in
 def trCube {κ : Type} (D : κ → Y.Opens) :
     secCube (f ≫ q) (L.pull f) (fun i => f ⁻¹ᵁ D i) ⟶ secCube q L D :=
-  GlobalTheory.Cube.homMk (fun s => trR f q L (⨅ i ∈ s, D i) (⨅ i ∈ s, f ⁻¹ᵁ D i) (preimage_biInf D f s).le)
+  GlobalTheory.Cube.homMk κ R
+    (fun s => trR f q L (⨅ i ∈ s, D i) (⨅ i ∈ s, f ⁻¹ᵁ D i) (preimage_biInf D f s).le)
     fun {s t} h x => by
       show trSec f _ (SecOn.restrict (L.pull f) (preimage_biInf D f t).le
           (SecOn.restrict (L.pull f) (iInf_le_iInf_of_subset (fun i => f ⁻¹ᵁ D i) h) x)) =
@@ -301,7 +302,7 @@ def trCube {κ : Type} (D : κ → Y.Opens) :
 variable (L) in
 def pullCube {κ : Type} (D : κ → Y.Opens) :
     secCube q L D ⟶ secCube (f ≫ q) (L.pull f) (fun i => f ⁻¹ᵁ D i) :=
-  GlobalTheory.Cube.homMk (fun s => secCubePull L D (comp_eq_comp_id f q) s)
+  GlobalTheory.Cube.homMk κ R (fun s => secCubePull L D (comp_eq_comp_id f q) s)
     fun h x => secCubePull_res D (comp_eq_comp_id f q) h x
 
 end Cech
@@ -329,9 +330,14 @@ variable {X Y : Scheme.{0}} (f : X ⟶ Y) {R : Type} [CommRing R] (q : Y ⟶ Spe
 
 omit [IsFinite f] [Flat f] [LocallyOfFinitePresentation f] in
 def funCube (a : Γ(Y, ⊤)) (L : LB Y) {κ : Type} (D : κ → Y.Opens) : secCube q L D ⟶ secCube q L D :=
-  secCubeMap q D (fun V => LinearMap.lsmul Γ(Y, V) (SecOn L V) (rs Y (le_top : V ≤ ⊤) a))
-    fun h s => by
-      rw [LinearMap.lsmul_apply, LinearMap.lsmul_apply, map_smulₛₗ, rs_rs]
+  GlobalTheory.Cube.homMk κ R
+    (fun s => SecOnR.lin q (LinearMap.lsmul Γ(Y, ⨅ i ∈ s, D i) (SecOn L (⨅ i ∈ s, D i))
+      (rs Y le_top a))) fun {s t} h x => by
+      let e := iInf_le_iInf_of_subset D h
+      let y : SecOn L (⨅ i ∈ s, D i) := x
+      change rs Y (le_top : (⨅ i ∈ t, D i) ≤ ⊤) a • SecOn.restrict L e y =
+        SecOn.restrict L e (rs Y (le_top : (⨅ i ∈ s, D i) ≤ ⊤) a • y)
+      rw [map_smulₛₗ, rs_rs]
 
 def cechPull (L : LB Y) {κ : Type} [LinearOrder κ] (D : κ → Y.Opens) :
     cechLB q L D ⟶ cechLB (f ≫ q) (L.pull f) (fun i => f ⁻¹ᵁ D i) :=

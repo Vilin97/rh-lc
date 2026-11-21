@@ -138,7 +138,7 @@ theorem exists_eval [μ.IsMulRightInvariant]
         (fun y => ‖φ y‖) Ω
       rw [h3, ← h4]
       refine setIntegral_mono_set (a2.norm.continuousOn.integrableOn_compact (hB.mul hΩ))
-        (Filter.Eventually.of_forall fun y => norm_nonneg _) (LE.le.eventuallyLE ?_)
+        (Filter.Eventually.of_forall fun y => norm_nonneg _) (Filter.Eventually.of_forall ?_)
       rintro _ ⟨y, hy, rfl⟩
       exact Set.mul_mem_mul hx hy
     rw [e]

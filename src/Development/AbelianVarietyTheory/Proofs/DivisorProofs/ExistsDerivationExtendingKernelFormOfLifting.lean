@@ -21,7 +21,7 @@ theorem krullDimLE_and_isLocalRing_quotient {P : Type} [CommRing P] (Q S : Ideal
     exact (Ideal.map_comap_of_surjective _ Ideal.Quotient.mk_surjective M).symm.trans
       (congrArg _ (hQ.eq_of_le hc.ne_top h3).symm)
   obtain ⟨M, hM⟩ := Ideal.exists_maximal (P ⧸ S)
-  exact ((Ring.krullDimLE_zero_and_isLocalRing_tfae (P ⧸ S)).out 1 0 rfl rfl).mp
+  exact ((Ring.krullDimLE_zero_and_isLocalRing_tfae (P ⧸ S)).out 2 1 rfl rfl).mp
     ⟨M, hM.isPrime, fun M' hM' => (key M' hM').trans (key M hM.isPrime).symm⟩
 
 theorem exists_derivation_extending : ∀ (A P R K : Type) [CommRing A] [CommRing P] [IsNoetherianRing P] [CommRing R] [Field K] [Algebra A P] [Algebra A R] [Algebra P R] [IsScalarTower A P R] [Algebra R K] [Algebra P K] [IsScalarTower P R K] [Algebra A K] [IsScalarTower A P K], Function.Surjective (algebraMap P R) → Function.Surjective (algebraMap R K) → (∀ (C C₀ : Type) [CommRing C] [IsLocalRing C] [IsArtinianRing C] [CommRing C₀] (π : C →+* C₀), Function.Surjective π → RingHom.ker π ^ 2 = ⊥ → ∀ (β : A →+* C) (φ₀ : R →+* C₀), φ₀.comp (algebraMap A R) = π.comp β → ∃ φ : R →+* C, π.comp φ = φ₀ ∧ φ.comp (algebraMap A R) = β) → ∀ ℓ : RingHom.ker (algebraMap P R) →ₗ[P] K, ∃ D : Derivation A P K, ∀ i : RingHom.ker (algebraMap P R), D i = ℓ i := by

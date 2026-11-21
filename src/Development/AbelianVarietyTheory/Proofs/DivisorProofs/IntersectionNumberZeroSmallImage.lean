@@ -158,7 +158,9 @@ theorem interNum_pull_eq_zero : ∀ (κ : Type) [Field κ] (e r : ℕ) (Z W : Sc
     have e1 : interNum κ (structureModule _) (fun i => (Q i).pull (redι C)) =
         interNum κ (structureModule _)
           (fun x => (Sum.elim P (fun a : Fin r => (A a.succ).pull g) x).pull (redι C)) :=
-      interNum_comp_equiv κ _ (fun x => pull_isLB (hQ' x) (redι C)) finSumFinEquiv.symm
+      by
+        set_option maxHeartbeats 12000000 in
+          exact interNum_comp_equiv κ _ (fun x => pull_isLB (hQ' x) (redι C)) finSumFinEquiv.symm
     have e2 : interNum κ (structureModule _)
           (fun x => (Sum.elim P (fun a : Fin r => (A a.succ).pull g) x).pull (redι C)) =
         interNum κ (structureModule _)

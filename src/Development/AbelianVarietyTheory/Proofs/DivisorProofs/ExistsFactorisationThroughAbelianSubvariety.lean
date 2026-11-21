@@ -44,6 +44,6 @@ theorem exists_factor_abelianSubvariety : ∀ (K : Type) [Field K] (A B : AbVar 
   obtain ⟨g, hd⟩ := GlobalTheory.T.abelianScheme_field_smoothOfRelativeDimension_exists K Z hab
   let C : AbVar K := { X := Z, ab := hab, dim := g, smooth := hd }
   refine ⟨C, Hom.mk (B := C) p, Hom.mk (A := C) i, hp, hi, ?_⟩
-  exact hom_ext hpi
+  exact Subtype.ext hpi
 
 end GlobalTheory.AV.AbVar

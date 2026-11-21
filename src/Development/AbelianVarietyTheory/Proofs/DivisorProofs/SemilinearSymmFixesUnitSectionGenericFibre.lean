@@ -29,9 +29,6 @@ private lemma unit_pullback_left_comp_fst_eq_spMap_comp_unit {W R : Type} [CommR
     (η[(Over.pullback (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap φ)).obj G]).left ≫ pullback.fst G.hom (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap φ) =
       _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap φ ≫ η[G].left := by
   simp [Functor.grpObjObj, Functor.monObjObj]
-  have h := pullback.condition (f := 𝟙 (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Sp W)) (g := _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap φ)
-  simp only [Category.comp_id] at h
-  rw [← Category.assoc, ← h]
 
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry in
 open scoped CategoryTheory.Obj CategoryTheory.MonObj Pointwise in

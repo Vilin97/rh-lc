@@ -21,7 +21,7 @@ private lemma one_sub_prod_le_sum_one_sub_of_mem_Icc {ι : Type*} (s : Finset ι
     rw [Finset.prod_insert ha, Finset.sum_insert ha]
     have h0' : ∀ i ∈ s, 0 ≤ f i := fun i hi => h0 i (Finset.mem_insert_of_mem hi)
     have h1' : ∀ i ∈ s, f i ≤ 1 := fun i hi => h1 i (Finset.mem_insert_of_mem hi)
-    have hP1 : ∏ i ∈ s, f i ≤ 1 := Finset.prod_le_one h0' h1'
+    have hP1 : ∏ i ∈ s, f i ≤ 1 := Finset.prod_le_one₀ h0' h1'
     have ha1 := h1 a (Finset.mem_insert_self a s)
     have key := ih h0' h1'
     nlinarith [mul_nonneg (sub_nonneg.2 hP1) (sub_nonneg.2 ha1)]

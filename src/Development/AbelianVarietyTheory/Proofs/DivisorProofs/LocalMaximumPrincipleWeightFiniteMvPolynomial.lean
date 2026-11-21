@@ -95,7 +95,10 @@ private lemma isCompact_image_homs_over_isCompact {d : ℕ} {B : Type} [CommRing
   rw [hS]
   have hclosed : IsClosed S := by
     refine IsClosed.inter ?_ (hT.isClosed.preimage (continuous_pi fun i => continuous_apply _))
-    refine IsClosed.inter (isClosed_eq (continuous_apply 1) continuous_const) (IsClosed.inter ?_ ?_)
+    change IsClosed ({g : B → ℂ | g 1 = 1} ∩
+      ({g : B → ℂ | ∀ a c, g (a + c) = g a + g c} ∩
+       {g : B → ℂ | ∀ a c, g (a * c) = g a * g c}))
+    refine IsClosed.inter (isClosed_eq (f := fun g : B → ℂ => g 1) (g := fun _ => (1 : ℂ)) (continuous_apply 1) continuous_const) (IsClosed.inter ?_ ?_)
     · show IsClosed {g : B → ℂ | ∀ a c, g (a + c) = g a + g c}
       simp only [Set.setOf_forall]
       exact isClosed_iInter fun a : B => isClosed_iInter fun c : B =>

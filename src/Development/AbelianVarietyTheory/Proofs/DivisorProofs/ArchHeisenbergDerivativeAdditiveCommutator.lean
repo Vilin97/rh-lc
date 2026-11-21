@@ -19,7 +19,8 @@ noncomputable def evIHom : AF F →+* mixedEmbedding.mixedSpace F :=
 lemma evI_eq (a : AF F) : evI F a = evIHom a := rfl
 
 lemma evI_realAd' (r : ℝ) : evI F (realAd F r) = algebraMap ℝ (mixedEmbedding.mixedSpace F) r := by
-  simp [evI, realAd]
+  change (InfiniteAdeleRing.ringEquiv_mixedSpace F) ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (algebraMap ℝ _ r)) = _
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
 
 noncomputable def trPair (w : κ → mixedEmbedding.mixedSpace F) :
     (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] ℂ where
@@ -72,7 +73,7 @@ lemma evV_smul (r : ℝ) (a : κ → AF F) :
   rw [evI_eq, map_mul, ← evI_eq, ← evI_eq, evI_realAd', Algebra.smul_def]
 
 lemma isSymm (f : SInf F κ) (x : κ → mixedEmbedding.mixedSpace F) : IsSymmSndFDerivAt ℝ (⇑f) x :=
-  ((f.smooth ⊤).contDiffAt).isSymmSndFDerivAt (by simp; exact WithTop.coe_le_coe.2 le_top)
+  ((f.smooth ⊤).contDiffAt).isSymmSndFDerivAt (by simp)
 
 theorem heis_deriv_laws : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) {α β κ : Type}
     [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ] (JA : Matrix α α (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))

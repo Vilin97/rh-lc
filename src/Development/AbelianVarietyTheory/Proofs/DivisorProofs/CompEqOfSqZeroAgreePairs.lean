@@ -94,7 +94,8 @@ lemma eq_on_map {B R : Type} [CommRing B] [CommRing R] (I : Ideal C) (hI : I ^ 2
     rw [← RingHom.comp_apply β, hβ, ← RingHom.comp_apply β', hβ']
     exact ⟨rfl, Ideal.mem_map_of_mem _ hc⟩
   | zero => simp
-  | add x y _ _ hx hy => exact ⟨by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), hx.1, hy.1], by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx.2 hy.2⟩
+  | add x y _ _ hx hy =>
+    exact ⟨by simp only [map_add, hx.1, hy.1], by simpa only [map_add] using add_mem hx.2 hy.2⟩
   | smul a x _ hx =>
     refine ⟨?_, ?_⟩
     · rw [smul_eq_mul, map_mul, map_mul, ← hx.1, ← sub_eq_zero, ← sub_mul, ← Ideal.mem_bot, ← hJ]

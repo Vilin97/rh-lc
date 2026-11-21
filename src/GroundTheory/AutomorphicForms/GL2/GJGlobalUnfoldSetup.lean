@@ -30,8 +30,8 @@ theorem measurePreserving_of_mapsTo_lattice {V : Type*} [AddCommGroup V] [Topolo
   have heq : ν.map φ = Measure.addHaarScalarFactor (ν.map φ) ν • ν :=
     Measure.isAddLeftInvariant_eq_smul _ _
   set c := Measure.addHaarScalarFactor (ν.map φ) ν with hcdef
-  have hqmp : Measure.QuasiMeasurePreserving φ ν ν :=
-    ⟨(map_continuous φ).measurable, by rw [heq]; exact Measure.smul_absolutelyContinuous⟩
+  have hqmp : QuasiMeasurePreserving φ ν ν :=
+    ⟨(map_continuous φ).measurable.aemeasurable, by rw [heq]; exact Measure.smul_absolutelyContinuous⟩
   have hfd : IsAddFundamentalDomain L (φ ⁻¹' D) ν := by
     refine hD.preimage_of_equiv hqmp (e := fun ξ : L => (⟨φ.symm ξ, hφ' _ ξ.2⟩ : L)) ?_ ?_
     · refine ⟨fun a b hab => ?_, fun b => ⟨⟨φ b, hφ _ b.2⟩, ?_⟩⟩
@@ -44,7 +44,7 @@ theorem measurePreserving_of_mapsTo_lattice {V : Type*} [AddCommGroup V] [Topolo
   have hmeas : ν (φ ⁻¹' D) = ν D := hfd.measure_eq hD
   have hc : (c : ℝ≥0∞) * ν D = 1 * ν D := by
     have := congrArg (fun m : Measure V => m D) heq
-    rw [Measure.map_apply (map_continuous φ).measurable hDm, hmeas, Measure.smul_apply,
+    rw [Measure.map_apply (map_continuous φ).measurable hDm, hmeas, smul_apply,
       ENNReal.smul_def, smul_eq_mul] at this
     rw [one_mul]
     exact this.symm
@@ -77,10 +77,11 @@ instance isNegInvariant_unipMeasure (k : ℕ) : (unipMeasure K n k).IsNegInvaria
     (fun ξ hξ => (unipLattice K n k).neg_mem hξ) (fun ξ hξ => (unipLattice K n k).neg_mem hξ)
   exact ⟨h.map_eq⟩
 
-theorem unipOne_injective (k : ℕ) : Injective (unipOne K n k) := fun _ _ h =>
+theorem unipOne_injective (k : ℕ) : Injective (unipOne (K := K) (n := n) k) := fun _ _ h =>
   unipGL_injective (congrArg Subtype.val h)
 
 
+variable (K n) in
 def ratOne : GL (Fin n) K →* normOneGL (K := K) (n := n) :=
   (AdelicGLn.diagonal K n).codRestrict (normOneGL (K := K) (n := n))
     (fun γ => rationalGL_le_normOneGL ⟨γ, rfl⟩)
@@ -107,6 +108,7 @@ instance countable_GL : Countable (GL (Fin n) K) := by
     Units.val_injective
 
 
+variable (K n) in
 def parabolicOne (k : ℕ) : Subgroup (normOneGL (K := K) (n := n)) :=
   (parabolic (K := K) (n := n) k).map (ratOne K n)
 
@@ -187,9 +189,10 @@ theorem coe_inv_mul_coe (q : normOneGL (K := K) (n := n)) :
   rw [← Units.val_mul, ← Subgroup.coe_mul, inv_mul_cancel, Subgroup.coe_one, Units.val_one]
 
 theorem conj_unipOne {k : ℕ} {q : normOneGL (K := K) (n := n)} (hq : q ∈ parabolicOne K n k) (Z : UPos n k → 𝔸[K]) :
-    q⁻¹ * unipOne K n k Z * q = unipOne K n k (conjUnip k q Z) := by
+    q⁻¹ * unipOne k Z * q = unipOne k (conjUnip k q Z) := by
+  have hcoe (X : UPos n k → 𝔸[K]) : (unipOne k X : AdelicGLn.AdelicGL K n) = unipGL X := rfl
   refine Subtype.ext (Units.ext ?_)
-  simp only [Subgroup.coe_mul, Units.val_mul, coe_unipOne, coe_unipGL, unipMatrix]
+  simp only [Subgroup.coe_mul, Units.val_mul, hcoe, coe_unipGL, unipMatrix]
   rw [blockEntry_conjUnip hq, Matrix.mul_add, Matrix.add_mul, Matrix.mul_one, coe_inv_mul_coe]
 
 theorem conjUnip_conjUnip_inv {k : ℕ} {q : normOneGL (K := K) (n := n)} (hq : q ∈ parabolicOne K n k)
@@ -262,10 +265,10 @@ omit [NumberField K] in
 theorem isBlockUpper_unipMatrix {k : ℕ} (X : UPos n k → K) : IsBlockUpper k (unipMatrix X) := by
   intro i j hi hj
   simp only [unipMatrix, Matrix.add_apply, blockEntry_apply]
-  rw [Matrix.one_apply, if_neg (by intro h; subst h; omega), dite_eq_right (by omega), add_zero]
+  rw [Matrix.one_apply, ite_eq_right (by intro h; subst h; omega), dite_eq_right (by omega), add_zero]
 
 theorem unipOne_mem_parabolicOne {k : ℕ} {ξ : UPos n k → 𝔸[K]} (hξ : ξ ∈ unipLattice K n k) :
-    unipOne K n k ξ ∈ parabolicOne K n k := by
+    unipOne k ξ ∈ parabolicOne K n k := by
   obtain ⟨ξ₀, rfl⟩ := hξ
   refine mem_parabolicOne_iff.2 ⟨unipGL ξ₀, ⟨?_, ?_⟩, Subtype.ext (diagonal_unipGL ξ₀)⟩
   · rw [coe_unipGL]
@@ -274,11 +277,14 @@ theorem unipOne_mem_parabolicOne {k : ℕ} {ξ : UPos n k → 𝔸[K]} (hξ : ξ
     exact isBlockUpper_unipMatrix (-ξ₀)
 
 theorem hyp (k : ℕ) :
-    Unfold.Hyp (unipMeasure K n k) (unipOne K n k) (unipLattice K n k) (unipFundamentalDomain K n k)
+    Unfold.Hyp (unipMeasure K n k) (unipOne k) (unipLattice K n k) (unipFundamentalDomain K n k)
       (parabolicOne K n k) (fundamentalDomain (parabolicOne K n k)) (conjUnip k) where
-  map_add := unipOne_add k
+  map_add := fun X Y => Subtype.ext (unipGL_add X Y)
   injective := unipOne_injective k
-  measurable := (continuous_unipOne k).measurable
+  measurable := by
+    have h : Continuous (unipOne (K := K) (n := n) k) :=
+      continuous_induced_rng.2 continuous_unipGL
+    exact h.measurable
   isAddFundamentalDomain := isAddFundamentalDomain_unipFundamentalDomain
   measurableSet_D := measurableSet_unipFundamentalDomain
   measurableSet_E := measurableSet_fundamentalDomain _

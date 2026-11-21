@@ -46,7 +46,7 @@ theorem exists_perCl {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup 
     have e := hc φ ψ
     rw [hp (l + m) _ _ (φ ≫ ψ) rfl, hp l _ _ φ rfl, hp m _ _ ψ rfl, hcom ψ] at e
     change K.cst k'' (p (l + m)) = K.cst k'' (p l) + K.cst k'' (p m) at e
-    rw [map_sub, map_add (f := _), e, sub_self]
+    rw [(K.cst k'').map_sub, (K.cst k'').map_add, e, sub_self]
   refine ⟨AddMonoidHom.mk' p hadd, ?_⟩
   rw [perCl, H1.mk_eq_mk]
   refine ⟨G, ?_⟩

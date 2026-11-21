@@ -150,6 +150,7 @@ theorem not_klt_at_points : GlobalTheory.Published.Principalisation →
         rw [h3 _ (fun h => hφ g hg (Subtype.ext h))]; simp)]
       have h6' := (Int.cast_le (R := ℚ)).2 h6
       push_cast at h6'
+      unfold Place.formOrd
       have : (k : ℚ) ≤ t * M := htM
       linarith
     · obtain ⟨V, h1, h2, h3, h4, h5, h6⟩ := GlobalTheory.FieldPair.exists_place_weighted_over_place (L := FractionRing (K ⊗[ℂ] κ')) n k r
@@ -166,7 +167,9 @@ theorem not_klt_at_points : GlobalTheory.Published.Principalisation →
       rw [hq]
       have h6' := (Int.cast_le (R := ℚ)).2 h6
       push_cast at h6'
+      unfold Place.formOrd
       rw [Place.disc] at hEd
+      unfold Place.formOrd at hEd
       linarith
 
   obtain ⟨V, h1, h2, h4, h5, h6⟩ := hV

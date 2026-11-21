@@ -151,7 +151,8 @@ theorem trBasis_uniformiser_cons : âˆ€ {L K : Type} [Field L] [Field K] (cL : â„
       refine hwu _ fun h0 => hi ?_
       rw [h0, map_zero]) hP
     have hQ0 : Q = 0 := by
-      ext1 i
+      apply Polynomial.ext
+      intro i
       rw [Polynomial.coeff_zero]
       by_contra h0
       apply (hwu _ h0).ne_zero

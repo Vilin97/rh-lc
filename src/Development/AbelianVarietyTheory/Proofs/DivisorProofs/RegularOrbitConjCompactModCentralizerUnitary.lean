@@ -90,7 +90,9 @@ theorem orbit_cpt_U : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Un
   let Z : Subgroup (GLw n w) := Subgroup.centralizer {y.1}
   have hZ : ∀ z : GLw n w, z ∈ Z ↔ z.val * y.1.val = y.1.val * z.val := by
     intro z
-    rw [Subgroup.mem_centralizer_singleton_iff, Units.ext_iff, Units.val_mul, Units.val_mul]
+    rw [Subgroup.mem_centralizer_singleton_iff]
+    change z * y.1 = y.1 * z ↔ _
+    exact Units.ext_iff
   have hZc : IsClosed (Z : Set (GLw n w)) := by
     have : (Z : Set (GLw n w)) = {z | z * y.1 = y.1 * z} := by
       ext z; exact Subgroup.mem_centralizer_singleton_iff

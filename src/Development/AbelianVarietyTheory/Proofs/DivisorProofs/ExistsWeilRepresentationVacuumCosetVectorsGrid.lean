@@ -92,6 +92,8 @@ theorem exists_cartan {V : HSp D} (hV : V.SigOK) (τ : D.what₂.Tau) :
   have J2 : Jᴴ = J := by
     rw [hJ, Formalism.REAL.Jm, diagonal_conjTranspose]
     congr 1
+    funext a
+    simp only [Pi.star_apply]
     split_ifs <;> simp
   set A := fr τ
   set B : Matrix (Fin V.rank) (Fin V.rank) ℂ := (u⁻¹).1

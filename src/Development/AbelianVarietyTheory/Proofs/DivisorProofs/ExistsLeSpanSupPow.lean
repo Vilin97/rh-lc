@@ -87,7 +87,7 @@ theorem exists_le_span_sup_pow (A : Type) [CommRing A] [IsLocalRing A] [IsNoethe
     ∃ N, K N ≤ Ideal.span {f} ⊔ maximalIdeal A ^ e := by
   set B := AdicCompletion (maximalIdeal A) A
   set φ := algebraMap A B
-  haveI : IsNoetherianRing B := GlobalTheory.AdicNoeth.isNoetherianRing_adicCompletion A _
+  have : IsNoetherianRing B := GlobalTheory.AdicNoeth.isNoetherianRing_adicCompletion A _
   set I : Ideal B := Ideal.span {φ f}
   let L : ℕ → Submodule B (B ⧸ I) := fun N => Submodule.map I.mkQ ((K N).map φ)
   have hL : Directed (· ≥ ·) L := by

@@ -41,8 +41,8 @@ instance ptCat (s : X ⟶ Sp R) : Category.{0} (Pt s) where
 def toPC (s : X ⟶ Sp R) : CoefMap (RingHom.id R) (O (dp0 R) s) (FP s) where
   G := { obj := fun P ↦ P.triv
          map := fun φ ↦ Pt.Hom.triv φ
-         map_id := fun _ ↦ Thick.hom_ext fun _ ↦ rfl
-         map_comp := fun _ _ ↦ Thick.hom_ext fun _ ↦ rfl }
+         map_id := fun _ ↦ Thick.Hom.ext' (AlgHom.ext fun _ ↦ rfl)
+         map_comp := fun _ _ ↦ Thick.Hom.ext' (AlgHom.ext fun _ ↦ rfl) }
   α P := RingHom.id P.B
   naturality _ _ := rfl
   smul _ _ _ := rfl
@@ -68,8 +68,8 @@ def pushHom (h : φ ≫ s = s' ≫ spMap σ) {P Q : Pt s'} (f : P ⟶ Q) : pushP
 def pushC (h : φ ≫ s = s' ≫ spMap σ) : CoefMap σ (FP s) (FP s') where
   G := { obj := pushPt h
          map := pushHom h
-         map_id := fun _ ↦ hom_ext fun _ ↦ rfl
-         map_comp := fun _ _ ↦ hom_ext fun _ ↦ rfl }
+         map_id := fun _ ↦ hom_ext' fun _ ↦ rfl
+         map_comp := fun _ _ ↦ hom_ext' fun _ ↦ rfl }
   α P := RingHom.id P.B
   naturality _ _ := rfl
   smul T r b := (Algebra.smul_def (A := T.B) (σ r) b).symm
@@ -90,7 +90,7 @@ theorem pullP_pullP {τ : R' →+* R''} {ψ : X'' ⟶ X'} {ρ : R →+* R''} {χ
           pt := by
             change spMap (RingHom.id T.B) ≫ (T.x ≫ ψ) ≫ φ = T.x ≫ χ
             rw [GlobalTheory.Cris.spMap_id, ← e']; simp }
-      naturality := fun _ _ _ ↦ hom_ext fun _ ↦ rfl } (fun _ _ ↦ rfl) c)
+      naturality := fun _ _ _ ↦ hom_ext' fun _ ↦ rfl } (fun _ _ ↦ rfl) c)
 
 theorem toP_eq_zero_iff (c : FirstDeRham s) : toP s c = 0 ↔ c ∈ F1 s := by
   constructor

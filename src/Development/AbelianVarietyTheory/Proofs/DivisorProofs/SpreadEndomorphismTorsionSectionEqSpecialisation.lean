@@ -44,7 +44,16 @@ theorem GlobalTheory.TorsCmp.torsion_section_eq : ∀ (k₀ K : Type) [Field k�
   haveI := hΨ
   haveI := hf₀
   haveI : IsAbelianScheme ((Over.pullback (spMap (algebraMap k₀ R))).obj B) :=
-    GlobalTheory.isAbelianScheme_overPullback _ B hB
+    by
+      have := hB.comm
+      have := hB.smooth
+      have := hB.proper
+      have := hB.geomConnected
+      exact
+        { comm := Functor.isCommMonObj_obj
+          smooth := by change Smooth (pullback.snd B.hom _); infer_instance
+          proper := by change IsProper (pullback.snd B.hom _); infer_instance
+          geomConnected := by change GeometricallyConnected (pullback.snd B.hom _); infer_instance }
   have hgf : spMap g.toRingHom ≫ spMap (algebraMap k₀ R) = 𝟙 _ := by
     rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
     have : g.toRingHom.comp (algebraMap k₀ R) = RingHom.id k₀ := by
@@ -79,3 +88,4 @@ theorem GlobalTheory.TorsCmp.torsion_section_eq : ∀ (k₀ K : Type) [Field k�
   have hab := GlobalTheory.HkFam.ListedSubgroup.section_eq _ hNR ha hb (spMap g.toRingHom) hpt
   have := congrArg (fun z => z.left ≫ pullback.fst B.hom (spMap (algebraMap k₀ R))) hab
   simp only [cc, bb, Over.comp_left, Over.homMk_left, Category.assoc] at this
+  simpa only [pullback.lift_fst] using this

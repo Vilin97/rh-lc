@@ -77,7 +77,7 @@ theorem exists_int_inv_one_add {n : Type} [Fintype n] [DecidableEq n] (E : Matri
   have hI : ∀ i j, (1 + E) i j ∈ 𝒪[k] := fun i j => by
     rw [Valuation.mem_integer_iff, Matrix.add_apply]
     refine Valuation.map_add_le _ ?_ (hE i j).le
-    rw [one_apply]; split_ifs <;> simp
+    rw [Matrix.one_apply]; split_ifs <;> simp
   have hEI : ∀ i j, E i j ∈ 𝒪[k] := fun i j => (Valuation.mem_integer_iff _ _).2 (hE i j).le
   let M : Matrix n n 𝒪[k] := fun i j => ⟨(1 + E) i j, hI i j⟩
   have hres : (IsLocalRing.residue 𝒪[k]).mapMatrix M = 1 := by
@@ -85,13 +85,13 @@ theorem exists_int_inv_one_add {n : Type} [Fintype n] [DecidableEq n] (E : Matri
     simp only [RingHom.mapMatrix_apply, map_apply]
     have : M i j - (1 : Matrix n n 𝒪[k]) i j = ⟨E i j, hEI i j⟩ := by
       apply Subtype.ext
-      by_cases h : i = j <;> simp [M, one_apply, h]
+      by_cases h : i = j <;> simp [M, Matrix.one_apply, h]
     have hm : M i j - (1 : Matrix n n 𝒪[k]) i j ∈ IsLocalRing.maximalIdeal 𝒪[k] := by
       rw [this, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff, Valuation.Integer.not_isUnit_iff_valuation_lt_one]
       exact hE i j
     have e2 : (IsLocalRing.residue 𝒪[k]) (M i j) = (IsLocalRing.residue 𝒪[k]) ((1 : Matrix n n 𝒪[k]) i j) := by
       rw [← sub_eq_zero, ← map_sub, IsLocalRing.residue_eq_zero_iff]; exact hm
-    rw [e2]; by_cases h : i = j <;> simp [one_apply, h]
+    rw [e2]; by_cases h : i = j <;> simp [Matrix.one_apply, h]
   have hdet : IsUnit M.det := by
     rw [← IsLocalRing.residue_ne_zero_iff_isUnit, RingHom.map_det, hres, det_one]
     exact one_ne_zero

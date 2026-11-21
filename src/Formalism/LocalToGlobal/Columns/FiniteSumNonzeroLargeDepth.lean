@@ -172,18 +172,20 @@ def Deco.res (h : SG ⊆ SG') (d : Deco E n ST SG') : Deco E n ST SG where
   f := d.f
   be w := d.be ⟨w.1, h w.2⟩
 
-theorem Deco.Ok.res {d : Deco E n ST SG'} (hd : d.Ok) (h : SG ⊆ SG') : (d.res h).Ok where
-  lat := hd.lat
-  uni := hd.uni
-  f_add := hd.f_add
-  f_smul := hd.f_smul
-  f_off := hd.f_off
-  f_ne := hd.f_ne
-  be_add w := hd.be_add ⟨w.1, h w.2⟩
-  be_smul w := hd.be_smul ⟨w.1, h w.2⟩
-  be_off w := hd.be_off ⟨w.1, h w.2⟩
-  be_surj w := hd.be_surj ⟨w.1, h w.2⟩
-  be_ker w := hd.be_ker ⟨w.1, h w.2⟩
+theorem Deco.Ok.res {d : Deco E n ST SG'} (hd : d.Ok) (h : SG ⊆ SG') : (d.res h).Ok := by
+  exact {
+    lat := hd.lat
+    uni := hd.uni
+    f_add := hd.f_add
+    f_smul := hd.f_smul
+    f_off := hd.f_off
+    f_ne := hd.f_ne
+    be_add w := hd.be_add ⟨w.1, h w.2⟩
+    be_smul w := hd.be_smul ⟨w.1, h w.2⟩
+    be_off w := hd.be_off ⟨w.1, h w.2⟩
+    be_surj w := hd.be_surj ⟨w.1, h w.2⟩
+    be_ker w := hd.be_ker ⟨w.1, h w.2⟩
+  }
 
 def DecoSet.res (h : SG ⊆ SG') (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG')) : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) := ⟨d.1.res h, d.2.res h⟩
 

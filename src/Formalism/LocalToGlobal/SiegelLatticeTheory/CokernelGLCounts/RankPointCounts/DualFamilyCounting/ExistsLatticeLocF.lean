@@ -23,15 +23,8 @@ theorem mem_of_isLatIn {X : Submodule K V} {L : Submodule (𝓞 K) V} (hL : IsLa
     ∀ x ∈ L, x ∈ X := fun x hx => hL.2 ▸ Submodule.subset_span hx
 
 theorem isLattice_sup {X Y : Submodule K V} (hc : IsCompl X Y) {A B : Submodule (𝓞 K) V}
-    (hA : IsLatIn X A) (hB : IsLatIn Y B) : Submodule.IsLattice K (A ⊔ B) where
-  fg := hA.1.sup hB.1
-  span_eq_top := by
-    rw [eq_top_iff, ← hc.sup_eq_top]
-    refine sup_le ?_ ?_
-    · rw [← hA.2]
-      exact Submodule.span_mono (SetLike.coe_subset_coe.mpr le_sup_left)
-    · rw [← hB.2]
-      exact Submodule.span_mono (SetLike.coe_subset_coe.mpr le_sup_right)
+    (hA : IsLatIn X A) (hB : IsLatIn Y B) : Submodule.IsLattice K (A ⊔ B) :=
+  Submodule.IsLattice.of_fg K (hA.1.sup hB.1)
 
 theorem prO_sup {X Y : Submodule K V} (hc : IsCompl X Y) {A B : Submodule (𝓞 K) V}
     (hA : ∀ x ∈ A, x ∈ X) (hB : ∀ y ∈ B, y ∈ Y) {z : V} (hz : z ∈ A ⊔ B) : prO hc z ∈ A := by

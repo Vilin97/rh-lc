@@ -39,8 +39,7 @@ theorem exists_normOne_mul_compact : ∀ (K : Type) [NontriviallyNormedField K] 
   have hu := hδ.1
   set N := GlobalTheory.Tw.nrm δ with hNdef
   set A := Algebra.adjoin K {N} with hAdef
-  letI : CommRing A := Algebra.adjoinCommRingOfComm K (by
-    intro a ha b hb; rw [Set.mem_singleton_iff.mp ha, Set.mem_singleton_iff.mp hb])
+  letI : CommRing A := Algebra.instCommRingAdjoinSingleton N
   have hA := GlobalTheory.Tw.CentralizerAdjoin.adj_adjoin hu
   have hmul := GlobalTheory.Tw.CentralizerAdjoin.adj_mul' hu
   have hsemi := GlobalTheory.Tw.CentralizerAdjoin.adj_semi δ
@@ -55,7 +54,7 @@ theorem exists_normOne_mul_compact : ∀ (K : Type) [NontriviallyNormedField K] 
         apply Subtype.ext
         change GlobalTheory.Tw.adj δ (x.1 * y.1) = _
         rw [hmul]
-        exact congrArg Subtype.val (mul_comm (⟨_, (hA y y.2).1⟩ : A) ⟨_, (hA x x.2).1⟩)
+        simpa only [Subalgebra.coe_mul] using congrArg Subtype.val (mul_comm (⟨_, (hA y y.2).1⟩ : A) ⟨_, (hA x x.2).1⟩)
       map_zero' := Subtype.ext hzero
       map_add' := fun x y => Subtype.ext (hadd x.1 y.1) }
   have hσv : ∀ x : A, (σ x : Matrix (Fin n) (Fin n) K) = GlobalTheory.Tw.adj δ x := fun x => rfl
