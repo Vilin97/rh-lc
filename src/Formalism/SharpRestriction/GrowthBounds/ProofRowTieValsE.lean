@@ -111,12 +111,8 @@ theorem EK_map {φ : Pt C 1 dd} (hφ : IsEndo Y φ) {lam : WVO (IS I0) → C}
   rw [Pi.mul_apply, mul_right_comm, ← h, Finset.sum_mul]
   exact Finset.sum_congr rfl fun j _ => by ring
 
-theorem isEndo_act (x : O) : IsEndo Y (Y.B.A.act x) where
-  int := Y.intAct x
-  cc := Y.B.A.const x
-  add := by
-    simp only [VP.coordinateChange_comp1_intertwines_action, VP.addOf_eq']
-    exact VP.actAt_addAt Y x (VP.cc_pt 0) (VP.cc_pt 1)
+theorem isEndo_act (x : O) : IsEndo Y (Y.B.A.act x) :=
+  ⟨Y.intAct x, Y.B.A.const x, Y.B.A.hom x⟩
 
 theorem EK_act (x : O) (κ : WVO (IS I0) → C) : VP.actAt Y x (EK Y p κ) = EK Y p (lamAct Y p x * κ) :=
   EK_map Y p (isEndo_act Y x) (fun w => (p w.1).e_eig w.2.2 x) κ

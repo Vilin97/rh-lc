@@ -353,7 +353,8 @@ theorem haar_val_add_invariant : ∀ (D : D7) (ρ : ℕ) (ν : Measure (UX D ρ)
     have hf : Measurable (fun s : supMx D ρ => 1 + s.1) :=
       (continuous_const.add continuous_subtype_val).measurable
     have e2 : (fun u : UX D ρ => (u.1.1 : Mx D ρ ρ)) ∘ Ψ.symm = fun s => 1 + s.1 := rfl
-    rw [e1, Measure.map_smul, Measure.map_smul]
+    rw [e1, Measure.map_smul _ hΦ.aemeasurable,
+      Measure.map_smul _ (measurable_add_const t).aemeasurable]
     congr 1
     change Measure.map (· + t) (Measure.map (fun u : UX D ρ => (u.1.1 : Mx D ρ ρ)) (Measure.map Ψ.symm lam)) =
       Measure.map (fun u : UX D ρ => (u.1.1 : Mx D ρ ρ)) (Measure.map Ψ.symm lam)

@@ -31,7 +31,8 @@ def blockDet (j : GL (A ⊕ D) k) : kˣ :=
 
 theorem val_emb_one (m : GL D k) :
     (emb₂ k (Equiv.refl (A ⊕ D)) (1, m)).1 = fromBlocks 1 0 0 m.1 := by
-  rw [val_emb₂]; simp
+  classical
+  ext (i | i) (j | j) <;> simp [emb₂, leviEmb, leviTwo, two, Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.blockDiagonal'_apply]
 
 theorem blockDet_lowU_emb (ν : Matrix D A k) (m : GL D k) :
     blockDet (lowU ν * emb₂ k (Equiv.refl (A ⊕ D)) (1, m)) = GeneralLinearGroup.det m := by

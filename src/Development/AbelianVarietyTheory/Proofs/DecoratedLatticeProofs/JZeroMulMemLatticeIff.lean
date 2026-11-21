@@ -27,7 +27,11 @@ variable {D : D7}
 
 theorem supp_of_colMul {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (L : Lat S) (v : Pl D) (i : Fin ρ) (a : AE D)
     (h : colMul d.jX i a ∈ latV S L (· = v)) : a ∈ idAt D (· = v) := by
-  have h1 : (d.pX ⬝ d.jX) i i = 1 := by rw [d.pX_jX]; exact Matrix.one_apply_eq i
+  have hp : d.pX * d.jX = 1 := by
+    have h := congrArg rat d.e'e
+    rw [rat_one] at h
+    simpa only [HypDec.pX, HypDec.qX, HypDec.jX, rat, Matrix.map_mul] using h
+  have h1 : (d.pX * d.jX) i i = 1 := by rw [hp]; exact Matrix.one_apply_eq i
   rw [Matrix.mul_apply] at h1
   have h2 : a = ∑ k, d.pX i k * colMul d.jX i a k := by
     calc a = a * ∑ k, d.pX i k * d.jX k i := by rw [h1, mul_one]

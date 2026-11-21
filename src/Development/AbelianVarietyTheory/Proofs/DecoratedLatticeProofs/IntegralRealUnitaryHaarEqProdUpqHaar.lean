@@ -43,7 +43,7 @@ theorem continuous_psiT (D : D7) (τ : D.what₂.Tau) : Continuous (psiT D τ) :
   have hfun : (⇑(psiT D τ) : AE D → ℂ) = fun x => ∑ c, psiT D τ (algebraMap (AF D.host.F) (AE D)
       ((basAF D).repr x c)) * psiT D τ (basAF D c) := funext hsum
   rw [hfun]
-  exact continuous_finset_sum _ fun c _ => (halg.comp (hc c)).mul continuous_const
+  exact continuous_finsetSum _ fun c _ => (halg.comp (hc c)).mul continuous_const
 
 end GlobalTheory.HaarReal
 
@@ -177,8 +177,9 @@ def eqv : GinfC V ≃ₜ* (∀ τ, Formalism.REAL.UJ (M.ε τ)) where
   invFun := bwd M
   left_inv g := by
     apply Subtype.ext
-    refine (famH_unique D V _ (unitFam_ofFr M (fwd M g)) (g : GA D V) g.2 fun τ => ?_).symm
-    show _ = GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.ofFr M τ (toJ M τ _)
+    apply (famH_unique D V _ (unitFam_ofFr M (fwd M g)) (g : GA D V) g.2 ?_).symm
+    intro τ
+    change _ = GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.ofFr M τ (toJ M τ _)
     rw [ofFr_toJ]
   right_inv us := by
     funext τ

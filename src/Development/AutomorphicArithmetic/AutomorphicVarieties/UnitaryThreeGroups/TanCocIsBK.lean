@@ -166,7 +166,7 @@ private theorem tan_cont {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDom
 
 theorem UpperTheory.V.U3.tanCoc_isBK :
     CohInp → ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {K : Type} [Field K] [NumberField K] [Algebra K Ω]
-      {l : ℕ} [Fact l.Prime] {c : Coef l} {N : ℕ} [NeZero N] {e : ℕ} {ψ : DirichletCharacter c.O N} (D : Dat Ω K c e ψ) {U : D.ULoc} {g₁ : G ℚ Ω}, D.Marked g₁ → ∀ (S : D.Ring U g₁),
+      {l : ℕ} [Fact l.Prime] {c : Coef l} {N : ℕ} [NeZero N] {e : ℕ} {ψ : DirichletCharacter c.O N} (D : Dat Ω K c e ψ) {U : (_root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition _ (D.η.comp D.ι) (D.Ψ.comp D.ι)))} {g₁ : G ℚ Ω}, D.Marked g₁ → ∀ (S : D.Ring U g₁),
       ∀ F : S.R →ₐ[c.O] DualNumber (PadicAlgCl l), IsLocPt (dualFst F) →
         tanCoc F S.r.hom ∈ Z1 (adRep (push (dualFst F) S.r.hom)) ∧ Af.IsBK l (adRep (push (dualFst F) S.r.hom)) (tanCoc F S.r.hom) := by
   intro hI Ω _ _ _ K _ _ _ l _ c N _ e ψ D U g₁ _ S F hF

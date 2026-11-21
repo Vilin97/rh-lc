@@ -159,7 +159,7 @@ private theorem phi_kill (hGF : GlobalFiniteness) {Ω : Type} [Field Ω] [CharZe
 
 theorem UpperTheory.V.U3.exists_model :
     CohInp → LemmaP → ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {K : Type} [Field K] [NumberField K] [Algebra K Ω]
-      {l : ℕ} [Fact l.Prime] {c : Coef l} {N : ℕ} [NeZero N] {e : ℕ} {ψ : DirichletCharacter c.O N} (D : Dat Ω K c e ψ) {U : D.ULoc} {g₁ : G ℚ Ω}, D.Marked g₁ → ∀ (S : D.Ring U g₁), Nonempty (Model S (PadicAlgCl l)) := by
+      {l : ℕ} [Fact l.Prime] {c : Coef l} {N : ℕ} [NeZero N] {e : ℕ} {ψ : DirichletCharacter c.O N} (D : Dat Ω K c e ψ) {U : (_root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition _ (D.η.comp D.ι) (D.Ψ.comp D.ι)))} {g₁ : G ℚ Ω}, D.Marked g₁ → ∀ (S : D.Ring U g₁), Nonempty (Model S (PadicAlgCl l)) := by
   intro hC hP Ω _ _ _ K _ _ _ l hl c N _ e ψ D U g₁ hg S
   haveI : IsGalois ℚ Ω := IsAlgClosure.isGalois ℚ Ω
   obtain ⟨-, -, -, hη, hΨ, hK, -⟩ := dat_facts D

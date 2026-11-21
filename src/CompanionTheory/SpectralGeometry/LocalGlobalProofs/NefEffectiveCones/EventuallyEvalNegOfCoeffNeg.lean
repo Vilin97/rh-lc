@@ -10,7 +10,6 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPowLeG
 open CategoryTheory Limits AlgebraicGeometry TopologicalSpace Filter
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open GlobalTheory GlobalTheory.QCoh GlobalTheory.CechPic GlobalTheory.Twist
-open GlobalTheory.CompanionTheory.NefKleiman
 
 set_option autoImplicit false
 noncomputable section

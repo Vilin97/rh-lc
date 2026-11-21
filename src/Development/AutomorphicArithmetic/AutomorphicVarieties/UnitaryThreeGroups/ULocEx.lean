@@ -49,7 +49,7 @@ private theorem exists_univ_loc (hP : Loc.LocalPublishedTheorems) (l : ℕ) [hl 
 
 theorem UpperTheory.V.U3.exists_uLoc :
     CohInp → ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {K : Type} [Field K] [NumberField K] [Algebra K Ω]
-      {l : ℕ} [Fact l.Prime] {c : Coef l} {N : ℕ} [NeZero N] {e : ℕ} {ψ : DirichletCharacter c.O N} (D : Dat Ω K c e ψ), Nonempty D.ULoc := by
+      {l : ℕ} [Fact l.Prime] {c : Coef l} {N : ℕ} [NeZero N] {e : ℕ} {ψ : DirichletCharacter c.O N} (D : Dat Ω K c e ψ), Nonempty (_root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition _ (D.η.comp D.ι) (D.Ψ.comp D.ι))) := by
   intro hC Ω _ _ _ K _ _ _ l hl c N _ e ψ D
   obtain ⟨-, -, -, hη, hΨ, -⟩ := dat_facts D
   exact exists_univ_loc hC.loc l c.O _ _ (hη.comp_continuous D.ι_cont) (hΨ.comp_continuous D.ι_cont)

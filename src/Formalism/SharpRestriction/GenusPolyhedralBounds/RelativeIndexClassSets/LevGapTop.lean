@@ -82,7 +82,7 @@ theorem isOpen_intAd : IsOpen (intAd F : Set (FiniteAdeleRing (𝓞 F) F)) :=
     (fun _ => Valued.isOpen_valuationSubring _)
 
 open scoped RestrictedProduct in
-theorem t2Space_adeleRing_numberField : T2Space 𝔸 :=
+theorem t2Space_adeleRing_numberField : T2Space (FiniteAdeleRing (𝓞 F) F) :=
   inferInstanceAs (T2Space (Πʳ v : HeightOneSpectrum (𝓞 F),
     [v.adicCompletion F, v.adicCompletionIntegers F]))
 

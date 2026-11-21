@@ -26,6 +26,8 @@ theorem colExt : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topological
   rw [GlobalTheory.LocMod.Witness.ext_apply, hc, colFun]
   refine if_congr Iff.rfl ?_ rfl
   congr 1
+  funext r
+  simp only [GlobalTheory.LocMod.Place.down, GlobalTheory.FinPl.ExtZero.zcol, Pi.smul_apply, smul_eq_mul, Matrix.mul_apply, Matrix.mulVec,
     dotProduct, map_sum, map_mul, hFL, Matrix.map_apply, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -178,9 +180,9 @@ theorem kapStep : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topologica
 
   have hζne : ∃ r, ζ r ≠ 0 := by
     by_contra h
-    push Not at h
+    have hz : ∀ r, ζ r = 0 := by simpa only [not_exists, not_not] using h
     apply hζ.2
-    have : ζ = 0 := funext h
+    have : ζ = 0 := funext hz
     simp [this]
   have hz : (fun r => s * P.pr (ζ r)) ≠ 0 := by
     obtain ⟨r, hr⟩ := hζne

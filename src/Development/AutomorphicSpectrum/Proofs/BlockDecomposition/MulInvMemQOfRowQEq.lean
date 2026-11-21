@@ -54,7 +54,7 @@ def rowEl (n : ℕ) (r : Fin (n + 1) → k) (h : (rowMat n r).det ≠ 0) : Mir k
     show rowMat n r (Fin.last (n + 1)) = eLast k (n + 1)
     rw [rowMat, updateRow_ne (Fin.castSucc_ne_last _).symm]
     funext j
-    simp [eLast, one_apply, Pi.single_apply, eq_comm]⟩
+    simp only [GlobalTheory.BZMir.eLast, Matrix.one_apply, Pi.single_apply, eq_comm]⟩
 
 theorem rowQ_rowEl (n : ℕ) (r : Fin (n + 1) → k) (h : (rowMat n r).det ≠ 0) :
     rowQ k n (rowEl n r h) = r := by

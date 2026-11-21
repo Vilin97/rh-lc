@@ -152,7 +152,7 @@ private theorem aux (hI : CohInp) (hP : LemmaP) {Ω : Type} [Field Ω] [CharZero
 
 theorem UpperTheory.V.U3.boxPres :
     CohInp → LemmaP → ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {K : Type} [Field K] [NumberField K] [Algebra K Ω]
-      {l : ℕ} [Fact l.Prime] {c : Coef l} {N : ℕ} [NeZero N] {e : ℕ} {ψ : DirichletCharacter c.O N} (D : Dat Ω K c e ψ) (U : D.ULoc) (B : Univ (BoxCond D.Kill D.ι D.ι_cont U (D.loc.It U))) (WB : WPres c.O ℤ (U.R ⧸ D.loc.It U)),
+      {l : ℕ} [Fact l.Prime] {c : Coef l} {N : ℕ} [NeZero N] {e : ℕ} {ψ : DirichletCharacter c.O N} (D : Dat Ω K c e ψ) (U : (_root_.UpperTheory.V.U3.Univ (_root_.UpperTheory.V.U3.GCond.noCondition _ (D.η.comp D.ι) (D.Ψ.comp D.ι)))) (B : Univ (BoxCond D.Kill D.ι D.ι_cont U (D.loc.It U))) (WB : WPres c.O ℤ (U.R ⧸ D.loc.It U)),
       IsLocPres U (D.loc.It U) WB → BoxPres B WB := by
   intro hI hP Ω _ _ _ K _ _ _ l hl c N hN e ψ D U B WB hW
   obtain ⟨hc, hf, hlm, -⟩ := UpperTheory.V.abelian₂.dvr_finite l c.O

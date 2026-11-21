@@ -35,7 +35,9 @@ theorem places_dvd_iff (D : Formalism.BasicNotions.D7) (π π' : 𝓞 D.host.E) 
     have hTw : π * π' ∈ w.asIdeal := by
       rw [hT, ← hmap]
       show algebraMap (𝓞 D.host.F) (𝓞 D.host.E) (T : 𝓞 D.host.F) ∈ Q
-      rw [← Ideal.mem_comap, hQ]; exact hx
+      rw [← Ideal.mem_comap]
+      change (T : 𝓞 D.host.F) ∈ Ideal.under (𝓞 D.host.F) Q
+      rw [hQ]; exact hx
     rcases w.isPrime.mem_or_mem hTw with h | h
     · exact ⟨w, (Formalism.L2.Col.mem_divs hπ w).2 h, hw⟩
     · refine ⟨GlobalTheory.IdemSupport.cP w, (Formalism.L2.Col.mem_divs hπ _).2 ?_, (GlobalTheory.IdemSupport.under_cP w).trans hw⟩

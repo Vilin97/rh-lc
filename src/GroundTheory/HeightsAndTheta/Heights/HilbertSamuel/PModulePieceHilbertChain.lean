@@ -258,10 +258,10 @@ theorem length_loc_rel (P : Ideal R) [P.IsPrime] : ∀ (N : ℕ) (F : Fin (N + 1
     rw [length_loc_step (F 0) (q 0) (f 0) h3 P, ← h1, ih, Fin.sum_univ_succ]
     simp only [Fin.succ_last]
     by_cases hq : q 0 = P
-    · rw [if_pos hq, hq, length_loc_quot_self]
+    · rw [ite_eq_left hq, hq, length_loc_quot_self]
       push_cast
       ring
-    · rw [if_neg hq, length_loc_quot_eq_zero _ _ (fun h => hq (hmin 0 h))]
+    · rw [ite_eq_right hq, length_loc_quot_eq_zero _ _ (fun h => hq (hmin 0 h))]
       simp
 
 end Lengths

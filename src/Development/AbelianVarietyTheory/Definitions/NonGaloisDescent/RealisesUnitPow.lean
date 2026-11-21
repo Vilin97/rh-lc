@@ -42,7 +42,7 @@ theorem semiBC_piMap {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (J :
 def piFrob {A : Type} [CommRing A] (φ : A →+* A) (d : A) (J : Type) :
     (J → A) →ₛₗ[(algebraMap A (Localization.Away d)).comp φ] LocalizedModule (Submonoid.powers d) (J → A) where
   toFun x := LocalizedModule.mk (piMap φ J x) 1
-  map_add' x y := by simp [LocalizedModule.mk_add_mk]
+  map_add' x y := by simp
   map_smul' c x := by
     rw [RingHom.comp_apply, algebraMap_smul, LocalizedModule.smul'_mk, LinearMap.map_smulₛₗ]
 
@@ -127,10 +127,20 @@ theorem unitPowMap_gal (F : FinExt l) {T J : Type} [AddCommGroup T] [Module ℤ_
 
 theorem realises_unitPow (F : FinExt l) {T J : Type} [AddCommGroup T] [Module ℤ_[l] T] [Fintype J]
     [DecidableEq J] (β : Module.Basis J ℤ_[l] T) (ρ : ↥(GK F) → (T →ₗ[ℤ_[l]] T)) (hρ : ∀ g x, ρ g x = x) :
-    Realises F (unitPow l ↥(OL F) J) (ainfObj F) (ainfId F) T ρ (unitPowMap F β) where
-  ainf := isAinf_ainfObj F
-  bc := SemiBC.comp_equiv (semiBC_piMap ((inclW l).comp (ainfId F).toRingHom) J) _
-  j_φ d hd x m k h := unitPowMap_frob F β d.1 hd x m k h
-  j_act g x := unitPowMap_gal F β g (ρ g) (hρ g) x
+    Realises F (unitPow l ↥(OL F) J) (ainfObj F) (ainfId F) T ρ (unitPowMap F β) := by
+  have hAinf : IsAinf F (ainfObj F) (ainfId F) := by
+    refine ⟨fun _ => rfl, fun _ => Iff.rfl, ?_⟩
+    intro x a h
+    have hθ : ainfQuot l (Ideal.Quotient.mk _ a) = ainfQuot l ((ainfQuot l).symm (intToOC F x)) :=
+      congrArg (ainfQuot l) h
+    rw [RingEquiv.apply_symm_apply] at hθ
+    exact congrArg Subtype.val hθ
+  refine ⟨hAinf, ?_, ?_, ?_⟩
+  · exact SemiBC.comp_equiv (semiBC_piMap ((inclW l).comp (ainfId F).toRingHom) J)
+      (β.baseChange (WCb l)).equivFun.symm
+  · intro d hd x m k h
+    exact unitPowMap_frob F β d.1 hd x m k h
+  · intro g x
+    exact unitPowMap_gal F β g (ρ g) (hρ g) x
 
 end GlobalTheory.BKReal

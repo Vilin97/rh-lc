@@ -37,15 +37,11 @@ theorem lat_eq_map (I : FractionalIdeal (𝓞 E)⁰ E) :
   · rintro ⟨x, hx, rfl⟩
     simpa using hx
 
-theorem isLattice_lat (I : FractionalIdeal (𝓞 E)⁰ E) (hI : I ≠ 0) : Submodule.IsLattice E (lat E I) where
-  fg := by
-    rw [lat_eq_map]
-    exact (FractionalIdeal.fg_of_isNoetherianRing le_rfl I).map _
-  span_eq_top := by
-    have hbot : (I : Submodule (𝓞 E) E) ≠ ⊥ := fun h => hI (FractionalIdeal.coeToSubmodule_eq_bot.1 h)
-    obtain ⟨c, hcI, hc0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hbot
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+theorem isLattice_lat (I : FractionalIdeal (𝓞 E)⁰ E) (hI : I ≠ 0) : Submodule.IsLattice E (lat E I) := by
+  apply Submodule.IsLattice.of_fg
+  rw [lat_eq_map]
+  exact (FractionalIdeal.fg_of_isNoetherianRing le_rfl I).map _
+
 theorem latAt_lat [IsTotallyComplex E] (I : (FractionalIdeal (𝓞 E)⁰ E)ˣ) :
     latAt E 1 (lat E I.1) (oneInf E 1) = Submodule.span ℤ (Set.range
       ((Pi.basis fun _ : Fin 1 => mixedEmbedding.fractionalIdealLatticeBasis E I).map (mix E 1))) := by
