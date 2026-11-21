@@ -16,7 +16,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 def UnramInert (σ : E →ₐ[F] E) (η : (AF F ⊗[F] E)ˣ →* Circle) : Prop :=
   ∀ x : (AEF F E)ˣ, infPartF F E (x : AEF F E) = 1 → (∀ e, IsSplitIdemF σ e → e * (x : AEF F E) = e) →
-    finPartF F E (x : AEF F E) ∈ intAEF F E → finPartF F E ((x⁻¹ : (AEF F E)ˣ) : AEF F E) ∈ intAEF F E → η x = 1
+    finPartF F E (x : AEF F E) ∈ intAEF → finPartF F E ((x⁻¹ : (AEF F E)ˣ) : AEF F E) ∈ intAEF → η x = 1
 
 end PositivityTheory.ThKW
 

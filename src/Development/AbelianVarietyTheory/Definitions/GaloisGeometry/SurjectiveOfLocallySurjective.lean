@@ -189,13 +189,15 @@ variable {k : Type} [CommRing k] {X : Scheme.{0}} (s : X ⟶ Sp k) (j : ℕ)
 instance secModule (F : X.Modules) (U : X.Opens) : Module (Sec s U) Γ(F, U) :=
   inferInstanceAs (Module Γ(X, U) Γ(F, U))
 
-def toOm (U : X.Opens) : OmU s U j →ₗ[Sec s U] Γ(Omega s j, U) := ((toOmega s j).app (op U)).hom
+def toOm (U : X.Opens) : OmU s U j →ₗ[Sec s U] Γ(Omega s j, U) :=
+  ((toOmega (s := s) j).app (op U)).hom
 
-theorem toOm_apply (U : X.Opens) (x : OmU s U j) : toOm s j U x = (toOmega s j).app (op U) x := rfl
+theorem toOm_apply (U : X.Opens) (x : OmU s U j) :
+    toOm s j U x = (toOmega (s := s) j).app (op U) x := rfl
 
 theorem res_toOm {U V : X.Opens} (h : V ≤ U) (x : OmU s U j) :
     (Omega s j).presheaf.map (homOfLE h).op (toOm s j U x) = toOm s j V (formRes s h j x) :=
-  (PresheafOfModules.naturality_apply (toOmega s j) (homOfLE h).op x).symm
+  (PresheafOfModules.naturality_apply (toOmega (s := s) j) (homOfLE h).op x).symm
 
 theorem exists_formRes_eq_zero {U : X.Opens} {x : OmU s U j} (h : toOm s j U x = 0) {p : X}
     (hp : p ∈ U) : ∃ V : X.Opens, ∃ hV : V ≤ U, p ∈ V ∧ formRes s hV j x = 0 := by

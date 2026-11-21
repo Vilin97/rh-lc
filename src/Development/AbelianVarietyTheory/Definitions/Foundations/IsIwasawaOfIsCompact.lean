@@ -80,6 +80,7 @@ theorem triv_of_isCompact (hP : IsClosed (P : Set G)) (hδ : Continuous δ) (hK 
   have := key p⁻¹ (inv_mem hp)
   rwa [map_inv, inv_le_one₀ (hom_pos δ p)] at this
 
+omit [IsTopologicalGroup G] in
 theorem isIwasawa_of_isCompact (hP : IsClosed (P : Set G)) (hδ : Continuous δ) (hK : IsCompact (K : Set G))
     (h : ∀ g : G, ∃ p : P, ∃ k ∈ K, g = p * k) : IsIwasawa δ K := ⟨h, triv_of_isCompact hP hδ hK⟩
 

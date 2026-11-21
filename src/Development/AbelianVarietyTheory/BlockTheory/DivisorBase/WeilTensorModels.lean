@@ -20,6 +20,7 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+variable (F E) in
 abbrev AE : Type := AF F ⊗[F] E
 
 
@@ -45,6 +46,7 @@ local instance borelFv (v : Pl F) : BorelSpace (Fv F v) := ⟨rfl⟩
 def cA (σ : E →ₐ[F] E) : AE F E →ₐ[AF F] AE F E := Algebra.TensorProduct.map (AlgHom.id (AF F) (AF F)) σ
 
 
+variable (F) in
 def incM {m n : Type} (J : Matrix m n E) : Matrix m n (AE F E) := J.map (inclR (F := F) (AF F))
 
 abbrev UA (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) : Type := UG (cA σ) (incM F J)
@@ -61,6 +63,7 @@ def ht {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (g : UA σ 
 def qht {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (g : UA σ J) : ℝ≥0 := ⨅ γ : ratU σ J, ht (γ.1 * g)
 
 
+variable (F) in
 def evI (a : AF F) : mixedEmbedding.mixedSpace F := InfiniteAdeleRing.ringEquiv_mixedSpace F a.1
 
 
@@ -193,6 +196,7 @@ structure Spc.IsSkew (B : Base F E) {n : ℕ} (X : Spc F E n) (r s : ℕ) : Prop
   bas : ∀ v : B.P, IsSplitBasis (B.τ v) X.L (X.bas v)
 
 
+variable (σ) in
 structure Model {n d : ℕ} (X : Spc F E n) (W : Spc F E d) where
 
   co : Darboux (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J)) (Fin n × Fin d)

@@ -36,7 +36,7 @@ theorem fderiv_field_bracket {U : Set E} (hU : IsOpen U) {f : E → F} (hf : Con
   have h2 : DifferentiableAt ℝ (fderiv ℝ f) g :=
     ((h1.contDiffAt (hU.mem_nhds hg)).differentiableAt (by simp))
   have hs : IsSymmSndFDerivAt ℝ f g :=
-    (hf.contDiffAt (hU.mem_nhds hg)).isSymmSndFDerivAt (by simp; exact ENat.LEInfty.out)
+    (hf.contDiffAt (hU.mem_nhds hg)).isSymmSndFDerivAt (by simp)
   have hA := (h2.hasFDerivAt.clm_apply A.hasFDerivAt).fderiv
   have hB := (h2.hasFDerivAt.clm_apply B.hasFDerivAt).fderiv
   rw [hA, hB]

@@ -35,12 +35,25 @@ theorem act_unique (hL : Out.SymLiftSt) {S : Scheme.{0}} [IsLocallyNoetherian S]
   subst hz
   have hc := (hL S P k ho hu T x hx).2 θ θ' h h'
   refine sec_ext_val P.isLB (s := s₁) (s' := s₂) (fun y J hJ => ?_) j
+  have e₁ := GlobalTheory.ThetaPowOrder.act_sval a₁ (𝟙 _) y hJ
+  have e₂ := GlobalTheory.ThetaPowOrder.act_sval a₂ (𝟙 _) y hJ
+  have e₃ := val_corr hJ hc (𝟙 _)
+  have e₄ : θ.pt = θ'.pt := h.pt_eq.trans h'.pt_eq.symm
+  refine e₁.trans (Eq.trans ?_ e₂.symm)
+  exact congrArg₂ (fun u (p : T ⟶ P.A) => Units.val u * sval (L := P.L) s (𝟙 _ ≫ (Out.translT P.A p).left) y J) e₃ e₄
 
 theorem lbIso_pow {X Y : Scheme.{0}} {L : LB X} (hL : L.IsLB) (f : Y ⟶ X) (n : ℕ) (z : ℤ) (hz : z = n) :
     LBIso (LB.LinComb L (K := Fin 1) (fun _ => f) (fun _ => z)) ((lbPow L n).pull f) := by
   subst hz
   refine LBIso.chartPull (h := f) (A := lbPow L n) (B := lbPow L n) ?_ (chartPullPull _ f f rfl)
     ⟨_, idIso_isGen (LB.isLB_linComb hL _ _)⟩
+  have le : ∀ j : Fin 1 → L.ι, LB.wchart L (fun _ : Fin 1 => f) j ≤
+      f ⁻¹ᵁ LB.wchart L (fun _ : PUnit => 𝟙 X) (fun _ => j 0) :=
+    fun j y hy => Set.mem_iInter.2 fun _ => Set.mem_iInter.1 hy 0
+  refine ⟨fun j _ => j 0, le, fun y j j' hj hj' => ?_⟩
+  refine (gm_linComb L _ _ (𝟙 Y) y j j' hj hj').trans (Eq.trans ?_
+    (gm_linComb L (fun _ : PUnit => 𝟙 X) (fun _ => (n : ℤ)) f y _ _ (le j hj) (le j' hj')).symm)
+  rw [Fin.prod_univ_one, Fintype.prod_unique, Category.id_comp, Category.comp_id]
 
 theorem linComb_pow {S : Scheme.{0}} {A T : Over S} [GrpObj A] [IsCommMonObj A] {r : ℕ} (y : Fin r → (T ⟶ A))
     (a : Fin r → ℕ) (n : ℕ) : Out.linComb y a ^ n = ∏ i, y i ^ (a i * n) := by

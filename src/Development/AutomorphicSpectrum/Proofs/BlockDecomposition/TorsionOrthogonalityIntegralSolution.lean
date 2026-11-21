@@ -129,6 +129,7 @@ end GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.HS.DualCover
 
 
 theorem GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.HS.dual_cover : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (m : ℕ) (c : Matrix (Fin m) (Fin m) E), (∀ a b, σ (c b a) = c a b) → ∀ (u : Fin m → E) (b : E), (∀ t ∈ tor c u, σ (t : E) * b ∈ (1 : Submodule (𝓞 E) E)) → ∃ y : Fin m → 𝓞 E, y ∈ Kc c ∧ b - ∑ j, σ (u j) * (y j : E) ∈ (1 : Submodule (𝓞 E) E) := by
+  open GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.HS.DualCover in
   intro F E _ _ _ _ _ σ hcm m c hc u b hb
   obtain ⟨hinv, -, hsO, -⟩ := GlobalTheory.T.cm_conjugation_properties F E σ hcm
   set w : Fin m → E := fun j => σ (u j) with hw

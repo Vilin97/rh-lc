@@ -261,7 +261,8 @@ theorem unfold_abs [TopologicalSpace G] [IsTopologicalGroup G] [T2Space G] [Seco
       simp only
       rw [twConj_out ι θ θR hθ, ← map_repR ι q, ← map_inv, hχi]
     simp_rw [e1]
-    exact ENNReal.tsum_comp_le_tsum_of_injective (orbPt_injective (hH c)) _
+    exact ENNReal.tsum_comp_le_tsum_of_injective (orbPt_injective (hH c))
+      (fun d => ‖χ x * φ (twConj θ x (ι d))‖ₑ)
   have hterm : ∀ c, (quotIntegral μ (H c) Measure.count fun x => χ x * φ (twConj θ x (ι (rep c)))) =
       ∫ x in Fd, ∑' q : ι.range ⧸ (H c).subgroupOf ι.range,
         χ ((q.out : G)⁻¹ * x) * φ (twConj θ ((q.out : G)⁻¹ * x) (ι (rep c))) ∂μ := fun c => by

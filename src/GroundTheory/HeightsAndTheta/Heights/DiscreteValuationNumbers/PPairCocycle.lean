@@ -424,36 +424,37 @@ theorem ratDiv_mul {P : Ideal (MRing ι O)} [P.IsPrime] {f g f' g' : MRing ι O}
 theorem isVerticalDivisor_mul {P : Ideal (MRing ι O)} [P.IsPrime] {ϖ : O} {b b' : K → ℤ}
     {f g f' g' : MRing ι O} (hD : IsVerticalDivisor P ϖ b f g)
     (hD' : IsVerticalDivisor P ϖ b' f' g') :
-    IsVerticalDivisor P ϖ (b + b') (f * f') (g * g') where
-  degrees := by
-    obtain ⟨bf, bg, hf, hg, hb⟩ := hD.degrees
-    obtain ⟨bf', bg', hf', hg', hb'⟩ := hD'.degrees
-    refine ⟨bf + bf', bg + bg', IsWeightedHomogeneous.mul hf hf',
-      IsWeightedHomogeneous.mul hg hg', ?_⟩
-    rw [← hb, ← hb']
-    funext k
-    simp only [Pi.add_apply, Nat.cast_add]
-    ring
-  num_not_mem := fun h => (Ideal.IsPrime.mem_or_mem ‹_› h).elim hD.num_not_mem hD'.num_not_mem
-  den_not_mem := fun h => (Ideal.IsPrime.mem_or_mem ‹_› h).elim hD.den_not_mem hD'.den_not_mem
-  vertical := by
-    intro W hW
-    rw [ratDiv_mul hD.num_not_mem hD.den_not_mem hD'.num_not_mem hD'.den_not_mem,
-      Pi.add_apply] at hW
-    by_cases h1 : ratDiv P f g W = 0
-    · rw [h1, zero_add] at hW
-      exact hD'.vertical W hW
-    · exact hD.vertical W h1
-  unit_off_special := by
-    intro W hW hPW hrel hϖ
-    obtain ⟨u, v, hu, hv, h⟩ := hD.unit_off_special W hW hPW hrel hϖ
-    obtain ⟨u', v', hu', hv', h'⟩ := hD'.unit_off_special W hW hPW hrel hϖ
-    refine ⟨u * u', v * v', fun hm => (hW.mem_or_mem hm).elim hu hu',
-      fun hm => (hW.mem_or_mem hm).elim hv hv', ?_⟩
-    have e : u * u' * (f * f') - v * v' * (g * g') =
-        (u' * f') * (u * f - v * g) + (v * g) * (u' * f' - v' * g') := by ring
-    rw [e]
-    exact P.add_mem (P.mul_mem_left _ h) (P.mul_mem_left _ h')
+    IsVerticalDivisor P ϖ (b + b') (f * f') (g * g') := by
+  exact {
+    degrees := by
+      obtain ⟨bf, bg, hf, hg, hb⟩ := hD.degrees
+      obtain ⟨bf', bg', hf', hg', hb'⟩ := hD'.degrees
+      refine ⟨bf + bf', bg + bg', IsWeightedHomogeneous.mul hf hf',
+        IsWeightedHomogeneous.mul hg hg', ?_⟩
+      rw [← hb, ← hb']
+      funext k
+      simp only [Pi.add_apply, Nat.cast_add]
+      ring
+    num_not_mem := fun h => (Ideal.IsPrime.mem_or_mem ‹_› h).elim hD.num_not_mem hD'.num_not_mem
+    den_not_mem := fun h => (Ideal.IsPrime.mem_or_mem ‹_› h).elim hD.den_not_mem hD'.den_not_mem
+    vertical := by
+      intro W hW
+      rw [ratDiv_mul hD.num_not_mem hD.den_not_mem hD'.num_not_mem hD'.den_not_mem,
+        Pi.add_apply] at hW
+      by_cases h1 : ratDiv P f g W = 0
+      · rw [h1, zero_add] at hW
+        exact hD'.vertical W hW
+      · exact hD.vertical W h1
+    unit_off_special := by
+      intro W hW hPW hrel hϖ
+      obtain ⟨u, v, hu, hv, h⟩ := hD.unit_off_special W hW hPW hrel hϖ
+      obtain ⟨u', v', hu', hv', h'⟩ := hD'.unit_off_special W hW hPW hrel hϖ
+      refine ⟨u * u', v * v', fun hm => (hW.mem_or_mem hm).elim hu hu',
+        fun hm => (hW.mem_or_mem hm).elim hv hv', ?_⟩
+      have e : u * u' * (f * f') - v * v' * (g * g') =
+          (u' * f') * (u * f - v * g) + (v * g) * (u' * f' - v' * g') := by ring
+      rw [e]
+      exact P.add_mem (P.mul_mem_left _ h) (P.mul_mem_left _ h') }
 
 end Models
 
@@ -493,55 +494,57 @@ theorem isFlagPair_comp {ϖ : O} {y : (Σ k, ι k) → Ω} [(pointIdeal O y).IsP
     {B B' B'' : ChartBundle O (segreVec y) N E} {w w' w'' : Module.Basis (Fin N) Ω E}
     {x x' x'' : Fin N → K → ℤ} {f g f' g' : Fin N → MRing ι O}
     (hp₁ : IsFlagPair ϖ y B B' w w' x x' f g) (hp₂ : IsFlagPair ϖ y B' B'' w' w'' x' x'' f' g') :
-    IsFlagPair ϖ y B B'' w w'' x x'' (fun i => f i * f' i) (fun i => g i * g' i) where
-  flag := hp₁.flag
-  flag' := hp₂.flag'
-  sameFlag := by
-    intro i j hij
-    rw [repr_chain w w' (w'' i) j]
-    refine Finset.sum_eq_zero fun m _ => ?_
-    rcases lt_or_ge i m with h | h
-    · rw [hp₂.sameFlag i m h, zero_mul]
-    · rw [hp₁.sameFlag m j (lt_of_le_of_lt h hij), mul_zero]
-  vertical := fun i => by
-    have h := isVerticalDivisor_mul (hp₁.vertical i) (hp₂.vertical i)
-    rwa [sub_add_sub_cancel] at h
-  generic := fun i => by
-    simp only [map_mul]
-    rw [hp₁.generic i, hp₂.generic i, repr_chain w w' (w'' i) i, Finset.sum_eq_single i]
-    · ring
-    · intro m _ hmi
-      rcases lt_or_gt_of_ne hmi with h | h
-      · rw [hp₁.sameFlag m i h, mul_zero]
+    IsFlagPair ϖ y B B'' w w'' x x'' (fun i => f i * f' i) (fun i => g i * g' i) := by
+  exact {
+    flag := hp₁.flag
+    flag' := hp₂.flag'
+    sameFlag := by
+      intro i j hij
+      rw [repr_chain w w' (w'' i) j]
+      refine Finset.sum_eq_zero fun m _ => ?_
+      rcases lt_or_ge i m with h | h
       · rw [hp₂.sameFlag i m h, zero_mul]
-    · simp
+      · rw [hp₁.sameFlag m j (lt_of_le_of_lt h hij), mul_zero]
+    vertical := fun i => by
+      have h := isVerticalDivisor_mul (hp₁.vertical i) (hp₂.vertical i)
+      rwa [sub_add_sub_cancel] at h
+    generic := fun i => by
+      simp only [map_mul]
+      rw [hp₁.generic i, hp₂.generic i, repr_chain w w' (w'' i) i, Finset.sum_eq_single i]
+      · ring
+      · intro m _ hmi
+        rcases lt_or_gt_of_ne hmi with h | h
+        · rw [hp₁.sameFlag m i h, mul_zero]
+        · rw [hp₂.sameFlag i m h, zero_mul]
+      · simp }
 
 
 theorem isFlagPair_refl {ϖ : O} {y : (Σ k, ι k) → Ω} [(pointIdeal O y).IsPrime]
     {B : ChartBundle O (segreVec y) N E} {w : Module.Basis (Fin N) Ω E} {x : Fin N → K → ℤ}
     (hf : IsFlagFrame y B w x) :
-    IsFlagPair ϖ y B B w w x x (fun _ => 1) (fun _ => 1) where
-  flag := hf
-  flag' := hf
-  sameFlag := by
-    intro i j hij
-    simp [Module.Basis.repr_self, hij.ne]
-  vertical := fun i => by
-    rw [sub_self]
-    have hHom : IsMultiHomog (1 : MRing ι O) 0 :=
-      isWeightedHomogeneous_one O (blockWeight ι)
-    have hOne : (1 : MRing ι O) ∉ pointIdeal O y :=
-      (Ideal.ne_top_iff_one _).mp (Ideal.IsPrime.ne_top' : pointIdeal O y ≠ ⊤)
-    exact {
-      degrees := ⟨0, 0, hHom, hHom, by funext k; simp⟩
-      num_not_mem := hOne
-      den_not_mem := hOne
-      vertical := by simp [ratDiv]
-      unit_off_special := by
-        intro W hW _ _ _
-        have hOneW : 1 ∉ W := (Ideal.ne_top_iff_one W).mp hW.ne_top
-        exact ⟨1, 1, hOneW, hOneW, by simp⟩ }
-  generic := fun i => by simp [Module.Basis.repr_self]
+    IsFlagPair ϖ y B B w w x x (fun _ => 1) (fun _ => 1) := by
+  exact {
+    flag := hf
+    flag' := hf
+    sameFlag := by
+      intro i j hij
+      simp [Module.Basis.repr_self, hij.ne]
+    vertical := fun i => by
+      rw [sub_self]
+      have hHom : IsMultiHomog (1 : MRing ι O) 0 :=
+        isWeightedHomogeneous_one O (blockWeight ι)
+      have hOne : (1 : MRing ι O) ∉ pointIdeal O y :=
+        (Ideal.ne_top_iff_one _).mp (Ideal.IsPrime.ne_top' : pointIdeal O y ≠ ⊤)
+      exact {
+        degrees := ⟨0, 0, hHom, hHom, by funext k; simp⟩
+        num_not_mem := hOne
+        den_not_mem := hOne
+        vertical := by simp [ratDiv]
+        unit_off_special := by
+          intro W hW _ _ _
+          have hOneW : 1 ∉ W := (Ideal.ne_top_iff_one W).mp hW.ne_top
+          exact ⟨1, 1, hOneW, hOneW, by simp⟩ }
+    generic := fun i => by simp [Module.Basis.repr_self] }
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem pairNum_one (P : Ideal (MRing ι O)) (x : Fin N → K → ℤ)

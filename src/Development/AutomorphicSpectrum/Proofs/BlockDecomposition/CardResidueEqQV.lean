@@ -17,7 +17,6 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.EqOfHasValue
 noncomputable section
 open NumberField IsDedekindDomain Matrix
 open GlobalTheory.CuspRep GlobalTheory.PRep Formalism.UG Formalism.BasicNotions GlobalTheory.UnitaryBC Formalism.L2.Host GlobalTheory.SmGL GlobalTheory.BCT ValuativeRel
-open PositivityTheory.Rg.BcB.F.Tail.BS
 open scoped Classical TensorProduct
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
@@ -29,7 +28,7 @@ theorem qV_pos {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞
 
 theorem card_residue_eq_qV {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) :
     Nat.card 𝓀[w.adicCompletion E] = qV E w := by
-  have h := GlobalTheory.LocLanglands.resCard_eq_normV w
+  have h := GlobalTheory.LocLanglands.resCard_eq_normV (w := w)
   simpa [GlobalTheory.SplitWeil.resCard, Formalism.ConjugateSelfDual.normV, qV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using h
 
 theorem modExp_points (n : ℕ) (a : Fin n) :

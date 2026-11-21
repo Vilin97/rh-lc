@@ -134,7 +134,7 @@ include hT htf hk
 
 theorem ses_smul : SES (smulHom L t) (π 0) where
   inj n := (injective_iff_map_eq_zero _).2 fun x hx => htf n x hx
-  exact n y := by
+  «exact» n y := by
     rw [hk 0 n y]
     simp only [zero_add, pow_one, Set.mem_range, smulHom_f]
     exact ⟨fun ⟨z, hz⟩ => ⟨z, hz.symm⟩, fun ⟨z, hz⟩ => ⟨z, hz.symm⟩⟩
@@ -174,7 +174,7 @@ theorem ses_j (m : ℕ) : SES (jHom t hT htf hk m) (τ m) where
       rw [smul_sub, hy, smul_smul, ← pow_succ, sub_self]
     rw [hk 0 n]
     exact ⟨y, by simpa using this⟩
-  exact n z := by
+  «exact» n z := by
     obtain ⟨x, rfl⟩ := tower_pi_surj hT (m + 1) n z
     rw [hT.compat, hk]
     constructor

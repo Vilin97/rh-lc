@@ -59,9 +59,9 @@ theorem evalPt_mem_adm {κ : Type} [Fintype κ] (x : κ → AF F) :
   simp [pureA, mul_comm]
 
 theorem rho_diag {a b : ℕ} {JA : Matrix (Fin a) (Fin a) E} {JB : Matrix (Fin b) (Fin b) E} {κ : Type}
-    [Fintype κ] {d : Darboux (symp (cA σ) (-1) (incM F JA) (incM F JB)) κ}
-    {dd : Darboux (symp (cA σ) (-1) (incM F JA) (dbl (incM F JB))) (κ ⊕ κ)}
-    (h : IsDblCoord (cA σ) (-1) (incM F JA) (incM F JB) d dd) (ψ : AddChar (AF F) ℂ)
+    [Fintype κ] {d : Darboux (symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JA) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB)) κ}
+    {dd : Darboux (symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JA) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB))) (κ ⊕ κ)}
+    (h : IsDblCoord (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JA) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB) d dd) (ψ : AddChar (AF F) ℂ)
     (z : Matrix (Fin a) (Fin b) (AE F E)) :
     dd.rho ψ (z * (diagCols (Fin b) : Matrix (Fin b ⊕ Fin b) (Fin b) (AE F E))ᵀ) =
       schr ψ (Sum.elim (d.e z).1 (d.e z).1, Sum.elim (d.e z).2 (-(d.e z).2)) := by
@@ -72,13 +72,13 @@ theorem rho_diag {a b : ℕ} {JA : Matrix (Fin a) (Fin a) E} {JB : Matrix (Fin b
   rcases j with j | j <;> erw [Matrix.mul_apply] <;> simp [diagCols, Matrix.one_apply]
 
 theorem siegel_transfer {a b : ℕ} {JA : Matrix (Fin a) (Fin a) E} {JB : Matrix (Fin b) (Fin b) E} {κ : Type} [Fintype κ]
-    {ψ : AddChar (AF F) ℂ} {dd : Darboux (symp (cA σ) (-1) (incM F JA) (dbl (incM F JB))) κ} {χ : Chr F E}
-    {omd : UG (cA σ) (dbl (incM F JB)) →* Module.End ℂ ((κ → AF F) → ℂ)}
-    (h : IsUWeilSplit (cA σ) (adeleClass F) ψ (-1) (incM F JA) (dbl (incM F JB)) dd χ (diagCols (Fin b)) omd)
-    (g₀ : UG (cA σ) (dbl (incM F JB))) (l : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) (hl : l ∈ (adeleClass F).adm κ)
+    {ψ : AddChar (AF F) ℂ} {dd : Darboux (symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JA) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB))) κ} {χ : Chr F E}
+    {omd : UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB)) →* Module.End ℂ ((κ → AF F) → ℂ)}
+    (h : IsUWeilSplit (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (adeleClass F) ψ (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JA) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB)) dd χ (diagCols (Fin b)) omd)
+    (g₀ : UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB))) (l : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) (hl : l ∈ (adeleClass F).adm κ)
     (hinv : ∀ z : Matrix (Fin a) (Fin b) (AE F E), ∀ φ ∈ schA F κ,
       l (dd.rho ψ (z * (g₀.1.1 * (diagCols (Fin b) : Matrix (Fin b ⊕ Fin b) (Fin b) (AE F E)))ᵀ) φ) = l φ)
-    (p : UG (cA σ) (dbl (incM F JB))) (t : GL (Fin b) (AE F E))
+    (p : UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB))) (t : GL (Fin b) (AE F E))
     (hp : p.1.1 * (g₀.1.1 * (diagCols (Fin b) : Matrix (Fin b ⊕ Fin b) (Fin b) (AE F E))) =
       (g₀.1.1 * (diagCols (Fin b) : Matrix (Fin b ⊕ Fin b) (Fin b) (AE F E))) * t.1) :
     ∀ φ ∈ schA F κ, l (omd p φ) = (χ (Matrix.GeneralLinearGroup.det t) : ℂ) *
@@ -93,7 +93,7 @@ theorem siegel_transfer {a b : ℕ} {JA : Matrix (Fin a) (Fin a) E} {JB : Matrix
     intro z φ hφ
     simp only [LinearMap.comp_apply]
     rw [hS.impl g₀ _ φ hφ]
-    have ea : actB (cA σ) g₀ (z * Δᵀ) = z * (g₀.1.1 * Δ)ᵀ := by
+    have ea : actB (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) g₀ (z * Δᵀ) = z * (g₀.1.1 * Δ)ᵀ := by
       simp only [actB, Matrix.transpose_mul, Matrix.mul_assoc]
     rw [ea]
     exact hinv z _ (hS.pres g₀ φ hφ)
@@ -162,7 +162,7 @@ theorem levi_scalar_one : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) 
     rw [map_mul, map_mul, Module.End.mul_apply, hlam p _ (hS.pres _ Ψ hΨ), hlam q Ψ hΨ, map_smul, smul_smul,
       map_mul, Module.End.mul_apply]).symm
   have hone : lam 1 = 1 := (huniq 1 1 fun Ψ _ => by simp).symm
-  let cM : UG (cA σ) (dbl (incM F X₁.J)) →* ℂ := { toFun := lam, map_one' := hone, map_mul' := hmul }
+  let cM : UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J)) →* ℂ := { toFun := lam, map_one' := hone, map_mul' := hmul }
   let c := cM.toHomUnits
   have hcv : ∀ p, ((c p : ℂˣ) : ℂ) = lam p := fun p => rfl
   obtain ⟨x, hx⟩ : ∃ x, et Φ₁ x ≠ 0 := by
@@ -199,7 +199,7 @@ theorem levi_scalar_one : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) 
     rw [this]
     exact hcont_l.inv₀ fun p => by rw [← hcv]; exact (c p).ne_zero
 
-  have hP' : ∀ (p : UG (cA σ) (dbl (incM F X₁.J))) (t : GL (Fin n₁) (AE F E)),
+  have hP' : ∀ (p : UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J))) (t : GL (Fin n₁) (AE F E)),
       (p.1.1 : Matrix (Fin n₁ ⊕ Fin n₁) (Fin n₁ ⊕ Fin n₁) (AE F E)) * diagCols (Fin n₁) = diagCols (Fin n₁) * t.1 →
         c p = 1 := fun p t hpt => by
     obtain ⟨t', ht', hdet⟩ := hsieg p t hpt
@@ -233,7 +233,7 @@ theorem levi_scalar_one : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) 
   have hc1 := GlobalTheory.T.doubledUnitary_character_trivial_of_siegel F E σ hσ n₁ X₁.J 1 hJ hdetJ c hcontc hP'
   have hlam1 : ∀ p, lam p = 1 := fun p => by rw [← hcv, hc1]; rfl
 
-  obtain ⟨gd₁, hgd₁⟩ := GlobalTheory.T.exists_unitaryDoubled_blockDiag_one (AF F) (AE F E) (cA σ) (Fin n₁) (incM F X₁.J) g₁
+  obtain ⟨gd₁, hgd₁⟩ := GlobalTheory.T.exists_unitaryDoubled_blockDiag_one (AF F) (AE F E) (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (Fin n₁) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J) g₁
   have hmd := hlevi g₁ m hL gd₁ hgd₁
   have hsp := hP.weil.isUSplitting
   have e3 := hlam gd₁ (boxFun Φ φ₂) (GlobalTheory.T.productFunctionOnSumCoords_mem_adelicSchwartzSpace F _ _ Φ hΦ φ₂ hφ₂)

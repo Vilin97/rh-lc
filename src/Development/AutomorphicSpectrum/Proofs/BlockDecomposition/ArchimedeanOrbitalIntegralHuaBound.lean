@@ -180,7 +180,7 @@ theorem inner_polarOp {W : Type} [Fintype W] {n M : ℕ} (J : W → Matrix (Fin 
   have key : ∑ p, inner ℂ (x (w, p)) (mixOp J (diagOp b y) (w, p)) =
       2 * sesq (J w) (b w) (tupCoord x w) (tupCoord y w) := by
     simp only [PiLp.inner_apply, mixOp_apply, diagOp_apply, tupCoord_apply]
-    simp [sesq, Matrix.toEuclideanLin_apply, Matrix.mulVec, dotProduct, Finset.mul_sum, Finset.sum_mul]
+    simp [sesq, Matrix.mulVec, dotProduct, Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ =>
       Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   calc ∑ p, inner ℝ (x (w, p)) (mixOp J (diagOp b y) (w, p))

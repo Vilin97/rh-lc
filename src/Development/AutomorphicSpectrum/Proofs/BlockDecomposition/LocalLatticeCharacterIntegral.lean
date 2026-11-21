@@ -217,7 +217,7 @@ theorem GlobalTheory.CompanionTheory.AvgFree.nearNF_cover : ∀ (F E : Type) [Fi
   have hsO : ((p.1 ^ j : (Fv F v ⊗[F] E)ˣ) : Fv F v ⊗[F] E) ∈ O := by
     rw [Units.val_pow_eq_pow_val]
     exact O.pow_mem htO j
-  obtain ⟨Rep, hcard, hRO, hRep⟩ := exists_reps (GlobalTheory.CompanionTheory.SW.coordK (Fv F v) b lv) O hOc hOo (p.1 ^ j) hsO
+  obtain ⟨Rep, hcard, hRO, hRep⟩ := GlobalTheory.CompanionTheory.AvgFree.Cov.exists_reps (GlobalTheory.CompanionTheory.SW.coordK (Fv F v) b lv) O hOc hOo (p.1 ^ j) hsO
     (θ ^ j) (hpow j)
   let G : Finset (Fin n × (Fin n → (Fv F v ⊗[F] E))) :=
     ((Finset.univ : Finset (Fin n)) ×ˢ Fintype.piFinset (fun _ : Fin n => Rep)).image
@@ -243,8 +243,8 @@ theorem GlobalTheory.CompanionTheory.AvgFree.nearNF_cover : ∀ (F E : Type) [Fi
     refine ⟨(l, Function.update r l 1), ?_, ?_⟩
     · refine Finset.mem_image.2 ⟨(l, r), Finset.mem_product.2 ⟨Finset.mem_univ _, ?_⟩, rfl⟩
       exact Fintype.mem_piFinset.2 hrRep
-    · refine rmul_mem_tupIn (Fv F v) (L : Set (Fv F v ⊗[F] E)) (p.1 ^ j) l _ X hX fun k => ?_
-      refine sum_near O L _ X hX l _ a0 (by simp [hl0]) (fun i hi => ?_) k ?_
+    · refine GlobalTheory.CompanionTheory.AvgFree.Cov.rmul_mem_tupIn (Fv F v) (L : Set (Fv F v ⊗[F] E)) (p.1 ^ j) l _ X hX fun k => ?_
+      refine GlobalTheory.CompanionTheory.AvgFree.Cov.sum_near O L _ X hX l _ a0 (by simp [hl0]) (fun i hi => ?_) k ?_
       · refine ⟨- o i, O.neg_mem (ho i), ?_⟩
         change Function.update r l 1 i - a0 i = _
         rw [Function.update_of_ne hi, mul_neg, ← hoe i]

@@ -69,7 +69,9 @@ theorem symO_std (n : ℕ) : Formalism.L2.Pj.symO (Dw := Dw) c (⟨stdLat E n⟩
   · rintro _ ⟨Q, rfl⟩
     induction Q using MvPolynomial.induction_on with
     | C o => exact Subring.subset_closure (Or.inl ⟨o, by rw [map_C]; rfl⟩)
-    | add p q hp hq => rw [map_add (f := _)]; exact Subring.add_mem _ hp hq
+    | add p q hp hq =>
+      rw [(MvPolynomial.map (σ := LtN Dw n) (algebraMap (integralClosure ℤ c.F) c.F)).map_add]
+      exact Subring.add_mem _ hp hq
     | mul_X p s hp =>
       rw [map_mul, map_X]
       refine Subring.mul_mem _ hp (Subring.subset_closure (Or.inr ?_))

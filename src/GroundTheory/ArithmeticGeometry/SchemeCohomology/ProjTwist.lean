@@ -115,6 +115,7 @@ def sectionsSubgroup (k : ℤ) (U : Opens (ProjectiveSpectrum.top 𝒜)) :
   add_mem' := add_mem' k U _ _
   neg_mem' := neg_mem' k U _
 
+open ProjectiveSpectrum in
 instance (k : ℤ) (U : (Opens (ProjectiveSpectrum.top 𝒜))ᵒᵖ) :
     AddCommGroup ((twistSheafInType 𝒜 k).obj.obj U) :=
   (sectionsSubgroup k U.unop).toAddCommGroup
@@ -128,6 +129,7 @@ def toLocFun (U : Opens (ProjectiveSpectrum.top 𝒜)) :
   map_zero' := by funext x; exact HomogeneousLocalization.val_zero
   map_add' a b := by funext x; exact HomogeneousLocalization.val_add _ _
 
+open ProjectiveSpectrum in
 instance (U : Opens (ProjectiveSpectrum.top 𝒜)) :
     Module ((ProjectiveSpectrum.Proj.structureSheaf 𝒜).obj.obj (op U)) (∀ x : U, Loc 𝒜 x.1) :=
   Module.compHom _ (toLocFun U)

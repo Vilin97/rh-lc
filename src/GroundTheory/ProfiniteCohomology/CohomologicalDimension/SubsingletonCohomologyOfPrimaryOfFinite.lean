@@ -65,9 +65,9 @@ theorem subsingleton_cohomology_X₂ {S : ShortComplex (Rep.{u} k G)} [IsDiscret
     Subsingleton (cohomology S.X₂ n) := by
   suffices h : ∀ x : cohomology S.X₂ n, x = 0 from ⟨fun x y => by rw [h x, h y]⟩
   intro x
-  obtain ⟨z, hz⟩ := (ShortComplex.moduleCat_exact_iff _).1 (cohomology_exact₂ hS n) x
-    (Subsingleton.elim _ _)
-  rw [← hz, Subsingleton.elim z 0]
+  obtain ⟨z, hz⟩ := (ShortComplex.moduleCat_exact_iff _).1
+    ((cochainsShortComplex_shortExact hS).homology_exact₂ n) x (@Subsingleton.elim _ h₃ _ _)
+  rw [← hz, @Subsingleton.elim _ h₁ z 0]
   exact map_zero _
 
 noncomputable def subQuotShortComplex (A : Rep.{u} k G) (W : Submodule k A)
@@ -78,15 +78,14 @@ noncomputable def subQuotShortComplex (A : Rep.{u} k G) (W : Submodule k A)
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem subQuotShortComplex_shortExact (A : Rep.{u} k G) (W : Submodule k A)
-    (h : ∀ g, W ≤ W.comap (A.ρ g)) : (subQuotShortComplex A W h).ShortExact where
-  exact := by
-    rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k G) (ModuleCat.{u} k)),
-      ShortComplex.moduleCat_exact_iff]
-    intro a ha
-    change Submodule.Quotient.mk (p := W) a = 0 at ha
-    exact ⟨⟨a, (Submodule.Quotient.mk_eq_zero _).1 ha⟩, rfl⟩
-  mono_f := (Rep.mono_iff_injective _).2 Subtype.val_injective
-  epi_g := (Rep.epi_iff_surjective _).2 (Submodule.mkQ_surjective _)
+    (h : ∀ g, W ≤ W.comap (A.ρ g)) : (subQuotShortComplex A W h).ShortExact := by
+  refine ShortComplex.ShortExact.mk' ?_ ((Rep.mono_iff_injective _).2 Subtype.val_injective)
+    ((Rep.epi_iff_surjective _).2 (Submodule.mkQ_surjective _))
+  rw [← ShortComplex.exact_map_iff_of_faithful _ (forget₂ (Rep.{u} k G) (ModuleCat.{u} k)),
+    ShortComplex.moduleCat_exact_iff]
+  intro a ha
+  change Submodule.Quotient.mk (p := W) a = 0 at ha
+  exact ⟨⟨a, (Submodule.Quotient.mk_eq_zero _).1 ha⟩, rfl⟩
 
 instance (A : Rep.{u} k G) [IsDiscreteRep A] (W : Submodule k A) (h : ∀ g, W ≤ W.comap (A.ρ g)) :
     IsDiscreteRep (subQuotShortComplex A W h).X₁ :=
@@ -241,8 +240,9 @@ theorem cdp_le_of_forall_primary {p : ℕ} (hp : p.Prime) {n : ℕ}
   rintro x ⟨k, hk⟩
   have hx : (cohomologyMap (Rep.mkQ A (primarySubmodule A p) hW) q).hom x = 0 :=
     hQ _ ⟨k, by rw [← map_nsmul, hk, map_zero]⟩
+  have hS := subQuotShortComplex_shortExact A (primarySubmodule A p) hW
   obtain ⟨z, hz⟩ := (ShortComplex.moduleCat_exact_iff _).1
-    (cohomology_exact₂ (subQuotShortComplex_shortExact A (primarySubmodule A p) hW) q) x hx
+    ((cochainsShortComplex_shortExact hS).homology_exact₂ q) x hx
   rw [← hz, @Subsingleton.elim _ hT z 0]
   exact map_zero _
 
@@ -405,7 +405,12 @@ theorem subsingleton_cohomology_of_primary_of_finite [CompactSpace G] {p : ℕ} 
     exact ⟨⟨W, h1, h2⟩, h3⟩
   suffices hz : ∀ x : cohomology A m, x = 0 from ⟨fun x y => by rw [hz x, hz y]⟩
   intro x
-  obtain ⟨i, z, rfl⟩ := exists_cohomologyMap_subtype_eq A Wf hW hstable hunion m x
+  have hpreimage : ∃ (i : ι) (z : cohomology (A.subrepresentation (Wf i) (hstable i)) m),
+      (cohomologyMap (Rep.subtype A (Wf i) (hstable i)) m).hom z = x :=
+    exists_homologyMap_eq_of_cocone (subrepCochainsCocone A Wf hW hstable) m
+      (subrepCochainsCocone_surj A Wf hW hstable hunion m)
+      (subrepCochainsCocone_inj A Wf hW hstable _) x
+  obtain ⟨i, z, rfl⟩ := hpreimage
   have : Finite (A.subrepresentation (Wf i) (hstable i)) := i.2.2
   have hs := h (A.subrepresentation (Wf i) (hstable i)) (by
     rintro ⟨b, hb⟩

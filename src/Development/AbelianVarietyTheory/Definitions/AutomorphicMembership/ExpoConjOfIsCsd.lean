@@ -33,9 +33,11 @@ inductive Op (E : Type) [Field E] [NumberField E] (a : ℕ) : Type
   | lie (X : Lie E a)
 
 
+variable (E a) in
 def finRep : Representation ℂ (GL (Fin a) (Af E)) (Sm E a) := (rt E a).comp (finGL E a)
 
 
+variable (E a) in
 def cptRep : Representation ℂ (Kinf E a) (Sm E a) := (rt E a).comp ((infGL E a).comp Unitary.toUnits)
 
 def act : Op E a → Module.End ℂ (Sm E a)
@@ -77,6 +79,7 @@ def ratN (E : Type) [Field E] [NumberField E] (a r : ℕ) : AddSubgroup (BlockIx
   (AddMonoidHom.compLeft (algebraMap E (Ad E)).toAddMonoidHom (BlockIx a r)).range
 
 
+omit [IsTotallyComplex E] in
 theorem unip_algebraMap {r : ℕ} (x : BlockIx a r → E) :
     unip (fun p => algebraMap E (Ad E) (x p)) = ratGL E a (unip x) := by
   ext i j
@@ -117,15 +120,18 @@ theorem isOpen_ker_chiDet (χ : HChar E) : IsOpen {k : GL (Fin a) (Af E) | chiDe
   exact Iff.of_eq (congrArg (fun u => χ.1 u = 1) (det_finGL k))
 
 
+omit [IsTotallyComplex E] in
 theorem chiDet_ratGL (χ : HChar E) (γ : GL (Fin a) E) : chiDet a χ (ratGL E a γ) = 1 := by
   rw [← χ.2.2 (GeneralLinearGroup.det γ)]
   exact congrArg χ.1 (Units.ext (det_map _ γ))
 
 
+omit [IsTotallyComplex E] in
 theorem one_le_height (y : GL (Fin a) (Cinf E)) : 1 ≤ height y := by
   unfold height; linarith [norm_nonneg (toL y.val), norm_nonneg (toL (y⁻¹).val)]
 
 
+omit [IsTotallyComplex E] in
 theorem norm_det_le (x : Matrix (Fin a) (Fin a) (Cinf E)) {B : ℝ} (hx : ‖toL x‖ ≤ B) :
     ‖x.det‖ ≤ a.factorial * B ^ a := by
   rw [Matrix.det_apply]
@@ -203,6 +209,7 @@ theorem IsCuspForm.mulChi {φ : Sm E a} (h : IsCuspForm φ) (χ : HChar E) : IsC
   rw [integral_mul_const, h.2 r h0 h1 μ 𝓕 hμ hF g, zero_mul]
 
 
+variable (E a) in
 @[ext] structure CuspSub where
 
   V : Submodule ℂ (Sm E a)
@@ -222,6 +229,7 @@ def op (o : Op E a) : Module.End ℂ π.V := (act o).restrict (π.stable o)
 def Iso : Prop := ∃ T : π.V ≃ₗ[ℂ] π'.V, ∀ o φ, T (π.op o φ) = π'.op o (T φ)
 
 
+variable (E a) in
 instance setoid : Setoid (CuspSub E a) where
   r := Iso
   iseqv := ⟨fun π => ⟨.refl _ _, fun _ _ => rfl⟩,
@@ -252,6 +260,7 @@ theorem op_toTwist (χ : HChar E) (o : Op E a) (φ : π.V) :
   Subtype.ext (act_mulChi χ o φ.1)
 
 
+variable {π π'} in
 theorem Iso.twist (h : Iso π π') (χ : HChar E) : Iso (π.twist χ) (π'.twist χ) := by
   obtain ⟨T, hT⟩ := h
   refine ⟨((π.toTwist χ).symm.trans T).trans (π'.toTwist χ), fun o φ => ?_⟩
@@ -316,8 +325,12 @@ theorem HasInfChar.twist {τ : E →+* ℂ} {m : Multiset ℂ} (h : π.HasInfCha
   change cap τ u (mulChi a χ φ) = _ • mulChi a χ φ
   rw [cap_mulChi, h.2 _ φ hφ, map_smul, Multiset.map_map]
   congr 3
+  funext x
+  dsimp
+  ac_rfl
 
 
+omit [IsTotallyComplex E] in
 theorem continuous_sLoc (w : HeightOneSpectrum (𝓞 E)) : Continuous (sLoc E w) := by
   classical
   have e : (sLoc E w : _ → Af E) = fun x => Neutral.B1.finiteSingle E w x - Neutral.B1.finiteSingle E w 0 := by
@@ -333,14 +346,17 @@ theorem continuous_sLoc (w : HeightOneSpectrum (𝓞 E)) : Continuous (sLoc E w)
   exact (GlobalTheory.Mem.UnrAe.continuous_finSingle w).sub continuous_const
 
 
+omit [IsTotallyComplex E] in
 theorem continuous_locGL (w : HeightOneSpectrum (𝓞 E)) : Continuous (locGL E a w) :=
   Continuous.units_map _ (continuous_const.add (continuous_id.matrix_map (continuous_sLoc w)))
 
 
+variable (π) in
 def finPart : Representation ℂ (GL (Fin a) (Af E)) π.V :=
   GlobalTheory.PRep.sub (finRep E a) π.V fun k => π.stable (.fin k)
 
 
+variable (π) in
 def locRep (w : HeightOneSpectrum (𝓞 E)) : Representation ℂ (GL (Fin a) (w.adicCompletion E)) π.V :=
   π.finPart.comp (locGL E a w)
 
@@ -348,16 +364,19 @@ theorem locRep_eq (w : HeightOneSpectrum (𝓞 E)) (g : GL (Fin a) (w.adicComple
     π.locRep w g = π.op (.fin (locGL E a w g)) := rfl
 
 
+variable (π) in
 theorem isSmooth_finPart : GlobalTheory.PRep.IsSmooth π.finPart := fun φ => by
   convert (π.cusp _ φ.2).1.level using 1
   ext k
   exact Subtype.ext_iff
 
 
+variable (π) in
 theorem isSmooth_locRep (w : HeightOneSpectrum (𝓞 E)) : GlobalTheory.PRep.IsSmooth (π.locRep w) := fun φ =>
   (π.isSmooth_finPart φ).preimage (continuous_locGL w)
 
 
+variable (π) in
 def IsLocComp (w : HeightOneSpectrum (𝓞 E)) (σ : SmIrr (GL (Fin a) (w.adicCompletion E))) : Prop :=
   ∃ f : σ.V →ₗ[ℂ] π.V, f ≠ 0 ∧ ∀ g v, f (σ.ρ g v) = π.locRep w g (f v)
 
@@ -369,7 +388,7 @@ theorem IsLocComp.congr {w : HeightOneSpectrum (𝓞 E)} {σ σ' : SmIrr (GL (Fi
   refine ⟨T.toLinearMap ∘ₗ f ∘ₗ e.symm.toLinearEquiv.toLinearMap, fun h => h0 (LinearMap.ext fun v => T.injective ?_),
     fun g v => ?_⟩
   · have := LinearMap.congr_fun h (e.toLinearEquiv v)
-    rw [LinearMap.zero_apply, map_zero]
+    rw [LinearMap.zero_apply, T.map_zero]
     exact (congrArg (fun x => T (f x)) (e.toLinearEquiv.symm_apply_apply v)).symm.trans this
   · have h1 : e.symm.toLinearEquiv (σ'.ρ g v) = σ.ρ g (e.symm.toLinearEquiv v) :=
       LinearMap.congr_fun (e.symm.isIntertwining' g) v
@@ -377,6 +396,7 @@ theorem IsLocComp.congr {w : HeightOneSpectrum (𝓞 E)} {σ σ' : SmIrr (GL (Fi
     rw [h1, hf, locRep_eq, hT, locRep_eq]
 
 
+omit [IsTotallyComplex E] in
 def locDet (a : ℕ) (χ : HChar E) (w : HeightOneSpectrum (𝓞 E)) : GL (Fin a) (w.adicCompletion E) →* ℂˣ :=
   (χ.loc w).comp GeneralLinearGroup.det
 
@@ -392,7 +412,8 @@ theorem IsLocComp.twist {w : HeightOneSpectrum (𝓞 E)} {σ : SmIrr (GL (Fin a)
     (π.twist χ).IsLocComp w (σ.twist (locDet a χ w) (isOpen_ker_locDet χ w)) := by
   obtain ⟨f, h0, hf⟩ := h
   refine ⟨(π.toTwist χ).toLinearMap ∘ₗ f, fun h => h0 (LinearMap.ext fun v => (π.toTwist χ).injective ?_), fun g v => ?_⟩
-  · rw [LinearMap.zero_apply, map_zero]; exact LinearMap.congr_fun h v
+  · rw [LinearMap.zero_apply, (π.toTwist χ).map_zero]
+    exact LinearMap.congr_fun h v
   · change π.toTwist χ (f (((locDet a χ w g : ℂˣ) : ℂ) • σ.ρ g v)) =
       (π.twist χ).op (.fin (locGL E a w g)) (π.toTwist χ (f v))
     rw [op_toTwist, map_smul f, hf g v, ← chiDet_locGL, opAdd, zero_smul, add_zero]
@@ -405,6 +426,7 @@ section CM
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
 
+omit [NumberField E] [IsTotallyComplex E] in
 def PhiK (E : Type) [Field E] (a : ℕ) : Kinf E a :=
   ⟨GlobalTheory.Tw.Phi a (Cinf E), Matrix.mem_unitaryGroup_iff.2 (by
     rw [← Phi_mul_transpose a (Cinf E)]
@@ -414,6 +436,7 @@ def PhiK (E : Type) [Field E] (a : ℕ) : Kinf E a :=
     split_ifs <;> simp)⟩
 
 
+omit [NumberField E] [IsTotallyComplex E] in
 theorem toUnits_conj_PhiK (k : Kinf E a) :
     Unitary.toUnits (PhiK E a * k * (PhiK E a)⁻¹) = thetaGL a (starRingEnd (Cinf E)) (Unitary.toUnits k) := by
   have h : Unitary.toUnits (PhiK E a) = PhiU a (Cinf E) := Units.ext rfl
@@ -451,6 +474,7 @@ theorem CuspSub.IsCsd.twist {π : CuspSub L a} (h : π.IsCsd) {χ : HChar L} (h�
 end CM
 
 
+variable (E a) in
 def oneFn : Sm E a :=
   ⟨fun _ => 1, fun _ => contDiffOn_const.congr (f := fun _ => 1) fun x hx => dif_pos (show IsUnit (Matrix.of x) from hx)⟩
 
@@ -501,6 +525,7 @@ theorem cap_oneFn (τ : E →+* ℂ) (u : ℂ) :
   simpa using cap_highest τ 0 (oneFn E a) ⟨fun i => by simp [h], fun i j _ => h i j⟩ u
 
 
+variable (E) in
 def CuspSub.triv (ha : a ≤ 1) : CuspSub E a where
   V := Submodule.span ℂ {oneFn E a}
   cusp φ hφ := ⟨isAutForm_const hφ, fun r h0 h1 => by omega⟩
@@ -519,6 +544,7 @@ theorem CuspSub.op_triv_twist (ha : a ≤ 1) (χ : HChar E) (o : Op E a) (φ : (
   module
 
 
+variable (E a) in
 def CG : Type := Quotient (CuspSub.setoid E a)
 
 namespace CG
@@ -658,7 +684,7 @@ theorem isRegAlg_ofChar (χ : HChar E) : (ofChar χ).IsRegAlg ↔ ∀ τ, ∃ n 
 
 theorem isLoc_ofChar (χ : HChar E) (w : HeightOneSpectrum (𝓞 E)) :
     (ofChar χ).IsLoc w (Irr.ofChar (CuspSub.locDet 1 χ w) (CuspSub.isOpen_ker_locDet χ w)) := by
-  have h : (CuspSub.triv E (le_refl 1)).IsLocComp w (SmIrr.triv _) :=
+  have h : (CuspSub.triv E (le_refl 1)).IsLocComp w SmIrr.triv :=
     ⟨LinearMap.toSpanSingleton ℂ _ ⟨oneFn E 1, Submodule.mem_span_singleton_self _⟩,
       fun h => oneFn_ne_zero ((one_smul ℂ _).symm.trans (congrArg Subtype.val (LinearMap.congr_fun h (1 : ℂ)))),
       fun _ _ => rfl⟩

@@ -37,6 +37,7 @@ theorem traceInf_algebraMap (F : Type) [Field F] [NumberField F] (x : F) :
   unfold GlobalTheory.IndefiniteRowSideFullHecke.LocalDualIndex.traceInf
   refine Finset.sum_congr rfl fun w _ => ?_
   congr 2
-  exact InfinitePlace.Completion.extensionEmbedding_coe w ((WithAbs.equiv w.1).symm x)
+  rw [InfiniteAdeleRing.algebraMap_apply]
+  simpa using InfinitePlace.Completion.extensionEmbedding_coe w ((WithAbs.equiv w.1).symm x)
 
 end GlobalTheory.TraceSumRealEmbeddings

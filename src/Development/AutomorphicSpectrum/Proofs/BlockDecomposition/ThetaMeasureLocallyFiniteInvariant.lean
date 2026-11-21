@@ -161,7 +161,7 @@ theorem theta_frames_zero : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
   · obtain ⟨K, hK, hX⟩ := exists_compact_mem_nhds X
     obtain ⟨N, r, hN, hr, hsub⟩ := (GlobalTheory.T.adelic_tuple_compact_sets F E σ hcm _ (Module.finBasis F E) 1 M).2 K hK
     obtain ⟨C, hC⟩ := GlobalTheory.T.theta_measure_nonzero_vectors_bound F E σ hcm M J hJ hM _ (Module.finBasis F E) μ 𝓕 hμ h𝓕 N hN
-    refine ⟨K, hX, lt_of_le_of_lt (le_trans ?_ ((measure_mono hsub).trans (hC r hr))) ENNReal.ofReal_lt_top⟩
+    refine ⟨K, hX, lt_of_le_of_lt (le_trans ?_ ((measure_mono (fun X hX => hsub X hX)).trans (hC r hr))) ENNReal.ofReal_lt_top⟩
     have hm : Measurable (K.indicator (1 : (Fin 1 → Fin M → AF F ⊗[F] E) → ℝ≥0∞)) := measurable_one.indicator hK.measurableSet
     rw [← lintegral_indicator_one hK.measurableSet, ← lintegral_indicator_one hK.measurableSet,
       hl _ _ hm, hl _ _ hm]

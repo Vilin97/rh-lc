@@ -44,7 +44,7 @@ theorem finite_support (e : G ≃* G') (θ : G →* G) (θ' : G' →* G')
     (f := fun q : DoubleCoset.Quotient (twCent θ d : Set G) (K : Set G) =>
       DoubleCoset.mk (twCent θ' (e d)) K' (e (Quotient.out q))) ?_ ?_ hfin
   · rintro q ⟨k, hk, hne⟩
-    obtain ⟨t, k₁, ht₀, hk₁, hout⟩ := DoubleCoset.mk_out_eq_mul (twCent θ' (e d)) K' (e (Quotient.out q))
+    obtain ⟨t, ht₀, k₁, hk₁, hout⟩ := DoubleCoset.mk_out_eq_mul (twCent θ' (e d)) K' (e (Quotient.out q))
     refine ⟨k₁⁻¹ * e k, K'.mul_mem (K'.inv_mem hk₁) ((hK k).1 hk), ?_⟩
     have hmul : Quotient.out (DoubleCoset.mk (twCent θ' (e d)) K' (e (Quotient.out q))) *
         (k₁⁻¹ * e k) = t * e (Quotient.out q * k) := by
@@ -62,7 +62,7 @@ theorem finite_support (e : G ≃* G') (θ : G →* G) (θ' : G' →* G')
       rw [mem_twCent_iff e θ θ' hθ, e.apply_symm_apply]; exact ht'
     have hk : e.symm k' ∈ K := by
       rw [hK, e.apply_symm_apply]; exact hk'
-    rw [← DoubleCoset.out_eq' _ _ q₁, ← DoubleCoset.out_eq' _ _ q₂]
+    rw [← DoubleCoset.out_eq' q₁, ← DoubleCoset.out_eq' q₂]
     exact (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨_, ht, _, hk, h₂⟩
 
 theorem index_ne_zero (e : G ≃* G') (K : Subgroup G) (K' : Subgroup G') (hK : ∀ x, x ∈ K ↔ e x ∈ K')

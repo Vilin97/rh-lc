@@ -24,15 +24,15 @@ instance isDiscreteRep_uliftIntToIntRep : IsDiscreteRep (uliftIntToIntRep A) :=
 
 def cochainsULiftIntEquiv (n : ℕ) :
     (cochainsComplex A).X n ≃+ (cochainsComplex (uliftIntToIntRep A)).X n where
-  toFun f := mkCochain _ (cochainOf A f) (isLocallyConstant_cochainOf f)
-  invFun f := mkCochain A (cochainOf _ f) (isLocallyConstant_cochainOf f)
+  toFun f := mkCochain (A := uliftIntToIntRep A) (cochainOf f) (isLocallyConstant_cochainOf f)
+  invFun f := mkCochain (A := A) (cochainOf f) (isLocallyConstant_cochainOf f)
   left_inv _ := rfl
   right_inv _ := rfl
   map_add' _ _ := rfl
 
 @[simp]
 theorem cochainOf_cochainsULiftIntEquiv (n : ℕ) (f : (cochainsComplex A).X n) :
-    cochainOf (uliftIntToIntRep A) (cochainsULiftIntEquiv A n f) = cochainOf A f :=
+    cochainOf (A := uliftIntToIntRep A) (cochainsULiftIntEquiv A n f) = cochainOf (A := A) f :=
   rfl
 
 theorem cochainsULiftIntEquiv_d (i : ℕ) (f : (cochainsComplex A).X i) :
@@ -40,7 +40,7 @@ theorem cochainsULiftIntEquiv_d (i : ℕ) (f : (cochainsComplex A).X i) :
       (cochainsComplex (uliftIntToIntRep A)).d i (i + 1) (cochainsULiftIntEquiv A i f) := by
   apply cochainOf_injective
   rw [cochainOf_cochainsULiftIntEquiv, cochainOf_d, cochainOf_d, cochainOf_cochainsULiftIntEquiv]
-  have := inhomogeneousCochains_d_uliftIntToIntRep A i (i + 1) (cochainOf A f)
+  have := inhomogeneousCochains_d_uliftIntToIntRep A i (i + 1) (cochainOf f)
   rw [groupCohomology.inhomogeneousCochains.d_def, groupCohomology.inhomogeneousCochains.d_def] at this
   exact this.symm
 
@@ -77,11 +77,13 @@ noncomputable def kerULiftIntEquiv (n : ℕ) :
       LinearMap.ker ((cochainsComplex (uliftIntToIntRep A)).sc n).g.hom where
   toFun x := ⟨cochainsULiftIntEquiv A n x.1,
     LinearMap.mem_ker.2 ((cochainsULiftIntEquiv_d_eq_zero_iff A n _ x.1).2 x.2)⟩
-  invFun x := ⟨(cochainsULiftIntEquiv A n).symm x.1, LinearMap.mem_ker.2 ((cochainsULiftIntEquiv_d_eq_zero_iff A n _
-      ((cochainsULiftIntEquiv A n).symm x.1)).1 x.2)⟩
+  invFun x := ⟨(cochainsULiftIntEquiv A n).symm x.1, LinearMap.mem_ker.2 (by
+    apply (cochainsULiftIntEquiv_d_eq_zero_iff A n _ ((cochainsULiftIntEquiv A n).symm x.1)).1
+    rw [AddEquiv.apply_symm_apply]
+    exact LinearMap.mem_ker.1 x.2)⟩
   left_inv _ := rfl
   right_inv _ := rfl
-  map_add' _ _ := rfl
+  map_add' x y := Subtype.ext ((cochainsULiftIntEquiv A n).map_add x.1 y.1)
 
 theorem kerULiftIntEquiv_mem_range_iff (n : ℕ) (x : LinearMap.ker ((cochainsComplex A).sc n).g.hom) :
     (∃ z, ((cochainsComplex (uliftIntToIntRep A)).sc n).moduleCatToCycles z = kerULiftIntEquiv A n x) ↔
@@ -98,14 +100,16 @@ theorem kerULiftIntEquiv_mem_range_iff (n : ℕ) (x : LinearMap.ker ((cochainsCo
 noncomputable def homologyDataULiftIntEquiv (n : ℕ) :
     ((cochainsComplex A).sc n).moduleCatLeftHomologyData.H ≃+
       ((cochainsComplex (uliftIntToIntRep A)).sc n).moduleCatLeftHomologyData.H where
-  toEquiv := Quotient.congr (kerULiftIntEquiv A n).toEquiv fun a b =>
-by
+  toEquiv := Quotient.congr (kerULiftIntEquiv A n).toEquiv fun a b => by
     refine QuotientAddGroup.leftRel_apply.trans (Iff.trans ?_ QuotientAddGroup.leftRel_apply.symm)
-    exact (kerULiftIntEquiv_mem_range_iff A n (-a + b)).symm
+    simpa only [Submodule.mem_toAddSubgroup, LinearMap.mem_range, AddEquiv.toEquiv_eq_coe,
+      AddEquiv.coe_toEquiv, map_add, map_neg] using
+      (kerULiftIntEquiv_mem_range_iff A n (-a + b)).symm
   map_add' x y := by
-    induction x using Quotient.inductionOn
-    induction y using Quotient.inductionOn
-    rfl
+    induction x using Quotient.inductionOn with
+    | h a =>
+      induction y using Quotient.inductionOn with
+      | h b => exact congrArg Submodule.Quotient.mk ((kerULiftIntEquiv A n).map_add a b)
 
 end BridgeH
 
@@ -122,8 +126,7 @@ noncomputable def cohomologyULiftIntAddEquiv (n : ℕ) :
 
 theorem cohomologyULiftIntAddEquiv_cohomologyπ {n : ℕ} (z : cocycles A n)
     (z' : cocycles (uliftIntToIntRep A) n)
-    (h : cochainOf (uliftIntToIntRep A) (cocycleι (uliftIntToIntRep A) n z') =
-      cochainOf A (cocycleι A n z)) :
+    (h : cochainOf (A := uliftIntToIntRep A) (cocycleι z') = cochainOf (A := A) (cocycleι z)) :
     cohomologyULiftIntAddEquiv A n (cohomologyπ A n z) = cohomologyπ (uliftIntToIntRep A) n z' := by
   set S₁ := (cochainsComplex A).sc n
   set S₂ := (cochainsComplex (uliftIntToIntRep A)).sc n
@@ -139,7 +142,8 @@ theorem cohomologyULiftIntAddEquiv_cohomologyπ {n : ℕ} (z : cocycles A n)
     have e₂ := ShortComplex.moduleCatCyclesIso_hom_i_apply S₂ z'
     change cochainsULiftIntEquiv A n (S₁.moduleCatCyclesIso.hom z).1 = (S₂.moduleCatCyclesIso.hom z').1
     apply cochainOf_injective
-    change cochainOf A (S₁.moduleCatCyclesIso.hom z).1 = cochainOf (uliftIntToIntRep A) (S₂.moduleCatCyclesIso.hom z').1
+    change cochainOf (A := A) (S₁.moduleCatCyclesIso.hom z).1 =
+      cochainOf (A := uliftIntToIntRep A) (S₂.moduleCatCyclesIso.hom z').1
     rw [show (S₁.moduleCatCyclesIso.hom z).1 = S₁.iCycles z from e₁,
       show (S₂.moduleCatCyclesIso.hom z').1 = S₂.iCycles z' from e₂]
     exact h.symm
@@ -159,15 +163,16 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   (A : Rep.{0} (ULift.{0} ℤ) G) [IsDiscreteRep A]
 
 noncomputable def cocyclesULiftInt {n : ℕ} (z : cocycles A n) : cocycles (uliftIntToIntRep A) n :=
-  (cochainsComplex (uliftIntToIntRep A)).cyclesMk (cochainsULiftIntEquiv A n (cocycleι A n z)) (n + 1)
+  (cochainsComplex (uliftIntToIntRep A)).cyclesMk (cochainsULiftIntEquiv A n (cocycleι z)) (n + 1)
     (by simp) ((cochainsULiftIntEquiv_d_eq_zero_iff A n (n + 1) _).2
       (congrArg (fun ψ => ψ.hom z) ((cochainsComplex A).iCycles_d n (n + 1))))
 
 @[simp]
 theorem cochainOf_cocycleι_cocyclesULiftInt {n : ℕ} (z : cocycles A n) :
-    cochainOf (uliftIntToIntRep A) (cocycleι (uliftIntToIntRep A) n (cocyclesULiftInt A z)) =
-      cochainOf A (cocycleι A n z) :=
-  congrArg (cochainOf (uliftIntToIntRep A)) ((cochainsComplex (uliftIntToIntRep A)).i_cyclesMk _ _ _ _)
+    cochainOf (A := uliftIntToIntRep A) (cocycleι (cocyclesULiftInt A z)) =
+      cochainOf (A := A) (cocycleι z) :=
+  congrArg (cochainOf (A := uliftIntToIntRep A))
+    ((cochainsComplex (uliftIntToIntRep A)).i_cyclesMk _ _ _ _)
 
 theorem cohomologyULiftIntAddEquiv_cohomologyπ' {n : ℕ} (z : cocycles A n) :
     cohomologyULiftIntAddEquiv A n (cohomologyπ A n z) =
@@ -182,8 +187,8 @@ theorem cohomologyULiftIntAddEquiv_cohomologyMapAlong {H : Type} [Group H] [Topo
     cohomologyULiftIntAddEquiv B n (cohomologyMapAlong φ hφ f n x) =
       cohomologyMapAlong φ hφ f' n (cohomologyULiftIntAddEquiv A n x) := by
   obtain ⟨z, rfl⟩ := cohomologyπ_surjective A n x
-  rw [cohomologyπ_cohomologyMapAlong_apply, cohomologyULiftIntAddEquiv_cohomologyπ' A z,
-    cohomologyπ_cohomologyMapAlong_apply]
+  rw [cohomologyMapAlong_cohomologyπ, cohomologyULiftIntAddEquiv_cohomologyπ' A z,
+    cohomologyMapAlong_cohomologyπ]
   refine cohomologyULiftIntAddEquiv_cohomologyπ B _ _ ?_
   rw [cochainOf_cocycleι_cocyclesMapAlong, cochainOf_cocycleι_cocyclesMapAlong]
   funext v

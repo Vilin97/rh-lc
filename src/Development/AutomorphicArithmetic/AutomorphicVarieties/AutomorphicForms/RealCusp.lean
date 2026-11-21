@@ -84,18 +84,22 @@ theorem det_infGL (y : GL (Fin a) (Rinf E)) :
     simp
 
 
+omit [NumberField E] [IsTotallyReal E] in
 abbrev toL (x : Matrix (Fin a) (Fin a) (Rinf E)) : Lie E a := Matrix.of.symm x
 
 
+omit [NumberField E] [IsTotallyReal E] in
 def invSet (E : Type) [Field E] (a : ℕ) : Set (Lie E a) := {x | IsUnit (Matrix.of x)}
 
 
+omit [IsTotallyReal E] in
 theorem contDiff_det : ContDiff ℝ ∞ fun x : Lie E a => (Matrix.of x).det := by
   simp only [Matrix.det_apply', Matrix.of_apply]
   refine ContDiff.sum fun σ _ => contDiff_const.mul (contDiff_prod fun i _ => ?_)
   exact (contDiff_apply ℝ _ i).comp (contDiff_apply ℝ _ (σ i))
 
 
+omit [IsTotallyReal E] in
 theorem isOpen_invSet : IsOpen (invSet E a) := by
   have : invSet E a = (fun x : Lie E a => (Matrix.of x).det) ⁻¹' {u | IsUnit u} := by
     ext x; exact Matrix.isUnit_iff_isUnit_det _
@@ -103,6 +107,7 @@ theorem isOpen_invSet : IsOpen (invSet E a) := by
   exact Units.isOpen.preimage contDiff_det.continuous
 
 
+omit [NumberField E] [IsTotallyReal E] in
 theorem val_mem_invSet (y : GL (Fin a) (Rinf E)) : (toL y.val) ∈ invSet E a := y.isUnit
 
 
@@ -117,10 +122,12 @@ theorem chart_val (φ : GA E a → ℂ) (g : GA E a) (y : GL (Fin a) (Rinf E)) :
   rw [chart, dif_pos h, e]
 
 
+omit [IsTotallyReal E] in
 def lmul (y : Lie E a) : Lie E a →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap (LinearMap.mulLeft ℝ (Matrix.of y) : Matrix (Fin a) (Fin a) (Rinf E) →ₗ[ℝ] _)
 
 
+omit [IsTotallyReal E] in
 def rmul (y : Lie E a) : Lie E a →L[ℝ] Lie E a :=
   LinearMap.toContinuousLinearMap (LinearMap.mulRight ℝ (Matrix.of y) : Matrix (Fin a) (Fin a) (Rinf E) →ₗ[ℝ] _)
 
@@ -152,6 +159,7 @@ theorem chart_rt_fin (φ : GA E a → ℂ) (g : GA E a) (k : GL (Fin a) (Af E)) 
   simp only [chart, mul_assoc, infGL_comm]
 
 
+variable (E a) in
 def Sm : Submodule ℂ (GA E a → ℂ) where
   carrier := {φ | ∀ g, ContDiffOn ℝ ∞ (chart φ g) (invSet E a)}
   add_mem' := fun {φ ψ} h h' g => ((h g).add (h' g)).congr fun x hx => by
@@ -173,11 +181,13 @@ theorem rt_mem_Sm (h : GA E a) (φ : GA E a → ℂ) (hφ : φ ∈ Sm E a) : Glo
   exact (hφ _).comp (rmul (toL y.val)).contDiff.contDiffOn fun x hx => IsUnit.mul hx y.isUnit
 
 
+variable (E a) in
 def rt : Representation ℂ (GA E a) (Sm E a) := GlobalTheory.PRep.sub (GlobalTheory.PRep.rightReg ℂ (GA E a) ℂ) (Sm E a) rt_mem_Sm
 
 @[simp] theorem rt_apply (h g : GA E a) (φ : Sm E a) : (rt E a h φ).1 g = φ.1 (g * h) := rfl
 
 
+omit [NumberField E] [IsTotallyReal E] in
 abbrev oneL (E : Type) [Field E] (a : ℕ) : Lie E a := toL 1
 
 def lieD (X : Lie E a) (φ : GA E a → ℂ) (g : GA E a) : ℂ := fderiv ℝ (chart φ g) (oneL E a) X
@@ -204,6 +214,7 @@ theorem lieD_mem_Sm (X : Lie E a) {φ : GA E a → ℂ} (hφ : φ ∈ Sm E a) : 
     fun _ hx => chart_lieD hφ X g hx
 
 
+variable (E a) in
 def lie : Lie E a →ₗ[ℝ] Module.End ℂ (Sm E a) where
   toFun X :=
     { toFun := fun φ => ⟨lieD X φ.1, lieD_mem_Sm X φ.2⟩
@@ -255,16 +266,18 @@ theorem lie_comm (X Y : Lie E a) :
     rw [e1, add_comm]
     rfl
   change lieD X (lieD Y φ.1) g - lieD Y (lieD X φ.1) g = lieD _ φ.1 g - lieD _ φ.1 g
-  rw [key, key, (hs.isSymmSndFDerivAt (by simp; norm_cast)).eq X Y]
+  rw [key, key, (hs.isSymmSndFDerivAt (by simp)).eq X Y]
   ring
 
 
+open Classical in
 def Eop (v : InfinitePlace E) (i j : Fin a) : Module.End ℂ (Sm E a) :=
   lie E a (toL (Matrix.single i j (Pi.single v 1)))
 
 def cap (v : InfinitePlace E) (u : ℂ) : Module.End ℂ (Sm E a) := Formalism.REAL.qdet (Eop v) (u + ((a : ℂ) - 1) / 2)
 
 
+variable (E a) in
 def Zalg : Subalgebra ℂ (Module.End ℂ (Sm E a)) := Algebra.adjoin ℂ {z | ∃ v u, z = cap v u}
 
 abbrev Kinf (E : Type) [Field E] (a : ℕ) : Type := Matrix.unitaryGroup (Fin a) (Rinf E)
@@ -275,9 +288,11 @@ inductive Op (E : Type) [Field E] [NumberField E] (a : ℕ) : Type
   | lie (X : Lie E a)
 
 
+variable (E a) in
 def finRep : Representation ℂ (GL (Fin a) (Af E)) (Sm E a) := (rt E a).comp (finGL E a)
 
 
+variable (E a) in
 def cptRep : Representation ℂ (Kinf E a) (Sm E a) := (rt E a).comp ((infGL E a).comp Unitary.toUnits)
 
 def act : Op E a → Module.End ℂ (Sm E a)
@@ -299,6 +314,7 @@ structure IsAutForm (φ : Sm E a) : Prop where
 def IsCuspForm (φ : Sm E a) : Prop := IsAutForm φ ∧ GlobalTheory.CuspRep.IsCuspidal φ.1
 
 
+variable (E a) in
 @[ext] structure CuspSub where
 
   V : Submodule ℂ (Sm E a)
@@ -351,6 +367,7 @@ structure Polarized (χ : HChar E) : Prop where
 end CuspSub
 
 
+variable (E a) in
 def oneFn : Sm E a :=
   ⟨fun _ => 1, fun _ => contDiffOn_const.congr (f := fun _ => 1) fun x hx => dif_pos (show IsUnit (Matrix.of x) from hx)⟩
 
@@ -406,6 +423,7 @@ theorem isAutForm_const {φ : Sm E a} (hφ : φ ∈ Submodule.span ℂ {oneFn E 
     simp
 
 
+variable (E) in
 def CuspSub.triv (ha : a ≤ 1) : CuspSub E a where
   V := Submodule.span ℂ {oneFn E a}
   cusp φ hφ := ⟨isAutForm_const hφ, fun r h0 h1 => by omega⟩

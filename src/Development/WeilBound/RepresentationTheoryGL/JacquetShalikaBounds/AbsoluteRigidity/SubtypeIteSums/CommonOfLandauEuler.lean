@@ -122,6 +122,7 @@ def gf {ι κ : Type} (F : ι × κ → ℂ → ℂ) (x : ι → X × ℝ) (y : 
 end PositivityTheory.RgJS.Common0Aux
 
 open PositivityTheory.RgJS PositivityTheory.RgJS.Common0Aux in
+open PositivityTheory.RgJS.Common0Aux in
 theorem PositivityTheory.RgJS.common_of_landau_euler : LandauL → EulerLog → Conv1 → Unb → Common0 := by
   classical
   intro hL hE hC hU W q X d A hS ι κ _ _ x y hR ht ht' h0

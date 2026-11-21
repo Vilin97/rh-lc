@@ -69,8 +69,8 @@ theorem continuous_logSizeM (hS : SzFin) :
       ∑ v, Real.posLog (⨆ p : Fin n × Fin n, ‖cV v (A p.1 p.2)‖ ^ 2) +
         ∑ w ∈ (hS E (Fin n) (Fin n) A₀).toFinset,
           Real.posLog (⨆ p : Fin n × Fin n, ‖cW w (A p.1 p.2)‖) :=
-    (continuous_finset_sum _ fun v _ => continuous_inf v).add
-      (continuous_finset_sum _ fun w _ => continuous_fin w)
+    (continuous_finsetSum _ fun v _ => continuous_inf v).add
+      (continuous_finsetSum _ fun w _ => continuous_fin w)
   refine hc.continuousAt.congr ?_
   filter_upwards [eventually_finsum hS A₀] with A hA
   rw [logSizeM, hA]

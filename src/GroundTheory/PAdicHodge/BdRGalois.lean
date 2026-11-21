@@ -35,7 +35,12 @@ namespace IsPerfectoidField
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
 
+local notation "𝒪" => normInteger K
+local notation "𝔸" => Localization.Away (p : WittVector p (PreTilt 𝒪 p))
+local notation "𝔹" => BDeRhamPlus 𝒪 p
+local notation "J" => RingHom.ker (fontaineThetaInvertP 𝒪 p)
 
+variable (K p) in
 def evalB (n : ℕ) : 𝔹 →+* 𝔸 ⧸ J ^ n := (AdicCompletion.evalₐ J n).toRingHom
 
 omit [CharZero K] in
@@ -49,8 +54,7 @@ omit [CharZero K] in
 theorem evalB_ext {x y : 𝔹} (h : ∀ n, evalB K p n x = evalB K p n y) : x = y :=
   AdicCompletion.ext_evalₐ h
 
-
-
+variable (K p) in
 theorem map_ker_fontaineThetaInvertP :
     Ideal.map (toBDeRhamPlus 𝒪 p) J = maximalIdeal 𝔹 := by
   rw [ker_fontaineThetaInvertP (ker_fontaineTheta_eq_span_kerThetaGenerator K p), Ideal.map_span,
@@ -84,6 +88,13 @@ end IsPerfectoidField
 section Galois
 
 variable {p : ℕ} [hp : Fact p.Prime] {K : IntermediateField ℚ_[p] (PadicAlgCl p)}
+
+local notation "𝒪" => normInteger ℂ_[p]
+local notation "𝕎𝒪♭" => WittVector p (PreTilt 𝒪 p)
+local notation "𝔸" => Localization.Away (p : 𝕎𝒪♭)
+local notation "𝔹" => BDeRhamPlus 𝒪 p
+local notation "θ" => fontaineTheta 𝒪 p
+local notation "J" => RingHom.ker (fontaineThetaInvertP 𝒪 p)
 
 omit hp in
 theorem isUnit_algebraMap_p_away [Fact p.Prime] :

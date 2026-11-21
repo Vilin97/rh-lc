@@ -14,12 +14,12 @@ namespace GlobalTheory.EtC.CoindRetract
 
 variable {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S)
 
-def adj : restr φ ⊣ coind φ :=
+def adj : restr R φ ⊣ coind φ :=
   Adjunction.restrictFullyFaithful
     ((ModuleCat.restrictCoextendScalarsAdj.{1, 1, 1} (liftHom φ)).whiskerRight (Scheme.{0}ᵒᵖ))
     (fullyFaithfulSheafToPresheaf _ _) (fullyFaithfulSheafToPresheaf _ _) (Iso.refl _) (Iso.refl _)
 
-instance restr_faithful : (restr φ).Faithful :=
+instance restr_faithful : (restr R φ).Faithful :=
   show (sheafCompose (Scheme.etaleTopology.{0}) (ModuleCat.restrictScalars.{1} (liftHom φ))).Faithful from inferInstance
 
 instance coind_preservesMono : (coind φ).PreservesMonomorphisms := by
@@ -28,8 +28,8 @@ instance coind_preservesMono : (coind φ).PreservesMonomorphisms := by
 
 theorem coind_retract (R S : Type) [CommRing R] [CommRing S] (φ : R →+* S) (I : Shv S) [Injective I] :
     ∃ (J : Shv R) (_ : Injective J) (i : I ⟶ (coind φ).obj J) (r : (coind φ).obj J ⟶ I), i ≫ r = 𝟙 I := by
-  let J := Injective.under ((restr φ).obj I)
-  let i : I ⟶ (coind φ).obj J := (adj φ).unit.app I ≫ (coind φ).map (Injective.ι ((restr φ).obj I))
+  let J := Injective.under ((restr R φ).obj I)
+  let i : I ⟶ (coind φ).obj J := (adj φ).unit.app I ≫ (coind φ).map (Injective.ι ((restr R φ).obj I))
   haveI : Mono i := mono_comp _ _
   exact ⟨J, inferInstance, i, Injective.factorThru (𝟙 I) i, Injective.comp_factorThru _ _⟩
 

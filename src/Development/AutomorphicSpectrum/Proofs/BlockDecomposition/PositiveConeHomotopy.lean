@@ -181,7 +181,8 @@ theorem fderiv_b (K : (I → ℝ) × (I → ℝ) → (V →L[ℂ] V)) (A : V →
   have ht0 := (trL (V := V)).hasFDerivAt.comp v hm
   have ht : HasFDerivAt (fun v => trL (A * (∑ j, (v - o) j • c j) * K (path o s v))) _ v := ht0
   rw [ht.fderiv]
-  simp [hJa, hPd, add_comm]
+  set_option synthInstance.maxHeartbeats 400000 in
+    simp [hJa, hPd, add_comm]
 
 theorem contDiffOn_b {U : Set (I → ℝ)} (K : (I → ℝ) × (I → ℝ) → (V →L[ℂ] V)) (A : V →L[ℂ] V)
     (c : I → (V →L[ℂ] V)) (o : I → ℝ) (s : ℝ) (hK : ContDiffOn ℝ ∞ K (U ×ˢ U))
@@ -253,7 +254,8 @@ theorem homot : PositivityTheory.RgBcC.Homot := by
     have h3 : (fun y => Γ * K y) = fun y => K y * Γ := funext hΓK
     rw [h3] at h1
     have h4 := congrArg (fun L => L w) (h1.unique h2)
-    simpa using h4
+    set_option synthInstance.maxHeartbeats 400000 in
+      simpa using h4
   have hdiv : ∀ s ∈ Icc (0 : ℝ) 1, ∫ v in C, D s v = 0 := by
     intro s hs
     set b : I → (I → ℝ) → ℂ := fun i v => trL (Γ * e i * S s * (∑ j, (v - o) j • c j) * K (path o s v)) with hb

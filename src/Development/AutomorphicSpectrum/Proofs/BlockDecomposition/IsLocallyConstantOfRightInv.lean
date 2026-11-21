@@ -157,7 +157,7 @@ theorem rr_mul_right (Γ' K : Subgroup B) {k : B} (hk : k ∈ K) (y : B) : rr Γ
 theorem tsum_rr (Γ' K : Subgroup B)
     (hfin : ∀ x : B, Finite (Γ' ⊓ K.map (MulAut.conj x).toMonoidHom : Subgroup B)) (y : B) :
     ∑' γ : Γ', rr Γ' K ((γ : B) * y) = 1 := by
-  obtain ⟨h, k, hh, hk, ho⟩ := DoubleCoset.mk_out_eq_mul Γ' K y
+  obtain ⟨h, hh, k, hk, ho⟩ := DoubleCoset.mk_out_eq_mul Γ' K y
   set o := oo Γ' K y with hodef
   have ho' : o = h * y * k := ho
   set D : Subgroup B := Γ' ⊓ K.map (MulAut.conj o).toMonoidHom with hD
@@ -264,7 +264,7 @@ theorem integral_mul_rr (β : Measure B) [β.IsHaarMeasure] (Γ' K U : Subgroup 
       have e1 : DoubleCoset.mk Γ' K (Quotient.out q) = q₀ :=
         (@DoubleCoset.eq _ _ Γ' K _ y).2 ⟨1, Γ'.one_mem, (Quotient.out q)⁻¹ * y, hm, by group⟩
       rw [← e1]
-      exact (DoubleCoset.out_eq' Γ' K q).symm
+      exact (DoubleCoset.out_eq' q).symm
     have hrr : (((rr Γ' K y).toReal : ℝ) : ℂ) = if (Quotient.out q₀)⁻¹ * y ∈ K then c q₀ else 0 := by
       simp only [rr, hoo]
       by_cases hm : (Quotient.out q₀)⁻¹ * y ∈ K

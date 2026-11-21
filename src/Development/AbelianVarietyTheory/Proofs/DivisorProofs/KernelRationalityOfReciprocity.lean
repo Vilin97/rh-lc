@@ -127,10 +127,10 @@ theorem restr_isEv : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
     (ι : Matrix (Fin n) (Fin n₁) E) (ι' : Matrix (Fin d) (Fin d₁) E) (I : Set (Matrix (Fin n) (Fin d) (AE F E)))
     (M₁ : Model σ X₁ W₁) (eq : Fin n × Fin d ≃ κ' ⊕ Fin n₁ × Fin d₁)
     (T : Matrix (Fin n) (Fin d) (AE F E) ≃ₗ[AF F] ((κ' → AF F) × (κ' → AF F)) × Matrix (Fin n₁) (Fin d₁) (AE F E))
-    (hf : ∀ w w', symp (cA σ) (-1) (incM F X.J) (incM F W.J) w w' =
-        (T w).1.1 ⬝ᵥ (T w').1.2 - (T w').1.1 ⬝ᵥ (T w).1.2 + symp (cA σ) (-1) (incM F X₁.J) (incM F W₁.J) (T w).2 (T w').2)
+    (hf : ∀ w w', symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) w w' =
+        (T w).1.1 ⬝ᵥ (T w').1.2 - (T w').1.1 ⬝ᵥ (T w).1.2 + symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W₁.J) (T w).2 (T w').2)
     (l : ∀ v : Pl (F := F), (κ' → Fv F v) → ℂ) (μ : Measure (UA σ X.J)) (D : Set (UA σ X.J)),
-    (∀ z, T (incM F ι * z * (incM F ι')ᵀ) = ((0, 0), z)) → (∀ u ∈ I, (T u).1.1 = 0 ∧ (T u).2 = 0) →
+    (∀ z, T ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) ι * z * ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) ι')ᵀ) = ((0, 0), z)) → (∀ u ∈ I, (T u).1.1 = 0 ∧ (T u).2 = 0) →
     (∀ v, l v ∈ SB _ ∧ l v 0 = 1) → (∀ v, M₁.vac v ∈ SB _) →
     IsEv B (Model.mk (glueDarboux M₁.co eq T hf) (fun v => vacGlue eq (l v) (M₁.vac v)) μ D) M₁ ι ι' I (restr eq) := by
   intro F E _ _ _ _ _ σ B n d n₁ d₁ κ' _ X W X₁ W₁ ι ι' I M₁ eq T hf l μ D hblk hI hl hvac
@@ -139,7 +139,7 @@ theorem restr_isEv : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
     glueDarboux_e M₁.co eq T hf
   refine ⟨fun Φ hΦ => restr_mem_schA eq Φ hΦ, fun z Φ _ => ?_, fun u hu Φ _ => ?_, ?_⟩
   · funext x
-    have h1 := he (incM F ι * z * (incM F ι')ᵀ)
+    have h1 := he ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) ι * z * ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) ι')ᵀ)
     rw [hblk z] at h1
     simp only [restr_apply, Darboux.rho, schr, h1, glue_dot, dotProduct_zero, zero_dotProduct, zero_add,
       glue_add_zero]

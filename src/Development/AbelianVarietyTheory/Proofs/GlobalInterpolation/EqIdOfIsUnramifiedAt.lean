@@ -56,7 +56,7 @@ theorem _root_.GlobalTheory.UnramifiedDiscriminant.exists_int_of_conj_eq (h : _r
     ∃ t : 𝓞 F, algebraMap (𝓞 F) (𝓞 E) t = a := by
   obtain ⟨f, hf⟩ := isCMExt_mem_range_of_conj_fixed h ha
   have hint : IsIntegral ℤ f := by
-    rw [← isIntegral_algebraMap_iff , hf]
+    rw [← isIntegral_algebraMap_iff (B := E), hf]
     exact RingOfIntegers.isIntegral_coe a
   refine ⟨⟨f, hint⟩, ?_⟩
   ext

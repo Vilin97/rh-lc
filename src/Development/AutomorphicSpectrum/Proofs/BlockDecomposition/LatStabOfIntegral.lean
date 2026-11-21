@@ -184,10 +184,10 @@ theorem prim_local : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
       ENNReal.ofReal (1 / (Ideal.absNorm v.asIdeal : ℝ) ^ 2) * m H (latV b v) := by
     intro c hc
     by_cases hu : IsUnit c
-    · have : Sc c = ∅ := Set.eq_empty_of_forall_notMem fun X hX => hX.1 hu
+    · have : Sc c = ∅ := by ext X; simp [Sc, hu]
       rw [this, measure_empty]
       simp
-    · exact (measure_mono fun X hX => hX.2).trans (h37 O hO lam hlam m hm h₂ c hu hc _ hmeas)
+    · exact (measure_mono fun X (hX : X ∈ Sc c) => hX.2).trans (h37 O hO lam hlam m hm h₂ c hu hc _ hmeas)
   have hcov : (latV b v : Set (Fin 1 → Fin (M + 2) → Fv F v ⊗[F] E)) ⊆
       ((primV σ J b v ∪ Sc π₁) ∪ Sc π₂) ∪ Z := by
     intro X hX

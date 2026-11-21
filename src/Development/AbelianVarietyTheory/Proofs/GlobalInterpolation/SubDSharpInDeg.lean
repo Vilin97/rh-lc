@@ -120,13 +120,13 @@ end GlobalTheory.JetDeg
 theorem GlobalTheory.subD_sharp_inDeg : ∀ (K : Type) [Field K] (ι : Type) [Fintype ι] (a b : ℕ) (hab : a < b) (lam : ι → DomWeight a) (lam' : ι → DomWeight b) (s s' : ι → ℤ) (n : ι → ℕ), WtCompat hab lam lam' s s' n → ∀ P ∈ Formalism.L2.DIV.VV K lam, ∀ μ ∈ (subD K ι a b (sharp n P)).support, InDeg lam s' (Finsupp.comapDomain Sum.inr μ Sum.inr_injective.injOn) := by
   classical
   intro K _ ι _ a b hab lam lam' s s' n hw P hP μ hμ τ
-  have h := subD_hom (b := b) τ (sharp_hom n τ (VV_hom lam τ hP)) (mem_support_iff.mp hμ)
-  rw [weight_derW] at h
+  have h := GlobalTheory.JetDeg.subD_hom (b := b) τ (GlobalTheory.JetDeg.sharp_hom n τ (GlobalTheory.JetDeg.VV_hom lam τ hP)) (mem_support_iff.mp hμ)
+  rw [GlobalTheory.JetDeg.weight_derW] at h
   simp only [Finsupp.comapDomain_apply]
   rw [h]
   push_cast
   have e : ∀ i, (lam τ).w i + s' τ = ((lam τ).natW i : ℤ) + n τ := fun i => by
-    rw [natW_cast, hw.2.2 τ]; ring
+    rw [GlobalTheory.JetDeg.natW_cast, hw.2.2 τ]; ring
   simp [e, Finset.sum_add_distrib, mul_comm]
 
 end

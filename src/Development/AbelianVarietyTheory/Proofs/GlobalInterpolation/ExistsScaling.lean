@@ -34,7 +34,7 @@ theorem algebraMap_inj : Function.Injective (algebraMap (Fv F v) (Fv F v ⊗[F] 
 
 theorem algebraMap_mem_iff (a : Fv F v) :
     algebraMap (Fv F v) (Fv F v ⊗[F] E) a ∈ SelfDualLatticeActions.OEv E v ↔ a ∈ v.adicCompletionIntegers F := by
-  rw [mem_integralClosure_iff, isIntegral_algebraMap_iff (algebraMap_inj v)]
+  rw [mem_integralClosure_iff, isIntegral_algebraMap_iff]
   constructor
   · intro h
     obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.1 h
@@ -199,7 +199,8 @@ theorem exists_norm (hσ : IsCMExt F E σ) {w : Fv F v ⊗[F] E} {t n : v.adicCo
     ⟨⟨w, hw⟩, isUnit_of_mul_isUnit_left (y := ⟨w, hw⟩ - c ⟨w, hw⟩) (by
       convert hD.map (algebraMap _ (SelfDualLatticeActions.OEv E v))
       apply Subtype.ext
-      simp only [map_sub, map_mul, map_pow, map_ofNat]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_mul, map_pow, map_ofNat]
       push_cast
       change _ = algebraMap (Fv F v) (Fv F v ⊗[F] E) (t : Fv F v) ^ 2 -
         4 * algebraMap (Fv F v) (Fv F v ⊗[F] E) (n : Fv F v)

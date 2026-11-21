@@ -25,8 +25,8 @@ theorem map_decomp_frob {O K : Type} [CommRing O] [NormedField K] [Algebra O K] 
 
 theorem colon_map_frob_le : ∀ (O K : Type) [CommRing O] [NormedField K] [IsUltrametricDist K] [Algebra O K]
     [IsUnitBall O K] (l : ℕ) [Fact l.Prime] (ι κ : Type) [Fintype ι] [Fintype κ] (G : Matrix κ ι K⟦X⟧),
-    colon O K (G.map (frob K l)) ≤
-      (colon O K G).map (PowerSeries.expand l (Fact.out : l.Prime).ne_zero) := by
+    colon (O := O) (K := K) (G.map (frob K l)) ≤
+      (colon (O := O) (K := K) G).map (PowerSeries.expand l (Fact.out : l.Prime).ne_zero) := by
   intro O K _ _ _ _ _ l _ ι κ _ _ G β hβ
   have hl2 : 2 ≤ l := (Fact.out : l.Prime).two_le
   have decO : ∀ f : O⟦X⟧, ∃! g : Fin l → O⟦X⟧,
@@ -36,7 +36,7 @@ theorem colon_map_frob_le : ∀ (O K : Type) [CommRing O] [NormedField K] [IsUlt
     GlobalTheory.T.powerSeries_existsUnique_decomp_over_frobeniusLike_endo l hl2 (frob K l) (fun f m => coeff_frob l f m)
   obtain ⟨b, hb, -⟩ := decO β
   have hbK := map_decomp_frob (K := K) l hb
-  have key : ∀ j, b j ∈ colon O K G := by
+  have key : ∀ j, b j ∈ colon (O := O) (K := K) G := by
     intro j w hw
     obtain ⟨M, hM, hMeq⟩ := hβ (frobV l w) (fun i => frob_mem_A l (hw i))
     have lift : ∀ k, ∃ μ : O⟦X⟧, PowerSeries.map (algebraMap O K) μ = M k := fun k => by

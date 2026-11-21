@@ -73,7 +73,7 @@ theorem tors_quot : ∀ (p : ℕ) [Fact p.Prime] (B : Type) [CommRing B] (π : B
         (Polynomial.mem_lifts _).2 ⟨Q, hQ⟩
     obtain ⟨Q, rfl, hQd, hQm⟩ := Polynomial.lifts_and_natDegree_eq_and_monic hl hP
     obtain ⟨x, hx⟩ := hA Q hQm (hQd ▸ hdeg)
-    exact ⟨Ideal.Quotient.mk I x, hx.map⟩
+    exact ⟨Ideal.Quotient.mk I x, hx.map (Ideal.Quotient.mk I)⟩
   · intro hV f₁ g₁ ⟨N, hN⟩
     obtain ⟨f, rfl⟩ := hsurj f₁
     obtain ⟨g, rfl⟩ := hsurj g₁

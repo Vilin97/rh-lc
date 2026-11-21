@@ -29,7 +29,7 @@ theorem map_eq_sqrt_smul {G : Type} [AddCommGroup G] [TopologicalSpace G] [IsTop
     ⟨_, Measure.isAddLeftInvariant_eq_smul (ν.map e) ν⟩
   have he : Measurable e := e.continuous.measurable
   have h2 : ν.map (e ∘ e) = (b * b) • ν := by
-    rw [← Measure.map_map he he, hb, Measure.map_smul, hb, smul_smul]
+    rw [← Measure.map_map he he, hb, Measure.map_smul b he.aemeasurable, hb, smul_smul]
   obtain ⟨K, hK, hK0⟩ := exists_compact_mem_nhds (0 : G)
   have hpos : ν K ≠ 0 := (Measure.measure_pos_of_mem_nhds ν hK0).ne'
   have hfin : ν K ≠ ∞ := hK.measure_lt_top.ne

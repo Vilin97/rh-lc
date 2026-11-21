@@ -18,7 +18,7 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LinearCha
 @[expose] public section
 
 open MeasureTheory ValuativeRel Matrix
-open GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.StepData GlobalTheory.IndefiniteRowSideFullHecke.FlatOmegaSeries
+open GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.StepData
 open scoped NNReal ENNReal
 
 noncomputable section

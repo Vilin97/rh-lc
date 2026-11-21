@@ -16,7 +16,6 @@ theorem prodLeft_eq_rTensor {A B₁ B₂ K : Type} [CommRing A] [AddCommGroup B�
     TensorProduct.prodLeft A A B₁ B₂ K w =
       ((LinearMap.fst A B₁ B₂).rTensor K w, (LinearMap.snd A B₁ B₂).rTensor K w) := by
   induction w with
-  | zero => rw [map_zero, map_zero, map_zero]; rfl
   | tmul b k =>
     obtain ⟨b₁, b₂⟩ := b
     simp

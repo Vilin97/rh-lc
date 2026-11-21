@@ -133,6 +133,12 @@ theorem _root_.GlobalTheory.SmGL.leviEmb_mem_parab (e : (Σ a, m a) ≃ n)
   ext i j
   simp
 
+open Matrix in
+variable (R : Type) [CommRing R] {α n : Type} {m : α → Type} [Fintype α] [LinearOrder α]
+  [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
+variable {R} in
+variable (R) in
+omit [∀ a, DecidableEq (m a)] [Fintype n] [DecidableEq n] in
 private lemma bijective_blockPosition_of_equiv_sigma (e : (Σ a, m a) ≃ n) (a : α) :
     Function.Bijective fun i : m a =>
       (⟨e ⟨a, i⟩, _root_.GlobalTheory.SmGL.blk_apply e a i⟩ :

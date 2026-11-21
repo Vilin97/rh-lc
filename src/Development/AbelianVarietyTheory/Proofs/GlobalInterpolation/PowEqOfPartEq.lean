@@ -137,7 +137,7 @@ theorem tameDistinct_gen : ∀ (r g m : ℕ) [Fact g.Prime] (w : (ZMod g)ˣ), or
       rw [← Real.rpow_natCast, ← Real.rpow_mul (by positivity)]; norm_num
     rw [h5, ← pow_mul, mul_comm] at h4
     refine Or.inr ⟨1, le_rfl, hr, hl, ?_⟩
-    rw [pow_one, ← Nat.factorization_def _ hl, ← hv]
+    rw [pow_one, Nat.padicValNat_def, ← Nat.factorization_def _ hl, ← hv]
     exact_mod_cast h4
   · intro j
     exact ⟨w ^ (j.1 + 1), by rw [← pow_add, ← two_mul]⟩

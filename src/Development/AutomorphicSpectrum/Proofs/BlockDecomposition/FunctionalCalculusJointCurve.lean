@@ -224,7 +224,7 @@ theorem sup_bound (hS : SobG) (n : ℕ) [MeasurableSpace (G n)] [BorelSpace (G n
     set K := Rw w f with hK
     have hm : MemLp (fun y : G n => K y.val) 2 μ := hf.2 w
     have hφ : Integrable (fun y : G n => ‖K y.val‖ ^ 2) μ :=
-      (memLp_two_iff_integrable_sq_norm hm.1).1 hm
+      (memLp_two_iff_integrable_sq_norm hm.aestronglyMeasurable).1 hm
     have hψ : Integrable (fun y : G n => ‖K (x * y.val)‖ ^ 2) μ :=
       hφ.comp_mul_left (GlobalTheory.CompanionTheory.RCalc.ByParts.toG hx)
     have e1 : ∫ y : G n, ‖K (x * y.val)‖ ^ 2 ∂μ = ∫ y : G n, ‖K y.val‖ ^ 2 ∂μ :=

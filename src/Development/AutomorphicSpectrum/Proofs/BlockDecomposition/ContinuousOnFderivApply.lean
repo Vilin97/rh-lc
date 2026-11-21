@@ -179,7 +179,7 @@ theorem ibp_of (hL : LgFacts) (hU : Unimod) : IBP := by
     exact hCb (y, t) ⟨hy, Metric.ball_subset_closedBall ht⟩
   · intro t ht
     have h0 := integral_mul_right_eq_self (μ := μ) (fun y : G n => f y.val) (toG (hball t ht))
-    simpa [c_zero] using h0
+    simpa [toG, Matrix.GeneralLinearGroup.mkOfDetNeZero, Matrix.GeneralLinearGroup.mk', Matrix.unitOfDetInvertible, c_zero] using h0
 
 end GlobalTheory.CompanionTheory.RCalc.ByParts
 

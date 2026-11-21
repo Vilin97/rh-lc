@@ -21,10 +21,12 @@ section Linear
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+variable (E a) in
 def splitCentre (t : ℝ) : GA E a :=
   infGL E a (Units.map (Matrix.scalar (Fin a)).toMonoidHom (expU fun _ : InfinitePlace E => (t : ℂ)))
 
 
+variable (E a) in
 def latticeGL : Subgroup (GA E a) := (ratGL E a).range ⊔ Subgroup.zpowers (splitCentre E a 1)
 
 def IsSqInt (φ : GA E a → ℂ) : Prop :=
@@ -48,6 +50,8 @@ def HasInfCharGL (V : Submodule ℂ (Sm E a)) (τ : E →+* ℂ) (m : Multiset �
   Multiset.card m = a ∧ ∀ u, ∀ φ ∈ V, cap τ u φ = (m.map (u + ·)).prod • φ
 
 
+attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField in
+omit [IsTotallyComplex E] in
 def locProd {c n : ℕ} {N : Fin c → ℕ} (h : ∑ i, N i = n) (w : HeightOneSpectrum (𝓞 E))
     (σ : ∀ i, SmIrr (GL (Fin (N i)) (w.adicCompletion E))) :=
   GlobalTheory.SmGL.multiProd (GlobalTheory.SmGL.stdBlocks N h) fun i => (σ i).ρ
@@ -59,6 +63,7 @@ section CM
 variable (E : Type) [Field E] [NumberField E] [IsCMField E] {a : ℕ}
 
 
+variable {E} in
 def IsCsdGL (V : Submodule ℂ (Sm E a)) : Prop :=
   ∃ T : V ≃ₗ[ℂ] V, ∀ (o : Op E a) (φ ψ : V), ψ.1 = act (thetaOp o) φ.1 → (T ψ).1 = act o (T φ).1
 
@@ -79,24 +84,30 @@ def cLoc (w : HeightOneSpectrum (𝓞 E)) : UA E n →* GL (Fin n) (w.adicComple
 def cEmb (τ : E →+* ℂ) : UA E n →* GL (Fin n) ℂ := (GeneralLinearGroup.map (coord τ)).comp cInf
 
 
+variable (E n) in
 def ratU : Subgroup (UA E n) := (ratGL E n).range.subgroupOf (UA E n)
 
 
+variable (E n) in
 def finU : Subgroup (UA E n) := (cInf (E := E) (n := n)).ker
 
 
+variable (E n) in
 def infU : Subgroup (UA E n) := ((GeneralLinearGroup.map (pFin E)).comp (UA E n).subtype).ker
 
 
+variable (n) in
 def locU (w : HeightOneSpectrum (𝓞 E)) : Subgroup (UA E n) :=
   finU E n ⊓ ⨅ (u : HeightOneSpectrum (𝓞 E))
     (_ : u.under (𝓞 (maximalRealSubfield E)) ≠ w.under (𝓞 (maximalRealSubfield E))), (cLoc u).ker
 
 
+variable (n) in
 def embU (τ : E →+* ℂ) : Subgroup (UA E n) :=
   infU E n ⊓ ⨅ (τ' : E →+* ℂ) (_ : InfinitePlace.mk τ' ≠ InfinitePlace.mk τ), (cEmb τ').ker
 
 
+variable (E n) in
 abbrev RU : Representation ℂ (UA E n) (UA E n → ℂ) := rightReg ℂ (UA E n) ℂ
 
 structure IsAutFormU (φ : UA E n → ℂ) : Prop where

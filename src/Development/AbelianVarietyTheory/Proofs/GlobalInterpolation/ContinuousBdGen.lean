@@ -214,9 +214,11 @@ theorem decay_ops : ∀ (F : Type) [Field F] [NumberField F] (N : ℕ) (ψ : Add
     convert h using 1
     congr 1
     funext l
-    simp [g, Matrix.mulVec_diagonal]
+    simp [Da, g, Matrix.mulVec_diagonal]
   · have h := decay_of_comp hΦ id continuous_id (fun _ => c) continuous_const ‖c‖ (fun _ => le_rfl)
       (fun K hK => ⟨K, hK, fun u h => h⟩) 1 0 zero_le_one le_rfl (fun u => by simp)
     convert h using 1
+    funext u
+    rfl
 
 end GlobalTheory.SWQ

@@ -56,6 +56,7 @@ def Normalises {Γ : Type} [Group Γ] (ρ : Γ →* Matrix ι ι R) : Prop :=
   ∀ g a b, w a ≠ w b → ρ g a b = 0
 
 variable {Φ} in
+variable {Φ R} in
 theorem ad_mem {Γ : Type} [Group Γ] {ρ : Γ →* Matrix ι ι R} (h : Φ.Normalises ρ) (j : X) (s : Γ) {Y : Matrix ι ι R}
     (hY : Y ∈ Φ.gw R j) : ρ s * Y * ρ s⁻¹ ∈ Φ.gw R j := by
   obtain ⟨h1, ⟨π, h2⟩, h3⟩ := h

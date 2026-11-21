@@ -249,7 +249,11 @@ theorem growth_decay : TStatement → ∀ (E : Type) [Field E] [NumberField E] [
           field_simp
         have hK' : K = (25 : ℝ) ^ (2 * (Module.finrank ℚ E * A.T.r) * A.T.r) := by rw [hAr]
         rw [hK']
-        refine finsum_le A.T _ (fun a ha => ⟨ha.1, ha.2.1⟩) _ _ (by positivity) fun a ha => ?_
+        refine finsum_le A.T {a | (∀ j, a j ∈ ZSpan.fundamentalDomain A.T.b) ∧
+          (∀ j, ((5 : ℂ) ^ 2) • a j ∈ A.T.L) ∧
+          ∀ x ∈ A.T.L, ∃ c : Fin A.T.r → 𝓞 E, ∃ y ∈ A.T.L,
+            x = ∑ j, act (c j) (((5 : ℂ) ^ 2) • a j) + (5 : ℂ) • y}
+          (fun a ha => ⟨ha.1, ha.2.1⟩) _ _ (by positivity) fun a ha => ?_
         rw [prod_eq_sq]
         refine pow_le_pow_left₀ (Finset.prod_nonneg fun _ _ => by positivity) ?_ 2
         have := (hT E A.T 1 P 5 (by norm_num) a (by exact_mod_cast ha.2.1)
@@ -262,7 +266,11 @@ theorem growth_decay : TStatement → ∀ (E : Type) [Field E] [NumberField E] [
           simp only [Par.ph, PT.ph, hq, hR, hla, if_neg (not_lt.2 h)]
         have hK' : K = (25 : ℝ) ^ (2 * (Module.finrank ℚ E * A.T.r) * A.T.r) := by rw [hAr]
         rw [hK']
-        refine finsum_le A.T _ (fun a ha => ⟨ha.1, ha.2.1⟩) _ _ (by positivity) fun a ha => ?_
+        refine finsum_le A.T {a | (∀ j, a j ∈ ZSpan.fundamentalDomain A.T.b) ∧
+          (∀ j, ((5 : ℂ) ^ 2) • a j ∈ A.T.L) ∧
+          ∀ x ∈ A.T.L, ∃ c : Fin A.T.r → 𝓞 E, ∃ y ∈ A.T.L,
+            x = ∑ j, act (c j) (((5 : ℂ) ^ 2) • a j) + (5 : ℂ) • y}
+          (fun a ha => ⟨ha.1, ha.2.1⟩) _ _ (by positivity) fun a ha => ?_
         rw [prod_eq_sq]
         refine pow_le_pow_left₀ (Finset.prod_nonneg fun _ _ => by positivity) ?_ 2
         have := (hT E A.T 1 P 5 (by norm_num) a (by exact_mod_cast ha.2.1)

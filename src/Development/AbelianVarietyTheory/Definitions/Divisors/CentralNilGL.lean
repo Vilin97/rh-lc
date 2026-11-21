@@ -18,6 +18,7 @@ def CentralNilGL (χ : Module.End ℂ (Sm E a) → ℂ) (N : ℕ) (φ : Sm E a) 
     zs.foldr (fun z f => z f - χ z • f) φ = 0
 
 
+variable (E a) in
 def formsGL (L : Subgroup (GL (Fin a) (Af E))) (W : Submodule ℂ (Kinf E a → ℂ)) (X : Set (Module.End ℂ (Sm E a) → ℂ))
     (N : ℕ) : Set (Sm E a) :=
   {φ | IsAutForm φ ∧ (∀ k ∈ L, finRep E a k φ = φ) ∧ (∀ g : GA E a, (fun k : Kinf E a => (cptRep E a k φ).1 g) ∈ W) ∧

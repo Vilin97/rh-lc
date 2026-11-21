@@ -52,11 +52,23 @@ theorem sum_norm_coeff_rename {σ κ : Type} {ρ : σ → κ} (hρ : Function.In
 theorem polyDeriv_smul_dir {σ W : Type} [NormedAddCommGroup W] [NormedSpace ℂ W] {P : MvPolynomial σ ℂ} {d : ℕ}
     (hP : P.IsHomogeneous d) (c : ℂ) (u : σ → W) (F : W → ℂ) (x : W) :
     I2.polyDeriv P (fun l => c • u l) F x = c ^ d * I2.polyDeriv P u F x := by
-  refine polyDeriv_smul_letter P (fun _ => c) _ (fun m hm => ?_) u F x
-  have := hP (MvPolynomial.mem_support_iff.1 hm)
-  rw [Finsupp.prod, Finset.prod_pow_eq_pow_sum, ← this]
-  congr 1
-  simp [Finsupp.weight_apply, Finsupp.sum]
+  have h (m) (hm : m ∈ P.support) : (m.prod fun _ e => c ^ e) = c ^ d := by
+    have := hP (MvPolynomial.mem_support_iff.1 hm)
+    rw [Finsupp.prod, Finset.prod_pow_eq_pow_sum, ← this]
+    congr 1
+    simp [Finsupp.weight_apply, Finsupp.sum]
+  unfold I2.polyDeriv
+  rw [Finset.mul_sum]
+  refine Finset.sum_congr rfl fun m hm => ?_
+  rw [ContinuousMultilinearMap.map_smul_univ, smul_eq_mul, ← h m hm, mul_left_comm]
+  have h1 := (finCongr (Multiset.length_toList (Finsupp.toMultiset m)).symm).prod_comp
+    fun _ => c
+  have h2 : ∏ k, (fun _ => c) ((Finsupp.toMultiset m).toList.get k) =
+      ((Finsupp.toMultiset m).toList.map fun _ => c).prod := by
+    simp [← Fin.prod_univ_fun_getElem]
+  refine congrArg (· * _) ((h1.trans h2).trans ?_)
+  rw [Multiset.prod_map_toList, Finsupp.toMultiset_map, Finsupp.prod_toMultiset,
+    Finsupp.prod_mapDomain_index (fun _ => pow_zero _) fun _ _ _ => pow_add _ _ _]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r g n : ℕ} {X : Data E r}
   {bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ}
@@ -149,7 +161,7 @@ theorem mem_tensorLat_iff (idx : Fin g ≃ X.Ψ × Fin r) (x : Frame X.Ψ r) (T 
       obtain ⟨v, hv, u, hu, rfl⟩ := ha
       exact Submodule.subset_span ⟨_, (hL _).2 ⟨u, hu, rfl⟩, v, hv, hp v u⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | neg a _ ha => rw [map_neg]; exact neg_mem ha
 
 theorem jet_projA_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : Data E r) (g q0 : ℕ) (hr : X.p0 + q0 = r) (bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ) (idx : Fin g ≃ X.Ψ × Fin r) (n : ℕ), IsSympl X bas → Even n → ∀ w : 𝓞 E, (w : E) + cc (w : E) = 1 → ∀ L : Lt E r, SelfD X L → ∀ Λ ∈ Vset E n 1, ∀ v : TF n g, IsVac X bas (w : E) (tens (stdL E n) L) v → ∀ x ∈ X.dom, X.IsOrtho x → ∀ t : ℝ, 0 < t → (∀ τ, X.c τ = t) → ∀ (θ : (Fin g → ℂ) → ℂ) (κ : ℂ), IsTheta1 X bas idx (w : E) x L θ → MeanOne X bas idx x L θ → (∀ z : Fin n → Fin g → ℂ, ∏ b, θ (z b) = κ * thA X bas idx v x z) → ∀ lam : ℝ, 0 < lam → (∀ u ∈ L, u ≠ 0 → lam ^ 2 ≤ (hx X bas idx x (pv X idx x u) (pv X idx x u)).re) → ∀ (y : Matrix (Fin n) (Fin r) E) (P : Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)) (d : ℕ), P.IsHomogeneous d → ‖κ * thP X hr bas idx (heisG X bas y (projA X bas (w : E) (tens Λ L) v)) P x‖ * Real.sqrt ((((stdL E n).toAddSubgroup.relIndex Λ.toAddSubgroup) : ℝ) ^ r) ≤ (∑ m ∈ P.support, ‖P.coeff m‖) * (Real.pi * Real.exp 1 * t * d) ^ ((d : ℝ) / 2) * Real.sqrt 2 * (1 + 4 * Real.sqrt (2 * g * n) * (2 * (fdeg E : ℝ) ^ ((3 : ℝ) / 2) * n ^ 2 * rdE E) / (Real.sqrt Real.pi * lam)) ^ (g * n) := by

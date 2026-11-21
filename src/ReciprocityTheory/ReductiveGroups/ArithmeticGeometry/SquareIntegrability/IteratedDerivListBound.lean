@@ -57,9 +57,9 @@ end Col
 section Main
 variable {dim : (E →+* ℂ) → ℕ} (bs : Fin nb → Block E n dim)
 
-open scoped Classical in
-def eU (j : Fin nb) (a : Fin (bs j).i) : Vsp dim :=
-  EuclideanSpace.single (⟨(bs j).τ, Fin.castLE (bs j).hi a⟩ : Idx dim) (1 : ℂ)
+def eU (j : Fin nb) (a : Fin (bs j).i) : Vsp dim := by
+  classical
+  exact EuclideanSpace.single (⟨(bs j).τ, Fin.castLE (bs j).hi a⟩ : Idx dim) (1 : ℂ)
 
 def idealA (μ : (Σ j : Fin nb, Fin (bs j).i) → ℂ) (y : (Σ j : Fin nb, Fin (bs j).i) → Vsp dim)
     (ee : Fin n → ℂ) (T : Choice bs) (k : Fin n) : ℂ :=

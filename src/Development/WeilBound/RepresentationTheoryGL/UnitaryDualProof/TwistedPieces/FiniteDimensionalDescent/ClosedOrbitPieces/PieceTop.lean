@@ -8,6 +8,7 @@ public import Development.WeilBound.CoreStatements.AutomorphicKernels.BernsteinU
 noncomputable section
 
 open Matrix Polynomial GroundTheory.Automorphic.Whittaker
+open Classical in
 section
 end
 

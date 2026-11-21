@@ -35,7 +35,7 @@ def cosetRep {ϖ : kˣ} (hϖ : valuation k (ϖ : k) = uniformizer k) {n j : ℕ}
 open MeasureTheory ValuativeRel Matrix in
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 private theorem torusElt_indic_eq_satakeGL {N : ℕ} (ϖ : kˣ) (s : Finset (Fin N)) :
-    _root_.GlobalTheory.GLDoubling.torusElt k (Fin N) ϖ (_root_.GlobalTheory.ParHecke.indic s) =
+    _root_.GlobalTheory.GLDoubling.torusElt (k := k) (n := Fin N) ϖ (_root_.GlobalTheory.ParHecke.indic s) =
       _root_.Formalism.UG.P.satakeGL 𝒪[k] (π := (ϖ : k)) ϖ.ne_zero s (fun _ => 0) := by
   refine Units.ext (Matrix.ext fun a l => ?_)
   rw [_root_.GlobalTheory.GLDoubling.val_torusElt, _root_.Formalism.UG.P.satakeGL_apply]
@@ -95,12 +95,12 @@ private theorem isBorelSph_apply_satakeGL_eq {N : ℕ} {ϖ : kˣ}
     (hψ : _root_.GlobalTheory.SatakeBound.IsBorelSph k γ ψ) (S : Finset (Fin N)) (c : _root_.Formalism.UG.P.satakePairs S → 𝒪[k]) :
     ψ (_root_.Formalism.UG.P.satakeGL 𝒪[k] (π := (ϖ : k)) ϖ.ne_zero S c) = ∏ a ∈ S, γ a := by
   have hone : _root_.GlobalTheory.SmGL.ord k 1 = 0 :=
-    _root_.GlobalTheory.SmGL.ord_eq_zero (by simp)
+    _root_.GlobalTheory.SmGL.ord_eq_zero k (by simp)
   rw [hψ.2 _ ((_root_.GlobalTheory.SmGL.mem_borel k).mpr fun a l h => _root_.Formalism.UG.P.satakeGL_lower _ _ _ _ _ _ h)
     (fun a => if a ∈ S then ϖ else 1) (fun a => by rw [_root_.Formalism.UG.P.satakeGL_diag]; split_ifs <;> simp)]
   calc ∏ i, γ i ^ _root_.GlobalTheory.SmGL.ord k (if i ∈ S then ϖ else 1)
       = ∏ i, if i ∈ S then γ i else 1 := Finset.prod_congr rfl fun i _ => by
-        split_ifs <;> simp [_root_.GlobalTheory.SmGL.ord_eq_one hϖ, hone]
+        split_ifs <;> simp [_root_.GlobalTheory.SmGL.ord_eq_one k hϖ, hone]
     _ = ∏ a ∈ S, γ a := by rw [Finset.prod_ite_mem, Finset.univ_inter]
 
 open MeasureTheory ValuativeRel Matrix in
@@ -121,7 +121,7 @@ theorem _root_.GlobalTheory.BorelCosetSum.sum_cosets_eq : ∀ (k : Type) [Field 
     _root_.GlobalTheory.SatakeBound.IsBorelSph k γ ψ → (∀ i, γ i ≠ 0) → ∀ (s : Finset (Fin N))
     (R : Finset (GL (Fin N) k)),
     _root_.GlobalTheory.ParHecke.IsRepsK
-      (_root_.GlobalTheory.GLDoubling.torusElt k (Fin N) ϖ (_root_.GlobalTheory.ParHecke.indic s)) R →
+      (_root_.GlobalTheory.GLDoubling.torusElt (k := k) (n := Fin N) ϖ (_root_.GlobalTheory.ParHecke.indic s)) R →
     ∑ g ∈ R, ψ g = ∑ S ∈ (Finset.univ : Finset (Fin N)).powersetCard s.card,
       ((_root_.GlobalTheory.SplitWeil.resCard k : ℂ) ^
         ((S ×ˢ Sᶜ).filter fun p : Fin N × Fin N => p.1 < p.2).card * ∏ a ∈ S, γ a) := by
@@ -132,7 +132,8 @@ theorem _root_.GlobalTheory.BorelCosetSum.sum_cosets_eq : ∀ (k : Type) [Field 
   set q := _root_.GlobalTheory.SplitWeil.resCard k with hqdef
   set K := _root_.GlobalTheory.SplitWeil.KO k (Fin N) with hK
   set dJ := _root_.Formalism.UG.P.tjcosets_dG N j (ϖ : k) ϖ.ne_zero with hdJ
-  set d := _root_.GlobalTheory.GLDoubling.torusElt k (Fin N) ϖ (_root_.GlobalTheory.ParHecke.indic s) with hddef
+  set d := _root_.GlobalTheory.GLDoubling.torusElt (k := k) (n := Fin N) ϖ
+    (_root_.GlobalTheory.ParHecke.indic s) with hddef
   obtain ⟨hR1, hR2⟩ := hR
   let P : GL (Fin N) k → Prop := fun g => ∃ a ∈ K, ∃ b ∈ K, g = a * dJ * b
   have hPsat : ∀ (S : Finset (Fin N)) (c : _root_.Formalism.UG.P.satakePairs S → 𝒪[k]), S.card = j →

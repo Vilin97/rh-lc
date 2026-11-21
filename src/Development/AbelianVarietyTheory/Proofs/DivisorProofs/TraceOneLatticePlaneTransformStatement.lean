@@ -18,8 +18,8 @@ theorem _root_.GlobalTheory.T.trace_one_lattice_plane_transform : ∀ {F E : Typ
     H.IsAdapted σ B X X₁ j₀ j₁ → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ θ : E, θ + σ θ = 1 →
     ∀ γ a b : Matrix (Fin n) (Fin d) (AE F E), planeT σ X W H H' a = ((0, (planeT σ X W H H' γ).1.2), 0) →
     planeT σ X W H H' b = (((planeT σ X W H H' γ).1.1, 0), 0) →
-    symp (cA σ) (inclR (F := F) (AF F) θ) (incM F X.J) (incM F W.J) γ γ =
+    symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (inclR (F := F) (AF F) θ) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) γ γ =
       (planeT σ X W H H' γ).1.1 ⬝ᵥ (planeT σ X W H H' γ).1.2 +
-        2 * symp (cA σ) (inclR (F := F) (AF F) θ) (incM F X.J) (incM F W.J) b a +
-        symp (cA σ) (inclR (F := F) (AF F) θ) (incM F X₁.J) (incM F W₁.J) (planeT σ X W H H' γ).2 (planeT σ X W H H' γ).2 := by
+        2 * symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (inclR (F := F) (AF F) θ) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) b a +
+        symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (inclR (F := F) (AF F) θ) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W₁.J) (planeT σ X W H H' γ).2 (planeT σ X W H H' γ).2 := by
   first | exact @GlobalTheory.ThK.PlaneCo.symp_self_planeT | exact GlobalTheory.ThK.PlaneCo.symp_self_planeT | (intros; apply GlobalTheory.ThK.PlaneCo.symp_self_planeT <;> assumption)

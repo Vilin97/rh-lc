@@ -125,7 +125,7 @@ noncomputable def coindDiscreteCoindIso :
 theorem isZero_cohomology_coind_discreteCoind (n : ℕ) :
     IsZero (cohomology (Rep.coind.{u} (U : Subgroup G).subtype
       (discreteCoind k (U : Subgroup G) X)) (n + 1)) :=
-  (isZero_cohomology_discreteCoind k G X n).of_iso
+  (isZero_cohomology_discreteCoind (k := k) (G := G) (X := X) n).of_iso
     (cohomologyIsoOfIso (coindDiscreteCoindIso U X) (n + 1))
 
 end Acyclic
@@ -134,7 +134,7 @@ section DegreeZero
 
 variable (B : Rep.{u} k (U : Subgroup G)) [IsDiscreteRep B]
 
-
+omit [IsTopologicalGroup G] [CompactSpace G] [IsDiscreteRep B] in
 theorem coind_invariant_apply (f : (Rep.coind (U : Subgroup G).subtype B).ρ.invariants) (x : G) :
     f.1.1 x = f.1.1 1 := by
   have h : f.1.1 (1 * x) = f.1.1 1 :=
@@ -231,7 +231,7 @@ theorem isIso_shapiroMap (n : ℕ) :
 
     have hδU : Epi (δ hX n (n + 1) rfl) :=
       (cohomology_exact₁ hX n (n + 1) rfl).epi_f
-        ((isZero_cohomology_discreteCoind k (U : Subgroup G) B n).eq_of_tgt _ _)
+        ((isZero_cohomology_discreteCoind (k := k) (G := (U : Subgroup G)) (X := B) n).eq_of_tgt _ _)
     have hδG : Epi (δ hY n (n + 1) rfl) :=
       (cohomology_exact₁ hY n (n + 1) rfl).epi_f
         ((isZero_cohomology_coind_discreteCoind U B n).eq_of_tgt _ _)

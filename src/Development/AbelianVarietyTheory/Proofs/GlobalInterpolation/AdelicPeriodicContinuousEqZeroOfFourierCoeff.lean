@@ -48,7 +48,7 @@ theorem Bd_rat_rat (a : Fin N → F) (η ξ : Fin N → F) :
 
 theorem cont_Bd (a : Fin N → F) (w : Fin N → AF F) : Continuous fun u : Fin N → AF F => Bd (AF F) a u w := by
   unfold Bd
-  exact continuous_finset_sum _ fun l _ => (continuous_const.mul (continuous_apply l)).mul continuous_const
+  exact continuous_finsetSum _ fun l _ => (continuous_const.mul (continuous_apply l)).mul continuous_const
 
 def chi (ψ : AddChar (AF F) ℂ) (a : Fin N → F) (ξ : Fin N → F) (u : Fin N → AF F) : ℂ :=
   ψ (-(Bd (AF F) a u (rat ξ)))

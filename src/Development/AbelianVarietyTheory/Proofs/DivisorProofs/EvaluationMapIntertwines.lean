@@ -44,7 +44,7 @@ theorem finite_part_sum_smul_zero {ι : Type} [Fintype ι] (x : ι → AF F) (hx
       simp only [Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Prod.smul_fst, Prod.smul_snd, Pi.smul_apply, smul_eq_mul,
       map_sum, map_mul, hx, zero_mul, Finset.sum_const_zero]
 
-theorem scalar_decay_pure {ι : Type} [Fintype ι] (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ)
+theorem scalar_decay_pure {ι : Type} [Fintype ι] (ψ : AddChar (AF F) ℂ) (hψ : (_root_.Continuous ψ ∧ (∀ x : F, ψ (algebraMap F (AF F) x) = 1) ∧ ∀ a : (AF F), _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI (F := F)) a → ψ a = _root_.Complex.exp (-(2 * _root_.Real.pi * _root_.Complex.I) * (_root_.Algebra.trace ℝ (_root_.NumberField.mixedEmbedding.mixedSpace F) ((_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI (F := F)) a) : ℝ))))
     (S U : ι → (κ → AF F) × (κ → AF F)) (hSU : ∀ i j, (S j).1 ⬝ᵥ (U i).2 - (U i).1 ⬝ᵥ (S j).2 = if i = j then 1 else 0)
     (e : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) (he : e ∈ (adeleClass F).adm κ)
     (hinv : ∀ i (a : AF F), ∀ Φ ∈ schA F κ, e (schr ψ (a • U i) Φ) = e Φ)
@@ -103,7 +103,7 @@ theorem scalar_decay_pure {ι : Type} [Fintype ι] (ψ : AddChar (AF F) ℂ) (h�
       change ‖L _‖ = 0
       rw [hz, norm_zero]
 
-theorem scalar_decay {ι : Type} [Fintype ι] (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ)
+theorem scalar_decay {ι : Type} [Fintype ι] (ψ : AddChar (AF F) ℂ) (hψ : (_root_.Continuous ψ ∧ (∀ x : F, ψ (algebraMap F (AF F) x) = 1) ∧ ∀ a : (AF F), _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI (F := F)) a → ψ a = _root_.Complex.exp (-(2 * _root_.Real.pi * _root_.Complex.I) * (_root_.Algebra.trace ℝ (_root_.NumberField.mixedEmbedding.mixedSpace F) ((_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI (F := F)) a) : ℝ))))
     (S U : ι → (κ → AF F) × (κ → AF F)) (hSU : ∀ i j, (S j).1 ⬝ᵥ (U i).2 - (U i).1 ⬝ᵥ (S j).2 = if i = j then 1 else 0)
     (e : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) (he : e ∈ (adeleClass F).adm κ)
     (hinv : ∀ i (a : AF F), ∀ Φ ∈ schA F κ, e (schr ψ (a • U i) Φ) = e Φ)
@@ -190,7 +190,7 @@ theorem dualPair_family (σ : E →ₐ[F] E) {n d : ℕ} (J : Matrix (Fin n) (Fi
     (x y : Fin n → E) (x' : Fin d → Fin d → E) (h1 : form σ J x y = 1)
     (h2 : ∀ k i, form σ J' (Pi.single k 1) (x' i) = if k = i then -1 else 0) :
     ∃ t : Fin (Module.finrank F E) → E, ∀ (p q : Fin d × Fin (Module.finrank F E)),
-      symp (R := AF F) (cA σ) (-1) (incM F J) (incM F J')
+      symp (R := AF F) (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) J')
         (inclR (F := F) (AF F) (Module.finBasis F E q.2) • Matrix.vecMulVec (incV F x) (incV F (Pi.single q.1 1)))
         (Matrix.vecMulVec (inclR (F := F) (AF F) (t p.2) • incV F y) (incV F (x' p.1))) = if p = q then 1 else 0 := by
   haveI : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E

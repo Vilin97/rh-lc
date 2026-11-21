@@ -21,17 +21,17 @@ theorem _root_.GlobalTheory.T.seesaw_pair_restriction_adapted : ∀ (F E : Type)
     (M : Model σ X W) (χX χW : Chr F E) (om : Rep σ X W) (r s r' s' : ℕ), IsPair B M χX χW om r s r' s' →
     ∀ (d₁ : ℕ) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ : ℕ) (M₁ : Model σ X W₁) (om₁ : Rep σ X W₁) (r₁ s₁ : ℕ),
       H'.IsAdapted σ B W W₁ i₀ i₁ → IsPair B M₁ χX χW om₁ r s r₁ s₁ →
-      ∀ (dd₁ : Darboux (symp (cA σ) (-1) (incM F W₁.J) (dbl (incM F X.J))) ((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁))),
+      ∀ (dd₁ : Darboux (symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W₁.J) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J))) ((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁))),
         (∀ x : Matrix (Fin d₁) (Fin n ⊕ Fin n) E, ∃ u v : (Fin n × Fin d₁) ⊕ (Fin n × Fin d₁) → F,
-          dd₁.e (incM F x) = (fun i => algebraMap F (AF F) (u i), fun i => algebraMap F (AF F) (v i))) →
+          dd₁.e ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) x) = (fun i => algebraMap F (AF F) (u i), fun i => algebraMap F (AF F) (v i))) →
       ∃ (κa : Type) (_ : Fintype κa) (ε : (Fin n × Fin d) ⊕ (Fin n × Fin d) ≃ κa ⊕ ((Fin n × Fin d₁) ⊕ (Fin n × Fin d₁)))
         (C : Matrix κa (Fin n) E)
-        (dN : Darboux (symp (cA σ) (-1) (incM F W.J) (dbl (incM F X.J))) ((Fin n × Fin d) ⊕ (Fin n × Fin d))),
+        (dN : Darboux (symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J))) ((Fin n × Fin d) ⊕ (Fin n × Fin d))),
         (∀ x : Matrix (Fin d) (Fin n ⊕ Fin n) E, ∃ u v : (Fin n × Fin d) ⊕ (Fin n × Fin d) → F,
-          dN.e (incM F x) = (fun i => algebraMap F (AF F) (u i), fun i => algebraMap F (AF F) (v i))) ∧
+          dN.e ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) x) = (fun i => algebraMap F (AF F) (u i), fun i => algebraMap F (AF F) (v i))) ∧
         (∀ z : Fin n → E, (∀ k, ∑ j, Algebra.trace F E (C k j * z j) = 0) → z = 0) ∧
         (∀ z : Matrix (Fin d₁) (Fin n ⊕ Fin n) (AE F E),
-          dN.e (incM F H'.ι * z) = (GlobalTheory.ThK.Adapt.glue ε 0 (dd₁.e z).1, GlobalTheory.ThK.Adapt.glue ε 0 (dd₁.e z).2)) ∧
+          dN.e ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) H'.ι * z) = (GlobalTheory.ThK.Adapt.glue ε 0 (dd₁.e z).1, GlobalTheory.ThK.Adapt.glue ε 0 (dd₁.e z).2)) ∧
         (∀ y : Fin n ⊕ Fin n → AE F E, ∃ q : κa → AF F,
           dN.e (Matrix.vecMulVec (incV F H'.x) y) = (0, GlobalTheory.ThK.Adapt.glue ε q 0)) ∧
         (∀ y : Fin n → AE F E, dN.e (Matrix.vecMulVec (incV F H'.y) (Sum.elim y y)) =

@@ -24,8 +24,8 @@ theorem GlobalTheory.ThK.PlaneCo.isVac_vacGlue : ∀ {F E : Type} [Field F] [Num
     ∀ (eq : Fin n × Fin d ≃ Kc F E d₁ n₁ ⊕ Fin n₁ × Fin d₁)
       (T : Matrix (Fin n) (Fin d) (AE F E) ≃ₗ[AF F] ((Kc F E d₁ n₁ → AF F) × (Kc F E d₁ n₁ → AF F)) × Matrix (Fin n₁) (Fin d₁) (AE F E))
       (hT : ∀ u, T u = planeT σ X W H H' u)
-      (hf : ∀ w w', symp (cA σ) (-1) (incM F X.J) (incM F W.J) w w' =
-        (T w).1.1 ⬝ᵥ (T w').1.2 - (T w').1.1 ⬝ᵥ (T w).1.2 + symp (cA σ) (-1) (incM F X₁.J) (incM F W₁.J) (T w).2 (T w').2)
+      (hf : ∀ w w', symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) w w' =
+        (T w).1.1 ⬝ᵥ (T w').1.2 - (T w').1.1 ⬝ᵥ (T w).1.2 + symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W₁.J) (T w).2 (T w').2)
       (μ : Measure (UA σ X.J)) (D : Set (UA σ X.J)) (v : Pl (F := F)),
       Model.IsVac (Model.mk (glueDarboux M₁.co eq T hf) (fun v => vacGlue eq (vacS σ X W H H' v) (M₁.vac v)) μ D) B.ψ v
         (vacGlue eq (vacS σ X W H H' v) (M₁.vac v)) := by
@@ -38,7 +38,7 @@ theorem GlobalTheory.ThK.PlaneCo.isVac_vacGlue : ∀ {F E : Type} [Field F] [Num
     show (glueDarboux M₁.co eq T hf).e z = _
     rw [glueDarboux_e]; rfl
   have hrat : ∀ x : Matrix (Fin n) (Fin d) E, ∃ y z : Fin n × Fin d → F,
-      Ma.co.e (incM F x) = (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i)) := by
+      Ma.co.e ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) x) = (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i)) := by
     intro x
     obtain ⟨⟨y, z, hyz⟩, x₁, hx₁⟩ := GlobalTheory.T.plane_transform_rational_points σ X W H H' x
     obtain ⟨y₁, z₁, h₁⟩ := hM₁.rat x₁
@@ -56,14 +56,14 @@ theorem GlobalTheory.ThK.PlaneCo.isVac_vacGlue : ∀ {F E : Type} [Field F] [Num
     rw [hT b, hbT] at h2
     have hm : inclR (F := F) (AF F) (((-1 : 𝓞 E) : E)) = -1 := by simp
     rw [one_mul, hm, h2] at h1
-    have h0 : symp (cA σ) (-1) (incM F X₁.J) (incM F W₁.J) (0 : Matrix (Fin n₁) (Fin d₁) (AE F E)) (T γ).2 = 0 := by
+    have h0 : symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W₁.J) (0 : Matrix (Fin n₁) (Fin d₁) (AE F E)) (T γ).2 = 0 := by
       simp [symp, hTens]
     rw [h0] at h1
     simpa [hT] using h1
   have hθ : ∀ θ : 𝓞 E, (θ : E) + σ θ = 1 → ∀ γ ∈ latAtV X W v,
-      B.ψ (⅟(2 : AF F) * symp (cA σ) (inclR (F := F) (AF F) (θ : E)) (incM F X.J) (incM F W.J) γ γ) =
+      B.ψ (⅟(2 : AF F) * symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (inclR (F := F) (AF F) (θ : E)) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) γ γ) =
         B.ψ (⅟(2 : AF F) * ((T γ).1.1 ⬝ᵥ (T γ).1.2)) *
-          B.ψ (⅟(2 : AF F) * symp (cA σ) (inclR (F := F) (AF F) (θ : E)) (incM F X₁.J) (incM F W₁.J) (T γ).2 (T γ).2) := by
+          B.ψ (⅟(2 : AF F) * symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (inclR (F := F) (AF F) (θ : E)) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W₁.J) (T γ).2 (T γ).2) := by
     intro θ hθ γ hγ
     obtain ⟨⟨a, ha, haT⟩, ⟨b, hb, hbT⟩, -⟩ := hdec γ hγ
     have e := GlobalTheory.T.trace_one_lattice_plane_transform σ B X W X₁ W₁ H H' hB hX hW hH hH' (θ : E) hθ γ a b haT hbT
@@ -73,9 +73,9 @@ theorem GlobalTheory.ThK.PlaneCo.isVac_vacGlue : ∀ {F E : Type} [Field F] [Num
     simp only [hT]
     rw [e, ← AddChar.map_add_eq_mul]
     have h3 : (⅟(2 : AF F)) * 2 = 1 := invOf_mul_self _
-    generalize symp (cA σ) (inclR (F := F) (AF F) (θ : E)) (incM F X.J) (incM F W.J) b a = S at h1 ⊢
+    generalize symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (inclR (F := F) (AF F) (θ : E)) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) b a = S at h1 ⊢
     generalize (planeT σ X W H H' γ).1.1 ⬝ᵥ (planeT σ X W H H' γ).1.2 = P
-    generalize symp (cA σ) (inclR (F := F) (AF F) (θ : E)) (incM F X₁.J) (incM F W₁.J) (planeT σ X W H H' γ).2
+    generalize symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (inclR (F := F) (AF F) (θ : E)) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W₁.J) (planeT σ X W H H' γ).2
       (planeT σ X W H H' γ).2 = Q
     have : ⅟(2 : AF F) * (P + 2 * S + Q) = (⅟(2 : AF F) * P + ⅟(2 : AF F) * Q) + S := by
       linear_combination S * h3

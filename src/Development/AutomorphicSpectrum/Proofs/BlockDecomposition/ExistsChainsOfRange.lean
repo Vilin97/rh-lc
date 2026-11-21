@@ -49,6 +49,8 @@ theorem exists_chains_of_range [FiniteDimensional K V] (f : V →ₗ[K] V)
   have ht : LinearIndependent K t := by
     have h2 := hLV.comp idx hidx
     convert h2 using 1
+    funext b
+    change (f ^ e' b) (u b) = ((g ^ (e' b - 1)) (w b) : LinearMap.range f)
     rw [pow_coe_of_restrict f g hg, ← hstep]
     congr 2
     have := he' b

@@ -19,8 +19,8 @@ theorem _root_.GlobalTheory.T.evaluation_adapted_good_model : ∀ {F E : Type} [
     ∀ (eq : Fin n × Fin d ≃ Kc F E d₁ n₁ ⊕ Fin n₁ × Fin d₁)
       (T : Matrix (Fin n) (Fin d) (AE F E) ≃ₗ[AF F] ((Kc F E d₁ n₁ → AF F) × (Kc F E d₁ n₁ → AF F)) × Matrix (Fin n₁) (Fin d₁) (AE F E))
       (hT : ∀ u, T u = planeT σ X W H H' u)
-      (hf : ∀ w w', symp (cA σ) (-1) (incM F X.J) (incM F W.J) w w' =
-        (T w).1.1 ⬝ᵥ (T w').1.2 - (T w').1.1 ⬝ᵥ (T w).1.2 + symp (cA σ) (-1) (incM F X₁.J) (incM F W₁.J) (T w).2 (T w').2)
+      (hf : ∀ w w', symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) w w' =
+        (T w).1.1 ⬝ᵥ (T w').1.2 - (T w').1.1 ⬝ᵥ (T w).1.2 + symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X₁.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W₁.J) (T w).2 (T w').2)
       (μ : Measure (UA σ X.J)) (D : Set (UA σ X.J)) (v : Pl (F := F)),
       Model.IsVac (Model.mk (glueDarboux M₁.co eq T hf) (fun v => vacGlue eq (vacS σ X W H H' v) (M₁.vac v)) μ D) B.ψ v
         (vacGlue eq (vacS σ X W H H' v) (M₁.vac v)) := by

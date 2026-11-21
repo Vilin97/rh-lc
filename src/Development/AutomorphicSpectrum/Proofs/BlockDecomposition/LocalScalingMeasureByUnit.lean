@@ -26,6 +26,7 @@ theorem map_char' (μ : Measure A) [μ.IsAddHaarMeasure] (φ : A ≃ₜ+ A) :
   obtain ⟨a, ha⟩ : ∃ a : ℝ≥0, μ = a • (Measure.addHaar : Measure A) :=
     ⟨_, Measure.isAddLeftInvariant_eq_smul μ Measure.addHaar⟩
   rw [ha, Measure.map_smul, map_char Measure.addHaar φ, smul_comm]
+  exact φ.continuous.measurable.aemeasurable
 
 theorem char_of_image (μ : Measure A) [μ.IsAddHaarMeasure] (φ : A ≃ₜ+ A) (θ : ℝ≥0)
     (h : ∀ Y : Set A, μ (φ '' Y) = θ * μ Y) : addEquivAddHaarChar φ = θ := by
@@ -395,4 +396,4 @@ theorem GlobalTheory.CompanionTheory.AvgFree.cjPre_dMat_scale : ∀ (F E : Type)
   haveI := r3
   haveI := r4
   haveI : BorelSpace (Fv F v) := ⟨rfl⟩
-  exact scale_ring σ hσ (Fv F v) b lv hlv.1 s θ hθ n l Y hY
+  exact GlobalTheory.CompanionTheory.AvgFree.HD.scale_ring σ hσ (Fv F v) b lv hlv.1 s θ hθ n l Y hY

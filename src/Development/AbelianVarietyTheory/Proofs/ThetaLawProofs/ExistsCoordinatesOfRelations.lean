@@ -148,7 +148,8 @@ theorem _root_.GlobalTheory.ThetaValueCont.continuousAt_constant {V V' K ι : Ty
         have h := hFse w.1 hBw w.2 hw.1
         rw [hκw] at h
         exact h)
-      (fun b z hz ↦ ((hFsd b (hNsub b hz.2).2).mono fun z' hz' ↦ hz'.1) z hz)
+      (fun b z hz ↦
+        ((hFsd b (hNsub b hz.2).2).mono (s := {z' | (b, z') ∈ Wst}) fun _ hz' ↦ hz'.1) z hz)
       (fun w hw ↦ hnz _ hκ₀ w.1 (hNsub w.1 hw.2).2 w.2)
   have hmem : (b₀, (0 : V')) ∈ Wst := ⟨hj, hb₀N⟩
   have hpair : Continuous fun b : V ↦ (b, (0 : V')) := continuous_id.prodMk continuous_const
@@ -172,6 +173,7 @@ theorem _root_.GlobalTheory.ThetaValueCont.continuousAt_constant {V V' K ι : Ty
   show Fs b 0 / r j b = c b
   rw [heq, h0 rfl, mul_div_cancel_right₀ _ hrb]
 
+open scoped Matrix in
 
 theorem _root_.GlobalTheory.ThetaValueCont.exists_coordinates_of_relations {g : ℕ} {Hm : Matrix (Fin g) (Fin g) ℂ} (hH : Hm.IsHermitian)
     (hpos : ∀ z : Fin g → ℂ, z ≠ 0 → 0 < (z ⬝ᵥ Hm.mulVec (star z)).re) (e f : Fin g → Fin g → ℂ)
@@ -228,8 +230,8 @@ theorem _root_.GlobalTheory.ThetaValueCont.exists_coordinates_of_relations {g : 
   obtain ⟨hsymm, hpd, hYI⟩ := _root_.GlobalTheory.SiegelNormalForm.siegel_of_relations Y hYpos τ
     (fun i j ↦ by rw [hYre, hYC, hPe, hPτ]; exact hef i j)
     (fun i j ↦ by rw [hYre, hYC, hPτ, hPτ]; exact hff i j)
-  letI : Invertible P := P.invertibleOfIsUnitDet hdet
-  refine ⟨Matrix.toLinearEquiv' P this, τ, hsymm, hpd, fun k ↦ ⟨?_, ?_⟩, fun z w ↦ ?_⟩
+  let hPinv : Invertible P := P.invertibleOfIsUnitDet hdet
+  refine ⟨Matrix.toLinearEquiv' P hPinv, τ, hsymm, hpd, fun k ↦ ⟨?_, ?_⟩, fun z w ↦ ?_⟩
   · change P *ᵥ Pi.single k 1 = e k
     exact hPe k
   · change P *ᵥ (τ *ᵥ Pi.single k 1) = f k

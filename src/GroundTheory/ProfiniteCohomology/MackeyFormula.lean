@@ -20,7 +20,7 @@ variable (U : Subgroup G) (ι : H →* G) (N : Rep.{u} k U)
 theorem exists_eq_mul_out_mul (y : G) :
     ∃ u : U, ∃ h : H, y = (u : G) * (DoubleCoset.mk U ι.range y).out * ι h := by
   obtain ⟨a, ha, b, hb, e⟩ :=
-    (@DoubleCoset.eq _ _ U ι.range _ y).1 (DoubleCoset.out_eq' U ι.range (DoubleCoset.mk U ι.range y))
+    (@DoubleCoset.eq _ _ U ι.range _ y).1 (DoubleCoset.out_eq' (DoubleCoset.mk U ι.range y))
   obtain ⟨h, rfl⟩ := MonoidHom.mem_range.1 hb
   exact ⟨⟨a, ha⟩, h, e⟩
 
@@ -160,7 +160,7 @@ theorem mackeyLift_single_ρ [DecidableEq (MackeyDoubleCoset U ι)] (d : MackeyD
     simp
   · simp [Pi.single_eq_of_ne hd]
 
-
+open scoped Classical in
 noncomputable def mackeyIncl (d : MackeyDoubleCoset U ι) :
     mackeySummand U ι N d.out ⟶ Rep.res ι (Rep.coind U.subtype N) :=
   Rep.ofHom ⟨{

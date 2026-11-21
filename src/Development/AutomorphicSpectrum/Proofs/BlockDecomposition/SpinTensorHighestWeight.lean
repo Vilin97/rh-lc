@@ -165,13 +165,13 @@ theorem exists_factor {D Z : Type*} [AddCommGroup D] [Module ℂ D] [AddCommGrou
     ∃ φ : V →ₗ[ℂ] Z, (∀ d, φ (L d) = L' d) ∧ ∀ k ∈ Q, φ k = 0 := by
   let φ₀ : LinearMap.range L →ₗ[ℂ] Z :=
     ((LinearMap.ker L).liftQ L' h) ∘ₗ (L.quotKerEquivRange.symm : LinearMap.range L →ₗ[ℂ] _)
-  refine ⟨φ₀ ∘ₗ Submodule.linearProjOfIsCompl _ _ hc, fun d => ?_, fun k hk => ?_⟩
-  · have : Submodule.linearProjOfIsCompl _ _ hc (L d) = ⟨L d, LinearMap.mem_range_self L d⟩ :=
-      Submodule.linearProjOfIsCompl_apply_left hc ⟨L d, LinearMap.mem_range_self L d⟩
+  refine ⟨φ₀ ∘ₗ Submodule.projectionOnto _ _ hc, fun d => ?_, fun k hk => ?_⟩
+  · have : Submodule.projectionOnto _ _ hc (L d) = ⟨L d, LinearMap.mem_range_self L d⟩ :=
+      Submodule.projectionOnto_apply_left hc ⟨L d, LinearMap.mem_range_self L d⟩
     simp only [LinearMap.comp_apply, this, φ₀]
     erw [LinearMap.quotKerEquivRange_symm_apply_image L d (LinearMap.mem_range_self L d)]
     simp
-  · have h0 : Submodule.linearProjOfIsCompl _ _ hc k = 0 := Submodule.linearProjOfIsCompl_apply_right' hc hk
+  · have h0 : Submodule.projectionOnto _ _ hc k = 0 := Submodule.projectionOnto_apply_of_mem_right hc hk
     rw [LinearMap.comp_apply, h0, map_zero]
 
 end Span

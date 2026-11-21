@@ -194,21 +194,16 @@ theorem lin_pt_eq_one : lin (pt R (n := 1) d 0) 1 = 1 := by
   exact if_congr eq_comm rfl rfl
 
 theorem IsMapOf.trans {R₂ R₃ : Type} [CommRing R₂] [CommRing R₃] {f : R →+* R₂} {g : R₂ →+* R₃} {B : FB R d O}
-    {B₂ : FB R₂ d O} {B₃ : FB R₃ d O} (h : IsMapOf f B B₂) (h' : IsMapOf g B₂ B₃) : IsMapOf (g.comp f) B B₃ where
-  F := by
-    intro i
+    {B₂ : FB R₂ d O} {B₃ : FB R₃ d O} (h : IsMapOf f B B₂) (h' : IsMapOf g B₂ B₃) : IsMapOf (g.comp f) B B₃ := by
+  constructor
+  · intro i
     simp only [h'.F, h.F, MvPowerSeries.map_comp, RingHom.comp_apply]
-  act := by
-    intro a i
+  · intro a i
     simp only [h'.act, h.act, MvPowerSeries.map_comp, RingHom.comp_apply]
-  ph1 := by
-    simp only [h'.ph1, h.ph1, MvPowerSeries.map_comp, RingHom.comp_apply]
-  ph2 := by
-    simp only [h'.ph2, h.ph2, MvPowerSeries.map_comp, RingHom.comp_apply]
-  sy := by
-    simp only [h'.sy, h.sy, MvPowerSeries.map_comp, RingHom.comp_apply]
-  ad := by
-    intro a
+  · simp only [h'.ph1, h.ph1, MvPowerSeries.map_comp, RingHom.comp_apply]
+  · simp only [h'.ph2, h.ph2, MvPowerSeries.map_comp, RingHom.comp_apply]
+  · simp only [h'.sy, h.sy, MvPowerSeries.map_comp, RingHom.comp_apply]
+  · intro a
     simp only [h'.ad, h.ad, MvPowerSeries.map_comp, RingHom.comp_apply]
 
 theorem ev_pt_self {n : ℕ} (a : Fin n → Pt R n d) (ha : ∀ j, a j = pt R d j) (f : PS R n d) : ev a f = f := by

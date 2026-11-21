@@ -40,7 +40,7 @@ theorem traceInf_add (x y : Ainf F) : traceInf F (x + y) = traceInf F x + traceI
   rw [show (x + y) w = x w + y w from rfl, map_add (f := _), Complex.add_re, mul_add]
 
 theorem continuous_traceInf : Continuous (traceInf F) := by
-  refine continuous_finset_sum _ fun w _ => continuous_const.mul (Complex.continuous_re.comp ?_)
+  refine continuous_finsetSum _ fun w _ => continuous_const.mul (Complex.continuous_re.comp ?_)
   exact (InfinitePlace.Completion.isometry_extensionEmbedding w).continuous.comp (continuous_apply w)
 
 theorem traceInf_algebraMap (x : F) :
@@ -48,7 +48,8 @@ theorem traceInf_algebraMap (x : F) :
   rw [← sum_mult_re_eq_trace, traceInf]
   refine Finset.sum_congr rfl fun w _ => ?_
   congr 2
-  exact InfinitePlace.Completion.extensionEmbedding_coe w _
+  rw [InfiniteAdeleRing.algebraMap_apply, InfinitePlace.Completion.extensionEmbedding_coe]
+  simp
 
 theorem existsUnique_isStdChar : ∃! ψ₀ : AddChar (AF F) ℂ, IsStdChar F ψ₀ := by
   let L : Ainf F →+ ℂ := AddMonoidHom.mk' (fun x => (traceInf F x : ℂ)) fun a b => by

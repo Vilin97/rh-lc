@@ -65,7 +65,7 @@ theorem GlobalTheory.CompanionTheory.AvgFree.coordW_dMat_scale : ∀ (F E : Type
 
   have hvec : (Measure.pi fun _ : Fin M => μ).map (fun x i => g (x i)) =
       ((θ : ℝ≥0∞)⁻¹ ^ M) • Measure.pi fun _ : Fin M => μ := by
-    have := map_pi_scale (fun _ : Fin M => μ) (fun _ => g) (fun _ => hgm) (fun _ => (θ : ℝ≥0∞)⁻¹)
+    have := GlobalTheory.CompanionTheory.AvgFree.UnitScale.map_pi_scale (fun _ : Fin M => μ) (fun _ => g) (fun _ => hgm) (fun _ => (θ : ℝ≥0∞)⁻¹)
       (fun _ => ENNReal.inv_ne_zero.2 hθt) (fun _ => ENNReal.inv_ne_top.2 hθ0) (fun _ => hmap)
     simpa using this
   have hvm : Measurable (fun (x : Fin M → Fv F v ⊗[F] E) i => g (x i)) :=
@@ -90,7 +90,7 @@ theorem GlobalTheory.CompanionTheory.AvgFree.coordW_dMat_scale : ∀ (F E : Type
     by_cases h : a = l
     · simpa [gV, c, h] using hvec
     · simp [gV, c, h]
-  have htup := map_pi_scale (fun _ : Fin n => Measure.pi fun _ : Fin M => μ) gV hgV c hc0 hct hmapV
+  have htup := GlobalTheory.CompanionTheory.AvgFree.UnitScale.map_pi_scale (fun _ : Fin n => Measure.pi fun _ : Fin M => μ) gV hgV c hc0 hct hmapV
   have hT : Measurable (fun (x : Fin n → Fin M → Fv F v ⊗[F] E) a => gV a (x a)) :=
     Measurable.of_eval fun a => (hgV a).comp (measurable_pi_apply a)
   have hset : {X : Fin n → Fin M → Fv F v ⊗[F] E |

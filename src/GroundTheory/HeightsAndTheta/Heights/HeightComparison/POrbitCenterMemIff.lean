@@ -38,7 +38,7 @@ theorem weightedHomogeneousComponent_X_mul (j : Coord n) (G : MvPolynomial (Coor
       · rw [ite_eq_right h1, ite_eq_right]
         intro h3
         exact h1 (by rw [hw, h3, tsub_add_cancel_of_le h2])
-    · rw [ite_eq_right h2, AddMonoidAlgebra.coeff_zero, ite_eq_right]
+    · rw [ite_eq_right h2, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, ite_eq_right]
       intro h1
       apply h2
       rw [← h1, hw]
@@ -46,7 +46,7 @@ theorem weightedHomogeneousComponent_X_mul (j : Coord n) (G : MvPolynomial (Coor
   · rw [coeff_weightedHomogeneousComponent, coeff_X_mul', ite_eq_right hj, ite_self]
     by_cases h2 : coordDeg n j ≤ e
     · rw [ite_eq_left h2, coeff_X_mul', ite_eq_right hj]
-    · rw [ite_eq_right h2, AddMonoidAlgebra.coeff_zero]
+    · rw [ite_eq_right h2, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
 
 end OrbitCenterMemIff
 

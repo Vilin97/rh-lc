@@ -81,7 +81,7 @@ theorem main : GlobalTheory.UT.LL → BrGtSt → AllS fun {E} _ _ _ {H} {_} {_} 
     ext1
     rw [a₂, o.I.lin, Over.comp_left, Over.comp_left, a₁, Category.assoc, Category.assoc, M.act]
   have h₂ : QkAct M.P.oD x p₁ p₂ :=
-    (TorusExt.qkAct_iff_of_equiv M.P.D.tau_bimult hL.1.globalFns M.P.oD (qk_equiv_refl M.P.D.tau_bimult p₁) h₃).2
+    (TorusExt.qkAct_iff_of_equiv M.P.oD (qk_equiv_refl M.P.D.tau_bimult p₁) h₃).2
       ((t₃ _ _).1 e₃)
   obtain ⟨z₂, d₂, e₂⟩ := act_parts M.P.oD h₂
   obtain ⟨w₀, rfl⟩ := A.ν.eX.surjective z₀

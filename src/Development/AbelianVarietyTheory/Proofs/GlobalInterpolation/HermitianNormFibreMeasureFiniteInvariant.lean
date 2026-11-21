@@ -113,6 +113,7 @@ theorem isDxDq_map {fib : ℝ → Measure (Sp P Q)} (h : IsDxDq fib) (g : UpqT P
     have hdx : (dx P Q).map (act g) = dx P Q := by
       unfold dx
       rw [Measure.map_smul, map_volume_act]
+      exact hm.aemeasurable
     conv_lhs => rw [← hdx]
     rw [setLIntegral_map hO.measurableSet hφ hm, hU]
   · have hc : Continuous (φ ∘ act g) := hφc.comp (continuous_act g)

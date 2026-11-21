@@ -28,6 +28,7 @@ theorem absDetA_one : absDetA (1 : GA E a) = 1 := by
   rfl
 
 
+variable (E a) in
 def band : Set (GA E a) := {g | 1 ≤ absDetA g ∧ absDetA g ≤ 2}
 
 theorem one_mem_band : (1 : GA E a) ∈ band E a := by

@@ -18,5 +18,6 @@ theorem haar_rinv_UJ : ∀ (n : ℕ) (ε : Fin n → Bool) (μ : Measure (Formal
     Measure.isMulLeftInvariant_eq_smul μ (Formalism.REAL.muG ε)
   refine ⟨fun g => ?_⟩
   rw [hμ, Measure.map_smul, map_mul_right_eq_self]
+  exact (continuous_id.mul continuous_const).aemeasurable
 
 end GlobalTheory.CompanionTheory.HaarUJ

@@ -58,7 +58,7 @@ theorem int_sub [IsUltrametricDist K] {a b : Matrix ι κ K}
 
 theorem int_one [DecidableEq ι] : ∀ i j, ‖(1 : Matrix ι ι K) i j‖ ≤ 1 := by
   intro i j
-  rw [one_apply]
+  rw [Matrix.one_apply]
   split_ifs <;> simp
 
 theorem nF_mul_le (hM : MulF) [IsUltrametricDist K] [Fintype ι] [Fintype ι'] [Fintype κ]
@@ -71,7 +71,7 @@ theorem nF_mul_le (hM : MulF) [IsUltrametricDist K] [Fintype ι] [Fintype ι'] [
 theorem sel_mul [DecidableEq ι] [Fintype ι] (s : κ → ι) (M : Matrix ι ι' K) :
     (1 : Matrix ι ι K).submatrix s id * M = M.submatrix s id := by
   ext a b
-  simp [Matrix.mul_apply, one_apply]
+  simp [Matrix.mul_apply, Matrix.one_apply]
 
 theorem norm_det_perm [Fintype κ] [DecidableEq κ] (M : Matrix κ κ K) (e : Equiv.Perm κ) :
     ‖(M.submatrix e id).det‖ = ‖M.det‖ := by
@@ -91,7 +91,7 @@ theorem nF_fromCols_sel_le [IsUltrametricDist K] [Fintype ι] [DecidableEq ι] [
     obtain ⟨k, hk⟩ := hu
     have : ((fromCols Eᵀ C).submatrix u id).det = 0 := by
       refine det_eq_zero_of_column_eq_zero (Sum.inl k) fun x => ?_
-      simpa [hE, one_apply] using hk x
+      simpa [hE, Matrix.one_apply] using hk x
     rw [this, norm_zero]
     exact nF_nonneg' C
   by_cases inj : Function.Injective u
@@ -118,7 +118,7 @@ theorem nF_fromCols_sel_le [IsUltrametricDist K] [Fintype ι] [DecidableEq ι] [
   have hb : ((fromCols Eᵀ C).submatrix u id).submatrix e id =
       fromBlocks 1 0 (Eᵀ.submatrix (u ∘ e ∘ Sum.inr) id) (C.submatrix (u ∘ e ∘ Sum.inr) id) := by
     ext (a | a) (b | b)
-    · simp [he, hσ, hE, one_apply, hs.eq_iff, eq_comm]
+    · simp [he, hσ, hE, Matrix.one_apply, hs.eq_iff, eq_comm]
     · simpa [he, hσ] using congrFun (congrFun hC a) b
     · simp
     · simp
@@ -154,7 +154,7 @@ theorem nF_fromCols_of_id (hM : MulF) [IsUltrametricDist K] [Fintype ι] [Decida
   have hEE : E * Eᵀ = 1 := by
     rw [hE, sel_mul]
     ext a b
-    simp [one_apply, hs.eq_iff, eq_comm]
+    simp [Matrix.one_apply, hs.eq_iff, eq_comm]
   have hEC : E * C = 0 := by rw [hE, sel_mul, hC]
   have hEint : ∀ i j, ‖E i j‖ ≤ 1 := fun i j => int_one _ _
   have hEtint : ∀ i j, ‖Eᵀ i j‖ ≤ 1 := fun i j => int_one _ _

@@ -70,6 +70,7 @@ theorem cv_adj_eq_avg (X : Ctx) (f ψ : X.G → ℂ) (hψ : IsBump X ψ) (y : X.
 
 theorem approxU : CvTest → TwoUnif → ApproxU := by
   intro hcv htu X φ ε hφ hε
+  letI : Inv (Set X.G) := Set.inv
   obtain ⟨W₀, hW₀, hW⟩ := htu X φ ε hφ hε
   refine ⟨W₀ ∩ W₀⁻¹, Filter.inter_mem hW₀ (inv_mem_nhds_one _ hW₀), ?_⟩
   intro ψ hb hsub y

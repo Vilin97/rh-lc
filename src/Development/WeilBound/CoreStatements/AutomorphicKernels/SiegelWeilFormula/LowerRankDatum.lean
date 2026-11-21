@@ -58,7 +58,7 @@ structure LowerRankDatum (d : SD σ) : Type 1 where
   Y : Spc F E n
   κ : Type
   [fin : Fintype κ]
-  dd : Darboux (symp (R := AF F) (cA σ) (-1) (incM F d.A.J) (dbl (incM F Y.J))) κ
+  dd : Darboux (symp (R := AF F) (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) d.A.J) (dbl ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) Y.J))) κ
   om : G2 σ Y →* Module.End ℂ ((κ → AF F) → ℂ)
   S : UA σ d.A.J →* Module.End ℂ ((κ → AF F) → ℂ)
   l : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ

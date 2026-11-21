@@ -50,7 +50,7 @@ theorem trace_of_block_sandwich : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] 
     rw [LinearEquiv.conj_apply]
     refine LinearMap.ext fun f => funext fun i => ?_
     have := hF (R.symm f) i
-    simpa using this
+    simpa [sandwich] using this
   rw [← LinearMap.trace_conj' F R, hconj, trace_pi_blocks]
   exact Finset.sum_congr rfl fun i _ => trace_sandwich (a i) (b i)
 

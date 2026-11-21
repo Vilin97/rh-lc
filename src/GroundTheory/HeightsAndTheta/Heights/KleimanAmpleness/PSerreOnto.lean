@@ -189,6 +189,7 @@ theorem GradedPMod.exists_gens (𝓜 : GradedPMod S N M) (hM : Module.Finite (Po
   dsimp only
   rw [Equiv.symm_apply_apply]
 
+omit [IsScalarTower S (Poly S N) M] in
 theorem freeMap_mem {r : ℕ} (𝓜 : GradedPMod S N M) {g : Fin r → M} {deg : Fin r → ℤ}
     (hg : ∀ j, g j ∈ 𝓜.piece (deg j)) (c : ℤ) {f : Fin r → Poly S N}
     (hf : f ∈ (freeGraded deg).piece c) : freeMap (S := S) (N := N) g f ∈ 𝓜.piece c := by

@@ -69,16 +69,14 @@ theorem unipotentCompactG_le (e : ℕ) :
 theorem mem_unipotentCompactG {e : ℕ} {u : GL (Fin n) F} :
     u ∈ unipotentCompactG γ e ↔ u ∈ unipotentRadical F n γ ∧
       rankTorus F n γ e * u * (rankTorus F n γ e)⁻¹ ∈ integralGL F n := by
+  have hmem (v : unipotentRadical F n γ) :
+      v ∈ unipotentCompact (β := γ) e ↔
+        rankTorus F n γ e * v * (rankTorus F n γ e)⁻¹ ∈ integralGL F n := Iff.rfl
   constructor
   · rintro ⟨v, hv, rfl⟩
-    exact ⟨v.2, mem_unipotentCompact.1 hv⟩
+    exact ⟨v.2, (hmem v).1 hv⟩
   · rintro ⟨hu, h⟩
-    exact ⟨⟨u, hu⟩, mem_unipotentCompact.2 h, rfl⟩
-
-theorem isCompact_unipotentCompactG (e : ℕ) :
-    IsCompact (unipotentCompactG (F := F) γ e : Set (GL (Fin n) F)) := by
-  rw [unipotentCompactG, Subgroup.coe_map]
-  exact (isCompact_unipotentCompact e).image continuous_subtype_val
+    exact ⟨⟨u, hu⟩, (hmem ⟨u, hu⟩).2 h, rfl⟩
 
 theorem unipotentCompactG_eq (e : ℕ) :
     unipotentCompactG (F := F) γ e = unipotentRadical F n γ ⊓
@@ -86,6 +84,14 @@ theorem unipotentCompactG_eq (e : ℕ) :
   ext u
   rw [mem_unipotentCompactG, Subgroup.mem_inf, Subgroup.mem_comap]
   rfl
+
+theorem isCompact_unipotentCompactG (e : ℕ) :
+    IsCompact (unipotentCompactG (F := F) γ e : Set (GL (Fin n) F)) := by
+  rw [unipotentCompactG_eq, Subgroup.coe_inf]
+  change IsCompact ((unipotentRadical F n γ : Set (GL (Fin n) F)) ∩
+    (conjHomeomorph (rankTorus F n γ e)) ⁻¹' (integralGL F n : Set (GL (Fin n) F)))
+  exact ((conjHomeomorph _).isCompact_preimage.2 (isCompact_integralGL F n)).inter_left
+    isClosed_unipotentRadical
 
 theorem isOpen_conj_integralGL (t : GL (Fin n) F) :
     IsOpen (((integralGL F n).comap (MulAut.conj t).toMonoidHom : Subgroup (GL (Fin n) F)) :
@@ -96,8 +102,13 @@ theorem mem_unipotentCompactG_of_bound {e : ℕ} {u : GL (Fin n) F}
     (hu : u ∈ unipotentRadical F n γ)
     (hb : EntryBound F e (u : Matrix (Fin n) (Fin n) F))
     (hb' : EntryBound F e ((u⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F)) :
-    u ∈ unipotentCompactG γ e :=
-  ⟨⟨u, hu⟩, mem_unipotentCompact_of_bound (u := ⟨u, hu⟩) hb hb', rfl⟩
+    u ∈ unipotentCompactG γ e := by
+  rw [mem_unipotentCompactG, mem_integralGL_iff]
+  refine ⟨hu, rankTorus_conj_apply_mem hu hb, fun i j => ?_⟩
+  have hinv : (rankTorus F n γ e * u * (rankTorus F n γ e)⁻¹)⁻¹ =
+      rankTorus F n γ e * u⁻¹ * (rankTorus F n γ e)⁻¹ := by group
+  rw [hinv]
+  exact rankTorus_conj_apply_mem ((unipotentRadical F n γ).inv_mem hu) hb' i j
 
 theorem unipotentCompactG_mono {e e' : ℕ} (h : e ≤ e') :
     unipotentCompactG (F := F) γ e ≤ unipotentCompactG γ e' := by

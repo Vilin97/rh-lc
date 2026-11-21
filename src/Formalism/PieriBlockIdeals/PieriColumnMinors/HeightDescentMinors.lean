@@ -70,6 +70,7 @@ theorem hasSubst_binomialSeries_sub_one {A : Type*} [CommRing A] [Algebra R A] (
   simp
 
 attribute [local instance] BinomialRing.toHasUniqueDiv in
+attribute [local instance] BinomialRing.toIsAddTorsionFree in
 theorem binomialSeries_subst_comp (d e : R) :
     (binomialSeries R d).subst (binomialSeries R e - 1 : R⟦X⟧) = binomialSeries R (d * e) := by
   have ha := hasSubst_binomialSeries_sub_one (A := R) e

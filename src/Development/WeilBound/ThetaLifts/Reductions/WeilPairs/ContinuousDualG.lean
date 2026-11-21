@@ -313,14 +313,14 @@ theorem swap_datum {Tau : Type} [Fintype Tau] {tauE : Tau → (E →+* ℂ)} {χ
 
 set_option maxHeartbeats 400000 in
 theorem swap_transport {ξ ξ' : AF F ⊗[F] E} {JA : Matrix (Fin nT) (Fin nT) E} {JB JB' : Matrix (Fin nS) (Fin nS) E}
-    (hle : GlobalTheory.WeilM.UG (cA σ) (incM F JB') ≤ GlobalTheory.WeilM.UG (cA σ) (incM F JB)) {κ : Type} [Fintype κ]
-    (co : GlobalTheory.WeilM.Darboux (GlobalTheory.WeilM.symp (cA σ) ξ (incM F JA) (incM F JB)) κ)
-    (co' : GlobalTheory.WeilM.Darboux (GlobalTheory.WeilM.symp (cA σ) ξ' (incM F JB') (incM F JA)) κ)
+    (hle : GlobalTheory.WeilM.UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB') ≤ GlobalTheory.WeilM.UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB)) {κ : Type} [Fintype κ]
+    (co : GlobalTheory.WeilM.Darboux (GlobalTheory.WeilM.symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) ξ ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JA) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB)) κ)
+    (co' : GlobalTheory.WeilM.Darboux (GlobalTheory.WeilM.symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) ξ' ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB') ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JA)) κ)
     (hco : ∀ x, co'.rho ψ x = co.rho ψ xᵀ)
     {ω : GAF σ JS × GAF σ JT →* Module.End ℂ (WOF F E nS nT → ℂ)}
-    {om : GlobalTheory.WeilM.UG (cA σ) (incM F JA) × GlobalTheory.WeilM.UG (cA σ) (incM F JB) →* Module.End ℂ ((κ → AF F) → ℂ)}
+    {om : GlobalTheory.WeilM.UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JA) × GlobalTheory.WeilM.UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB) →* Module.End ℂ ((κ → AF F) → ℂ)}
     (hom : GlobalTheory.WeilSchrodinger.IsTransportF σ ψ co ω om)
-    (om' : GlobalTheory.WeilM.UG (cA σ) (incM F JB') × GlobalTheory.WeilM.UG (cA σ) (incM F JA) →* Module.End ℂ ((κ → AF F) → ℂ))
+    (om' : GlobalTheory.WeilM.UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JB') × GlobalTheory.WeilM.UG (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) JA) →* Module.End ℂ ((κ → AF F) → ℂ))
     (hom' : ∀ a g, om' (a, g) = om (g, Subgroup.inclusion hle a)) :
     GlobalTheory.WeilSchrodinger.IsTransportF σ ψ co' (swapOm σ hS hT ω) om' := by
   intro a b g h hh hg Φ hΦ

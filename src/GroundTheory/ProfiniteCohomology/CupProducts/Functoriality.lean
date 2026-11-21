@@ -34,6 +34,7 @@ def resTensorHom {A B : Rep.{u} k G} {A' B' : Rep.{u} k H} (f : Rep.res φ A ⟶
     (g : Rep.res φ B ⟶ B') : Rep.res φ (A ⊗ B) ⟶ A' ⊗ B' :=
   (f ⊗ₘ g : Rep.res φ A ⊗ Rep.res φ B ⟶ A' ⊗ B')
 
+omit [TopologicalSpace G] [IsTopologicalGroup G] in
 @[simp]
 theorem resTensorHom_tmul {A B : Rep.{u} k G} {A' B' : Rep.{u} k H} (f : Rep.res φ A ⟶ A')
     (g : Rep.res φ B ⟶ B') (a : A) (b : B) :

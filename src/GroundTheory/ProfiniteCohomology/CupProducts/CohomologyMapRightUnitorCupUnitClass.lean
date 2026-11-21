@@ -35,14 +35,16 @@ theorem d_oneCochain :
 
 def unitCocycle : cocycles (𝟙_ (Rep.{u} k G)) 0 :=
   (cochainsComplex (𝟙_ (Rep.{u} k G))).cyclesMk
-    (mkCochain (𝟙_ (Rep.{u} k G)) oneCochain (IsLocallyConstant.const _)) 1 (by simp) (by
+    (mkCochain (A := 𝟙_ (Rep.{u} k G)) oneCochain (IsLocallyConstant.const _)) 1 (by simp) (by
       apply cochainOf_injective (A := 𝟙_ (Rep.{u} k G))
       exact (cochainOf_d (A := 𝟙_ (Rep.{u} k G)) _).trans d_oneCochain)
 
 @[simp]
 theorem cochainOf_cocycleι_unitCocycle :
-    cochainOf _ (cocycleι _ 0 (unitCocycle (k := k) (G := G))) = oneCochain :=
-  congrArg (cochainOf _) ((cochainsComplex (𝟙_ (Rep.{u} k G))).i_cyclesMk _ _ _ _)
+    cochainOf (A := 𝟙_ (Rep.{u} k G))
+      (cocycleι (p := 0) (unitCocycle (k := k) (G := G))) = oneCochain :=
+  congrArg (cochainOf (A := 𝟙_ (Rep.{u} k G)))
+    ((cochainsComplex (𝟙_ (Rep.{u} k G))).i_cyclesMk _ _ _ _)
 
 def unitClass : cohomology (𝟙_ (Rep.{u} k G)) 0 :=
   cohomologyπ _ 0 unitCocycle

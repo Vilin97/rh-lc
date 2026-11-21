@@ -19,7 +19,7 @@ namespace GlobalTheory.GaugeDiv
 variable {R k : Type} [CommRing R] [CommRing k] {φ : R →+* k} {d : ℕ}
 
 def DD (F : Pt k 2 d) (a : Fin 2) (u : Fin d → k) (G : PS k 2 d) : PS k 2 d :=
-  ∑ j, ev (n := 2) ![pt k d a] (dy u (F j)) * pderiv k (a, j) G
+  ∑ j, ev (n := 2) ![pt k d a] (dy u (F j)) * pderiv (a, j) G
 
 theorem dd_add (F : Pt k 2 d) (a : Fin 2) (u : Fin d → k) (G H : PS k 2 d) :
     DD F a u (G + H) = DD F a u G + DD F a u H := by
@@ -55,7 +55,7 @@ theorem dd_ev_ne (F : Pt k 2 d) {a b : Fin 2} (hab : b ≠ a) (v : Fin d → k) 
   exact pderiv_pt_ne hab _ _
 
 theorem ev_formalSecondPointDerivative {n : ℕ} (a : Pt k n d) (ha : GP a) (v : Fin d → k) (f : PS k 2 d) :
-    ev ![a] (dy v f) = ∑ i, C (v i) * ev ![a, 0] (pderiv k ((1 : Fin 2), i) f) := by
+    ev ![a] (dy v f) = ∑ i, C (v i) * ev ![a, 0] (pderiv ((1 : Fin 2), i) f) := by
   rw [dy, ev_sum _ (single_point_zero_constant ha)]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [gt_ev_mul _ (single_point_zero_constant ha), ev_C, formalSubst_single_of_formalSubst_two _ ha _ _ (gp_pt 0) gp_zero₂, gt_comp1_pt _ ha,
@@ -135,7 +135,7 @@ theorem ev_pts (g : PS k 2 d) : ev (n := 2) ![pt k d 0, pt k d 1] g = g := by
   rfl
 
 def dz3 (v : Fin d → k) (f : PS k 3 d) : PS k 2 d :=
-  ∑ i, C (v i) * ev (n := 2) ![pt k d 0, pt k d 1, 0] (pderiv k ((2 : Fin 3), i) f)
+  ∑ i, C (v i) * ev (n := 2) ![pt k d 0, pt k d 1, 0] (pderiv ((2 : Fin 3), i) f)
 
 theorem thirdPointDerivativeAtZeroSeries_mem_integral {v : Fin d → k} (hv : ∀ i, v i ∈ φ.range) {f : PS k 3 d} (hf : DI φ f) :
     dz3 v f ∈ IntS φ 2 d :=
@@ -179,7 +179,7 @@ theorem thirdPointDerivativeAtZeroSeries_addOf_right {F : Pt k 2 d} (hF : GP F) 
   exact Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => by ring
 
 def al (u : Fin d → k) (g : PS k 2 d) : PS k 1 d :=
-  ∑ i, C (u i) * ev (n := 1) ![0, pt k d 0] (pderiv k ((0 : Fin 2), i) g)
+  ∑ i, C (u i) * ev (n := 1) ![0, pt k d 0] (pderiv ((0 : Fin 2), i) g)
 
 theorem dd_zero_sub {F : Pt k 2 d} (iF : IP φ F) (hU : evP (n := 1) ![pt k d 0, 0] F = pt k d 0)
     (g : PS k 2 d) (hl : DI φ (defL F g)) {u : Fin d → k} (hu : ∀ i, u i ∈ φ.range) :
@@ -216,11 +216,11 @@ theorem dof_al {F : Pt k 2 d} (iF : IP φ F) (hU : evP (n := 1) ![pt k d 0, 0] F
   have p0 : GP (pt k (n := 2) d 0) := gp_pt 0
   have p1 : GP (pt k (n := 2) d 1) := gp_pt 1
   have q0 : GP (pt k (n := 1) d 0) := gp_pt 0
-  have ha : ∀ i, Dof F v (ev (n := 1) ![0, pt k d 0] (pderiv k ((0 : Fin 2), i) g)) -
+  have ha : ∀ i, Dof F v (ev (n := 1) ![0, pt k d 0] (pderiv ((0 : Fin 2), i) g)) -
       C ((bilinPart k g).mulVec v i) ∈ IntS φ 1 d := by
     intro i
     have h := dof_almost_additive hF hU hv
-      (ev (n := 1) ![0, pt k d 0] (pderiv k ((0 : Fin 2), i) g)) (by
+      (ev (n := 1) ![0, pt k d 0] (pderiv ((0 : Fin 2), i) g)) (by
       rw [formalSubst_single_of_formalSubst_two _ hF _ _ gp_zero₂ q0, formalSubst_single_of_formalSubst_two _ p0 _ _ gp_zero₂ q0,
         formalSubst_single_of_formalSubst_two _ p1 _ _ gp_zero₂ q0, gt_comp1_pt _ hF, gt_comp1_pt _ p0, gt_comp1_pt _ p1,
         formalComp_zero_left_point _ hF, formalComp_zero_left_point _ p0, formalComp_zero_left_point _ p1]
@@ -248,10 +248,10 @@ theorem dof_dy {F : Pt k 2 d} (iF : IP φ F) (hU : evP (n := 1) ![pt k d 0, 0] F
   have p0 : GP (pt k (n := 2) d 0) := gp_pt 0
   have p1 : GP (pt k (n := 2) d 1) := gp_pt 1
   have q0 : GP (pt k (n := 1) d 0) := gp_pt 0
-  have hb : ∀ j, Dof F u (ev (n := 1) ![pt k d 0, 0] (pderiv k ((1 : Fin 2), j) g)) -
+  have hb : ∀ j, Dof F u (ev (n := 1) ![pt k d 0, 0] (pderiv ((1 : Fin 2), j) g)) -
       C (Matrix.vecMul u (bilinPart k g) j) ∈ IntS φ 1 d := by
     intro j
-    have h := dof_almost_additive hF hU hu (ev (n := 1) ![pt k d 0, 0] (pderiv k ((1 : Fin 2), j) g)) (by
+    have h := dof_almost_additive hF hU hu (ev (n := 1) ![pt k d 0, 0] (pderiv ((1 : Fin 2), j) g)) (by
       rw [formalSubst_single_of_formalSubst_two _ hF _ _ q0 gp_zero₂, formalSubst_single_of_formalSubst_two _ p0 _ _ q0 gp_zero₂,
         formalSubst_single_of_formalSubst_two _ p1 _ _ q0 gp_zero₂, gt_comp1_pt _ hF, gt_comp1_pt _ p0, gt_comp1_pt _ p1,
         formalComp_zero_left_point _ hF, formalComp_zero_left_point _ p0, formalComp_zero_left_point _ p1]
@@ -275,7 +275,7 @@ theorem dmon_div {F : Pt k 2 d} (iF : IP φ F) (hU : evP (n := 1) ![pt k d 0, 0]
     {w : Pt k 1 d} (hw : GP w)
     (hom : comp1 w F = addOf F (comp1 w (pt k (n := 2) d 0)) (comp1 w (pt k (n := 2) d 1)))
     (g : PS k 2 d) (h1 : ev (n := 1) ![pt k d 0, 0] g = 0)
-    (c1 : ∀ s, constantCoeff (pderiv k s g) = 0)
+    (c1 : ∀ s, constantCoeff (pderiv s g) = 0)
     (hl : DI φ (defL F g)) (hr : DI φ (defR F g)) {ι : Type} [Fintype ι] (U V : ι → Fin d → k)
     (hu : ∀ l i, U l i ∈ φ.range) (hv : ∀ l i, V l i ∈ φ.range) (N : ℕ)
     (huv : ∀ l i, lin (U l) (w i) = N * V l i)
@@ -370,7 +370,7 @@ theorem canonGauge_dmonOf_hL_natCast_mul :
   have c0 : constantCoeff g = 0 := by
     rw [← coeff_zero_eq_constantCoeff_apply]
     exact coeff_eq_zero_of_axes g hg.ax0 hg.ax1 0 (by simp)
-  have c1 : ∀ s, constantCoeff (pderiv k s g) = 0 := fun s => by
+  have c1 : ∀ s, constantCoeff (pderiv s g) = 0 := fun s => by
     rw [const_pderiv]
     exact coeff_eq_zero_of_axes g hg.ax0 hg.ax1 _ (by simp)
   have hp : ∀ j : Fin 3, GP (pt k d j) := gp_pt

@@ -55,7 +55,7 @@ private theorem exists_hermGL_coset_eq_of_integral {k : Type} [Field k] [Valuati
   have hdiag : ∀ i, b' i i ≠ 0 := by
     intro i h
     have hb' : (b : Matrix (Fin n) (Fin n) k).BlockTriangular id := fun i j h => hb h
-    have hdet := Matrix.det_of_upperTriangular hb'
+    have hdet := Matrix.det_of_isUpperTriangular hb'
     have hne : (b : Matrix (Fin n) (Fin n) k).det ≠ 0 := by
       rw [← Matrix.GeneralLinearGroup.val_det_apply]
       exact Units.ne_zero _
@@ -115,7 +115,7 @@ private theorem ord_det_hermGL_mul_eq_sum {k : Type} [Field k] [ValuativeRel k]
     induction m with
     | zero =>
       rw [pow_zero]
-      exact _root_.GlobalTheory.SmGL.ord_eq_zero_iff.2 (by simp)
+      exact (_root_.GlobalTheory.SmGL.ord_eq_zero_iff k).2 (by simp)
     | succ m ih => rw [pow_succ, _root_.GlobalTheory.SmGL.ord_mul, ih, hu1]; push_cast; ring
   have hw0 : _root_.GlobalTheory.SmGL.ord k (Matrix.GeneralLinearGroup.det w) = 0 := by
     apply ord_eq_of_nabs_eq_resCard_zpow_neg
@@ -136,12 +136,16 @@ private theorem ord_det_hermGL_mul_eq_sum {k : Type} [Field k] [ValuativeRel k]
 open MeasureTheory ValuativeRel in
 private theorem hasSum_prod_pow_eq_prod_one_sub_inv : ∀ (n : ℕ) (β : Fin n → ℂ), (∀ i, ‖β i‖ < 1) →
     Summable (fun a : Fin n → ℕ => ‖∏ i, β i ^ a i‖) ∧
-      HasSum (fun a : Fin n → ℕ => ∏ i, β i ^ a i) (∏ i, (1 - β i)⁻¹)
-  | 0, β, _ => by
+      HasSum (fun a : Fin n → ℕ => ∏ i, β i ^ a i) (∏ i, (1 - β i)⁻¹) := by
+  intro n
+  induction n with
+  | zero =>
+    intro β _
     refine ⟨Summable.of_finite, ?_⟩
-    simpa using (hasSum_fintype (fun a : Fin 0 → ℕ => (1 : ℂ)))
-  | n + 1, β, hβ => by
-    obtain ⟨hs, hh⟩ := hasSum_prod_pow_eq_prod_one_sub_inv n (fun i => β i.succ) (fun i => hβ i.succ)
+    simp
+  | succ n ih =>
+    intro β hβ
+    obtain ⟨hs, hh⟩ := ih (fun i => β i.succ) (fun i => hβ i.succ)
     have hg : HasSum (fun m : ℕ => β 0 ^ m) (1 - β 0)⁻¹ := hasSum_geometric_of_norm_lt_one (hβ 0)
     have hgn : Summable (fun m : ℕ => ‖β 0 ^ m‖) := by
       simpa [norm_pow] using summable_geometric_of_lt_one (norm_nonneg _) (hβ 0)

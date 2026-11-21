@@ -26,7 +26,8 @@ theorem splitTorus_hom_eq_one_of_no_cocharacter :
   let b := Module.Free.chooseBasis ℤ X
   let l : _ → (X →+ ULift.{0} ℤ) := fun i =>
     (AddEquiv.ulift : ULift.{0} ℤ ≃+ ℤ).symm.toAddMonoidHom.comp (b.coord i).toAddMonoidHom
-  let c : _ → (ULift.{0} ℤ →+ X) := fun i => SplitTorus.uliftMultiples X (b i)
+  let c : _ → (ULift.{0} ℤ →+ X) := fun i =>
+    (zmultiplesHom X (b i)).comp (AddEquiv.ulift : ULift.{0} ℤ ≃+ ℤ).toAddMonoidHom
   have h1 : ∀ i, SplitTorus.torusMap S ((c i).comp (l i)) ≫ u = 1 := fun i => by
     have e : SplitTorus.torusMap S (l i) ≫ u = 1 := h _ (inferInstanceAs
       (IsMonHom (SplitTorus.torusMap S (l i) ≫ u)))
@@ -40,7 +41,7 @@ theorem splitTorus_hom_eq_one_of_no_cocharacter :
   have h3 : (∑ i, (c i).comp (l i)) = AddMonoidHom.id X := by
     ext x
     rw [AddMonoidHom.finsetSum_apply]
-    exact b.sum_repr x
+    simpa [c, l] using b.sum_repr x
   have := h2 Finset.univ
   rwa [h3, SplitTorus.torusMap_id, Category.id_comp] at this
 

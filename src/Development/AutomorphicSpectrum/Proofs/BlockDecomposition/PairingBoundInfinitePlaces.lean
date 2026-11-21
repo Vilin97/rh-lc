@@ -11,6 +11,7 @@ namespace GlobalTheory.CompanionTheory.Wedge
 
 
 theorem pairI_of_detMono : DetMono → PairI := by
+  open scoped ComplexOrder in
   intro hD ι κ _ _ _ U W
   have hG : (Uᴴ * U).PosSemidef := posSemidef_conjTranspose_mul_self U
   have hH : (Wᴴ * W).PosSemidef := posSemidef_conjTranspose_mul_self W

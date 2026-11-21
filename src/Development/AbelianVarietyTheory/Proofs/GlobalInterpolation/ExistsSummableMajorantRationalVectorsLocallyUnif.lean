@@ -46,7 +46,7 @@ theorem sz_sub_le (u y : Fin N → AF F) : sz u - sz y ≤ sz (u + y) := by
 
 theorem continuous_sz : Continuous (sz : (Fin N → AF F) → ℝ) := by
   unfold sz
-  refine continuous_finset_sum _ fun l _ => continuous_finset_sum _ fun w _ => ?_
+  refine continuous_finsetSum _ fun l _ => continuous_finsetSum _ fun w _ => ?_
   have h1 : Continuous fun u : Fin N → AF F => inf u l := by
     show Continuous fun u : Fin N → AF F => (u l).1
     exact continuous_fst.comp (continuous_apply l)

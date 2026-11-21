@@ -136,7 +136,7 @@ noncomputable def rowEmb {E m n : Type} [Field E] [Fintype n] (W : Matrix n m E)
       map_zero' := by ext p; simp
       map_add' := fun s t => by ext p; simp [add_vecMul] }
 
-
+open scoped Classical in
 theorem det_gram_rowEmb {E m : Type} [Field E] [NumberField E] [Fintype m] {N : ℕ}
     (W : Matrix (Fin N) m E) (ω : (E →+* ℂ) → E) :
     (((gram ℝ fun p : Fin N × (E →+* ℂ) => rowEmb W (Pi.single p.1 (ω p.2))).det : ℝ) : ℂ) =
@@ -151,8 +151,8 @@ theorem det_gram_rowEmb {E m : Type} [Field E] [NumberField E] [Fintype m] {N : 
     ext ⟨i, k⟩ ⟨i', k'⟩
     have hR : (P * blockDiagonal (fun σ : E →+* ℂ => W.map σ * (W.map σ)ᴴ) * Pᴴ)ᵀ (i, k) (i', k')
         = ∑ σ : E →+* ℂ, ∑ j, σ (ω k' * W i' j) * conj (σ (ω k * W i j)) := by
-      simp only [transpose_apply, mul_apply, Fintype.sum_prod_type, hP, hA, kroneckerMap_apply,
-        one_apply, blockDiagonal_apply, conjTranspose_apply, of_apply, map_apply]
+      simp only [transpose_apply, Matrix.mul_apply, Fintype.sum_prod_type, hP, hA, kroneckerMap_apply,
+        Matrix.one_apply, blockDiagonal_apply, conjTranspose_apply, of_apply, map_apply]
       simp [Finset.mul_sum, Finset.sum_mul, apply_ite]
       refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
     rw [hR]
@@ -165,7 +165,7 @@ theorem det_gram_rowEmb {E m : Type} [Field E] [NumberField E] [Fintype m] {N : 
       set_option synthInstance.maxHeartbeats 100000 in
         simp [map_sum]
     rw [← conj_eq_iff_re.1 hreal]
-    simp [gram_apply, PiLp.inner_apply, Fintype.sum_prod_type, Complex.inner, single_vecMul]
+    simp [gram_apply, PiLp.inner_apply, Fintype.sum_prod_type, Complex.inner, rowEmb]
   rw [← ofRealHom_eq_coe, RingHom.map_det, RingHom.mapMatrix_apply, key, det_transpose, det_mul,
     det_mul, det_conjTranspose, hdP, det_blockDiagonal, normSq_eq_conj_mul_self]
   simp only [star_pow, RCLike.star_def]
@@ -180,7 +180,7 @@ theorem IsType.prod_det_eq_sq {E m n : Type} [Field E] [NumberField E] [IsCMFiel
   have h1 : W.map (ComplexEmbedding.conjugate τ.1) * (W.map (ComplexEmbedding.conjugate τ.1))ᴴ =
       (W.map τ.1 * (W.map τ.1)ᴴ)ᵀ := by
     ext i j
-    simp [mul_apply, mul_comm]
+    simp [Matrix.mul_apply, mul_comm]
   have h2 : (((W.map τ.1 * (W.map τ.1)ᴴ).det.re : ℝ) : ℂ) = (W.map τ.1 * (W.map τ.1)ᴴ).det :=
     conj_eq_iff_re.1 (by
       rw [← RCLike.star_def, ← det_conjTranspose, conjTranspose_mul, conjTranspose_conjTranspose])
@@ -234,7 +234,7 @@ theorem exists_short_independent_rows :
     · exact fun x y _ _ hx hy j => (hx j).add (hy j)
     · exact fun c x _ hx j => (hx j).smul c
   · exact ((Matrix.isUnit_iff_isUnit_det _).1
-      (linearIndependent_rows_iff_isUnit.1 (show LinearIndependent E (Matrix.of a).row from ha))).ne_zero
+      (linearIndependent_row_iff_isUnit.1 (show LinearIndependent E (Matrix.of a).row from ha))).ne_zero
   · rw [hdet, Real.sqrt_sq (by positivity), ← mul_assoc, hΨ.finrank_eq] at hle
     refine le_trans (Finset.prod_le_prod₀ (fun _ _ => by positivity) fun i _ => ?_) hle
     rw [pow_mul, EuclideanSpace.norm_sq_eq, Fintype.sum_prod_type]

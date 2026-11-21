@@ -33,8 +33,7 @@ theorem bd_zero (a : Fin N → F) (u : Fin N → AF F) : Bd (AF F) a u (rat 0) =
 theorem continuous_bd (a : Fin N → F) (ξ : Fin N → F) :
     Continuous fun u : Fin N → AF F => Bd (AF F) a u (rat ξ) := by
   unfold Bd
-  refine continuous_finset_sum _ fun l _ => ?_
-  exact (continuous_const.mul (continuous_apply l)).mul continuous_const
+  exact continuous_finsetSum _ fun l _ => (continuous_const.mul (continuous_apply l)).mul continuous_const
 
 end GlobalTheory.SWQ.FourierSeries
 

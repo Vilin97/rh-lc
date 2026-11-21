@@ -20,7 +20,7 @@ theorem latAtV_selfDual_split : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
     ∀ (v : Pl (F := F)), Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v → PsiUnr B.ψ v →
     ∀ z : Matrix (Fin n) (Fin d) (AE F E), At (evFin F v) z →
       (z ∈ latAtV X Y v ↔ ∀ γ ∈ latAtV X Y v,
-        B.ψ (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F Y.J) z γ) = 1) := by
+        B.ψ (symp (R := AF F) (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) Y.J) z γ) = 1) := by
   intro F E _ _ _ _ _ σ B hB n d X Y r s r' s' hX hY v _ _ z hz
   exact GlobalTheory.LatSelfDualAll.latAtV_selfDual F E σ B n d X Y r s r' s' hB hX hY v z hz
 

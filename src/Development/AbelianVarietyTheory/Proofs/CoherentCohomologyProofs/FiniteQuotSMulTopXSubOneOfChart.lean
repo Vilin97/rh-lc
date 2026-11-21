@@ -29,6 +29,7 @@ theorem _root_.GlobalTheory.finite_quotSMulTop_X_sub_one_of_chart : ∀ (ι : Ty
     (Algebra.FinitePresentation R B → Module.FinitePresentation B P →
       Module.FinitePresentation (MvPolynomial ι R)
         (QuotSMulTop ((MvPolynomial.X i : MvPolynomial ι R) - 1) G)) := by
+  open scoped Pointwise in
   intro ι _ _ R _ G _ _ _ _ 𝒢 _ _ i B _ _ π P _ _ ε ⟨hπs, hπX, hεs, hker⟩
   letI : Algebra (MvPolynomial ι R) B := (π : MvPolynomial ι R →+* B).toAlgebra
   letI : Module (MvPolynomial ι R) P := Module.compHom P (π : MvPolynomial ι R →+* B)

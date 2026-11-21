@@ -14,26 +14,26 @@ namespace GlobalTheory.CompanionTheory.AicStep
 
 
 theorem aic_step : ∀ (B : Type) [CommRing B] (T : Type) [CommRing T] (π : B) (g : B →+* T), IsCompl π g → π ∈ nonZeroDivisors B → AIC B → VAL π → ∀ P : Polynomial T, P.Monic → 0 < P.natDegree → ∀ (M : ℕ) (a : B), P.eval (g a) ∈ Ideal.span {g π ^ (P.natDegree * M)} → ∃ a₁ : B, a₁ - a ∈ Ideal.span {π ^ M} ∧ P.eval (g a₁) ∈ Ideal.span {g π ^ (P.natDegree * (M + 1))} := by
+  open Polynomial in
   intro B _ T _ π g hC hπ hA hV P hP hd M a ha
   obtain ⟨_, hsurj, hinj⟩ := hC
   haveI : Nontrivial T := by
     by_contra hT
     rw [not_nontrivial_iff_subsingleton] at hT
     have hP0 : P = 0 := Polynomial.ext fun n => Subsingleton.elim _ _
-    rw [hP0, natDegree_zero] at hd
-    exact lt_irrefl _ hd
+    simp [hP0] at hd
   haveI : Nontrivial B := g.domain_nontrivial
   choose c hc using fun i : ℕ => hsurj (P.natDegree * (M + 1)) (P.coeff i)
-  have hsum : (∑ i ∈ Finset.range P.natDegree, C (c i) * X ^ i : B[X]) =
+  have hsum : (∑ i ∈ Finset.range P.natDegree, C (c i) * X ^ i : Polynomial B) =
       ∑ i : Fin P.natDegree, C (c i) * X ^ (i : ℕ) :=
-    (Fin.sum_univ_eq_sum_range (fun i => (C (c i) * X ^ i : B[X])) _).symm
-  let Q : B[X] := X ^ P.natDegree + ∑ i ∈ Finset.range P.natDegree, C (c i) * X ^ i
+    (Fin.sum_univ_eq_sum_range (fun i => (C (c i) * X ^ i : Polynomial B)) _).symm
+  let Q : Polynomial B := X ^ P.natDegree + ∑ i ∈ Finset.range P.natDegree, C (c i) * X ^ i
   have hQm : Q.Monic := by
-    show (X ^ P.natDegree + ∑ i ∈ Finset.range P.natDegree, C (c i) * X ^ i : B[X]).Monic
+    show (X ^ P.natDegree + ∑ i ∈ Finset.range P.natDegree, C (c i) * X ^ i : Polynomial B).Monic
     rw [hsum]
     exact monic_X_pow_add (degree_sum_fin_lt _)
   have hQd : Q.natDegree = P.natDegree := by
-    show (X ^ P.natDegree + ∑ i ∈ Finset.range P.natDegree, C (c i) * X ^ i : B[X]).natDegree = _
+    show (X ^ P.natDegree + ∑ i ∈ Finset.range P.natDegree, C (c i) * X ^ i : Polynomial B).natDegree = _
     rw [hsum, natDegree_add_eq_left_of_degree_lt, natDegree_X_pow]
     rw [degree_X_pow]
     exact degree_sum_fin_lt _

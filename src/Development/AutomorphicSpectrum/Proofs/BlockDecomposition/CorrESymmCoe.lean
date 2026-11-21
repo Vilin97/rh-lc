@@ -51,12 +51,12 @@ theorem fix_stable (hL : IsLevi Γ K Q Γ' K' π ι c₀) (ρ : K →* (W →L[�
   set u : K := kι hL m with hu
   have hconj : (((u⁻¹ * r * u : K)) : G) ∈ Q := by
     have : (((u⁻¹ * r * u : K)) : G) = (((ι (m : G'))⁻¹ * ⟨r, hr⟩ * ι (m : G') : Q) : G) := by
-      simp [hu]
+      simp [hu, kι, MonoidHom.codRestrict, MonoidHom.comp, Subgroup.subtype]
     rw [this]
     exact Subtype.property _
   have hval : (⟨((u⁻¹ * r * u : K) : G), hconj⟩ : Q) = (ι (m : G'))⁻¹ * ⟨r, hr⟩ * ι (m : G') := by
     apply Subtype.ext
-    simp [hu]
+    simp [hu, kι, MonoidHom.codRestrict, MonoidHom.comp, Subgroup.subtype]
   have hπ : π ⟨((u⁻¹ * r * u : K) : G), hconj⟩ = 1 := by
     rw [hval, map_mul, map_mul, h1, map_inv, hL.sect]
     simp
@@ -112,12 +112,12 @@ theorem am_move (hL : IsLevi Γ K Q Γ' K' π ι c₀) (ρ : K →* (W →L[ℂ]
   set s : K := r * (kι hL m)⁻¹ with hs
   have hsQ : (s : G) ∈ Q := by
     have : (s : G) = ((⟨r, hr⟩ * (ι (π ⟨r, hr⟩))⁻¹ : Q) : G) := by
-      simp [hs, hm]
+      simp [hs, hm, kι, MonoidHom.codRestrict, MonoidHom.comp, Subgroup.subtype]
     rw [this]
     exact Subtype.property _
   have hsval : (⟨(s : G), hsQ⟩ : Q) = ⟨r, hr⟩ * (ι (π ⟨r, hr⟩))⁻¹ := by
     apply Subtype.ext
-    simp [hs, hm]
+    simp [hs, hm, kι, MonoidHom.codRestrict, MonoidHom.comp, Subgroup.subtype]
   have hsπ : π ⟨s, hsQ⟩ = 1 := by
     rw [hsval, map_mul, map_inv, hL.sect]
     simp
@@ -368,7 +368,7 @@ theorem sec_pull (hL : IsLevi Γ K Q Γ' K' π ι c₀) (hP : IsPull Q P P' π c
     rw [hπp]
     exact hp'⟩
   have hqk : (q : G) * k = p * ((kι hL m * k : K) : G) := by
-    simp [hpd, hm]
+    simp [hpd, hm, kι, MonoidHom.codRestrict, MonoidHom.comp, Subgroup.subtype]
   have hcp : c p = c₀ q * c' p' := by
     rw [hP.ch p (by rw [hπp]; exact hp'), hπp, hpd, c₀_ι_right hL]
   have hsec' := h2 _ hv p' hp' m
@@ -459,7 +459,7 @@ theorem mem_secSp_iff (hL : IsLevi Γ K Q Γ' K' π ι c₀) (hP : IsPull Q P P'
     set m : K' := ⟨π ⟨r, hrQ⟩, hL.πK ⟨r, hrQ⟩ r.2⟩ with hm
     set s : K := r * (kι hL m)⁻¹ with hs
     have hsval : (s : G) = ((⟨r, hrQ⟩ * (ι (π ⟨r, hrQ⟩))⁻¹ : Q) : G) := by
-      simp [hs, hm]
+      simp [hs, hm, kι, MonoidHom.codRestrict, MonoidHom.comp, Subgroup.subtype]
     have hsQ : (s : G) ∈ Q := by
       rw [hsval]
       exact Subtype.property _
@@ -506,7 +506,7 @@ theorem isPar_pull [IsTopologicalGroup G] (hL : IsLevi Γ K Q Γ' K' π ι c₀)
         simp [map_mul, map_inv, hL.sect, hq]
       rw [this]
       exact hp'
-    · simp [hg, hm]
+    · simp [hg, hm, kι, MonoidHom.codRestrict, MonoidHom.comp, Subgroup.subtype]
   · intro p hp q hq
     obtain ⟨hp1, hp2⟩ := (hP.mem _).1 hp
     obtain ⟨hq1, hq2⟩ := (hP.mem _).1 hq

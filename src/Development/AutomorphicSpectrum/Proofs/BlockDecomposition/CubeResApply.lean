@@ -96,11 +96,6 @@ theorem nerveCx_d (G : C ⥤ ModuleCat.{0} R) (n : ℕ) :
   have h : ((-1 : R) ^ (i : ℕ)) = (((-1 : ℤ) ^ (i : ℕ) : ℤ) : R) := by push_cast; rfl
   rw [h, Int.cast_smul_eq_zsmul, ModuleCat.hom_zsmul, ModuleCat.hom_ofHom]
 
-  obj T := ModuleCat.of R (F.obj T)
-  map φ := ModuleCat.ofHom (GlobalTheory.CatCoh.mp F φ).toLinearMap
-  map_id T := ModuleCat.hom_ext (LinearMap.ext fun b ↦ GlobalTheory.CatCoh.mp_id F T b)
-  map_comp φ ψ := ModuleCat.hom_ext (LinearMap.ext fun b ↦ GlobalTheory.CatCoh.mp_comp F φ ψ b)
-
 end Cochains
 
 section Cube

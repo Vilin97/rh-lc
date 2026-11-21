@@ -158,7 +158,7 @@ lemma length_eq_sum_tensor {X : Type*} [AddCommGroup X] [Module S X] (hX : IsFin
         (Module.Flat.lTensor_preserves_injective_linearMap f hf)
         (LinearMap.lTensor_surjective (A n) hg) (Module.Flat.lTensor_exact (A n) hfg),
         ← (Algebra.TensorProduct.quotIdealMapEquivTensorQuot (A n) m).toLinearEquiv.length_eq,
-        ← length_localization_quot_maximal R ⟨m, hm⟩ n (A n)]
+        ← length_localization_quot_maximal ⟨m, hm⟩ n (A n)]
     simp_rw [key, add_mul, Finset.sum_add_distrib]
     simp
 
@@ -248,12 +248,11 @@ theorem addVal_norm_eq_sum (x : S) :
 
 theorem addVal_localization_ne_top {x : S} (hx : x ∈ nonZeroDivisors S) (n : MaximalSpectrum S) :
     addVal (A n) (algebraMap S (A n) x) ≠ ⊤ := by
+  rw [Ne, addVal_eq_top_iff]
   intro h
-  refine (addVal_norm_ne_top_iff R x).2 hx ?_
-  rw [addVal_norm_eq_sum R A, ENat.sum_eq_top]
-  refine ⟨n, Finset.mem_univ _, ?_⟩
-  rw [h, ENat.top_mul]
-  exact_mod_cast (Ideal.inertiaDeg_pos n.asIdeal R).ne'
+  obtain ⟨s, hs⟩ := (IsLocalization.map_eq_zero_iff n.asIdeal.primeCompl (A n) x).1 h
+  have : (s : S) = 0 := (mem_nonZeroDivisors_iff_left.mp hx) s (by simpa [mul_comm] using hs)
+  exact s.2 (this ▸ n.asIdeal.zero_mem)
 
 variable [∀ n, Algebra R (A n)] [∀ n, IsScalarTower R S (A n)]
   [∀ n, IsLocalHom (algebraMap R (A n))]
@@ -263,7 +262,7 @@ end Local
 
 theorem isDiscreteValuationRing_localization_of_isDedekindDomain [IsDedekindDomain S]
     (n : MaximalSpectrum S) : IsDiscreteValuationRing (Localization.AtPrime n.asIdeal) := by
-  have := liesOver_maximalIdeal R n.asIdeal
+  have := NormVal.liesOver_maximalIdeal R n.asIdeal
   exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain S
     (Ideal.ne_bot_of_liesOver_of_ne_bot (IsDiscreteValuationRing.not_a_field R) n.asIdeal) _
 

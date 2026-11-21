@@ -46,7 +46,7 @@ theorem nontrivial_piTensorProduct_iff {ι : Type} [Fintype ι] [DecidableEq ι]
 theorem genericProdIff_of_whitHeredity (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] : WhitHeredity k → GenericProdIff k := by
   intro hW h N d hd X _ _ π hsm
-  obtain ⟨ψ, hψc, hψ1⟩ := GlobalTheory.LocGL.exists_continuous_addChar_ne_one k
+  obtain ⟨ψ, hψc, hψ1⟩ := GlobalTheory.LocGL.exists_continuous_addChar_ne_one (k := k)
   obtain ⟨e⟩ := hW ψ hψc hψ1 h N d hd X π hsm
   simp only [GlobalTheory.LocGL.isGeneric_iff_isGenericFor hψc hψ1, GlobalTheory.LocGL.IsGenericFor]
   exact Iff.trans ⟨fun hn => @Equiv.nontrivial _ _ e.symm.toEquiv hn, fun hn => @Equiv.nontrivial _ _ e.toEquiv hn⟩

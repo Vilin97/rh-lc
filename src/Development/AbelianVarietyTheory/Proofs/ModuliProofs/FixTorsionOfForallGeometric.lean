@@ -50,25 +50,16 @@ theorem serre_any_base (hL : Out.Laws) {S : Scheme.{0}} (P : Out.PolAV S) (M : �
       ∃ c : LB.Gen ((LB.LinComb P.L (K := Fin 2) ![σ.hom.left, 𝟙 P.A.left] ![1, -1]).pull
         (P.A.hom ⁻¹ᵁ V).ι), c.IsGen)
     (hfix : ∀ (T : Over S) (x : T ⟶ P.A), x ^ M = 1 → x ≫ σ.hom = x) : σ.hom = 𝟙 P.A := by
-  open ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.DVR ReciprocityTheory.ChartRestriction.G.H1 in
-    have gen_chartPull {A' : LB Y'} {A : LB Y} {h : Y' ⟶ Y} (a : ChartPull A' A h) (t : LB.Gen A) (ht : t.IsGen) :
-        ∃ t' : LB.Gen A', t'.IsGen := by
-      refine ⟨⟨fun i => res (a.le i) (pullU h _ (t.s (a.idx i)))⟩, fun i j => unit_ext fun y hy => ?_⟩
-      have hm : h y ∈ A.U (a.idx i) ⊓ A.U (a.idx j) := ⟨a.le i hy.1, a.le j hy.2⟩
-      have e := (gm_res h y _ hm _).symm.trans ((congrArg (gm h y _) (ht (a.idx i) (a.idx j))).trans ((map_mul _ _ _).trans
-        (congrArg₂ (· * ·) rfl (gm_res h y _ hm _))))
-      exact ((gm_res _ y _ hy _).trans (gm_rp₁ h y _ _ (a.le i) hy.1 _)).trans (e.trans ((map_mul _ _ _).trans
-        (congrArg₂ (· * ·) (a.g y i j hy.1 hy.2) ((gm_res _ y _ hy _).trans (gm_rp₁ h y _ _ (a.le j) hy.2 _)))).symm)
-    refine eq_id_of_forall_geometric_fibre hL.globalFns P.A P.isAb σ.hom (IsMonHom.one_hom σ.hom)
-      fun t => ?_
-    obtain ⟨V, hV, c, hc⟩ := hloc t
-    have hf : ∀ y, S.fromSpecResidueField t y = t := Scheme.fromSpecResidueField_apply t
-    obtain ⟨X, g, q, hg, e⟩ := comp_aut_eq_of_serre_baseChange hL.polBaseChange
-      (S.fromSpecResidueField t) P M
-      (fun P' σ' h' ⟨c', hc'⟩ hx => hL.serre _ P' M hM σ' h' (fun _ => ⟨⊤, trivial,
-        gen_chartPull (chartPullPull _ _ _ rfl) c' hc'⟩) hx)
-      σ hσ V (fun y => by rw [hf]; exact hV) c hc hfix
-    exact ⟨_, X, _, g, q, (default : PrimeSpectrum (S.residueField t)), hf _, hg, e⟩
+  refine eq_id_of_forall_geometric_fibre hL.globalFns P.A P.isAb σ.hom (IsMonHom.one_hom σ.hom)
+    fun t => ?_
+  obtain ⟨V, hV, c, hc⟩ := hloc t
+  have hf : ∀ y, S.fromSpecResidueField t y = t := Scheme.fromSpecResidueField_apply t
+  obtain ⟨X, g, q, hg, e⟩ := comp_aut_eq_of_serre_baseChange hL.polBaseChange
+    (S.fromSpecResidueField t) P M
+    (fun P' σ' h' ⟨c', hc'⟩ hx => hL.serre _ P' M hM σ' h' (fun _ => ⟨⊤, trivial,
+      gen_chartPull (chartPullPull _ _ _ rfl) c' hc'⟩) hx)
+    σ hσ V (fun y => by rw [hf]; exact hV) c hc hfix
+  exact ⟨_, X, _, g, q, (default : PrimeSpectrum (S.residueField t)), hf _, hg, e⟩
 
 theorem fix_torsion_of_forall_geometric {S : Scheme.{0}} (A : Over S) [GrpObj A] (n : ℕ)
     [Etale (Out.mulA A n).left] (σ : A ⟶ A) [IsMonHom σ]
@@ -114,52 +105,32 @@ theorem obj_aut_fix_geometric_torsion {B : Type} [CommRing B] {b : Base l B} {S 
     rw [← hI a ha, Category.assoc, heta]
 
 theorem obj_rigid_of_pol : Out.Laws → (∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (B : Type) [CommRing B] (b : Base l B) (S : Scheme.{0}) (s : S ⟶ Sp B) (o : Obj D l b s), IsAbelianScheme o.t.G ∧ SmoothOfRelativeDimension (Module.finrank ℚ E / 2 * (D.p + D.q)) o.t.G.hom ∧ Out.Rigidified o.t.G o.t.PP.L ∧ Out.Sym o.t.G o.t.PP.L) → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (B B' : Type) [CommRing B] [CommRing B'] (b : Base l B) (b' : Base l B') (S S' : Scheme.{0}) (s : S ⟶ Sp B) (s' : S' ⟶ Sp B') (o : Obj D l b s) (o' : Obj D l b' s') (f : S' ⟶ S), ∀ m m' : SABMap o'.t o.t f, (∀ a, ∃ σ, (o'.eta a).left ≫ m.φ = σ ∧ (o'.eta a).left ≫ m'.φ = σ) → m.φ = m'.φ := by
-  open ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.DVR ReciprocityTheory.ChartRestriction.G.H1 in
-    have gen_chartPull {A' : LB Y'} {A : LB Y} {h : Y' ⟶ Y} (a : ChartPull A' A h) (t : LB.Gen A) (ht : t.IsGen) :
-        ∃ t' : LB.Gen A', t'.IsGen := by
-      refine ⟨⟨fun i => res (a.le i) (pullU h _ (t.s (a.idx i)))⟩, fun i j => unit_ext fun y hy => ?_⟩
-      have hm : h y ∈ A.U (a.idx i) ⊓ A.U (a.idx j) := ⟨a.le i hy.1, a.le j hy.2⟩
-      have e := (gm_res h y _ hm _).symm.trans ((congrArg (gm h y _) (ht (a.idx i) (a.idx j))).trans ((map_mul _ _ _).trans
-        (congrArg₂ (· * ·) rfl (gm_res h y _ hm _))))
-      exact ((gm_res _ y _ hy _).trans (gm_rp₁ h y _ _ (a.le i) hy.1 _)).trans (e.trans ((map_mul _ _ _).trans
-        (congrArg₂ (· * ·) (a.g y i j hy.1 hy.2) ((gm_res _ y _ hy _).trans (gm_rp₁ h y _ _ (a.le j) hy.2 _)))).symm)
-    have gen_of_iso {X : Scheme.{0}} {L : LB X} {Y : Scheme.{0}} {F : X ⟶ X} {w : LB.Iso L (L.pull F)} (hw : PGen w) (h : Y ⟶ X) :
-        ∃ t : LB.Gen (LB.LinComb L (K := Fin 2) ![h ≫ F, h] ![1, -1]), t.IsGen := by
-      have le : ∀ j : Fin 2 → L.ι, LB.wchart L ![h ≫ F, h] j ≤ h ⁻¹ᵁ ((L.pull F).U (fun _ => j 0) ⊓ L.U (j 1)) := fun j y hy =>
-        ⟨mem_pull.2 (Set.mem_iInter.1 hy 0), Set.mem_iInter.1 hy 1⟩
-      have v : ∀ (y : Y) (j : Fin 2 → L.ι), y ∈ LB.wchart L ![h ≫ F, h] j → gm (𝟙 Y) y (LB.wchart L ![h ≫ F, h] j)
-          (res (le j) (pullU h _ (w.s (fun _ => j 0, j 1)))) = gw w h y (j 0) (j 1) := fun y j hy => gm_rp₁ h y _ _ (le j) hy _
-      refine ⟨⟨fun j => res (le j) (pullU h _ (w.s (fun _ => j 0, j 1)))⟩, isGen_of_gm _ fun y j j' hj hj' => ?_⟩
-      refine (v y j hj).trans ((hw _ h y _ _ _ _ (Set.mem_iInter.1 hj 0) (Set.mem_iInter.1 hj' 0) (Set.mem_iInter.1 hj 1)
-        (Set.mem_iInter.1 hj' 1)).trans (congrArg₂ (· * ·) ?_ (v y j' hj').symm))
-      rw [trF, Fin.prod_univ_two]
-      simp only [Category.id_comp, Matrix.cons_val_zero, Matrix.cons_val_one, zpow_one, zpow_neg]
-    intro hL hpol E _ _ _ H D l B B' _ _ b b' S S' s s' o o' f m m' heta
-    obtain ⟨hA, hd, hr, hs⟩ := hpol E H D l B' b' S' s' o'
-    obtain ⟨θ, hθ, hφ, hact, -, w, hw, -⟩ := sabMap_iso m m' rfl rfl
-    have hη : ∀ a, o'.eta a ≫ θ.hom = o'.eta a := fun a => by
-      obtain ⟨σ, h₁, h₂⟩ := heta a
-      apply Over.OverMorphism.ext
-      apply m'.cart.1.hom_ext
-      · rw [Over.comp_left, Category.assoc]
-        exact (congrArg _ hφ).trans (h₁.trans h₂.symm)
-      · rw [Over.w, Over.w]
-    let P : Out.PolAV S' :=
-      { A := o'.t.G, g := _, smoothDim := hd, L := o'.t.PP.L, isLB := o'.t.PP.isLB,
-        ample := o'.ample, ktriv := o'.ktriv, isAb := hA, rigid := hr, sym := hs }
-    have hM : 0 < l.M := lt_of_lt_of_le (by norm_num) l.three_le
-    have hMu : IsUnit (l.M : Γ(S', ⊤)) := by
-      simpa using (b'.unit _ hM).map ((Scheme.ΓSpecIso (CommRingCat.of B')).inv ≫ s'.appTop).hom
-    have := hA.smooth
-    have : Etale (Out.mulA o'.t.G l.M).left := GrpTangent.etale_id_pow o'.t.G hMu
-    have h : θ.hom = 𝟙 _ := by
-      refine serre_any_base hL P l.M l.three_le θ hθ (fun _ => ⟨⊤, trivial, ?_⟩)
-        (fix_torsion_of_forall_geometric o'.t.G l.M θ.hom
-          (obj_aut_fix_geometric_torsion o' θ hact ⟨w, hw⟩ hη))
-      obtain ⟨t, ht⟩ := gen_of_iso ((isGen_iff w).1 hw) (o'.t.G.hom ⁻¹ᵁ ⊤).ι
-      refine gen_chartPull (chartPullOut o'.t.PP.L _ _ _ _ fun n => ?_) t ht
-      fin_cases n
-      exacts [rfl, (Category.comp_id _).symm]
-    rw [← hφ, h, Over.id_left, Category.id_comp]
+  intro hL hpol E _ _ _ H D l B B' _ _ b b' S S' s s' o o' f m m' heta
+  obtain ⟨hA, hd, hr, hs⟩ := hpol E H D l B' b' S' s' o'
+  obtain ⟨θ, hθ, hφ, hact, -, w, hw, -⟩ := sabMap_iso m m' rfl rfl
+  have hη : ∀ a, o'.eta a ≫ θ.hom = o'.eta a := fun a => by
+    obtain ⟨σ, h₁, h₂⟩ := heta a
+    apply Over.OverMorphism.ext
+    apply m'.cart.1.hom_ext
+    · rw [Over.comp_left, Category.assoc]
+      exact (congrArg _ hφ).trans (h₁.trans h₂.symm)
+    · rw [Over.w, Over.w]
+  let P : Out.PolAV S' :=
+    { A := o'.t.G, g := _, smoothDim := hd, L := o'.t.PP.L, isLB := o'.t.PP.isLB,
+      ample := o'.ample, ktriv := o'.ktriv, isAb := hA, rigid := hr, sym := hs }
+  have hM : 0 < l.M := lt_of_lt_of_le (by norm_num) l.three_le
+  have hMu : IsUnit (l.M : Γ(S', ⊤)) := by
+    simpa using (b'.unit _ hM).map ((Scheme.ΓSpecIso (CommRingCat.of B')).inv ≫ s'.appTop).hom
+  have := hA.smooth
+  have : Etale (Out.mulA o'.t.G l.M).left := GrpTangent.etale_id_pow o'.t.G hMu
+  have h : θ.hom = 𝟙 _ := by
+    refine serre_any_base hL P l.M l.three_le θ hθ (fun _ => ⟨⊤, trivial, ?_⟩)
+      (fix_torsion_of_forall_geometric o'.t.G l.M θ.hom
+        (obj_aut_fix_geometric_torsion o' θ hact ⟨w, hw⟩ hη))
+    obtain ⟨t, ht⟩ := gen_of_iso ((isGen_iff w).1 hw) (o'.t.G.hom ⁻¹ᵁ ⊤).ι
+    refine gen_chartPull (chartPullOut o'.t.PP.L _ _ _ _ fun n => ?_) t ht
+    fin_cases n
+    exacts [rfl, (Category.comp_id _).symm]
+  rw [← hφ, h, Over.id_left, Category.id_comp]
 
 end GlobalTheory

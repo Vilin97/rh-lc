@@ -137,7 +137,7 @@ theorem form_pullback_evaluation {T T' : C} (φ : T ⟶ T') (x : Glob1 F) : p1 F
 
 theorem linear_form_extension_naturality (hP : Par F) (l : Module.Dual R (Glob1 F)) {T T' : C} (φ : T ⟶ T')
     (α : Ω[F.obj T⁄R]) : Lf hP l T' (p1 F φ α) = mp F φ (Lf hP l T α) := by
-  refine (hP T).inductionOn α _ (by simp) (fun x ↦ ?_) (fun b y hy ↦ ?_) (fun y z hy hz ↦ ?_)
+  refine (hP T).inductionOn α (fun x ↦ ?_) (fun b y hy ↦ ?_) (fun y z hy hz ↦ ?_)
   · rw [form_pullback_evaluation, Lf_ev, Lf_ev, AlgHom.commutes]
   · rw [oneFormsMapOfFunctorMorphism_smul, map_smul, hy, map_smul, smul_eq_mul, smul_eq_mul, map_mul]
   · simp only [map_add (f := _), hy, hz]
@@ -145,7 +145,7 @@ theorem linear_form_extension_naturality (hP : Par F) (l : Module.Dual R (Glob1 
 theorem Lf_expand (hP : Par F) {n : ℕ} (w : Fin n → Glob1 F) (l : Fin n → Module.Dual R (Glob1 F))
     (h : ∀ x, x = ∑ i, l i x • w i) (T : C) (α : Ω[F.obj T⁄R]) :
     α = ∑ i, Lf hP (l i) T α • evForm F T (w i) := by
-  refine (hP T).inductionOn α _ (by simp) (fun x ↦ ?_) (fun b y hy ↦ ?_) (fun y z hy hz ↦ ?_)
+  refine (hP T).inductionOn α (fun x ↦ ?_) (fun b y hy ↦ ?_) (fun y z hy hz ↦ ?_)
   · conv_lhs => rw [h x]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul, Lf_ev, algebraMap_smul]
