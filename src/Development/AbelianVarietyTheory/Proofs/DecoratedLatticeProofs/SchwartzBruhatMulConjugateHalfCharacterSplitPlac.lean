@@ -35,8 +35,8 @@ theorem continuous_pi_hO_up {D : D7} {k : Type} [Field k] [ValuativeRel k] [Topo
   rw [h]
   have hm : Continuous fun t : Matrix Y Y' k => FT.β * t * FS.γ :=
     (continuous_const.matrix_mul continuous_id).matrix_mul continuous_const
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ => continuous_finset_sum _ fun c _ =>
-    continuous_finset_sum _ fun d _ => continuous_const.mul (hm.matrix_elem d a)
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ => continuous_finsetSum _ fun c _ =>
+    continuous_finsetSum _ fun d _ => continuous_const.mul (hm.matrix_elem d a)
 
 theorem mul_char_mem_SB : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (p : GlobalTheory.LocMod.Place D k) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S T : HSp D) (Y Y' : Type) [Fintype Y] [DecidableEq Y] [Fintype Y'] [DecidableEq Y'] (FS : GlobalTheory.LocMod.Frame k S.rank Y') (FT : GlobalTheory.LocMod.Frame k T.rank Y) (y : WO S T), IsHalf (cA D p.e) y → ∀ Φ ∈ SB (Matrix Y Y' k), (fun t => ψ (symplO S T (p.up FS FT t) y) * Φ t) ∈ SB (Matrix Y Y' k) := by
   intro D k _ _ _ _ p ψ hψ S T Y Y' _ _ _ _ FS FT y hy Φ hΦ

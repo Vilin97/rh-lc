@@ -240,7 +240,7 @@ theorem exists_iota (g l : ℕ) [Fact g.Prime] [hl : Fact l.Prime] : ∃ ι : Fo
     rw [map_mul, map_mul, h2, ← map_mul, ← map_mul, mul_inv_cancel₀ hy, map_one, map_one]
   have h3 : IsPrimitiveRoot (1 : Formalism.CyclotomicNorms.Fbar l) n := by
     rw [← isRoot_cyclotomic_iff, ← h1, ← map_cyclotomic n ρ]
-    exact (hprim.isRoot_cyclotomic hnpos).map
+    exact (hprim.isRoot_cyclotomic hnpos).map ρ
   have h4 : n = 1 := h3.unique IsPrimitiveRoot.one
   exact (mul_inv_eq_one₀ hy).1 (orderOf_eq_one_iff.1 h4)
 
@@ -255,8 +255,9 @@ theorem two_le_r (R : Ranks) : 2 ≤ R.r := by
   omega
 
 theorem f_pos (R : Ranks) : 0 < R.f := by
+  have := R.ord_pos
   unfold Ranks.f Ranks.n
-  positivity
+  omega
 
 def lData (H : Host R) (p : ℕ) [Fact p.Prime] : Formalism.GaloisCohomology.LData H.E (AlgebraicClosure H.E) p :=
   (nonempty_lData H.E (AlgebraicClosure H.E) p).some

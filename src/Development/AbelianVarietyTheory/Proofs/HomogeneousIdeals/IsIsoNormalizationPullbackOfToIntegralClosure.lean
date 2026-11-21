@@ -993,7 +993,7 @@ theorem normalization_quotient {G : Type v} [Group G] [Finite G] {X X' Y : Schem
   have : QuasiCompact π := .of_comp π f'
   have : QuasiSeparated π := .of_comp π f'
   have h₁ := normalizationActionOver_normalizationMap f f' π hf ρ hρ hπ
-  have h₂ := mem_range_normalizationMap_app f f' π hf ρ hρ hπ
+  have h₂ := mem_range_normalizationMap_app f f' π hf ρ hπ hρ hπ
     fun W _ s hs ↦ hs.mem_range_app_of_cover π hπ hinv
   refine ⟨h₁, inferInstance, inferInstance,
     apply_eq_iff_exists_aut_of_invariant _ _ h₁ fun W _ ↦ h₂ W,

@@ -39,7 +39,7 @@ def inL {K I Q : Cx R} {m n : ℤ} (h : m + 1 = n) (α₁ : Cocycle K I n) (α�
     ((n.negOnePow : ℤˣ) : ℤ) • zcomp (α₂.rightShift (-1) n (by omega)) (Cocycle.ofHom (biprod.inr : sh Q ⟶ LL I Q)) (add_zero n)
 
 def sg {X : Scheme.{0}} {I : Cx R} {n : ℤ} (α : Cocycle ((chains R).obj (sch.obj X)) I n) : Sec (I.X n) X :=
-  ev R α.1 0 n (by simp) X (𝟙 X)
+  ev α.1 0 n (by simp) X (𝟙 X)
 
 end UpperTheory.Kun
 
@@ -130,14 +130,17 @@ theorem c₂_d {I Q : Cx R} {T : Scheme.{0}} (s t : ℤ) (x : Sec ((LL I Q).X s)
 
 theorem sg_pull {X Y : Scheme.{0}} {I : Cx R} {n : ℤ} (f : Y ⟶ X) (α : Cocycle ((chains R).obj (sch.obj X)) I n) :
     sg (zcomp (Cocycle.ofHom ((chains R).map (sch.map f))) α (zero_add n)) = Sec.res f (sg α) := by
-  have h1 := CupSpec.ev_pull (sch.map f) α.1 0 n (by simp) Y (𝟙 Y)
-  have h2 := CupSpec.ev_res α.1 0 n (by simp) f (𝟙 X)
+  have hEval := GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties R
+    (E := sch.obj X) (I := I) (n := n)
+  have h1 := hEval.2.2.2.1 (sch.map f) α.1 0 n (by simp) Y (𝟙 Y)
+  have h2 := hEval.2.1 α.1 0 n (by simp) Y X f (𝟙 X)
   refine h1.trans (Eq.trans ?_ h2.symm)
   congr 1
 
 theorem sg_sub {X : Scheme.{0}} {I : Cx R} {n : ℤ} (α β : Cocycle ((chains R).obj (sch.obj X)) I n) : sg (α - β) = sg α - sg β := by
-  have h := map_sub (CupSpec.evHom (E := sch.obj X) I n 0 n (by simp) X (𝟙 X)) α.1 β.1
-  exact h
+  have hEval := GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties R
+    (E := sch.obj X) (I := I) (n := n)
+  exact (hEval.1 α.1 β.1 0 n (by simp) X (𝟙 X)).2.1
 
 theorem res_add {F : Shv R} {V U : Scheme.{0}} (g : V ⟶ U) (x y : Sec F U) : Sec.res g (x + y) = Sec.res g x + Sec.res g y :=
   map_add _ _ _

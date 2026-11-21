@@ -51,7 +51,6 @@ def compAt (v : HeightOneSpectrum (𝓞 F)) : AE F E →+* Kv E v :=
 
 open scoped Classical in
 variable (F) in
-variable (F) in
 open Classical in
 def singleF (v : HeightOneSpectrum (𝓞 F)) : v.adicCompletion F →ₗ[F] FiniteAdeleRing (𝓞 F) F where
   toFun x := ⟨Pi.single v x, by

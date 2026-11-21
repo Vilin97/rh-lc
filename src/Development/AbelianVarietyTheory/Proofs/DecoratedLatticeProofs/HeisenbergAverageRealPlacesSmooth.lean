@@ -41,6 +41,8 @@ theorem contDiff_integral_kernel {R : Type} [NormedAddCommGroup R] [NormedSpace 
     simp only [ContinuousLinearMap.mul_apply', g, neg_sub]
     rw [← integral_sub_right_eq_self (fun x => (φ x : ℂ) * K y x * G (y + x)) y]
     congr 1
+    funext x
+    rw [add_comm y (x - y), sub_add_cancel]
     ring
   have hk : IsCompact (Neg.neg '' tsupport φ) := hφc.isCompact.image continuous_neg
   have hgs : ∀ p, ∀ x, p ∈ (Set.univ : Set R) → x ∉ Neg.neg '' tsupport φ → g p x = 0 := by
@@ -75,7 +77,7 @@ theorem sm_heisO_average : ∀ (D : D7) (θ : InfFam D) (σ : (D.what₂.Tau →
   funext y
   refine congrArg _ ?_
   funext x
-  rw [heisO_iota h hψ, (piW θ T A).map_add (f := _), h.pi_iota, (iotaW σ T A).map_add (f := _), ← add_assoc, mul_assoc]
+  rw [heisO_iota h hψ, map_add (piW θ T A), h.pi_iota, map_add (iotaW σ T A), ← add_assoc, mul_assoc]
   rfl
 
 end GlobalTheory.HeisAverage

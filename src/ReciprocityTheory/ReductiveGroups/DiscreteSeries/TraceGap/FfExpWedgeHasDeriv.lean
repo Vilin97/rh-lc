@@ -78,6 +78,7 @@ theorem cpV_cmV_ιMulti (u w : Fin n × Fin n → ℂ) : ∀ (p : ℕ) (v : Fin 
       rw [mul_smul_comm, ExteriorAlgebra.ιMulti_succ_apply,
         Function.update_of_ne (Fin.succ_ne_zero i).symm]
       congr 3
+      exact (Fin.tail_update_succ (q := v) (i := i) (y := u)).symm
 
 theorem isDer_cpV_cmV (u w : Fin n × Fin n → ℂ) :
     IsDer (cpV u * cmV w) (LinearMap.smulRight (dualV w) u) := by
@@ -221,7 +222,7 @@ theorem wedgeCoord_eq_sum (p : ℕ) (v : Fin p → (Fin n × Fin n → ℂ)) :
   set_option synthInstance.maxHeartbeats 100000 in
     rw [MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun r _ => ?_
-  rw [MultilinearMap.map_smul_univ]
+  simp only [MultilinearMap.map_smul_univ, RingHom.id_apply]
 
 theorem wedgeCoord_continuous (p : ℕ) : Continuous (wedgeCoord (n := n) p) := by
   have h : (wedgeCoord (n := n) p : (Fin p → (Fin n × Fin n → ℂ)) → (Finset (Fin (n * n)) → ℂ)) =

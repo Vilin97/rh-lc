@@ -36,7 +36,7 @@ theorem inf_rat (L : Ainf F →+ ℂ) (hL : Continuous L)
   have key : (fun w : Ainf F => φ w) = fun w => ∑ i, L (w * algebraMap F _ (integralBasis F i)) *
       φ (algebraMap F _ ((integralBasis F).traceDual i)) := by
     refine (InfiniteAdeleRing.denseRange_algebraMap F).equalizer hφ
-      (continuous_finset_sum _ fun i _ => (hL.comp (continuous_id.mul continuous_const)).mul continuous_const) ?_
+      (continuous_finsetSum _ fun i _ => (hL.comp (continuous_id.mul continuous_const)).mul continuous_const) ?_
     funext x
     simp only [Function.comp_apply, ← map_mul, hT]
     conv_lhs => rw [← (integralBasis F).traceDual.sum_repr x]
@@ -213,7 +213,7 @@ theorem ratL_annihilator : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdC
     let L : Ainf D.host.F →+ ℂ := AddMonoidHom.mk' (fun x => ∑ ρ, θ ρ (x ⊗ₜ[D.host.F] (1 : D.host.E))) fun a b => by
       simp only [map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib]
     have hrat := adele_rat hψ.1 (GlobalTheory.StdCharLocal.psiV_ne_one D ψ hψ) L
-      (continuous_finset_sum _ fun ρ _ => (hθ ρ).2)
+      (continuous_finsetSum _ fun ρ _ => (hθ ρ).2)
       (fun x => by
         show ∑ ρ, θ ρ (algebraMap D.host.F (Ainf D.host.F) x ⊗ₜ[D.host.F] (1 : D.host.E)) = _
         rw [GlobalTheory.StdRat.tmul_one_eq, Finset.sum_congr rfl fun ρ _ => (hθ ρ).1 _, GlobalTheory.StdRat.sum_tauE_eq_trace])

@@ -134,7 +134,8 @@ theorem exists_locReps' (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF
       have e1 : algebraMap (𝓞 F) (𝓞 K) t = 0 := Formalism.HermitianLatticesTheory.genusCovol_hinj (by rw [e, map_zero])
       have e2 : t = 0 := FaithfulSMul.algebraMap_injective (𝓞 F) (𝓞 K) (by rw [e1, map_zero])
       exact ht (e2 ▸ 𝔭.zero_mem)
-    have hB := LocalizedFibreSets.isLattice_gmap g hL
+    have hB : Submodule.IsLattice K (Formalism.HermitianLatticesTheory.gmap g L) :=
+      Submodule.IsLattice.of_fg K (hL.fg.map _)
     have hBi := UnimodularLocalization.isIntegralLat_gmap hg hLi
     have hgood := good_cut (F := F) hK hF hs hd (scaleSplit S _ hc) hB hBi
       (by change algebraMap (𝓞 K) K (algebraMap (𝓞 F) (𝓞 K) t) • S.x₀ ∈ _

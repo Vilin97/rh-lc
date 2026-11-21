@@ -24,6 +24,7 @@ theorem exists_ringHom_of_isIntegral (R : Type) [CommRing R] [CharZero R] [Algeb
   have := hP
   have hl0 : ((l : ℕ) : R ⧸ P) = 0 := by
     have h1 : (l : ℤ) ∈ P.comap (algebraMap ℤ R) := by
+      change (l : ℤ) ∈ Ideal.under ℤ P
       rw [hPc]
       exact Ideal.mem_span_singleton_self _
     rw [Ideal.mem_comap] at h1

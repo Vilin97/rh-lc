@@ -59,7 +59,7 @@ theorem compFin_repr (w : Pl D) (y : Af D.host.F ⊗[D.host.F] D.host.E) (k : Fi
     rw [h, Algebra.TensorProduct.basis_repr_tmul, Algebra.TensorProduct.basis_repr_tmul]
     simp [Finsupp.smul_apply, Finsupp.mapRange_apply, map_mul, AlgHom.commutes]
   | add x y hx hy =>
-    simp only [RingHom.map_add (f := _), LinearEquiv.map_add (f := _), Finsupp.add_apply, hx, hy]
+    simp only [RingHom.map_add (f := _), LinearEquiv.map_add (e := _), Finsupp.add_apply, hx, hy]
     exact (RingHom.map_add (evalV D.host.F w).toRingHom _ _).symm
 
 theorem eq_zero_of_compFin (y : Af D.host.F ⊗[D.host.F] D.host.E) (h : ∀ w, GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter.compFin D w y = 0) :

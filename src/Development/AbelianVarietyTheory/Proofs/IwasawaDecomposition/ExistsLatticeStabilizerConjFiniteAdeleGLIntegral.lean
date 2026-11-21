@@ -173,7 +173,7 @@ theorem lat_span {n : ℕ} (s : GL (Fin n) (FiniteAdeleRing (𝓞 F) F)) :
   exact Submodule.smul_mem _ _ (Submodule.subset_span (hmem j))
 
 theorem lat_isLattice {n : ℕ} (s : GL (Fin n) (FiniteAdeleRing (𝓞 F) F)) : Submodule.IsLattice F (lat F s) :=
-  ⟨lat_fg s, lat_span s⟩
+  Submodule.IsLattice.of_fg F (lat_fg s)
 
 theorem matInt_conj {n : ℕ} (s : GL (Fin n) (FiniteAdeleRing (𝓞 F) F)) (γ : GL (Fin n) F)
     (h : ∀ y ∈ lat F s, (γ : Matrix (Fin n) (Fin n) F) *ᵥ y ∈ lat F s) :

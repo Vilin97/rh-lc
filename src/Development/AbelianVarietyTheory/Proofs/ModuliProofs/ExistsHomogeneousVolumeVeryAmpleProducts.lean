@@ -30,15 +30,15 @@ theorem eq_coeff_of_tendsto (q : Polynomial ℝ) (g : ℕ) (δ : ℝ)
   have hX : (Polynomial.X ^ g : Polynomial ℝ).degree = g := Polynomial.degree_X_pow g
   have h0 : (Polynomial.X ^ g : Polynomial ℝ) ≠ 0 := pow_ne_zero _ Polynomial.X_ne_zero
   rcases lt_trichotomy q.degree g with hq | hq | hq
-  · have := (Polynomial.div_tendsto_atTop_zero_of_degree_lt q (Polynomial.X ^ g) (hX ▸ hq)).comp
+  · have := (Polynomial.div_tendsto_atTop_zero_of_degree_lt (P := q) (Q := Polynomial.X ^ g) (hX ▸ hq)).comp
       tendsto_natCast_atTop_atTop
     rw [Polynomial.coeff_eq_zero_of_degree_lt hq]
     exact tendsto_nhds_unique h (by simpa [Function.comp_def] using this)
-  · have := (Polynomial.div_tendsto_atTop_leadingCoeff_div_of_degree_eq q (Polynomial.X ^ g) (hX ▸ hq)).comp
+  · have := (Polynomial.div_tendsto_atTop_leadingCoeff_div_of_degree_eq (P := q) (Q := Polynomial.X ^ g) (hX ▸ hq)).comp
       tendsto_natCast_atTop_atTop
     rw [← Polynomial.natDegree_eq_of_degree_eq_some hq]
     exact tendsto_nhds_unique h (by simpa [Function.comp_def] using this)
-  · have := (Polynomial.abs_div_tendsto_atTop_atTop_of_degree_gt q (Polynomial.X ^ g) (hX ▸ hq) h0).comp
+  · have := (Polynomial.abs_div_tendsto_atTop_atTop_of_degree_gt (P := q) (Q := Polynomial.X ^ g) (hX ▸ hq) h0).comp
       tendsto_natCast_atTop_atTop
     exact (not_tendsto_nhds_of_tendsto_atTop (by simpa [Function.comp_def, abs_div] using this) _ (by simpa [abs_div] using h.abs)).elim
 
@@ -52,12 +52,9 @@ theorem exists_poly_line {σ : Type} (Ψ : MvPolynomial σ ℚ) (n : σ → ℚ)
         Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, Finsupp.degree_apply]
       ring
     · rw [MvPolynomial.homogeneousComponent_of_mem (MvPolynomial.isHomogeneous_monomial c rfl),
-        Polynomial.coeff_monomial]
-      split_ifs with h1 h2 h2
-      · rfl
-      · exact (h2 h1.symm).elim
-      · exact (h1 h2.symm).elim
-      · simp
+        Polynomial.coeff_monomial_apply]
+      split_ifs <;> simp_all
+
   | add p p' hp hp' =>
     obtain ⟨q, h1, h2⟩ := hp
     obtain ⟨q', h1', h2'⟩ := hp'
@@ -192,6 +189,8 @@ theorem Emb.veryAmpleBy {f : X ⟶ Sp K} {H : LB X} {σ : Type} {s : σ → LB.S
   refine ⟨MvPolynomial.rename e.symm p, ?_⟩
   rw [MvPolynomial.coe_eval₂Hom, MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_rename]
   congr 1
+  funext j
+  simp
 
 variable {J : Type} {U : J → X.Opens}
 
@@ -441,7 +440,7 @@ theorem lbIso_lbPow_linComb {Y : Scheme.{0}} {L : LB Y} (hL : L.IsLB) {I : Type}
     LBIso (lbPow (LB.LinComb L φ (fun i => ∑ k, (n k : ℤ) * ε k i)) e)
       (LB.LinComb L φ (fun i => ∑ k, ((e • n) k : ℤ) * ε k i)) := by
   have h := LB.isLB_linComb hL φ (fun i => ∑ k, (n k : ℤ) * ε k i)
-  refine (CechPic.cls_eq_iff (LB.isLB_linComb h _ _) (LB.isLB_linComb hL _ _)).1 ?_
+  refine (CechPic.cls_eq_iff (isLB_lbPow h e) (LB.isLB_linComb hL φ _)).2 ?_
   rw [CechPic.cls_lbPow h, CechPic.cls_linComb hL, CechPic.cls_linComb hL, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← natCast_zsmul, smul_smul, Finset.mul_sum]

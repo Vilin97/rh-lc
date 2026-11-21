@@ -33,7 +33,10 @@ theorem exists_subsingleton_coh_twist_tens_lbPow : ∀ (k : Type) [Field k] {Y :
   have := hq ⟨m, hm⟩ j ((hQ _).trans hj) p hp
   obtain ⟨e⟩ := nonempty_twist_twist_iso_of_cls_eq G (isLB_lbPow hN m)
     (isLB_lbPow hA.isLB j) (isLB_tens (isLB_lbPow hA.isLB j) (isLB_lbPow hN m)) (by
-      rw [cls_tens (isLB_lbPow hA.isLB j) (isLB_lbPow hN m), add_comm])
+      rw [cls_tens (isLB_lbPow hA.isLB j) (isLB_lbPow hN m),
+        ← cls_tens (isLB_lbPow hA.isLB j) (isLB_lbPow hN m) (isLB_tens (isLB_lbPow hA.isLB j) (isLB_lbPow hN m)),
+        ← cls_tens (isLB_lbPow hN m) (isLB_lbPow hA.isLB j) (isLB_tens (isLB_lbPow hN m) (isLB_lbPow hA.isLB j))]
+      exact (cls_eq_iff _ _).2 (tens_comm_iso (isLB_lbPow hA.isLB j) (isLB_lbPow hN m)))
   exact (cohOn.mapIso k ⊤ p e).symm.injective.subsingleton
 
 end GlobalTheory

@@ -24,7 +24,7 @@ theorem adelic_regular_rep_unitary_continuous (X : CData) (hd : RegData X) (hu :
   have : (X.I.muA X.μf).IsOpenPosMeasure := rr_muA_openPos X
   have hne : X.I.muA X.μf ≠ 0 := fun h0 =>
     isOpen_univ.measure_ne_zero (X.I.muA X.μf) (univ_nonempty (α := X.I.GA))
-      (by rw [h0, Measure.coe_zero, Pi.zero_apply])
+      (by rw [h0, FunLike.coe_zero, Pi.zero_apply])
   obtain ⟨h1, h2, h3⟩ := rightRegular_isometric_multiplicative X hd hu
   exact ⟨h1, h2, h3, fun F => rr_cont_of_meas' (μ := X.I.muA X.μf) hne h1 h2 h3 (regular_rep_coeff_measurable X hd hu) F⟩
 

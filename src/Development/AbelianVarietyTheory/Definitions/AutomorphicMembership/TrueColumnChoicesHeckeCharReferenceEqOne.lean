@@ -217,7 +217,7 @@ abbrev dat : Dat := B.dat X I.Ch
 
 structure Ok : Prop where
 
-  spaces : letI := B.host.cmStar; DiagSpaces B.sp
+  spaces : letI := B.host.cmStar; _root_.GlobalTheory.Mem.DiagSpaces B.sp
   ch_ok : I.Ch.Ok
 
   ch_tied : I.Ch.Tied B.embLL (fun j τ => (B.hc τ).e j) I.C.mu0 I.C.eta
@@ -240,7 +240,7 @@ structure Ok : Prop where
 
   sharp : ∀ a, (I.cst a).sharp = true
 
-  idx_ok : ∀ a, (I.idx a).Ok I.Ch I.sel (I.tup a) (I.cst a) I.glob (B.R.m - 2)
+  idx_ok : ∀ a, ChIdx.Ok I.Ch I.sel (I.tup a) (I.cst a) (I.idx a) I.glob (B.R.m - 2)
   amb_ok : I.J.Ok
 
   duStar : ∀ u, (B.duStar u : ℝ) = duStarOf B.host (B.hcW u)

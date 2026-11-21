@@ -189,7 +189,12 @@ theorem placeModel_unique_of_dual (ψ : AddChar (AF D.host.F) ℂ) {e : AE D} (�
   have tf : ∀ k : ℕ, 0 < k → Function.Injective fun t : WO S T => k • t := fun k hk a b hab => by
     rw [← inv_smul_nsmul S T hk a, ← inv_smul_nsmul S T hk b]
     exact congrArg _ hab
-  have hb := isBichar_symplO S T ψ
+  have hb : IsBichar (fun x y : WO S T => ψ (symplO S T x y)) := by
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · intro a b y; simp only [symplO_add_left, AddChar.map_add_eq_mul]
+    · intro a y z; simp only [symplO_add_right, AddChar.map_add_eq_mul]
+    · intro y; simp [symplO_zero_left]
+    · intro a; simp [symplO_zero_right]
   have hm : Φ ∈ waveSpan (fun x y : WO S T => ψ (symplO S T x y)) (half S T e) (half S T (cA D e)) (Λ ⊓ half S T e) := by
     obtain ⟨h1, k, hk, h2, h3⟩ := hΦ
     exact mem_waveSpan hb inf_le_right inf_le_right hLL' hX (half_div S T e) (half_div S T _) tf hfin Φ
@@ -299,7 +304,7 @@ theorem comm_symm_mem {r : E ⊗[F] Af F} (hr : r ∈ Formalism.L2.Herm.intAf F 
     · exact GlobalTheory.AdLat.tmul_mem_adelicCompletion_of_integral F hβ ⟨1, map_one _⟩
   | zero => rw [map_zero]; exact zero_mem _
   | one => rw [map_one]; exact GlobalTheory.AdLat.one_tmul_mem_adelicCompletionOfElementSet F ⟨1, map_one _⟩
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | neg a _ ha => rw [map_neg]; exact neg_mem ha
   | mul a b _ _ ha hb => rw [map_mul]; exact GlobalTheory.AdIdem.mul_mem_hat F E ha hb
 

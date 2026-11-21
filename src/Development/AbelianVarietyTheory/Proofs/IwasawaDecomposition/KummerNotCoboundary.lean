@@ -160,6 +160,7 @@ theorem exists_tilt (ν : ℕ → Om l) (hs : ∀ m, ν (m + 1) ^ l = ν m) (u :
     have h2 : Valued.v (algebraMap (Om l) ℂ_[l] (ν m)) ^ l ^ m ≤ 1 := by
       rw [← map_pow, h]
       exact natCast_mem (PadicComplexInt l) u
+    change Valued.v (algebraMap (Om l) ℂ_[l] (ν m)) ≤ 1
     exact (pow_le_one_iff_of_nonneg zero_le (pow_ne_zero _ (Fact.out : l.Prime).ne_zero)).1 h2
   obtain ⟨e, he⟩ := zeta_exists_tilt (p := l) (O := Per.OC l)
     (fun m => ⟨algebraMap (Om l) ℂ_[l] (ν m), hmem m⟩) (fun m => Subtype.ext (by

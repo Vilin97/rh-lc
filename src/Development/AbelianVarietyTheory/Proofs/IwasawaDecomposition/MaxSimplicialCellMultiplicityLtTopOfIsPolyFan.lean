@@ -30,7 +30,7 @@ theorem cellMult_map {Y : Type} [AddCommGroup Y] [Module O Y] (f : balForms bar 
   refine exists_congr fun a => ?_
   rw [Submonoid.smul_def, Submonoid.smul_def]
   change _ ↔ (a : ℤ) • g x = 0
-  rw [← map_smul, LinearEquiv.map_eq_zero_iff]
+  rw [← g.map_smul, LinearEquiv.map_eq_zero_iff]
 
 theorem cellMult_le_of_finite (T : Set (balForms bar X)) (hT : T.Finite) :
     ∃ C : ℕ, ∀ (m : ℕ) (δ : Fin m → balForms bar X), (∀ i, δ i ∈ T) → cellMult bar δ ≤ C := by
@@ -98,7 +98,7 @@ theorem transport [Module.Finite O X] [Module.Finite O X₁] (e : X ≃ₗ[O] X�
       { toFun := pull e.toLinearMap, map_add' := fun _ _ => rfl, map_smul' := fun _ _ => rfl }
     exact hl.map' P (LinearMap.ker_eq_bot.2 fun a b hab => by
       rw [← pull_symm_pull e a, ← pull_symm_pull e b]; exact congrArg _ hab)
-  · exact hp i k _ (by rw [← (pullBalEquiv bar e).symm_apply_apply ⟨δ i, h.mem i⟩, e0, hk, map_nsmul])
+  · exact hp i k ((pullBalEquiv bar e).symm β') (by rw [← (pullBalEquiv bar e).symm_apply_apply ⟨δ i, h.mem i⟩, e0, hk]; exact map_nsmul (pullBalEquiv bar e).symm.toAddMonoidHom k β')
 
 theorem perModule [Module.Finite O X] (hF : IsPolyFanOn bar φ X)
     (hpsd : ∀ β ∈ balForms bar X, (∀ y, 0 ≤ β y y) → toReal β ∈ psdCone (bar := bar) (X := X)) :

@@ -124,9 +124,11 @@ theorem smul_map_mulVec_pi [IsArtinianRing S] [IsReduced S] (ν : Measure S) [ν
       ext f
       simp only [Set.mem_preimage, Set.mem_univ_pi, mulVec_diagonal]
       exact forall_congr' fun i => (Set.mem_inv_smul_set_iff (a := (A i).unit)).symm
-    rw [this, Measure.pi_pi, hu', modu_coe, map_prod, ENNReal.coe_finset_prod, smul_eq_mul,
-      ← Finset.prod_mul_distrib]
+    rw [this, Measure.pi_pi, hu', modu_coe, map_prod, smul_eq_mul]
+    change ENNReal.ofNNRealHom (∏ i, distribHaarChar S (A i).unit) * _ = _
+    rw [map_prod, ← Finset.prod_mul_distrib]
     refine Finset.prod_congr rfl fun i _ => ?_
+    change ((distribHaarChar S (A i).unit : ℝ≥0) : ℝ≥0∞) * _ = _
     rw [distribHaarChar_mul, smul_inv_smul]
   · intro a b c hab
     rw [det_transvection_of_ne _ _ hab]
@@ -148,6 +150,7 @@ theorem smul_map_mulVec_pi [IsArtinianRing S] [IsReduced S] (ν : Measure S) [ν
     refine ⟨hA.mul hB, ?_⟩
     rw [modu_mul hA hB, ENNReal.coe_mul, mul_smul, e, ← Measure.map_map (hm _) (hm _),
       ← Measure.map_smul, IHB, IHA]
+    exact (hm A).aemeasurable
 
 end
 
@@ -187,7 +190,8 @@ theorem tupMeas_lrAct : ∀ (S : Type) [CommRing S] [TopologicalSpace S] [IsTopo
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   have hm : Measurable (γᵀ ⊗ₖ g).mulVec := (continuous_const.matrix_mulVec continuous_id).measurable
   rw [tupMeas_eq_map, Measure.map_map hl hc, hcomm, ← Measure.map_map hc hm, ← Measure.map_smul]
-  exact congrArg _ key.symm
+  · exact congrArg _ key.symm
+  · exact hc.aemeasurable
 
 end GlobalTheory.GaugeEx.ModDet
 

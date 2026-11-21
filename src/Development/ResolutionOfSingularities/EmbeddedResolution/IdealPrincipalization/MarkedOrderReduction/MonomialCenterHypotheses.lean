@@ -91,17 +91,19 @@ structure MonomialCenterHypotheses : Prop where
                                   Set ↥X')) ∧
                             ∀ ξ : ↥T.scheme, IsGenericPoint ξ C → π ξ' = ξ
 
-theorem monomialCaseHypotheses_of_monomialCenterHypotheses (h : MonomialCenterHypotheses.{u}) : MonomialCaseHypotheses.{u} where
-  card_lt_dim := MonomialCodimension.card_lt_krullDimSucc_of_nonempty
-  center_smooth := h.center_smooth
-  center_snc := h.center_snc
-  blowup_total_transform := h.blowup_total_transform
-  components_subset_divisor_iff := h.components_subset_divisor_iff
-  transformed_components := h.transformed_components
-  stratum_smooth := MonomialChart.smooth_intersectionIdeal_subscheme
-  orderAt_comap_off_exceptional := fun T hT X' π Z hπ x' hx' A =>
-    orderAt_comap_eq_of_notMem_exceptionalIdeal T hT Z X' π hπ x' hx' A
-  orderAt_boundary_eq_one := MonomialChart.orderAt_boundary_eq_one
+theorem monomialCaseHypotheses_of_monomialCenterHypotheses (h : MonomialCenterHypotheses.{u}) :
+    MonomialCaseHypotheses.{u} := by
+  exact {
+    card_lt_dim := MonomialCodimension.card_lt_krullDimSucc_of_nonempty
+    center_smooth := h.center_smooth
+    center_snc := h.center_snc
+    blowup_total_transform := h.blowup_total_transform
+    components_subset_divisor_iff := h.components_subset_divisor_iff
+    transformed_components := h.transformed_components
+    stratum_smooth := MonomialChart.smooth_intersectionIdeal_subscheme
+    orderAt_comap_off_exceptional := fun T hT X' π Z hπ x' hx' A =>
+      orderAt_comap_eq_of_notMem_exceptionalIdeal T hT Z X' π hπ x' hx' A
+    orderAt_boundary_eq_one := MonomialChart.orderAt_boundary_eq_one }
 
 end MonomialCenterCase
 
@@ -124,9 +126,12 @@ structure StrictTransformHypotheses : Prop extends MonomialCenterCase.MonomialCe
                             ¬ C ⊆ (Z.support : Set ↥T.scheme) ∧
                               C = closure ({π ξ'} : Set ↥T.scheme)
 
-theorem strictTransformHypotheses_of_residualHypotheses (h : StrictTransformHypotheses.{u}) : StrictTransformAndMonomialCaseHypotheses.{u} where
-  strictTransform_components := h.strictTransform_components
-  monomial := MonomialCenterCase.monomialCaseHypotheses_of_monomialCenterHypotheses h.toMonomialCenterHypotheses
+theorem strictTransformHypotheses_of_residualHypotheses (h : StrictTransformHypotheses.{u}) :
+    StrictTransformAndMonomialCaseHypotheses.{u} := by
+  exact {
+    strictTransform_components := h.strictTransform_components
+    monomial := MonomialCenterCase.monomialCaseHypotheses_of_monomialCenterHypotheses
+      h.toMonomialCenterHypotheses }
 
 end StrictTransformCase
 

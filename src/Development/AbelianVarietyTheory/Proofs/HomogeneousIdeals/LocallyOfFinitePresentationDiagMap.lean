@@ -418,7 +418,7 @@ variable (X : Type u) [AddCommGroup X] {n : ℕ}
 
 theorem nsmul_injective [Module.Free ℤ X] (hn : n ≠ 0) :
     Function.Injective (nsmulAddMonoidHom n : X →+ X) := by
-  have : IsAddTorsionFree X := Module.isTorsionFree_int_iff_isAddTorsionFree.1 inferInstance
+  have : HasUniqueDiv X := Module.isTorsionFree_int_iff_hasUniqueDiv.1 inferInstance
   exact nsmul_right_injective hn
 
 theorem finiteIndex_nsmul [Module.Finite ℤ X] (hn : n ≠ 0) :

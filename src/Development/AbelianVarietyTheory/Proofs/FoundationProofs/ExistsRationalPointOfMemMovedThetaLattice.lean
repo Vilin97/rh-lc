@@ -40,6 +40,13 @@ theorem mv_smul (g : GL (Fin N) (AE D)) (g' : GL (Fin N') (AE D)) (e : D.host.E)
     simp only [Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, map_mul]
   rw [this, Matrix.mul_smul, Matrix.smul_mul]
 
+#check Formalism.UG.P.adelstab_incl_int
+#check Formalism.UG.CS.span_recovery_of_integral_adelic_approx
+#check Formalism.UG.CS.csGlob_intAdApprox
+#check Formalism.UG.CS.globLat
+#check Formalism.UG.P.easyc_latS_std
+#check GlobalTheory.NormSum.AdLattice.lat
+
 theorem inc_int (o : 𝓞 D.host.E) : inc D (o : D.host.E) ∈ OhE D :=
   (incl_mem_iff (F := ℚ) (o : D.host.E)).2 ⟨o, rfl⟩
 

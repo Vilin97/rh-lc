@@ -24,7 +24,9 @@ theorem _root_.GlobalTheory.exists_heightOneSpectrum_natCast_mem (L : Type*) [Fi
         rw [RingHom.mem_ker, (algebraMap ℤ (𝓞 L)).injective_int.eq_iff' (map_zero _)] at hx
         simp [hx])
   have hmem : ((p : ℕ) : 𝓞 L) ∈ Q := by
-    have : (p : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 L)) := hQ ▸ Ideal.mem_span_singleton_self _
+    have : (p : ℤ) ∈ Ideal.under ℤ Q := by
+      rw [hQ]
+      exact Ideal.mem_span_singleton_self _
     simpa using this
   refine ⟨⟨Q, hQm.isPrime, ?_⟩, hmem⟩
   rintro rfl

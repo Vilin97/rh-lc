@@ -45,6 +45,7 @@ theorem LevFam.glue_of_not (A : LevFam E K n SG) (B : LevFam E K n Q) (w : uSG S
     A.glue B w = B ⟨w.1, (Finset.mem_union.mp w.2).resolve_left h⟩ := dif_neg h
 
 
+variable (Q) in
 open Classical in
 def extGLG : GLG (E := E) (n := n) (SG := SG) →* GLG (E := E) (n := n) (SG := uSG SG Q) where
   toFun g w := if h : w.1 ∈ SG then g ⟨w.1, h⟩ else 1

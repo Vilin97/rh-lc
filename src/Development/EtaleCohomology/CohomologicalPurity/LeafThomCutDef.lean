@@ -96,11 +96,12 @@ def vec1 {d : ℕ} {A : Type} [CommRing A] (x : Fin d → A) : Vec (d + 1) 0 (Sp
 
 abbrev PR (N k : ℕ) (R : Type) [CommRing R] : Spc := Pj N k ⨯ sp R
 
-def hyp (q N k : ℕ) (R : Type) [CommRing R] : Ht q (PR N k R) 2 1 := c1 q (prod.fst ≫ Pj.line N k)
+def hyp (q N k : ℕ) (R : Type) [CommRing R] : Ht q (PR N k R) 2 1 := GlobalTheory.EtC.c1 q (prod.fst ≫ Pj.line N k)
 
 def poly (q N k : ℕ) (R : Type) [CommRing R] (m : ℕ) (n i : ℤ)
     (a : ∀ j : Fin m, Ht q (sp R) (n - 2 * (j : ℕ)) (i - (j : ℕ))) : Ht q (PR N k R) n i :=
-  ∑ j : Fin m, ((cup q (pull _ prod.snd _ _ (a j)) (cpow q (hyp q N k R) j)).cast (by ring) (by ring) : Ht q _ n i)
+  ∑ j : Fin m, ((GlobalTheory.EtC.cup q (pull _ prod.snd _ _ (a j))
+    (GlobalTheory.EtC.cpow q (hyp q N k R) j)).cast (by ring) (by ring) : Ht q _ n i)
 
 def pr (d : ℕ) (R : Type) [CommRing R] : Arrow Spc :=
   Arrow.mk (prod.map (Pj.incl (d + 1)) (𝟙 _) : PR (d + 1) 1 R ⟶ PR (d + 1) 0 R)
@@ -111,6 +112,6 @@ def prMap (d : ℕ) {A B : Type} [CommRing A] [CommRing B] (φ : A →+* B) : pr
 def chart {d : ℕ} {A : Type} [CommRing A] (x : Fin d → A) : sp A ⟶ PR (d + 1) 0 A := prod.lift (Pj.pt (vec1 x)) (𝟙 _)
 
 def IsTau (q d : ℕ) (R : Type) [CommRing R] (τ : Hs q (pr d R) (2 * d) d) : Prop :=
-  ∃ a, Hs.fgt q (pr d R) _ _ τ = cpow q (hyp q (d + 1) 0 R) d + poly q (d + 1) 0 R d (2 * d) d a
+  ∃ a, Hs.fgt q (pr d R) _ _ τ = GlobalTheory.EtC.cpow q (hyp q (d + 1) 0 R) d + poly q (d + 1) 0 R d (2 * d) d a
 
 end LateralTheory.CohomologicalPurity.Thom

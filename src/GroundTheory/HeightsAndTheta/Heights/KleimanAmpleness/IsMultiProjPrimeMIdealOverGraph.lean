@@ -68,9 +68,9 @@ theorem coeff_mConeMapOver (y : (Σ k, ι k) → Ω) (b : K → ℕ) (f : MvPoly
     rw [hX, coeff_C_mul, coeff_monomial]
     by_cases h : b = Finsupp.weight (NumbersDVR.blockWeight ι) e
     · subst h; simp
-    · rw [if_neg h, if_neg (fun h' => h (Finsupp.equivFunOnFinite.symm.injective h').symm)]
+    · rw [ite_eq_right h, ite_eq_right (fun h' => h (Finsupp.equivFunOnFinite.symm.injective h').symm)]
       simp
-  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, map_add (f := _), map_add (f := _)]
+  | add p q hp hq => simp only [map_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, hp, hq]
 
 theorem isMultiHomogIdeal_mIdealOver (y : (Σ k, ι k) → Ω) :
     NumbersDVR.IsMultiHomogIdeal (R := S) (mIdealOver S y) := by
@@ -82,18 +82,18 @@ theorem isMultiHomogIdeal_mIdealOver (y : (Σ k, ι k) → Ω) :
     intro e' he' k
     rw [sum_block_eq_blockWeight,
       weightedHomogeneousComponent_isWeightedHomogeneous b f (mem_support_iff.mp he')]
-  rw [mConeMapOver_eq_of_block y hb, ← coeff_mConeMapOver, hf', coeff_zero, map_zero, zero_mul]
+  rw [mConeMapOver_eq_of_block y hb, ← coeff_mConeMapOver, hf']
+  simp
 
 theorem isMultiProjPrime_mIdealOver (y : (Σ k, ι k) → Ω) (hy : ∀ k, ∃ i, y ⟨k, i⟩ ≠ 0) :
-    NumbersDVR.IsMultiProjPrime (R := S) (mIdealOver S y) where
-  isPrime := RingHom.ker_isPrime _
-  multiHomog := isMultiHomogIdeal_mIdealOver y
-  relevant k := by
-    obtain ⟨i, hi⟩ := hy k
-    refine ⟨i, fun h => ?_⟩
-    have h' : mConeMapOver S y (X ⟨k, i⟩) = 0 := RingHom.mem_ker.mp h
-    simp only [mConeMapOver, aeval_X] at h'
-    exact mul_ne_zero (by rwa [Ne, MvPolynomial.C_eq_zero]) (X_ne_zero _) h'
+    NumbersDVR.IsMultiProjPrime (R := S) (mIdealOver S y) := by
+  refine ⟨RingHom.ker_isPrime (mConeMapOver S y), isMultiHomogIdeal_mIdealOver y, ?_⟩
+  intro k
+  obtain ⟨i, hi⟩ := hy k
+  refine ⟨i, fun h => ?_⟩
+  have h' : mConeMapOver S y (X ⟨k, i⟩) = 0 := RingHom.mem_ker.mp h
+  simp only [mConeMapOver, aeval_X] at h'
+  exact mul_ne_zero (by rwa [Ne, MvPolynomial.C_eq_zero]) (X_ne_zero _) h'
 
 end Homog
 
@@ -109,6 +109,7 @@ theorem mConeMapOver_graph_comp_base (x : Fin (N + 1) → Ω) (s : Fin m → Ω)
   apply MvPolynomial.algHom_ext
   intro a
   simp [mConeMapOver, Kleiman.cone, ReciprocityTheory.ChartRestriction.G.Geo.coneMap]
+  rfl
 
 theorem cone_eq_graph_comp (x : Fin (N + 1) → Ω) (s : Fin m → Ω) :
     Kleiman.cone (S := S) x =
@@ -118,6 +119,7 @@ theorem cone_eq_graph_comp (x : Fin (N + 1) → Ω) (s : Fin m → Ω) :
   apply MvPolynomial.algHom_ext
   intro a
   simp [mConeMapOver, Kleiman.cone, ReciprocityTheory.ChartRestriction.G.Geo.coneMap]
+  rfl
 
 theorem comap_mIdealOver_graph (x : Fin (N + 1) → Ω) (s : Fin m → Ω) :
     (mIdealOver S (graphVec x s)).comap

@@ -32,6 +32,7 @@ theorem Scales.comp {μ : Measure X} {f g : X → X} {m n : ℝ≥0} (hf : Scale
   have e : μ.map (Φ.trans Ψ) = (μ.map Φ).map Ψ :=
     (Measure.map_map Ψ.continuous.measurable Φ.continuous.measurable).symm
   rw [e, mul_comm, mul_smul, ← Measure.map_smul, ← h1, ← h2]
+  exact Ψ.continuous.measurable.aemeasurable
 
 theorem Scales.prod [SecondCountableTopology X] [SecondCountableTopology Y]
     {μ : Measure X} {ν : Measure Y} [SFinite μ] [SFinite ν] {f : X → X} {g : Y → Y} {m n : ℝ≥0}

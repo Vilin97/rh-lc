@@ -24,7 +24,8 @@ def flagSub (c i : ℕ) : Submodule 𝒪[k] (n ⊕ Fin c → k) where
   add_mem' h h' l hl := by simp [h l hl, h' l hl]
   smul_mem' s y h l hl := by simp [h l hl]
 
-def latStep (L : Submodule 𝒪[k] (n ⊕ Fin c → k)) (i : ℕ) : Submodule 𝒪[k] (n ⊕ Fin c → k) := L ⊓ flagSub c i
+def latStep (L : Submodule 𝒪[k] (n ⊕ Fin c → k)) (i : ℕ) : Submodule 𝒪[k] (n ⊕ Fin c → k) :=
+  L ⊓ flagSub k n c i
 
 def interX (L : Submodule 𝒪[k] (n ⊕ Fin c → k)) : Submodule 𝒪[k] (n → k) :=
   L.comap (GlobalTheory.LatPair.inX k n c)

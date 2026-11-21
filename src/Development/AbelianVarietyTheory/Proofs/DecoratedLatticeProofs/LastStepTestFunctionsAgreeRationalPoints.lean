@@ -80,7 +80,7 @@ theorem bottom_iff {P : HeightOneSpectrum (𝓞 E)} {q : ℕ} {ι : E →+* k} {
 theorem unit_char {P : HeightOneSpectrum (𝓞 E)} {q : ℕ} {ι : E →+* k} {σ₀ : K →+* ℂ} {ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K}
     {χ : ℕ → (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ} {s κ : ℕ} {S : SymData k s κ} (hT : Comparison₂ P q ι σ₀ ψ₀ χ S) (i : ℕ) (d : E) (u : kˣ)
     (hd : IntAt P d) (hu : valuation k (u : k) = 1) (e : (u : k) = ι d) :
-    (S.μ (i + 1) u : ℂ) = σ₀ (LocE.unitV (χ i) d) := by
+    (S.μ (i + 1) u : ℂ) = σ₀ (LocE.unitV P (χ i) d) := by
   have res := GlobalTheory.T.residues_of_completionAtPrimeWithUniformizer E k P q ι S.ϖ hT.compl S.unif
   exact hT.chi i d u hd ((res.2.2.1 d hd).1 (e ▸ hu)) e
 

@@ -170,6 +170,7 @@ theorem forgetFr_surjective : Function.Surjective (forgetFr : DecoF E n ST SG Q 
     · exact (forgetDeco_be_of_not _ w h).trans (be_eq_frBe d.2 (liftFr_spec d.2 w)).symm
 
 
+variable (E n SG Q) in
 open Classical in
 def redGQ : GLG (E := E) (n := n) (SG := SG) × GLQ E n Q →* GLG (E := E) (n := n) (SG := uSG SG Q) where
   toFun a w := if h : w.1 ∈ SG then a.1 ⟨w.1, h⟩ else redGL n w.1 (a.2 (rightOf w h))

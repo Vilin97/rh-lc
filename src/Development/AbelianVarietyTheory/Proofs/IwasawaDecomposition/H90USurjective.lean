@@ -56,7 +56,7 @@ theorem KDq_le_ker {χ : HChar H.E} (hF : χ.TrivOn H.F) (ht : ∀ v, χ.TameAt 
     show χ.1 (finPartI H.E (locF H.F v k)) = 1
     rw [e, ← hF.1 v k]
     unfold locF HChar.resFin
-    rw [map_prod, MonoidHom.finset_prod_apply]
+    rw [map_prod, MonoidHom.finsetProd_apply]
     rfl
 
 theorem KD_le_ker {χ : HChar H.E} (hF : χ.TrivOn H.F) (ht : ∀ v, χ.TameAt v)
@@ -167,8 +167,7 @@ theorem map_one_tmul {ι : AfE F E →+* FiniteAdeleRing (𝓞 E) E} (h1 : ∀ x
 theorem exists_eq_one_tmul {σ : E →ₐ[F] E} (hσ : ∀ x, ∃ t : F, algebraMap F E t = x + σ x) {z : AfE F E}
     (hz : sigR σ (FiniteAdeleRing (𝓞 F) F) z = z) : ∃ b, z = 1 ⊗ₜ[F] b := by
   have h : ∀ y : AfE F E, ∃ b, y + sigR σ (FiniteAdeleRing (𝓞 F) F) y = 1 ⊗ₜ[F] b := fun y => by
-    induction y using TensorProduct.induction_on with
-    | zero => exact ⟨0, by simp⟩
+    induction y using TensorProduct.inductionOn with
     | add y y' hy hy' =>
       obtain ⟨b, hb⟩ := hy
       obtain ⟨b', hb'⟩ := hy'

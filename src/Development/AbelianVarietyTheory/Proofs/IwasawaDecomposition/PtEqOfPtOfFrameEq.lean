@@ -109,6 +109,7 @@ theorem perFr_mem {A : Type} (S : Submodule ℂ (A → ℂ)) (w : A → Fin r �
     rw [Finset.sum_comm (s := Finset.univ) (f := fun b c => ∑ d, n b _ * _)]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [Finset.sum_comm]
+    simp only [Matrix.mul_apply, Finset.sum_mul]
     exact Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun d _ => by ring
 
 variable {H : Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {σ : c.F →+* ℂ}

@@ -141,7 +141,7 @@ theorem exists_isStdChar : ∀ D : D7, ∃ ψ : AddChar (AF D.host.F) ℂ, IsStd
   obtain ⟨θ, hθ⟩ := GlobalTheory.DualPairCompare.exists_infFam D
   let L : Ainf D.host.F →+ ℂ := AddMonoidHom.mk' (fun x => ∑ ρ, θ ρ (x ⊗ₜ[D.host.F] (1 : D.host.E))) fun a b => by
     simp only [map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib]
-  obtain ⟨ψ, h1, h2⟩ := exists_char_of_trace D.host.F L (continuous_finset_sum _ fun ρ _ => (hθ ρ).2) fun x => by
+  obtain ⟨ψ, h1, h2⟩ := exists_char_of_trace D.host.F L (continuous_finsetSum _ fun ρ _ => (hθ ρ).2) fun x => by
     show ∑ ρ, θ ρ (algebraMap D.host.F (Ainf D.host.F) x ⊗ₜ[D.host.F] (1 : D.host.E)) = _
     rw [GlobalTheory.StdRat.tmul_one_eq, Finset.sum_congr rfl fun ρ _ => (hθ ρ).1 _, GlobalTheory.StdRat.sum_tauE_eq_trace]
   refine ⟨ψ, h1, ⟨θ, hθ⟩, fun θ' hθ' x => ?_⟩

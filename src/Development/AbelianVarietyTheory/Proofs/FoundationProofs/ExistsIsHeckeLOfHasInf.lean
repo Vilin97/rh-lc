@@ -79,7 +79,8 @@ theorem pic_char_eq_finPart (hc : c ≠ ⊥) (θ : PicO c →* ℂˣ) (ξ : HCha
         rw [hP2]
         exact Valuation.map_sub_le _ (le_of_eq hx) (by simp)))
       refine GlobalTheory.FrobDense.eq_one_of_unif ((η * ξ⁻¹).loc P) fun x hx => ?_
-      rw [Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_inv, η.val_eq hη x hx, ξ.val_eq (h P hP.1).1 x hx,
+      change η.loc P x * (ξ.loc P x)⁻¹ = 1
+      rw [η.val_eq hη x hx, ξ.val_eq (h P hP.1).1 x hx,
         ← (h P hP.1).2]
       exact mul_inv_cancel _
   exact mul_inv_eq_one.1 (DFunLike.congr_fun key (finIdele E y))
@@ -139,7 +140,7 @@ theorem exists_emb (i : X.Tw) (k : ℕ) : ∃ J : FractionRing (X.Ok i k) →+* 
   have hJ : Function.Injective J0.toRingHom := by
     rw [RingHom.injective_iff_ker_eq_bot]
     refine Ideal.eq_bot_of_comap_eq_bot (R := X.O i) ?_
-    rw [RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
+    rw [Ideal.under_def, RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
     intro a b hab
     exact FaithfulSMul.algebraMap_injective (X.O i) (Kbar X i)
       ((J0.commutes a).symm.trans (Eq.trans hab (J0.commutes b)))
@@ -199,12 +200,14 @@ theorem isValChar_mul (ha : IsGlobalArtin art) (h : Corr art (r.comp (X.art i Q)
       rw [← hP, Ideal.mem_comap, map_natCast]
       exact hm)
     intro x hx hx1
-    rw [Formalism.L2.Host.HChar.loc_mul, e x hx, levelLe_one_of_pow (X.lPrime i).out hp hPl x hx hx1, one_mul]
+    change χ.loc P x * ξ.loc P x = 1
+    rw [e x hx, levelLe_one_of_pow (X.lPrime i).out hp hPl x hx hx1, one_mul]
   · have hu : ξ.UnrAt P := unrAt_of_corr ha h fun hm =>
       hv (Finset.mem_image.2 ⟨P, hm, HeightOneSpectrum.ext hP⟩)
     rw [← (hχ.2.2.2 v P hP).2 (Finset.notMem_empty v) m]
     refine forall_congr' fun x => forall_congr' fun hx => ?_
-    rw [Formalism.L2.Host.HChar.loc_mul, hu x hx, mul_one]
+    change χ.loc P x * ξ.loc P x = _
+    rw [hu x hx, mul_one]
 
 theorem exists_isHeckeL {E : Type} [Field E] [NumberField E] {I : Type} [Fintype I] {φ : I → E →+* ℂ} {s : ℕ} {κ : I → ℕ}
     {𝔣 : Ideal (OF E)} {T : Finset (HeightOneSpectrum (OF E))} {χ : HChar E} (hb : IsBaseCond 𝔣) (hT : IsFinSetSplitPlacesCoprimeConductor 𝔣 T)
@@ -214,7 +217,7 @@ theorem exists_isHeckeL {E : Type} [Field E] [NumberField E] {I : Type} [Fintype
   let v : HeightOneSpectrum (OF E) := ⟨M, hM.isPrime, fun h => hb.1 (le_bot_iff.1 (h ▸ hle))⟩
   have hv : v.asIdeal ∣ 𝔣 := Ideal.dvd_iff_le.2 hle
   obtain ⟨P, -, -, hP, -⟩ := (hb.2.2 v hv).1
-  refine ((hχ.2.2.2 v P hP).2 fun hm => (hT v hm).2 hv).not_unrAt (multiplicity_ne_zero.2 hv) ?_
+  refine ((hχ.2.2.2 v P hP).2 fun hm => (hT v hm).2 hv).not_unrAt ((multiplicity_ne_zero (Ideal.finiteMultiplicity v.isPrime.ne_top hb.1)).2 hv) ?_
   rw [(GlobalTheory.HeckeOne.isNormPow_iff _ _).1 ht]
   exact GlobalTheory.HeckeOne.unrAt_normChar t P
 

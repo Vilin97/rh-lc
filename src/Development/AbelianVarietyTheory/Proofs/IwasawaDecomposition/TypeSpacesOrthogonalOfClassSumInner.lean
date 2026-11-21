@@ -110,7 +110,7 @@ theorem rt_mem_AFall {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ
     {ρ : Representation ℂ (GQ L n) W} (h : GAf L n) {f : GAf L n → W} (hf : f ∈ NG.AFall L n ρ) :
     NG.rt L n h f ∈ NG.AFall L n ρ := by
   obtain ⟨h1, N, hN, h2⟩ := hf
-  obtain ⟨N', hN', hc⟩ := GlobalTheory.CongConjugate.congConj L n h N hN
+  obtain ⟨N', hN', hc⟩ := Formalism.IndefR.principalLevelFrame.congConj_holds L n h N hN
   refine ⟨fun γ g => ?_, N', hN', fun κ hκ g => ?_⟩
   · show f ((γ : GAf L n) * g * h) = ρ γ (f (g * h))
     rw [mul_assoc]; exact h1 γ _
@@ -165,7 +165,7 @@ theorem mem_sSup_irrRep : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L]
     refine (GlobalTheory.IsotOrth.orbit_finite ρC hN' y (fun κ hκ => Subtype.ext (funext fun g => hy κ hκ g))).subset ?_
     rintro _ ⟨k, hk, rfl⟩
     exact ⟨k, hk.1, rfl⟩
-  have hmem := GlobalTheory.SpanIsot.mem_sSup_irr ρC hunit _ F hF horb ⟨x, hx⟩
+  have hmem := GlobalTheory.SpanIsot.mem_sSup_irr ρC F ⟨x, hx⟩
     (fun κ hκ => Subtype.ext (funext fun g => hxN κ hκ g))
   have hle : sSup {W | GlobalTheory.SpanIsot.IrrSub ρC W} ≤ (sSup {S | NG.IsIrrRep a.ρ S}).comap C.subtype := by
     refine sSup_le fun W hW => ?_

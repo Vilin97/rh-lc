@@ -665,6 +665,7 @@ variable {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] (P : Heig
 def vP (a : E) : ℤ := Classical.epsilon fun z : ℤ => IsUnit (redP P (a / (q : E) ^ z))
 
 
+variable {P} in
 open Classical in
 def unitV (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (a : E) : K := if h : IsUnit (redP P a) then ((χ h.unit : Kˣ) : K) else 0
 
@@ -1196,7 +1197,10 @@ theorem ybSet_gmap {n : ℕ} (N : Submodule (𝓞 X.E) (Sp X.E n)) (γ : Sp X.E 
   · rintro ⟨y, hy, hY⟩
     refine ⟨γ y, (mem_locLat_gmap _ _ _ _ _).2 (by rwa [LinearEquiv.symm_apply_apply]), ?_⟩
     ext z
-    rw [Set.mem_ofPred_eq, mem_locLat_gmap, map_sub, LinearEquiv.symm_apply_apply]
+    classical
+    change z ∈ (fun v => γ v) '' Y ↔ z - γ y ∈
+      locLat (rowSG Pr sel mu) (gmap γ N) (fun P => if P.1 ∈ Pr.vGs then 0 else cst.M)
+    rw [mem_locLat_gmap, map_sub, LinearEquiv.symm_apply_apply]
     constructor
     · rintro ⟨z', h', rfl⟩
       rw [hY] at h'

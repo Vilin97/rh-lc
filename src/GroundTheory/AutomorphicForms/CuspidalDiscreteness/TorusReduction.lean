@@ -23,6 +23,8 @@ open Reduction AutomorphicForm RightCosetSpace
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
+local notation "Γ₁" => rationalGLOne (K := K) (n := n)
+
 def truncInf {r : ℕ} (s : UPos n r → 𝔸[K]) : UPos n r → 𝔸[K] := fun p => ((s p).1, 0)
 
 def truncFin {r : ℕ} (s : UPos n r → 𝔸[K]) : UPos n r → 𝔸[K] := fun p => (0, (s p).2)
@@ -57,9 +59,9 @@ theorem norm_rconv_le_of_altSum (f : CompactlySupportedContinuousMap (normOneGL 
     {φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)} (hφ : φ ∈ cuspidalL2 μ) {r : ℕ} (hr : 0 < r) (hrn : r < n)
     {M : ℕ} (hM : 0 < M) (x : normOneGL (K := K) (n := n)) (k : ℕ) {B : ℝ}
     (hB : ∀ y : Fin k → UPos n r → 𝔸[K], (∀ i, y i ∈ scaledUnipFD K n r M) →
-      ‖altSum k (fun s => rconv Γ₁ μ f φ (unipOne K n r s * x)) y 0‖ ≤ B) :
+      ‖altSum k (fun s => rconv Γ₁ μ f φ (unipOne r s * x)) y 0‖ ≤ B) :
     ‖rconv Γ₁ μ f φ x‖ ≤ B := by
-  set H : (UPos n r → 𝔸[K]) → ℂ := fun s => rconv Γ₁ μ f φ (unipOne K n r s * x)
+  set H : (UPos n r → 𝔸[K]) → ℂ := fun s => rconv Γ₁ μ f φ (unipOne r s * x)
   have hHc : Continuous H :=
     (continuous_rconv Γ₁ μ f φ).comp ((continuous_unipOne r).mul continuous_const)
   have hper : ∀ ξ ∈ unipLattice K n r, ∀ s, H (ξ + s) = H s := by
@@ -83,28 +85,28 @@ theorem norm_rconv_le_of_altSum_inf (f : CompactlySupportedContinuousMap (normOn
     (hfin : ∀ z : UPos n r → 𝔸[K], (∀ p, (z p).1 = 0) →
       (∀ p, ∃ a ∈ GroundTheory.Global.integralFiniteAdeles (𝓞 K) K,
         (z p).2 = (M : FiniteAdeleRing (𝓞 K) K) * a) →
-      ∀ w, f ((x⁻¹ * unipOne K n r z * x)⁻¹ * w) = f w)
+      ∀ w, f ((x⁻¹ * unipOne r z * x)⁻¹ * w) = f w)
     (k : ℕ) {B : ℝ}
     (hB : ∀ y : Fin k → UPos n r → 𝔸[K], (∀ i, y i ∈ scaledUnipFD K n r M) →
-      ‖altSum k (fun s => rconv Γ₁ μ f φ (unipOne K n r (truncInf s) * x)) y 0‖ ≤ B) :
+      ‖altSum k (fun s => rconv Γ₁ μ f φ (unipOne r (truncInf s) * x)) y 0‖ ≤ B) :
     ‖rconv Γ₁ μ f φ x‖ ≤ B := by
   refine norm_rconv_le_of_altSum μ f hφ hr hrn hM x k fun y hy => ?_
   have key : ∀ ε : Fin k → Bool,
-      rconv Γ₁ μ f φ (unipOne K n r (0 + altPoint y ε) * x) =
-        rconv Γ₁ μ f φ (unipOne K n r (truncInf (0 + altPoint y ε)) * x) := by
+      rconv Γ₁ μ f φ (unipOne r (0 + altPoint y ε) * x) =
+        rconv Γ₁ μ f φ (unipOne r (truncInf (0 + altPoint y ε)) * x) := by
     intro ε
     rw [zero_add]
     have hfinP := hfin (truncFin (altPoint y ε)) (fun p => rfl) fun p => by
       obtain ⟨a, ha, hPa⟩ := exists_finite_altPoint_eq_natCast_mul hM y hy ε p
       exact ⟨a, ha, hPa⟩
-    have hP : unipOne K n r (altPoint y ε) * x = unipOne K n r (truncInf (altPoint y ε)) * x *
-        (x⁻¹ * unipOne K n r (truncFin (altPoint y ε)) * x) := by
+    have hP : unipOne r (altPoint y ε) * x = unipOne r (truncInf (altPoint y ε)) * x *
+        (x⁻¹ * unipOne r (truncFin (altPoint y ε)) * x) := by
       simp only [mul_assoc, mul_inv_cancel_left]
       rw [← mul_assoc, ← unipOne_add, truncInf_add_truncFin]
     rw [hP]
     exact rconv_mul_right μ f φ hfinP _
-  have heq : altSum k (fun s => rconv Γ₁ μ f φ (unipOne K n r s * x)) y 0 =
-      altSum k (fun s => rconv Γ₁ μ f φ (unipOne K n r (truncInf s) * x)) y 0 := by
+  have heq : altSum k (fun s => rconv Γ₁ μ f φ (unipOne r s * x)) y 0 =
+      altSum k (fun s => rconv Γ₁ μ f φ (unipOne r (truncInf s) * x)) y 0 := by
     rw [altSum_eq_sum, altSum_eq_sum]
     exact Finset.sum_congr rfl fun ε _ => congrArg (altSign ε • ·) (key ε)
   rw [heq]

@@ -110,19 +110,15 @@ theorem logMv_eq (F : PowerSeries ℂ_[p]) (hF : constantCoeff F = 1) :
     simp [h0]
 
 theorem mul_derivative_logOf (F : PowerSeries ℂ_[p]) (hF : constantCoeff F = 1) :
-    F * d⁄dX ℂ_[p] (logOf F) = d⁄dX ℂ_[p] F := by
+    F * d⁄dX (logOf F) = d⁄dX F := by
   have h1 : constantCoeff (F - 1) = 0 := by simp [hF]
   have hs := HasSubst.of_constantCoeff_zero' h1
-  have e : (1 + X) * d⁄dX ℂ_[p] (PowerSeries.log ℂ_[p]) = 1 := by
-    rw [deriv_log]
-    ext n
-    cases n with
-    | zero => simp [add_mul]
-    | succ n => simp [add_mul, coeff_succ_X_mul, coeff_one, pow_succ]
+  have e : (1 + X) * d⁄dX (PowerSeries.log ℂ_[p]) = 1 := by
+    rw [mul_comm, derivative_log_mul_one_add_X]
   have e2 := congrArg (substAlgHom (R := ℂ_[p]) hs) e
   rw [map_mul, map_add (f := _), map_one, substAlgHom_X, coe_substAlgHom] at e2
   rw [logOf_eq, derivative_subst hs, ← mul_assoc]
-  have e3 : F * subst (F - 1) (d⁄dX ℂ_[p] (PowerSeries.log ℂ_[p])) = 1 := by
+  have e3 : F * subst (F - 1) (d⁄dX (PowerSeries.log ℂ_[p])) = 1 := by
     rwa [add_sub_cancel] at e2
   rw [e3]
   simp
@@ -134,8 +130,11 @@ theorem constantCoeff_expPS (F : PowerSeries ℂ_[p]) : constantCoeff (expPS F) 
 theorem exp_neg_log_mul (F : PowerSeries ℂ_[p]) (hF : constantCoeff F = 1) :
     expPS (-logOf F) * F = 1 := by
   have h0 : constantCoeff (-logOf F) = 0 := by simp [constantCoeff_logOf hF]
+  have hExp : d⁄dX (expPS (-logOf F)) = expPS (-logOf F) * d⁄dX (-logOf F) := by
+    rw [GlobalTheory.ExpJets.expPS_eq_subst _ h0,
+      derivative_subst (HasSubst.of_constantCoeff_zero' h0), derivative_exp]
   refine derivative.ext ?_ ?_
-  · rw [Derivation.leibniz, GlobalTheory.ExpJets.derivative_expPS _ h0, map_neg, derivative_one]
+  · rw [Derivation.leibniz, hExp, map_neg, derivative_one]
     simp only [smul_eq_mul]
     linear_combination (-expPS (-logOf F)) * mul_derivative_logOf F hF
   · simp [hF, constantCoeff_expPS]

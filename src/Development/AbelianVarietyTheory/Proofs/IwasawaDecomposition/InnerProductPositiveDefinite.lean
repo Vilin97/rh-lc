@@ -34,10 +34,11 @@ theorem re_pos_of_majAt {K V ι M : Type} [Field K] [NumberField K] [StarRing K]
     induction w using hd0.induction_on with
     | hp =>
       apply isClosed_eq
-      set_option synthInstance.maxHeartbeats 100000 in
-        · simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
-          RingHom.id_apply]
-        have := Complex.continuous_conj
+      · set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+            RingHom.id_apply]
+        have hρ : ∀ i : ι, Continuous (fun y : ι → ℂ => ρ (y i)) :=
+          fun i => hρc.comp (continuous_apply i)
         fun_prop
       · have : Continuous fun w : ι → ℂ => (X v)⁻¹.mulVec w :=
           Continuous.matrix_mulVec continuous_const continuous_id

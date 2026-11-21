@@ -172,11 +172,7 @@ theorem latAt_lattice (u : B.Word) (a : I.ι) (i : ℕ) (c : (I.stp u a i).Cl) :
   letI := B.host.cmStar
   unfold latAt
   split_ifs with hi
-  · have h := l.lat u a i c
-    refine ⟨h.fg.map _, ?_⟩
-    have h2 := congrArg (Submodule.map ((crd B i hi).symm : (Fin (B.R.N i) → B.host.E) →ₗ[B.host.E] (B.sp.X i).V)) h.span_eq_top
-    rw [Submodule.map_span, Submodule.map_top, LinearEquiv.range] at h2
-    exact h2
+  · exact Submodule.IsLattice.of_fg _ ((l.lat u a i c).fg.map _)
   · exact (B.sp.X i).standardTuple_isLattice
 
 def cols : Cols B where

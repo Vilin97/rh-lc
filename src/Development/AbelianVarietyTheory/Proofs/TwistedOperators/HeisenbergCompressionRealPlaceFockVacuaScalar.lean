@@ -141,7 +141,7 @@ private theorem flow_lemma {μ : Measure (WO S T)} {𝓕 : Set (WO S T)} (hψ : 
     simp only [sub_add_cancel] at hd
     refine hd.congr_deriv ?_
     have hDzh := GlobalTheory.WeilVacMove.isTheta_dRho hψ hθ τ z hh
-    have hDJh := GlobalTheory.WeilVacMove.isTheta_dRho hψ hθ τ J hh
+    have hDJh : IsThetaFunO ψ S T (DJ h) := GlobalTheory.WeilVacMove.isTheta_dRho hψ hθ τ J hh
     have hDJg := GlobalTheory.WeilVacMove.isTheta_dRho hψ hθ τ J hg
     have cA : Dz h + Complex.I • DJ h =
         (-2 * (phase lam S T (L 1) (L s) + Complex.I * phase lam S T (L' 1) (L s))) • h := by
@@ -167,7 +167,8 @@ private theorem flow_lemma {μ : Measure (WO S T)} {𝓕 : Set (WO S T)} (hψ : 
           refine ⟨U, hU, fun u hu h0 => ?_⟩
           funext w
           have e1 := congrFun (h1 u hu h0) w
-          unfold heisO at e1 ⊢
+          change ψ (symplOH S T w u) * DJ h (w + u) = DJ h w at e1
+          unfold heisO
           rw [Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm, e1]
         · exact hDJh.cont.const_smul Complex.I
         · intro k L h1 h2 w

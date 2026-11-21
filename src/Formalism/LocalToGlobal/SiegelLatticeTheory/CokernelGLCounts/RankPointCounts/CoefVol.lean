@@ -137,6 +137,7 @@ theorem volProd_of (hA : ∀ p, Agree δ M p)
     Complex.ofRealHom.toMonoidHom.map_finprod_of_injective Complex.ofReal_injective _
   rw [← hcast, hv, key, ← hw]
   simp only [yT, hz, Complex.ofReal_mul, Complex.ofReal_natCast]
+  rfl
 
 end Good
 

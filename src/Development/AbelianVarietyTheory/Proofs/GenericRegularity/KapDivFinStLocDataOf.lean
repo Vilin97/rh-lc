@@ -33,7 +33,6 @@ theorem kap_divFin_stLoc_dataOf : ∀ (E : Type) [Field E] [NumberField E] [IsCM
   refine ⟨hfg, htr, ?_, ?_⟩
   · exact divFin_of_trdeg E H Dw l Xo c _ hD hDd (fun Z j => valC_mem h uL.1 uL.2 (wR j) Z) hw hT
   · refine stLoc_of_trdeg E H Dw l Xo c h Dd N uL wR jc hFG hTr hjc (fun Z => ?_)
-
     have hZ := hT Z
     unfold ReciprocityTheory.ChartRestriction.G.AR.Up.TrdegD at hZ
     have key : (fun j => ReciprocityTheory.ChartRestriction.G.T0.ratio (Ω := Om Z) ((dataOf h δ fn yP Dd N T i g0 cc uL uF uka ude uet uta1 uta2 wR jc np thpR n0 th0R uF0 nk thkR MR etR ta1R ta2R nu ip wsize DF PN PQ tableDegreeThreeBase PP0' Pd Gc PI4 Pet tableLineDegreeFive tableLineDegreeTwo Prw PO f r).w j Z) ((dataOf h δ fn yP Dd N T i g0 cc uL uF uka ude uet uta1 uta2 wR jc np thpR n0 th0R uF0 nk thkR MR etR ta1R ta2R nu ip wsize DF PN PQ tableDegreeThreeBase PP0' Pd Gc PI4 Pet tableLineDegreeFive tableLineDegreeTwo Prw PO f r).w ((dataOf h δ fn yP Dd N T i g0 cc uL uF uka ude uet uta1 uta2 wR jc np thpR n0 th0R uF0 nk thkR MR etR ta1R ta2R nu ip wsize DF PN PQ tableDegreeThreeBase PP0' Pd Gc PI4 Pet tableLineDegreeFive tableLineDegreeTwo Prw PO f r).jc Z) Z)) =
@@ -44,5 +43,6 @@ theorem kap_divFin_stLoc_dataOf : ∀ (E : Type) [Field E] [NumberField E] [IsCM
       simp [div_mul_cancel₀ _ (hjc Z)]
     rw [key] at hZ
     exact hZ
+
 
 end GlobalTheory.Reg

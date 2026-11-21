@@ -23,7 +23,7 @@ variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : 
 def twLocPart (M₀ : FinGradedSub (S := S) (x := x) Ω) (b c : ℤ) (I : Finset (Fin (N + 1))) :
     Submodule S Ω :=
   Submodule.span S {y | ∃ (z : Ω) (s : Poly S N) (a : ℤ) (e : ℕ), s ∈ monos I ∧ s.IsHomogeneous e ∧
-    z ∈ twPart x η M₀ a b ∧ a - e = c ∧ y = (aeval x s)⁻¹ * z}
+    z ∈ twPart η M₀ a b ∧ a - e = c ∧ y = (aeval x s)⁻¹ * z}
 
 theorem twLocPart_eta_mul (M₀ : FinGradedSub (S := S) (x := x) Ω) {b c : ℤ} {I : Finset (Fin (N + 1))}
     (j : Fin (r + 1)) {y : Ω} (hy : y ∈ twLocPart η M₀ b c I) : η j * y ∈ twLocPart η M₀ (b + 1) c I := by
@@ -36,7 +36,7 @@ theorem twLocPart_eta_mul (M₀ : FinGradedSub (S := S) (x := x) Ω) {b c : ℤ}
   · intro c' u _ hu; rw [mul_smul_comm]; exact Submodule.smul_mem _ c' hu
 
 theorem twLocPart_chart_mul (M₀ : FinGradedSub (S := S) (x := x) Ω) {b c : ℤ} (K : Chart x)
-    (a : chartRing (S := S) K) {y : Ω} (hy : y ∈ twLocPart η M₀ b c K.1) : (a : Ω) * y ∈ twLocPart η M₀ b c K.1 := by
+    (a : chartRing S x K) {y : Ω} (hy : y ∈ twLocPart η M₀ b c K.1) : (a : Ω) * y ∈ twLocPart η M₀ b c K.1 := by
   obtain ⟨f, s, e, hs, hf, hse, ha⟩ := a.2
   rw [ha]
   refine Submodule.span_induction (p := fun y _ => aeval x f / aeval x s * y ∈ twLocPart η M₀ b c K.1)
@@ -51,15 +51,15 @@ theorem twLocPart_chart_mul (M₀ : FinGradedSub (S := S) (x := x) Ω) {b c : �
   · intro c' u _ hu; rw [mul_smul_comm]; exact Submodule.smul_mem _ c' hu
 
 def twLocPartA (M₀ : FinGradedSub (S := S) (x := x) Ω) (b c : ℤ) (K : Chart x) :
-    Submodule (chartRing (S := S) K) Ω where
+    Submodule (chartRing S x K) Ω where
   carrier := twLocPart η M₀ b c K.1
   add_mem' := Submodule.add_mem _
   zero_mem' := Submodule.zero_mem _
   smul_mem' a y hy := by rw [chartRing_smul_def]; exact twLocPart_chart_mul η M₀ K a hy
 
-theorem mul_mem_of_mem_span {K : Chart x} (T : Submodule (chartRing (S := S) K) Ω) {s t : Set Ω} (w : Ω)
-    (h : ∀ u ∈ s, ∀ v ∈ t, w * (u * v) ∈ T) {u v : Ω} (hu : u ∈ Submodule.span (chartRing (S := S) K) s)
-    (hv : v ∈ Submodule.span (chartRing (S := S) K) t) : w * (u * v) ∈ T := by
+theorem mul_mem_of_mem_span {K : Chart x} (T : Submodule (chartRing S x K) Ω) {s t : Set Ω} (w : Ω)
+    (h : ∀ u ∈ s, ∀ v ∈ t, w * (u * v) ∈ T) {u v : Ω} (hu : u ∈ Submodule.span (chartRing S x K) s)
+    (hv : v ∈ Submodule.span (chartRing S x K) t) : w * (u * v) ∈ T := by
   induction hu using Submodule.span_induction generalizing v with
   | mem u hu =>
     induction hv using Submodule.span_induction with
@@ -77,8 +77,8 @@ theorem mul_mem_of_mem_span {K : Chart x} (T : Submodule (chartRing (S := S) K) 
 
 variable {G B : SubSystem S x Ω}
 
-theorem pow_sub_le_span (hB : ∀ I, Submodule.span (chartRing (S := S) I) (Set.range η) = B.sub I) (K : Chart x)
-    (n : ℕ) : (B.pow n).sub K ≤ Submodule.span (chartRing (S := S) K) (Set.range η ^ n) := by
+theorem pow_sub_le_span (hB : ∀ I, Submodule.span (chartRing S x I) (Set.range η) = B.sub I) (K : Chart x)
+    (n : ℕ) : (B.pow n).sub K ≤ Submodule.span (chartRing S x K) (Set.range η ^ n) := by
   induction n with
   | zero =>
     change twistMod S x 0 K ≤ _
@@ -86,24 +86,24 @@ theorem pow_sub_le_span (hB : ∀ I, Submodule.span (chartRing (S := S) I) (Set.
     rintro _ ⟨f, s, e, e', hs, hf, hse, hc, rfl⟩
     have he : e' = e := by omega
     subst he
-    have hmem : aeval x f / aeval x s ∈ chartRing (S := S) K := ⟨f, s, e', hs, hf, hse, rfl⟩
-    have h1 : (1 : Ω) ∈ Submodule.span (chartRing (S := S) K) (Set.range η ^ 0) :=
+    have hmem : aeval x f / aeval x s ∈ chartRing S x K := ⟨f, s, e', hs, hf, hse, rfl⟩
+    have h1 : (1 : Ω) ∈ Submodule.span (chartRing S x K) (Set.range η ^ 0) :=
       Submodule.subset_span (by rw [pow_zero]; exact Set.mem_one.mpr rfl)
-    have := Submodule.smul_mem _ (⟨_, hmem⟩ : chartRing (S := S) K) h1
+    have := Submodule.smul_mem _ (⟨_, hmem⟩ : chartRing S x K) h1
     rwa [chartRing_smul_def, mul_one] at this
   | succ n ih =>
     change Submodule.span _ _ ≤ _
     rw [Submodule.span_le]
     rintro _ ⟨q, hq, y, hy, rfl⟩
     rw [← hB K] at hq
-    have := mul_mem_of_mem_span (Submodule.span (chartRing (S := S) K) (Set.range η ^ (n + 1))) 1
+    have := mul_mem_of_mem_span (Submodule.span (chartRing S x K) (Set.range η ^ (n + 1))) 1
       (s := Set.range η) (t := Set.range η ^ n)
       (fun u hu v hv => by
         rw [one_mul, pow_succ']
         exact Submodule.subset_span (Set.mul_mem_mul hu hv)) hq (ih hy)
     rwa [one_mul, ← smul_eq_mul] at this
 
-theorem range_pow_subset (hB : ∀ I, Submodule.span (chartRing (S := S) I) (Set.range η) = B.sub I) (K : Chart x)
+theorem range_pow_subset (hB : ∀ I, Submodule.span (chartRing S x I) (Set.range η) = B.sub I) (K : Chart x)
     (n : ℕ) {q : Ω} (hq : q ∈ Set.range η ^ n) : q ∈ (B.pow n).sub K := by
   induction n generalizing q with
   | zero =>
@@ -119,7 +119,7 @@ theorem range_pow_subset (hB : ∀ I, Submodule.span (chartRing (S := S) I) (Set
 variable (M₀ : FinGradedSub (S := S) (x := x) Ω)
 
 theorem twistSub_le_twLocPart (hG : ∀ I, M₀.tilde 0 I = G.sub I)
-    (hB : ∀ I, Submodule.span (chartRing (S := S) I) (Set.range η) = B.sub I) (K : Chart x) (n : ℕ) (c : ℤ)
+    (hB : ∀ I, Submodule.span (chartRing S x I) (Set.range η) = B.sub I) (K : Chart x) (n : ℕ) (c : ℤ)
     {y : Ω} (hy : y ∈ ((G.twist (B.pow n)).twist (twistSys S x c)).sub K) :
     y ∈ twLocPart η M₀ n c K.1 := by
   change y ∈ twLocPartA η M₀ n c K
@@ -142,7 +142,7 @@ theorem twistSub_le_twLocPart (hG : ∀ I, M₀.tilde 0 I = G.sub I)
     ring
 
 theorem twLocPart_le_twistSub (hG : ∀ I, M₀.tilde 0 I = G.sub I)
-    (hB : ∀ I, Submodule.span (chartRing (S := S) I) (Set.range η) = B.sub I) (K : Chart x) (n : ℕ) (c : ℤ)
+    (hB : ∀ I, Submodule.span (chartRing S x I) (Set.range η) = B.sub I) (K : Chart x) (n : ℕ) (c : ℤ)
     {y : Ω} (hy : y ∈ twLocPart η M₀ n c K.1) :
     y ∈ ((G.twist (B.pow n)).twist (twistSys S x c)).sub K := by
   obtain ⟨i, hi⟩ := K.2.1

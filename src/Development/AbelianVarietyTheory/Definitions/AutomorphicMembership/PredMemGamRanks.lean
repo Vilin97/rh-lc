@@ -334,6 +334,7 @@ variable (E) in
 def gamOrd (R : Ranks) : Set ℕ := ⋃ n ∈ gamRanks R, autOrd E n
 
 
+variable (E) in
 open Classical in
 def DGam (R : Ranks) : ℕ := if h : (gamOrd E R).Finite then h.toFinset.lcm id else 0
 
@@ -930,6 +931,7 @@ structure TopLev.Ok {X : Fields} {Pr : Primes X} {R : Ranks} {Q : Finset (Height
   pref_top : ∀ u p, Tp.pref u R.m p → ∃ d, p.deco = DecoSet.tilH (N_m_succ R) (Pr.piT u) d
 
 
+variable (R) in
 open Classical in
 def ysAt (j : ℕ) : Ys X (R.N j) :=
   if j + 1 = R.m then ⟨ybSet sel mu cst, fun N γ Y => ybSet_gmap sel mu cst N γ Y⟩ else Ys.triv X _

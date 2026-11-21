@@ -60,7 +60,7 @@ theorem exists_cast {S S' : Scheme.{0}} {t : SAB H S} {t' : SAB H S'} {f g : S' 
 theorem exists_fac {X X₀ Y : Scheme.{0}} {j : X₀ ⟶ X} {t₀ : SAB H X₀} {t : SAB H X} (a : SABMap t₀ t j) (i : Y ⟶ X)
     {k : X₀ ⟶ Y} (hk : k ≫ i = j) :
     ∃ (s : SAB H Y) (b : SABMap t₀ s k) (m : SABMap s t i), b.φ ≫ m.φ = a.φ := by
-  obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull i t
+  obtain ⟨_, _, _, _, _, m, -⟩ := ReciprocityTheory.ChartRestriction.G.Geo.Tor.sabPull Out.CubePf.cubePull i t
   obtain ⟨a', ha'⟩ := exists_cast a hk.symm
   obtain ⟨b, hb⟩ := ObjMaps.exists_sab_cancel m a'
   exact ⟨_, b, m, hb.symm.trans ha'⟩

@@ -181,7 +181,7 @@ theorem exists_val (hF : IsFixF K F) (hs : h.IsSymm) (hLi : Formalism.HermitianL
   obtain ⟨a, ha⟩ := (hF (h y y)).1 (hs.eq y y)
   obtain ⟨z, hz⟩ := Submodule.mem_one.1 (hLi y y.2 y y.2)
   have hint : IsIntegral ℤ a := by
-    rw [← isIntegral_algebraMap_iff , ha, ← hz]
+    rw [← isIntegral_algebraMap_iff (B := K), ha, ← hz]
     exact RingOfIntegers.isIntegral_coe z
   exact ⟨⟨a, hint⟩, ha.symm⟩
 

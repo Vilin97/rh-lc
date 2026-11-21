@@ -194,7 +194,7 @@ theorem finPart_mem_intAE {w : AE D} (hw : toEAf D w ∈ Formalism.L2.Herm.intAf
       · exact AddSubgroup.subset_closure ⟨β, hβ, 1, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
     | one => rw [map_one]; exact AddSubgroup.subset_closure ⟨1, one_mem (Formalism.UG.intAd D.host.F), 1, rfl⟩
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | neg a _ ha => rw [map_neg]; exact neg_mem ha
     | mul a b _ _ ha hb => rw [map_mul]; exact GlobalTheory.HeckeConj.mul_mem_intAE D ha hb
   have := key _ hw
@@ -345,7 +345,12 @@ theorem placeModel_unique {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ
       (mem_half S T).2 (by rw [smul_smul, hb])⟩
   generalize (latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun _ => True) = Λ at *
   have ha' : cA D a * cA D a = cA D a := by rw [← RingHom.map_mul, ha]
-  have hb := isBichar_symplO S T ψ
+  have hb : IsBichar (fun x y : WO S T => ψ (symplO S T x y)) := by
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · intro x x' y; rw [symplO_add_left, AddChar.map_add_eq_mul]
+    · intro x y y'; rw [symplO_add_right, AddChar.map_add_eq_mul]
+    · intro y; rw [symplO_zero_left, AddChar.map_zero_eq_one]
+    · intro x; rw [symplO_zero_right, AddChar.map_zero_eq_one]
   have tf : ∀ k : ℕ, 0 < k → Function.Injective fun t : WO S T => k • t := fun k hk x y hxy => by
     rw [← inv_smul_nsmul S T hk x, ← inv_smul_nsmul S T hk y]
     exact congrArg _ hxy

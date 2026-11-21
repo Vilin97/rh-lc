@@ -21,7 +21,7 @@ variable {R : Type u} [CommRing R]
 
 theorem X_pow_succ_dvd_of_derivative
     (hR : ∀ (n : ℕ) (r : R), n ≠ 0 → (n : R) * r = 0 → r = 0) {f : R⟦X⟧} {n : ℕ}
-    (h0 : constantCoeff f = 0) (h : X ^ n ∣ derivative R f) : X ^ (n + 1) ∣ f := by
+    (h0 : constantCoeff f = 0) (h : X ^ n ∣ derivative f) : X ^ (n + 1) ∣ f := by
   rw [PowerSeries.X_pow_dvd_iff] at h ⊢
   intro m hm
   rcases m with _ | k

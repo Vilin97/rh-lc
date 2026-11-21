@@ -84,9 +84,9 @@ def unitaryDecomposition : QuasiCharacter K ≃* HeckeCharacter K × Multiplicat
 
 variable (ψ : QuasiCharacter K)
 
-def unitaryPart : HeckeCharacter K := (unitaryDecomposition ψ).1
+def unitaryPart : HeckeCharacter K := (unitaryDecomposition K ψ).1
 
-def exponent : ℝ := (unitaryDecomposition ψ).2.toAdd
+def exponent : ℝ := (unitaryDecomposition K ψ).2.toAdd
 
 theorem ofUnitary_unitaryPart_mul_modulePow_exponent :
     ofUnitary ψ.unitaryPart * modulePow (ψ.exponent : ℂ) = ψ :=

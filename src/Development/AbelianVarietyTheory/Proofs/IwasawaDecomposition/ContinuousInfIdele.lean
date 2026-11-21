@@ -40,8 +40,9 @@ theorem exists_ext {L : Type} [Field L] (φ : L →+* ℂ) :
     ∃ e : (InfinitePlace.mk φ).Completion →+* ℂ, Continuous e ∧
       ∀ k : L, e (algebraMap L _ k) = φ k := by
   have h0 : ∀ k : L, InfinitePlace.Completion.extensionEmbedding (InfinitePlace.mk φ) (algebraMap L _ k) =
-      (InfinitePlace.mk φ).embedding k := fun k =>
-    InfinitePlace.Completion.extensionEmbedding_coe (InfinitePlace.mk φ) (WithAbs.toAbs _ k)
+      (InfinitePlace.mk φ).embedding k := fun k => by
+    rw [InfinitePlace.Completion.algebraMap_apply]
+    simpa using InfinitePlace.Completion.extensionEmbedding_coe (InfinitePlace.mk φ) (WithAbs.toAbs _ k)
   have hc := (InfinitePlace.Completion.isometry_extensionEmbedding (InfinitePlace.mk φ)).continuous
   rcases InfinitePlace.embedding_mk_eq φ with h | h
   · exact ⟨_, hc, fun k => by rw [h0, h]⟩

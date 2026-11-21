@@ -123,7 +123,7 @@ theorem hasMaj_pure {θ : InfFam D} (hθ : IsInfFam θ) {m n : ℕ} (f : Schwart
     exact mul_nonneg (by positivity) (GlobalTheory.Unf.maj_nonneg θ _ N x)
   · have hin : GlobalTheory.Unf.InBox (t '' tsupport g) x := by
       refine ⟨t fun i j => finPart D (x i j), ⟨_, subset_tsupport g h0, rfl⟩, ?_⟩
-      refine Matrix.ext fun i j => ?_
+      ext i j
       change finPart D (x i j - s (finPart D (x i j))) = 0
       rw [(finPart D).map_sub, hsec, sub_self]
     have hr := GlobalTheory.Unf.realSize_nonneg θ x

@@ -365,8 +365,10 @@ abbrev TopG : Type := FrmG ((topLev Ch sel mu cst P).levG R.m) ((topLev Ch sel m
 
 def extTop : FrmG (rowTyG Ch P) (levQX R sel mu) →* TopG Ch sel mu cst P :=
   (extUH (N_m_succ R)).prodMap
-    ((((extGH (N_m_succ R)).comp (Subgroup.subtype _)).codRestrict _ (extGH_mem_topLev Ch sel mu cst P)).prodMap
-      (((extQ X.E (N_m_succ R) _).comp (Subgroup.subtype _)).codRestrict _ (extQ_mem_topLev Ch sel mu cst P)))
+    ((((extGH (N_m_succ R)).comp (Subgroup.subtype (rowTyG Ch P).grp)).codRestrict
+        ((topLev Ch sel mu cst P).levG R.m).grp (extGH_mem_topLev Ch sel mu cst P)).prodMap
+      (((extQ X.E (N_m_succ R) _).comp (Subgroup.subtype (levQX R sel mu).grp)).codRestrict
+        ((topLev Ch sel mu cst P).levQ R.m).grp (extQ_mem_topLev Ch sel mu cst P)))
 
 theorem incl_extTop (g : FrmG (rowTyG Ch P) (levQX R sel mu)) : FrmG.incl _ _ (extTop Ch sel mu cst P g) =
     (extUH (N_m_succ R) g.1, extGH (N_m_succ R) g.2.1.1, extQ X.E (N_m_succ R) _ g.2.2.1) := rfl

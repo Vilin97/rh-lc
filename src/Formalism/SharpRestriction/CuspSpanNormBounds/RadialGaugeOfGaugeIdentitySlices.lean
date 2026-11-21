@@ -416,7 +416,7 @@ section PartFr4
 
 namespace Formalism.MainNotions.BridgeLemma₅
 
-open Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions.S.TopsChoicePartA Formalism.MainNotions.S.LevR Formalism.MainNotions.S.UnitaryLevelOperators Formalism.MainNotions.LevelRaisingOperators
+open Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions.S.TopsChoicePartA Formalism.MainNotions.S.LevR Formalism.MainNotions.S.UnitaryLevelOperators
 open scoped ContDiff
 
 section Transfer
@@ -483,7 +483,7 @@ section PartFr6
 
 namespace Formalism.MainNotions.BridgeLemma₅
 
-open Polynomial Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions.S.TopsChoicePartA Formalism.MainNotions.S.LevR Formalism.MainNotions.S.UnitaryLevelOperators Formalism.MainNotions.LevelRaisingOperators
+open Polynomial Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions.S.TopsChoicePartA Formalism.MainNotions.S.LevR Formalism.MainNotions.S.UnitaryLevelOperators
 
 section Res
 

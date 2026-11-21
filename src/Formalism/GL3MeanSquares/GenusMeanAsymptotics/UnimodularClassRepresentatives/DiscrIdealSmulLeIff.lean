@@ -108,11 +108,13 @@ theorem discrIdeal_smul_le_iff {h : V →ₗ⋆[K] V →ₗ[K] K} {L : Submodule
     have hmul : extP K 𝔭 ^ v * Ideal.span {z} ≤ extP K 𝔭 ^ (v + e) := by
       refine (Ideal.mul_mono_left hspan).trans ?_
       rw [Ideal.sup_mul, Ideal.span_singleton_mul_span_singleton]
-      exact sup_le (Ideal.span_singleton_le_iff_mem.mpr hz) Ideal.mul_le_left
+      exact sup_le ((Ideal.span_singleton_le_iff_mem _).mpr hz) Ideal.mul_le_left
     have hne : extP K 𝔭 ^ v ≠ 0 :=
       pow_ne_zero _ (idealPowerSpanBounds.map_ne_bot_of_isMaximal (K := K) h𝔭)
-    rw [Ideal.dvd_span_singleton.symm, ← mul_dvd_mul_iff_left hne, ← pow_add]
-    exact Ideal.dvd_iff_le.mpr hmul
+    have hdiv : extP K 𝔭 ^ v * extP K 𝔭 ^ e ∣ extP K 𝔭 ^ v * Ideal.span {z} := by
+      rw [← pow_add]
+      exact Ideal.dvd_iff_le.mpr hmul
+    exact Ideal.dvd_span_singleton.mp ((mul_dvd_mul_iff_left hne).mp hdiv)
   · intro hle
     unfold discrIdeal
     rw [Ideal.span_le]
@@ -137,7 +139,14 @@ theorem vd_smul (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFix
     (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {c : 𝓞 F} (hc : c ≠ 0) :
     vd (algebraMap F K (c : F) • h) L 𝔭 = vd h L 𝔭 + finrank K V * vF 𝔭 c := by
-  have hD := LocF.discrIdeal_ne_bot (LocF.aniso_of_totPosDef hd) hL.toIsLattice hLi
+  have hD : discrIdeal h L ≠ ⊥ := by
+    obtain ⟨b, hbL, _⟩ := LocalSpans.exists_basis_locF hL h𝔭
+    obtain ⟨g, _, hdet⟩ := LocF.exists_gram hLi b hbL
+    intro hbot
+    have hmem : g.det ∈ discrIdeal h L := Ideal.subset_span ⟨b, hbL, hdet⟩
+    rw [hbot, Ideal.mem_bot] at hmem
+    apply LocF.gram_det_ne_zero h (LocF.aniso_of_totPosDef hd) b b.linearIndependent
+    rw [← hdet, hmem, map_zero]
   have hE : extP K 𝔭 ≠ ⊤ := by
     intro e
     apply h𝔭.ne_top

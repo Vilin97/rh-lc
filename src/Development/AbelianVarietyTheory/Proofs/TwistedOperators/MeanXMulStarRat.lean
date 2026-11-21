@@ -30,7 +30,8 @@ theorem cplx_zero : cplx V W B 0 = 0 := by
 
 theorem continuous_cplx : Continuous (cplx V W B) := by
   unfold cplx
-  refine continuous_finset_sum _ fun i _ => ?_
+  refine continuous_finsetSum _ fun i _ => ?_
+  exact (continuous_id.matrix_elem 0 i).smul continuous_const
 
 theorem cplx_rat (c : Matrix (Fin 1) (Fin k) D.host.E) :
     cplx V W B (c.map (incA D)) = (∑ i, c 0 i • B i).map (incA D) := by

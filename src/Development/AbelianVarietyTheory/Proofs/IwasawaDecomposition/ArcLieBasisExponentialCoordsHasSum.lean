@@ -179,7 +179,7 @@ theorem lie_coords_hasSum : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
     (fun f => ?_) (sep_laurent hcart v hvb hVo hVη) (fun f k => ?_) (fun f => ?_) (fun f => ?_)
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [comb_snd hcart v tanv (A i) (v' i) (hA i) Vo hVη f, map_sum]
-    exact Finset.sum_congr rfl fun k _ => map_mul _ _ _
+      exact Finset.sum_congr rfl fun k _ => map_mul _ _ _
   · obtain ⟨T', hT'⟩ := Ha.diff (z k) (e k) (v k) Vo f (hez k).2.1 (hez k).2.2
       (fun n ρ κ vn h1 h2 h3 h4 h5 => (hez k).1 n ρ κ vn h1 h2 h3 h4 (thick_base _ n (v k) ρ vn h1 h5) h5) (hvV k)
     exact high_iff.2 ⟨T', fun ω hω => GlobalTheory.Conv.sumsAt_iff.1 (hT' _ hω _ ω.2.2.2.1)⟩

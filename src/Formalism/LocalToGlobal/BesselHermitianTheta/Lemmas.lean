@@ -62,12 +62,10 @@ theorem foldrRder_const (l : List (D.what₂.Tau × Matrix (Fin V.rank) (Fin V.r
     obtain ⟨c1, h1⟩ := ih
     exact ⟨0, by simp only [List.foldr_cons, h1, Rder_const]⟩
 
-theorem isAutFunSm_const (c : ℂ) : IsAutFunSm θ V (fun _ => c) where
-  left := fun _ _ _ => rfl
-  level := ⟨⊤, isOpen_univ, fun _ _ _ _ => rfl⟩
-  cont := continuous_const
-  smooth := fun _ _ _ _ _ => contDiff_const
-  zfin := by
+theorem isAutFunSm_const (c : ℂ) : IsAutFunSm θ V (fun _ => c) := by
+  refine ⟨⟨fun _ _ _ => rfl, ⟨⊤, isOpen_univ, fun _ _ _ _ => rfl⟩, continuous_const⟩,
+    fun _ _ _ _ _ => contDiff_const, ?_, ?_⟩
+  ·
     refine ⟨Submodule.span ℂ {fun _ => (1 : ℂ)}, FiniteDimensional.span_singleton ℂ _, ?_, ?_⟩
     · exact Submodule.mem_span_singleton.2 ⟨c, by funext g; simp⟩
     · intro τ k f hf
@@ -76,7 +74,7 @@ theorem isAutFunSm_const (c : ℂ) : IsAutFunSm θ V (fun _ => c) where
       obtain ⟨c', hc'⟩ := gelf_const θ V τ k a
       rw [e, hc']
       exact Submodule.mem_span_singleton.2 ⟨c', by funext g; simp⟩
-  growth := by
+  ·
     refine ⟨0, fun l _ x => ?_⟩
     obtain ⟨c', hc'⟩ := foldrRder_const θ V l c
     exact ⟨‖c'‖, fun g _ => by rw [hc', pow_zero, mul_one]⟩

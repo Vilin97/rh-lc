@@ -356,7 +356,15 @@ theorem inductionContragredient : ∀ (k : Type) [Field k] [ValuativeRel k] [Top
     (GlobalTheory.SmGL.exists_open_normalised_subgroup_subset k n) hσ (fun p hp w' w => by rw [hB, hK2 _ (hK1 p hp)]; simp) Subtype.val_injective
     (fun l hl => by
       rw [Submodule.range_subtype]
-      have hc : Continuous fun g : Levi k m => (⟨leviEmb k e g⁻¹, leviEmb_mem_parab k e _⟩ : parab k e) :=
+      have hemb : ∀ g : Levi k m, leviEmb k e g ∈ parab k e := fun g =>
+        mem_parab_iff.2 fun a b i j h => by
+          simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ h.ne']
+      have hproj : ∀ g : Levi k m, leviProj k e ⟨leviEmb k e g, hemb g⟩ = g := by
+        intro g
+        funext a
+        ext i j
+        simp [leviEmb, Matrix.blockDiagonal'_apply_eq]
+      have hc : Continuous fun g : Levi k m => (⟨leviEmb k e g⁻¹, hemb _⟩ : parab k e) :=
         ((continuous_leviEmb k e).comp continuous_inv).subtype_mk _
       refine mem_smoothPart_of_nhds ?_
       filter_upwards [(hc.tendsto' 1 1 (by simp)).eventually hl,
@@ -364,7 +372,7 @@ theorem inductionContragredient : ∀ (k : Type) [Field k] [ValuativeRel k] [Top
       refine LinearMap.ext fun w => Eq.trans ?_ (h1 w)
       have h3 : deltaHalf k m g⁻¹ = 1 := inv_mem h2
       show l (ρ g⁻¹ w) = l (twist ρ (deltaHalf k m) (leviProj k e _) w)
-      rw [leviProj_leviEmb, twist_apply, h3, Units.val_one, one_smul]) hinv
+      rw [hproj, twist_apply, h3, Units.val_one, one_smul]) hinv
   exact exists_equiv μ SplitFlip.isCompact_KO σ τ B hinv hi hs
 
 end GlobalTheory.SmGL.IndDual
