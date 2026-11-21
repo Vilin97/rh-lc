@@ -65,9 +65,9 @@ theorem fst_eq_one {u : B.Word} {a : I.ι} {j : ℕ} {b : (I.stp u a j).β} {g :
 
 theorem act_eq {u : B.Word} {a : I.ι} {j : ℕ} {b : (I.stp u a j).β} {g : (I.stp u a j).G b} (h : (I.stp u a j).gam b g = 1)
     (p : (I.stp u a j).D b) : ((I.stp u a j).act b g p).1.1 =
-      ((1, g.2.1.1, g.2.2.1) : UF B.fields.E (B.R.N j) × GLG B.fields.E (B.R.N j) (B.primes X).vGs ×
+      ((1, g.2.1.1, g.2.2.1) : UF B.fields.E (B.R.N j) × GLG (E := B.fields.E) (n := B.R.N j) (SG := (B.primes X).vGs) ×
         GLQ B.fields.E (B.R.N j) (I.Q a)) • p.1.1 := by
-  show ((g.1, g.2.1.1, g.2.2.1) : UF B.fields.E (B.R.N j) × GLG B.fields.E (B.R.N j) (B.primes X).vGs ×
+  show ((g.1, g.2.1.1, g.2.2.1) : UF B.fields.E (B.R.N j) × GLG (E := B.fields.E) (n := B.R.N j) (SG := (B.primes X).vGs) ×
         GLQ B.fields.E (B.R.N j) (I.Q a)) • p.1.1 = _
   rw [fst_eq_one h]
 

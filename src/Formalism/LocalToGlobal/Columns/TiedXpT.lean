@@ -21,8 +21,8 @@ section Gen
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 
-theorem xp_mulLat_L (hc : CMData F E) {n : ℕ} [NeZero n] {ST SG : Finset (Pl E)} {H : Subgroup (GLG E n SG)} (g : UF E n × H)
-    (e : DecoSet E n ST SG) :
+theorem xp_mulLat_L (hc : CMData F E) {n : ℕ} [NeZero n] {ST SG : Finset (Pl E)} {H : Subgroup (GLG (E := E) (n := n) (SG := SG))} (g : UF E n × H)
+    (e : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     Formalism.L2.Forms.mulLat (((ratEquiv hc n).symm g.1 : GL (Fin n) E) : Matrix (Fin n) (Fin n) E) e.1.L = (g • e).1.L := by
   rw [rlc_smul_val, Deco.L_act]
   unfold Formalism.L2.Forms.mulLat gmap
@@ -46,7 +46,7 @@ def padL (E : Type) [Field E] (n N : ℕ) : (Fin n → E) →ₗ[E] (Fin N → E
 theorem padL_apply (E : Type) [Field E] (n N : ℕ) (x : Fin n → E) (j : Fin N) :
     padL E n N x j = if h : (j : ℕ) < n then x ⟨j, h⟩ else 0 := rfl
 
-theorem xp_tilH_L {N n : ℕ} (hN : N = n + 1) [NeZero N] {ST SG : Finset (Pl E)} (d : DecoSet E n ∅ SG) {pi : 𝓞 E}
+theorem xp_tilH_L {N n : ℕ} (hN : N = n + 1) [NeZero N] {ST SG : Finset (Pl E)} (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) {pi : 𝓞 E}
     (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal) (hpi : ∀ P : ST, pi ∈ P.1.asIdeal)
     (hdvd : ∀ r : 𝓞 E, (∀ P : ST, r ∈ P.1.asIdeal) → pi ∣ r)
     (iX : (Fin n → E) →ₗ[E] (Fin N → E))
@@ -136,7 +136,7 @@ theorem hermitianForm_lastCoordinateUniformizerVector_self (hS : SpStd d.toColBa
     rw [Pi.single_eq_of_ne hj, mul_zero]
   · intro h; exact absurd (Finset.mem_univ _) h
 
-def ColDat.tilPt (d : ColDat) (u : d.what₂.Word) (c : PCl d) : DecoSet d.X.E (d.R.N d.R.m) (d.Pr.vT u) d.Pr.vGs :=
+def ColDat.tilPt (d : ColDat) (u : d.what₂.Word) (c : PCl d) : DecoSet (E := d.X.E) (n := d.R.N d.R.m) (ST := d.Pr.vT u) (SG := d.Pr.vGs) :=
   tilR (Pr := d.Pr) (R := d.R) (Finset.Subset.refl _) u (d.reprP c)
 
 def ColDat.tilMv (d : ColDat) (u : d.what₂.Word) (c : PCl d) : (stepGSD (Pr := d.Pr) d.W d.lev u d.R.m).G :=
@@ -190,7 +190,7 @@ theorem til_lat (hS : SpStd d.toColBase) (u : d.what₂.Word) (c : PCl d) :
   refine (congrArg (Formalism.L2.Forms.mulLat (tieGa a hS u c).1.1) (clsCrd_eq a u d.R.m le_rfl _)).trans ?_
   refine (xp_mulLat_L d.sp.cm (d.tilMv u c) _).trans ?_
   have h := tilMv_smul u c
-  refine (congrArg (fun e : DecoSet d.X.E (d.R.N d.R.m) (d.Pr.vT u) d.Pr.vGs => e.1.L) h).trans ?_
+  refine (congrArg (fun e : DecoSet (E := d.X.E) (n := d.R.N d.R.m) (ST := d.Pr.vT u) (SG := d.Pr.vGs) => e.1.L) h).trans ?_
   exact xp_tilH_L (N_m_succ d.R) (d.reprP c) (fun P => conj_piT_notMem d.hPr u P) (a.piT_off u)
     (fun P => decoFin_mem_of_mem_divs P.2) (fun r hr => piT_dvd_of_mem d.hX d.hPr u r hr) _ (padL_apply _ _ _)
 

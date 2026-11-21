@@ -47,7 +47,7 @@ section Til
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {N n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-theorem mem_tilH (hN : N = n + 1) (d : DecoSet E n ∅ SG) {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal)
+theorem mem_tilH (hN : N = n + 1) (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal)
     (hG : ∀ w : SG, pi ∉ w.1.asIdeal) (Q : HeightOneSpectrum (𝓞 E)) (v : Sp E N) :
     v ∈ localization₂ Q.asIdeal (DecoSet.tilH (ST := ST) hN pi d).1.N ↔
       prH E hN v ∈ localization₂ Q.asIdeal d.1.N ∧ IntAt Q (v (Br.iL hN)) := by

@@ -109,12 +109,12 @@ abbrev GLG : Type := ∀ w : SG, GL (Fin n) (𝓞 E ⧸ w.1.asIdeal)
 variable (E ST) in
 abbrev DiaG : Type := ∀ P : ST, (𝓞 E ⧸ P.1.asIdeal)ˣ
 
-def Deco.act (ga : Sp E n ≃ₗ[E] Sp E n) (h : GLG E n SG) (d : Deco E n ST SG) : Deco E n ST SG where
+def Deco.act (ga : Sp E n ≃ₗ[E] Sp E n) (h : GLG (E := E) (n := n) (SG := SG)) (d : Deco E n ST SG) : Deco E n ST SG where
   N := gmap ga d.N
   f P x := d.f P (ga.symm x)
   be w x := (h w).1.mulVec (d.be w (ga.symm x))
 
-def Deco.dia (c : DiaG E ST) (d : Deco E n ST SG) : Deco E n ST SG where
+def Deco.dia (c : DiaG (E := E) (ST := ST)) (d : Deco E n ST SG) : Deco E n ST SG where
   N := d.N
   f P x := (c P).1 * d.f P x
   be := d.be
@@ -253,7 +253,7 @@ theorem dual_gmap (g : Sp E n ≃ₗ[E] Sp E n) (hg : g ∈ UF E n) (L : Submodu
     simpa using this
 
 theorem Deco.Ok.act {d : Deco E n ST SG} (hd : d.Ok) {ga : Sp E n ≃ₗ[E] Sp E n} (hga : ga ∈ UF E n)
-    (h : GLG E n SG) : (d.act ga h).Ok where
+    (h : GLG (E := E) (n := n) (SG := SG)) : (d.act ga h).Ok where
   lat := gmap_lattice ga d.N hd.lat
   uni := by
     change dual (hStd E n) (gmap ga d.N) = gmap ga d.N
@@ -301,7 +301,7 @@ theorem Deco.Ok.act {d : Deco E n ST SG} (hd : d.Ok) {ga : Sp E n ≃ₗ[E] Sp E
     rw [← Submodule.map_smul'']
     exact ⟨ga.symm x, h3, by simp⟩
 
-theorem Deco.Ok.dia {d : Deco E n ST SG} (hd : d.Ok) (c : DiaG E ST) : (d.dia c).Ok where
+theorem Deco.Ok.dia {d : Deco E n ST SG} (hd : d.Ok) (c : DiaG (E := E) (ST := ST)) : (d.dia c).Ok where
   lat := hd.lat
   uni := hd.uni
   f_add P x hx y hy := by
@@ -333,7 +333,7 @@ theorem Deco.act_one (d : Deco E n ST SG) : d.act 1 1 = d := by
     change (1 : Matrix _ _ _).mulVec (d.be w x) = _
     rw [Matrix.one_mulVec]
 
-theorem Deco.act_mul (d : Deco E n ST SG) (ga ga' : Sp E n ≃ₗ[E] Sp E n) (h h' : GLG E n SG) :
+theorem Deco.act_mul (d : Deco E n ST SG) (ga ga' : Sp E n ≃ₗ[E] Sp E n) (h h' : GLG (E := E) (n := n) (SG := SG)) :
     d.act (ga * ga') (h * h') = (d.act ga' h').act ga h := by
   ext1
   · change d.N.map _ = (d.N.map _).map _
@@ -345,20 +345,20 @@ theorem Deco.act_mul (d : Deco E n ST SG) (ga ga' : Sp E n ≃ₗ[E] Sp E n) (h 
     rw [Matrix.mulVec_mulVec]
     rfl
 
-instance : MulAction (UF E n × GLG E n SG) (DecoSet E n ST SG) where
+instance : MulAction (UF E n × GLG (E := E) (n := n) (SG := SG)) (DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) where
   smul a d := ⟨d.1.act a.1.1 a.2, d.2.act a.1.2 a.2⟩
   one_smul d := Subtype.ext (Deco.act_one d.1)
   mul_smul a b d := Subtype.ext (Deco.act_mul d.1 a.1.1 b.1.1 a.2 b.2)
 
-theorem DecoSet.smul_val (a : UF E n × GLG E n SG) (d : DecoSet E n ST SG) :
+theorem DecoSet.smul_val (a : UF E n × GLG (E := E) (n := n) (SG := SG)) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     (a • d).1 = d.1.act a.1.1 a.2 := rfl
 
-def DecoSet.dia (c : DiaG E ST) (d : DecoSet E n ST SG) : DecoSet E n ST SG := ⟨d.1.dia c, d.2.dia c⟩
+def DecoSet.dia (c : DiaG (E := E) (ST := ST)) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) := ⟨d.1.dia c, d.2.dia c⟩
 
-def DecoSet.dia1 (P : ST) (c : (𝓞 E ⧸ P.1.asIdeal)ˣ) (d : DecoSet E n ST SG) : DecoSet E n ST SG :=
+def DecoSet.dia1 (P : ST) (c : (𝓞 E ⧸ P.1.asIdeal)ˣ) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) :=
   open Classical in d.dia (Pi.mulSingle P c)
 
-theorem DecoSet.dia_one (d : DecoSet E n ST SG) : d.dia 1 = d := by
+theorem DecoSet.dia_one (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : d.dia 1 = d := by
   apply Subtype.ext
   ext1
   · rfl
@@ -367,7 +367,7 @@ theorem DecoSet.dia_one (d : DecoSet E n ST SG) : d.dia 1 = d := by
     rw [one_mul]
   · rfl
 
-theorem DecoSet.dia_mul (c c' : DiaG E ST) (d : DecoSet E n ST SG) :
+theorem DecoSet.dia_mul (c c' : DiaG (E := E) (ST := ST)) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     d.dia (c * c') = (d.dia c').dia c := by
   apply Subtype.ext
   ext1
@@ -377,7 +377,7 @@ theorem DecoSet.dia_mul (c c' : DiaG E ST) (d : DecoSet E n ST SG) :
     rw [mul_assoc]
   · rfl
 
-theorem DecoSet.dia_smul (c : DiaG E ST) (a : UF E n × GLG E n SG) (d : DecoSet E n ST SG) :
+theorem DecoSet.dia_smul (c : DiaG (E := E) (ST := ST)) (a : UF E n × GLG (E := E) (n := n) (SG := SG)) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     (a • d).dia c = a • d.dia c := rfl
 
 end Lemmas
@@ -648,7 +648,7 @@ theorem Deco.base_ok [NeZero n] : (Deco.base E n ST SG).Ok where
 
 
 variable (E n ST SG) in
-def DecoSet.base [NeZero n] : DecoSet E n ST SG := ⟨Deco.base E n ST SG, Deco.base_ok⟩
+def DecoSet.base [NeZero n] : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) := ⟨Deco.base E n ST SG, Deco.base_ok⟩
 
 theorem Deco.Ok.ext_on {d d' : Deco E n ST SG} (hd : d.Ok) (hd' : d'.Ok) (hN : d.N = d'.N)
     (hf : ∀ (P : ST), ∀ x ∈ d.N, d.f P x = d'.f P x)
@@ -685,20 +685,20 @@ section Moves
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
   {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-def DecoSet.upSet (P : ST) (q : 𝓞 E) (d : DecoSet E n ST SG) : Set (DecoSet E n ST SG) :=
+def DecoSet.upSet (P : ST) (q : 𝓞 E) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : Set (DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :=
   {d' | Deco.IsUp P q d.1 d'.1}
 
-def DecoSet.dnSet (P : ST) (q : 𝓞 E) (d : DecoSet E n ST SG) : Set (DecoSet E n ST SG) :=
+def DecoSet.dnSet (P : ST) (q : 𝓞 E) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : Set (DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :=
   {d' | Deco.IsDn P q d.1 d'.1}
 
-def DecoSet.up (d : DecoSet E n ST SG) (P : ST) (q : 𝓞 E) (x : Sp E n) : DecoSet E n ST SG :=
+def DecoSet.up (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (q : 𝓞 E) (x : Sp E n) : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) :=
   open Classical in if h : (d.1.up P q x).Ok then ⟨_, h⟩ else d
 
-def DecoSet.dn (d : DecoSet E n ST SG) (P : ST) (f' : Sp E n → 𝓞 E ⧸ P.1.asIdeal) :
-    DecoSet E n ST SG :=
+def DecoSet.dn (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (f' : Sp E n → 𝓞 E ⧸ P.1.asIdeal) :
+    DecoSet (E := E) (n := n) (ST := ST) (SG := SG) :=
   open Classical in if h : (d.1.dn P f').Ok then ⟨_, h⟩ else d
 
-def DecoSet.til (pi : 𝓞 E) (d : DecoSet E n ∅ SG) : DecoSet E (n + 1) ST SG :=
+def DecoSet.til (pi : 𝓞 E) (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) : DecoSet (E := E) (n := n + 1) (ST := ST) (SG := SG) :=
   open Classical in if h : (d.1.til (ST := ST) pi).Ok then ⟨_, h⟩ else DecoSet.base E (n + 1) ST SG
 
 end Moves
@@ -707,7 +707,7 @@ section Inst
 
 variable (X : Fields) (Pr : Primes X)
 
-abbrev ColDeco (u : Pr.Word) (n : ℕ) : Type := DecoSet X.E n (Pr.vT u) Pr.vGs
+abbrev ColDeco (u : Pr.Word) (n : ℕ) : Type := DecoSet (E := X.E) (n := n) (ST := Pr.vT u) (SG := Pr.vGs)
 
 variable {X Pr}
 

@@ -19,7 +19,7 @@ open Formalism.L2.DIV (Pl kP St redAt redFn)
 section Lev
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
-variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG E n SG))
+variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 def levU : Subgroup (GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) := (JH hc n ST SG H).map (J0 hc n ST).subtype
 
@@ -105,25 +105,25 @@ end Fun
 section Cls
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
-variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG E n SG))
+variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 abbrev AdCl : Type := Formalism.L2.DIV.Cl hc (1 : Matrix (Fin n) (Fin n) E) (levU hc n ST SG H)
 
-abbrev DecoCl : Type := MulAction.orbitRel.Quotient (UF E n × H) (DecoSet E n ST SG)
+abbrev DecoCl : Type := MulAction.orbitRel.Quotient (UF E n × H) (DecoSet (E := E) (n := n) (ST := ST) (SG := SG))
 
-def decoCls (d : DecoSet E n ST SG) : DecoCl n ST SG H := Quotient.mk (MulAction.orbitRel (UF E n × H) (DecoSet E n ST SG)) d
+def decoCls (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : DecoCl n ST SG H := Quotient.mk (MulAction.orbitRel (UF E n × H) (DecoSet (E := E) (n := n) (ST := ST) (SG := SG))) d
 
-def ptOf (d : DecoSet E n ST SG) : UAd hc n :=
+def ptOf (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : UAd hc n :=
   open Classical in
   if h : ∃ x : UAd hc n, decoOf ST SG (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) = d then h.choose else 1
 
-def adClsOf (d : DecoSet E n ST SG) : AdCl hc n ST SG H := Quotient.mk'' (ptOf hc n ST SG d)
+def adClsOf (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : AdCl hc n ST SG H := Quotient.mk'' (ptOf hc n ST SG d)
 
-def decoOfD (c : DiaG E ST) (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) : DecoSet E n ST SG := (decoOf ST SG x).dia c
+def decoOfD (c : DiaG (E := E) (ST := ST)) (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) := (decoOf ST SG x).dia c
 
-def ptOfD (c : DiaG E ST) (d : DecoSet E n ST SG) : UAd hc n := ptOf hc n ST SG (d.dia c⁻¹)
+def ptOfD (c : DiaG (E := E) (ST := ST)) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : UAd hc n := ptOf hc n ST SG (d.dia c⁻¹)
 
-def stabRat (d : DecoSet E n ST SG) : MulAction.stabilizer (UF E n × H) d →* URat hc n :=
+def stabRat (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : MulAction.stabilizer (UF E n × H) d →* URat hc n :=
   (ratEquiv hc n).symm.toMonoidHom.comp ((MonoidHom.fst (UF E n) H).comp (Subgroup.subtype _))
 
 end Cls
@@ -177,10 +177,10 @@ variable (hc : Formalism.BasicNotions.CMData X.F X.E) (Ch : Chars X Pr R.m)
 
 
 open Classical in
-def diaT (u : Pr.Word) : DiaG X.E (Pr.vT u) := fun P =>
+def diaT (u : Pr.Word) : DiaG (E := X.E) (ST := Pr.vT u) := fun P =>
   if h : IsUnit (Ideal.Quotient.mk P.1.asIdeal (X.conjO (Pr.piT u))) then h.unit else 1
 
-def colDia (R : Ranks) (u : Pr.Word) (j : ℕ) : DiaG X.E (Pr.vT u) := if j < R.m then 1 else diaT u
+def colDia (R : Ranks) (u : Pr.Word) (j : ℕ) : DiaG (E := X.E) (ST := Pr.vT u) := if j < R.m then 1 else diaT u
 
 def colPt (u : Pr.Word) (j : ℕ) (d : ColDeco X Pr u (R.N j)) : UAd hc (R.N j) :=
   ptOfD hc (R.N j) (Pr.vT u) Pr.vGs (colDia R u j) d

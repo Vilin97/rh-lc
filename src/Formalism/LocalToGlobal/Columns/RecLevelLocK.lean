@@ -240,7 +240,7 @@ section Main
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] {ST : Finset (Pl E)} (SG : Finset (Pl E))
-  (H : Subgroup (GLG E n SG)) {π : 𝓞 E} (v : HeightOneSpectrum (𝓞 F))
+  (H : Subgroup (GLG (E := E) (n := n) (SG := SG))) {π : 𝓞 E} (v : HeightOneSpectrum (𝓞 F))
 
 theorem rll_IE_incl_mul (e : E) (x : Rv) :
     afsplitIE v (ιv e * x) = inclE (F := F) (Formalism.L2.Herm.Af F) e * afsplitIE v x := by

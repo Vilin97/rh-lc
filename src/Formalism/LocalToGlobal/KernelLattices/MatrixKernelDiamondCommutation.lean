@@ -79,7 +79,7 @@ variable {u : Pr.Word}
 
 
 variable (R u) in
-abbrev TopPt : Type := RowPt Pr R sel mu × DecoSet X.E (R.N R.m) (Pr.vT u) (rowSG Pr sel mu)
+abbrev TopPt : Type := RowPt Pr R sel mu × DecoSet (E := X.E) (n := R.N R.m) (ST := Pr.vT u) (SG := rowSG Pr sel mu)
 
 def tilTop (d : RowPt Pr R sel mu) : TopPt R sel mu u := (d, tilQ sel mu u d)
 

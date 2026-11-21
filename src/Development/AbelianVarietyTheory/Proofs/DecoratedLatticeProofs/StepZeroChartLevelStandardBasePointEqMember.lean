@@ -45,7 +45,7 @@ theorem stepZeroReduction_of_moved_representative (hPr : (B.primes X).Ok) (u : B
   have e1 : κ.1 = 1 := ufGL_inj B.sp.cm (B.R.N 0) (h1.trans (map_one _).symm)
   exact red_of_act B.sp.cm (B.R.N 0) (Formalism.L2.Col.diaT (Pr := B.primes X) u) hg.1 hx.1 κ.2.1.1 (by
     rw [hg.2, hx.2]
-    show ((κ.1, κ.2.1.1) : Formalism.L2.Col.UF B.fields.E (B.R.N 0) × Formalism.L2.Col.GLG B.fields.E (B.R.N 0) (B.primes X).vGs) • _ = _
+    show ((κ.1, κ.2.1.1) : Formalism.L2.Col.UF B.fields.E (B.R.N 0) × Formalism.L2.Col.GLG (E := B.fields.E) (n := B.R.N 0) (SG := (B.primes X).vGs)) • _ = _
     rw [e1]
     rfl)
 

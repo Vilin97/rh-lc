@@ -179,7 +179,7 @@ theorem qdf_frLat (q : QLoc hc n Q Θ) : FrLat ST SG q := by
     rw [e4]
     exact mul_mem hinv (qdf_pi_int q P (hpull i))
 
-variable {H : Subgroup (GLG E n SG)}
+variable {H : Subgroup (GLG (E := E) (n := n) (SG := SG))}
 
 end QLat
 

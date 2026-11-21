@@ -129,7 +129,7 @@ theorem mem_hatL_gmap (γ : UF E n) (L : Submodule (𝓞 E) (Sp E n)) (x : Fin n
 
 theorem isPtOf_rat {hc : Formalism.BasicNotions.CMData F E} {ST SG Q : Finset (HeightOneSpectrum (𝓞 E))}
     {g : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} (h : IsPtOf hc g p) (γ : UF E n) :
-    IsPtOf hc (ratAd F γ * g) (((γ, 1, 1) : UF E n × GLG E n SG × GLQ E n Q) • p) := by
+    IsPtOf hc (ratAd F γ * g) (((γ, 1, 1) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p) := by
   refine ⟨?_, fun x => ?_, fun P x hx i hi => ?_, fun w x hx i => ?_, fun P i j => ?_⟩
   · refine mul_mem ?_ h.uni
     have hg : ufGL E n γ ∈ UJ (hc.sig : E →+* E) (1 : Matrix (Fin n) (Fin n) E) := by
@@ -145,13 +145,13 @@ theorem isPtOf_rat {hc : Formalism.BasicNotions.CMData F E} {ST SG Q : Finset (H
   · rw [pullV_rat]
     exact h.f P _ ((mem_gmap _ _ _).1 hx) i hi
   · rw [pullV_rat]
-    have e : (((γ, 1, 1) : UF E n × GLG E n SG × GLQ E n Q) • p).deco.1.be w x = p.deco.1.be w (γ⁻¹.1 x) := by
-      show ((1 : GLG E n SG) w).1.mulVec _ = _
+    have e : (((γ, 1, 1) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p).deco.1.be w x = p.deco.1.be w (γ⁻¹.1 x) := by
+      show ((1 : GLG (E := E) (n := n) (SG := SG)) w).1.mulVec _ = _
       simp
       rfl
     rw [e]
     exact h.be w _ ((mem_gmap _ _ _).1 hx) i
-  · have e : (((γ, 1, 1) : UF E n × GLG E n SG × GLQ E n Q) • p).fr P (Pi.single j 1) = γ.1 (p.fr P (Pi.single j 1)) := by
+  · have e : (((γ, 1, 1) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p).fr P (Pi.single j 1) = γ.1 (p.fr P (Pi.single j 1)) := by
       show (γ.1 * p.1.2 P * (((1 : GLQ E n Q) P)⁻¹).1) _ = _
       simp
       rfl
@@ -345,7 +345,7 @@ section GenU
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [StarRing E]
 
-theorem tilH_be {N n : ℕ} (hN : N = n + 1) {ST SG : Finset (HeightOneSpectrum (𝓞 E))} (d : DecoSet E n ∅ SG) {pi : 𝓞 E}
+theorem tilH_be {N n : ℕ} (hN : N = n + 1) {ST SG : Finset (HeightOneSpectrum (𝓞 E))} (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) {pi : 𝓞 E}
     (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal) (w : SG) (x : Sp E N)
     (hx : x ∈ (DecoSet.tilH (ST := ST) hN pi d).1.N) :
     (∀ i : Fin n, (DecoSet.tilH (ST := ST) hN pi d).1.be w x (Br.iC hN i) = d.1.be w (iniH hN x) i) ∧
@@ -581,7 +581,7 @@ theorem exists_ka (hI : I.Ok) (u : B.Word) {Lb : Unit → Submodule (𝓞 B.host
     exact h
   have hact : ((I.stp u I.mu0 B.R.m).act (I.perIn u I.mu0).b0 κ0 ((I.stp u I.mu0 B.R.m).rep ((I.perIn u I.mu0).tilC c))).1.1 =
       (((m.1 : UF B.fields.E (B.R.N B.R.m))⁻¹, 1, 1) :
-        UF B.fields.E (B.R.N B.R.m) × GLG B.fields.E (B.R.N B.R.m) (B.primes X).vGs × GLQ B.fields.E (B.R.N B.R.m) (I.Q I.mu0)) •
+        UF B.fields.E (B.R.N B.R.m) × GLG (E := B.fields.E) (n := B.R.N B.R.m) (SG := (B.primes X).vGs) × GLQ B.fields.E (B.R.N B.R.m) (I.Q I.mu0)) •
         (tilF (Pr := B.primes X) (R := B.R) I.sel (I.tup I.mu0) u ((I.stX I.mu0).rep c).1.1) := by
     have e1 : FrmG.incl _ _ m • ((I.stp u I.mu0 B.R.m).rep ((I.perIn u I.mu0).tilC c)).1.1 =
         tilF (Pr := B.primes X) (R := B.R) I.sel (I.tup I.mu0) u ((I.stX I.mu0).rep c).1.1 :=
@@ -591,7 +591,7 @@ theorem exists_ka (hI : I.Ok) (u : B.Word) {Lb : Unit → Submodule (𝓞 B.host
     have e2 : FrmG.incl (levGAt I.sel (I.tup I.mu0) (I.idx I.mu0) (I.Tp I.mu0) B.R.m (I.perIn u I.mu0).b0)
         (levQAt I.sel (I.tup I.mu0) (I.idx I.mu0) (I.Tp I.mu0) B.R.m (I.perIn u I.mu0).b0) κ0 =
         (((m.1 : UF B.fields.E (B.R.N B.R.m))⁻¹, 1, 1) :
-        UF B.fields.E (B.R.N B.R.m) × GLG B.fields.E (B.R.N B.R.m) (B.primes X).vGs × GLQ B.fields.E (B.R.N B.R.m) (I.Q I.mu0)) *
+        UF B.fields.E (B.R.N B.R.m) × GLG (E := B.fields.E) (n := B.R.N B.R.m) (SG := (B.primes X).vGs) × GLQ B.fields.E (B.R.N B.R.m) (I.Q I.mu0)) *
         FrmG.incl _ _ m := by
       refine Prod.ext ?_ (Prod.ext ?_ ?_)
       · exact (inv_mul_cancel _).symm
@@ -632,7 +632,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E]
 
 theorem til_L_eq {N n : ℕ} (hN : N = n + 1) {ST SG : Finset (HeightOneSpectrum (𝓞 E))} {pi : 𝓞 E}
     (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal) (hpi : ∀ P : ST, pi ∈ P.1.asIdeal)
-    (hdvd : ∀ r : 𝓞 E, (∀ P : ST, r ∈ P.1.asIdeal) → pi ∣ r) (d : DecoSet E n ∅ SG)
+    (hdvd : ∀ r : 𝓞 E, (∀ P : ST, r ∈ P.1.asIdeal) → pi ∣ r) (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG))
     (f : (Fin n → E) →ₗ[E] (Fin N → E)) (hf : ∀ x j, f x j = if h : j.1 < n then x ⟨j.1, h⟩ else 0)
     (z : Fin N → E) (hz : ∀ j, z j = if j.1 + 1 = N then (pi : E) else 0) :
     (DecoSet.tilH (ST := ST) hN pi d).1.L = d.1.N.map (f.restrictScalars (𝓞 E)) ⊔ Submodule.span (𝓞 E) {z} := by
@@ -657,7 +657,7 @@ theorem til_L_eq {N n : ℕ} (hN : N = n + 1) {ST SG : Finset (HeightOneSpectrum
   exact d.2.til_L hT hG hpi hdvd
 
 theorem L_act {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))} {d : Deco E n ST SG} (hd : d.Ok)
-    {ga : Sp E n ≃ₗ[E] Sp E n} (hga : ga ∈ UF E n) (h : GLG E n SG) : (d.act ga h).L = Formalism.HermitianLatticesTheory.gmap ga d.L := by
+    {ga : Sp E n ≃ₗ[E] Sp E n} (hga : ga ∈ UF E n) (h : GLG (E := E) (n := n) (SG := SG)) : (d.act ga h).L = Formalism.HermitianLatticesTheory.gmap ga d.L := by
   ext x
   rw [(hd.act hga h).mem_L, mem_gmap, hd.mem_L]
   exact and_congr (mem_gmap _ _ _) Iff.rfl

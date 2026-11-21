@@ -96,19 +96,19 @@ end Gen
 section Tr
 
 variable {X : Col.Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-  (C : Col.CoefPk X n (Col.DecoSet X.E n ST SG)) (Λ : Col.LevFam X.E X.K n SG)
+  (C : Col.CoefPk X n (Col.DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : Col.LevFam X.E X.K n SG)
 
 theorem heckeFam_formPts_apply (S0 : Set (HeightOneSpectrum (𝓞 X.E))) (y : Col.LevOff ST SG S0 × ℕ)
     (φ : (Col.formGSD C Λ).EqFun) :
-    ((Col.heckeFam (formPts C Λ) S0 y φ : (Col.formGSD C Λ).EqFun) : Col.DecoSet X.E n ST SG → C.V) =
-      Col.nbFun X.K C.V y.1.1.asIdeal y.2 (φ : Col.DecoSet X.E n ST SG → C.V) := by
+    ((Col.heckeFam (formPts C Λ) S0 y φ : (Col.formGSD C Λ).EqFun) : Col.DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → C.V) =
+      Col.nbFun X.K C.V y.1.1.asIdeal y.2 (φ : Col.DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → C.V) := by
   funext d
   simp only [Col.heckeFam, Col.heckeD]
   erw [Col.LocOp.ofNbr_op_apply]
   simp only [Col.DecoPts.nb, Finset.sum_map, LinearMap.id_apply]
   rfl
 
-theorem heckeFam_comm_trRep {A : Type} [Group A] (ι : A →* Col.GLG X.E n SG) (hι : ∀ a w, (Λ w).NormBy (ι a w))
+theorem heckeFam_comm_trRep {A : Type} [Group A] (ι : A →* Col.GLG (E := X.E) (n := n) (SG := SG)) (hι : ∀ a w, (Λ w).NormBy (ι a w))
     (S0 : Set (HeightOneSpectrum (𝓞 X.E))) (y : Col.LevOff ST SG S0 × ℕ) (a : A) :
     Commute (Col.trRep C Λ ι hι a) (Col.heckeFam (formPts C Λ) S0 y) := by
   rw [commute_iff_eq]
@@ -116,12 +116,12 @@ theorem heckeFam_comm_trRep {A : Type} [Group A] (ι : A →* Col.GLG X.E n SG) 
   intro φ
   apply Subtype.ext
   have key : ∀ ψ : (Col.formGSD C Λ).EqFun,
-      ((Col.trRep C Λ ι hι a ψ : (Col.formGSD C Λ).EqFun) : Col.DecoSet X.E n ST SG → C.V) =
-        Col.trF X n ST SG C.V (ι a) (ψ : Col.DecoSet X.E n ST SG → C.V) := fun ψ => rfl
+      ((Col.trRep C Λ ι hι a ψ : (Col.formGSD C Λ).EqFun) : Col.DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → C.V) =
+        Col.trF X n ST SG C.V (ι a) (ψ : Col.DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → C.V) := fun ψ => rfl
   rw [Module.End.mul_apply, Module.End.mul_apply, key, heckeFam_formPts_apply, heckeFam_formPts_apply, key,
     Col.trF_nbFun]
 
-theorem heckeCSD_comm_trRep (h : (Col.formGSD C Λ).Ok) {A : Type} [Group A] (ι : A →* Col.GLG X.E n SG)
+theorem heckeCSD_comm_trRep (h : (Col.formGSD C Λ).Ok) {A : Type} [Group A] (ι : A →* Col.GLG (E := X.E) (n := n) (SG := SG))
     (hι : ∀ a w, (Λ w).NormBy (ι a w)) (SG0 : Finset (HeightOneSpectrum (𝓞 X.E)))
     (S0 : Set (HeightOneSpectrum (𝓞 X.E))) (x : offSub ST SG0 SG S0 × ℕ) (a : A) :
     Commute (heckeCSD (Col.formGSD C Λ) h (formPts C Λ) SG0 S0 x)

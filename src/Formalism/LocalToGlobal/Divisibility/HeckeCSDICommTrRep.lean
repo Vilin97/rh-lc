@@ -103,9 +103,9 @@ end OffI
 section TrI
 
 variable {X : Col.Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-  (C : Col.CoefPk X n (Col.DecoSet X.E n ST SG)) (Λ : Col.LevFam X.E X.K n SG)
+  (C : Col.CoefPk X n (Col.DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : Col.LevFam X.E X.K n SG)
 
-theorem heckeCSDI_comm_trRep (h : (Col.formGSD C Λ).Ok) {A : Type} [Group A] (ι : A →* Col.GLG X.E n SG)
+theorem heckeCSDI_comm_trRep (h : (Col.formGSD C Λ).Ok) {A : Type} [Group A] (ι : A →* Col.GLG (E := X.E) (n := n) (SG := SG))
     (hι : ∀ a w, (Λ w).NormBy (ι a w)) (SG0 : Finset (HeightOneSpectrum (𝓞 X.E)))
     (S0 : Set (HeightOneSpectrum (𝓞 X.E))) (x : offSubI ST SG0 SG S0 × List ℕ) (a : A) :
     Commute (heckeCSDI (Col.formGSD C Λ) h (formPts C Λ) SG0 S0 x)

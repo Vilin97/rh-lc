@@ -81,7 +81,7 @@ variable {X : Fields} {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum (𝓞 X.E))
 
 
 variable (ST Λ₀) in
-abbrev base : GSD X.K := formGSD (roundPk X lam fun d : DecoSet X.E n ST SG => d.1.Lsh) Λ₀
+abbrev base : GSD X.K := formGSD (roundPk X lam fun d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) => d.1.Lsh) Λ₀
 
 def down (hΛ : ∀ b, Λ b = Λ₀) (b : β) : (stepY ST y β Λ Θ pref).G b →* FormG Λ₀ where
   toFun g := (g.1, ⟨g.2.1.1, hΛ b ▸ g.2.1.2⟩)
@@ -129,13 +129,13 @@ theorem exists_lift (hy : ∀ N, y.ys N = {∅}) (hΛ : ∀ b, Λ b = Λ₀) (h�
     (p q : (stepY ST y β Λ Θ pref).D b) (g₀ : FormG Λ₀) (h : g₀ • p.1.1.deco = q.1.1.deco) :
     ∃ g : (stepY ST y β Λ Θ pref).G b, down pref hΛ b g = g₀ ∧ g • p = q := by
   obtain ⟨c, hc⟩ := GlobalTheory.FramedForms.exists_smul_of_deco_eq
-    (p := ((g₀.1, g₀.2.1, 1) : UF X.E n × GLG X.E n SG × GLQ X.E n Q) • p.1.1) (q := q.1.1) h
+    (p := ((g₀.1, g₀.2.1, 1) : UF X.E n × GLG (E := X.E) (n := n) (SG := SG) × GLQ X.E n Q) • p.1.1) (q := q.1.1) h
   refine ⟨(g₀.1, ⟨g₀.2.1, (hΛ b).symm ▸ g₀.2.2⟩, ⟨c, mem_grp (hΘ b) c⟩), rfl, pt_ext hy ?_⟩
   rw [hc, smul_smul]
   simp only [Prod.mk_mul_mk, one_mul, mul_one]
   rfl
 
-theorem exists_pt (hy : ∀ N, y.ys N = {∅}) (d : DecoSet X.E n ST SG) : ∃ p : PtY ST SG Q y, p.1.1.deco = d := by
+theorem exists_pt (hy : ∀ N, y.ys N = {∅}) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) : ∃ p : PtY ST SG Q y, p.1.1.deco = d := by
   obtain ⟨γ, -, hγ⟩ := GlobalTheory.SemilocalBasis.exists_equiv X.E n Q d.1.N d.2.lat
   exact ⟨⟨(⟨(d, fun _ => γ), fun P x => hγ P.1 P.2 x⟩, ∅), by rw [hy]; rfl⟩, rfl⟩
 

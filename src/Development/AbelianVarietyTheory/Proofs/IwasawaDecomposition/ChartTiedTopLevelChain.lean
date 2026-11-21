@@ -154,7 +154,7 @@ theorem pt_exists {x : GL (Fin n) (AfE F E)} (hx : x ∈ UAd hc n) : ∃ q : Dec
   exact ⟨⟨(⟨_, decorated_lattice_exists hc n ST SG _ hu⟩, fun _ => 1), fun P => (Finset.eq_empty_iff_forall_notMem.1 hQ P.1 P.2).elim⟩,
     (_root_.GlobalTheory.Mem.Col2.PtDeco.isPtOf_iff_decoRaw F E hc n ST SG Q _ _ hQ).2 ⟨hu, rfl⟩⟩
 
-theorem pt_read {x : GL (Fin n) (AfE F E)} (h : GLG E n SG) (θ : GLQ E n Q)
+theorem pt_read {x : GL (Fin n) (AfE F E)} (h : GLG (E := E) (n := n) (SG := SG)) (θ : GLQ E n Q)
     (hq : IsPtOf hc (y * x * k) (((1 : UF E n), h, θ) • p)) :
     ∃ hx : x ∈ J0 hc n ST, (redG hc n ST SG ⟨x, hx⟩)⁻¹ = h := by
   obtain ⟨hu, hd⟩ := (_root_.GlobalTheory.Mem.Col2.PtDeco.isPtOf_iff_decoRaw F E hc n ST SG Q _ p hQ).1 hp
@@ -423,7 +423,7 @@ theorem stepBefore_oneLevel : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.
   have hJ0 : ∀ x ∈ J.U, x ∈ J0 B.sp.cm (B.R.N (B.R.m - 1)) ((B.primes X).vT u) := fun x hx =>
     (read_of_mem H c0 ⟨x, hx⟩ (hUA _ _ hx)).1
   have key : ∀ (b b' : Idx I.sel (I.tup I.mu0) (I.idx I.mu0) (B.R.m - 1)) (_ : b = b')
-      (z z' : GLG B.fields.E (B.R.N (B.R.m - 1)) (B.primes X).vGs)
+      (z z' : GLG (E := B.fields.E) (n := B.R.N (B.R.m - 1)) (SG := (B.primes X).vGs))
       (hz : z ∈ (levGAt I.sel (I.tup I.mu0) (I.idx I.mu0) (I.Tp I.mu0) (B.R.m - 1) b).grp)
       (hz' : z' ∈ (levGAt I.sel (I.tup I.mu0) (I.idx I.mu0) (I.Tp I.mu0) (B.R.m - 1) b').grp), z = z' →
       (levGAt I.sel (I.tup I.mu0) (I.idx I.mu0) (I.Tp I.mu0) (B.R.m - 1) b).chr ⟨z, hz⟩ =
@@ -456,7 +456,7 @@ theorem stepBefore_oneLevel : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.
     haveI : Finite (I.stp u I.mu0 (B.R.m - 1)).Cl := @Finite.instSigma _ _ inferInstance hfin
     exact Finite.of_surjective chOf H.onto
   haveI : ∀ w : (B.primes X).vGs, Finite (𝓞 B.fields.E ⧸ w.1.asIdeal) := fun w => Ideal.finiteQuotientOfFreeOfNeBot _ w.1.ne_bot
-  let f : J.U →* GLG B.fields.E (B.R.N (B.R.m - 1)) (B.primes X).vGs :=
+  let f : J.U →* GLG (E := B.fields.E) (n := B.R.N (B.R.m - 1)) (SG := (B.primes X).vGs) :=
     { toFun := fun x => redG B.sp.cm (B.R.N (B.R.m - 1)) ((B.primes X).vT u) (B.primes X).vGs ⟨x.1, hJ0 x.1 x.2⟩
       map_one' := by rw [← map_one (redG B.sp.cm (B.R.N (B.R.m - 1)) ((B.primes X).vT u) (B.primes X).vGs)]; rfl
       map_mul' := fun x y => by rw [← map_mul]; rfl }

@@ -728,7 +728,7 @@ theorem mhl_isSplitSet_single {Pb : Pl E} (hsp : conjPrime₂ Pb ≠ Pb) : Forma
 
 theorem mhl_surj (ST SG : Finset (Pl E)) (hov : IsOver v Pb) (hov2 : ∀ Q : Pl E, IsOver v Q → Q = Pb ∨ Q = conjPrime₂ Pb)
     (hST : ∀ Q ∈ ST, ¬ IsOver v Q) (hSG : ∀ Q ∈ SG, ¬ IsOver v Q) (hsp : conjPrime₂ Pb ≠ Pb) (hk : k ≤ n) (x : UAd hc n)
-    {d' : DecoSet E n ST SG} (hd' : d' ∈ (decoOf ST SG (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))).heckeSet (conjPrime₂ Pb).asIdeal k) :
+    {d' : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)} (hd' : d' ∈ (decoOf ST SG (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))).heckeSet (conjPrime₂ Pb).asIdeal k) :
     ∃ κ : UAd hc n, (∀ w : HeightOneSpectrum (𝓞 F), w ≠ v → bc (prV (E := E) w) (κ : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) = 1) ∧
       (κ : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) ∈ St (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) ∧
       decoOf ST SG ((x * κ * mhlEta hc n v U.hπ0 k : UAd hc n) : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) = d' := by

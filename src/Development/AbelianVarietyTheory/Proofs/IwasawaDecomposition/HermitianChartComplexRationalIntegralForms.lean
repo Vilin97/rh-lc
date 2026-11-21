@@ -377,8 +377,8 @@ variable {X : Formalism.L2.Col.Fields} {n : ℕ} {ST SG Q : Finset (HeightOneSpe
 
 theorem lev_part_smul (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) (s : FrmG Λ Θ) (p : DecoF X.E n ST SG Q)
     (h : FrmG.incl Λ Θ s • p = p) :
-    FrmG.incl Λ Θ (1, s.2) • p = ((s.1⁻¹, 1, 1) : UF X.E n × GLG X.E n SG × GLQ X.E n Q) • p := by
-  have e : FrmG.incl Λ Θ (1, s.2) = ((s.1⁻¹, 1, 1) : UF X.E n × GLG X.E n SG × GLQ X.E n Q) * FrmG.incl Λ Θ s :=
+    FrmG.incl Λ Θ (1, s.2) • p = ((s.1⁻¹, 1, 1) : UF X.E n × GLG (E := X.E) (n := n) (SG := SG) × GLQ X.E n Q) • p := by
+  have e : FrmG.incl Λ Θ (1, s.2) = ((s.1⁻¹, 1, 1) : UF X.E n × GLG (E := X.E) (n := n) (SG := SG) × GLQ X.E n Q) * FrmG.incl Λ Θ s :=
     Prod.ext (inv_mul_cancel s.1).symm (one_mul _).symm
   rw [e, mul_smul, h]
 

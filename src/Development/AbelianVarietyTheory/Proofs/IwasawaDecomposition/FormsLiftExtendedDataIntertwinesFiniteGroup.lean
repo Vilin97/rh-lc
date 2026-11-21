@@ -62,8 +62,8 @@ namespace GlobalTheory.Mem.R3.DefLatBC
 
 open Formalism.L2.Col in
 theorem decoratedLattice_translates_heq_of_eq_primes {X : Fields} {n r : ℕ} (h : r ≤ n) {SG Q Q' : Finset (HeightOneSpectrum (𝓞 X.E))} (hQ : Q' = Q) :
-    (∀ d' : DecoSet X.E n ∅ (uSG SG Q'), ∃ d : DecoSet X.E n ∅ (uSG SG Q), HEq d' d) ∧
-    ∀ (g : G0 X.E SG r) (d : DecoSet X.E n ∅ (uSG SG Q)) (d' : DecoSet X.E n ∅ (uSG SG Q')), HEq d' d →
+    (∀ d' : DecoSet (E := X.E) (n := n) (ST := ∅) (SG := uSG SG Q'), ∃ d : DecoSet (E := X.E) (n := n) (ST := ∅) (SG := uSG SG Q), HEq d' d) ∧
+    ∀ (g : G0 X.E SG r) (d : DecoSet (E := X.E) (n := n) (ST := ∅) (SG := uSG SG Q)) (d' : DecoSet (E := X.E) (n := n) (ST := ∅) (SG := uSG SG Q')), HEq d' d →
       HEq (((1 : UF X.E n), (extGLG Q' (diagonalEmbeddingProduct SG h g))⁻¹) • d') (((1 : UF X.E n), (extGLG Q (diagonalEmbeddingProduct SG h g))⁻¹) • d) := by
   subst hQ
   exact ⟨fun d' => ⟨d', HEq.rfl⟩, fun g d d' hd => by cases hd; rfl⟩
@@ -76,10 +76,10 @@ theorem decoratedLattice_translates_heq_of_eq_preData (B B' : Base) (px : PreX B
     (mu : Tup B.fields.F B.fields.E B.fields.K S) (mu' : Tup B'.fields.F B'.fields.E B'.fields.K S')
     (hQ : QE sel (mu : Chr B.fields.F B.fields.E B.fields.K) = ∅)
     (hQ' : QE sel' (mu' : Chr B'.fields.F B'.fields.E B'.fields.K) = ∅) :
-    (∀ d' : DecoSet B'.fields.E B'.R.nV ∅ (rowSG (B'.primes px') sel' mu'),
-      ∃ d : DecoSet B.fields.E B.R.nV ∅ (rowSG (B.primes px) sel mu), HEq d' d) ∧
-    ∀ (g : Gc B px) (g' : Gc B' px'), HEq g' g → ∀ (d : DecoSet B.fields.E B.R.nV ∅ (rowSG (B.primes px) sel mu))
-      (d' : DecoSet B'.fields.E B'.R.nV ∅ (rowSG (B'.primes px') sel' mu')), HEq d' d →
+    (∀ d' : DecoSet (E := B'.fields.E) (n := B'.R.nV) (ST := ∅) (SG := rowSG (B'.primes px') sel' mu'),
+      ∃ d : DecoSet (E := B.fields.E) (n := B.R.nV) (ST := ∅) (SG := rowSG (B.primes px) sel mu), HEq d' d) ∧
+    ∀ (g : Gc B px) (g' : Gc B' px'), HEq g' g → ∀ (d : DecoSet (E := B.fields.E) (n := B.R.nV) (ST := ∅) (SG := rowSG (B.primes px) sel mu))
+      (d' : DecoSet (E := B'.fields.E) (n := B'.R.nV) (ST := ∅) (SG := rowSG (B'.primes px') sel' mu')), HEq d' d →
       HEq (((1 : UF B'.fields.E B'.R.nV), (unipotentGroupBlockEmbedding (B'.primes px') sel' mu' (r_le_nV B'.R) g')⁻¹) • d')
         (((1 : UF B.fields.E B.R.nV), (unipotentGroupBlockEmbedding (B.primes px) sel mu (r_le_nV B.R) g)⁻¹) • d) := by
   cases B

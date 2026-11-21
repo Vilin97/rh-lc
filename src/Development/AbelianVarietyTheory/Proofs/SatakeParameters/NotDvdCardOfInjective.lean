@@ -61,7 +61,7 @@ section Stab
 
 variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
 
-theorem glg_eq_one_of_fix (d : DecoSet X.E n ST SG) (h : GLG X.E n SG) (e : d.1.act 1 h = d.1) : h = 1 := by
+theorem glg_eq_one_of_fix (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) (h : GLG (E := X.E) (n := n) (SG := SG)) (e : d.1.act 1 h = d.1) : h = 1 := by
   funext w
   apply Units.ext
   refine Matrix.mulVec_injective (funext fun c => ?_)
@@ -71,7 +71,7 @@ theorem glg_eq_one_of_fix (d : DecoSet X.E n ST SG) (h : GLG X.E n SG) (e : d.1.
   rw [hx] at this
   simpa using this
 
-theorem not_dvd_card_stab_form (Λ : LevFam X.E X.K n SG) (d : DecoSet X.E n ST SG)
+theorem not_dvd_card_stab_form (Λ : LevFam X.E X.K n SG) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))
     [Finite (MulAction.stabilizer (FormG Λ) d)] {p : ℕ} (hp : p.Prime) (hb : Module.finrank ℚ X.E * n + 1 < p) :
     ¬ p ∣ Nat.card (MulAction.stabilizer (FormG Λ) d) := by
   refine not_dvd_card_of_injective (((UF X.E n).subtype.comp (MonoidHom.fst _ _)).comp (Subgroup.subtype _)) ?_ hp hb
@@ -176,7 +176,7 @@ theorem valuation_pair_br_le_one {X : Fields} {N n : ℕ} (hN : N = n + 1) (lam 
     (hT : ∀ P : ST, cO X.E pi ∉ P.1.asIdeal) (hG : ∀ v : SG, pi ∉ v.1.asIdeal) {p : ℕ}
     (hp : ∀ Q ∈ ST, ((p : ℕ) : 𝓞 X.E) ∉ Q.asIdeal) (w : HeightOneSpectrum (𝓞 X.K))
     (hw : ((p : ℕ) : 𝓞 X.K) ∈ w.asIdeal) (t : X.Tau → X.K) (ht : ∀ τ, w.valuation X.K (t τ) = 1)
-    (d : DecoSet X.E n ∅ SG) {x : VV X.K lam}
+    (d : DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG)) {x : VV X.K lam}
     (hx : x ∈ localization₂ w.asIdeal (delAtr X.emb lam (DecoSet.tilH (ST := ST) hN pi d).1.Lsh)) {y : VV X.K sg}
     (hy : y ∈ nabAt X.emb sg d.1.N) : w.valuation X.K (pairBK sg (Br.brAt hN lam sg t x) y) ≤ 1 := by
   subst hN

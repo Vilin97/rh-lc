@@ -37,13 +37,13 @@ theorem gam_eq_one (h : I.Ok) (u : B.Word) (a : I.ι)
   set p := (I.stp u a 0).rep (I.cl0 u a b c') with hp
   set p0 := (I.stp u I.mu0 0).rep c' with hp0
   have hs : _ = _ := s.2
-  have hsd : ((s.1.1, (s.1.2.1.1 : GLG B.fields.E (B.R.N 0) (B.primes X).vGs)) : UF B.fields.E (B.R.N 0) × GLG B.fields.E (B.R.N 0) (B.primes X).vGs) • p.1.1.deco = p.1.1.deco :=
+  have hsd : ((s.1.1, (s.1.2.1.1 : GLG (E := B.fields.E) (n := B.R.N 0) (SG := (B.primes X).vGs))) : UF B.fields.E (B.R.N 0) × GLG (E := B.fields.E) (n := B.R.N 0) (SG := (B.primes X).vGs)) • p.1.1.deco = p.1.1.deco :=
     congrArg (fun x => DecoF.deco x.1.1) hs
   rw [hd] at hsd
   have hγ : ∀ (P : HeightOneSpectrum (𝓞 B.fields.E)) (z : Sp B.fields.E (B.R.N 0)),
       s.1.1.1 z ∈ p0.1.1.deco.1.at P ↔ z ∈ p0.1.1.deco.1.at P := by
     intro P z
-    have e := congrArg (fun d : DecoSet B.fields.E (B.R.N 0) ((B.primes X).vT u) (B.primes X).vGs => s.1.1.1 z ∈ d.1.at P) hsd
+    have e := congrArg (fun d : DecoSet (E := B.fields.E) (n := B.R.N 0) (ST := (B.primes X).vT u) (SG := (B.primes X).vGs) => s.1.1.1 z ∈ d.1.at P) hsd
     simp only at e
     rw [← e]
     show s.1.1.1 z ∈ Formalism.HermitianLatticesTheory.localization₂ P.asIdeal (Formalism.HermitianLatticesTheory.gmap s.1.1.1 _) ↔ _

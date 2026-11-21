@@ -21,7 +21,7 @@ section Pts
 
 variable {X : Col.Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
 
-def formPts (C : Col.CoefPk X n (Col.DecoSet X.E n ST SG)) (Λ : Col.LevFam X.E X.K n SG) :
+def formPts (C : Col.CoefPk X n (Col.DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : Col.LevFam X.E X.K n SG) :
     Col.DecoPts (Col.formGSD C Λ) X.E n ST SG where
   pts := Equiv.refl _
   hom := Col.FormG.incl Λ

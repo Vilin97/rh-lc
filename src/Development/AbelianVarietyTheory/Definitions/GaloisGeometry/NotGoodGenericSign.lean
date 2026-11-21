@@ -18,7 +18,7 @@ open Formalism.L2.Col
 
 theorem nb_congr {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
     {ST SG : Finset (HeightOneSpectrum (𝓞 E))} {P : Ideal (𝓞 E)} {s y : List ℕ}
-    (f : inType P s ≃ₗ[𝓞 E] inType P y) (d : DecoSet E n ST SG) : d.inertSet P s = d.inertSet P y := by
+    (f : inType P s ≃ₗ[𝓞 E] inType P y) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : d.inertSet P s = d.inertSet P y := by
   ext d'
   simp only [DecoSet.inertSet, Set.mem_ofPred_eq, IsInertNbr]
   constructor

@@ -202,12 +202,12 @@ section Deco
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-theorem mem_heckeNeighbour_iff {P : HeightOneSpectrum (𝓞 E)} {i : ℕ} {d e : DecoSet E n ST SG} :
+theorem mem_heckeNeighbour_iff {P : HeightOneSpectrum (𝓞 E)} {i : ℕ} {d e : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)} :
     e ∈ d.heckeNb P.asIdeal i ↔ IsHeckeNbr P.asIdeal i d.1.N e.1.N ∧ e.1.f = d.1.f ∧ e.1.be = d.1.be :=
   DecoSet.mem_heckeNb P.ne_bot (conjIdeal_ne_bot P.ne_bot) i d e
 
 theorem pathCount_le_one {P Q : HeightOneSpectrum (𝓞 E)} (hne : conjPrime₂ P ≠ P) (hQP' : Q ≠ conjPrime₂ P)
-    (hQbP : conjPrime₂ Q ≠ conjPrime₂ P) (i j : ℕ) (d f : DecoSet E n ST SG) : decorationPathCount P.asIdeal Q.asIdeal i j d f ≤ 1 := by
+    (hQbP : conjPrime₂ Q ≠ conjPrime₂ P) (i j : ℕ) (d f : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : decorationPathCount P.asIdeal Q.asIdeal i j d f ≤ 1 := by
   classical
   unfold decorationPathCount
   rw [Finset.card_le_one]
@@ -223,7 +223,7 @@ theorem pathCount_le_one {P Q : HeightOneSpectrum (𝓞 E)} (hne : conjPrime₂ 
 
 theorem pathCount_pos_symm {P Q : HeightOneSpectrum (𝓞 E)} (hneQ : conjPrime₂ Q ≠ Q) (hQP : Q ≠ P) (hQP' : Q ≠ conjPrime₂ P)
     (hSTQ : ∀ R : ST, R.1 ≠ Q ∧ R.1 ≠ conjPrime₂ Q) (hSGQ : ∀ w : SG, w.1 ≠ Q ∧ w.1 ≠ conjPrime₂ Q) (i j : ℕ)
-    (d f : DecoSet E n ST SG) (h : 0 < decorationPathCount P.asIdeal Q.asIdeal i j d f) :
+    (d f : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (h : 0 < decorationPathCount P.asIdeal Q.asIdeal i j d f) :
     0 < decorationPathCount Q.asIdeal P.asIdeal j i d f := by
   classical
   unfold decorationPathCount at h ⊢
@@ -231,7 +231,7 @@ theorem pathCount_pos_symm {P Q : HeightOneSpectrum (𝓞 E)} (hneQ : conjPrime�
   rw [Finset.mem_filter, mem_heckeNeighbour_iff, mem_heckeNeighbour_iff] at he
   obtain ⟨⟨a1, b1, c1⟩, a2, b2, c2⟩ := he
   obtain ⟨N', hl, hu, hnb, hsame, hnb2⟩ := neighbour_path_transfer hneQ hQP hQP' d.2.lat d.2.uni f.2.uni a1 a2
-  let e' : DecoSet E n ST SG := ⟨{ N := N', f := d.1.f, be := d.1.be },
+  let e' : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) := ⟨{ N := N', f := d.1.f, be := d.1.be },
     d.2.replN hl hu (fun R => hsame R.1 (hSTQ R).1 (hSTQ R).2) (fun w => hsame w.1 (hSGQ w).1 (hSGQ w).2)⟩
   refine Finset.card_pos.2 ⟨e', ?_⟩
   rw [Finset.mem_filter, mem_heckeNeighbour_iff, mem_heckeNeighbour_iff]
@@ -240,7 +240,7 @@ theorem pathCount_pos_symm {P Q : HeightOneSpectrum (𝓞 E)} (hneQ : conjPrime�
 theorem pathCount_symm_distinct (P Q : HeightOneSpectrum (𝓞 E)) (hne : conjPrime₂ P ≠ P) (hneQ : conjPrime₂ Q ≠ Q) (hQP : Q ≠ P)
     (hQP' : Q ≠ conjPrime₂ P) (hST : ∀ R : ST, R.1 ≠ P ∧ R.1 ≠ conjPrime₂ P) (hSG : ∀ w : SG, w.1 ≠ P ∧ w.1 ≠ conjPrime₂ P)
     (hSTQ : ∀ R : ST, R.1 ≠ Q ∧ R.1 ≠ conjPrime₂ Q) (hSGQ : ∀ w : SG, w.1 ≠ Q ∧ w.1 ≠ conjPrime₂ Q) (i j : ℕ)
-    (d f : DecoSet E n ST SG) : decorationPathCount P.asIdeal Q.asIdeal i j d f = decorationPathCount Q.asIdeal P.asIdeal j i d f := by
+    (d f : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : decorationPathCount P.asIdeal Q.asIdeal i j d f = decorationPathCount Q.asIdeal P.asIdeal j i d f := by
   have hPQ : P ≠ Q := Ne.symm hQP
   have hPQ' : P ≠ conjPrime₂ Q := ne_conjPrime_symm hQP'
   have h1 := pathCount_le_one hne hQP' (conjPrime_ne_conjPrime hQP) i j d f

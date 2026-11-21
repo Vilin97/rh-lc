@@ -89,7 +89,7 @@ theorem grp_le (P : LevFam X.E X.K R.r Pr.vGs) :
   · rw [rowTy_H_of_not Ch sel mu P w hw]
     exact h
 
-def blkMap (P : LevFam X.E X.K R.r Pr.vGs) : FormG (rowTy Ch sel mu P).inv →* GLG X.E R.r Pr.vGs where
+def blkMap (P : LevFam X.E X.K R.r Pr.vGs) : FormG (rowTy Ch sel mu P).inv →* GLG (E := X.E) (n := R.r) (SG := Pr.vGs) where
   toFun x v := blk0 (R.N R.m - 1) (𝓞 X.E ⧸ v.1.asIdeal) (r_le_X' R) (List.replicate R.m R.t)
     ⟨x.2.1 (inL sel mu v), HPar_le _ _ _ (memP Ch sel mu P x.2 v)⟩
   map_one' := by
@@ -114,7 +114,7 @@ def incl : FormG (rowTyKK Ch sel mu).inv →* FormG (rowTy Ch sel mu P).inv :=
 theorem incl_injective : Function.Injective (incl Ch sel mu P) := by
   intro a b e
   have e1 := congrArg Prod.fst e
-  have e2 := congrArg (fun x => (x.2 : GLG X.E (R.N R.m - 1) (rowSG Pr sel mu))) e
+  have e2 := congrArg (fun x => (x.2 : GLG (E := X.E) (n := R.N R.m - 1) (SG := rowSG Pr sel mu))) e
   exact Prod.ext e1 (Subtype.ext e2)
 
 theorem range_incl : (incl Ch sel mu P).range = (blkMap Ch sel mu P).ker := by
@@ -151,7 +151,7 @@ theorem range_blkMap : (blkMap Ch sel mu P).range = P.grp := by
     obtain ⟨_, h0⟩ := mem_HPar.mp (memP Ch sel mu P x.2 v)
     exact h0
   · intro hp
-    let h : GLG X.E (R.N R.m - 1) (rowSG Pr sel mu) := fun w =>
+    let h : GLG (E := X.E) (n := R.N R.m - 1) (SG := rowSG Pr sel mu) := fun w =>
       if hw : w.1 ∈ Pr.vGs then diagEmb _ (r_le_X' R) (p ⟨w.1, hw⟩) else 1
     have hmem : h ∈ (rowTy Ch sel mu P).inv.grp := by
       intro w _

@@ -204,7 +204,7 @@ theorem chr_inv_eq {X : Formalism.L2.Col.Fields} {Pr : Formalism.L2.Col.Primes X
     (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ} (mu : Tup X.F X.E X.K S)
     (hd : ∀ P ∈ Formalism.L2.Col.QE sel (mu : Formalism.L2.DIV.Chr X.F X.E X.K), P ∉ Pr.vGs)
     {a : ℕ} (e : a = R.N R.m - 1) (M : ∀ P : Pl X.E, GL (Fin a) (kP P)) (g : Formalism.L2.Col.G0 X.E Pr.vGs R.r)
-    (z : Formalism.L2.Col.GLG X.E (R.N R.m - 1) (Formalism.L2.Col.rowSG Pr sel mu))
+    (z : Formalism.L2.Col.GLG (E := X.E) (n := R.N R.m - 1) (SG := Formalism.L2.Col.rowSG Pr sel mu))
     (hz : ∀ w, z w = Units.map (Matrix.reindexAlgEquiv (kP w.1) (kP w.1) (finCongr e)).toMonoidHom (M w.1))
     (hu : z⁻¹ * Formalism.L2.Col.unipotentGroupBlockEmbedding Pr sel mu (Formalism.L2.Col.r_le_X' R) g ∈ ((Formalism.L2.Col.rowTyKK Ch sel mu).inv).grp)
     (σ : X.Kˣ →* ℂˣ) (χ : ℕ → ∀ P : Pl X.E, (kP P)ˣ →* ℂˣ) (ξ : ∀ P : Pl X.E, (kP P)ˣ →* ℂˣ)
@@ -255,7 +255,7 @@ theorem chr_eq_ch : ∀ (X : Stages) (px : PreX X.B.toPre) (I : Col2.ColIn X.B p
     ∀ (t : TupU I U) (q : (levEnv X.toD7.sp.X' L.βX (L.datXt t)).Q)
       (hz : RowAd.ptE X (q : Bridge.Gf X.toD7.sp.X') ∈ Formalism.L2.Col.J0 X.toD7.sp.cm (X.B.R.N X.B.R.m - 1) ∅)
       (hu : (((Formalism.L2.Col.redG X.toD7.sp.cm (X.B.R.N X.B.R.m - 1) ∅ (Formalism.L2.Col.rowSG (X.B.primes px) I.sel t.1) ⟨_, hz⟩)⁻¹ :
-        Formalism.L2.Col.GLG X.B.fields.E (X.B.R.N X.B.R.m - 1) (Formalism.L2.Col.rowSG (X.B.primes px) I.sel t.1)) *
+        Formalism.L2.Col.GLG (E := X.B.fields.E) (n := X.B.R.N X.B.R.m - 1) (SG := Formalism.L2.Col.rowSG (X.B.primes px) I.sel t.1)) *
         Formalism.L2.Col.unipotentGroupBlockEmbedding (X.B.primes px) I.sel t.1 (Formalism.L2.Col.r_le_X' X.B.R)
           (eG.symm (rTup L.βX (L.datXt t) (Formalism.UG.bc (swapAE X.toD7) ((q : Bridge.Gf X.toD7.sp.X') : GL _ _))))) ∈ ((Formalism.L2.Col.rowTyKK I.Ch I.sel t.1).inv).grp),
       X.toD7.what₂.embLL (((Formalism.L2.Col.rowTyKK I.Ch I.sel t.1).inv.chr ⟨_, hu⟩ : X.B.fields.Kˣ) : X.B.fields.K) =

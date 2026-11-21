@@ -232,7 +232,7 @@ theorem near_one (c : ℕ) : Near c (1 : GL (Fin n) (AfE F E)) (DecoF.base E n S
     simp⟩
 
 theorem Near.exists_smul {x : GL (Fin n) (AfE F E)} {p p' : DecoF E n ST SG Q} (h : Near c x p) (h' : Near c x p') :
-    ∃ k : GLQ E n Q, (∀ P, k P ∈ prinCong n P.1 c) ∧ p' = ((1, 1, k) : UF E n × GLG E n SG × GLQ E n Q) • p := by
+    ∃ k : GLQ E n Q, (∀ P, k P ∈ prinCong n P.1 c) ∧ p' = ((1, 1, k) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p := by
   have hd : p'.deco = p.deco := Subtype.ext (h'.deco.symm.trans h.deco)
   let k : GLQ E n Q := fun P => ⟨(p'.fr P)⁻¹ * p.fr P, fun w => by
     have h1 := p'.2 P (((p'.fr P)⁻¹ * p.fr P) w)
@@ -247,17 +247,17 @@ theorem Near.exists_smul {x : GL (Fin n) (AfE F E)} {p p' : DecoF E n ST SG Q} (
     rw [e] at h1
     convert h1 using 1
     noncomm_ring
-  · exact hd.trans (one_smul (UF E n × GLG E n SG) p.1.1).symm
+  · exact hd.trans (one_smul (UF E n × GLG (E := E) (n := n) (SG := SG)) p.1.1).symm
   · show p'.fr P = 1 * p.fr P * ((p'.fr P)⁻¹ * p.fr P)⁻¹
     group
 
 theorem Near.left {x : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} (h : Near c x p) (γ : URat hc n) :
-    Near c (Formalism.UG.bc ι (γ : GL (Fin n) E) * x) (((ratHom hc n γ, 1, 1) : UF E n × GLG E n SG × GLQ E n Q) • p) := by
+    Near c (Formalism.UG.bc ι (γ : GL (Fin n) E) * x) (((ratHom hc n γ, 1, 1) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p) := by
   refine ⟨?_, fun P => ?_⟩
   · have := decoRaw_rawSm hc ST SG γ 1 x
     rw [map_one, OneMemClass.coe_one, inv_one, mul_one, h.deco] at this
     exact this
-  · have e : (((ratHom hc n γ, 1, 1) : UF E n × GLG E n SG × GLQ E n Q) • p).fr P =
+  · have e : (((ratHom hc n γ, 1, 1) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p).fr P =
         Formalism.UG.glEquiv (γ : GL (Fin n) E) * p.fr P := by
       show Formalism.UG.glEquiv (γ : GL (Fin n) E) * p.fr P * ((1 : GLint E n P.1)⁻¹).1 = _
       simp

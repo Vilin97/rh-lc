@@ -66,7 +66,7 @@ section Frames
 
 variable {X : Fields} {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum (𝓞 X.E))}
 
-def decoEquiv (hQ : Q = ∅) : DecoF X.E n ST SG Q ≃ DecoSet X.E n ST SG where
+def decoEquiv (hQ : Q = ∅) : DecoF X.E n ST SG Q ≃ DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) where
   toFun := DecoF.deco
   invFun d := ⟨(d, fun _ => 1), fun P => absurd P.2 (by simp [hQ])⟩
   left_inv p := Subtype.ext (Prod.ext rfl (funext fun P => absurd P.2 (by simp [hQ])))
@@ -79,7 +79,7 @@ def grpEquiv (hQ : Q = ∅) (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q
   right_inv _ := rfl
   map_mul' _ _ := rfl
 
-theorem ipAt_frm (hQ : Q = ∅) (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ Λ' : LevFam X.E X.K n SG) (hΛ : Λ' = Λ)
+theorem ipAt_frm (hQ : Q = ∅) (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ Λ' : LevFam X.E X.K n SG) (hΛ : Λ' = Λ)
     (Θ : LevQFam X.E X.K n Q) (R : (formGSD C Λ).Rat) (h : (formGSD C Λ).Ok)
     (h' : (frmGSD (C.pull (DecoF.deco (Q := Q))) Λ' Θ).Ok) (v : InfinitePlace X.K) (φ : (formGSD C Λ).EqFun) :
     (frmGSD (C.pull (DecoF.deco (Q := Q))) Λ' Θ).ipAt h' v (fun p => (φ : _ → C.V) (DecoF.deco p))

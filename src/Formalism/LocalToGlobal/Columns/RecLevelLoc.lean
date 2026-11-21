@@ -88,7 +88,7 @@ end Int
 section Loc
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
-variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG E n SG))
+variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 theorem levLoc_le (v : HeightOneSpectrum (𝓞 F)) :
     levLoc hc n ST SG H v ≤ UPts hc.sig (1 : Matrix (Fin n) (Fin n) E) (v.adicCompletion F) := by
@@ -354,7 +354,7 @@ end Hat
 section Stab
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
-variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG E n SG))
+variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 theorem rll_stab_of_maps {A R : Type} [CommRing A] [CommRing R] [Algebra R A] {m : Type} [Fintype m] [DecidableEq m]
     (Λ : Submodule R (m → A)) (g : GL m A) (h1 : ∀ x ∈ Λ, (g : Matrix m m A) *ᵥ x ∈ Λ)
@@ -397,7 +397,7 @@ end Stab
 section Put
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
-variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG E n SG))
+variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 theorem rll_locL_std (v : HeightOneSpectrum (𝓞 F)) :
     Formalism.L2.Herm.locL v (stdLat E n) =

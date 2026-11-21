@@ -60,7 +60,7 @@ theorem exists_pt_of_agree {g₁ g' : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG
     apply adAt_congr_prV
     exact congrArg (fun g => g.1 i j) (hv P.1 P.2)
 
-theorem isPtOf_mul {g g₁ s : GL (Fin n) (AfE F E)} {p q : DecoF E n ST SG Q} (h : GLG E n SG)
+theorem isPtOf_mul {g g₁ s : GL (Fin n) (AfE F E)} {p q : DecoF E n ST SG Q} (h : GLG (E := E) (n := n) (SG := SG))
     (hq : q.deco.1 = p.deco.1.act 1 h) (hg : IsPtOf hc g p) (hg₁ : IsPtOf hc g₁ p) (hs : IsPtOf hc (g₁ * s) q) :
     IsPtOf hc (g * s) q := by
   obtain ⟨⟨hgu, hdg⟩, hfg⟩ := (isPtOf_iff hc g p).1 hg
@@ -116,7 +116,7 @@ theorem locMv_of_mem : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → 
       exact hκ1
     exact Subtype.ext ((toGLm B.fields.E (B.R.N i)).injective h1)
   · refine ChTwRead.isPtOf_mul B.sp.cm κ.2.1.1 ?_ hg hp (by rw [e, hκq]; exact hq)
-    show ((κ.1, (κ.2.1 : GLG B.fields.E (B.R.N i) (B.primes X).vGs)) • ((I.stp u a i).rep c).1.1.deco).1 = _
+    show ((κ.1, (κ.2.1 : GLG (E := B.fields.E) (n := B.R.N i) (SG := (B.primes X).vGs))) • ((I.stp u a i).rep c).1.1.deco).1 = _
     rw [hγ]
     rfl
 end GlobalTheory.Mem.Col2.TC.ChTw

@@ -266,7 +266,7 @@ theorem chart_twm : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.
       show ufGL B.host.E (B.R.N B.R.m) (gm c s) = 1
       rw [hs, map_one]))
   have hgr : ∀ c (γ : UF B.host.E (B.R.N B.R.m)), γ ∈ (gm c).range ↔ ∃ (h : ((I.Tp a).levG B.R.m).grp) (θ : ((I.Tp a).levQ B.R.m).grp),
-      ((γ, h.1, θ.1) : UF B.host.E (B.R.N B.R.m) × GLG B.host.E (B.R.N B.R.m) (B.primes X).vGs × GLQ B.host.E (B.R.N B.R.m) (I.Q a)) • ((I.stp u a B.R.m).rep c.1).1.1 = ((I.stp u a B.R.m).rep c.1).1.1 := by
+      ((γ, h.1, θ.1) : UF B.host.E (B.R.N B.R.m) × GLG (E := B.host.E) (n := B.R.N B.R.m) (SG := (B.primes X).vGs) × GLQ B.host.E (B.R.N B.R.m) (I.Q a)) • ((I.stp u a B.R.m).rep c.1).1.1 = ((I.stp u a B.R.m).rep c.1).1.1 := by
     intro c γ
     obtain ⟨e, he⟩ := hG c.1
     constructor

@@ -21,7 +21,7 @@ theorem chr_frames : ∀ {X : Fields} {n : ℕ} {ST SG Q : Finset (HeightOneSpec
 
   have hzU : z.1 ∈ levU hc n ST SG (chG Λ C) := levUQ_le q _ z.2
   have hx : g * z.1 ∈ UAd hc n := mul_mem hg (levU_le_UAd hc n ST SG _ hzU)
-  have hdeco : decoOf ST SG (g * z.1) = ((1, h.1) : UF X.E n × GLG X.E n SG) • decoOf ST SG g := by
+  have hdeco : decoOf ST SG (g * z.1) = ((1, h.1) : UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) • decoOf ST SG g := by
     rw [hE'.1, hE.1]
     rfl
   have e2 : decoRaw ST SG (g * z.1) = (decoRaw ST SG g).act 1 h.1 := by

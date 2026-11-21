@@ -47,10 +47,10 @@ theorem levelFamily_coefficientChange_liftRound (X : Formalism.L2.Col.Fields) {L
     (hH : ∀ w, (Λ₂ w).H = (Λ₁ w).H)
     (hl : ∀ w (h₁ : ↥(Λ₁ w).H) (h₂ : ↥(Λ₂ w).H), (h₁ : GL (Fin n) (𝓞 X.E ⧸ w.1.asIdeal)) = h₂ →
       ι (((Λ₁ w).lam h₁ : X.Kˣ) : X.K) = (((Λ₂ w).lam h₂ : Lˣ) : L))
-    (φ₁ : (Formalism.L2.Col.formGSD (Formalism.L2.Col.roundPk X lam fun d : Formalism.L2.Col.DecoSet X.E n ∅ SG => d.1.N) Λ₁).EqFun) :
+    (φ₁ : (Formalism.L2.Col.formGSD (Formalism.L2.Col.roundPk X lam fun d : Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG) => d.1.N) Λ₁).EqFun) :
     ∃ φ₂ : (Formalism.L2.Col.formGSD (X := ({F := X.F, E := X.E, K := L, Tau := X.Tau, emb := e} : Formalism.L2.Col.Fields))
       (Formalism.L2.Col.roundPk ({F := X.F, E := X.E, K := L, Tau := X.Tau, emb := e} : Formalism.L2.Col.Fields) lam
-        fun d : Formalism.L2.Col.DecoSet X.E n ∅ SG => d.1.N) Λ₂).EqFun,
+        fun d : Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG) => d.1.N) Λ₂).EqFun,
       ∀ d, (φ₂.1 d).1 = MvPolynomial.map ι (φ₁.1 d).1 := by
   refine ⟨⟨fun d => Formalism.L2.Col.hfsJ ι lam (φ₁.1 d), ?_⟩, fun d => rfl⟩
   intro g d
@@ -77,11 +77,11 @@ theorem liftRound_reidx (X : Formalism.L2.Col.Fields) {L : Type} [Field L] [Numb
     (Λ₁ : Formalism.L2.Col.LevFam X.E X.K n SG₁) (Λ₂ : Formalism.L2.Col.LevFam X.E L n SG₂)
     (hΛ : ∀ (w : ↥SG₁) (hw : w.1 ∈ SG₂), Λ₂ ⟨w.1, hw⟩ = (Λ₁ w).coefMap ι)
     (c₁ : X.K →+* ℂ) (c₂ : L →+* ℂ) (hc : ∀ x, c₂ (ι x) = c₁ x) :
-    Formalism.L2.Col.DecoSet X.E n ∅ SG₂ = Formalism.L2.Col.DecoSet X.E n ∅ SG₁ ∧
-    ∀ φ₁ : (Formalism.L2.Col.formGSD (Formalism.L2.Col.roundPk X lam fun d : Formalism.L2.Col.DecoSet X.E n ∅ SG₁ => d.1.N) Λ₁).EqFun,
+    Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₂) = Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₁) ∧
+    ∀ φ₁ : (Formalism.L2.Col.formGSD (Formalism.L2.Col.roundPk X lam fun d : Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₁) => d.1.N) Λ₁).EqFun,
     ∃ φ₂ : (Formalism.L2.Col.formGSD (X := ({F := X.F, E := X.E, K := L, Tau := X.Tau, emb := e} : Formalism.L2.Col.Fields))
       (Formalism.L2.Col.roundPk ({F := X.F, E := X.E, K := L, Tau := X.Tau, emb := e} : Formalism.L2.Col.Fields) lam
-        fun d : Formalism.L2.Col.DecoSet X.E n ∅ SG₂ => d.1.N) Λ₂).EqFun,
+        fun d : Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₂) => d.1.N) Λ₂).EqFun,
       ∀ d₁ d₂, HEq d₂ d₁ → HEq (MvPolynomial.map c₂ (φ₂.1 d₂).1) (MvPolynomial.map c₁ (φ₁.1 d₁).1) := by
   subst hS
   have hΛ' : Λ₂ = Λ₁.coefMap ι := funext fun w => hΛ w w.2

@@ -51,7 +51,7 @@ section FibLemmas
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
   {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-variable {d : DecoSet E n ST SG} {P : ST} {q : 𝓞 E} {co : Sp E n → (Fin n → 𝓞 E ⧸ P.1.asIdeal)}
+variable {d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)} {P : ST} {q : 𝓞 E} {co : Sp E n → (Fin n → 𝓞 E ⧸ P.1.asIdeal)}
 
 end FibLemmas
 
@@ -59,7 +59,7 @@ section FibModel
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
   {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
-  {d : DecoSet E n ST SG} {P : ST} {q : 𝓞 E} {co : Sp E n → (Fin n → 𝓞 E ⧸ P.1.asIdeal)}
+  {d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)} {P : ST} {q : 𝓞 E} {co : Sp E n → (Fin n → 𝓞 E ⧸ P.1.asIdeal)}
 
 end FibModel
 
@@ -162,20 +162,20 @@ end Exists
 section Apply
 
 variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-  (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG)
+  (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG)
 
 end Apply
 
 section Dict
 
 variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-  {C : CoefPk X n (DecoSet X.E n ST SG)} {Λ : LevFam X.E X.K n SG}
+  {C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))} {Λ : LevFam X.E X.K n SG}
 
 attribute [local instance] resField resFintype
 
 open Classical
 
-variable {P : ST} {q : 𝓞 X.E} {d : DecoSet X.E n ST SG} {co : Sp X.E n → (Fin n → 𝓞 X.E ⧸ P.1.asIdeal)}
+variable {P : ST} {q : 𝓞 X.E} {d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)} {co : Sp X.E n → (Fin n → 𝓞 X.E ⧸ P.1.asIdeal)}
   {R : Type} [CommRing R] {σ : X.K →+* R}
 
 end Dict
@@ -183,7 +183,7 @@ end Dict
 section T1
 
 variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-  (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG)
+  (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG)
 
 attribute [local instance] resField resFintype
 
@@ -193,7 +193,7 @@ variable {P : ST} {q : 𝓞 X.E}
 
 section Lin
 
-variable {C Λ} {d : DecoSet X.E n ST SG} {co : Sp X.E n → (Fin n → 𝓞 X.E ⧸ P.1.asIdeal)}
+variable {C Λ} {d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)} {co : Sp X.E n → (Fin n → 𝓞 X.E ⧸ P.1.asIdeal)}
   {R : Type} [CommRing R] {σ : X.K →+* R}
 
 end Lin
@@ -203,7 +203,7 @@ end T1
 section T7
 
 variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-  (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG)
+  (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG)
 
 attribute [local instance] resField resFintype
 
@@ -213,7 +213,7 @@ variable {P : ST} {q : 𝓞 X.E}
 
 section DictC
 
-variable {C Λ} {d : DecoSet X.E n ST SG} {co : Sp X.E n → (Fin n → 𝓞 X.E ⧸ P.1.asIdeal)} {σ : X.K →+* ℂ}
+variable {C Λ} {d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)} {co : Sp X.E n → (Fin n → 𝓞 X.E ⧸ P.1.asIdeal)} {σ : X.K →+* ℂ}
 
 end DictC
 

@@ -22,12 +22,12 @@ variable {hc : Formalism.BasicNotions.CMData F E} {n : ℕ} [NeZero n] {ST SG Q 
 
 variable (ST SG Q) in
 def FrExists : Prop :=
-  ∀ (d : DecoSet E n ST SG) (P : Q), ∃ f : Sp E n ≃ₗ[E] Sp E n, ∀ y, f y ∈ d.1.at P.1 ↔ y ∈ stdAt E n P.1
+  ∀ (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : Q), ∃ f : Sp E n ≃ₗ[E] Sp E n, ∀ y, f y ∈ d.1.at P.1 ↔ y ∈ stdAt E n P.1
 
 theorem qdf_toGLm_ratHom (γ : URat hc n) : toGLm E n (ratHom hc n γ).1 = (γ : GL (Fin n) E) := by
   simp [toGLm, ratHom, Formalism.UG.glEquiv]
 
-variable (H : Subgroup (GLG E n SG))
+variable (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 theorem qdf_rel_of_orbit (q : QLoc hc n Q Θ) {x x' : UAd hc n} {p : DecoF E n ST SG Q} (a : UF E n × H × Θ.grp)
     (hx : FrOver q x.1 p) (hx' : FrOver q x'.1 (a • p)) :

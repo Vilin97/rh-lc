@@ -24,7 +24,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
   (P : LevFam X.E X.K R.r Pr.vGs)
 
 theorem Lsh_eq_N {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {SG : Finset (HeightOneSpectrum (𝓞 E))}
-    (d : DecoSet E n ∅ SG) : d.1.Lsh = d.1.N := by
+    (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) : d.1.Lsh = d.1.N := by
   have e : d.1.L = d.1.N := by
     rw [Deco.L]
     simp

@@ -19,26 +19,26 @@ section Stab
 
 variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (Λ : LevFam X.E X.K n SG)
 
-def stabRat (d : DecoSet X.E n ST SG) : MulAction.stabilizer (FormG Λ) d →* autO d.1.N where
+def stabRat (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) : MulAction.stabilizer (FormG Λ) d →* autO d.1.N where
   toFun g := ⟨(g.1.1 : Sp X.E n ≃ₗ[X.E] Sp X.E n), g.1.1.2,
-    congrArg (fun e : DecoSet X.E n ST SG => e.1.N) ((MulAction.mem_stabilizer_iff).1 g.2)⟩
+    congrArg (fun e : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) => e.1.N) ((MulAction.mem_stabilizer_iff).1 g.2)⟩
   map_one' := rfl
   map_mul' _ _ := rfl
 
-theorem stabRat_injective (d : DecoSet X.E n ST SG) : Function.Injective (stabRat Λ d) := by
+theorem stabRat_injective (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) : Function.Injective (stabRat Λ d) := by
   rw [injective_iff_map_eq_one]
   intro g hg
   have hγ : (g.1.1 : Sp X.E n ≃ₗ[X.E] Sp X.E n) = 1 := congrArg Subtype.val hg
-  have hbe := congrArg (fun e : DecoSet X.E n ST SG => e.1.be) ((MulAction.mem_stabilizer_iff).1 g.2)
-  have hM : ∀ w : SG, ((g.1.2 : GLG X.E n SG) w : Matrix (Fin n) (Fin n) (𝓞 X.E ⧸ w.1.asIdeal)) = 1 := by
+  have hbe := congrArg (fun e : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) => e.1.be) ((MulAction.mem_stabilizer_iff).1 g.2)
+  have hM : ∀ w : SG, ((g.1.2 : GLG (E := X.E) (n := n) (SG := SG)) w : Matrix (Fin n) (Fin n) (𝓞 X.E ⧸ w.1.asIdeal)) = 1 := by
     intro w
     refine Matrix.ext_of_mulVec_single fun i => ?_
     obtain ⟨x, -, hx⟩ := d.2.be_surj w (Pi.single i 1)
     have e := congrFun (congrFun hbe w) x
-    change ((g.1.2 : GLG X.E n SG) w : Matrix (Fin n) (Fin n) _).mulVec
+    change ((g.1.2 : GLG (E := X.E) (n := n) (SG := SG)) w : Matrix (Fin n) (Fin n) _).mulVec
       (d.1.be w ((g.1.1 : Sp X.E n ≃ₗ[X.E] Sp X.E n).symm x)) = d.1.be w x at e
     rw [hγ] at e
-    change ((g.1.2 : GLG X.E n SG) w : Matrix (Fin n) (Fin n) _).mulVec (d.1.be w x) = d.1.be w x at e
+    change ((g.1.2 : GLG (E := X.E) (n := n) (SG := SG)) w : Matrix (Fin n) (Fin n) _).mulVec (d.1.be w x) = d.1.be w x at e
     rw [hx] at e
     rw [e, Matrix.one_mulVec]
   apply Subtype.ext
@@ -46,7 +46,7 @@ theorem stabRat_injective (d : DecoSet X.E n ST SG) : Function.Injective (stabRa
   · exact Subtype.ext hγ
   · exact Subtype.ext (funext fun w => Units.ext (hM w))
 
-theorem card_stab_dvd (d : DecoSet X.E n ST SG) :
+theorem card_stab_dvd (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) :
     Nat.card (MulAction.stabilizer (FormG Λ) d) ∣ Nat.card (autO d.1.N) :=
   Subgroup.card_dvd_of_injective (stabRat Λ d) (stabRat_injective Λ d)
 

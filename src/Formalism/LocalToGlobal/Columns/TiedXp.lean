@@ -44,7 +44,7 @@ def tieLevP : Formalism.L2.Forms.StepLevel X.F X.E hc.sig (1 : Matrix (Fin n) (F
     (by rw [baseLb_index hc n ∅ (fun P => absurd P.2 (Finset.notMem_empty P.1))]; simp)
     ((Units.map σ₀.toMonoidHom).comp Λ.chr)
 
-variable (s : DecoCl n (∅ : Finset (Pl X.E)) Pr.vGs Λ.grp → DecoSet X.E n (∅ : Finset (Pl X.E)) Pr.vGs)
+variable (s : DecoCl n (∅ : Finset (Pl X.E)) Pr.vGs Λ.grp → DecoSet (E := X.E) (n := n) (ST := ∅ : Finset (Pl X.E)) (SG := Pr.vGs))
 
 def clsPG₁ (hS : DecoPtSurj hc n (∅ : Finset (Pl X.E)) Pr.vGs) (hs : ∀ c, decoCls n ∅ Pr.vGs Λ.grp (s c) = c) :
     ClsG hc.sig (1 : Matrix (Fin n) (Fin n) X.E) 1 X.f (plUnder X.F Pr.vGs)
@@ -74,7 +74,7 @@ variable {d : ColDat} (a : ColArgs d)
 
 abbrev PCl (d : ColDat) : Type := (ptGSD (Pr := d.Pr) d.W d.levP).Cl
 
-def ColDat.reprP (d : ColDat) (c : PCl d) : DecoSet d.X.E (d.R.N d.R.m - 1) ∅ d.Pr.vGs :=
+def ColDat.reprP (d : ColDat) (c : PCl d) : DecoSet (E := d.X.E) (n := d.R.N d.R.m - 1) (ST := ∅) (SG := d.Pr.vGs) :=
   (ptGSD (Pr := d.Pr) d.W d.levP).outSec.rep c
 
 def crdPr (hS : SpStd d.toColBase) (hH : HostHyp d) :

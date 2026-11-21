@@ -23,9 +23,9 @@ namespace GlobalTheory.Mem.ColAd
 structure PtLaw {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum (𝓞 E))}
     (S : GStep E K n) (b : S.β) (pt : DecoF E n ST SG Q → S.D b) (c : ℕ) : Prop where
   rat : ∀ γ : UF E n, ∃ g : S.G b, S.gam b g = ufGL E n γ ∧ S.chr b g = 1 ∧
-    ∀ p, pt (((γ, 1, 1) : UF E n × GLG E n SG × GLQ E n Q) • p) = g • pt p
+    ∀ p, pt (((γ, 1, 1) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p) = g • pt p
   lev : ∀ k : GLQ E n Q, (∀ P, k P ∈ prinCong n P.1 c) → ∃ g : S.G b, S.gam b g = 1 ∧ S.chr b g = 1 ∧
-    ∀ p, pt (((1, 1, k) : UF E n × GLG E n SG × GLQ E n Q) • p) = g • pt p
+    ∀ p, pt (((1, 1, k) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p) = g • pt p
 
 theorem ptLaw_stepY {X : Fields} {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum (𝓞 X.E))} (y : Ys X n) (β : Type) [Fintype β]
     [DecidableEq β] (Λ : β → LevFam X.E X.K n SG) (Θ : β → LevQFam X.E X.K n Q) (pref : DecoF X.E n ST SG Q → Prop)

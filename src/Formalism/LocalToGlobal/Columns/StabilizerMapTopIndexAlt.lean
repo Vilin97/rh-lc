@@ -26,7 +26,7 @@ attribute [local instance] ptYAct
 
 variable (sel mu) in
 structure TopFr where
-  fr : ∀ (_P : {P // P ∈ QE sel (mu : Chr X.F X.E X.K)}) (_d : DecoSet X.E (R.N R.m - 1) ∅ SG'), Sp X.E (R.N R.m) ≃ₗ[X.E] Sp X.E (R.N R.m)
+  fr : ∀ (_P : {P // P ∈ QE sel (mu : Chr X.F X.E X.K)}) (_d : DecoSet (E := X.E) (n := R.N R.m - 1) (ST := ∅) (SG := SG')), Sp X.E (R.N R.m) ≃ₗ[X.E] Sp X.E (R.N R.m)
   spec : ∀ P d x, fr P d x ∈ localization₂ P.1.asIdeal (tilR hSG u d).1.N ↔ x ∈ stdAt X.E (R.N R.m) P.1
 
 variable (hm : R.m = m2 + 2) (F : TopFr sel mu u hSG)

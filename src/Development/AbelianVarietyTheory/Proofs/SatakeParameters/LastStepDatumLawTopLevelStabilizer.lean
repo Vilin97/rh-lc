@@ -36,8 +36,8 @@ theorem xiTop_stab_law : ∀ {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Char
     frsF_smulQ sel mu u p' (twLt Ch (m2 + 1 + 1)) (twTt (R := R) sel mu (m2 + 1 + 1)) a w
   rw [hfix] at hκ'
   have e0 : phiT X.K p.deco.1 p'.deco.1 (a.1.1.toLinearMap ∘ₗ x) = phiT X.K p.deco.1 p'.deco.1 x := by
-    have h := phiT_smul X.K p.deco p'.deco 1 1 a.1 (a.2.1 : GLG X.E (R.N (m2 + 1 + 1)) Pr.vGs) x
-    have hd : (a • p').deco = (a.1, (a.2.1 : GLG X.E (R.N (m2 + 1 + 1)) Pr.vGs)) • p'.deco := rfl
+    have h := phiT_smul X.K p.deco p'.deco 1 1 a.1 (a.2.1 : GLG (E := X.E) (n := R.N (m2 + 1 + 1)) (SG := Pr.vGs)) x
+    have hd : (a • p').deco = (a.1, (a.2.1 : GLG (E := X.E) (n := R.N (m2 + 1 + 1)) (SG := Pr.vGs))) • p'.deco := rfl
     rw [← hd, hfix, ← Prod.one_eq_mk, one_smul] at h
     exact h
 
@@ -94,13 +94,13 @@ theorem xiTop_stab_law : ∀ {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Char
   have hchr : (((twLt Ch (m2 + 1 + 1)).chr a.2.1 * (twTt (R := R) sel mu (m2 + 1 + 1)).chr a.2.2 : X.Kˣ) : X.K) =
       ∏ w : rowSG Pr sel mu,
         (if hw : w.1 ∈ Pr.vGs then
-          (((twLt Ch (m2 + 1 + 1) ⟨w.1, hw⟩).lam ⟨(a.2.1 : GLG X.E (R.N (m2 + 1 + 1)) Pr.vGs) ⟨w.1, hw⟩, a.2.1.2 _ (Set.mem_univ _)⟩ : X.Kˣ) : X.K)
+          (((twLt Ch (m2 + 1 + 1) ⟨w.1, hw⟩).lam ⟨(a.2.1 : GLG (E := X.E) (n := R.N (m2 + 1 + 1)) (SG := Pr.vGs)) ⟨w.1, hw⟩, a.2.1.2 _ (Set.mem_univ _)⟩ : X.Kˣ) : X.K)
         else
           (((twTt (R := R) sel mu (m2 + 1 + 1) ⟨w.1, (Finset.mem_union.mp w.2).resolve_left hw⟩).lam
               ⟨(a.2.2 : GLQ X.E (R.N (m2 + 1 + 1)) (QE sel (mu : Chr X.F X.E X.K))) ⟨w.1, (Finset.mem_union.mp w.2).resolve_left hw⟩,
                 a.2.2.2 _ (Set.mem_univ _)⟩ : X.Kˣ) : X.K)) := by
     rw [prod_uSG_dite hS
-      (fun w => (((twLt Ch (m2 + 1 + 1) w).lam ⟨(a.2.1 : GLG X.E (R.N (m2 + 1 + 1)) Pr.vGs) w, a.2.1.2 _ (Set.mem_univ _)⟩ : X.Kˣ) : X.K))
+      (fun w => (((twLt Ch (m2 + 1 + 1) w).lam ⟨(a.2.1 : GLG (E := X.E) (n := R.N (m2 + 1 + 1)) (SG := Pr.vGs)) w, a.2.1.2 _ (Set.mem_univ _)⟩ : X.Kˣ) : X.K))
       (fun Q => (((twTt (R := R) sel mu (m2 + 1 + 1) Q).lam ⟨(a.2.2 : GLQ X.E (R.N (m2 + 1 + 1)) (QE sel (mu : Chr X.F X.E X.K))) Q,
         a.2.2.2 _ (Set.mem_univ _)⟩ : X.Kˣ) : X.K))]
     rw [Units.val_mul, levFam_chr_apply_coe]
@@ -111,7 +111,7 @@ theorem xiTop_stab_law : ∀ {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Char
       muAt Ch sel mu cst (m2 + 1) w ((LinearEquiv.det a.1.1 : X.Eˣ) : X.E) *
         topDat Ch sel mu cst (m2 + 1) w (inFr (frsF sel mu p w) (frsF sel mu p' w) (a.1.1.toLinearMap ∘ₗ x)) ((frsF sel mu p w).symm (repY Y)) =
       (if hw : w.1 ∈ Pr.vGs then
-          (((twLt Ch (m2 + 1 + 1) ⟨w.1, hw⟩).lam ⟨(a.2.1 : GLG X.E (R.N (m2 + 1 + 1)) Pr.vGs) ⟨w.1, hw⟩, a.2.1.2 _ (Set.mem_univ _)⟩ : X.Kˣ) : X.K)
+          (((twLt Ch (m2 + 1 + 1) ⟨w.1, hw⟩).lam ⟨(a.2.1 : GLG (E := X.E) (n := R.N (m2 + 1 + 1)) (SG := Pr.vGs)) ⟨w.1, hw⟩, a.2.1.2 _ (Set.mem_univ _)⟩ : X.Kˣ) : X.K)
         else
           (((twTt (R := R) sel mu (m2 + 1 + 1) ⟨w.1, (Finset.mem_union.mp w.2).resolve_left hw⟩).lam
               ⟨(a.2.2 : GLQ X.E (R.N (m2 + 1 + 1)) (QE sel (mu : Chr X.F X.E X.K))) ⟨w.1, (Finset.mem_union.mp w.2).resolve_left hw⟩,
@@ -131,7 +131,7 @@ theorem xiTop_stab_law : ∀ {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Char
       have hq : ((qOf w.1 : ℕ) : X.E) • (frsF sel mu p w).symm (repY Y) ∈ stdAt X.E (R.N (m2 + 1)) w.1 := by
         rw [← LinearEquiv.map_smul]
         exact hFst _ (hqm _ hr0)
-      have key := topDat_law hc hn hLaw hRow w hw 1 ⟨(a.2.1 : GLG X.E (R.N (m2 + 1 + 1)) Pr.vGs) ⟨w.1, hw⟩, a.2.1.2 _ (Set.mem_univ _)⟩
+      have key := topDat_law hc hn hLaw hRow w hw 1 ⟨(a.2.1 : GLG (E := X.E) (n := R.N (m2 + 1 + 1)) (SG := Pr.vGs)) ⟨w.1, hw⟩, a.2.1.2 _ (Set.mem_univ _)⟩
         1 (κ' w) (fun z _ => by simp) (hκr' w hw) (ciQ_notMem_sq hX hPr hw)
         (inFr (frsF sel mu p w) (frsF sel mu p' w) x) ((frsF sel mu p w).symm (repY Y)) ((frsF sel mu p w).symm (repY Y)) (by simp) hq
       have h1 : rhoS Ch sel mu (m2 + 1) w ((LinearEquiv.det ((1 : ↥(GLint X.E (R.N (m2 + 1)) w.1)) : Sp X.E (R.N (m2 + 1)) ≃ₗ[X.E] Sp X.E (R.N (m2 + 1))) : X.Eˣ) : X.E) = 1 := by

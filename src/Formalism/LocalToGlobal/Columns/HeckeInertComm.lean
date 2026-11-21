@@ -137,7 +137,7 @@ def HiBd (I : Ideal (𝓞 E)) (R : Submodule (𝓞 E) (Sp E n) → Submodule (�
   ∀ N N', R N N' → I • N ≤ N' ∧ I • N' ≤ N
 
 theorem hi_middle_unique {I J : Ideal (𝓞 E)} (hIJ : I ⊔ J = ⊤) {Rx Ry : Submodule (𝓞 E) (Sp E n) →
-    Submodule (𝓞 E) (Sp E n) → Prop} (hx : HiBd I Rx) (hy : HiBd J Ry) {d e₁ e₂ f : DecoSet E n ST SG}
+    Submodule (𝓞 E) (Sp E n) → Prop} (hx : HiBd I Rx) (hy : HiBd J Ry) {d e₁ e₂ f : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)}
     (h1 : Rx d.1.N e₁.1.N) (h1' : Ry e₁.1.N f.1.N) (h2 : Rx d.1.N e₂.1.N) (h2' : Ry e₂.1.N f.1.N)
     (hf1 : e₁.1.f = d.1.f) (hb1 : e₁.1.be = d.1.be) (hf2 : e₂.1.f = d.1.f) (hb2 : e₂.1.be = d.1.be) :
     e₁ = e₂ := by
@@ -156,8 +156,8 @@ theorem hi_exchange {I J : Ideal (𝓞 E)} (hIJ : I ⊔ J = ⊤) (hJc : HiConj J
     {Rx Ry : Submodule (𝓞 E) (Sp E n) → Submodule (𝓞 E) (Sp E n) → Prop} (hx : HiBd I Rx) (hy : HiBd J Ry)
     (px : HiPar Rx) (py : HiPar Ry)
     (sT : ∀ N N', Ry N N' → ∀ R : ST, SameAt R.1 N N') (sG : ∀ N N', Ry N N' → ∀ w : SG, SameAt w.1 N N')
-    {d e f : DecoSet E n ST SG} (h1 : Rx d.1.N e.1.N) (h2 : Ry e.1.N f.1.N) :
-    ∃ e' : DecoSet E n ST SG, Ry d.1.N e'.1.N ∧ Rx e'.1.N f.1.N ∧ e'.1.f = d.1.f ∧ e'.1.be = d.1.be := by
+    {d e f : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)} (h1 : Rx d.1.N e.1.N) (h2 : Ry e.1.N f.1.N) :
+    ∃ e' : DecoSet (E := E) (n := n) (ST := ST) (SG := SG), Ry d.1.N e'.1.N ∧ Rx e'.1.N f.1.N ∧ e'.1.f = d.1.f ∧ e'.1.be = d.1.be := by
   obtain ⟨α, hα, β, hβ, hab, hαc, hβc⟩ := hi_exists_conj hJc hIJ
   have rNe : HiRel α d.1.N e.1.N := HiRel.of_ideal (hx _ _ h1).1 (hx _ _ h1).2 hα
   have reM : HiRel β e.1.N f.1.N := HiRel.of_ideal (hy _ _ h2).1 (hy _ _ h2).2 hβ
@@ -188,9 +188,9 @@ theorem hi_count_eq {I J : Ideal (𝓞 E)} (hIJ : I ⊔ J = ⊤) (hIc : HiConj I
     (hy : HiBd J Ry) (px : HiPar Rx) (py : HiPar Ry)
     (sTx : ∀ N N', Rx N N' → ∀ R : ST, SameAt R.1 N N') (sGx : ∀ N N', Rx N N' → ∀ w : SG, SameAt w.1 N N')
     (sTy : ∀ N N', Ry N N' → ∀ R : ST, SameAt R.1 N N') (sGy : ∀ N N', Ry N N' → ∀ w : SG, SameAt w.1 N N')
-    (A B : DecoSet E n ST SG → Finset (DecoSet E n ST SG))
+    (A B : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) → Finset (DecoSet (E := E) (n := n) (ST := ST) (SG := SG)))
     (hA : ∀ d e, e ∈ A d ↔ Rx d.1.N e.1.N ∧ e.1.f = d.1.f ∧ e.1.be = d.1.be)
-    (hB : ∀ d e, e ∈ B d ↔ Ry d.1.N e.1.N ∧ e.1.f = d.1.f ∧ e.1.be = d.1.be) (d f : DecoSet E n ST SG) :
+    (hB : ∀ d e, e ∈ B d ↔ Ry d.1.N e.1.N ∧ e.1.f = d.1.f ∧ e.1.be = d.1.be) (d f : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     ((A d).filter fun e => f ∈ B e).card = ((B d).filter fun e => f ∈ A e).card := by
   have hJI : J ⊔ I = ⊤ := by rw [sup_comm]; exact hIJ
   have hL : ((A d).filter fun e => f ∈ B e).card ≤ 1 := by
@@ -239,7 +239,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
 
 open Classical in
 theorem hi_commute (c : DecoPts S E n ST SG) (A B : LocOp S S)
-    (a b : DecoSet E n ST SG → Finset (DecoSet E n ST SG))
+    (a b : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) → Finset (DecoSet (E := E) (n := n) (ST := ST) (SG := SG)))
     (hA : ∀ (φ : S.EqFun) (d : S.D), ((A.op φ : S.EqFun) : S.D → S.V) d =
       ∑ e ∈ (a (c.pts d)).map c.pts.symm.toEmbedding, (φ : S.D → S.V) e)
     (hB : ∀ (φ : S.EqFun) (d : S.D), ((B.op φ : S.EqFun) : S.D → S.V) d =
@@ -247,8 +247,8 @@ theorem hi_commute (c : DecoPts S E n ST SG) (A B : LocOp S S)
     (h : ∀ d f, ((a d).filter fun e => f ∈ b e).card = ((b d).filter fun e => f ∈ a e).card) :
     Commute A.op B.op := by
   classical
-  have key : ∀ (D : DecoSet E n ST SG) (ψ : DecoSet E n ST SG → S.V)
-      (p q : DecoSet E n ST SG → Finset (DecoSet E n ST SG)) (U : Finset (DecoSet E n ST SG)),
+  have key : ∀ (D : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (ψ : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) → S.V)
+      (p q : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) → Finset (DecoSet (E := E) (n := n) (ST := ST) (SG := SG))) (U : Finset (DecoSet (E := E) (n := n) (ST := ST) (SG := SG))),
       (∀ e ∈ p D, q e ⊆ U) →
       ∑ x ∈ p D, ∑ y ∈ q x, ψ y = ∑ y ∈ U, ((p D).filter fun e => y ∈ q e).card • ψ y := by
     intro D ψ p q U hU

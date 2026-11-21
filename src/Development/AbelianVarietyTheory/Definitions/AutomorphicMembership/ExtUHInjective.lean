@@ -27,7 +27,7 @@ theorem stepY_gam (b : β) (g : FrmG (Λ b) (Θ b)) (x : Sp X.E n) :
 
 theorem stepY_eq_one (b : β) (g : (stepY ST y β Λ Θ pref).G b) (p : (stepY ST y β Λ Θ pref).D b) (h : g • p = p)
     (h1 : g.1 = 1) : g = 1 := by
-  have h2 : ((g.1, g.2.1.1) : UF X.E n × GLG X.E n SG) • p.1.1.deco = p.1.1.deco := congrArg (fun q => q.1.1.deco) h
+  have h2 : ((g.1, g.2.1.1) : UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) • p.1.1.deco = p.1.1.deco := congrArg (fun q => q.1.1.deco) h
   have h3 := DecoSet.eq_one_of_fst_eq_one _ h2 h1
   refine Prod.ext h1 (Prod.ext (Subtype.ext (congrArg Prod.snd h3)) (Subtype.ext (funext fun P => ?_)))
   have h4 : g.1.1 * p.1.1.fr P * ((g.2.2.1 P)⁻¹).1 = p.1.1.fr P := congrArg (fun q => q.1.1.fr P) h
@@ -67,7 +67,7 @@ theorem stepY_fin_orb (hX : X.Ok) (hI : ∀ b P, (Θ b P).H.FiniteIndex)
   let cl : (stepY ST y β Λ Θ pref).D b →
     MulAction.orbitRel.Quotient ((stepY ST y β Λ Θ pref).G b) ((stepY ST y β Λ Θ pref).D b) := Quotient.mk _
   have hcl : ∀ (g : (stepY ST y β Λ Θ pref).G b) p, cl (g • p) = cl p := fun g p => Quotient.sound ⟨g, rfl⟩
-  have key : ∀ d0 : DecoSet X.E n ST SG, (cl '' {p | p.1.1.deco = d0}).Finite := by
+  have key : ∀ d0 : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG), (cl '' {p | p.1.1.deco = d0}).Finite := by
     intro d0
     rcases Set.eq_empty_or_nonempty {p : (stepY ST y β Λ Θ pref).D b | p.1.1.deco = d0} with h | ⟨p0, hp0⟩
     · rw [h, Set.image_empty]
@@ -92,7 +92,7 @@ theorem stepY_fin_orb (hX : X.Ok) (hI : ∀ b P, (Θ b P).H.FiniteIndex)
       refine ⟨(QuotientGroup.mk c, ⟨p.1.2, hp' ▸ p.2⟩), ?_⟩
       refine (hcl ((1, 1, k) : FrmG (Λ b) (Θ b)) _).symm.trans (congrArg cl ?_)
       refine Subtype.ext (Prod.ext (Subtype.ext (Prod.ext ?_ (funext fun P => ?_))) (Set.image_id _))
-      · exact (one_smul (UF X.E n × GLG X.E n SG) p0.1.1.deco).trans hp'.symm
+      · exact (one_smul (UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) p0.1.1.deco).trans hp'.symm
       · show (1 : Sp X.E n ≃ₗ[X.E] Sp X.E n) * (p0.1.1.fr P * ((Quotient.out (QuotientGroup.mk c : GLQ X.E n Q ⧸ (Θ b).grp)) P).1) *
           ((k.1 P)⁻¹).1 = p.1.1.fr P
         rw [hk]
@@ -106,7 +106,7 @@ theorem stepY_fin_orb (hX : X.Ok) (hI : ∀ b P, (Θ b P).H.FiniteIndex)
   | h p =>
     obtain ⟨d0, hd0, g, hg⟩ := hrep p.1.1.deco
     refine Set.mem_biUnion hd0 ⟨(((g⁻¹, 1, 1) : FrmG (Λ b) (Θ b)) : (stepY ST y β Λ Θ pref).G b) • p, ?_, hcl _ _⟩
-    show ((g⁻¹, 1) : UF X.E n × GLG X.E n SG) • p.1.1.deco = d0
+    show ((g⁻¹, 1) : UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) • p.1.1.deco = d0
     rw [hg, smul_smul, Prod.mk_mul_mk, inv_mul_cancel, one_mul]
     exact one_smul _ d0
 
@@ -149,7 +149,7 @@ variable {X : Fields} {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum (𝓞 X.E))
 theorem PtY.ext' {y : Ys X n} {p p' : PtY ST SG Q y} (h1 : p.1.1.deco = p'.1.1.deco) (h2 : p.1.1.1.2 = p'.1.1.1.2)
     (h3 : p.1.2 = p'.1.2) : p = p' := Subtype.ext (Prod.ext (Subtype.ext (Prod.ext h1 h2)) h3)
 
-theorem PtY.mv_spec {y : Ys X n} (p : PtY ST SG Q y) (d : DecoSet X.E n ST SG)
+theorem PtY.mv_spec {y : Ys X n} (p : PtY ST SG Q y) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))
     (h1 : ∀ P : Q, d.1.at P.1 = p.1.1.deco.1.at P.1) (h2 : y.ys d.1.N = y.ys p.1.1.deco.1.N) :
     (p.mv d).1.1.deco = d ∧ (p.mv d).1.1.1.2 = p.1.1.1.2 ∧ (p.mv d).1.2 = p.1.2 := by
   have h : (∀ (P : Q) (x : Sp X.E n), p.1.1.1.2 P x ∈ d.1.at P.1 ↔ x ∈ stdAt X.E n P.1) ∧ p.1.2 ∈ y.ys d.1.N :=
@@ -233,7 +233,7 @@ theorem tdatY_ok (hP : ∀ P : ST, conjPrime₂ P.1 ≠ P.1) (hT : ∀ P : ST, (
     classical
     show (p.mv (DecoSet.dia1 P a p.1.1.deco)).1.1.deco.1.f P x = _
     rw [PtY.mv_dia]
-    show ((Pi.mulSingle P a : DiaG X.E ST) P).1 * _ = _
+    show ((Pi.mulSingle P a : DiaG (E := X.E) (ST := ST)) P).1 * _ = _
     rw [Pi.mulSingle_eq_same]
     rfl
 
@@ -382,7 +382,7 @@ theorem extUH_last (γ : UF E n) (x : Sp E N) : (extUH hN γ).1 x (Br.iL hN) = x
   subst hN
   exact extE_last γ.1 x
 
-theorem Lsh_empty (d : DecoSet E n ∅ SG) : d.1.Lsh = d.1.N := by
+theorem Lsh_empty (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) : d.1.Lsh = d.1.N := by
   have h : d.1.L = d.1.N := by
     ext x
     rw [d.2.mem_L]
@@ -391,7 +391,7 @@ theorem Lsh_empty (d : DecoSet E n ∅ SG) : d.1.Lsh = d.1.N := by
   rw [h]
   exact d.2.uni
 
-variable (d : DecoSet E n ∅ SG) {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal)
+variable (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal)
 include hT hG
 
 theorem tilH_N (x : Sp E N) : x ∈ (DecoSet.tilH (ST := ST) hN pi d).1.N ↔

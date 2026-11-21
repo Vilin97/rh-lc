@@ -38,20 +38,20 @@ private theorem liftHom_reidx (X : Fields) {L : Type} [Field L] [NumberField L] 
     (Λ₁ : LevFam X.E X.K n SG₁) (Λ₂ : LevFam X.E L n SG₂)
     (hΛ : ∀ (w : ↥SG₁) (hw : w.1 ∈ SG₂), Λ₂ ⟨w.1, hw⟩ = (Λ₁ w).coefMap ι)
     (c₁ : X.K →+* ℂ) (c₂ : L →+* ℂ) (hc : ∀ x, c₂ (ι x) = c₁ x) :
-    ∃ Lf : (formGSD (roundPk X lam₁ fun d : DecoSet X.E n ∅ SG₁ => d.1.N) Λ₁).EqFun →+
+    ∃ Lf : (formGSD (roundPk X lam₁ fun d : DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₁) => d.1.N) Λ₁).EqFun →+
       (formGSD (X := ({F := X.F, E := X.E, K := L, Tau := X.Tau, emb := e} : Fields))
         (roundPk ({F := X.F, E := X.E, K := L, Tau := X.Tau, emb := e} : Fields) lam₂
-          fun d : DecoSet X.E n ∅ SG₂ => d.1.N) Λ₂).EqFun,
+          fun d : DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₂) => d.1.N) Λ₂).EqFun,
       (∀ (a : X.K) ψ, Lf (a • ψ) = ι a • Lf ψ) ∧
       ∀ ψ d₁ d₂, HEq d₂ d₁ → HEq (MvPolynomial.map c₂ ((Lf ψ).1 d₂).1) (MvPolynomial.map c₁ (ψ.1 d₁).1) := by
   subst lam₂
   subst SG₂
   have hΛ' : Λ₂ = Λ₁.coefMap ι := funext fun w => hΛ w w.2
   subst hΛ'
-  have hmem : ∀ ψ : (formGSD (roundPk X lam₁ fun d : DecoSet X.E n ∅ SG₁ => d.1.N) Λ₁).EqFun,
+  have hmem : ∀ ψ : (formGSD (roundPk X lam₁ fun d : DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₁) => d.1.N) Λ₁).EqFun,
       (fun d => hfsJ ι lam₁ (ψ.1 d)) ∈ (formGSD (X := ({F := X.F, E := X.E, K := L, Tau := X.Tau, emb := e} : Fields))
         (roundPk ({F := X.F, E := X.E, K := L, Tau := X.Tau, emb := e} : Fields) lam₁
-          fun d : DecoSet X.E n ∅ SG₁ => d.1.N) (Λ₁.coefMap ι)).EqFun := by
+          fun d : DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₁) => d.1.N) (Λ₁.coefMap ι)).EqFun := by
     intro ψ
     obtain ⟨φ₂, h⟩ := GlobalTheory.Mem.R3.Tr.levelFamily_coefficientChange_liftRound X ι e he lam₁ Λ₁ (Λ₁.coefMap ι) (fun w => rfl)
       (fun w h₁ h₂ hh => by

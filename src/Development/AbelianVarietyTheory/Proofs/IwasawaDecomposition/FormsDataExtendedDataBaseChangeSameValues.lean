@@ -37,11 +37,11 @@ theorem gsdbc_round_reidx (X : Formalism.L2.Col.Fields) {L : Type} [Field L] [Nu
     (Λ₁ : Formalism.L2.Col.LevFam X.E X.K n SG₁) (Λ₂ : Formalism.L2.Col.LevFam X.E L n SG₂)
     (hΛ : ∀ (w : ↥SG₁) (hw : w.1 ∈ SG₂), Λ₂ ⟨w.1, hw⟩ = (Λ₁ w).coefMap ι)
     (c₁ : X.K →+* ℂ) (c₂ : L →+* ℂ) (hc : ∀ x, c₂ (ι x) = c₁ x) :
-    ∃ b : Formalism.L2.Col.GSDBC ι (Formalism.L2.Col.formGSD (Formalism.L2.Col.roundPk X lam fun d : Formalism.L2.Col.DecoSet X.E n ∅ SG₁ => d.1.N) Λ₁)
+    ∃ b : Formalism.L2.Col.GSDBC ι (Formalism.L2.Col.formGSD (Formalism.L2.Col.roundPk X lam fun d : Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₁) => d.1.N) Λ₁)
       (Formalism.L2.Col.formGSD (X := ({F := X.F, E := X.E, K := L, Tau := X.Tau, emb := e} : Formalism.L2.Col.Fields))
         (Formalism.L2.Col.roundPk ({F := X.F, E := X.E, K := L, Tau := X.Tau, emb := e} : Formalism.L2.Col.Fields) lam
-          fun d : Formalism.L2.Col.DecoSet X.E n ∅ SG₂ => d.1.N) Λ₂),
-      ∀ (ψ : (Formalism.L2.Col.formGSD (Formalism.L2.Col.roundPk X lam fun d : Formalism.L2.Col.DecoSet X.E n ∅ SG₁ => d.1.N) Λ₁).EqFun) d₁ d₂,
+          fun d : Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₂) => d.1.N) Λ₂),
+      ∀ (ψ : (Formalism.L2.Col.formGSD (Formalism.L2.Col.roundPk X lam fun d : Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₁) => d.1.N) Λ₁).EqFun) d₁ d₂,
         HEq d₂ d₁ → HEq (MvPolynomial.map c₂ ((b.lift ψ).1 d₂).1) (MvPolynomial.map c₁ (ψ.1 d₁).1) := by
   subst hS
   have hΛ' : Λ₂ = Λ₁.coefMap ι := funext fun w => hΛ w w.2
@@ -49,7 +49,7 @@ theorem gsdbc_round_reidx (X : Formalism.L2.Col.Fields) {L : Type} [Field L] [Nu
   have he' : e = fun τ => ι.comp (X.emb τ) := funext fun τ => (he τ).symm
   subst he'
   obtain ⟨F⟩ := Formalism.L2.Col.CoefFrame.nonempty ι
-  refine ⟨Formalism.L2.Col.hfsFormBC ι F (Formalism.L2.Col.roundPk X lam fun d : Formalism.L2.Col.DecoSet X.E n ∅ _ => d.1.N)
+  refine ⟨Formalism.L2.Col.hfsFormBC ι F (Formalism.L2.Col.roundPk X lam fun d : Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := _) => d.1.N)
     ((Formalism.L2.DIV.rhoVr (X.coefExt L ι).emb lam).comp (Formalism.L2.Col.ufGL X.E n)) (Formalism.L2.DIV.pairVr (X.coefExt L ι).emb lam 1)
     (fun d => Formalism.L2.DIV.nabAtr (X.coefExt L ι).emb lam d.1.N) (fun d => Formalism.L2.DIV.delAtr (X.coefExt L ι).emb lam d.1.N)
     (fun γ v => Formalism.L2.Col.hfs_rhoVr ι lam X.emb (Formalism.L2.Col.ufGL X.E n γ) v) Λ₁, fun ψ d₁ d₂ hd => ?_⟩

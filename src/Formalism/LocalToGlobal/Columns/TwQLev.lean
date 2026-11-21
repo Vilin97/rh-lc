@@ -34,7 +34,7 @@ structure QOpen (q : QLoc hc n Q Θ) : Prop where
     (∀ i j, (u : Matrix (Fin n) (Fin n) 𝒜) i j = (1 : Matrix (Fin n) (Fin n) 𝒜) i j + iA F E (algebraMap (𝓞 E) E a) * s i j) →
     ∀ P : Q, q.at P u ∈ q.U P
 
-variable (q : QLoc hc n Q Θ) (H : Subgroup (GLG E n SG))
+variable (q : QLoc hc n Q Θ) (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 theorem mem_levUQ {x : GL (Fin n) 𝒜} :
     x ∈ levUQ hc n ST SG Q H q ↔ x ∈ levU hc n ST SG H ∧ ∀ P : Q, q.at P x ∈ q.U P := by
@@ -177,7 +177,7 @@ def stepOfQ (hB : BasePi ST π) (hTπ : π * cO E π = (T : 𝓞 E)) (hST : ∀ 
     (hcard : ∀ P ∈ ST, Nat.card (𝓞 E ⧸ P.asIdeal) = T) (hSG : ∀ v : HeightOneSpectrum (𝓞 F), (T : 𝓞 F) ∈ v.asIdeal → v ∉ plUnder F SG)
     (hidx : (baseLb E n ST).toAddSubgroup.relIndex
       (Submodule.span (𝓞 E) (Formalism.BasicNotions.dualSet (hc.sig : E →+* E) (1 : Matrix (Fin n) (Fin n) E) (baseLb E n ST))).toAddSubgroup = T ^ (2 * f))
-    (lam : (Subgroup.pi Set.univ Hw : Subgroup (GLG E n SG)) →* ℂˣ)
+    (lam : (Subgroup.pi Set.univ Hw : Subgroup (GLG (E := E) (n := n) (SG := SG))) →* ℂˣ)
     (hQ : QOpen q) (hQT : ∀ P : Q, (T : 𝓞 F) ∉ (qv F P.1).asIdeal) (σ₀ : K →+* ℂ) :
     Formalism.L2.Forms.StepLevel F E hc.sig (1 : Matrix (Fin n) (Fin n) E) T f (badQ' SG Q) where
   Lb := baseLb E n ST
@@ -237,7 +237,7 @@ theorem stepOfQ_chi_fin (hB : BasePi ST π) (hTπ : π * cO E π = (T : 𝓞 E))
     (hcard : ∀ P ∈ ST, Nat.card (𝓞 E ⧸ P.asIdeal) = T) (hSG : ∀ v : HeightOneSpectrum (𝓞 F), (T : 𝓞 F) ∈ v.asIdeal → v ∉ plUnder F SG)
     (hidx : (baseLb E n ST).toAddSubgroup.relIndex
       (Submodule.span (𝓞 E) (Formalism.BasicNotions.dualSet (hc.sig : E →+* E) (1 : Matrix (Fin n) (Fin n) E) (baseLb E n ST))).toAddSubgroup = T ^ (2 * f))
-    (lam : (Subgroup.pi Set.univ Hw : Subgroup (GLG E n SG)) →* ℂˣ)
+    (lam : (Subgroup.pi Set.univ Hw : Subgroup (GLG (E := E) (n := n) (SG := SG))) →* ℂˣ)
     (hQ : QOpen q) (hQT : ∀ P : Q, (T : 𝓞 F) ∉ (qv F P.1).asIdeal) (σ₀ : K →+* ℂ)
     (hlam : ∃ m : ℕ, 0 < m ∧ ∀ h, lam h ^ m = 1) (hchr : ∀ P : Q, ∃ m : ℕ, 0 < m ∧ ∀ k, q.chr P k ^ m = 1) :
     ∃ m : ℕ, 0 < m ∧ ∀ κ, (stepOfQ hc n Hw q hB hTπ hST hcard hSG hidx lam hQ hQT σ₀).chi κ ^ m = 1 := by

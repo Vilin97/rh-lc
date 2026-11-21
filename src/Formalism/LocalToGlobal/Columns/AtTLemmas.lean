@@ -20,21 +20,21 @@ section DiaMoves
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
   {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-instance diaAction : MulAction (DiaG E ST) (DecoSet E n ST SG) where
+instance diaAction : MulAction (DiaG (E := E) (ST := ST)) (DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) where
   smul c d := d.dia c
   one_smul := DecoSet.dia_one
   mul_smul c c' d := DecoSet.dia_mul c c' d
 
-theorem DecoSet.dia_smul_def (c : DiaG E ST) (d : DecoSet E n ST SG) : c • d = d.dia c := rfl
+theorem DecoSet.dia_smul_def (c : DiaG (E := E) (ST := ST)) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : c • d = d.dia c := rfl
 
 end DiaMoves
 
 section OpsL
 
 variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-  (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG)
+  (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG)
 
-theorem diamond_action_apply (P : ST) (c : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) (φ : (formGSD C Λ).EqFun) (d : DecoSet X.E n ST SG) :
+theorem diamond_action_apply (P : ST) (c : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) (φ : (formGSD C Λ).EqFun) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) :
     ((diamondOperatorOnForms' C Λ P c φ : (formGSD C Λ).EqFun) : (formGSD C Λ).D → (formGSD C Λ).V) d =
       (φ : (formGSD C Λ).D → (formGSD C Λ).V) (d.dia1 P c) := by
   unfold diamondOperatorOnForms'

@@ -38,7 +38,7 @@ theorem pt_ext {p q : (stepX Ch sel mu P).D ()} (h : p.1.1 = q.1.1) : p = q :=
 def mkPt (p : XPt Pr R sel mu) : (stepX Ch sel mu P).D () := ⟨(p, ∅), rfl⟩
 
 theorem orbit_inj (c c' : (stepX Ch sel mu P).Cl) (γ : UF X.E (R.N R.m - 1)) (h : (rowTyG Ch P).grp) (θ : (levQX R sel mu).grp)
-    (e : ((γ, h.1, θ.1) : UF X.E (R.N R.m - 1) × GLG X.E (R.N R.m - 1) Pr.vGs × GLQ X.E (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K))) • ((stepX Ch sel mu P).rep c).1.1 = ((stepX Ch sel mu P).rep c').1.1) : c = c' := by
+    (e : ((γ, h.1, θ.1) : UF X.E (R.N R.m - 1) × GLG (E := X.E) (n := R.N R.m - 1) (SG := Pr.vGs) × GLQ X.E (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K))) • ((stepX Ch sel mu P).rep c).1.1 = ((stepX Ch sel mu P).rep c').1.1) : c = c' := by
   obtain ⟨⟨⟩, q⟩ := c
   obtain ⟨⟨⟩, q'⟩ := c'
   have h1 : ((γ, h, θ) : (stepX Ch sel mu P).G ()) • (stepX Ch sel mu P).rep ⟨(), q⟩ = (stepX Ch sel mu P).rep ⟨(), q'⟩ :=
@@ -51,13 +51,13 @@ theorem orbit_inj (c c' : (stepX Ch sel mu P).Cl) (γ : UF X.E (R.N R.m - 1)) (h
   exact (Quotient.sound h4).symm
 
 theorem orbit_surj (p : XPt Pr R sel mu) : ∃ (c : (stepX Ch sel mu P).Cl) (γ : UF X.E (R.N R.m - 1)) (h : (rowTyG Ch P).grp) (θ : (levQX R sel mu).grp),
-    ((γ, h.1, θ.1) : UF X.E (R.N R.m - 1) × GLG X.E (R.N R.m - 1) Pr.vGs × GLQ X.E (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K))) • ((stepX Ch sel mu P).rep c).1.1 = p := by
+    ((γ, h.1, θ.1) : UF X.E (R.N R.m - 1) × GLG (E := X.E) (n := R.N R.m - 1) (SG := Pr.vGs) × GLQ X.E (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K))) • ((stepX Ch sel mu P).rep c).1.1 = p := by
   obtain ⟨g, hg⟩ := (stepX Ch sel mu P).exists_mv () (mkPt Ch sel mu P p)
   exact ⟨_, g.1, g.2.1, g.2.2, congrArg (fun q : (stepX Ch sel mu P).D () => q.1.1) hg⟩
 
 theorem stab_iff (c : (stepX Ch sel mu P).Cl) (γ : UF X.E (R.N R.m - 1)) :
     (∃ s : (stepX Ch sel mu P).Stab c, s.1.1 = γ) ↔ ∃ (h : (rowTyG Ch P).grp) (θ : (levQX R sel mu).grp),
-      ((γ, h.1, θ.1) : UF X.E (R.N R.m - 1) × GLG X.E (R.N R.m - 1) Pr.vGs × GLQ X.E (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K))) • ((stepX Ch sel mu P).rep c).1.1 = ((stepX Ch sel mu P).rep c).1.1 := by
+      ((γ, h.1, θ.1) : UF X.E (R.N R.m - 1) × GLG (E := X.E) (n := R.N R.m - 1) (SG := Pr.vGs) × GLQ X.E (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K))) • ((stepX Ch sel mu P).rep c).1.1 = ((stepX Ch sel mu P).rep c).1.1 := by
   obtain ⟨⟨⟩, q⟩ := c
   constructor
   · rintro ⟨s, rfl⟩
@@ -68,7 +68,7 @@ theorem stab_iff (c : (stepX Ch sel mu P).Cl) (γ : UF X.E (R.N R.m - 1)) :
 theorem lev_iff (c : (stepX Ch sel mu P).Cl) (q : XPt Pr R sel mu) :
     (∃ κ : (stepX Ch sel mu P).G c.1, (stepX Ch sel mu P).gam c.1 κ = 1 ∧ ((stepX Ch sel mu P).act c.1 κ ((stepX Ch sel mu P).rep c)).1.1 = q) ↔
       ∃ (h : (rowTyG Ch P).grp) (θ : (levQX R sel mu).grp),
-      ((1, h.1, θ.1) : UF X.E (R.N R.m - 1) × GLG X.E (R.N R.m - 1) Pr.vGs × GLQ X.E (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K))) • ((stepX Ch sel mu P).rep c).1.1 = q := by
+      ((1, h.1, θ.1) : UF X.E (R.N R.m - 1) × GLG (E := X.E) (n := R.N R.m - 1) (SG := Pr.vGs) × GLQ X.E (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K))) • ((stepX Ch sel mu P).rep c).1.1 = q := by
   obtain ⟨⟨⟩, c⟩ := c
   constructor
   · rintro ⟨κ, hγ, e⟩
@@ -100,7 +100,7 @@ theorem memberLevel_read {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) 
 
   have hmv : ∀ (z : GL (Fin (B.R.N B.R.m - 1)) (AfE B.host.F B.host.E)) (hz : z ∈ J0 B.sp.cm (B.R.N B.R.m - 1) ∅) (h : (rowTyG I.Ch I.Ps).grp),
       redG B.sp.cm (B.R.N B.R.m - 1) ∅ (B.primes X).vGs ⟨z, hz⟩ = h.1⁻¹ →
-      IsPtOf B.sp.cm (g0 * z) (((1, h.1, 1) : UF B.host.E (B.R.N B.R.m - 1) × GLG B.host.E (B.R.N B.R.m - 1) (B.primes X).vGs × GLQ B.host.E (B.R.N B.R.m - 1) (I.Q I.mu0)) • ((I.stX I.mu0).rep c0).1.1) :=
+      IsPtOf B.sp.cm (g0 * z) (((1, h.1, 1) : UF B.host.E (B.R.N B.R.m - 1) × GLG (E := B.host.E) (n := B.R.N B.R.m - 1) (SG := (B.primes X).vGs) × GLQ B.host.E (B.R.N B.R.m - 1) (I.Q I.mu0)) • ((I.stX I.mu0).rep c0).1.1) :=
     fun z hz h hr => (isPtOf_mul_J0 _ _ B.sp.cm _ ∅ (B.primes X).vGs (I.Q I.mu0) g0 z ((I.stX I.mu0).rep c0).1.1
       ((I.stX I.mu0).rep c0).1.1 h.1).2.1 hQ0 hp0 hz hr
   refine ⟨fun x hx => ⟨fun hxU => ?_, fun hxL => ?_⟩, fun x z h e hr => ?_⟩
@@ -246,7 +246,7 @@ theorem tuplePrimedSpace_classes : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X
       exact mem_topU_iff _ _ B.fields.K B.sp.cm _ ∅ (B.primes X).vGs (I.Q a) (rowTyG I.Ch I.Ps) (levQX B.R I.sel (I.tup a)) d hd N hdN hΘ
         KP.lev.U 1 1 (y c) x _ q (one_mem _) (fun _ => map_one _) (one_mem _) hU1 (hy1 c) (by rw [mul_one, mul_one, ← hy' c]; exact hq)
     · have k1 : κ.1 = 1 := Subtype.ext ((toGLm B.fields.E (B.R.N B.R.m - 1)).injective (hκ.trans (map_one _).symm))
-      have hκ' : ((I.stX a).act c.1 κ ((I.stX a).rep c)).1.1 = ((1, κ.2.1.1, κ.2.2.1) : UF B.host.E (B.R.N B.R.m - 1) × GLG B.host.E (B.R.N B.R.m - 1) (B.primes X).vGs × GLQ B.host.E (B.R.N B.R.m - 1) (I.Q a)) • ((I.stX a).rep c).1.1 := by
+      have hκ' : ((I.stX a).act c.1 κ ((I.stX a).rep c)).1.1 = ((1, κ.2.1.1, κ.2.2.1) : UF B.host.E (B.R.N B.R.m - 1) × GLG (E := B.host.E) (n := B.R.N B.R.m - 1) (SG := (B.primes X).vGs) × GLQ B.host.E (B.R.N B.R.m - 1) (I.Q a)) • ((I.stX a).rep c).1.1 := by
         rw [← k1]; rfl
       have hx : x.1 ∈ topU KP.lev.U 1 (levQX B.R I.sel (I.tup a)) d := hCU ▸ x.2
       have h1 := chi_mul_topChi_moved _ _ B.fields.K B.sp.cm _ ∅ (B.primes X).vGs (I.Q a) (rowTyG I.Ch I.Ps) (levQX B.R I.sel (I.tup a)) d hd N hdN hΘ

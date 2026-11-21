@@ -265,7 +265,7 @@ theorem val_det_eq {P : HeightOneSpectrum (𝓞 E)} {g : Sp E n ≃ₗ[E] Sp E n
   rw [map_mul, map_one] at h3
   exact eq_one_of_one_le_mul_left h1 h2 h3.ge
 
-theorem at_conj_eq {ST SG : Finset (HeightOneSpectrum (𝓞 E))} (d : DecoSet E n ST SG) {P : HeightOneSpectrum (𝓞 E)}
+theorem at_conj_eq {ST SG : Finset (HeightOneSpectrum (𝓞 E))} (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) {P : HeightOneSpectrum (𝓞 E)}
     (h : d.1.at P = stdAt E n P) : d.1.at (conjPrime₂ P) = stdAt E n (conjPrime₂ P) :=
   le_antisymm (localization_conj_le_of_le stdLat_lattice.fg stdLat_unimodular d.2.uni h.ge)
     (localization_conj_le_of_le d.2.lat.fg d.2.uni stdLat_unimodular h.le)

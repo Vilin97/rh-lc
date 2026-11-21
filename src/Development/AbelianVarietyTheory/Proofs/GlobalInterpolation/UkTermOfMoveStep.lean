@@ -379,8 +379,8 @@ theorem sum_ite_unique {α K : Type} [Field K] (s : Finset α) (p : α → Prop)
   · exact Finset.sum_eq_zero fun v hv => if_neg fun hv' => he ⟨v, hv, hv'⟩
 
 theorem sum_phiT (K : Type) [Field K] {P : ST} (hP : MoveHyp ST SG P) (hP' : MoveHyp ST SG' P) {q : 𝓞 E} (hq : q ∈ P.1.asIdeal)
-    (hq2 : q ∉ P.1.asIdeal ^ 2) (d : DecoSet E a ST SG) (d' : DecoSet E b ST SG') (U : Finset (DecoSet E b ST SG'))
-    (D : Finset (DecoSet E a ST SG)) (hU : ∀ d₁, d₁ ∈ U ↔ d'.1.IsUp P q d₁.1) (hD : ∀ d₀, d₀ ∈ D ↔ d₀.1.IsUp P q d.1)
+    (hq2 : q ∉ P.1.asIdeal ^ 2) (d : DecoSet (E := E) (n := a) (ST := ST) (SG := SG)) (d' : DecoSet (E := E) (n := b) (ST := ST) (SG := SG')) (U : Finset (DecoSet (E := E) (n := b) (ST := ST) (SG := SG')))
+    (D : Finset (DecoSet (E := E) (n := a) (ST := ST) (SG := SG))) (hU : ∀ d₁, d₁ ∈ U ↔ d'.1.IsUp P q d₁.1) (hD : ∀ d₀, d₀ ∈ D ↔ d₀.1.IsUp P q d.1)
     (x : HomE E a b) : ∑ d₁ ∈ U, phiT K d.1 d₁.1 x = ∑ d₀ ∈ D, phiT K d₀.1 d'.1 x := by
   classical
   simp_rw [phiT_eq]

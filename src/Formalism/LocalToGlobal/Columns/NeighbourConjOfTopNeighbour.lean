@@ -147,7 +147,7 @@ theorem gaussBinomial_self (q n : ℕ) : gaussBin q n n = 1 := by
   | zero => simp [gaussBin]
   | succ k ih => simp only [gaussBin, ih, gaussBin_eq_zero q (Nat.lt_succ_self k), mul_zero, add_zero]
 
-theorem mem_heckeSet_iff_symm (Q : HeightOneSpectrum (𝓞 E)) {i : ℕ} (d e : DecoSet E n ST SG) :
+theorem mem_heckeSet_iff_symm (Q : HeightOneSpectrum (𝓞 E)) {i : ℕ} (d e : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     e ∈ d.heckeSet Q.asIdeal i ↔ d ∈ e.heckeSet (conjPrime₂ Q).asIdeal i := by
   constructor
   · rintro ⟨h, hf, hb⟩
@@ -159,15 +159,15 @@ theorem mem_heckeSet_iff_symm (Q : HeightOneSpectrum (𝓞 E)) {i : ℕ} (d e : 
 
 
 open Classical in
-def decoratedNeighbourAtPrime (Q : HeightOneSpectrum (𝓞 E)) (g : DecoSet E n ST SG) : DecoSet E n ST SG :=
+def decoratedNeighbourAtPrime (Q : HeightOneSpectrum (𝓞 E)) (g : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) :=
   if h : (g.heckeSet Q.asIdeal n).Nonempty then h.some else g
 
 theorem card_topNeighbours_eq_one (Q : HeightOneSpectrum (𝓞 E)) (hne : conjPrime₂ Q ≠ Q) (hST : ∀ R : ST, R.1 ≠ Q ∧ R.1 ≠ conjPrime₂ Q)
-    (hSG : ∀ w : SG, w.1 ≠ Q ∧ w.1 ≠ conjPrime₂ Q) (g : DecoSet E n ST SG) : Nat.card (g.heckeSet Q.asIdeal n) = 1 := by
+    (hSG : ∀ w : SG, w.1 ≠ Q ∧ w.1 ≠ conjPrime₂ Q) (g : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : Nat.card (g.heckeSet Q.asIdeal n) = 1 := by
   rw [DecoSet.card_heckeSet g Q hne hST hSG n, gaussBinomial_self]
 
 theorem topNeighbour_mem (Q : HeightOneSpectrum (𝓞 E)) (hne : conjPrime₂ Q ≠ Q) (hST : ∀ R : ST, R.1 ≠ Q ∧ R.1 ≠ conjPrime₂ Q)
-    (hSG : ∀ w : SG, w.1 ≠ Q ∧ w.1 ≠ conjPrime₂ Q) (g : DecoSet E n ST SG) : decoratedNeighbourAtPrime Q g ∈ g.heckeSet Q.asIdeal n := by
+    (hSG : ∀ w : SG, w.1 ≠ Q ∧ w.1 ≠ conjPrime₂ Q) (g : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : decoratedNeighbourAtPrime Q g ∈ g.heckeSet Q.asIdeal n := by
   have hc := card_topNeighbours_eq_one Q hne hST hSG g
   have hn : (g.heckeSet Q.asIdeal n).Nonempty :=
     Set.nonempty_coe_sort.mp (Nat.card_eq_one_iff_unique.mp hc).2
@@ -176,14 +176,14 @@ theorem topNeighbour_mem (Q : HeightOneSpectrum (𝓞 E)) (hne : conjPrime₂ Q 
   exact hn.some_mem
 
 theorem topNeighbour_unique (Q : HeightOneSpectrum (𝓞 E)) (hne : conjPrime₂ Q ≠ Q) (hST : ∀ R : ST, R.1 ≠ Q ∧ R.1 ≠ conjPrime₂ Q)
-    (hSG : ∀ w : SG, w.1 ≠ Q ∧ w.1 ≠ conjPrime₂ Q) {g z : DecoSet E n ST SG} (hz : z ∈ g.heckeSet Q.asIdeal n) :
+    (hSG : ∀ w : SG, w.1 ≠ Q ∧ w.1 ≠ conjPrime₂ Q) {g z : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)} (hz : z ∈ g.heckeSet Q.asIdeal n) :
     z = decoratedNeighbourAtPrime Q g := by
   have hc := card_topNeighbours_eq_one Q hne hST hSG g
   have hs := (Nat.card_eq_one_iff_unique.mp hc).1
   have hm := topNeighbour_mem Q hne hST hSG g
   exact congrArg Subtype.val (@Subsingleton.elim _ hs ⟨z, hz⟩ ⟨_, hm⟩)
 
-theorem neighbour_of_topNeighbour_sub (Q : HeightOneSpectrum (𝓞 E)) (hne : conjPrime₂ Q ≠ Q) {g z h : DecoSet E n ST SG} {j : ℕ} (hj : j ≤ n)
+theorem neighbour_of_topNeighbour_sub (Q : HeightOneSpectrum (𝓞 E)) (hne : conjPrime₂ Q ≠ Q) {g z h : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)} {j : ℕ} (hj : j ≤ n)
     (hz : z ∈ g.heckeSet Q.asIdeal n) (hh : h ∈ g.heckeSet Q.asIdeal j) : h ∈ z.heckeSet (conjPrime₂ Q).asIdeal (n - j) := by
   obtain ⟨hz1, hz2, hz3⟩ := hz
   obtain ⟨hh1, hh2, hh3⟩ := hh
@@ -201,7 +201,7 @@ theorem conj_split_hypotheses : conjPrime₂ (conjPrime₂ P) ≠ conjPrime₂ P
   · exact ⟨(hST R).2, (hST R).1⟩
   · exact ⟨(hSG w).2, (hSG w).1⟩
 
-theorem heckeSet_conj_eq_topNeighbour {j : ℕ} (hj : j ≤ n) (g : DecoSet E n ST SG) :
+theorem heckeSet_conj_eq_topNeighbour {j : ℕ} (hj : j ≤ n) (g : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     g.heckeSet (conjPrime₂ P).asIdeal j = (decoratedNeighbourAtPrime (conjPrime₂ P) g).heckeSet P.asIdeal (n - j) := by
   obtain ⟨h1, h2, h3⟩ := conj_split_hypotheses P hne hST hSG
   have hz := topNeighbour_mem (conjPrime₂ P) h1 h2 h3 g
@@ -217,10 +217,10 @@ theorem heckeSet_conj_eq_topNeighbour {j : ℕ} (hj : j ≤ n) (g : DecoSet E n 
     have := neighbour_of_topNeighbour_sub P hne (Nat.sub_le n j) hg hh
     rwa [Nat.sub_sub_self hj] at this
 
-theorem mem_heckeSet_iff_topNeighbour {i : ℕ} (hi : i ≤ n) (d e : DecoSet E n ST SG) :
+theorem mem_heckeSet_iff_topNeighbour {i : ℕ} (hi : i ≤ n) (d e : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     e ∈ d.heckeSet P.asIdeal i ↔ decoratedNeighbourAtPrime (conjPrime₂ P) e ∈ (decoratedNeighbourAtPrime (conjPrime₂ P) d).heckeSet P.asIdeal i := by
   obtain ⟨h1, h2, h3⟩ := conj_split_hypotheses P hne hST hSG
-  have hZZ : ∀ g : DecoSet E n ST SG, decoratedNeighbourAtPrime P (decoratedNeighbourAtPrime (conjPrime₂ P) g) = g := by
+  have hZZ : ∀ g : DecoSet (E := E) (n := n) (ST := ST) (SG := SG), decoratedNeighbourAtPrime P (decoratedNeighbourAtPrime (conjPrime₂ P) g) = g := by
     intro g
     have hz := topNeighbour_mem (conjPrime₂ P) h1 h2 h3 g
     have hg := (mem_heckeSet_iff_symm (conjPrime₂ P) g (decoratedNeighbourAtPrime (conjPrime₂ P) g)).mp hz
@@ -233,13 +233,13 @@ theorem mem_heckeSet_iff_topNeighbour {i : ℕ} (hi : i ≤ n) (d e : DecoSet E 
   rw [← hB, mem_heckeSet_iff_symm (conjPrime₂ P) d (decoratedNeighbourAtPrime (conjPrime₂ P) e), conjugatePrime_conjugatePrime, hB',
     ← mem_heckeSet_iff_symm P d e]
 
-theorem topNeighbour_conj_involutive (g : DecoSet E n ST SG) : decoratedNeighbourAtPrime (conjPrime₂ P) (decoratedNeighbourAtPrime P g) = g := by
+theorem topNeighbour_conj_involutive (g : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : decoratedNeighbourAtPrime (conjPrime₂ P) (decoratedNeighbourAtPrime P g) = g := by
   obtain ⟨h1, h2, h3⟩ := conj_split_hypotheses P hne hST hSG
   have hz := topNeighbour_mem P hne hST hSG g
   have hg := (mem_heckeSet_iff_symm P g (decoratedNeighbourAtPrime P g)).mp hz
   exact (topNeighbour_unique (conjPrime₂ P) h1 h2 h3 hg).symm
 
-theorem topNeighbour_involutive_conj (g : DecoSet E n ST SG) : decoratedNeighbourAtPrime P (decoratedNeighbourAtPrime (conjPrime₂ P) g) = g := by
+theorem topNeighbour_involutive_conj (g : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : decoratedNeighbourAtPrime P (decoratedNeighbourAtPrime (conjPrime₂ P) g) = g := by
   obtain ⟨h1, h2, h3⟩ := conj_split_hypotheses P hne hST hSG
   have hz := topNeighbour_mem (conjPrime₂ P) h1 h2 h3 g
   have hg := (mem_heckeSet_iff_symm (conjPrime₂ P) g (decoratedNeighbourAtPrime (conjPrime₂ P) g)).mp hz
@@ -248,7 +248,7 @@ theorem topNeighbour_involutive_conj (g : DecoSet E n ST SG) : decoratedNeighbou
 
 omit hne hST hSG in
 theorem heckeNeighbour_empty_of_gt (Q : HeightOneSpectrum (𝓞 E)) (hneQ : conjPrime₂ Q ≠ Q) (hSTQ : ∀ R : ST, R.1 ≠ Q ∧ R.1 ≠ conjPrime₂ Q)
-    (hSGQ : ∀ w : SG, w.1 ≠ Q ∧ w.1 ≠ conjPrime₂ Q) {i : ℕ} (hi : n < i) (g : DecoSet E n ST SG) :
+    (hSGQ : ∀ w : SG, w.1 ≠ Q ∧ w.1 ≠ conjPrime₂ Q) {i : ℕ} (hi : n < i) (g : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     g.heckeNb Q.asIdeal i = ∅ := by
   unfold DecoSet.heckeNb
   split_ifs with hfin
@@ -263,12 +263,12 @@ theorem heckeNeighbour_empty_of_gt (Q : HeightOneSpectrum (𝓞 E)) (hneQ : conj
   · rfl
 
 theorem pathCount_conj_symm
-    (hsame : ∀ (i j : ℕ) (d f : DecoSet E n ST SG),
+    (hsame : ∀ (i j : ℕ) (d f : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)),
       decorationPathCount P.asIdeal P.asIdeal i j d f = decorationPathCount P.asIdeal P.asIdeal j i d f)
-    (i j : ℕ) (d f : DecoSet E n ST SG) :
+    (i j : ℕ) (d f : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     decorationPathCount P.asIdeal (conjPrime₂ P).asIdeal i j d f = decorationPathCount (conjPrime₂ P).asIdeal P.asIdeal j i d f := by
   obtain ⟨h1, h2, h3⟩ := conj_split_hypotheses P hne hST hSG
-  have hPb : ∀ (Q : HeightOneSpectrum (𝓞 E)) (k : ℕ) (a b : DecoSet E n ST SG),
+  have hPb : ∀ (Q : HeightOneSpectrum (𝓞 E)) (k : ℕ) (a b : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)),
       b ∈ a.heckeNb Q.asIdeal k ↔ b ∈ a.heckeSet Q.asIdeal k := fun Q k a b =>
     DecoSet.mem_heckeNb Q.ne_bot (by rw [conjIdeal_asIdeal]; exact (conjPrime₂ Q).ne_bot) k a b
   by_cases hi : i ≤ n

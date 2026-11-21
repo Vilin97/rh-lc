@@ -43,7 +43,7 @@ variable {Q : Finset (HeightOneSpectrum (𝓞 E))}
 
 def levRedFam (Θ : LevFam E K n Q) : LevQFam E K n Q := fun P => levRed P.1 (Θ P)
 
-theorem exists_redGL_eq [NeZero n] (h : GLG E n Q) (w : Q) : ∃ k : GLint E n w.1, redGL n w.1 k = h w := by
+theorem exists_redGL_eq [NeZero n] (h : GLG (E := E) (n := n) (SG := Q)) (w : Q) : ∃ k : GLint E n w.1, redGL n w.1 k = h w := by
   have hd := Deco.base_ok (E := E) (n := n) (ST := ∅) (SG := Q)
   have hd' : ((Deco.base E n ∅ Q).act 1 h).Ok := hd.act (one_mem (UF E n)) h
   exact ⟨_, redGL_passFr 1 h (liftFr_spec hd w) (liftFr_spec hd' w)⟩
@@ -134,7 +134,7 @@ theorem forgetDeco_ok (p : DecoF E n ST SG Q) : (forgetDeco p).Ok := by
   · rw [forgetDeco_be_of_mem p w h]; exact hp.be_ker ⟨w.1, h⟩
   · rw [forgetDeco_be_of_not p w h, e (rightOf w h)]; exact hd.be_ker (rightOf w h)
 
-def forgetFr (p : DecoF E n ST SG Q) : DecoSet E n ST (uSG SG Q) := ⟨forgetDeco p, forgetDeco_ok p⟩
+def forgetFr (p : DecoF E n ST SG Q) : DecoSet (E := E) (n := n) (ST := ST) (SG := uSG SG Q) := ⟨forgetDeco p, forgetDeco_ok p⟩
 
 theorem forgetFr_N (p : DecoF E n ST SG Q) : (forgetFr p).1.N = p.deco.1.N := rfl
 
@@ -156,7 +156,7 @@ theorem isLiftFr_forgetFr (p : DecoF E n ST SG Q) (w : uSG SG Q) (h : w.1 ∉ SG
 
 
 open Classical in
-theorem forgetFr_surjective : Function.Surjective (forgetFr : DecoF E n ST SG Q → DecoSet E n ST (uSG SG Q)) := by
+theorem forgetFr_surjective : Function.Surjective (forgetFr : DecoF E n ST SG Q → DecoSet (E := E) (n := n) (ST := ST) (SG := uSG SG Q)) := by
   intro d
   refine ⟨⟨(d.res Finset.subset_union_left, fun P => d.1.liftFr (inRight SG P)),
     fun P => (liftFr_spec d.2 (inRight SG P)).1⟩, ?_⟩
@@ -171,7 +171,7 @@ theorem forgetFr_surjective : Function.Surjective (forgetFr : DecoF E n ST SG Q 
 
 
 open Classical in
-def redGQ : GLG E n SG × GLQ E n Q →* GLG E n (uSG SG Q) where
+def redGQ : GLG (E := E) (n := n) (SG := SG) × GLQ E n Q →* GLG (E := E) (n := n) (SG := uSG SG Q) where
   toFun a w := if h : w.1 ∈ SG then a.1 ⟨w.1, h⟩ else redGL n w.1 (a.2 (rightOf w h))
   map_one' := by
     funext w
@@ -180,13 +180,13 @@ def redGQ : GLG E n SG × GLQ E n Q →* GLG E n (uSG SG Q) where
     funext w
     by_cases h : w.1 ∈ SG <;> simp [h]
 
-theorem redGQ_of_mem (a : GLG E n SG × GLQ E n Q) (w : uSG SG Q) (h : w.1 ∈ SG) :
+theorem redGQ_of_mem (a : GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) (w : uSG SG Q) (h : w.1 ∈ SG) :
     redGQ E n SG Q a w = a.1 ⟨w.1, h⟩ := dif_pos h
 
-theorem redGQ_of_not (a : GLG E n SG × GLQ E n Q) (w : uSG SG Q) (h : w.1 ∉ SG) :
+theorem redGQ_of_not (a : GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) (w : uSG SG Q) (h : w.1 ∉ SG) :
     redGQ E n SG Q a w = redGL n w.1 (a.2 (rightOf w h)) := dif_neg h
 
-theorem forgetFr_smul (a : UF E n × GLG E n SG × GLQ E n Q) (p : DecoF E n ST SG Q) :
+theorem forgetFr_smul (a : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) (p : DecoF E n ST SG Q) :
     forgetFr (a • p) = (a.1, redGQ E n SG Q a.2) • forgetFr p := by
   apply Subtype.ext
   ext1
@@ -216,13 +216,13 @@ theorem exists_of_forgetFr_eq (hd : Disjoint SG Q) {p q : DecoF E n ST SG Q} (h 
 
 theorem forgetFr_eq_iff (hd : Disjoint SG Q) (p q : DecoF E n ST SG Q) :
     forgetFr p = forgetFr q ↔ ∃ c : GLQ E n Q, (∀ P : Q, redGL n P.1 (c P) = 1) ∧
-      q = ((1, 1, c) : UF E n × GLG E n SG × GLQ E n Q) • p := by
+      q = ((1, 1, c) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p := by
   constructor
   · intro h
     choose c hc1 hc2 using exists_of_forgetFr_eq hd h
     refine ⟨c, hc1, Subtype.ext (Prod.ext ?_ ?_)⟩
     · have e : q.deco = p.deco := by rw [← forgetFr_res q, ← h, forgetFr_res]
-      exact e.trans (one_smul (UF E n × GLG E n SG) p.deco).symm
+      exact e.trans (one_smul (UF E n × GLG (E := E) (n := n) (SG := SG)) p.deco).symm
     · funext P
       show q.fr P = (1 : Sp E n ≃ₗ[E] Sp E n) * p.fr P * ((c P).1)⁻¹
       rw [hc2 P, one_mul, mul_inv_cancel_right]
@@ -230,7 +230,7 @@ theorem forgetFr_eq_iff (hd : Disjoint SG Q) (p q : DecoF E n ST SG Q) :
     rw [forgetFr_smul]
     show _ = ((1 : UF E n), redGQ E n SG Q (1, c)) • forgetFr p
     rw [redGQ_eq_one hc]
-    exact (one_smul (UF E n × GLG E n (uSG SG Q)) _).symm
+    exact (one_smul (UF E n × GLG (E := E) (n := n) (SG := uSG SG Q)) _).symm
 
 theorem forgetFr_base [NeZero n] : forgetFr (DecoF.base E n ST SG Q) = DecoSet.base E n ST (uSG SG Q) := by
   apply Subtype.ext
@@ -405,7 +405,7 @@ variable {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : 
 
 include hT in
 theorem tilH_N_f {SG' : Finset (HeightOneSpectrum (𝓞 E))} (hG : ∀ w : SG, pi ∉ w.1.asIdeal) (hG' : ∀ w : SG', pi ∉ w.1.asIdeal)
-    (d : DecoSet E n ∅ SG) (d' : DecoSet E n ∅ SG') (h : d.1.N = d'.1.N) :
+    (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) (d' : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG')) (h : d.1.N = d'.1.N) :
     (DecoSet.tilH (ST := ST) hN pi d).1.N = (DecoSet.tilH (ST := ST) hN pi d').1.N ∧
       (DecoSet.tilH (ST := ST) hN pi d).1.f = (DecoSet.tilH (ST := ST) hN pi d').1.f := by
   subst hN
@@ -447,9 +447,9 @@ theorem tilFr_fr_last (p : DecoF E n ∅ SG Q) (P : Q) :
   · rw [prH_sumE, h0, h0, map_zero]
   · rw [sumE_last, unitOf_val (hQ P), Pi.single_eq_same, Pi.single_eq_same, mul_one]
 
-theorem tilFr_smul (a : UF E n × GLG E n SG × GLQ E n Q) (p : DecoF E n ∅ SG Q) :
+theorem tilFr_smul (a : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) (p : DecoF E n ∅ SG Q) :
     tilFr (ST := ST) hN pi (a • p) =
-      ((extUH hN a.1, extGH hN a.2.1, extQ E hN Q a.2.2) : UF E N × GLG E N SG × GLQ E N Q) • tilFr (ST := ST) hN pi p := by
+      ((extUH hN a.1, extGH hN a.2.1, extQ E hN Q a.2.2) : UF E N × GLG (E := E) (n := N) (SG := SG) × GLQ E N Q) • tilFr (ST := ST) hN pi p := by
   refine Subtype.ext (Prod.ext ?_ (funext fun P => ?_))
   · show (tilFr hN pi (a • p)).deco = (extUH hN a.1, extGH hN a.2.1) • (tilFr hN pi p).deco
     rw [tilFr_deco hN hT hG hQ, tilFr_deco hN hT hG hQ]
@@ -580,10 +580,10 @@ theorem tilF_N (p : XPt Pr R sel mu) : (tilF sel mu u p).deco.1.N = (tilQ sel mu
 
 
 set_option synthInstance.maxHeartbeats 200000 in
-theorem tilF_smul (a : UF X.E (R.N R.m - 1) × GLG X.E (R.N R.m - 1) Pr.vGs × GLQ X.E (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K)))
+theorem tilF_smul (a : UF X.E (R.N R.m - 1) × GLG (E := X.E) (n := R.N R.m - 1) (SG := Pr.vGs) × GLQ X.E (R.N R.m - 1) (QE sel (mu : Chr X.F X.E X.K)))
     (p : XPt Pr R sel mu) :
     tilF sel mu u (a • p) = ((extUH (N_m_succ R) a.1, extGH (N_m_succ R) a.2.1, extQ X.E (N_m_succ R) _ a.2.2) :
-      UF X.E (R.N R.m) × GLG X.E (R.N R.m) Pr.vGs × GLQ X.E (R.N R.m) (QE sel (mu : Chr X.F X.E X.K))) • tilF sel mu u p :=
+      UF X.E (R.N R.m) × GLG (E := X.E) (n := R.N R.m) (SG := Pr.vGs) × GLQ X.E (R.N R.m) (QE sel (mu : Chr X.F X.E X.K))) • tilF sel mu u p :=
   tilFr_smul _ (conj_piT_notMem hPr u) (piT_notMem_vGs hPr u) hQ a p
 
 end TilF

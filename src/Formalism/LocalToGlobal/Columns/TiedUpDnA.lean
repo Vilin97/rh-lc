@@ -17,7 +17,7 @@ section Lat
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-theorem tud_locP_L {a : 𝓞 E} (ha : SepElt ST a) (d : DecoSet E n ST SG) (P : ST) :
+theorem tud_locP_L {a : 𝓞 E} (ha : SepElt ST a) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) :
     localization₂ P.1.asIdeal d.1.L = localization₂ P.1.asIdeal (d.1.LshKer P) := by
   rw [d.2.locP_LshKer_self ha P]
   have key : ∀ (L : Submodule (𝓞 E) (Sp E n)) (x : Sp E n),

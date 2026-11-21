@@ -18,7 +18,7 @@ open Formalism.L2.DIV (Pl kP St redAt redFn)
 section Mem
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
-variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG E n SG))
+variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 theorem mem_mirabolicLevel_iff_local {x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)} :
     x ∈ J0 hc n ST ↔ x ∈ UAd hc n ∧ x ∈ St (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) ∧ ∀ P ∈ ST, x ∈ mirAt (F := F) n P := by
@@ -51,7 +51,7 @@ theorem mem_levU_iff {x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)} :
     exact hH
 
 theorem levRed_apply (x : levU hc n ST SG H) (w : SG) :
-    (levRed hc n ST SG H x : GLG E n SG) w =
+    (levRed hc n ST SG H x : GLG (E := E) (n := n) (SG := SG)) w =
       redFn (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) w.1 (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) :=
   rld_redG_apply hc n ST SG (Subgroup.inclusion (unipotentLevel_le_mirabolicLevel hc n ST SG H) x) w
 
@@ -169,7 +169,7 @@ theorem levChr_parFam_eq_levChar (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af 
     (h1 : x ∈ levU hc n ∅ SG (parFam h t s P χ).grp)
     (h2 : x ∈ Formalism.L2.DIV.lev hc (1 : Matrix (Fin n) (Fin n) E) (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (parDat h t s P χ)) :
     levChr (parFam h t s P χ).chr ⟨x, h1⟩ = Formalism.L2.DIV.levChar hc 1 1 (parDat h t s P χ) ⟨x, h2⟩ := by
-  have e1 : (levRed hc n ∅ SG (parFam h t s P χ).grp ⟨x, h1⟩ : GLG E n SG) = fun w : SG =>
+  have e1 : (levRed hc n ∅ SG (parFam h t s P χ).grp ⟨x, h1⟩ : GLG (E := E) (n := n) (SG := SG)) = fun w : SG =>
       redFn (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) w.1 x :=
     funext (levRed_apply hc n ∅ SG _ ⟨x, h1⟩)
   have hx := e1 ▸ (levRed hc n ∅ SG (parFam h t s P χ).grp ⟨x, h1⟩).2

@@ -43,7 +43,7 @@ theorem isPtOf_of_decoRaw [IsEmpty Q] {x : GL (Fin n) (AfE F E)} (hx : x ∈ UAd
     exact PtExist.hasRes_redA _ ((mem_globLat x v).1 hv i)
 
 theorem isPtOf_mul_inv [IsEmpty Q] {g : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} (h : IsPtOf hc g p) (z : J0 hc n ST) :
-    IsPtOf hc (g * z.1⁻¹) (((1, redG hc n ST SG z, 1) : UF E n × GLG E n SG × GLQ E n Q) • p) := by
+    IsPtOf hc (g * z.1⁻¹) (((1, redG hc n ST SG z, 1) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p) := by
   refine isPtOf_of_decoRaw (mul_mem h.uni (inv_mem (congruence_le_adelic_unitary hc n ST z.2))) ?_
   have := decoRaw_rawSm hc ST SG 1 z g
   rw [map_one, OneMemClass.coe_one, map_one, one_mul, (ColAd.near_of_isPtOf h 0).deco] at this
@@ -51,8 +51,8 @@ theorem isPtOf_mul_inv [IsEmpty Q] {g : GL (Fin n) (AfE F E)} {p : DecoF E n ST 
 
 
 omit [NeZero n] in
-theorem glg_free {p : DecoF E n ST SG Q} {a b : GLG E n SG} {c d : GLQ E n Q}
-    (h : ((1, a, c) : UF E n × GLG E n SG × GLQ E n Q) • p = ((1, b, d) : UF E n × GLG E n SG × GLQ E n Q) • p) : a = b := by
+theorem glg_free {p : DecoF E n ST SG Q} {a b : GLG (E := E) (n := n) (SG := SG)} {c d : GLQ E n Q}
+    (h : ((1, a, c) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p = ((1, b, d) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p) : a = b := by
   funext w
   refine Units.ext (Matrix.ext_of_mulVec_single fun j => ?_)
   obtain ⟨x, -, hx⟩ := p.deco.2.be_surj w (Pi.single j 1)

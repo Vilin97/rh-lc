@@ -105,11 +105,11 @@ theorem lev_lam_congr' {κ K : Type} [CommRing κ] [Field K] {n : ℕ} {l l' : F
   rfl
 
 theorem mem_inv_grp {E K : Type} [Field E] [NumberField E] [Field K] {n : ℕ} {SG : Finset (HeightOneSpectrum (𝓞 E))}
-    (Λ : Formalism.L2.Col.LevFam E K n SG) (x : Formalism.L2.Col.GLG E n SG) (h : ∀ w, x w ∈ (Λ w).H) : x ∈ Λ.inv.grp :=
+    (Λ : Formalism.L2.Col.LevFam E K n SG) (x : Formalism.L2.Col.GLG (E := E) (n := n) (SG := SG)) (h : ∀ w, x w ∈ (Λ w).H) : x ∈ Λ.inv.grp :=
   fun w _ => h w
 
 theorem inv_chr_apply {E K : Type} [Field E] [NumberField E] [Field K] {n : ℕ} {SG : Finset (HeightOneSpectrum (𝓞 E))}
-    (Λ : Formalism.L2.Col.LevFam E K n SG) (x : Formalism.L2.Col.GLG E n SG) (h : ∀ w, x w ∈ (Λ w).H) :
+    (Λ : Formalism.L2.Col.LevFam E K n SG) (x : Formalism.L2.Col.GLG (E := E) (n := n) (SG := SG)) (h : ∀ w, x w ∈ (Λ w).H) :
     Λ.inv.chr ⟨x, mem_inv_grp Λ x h⟩ = ∏ w, ((Λ w).lam ⟨x w, h w⟩)⁻¹ := by
   exact Formalism.L2.Col.piChar_apply (fun w => (Λ.inv w).H) (fun w => (Λ.inv w).lam) ⟨x, mem_inv_grp Λ x h⟩
 

@@ -18,7 +18,7 @@ section QRec
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable {hc : Formalism.BasicNotions.CMData F E} {n : ℕ} [NeZero n] {ST SG Q : Finset (Pl E)} {K : Type} [Field K] {Θ : LevQFam E K n Q}
-variable (H : Subgroup (GLG E n SG))
+variable (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 theorem qdf_levUQ_le_UAd (q : QLoc hc n Q Θ) : levUQ hc n ST SG Q H q ≤ UAd hc n := by
   unfold levUQ

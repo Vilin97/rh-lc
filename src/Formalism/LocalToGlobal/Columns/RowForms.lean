@@ -46,7 +46,7 @@ theorem LevFam.glue_of_not (A : LevFam E K n SG) (B : LevFam E K n Q) (w : uSG S
 
 
 open Classical in
-def extGLG : GLG E n SG →* GLG E n (uSG SG Q) where
+def extGLG : GLG (E := E) (n := n) (SG := SG) →* GLG (E := E) (n := n) (SG := uSG SG Q) where
   toFun g w := if h : w.1 ∈ SG then g ⟨w.1, h⟩ else 1
   map_one' := by
     funext w
@@ -55,9 +55,9 @@ def extGLG : GLG E n SG →* GLG E n (uSG SG Q) where
     funext w
     by_cases h : w.1 ∈ SG <;> simp [h]
 
-theorem extGLG_of_mem (g : GLG E n SG) (w : uSG SG Q) (h : w.1 ∈ SG) : extGLG Q g w = g ⟨w.1, h⟩ := dif_pos h
+theorem extGLG_of_mem (g : GLG (E := E) (n := n) (SG := SG)) (w : uSG SG Q) (h : w.1 ∈ SG) : extGLG Q g w = g ⟨w.1, h⟩ := dif_pos h
 
-theorem extGLG_of_not (g : GLG E n SG) (w : uSG SG Q) (h : w.1 ∉ SG) : extGLG Q g w = 1 := dif_neg h
+theorem extGLG_of_not (g : GLG (E := E) (n := n) (SG := SG)) (w : uSG SG Q) (h : w.1 ∉ SG) : extGLG Q g w = 1 := dif_neg h
 
 end Glue
 
@@ -86,7 +86,7 @@ theorem LevFam.chr_apply (Λ : LevFam X.E X.K n SG) (h : ↥Λ.grp) :
     Λ.chr h = ∏ w, (Λ w).lam ⟨h.1 w, h.2 w (Set.mem_univ w)⟩ :=
   piChar_apply (fun w => (Λ w).H) (fun w => (Λ w).lam) h
 
-theorem LevFam.normBy (Λ : LevFam X.E X.K n SG) (a : GLG X.E n SG) (ha : ∀ w, (Λ w).NormBy (a w)) (h : ↥Λ.grp) :
+theorem LevFam.normBy (Λ : LevFam X.E X.K n SG) (a : GLG (E := X.E) (n := n) (SG := SG)) (ha : ∀ w, (Λ w).NormBy (a w)) (h : ↥Λ.grp) :
     ∃ h' : ↥Λ.grp, a⁻¹ * h.1 = h'.1 * a⁻¹ ∧ Λ.chr h' = Λ.chr h := by
   choose f hf1 hf2 using fun w => ha w ⟨h.1 w, h.2 w (Set.mem_univ w)⟩
   refine ⟨⟨fun w => (f w).1, fun w _ => (f w).2⟩, ?_, ?_⟩
@@ -98,38 +98,38 @@ theorem LevFam.normBy (Λ : LevFam X.E X.K n SG) (a : GLG X.E n SG) (ha : ∀ w,
 
 variable (X n ST SG) in
 def trF (V : Type) [AddCommGroup V] [Module X.K V] :
-    Representation X.K (GLG X.E n SG) (DecoSet X.E n ST SG → V) where
+    Representation X.K (GLG (E := X.E) (n := n) (SG := SG)) (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → V) where
   toFun a :=
     { toFun := fun φ d => φ (((1 : UF X.E n), a⁻¹) • d)
       map_add' := fun _ _ => rfl
       map_smul' := fun _ _ => rfl }
   map_one' := by
     ext φ d
-    show φ (((1 : UF X.E n), (1 : GLG X.E n SG)⁻¹) • d) = φ d
+    show φ (((1 : UF X.E n), (1 : GLG (E := X.E) (n := n) (SG := SG))⁻¹) • d) = φ d
     rw [inv_one, ← Prod.one_eq_mk, one_smul]
   map_mul' a b := by
     ext φ d
     show φ (((1 : UF X.E n), (a * b)⁻¹) • d) = φ (((1 : UF X.E n), b⁻¹) • ((1 : UF X.E n), a⁻¹) • d)
     rw [smul_smul, Prod.mk_mul_mk, one_mul, mul_inv_rev]
 
-theorem trF_apply (V : Type) [AddCommGroup V] [Module X.K V] (a : GLG X.E n SG) (φ : DecoSet X.E n ST SG → V)
-    (d : DecoSet X.E n ST SG) : trF X n ST SG V a φ d = φ (((1 : UF X.E n), a⁻¹) • d) := rfl
+theorem trF_apply (V : Type) [AddCommGroup V] [Module X.K V] (a : GLG (E := X.E) (n := n) (SG := SG)) (φ : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → V)
+    (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) : trF X n ST SG V a φ d = φ (((1 : UF X.E n), a⁻¹) • d) := rfl
 
-theorem trF_mem (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG) (a : GLG X.E n SG)
-    (ha : ∀ w, (Λ w).NormBy (a w)) (φ : DecoSet X.E n ST SG → C.V) (hφ : φ ∈ (formGSD C Λ).EqFun) :
+theorem trF_mem (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG) (a : GLG (E := X.E) (n := n) (SG := SG))
+    (ha : ∀ w, (Λ w).NormBy (a w)) (φ : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → C.V) (hφ : φ ∈ (formGSD C Λ).EqFun) :
     trF X n ST SG C.V a φ ∈ (formGSD C Λ).EqFun := by
   intro g d
   obtain ⟨h', e1, e2⟩ := Λ.normBy a ha g.2
-  have h1 : φ ((g.1, (h'.1 : GLG X.E n SG)) • ((1 : UF X.E n), a⁻¹) • (d : DecoSet X.E n ST SG)) =
-      ((Λ.chr h' : X.Kˣ) : X.K) • C.rho g.1 (φ (((1 : UF X.E n), a⁻¹) • (d : DecoSet X.E n ST SG))) :=
+  have h1 : φ ((g.1, (h'.1 : GLG (E := X.E) (n := n) (SG := SG))) • ((1 : UF X.E n), a⁻¹) • (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) =
+      ((Λ.chr h' : X.Kˣ) : X.K) • C.rho g.1 (φ (((1 : UF X.E n), a⁻¹) • (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)))) :=
     hφ ((g.1, h') : FormG Λ) _
-  show φ (((1 : UF X.E n), a⁻¹) • (g.1, (g.2.1 : GLG X.E n SG)) • (d : DecoSet X.E n ST SG)) =
-    ((Λ.chr g.2 : X.Kˣ) : X.K) • C.rho g.1 (φ (((1 : UF X.E n), a⁻¹) • (d : DecoSet X.E n ST SG)))
+  show φ (((1 : UF X.E n), a⁻¹) • (g.1, (g.2.1 : GLG (E := X.E) (n := n) (SG := SG))) • (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) =
+    ((Λ.chr g.2 : X.Kˣ) : X.K) • C.rho g.1 (φ (((1 : UF X.E n), a⁻¹) • (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))))
   rw [smul_smul, Prod.mk_mul_mk, mul_one] at h1
   rw [smul_smul, Prod.mk_mul_mk, one_mul, e1, h1, e2]
 
-def trRep (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG) {A : Type} [Group A]
-    (ι : A →* GLG X.E n SG) (hι : ∀ a w, (Λ w).NormBy (ι a w)) : Representation X.K A (formGSD C Λ).EqFun where
+def trRep (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG) {A : Type} [Group A]
+    (ι : A →* GLG (E := X.E) (n := n) (SG := SG)) (hι : ∀ a w, (Λ w).NormBy (ι a w)) : Representation X.K A (formGSD C Λ).EqFun where
   toFun a := (trF X n ST SG C.V (ι a)).restrict fun φ hφ => trF_mem C Λ (ι a) (hι a) φ hφ
   map_one' := by
     apply LinearMap.ext
@@ -148,11 +148,11 @@ def trRep (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG) {A :
     rw [map_mul, map_mul]
     rfl
 
-theorem trRep_apply (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG) {A : Type} [Group A]
-    (ι : A →* GLG X.E n SG) (hι : ∀ a w, (Λ w).NormBy (ι a w)) (a : A) (φ : (formGSD C Λ).EqFun)
-    (d : DecoSet X.E n ST SG) :
-    ((trRep C Λ ι hι a φ : (formGSD C Λ).EqFun) : DecoSet X.E n ST SG → C.V) d =
-      (φ : DecoSet X.E n ST SG → C.V) (((1 : UF X.E n), (ι a)⁻¹) • d) := rfl
+theorem trRep_apply (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG) {A : Type} [Group A]
+    (ι : A →* GLG (E := X.E) (n := n) (SG := SG)) (hι : ∀ a w, (Λ w).NormBy (ι a w)) (a : A) (φ : (formGSD C Λ).EqFun)
+    (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) :
+    ((trRep C Λ ι hι a φ : (formGSD C Λ).EqFun) : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → C.V) d =
+      (φ : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → C.V) (((1 : UF X.E n), (ι a)⁻¹) • d) := rfl
 
 end Norm
 
@@ -309,7 +309,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
 
 
 variable (Pr) in
-def unipotentGroupBlockEmbedding {r n : ℕ} (h : r ≤ n) : G0 X.E Pr.vGs r →* GLG X.E n (rowSG Pr sel mu) :=
+def unipotentGroupBlockEmbedding {r n : ℕ} (h : r ≤ n) : G0 X.E Pr.vGs r →* GLG (E := X.E) (n := n) (SG := rowSG Pr sel mu) :=
   (extGLG (QE sel (mu : Chr X.F X.E X.K))).comp (diagonalEmbeddingProduct Pr.vGs h)
 
 theorem rowTyKK_inv_normBy_g0Hat (a : G0 X.E Pr.vGs R.r) (w : rowSG Pr sel mu) :

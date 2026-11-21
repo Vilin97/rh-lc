@@ -25,7 +25,7 @@ theorem pt_swap {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
   obtain ⟨hz, hr⟩ := ((isPtOf_mul_J0 F E hc n ST SG Q (y * k) (k⁻¹ * k') p p 1).1 h (by rw [e]; exact h')).2 (one_smul _ _).symm
   have := (isPtOf_mul_J0 F E hc n ST SG Q' (g * k) (k⁻¹ * k') q q 1).2.1 hQ hq hz hr
   rw [e] at this
-  exact (one_smul _ q : ((1, 1, 1) : UF E n × GLG E n SG × GLQ E n Q') • q = q) ▸ this
+  exact (one_smul _ q : ((1, 1, 1) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q') • q = q) ▸ this
 
 
 set_option maxHeartbeats 2000000 in

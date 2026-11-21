@@ -145,7 +145,7 @@ theorem L_empty (d : Deco X.E n ∅ SG) : d.L = d.N := by
     Set.ext fun x => and_iff_left fun P => absurd P.2 (Finset.notMem_empty _), Submodule.span_eq]
 
 omit [NeZero n] in
-theorem Lsh_empty (d : DecoSet X.E n ∅ SG) : d.1.Lsh = d.1.N := by
+theorem Lsh_empty (d : DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG)) : d.1.Lsh = d.1.N := by
   unfold Deco.Lsh
   rw [L_empty]
   exact d.2.uni

@@ -887,7 +887,7 @@ variable (ST) in
 
 
 open Classical in
-def PtY.mv {y : Ys X n} (p : PtY ST SG Q y) (d : DecoSet X.E n ST SG) : PtY ST SG Q y :=
+def PtY.mv {y : Ys X n} (p : PtY ST SG Q y) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) : PtY ST SG Q y :=
   if h : (∀ (P : Q) (x : Sp X.E n), p.1.1.1.2 P x ∈ d.1.at P.1 ↔ x ∈ stdAt X.E n P.1) ∧ p.1.2 ∈ y.ys d.1.N
   then ⟨(⟨(d, p.1.1.1.2), h.1⟩, p.1.2), h.2⟩ else p
 

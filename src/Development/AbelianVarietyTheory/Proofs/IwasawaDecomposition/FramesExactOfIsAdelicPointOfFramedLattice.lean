@@ -17,7 +17,7 @@ theorem frExact_of_isPtOf : ∀ {F E : Type} [Field F] [NumberField F] [Field E]
   intro F E _ _ _ _ _ _ hc n _ ST SG Q K _ Θ q hQ g p hp
   have h1 : IsPtOf hc (g * 1) p := by rwa [mul_one]
   have hres : ∀ (P : ST) (r j : Fin n), r.1 + 1 = n → HasRes P.1 (adAt F P.1 (((1 : GL (Fin n) (AfE F E))⁻¹ : GL (Fin n) (AfE F E)).1 r j))
-      (if j = r then (((1 : DiaG E ST) P : (𝓞 E ⧸ P.1.asIdeal)ˣ) : 𝓞 E ⧸ P.1.asIdeal) else 0) := by
+      (if j = r then (((1 : DiaG (E := E) (ST := ST)) P : (𝓞 E ⧸ P.1.asIdeal)ˣ) : 𝓞 E ⧸ P.1.asIdeal) else 0) := by
     intro P r j _
     rw [inv_one, Units.val_one]
     by_cases h : j = r

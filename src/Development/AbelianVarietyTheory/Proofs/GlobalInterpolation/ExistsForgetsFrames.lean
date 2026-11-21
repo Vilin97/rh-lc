@@ -107,7 +107,7 @@ section Points
 
 variable {X : Fields} {n : ℕ} {ST SG Q Q' : Finset (HeightOneSpectrum (𝓞 X.E))}
 
-theorem mv_deco {y : Ys X n} (p : PtY ST SG Q y) (d : DecoSet X.E n ST SG) (h : (p.mv d).1.1.deco.1.N = d.1.N) :
+theorem mv_deco {y : Ys X n} (p : PtY ST SG Q y) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) (h : (p.mv d).1.1.deco.1.N = d.1.N) :
     (p.mv d).1.1.deco = d := by
   by_cases hc : (∀ (P : Q) (x : Sp X.E n), p.1.1.1.2 P x ∈ d.1.at P.1 ↔ x ∈ stdAt X.E n P.1) ∧ p.1.2 ∈ y.ys d.1.N
   · exact congrArg (fun q : PtY ST SG Q y => q.1.1.deco) (dif_pos hc : p.mv d = _)
@@ -148,7 +148,7 @@ theorem exists_lift {y' : Ys X n} (hy : ∀ N, y.ys N = {∅}) {Λ₁ Λ₂ : Le
     ∃ g : FrmG Λ₁ Θ₁, (ptYAct y Λ₁ Θ₁).smul g p₀ = p ∧ g.1 = g'.1 ∧
       Λ₁.chr g.2.1 * Θ₁.chr g.2.2 = Λ₂.chr g'.2.1 * Θ₂.chr g'.2.2 := by
   subst hΛ h₁ h₂
-  have hd : p.1.1.deco = ((g'.1, (g'.2.1 : GLG X.E n SG)) : UF X.E n × GLG X.E n SG) • p₀.1.1.deco := by
+  have hd : p.1.1.deco = ((g'.1, (g'.2.1 : GLG (E := X.E) (n := n) (SG := SG))) : UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) • p₀.1.1.deco := by
     rw [h0]; exact h1
   have hc : ∀ P : Q, (p.1.1.fr P)⁻¹ * g'.1.1 * p₀.1.1.fr P ∈ GLint X.E n P.1 := fun P x => by
     have a1 := p.1.1.2 P ((p.1.1.fr P).symm (g'.1.1 (p₀.1.1.fr P x)))

@@ -29,8 +29,8 @@ namespace GlobalTheory.DatExtForms
 
 theorem decoSet_eq (B B' : Base) (h : B'.toPre = B.toPre) (X : PreX B.toPre) (X' : PreX B'.toPre) (hx : HEq X' X)
     (Q : Finset (HeightOneSpectrum (𝓞 B.fields.E))) (Q' : Finset (HeightOneSpectrum (𝓞 B'.fields.E))) (hQ : Q = ∅) (hQ' : Q' = ∅) :
-    Formalism.L2.Col.DecoSet B'.fields.E B'.R.nV ∅ (Formalism.L2.Col.uSG (B'.primes X').vGs Q') =
-      Formalism.L2.Col.DecoSet B.fields.E B.R.nV ∅ (Formalism.L2.Col.uSG (B.primes X).vGs Q) := by
+    Formalism.L2.Col.DecoSet (E := B'.fields.E) (n := B'.R.nV) (ST := ∅) (SG := Formalism.L2.Col.uSG (B'.primes X').vGs Q') =
+      Formalism.L2.Col.DecoSet (E := B.fields.E) (n := B.R.nV) (ST := ∅) (SG := Formalism.L2.Col.uSG (B.primes X).vGs Q) := by
   subst hQ hQ'
   cases B
   cases B'

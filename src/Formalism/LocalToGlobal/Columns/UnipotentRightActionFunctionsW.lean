@@ -36,7 +36,7 @@ section Forms
 
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R)
 
-def wmVal (SG : Finset (HeightOneSpectrum (𝓞 X.E))) : CoefPk X R.r (DecoSet X.E R.r ∅ SG) :=
+def wmVal (SG : Finset (HeightOneSpectrum (𝓞 X.E))) : CoefPk X R.r (DecoSet (E := X.E) (n := R.r) (ST := ∅) (SG := SG)) :=
   roundPk X W.lamW fun d => d.1.N
 
 variable (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ} (mu : Tup X.F X.E X.K S)
@@ -59,7 +59,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E]
 
 variable {SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-def wmIsRed {a b : ℕ} (d' : DecoSet E a ∅ SG) (d : DecoSet E b ∅ SG) (w : SG) (x : Sp E a →ₗ[E] Sp E b)
+def wmIsRed {a b : ℕ} (d' : DecoSet (E := E) (n := a) (ST := ∅) (SG := SG)) (d : DecoSet (E := E) (n := b) (ST := ∅) (SG := SG)) (w : SG) (x : Sp E a →ₗ[E] Sp E b)
     (M : Matrix (Fin b) (Fin a) (𝓞 E ⧸ w.1.asIdeal)) : Prop :=
   ∀ y ∈ d'.1.at w.1, x y ∈ d.1.at w.1 ∧ d.1.be w (x y) = M.mulVec (d'.1.be w y)
 
@@ -75,7 +75,7 @@ def lemU {κ K : Type} [CommRing κ] [Field K] {r n : ℕ} (h : r ≤ n) (l : Le
 
 open Classical in
 def wmPhi {K : Type} [Field K] {a b : ℕ} (loc : ∀ w : SG, Matrix (Fin b) (Fin a) (𝓞 E ⧸ w.1.asIdeal) → K)
-    (d' : DecoSet E a ∅ SG) (d : DecoSet E b ∅ SG) (x : Sp E a →ₗ[E] Sp E b) : K :=
+    (d' : DecoSet (E := E) (n := a) (ST := ∅) (SG := SG)) (d : DecoSet (E := E) (n := b) (ST := ∅) (SG := SG)) (x : Sp E a →ₗ[E] Sp E b) : K :=
   ∏ w : SG, if h : ∃ M, wmIsRed d' d w x M then loc w h.choose else 0
 
 end Data
@@ -86,7 +86,7 @@ variable (E K : Type) [Field E] [NumberField E] [StarRing E] [Field K] (a b : �
   (V V' : Type) [AddCommGroup V] [Module K V] [AddCommGroup V'] [Module K V']
 
 abbrev WmTh : Type :=
-  Finset (HeightOneSpectrum (𝓞 E)) → DecoSet E a ∅ SG → DecoSet E b ∅ SG →
+  Finset (HeightOneSpectrum (𝓞 E)) → DecoSet (E := E) (n := a) (ST := ∅) (SG := SG) → DecoSet (E := E) (n := b) (ST := ∅) (SG := SG) →
     ((Sp E a →ₗ[E] Sp E b) → K) →ₗ[K] (V →ₗ[K] V')
 
 variable {E K a b SG V V'}
@@ -145,7 +145,7 @@ section NbFun
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
   (K : Type) [Field K] (V : Type) [AddCommGroup V] [Module K V]
 
-def nbFun (P : Ideal (𝓞 E)) (i : ℕ) : (DecoSet E n ST SG → V) →ₗ[K] (DecoSet E n ST SG → V) where
+def nbFun (P : Ideal (𝓞 E)) (i : ℕ) : (DecoSet (E := E) (n := n) (ST := ST) (SG := SG) → V) →ₗ[K] (DecoSet (E := E) (n := n) (ST := ST) (SG := SG) → V) where
   toFun ψ d := ∑ d₁ ∈ d.heckeNb P i, ψ d₁
   map_add' ψ ψ' := by
     funext d

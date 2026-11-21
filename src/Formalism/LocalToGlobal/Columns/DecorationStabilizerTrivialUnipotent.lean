@@ -467,7 +467,7 @@ theorem Deco.Ok.isFrameMod {d : Deco E n ST SG} (hd : d.Ok) (w : SG) :
 
 theorem Deco.stab0 (hpos : ∀ x : Sp E n, x ≠ 0 → 0 < Algebra.trace ℚ E (hStd E n x x))
     {d : Deco E n ST SG} (hd : d.Ok) {ga : Sp E n ≃ₗ[E] Sp E n} (hga : ga ∈ UF E n)
-    {h : GLG E n SG} (hN : (d.act ga h).N = d.N) (hbe : (d.act ga h).be = d.be)
+    {h : GLG (E := E) (n := n) (SG := SG)} (hN : (d.act ga h).N = d.N) (hbe : (d.act ga h).be = d.be)
     (w : SG) {g : ℕ} (hg : g.Prime) (hgw : (g : 𝓞 E) ∈ w.1.asIdeal)
     (hbig : finrank ℚ E * n + 1 < g)
     (hu : IsNilpotent (((h w : GL (Fin n) (𝓞 E ⧸ w.1.asIdeal)) :
@@ -493,7 +493,7 @@ theorem Deco.stab0 (hpos : ∀ x : Sp E n, x ≠ 0 → 0 < Algebra.trace ℚ E (
 
 theorem Deco.stab_trivial (hpos : ∀ x : Sp E n, x ≠ 0 → 0 < Algebra.trace ℚ E (hStd E n x x))
     {d : Deco E n ST SG} (hd : d.Ok) {ga : Sp E n ≃ₗ[E] Sp E n} (hga : ga ∈ UF E n)
-    {h : GLG E n SG} (hfix : d.act ga h = d)
+    {h : GLG (E := E) (n := n) (SG := SG)} (hfix : d.act ga h = d)
     (w : SG) {g : ℕ} (hg : g.Prime) (hgw : (g : 𝓞 E) ∈ w.1.asIdeal)
     (hbig : finrank ℚ E * n + 1 < g)
     (hu : IsNilpotent (((h w : GL (Fin n) (𝓞 E ⧸ w.1.asIdeal)) :
@@ -502,7 +502,7 @@ theorem Deco.stab_trivial (hpos : ∀ x : Sp E n, x ≠ 0 → 0 < Algebra.trace 
 
 theorem DecoSet.eq_one_of_smul_eq
     (hpos : ∀ x : Sp E n, x ≠ 0 → 0 < Algebra.trace ℚ E (hStd E n x x))
-    (d : DecoSet E n ST SG) {a : UF E n × GLG E n SG} (ha : a • d = d)
+    (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) {a : UF E n × GLG (E := E) (n := n) (SG := SG)} (ha : a • d = d)
     (w : SG) {g : ℕ} (hg : g.Prime) (hgw : (g : 𝓞 E) ∈ w.1.asIdeal)
     (hbig : finrank ℚ E * n + 1 < g)
     (hu : IsNilpotent (((a.2 w : GL (Fin n) (𝓞 E ⧸ w.1.asIdeal)) :
@@ -511,7 +511,7 @@ theorem DecoSet.eq_one_of_smul_eq
   obtain ⟨h1, h2⟩ := Deco.stab_trivial hpos d.2 a.1.2 hfix w hg hgw hbig hu
   exact Prod.ext (Subtype.ext h1) h2
 
-theorem DecoSet.eq_one_of_fst_eq_one (d : DecoSet E n ST SG) {a : UF E n × GLG E n SG}
+theorem DecoSet.eq_one_of_fst_eq_one (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) {a : UF E n × GLG (E := E) (n := n) (SG := SG)}
     (ha : a • d = d) (h1 : a.1 = 1) : a = 1 := by
   refine Prod.ext h1 ?_
   funext w'
@@ -525,21 +525,21 @@ theorem DecoSet.eq_one_of_fst_eq_one (d : DecoSet E n ST SG) {a : UF E n × GLG 
   have e : (a.2 w').1.mulVec (d.1.be w' x) = d.1.be w' x := this
   simpa using e
 
-theorem DecoSet.prime_le_of_dvd_card (d : DecoSet E n ST SG) (Γ : Subgroup (UF E n × GLG E n SG))
-    (hΓ : Γ ≤ MulAction.stabilizer (UF E n × GLG E n SG) d) [Finite Γ] {p : ℕ} (hp : p.Prime)
+theorem DecoSet.prime_le_of_dvd_card (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (Γ : Subgroup (UF E n × GLG (E := E) (n := n) (SG := SG)))
+    (hΓ : Γ ≤ MulAction.stabilizer (UF E n × GLG (E := E) (n := n) (SG := SG)) d) [Finite Γ] {p : ℕ} (hp : p.Prime)
     (hdvd : p ∣ Nat.card Γ) : p ≤ finrank ℚ E * n + 1 := by
   have : Fact p.Prime := ⟨hp⟩
   obtain ⟨x, hx⟩ := exists_prime_orderOf_dvd_card' p hdvd
-  have h0 : (x : UF E n × GLG E n SG) ^ p = 1 := by
+  have h0 : (x : UF E n × GLG (E := E) (n := n) (SG := SG)) ^ p = 1 := by
     have := pow_orderOf_eq_one x
     rw [hx] at this
     exact_mod_cast congrArg Subtype.val this
-  have h1 : ((x : UF E n × GLG E n SG).1 : Sp E n ≃ₗ[E] Sp E n) ^ p = 1 := by
-    have := congrArg (fun a : UF E n × GLG E n SG => (a.1 : Sp E n ≃ₗ[E] Sp E n)) h0
+  have h1 : ((x : UF E n × GLG (E := E) (n := n) (SG := SG)).1 : Sp E n ≃ₗ[E] Sp E n) ^ p = 1 := by
+    have := congrArg (fun a : UF E n × GLG (E := E) (n := n) (SG := SG) => (a.1 : Sp E n ≃ₗ[E] Sp E n)) h0
     simpa using this
-  have h2 : ((x : UF E n × GLG E n SG).1 : Sp E n ≃ₗ[E] Sp E n) ≠ 1 := by
+  have h2 : ((x : UF E n × GLG (E := E) (n := n) (SG := SG)).1 : Sp E n ≃ₗ[E] Sp E n) ≠ 1 := by
     intro h
-    have h3 : (x : UF E n × GLG E n SG) = 1 :=
+    have h3 : (x : UF E n × GLG (E := E) (n := n) (SG := SG)) = 1 :=
       DecoSet.eq_one_of_fst_eq_one d (hΓ x.2) (Subtype.ext h)
     have : x = 1 := Subtype.ext h3
     rw [this, orderOf_one] at hx
@@ -569,8 +569,8 @@ theorem Primes.Ok.g_mem {X : Fields} {Pr : Primes X} (hPr : Pr.Ok) {i : Fin 2}
   exact Ideal.mul_mem_left _ _ (mem_of_mem_divs hw)
 
 theorem DecoSet.decoration_stabilizer_trivial_unipotent {X : Fields} (hX : X.Ok) {Pr : Primes X} (hPr : Pr.Ok)
-    {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet X.E n ST SG)
-    {a : UF X.E n × GLG X.E n SG} (ha : a • d = d) (i : Fin 2) (w : SG) (hw : w.1 ∈ Pr.vG i)
+    {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))
+    {a : UF X.E n × GLG (E := X.E) (n := n) (SG := SG)} (ha : a • d = d) (i : Fin 2) (w : SG) (hw : w.1 ∈ Pr.vG i)
     (hbig : 2 * X.f * n < Pr.g i - 1)
     (hu : IsNilpotent (((a.2 w : GL (Fin n) (𝓞 X.E ⧸ w.1.asIdeal)) :
       Matrix (Fin n) (Fin n) (𝓞 X.E ⧸ w.1.asIdeal)) - 1)) : a = 1 :=

@@ -25,7 +25,7 @@ variable {X : Fields} {n : ℕ} [NeZero n] {a : ℕ} {H Γ W : Type} [AddCommGro
   (mat : H → GL (Fin a) (X.E ⊗[X.F] Formalism.L2.Herm.Af X.F)) (rat : Γ → GL (Fin a) X.E → Prop) (ρ : Γ → W → W)
 
 def StdSide {ι : Type} (lam : X.Tau → DomWeight n) (rho : GL (Fin n) X.E →* Module.End X.K (VV X.K lam))
-    (SG : ι → Finset (Pl X.E)) (Fm : ι → Type) (val : ∀ t, Fm t → DecoSet X.E n ∅ (SG t) → VV X.K lam)
+    (SG : ι → Finset (Pl X.E)) (Fm : ι → Type) (val : ∀ t, Fm t → DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG t) → VV X.K lam)
     (ad : ∀ t, Fm t → H → W) : Prop :=
   ∃ c : VV X.K lam →ₛₗ[σ] W,
     (∀ γ γE g, rat γ γE → MatEq γE g → ∀ v, c (rho g v) = ρ γ (c v)) ∧

@@ -26,14 +26,14 @@ abbrev PtY (b : L.β j) : Type := (cplAt W sel mu cst L u m2 j b).Pts
 
 attribute [local instance] ptYAct
 
-def PtY.deco {b : L.β j} (x : PtY W cst L u m2 j b) : DecoSet X.E (R.N j) (Pr.vT u) Pr.vGs := x.1.1.deco
+def PtY.deco {b : L.β j} (x : PtY W cst L u m2 j b) : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := Pr.vGs) := x.1.1.deco
 
-theorem sameOn_QE {d d' : DecoSet X.E (R.N j) (Pr.vT u) Pr.vGs} (h : DecoSet.SameOn (rowSG Pr sel mu) d d') :
+theorem sameOn_QE {d d' : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := Pr.vGs)} (h : DecoSet.SameOn (rowSG Pr sel mu) d d') :
     DecoSet.SameOn (QE sel (mu : Chr X.F X.E X.K)) d d' := by
   classical
   exact fun P hP => h P (Finset.mem_union_right _ hP)
 
-theorem cplAt_ys_mv (b : L.β j) (p : ChPt (R := R) sel mu u j) {d' : DecoSet X.E (R.N j) (Pr.vT u) Pr.vGs}
+theorem cplAt_ys_mv (b : L.β j) (p : ChPt (R := R) sel mu u j) {d' : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := Pr.vGs)}
     (h : DecoSet.SameOn (rowSG Pr sel mu) p.deco d') :
     (cplAt W sel mu cst L u m2 j b).ys (p.mv d') = (cplAt W sel mu cst L u m2 j b).ys p := by
   classical
@@ -43,13 +43,13 @@ theorem cplAt_ys_mv (b : L.β j) (p : ChPt (R := R) sel mu u j) {d' : DecoSet X.
   · exact ybSet_sameAt sel mu cst h
   · rfl
 
-def PtY.repl {b : L.β j} (x : PtY W cst L u m2 j b) (d' : DecoSet X.E (R.N j) (Pr.vT u) Pr.vGs)
+def PtY.repl {b : L.β j} (x : PtY W cst L u m2 j b) (d' : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := Pr.vGs))
     (h : DecoSet.SameOn (rowSG Pr sel mu) x.deco d') : PtY W cst L u m2 j b :=
   ⟨(x.1.1.mv d', x.1.2), by rw [cplAt_ys_mv b x.1.1 h]; exact x.2⟩
 
 
 open Classical in
-def PtY.mv {b : L.β j} (x : PtY W cst L u m2 j b) (d' : DecoSet X.E (R.N j) (Pr.vT u) Pr.vGs) : PtY W cst L u m2 j b :=
+def PtY.mv {b : L.β j} (x : PtY W cst L u m2 j b) (d' : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := Pr.vGs)) : PtY W cst L u m2 j b :=
   if h : DecoSet.SameOn (rowSG Pr sel mu) x.deco d' then x.repl d' h else x
 
 end Pairs

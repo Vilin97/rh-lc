@@ -155,7 +155,7 @@ theorem congruence_subgroup_le_stabilizer : J0 hc n ST ≤ St (1 : GL (Fin n) (E
   unfold J0
   exact le_trans inf_le_left inf_le_right
 
-def redG : J0 hc n ST →* GLG E n SG :=
+def redG : J0 hc n ST →* GLG (E := E) (n := n) (SG := SG) :=
   MonoidHom.pi fun w : SG =>
     (redAt (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) w.1).comp (Subgroup.inclusion (congruence_subgroup_le_stabilizer hc n ST))
 
@@ -190,7 +190,7 @@ theorem K1_conj (k : J0 hc n ST) {a : UAd hc n} (ha : a ∈ (K1 hc n ST SG).subg
   show (k : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) * (y : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) * (k : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))⁻¹ = (k : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) * (a : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) * (k : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))⁻¹
   rw [hya']
 
-variable (H : Subgroup (GLG E n SG))
+variable (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 abbrev JH : Subgroup (J0 hc n ST) := H.comap (redG hc n ST SG)
 
@@ -243,7 +243,7 @@ def decoRaw (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) : Deco E n ST SG 
   be w v := open Classical in
     if v ∈ Formalism.HermitianLatticesTheory.localization₂ w.1.asIdeal (Formalism.UG.CS.globLat x (stdLat E n)) then fun i => redA w.1 (pullV x v i) else 0
 
-def decoOf (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) : DecoSet E n ST SG :=
+def decoOf (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) :=
   open Classical in if h : (decoRaw ST SG x).Ok then ⟨_, h⟩ else DecoSet.base E n ST SG
 
 end DecoOf
@@ -253,7 +253,7 @@ section DecoPt
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E))
 
-def decoPt (q : adPt hc n ST SG) : DecoSet E n ST SG :=
+def decoPt (q : adPt hc n ST SG) : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) :=
   decoOf ST SG ((Quotient.out q : UAd hc n) : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))
 
 end DecoPt
@@ -263,15 +263,15 @@ section Iso
 variable {K : Type} [Field K] [NumberField K] [StarRing K]
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
-variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG E n SG))
+variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
-instance decoActH : MulAction (UF E n × H) (DecoSet E n ST SG) :=
+instance decoActH : MulAction (UF E n × H) (DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :=
   MulAction.compHom _ (MonoidHom.prodMap (MonoidHom.id (UF E n)) H.subtype)
 
 structure OnDeco (S : GSD K) where
   eG : (UF E n × H) ≃* S.G
-  eD : DecoSet E n ST SG ≃ S.D
-  smul : ∀ (g : UF E n × H) (d : DecoSet E n ST SG), eD (g • d) = eG g • eD d
+  eD : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) ≃ S.D
+  smul : ∀ (g : UF E n × H) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)), eD (g • d) = eG g • eD d
 
 variable {hc n ST SG H}
 

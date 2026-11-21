@@ -191,7 +191,7 @@ theorem mem_lev_iff (hI : I.Ok) (hTw : I.IsTw) (hPr : (B.primes X).Ok) (u : B.Wo
     have e1 : κ.1 = 1 := ufGL_inj B.sp.cm (B.R.N j) (h1.trans (map_one _).symm)
     obtain ⟨hJ, hr⟩ := red_of_act B.sp.cm (B.R.N j) (diaT (Pr := B.primes X) u) hg.1 hxq.1 κ.2.1.1 (by
       rw [hg.2, hxq.2, ← h2]
-      show ((κ.1, κ.2.1.1) : UF B.fields.E (B.R.N j) × GLG B.fields.E (B.R.N j) (B.primes X).vGs) • _ = _
+      show ((κ.1, κ.2.1.1) : UF B.fields.E (B.R.N j) × GLG (E := B.fields.E) (n := B.R.N j) (SG := (B.primes X).vGs)) • _ = _
       rw [e1]
       rfl)
     refine (mem_levU _ _ _ _ _).2 ⟨hJ, ?_⟩

@@ -173,9 +173,9 @@ theorem Deco.Ok.be_eq_of_span {d d' : Deco E n ST SG} (hd : d.Ok) (hd' : d'.Ok) 
     rw [hd.be_smul w a y (hm y hy).1, hd'.be_smul w a y (hm y hy).2, ih]
 
 theorem DecoSet.finite_fibre (N : Submodule (𝓞 E) (Sp E n)) (hN : N.FG) :
-    {d : DecoSet E n ST SG | d.1.N = N}.Finite := by
+    {d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) | d.1.N = N}.Finite := by
   obtain ⟨S, hS⟩ := hN
-  let Φ : {d : DecoSet E n ST SG | d.1.N = N} →
+  let Φ : {d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) | d.1.N = N} →
       (∀ P : ST, S → 𝓞 E ⧸ P.1.asIdeal) × (∀ w : SG, S → Fin n → 𝓞 E ⧸ w.1.asIdeal) :=
     fun d => (fun P b => d.1.1.f P b.1, fun w b => d.1.1.be w b.1)
   have hΦ : Function.Injective Φ := by
@@ -194,8 +194,8 @@ theorem DecoSet.finite_fibre (N : Submodule (𝓞 E) (Sp E n)) (hN : N.FG) :
   exact Set.finite_coe_iff.1 (Finite.of_injective Φ hΦ)
 
 theorem DecoSet.finite_reps (hE : PosStar E) :
-    ∃ s : Set (DecoSet E n ST SG), s.Finite ∧
-      ∀ d, ∃ d0 ∈ s, ∃ g : UF E n, d = (g, (1 : GLG E n SG)) • d0 := by
+    ∃ s : Set (DecoSet (E := E) (n := n) (ST := ST) (SG := SG)), s.Finite ∧
+      ∀ d, ∃ d0 ∈ s, ∃ g : UF E n, d = (g, (1 : GLG (E := E) (n := n) (SG := SG))) • d0 := by
   classical
   obtain ⟨S, hS, hrep⟩ := unimod_finite hE n
   have key : ∀ (h : Sp E n ≃ₗ[E] Sp E n) (L : Submodule (𝓞 E) (Sp E n)), gmap h.symm (gmap h L) = L := by
@@ -207,34 +207,34 @@ theorem DecoSet.finite_reps (hE : PosStar E) :
       simpa using hz
     · intro hx
       exact ⟨h x, ⟨x, hx, rfl⟩, by simp⟩
-  refine ⟨⋃ N ∈ (S : Set (Submodule (𝓞 E) (Sp E n))), {d : DecoSet E n ST SG | d.1.N = N}, ?_, ?_⟩
+  refine ⟨⋃ N ∈ (S : Set (Submodule (𝓞 E) (Sp E n))), {d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) | d.1.N = N}, ?_, ?_⟩
   · exact S.finite_toSet.biUnion fun N hN => DecoSet.finite_fibre N (hS N hN).1.fg
   · intro d
     obtain ⟨N, hN, g, hg, hgN⟩ := hrep d.1.N d.2.lat d.2.uni
-    refine ⟨((⟨g, hg⟩ : UF E n), (1 : GLG E n SG))⁻¹ • d,
+    refine ⟨((⟨g, hg⟩ : UF E n), (1 : GLG (E := E) (n := n) (SG := SG)))⁻¹ • d,
       Set.mem_biUnion (Finset.mem_coe.mpr hN) ?_, ⟨g, hg⟩, (smul_inv_smul _ d).symm⟩
-    show (((⟨g, hg⟩ : UF E n), (1 : GLG E n SG))⁻¹ • d).1.N = N
+    show (((⟨g, hg⟩ : UF E n), (1 : GLG (E := E) (n := n) (SG := SG)))⁻¹ • d).1.N = N
     rw [DecoSet.smul_val]
     show gmap g.symm d.1.N = N
     rw [← hgN]
     exact key g N
 
-theorem DecoSet.finite_orbits (hE : PosStar E) (Γ : Subgroup (UF E n × GLG E n SG))
-    (hΓ : ∀ g : UF E n, (g, (1 : GLG E n SG)) ∈ Γ) :
-    Finite (MulAction.orbitRel.Quotient Γ (DecoSet E n ST SG)) := by
+theorem DecoSet.finite_orbits (hE : PosStar E) (Γ : Subgroup (UF E n × GLG (E := E) (n := n) (SG := SG)))
+    (hΓ : ∀ g : UF E n, (g, (1 : GLG (E := E) (n := n) (SG := SG))) ∈ Γ) :
+    Finite (MulAction.orbitRel.Quotient Γ (DecoSet (E := E) (n := n) (ST := ST) (SG := SG))) := by
   obtain ⟨s, hs, hrep⟩ := DecoSet.finite_reps (E := E) (n := n) (ST := ST) (SG := SG) hE
   haveI : Finite s := hs.to_subtype
   refine Finite.of_surjective
-    (fun x : s => (Quotient.mk _ x.1 : MulAction.orbitRel.Quotient Γ (DecoSet E n ST SG))) ?_
+    (fun x : s => (Quotient.mk _ x.1 : MulAction.orbitRel.Quotient Γ (DecoSet (E := E) (n := n) (ST := ST) (SG := SG)))) ?_
   intro z
   induction z using Quotient.inductionOn with
   | h d =>
     obtain ⟨d0, hd0, g, rfl⟩ := hrep d
     refine ⟨⟨d0, hd0⟩, ?_⟩
-    have hmem : (g, (1 : GLG E n SG)) • d0 ∈ MulAction.orbit Γ d0 := ⟨⟨(g, 1), hΓ g⟩, rfl⟩
-    exact (Quotient.sound (s := MulAction.orbitRel Γ (DecoSet E n ST SG)) hmem).symm
+    have hmem : (g, (1 : GLG (E := E) (n := n) (SG := SG))) • d0 ∈ MulAction.orbit Γ d0 := ⟨⟨(g, 1), hΓ g⟩, rfl⟩
+    exact (Quotient.sound (s := MulAction.orbitRel Γ (DecoSet (E := E) (n := n) (ST := ST) (SG := SG))) hmem).symm
 
-theorem DecoSet.stab_fst_injective (d : DecoSet E n ST SG) {a b : UF E n × GLG E n SG}
+theorem DecoSet.stab_fst_injective (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) {a b : UF E n × GLG (E := E) (n := n) (SG := SG)}
     (ha : a • d = d) (hb : b • d = d) (hab : a.1 = b.1) : a = b := by
   obtain ⟨a1, a2⟩ := a
   obtain ⟨b1, b2⟩ := b
@@ -244,10 +244,10 @@ theorem DecoSet.stab_fst_injective (d : DecoSet E n ST SG) {a b : UF E n × GLG 
   funext w
   apply Units.ext
   have hA : ∀ x, (a2 w).1.mulVec (d.1.be w (a1.1.symm x)) = d.1.be w x := fun x => by
-    have h1 := congrArg (fun e : DecoSet E n ST SG => e.1.be w x) ha
+    have h1 := congrArg (fun e : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) => e.1.be w x) ha
     simpa [DecoSet.smul_val, Deco.act] using h1
   have hB : ∀ x, (b2 w).1.mulVec (d.1.be w (a1.1.symm x)) = d.1.be w x := fun x => by
-    have h1 := congrArg (fun e : DecoSet E n ST SG => e.1.be w x) hb
+    have h1 := congrArg (fun e : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) => e.1.be w x) hb
     simpa [DecoSet.smul_val, Deco.act] using h1
   apply Matrix.toLin'.injective
   apply LinearMap.ext
@@ -256,13 +256,13 @@ theorem DecoSet.stab_fst_injective (d : DecoSet E n ST SG) {a b : UF E n × GLG 
   simp only [Matrix.toLin'_apply]
   rw [← hxc, ← LinearEquiv.symm_apply_apply a1.1 x, hA, hB]
 
-theorem DecoSet.finite_stabilizer (hE : PosStar E) (d : DecoSet E n ST SG) :
-    Finite (MulAction.stabilizer (UF E n × GLG E n SG) d) := by
+theorem DecoSet.finite_stabilizer (hE : PosStar E) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
+    Finite (MulAction.stabilizer (UF E n × GLG (E := E) (n := n) (SG := SG)) d) := by
   have hA := final_autFinite E (Sp E n) (hStd E n) hStd_isSymm (hStd_pos hE) d.1.N d.2.lat
   have : Finite {g : Sp E n ≃ₗ[E] Sp E n | g ∈ isom (hStd E n) ∧ gmap g d.1.N = d.1.N} := hA
-  let Φ : MulAction.stabilizer (UF E n × GLG E n SG) d →
+  let Φ : MulAction.stabilizer (UF E n × GLG (E := E) (n := n) (SG := SG)) d →
       {g : Sp E n ≃ₗ[E] Sp E n | g ∈ isom (hStd E n) ∧ gmap g d.1.N = d.1.N} :=
-    fun a => ⟨a.1.1.1, a.1.1.2, congrArg (fun d : DecoSet E n ST SG => d.1.N) a.2⟩
+    fun a => ⟨a.1.1.1, a.1.1.2, congrArg (fun d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) => d.1.N) a.2⟩
   refine Finite.of_injective Φ ?_
   intro a b hab
   apply Subtype.ext
@@ -838,14 +838,14 @@ theorem Deco.Ok.up {d : Deco E n ST SG} (hd : d.Ok) (P : ST) (hP : MoveHyp ST SG
       exact Ideal.add_mem _ h he'
     · exact hr h
 
-theorem DecoSet.up_val (d : DecoSet E n ST SG) (P : ST) (hP : MoveHyp ST SG P) {q : 𝓞 E}
+theorem DecoSet.up_val (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (hP : MoveHyp ST SG P) {q : 𝓞 E}
     (hq : q ∈ P.1.asIdeal) (hq2 : q ∉ P.1.asIdeal ^ 2) {x : Sp E n} (hx : x ∈ d.1.N)
     (hfx : d.1.f P x = 1) : (d.up P q x).1 = d.1.up P q x := by
   have hok : (d.1.up P q x).Ok := Deco.Ok.up d.2 P hP hq hq2 hx hfx
   unfold DecoSet.up
   rw [dite_eq_left hok]
 
-theorem DecoSet.upSet_nonempty (d : DecoSet E n ST SG) (P : ST) (hP : MoveHyp ST SG P) {q : 𝓞 E}
+theorem DecoSet.upSet_nonempty (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (hP : MoveHyp ST SG P) {q : 𝓞 E}
     (hq : q ∈ P.1.asIdeal) (hq2 : q ∉ P.1.asIdeal ^ 2) : (d.upSet P q).Nonempty := by
   obtain ⟨x, hx, hfx⟩ := d.2.f_ne P
   haveI := P.1.isMaximal
@@ -1101,7 +1101,7 @@ theorem Deco.Ok.til {d : Deco E n ∅ SG} (hd : d.Ok) {pi : 𝓞 E}
       exact Submodule.smul_mono le_rfl le_sup_left
     exact h3 (Submodule.mem_map_of_mem h2)
 
-theorem DecoSet.til_val (d : DecoSet E n ∅ SG) {pi : 𝓞 E}
+theorem DecoSet.til_val (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) {pi : 𝓞 E}
     (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal) :
     (DecoSet.til (ST := ST) pi d).1 = d.1.til pi := by
   have hok : (d.1.til (ST := ST) pi).Ok := Deco.Ok.til d.2 hT hG
@@ -1302,7 +1302,7 @@ private theorem up_f_ne_lemma_6 (d : Deco E n ST SG) (P : ST) (q : 𝓞 E) (x : 
   simp [Deco.up, hQ]
 
 theorem Deco.up_act (d : Deco E n ST SG) {g : Sp E n ≃ₗ[E] Sp E n} (hg : g ∈ UF E n)
-    (h : GLG E n SG) (P : ST) (q : 𝓞 E) (x : Sp E n) :
+    (h : GLG (E := E) (n := n) (SG := SG)) (P : ST) (q : 𝓞 E) (x : Sp E n) :
     (d.act g h).up P q (g x) = (d.up P q x).act g h := by
   have hsm : ∀ (s : 𝓞 E) (v : Sp E n), g.symm (s • v) = s • g.symm v := fun s v =>
     ((g.symm : Sp E n →ₗ[E] Sp E n).restrictScalars (𝓞 E)).map_smul s v
@@ -1337,14 +1337,14 @@ theorem Deco.up_act (d : Deco E n ST SG) {g : Sp E n ≃ₗ[E] Sp E n} (hg : g �
   · rfl
 
 theorem Deco.IsUp.act {P : ST} {q : 𝓞 E} {d d' : Deco E n ST SG} (hdd : Deco.IsUp P q d d')
-    {g : Sp E n ≃ₗ[E] Sp E n} (hg : g ∈ UF E n) (h : GLG E n SG) :
+    {g : Sp E n ≃ₗ[E] Sp E n} (hg : g ∈ UF E n) (h : GLG (E := E) (n := n) (SG := SG)) :
     Deco.IsUp P q (d.act g h) (d'.act g h) := by
   obtain ⟨x, hx, hfx, rfl⟩ := hdd
   refine ⟨g x, Submodule.mem_map.mpr ⟨x, hx, rfl⟩, ?_, (Deco.up_act d hg h P q x).symm⟩
   show d.f P (g.symm (g x)) = 1
   rw [LinearEquiv.symm_apply_apply, hfx]
 
-theorem Deco.kerAt_act (d : Deco E n ST SG) (g : Sp E n ≃ₗ[E] Sp E n) (h : GLG E n SG) (P : ST) :
+theorem Deco.kerAt_act (d : Deco E n ST SG) (g : Sp E n ≃ₗ[E] Sp E n) (h : GLG (E := E) (n := n) (SG := SG)) (P : ST) :
     (d.act g h).kerAt P = gmap g (d.kerAt P) := by
   show Submodule.span (𝓞 E) {x | x ∈ gmap g d.N ∧ d.f P (g.symm x) = 0} =
     (Submodule.span (𝓞 E) {x | x ∈ d.N ∧ d.f P x = 0}).map
@@ -1361,12 +1361,12 @@ theorem Deco.kerAt_act (d : Deco E n ST SG) (g : Sp E n ≃ₗ[E] Sp E n) (h : G
     exact ⟨⟨y, hy, rfl⟩, by simpa using hf⟩
 
 theorem Deco.dnN_act (d : Deco E n ST SG) {g : Sp E n ≃ₗ[E] Sp E n} (hg : g ∈ UF E n)
-    (h : GLG E n SG) (P : ST) : (d.act g h).dnN P = gmap g (d.dnN P) := by
+    (h : GLG (E := E) (n := n) (SG := SG)) (P : ST) : (d.act g h).dnN P = gmap g (d.dnN P) := by
   unfold Deco.dnN
   rw [Deco.kerAt_act, gmap_sup, gmap_smul, dual_gmap_lemma_3 hg]
 
 theorem Deco.dn_act (d : Deco E n ST SG) {g : Sp E n ≃ₗ[E] Sp E n} (hg : g ∈ UF E n)
-    (h : GLG E n SG) (P : ST) (f' : Sp E n → 𝓞 E ⧸ P.1.asIdeal) :
+    (h : GLG (E := E) (n := n) (SG := SG)) (P : ST) (f' : Sp E n → 𝓞 E ⧸ P.1.asIdeal) :
     (d.act g h).dn P (fun y => f' (g.symm y)) = (d.dn P f').act g h := by
   apply Deco.ext
   · exact Deco.dnN_act d hg h P
@@ -1378,7 +1378,7 @@ theorem Deco.dn_act (d : Deco E n ST SG) {g : Sp E n ≃ₗ[E] Sp E n} (hg : g �
   · rfl
 
 theorem Deco.IsDn.act {P : ST} {q : 𝓞 E} {d d' : Deco E n ST SG} (hdd : Deco.IsDn P q d d')
-    {g : Sp E n ≃ₗ[E] Sp E n} (hg : g ∈ UF E n) (h : GLG E n SG) :
+    {g : Sp E n ≃ₗ[E] Sp E n} (hg : g ∈ UF E n) (h : GLG (E := E) (n := n) (SG := SG)) :
     Deco.IsDn P q (d.act g h) (d'.act g h) := by
   have hsm : ∀ (s : 𝓞 E) (v : Sp E n), g.symm (s • v) = s • g.symm v := fun s v =>
     ((g.symm : Sp E n →ₗ[E] Sp E n).restrictScalars (𝓞 E)).map_smul s v
@@ -1397,9 +1397,9 @@ theorem Deco.IsDn.act {P : ST} {q : 𝓞 E} {d d' : Deco E n ST SG} (hdd : Deco.
     rw [hsm, LinearEquiv.symm_apply_apply]
     exact h2 y hy hfe'
 
-theorem DecoSet.smul_mem_upSet (a : UF E n × GLG E n SG) (P : ST) (q : 𝓞 E)
-    (d d' : DecoSet E n ST SG) : a • d' ∈ (a • d).upSet P q ↔ d' ∈ d.upSet P q := by
-  have key : ∀ (b : UF E n × GLG E n SG) (e e' : DecoSet E n ST SG), Deco.IsUp P q e.1 e'.1 →
+theorem DecoSet.smul_mem_upSet (a : UF E n × GLG (E := E) (n := n) (SG := SG)) (P : ST) (q : 𝓞 E)
+    (d d' : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : a • d' ∈ (a • d).upSet P q ↔ d' ∈ d.upSet P q := by
+  have key : ∀ (b : UF E n × GLG (E := E) (n := n) (SG := SG)) (e e' : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)), Deco.IsUp P q e.1 e'.1 →
       Deco.IsUp P q (b • e).1 (b • e').1 := by
     intro b e e' h
     rw [DecoSet.smul_val, DecoSet.smul_val]
@@ -1411,7 +1411,7 @@ theorem DecoSet.smul_mem_upSet (a : UF E n × GLG E n SG) (P : ST) (q : 𝓞 E)
   · intro h
     exact key a _ _ h
 
-theorem DecoSet.dnSet_finite (d : DecoSet E n ST SG) (P : ST) (hne : conjPrime₂ P.1 ≠ P.1) (q : 𝓞 E) :
+theorem DecoSet.dnSet_finite (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (hne : conjPrime₂ P.1 ≠ P.1) (q : 𝓞 E) :
     (d.dnSet P q).Finite := by
   have hs := d.2.dnN_spec P hne
   refine (DecoSet.finite_fibre (d.1.dnN P) hs.1.fg).subset ?_
@@ -1619,7 +1619,7 @@ theorem Deco.IsDn.isUp {d d' : Deco E n ST SG} (hd : d.Ok) (hd' : d'.Ok) {P : ST
     rw [hbe]
 
 theorem DecoSet.mem_upSet_iff_mem_dnSet {P : ST} (hP : MoveHyp ST SG P) {q : 𝓞 E}
-    (hq : q ∈ P.1.asIdeal) (hq2 : q ∉ P.1.asIdeal ^ 2) (d d' : DecoSet E n ST SG) :
+    (hq : q ∈ P.1.asIdeal) (hq2 : q ∉ P.1.asIdeal ^ 2) (d d' : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     d' ∈ d.upSet P q ↔ d ∈ d'.dnSet P q := ⟨fun h => Deco.IsUp.isDn d.2 hP hq hq2 h, fun h => Deco.IsDn.isUp d.2 d'.2 hP hq hq2 h⟩
 
 end Adjoint
@@ -1712,7 +1712,7 @@ theorem exists_finite_reps {N : Submodule (𝓞 E) (Sp E n)} (hN : N.FG)
   rw [← Ideal.Quotient.eq]
   exact (Quotient.out_eq' _).symm
 
-theorem DecoSet.upSet_finite (d : DecoSet E n ST SG) (P : ST) (q : 𝓞 E) : (d.upSet P q).Finite := by
+theorem DecoSet.upSet_finite (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (q : 𝓞 E) : (d.upSet P q).Finite := by
   obtain ⟨R, hR, hrep⟩ := exists_finite_reps d.2.lat.fg P.1
   have hfin : ((fun r => d.1.up P q r) '' R).Finite := hR.image _
   refine (hfin.preimage Subtype.val_injective.injOn).subset ?_
@@ -1967,7 +1967,7 @@ theorem padM_mulVec_snoc {R : Type} [CommRing R] (A : Matrix (Fin n) (Fin n) R) 
   | last => simp [padM, Matrix.mulVec, dotProduct, Fin.sum_univ_castSucc]
   | cast j => simp [padM, Matrix.mulVec, dotProduct, Fin.sum_univ_castSucc]
 
-def extG : GLG E n SG →* GLG E (n + 1) SG :=
+def extG : GLG (E := E) (n := n) (SG := SG) →* GLG (E := E) (n := n + 1) (SG := SG) :=
   MonoidHom.pi fun w => (Units.map (padM (𝓞 E ⧸ w.1.asIdeal) n)).comp (Pi.evalMonoidHom _ w)
 
 theorem tilN_gmap (g : Sp E n ≃ₗ[E] Sp E n) (N : Submodule (𝓞 E) (Sp E n)) :
@@ -1990,7 +1990,7 @@ theorem tilN_gmap (g : Sp E n ≃ₗ[E] Sp E n) (N : Submodule (𝓞 E) (Sp E n)
     rw [Submodule.map_span, Set.image_singleton]
     simp only [LinearMap.restrictScalars_apply, LinearEquiv.coe_coe, h2]
 
-theorem Deco.til_act (d : Deco E n ∅ SG) (g : Sp E n ≃ₗ[E] Sp E n) (h : GLG E n SG) (pi : 𝓞 E) :
+theorem Deco.til_act (d : Deco E n ∅ SG) (g : Sp E n ≃ₗ[E] Sp E n) (h : GLG (E := E) (n := n) (SG := SG)) (pi : 𝓞 E) :
     (d.act g h).til (ST := ST) pi = (d.til (ST := ST) pi).act (extE g) (extG h) := by
   have mg : ∀ (L : Submodule (𝓞 E) (Sp E (n + 1))) (v : Sp E (n + 1)),
       v ∈ gmap (extE g) L ↔ (extE g).symm v ∈ L := by
@@ -2028,7 +2028,7 @@ theorem Deco.til_act (d : Deco E n ∅ SG) (g : Sp E n ≃ₗ[E] Sp E n) (h : GL
     · rw [if_pos ((hloc w.1 x).mpr hm), if_pos hm, padM_mulVec_snoc, initL_extE_symm, extE_symm_last]
     · rw [if_neg (fun h' => hm ((hloc w.1 x).mp h')), if_neg hm, Matrix.mulVec_zero]
 
-theorem DecoSet.til_smul (a : UF E n × GLG E n SG) (d : DecoSet E n ∅ SG) {pi : 𝓞 E}
+theorem DecoSet.til_smul (a : UF E n × GLG (E := E) (n := n) (SG := SG)) (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) {pi : 𝓞 E}
     (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal) :
     DecoSet.til (ST := ST) pi (a • d) = (extU a.1, extG a.2) • DecoSet.til (ST := ST) pi d := by
   apply Subtype.ext
@@ -2414,7 +2414,7 @@ section DnNonempty
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
   {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-theorem DecoSet.dnSet_nonempty (d : DecoSet E n ST SG) (P : ST) (hP : MoveHyp ST SG P) {q : 𝓞 E}
+theorem DecoSet.dnSet_nonempty (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (hP : MoveHyp ST SG P) {q : 𝓞 E}
     (hq : q ∈ P.1.asIdeal) (hq2 : q ∉ P.1.asIdeal ^ 2) : (d.dnSet P q).Nonempty := by
   classical
   have hd := d.2

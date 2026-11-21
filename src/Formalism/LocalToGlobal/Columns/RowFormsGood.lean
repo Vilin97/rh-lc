@@ -49,7 +49,7 @@ structure CoefPk.DualP {D : Type} (C : CoefPk X n D) : Prop where
   del_le : ∀ d, C.Del d ≤ C.Nab d
   dual : ∀ d, Formalism.HermitianLatticesTheory.dual C.pair (C.Nab d) = C.Del d
 
-theorem formGSD_rat (hX : X.Ok) (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG) (hC : C.RatP) :
+theorem formGSD_rat (hX : X.Ok) (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG) (hC : C.RatP) :
     (formGSD C Λ).Rat where
   pair_rat := hC.pair_rat
   act_rat g i j := by
@@ -59,7 +59,7 @@ theorem formGSD_rat (hX : X.Ok) (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : Lev
     exact mul_mem (rf_root_mem_cmMax hX hm hc) (hC.act_rat g.1 i j)
   pos := hC.pos
 
-theorem formGSD_good (hX : X.Ok) (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG) (hE : C.Eqv)
+theorem formGSD_good (hX : X.Ok) (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG) (hE : C.Eqv)
     (hC : C.DualP) : (formGSD C Λ).Good 1 where
   ok := formGSD_ok C Λ hX hE
   symm := hC.symm

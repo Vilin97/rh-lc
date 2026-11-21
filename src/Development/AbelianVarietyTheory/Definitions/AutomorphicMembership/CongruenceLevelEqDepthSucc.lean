@@ -273,7 +273,7 @@ theorem topLev_root (j : ℕ) (Q : QE sel (mu : Chr X.F X.E X.K)) :
 theorem mem_levGTop (w : Pr.vGs) (a : GL (Fin (R.N R.m)) (𝓞 X.E ⧸ w.1.asIdeal)) :
     a ∈ (levGTop Ch P w).H ↔ ∃ g ∈ (rowTyG Ch P w).H, diagEmb _ (Nat.sub_le _ 1) g = a := Iff.rfl
 
-theorem mem_levGTop_grp (a : GLG X.E (R.N R.m) Pr.vGs) :
+theorem mem_levGTop_grp (a : GLG (E := X.E) (n := R.N R.m) (SG := Pr.vGs)) :
     a ∈ (levGTop Ch P).grp ↔ ∃ h ∈ (rowTyG Ch P).grp, extGH (N_m_succ R) h = a := by
   constructor
   · intro ha

@@ -354,7 +354,7 @@ theorem extUH_val (γ : UF E n) : (extUH hN γ).1 = sumE hN γ.1 1 := by
   exact LinearEquiv.ext fun x => ext_prH rfl ((initL_extE γ.1 x).trans (prH_sumE rfl γ.1 1 x).symm)
     ((extE_last γ.1 x).trans (by rw [sumE_last, Units.val_one, one_mul]; rfl))
 
-theorem extGH_apply {SG : Finset (HeightOneSpectrum (𝓞 E))} (h : GLG E n SG) (w : SG) :
+theorem extGH_apply {SG : Finset (HeightOneSpectrum (𝓞 E))} (h : GLG (E := E) (n := n) (SG := SG)) (w : SG) :
     extGH hN h w = diagEmb _ (by omega : n ≤ N) (h w) := by
   subst hN
   apply Units.ext
@@ -504,14 +504,14 @@ theorem exists_liftFr {d : Deco E n ST SG} (hd : d.Ok) (w : SG) : ∃ f, IsLiftF
 theorem liftFr_spec {d : Deco E n ST SG} (hd : d.Ok) (w : SG) : IsLiftFr d w (d.liftFr w) :=
   Classical.epsilon_spec (exists_liftFr hd w)
 
-def passFr {d : Deco E n ST SG} {w : SG} (γ : Sp E n ≃ₗ[E] Sp E n) (h : GLG E n SG) {f f' : Sp E n ≃ₗ[E] Sp E n}
+def passFr {d : Deco E n ST SG} {w : SG} (γ : Sp E n ≃ₗ[E] Sp E n) (h : GLG (E := E) (n := n) (SG := SG)) {f f' : Sp E n ≃ₗ[E] Sp E n}
     (hf : IsLiftFr d w f) (hf' : IsLiftFr (d.act γ h) w f') : GLint E n w.1 :=
   ⟨f'⁻¹ * γ * f, fun x => by
     rw [← hf'.1, ← hf.1]
     show f' (f'.symm (γ (f x))) ∈ localization₂ w.1.asIdeal (gmap γ d.N) ↔ _
     rw [LinearEquiv.apply_symm_apply, mem_localization_gmap, LinearEquiv.symm_apply_apply]⟩
 
-theorem redGL_passFr {d : Deco E n ST SG} {w : SG} (γ : Sp E n ≃ₗ[E] Sp E n) (h : GLG E n SG) {f f' : Sp E n ≃ₗ[E] Sp E n}
+theorem redGL_passFr {d : Deco E n ST SG} {w : SG} (γ : Sp E n ≃ₗ[E] Sp E n) (h : GLG (E := E) (n := n) (SG := SG)) {f f' : Sp E n ≃ₗ[E] Sp E n}
     (hf : IsLiftFr d w f) (hf' : IsLiftFr (d.act γ h) w f') : redGL n w.1 (passFr γ h hf hf') = h w := by
   refine redGL_eq _ fun x hx => ?_
   rw [← hf'.2 _ (glint_mem _ hx), ← hf.2 x hx]
@@ -527,7 +527,7 @@ theorem exists_of_isLiftFr {d : Deco E n ST SG} {w : SG} {f f' : Sp E n ≃ₗ[E
 
 variable {N : ℕ} (hN : N = n + 1)
 
-theorem isLiftFr_tilH (d : DecoSet E n ∅ SG) {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal)
+theorem isLiftFr_tilH (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal)
     (w : SG) {f : Sp E n ≃ₗ[E] Sp E n} (hf : IsLiftFr d.1 w f) (t : Eˣ) (ht : (t : E) = (pi : E)) :
     IsLiftFr (DecoSet.tilH (ST := ST) hN pi d).1 w (sumE hN f t) := by
   classical

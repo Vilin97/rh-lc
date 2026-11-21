@@ -522,7 +522,7 @@ theorem frsF_smulQ {j : ℕ} (p : ChPt (R := R) sel mu u j)
     (g : FrmG Λ Θ) (w : rowSG Pr sel mu) :
     ∃ κ : ↥(GLint X.E (R.N j) w.1), frsF sel mu (g • p) w = g.1.1 * frsF sel mu p w * κ.1 ∧
       (∀ hw : w.1 ∈ Pr.vGs, ∀ x ∈ stdAt X.E (R.N j) w.1, redV w.1 (κ.1 x) =
-        (((g.2.1 : GLG X.E (R.N j) Pr.vGs) ⟨w.1, hw⟩)⁻¹ : GL _ _).1.mulVec (redV w.1 x)) ∧
+        (((g.2.1 : GLG (E := X.E) (n := R.N j) (SG := Pr.vGs)) ⟨w.1, hw⟩)⁻¹ : GL _ _).1.mulVec (redV w.1 x)) ∧
       ∀ hw : w.1 ∉ Pr.vGs, κ = ((g.2.2 : GLQ X.E (R.N j) (QE sel (mu : Chr X.F X.E X.K))) ⟨w.1, (Finset.mem_union.mp w.2).resolve_left hw⟩)⁻¹ := by
   by_cases hw : w.1 ∈ Pr.vGs
   · obtain ⟨κ, h1, h2⟩ := frsF_smul sel mu p Λ Θ g w hw

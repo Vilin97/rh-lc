@@ -149,7 +149,7 @@ section Cast
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {N n : ℕ} (hN : N = n + 1)
   {ST SG SG' : Finset (HeightOneSpectrum (𝓞 E))}
 
-def DecoSet.tilH (pi : 𝓞 E) : DecoSet E n ∅ SG → DecoSet E N ST SG := by
+def DecoSet.tilH (pi : 𝓞 E) : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG) → DecoSet (E := E) (n := N) (ST := ST) (SG := SG) := by
   subst hN
   exact DecoSet.til pi
 
@@ -157,11 +157,11 @@ def extUH : UF E n →* UF E N := by
   subst hN
   exact extU
 
-def extGH : GLG E n SG →* GLG E N SG := by
+def extGH : GLG (E := E) (n := n) (SG := SG) →* GLG (E := E) (n := N) (SG := SG) := by
   subst hN
   exact extG
 
-theorem DecoSet.tilH_smul (a : UF E n × GLG E n SG) (d : DecoSet E n ∅ SG) {pi : 𝓞 E}
+theorem DecoSet.tilH_smul (a : UF E n × GLG (E := E) (n := n) (SG := SG)) (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) {pi : 𝓞 E}
     (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal) :
     DecoSet.tilH (ST := ST) hN pi (a • d) = (extUH hN a.1, extGH hN a.2) • DecoSet.tilH (ST := ST) hN pi d := by
   subst hN
@@ -185,7 +185,7 @@ theorem Deco.Ok.res {d : Deco E n ST SG'} (hd : d.Ok) (h : SG ⊆ SG') : (d.res 
   be_surj w := hd.be_surj ⟨w.1, h w.2⟩
   be_ker w := hd.be_ker ⟨w.1, h w.2⟩
 
-def DecoSet.res (h : SG ⊆ SG') (d : DecoSet E n ST SG') : DecoSet E n ST SG := ⟨d.1.res h, d.2.res h⟩
+def DecoSet.res (h : SG ⊆ SG') (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG')) : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) := ⟨d.1.res h, d.2.res h⟩
 
 end Cast
 
@@ -203,14 +203,14 @@ def brC (u : Pr.Word) : VV X.K (W.lamTrue u R.m) →ₗ[X.K] VV X.K W.sgTrue :=
 
 
 variable (Pr R) in
-abbrev RowPt : Type := DecoSet X.E (R.N R.m - 1) ∅ (rowSG Pr sel mu)
+abbrev RowPt : Type := DecoSet (E := X.E) (n := R.N R.m - 1) (ST := ∅) (SG := rowSG Pr sel mu)
 
-def tilQ (u : Pr.Word) : RowPt Pr R sel mu → DecoSet X.E (R.N R.m) (Pr.vT u) (rowSG Pr sel mu) :=
+def tilQ (u : Pr.Word) : RowPt Pr R sel mu → DecoSet (E := X.E) (n := R.N R.m) (ST := Pr.vT u) (SG := rowSG Pr sel mu) :=
   DecoSet.tilH (N_m_succ R) (Pr.piT u)
 
 
 open Classical in
-def tilC (u : Pr.Word) : RowPt Pr R sel mu → DecoSet X.E (R.N R.m) (Pr.vT u) Pr.vGs :=
+def tilC (u : Pr.Word) : RowPt Pr R sel mu → DecoSet (E := X.E) (n := R.N R.m) (ST := Pr.vT u) (SG := Pr.vGs) :=
   fun d => (tilQ sel mu u d).res Finset.subset_union_left
 
 def evzC (u : Pr.Word) : ColV W Ch u R.m →ₗ[X.K] (RowPt Pr R sel mu → VV X.K (W.lamTrue u R.m)) :=
@@ -344,14 +344,14 @@ def GLint (P : HeightOneSpectrum (𝓞 E)) : Subgroup (Sp E n ≃ₗ[E] Sp E n) 
 variable (ST SG Q : Finset (HeightOneSpectrum (𝓞 E)))
 
 def DecoF : Type :=
-  {p : DecoSet E n ST SG × (∀ P : Q, Sp E n ≃ₗ[E] Sp E n) //
+  {p : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) × (∀ P : Q, Sp E n ≃ₗ[E] Sp E n) //
     ∀ (P : Q) (x : Sp E n), p.2 P x ∈ p.1.1.at P.1 ↔ x ∈ stdAt E n P.1}
 
 abbrev GLQ : Type := ∀ P : Q, ↥(GLint E n P.1)
 
 variable {E n ST SG Q}
 
-def DecoF.deco (p : DecoF E n ST SG Q) : DecoSet E n ST SG := p.1.1
+def DecoF.deco (p : DecoF E n ST SG Q) : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) := p.1.1
 
 def DecoF.fr (p : DecoF E n ST SG Q) (P : Q) : Sp E n ≃ₗ[E] Sp E n := p.1.2 P
 
@@ -361,9 +361,9 @@ def DecoF.base [NeZero n] : DecoF E n ST SG Q := ⟨(DecoSet.base E n ST SG, fun
 
 instance [NeZero n] : Nonempty (DecoF E n ST SG Q) := ⟨DecoF.base E n ST SG Q⟩
 
-instance : MulAction (UF E n × GLG E n SG × GLQ E n Q) (DecoF E n ST SG Q) where
+instance : MulAction (UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) (DecoF E n ST SG Q) where
   smul a p := ⟨((a.1, a.2.1) • p.1.1, fun P => a.1.1 * p.1.2 P * ((a.2.2 P)⁻¹).1), fun P x => by
-    have h1 : (((a.1, a.2.1) • p.1.1 : DecoSet E n ST SG)).1.at P.1 =
+    have h1 : (((a.1, a.2.1) • p.1.1 : DecoSet (E := E) (n := n) (ST := ST) (SG := SG))).1.at P.1 =
         localization₂ P.1.asIdeal (gmap a.1.1 p.1.1.1.N) := rfl
     rw [h1, mem_localization_gmap]
     show a.1.1.symm (a.1.1 (p.1.2 P (((a.2.2 P)⁻¹).1 x))) ∈ _ ↔ _
@@ -417,7 +417,7 @@ variable {X : Fields} {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum (𝓞 X.E))
 abbrev FrmG (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) : Type := UF X.E n × ↥Λ.grp × ↥Θ.grp
 
 def FrmG.incl (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) :
-    FrmG Λ Θ →* UF X.E n × GLG X.E n SG × GLQ X.E n Q :=
+    FrmG Λ Θ →* UF X.E n × GLG (E := X.E) (n := n) (SG := SG) × GLQ X.E n Q :=
   MonoidHom.prodMap (MonoidHom.id _) (MonoidHom.prodMap Λ.grp.subtype Θ.grp.subtype)
 
 instance frmAct (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) :

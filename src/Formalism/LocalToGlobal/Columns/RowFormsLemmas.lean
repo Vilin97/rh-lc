@@ -111,9 +111,9 @@ end Ties2
 section Iso
 
 variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-  (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG)
+  (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG)
 
-theorem LevFam.conj_inv_spec (a : GLG X.E n SG) (ha : ∀ w, (Λ w).NormBy (a w)) (h : ↥Λ.grp) :
+theorem LevFam.conj_inv_spec (a : GLG (E := X.E) (n := n) (SG := SG)) (ha : ∀ w, (Λ w).NormBy (a w)) (h : ↥Λ.grp) :
     ∃ hm : a⁻¹ * h.1 * a ∈ Λ.grp, Λ.chr ⟨_, hm⟩ = Λ.chr h := by
   obtain ⟨h', e1, e2⟩ := Λ.normBy a ha h
   have e : a⁻¹ * h.1 * a = h'.1 := by rw [e1, inv_mul_cancel_right]
@@ -122,13 +122,13 @@ theorem LevFam.conj_inv_spec (a : GLG X.E n SG) (ha : ∀ w, (Λ w).NormBy (a w)
   congr 1
   exact Subtype.ext e
 
-theorem LevFam.conj_spec (a : GLG X.E n SG) (ha : ∀ w, (Λ w).NormBy (a⁻¹ w)) (h : ↥Λ.grp) :
+theorem LevFam.conj_spec (a : GLG (E := X.E) (n := n) (SG := SG)) (ha : ∀ w, (Λ w).NormBy (a⁻¹ w)) (h : ↥Λ.grp) :
     ∃ hm : a * h.1 * a⁻¹ ∈ Λ.grp, Λ.chr ⟨_, hm⟩ = Λ.chr h := by
   obtain ⟨hm, e⟩ := Λ.conj_inv_spec a⁻¹ ha h
   simp only [inv_inv] at hm e
   exact ⟨hm, e⟩
 
-def conjG (a : GLG X.E n SG) (ha : ∀ w, (Λ w).NormBy (a w)) (ha' : ∀ w, (Λ w).NormBy (a⁻¹ w)) :
+def conjG (a : GLG (E := X.E) (n := n) (SG := SG)) (ha : ∀ w, (Λ w).NormBy (a w)) (ha' : ∀ w, (Λ w).NormBy (a⁻¹ w)) :
     FormG Λ ≃* FormG Λ where
   toFun g := (g.1, ⟨a * g.2.1 * a⁻¹, (Λ.conj_spec a ha' g.2).1⟩)
   invFun g := (g.1, ⟨a⁻¹ * g.2.1 * a, (Λ.conj_inv_spec a ha g.2).1⟩)
@@ -142,25 +142,25 @@ def conjG (a : GLG X.E n SG) (ha : ∀ w, (Λ w).NormBy (a w)) (ha' : ∀ w, (Λ
     show a * (g.2.1 * g'.2.1) * a⁻¹ = (a * g.2.1 * a⁻¹) * (a * g'.2.1 * a⁻¹)
     group))
 
-def trIso (hC : C.Eqv) (a : GLG X.E n SG) (ha : ∀ w, (Λ w).NormBy (a w)) (ha' : ∀ w, (Λ w).NormBy (a⁻¹ w)) :
+def trIso (hC : C.Eqv) (a : GLG (E := X.E) (n := n) (SG := SG)) (ha : ∀ w, (Λ w).NormBy (a w)) (ha' : ∀ w, (Λ w).NormBy (a⁻¹ w)) :
     GSD.Iso (formGSD C Λ) (formGSD C Λ) where
   eG := conjG Λ a ha ha'
-  eD := MulAction.toPerm (((1 : UF X.E n), a) : UF X.E n × GLG X.E n SG)
+  eD := MulAction.toPerm (((1 : UF X.E n), a) : UF X.E n × GLG (E := X.E) (n := n) (SG := SG))
   eV := LinearEquiv.refl _ _
   smul g d := by
-    show ((1 : UF X.E n), a) • (g.1, (g.2.1 : GLG X.E n SG)) • (d : DecoSet X.E n ST SG) =
-      (g.1, a * g.2.1 * a⁻¹) • ((1 : UF X.E n), a) • (d : DecoSet X.E n ST SG)
+    show ((1 : UF X.E n), a) • (g.1, (g.2.1 : GLG (E := X.E) (n := n) (SG := SG))) • (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) =
+      (g.1, a * g.2.1 * a⁻¹) • ((1 : UF X.E n), a) • (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))
     rw [smul_smul, smul_smul, Prod.mk_mul_mk, Prod.mk_mul_mk, one_mul, mul_one, inv_mul_cancel_right]
   rho g x := by
     show ((Λ.chr g.2 : X.Kˣ) : X.K) • C.rho g.1 x = ((Λ.chr ⟨a * g.2.1 * a⁻¹, _⟩ : X.Kˣ) : X.K) • C.rho g.1 x
     rw [(Λ.conj_spec a ha' g.2).2]
   pair _ _ := rfl
   nab d := by
-    show C.Nab (((1 : UF X.E n), a) • (d : DecoSet X.E n ST SG)) = _
+    show C.Nab (((1 : UF X.E n), a) • (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) = _
     rw [hC.nab_smul, map_one]
     rfl
   del d := by
-    show C.Del (((1 : UF X.E n), a) • (d : DecoSet X.E n ST SG)) = _
+    show C.Del (((1 : UF X.E n), a) • (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) = _
     rw [hC.del_smul, map_one]
     rfl
   rat := by
@@ -178,7 +178,7 @@ def trIso (hC : C.Eqv) (a : GLG X.E n SG) (ha : ∀ w, (Λ w).NormBy (a w)) (ha'
     · exact one_mem _
     · exact zero_mem _
 
-variable {A : Type} [Group A] (ι : A →* GLG X.E n SG) (hι : ∀ a w, (Λ w).NormBy (ι a w))
+variable {A : Type} [Group A] (ι : A →* GLG (E := X.E) (n := n) (SG := SG)) (hι : ∀ a w, (Λ w).NormBy (ι a w))
 
 include hι in
 theorem normBy_inv_of (a : A) (w : SG) : (Λ w).NormBy ((ι a)⁻¹ w) := by
@@ -189,8 +189,8 @@ theorem trRep_eq_onForms (hC : C.Eqv) (a : A) (φ : (formGSD C Λ).EqFun) :
     trRep C Λ ι hι a φ = (trIso C Λ hC (ι a) (hι a) (normBy_inv_of Λ ι hι a)).onForms φ := by
   apply Subtype.ext
   funext d
-  show (φ : DecoSet X.E n ST SG → C.V) (((1 : UF X.E n), (ι a)⁻¹) • d) =
-    (φ : DecoSet X.E n ST SG → C.V) ((((1 : UF X.E n), ι a) : UF X.E n × GLG X.E n SG)⁻¹ • d)
+  show (φ : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → C.V) (((1 : UF X.E n), (ι a)⁻¹) • d) =
+    (φ : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → C.V) ((((1 : UF X.E n), ι a) : UF X.E n × GLG (E := X.E) (n := n) (SG := SG))⁻¹ • d)
   rw [Prod.inv_mk, inv_one]
 
 theorem trRep_ip (hC : C.Eqv) (h : (formGSD C Λ).Ok) (s : (formGSD C Λ).Sec) (a : A) (φ ψ : (formGSD C Λ).EqFun) :
@@ -400,7 +400,7 @@ theorem LevFam.chr_ev {SG : Finset (HeightOneSpectrum (𝓞 X.E))} (Λ : LevFam 
 theorem LevFam.mem_at {SG : Finset (HeightOneSpectrum (𝓞 X.E))} (Λ : LevFam X.E X.K n SG) (h : ↥Λ.grp) (w : SG) :
     h.1 w ∈ (Λ w).H := h.2 w (Set.mem_univ w)
 
-structure LevFam.Split {SG0 SG : Finset (HeightOneSpectrum (𝓞 X.E))} (ι : GLG X.E r SG0 →* GLG X.E n SG)
+structure LevFam.Split {SG0 SG : Finset (HeightOneSpectrum (𝓞 X.E))} (ι : GLG (E := X.E) (n := r) (SG := SG0) →* GLG (E := X.E) (n := n) (SG := SG))
     (ΛP ΛK : LevFam X.E X.K n SG) (Λ0 : LevFam X.E X.K r SG0) : Prop where
   fac : ∀ h : ↥ΛP.grp, ∃ (a : ↥Λ0.grp) (k : ↥ΛK.grp), h.1 = ι a.1 * k.1 ∧ ΛP.chr h = Λ0.chr a * ΛK.chr k
   emb : ∀ a : ↥Λ0.grp, ∃ hm : ι a.1 ∈ ΛP.grp, ΛP.chr ⟨_, hm⟩ = Λ0.chr a
@@ -438,7 +438,7 @@ theorem LevFam.glue_split (h : r ≤ n) (TP TK : LevFam X.E X.K n SG0) (P : LevF
       rw [LevFam.glue_of_mem TP B (inlSG w) w.2] at this
       exact this
     choose a ha k hk e1 e2 using fun w : SG0 => (H w).fac _ (hx w)
-    let kk : GLG X.E n (uSG SG0 Q) := fun w => if hw : w.1 ∈ SG0 then k ⟨w.1, hw⟩ else x.1 w
+    let kk : GLG (E := X.E) (n := n) (SG := uSG SG0 Q) := fun w => if hw : w.1 ∈ SG0 then k ⟨w.1, hw⟩ else x.1 w
     have hkk : kk ∈ (TK.glue B).grp := by
       intro w _
       by_cases hw : w.1 ∈ SG0
@@ -516,7 +516,7 @@ theorem LevFam.inv_chr {SG : Finset (HeightOneSpectrum (𝓞 X.E))} (Λ : LevFam
   rw [LevFam.chr_ev, LevFam.chr_ev, ← Finset.prod_inv_distrib]
   exact Finset.prod_congr rfl fun w _ => Lev.inv_ev _ _
 
-theorem LevFam.Split.inv {SG : Finset (HeightOneSpectrum (𝓞 X.E))} {ι : GLG X.E r SG0 →* GLG X.E n SG}
+theorem LevFam.Split.inv {SG : Finset (HeightOneSpectrum (𝓞 X.E))} {ι : GLG (E := X.E) (n := r) (SG := SG0) →* GLG (E := X.E) (n := n) (SG := SG)}
     {ΛP ΛK : LevFam X.E X.K n SG} {Λ0 : LevFam X.E X.K r SG0} (H : LevFam.Split ι ΛP ΛK Λ0) :
     LevFam.Split ι ΛP.inv ΛK.inv Λ0.inv where
   fac h := by
@@ -530,9 +530,9 @@ theorem LevFam.Split.inv {SG : Finset (HeightOneSpectrum (𝓞 X.E))} {ι : GLG 
     obtain ⟨hm, e⟩ := H.sub ⟨k.1, k.2⟩
     exact ⟨hm, by rw [ΛP.inv_chr ⟨_, hm⟩, ΛK.inv_chr ⟨k.1, k.2⟩, e]⟩
 
-theorem mem_EqFun_split {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (C : CoefPk X n (DecoSet X.E n ST SG))
-    {ι : GLG X.E r SG0 →* GLG X.E n SG} {ΛP ΛK : LevFam X.E X.K n SG} {Λ0 : LevFam X.E X.K r SG0}
-    (H : LevFam.Split ι ΛP ΛK Λ0) (φ : DecoSet X.E n ST SG → C.V) :
+theorem mem_EqFun_split {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)))
+    {ι : GLG (E := X.E) (n := r) (SG := SG0) →* GLG (E := X.E) (n := n) (SG := SG)} {ΛP ΛK : LevFam X.E X.K n SG} {Λ0 : LevFam X.E X.K r SG0}
+    (H : LevFam.Split ι ΛP ΛK Λ0) (φ : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → C.V) :
     φ ∈ (formGSD C ΛP).EqFun ↔ φ ∈ (formGSD C ΛK).EqFun ∧
       ∀ a : ↥Λ0.grp, trF X n ST SG C.V (ι a.1) φ = (((Λ0.chr a)⁻¹ : X.Kˣ) : X.K) • φ := by
   rw [mem_formGSD_EqFun, mem_formGSD_EqFun]
@@ -550,9 +550,9 @@ theorem mem_EqFun_split {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (C : Coe
       exact h1
   · rintro ⟨h1, h2⟩ γ h d
     obtain ⟨a, k, e1, e2⟩ := H.fac h
-    have h3 := congrFun (h2 a⁻¹) ((γ, (k.1 : GLG X.E n SG)) • d)
+    have h3 := congrFun (h2 a⁻¹) ((γ, (k.1 : GLG (E := X.E) (n := n) (SG := SG))) • d)
     rw [trF_apply, Pi.smul_apply, h1 γ k d, smul_smul, Prod.mk_mul_mk, one_mul, map_inv, inv_inv] at h3
-    have e3 : (ι ((a⁻¹ : ↥Λ0.grp) : GLG X.E r SG0))⁻¹ = ι a.1 := by
+    have e3 : (ι ((a⁻¹ : ↥Λ0.grp) : GLG (E := X.E) (n := r) (SG := SG0)))⁻¹ = ι a.1 := by
       rw [Subgroup.coe_inv, map_inv, inv_inv]
     rw [e3] at h3
     rw [e1, h3, e2, smul_smul, Units.val_mul]
@@ -568,7 +568,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Ch : Ch
 theorem rowTy_split : LevFam.Split (unipotentGroupBlockEmbedding Pr sel mu (r_le_X' R)) (rowTy Ch sel mu P) (rowTyKK Ch sel mu) P :=
   LevFam.glue_split (r_le_X' R) _ _ P _ fun w => HPar_split (r_le_X' R) _ (P w).H (P w).lam (chiAt Ch w)
 
-theorem mem_MtildeV_iff (φ : DecoSet X.E (R.N R.m - 1) ∅ (rowSG Pr sel mu) → VV X.K W.sgTrue) :
+theorem mem_MtildeV_iff (φ : DecoSet (E := X.E) (n := R.N R.m - 1) (ST := ∅) (SG := rowSG Pr sel mu) → VV X.K W.sgTrue) :
     φ ∈ (mtildeGSD W Ch sel mu P).EqFun ↔ ∃ hφ : φ ∈ (mtildeKGSD W Ch sel mu).EqFun,
       ∀ a : ↥P.grp, g0HatRepEqFunX W Ch sel mu a.1 ⟨φ, hφ⟩ = ((P.chr a : X.Kˣ) : X.K) • (⟨φ, hφ⟩ : (mtildeKGSD W Ch sel mu).EqFun) := by
   refine (mem_EqFun_split (rowVal W (rowSG Pr sel mu)) (rowTy_split Ch sel mu P).inv φ).trans ?_

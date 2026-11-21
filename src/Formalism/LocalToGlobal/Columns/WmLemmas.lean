@@ -20,13 +20,13 @@ section Nb
 
 variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (V : Type) [AddCommGroup V] [Module X.K V]
 
-theorem trF_nbFun (a : GLG X.E n SG) (P : Ideal (𝓞 X.E)) (i : ℕ) (ψ : DecoSet X.E n ST SG → V) :
+theorem trF_nbFun (a : GLG (E := X.E) (n := n) (SG := SG)) (P : Ideal (𝓞 X.E)) (i : ℕ) (ψ : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → V) :
     trF X n ST SG V a (nbFun X.K V P i ψ) = nbFun X.K V P i (trF X n ST SG V a ψ) := by
   funext d
   rw [trF_apply]
-  show ∑ d₁ ∈ ((((1 : UF X.E n), a⁻¹) : UF X.E n × GLG X.E n SG) • d).heckeNb P i, ψ d₁ =
-    ∑ d₁ ∈ d.heckeNb P i, ψ ((((1 : UF X.E n), a⁻¹) : UF X.E n × GLG X.E n SG) • d₁)
-  set g : UF X.E n × GLG X.E n SG := ((1 : UF X.E n), a⁻¹)
+  show ∑ d₁ ∈ ((((1 : UF X.E n), a⁻¹) : UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) • d).heckeNb P i, ψ d₁ =
+    ∑ d₁ ∈ d.heckeNb P i, ψ ((((1 : UF X.E n), a⁻¹) : UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) • d₁)
+  set g : UF X.E n × GLG (E := X.E) (n := n) (SG := SG) := ((1 : UF X.E n), a⁻¹)
   refine Finset.sum_nbij' (fun e => g⁻¹ • e) (fun e => g • e) ?_ ?_ ?_ ?_ ?_
   · intro e he
     have : g • (g⁻¹ • e) ∈ (g • d).heckeNb P i := by rwa [smul_inv_smul]

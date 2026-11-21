@@ -122,7 +122,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Λ : �
 
 
 open Classical in
-def frsD {n : ℕ} {ST : Finset (HeightOneSpectrum (𝓞 X.E))} (p : DecoSet X.E n ST Pr.vGs) : Frs X.E n (rowSG Pr sel mu) := fun P =>
+def frsD {n : ℕ} {ST : Finset (HeightOneSpectrum (𝓞 X.E))} (p : DecoSet (E := X.E) (n := n) (ST := ST) (SG := Pr.vGs)) : Frs X.E n (rowSG Pr sel mu) := fun P =>
   if h : P.1 ∈ Pr.vGs then p.1.liftFr ⟨P.1, h⟩ else 1
 
 def repN (u : Pr.Word) (j : ℕ) (c : StCl W Λ u j) : Submodule (𝓞 X.E) (Sp X.E (R.N j)) := ((stepGSD W Λ u j).outSec.rep c).1.N
@@ -145,11 +145,11 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Λ : �
   (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu)) (Am : Amb X) (u : Pr.Word)
 
 abbrev XiFam (Pr : Primes X) (R : Ranks) (u : Pr.Word) : Type :=
-  ∀ i, DecoSet X.E (R.N i) (Pr.vT u) Pr.vGs → DecoSet X.E (R.N (i + 1)) (Pr.vT u) Pr.vGs → HomE X.E (R.N i) (R.N (i + 1)) → X.K
+  ∀ i, DecoSet (E := X.E) (n := R.N i) (ST := Pr.vT u) (SG := Pr.vGs) → DecoSet (E := X.E) (n := R.N (i + 1)) (ST := Pr.vT u) (SG := Pr.vGs) → HomE X.E (R.N i) (R.N (i + 1)) → X.K
 
 variable (Ξ : XiFam Pr R u)
 
-def xiKer (i : ℕ) (p : DecoSet X.E (R.N i) (Pr.vT u) Pr.vGs) (p' : DecoSet X.E (R.N (i + 1)) (Pr.vT u) Pr.vGs) :
+def xiKer (i : ℕ) (p : DecoSet (E := X.E) (n := R.N i) (ST := Pr.vT u) (SG := Pr.vGs)) (p' : DecoSet (E := X.E) (n := R.N (i + 1)) (ST := Pr.vT u) (SG := Pr.vGs)) :
     (stepGSD W Λ u i).V →ₗ[X.K] (stepGSD W Λ u (i + 1)).V :=
   kerOf (stepC W Ch sel mu cst Am u i (W.lamTrue u (i + 1))) (Sall sel mu u) (cAof sel mu cst) (cBof sel mu cst u)
     p.1.N (frsD sel mu p) p'.1.N (frsD sel mu p') (Ξ i p p')

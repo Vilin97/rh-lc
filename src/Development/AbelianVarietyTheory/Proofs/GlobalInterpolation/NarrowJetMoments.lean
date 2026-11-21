@@ -54,7 +54,7 @@ section Clause
 
 variable {X : Fields} (A : Amb X) (Pr : Primes X) (u : Pr.Word) {p : ℕ} [Fact p.Prime] (w : HeightOneSpectrum (𝓞 X.K))
   (ι : X.K →+* ℂ_[p]) (uu : X.Tau → ℂ_[p]) {a b : ℕ} (SB Sall : Finset (HeightOneSpectrum (𝓞 X.E)))
-  {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet X.E a (Pr.vT u) SG) (d' : DecoSet X.E b (Pr.vT u) SG')
+  {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet (E := X.E) (n := a) (ST := Pr.vT u) (SG := SG)) (d' : DecoSet (E := X.E) (n := b) (ST := Pr.vT u) (SG := SG'))
 
 end Clause
 

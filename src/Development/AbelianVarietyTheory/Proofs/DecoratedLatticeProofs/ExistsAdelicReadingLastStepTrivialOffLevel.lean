@@ -203,7 +203,7 @@ theorem isPtOf_move (S : Set (HeightOneSpectrum (𝓞 F))) {g k k₁ : GL (Fin n
   have hT : ∀ P ∈ ST, ∀ i j, adAt F P ((m : Matrix (Fin n) (Fin n) (AfE F E)) i j) =
       adAt F P (((1 : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) i j) := fun P hP i j =>
     adAt_congr_bc (by rw [em2 _ (hST P hP), map_one]) i j
-  have hh : ∀ w : SG, LevRead.IsRed w.1 m ((1 : GLG E n SG) w) := fun w => by
+  have hh : ∀ w : SG, LevRead.IsRed w.1 m ((1 : GLG (E := E) (n := n) (SG := SG)) w) := fun w => by
     show LevRead.IsRed w.1 m ((1 : GL (Fin n) (𝓞 E ⧸ w.1.asIdeal)) : Matrix (Fin n) (Fin n) (𝓞 E ⧸ w.1.asIdeal))
     rw [Units.val_one]
     by_cases hw : w.1.under (𝓞 F) ∈ S
@@ -217,7 +217,7 @@ theorem isPtOf_move (S : Set (HeightOneSpectrum (𝓞 F))) {g k k₁ : GL (Fin n
     rfl
   have H := LevLiftPt.isPtOf_mul_fr hp hmU h1 h2 hT hh 1 hfr
   have e1 : g * k * m⁻¹ = g * k₁ := by rw [hm]; group
-  have e2 : ((1, 1, 1) : UF E n × GLG E n SG × GLQ E n Q) • p = p := one_smul _ p
+  have e2 : ((1, 1, 1) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p = p := one_smul _ p
   rw [e1, e2] at H
   exact H
 
@@ -336,10 +336,10 @@ theorem isRed_one_of_topPt (I : TC B X) (hI : I.Ok) (hP : TC.Pins B X) (l : I.La
     (fun i j => by rw [inv_inv]; exact (val_le_one_of_carries hkl w i j).1)
   have hA' : LevRead.IsRed w m A := fun i j => by rw [em]; exact hA i j
   have e1 : k0 * t * m⁻¹ = k := by rw [hm]; group
-  have hq' : IsPtOf B.sp.cm (k0 * t * m⁻¹) (((1, 1, 1) : UF B.fields.E (B.R.N B.R.m) × GLG B.fields.E (B.R.N B.R.m) (B.primes X).vGs ×
+  have hq' : IsPtOf B.sp.cm (k0 * t * m⁻¹) (((1, 1, 1) : UF B.fields.E (B.R.N B.R.m) × GLG (E := B.fields.E) (n := B.R.N B.R.m) (SG := (B.primes X).vGs) ×
       GLQ B.fields.E (B.R.N B.R.m) (QE I.sel (I.tup a))) • tilF I.sel (I.tup a) u
         (DecoF.base B.fields.E (B.R.N B.R.m - 1) ∅ (B.primes X).vGs (QE I.sel (I.tup a)))) := by
-    rw [e1, show ((1, 1, 1) : UF B.fields.E (B.R.N B.R.m) × GLG B.fields.E (B.R.N B.R.m) (B.primes X).vGs ×
+    rw [e1, show ((1, 1, 1) : UF B.fields.E (B.R.N B.R.m) × GLG (E := B.fields.E) (n := B.R.N B.R.m) (SG := (B.primes X).vGs) ×
       GLQ B.fields.E (B.R.N B.R.m) (QE I.sel (I.tup a))) = 1 from rfl, one_smul]
     exact hp
   have e2 := LevRead.eq_red hp' hq' ⟨w, hw⟩ hA'

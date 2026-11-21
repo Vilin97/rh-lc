@@ -94,7 +94,7 @@ end Pr
 section Dec
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
-  (d : DecoSet E n ST SG) {a : 𝓞 E} (ha : SepElt ST a) (P : ST)
+  (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) {a : 𝓞 E} (ha : SepElt ST a) (P : ST)
 
 
 include ha in
@@ -203,7 +203,7 @@ end Dec
 section Comparison₂
 
 variable {X : Fields} {Pr : Primes X} (hc : CMData X.F X.E) (hPr : Pr.Ok) (σ₀ : X.K →+* ℂ) (u : Pr.Word) {n : ℕ} [NeZero n]
-  {cls : Type} (s : cls → DecoSet X.E n (Pr.vT u) Pr.vGs) (Q : StepCrd Pr σ₀ n fun c => (s c).1.L)
+  {cls : Type} (s : cls → DecoSet (E := X.E) (n := n) (ST := Pr.vT u) (SG := Pr.vGs)) (Q : StepCrd Pr σ₀ n fun c => (s c).1.L)
 
 theorem tie_Ld_eq (c : cls) : Formalism.L2.Forms.dualL (hc.sig : X.E →+* X.E) Q.J (Q.lat c) = (s c).1.Lsh := by
   obtain ⟨J, f, bad, emb, lat, l0, rfl, rfl, rfl, rfl, rfl, rfl⟩ := Q

@@ -30,10 +30,10 @@ theorem isPtOf_mul_fr {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
     (h2 : ∀ i j, ((m⁻¹ : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) i j ∈ RInt F E)
     (hT : ∀ P ∈ ST, ∀ i j, adAt F P ((m : Matrix (Fin n) (Fin n) (AfE F E)) i j) =
       adAt F P (((1 : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) i j))
-    {h : GLG E n SG} (hh : ∀ w : SG, LevRead.IsRed w.1 m (h w)) (c : GLQ E n Q)
+    {h : GLG (E := E) (n := n) (SG := SG)} (hh : ∀ w : SG, LevRead.IsRed w.1 m (h w)) (c : GLQ E n Q)
     (hfr : ∀ (P : Q) (i j : Fin n), adAt F P.1 (((g * m⁻¹ : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) i j) =
       algebraMap E _ ((p.fr P * ((c P)⁻¹ : GLint E n P.1).1) (Pi.single j 1) i)) :
-    IsPtOf hc (g * m⁻¹) (((1, h, c) : UF E n × GLG E n SG × GLQ E n Q) • p) := by
+    IsPtOf hc (g * m⁻¹) (((1, h, c) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p) := by
   have hg0 : IsPtOf hc g (ChTwRead.noFr p) :=
     ⟨hg.uni, hg.lat, hg.f, hg.be, fun P => absurd P.2 (Finset.notMem_empty _)⟩
   have H := LevRead.isPtOf_mul (Q := ∅) (fun P => Finset.notMem_empty P) hg0 hm h1 h2 hT hh
@@ -82,13 +82,13 @@ theorem core {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [A
     (hpt : ∀ r s, adAt F P (((kk⁻¹ * x * kk : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) r s) =
       algebraMap E (P.adicCompletion E) (LinearMap.toMatrix' g'.toLinearMap r s))
     (hST : ∀ P' ∈ ST, ¬ Formalism.L2.Col.IsOver v P') (hover : ∀ w, w ∈ SG ∨ w ∈ Q → Formalism.L2.Col.IsOver v w → w = P)
-    (h : GLG E n SG) (c : GLQ E n Q)
+    (h : GLG (E := E) (n := n) (SG := SG)) (c : GLQ E n Q)
     (hG : ∀ hP : P ∈ SG, ∀ y ∈ Formalism.L2.Col.stdAt E n P, redV P (g' y) = ((h ⟨P, hP⟩)⁻¹).1.mulVec (redV P y))
     (hGo : ∀ w : SG, w.1 ≠ P → ∀ y ∈ Formalism.L2.Col.stdAt E n w.1,
       redV w.1 ((1 : Sp E n ≃ₗ[E] Sp E n) y) = ((h w)⁻¹).1.mulVec (redV w.1 y))
     (hQ : ∀ hP : P ∈ Q, g' = ((c ⟨P, hP⟩)⁻¹).1)
     (hQo : ∀ P'' : Q, P''.1 ≠ P → (1 : Sp E n ≃ₗ[E] Sp E n) = ((c P'')⁻¹).1) :
-    IsPtOf hc (g0 * (kk⁻¹ * x * kk)) (((1, h, c) : UF E n × GLG E n SG × GLQ E n Q) • p) := by
+    IsPtOf hc (g0 * (kk⁻¹ * x * kk)) (((1, h, c) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p) := by
   set m := kk⁻¹ * x * kk with hm
   have hmU : m ∈ Formalism.L2.Herm.UstdAf hc n := mul_mem (mul_mem (inv_mem hk) hx) hk
   have hmoff : ∀ v', v' ≠ v → bc (prV (E := E) v') m = 1 := fun v' hv' => by
@@ -185,7 +185,7 @@ theorem pt_of_lift : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC
       exact hK.1
     exact Subtype.ext ((toGLm B.fields.E (B.R.N i)).injective h1)
   have hq : ((I.stp u a i).act c.1 κ' ((I.stp u a i).rep c)).1.1 =
-      ((1, fun w => (κ'.2.1.1 w), κ'.2.2.1) : UF B.fields.E (B.R.N i) × GLG B.fields.E (B.R.N i) (B.primes X).vGs × GLQ B.fields.E (B.R.N i) (I.Q a)) • ((I.stp u a i).rep c).1.1 := by
+      ((1, fun w => (κ'.2.1.1 w), κ'.2.2.1) : UF B.fields.E (B.R.N i) × GLG (E := B.fields.E) (n := B.R.N i) (SG := (B.primes X).vGs) × GLQ B.fields.E (B.R.N i) (I.Q a)) • ((I.stp u a i).rep c).1.1 := by
     show FrmG.incl _ _ κ' • _ = _
     rw [← hγ]
     rfl

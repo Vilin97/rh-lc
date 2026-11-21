@@ -107,7 +107,7 @@ theorem exists_ka_tw (u : B.Word) (a : I.ι) {Ch : Type} {chOf : (I.stp u a B.R.
     exact h
   have hact : ((I.stp u a B.R.m).act (I.perIn u a).b0 κ0 ((I.stp u a B.R.m).rep ((I.perIn u a).tilC c))).1.1 =
       (((m.1 : UF B.fields.E (B.R.N B.R.m))⁻¹, 1, 1) :
-        UF B.fields.E (B.R.N B.R.m) × GLG B.fields.E (B.R.N B.R.m) (B.primes X).vGs × GLQ B.fields.E (B.R.N B.R.m) (I.Q a)) •
+        UF B.fields.E (B.R.N B.R.m) × GLG (E := B.fields.E) (n := B.R.N B.R.m) (SG := (B.primes X).vGs) × GLQ B.fields.E (B.R.N B.R.m) (I.Q a)) •
         (tilF (Pr := B.primes X) (R := B.R) I.sel (I.tup a) u ((I.stX a).rep c).1.1) := by
     have e1 : FrmG.incl _ _ m • ((I.stp u a B.R.m).rep ((I.perIn u a).tilC c)).1.1 =
         tilF (Pr := B.primes X) (R := B.R) I.sel (I.tup a) u ((I.stX a).rep c).1.1 :=
@@ -117,7 +117,7 @@ theorem exists_ka_tw (u : B.Word) (a : I.ι) {Ch : Type} {chOf : (I.stp u a B.R.
     have e2 : FrmG.incl (levGAt I.sel (I.tup a) (I.idx a) (I.Tp a) B.R.m (I.perIn u a).b0)
         (levQAt I.sel (I.tup a) (I.idx a) (I.Tp a) B.R.m (I.perIn u a).b0) κ0 =
         (((m.1 : UF B.fields.E (B.R.N B.R.m))⁻¹, 1, 1) :
-        UF B.fields.E (B.R.N B.R.m) × GLG B.fields.E (B.R.N B.R.m) (B.primes X).vGs × GLQ B.fields.E (B.R.N B.R.m) (I.Q a)) *
+        UF B.fields.E (B.R.N B.R.m) × GLG (E := B.fields.E) (n := B.R.N B.R.m) (SG := (B.primes X).vGs) × GLQ B.fields.E (B.R.N B.R.m) (I.Q a)) *
         FrmG.incl _ _ m := by
       refine Prod.ext ?_ (Prod.ext ?_ ?_)
       · exact (inv_mul_cancel _).symm

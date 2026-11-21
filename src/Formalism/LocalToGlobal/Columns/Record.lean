@@ -337,7 +337,7 @@ def frSub (σ₀ : X.K →+* ℂ) (γ : GL (Fin n) X.E) : (FrS X σ₀ n → ℂ
 variable {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
 
 def roundEv (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, σ₀ (star x) = starRingEnd ℂ (σ₀ x))
-    (lam : X.Tau → DomWeight n) (L : DecoSet X.E n ST SG → Submodule (𝓞 X.E) (Sp X.E n)) (Λ : LevFam X.E X.K n SG) :
+    (lam : X.Tau → DomWeight n) (L : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → Submodule (𝓞 X.E) (Sp X.E n)) (Λ : LevFam X.E X.K n SG) :
     (formGSD (roundPk X lam L) Λ).Ev σ₀ where
   Y := FrS X σ₀ n
   ev := evV X.emb 1 lam σ₀
@@ -439,14 +439,14 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Fi
 
 namespace DecoSet
 
-abbrev lv (d : DecoSet E n ST SG) (P : ST) : Type := modP P.1 d.1.N
+abbrev lv (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Type := modP P.1 d.1.N
 
-def fv (d : DecoSet E n ST SG) (P : ST) : Module.Dual (𝓞 E ⧸ P.1.asIdeal) (d.lv P) :=
+def fv (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Module.Dual (𝓞 E ⧸ P.1.asIdeal) (d.lv P) :=
   modP.lift P.1 d.1.N (d.2.fLin P d.1.N (le_locP _ _))
 
-theorem fv_mk (d : DecoSet E n ST SG) (P : ST) (x : ↥d.1.N) : d.fv P (modP.mk P.1 d.1.N x) = d.1.f P x.1 := rfl
+theorem fv_mk (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (x : ↥d.1.N) : d.fv P (modP.mk P.1 d.1.N x) = d.1.f P x.1 := rfl
 
-theorem fv_ne (d : DecoSet E n ST SG) (P : ST) : d.fv P ≠ 0 := by
+theorem fv_ne (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : d.fv P ≠ 0 := by
   intro h
   obtain ⟨e, he, hf1, -⟩ := d.2.exists_dualBasis
   have h1 : d.fv P (modP.mk P.1 d.1.N ⟨e P, he P⟩) = 1 := (d.fv_mk P _).trans (hf1 P)
@@ -454,11 +454,11 @@ theorem fv_ne (d : DecoSet E n ST SG) (P : ST) : d.fv P ≠ 0 := by
   haveI := P.1.isPrime
   exact zero_ne_one h1
 
-def upL (d : DecoSet E n ST SG) (P : ST) (q : 𝓞 E) (x : d.lv P) : DecoSet E n ST SG := d.up P q (modP.rep x)
+def upL (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (q : 𝓞 E) (x : d.lv P) : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) := d.up P q (modP.rep x)
 
-abbrev lk (d : DecoSet E n ST SG) (P : ST) : Type := modP P.1 (d.1.kerAt P)
+abbrev lk (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Type := modP P.1 (d.1.kerAt P)
 
-theorem kerAt_lattice (d : DecoSet E n ST SG) (P : ST) : Submodule.IsLattice E (d.1.kerAt P) := by
+theorem kerAt_lattice (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Submodule.IsLattice E (d.1.kerAt P) := by
   obtain ⟨p, hp, hp0⟩ : ∃ p ∈ P.1.asIdeal, p ≠ 0 := by
     by_contra H
     push Not at H
@@ -466,18 +466,18 @@ theorem kerAt_lattice (d : DecoSet E n ST SG) (P : ST) : Submodule.IsLattice E (
   exact lattice_of_smul d.2.lat d.2.lat (fun x hx => ((d.2.mem_kerAt P x).1 hx).1) hp0
     fun x hx => d.2.smul_mem_kerAt P hp hx
 
-def e1 (d : DecoSet E n ST SG) (P : ST) : Sp E n := d.2.exists_dualBasis.choose P
+def e1 (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : Sp E n := d.2.exists_dualBasis.choose P
 
-theorem first_raising_mem_equivariant (d : DecoSet E n ST SG) (P : ST) : d.e1 P ∈ d.1.N := d.2.exists_dualBasis.choose_spec.1 P
+theorem first_raising_mem_equivariant (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : d.e1 P ∈ d.1.N := d.2.exists_dualBasis.choose_spec.1 P
 
-theorem functional_firstBasis_eq_one (d : DecoSet E n ST SG) (P : ST) : d.1.f P (d.e1 P) = 1 := d.2.exists_dualBasis.choose_spec.2.1 P
+theorem functional_firstBasis_eq_one (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) : d.1.f P (d.e1 P) = 1 := d.2.exists_dualBasis.choose_spec.2.1 P
 
 
 open Classical in
-def te (d : DecoSet E n ST SG) (P : ST) (q : 𝓞 E) : d.lk P :=
+def te (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (q : 𝓞 E) : d.lk P :=
   if h : q • d.e1 P ∈ d.1.kerAt P then modP.mk P.1 (d.1.kerAt P) ⟨_, h⟩ else 0
 
-theorem te_ne (d : DecoSet E n ST SG) (P : ST) {q : 𝓞 E} (hq : q ∈ P.1.asIdeal) (hq2 : q ∉ P.1.asIdeal ^ 2) :
+theorem te_ne (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) {q : 𝓞 E} (hq : q ∈ P.1.asIdeal) (hq2 : q ∉ P.1.asIdeal ^ 2) :
     d.te P q ≠ 0 := by
   have hm : q • d.e1 P ∈ d.1.kerAt P := d.2.smul_mem_kerAt P hq (d.first_raising_mem_equivariant P)
   unfold te
@@ -493,7 +493,7 @@ theorem te_ne (d : DecoSet E n ST SG) (P : ST) {q : 𝓞 E} (hq : q ∈ P.1.asId
   rw [h3, d.2.mem_kerAt, d.2.f_smul P r _ (le_locP _ _ (d.first_raising_mem_equivariant P)), d.functional_firstBasis_eq_one, mul_one] at h2
   exact hr (Ideal.Quotient.eq_zero_iff_mem.1 h2.2)
 
-def dnL (d : DecoSet E n ST SG) (P : ST) (g : Module.Dual (𝓞 E ⧸ P.1.asIdeal) (d.lk P)) : DecoSet E n ST SG :=
+def dnL (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (g : Module.Dual (𝓞 E ⧸ P.1.asIdeal) (d.lk P)) : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) :=
   d.dn P (modP.ext P.1 (d.1.kerAt P) g)
 
 end DecoSet
@@ -581,12 +581,12 @@ section FormT
 
 variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
 
-theorem diagonalTwist_one (P : ST) (d : DecoSet X.E n ST SG) : d.dia1 P 1 = d := by
+theorem diagonalTwist_one (P : ST) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) : d.dia1 P 1 = d := by
   classical
   unfold DecoSet.dia1
   rw [← DecoSet.dia_smul_def, Pi.mulSingle_one, one_smul]
 
-theorem diagonalTwist_mul (P : ST) (a b : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) (d : DecoSet X.E n ST SG) :
+theorem diagonalTwist_mul (P : ST) (a b : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) :
     d.dia1 P (a * b) = (d.dia1 P b).dia1 P a := by
   classical
   unfold DecoSet.dia1
@@ -594,22 +594,22 @@ theorem diagonalTwist_mul (P : ST) (a b : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) (d : Dec
   | rw [← DecoSet.dia_smul_def, ← DecoSet.dia_smul_def, ← DecoSet.dia_smul_def, Pi.mulSingle_mul, mul_smul]
   | simp only [← DecoSet.dia_smul_def, Pi.mulSingle_mul, mul_smul]
 
-theorem diagonalTwist_injective (P : ST) (a : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) {d d' : DecoSet X.E n ST SG} (h : d.dia1 P a = d'.dia1 P a) :
+theorem diagonalTwist_injective (P : ST) (a : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) {d d' : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)} (h : d.dia1 P a = d'.dia1 P a) :
     d = d' := by
   unfold DecoSet.dia1 at h
   rw [← DecoSet.dia_smul_def, ← DecoSet.dia_smul_def] at h
   exact MulAction.injective _ h
 
-theorem functional_diagonalTwist (P : ST) (a : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) (d : DecoSet X.E n ST SG) :
+theorem functional_diagonalTwist (P : ST) (a : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) :
     (d.dia1 P a).fv P = (a : 𝓞 X.E ⧸ P.1.asIdeal) • d.fv P := by
   classical
   apply LinearMap.ext
   intro z
   obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ z
-  show ((Pi.mulSingle P a : DiaG X.E ST) P).1 * d.1.f P x.1 = (a : 𝓞 X.E ⧸ P.1.asIdeal) * d.1.f P x.1
+  show ((Pi.mulSingle P a : DiaG (E := X.E) (ST := ST)) P).1 * d.1.f P x.1 = (a : 𝓞 X.E ⧸ P.1.asIdeal) * d.1.f P x.1
   rw [Pi.mulSingle_eq_same]
 
-theorem rec_lv_smul (g : UF X.E n × GLG X.E n SG) (d : DecoSet X.E n ST SG) (P : ST) :
+theorem rec_lv_smul (g : UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) (P : ST) :
     ∃ e : d.lv P ≃ₗ[𝓞 X.E ⧸ P.1.asIdeal] (g • d).lv P, d.fv P = ((g • d).fv P).comp e.toLinearMap := by
   refine ⟨modP.map P.1 d.1.N g.1.1, ?_⟩
   apply LinearMap.ext
@@ -618,20 +618,20 @@ theorem rec_lv_smul (g : UF X.E n × GLG X.E n SG) (d : DecoSet X.E n ST SG) (P 
   show d.1.f P x.1 = d.1.f P (g.1.1.symm (g.1.1 x.1))
   rw [LinearEquiv.symm_apply_apply]
 
-theorem rec_lv_of_eq {d₁ d₂ : DecoSet X.E n ST SG} (g : UF X.E n × GLG X.E n SG) (h : g • d₂ = d₁) (P : ST) :
+theorem rec_lv_of_eq {d₁ d₂ : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)} (g : UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) (h : g • d₂ = d₁) (P : ST) :
     ∃ e : d₂.lv P ≃ₗ[𝓞 X.E ⧸ P.1.asIdeal] d₁.lv P, d₂.fv P = (d₁.fv P).comp e.toLinearMap := by
   subst h
   exact rec_lv_smul g d₂ P
 
-variable (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG)
+variable (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG)
 
-def repD (c : (formGSD C Λ).Cl) : DecoSet X.E n ST SG := (formGSD C Λ).outSec.rep c
+def repD (c : (formGSD C Λ).Cl) : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) := (formGSD C Λ).outSec.rep c
 
-def clsD (d : DecoSet X.E n ST SG) : (formGSD C Λ).Cl := (formGSD C Λ).cls d
+def clsD (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) : (formGSD C Λ).Cl := (formGSD C Λ).cls d
 
 theorem clsD_repD (c : (formGSD C Λ).Cl) : clsD C Λ (repD C Λ c) = c := (formGSD C Λ).outSec.spec c
 
-theorem class_diagonalTwist_congr (P : ST) (a : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) {d d' : DecoSet X.E n ST SG} (h : clsD C Λ d = clsD C Λ d') :
+theorem class_diagonalTwist_congr (P : ST) (a : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) {d d' : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)} (h : clsD C Λ d = clsD C Λ d') :
     clsD C Λ (d.dia1 P a) = clsD C Λ (d'.dia1 P a) := by
   obtain ⟨g, hg⟩ := ((formGSD C Λ).cls_eq_iff _ _).mp h
   refine ((formGSD C Λ).cls_eq_iff _ _).mpr ⟨g, ?_⟩
@@ -666,7 +666,7 @@ theorem dilD_fv (P : ST) (a : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) (c : (formGSD C Λ).
   | rfl
   | (ext x; rfl)
 
-theorem stabilizer_diagonalTwist (P : ST) (a : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) (d : DecoSet X.E n ST SG) :
+theorem stabilizer_diagonalTwist (P : ST) (a : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) :
     MulAction.stabilizer (formGSD C Λ).G (d.dia1 P a) = MulAction.stabilizer (formGSD C Λ).G d := by
   ext g
   have hc : g • d.dia1 P a = (g • d).dia1 P a := (DecoSet.dia_smul _ (FormG.incl Λ g) d).symm
@@ -681,12 +681,12 @@ theorem dilD_stab (P : ST) (a : (𝓞 X.E ⧸ P.1.asIdeal)ˣ) (c : (formGSD C Λ
   rw [← hg, MulAction.stabilizer_smul_eq_stabilizer_map_conj, stabilizer_diagonalTwist,
     Subgroup.card_map_of_injective (MulAut.conj g).injective]
 
-theorem formGSD_intOf_span (hX : X.Ok) (hC : C.Eqv) (N : DecoSet X.E n ST SG → Submodule (𝓞 X.K) C.V)
-    (hs : ∀ (a : UF X.E n × GLG X.E n SG) (d : DecoSet X.E n ST SG),
+theorem formGSD_intOf_span (hX : X.Ok) (hC : C.Eqv) (N : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → Submodule (𝓞 X.K) C.V)
+    (hs : ∀ (a : UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)),
       N (a • d) = (N d).map ((C.rho a.1).restrictScalars (𝓞 X.K)))
     (hN : ∀ d, Submodule.IsLattice X.K (N d)) :
     Submodule.span X.K ((formGSD C Λ).intOf N : Set (formGSD C Λ).EqFun) = ⊤ := by
-  let C' : CoefPk X n (DecoSet X.E n ST SG) := { C with Del := N }
+  let C' : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) := { C with Del := N }
   have h := (formGSD C' Λ).intDel_isLattice (formGSD_ok C' Λ hX ⟨hC.nab_smul, hs, hC.inv⟩) hN
   exact h.span_eq_top
 
@@ -997,12 +997,12 @@ def rhoTC (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, σ₀ (star x) = starRingE
     (𝓞 X.E ⧸ P.1.asIdeal)ˣ →* ((StCl W Λ u 0 → FrS X σ₀ (R.N 0) → ℂ) →ₗ[ℂ] (StCl W Λ u 0 → FrS X σ₀ (R.N 0) → ℂ)) where
   toFun a := (stepEv W Λ σ₀ hσ u 0).opOn (DecoSet.dia1 P a)
   map_one' := by
-    have : (DecoSet.dia1 P 1 : DecoSet X.E (R.N 0) (Pr.vT u) Pr.vGs → _) = fun d => d := funext fun d => diagonalTwist_one P d
+    have : (DecoSet.dia1 P 1 : DecoSet (E := X.E) (n := R.N 0) (ST := Pr.vT u) (SG := Pr.vGs) → _) = fun d => d := funext fun d => diagonalTwist_one P d
     rw [this]
     exact (stepEv W Λ σ₀ hσ u 0).opOn_id hfree
   map_mul' a b := by
     have h := (stepEv W Λ σ₀ hσ u 0).opOn_comp hfree (DecoSet.dia1 P a) (DecoSet.dia1 P b) (fun _ _ => rfl)
-    have e : (fun d : DecoSet X.E (R.N 0) (Pr.vT u) Pr.vGs => (d.dia1 P a).dia1 P b) = DecoSet.dia1 P (a * b) :=
+    have e : (fun d : DecoSet (E := X.E) (n := R.N 0) (ST := Pr.vT u) (SG := Pr.vGs) => (d.dia1 P a).dia1 P b) = DecoSet.dia1 P (a * b) :=
       funext fun d => by rw [mul_comm, diagonalTwist_mul]
     rw [← e]
     exact h.symm
@@ -1058,9 +1058,9 @@ theorem rec_delAtr_lattice {n : ℕ} (lam : X.Tau → DomWeight n) {M : Submodul
 theorem stepH_good (hX : X.Ok) (u : Pr.Word) (j : ℕ) : (stepH (W := W) (Λ := Λ) hX u j).Good :=
   ((stepRat W Λ hX u j).posH (stepOk W Λ hX u j)).good
     ((stepGSD W Λ u j).intDel_isLattice (stepOk W Λ hX u j) fun d =>
-      rec_delAtr_lattice (W.lamTrue u j) (d : DecoSet X.E (R.N j) (Pr.vT u) Pr.vGs).2.Lsh_lattice)
+      rec_delAtr_lattice (W.lamTrue u j) (d : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := Pr.vGs)).2.Lsh_lattice)
 
-theorem rec_LshKer_lattice {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet X.E n ST SG) (P : ST) :
+theorem rec_LshKer_lattice {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) (P : ST) :
     Submodule.IsLattice X.E (d.1.LshKer P) := by
   refine lattice_between d.2.L_lattice d.2.Lsh_lattice (fun x hx => ?_) ?_
   · exact Submodule.subset_span ⟨d.2.L_le_Lsh hx, ((d.2.mem_L x).1 hx).2 P⟩
@@ -1203,7 +1203,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R)
 @[reducible] def rowGSD : GSD X.K := formGSD (rowVal W SG') ΛM
 
 @[reducible] def ptGSD : GSD X.K :=
-  formGSD (roundPk X W.sgTrue fun d : DecoSet X.E (R.N R.m - 1) ∅ SG' => d.1.N) ΛM.inv
+  formGSD (roundPk X W.sgTrue fun d : DecoSet (E := X.E) (n := R.N R.m - 1) (ST := ∅) (SG := SG') => d.1.N) ΛM.inv
 
 theorem ptOk (hX : X.Ok) : (ptGSD W ΛM).Ok :=
   formGSD_ok _ _ hX
@@ -1221,22 +1221,22 @@ def ptEv (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, σ₀ (star x) = starRingEn
 theorem ptH_good (hX : X.Ok) : (ptH W ΛM hX).Good :=
   ((ptRat W ΛM hX).posH (ptOk W ΛM hX)).good
     ((ptGSD W ΛM).intDel_isLattice (ptOk W ΛM hX) fun d =>
-      rec_delAtr_lattice W.sgTrue (d : DecoSet X.E (R.N R.m - 1) ∅ SG').2.lat)
+      rec_delAtr_lattice W.sgTrue (d : DecoSet (E := X.E) (n := R.N R.m - 1) (ST := ∅) (SG := SG')).2.lat)
 
 variable {W ΛM}
 
-def tilR (u : Pr.Word) (d : DecoSet X.E (R.N R.m - 1) ∅ SG') : DecoSet X.E (R.N R.m) (Pr.vT u) Pr.vGs :=
+def tilR (u : Pr.Word) (d : DecoSet (E := X.E) (n := R.N R.m - 1) (ST := ∅) (SG := SG')) : DecoSet (E := X.E) (n := R.N R.m) (ST := Pr.vT u) (SG := Pr.vGs) :=
   (DecoSet.tilH (ST := Pr.vT u) (N_m_succ R) (Pr.piT u) d).res hSG
 
 
 variable (R) in
-def extR : UF X.E (R.N R.m - 1) × GLG X.E (R.N R.m - 1) SG' →* UF X.E (R.N R.m) × GLG X.E (R.N R.m) Pr.vGs :=
+def extR : UF X.E (R.N R.m - 1) × GLG (E := X.E) (n := R.N R.m - 1) (SG := SG') →* UF X.E (R.N R.m) × GLG (E := X.E) (n := R.N R.m) (SG := Pr.vGs) :=
   MonoidHom.prodMap (extUH (N_m_succ R))
     ((MonoidHom.pi fun w : Pr.vGs => Pi.evalMonoidHom (fun w : SG' => GL (Fin (R.N R.m)) (𝓞 X.E ⧸ w.1.asIdeal))
       ⟨w.1, hSG w.2⟩).comp (extGH (N_m_succ R)))
 
 theorem tilR_smul (hPr : Pr.Ok) (u : Pr.Word) (hpi : ∀ w : SG', Pr.piT u ∉ w.1.asIdeal)
-    (a : UF X.E (R.N R.m - 1) × GLG X.E (R.N R.m - 1) SG') (d : DecoSet X.E (R.N R.m - 1) ∅ SG') :
+    (a : UF X.E (R.N R.m - 1) × GLG (E := X.E) (n := R.N R.m - 1) (SG := SG')) (d : DecoSet (E := X.E) (n := R.N R.m - 1) (ST := ∅) (SG := SG')) :
     tilR hSG u (a • d) = extR R hSG a • tilR hSG u d := by
   unfold tilR
   rw [DecoSet.tilH_smul (N_m_succ R) a d (fun P => conj_piT_notMem hPr u P) hpi]
@@ -1278,7 +1278,7 @@ def extF (hL : LevExt Λ hSG ΛM) (u : Pr.Word) : (ptGSD W ΛM).G →* (stepGSD 
       exact congrArg Prod.snd (map_mul (extR R hSG) (a.1, a.2.1) (b.1, b.2.1))
 
 theorem tilR_smulF (hPr : Pr.Ok) (u : Pr.Word) (hpi : ∀ w : SG', Pr.piT u ∉ w.1.asIdeal) (hL : LevExt Λ hSG ΛM)
-    (a : (ptGSD W ΛM).G) (d : DecoSet X.E (R.N R.m - 1) ∅ SG') :
+    (a : (ptGSD W ΛM).G) (d : DecoSet (E := X.E) (n := R.N R.m - 1) (ST := ∅) (SG := SG')) :
     tilR hSG u (a • d) = extF hSG hL u a • tilR hSG u d := by
   first
   | exact tilR_smul hSG hPr u hpi (a.1, a.2.1) d

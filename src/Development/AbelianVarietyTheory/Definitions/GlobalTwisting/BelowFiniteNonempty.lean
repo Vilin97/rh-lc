@@ -26,8 +26,8 @@ def ker (N : Submodule (𝓞 X.E) (Sp X.E (R.N i))) (fr : Frs X.E (R.N i) (rowSG
     VV X.K (W.lamTrue u i) →ₗ[X.K] VV X.K (W.lamTrue u j) :=
   kerOf (stepT W Ch sel mu cst A u i (W.lamTrue u j)) (Sall sel mu u) (cAof sel mu cst) (cBof sel mu cst u) N fr N' fr' Ξ
 
-def term {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet X.E (R.N i) (Pr.vT u) SG)
-    (fr : Frs X.E (R.N i) (rowSG Pr sel mu)) (d' : DecoSet X.E (R.N j) (Pr.vT u) SG') (fr' : Frs X.E (R.N j) (rowSG Pr sel mu))
+def term {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet (E := X.E) (n := R.N i) (ST := Pr.vT u) (SG := SG))
+    (fr : Frs X.E (R.N i) (rowSG Pr sel mu)) (d' : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := SG')) (fr' : Frs X.E (R.N j) (rowSG Pr sel mu))
     (Ξ₀ : HomE X.E (R.N i) (R.N j) → X.K) : VV X.K (W.lamTrue u i) →ₗ[X.K] VV X.K (W.lamTrue u j) :=
   ker W Ch sel mu cst A u i j d.1.N fr d'.1.N fr' fun x => phiT X.K d.1 d'.1 x * Ξ₀ x
 
@@ -54,46 +54,46 @@ def RatStep : Prop :=
     ((rhoVr X.emb (W.lamTrue u i)).comp (ufGL X.E (R.N i))) ((rhoVr X.emb (W.lamTrue u j)).comp (ufGL X.E (R.N j)))
 
 def RatTerm : Prop :=
-  ∀ {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet X.E (R.N i) (Pr.vT u) SG) (fr : Frs X.E (R.N i) (rowSG Pr sel mu))
-    (d' : DecoSet X.E (R.N j) (Pr.vT u) SG') (fr' : Frs X.E (R.N j) (rowSG Pr sel mu)) (Ξ₀ : HomE X.E (R.N i) (R.N j) → X.K)
+  ∀ {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet (E := X.E) (n := R.N i) (ST := Pr.vT u) (SG := SG)) (fr : Frs X.E (R.N i) (rowSG Pr sel mu))
+    (d' : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := SG')) (fr' : Frs X.E (R.N j) (rowSG Pr sel mu)) (Ξ₀ : HomE X.E (R.N i) (R.N j) → X.K)
     (γ : UF X.E (R.N i)) (γ' : UF X.E (R.N j)), InBoxOfRowSelection sel mu cst u d.1.N d'.1.N Ξ₀ →
-    term W Ch sel mu cst A u i j (((γ, 1) : UF X.E (R.N i) × GLG X.E (R.N i) SG) • d) (fun P => γ.1 * fr P)
-        (((γ', 1) : UF X.E (R.N j) × GLG X.E (R.N j) SG') • d') (fun P => γ'.1 * fr' P)
+    term W Ch sel mu cst A u i j (((γ, 1) : UF X.E (R.N i) × GLG (E := X.E) (n := R.N i) (SG := SG)) • d) (fun P => γ.1 * fr P)
+        (((γ', 1) : UF X.E (R.N j) × GLG (E := X.E) (n := R.N j) (SG := SG')) • d') (fun P => γ'.1 * fr' P)
         (fun x => Ξ₀ (γ'.1.symm.toLinearMap ∘ₗ x ∘ₗ γ.1.toLinearMap)) =
       (rhoVr X.emb (W.lamTrue u j) (ufGL X.E (R.N j) γ')) ∘ₗ term W Ch sel mu cst A u i j d fr d' fr' Ξ₀ ∘ₗ
         (rhoVr X.emb (W.lamTrue u i) (ufGL X.E (R.N i) γ⁻¹))
 
 def UKTerm : Prop :=
-  ∀ {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet X.E (R.N i) (Pr.vT u) SG) (fr : Frs X.E (R.N i) (rowSG Pr sel mu))
-    (d' : DecoSet X.E (R.N j) (Pr.vT u) SG') (fr' : Frs X.E (R.N j) (rowSG Pr sel mu)) (Ξ₀ : HomE X.E (R.N i) (R.N j) → X.K)
+  ∀ {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet (E := X.E) (n := R.N i) (ST := Pr.vT u) (SG := SG)) (fr : Frs X.E (R.N i) (rowSG Pr sel mu))
+    (d' : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := SG')) (fr' : Frs X.E (R.N j) (rowSG Pr sel mu)) (Ξ₀ : HomE X.E (R.N i) (R.N j) → X.K)
     (P : Pr.vT u) (y : VV X.K (W.lamTrue u i)), MoveHyp (Pr.vT u) SG P → MoveHyp (Pr.vT u) SG' P →
     InBoxOfRowSelection sel mu cst u d.1.N d'.1.N Ξ₀ →
-    (∑ᶠ d₁ ∈ {d₁ : DecoSet X.E (R.N j) (Pr.vT u) SG' | d'.1.IsUp P (Pr.T u : 𝓞 X.E) d₁.1},
+    (∑ᶠ d₁ ∈ {d₁ : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := SG') | d'.1.IsUp P (Pr.T u : 𝓞 X.E) d₁.1},
         term W Ch sel mu cst A u i j d fr d₁ fr' Ξ₀ y) =
       ((Pr.T u : X.K) ^ ((R.t + 1) / 2)) •
-        ∑ᶠ d₀ ∈ {d₀ : DecoSet X.E (R.N i) (Pr.vT u) SG | d₀.1.IsUp P (Pr.T u : 𝓞 X.E) d.1},
+        ∑ᶠ d₀ ∈ {d₀ : DecoSet (E := X.E) (n := R.N i) (ST := Pr.vT u) (SG := SG) | d₀.1.IsUp P (Pr.T u : 𝓞 X.E) d.1},
           term W Ch sel mu cst A u i j d₀ fr d' fr' Ξ₀ y
 
 def valAt (w : HeightOneSpectrum (𝓞 X.K)) {n : ℕ} (lam : X.Tau → DomWeight n) (L : Submodule (𝓞 X.E) (Sp X.E n)) :
     Submodule (𝓞 X.K) (VV X.K lam) := localization₂ w.asIdeal (delAtr X.emb lam L)
 
 def BarTerm (w : HeightOneSpectrum (𝓞 X.K)) : Prop :=
-  ∀ {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet X.E (R.N i) (Pr.vT u) SG) (fr : Frs X.E (R.N i) (rowSG Pr sel mu))
-    (d' : DecoSet X.E (R.N j) (Pr.vT u) SG') (fr' : Frs X.E (R.N j) (rowSG Pr sel mu)) (Ξ₀ : HomE X.E (R.N i) (R.N j) → X.K),
+  ∀ {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet (E := X.E) (n := R.N i) (ST := Pr.vT u) (SG := SG)) (fr : Frs X.E (R.N i) (rowSG Pr sel mu))
+    (d' : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := SG')) (fr' : Frs X.E (R.N j) (rowSG Pr sel mu)) (Ξ₀ : HomE X.E (R.N i) (R.N j) → X.K),
     Framed d.1.N fr → Framed d'.1.N fr' → InBoxOfRowSelection sel mu cst u d.1.N d'.1.N Ξ₀ → (∀ x, w.valuation X.K (Ξ₀ x) ≤ 1) →
     ∀ y ∈ valAt w (W.lamTrue u i) d.1.Lsh, ∃ y' ∈ valAt w (W.lamTrue u j) d'.1.Lsh,
       term W Ch sel mu cst A u i j d fr d' fr' Ξ₀ y = ((Pr.T u : X.K) ^ (X.f * ((R.t + 1) / 2))) • y'
 
 def PTerm (w : HeightOneSpectrum (𝓞 X.K)) : Prop :=
-  ∀ {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet X.E (R.N i) (Pr.vT u) SG) (fr : Frs X.E (R.N i) (rowSG Pr sel mu))
-    (d' : DecoSet X.E (R.N j) (Pr.vT u) SG') (fr' : Frs X.E (R.N j) (rowSG Pr sel mu)) (Ξ₀ : HomE X.E (R.N i) (R.N j) → X.K),
+  ∀ {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet (E := X.E) (n := R.N i) (ST := Pr.vT u) (SG := SG)) (fr : Frs X.E (R.N i) (rowSG Pr sel mu))
+    (d' : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := SG')) (fr' : Frs X.E (R.N j) (rowSG Pr sel mu)) (Ξ₀ : HomE X.E (R.N i) (R.N j) → X.K),
     Framed d.1.N fr → Framed d'.1.N fr' → InBoxOfRowSelection sel mu cst u d.1.N d'.1.N Ξ₀ → (∀ x, w.valuation X.K (Ξ₀ x) ≤ 1) →
     ∀ y ∈ valAt w (W.lamTrue u i) d.1.Lsh,
       ((Pr.T u : X.K) ^ (((X.f * R.N i : ℕ) : ℤ) - ∑ τ, (W.lamTrue u j τ).detShift)) •
         term W Ch sel mu cst A u i j d fr d' fr' Ξ₀ y ∈ valAt w (W.lamTrue u j) d'.1.L
 
-def StdOnly {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet X.E (R.N i) (Pr.vT u) SG)
-    (d' : DecoSet X.E (R.N j) (Pr.vT u) SG') : Prop :=
+def StdOnly {SG SG' : Finset (HeightOneSpectrum (𝓞 X.E))} (d : DecoSet (E := X.E) (n := R.N i) (ST := Pr.vT u) (SG := SG))
+    (d' : DecoSet (E := X.E) (n := R.N j) (ST := Pr.vT u) (SG := SG')) : Prop :=
   GlobalTheory.IndefiniteRowSideFullHecke.JetSumTable.StdAtT d.1 ∧ GlobalTheory.IndefiniteRowSideFullHecke.JetSumTable.StdAtT d'.1
 
 def AlcoveAt : Prop :=
@@ -128,20 +128,20 @@ theorem moveHyp_of_notMem (hPr : Pr.Ok) (h : ∀ w ∈ SG, (Pr.T u : 𝓞 X.E) �
     exact T_mem hPr u P
 
 theorem above_finite_nonempty (hX : X.Ok) (hPr : Pr.Ok) {P : Pr.vT u} (hP : MoveHyp (Pr.vT u) SG P)
-    (d' : DecoSet X.E n (Pr.vT u) SG) :
-    {d₁ : DecoSet X.E n (Pr.vT u) SG | d'.1.IsUp P (Pr.T u : 𝓞 X.E) d₁.1}.Finite ∧
-      {d₁ : DecoSet X.E n (Pr.vT u) SG | d'.1.IsUp P (Pr.T u : 𝓞 X.E) d₁.1}.Nonempty :=
+    (d' : DecoSet (E := X.E) (n := n) (ST := Pr.vT u) (SG := SG)) :
+    {d₁ : DecoSet (E := X.E) (n := n) (ST := Pr.vT u) (SG := SG) | d'.1.IsUp P (Pr.T u : 𝓞 X.E) d₁.1}.Finite ∧
+      {d₁ : DecoSet (E := X.E) (n := n) (ST := Pr.vT u) (SG := SG) | d'.1.IsUp P (Pr.T u : 𝓞 X.E) d₁.1}.Nonempty :=
   ⟨d'.upSet_finite P _, d'.upSet_nonempty P hP (T_unif hX hPr u P).1 (T_unif hX hPr u P).2⟩
 
 theorem below_eq_dnSet (hX : X.Ok) (hPr : Pr.Ok) {P : Pr.vT u} (hP : MoveHyp (Pr.vT u) SG P)
-    (d : DecoSet X.E n (Pr.vT u) SG) :
-    {d₀ : DecoSet X.E n (Pr.vT u) SG | d₀.1.IsUp P (Pr.T u : 𝓞 X.E) d.1} = d.dnSet P (Pr.T u : 𝓞 X.E) :=
+    (d : DecoSet (E := X.E) (n := n) (ST := Pr.vT u) (SG := SG)) :
+    {d₀ : DecoSet (E := X.E) (n := n) (ST := Pr.vT u) (SG := SG) | d₀.1.IsUp P (Pr.T u : 𝓞 X.E) d.1} = d.dnSet P (Pr.T u : 𝓞 X.E) :=
   Set.ext fun d₀ => DecoSet.mem_upSet_iff_mem_dnSet hP (T_unif hX hPr u P).1 (T_unif hX hPr u P).2 d₀ d
 
 theorem below_finite_nonempty (hX : X.Ok) (hPr : Pr.Ok) {P : Pr.vT u} (hP : MoveHyp (Pr.vT u) SG P)
-    (d : DecoSet X.E n (Pr.vT u) SG) :
-    {d₀ : DecoSet X.E n (Pr.vT u) SG | d₀.1.IsUp P (Pr.T u : 𝓞 X.E) d.1}.Finite ∧
-      {d₀ : DecoSet X.E n (Pr.vT u) SG | d₀.1.IsUp P (Pr.T u : 𝓞 X.E) d.1}.Nonempty := by
+    (d : DecoSet (E := X.E) (n := n) (ST := Pr.vT u) (SG := SG)) :
+    {d₀ : DecoSet (E := X.E) (n := n) (ST := Pr.vT u) (SG := SG) | d₀.1.IsUp P (Pr.T u : 𝓞 X.E) d.1}.Finite ∧
+      {d₀ : DecoSet (E := X.E) (n := n) (ST := Pr.vT u) (SG := SG) | d₀.1.IsUp P (Pr.T u : 𝓞 X.E) d.1}.Nonempty := by
   rw [below_eq_dnSet hX hPr hP]
   exact ⟨d.dnSet_finite P hP.ne _, d.dnSet_nonempty P hP (T_unif hX hPr u P).1 (T_unif hX hPr u P).2⟩
 

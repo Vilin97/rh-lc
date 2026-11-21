@@ -91,19 +91,19 @@ section Vals
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R)
 
 def colVal (u : Pr.Word) (j : ℕ) (ST SG : Finset (HeightOneSpectrum (𝓞 X.E))) :
-    CoefPk X (R.N j) (DecoSet X.E (R.N j) ST SG) :=
+    CoefPk X (R.N j) (DecoSet (E := X.E) (n := R.N j) (ST := ST) (SG := SG)) :=
   roundPk X (W.lamTrue u j) fun d => d.1.Lsh
 
 def rowVal (SG : Finset (HeightOneSpectrum (𝓞 X.E))) :
-    CoefPk X (R.N R.m - 1) (DecoSet X.E (R.N R.m - 1) ∅ SG) :=
+    CoefPk X (R.N R.m - 1) (DecoSet (E := X.E) (n := R.N R.m - 1) (ST := ∅) (SG := SG)) :=
   squarePk X W.sgTrue fun d => d.1.N
 
 def mtVal (j : ℕ) (SG : Finset (HeightOneSpectrum (𝓞 X.E))) :
-    CoefPk X R.nV (DecoSet X.E R.nV ∅ SG) :=
+    CoefPk X R.nV (DecoSet (E := X.E) (n := R.nV) (ST := ∅) (SG := SG)) :=
   roundPk X (W.lamV j) fun d => d.1.N
 
 def BvLat (u : Pr.Word) (j : ℕ) {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-    (P : ST) (d : DecoSet X.E (R.N j) ST SG) : Submodule (𝓞 X.K) (VV X.K (W.lamTrue u j)) :=
+    (P : ST) (d : DecoSet (E := X.E) (n := R.N j) (ST := ST) (SG := SG)) : Submodule (𝓞 X.K) (VV X.K (W.lamTrue u j)) :=
   delAtr X.emb (W.lamTrue u j) (d.1.LshKer P)
 
 end Vals

@@ -24,7 +24,7 @@ def Deco.IsDnA (P : ST) (q : 𝓞 E) (a : 𝓞 E ⧸ P.1.asIdeal) (d d' : Deco E
   d' = d.dn P (d'.f P) ∧ ∀ e ∈ d.N, d.f P e = 1 → d'.f P (q • e) = a
 
 theorem Deco.IsDnA.act {P : ST} {q : 𝓞 E} {a : 𝓞 E ⧸ P.1.asIdeal} {d d' : Deco E n ST SG}
-    (hdd : Deco.IsDnA P q a d d') {g : Sp E n ≃ₗ[E] Sp E n} (hg : g ∈ UF E n) (h : GLG E n SG) :
+    (hdd : Deco.IsDnA P q a d d') {g : Sp E n ≃ₗ[E] Sp E n} (hg : g ∈ UF E n) (h : GLG (E := E) (n := n) (SG := SG)) :
     Deco.IsDnA P q a (d.act g h) (d'.act g h) := by
   obtain ⟨h1, h2⟩ := hdd
   refine ⟨?_, ?_⟩
@@ -35,12 +35,12 @@ theorem Deco.IsDnA.act {P : ST} {q : 𝓞 E} {a : 𝓞 E ⧸ P.1.asIdeal} {d d' 
     rw [equiv_osmul]
     exact h2 _ ((mem_gmap _ _ _).1 he) hfe
 
-def DecoSet.dnSetA (P : ST) (q : 𝓞 E) (a : 𝓞 E ⧸ P.1.asIdeal) (d : DecoSet E n ST SG) :
-    Set (DecoSet E n ST SG) :=
+def DecoSet.dnSetA (P : ST) (q : 𝓞 E) (a : 𝓞 E ⧸ P.1.asIdeal) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
+    Set (DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :=
   {d' | Deco.IsDnA P q a d.1 d'.1}
 
-theorem DecoSet.smul_mem_dnSetA (x : UF E n × GLG E n SG) (P : ST) (q : 𝓞 E) (a : 𝓞 E ⧸ P.1.asIdeal)
-    (d d' : DecoSet E n ST SG) : x • d' ∈ (x • d).dnSetA P q a ↔ d' ∈ d.dnSetA P q a := by
+theorem DecoSet.smul_mem_dnSetA (x : UF E n × GLG (E := E) (n := n) (SG := SG)) (P : ST) (q : 𝓞 E) (a : 𝓞 E ⧸ P.1.asIdeal)
+    (d d' : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : x • d' ∈ (x • d).dnSetA P q a ↔ d' ∈ d.dnSetA P q a := by
   constructor
   · intro h
     have := Deco.IsDnA.act h (x⁻¹).1.2 (x⁻¹).2
@@ -51,7 +51,7 @@ theorem DecoSet.smul_mem_dnSetA (x : UF E n × GLG E n SG) (P : ST) (q : 𝓞 E)
   · intro h
     exact Deco.IsDnA.act h x.1.2 x.2
 
-theorem DecoSet.dnSetA_finite (d : DecoSet E n ST SG) (P : ST) (q : 𝓞 E) (a : 𝓞 E ⧸ P.1.asIdeal) :
+theorem DecoSet.dnSetA_finite (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : ST) (q : 𝓞 E) (a : 𝓞 E ⧸ P.1.asIdeal) :
     (d.dnSetA P q a).Finite := by
   by_cases h : (d.1.dnN P).FG
   · refine (DecoSet.finite_fibre (ST := ST) (SG := SG) (d.1.dnN P) h).subset ?_
@@ -74,9 +74,9 @@ end MovesA
 section Ops
 
 variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-  (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG)
+  (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG)
 
-def diaG (c : DiaG X.E ST) : Module.End X.K (formGSD C Λ).EqFun :=
+def diaG (c : DiaG (E := X.E) (ST := ST)) : Module.End X.K (formGSD C Λ).EqFun :=
   (LocOp.ofMap (S := formGSD C Λ) (S' := formGSD C Λ) (MonoidHom.id _) (fun d => DecoSet.dia c d) LinearMap.id
     (fun g d => DecoSet.dia_smul c (FormG.incl Λ g) d) (fun _ _ => rfl)).op
 

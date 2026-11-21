@@ -446,7 +446,7 @@ theorem decoPt_mk (x : UAd hc n) :
   rw [hk, Subgroup.coe_mul]
   exact decoration_mul_principal hc n ST SG _ (Subgroup.mem_subgroupOf.1 k.2)
 
-variable (H : Subgroup (GLG E n SG))
+variable (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 theorem rawSm_val (γ : URat hc n) (k : J0 hc n ST) (x : UAd hc n) :
     ((rawSm hc n ST γ k x : UAd hc n) : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) =
@@ -600,12 +600,12 @@ theorem red_row_eq (y : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) {P : Pl E}
   simp only [hc] at h1
   simpa [Pi.single_apply] using h1
 
-theorem Deco.act_one_N (d : Deco E n ST SG) (g : GLG E n SG) : (d.act 1 g).N = d.N := by
+theorem Deco.act_one_N (d : Deco E n ST SG) (g : GLG (E := E) (n := n) (SG := SG)) : (d.act 1 g).N = d.N := by
   ext x
   simp [Deco.act, Formalism.HermitianLatticesTheory.gmap]
 
 theorem mem_congruence_of_action {x y : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)} (hx : x ∈ UAd hc n) (hy : y ∈ UAd hc n)
-    (g : GLG E n SG) (h : decoRaw ST SG x = (decoRaw ST SG y).act 1 g) :
+    (g : GLG (E := E) (n := n) (SG := SG)) (h : decoRaw ST SG x = (decoRaw ST SG y).act 1 g) :
     ∃ hJ : x⁻¹ * y ∈ J0 hc n ST, redG hc n ST SG ⟨_, hJ⟩ = g := by
   classical
   have hN : Formalism.UG.CS.globLat x (stdLat E n) = Formalism.UG.CS.globLat y (stdLat E n) :=
@@ -710,7 +710,7 @@ theorem decoPt_injective (hOk : DecoOfOk hc n ST SG) : Function.Injective (decoP
   rw [Subgroup.mem_subgroupOf, Subgroup.coe_mul, Subgroup.coe_inv]
   exact mem_principal_of_same_decoration hc n ST SG x.2 y.2 hr
 
-variable (H : Subgroup (GLG E n SG))
+variable (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 theorem redHSurj_of (hOk : DecoOfOk hc n ST SG) (hS : Function.Surjective (decoPt hc n ST SG)) :
     RedHSurj hc n ST SG H := by
@@ -722,11 +722,11 @@ theorem redHSurj_of (hOk : DecoOfOk hc n ST SG) (hS : Function.Surjective (decoP
   unfold decoOf at hq
   rw [dif_pos hy] at hq
   have h1 : decoRaw ST SG (y : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) =
-      (decoRaw ST SG (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))).act 1 (h : GLG E n SG) := by
+      (decoRaw ST SG (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))).act 1 (h : GLG (E := E) (n := n) (SG := SG)) := by
     have h2 := congrArg Subtype.val hq
     rw [decoRaw_one]
     exact h2
-  obtain ⟨hJ, hred⟩ := mem_congruence_of_action hc ST SG y.2 (one_mem _) (h : GLG E n SG) h1
+  obtain ⟨hJ, hred⟩ := mem_congruence_of_action hc ST SG y.2 (one_mem _) (h : GLG (E := E) (n := n) (SG := SG)) h1
   refine ⟨⟨⟨_, hJ⟩, ?_⟩, ?_⟩
   · show redG hc n ST SG ⟨_, hJ⟩ ∈ H
     rw [hred]
@@ -1075,7 +1075,7 @@ theorem decorated_lattice_exists : DecoOfOk hc n ST SG := by
 theorem decoPt_injective' : Function.Injective (decoPt hc n ST SG) := by
   exact decoPt_injective hc n ST SG (decorated_lattice_exists hc n ST SG)
 
-theorem decorated_point_equivariant (H : Subgroup (GLG E n SG)) : DecoPtEqv hc n ST SG H := by
+theorem decorated_point_equivariant (H : Subgroup (GLG (E := E) (n := n) (SG := SG))) : DecoPtEqv hc n ST SG H := by
   exact decoPtEqv_of hc n ST SG H (decorated_lattice_exists hc n ST SG)
 
 end Final
@@ -1083,7 +1083,7 @@ end Final
 section Inst
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
-variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG E n SG))
+variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 end Inst
 

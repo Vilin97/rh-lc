@@ -31,7 +31,7 @@ theorem PtY.mv_dn_facts {X : Fields} {n : ℕ} {ST SG Q : Finset (HeightOneSpect
         rw [Function.update_of_ne hQP]
     · exact ⟨fun _ _ => rfl, fun _ _ => rfl, fun _ _ => rfl⟩
 
-  suffices H : ∀ d : DecoSet X.E n ST SG, Deco.SameOff ST SG v p.1.1.deco.1 d.1 →
+  suffices H : ∀ d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG), Deco.SameOff ST SG v p.1.1.deco.1 d.1 →
       (p.mv d).1.2 = p.1.2 ∧ (p.mv d).1.1.fr = p.1.1.fr ∧
         Deco.SameOff ST SG v p.1.1.deco.1 (p.mv d).1.1.deco.1 from H _ key
   intro d hd

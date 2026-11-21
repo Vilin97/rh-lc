@@ -28,7 +28,7 @@ theorem exists_ptOf_mul_K1 : ∀ {B : Base} (n : ℕ) [NeZero n] (ST SG : Finset
   have hz : t ∈ J0 B.sp.cm n ∅ := K1_le_J0_empty n ST SG ht
   have h2 := (isPtOf_mul_J0 B.host.F B.host.E B.sp.cm n ∅ ∅ ∅ k t p p
     (redG B.sp.cm n ∅ ∅ ⟨t, hz⟩)⁻¹).2.1 rfl hp hz (by rw [inv_inv])
-  have e : (((1, (redG B.sp.cm n ∅ ∅ ⟨t, hz⟩)⁻¹, 1) : UF B.fields.E n × GLG B.fields.E n ∅ × GLQ B.fields.E n ∅) • p) = p := by
+  have e : (((1, (redG B.sp.cm n ∅ ∅ ⟨t, hz⟩)⁻¹, 1) : UF B.fields.E n × GLG (E := B.fields.E) (n := n) (SG := ∅) × GLQ B.fields.E n ∅) • p) = p := by
     have : (redG B.sp.cm n ∅ ∅ ⟨t, hz⟩)⁻¹ = 1 := Subsingleton.elim _ _
     rw [this]
     exact one_smul _ p

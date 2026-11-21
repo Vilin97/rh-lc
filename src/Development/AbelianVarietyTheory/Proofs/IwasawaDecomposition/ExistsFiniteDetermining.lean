@@ -140,7 +140,7 @@ theorem coefMap_rhoC {c : ℂ →+ X.K} (hc : ∀ k a, c (σ k * a) = k * c a) (
   rw [h]
   exact congrArg (fun z => (rhoV X.emb lam (ufGL X.E n γ) z).1) (Subtype.ext hy)
 
-variable (L : DecoSet X.E n ST SG → Submodule (𝓞 X.E) (Sp X.E n)) (Λ : LevFam X.E X.K n SG)
+variable (L : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → Submodule (𝓞 X.E) (Sp X.E n)) (Λ : LevFam X.E X.K n SG)
 
 def coordForm {c : ℂ →+ X.K} (hc : ∀ k a, c (σ k * a) = k * c a) (F : cForms ST σ lam Λ) :
     (formGSD (squarePk X lam L) Λ).EqFun :=
@@ -152,14 +152,14 @@ def coordForm {c : ℂ →+ X.K} (hc : ∀ k a, c (σ k * a) = k * c a) (F : cFo
 theorem toCForm_linearIndependent {J : Type*} {φ : J → (formGSD (squarePk X lam L) Λ).EqFun} (h : LinearIndependent X.K φ) :
     LinearIndependent ℂ fun j => toCForm σ lam L Λ (φ j) := by
   refine LinearIndependent.of_comp (cForms ST σ lam Λ).subtype ?_
-  let i : (formGSD (squarePk X lam L) Λ).EqFun →ₗ[X.K] (DecoSet X.E n ST SG → Pol X.K X.Tau n) :=
+  let i : (formGSD (squarePk X lam L) Λ).EqFun →ₗ[X.K] (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → Pol X.K X.Tau n) :=
     { toFun := fun φ d => (φ.1 d).1
       map_add' := fun _ _ => rfl
       map_smul' := fun _ _ => rfl }
   have hi : Function.Injective i := fun _ _ e => Subtype.ext (funext fun d => Subtype.ext (congrFun e d))
   exact linearIndependent_map_pi σ (h.map' i (LinearMap.ker_eq_bot.2 hi))
 
-theorem exists_finite_determining (hX : X.Ok) : ∃ s : Set (DecoSet X.E n ST SG), s.Finite ∧
+theorem exists_finite_determining (hX : X.Ok) : ∃ s : Set (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)), s.Finite ∧
     ∀ F : cForms ST σ lam Λ, (∀ d ∈ s, F.1 d = 0) → F = 0 := by
   obtain ⟨s, hs, hrep⟩ := DecoSet.finite_reps (ST := ST) (SG := SG) (n := n) (posStar_of_conj hX.conjE)
   refine ⟨s, hs, fun F hF => Subtype.ext (funext fun d => ?_)⟩

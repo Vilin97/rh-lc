@@ -93,7 +93,7 @@ def MomAt (D : Dat) {H : D7} (cc : Ideal (𝓞 H.host.K)) (A : Amb D.X) (u : D.P
     (∀ P ∈ rowSG D.Pr sel mu, Nat.Coprime (Ideal.absNorm cc) (qOf P)) →
     ∀ (i b : ℕ), i < D.R.m → b = D.R.N (i + 1) →
     ∀ (SG SG' : Finset (HeightOneSpectrum (𝓞 D.X.E)))
-      (d : DecoSet D.X.E (D.R.N i) (D.Pr.vT u) SG) (d' : DecoSet D.X.E b (D.Pr.vT u) SG'),
+      (d : DecoSet (E := D.X.E) (n := D.R.N i) (ST := D.Pr.vT u) (SG := SG)) (d' : DecoSet (E := D.X.E) (n := b) (ST := D.Pr.vT u) (SG := SG')),
       StdAtT d.1 → StdAtT d'.1 →
       ∀ Ξ₀ : HomE D.X.E (D.R.N i) b → D.X.K,
         OffDatum (cAof sel mu cst) (cBof sel mu cst u) d.1.N d'.1.N (rowSG D.Pr sel mu) w Ξ₀ →

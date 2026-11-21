@@ -17,15 +17,15 @@ open Formalism.L2.DIV (Pl kP St redAt redFn)
 section Cls
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
-variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG E n SG))
+variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 theorem rlc_decoOf_val {x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)} (hx : x ∈ UAd hc n) :
     (decoOf ST SG x).1 = decoRaw ST SG x := by
   unfold decoOf
   rw [dite_eq_left (decorated_lattice_exists hc n ST SG x hx)]
 
-theorem rlc_smul_val (a : UF E n × H) (d : DecoSet E n ST SG) :
-    (a • d).1 = d.1.act a.1.1 (a.2 : GLG E n SG) := rfl
+theorem rlc_smul_val (a : UF E n × H) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
+    (a • d).1 = d.1.act a.1.1 (a.2 : GLG (E := E) (n := n) (SG := SG)) := rfl
 
 theorem rlc_decoOf_sm (γ : URat hc n) (k : levU hc n ST SG H) (x : UAd hc n) :
     decoOf ST SG (Formalism.UG.bc (iA F E) (γ : GL (Fin n) E) * (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) *
@@ -81,11 +81,11 @@ theorem rlc_rel_of_orbit {x y : UAd hc n} (a : UF E n × H)
     congr 1
     rw [Prod.mk_mul_mk, one_mul, mul_one, hγ]
   have h3 : decoRaw ST SG (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) =
-      (decoRaw ST SG (y' : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))).act 1 (a.2 : GLG E n SG) := by
+      (decoRaw ST SG (y' : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))).act 1 (a.2 : GLG (E := E) (n := n) (SG := SG)) := by
     have := congrArg Subtype.val h2
     rw [rlc_decoOf_val hc n ST SG x.2, rlc_smul_val, rlc_decoOf_val hc n ST SG y'.2] at this
     exact this
-  obtain ⟨hJ, hr⟩ := mem_congruence_of_action hc ST SG x.2 y'.2 (a.2 : GLG E n SG) h3
+  obtain ⟨hJ, hr⟩ := mem_congruence_of_action hc ST SG x.2 y'.2 (a.2 : GLG (E := E) (n := n) (SG := SG)) h3
   have hkU : (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))⁻¹ * (y' : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) ∈
       levU hc n ST SG H := (mem_levU hc n ST SG H).2 ⟨hJ, by rw [hr]; exact a.2.2⟩
   refine ⟨γ, ⟨_, hkU⟩, hγ, Subtype.ext hr, ?_⟩
@@ -113,7 +113,7 @@ theorem adToCls_injective : Function.Injective (adToCls hc n ST SG H) := by
     obtain ⟨γ, k, -, -, e⟩ := rlc_rel_of_orbit hc n ST SG H a ha.symm
     exact (rlc_mk_eq hc n ST SG H γ k e).symm
 
-theorem decoOf_ptOf (hS : DecoPtSurj hc n ST SG) (d : DecoSet E n ST SG) :
+theorem decoOf_ptOf (hS : DecoPtSurj hc n ST SG) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     decoOf ST SG (ptOf hc n ST SG d : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) = d := by
   have hex : ∃ x : UAd hc n, decoOf ST SG (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) = d := by
     obtain ⟨q, hq⟩ := hS d
@@ -123,12 +123,12 @@ theorem decoOf_ptOf (hS : DecoPtSurj hc n ST SG) (d : DecoSet E n ST SG) :
   rw [dite_eq_left hex]
   exact hex.choose_spec
 
-theorem adToCls_adClsOf (hS : DecoPtSurj hc n ST SG) (d : DecoSet E n ST SG) :
+theorem adToCls_adClsOf (hS : DecoPtSurj hc n ST SG) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     adToCls hc n ST SG H (adClsOf hc n ST SG H d) = decoCls n ST SG H d := by
   unfold adClsOf
   rw [adToCls_mk, decoOf_ptOf hc n ST SG hS]
 
-theorem levU_y_bij (hS : DecoPtSurj hc n ST SG) (s : DecoCl n ST SG H → DecoSet E n ST SG)
+theorem levU_y_bij (hS : DecoPtSurj hc n ST SG) (s : DecoCl n ST SG H → DecoSet (E := E) (n := n) (ST := ST) (SG := SG))
     (hs : ∀ c, decoCls n ST SG H (s c) = c) :
     Function.Bijective (fun c : DecoCl n ST SG H =>
       (Quotient.mk'' (ptOf hc n ST SG (s c)) : Formalism.UG.ClassSet
@@ -145,20 +145,20 @@ theorem levU_y_bij (hS : DecoPtSurj hc n ST SG) (s : DecoCl n ST SG H → DecoSe
     refine ⟨adToCls hc n ST SG H q, ?_⟩
     exact adToCls_injective hc n ST SG H (hinv _)
 
-theorem rlc_ratHom_stabRat (d : DecoSet E n ST SG) (a : MulAction.stabilizer (UF E n × H) d) :
+theorem rlc_ratHom_stabRat (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (a : MulAction.stabilizer (UF E n × H) d) :
     ratHom hc n (stabRat hc n ST SG H d a) = a.1.1 :=
   (ratEquiv hc n).apply_symm_apply a.1.1
 
-theorem stabRat_injective (d : DecoSet E n ST SG) : Function.Injective (stabRat hc n ST SG H d) := by
+theorem stabRat_injective (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : Function.Injective (stabRat hc n ST SG H d) := by
   intro a b hab
   have h1 : a.1.1 = b.1.1 := by
     rw [← rlc_ratHom_stabRat hc n ST SG H d a, ← rlc_ratHom_stabRat hc n ST SG H d b, hab]
-  have ha : ((a.1.1, (a.1.2 : GLG E n SG)) : UF E n × GLG E n SG) • d = d := a.2
-  have hb : ((b.1.1, (b.1.2 : GLG E n SG)) : UF E n × GLG E n SG) • d = d := b.2
+  have ha : ((a.1.1, (a.1.2 : GLG (E := E) (n := n) (SG := SG))) : UF E n × GLG (E := E) (n := n) (SG := SG)) • d = d := a.2
+  have hb : ((b.1.1, (b.1.2 : GLG (E := E) (n := n) (SG := SG))) : UF E n × GLG (E := E) (n := n) (SG := SG)) • d = d := b.2
   have h2 := DecoSet.stab_fst_injective d ha hb h1
   exact Subtype.ext (Prod.ext h1 (Subtype.ext (congrArg Prod.snd h2)))
 
-theorem stabRat_range (d : DecoSet E n ST SG) (y : UAd hc n)
+theorem stabRat_range (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (y : UAd hc n)
     (hy : decoOf ST SG (y : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) = d) (γ : URat hc n) :
     γ ∈ (stabRat hc n ST SG H d).range ↔
       Formalism.UG.bc (Formalism.UG.inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) (γ : GL (Fin n) E) ∈
@@ -198,7 +198,7 @@ theorem rlc_ratHom_apply (γ : URat hc n) (x : Fin n → E) :
     ((ratHom hc n γ : UF E n) : Sp E n ≃ₗ[E] Sp E n) x = ((γ : GL (Fin n) E) : Matrix (Fin n) (Fin n) E) *ᵥ x := by
   simp [ratHom, Formalism.UG.glEquiv]
 
-theorem stabRat_lat (d : DecoSet E n ST SG) (a : MulAction.stabilizer (UF E n × H) d) (x : Fin n → E) :
+theorem stabRat_lat (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (a : MulAction.stabilizer (UF E n × H) d) (x : Fin n → E) :
     x ∈ d.1.L ↔ (((stabRat hc n ST SG H d a : GL (Fin n) E) : Matrix (Fin n) (Fin n) E) *ᵥ x) ∈ d.1.L := by
   have h0 : a.1 • d = d := MulAction.mem_stabilizer_iff.1 a.2
   have h1 : (a.1 • d).1.L = d.1.L := by rw [h0]
@@ -452,7 +452,7 @@ theorem decoRaw_carries {x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)} (hx :
   exact Formalism.UG.P.span_recovery_of_integral_adelic_approx Formalism.UG.P.integral_adele_approximation_holds F E (Fin n) (baseLb E n ST) (baseLb_fin n ST)
     (baseLb_span n ST) x z
 
-theorem levU_y_lat (hS : DecoPtSurj hc n ST SG) (d : DecoSet E n ST SG) (x : Fin n → E ⊗[F] FiniteAdeleRing (𝓞 F) F) :
+theorem levU_y_lat (hS : DecoPtSurj hc n ST SG) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (x : Fin n → E ⊗[F] FiniteAdeleRing (𝓞 F) F) :
     x ∈ Formalism.UG.latS (F := F) (FiniteAdeleRing (𝓞 F) F)
       (Formalism.UG.tensInt (F := F) (FiniteAdeleRing (𝓞 F) F) (Formalism.UG.intOE E) (Formalism.UG.intAd F)) d.1.L ↔
     ((((ptOf hc n ST SG d : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)))⁻¹ : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) :
@@ -468,7 +468,7 @@ end Hat
 section Fin
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
-variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG E n SG))
+variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG (E := E) (n := n) (SG := SG)))
 
 end Fin
 

@@ -300,7 +300,7 @@ theorem isHeckeNbr_iff (P : HeightOneSpectrum (𝓞 E)) (i : ℕ) (N N' : Submod
   unfold IsHeckeNbr
   rw [conjIdeal_asIdeal]
 
-theorem DecoSet.card_heckeSet (d : DecoSet E n ST SG) (P : HeightOneSpectrum (𝓞 E)) (hne : conjPrime₂ P ≠ P)
+theorem DecoSet.card_heckeSet (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (P : HeightOneSpectrum (𝓞 E)) (hne : conjPrime₂ P ≠ P)
     (hST : ∀ Q : ST, Q.1 ≠ P ∧ Q.1 ≠ conjPrime₂ P) (hSG : ∀ w : SG, w.1 ≠ P ∧ w.1 ≠ conjPrime₂ P) (i : ℕ) :
     Nat.card (d.heckeSet P.asIdeal i) = gaussBin (Nat.card (𝓞 E ⧸ P.asIdeal)) n i := by
   obtain ⟨ρ, hρs, hρk⟩ := exists_redLat d.2.lat (conjPrime₂ P)

@@ -69,7 +69,7 @@ def topClassNumber : ℕ :=
   Nat.card (MulAction.orbitRel.Quotient
     ((⊤ : Subgroup (UF X.E (R.N R.m))).prod
       (((rowTy Ch sel mu (rPsymF Ch)).grp).map (extGH (SG := rowSG Pr sel mu) (N_m_succ R))))
-    (DecoSet X.E (R.N R.m) (Pr.vT u) (rowSG Pr sel mu)))
+    (DecoSet (E := X.E) (n := R.N R.m) (ST := Pr.vT u) (SG := rowSG Pr sel mu)))
 
 def classNumberAt (j : ℕ) : ℕ :=
   if j = R.m then topClassNumber Ch sel mu u

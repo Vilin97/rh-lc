@@ -225,7 +225,7 @@ theorem Ctx.sub (h : Ctx A a b S SG ϖ p g cA) : divs ϖ ⊆ S ∧ SG ⊆ S ∧ 
     exact hp.ne_one (by simpa using hg)
 
 theorem assemble_phi (h : Ctx A a b S SG ϖ p g cA) (hlam : ∀ k, A.σ₀ k ∈ TaylorLogMetric.Qbar ∧ TaylorLogMetric.lamC lam (A.σ₀ k) = ι k)
-    (hw : Induces ι w) (d : DecoSet X.E a (divs ϖ) SG₁) (d' : DecoSet X.E b (divs ϖ) SG₂)
+    (hw : Induces ι w) (d : DecoSet (E := X.E) (n := a) (ST := divs ϖ) (SG := SG₁)) (d' : DecoSet (E := X.E) (n := b) (ST := divs ϖ) (SG := SG₂))
     (hχ : A.chiF a b d.1.N d'.1.N ∈ TaylorLogMetric.Qbar) (hχ1 : ‖TaylorLogMetric.lamC lam (A.chiF a b d.1.N d'.1.N)‖ = 1)
     (Ξ₀ : HomE X.E a b → X.K) (hΞ : OffDatum cA (p * g) d.1.N d'.1.N SG w Ξ₀)
     (C : AddSubgroup (HomE X.E a b)) (hC : ∀ y ∈ C, y ∈ homAt S d.1.N d'.1.N ∧ y ∈ mulLat (p * g) (homAt SG d.1.N d'.1.N) ∧
@@ -252,7 +252,7 @@ theorem assemble_phi (h : Ctx A a b S SG ϖ p g cA) (hlam : ∀ k, A.σ₀ k ∈
       ((_root_.GlobalTheory.MomPlace.places X.K p A.σ₀ ι).2.1 w hw _ (hΞ x (hd x hx)).1)
 
 theorem type_bar (h : Ctx A a b S SG ϖ p g cA) (hlam : ∀ k, A.σ₀ k ∈ TaylorLogMetric.Qbar ∧ TaylorLogMetric.lamC lam (A.σ₀ k) = ι k)
-    (hw : Induces ι w) (d : DecoSet X.E a (divs ϖ) SG₁) (d' : DecoSet X.E b (divs ϖ) SG₂)
+    (hw : Induces ι w) (d : DecoSet (E := X.E) (n := a) (ST := divs ϖ) (SG := SG₁)) (d' : DecoSet (E := X.E) (n := b) (ST := divs ϖ) (SG := SG₂))
     (hχ : A.chiF a b d.1.N d'.1.N ∈ TaylorLogMetric.Qbar) (hχ1 : ‖TaylorLogMetric.lamC lam (A.chiF a b d.1.N d'.1.N)‖ = 1)
     (Ξ₀ : HomE X.E a b → X.K) (hΞ : OffDatum cA (p * g) d.1.N d'.1.N SG w Ξ₀)
     (hm : PtMom A a b lam ι un ((ϖ : X.E) / star (ϖ : X.E))) :
@@ -271,7 +271,7 @@ theorem type_bar (h : Ctx A a b S SG ϖ p g cA) (hlam : ∀ k, A.σ₀ k ∈ Tay
     simpa using this
 
 theorem type_p (h : Ctx A a b S SG ϖ p g cA) (hlam : ∀ k, A.σ₀ k ∈ TaylorLogMetric.Qbar ∧ TaylorLogMetric.lamC lam (A.σ₀ k) = ι k)
-    (hw : Induces ι w) (d : DecoSet X.E a (divs ϖ) SG₁) (d' : DecoSet X.E b (divs ϖ) SG₂) (hstd : StdAtT d.1)
+    (hw : Induces ι w) (d : DecoSet (E := X.E) (n := a) (ST := divs ϖ) (SG := SG₁)) (d' : DecoSet (E := X.E) (n := b) (ST := divs ϖ) (SG := SG₂)) (hstd : StdAtT d.1)
     (hχ : A.chiF a b d.1.N d'.1.N ∈ TaylorLogMetric.Qbar) (hχ1 : ‖TaylorLogMetric.lamC lam (A.chiF a b d.1.N d'.1.N)‖ = 1)
     (Ξ₀ : HomE X.E a b → X.K) (hΞ : OffDatum cA (p * g) d.1.N d'.1.N SG w Ξ₀)
     (hm : PtMom A a b lam ι un (star (ϖ : X.E) / (ϖ : X.E))) (hnorm : ∀ P ∈ divs ϖ, Ideal.absNorm P.asIdeal = p)

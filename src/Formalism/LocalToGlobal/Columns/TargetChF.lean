@@ -21,7 +21,7 @@ theorem chfok_false (hQ : Q = ∅) (P : Q) : False := by
   obtain ⟨p, hp⟩ := P
   simp [hQ] at hp
 
-def chfokLift (hQ : Q = ∅) (d : DecoSet X.E n ST SG) : DecoF X.E n ST SG Q :=
+def chfokLift (hQ : Q = ∅) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) : DecoF X.E n ST SG Q :=
   ⟨(d, fun _ => 1), fun P _ => (chfok_false hQ P).elim⟩
 
 end Gen

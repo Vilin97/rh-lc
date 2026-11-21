@@ -181,7 +181,7 @@ section Til
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {N n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-theorem xtTilH_mem (hN : N = n + 1) (d : DecoSet E n ∅ SG) {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal)
+theorem xtTilH_mem (hN : N = n + 1) (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal)
     (w : HeightOneSpectrum (𝓞 E)) (v : Sp E N) :
     v ∈ (DecoSet.tilH (ST := ST) hN pi d).1.at w ↔
       (fun i : Fin n => v ⟨i.1, by omega⟩) ∈ d.1.at w ∧ IntAt w (v ⟨n, by omega⟩) := by
@@ -198,7 +198,7 @@ theorem xtTilH_mem (hN : N = n + 1) (d : DecoSet E n ∅ SG) {pi : 𝓞 E} (hT :
 
 
 open Classical in
-theorem xtTilH_be (hN : N = n + 1) (d : DecoSet E n ∅ SG) {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal)
+theorem xtTilH_be (hN : N = n + 1) (d : DecoSet (E := E) (n := n) (ST := ∅) (SG := SG)) {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal)
     (w : SG) (v : Sp E N) (hv : v ∈ (DecoSet.tilH (ST := ST) hN pi d).1.at w.1) (i : Fin N) :
     (DecoSet.tilH (ST := ST) hN pi d).1.be w v i =
       if h : i.1 < n then d.1.be w (fun i : Fin n => v ⟨i.1, by omega⟩) ⟨i.1, h⟩

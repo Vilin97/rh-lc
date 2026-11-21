@@ -28,7 +28,7 @@ theorem FrExact.over {q : QLoc hc n Q Θ} {x : GL (Fin n) (E ⊗[F] Formalism.L2
   rw [h.2 P, inv_mul_cancel]
   exact (q.U P).one_mem
 
-variable {H : Subgroup (GLG E n SG)}
+variable {H : Subgroup (GLG (E := E) (n := n) (SG := SG))}
 
 def recClsFy (q : QLoc hc n Q Θ) (hF : FrLat ST SG q) (hE : FrExists (n := n) ST SG Q)
     (s : DecoFCl (K := K) n ST SG Q H Θ → DecoF E n ST SG Q) (hs : ∀ c, (Quotient.mk'' (s c) : DecoFCl (K := K) n ST SG Q H Θ) = c)
@@ -76,8 +76,8 @@ def recClsFy (q : QLoc hc n Q Θ) (hF : FrLat ST SG q) (hE : FrExists (n := n) S
     have h1 : a.1.1 = b.1.1 := by rw [← qdf_ratHom_stab (hc := hc) H (s c) a, ← qdf_ratHom_stab (hc := hc) H (s c) b, hab]
     have ha := qdf_stab_deco H (s c) a
     have hb := qdf_stab_deco H (s c) b
-    have hab' : ((a.1.1, (a.1.2.1 : GLG E n SG)) : UF E n × GLG E n SG) • (s c).deco = (s c).deco := ha
-    have hbb' : ((b.1.1, (b.1.2.1 : GLG E n SG)) : UF E n × GLG E n SG) • (s c).deco = (s c).deco := hb
+    have hab' : ((a.1.1, (a.1.2.1 : GLG (E := E) (n := n) (SG := SG))) : UF E n × GLG (E := E) (n := n) (SG := SG)) • (s c).deco = (s c).deco := ha
+    have hbb' : ((b.1.1, (b.1.2.1 : GLG (E := E) (n := n) (SG := SG))) : UF E n × GLG (E := E) (n := n) (SG := SG)) • (s c).deco = (s c).deco := hb
     have h2 := DecoSet.stab_fst_injective (s c).deco hab' hbb' h1
     have h3 : a.1.2.2 = b.1.2.2 := by
       apply Subtype.ext

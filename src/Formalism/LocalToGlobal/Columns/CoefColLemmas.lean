@@ -44,7 +44,7 @@ section DecoAct
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
   {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-theorem Deco.L_act (d : Deco E n ST SG) (ga : Sp E n ≃ₗ[E] Sp E n) (h : GLG E n SG) :
+theorem Deco.L_act (d : Deco E n ST SG) (ga : Sp E n ≃ₗ[E] Sp E n) (h : GLG (E := E) (n := n) (SG := SG)) :
     (d.act ga h).L = gmap ga d.L := by
   unfold Deco.L gmap
   rw [Submodule.map_span]
@@ -57,13 +57,13 @@ theorem Deco.L_act (d : Deco E n ST SG) (ga : Sp E n ≃ₗ[E] Sp E n) (h : GLG 
   · rintro ⟨y, ⟨hy, hf⟩, rfl⟩
     refine ⟨(mem_gmap ga d.N (ga y)).2 (by simpa using hy), fun P => by simpa using hf P⟩
 
-theorem Deco.Lsh_act (d : Deco E n ST SG) {ga : Sp E n ≃ₗ[E] Sp E n} (hga : ga ∈ UF E n) (h : GLG E n SG) :
+theorem Deco.Lsh_act (d : Deco E n ST SG) {ga : Sp E n ≃ₗ[E] Sp E n} (hga : ga ∈ UF E n) (h : GLG (E := E) (n := n) (SG := SG)) :
     (d.act ga h).Lsh = gmap ga d.Lsh := by
   unfold Deco.Lsh
   rw [Deco.L_act, dual_gmap ga hga]
 
 theorem Deco.LshKer_act (d : Deco E n ST SG) {ga : Sp E n ≃ₗ[E] Sp E n} (hga : ga ∈ UF E n)
-    (h : GLG E n SG) (P : ST) :
+    (h : GLG (E := E) (n := n) (SG := SG)) (P : ST) :
     (d.act ga h).LshKer P = gmap ga (d.LshKer P) := by
   unfold Deco.LshKer gmap
   rw [Submodule.map_span]
@@ -77,7 +77,7 @@ theorem Deco.LshKer_act (d : Deco E n ST SG) {ga : Sp E n ≃ₗ[E] Sp E n} (hga
   · rintro ⟨y, ⟨hy, hf⟩, rfl⟩
     refine ⟨(mem_gmap ga d.Lsh (ga y)).2 (by simpa using hy), by simpa [Deco.act] using hf⟩
 
-theorem Deco.N_act (d : Deco E n ST SG) (ga : Sp E n ≃ₗ[E] Sp E n) (h : GLG E n SG) :
+theorem Deco.N_act (d : Deco E n ST SG) (ga : Sp E n ≃ₗ[E] Sp E n) (h : GLG (E := E) (n := n) (SG := SG)) :
     (d.act ga h).N = gmap ga d.N := rfl
 
 end DecoAct
@@ -229,41 +229,41 @@ section ValsEquiv
 variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R)
 
 theorem colVal_nab_smul (u : Pr.Word) (j : ℕ) {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-    (a : UF X.E (R.N j) × GLG X.E (R.N j) SG) (d : DecoSet X.E (R.N j) ST SG) :
+    (a : UF X.E (R.N j) × GLG (E := X.E) (n := R.N j) (SG := SG)) (d : DecoSet (E := X.E) (n := R.N j) (ST := ST) (SG := SG)) :
     (colVal W u j ST SG).Nab (a • d) =
       ((colVal W u j ST SG).Nab d).map (((colVal W u j ST SG).rho a.1).restrictScalars (𝓞 X.K)) :=
   roundPk_nab X _ _ (d.1.Lsh_act a.1.2 a.2)
 
 theorem colVal_del_smul (u : Pr.Word) (j : ℕ) {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-    (a : UF X.E (R.N j) × GLG X.E (R.N j) SG) (d : DecoSet X.E (R.N j) ST SG) :
+    (a : UF X.E (R.N j) × GLG (E := X.E) (n := R.N j) (SG := SG)) (d : DecoSet (E := X.E) (n := R.N j) (ST := ST) (SG := SG)) :
     (colVal W u j ST SG).Del (a • d) =
       ((colVal W u j ST SG).Del d).map (((colVal W u j ST SG).rho a.1).restrictScalars (𝓞 X.K)) :=
   roundPk_del X _ _ (d.1.Lsh_act a.1.2 a.2)
 
 theorem BvLat_smul (u : Pr.Word) (j : ℕ) {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))} (P : ST)
-    (a : UF X.E (R.N j) × GLG X.E (R.N j) SG) (d : DecoSet X.E (R.N j) ST SG) :
+    (a : UF X.E (R.N j) × GLG (E := X.E) (n := R.N j) (SG := SG)) (d : DecoSet (E := X.E) (n := R.N j) (ST := ST) (SG := SG)) :
     BvLat W u j P (a • d) = (BvLat W u j P d).map (((colVal W u j ST SG).rho a.1).restrictScalars (𝓞 X.K)) := by
   show delAtr X.emb (W.lamTrue u j) ((a • d).1.LshKer P) = _
   rw [DecoSet.smul_val, Deco.LshKer_act _ a.1.2, delAtr_gmap]
   rfl
 
 theorem rowVal_nab_smul {SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-    (a : UF X.E (R.N R.m - 1) × GLG X.E (R.N R.m - 1) SG) (d : DecoSet X.E (R.N R.m - 1) ∅ SG) :
+    (a : UF X.E (R.N R.m - 1) × GLG (E := X.E) (n := R.N R.m - 1) (SG := SG)) (d : DecoSet (E := X.E) (n := R.N R.m - 1) (ST := ∅) (SG := SG)) :
     (rowVal W SG).Nab (a • d) = ((rowVal W SG).Nab d).map (((rowVal W SG).rho a.1).restrictScalars (𝓞 X.K)) :=
   squarePk_nab X _ _ (d.1.N_act a.1.1 a.2)
 
 theorem rowVal_del_smul {SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-    (a : UF X.E (R.N R.m - 1) × GLG X.E (R.N R.m - 1) SG) (d : DecoSet X.E (R.N R.m - 1) ∅ SG) :
+    (a : UF X.E (R.N R.m - 1) × GLG (E := X.E) (n := R.N R.m - 1) (SG := SG)) (d : DecoSet (E := X.E) (n := R.N R.m - 1) (ST := ∅) (SG := SG)) :
     (rowVal W SG).Del (a • d) = ((rowVal W SG).Del d).map (((rowVal W SG).rho a.1).restrictScalars (𝓞 X.K)) :=
   squarePk_del X _ _ (d.1.N_act a.1.1 a.2)
 
 theorem mtVal_nab_smul (j : ℕ) {SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-    (a : UF X.E R.nV × GLG X.E R.nV SG) (d : DecoSet X.E R.nV ∅ SG) :
+    (a : UF X.E R.nV × GLG (E := X.E) (n := R.nV) (SG := SG)) (d : DecoSet (E := X.E) (n := R.nV) (ST := ∅) (SG := SG)) :
     (mtVal W j SG).Nab (a • d) = ((mtVal W j SG).Nab d).map (((mtVal W j SG).rho a.1).restrictScalars (𝓞 X.K)) :=
   roundPk_nab X _ _ (d.1.N_act a.1.1 a.2)
 
 theorem mtVal_del_smul (j : ℕ) {SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-    (a : UF X.E R.nV × GLG X.E R.nV SG) (d : DecoSet X.E R.nV ∅ SG) :
+    (a : UF X.E R.nV × GLG (E := X.E) (n := R.nV) (SG := SG)) (d : DecoSet (E := X.E) (n := R.nV) (ST := ∅) (SG := SG)) :
     (mtVal W j SG).Del (a • d) = ((mtVal W j SG).Del d).map (((mtVal W j SG).rho a.1).restrictScalars (𝓞 X.K)) :=
   roundPk_del X _ _ (d.1.N_act a.1.1 a.2)
 

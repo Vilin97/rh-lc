@@ -151,7 +151,7 @@ theorem top_lev_chi : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC
   have hgam1 : (I.stp u a B.R.m).gam (I.perIn u a).b0 κ' = 1 := by
     show Formalism.L2.Col.ufGL _ _ (1 : Formalism.L2.Col.UF B.fields.E (B.R.N B.R.m)) = 1
     simp
-  have hq : ((g₀.1⁻¹, 1, 1) : Formalism.L2.Col.UF B.fields.E (B.R.N B.R.m) × Formalism.L2.Col.GLG B.fields.E (B.R.N B.R.m) (B.primes X).vGs × Formalism.L2.Col.GLQ B.fields.E (B.R.N B.R.m) (Formalism.L2.Col.QE I.sel ↑(I.tup a))) • (tilF I.sel (I.tup a) u ((I.stX a).rep c).1.1) =
+  have hq : ((g₀.1⁻¹, 1, 1) : Formalism.L2.Col.UF B.fields.E (B.R.N B.R.m) × Formalism.L2.Col.GLG (E := B.fields.E) (n := B.R.N B.R.m) (SG := (B.primes X).vGs) × Formalism.L2.Col.GLQ B.fields.E (B.R.N B.R.m) (Formalism.L2.Col.QE I.sel ↑(I.tup a))) • (tilF I.sel (I.tup a) u ((I.stX a).rep c).1.1) =
       ((I.stp u a B.R.m).act (I.perIn u a).b0 κ' ((I.stp u a B.R.m).rep ((I.perIn u a).tilC c))).1.1 := by
     have e0 : (tilF I.sel (I.tup a) u ((I.stX a).rep c).1.1) = ((I.perIn u a).tilPt c).1.1 := rfl
     rw [e0, ← hmv]

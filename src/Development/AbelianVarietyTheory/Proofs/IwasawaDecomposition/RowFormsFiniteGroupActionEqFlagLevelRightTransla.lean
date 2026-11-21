@@ -20,16 +20,16 @@ namespace GlobalTheory.Mem.R3.RowAct
 section Forms
 
 variable {Xf : Formalism.L2.Col.Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 Xf.E))}
-  (C : Formalism.L2.Col.CoefPk Xf n (Formalism.L2.Col.DecoSet Xf.E n ST SG)) (Λ : Formalism.L2.Col.LevFam Xf.E Xf.K n SG)
+  (C : Formalism.L2.Col.CoefPk Xf n (Formalism.L2.Col.DecoSet (E := Xf.E) (n := n) (ST := ST) (SG := SG))) (Λ : Formalism.L2.Col.LevFam Xf.E Xf.K n SG)
 
-theorem eqFun_smul_grp (φ : (Formalism.L2.Col.formGSD C Λ).EqFun) (u : Λ.grp) (a : Formalism.L2.Col.GLG Xf.E n SG)
-    (d : Formalism.L2.Col.DecoSet Xf.E n ST SG) :
-    (φ : Formalism.L2.Col.DecoSet Xf.E n ST SG → C.V) (((1 : Formalism.L2.Col.UF Xf.E n), (u : Formalism.L2.Col.GLG Xf.E n SG) * a) • d) =
-      ((Λ.chr u : Xf.Kˣ) : Xf.K) • (φ : Formalism.L2.Col.DecoSet Xf.E n ST SG → C.V) (((1 : Formalism.L2.Col.UF Xf.E n), a) • d) := by
+theorem eqFun_smul_grp (φ : (Formalism.L2.Col.formGSD C Λ).EqFun) (u : Λ.grp) (a : Formalism.L2.Col.GLG (E := Xf.E) (n := n) (SG := SG))
+    (d : Formalism.L2.Col.DecoSet (E := Xf.E) (n := n) (ST := ST) (SG := SG)) :
+    (φ : Formalism.L2.Col.DecoSet (E := Xf.E) (n := n) (ST := ST) (SG := SG) → C.V) (((1 : Formalism.L2.Col.UF Xf.E n), (u : Formalism.L2.Col.GLG (E := Xf.E) (n := n) (SG := SG)) * a) • d) =
+      ((Λ.chr u : Xf.Kˣ) : Xf.K) • (φ : Formalism.L2.Col.DecoSet (E := Xf.E) (n := n) (ST := ST) (SG := SG) → C.V) (((1 : Formalism.L2.Col.UF Xf.E n), a) • d) := by
   have e := φ.2 ((1, u) : Formalism.L2.Col.FormG Λ) (((1 : Formalism.L2.Col.UF Xf.E n), a) • d)
   have e' : ((1, u) : Formalism.L2.Col.FormG Λ) • (((1 : Formalism.L2.Col.UF Xf.E n), a) • d) =
-      ((1 : Formalism.L2.Col.UF Xf.E n), (u : Formalism.L2.Col.GLG Xf.E n SG) * a) • d := by
-    show ((1 : Formalism.L2.Col.UF Xf.E n), (u : Formalism.L2.Col.GLG Xf.E n SG)) • (((1 : Formalism.L2.Col.UF Xf.E n), a) • d) = _
+      ((1 : Formalism.L2.Col.UF Xf.E n), (u : Formalism.L2.Col.GLG (E := Xf.E) (n := n) (SG := SG)) * a) • d := by
+    show ((1 : Formalism.L2.Col.UF Xf.E n), (u : Formalism.L2.Col.GLG (E := Xf.E) (n := n) (SG := SG))) • (((1 : Formalism.L2.Col.UF Xf.E n), a) • d) = _
     rw [smul_smul, Prod.mk_mul_mk, one_mul]
   rw [e'] at e
   rw [e]

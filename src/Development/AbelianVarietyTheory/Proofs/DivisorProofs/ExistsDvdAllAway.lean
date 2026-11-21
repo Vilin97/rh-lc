@@ -127,7 +127,7 @@ theorem coeff_mem {E : Type} [Field E] [NumberField E] {n : ℕ} {P : Ideal (�
 
 theorem two_mul_length_le {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
     {ST SG : Finset (HeightOneSpectrum (𝓞 E))} (P : HeightOneSpectrum (𝓞 E)) (y : List ℕ)
-    (d e : Col.DecoSet E n ST SG) (hy : ∀ a ∈ y, 0 < a) (he : e ∈ d.inertSet P.asIdeal y) :
+    (d e : Col.DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (hy : ∀ a ∈ y, 0 < a) (he : e ∈ d.inertSet P.asIdeal y) :
     2 * y.length ≤ n := by
   classical
   obtain ⟨⟨⟨e1⟩, ⟨e2⟩⟩, -, -⟩ := he

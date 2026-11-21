@@ -60,7 +60,7 @@ end Roots
 section Form
 
 variable {X : Fields} {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 X.E))}
-  (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG)
+  (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG)
 
 theorem FormG.incl_injective : Function.Injective (FormG.incl Λ) := by
   intro a b h
@@ -71,9 +71,9 @@ theorem FormG.incl_injective : Function.Injective (FormG.incl Λ) := by
 theorem formGSD_rho (a : (formGSD C Λ).G) (x : C.V) :
     (formGSD C Λ).ρ a x = ((Λ.chr a.2 : X.Kˣ) : X.K) • C.rho a.1 x := rfl
 
-theorem mem_formGSD_EqFun (φ : DecoSet X.E n ST SG → C.V) :
-    φ ∈ (formGSD C Λ).EqFun ↔ ∀ (γ : UF X.E n) (h : ↥Λ.grp) (d : DecoSet X.E n ST SG),
-      φ ((γ, (h : GLG X.E n SG)) • d) = ((Λ.chr h : X.Kˣ) : X.K) • C.rho γ (φ d) :=
+theorem mem_formGSD_EqFun (φ : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → C.V) :
+    φ ∈ (formGSD C Λ).EqFun ↔ ∀ (γ : UF X.E n) (h : ↥Λ.grp) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)),
+      φ ((γ, (h : GLG (E := X.E) (n := n) (SG := SG))) • d) = ((Λ.chr h : X.Kˣ) : X.K) • C.rho γ (φ d) :=
   ⟨fun H γ h d => H (γ, h) d, fun H a d => H a.1 a.2 d⟩
 
 theorem LevFam.chr_root (h : ↥Λ.grp) : ∃ m : ℕ, 0 < m ∧ ((Λ.chr h : X.Kˣ) : X.K) ^ m = 1 := by
@@ -96,10 +96,10 @@ theorem formGSD_ok (hX : X.Ok) (hC : C.Eqv) : (formGSD C Λ).Ok where
       rw [h1, inv_smul_smul]
   fin_stab := by
     intro d
-    have := DecoSet.finite_stabilizer (posStar_of_conj hX.conjE) (d : DecoSet X.E n ST SG)
+    have := DecoSet.finite_stabilizer (posStar_of_conj hX.conjE) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))
     refine Finite.of_injective
       (fun a : MulAction.stabilizer (formGSD C Λ).G d =>
-        (⟨FormG.incl Λ a.1, a.2⟩ : MulAction.stabilizer (UF X.E n × GLG X.E n SG) (d : DecoSet X.E n ST SG))) ?_
+        (⟨FormG.incl Λ a.1, a.2⟩ : MulAction.stabilizer (UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)))) ?_
     intro a b hab
     exact Subtype.ext (FormG.incl_injective Λ (congrArg Subtype.val hab))
   nab_smul := by
@@ -120,7 +120,7 @@ theorem formGSD_ok (hX : X.Ok) (hC : C.Eqv) : (formGSD C Λ).Ok where
 
 theorem formGSD_stab_inj (d : (formGSD C Λ).D) {a b : (formGSD C Λ).G} (ha : a • d = d) (hb : b • d = d)
     (hab : a.1 = b.1) : a = b :=
-  FormG.incl_injective Λ (DecoSet.stab_fst_injective (d : DecoSet X.E n ST SG) ha hb hab)
+  FormG.incl_injective Λ (DecoSet.stab_fst_injective (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) ha hb hab)
 
 end Form
 

@@ -248,7 +248,7 @@ theorem lev_iff (hI : I.Ok) {u : B.Word} {Lb : Unit → Submodule (𝓞 B.host.E
       RInt B.host.F B.host.E)
     (hT : ∀ P ∈ (B.primes X).vT u, ∀ i j, adAt B.host.F P ((m : Matrix (Fin (B.R.N 0)) (Fin (B.R.N 0)) (AfE B.host.F B.host.E)) i j) =
       adAt B.host.F P (((1 : GA B (B.R.N 0)) : Matrix (Fin (B.R.N 0)) (Fin (B.R.N 0)) (AfE B.host.F B.host.E)) i j))
-    {h : GLG B.host.E (B.R.N 0) (B.primes X).vGs} (hh : ∀ w : (B.primes X).vGs, IsRed w.1 m (h w : Matrix _ _ _)) :
+    {h : GLG (E := B.host.E) (n := B.R.N 0) (SG := (B.primes X).vGs)} (hh : ∀ w : (B.primes X).vGs, IsRed w.1 m (h w : Matrix _ _ _)) :
     x ∈ U () ↔ ∀ w, h w ∈ (colLev I.Ch 0 w).H := by
   have hQ := notMem_twistPrimes_initialTuple I
   set p0 := ((I.stp u I.mu0 0).rep c).1.1 with hp0def
@@ -260,16 +260,16 @@ theorem lev_iff (hI : I.Ok) {u : B.Word} {Lb : Unit → Submodule (𝓞 B.host.E
   constructor
   · rintro ⟨κ, hg, he, -⟩
     have hγ : κ.1 = 1 := ufGL_eq_one hg
-    have e : ((1, κ.2.1.1, κ.2.2.1) : UF B.host.E (B.R.N 0) × GLG B.host.E (B.R.N 0) (B.primes X).vGs ×
+    have e : ((1, κ.2.1.1, κ.2.2.1) : UF B.host.E (B.R.N 0) × GLG (E := B.host.E) (n := B.R.N 0) (SG := (B.primes X).vGs) ×
         GLQ B.host.E (B.R.N 0) (QE I.sel (I.tup I.mu0 : Chr B.fields.F B.fields.E B.fields.K))) • p0 =
-        ((1, h, 1) : UF B.host.E (B.R.N 0) × GLG B.host.E (B.R.N 0) (B.primes X).vGs ×
+        ((1, h, 1) : UF B.host.E (B.R.N 0) × GLG (E := B.host.E) (n := B.R.N 0) (SG := (B.primes X).vGs) ×
         GLQ B.host.E (B.R.N 0) (QE I.sel (I.tup I.mu0 : Chr B.fields.F B.fields.E B.fields.K))) • p0 := by
       rw [← he, ← hγ]
       rfl
     have e2 := eq_of_smul_eq p0 e
-    have hmem : (κ.2.1 : GLG B.host.E (B.R.N 0) (B.primes X).vGs) ∈ (colLev I.Ch 0).grp := by
+    have hmem : (κ.2.1 : GLG (E := B.host.E) (n := B.R.N 0) (SG := (B.primes X).vGs)) ∈ (colLev I.Ch 0).grp := by
       have h3 := κ.2.1.2
-      generalize (κ.2.1 : GLG B.host.E (B.R.N 0) (B.primes X).vGs) = g at h3
+      generalize (κ.2.1 : GLG (E := B.host.E) (n := B.R.N 0) (SG := (B.primes X).vGs)) = g at h3
       rwa [levelTypePrimes_stepZero_eq_colLev I hI u c.1] at h3
     intro w
     rw [← e2]
@@ -322,7 +322,7 @@ theorem chi_eq (hI : I.Ok) {u : B.Word} {Lb : Unit → Submodule (𝓞 B.host.E)
     (hx : x ∈ U ()) (hxm : y c * x * k () = y c * k () * m⁻¹) (hu : y c * x * k () ∈ Formalism.L2.Herm.UstdAf B.sp.cm (B.R.N 0))
     {A : ∀ w : (B.primes X).vGs, Matrix (Fin (B.R.N 0)) (Fin (B.R.N 0)) (𝓞 B.host.E ⧸ w.1.asIdeal)}
     (hA : ∀ w : (B.primes X).vGs, IsRed w.1 m (A w)) :
-    ∃ h : GLG B.host.E (B.R.N 0) (B.primes X).vGs, (∀ w, h w ∈ (colLev I.Ch 0 w).H) ∧ (∀ w, (h w : Matrix _ _ _) = A w) ∧
+    ∃ h : GLG (E := B.host.E) (n := B.R.N 0) (SG := (B.primes X).vGs), (∀ w, h w ∈ (colLev I.Ch 0 w).H) ∧ (∀ w, (h w : Matrix _ _ _) = A w) ∧
       ((chi () ⟨x, hx⟩ : ℂˣ) : ℂ) = B.embLL (∏ w : (B.primes X).vGs,
         I.Ch.psi0 w (supSum B.R.k (SX B.R.k B.R.m 0) ((h w : GL _ _) : Matrix (Fin (B.R.N 0)) (Fin (B.R.N 0)) _))) := by
   have hQ := notMem_twistPrimes_initialTuple I
@@ -337,14 +337,14 @@ theorem chi_eq (hI : I.Ok) {u : B.Word} {Lb : Unit → Submodule (𝓞 B.host.E)
     rw [he]; exact hq
   have hchr := hR.chr c ⟨x, hx⟩ κ hg hq'
   have e : ((I.stp u I.mu0 0).act c.1 κ ((I.stp u I.mu0 0).rep c)).1.1 =
-      ((1, κ.2.1.1, κ.2.2.1) : UF B.host.E (B.R.N 0) × GLG B.host.E (B.R.N 0) (B.primes X).vGs ×
+      ((1, κ.2.1.1, κ.2.2.1) : UF B.host.E (B.R.N 0) × GLG (E := B.host.E) (n := B.R.N 0) (SG := (B.primes X).vGs) ×
         GLQ B.host.E (B.R.N 0) (QE I.sel (I.tup I.mu0 : Chr B.fields.F B.fields.E B.fields.K))) • p0 := by
     rw [← hγ]
     rfl
   rw [e, hxm] at hq'
-  have hmem : (κ.2.1 : GLG B.host.E (B.R.N 0) (B.primes X).vGs) ∈ (colLev I.Ch 0).grp := by
+  have hmem : (κ.2.1 : GLG (E := B.host.E) (n := B.R.N 0) (SG := (B.primes X).vGs)) ∈ (colLev I.Ch 0).grp := by
     have h3 := κ.2.1.2
-    generalize (κ.2.1 : GLG B.host.E (B.R.N 0) (B.primes X).vGs) = g at h3
+    generalize (κ.2.1 : GLG (E := B.host.E) (n := B.R.N 0) (SG := (B.primes X).vGs)) = g at h3
     rwa [levelTypePrimes_stepZero_eq_colLev I hI u c.1] at h3
   refine ⟨κ.2.1, fun w => hmem w (Set.mem_univ _), fun w => (eq_red hp0 hq' w (hA w)).symm, ?_⟩
   rw [hchr]
@@ -520,7 +520,7 @@ theorem mem_Uloc (hI : I.Ok) (hG : G.piG = X.piG) (i : Fin 2) (v : HeightOneSpec
 
 set_option maxHeartbeats 800000 in
 include hR in
-theorem chi_prod (hI : I.Ok) (x : S.U) : ∃ h : GLG B.host.E (B.R.N 0) (B.primes X).vGs,
+theorem chi_prod (hI : I.Ok) (x : S.U) : ∃ h : GLG (E := B.host.E) (n := B.R.N 0) (SG := (B.primes X).vGs),
     (∀ w, h w ∈ uniUT (B.R.N 0) (𝓞 B.host.E ⧸ w.1.asIdeal) B.R.k []) ∧ (∀ w : (B.primes X).vGs, IsRed w.1 x.1 ((h w)⁻¹).1) ∧
       ((S.chi x : ℂˣ) : ℂ) = ∏ w : (B.primes X).vGs, B.embLL (I.Ch.psi0 w (supSum B.R.k (SX B.R.k B.R.m 0) (h w).1)) := by
   obtain ⟨c, -⟩ := hR.onto ()

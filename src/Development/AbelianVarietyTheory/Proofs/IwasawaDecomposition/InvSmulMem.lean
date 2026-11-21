@@ -89,7 +89,7 @@ theorem f_kill {d : Deco E n ST SG} (hd : d.Ok) (P : ST) (r : Sp E n → Sp E n)
 
 theorem deco_up {d d' : Deco E n ST SG} (hd : d.Ok) (P : ST) (hP : MoveHyp ST SG P) {q : 𝓞 E} (hq : q ∈ P.1.asIdeal)
     (hq2 : q ∉ P.1.asIdeal ^ 2) {x₀ : Sp E n} (hx₀ : x₀ ∈ d.N) (hf : d.f P x₀ = 1) {γ : Sp E n ≃ₗ[E] Sp E n} (hγ : γ ∈ UF E n)
-    {h : GLG E n SG} (hact : d'.act γ h = d.up P q x₀) {z : Sp E n} (hz : z - x₀ ∈ P.1.asIdeal • dual (hStd E n) d.L) :
+    {h : GLG (E := E) (n := n) (SG := SG)} (hact : d'.act γ h = d.up P q x₀) {z : Sp E n} (hz : z - x₀ ∈ P.1.asIdeal • dual (hStd E n) d.L) :
     localization₂ P.1.asIdeal (gmap γ d'.L) = localization₂ P.1.asIdeal (dual (hStd E n) d.L) ∧
     localization₂ P.1.asIdeal (gmap γ (dual (hStd E n) d'.L)) =
       localization₂ P.1.asIdeal (dual (hStd E n) d.L ⊔ Submodule.span (𝓞 E) {(algebraMap (𝓞 E) E q)⁻¹ • z}) ∧

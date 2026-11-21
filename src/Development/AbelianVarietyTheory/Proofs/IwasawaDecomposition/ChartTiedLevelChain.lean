@@ -285,7 +285,7 @@ theorem mem_baseL {B : Base} {n : ℕ} [NeZero n] {ST : Finset (HeightOneSpectru
     exact ⟨r j, (hr j).symm, fun hj => by rw [(hl j).1 hj]; exact (h.dvd _).1 hP⟩
 
 theorem exists_smul_mem {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
-    (d : DecoSet E n ST SG) {a : 𝓞 E} (ha : SepElt ST a) (P : ST) (z : Fin n → E) (hz : z ∈ d.1.Lsh) :
+    (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) {a : 𝓞 E} (ha : SepElt ST a) (P : ST) (z : Fin n → E) (hz : z ∈ d.1.Lsh) :
     ∃ s : 𝓞 E, Ideal.Quotient.mk P.1.asIdeal s ≠ 0 ∧ s • z ∈ d.1.N := by
   obtain ⟨s, hs, hsz⟩ := (mem_locP _ _ _).1 (d.2.Lsh_le_at ha P hz)
   exact ⟨s, fun h0 => hs (Ideal.Quotient.eq_zero_iff_mem.1 h0), hsz⟩

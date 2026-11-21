@@ -25,7 +25,7 @@ abbrev qv (P : Pl E) : HeightOneSpectrum (𝓞 F) := underPl F P
 
 abbrev qGL (g : Sp E n ≃ₗ[E] Sp E n) : GL (Fin n) E := toGLm E n g
 
-instance qdAct {K : Type} [Field K] (H : Subgroup (GLG E n SG)) (Θ : LevQFam E K n Q) :
+instance qdAct {K : Type} [Field K] (H : Subgroup (GLG (E := E) (n := n) (SG := SG))) (Θ : LevQFam E K n Q) :
     MulAction (UF E n × H × Θ.grp) (DecoF E n ST SG Q) :=
   MulAction.compHom _ (MonoidHom.prodMap (MonoidHom.id _) (MonoidHom.prodMap H.subtype Θ.grp.subtype))
 
@@ -68,7 +68,7 @@ variable {hc n Q} in
 abbrev QLoc.at (q : QLoc hc n Q Θ) (P : Q) (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) : GL (Fin n) ((qv F P.1).adicCompletion F) :=
   Formalism.UG.bc ((RingHom.fst _ _).comp (q.sp P).toRingHom) (Formalism.UG.bc (Formalism.UG.prV (E := E) (qv F P.1)) x)
 
-def levUQ (H : Subgroup (GLG E n SG)) (q : QLoc hc n Q Θ) : Subgroup (GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) :=
+def levUQ (H : Subgroup (GLG (E := E) (n := n) (SG := SG))) (q : QLoc hc n Q Θ) : Subgroup (GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) :=
   levU hc n ST SG H ⊓ ⨅ P : Q, (q.U P).comap ((Formalism.UG.bc ((RingHom.fst _ _).comp (q.sp P).toRingHom)).comp
     (Formalism.UG.bc (Formalism.UG.prV (E := E) (qv F P.1))))
 
@@ -79,10 +79,10 @@ def FrOver (q : QLoc hc n Q Θ) (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F
 
 variable (hc n ST SG Q)
 
-abbrev DecoFCl (H : Subgroup (GLG E n SG)) (Θ' : LevQFam E K n Q) : Type :=
+abbrev DecoFCl (H : Subgroup (GLG (E := E) (n := n) (SG := SG))) (Θ' : LevQFam E K n Q) : Type :=
   MulAction.orbitRel.Quotient (UF E n × H × Θ'.grp) (DecoF E n ST SG Q)
 
-abbrev RecClsF (H : Subgroup (GLG E n SG)) (q : QLoc hc n Q Θ) (s : DecoFCl (K := K) n ST SG Q H Θ → DecoF E n ST SG Q) : Type :=
+abbrev RecClsF (H : Subgroup (GLG (E := E) (n := n) (SG := SG))) (q : QLoc hc n Q Θ) (s : DecoFCl (K := K) n ST SG Q H Θ → DecoF E n ST SG Q) : Type :=
   RecCls hc (1 : Matrix (Fin n) (Fin n) E) (baseLb E n ST) (levUQ hc n ST SG Q H q)
     (fun c => MulAction.stabilizer (UF E n × H × Θ.grp) (s c)) (fun c => (s c).deco.1.L)
 

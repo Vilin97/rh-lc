@@ -16,7 +16,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Chars X Pr R.m)
   (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu))
 
 def XiTop {u : Pr.Word} (m2 : ℕ) (p : ChPt (R := R) sel mu u (m2 + 1)) (Y : Set (Sp X.E (R.N (m2 + 1))))
-    (d : DecoSet X.E (R.N R.m) (Pr.vT u) (rowSG Pr sel mu)) (fr : Frs X.E (R.N R.m) (rowSG Pr sel mu))
+    (d : DecoSet (E := X.E) (n := R.N R.m) (ST := Pr.vT u) (SG := rowSG Pr sel mu)) (fr : Frs X.E (R.N R.m) (rowSG Pr sel mu))
     (x : HomE X.E (R.N (m2 + 1)) (R.N R.m)) : X.K :=
   phiT X.K p.deco.1 d.1 x *
     ∏ P : rowSG Pr sel mu,

@@ -357,12 +357,12 @@ def IsHeckeNbr (P : Ideal (𝓞 E)) (i : ℕ) (N N' : Submodule (𝓞 E) (Sp E n
 
 variable {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-def DecoSet.heckeSet (P : Ideal (𝓞 E)) (i : ℕ) (d : DecoSet E n ST SG) : Set (DecoSet E n ST SG) :=
+def DecoSet.heckeSet (P : Ideal (𝓞 E)) (i : ℕ) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : Set (DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :=
   {d' | IsHeckeNbr P i d.1.N d'.1.N ∧ d'.1.f = d.1.f ∧ d'.1.be = d.1.be}
 
 
 open Classical in
-def DecoSet.heckeNb (P : Ideal (𝓞 E)) (i : ℕ) (d : DecoSet E n ST SG) : Finset (DecoSet E n ST SG) :=
+def DecoSet.heckeNb (P : Ideal (𝓞 E)) (i : ℕ) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : Finset (DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :=
   if h : (d.heckeSet P i).Finite then h.toFinset else ∅
 
 def quotMapEquiv {R W : Type} [CommRing R] [AddCommGroup W] [Module R W] (g : W ≃ₗ[R] W)
@@ -403,8 +403,8 @@ open NumberField IsDedekindDomain Formalism.HermitianLatticesTheory
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
   {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
-theorem DecoSet.smul_mem_heckeSet {P : Ideal (𝓞 E)} {i : ℕ} (a : UF E n × GLG E n SG)
-    {d e : DecoSet E n ST SG} (h : e ∈ d.heckeSet P i) : a • e ∈ (a • d).heckeSet P i := by
+theorem DecoSet.smul_mem_heckeSet {P : Ideal (𝓞 E)} {i : ℕ} (a : UF E n × GLG (E := E) (n := n) (SG := SG))
+    {d e : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)} (h : e ∈ d.heckeSet P i) : a • e ∈ (a • d).heckeSet P i := by
   obtain ⟨h1, h2, h3⟩ := h
   refine ⟨?_, ?_, ?_⟩
   · rw [DecoSet.smul_val, DecoSet.smul_val]
@@ -414,14 +414,14 @@ theorem DecoSet.smul_mem_heckeSet {P : Ideal (𝓞 E)} {i : ℕ} (a : UF E n × 
   · rw [DecoSet.smul_val, DecoSet.smul_val]
     simp only [Deco.act, h3]
 
-theorem DecoSet.smul_mem_heckeSet_iff {P : Ideal (𝓞 E)} {i : ℕ} (a : UF E n × GLG E n SG)
-    {d e : DecoSet E n ST SG} : a • e ∈ (a • d).heckeSet P i ↔ e ∈ d.heckeSet P i := by
+theorem DecoSet.smul_mem_heckeSet_iff {P : Ideal (𝓞 E)} {i : ℕ} (a : UF E n × GLG (E := E) (n := n) (SG := SG))
+    {d e : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)} : a • e ∈ (a • d).heckeSet P i ↔ e ∈ d.heckeSet P i := by
   refine ⟨fun h => ?_, DecoSet.smul_mem_heckeSet a⟩
   have := DecoSet.smul_mem_heckeSet a⁻¹ h
   rwa [inv_smul_smul, inv_smul_smul] at this
 
-theorem DecoSet.heckeSet_smul (P : Ideal (𝓞 E)) (i : ℕ) (a : UF E n × GLG E n SG)
-    (d : DecoSet E n ST SG) : (a • d).heckeSet P i = (fun e => a • e) '' d.heckeSet P i := by
+theorem DecoSet.heckeSet_smul (P : Ideal (𝓞 E)) (i : ℕ) (a : UF E n × GLG (E := E) (n := n) (SG := SG))
+    (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : (a • d).heckeSet P i = (fun e => a • e) '' d.heckeSet P i := by
   ext e
   constructor
   · intro h
@@ -431,8 +431,8 @@ theorem DecoSet.heckeSet_smul (P : Ideal (𝓞 E)) (i : ℕ) (a : UF E n × GLG 
   · rintro ⟨e', h, rfl⟩
     exact DecoSet.smul_mem_heckeSet a h
 
-theorem DecoSet.smul_mem_heckeNb_iff {P : Ideal (𝓞 E)} {i : ℕ} (a : UF E n × GLG E n SG)
-    {d e : DecoSet E n ST SG} : a • e ∈ (a • d).heckeNb P i ↔ e ∈ d.heckeNb P i := by
+theorem DecoSet.smul_mem_heckeNb_iff {P : Ideal (𝓞 E)} {i : ℕ} (a : UF E n × GLG (E := E) (n := n) (SG := SG))
+    {d e : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)} : a • e ∈ (a • d).heckeNb P i ↔ e ∈ d.heckeNb P i := by
   have hfin : ((a • d).heckeSet P i).Finite ↔ (d.heckeSet P i).Finite := by
     rw [DecoSet.heckeSet_smul]
     exact Set.finite_image_iff (MulAction.injective a).injOn
@@ -456,9 +456,9 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
 structure DecoPts (S : GSD K) (E : Type) [Field E] [NumberField E] [StarRing E] (n : ℕ)
     (ST SG : Finset (HeightOneSpectrum (𝓞 E))) where
 
-  pts : S.D ≃ DecoSet E n ST SG
+  pts : S.D ≃ DecoSet (E := E) (n := n) (ST := ST) (SG := SG)
 
-  hom : S.G →* UF E n × GLG E n SG
+  hom : S.G →* UF E n × GLG (E := E) (n := n) (SG := SG)
   pts_smul : ∀ (g : S.G) (d : S.D), pts (g • d) = hom g • pts d
 
 variable {S : GSD K}
@@ -539,14 +539,14 @@ theorem finite_quot_smul {W : Type} [AddCommGroup W] [Module (𝓞 E) W] (N : Su
 variable [StarRing E] {n : ℕ} {ST SG : Finset (HeightOneSpectrum (𝓞 E))}
 
 theorem DecoSet.heckeSet_finite {P : Ideal (𝓞 E)} (hP : P ≠ ⊥) (hP' : conjIdeal (K := E) P ≠ ⊥) (i : ℕ)
-    (d : DecoSet E n ST SG) : (d.heckeSet P i).Finite := by
+    (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : (d.heckeSet P i).Finite := by
   obtain ⟨a, haP, ha⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hP
   have hI : Ideal.span {a} * conjIdeal (K := E) P ≠ ⊥ := by
     rw [Ne, Ideal.mul_eq_bot, not_or]
     exact ⟨fun h => ha (Ideal.span_singleton_eq_bot.1 h), hP'⟩
   have hfin := finite_between ((Ideal.span {a} * conjIdeal (K := E) P) • d.1.N) d.1.N
     (finite_quot_smul d.1.N d.2.lat.fg _ hI)
-  refine Set.Finite.of_injOn (f := fun e : DecoSet E n ST SG => Ideal.span {a} • e.1.N) ?_ ?_ hfin
+  refine Set.Finite.of_injOn (f := fun e : DecoSet (E := E) (n := n) (ST := ST) (SG := SG) => Ideal.span {a} • e.1.N) ?_ ?_ hfin
   · intro e he
     obtain ⟨⟨h1, h2, _⟩, _, _⟩ := he
     refine ⟨?_, ?_⟩
@@ -566,11 +566,11 @@ theorem DecoSet.heckeSet_finite {P : Ideal (𝓞 E)} (hP : P ≠ ⊥) (hP' : con
     exact Subtype.ext (Deco.ext hN (he.2.1.trans he'.2.1.symm) (he.2.2.trans he'.2.2.symm))
 
 theorem DecoSet.mem_heckeNb {P : Ideal (𝓞 E)} (hP : P ≠ ⊥) (hP' : conjIdeal (K := E) P ≠ ⊥) (i : ℕ)
-    (d e : DecoSet E n ST SG) : e ∈ d.heckeNb P i ↔ e ∈ d.heckeSet P i := by
+    (d e : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : e ∈ d.heckeNb P i ↔ e ∈ d.heckeSet P i := by
   unfold DecoSet.heckeNb
   rw [dite_eq_left (DecoSet.heckeSet_finite hP hP' i d), Set.Finite.mem_toFinset]
 
-theorem DecoSet.heckeSet_zero (P : Ideal (𝓞 E)) (d : DecoSet E n ST SG) : d.heckeSet P 0 = {d} := by
+theorem DecoSet.heckeSet_zero (P : Ideal (𝓞 E)) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) : d.heckeSet P 0 = {d} := by
   ext e
   simp only [Set.mem_singleton_iff]
   constructor

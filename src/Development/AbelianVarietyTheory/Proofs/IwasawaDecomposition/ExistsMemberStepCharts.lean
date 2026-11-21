@@ -46,7 +46,7 @@ theorem ufGL_inj : Function.Injective (ufGL E n) := fun a b h => by
   rw [ufGL_ratHom, ufGL_ratHom] at h
   rw [Subtype.ext h]
 
-theorem cls_dia (H : Subgroup (GLG E n SG)) (c : DiaG E ST) (d d' : DecoSet E n ST SG) :
+theorem cls_dia (H : Subgroup (GLG (E := E) (n := n) (SG := SG))) (c : DiaG (E := E) (ST := ST)) (d d' : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) :
     decoCls n ST SG H (d.dia c) = decoCls n ST SG H (d'.dia c) ↔ decoCls n ST SG H d = decoCls n ST SG H d' := by
   rw [rla_cls_eq, rla_cls_eq]
   refine exists_congr fun g => ?_
@@ -59,14 +59,14 @@ theorem chart_exists (Hw : ∀ w : SG, Subgroup (GL (Fin n) (𝓞 E ⧸ w.1.asId
     (hSG : ∀ v : HeightOneSpectrum (𝓞 F), (T : 𝓞 F) ∈ v.asIdeal → v ∉ plUnder F SG)
     (hidx : (baseLb E n ST).toAddSubgroup.relIndex
       (Submodule.span (𝓞 E) (Formalism.BasicNotions.dualSet (hc.sig : E →+* E) (1 : Matrix (Fin n) (Fin n) E) (baseLb E n ST))).toAddSubgroup = T ^ (2 * f))
-    (lam : (Subgroup.pi Set.univ Hw : Subgroup (GLG E n SG)) →* ℂˣ)
+    (lam : (Subgroup.pi Set.univ Hw : Subgroup (GLG (E := E) (n := n) (SG := SG))) →* ℂˣ)
     (J : Matrix (Fin n) (Fin n) E) (hJ : J = 1) (bad : Set (HeightOneSpectrum (𝓞 F))) (hb : bad = plUnder F SG)
-    {cl : Type} (stab : cl → Type) [∀ c, Group (stab c)] (lat : cl → Submodule (𝓞 E) (Fin n → E)) (c₀ : DiaG E ST)
-    (s : cl → DecoSet E n ST SG) (y : cl → GL (Fin n) (AfE F E)) (hy : ∀ c, y c ∈ UAd hc n)
+    {cl : Type} (stab : cl → Type) [∀ c, Group (stab c)] (lat : cl → Submodule (𝓞 E) (Fin n → E)) (c₀ : DiaG (E := E) (ST := ST))
+    (s : cl → DecoSet (E := E) (n := n) (ST := ST) (SG := SG)) (y : cl → GL (Fin n) (AfE F E)) (hy : ∀ c, y c ∈ UAd hc n)
     (hd : ∀ c, (decoOf ST SG (y c)).dia c₀ = s c)
     (hs : Function.Bijective fun c => decoCls n ST SG (Subgroup.pi Set.univ Hw) (s c)) (hlat : ∀ c, lat c = (s c).1.L)
     (st : ∀ c, stab c →* GL (Fin n) E) (hinj : ∀ c, Function.Injective (st c))
-    (hr : ∀ c γ, γ ∈ (st c).range ↔ ∃ g : UF E n × (Subgroup.pi Set.univ Hw : Subgroup (GLG E n SG)), ufGL E n g.1 = γ ∧ g • s c = s c) :
+    (hr : ∀ c γ, γ ∈ (st c).range ↔ ∃ g : UF E n × (Subgroup.pi Set.univ Hw : Subgroup (GLG (E := E) (n := n) (SG := SG))), ufGL E n g.1 = γ ∧ g • s c = s c) :
     ∃ (lev : StepLevel F E hc.sig J T f bad) (Y : cl → UPts hc.sig J (FiniteAdeleRing (𝓞 F) F))
       (SI : ∀ c, stab c →* UJ (hc.sig : E →+* E) J),
       Function.Bijective (fun c => (Quotient.mk'' (Y c) : Cls lev)) ∧
@@ -123,10 +123,10 @@ theorem chart_exists (Hw : ∀ w : SG, Subgroup (GL (Fin n) (𝓞 E ⧸ w.1.asId
     · rintro ⟨h, hg⟩
       exact ⟨(_, h), ufGL_ratHom hc n γ, hg⟩
 
-theorem red_of_act (c₀ : DiaG E ST) {y x : GL (Fin n) (AfE F E)} (hy : y ∈ UAd hc n) (hx : y * x ∈ UAd hc n) (h : GLG E n SG)
-    (e : (decoOf ST SG (y * x)).dia c₀ = ((1, h) : UF E n × GLG E n SG) • (decoOf ST SG y).dia c₀) :
+theorem red_of_act (c₀ : DiaG (E := E) (ST := ST)) {y x : GL (Fin n) (AfE F E)} (hy : y ∈ UAd hc n) (hx : y * x ∈ UAd hc n) (h : GLG (E := E) (n := n) (SG := SG))
+    (e : (decoOf ST SG (y * x)).dia c₀ = ((1, h) : UF E n × GLG (E := E) (n := n) (SG := SG)) • (decoOf ST SG y).dia c₀) :
     ∃ hJ : x ∈ J0 hc n ST, redG hc n ST SG ⟨x, hJ⟩ = h⁻¹ := by
-  have e1 : decoOf ST SG (y * x) = ((1, h) : UF E n × GLG E n SG) • decoOf ST SG y := rla_dia_inj n ST SG c₀ e
+  have e1 : decoOf ST SG (y * x) = ((1, h) : UF E n × GLG (E := E) (n := n) (SG := SG)) • decoOf ST SG y := rla_dia_inj n ST SG c₀ e
   have e2 : decoRaw ST SG (y * x) = (decoRaw ST SG y).act 1 h := by
     rw [← rlc_decoOf_val hc n ST SG hx, ← rlc_decoOf_val hc n ST SG hy, e1]
     rfl
@@ -136,9 +136,9 @@ theorem red_of_act (c₀ : DiaG E ST) {y x : GL (Fin n) (AfE F E)} (hy : y ∈ U
   rw [← hr, ← map_inv]
   exact congrArg _ (Subtype.ext e3)
 
-theorem act_of_mem (H : Subgroup (GLG E n SG)) (c₀ : DiaG E ST) {y : GL (Fin n) (AfE F E)} (hy : y ∈ UAd hc n) (x : levU hc n ST SG H) :
+theorem act_of_mem (H : Subgroup (GLG (E := E) (n := n) (SG := SG))) (c₀ : DiaG (E := E) (ST := ST)) {y : GL (Fin n) (AfE F E)} (hy : y ∈ UAd hc n) (x : levU hc n ST SG H) :
     (decoOf ST SG (y * x.1)).dia c₀ =
-      ((1, ((Formalism.L2.Col.levRed hc n ST SG H x)⁻¹ : H).1) : UF E n × GLG E n SG) • (decoOf ST SG y).dia c₀ := by
+      ((1, ((Formalism.L2.Col.levRed hc n ST SG H x)⁻¹ : H).1) : UF E n × GLG (E := E) (n := n) (SG := SG)) • (decoOf ST SG y).dia c₀ := by
   have h := rlc_decoOf_sm hc n ST SG H 1 x⁻¹ ⟨y, hy⟩
   rw [map_one, map_inv] at h
   simp only [OneMemClass.coe_one, map_one, one_mul, InvMemClass.coe_inv, inv_inv] at h
@@ -197,13 +197,13 @@ theorem bar_ya_eq_iff (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) (g :
 def chH (Λ : LevFam X.E X.K n SG) (C : ∀ w : SG, Set (Fin n → 𝓞 X.E ⧸ w.1.asIdeal)) (w : SG) :
     Subgroup (GL (Fin n) (𝓞 X.E ⧸ w.1.asIdeal)) := (Λ w).H ⊓ setStab (C w)
 
-abbrev chG (Λ : LevFam X.E X.K n SG) (C : ∀ w : SG, Set (Fin n → 𝓞 X.E ⧸ w.1.asIdeal)) : Subgroup (GLG X.E n SG) :=
+abbrev chG (Λ : LevFam X.E X.K n SG) (C : ∀ w : SG, Set (Fin n → 𝓞 X.E ⧸ w.1.asIdeal)) : Subgroup (GLG (E := X.E) (n := n) (SG := SG)) :=
   Subgroup.pi Set.univ (chH Λ C)
 
 theorem chG_le (Λ : LevFam X.E X.K n SG) (C : ∀ w : SG, Set (Fin n → 𝓞 X.E ⧸ w.1.asIdeal)) : chG Λ C ≤ Λ.grp :=
   fun _ h w hw => (h w hw).1
 
-theorem mem_chG {Λ : LevFam X.E X.K n SG} {C : ∀ w : SG, Set (Fin n → 𝓞 X.E ⧸ w.1.asIdeal)} {h : GLG X.E n SG} :
+theorem mem_chG {Λ : LevFam X.E X.K n SG} {C : ∀ w : SG, Set (Fin n → 𝓞 X.E ⧸ w.1.asIdeal)} {h : GLG (E := X.E) (n := n) (SG := SG)} :
     h ∈ chG Λ C ↔ h ∈ Λ.grp ∧ ∀ w, h w ∈ setStab (C w) :=
   ⟨fun a => ⟨chG_le Λ C a, fun w => (a w trivial).2⟩, fun a w hw => ⟨a.1 w hw, a.2 w⟩⟩
 
@@ -220,7 +220,7 @@ theorem grpQ_eq_one (hQ : Q = ∅) (Θ : LevQFam X.E X.K n Q) (t : Θ.grp) : t =
 
 variable [NeZero n] (hc : Formalism.BasicNotions.CMData X.F X.E)
 
-theorem lev_iff (hQ : Q = ∅) (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) (r : PtY ST SG Q y) (c₀ : DiaG X.E ST)
+theorem lev_iff (hQ : Q = ∅) (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) (r : PtY ST SG Q y) (c₀ : DiaG (E := X.E) (ST := ST))
     {g x : GL (Fin n) (AfE X.F X.E)} (hg : g ∈ UAd hc n) (hx : g * x ∈ UAd hc n) (q : DecoF X.E n ST SG Q)
     (e : (decoOf ST SG g).dia c₀ = r.1.1.deco) (e' : (decoOf ST SG (g * x)).dia c₀ = q.deco) :
     x ∈ levU hc n ST SG (chG Λ (bar r)) ↔
@@ -239,7 +239,7 @@ theorem lev_iff (hQ : Q = ∅) (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K 
     rw [hr]
     exact inv_mem (mem_chG.2 ⟨h.2, (bar_ya_eq_iff _ _ _ _).1 h3⟩)
 
-theorem chr_eq (σ : X.K →+* ℂ) (hQ : Q = ∅) (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) (r : PtY ST SG Q y) (c₀ : DiaG X.E ST)
+theorem chr_eq (σ : X.K →+* ℂ) (hQ : Q = ∅) (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) (r : PtY ST SG Q y) (c₀ : DiaG (E := X.E) (ST := ST))
     (C : ∀ w : SG, Set (Fin n → 𝓞 X.E ⧸ w.1.asIdeal))
     {g : GL (Fin n) (AfE X.F X.E)} (x : levU hc n ST SG (chG Λ C)) (hg : g ∈ UAd hc n) (κ : FrmG Λ Θ) (h1 : ufGL X.E n κ.1 = 1)
     (e : (decoOf ST SG g).dia c₀ = r.1.1.deco) (e' : (decoOf ST SG (g * x.1)).dia c₀ = (ya Λ Θ κ r).1.1.deco) :
@@ -308,7 +308,7 @@ theorem ya_eq (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) (q q' : PtY 
   hinj _ _ hg (((bar_ya_eq_iff _ _ _ _).2 (mem_chG.1 g.2.2).2).trans hb.symm)
 
 include hinj in
-theorem cls_bij (hsur : ∀ (q : PtY ST SG Q y) (d : DecoSet X.E n ST SG), ∃ q' : PtY ST SG Q y, q'.1.1.deco = d ∧ bar q' = bar q)
+theorem cls_bij (hsur : ∀ (q : PtY ST SG Q y) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)), ∃ q' : PtY ST SG Q y, q'.1.1.deco = d ∧ bar q' = bar q)
     (hnorm : ∀ b q q', bar q = bar q' →
       bar (rp Λ Θ p₀ pref ((stR Λ Θ p₀ pref).cl b q)) = bar (rp Λ Θ p₀ pref ((stR Λ Θ p₀ pref).cl b q')))
     (c₀ : (stR Λ Θ p₀ pref).Cl) (p : (stR Λ Θ p₀ pref).Cl → Prop)

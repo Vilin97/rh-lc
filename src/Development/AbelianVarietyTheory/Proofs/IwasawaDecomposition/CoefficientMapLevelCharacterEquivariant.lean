@@ -30,17 +30,17 @@ section Generic
 
 variable {Xf : Formalism.L2.Col.Fields} {n : ℕ} {SG : Finset (HeightOneSpectrum (𝓞 Xf.E))} (Λ : Formalism.L2.Col.LevFam Xf.E Xf.K n SG)
 
-theorem mem_grp_of_inv_mul (a b : Formalism.L2.Col.GLG Xf.E n SG) (hb : b = 1) (hu : a⁻¹ * b ∈ Λ.grp) : a ∈ Λ.grp := by
+theorem mem_grp_of_inv_mul (a b : Formalism.L2.Col.GLG (E := Xf.E) (n := n) (SG := SG)) (hb : b = 1) (hu : a⁻¹ * b ∈ Λ.grp) : a ∈ Λ.grp := by
   subst hb
   rw [mul_one] at hu
   exact (Subgroup.inv_mem_iff _).1 hu
 
-theorem inv_mul_mem_grp (a b : Formalism.L2.Col.GLG Xf.E n SG) (hb : b = 1) (ha : a ∈ Λ.grp) : a⁻¹ * b ∈ Λ.grp := by
+theorem inv_mul_mem_grp (a b : Formalism.L2.Col.GLG (E := Xf.E) (n := n) (SG := SG)) (hb : b = 1) (ha : a ∈ Λ.grp) : a⁻¹ * b ∈ Λ.grp := by
   subst hb
   rw [mul_one]
   exact Λ.grp.inv_mem ha
 
-theorem chr_of_inv_mul (σ : Xf.K →+* ℂ) (a b : Formalism.L2.Col.GLG Xf.E n SG) (hb : b = 1) (ha : a ∈ Λ.grp) (hu : a⁻¹ * b ∈ Λ.grp)
+theorem chr_of_inv_mul (σ : Xf.K →+* ℂ) (a b : Formalism.L2.Col.GLG (E := Xf.E) (n := n) (SG := SG)) (hb : b = 1) (ha : a ∈ Λ.grp) (hu : a⁻¹ * b ∈ Λ.grp)
     (z : ℂˣ) (hz : σ ((Λ.chr ⟨_, hu⟩ : Xf.Kˣ) : Xf.K) = (z : ℂ)) :
     σ ((Λ.chr ⟨a, ha⟩ : Xf.Kˣ) : Xf.K) = ((z⁻¹ : ℂˣ) : ℂ) := by
   subst hb
@@ -56,7 +56,7 @@ theorem character_trivial_on_reduction_kernel (σ : Xf.K →+* ℂ) (k : colJ hc
   have hr : Formalism.L2.Col.redH hc n ∅ SG Λ.grp ((colJEquiv hc n ∅ SG Λ.grp).symm k) = 1 := Subtype.ext hk
   rw [hr, map_one, Units.val_one, map_one]
 
-theorem formRho_colGl (C : Formalism.L2.Col.CoefPk Xf n (Formalism.L2.Col.DecoSet Xf.E n ∅ SG))
+theorem formRho_colGl (C : Formalism.L2.Col.CoefPk Xf n (Formalism.L2.Col.DecoSet (E := Xf.E) (n := n) (ST := ∅) (SG := SG)))
     (γ : Formalism.L2.Col.URat hc n) (k : colJ hc n ∅ SG Λ.grp) (v : C.V) :
     (Formalism.L2.Col.formGSD C Λ).ρ (colGl (Formalism.L2.Col.rf_onDeco C Λ) (γ, k)) v =
       ((Λ.chr (Formalism.L2.Col.redH hc n ∅ SG Λ.grp ((colJEquiv hc n ∅ SG Λ.grp).symm k)) : Xf.Kˣ) : Xf.K) •

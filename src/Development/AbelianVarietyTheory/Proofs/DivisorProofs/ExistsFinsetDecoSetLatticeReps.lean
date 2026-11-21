@@ -50,8 +50,8 @@ theorem exists_finset_decoSet_lattice_reps :
       (Rs.card : ℝ) ≤ (3 * ((Module.finrank ℚ E : ℝ) ^ 2 * (n : ℝ) ^ 4 *
         (|(discr E : ℝ)| ^ ((1 : ℝ) / (Module.finrank ℚ E : ℝ))) ^ 2)) ^
           (3 * Module.finrank ℚ E * n ^ 2) ∧
-      ∀ (ST SG : Finset (HeightOneSpectrum (𝓞 E))) (d : DecoSet E n ST SG),
-        ∃ g : UF E n, ((g, (1 : GLG E n SG)) • d).1.N ∈ Rs := by
+      ∀ (ST SG : Finset (HeightOneSpectrum (𝓞 E))) (d : DecoSet (E := E) (n := n) (ST := ST) (SG := SG)),
+        ∃ g : UF E n, ((g, (1 : GLG (E := E) (n := n) (SG := SG))) • d).1.N ∈ Rs := by
   intro E _ _ _ _ hs n
   obtain ⟨R, hR, H⟩ := GlobalTheory.exists_finset_selfDual_classes_rootDiscr E n
   refine ⟨R, hR, fun ST SG d => ?_⟩

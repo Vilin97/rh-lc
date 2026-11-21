@@ -31,7 +31,7 @@ theorem rhoC_map (γ : UF X.E n) (v : VV X.K lam) :
 
 
 variable (ST) in
-def cForms (Λ : LevFam X.E X.K n SG) : Submodule ℂ (DecoSet X.E n ST SG → Pol ℂ X.Tau n) where
+def cForms (Λ : LevFam X.E X.K n SG) : Submodule ℂ (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → Pol ℂ X.Tau n) where
   carrier := {F | ∀ d, F d ∈ VV ℂ lam ∧ ∀ g : FormG Λ, F (g • d) = σ (Λ.chr g.2 : X.Kˣ) • rhoC σ lam g.1 (F d)}
   add_mem' := by
     intro F G hF hG d
@@ -45,12 +45,12 @@ def cForms (Λ : LevFam X.E X.K n SG) : Submodule ℂ (DecoSet X.E n ST SG → P
     simp only [Pi.smul_apply]
     rw [(hF d).2 g, map_smul, smul_comm]
 
-theorem mem_cForms (Λ : LevFam X.E X.K n SG) (F : DecoSet X.E n ST SG → Pol ℂ X.Tau n) : F ∈ cForms ST σ lam Λ ↔
+theorem mem_cForms (Λ : LevFam X.E X.K n SG) (F : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → Pol ℂ X.Tau n) : F ∈ cForms ST σ lam Λ ↔
     ∀ d, F d ∈ VV ℂ lam ∧ ∀ (γ : UF X.E n) (h : Λ.grp),
-      F ((γ, (h.1 : GLG X.E n SG)) • d) = σ (Λ.chr h : X.Kˣ) • rhoC σ lam γ (F d) :=
+      F ((γ, (h.1 : GLG (E := X.E) (n := n) (SG := SG))) • d) = σ (Λ.chr h : X.Kˣ) • rhoC σ lam γ (F d) :=
   forall_congr' fun _ => and_congr_right fun _ => ⟨fun h γ k => h (γ, k), fun h g => h g.1 g.2⟩
 
-def toCForm (L : DecoSet X.E n ST SG → Submodule (𝓞 X.E) (Sp X.E n)) (Λ : LevFam X.E X.K n SG) :
+def toCForm (L : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → Submodule (𝓞 X.E) (Sp X.E n)) (Λ : LevFam X.E X.K n SG) :
     (formGSD (squarePk X lam L) Λ).EqFun →ₛₗ[σ] cForms ST σ lam Λ where
   toFun φ := ⟨fun d => MvPolynomial.map σ (φ.1 d).1, fun d => ⟨GlobalTheory.Proof.TensorMapDescent.map_mem_VV σ lam _ (φ.1 d).2, fun g => by
     have h : (φ.1 (g • d)).1 = ((Λ.chr g.2 : X.Kˣ) : X.K) • (rhoV X.emb lam (ufGL X.E n g.1) (φ.1 d)).1 :=
@@ -60,12 +60,12 @@ def toCForm (L : DecoSet X.E n ST SG → Submodule (𝓞 X.E) (Sp X.E n)) (Λ : 
   map_add' φ ψ := Subtype.ext (funext fun d => map_add (MvPolynomial.map σ) (φ.1 d).1 (ψ.1 d).1)
   map_smul' c φ := Subtype.ext (funext fun d => (mapS σ).map_smulₛₗ c (φ.1 d).1)
 
-theorem toCForm_injective (L : DecoSet X.E n ST SG → Submodule (𝓞 X.E) (Sp X.E n)) (Λ : LevFam X.E X.K n SG) :
+theorem toCForm_injective (L : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → Submodule (𝓞 X.E) (Sp X.E n)) (Λ : LevFam X.E X.K n SG) :
     Function.Injective (toCForm σ lam L Λ) := fun _ _ h =>
   Subtype.ext (funext fun d => Subtype.ext (MvPolynomial.map_injective σ σ.injective (congrFun (congrArg Subtype.val h) d)))
 
-theorem tr_mem_cForms (Λ : LevFam X.E X.K n SG) (a : GLG X.E n SG) (ha : ∀ w, (Λ w).NormBy (a w))
-    {F : DecoSet X.E n ST SG → Pol ℂ X.Tau n} (hF : F ∈ cForms ST σ lam Λ) :
+theorem tr_mem_cForms (Λ : LevFam X.E X.K n SG) (a : GLG (E := X.E) (n := n) (SG := SG)) (ha : ∀ w, (Λ w).NormBy (a w))
+    {F : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → Pol ℂ X.Tau n} (hF : F ∈ cForms ST σ lam Λ) :
     (fun d => F (((1 : UF X.E n), a⁻¹) • d)) ∈ cForms ST σ lam Λ := by
   rw [mem_cForms] at hF ⊢
   refine fun d => ⟨(hF _).1, fun γ h => ?_⟩
@@ -76,7 +76,7 @@ theorem tr_mem_cForms (Λ : LevFam X.E X.K n SG) (a : GLG X.E n SG) (ha : ∀ w,
 
 
 variable (ST) in
-def cTr (Λ : LevFam X.E X.K n SG) {A : Type} [Group A] (ι : A →* GLG X.E n SG) (hι : ∀ a w, (Λ w).NormBy (ι a w)) :
+def cTr (Λ : LevFam X.E X.K n SG) {A : Type} [Group A] (ι : A →* GLG (E := X.E) (n := n) (SG := SG)) (hι : ∀ a w, (Λ w).NormBy (ι a w)) :
     Representation ℂ A (cForms ST σ lam Λ) where
   toFun a :=
     { toFun := fun F => ⟨_, tr_mem_cForms σ lam Λ (ι a) (hι a) F.2⟩
@@ -91,9 +91,9 @@ def cTr (Λ : LevFam X.E X.K n SG) {A : Type} [Group A] (ι : A →* GLG X.E n S
     show F.1 (((1 : UF X.E n), (ι (a * b))⁻¹) • d) = F.1 (((1 : UF X.E n), (ι b)⁻¹) • ((1 : UF X.E n), (ι a)⁻¹) • d)
     rw [smul_smul, Prod.mk_mul_mk, one_mul, map_mul, mul_inv_rev]
 
-theorem mem_cForms_split {r : ℕ} {SG0 : Finset (HeightOneSpectrum (𝓞 X.E))} {ι : GLG X.E r SG0 →* GLG X.E n SG}
+theorem mem_cForms_split {r : ℕ} {SG0 : Finset (HeightOneSpectrum (𝓞 X.E))} {ι : GLG (E := X.E) (n := r) (SG := SG0) →* GLG (E := X.E) (n := n) (SG := SG)}
     {ΛP ΛK : LevFam X.E X.K n SG} {Λ0 : LevFam X.E X.K r SG0} (H : LevFam.Split ι ΛP ΛK Λ0)
-    (F : DecoSet X.E n ST SG → Pol ℂ X.Tau n) :
+    (F : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG) → Pol ℂ X.Tau n) :
     F ∈ cForms ST σ lam ΛP ↔ F ∈ cForms ST σ lam ΛK ∧
       ∀ (a : Λ0.grp) d, F (((1 : UF X.E n), (ι a.1)⁻¹) • d) = σ ((Λ0.chr a)⁻¹ : X.Kˣ) • F d := by
   rw [mem_cForms, mem_cForms]
@@ -111,9 +111,9 @@ theorem mem_cForms_split {r : ℕ} {SG0 : Finset (HeightOneSpectrum (𝓞 X.E))}
   · rintro ⟨h1, h2⟩ d
     refine ⟨(h1 d).1, fun γ h => ?_⟩
     obtain ⟨a, k, e1, e2⟩ := H.fac h
-    have h3 := h2 a⁻¹ ((γ, (k.1 : GLG X.E n SG)) • d)
+    have h3 := h2 a⁻¹ ((γ, (k.1 : GLG (E := X.E) (n := n) (SG := SG))) • d)
     rw [(h1 d).2 γ k, smul_smul, Prod.mk_mul_mk, one_mul, map_inv Λ0.chr, inv_inv] at h3
-    have e3 : (ι ((a⁻¹ : ↥Λ0.grp) : GLG X.E r SG0))⁻¹ = ι a.1 := by
+    have e3 : (ι ((a⁻¹ : ↥Λ0.grp) : GLG (E := X.E) (n := r) (SG := SG0)))⁻¹ = ι a.1 := by
       rw [Subgroup.coe_inv, map_inv, inv_inv]
     rw [e3] at h3
     rw [e1, h3, e2, smul_smul, Units.val_mul, map_mul]
@@ -135,7 +135,7 @@ variable {Λ Λ' : LevFam X.E X.K n SG} {Θ : LevFam X.E X.K n Q} {H : Subgroup 
   (hH : IsSubLev Λ Λ' (levRedFam Θ) H) (hd : Disjoint SG Q)
 include hH hd
 
-theorem frLaw_comp_iff (F : DecoSet X.E n ST (uSG SG Q) → Pol ℂ X.Tau n) :
+theorem frLaw_comp_iff (F : DecoSet (E := X.E) (n := n) (ST := ST) (SG := uSG SG Q) → Pol ℂ X.Tau n) :
     FrLaw σ lam Λ (levRedFam Θ) H (fun p => F (forgetFr p)) ↔ F ∈ cForms ST σ lam (Λ'.glue Θ).inv := by
   have key : ∀ (g : FrmG Λ (levRedFam Θ)) (hg : g.2.1.1 ∈ Λ'.grp), (σ (Λ.chr g.2.1 * (levRedFam Θ).chr g.2.2 : X.Kˣ))⁻¹ =
       σ ((Λ'.glue Θ).inv.chr (redFG Λ' Θ (g.1, ⟨_, hg⟩, g.2.2)).2 : X.Kˣ) := fun g hg => by

@@ -157,7 +157,7 @@ theorem pt_tilF_gen : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → P
   have e : (tilF I.sel (I.tup a) u d).deco =
       (tilFr (ST := (B.primes X).vT u) hN ((B.primes X).piT u) (extTo ∅ d)).deco := by
     rw [tilF_deco I.sel (I.tup a) hPr u hQ d, tilFr_deco hN (conj_piT_notMem hPr u) (piT_notMem_vGs hPr u) hQ0, extTo_deco]
-  rw [show ((1, 1, 1) : UF B.fields.E (B.R.N B.R.m) × GLG B.fields.E (B.R.N B.R.m) (B.primes X).vGs ×
+  rw [show ((1, 1, 1) : UF B.fields.E (B.R.N B.R.m) × GLG (E := B.fields.E) (n := B.R.N B.R.m) (SG := (B.primes X).vGs) ×
     GLQ B.fields.E (B.R.N B.R.m) ∅) = 1 from rfl, one_smul] at hB
   rw [hgext, ← mul_assoc]
   refine ⟨hB.uni, ?_, ?_, ?_, ?_⟩

@@ -209,8 +209,8 @@ theorem exists_isRed_inv {s : GL (Fin n) (AfE F E)}
     ∃ A : GL (Fin n) (𝓞 E ⧸ P.asIdeal), IsRed P s⁻¹ A :=
   exists_isRed (fun i j => (entries_le h P i j).2) fun i j => by rw [inv_inv]; exact (entries_le h P i j).1
 
-theorem fr_smul (p : DecoF E n ST SG Q) (h : GLG E n SG) (θ : GLQ E n Q) (P : Q) (v : Sp E n) :
-    (((1, h, θ) : UF E n × GLG E n SG × GLQ E n Q) • p).fr P v = p.fr P ((((θ P)⁻¹ : ↥(GLint E n P.1)).1) v) := rfl
+theorem fr_smul (p : DecoF E n ST SG Q) (h : GLG (E := E) (n := n) (SG := SG)) (θ : GLQ E n Q) (P : Q) (v : Sp E n) :
+    (((1, h, θ) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p).fr P v = p.fr P ((((θ P)⁻¹ : ↥(GLint E n P.1)).1) v) := rfl
 
 theorem adAt_mul_fr {g : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} (hg : IsPtOf hc g p) (θ : GLQ E n Q) (P : Q)
     (i j : Fin n) :
@@ -222,8 +222,8 @@ theorem adAt_mul_fr {g : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} (hg : IsP
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul, hg.fr P i k]
 
-theorem conds_of_pts {g s : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} {h : GLG E n SG} {θ : GLQ E n Q}
-    (hg : IsPtOf hc g p) (hq : IsPtOf hc (g * s) (((1, h, θ) : UF E n × GLG E n SG × GLQ E n Q) • p)) :
+theorem conds_of_pts {g s : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} {h : GLG (E := E) (n := n) (SG := SG)} {θ : GLQ E n Q}
+    (hg : IsPtOf hc g p) (hq : IsPtOf hc (g * s) (((1, h, θ) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p)) :
     (s ∈ Formalism.L2.Herm.UstdAf hc n ∧ Formalism.L2.Herm.Carries s (Formalism.L2.Col.stdLat E n) (Formalism.L2.Col.stdLat E n) ∧
       (∀ (P : ST) (r j : Fin n), r.1 + 1 = n →
         HasRes P.1 (adAt F P.1 ((s⁻¹ : GL (Fin n) (AfE F E)).1 r j)) (if j = r then 1 else 0)) ∧
@@ -244,7 +244,7 @@ theorem conds_of_pts {g s : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} {h : G
     have h2 := hq.f P x (by rw [smul_N]; exact hx) r hr
     have h3 := hg.f P x hx r hr
     have e1 : p.deco.1.f P x = if r = j then 1 else 0 := h3.unique (hxr r)
-    have e2 : (((1, h, θ) : UF E n × GLG E n SG × GLQ E n Q) • p).deco.1.f P x = p.deco.1.f P x := rfl
+    have e2 : (((1, h, θ) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p).deco.1.f P x = p.deco.1.f P x := rfl
     have e3 : ((A : Matrix (Fin n) (Fin n) (𝓞 E ⧸ P.1.asIdeal)) *ᵥ fun i => if i = j then 1 else 0) r =
         (A : Matrix (Fin n) (Fin n) (𝓞 E ⧸ P.1.asIdeal)) r j := by
       simp [Matrix.mulVec, dotProduct]
@@ -278,7 +278,7 @@ theorem conds_of_pts {g s : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} {h : G
     have := congrFun (congrFun key r) j
     simpa [φ, T] using this
 
-theorem pt_of_conds {g s : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} {h : GLG E n SG} {θ : GLQ E n Q}
+theorem pt_of_conds {g s : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} {h : GLG (E := E) (n := n) (SG := SG)} {θ : GLQ E n Q}
     (hg : IsPtOf hc g p) (h1 : s ∈ Formalism.L2.Herm.UstdAf hc n)
     (h2 : Formalism.L2.Herm.Carries s (Formalism.L2.Col.stdLat E n) (Formalism.L2.Col.stdLat E n))
     (h3 : ∀ (P : ST) (r j : Fin n), r.1 + 1 = n →
@@ -286,7 +286,7 @@ theorem pt_of_conds {g s : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} {h : GL
     (h4 : ∀ (w : SG) (r j : Fin n), HasRes w.1 (adAt F w.1 ((s⁻¹ : GL (Fin n) (AfE F E)).1 r j)) ((h w).1 r j))
     (h5 : ∀ (P : Q) (r j : Fin n), adAt F P.1 ((s : Matrix (Fin n) (Fin n) _) r j) =
       algebraMap E _ ((((θ P)⁻¹ : ↥(GLint E n P.1)).1) (Pi.single j 1) r)) :
-    IsPtOf hc (g * s) (((1, h, θ) : UF E n × GLG E n SG × GLQ E n Q) • p) := by
+    IsPtOf hc (g * s) (((1, h, θ) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p) := by
   refine ⟨mul_mem hg.uni h1, ?_, fun P x hx r hr => ?_, fun w x hx r => ?_, fun P i j => ?_⟩
   · rw [smul_N]
     exact carries_mul hg.lat h2
@@ -326,10 +326,10 @@ theorem locMv_iff : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → ∀
       LocalCondMoveDecoratedLattice u (B.R.N i) s κ.2.1.1 ∧ LocCQ (I.Q a) (B.R.N i) s κ.2.2.1) := by
   intro B X I hI u a i _ c s κ
   have hact : (I.stp u a i).gam c.1 κ = 1 → ((I.stp u a i).act c.1 κ ((I.stp u a i).rep c)).1.1 =
-      ((1, κ.2.1.1, κ.2.2.1) : UF B.fields.E (B.R.N i) × GLG B.fields.E (B.R.N i) (B.primes X).vGs ×
+      ((1, κ.2.1.1, κ.2.2.1) : UF B.fields.E (B.R.N i) × GLG (E := B.fields.E) (n := B.R.N i) (SG := (B.primes X).vGs) ×
         GLQ B.fields.E (B.R.N i) (I.Q a)) • ((I.stp u a i).rep c).1.1 := fun h1 => by
     have e1 : κ.1 = 1 := Subtype.ext ((toGLm B.fields.E (B.R.N i)).injective (h1.trans (map_one _).symm))
-    show ((κ.1, κ.2.1.1, κ.2.2.1) : UF B.fields.E (B.R.N i) × GLG B.fields.E (B.R.N i) (B.primes X).vGs ×
+    show ((κ.1, κ.2.1.1, κ.2.2.1) : UF B.fields.E (B.R.N i) × GLG (E := B.fields.E) (n := B.R.N i) (SG := (B.primes X).vGs) ×
         GLQ B.fields.E (B.R.N i) (I.Q a)) • ((I.stp u a i).rep c).1.1 = _
     rw [e1]
   constructor

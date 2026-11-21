@@ -65,7 +65,7 @@ theorem coreMove {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E
 
 theorem actSameOff {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E] {n : ℕ}
     {ST SG : Finset (HeightOneSpectrum (𝓞 E))} (v : HeightOneSpectrum (𝓞 F)) {d d' : Deco E n ST SG}
-    (h : Deco.SameOff ST SG v d d') (ga : Sp E n ≃ₗ[E] Sp E n) (hh : GLG E n SG) :
+    (h : Deco.SameOff ST SG v d d') (ga : Sp E n ≃ₗ[E] Sp E n) (hh : GLG (E := E) (n := n) (SG := SG)) :
     Deco.SameOff ST SG v (d.act ga hh) (d'.act ga hh) where
   N Q hQ := by
     ext x
@@ -82,23 +82,23 @@ theorem actSameOff {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
 
 theorem pointGen {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
     (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG Q SQ : Finset (HeightOneSpectrum (𝓞 E)))
-    (v0 : HeightOneSpectrum (𝓞 F)) (r0 d r' : DecoF E n ST SG Q) (a : UF E n × GLG E n SG × GLQ E n Q)
+    (v0 : HeightOneSpectrum (𝓞 F)) (r0 d r' : DecoF E n ST SG Q) (a : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q)
     (hmv : a • r' = d) (hfr : d.fr = r0.fr) (hoff : Deco.SameOff ST SG v0 r0.deco.1 d.deco.1)
     (hQSQ : Q ⊆ SQ) (hdis : Disjoint SG Q) (g0 h : GL (Fin n) (TensorProduct F E (FiniteAdeleRing (𝓞 F) F)))
     (h0 : IsPtOf hc g0 (extTo SQ r0))
-    (h1 : IsPtOf hc h (((a.1, 1, 1) : UF E n × GLG E n SG × GLQ E n SQ) • extTo SQ r'))
+    (h1 : IsPtOf hc h (((a.1, 1, 1) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n SQ) • extTo SQ r'))
     (hQ : ∀ P ∈ Q, ¬ IsOver v0 P) (hSG : ∀ w ∈ SG, ¬ IsOver v0 w) :
     IsPtOf hc (h * rll_put n v0 (bc (prV (E := E) v0) (h⁻¹ * g0)))
-      ((((1 : UF E n), a.2)⁻¹ : UF E n × GLG E n SG × GLQ E n Q) • r0) := by
-  have e1 : (((1 : UF E n), a.2)⁻¹ : UF E n × GLG E n SG × GLQ E n Q) • d = ((a.1, 1, 1) : UF E n × GLG E n SG × GLQ E n Q) • r' := by
+      ((((1 : UF E n), a.2)⁻¹ : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • r0) := by
+  have e1 : (((1 : UF E n), a.2)⁻¹ : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • d = ((a.1, 1, 1) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • r' := by
     rw [← hmv, smul_smul]
     congr 1
     ext1
     · simp
     · ext1 <;> simp
   refine GlobalTheory.T.isPointOf_decoratedLattice_splicedAtPlace hc n ST SG Q SQ SQ v0 g0 h (extTo SQ r0) _ _ h0 h1 hQ hSG ?_ ?_ ?_ ?_
-  · have h2 := actSameOff v0 hoff (((((1 : UF E n), a.2)⁻¹ : UF E n × GLG E n SG × GLQ E n Q)).1.1) (((((1 : UF E n), a.2)⁻¹ : UF E n × GLG E n SG × GLQ E n Q)).2.1)
-    have e2 : (((a.1, 1, 1) : UF E n × GLG E n SG × GLQ E n SQ) • extTo SQ r').deco.1 = ((((1 : UF E n), a.2)⁻¹ : UF E n × GLG E n SG × GLQ E n Q) • d).deco.1 := by
+  · have h2 := actSameOff v0 hoff (((((1 : UF E n), a.2)⁻¹ : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q)).1.1) (((((1 : UF E n), a.2)⁻¹ : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q)).2.1)
+    have e2 : (((a.1, 1, 1) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n SQ) • extTo SQ r').deco.1 = ((((1 : UF E n), a.2)⁻¹ : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • d).deco.1 := by
       rw [e1]; rfl
     rw [e2]
     exact h2
@@ -113,8 +113,8 @@ theorem pointGen {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E
   · intro P
     refine ⟨⟨P.1, hQSQ P.2⟩, rfl, ?_⟩
     have hP : P.1 ∉ SG := Finset.disjoint_right.1 hdis P.2
-    have e3 : ((((1 : UF E n), a.2)⁻¹ : UF E n × GLG E n SG × GLQ E n Q) • r0).fr P =
-        ((((1 : UF E n), a.2)⁻¹ : UF E n × GLG E n SG × GLQ E n Q) • d).fr P := by
+    have e3 : ((((1 : UF E n), a.2)⁻¹ : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • r0).fr P =
+        ((((1 : UF E n), a.2)⁻¹ : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • d).fr P := by
       show _ * r0.1.2 P * _ = _ * d.1.2 P * _
       rw [show d.1.2 P = d.fr P from rfl, hfr]; rfl
     rw [e3, e1]

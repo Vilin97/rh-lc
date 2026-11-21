@@ -169,7 +169,7 @@ section Stab
 
 variable {X : Fields} {R : Ranks} {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum (𝓞 X.E))}
 
-theorem formGSD_stab_dvd_autU (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG) (d : DecoSet X.E n ST SG) :
+theorem formGSD_stab_dvd_autU (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG) (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) :
     Nat.card (MulAction.stabilizer (formGSD C Λ).G d) ∣ Nat.card (autU X.E n d.lat) := by
   let φ : MulAction.stabilizer (formGSD C Λ).G d →* autU X.E n d.lat :=
     ((MonoidHom.fst (UF X.E n) ↥Λ.grp).comp (MulAction.stabilizer (formGSD C Λ).G d).subtype).codRestrict _ fun a => by
@@ -179,17 +179,17 @@ theorem formGSD_stab_dvd_autU (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFa
   have h1 : (a.1.1 : UF X.E n) = b.1.1 := congrArg Subtype.val hab
   exact Subtype.ext (formGSD_stab_inj C Λ d a.2 b.2 h1)
 
-theorem formGSD_stab_dvd_dGamAut (hX : X.Ok) (hn : n ≤ R.N R.m) (C : CoefPk X n (DecoSet X.E n ST SG)) (Λ : LevFam X.E X.K n SG)
-    (d : DecoSet X.E n ST SG) : Nat.card (MulAction.stabilizer (formGSD C Λ).G d) ∣ dGamAut X R := (formGSD_stab_dvd_autU C Λ d).trans (card_autU_dvd_dGamAut hX hn _)
+theorem formGSD_stab_dvd_dGamAut (hX : X.Ok) (hn : n ≤ R.N R.m) (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (Λ : LevFam X.E X.K n SG)
+    (d : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) : Nat.card (MulAction.stabilizer (formGSD C Λ).G d) ∣ dGamAut X R := (formGSD_stab_dvd_autU C Λ d).trans (card_autU_dvd_dGamAut hX hn _)
 
 theorem dga_frm_stab_inj (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) (p : DecoF X.E n ST SG Q) {a b : FrmG Λ Θ}
     (ha : a • p = p) (hb : b • p = p) (hab : a.1 = b.1) : a = b := by
-  have hda : ((a.1, (a.2.1 : GLG X.E n SG)) • p.deco : DecoSet X.E n ST SG) = p.deco :=
+  have hda : ((a.1, (a.2.1 : GLG (E := X.E) (n := n) (SG := SG))) • p.deco : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) = p.deco :=
     congrArg (fun q : DecoF X.E n ST SG Q => q.1.1) ha
-  have hdb : ((b.1, (b.2.1 : GLG X.E n SG)) • p.deco : DecoSet X.E n ST SG) = p.deco :=
+  have hdb : ((b.1, (b.2.1 : GLG (E := X.E) (n := n) (SG := SG))) • p.deco : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG)) = p.deco :=
     congrArg (fun q : DecoF X.E n ST SG Q => q.1.1) hb
   have h1 := DecoSet.stab_fst_injective p.deco hda hdb hab
-  have h2 : (a.2.1 : GLG X.E n SG) = b.2.1 := congrArg Prod.snd h1
+  have h2 : (a.2.1 : GLG (E := X.E) (n := n) (SG := SG)) = b.2.1 := congrArg Prod.snd h1
   have h3 : ∀ P : Q, (((a.2.2 : GLQ X.E n Q) P)⁻¹).1 = (((b.2.2 : GLQ X.E n Q) P)⁻¹).1 := by
     intro P
     have ea : a.1.1 * p.fr P * (((a.2.2 : GLQ X.E n Q) P)⁻¹).1 = p.fr P :=

@@ -382,8 +382,8 @@ section Pts
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [StarRing E] {hc : CMData F E} {n : ℕ}
   {ST SG Q : Finset (HeightOneSpectrum (𝓞 E))}
 
-theorem smul_N (p : DecoF E n ST SG Q) (h : GLG E n SG) (c : GLQ E n Q) :
-    (((1, h, c) : UF E n × GLG E n SG × GLQ E n Q) • p).deco.1.N = p.deco.1.N := Submodule.map_id _
+theorem smul_N (p : DecoF E n ST SG Q) (h : GLG (E := E) (n := n) (SG := SG)) (c : GLQ E n Q) :
+    (((1, h, c) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p).deco.1.N = p.deco.1.N := Submodule.map_id _
 
 theorem exists_pt [NeZero n] (hQ : ∀ P, P ∉ Q) {g : GL (Fin n) (AfE F E)} (hg : g ∈ Formalism.L2.Herm.UstdAf hc n) :
     ∃ q : DecoF E n ST SG Q, IsPtOf hc g q := by
@@ -407,8 +407,8 @@ theorem isPtOf_mul (hQ : ∀ P, P ∉ Q) {g m : GL (Fin n) (AfE F E)} {p : DecoF
     (h2 : ∀ i j, ((m⁻¹ : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) i j ∈ RInt F E)
     (hT : ∀ P ∈ ST, ∀ i j, adAt F P ((m : Matrix (Fin n) (Fin n) (AfE F E)) i j) =
       adAt F P (((1 : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) i j))
-    {h : GLG E n SG} (hh : ∀ w : SG, IsRed w.1 m (h w)) (c : GLQ E n Q) :
-    IsPtOf hc (g * m⁻¹) (((1, h, c) : UF E n × GLG E n SG × GLQ E n Q) • p) := by
+    {h : GLG (E := E) (n := n) (SG := SG)} (hh : ∀ w : SG, IsRed w.1 m (h w)) (c : GLQ E n Q) :
+    IsPtOf hc (g * m⁻¹) (((1, h, c) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p) := by
   refine ⟨mul_mem hg.uni (inv_mem hm), fun z => ?_, fun P v hv i hi => ?_, fun w v hv i => ?_, fun P => absurd P.2 (hQ _)⟩
   · rw [smul_N]
     refine (hg.lat z).trans ((mem_latS_std _).trans (Iff.trans ⟨fun h i => ?_, fun h i => ?_⟩ (mem_latS_std _).symm))
@@ -433,12 +433,12 @@ theorem eq_of_be (p : DecoF E n ST SG Q) (w : SG) {A B : Matrix (Fin n) (Fin n) 
   rw [← e]
   exact h v hv
 
-theorem eq_of_smul_eq (p : DecoF E n ST SG Q) {h h' : GLG E n SG} {c c' : GLQ E n Q}
-    (e : ((1, h, c) : UF E n × GLG E n SG × GLQ E n Q) • p = ((1, h', c') : UF E n × GLG E n SG × GLQ E n Q) • p) : h = h' :=
+theorem eq_of_smul_eq (p : DecoF E n ST SG Q) {h h' : GLG (E := E) (n := n) (SG := SG)} {c c' : GLQ E n Q}
+    (e : ((1, h, c) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p = ((1, h', c') : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p) : h = h' :=
   funext fun w => Units.ext (eq_of_be p w fun v _ => congrArg (fun q : DecoF E n ST SG Q => q.deco.1.be w v) e)
 
-theorem eq_red {g m : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} (hg : IsPtOf hc g p) {h : GLG E n SG} {c : GLQ E n Q}
-    (hq : IsPtOf hc (g * m⁻¹) (((1, h, c) : UF E n × GLG E n SG × GLQ E n Q) • p)) (w : SG)
+theorem eq_red {g m : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} (hg : IsPtOf hc g p) {h : GLG (E := E) (n := n) (SG := SG)} {c : GLQ E n Q}
+    (hq : IsPtOf hc (g * m⁻¹) (((1, h, c) : UF E n × GLG (E := E) (n := n) (SG := SG) × GLQ E n Q) • p)) (w : SG)
     {A : Matrix (Fin n) (Fin n) (𝓞 E ⧸ w.1.asIdeal)} (hA : IsRed w.1 m A) : A = h w :=
   eq_of_be p w fun v hv => funext fun i =>
     (hasRes_pullV hA (hg.be w v hv) i).unique (hq.be w v ((smul_N p h c).symm ▸ hv) i)

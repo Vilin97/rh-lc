@@ -17,7 +17,7 @@ section ColPts
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Formalism.L2.DIV.Pl E))
-  (H : Subgroup (Col.GLG E n SG))
+  (H : Subgroup (Col.GLG (E := E) (n := n) (SG := SG)))
 
 def colJ : Subgroup (Col.UAd hc n) := (Col.JH hc n ST SG H).map (Col.ToUnitaryAdelic hc n ST)
 
