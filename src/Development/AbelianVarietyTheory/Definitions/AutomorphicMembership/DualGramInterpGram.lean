@@ -100,7 +100,7 @@ def IsMap (f : EigFrame Z φ x) (ψ : R →+* R') (f' : EigFrame Z φ' x') : Pro
   ∀ τ i, f'.v τ i = spMap (Formalism.L2.Pj.dualMap ψ) ≫ f.v τ i
 
 theorem exists_isMap (f : EigFrame Z φ x) (ψ : R →+* R') (hφ : φ' = ψ.comp φ) (hx : x' = spMap ψ ≫ x) :
-    ∃ f' : EigFrame Z φ' x', f.IsMap ψ f' := by
+    ∃ f' : EigFrame Z φ' x', (_root_.GlobalTheory.ShFam.EigFrame.IsMap f) ψ f' := by
   subst hφ hx
   exact exists_baseChange E H Dw l Xo c O β Z R R' φ x f ψ
 
@@ -133,19 +133,19 @@ theorem isUnit_det_co : IsUnit (f.co g τ).det := isUnit_det_of_right_inverse ((
 
 variable {f g}
 
-theorem IsMap.co {ψ : R →+* R'} {f' g' : EigFrame Z φ' x'} (hf : f.IsMap ψ f') (hg : g.IsMap ψ g')
+theorem IsMap.co {ψ : R →+* R'} {f' g' : EigFrame Z φ' x'} (hf : (_root_.GlobalTheory.ShFam.EigFrame.IsMap f) ψ f') (hg : (_root_.GlobalTheory.ShFam.EigFrame.IsMap g) ψ g')
     (hx : x' = spMap ψ ≫ x) : f'.co g' τ = (f.co g τ).map ψ :=
   co_eq fun i => by
     rw [funext (hf τ), hg τ i]
     exact GlobalTheory.GradedPieces.comb_map ψ hx.symm (f.co_spec g τ i)
 
 theorem Tri.co {ψ : R →+* R'} {f' g' : EigFrame Z φ' x'} {t : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → R'ˣ} (h : f.Tri ψ g' t)
-    (hf : f.IsMap ψ f') : (∀ a i, i < a → f'.co g' τ a i = 0) ∧ ∀ i, f'.co g' τ i i = t τ i := by
+    (hf : (_root_.GlobalTheory.ShFam.EigFrame.IsMap f) ψ f') : (∀ a i, i < a → f'.co g' τ a i = 0) ∧ ∀ i, f'.co g' τ i i = t τ i := by
   choose T h1 h2 h3 using h.2.2 τ
   rw [co_eq (T := of fun a i => T i a) fun i => by rw [funext (hf τ)]; exact h3 i]
   exact ⟨fun a i => h2 i a, h1⟩
 
-theorem IsMap.tri {ψ : R →+* R'} {f' : EigFrame Z φ' x'} (hf : f.IsMap ψ f') (hφ : φ' = ψ.comp φ)
+theorem IsMap.tri {ψ : R →+* R'} {f' : EigFrame Z φ' x'} (hf : (_root_.GlobalTheory.ShFam.EigFrame.IsMap f) ψ f') (hφ : φ' = ψ.comp φ)
     (hx : x' = spMap ψ ≫ x) : f.Tri ψ f' 1 :=
   ⟨hx, hφ, fun τ i => ⟨Pi.single i 1, by simp, fun _ hk => Pi.single_eq_of_ne hk.ne' _, by
     rw [← funext (hf τ)]; exact isCombAtG_single Z.t x' (f'.tan τ) i⟩⟩

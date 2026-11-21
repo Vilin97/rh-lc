@@ -61,7 +61,7 @@ private theorem tri_descend {R k K : Type} [CommRing R] [Field k] [Field K] {φ�
   have e2 : φ = ψ.comp φ₁ := RingHom.ext fun a => χ.injective (RingHom.congr_fun (hφ.symm.trans h.2.1) a)
   obtain ⟨f₀, hf₀⟩ := f.exists_isMap ψ e2 e1
   obtain ⟨f', hf'⟩ := f₀.exists_isMap χ hφ hx
-  have hf : f.IsMap (χ.comp ψ) f' := fun τ i => by rw [hf' τ i, hf₀ τ i, dual_comp, Category.assoc]
+  have hf : (_root_.GlobalTheory.ShFam.EigFrame.IsMap f) (χ.comp ψ) f' := fun τ i => by rw [hf' τ i, hf₀ τ i, dual_comp, Category.assoc]
   have key : ∀ τ, (∀ a i, i < a → f₀.co g τ a i = 0) ∧ ∀ i, f₀.co g τ i i ≠ 0 := fun τ => by
     have := EigFrame.Tri.co τ h hf
     rw [EigFrame.IsMap.co τ hf' hg hx] at this

@@ -137,7 +137,7 @@ theorem GlobalTheory.GenFrame.exists_generic_frame : ∀ (E : Type) [Field E] [N
 
   have main : ∀ (hu : ∀ τ, IsUnit (GlobalTheory.GenFrame.mixM ιV sV (g.co g' τ)).det),
       ∃ gV : EigFrame Z (ιV.comp χ) (spMap ιV ≫ x), gV.Tri ν gL 1 ∧
-        ∃ gVr : EigFrame Z χ x, gV.IsMap r gVr ∧ ∀ τ, g.co gVr τ = GlobalTheory.GenFrame.mixM (RingHom.id K) (r sV) (g.co g' τ) := by
+        ∃ gVr : EigFrame Z χ x, (_root_.GlobalTheory.ShFam.EigFrame.IsMap gV) r gVr ∧ ∀ τ, g.co gVr τ = GlobalTheory.GenFrame.mixM (RingHom.id K) (r sV) (g.co g' τ) := by
     intro hu
     obtain ⟨gV, hgV⟩ := GlobalTheory.GenFrame.exists_co_eq gVB (fun τ => GlobalTheory.GenFrame.mixM ιV sV (g.co g' τ)) hu
     obtain ⟨gVν, hgVν⟩ := gV.exists_isMap ν hφν hxν

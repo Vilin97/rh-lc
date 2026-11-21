@@ -29,7 +29,7 @@ private theorem dual_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] 
   ext r <;> simp [dualMap, Chart.dualMapR]
 
 theorem UpperTheory.fibre_hermitian_embedding :
-    ∀ (D : D7) (O : Setup D) (x : ToroidalCompactificationData O.s) (y : Pt O.s), below y.y ∉ genBd O.s.T.Z → ∀ (K : Type) [Field K] [NumberField K] (F : SemiFib K) (ι : K →+* Qb) (h : HermFam K (Fin F.P₀.g → K)), FibTie O y F ι → F.IsHerm h → ∀ (θ : Qb →+* ℂ) (σ : O.κ.c.F →+* ℂ), Formalism.L2.PjFree.GoodEmb O.κ.c σ → σ = θ.comp y.fK → ∀ (yc : GlobalTheory.CxPts (genStr O.s.T.Z) σ), yc.1 = spMap θ ≫ y.y → ∀ f : EigFrame O.s.T.Z σ (yc.1 ≫ genι O.s.T.Z), y.frame.IsMap θ f → ∀ (τ : D.host.E →+* ℂ) (a b : Fin (O.S.Dw.mult τ)), (x.hodge σ).gram yc f τ a b = h.form (θ.comp ι) (stepVec O F τ a) (stepVec O F τ b) := by
+    ∀ (D : D7) (O : Setup D) (x : ToroidalCompactificationData O.s) (y : Pt O.s), below y.y ∉ genBd O.s.T.Z → ∀ (K : Type) [Field K] [NumberField K] (F : SemiFib K) (ι : K →+* Qb) (h : HermFam K (Fin F.P₀.g → K)), FibTie O y F ι → F.IsHerm h → ∀ (θ : Qb →+* ℂ) (σ : O.κ.c.F →+* ℂ), Formalism.L2.PjFree.GoodEmb O.κ.c σ → σ = θ.comp y.fK → ∀ (yc : GlobalTheory.CxPts (genStr O.s.T.Z) σ), yc.1 = spMap θ ≫ y.y → ∀ f : EigFrame O.s.T.Z σ (yc.1 ≫ genι O.s.T.Z), (_root_.GlobalTheory.ShFam.EigFrame.IsMap (y.frame)) θ f → ∀ (τ : D.host.E →+* ℂ) (a b : Fin (O.S.Dw.mult τ)), ((_root_.GlobalTheory.ShFam.ToroidalCompactificationData.hodge x) σ).gram yc f τ a b = h.form (θ.comp ι) (stepVec O F τ a) (stepVec O F τ b) := by
   intro D O x y hy K _ _ F ι h hT hH θ σ hG hσ yc hyc f hf τ a b
   obtain ⟨jF, yO, ψ, -, h2, h3, h4, h5, h6⟩ := hT
   obtain ⟨Λ, Hm, W, ⟨Q, e, ψ', v', u, χ, ⟨-, p1, p2⟩, -, hAH, hv⟩, hW⟩ := hH (θ.comp ι)

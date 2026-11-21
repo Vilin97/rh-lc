@@ -87,14 +87,14 @@ theorem _root_.GlobalTheory.ShFam.FinalTheorems.exists_isHodgeFrame_iff : (∃ f
 
 theorem hodge_gram {f : EigFrame s.T.Z σ (y.1 ≫ genι s.T.Z)} (hf : IsHodgeFrame s.U y f)
     (g : EigFrame s.T.Z σ (y.1 ≫ genι s.T.Z)) (τ : D.host.E →+* ℂ) :
-    (x.hodge σ).gram y g τ = ((2 * Real.pi * xiR D : ℝ) : ℂ) • ((f.co g τ)ᴴ * f.co g τ) :=
+    ((_root_.GlobalTheory.ShFam.ToroidalCompactificationData.hodge x) σ).gram y g τ = ((2 * Real.pi * xiR D : ℝ) : ℂ) • ((f.co g τ)ᴴ * f.co g τ) :=
   hf.gram_eq (fun σ h => (s.unf σ h).1) (xiR_pos D) s.im_neg_xi g τ
 
 def IsMuExp (C : ℝ) : Prop :=
   0 ≤ C ∧ ∀ (σ : κ.c.F →+* ℂ) (y : CxPts (genStr s.T.Z) σ), ¬ LiesIn y (genBd s.T.Z) →
     ∀ (g : EigFrame s.T.Z σ (y.1 ≫ genι s.T.Z)) (τ : D.host.E →+* ℂ) (v : Fin (S.Dw.mult τ) → ℂ),
-      x.r σ y ^ (-C) * (star v ⬝ᵥ x.gram y g τ *ᵥ v).re ≤ (star v ⬝ᵥ (x.hodge σ).gram y g τ *ᵥ v).re ∧
-        (star v ⬝ᵥ (x.hodge σ).gram y g τ *ᵥ v).re ≤ x.r σ y ^ C * (star v ⬝ᵥ x.gram y g τ *ᵥ v).re
+      x.r σ y ^ (-C) * (star v ⬝ᵥ x.gram y g τ *ᵥ v).re ≤ (star v ⬝ᵥ ((_root_.GlobalTheory.ShFam.ToroidalCompactificationData.hodge x) σ).gram y g τ *ᵥ v).re ∧
+        (star v ⬝ᵥ ((_root_.GlobalTheory.ShFam.ToroidalCompactificationData.hodge x) σ).gram y g τ *ᵥ v).re ≤ x.r σ y ^ C * (star v ⬝ᵥ x.gram y g τ *ᵥ v).re
 
 def muExp : ℝ := Classical.epsilon x.IsMuExp
 
@@ -114,8 +114,8 @@ theorem wt_mem (R : ℝ) (y : CxPts (genStr s.T.Z) σ) : x.wt σ R y ∈ Set.Icc
 
 variable (σ) in
 def eigMetAt : Option ℝ → EigMet s.T.Z σ
-  | none => x.hodge σ
-  | some R => .interp (x.wt σ R) (x.wt_mem R) (x.eigMet σ) (x.hodge σ)
+  | none => (_root_.GlobalTheory.ShFam.ToroidalCompactificationData.hodge x) σ
+  | some R => .interp (x.wt σ R) (x.wt_mem R) (x.eigMet σ) ((_root_.GlobalTheory.ShFam.ToroidalCompactificationData.hodge x) σ)
 
 end ToroidalCompactificationData
 

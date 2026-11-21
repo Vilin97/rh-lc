@@ -126,12 +126,12 @@ open CategoryTheory AlgebraicGeometry NumberField IsDedekindDomain ReciprocityTh
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem UpperTheory.hodge_gram_eq_pi_mul_hermForm_of_exponential :
-    ∀ (D : D7) (O : Setup D) (x : ToroidalCompactificationData O.s) (σ : O.κ.c.F →+* ℂ), Formalism.L2.PjFree.GoodEmb O.κ.c σ → ∀ (yc : GlobalTheory.CxPts (genStr O.s.T.Z) σ), yc.1 (IsLocalRing.closedPoint ℂ) ∉ genBd O.s.T.Z → ∀ (g : ℕ) (exx : (Fin g → ℂ) → (Over.mk (yc.1 ≫ genι O.s.T.Z) ⟶ O.s.T.Z.t.G)) (Hm : Matrix (Fin g) (Fin g) ℂ), GlobalTheory.ShFam.Hor.LogCh.IsExpAt O.s.T.Z.t (yc.1 ≫ genι O.s.T.Z) exx → IsHolTo Set.univ (fun w => (exx w).left) → ((∀ v w : Fin g → ℂ, exx v = 1 → exx w = 1 → ∃ m : ℤ, (hermForm Hm v w).im = m) ∧ (∀ (k : ℕ) (v w : Fin g → ℂ) (ζ : ℂˣ), 0 < k → exx v = 1 → exx w = 1 → (ζ : ℂ) = Complex.exp (-(2 * Real.pi * Complex.I) * ((hermForm Hm v w).im : ℂ) / k) → GlobalTheory.UU.CubWeil O.s.T.Z.t.cub k (exx ((k : ℂ)⁻¹ • v)) (exx ((k : ℂ)⁻¹ • w)) (unitOn ζ))) → ∀ (f : EigFrame O.s.T.Z σ (yc.1 ≫ genι O.s.T.Z)) (Wd : ∀ τ : D.host.E →+* ℂ, Fin (O.S.Dw.mult τ) → Fin g → ℂ), (∀ τ b, IsDerivAt0 (fun w => (exx w).left) (Wd τ b) (f.v τ b)) → ∀ τ a b, (x.hodge σ).gram yc f τ a b = (Real.pi : ℂ) * hermForm Hm (Wd τ b) (Wd τ a) := by
+    ∀ (D : D7) (O : Setup D) (x : ToroidalCompactificationData O.s) (σ : O.κ.c.F →+* ℂ), Formalism.L2.PjFree.GoodEmb O.κ.c σ → ∀ (yc : GlobalTheory.CxPts (genStr O.s.T.Z) σ), yc.1 (IsLocalRing.closedPoint ℂ) ∉ genBd O.s.T.Z → ∀ (g : ℕ) (exx : (Fin g → ℂ) → (Over.mk (yc.1 ≫ genι O.s.T.Z) ⟶ O.s.T.Z.t.G)) (Hm : Matrix (Fin g) (Fin g) ℂ), GlobalTheory.ShFam.Hor.LogCh.IsExpAt O.s.T.Z.t (yc.1 ≫ genι O.s.T.Z) exx → IsHolTo Set.univ (fun w => (exx w).left) → ((∀ v w : Fin g → ℂ, exx v = 1 → exx w = 1 → ∃ m : ℤ, (hermForm Hm v w).im = m) ∧ (∀ (k : ℕ) (v w : Fin g → ℂ) (ζ : ℂˣ), 0 < k → exx v = 1 → exx w = 1 → (ζ : ℂ) = Complex.exp (-(2 * Real.pi * Complex.I) * ((hermForm Hm v w).im : ℂ) / k) → GlobalTheory.UU.CubWeil O.s.T.Z.t.cub k (exx ((k : ℂ)⁻¹ • v)) (exx ((k : ℂ)⁻¹ • w)) (unitOn ζ))) → ∀ (f : EigFrame O.s.T.Z σ (yc.1 ≫ genι O.s.T.Z)) (Wd : ∀ τ : D.host.E →+* ℂ, Fin (O.S.Dw.mult τ) → Fin g → ℂ), (∀ τ b, IsDerivAt0 (fun w => (exx w).left) (Wd τ b) (f.v τ b)) → ∀ τ a b, ((_root_.GlobalTheory.ShFam.ToroidalCompactificationData.hodge x) σ).gram yc f τ a b = (Real.pi : ℂ) * hermForm Hm (Wd τ b) (Wd τ a) := by
   intro D O x σ hσ yc hy g exx Hm hex hhol hH f Wd hd τ a b
   obtain ⟨k, x', hx', rfl⟩ := GlobalTheory.HodgeSmooth.exists_orth (Z := O.s.T.Z) hσ (O.s.unf σ hσ).1 (y := yc) hy
   have h := herm_exp hσ (O.s.unf σ hσ).1 (O.s.im_neg_xi σ) hx' exx hex hhol Hm hH.1 hH.2 f τ (Wd τ) (hd τ)
   have e := congrFun (congrFun h a) b
-  rw [x.hodge_gram (isHodgeFrame_cxFrame hσ hx') f τ]
+  rw [(_root_.GlobalTheory.ShFam.ToroidalCompactificationData.hodge_gram x) (isHodgeFrame_cxFrame hσ hx') f τ]
   simp only [Matrix.of_apply, Matrix.smul_apply, smul_eq_mul] at e ⊢
   rw [e]
   push_cast

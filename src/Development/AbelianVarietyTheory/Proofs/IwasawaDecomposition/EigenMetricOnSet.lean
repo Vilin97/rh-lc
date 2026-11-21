@@ -49,12 +49,12 @@ theorem smoothOn_of_locally {σ : c.F →+* ℂ} (G : EigMet Z σ) (S : Set (CxP
       y.1 ≫ genι Z = spMap (evHom h) ≫ LogKS.chart V ≫ genι Z := fun h => by
     rw [← Category.assoc, spMap_evHom h]
   have hex : ∀ {y : CxPts (genStr Z) σ} (h : y ∈ ptsIn (genStr Z) σ V.1),
-      ∃ f : EigFrame Z σ (y.1 ≫ genι Z), F.IsMap (evHom h) f := fun h =>
+      ∃ f : EigFrame Z σ (y.1 ≫ genι Z), (_root_.GlobalTheory.ShFam.EigFrame.IsMap F) (evHom h) f := fun h =>
     F.exists_isMap (evHom h) (eq_comp_evHom hV h) (hx h)
   let g : CxPts (genStr Z) σ → ℂ := fun y =>
     if h : y ∈ ptsIn (genStr Z) σ V.1 then G.gram y (hex h).choose τ a b else 0
   have hg : ∀ y (hy : y ∈ ptsIn (genStr Z) σ V.1) (f : EigFrame Z σ (y.1 ≫ genι Z)),
-      F.IsMap (evHom hy) f → G.gram y f τ a b = g y := fun y hy f hf => by
+      (_root_.GlobalTheory.ShFam.EigFrame.IsMap F) (evHom hy) f → G.gram y f τ a b = g y := fun y hy f hf => by
     simp only [g, dif_pos hy]
     rw [gram_eq_of_isMap G (hex hy).choose_spec hf τ]
   let ι := {y₀ // y₀ ∈ S ∧ y₀ ∈ ptsIn (genStr Z) σ V.1}

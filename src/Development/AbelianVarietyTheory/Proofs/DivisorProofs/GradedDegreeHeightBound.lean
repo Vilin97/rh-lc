@@ -65,7 +65,7 @@ private theorem exists_coord_gen [CharZero k] [Algebra.IsAlgebraic ℚ k] (n : L
   rw [hr, Units.val_inv_eq_inv_val, div_eq_inv_mul]
 
 private theorem coord_map {a : k} (h : IsCoord Y p g n s a) {k' : Type} [Field k'] (θ : k →+* k') {φ' : c.F →+* k'}
-    {x' : Sp k' ⟶ Z.X} {g' : EigFrame Z φ' x'} (hg : g.IsMap θ g') (hφ : φ' = θ.comp φ) (hx : x' = spMap θ ≫ x) :
+    {x' : Sp k' ⟶ Z.X} {g' : EigFrame Z φ' x'} (hg : (_root_.GlobalTheory.ShFam.EigFrame.IsMap g) θ g') (hφ : φ' = θ.comp φ) (hx : x' = spMap θ ≫ x) :
     IsCoord Y (spMap θ ≫ p) g' n s (θ a) := by
   obtain ⟨y, ψ, φ₁, f, t, t', r, h₁, h₂, h₃, h₄, rfl⟩ := h
   refine ⟨y, θ.comp ψ, φ₁, f, t, fun τ i => Units.map θ.toMonoidHom (t' τ i), r, ?_, h₂, ⟨?_, ?_, fun τ i => ?_⟩, h₄, ?_⟩
@@ -83,7 +83,7 @@ private theorem coord_map {a : k} (h : IsCoord Y p g n s a) {k' : Type} [Field k
 
 end Coord
 
-private theorem gram_all : ∀ (D : D7) (O : Setup D) (x : ToroidalCompactificationData O.s) (y : Pt O.s), below y.y ∉ genBd O.s.T.Z → ∀ (K : Type) [Field K] [NumberField K] (F : SemiFib K) (ι : K →+* Qb) (h : HermFam K (Fin F.P₀.g → K)), FibTie O y F ι → F.IsHerm h → ∀ (θ : Qb →+* ℂ) (σ : O.κ.c.F →+* ℂ),  σ = θ.comp y.fK → ∀ (yc : GlobalTheory.CxPts (genStr O.s.T.Z) σ), yc.1 = spMap θ ≫ y.y → ∀ f : EigFrame O.s.T.Z σ (yc.1 ≫ genι O.s.T.Z), y.frame.IsMap θ f → ∀ (τ : D.host.E →+* ℂ) (a b : Fin (O.S.Dw.mult τ)), (x.hodge σ).gram yc f τ a b = h.form (θ.comp ι) (stepVec O F τ a) (stepVec O F τ b) := by
+private theorem gram_all : ∀ (D : D7) (O : Setup D) (x : ToroidalCompactificationData O.s) (y : Pt O.s), below y.y ∉ genBd O.s.T.Z → ∀ (K : Type) [Field K] [NumberField K] (F : SemiFib K) (ι : K →+* Qb) (h : HermFam K (Fin F.P₀.g → K)), FibTie O y F ι → F.IsHerm h → ∀ (θ : Qb →+* ℂ) (σ : O.κ.c.F →+* ℂ),  σ = θ.comp y.fK → ∀ (yc : GlobalTheory.CxPts (genStr O.s.T.Z) σ), yc.1 = spMap θ ≫ y.y → ∀ f : EigFrame O.s.T.Z σ (yc.1 ≫ genι O.s.T.Z), (_root_.GlobalTheory.ShFam.EigFrame.IsMap (y.frame)) θ f → ∀ (τ : D.host.E →+* ℂ) (a b : Fin (O.S.Dw.mult τ)), ((_root_.GlobalTheory.ShFam.ToroidalCompactificationData.hodge x) σ).gram yc f τ a b = h.form (θ.comp ι) (stepVec O F τ a) (stepVec O F τ b) := by
   intro D O x y hy K _ _ F ι h hT hH θ σ hσ yc hyc f hf τ a b
   by_cases hg : GoodEmb O.κ.c σ
   · exact UpperTheory.fibre_hermitian_embedding D O x y hy K F ι h hT hH θ σ hg hσ yc hyc f hf τ a b
@@ -110,9 +110,9 @@ private theorem gram_all : ∀ (D : D7) (O : Setup D) (x : ToroidalCompactificat
     (RingHom.ext fun _ => (Complex.conj_conj _).symm) (by simp only [y', ← Category.assoc, hc, Category.id_comp])
   have hg₂ : g.IsMap (starRingEnd ℂ) g' := fun τ i => by
     rw [hg₁, GlobalTheory.GradedPieces.dual_comp, hcc, spMap_dualMap_id, Category.id_comp]
-  have e3 := x.hodge_gram hg' f' τ
+  have e3 := (_root_.GlobalTheory.ShFam.ToroidalCompactificationData.hodge_gram x) hg' f' τ
   rw [hg₂.co τ hf' hx] at e3
-  rw [x.hodge_gram (hg'.conj rfl rfl hg₂) f τ]
+  rw [(_root_.GlobalTheory.ShFam.ToroidalCompactificationData.hodge_gram x) (hg'.conj rfl rfl hg₂) f τ]
   apply (starRingEnd ℂ).injective
   rw [← e2, ← RingHom.comp_assoc, ← e1, e3]
   simp [Matrix.mul_apply, map_ofNat]
@@ -181,7 +181,7 @@ private theorem ht_eq {D : D7} (O : Setup D) (x : ToroidalCompactificationData O
       have hne : ((Finsupp.single (ArIn.ind ∅, none, Sum.inl (τ, i)) 1 : Sym D.host.E →₀ ℤ)).support.Nonempty := ⟨_, Finsupp.mem_support_iff.2 (by rw [Finsupp.single_eq_same]; exact one_ne_zero)⟩
       rw [parOf, dif_pos hne, Finset.mem_singleton.1 (Finsupp.support_single_subset hne.choose_spec)]
     have h4 := pn_metsOf (x := x) (parOf (Finsupp.single (ArIn.ind ∅, none, Sum.inl (τ, i)) 1 : Sym D.host.E →₀ ℤ)) (g := g) h3
-    have hpos := (x.hodge (embOf O.κ.e σ)).pos _ g τ
+    have hpos := ((_root_.GlobalTheory.ShFam.ToroidalCompactificationData.hodge x) (embOf O.κ.e σ)).pos _ g τ
     have h5 := grSq_eq O F h τ (θ.comp ι) hpos (gram_all D O x y hy K F ι h hT hH θ _ hσ _ hd g hgm τ) ⟨i, hi⟩
     have h6 : letterOf O.S.Dw (Sum.inl (τ, i)) = some ⟨τ, ⟨i, hi⟩⟩ := dif_pos hi
     rw [Finset.prod_eq_single (⟨τ, ⟨i, hi⟩⟩ : Letter O.S.Dw) (fun b _ hb => by
@@ -190,7 +190,7 @@ private theorem ht_eq {D : D7} (O : Setup D) (x : ToroidalCompactificationData O
     refine (congrArg (fun r => Real.log r / 2) h4).trans ?_
     rw [hpar]
     have h7 := grSq_pos hpos ⟨i, hi⟩
-    show Real.log (_ * grSq ((x.hodge (embOf O.κ.e σ)).gram _ g τ) ⟨i, hi⟩) / 2 = _
+    show Real.log (_ * grSq (((_root_.GlobalTheory.ShFam.ToroidalCompactificationData.hodge x) (embOf O.κ.e σ)).gram _ g τ) ⟨i, hi⟩) / 2 = _
     rw [Real.log_mul (pow_ne_zero _ (norm_ne_zero_iff.2 ((map_ne_zero θ).2 hβ))) h7.ne', h5, Real.log_pow]
     push_cast
     ring

@@ -99,7 +99,7 @@ theorem tri_of_carries : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   obtain ⟨f₁F, hf₁F⟩ := f₁'.exists_isMap alg c1.symm hgen
   obtain ⟨fk, hfk⟩ := f.exists_isMap ψ hφk hxψ
   obtain ⟨f₁k, hf₁k⟩ := f₁.exists_isMap ψ₁ hg₁.2.1 hg₁.1
-  have iF : f.IsMap (algebraMap (C.Y.X.presheaf.stalk y) C.Y.X.functionField) fF := fun τ i => by
+  have iF : (_root_.GlobalTheory.ShFam.EigFrame.IsMap f) (algebraMap (C.Y.X.presheaf.stalk y) C.Y.X.functionField) fF := fun τ i => by
     rw [hfF τ i, hf' τ i, ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap alg)), ← spMap_dualMap_comp, ← halg]
   have i₁F : f₁.IsMap (algebraMap (C.Y.X.presheaf.stalk y₁) C.Y.X.functionField) f₁F := fun τ i => by
     rw [hf₁F τ i, hf₁' τ i, ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap alg)), ← spMap_dualMap_comp, ← halg₁]
