@@ -30,7 +30,7 @@ theorem lieBasis_of_etale {S : Type} [CommRing S] [Algebra R S] {n : ℕ} [Algeb
     rw [Ideal.mem_bot, show a = TrivSqZeroExt.inr a.snd from TrivSqZeroExt.ext ha rfl,
       show b = TrivSqZeroExt.inr b.snd from TrivSqZeroExt.ext hb rfl, TrivSqZeroExt.inr_mul_inr]⟩
   let Co : (sp (R₀ := R) (DualNumber R) ⟶ G) → (Fin n → R) → Prop := fun w c =>
-    ∃ ψ : S →ₐ[R] DualNumber R, (fstD R).comp ψ = ε' ∧ w = spMap ψ ≫ y₀ ∧ ∀ j, (ψ (sX R j)).snd = c j
+    ∃ ψ : S →ₐ[R] DualNumber R, (fstD R).comp ψ = ε' ∧ w = spMap ψ ≫ y₀ ∧ ∀ j, (ψ (sX (R := R) j)).snd = c j
   have tan : ∀ {w c}, Co w c → IsTan w := fun ⟨ψ, h, e, _⟩ => by
     rw [IsTan, e, ← Category.assoc, spMap_comp, h, h₀]
   have fn : ∀ {w c c'}, Co w c → Co w c' → c = c' := fun ⟨ψ, _, e, h⟩ ⟨ψ', _, e', h'⟩ => funext fun j => by
@@ -40,29 +40,68 @@ theorem lieBasis_of_etale {S : Type} [CommRing S] [Algebra R S] {n : ℕ} [Algeb
       ((AlgHom.congr_fun a _).trans (AlgHom.congr_fun a' _).symm) ((h j).trans (h' j).symm)]
   have ex : ∀ {w}, IsTan w → ∃ c, Co w c := fun hw => let ⟨ψ, a, e⟩ := up (fstD R) nD _ hw; ⟨_, ψ, a, e, fun _ => rfl⟩
   have sj : ∀ c, ∃ w, Co w c := fun c => by
-    obtain ⟨ψ, a, h⟩ := etale_exists (n := n) ε' (fstD R) nD (fun j => TrivSqZeroExt.inl (ε' (sX R j)) + TrivSqZeroExt.inr (c j))
+    obtain ⟨ψ, a, h⟩ := etale_exists (n := n) ε' (fstD R) nD (fun j => TrivSqZeroExt.inl (ε' (sX (R := R) j)) + TrivSqZeroExt.inr (c j))
       fun j => by simp [fstD]
     exact ⟨_, ψ, a, rfl, fun j => by rw [h j]; simp⟩
   have sc : ∀ {w c} (a : R), Co w c → Co (spMap (scaleD a) ≫ w) (a • c) := fun a ⟨ψ, h, e, k⟩ =>
     ⟨(scaleD a).comp ψ, AlgHom.ext fun b => (TrivSqZeroExt.fst_map _ _).trans (AlgHom.congr_fun h b),
       by rw [e, ← Category.assoc, spMap_comp], fun j => (TrivSqZeroExt.snd_map _ _).trans (congrArg (a * ·) (k j))⟩
   have ad : ∀ {w₁ w₂ c₁ c₂}, Co w₁ c₁ → Co w₂ c₂ → Co (w₁ * w₂) (c₁ + c₂) := fun {w₁ w₂ c₁ c₂} h₁ h₂ => by
+    have delta_sq : (RingHom.ker (TrivSqZeroExt.fstHom R R (R × R))) ^ 2 = ⊥ := by
+      rw [← le_bot_iff, pow_two, Ideal.mul_le]
+      intro a ha b hb
+      rw [Ideal.mem_bot, show a = TrivSqZeroExt.inr a.snd from TrivSqZeroExt.ext ha rfl,
+        show b = TrivSqZeroExt.inr b.snd from TrivSqZeroExt.ext hb rfl, TrivSqZeroExt.inr_mul_inr]
+    let deltaJ : JetR R (Fin 2) 1 →ₐ[R] TrivSqZeroExt R (R × R) :=
+      jetLift (R := R) (RingHom.ker (TrivSqZeroExt.fstHom R R (R × R))) delta_sq
+        (fun i => TrivSqZeroExt.inr (if i = 0 then ((1 : R), (0 : R)) else (0, 1)))
+        (fun _ => (RingHom.mem_ker).mpr rfl)
+    let rD (l : R × R →ₗ[R] R) : JetR R (Fin 2) 1 →ₐ[R] DualNumber R :=
+      (TrivSqZeroExt.map l).comp deltaJ
+    have rD_zR (l : R × R →ₗ[R] R) (i : Fin 2) :
+        rD l (zR 1 i) = TrivSqZeroExt.inr (l (if i = 0 then ((1 : R), (0 : R)) else (0, 1)) : R) := by
+      simp [rD, deltaJ, jetLift_zR, TrivSqZeroExt.map_inr]
+    have fstD_comp_rD (l : R × R →ₗ[R] R) : (fstD R).comp (rD l) = jetAug R (Fin 2) 1 :=
+      jet_ext fun i => by
+        rw [AlgHom.comp_apply, rD_zR, jetAug_zR]
+        simp [fstD]
+    have rD_comp_qD (l : R × R →ₗ[R] R) (i : Fin 2) :
+        (rD l).comp (qD i) = TrivSqZeroExt.map
+          ((l (if i = 0 then ((1 : R), (0 : R)) else (0, 1)) : R) • LinearMap.id) := by
+      apply DualNumber.algHom_ext
+      rw [AlgHom.comp_apply, qD_apply]
+      simp only [DualNumber.fst_eps, DualNumber.snd_eps, map_zero, one_smul, zero_add, rD_zR]
+      show _ = TrivSqZeroExt.map _ (TrivSqZeroExt.inr 1)
+      rw [TrivSqZeroExt.map_inr, LinearMap.smul_apply, LinearMap.id_apply, smul_eq_mul, _root_.mul_one]
+    have snd_rD_add (a : JetR R (Fin 2) 1) :
+        (rD (LinearMap.fst R R R + LinearMap.snd R R R) a).snd =
+          (rD (LinearMap.fst R R R) a).snd + (rD (LinearMap.snd R R R) a).snd := by
+      simp [rD, TrivSqZeroExt.snd_map, LinearMap.add_apply]
     obtain ⟨ψ, a, e⟩ := up (jetAug R (Fin 2) 1) (ker_jetAug_nil (Fin 2) 1) ((spMap (qD 0) ≫ w₁) * (spMap (qD 1) ≫ w₂)) (by
       rw [MonObj.comp_mul, ← Category.assoc, ← Category.assoc, spMap_comp, spMap_comp, jetAug_comp_qD, jetAug_comp_qD, tan h₁,
         tan h₂, _root_.mul_one])
     have r : ∀ l : R × R →ₗ[R] R, Co ((spMap (scaleD (l (1, 0))) ≫ w₁) * (spMap (scaleD (l (0, 1))) ≫ w₂))
-        fun j => (rD l (ψ (sX R j))).snd := fun l =>
+        fun j => (rD l (ψ (sX (R := R) j))).snd := fun l =>
       ⟨(rD l).comp ψ, by rw [← AlgHom.comp_assoc, fstD_comp_rD, a], by
         rw [← spMap_comp, Category.assoc, ← e, MonObj.comp_mul, ← Category.assoc, ← Category.assoc, spMap_comp, spMap_comp,
-          restrictDiag_comp_incl_fst, restrictDiag_comp_incl_snd], fun _ => rfl⟩
+          rD_comp_qD, rD_comp_qD]
+        constructor
+        ·
+          have h0 : scaleD (l (1, 0)) = TrivSqZeroExt.map (l (if (0 : Fin 2) = 0 then ((1 : R), (0 : R)) else (0, 1)) • LinearMap.id) := by
+            simp [scaleD]
+          have h1 : scaleD (l (0, 1)) = TrivSqZeroExt.map (l (if (1 : Fin 2) = 0 then ((1 : R), (0 : R)) else (0, 1)) • LinearMap.id) := by
+            simp [scaleD]
+          rw [h0, h1]
+        · intro j
+          rfl⟩
     have r₁ := r (LinearMap.fst R R R)
     have r₂ := r (LinearMap.snd R R R)
     have r₃ := r (LinearMap.fst R R R + LinearMap.snd R R R)
     simp only [LinearMap.add_apply, LinearMap.fst_apply, LinearMap.snd_apply, add_zero, zero_add, scaleD_one, spMap_id,
       Category.id_comp, spMap_scaleD_zero (tan h₁), spMap_scaleD_zero (tan h₂), _root_.mul_one, _root_.one_mul] at r₁ r₂ r₃
     rw [fn h₁ r₁, fn h₂ r₂]
-    exact (show (fun j => (rD (LinearMap.fst R R R + LinearMap.snd R R R) (ψ (sX (n := n) R j))).snd) =
-      (fun j => (rD (LinearMap.fst R R R) (ψ (sX (n := n) R j))).snd) + fun j => (rD (LinearMap.snd R R R) (ψ (sX (n := n) R j))).snd from
+    exact (show (fun j => (rD (LinearMap.fst R R R + LinearMap.snd R R R) (ψ (sX (R := R) (n := n) j))).snd) =
+      (fun j => (rD (LinearMap.fst R R R) (ψ (sX (R := R) (n := n) j))).snd) + fun j => (rD (LinearMap.snd R R R) (ψ (sX (R := R) (n := n) j))).snd from
       funext fun j => snd_rD_add _) ▸ r₃
   choose v hv using fun i => sj (Pi.single i 1)
   have pr : ∀ {m} (a : Fin m → R) (u : Fin m → _) (c : Fin m → Fin n → R), (∀ i, Co (u i) (c i)) →

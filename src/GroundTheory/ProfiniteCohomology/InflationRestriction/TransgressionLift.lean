@@ -161,7 +161,7 @@ theorem cochainsComplex_d_d_apply {B : Rep.{u} k G} [IsDiscreteRep B] (i j l : â
 
 theorem tgCochain_d (hx : IsCocycleOne A N x) (hy : IsTgLift A N x y) (hyc : IsLocallyConstant y) :
     ((cochainsComplex (A.quotientToInvariants N)).d 2 (2 + 1)).hom (tgCochain hx hy hyc) = 0 := by
-  apply cochainsMapAlong_mk_injective A N 3
+  apply cochainsMapAlong_mk_injective (A := A) (N := N) 3
   rw [map_zero]
   refine (hom_f_d_apply _ 2 3 _).trans ?_
   rw [cochainsMapAlong_tgCochain]

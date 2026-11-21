@@ -58,8 +58,7 @@ def algebraicNormedField : NontriviallyNormedField L :=
   spectralNorm.nontriviallyNormedField K L
 
 theorem algebraicNormedField_isUltrametricDist :
-    letI := algebraicNormedField K L
-    IsUltrametricDist L := by
+    (letI := algebraicNormedField K L; IsUltrametricDist L) := by
   let := normedField K
   have := normedField_isUltrametricDist K
   have := normedField_completeSpace K
@@ -68,9 +67,8 @@ theorem algebraicNormedField_isUltrametricDist :
     (isNonarchimedean_spectralNorm (K := K) (L := L))
 
 theorem algebraicNormedField_norm_algebraMap (a : K) :
-    letI := normedField K
-    letI := algebraicNormedField K L
-    ‖algebraMap K L a‖ = ‖a‖ := by
+    (letI := normedField K; letI := algebraicNormedField K L;
+      ‖algebraMap K L a‖ = ‖a‖) := by
   let := normedField K
   exact spectralNorm_extends a
 
@@ -150,6 +148,7 @@ theorem vle_iff_spectralNorm_le [ValuativeRel L] [ValuativeExtension K L] (x y :
     rw [norm_div, div_lt_one (norm_pos_iff.mpr hx), not_lt]
 
 
+variable (K) in
 theorem valuativeRel_eq_of_isAlgebraic {v₁ v₂ : ValuativeRel L}
     (e₁ : @ValuativeExtension K L _ _ _ v₁ _) (e₂ : @ValuativeExtension K L _ _ _ v₂ _) :
     v₁ = v₂ := by
@@ -183,13 +182,11 @@ def algebraicTopology : TopologicalSpace L :=
   (algebraicNormedField K L).toUniformSpace.toTopologicalSpace
 
 theorem algebraicValuativeRel_vle_iff (x y : L) :
-    letI := normedField K
-    letI := algebraicValuativeRel K L
-    x ≤ᵥ y ↔ spectralNorm K L x ≤ spectralNorm K L y := Iff.rfl
+    (letI := normedField K; letI := algebraicValuativeRel K L;
+      x ≤ᵥ y ↔ spectralNorm K L x ≤ spectralNorm K L y) := Iff.rfl
 
 theorem algebraicValuativeRel_valuativeExtension :
-    letI := algebraicValuativeRel K L
-    ValuativeExtension K L := by
+    (letI := algebraicValuativeRel K L; ValuativeExtension K L) := by
   let := algebraicValuativeRel K L
   constructor
   intro a b
@@ -200,9 +197,8 @@ theorem algebraicValuativeRel_valuativeExtension :
   rfl
 
 theorem algebraicTopology_isValuativeTopology :
-    letI := algebraicValuativeRel K L
-    letI := algebraicTopology K L
-    IsValuativeTopology L := by
+    (letI := algebraicValuativeRel K L; letI := algebraicTopology K L;
+      IsValuativeTopology L) := by
   let := algebraicNormedField K L
   have := algebraicNormedField_isUltrametricDist K L
   let := algebraicValuativeRel K L
@@ -300,12 +296,11 @@ section Inclusion
 variable {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω] [ValuativeRel Ω]
 
 theorem IntermediateField.valuativeExtension_inclusion {E F : IntermediateField K Ω} (h : E ≤ F) :
-    letI := (IntermediateField.inclusion h).toRingHom.toAlgebra
-    ValuativeExtension E F :=
+    (letI := (IntermediateField.inclusion h).toRingHom.toAlgebra; ValuativeExtension E F) :=
   letI := (IntermediateField.inclusion h).toRingHom.toAlgebra
-  ⟨fun a b ↦ by
-    rw [← IntermediateField.coe_vle_coe_iff (L := Ω) a b,
-      ← IntermediateField.coe_vle_coe_iff (L := Ω)]
+  ⟨fun {a b} ↦ by
+    rw [← IntermediateField.coe_vle_coe_iff (E := E) a b,
+      ← IntermediateField.coe_vle_coe_iff (E := F)]
     rfl⟩
 
 end Inclusion
@@ -315,6 +310,7 @@ section Finite
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
 
 
+variable (K) in
 theorem valuativeRel_eq_finiteExtensionStructure {L : Type*} [Field L] [Algebra K L]
     [FiniteDimensional K L] [v : ValuativeRel L] [ValuativeExtension K L] :
     v = (finiteExtensionStructure K L).rel :=

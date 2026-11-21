@@ -55,6 +55,7 @@ theorem slice_mem {F : Y × W → ℂ} (hF : F ∈ TF (Y × W)) (w : W) : (fun y
   exact hy ⟨(y, w), subset_tsupport _ h, rfl⟩
 
 
+open Classical in
 theorem piece_mem (K : Subgroup G) (S : Set W) (hKo : ∀ w ∈ S, IsOpen {w' | ∃ g ∈ K, g • w = w'})
     {F : Y × W → ℂ} (hF : F ∈ TF (Y × W)) (hFS : ∀ p : Y × W, p.2 ∉ S → F p = 0)
     (q : Quotient (rel K)) :

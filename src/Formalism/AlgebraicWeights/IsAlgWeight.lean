@@ -29,6 +29,8 @@ section Unitary
 
 variable (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ)
 
+local notation3 "L⁺" => maximalRealSubfield L
+
 open ReciprocityTheory.Aut
 
 abbrev GAf : Type := ↥(GA L n)
@@ -54,17 +56,19 @@ abbrev Forms {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ
   Formalism.UG.AMF ℂ (GQ L n) U ρ
 
 def tSet (s : SplitPlace L) (ϖ : s.v.adicCompletion L⁺) (j : ℕ) : Set (GAf L n) :=
-  {x | TrivOutside {s.v} x ∧ ∃ a ∈ Formalism.UG.GLint (Fin n) (s.v.adicCompletionIntegers L⁺).toSubring,
+  {x | TrivOutside L {s.v} x ∧ ∃ a ∈ Formalism.UG.GLint (Fin n) (s.v.adicCompletionIntegers L⁺).toSubring,
     ∃ b ∈ Formalism.UG.GLint (Fin n) (s.v.adicCompletionIntegers L⁺).toSubring,
-      ((s.loc n x : GL (Fin n) (s.v.adicCompletion L⁺)) : Matrix (Fin n) (Fin n) _) =
+      ((SplitPlace.loc L s n x : GL (Fin n) (s.v.adicCompletion L⁺)) : Matrix (Fin n) (Fin n) _) =
         (a : Matrix (Fin n) (Fin n) _) * Formalism.UG.diagJ n ϖ j * (b : Matrix (Fin n) (Fin n) _)}
 
 
+open Classical in
 def heckeFun {W : Type} [AddCommGroup W] [Module ℂ W] (U : Subgroup (GAf L n)) (D : Set (GAf L n))
     (f : GAf L n → W) : GAf L n → W :=
   fun g => ∑ᶠ c : GAf L n ⧸ U, if (∃ x ∈ D, (x : GAf L n ⧸ U) = c) then f (g * c.out) else 0
 
 
+open Classical in
 def heckeEnd {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (GQ L n) W)
     (U : Subgroup (GAf L n)) (D : Set (GAf L n)) : Module.End ℂ (Forms L n ρ U) :=
   if h : ∃ φ : Module.End ℂ (Forms L n ρ U), ∀ f g, (φ f : GAf L n → W) g = heckeFun L n U D f g

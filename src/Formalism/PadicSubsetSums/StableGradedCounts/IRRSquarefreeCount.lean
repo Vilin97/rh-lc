@@ -5,6 +5,7 @@ public import Formalism.PadicSubsetSums.StableGradedCounts.IRRIrredCountUpper
 @[expose] public section
 
 open Polynomial
+open scoped Classical
 
 namespace Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
 

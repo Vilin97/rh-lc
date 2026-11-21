@@ -166,7 +166,7 @@ variable [MulAction G X]
 
 theorem permutesFactors_mulPiRep
     (h : ∀ (g : G) (f : ∀ x, U x) (x : X), f x = 1 → (g • f) (g • x) = 1) :
-    PermutesFactors (mulPiRep G U) := fun g f x hf ↦
+    PermutesFactors (mulPiRep (G := G) (U := U)) := fun g f x hf ↦
   congrArg Additive.ofMul (h g (fun x ↦ (f x).toMul) x hf)
 
 variable [Fintype G] [MulAction.IsPretransitive G X]
@@ -178,8 +178,9 @@ def cycTateZeroMulOrbitEquiv
     (hσ : ∀ g, g ∈ Subgroup.zpowers σ) (τ : D) (hτ : ∀ d, d ∈ Subgroup.zpowers τ) :
     CycTateZero (Representation.ofMulDistribMulAction G (∀ x, U x)) σ ≃+
       CycTateZero (Representation.ofMulDistribMulAction D (U x₀)) τ :=
-  (cycTateZeroCongr (ρ' := mulPiRep G U) (additivePiEquiv U) (fun _ _ ↦ rfl) σ).trans
-    (cycTateZeroOrbitEquiv (mulPiRep G U) (permutesFactors_mulPiRep hU) x₀ D hD
+  (cycTateZeroCongr (ρ' := mulPiRep (G := G) (U := U)) (additivePiEquiv U)
+    (fun _ _ ↦ rfl) σ).trans
+    (cycTateZeroOrbitEquiv (mulPiRep (G := G) (U := U)) (permutesFactors_mulPiRep hU) x₀ D hD
       (Representation.ofMulDistribMulAction D (U x₀))
       (fun d f ↦ congrArg Additive.ofMul (hU₀ d fun x ↦ (f x).toMul)) σ hσ τ hτ)
 
@@ -190,8 +191,9 @@ def cycTateNegOneMulOrbitEquiv
     (hσ : ∀ g, g ∈ Subgroup.zpowers σ) (τ : D) (hτ : ∀ d, d ∈ Subgroup.zpowers τ) :
     CycTateNegOne (Representation.ofMulDistribMulAction G (∀ x, U x)) σ ≃+
       CycTateNegOne (Representation.ofMulDistribMulAction D (U x₀)) τ :=
-  (cycTateNegOneCongr (ρ' := mulPiRep G U) (additivePiEquiv U) (fun _ _ ↦ rfl) σ).trans
-    (cycTateNegOneOrbitEquiv (mulPiRep G U) (permutesFactors_mulPiRep hU) x₀ D hD
+  (cycTateNegOneCongr (ρ' := mulPiRep (G := G) (U := U)) (additivePiEquiv U)
+    (fun _ _ ↦ rfl) σ).trans
+    (cycTateNegOneOrbitEquiv (mulPiRep (G := G) (U := U)) (permutesFactors_mulPiRep hU) x₀ D hD
       (Representation.ofMulDistribMulAction D (U x₀))
       (fun d f ↦ congrArg Additive.ofMul (hU₀ d fun x ↦ (f x).toMul)) σ hσ τ hτ)
 

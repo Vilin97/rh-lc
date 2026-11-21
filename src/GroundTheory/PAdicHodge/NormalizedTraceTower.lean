@@ -119,8 +119,10 @@ instance finiteDimensional_cyclotomicLayer_cycl (n : ℕ) :
 theorem relDeg_pos (n : ℕ) : 0 < relDeg K n := Module.finrank_pos
 
 def traceBasis : Basis (Fin (relDeg K (stableIndex K))) (cycl p (stableIndex K))
-    (extendScalars (cycl_le_cyclotomicLayer K (stableIndex K))) :=
-  Module.finBasis _ _
+    (extendScalars (cycl_le_cyclotomicLayer K (stableIndex K))) := by
+  letI : Module.Free (cycl p (stableIndex K))
+      (extendScalars (cycl_le_cyclotomicLayer K (stableIndex K))) := Module.Free.of_divisionRing _ _
+  exact Module.finBasis _ _
 
 def traceDualBasis : Basis (Fin (relDeg K (stableIndex K))) (cycl p (stableIndex K))
     (extendScalars (cycl_le_cyclotomicLayer K (stableIndex K))) :=
@@ -254,6 +256,7 @@ theorem norm_normTrace_cyclotomicLayer_le {cF : ℝ} (hcF : 0 ≤ cF)
     _ = cF * (‖towerVec K i‖ * ‖towerDualVec K i‖) * ‖y‖ := by ring
 
 
+omit [FiniteDimensional ℚ_[p] K] in
 theorem cyclotomicLayer_map (σ : PadicAlgCl p ≃ₐ[ℚ_[p]] PadicAlgCl p) (hσ : ∀ x ∈ K, σ x = x)
     (n : ℕ) :
     (cyclotomicLayer K n).map (σ : PadicAlgCl p →ₐ[ℚ_[p]] PadicAlgCl p) = cyclotomicLayer K n := by

@@ -26,6 +26,7 @@ def ConservationOfNumber.Statement : Prop :=
         cycEval (fun W => vNum W a) (divCycle P (C ϖ)) = gNum P a
 
 
+open scoped Classical in
 def CutByEffectiveDivisor.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]

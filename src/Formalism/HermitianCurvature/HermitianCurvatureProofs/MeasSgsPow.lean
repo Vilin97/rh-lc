@@ -21,7 +21,7 @@ variable {k r : ℕ}
 theorem gN_mt_cont : Continuous fun x : Mt k r => B.gN (Matrix.of x) := by
   unfold B.gN
   refine Real.continuous_sqrt.comp ?_
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact Complex.continuous_normSq.comp ((continuous_apply j).comp (continuous_apply i))
 
 theorem conv_pt (hNI : NormInv) {a b : ℝ} (hb : 0 ≤ b) (hab : b ≤ a) {t g : Mx k r}

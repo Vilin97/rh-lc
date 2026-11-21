@@ -30,18 +30,18 @@ def valBall (n : ℤ) : AddSubgroup K where
   neg_mem' hx := by simpa using hx
 
 theorem mem_valBall {n : ℤ} {x : K} :
-    x ∈ valBall K n ↔ normalizedValuation K x ≤ WithZero.exp (-n) := Iff.rfl
+    x ∈ valBall n ↔ normalizedValuation K x ≤ WithZero.exp (-n) := Iff.rfl
 
-theorem valBall_antitone {m n : ℤ} (h : m ≤ n) : valBall K n ≤ valBall K m := fun x hx ↦
+theorem valBall_antitone {m n : ℤ} (h : m ≤ n) : valBall n ≤ valBall m := fun x hx ↦
   hx.trans (WithZero.exp_le_exp.mpr (by omega))
 
-theorem mul_mem_valBall {m n : ℤ} {x y : K} (hx : x ∈ valBall K m) (hy : y ∈ valBall K n) :
-    x * y ∈ valBall K (m + n) := by
+theorem mul_mem_valBall {m n : ℤ} {x y : K} (hx : x ∈ valBall m) (hy : y ∈ valBall n) :
+    x * y ∈ valBall (m + n) := by
   rw [mem_valBall, map_mul, neg_add, WithZero.exp_add]
   exact mul_le_mul' hx hy
 
-theorem pow_mem_valBall {n : ℤ} {x : K} (hx : x ∈ valBall K n) (k : ℕ) :
-    x ^ k ∈ valBall K (k * n) := by
+theorem pow_mem_valBall {n : ℤ} {x : K} (hx : x ∈ valBall n) (k : ℕ) :
+    x ^ k ∈ valBall (k * n) := by
   induction k with
   | zero => simp [mem_valBall]
   | succ k ih =>
@@ -49,23 +49,23 @@ theorem pow_mem_valBall {n : ℤ} {x : K} (hx : x ∈ valBall K n) (k : ℕ) :
     convert mul_mem_valBall ih hx using 2
     push_cast; ring
 
-theorem isOpen_valBall (n : ℤ) : IsOpen (valBall K n : Set K) := by
+theorem isOpen_valBall (n : ℤ) : IsOpen (valBall n : Set K) := by
   obtain ⟨y, hy⟩ := exists_normalizedValuation_eq K (-n)
   have hy0 : valuation K y ≠ 0 := by
     intro h
     rw [normalizedValuation_apply, h, map_zero] at hy
     exact WithZero.exp_ne_zero hy.symm
-  have : (valBall K n : Set K) = {z : K | valuation K (z - 0) ≤ valuation K y} := by
+  have : (valBall n : Set K) = {z : K | valuation K (z - 0) ≤ valuation K y} := by
     ext z
     simp only [sub_zero, SetLike.mem_coe, mem_valBall, ← hy, normalizedValuation_le_iff]
     rfl
   rw [this]
   exact isOpen_setOf_valuation_sub_le hy0
 
-theorem isClosed_valBall (n : ℤ) : IsClosed (valBall K n : Set K) :=
+theorem isClosed_valBall (n : ℤ) : IsClosed (valBall n : Set K) :=
   AddSubgroup.isClosed_of_isOpen _ (isOpen_valBall n)
 
-theorem valBall_mem_nhds (n : ℤ) : (valBall K n : Set K) ∈ 𝓝 (0 : K) :=
+theorem valBall_mem_nhds (n : ℤ) : (valBall n : Set K) ∈ 𝓝 (0 : K) :=
   (isOpen_valBall n).mem_nhds (zero_mem _)
 
 private instance t2Space_local_field_instance : T2Space K := by
@@ -79,7 +79,7 @@ instance nonarchimedeanRing : NonarchimedeanRing K where
     exact ⟨⟨(valuation K).ltAddSubgroup γ, isOpen_setOf_valuation_lt⟩, hγ⟩
 
 theorem tendsto_zero_iff_valBall {ι : Type*} {l : Filter ι} {f : ι → K} :
-    Tendsto f l (𝓝 0) ↔ ∀ N : ℤ, ∀ᶠ i in l, f i ∈ valBall K N := by
+    Tendsto f l (𝓝 0) ↔ ∀ N : ℤ, ∀ᶠ i in l, f i ∈ valBall N := by
   constructor
   · intro hf N
     exact hf (valBall_mem_nhds N)
@@ -99,8 +99,8 @@ theorem summable_of_tendsto_zero {f : ℕ → K} (hf : Tendsto f atTop (𝓝 0))
   have := isUniformAddGroup_of_addCommGroup (G := K)
   exact NonarchimedeanAddGroup.summable_of_tendsto_cofinite_zero (by rwa [Nat.cofinite_eq_atTop])
 
-theorem tsum_mem_valBall {f : ℕ → K} {N : ℤ} (h : ∀ k, f k ∈ valBall K N) :
-    ∑' k, f k ∈ valBall K N := by
+theorem tsum_mem_valBall {f : ℕ → K} {N : ℤ} (h : ∀ k, f k ∈ valBall N) :
+    ∑' k, f k ∈ valBall N := by
   by_cases hs : Summable f
   · exact (isClosed_valBall N).mem_of_tendsto hs.hasSum.tendsto_sum_nat
       (Eventually.of_forall fun s ↦ AddSubgroup.sum_mem _ fun k _ ↦ h k)
@@ -187,8 +187,8 @@ theorem normalizedValuation_natCast {n : ℕ} (hn : n ≠ 0) :
   congr 1
   simp; ring
 
-theorem div_natCast_mem_valBall {a : ℤ} {x : K} (hx : x ∈ valBall K a) {n : ℕ} (hn : n ≠ 0) :
-    x / n ∈ valBall K (a - absRamificationIndex K * padicValNat p n) := by
+theorem div_natCast_mem_valBall {a : ℤ} {x : K} (hx : x ∈ valBall a) {n : ℕ} (hn : n ≠ 0) :
+    x / n ∈ valBall (a - absRamificationIndex K * padicValNat p n) := by
   rw [mem_valBall, map_div₀, normalizedValuation_natCast p hn, div_eq_mul_inv,
     ← WithZero.exp_neg, neg_neg, neg_sub, sub_eq_add_neg, WithZero.exp_add, mul_comm]
   exact mul_le_mul_right hx _
@@ -203,18 +203,18 @@ noncomputable def expSeries (x : K) : K := ∑' k : ℕ, x ^ k / (k.factorial : 
 
 variable (p : ℕ) [hp : Fact p.Prime] [CharP 𝓀[K] p] [CharZero K]
 
-theorem logTerm_mem {a : ℤ} {x : K} (hx : x ∈ valBall K a) (k : ℕ) :
+theorem logTerm_mem {a : ℤ} {x : K} (hx : x ∈ valBall a) (k : ℕ) :
     (-1) ^ k * x ^ (k + 1) / ((k + 1 : ℕ) : K) ∈
-      valBall K ((k + 1) * a - absRamificationIndex K * padicValNat p (k + 1)) := by
-  have h1 : (-1 : K) ^ k * x ^ (k + 1) ∈ valBall K ((k + 1 : ℕ) * a) := by
+      valBall ((k + 1) * a - absRamificationIndex K * padicValNat p (k + 1)) := by
+  have h1 : (-1 : K) ^ k * x ^ (k + 1) ∈ valBall ((k + 1 : ℕ) * a) := by
     rw [mem_valBall, map_mul, map_pow, Valuation.map_neg, map_one, one_pow, one_mul]
     exact pow_mem_valBall hx (k + 1)
   have := div_natCast_mem_valBall p h1 (by omega : k + 1 ≠ 0)
   simpa only [Nat.cast_add, Nat.cast_one] using this
 
-theorem expTerm_mem {a : ℤ} {x : K} (hx : x ∈ valBall K a) (k : ℕ) :
+theorem expTerm_mem {a : ℤ} {x : K} (hx : x ∈ valBall a) (k : ℕ) :
     x ^ k / (k.factorial : K) ∈
-      valBall K (k * a - absRamificationIndex K * padicValNat p k.factorial) :=
+      valBall (k * a - absRamificationIndex K * padicValNat p k.factorial) :=
   div_natCast_mem_valBall p (pow_mem_valBall hx k) (Nat.factorial_ne_zero k)
 
 omit [CharP 𝓀[K] p] [CharZero K] in
@@ -223,7 +223,7 @@ theorem sub_one_mul_padicValNat_factorial_le (k : ℕ) :
   (sub_one_mul_padicValNat_factorial k).le.trans (Nat.sub_le _ _)
 
 
-theorem summable_logSeries {x : K} (hx : x ∈ valBall K 1) :
+theorem summable_logSeries {x : K} (hx : x ∈ valBall 1) :
     Summable fun k : ℕ ↦ (-1) ^ k * x ^ (k + 1) / ((k + 1 : ℕ) : K) := by
   refine summable_of_tendsto_zero (tendsto_zero_iff_valBall.mpr fun N ↦ ?_)
   rw [eventually_atTop]
@@ -246,9 +246,9 @@ theorem one_le_of_lt_sub_one_mul {a : ℤ} (ha : (absRamificationIndex K : ℤ) 
   push Not at h
   nlinarith
 
-theorem logSeries_sub_self_mem {a : ℤ} {x : K} (hx : x ∈ valBall K a)
+theorem logSeries_sub_self_mem {a : ℤ} {x : K} (hx : x ∈ valBall a)
     (ha : (absRamificationIndex K : ℤ) < (p - 1 : ℤ) * a) :
-    logSeries x - x ∈ valBall K (a + 1) := by
+    logSeries x - x ∈ valBall (a + 1) := by
   have ha1 := one_le_of_lt_sub_one_mul p ha
   have hs := summable_logSeries p (valBall_antitone ha1 hx)
   rw [logSeries, hs.tsum_eq_zero_add]
@@ -294,7 +294,7 @@ theorem expTerm_order_bound {a : ℤ} (ha : (absRamificationIndex K : ℤ) < (p 
   have hk : (0 : ℤ) ≤ k := by positivity
   nlinarith [mul_le_mul_of_nonneg_left h1' he, mul_le_mul_of_nonneg_left ha.le hk]
 
-theorem summable_expSeries {a : ℤ} {x : K} (hx : x ∈ valBall K a)
+theorem summable_expSeries {a : ℤ} {x : K} (hx : x ∈ valBall a)
     (ha : (absRamificationIndex K : ℤ) < (p - 1 : ℤ) * a) :
     Summable fun k : ℕ ↦ x ^ k / (k.factorial : K) := by
   refine summable_of_tendsto_zero (tendsto_zero_iff_valBall.mpr fun N ↦ ?_)
@@ -309,9 +309,9 @@ theorem summable_expSeries {a : ℤ} {x : K} (hx : x ∈ valBall K a)
   push_cast [hp1] at h3
   nlinarith
 
-theorem expSeries_sub_one_sub_self_mem {a : ℤ} {x : K} (hx : x ∈ valBall K a)
+theorem expSeries_sub_one_sub_self_mem {a : ℤ} {x : K} (hx : x ∈ valBall a)
     (ha : (absRamificationIndex K : ℤ) < (p - 1 : ℤ) * a) :
-    expSeries x - 1 - x ∈ valBall K (a + 1) := by
+    expSeries x - 1 - x ∈ valBall (a + 1) := by
   have hs := summable_expSeries p hx ha
   rw [expSeries, hs.tsum_eq_zero_add, ((summable_nat_add_iff 1).mpr hs).tsum_eq_zero_add]
   simp only [pow_zero, Nat.factorial_zero, Nat.cast_one, div_one, zero_add, pow_one,
@@ -335,7 +335,7 @@ theorem expSeries_sub_one_sub_self_mem {a : ℤ} {x : K} (hx : x ∈ valBall K a
   push_cast
   nlinarith [mul_le_mul_of_nonneg_left h0'' he, mul_le_mul_of_nonneg_left ha' hk]
 
-theorem expSeries_add {a : ℤ} {x y : K} (hx : x ∈ valBall K a) (hy : y ∈ valBall K a)
+theorem expSeries_add {a : ℤ} {x y : K} (hx : x ∈ valBall a) (hy : y ∈ valBall a)
     (ha : (absRamificationIndex K : ℤ) < (p - 1 : ℤ) * a) :
     expSeries (x + y) = expSeries x * expSeries y := by
   let := IsTopologicalAddGroup.rightUniformSpace K
@@ -364,16 +364,16 @@ theorem expSeries_add {a : ℤ} {x y : K} (hx : x ∈ valBall K a) (hy : y ∈ v
   rw [← key]
   field_simp
 
-theorem expSeries_sub_one_mem {a : ℤ} {x : K} (hx : x ∈ valBall K a)
+theorem expSeries_sub_one_mem {a : ℤ} {x : K} (hx : x ∈ valBall a)
     (ha : (absRamificationIndex K : ℤ) < (p - 1 : ℤ) * a) :
-    expSeries x - 1 ∈ valBall K a := by
+    expSeries x - 1 ∈ valBall a := by
   have h := add_mem (valBall_antitone (by omega : a ≤ a + 1)
     (expSeries_sub_one_sub_self_mem p hx ha)) hx
   simpa using h
 
-theorem logSeries_mem_valBall {a : ℤ} {x : K} (hx : x ∈ valBall K a)
+theorem logSeries_mem_valBall {a : ℤ} {x : K} (hx : x ∈ valBall a)
     (ha : (absRamificationIndex K : ℤ) < (p - 1 : ℤ) * a) :
-    logSeries x ∈ valBall K a := by
+    logSeries x ∈ valBall a := by
   have h := add_mem (valBall_antitone (by omega : a ≤ a + 1) (logSeries_sub_self_mem p hx ha)) hx
   simpa using h
 

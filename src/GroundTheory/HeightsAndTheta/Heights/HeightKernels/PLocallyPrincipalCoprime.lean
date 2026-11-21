@@ -81,7 +81,7 @@ theorem exists_local_mult {B : Subring L} {M : AddSubgroup L} {ι : Type} [Finty
     have e : b • a j = c • a i := by rw [Subring.smul_def, Subring.smul_def, smul_eq_mul, smul_eq_mul, hbc]
     rw [Submodule.mem_colon_singleton, e]
     exact Submodule.mem_span_singleton.mpr ⟨c, rfl⟩
-  obtain ⟨t, htK, htm⟩ := SetLike.not_le_iff_exists.mp hK
+  obtain ⟨t, htK, htm⟩ := IsConcreteLE.not_le_iff_exists.mp hK
   refine ⟨t / a i, i, ?_, t, by field_simp, htm⟩
   intro z hz
   have hzN := mem_span_of_local hloc hz
@@ -101,6 +101,7 @@ theorem exists_local_mult {B : Subring L} {M : AddSubgroup L} {ι : Type} [Finty
   exact c.2
 
 
+open scoped Classical in
 noncomputable def toB (B : Subring L) (x : L) : B := if h : x ∈ B then ⟨x, h⟩ else 0
 
 theorem coe_toB {B : Subring L} {x : L} (h : x ∈ B) : (toB B x : L) = x := by
@@ -109,7 +110,9 @@ theorem coe_toB {B : Subring L} {x : L} (h : x ∈ B) : (toB B x : L) = x := by
 end LocallyPrincipalCoprimeAlt
 
 
+open LocallyPrincipalCoprimeAlt in
 theorem LocallyPrincipalCoprime.proof : LocallyPrincipalCoprime.Statement := by
+  classical
   intro L _ _ B M ι _ a hfin hBM haM hden hloc hM s hs
   obtain ⟨m₀, hm₀⟩ := Ideal.exists_maximal B
   have : Nonempty ι := ⟨(hloc m₀ hm₀).choose⟩
@@ -126,7 +129,7 @@ theorem LocallyPrincipalCoprime.proof : LocallyPrincipalCoprime.Statement := by
       rintro ⟨m', hm'S, hm'm⟩
       have h' := (memS m').mp (Finset.mem_of_mem_erase hm'S)
       exact Finset.ne_of_mem_erase hm'S (h'.1.eq_of_le hmS'.1.ne_top hm'm)
-    obtain ⟨e, he, hem⟩ := SetLike.not_le_iff_exists.mp hnle
+    obtain ⟨e, he, hem⟩ := IsConcreteLE.not_le_iff_exists.mp hnle
     exact ⟨e, fun m' hm' => Finset.inf_le (f := id) hm' he, hem⟩
   choose! e he hem using havoid
   set γ : L := (s : L) * g m₀ + ∑ m ∈ S, (e m : L) * g m with hγdef

@@ -72,6 +72,7 @@ theorem exists_natCast_mul_integral_of_isCompact {𝒦 : Set (FiniteAdeleRing (�
   exact ⟨z, hz⟩
 
 
+open scoped Classical in
 theorem exists_abs_repr_le :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ (z : 𝓞 K) (i : Module.Free.ChooseBasisIndex ℤ (𝓞 K)),
       |(((RingOfIntegers.basis K).repr z i : ℤ) : ℝ)| ≤

@@ -114,7 +114,7 @@ theorem not_isDiagExp_of_hasUpper {m : Fin n × Fin n →₀ ℕ} (h : HasUpper 
   simp only [IsUpper, IsDiag] at ha this
   rw [this] at ha; exact lt_irrefl _ ha
 
-def cartanSet (n : ℕ) : Set (U n) := Set.range fun i : Fin n => e (i, i)
+noncomputable def cartanSet (n : ℕ) : Set (U n) := Set.range fun i : Fin n => e (i, i)
 
 theorem e_diag_commute (i j : Fin n) : e (i, i) * e (j, j) = e (j, j) * e (i, i) := by
   have h := e_mul_sub_mul (i, i) (j, j)
@@ -127,10 +127,12 @@ theorem cartanSet_commute : ∀ a ∈ cartanSet n, ∀ b ∈ cartanSet n, a * b 
   rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩
   exact e_diag_commute i j
 
-def cartanSub (n : ℕ) : Subalgebra ℂ (U n) := Algebra.adjoin ℂ (cartanSet n)
+noncomputable def cartanSub (n : ℕ) : Subalgebra ℂ (U n) := Algebra.adjoin ℂ (cartanSet n)
 
 instance cartanSub.instIsMulCommutative : IsMulCommutative (cartanSub n) :=
-  Algebra.isMulCommutative_adjoin ℂ cartanSet_commute
+  Algebra.isMulCommutative_adjoin ℂ (by
+    intro a ha b hb _
+    exact cartanSet_commute a ha b hb)
 
 open scoped IsMulCommutative
 

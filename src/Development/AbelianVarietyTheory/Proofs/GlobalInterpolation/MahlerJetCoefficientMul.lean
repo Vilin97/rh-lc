@@ -34,10 +34,14 @@ theorem jet_eq {κ : Type} (v : κ → V) {f : V → ℂ} (hf : ContDiff ℂ ∞
       hf.differentiable_iteratedFDeriv (by exact_mod_cast ENat.natCast_lt_top _) x
     have h : (fun y => iteratedFDeriv ℂ L.length f y (fun i => v (L.get i))) = ddl v L f :=
       funext fun y => jet_eq v hf L y
-    show iteratedFDeriv ℂ (L.length + 1) f x _ = _
+    have hm : Fin.tail (fun i : Fin (L.length + 1) => v ((a :: L).get i)) =
+        fun i => v (L.get i) := by
+      funext i
+      simp [Fin.tail]
+    change iteratedFDeriv ℂ (L.length + 1) f x (fun i => v ((a :: L).get i)) = _
     rw [iteratedFDeriv_succ_apply_left]
     rw [← fderiv_continuousMultilinear_apply_const_apply hd]
-    show fderiv ℂ (fun y => iteratedFDeriv ℂ L.length f y (fun i => v (L.get i))) x (v a) = _
+    rw [hm]
     rw [h]
     rfl
 

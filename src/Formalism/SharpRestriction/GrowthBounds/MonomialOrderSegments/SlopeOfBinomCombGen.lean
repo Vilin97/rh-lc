@@ -278,26 +278,23 @@ theorem costV_ok {L : Type} [DecidableEq L] {r : ℕ} (sg : L → Bool) (fam : S
       vala sg S θ F → vala sg S θ G → vala sg S θ (F + G))
     (hsmul : ∀ S ∈ fam, ∀ (θ : ℝ) (a : K) (F : MvPolynomial (L × Fin r) K),
       vala sg S θ F → vala sg S θ (a • F)) :
-    CostOK (CostV (K := K) (r := r) sg fam) where
-  one := by
-    intro S _ θ F h
-    rw [dg_one_fun]; simpa using h
-  mul := by
-    intro m n f g hf hg S hS θ F h
+    CostOK (CostV (K := K) (r := r) sg fam) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · intro S _ θ F h
+    rw [dg_one_fun]
+    simpa using h
+  · intro m n f g hf hg S hS θ F h
     rw [dg_mul_fun]
     have := hf S hS _ _ (hg S hS θ F h)
     have e : θ - ((m + n : ℕ) : ℝ) = θ - n - m := by push_cast; ring
     rw [e]; exact this
-  add := by
-    intro n f g hf hg S hS θ F h
+  · intro n f g hf hg S hS θ F h
     rw [dg_add_fun]
     exact hadd S hS _ _ _ (hf S hS θ F h) (hg S hS θ F h)
-  smul := by
-    intro n a f hf S hS θ F h
+  · intro n a f hf S hS θ F h
     rw [dg_smul_fun]
     exact hsmul S hS _ _ _ (hf S hS θ F h)
-  mono := by
-    intro m n f hmn hf S hS θ F h
+  · intro m n f hmn hf S hS θ F h
     have h1 := hf S hS θ F h
     unfold vala at h1 ⊢
     refine le_trans ?_ h1

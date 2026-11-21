@@ -25,8 +25,10 @@ theorem finite_placesOver (g : ℕ) (hg : g ≠ 0) :
   exact Ideal.dvd_iff_le.2 ((Ideal.span_singleton_le_iff_mem _).2 hv)
 
 
-def placesOver (g : ℕ) : Finset (HeightOneSpectrum (𝓞 F)) :=
-  if h : {v : HeightOneSpectrum (𝓞 F) | ((g : ℕ) : 𝓞 F) ∈ v.asIdeal}.Finite then h.toFinset else ∅
+def placesOver (g : ℕ) : Finset (HeightOneSpectrum (𝓞 F)) := by
+  classical
+  exact if h : {v : HeightOneSpectrum (𝓞 F) | ((g : ℕ) : 𝓞 F) ∈ v.asIdeal}.Finite then
+    h.toFinset else ∅
 
 theorem mem_placesOver (g : ℕ) (hg : g ≠ 0) (v : HeightOneSpectrum (𝓞 F)) :
     v ∈ placesOver F g ↔ ((g : ℕ) : 𝓞 F) ∈ v.asIdeal := by

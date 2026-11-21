@@ -112,8 +112,18 @@ theorem moll_young (E : Type*) [NormedAddCommGroup E] [NormedSpace ℝ E] [Finit
   have h := moll_young_sq E μ K u s hs hu
   have e : ∀ z : ℝ≥0∞, z ^ (ENNReal.toReal 2) = z ^ 2 := fun z => by
     rw [ENNReal.toReal_ofNat, ← ENNReal.rpow_natCast]; norm_num
-  rw [MeasureTheory.eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num),
-    MeasureTheory.eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num)]
+  have huT : AEStronglyMeasurable u (μ.restrict (thickening K.r s)) := hu.restrict
+  have hmoll : AEStronglyMeasurable (moll K u) μ := by
+    have hq := hu.comp_quasiMeasurePreserving (quasiMeasurePreserving_sub μ μ)
+    have hprod : AEStronglyMeasurable
+        (fun p : E × E => K.toFun p.2 • u (p.1 - p.2)) (μ.prod μ) :=
+      (K.smooth.continuous.measurable.comp measurable_snd).aestronglyMeasurable.smul hq
+    change AEStronglyMeasurable
+      (fun x => ∫ t, K.toFun t • u (x - t) ∂μ) μ
+    exact hprod.integral_prod_right'
+  have hmolls : AEStronglyMeasurable (moll K u) (μ.restrict s) := hmoll.restrict
+  rw [MeasureTheory.eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num) huT,
+    MeasureTheory.eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num) hmolls]
   simp_rw [e]
   exact ENNReal.rpow_le_rpow h (by norm_num)
 

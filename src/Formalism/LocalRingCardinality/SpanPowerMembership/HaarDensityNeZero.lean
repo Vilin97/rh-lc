@@ -15,6 +15,8 @@ open scoped ENNReal NNReal Matrix.Norms.Operator
 
 variable (P Q : ℕ)
 
+local notation "J" => Formalism.UG.Jpq P Q
+
 def matHom : UpqT P Q →* MM P Q where
   toFun := UpqT.mat
   map_one' := rfl
@@ -109,8 +111,8 @@ def chart : Chart (lieU P Q) (UpqT P Q) where
       rw [show UpqT.mat g = exp Z from hg] at this
       exact this
     rw [mem_lieU_iff]
-    calc J * (-Zᴴ) * J = logA (MM P Q) (exp (J * (-Zᴴ) * J)) := h2.symm
-      _ = logA (MM P Q) (exp Z) := congrArg (logA (MM P Q)) (exp_theta P Q Z hm)
+    calc J * (-Zᴴ) * J = logA (𝔸 := MM P Q) (exp (J * (-Zᴴ) * J)) := h2.symm
+      _ = logA (𝔸 := MM P Q) (exp Z) := congrArg (logA (𝔸 := MM P Q)) (exp_theta P Q Z hm)
       _ = Z := h1
 
 theorem norm_le_sum (X : MM P Q) : ‖X‖ ≤ ∑ i, ∑ j, ‖X i j‖ := by

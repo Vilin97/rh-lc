@@ -19,7 +19,7 @@ theorem goal1 (g : ℕ) (hg : g.Prime) : ∃ v : HeightOneSpectrum (𝓞 F), (g 
       exact bot_le)
   have hgQ : (g : 𝓞 F) ∈ Q := by
     have h1 : (g : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 F)) := by
-      rw [hQc]
+      rw [← Ideal.under_def, hQc]
       exact Ideal.subset_span rfl
     simpa using h1
   refine ⟨⟨Q, hQ, ?_⟩, hgQ⟩

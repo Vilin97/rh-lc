@@ -129,7 +129,6 @@ theorem IsVerticalDivisor.of_unit_off_special {P : Ideal (MRing ι O)} {ϖ : O} 
   degrees := degrees
   num_not_mem := hf
   den_not_mem := hg
-  unit_off_special := hunit
   vertical := by
     intro W hW
     by_contra hϖ
@@ -143,6 +142,7 @@ theorem IsVerticalDivisor.of_unit_off_special {P : Ideal (MRing ι O)} {ϖ : O} 
     apply hW
     unfold ratDiv
     rw [divCycle_eq_of_mul_sub_mem hu hv h, sub_self]
+  unit_off_special := hunit
 
 end Vertical
 

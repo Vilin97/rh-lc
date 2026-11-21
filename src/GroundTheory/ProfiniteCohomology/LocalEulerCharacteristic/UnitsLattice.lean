@@ -21,13 +21,13 @@ variable (E F : Type*) [Field E] [ValuativeRel E] [TopologicalSpace E] [IsNonarc
   [Algebra E F] [ValuativeExtension E F] [FiniteDimensional E F]
 
 noncomputable abbrev integerAction : MulSemiringAction (F ≃ₐ[E] F) 𝒪[F] where
-  smul σ x := integerAlgEquiv E F σ x
+  smul σ x := integerAlgEquivLocal σ x
   one_smul x := by ext; rfl
   mul_smul σ τ x := by ext; rfl
-  smul_zero σ := map_zero (integerAlgEquiv E F σ)
-  smul_add σ := map_add (integerAlgEquiv E F σ)
-  smul_one σ := map_one (integerAlgEquiv E F σ)
-  smul_mul σ := map_mul (integerAlgEquiv E F σ)
+  smul_zero σ := map_zero (integerAlgEquivLocal σ)
+  smul_add σ := map_add (integerAlgEquivLocal σ)
+  smul_one σ := map_one (integerAlgEquivLocal σ)
+  smul_mul σ := map_mul (integerAlgEquivLocal σ)
 
 attribute [local instance] integerAction
 
@@ -225,6 +225,7 @@ variable {E F : Type*} [Field E] [ValuativeRel E] [Field F] [ValuativeRel F] [Al
   [FiniteDimensional E F]
 
 
+variable (E) in
 noncomputable def normalSub (θ : F) : AddSubgroup 𝒪[F] :=
   (normalLattice (1 : 𝒪[E]) θ 0).toAddSubgroup.comap (𝒪[F].subtype : 𝒪[F] →+* F).toAddMonoidHom
 
@@ -265,8 +266,10 @@ variable {θ : F} (hθ : LinearIndependent E fun σ : F ≃ₐ[E] F ↦ σ θ)
 omit [TopologicalSpace E] [IsNonarchimedeanLocalField E] [TopologicalSpace F]
   [IsNonarchimedeanLocalField F] in
 include hθO in
-theorem sum_smul_mem_integer (c : (F ≃ₐ[E] F) → 𝒪[E]) : ∑ σ, c σ • σ θ ∈ 𝒪[F] :=
-  mem_integer_of_mem_normalLattice 1 θ hθO (sum_smul_mem_normalLattice c)
+theorem sum_smul_mem_integer (c : (F ≃ₐ[E] F) → 𝒪[E]) : ∑ σ, c σ • σ θ ∈ 𝒪[F] := by
+  refine sum_mem fun σ _ ↦ ?_
+  rw [integer_smul_eq]
+  exact mul_mem ((algebraMap_mem_integer_iff E F (c σ)).mpr (c σ).2) (hθO σ)
 
 noncomputable def normalSubOfCoeff : ((F ≃ₐ[E] F) → 𝒪[E]) →+ normalSub E θ where
   toFun c := ⟨⟨∑ σ, c σ • σ θ, sum_smul_mem_integer hθO c⟩, sum_smul_mem_normalLattice c⟩

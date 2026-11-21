@@ -57,17 +57,17 @@ structure OFam (e f : ι → K) (r : ℕ) where
 
 variable {e f : ι → K}
 
-def OFam.proj {r : ℕ} (F : OFam σ J e f r) (x : ι → K) : ι → K :=
+def OFam.proj {r : ℕ} (F : OFam (σ := σ) (J := J) e f r) (x : ι → K) : ι → K :=
   hf σ J x f • e + hf σ J x e • f + ∑ j, (hf σ J x (F.a j) * F.inv j) • F.a j
 
-def OFam.Spans {r : ℕ} (F : OFam σ J e f r) : Prop := ∀ x, F.proj x = x
+def OFam.Spans {r : ℕ} (F : OFam (σ := σ) (J := J) e f r) : Prop := ∀ x, F.proj x = x
 
 section
 variable (hσ : ∀ x, σ (σ x) = x) (hJ : Jᵀ = J.map σ) (he : hf σ J e e = 0) (hff : hf σ J f f = 0)
   (hef : hf σ J e f = 1)
 include hσ hJ he hff hef
 
-theorem OFam.sub_proj_orth {r : ℕ} (F : OFam σ J e f r) (x : ι → K) :
+theorem OFam.sub_proj_orth {r : ℕ} (F : OFam (σ := σ) (J := J) e f r) (x : ι → K) :
     hf σ J (x - F.proj x) e = 0 ∧ hf σ J (x - F.proj x) f = 0 ∧
       ∀ k, hf σ J (x - F.proj x) (F.a k) = 0 := by
   have hadd : ∀ x y z, hf σ J (x + y) z = hf σ J x z + hf σ J y z := by
@@ -111,7 +111,7 @@ theorem OFam.sub_proj_orth {r : ℕ} (F : OFam σ J e f r) (x : ι → K) :
 
 end
 
-theorem OFam.proj_add {r : ℕ} (F : OFam σ J e f r) (x y : ι → K) :
+theorem OFam.proj_add {r : ℕ} (F : OFam (σ := σ) (J := J) e f r) (x y : ι → K) :
     F.proj (x + y) = F.proj x + F.proj y := by
   have hadd : ∀ z, hf σ J (x + y) z = hf σ J x z + hf σ J y z := by
     intro z
@@ -119,7 +119,7 @@ theorem OFam.proj_add {r : ℕ} (F : OFam σ J e f r) (x y : ι → K) :
   simp only [OFam.proj, hadd, add_smul, add_mul, Finset.sum_add_distrib]
   abel
 
-theorem OFam.proj_smul {r : ℕ} (F : OFam σ J e f r) (c : K) (x : ι → K) :
+theorem OFam.proj_smul {r : ℕ} (F : OFam (σ := σ) (J := J) e f r) (c : K) (x : ι → K) :
     F.proj (c • x) = c • F.proj x := by
   have hsmul : ∀ z, hf σ J (c • x) z = c * hf σ J x z := by
     intro z
@@ -161,8 +161,8 @@ theorem polar {p p' : ι → K} (hp : hf σ J p p = 0) (hp' : hf σ J p' p' = 0)
   exact h2.mul_right_eq_zero.mp e4
 
 include hσ hJ he hff hef hdet hfix h2 hδ hσδ in
-theorem OFam.extend {r : ℕ} (F : OFam σ J e f r) (hns : ¬ F.Spans) :
-    Nonempty (OFam σ J e f (r + 1)) := by
+theorem OFam.extend {r : ℕ} (F : OFam (σ := σ) (J := J) e f r) (hns : ¬ F.Spans) :
+    Nonempty (OFam (σ := σ) (J := J) e f (r + 1)) := by
   classical
   have hadd1 : ∀ x y z, hf σ J (x + y) z = hf σ J x z + hf σ J y z := by
     intro x y z
@@ -267,7 +267,7 @@ theorem OFam.extend {r : ℕ} (F : OFam σ J e f r) (hns : ¬ F.Spans) :
       exact F.hinv i
 
 include hσ hJ he hff hef in
-theorem OFam.card_le [Nontrivial K] {r : ℕ} (F : OFam σ J e f r) : r + 2 ≤ Fintype.card ι := by
+theorem OFam.card_le [Nontrivial K] {r : ℕ} (F : OFam (σ := σ) (J := J) e f r) : r + 2 ≤ Fintype.card ι := by
   classical
   have hadd1 : ∀ x y z, hf σ J (x + y) z = hf σ J x z + hf σ J y z := by
     intro x y z
@@ -338,9 +338,9 @@ theorem OFam.card_le [Nontrivial K] {r : ℕ} (F : OFam σ J e f r) : r + 2 ≤ 
   simpa [Module.finrank_fintype_fun_eq_card] using hcard
 
 include hσ hJ he hff hef hdet hfix h2 hδ hσδ in
-theorem exists_spans [Nontrivial K] : ∃ r, ∃ F : OFam σ J e f r, F.Spans := by
+theorem exists_spans [Nontrivial K] : ∃ r, ∃ F : OFam (σ := σ) (J := J) e f r, F.Spans := by
   classical
-  let Pr : ℕ → Prop := fun r => Nonempty (OFam σ J e f r)
+  let Pr : ℕ → Prop := fun r => Nonempty (OFam (σ := σ) (J := J) e f r)
   have h0 : Pr 0 := ⟨⟨Fin.elim0, Fin.elim0, fun j => j.elim0, fun j => j.elim0,
     fun i => i.elim0, fun j => j.elim0⟩⟩
   have hr : Pr (Nat.findGreatest Pr (Fintype.card ι)) := Nat.findGreatest_spec (Nat.zero_le _) h0

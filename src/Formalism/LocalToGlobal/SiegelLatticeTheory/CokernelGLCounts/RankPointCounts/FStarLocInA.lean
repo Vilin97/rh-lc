@@ -237,6 +237,7 @@ theorem locInA_mk_e (x : ↥(H.perp (H.X t₁.f))) (y : ↥(H.perp (H.X t₁.f))
        exact (Submodule.Quotient.eq _).2 h2)
 
 
+include hf hX in
 theorem lset_eq {Lam₂ Lam₃ : Submodule M.L.O V} (hL : ∀ x, x ∈ Lam₃ ↔ e.symm x ∈ Lam₂) :
     H.Lset Lam₂ t₁.f = H.Lset Lam₃ t₁.f := by
   ext w
@@ -281,6 +282,7 @@ theorem lset_q {Lam₂ Lam₃ : Submodule M.L.O V} (hL : ∀ x, x ∈ Lam₃ ↔
       locInA_q_mk H e hiso hf' ⟨e.symm y, hp⟩ y (e.apply_symm_apply _).symm⟩
 
 
+include hf hX in
 theorem iota_q {Lam₂ Lam₃ : Submodule M.L.O V} (hL : ∀ x, x ∈ Lam₃ ↔ e.symm x ∈ Lam₂) (g : Loc.SplitG M.L)
     (T T' : F) :
     H.iotaGraph g (⟨Lam₃, t₁.f, f₃', T, T'⟩ : Loc.Term V M r) =
@@ -358,6 +360,7 @@ theorem locInA_dl' (l : ℕ) : H.Dl t₁.f f₃' l = H.Dl t₁.f f₂' l := by
     _ = H.Dl t₁.f f₂' l := locInA_dl H e hiso t₁.f f₂' l
 
 
+include hf hf' hX in
 theorem ident_trans (φ' : H.Wb t₁.f' ≃ₗ[E] H.Wb f₂')
     (hI : H.Ident t₁ ⟨⊥, t₁.f, f₂', t₁.T, t₁.T'⟩ (LinearEquiv.refl E _) φ') :
     H.Ident t₁ ⟨⊥, t₁.f, f₃', t₁.T, t₁.T'⟩ (LinearEquiv.refl E _) (φ'.trans (qE H e hiso hf')) := by
@@ -422,6 +425,7 @@ theorem ident_trans (φ' : H.Wb t₁.f' ≃ₗ[E] H.Wb f₂')
     exact i6
 
 
+include hf hf' hX in
 theorem locSet_back {Lam₂ Lam₃ : Submodule M.L.O V} (hL : ∀ x, x ∈ Lam₃ ↔ e.symm x ∈ Lam₂)
     (φ' : H.Wb t₁.f' ≃ₗ[E] H.Wb f₂')
     (hI : H.Ident t₁ ⟨⊥, t₁.f, f₂', t₁.T, t₁.T'⟩ (LinearEquiv.refl E _) φ')

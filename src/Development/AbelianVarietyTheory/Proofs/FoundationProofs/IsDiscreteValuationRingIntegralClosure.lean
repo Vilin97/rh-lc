@@ -103,7 +103,8 @@ theorem finite_integralClosure : Module.Finite R (integralClosure R L) := by
     refine IsHausdorff.of_isDomain _ ?_
     obtain ⟨n, hn⟩ := Ideal.exists_maximal B
     refine ne_top_of_le_ne_top hn.ne_top (Ideal.map_le_iff_le_comap.2 ?_)
-    exact (eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal n)).ge
+    exact (eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+      (algebraMap R B) (by intro x; exact integralClosure.isIntegral x) n)).ge
   have halg : Algebra.IsAlgebraic R L :=
     (IsFractionRing.comap_isAlgebraic_iff (A := R) (K := K) (C := L)).mpr inferInstance
   obtain ⟨s, hsT, hs⟩ := (Submodule.fg_span_iff_fg_span_finset_subset (R := K) (B : Set L)).mp

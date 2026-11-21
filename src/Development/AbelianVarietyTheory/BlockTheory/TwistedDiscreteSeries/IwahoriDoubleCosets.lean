@@ -76,8 +76,9 @@ def cosetInd (t : n → kˣ) : GL n k → ℂ := (iwahoriCoset t).indicator fun 
 variable {V : Type} [AddCommGroup V] [Module ℂ V]
 
 
-def IsExponents (π : Representation ℂ (GL n k) V) (E : Multiset ((n → kˣ) →* ℂˣ)) : Prop :=
-  (∀ χ ∈ E, ∀ s ∈ torusO k n, χ s = 1) ∧ ∀ χ, (E.count χ : ℕ∞) = expMult π χ
+def IsExponents (π : Representation ℂ (GL n k) V) (E : Multiset ((n → kˣ) →* ℂˣ)) : Prop := by
+  classical
+  exact (∀ χ ∈ E, ∀ s ∈ torusO k n, χ s = 1) ∧ ∀ χ, (E.count χ : ℕ∞) = expMult π χ
 
 variable (k n)
 

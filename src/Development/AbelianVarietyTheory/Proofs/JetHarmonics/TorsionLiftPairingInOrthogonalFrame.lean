@@ -151,7 +151,9 @@ theorem _root_.GlobalTheory.MomOne.kapFrame : ∀ (q : ℕ) [Fact q.Prime] (lam 
     (∀ i, x i ∈ S.La) → (∀ i j, _root_.Formalism.L2.Ker.JMB.beta S.d S.Hm (x i) (x j) = if i = j then (a i : ℂ) else 0) →
     (∀ i, 0 < a i ∧ Nat.Coprime (a i) q) → (∀ i, b i ∈ S.La) → _root_.Formalism.L2.Ker.JMB.IsIdem lam S.d m eps →
     2 * n ≤ m → (s₀ * ∏ i, a i) ∣ s →
-    let y' : Fin g → ℂ := fun i => _root_.Formalism.L2.Ker.JMB.beta S.d S.Hm ((s : ℂ) • _root_.Formalism.L2.Ker.JMB.liftY q n eps b y) (x i) / (a i : ℂ);
+    let y' (i : Fin g) : ℂ :=
+      _root_.Formalism.L2.Ker.JMB.beta S.d S.Hm
+        ((s : ℂ) • _root_.Formalism.L2.Ker.JMB.liftY q n eps b y) (x i) / (a i : ℂ)
     (∀ i, _root_.GlobalTheory.MomOne.Good ι S.d n s₀ (y' i)) ∧
       ∀ (A : Fin r → ℤ_[q]) (A' : Fin g → ℤ_[q]),
         (∀ i, _root_.GlobalTheory.MomOne.zc (A' i) =

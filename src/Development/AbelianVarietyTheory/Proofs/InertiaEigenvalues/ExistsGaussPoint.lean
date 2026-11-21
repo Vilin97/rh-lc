@@ -89,7 +89,7 @@ theorem exists_gaussPoint (T : CDVR) (ϖ : T.V) (hϖ : Irreducible ϖ) :
   have hev : Function.Injective ev :=
     (algebraMap_adicCompletion_injective_of_dvr L).comp hinj
   have hirr' : Irreducible (ev (PowerSeries.C ϖ)) :=
-    irreducible_algebraMap_adicCompletion_of_dvr hirr
+    irreducible_algebraMap_adicCompletion_of_dvr L hirr
   have hunit : ∀ s : R, ¬ PowerSeries.C ϖ ∣ s → IsUnit (ev s) := fun s hs =>
     (IsLocalization.map_units L (⟨s, fun h => hs (Ideal.mem_span_singleton.1 h)⟩ :
       P.primeCompl)).map (algebraMap L S)

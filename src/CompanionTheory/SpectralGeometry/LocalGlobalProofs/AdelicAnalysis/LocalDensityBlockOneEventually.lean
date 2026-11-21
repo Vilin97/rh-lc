@@ -26,7 +26,7 @@ theorem continuous_act_consTup {F E : Type} [Field F] [Field E] [Algebra F E] (R
     Continuous fun X : Fin n → Fin M → R ⊗[F] E => actW R σ J h (consTup X) := by
   refine continuous_pi fun a => continuous_pi fun i => ?_
   simp only [actW, actTup, Matrix.mulVec, dotProduct]
-  refine continuous_finset_sum _ fun j _ => continuous_const.mul ?_
+  refine continuous_finsetSum _ fun j _ => continuous_const.mul ?_
   refine Fin.cases ?_ (fun a' => ?_) a
   · refine Fin.cases ?_ (fun j' => ?_) j <;> simpa [consTup] using continuous_const
   · refine Fin.cases ?_ (fun j' => ?_) j

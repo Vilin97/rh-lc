@@ -95,12 +95,12 @@ theorem lattice_inequality :
   have hw' : ∀ x, ∃ μ, w x = yy x + N • μ := fun x => by
     obtain ⟨μ, hμ⟩ := hw x
     exact ⟨m • μ, by rw [hμ, mul_smul]⟩
-  obtain ⟨k, μ, hk, h⟩ := exists_reduced_combination N hN yy w hw' _ hc
+  obtain ⟨k, μ, hk, h⟩ := LatticeIneq.exists_reduced_combination N hN yy w hw' _ hc
   refine ⟨μ, ?_⟩
   have hc' : c + N • μ = αs + ∑ x, k x • w x := by rw [← h]; abel
   have hNpos : (0 : ℝ) < N := by exact_mod_cast hN
-  have h1 := weighted_add_le q hq j αs (∑ x, k x • w x)
-  have h2 := map_sum_le q hq Finset.univ (fun x => k x • w x)
+  have h1 := LatticeIneq.weighted_add_le q hq j αs (∑ x, k x • w x)
+  have h2 := LatticeIneq.map_sum_le q hq Finset.univ (fun x => k x • w x)
   have h3 : ∑ x, q (k x • w x) ≤ (N : ℝ) ^ 2 * ((N * m : ℕ) : ℝ) ^ 2 * ∑ x, vth x := by
     rw [Finset.mul_sum]
     refine Finset.sum_le_sum fun x _ => ?_

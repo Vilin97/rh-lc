@@ -247,13 +247,13 @@ theorem exists_inv_one_add {p : ℕ} (hp : (p : 𝓞 (maximalRealSubfield E)) �
   have : IsUnit (1 + p • (⟨z, hz⟩ : locOrder v)) := by
     by_contra h
     obtain ⟨m, hm, h⟩ := exists_max_ideal_of_mem_nonunits h
-    have h1 := eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+    have h1 := eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal
       (R := v.adicCompletionIntegers (maximalRealSubfield E)) m)
     have h2 : (p : v.adicCompletionIntegers (maximalRealSubfield E)) ∈ maximalIdeal _ := by
       rw [mem_maximalIdeal, mem_nonunits_iff, ← map_natCast (algebraMap (𝓞 (maximalRealSubfield E)) _),
         isUnit_algebraMap_iff]
       exact fun h => h hp
-    rw [← h1, Ideal.mem_comap, map_natCast] at h2
+    rw [← h1, Ideal.mem_under, map_natCast] at h2
     rw [nsmul_eq_mul] at h
     exact hm.ne_top ((Ideal.eq_top_iff_one _).2 ((Ideal.add_mem_iff_left _ (m.mul_mem_right _ h2)).1 h))
   obtain ⟨w, hw⟩ := this.exists_right_inv
@@ -378,8 +378,10 @@ theorem exists_nsmul_mem {p : ℕ} (hp : p.Prime) (L : Submodule (𝓞 E) (Fin n
     · rwa [← e]
     · rwa [e, neg_smul, neg_mem_iff] at h1
   have hpQ : (p : 𝓞 (maximalRealSubfield E)) ∈ Q := by
-    have : (p : ℤ) ∈ Q.comap (algebraMap ℤ _) := hQp ▸ Ideal.mem_span_singleton_self _
-    simpa using this
+    have : (p : ℤ) ∈ Q.under ℤ := by
+      rw [hQp]
+      exact Ideal.mem_span_singleton_self _
+    simpa [Ideal.mem_under] using this
   obtain ⟨s, hs, hsx⟩ := h ⟨Q, hQ, fun e => hp.ne_zero (by simpa [e] using hpQ)⟩ hpQ
   exact hs (hIQ hsx)
 
@@ -411,7 +413,8 @@ theorem inGenus_of_selfDual [Algebra.Unramified (𝓞 (maximalRealSubfield E)) (
     Units.inv_eq_of_mul_eq_one_left (hh' v)
   obtain ⟨γ, hγ, hγ'⟩ := exists_unitary_near hp.ne_zero (fun v => (h v).1) hh'
   have hγ₂ : γ * (γ.map cc)ᵀ = 1 := mul_eq_one_comm.1 hγ
-  have hmap : ∀ v (M : Matrix (Fin n) (Fin n) E) (x : Fin n → E),
+  have hmap : ∀ (v : HeightOneSpectrum (𝓞 (maximalRealSubfield E)))
+      (M : Matrix (Fin n) (Fin n) E) (x : Fin n → E),
       (fun i => locEmb v ((M *ᵥ x) i)) = M.map (locEmb v) *ᵥ fun i => locEmb v (x i) :=
     fun v M x => funext fun i => RingHom.map_mulVec (locEmb v) M x i
   refine ⟨Matrix.toLin'OfInv hγ hγ₂, fun x y => ?_, fun x hx => exists_nsmul_mem hp _ _ fun v hv => ?_,

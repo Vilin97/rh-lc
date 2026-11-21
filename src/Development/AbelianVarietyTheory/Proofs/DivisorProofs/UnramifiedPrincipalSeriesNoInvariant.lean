@@ -7,7 +7,7 @@ public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.
 
 noncomputable section
 
-open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil ValuativeRel GlobalTheory.PrinTwo
+open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil ValuativeRel
 
 namespace GlobalTheory.PrinTwo.NoFix
 

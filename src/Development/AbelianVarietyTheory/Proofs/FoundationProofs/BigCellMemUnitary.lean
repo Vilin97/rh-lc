@@ -109,12 +109,14 @@ end BigCellUnitary
 
 theorem bigCell_mem_unitary : Formalism.QuantumDeterminants.BigCellMem := by
   intro k r c μ hc hμ
-  have key : ((bigCell k r c μ)ᴴ * Hpk k r * bigCell k r c μ).submatrix (posEquiv k r) (posEquiv k r) =
-      (Hpk k r).submatrix (posEquiv k r) (posEquiv k r) := by
-    rw [← submatrix_mul_equiv _ _ _ (posEquiv k r), ← submatrix_mul_equiv _ _ _ (posEquiv k r),
+  change (bigCell k r c μ)ᴴ * Hpk k r * bigCell k r c μ = Hpk k r
+  let e := BigCellUnitary.posEquiv k r
+  have key : ((bigCell k r c μ)ᴴ * Hpk k r * bigCell k r c μ).submatrix e e =
+      (Hpk k r).submatrix e e := by
+    rw [← submatrix_mul_equiv _ _ _ e, ← submatrix_mul_equiv _ _ _ e,
       ← conjTranspose_submatrix]
-    have hp : ⇑(posEquiv k r) = pos k r := rfl
-    rw [hp, gram_submatrix, bigCell_submatrix]
+    have hp : ⇑e = BigCellUnitary.pos k r := rfl
+    rw [hp, BigCellUnitary.gram_submatrix, BigCellUnitary.bigCell_submatrix]
     have h1 : diagonal (fun a => star (c a)) * diagonal (fun a => (star (c a))⁻¹) =
         (1 : Matrix (Fin r) (Fin r) ℂ) := by
       rw [diagonal_mul_diagonal, ← diagonal_one]
@@ -131,8 +133,8 @@ theorem bigCell_mem_unitary : Formalism.QuantumDeterminants.BigCellMem := by
     rw [show star c = fun a => star (c a) from rfl,
       show star (fun a => (star (c a))⁻¹) = fun a => star (star (c a))⁻¹ from rfl, h1, h2]
   ext i j
-  obtain ⟨i, rfl⟩ := (posEquiv k r).surjective i
-  obtain ⟨j, rfl⟩ := (posEquiv k r).surjective j
+  obtain ⟨i, rfl⟩ := e.surjective i
+  obtain ⟨j, rfl⟩ := e.surjective j
   exact congrFun (congrFun key i) j
 
 end GlobalTheory

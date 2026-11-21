@@ -27,7 +27,7 @@ theorem posDef_of_lminor : ∀ (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ), A.IsH
     (∀ i : Fin (n + 1), 0 < (lminor A i).re) → A.PosDef
   | 0, A, hA, _ => ⟨hA, fun x hx => absurd (Subsingleton.elim x 0) hx⟩
   | n + 1, A, hA, hm => by
-    set A' := A.submatrix Fin.castSucc Fin.castSucc with hA'def
+    set A' : Matrix (Fin n) (Fin n) ℂ := A.submatrix Fin.castSucc Fin.castSucc with hA'def
     have hA'h : A'.IsHermitian := hA.submatrix _
     have hA' : A'.PosDef := posDef_of_lminor n A' hA'h (fun i => by
       rw [lminor_submatrix_castSucc]; exact hm _)

@@ -34,11 +34,12 @@ theorem constSt : ConstSt := by
       rw [map_pow, ha p, zero_pow hp]
     rw [h0, smul_zero]
 
+open scoped MvPowerSeries.WithPiTopology
 
 theorem continuous_pderiv_disc {σ R : Type} [CommRing R] [TopologicalSpace R] [DiscreteTopology R]
-    (i : σ) : Continuous (fun f : MvPowerSeries σ R => pderiv R i f) := by
+    (i : σ) : Continuous (fun f : MvPowerSeries σ R => MvPowerSeries.pderiv i f) := by
   refine continuous_pi fun n => ?_
-  have h : (fun f : MvPowerSeries σ R => (pderiv R i f) n) =
+  have h : (fun f : MvPowerSeries σ R => (MvPowerSeries.pderiv i f) n) =
       (fun a : R => a * ((n i : R) + 1)) ∘ ⇑(MvPowerSeries.coeff (n + Finsupp.single i 1)) := by
     funext f
     exact MvPowerSeries.coeff_pderiv f n

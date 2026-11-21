@@ -49,10 +49,10 @@ theorem coeff_subst_congr {g h : PowerSeries R} {a : MvPowerSeries σ R}
 theorem pderiv_subst_coe (p : Polynomial R) {a : MvPowerSeries σ R}
     (ha : MvPowerSeries.constantCoeff a = 0) (i : σ) :
     MvPowerSeries.pderiv (R := R) i ((p : PowerSeries R).subst a) =
-      (derivative R (p : PowerSeries R)).subst a * MvPowerSeries.pderiv (R := R) i a := by
+      (derivative (p : PowerSeries R)).subst a * MvPowerSeries.pderiv (R := R) i a := by
   have hs : PowerSeries.HasSubst a := PowerSeries.HasSubst.of_constantCoeff_zero ha
   suffices H : ∀ P : Polynomial R, MvPowerSeries.pderiv (R := R) i (PowerSeries.substAlgHom hs (P : PowerSeries R)) =
-      PowerSeries.substAlgHom hs (derivative R (P : PowerSeries R)) * MvPowerSeries.pderiv (R := R) i a by
+      PowerSeries.substAlgHom hs (derivative (P : PowerSeries R)) * MvPowerSeries.pderiv (R := R) i a by
     simpa only [PowerSeries.coe_substAlgHom] using H p
   intro P
   induction P using Polynomial.induction_on'
@@ -75,7 +75,7 @@ theorem degree_le_of_mem_antidiagonal [DecidableEq σ] {d : σ →₀ ℕ} {x : 
 theorem pderiv_subst (g : PowerSeries R) {a : MvPowerSeries σ R}
     (ha : MvPowerSeries.constantCoeff a = 0) (i : σ) :
     MvPowerSeries.pderiv (R := R) i (g.subst a) =
-      (derivative R g).subst a * MvPowerSeries.pderiv (R := R) i a := by
+      (derivative g).subst a * MvPowerSeries.pderiv (R := R) i a := by
   classical
   ext e
   have hP : ∀ k ≤ e.degree + 1,

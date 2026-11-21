@@ -10,12 +10,6 @@ noncomputable section
 open PowerSeries GlobalTheory.MomOne
 open scoped ComplexConjugate BigOperators Topology
 
--- The imported definition is absent from the current compiled dependency.
-namespace GlobalTheory.MomOne
-variable {q : ℕ} [Fact q.Prime]
-def DT (f : ℂ_[q]⟦X⟧) : ℂ_[q]⟦X⟧ := (1 + X) * PowerSeries.derivative f
-end GlobalTheory.MomOne
-
 namespace GlobalTheory.MomOne.TwistMom
 open GlobalTheory.MomOne.Shift
 variable {q : ℕ} [Fact q.Prime]

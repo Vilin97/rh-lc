@@ -29,7 +29,7 @@ theorem det_of_blocks {I : Type} [Fintype I] [DecidableEq I] (M : Matrix I I R) 
   have : (M.toSquareBlock b a).submatrix (φ a) (φ a) = A a ⊗ₖ (1 : Matrix (T a) (T a) R) := by
     ext x y
     refine (h a x y).trans ?_
-    simp [kroneckerMap_apply, one_apply]
+    by_cases hxy : x.2 = y.2 <;> simp [kroneckerMap_apply, Matrix.one_apply, hxy]
   rw [this, det_kronecker]
   simp
 
@@ -105,9 +105,9 @@ theorem eq_one_add_mat {u : GL n R} (hu : u ∈ unipRad R e) :
   obtain ⟨⟨a, i⟩, rfl⟩ := e.surjective i
   obtain ⟨⟨b, j⟩, rfl⟩ := e.surjective j
   rcases lt_trichotomy a b with h | rfl | h
-  · simp [mat, ent, h, one_apply, h.ne]
-  · simp [mat, h2, one_apply]
-  · simp [mat, h.not_gt, one_apply, h.ne', mem_parab_iff.1 h1 a b i j h]
+  · simp [mat, ent, h, h.ne]
+  · simp [mat, h2, Matrix.one_apply, e.injective.eq_iff]
+  · simp [mat, h.not_gt, h.ne', mem_parab_iff.1 h1 a b i j h]
 
 omit [Fintype α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] [Fintype n] in
 theorem blockTriangular_one_add_mat (x : Idx e → R) : (1 + mat e x).BlockTriangular (blk e) :=
@@ -118,8 +118,8 @@ theorem det_one_add_mat (x : Idx e → R) : (1 + mat e x).det = 1 := by
   rw [(blockTriangular_one_add_mat e x).det_fintype]
   refine Finset.prod_eq_one fun a _ => ?_
   have : (1 + mat e x).toSquareBlock (blk e) a = 1 := by
-    ext ⟨i, hi⟩ ⟨j, hj⟩
-    simp [toSquareBlock_def, mat, hi, hj, one_apply]
+    ext i j
+    simp [toSquareBlock_def, mat, i.property, j.property, Matrix.one_apply, Subtype.ext_iff]
   rw [this, det_one]
 
 def unipEquiv : unipRad R e ≃ (Idx e → R) where
@@ -127,7 +127,7 @@ def unipEquiv : unipRad R e ≃ (Idx e → R) where
   invFun x := ⟨GeneralLinearGroup.mk'' (1 + mat e x) (by rw [det_one_add_mat]; exact isUnit_one),
     mem_unipRad.2 ⟨blockTriangular_one_add_mat e x, fun a i j => by
       show (1 + mat e x) _ _ = _
-      simp [mat, one_apply]⟩⟩
+      simp [mat, Matrix.one_apply, e.injective.eq_iff]⟩⟩
   left_inv u := Subtype.ext (Units.ext (eq_one_add_mat e u.2).symm)
   right_inv x := (ent_one_add e _).trans (ent_mat e x)
 
@@ -136,7 +136,7 @@ theorem card_blk (p : α → Prop) [DecidablePred p] :
     Fintype.card {j : n // p (blk e j)} = ∑ b with p b, Fintype.card (m b) := by
   rw [Fintype.card_subtype, Finset.card_filter, ← e.sum_comp, Fintype.sum_sigma, Finset.sum_filter]
   refine Finset.sum_congr rfl fun b _ => ?_
-  by_cases h : p b <;> simp [h]
+  by_cases h : p b <;> simp [blk, h]
 
 def rowEquiv (a : α) : m a × {j : n // a < blk e j} ≃ {p : Idx e // blk e p.1.1 = a} :=
   Equiv.ofBijective (fun x => ⟨⟨(e ⟨a, x.1⟩, x.2.1), by simpa using x.2.2⟩, by simp⟩) ⟨by
@@ -285,7 +285,7 @@ theorem map_preimage_conj (g : Levi k m) {T : Set (unipRad k e)} (hT : Measurabl
     funext fun x => (unipEquiv e).eq_symm_apply.2 (unipEquiv_conj e g x)
   have hc := (continuous_conj e g).measurable
   rw [← Measure.map_apply hc hT, Measure.map_map hc hΦ, h2, ← Measure.map_map hΦ hm]
-  conv_lhs => rw [← h1, Measure.map_smul, Measure.smul_apply, smul_eq_mul]
+  conv_lhs => rw [← h1, Measure.map_smul _ hΦ.aemeasurable, smul_apply, smul_eq_mul]
   congr 1
   rw [← ENNReal.ofReal_coe_nnreal]
   simp [modulus, nabs]

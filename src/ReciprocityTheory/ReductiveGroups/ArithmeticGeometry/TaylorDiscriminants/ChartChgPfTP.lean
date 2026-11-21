@@ -41,7 +41,7 @@ theorem ordGE_mul {σ : Type} {a b : ℕ} {f g : MvPowerSeries σ k} (hf : OrdGE
   · rw [hg _ (by omega), mul_zero]
 
 theorem ordGE_pderiv {σ : Type} {r : ℕ} (i : σ) {g : MvPowerSeries σ k} (h : OrdGE (r + 1) g) :
-    OrdGE r (pderiv k i g) := by
+    OrdGE r (pderiv i g) := by
   intro e he
   have key : coeff (e + Finsupp.single i 1) g = 0 := h _ (by
     first
@@ -100,8 +100,8 @@ theorem ordGE_subst {σ τ : Type} [Finite σ] (a : σ → MvPowerSeries τ k) (
 
 theorem pderiv_subst_coe {σ τ : Type} [Fintype σ] [DecidableEq σ] {a : σ → MvPowerSeries τ k} (hs : HasSubst a)
     (i : τ) (p : MvPolynomial σ k) :
-    pderiv k i (substAlgHom hs (p : MvPowerSeries σ k)) =
-      ∑ s, substAlgHom hs (pderiv k s (p : MvPowerSeries σ k)) * pderiv k i (a s) := by
+    pderiv i (substAlgHom hs (p : MvPowerSeries σ k)) =
+      ∑ s, substAlgHom hs (pderiv s (p : MvPowerSeries σ k)) * pderiv i (a s) := by
   classical
   have h1 : subst a (1 : MvPowerSeries σ k) = 1 := by
     rw [← MvPowerSeries.coe_substAlgHom hs]
@@ -125,8 +125,8 @@ theorem pderiv_subst_coe {σ τ : Type} [Fintype σ] [DecidableEq σ] {a : σ �
       first
       | rw [MvPolynomial.coe_mul, MvPolynomial.coe_X]
       | simp
-    have hδ : ∑ s', subst a (p : MvPowerSeries σ k) * subst a (pderiv k s' (X s : MvPowerSeries σ k)) *
-        pderiv k i (a s') = subst a (p : MvPowerSeries σ k) * pderiv k i (a s) := by
+    have hδ : ∑ s', subst a (p : MvPowerSeries σ k) * subst a (pderiv s' (X s : MvPowerSeries σ k)) *
+        pderiv i (a s') = subst a (p : MvPowerSeries σ k) * pderiv i (a s) := by
       rw [Finset.sum_eq_single s]
       · simp [MvPowerSeries.pderiv_X, Pi.single_apply, h1]
       · intro b _ hb
@@ -142,7 +142,7 @@ theorem pderiv_subst_coe {σ τ : Type} [Fintype σ] [DecidableEq σ] {a : σ �
 
 theorem pderiv_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] (a : σ → MvPowerSeries τ k)
     (ha : ∀ s, constantCoeff (a s) = 0) (i : τ) (f : MvPowerSeries σ k) :
-    pderiv k i (subst a f) = ∑ s, subst a (pderiv k s f) * pderiv k i (a s) := by
+    pderiv i (subst a f) = ∑ s, subst a (pderiv s f) * pderiv i (a s) := by
   classical
   have hs : HasSubst a := (by first
       | exact MvPowerSeries.hasSubst_of_constantCoeff_zero ha
@@ -173,14 +173,14 @@ theorem pderiv_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] (a : σ → Mv
       | (show m s ≤ e.degree + 1 + 1; omega)
     rw [map_sub, MvPolynomial.coeff_coe, MvPolynomial.coeff_sum]
     simp [MvPolynomial.coeff_monomial, hmn]
-  have k1 : coeff e (pderiv k i (subst a (f - (q : MvPowerSeries σ k)))) = 0 :=
+  have k1 : coeff e (pderiv i (subst a (f - (q : MvPowerSeries σ k)))) = 0 :=
     ordGE_pderiv i (r := e.degree + 1) (ordGE_subst a ha hq) e (by omega)
-  have k2 : coeff e (∑ s, subst a (pderiv k s (f - (q : MvPowerSeries σ k))) * pderiv k i (a s)) = 0 := by
+  have k2 : coeff e (∑ s, subst a (pderiv s (f - (q : MvPowerSeries σ k))) * pderiv i (a s)) = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum]
     refine Finset.sum_eq_zero fun s _ => ?_
     exact ordGE_mul (ordGE_subst a ha (ordGE_pderiv s (r := e.degree + 1) hq))
-      (ordGE_zero_left (pderiv k i (a s))) e (by omega)
+      (ordGE_zero_left (pderiv i (a s))) e (by omega)
   have hpoly := ChartChgPfTP.pderiv_subst_coe hs i q
   rw [MvPowerSeries.coe_substAlgHom] at hpoly
   have hfq : f = (q : MvPowerSeries σ k) + (f - (q : MvPowerSeries σ k)) := (add_sub_cancel _ _).symm
@@ -204,7 +204,7 @@ theorem ev_ev {m n r : ℕ} (a : Fin m → Pt k n d) (b : Fin n → Pt k r d) (h
 
 theorem pderiv_ev {m n : ℕ} (a : Fin m → Pt k n d) (ha : ∀ p q, constantCoeff (a p q) = 0) (t : Fin n × Fin d)
     (f : PS k m d) :
-    pderiv k t (ev a f) = ∑ p : Fin m × Fin d, ev a (pderiv k p f) * pderiv k t (a p.1 p.2) := by
+    pderiv t (ev a f) = ∑ p : Fin m × Fin d, ev a (pderiv p f) * pderiv t (a p.1 p.2) := by
   exact pderiv_subst (fun p : Fin m × Fin d => a p.1 p.2) (fun p => ha p.1 p.2) t f
 
 theorem ev_zero' {m n : ℕ} {a : Fin m → Pt k n d} (ha : ∀ p q, constantCoeff (a p q) = 0) :

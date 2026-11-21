@@ -47,6 +47,7 @@ def IsLZBasis (g : ℕ) (ω : Fin (4 * Fintype.card X.Ψ) → X.Ψ → Fin 2 →
     LinearIndependent ℝ ω
 
 
+open scoped Classical in
 def fz (u : Fin 2 → Fin r → E) (g : ℕ) (χ : X.Ψ → Fin 2 → Fin 2 → ℂ) (G : Frame X.Ψ r → ℂ)
     (x : Frame X.Ψ r) : ℂ :=
   if IsHermFam χ ∧ X.IsFreqZ g χ then

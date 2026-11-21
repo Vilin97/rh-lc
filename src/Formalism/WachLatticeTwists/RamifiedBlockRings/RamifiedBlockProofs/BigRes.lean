@@ -111,8 +111,10 @@ theorem unram_ext (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing 
   have hmaxk : (RingHom.ker ψ).IsMaximal := RingHom.ker_isMaximal_of_surjective ψ hψs
   have hloc : IsLocalRing A := by
     refine IsLocalRing.of_unique_max_ideal ⟨RingHom.ker ψ, hmaxk, fun M hM => ?_⟩
+    letI : Module.Finite O A := hfin
     have h1 : (M.comap (algebraMap O A)).IsMaximal :=
-      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M
+      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap O A)
+        (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) M
     have h2 : ϖ ∈ M.comap (algebraMap O A) := by
       rw [IsLocalRing.eq_maximalIdeal h1]
       exact hϖ.not_isUnit
@@ -155,6 +157,6 @@ theorem bigResidueExt : StatBigResidueExt := by
   · have hinf : Infinite (IsLocalRing.ResidueField O) := not_finite_iff_infinite.mp hk
     refine ⟨O, inferInstance, inferInstance, inferInstance, Algebra.id O, inferInstance,
       inferInstance, fun y => rfl, ?_⟩
-    exact lt_of_lt_of_le (Cardinal.nat_lt_aleph0 N) (Cardinal.aleph0_le_mk _)
+    exact lt_of_lt_of_le (Cardinal.natCast_lt_aleph0 (n := N)) (Cardinal.aleph0_le_mk _)
 
 end Formalism.RepresentationBoundsCohomology.ringDataObjects

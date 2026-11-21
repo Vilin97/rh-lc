@@ -221,6 +221,7 @@ theorem omB_mul (ν α : kˣ →* ℂˣ) (g g' : GL A' k) (h h' : GL D k) (Ψ : 
 
 theorem comp_mul_mem_SB (g : GL A k) (h : GL D k) {Φ : Matrix A D k → ℂ} (hΦ : Φ ∈ SB (Matrix A D k)) :
     (fun X => Φ (g.val * X * h.val)) ∈ SB (Matrix A D k) := by
+  borelize k
   have := (SB (Matrix A D k)).smul_mem (om 1 h g⁻¹ (fun _ => 1) 0)⁻¹ (om_mem_SB 1 h g⁻¹ hΦ)
   convert this using 1
   funext X
@@ -342,7 +343,7 @@ theorem smul_diagLat (u : kˣ) (c : D → kˣ) : u • diagLat c = diagLat fun j
 
 variable [Fintype D]
 
-instance isLattice_diagLat (c : D → kˣ) : Submodule.IsLattice k (diagLat c) := by
+instance isLattice_diagLat (c : D → kˣ) : Submodule.IsFullLattice k (diagLat c) := by
   classical
   have hmem : ∀ j, (Pi.single j (c j : k) : D → k) ∈ diagLat c := fun j l => by
     by_cases h : l = j
@@ -350,7 +351,7 @@ instance isLattice_diagLat (c : D → kˣ) : Submodule.IsLattice k (diagLat c) :
     · simp [h]
   have hx : ∀ x : D → k, x = ∑ j, (x j / c j) • (Pi.single j (c j : k) : D → k) := fun x => by
     funext l; simp [Finset.sum_apply, Pi.single_apply]
-  refine ⟨?_, ?_⟩
+  refine { toIsLattice := Submodule.IsLattice.of_fg k ?_, span_eq_top := ?_ }
   · refine Submodule.fg_def.2 ⟨Set.range fun j => (Pi.single j (c j : k) : D → k), Set.finite_range _, le_antisymm ?_ ?_⟩
     · exact Submodule.span_le.2 (by rintro _ ⟨j, rfl⟩; exact hmem j)
     · intro x h
@@ -483,7 +484,7 @@ theorem pow_smul_le {ϖ : kˣ} (hϖ : IsUnif ϖ) (e : ℕ) (Λ : Submodule 𝒪[
   exact Λ.smul_mem ⟨_, h⟩ hy
 
 theorem hasDepth_indicator {ϖ : kˣ} (hϖ : IsUnif ϖ) (e : ℕ) (Λ : Submodule 𝒪[k] (D → k)) :
-    HasDepth ϖ e Λ ((matLat Λ : Set (Matrix A D k)).indicator 1) := by
+    HasDepth ϖ e Λ ((↑(matLat (A := A) Λ) : Set (Matrix A D k)).indicator 1) := by
   refine ⟨fun X hX => Set.indicator_of_notMem hX _, fun X Z hZ => ?_⟩
   have hZ' : Z ∈ matLat Λ := fun i => pow_smul_le hϖ e Λ (hZ i)
   by_cases hX : X ∈ matLat Λ
@@ -532,6 +533,7 @@ def fourierInt [MeasurableSpace k] [BorelSpace k] (ψ : AddChar k Circle) (m : M
 
 variable [DecidableEq A]
 
+open scoped Classical
 
 def fourierSum (ψ : AddChar k Circle) (ϖ : kˣ) (e : ℕ) (P : Finset D) :
     (Matrix A D k → ℂ) →ₗ[ℂ] (Matrix A D k → ℂ) where
@@ -644,8 +646,12 @@ theorem smallF_mul_left (μ : Measure (GL A' k)) [μ.IsHaarMeasure] (ν : kˣ �
   rw [← integral_mul_right_eq_self (fun g : GL A' k =>
     Ψ (g.val * Y) * (ν (gdet g) : ℂ) * apow (gdet g) ((Fintype.card D : ℂ) / 2)) g₀, ← integral_const_mul]
   congr 1
+  funext g
+  simp only [Units.val_mul, Matrix.mul_assoc, map_mul, apow_mul]
   ring
 
+
+open scoped Classical
 
 def fFun (μ : Measure (GL A' k)) (σ : A ⊕ A' ≃ D) (ν : kˣ →* ℂˣ) (Ψ : Matrix A' D k → ℂ) (X : Matrix A D k) : ℂ :=
   if hX : ∃ h : GL D k, X = X0 (k := k) σ * (invT h).val then
@@ -671,7 +677,7 @@ theorem exists_secondBlock_of_frameFirstBlock_eq (σ : A ⊕ A' ≃ D) {h h' : G
     rw [← det_submatrix_equiv_self σ, show u.val.submatrix σ σ =
       fromBlocks 1 (Matrix.of fun i j => u.val (σ (Sum.inl i)) (σ (Sum.inr j))) 0 C from ?_,
       det_fromBlocks_zero₂₁, det_one, one_mul]
-    ext (i | i) (j | j) <;> simp [H2, C, one_apply, eq_comm]
+    ext (i | i) (j | j) <;> simp [H2, C, Matrix.one_apply, eq_comm]
   refine ⟨Matrix.GeneralLinearGroup.mkOfDetNeZero C (hdet ▸ u.det_ne_zero), ?_, ?_⟩
   · rw [Units.val_mul, ← Matrix.mul_assoc, ← Matrix.mul_assoc]
     congr 1
@@ -922,7 +928,8 @@ theorem isOpen_detCong (c : kˣ) (n : Type*) [Fintype n] [DecidableEq n] : IsOpe
 theorem mul_mul_mem_matLat_iff {m n : Type*} [Fintype m] [DecidableEq m] [Fintype n] [DecidableEq n]
     {g : GL m k} {h : GL n k} (hg : g ∈ KO k m) (hh : h ∈ KO k n) (X : Matrix m n k) :
     g.val * X * h.val ∈ matLat (stdLat) ↔ X ∈ matLat (stdLat) := by
-  have key : ∀ {g : GL m k} {h : GL n k}, g ∈ KO k m → h ∈ KO k n → ∀ X ∈ matLat (stdLat),
+  have key : ∀ {g : GL m k} {h : GL n k}, g ∈ KO k m → h ∈ KO k n →
+      ∀ (X : Matrix m n k), X ∈ matLat (stdLat) →
       g.val * X * h.val ∈ matLat (stdLat) := fun hg hh X hX =>
     mem_matLat_stdLat.2 fun i j => Subring.sum_mem _ fun l _ => mul_mem (Subring.sum_mem _ fun l' _ =>
       mul_mem (((mem_KO_iff _).1 hg).1 _ _) (mem_matLat_stdLat.1 hX _ _)) (((mem_KO_iff _).1 hh).1 _ _)

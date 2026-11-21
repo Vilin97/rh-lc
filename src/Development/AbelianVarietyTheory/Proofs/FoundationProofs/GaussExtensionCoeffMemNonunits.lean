@@ -57,16 +57,17 @@ private theorem exists_mul_add_mul_eq_C_of_monic_irreducible {k : Type} [Field k
       Polynomial.natDegree_map_eq_of_injective hinj] at this
     omega)
   obtain ⟨a, b, hab⟩ := hcop
-  obtain ⟨ca, hA⟩ := IsLocalization.integerNormalization_map_to_map
+  obtain ⟨ca, hca, hA⟩ := IsLocalization.integerNormalization_spec
     (nonZeroDivisors (Polynomial k)) a
-  obtain ⟨cb, hB⟩ := IsLocalization.integerNormalization_map_to_map
+  obtain ⟨cb, hcb, hB⟩ := IsLocalization.integerNormalization_spec
     (nonZeroDivisors (Polynomial k)) b
-  refine ⟨Polynomial.C (ca : Polynomial k) *
+  refine ⟨Polynomial.C ca *
       IsLocalization.integerNormalization (nonZeroDivisors (Polynomial k)) b,
-    Polynomial.C (cb : Polynomial k) *
+    Polynomial.C cb *
       IsLocalization.integerNormalization (nonZeroDivisors (Polynomial k)) a,
-    (ca : Polynomial k) * cb,
-    mul_ne_zero (nonZeroDivisors.coe_ne_zero ca) (nonZeroDivisors.coe_ne_zero cb), ?_⟩
+    ca * cb,
+    mul_ne_zero (nonZeroDivisors.coe_ne_zero ⟨ca, hca⟩)
+      (nonZeroDivisors.coe_ne_zero ⟨cb, hcb⟩), ?_⟩
   apply Polynomial.map_injective _ hinj
   simp only [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_C, hA, hB,
     polynomial_smul_eq_C_algebraMap_mul, map_mul, Polynomial.C_mul]

@@ -42,14 +42,14 @@ noncomputable def ratSES : ShortComplex (Rep.{0} ℤ G) :=
     rw [AddCircle.coe_eq_zero_iff]
     exact ⟨n, by simp⟩)
 
-theorem ratSES_shortExact : (ratSES G).ShortExact where
-  mono_f := (Rep.mono_iff_injective _).2 fun a b h => Int.cast_injective (α := ℚ) h
-  epi_g := (Rep.epi_iff_surjective _).2 fun x => QuotientAddGroup.mk_surjective x
-  exact := by
-    refine shortComplex_exact_of_forall fun q hq => ?_
+theorem ratSES_shortExact : (ratSES G).ShortExact := by
+  refine ShortComplex.ShortExact.mk' ?_ ?_ ?_
+  · refine shortComplex_exact_of_forall fun q hq => ?_
     have hq' : ((show ℚ from q) : AddCircle (1 : ℚ)) = 0 := hq
     obtain ⟨n, hn⟩ := (AddCircle.coe_eq_zero_iff _).1 hq'
     exact ⟨n, by change ((n : ℤ) : ℚ) = (show ℚ from q); rw [← hn, zsmul_one]⟩
+  · exact (Rep.mono_iff_injective (intToRat G)).2 (Int.cast_injective (α := ℚ))
+  · exact (Rep.epi_iff_surjective (ratToRatModInt G)).2 QuotientAddGroup.mk_surjective
 
 end Sequence
 
@@ -113,6 +113,7 @@ variable {G : Type} [Group G] [Fintype G] (σ : G) (hσ : ∀ g : G, g ∈ Subgr
 
 
 
+include hσ in
 theorem orderOf_ofAdd_div_card_dvd :
     orderOf (Multiplicative.ofAdd (((1 : ℚ) / Nat.card G : ℚ) : AddCircle (1 : ℚ))) ∣
       orderOf σ := by

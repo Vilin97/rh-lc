@@ -219,6 +219,9 @@ theorem mem_of_eqOn_orbit (hO : U ∩ C = orbit H x₀) {W : Submodule ℂ (X �
   simpa using this
 
 
+omit [LocallyCompactSpace X] [TotallyDisconnectedSpace X] [IsTopologicalGroup H]
+  [LocallyCompactSpace H] [T2Space H] [TotallyDisconnectedSpace H] [SigmaCompactSpace H] [T2Space X]
+  [TopologicalSpace H] [ContinuousSMul H X] in
 theorem transl_mem_of_mem (χ : H →* ℂ)
     {W : Submodule ℂ (X → ℂ)} (hWU : W ≤ supportedIn U) (hW : relSpan χ U ≤ W) (h : H)
     {f : X → ℂ} (hf : f ∈ W ⊔ (supportedIn U ⊓ vanishingOn C)) :

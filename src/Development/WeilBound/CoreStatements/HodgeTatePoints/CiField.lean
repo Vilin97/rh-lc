@@ -83,7 +83,7 @@ theorem isFunctionField_of_dim {p : ℕ} [Fact p.Prime] [Algebra (ZMod p) K] {w 
       intro f
       induction f using MvPolynomial.induction_on with
       | C a => simp
-      | add f g hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
+      | add f g hf hg => rw [map_add]; exact add_mem hf hg
       | mul_X f q hf => rw [map_mul, aeval_X]; exact mul_mem hf (IntermediateField.subset_adjoin _ _ ⟨q, rfl⟩)
     obtain ⟨d, g, h, -, -, h0, h1⟩ := hb s
     rw [← div_eq_iff h0] at h1
@@ -93,6 +93,8 @@ theorem isFunctionField_of_dim {p : ℕ} [Fact p.Prime] [Algebra (ZMod p) K] {w 
     have hchar : CharP (MRing J ⧸ W) p := (CharP.charP_iff_prime_eq_zero Fact.out).2 (by
       rw [← map_natCast (Ideal.Quotient.mk W), Ideal.Quotient.eq_zero_iff_mem]; exact hp)
     let _ := ZMod.algebra (MRing J ⧸ W) p
+    haveI : FaithfulSMul (ZMod p) (MRing J ⧸ W) :=
+      (faithfulSMul_iff_algebraMap_injective _ _).2 (RingHom.injective _)
     have : IsScalarTower ℤ (ZMod p) (MRing J ⧸ W) := IsScalarTower.of_algebraMap_eq' (RingHom.ext_int _ _)
     have : Algebra.FiniteType (ZMod p) (MRing J ⧸ W) :=
       Algebra.FiniteType.of_restrictScalars_finiteType ℤ (ZMod p) _

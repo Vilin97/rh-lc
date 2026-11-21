@@ -255,8 +255,9 @@ theorem nsK_unit (hMM : MM R) (h h' : Point K) (z : Kˣ) :
   rw [(hMM z z).2, Nat.add_sub_cancel, mul_comm (m + 1) m, tri_pow]
 
 
-def amp (h h' : Point K) (t₁ ζ : Kˣ) (z : K) : ℂ :=
-  if hz : IsUnit z then
+def amp (h h' : Point K) (t₁ ζ : Kˣ) (z : K) : ℂ := by
+  classical
+  exact if hz : IsUnit z then
     γ (hz.unit * t₁) * conj (γ (ζ * hz.unit * t₁)) *
       (((modK R ((m + 1 : ℕ) : K))⁻¹ * modK R z ^ (m ^ 2) : ℝ) : ℂ) *
       Kp R ψ (addBlock h (m + 1) hz.unit) (addBlock h' (m + 1) (ζ * hz.unit))

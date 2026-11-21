@@ -87,7 +87,8 @@ theorem splitT_inner {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E
   show ∫ a, ⟪F a, G a⟫_ℂ ∂((vol n z).withDensity fun x => ((Real.exp (-ph x)).toNNReal : ℝ≥0∞)) = _
   rw [integral_withDensity_eq_integral_smul hd]
   congr 1
-  ring
+  funext x
+  rw [NNReal.smul_def, Real.coe_toNNReal _ (Real.exp_nonneg _), Complex.real_smul, mul_comm]
 
 theorem splitT_inner2 {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
     (ph : M → ℝ) (hph : Continuous ph) (F G : M → E) (hF : MemLp F 2 (wvol n z ph))
@@ -206,7 +207,7 @@ theorem splitTest (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
     Ck.continuous n z hz 1 _ (Ck.d n z 1 j _ (hprod j))
   have htc : Continuous (tstar n z ph₁ ph₂ f) := by
     unfold tstar
-    exact ((Smooth.continuous n z hz _ hE1).mul (continuous_finset_sum _ fun j _ => hdj j)).neg
+    exact ((Smooth.continuous n z hz _ hE1).mul (continuous_finsetSum _ fun j _ => hdj j)).neg
   have hoff : ∀ j x, x ∉ tsupport (fun y => (Real.exp (-ph₂ y) : ℂ) * f y j) →
       d n z j (fun y => (Real.exp (-ph₂ y) : ℂ) * f y j) x = 0 := fun j x hx =>
     (d_db_eq_zero_of_not_mem_compact_support n z (tsupport fun y => (Real.exp (-ph₂ y) : ℂ) * f y j)

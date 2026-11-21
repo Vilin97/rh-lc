@@ -27,7 +27,7 @@ variable {ι : Type*} {G : ι → Type*} [∀ v, Group (G v)] [∀ v, Topologica
 
 
 theorem tensorRep_mulSingle_tprod [DecidableEq ι] (a : ι) (k : G a) (x : ∀ v, V v) :
-    tensorRep K π (RestrictedProduct.mulSingle K a k) (tprod ℂ x) =
+    tensorRep (K := K) π (RestrictedProduct.mulSingle K a k) (tprod ℂ x) =
       tprod ℂ (Function.update x a (π a k (x a))) := by
   rw [tensorRep_tprod]
   congr 1
@@ -57,7 +57,7 @@ theorem exists_boxSubgroup_fixing (hπ : ∀ v, IsSmooth (π v))
     (ht : t ∈ restrictedTensor ξ) :
     ∃ K' : ∀ v, Subgroup (G v), (∀ v, IsCompact (K' v : Set (G v))) ∧
       (∀ v, IsOpen (K' v : Set (G v))) ∧ (∀ v, K' v ≤ K v) ∧ (∀ᶠ v in cofinite, K' v = K v) ∧
-        ∀ g ∈ boxSubgroup K K', tensorRep K π g t = t := by
+        ∀ g ∈ boxSubgroup K K', tensorRep (K := K) π g t = t := by
   classical
   have hKcs : ∀ v, IsCompact (K v : Set (G v)) := fun v => isCompact_iff_compactSpace.2 (hKc v)
   induction ht using Submodule.span_induction with
@@ -144,7 +144,7 @@ theorem coe_fixedProj_tprod {x : ∀ v, V v} (hx : IsRestricted ξ x) :
       fixedVectors ρW H := by
     intro g hg
     refine Subtype.ext ?_
-    show tensorRep K π g (tprod ℂ y) = tprod ℂ y
+    show tensorRep (K := K) π g (tprod ℂ y) = tprod ℂ y
     rw [tensorRep_tprod]
     congr 1
     funext v
@@ -247,6 +247,7 @@ theorem windowEmbed_tprod [DecidableEq ι] (S : Finset ι)
 
 
 
+include hπ hK'c hK'o in
 theorem le_range_windowEmbed [DecidableEq ι] (hK'e : ∀ᶠ v in cofinite, K' v = K v)
     (S : Finset ι) (hSK : ∀ v ∉ S, K' v = K v)
     (hSgel : ∀ v ∉ S, ∀ u ∈ fixedVectors (π v) (K v), ∃ c : ℂ, u = c • ξ v)

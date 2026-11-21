@@ -16,7 +16,7 @@ namespace GlobalTheory.InvDerMap
 variable {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S)
 
 theorem map_pderiv {σ : Type} (i : σ) (f : MvPowerSeries σ R) :
-    MvPowerSeries.map φ (pderiv R i f) = pderiv S i (MvPowerSeries.map φ f) := by
+    MvPowerSeries.map φ (pderiv i f) = pderiv i (MvPowerSeries.map φ f) := by
   ext m
   simp [coeff_map, coeff_pderiv]
 

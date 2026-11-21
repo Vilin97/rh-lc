@@ -101,6 +101,7 @@ theorem norm_mem_integer {x : L} (hx : x ∈ 𝒪[L]) : Algebra.norm K x ∈ �
   exact (Algebra.norm 𝒪[K] (⟨x, hx⟩ : 𝒪[L])).2
 
 
+variable (K L) in
 def normIntegerUnits : 𝒪[L]ˣ →* 𝒪[K]ˣ :=
   Units.map (Algebra.norm 𝒪[K] : 𝒪[L] →* 𝒪[K])
 
@@ -232,7 +233,7 @@ theorem exists_norm_one_add_smul_eq (z : 𝒪[L]) {ϖ : 𝒪[K]} (hϖ : Irreduci
 
 section Separable
 
-variable [Algebra.IsSeparable K L]
+variable (K L) [Algebra.IsSeparable K L]
 
 
 theorem exists_trace_integer_ne_zero : ∃ z : 𝒪[L], Algebra.trace 𝒪[K] 𝒪[L] z ≠ 0 := by

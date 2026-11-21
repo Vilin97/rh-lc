@@ -16,8 +16,8 @@ noncomputable section
 theorem not_dvd_choose_pow_of_lt {p : ℕ} [hp : Fact p.Prime] {d k : ℕ} (h1 : p ^ k ≤ d)
     (h2 : d < p ^ (k + 1)) : ¬ p ∣ Nat.choose d (p ^ k) := by
   have hlog : Nat.log p d = k := Nat.log_eq_of_pow_le_of_lt_pow h1 h2
-  have hv : padicValNat p (Nat.choose d (p ^ k)) = 0 := by
-    rw [padicValNat_choose h1 (b := k + 1) (by omega), Finset.card_eq_zero,
+  have hv : multiplicity p (Nat.choose d (p ^ k)) = 0 := by
+    rw [multiplicity_choose (p := p) h1 (b := k + 1) (by rw [hlog]; omega), Finset.card_eq_zero,
       Finset.filter_eq_empty_iff]
     intro i hi
     rw [Finset.mem_Ico] at hi
@@ -25,10 +25,7 @@ theorem not_dvd_choose_pow_of_lt {p : ℕ} [hp : Fact p.Prime] {d k : ℕ} (h1 :
     rw [Nat.mod_eq_zero_of_dvd hdvd, zero_add, not_le]
     exact Nat.mod_lt _ (pow_pos hp.out.pos i)
   have hne : Nat.choose d (p ^ k) ≠ 0 := (Nat.choose_pos h1).ne'
-  rcases (padicValNat.eq_zero_iff.1 hv) with h | h | h
-  · exact absurd h hp.out.one_lt.ne'
-  · exact absurd h hne
-  · exact h
+  simpa only [Nat.multiplicity_eq_zero_iff, hp.out.ne_one, hne, false_or] using hv
 
 theorem not_sq_dvd_choose_pow_pow {p : ℕ} [hp : Fact p.Prime] {k : ℕ} (hk : 1 ≤ k) :
     ¬ p ^ 2 ∣ Nat.choose (p ^ k) (p ^ (k - 1)) := by
@@ -38,8 +35,8 @@ theorem not_sq_dvd_choose_pow_pow {p : ℕ} [hp : Fact p.Prime] {k : ℕ} (hk : 
   have hsub : p ^ k - p ^ (k - 1) = p ^ (k - 1) * (p - 1) := by
     obtain ⟨j, rfl⟩ : ∃ j, k = j + 1 := ⟨k - 1, by omega⟩
     simp only [Nat.add_sub_cancel, pow_succ, Nat.mul_sub, mul_one]
-  have hv : padicValNat p (Nat.choose (p ^ k) (p ^ (k - 1))) ≤ 1 := by
-    rw [padicValNat_choose hle (b := k + 1) (by omega)]
+  have hv : multiplicity p (Nat.choose (p ^ k) (p ^ (k - 1))) ≤ 1 := by
+    rw [multiplicity_choose (p := p) hle (b := k + 1) (by rw [hlog]; omega)]
     calc _ ≤ ({k} : Finset ℕ).card := by
           refine Finset.card_le_card fun i hi => ?_
           rw [Finset.mem_filter, Finset.mem_Ico] at hi
@@ -56,7 +53,7 @@ theorem not_sq_dvd_choose_pow_pow {p : ℕ} [hp : Fact p.Prime] {k : ℕ} (hk : 
       _ = 1 := Finset.card_singleton k
   intro hdvd
   have hne : Nat.choose (p ^ k) (p ^ (k - 1)) ≠ 0 := (Nat.choose_pos hle).ne'
-  have := ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hne).1 hdvd
+  have := (multiplicity_dvd_iff_le hne).1 hdvd
   omega
 
 section Norms
@@ -69,15 +66,13 @@ theorem norm_natCast_padicAlgCl {n : ℕ} (hn : n ≠ 0) :
     rw [Rat.cast_natCast, map_natCast]
   rw [h1]
   refine (PadicAlgCl.norm_extends p _).trans ?_
-  rw [Padic.eq_padicNorm, padicNorm.eq_zpow_of_nonzero (by exact_mod_cast hn),
-    padicValRat.of_nat]
-  push_cast
-  rfl
+  rw [Padic.eq_padicNorm, padicNorm.eq_zpow_of_ne_zero (by exact_mod_cast hn),
+    Rat.cast_zpow, Rat.cast_natCast, padicValRat.of_nat, Nat.padicValNat_def]
 
 theorem norm_natCast_padicAlgCl_of_not_dvd {n : ℕ} (h : ¬ p ∣ n) :
     ‖(n : PadicAlgCl p)‖ = 1 := by
   have hn : n ≠ 0 := by rintro rfl; exact h (dvd_zero p)
-  rw [norm_natCast_padicAlgCl hn, padicValNat.eq_zero_of_not_dvd h]
+  rw [norm_natCast_padicAlgCl hn, Nat.padicValNat_def, multiplicity_eq_zero_of_not_dvd h]
   simp
 
 theorem inv_le_norm_natCast_padicAlgCl {n : ℕ} (hn : n ≠ 0) (h : ¬ p ^ 2 ∣ n) :

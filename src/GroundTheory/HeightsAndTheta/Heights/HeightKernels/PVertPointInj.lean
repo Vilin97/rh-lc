@@ -40,14 +40,14 @@ theorem VertPointInj.proof (hCh : VertPointChart.Statement) : VertPointInj.State
   obtain ⟨t, ht⟩ := hW.2 ()
   obtain ⟨t', ht'⟩ := hW'.2 ()
   have hyt : y ⟨(), t⟩ ≠ 0 :=
-    coord_ne_zero y t fun h => ht (le_sup_left.trans hW.1.1.2 h)
+    VerticalPointInjective.coord_ne_zero y t fun h => ht (le_sup_left.trans hW.1.1.2 h)
   obtain ⟨hmax, hrat, hform⟩ := hCh T K' y s hA hs hsP W hW t ht
   obtain ⟨-, -, hform'⟩ := hCh T K' y s hA hs hsP W' hW' t' ht'
   obtain ⟨a', b', hb', hab'⟩ := hrat t'
   have hab'' : (b' : K') * y ⟨(), t'⟩ = a' * y ⟨(), t⟩ := by
     rw [← hab']; field_simp
   have hle : W' ≤ W := by
-    obtain ⟨S, hS, hSeq⟩ := isMultiHomogIdeal_of_mem_divSupp y s hA hs hW'
+    obtain ⟨S, hS, hSeq⟩ := VerticalPointInjective.isMultiHomogIdeal_of_mem_divSupp y s hA hs hW'
     rw [hSeq, Ideal.span_le]
     intro g hg
     obtain ⟨e, he⟩ := hS g hg

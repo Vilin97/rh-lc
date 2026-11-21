@@ -97,7 +97,7 @@ theorem line_apply {n : ℕ} (z : Fin n → ℂ) (t : ℂ) (k : Fin n) : line z 
 end KernelPositive
 
 
-theorem kernelPositive_statement : KernelPositive.Statement := by
+theorem kernelPositive_statement : KernelPositive.Statement := open KernelPositive in by
   intro n a g P T0 hT v hv hB z hz
   rw [← cquad_im]
   have hLa : AnalyticAt ℂ (line z) 0 :=

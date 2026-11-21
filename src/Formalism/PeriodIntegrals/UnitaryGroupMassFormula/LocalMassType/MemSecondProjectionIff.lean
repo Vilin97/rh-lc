@@ -233,6 +233,7 @@ theorem dot_int_iff (w : Fin n → Fv F v) :
     exact sum_mem fun i _ => mul_mem (hc i) (h i)
 
 
+include D in
 theorem latStd_SD {J : Matrix (Fin n) (Fin n) E} {Λ : Set (Fin n → E)} (hJ : IsHermND σ J)
     (hSD : IsSDLoc σ J v Λ) (hLat : LocMassOrdW.IsLatLoc v Λ) :
     ∃ Q : GL (Fin n) (Fv F v ⊗[F] E),

@@ -9,7 +9,7 @@ set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
 
-open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR
+open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR Classical
 
 noncomputable section
 
@@ -47,8 +47,8 @@ end Objects
 
 def MultigradedFiltration.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (M : Type v) [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module F M]
-    [IsScalarTower F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module.Finite (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M]
+    [∀ k, Fintype (ι k)] (M : Type v) [AddCommGroup M] [Module (MRing ι F) M] [Module F M]
+    [IsScalarTower F (MRing ι F) M] [Module.Finite (MRing ι F) M]
     (piece : (K → ℤ) → Submodule F M), IsMultigrading ι M piece →
     ∃ (n : ℕ) (N : Fin (n + 1) → Submodule (MRing ι F) M) (x : Fin n → M) (c : Fin n → K → ℤ)
       (q : Fin n → Ideal (MRing ι F)),
@@ -82,8 +82,8 @@ def HilbertPrime.Statement : Prop := ∀ d : ℕ, HilbertPrime.AtDim.{u} d
 
 def HilbertModule.AtDim (d : ℕ) : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (M : Type v) [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module F M]
-    [IsScalarTower F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module.Finite (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M]
+    [∀ k, Fintype (ι k)] (M : Type v) [AddCommGroup M] [Module (MRing ι F) M] [Module F M]
+    [IsScalarTower F (MRing ι F) M] [Module.Finite (MRing ι F) M]
     (piece : (K → ℤ) → Submodule F M), IsMultigrading ι M piece →
     (∀ W : Ideal (MRing ι F), IsMultiProjPrime W → Module.annihilator (MRing ι F) M ≤ W →
       ringKrullDim (MRing ι F ⧸ W) ≤ ((d + Fintype.card K : ℕ) : WithBot ℕ∞)) →
@@ -122,8 +122,8 @@ def IntersectionRecursion.Statement : Prop :=
 
 def MixedNumberPolynomial.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (d : ℕ), IsMultiProjPrime q →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    [∀ k, Fintype (ι k)] (q : Ideal (MRing ι F)) (d : ℕ), IsMultiProjPrime q →
+    ringKrullDim (MRing ι F ⧸ q) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) →
     (∀ (σ : Equiv.Perm (Fin d)) (bs : Fin d → K → ℤ), intNum F q (bs ∘ σ) = intNum F q bs) ∧
     ∀ (bs : Fin d → K → ℤ) (j : Fin d) (x y : K → ℤ),
       intNum F q (Function.update bs j (x + y)) =
@@ -131,8 +131,8 @@ def MixedNumberPolynomial.Statement : Prop :=
 
 def MultigradedHilbertPolynomial.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (d : ℕ), IsMultiProjPrime q →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    [∀ k, Fintype (ι k)] (q : Ideal (MRing ι F)) (d : ℕ), IsMultiProjPrime q →
+    ringKrullDim (MRing ι F ⧸ q) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) →
     ∃ (p : MvPolynomial K ℚ) (a₀ : ℕ), p.totalDegree ≤ d ∧
       ∀ a : K → ℕ, (∀ k, a₀ ≤ a k) →
         (hilbFn q (fun k => (a k : ℤ)) : ℚ) = MvPolynomial.eval (fun k => (a k : ℚ)) p

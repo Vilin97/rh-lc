@@ -80,7 +80,14 @@ theorem bc_appLE_comp_psi : ∀ (A B C : Type) [CommRing A] [CommRing B] [Algebr
         (((pullback.snd (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))).app U).hom.comp
           (secAlg A (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C))) U)).toAlgebra
       exact Algebra.TensorProduct.lift_tmul _ _ _ _ _
-    rw [hθ, mul_comm]
+    rw [hθ]
+    calc
+      _ = _ := by rw [mul_comm]
+      _ = _ := (congrArg (fun z => z *
+        ((pullback.fst (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))).appLE ⊤
+          ((pullback.snd (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))) ⁻¹ᵁ U)
+          (by simp)).hom ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom b)) hS).symm
+      _ = _ := by congr 1 <;> rfl
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.HilbAff

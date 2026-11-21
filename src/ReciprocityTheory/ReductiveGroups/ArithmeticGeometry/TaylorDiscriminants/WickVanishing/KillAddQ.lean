@@ -20,17 +20,17 @@ def QuadColDerivSt : Prop :=
       C (if b = b' then dotProduct u (β.mulVec v) + dotProduct v (β.mulVec u) else 0)
 
 private theorem pderiv_X_eq_C_ite {k : Type} [CommRing k] {n d : ℕ} (p q : Fin n × Fin d) :
-    pderiv k p (X q : PS k n d) = C (if q = p then (1 : k) else 0) := by
+    MvPowerSeries.pderiv p (X q : PS k n d) = C (if q = p then (1 : k) else 0) := by
   classical
   rw [MvPowerSeries.pderiv_X, Pi.single_apply]
   split_ifs <;> simp
 
 private theorem pderiv_C_mul' {k : Type} [CommRing k] {n d : ℕ} (p : Fin n × Fin d) (a : k)
-    (Y : PS k n d) : pderiv k p (C a * Y) = C a * pderiv k p Y := by
+    (Y : PS k n d) : MvPowerSeries.pderiv p (C a * Y) = C a * MvPowerSeries.pderiv p Y := by
   rw [Derivation.leibniz, MvPowerSeries.pderiv_C, smul_zero, add_zero, smul_eq_mul]
 
 private theorem pderiv_C_mul_X_mul_X {k : Type} [CommRing k] {n d : ℕ} (p q r : Fin n × Fin d) (a : k) :
-    pderiv k p (C a * X q * X r : PS k n d) =
+    MvPowerSeries.pderiv p (C a * X q * X r : PS k n d) =
       C (a * (if r = p then 1 else 0)) * X q + C (a * (if q = p then 1 else 0)) * X r := by
   rw [Derivation.leibniz, pderiv_C_mul', pderiv_X_eq_C_ite, pderiv_X_eq_C_ite, smul_eq_mul, smul_eq_mul,
     map_mul, map_mul]

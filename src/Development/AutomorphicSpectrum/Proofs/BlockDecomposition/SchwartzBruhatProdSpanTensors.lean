@@ -5,7 +5,7 @@ public import Development.WeilBound.CoreStatements.AutomorphicKernels.BernsteinU
 
 @[expose] public section
 
-open MeasureTheory MeasureTheory.Measure GlobalTheory.SplitWeil PositivityTheory.PfBern.Frob
+open Classical MeasureTheory MeasureTheory.Measure GlobalTheory.SplitWeil PositivityTheory.PfBern.Frob
 
 namespace GlobalTheory.CompanionTheory.FrobProd
 
@@ -13,7 +13,7 @@ theorem exists_compact_clopen {X : Type} [TopologicalSpace X] [T2Space X] [Local
     [TotallyDisconnectedSpace X] {x : X} {u : Set X} (hu : IsOpen u) (hx : x ∈ u) :
     ∃ V : Set X, IsCompact V ∧ IsClopen V ∧ x ∈ V ∧ V ⊆ u := by
   obtain ⟨K, hK, hxK, hKu⟩ := exists_compact_subset hu hx
-  obtain ⟨V, hV, hxV, hVK⟩ := (loc_compact_Haus_tot_disc_of_zero_dim (H := X)).exists_subset_of_mem_open
+  obtain ⟨V, hV, hxV, hVK⟩ := (isTopologicalBasis_isClopen (X := X)).exists_subset_of_mem_open
     hxK isOpen_interior
   have hVK' : V ⊆ K := hVK.trans interior_subset
   exact ⟨V, hK.of_isClosed_subset hV.isClosed hVK', hV, hxV, hVK'.trans hKu⟩

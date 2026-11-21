@@ -16,7 +16,7 @@ section Local
 variable {O : Type} [CommRing O] [IsDomain O] [IsLocalRing O] {H : Type} [Group H] [TopologicalSpace H]
   {η : H →* ℤˣ} {Ψ : H →* Oˣ} (U : Univ (GCond.noCondition O η Ψ)) (I : Ideal U.R)
 
-def IsBase {Γ R : Type} [Group Γ] [CommRing R] [Algebra O R] (η : Γ →* ℤˣ) (Ψ : Γ →* Oˣ) (r : Γ →* GG 3 R)
+def IsBase {Γ R : Type} [Group Γ] [CommRing R] [Algebra O R] (η : Γ →* ℤˣ) (Ψ : Γ →* Oˣ) (r : Γ →* GG (m := 3) (R := R))
     (x : R →ₐ[O] O) : Prop := push x r = r0 η Ψ
 
 def ConjStable : Prop :=
@@ -51,10 +51,10 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsLocalRing O] {Γ H : Type} [Gro
 
 abbrev SRing : Type 1 := Univ (NormCond c g₁ (BoxCond N ι hι U I))
 
-def EntWt {G R Q : Type} [Group G] [CommRing R] [Algebra O R] [AddCommGroup Q] [Module O Q] (r : G →* GG 3 R) (j : ℤ)
+def EntWt {G R Q : Type} [Group G] [CommRing R] [Algebra O R] [AddCommGroup Q] [Module O Q] (r : G →* GG (m := 3) (R := R)) (j : ℤ)
     (D : R →ₗ[O] Q) : Prop := ∀ g a b, wt a b ≠ j → D ((r g).mat a b) = 0
 
-structure Model (S : SRing N hι U I c g₁) (K : Type) [NormedField K] [Algebra O K] : Type 1 where
+structure Model (S : SRing (N := N) (hι := hι) (U := U) (I := I) (c := c) (g₁ := g₁)) (K : Type) [NormedField K] [Algebra O K] : Type 1 where
   A : Type
   [cr : CommRing A]
   [al : Algebra O A]
@@ -89,27 +89,27 @@ structure Model (S : SRing N hι U I c g₁) (K : Type) [NormedField K] [Algebra
 
 attribute [instance] Model.cr Model.al Model.gr
 
-def Model.len {S : SRing N hι U I c g₁} {K : Type} [NormedField K] [Algebra O K] (M : Model S K) : ℕ∞ :=
+def Model.len {S : SRing (N := N) (hι := hι) (U := U) (I := I) (c := c) (g₁ := g₁)} {K : Type} [NormedField K] [Algebra O K] (M : Model S K) : ℕ∞ :=
   cotLen M.x M.𝒜 (-1) M.Q.F
 
 
-def TwoPt {R K : Type} [CommRing R] [Algebra O R] [IsLocalRing R] [NormedField K] [Algebra O K] (r : Γ →* GG 3 R)
+def TwoPt {R K : Type} [CommRing R] [Algebra O R] [IsLocalRing R] [NormedField K] [Algebra O K] (r : Γ →* GG (m := 3) (R := R))
     (f : R →ₐ[O] K) : Prop := IsLocPt f ∧ ¬ Upper η (push f r) ∧ ¬ Lower η (push f r)
 
 def CoversPt {R K : Type} [CommRing R] [Algebra O R] [IsLocalRing R] [NormedField K] [Algebra O K] (η : Γ →* ℤˣ)
-    (r : Γ →* GG 3 R) (T : Finset (R →ₐ[O] K)) : Prop :=
-  (∀ f ∈ T, TwoPt η r f) ∧ ∀ f : R →ₐ[O] K, TwoPt η r f → ∃ f' ∈ T, ∃ t : Kˣ, push f r = conjBy (tor K t) (push f' r)
+    (r : Γ →* GG (m := 3) (R := R)) (T : Finset (R →ₐ[O] K)) : Prop :=
+  (∀ f ∈ T, TwoPt (η := η) r f) ∧ ∀ f : R →ₐ[O] K, TwoPt (η := η) r f → ∃ f' ∈ T, ∃ t : Kˣ, push f r = conjBy (tor (R := K) t) (push f' r)
 
 def trDiff {R K : Type} [CommRing R] [Algebra O R] [CommRing K] [Algebra O K] (η : Γ →* ℤˣ) (Ψ : Γ →* Oˣ)
-    (r : Γ →* GG 3 R) (σ : Γ) (f : R →ₐ[O] K) : K :=
+    (r : Γ →* GG (m := 3) (R := R)) (σ : Γ) (f : R →ₐ[O] K) : K :=
   f (r σ).mat.trace - algebraMap O K (r0 η Ψ σ).mat.trace
 
 
 def shaCoc (a : O) : Set (Γ → Matrix (Fin 3) (Fin 3) (O ⧸ Ideal.span {a})) :=
-  {γ | IsLocallyConstant γ ∧ (∀ g, γ g ∈ gw _ (-1)) ∧
+  {γ | IsLocallyConstant γ ∧ (∀ g, γ g ∈ gw (R := O ⧸ Ideal.span {a}) (-1)) ∧
     IsCoc ((GG.map (Ideal.Quotient.mk (Ideal.span {a}))).comp (r0 η Ψ)) γ ∧
     NormCoc c g₁ ((GG.map (Ideal.Quotient.mk (Ideal.span {a}))).comp (r0 η Ψ)) γ ∧ (∀ g ∈ N, γ g = 0) ∧
-    ∃ X ∈ gw (O ⧸ Ideal.span {a}) (-1), ∀ h,
+    ∃ X ∈ gw (R := O ⧸ Ideal.span {a}) (-1), ∀ h,
       γ (ι h) = cob ((GG.map (Ideal.Quotient.mk (Ideal.span {a}))).comp (r0 η Ψ)) X (ι h)}
 
 end Model

@@ -13,19 +13,6 @@ namespace Formalism.NG
 
 namespace IdempotentImageSmul
 
-section Adj
-
-variable {O OO M Q : Type*} [CommRing O] [Ring OO] [Algebra O OO] [AddCommGroup M] [Module OO M]
-    [Module O M] [IsScalarTower O OO M] [AddCommGroup Q] [Module O Q] (ε : OO)
-
-variable {ε}
-
-variable (ε) [SMulCommClass OO O (EpsDual O OO Q ε)]
-
-variable {ε}
-
-end Adj
-
 section Matlis
 
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]

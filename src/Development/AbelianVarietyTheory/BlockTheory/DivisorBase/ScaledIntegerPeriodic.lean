@@ -19,7 +19,7 @@ def scaledInt (ϖ : kˣ) (a : ℕ) (m : ℤ) : Set (Matrix (Fin a) (Fin a) k) :=
   {Z | ∀ i j, valuation k (Z i j) ≤ valuation k ((ϖ ^ m : kˣ) : k)}
 
 theorem mem_scaledInt_iff (ϖ : kˣ) (a : ℕ) (m : ℤ) (Z : Matrix (Fin a) (Fin a) k) :
-    Z ∈ scaledInt ϖ a m ↔ Z ∈ matLat (Fin a) (ϖ ^ m • stdLat k (Fin a)) := by
+    Z ∈ scaledInt ϖ a m ↔ Z ∈ matLat (ϖ ^ m • stdLat) := by
   rw [stdLat, smul_diagLat, mem_matLat]
   simp only [mem_diagLat, Pi.one_apply, mul_one]
   rfl

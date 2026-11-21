@@ -37,6 +37,10 @@ theorem coefFn_eq_cubeCoeff {Ω : Type} {N : ℕ} (act : (Fin N → ℝ) → Ω 
   rw [← Set.pi_univ_Icc]
   simp only [h]
   congr 1
+  funext t
+  have hphase : (∑ k, t k * ph k) = ∑ k, ph k * t k :=
+    Finset.sum_congr rfl fun k _ => mul_comm (t k) (ph k)
+  simp only [integrand, chr, eNeg, dotForm_apply, one_mul, hphase]
 
 theorem herm_comb {E : Type} [Field E] [NumberField E] [IsCMField E] {r ρ : ℕ} {X : Data E r}
     (cu : CuspFD X ρ) (η : Fin ρ → E) :

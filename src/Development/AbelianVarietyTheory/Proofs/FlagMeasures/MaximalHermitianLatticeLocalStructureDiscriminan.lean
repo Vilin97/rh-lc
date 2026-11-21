@@ -116,20 +116,18 @@ theorem dual_left (hσ : ∀ r, algebraMap R K (σ r) = star (algebraMap R K r))
 theorem mem_of_int (hσ : ∀ r, algebraMap R K (σ r) = star (algebraMap R K r)) (hs : h.IsSymm)
     (hM : IsMaxLat h M) {y : V} (hy : y ∈ dual h M) (hyy : h y y ∈ (1 : Submodule R K)) : y ∈ M := by
   have hN : IsIntLat h (M ⊔ Submodule.span R {y}) := by
-    refine ⟨⟨hM.1.1.fg.sup (Submodule.fg_span_singleton y), ?_⟩, ?_⟩
-    · rw [eq_top_iff, ← hM.1.1.span_eq_top]
-      exact Submodule.span_mono (le_sup_left : M ≤ M ⊔ Submodule.span R {y})
-    · intro u hu v hv
-      obtain ⟨m, hm, u', hu', rfl⟩ := Submodule.mem_sup.1 hu
-      obtain ⟨n, hn, v', hv', rfl⟩ := Submodule.mem_sup.1 hv
-      obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.1 hu'
-      obtain ⟨b, rfl⟩ := Submodule.mem_span_singleton.1 hv'
-      rw [map_add h, LinearMap.add_apply, map_add (f := _), map_add (f := _)]
-      refine Submodule.add_mem _ (Submodule.add_mem _ (hM.1.2 m hm n hn) ?_) (Submodule.add_mem _ ?_ ?_)
-      · exact (dualBasic_mem_dual h M _).1 (Submodule.smul_mem _ b hy) m hm
-      · exact dual_left hσ hs (Submodule.smul_mem _ a hy) hn
-      · rw [locDual_h_smul_left, locDual_h_smul_right, ← hσ]
-        exact locDual_one_mul (locDual_alg_mem _) (locDual_one_mul (locDual_alg_mem _) hyy)
+    refine ⟨Submodule.IsLattice.of_fg K (hM.1.1.fg.sup (Submodule.fg_span_singleton y)), ?_⟩
+    intro u hu v hv
+    obtain ⟨m, hm, u', hu', rfl⟩ := Submodule.mem_sup.1 hu
+    obtain ⟨n, hn, v', hv', rfl⟩ := Submodule.mem_sup.1 hv
+    obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.1 hu'
+    obtain ⟨b, rfl⟩ := Submodule.mem_span_singleton.1 hv'
+    rw [map_add h, LinearMap.add_apply, map_add (f := _), map_add (f := _)]
+    refine Submodule.add_mem _ (Submodule.add_mem _ (hM.1.2 m hm n hn) ?_) (Submodule.add_mem _ ?_ ?_)
+    · exact (dualBasic_mem_dual h M _).1 (Submodule.smul_mem _ b hy) m hm
+    · exact dual_left hσ hs (Submodule.smul_mem _ a hy) hn
+    · rw [locDual_h_smul_left, locDual_h_smul_right, ← hσ]
+      exact locDual_one_mul (locDual_alg_mem _) (locDual_one_mul (locDual_alg_mem _) hyy)
   rw [← hM.2 _ hN le_sup_left]
   exact Submodule.mem_sup_right (Submodule.mem_span_singleton_self y)
 

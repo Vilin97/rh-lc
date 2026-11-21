@@ -181,7 +181,7 @@ private theorem continuous_cpt_torus_haar_measure (x0 : _root_.ReciprocityTheory
     have h := congrFun (congrFun (_root_.ReciprocityTheory.ChartRestriction.G.AR.Up.ExF.mat_cpt X x0 z τ) a) c
     exact h
   simp_rw [this]
-  refine continuous_finset_sum _ fun k _ => continuous_const.mul ?_
+  refine continuous_finsetSum _ fun k _ => continuous_const.mul ?_
   exact (_root_.ReciprocityTheory.ChartRestriction.G.AR.Up.ExF.cd_nM X τ k c).continuous
 
 open NumberField MeasureTheory Topology in

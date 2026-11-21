@@ -28,9 +28,13 @@ def trivLB (X : Scheme.{0}) : LB X := ⟨PUnit, fun _ => ⊤, fun _ _ => 1⟩
 
 theorem trivLB_isLB (X : Scheme.{0}) : (trivLB X).IsLB where
   cover := by simp [trivLB]
-  g_self := fun _ => map_one _
-  cocycle := fun _ _ _ => by
-    erw [map_one]; (try erw [map_one]); (try erw [map_one]); exact _root_.one_mul _
+  g_self := by
+    intro i
+    exact (res _).map_one
+  cocycle := by
+    intro i j k
+    refine (congrArg₂ (· * ·) (res _).map_one (res _).map_one).trans ?_
+    exact (_root_.one_mul _).trans (res _).map_one.symm
 
 theorem linComb_triv_g {X Y : Scheme.{0}} {K : Type} [Fintype K] (φ : K → (Y ⟶ X)) (ε : K → ℤ)
     (j j' : (LB.LinComb (trivLB X) φ ε).ι) : (LB.LinComb (trivLB X) φ ε).g j j' = 1 := by

@@ -160,7 +160,7 @@ private theorem ev2homog_lemma_23 {τ : Type} {p : MvPolynomial (Fin 2 × Fin d)
 private theorem zeroOf_lemma_26 {τ : Type} {p : MvPolynomial τ S} {j : ℕ} (hh : p.IsHomogeneous j)
     (hp : p ∈ Io S τ ^ (j + 1)) : p = 0 := by
   ext e
-  rw [coeff_zero]
+  change p.coeff e = 0
   by_contra he
   have h1 : Finsupp.weight 1 e = j := hh he
   have h2 := (memIo_lemma (j + 1) p).1 hp e (MvPolynomial.mem_support_iff.2 he)
@@ -393,7 +393,7 @@ theorem zero_of_biadd {h : MvPolynomial (Fin 2 × Fin d) S} {j : ℕ} (hh : h.Is
       ev2 h (xs S d 0) (xs S d 2) + ev2 h (xs S d 1) (xs S d 2))
     (hs : ev2 h (xs S d 1) (xs S d 0) = h) : h = 0 := by
   ext e
-  rw [coeff_zero]
+  change h.coeff e = 0
   by_contra he
   have h0 := row_degree_eq_one_of_aeval_double 0 (aeval_double_fst_of_additive hA1) e he
   have h1 := row_degree_eq_one_of_aeval_double 1 (aeval_double_snd_of_symm (aeval_double_fst_of_additive hA1) hs) e he
@@ -418,7 +418,7 @@ theorem stepNo2 {P : MvPolynomial (Fin 2 × Fin d) S} {m j : ℕ} (hj1 : 1 ≤ j
   · exfalso
     have hxj : Finsupp.degree x = j := le_antisymm hge hle
     have hcx := congrArg (AddMonoidAlgebra.coeff · x) h0
-    rw [coeff_homogeneousComponent, if_pos hxj, coeff_zero] at hcx
+    rw [coeff_homogeneousComponent, if_pos hxj, AddMonoidAlgebra.coeff_zero] at hcx
     exact (MvPolynomial.mem_support_iff.1 hx) hcx
 
 theorem eq_one_of_cube {P : MvPolynomial (Fin 2 × Fin d) S} {m : ℕ}

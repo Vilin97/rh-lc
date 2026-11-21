@@ -29,10 +29,12 @@ def val (x : MG G hG) : MtM m := x.1
 theorem toM_mem (x : MG G hG) : x.toM ∈ G := x.2
 
 def mk (hG : IsMatGroup G) (g : Matrix (Fin m) (Fin m) ℂ) (h : g ∈ G) : MG G hG :=
-  ⟨Matrix.of.symm g, by simpa using h⟩
+  ⟨Matrix.of.symm g, by
+    have heq : Matrix.of (Matrix.of.symm g) = g := (Matrix.of).apply_symm_apply g
+    exact heq ▸ h⟩
 
 @[simp] theorem toM_mk (g : Matrix (Fin m) (Fin m) ℂ) (h : g ∈ G) : (mk hG g h).toM = g := by
-  simp [mk, toM]
+  rfl
 
 theorem toM_injective : Function.Injective (toM : MG G hG → Matrix (Fin m) (Fin m) ℂ) := by
   intro x y h
@@ -63,10 +65,24 @@ instance : Group (MG G hG) where
   mul := (· * ·)
   one := 1
   inv := (·⁻¹)
-  mul_assoc a b c := ext (by simp [Matrix.mul_assoc])
-  one_mul a := ext (by simp)
-  mul_one a := ext (by simp)
-  inv_mul_cancel a := ext (by simp [inv_mul_toM])
+  zpow := zpowRec npowRec
+  zpow_zero' a := rfl
+  zpow_succ' n a := rfl
+  mul_assoc a b c := by
+    apply toM_injective
+    simp [Matrix.mul_assoc]
+  one_mul a := by
+    apply toM_injective
+    simp
+  mul_one a := by
+    apply toM_injective
+    simp
+  inv_mul_cancel a := by
+    apply toM_injective
+    simp [inv_mul_toM]
+  zpow_neg' n a := by
+    change (npowRec n.succ a)⁻¹ = (npowRec n.succ a)⁻¹
+    rfl
 
 @[simp] theorem toM_mul' (x y : MG G hG) : (x * y).toM = x.toM * y.toM := toM_mul x y
 
@@ -99,11 +115,14 @@ theorem continuous_iff_toM {X : Type*} [TopologicalSpace X] {f : X → MG G hG} 
 instance : IsTopologicalGroup (MG G hG) where
   continuous_mul := by
     rw [continuous_iff_toM]
-    simp only [toM_mul']
-    exact (continuous_toM.comp continuous_fst).matrix_mul (continuous_toM.comp continuous_snd)
+    convert (continuous_toM.comp continuous_fst).matrix_mul
+      (continuous_toM.comp continuous_snd) using 1
+    funext x
+    exact toM_mul x.1 x.2
   continuous_inv := by
     rw [continuous_iff_toM]
-    simp only [toM_inv]
+    have hfun : (fun x : MG G hG => x⁻¹.toM) = fun x => (x.toM)⁻¹ := funext toM_inv
+    rw [hfun]
     refine continuous_iff_continuousAt.2 fun x => ?_
     refine (continuousAt_matrix_inv _ ?_).comp continuous_toM.continuousAt
     rw [Ring.inverse_eq_inv']

@@ -45,8 +45,9 @@ theorem AdjoinIndepRelfinrank.proof : AdjoinIndepRelfinrank.Statement := by
     have hcoef : ∀ m, ∀ j ∈ s, AddMonoidAlgebra.coeff (p j) m = 0 := by
       intro m
       have h := congrArg (AddMonoidAlgebra.coeff · m) hq0
-      rw [hq, MvPolynomial.coeff_sum, MvPolynomial.coeff_zero] at h
-      simp only [MvPolynomial.coeff_C_mul, MvPolynomial.coeff_map] at h
+      rw [hq, MvPolynomial.coeff_sum] at h
+      simp only [MvPolynomial.coeff_C_mul, MvPolynomial.coeff_map, AddMonoidAlgebra.coeff_zero,
+        Finsupp.zero_apply] at h
       have hb := (linearIndependent_iff'.mp b.linearIndependent) s (fun j => AddMonoidAlgebra.coeff (p j) m)
       apply hb
       rw [← h]
@@ -79,7 +80,10 @@ theorem AdjoinIndepRelfinrank.proof : AdjoinIndepRelfinrank.Statement := by
   · have : Algebra.IsAlgebraic L₀ L' := Algebra.IsAlgebraic.of_finite L₀ L'
     have := hdisj.adjoin_rank_eq_rank_right_of_isAlgebraic_right
     exact congrArg Cardinal.toNat this
-  · rw [finrank_of_not_finite hfin, finrank_of_not_finite]
+  · rw [finrank_of_not_finite hfin]
+    have : Module.Free A (extendScalars hle') :=
+      Module.Free.of_divisionRing (K := A) (V := extendScalars hle')
+    apply finrank_of_not_finite
     intro hfin'
     apply hfin
     let v : _ → extendScalars hle' := fun j => ⟨algebraMap L' Ω (b j), by

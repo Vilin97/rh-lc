@@ -9,6 +9,8 @@ universe u
 
 noncomputable section
 
+local instance (α : Sort u) : DecidableEq α := Classical.decEq α
+
 namespace Formalism.ELL
 
 open WeierstrassCurve

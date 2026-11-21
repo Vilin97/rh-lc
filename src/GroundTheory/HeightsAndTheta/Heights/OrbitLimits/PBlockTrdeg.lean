@@ -169,7 +169,7 @@ theorem algebraicIndependent_forgotten (hv : ∀ p, (v p).1 = κ p.1) (hP : IsMu
       rfl
     rw [e1, hp, mul_zero]
   refine MvPolynomial.ext _ _ fun a ↦ ?_
-  rw [coeff_zero]
+  rw [AddMonoidAlgebra.coeff_zero]
   by_cases ha : a ∈ p.support
   swap
   · exact notMem_support_iff.mp ha

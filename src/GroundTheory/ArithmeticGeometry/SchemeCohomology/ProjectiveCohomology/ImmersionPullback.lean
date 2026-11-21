@@ -32,6 +32,8 @@ instance final_opensMap (f : Y ⟶ Z) : (Opens.map f.base).Final :=
 def pullbackUnitIso (f : Y ⟶ Z) :
     (Scheme.Modules.pullback f).obj (SheafOfModules.unit Z.ringCatSheaf) ≅
       SheafOfModules.unit Y.ringCatSheaf :=
+  letI : (SheafOfModules.pushforward.{u} f.toRingCatSheafHom).IsRightAdjoint :=
+    (inferInstance : (Scheme.Modules.pushforward f).IsRightAdjoint)
   let e := asIso (C := SheafOfModules Y.ringCatSheaf)
     (SheafOfModules.pullbackObjUnitToUnit f.toRingCatSheafHom)
   ⟨e.hom, e.inv, e.hom_inv_id, e.inv_hom_id⟩
@@ -53,6 +55,8 @@ lemma pullbackUnitApp_naturality (f : Y ⟶ Z) {N N' : Z.Modules} (φ : N ⟶ N'
 lemma pullbackUnitIso_hom_one (f : Y ⟶ Z) :
     (pullbackUnitIso f).hom.app ⊤
       (pullbackUnitApp f (SheafOfModules.unit Z.ringCatSheaf) ⊤ (unitOne Z ⊤)) = unitOne Y ⊤ := by
+  let : (SheafOfModules.pushforward.{u} f.toRingCatSheafHom).IsRightAdjoint :=
+    (inferInstance : (Scheme.Modules.pushforward f).IsRightAdjoint)
   have h := SheafOfModules.pullbackPushforwardAdjunction_homEquiv_pullbackObjUnitToUnit
     f.toRingCatSheafHom
   rw [Adjunction.homEquiv_unit] at h
@@ -105,9 +109,8 @@ lemma isBasisOn_pullbackUnitApp_of_top (f : Y ⟶ Z) {N : Z.Modules} {O : Z.Open
   have hx : ((preMod Y).map (asIso ((Scheme.Modules.pullback f).map f₀)).hom).app (op ⊤)
       (pullbackUnitApp f (SheafOfModules.unit Z.ringCatSheaf) ⊤ (unitOne Z ⊤)) =
       pullbackUnitApp f N ⊤ t := by
-    change Scheme.Modules.Hom.app ((Scheme.Modules.pullback f).map f₀) (f ⁻¹ᵁ ⊤)
-      (pullbackUnitApp f (𝟙_ Z.Modules) ⊤ (unitOne Z ⊤)) = _
-    rw [pullbackUnitApp_naturality, hf₀t]
+    exact (pullbackUnitApp_naturality f f₀ ⊤ (unitOne Z ⊤)).trans
+      (congrArg (pullbackUnitApp f N ⊤) hf₀t)
   rw [hx] at h2
   exact h2
 

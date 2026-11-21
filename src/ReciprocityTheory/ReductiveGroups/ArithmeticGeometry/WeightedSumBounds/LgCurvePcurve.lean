@@ -33,10 +33,8 @@ theorem ptx_eq (G : LogFGL v d) (p : ℕ) (γ : Fin d → Fin d → PowerSeries 
 
 private theorem lgCurve_zero' (G : LogFGL v d) (a : Fin d) :
     G.lgCurve (fun _ => (0 : PowerSeries C)) a = 0 := by
-  have h0 : HasSubst (fun _ : Fin d => (0 : PowerSeries C)) := by
-    first
-    | exact MvPowerSeries.hasSubst_of_constantCoeff_zero (fun _ => by simp)
-    | exact MvPowerSeries.HasSubst.of_constantCoeff_zero' (fun _ => by simp)
+  have h0 : HasSubst (fun _ : Fin d => (0 : PowerSeries C)) :=
+    MvPowerSeries.hasSubst_of_constantCoeff_zero (fun _ => by simp)
   ext j
   rw [map_zero]
   change MvPowerSeries.coeff (Finsupp.single () j) (subst _ (G.lg a)) = 0
@@ -48,7 +46,7 @@ private theorem lgCurve_zero' (G : LogFGL v d) (a : Fin d) :
     rw [coeff_zero_eq_constantCoeff_apply, G.lg_const a, zero_smul]
   · obtain ⟨s, hs⟩ : ∃ s, e s ≠ 0 := by
       by_contra hcon
-      push_neg at hcon
+      push Not at hcon
       exact he (Finsupp.ext hcon)
     rw [Finsupp.prod, Finset.prod_eq_zero (Finsupp.mem_support_iff.mpr hs) (by simp [hs]),
       map_zero, smul_zero]

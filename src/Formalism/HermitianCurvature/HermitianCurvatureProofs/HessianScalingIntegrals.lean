@@ -6,7 +6,7 @@ public import Formalism.HermitianCurvature.ThetaExistenceInductiveFromPieces
 
 noncomputable section
 
-open Matrix Formalism.DoubleCosetMeasures Formalism.FourierDecayAlt.A5 Formalism.FourierDecayAlt.A6 Filter Topology
+open Matrix Formalism.DoubleCosetMeasures Formalism.FourierDecayAlt.A5 Formalism.FourierDecayAlt.A6 Filter Topology Classical
 
 namespace Formalism.FourierDecayAlt.P.HessianScalingIntegrals
 
@@ -289,13 +289,13 @@ theorem Formalism.FourierDecayAlt.P.stationaryPhaseOfSteps : Formalism.FourierDe
     have h1 : (∃ z : Kˣ, z ^ (m + 1) = D' ∧ ∀ k, (x + l) k - (z : K) ∈ B.toAddSubgroup) ↔
         ∃ z : Kˣ, z ^ (m + 1) = D' ∧ ∀ k, x k - (z : K) ∈ B.toAddSubgroup :=
       exists_congr fun z => and_congr_right fun _ =>
-        ball_iff B.toAddSubgroup x l z fun k => hΛ'B (hl k)
+        Formalism.FourierDecayAlt.P.HessianScalingIntegrals.ball_iff B.toAddSubgroup x l z fun k => hΛ'B (hl k)
     simp only [hFoff]
     rw [if_congr h1 rfl (hF' x l hl)]
   have hFzInv : ∀ z : Kˣ, LatInvN Λ'.toAddSubgroup (Fz z) := by
     intro z x l hl
     have h1 : (∀ k, (x + l) k - (z : K) ∈ B) ↔ ∀ k, x k - (z : K) ∈ B :=
-      ball_iff B.toAddSubgroup x l z fun k => hΛ'B (hl k)
+      Formalism.FourierDecayAlt.P.HessianScalingIntegrals.ball_iff B.toAddSubgroup x l z fun k => hΛ'B (hl k)
     simp only [hFz]
     rw [if_congr h1 (hF' x l hl) rfl]
   have hFoffSupp : ∀ x, Foff x ≠ 0 → ∀ i, x i ∈ L₀ := by
@@ -310,11 +310,11 @@ theorem Formalism.FourierDecayAlt.P.stationaryPhaseOfSteps : Formalism.FourierDe
     intro h0
     apply hx
     simp only [hFz, h0, ite_self]
-  have hS0 := fin_supp Λ'.toAddSubgroup L₀ hΛ'.1 hL₀.2 m
+  have hS0 := Formalism.FourierDecayAlt.P.HessianScalingIntegrals.fin_supp Λ'.toAddSubgroup L₀ hΛ'.1 hL₀.2 m
   have hsplit : intK R Λ'.toAddSubgroup m F = intK R Λ'.toAddSubgroup m Foff +
       ∑ z ∈ hfin.toFinset, intK R Λ'.toAddSubgroup m (Fz z) := by
-    rw [intK_eq_sum R _ L₀ m hS0 F hFsupp, intK_eq_sum R _ L₀ m hS0 Foff hFoffSupp]
-    simp_rw [fun z => intK_eq_sum R _ L₀ m hS0 (Fz z) (hFzSupp z)]
+    rw [Formalism.FourierDecayAlt.P.HessianScalingIntegrals.intK_eq_sum R _ L₀ m hS0 F hFsupp, Formalism.FourierDecayAlt.P.HessianScalingIntegrals.intK_eq_sum R _ L₀ m hS0 Foff hFoffSupp]
+    simp_rw [fun z => Formalism.FourierDecayAlt.P.HessianScalingIntegrals.intK_eq_sum R _ L₀ m hS0 (Fz z) (hFzSupp z)]
     rw [← Finset.mul_sum, ← mul_add, Finset.sum_comm, ← Finset.sum_add_distrib]
     congr 1
     exact Finset.sum_congr rfl fun y _ => hdec _
@@ -338,6 +338,6 @@ theorem Formalism.FourierDecayAlt.P.stationaryPhaseOfSteps : Formalism.FourierDe
   refine Finset.sum_congr rfl fun z hz => ?_
   have hz' : z ^ (m + 1) = D' := by simpa using hz
   have hzq : (z : K) ^ (m + 1) ∈ Q := by rw [hzQ z hz']; exact hD'
-  exact root_piece R ψ m γ hγ Λ₁ B Λ' hB hΛ' hΛ'B (fun b hb => (hBV hb).2) A hA.2 t z (D' : K)
+  exact Formalism.FourierDecayAlt.P.HessianScalingIntegrals.root_piece R ψ m γ hγ Λ₁ B Λ' hB hΛ' hΛ'B (fun b hb => (hBV hb).2) A hA.2 t z (D' : K)
     (hzQ z hz') ⟨(hMod K R ψ hD z t).1, (hMod K R ψ hD t z).1, (hMod K R ψ hD z t).2⟩
     (hG t z ht.2 hzq) (hM B hB (fun b hb => (hBV hb).1.1) z hzq) (hFzInv z)

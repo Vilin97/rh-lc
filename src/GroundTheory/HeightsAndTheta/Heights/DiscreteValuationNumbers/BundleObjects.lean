@@ -271,18 +271,20 @@ theorem isFlagFrame_scaledTriv (y : (Σ k, ι k) → Ω) (r : ℕ) {s : Ω} (hs 
 
 theorem isTwistedDualGens_triv (y : (Σ k, ι k) → Ω) (r : ℕ) :
     IsTwistedDualGens y (scaledTrivBundle R (segreVec y) r one_ne_zero) 0
-      (fun l : Fin r => (LinearMap.proj l : Module.Dual Ω (Fin r → Ω))) where
-  sections c hc l v hv := by
+      (fun l : Fin r => (LinearMap.proj l : Module.Dual Ω (Fin r → Ω))) := by
+  constructor
+  · intro c hc l v hv
     obtain ⟨a, ha, hva⟩ := (mem_scaledTrivLat).1 hv l
     exact ⟨a, ha, by simp [hva]⟩
-  generate c hc ψ hψ := by
+  · intro c hc ψ hψ
     refine ⟨fun l => ψ (Pi.single l 1), fun l => hψ _ ((mem_scaledTrivLat).2 fun q => ?_), ?_⟩
     · by_cases h : q = l
       · subst h
         exact ⟨1, one_mem _, by simp⟩
       · exact ⟨0, zero_mem _, by simp [h]⟩
-    · ext i
-      simp [Pi.single_apply]
+    · apply (Pi.basisFun Ω (Fin r)).ext
+      intro i
+      simp [LinearMap.sum_apply, Pi.single_apply, mul_ite]
 
 end Examples
 

@@ -16,9 +16,6 @@ theorem csq_sum_univ_pm {R : Type*} [AddCommMonoid R] (ε : Fin n → Bool) (f :
   unfold plusIdx minusIdx
   rw [← Finset.sum_filter_add_sum_filter_not univ (fun a => ε a = true) f]
   congr 1
-  refine Finset.sum_congr ?_ fun _ _ => rfl
-  ext a
-  simp
 
 theorem sum_comm_pair_pair {R : Type*} [AddCommMonoid R] {ι κ ι' κ' : Type*} (s : Finset ι) (s' : Finset ι')
     (t : Finset κ) (t' : Finset κ') (f : ι → ι' → κ → κ' → R) :

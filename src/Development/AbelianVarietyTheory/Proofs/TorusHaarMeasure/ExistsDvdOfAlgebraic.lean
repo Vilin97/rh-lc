@@ -17,7 +17,7 @@ section Univ
 variable {K Ω Kl K' : Type} [Field K] [Field Ω] [Algebra K Ω] [Field Kl] [Field K'] [Algebra K Kl]
   [Algebra Kl K'] [Algebra K K'] [IsScalarTower K Kl K']
 
-
+variable (K Kl K') in
 def incl : Ω →+* K' ⊗[Kl] (Kl ⊗[K] Ω) :=
   (Algebra.TensorProduct.includeRight : (Kl ⊗[K] Ω) →ₐ[Kl] K' ⊗[Kl] (Kl ⊗[K] Ω)).toRingHom.comp
     (Algebra.TensorProduct.includeRight : Ω →ₐ[K] Kl ⊗[K] Ω).toRingHom
@@ -301,6 +301,8 @@ theorem basis_descends (j0 : ι → Fin (N + 1)) (v : ∀ Z, Fin (N + 1) → Ω 
   letI iL : ∀ Z, Algebra (FractionRing (MvPolynomial (TVar D N) K)) (OmS (Ω Z) D N) := fun Z =>
     ((algebraMap (IntermediateField.adjoin K (Set.range (sImg (D := D) (j0 Z) (x Z)))) (OmS (Ω Z) D N)).comp
       (hind Z).aevalEquivField.toRingEquiv.toRingHom).toAlgebra
+  haveI : ∀ Z, Module.Free (FractionRing (MvPolynomial (TVar D N) K)) (OmS (Ω Z) D N) :=
+    fun Z => Module.Free.of_divisionRing _ _
   have hL : ∀ Z (q : MvPolynomial (TVar D N) K), algebraMap (FractionRing (MvPolynomial (TVar D N) K))
       (OmS (Ω Z) D N) (algebraMap (MvPolynomial (TVar D N) K) _ q) = sHom (j0 Z) (x Z) q := fun Z q =>
     (hind Z).aevalEquivField_algebraMap_apply_coe q

@@ -30,8 +30,12 @@ theorem exists_root (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRin
   have huniq : ∀ M : Ideal (AdjoinRoot P), M.IsMaximal →
       M = Ideal.map (AdjoinRoot.of P) (maximalIdeal V) := by
     intro M hM
-    have h1 : (M.comap (algebraMap V (AdjoinRoot P))).IsMaximal :=
-      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M
+    have h1 : (M.comap (algebraMap V (AdjoinRoot P))).IsMaximal := by
+      letI := hM
+      exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+        (algebraMap V (AdjoinRoot P)) (by
+          intro x
+          exact Algebra.IsIntegral.isIntegral x) M
     have h2 := eq_maximalIdeal h1
     refine (hmax.eq_of_le hM.ne_top ?_).symm
     rw [Ideal.map_le_iff_le_comap, ← h2]

@@ -205,9 +205,11 @@ theorem ffl_opApply (D : RealPlaceData k r Wp Wq) {O UU : Set (Mat k r)} (hO : Q
   have hπ1 : D.π 1 = ContinuousLinearMap.id ℂ Wp := D.π_rep.1
   have hπ1' : D.π' 1 = ContinuousLinearMap.id ℂ Wq := D.π'_rep.1
   refine ⟨smoothLev_of_ck (ck_op (m := ⊤) (o := opOrder Θ) (by rw [top_add]; exact hJc) Θ fun T hT =>
-    ⟨ck_mono_set (fun g hg => hOU g hg.2 hg.1) (hS T hT), word_le_opOrder Θ T hT⟩), ?_, ?_, ?_⟩
+    ⟨ck_mono_set (UU := GV k r ∩ O) (VV := UU) (fun g hg => hOU g hg.2 hg.1) (hS T hT),
+      word_le_opOrder Θ T hT⟩), ?_, ?_, ?_⟩
   · intro g hg n hn
-    have hni : n⁻¹ ∈ Nset k r := (Formalism.QuantumDeterminants.nSubgroup k r).2.2 _ hn.1
+    have hni : n⁻¹ ∈ Formalism.QuantumDeterminants.Nset k r :=
+      (Formalism.QuantumDeterminants.nSubgroup k r).2.2 _ hn.1
     let p : SS k r := mkSS 1 n⁻¹ 1 1
     have hp : D.inSS p := inSS_mk D (uw_one _) hni (uw_one _) n1
     have hs : ∀ x, sgs p x = n * x := fun x => by
@@ -266,7 +268,7 @@ theorem contDiff_poly {κ : ℕ} {P : Mat k r → ℂ} (hP : U.IsPolyDeg κ P) :
   have e : P = fun g => MvPolynomial.eval (Sum.elim (fun x => g x.1 x.2) (fun x => star (g x.1 x.2))) q := funext hq
   rw [e]
   clear hq e
-  have hv : ∀ i j, ContDiff ℝ ∞ (fun g : Mat k r => g i j) := fun i j => contDiff_apply_apply ℝ ℂ i j
+  have hv : ∀ i j, ContDiff ℝ ∞ (fun g : Mat k r => g i j) := fun i j => contDiff_apply_apply ℝ i j
   induction q using MvPolynomial.induction_on with
   | C a => simpa using contDiff_const
   | add p q hp hq => simpa using hp.add hq

@@ -136,12 +136,17 @@ theorem sum_sq_of_anti {P : Type*} [AddCommGroup P] [Fintype P] {Φ : P → ℂ}
         simp [h.phi_zero]
 
 theorem pow4 (h : IsQuadFn φ b) :
-    IsQuadFn (fun v : Fin 4 → M => ∏ i, φ (v i)) (fun v w => ∏ i, b (v i) (w i)) where
-  add v w := by simp only [Pi.add_apply, h.add, Finset.prod_mul_distrib]
-  left u v w := by simp only [Pi.add_apply, h.left, Finset.prod_mul_distrib]
-  sq k v := by simp only [Pi.smul_apply, h.sq, Finset.prod_pow]
-  ne v := Finset.prod_ne_zero_iff.2 fun i _ => h.ne _
-  nondeg v hv := by
+    IsQuadFn (fun v : Fin 4 → M => ∏ i, φ (v i)) (fun v w => ∏ i, b (v i) (w i)) := by
+  refine { add := ?_, left := ?_, sq := ?_, ne := ?_, nondeg := ?_ }
+  · intro v w
+    simp only [Pi.add_apply, h.add, Finset.prod_mul_distrib]
+  · intro u v w
+    simp only [Pi.add_apply, h.left, Finset.prod_mul_distrib]
+  · intro k v
+    simp only [Pi.smul_apply, h.sq, Finset.prod_pow]
+  · intro v
+    exact Finset.prod_ne_zero_iff.2 fun i _ => h.ne _
+  · intro v hv
     funext i
     apply h.nondeg
     intro y

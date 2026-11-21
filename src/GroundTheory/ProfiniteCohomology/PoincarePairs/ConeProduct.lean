@@ -55,7 +55,7 @@ variable {KA LA KC LC N LN KA' LA' KC' LC' N' LN' : CochainComplex (ModuleCat.{u
   (μL : LeibnizPairing LA LN LC) (μK : LeibnizPairing KA N KC)
   (μL' : LeibnizPairing LA' LN' LC') (μK' : LeibnizPairing KA' N' KC')
 
-
+include hN in
 theorem homotopy_apply_zero_of_d_eq_zero (z : N.X 0) (hz : (N.d 0 1).hom z = 0) :
     (βN.f 0).hom ((ρ.f 0).hom z) = (ρ'.f 0).hom ((αN.f 0).hom z) := by
   have e := congrArg (fun φ => φ.hom z) (hN.comm 0)

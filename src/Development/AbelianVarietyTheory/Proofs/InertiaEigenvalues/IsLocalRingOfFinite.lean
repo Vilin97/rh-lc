@@ -17,7 +17,6 @@ theorem precomplete_of_finite (O : Type) [CommRing O] (I : Ideal O) [IsPrecomple
   intro z
   obtain ⟨t, rfl⟩ := AdicCompletion.ofTensorProduct_surjective_of_finite I M z
   induction t with
-  | zero => exact ⟨0, by simp⟩
   | tmul r x =>
     obtain ⟨a, rfl⟩ := AdicCompletion.of_surjective I O r
     refine ⟨a • x, ?_⟩
@@ -65,8 +64,7 @@ theorem isLocalRing_of_finite (O : Type) [CommRing O] [IsLocalRing O] [IsNoether
   haveI : Finite (R ⧸ J) := Module.finite_of_finite (O ⧸ IsLocalRing.maximalIdeal O)
   have hjac : ∀ y ∈ J, IsUnit (1 + y) := by
     intro y hy
-    have := Ideal.mem_jacobson_bot.1 (hH.jac hy) 1
-    simpa [add_comm] using this
+    exact Ideal.isUnit_of_sub_one_mem_jacobson (1 + y) (by simpa using hH.jac hy)
   refine IsLocalRing.of_isUnit_or_isUnit_one_sub_self fun x => ?_
   obtain ⟨n, hn, h⟩ := exists_pow_idem (R ⧸ J) (Ideal.Quotient.mk J x)
   have hm : (X ^ 2 - X : R[X]).Monic := by monicity!
@@ -152,22 +150,24 @@ theorem odd_of_involution (k : Type) [Field k] [Finite k] (τ : k →+* k) (hτ 
   have h1s : 1 < q ^ f := by rw [← hcF]; exact Fintype.one_lt_card
   have haF : a ∉ (F : Set k).toFinset := by
     rw [Set.mem_toFinset]; exact fun h => hta ((hF a).1 h)
-  refine FiniteField.X_pow_card_sub_X_ne_zero k h1s ?_
-  refine Polynomial.eq_zero_of_natDegree_lt_card_of_eval_eq_zero' _
-    (insert a (F : Set k).toFinset) ?_ ?_
-  · intro x hx
-    rcases Finset.mem_insert.1 hx with rfl | hx
-    · simp [has]
-    · rw [Set.mem_toFinset] at hx
-      have := congrArg Subtype.val (FiniteField.pow_card (⟨x, hx⟩ : F))
-      rw [hcF] at this
-      simp only [eval_sub, eval_pow, eval_X]
-      exact sub_eq_zero.2 this
-  · rw [Polynomial.natDegree_X_pow_sub_X (R := k) h1s, Finset.card_insert_of_notMem haF,
-      Set.toFinset_card]
-    have : Fintype.card (F : Set k) = q ^ f := by
-      rw [← hcard, Nat.card_eq_fintype_card]; exact Fintype.card_congr (Equiv.refl _)
-    omega
+  have hne : (X ^ (q ^ f) - X : k[X]) ≠ 0 := Polynomial.X_pow_sub_X_ne_zero (R := k) h1s
+  have hzero : (X ^ (q ^ f) - X : k[X]) = 0 := by
+    refine Polynomial.eq_zero_of_natDegree_lt_card_of_eval_eq_zero' _
+      (insert a (F : Set k).toFinset) ?_ ?_
+    · intro x hx
+      rcases Finset.mem_insert.1 hx with rfl | hx
+      · simp [has]
+      · rw [Set.mem_toFinset] at hx
+        have := congrArg Subtype.val (FiniteField.pow_card (⟨x, hx⟩ : F))
+        rw [hcF] at this
+        simp only [eval_sub, eval_pow, eval_X]
+        exact sub_eq_zero.2 this
+    · rw [Polynomial.natDegree_X_pow_sub_X h1s, Finset.card_insert_of_notMem haF,
+        Set.toFinset_card]
+      have : Fintype.card (F : Set k) = q ^ f := by
+        rw [← hcard, Nat.card_eq_fintype_card]; exact Fintype.card_congr (Equiv.refl _)
+      omega
+  exact hne hzero
 
 open GlobalTheory.UnitLemma
 

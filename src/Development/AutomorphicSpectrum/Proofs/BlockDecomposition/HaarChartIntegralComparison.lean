@@ -173,8 +173,11 @@ theorem lebesgue_le_haar :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ φ : Mat n → ℝ, ContinuousOn φ (GLs n) → (∀ y, 0 ≤ φ y) →
       ∫ t in Q, φ (1 + cm t) ≤ C * ∫ y in S, φ y.val ∂μ := by
   intro n m hB μ hμ Q S hQ hS h
-  have e : m = Units.instMeasurableSpace :=
-    hB.measurable_eq.trans (GroundTheory.Automorphic.borelSpace_GLComplex (n := Fin n)).measurable_eq.symm
+  letI : MeasurableSpace (Matrix (Fin n) (Fin n) ℂ) :=
+    GroundTheory.Automorphic.matrixMeasurableSpaceComplex
+  have e : m = Units.instMeasurableSpace := by
+    exact hB.measurable_eq.trans
+      (GroundTheory.Automorphic.borelSpace_GLComplex (n := Fin n)).measurable_eq.symm
   subst e
   exact HaarDom.dom_units n μ Q S hQ hS h
 

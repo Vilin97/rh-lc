@@ -16,6 +16,7 @@ noncomputable section
 variable {K : Type*} [Field K] [NumberField K]
 
 
+open Classical in
 def finiteAdeleSingleAdd (v : HeightOneSpectrum (𝓞 K)) :
     v.adicCompletion K →+ FiniteAdeleRing (𝓞 K) K where
   toFun x := RestrictedProduct.single
@@ -82,6 +83,7 @@ theorem continuous_finitePlaceIncl (v : HeightOneSpectrum (𝓞 K)) :
   continuous_const.prodMk (continuous_finiteAdeleSingleAdd v)
 
 
+open Classical in
 def infinitePlaceIncl (w : InfinitePlace K) : w.Completion →+ 𝔸[K] :=
   ((AddMonoidHom.single (fun u : InfinitePlace K => u.Completion) w).prod 0 :
     w.Completion →+ InfiniteAdeleRing K × FiniteAdeleRing (𝓞 K) K)
@@ -106,15 +108,16 @@ def infiniteAdeleInl : InfiniteAdeleRing K →+ 𝔸[K] :=
 
 theorem infiniteAdeleInl_add_finiteAdeleInr (x : 𝔸[K]) :
     infiniteAdeleInl x.1 + finiteAdeleInr x.2 = x := by
-  refine Prod.ext (α := InfiniteAdeleRing K) (β := FiniteAdeleRing (𝓞 K) K) ?_ ?_
-  · rw [adeleRing_add_fst, infiniteAdeleInl_fst, finiteAdeleInr_fst, add_zero]
-  · rw [adeleRing_add_snd, infiniteAdeleInl_snd, finiteAdeleInr_snd, zero_add]
+  have h : infiniteAdeleInl x.1 + finiteAdeleInr x.2 = (x.1 + 0, 0 + x.2) := rfl
+  simpa using h
 
 
+variable (K) in
 def localAdelicChar (v : HeightOneSpectrum (𝓞 K)) : AddChar (v.adicCompletion K) Circle :=
   (adelicChar K).compAddMonoidHom (finitePlaceIncl v)
 
 
+variable (K) in
 def infiniteAdelicChar (w : InfinitePlace K) : AddChar w.Completion Circle :=
   (adelicChar K).compAddMonoidHom (infinitePlaceIncl w)
 

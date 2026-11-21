@@ -115,6 +115,8 @@ theorem dsig_add {X : Mx k r} (hX : InLieHpk k r X) {v w : H} (hv : v ∈ smooth
   rw [← h.deriv]
   unfold dsig
   congr 1
+  funext t
+  exact map_add (σ (NormedSpace.exp ((t : ℂ) • X))) v w
 
 theorem dsig_smul {X : Mx k r} (hX : InLieHpk k r X) (a : ℂ) {v : H} (hv : v ∈ smoothVecs (k := k) (r := r) σ) :
     dsig (k := k) (r := r) σ X (a • v) = a • dsig (k := k) (r := r) σ X v := by
@@ -122,6 +124,8 @@ theorem dsig_smul {X : Mx k r} (hX : InLieHpk k r X) (a : ℂ) {v : H} (hv : v �
   rw [← h.deriv]
   unfold dsig
   congr 1
+  funext t
+  exact map_smul (σ (NormedSpace.exp ((t : ℂ) • X))) a v
 
 theorem dsig_smooth (hσ : IsDSHpk k r ε mu σ) {X : Mx k r} (hX : InLieHpk k r X) {v : H}
     (hv : v ∈ smoothVecs (k := k) (r := r) σ) :

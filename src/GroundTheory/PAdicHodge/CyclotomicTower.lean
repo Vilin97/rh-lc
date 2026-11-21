@@ -144,8 +144,7 @@ theorem finrank_cycl (n : ℕ) : finrank ℚ_[p] (cycl p n) = Nat.totient (p ^ n
 
 theorem totient_prime_pow_succ {k : ℕ} (hk : 1 ≤ k) :
     Nat.totient (p ^ (k + 1)) = p * Nat.totient (p ^ k) := by
-  rw [pow_succ', Nat.totient_mul_of_prime_of_dvd (Fact.out : p.Prime)
-    (dvd_pow_self p (by omega))]
+  rw [pow_succ', Nat.totient_mul_of_dvd (dvd_pow_self p (by omega))]
 
 theorem natDegree_minpoly_cycl_of_adjoin_eq {k : ℕ} (hk : 1 ≤ k) {y : PadicAlgCl p}
     (hy : ℚ_[p]⟮y⟯ = cycl p (k + 1)) : (minpoly (cycl p k) y).natDegree = p := by
@@ -193,7 +192,8 @@ theorem exists_norm_pow_totient_eq_zpow {n : ℕ} {y : PadicAlgCl p} (hy : y ∈
   rw [hm, pow_mul, norm_pow_natDegree_minpoly, hz, zpow_mul, zpow_natCast]
 
 
-def cyclRadius (j : ℕ) : ℝ := ‖(exists_isPrimitiveRoot (p := p) j).choose - 1‖
+def cyclRadius (p : ℕ) [Fact p.Prime] (j : ℕ) : ℝ :=
+  ‖(exists_isPrimitiveRoot (p := p) j).choose - 1‖
 
 theorem norm_sub_one_eq_cyclRadius {η : PadicAlgCl p} {j : ℕ} (hη : IsPrimitiveRoot η (p ^ j)) :
     ‖η - 1‖ = cyclRadius p j :=

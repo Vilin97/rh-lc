@@ -96,8 +96,9 @@ theorem exists_term_basis (hG : GlobalFnsSt) (hP : PolBaseChangeSt) (hT : TwistB
         IsSecBasis (T := Over.mk t) (A := D.P.A) _ b := by
     rintro t rfl φ rfl
     obtain ⟨b, hb⟩ := GlobalTheory.T.exists_twist_basis_off_prime hP hG hT R D hW ⊥ k hk α
-    refine ⟨fun i => pullSec D.P.L (DegPre.famφB D α) (DegPre.famε k) (b i) _, hb F f (fun s hs => ?_) _
-      (fun i j => rfl)⟩
+    let b' := fun i => DVR.pullSec (L := D.P.L) (DegPre.famφB D α) (DegPre.famε k) (b i)
+      (snd (Over.mk (Spec.map (CommRingCat.ofHom f))) D.P.A).left
+    refine ⟨b', hb F f (fun s hs => ?_) b' (fun i j => rfl)⟩
     refine IsUnit.mk0 _ fun h0 => hs ?_
     have h1 : algebraMap R (FractionRing R) s = 0 := (algebraMap (FractionRing R) F).injective (h0.trans (map_zero _).symm)
     exact (IsFractionRing.to_map_eq_zero_iff (K := FractionRing R)).1 h1

@@ -19,16 +19,16 @@ section Basic
 variable (S : Set (HeightOneSpectrum (𝓞 F)))
 
 theorem le_maxUnramifiedOutside {E : IntermediateField F Ω} [FiniteDimensional F E]
-    (hE : IsUnramifiedOutside S E) : E ≤ maxUnramifiedOutside F Ω S :=
+    (hE : IsUnramifiedOutside S E) : E ≤ maxUnramifiedOutside (F := F) (Ω := Ω) S :=
   le_iSup_of_le E (le_iSup_of_le ‹_› (le_iSup_of_le hE le_rfl))
 
 theorem maxUnramifiedOutside_mono {S T : Set (HeightOneSpectrum (𝓞 F))} (h : S ⊆ T) :
-    maxUnramifiedOutside F Ω S ≤ maxUnramifiedOutside F Ω T :=
+    maxUnramifiedOutside (F := F) (Ω := Ω) S ≤ maxUnramifiedOutside (F := F) (Ω := Ω) T :=
   iSup_mono fun _ => iSup_mono fun _ => iSup_le fun hE =>
     le_iSup_of_le (fun v hv => hE v fun hs => hv (h hs)) le_rfl
 
 theorem maxUnramifiedOutside_eq_iSup :
-    maxUnramifiedOutside F Ω S =
+    maxUnramifiedOutside (F := F) (Ω := Ω) S =
       ⨆ E : {E : IntermediateField F Ω // FiniteDimensional F E ∧ IsUnramifiedOutside S E}, E.1 := by
   apply le_antisymm
   · exact iSup_le fun E => iSup_le fun hf => iSup_le fun hu => le_iSup_of_le ⟨E, hf, hu⟩ le_rfl
@@ -37,7 +37,7 @@ theorem maxUnramifiedOutside_eq_iSup :
 variable [NumberField F] [IsGalois F Ω]
 
 theorem mem_maxUnramifiedOutside_iff {x : Ω} :
-    x ∈ maxUnramifiedOutside F Ω S ↔
+    x ∈ maxUnramifiedOutside (F := F) (Ω := Ω) S ↔
       ∃ E : IntermediateField F Ω, FiniteDimensional F E ∧ IsUnramifiedOutside S E ∧ x ∈ E := by
   constructor
   · intro hx
@@ -57,7 +57,7 @@ theorem mem_maxUnramifiedOutside_iff {x : Ω} :
     exact le_maxUnramifiedOutside S hu hx
 
 theorem exists_subset_of_subset_maxUnramifiedOutside (s : Finset Ω)
-    (hs : ∀ x ∈ s, x ∈ maxUnramifiedOutside F Ω S) :
+    (hs : ∀ x ∈ s, x ∈ maxUnramifiedOutside (F := F) (Ω := Ω) S) :
     ∃ E : IntermediateField F Ω, FiniteDimensional F E ∧ IsUnramifiedOutside S E ∧
       ∀ x ∈ s, x ∈ E := by
   classical
@@ -73,7 +73,8 @@ theorem exists_subset_of_subset_maxUnramifiedOutside (s : Finset Ω)
     · exact le_sup_right (α := IntermediateField F Ω) (hs₂ x hx)
 
 theorem isUnramifiedOutside_iff_le_maxUnramifiedOutside {E : IntermediateField F Ω}
-    [FiniteDimensional F E] : IsUnramifiedOutside S E ↔ E ≤ maxUnramifiedOutside F Ω S := by
+    [FiniteDimensional F E] : IsUnramifiedOutside S E ↔
+      E ≤ maxUnramifiedOutside (F := F) (Ω := Ω) S := by
   refine ⟨le_maxUnramifiedOutside S, fun h => ?_⟩
   classical
   let b := Module.finBasis F E
@@ -93,8 +94,8 @@ theorem isUnramifiedOutside_iff_le_maxUnramifiedOutside {E : IntermediateField F
     exact sum_mem fun i _ => E'.smul_mem (hE' _ (Finset.mem_image_of_mem _ (Finset.mem_univ i)))
   exact fun v hv => isUnramifiedIn_of_le hle v (hu v hv)
 
-instance isGalois_maxUnramifiedOutside : IsGalois F (maxUnramifiedOutside F Ω S) := by
-  have hN : Normal F (maxUnramifiedOutside F Ω S) := by
+instance isGalois_maxUnramifiedOutside : IsGalois F (maxUnramifiedOutside (F := F) (Ω := Ω) S) := by
+  have hN : Normal F (maxUnramifiedOutside (F := F) (Ω := Ω) S) := by
     rw [IntermediateField.normal_iff_forall_map_le']
     intro τ x hx
     obtain ⟨y, hy, rfl⟩ := (IntermediateField.mem_map _).1 hx
@@ -105,9 +106,10 @@ instance isGalois_maxUnramifiedOutside : IsGalois F (maxUnramifiedOutside F Ω S
   exact ⟨⟩
 
 theorem galUnramifiedOutside_isProfinite :
-    CompactSpace (galUnramifiedOutside F Ω S) ∧ T2Space (galUnramifiedOutside F Ω S) ∧
-      TotallyDisconnectedSpace (galUnramifiedOutside F Ω S) :=
-  galois_isProfinite F (maxUnramifiedOutside F Ω S)
+    CompactSpace (galUnramifiedOutside (F := F) (Ω := Ω) S) ∧
+      T2Space (galUnramifiedOutside (F := F) (Ω := Ω) S) ∧
+      TotallyDisconnectedSpace (galUnramifiedOutside (F := F) (Ω := Ω) S) :=
+  galois_isProfinite F (maxUnramifiedOutside (F := F) (Ω := Ω) S)
 
 end Basic
 

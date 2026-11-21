@@ -26,7 +26,7 @@ def shiftFn (s : K → ℤ) (f : (K → ℤ) → ℤ) : (K → ℤ) → ℤ := f
 
 variable {ι : K → Type*}
 
-
+open scoped Classical in
 def idealCycle {R : Type*} [CommRing R] (J W : Ideal (MRing ι R)) : ℤ :=
   if h : W ∈ J.minimalPrimes ∧ IsRelevant W then
     haveI : W.IsPrime := h.1.1.1
@@ -230,13 +230,13 @@ section Fibres
 
 def GradedPieceFree.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
-    ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)),
+    ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)),
     (∀ x, C ϖ * x ∈ P → x ∈ P) → ∀ m : K → ℕ,
       Module.Free O (gradedPieceR P m) ∧ Module.Finite O (gradedPieceR P m)
 
 def SpecialPieceRank.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
-    ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)),
+    ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)),
     IsMultiHomogIdeal P → (∀ x, C ϖ * x ∈ P → x ∈ P) → ∀ m : K → ℕ,
       Module.finrank (IsLocalRing.ResidueField O) (gradedPiece (specialIdeal P) m) =
         Module.finrank O (gradedPieceR P m)

@@ -64,6 +64,7 @@ theorem exists_orbit (hπ : IsSmooth π) {H : Subgroup G} (hH : IsCompact (H : S
   · rw [← Module.End.mul_apply, ← map_mul]; simp
 
 
+variable (π) in
 def Inj (I J : Subgroup G) : Prop := ∀ v ∈ fixed π I, v ∈ twKer π J 1 → v = 0
 
 theorem Inj.trans (hπ : IsSmooth π) {I J K : Subgroup G} (hJ : IsCompact (J : Set G))
@@ -273,6 +274,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {n : Type} [Fintype n] [DecidableEq n]
 
 
+variable (k) in
 def grp {f : n → n → ℤ} (hf : Conc f) : Subgroup (GL n k) where
   carrier := {g | (∀ i j, Deep (f i j) (g.val i j)) ∧ ∀ i j, Deep (f i j) ((g⁻¹).val i j)}
   one_mem' := by
@@ -332,7 +334,7 @@ theorem diag_unit {f : n → n → ℤ} (hf : Chamber f) {p : GL n k} {i : n}
     ¬ Deep 1 (p.val i i) := by
   intro h
   have h3 : Deep 1 ((p.val * (p⁻¹).val) i i) := by
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     refine Deep.sum fun l _ => ?_
     by_cases c : l = i
     · subst c

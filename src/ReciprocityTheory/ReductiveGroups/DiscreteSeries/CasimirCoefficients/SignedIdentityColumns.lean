@@ -91,7 +91,9 @@ lemma ballFiniteVG (ε : Fin n → Bool) (ν : Measure (UJ ε)) [ν.IsHaarMeasur
   let K : Set (Matrix (Fin n) (Fin n) ℂ) := {M | inUJ ε M ∧ hs M ≤ R}
   have hKc : IsCompact K := by
     apply Metric.isCompact_of_isClosed_isBounded
-    · apply IsClosed.inter
+    · change IsClosed ({M : Matrix (Fin n) (Fin n) ℂ | Mᴴ * Jm ε * M = Jm ε} ∩
+        {M : Matrix (Fin n) (Fin n) ℂ | hs M ≤ R})
+      apply IsClosed.inter
       · exact isClosed_eq ((continuous_id.matrix_conjTranspose.matrix_mul continuous_const).matrix_mul
           continuous_id) continuous_const
       · exact isClosed_le hs_contVG continuous_const
@@ -187,7 +189,8 @@ lemma hs_le_colsV {ε : Fin n → Bool} (s : Bool) {g : Matrix (Fin n) (Fin n) �
   have hJσ : Jm ε = Matrix.diagonal fun a => ((σ a : ℝ) : ℂ) := by
     unfold Jm
     congr 1
-    split_ifs <;> simp
+    funext a
+    by_cases ha : ε a = true <;> simp [σ, ha]
   have hterm : ∀ i j, g i j * ((σ j : ℝ) : ℂ) * star (g i j) = ((σ j * ‖g i j‖ ^ 2 : ℝ) : ℂ) := by
     intro i j
     rw [mul_comm (g i j), mul_assoc, Complex.star_def, Complex.mul_conj']

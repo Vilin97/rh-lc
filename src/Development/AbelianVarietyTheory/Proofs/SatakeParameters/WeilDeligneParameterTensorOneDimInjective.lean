@@ -64,7 +64,7 @@ theorem tensor_iso_twist {V : Type*} [AddCommGroup V] [Module ℂ V] [FiniteDime
   · induction v using TensorProduct.induction_on with
     | zero => simp
     | tmul x y =>
-      simp [N_eq_zero c, Function.eval]
+      simp [N_eq_zero c, Function.eval, WDRep.twist]
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem iso_of_twist {V V' : Type*} [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
@@ -91,5 +91,5 @@ theorem GlobalTheory.WeilDeligne.lpChar_left_injective_of_lpDim_one : ∀ (E Ω 
   rw [WD.lpDim_mk, Module.finrank_fin_fun] at hc
   subst hc
   rw [WD.lpChar_mk, WD.lpChar_mk, WD.mk_eq_mk] at hab
-  exact WD.sound (iso_of_twist (chr c) (isSmooth_chr c)
-    (((tensor_iso_twist a c).symm.trans hab).trans (tensor_iso_twist b c)))
+  exact WD.sound (TwistInj.iso_of_twist (TwistInj.chr c) (TwistInj.isSmooth_chr c)
+    (((TwistInj.tensor_iso_twist a c).symm.trans hab).trans (TwistInj.tensor_iso_twist b c)))

@@ -208,7 +208,7 @@ theorem finish (L : LocalNG Cl Nu) (Xp Yp : L.P → ℝ) (hX : ∀ p, 1 ≤ Xp p
   calc (4 : ℝ) ^ L.Om.card * (∏ p, Xp p * Yp p)
       = ∏ p, (if p ∈ L.Om then (4 : ℝ) else 1) * (Xp p * Yp p) := by
         rw [pow_card_eq, ← Finset.prod_mul_distrib]
-    _ ≤ ∏ p, L.H p ^ e := Finset.prod_le_prod hnn (fun p _ => h p)
+    _ ≤ ∏ p, L.H p ^ e := Finset.prod_le_prod₀ hnn (fun p _ => h p)
     _ = L.Htot ^ e := by
         rw [Finset.prod_pow]
         rfl

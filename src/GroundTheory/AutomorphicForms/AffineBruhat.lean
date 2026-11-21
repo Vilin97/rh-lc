@@ -18,6 +18,8 @@ namespace GLnLocal
 variable (F : Type*) [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   (n : ℕ)
 
+local notation "ϖ" => ((uniformizer F : 𝒪[F]) : F)
+
 section Iwahori
 
 def residueReduction : GL (Fin n) 𝒪[F] →* GL (Fin n) (IsLocalRing.ResidueField 𝒪[F]) :=
@@ -139,8 +141,7 @@ def diagPow : (Fin n → Multiplicative ℤ) →* GL (Fin n) F where
   map_one' := by
     refine Units.ext ?_
     change (diagonal fun i => ϖ ^ ((1 : Fin n → Multiplicative ℤ) i).toAdd) = 1
-    rw [← diagonal_one]
-    congr 1
+    simp only [Pi.one_apply, toAdd_one, zpow_zero, diagonal_one]
   map_mul' a b := by
     refine Units.ext ?_
     change (diagonal fun i => ϖ ^ ((a * b) i).toAdd) =
@@ -210,7 +211,7 @@ end AffineWeyl
 
 section Existence
 
-
+variable {F n} in
 def RowsReducedOn (M : Matrix (Fin n) (Fin n) F) (R : Finset (Fin n)) : Prop :=
   ∃ p : Fin n → Fin n, ∀ i ∈ R,
     M i (p i) ≠ 0 ∧ (∀ c, c ≠ p i → M i c = 0) ∧ (∀ r, r ≠ i → M r (p i) = 0)

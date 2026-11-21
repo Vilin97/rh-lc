@@ -32,6 +32,7 @@ theorem extend_zero_inj {K K' : Type*} {j : K → K'} (hj : Function.Injective j
 variable {K K' : Type*} [DecidableEq K] [DecidableEq K'] {ι : K → Type*} {ι' : K' → Type*}
   {j : K → K'} {g : (Σ k, ι k) → (Σ k, ι' k)} (hgj : ∀ v, (g v).1 = j v.1)
 
+include hgj
 
 theorem weight_mapDomain (hj : Function.Injective j) (d : (Σ k, ι k) →₀ ℕ) :
     Finsupp.weight (blockWeight ι') (Finsupp.mapDomain g d) =
@@ -49,7 +50,7 @@ theorem weight_mapDomain (hj : Function.Injective j) (d : (Σ k, ι k) →₀ �
     simp only [Finsupp.sum, Finset.sum_apply, Pi.smul_apply, blockWeight, hgj, Pi.single_apply,
       Pi.zero_apply]
     refine Finset.sum_eq_zero fun v _ => ?_
-    rw [if_neg fun h => hk ⟨v.1, h.symm⟩, smul_zero]
+    rw [ite_eq_right fun h => hk ⟨v.1, h.symm⟩, smul_zero]
 
 
 theorem rename_weightedHomogeneousComponent (hj : Function.Injective j)
@@ -75,8 +76,11 @@ theorem isMultiProjPrime_comap_rename (hj : Function.Injective j) (hg : Function
     (hsurj : ∀ w : Σ k, ι' k, w.1 ∈ Set.range j → ∃ v, g v = w) {R : Type*} [CommRing R]
     {P : Ideal (MRing ι' R)} (hP : IsMultiProjPrime P) :
     IsMultiProjPrime (P.comap (rename (R := R) g)) where
-  isPrime := haveI := hP.isPrime; Ideal.comap_isPrime _ _
-  multiHomog f hf b := by
+  isPrime := by
+    have := hP.isPrime
+    exact Ideal.comap_isPrime _ _
+  multiHomog := by
+    intro f hf b
     rw [Ideal.mem_comap] at hf ⊢
     rw [rename_weightedHomogeneousComponent hgj hj hg]
     exact hP.multiHomog _ hf _

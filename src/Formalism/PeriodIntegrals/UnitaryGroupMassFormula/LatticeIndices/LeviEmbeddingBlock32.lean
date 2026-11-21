@@ -101,17 +101,23 @@ structure GP (P : Matrix (Fin k) (Fin k) A → Prop) : Prop where
   inv : ∀ {h}, P h → P h⁻¹
   unit : ∀ {h}, P h → IsUnit h.det
 
-theorem gpUnit : GP (fun h : Matrix (Fin k) (Fin k) A => IsUnit h.det) where
-  one := by simp
-  mul := by intro h h' a b; rw [Matrix.det_mul]; exact a.mul b
-  inv := by intro h a; exact Matrix.isUnit_nonsing_inv_det h a
-  unit := fun a => a
+theorem gpUnit : GP (fun h : Matrix (Fin k) (Fin k) A => IsUnit h.det) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simp
+  · intro h h' a b
+    rw [Matrix.det_mul]
+    exact a.mul b
+  · intro h a
+    exact Matrix.isUnit_nonsing_inv_det h a
+  · exact fun a => a
 
-theorem gpUni : GP (IsUpUni : Matrix (Fin k) (Fin k) A → Prop) where
-  one := isUpUni_one A
-  mul := fun a b => isUpUni_mul A a b
-  inv := fun a => isUpUni_inv A a
-  unit := by intro h a; rw [isUpUni_det A a]; exact isUnit_one
+theorem gpUni : GP (IsUpUni : Matrix (Fin k) (Fin k) A → Prop) := by
+  refine ⟨isUpUni_one A, ?_, ?_, ?_⟩
+  · exact fun a b => isUpUni_mul A a b
+  · exact fun a => isUpUni_inv A a
+  · intro h a
+    rw [isUpUni_det A a]
+    exact isUnit_one
 
 def Par (P : Matrix (Fin k) (Fin k) A → Prop) (x : Matrix (Idx r k) (Idx r k) A) : Prop :=
   IsUpUni (b11 x) ∧ IsUpUni (b33 x) ∧ b21 x = 0 ∧ b31 x = 0 ∧ b32 x = 0 ∧ ∃ h, P h ∧ b22 x = midEmb h

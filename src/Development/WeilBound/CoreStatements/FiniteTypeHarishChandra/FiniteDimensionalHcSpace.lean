@@ -60,7 +60,9 @@ def patChar {ι : Type} [Fintype ι] [DecidableEq ι] (E : ι → ι → K) (ψ�
 
 def wh {ι : Type} [Fintype ι] [DecidableEq ι] (Φ : ι → ι → Prop) (E : ι → ι → K) (ψ₀ : AddChar K ℂ)
     (χ : GL ι K → ℂ) : ℂ :=
-  ((patSet K Φ).ncard : ℂ)⁻¹ * ∑ u, if u ∈ patSet K Φ then (patChar E ψ₀ u)⁻¹ * χ u else 0
+  by
+    classical
+    exact ((patSet (K := K) Φ).ncard : ℂ)⁻¹ * ∑ u, if u ∈ patSet (K := K) Φ then (patChar E ψ₀ u)⁻¹ * χ u else 0
 
 def IsPat {ι : Type} (Φ : ι → ι → Prop) : Prop := (∀ i, ¬ Φ i i) ∧ ∀ i j k, Φ i j → Φ j k → Φ i k
 

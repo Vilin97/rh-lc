@@ -20,6 +20,7 @@ def FinOrb (K K' : Subgroup G) (x : G) : Prop := (MulAction.orbit K (x : G ⧸ K
 def HeckePair (I : Subgroup G) : Prop := ∀ x : G, FinOrb I I x
 
 
+open scoped Classical in
 def hk2 (ρ : Representation A G M) (K K' : Subgroup G) (x : G) : fixd ρ K' →ₗ[A] fixd ρ K :=
   if h : ∀ v ∈ fixd ρ K', dc ρ K K' x v ∈ fixd ρ K then (dc ρ K K' x).restrict h else 0
 
@@ -33,6 +34,8 @@ def inc (ρ : Representation A G M) {I K : Subgroup G} (h : I ≤ K) : fixd ρ K
 
 def trc (ρ : Representation A G M) (K I : Subgroup G) : fixd ρ I →ₗ[A] fixd ρ K := hk2 ρ K I 1
 
+
+variable (A)
 
 abbrev permRep (I : Subgroup G) : Representation A G (MonoidAlgebra A (G ⧸ I)) := Representation.ofMulAction A G (G ⧸ I)
 

@@ -150,7 +150,7 @@ theorem positiveSubgroupEquivIdeleClassGroup_apply (x : positiveSubgroup) :
 def positiveSubgroupEquiv : positiveSubgroup ≃ₜ* Units.posSubgroup ℝ ×
     Π v : HeightOneSpectrum (𝓞 ℚ), (v.adicCompletionIntegers ℚ)ˣ where
   toFun x := (⟨realPart x, (Units.mem_posSubgroup _).2 (mem_positiveSubgroup.1 x.2).2⟩,
-    (standardOpenSubgroupEquiv ℚ ⟨x, (mem_positiveSubgroup.1 x.2).1⟩).2)
+    (standardOpenSubgroupEquiv (K := ℚ) ⟨x, (mem_positiveSubgroup.1 x.2).1⟩).2)
   invFun p := ⟨ofIntegerUnits (realUnitsEquiv.symm p.1) p.2, mem_positiveSubgroup.2
     ⟨ofIntegerUnits_mem _ _, by
       rw [realPart_ofIntegerUnits, ContinuousMulEquiv.apply_symm_apply]
@@ -168,10 +168,10 @@ def positiveSubgroupEquiv : positiveSubgroup ≃ₜ* Units.posSubgroup ℝ ×
     (funext fun _ ↦ Units.ext (Subtype.ext rfl))
   continuous_toFun := by
     exact ((continuous_realPart.comp continuous_subtype_val).subtype_mk _).prodMk
-      (continuous_snd.comp ((standardOpenSubgroupEquiv ℚ).continuous.comp
+      (continuous_snd.comp ((standardOpenSubgroupEquiv (K := ℚ)).continuous.comp
         (continuous_subtype_val.subtype_mk _)))
   continuous_invFun := by
-    exact (continuous_subtype_val.comp ((standardOpenSubgroupEquiv ℚ).symm.continuous.comp
+    exact (continuous_subtype_val.comp ((standardOpenSubgroupEquiv (K := ℚ)).symm.continuous.comp
       ((realUnitsEquiv.symm.continuous.comp (continuous_subtype_val.comp continuous_fst)).prodMk
         continuous_snd))).subtype_mk _
 

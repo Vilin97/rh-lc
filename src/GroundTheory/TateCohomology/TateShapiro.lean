@@ -77,6 +77,8 @@ end Cochains
 
 section Unit
 
+open scoped Classical
+
 variable {k G : Type u} [CommRing k] [Group G] (S : Subgroup G)
 
 
@@ -387,6 +389,7 @@ section Ind
 variable {k G : Type u} [CommRing k] [Group G] (S : Subgroup G) [Fintype G] [Fintype S]
 
 
+open scoped Classical in
 noncomputable def tateIndNatIso (n : ℤ) :
     indFunctor k S.subtype ⋙ tateCohomologyFunctor n ≅
       tateCohomologyFunctor (R := k) (G := S) n :=

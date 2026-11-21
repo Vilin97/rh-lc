@@ -13,7 +13,13 @@ namespace GlobalTheory.LeviIso
 theorem exists_hermitian_sqrt_mul_mul_eq {n : ℕ} (J C : Matrix (Fin n) (Fin n) ℂ)
     (hJ : J * J = 1) (hJh : Jᴴ = J) (hC : C.det ≠ 0)
     (h : (Cᴴ * C) * J * (Cᴴ * C) = J) :
-    ∃ s : Matrix (Fin n) (Fin n) ℂ, IsUnit s.det ∧ sᴴ = s ∧ s * s = Cᴴ * C ∧ s * J * s = J := by
+    ∃ s : Matrix (Fin n) (Fin n) ℂ, IsUnit s.det ∧ sᴴ = s ∧ s * s = Cᴴ * C ∧ s * J * s = J :=
+  by
+  letI : PartialOrder ℂ := RCLike.toPartialOrder
+  letI : PartialOrder (Matrix (Fin n) (Fin n) ℂ) := Matrix.instPartialOrder
+  letI : StarOrderedRing ℂ := RCLike.toStarOrderedRing
+  letI : StarOrderedRing (Matrix (Fin n) (Fin n) ℂ) := Matrix.instStarOrderedRing
+  letI : NonnegSpectrumClass ℝ (Matrix (Fin n) (Fin n) ℂ) := Matrix.instNonnegSpectrumClass
   set H := Cᴴ * C with hHdef
   have hH : 0 ≤ H := (Matrix.posSemidef_conjTranspose_mul_self C).nonneg
   set s := CFC.sqrt H with hsdef

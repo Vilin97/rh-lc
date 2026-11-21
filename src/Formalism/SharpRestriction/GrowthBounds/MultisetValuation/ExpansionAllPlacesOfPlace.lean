@@ -72,6 +72,8 @@ theorem th_map_ren {S : Type} [CommRing S] (h : R →+* S) (f : MvPowerSeries κ
   unfold ren
   rw [MvPowerSeries.map_subst (th_ren_hasSubst φ)]
   congr 1
+  funext k
+  exact MvPowerSeries.map_X h (φ k)
 
 end Rename₂
 

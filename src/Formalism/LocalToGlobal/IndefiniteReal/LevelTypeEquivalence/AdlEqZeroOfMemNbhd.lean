@@ -38,7 +38,7 @@ theorem adl_exists_place_ge_one (r : 𝓞 F) (hr : r ≠ 0) :
 open scoped AdeleRing
 
 
-def adlNbhd : Set (AdeleRing (𝓞 F) F) :=
+def adlNbhd (F : Type) [Field F] [NumberField F] : Set (AdeleRing (𝓞 F) F) :=
   {x | (∀ w, ‖x.1 w‖ < 1) ∧ ∀ v, x.2 v ∈ v.adicCompletionIntegers F}
 
 theorem adl_isOpen_nbhd : IsOpen (adlNbhd F) := by
@@ -71,8 +71,8 @@ theorem adl_zero_mem_nbhd : (0 : AdeleRing (𝓞 F) F) ∈ adlNbhd F := by
 
 theorem adl_norm_algebraMap (x : F) (w : InfinitePlace F) :
     ‖(algebraMap F (InfiniteAdeleRing F) x) w‖ = w x := by
-  simp [InfiniteAdeleRing.algebraMap_apply]
-  first | rfl | simp [WithAbs.equiv, WithAbs.toAbs]
+  rw [InfiniteAdeleRing.algebraMap_apply]
+  exact AbsoluteValue.Completion.norm_coe (WithAbs.toAbs w.1 x)
 
 theorem adl_eq_zero_of_mem_nbhd (a : F) (ha : algebraMap F (AdeleRing (𝓞 F) F) a ∈ adlNbhd F) : a = 0 := by
   obtain ⟨hinf, hfin⟩ := ha

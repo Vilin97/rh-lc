@@ -281,7 +281,7 @@ structure LocWach (PD : PeriodData G Qp K₀ K B BdR) (LL O : Type) [Field LL] [
   lev : ZMod n → LL → (LetA O n →ₐ[O] PowerSeries LL)
   lev_letter : ∀ i ζ a, a i = 0 → lev i ζ a = 0
   lev_π : ∀ i (ζ : LL), (∃ j : ℕ, IsPrimitiveRoot ζ (PD.p ^ j)) → ∃ E : PowerSeries LL, PowerSeries.constantCoeff E = 1 ∧
-    PowerSeries.derivative LL E = E ∧ 1 + lev i ζ letπ = PowerSeries.C ζ * E
+    PowerSeries.derivative E = E ∧ 1 + lev i ζ letπ = PowerSeries.C ζ * E
 
   lev_cont : ∀ (i : ZMod n) (ζ : LL) (a : LetA O n) (k r : ℕ), ∃ m₀ : ℕ, ∀ m ≥ m₀, (r : WithTop ℚ) ≤
     v (PowerSeries.coeff k (lev i ζ a) -
@@ -688,7 +688,8 @@ def IsJumpW (P : LocPrime l) {m : ℕ} (r : ↥Gw →* Matrix.GeneralLinearGroup
   IsJumpV (P.PD Bw.Kw) (Bw.rep r) τ a
 
 def IsdRW (P : LocPrime l) {m : ℕ} (r : ↥Gw →* Matrix.GeneralLinearGroup (Fin m) O) : Prop :=
-  Module.finrank ↥Bw.LL.1 ↥(DdR (P.PD Bw.Kw) (Bw.rep r)) = Module.finrank ℚ_[l] ↥Bw.Kw.1 * m
+  let D := DdR (P.PD Bw.Kw) (Bw.rep r)
+  @Module.finrank ↥Bw.LL.1 ↥D _ _ (Submodule.module D) = Module.finrank ℚ_[l] ↥Bw.Kw.1 * m
 
 def IsPotCrysW (P : LocPrime l) {m : ℕ} (r : ↥Gw →* Matrix.GeneralLinearGroup (Fin m) O) : Prop :=
   ∃ (K' : FinExt l) (h : Bw.Kw.1 ≤ K'.1),

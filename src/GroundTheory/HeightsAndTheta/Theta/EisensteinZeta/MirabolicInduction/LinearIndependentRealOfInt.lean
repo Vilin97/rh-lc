@@ -32,6 +32,8 @@ theorem discreteTopology_of_sep {L : Submodule ℤ W} {lam : ℝ} (hlam : 0 < la
 theorem finite_of_sep {L : Submodule ℤ W} {lam : ℝ} (hlam : 0 < lam) (h : Sep L lam) (r : ℝ) :
     {x : W | x ∈ L ∧ ‖x‖ ≤ r}.Finite := by
   have := discreteTopology_of_sep hlam h
+  letI : MeasurableSpace W := borel W
+  letI : BorelSpace W := ⟨rfl⟩
   exact GroundTheory.Heights₂.Heights.finite_lattice_closedBall L r
 
 theorem linearIndependent_real_of_int {n : ℕ} {b : Fin n → W} (hb : LinearIndependent ℤ b)
@@ -74,11 +76,11 @@ theorem det_gram_eq_of_span_eq {n : ℕ} {b b' : Fin n → W} (hb : LinearIndepe
     ext i l
     have key : ∑ l, ((Matrix.of P * Matrix.of Q) i l - (1 : Matrix (Fin n) (Fin n) ℤ) i l) • b l
         = 0 := by
-      simp only [sub_smul, Finset.sum_sub_distrib, mul_apply, of_apply, Finset.sum_smul,
+      simp only [sub_smul, Finset.sum_sub_distrib, Matrix.mul_apply, of_apply, Finset.sum_smul,
         mul_smul]
       rw [Finset.sum_comm]
       simp only [← Finset.smul_sum, hQ, hP]
-      simp [one_apply]
+      simp [Matrix.one_apply]
     have := Fintype.linearIndependent_iff.1 hb _ key l
     exact sub_eq_zero.1 this
   have hdet : (Matrix.of P).det = 1 ∨ (Matrix.of P).det = -1 := by

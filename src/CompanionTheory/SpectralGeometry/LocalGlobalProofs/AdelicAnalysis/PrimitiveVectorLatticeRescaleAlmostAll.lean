@@ -98,7 +98,8 @@ theorem repr_mul (h0 : B 0 = 1) (h1 : B 1 * B 1 = algebraMap L K Δ) (x y : K) :
   exact this
 
 
-def nrm (x : K) : L := B.repr x 0 ^ 2 - Δ * B.repr x 1 ^ 2
+def nrm (B : Module.Basis (Fin 2) L K) (Δ : L) (x : K) : L :=
+  B.repr x 0 ^ 2 - Δ * B.repr x 1 ^ 2
 
 theorem nrm_mul (h0 : B 0 = 1) (h1 : B 1 * B 1 = algebraMap L K Δ) (x y : K) :
     nrm B Δ (x * y) = nrm B Δ x * nrm B Δ y := by
@@ -200,10 +201,12 @@ theorem int_ef {e f : K} (he : ∀ l, w (B.repr e l) ≤ 1) (hf : ∀ l, w (B.re
   · rw [map_mul]; exact mul_le_one' hβ (hf l)
 
 
-def idm (s : L) : K := (2⁻¹ : L) • B 0 + ((2 * s)⁻¹ : L) • B 1
+def idm (B : Module.Basis (Fin 2) L K) (s : L) : K :=
+  (2⁻¹ : L) • B 0 + ((2 * s)⁻¹ : L) • B 1
 
 
-def ev (s : L) (x : K) : L := B.repr x 0 + s * B.repr x 1
+def ev (B : Module.Basis (Fin 2) L K) (s : L) (x : K) : L :=
+  B.repr x 0 + s * B.repr x 1
 
 theorem mul_idm (h0 : B 0 = 1) (h1 : B 1 * B 1 = algebraMap L K Δ) (h2 : (2 : L) ≠ 0) {s : L}
     (hs0 : s ≠ 0) (hs : s * s = Δ) (x : K) : x * idm B s = ev B s x • idm B s := by

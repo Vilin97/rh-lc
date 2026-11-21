@@ -39,5 +39,7 @@ theorem _root_.GlobalTheory.BesselFunctionBasic.JF_basic : ∀ (k r : ℕ) (Wp :
     simp only [hJ]
     rw [← MeasureTheory.integral_finsetSum _ (fun i _ => hF i)]
     congr 1
+    funext p
+    simp only [JF.integrand, P.B6.rho_eq, map_sum, Finset.smul_sum]
 
 end GlobalTheory.BesselFunctionBasic

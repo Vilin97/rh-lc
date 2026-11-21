@@ -111,7 +111,7 @@ private theorem add_pow_card_eq_add_pow_card (a b : K) :
 private theorem mem_range_algebraMap_of_pow_card_eq (d : K) (hd : d ^ Fintype.card k = d) :
     ∃ d0 : k, algebraMap k K d0 = d := by
   have hq1 : 1 < Fintype.card k := Fintype.one_lt_card
-  have hP : (X ^ Fintype.card k - X : K[X]) ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero K hq1
+  have hP : (X ^ Fintype.card k - X : K[X]) ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hq1
   have hsub : Finset.univ.image (algebraMap k K) ⊆
       (X ^ Fintype.card k - X : K[X]).roots.toFinset := by
     intro x hx

@@ -63,14 +63,14 @@ def blk (b : R) (D : Matrix (Fin n) (Fin n) R) : Matrix (Fin (n + 1)) (Fin (n + 
 
 theorem blk_mul (b b' : R) (D D' : Matrix (Fin n) (Fin n) R) :
     blk b D * blk b' D' = blk (b * b') (D * D') := by
-  ext a c
-  refine Fin.cases ?_ (fun i => ?_) a <;> refine Fin.cases ?_ (fun k => ?_) c <;>
-    simp [Matrix.mul_apply, Fin.sum_univ_succ]
+  refine Matrix.ext fun a c => ?_
+  cases a using Fin.cases <;> cases c using Fin.cases <;>
+    simp [blk, Matrix.mul_apply, Fin.sum_univ_succ]
 
 theorem blk_one : blk (1 : R) (1 : Matrix (Fin n) (Fin n) R) = 1 := by
-  ext a c
-  refine Fin.cases ?_ (fun i => ?_) a <;> refine Fin.cases ?_ (fun k => ?_) c <;>
-    simp [Matrix.one_apply, Fin.succ_ne_zero, (Fin.succ_ne_zero _).symm]
+  refine Matrix.ext fun a c => ?_
+  cases a using Fin.cases <;> cases c using Fin.cases <;>
+    simp [blk, Matrix.one_apply, (Fin.succ_ne_zero _).symm]
 
 theorem isUnit_blk_one {U : Matrix (Fin n) (Fin n) R} (hU : IsUnit U) : IsUnit (blk 1 U) := by
   obtain ⟨u, rfl⟩ := hU
@@ -80,9 +80,9 @@ theorem isUnit_blk_one {U : Matrix (Fin n) (Fin n) R} (hU : IsUnit U) : IsUnit (
 theorem eq_blk (B : Matrix (Fin (n + 1)) (Fin (n + 1)) R) (hr : ∀ k : Fin n, B 0 k.succ = 0)
     (hc : ∀ i : Fin n, B i.succ 0 = 0) :
     B = blk (B 0 0) (B.submatrix Fin.succ Fin.succ) := by
-  ext a c
-  refine Fin.cases ?_ (fun i => ?_) a <;> refine Fin.cases ?_ (fun k => ?_) c <;>
-    simp [hr, hc]
+  refine Matrix.ext fun a c => ?_
+  cases a using Fin.cases <;> cases c using Fin.cases <;>
+    simp [blk, hr, hc]
 
 theorem Eqv.blk {D D' : Matrix (Fin n) (Fin n) R} (h : Eqv D D') (b : R) :
     Eqv (blk b D) (blk b D') := by

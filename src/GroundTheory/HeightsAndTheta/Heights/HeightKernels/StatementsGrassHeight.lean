@@ -34,7 +34,7 @@ def grassIdeal (f j m : ℕ) : Ideal (MRing (plBlocks f j m)) :=
   mCoordIdeal (grassCoord f j m)
 
 def fsMulti {K : Type*} [Fintype K] (ι : K → Type*) [∀ k, Fintype (ι k)] : HermLine ι :=
-  HermLine.ofMetrics (fun k => fsMetric (ι k)) (fun _ => 1)
+  HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) (fun _ => 1)
 
 def IsRootMatrix {f j m : ℕ} (ζ : Fin f → Matrix (Fin j) (Fin m) ℂ) : Prop :=
   ∀ τ a b, ∃ k : ℕ, 0 < k ∧ ζ τ a b ^ k = 1

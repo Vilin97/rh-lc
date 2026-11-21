@@ -10,7 +10,7 @@ open MeasureTheory
 
 instance isProbabilityMeasure_sphProb (N : ℕ) : IsProbabilityMeasure (sphProb N) := by
   unfold sphProb
-  exact Measure.isProbabilityMeasure_map sphMonom_measurable_normalize.aemeasurable
+  infer_instance
 
 theorem sphProb_compl_sphere (D : ℕ) : sphProb (D + 1) {z | sqN z = 1}ᶜ = 0 := by
   unfold sphProb

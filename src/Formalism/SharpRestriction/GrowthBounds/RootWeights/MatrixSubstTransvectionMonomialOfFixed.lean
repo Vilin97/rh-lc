@@ -27,6 +27,7 @@ variable {B : Type*} [CommRing B] {ι : Type*} [Fintype ι] {n : ℕ} (LL : Lett
   (a b : Fin n) (t : B) (m : ι × Fin n →₀ ℕ)
 
 
+open Classical in
 def sourceExp (l : ι) : ℕ := if l ∈ S then m (sourceVar LL a b l) else 0
 
 def sourceVariableExponent : ι × Fin n →₀ ℕ := ∑ l : ι, Finsupp.single (sourceVar LL a b l) (sourceExp LL S a b m l)
@@ -162,6 +163,7 @@ theorem monomial_mul_prod_binomial_term (p : ι → ℕ) (hp : ∀ l, p l ≤ so
     ring
 
 
+open Classical in
 theorem matrixSubst_transvection_monomial_sum :
     matrixSubst LL S φ (Matrix.transvection a b t) (Matrix.transvection a b (-t)) (monomial m 1) =
       ∑ p ∈ Fintype.piFinset (fun l : ι => Finset.range (sourceExp LL S a b m l + 1)),

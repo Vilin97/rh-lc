@@ -70,8 +70,8 @@ theorem residue_onto (c : Fin r) :
       · rw [← Ideal.Quotient.eq_zero_iff_mem]
         set_option synthInstance.maxHeartbeats 100000 in
           simpa [map_sum, map_mul, hα', mk] using hz
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_sum]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         push_cast
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [hT_osmul_right, ho]; ring)

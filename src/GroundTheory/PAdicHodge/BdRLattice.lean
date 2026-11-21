@@ -46,6 +46,11 @@ namespace IsPerfectoidField
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
 
+local notation "𝒪" => normInteger K
+local notation "𝕎𝒪♭" => WittVector p (PreTilt 𝒪 p)
+local notation "θ" => fontaineTheta 𝒪 p
+local notation "𝔸" => Localization.Away (p : 𝕎𝒪♭)
+local notation "𝔹" => BDeRhamPlus 𝒪 p
 
 theorem eq_zero_of_forall_mem_span_p_pow {b : 𝒪} (h : ∀ M : ℕ, b ∈ span {(p : 𝒪) ^ M}) : b = 0 := by
   have := isAdicComplete (K := K) p
@@ -140,13 +145,21 @@ theorem exists_p_pow_mul_mem_of_dvd {z : 𝕎𝒪♭} {k : ℕ}
   rw [pow_add]
   linear_combination hr
 
-theorem mem_maximalIdeal_pow_of_forall_sub_mem {y : 𝔹} {k : ℕ}
-    (h : ∀ M : ℕ, ∃ a : 𝕎𝒪♭, y - (p : 𝔹) ^ M * wittToBDeRhamPlus 𝒪 p a ∈ maximalIdeal 𝔹 ^ k) :
-    y ∈ maximalIdeal 𝔹 ^ k := by
+theorem mem_maximalIdeal_pow_of_forall_sub_mem {y : 𝔹} {k : ℕ} :
+    haveI := isLocalRing_bDeRhamPlus (ker_fontaineTheta_eq_span_kerThetaGenerator K p)
+      (surjective_frobenius p) (isField_away p)
+    (h : ∀ M : ℕ, ∃ a : 𝕎𝒪♭, y - (p : 𝔹) ^ M * wittToBDeRhamPlus 𝒪 p a ∈ maximalIdeal 𝔹 ^ k) →
+      y ∈ maximalIdeal 𝔹 ^ k := by
+  intro h
   set ξ₀ := kerThetaGenerator K p
   have hξ := ker_fontaineTheta_eq_span_kerThetaGenerator K p
+  have := isLocalRing_bDeRhamPlus hξ (surjective_frobenius p) (isField_away p)
+  have hmax : maximalIdeal 𝔹 = span {wittToBDeRhamPlus 𝒪 p ξ₀} :=
+    (IsLocalRing.eq_maximalIdeal
+      (isMaximal_ker_thetaBDeRhamPlus (surjective_frobenius p) (isField_away p))).symm.trans
+      (ker_thetaBDeRhamPlus hξ)
   have hm : maximalIdeal 𝔹 ^ k = span {wittToBDeRhamPlus 𝒪 p (ξ₀ ^ k)} := by
-    rw [maximalIdeal_bDeRhamPlus_eq_span hξ, span_singleton_pow, map_pow]
+    rw [hmax, span_singleton_pow, map_pow]
   obtain ⟨a₀, ha₀⟩ := h 0
   rw [pow_zero, one_mul] at ha₀
   suffices hs : a₀ ∈ span {ξ₀ ^ k} by

@@ -80,11 +80,22 @@ lemma hMap_thick (Y : Over (Spec (CommRingCat.of R))) (Y' : Over (Spec (CommRing
     (b : Y' ⟶ (Over.pullback (specOf φ)).obj Y) :
     thickMap R' I' e Y' ≫ hMap (hφ := hφ) (e := e + 1) Y Y' b =
       hMap (hφ := hφ) (e := e) Y Y' b ≫ thickMap R I e Y := by
-  apply pullback.hom_ext
-  · rw [Category.assoc, Category.assoc, hMap_fst]
+  have hthick (Z : Over (Spec (CommRingCat.of R))) :
+      thickMap R I e Z ≫ pullback.fst Z.hom (thick R I (e + 1)) =
+        pullback.fst Z.hom (thick R I e) := by
     simp only [thickMap, pullback.map]
-    simp only [Category.comp_id, Category.id_comp]
-    rw [hMap_fst]
+    rw [pullback.lift_fst]
+    simp
+  have hthick' (Z : Over (Spec (CommRingCat.of R'))) :
+      thickMap R' I' e Z ≫ pullback.fst Z.hom (thick R' I' (e + 1)) =
+        pullback.fst Z.hom (thick R' I' e) := by
+    simp only [thickMap, pullback.map]
+    rw [pullback.lift_fst]
+    simp
+  apply pullback.hom_ext
+  · simp only [Category.assoc, hMap_fst]
+    rw [← Category.assoc, hthick' Y']
+    rw [hthick Y, hMap_fst]
   · rw [Category.assoc, Category.assoc, hMap_snd]
     simp only [thickMap, pullback.map]
     erw [pullback.lift_snd_assoc, pullback.lift_snd]

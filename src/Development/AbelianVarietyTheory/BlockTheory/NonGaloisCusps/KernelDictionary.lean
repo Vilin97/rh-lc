@@ -21,7 +21,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     [IsScalarTower K₀ K BdR] [IsScalarTower Qp K₀ BdR]
     {PD : PeriodData G Qp K₀ K B BdR} {LL O : Type} [Field LL] [Algebra Qp LL]
     [CommRing O] [Algebra O LL] [TopologicalSpace LL] {v : AddValuation LL (WithTop ℚ)} {n : ℕ}
-    (W : LocWach PD LL O v n) {l : ℕ} (R : Fr l O)
+    (W : _root_.Formalism.BasicNotions.LocWach PD LL O v n) {l : ℕ} (R : Fr l O)
 
 def diag (n : ℕ) (a : O⟦X⟧) : LetA O n := fun _ => a
 

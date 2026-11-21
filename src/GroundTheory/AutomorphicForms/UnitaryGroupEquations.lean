@@ -37,7 +37,8 @@ variable {R}
 
 
 theorem repr_tensorMap (f : R →ₐ[F] S) (z : R ⊗[F] E) (k : κ) :
-    (Algebra.TensorProduct.basis S b).repr (tensorMap E f z) k =
+    (Algebra.TensorProduct.basis S b).repr
+        (TensorProduct.map f.toLinearMap (LinearMap.id : E →ₗ[F] E) z) k =
       f ((Algebra.TensorProduct.basis R b).repr z k) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
@@ -47,7 +48,9 @@ theorem repr_tensorMap (f : R →ₐ[F] S) (z : R ⊗[F] E) (k : κ) :
 
 
 theorem matrixCoords_map (f : R →ₐ[F] S) (g : Matrix ι ι (R ⊗[F] E)) :
-    matrixCoords b S (g.map (tensorMap E f)) = f ∘ matrixCoords b R g := by
+    matrixCoords b S (g.map (TensorProduct.map f.toLinearMap
+      (LinearMap.id : E →ₗ[F] E))) =
+      f ∘ matrixCoords b R g := by
   funext ⟨i, j, k⟩
   rw [Function.comp_apply, matrixCoords_apply, matrixCoords_apply, Matrix.map_apply, repr_tensorMap]
 

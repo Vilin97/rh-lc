@@ -1,9 +1,5 @@
-module
-
-public import Mathlib
-public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.MonomialRepresentations.Clifford
-
-@[expose] public section
+import Mathlib
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.MonomialRepresentations.Clifford
 
 open Polynomial Matrix
 
@@ -191,7 +187,7 @@ theorem UpperTheory.V.AlgebraTools.twistOfRed :
     intro g f hf m hm v
     rw [hc_apply, hc_apply]
     have hn' : g⁻¹ * m * g ∈ N := by
-      simpa using Subgroup.Normal.conj_mem ‹N.Normal› m hm g⁻¹
+      simpa using Subgroup.Normal.conj_mem' ‹N.Normal› m hm g
     have e1 : ∀ w, ρ m (ρ g w) = ρ g (ρ (g⁻¹ * m * g) w) := by
       intro w
       rw [hρ, hρ]

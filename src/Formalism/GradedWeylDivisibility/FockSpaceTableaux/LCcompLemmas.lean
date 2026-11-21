@@ -92,7 +92,8 @@ private lemma weightedHomogeneousComponent_eq_zero_of_ne_isWH {σ M R : Type*} [
     weightedHomogeneousComponent w n p = 0 := by
   classical
   ext d
-  rw [coeff_weightedHomogeneousComponent, coeff_zero]
+  rw [coeff_weightedHomogeneousComponent]
+  simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   split_ifs with hd
   · by_contra hne
     exact hn (hd.symm.trans (h hne))
@@ -121,7 +122,8 @@ theorem lccomp_component_colAddGen {B : Type*} [CommRing B] {r n : ℕ} (l j : F
   · rw [Finset.sum_eq_zero]
     · have h0 : weightedHomogeneousComponent (pairW l j) ω f = 0 := by
         ext d
-        rw [coeff_weightedHomogeneousComponent, coeff_zero]
+        rw [coeff_weightedHomogeneousComponent]
+        simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
         split_ifs with h
         · by_contra hne
           exact hω (h ▸ Finset.mem_image_of_mem _ (mem_support_iff.mpr hne))

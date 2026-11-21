@@ -36,12 +36,14 @@ variable {ι : Type} {k : Type} [CommRing k]
 def cechSign [LinearOrder ι] (J : Finset ι) (j : ι) : ℤ := (-1) ^ (J.filter (· < j)).card
 
 
+open scoped Classical in
 def cechD [LinearOrder ι] (C : CechSystem ι k) : (∀ I, C.V I) →ₗ[k] (∀ I, C.V I) :=
   LinearMap.pi fun J => if C.good J then
     ∑ j ∈ J, cechSign J j • ((C.res (Finset.erase_subset j J)).comp (LinearMap.proj (J.erase j)))
   else 0
 
 
+open scoped Classical in
 def cechC (C : CechSystem ι k) (i : ℕ) : Submodule k (∀ I, C.V I) :=
   Submodule.pi Set.univ fun I => if C.good I ∧ I.card = i + 1 then C.piece I else ⊥
 
@@ -75,7 +77,7 @@ theorem CechHom.amb_cechD [LinearOrder ι] (φ : CechHom C C') (v : ∀ I, C.V I
   by_cases h : C.good J
   · have h' : C'.good J := (φ.good_iff J).2 h
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [h, h', if_true, LinearMap.sum_apply, map_sum, LinearMap.smul_apply, map_zsmul,
+      simp only [h, h', ite_true, LinearMap.sum_apply, map_sum, LinearMap.smul_apply, map_zsmul,
       LinearMap.comp_apply, LinearMap.proj_apply, LinearMap.pi_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     congr 1
@@ -95,7 +97,7 @@ theorem CechHom.amb_mem_cechC (φ : CechHom C C') {i : ℕ} {v : ∀ I, C.V I} (
     simp only [h, h'] at hI ⊢
     exact φ.piece_le I ⟨_, hI, rfl⟩
   · have h' : ¬ (C'.good I ∧ I.card = i + 1) := fun h' => h ⟨(φ.good_iff I).1 h'.1, h'.2⟩
-    simp only [h, h', if_false, Submodule.mem_bot] at hI ⊢
+    simp only [h, h', ite_false, Submodule.mem_bot] at hI ⊢
     simp [CechHom.amb, hI]
 
 theorem CechHom.amb_mem_cechB [LinearOrder ι] (φ : CechHom C C') {i : ℕ} {v : ∀ I, C.V I} (hv : v ∈ cechB C i) :

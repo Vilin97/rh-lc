@@ -63,7 +63,7 @@ theorem GlobalTheory.finiteCovolume_kernel : ∀ (G : Type) [Group G] [Topologic
   haveI : LocallyCompactSpace H := hcl.locallyCompactSpace
   haveI : SigmaCompactSpace H := hcl.sigmaCompactSpace
   haveI : SigmaFinite π := inferInstance
-  set φ : H × ℝ ≃ₜ G := splitHomeo hs hsa hc hca hsc hH with hφdef
+  set φ : H × ℝ ≃ₜ G := GlobalTheory.KernelCovolume.splitHomeo hs hsa hc hca hsc hH with hφdef
   have hφ : ∀ p : H × ℝ, φ p = (p.1 : G) * c p.2 := fun p => rfl
   set μ0 : Measure (H × ℝ) := π.prod volume with hμ0
   set ν : Measure G := μ0.map φ with hνdef
@@ -83,10 +83,10 @@ theorem GlobalTheory.finiteCovolume_kernel : ∀ (G : Type) [Group G] [Topologic
     rw [hΛ] at hl
     obtain ⟨y, hy, z, hz, rfl⟩ := Subgroup.mem_sup_of_normal_right.1 hl
     obtain ⟨n, rfl⟩ := Subgroup.mem_zpowers_iff.1 hz
-    exact ⟨y, hy, n, by rw [c_int hca]⟩
+    exact ⟨y, hy, n, by rw [GlobalTheory.KernelCovolume.c_int hca]⟩
   have hmemΛ : ∀ γ ∈ Γ, ∀ n : ℤ, γ * c n ∈ Λ := by
     intro γ hγ n
-    rw [hΛ, c_int hca]
+    rw [hΛ, GlobalTheory.KernelCovolume.c_int hca]
     exact Subgroup.mul_mem _ (Subgroup.mem_sup_left hγ)
       (Subgroup.mem_sup_right (Subgroup.zpow_mem_zpowers _ _))
 
@@ -119,7 +119,7 @@ theorem GlobalTheory.finiteCovolume_kernel : ∀ (G : Type) [Group G] [Topologic
     have hx : l⁻¹ • φ p = φ ((⟨γ, hΓ hγ⟩ : H)⁻¹ * p.1, ((-n : ℤ) : ℝ) + p.2) := by
       rw [← hmulφ, Subgroup.smul_def, smul_eq_mul]
       congr 1
-      simp only [Subgroup.coe_inv, e, mul_inv_rev, c_neg hca, Int.cast_neg]
+      simp only [Subgroup.coe_inv, e, mul_inv_rev, GlobalTheory.KernelCovolume.c_neg hca, Int.cast_neg]
       exact hcc _ _
     rw [hx] at hp
     simpa [hD', hS] using hp

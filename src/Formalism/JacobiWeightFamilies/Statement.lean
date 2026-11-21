@@ -11,7 +11,7 @@ noncomputable section
 
 namespace Formalism.WT
 
-open Formalism Formalism.CMTypeGaloisData
+open Formalism
 
 def L1 {N : ℕ} (χ : DirichletCharacter ℂ N) : ℝ :=
   if h : N = 0 then 0 else

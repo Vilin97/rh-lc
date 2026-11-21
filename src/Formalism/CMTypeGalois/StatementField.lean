@@ -18,7 +18,9 @@ def IsMQ {k : ℕ} {E : Type*} [Field E] [Algebra ℚ E] (a : Fin k → ℤ) (α
 
 def galSign {k : ℕ} {E : Type*} [Field E] [Algebra ℚ E] (α : Fin k → E) (σ : Gal(E/ℚ)) :
     Fin k → ℤˣ :=
-  fun i => if σ (α i) = α i then 1 else -1
+  by
+    classical
+    exact fun i => if σ (α i) = α i then 1 else -1
 
 def MQGalois : Prop :=
   ∀ (k : ℕ) (E : Type) [Field E] [NumberField E] (a : Fin k → ℤ) (α : Fin k → E),

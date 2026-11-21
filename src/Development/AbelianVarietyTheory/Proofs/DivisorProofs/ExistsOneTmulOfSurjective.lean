@@ -135,8 +135,10 @@ theorem comap_ker_red (E : Idx R Ω) :
 theorem ker_red (E : Idx R Ω) : RingHom.ker (red R Ω E) = maximalIdeal (Lift R Ω E) := by
   have hp : (RingHom.ker (red R Ω E)).IsPrime := RingHom.ker_isPrime _
   haveI : Algebra.IsIntegral R (Lift R Ω E) := Algebra.IsIntegral.of_finite R _
+  have hIntegral : (algebraMap R (Lift R Ω E)).IsIntegral := algebraMap_isIntegral_iff.mpr this
   have : (RingHom.ker (red R Ω E)).IsMaximal :=
-    Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := R) _ (by rw [comap_ker_red]; infer_instance)
+    Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (algebraMap R (Lift R Ω E)) hIntegral _
+      (by rw [comap_ker_red]; infer_instance)
   exact IsLocalRing.eq_maximalIdeal this
 
 theorem red_eq_zero_iff (E : Idx R Ω) (a : Lift R Ω E) :
@@ -188,7 +190,7 @@ theorem redSH_ofA (E : Idx R Ω) (a : Lift R Ω E) :
     redSH R Ω (ofA (R := R) (Ω := Ω) E a) = red R Ω E a := rfl
 
 theorem exists_ofA (s : SH R Ω) : ∃ E a, ofA (R := R) (Ω := Ω) E a = s := by
-  obtain ⟨E, a, rfl⟩ := Ring.DirectLimit.exists_of s
+  obtain ⟨E, a, rfl⟩ := DirectLimit.exists_eq_mk (trans R Ω) s
   exact ⟨E, a, rfl⟩
 
 theorem exists_ofA_finset (s : Finset (SH R Ω)) :
@@ -271,15 +273,18 @@ instance : HenselianLocalRing (SH R Ω) := by
     obtain ⟨b, hb⟩ := hE a₀ (Finset.mem_insert_self _ _)
     change (ofA (R := R) (Ω := Ω) E) b = a₀ at hb
     subst hg hb
-    rw [eval_map, eval₂_at_apply] at h0
-    rw [derivative_map, eval_map, eval₂_at_apply] at hu
+    change eval (i b) (Polynomial.map i g) ∈ maximalIdeal (SH R Ω) at h0
+    rw [eval_map_apply] at h0
+    change IsUnit (eval (i b) (derivative (Polynomial.map i g))) at hu
+    rw [derivative_map, eval_map_apply] at hu
     have h0' : g.eval b ∈ maximalIdeal (Lift R Ω E) := fun hu' => h0 (hu'.map i)
     have hu' : IsUnit (g.derivative.eval b) := IsLocalHom.map_nonunit _ hu
     obtain ⟨a, ha, hab⟩ := HenselianRing.is_henselian (I := maximalIdeal (Lift R Ω E)) g hgm b h0'
       (hu'.map _)
     refine ⟨i a, ?_, ?_⟩
     · rw [IsRoot, eval_map, eval₂_at_apply, ha.eq_zero, map_zero]
-    · rw [← map_sub]
+    · change i a - i b ∈ maximalIdeal (SH R Ω)
+      rw [← map_sub]
       exact fun hh => hab (IsLocalHom.map_nonunit _ hh)
 
 end GlobalTheory.StrictHensOfHens

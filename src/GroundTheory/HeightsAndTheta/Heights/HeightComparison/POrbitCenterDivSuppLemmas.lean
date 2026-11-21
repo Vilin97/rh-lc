@@ -88,7 +88,8 @@ theorem finitePlace_aeval_le_one {K : Type*} [Field K] [NumberField K] (v : Fini
   induction g using MvPolynomial.induction_on with
   | C a =>
     rw [aeval_C, algebraMap_int_eq, eq_intCast]
-    exact IsNonarchimedean.apply_intCast_le_one (fun a b ↦ FinitePlace.add_le v a b)
+    exact IsNonarchimedean.apply_intCast_le_one (map_zero_le v 1) (map_one v)
+      (map_neg_eq_map v) (FinitePlace.add_le v)
   | add p q hp hq =>
     rw [map_add (f := _)]
     exact (FinitePlace.add_le v _ _).trans (max_le hp hq)

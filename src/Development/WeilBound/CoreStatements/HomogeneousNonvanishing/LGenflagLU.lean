@@ -172,7 +172,7 @@ theorem exists_general (g : Matrix (Fin r) (Fin r) F) (hg : g.det ≠ 0) :
   have hφ : Function.Injective φ := IsFractionRing.injective _ _
   have e1 : N.map (Polynomial.evalRingHom (1 : F)) = 1 := by
     ext i j
-    by_cases h : i = j <;> simp [N, h, one_apply]
+    by_cases h : i = j <;> simp [N, h, Matrix.one_apply]
   have e0 : (g.map Polynomial.C * N).map (Polynomial.evalRingHom (0 : F)) = 1 := by
     rw [Matrix.map_mul, ← mul_nonsing_inv g (IsUnit.mk0 _ hg)]
     congr 1

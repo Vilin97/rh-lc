@@ -89,8 +89,8 @@ lemma hat_eval (ι : ℂ ≃+* ℂ_[q]) {ℓ : ℂ_[q]⟦X⟧} (hℓ : constantC
     simp only [map_mul, MvPolynomial.aeval_X, MvPolynomial.eval₂_mul, MvPolynomial.eval₂_X]
     exact ⟨hp.1.mul hi, by rw [(h1 _ _ hp.1 hi).2.1, hp.2, hi2]⟩
 
-lemma one_add_X_mul_derivative_logS : (1 + X) * derivative ℂ_[q] (logS : ℂ_[q]⟦X⟧) = 1 := by
-  have hc : ∀ n, coeff n (derivative ℂ_[q] (logS : ℂ_[q]⟦X⟧)) = (-1) ^ n := by
+lemma one_add_X_mul_derivative_logS : (1 + X) * derivative (logS : ℂ_[q]⟦X⟧) = 1 := by
+  have hc : ∀ n, coeff n (derivative (logS : ℂ_[q]⟦X⟧)) = (-1) ^ n := by
     intro n
     have hk : ((n : ℂ_[q]) + 1) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero n
     rw [coeff_derivative, logS, coeff_mk, if_neg (Nat.succ_ne_zero n)]
@@ -109,7 +109,7 @@ lemma constantCoeff_chart (ω : ℂ_[q]) : constantCoeff (C ω * logS : ℂ_[q]�
 lemma DT_hat (ι : ℂ ≃+* ℂ_[q]) (ω : ℂ_[q]) {G : ℂ → ℂ} (hG : AnalyticAt ℂ G 0) :
     DT (hat ι (C ω * logS) G) = C ω * hat ι (C ω * logS) (deriv G) := by
   obtain ⟨-, -, -, -, h5, -⟩ := TaylorRead.hat_laws q ι _ (constantCoeff_chart ω)
-  have hd : derivative ℂ_[q] (C ω * logS : ℂ_[q]⟦X⟧) = C ω * derivative ℂ_[q] logS := by
+  have hd : derivative (C ω * logS : ℂ_[q]⟦X⟧) = C ω * derivative logS := by
     rw [Derivation.leibniz]; simp
   rw [DT, h5 G hG, hd]
   linear_combination (C ω * hat ι (C ω * logS) (deriv G)) * one_add_X_mul_derivative_logS (q := q)

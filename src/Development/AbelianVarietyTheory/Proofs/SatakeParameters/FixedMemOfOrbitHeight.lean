@@ -214,9 +214,9 @@ theorem fixed_mem_of_orbit_height : ∀ {G ι M : Type} [Group G] [MulAction G �
       ∃ v ∈ S, ∃ u ∈ ⨆ (j) (_ : μ j < μ i), V j, v - u ∈ (⨆ g : G, V (g • i)) ∧ v - u ≠ 0) →
     ∀ w : M, (∀ g, π g w = w) → w ∈ S := by
   intro G ι M _ _ _ _ π V hV htop hline hπ μ hμ S hS hstep
-  obtain ⟨c, hc1, hc2, hc3, hc4⟩ := exists_comp V hV htop
+  obtain ⟨c, hc1, hc2, hc3, hc4⟩ := GradedFixed.exists_comp V hV htop
   have hsum : ∀ (p : ι → Prop) (u : M), (∀ l, ¬ p l → c l u = 0) →
-      (∀ i, p i → ∀ x, (∀ g, π g x = x) → x ∈ WA V (orbit G i) → x ∈ S) →
+      (∀ i, p i → ∀ x, (∀ g, π g x = x) → x ∈ GradedFixed.WA V (orbit G i) → x ∈ S) →
       (∀ g, π g u = u) → u ∈ S := by
     classical
     intro p u hp hgood hu
@@ -224,38 +224,40 @@ theorem fixed_mem_of_orbit_height : ∀ {G ι M : Type} [Group G] [MulAction G �
     have hF' : u = ∑ j ∈ F.filter p, c j u := by
       rw [Finset.sum_filter_of_ne (fun j _ h => by_contra fun hpj => h (hp j hpj))]
       exact hF
-    refine mem_of_orbits π V hV hπ S (F.filter p)
+    refine GradedFixed.mem_of_orbits π V hV hπ S (F.filter p)
       (fun j hj => hgood j (Finset.mem_filter.mp hj).2) u hu ?_
-    exact mem_WA_of_sum V c hc1 hc3
+    exact GradedFixed.mem_WA_of_sum V c hc1 hc3
       (fun j hj => Set.mem_iUnion₂.mpr ⟨j, hj, (mem_orbit_self j : j ∈ orbit G j)⟩) u hF'
-  have key : ∀ m i, μ i = m → ∀ x, (∀ g, π g x = x) → x ∈ WA V (orbit G i) → x ∈ S := by
+  have key : ∀ m i, μ i = m → ∀ x, (∀ g, π g x = x) → x ∈ GradedFixed.WA V (orbit G i) → x ∈ S := by
     intro m
     induction m using Nat.strong_induction_on with
     | _ m ih =>
     intro i hi x hx hxO
     by_cases hx0 : x = 0
     · rw [hx0]; exact zero_mem S
-    obtain ⟨v, hvS, u, hu, hvu, hvu0⟩ := hstep i ⟨x, hx0, hx, by rw [iSup_orbit]; exact hxO⟩
-    rw [iSup_orbit] at hvu
-    have huW : u ∈ WA V {j | μ j < μ i} := hu
+    obtain ⟨v, hvS, u, hu, hvu, hvu0⟩ :=
+      hstep i ⟨x, hx0, hx, by rw [GradedFixed.iSup_orbit]; exact hxO⟩
+    rw [GradedFixed.iSup_orbit] at hvu
+    have huW : u ∈ GradedFixed.WA V {j | μ j < μ i} := hu
     have hsub : {j | μ j < μ i} ⊆ (orbit G i)ᶜ := by
       intro j hj hjO
       obtain ⟨g, rfl⟩ := hjO
       simp [hμ] at hj
     have hcompl : ∀ (g : G), ∀ j ∈ (orbit G i)ᶜ, g • j ∈ (orbit G i)ᶜ :=
-      fun g j hj hgj => hj (by simpa using orbit_stable i g⁻¹ hgj)
+      fun g j hj hgj => hj (by simpa using GradedFixed.orbit_stable i g⁻¹ hgj)
     have hfa : ∀ g, π g (v - u) = v - u :=
-      fixed_part π V hV hπ (fun g j hj => orbit_stable i g hj) hcompl disjoint_compl_right hvu
-        (WA_mono V hsub huW) (fun g => by rw [sub_add_cancel]; exact hS v hvS g)
+      GradedFixed.fixed_part π V hV hπ (fun g j hj => GradedFixed.orbit_stable i g hj)
+        hcompl disjoint_compl_right hvu (GradedFixed.WA_mono V hsub huW)
+        (fun g => by rw [sub_add_cancel]; exact hS v hvS g)
     have hufix : ∀ g, π g u = u := fun g => by
       have h1 := hfa g
       rw [map_sub, hS v hvS g] at h1
       exact sub_right_injective h1
-    have huS : u ∈ S := hsum (fun j => μ j < μ i) u (fun l hl => comp_outside V c hc3 huW hl)
+    have huS : u ∈ S := hsum (fun j => μ j < μ i) u (fun l hl => GradedFixed.comp_outside V c hc3 huW hl)
       (fun j hj => ih (μ j) (hi ▸ hj) j rfl) hufix
     have hvuS : v - u ∈ S := sub_mem hvS huS
     obtain ⟨r, hr⟩ := Submodule.mem_span_singleton.mp
-      (mem_span_of_fixed π V c hc1 hc2 hc3 hc4 hπ hline i hx hfa hxO hvu hvu0)
+      (GradedFixed.mem_span_of_fixed π V c hc1 hc2 hc3 hc4 hπ hline i hx hfa hxO hvu hvu0)
     rw [← hr]
     exact S.smul_mem r hvuS
   intro w hw

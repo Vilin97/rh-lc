@@ -110,7 +110,7 @@ lemma dAt_mul (a b : LocRing G) : dAt G (a * b) = aug G a • dAt G b + aug G b 
   show (augIdeal G).toCotangent (_ + _ + _) = aug G a • (augIdeal G).toCotangent _ + aug G b • (augIdeal G).toCotangent _
   rw [map_add (f := _), map_add (f := _), hz, add_zero, map_smul, map_smul, algebraMap_smul, algebraMap_smul]
 
-
+variable {G} in
 def tangentAlg {R : Type u} [CommRing R] [Algebra O R] (v : Cotangent G →ₗ[O] R) :
     LocRing G →ₐ[O] DualNumber R where
   toFun a := TrivSqZeroExt.inl (algebraMap O R (aug G a)) + TrivSqZeroExt.inr (v (dAt G a))

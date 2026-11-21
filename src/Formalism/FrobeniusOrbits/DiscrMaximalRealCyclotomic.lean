@@ -60,6 +60,7 @@ def HostPartner : Prop :=
 def chC (e : ℕ) : GG e →* ℂˣ := (Units.map (Int.castRingHom ℂ).toMonoidHom).comp (chD e)
 
 
+open scoped Classical in
 def HostCharSum : Prop :=
   ∀ e : ℕ,
     (∀ χ : GG e →* ℂˣ,

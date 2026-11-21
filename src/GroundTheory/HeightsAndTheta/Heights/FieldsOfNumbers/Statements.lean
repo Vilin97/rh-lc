@@ -34,10 +34,12 @@ def homFracDegZero (P : Ideal (MRing ι F)) [P.IsPrime] :
       algebraMap (MRing ι F ⧸ P) _ (Ideal.Quotient.mk P g)}
 
 
+open scoped Classical in
 def resDeg (P : Ideal (MRing ι F)) : ℕ :=
   if h : P.IsPrime then haveI := h; Module.finrank F (homFracDegZero P) else 0
 
 
+open scoped Classical in
 def topCycle [Fintype K] (I : Ideal (MRing ι F)) (n : ℕ) (W : Ideal (MRing ι F)) : ℤ :=
   if h : W ∈ I.minimalPrimes ∧ IsRelevant W ∧ relDim W = n then
     haveI : W.IsPrime := h.1.1.1
@@ -105,19 +107,19 @@ def PolyOfDiffs.Statement : Prop :=
 
 def HilbEventuallyPoly.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiHomogIdeal I →
+    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)), IsMultiHomogIdeal I →
     ∃ p : MvPolynomial K ℚ, EventuallyPoly (hilbFn I) p
 
 def HilbDegreeBound.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiHomogIdeal I →
+    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)), IsMultiHomogIdeal I →
     (IsRelevant I → ∀ p : MvPolynomial K ℚ, EventuallyPoly (hilbFn I) p → p ≠ 0 →
         (p.totalDegree : WithBot (WithTop ℤ)) ≤ relDim I) ∧
       (¬ IsRelevant I → ∀ᶠ m in Filter.atTop, hilbFn I m = 0)
 
 def MixedDiffConst.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiHomogIdeal I → IsRelevant I →
+    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)), IsMultiHomogIdeal I → IsRelevant I →
     ∀ n : ℕ, relDim I = n →
       (∀ bs : Fin n → K → ℤ, ∀ᶠ m in Filter.atTop, mixedDiff bs (hilbFn I) m = intNum F I bs) ∧
       (∀ r : ℕ, n < r → ∀ bs : Fin r → K → ℤ,
@@ -130,7 +132,7 @@ def IntNumSymm.Statement : Prop :=
 
 def IntNumAdd.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiHomogIdeal I → IsRelevant I →
+    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)), IsMultiHomogIdeal I → IsRelevant I →
     ∀ n : ℕ, relDim I = n → ∀ (bs : Fin n → K → ℤ) (i : Fin n) (b b' : K → ℤ),
       intNum F I (Function.update bs i (b + b')) =
         intNum F I (Function.update bs i b) + intNum F I (Function.update bs i b')
@@ -163,7 +165,7 @@ def PrimeFiltration.Statement : Prop :=
 
 def MultEqualsCoeff.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiHomogIdeal I → IsRelevant I →
+    [∀ k, Fintype (ι k)] (I : Ideal (MRing ι F)), IsMultiHomogIdeal I → IsRelevant I →
     ∀ n : ℕ, relDim I = n → ∀ bs : Fin n → K → ℤ,
       intNum F I bs = cycEval (fun W => intNum F W bs) (topCycle I n)
 

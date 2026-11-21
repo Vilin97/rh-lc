@@ -105,7 +105,10 @@ theorem abhyankar_dvr_of_isSeparable : ∀ (S K L : Type) [CommRing S] [IsDomain
       Algebra.IsUnramifiedAt D Q := by
     intro Q hQ
     have hQu : Q.under D = maximalIdeal D :=
-      IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal Q)
+      IsLocalRing.eq_maximalIdeal
+        (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap D
+          (integralClosure D (TensorProduct S D L)))
+          (algebraMap_isIntegral_iff.mpr inferInstance) Q)
     haveI : Q.LiesOver (maximalIdeal D) := ⟨hQu.symm⟩
     exact isUnramifiedAt_of_ramificationIdx_eq_one_of_isSeparable (maximalIdeal D) Q
       (GlobalTheory.T.abhyankar_ramificationIdx_eq_one_alt S K L π e D ⟨φ⟩ hπ he hram hsep Q) (GlobalTheory.T.abhyankar_residueField_isSeparable_alt S K L π e D ⟨φ⟩ hπ he hram hsep Q)

@@ -105,7 +105,7 @@ theorem substPoint_inv_subst {φ : PowerSeries R} (hφ : PowerSeries.constantCoe
 
 
 @[ext]
-structure Hom where
+structure Hom (F G : FormalGroup R) where
 
   toPowerSeries : PowerSeries R
 
@@ -177,7 +177,7 @@ theorem toPowerSeries_comp (g : Hom G H) (f : Hom F G) :
     (g.comp f).toPowerSeries = PowerSeries.subst f.toPowerSeries g.toPowerSeries := rfl
 
 
-noncomputable def id : Hom F F :=
+noncomputable def id (F : FormalGroup R) : Hom F F :=
   ofPoints PowerSeries.X PowerSeries.constantCoeff_X fun x y => by
     rw [substPoint_X, substPoint_X, substPoint_X]
 
@@ -380,7 +380,7 @@ theorem coeff_one_id : PowerSeries.coeff 1 (id F).toPowerSeries = 1 := by
 end Hom
 
 
-noncomputable def linearCoeff [F.IsComm] : Hom F F →+* R where
+noncomputable def linearCoeff (F : FormalGroup R) [F.IsComm] : Hom F F →+* R where
   toFun f := PowerSeries.coeff 1 f.toPowerSeries
   map_one' := Hom.coeff_one_id
   map_mul' g f := Hom.coeff_one_comp g f
@@ -388,7 +388,7 @@ noncomputable def linearCoeff [F.IsComm] : Hom F F →+* R where
   map_add' f g := Hom.coeff_one_add f g
 
 
-structure Iso where
+structure Iso (F G : FormalGroup R) where
 
   hom : Hom F G
 

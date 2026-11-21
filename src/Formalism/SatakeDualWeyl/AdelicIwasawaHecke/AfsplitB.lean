@@ -13,7 +13,7 @@ open Formalism.UG
 section Tens
 variable {F : Type} [Field F] [NumberField F] {E : Type} [CommRing E] [Algebra F E]
 
-def afsplitIE (v : HeightOneSpectrum (𝓞 F)) : E ⊗[F] v.adicCompletion F →ₙ+* E ⊗[F] 𝔸 where
+def afsplitIE (v : HeightOneSpectrum (𝓞 F)) : E ⊗[F] v.adicCompletion F →ₙ+* E ⊗[F] (FiniteAdeleRing (𝓞 F) F) where
   toFun := LinearMap.lTensor E (afsplitI v)
   map_zero' := map_zero _
   map_add' := map_add _
@@ -31,7 +31,7 @@ def afsplitIE (v : HeightOneSpectrum (𝓞 F)) : E ⊗[F] v.adicCompletion F →
 theorem afsplitIE_tmul (v : HeightOneSpectrum (𝓞 F)) (a : E) (x : v.adicCompletion F) :
     afsplitIE v (a ⊗ₜ[F] x) = a ⊗ₜ[F] afsplitI v x := rfl
 
-theorem afsplit_prV_tmul (w : HeightOneSpectrum (𝓞 F)) (a : E) (b : 𝔸) :
+theorem afsplit_prV_tmul (w : HeightOneSpectrum (𝓞 F)) (a : E) (b : (FiniteAdeleRing (𝓞 F) F)) :
     prV (E := E) w (a ⊗ₜ[F] b) = a ⊗ₜ[F] (b w) := rfl
 
 theorem afsplit_prV_IE (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] v.adicCompletion F) :
@@ -49,16 +49,16 @@ theorem afsplit_prV_IE_ne (v w : HeightOneSpectrum (𝓞 F)) (h : w ≠ v)
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 theorem afsplit_sigR_IE (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] v.adicCompletion F) :
-    sigR σ 𝔸 (afsplitIE v x) = afsplitIE v (sigR σ (v.adicCompletion F) x) := by
+    sigR σ (FiniteAdeleRing (𝓞 F) F) (afsplitIE v x) = afsplitIE v (sigR σ (v.adicCompletion F) x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a b => simp [sigR, afsplitIE_tmul]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
-def afsplitEps (E : Type) [CommRing E] [Algebra F E] (v : HeightOneSpectrum (𝓞 F)) : E ⊗[F] 𝔸 :=
+def afsplitEps (E : Type) [CommRing E] [Algebra F E] (v : HeightOneSpectrum (𝓞 F)) : E ⊗[F] (FiniteAdeleRing (𝓞 F) F) :=
   afsplitIE v 1
 
-theorem afsplit_decomp (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] 𝔸) :
+theorem afsplit_decomp (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] (FiniteAdeleRing (𝓞 F) F)) :
     afsplitIE v (prV (E := E) v x) = afsplitEps E v * x := by
   have he : afsplitEps E v = (1 : E) ⊗ₜ[F] afsplitI v 1 := by
     rw [afsplitEps, Algebra.TensorProduct.one_def, afsplitIE_tmul]
@@ -84,7 +84,7 @@ theorem afsplit_eps_idem (v : HeightOneSpectrum (𝓞 F)) :
   exact afsplit_eps_mul_IE (E := E) v 1
 
 theorem afsplit_sigR_eps (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) :
-    sigR σ 𝔸 (afsplitEps E v) = afsplitEps E v := by
+    sigR σ (FiniteAdeleRing (𝓞 F) F) (afsplitEps E v) = afsplitEps E v := by
   rw [afsplitEps, afsplit_sigR_IE, map_one]
 
 theorem afsplit_prV_eps (v : HeightOneSpectrum (𝓞 F)) : prV (E := E) v (afsplitEps E v) = 1 := by
@@ -95,10 +95,10 @@ theorem afsplit_prV_eps_ne (v w : HeightOneSpectrum (𝓞 F)) (h : w ≠ v) :
   exact afsplit_prV_IE_ne (E := E) v w h 1
 
 theorem afsplit_prV_inclE (v : HeightOneSpectrum (𝓞 F)) (e : E) :
-    prV (E := E) v (inclE (F := F) 𝔸 e) = inclE (F := F) (v.adicCompletion F) e := rfl
+    prV (E := E) v (inclE (F := F) (FiniteAdeleRing (𝓞 F) F) e) = inclE (F := F) (v.adicCompletion F) e := rfl
 
 theorem afsplit_prV_comp_sigR (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) :
-    (prV (E := E) v).comp (sigR σ 𝔸) = (sigR σ (v.adicCompletion F)).comp (prV (E := E) v) := by
+    (prV (E := E) v).comp (sigR σ (FiniteAdeleRing (𝓞 F) F)) = (sigR σ (v.adicCompletion F)).comp (prV (E := E) v) := by
   refine RingHom.ext fun y => ?_
   simp only [RingHom.comp_apply]
   induction y using TensorProduct.induction_on with
@@ -112,9 +112,9 @@ section Inj
 variable {F : Type} [Field F] [NumberField F] {E : Type} [CommRing E] [Algebra F E]
 
 theorem afsplit_coord_prV (b : Module.Basis (Module.Free.ChooseBasisIndex F E) F E)
-    (i : Module.Free.ChooseBasisIndex F E) (w : HeightOneSpectrum (𝓞 F)) (y : E ⊗[F] 𝔸) :
+    (i : Module.Free.ChooseBasisIndex F E) (w : HeightOneSpectrum (𝓞 F)) (y : E ⊗[F] (FiniteAdeleRing (𝓞 F) F)) :
     TensorProduct.lid F (w.adicCompletion F) ((b.coord i).rTensor _ (prV (E := E) w y)) =
-      (TensorProduct.lid F 𝔸 ((b.coord i).rTensor _ y)) w := by
+      (TensorProduct.lid F (FiniteAdeleRing (𝓞 F) F) ((b.coord i).rTensor _ y)) w := by
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]; rfl
   | tmul a b =>
@@ -122,24 +122,24 @@ theorem afsplit_coord_prV (b : Module.Basis (Module.Free.ChooseBasisIndex F E) F
     simp only [LinearMap.rTensor_tmul, TensorProduct.lid_tmul, afsplit_smul_apply]
   | add x y hx hy => simp only [map_add (f := _), hx, hy, afsplit_add_apply]
 
-theorem afsplit_inj (y : E ⊗[F] 𝔸) (hy : ∀ w : HeightOneSpectrum (𝓞 F), prV (E := E) w y = 0) :
+theorem afsplit_inj (y : E ⊗[F] (FiniteAdeleRing (𝓞 F) F)) (hy : ∀ w : HeightOneSpectrum (𝓞 F), prV (E := E) w y = 0) :
     y = 0 := by
   classical
   set b := Module.Free.chooseBasis F E
-  have hc : ∀ i, TensorProduct.lid F 𝔸 ((b.coord i).rTensor _ y) = 0 := by
+  have hc : ∀ i, TensorProduct.lid F (FiniteAdeleRing (𝓞 F) F) ((b.coord i).rTensor _ y) = 0 := by
     intro i
     ext w
     rw [← afsplit_coord_prV b i w y, hy w]
     simp only [map_zero]
     rfl
-  have hcoord : ∀ (z : E ⊗[F] 𝔸) (i : Module.Free.ChooseBasisIndex F E),
-      TensorProduct.equivFinsuppOfBasisLeft b z i = TensorProduct.lid F 𝔸 ((b.coord i).rTensor _ z) := by
+  have hcoord : ∀ (z : E ⊗[F] (FiniteAdeleRing (𝓞 F) F)) (i : Module.Free.ChooseBasisIndex F E),
+      TensorProduct.equivFinsuppOfBasisLeft b z i = TensorProduct.lid F (FiniteAdeleRing (𝓞 F) F) ((b.coord i).rTensor _ z) := by
     intro z i
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul m n => simp [TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply]
     | add x y hx hy => simp [hx, hy]
-  apply (TensorProduct.equivFinsuppOfBasisLeft (N := 𝔸) b).injective
+  apply (TensorProduct.equivFinsuppOfBasisLeft (N := (FiniteAdeleRing (𝓞 F) F)) b).injective
   rw [map_zero]
   ext i
   rw [hcoord, hc i]

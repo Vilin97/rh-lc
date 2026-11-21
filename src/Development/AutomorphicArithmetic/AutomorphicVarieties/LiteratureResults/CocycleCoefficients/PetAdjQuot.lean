@@ -134,12 +134,16 @@ private theorem intOn {φ : ℍ → ℂ} (hc : Continuous φ) {C : ℝ} (hb : �
 private theorem quotInt_mu (H : Subgroup SL(2, ℤ)) [H.FiniteIndex] {φ : ℍ → ℂ} (hc : Continuous φ) {C : ℝ}
     (hb : ∀ z, ‖φ z‖ ≤ C) : quotInt H φ = ∫ w, w ∂(Measure.map φ (mu H)) := by
   haveI : Fintype (SL(2, ℤ) ⧸ H) := Fintype.ofFinite _
-  rw [integral_map (f := fun w : ℂ => w) hc.aemeasurable aestronglyMeasurable_id, mu, Measure.sum_fintype, integral_finset_sum_measure,
-    quotInt, finsum_eq_sum_of_fintype]
-  · refine Finset.sum_congr rfl fun q _ => ?_
-    rw [integral_map (contSL _).aemeasurable hc.aestronglyMeasurable]
-  · intro q _
-    exact (integrable_map_measure hc.aestronglyMeasurable (contSL _).aemeasurable).2 (intOn hc hb _)
+  rw [integral_map (f := fun w : ℂ => w) hc.aemeasurable aestronglyMeasurable_id, mu]
+  have hi : Integrable φ (Measure.sum fun q : SL(2, ℤ) ⧸ H =>
+      Measure.map (fun z : ℍ => q.out⁻¹ • z) (volume.restrict ModularGroup.fd)) := by
+    apply integrable_sum_measure
+    · intro q
+      exact (integrable_map_measure hc.aestronglyMeasurable (contSL _).aemeasurable).2 (intOn hc hb _)
+    · apply Summable.of_finite
+  rw [integral_sum_measure hi, tsum_fintype, quotInt, finsum_eq_sum_of_fintype]
+  refine Finset.sum_congr rfl fun q _ => ?_
+  rw [integral_map (contSL _).aemeasurable hc.aestronglyMeasurable]
 
 private theorem quotInt_conj0 (H K : Subgroup SL(2, ℤ)) [H.FiniteIndex] [K.FiniteIndex] (α : GL (Fin 2) ℝ) (e : K ≃ H)
     (he : ∀ (h : K) (z : ℍ), α⁻¹ • (h : SL(2, ℤ)) • z = (e h : SL(2, ℤ)) • α⁻¹ • z)

@@ -45,25 +45,10 @@ theorem _root_.GlobalTheory.Up.DivMetricPf.pnorm_lact (hN : _root_.ReciprocityTh
 theorem _root_.GlobalTheory.Up.DivMetricPf.measurable_cut {f : _root_.ReciprocityTheory.ChartRestriction.G.FD.Frame X.Ψ r → ℝ}
     (hf : ContinuousOn f X.dom) :
     Measurable (X.dom.indicator fun x => ENNReal.ofReal (f x)) := by
-  have hc : ContinuousOn (fun x => ((Real.sqrt (f x) : ℝ) : ℂ)) X.dom :=
-    Complex.continuous_ofReal.comp_continuousOn (Real.continuous_sqrt.comp_continuousOn hf)
-  have key : ∀ y, ENNReal.ofReal (‖((Real.sqrt (f y) : ℝ) : ℂ)‖ ^ 2) = ENNReal.ofReal (f y) := by
-    intro y
-    rw [Complex.norm_real, Real.norm_eq_abs, sq_abs]
-    rcases le_total 0 (f y) with h | h
-    · rw [Real.sq_sqrt h]
-    · rw [Real.sqrt_eq_zero'.mpr h, ENNReal.ofReal_of_nonpos h]
-      simp
-  have hm := _root_.ReciprocityTheory.ChartRestriction.G.AR.Up.OntoE.phiF_meas X (W := 1) hc measurable_one
-  convert hm using 1
-  funext y
   classical
-  unfold _root_.ReciprocityTheory.ChartRestriction.G.AR.Up.OntoE.phiF
-  simp only [Pi.one_apply, mul_one]
-  by_cases hy : y ∈ X.dom
-  · rw [Set.indicator_of_mem hy, Set.piecewise_eq_of_mem _ _ _ hy, key]
-  · rw [Set.indicator_of_notMem hy, Set.piecewise_eq_of_notMem _ _ _ hy]
-    rfl
+  rw [← Set.piecewise_eq_indicator]
+  exact ContinuousOn.measurable_piecewise (ENNReal.continuous_ofReal.comp_continuousOn hf)
+    continuousOn_const (FourierCoefficientDomain.isOpen_dom X).measurableSet
 
 
 theorem _root_.GlobalTheory.Up.DivMetricPf.exists_sum_le {N : ℕ} {la : _root_.ReciprocityTheory.ChartRestriction.G.FD.Wt X.Ψ r}

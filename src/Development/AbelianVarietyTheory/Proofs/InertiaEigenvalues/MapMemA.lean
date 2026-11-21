@@ -18,6 +18,7 @@ theorem map_mem_A (f : O⟦X⟧) : PowerSeries.map (algebraMap O K) f ∈ A O K 
   exact (equivA O K f).2
 
 
+variable (O K) in
 def colon {ι κ : Type} [Fintype ι] (G : Matrix κ ι K⟦X⟧) : Ideal O⟦X⟧ where
   carrier := {α | ∀ w : κ → K⟦X⟧, (∀ i, w i ∈ A O K) →
     ∃ m : ι → K⟦X⟧, (∀ j, m j ∈ A O K) ∧ PowerSeries.map (algebraMap O K) α • w = G *ᵥ m}

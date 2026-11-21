@@ -20,6 +20,6 @@ def TorusInvLevi.Statement : Prop :=
       u (fun p => c p.1 * z p) = u z) →
     ∃ C : ℝ, ∀ z : (Σ k, ι k) → ℂ, (∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) → ∀ w : (Σ k, ι k) → ℂ,
       |leviForm u z w| ≤
-        C * leviForm (fun y => ∑ k, Real.log ((fsMetric (ι k)).ρ (fun i => y ⟨k, i⟩))) z w
+        C * leviForm (fun y => ∑ k, Real.log ((fsMetric (ι := ι k)).ρ (fun i => y ⟨k, i⟩))) z w
 
 end GroundTheory.Heights₂.Heights.Inter

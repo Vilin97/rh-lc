@@ -33,7 +33,7 @@ theorem serMap_sum (ψ : E →+ E) {ι : Type} (s : Finset ι) (f : ι → Power
 
 theorem coeff_polMap (ψ : E →+ E) (m : ℕ) (Q : E[X]) (i : ℕ) :
     (polMap ψ m Q).coeff i = if i ≤ m then ψ (Q.coeff i) else 0 := by
-  simp only [polMap, finsetSum_coeff, coeff_monomial]
+  simp only [polMap, finsetSum_coeff, coeff_monomial_apply]
   rw [Finset.sum_ite_eq' (Finset.range (m + 1)) i]
   simp
 

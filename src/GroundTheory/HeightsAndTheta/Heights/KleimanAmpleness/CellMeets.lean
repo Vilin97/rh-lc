@@ -19,6 +19,7 @@ variable (S : Type) [CommRing S] {K : Type} [Fintype K] {ι : K → Type} [∀ k
 def CellMeets (y : (Σ k, ι k) → Ω) (I : ∀ k, Finset (ι k)) : Prop :=
   ∀ k, ∀ i ∈ I k, y ⟨k, i⟩ ≠ 0
 
+open scoped Classical
 
 def cellSec (y : (Σ k, ι k) → Ω) (γ : K → ℤ) (I : ∀ k, Finset (ι k)) : Submodule S Ω :=
   if CellMeets y I then

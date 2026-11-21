@@ -46,7 +46,11 @@ theorem X_pow_smul_mem (hM : IsMultigrading ι M piece) (v : Σ k, ι k) (n : �
     rw [pow_succ, mul_smul]
     have h := ih _ _ (hM.smul_mem v m x hx)
     convert h using 2
-    split_ifs <;> push_cast <;> ring
+    have hdeg : degZ (blockWeight ι v) = unitDeg v.1 := by
+      funext k
+      simp only [degZ, blockWeight, unitDeg, Pi.single_apply]
+      split_ifs <;> simp
+    rw [add_nsmul, one_nsmul, degZ_add, hdeg, add_comm (degZ (n • blockWeight ι v)), ← add_assoc]
 
 theorem monomial_smul_mem (hM : IsMultigrading ι M piece) (d : (Σ k, ι k) →₀ ℕ) :
     ∀ (m : K → ℤ) (x : M), x ∈ piece m →

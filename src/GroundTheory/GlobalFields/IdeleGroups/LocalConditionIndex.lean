@@ -32,6 +32,7 @@ theorem index_range_powMonoidHom_of_mulEquiv {G H : Type*} [CommGroup G] [CommGr
 
 theorem index_range_powMonoidHom_infinitePlaceCompletion (w : InfinitePlace K) {n : ℕ}
     (hn : n ≠ 0) :
+    letI : Decidable (w.IsReal ∧ Even n) := Classical.propDecidable _
     (powMonoidHom n : (w.Completion)ˣ →* (w.Completion)ˣ).range.index =
       if w.IsReal ∧ Even n then 2 else 1 := by
   rcases w.isReal_or_isComplex with hw | hw
