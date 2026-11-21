@@ -30,7 +30,7 @@ theorem map_real_eq_zero (φ : A.V →ₗ[ℝ] ℝ) (w : ℂ) (h : ∀ n, φ (A.
   have e : ((r, 0) : A.V) =
       ∑ i, (r (b i)).re • A.Pw w (AnArc.La.mk 0 (b.coord i).toAddMonoidHom 0) := by
     refine Prod.ext (AddMonoidHom.ext fun x => ?_) ?_
-    · rw [Prod.fst_sum, AddMonoidHom.finset_sum_apply]
+    · rw [Prod.fst_sum, AddMonoidHom.finsetSum_apply]
       conv_lhs => rw [← b.sum_repr x]
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [map_sum, map_zsmul]
@@ -75,7 +75,8 @@ theorem map_I_smul_N (φ : A.V →ₗ[ℝ] ℝ) (w : ℂ) (v : A.La) (h : ∀ la
     (hn : ∀ x, (A.T v.y x).im = (A.H (A.ct v.y) (A.ct x)).re / 2) :
     φ (Complex.I • A.N v) * w.im = -(A.be v.y v.y : ℝ) := by
   set u : A.V := A.Pw w (AnArc.La.mk v.y 0 0) - abLift A (A.ct v.y) - w.im • Complex.I • A.N v with hu
-  have h2 : u = (u.1, 0) := Prod.ext rfl (by simp [hu, abLift])
+  have hN : (A.N v).2 = 0 := rfl
+  have h2 : u = (u.1, 0) := Prod.ext rfl (by simp [hu, abLift, hN])
   have h3 : φ u = 0 := by
     rw [h2]
     refine map_real_eq_zero A φ w (fun n => by simp [h]) _ fun x => ?_

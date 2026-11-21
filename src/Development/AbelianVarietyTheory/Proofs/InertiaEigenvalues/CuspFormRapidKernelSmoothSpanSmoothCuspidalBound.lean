@@ -88,13 +88,14 @@ theorem mem_dSub {π : CuspSub E a} {φ : Sm E a} :
 theorem lie_mem_dSub {π : CuspSub E a} {φ : Sm E a} (h : φ ∈ dSub π) (X : Lie E a) : lie E a X φ ∈ dSub π :=
   mem_dSub.2 fun l => by rw [← word_append]; exact mem_dSub.1 h _
 
-theorem isBCC_rt {F : GA E a → ℂ} (hF : IsBCC F) (h : GA E a) : IsBCC (fun g => F (g * h)) where
-  cont := hF.cont.comp (continuous_mul_const h)
-  bdd := let ⟨C, hC⟩ := hF.bdd; ⟨C, fun g => hC _⟩
-  cusp := by
-    intro r h0 h1 _ _ μ 𝓕 hμ hF' g
+theorem isBCC_rt {F : GA E a → ℂ} (hF : IsBCC F) (h : GA E a) : IsBCC (fun g => F (g * h)) := by
+  refine ⟨hF.cont.comp (continuous_mul_const h), ?_, ?_, ?_⟩
+  · obtain ⟨C, hC⟩ := hF.bdd
+    exact ⟨C, fun g => hC (g * h)⟩
+  · intro r h0 h1 _ _ μ 𝓕 hμ hF' g
     simpa only [mul_assoc] using hF.cusp r h0 h1 μ 𝓕 hμ hF' (g * h)
-  left γ g := by simpa only [mul_assoc] using hF.left γ (g * h)
+  · intro γ g
+    simpa only [mul_assoc] using hF.left γ (g * h)
 
 theorem rt_mem_dSub {π : CuspSub E a} {φ : Sm E a} (hφ : φ ∈ dSub π) (h : GA E a) : rt E a h φ ∈ dSub π :=
   mem_dSub.2 fun l => by
@@ -103,11 +104,8 @@ theorem rt_mem_dSub {π : CuspSub E a} {φ : Sm E a} (hφ : φ ∈ dSub π) (h :
     exact ⟨mspanR_rt h1 h, isBCC_rt h2 h⟩
 
 theorem isBCC_of_mem (hB : GlobalTheory.Published.CuspFormsBoundedGL) {π : CuspSub E a} (hπ : π.IsUnitary) {φ : Sm E a}
-    (h : φ ∈ π.V) : IsBCC φ.1 where
-  cont := (π.cusp φ h).1.continuous
-  bdd := hB.of_isUnitary hπ h
-  cusp := (π.cusp φ h).2
-  left := (π.cusp φ h).1.left
+    (h : φ ∈ π.V) : IsBCC φ.1 :=
+  ⟨(π.cusp φ h).1.continuous, hB.of_isUnitary hπ h, (π.cusp φ h).2, (π.cusp φ h).1.left⟩
 
 theorem word_mem (π : CuspSub E a) : ∀ (l : List (Lie E a)) {φ : Sm E a}, φ ∈ π.V → GlobalTheory.GLFin.word l φ ∈ π.V
   | [], _, h => by rw [word_nil]; exact h
@@ -119,18 +117,18 @@ theorem mem_dSub_of_mem (hB : GlobalTheory.Published.CuspFormsBoundedGL) {π : C
 
 theorem isBCC_kerOp {X : Type} [MeasurableSpace X] (ν : Measure X) [SFinite ν] (k : X → ℂ)
     (γ : X → GL (Fin a) (Cinf E)) (hk : IsRapidInf ν k γ) (φ : Sm E a) (hφ : IsBCC φ.1) :
-    IsBCC (kerOp ν k γ φ.1) where
-  cont := (GlobalTheory.T.kernelOperator_integrable_continuous_smooth E a X ν k γ hk φ hφ.cont hφ.bdd).2
-  bdd := by
-    obtain ⟨C, hC⟩ := hφ.bdd
+    IsBCC (kerOp ν k γ φ.1) := by
+  refine ⟨(GlobalTheory.T.kernelOperator_integrable_continuous_smooth E a X ν k γ hk φ hφ.cont hφ.bdd).2,
+    ?_, GlobalTheory.T.isCuspidal_archimedeanKernelConvolutionOperator E a X ν k γ hk φ hφ, ?_⟩
+  · obtain ⟨C, hC⟩ := hφ.bdd
     have hi : Integrable (fun x => ‖k x‖) ν := by simpa using hk.2.2 0
     refine ⟨C * ∫ x, ‖k x‖ ∂ν, fun g => ?_⟩
     rw [← integral_const_mul]
     refine norm_integral_le_of_norm_le (hi.const_mul C) (Filter.Eventually.of_forall fun x => ?_)
     rw [norm_mul, mul_comm]
     exact mul_le_mul_of_nonneg_right (hC _) (norm_nonneg _)
-  cusp := GlobalTheory.T.isCuspidal_archimedeanKernelConvolutionOperator E a X ν k γ hk φ hφ
-  left γ' g := by simp only [kerOp, mul_assoc, hφ.left]
+  · intro γ' g
+    simp only [kerOp, mul_assoc, hφ.left]
 
 theorem hasFDerivAt_kerOp {X : Type} [MeasurableSpace X] (ν : Measure X) (k : X → ℂ) (γ : X → GL (Fin a) (Cinf E))
     (hk : IsRapidInf ν k γ) (φ : Sm E a) (hb : ∃ C : ℝ, ∀ g, ‖φ.1 g‖ ≤ C)

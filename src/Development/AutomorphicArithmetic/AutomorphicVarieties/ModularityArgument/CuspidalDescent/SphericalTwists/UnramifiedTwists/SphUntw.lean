@@ -56,8 +56,17 @@ private theorem good_chars {n : ℕ} {x : IrrGL (k := k)} (ξ : Fin n → kˣ �
   simp [IrrGL.ofChar]
 
 private theorem good_zero (τ : SmIrr (GL (Fin 0) k)) : Good (IrrGL.of τ.ρ τ.smooth τ.irred) := by
-  obtain ⟨t, x, hx, -, hc, -, hs⟩ := GlobalTheory.BCen.SuppEmbed.exists_embedding_prodIrr_support k 0 _ τ.ρ τ.smooth τ.irred
-  refine ⟨_, ((hs _).2 rfl).of_equiv (IrrGL.equivOf τ.ρ τ.smooth τ.irred), fun y hy => ?_⟩
+  have hex : ∃ (t : ℕ) (x : Fin t → IrrGL (k := k)) (hx : ∑ a, (x a).1 = 0)
+      (φ : τ.ρ.IntertwiningMap (GlobalTheory.LocGL.prodIrr x hx)),
+      (∀ a, (x a).IsCusp) ∧ Function.Injective φ ∧
+        HasSupport τ.ρ (Finset.univ.val.map x) := by
+    obtain ⟨t, x, hx, hc, φ, hφ⟩ :=
+      GlobalTheory.CompanionTheory.SubEmb.subEmbedding_of_stage GlobalTheory.CompanionTheory.ProdStage.prod₂_prodIrr_append k 0 _ τ.ρ τ.smooth τ.irred
+    have hsupp : HasSupport τ.ρ (Finset.univ.val.map x) :=
+      GlobalTheory.LocGL.hasSupport_of_isSubquotient τ.irred hc (.of_injective φ hφ)
+    exact ⟨t, x, hx, φ, hc, hφ, hsupp⟩
+  obtain ⟨t, x, hx, -, hc, -, hs⟩ := hex
+  refine ⟨_, hs.of_equiv (IrrGL.equivOf τ.ρ τ.smooth τ.irred), fun y hy => ?_⟩
   obtain ⟨a, -, rfl⟩ := Multiset.mem_map.1 hy
   have h0 := (Finset.sum_eq_zero_iff.1 hx) a (Finset.mem_univ a)
   have h1 := (hc a).1

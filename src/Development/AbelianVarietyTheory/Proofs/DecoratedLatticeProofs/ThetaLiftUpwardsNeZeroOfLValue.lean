@@ -77,7 +77,10 @@ theorem upNe_of_heckeForm : ∀ D : D7, GlobalTheory.Core.Rk.IP.HeckeForm D → 
   have hAut : Formalism.L2.Theta.IsAutFunSm c.θ s.V (fun g => conj (F g)) := hu1.1.1
   have hFl : ∀ γ ∈ GQ s.V, ∀ g, F (γ * g) = F g := fun γ hγ g => by
     simpa using congrArg (starRingEnd ℂ) (hAut.left γ hγ g)
-  have hFc : Continuous F := by simpa using hAut.cont.star
+  have hFc : Continuous F := by
+    have h := hAut.cont.star
+    change Continuous (fun g => star (star (F g))) at h
+    simpa only [star_star] using h
   have hΦ : IsThetaFunO c.ψ s.V s'.V (p.pt φ) := (hfock φ).1.1
   have hθl : ∀ h, ∀ γ ∈ GQ s.V, ∀ g, thetaKO p.ω (γ * g) h (p.pt φ) = thetaKO p.ω g h (p.pt φ) := by
     intro h γ hγ g

@@ -161,6 +161,7 @@ theorem corr_word (G : Gen T L₀ L) (hQ : ∀ Y, MRel T (st₀.QQ Y) (st.QQ Y))
     exact arel_io (rel_inv (x_rel G hQ hs₀ hs Y) (hs₀.x_xi Y hY).1 (hs₀.x_xi Y hY).2
       (hs.x_xi Y (hinv ▸ hY)).1 (hs.x_xi Y (hinv ▸ hY)).2)
   | ⟨pl, a, Ya⟩ :: w, h₀, h => by
+    simp only [AdmRec] at h₀ h
     obtain ⟨hw₀, -, -, hp0, hp1, hrest⟩ := h₀
     obtain ⟨hw, -⟩ := h
     have ih := corr_word G hQ hq hinv hL₀ hL hs₀ hs w hw₀ hw
@@ -168,7 +169,7 @@ theorem corr_word (G : Gen T L₀ L) (hQ : ∀ Y, MRel T (st₀.QQ Y) (st.QQ Y))
     have hf := Formalism.FourierDecayAlt.P.frame_of_recursive_word (Pr V') S r₁ L st w hL hs hw
     cases pl
     · have hm : Ya - 1 ∈ (ofWord L₀ st₀ w).inv := by
-        simp only [Bool.false_eq_true, if_false] at hrest
+        simp only [Bool.false_eq_true, ite_false] at hrest
         exact hrest.1
       exact corr_minus G ih hf₀ hf a Ya hp0 hm
     · exact corr_plus G ih hf₀ hf a Ya hp0 hp1

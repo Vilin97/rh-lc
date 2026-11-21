@@ -470,7 +470,64 @@ theorem kerOf_sum {K : Type} [Field K] {SB : Finset (HeightOneSpectrum (𝓞 E))
     (hA : 0 < cA) (hB : 0 < cB) {N : Submodule (𝓞 E) (Sp E a)} {N' : Submodule (𝓞 E) (Sp E b)} (hN : Submodule.IsLattice E N)
     (hN' : Submodule.IsLattice E N') (fr : Frs E a SB) (fr' : Frs E b SB) {ι : Type} (s : Finset ι) (Ξ : ι → HomE E a b → K) :
     ∑ k ∈ s, kerOf th SA cA cB N fr N' fr' (Ξ k) = kerOf th SA cA cB N fr N' fr' fun x => ∑ k ∈ s, Ξ k x := by
-  have := GlobalTheory.finite_divLat_quot_mulLat_homAt E a b SA N N' cA cB hN hN' hA hB
+  have card_finset_le {V A Q : Type} [AddCommGroup V] [Module ℚ V] [Module.Finite ℚ V] [AddCommGroup A] [AddCommGroup Q]
+      (f : A →+ V) (hf : Function.Injective f) (π : A →+ Q) (hπ : Function.Surjective π) (n : ℕ) (hn : 0 < n)
+      (h0 : ∀ x : A, π (n • x) = 0) (s : Finset Q) : s.card ≤ n ^ Module.finrank ℚ V := by
+    classical
+    obtain ⟨σ, hσ⟩ := hπ.hasRightInverse
+    let F : Submodule ℤ A := Submodule.span ℤ (↑(s.image σ) : Set A)
+    haveI : Module.Finite ℤ F := Module.Finite.span_of_finite ℤ (Finset.finite_toSet _)
+    let g : F →ₗ[ℤ] V := f.toIntLinearMap ∘ₗ F.subtype
+    have hg : Function.Injective g := hf.comp F.subtype_injective
+    haveI : HasUniqueDiv V := HasUniqueDiv.of_module_rat V
+    haveI : Module.IsTorsionFree ℤ F := Function.Injective.moduleIsTorsionFree g hg (by simp)
+    haveI : Module.Free ℤ F := Module.free_of_finite_type_torsion_free'
+    have hr : Module.finrank ℤ F ≤ Module.finrank ℚ V := by
+      let b := Module.finBasis ℤ F
+      have h1 : LinearIndependent ℤ (g ∘ b) := b.linearIndependent.map' g (LinearMap.ker_eq_bot.2 hg)
+      have h2 : LinearIndependent ℚ (g ∘ b) := (LinearIndependent.iff_fractionRing ℤ ℚ).1 h1
+      simpa using h2.fintype_card_le_finrank
+    let p : F →+ Q := π.comp F.subtype.toAddMonoidHom
+    have hle : (nsmulAddMonoidHom (α := F) n).range ≤ p.ker := by
+      rintro _ ⟨x, rfl⟩
+      simpa [p] using h0 x
+    have hidx : (nsmulAddMonoidHom (α := F) n).range.index = n ^ Module.finrank ℤ F :=
+      AddSubgroup.index_range_nsmul F n
+    have hpos : 0 < n ^ Module.finrank ℤ F := pow_pos hn _
+    have hdvd : p.ker.index ∣ n ^ Module.finrank ℤ F := hidx ▸ AddSubgroup.index_dvd_of_le hle
+    rw [AddSubgroup.index_ker] at hdvd
+    have hne : Nat.card p.range ≠ 0 := fun h => by
+      rw [h] at hdvd; exact hpos.ne' (Nat.eq_zero_of_zero_dvd hdvd)
+    haveI : Finite p.range := Nat.finite_of_card_ne_zero hne
+    have hsub : (↑s : Set Q) ⊆ (p.range : Set Q) := fun q hq =>
+      ⟨⟨σ q, Submodule.subset_span (by simpa using ⟨q, hq, rfl⟩)⟩, hσ q⟩
+    calc s.card = Nat.card (↑s : Set Q) := by simp
+      _ ≤ Nat.card p.range := Nat.card_mono (Set.toFinite _) hsub
+      _ ≤ n ^ Module.finrank ℤ F := Nat.le_of_dvd hpos hdvd
+      _ ≤ n ^ Module.finrank ℚ V := Nat.pow_le_pow_right hn hr
+  have finite_card_le {V A Q : Type} [AddCommGroup V] [Module ℚ V] [Module.Finite ℚ V] [AddCommGroup A] [AddCommGroup Q]
+      (f : A →+ V) (hf : Function.Injective f) (π : A →+ Q) (hπ : Function.Surjective π) (n : ℕ) (hn : 0 < n)
+      (h0 : ∀ x : A, π (n • x) = 0) : Finite Q ∧ Nat.card Q ≤ n ^ Module.finrank ℚ V := by
+    have h := card_finset_le f hf π hπ n hn h0
+    have hfin : Finite Q := by
+      by_contra hinf
+      haveI : Infinite Q := not_finite_iff_infinite.1 hinf
+      obtain ⟨s, hs⟩ := Infinite.exists_subset_card_eq Q (n ^ Module.finrank ℚ V + 1)
+      have := h s
+      omega
+    refine ⟨hfin, ?_⟩
+    haveI := Fintype.ofFinite Q
+    rw [Nat.card_eq_fintype_card]
+    exact h Finset.univ
+  haveI : Module.Finite ℚ (HomE E a b) := Module.Finite.trans E (HomE E a b)
+  have : Finite (↥(divLat cA (homAt SA N N')) ⧸ (mulLat cB (homAt SA N N')).comap (divLat cA (homAt SA N N')).subtype) := by
+    refine (finite_card_le (divLat cA (homAt SA N N')).subtype.toAddMonoidHom (Submodule.subtype_injective _)
+      ((mulLat cB (homAt SA N N')).comap (divLat cA (homAt SA N N')).subtype).mkQ.toAddMonoidHom
+      (Submodule.mkQ_surjective _) (cA * cB) (Nat.mul_pos hA hB) ?_).1
+    intro x
+    refine (Submodule.Quotient.mk_eq_zero _).2 ⟨(cA : 𝓞 E) • (x : HomE E a b), x.2, ?_⟩
+    show (cB : 𝓞 E) • (cA : 𝓞 E) • (x : HomE E a b) = (cA * cB) • (x : HomE E a b)
+    rw [Nat.cast_smul_eq_nsmul, Nat.cast_smul_eq_nsmul, mul_nsmul]
   have := Fintype.ofFinite (↥(divLat cA (homAt SA N N')) ⧸ (mulLat cB (homAt SA N N')).comap (divLat cA (homAt SA N N')).subtype)
   unfold kerOf latSum
   simp_rw [finsum_eq_sum_of_fintype, Finset.sum_smul]

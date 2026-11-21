@@ -25,19 +25,21 @@ open Reduction AutomorphicForm CuspidalSpectrum RightCosetSpace
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
+local notation "Γ₁" => rationalGLOne (K := K) (n := n)
+
 variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 theorem constantTermL2_unipotent_mul (φ : Lp ℂ 2 (quotientMeasure Γ₁ μ)) (r : ℕ)
     (Y : UPos n r → 𝔸[K]) (z : normOneGL (K := K) (n := n)) :
-    constantTermL2 μ r φ (unipOne K n r Y * z) = constantTermL2 μ r φ z := by
+    constantTermL2 μ r φ (unipOne r Y * z) = constantTermL2 μ r φ z := by
   simp only [constantTermL2, ctFun]
-  have h : ∀ X, unipOne K n r X * (unipOne K n r Y * z) = unipOne K n r (X + Y) * z := by
+  have h : ∀ X, unipOne r X * (unipOne r Y * z) = unipOne r (X + Y) * z := by
     intro X
     rw [unipOne_add, mul_assoc]
   simp_rw [h]
   refine setIntegral_add_right_of_periodic isAddFundamentalDomain_unipFundamentalDomain
-    (h := fun X => (φ : RightCosetSpace Γ₁ → ℂ) (mk Γ₁ (unipOne K n r X * z))) (fun ξ hξ s => ?_) Y
-  show (φ : RightCosetSpace Γ₁ → ℂ) (mk Γ₁ (unipOne K n r (ξ + s) * z)) = φ (mk Γ₁ (unipOne K n r s * z))
+    (h := fun X => (φ : RightCosetSpace Γ₁ → ℂ) (mk Γ₁ (unipOne r X * z))) (fun ξ hξ s => ?_) Y
+  show (φ : RightCosetSpace Γ₁ → ℂ) (mk Γ₁ (unipOne r (ξ + s) * z)) = φ (mk Γ₁ (unipOne r s * z))
   rw [unipOne_add, mul_assoc, mk_mul_of_mem (unipOne_mem_rationalGLOne r ⟨ξ, hξ⟩)]
 
 variable (v : HeightOneSpectrum (𝓞 K)) [MeasurableSpace (v.adicCompletion K)]

@@ -118,7 +118,7 @@ theorem RatCols.ae {m n : ℕ} {x : Mx D m n} (h : RatCols x) :
 theorem ratCols_jX {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) : RatCols d.jX := fun i => by
   refine ⟨fun k => d.e k i, fun h => ?_, fun _ => rfl⟩
   have := congrFun (congrFun d.e'e i) i
-  rw [mul_apply, one_apply_eq, Finset.sum_eq_zero fun k _ => by rw [show d.e k i = 0 from congrFun h k, mul_zero]] at this
+  rw [Matrix.mul_apply, one_apply_eq, Finset.sum_eq_zero fun k _ => by rw [show d.e k i = 0 from congrFun h k, mul_zero]] at this
   exact zero_ne_one this
 
 theorem ae_colsAt {V V₀ W : HSp D} {ρ : ℕ} (d : HypDec V V₀ ρ) {x : Mx D W.rank ρ} (hx : RatCols x) {LV : Lat V}

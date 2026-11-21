@@ -153,6 +153,8 @@ theorem seeSmall : ∀ D : D7, SeeSmall D := by
     intro i h'
     rw [biLift_eq]
     congr 1
+    funext h
+    simp only [liftA, e0]
     rw [← integral_const_mul]
     congr 1
     funext h₀

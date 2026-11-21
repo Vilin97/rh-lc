@@ -228,6 +228,7 @@ theorem interNum_of_cls_eq_zsmul {P Q : Fin d → LB X} (hP : ∀ i, (P i).IsLB)
     (n : Fin d → ℤ) (e : ∀ i, cls (Q i) (hQ i) = n i • cls (P i) (hP i)) :
     interNum k F Q = (∏ i, n i) * interNum k F P := by
   rw [← h.form_cls hQ, ← h.form_cls hP, funext e, MultilinearMap.map_smul_univ, smul_eq_mul]
+  rfl
 
 theorem interNum_of_cls_eq_sum [DecidableEq ι] (hL : ∀ j, (L j).IsLB) {Q : Fin d → LB X}
     (hQ : ∀ i, (Q i).IsLB) (n : Fin d → ι → ℤ)

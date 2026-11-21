@@ -235,14 +235,16 @@ theorem isQProjOver_of_isGaloisCover : ∀ (K : Type) [Field K] (X Y : Scheme.{0
     { toFun := fun a => ⟨ρ a⁻¹, ρ a, by rw [← hG.mul, inv_mul_cancel, hG.one], by rw [← hG.mul, mul_inv_cancel, hG.one]⟩
       map_one' := by
         ext1
+        ext1
         show ρ 1⁻¹ = _
         rw [inv_one, hG.one]
         rfl
       map_mul' := fun a c => by
         ext1
+        ext1
         show ρ (a * c)⁻¹ = ρ c⁻¹ ≫ ρ a⁻¹
         rw [mul_inv_rev, hG.mul] }
-  have hρ' : ∀ a, (ρ' a).hom = ρ a⁻¹ := fun a => rfl
+  have hρ' : ∀ a, (ρ' a).asIso.hom = ρ a⁻¹ := fun a => rfl
   have : OrbitsInAffineOpens ρ' := OrbitsInAffineOpens.of_isQProjOver hq ρ'
   obtain ⟨Y', q, hQ⟩ := (exists_isAffineQuotient_iff ρ').mpr inferInstance
   obtain ⟨L', hL'⟩ := exists_isAmpleLB_of_isAffineQuotient hQ hq
@@ -250,7 +252,7 @@ theorem isQProjOver_of_isGaloisCover : ∀ (K : Type) [Field K] (X Y : Scheme.{0
     have := hQ.comp_eq a⁻¹
     rwa [hρ', inv_inv] at this
   obtain ⟨f, hf, -⟩ := GlobalTheory.ZM.IsGaloisCover.existsUnique_desc hG q hqi
-  have hπi : ∀ a, (ρ' a).hom ≫ π = π := fun a => by rw [hρ']; exact hG.inv _
+  have hπi : ∀ a, (ρ' a).asIso.hom ≫ π = π := fun a => by rw [hρ']; exact hG.inv _
   have hfg : f ≫ hQ.desc π hπi = 𝟙 Y := by
     obtain ⟨u, -, hu⟩ := GlobalTheory.ZM.IsGaloisCover.existsUnique_desc hG π hG.inv
     have h1 := hu (f ≫ hQ.desc π hπi) (by

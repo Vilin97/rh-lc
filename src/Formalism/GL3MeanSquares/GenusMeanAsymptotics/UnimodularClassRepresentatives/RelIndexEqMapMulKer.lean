@@ -63,9 +63,11 @@ theorem exists_skew_unit (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (h
     rw [map_mul, conjO_conjO, mul_comm])
   have hone : (1 : 𝓞 K) ∉ extP K 𝔭 := by
     intro h1
-    have h3 := (idealPowerSpanBounds.mem_pow_iff (K := K) 𝔭 1 1).1 (by rwa [map_one, pow_one])
-    rw [pow_one] at h3
-    exact h𝔭.ne_top ((Ideal.eq_top_iff_one _).2 h3)
+    have hcomap : Ideal.comap (algebraMap (𝓞 F) (𝓞 K)) (extP K 𝔭) = 𝔭 :=
+      Ideal.comap_map_eq_self_of_faithfullyFlat 𝔭
+    have hone_mem : (1 : 𝓞 F) ∈ 𝔭 := by
+      rwa [← hcomap, Ideal.mem_comap, map_one]
+    exact h𝔭.ne_top ((Ideal.eq_top_iff_one _).2 hone_mem)
   have hn𝔭 : n ∉ 𝔭 := by
     intro hmem
     have h1 : d * conjO K d ∈ extP K 𝔭 ^ 1 := by
@@ -82,7 +84,7 @@ theorem exists_skew_unit (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (h
     intro h0
     apply hn𝔭
     have : algebraMap (𝓞 F) (𝓞 K) n = algebraMap (𝓞 F) (𝓞 K) 0 := by rw [hn, h0]; simp
-    rw [idealPowerSpanBounds.ι_inj this]
+    rw [RingOfIntegers.algebraMap.injective F K this]
     exact 𝔭.zero_mem
   have hdK : ((d : 𝓞 K) : K) ≠ 0 := by
     intro h0

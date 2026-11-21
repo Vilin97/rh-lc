@@ -14,7 +14,7 @@ public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DefiniteT
 noncomputable section
 
 open NumberField Classical Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.StandardLatticesGL3 Formalism.L2.Indef.Tree.ArchimedeanLeafBounds.Cuts
-open GlobalTheory.NormSum GlobalTheory.IndefiniteRowSideFullHecke.IntegralCoordinatesNorm
+open GlobalTheory.NormSum
 
 namespace GlobalTheory.NormSum.Compare
 

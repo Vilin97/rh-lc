@@ -98,19 +98,21 @@ def Gaway (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L))) : Subgroup (GAf
   inv_mem' := fun hx => GlobalTheory.SatInd.CosetFin.trivOutside_inv hx
 
 theorem placeSys {N : ℕ} (hN : 0 < N) :
-    PlaceSys (GlobalTheory.InertSph.Gv L n) (Gaway L n) (GlobalTheory.IsotOrth.congSub L n N) where
-  comm := fun v x hx y hy => (GlobalTheory.InertSph.commute_of_trivOutside v x y hx hy).eq
-  le := fun v w hvw x hx u hu => hx u (by
+    PlaceSys (GlobalTheory.InertSph.Gv L n) (Gaway L n) (GlobalTheory.IsotOrth.congSub L n N) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · exact fun v x hx y hy => (GlobalTheory.InertSph.commute_of_trivOutside v x y hx hy).eq
+  · intro v w hvw x hx u hu
+    apply hx u
     have : u = v := by simpa using hu
     subst this
-    simpa using hvw)
-  dec := fun v g => by
+    simpa using hvw
+  · intro v g
     obtain ⟨x, y, hx, hy, e⟩ := GlobalTheory.T.finiteAdelicUnitary_eq_mul_trivOutside_place_and_at_place L n v g
     exact ⟨x, hx, y, hy, e⟩
-  decJ := fun v k hk => by
+  · intro v k hk
     obtain ⟨x, y, hx, hy, cx, cy, e⟩ := GlobalTheory.T.principalCongruence_split_trivOutside_and_at_place L n N v k hk
     exact ⟨x, ⟨hx, cx⟩, y, ⟨hy, cy⟩, e⟩
-  ind := fun p h1 h2 => GlobalTheory.T.finiteAdelicGL_induction_over_places L n N hN p h1 (fun v x y hx hy => h2 v x hx y hy)
+  · exact fun p h1 h2 => GlobalTheory.T.finiteAdelicGL_induction_over_places L n N hN p h1 (fun v x y hx hy => h2 v x hx y hy)
 
 variable {L n}
 

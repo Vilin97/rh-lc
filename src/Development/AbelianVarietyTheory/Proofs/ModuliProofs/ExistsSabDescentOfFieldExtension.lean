@@ -81,13 +81,9 @@ end Transition
 
 section Algebra
 
-open IndefiniteRowSideFullHecke.LevelActionTransitions
-
 end Algebra
 
 section Action
-
-open IndefiniteRowSideFullHecke.LevelActionTransitions (KMax Sends FixesLevel modulus cls exists_sends)
 
 variable (Y : Model Xo c β)
 

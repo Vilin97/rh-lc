@@ -25,8 +25,8 @@ theorem perTwAt_of_perDecTw {D : D7} {Dx : DivX D} {T : TwForms D} (hD : DGamDef
   refine ⟨∑ c, ((Nat.card ((T.fm u μ).stabilizer₂ c) : ℕ) : D.what₂.LL)⁻¹ * y c, ?_, fun w hw => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [hs, map_sum]
-    refine Finset.sum_congr rfl fun c _ => ?_
-    rw [map_mul, map_inv₀, map_natCast, hy c]
+      refine Finset.sum_congr rfl fun c _ => ?_
+      rw [map_mul, map_inv₀, map_natCast, hy c]
   · refine Finset.sum_induction _ (fun t => t = 0 ∨ -ur D w (Formalism.MainNotions.WeilJacquetShalikaLaw.vDG D u w) ≤ (vAdd (D.plEq w) t : ℝ))
       (fun a b ha hb => Formalism.MainNotions.WeightDegreeSizes.pair_add_ge D w ha hb) (Or.inl rfl) fun c _ => ?_
     rcases hv c w hw with h0 | h0

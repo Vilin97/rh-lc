@@ -12,7 +12,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.Glob
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 noncomputable section
-open scoped Topology
+open scoped Topology GlobalTheory.MixModel
 
 namespace GlobalTheory.ContrModR
 

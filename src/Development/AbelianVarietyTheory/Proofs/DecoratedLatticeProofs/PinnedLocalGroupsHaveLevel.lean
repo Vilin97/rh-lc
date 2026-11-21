@@ -212,11 +212,26 @@ theorem red_of_pattern {s κ t j n r : ℕ} (S : SymData k s κ) (hr0 : r = κ +
     rw [GeneralLinearGroup.val_det_apply, h4] at h6
     exact not_isUnit_zero h6
   let x₀ : GL (Fin κ ⊕ Fin (s + 1)) 𝒪[k] := ((isUnit_iff_isUnit_det _).2 hd).unit
-  refine ⟨⟨GeneralLinearGroup.map (algebraMap 𝒪[k] k) x₀, (SymData.mem_J_iff_pattern k s κ S _).2 ⟨⟨x₀, rfl⟩, fun a b hab => ?_⟩⟩,
+  have mem_J_iff_pattern (g : GL (Fin κ ⊕ Fin (s + 1)) k) :
+      g ∈ S.P.J ↔ g ∈ KO k _ ∧ ∀ a b, ¬ FreeTop S.ρ a b →
+        valuation k (g.val a b - (1 : Matrix _ _ k) a b) < 1 := by
+    rw [S.sym.1 g]
+    constructor
+    · rintro ⟨u, hu, γ, hγ, g₀, hg₀, hgb⟩
+      refine ⟨⟨g₀, hg₀⟩, fun a b hab => ?_⟩
+      rw [← hg₀, SymPattern.entry_lt_iff, hgb]
+      exact SymPattern.pat_of_mul S.ρ u ((Radical.mem_N_iff u).mp hu) γ hγ a b hab
+    · rintro ⟨⟨g₀, hg₀⟩, hpat⟩
+      obtain ⟨u, hu, γ, hγ, he⟩ := SymPattern.exists_of_pat S.ρ
+        (Matrix.GeneralLinearGroup.map (IsLocalRing.residue 𝒪[k]) g₀) (fun a b hab => by
+          rw [← SymPattern.entry_lt_iff, hg₀]; exact hpat a b hab)
+      exact ⟨u, (Radical.mem_N_iff u).mpr hu, γ, hγ, g₀, hg₀, he⟩
+  refine ⟨⟨GeneralLinearGroup.map (algebraMap 𝒪[k] k) x₀, (mem_J_iff_pattern _).2 ⟨⟨x₀, rfl⟩, fun a b hab => ?_⟩⟩,
     fun a b a' b' ha hb z hz => ?_⟩
   · have := hy (Sum.inl a) (Sum.inl b) hab
     rw [show (1 : Matrix (Ix (Fin κ ⊕ Fin (s + 1)) (Fin t) j) _ k) (Sum.inl a) (Sum.inl b) = (1 : Matrix _ _ k) a b by
-      simp [one_apply]] at this
+      change (if Sum.inl a = Sum.inl b then (1 : k) else 0) = (if a = b then 1 else 0)
+      simp] at this
     exact this
   · change valuation k (ψ (Z a b) - ψ z) < 1
     rw [← map_sub, ← h2, map_sub, hz, hZ a b a' b' ha hb, sub_self]
@@ -265,7 +280,7 @@ theorem exists_int_ring {R : Type} [CommRing R] (O : Subring R) {f f' : R} (hf :
       linear_combination -c4
     rw [c5]
     refine add_mem (add_mem (c2 i j) (c3 i j)) (mul_mem (sub_mem (one_mem _) (add_mem hf hf')) ?_)
-    rw [one_apply]
+    change (if i = j then (1 : R) else 0) ∈ O
     split_ifs
     · exact one_mem _
     · exact zero_mem _

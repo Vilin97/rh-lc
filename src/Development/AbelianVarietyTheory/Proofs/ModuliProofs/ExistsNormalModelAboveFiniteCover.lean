@@ -74,7 +74,7 @@ theorem Cpt.exists_above : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
       (GlobalTheory.ProjSpace.isProjOver_pullback_snd b C.proj) hN inferInstance
       (by rw [← Category.assoc]; exact (congrArg (· ≫ _) hW).trans u₁)
       (by rw [← Category.assoc]; exact (congrArg (· ≫ _) hW).trans u₂)
-  obtain ⟨_, _, _, _, _, mu, -⟩ := sabPull Out.CubePf.cubePull (π ≫ pullback.fst C.s (spMap b)) C.t
+  obtain ⟨pp, cub, sym, adj, prim, mu, hmu⟩ := sabPull Out.CubePf.cubePull (π ≫ pullback.fst C.s (spMap b)) C.t
   obtain ⟨n, hn⟩ := sabComp pullCubComp E H _ _ _ _ _ _ _ _ C.m ν
   have hj : (jQ ≫ pullback.fst (π ≫ s₁) (spMap β')) ≫ π ≫ pullback.fst C.s (spMap b) =
       r ≫ C.jQ ≫ pullback.fst _ _ := by

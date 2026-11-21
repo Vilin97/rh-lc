@@ -41,7 +41,8 @@ private theorem fd_level {v : ℕ} [Fact v.Prime] {x : Om v} (hx : x ∈ Maximal
     obtain ⟨m, hm, h⟩ := key hx hy
     exact ⟨m, hm, fun g k hgk => by rw [map_mul, map_mul, (h g k hgk).1, (h g k hgk).2]⟩
 
-private theorem fd_frob {v : ℕ} [Fact v.Prime] {σ : GQ v} (hσ : IsFrob σ) {m : ℕ} (hm : ¬ v ∣ m)
+private theorem fd_frob {v : ℕ} [Fact v.Prime] {σ : GQ v}
+    (hσ : UpperTheory.V.Loc.IsFrob (v := v) σ) {m : ℕ} (hm : ¬ v ∣ m)
     (j : ℕ) (y : Om v) (hy : y ^ m = 1) : (σ ^ j) y = y ^ v ^ j := by
   have hm0 : m ≠ 0 := by rintro rfl; exact hm (dvd_zero _)
   have h1 : σ y = y ^ v := by
@@ -54,7 +55,8 @@ private theorem fd_frob {v : ℕ} [Fact v.Prime] {σ : GQ v} (hσ : IsFrob σ) {
   | succ j ih => rw [pow_succ', AlgEquiv.mul_apply, ih, map_pow, h1, ← pow_mul, pow_succ']
 
 theorem UpperTheory.V.Loc.frobDense :
-    ∀ {v : ℕ} [Fact v.Prime] (σ : GQ v), IsFrob σ → (Iq v ⊔ Subgroup.zpowers σ).topologicalClosure = ⊤ := by
+    ∀ {v : ℕ} [Fact v.Prime] (σ : GQ v), UpperTheory.V.Loc.IsFrob (v := v) σ →
+      (Iq v ⊔ Subgroup.zpowers σ).topologicalClosure = ⊤ := by
   intro v _ σ hσ
   let H : ClosedSubgroup (GQ v) :=
     ⟨(Iq v ⊔ Subgroup.zpowers σ).topologicalClosure, Subgroup.isClosed_topologicalClosure _⟩

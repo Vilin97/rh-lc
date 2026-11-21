@@ -24,7 +24,7 @@ noncomputable section
 namespace GlobalTheory.AlgLawsCompare
 
 open NumberField IsDedekindDomain IsLocalRing AlgebraicGeometry CategoryTheory
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.IndefiniteRowSideFullHecke.AlgebraicPointWeights GlobalTheory.Frames
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.Frames
 
 section Valuations
 

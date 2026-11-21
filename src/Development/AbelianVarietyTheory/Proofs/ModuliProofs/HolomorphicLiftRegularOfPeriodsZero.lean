@@ -30,16 +30,17 @@ section
 variable {R : Type} [CommRing R] {Y X : Scheme.{0}} {q : Y ⟶ Sp ℂ} {p : X ⟶ Sp R} {m : Y ⟶ X} {D : R → ℂ}
 
 theorem locDer_sub {V V' : X.Opens} {d d' : ∀ W : X.Opens, Γ(X, W) → Γ(Y, m ⁻¹ᵁ W)} (h : LocDer q p m D V d)
-    (h' : LocDer q p m D V' d') : LocDer q p m (fun _ => 0) (V ⊓ V') (fun W f => d W f - d' W f) where
-  add W hW f f' := by
+    (h' : LocDer q p m D V' d') : LocDer q p m (fun _ => 0) (V ⊓ V') (fun W f => d W f - d' W f) := by
+  constructor
+  · intro W hW f f'
     rw [h.add W (hW.trans inf_le_left), h'.add W (hW.trans inf_le_right)]
     abel
-  mul W hW f f' := by
+  · intro W hW f f'
     rw [h.mul W (hW.trans inf_le_left), h'.mul W (hW.trans inf_le_right)]
     ring
-  res W W' hle hW f := by
+  · intro W W' hle hW f
     rw [h.res W W' hle (hW.trans inf_le_left), h'.res W W' hle (hW.trans inf_le_right), map_sub]
-  base W hW r := by
+  · intro W hW r
     rw [h.base W (hW.trans inf_le_left), h'.base W (hW.trans inf_le_right), sub_self,
       ← liftConstHom_apply, map_zero]
 
@@ -108,8 +109,12 @@ theorem exists_periodic_vector (hu : GoodU u Hm χ) (hp : Smooth p) (hm : IsPull
       rw [hs.base z r, ptOf_const hd (u.ex z).left (hq z) hz r, sub_self]⟩
   obtain ⟨w, hw, hrep⟩ := GlobalTheory.T.exists_differentiableOn_verticalVectorField P₀ u Hm χ hu R x₀ X p m hp hm P₀.g (dom u m V) id
     (fun z W f => s z W f - ptOf V d (u.ex z).left W f) hdomV differentiable_id hpt
-    (fun W f => ((hs.hol W f).mono fun z hz => hz.2).sub
-      (((u.hol (m ⁻¹ᵁ (W ⊓ V)) (d (W ⊓ V) (resG X inf_le_left f))).2).mono fun z hz a ha => ⟨hz.2 ha, hz.1 ha⟩))
+    (by
+      intro W f
+      apply DifferentiableOn.sub
+      · exact (hs.hol W f).mono fun _ hz => hz.2
+      · exact (u.hol (m ⁻¹ᵁ (W ⊓ V)) (d (W ⊓ V) (resG X inf_le_left f))).2.mono
+          fun _ hz a ha => ⟨hz.2 ha, hz.1 ha⟩)
   refine ⟨w, hw, fun l z hz => ?_, fun W hWV f z hz => ?_⟩
   · have hzl : z + l ∈ dom u m V := by
       show ⊤ ≤ ((u.ex (z + l)).left ≫ m) ⁻¹ᵁ V

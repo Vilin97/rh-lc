@@ -49,7 +49,10 @@ theorem dLine_add_line (hψ : IsStdChar D ψ (-1)) {S T : HSp D} {L L' : ℝ →
   obtain ⟨lam, hl, hlam⟩ := exists_log hψ
   have hS : Continuous (L + L') := hL.add hL'
   have hS0 : ∀ t, ((L + L') t).map (finPart D) = 0 := fun t => by
-    rw [AddMonoidHom.add_apply, Matrix.map_add _ (finPart D).map_add (f := _), hL0 t, hL0' t, add_zero]
+    ext i j
+    have h := congrFun (congrFun (hL0 t) i) j
+    have h' := congrFun (congrFun (hL0' t) i) j
+    simpa [Matrix.map_apply, (finPart D).map_add] using congrArg₂ (· + ·) h h'
   funext w
   rw [Pi.add_apply, dLine_apply' h hl hlam hS hS0 hf, dLine_apply' h hl hlam hL hL0 hf, dLine_apply' h hl hlam hL' hL0' hf,
     AddMonoidHom.add_apply, map_add, ContinuousLinearMap.map_add]
@@ -72,6 +75,8 @@ theorem dLine_inlH (G : WO A S → WO S A' → ℂ) (M : ℝ →+ WO A S) :
   funext x
   simp only [dLine, join_apply]
   congr 1
+  funext t
+  simp only [AddMonoidHom.comp_apply, heisO, symplOH_split d, map_add (fstH d S), map_add (sndH d S), fst_inl, snd_inl,
     GlobalTheory.WeilVacMove.symplOH_zero_right, add_zero, join_apply]
 
 theorem dLine_inrH (G : WO A S → WO S A' → ℂ) (M : ℝ →+ WO S A') :
@@ -79,6 +84,8 @@ theorem dLine_inrH (G : WO A S → WO S A' → ℂ) (M : ℝ →+ WO S A') :
   funext x
   simp only [dLine, join_apply]
   congr 1
+  funext t
+  simp only [AddMonoidHom.comp_apply, heisO, symplOH_split d, map_add (fstH d S), map_add (sndH d S), fst_inr, snd_inr,
     GlobalTheory.WeilVacMove.symplOH_zero_right, zero_add, add_zero, join_apply]
 
 end GlobalTheory.BiJoinDeriv

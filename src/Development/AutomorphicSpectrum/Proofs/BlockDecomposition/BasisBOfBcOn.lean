@@ -263,20 +263,24 @@ theorem dividedPowerFiltration_dividedPowersBot_of_one_le' {K : Type} [Field K] 
   rw [e]
   exact (dividedPowersBot K).dpow_eval_zero h0
 
-theorem tfbase_K {K : Type} [Field K] [CharZero K] {s : ℕ} (hs : 1 ≤ s) : TFBase (dividedPowersBot K) 1 s where
-  nil := dividedPowerFiltration_dividedPowersBot_of_one_le' hs
-  tf r x h := by simpa using h
-  dv n hn := ⟨0, (n : K)⁻¹, by
-    have : (n : K) ≠ 0 := Nat.cast_ne_zero.2 hn
-    simp [this]⟩
+theorem tfbase_K {K : Type} [Field K] [CharZero K] {s : ℕ} (hs : 1 ≤ s) : TFBase (dividedPowersBot K) 1 s := by
+  refine { nil := dividedPowerFiltration_dividedPowersBot_of_one_le' hs, tf := ?_, dv := ?_ }
+  · intro r x h
+    simpa using h
+  · intro n hn
+    exact ⟨0, (n : K)⁻¹, by
+      have : (n : K) ≠ 0 := Nat.cast_ne_zero.2 hn
+      simp [this]⟩
 
 theorem tfbase_B {K B : Type} [Field K] [CharZero K] [CommRing B] [Algebra K B] {I : Ideal B} (γ : DividedPowers I) {s : ℕ}
-    (h : pdP γ s = ⊥) : TFBase γ 1 s where
-  nil := h
-  tf r x hx := by simpa using hx
-  dv n hn := ⟨0, algebraMap K B (n : K)⁻¹, by
-    have : (n : K) ≠ 0 := Nat.cast_ne_zero.2 hn
-    rw [pow_zero, ← map_natCast (algebraMap K B) n, ← map_mul, mul_inv_cancel₀ this, map_one]⟩
+    (h : pdP γ s = ⊥) : TFBase γ 1 s := by
+  refine { nil := h, tf := ?_, dv := ?_ }
+  · intro r x hx
+    simpa using hx
+  · intro n hn
+    exact ⟨0, algebraMap K B (n : K)⁻¹, by
+      have : (n : K) ≠ 0 := Nat.cast_ne_zero.2 hn
+      rw [pow_zero, ← map_natCast (algebraMap K B) n, ← map_mul, mul_inv_cancel₀ this, map_one]⟩
 
 theorem main : BcOn False → KH.KIso → BasisB := by
   intro hB hK K B _ _ _ _ I γ s m hm hms X q U hU 𝒱 h𝒱 j a bs
@@ -323,7 +327,8 @@ theorem main : BcOn False → KH.KIso → BasisB := by
     obtain ⟨E, hE⟩ := zK_transport q (TO q 1 s 𝒱) (0 - (i : ℕ)) (r - (i : ℕ)) (hne i) j
     have h0 : quoK q (KS q s 𝒱) ((r - (i : ℕ) : ℕ) : ℤ) j x = 0 := by
       have e1 : (((r - (i : ℕ) : ℕ) : ℤ)) = (r : ℤ) - (i : ℕ) := by omega
-      rw [e1, ← hE x, hx, map_zero]
+      rw [e1, ← hE x, hx]
+      exact E.toAddMonoidHom.map_zero
     have h1 := ((hK q U s hd 𝒱 h𝒱 j).2 (r - i) (by omega) x).2 h0
     exact GlobalTheory.LogCris.fil_anti _ _ (by omega) h1
 

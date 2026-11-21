@@ -28,7 +28,8 @@ private theorem prj_zero (c : Fin 4 → R) {i a : Fin 4} (h : a ≠ i) :
 private theorem ord_diag {H : Type} [Group H] (I : Subgroup H) (ps : Fin 4 → H → R) (s₀ : H) (r : H →* M4 R)
     (hr : ∀ g, r g = Matrix.diagonal fun i => ps i g) : Ord I ps s₀ r where
   charpoly := by rw [hr, Matrix.charpoly_diagonal]
-  stable g i j hij := by
+  stable := by
+    intro g i j hij
     rw [hr s₀, hr g, prj_diag, prj_diag, Matrix.diagonal_mul_diagonal, Matrix.diagonal_mul_diagonal,
       ← Matrix.diagonal_zero]
     congr 1
@@ -36,7 +37,8 @@ private theorem ord_diag {H : Type} [Group H] (I : Subgroup H) (ps : Fin 4 → H
     by_cases h : a = i
     · rw [prj_zero (fun a => ps a s₀) (i := j) (a := a) (by rw [h]; exact hij.ne), zero_mul, zero_mul]
     · rw [prj_zero (fun a => ps a s₀) h, mul_zero]
-  inert s _ i := by
+  inert := by
+    intro s _ i
     rw [hr s₀, hr s, prj_diag, Matrix.smul_one_eq_diagonal, Matrix.diagonal_sub, Matrix.diagonal_mul_diagonal,
       Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_zero]
     congr 1

@@ -150,8 +150,17 @@ theorem exists_frame (x : GL (Fin n) (AfE F E)) (P : HeightOneSpectrum (𝓞 E))
     ∃ f : Sp E n ≃ₗ[E] Sp E n, CharValCompare.IsFr P (Formalism.UG.CS.globLat x (stdLat E n)) f ∧
       Sm Valued.v (dep P c) (locM P x⁻¹ * ratM P f - 1) := by
   classical
+  have hspan : Submodule.span E (stdLat E n : Set (Fin n → E)) = ⊤ := by
+    apply top_unique
+    intro v _
+    have hv : v = ∑ i, v i • (Pi.single i (1 : E) : Fin n → E) := by
+      funext j
+      simp [Finset.sum_apply, Pi.single_apply]
+    rw [hv]
+    exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _
+      (Submodule.subset_span (by simpa using single_mem_stdLat (E := E) i 1))
   have hN : Submodule.IsLattice E (Formalism.UG.CS.globLat x (stdLat E n)) := Formalism.UG.P.global_lattice_isLattice_holds F E (Fin n) (stdLat E n)
-    (Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg) (stdLat_lattice (E := E) (n := n)).span_eq_top x
+    (Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg) hspan x
   obtain ⟨f, hf⟩ := CharValCompare.exists_isFr P hN
   have hA : Sm Valued.v 1 (locM P x⁻¹ * ratM P f) := fun i j => by
     have := PtExist.valued_pullV_le x ((hf (Pi.single j 1)).2 (single_mem_stdAt j)) i
@@ -330,8 +339,45 @@ theorem exists_cong (c : ℕ) : ∃ a : 𝓞 E, a ≠ 0 ∧ ∀ k ∈ UAd hc n, 
 variable {hc} in
 theorem near_of_isPtOf {g : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} (h : IsPtOf hc g p) (c : ℕ) : Near c g p := by
   classical
+  have hspan : Submodule.span E (p.deco.1.N : Set (Sp E n)) = ⊤ := by
+    open Formalism.HermitianLatticesTheory in
+    apply Submodule.dualAnnihilator_eq_bot_iff.mp
+    apply le_antisymm ?_ bot_le
+    intro f hf
+    let v : Sp E n := fun i => star (f (Pi.single i 1))
+    have hpair : hStd E n v = f := by
+      apply (Pi.basisFun E (Fin n)).ext
+      intro i
+      rw [Pi.basisFun_apply, hStd_apply, Finset.sum_eq_single i]
+      · simp [v]
+      · intro j _ hj
+        simp [hj]
+      · simp
+    have hline (r : E) : r • v ∈ p.deco.1.N := by
+      rw [← show dual (hStd E n) p.deco.1.N = p.deco.1.N from p.deco.2.uni, dualBasic_mem_dual]
+      intro y hy
+      have hy0 : hStd E n v y = 0 := by
+        rw [hpair]
+        exact (Submodule.mem_dualAnnihilator f).mp hf y (Submodule.subset_span hy)
+      have hz : hStd E n y v = 0 := by
+        simpa [hy0] using ((hStd_isSymm (E := E) (n := n)).eq v y).symm
+      simp [hz]
+    have hv : v = 0 := by
+      funext i
+      change v i = 0
+      by_contra hi
+      let coord := (LinearMap.proj i : Sp E n →ₗ[E] E).restrictScalars (𝓞 E)
+      have htop : p.deco.1.N.map coord = ⊤ := by
+        rw [eq_top_iff]
+        intro x _
+        exact ⟨(x / v i) • v, hline _, div_mul_cancel₀ _ hi⟩
+      have : Module.Finite (𝓞 E) E := Module.finite_def.mpr (htop ▸ p.deco.2.lat.fg.map coord)
+      exact RingOfIntegers.not_isField E
+        (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+    rw [Submodule.mem_bot]
+    simpa [hv] using hpair.symm
   have hN : Formalism.UG.CS.globLat g (stdLat E n) = p.deco.1.N := by
-    rw [← Formalism.UG.P.global_lattice_one_holds F E (Fin n) p.deco.1.N (Module.Finite.iff_fg.2 p.deco.2.lat.fg) p.deco.2.lat.span_eq_top]
+    rw [← Formalism.UG.P.global_lattice_one_holds F E (Fin n) p.deco.1.N (Module.Finite.iff_fg.2 p.deco.2.lat.fg) hspan]
     ext w
     refine (h.lat _).symm.trans ?_
     show _ ↔ ((1⁻¹ : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) *ᵥ _ ∈ Formalism.L2.Herm.hatL (F := F) p.deco.1.N

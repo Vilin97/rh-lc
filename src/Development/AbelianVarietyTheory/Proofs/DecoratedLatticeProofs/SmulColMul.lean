@@ -227,7 +227,7 @@ theorem orth_line {X T L : HSp D} (o : OrthDec X T L) {Λ : Lat X} {ΛT : Lat T}
     (h : OrthAt o Λ ΛT ΛL x) (ζ : Fin L.rank → D.host.E) (a : AE D) :
     a • ratV ζ ∈ latV L ΛL (· = x) ↔ a • ratV (vecB o ζ) ∈ latV X Λ (· = x) := by
   have e : (ratV (vecB o ζ) : Fin X.rank → AE D) = o.jB *ᵥ ratV ζ := (rat_mulVec _ _).symm
-  rw [h, e, mulVec_smul, mulVec_smul, mulVec_mulVec, mulVec_mulVec, o.pA_jB, o.pB_jB, zero_mulVec, smul_zero, one_mulVec,
+  rw [h, e, ← mulVec_smul, mulVec_mulVec, mulVec_mulVec, o.pA_jB, o.pB_jB, zero_mulVec, one_mulVec,
     and_iff_right (zero_mem _)]
 
 theorem line_idele {X T L : HSp D} (o : OrthDec X T L) {ζ : Fin L.rank → D.host.E} (hζ : IsLineVec L ζ) {Λ : Lat X}
@@ -273,7 +273,7 @@ theorem line_idele {X T L : HSp D} (o : OrthDec X T L) {ζ : Fin L.rank → D.ho
 theorem colMul_id {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) {x : Pl D} (j : Fin ρ) {a : AE D}
     (h : ∀ k, colMul d.jX j a k ∈ idAt D (· = x)) : a ∈ idAt D (· = x) := by
   have h1 := mulVec_mem_idAt d.pX h j
-  have h2 : (d.pX *ᵥ colMul d.jX j a) j = a * (d.pX ⬝ d.jX) j j := by
+  have h2 : (d.pX *ᵥ colMul d.jX j a) j = a * (d.pX * d.jX) j j := by
     simp only [mulVec, dotProduct, colMul, Matrix.mul_apply, Finset.mul_sum]
     exact Finset.sum_congr rfl fun k _ => by ring
   rwa [h2, d.pX_jX, Matrix.one_apply_eq, mul_one] at h1

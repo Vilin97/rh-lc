@@ -121,6 +121,36 @@ theorem full_per {M : Submodule (𝓞 E) (Sp E a)} {M' : Submodule (𝓞 E) (Sp 
 theorem perO_fg {M : Submodule (𝓞 E) (Sp E a)} {M' : Submodule (𝓞 E) (Sp E b)} (h : IsSdLat M) (h' : IsSdLat M') (hA : AA.FG) :
     (perO AA M M').FG := by
   classical
+  have full_of_sd : ∀ {n : ℕ} {L : Submodule (𝓞 E) (Sp E n)}, IsSdLat L → Submodule.IsFullLattice E L := by
+    intro n L hL
+    let := hL.1
+    refine { span_eq_top := ?_ }
+    let W := Submodule.span E (L : Set (Sp E n))
+    change W = ⊤
+    by_contra hW
+    let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
+    let g : Sp E n →ₗ[E] Module.Dual E W :=
+      (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
+    have hdim : Module.finrank E (Module.Dual E W) < Module.finrank E (Sp E n) := by
+      rw [Subspace.dual_finrank_eq]
+      exact Submodule.finrank_lt hW
+    obtain ⟨x, hx, hx₀⟩ :=
+      Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+    have hsmul (a : E) : a • e x ∈ L := by
+      rw [← hL.2, dualBasic_mem_dual]
+      intro y hy
+      apply hStd_mem_one_symm
+      have hxy : hStd E n (e x) y = 0 :=
+        congrArg (fun f : Module.Dual E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+      simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+    let i : E →ₗ[𝓞 E] L :=
+      ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict L hsmul
+    let : Module.Finite (𝓞 E) L := Module.Finite.iff_fg.mpr hL.1.fg
+    let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+      smul_left_injective E (fun hz => hx₀ (e.map_eq_zero_iff.mp hz)) (congrArg Subtype.val hab)
+    exact RingOfIntegers.not_isField E
+      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+  let := full_of_sd h
   obtain ⟨s, hs⟩ := h.1.fg
   let ev : HomE E a b →ₗ[𝓞 E] (s → Sp E b) :=
     { toFun := fun x i => x i.1
@@ -129,7 +159,7 @@ theorem perO_fg {M : Submodule (𝓞 E) (Sp E a)} {M' : Submodule (𝓞 E) (Sp E
   have hinj : Function.Injective ev := by
     intro x y hxy
     have h1 : Submodule.span E (s : Set (Sp E a)) = ⊤ := by
-      rw [← h.1.span_eq_top, ← hs, Submodule.span_span_of_tower]
+      rw [← (Submodule.IsFullLattice.span_eq_top (A := E) (M := M)), ← hs, Submodule.span_span_of_tower]
     exact LinearMap.ext_on h1 fun i hi => congrFun hxy ⟨i, hi⟩
   have hfg : (homO M M').FG := by
     refine Submodule.fg_of_fg_map_injective ev hinj ?_
@@ -256,7 +286,38 @@ theorem thInd_eq (hA : Moves A a b) (hS : ∀ P ∈ S, conjPrime₂ P ∉ S) (hU
     rfl
   have d1 : Dom S (perO A.AA N (twist₂ N' c fun Q => -expS S Q)) (perO A.AA N N') := dom_per h h (Dom.refl _ _) (tw_dom _ hc)
   have d2 : Dom S (perO A.AA N N') (perO A.AA N (twist₂ N' c (expS S))) := dom_per h h (Dom.refl _ _) (dom_tw _ hc)
-  have hvol := GlobalTheory.ThetaMove.VolumePos.volC_pos X.E a b A.AA S N N' h.1.fg h'.1.fg h.1.span_eq_top h'.1.span_eq_top hfg hne
+  have full_of_sd : ∀ {n : ℕ} {L : Submodule (𝓞 X.E) (Sp X.E n)}, IsSdLat L → Submodule.IsFullLattice X.E L := by
+    intro n L hL
+    let := hL.1
+    refine { span_eq_top := ?_ }
+    let W := Submodule.span X.E (L : Set (Sp X.E n))
+    change W = ⊤
+    by_contra hW
+    let e : Sp X.E n ≃ₗ⋆[X.E] Sp X.E n := starLinearEquiv X.E
+    let g : Sp X.E n →ₗ[X.E] Module.Dual X.E W :=
+      (LinearMap.domRestrict' W).comp ((hStd X.E n).comp e.toLinearMap)
+    have hdim : Module.finrank X.E (Module.Dual X.E W) < Module.finrank X.E (Sp X.E n) := by
+      rw [Subspace.dual_finrank_eq]
+      exact Submodule.finrank_lt hW
+    obtain ⟨x, hx, hx₀⟩ :=
+      Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+    have hsmul (a : X.E) : a • e x ∈ L := by
+      rw [← hL.2, dualBasic_mem_dual]
+      intro y hy
+      apply hStd_mem_one_symm
+      have hxy : hStd X.E n (e x) y = 0 :=
+        congrArg (fun f : Module.Dual X.E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+      simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+    let i : X.E →ₗ[𝓞 X.E] L :=
+      ((LinearMap.toSpanSingleton X.E _ (e x)).restrictScalars (𝓞 X.E)).codRestrict L hsmul
+    let : Module.Finite (𝓞 X.E) L := Module.Finite.iff_fg.mpr hL.1.fg
+    let : Module.Finite (𝓞 X.E) X.E := Module.Finite.of_injective i fun a b hab =>
+      smul_left_injective X.E (fun hz => hx₀ (e.map_eq_zero_iff.mp hz)) (congrArg Subtype.val hab)
+    exact RingOfIntegers.not_isField X.E
+      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 X.E) X.E) (Field.toIsField X.E))
+  let := full_of_sd h
+  let := full_of_sd h'
+  have hvol := GlobalTheory.ThetaMove.VolumePos.volC_pos X.E a b A.AA S N N' h.1.fg h'.1.fg (Submodule.IsFullLattice.span_eq_top (A := X.E) (M := N)) (Submodule.IsFullLattice.span_eq_top (A := X.E) (M := N')) hfg hne
   have i1 : relIdx (lam A N (twist₂ N' c (expS S))) (lam A N N') =
       (perO A.AA N (twist₂ N' c (expS S))).toAddSubgroup.relIndex (perO A.AA N N').toAddSubgroup :=
     AddSubgroup.relIndex_map_map_of_injective _ _ inj
@@ -266,9 +327,9 @@ theorem thInd_eq (hA : Moves A a b) (hS : ∀ P ∈ S, conjPrime₂ P ∉ S) (hU
       have f3 : Module.Finite ℤ (perO A.AA N (twist₂ N' c (expS S))) := Module.Finite.trans (𝓞 X.E) _
       have f4 : (perO A.AA N (twist₂ N' c (expS S))).toAddSubgroup.FG :=
         (AddGroup.fg_iff_addSubgroup_fg _).1 (Module.Finite.iff_addGroup_fg.1 f3)
-      obtain ⟨T, hT⟩ := f4
-      classical
-      exact ⟨T.image (embH (X.embC A.σ₀) A.δ), by rw [Finset.coe_image, ← AddMonoidHom.map_closure, hT]; rfl⟩
+      letI := f4
+      change IsAddFG ((perO A.AA N (twist₂ N' c (expS S))).toAddSubgroup.map (embH (X.embC A.σ₀) A.δ))
+      infer_instance
     have := GlobalTheory.ThetaInter.finite_quot (A₁ := lam A N N') f1 (by
       rintro _ ⟨y, -, rfl⟩
       obtain ⟨n, hn, hy⟩ := full_per h h' hne y

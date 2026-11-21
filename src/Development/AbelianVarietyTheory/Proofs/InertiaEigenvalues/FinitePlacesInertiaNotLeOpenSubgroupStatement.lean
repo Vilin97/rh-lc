@@ -12,7 +12,6 @@ public import GroundTheory.GlobalFields.TateThesis.RootNumberLocalFinite
 @[expose] public section
 
 open NumberField IsDedekindDomain ValuativeRel Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.WeilDeligne GlobalTheory.LocLanglands
-open GlobalTheory.DelEps
 open GlobalTheory.DelGlob
 open GroundTheory.Global (HeckeCharacter localAdelicChar)
 open GroundTheory.Automorphic.GodementSection (localChar)

@@ -152,7 +152,10 @@ theorem isLocalHom_of_integral {V W Ω : Type} [CommRing V] [IsLocalRing V] [Com
   have e : P.comap (algebraMap V W) = IsLocalRing.maximalIdeal V :=
     ((IsLocalRing.maximalIdeal.isMaximal V).eq_of_le (Ideal.comap_isPrime _ P).ne_top h).symm
   have hm : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := V) P
-    (e ▸ IsLocalRing.maximalIdeal.isMaximal V)
+    (by
+      change (P.comap (algebraMap V W)).IsMaximal
+      rw [e]
+      exact IsLocalRing.maximalIdeal.isMaximal V)
   exact ((IsLocalRing.local_hom_tfae g).out 5 1).1 (IsLocalRing.eq_maximalIdeal hm)
 
 theorem cExt_of_integral {V W : Type} [CommRing V] [IsDomain V] [IsLocalRing V] [CommRing W] [IsDomain W] [IsLocalRing W]

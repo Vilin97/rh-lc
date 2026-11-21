@@ -8,6 +8,12 @@ open NumberField IsDedekindDomain CategoryTheory GroundTheory.ProfCoh GroundTheo
 
 namespace PositivityTheory.Lit1.GEN.X
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
+local instance oddOrTcBaseScalarTower {K L : FiniteSubfield} [Fact (K ≤ L)] :
+    IsScalarTower K.1 L.1 ℚ̄ :=
+  IsScalarTower.of_algebraMap_eq fun _ => rfl
+
 variable {K L : FiniteSubfield} [Fact (K ≤ L)] {S : Set (HeightOneSpectrum (𝓞 K.1))} {ℓ : ℕ} [Fact ℓ.Prime]
   (hL : ∀ x : L.1, algebraMap L.1 ℚ̄ x ∈ maxUnramifiedOutside K.1 ℚ̄ S) [Normal K.1 L.1]
 
@@ -19,7 +25,7 @@ theorem odd_or_tc_base_pf
   · right
     subst h2
     have hTC : IsTotallyComplex L.1 := hK.resolve_left (by simp)
-    haveI : IsGalois K.1 L.1 := ⟨⟩
+    have : IsGalois K.1 L.1 := ⟨⟩
     refine ⟨fun v => ?_⟩
     by_contra hv
     rw [InfinitePlace.not_isComplex_iff_isReal] at hv

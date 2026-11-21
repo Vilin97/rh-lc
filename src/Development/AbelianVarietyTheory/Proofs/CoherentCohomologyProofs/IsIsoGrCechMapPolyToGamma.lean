@@ -190,7 +190,8 @@ theorem exists_pow_smul_mem_range (i : Fin (N + 1))
       rw [e, formOn_eq_aeval]
       refine (congrArg (· * _) (chartEval_coord i inf_le_right _)).trans
         (Eq.trans ?_ (chartEval_coord i inf_le_right _).symm)
-      simp [V])
+      simp [V]
+      exact one_mul _)
     obtain ⟨l, hl⟩ := (eventually_xProd_pow_smul_eq_zero R (ProjSpace.coord R N) _ (O1_isLB R N)
       (isCompact_top R N) (I := {i}) le_top (by simp [nonzeroLocus_coord, V]) _ h₃).exists
     rw [xProd, Finset.prod_singleton, smul_sub, sub_eq_zero, ← map_smul, ← mul_smul,

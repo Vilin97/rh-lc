@@ -57,9 +57,10 @@ theorem im_posDef_of_hermForm {M τ : Matrix (Fin g) (Fin g) ℂ} (hM : M.IsHerm
       refine (hpos _ h0).trans_eq ?_
       simp [hermForm, dotProduct, mulVec, Complex.re_sum, Complex.im_sum, h1']
   have hY : (τ.map Complex.im)ᵀ * M.map Complex.re = 1 := by
-    ext j k
-    rw [one_apply, ← h2 j k]
-    simp [hermForm, hs, dotProduct, mul_apply, Complex.im_sum, h1']
+    apply Matrix.ext
+    intro j k
+    rw [Matrix.one_apply, ← h2 j k]
+    simp [hermForm, hs, dotProduct, Matrix.mul_apply, Complex.im_sum, h1']
   have := hG.inv.transpose
   rwa [inv_eq_left_inv hY, transpose_transpose] at this
 
@@ -326,7 +327,9 @@ theorem exists_classical_law (hEF : ∀ u v, A.EF (bas u) (bas v) = -omegaStd u 
   · have : (Sum.elim 0 0 : Fin g ⊕ Fin g → ℤ) = 0 := by funext s; cases s <;> rfl
     simp [this, logConst, ofIntVec_zero]
   · have : (Sum.elim (-m) (-n) : Fin g ⊕ Fin g → ℤ) = -Sum.elim m n := by funext s; cases s <;> rfl
-    simp [this, logConst, ofIntVec_neg, A.chi_neg, A.psi_neg, H_neg_left, H_neg_right, mulVec_neg]
+    have hy (v : A.La) : (-v).y = -v.y := rfl
+    have hl (v : A.La) : (-v).l = -v.l := rfl
+    simp [this, logConst, ofIntVec_neg, A.chi_neg, A.psi_neg, H_neg_left, H_neg_right, mulVec_neg, map_neg, hy, hl]
   · obtain ⟨hy, hl⟩ := (A.orth_ker_iff (bas (Sum.elim (Pi.single k 1) 0))).1 fun v' hv' => by
       obtain ⟨u, rfl⟩ := bas.surjective v'
       simp [hEF, omegaStd, Pi.single_apply, (hS u).1 hv' k hk]

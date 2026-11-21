@@ -91,10 +91,10 @@ theorem exists_good_chart_ext : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     subst h
     exact ⟨m⟩
   obtain ⟨G₂, ⟨m⟩⟩ : ∃ G₂ : SAB H (Sp T'.V), Nonempty (SABMap G₂ C.I.G (spMap φ)) := by
-    obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull (spMap φ) C.I.G
+    obtain ⟨PP, cub, sym, adj, prim, m, hm⟩ := sabPull Out.CubePf.cubePull (spMap φ) C.I.G
     exact ⟨_, ⟨m⟩⟩
   obtain ⟨t₂, ⟨p⟩⟩ : ∃ t₂ : SAB H (Sp T'.Fr), Nonempty (SABMap t₂ C.I.t' (spMap iT)) := by
-    obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull (spMap iT) C.I.t'
+    obtain ⟨PP, cub, sym, adj, prim, m, hm⟩ := sabPull Out.CubePf.cubePull (spMap iT) C.I.t'
     exact ⟨_, ⟨m⟩⟩
   obtain ⟨a₁, -⟩ := sabComp pullCubComp E H _ _ _ _ _ _ _ _ C.I.m1 p
   obtain ⟨n₁⟩ := tr hx'.symm a₁

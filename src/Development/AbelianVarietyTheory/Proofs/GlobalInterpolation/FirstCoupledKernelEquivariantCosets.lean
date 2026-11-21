@@ -96,7 +96,7 @@ theorem exists_lift (hX : X.Ok) (hPr : Pr.Ok) (hL : L.Ok Ch sel mu cst G m2) {j 
 theorem muAt_unit (i : ℕ) (P : rowSG Pr sel mu) {a : X.E} (ha : IsUnit (redP P.1 a)) :
     muAt Ch sel mu cst i P a = rhoS Ch sel mu i P a := by
   unfold muAt rhoS
-  rw [LastSteps.locChar_unit _ _ ha]
+  exact LastSteps.locChar_unit _ _ ha
 
 theorem psiAt_source (hX : X.Ok) (hPr : Pr.Ok) (hL : L.Ok Ch sel mu cst G m2) {al : L.β m2} {P : rowSG Pr sel mu}
     {κ : GLint X.E (R.N m2) P.1} {a : X.Kˣ} (hk : LevAt (L.levG m2 al) (L.levQ m2 al) P κ a)

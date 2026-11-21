@@ -85,14 +85,18 @@ theorem length_mul_log [Finite k] :
 
 theorem geoNum_linPrime (hCut : LinPrimeCut.Statement) (hBase : LinPrimeBase.Statement) :
     ∀ (n : ℕ) (α : T → k) (M : T → Fin (n + 1) → k), Submodule.span ℤ (Set.range α) = ⊤ → LinFormsIndep M →
-      geoNum n (linPrime α M) (fun _ => degSecond) = ((Module.length ℤ k).toNat : ℤ)
-  | 0, α, M, hα, hM => by
+      geoNum n (linPrime α M) (fun _ => degSecond) = ((Module.length ℤ k).toNat : ℤ) := by
+  intro n
+  induction n with
+  | zero =>
+    intro α M hα hM
     have hrel := isRelevant_linPrime hα hM
     rw [geoNum, dite_eq_left hrel]
     unfold LinPrimeBase.Statement at hBase
     obtain ⟨e⟩ := hBase T k α M hα hM (fun κ => (hrel κ).choose) (fun κ => (hrel κ).choose_spec)
     rw [e.toAddEquiv.toIntLinearEquiv.length_eq]
-  | n + 1, α, M, hα, hM => by
+  | succ n ih =>
+    intro α M hα hM
     have hrel : ∀ κ, ∃ j, (X ⟨κ, j⟩ : MRing (stackedBlocks T)) ∉ linPrime α M := isRelevant_linPrime hα hM
     rw [geoNum]
     unfold IsRelevant
@@ -107,7 +111,7 @@ theorem geoNum_linPrime (hCut : LinPrimeCut.Statement) (hBase : LinPrimeBase.Sta
     have hmult' : multAt (linPrime α M ⊔ Ideal.span {(X ⟨Sum.inr default, (hrel (Sum.inr default)).choose⟩ :
         MRing (stackedBlocks T))}) (linPrime α M') = 1 := hmult
     rw [hmult', Nat.cast_one, one_mul]
-    exact geoNum_linPrime hCut hBase n α M' hα hM'
+    exact ih α M' hα hM'
 
 end StackedExceptionalSecondGeometric
 

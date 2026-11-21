@@ -86,25 +86,19 @@ theorem definite_hypotheses_of_unitary {s : ℕ} (hok : A3.fam3.Ok3 s) (hK : X.K
     (hcv : ∀ t (x y : A3.fam3.amb3.FR t), cv.hR t x y = CSDForm.csumForm (A3.fam3.F.R t).S x y)
     (hJ : X.JIsoR cv) {gE : Representation ℂ G X.EE} (hU : GUnit3 X gE) (hG : GEquiv3 A3 X gE)
     (t : A3.fam3.base3.Tup) :
-    Hyp A3.fam3.base3.v0.embedding (X.jR t) (A3.fam3.F.R t).r (fun g => X.opC t (Sum.inr g)) gE (X.Θ t) where
-  sp := definite_embeddings_span hK t
-  jr g x := X.jR_opR hK t (Sum.inr g) x
-  iso g x y := by
-    rw [hJ t, hJ t, hcv, hcv, CSDForm.csumForm_apply, CSDForm.csumForm_apply, (hok.ok2.what₂ t).act.unitary]
-  eq g x := hG t g x
-  u := hU
+    Hyp A3.fam3.base3.v0.embedding (X.jR t) (A3.fam3.F.R t).r (fun g => X.opC t (Sum.inr g)) gE (X.Θ t) := by
+  refine ⟨definite_embeddings_span hK t, jR_r_eq_opC_jR_of_kFormR hK t, ?_, hG t, hU⟩
+  intro g x y
+  rw [hJ t, hJ t, hcv, hcv, CSDForm.csumForm_apply, CSDForm.csumForm_apply, (hok.ok2.what₂ t).act.unitary]
 
 theorem lift_hypotheses_of_unitary {s : ℕ} (hok : A3.fam3.Ok3 s) (hK : X.KFormL) (cv : CrdV A3.fam3.amb3)
     (hcv : ∀ j t (x y : A3.fam3.amb3.FL j t), cv.hL j t x y = CSDForm.csumForm (A3.fam3.F.L j t).S x y)
     (hJ : X.JIsoL cv) {gW : ∀ j, Representation ℂ G (X.W j)} (hU : LiftActionUnitary X gW) (hG : LiftGroupEquivariance A3 X gW)
     (j : A3.fam3.base3.J) (t : A3.fam3.base3.Tup) :
-    Hyp A3.fam3.base3.v0.embedding (X.jL j t) (A3.fam3.F.L j t).r (fun g => X.opLC j t (Sum.inr g)) (gW j) (X.θ' j t) where
-  sp := lift_embeddings_span hK j t
-  jr g x := X.jL_opL hK j t (Sum.inr g) x
-  iso g x y := by
-    rw [hJ j t, hJ j t, hcv, hcv, CSDForm.csumForm_apply, CSDForm.csumForm_apply, (hok.ok2.lifts j t).act.unitary]
-  eq g x := hG j t g x
-  u := hU j
+    Hyp A3.fam3.base3.v0.embedding (X.jL j t) (A3.fam3.F.L j t).r (fun g => X.opLC j t (Sum.inr g)) (gW j) (X.θ' j t) := by
+  refine ⟨lift_embeddings_span hK j t, jL_r_eq_opLC_jL_of_kFormL hK j t, ?_, hG j t, hU j⟩
+  intro g x y
+  rw [hJ j t, hJ j t, hcv, hcv, CSDForm.csumForm_apply, CSDForm.csumForm_apply, (hok.ok2.lifts j t).act.unitary]
 
 theorem good_part_complex_eq_range_family {t : A3.fam3.base3.Tup} {ρ : G → X.FC t →ₗ[ℂ] X.FC t} {gE : Representation ℂ G X.EE}
     (H : Hyp A3.fam3.base3.v0.embedding (X.jR t) (A3.fam3.F.R t).r ρ gE (X.Θ t)) {cv : CrdV A3.fam3.amb3} {b : Bool}

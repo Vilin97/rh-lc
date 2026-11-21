@@ -106,11 +106,11 @@ theorem c_mul {W : Type} [Fintype W] (v : W → Pl D) (hv : Function.Injective v
   have hp1 : fstA D.host.F (pairA D.host.F 1 0) = 1 := rfl
   have hp2 : sndA D.host.F (pairA D.host.F 1 0) = 0 := rfl
   refine baseAdele_ext_infinite_finite ?_ ?_
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_mul, map_zero, map_sub, map_sub, map_sum, map_one, hp1]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_zero, map_sub, map_sub, map_sum, map_one, hp1]
     simp [hf]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_mul, map_zero, map_sub, map_sub, map_sum, map_one, hp2]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_zero, map_sub, map_sub, map_sum, map_one, hp2]
     simp only [hs, sub_zero]
     refine af_ext _ fun u => ?_
     set_option synthInstance.maxHeartbeats 100000 in
@@ -171,7 +171,7 @@ theorem mt_list_prod (V : HSp D) {W : Type} (h : W → GA D V) (E : W → AE D)
     (hh : ∀ w, mt V (h w) = E w • M + (1 - E w) • (1 : Matrix (Fin V.rank) (Fin V.rank) (AE D)))
     (horth : ∀ w w', w ≠ w' → E w * E w' = 0) :
     ∀ l : List W, l.Nodup → mt V ((l.map h).prod) = (l.map E).sum • M + (1 - (l.map E).sum) • 1
-  | [], _ => by simp [mt_one]
+  | [], _ => by simp
   | w :: l, hl => by
     rw [List.nodup_cons] at hl
     rw [List.map_cons, List.prod_cons, mt_mul, mt_list_prod V h E M hh horth l hl.2, hh, List.map_cons,
@@ -180,7 +180,7 @@ theorem mt_list_prod (V : HSp D) {W : Type} (h : W → GA D V) (E : W → AE D)
     rw [← List.sum_map_mul_left]
     apply List.sum_eq_zero
     intro x hx
-    obtain ⟨y, hy, rfl⟩ := List.mem_map.mp hx
+    obtain ⟨y, hy, rfl⟩ := (List.mem_map (f := fun y => E w * E y) (l := l)).mp hx
     exact horth w y (fun e => hl.1 (e ▸ hy))
 
 

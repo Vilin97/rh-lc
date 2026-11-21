@@ -157,7 +157,8 @@ theorem tame_mixS (hψ : IsStdChar D ψ (-1)) {S S₀ T : HSp D} {ρ : ℕ} (d :
   have : FirstCountableTopology (WO S₀ T) := TopologicalSpace.SecondCountableTopology.to_firstCountableTopology _
   obtain ⟨j1, -⟩ := lattice_Mx D T.rank S.rank
   have : BorelSpace (Mx D T.rank ρ) := ⟨rfl⟩
-  simp only [_root_.I195MixedCoordinates_18f638bfe5f22e80269acda3.source, HypDec.integrandS_eq]
+  change Tame fun b (q : Z × WO S₀ T) => ∫ a in v.𝓕, heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T q.2) (F b q.1))) 0 ∂v.μ
+  simp_rw [HypDec.integrandS_eq]
   refine Tame.integral v.μ v.𝓕 (by rw [v.covol.2.2]; exact ENNReal.one_lt_top) ?_
   have hY : Continuous (d.extY T) := continuous_id.matrix_mul continuous_const
   have h0 : Continuous (d.ext0 T) := continuous_id.matrix_mul continuous_const
@@ -189,8 +190,16 @@ theorem om_evalBF (hd : Descent D) (hm : GlobalTheory.IndefiniteRowSideFullHecke
   have e2 : ((B.o.emb (h₀, 1), h') : GA D B.V₀ × GA D J.W₀) = (B.o.emb (h₀, 1), 1) * (1, h') := by
     rw [Prod.mk_mul_mk, mul_one, one_mul]
   unfold evalBF evalZero evalAt
-  rw [e1, e2, map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply,
-    (hS _ (s.weil.om_pres _ _ hΨ)).core, (hS _ hΨ).target, ex, (hT _ (h₁.om_pres _ _ hf)).source, ey, (hT _ hf).core]
+  simp only [e1, e2, map_mul, Module.End.mul_apply]
+  change s.om₀ (B.o.emb (h₀, 1), 1) (s.om₀ (1, h')
+    (_root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.target J.d B.V₀ ψ s.vT.μ s.vT.𝓕
+      (_root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source B.d J.W ψ s.vS.μ s.vS.𝓕 Ψ (xZero J.d))
+      (yZero B.V₀ ρ (vecB B.o B.ζ)))) =
+    _root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.target J.d B.V₀ ψ s.vT.μ s.vT.𝓕
+      (_root_.I195MixedCoordinates_a63f0715cbf334f1e52c5d7b.source B.d J.W ψ s.vS.μ s.vS.𝓕
+        (s.om (B.d.emb0 (B.o.emb (h₀, 1)), 1) (s.om (1, J.d.emb0 h') Ψ)) (xZero J.d))
+      (yZero B.V₀ ρ (vecB B.o B.ζ))
+  rw [(hS _ (s.weil.om_pres _ _ hΨ)).core, (hS _ hΨ).target, ex, (hT _ (h₁.om_pres _ _ hf)).source, ey, (hT _ hf).core]
 
 theorem firstCountable_GA (V : HSp D) : FirstCountableTopology (GA D V) :=
   have := (GlobalTheory.Mem.AdelicGroupTop.adelic_unitary_topology D V).2.1
@@ -212,10 +221,8 @@ theorem continuous_cenT {T T₀ : HSp D} (d : HypDec T T₀ ρ) (S : HSp D) (y :
 theorem continuous_psiFlag (hψ : Continuous ψ) {T T₀ : HSp D} (d : HypDec T T₀ ρ) : Continuous (psiFlag ψ d) := by
   have ht : Continuous (Algebra.trace (AF D.host.F) (AE D)) := IsModuleTopology.continuous_of_linearMap _
   have hb : Continuous (blockX d) := continuous_const.matrix_mul ((continuous_mt T).matrix_mul continuous_const)
-  refine hψ.comp (ht.comp (continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_))
-  split_ifs
-  · exact hb.matrix_elem i j
-  · exact continuous_const
+  refine hψ.comp (ht.comp (continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_))
+  split_ifs <;> first | exact hb.matrix_elem i j | exact continuous_const
 
 end Step
 

@@ -153,7 +153,7 @@ theorem maj_integrable : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (m n 
     intro z
     have hoff : ∀ i j, ¬ P i j → (-shift (D := D) P z) i j = 0 := by
       intro i j h; rw [Matrix.neg_apply, shift_off P z i j h, neg_zero]
-    have hm : Measurable (fun x : Mx D m n => x + -shift P z) := (continuous_add_right _).measurable
+    have hm : Measurable (fun x : Mx D m n => x + -shift P z) := (continuous_id.add continuous_const).measurable
     calc μ ((fun x => x - shift P z) ⁻¹' Q) = μ ((fun x => x + -shift P z) ⁻¹' Q) := by
           simp only [sub_eq_add_neg]
       _ ≤ μ.map (fun x => x + -shift P z) Q := Measure.le_map_apply hm.aemeasurable Q

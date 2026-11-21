@@ -7,6 +7,8 @@ public import GroundTheory.ProfiniteCohomology.RealPlaces.LocalDualityPlace
 
 open NumberField IsDedekindDomain CategoryTheory GroundTheory.ProfCoh GroundTheory.Global
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 namespace PositivityTheory.Lit1.GEN.X.RealC
 
 theorem finrank_ker_sub_one_add_finrank_ker_add_one {k V : Type*} [Field k] [AddCommGroup V] [Module k V]

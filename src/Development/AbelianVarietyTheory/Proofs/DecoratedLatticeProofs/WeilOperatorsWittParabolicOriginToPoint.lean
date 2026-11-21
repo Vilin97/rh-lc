@@ -39,6 +39,9 @@ namespace GlobalTheory.WMove
 theorem main : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S S₀ T : HSp D) (ρ : ℕ) (d : HypDec S S₀ ρ) (χS χT : (AE D)ˣ →* Circle) (om : Om S T), IsWeilDatumO ψ S T χS χT om → ∀ (μ : Measure (Mx D T.rank ρ)) (𝓕 : Set (Mx D T.rank ρ)), IsCovolOne (ratMx D T.rank ρ) μ 𝓕 → ∀ f, IsThetaFunO ψ S T f → ∀ x : Mx D T.rank ρ, (∀ h, (_root_.I195MixedCoordinates_496aa803720ccf0c37cbff80.source d) T ψ μ 𝓕 (om (1, h) f) x = (_root_.I195MixedCoordinates_496aa803720ccf0c37cbff80.source d) T ψ μ 𝓕 (om (1, h) (heisO ψ S T (d.extX T (mt T h⁻¹ ⬝ x)) f)) 0) ∧ (∀ a g, (_root_.I195MixedCoordinates_496aa803720ccf0c37cbff80.source d) T ψ μ 𝓕 (om (d.levi a * d.emb0 g, 1) f) x = (_root_.I195MixedCoordinates_496aa803720ccf0c37cbff80.source d) T ψ μ 𝓕 (om (d.levi a * d.emb0 g, 1) (heisO ψ S T (d.extX T (x ⬝ a.1)) f)) 0) ∧ ∀ n : GA D S, (_root_.I195MixedCoordinates_496aa803720ccf0c37cbff80.source d) T ψ μ 𝓕 (om (n, 1) f) x = (_root_.I195MixedCoordinates_496aa803720ccf0c37cbff80.source d) T ψ μ 𝓕 (om (n, 1) (heisO ψ S T (d.extX T x ⬝ mt S n) f)) 0 := by
   intro D ψ S S₀ T ρ d χS χT om hω μ 𝓕 hμ f hf x
   have hb := fun F y => ((GlobalTheory.T.wittSourceMixedCoord_heisenbergRestriction D ψ S S₀ T ρ d).2.2.2.2.2.2.1 μ 𝓕 F y)
+  change ∀ (F : WO S T → ℂ) (y : Mx D T.rank ρ),
+    I195MixedCoordinates_496aa803720ccf0c37cbff80.source d T ψ μ 𝓕 F y =
+      I195MixedCoordinates_496aa803720ccf0c37cbff80.source d T ψ μ 𝓕 (heisO ψ S T (d.extX T y) F) 0 at hb
   refine ⟨fun h => ?_, fun a g => ?_, fun n => ?_⟩
   · rw [hb, hω.om_heis _ _ _ _ hf]
     congr 3

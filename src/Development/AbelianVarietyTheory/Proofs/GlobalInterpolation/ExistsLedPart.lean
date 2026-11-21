@@ -29,7 +29,11 @@ theorem X'_le_X'' (s : Scale) (R : Ranks) : s.X' ≤ s.X'' R.n := by
   have hx := s.one_lt_alt
   have hx0 : 0 < s.x := by linarith
   have hn : (1 : ℝ) ≤ R.n := by
-    have : 1 ≤ R.n := by unfold Ranks.n; exact Nat.succ_le_of_lt (by positivity)
+    have : 1 ≤ R.n := by
+      unfold Ranks.n
+      have := R.two_le_m
+      have := R.m_le_f
+      omega
     exact_mod_cast this
   have hX : 0 < s.X' := Real.exp_pos _
   have ha : 0 < s.a := by unfold Scale.a Scale.b; positivity

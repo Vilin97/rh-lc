@@ -18,6 +18,8 @@ open Topology Filter
 
 namespace GlobalTheory.CompanionTheory.Hypotheses₂.HCA.AnalyticWords
 
+local notation "Jε" => ReciprocityTheory.ChartRestriction.DS.Jm
+
 variable {n : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
 
 def projJ (ε : Fin n → Bool) (Y : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ :=
@@ -157,7 +159,7 @@ theorem word_eq (hG : IsLinRed (UJset ε)) (hrep : Formalism.QuantumDeterminants
   induction l with
   | nil => simp
   | cons a l ih =>
-    simp only [List.map_cons, List.prod_cons, List.foldr_cons, Module.End.mul_apply]
+    simp only [List.map_cons, List.prod_cons, List.foldr_cons, mul_apply_eq_comp]
     rw [← ih]
     rfl
 
@@ -178,14 +180,14 @@ theorem exists_series [CompleteSpace H] (hrep : Formalism.QuantumDeterminants.Is
   obtain ⟨C, hC, hb⟩ := hw
   let v' : smoothSub hG hrep := ⟨v, hs⟩
   let ev : Module.End ℝ (smoothSub hG hrep) →ₗ[ℝ] H := (smoothSub hG hrep).subtype ∘ₗ LinearMap.applyₗ v'
-  let q : ∀ m : ℕ, MultilinearMap ℝ (fun _ : Fin m => Fin n → Fin n → ℂ) H := fun m =>
+  let q : ∀ m : ℕ, (Fin m → Fin n → Fin n → ℂ) →ₘₗ[ℝ] H := fun m =>
     ((m.factorial : ℝ)⁻¹) • ev.compMultilinearMap
       ((MultilinearMap.mkPiAlgebraFin ℝ m (Module.End ℝ (smoothSub hG hrep))).compLinearMap fun _ => act hG hrep)
   have hq : ∀ m (Y : Fin m → Fin n → Fin n → ℂ), q m Y =
       ((m.factorial : ℝ)⁻¹) • (List.ofFn fun i => projL ε (Y i)).foldr (dRep π) v := fun m Y => by
     have h := word_eq hG hrep (List.ofFn Y) v'
     simp only [List.map_ofFn] at h
-    simp only [q, MultilinearMap.smul_apply, LinearMap.compMultilinearMap_apply,
+    simp only [q, smul_apply, LinearMap.compMultilinearMap_apply,
       MultilinearMap.compLinearMap_apply, MultilinearMap.mkPiAlgebraFin_apply]
     congr 1
   have hqb : ∀ m (Y : Fin m → Fin n → Fin n → ℂ), ‖q m Y‖ ≤ C ^ (m + 1) * ((n : ℝ) ^ 2) ^ m * ∏ i, ‖Y i‖ := by

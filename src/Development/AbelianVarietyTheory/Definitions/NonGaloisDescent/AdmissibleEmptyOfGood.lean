@@ -461,7 +461,7 @@ theorem exists_frame_good (S T : HSp D) (hS : S.SigOK) (hpos : S.IsPosDef) (hT :
           refine ⟨⟨star (a : D.host.E), ?_⟩, rfl⟩
           exact a.2.map (starRingEnd D.host.E).toIntAlgHom
         convert IsLocalization.isInteger_mul ha hz using 1
-        simp only [pairing, Pi.smul_apply, Algebra.smul_def, star_mul', Finset.mul_sum,
+        simp only [pairing, Pi.smul_apply, Algebra.smul_def, star_mul', Finset.mul_sum, Finset.sum_mul,
           mul_assoc, mul_left_comm, mul_comm]
     have hspan := Submodule.subset_span (R := D.host.E) hdE
     have hn : ((d : 𝓞 D.host.E) : D.host.E) ≠ 0 := by exact_mod_cast hd0

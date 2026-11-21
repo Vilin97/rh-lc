@@ -15,6 +15,8 @@ namespace GroundTheory.ProfCoh
 
 open CategoryTheory Limits groupCohomology IntermediateField GroundTheory.Global FiniteSubfield
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 attribute [local instance 2000] Rep.hV2 Submodule.module Submodule.Quotient.module
 
 noncomputable section
@@ -54,6 +56,7 @@ variable {K E : FiniteSubfield} [Fact (K ≤ E)]
 
 theorem normal_subgroupOf_of_isGalois [IsGalois K.1 E.1] :
     (E.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup).Normal := by
+  let : IsScalarTower K.1 E.1 ℚ̄ := IsScalarTower.of_algebraMap_eq fun _ => rfl
   refine ⟨fun n hn g => ?_⟩
   rw [Subgroup.mem_subgroupOf, IntermediateField.mem_fixingSubgroup_iff] at hn ⊢
   intro x hx

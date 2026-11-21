@@ -74,7 +74,7 @@ theorem isCuspFun_zero : IsCuspFun V (fun _ => 0) := by
 
 variable {V} {S : D.what₂.Tau → SPar}
 
-theorem isMultMap_zero (M : DSModel V S) (J : Set (GA D V)) (χ : GA D V → ℂ) : IsMultMap θ M J χ 0 where
+theorem isMultMap_zero (M : DSModel V S) (J : Set (GA D V)) (χ : GA D V → ℂ) : IsMultMap θ M J χ 0 := {
   aut v := by
     show IsAutFunSm θ V (fun _ => 0)
     exact isAutFunSm_zero θ V
@@ -86,7 +86,7 @@ theorem isMultMap_zero (M : DSModel V S) (J : Set (GA D V)) (χ : GA D V → ℂ
     funext x
     simp [rTr]
   cont τ v x := by
-    refine ⟨0, ⟨[], 0, by simp, fun w _ => by simp⟩, fun w => by simp⟩
+    refine ⟨0, ⟨[], 0, by simp, fun w _ => by simp⟩, fun w => by simp⟩ }
 
 
 variable (V) in
@@ -135,7 +135,7 @@ theorem isCuspFun_smul {φ : GA D V → ℂ} (h : IsCuspFun V φ) (c : ℂ) : Is
   rw [MeasureTheory.integral_smul, h r C hC μ 𝓕 hμ h𝓕 g, smul_zero]
 
 theorem isMultMap_smul {M : DSModel V S} {J : Set (GA D V)} {χ : GA D V → ℂ} {T : MMap M}
-    (hT : IsMultMap θ M J χ T) (c : ℂ) : IsMultMap θ M J χ (c • T) where
+    (hT : IsMultMap θ M J χ T) (c : ℂ) : IsMultMap θ M J χ (c • T) := {
   aut v := by
     show IsAutFunSm θ V (c • T v)
     exact isAutFunSm_smul θ V (hT.aut v) c
@@ -153,7 +153,7 @@ theorem isMultMap_smul {M : DSModel V S} {J : Set (GA D V)} {χ : GA D V → ℂ
     refine ⟨c • ℓ, ⟨L, ‖c‖ * C, hL, fun w hw => ?_⟩, fun w => ?_⟩
     · rw [LinearMap.smul_apply, norm_smul, mul_assoc]
       exact mul_le_mul_of_nonneg_left (hC w hw) (norm_nonneg c)
-    · simp only [LinearMap.smul_apply, _root_.smul_apply, Pi.smul_apply, hℓ w]
+    · simp only [LinearMap.smul_apply, _root_.smul_apply, Pi.smul_apply, hℓ w] }
 
 end Formalism.IndefR.Mult
 

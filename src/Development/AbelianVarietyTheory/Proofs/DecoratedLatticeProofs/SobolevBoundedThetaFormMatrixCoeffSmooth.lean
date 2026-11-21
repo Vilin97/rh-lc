@@ -40,7 +40,7 @@ theorem contDiff_of_partials {k : ℕ} (P : ((Fin k → ℝ) → ℂ) → Prop) 
       intro F hF
       choose m a H ha hH hD using hd F hF
       have hGc : ∀ i, Continuous fun t => ∑ j, a i j t * H i j t := fun i =>
-        continuous_finset_sum _ fun j _ => ((ha i j).continuous).mul (hc _ (hH i j))
+        continuous_finsetSum _ fun j _ => ((ha i j).continuous).mul (hc _ (hH i j))
       have hfd := GlobalTheory.T.hasFDerivAt_of_continuous_coordinate_partials k F (fun i t => ∑ j, a i j t * H i j t) hGc hD
       have hfe : fderiv ℝ F = fun t => ∑ i, (∑ j, a i j t * H i j t) •
           (ContinuousLinearMap.proj i : (Fin k → ℝ) →L[ℝ] ℝ).smulRight (1 : ℂ) := by

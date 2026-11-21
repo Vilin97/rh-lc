@@ -131,7 +131,7 @@ theorem dU_mul (β : DetBases k r n) (U : Planes k r n) (g : Matrix (Fin r) (Fin
       e.toMatrix (fun i => U.1.mkQ (y.row i)) * g.transpose := by
     ext a i
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Module.Basis.toMatrix_apply, hrow, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
+      simp only [Module.Basis.toMatrix_apply, hrow, map_sum, map_smul, Finsupp.finsetSum_apply,
       Finsupp.smul_apply, smul_eq_mul, Matrix.mul_apply, Matrix.transpose_apply]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   unfold dU
@@ -191,13 +191,14 @@ structure IsAdmissible (κ : kˣ →* Multiplicative C) (Φ : C → Matrix (Fin 
     Φ c (((g⁻¹ : GL (Fin r) k) : Matrix (Fin r) (Fin r) k) * y) =
       Φ (c + Multiplicative.toAdd (κ (GeneralLinearGroup.det g))) y
 
-theorem isAdmissible_univCoef (β : DetBases k r n) (κ : kˣ →* Multiplicative C) : IsAdmissible κ (univCoef β κ) where
-  den c y := by
+theorem isAdmissible_univCoef (β : DetBases k r n) (κ : kˣ →* Multiplicative C) : IsAdmissible κ (univCoef β κ) := by
+  refine { den := ?_, equiv := ?_ }
+  · intro c y
     have hq : (Nat.card k : ℚ) ≠ 0 := Nat.cast_ne_zero.2 Nat.card_pos.ne'
     refine ⟨r * (n - r), Nat.card {U : Planes k r n // ∃ u : kˣ, (u : k) = dU β U y ∧ Multiplicative.toAdd (κ u) = c}, ?_⟩
     rw [univCoef_eq, mul_comm, mul_inv_cancel_left₀ (pow_ne_zero _ hq)]
     simp
-  equiv g c y := by
+  · intro g c y
     rw [univCoef_eq, univCoef_eq]
     congr 2
     apply Nat.card_congr

@@ -115,7 +115,7 @@ lemma struct (M : ℕ) [NeZero M] (b : ℕ) (hb : Nat.Coprime b M) (θ : ℤ) (�
           rw [finsum_mem_insert _ (by simp) ((h1 χ).1.diff), ho]; simp
         simp only [if_true]
         rw [this, add_sub_cancel_left]
-        refine zsum _ _ ((h1 χ).1.inter_of_left _) (fun ρ hρ => ⟨hρ.1, ?_⟩) _ u hu fun ρ hρ => hρ.1.1
+        refine zsum (zerosBox χ (1 / 2) T \ {(β : ℂ)}) _ ((h1 χ).1.inter_of_left _) (fun ρ hρ => ⟨hρ.1, ?_⟩) _ u hu fun ρ hρ => hρ.1.1
         rcases h2 χ ρ hρ.1 with h | h
         · exact absurd h.2 hρ.2
         · exact h

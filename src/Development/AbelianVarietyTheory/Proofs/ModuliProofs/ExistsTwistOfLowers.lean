@@ -208,29 +208,29 @@ theorem Twist.unique (hpq : 1 ≤ D.p + D.q) (hj : ∀ x, ((jK x : KA l₂) : �
   exact (existsUnique_twist hpq hj h.fix h.root).unique ⟨h.comm, h.map⟩
     ⟨h'.comm, ν, fun x => by rw [hM]; exact a x, fun x => by rw [hA]; exact b x⟩
 
-theorem Twist.one : Twist Xo jK (SimAlg.one D) (RingHom.id _) (𝟙 _) where
-  fix := rfl
-  root := (zpow_one _).symm
-  lowM _ := rfl
-  lowA _ := rfl
-  comm := by rw [spMap_id', Category.id_comp, Category.comp_id]
-  map := ⟨ObjLower.sabId _, fun _ => (Category.comp_id _).trans (Category.id_comp _).symm,
-    fun _ => (Category.comp_id _).trans (Category.id_comp _).symm⟩
+theorem Twist.one : Twist Xo jK (SimAlg.one D) (RingHom.id _) (𝟙 _) :=
+  { fix := rfl,
+    root := (zpow_one _).symm,
+    lowM _ := rfl,
+    lowA _ := rfl,
+    comm := by rw [spMap_id', Category.id_comp, Category.comp_id],
+    map := ⟨ObjLower.sabId _, fun _ => (Category.comp_id _).trans (Category.id_comp _).symm,
+      fun _ => (Category.comp_id _).trans (Category.id_comp _).symm⟩ }
 
 theorem Twist.mul {g g' : Sim D} {σ σ' : KA l₂ →+* KA l₂} {f f' : Xo.X ⟶ Xo.X} (h : Twist Xo jK g σ f)
-    (h' : Twist Xo jK g' σ' f') : Twist Xo jK (SimAlg.mul g g') (σ.comp σ') (f ≫ f') where
-  fix := by rw [RingHom.comp_assoc, h'.fix, h.fix]
-  root := by rw [RingHom.comp_apply, h'.root, map_zpow₀, h.root, ← zpow_mul]; rfl
-  lowM a := (h.lowM _).trans (h'.lowM a)
-  lowA a := (h.lowA _).trans (h'.lowA a)
-  comm := by rw [Category.assoc, h'.comm, ← Category.assoc, h.comm, Category.assoc, spMap_comp']
-  map := by
-    obtain ⟨ν, a, b⟩ := h.map
-    obtain ⟨ν', a', b'⟩ := h'.map
-    obtain ⟨n, hn⟩ := exists_comp_sabMap ν ν' rfl
-    refine ⟨n, fun x => ?_, fun x => ?_⟩
-    · rw [hn, Category.assoc, ← a', ← Category.assoc, ← Category.assoc, ← a]; rfl
-    · rw [hn, Category.assoc, ← b', ← Category.assoc, ← Category.assoc, ← b]; rfl
+    (h' : Twist Xo jK g' σ' f') : Twist Xo jK (SimAlg.mul g g') (σ.comp σ') (f ≫ f') :=
+  { fix := by rw [RingHom.comp_assoc, h'.fix, h.fix],
+    root := by rw [RingHom.comp_apply, h'.root, map_zpow₀, h.root, ← zpow_mul]; rfl,
+    lowM a := (h.lowM _).trans (h'.lowM a),
+    lowA a := (h.lowA _).trans (h'.lowA a),
+    comm := by rw [Category.assoc, h'.comm, ← Category.assoc, h.comm, Category.assoc, spMap_comp'],
+    map := by
+      obtain ⟨ν, a, b⟩ := h.map
+      obtain ⟨ν', a', b'⟩ := h'.map
+      obtain ⟨n, hn⟩ := exists_comp_sabMap ν ν' rfl
+      refine ⟨n, fun x => ?_, fun x => ?_⟩
+      · rw [hn, Category.assoc, ← a', ← Category.assoc, ← Category.assoc, ← a]; rfl
+      · rw [hn, Category.assoc, ← b', ← Category.assoc, ← Category.assoc, ← b]; rfl }
 
 theorem Twist.exists_inv (hpq : 1 ≤ D.p + D.q) (hj : ∀ x, ((jK x : KA l₂) : ℂ) = ((x : KA l) : ℂ))
     {g : Sim D} {σ : KA l₂ →+* KA l₂} {f : Xo.X ⟶ Xo.X} (h : Twist Xo jK g σ f) :

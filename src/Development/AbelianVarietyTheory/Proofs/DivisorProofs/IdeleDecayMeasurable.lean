@@ -34,7 +34,9 @@ theorem continuous_evI : Continuous (evI F) := by
 def intAdeles : AddSubgroup (AF F) where
   carrier := {a | ∀ v, evFin F v a ∈ v.adicCompletionIntegers F}
   zero_mem' := fun v => by rw [map_zero]; exact zero_mem _
-  add_mem' := fun ha hb v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v)
+  add_mem' := fun ha hb v => by
+    rw [map_add (evFin F v)]
+    exact add_mem (ha v) (hb v)
   neg_mem' := fun ha v => by rw [map_neg]; exact neg_mem (ha v)
 
 theorem isOpen_intAdeles : IsOpen (intAdeles F : Set (AF F)) :=
@@ -52,7 +54,7 @@ theorem continuous_coord : Continuous (coord F E) := by
 
 theorem continuous_size : Continuous (size F E) := by
   unfold size
-  exact continuous_finset_sum _ fun i _ =>
+  exact continuous_finsetSum _ fun i _ =>
     ((continuous_evI F).comp ((continuous_apply i).comp (continuous_coord F E))).norm
 
 theorem continuous_decay (N m : ℕ) : Continuous (decay F E N m) := by

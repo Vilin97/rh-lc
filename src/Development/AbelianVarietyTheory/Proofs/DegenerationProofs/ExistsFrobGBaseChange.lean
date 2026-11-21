@@ -318,7 +318,9 @@ open FrobField
 theorem exists_frobG_baseChange : ∀ (W k : Type) [CommRing W] [Field k] (ρ : W →+* k) (p r : ℕ) [Fact p.Prime] [CharP k p], 1 ≤ r → (∀ w, ρ w ^ (p ^ r) = ρ w) → (∀ c : k, ∃ m, 1 ≤ m ∧ c ^ ((p ^ r) ^ m) = c) → ∀ (G : Over (Sp W)) [GrpObj G], SmConn G → ∃ F : End ((Over.pullback (spMap ρ)).obj G), FrobG _ F (p ^ r) ∧ ∀ (x : 𝟙_ (Over (Sp k)) ⟶ (Over.pullback (spMap ρ)).obj G) (τ : k →+* k), (∀ c, τ c = c ^ (p ^ r)) → (x ≫ F.asHom).left ≫ pullback.fst G.hom (spMap ρ) = spMap τ ≫ x.left ≫ pullback.fst G.hom (spMap ρ) := by
   intro W k _ _ ρ p r hp _ _ hρ hfin G _ _
   have hk : (p : k) = 0 := CharP.cast_eq_zero k p
-  refine ⟨End.of ((relNat ρ p r hp.out hk hρ).app G), ⟨isMonHom_app _ _ G, fun U hU f => ?_⟩, fun x τ hτ => ?_⟩
+  refine ⟨End.of ((relNat ρ p r hp.out hk hρ).app G), ⟨?_, fun U hU f => ?_⟩, fun x τ hτ => ?_⟩
+  · change IsMonHom ((relNat ρ p r hp.out hk hρ).app G)
+    exact isMonHom_app _ _ G
   · obtain ⟨m, hm, h⟩ := good_of_isPullback (IsPullback.of_hasPullback G.hom (spMap ρ)) p r hp.out
       (cast_zero_of_hom (pullback.snd _ _) (cast_zero_sp k hk)) (fun c => by
         obtain ⟨m, hm, h⟩ := hfin ((Scheme.ΓSpecIso (.of k)).hom.hom c)

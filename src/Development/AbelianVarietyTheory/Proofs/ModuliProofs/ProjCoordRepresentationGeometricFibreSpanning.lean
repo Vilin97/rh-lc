@@ -119,6 +119,13 @@ theorem projRep_bot (R : Type) [CommRing R] {N : ℕ} (e : σ ≃ Fin (N + 1)) :
     rw [ProjCoord.range_comp_symm] at hv
     exact ⟨hv, fun F hF => by rw [Ideal.mem_bot.1 hF, MvPolynomial.eval₂_zero]⟩
   · rw [← ProjCoord.range_comp_symm e] at hv
+    have pt_str : ∀ (c : R →+* R') (v : Fin (N + 1) → R')
+        (hv : Ideal.span (Set.range v) = ⊤), pt c v hv ≫ PSpace.str R N = spMap c := by
+      intro c v hv
+      rw [pt, PSpace.str, ProjPoint.ofHom_toSpecZero_assoc, ← Spec.map_comp]
+      congr 1
+      ext1
+      exact RingHom.ext fun r => MvPolynomial.eval₂Hom_C c v r
     refine ⟨pt β _ hv, ⟨pt_str _ _ _, ?_⟩, fun x hx => ?_⟩
     · exact (ProjCoord.secCoord_iff e (𝟙 _) β _ (by simpa using pt_str β _ hv) v).2 ⟨hv, Category.comp_id _⟩
     · obtain ⟨_, h⟩ := (ProjCoord.secCoord_iff e (𝟙 _) β x (by simpa using hx.1) v).1 hx.2
