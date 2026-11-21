@@ -122,9 +122,11 @@ theorem form_self {Ψ : Finset (E →+* ℂ)} (hΨ : IsType Ψ) {N : ℕ} (X : H
   have h2 : ∀ τ : Ψ, τ.1 (X.1 * X.1).trace =
       ((∑ a, ∑ b, normSq (τ.1 (X.1 a b)) : ℝ) : ℂ) := fun τ => by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Matrix.trace, diag_apply, mul_apply, map_sum, map_mul]
+      simp only [Matrix.trace, diag_apply, map_sum]
     push_cast
-    refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
+    refine Finset.sum_congr rfl fun a _ => ?_
+    simp only [Matrix.mul_apply, map_sum, map_mul]
+    refine Finset.sum_congr rfl fun b _ => ?_
     have h3 : cc (X.1 a b) = X.1 b a := congrFun (congrFun hX b) a
     rw [← h3, Base.map_cc, Complex.mul_conj]
   simp only [h2] at h1

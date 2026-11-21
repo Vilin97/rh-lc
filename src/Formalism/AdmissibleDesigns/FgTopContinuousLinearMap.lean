@@ -187,7 +187,7 @@ theorem contAction_repV' (ε : Γ →* Oˣ) (M : Γ →* Matrix n n O)
   refine continuous_pi fun a => ?_
   simp only [repV'_apply, Pi.smul_apply, matK_mulVec]
   refine (hε.comp continuous_fst).smul ?_
-  exact continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun j _ =>
     ((hM a j).comp continuous_fst).smul ((continuous_apply j).comp continuous_snd)
 
 theorem contAction_repV (M : Γ →* Matrix n n O) (hM : ∀ a b, Continuous fun g => M g a b) :
@@ -195,13 +195,13 @@ theorem contAction_repV (M : Γ →* Matrix n n O) (hM : ∀ a b, Continuous fun
   show Continuous fun p : Γ × (n → FractionRing O) => repV M p.1 p.2
   refine continuous_pi fun a => ?_
   simp only [repV_apply, matK_mulVec]
-  exact continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun j _ =>
     ((hM a j).comp continuous_fst).smul ((continuous_apply j).comp continuous_snd)
 
 theorem cont_pairStd [ContinuousMul (FractionRing O)] :
     Continuous fun p : (n → FractionRing O) × (n → FractionRing O) => pairStd p.1 p.2 := by
   simp only [pairStd_apply, dotProduct]
-  exact continuous_finset_sum _ fun i _ =>
+  exact continuous_finsetSum _ fun i _ =>
     ((continuous_apply i).comp continuous_fst).mul ((continuous_apply i).comp continuous_snd)
 
 def datStd (hK : ContinuousMul (FractionRing O)) (ε : Γ →* Oˣ) (M : Γ →* Matrix n n O)

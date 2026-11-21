@@ -584,8 +584,10 @@ theorem GlobalTheory.SW.hecke_relation_pointwise : ∀ (E : Type) [Field E] [Num
   have hq := hP.1
   have mP := max_of_norm hq hP.2.2.1
   have mQ := max_of_norm hq hQ.2.2.1
-  have cP : Nat.card (𝓞 E ⧸ P) = q := hP.2.2.1
-  have cQ : Nat.card (𝓞 E ⧸ conjI P) = q := hQ.2.2.1
+  have cP : Nat.card (𝓞 E ⧸ P) = q := by
+    simpa only [Ideal.absNorm_eq_natCard] using hP.2.2.1
+  have cQ : Nat.card (𝓞 E ⧸ conjI P) = q := by
+    simpa only [Ideal.absNorm_eq_natCard] using hQ.2.2.1
   have : Finite (𝓞 E ⧸ P) := Nat.finite_of_card_ne_zero (cP ▸ hq.ne_zero)
   have : Finite (𝓞 E ⧸ conjI P) := Nat.finite_of_card_ne_zero (cQ ▸ hq.ne_zero)
   have qP : ((q : ℕ) : 𝓞 E) ∈ P := hP.2.2.1 ▸ Ideal.absNorm_mem P

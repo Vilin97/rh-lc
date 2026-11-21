@@ -36,17 +36,17 @@ theorem lev_ring {A B D T : Type} [CommRing A] [CommRing B] [CommRing D] [CommRi
     { carrier := {z | (fun i => p (z i)) = ε.mulVec fun i => q (z i)}
       add_mem' := by
         intro a b ha hb
-        simp only [Set.mem_setOf_eq] at ha hb ⊢
+        simp only [Set.mem_ofPred_eq] at ha hb ⊢
         have e : (fun i => q ((a + b) i)) = (fun i => q (a i)) + fun i => q (b i) := by
           funext i; simp [map_add (f := _)]
         rw [e, Matrix.mulVec_add, ← ha, ← hb]
         funext i; simp [map_add (f := _)]
       zero_mem' := by
-        simp only [Set.mem_setOf_eq, Pi.zero_apply, map_zero]
+        simp only [Set.mem_ofPred_eq, Pi.zero_apply, map_zero]
         exact (Matrix.mulVec_zero ε).symm
       smul_mem' := by
         intro c z hz
-        simp only [Set.mem_setOf_eq] at hz ⊢
+        simp only [Set.mem_ofPred_eq] at hz ⊢
         have e1 : (fun i => p ((c • z) i)) = q (algebraMap A B c) • fun i => p (z i) := by
           funext i; simp [Algebra.smul_def, map_mul, hr]
         have e2 : (fun i => q ((c • z) i)) = q (algebraMap A B c) • fun i => q (z i) := by
@@ -70,7 +70,7 @@ theorem lev_prism [Fact l.Prime] {B C D : Obj l R} (h : Hom B C) (p q : Hom C D)
         fun i => qmap q m (z i)) ∧
       Module.Finite (B.A ⧸ adI B ^ m) ↥N ∧ Module.Projective (B.A ⧸ adI B ^ m) ↥N ∧
         IsBaseChange (C.A ⧸ adI C ^ m) N.subtype := by
-  letI := (qmap h m).toAlgebra
+  let := (qmap h m).toAlgebra
   have c1 : p.comp h = q.comp h := hpo.comm
   refine Exists.elim (hc.stable.po D (p.comp h)) fun T hT => Exists.elim hT fun q₃ hT => Exists.elim hT
     fun q₁₂ hT => ?_

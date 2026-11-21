@@ -331,7 +331,8 @@ theorem fixed_of_level (hJ : SphOff J χ S) (hv : v ∉ S) {φ : GA D V → ℂ}
       rw [(RingHom.injective_iff_ker_eq_bot (algebraMap (𝓞 D.host.F) (𝓞 D.host.E))).1
         (FaithfulSMul.algebraMap_injective _ _)]; exact bot_le)
     exact ⟨⟨Q, hQ.isPrime, fun h0 => v.ne_bot (by
-      rw [← e, h0, Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective _ _)])⟩,
+      rw [← e, h0]
+      exact Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective _ _))⟩,
       HeightOneSpectrum.ext e⟩
   obtain ⟨e, f, hef, h1, h2⟩ := hJ w (offS_iff.2 (h ▸ hv))
   have hs := (Supp.suppF_iff_of_isPrimeIdem V hef h _).2 ⟨k, rfl⟩

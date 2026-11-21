@@ -76,7 +76,7 @@ theorem lineDerivList_replicate (n : ℕ) (v : E) (F : E → V) (z : E) (t : �
     lineDerivList 𝕜 (List.replicate n v) F (z + t • v)
       = iteratedDeriv n (fun s : 𝕜 => F (z + s • v)) t := by
   induction n generalizing t with
-  | zero => simp
+  | zero => simp [lineDerivList]
   | succ n ih =>
     rw [List.replicate_succ, lineDerivList_cons, iteratedDeriv_succ]
     simp only [lineDeriv, add_assoc, ← add_smul, ih]
@@ -117,7 +117,7 @@ theorem analyticAt_lineDerivList {F : E → V} {a : E} (h : AnalyticAt 𝕜 F a)
 theorem lineDerivList_ofFn {F : E → V} {a : E} (h : AnalyticAt 𝕜 F a) {n : ℕ} (m : Fin n → E) :
     lineDerivList 𝕜 (List.ofFn m) F a = iteratedFDeriv 𝕜 n F a m := by
   induction n generalizing a with
-  | zero => simp
+  | zero => simp [lineDerivList]
   | succ n ih =>
     have hev : lineDerivList 𝕜 (List.ofFn fun i => m i.succ) F
         =ᶠ[𝓝 a] fun z => iteratedFDeriv 𝕜 n F z (Fin.tail m) := by

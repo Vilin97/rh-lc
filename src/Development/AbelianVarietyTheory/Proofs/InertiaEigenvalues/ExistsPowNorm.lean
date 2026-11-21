@@ -96,7 +96,7 @@ theorem homog_eq (C : Core l) (a b : Per.Acris l) (y : Om l) (hy : ‖y‖ ≤ 1
   obtain ⟨q, hq, h0⟩ := exists_monic y hy
   refine ⟨q.natDegree, fun i => algebraMap (Per.Ainf l) (Per.Acris l) (Per.zA l (q.coeff i)), ?_⟩
   apply crisP_injective l C.j C.j_cris
-  rw [hq.as_sum, Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finset_sum] at h0
+  rw [hq.as_sum, Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finsetSum] at h0
   have h1 := congrArg (fun z => C.o z * C.j b ^ q.natDegree) h0
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_add (f := _), map_pow, map_sum, map_zero, zero_mul, add_mul, Finset.sum_mul,

@@ -61,7 +61,7 @@ theorem eventually_subsingleton_cohOn [IsLocallyNoetherian X] (π : X' ⟶ X) [I
   let e' : (twist E (lbPow L n)).restrict j ≅ twist (E.restrict j) (lbPow (L.pull j) n) :=
     (Scheme.Modules.restrictFunctorIsoPullback j).app _ ≪≫ Twist.pullbackIso E j (isLB_lbPow hL.isLB n) ≪≫
       (twistFunctor _).mapIso ((Scheme.Modules.restrictFunctorIsoPullback j).app _).symm ≪≫ e
-  exact ((LinearEquiv.ofBijective _ (cohOn.pull_restrict_bijective (g := j) (F := twist E (lbPow L n)) (σ := RingHom.id ℤ) (n := q) (fun r => by simp) ((j.preimage_image_eq ⊤).ge.trans (j.preimage_mono (π ⁻¹ᵁ V).ι_image_top.le)) (π ⁻¹ᵁ V).ι_image_top.ge)).trans
+  exact ((cohOn.restrictEquiv ℤ (g := j) (fun r => by simp) _ (π ⁻¹ᵁ V).ι_image_top q).trans
     (cohOn.mapIso ℤ ⊤ q e')).injective.subsingleton
 
 theorem topIso_inv_appTop (π : X' ⟶ X) (V : X.Opens) :
@@ -247,7 +247,7 @@ theorem finite_coh_of_forall_modification {R : Type} [CommRing R] [IsNoetherianR
       have := ih ((Scheme.Modules.pushforward (redι Z)).obj E)
         ⟨inferInstance, fun V hV => finite_sections_pushforward _ _ hV (hF := finite_sections E (hV.preimage _))⟩
         (range_redι Z ▸ support_pushforward_ssubset (redι Z) E hv) q
-      exact Module.Finite.equiv (LinearEquiv.ofBijective _ (cohOn.pull_id_bijective (g := redι Z) (G := E) (σ := RingHom.id R) (V := ⊤) (n := q) (fun _ => rfl)))) G p
-    exact Module.Finite.equiv (LinearEquiv.ofBijective _ (cohOn.pull_id_bijective (g := redι Z) (G := G) (σ := RingHom.id R) (V := ⊤) (n := p) (fun _ => rfl))).symm
+      exact Module.Finite.equiv (coh.pushforwardEquiv R (g := redι Z) (fun _ => rfl) E q)) G p
+    exact Module.Finite.equiv (coh.pushforwardEquiv R (g := redι Z) (fun _ => rfl) G p).symm
 
 end GlobalTheory.ProperFinite

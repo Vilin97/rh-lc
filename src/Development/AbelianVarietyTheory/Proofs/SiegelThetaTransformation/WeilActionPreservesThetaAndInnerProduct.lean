@@ -181,6 +181,8 @@ theorem wG_laws : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : �
     have hy (k) : per X (lact γ x) ((y * (γ : Matrix (Fin r) (Fin r) E)ᵀ) k) = per X x (y k) := by
       rw [← per_lact x hγ]
       congr 1
+      ext j
+      simp [Matrix.mul_apply, Matrix.mulVec, dotProduct, mul_comm]
     rw [(hH _ _ k1).2.2.2.2 _ (hγ.lact_mem hx), (hH _ _ hφ).2.2.2.2 _ hx, k2 x hx]
     simp only [hy, herm_lact idx hs hγ hx]
 

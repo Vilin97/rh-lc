@@ -100,7 +100,7 @@ theorem isIntegral [Flat f] [IsIntegral HK]
     (hK : IsPullback j fK f (Spec.map (CommRingCat.ofHom (algebraMap V K)))) : IsIntegral H := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible V
   have := isOpenImmersion_generic hK
-  exact isIntegral_of_basicOpen (fun U hU ↦ res_mem_nonZeroDivisors hϖ.ne_zero hU) j
+  exact isIntegral_of_basicOpen (fun U hU ↦ res_mem_nonZeroDivisors f hϖ.ne_zero hU) j
     (opensRange_generic hϖ hK)
 
 theorem notMem_basicOpen_iff_specializes (hϖ : Irreducible ϖ) [IsIntegral Hs]
@@ -108,10 +108,10 @@ theorem notMem_basicOpen_iff_specializes (hϖ : Irreducible ϖ) [IsIntegral Hs]
     x ∉ H.basicOpen (f.appTop ((Scheme.ΓSpecIso (.of V)).inv ϖ)) ↔ i (genericPoint Hs) ⤳ x := by
   constructor
   · intro h
-    obtain ⟨y, rfl⟩ := (mem_range_special hs x).2 ((notMem_basicOpen_iff hϖ x).1 h)
+    obtain ⟨y, rfl⟩ := (mem_range_special hs x).2 ((notMem_basicOpen_iff f hϖ x).1 h)
     exact ((genericPoint_spec Hs).specializes trivial).map i.continuous
   · intro h hx
-    exact (notMem_basicOpen_iff hϖ _).2 ((mem_range_special hs _).1 ⟨_, rfl⟩)
+    exact (notMem_basicOpen_iff f hϖ _).2 ((mem_range_special hs _).1 ⟨_, rfl⟩)
       (h.mem_open (H.basicOpen _).isOpen hx)
 
 theorem prime_res (hϖ : Irreducible ϖ) [Flat f] [IsIntegral Hs]
@@ -122,7 +122,7 @@ theorem prime_res (hϖ : Irreducible ϖ) [Flat f] [IsIntegral Hs]
   have : Nonempty (i ⁻¹ᵁ U) := ⟨⟨y, hx⟩⟩
   have : Nonempty U := ⟨⟨_, hx⟩⟩
   rw [← Ideal.span_singleton_prime
-      (nonZeroDivisors.ne_zero (res_mem_nonZeroDivisors hϖ.ne_zero hU)),
+      (nonZeroDivisors.ne_zero (res_mem_nonZeroDivisors f hϖ.ne_zero hU)),
     ← ker_app_eq_span (β := CommRingCat.ofHom (residue V)) residue_surjective
       (ker_residue.trans hϖ.maximalIdeal_eq) hs hU]
   exact RingHom.ker_isPrime _
@@ -143,7 +143,7 @@ theorem isDiscreteValuationRing_stalk_generic (hϖ : Irreducible ϖ) [Flat f]
     IsDiscreteValuationRing (H.presheaf.stalk (i (genericPoint Hs))) ∧
       Irreducible (H.presheaf.germ ⊤ (i (genericPoint Hs)) trivial (f.appTop ((Scheme.ΓSpecIso (.of V)).inv ϖ))) :=
   haveI := isLocallyNoetherian f
-  isDiscreteValuationRing_stalk
+  isDiscreteValuationRing_stalk (notMem_basicOpen_iff_specializes hϖ hs) (prime_res_generic hϖ hs)
 
 
 omit [IsDomain V] [IsDiscreteValuationRing V] [IsFractionRing V K] in
@@ -210,10 +210,11 @@ theorem existsUnique_isUnit_appLE_eq {ι : Type v} {U : ι → H.Opens}
   have := isLocalization_away (K := K) hϖ
   have := IsOpenImmersion.of_isLocalization (S := K) ϖ
   refine existsUnique_of_exists_of_unique
-    (exists_isUnit_appLE_eq hU hg hr hru e
+    (exists_isUnit_appLE_eq (notMem_basicOpen_iff_specializes hϖ hs)
+      (prime_res_generic hϖ hs) (opensRange_generic hϖ hK) hW hU hg hr hru e
       (Spec.map (CommRingCat.ofHom (algebraMap V K))) eK heK ?_ hyA hA hA' hA'' hu hur)
     fun s s' h h' ↦ funext fun a ↦ appLE_injective j (hW a) ((h.2.2 a).trans (h'.2.2 a).symm)
-  rw [notMem_basicOpen_iff hϖ, ← Scheme.Hom.comp_apply, he]
+  rw [notMem_basicOpen_iff f hϖ, ← Scheme.Hom.comp_apply, he]
   rfl
 
 theorem existsUnique_gen {e : Spec (.of V) ⟶ H} (he : e ≫ f = 𝟙 _)
@@ -269,9 +270,10 @@ theorem existsUnique_zpow_mul_chart (hϖ : Irreducible ϖ) {ι : Type v} {U : ι
       fK.appTop ((Scheme.ΓSpecIso (.of K)).inv (algebraMap V K ϖ ^ n)) := fun n ↦ by
     rw [← map_zpow, Units.coe_map, Units.val_zpow_eq_zpow_val]
     rfl
-  have := existsUnique_zpow_mul_appLE (hU := hU) (hg := hg)
+  have := existsUnique_zpow_mul_appLE (notMem_basicOpen_iff_specializes hϖ hs)
+    (prime_res_generic hϖ hs) (opensRange_generic hϖ hK) hW hU hg
     (Units.map φ.toMonoidHom (Units.mk0 _ h0)) (appTop_cst hK.w ϖ).symm hr hr0
-  simpa only [hτ, notMem_basicOpen_iff hϖ] using this
+  simpa only [hτ, notMem_basicOpen_iff f hϖ] using this
 
 theorem existsUnique_zpow_mul_sec (hϖ : Irreducible ϖ) {L : LB H} (hL : L.IsLB)
     (r : (L.pull j).Sec) (hr0 : ∃ a, r.f a ≠ 0) :

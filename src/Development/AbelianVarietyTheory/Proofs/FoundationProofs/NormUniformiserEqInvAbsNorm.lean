@@ -21,6 +21,6 @@ theorem norm_uniformiser_eq_inv_absNorm :
   have hne : ((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) ≠ 0 :=
     WithZero.coe_ne_zero
   rw [WithZeroMulInt.toNNReal_neg_apply _ hne]
-  simp only [WithZero.unzero_coe, toAdd_ofAdd, zpow_neg, zpow_one, NNReal.coe_inv]
+  simp only [WithZero.log, WithZero.recZeroCoe_coe, toAdd_ofAdd, zpow_neg, zpow_one, NNReal.coe_inv]
 
 end GlobalTheory

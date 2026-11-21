@@ -324,6 +324,7 @@ theorem GlobalTheory.UnipCoord.map_coords_haar : ∀ (R : Type) [CommRing R] [To
     ⟨_, Measure.isMulLeftInvariant_eq_smul ν (coordMeasure μR)⟩
   refine ⟨c, ?_⟩
   change Measure.map coords ν = _
-  rw [hc, Measure.map_smul, coordMeasure, Measure.map_map measurable_coords measurable_ofCoords]
+  rw [hc, Measure.map_smul c measurable_coords.aemeasurable, coordMeasure,
+    Measure.map_map measurable_coords measurable_ofCoords]
   have : coords ∘ (ofCoords : (Pos n → R) → GlobalTheory.SmGL.unipB R (Fin n)) = id := funext coords_ofCoords
   rw [this, Measure.map_id]

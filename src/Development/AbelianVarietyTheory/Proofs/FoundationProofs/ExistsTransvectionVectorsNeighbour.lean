@@ -105,7 +105,10 @@ theorem exists_nat {q : ℕ} (hq : q.Prime) (μ : K)
     intro hle
     obtain ⟨Q, hJQ, hQ, hc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (Ideal.span {(q : ℤ)}) J hle
     have hqQ : (q : 𝓞 K) ∈ Q := by
-      have : (q : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := by rw [hc]; exact Ideal.mem_span_singleton_self _
+      have : (q : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := by
+        change (q : ℤ) ∈ Ideal.under ℤ Q
+        rw [hc]
+        exact Ideal.mem_span_singleton_self _
       simpa [Ideal.mem_comap] using this
     obtain ⟨p, a, ha, e⟩ := h Q hQ hqQ
     exact ha (hJQ ⟨p, e⟩)

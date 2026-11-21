@@ -42,8 +42,6 @@ theorem der_div_eq_zero {L : Type*} [Field L] {δ : L → L} (h : IsDer δ) {x y
 variable {D : D7} {B : WeightFamilies.Prov D} {P : ModuliIntegralCharts.Prov D} {j : ℕ} (X : PJ D B P j)
   (la : HeightOneSpectrum (𝓞 B.KO)) (N : ℕ)
 
-attribute [local instance 1100] Kp.field Kp.algOp Kp.algKl
-
 theorem exists_derKp (p : Idx D j N) : ∃ δ : Kp X la N → Kp X la N, IsDer δ ∧
     (∀ f : Pol X la N, δ (algebraMap (Op X la N) (Kp X la N) (algebraMap (Pol X la N) (Op X la N) f)) =
       algebraMap (Op X la N) (Kp X la N) (algebraMap (Pol X la N) (Op X la N) (MvPolynomial.pderiv p f))) ∧

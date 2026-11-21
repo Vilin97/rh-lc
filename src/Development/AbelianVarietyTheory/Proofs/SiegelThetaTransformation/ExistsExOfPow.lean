@@ -148,7 +148,8 @@ theorem exists_den (x : Matrix κ ι ℚ) : ∃ N : ℕ, 0 < N ∧ IntM ((N : �
 theorem exists_den_fg (M : AddSubgroup (Matrix κ ι ℚ)) (hM : M.FG) :
     ∃ N : ℕ, 0 < N ∧ ∀ x ∈ M, IntM ((N : ℚ) • x) := by
   classical
-  obtain ⟨S, rfl⟩ := hM
+  obtain ⟨S, hS⟩ := AddSubgroup.isAddFG_iff.mp hM
+  rw [← hS]
   choose d hd hd' using fun x : Matrix κ ι ℚ => exists_den x
   refine ⟨∏ x ∈ S, d x, Finset.prod_pos fun x _ => hd x, fun x hx => ?_⟩
   induction hx using AddSubgroup.closure_induction with
@@ -185,8 +186,9 @@ theorem ip_smul_self (c : ℂ) (hc : c ≠ 0) (φ : Matrix κ ι ℚ → ℂ) :
 theorem fg_map {G G' : Type} [AddCommGroup G] [AddCommGroup G'] {A : AddSubgroup G} (hA : A.FG)
     (f : G →+ G') : (A.map f).FG := by
   classical
-  obtain ⟨S, rfl⟩ := hA
-  exact ⟨S.image f, by rw [AddMonoidHom.map_closure, Finset.coe_image]⟩
+  obtain ⟨S, hS⟩ := AddSubgroup.isAddFG_iff.mp hA
+  apply AddSubgroup.isAddFG_iff.mpr
+  exact ⟨S.image f, by rw [Finset.coe_image, ← AddMonoidHom.map_closure, hS]⟩
 
 def fac (ε : Matrix κ ι ℚ × Matrix κ ι ℚ → ℂ) (y : Matrix κ ι ℚ × Matrix κ ι ℚ)
     (x : Matrix κ ι ℚ) : ℂ := ε y * ex (2 * pr x y.1 - pr y.1 y.2)

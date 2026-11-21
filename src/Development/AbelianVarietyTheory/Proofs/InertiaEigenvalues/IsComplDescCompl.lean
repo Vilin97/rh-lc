@@ -56,6 +56,8 @@ theorem form_mem (l : k' →ₗ[k] k) (W : Submodule k (Fin n → k)) (x : Fin n
     | zero =>
       intro c
       convert W.zero_mem using 1
+      funext i
+      simp
     | add y z _ _ hy hz =>
       intro c
       convert W.add_mem (hy c) (hz c) using 1

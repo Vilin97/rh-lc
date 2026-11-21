@@ -281,13 +281,13 @@ theorem exists_invariant (idx : Fin g ≃ T × Fin r) (ρ : Fin q ⊕ Fin p → 
       aeval (fun l => lin (lift idx NB (d l))) (barP (P j)))
   refine ⟨R, fun u hu => absorb_invariant (differentiable_gauss c M) hR _ _
     (dotProduct_act (uc u)) (fun y => ?_) (gauss_act c M hu), fun F hF => ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [map_sum, map_mul, eval_aeval_lin]
-    refine invFam_eval hP hu _ _ _ _ (fun t i k => ?_) fun t i k => ?_
-    · simp only [hd]
-      convert lift_single_act idx NA t (ρ i) _ (hA t i) k (uc u) y
-    · simp only [hd]
-      convert lift_single_act idx NB t (ρ i) _ (hB t i) k (uc u) y
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, eval_aeval_lin]
+      refine invFam_eval hP hu _ _ _ _ (fun t i k => ?_) fun t i k => ?_
+      · simp only [hd]
+        convert lift_single_act idx NA t (ρ i) _ (hA t i) k (uc u) y
+      · simp only [hd]
+        convert lift_single_act idx NB t (ρ i) _ (hB t i) k (uc u) y
   · rw [← hR F hF, I2.jof_polyDeriv_sum]
     exact Finset.sum_congr rfl fun j _ =>
       polyDeriv_bi ((differentiable_gauss c M).fun_mul hF) _ _ _ _ _

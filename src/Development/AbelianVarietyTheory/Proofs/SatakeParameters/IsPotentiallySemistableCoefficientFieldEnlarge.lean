@@ -36,10 +36,11 @@ include hE
 
 theorem tensCoord_stRep (g : ↥(GK K)) (x : V' ⊗[ℚ_[l]] Bst P) (i : ι) :
     tensCoord E (Bst P) (stRep P ρ' g x) i = stRep P ρ g (tensCoord E (Bst P) x i) := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
-  | tmul v b => simp [hE]
-  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
+  change tensCoord E (Bst P) (AlgebraTensorModule.map (ρ' g)
+    (actSt P (g : GQ l)).toLinearMap x) i =
+    AlgebraTensorModule.map (ρ g) (actSt P (g : GQ l)).toLinearMap
+      (tensCoord E (Bst P) x i)
+  exact tensCoord_map E (ρ' g) (ρ g) (hE g) _ x i
 
 theorem mem_Dpst_coord (x : V' ⊗[ℚ_[l]] Bst P) :
     x ∈ Dpst P ρ' ↔ ∀ i, tensCoord E (Bst P) x i ∈ Dpst P ρ := by
@@ -101,6 +102,6 @@ theorem isPst_enlarge : ∀ {l : ℕ} [Fact l.Prime] (P : LocPrime l) {E Ω : Ty
       ∀ x, Bw.repE L₂ (mapRep (IntermediateField.inclusion hL).toRingHom r₁) g x =
         (M.map (algebraMap ↥L₁.1 ↥L₂.1)).mulVec x :=
     fun g => ⟨r₁ (Bw.e.symm g), fun _ => rfl, fun _ => rfl⟩
-  exact isPst_of_coord P (E := vecCoord ↥L₁.1 ↥L₂.1 m) (vecCoord_rep hρ) h
+  exact isPst_of_coord P (E := GlobalTheory.Pst.vecCoord ↥L₁.1 ↥L₂.1 m) (vecCoord_rep hρ) h
 
 end GlobalTheory.PstExt

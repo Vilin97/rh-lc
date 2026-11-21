@@ -26,6 +26,37 @@ theorem valR_pullGen_spMap {A A' : Type} [CommRing A] [CommRing A'] [IsLocalRing
   have h₀ : ⊤ ≤ (𝟙 (Sp A)) ⁻¹ᵁ LB.wchart L φ j := h
   have h₁ : ⊤ ≤ (𝟙 (Sp A')) ⁻¹ᵁ LB.wchart L (fun k => spMap f ≫ φ k) j := fun z _ =>
     Set.mem_iInter.2 fun k => Set.mem_iInter.1 (h (show spMap f z ∈ (⊤ : (Sp A).Opens) from trivial)) k
+  have toStkA_valR : ∀ {R : Type} [CommRing R] {T : Scheme.{0}} (f : Sp R ⟶ T)
+      (U : T.Opens) (z : Sp R) (ht : ⊤ ≤ f ⁻¹ᵁ U) (a : Γ(T, U)ˣ),
+      toStkA z (valR f U a.val) = (gm f z U a).val := by
+    intro R _ T f U z ht a
+    have hz : f z ∈ U := ht trivial
+    have e1 : ∀ c, (Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of R)).hom.hom c) = c :=
+      fun c => congrArg (fun f => CommRingCat.Hom.hom f c) (Iso.hom_inv_id (Scheme.ΓSpecIso (CommRingCat.of R)))
+    rw [valR, dif_pos ht, gm, dif_pos hz]
+    show ((Sp R).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom
+        ((Scheme.ΓSpecIso (CommRingCat.of R)).hom.hom ((f.appLE U ⊤ ht).hom a.val))) =
+      ((Sp R).presheaf.germ (f ⁻¹ᵁ U) z hz).hom ((f.app U).hom a.val)
+    rw [e1]
+    exact TopCat.Presheaf.germ_res_apply (Sp R).presheaf (homOfLE ht) z trivial ((f.app U).hom a.val)
+  have gm_pullU_eq_gm_comp {S T V : Scheme.{0}} (h : T ⟶ S) (r : V ⟶ T) (z : V) (U : S.Opens)
+      (a : Γ(S, U)ˣ) : gm r z (h ⁻¹ᵁ U) (pullU h U a) = gm (r ≫ h) z U a := by
+    by_cases hz : r z ∈ h ⁻¹ᵁ U
+    · have hz' : (r ≫ h) z ∈ U := hz
+      simp only [gm, dif_pos hz, dif_pos hz']
+      all_goals first | rfl | (ext; simp [pullU, Scheme.comp_app])
+    · have hz' : (r ≫ h) z ∉ U := hz
+      simp only [gm, dif_neg hz, dif_neg hz', MonoidHom.one_apply]
+  have gm_pullGen' {X Y Z Z' : Scheme.{0}} (L : LB X) {K : Type} [Fintype K]
+      (φ : K → (Y ⟶ X)) (ε : K → ℤ) (t : LB.Gen (LB.LinComb L φ ε))
+      (h : Z ⟶ Y) (r : Z' ⟶ Z) (z : Z') (j : K → L.ι) :
+      gm r z (LB.wchart L (fun k => h ≫ φ k) j) ((LB.pullGen L φ ε t h).s j) =
+        gm (r ≫ h) z (LB.wchart L φ j) (t.s j) := by
+    by_cases hz : r z ∈ LB.wchart L (fun k => h ≫ φ k) j
+    · exact (gm_res r z _ hz (pullU h _ (t.s j))).trans (gm_pullU_eq_gm_comp h r z _ _)
+    · have hz' : (r ≫ h) z ∉ LB.wchart L φ j := fun H => hz (Set.mem_iInter.2 fun k => Set.mem_iInter.1 H k)
+      simp only [gm, dif_neg hz, dif_neg hz', MonoidHom.one_apply]
+      rfl
   apply toStkA_injective
   refine (toStkA_valR _ _ _ h₁ _).trans ((congrArg Units.val (gm_pullGen' L φ ε t (spMap f) (𝟙 _) _ j)).trans ?_)
   refine Eq.trans ?_ (congrArg _ (FormalValue.valR_spMap f _ _ h₀ _))
@@ -221,7 +252,7 @@ theorem exists_coeff_expansion (h : ThetaHyp W th σ fam) (hθ : Λ.u.IsFn th θ
     · simp
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [hc, map_sum]
-      exact Finset.sum_congr rfl fun x _ => by rw [PowerSeries.coeff_C_mul, mul_comm]
+        exact Finset.sum_congr rfl fun x _ => by rw [PowerSeries.coeff_C_mul, mul_comm]
 
 theorem vals_FSum : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)] (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) [Algebra (FractionRing ℂ) ℂ] [IsScalarTower ℂ (FractionRing ℂ) ℂ] (b : O →+* ℂ) (a : ArcIn D l β ℂ b) (χ : Sp ℂ⟦X⟧ ⟶ Y.X) (W : ArcWit Y a (Ideal.span {PowerSeries.X}) (PowerSeries.C (R := ℂ)) PowerSeries.X χ) (Λ : GtAn a) (Ξ : ConstPts W Λ) (th : a.D₀.P.L.Sec) (σ : Out.H0 W.P.U.LG.L 1) (fam : ∀ x, W.P.D.toPre.SecB 1 x) (θ : (Fin Λ.A.gB → ℂ) → ℂ), ThetaHyp W th σ fam → θ ∈ Λ.A.Theta 1 0 → Λ.u.IsFn th θ → Ξ.Vals σ (fun v => Λ.A.FSum 1 0 θ v) := by
   intro h₁ h₂ E _ _ _ H _ D l Xo c O _ β Y _ _ b a χ W Λ Ξ th σ fam θ h _ hθ

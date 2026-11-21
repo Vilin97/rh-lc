@@ -23,8 +23,9 @@ omit [Fintype γ] [LinearOrder γ] [Fintype γ'] [LinearOrder γ'] [Fintype n] [
 theorem blk_rename {e : (Σ c, m c) ≃ n} {e₂ : (Σ c', m (f c')) ≃ n}
     (he : ∀ c' x, e₂ ⟨c', x⟩ = e ⟨f c', x⟩) (j : n) : blk e j = f (blk e₂ j) := by
   obtain ⟨⟨c', x⟩, rfl⟩ := e₂.surjective j
-  have h1 : blk e₂ (e₂ ⟨c', x⟩) = c' := blk_apply e₂ c' x
-  rw [h1, he, blk_apply]
+  calc
+    blk e (e₂ ⟨c', x⟩) = f c' := by rw [he]; simp [blk]
+    _ = f (blk e₂ (e₂ ⟨c', x⟩)) := by simp [blk]
 
 
 omit [Fintype γ] [Fintype γ'] [∀ c, Fintype (m c)] [∀ c, DecidableEq (m c)] in

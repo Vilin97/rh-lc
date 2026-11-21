@@ -22,7 +22,7 @@ theorem galQ_eq_GK_mul_GKinf : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero 
   intro l _ a e _ _ ϖ hea g
   have hl := (Fact.out : l.Prime)
   have hdvd : e ∣ l ^ a - 1 := ⟨1, by omega⟩
-  have hG := PiSys.isGalois_field a ϖ hdvd
+  have hG := ϖ.isGalois_field a hdvd
   have hK : FiniteDimensional ℚ_[l] (ϖ.field a).1 := (ϖ.field a).2
   have hcop : Nat.Coprime l e := by
     refine (Nat.Prime.coprime_iff_not_dvd hl).2 fun h => ?_

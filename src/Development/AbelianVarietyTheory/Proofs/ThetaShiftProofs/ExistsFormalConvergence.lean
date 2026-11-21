@@ -32,7 +32,7 @@ theorem exists_dfsum_halfRing {α : A.X} {th : (Fin A.gB → ℂ) → ℂ} (h : 
   let S : ℂ⸨X⸩ := HahnSeries.ofSuppBddBelow (fun n => fderiv ℂ (fun v => (A.FSum j α th v).coeff n) 0 z₀)
     ⟨-A.be α α, fun n hn => by
       by_contra hlt
-      exact hn (by simp only [AnArc.fderiv_coeff_FSum_eq_zero (not_le.1 hlt), ContinuousLinearMap.zero_apply])⟩
+      exact hn (by simp only [AnArc.fderiv_coeff_FSum_eq_zero (not_le.1 hlt), zero_apply])⟩
   exact ⟨⟨S, fun _ hw => (AnArc.hasSum_fderiv_coeff_FSum hT h hw 0 z₀).summable⟩, fun _ => rfl,
     fun _ hw => Conv.ev_eq_of_hasSum hw _ (AnArc.hasSum_fderiv_coeff_FSum hT h hw 0 z₀)⟩
 

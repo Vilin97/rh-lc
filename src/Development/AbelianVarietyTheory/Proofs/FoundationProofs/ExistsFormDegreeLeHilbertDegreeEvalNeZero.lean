@@ -68,7 +68,7 @@ theorem mk_mul_mem_quotPiece (I : Ideal (MvPolynomial ι k)) {z : MvPolynomial �
 theorem finrank_homogeneousSubmodule [Fintype ι] (n : ℕ) :
     finrank k (homogeneousSubmodule ι k n) = (n + Fintype.card ι - 1).choose n := by
   rw [← natCard_degree_eq, homogeneousSubmodule_eq_finsupp_supported]
-  exact finrank_eq_nat_card_basis (basisRestrictSupport k _)
+  exact finrank_eq_nat_card_basis (basisRestrictSupport k {d : ι →₀ ℕ | d.degree = n})
 
 end Grading
 
@@ -201,6 +201,7 @@ theorem exists_linear_normalisation [Infinite k] {P : Ideal (MvPolynomial ι k)}
     refine ih w' (fun j => (hw _).sub ((hw 0).C_mul _)) (fun j => by simp [w', hy]) ?_
     let φ : MvPolynomial (Fin r) k →ₐ[k] _ := aeval fun j => Ideal.Quotient.mk P (w' j)
     letI := φ.toRingHom.toAlgebra
+    set_option synthInstance.maxHeartbeats 200000 in
     haveI : IsScalarTower k (MvPolynomial (Fin r) k) (MvPolynomial ι k ⧸ P) :=
       IsScalarTower.of_algebraMap_eq fun x => (φ.commutes x).symm
     refine (isIntegral_of_projection (R := MvPolynomial (Fin r) k) _ (Fin.cons 0 X) (Fin.cons 1 c)
@@ -327,7 +328,7 @@ theorem le_factorial_mul_leadingCoeff [Finite ι] {I : Ideal (MvPolynomial ι k)
       rw [Nat.sub_add_cancel hdn] at this
       rw [Int.cast_natCast] at hn
       rw [Polynomial.eval_sub, Polynomial.eval_C_mul,
-        Polynomial.preHilbertPoly_eq_choose_sub_add _ _ hdn, ← hn, sub_nonneg]
+        Polynomial.preHilbertPoly_eq_choose_add_sub _ _ (by omega), Nat.add_sub_comm hdn, ← hn, sub_nonneg]
       exact_mod_cast this
   rw [Polynomial.coeff_sub, Polynomial.coeff_C_mul, Polynomial.coeff_preHilbertPoly_self,
     sub_nonneg] at h1
@@ -427,6 +428,7 @@ theorem exists_form_degree_le_of_isHilbertPoly [Infinite k] [Finite ι]
     let φ : MvPolynomial (Fin (Fintype.card ι)) k →ₐ[k] _ :=
       aeval fun j => Ideal.Quotient.mk P (w j)
     letI := φ.toRingHom.toAlgebra
+    set_option synthInstance.maxHeartbeats 200000 in
     haveI : IsScalarTower k (MvPolynomial (Fin (Fintype.card ι)) k) (MvPolynomial ι k ⧸ P) :=
       IsScalarTower.of_algebraMap_eq fun x => (φ.commutes x).symm
     have e : (aeval fun j => Ideal.Quotient.mk P (X j) : MvPolynomial ι k →ₐ[k] _) =

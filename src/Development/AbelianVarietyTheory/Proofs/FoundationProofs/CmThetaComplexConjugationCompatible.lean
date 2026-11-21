@@ -306,7 +306,7 @@ theorem normSq_bar {T : Tor D} (hT : 0 < area T.abelian₂)
 theorem fixK_or (M : IntermediateField ℚ ℂ) (ρ : M →ₐ[ℚ] ℂ) (hM : ∀ τ x, embT D τ x ∈ M) :
     FixK D M ρ ∨ FixK D M (rhoBar M ρ) := by
   obtain ⟨τ⟩ : Nonempty D.what₂.Tau := Fintype.card_pos_iff.1 (by
-    rw [D.what₂.card_Tau]; unfold Ranks.f Ranks.n; positivity)
+    rw [D.what₂.card_Tau]; unfold Ranks.f Ranks.n; have := D.R.ord_pos; omega)
   have hm : ∀ a : D.host.K, D.host.φ₀ (a : D.host.E) ∈ M := fun a => by
     rw [← (GlobalTheory.InducedType.induced_type D).1.1 τ a]; exact hM _ _
   let σ : D.host.K →+* ℂ := D.host.φ₀.comp D.host.K.val.toRingHom

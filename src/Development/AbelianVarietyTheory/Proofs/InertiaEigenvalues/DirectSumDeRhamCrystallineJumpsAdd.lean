@@ -218,7 +218,7 @@ private theorem dcris_finite_le {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : 
     [IsScalarTower ℚ_[l] ↥LL.1 V] [FiniteDimensional ↥LL.1 V] (ρ : Representation ↥LL.1 ↥(GK K) V) :
     Module.Finite ↥LL.1 (Dcris (P.PD K) ρ) ∧
       finrank ↥LL.1 (Dcris (P.PD K) ρ) ≤ finrank ℚ_[l] ↥(K0 K) * finrank ↥LL.1 V := by
-  have := isDomain_cris (P.PD K) (isField_of_tied T)
+  have := isDomain_cris (PD := P.PD K) (isField_of_tied T)
   have := (P.PD K).finK₀
   have := LL.2
   refine finite_finrank_le (P.PD K).actB

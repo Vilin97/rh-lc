@@ -26,7 +26,7 @@ theorem _root_.GlobalTheory.Ker.isOpen_doubleCoset_of_isOpen (Γ K : Subgroup G)
   have hunion : {x : G | ∃ γ ∈ Γ, ∃ k ∈ K, x = γ * a * k} =
       ⋃ γ ∈ Γ, (fun k => γ * a * k) '' (K : Set G) := by
     ext x
-    simp only [Set.mem_setOf_eq, Set.mem_iUnion, Set.mem_image, SetLike.mem_coe, exists_prop]
+    simp only [Set.mem_ofPred_eq, Set.mem_iUnion, Set.mem_image, SetLike.mem_coe, exists_prop]
     constructor
     · rintro ⟨γ, hγ, k, hk, rfl⟩
       exact ⟨γ, hγ, k, hk, rfl⟩
@@ -81,7 +81,7 @@ theorem _root_.GlobalTheory.Ker.tsum_indicator_coset (Γ K : Subgroup G) (a : G)
         exact K.mul_mem hγ' (K.inv_mem hk₀)
     rw [← hinj.encard_image, ← himg, ← hfin.cast_ncard_eq, ENat.toENNReal_coe]
   · rw [Set.indicator_of_notMem hx, mul_zero]
-    refine ENNReal.tsum_eq_zero.2 fun γ => Set.indicator_of_notMem ?_ _
+    refine tsum_eq_zero_iff.2 fun γ => Set.indicator_of_notMem ?_ _
     intro hmem
     have hk : a⁻¹ * ((γ : G) * x) ∈ K := hmem
     exact hx ⟨(γ : G)⁻¹, Γ.inv_mem γ.2, _, hk, by group⟩
@@ -159,7 +159,7 @@ theorem _root_.GlobalTheory.Ker.integral_fundamentalDomain_eq_sum_doubleCoset : 
     rw [Measure.restrict_apply (hCmeas i)]
     exact hCGtop i
   refine ⟨h𝓖top, ?_, ?_⟩
-  · exact (integrable_finset_sum _ fun i _ => hint i).congr
+  · exact (integrable_finsetSum _ fun i _ => hint i).congr
       (ae_of_all _ fun x => (hdecomp x).symm)
   · refine (congrArg (fun f : G → ℂ => ∫ x in 𝓖, f x ∂ν) (funext hdecomp)).trans ?_
     rw [integral_finsetSum _ fun i _ => hint i, Finset.mul_sum]

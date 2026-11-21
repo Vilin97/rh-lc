@@ -32,7 +32,6 @@ section Inhabitants
 namespace Line
 
 open GroundTheory.Heights₂.Heights (CP)
-open GroundTheory.Heights₂.Heights.Regular.ProjectiveLine
 
 end Line
 

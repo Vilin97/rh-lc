@@ -31,18 +31,26 @@ def sat {V V' : Type*} [AddCommGroup V] [AddCommGroup V'] (f : V →+ V') (B : A
 
 theorem uniform_of_fg {V V' : Type*} [AddCommGroup V] [AddCommGroup V'] (f : V →+ V') (A : AddSubgroup V)
     (B : AddSubgroup V') (hA : A.FG) (h : A ≤ sat f B) : ∃ R : ℕ, 0 < R ∧ ∀ y ∈ A, R • f y ∈ B := by
-  obtain ⟨S, rfl⟩ := hA
-  have h' : ∀ y : S, ∃ n : ℕ, 0 < n ∧ n • f y ∈ B := fun y => h (AddSubgroup.subset_closure y.2)
+  obtain ⟨S, hS⟩ := hA
+  have h' : ∀ y : S, ∃ n : ℕ, 0 < n ∧ n • f y.1.1 ∈ B :=
+    fun y => h y.1.2
   choose n hn hy using h'
   refine ⟨∏ y, n y, Finset.prod_pos fun y _ => hn y, fun y hy' => ?_⟩
-  induction hy' using AddSubgroup.closure_induction with
-  | mem x hx =>
-    obtain ⟨c, hc⟩ : n ⟨x, hx⟩ ∣ ∏ y, n y := Finset.dvd_prod_of_mem _ (Finset.mem_univ _)
-    rw [hc, mul_comm, mul_smul]
-    exact B.nsmul_mem (hy ⟨x, hx⟩) _
-  | zero => simp
-  | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact B.add_mem hx hy
-  | neg x _ hx => rw [map_neg, smul_neg]; exact B.neg_mem hx
+  have hall : ∀ x : A, x ∈ AddSubsemigroup.closure (S : Set A) →
+      (∏ y, n y) • f x.1 ∈ B := by
+    intro x hx
+    induction hx using AddSubsemigroup.closure_induction with
+    | mem x hx =>
+      obtain ⟨c, hc⟩ : n ⟨x, hx⟩ ∣ ∏ y, n y := Finset.dvd_prod_of_mem _ (Finset.mem_univ _)
+      rw [hc, mul_comm, mul_smul]
+      exact B.nsmul_mem (hy ⟨x, hx⟩) _
+    | add x y _ _ hx hy =>
+      change (∏ y, n y) • f (x.1 + y.1) ∈ B
+      rw [map_add, smul_add]
+      exact B.add_mem hx hy
+  apply hall ⟨y, hy'⟩
+  rw [hS]
+  trivial
 
 theorem exists_nat_mul_int {K : Type*} [Field K] [NumberField K] (κ : K) :
     ∃ (n : ℕ) (a : 𝓞 K), 0 < n ∧ (a : K) = n * κ := by

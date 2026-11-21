@@ -82,7 +82,7 @@ theorem det_gram_bot {γ : M2 E N} (h : γ ∈ UU E N) (τ : E →+* ℂ) :
   have e : (γ.submatrix Sum.inr id).map τ * ((γ.submatrix Sum.inr id).map τ)ᴴ =
       γ.toBlocks₂₁.map τ * (γ.toBlocks₂₁.map τ)ᴴ + γ.toBlocks₂₂.map τ * (γ.toBlocks₂₂.map τ)ᴴ := by
     ext i j
-    simp [mul_apply, Fintype.sum_sum_type, toBlocks₂₁, toBlocks₂₂]
+    simp [Matrix.mul_apply, Fintype.sum_sum_type, toBlocks₂₁, toBlocks₂₂]
   have h1 := HAct.map_mem τ (HAct.group_part h).2.2.1
   rw [HAct.map_ccT, HAct.map_blocks τ γ, fromBlocks_conjTranspose] at h1
   have h2 := (HAct.blocks h1).2.2.2
@@ -145,7 +145,8 @@ theorem exists_short_generators {Ψ : Finset (E →+* ℂ)} (hΨ : IsType Ψ) (N
   have hca : ((c : E) • a).det ≠ 0 := by
     rw [det_smul]; exact mul_ne_zero (pow_ne_zero _ hcE) ha
   have hint : ∀ i j, IsIntegral ℤ ((((c : E) • a) * γ.submatrix Sum.inr id) i j) := fun i j => by
-    rw [Matrix.smul_mul, ← Matrix.mul_smul, mul_apply]
+    rw [Matrix.smul_mul, ← Matrix.mul_smul]
+    change IsIntegral ℤ (∑ k, a i k * ((c : E) * γ (Sum.inr k) j))
     exact IsIntegral.sum _ fun k _ => (hai i k).mul (hd (Sum.inr k) j)
   set w : Fin N → (Fin N ⊕ Fin N → 𝓞 E) := fun i j => ⟨_, hint i j⟩ with hw
   have hwe : ∀ i j, (w i j : E) = (((c : E) • a) * γ.submatrix Sum.inr id) i j := fun _ _ => rfl
@@ -165,7 +166,7 @@ theorem exists_short_generators {Ψ : Finset (E →+* ℂ)} (hΨ : IsType Ψ) (N
       rw [← pow_mul, mul_comm, pow_mul, ← mul_pow]
       refine pow_le_pow_left₀ (by positivity) ((norm_embAll_sq_le hΨ _).trans (le_of_eq ?_)) _
       simp only [hwe, Finset.mul_sum, Matrix.smul_mul, Matrix.smul_apply, smul_eq_mul, map_mul,
-        map_natCast, norm_mul, norm_natCast, mul_pow]
+        map_natCast, norm_mul, Complex.norm_natCast, mul_pow]
     rw [← Finset.prod_pow]
     refine (Finset.prod_le_prod₀ (fun _ _ => by positivity) fun i _ => h1 i).trans ?_
     rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]

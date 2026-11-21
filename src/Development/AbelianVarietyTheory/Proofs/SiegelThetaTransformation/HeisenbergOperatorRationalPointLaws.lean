@@ -111,6 +111,8 @@ theorem heisS_laws : ∀ (κ ι : Type) [Fintype κ] [Fintype ι] [DecidableEq �
     unfold ip
     refine Eq.trans ?_ h3
     congr 1
+    funext x
+    simp only [heisS, Pi.mul_apply, map_mul]
     rw [← Complex.exp_conj, mul_mul_mul_comm, ← Complex.exp_add]
     simp only [map_mul, Complex.conj_ofReal, Complex.conj_I, map_ratCast]
     simp

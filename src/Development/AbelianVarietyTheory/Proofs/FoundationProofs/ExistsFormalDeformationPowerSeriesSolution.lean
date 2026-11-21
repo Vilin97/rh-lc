@@ -43,7 +43,22 @@ theorem not_mem_pow_succ {A : Type} [CommRing A] [IsDedekindDomain A] {N : ℕ} 
   · rcases hp.dvd_or_dvd h with h | h
     · exact hQP i (hP₀.eq_of_le (hQmax i).ne_top (Ideal.le_of_dvd h)).symm
     · exact hDQ i (Ideal.le_of_dvd h)
-  · obtain ⟨j, hj, hji⟩ := (hp.dvd_finset_prod_iff _).mp h
+  · have hprod : ∀ s : Finset I, Q i ∣ ∏ j ∈ s, Q j ^ N →
+        ∃ j ∈ s, Q i ∣ Q j ^ N := by
+      intro s
+      induction s using Finset.induction_on with
+      | empty =>
+        simp only [Finset.prod_empty]
+        intro hd
+        exact (hp.not_unit (isUnit_iff_dvd_one.mpr hd)).elim
+      | @insert j s hj ih =>
+        rw [Finset.prod_insert hj]
+        intro hd
+        rcases hp.dvd_or_dvd hd with hd | hd
+        · exact ⟨j, Finset.mem_insert_self _ _, hd⟩
+        · obtain ⟨a, ha, had⟩ := ih hd
+          exact ⟨a, Finset.mem_insert_of_mem ha, had⟩
+    obtain ⟨j, hj, hji⟩ := hprod _ h
     have hle : Q j ≤ Q i := Ideal.le_of_dvd (hp.dvd_of_dvd_pow hji)
     exact (Finset.mem_erase.mp hj).1 (hQinj ((hQmax j).eq_of_le (hQmax i).ne_top hle))
 

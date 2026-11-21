@@ -45,6 +45,27 @@ open scoped CategoryTheory.Obj in
 theorem exists_self {R : Type} [CommRing R] [IsDomain R] (D : Out.DegPre R) (h : ∀ χ, PsiUnitOn D χ Set.univ) :
     ∃ p : Out.IsPullDeg (RingHom.id R) D D, (∀ q : D.P.A.left ⟶ D.P.A.left, q ≫ prj p = prj p ≫ q) ∧
       (∀ y, p.xe y = y) ∧ ∀ ν, LetBC p ν ν := by
+  have hgen {F : D.P.A.left ⟶ D.P.A.left} (hF : F = 𝟙 _) : PGen (isoPullId (Geo.Tor.idIso D.P.L) hF) := by
+    subst F
+    intro Y f y j j' k k' hj hj' hk hk'
+    have hgw : ∀ a b, f y ∈ D.P.L.U a → f y ∈ D.P.L.U b →
+        gw (isoPullId (Geo.Tor.idIso D.P.L) rfl) f y a b =
+          gm f y _ (D.P.L.g a b) := by
+      intro a b ha hb
+      have hm : f y ∈ (D.P.L.pull (𝟙 _)).U (fun _ => a) ⊓ D.P.L.U b := ⟨mem_pull.2 ha, hb⟩
+      exact gm_res f y _ hm _
+    rw [hgw j k hj hk, hgw j' k' hj' hk', Category.comp_id]
+    have hV : f y ∈ (D.P.L.U j ⊓ D.P.L.U k) ⊓ (D.P.L.U j' ⊓ D.P.L.U k') := ⟨⟨hj, hk⟩, ⟨hj', hk'⟩⟩
+    have hw' : res (inf_le_left : (D.P.L.U j ⊓ D.P.L.U k) ⊓ (D.P.L.U j' ⊓ D.P.L.U k') ≤ D.P.L.U j ⊓ D.P.L.U k) (D.P.L.g j k) =
+      res (le_inf (inf_le_left.trans inf_le_left) (inf_le_right.trans inf_le_left) :
+        (D.P.L.U j ⊓ D.P.L.U k) ⊓ (D.P.L.U j' ⊓ D.P.L.U k') ≤ D.P.L.U j ⊓ D.P.L.U j') (D.P.L.g j j') *
+      (res (le_inf (inf_le_left.trans inf_le_right) (inf_le_right.trans inf_le_right) :
+        (D.P.L.U j ⊓ D.P.L.U k) ⊓ (D.P.L.U j' ⊓ D.P.L.U k') ≤ D.P.L.U k ⊓ D.P.L.U k') (D.P.L.g k k'))⁻¹ *
+      res (inf_le_right : (D.P.L.U j ⊓ D.P.L.U k) ⊓ (D.P.L.U j' ⊓ D.P.L.U k') ≤ D.P.L.U j' ⊓ D.P.L.U k') (D.P.L.g j' k') :=
+      (idIso_isGen D.P.isLB) (j, k) (j', k')
+    have key := congrArg (gm f y ((D.P.L.U j ⊓ D.P.L.U k) ⊓ (D.P.L.U j' ⊓ D.P.L.U k'))) hw'
+    simp only [map_mul, map_inv, gm_res f y _ hV] at key
+    exact key
   have : IsMonHom (Iso.refl D.P.A).hom := inferInstanceAs (IsMonHom (𝟙 D.P.A))
   have gp : IsGrpPullback D.P.A D.P.A (Out.specOf (RingHom.id R)) (Iso.refl D.P.A).hom.left :=
     (isGrpPullback_of_iso (Iso.refl D.P.A)).congr (specOf_id R).symm rfl
@@ -52,7 +73,7 @@ theorem exists_self {R : Type} [CommRing R] [IsDomain R] (D : Out.DegPre R) (h :
   have hF' : e.hom.left ≫ pullback.fst D.P.A.hom (Out.specOf (RingHom.id R)) = 𝟙 _ := hF
   obtain ⟨ψW⟩ := GlobalTheory.ArcPull.nonempty_psiOn_top D h
   obtain ⟨p, h₁, h₂, h₃⟩ := UnifUniq.exists_isPullDeg_id D D ⊤ trivial ψW e me
-    (isoPullId (idIso D.P.L) hF') ((isGen_iff _).2 (isoPullId_pgen (idIso_isGen D.P.isLB) hF'))
+    (isoPullId (idIso D.P.L) hF') ((isGen_iff _).2 (hgen hF'))
     ((congrArg (_ ≫ ·) hF').trans (Category.comp_id _))
     (NoTorus.pmaps_id hF' (K := PUnit) (fun _ => eSec D.P.A) (fun _ => 1) D.rig_gen) (AddEquiv.refl _)
     (fun x => (congrArg (_ ≫ ·) hF').trans (Category.comp_id _))
@@ -141,7 +162,7 @@ theorem exists_arcBasis_baseChange (hL : Out.Laws) (hL₂ : Out.Laws2) (hU : Out
   have hfl : ((PowerSeries.map f).comp (PowerSeries.C (R := A))).Flat := by
     refine flat_of_injective _ fun x y hxy => hf (PowerSeries.C_injective ?_)
     simpa using hxy
-  obtain ⟨u, hu, hb⟩ := GlobalTheory.T.constant_arc_eigenbasis_flat_baseChange hL.globalFns E H Dw l Xo c O β Y A b a χ W ρ e h (PowerSeries A')
+  obtain ⟨u, hu, hb⟩ := GlobalTheory.ArcQ.arcBasis_baseChange hL.globalFns E H Dw l Xo c O β Y A b a χ W ρ e h (PowerSeries A')
     (PowerSeries.map f) hfl W'.t m
   refine ⟨W', e', he', u, fun τ k => ?_, fun τ => ?_⟩
   · obtain ⟨v, hv, huv⟩ := hu τ k

@@ -272,7 +272,7 @@ lemma pullB_mem (htr : TraceMapNormalisation D) (hb : Orthonormal D b) (g : ℂ 
       refine hg.comp ?_
       unfold coordB
       fun_prop
-    exact fun z => (HasFDerivAt.finset_prod fun j _ => (hd j z).hasFDerivAt).differentiableAt
+    exact Differentiable.fun_finsetProd fun j _ => hd j
   · obtain ⟨c, hc, rfl⟩ := exists_coords _ hx
     choose n hn hU using fun i => hch (c i) (hc i)
     have hal : al D (tor0 D cc δ) (∑ i, c i • embV D (tor0 D cc δ) (b i)) = ∏ i, (-1 : ℂ) ^ n i := by

@@ -146,6 +146,8 @@ theorem stdL_full (E : Type) [Field E] [NumberField E] (n : ℕ) :
   rw [GlobalTheory.SW.stdL, Submodule.span_span_of_tower]
   have := (Pi.basisFun E (Fin n)).span_eq
   convert this using 3
+  funext i
+  exact (Pi.basisFun_apply E (Fin n) i).symm
 
 theorem psi_hat (C : Ctx S T) {u u' : WO S T} (hu : u ∈ hatA S T (tens (GlobalTheory.SW.stdL D.host.E S.rank) C.X.Λ))
     (hu' : u' ∈ hatA S T (tens (GlobalTheory.SW.stdL D.host.E S.rank) C.X.Λ)) : C.ψ (symplOH S T (2 • u) u') = 1 := by

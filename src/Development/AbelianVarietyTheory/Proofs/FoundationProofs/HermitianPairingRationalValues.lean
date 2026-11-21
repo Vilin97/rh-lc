@@ -20,7 +20,7 @@ theorem pair_integral {E : Type} [Field E] [NumberField E] [StarRing E] {N N' : 
     IsIntegral ℤ (∑ i, ∑ j, A i j * star (B i j)) := by
   obtain ⟨hLfg, hLspan, hLdual⟩ := hL
   obtain ⟨-, -, hL'dual⟩ := hL'
-  obtain ⟨m, x, φ, hx, hφ, hxφ⟩ := GlobalTheory.TauLat.exists_dual_family L ⟨hLfg, hLspan⟩
+  obtain ⟨m, x, φ, hx, hφ, hxφ⟩ := GlobalTheory.TauLat.exists_dual_family L (Submodule.IsLattice.of_fg E hLfg)
 
   set ψ : Fin m → Fin N → E := fun k b => star (φ k b) with hψdef
   have hψ : ∀ k, ψ k ∈ L := by

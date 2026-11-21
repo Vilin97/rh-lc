@@ -67,7 +67,9 @@ theorem exists_comm_lift {W : Type} [Ring W] {n : ℕ} (x : Fin n → Fin n → 
   have hS : ∀ u ∈ S, ∀ v ∈ S, u * v = v * u := by
     rintro _ ⟨p, rfl⟩ _ ⟨q, rfl⟩
     exact (hx _ _ _ _).eq
-  letI : CommRing (Subring.closure S) := Subring.closureCommRingOfComm hS
+  letI : IsMulCommutative (Subring.closure S) :=
+    Subring.isMulCommutative_closure (fun a ha b hb _ => hS a ha b hb)
+  open scoped IsMulCommutative in
   refine ⟨(Subring.closure S).subtype.comp
     (MvPolynomial.eval₂Hom (Int.castRingHom _)
       (fun p => (⟨x p.1 p.2, Subring.subset_closure ⟨p, rfl⟩⟩ : Subring.closure S))), ?_⟩

@@ -50,7 +50,7 @@ theorem exists_ringHom_lift (r : Out.RingAct A O)
     ∃ F : O →+* Module.End ℂ (Fin g → ℂ), ∀ x z, u.ex (F x z) = u.ex z ≫ r.act x := by
   choose F hF using fun x => h (r.act x) (r.hom x)
   have add : ∀ a b, F (a + b) = F a + F b := fun a b => lin_ext u fun z => by
-    rw [LinearMap.add_apply, u.ex_add, hF, hF, hF, r.map_add (f := _)]
+    rw [LinearMap.add_apply, u.ex_add, hF, hF, hF, r.map_add]
     exact MonObj.comp_mul _ _ _
   refine ⟨{ toFun := F, map_one' := lin_ext u fun z => ?_, map_mul' := fun a b => lin_ext u fun z => ?_,
             map_zero' := ?_, map_add' := add }, hF⟩

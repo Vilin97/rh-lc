@@ -119,7 +119,7 @@ theorem projective_coker_of_isLocallyConstant_finrank_range [IsReduced R]
     Module.Projective R (F ⧸ LinearMap.range φ) := by
   refine projective_of_finite_of_isLocallyConstant_finrank_fiber
     ((IsLocallyConstant.iff_eventually_eq _).2 fun p => ?_)
-  filter_upwards [h.eventually_eq p, (isLocallyConstant_finrank_fiber F).eventually_eq p]
+  filter_upwards [h.eventually_eq p, (Semicont.isLocallyConstant_finrank_fiber F).eventually_eq p]
     with q h1 h2
   have h3 := finrank_baseChange_coker_add_finrank_range p.asIdeal.ResidueField φ
   have h4 := finrank_baseChange_coker_add_finrank_range q.asIdeal.ResidueField φ

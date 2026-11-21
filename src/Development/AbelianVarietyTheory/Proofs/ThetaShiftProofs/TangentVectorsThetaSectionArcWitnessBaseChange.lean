@@ -42,7 +42,9 @@ theorem sq_of_tri (hs : φ' ≫ π = Φ ≫ φ) {w₁ : LB.Iso M' (M₀.pull (Φ
   intro Z r z j i i' k hj hi hi' hk
   have hj' : π (φ' (r z)) ∈ M₀.U j := (congrArg (fun g => g (r z) ∈ M₀.U j) hs).mpr hj
   rw [← T₁ Z r z j i k hj hi hk, ← T₂ Z r z j i' k hj' hi' hk]
-  exact gw_heq hs.symm e r z j k
+  cases hs
+  cases eq_of_heq e
+  rfl
 
 theorem genRelR_baseChange (hs : φ' ≫ π = Φ ≫ φ) (S : Sq w wD wp w') (hw : w.IsGen) (hM : M.IsLB) (hM₀ : M₀.IsLB)
     {K : Type} [Fintype K] {ε : K → ℤ} {T T' N N' : Scheme.{0}} {o : K → (T ⟶ B)} {o' : K → (T' ⟶ B')}
@@ -57,7 +59,52 @@ theorem genRelR_baseChange (hs : φ' ≫ π = Φ ≫ φ) (S : Sq w wD wp w') (hw
     GenRelR w' (LB.pullGen _ _ _ t' v') (LB.pullGen _ _ _ ν' κ') := by
   have P := ConstGrp.pmaps_of_genRelR ((isGen_iff w).1 hw) hM hM₀ (DVR.pullGen_isGen _ _ _ _ ht v)
     (DVR.pullGen_isGen _ _ _ _ hν κ) H
-  refine (genRelR_iff w' _ _).2 ⟨hp, fun j j₀ h₀ h₁ => congrArg Units.val ?_⟩
+  have toStkA_valR_local {X : Scheme.{0}} (x : Sp A ⟶ X) (U : X.Opens) (z : Sp A) (ht : ⊤ ≤ x ⁻¹ᵁ U) (a : Γ(X, U)ˣ) :
+      toStkA z (valR x U a.val) = (gm x z U a).val := by
+    have hz : x z ∈ U := ht (show z ∈ (⊤ : (Sp A).Opens) from trivial)
+    have e1 : ∀ c, (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom c) = c :=
+      fun c => congrArg (fun f => CommRingCat.Hom.hom f c) (Iso.hom_inv_id (Scheme.ΓSpecIso (CommRingCat.of A)))
+    rw [valR, dif_pos ht, gm, dif_pos hz]
+    show ((Sp A).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom
+        ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom ((x.appLE U ⊤ ht).hom a.val))) =
+      ((Sp A).presheaf.germ (x ⁻¹ᵁ U) z hz).hom ((x.app U).hom a.val)
+    rw [e1]
+    exact TopCat.Presheaf.germ_res_apply (Sp A).presheaf (homOfLE ht) z trivial ((x.app U).hom a.val)
+
+  have genRelR_iff_local {A : Type} [CommRing A] [IsLocalRing A] {B B₀ : Scheme.{0}}
+      {M : LB B} {M₀ : LB B₀} {φ : B ⟶ B₀} (w : LB.Iso M (M₀.pull φ))
+      {pt : K → (Sp A ⟶ B)} {pt₀ : K → (Sp A ⟶ B₀)}
+      (t : LB.Gen (LB.LinComb M pt ε)) (t₀ : LB.Gen (LB.LinComb M₀ pt₀ ε)) : GenRelR w t t₀ ↔ (∀ k, pt k ≫ φ = pt₀ k) ∧ ∀ (j : K → M.ι) (j₀ : K → M₀.ι),
+      (∀ k, φ (pt k (cpt A)) ∈ M₀.U (j₀ k)) → (∀ k, pt k (cpt A) ∈ M.U (j k)) →
+      ((∏ k, gw w (pt k) (cpt A) (j₀ k) (j k) ^ ε k) * gm (𝟙 _) (cpt A) (LB.wchart M pt j) (t.s j)).val =
+        (gm (𝟙 _) (cpt A) (LB.wchart M₀ pt₀ j₀) (t₀.s j₀)).val := by
+    unfold GenRelR
+    refine and_congr_right fun hpt => forall_congr' fun j => forall_congr' fun j₀ => ?_
+    have hP_iff : (∀ k, ⊤ ≤ pt k ⁻¹ᵁ (LB.div (M₀.pull φ) M).U (fun _ => j₀ k, j k)) ↔
+        (∀ k, φ (pt k (cpt A)) ∈ M₀.U (j₀ k)) ∧ (∀ k, pt k (cpt A) ∈ M.U (j k)) := by
+      simp only [top_le_iff_cpt]
+      exact ⟨fun h => ⟨fun k => Set.mem_iInter.1 (h k).1 PUnit.unit, fun k => (h k).2⟩,
+        fun h k => ⟨Set.mem_iInter.2 fun _ => h.1 k, h.2 k⟩⟩
+    rw [hP_iff, and_imp]
+    refine forall_congr' fun h1 => forall_congr' fun h2 => ?_
+    have hP : ∀ k, ⊤ ≤ pt k ⁻¹ᵁ (LB.div (M₀.pull φ) M).U (fun _ => j₀ k, j k) := hP_iff.2 ⟨h1, h2⟩
+    have hT : ⊤ ≤ (𝟙 (Sp A)) ⁻¹ᵁ (LB.LinComb M pt ε).U j :=
+      (top_le_iff_cpt _ _).2 (Set.mem_iInter.2 fun k => h2 k)
+    have hT₀ : ⊤ ≤ (𝟙 (Sp A)) ⁻¹ᵁ (LB.LinComb M₀ pt₀ ε).U j₀ := by
+      refine (top_le_iff_cpt _ _).2 (Set.mem_iInter.2 fun k => ?_)
+      show pt₀ k ((𝟙 (Sp A)) (cpt A)) ∈ M₀.U (j₀ k)
+      rw [← hpt k]
+      exact h1 k
+    have hW : ∀ k (u : Γ(B, (LB.div (M₀.pull φ) M).U (fun _ => j₀ k, j k))ˣ),
+        toStkA (cpt A) (valR (pt k) _ u.val) = (gm (pt k) (cpt A) _ u).val :=
+      fun k u => toStkA_valR_local _ _ _ (hP k) u
+    rw [← (toStkA_injective (A := A)).eq_iff, map_mul, map_prod, toStkA_valR_local _ _ _ hT, toStkA_valR_local _ _ _ hT₀]
+    simp only [hW, map_zpow]
+    rw [← Units.coe_prod, ← Units.val_mul, Units.val_inj, Units.val_inj]
+    simp only [zpow_neg, Finset.prod_inv_distrib]
+    exact eq_inv_mul_iff_mul_eq
+
+  refine (genRelR_iff_local w' _ _).2 ⟨hp, fun j j₀ h₀ h₁ => congrArg Units.val ?_⟩
   set z := cpt A'
   choose i hi using fun k => exists_chart hM (Φ ((v' ≫ o' k) z))
   choose p hp' using fun k => exists_chart hM₀ (φ (Φ ((v' ≫ o' k) z)))

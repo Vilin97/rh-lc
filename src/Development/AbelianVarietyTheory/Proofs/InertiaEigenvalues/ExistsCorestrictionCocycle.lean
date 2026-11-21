@@ -25,7 +25,7 @@ theorem exists_corestriction_cocycle : ∀ (R G X : Type) [CommRing R] [Group G]
     intro a b x
     rw [map_mul]; rfl
   refine ⟨fun g => ∑ q : G ⧸ H, ρ (g • q).out (f ((g • q).out⁻¹ * g * q.out)), ?_, ?_, ?_, ?_⟩
-  · refine continuous_finset_sum _ fun q _ => ?_
+  · refine continuous_finsetSum _ fun q _ => ?_
     rw [continuous_iff_continuousAt]
     intro g₀
     have hk : Continuous fun g : G => (g₀ • q).out⁻¹ * g * q.out := by fun_prop

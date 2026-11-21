@@ -43,7 +43,7 @@ theorem exists_rep : ∀ (D : D7), GrpSide D → ∀ (k : Fin 2) (v : D.nd.PlG k
   intro D hG k v
   haveI : Fact (D.host.g k).Prime := ⟨D.host.g_prime k⟩
   haveI : IsAlgClosed D.nd.Om := IsAlgClosure.isAlgClosed D.host.E
-  haveI : CharZero D.nd.Om := charZero_of_injective_algebraMap (algebraMap D.host.E D.nd.Om).injective
+  haveI : CharZero D.nd.Om := charZero_of_injective_ringHom (f := algebraMap D.host.E D.nd.Om) (algebraMap D.host.E D.nd.Om).injective
   have hgp : (D.host.g k).Prime := D.host.g_prime k
   have hAP : IsPlaceOver (F := D.host.E) (D.nd.plOm.1 (D.naut.plGw k v)) (D.naut.plGw k v) :=
     D.nd.plOm.2 (D.naut.plGw k v)

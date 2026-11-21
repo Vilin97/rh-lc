@@ -31,15 +31,15 @@ theorem good_top : ∀ (E : Type) [Field E] [NumberField E] (m : ℕ) (ψ : AddC
     Continuous f → (∀ γ g, f (ratGL E (m + 1) γ * g) = f g) →
     (∀ r, 0 < r → r ≤ m → ∀ g, avg (ratV E (UnipotentBlockColumnIndex (m + 1) r m)) (fun x => f (blkU x * g)) = 0) → Good ψ m f := by
   intro E _ _ m ψ f hc hl hv
-  refine ⟨hc, fun γ _ g => hl γ g, ?_, hv⟩
-  intro k hk y g
-  have he : IsEmpty (UnipotentBlockColumnIndex (m + 1) k k) := ⟨fun t => by have := t.1.2.isLt; have := t.2; omega⟩
-  have hy : y = 0 := Subsingleton.elim _ _
-  subst hy
-  have hd : dot (eLast (m + 1) k) (0 : UnipotentBlockColumnIndex (m + 1) k k → Ad E) = 0 := by simp [dot]
-  rw [hd, AddChar.map_zero_eq_one, one_mul]
-  unfold blkU
-  rw [posU_zero, one_mul]
+  refine ⟨hc, fun γ _ g => hl γ g, by
+    intro k hk y g
+    have he : IsEmpty (UnipotentBlockColumnIndex (m + 1) k k) := ⟨fun t => by have := t.1.2.isLt; have := t.2; omega⟩
+    have hy : y = 0 := Subsingleton.elim _ _
+    subst hy
+    have hd : dot (eLast (m + 1) k) (0 : UnipotentBlockColumnIndex (m + 1) k k → Ad E) = 0 := by simp [dot]
+    rw [hd, AddChar.map_zero_eq_one, one_mul]
+    unfold blkU
+    rw [posU_zero, one_mul], hv⟩
 
 end GlobalTheory.CuspGeneric
 

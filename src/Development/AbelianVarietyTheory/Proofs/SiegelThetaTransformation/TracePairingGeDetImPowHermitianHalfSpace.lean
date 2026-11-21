@@ -105,6 +105,7 @@ private lemma exists_conjTranspose_mul_self_eq_of_posDef {N : ℕ} {Y : Matrix (
     have hDD : D * D = diagonal (RCLike.ofReal ∘ hY.isHermitian.eigenvalues) := by
       rw [diagonal_mul_diagonal]
       congr 1
+      funext i
       rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hY.eigenvalues_pos i).le]
       rfl
     conv_rhs => rw [hY.isHermitian.spectral_theorem]

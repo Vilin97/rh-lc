@@ -17,7 +17,6 @@ namespace GlobalTheory
 
 theorem mul_unitary_map_haar : ∀ (D : D7) (N m : ℕ) (K : Matrix (Fin N) (Fin N) D.host.E), (∀ a b, D.sp.cm.sig (K b a) = K a b) → K.det ≠ 0 → ∀ (g : HA (AF D.host.F) D.sp.cm.sig K) (μ : Measure (Mx D m N)), μ.IsAddHaarMeasure → μ.map (fun x : Mx D m N => (HMul.hMul (x : Matrix (Fin m) (Fin N) (AE D)) ((HA.mat (AF D.host.F) D.sp.cm.sig K g).1 : Matrix (Fin N) (Fin N) (AE D)) : Mx D m N)) = μ := by
   intro D N m K hK hdet g μ hμ
-  obtain ⟨h1, h2, h3, h4, h5⟩ := Formalism.IndefR.Eqv.ae_facts D
   have hcm := GlobalTheory.Mem.VolExists.isCMExt D.sp.cm
   let A : Matrix (Fin N) (Fin N) (AE D) := (HA.mat (AF D.host.F) D.sp.cm.sig K g).1
   let φ : (Fin N → AE D) →+ (Fin N → AE D) :=

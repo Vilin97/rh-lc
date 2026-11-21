@@ -331,6 +331,7 @@ theorem HasCoords.toStkA_wVal {e : ℕ} {T : Type} [CommRing T] {r : Sp T ⟶ Sp
     toStkA z (wVal U e xe jL jM) = (wv U e xe z jM jL).val :=
   toStkA_valR xe _ z (h.top_le_chart hL hM) _
 
+
 theorem top_le_secChart {jL : U.LG.L.ι} (hL : ⊤ ≤ x ⁻¹ᵁ U.LG.L.U jL) :
     ⊤ ≤ x ⁻¹ᵁ LB.wchart U.LG.L (fun _ : Fin 1 => 𝟙 G.left) (fun _ => jL) :=
   fun _ hz => Set.mem_iInter.2 fun _ => hL hz

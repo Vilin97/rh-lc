@@ -56,8 +56,8 @@ theorem exists_fibre_pull (laws : Laws) {S S' Z Z' : Scheme.{0}} {j : Z ⟶ S} {
   obtain ⟨gen', hgen', e⟩ := grpPullback_iso ((isGrpPullback_pullback _ j').comp
     (isGrpPullback_pullback G f)) h₂
   have hi : gen.inv.left ≫ gen.hom.left = 𝟙 _ := by rw [← Over.comp_left, gen.inv_hom_id, Over.id_left]
-  refine ⟨A', gen', hgen', LBIso.trans (pull_isLB A'.isLB _) (pull_isLB (pull_isLB A.isLB g) gen'.hom.left)
-    (pull_isLB (pull_isLB hL _) _) ?_ ?_⟩
+  refine ⟨A', gen', hgen', LBIso.trans (LB.isLB_pull A'.isLB _) (LB.isLB_pull (LB.isLB_pull A.isLB g) gen'.hom.left)
+    (LB.isLB_pull (LB.isLB_pull hL _) _) ?_ ?_⟩
   · exact LBIso.chartPull (Geo.Tor.chartPullPull _ _ _ rfl) (Geo.Tor.chartPullPull _ _ _ rfl) (LBIso.symm ⟨t, ht⟩)
   · refine LBIso.chartPull (h := gen'.hom.left ≫ g ≫ gen.inv.left)
       (chartPullLinComb A.L g _ (fun _ : PUnit => gen.hom.left) _ _ fun _ => ?_)
@@ -155,7 +155,38 @@ theorem main : Laws → Laws2 → Laws3 → USt → ∀ (R : Type) [CommRing R] 
     (N := (T.l 0).Pe) (N' := P₀) sq (isGrpPullback_pullback G (spMap φ))
     (isGrpPullback_pullback G (thick R I 0)) (isGrpPullback_pullback _ (thick V (IsLocalRing.maximalIdeal V) 0)) H hl H₀
   obtain ⟨Q₀, D₀, β, pβ, hβ⟩ := exists_desc_pull pF (T.l 0).Q (T.l 0).D k₃
-  have hG' := IsSemiAbelian.pullback (spMap φ) G hG
+  have hG' : IsSemiAbelian ((Over.pullback (spMap φ)).obj G) := by
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+    · have := hG.comm; infer_instance
+    · have := hG.smooth; change Smooth (pullback.snd G.hom (spMap φ)); infer_instance
+    · have := hG.separated; change IsSeparated (pullback.snd G.hom (spMap φ)); infer_instance
+    · have := hG.quasiCompact; change QuasiCompact (pullback.snd G.hom (spMap φ)); infer_instance
+    · have := hG.geomConnected; change GeometricallyConnected (pullback.snd G.hom (spMap φ)); infer_instance
+    · intro Ω _ _ q
+      obtain ⟨E⟩ := hG.fibres Ω (q ≫ spMap φ)
+      let em := (Functor.mapMonNatIso (Over.pullbackComp q (spMap φ)) ≪≫ Functor.mapMonCompIso).app (Mon.mk G)
+      let e : (Over.pullback (q ≫ spMap φ)).obj G ≅ (Over.pullback q).obj ((Over.pullback (spMap φ)).obj G) := (Mon.forget _).mapIso em
+      haveI : IsMonHom e.hom := by
+        show IsMonHom em.hom.hom
+        infer_instance
+      letI := E.grpB
+      haveI := E.q_hom
+      haveI := E.i_hom
+      exact ⟨{ X := E.X
+               addCommGroup := E.addCommGroup
+               free := E.free
+               finite := E.finite
+               B := E.B
+               grpB := E.grpB
+               isAbelian := E.isAbelian
+               q := e.inv ≫ E.q
+               q_hom := inferInstance
+               q_flat := by rw [Over.comp_left]; have := E.q_flat; have : IsIso e.inv.left := Functor.map_isIso (Over.forget _) e.inv; infer_instance
+               q_surjective := by rw [Over.comp_left]; have := E.q_surjective; have : IsIso e.inv.left := Functor.map_isIso (Over.forget _) e.inv; infer_instance
+               q_quasiCompact := by rw [Over.comp_left]; have := E.q_quasiCompact; have : IsIso e.inv.left := Functor.map_isIso (Over.forget _) e.inv; infer_instance
+               i := E.i ≫ e.hom
+               i_hom := inferInstance
+               isKernel := by refine IsPullback.of_iso E.isKernel (Iso.refl _) e (Iso.refl _) (Iso.refl _) ?_ ?_ ?_ ?_ <;> simp }⟩
   have ev := GlobalTheory.T.exists_even_cubical_trivialisation_specialFibre laws V hV A' _ hG' gen' hgen' P' ((Over.pullback (spMap φ)).map w) inferInstance
     prim' X Q₀ P₀ ⟨w₀, H₀⟩
   obtain ⟨wA, hwA⟩ := hA'

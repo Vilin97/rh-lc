@@ -492,9 +492,9 @@ theorem idealHilbertPoly_bot [Fintype ι] {n : ℕ} (hn : Fintype.card ι = n + 
   have h1 := finrank_quotPiece_add (⊥ : Ideal (MvPolynomial ι k)) m
   have h2 : finrank k (homogeneousSubmodule ι k m) = (m + Fintype.card ι - 1).choose m := by
     rw [← natCard_degree_eq, homogeneousSubmodule_eq_finsupp_supported]
-    exact finrank_eq_nat_card_basis (basisRestrictSupport k _)
+    exact finrank_eq_nat_card_basis (basisRestrictSupport k {d : ι →₀ ℕ | d.degree = m})
   rw [Submodule.restrictScalars_bot, bot_inf_eq, finrank_bot, add_zero, h2, hn] at h1
-  rw [← hm, h1, preHilbertPoly_eq_choose_sub_add ℚ n (Nat.zero_le m), Nat.sub_zero,
+  rw [← hm, h1, preHilbertPoly_eq_choose_sub_add ℚ n (Nat.zero_le (m + n)), Nat.sub_zero,
     ← Nat.choose_symm_add]
   rfl
 

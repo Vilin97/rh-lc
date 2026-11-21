@@ -110,7 +110,7 @@ theorem lsub_le (Z : LocDat D) {T : D.host.E} (G : LFlag (D.sp.Y 0) D.R.rS T)
   obtain ⟨Q, hQX, hQv, hQQ⟩ := exists_proj (Xsp G)
   set Γ : LV D := Λ₂ ⊔ Λ₂.map (Q.restrictScalars (𝓞 D.host.E)) with hΓdef
   have hΓ : Submodule.IsLattice D.host.E Γ :=
-    ⟨h₂.fg.sup (h₂.fg.map _), eq_top_iff.2 (h₂.span_eq_top.symm.le.trans (Submodule.span_mono (show (Λ₂ : Set (VS D).V) ⊆ Γ from fun z hz => Submodule.mem_sup_left hz)))⟩
+    Submodule.IsLattice.of_fg D.host.E (h₂.fg.sup (h₂.fg.map _))
   intro v hv
   have hvo : v ∈ orth (VS D) (Xsp G) := hv.2
   obtain ⟨l, hl, x, hx, rfl⟩ := Submodule.mem_sup.1 hv.1

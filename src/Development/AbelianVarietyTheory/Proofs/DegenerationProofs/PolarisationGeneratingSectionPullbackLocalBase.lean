@@ -22,7 +22,7 @@ theorem exists_down {X : Scheme.{0}} {L : LB X} (s : H0 L 1) : ∃ t : L.Sec, �
   have exists_pw_local : ∃ b : LB.Sec (AbLaw.pw L ((1 : ℕ) : ℤ)),
       ∀ (Z : Scheme.{0}) (q : Z ⟶ X) (z : Z) (j : L.ι), q z ∈ L.U j →
         gs q z (LB.wchart L (fun _ : Fin 1 => 𝟙 X) (fun _ => j)) (s.f fun _ => j) = gs q z (L.U j) (b.f j) := by
-    have le : ∀ j, L.U j ≤ LB.wchart L (fun _ : Fin 1 => 𝟙 X) (fun _ => j) := fun j y hy => mem_wc hy
+    have le : ∀ j, L.U j ≤ LB.wchart L (fun _ : Fin 1 => 𝟙 X) (fun _ => j) := fun j y hy => Set.mem_iInter.2 fun _ => hy
     refine ⟨⟨fun j => resG _ (le j) (s.f fun _ => j), fun j i => fn_ext fun y hy => ?_⟩,
       fun Z q z j hj => (gs_res q z (le j) hj _).symm⟩
     refine ((gs_res (𝟙 _) y _ hy _).trans (gs_res (𝟙 _) y (le j) hy.1 _)).trans
@@ -43,11 +43,15 @@ theorem exists_up {X : Scheme.{0}} {L : LB X} (t : L.Sec) : ∃ s : H0 L 1, ∀ 
         gs q z (LB.wchart L (fun _ : Fin 1 => 𝟙 X) (fun _ => j)) (s.f fun _ => j) = gs q z (L.U j) (t.f j) := by
     have le : ∀ j : Fin 1 → L.ι, LB.wchart L (fun _ : Fin 1 => 𝟙 X) j ≤ L.U (j 0) := fun j y hy => Set.mem_iInter.1 hy 0
     refine ⟨⟨fun j => resG X (le j) (t.f (j 0)), fun j i => fn_ext fun y hy => ?_⟩,
-      fun Z q z j hj => gs_res q z (le _) (mem_wc hj) _⟩
+      fun Z q z j hj => gs_res q z (le _) (Set.mem_iInter.2 fun _ => hj) _⟩
     refine ((gs_res (𝟙 X) y _ hy _).trans (gs_res (𝟙 X) y (le j) hy.1 _)).trans (Eq.trans ?_ ((gs_mul (𝟙 X) y _ hy _ _).trans
       (congrArg₂ (· * ·) ((gs_unit (𝟙 X) y _ hy _).trans (congrArg Units.val (gm_linComb L _ _ (𝟙 X) y j i hy.1 hy.2)))
         ((gs_res (𝟙 X) y _ hy _).trans (gs_res (𝟙 X) y (le i) hy.2 _)))).symm)
-    rw [FlatSec.gs_sec_trans t (𝟙 X) y (le j hy.1) (le i hy.2), Fin.prod_univ_one, Nat.cast_one, zpow_one, Category.id_comp]
+    have hm : (𝟙 X) y ∈ L.U (j 0) ⊓ L.U (i 0) := ⟨le j hy.1, le i hy.2⟩
+    have ht : gs (𝟙 X) y _ (t.f (j 0)) = (gm (𝟙 X) y _ (L.g (j 0) (i 0))).val * gs (𝟙 X) y _ (t.f (i 0)) :=
+      (gs_res (𝟙 X) y _ hm _).symm.trans ((congrArg (gs (𝟙 X) y _) (t.compat (j 0) (i 0))).trans
+        ((gs_mul (𝟙 X) y _ hm _ _).trans (congrArg₂ (· * ·) (gs_unit (𝟙 X) y _ hm _) (gs_res (𝟙 X) y _ hm _))))
+    rw [ht, Fin.prod_univ_one, Nat.cast_one, zpow_one, Category.id_comp]
   obtain ⟨s, hs⟩ := exists_up_local
   exact ⟨s, fun Z r z J hJ =>
     (sval_of s r z J (fun _ => J r) fun _ => by rw [Category.comp_id]).trans (hs Z r z _ (hJ r))⟩

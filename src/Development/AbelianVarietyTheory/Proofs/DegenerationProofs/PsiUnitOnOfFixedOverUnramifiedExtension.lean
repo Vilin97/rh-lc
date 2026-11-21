@@ -307,14 +307,6 @@ theorem level_step (hM : MulNSt) [IsNoetherianRing R] [IsAlgClosed F] [CharZero 
     exact (congrArg (fun u => (sig F u : F)) (e.trans (congrArg (fun q => gm q z _ _) c))).trans
       (congrArg Units.val n).symm
   refine ⟨fun y χ => ?_, fun χ => inj _ _ ((hψ _).symm.trans ((w_even ρ hJ w hint hE χ).trans (hψ _)))⟩
-  have equiv_iff_local (p p' : QkPt D F k) :
-      QkPt.Equiv D F p p' ↔ ∃ z : D.X, p'.y = p.y + k • z ∧ p'.g = p.g + iota hB F z :=
-    exists_congr fun z => and_congr Iff.rfl
-      ⟨fun ⟨_, h₁, h₂⟩ => ((isAdd_iff_eq _ _ _).1 h₂).trans (congrArg (p.g + ·) ((isIota_iff_eq hB _ _).1 h₁)),
-        fun h => ⟨_, isIota_iota hB z, (isAdd_iff_eq _ _ _).2 h⟩⟩
-  have qk_nsmul_local (p : QkPt D F k) : k • p.g = iota hB F p.y := by
-    obtain ⟨h, h₁, h₂⟩ := p.eq
-    exact ((isNsmul_iff_eq _ _ _).1 h₁).symm.trans ((isIota_iff_eq hB _ _).1 h₂)
   obtain ⟨p, rfl⟩ := exists_qkPt (F := F) hM (Or.inl inferInstance) hB hk y
   obtain ⟨b, hb⟩ := exists_extend W φ' ρ rfl p.g.b
   obtain ⟨v, u, hu⟩ := eq_unit_mul_zpow_of_fixed T hϖ (sig F (charVal p.g χ z J) : F) (Units.ne_zero _) fun σ hσ => by
@@ -322,14 +314,14 @@ theorem level_step (hM : MulNSt) [IsNoetherianRing R] [IsAlgClosed F] [CharZero 
       IsLocalization.ringHom_ext (nonZeroDivisors R) (RingHom.ext fun r => by
         show σ (algebraMap (FractionRing R) F (algebraMap R _ r)) = algebraMap (FractionRing R) F (algebraMap R _ r)
         rw [← hφ]; exact hσ _ (φ r).2)
-    obtain ⟨a, ha, hg⟩ := (equiv_iff_local _ _).1 (hfix σ hσ p _ ((qkExt_iff hB _ hσ' _ _).2 rfl))
+    obtain ⟨a, ha, hg⟩ := (equiv_iff hB _ _).1 (hfix σ hσ p _ ((qkExt_iff hB _ hσ' _ _).2 rfl))
     have a0 : a = 0 := by
       have : k • a = 0 := left_eq_add.1 ha
       exact (smul_eq_zero.1 (show (k : ℤ) • a = 0 by rw [natCast_zsmul, this])).resolve_left (Int.natCast_ne_zero.2 hk)
     rw [a0, map_zero, add_zero] at hg
     exact charVal_fixed σ.toRingHom hσ' p.g hg χ hJ
   have e₁ := w_nsmul ρ hJ w hint p.g b hb χ k
-  rw [qk_nsmul_local, iota_val hB _ _ hJ, w_tau ρ hJ w hint, hψ, hψ, hψ, hv _ u v hu, ← zpow_natCast, ← zpow_mul,
+  rw [qk_nsmul hB, iota_val hB _ _ hJ, w_tau ρ hJ w hint, hψ, hψ, hψ, hv _ u v hu, ← zpow_natCast, ← zpow_mul,
     ← zpow_sub, ← zpow_sub] at e₁
   exact ⟨v, (inj _ _ e₁).trans (mul_comm _ _)⟩
 

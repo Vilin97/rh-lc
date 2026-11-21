@@ -157,13 +157,13 @@ theorem bijective_ofRealHom_comp :
 variable (F) in
 theorem card_realEmbeddings : Fintype.card (F →+* ℝ) = finrank ℚ F := by
   rw [← Embeddings.card F ℂ]
-  exact Fintype.card_of_bijective bijective_ofRealHom_comp
+  exact Fintype.card_of_bijective (bijective_ofRealHom_comp F)
 
 theorem trace_eq_sum_realEmbeddings (x : F) :
     ((Algebra.trace ℚ F x : ℚ) : ℝ) = ∑ σ : F →+* ℝ, σ x := by
   apply Complex.ofReal_injective
   rw [Complex.ofReal_ratCast, trace_eq_sum_complexEmbeddings, Complex.ofReal_sum]
-  exact (bijective_ofRealHom_comp.sum_comp (fun φ => φ x)).symm
+  exact ((bijective_ofRealHom_comp F).sum_comp (fun φ => φ x)).symm
 
 end TotallyReal
 

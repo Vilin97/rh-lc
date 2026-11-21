@@ -342,8 +342,6 @@ theorem exists_rep (B : HSp D) (l : B.V →ₗ[D.host.E] D.host.E) : ∃ v, ∀ 
 
 section Ties
 
-open GlobalTheory.BesselGap
-
 variable {X : ThetaX D} {T : ThetaTied D X} {Wl : WeilTied D X T}
   {piT : D.what₂.Word → 𝓞 D.host.E} {piG : Fin 2 → 𝓞 D.host.E}
 

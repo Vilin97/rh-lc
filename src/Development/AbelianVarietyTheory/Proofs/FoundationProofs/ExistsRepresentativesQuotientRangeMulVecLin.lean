@@ -104,20 +104,24 @@ theorem sq_sum_bicharacter (hodd : Odd (Fintype.card A)) (B : A → AddChar A �
   let P : Matrix A A ℂ := Matrix.of fun x y => if x + y = 0 then 1 else 0
   have hFF : F * F = (Fintype.card A : ℂ) • P := by
     ext x z
-    simp only [F, P, mul_apply, of_apply, Matrix.smul_apply, smul_eq_mul, mul_ite, mul_one, mul_zero]
+    rw [Matrix.mul_apply]
+    simp only [F, P, of_apply, Matrix.smul_apply, smul_eq_mul, mul_ite, mul_one, mul_zero]
     rw [← hsum]
     refine sum_congr rfl fun y _ => ?_
     rw [hsymm x y, hsymm (x + z) y, AddChar.map_add_eq_mul]
   have hPP : P * P = 1 := by
     ext x z
-    simp only [P, mul_apply, of_apply, one_apply, add_eq_zero_iff_neg_eq, ite_mul, one_mul, zero_mul,
+    rw [Matrix.mul_apply, Matrix.one_apply]
+    simp only [P, of_apply, add_eq_zero_iff_neg_eq, ite_mul, one_mul, zero_mul,
       sum_ite_eq, mem_univ, if_true, neg_neg]
   have hP : P.trace = 1 := by
     have : ∀ x : A, x + x = 0 ↔ x = 0 := fun x =>
       ⟨eq_zero_of_add_self_eq_zero_of_odd_card hodd, fun h => by simp [h]⟩
     simp [P, trace, this]
   have hPF : (P * F).trace = ∑ x, B (-x) x := by
-    simp [P, F, trace, mul_apply, add_eq_zero_iff_neg_eq]
+    change (∑ x, (P * F) x x) = _
+    simp_rw [Matrix.mul_apply]
+    simp [P, F, add_eq_zero_iff_neg_eq]
   have hF : F.trace = ∑ x, B x x := by simp [F, trace]
   have hprod : F.trace * (P * F).trace = Fintype.card A := by
     rw [hF, hPF, sum_mul_sum, ← Fintype.sum_prod_type']

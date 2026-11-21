@@ -48,7 +48,7 @@ theorem exists_approx {L : Submodule (𝓞 E) (Fin r → E)} (hL : L.FG) {n : �
   haveI : Module.Finite (𝓞 E) L := Module.Finite.iff_fg.2 hL
   haveI : Module.Finite ℤ L := Module.Finite.trans (𝓞 E) L
   obtain ⟨m, t, ht⟩ := Module.Finite.exists_fin (R := ℤ) (M := L)
-  have h1 : ∀ v, z v ∈ Submodule.span (v.adicCompletionIntegers (maximalRealSubfield E)) (Set.range fun i => vec v (t i : Fin r → E)) := by
+  have h1 : ∀ v, z v ∈ Submodule.span (v.adicCompletionIntegers (maximalRealSubfield E)) (Set.range fun i : Fin m => vec (E := E) (r := r) v (t i : Fin r → E)) := by
     intro v
     refine (Submodule.span_le.2 ?_ : locLattice v L ≤ _) (hz v)
     rintro _ ⟨x, hx, rfl⟩

@@ -49,8 +49,24 @@ theorem isZero_of_isAdd {T : Over (Spec (CommRingCat.of A))} {g : Out.GtPt D₀ 
     exact (mul_eq_left.1 hb.symm)
   refine ⟨hb1, fun χ => corr_of_val D₀.P.isLB fun y J hJ => ?_⟩
   have e := hv χ y J hJ
-  have C : IsCub (DVR.th D₀ (T := T) y J) := isCub_cubV D₀.cub hJ
-  rw [hb1, C.face₃, _root_.mul_one] at e
+  have face (x x' : T ⟶ D₀.P.A) : cubV D₀.cub y J 1 x x' = 1 := by
+    have q := val_corr hJ (D₀.cub.face 0) (lift x x').left
+    rw [val_one] at q
+    refine (Eq.trans ?_ (val_cub D₀.cub (lift x x') hJ (pzero D₀.P.A _) (x2 D₀.P.A 0) (x2 D₀.P.A 1)).symm).trans q
+    congr 1 <;> simp [x2, pzero, Hom.one_def]
+  have swap01 (x x' w : T ⟶ D₀.P.A) : cubV D₀.cub y J x x' w = cubV D₀.cub y J x' x w := by
+    have q := (val_corr hJ D₀.cub.cubeSymmetric_swap_first (lift x (lift x' w)).left).trans (val_cub D₀.cub (lift x (lift x' w)) hJ _ _ _)
+    refine q.trans ?_
+    congr 1 <;> simp [x3]
+  have swap12 (x x' w : T ⟶ D₀.P.A) : cubV D₀.cub y J x x' w = cubV D₀.cub y J x w x' := by
+    have q := (val_corr hJ D₀.cub.cubeSymmetric_swap_last (lift x (lift x' w)).left).trans (val_cub D₀.cub (lift x (lift x' w)) hJ _ _ _)
+    refine q.trans ?_
+    congr 1 <;> simp [x3]
+  have face3 (x x' : T ⟶ D₀.P.A) : cubV D₀.cub y J x x' 1 = 1 :=
+    (swap12 _ _ _).trans ((swap01 _ _ _).trans (face _ _))
+  rw [hb1] at e
+  change cv g χ y J * cubV D₀.cub y J (DVR.cP D₀ T χ) 1 1 = _ at e
+  rw [face3, _root_.mul_one] at e
   exact (mul_eq_left.1 e.symm).trans (val_one _).symm
 
 end Gt

@@ -169,7 +169,7 @@ theorem span_eq_top_of_invariant (hu : LineUnit PD) [FiniteDimensional Qp V] (ρ
     have := congrFun hc0 j
     simp only [Matrix.mulVec, dotProduct, A, Basis.toMatrix_apply, Pi.zero_apply] at this
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+      simp only [map_sum, map_smul, Finset.sum_apply', Finsupp.smul_apply,
       smul_eq_mul, map_zero, Finsupp.zero_apply]
     rw [← this]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
@@ -178,7 +178,7 @@ theorem span_eq_top_of_invariant (hu : LineUnit PD) [FiniteDimensional Qp V] (ρ
     intro g w k
     conv_lhs => rw [← e.sum_repr w]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, sig_smul, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+      simp only [map_sum, sig_smul, map_smul, Finset.sum_apply', Finsupp.smul_apply,
       smul_eq_mul]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [mul_comm]
@@ -291,7 +291,7 @@ theorem tensorCrys (hf : FracInv PD) (hu : LineUnit PD) : TensorCrys PD LL := by
   rw [isCrys_iff_span PD hf hu]
   set S := Submodule.span B (DcrisK₀ PD (ρ.tprod ρ') : Set (B ⊗[Qp] (V ⊗[LL] V')))
   let c := (TensorProduct.comm Qp B (V ⊗[LL] V')).symm
-  have hcm : ∀ (b : B) z, c (mB LL b z) = b • c z := fun b z => by
+  have hcm : ∀ (b : B) z, c (mB (LL := LL) b z) = b • c z := fun b z => by
     apply (TensorProduct.comm Qp B (V ⊗[LL] V')).injective
     rw [comm_smulB (LL := LL), LinearEquiv.apply_symm_apply, LinearEquiv.apply_symm_apply]
   have key : ∀ (x : V ⊗[Qp] B) (y : V' ⊗[Qp] B), c (prodB (LL := LL) (x ⊗ₜ[LL] y)) ∈ S := by
@@ -508,8 +508,8 @@ theorem letter_le (ρ : Representation LL G V) [Module.Finite LL ↥(Dcris PD ρ
     | zero => simp
     | tmul v b => simp [actVB, φVB, PD.φ_comm]
     | add a b ha hb => simp only [map_add (f := _), ha, hb]
-  have h2 : ∀ (c : K₀) (x : V ⊗[Qp] B), φVB PD (LL := LL) (mB LL (algebraMap K₀ B c) x) =
-      mB LL (algebraMap K₀ B (PD.σ c)) (φVB PD (LL := LL) x) := by
+  have h2 : ∀ (c : K₀) (x : V ⊗[Qp] B), φVB PD (LL := LL) (mB (LL := LL) (algebraMap K₀ B c) x) =
+      mB (LL := LL) (algebraMap K₀ B (PD.σ c)) (φVB PD (LL := LL) x) := by
     intro c x
     induction x using TensorProduct.induction_on with
     | zero => simp
@@ -653,7 +653,7 @@ theorem letterDim (hf : FracInv PD) : LetterDim PD LL := by
     obtain ⟨n', hn'⟩ := exists_pow_sigma PD LL hc τ' τ
     exact le_antisymm (hle n _ _ hn) (hle n' _ _ hn')
   rw [Nat.card_eq_fintype_card] at hc
-  have hs := finrank_eq_sum_letters hc (fun c => mB LL (algebraMap K₀ B c))
+  have hs := finrank_eq_sum_letters hc (fun c => mB (LL := LL) (algebraMap K₀ B c))
     (fun a b x => by rw [map_add (f := _), mB_add]) (fun a b x => by rw [map_mul, mB_mul])
     (fun q (x : V ⊗[Qp] B) => by
       induction x using TensorProduct.induction_on with

@@ -19,6 +19,8 @@ theorem tv_mulVec (D : D7) {n : ℕ} (μ : D.host.E) (w v : Fin n → D.host.E) 
     (tv D μ w).mulVec v = v + (μ * hE D v w) • w := by
   rw [tv, Matrix.add_mulVec, Matrix.one_mulVec, Matrix.smul_mulVec]
   congr 1
+  funext i
+  simp only [Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Matrix.vecMulVec_apply, hE,
     Finset.mul_sum, Finset.sum_mul]
   exact Finset.sum_congr rfl fun j _ => by ring
 

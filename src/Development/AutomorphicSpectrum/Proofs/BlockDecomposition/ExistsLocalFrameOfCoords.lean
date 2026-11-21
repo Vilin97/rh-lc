@@ -32,8 +32,8 @@ theorem dividedPowerFiltration_dividedPowersBot_of_one_le {K : Type} [CommRing K
 
 theorem tfBase_dpBot {K : Type} [Field K] [CharZero K] {s : ℕ} (hs : 1 ≤ s) : TFBase (dividedPowersBot K) 1 s where
   nil := dividedPowerFiltration_dividedPowersBot_of_one_le hs
-  tf r x h := by simpa using h
-  dv n hn := ⟨0, (n : K)⁻¹, by
+  tf := fun _ _ h => by simpa using h
+  dv := fun n hn => ⟨0, (n : K)⁻¹, by
     have : (n : K) ≠ 0 := Nat.cast_ne_zero.2 hn
     simp [this]⟩
 
@@ -46,8 +46,16 @@ theorem exists_loc : ∀ {K : Type} [Field K] [CharZero K] {X : Scheme.{0}} (q :
   letI := (strV q W).toAlgebra
   have hg := GlobalTheory.CompanionTheory.ChartMaps.good c'
   have hD : KS q s {W} c'.D := ⟨hTF, W, rfl, c'.inV⟩
-  obtain ⟨hpow, hc⟩ := GlobalTheory.CompanionTheory.ChartFil.chart_grConst c' hg (KS q s {W}) (ks_in q s W) hD
   let E := c'.frame hg (KS q s {W}) (ks_in q s W) hD
+  have hpow (r : ℕ) : c'.D.pdPow r = (pdP (dividedPowersBot K) r).map c'.D.i :=
+    GlobalTheory.CompanionTheory.ChartFil.dividedPowerFiltration_eq_map _ _ _ c'.D.compat c'.J_eq r
+  have hc : E.GrConst (sFil (KS q s {W})) := by
+    intro n T u v x hx
+    have hx' : (show c'.D.B from x) ∈ c'.D.pdPow ((n : ℤ).toNat) := hx
+    rw [Int.toNat_natCast, hpow] at hx'
+    change _ ∈ T.obj.pdPow (((n : ℤ) + 1).toNat)
+    rw [show ((n : ℤ) + 1).toNat = n + 1 by omega]
+    exact GlobalTheory.CompanionTheory.ChartFil.sub_mem_pdP c' (ks_in q s W _ T.property) u.hom v.hom n hx'
   let ε : Γ(X, W) ≃+* c'.D.B := (Algebra.TensorProduct.lid K Γ(X, W)).symm.toRingEquiv.trans e
   have hε : ∀ f, ε f = e ((1 : K) ⊗ₜ[K] f) := fun f => rfl
   refine ⟨E, ε, hc, fun x hx => ?_, fun a => ?_, fun T u g => ?_, fun i T u v => ?_⟩

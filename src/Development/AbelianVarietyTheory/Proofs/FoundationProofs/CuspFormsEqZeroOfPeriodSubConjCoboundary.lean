@@ -52,7 +52,7 @@ private lemma eval_eq_denom_pow_mul_eval_of_slP_invariant (w : ℕ) (V : ℍ →
   rw [← hrel, _root_.GlobalTheory.HeckeFamilyMatrices.eval_polySlash w _ _ _ hmem (sl_denom_ne_zero γ τ)]
   congr 2
   rw [UpperHalfPlane.coe_specialLinearGroup_apply]
-  simp [_root_.GlobalTheory.HeckeFamilyMatrices.mat]
+  simp
 
 open Polynomial UpperHalfPlane in
 open scoped MatrixGroups ModularForm in
@@ -78,7 +78,7 @@ private lemma continuous_eval_of_continuous_coeff_of_degree_le (w : ℕ) (V : �
       rw [mem_degreeLT] at this
       exact (natDegree_lt_iff_degree_lt h0).2 this
   rw [h]
-  exact continuous_finset_sum _ fun i _ => (hc i).mul (continuous_coe.pow i)
+  exact continuous_finsetSum _ fun i _ => (hc i).mul (continuous_coe.pow i)
 
 open Polynomial UpperHalfPlane in
 open scoped MatrixGroups ModularForm in

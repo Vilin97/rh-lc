@@ -47,7 +47,7 @@ theorem ev_norm {y : 𝓞 D.host.E} (hy : y ≠ 0) :
     Ev D (Ideal.absNorm (Ideal.span {y})) ∧ Ideal.absNorm (Ideal.span {y}) ≠ 0 := by
   have h0 : Ideal.span {y} ≠ ⊥ := by simpa using hy
   haveI : Finite (𝓞 D.host.E ⧸ Ideal.span {y}) := Ideal.finiteQuotientOfFreeOfNeBot _ h0
-  exact ⟨(GlobalTheory.InertParity.FiniteOrder.ev_card_and_sgn_card D (𝓞 D.host.E ⧸ Ideal.span {y})).1, Ideal.absNorm_eq_zero_iff.not.2 h0⟩
+  exact ⟨by rw [Ideal.absNorm_eq_natCard]; exact (GlobalTheory.InertParity.FiniteOrder.ev_card_and_sgn_card D (𝓞 D.host.E ⧸ Ideal.span {y})).1, Ideal.absNorm_eq_zero_iff.not.2 h0⟩
 
 theorem inertPrimeOrderParitySign_radical_integral_form {n i k : ℕ} {w : D.host.E} {w₁ c : 𝓞 D.host.E} (h1 : w₁ ≠ 0) (hc : c ≠ 0) (h : w * c = w₁)
     (hi : Ev D i) (hi0 : i ≠ 0) (hn : (n : ℝ) = (i : ℝ) ^ k * (∏ τ, ‖embT D τ w‖ ^ 2) ^ k) :

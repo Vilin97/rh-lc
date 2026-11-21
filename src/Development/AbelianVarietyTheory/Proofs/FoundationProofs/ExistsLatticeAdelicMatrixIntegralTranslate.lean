@@ -133,7 +133,7 @@ theorem fg_lat (β : GL (Fin n) (FiniteAdeleRing (𝓞 E) E)) : (lat β.1).FG :=
   exact Submodule.FG.of_le_of_isNoetherian hle
 
 theorem isLattice_lat (β : GL (Fin n) (FiniteAdeleRing (𝓞 E) E)) :
-    Submodule.IsLattice E (lat β.1) := ⟨fg_lat β, span_lat β.1⟩
+    Submodule.IsLattice E (lat β.1) := Submodule.IsLattice.of_fg E (fg_lat β)
 
 theorem inv_mul_mem (β : GL (Fin n) (FiniteAdeleRing (𝓞 E) E)) (M : ℕ) (δ : GL (Fin n) E)
     (hδ : ∀ x ∈ lat β.1, ∃ y : Fin n → 𝓞 E, (M : E) • x = (fun i => (y i : E)) ᵥ* δ.1)

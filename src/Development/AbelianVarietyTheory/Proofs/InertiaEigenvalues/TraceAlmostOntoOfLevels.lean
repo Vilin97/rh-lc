@@ -16,13 +16,14 @@ variable {l : ℕ} [Fact l.Prime]
 
 theorem Ks_le_Kinf (K : FinExt l) (i : ℕ) : Ks K i ≤ Kinf K := by
   unfold Ks Kinf
-  exact sup_le_sup_left (IntermediateField.adjoin.mono _ _ _
-    fun (x : Om l) (hx : x ^ l ^ i = 1) => (⟨i, hx⟩ : ∃ j : ℕ, x ^ l ^ j = 1)) _
+  exact sup_le_sup_left (IntermediateField.adjoin.mono ℚ_[l] {x : Om l | x ^ l ^ i = 1}
+    {x : Om l | ∃ j : ℕ, x ^ l ^ j = 1} fun x hx => (⟨i, hx⟩ : ∃ j : ℕ, x ^ l ^ j = 1)) _
 
 theorem Ks_mono (K : FinExt l) : Monotone (Ks K) := by
   intro i j hij
   unfold Ks
-  refine sup_le_sup_left (IntermediateField.adjoin.mono _ _ _ fun x hx => ?_) _
+  refine sup_le_sup_left (IntermediateField.adjoin.mono ℚ_[l] {x : Om l | x ^ l ^ i = 1}
+    {x : Om l | x ^ l ^ j = 1} fun x hx => ?_) _
   obtain ⟨c, hc⟩ := pow_dvd_pow l hij
   have hx' : x ^ l ^ i = 1 := hx
   show x ^ l ^ j = 1
@@ -71,12 +72,11 @@ theorem exists_Gj_subset (K : FinExt l) {U : Set (GQ l)} (hU : IsOpen U)
     obtain ⟨i, hi⟩ := exists_mem_Ks K hx
     exact (IntermediateField.mem_fixingSubgroup_iff _ _).1 (Set.mem_iInter.1 hσ i) x hi
   obtain ⟨i₀, hi₀⟩ := hU.isClosed_compl.isCompact.elim_directed_family_closed
-    (fun i => (Gj K i : Set (GQ l))) hcl hinter hanti.directed_ge
+    (fun i => (Gj K i : Set (GQ l))) hcl (Set.disjoint_iff_inter_eq_empty.mpr hinter) hanti.directed_ge
   refine ⟨i₀, fun i hi σ hσ => ?_⟩
   by_contra hσU
   have hmem : σ ∈ Uᶜ ∩ (Gj K i₀ : Set (GQ l)) := ⟨hσU, hanti hi hσ⟩
-  rw [hi₀] at hmem
-  exact hmem
+  exact Set.disjoint_left.1 hi₀ hmem.1 hmem.2
 
 theorem sum_mem_Kinf (K : FinExt l) (L : IntermediateField ℚ_[l] (Om l)) (S : Finset (GQ l))
     (hS : ∀ s ∈ S, s ∈ Hinf K)

@@ -74,7 +74,7 @@ theorem isUnit_uhat : IsUnit (uhat O K l e) := by
   exact IsUnit.map _ (IsUnit.mk0 _ (neg_ne_zero.2 (l_ne_zero l)))
 
 theorem equivAhat_derivative (x : (AdjoinRoot (Polynomial.X ^ e + Polynomial.C (l : K)))⟦X⟧) :
-    AhatEq.equivAhat O K l e (PowerSeries.derivative _ x) = dHat O K l e (AhatEq.equivAhat O K l e x) :=
+    AhatEq.equivAhat O K l e (PowerSeries.derivative x) = dHat O K l e (AhatEq.equivAhat O K l e x) :=
   AhatEq.toAhat_derivative O K l e x
 
 theorem NHatE_algebraMap (x : Ahat O K l e) :
@@ -210,7 +210,7 @@ theorem grading [NeZero a] (P : PhiMod O K l e a ι) (hP : ∀ m ∈ P.M, P.EN m
     funext k
     apply ψ.injective
     simp only [Pi.smul_apply, smul_eq_mul, map_mul, AlgEquiv.apply_symm_apply]
-    rw [show ψ X = _ from hw, show ψ (PowerSeries.derivative _ (v k)) = _ from equivAhat_derivative (v k)]
+    rw [show ψ X = _ from hw, show ψ (PowerSeries.derivative (v k)) = _ from equivAhat_derivative (v k)]
     linear_combination (-(Ehat O K l e * ψ w * dHat O K l e (ψ (v k)))) * hu'
 
 theorem exists_eq_cterm_add (x : Ahat O K l e) :

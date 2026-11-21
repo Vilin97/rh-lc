@@ -825,12 +825,10 @@ theorem isHaarOn_smul {k r : ℕ} {U : Set (Formalism.FourierDecayAlt.B.Mat k r)
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · rw [Measure.smul_apply, h.conc, smul_zero]
   · intro a ha
-    have hm := (Formalism.MainNotions.BridgeCSB.continuous_lmulM (k := k) (r := r) a).measurable
-    rw [Measure.map_smul c hm.aemeasurable, h.left a ha]
+    have hm := Formalism.FourierDecayAlt.P.B2x1.lmulM_cont (k := k) (r := r) a
+    rw [Measure.map_smul c hm.measurable.aemeasurable, h.left a ha]
   · intro a ha
-    have hm : Continuous (Formalism.FourierDecayAlt.B.rmulF a) := by
-      unfold Formalism.FourierDecayAlt.B.rmulF
-      exact (continuous_id (X := Formalism.FourierDecayAlt.B.Mat k r)).matrix_mul continuous_const
+    have hm := Formalism.FourierDecayAlt.P.B2x1.rmulF_cont a
     rw [Measure.map_smul c hm.measurable.aemeasurable, h.right a ha]
   · intro K hK
     rw [Measure.smul_apply, smul_eq_mul]
@@ -1053,11 +1051,8 @@ theorem quotient_exists : QuotExists := by
   rw [lintegral_lintegral_swap hm2.aemeasurable]
   have hinv : μR.map Formalism.FourierDecayAlt.B2.invM = μR :=
     Formalism.FourierDecayAlt.P.haar_measure_inversion (k0 + 1) r _ μR (Formalism.FourierDecayAlt.P.Dx2.OrbJ.closedR hgu) hH
-  have haem : AEMeasurable Formalism.FourierDecayAlt.B2.invM μR := by
-    by_contra h
-    have h0 := Measure.map_of_not_aemeasurable h
-    rw [hinv] at h0
-    exact hH.ne_zero h0
+  have haem : AEMeasurable Formalism.FourierDecayAlt.B2.invM μR :=
+    Formalism.FourierDecayAlt.P.B2x1.invM_meas.aemeasurable
   set G : Mt (k0 + 1) r → PairSp (k0 + 1) r → ENNReal :=
     fun a y => ENNReal.ofReal (θ (stabAct g (Matrix.of (Formalism.FourierDecayAlt.B2.invM a)) y)) * f y with hGdef
   have e2 : ∀ᵐ a ∂μR, ∫⁻ x, ENNReal.ofReal (θ x) * f (stabAct g (Matrix.of a) x) ∂(pairMeas L) =

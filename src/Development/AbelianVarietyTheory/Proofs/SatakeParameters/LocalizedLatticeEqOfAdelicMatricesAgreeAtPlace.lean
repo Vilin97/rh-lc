@@ -200,7 +200,8 @@ theorem locP_latAd_le {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
       rw [Matrix.mulVec_mulVec, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.one_mulVec]
     rw [Units.val_mul, ← Matrix.mulVec_mulVec, hxx, ← Matrix.mulVec_smul]
     congr 1
-    rw [Algebra.smul_def, Algebra.smul_def, map_mul, map_mul]
+    ext a
+    simp only [Pi.smul_apply, smul_eq_mul, Algebra.smul_def, map_mul, mul_assoc]
 
 end GlobalTheory.LatAway
 

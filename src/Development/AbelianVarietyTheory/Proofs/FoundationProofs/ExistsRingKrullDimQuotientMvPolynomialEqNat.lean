@@ -320,7 +320,7 @@ theorem exists_ringKrullDim_quotient_mvPolynomial_eq_nat {I : Ideal (MvPolynomia
   | bot => simp at h0
   | coe x =>
     induction x with
-    | top => exact absurd h1 (not_le.mpr (by exact_mod_cast ENat.coe_lt_top _))
+    | top => exact absurd h1 (not_le.mpr (by exact_mod_cast ENat.card_lt_top_of_finite (α := σ)))
     | coe n => exact ⟨n, rfl⟩
 
 theorem exists_forms_algebraicIndependent_finite {I : Ideal (MvPolynomial σ k)}

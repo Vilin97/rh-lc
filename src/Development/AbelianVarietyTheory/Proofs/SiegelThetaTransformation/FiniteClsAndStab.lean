@@ -340,7 +340,7 @@ private lemma exists_moves_mem_Vset_of_mem_DH {M : ℕ} {h : Matrix (Fin n) (Fin
   · obtain ⟨s₂, hs₂, hc₂, hg₂⟩ := exists_coprime_scale_integral_entries_of_mem_DH hh
     obtain ⟨s₃, hs₃, hc₃, hg₃⟩ :=
       exists_coprime_scale_integral_entries_of_mem_DH (_root_.GlobalTheory.SW.Base.ccT_mem_DH hh)
-    refine ⟨s₁ * s₂ * s₃, by positivity, (hc₁.Nat.Coprime.mul_left hc₂).Nat.Coprime.mul_left hc₃, fun v hv => ?_, fun v hv => ?_⟩
+    refine ⟨s₁ * s₂ * s₃, by positivity, Nat.Coprime.mul_left (Nat.Coprime.mul_left hc₁ hc₂) hc₃, fun v hv => ?_, fun v hv => ?_⟩
     · have h1 := smul_mulVec_mem_stdL_of_integral_scaled hg₂ (hstd₁ _ ((hmem v).1 hv))
       have h2 := _root_.GlobalTheory.SW.Base.nat_smul_mem _ s₃ h1
       rw [Matrix.mulVec_smul, hinv, smul_smul, smul_smul] at h2

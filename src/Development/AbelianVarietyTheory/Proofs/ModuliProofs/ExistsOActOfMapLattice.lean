@@ -16,13 +16,9 @@ open scoped CategoryTheory.Obj TensorProduct
 namespace GlobalTheory
 
 private theorem isMonHom_mul_of_isCommMonObj {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G]
-    (f g : G ⟶ G) [IsMonHom f] [IsMonHom g] : IsMonHom (f * g) where
-  one_hom := by
-    rw [Hom.mul_def]
-    exact IsMonHom.one_hom _
-  mul_hom := by
-    rw [Hom.mul_def]
-    exact IsMonHom.mul_hom _
+    (f g : G ⟶ G) [IsMonHom f] [IsMonHom g] : IsMonHom (f * g) := by
+  rw [Hom.mul_def]
+  infer_instance
 
 theorem exists_oAct_of_map_lattice :
     Out.Laws → Out.Laws2 → (∀ (S : Scheme.{0}) (P : Out.PolAV S) (M : LB P.A.left), M.IsLB → ∃ t : LB.Gen (Theta P.A M), t.IsGen) → ThetaUnifAV → ∀ (O : Type) [CommRing O] (P : Out.PolAV (Sp ℂ)) (u : HolUnif P.A P.L P.g) (r : O →+* Module.End ℂ (Fin P.g → ℂ)), (∀ a, ∀ z ∈ u.Λ, r a z ∈ u.Λ) → ∃ act : OAct O P.A, ∀ a z, u.ex (r a z) = u.ex z ≫ act.act a := by
@@ -41,7 +37,7 @@ theorem exists_oAct_of_map_lattice :
   · intro a b
     refine (eq_of (a * b) (act a ≫ act b) inferInstance ?_).symm
     intro z
-    rw [mul_comm a b, map_mul, Module.End.mul_apply, (hact b).2, (hact a).2, Category.assoc]
+    rw [mul_comm a b, map_mul, mul_apply_eq_comp, (hact b).2, (hact a).2, Category.assoc]
   · intro a b
     have := hom a
     have := hom b

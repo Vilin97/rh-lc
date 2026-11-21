@@ -67,7 +67,10 @@ theorem isIntegral_io_adjoin_j (Ω : Type) [Field Ω] [Algebra ℚ Ω] (ε : Ω 
     show L.val (φ (d i)) = _
     rw [← Polynomial.aeval_algHom_apply L.val xa (d i)]
     rfl
-  simp only [Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finset_sum,
+  have hsum := map_sum (Polynomial.eval₂AddMonoidHom (algebraMap L T.K) (T.io b))
+    (fun i => Polynomial.C (φ (d i)) * Polynomial.X ^ (i : ℕ)) Finset.univ
+  change Polynomial.eval₂ (algebraMap L T.K) (T.io b) (∑ i, Polynomial.C (φ (d i)) * Polynomial.X ^ (i : ℕ)) = _ at hsum
+  simp only [Polynomial.eval₂_add, Polynomial.eval₂_X_pow, hsum, Polynomial.eval₂AddMonoidHom_apply,
     Polynomial.eval₂_mul, Polynomial.eval₂_C, hφ]
   exact hK
 

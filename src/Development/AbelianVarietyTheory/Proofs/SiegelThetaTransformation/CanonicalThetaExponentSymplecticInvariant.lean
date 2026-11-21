@@ -60,7 +60,7 @@ open scoped ComplexConjugate Real in
 variable {ι : Type} [Fintype ι] [DecidableEq ι] in
 private lemma qm_one' : _root_.GlobalTheory.SW.qm (1 : Matrix ι ι ℚ) = 1 := by
   ext i j
-  by_cases h : i = j <;> simp [_root_.GlobalTheory.SW.qm, one_apply, h]
+  by_cases h : i = j <;> simp [_root_.GlobalTheory.SW.qm, Matrix.one_apply, h]
 
 open Matrix Complex in
 open scoped ComplexConjugate Real in

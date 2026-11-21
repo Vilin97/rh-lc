@@ -78,7 +78,7 @@ theorem aLin_swap (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) :
   split_ifs
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [map_sum, map_mul, ← emb_cc, X.Gm_herm]
-    exact Finset.sum_congr rfl fun b _ => mul_comm _ _
+      exact Finset.sum_congr rfl fun b _ => mul_comm _ _
   · rw [Complex.conj_conj]
 
 theorem det_aAnti_ne_zero {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X.dom) (h₂ : x₂ ∈ X.dom) (τ : X.Ψ) :
@@ -109,6 +109,8 @@ theorem re_hermC_invol_neg {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X.dom) (h
       = d₂ - d₁ := by
     rw [← mulVec_mulVec, ← mulVec_mulVec, hd₁, hd₂, ← mulVec_sub, ← hy]
     congr 1
+    funext a
+    simp [Matrix.mulVec_diagonal, hyp, hym, sgn]
     split_ifs <;> simp
   have p₁ : d₁ ≠ 0 → 0 < (hermC τ.1 X.Gm d₁ d₁).re := fun h =>
     pos_of_upper h₁ x₂ τ h fun a ha => by rw [← hA, e₁]; simp only [hyp, if_neg ha]

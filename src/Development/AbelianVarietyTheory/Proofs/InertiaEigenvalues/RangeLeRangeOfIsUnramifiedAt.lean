@@ -89,6 +89,7 @@ theorem range_le_range_of_isUnramifiedAt
     exact hinj (e.injective this)
   obtain ⟨M, hMmax, hMc⟩ := Ideal.exists_ideal_over_maximal_of_isIntegral (S := S) (maximalIdeal O)
     (by rw [(RingHom.injective_iff_ker_eq_bot _).1 hOS]; exact bot_le)
+  change M.comap (algebraMap O S) = maximalIdeal O at hMc
   let σA : 𝓞 L →+* S := (σ.comp (algebraMap (𝓞 L) L)).codRestrict S fun a =>
     (a.isIntegral_coe.map_of_comp_eq (Int.castRingHom O) σ (RingHom.ext_int _ _) :)
   have hσA : ∀ a, (σA a : ℂ) = σ a := fun _ => rfl

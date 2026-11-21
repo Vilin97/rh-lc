@@ -190,7 +190,7 @@ theorem endSpanned_of_isoSub {Γ L : Type} [Group Γ] [Field L] {a : ℕ} (τ : 
       refine ⟨by simp, ?_⟩
       simp only [Matrix.zero_mulVec]
       have : (⟨0, W.zero_mem⟩ : W) = 0 := rfl
-      rw [this, map_zero]; rfl
+      rw [this, e.map_zero]; rfl
     | add x y hx' hy' hx hy =>
       intro v
       obtain ⟨h1, e1⟩ := hx v

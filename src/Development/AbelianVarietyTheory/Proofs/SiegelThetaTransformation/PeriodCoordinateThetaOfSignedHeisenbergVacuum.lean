@@ -292,7 +292,7 @@ theorem spB_mem (hs : IsSympl X bas) {b : Fin g ⊕ Fin g → Fin r → E}
   have hE := hb p.swap q.swap
   rw [EF_crd hs] at hE
   rcases p with i | i <;> rcases q with j | j <;> by_cases hij : i = j <;>
-    simp [Matrix.mul_apply, Matrix.J, spB, Fintype.sum_sum_type, omegaStd, Pi.single_apply,
+    simp [Matrix.mul_apply, Matrix.J, spB, Function.swap, Fintype.sum_sum_type, omegaStd, Pi.single_apply,
       Matrix.one_apply, Finset.sum_sub_distrib, @eq_comm _ j i, hij] at hE ⊢ <;> linarith
 
 theorem hMat_mul_per (hs : IsSympl X bas) (b : Fin g ⊕ Fin g → Fin r → E)

@@ -224,7 +224,8 @@ variable {I : X.IdealSheafData} {I' : Y.IdealSheafData} {m : ℕ}
 variable {E : List X.IdealSheafData} {E' : List Y.IdealSheafData}
 
 theorem iteratedStrictTransform_eq_comap_lastMap {s : MarkedBlowupSequenceData p I m E} {s' : MarkedBlowupSequenceData q I' m E'}
-    (d : SequenceOfBlowupsPullback g s'.toMarkedSequenceOfBlowups.toSequenceOfBlowups s.toMarkedSequenceOfBlowups.toSequenceOfBlowups)
+    (d : SequenceOfBlowupsPullback g
+      s'.toBlowupSequenceData.toSequenceOfBlowups s.toBlowupSequenceData.toSequenceOfBlowups)
     [AlgebraicGeometry.Flat g]
     (K : ∀ i : ℕ, (s.obj i).IdealSheafData) (K' : ∀ j : ℕ, (s'.obj j).IdealSheafData)
     (hN : ∀ i : ℕ, i ≤ s.length → AlgebraicGeometry.IsNoetherian (s.obj i))
@@ -241,10 +242,10 @@ theorem iteratedStrictTransform_eq_comap_lastMap {s : MarkedBlowupSequenceData p
   · intro j hj
     exact hN' j hj
   · intro i hi
-    rw [MarkedBlowupSequenceData.toMarkedSequence_blowupMorphism, MarkedBlowupSequenceData.toMarkedSequence_center]
+    rw [BlowupSequenceData.toSequenceOfBlowups_blowupMorphism, BlowupSequenceData.toSequenceOfBlowups_center]
     exact hrec i hi
   · intro j hj
-    rw [MarkedBlowupSequenceData.toMarkedSequence_blowupMorphism, MarkedBlowupSequenceData.toMarkedSequence_center]
+    rw [BlowupSequenceData.toSequenceOfBlowups_blowupMorphism, BlowupSequenceData.toSequenceOfBlowups_center]
     exact hrec' j hj
 
 end

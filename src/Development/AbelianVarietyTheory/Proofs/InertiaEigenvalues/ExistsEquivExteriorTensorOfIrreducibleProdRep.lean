@@ -111,7 +111,7 @@ theorem GlobalTheory.TensorFactor.exists_equiv_extTensor : ∀ (G H X Y : Type) 
   have hy0' : y0 ≠ 0 := fun h => hy0 (by simp [h])
   have hsurj : Function.Surjective (evMap τ ρ) :=
     (Representation.IsIrreducible.surjective_or_eq_zero (evMap τ ρ)).resolve_right fun h0 =>
-      hy0 (by simpa [ι'] using congrArg (fun f => f (ι' ⊗ₜ y0)) h0)
+      hy0 (by simpa [evMap, ι'] using congrArg (fun f => f (ι' ⊗ₜ y0)) h0)
   refine ⟨homSpace τ ρ, inferInstance, inferInstance, homRep τ ρ, ?_, ?_,
     ⟨(Representation.IntertwiningMap.ofBijective (evMap τ ρ) ⟨hev, hsurj⟩).symm⟩⟩
   · refine isSmooth_of_nhds fun φ => ?_
@@ -150,7 +150,7 @@ theorem GlobalTheory.TensorFactor.exists_equiv_extTensor : ∀ (G H X Y : Type) 
           U.toSubmodule := ⟨⟨ψ, hψ⟩ ⊗ₜ z, rfl⟩
       rw [hU] at hm
       have h2 := (Submodule.mem_bot ℂ).1 hm
-      have h3 : ((ψ : homSpace τ ρ) : Y →ₗ[ℂ] X) z = 0 := by simpa using h2
+      have h3 : ((ψ : homSpace τ ρ) : Y →ₗ[ℂ] X) z = 0 := by simpa [evMap] using h2
       simpa using h3
     · right
       apply Subrepresentation.toSubmodule_injective

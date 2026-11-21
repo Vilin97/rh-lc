@@ -199,7 +199,8 @@ theorem exists_grpData_map_haar : ∀ (p q : ℕ) (μ : Measure (UpqT p q)), μ.
   haveI : (t • (Measure.haar : Measure (cover p q))).IsHaarMeasure := Measure.IsHaarMeasure.nnreal_smul _ h0
   refine ⟨grpOf p q (t • Measure.haar), ?_⟩
   rw [ht]
-  exact Measure.map_smul _ _ _
+  haveI : BorelSpace (UpqT p q) := ⟨rfl⟩
+  exact Measure.map_smul _ (continuous_covU _).aemeasurable
 
 end GlobalTheory.DetSqrtCover
 
