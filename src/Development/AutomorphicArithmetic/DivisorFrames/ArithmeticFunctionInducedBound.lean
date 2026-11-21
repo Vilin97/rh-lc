@@ -147,7 +147,7 @@ open scoped Classical
 
 namespace UpperTheory.VertGlob
 
-open GlobalTheory.Mean4O GlobalTheory.CoverNorm GlobalTheory.VertForm GlobalTheory.ArInt GlobalTheory.CovTop GlobalTheory.CovHt GlobalTheory.TrivFlag GlobalTheory.CoverNorm.Isom GlobalTheory.CompHt GlobalTheory.AllWt
+open GlobalTheory.Mean4O GlobalTheory.CoverNorm GlobalTheory.VertForm GlobalTheory.ArInt GlobalTheory.CovTop GlobalTheory.CovHt GlobalTheory.CoverNorm.Isom GlobalTheory.CompHt GlobalTheory.AllWt
 
 variable {F : Type} [Field F] [NumberField F] {Y : Var F}
 
