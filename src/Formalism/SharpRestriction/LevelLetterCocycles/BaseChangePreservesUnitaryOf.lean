@@ -2635,9 +2635,9 @@ theorem mem_ideal_pow_iff_coeff (ϖ : O) (k : ℕ) (f : PowerSeries O) :
   ⟨fun h => pow_le_graded_ideal ϖ k h, fun h => graded_ideal_le_pow ϖ k h⟩
 
 theorem hstr_ps_complete (ϖ : O) [IsAdicComplete (Ideal.span {ϖ}) O] :
-    IsAdicComplete (Ideal.span {PowerSeries.C ϖ, PowerSeries.X}) (PowerSeries O) where
-  haus' := by
-    intro x hx
+    IsAdicComplete (Ideal.span {PowerSeries.C ϖ, PowerSeries.X}) (PowerSeries O) := by
+  refine { haus' := ?_, prec' := ?_ }
+  · intro x hx
     ext j
     rw [map_zero]
     refine IsHausdorff.haus (inferInstance : IsHausdorff (Ideal.span {ϖ}) O) _ (fun m => ?_)
@@ -2646,8 +2646,7 @@ theorem hstr_ps_complete (ϖ : O) [IsAdicComplete (Ideal.span {ϖ}) O] :
     rw [SModEq.zero, smul_eq_mul, Ideal.mul_top] at h1
     have h2 := (mem_ideal_pow_iff_coeff ϖ (m + j) x).1 h1 j
     rwa [show m + j - j = m by omega] at h2
-  prec' := by
-    intro f hf
+  · intro f hf
     have hc : ∀ j, ∃ c : O, ∀ m,
         coeff j (f (m + j)) ≡ c [SMOD (Ideal.span {ϖ} ^ m • ⊤ : Submodule O O)] := by
       intro j
@@ -2680,17 +2679,16 @@ namespace Formalism.MainNotions.LiftingTheory
 theorem hstr_coord {A M R ι : Type} [CommRing A] [AddCommGroup M] [Module A M] [CommRing R]
     (I : Ideal A) (I₀ : Ideal R) [IsAdicComplete I₀ R] (e : M ≃+ (ι → R))
     (h : ∀ (k : ℕ) (x : M), x ∈ (I ^ k • ⊤ : Submodule A M) ↔ ∀ κ, e x κ ∈ I₀ ^ k) :
-    IsAdicComplete I M where
-  haus' := by
-    intro x hx
+    IsAdicComplete I M := by
+  refine { haus' := ?_, prec' := ?_ }
+  · intro x hx
     have h0 : e x = 0 := by
       funext κ
       refine IsHausdorff.haus (inferInstance : IsHausdorff I₀ R) _ (fun k => ?_)
       rw [SModEq.zero, smul_eq_mul, Ideal.mul_top]
       exact (h k x).1 (by simpa [SModEq.zero] using hx k) κ
     exact e.map_eq_zero_iff.1 h0
-  prec' := by
-    intro f hf
+  · intro f hf
     have hc : ∀ κ, ∃ L : R, ∀ k, e (f k) κ ≡ L [SMOD (I₀ ^ k • ⊤ : Submodule R R)] := by
       intro κ
       refine IsPrecomplete.prec (inferInstance : IsPrecomplete I₀ R) (f := fun k => e (f k) κ) ?_

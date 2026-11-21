@@ -72,7 +72,9 @@ theorem exists_lubinTate_frobenius {n : ℕ} (hn : 0 < n) (w : 𝒪[K]ˣ) :
   have hτ0 : ∀ y : lubinTateField Ω hπ hf n, ρ0.liftNormal Ω (y : Ω) = (ρ0 y : Ω) :=
     fun y => ρ0.liftNormal_commutes Ω y
   have hmap := map_unramifiedDegree_fixingSubgroup (K := K) (Ω := Ω) (lubinTateField Ω hπ hf n)
-  rw [residueDegree_lubinTateField hπ hf hn] at hmap
+  have hres : (IsLocalRing.maximalIdeal 𝒪[lubinTateField Ω hπ hf n]).inertiaDeg 𝒪[K] = 1 :=
+    residueDegree_lubinTateField (Ω := Ω) hπ hf hn
+  rw [hres] at hmap
   have hmem : (unramifiedDegree K Ω (ρ0.liftNormal Ω))⁻¹ * Multiplicative.ofAdd 1 ∈
       (lubinTateField Ω hπ hf n).fixingSubgroup.map (unramifiedDegree K Ω) := by
     rw [hmap]
@@ -140,7 +142,9 @@ theorem ramificationIndex_fixingSubgroup_lubinTateField {n : ℕ} (hn : 0 < n) :
       Module.finrank K (lubinTateField Ω hπ hf n) := by
   have : IsSepClosed Ω := IsSepClosure.sep_closed K
   have h := index_eq_mul unramifiedDegree_surjective (lubinTateField Ω hπ hf n).fixingSubgroup
-  rw [inertiaDegree_unramifiedDegree_fixingSubgroup, residueDegree_lubinTateField hπ hf hn,
+  have hres : (IsLocalRing.maximalIdeal 𝒪[lubinTateField Ω hπ hf n]).inertiaDeg 𝒪[K] = 1 :=
+    residueDegree_lubinTateField (Ω := Ω) hπ hf hn
+  rw [inertiaDegree_unramifiedDegree_fixingSubgroup, hres,
     mul_one, ← finrank_eq_fixingSubgroup_index] at h
   exact h.symm
 
@@ -392,7 +396,18 @@ theorem reciprocity_lubinTate_sup {n : ℕ} (hn : 0 < n) (E : IntermediateField 
     (hτ : ∀ x ∈ lubinTateTorsion Ω (hπ := hπ) hf n,
       lubinTateGalPointMap (hπ := hπ) hf τ x = ((u⁻¹ : 𝒪[K]ˣ) : 𝒪[K]) • x) :
     have : IsSepClosed Ω := IsSepClosure.sep_closed K
-    have := normal_subgroupOf_fixingOpenSubgroup (lubinTateField Ω hπ hf n ⊔ E)
+    have :=
+      haveI : IsGalois K (lubinTateField Ω hπ hf n ⊔ E : IntermediateField K Ω) := by
+        have : Normal K (lubinTateField Ω hπ hf n) := by
+          refine normal_iff_forall_map_le'.mpr fun σ => ?_
+          rw [lubinTateField, adjoin_map, adjoin_le_iff]
+          rintro _ ⟨_, ⟨x, hx, rfl⟩, rfl⟩
+          change σ x.val ∈ lubinTateField Ω hπ hf n
+          rw [← lubinTateGalPointMap_val hf σ x]
+          apply val_mem_lubinTateField hπ hf
+          rw [mem_lubinTateTorsion, ← map_smul, (mem_lubinTateTorsion hf n x).mp hx, map_zero]
+        exact isGalois_iff.mpr ⟨inferInstance, inferInstance⟩
+      normal_subgroupOf_fixingOpenSubgroup (lubinTateField Ω hπ hf n ⊔ E)
     (localClassFieldTheory K Ω).reciprocity
         (le_top : fixingOpenSubgroup (lubinTateField Ω hπ hf n ⊔ E) ≤ ⊤)
         (localClassFieldTheory K Ω).classFieldAxiom (QuotientGroup.mk ⟨τ, by simp⟩) =

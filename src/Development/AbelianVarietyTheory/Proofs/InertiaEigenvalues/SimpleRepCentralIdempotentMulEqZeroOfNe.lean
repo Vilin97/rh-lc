@@ -8,7 +8,7 @@ public import Formalism.PadicSubsetSums.CentralIdempotents.GaloisConjCentralIdem
 
 @[expose] public section
 
-open Formalism.IrreducibleCountingLemmas.TYPES Formalism.L2.NT GlobalTheory.SerOSys
+open Formalism.IrreducibleCountingLemmas.TYPES Formalism.L2.NT
 open Polynomial CategoryTheory
 
 noncomputable section

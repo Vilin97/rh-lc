@@ -19,6 +19,10 @@ open _root_.WittVector Laurent ACris
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
 
+local notation "𝒪" => normInteger K
+local notation "𝔸" => Localization.Away (p : AInf K p)
+local notation "θ" => fontaineTheta 𝒪 p
+
 theorem exists_approx (a : ACris K p) (N : ℕ) :
     ∃ c : ACrisZero K p, a - algebraMap _ (ACris K p) c ∈ Ideal.span {(p : ACris K p) ^ N} := by
   obtain ⟨c, hc⟩ := Ideal.Quotient.mk_surjective

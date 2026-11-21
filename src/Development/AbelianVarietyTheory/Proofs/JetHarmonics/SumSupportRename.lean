@@ -92,7 +92,7 @@ theorem inCol_C (b : Fin n) (r : k) : inCol b (C r : PS k 1 d) = C r := by
   rw [subst_C]
 
 theorem pderiv_inCol (b c : Fin n) (j : Fin d) (f : PS k 1 d) :
-    pderiv k (c, j) (inCol b f) = if b = c then inCol b (pderiv k ((0 : Fin 1), j) f) else 0 := by
+    pderiv (c, j) (inCol b f) = if b = c then inCol b (pderiv ((0 : Fin 1), j) f) else 0 := by
   unfold inCol ev
   rw [FormalLog.pderiv_subst (a := fun p : Fin 1 × Fin d => (![pt k d b] : Fin 1 → Pt k n d) p.1 p.2)
     (fun p => gp b p.1 p.2)]
@@ -134,7 +134,7 @@ theorem dofN_inCol (F : Fin d → PS k 2 d) (b : Fin n) (u : Fin d → k) (f : P
   rw [map_mul, inColHom_apply, inColHom_apply, inCol_C, ev_axis]
 
 theorem pderiv_prod_out (b : Fin n) (j : Fin d) (g : Fin n → PS k 1 d) (s : Finset (Fin n)) (hs : b ∉ s) :
-    pderiv k (b, j) (∏ c ∈ s, inCol c (g c)) = 0 := by
+    pderiv (b, j) (∏ c ∈ s, inCol c (g c)) = 0 := by
   induction s using Finset.induction_on with
   | empty => simp
   | insert c s hc ih =>
@@ -143,7 +143,7 @@ theorem pderiv_prod_out (b : Fin n) (j : Fin d) (g : Fin n → PS k 1 d) (s : Fi
     simp
 
 theorem dofN_mul_out (F : Fin d → PS k 2 d) (b : Fin n) (u : Fin d → k) (f G : PS k n d)
-    (hG : ∀ j, pderiv k (b, j) G = 0) : DofN F b u (f * G) = DofN F b u f * G := by
+    (hG : ∀ j, pderiv (b, j) G = 0) : DofN F b u (f * G) = DofN F b u f * G := by
   unfold DofN
   rw [Finset.sum_mul]
   refine Finset.sum_congr rfl fun j _ => ?_

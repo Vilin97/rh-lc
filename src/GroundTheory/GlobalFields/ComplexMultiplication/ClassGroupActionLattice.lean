@@ -5,14 +5,6 @@ public import GroundTheory.GlobalFields.ComplexMultiplication.ClassGroupActionIs
 
 @[expose] public section
 
-private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
-  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
-  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
-  one_mem' z hz := by simpa only [one_mul] using hz
-  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
-  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
-  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
-
 open NumberField Module
 open scoped nonZeroDivisors
 
@@ -20,6 +12,14 @@ noncomputable section
 
 namespace GroundTheory.Global
 namespace Elliptic
+
+abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
 
 variable {K : Type*} [Field K] [NumberField K] (σ : K →+* ℂ)
 
@@ -321,7 +321,7 @@ theorem latticeEnd_eq_cmRing_of_ringEquiv (L : PeriodPair) (e : periodLatticeEnd
     let E : IntermediateField ℚ ℂ := ψ.toRatAlgHom.fieldRange
     have e₁ : K ≃ₐ[ℚ] E := AlgEquiv.ofInjectiveField ψ.toRatAlgHom
     have hE := @AlgHom.fieldRange_of_normal ℚ ℂ _ _ _ E
-      (by convert Normal.of_algEquiv (h := hN) e₁; exact Subsingleton.elim _ _)
+      (Normal.of_algEquiv (h := hN) e₁)
       (φ.toRatAlgHom.comp e₁.symm.toAlgHom)
     have hx : φ x ∈ (φ.toRatAlgHom.comp e₁.symm.toAlgHom).fieldRange := ⟨e₁ x, by simp⟩
     have hx' : φ x ∈ E := hE ▸ hx

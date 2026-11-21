@@ -133,14 +133,30 @@ theorem mem_sup_isotropic_of_dual_pairing (hΛ : Submodule.IsFullLattice D.host.
     have h2 : ∑ a, star (c a) • F0.e a = 0 := (hS D).nondeg.1 _ (fun y => by rw [h1]; rfl)
     have h3 := Fintype.linearIndependent_iff.1 F0.e_indep _ h2 a
     simpa using h3
-  let bb := Basis.sumExtend hℓ
+  let bb := Basis.extend hℓ.linearIndepOn_id
+  let idx : Fin D.R.rS → hℓ.linearIndepOn_id.extend (Set.subset_univ _) :=
+    fun a => ⟨ℓ a, hℓ.linearIndepOn_id.subset_extend _ ⟨a, rfl⟩⟩
   let f : Fin D.R.rS → (hS D).V := fun a =>
-    (Module.evalEquiv D.host.E (hS D).V).symm (bb.coord (Sum.inl a))
+    (Module.evalEquiv D.host.E (hS D).V).symm (bb.coord (idx a))
   have hf : ∀ a b, (hS D).hT (F0.e a) (f b) = if a = b then 1 else 0 := by
     intro a b
-    change ℓ a ((Module.evalEquiv D.host.E (hS D).V).symm (bb.coord (Sum.inl b))) = _
+    change ℓ a ((Module.evalEquiv D.host.E (hS D).V).symm (bb.coord (idx b))) = _
     rw [Module.apply_evalEquiv_symm_apply]
-    simp [bb, Basis.sumExtend, Basis.coord_apply]
+    have ha : bb (idx a) = ℓ a := Basis.extend_apply_self _ _
+    classical
+    rw [← ha, Basis.coord_apply, Basis.repr_self_apply]
+    have hi : idx b = idx a ↔ a = b := by
+      constructor
+      · intro h
+        have := congrArg Subtype.val h
+        exact (hℓ.injective this).symm
+      · rintro rfl
+        rfl
+    by_cases h : a = b
+    · subst b
+      simp only [if_pos rfl]
+    · have hn : idx a ≠ idx b := fun hh => h (hi.mp hh.symm)
+      simp only [if_neg h, if_neg hn]
   have DL := Formalism.HermitianLatticesTheory.dualLattice (𝓞 D.host.E) D.host.E (hS D).V (hS D).hT (hS D).herm (hS D).nondeg i_star_int
   have hlat : ∀ N : LatV D, N.FG → Submodule.IsLattice D.host.E (Λ ⊔ N) := fun N hN =>
     ⟨hΛ.fg.sup hN, fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli⟩

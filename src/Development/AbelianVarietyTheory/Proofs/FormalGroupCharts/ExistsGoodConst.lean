@@ -157,24 +157,25 @@ theorem fbOf : JetAlgSt → RepSt → LawSt → MapSt → ActSt → SerSt → Se
   have K := series_ext hJet hRep Lr c act u x hx j Gl.F hF A.act hA ph hph ad had
   have Ro := hRos _ G s2 s3 Lr c O act u hu
   have hCub {T : Over (Spec (CommRingCat.of R))} {z : T.left} {J : (T.left ⟶ G.left) → Lr.L.ι}
-      (hJ : Good Lr.L z J) : IsCub (cubV c z J) where
-    face x y := by
+      (hJ : Good Lr.L z J) : IsCub (cubV c z J) := by
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · intro x y
       have e := val_corr hJ (c.face 0) (lift x y).left
       rw [val_one] at e
       refine Eq.trans ?_ e
       refine Eq.trans ?_ (val_cub c (lift x y) hJ (pzero G _) (x2 G 0) (x2 G 1)).symm
       congr 1 <;> simp [x2, pzero, Hom.one_def]
-    s01 x y w := by
+    · intro x y w
       have e := (val_corr hJ c.cubeSymmetric_swap_first (lift x (lift y w)).left).trans
         (val_cub c (lift x (lift y w)) hJ _ _ _)
       refine e.trans ?_
       congr 1 <;> simp [x3]
-    s12 x y w := by
+    · intro x y w
       have e := (val_corr hJ c.cubeSymmetric_swap_last (lift x (lift y w)).left).trans
         (val_cub c (lift x (lift y w)) hJ _ _ _)
       refine e.trans ?_
       congr 1 <;> simp [x3]
-    coc x x' x'' y := by
+    · intro x x' x'' y
       have e := val_corr hJ c.cocycle (lift x (lift x' (lift x'' y))).left
       have e' := ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·) (val_cub c _ hJ _ _ _) (val_cub c _ hJ _ _ _))).symm.trans
         (e.trans ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·) (val_cub c _ hJ _ _ _) (val_cub c _ hJ _ _ _))))

@@ -81,9 +81,11 @@ theorem isHolTo_of_isPullback {W : Set E} {S X Y Z : Scheme.{0}}
     induction hg using Subring.closure_induction with
     | mem x hx =>
       rcases hx with ⟨y, rfl⟩ | ⟨y, rfl⟩
-      · exact ((ha U₁ y).2.mono fun w hw => ⟨hw.1, ((hiff w).1 hw.2).1⟩).congr fun w hw =>
+      · exact ((ha U₁ y).2.mono fun w (hw : w ∈ {w | w ∈ W ∧ ⊤ ≤ c w ⁻¹ᵁ V}) =>
+          ⟨hw.1, ((hiff w).1 hw.2).1⟩).congr fun w hw =>
           valAt'_appLE (c w) p U₁ V _ y hw.2
-      · exact ((hb U₂ y).2.mono fun w hw => ⟨hw.1, ((hiff w).1 hw.2).2⟩).congr fun w hw =>
+      · exact ((hb U₂ y).2.mono fun w (hw : w ∈ {w | w ∈ W ∧ ⊤ ≤ c w ⁻¹ᵁ V}) =>
+          ⟨hw.1, ((hiff w).1 hw.2).2⟩).congr fun w hw =>
           valAt'_appLE (c w) q U₂ V _ y hw.2
     | zero => exact (differentiableOn_const (0 : ℂ)).congr fun w _ => valAt'_zero _ _
     | one => exact (differentiableOn_const (1 : ℂ)).congr fun w hw => valAt'_one _ hw.2

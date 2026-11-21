@@ -242,7 +242,7 @@ theorem UpperTheory.V.Ws.Tw.muChar :
     rw [e, hN] at c3
     apply Units.ext
     rw [e, hN, hpr _ c3, Units.val_pow_eq_pow_val, cycZ_of_isFrob hv hB ht, map_natCast]
-    rfl
+    rw [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
   · by_cases hB : B = ⊤
     · rw [((places K Ω l B).2.1 hB).1]
       exact bot_le

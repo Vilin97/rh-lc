@@ -457,7 +457,7 @@ variable {G L O : Type} [Group G] [TopologicalSpace G] [Field L] [Algebra ℚ_[l
 theorem small (hc : ∀ c : ℤ_[l], algebraMap O L (algebraMap ℤ_[l] O c) =
       algebraMap ℚ_[l] L (algebraMap ℤ_[l] ℚ_[l] c)) (T : LocLat G ℚ_[l] L O) {ι κ : Type}
     [Fintype ι] [Fintype κ] (x : ι → ↥T.L.T) (m : ℕ) :
-    letI := Module.compHom ↥T.L.T (algebraMap ℤ_[l] O)
+    letI := Module.compHom ↥T.L.T (algebraMap ℤ_[l] O);
     ∀ _ : Module.Basis κ ℤ_[l] ↥T.L.T, ∀ᶠ g : G in nhds 1,
       ∀ i, T.actT g (x i) - x i ∈ mult ↥T.L.T (l : ℤ_[l]) m := by
   letI := Module.compHom ↥T.L.T (algebraMap ℤ_[l] O)

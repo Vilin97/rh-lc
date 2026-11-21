@@ -106,7 +106,7 @@ theorem bd_cmap {G H : Type} [Group G] [Group H] (f : G →* H) (m : ℕ) (z : C
     intro g r
     set_option synthInstance.maxHeartbeats 100000 in
       simp [bd, cmap, Finsupp.mapDomain_single, map_sum, Finsupp.mapDomain_add, Finsupp.mapDomain_smul, hc]
-    rw [Finsupp.mapDomain_finset_sum]
+    rw [Finsupp.mapDomain_finsetSum]
     simp only [Finsupp.mapDomain_single, hc]
   exact LinearMap.congr_fun key z
 

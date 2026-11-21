@@ -137,8 +137,12 @@ theorem exists_fn : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
     letI : Algebra c.F K := (χ.comp (algebraMap c.F (A p))).toAlgebra
     have hsn' : (spMap χ ≫ j p) ≫ pullback.snd _ _ = spMap (algebraMap c.F K) := by
       rw [Category.assoc, hsn, GlobalTheory.LocalFrame.spMap_spMap]
-    obtain ⟨y, hy⟩ := GlobalTheory.NonIntegralFrameExample.exists_framed (c := c) ((spMap χ ≫ j p) ≫ pullback.fst _ _) (by
-      rw [Category.assoc, pullback.condition, ← Category.assoc, hsn', sOf, GlobalTheory.LocalFrame.spMap_spMap])
+    have hx : ((spMap χ ≫ j p) ≫ pullback.fst _ _) ≫ Xo.s = sOf c K := by
+      rw [Category.assoc, pullback.condition, ← Category.assoc, hsn', sOf, GlobalTheory.LocalFrame.spMap_spMap]
+    obtain ⟨y, hy⟩ : ∃ y : FrPt Xo c K, y.x = (spMap χ ≫ j p) ≫ pullback.fst _ _ := by
+      choose u hu using fun τ => GlobalTheory.IntFramesCompare.exists_eigenBasisAt (c := c) hx τ
+      obtain ⟨s, hs⟩ := gfp_gen GlobalTheory.abelianSchemeLaws_all.2.secTwist ((spMap χ ≫ j p) ≫ pullback.fst _ _)
+      exact ⟨⟨_, hx, u, fun τ => (hu τ).1, fun τ => (hu τ).2.1, fun τ => (hu τ).2.2, s, hs⟩, rfl⟩
     have hb : spMap χ ≫ j p = basePt y := by
       refine pullback.hom_ext ?_ ?_
       · rw [← hy]; exact (pullback.lift_fst _ _ _).symm

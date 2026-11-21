@@ -100,11 +100,11 @@ def tateToM (M : PDivGroup p O ⥤ ModuleCat.{0} (Ainf p O)) [M.Additive] {G : P
 
 def endMap (M : PDivGroup p O ⥤ ModuleCat.{0} (Ainf p O)) [M.Additive] (G : PDivGroup p O) :
     End G →+* Module.End (Ainf p O) (M.obj G) where
-  toFun f := (M.map f).hom
+  toFun f := (M.map f.asHom).hom
   map_one' := congrArg ModuleCat.Hom.hom (M.map_id G)
-  map_mul' f g := congrArg ModuleCat.Hom.hom (M.map_comp g f)
+  map_mul' f g := congrArg ModuleCat.Hom.hom (M.map_comp g.asHom f.asHom)
   map_zero' := congrArg ModuleCat.Hom.hom (M.map_zero G G)
-  map_add' f g := congrArg ModuleCat.Hom.hom (M.map_add (f := f) (g := g))
+  map_add' f g := congrArg ModuleCat.Hom.hom (M.map_add (f := f.asHom) (g := g.asHom))
 
 theorem exists_dual_basis [IsDomain O] {ε : PreTilt O p} (hε : IsPrimitiveSystem ε)
     {G : PDivGroup p O} (hG : Bijective (pairing G O).flip) {h : ℕ}
@@ -203,11 +203,11 @@ theorem sandwichAt_of_covariant {C : Type} [Field C] [IsAlgClosed C] [CharZero C
     (equivFun_semilinear (ψ G) b b m).symm
   let ρT : Λ →ₐ[ℤ_[p]] Matrix (Fin G.height) (Fin G.height) ℤ_[p] :=
     (LinearMap.toMatrixAlgEquiv tb).toAlgHom.comp (ρ.onTateAlg O)
-  have hρT : ∀ a t, ρT a *ᵥ e t = e (tateMap G G O (ρ a) t) := fun a t =>
+  have hρT : ∀ a t, ρT a *ᵥ e t = e (tateMap G G O (ρ a).asHom t) := fun a t =>
     LinearMap.toMatrix_mulVec_repr tb tb _ t
   let ρM : Λ →+* Matrix (Fin G.height) (Fin G.height) (Ainf p O) :=
     (LinearMap.toMatrixAlgEquiv b).toAlgHom.toRingHom.comp ((endMap M G).comp ρ)
-  have hρM : ∀ a m, ρM a *ᵥ b.equivFun m = b.equivFun (M.map (ρ a) m) := fun a m =>
+  have hρM : ∀ a m, ρM a *ᵥ b.equivFun m = b.equivFun (M.map (ρ a).asHom m) := fun a m =>
     LinearMap.toMatrix_mulVec_repr b b _ m
   have hGF : ∀ t i, (Gm *ᵥ b.equivFun (Φ t)) i = ofPadic p O (e t i) * Sandwich.mu ε := by
     intro t i
@@ -254,7 +254,7 @@ theorem sandwichAt_of_covariant {C : Type} [Field C] [IsAlgClosed C] [CharZero C
   have hal : ∀ t, D.al (toO e t) = (u₁ : O) • c.equivFun (ι G (hodgeTate G t)) := fun t => by
     refine (red F (ofPadic p O ∘ e t)).trans ?_
     rw [hF, ← hc, hΦ, ← nr, hu₁, map_smul, map_smul, nι, hodgeTate_eq_omegaDualMap]
-  have hact : ∀ a y, actH D a (c.equivFun y) = c.equivFun (H.map (ρ a) y) := fun a y => by
+  have hact : ∀ a y, actH D a (c.equivFun y) = c.equivFun (H.map (ρ a).asHom y) := fun a y => by
     obtain ⟨m, rfl⟩ := (hr G).1 y
     rw [nr, hc, hc, ← hρM]
     exact red _ _
@@ -306,10 +306,10 @@ theorem sandwichAt_of_covariant {C : Type} [Field C] [IsAlgClosed C] [CharZero C
     congrArg (π G) (c.equivFun.symm_apply_apply y)
   refine ⟨D, e, LinearEquiv.ofBijective fil₀ hfil, lie, fun a t => (hρT a t).symm,
     fun a w => ?_, fun a m => ?_, fun t => ?_, fun x χ' => ?_⟩
-  · exact (congrArg c.equivFun (nι _ _ (ρ a) w).symm).trans (hact a _).symm
+  · exact (congrArg c.equivFun (nι _ _ (ρ a).asHom w).symm).trans (hact a _).symm
   · obtain ⟨y, rfl⟩ := c.equivFun.surjective m
     rw [hact, hlie, hlie]
-    exact nπ _ _ (ρ a) y
+    exact nπ _ _ (ρ a).asHom y
   · rw [hal, hodgeTate_eq_omegaMap]
     rfl
   · obtain ⟨y, rfl⟩ := (hex G).2.2 x

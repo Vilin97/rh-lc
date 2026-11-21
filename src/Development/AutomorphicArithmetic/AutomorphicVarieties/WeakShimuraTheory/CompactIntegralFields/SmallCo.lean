@@ -211,6 +211,7 @@ theorem UpperTheory.V.Ws.smallCo :
     exact isUnit_of_map_unit (𝔞.a c') y this⟩
   have hcl' : UpperTheory.V.CA.IsCL c'.O A' := ⟨inferInstance, hf'.complete, hloc, Module.Finite.of_finite⟩
   obtain ⟨S, hSmem, -, hco, hpow⟩ := UpperTheory.V.CA.cl_sub c'.O A' hcl'
+  letI : Algebra c'.O S := SubalgebraClass.toAlgebra (R := c'.O) (A := A') S
   haveI := hco
   have hmV : ∀ u : A', u ∈ maximalIdeal A' → f' u ∈ maximalIdeal 𝔞.V := fun u hu => map_nonunit f' u hu
   have hmS : ∀ u : S, u ∈ maximalIdeal S → f' u ∈ maximalIdeal 𝔞.V := by

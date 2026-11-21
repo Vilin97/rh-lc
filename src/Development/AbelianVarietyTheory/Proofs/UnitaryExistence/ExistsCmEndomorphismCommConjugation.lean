@@ -146,6 +146,8 @@ theorem exists_endo_comm : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   · unfold Curve.pt
     rw [← Over.comp_left, ← hF]
     congr 2
+    ext i
+    simp only [LinearMap.smul_apply, LinearMap.id_apply, Pi.smul_apply, smul_eq_mul]
     ring
   · have e := C.u.ex_add (fun _ => C.c * (z - z')) (fun _ => C.c * z')
     have e' : ((fun _ => C.c * (z - z')) + fun _ => C.c * z' : Fin C.P.g → ℂ) = fun _ => C.c * z := by

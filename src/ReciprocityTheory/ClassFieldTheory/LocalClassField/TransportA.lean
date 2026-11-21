@@ -65,8 +65,7 @@ theorem exists_residue_char : ∃ p : ℕ, p.Prime ∧ valuation K (p : K) < 1 :
   simpa using this
 
 theorem finite_over_padic (p : ℕ) [Fact p.Prime] (f : ℚ_[p] →+* K) (hf : Continuous f) :
-    letI := f.toAlgebra
-    FiniteDimensional ℚ_[p] K := by
+    (letI := f.toAlgebra; FiniteDimensional ℚ_[p] K) := by
   let := f.toAlgebra
   have := hausdorff_local_field K
   have : ContinuousSMul ℚ_[p] K := continuousSMul_of_algebraMap _ _ hf

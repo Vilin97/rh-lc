@@ -19,7 +19,11 @@ open Filter Topology
 
 namespace GlobalTheory.WeakClosed
 
-theorem continuous_orbit_twTop : ∀ {l : ℕ} [Fact l.Prime] {P : LocPrime l} (AI : LocAinf l P) {K LL : FinExt l} (T : Lt K LL) {d : ℕ} (b : LatB T d) (y : TW (RW LL) T), letI := twTop T b; Continuous fun g : ↥(GK K) => TWact (AI.gRW LL (g : GQ l)) T g y := by
+theorem continuous_orbit_twTop :
+    ∀ {l : ℕ} [Fact l.Prime] {P : LocPrime l} (AI : LocAinf l P) {K LL : FinExt l}
+      (T : Lt K LL) {d : ℕ} (b : LatB T d) (y : TW (RW LL) T),
+      letI := twTop T b
+      Continuous fun g : ↥(GK K) => TWact (AI.gRW LL (g : GQ l)) T g y := by
   intro l _ P AI K LL T d b y
 
   letI := zlMod T

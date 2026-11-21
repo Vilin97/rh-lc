@@ -110,7 +110,7 @@ private theorem tame_character_conjugation {p : ℕ} [Fact p.Prime] {G : Type} [
     field_simp
   rw [e2, norm_div, norm_mul, hy, hτ, mul_one, div_one] at h1
   have h2 := KStar.IdealValuations.norm_aut_and_roots.2 m _ _ hm (by rw [← map_pow, hc', map_one]) (hc' τ) h1
-  rw [← h2, ← AlgEquiv.mul_apply, mul_inv_cancel, AlgEquiv.one_apply]
+  simpa using congrArg (φ g) h2
 
 private theorem cyclotomic_congruence_fixed_root {p l : ℕ} [Fact p.Prime] [Fact l.Prime] (σ : GQ p) (x : Om p) (k : ℕ)
     (hx : x ^ l ^ k = 1) (hx1 : x ≠ 1) (h : σ x = x) : (l : ℤ_[l]) ∣ (cyc p l σ : ℤ_[l]) - 1 := by
@@ -190,10 +190,10 @@ private theorem exists_nontrivial_character_pgroup {H : Type} [Group H] [Finite 
   haveI := hH.isNilpotent
   have h1 := IsSolvable.commutator_lt_top_of_nontrivial H
   obtain ⟨a, -, ha⟩ := SetLike.exists_of_lt h1
-  have h2 : Abelianization.of a ≠ 1 := fun h => ha ((QuotientGroup.eq_one_iff a).1 h)
-  haveI : NeZero (Monoid.exponent (Abelianization H)) := ⟨Monoid.exponent_ne_zero_of_finite⟩
-  obtain ⟨ψ, hψ⟩ := CommGroup.exists_apply_ne_one_of_hasEnoughRootsOfUnity (Abelianization H) F h2
-  exact ⟨ψ.comp Abelianization.of, a, hψ⟩
+  have h2 : Group.Abelianization.of a ≠ 1 := fun h => ha ((QuotientGroup.eq_one_iff a).1 h)
+  haveI : NeZero (Monoid.exponent (Group.Abelianization H)) := ⟨Monoid.exponent_ne_zero_of_finite⟩
+  obtain ⟨ψ, hψ⟩ := CommGroup.exists_apply_ne_one_of_hasEnoughRootsOfUnity (Group.Abelianization H) F h2
+  exact ⟨ψ.comp Group.Abelianization.of, a, hψ⟩
 
 private theorem eq_zero_of_twisted_commutation {A : Type} [CommRing A] [IsLocalRing A] [IsHausdorff (IsLocalRing.maximalIdeal A) A] {n : ℕ}
     (M Y : Matrix (Fin n) (Fin n) A) (c x : A) (hc : IsUnit c) (hx : IsUnit (x - 1))

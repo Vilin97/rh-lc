@@ -59,7 +59,7 @@ def eqv (χ : G →* ℂˣ) : Submodule ℂ (Distr X) where
     ring
 
 theorem mem_eqv {χ : G →* ℂˣ} {D : Distr X} :
-    D ∈ eqv χ ↔ ∀ (g : G) (f : SB X), D (transl g f) = (χ g : ℂ) * D f :=
+    D ∈ eqv X χ ↔ ∀ (g : G) (f : SB X), D (transl g f) = (χ g : ℂ) * D f :=
   Iff.rfl
 
 end Transl

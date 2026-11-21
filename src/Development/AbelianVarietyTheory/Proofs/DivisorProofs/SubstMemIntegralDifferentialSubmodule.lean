@@ -32,8 +32,8 @@ theorem derivation_prod_erase {R A ι : Type} [CommRing R] [CommRing A] [Algebra
 
 theorem pderiv_prod_pow {R τ σ : Type} [CommRing R] [Fintype σ] [DecidableEq σ]
     (u : σ → MvPowerSeries τ R) (a : σ → ℕ) (j : τ) :
-    pderiv R j (∏ s, u s ^ a s) =
-      ∑ i, a i • ((∏ s ∈ Finset.univ.erase i, u s ^ a s) * (u i ^ (a i - 1) * pderiv R j (u i))) := by
+    pderiv j (∏ s, u s ^ a s) =
+      ∑ i, a i • ((∏ s ∈ Finset.univ.erase i, u s ^ a s) * (u i ^ (a i - 1) * pderiv j (u i))) := by
   rw [derivation_prod_erase]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [pderiv_pow, nsmul_eq_mul, mul_assoc, mul_left_comm]
@@ -80,7 +80,7 @@ theorem subst_mem_quasiInt : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [
       rw [hδγ, pderiv_prod_pow, map_sum] at key
     have hk : (γ j : Fr p k) * φ (coeff γ (∏ s, v s ^ α s)) =
         φ (∑ i, coeff δ (α i • ((∏ s ∈ Finset.univ.erase i, v s ^ α s) *
-          (v i ^ (α i - 1) * pderiv (WittVector p k) j (v i))))) := by
+          (v i ^ (α i - 1) * pderiv j (v i))))) := by
       rw [key, map_mul, map_add (f := _), map_natCast, map_one, ← hδj]
       ring
     set_option synthInstance.maxHeartbeats 100000 in

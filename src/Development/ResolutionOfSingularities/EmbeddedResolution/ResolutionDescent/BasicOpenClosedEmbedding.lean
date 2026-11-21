@@ -171,27 +171,31 @@ theorem replaceLastCoord_comp_affineSpaceIndexedByToSpec (k : Type u) [Field k] 
     (s : ↑((↑(pullbackBasicOpen k M G) : Scheme.{u}).presheaf.obj (Opposite.op ⊤))) :
     replaceLastCoord k M G s ≫ affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin M ⊕ Fin 1)) =
       (pullbackBasicOpen k M G).ι ≫ affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin M ⊕ Fin 1)) :=
-  (exists_replaceLastCoord k M G s).choose_spec.1
+  by
+    simpa only [replaceLastCoord] using (exists_replaceLastCoord k M G s).choose_spec.1
 
 theorem pullbackCoord_replaceLastCoord_inl (k : Type u) [Field k] (M : ℕ)
     (G : ↑((affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))).presheaf.obj (Opposite.op ⊤)))
     (s : ↑((↑(pullbackBasicOpen k M G) : Scheme.{u}).presheaf.obj (Opposite.op ⊤))) (a : Fin M) :
     pullbackCoord (replaceLastCoord k M G s) ⟨Sum.inl a⟩ =
       pullbackCoord (pullbackBasicOpen k M G).ι ⟨Sum.inl a⟩ :=
-  (exists_replaceLastCoord k M G s).choose_spec.2.1 a
+  by
+    simpa only [replaceLastCoord] using (exists_replaceLastCoord k M G s).choose_spec.2.1 a
 
 theorem replaceLastCoord_appTop_lastCoordinate (k : Type u) [Field k] (M : ℕ)
     (G : ↑((affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))).presheaf.obj (Opposite.op ⊤)))
     (s : ↑((↑(pullbackBasicOpen k M G) : Scheme.{u}).presheaf.obj (Opposite.op ⊤))) :
     (ConcreteCategory.hom (Scheme.Hom.appTop (replaceLastCoord k M G s))) (lastCoordinate k M) = s :=
-  (exists_replaceLastCoord k M G s).choose_spec.2.2.1
+  by
+    simpa only [replaceLastCoord] using (exists_replaceLastCoord k M G s).choose_spec.2.2.1
 
 @[simp]
 theorem replaceLastCoord_comp_projLeft (k : Type u) [Field k] (M : ℕ)
     (G : ↑((affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))).presheaf.obj (Opposite.op ⊤)))
     (s : ↑((↑(pullbackBasicOpen k M G) : Scheme.{u}).presheaf.obj (Opposite.op ⊤))) :
     replaceLastCoord k M G s ≫ projLeft k M 1 = (pullbackBasicOpen k M G).ι ≫ projLeft k M 1 :=
-  (exists_replaceLastCoord k M G s).choose_spec.2.2.2
+  by
+    simpa only [replaceLastCoord] using (exists_replaceLastCoord k M G s).choose_spec.2.2.2
 
 private theorem mem_pullbackBasicOpen_iff (k : Type u) [Field k] (M : ℕ)
     (G : ↑((affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))).presheaf.obj (Opposite.op ⊤)))
@@ -238,7 +242,8 @@ theorem shiftLastCoord_comp_ι (k : Type u) [Field k] (M : ℕ)
     (G : ↑((affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))).presheaf.obj (Opposite.op ⊤)))
     (s : ↑((↑(pullbackBasicOpen k M G) : Scheme.{u}).presheaf.obj (Opposite.op ⊤))) :
     shiftLastCoord k M G s ≫ (pullbackBasicOpen k M G).ι = replaceLastCoord k M G s :=
-  (exists_comp_ι_eq_replaceLastCoord k M G s).choose_spec
+  by
+    simpa only [shiftLastCoord] using (exists_comp_ι_eq_replaceLastCoord k M G s).choose_spec
 
 @[simp]
 theorem shiftLastCoord_comp_ι_assoc (k : Type u) [Field k] (M : ℕ)
@@ -271,7 +276,8 @@ theorem appTop_globalSectionLift (k : Type u) [Field k] (M : ℕ) {A : Scheme.{u
     (ρ : A ⟶ affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))) [IsClosedImmersion ρ]
     (F : ↑(A.presheaf.obj (Opposite.op ⊤))) :
     (ConcreteCategory.hom (Scheme.Hom.appTop ρ)) (globalSectionLift k M ρ F) = F :=
-  (exists_appTop_eq_of_isClosedImmersion k M ρ F).choose_spec
+  by
+    simpa only [globalSectionLift] using (exists_appTop_eq_of_isClosedImmersion k M ρ F).choose_spec
 
 private theorem pullbackAlongProjection_eq (k : Type u) [Field k] (M : ℕ)
     (G : ↑((affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))).presheaf.obj (Opposite.op ⊤))) :
@@ -414,7 +420,8 @@ theorem isClosedImmersion_basicOpenToPullbackBasicOpen (k : Type u) [Field k] (M
     (ρ : A ⟶ affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))) [IsClosedImmersion ρ]
     (F : ↑(A.presheaf.obj (Opposite.op ⊤))) :
     IsClosedImmersion (basicOpenToPullbackBasicOpen k M ρ F) :=
-  (exists_isClosedImmersion_basicOpen_pullbackBasicOpen k M ρ F).choose_spec.1
+  by
+    simpa only [basicOpenToPullbackBasicOpen] using (exists_isClosedImmersion_basicOpen_pullbackBasicOpen k M ρ F).choose_spec.1
 
 instance instIsClosedImmersionPadLocalEmb (k : Type u) [Field k] (M : ℕ) {A : Scheme.{u}}
     (ρ : A ⟶ affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))) [IsClosedImmersion ρ]
@@ -427,7 +434,8 @@ theorem basicOpenToPullbackBasicOpen_comp_projLeft (k : Type u) [Field k] (M : �
     (F : ↑(A.presheaf.obj (Opposite.op ⊤))) :
     basicOpenToPullbackBasicOpen k M ρ F ≫ (pullbackBasicOpen k M (globalSectionLift k M ρ F)).ι ≫ projLeft k M 1 =
       (A.basicOpen F).ι ≫ ρ :=
-  (exists_isClosedImmersion_basicOpen_pullbackBasicOpen k M ρ F).choose_spec.2.1
+  by
+    simpa only [basicOpenToPullbackBasicOpen] using (exists_isClosedImmersion_basicOpen_pullbackBasicOpen k M ρ F).choose_spec.2.1
 
 def basicOpenEmbedding (k : Type u) [Field k] (M : ℕ) {A : Scheme.{u}}
     (ρ : A ⟶ affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))) [IsClosedImmersion ρ]
@@ -440,7 +448,8 @@ theorem appTop_basicOpenEmbedding_lastCoordinate_mul (k : Type u) [Field k] (M :
     (F : ↑(A.presheaf.obj (Opposite.op ⊤))) :
     (ConcreteCategory.hom (Scheme.Hom.appTop (basicOpenEmbedding k M ρ F)))
         (lastCoordinate k M * pullbackAlongProjection k M (globalSectionLift k M ρ F)) = 1 :=
-  (exists_isClosedImmersion_basicOpen_pullbackBasicOpen k M ρ F).choose_spec.2.2
+  by
+    simpa only [basicOpenEmbedding, basicOpenToPullbackBasicOpen] using (exists_isClosedImmersion_basicOpen_pullbackBasicOpen k M ρ F).choose_spec.2.2
 
 private theorem isUnit_map_of_not_isUnit_map_mul_sub_one {R S : Type u} [CommRing R] [CommRing S]
     [IsLocalRing S] (φ : R →+* S) (a b : R) (h : ¬ IsUnit (φ (a * b - 1))) : IsUnit (φ b) := by

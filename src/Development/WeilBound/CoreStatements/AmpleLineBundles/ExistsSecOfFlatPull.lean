@@ -63,7 +63,9 @@ theorem exists_sec_of_flat_pull [Module.Flat R S] [CompactSpace X]
         (rsL p (V k) (V k ⊓ V l) inf_le_left).comp (LinearMap.proj k) -
           (mulL p (V k ⊓ V l) (res (pair_le L V c hVc k l) (L.g (c k) (c l))).val).comp
             ((rsL p (V l) (V k ⊓ V l) inf_le_right).comp (LinearMap.proj l)) := by
-      ext f; rfl
+      apply LinearMap.ext
+      intro f
+      rfl
     rw [hdec, LinearMap.rTensor_sub, LinearMap.sub_apply, LinearMap.rTensor_comp_apply, LinearMap.rTensor_comp_apply,
       LinearMap.rTensor_comp_apply, ← piLeft_apply_eq, ← piLeft_apply_eq, hpt, hpt]
     apply (eTens p p' φ H (V k ⊓ V l) (hinter _ _ (hVa k) (hVa l))).injective

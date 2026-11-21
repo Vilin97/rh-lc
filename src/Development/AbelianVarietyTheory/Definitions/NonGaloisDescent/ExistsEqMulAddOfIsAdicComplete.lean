@@ -152,8 +152,17 @@ theorem phi_bas_rankOne (j : ℤ) : (rankOne O K l e fun _ : ZMod a => j).phi (b
 
 theorem mem_ext_rankOne (j : ℤ) {B : Subalgebra O K⟦X⟧} {v : Vec K a Unit} :
     v ∈ (rankOne O K l e fun _ : ZMod a => j).ext B ↔ ∀ τ, Ezpow (K := K) l e (-j) * v τ () ∈ B := by
-  simp [PhiMod.ext, mem_tot, PhiMod.mem_extc_iff, mem_vecs, Matrix.mulVec, dotProduct,
-    mxInv_rankOne_eq]
+  rw [PhiMod.ext, mem_tot]
+  refine forall_congr' fun τ => ?_
+  rw [PhiMod.extc, Set.range_unique, Submodule.mem_span_singleton]
+  have h (c : B) : c • ((rankOne O K l e fun _ : ZMod a => j).mx τ).col () = v τ ↔
+      (c : K⟦X⟧) = Ezpow (K := K) l e (-j) * v τ () := by
+    simp only [funext_iff, Unique.forall_iff, Pi.smul_apply, Subalgebra.smul_def, smul_eq_mul,
+      Matrix.col_apply, mx_rankOne_eq]
+    constructor <;> intro hc
+    · rw [← hc, mul_left_comm, Ezpow_neg_mul, mul_one]
+    · rw [hc, mul_right_comm, Ezpow_neg_mul, one_mul]
+  exact ⟨fun ⟨c, hc⟩ => (h c).1 hc ▸ c.2, fun hv => ⟨⟨_, hv⟩, (h ⟨_, hv⟩).2 rfl⟩⟩
 
 variable [CompleteSpace K]
 
@@ -190,7 +199,7 @@ theorem exists_nabla_rankOne (j : ℤ) : ∃ γ ∈ S O K e,
     rw [smul_smul, Ezpow_neg_mul, one_smul]
   have hl (v : Vec K a Unit) : (l : K) • v = (l : K⟦X⟧) • v := by
     rw [Nat.cast_smul_eq_nsmul, Nat.cast_smul_eq_nsmul]
-  have hR : Raises (P.lphi * mulV (Ezpow (K := K) l e (-j))) := fun k v hv =>
+  have hR : Raises (P.lphi * mulV K a Unit (Ezpow (K := K) l e (-j))) := fun k v hv =>
     P.raises_lphi k _ ((uPow K a Unit _).smul_mem _ hv)
   change P.conn _ = (X : K⟦X⟧) • (γ : K⟦X⟧) • Ezpow (K := K) l e j • bas ()
   rw [← sub_eq_zero, smul_smul X]
@@ -204,7 +213,7 @@ theorem exists_nabla_rankOne (j : ℤ) : ∃ γ ∈ S O K e,
       P.conn (bas ()) - (N K (Ezpow (K := K) l e (-j)) * Ezpow (K := K) l e j) • bas () := by
     conv_rhs => rw [hb, P.conn_smul, ← hb, mul_smul, add_sub_cancel_left]
   have hmulV (v : Vec K a Unit) :
-      mulV (Ezpow (K := K) l e (-j)) v = Ezpow (K := K) l e (-j) • v := rfl
+      mulV K a Unit (Ezpow (K := K) l e (-j)) v = Ezpow (K := K) l e (-j) • v := rfl
   rw [mul_apply_eq_comp, hmulV, smul_sub, h3, smul_comm _ (X * (γ : K⟦X⟧)), ← hb, map_sub,
     map_sub, P.lphi_apply, ← P.conn_phi, P.lphi_apply, P.lphi_apply, P.phi_smul, P.phi_smul,
     phi_bas_rankOne, hl, hl, smul_smul (l : K⟦X⟧), smul_smul (l : K⟦X⟧), hq, sub_sub, ← add_smul,

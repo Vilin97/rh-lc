@@ -55,13 +55,13 @@ theorem diag_conj_eq {r s : ℕ} (N : Matrix (Fin s) (Fin r) ℂ) (G : Matrix (F
     (i : Fin r) :
     (Nᴴ * G * N) i i = star (N *ᵥ Pi.single i 1) ⬝ᵥ G *ᵥ (N *ᵥ Pi.single i 1) := by
   simp only [Matrix.mul_apply, Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply, Pi.star_apply,
-    Pi.single_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true, Finset.sum_mul,
+    Pi.single_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true, Finset.sum_mul,
     Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   ring
 
-theorem pt_lower {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric ℂ (Ix κ)}
+theorem pt_lower {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric (C := ℂ) (ι := Ix κ)}
     (hFS : IsPullFS x e m) {N kε δ : ℕ} (H : Fin δ → MvPolynomial (Ix κ) ℤ) {Cε : ℝ}
     (hCε0 : 0 ≤ Cε)
     (hCε : ∀ l, ∀ z ∈ pts (coordIdeal ℤ x),
@@ -73,6 +73,9 @@ theorem pt_lower {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric 
       Cε ^ 2 * δ * ((N + D).choose D : ℝ) *
         ∑ l : Fin δ, ∑ i, ‖c (finProdFinEquiv (l, i))‖ ^ 2 * monoNormSq (adtEnum D N i) := by
   have hρ0 : 0 ≤ m.ρ z := m.nonneg z
+  have hsqN : sqN (z ∘ e) = m.ρ z ^ 2 := by
+    rw [hFS z hz, Real.sq_sqrt (Finset.sum_nonneg fun k _ => sq_nonneg ‖z (e k)‖)]
+    rfl
   have hBn0 : (0 : ℝ) ≤ ((N + D).choose D : ℝ) := Nat.cast_nonneg _
   set q : Fin δ → ℝ := fun l =>
     ∑ i, ‖c (finProdFinEquiv (l, i))‖ ^ 2 * monoNormSq (adtEnum D N i) with hq
@@ -90,10 +93,13 @@ theorem pt_lower {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric 
     rw [Equiv.symm_apply_apply, eval_prodForm]; ring
   have hPl : ∀ l, ‖P l‖ ≤ Real.sqrt (((N + D).choose D : ℝ) * q l) * m.ρ z ^ N := fun l => by
     have h := form_enum_sq_le D N (fun i => c (finProdFinEquiv (l, i))) (z ∘ e)
-    rw [sqN_comp_eq hFS hz] at h
-    refine norm_le_sqrt_of_sq_le (norm_nonneg _) (mul_nonneg hBn0 (hq0 l)) (pow_nonneg hρ0 N) ?_
-    calc ‖P l‖ ^ 2 ≤ ((N + D).choose D : ℝ) * (m.ρ z ^ 2) ^ N * q l := h
-      _ = ((N + D).choose D : ℝ) * q l * (m.ρ z ^ N) ^ 2 := by ring
+    rw [hsqN] at h
+    have hsq : ‖P l‖ ^ 2 ≤ ((N + D).choose D : ℝ) * q l * (m.ρ z ^ N) ^ 2 := by
+      calc ‖P l‖ ^ 2 ≤ ((N + D).choose D : ℝ) * (m.ρ z ^ 2) ^ N * q l := h
+        _ = ((N + D).choose D : ℝ) * q l * (m.ρ z ^ N) ^ 2 := by ring
+    have hsqrt := Real.sqrt_le_sqrt hsq
+    rwa [Real.sqrt_sq (norm_nonneg _), Real.sqrt_mul (mul_nonneg hBn0 (hq0 l)),
+      Real.sqrt_sq (pow_nonneg hρ0 N)] at hsqrt
   have hmain : ‖∑ l, eval z (map (Int.castRingHom ℂ) (H l)) * P l‖ ≤
       (Cε * ∑ l, Real.sqrt (((N + D).choose D : ℝ) * q l)) * m.ρ z ^ (N + kε) := by
     refine (norm_sum_le _ _).trans ?_
@@ -105,7 +111,12 @@ theorem pt_lower {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric 
           mul_le_mul (hCε l z hz) (hPl l) (norm_nonneg _) (by positivity)
       _ = Cε * Real.sqrt (((N + D).choose D : ℝ) * q l) * m.ρ z ^ (N + kε) := by ring
   rw [hsum]
-  refine (sq_wgt_le_of_le hz.1 (norm_nonneg _) hmain).trans ?_
+  have hweighted : ‖∑ l, eval z (map (Int.castRingHom ℂ) (H l)) * P l‖ ^ 2 *
+      wgt m (N + kε) z ≤ (Cε * ∑ l, Real.sqrt (((N + D).choose D : ℝ) * q l)) ^ 2 := by
+    have hρ : 0 < m.ρ z ^ (N + kε) := pow_pos (m.pos z hz.1) _
+    rw [wgt, Nat.mul_comm 2, pow_mul, mul_inv_le_iff₀ (pow_pos hρ 2), ← mul_pow]
+    exact pow_le_pow_left₀ (norm_nonneg _) hmain 2
+  refine hweighted.trans ?_
   have hcs := sq_sum_le_card_mul_sum_sq (s := Finset.univ)
     (f := fun l => Real.sqrt (((N + D).choose D : ℝ) * q l))
   simp only [Finset.card_univ, Fintype.card_fin] at hcs
@@ -117,19 +128,24 @@ theorem pt_lower {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric 
         simp_rw [Real.sq_sqrt (mul_nonneg hBn0 (hq0 _))]
         rw [← Finset.mul_sum]; ring
 
-theorem pt_small {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric ℂ (Ix κ)}
+theorem pt_small {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric (C := ℂ) (ι := Ix κ)}
     (hFS : IsPullFS x e m) {N k₀ : ℕ} {a : Fin (D + 1) → ℕ} (ha : ∑ t, a t = N)
     (t : MvPolynomial (Ix κ) ℤ) {Ct : ℝ}
     (hCt : ∀ z ∈ pts (coordIdeal ℤ x), ‖eval z (map (Int.castRingHom ℂ) t)‖ ≤ Ct * m.ρ z ^ k₀)
     {z : Ix κ → ℂ} (hz : z ∈ pts (coordIdeal ℤ x)) :
     ‖eval z (map (Int.castRingHom ℂ) (prodForm e a t))‖ ^ 2 * wgt m (N + k₀) z ≤ Ct ^ 2 := by
   have hρ0 : 0 ≤ m.ρ z := m.nonneg z
+  have hsqN : sqN (z ∘ e) = m.ρ z ^ 2 := by
+    rw [hFS z hz, Real.sq_sqrt (Finset.sum_nonneg fun k _ => sq_nonneg ‖z (e k)‖)]
+    rfl
   have hm : ‖monoC a (z ∘ e)‖ ≤ m.ρ z ^ N := by
     have h := norm_monoC_sq_le a (z ∘ e)
     have e2 : (m.ρ z ^ 2) ^ N = (m.ρ z ^ N) ^ 2 := by ring
-    rw [sqN_comp_eq hFS hz, ha, e2] at h
+    rw [hsqN, ha, e2] at h
     exact (pow_le_pow_iff_left₀ (norm_nonneg _) (pow_nonneg hρ0 N) two_ne_zero).mp h
-  refine sq_wgt_le_of_le hz.1 (norm_nonneg _) ?_
+  have hρ : 0 < m.ρ z ^ (N + k₀) := pow_pos (m.pos z hz.1) _
+  rw [wgt, Nat.mul_comm 2, pow_mul, mul_inv_le_iff₀ (pow_pos hρ 2), ← mul_pow]
+  refine pow_le_pow_left₀ (norm_nonneg _) ?_ 2
   rw [eval_prodForm, norm_mul]
   have h2 := hCt z hz
   calc ‖monoC a (z ∘ e)‖ * ‖eval z (map (Int.castRingHom ℂ) t)‖ ≤ m.ρ z ^ N * (Ct * m.ρ z ^ k₀) :=

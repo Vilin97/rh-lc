@@ -21,7 +21,8 @@ theorem actK_self (B : FB C dd O) (a : O) : B.actK C a = B.A.act a := by
   funext i
   simp [FB.actK, Algebra.algebraMap_self]
 
-theorem pderiv_second_eval_first (f : PS C 1 dd) (i : Fin dd) : pderiv (R := C) ((1 : Fin 2), i) (ev (n := 2) ![pt C dd 0] f) = 0 := by
+theorem pderiv_second_eval_first (f : PS C 1 dd) (i : Fin dd) :
+    pderiv (R := C) ((1 : Fin 2), i) (ev (n := 2) ![pt C dd 0] f) = 0 := by
   unfold ev
   rw [Formalism.G.LogCR.pderiv_subst
     (fun p => z0_1 (pt C dd 0) (coordinate_point_constantCoeff 0) p.1 p.2) f ((1 : Fin 2), i),
@@ -31,7 +32,8 @@ theorem pderiv_second_eval_first (f : PS C 1 dd) (i : Fin dd) : pderiv (R := C) 
     rw [pderiv_X_of_ne (by simp), mul_zero]
 
 theorem pderiv_second_eval_second (f : PS C 1 dd) (i : Fin dd) :
-    pderiv (R := C) ((1 : Fin 2), i) (ev (n := 2) ![pt C dd 1] f) = ev (n := 2) ![pt C dd 1] (pderiv (R := C) ((0 : Fin 1), i) f) := by
+    pderiv (R := C) ((1 : Fin 2), i) (ev (n := 2) ![pt C dd 1] f) =
+      ev (n := 2) ![pt C dd 1] (pderiv (R := C) ((0 : Fin 1), i) f) := by
   unfold ev
   rw [Formalism.G.LogCR.pderiv_subst
     (fun p => z0_1 (pt C dd 1) (coordinate_point_constantCoeff 1) p.1 p.2) f ((1 : Fin 2), i),
@@ -134,7 +136,7 @@ theorem sg_act (Y : FBChart C V O dd) (α : O) (v : Fin dd → C) (hv : ∀ i, V
         pderiv (R := C) ((1 : Fin 2), i) ((![A, pt C dd 1] : Fin 2 → Pt C 2 dd) 1 j)) =
         ∑ j, ev (n := 2) ![A, pt C dd 1] (pderiv (R := C) ((1 : Fin 2), j) Y.h) * pderiv (R := C) ((1 : Fin 2), i) (pt C dd 1 j) from rfl]
     simp only [pt, pderiv_X, Pi.single_apply, Prod.mk.injEq, true_and, mul_ite, mul_one,
-      mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+      mul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
     exact eval_eval_pair hZA constant_zero_first_zero (a' := φ) (b' := 0)
       (fun j => eval_first_then_zero (φ j)) (fun j => ev_X constant_zero_first_zero 1 j) _
   have t2 : ∀ i, ev (n := 1) ![pt C dd 0, 0] (pderiv (R := C) ((1 : Fin 2), i) (ev (n := 2) ![pt C dd 0, Bp] Y.h)) =

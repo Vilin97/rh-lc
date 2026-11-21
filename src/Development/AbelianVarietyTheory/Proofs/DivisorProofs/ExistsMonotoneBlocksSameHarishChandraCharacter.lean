@@ -41,7 +41,7 @@ def blockEquiv (e : ι ≃ κ) (b : ι → Fin s) (c : Fin s) : {i // b i = c} �
 
 def lamT (e : ι ≃ κ) (b : ι → Fin s) (lam : ∀ c : Fin s, FDRep ℂ (GL {i // b i = c} K)) (c : Fin s) :
     FDRep ℂ (GL {k // (b ∘ e.symm) k = c} K) :=
-  transp (blockEquiv e b c) (lam c)
+  Formalism.IrreducibleCountingLemmas.TYPES.transp (blockEquiv e b c) (lam c)
 
 theorem mem_parab_symm (e : ι ≃ κ) (b : ι → Fin s) (p : parab K (b ∘ e.symm)) :
     (glEquiv K e).symm p.1 ∈ parab K b := by

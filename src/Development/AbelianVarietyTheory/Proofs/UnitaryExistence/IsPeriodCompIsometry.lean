@@ -41,7 +41,10 @@ lemma isHolTo_ex {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Recipro
     simp
   rw [hset]
   refine ⟨ho.preimage hj, ?_⟩
-  have h2 := hd.comp hjd.differentiableOn (fun z hz => hz)
+  have h2 := hd.comp (s := (fun z : Fin g → ℂ => ((0 : Fin 0 → ℂ), z)) ⁻¹'
+      {b | b ∈ (Set.univ : Set (Fin 0 → ℂ)) ×ˢ (Set.univ : Set (Fin g → ℂ)) ∧
+        ⊤ ≤ (fun bz : (Fin 0 → ℂ) × (Fin g → ℂ) => (F.ex k P bz.2).left) b ⁻¹ᵁ U})
+    hjd.differentiableOn (fun _ hz => hz)
   rw [Function.comp_def] at h2
   dsimp only at h2 ⊢
   exact h2

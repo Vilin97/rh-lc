@@ -6,7 +6,6 @@ public import Development.EtaleCohomology.EtaleSheaves.GlueRelPfCone
 
 noncomputable section
 open CategoryTheory Limits GlobalTheory.EtC CochainComplex.HomComplex CochainComplex AlgebraicGeometry LateralTheory.E.E4
-  LateralTheory.E.LeafLocStalkPf
 
 namespace LateralTheory.E.GlueRelPfNat
 variable (R : Type) [CommRing R]

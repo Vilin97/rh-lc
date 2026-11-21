@@ -55,7 +55,7 @@ theorem _root_.GlobalTheory.cuspForms_finiteDimensional_of_isUnf : _root_.Recipr
     | smul z g _ hg =>
       show z • g k x = 0
       rw [hg, smul_zero]
-  haveI : FiniteDimensional ℂ W :=
+  have : FiniteDimensional ℂ W :=
     _root_.GlobalTheory.CuspSecFinData.finiteDimensional_of_le_holSub E r (U σ).Comp (U σ).X
       (_root_.Formalism.L2.PjFree.laU (U σ) a n) W hWle hoff
   have hrank : Module.rank c.F V ≤ Module.finrank ℂ W := by
@@ -72,6 +72,6 @@ theorem _root_.GlobalTheory.cuspForms_finiteDimensional_of_isUnf : _root_.Recipr
       ⟨_root_.Formalism.L2.PjFree.rdU (U σ) (b i), Submodule.subset_span ⟨b i, ((e.symm i : s) : V).2, rfl⟩⟩
     have hb' : LinearIndependent ℂ b' := LinearIndependent.of_comp W.subtype himg
     simpa using hb'.fintype_card_le_finrank
-  exact Module.rank_lt_aleph0_iff.mp (lt_of_le_of_lt hrank (Cardinal.nat_lt_aleph0 _))
+  exact Module.rank_lt_aleph0_iff.mp (lt_of_le_of_lt hrank Cardinal.natCast_lt_aleph0)
 
 end GlobalTheory

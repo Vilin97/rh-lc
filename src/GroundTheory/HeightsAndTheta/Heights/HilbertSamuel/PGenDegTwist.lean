@@ -22,7 +22,7 @@ noncomputable section
 def intNumMultilinear {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
     (I : Ideal (MRingOver ℚ ι)) (n : ℕ) (hI : NumbersDVR.IsMultiHomogIdeal I)
     (hr : NumbersDVR.IsRelevant I) (hd : FieldNumbers.relDim I = n) :
-    MultilinearMap ℤ (fun _ : Fin n => K → ℤ) ℤ where
+    MultilinearMap (RingHom.id ℤ) (fun _ : Fin n => K → ℤ) ℤ where
   toFun bs := NumbersDVR.intNum ℚ I bs
   map_update_add' := by
     intro inst bs i x y

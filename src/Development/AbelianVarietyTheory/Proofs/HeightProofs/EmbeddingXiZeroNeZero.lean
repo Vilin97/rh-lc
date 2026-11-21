@@ -250,8 +250,11 @@ theorem gen_inf_exists (τ : E →+* ℂ) (w : InfinitePlace F) (hw : w.embeddin
   let _ : Algebra F ℂ := (τ.comp (algebraMap F E)).toAlgebra
   let f : Ainf F →ₐ[F] ℂ :=
     { toRingHom := (InfinitePlace.Completion.extensionEmbedding w).comp (Pi.evalRingHom _ w)
-      commutes' := fun x =>
-        (InfinitePlace.Completion.extensionEmbedding_coe w _).trans (DFunLike.congr_fun hw x) }
+      commutes' := fun x => by
+        change InfinitePlace.Completion.extensionEmbedding w (algebraMap F (Ainf F) x w) =
+          (τ.comp (algebraMap F E)) x
+        rw [InfiniteAdeleRing.algebraMap_apply]
+        exact (InfinitePlace.Completion.extensionEmbedding_coe w _).trans (DFunLike.congr_fun hw x) }
   let g : E →ₐ[F] ℂ := { toRingHom := τ, commutes' := fun _ => rfl }
   refine ⟨(Algebra.TensorProduct.lift f g (fun _ _ => Commute.all _ _)).toRingHom, fun x => ?_, ?_⟩
   · show f 1 * g x = τ x

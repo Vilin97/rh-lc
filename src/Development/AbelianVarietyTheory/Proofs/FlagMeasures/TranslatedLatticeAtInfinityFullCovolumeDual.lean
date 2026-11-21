@@ -251,12 +251,9 @@ theorem volume_fd_intB [IsTotallyComplex E] :
   rw [this, ← Real.sqrt_eq_rpow]
   simp [div_eq_inv_mul, Int.norm_eq_abs]
 
-theorem isLattice_int (Λ : Submodule (𝓞 E) (Fin j → E)) (h : Submodule.IsLattice E Λ) :
-    Submodule.IsLattice ℚ (Λ.restrictScalars ℤ) where
-  fg := by
-    have : Module.Finite (𝓞 E) Λ := Module.Finite.iff_fg.2 h.fg
-    have : Module.Finite ℤ Λ := Module.Finite.trans (𝓞 E) Λ
-    exact Module.Finite.iff_fg.1 (this : Module.Finite ℤ (Λ.restrictScalars ℤ))
+theorem isLattice_int (Λ : Submodule (𝓞 E) (Fin j → E)) (h : Submodule.IsFullLattice E Λ) :
+    Submodule.IsFullLattice ℚ (Λ.restrictScalars ℤ) where
+  toIsLattice := Submodule.IsLattice.of_fg ℚ (Submodule.FG.restrictScalars h.fg)
   span_eq_top := by
     rw [eq_top_iff]
     intro y _
@@ -270,15 +267,16 @@ theorem isLattice_int (Λ : Submodule (𝓞 E) (Fin j → E)) (h : Submodule.IsL
     rw [integralBasis_apply, algebraMap_smul]
     exact Λ.smul_mem _ (v i).2
 
-theorem exists_basis [IsTotallyComplex E] (Λ : Submodule (𝓞 E) (Fin j → E)) (h : Submodule.IsLattice E Λ) :
+theorem exists_basis [IsTotallyComplex E] (Λ : Submodule (𝓞 E) (Fin j → E)) (h : Submodule.IsFullLattice E Λ) :
     ∃ b : Basis (Idx E j) ℝ (VecInf E j),
       Submodule.span ℤ (emb E j '' (Λ : Set (Fin j → E))) = Submodule.span ℤ (Set.range b) := by
   classical
-  haveI := isLattice_int E j Λ h
+  have := isLattice_int E j Λ h
+  have := Submodule.IsLattice.free ℚ (Λ.restrictScalars ℤ)
   let β₀ := Module.Free.chooseBasis ℤ (Λ.restrictScalars ℤ)
-  let β := β₀.reindex (((β₀.extendOfIsLattice ℚ).indexEquiv (ratB E j)).trans ((intB E j).indexEquiv (stdB E j)))
-  let q := β.extendOfIsLattice ℚ
-  have hq : ∀ i, q i = (β i : Fin j → E) := fun i => Basis.extendOfIsLattice_apply ℚ β i
+  let β := β₀.reindex (((β₀.extendOfIsFullLattice ℚ).indexEquiv (ratB E j)).trans ((intB E j).indexEquiv (stdB E j)))
+  let q := β.extendOfIsFullLattice ℚ
+  have hq : ∀ i, q i = (β i : Fin j → E) := fun i => Basis.extendOfIsFullLattice_apply ℚ β i
   have hall : ∀ y, emb E j y ∈ Submodule.span ℝ (Set.range fun i => emb E j (q i)) := by
     intro y
     set_option synthInstance.maxHeartbeats 100000 in
@@ -350,7 +348,7 @@ theorem span_std [IsTotallyComplex E] :
     rw [h3]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
 
-theorem lattice_facts : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E → ∀ j : ℕ, (∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsLattice E Λ → ∃ κ : ℝ, 0 < κ ∧ ∀ g : MatInf E j, 0 < detNorm E j g → (∃ _ : DiscreteTopology (latAt E j Λ g), IsZLattice ℝ (latAt E j Λ g)) ∧ covAt E j (latAt E j Λ g) = κ / detNorm E j g ∧ covAt E j (dualAt E j (latAt E j Λ g)) = (covAt E j (latAt E j Λ g))⁻¹ ∧ dualAt E j (dualAt E j (latAt E j Λ g)) = latAt E j Λ g) ∧ covAt E j (latAt E j (Submodule.span (𝓞 E) (Set.range fun a => (Pi.single a 1 : Fin j → E))) fun _ a b => if a = b then 1 else 0) = Formalism.HermitianLatticesTheory.vInv E ^ (Formalism.HermitianLatticesTheory.fDeg E * j) := by
+theorem lattice_facts : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E → ∀ j : ℕ, (∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsFullLattice E Λ → ∃ κ : ℝ, 0 < κ ∧ ∀ g : MatInf E j, 0 < detNorm E j g → (∃ _ : DiscreteTopology (latAt E j Λ g), IsZLattice ℝ (latAt E j Λ g)) ∧ covAt E j (latAt E j Λ g) = κ / detNorm E j g ∧ covAt E j (dualAt E j (latAt E j Λ g)) = (covAt E j (latAt E j Λ g))⁻¹ ∧ dualAt E j (dualAt E j (latAt E j Λ g)) = latAt E j Λ g) ∧ covAt E j (latAt E j (Submodule.span (𝓞 E) (Set.range fun a => (Pi.single a 1 : Fin j → E))) fun _ a b => if a = b then 1 else 0) = Formalism.HermitianLatticesTheory.vInv E ^ (Formalism.HermitianLatticesTheory.fDeg E * j) := by
   intro E _ _ hE j
   refine ⟨fun Λ hΛ => ?_, by rw [span_std, covAt_span, volume_fd_intB]⟩
   classical

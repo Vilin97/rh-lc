@@ -27,9 +27,7 @@ theorem T.neg {f : ℂ → ℂ} {F : PowerSeries ℂ} (hf : T f F) : T (fun z =>
 
 theorem T.sub {f g : ℂ → ℂ} {F G : PowerSeries ℂ} (hf : T f F) (hg : T g G) :
     T (fun z => f z - g z) (F - G) := by
-  convert T.add taylor_ring hf (T.neg hg) using 1
-  · funext z; ring
-  · ring
+  simpa only [sub_eq_add_neg] using T.add taylor_ring hf (T.neg hg)
 
 theorem T.sum {ι : Type} (s : Finset ι) (f : ι → ℂ → ℂ) (F : ι → PowerSeries ℂ)
     (h : ∀ i ∈ s, T (f i) (F i)) : T (fun z => ∑ i ∈ s, f i z) (∑ i ∈ s, F i) := by
@@ -60,7 +58,7 @@ theorem T.prod {ι : Type} (s : Finset ι) (f : ι → ℂ → ℂ) (F : ι → 
     · rw [Finset.prod_insert ha]
 
 theorem T.deriv {f : ℂ → ℂ} {F : PowerSeries ℂ} (hf : T f F) :
-    T (deriv f) (derivative ℂ F) :=
+    T (deriv f) (derivative F) :=
   ⟨hf.1.deriv, by rw [taylor_deriv.1 f hf.1, hf.2]⟩
 
 theorem T.rescale {f : ℂ → ℂ} {F : PowerSeries ℂ} (a : ℂ) (hf : T f F) :

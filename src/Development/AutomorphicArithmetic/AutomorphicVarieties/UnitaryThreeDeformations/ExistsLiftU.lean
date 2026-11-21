@@ -321,7 +321,7 @@ theorem UpperTheory.V.UnitaryThreeInertia.exists_lift_u :
         exact (r' g).left.isUnit
       by_contra hn
       have h2 : X.det ∈ maximalIdeal R := hn
-      rw [← res_eq_zero_iff O R, ← res_map O R p X.det, res_eq_zero_iff O R'] at h2
+      rw [← res_eq_zero_iff O R, ← res_map p X.det, res_eq_zero_iff O R'] at h2
       exact h2 h1
     exact ⟨⟨⟨hu.unit, (r' g).right⟩, (hSm _).2 hX⟩, SemidirectProduct.ext (Units.ext hXp) rfl⟩
   have he : ∀ s ∈ F.Iv v, r' s ^ (2 * Nat.card (ResidueField O)ˣ) = 1 := fun s hs => by

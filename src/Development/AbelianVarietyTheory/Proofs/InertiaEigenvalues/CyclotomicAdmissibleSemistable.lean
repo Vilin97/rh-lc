@@ -16,7 +16,7 @@ namespace GlobalTheory.PMon.Inhab
 variable {l : ℕ} [Fact l.Prime] (P : LocPrime l)
 
 include P in
-theorem fixed_frob (c : ↥(MaximalUnramifiedExtension l)) (hc : frobUr l c = c) : ∃ q : ℚ_[l], algebraMap ℚ_[l] ↥(MaximalUnramifiedExtension l) q = c := by
+theorem fixed_frob (c : ↥(MaximalUnramifiedExtension l)) (hc : frobUr (l := l) c = c) : ∃ q : ℚ_[l], algebraMap ℚ_[l] ↥(MaximalUnramifiedExtension l) q = c := by
   let K := adjExt (c : Om l)
   let x : ↥(K0 K) := ⟨c, mem_adjExt _, c.2⟩
   have h1 : (P.PD K).φ (algebraMap ↥(MaximalUnramifiedExtension l) P.R.B c) = algebraMap ↥(MaximalUnramifiedExtension l) P.R.B c := by

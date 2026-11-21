@@ -63,7 +63,7 @@ theorem lieBC {S : Scheme.{0}} {G : Over S} [GrpObj G] {A B : Type} [CommRing A]
   have hbc : IsBaseChange B β := (GlobalTheory.T.lie_model_finite_base_change S G A x E M).2.2 B E' M' β h1
   refine ⟨j, h1, h2, ?_, ?_⟩
   · refine eq_top_iff.2 fun e _ => ?_
-    refine hbc.inductionOn e (fun z => z ∈ Submodule.span B (Set.range j)) (Submodule.zero_mem _) ?_ ?_ ?_
+    refine hbc.inductionOn e (motive := fun z => z ∈ Submodule.span B (Set.range j)) ?_ ?_ ?_
     · exact fun m => Submodule.subset_span ⟨m, rfl⟩
     · exact fun s n h => Submodule.smul_mem _ s h
     · exact fun a b ha hb => Submodule.add_mem _ ha hb

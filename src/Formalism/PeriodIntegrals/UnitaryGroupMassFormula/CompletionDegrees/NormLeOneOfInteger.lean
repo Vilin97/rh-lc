@@ -50,17 +50,17 @@ theorem natCast_mem_plIdeal {l : ℕ} [Fact l.Prime] {E : Type} [Field E] [Numbe
   simpa using norm_natCast_lt_one l
 
 theorem plIdeal_isPrime {l : ℕ} [Fact l.Prime] {E : Type} [Field E] [NumberField E]
-    (φ : E →+* Om l) : (plIdeal φ).IsPrime where
-  ne_top' h := by
+    (φ : E →+* Om l) : (plIdeal φ).IsPrime := by
+  refine ⟨?_, ?_⟩
+  · intro h
     have : (1 : 𝓞 E) ∈ plIdeal φ := h ▸ Submodule.mem_top
     rw [mem_plIdeal] at this
     simp at this
-  mem_or_mem' {a b} hab := by
-    simp only [mem_plIdeal, RingOfIntegers.coe_eq_algebraMap, map_mul, norm_mul] at *
-    by_contra h
-    push Not at h
-    have := mul_le_mul h.1 h.2 zero_le_one (norm_nonneg _)
-    linarith
+  · intro a b hab
+    simp only [mem_plIdeal, RingOfIntegers.coe_eq_algebraMap, map_mul, norm_mul] at hab ⊢
+    by_contra! h
+    exact (not_le_of_gt hab) (by
+      simpa only [one_mul] using mul_le_mul h.1 h.2 zero_le_one (norm_nonneg _))
 
 theorem plIdeal_ne_bot {l : ℕ} [hl : Fact l.Prime] {E : Type} [Field E] [NumberField E]
     (φ : E →+* Om l) : plIdeal φ ≠ ⊥ := by

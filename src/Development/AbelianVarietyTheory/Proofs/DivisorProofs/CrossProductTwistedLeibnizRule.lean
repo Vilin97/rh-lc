@@ -215,18 +215,22 @@ def bisimplexFunctionBoundarySecond {A : Type*} [AddCommGroup A] (φ : ∀ p r :
 
 def xv (α : Cochain ((chains R).obj E) I n) (z : Cochain ((chains R).obj B) J m) (w : ℤ) (p r : ℕ) (x : Sx E p U)
     (v : Sx B r U) : Sec (K.X w) U :=
-  if h : (-(p : ℤ) + n) + (-(r : ℤ) + m) = w then μ.mul U _ _ w h (ev α p _ rfl U x) (ev z r _ rfl U v) else 0
+  if h : (-(p : ℤ) + n) + (-(r : ℤ) + m) = w then
+    μ.mul U _ _ w h (GlobalTheory.EtC.ev (R := R) α p _ rfl U x) (GlobalTheory.EtC.ev (R := R) z r _ rfl U v)
+  else 0
 
 theorem xv_eq (α : Cochain ((chains R).obj E) I n) (z : Cochain ((chains R).obj B) J m) (w : ℤ) (p r : ℕ) (x : Sx E p U)
     (v : Sx B r U) (s t : ℤ) (hs : -(p : ℤ) + n = s) (ht : -(r : ℤ) + m = t) (h : s + t = w) :
-    xv μ α z w p r x v = μ.mul U s t w h (ev α p s hs U x) (ev z r t ht U v) := by
+    xv μ α z w p r x v =
+      μ.mul U s t w h (GlobalTheory.EtC.ev (R := R) α p s hs U x) (GlobalTheory.EtC.ev (R := R) z r t ht U v) := by
   subst hs ht
   exact dif_pos h
 
 theorem xv_δ_left {n₁ : ℤ} (hn : n + 1 = n₁) (α : Cochain ((chains R).obj E) I n) (z : Cochain ((chains R).obj B) J m)
     (w : ℤ) (p r : ℕ) (x : Sx E p U) (v : Sx B r U) (s s' t : ℤ) (hs : -(p : ℤ) + n = s) (hs' : s + 1 = s')
     (ht : -(r : ℤ) + m = t) (h : s' + t = w) :
-    μ.mul U s' t w h (Sec.map (I.d s s') (ev α p s hs U x)) (ev z r t ht U v) =
+    μ.mul U s' t w h (Sec.map (I.d s s') (GlobalTheory.EtC.ev (R := R) α p s hs U x))
+      (GlobalTheory.EtC.ev (R := R) z r t ht U v) =
       xv μ (δ n n₁ α) z w p r x v - sg n₁ • bisimplexFunctionBoundaryFirst (xv μ α z w) p r x v := by
   rw [xv_eq μ _ z w p r x v s' t (by omega) ht h]
   cases p with
@@ -241,7 +245,8 @@ theorem xv_δ_left {n₁ : ℤ} (hn : n + 1 = n₁) (α : Cochain ((chains R).ob
 theorem xv_δ_right {m₁ : ℤ} (hm : m + 1 = m₁) (α : Cochain ((chains R).obj E) I n) (z : Cochain ((chains R).obj B) J m)
     (w : ℤ) (p r : ℕ) (x : Sx E p U) (v : Sx B r U) (s t t' : ℤ) (hs : -(p : ℤ) + n = s)
     (ht : -(r : ℤ) + m = t) (ht' : t + 1 = t') (h : s + t' = w) :
-    μ.mul U s t' w h (ev α p s hs U x) (Sec.map (J.d t t') (ev z r t ht U v)) =
+    μ.mul U s t' w h (GlobalTheory.EtC.ev (R := R) α p s hs U x)
+      (Sec.map (J.d t t') (GlobalTheory.EtC.ev (R := R) z r t ht U v)) =
       xv μ α (δ m m₁ z) w p r x v - sg m₁ • bisimplexFunctionBoundarySecond (xv μ α z w) p r x v := by
   rw [xv_eq μ α _ w p r x v s t' hs (by omega) h]
   cases r with

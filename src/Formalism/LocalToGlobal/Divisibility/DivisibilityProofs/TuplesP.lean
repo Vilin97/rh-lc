@@ -65,7 +65,8 @@ section C
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 def c_lat (x : (AfE F E)ˣ) : Submodule (𝓞 E) E where
-  carrier := {e | ((x⁻¹ : (AfE F E)ˣ) : AfE F E) * ιE e ∈ RInt F E}
+  carrier := {e | ((x⁻¹ : (AfE F E)ˣ) : AfE F E) *
+    inclE (F := F) (FiniteAdeleRing (𝓞 F) F) e ∈ RInt F E}
   add_mem' := by
     intro a b ha hb
     simp only [Set.mem_ofPred_eq, map_add (f := _), mul_add] at *

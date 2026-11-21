@@ -84,7 +84,7 @@ theorem exists_compact_denom (D : D7) (d : ℕ) (hd : 0 < d) :
       map_zero' := by simp
       map_add' := fun x y => by simp [add_smul, Finset.sum_add_distrib] }
   have hφ : Continuous φ :=
-    continuous_finset_sum _ fun i _ => (continuous_apply i).fun_smul continuous_const
+    continuous_finsetSum _ fun i _ => (continuous_apply i).fun_smul continuous_const
   have hle : intAE D ≤ (AddSubgroup.pi Set.univ fun _ => O).map φ := by
     refine (AddSubgroup.closure_le _).2 ?_
     rintro y ⟨a, ha, x, rfl⟩

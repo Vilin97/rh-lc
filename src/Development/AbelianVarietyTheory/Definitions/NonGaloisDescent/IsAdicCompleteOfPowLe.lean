@@ -41,7 +41,7 @@ theorem isAdicComplete_of_pow_le {A : Type} [CommRing A] {I J : Ideal A} {N : �
     have := hx n
     simp only [SModEq.zero, smul_eq_mul, Ideal.mul_top] at this ⊢
     exact Ideal.pow_right_mono hJ n this
-  prec' f hf := by
+  toIsPrecomplete := ⟨fun f hf => by
     simp only [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top] at hf ⊢
     obtain ⟨L, hL⟩ := IsPrecomplete.prec' (I := I) f fun {m n} hmn => by
       simp only [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top]
@@ -51,7 +51,7 @@ theorem isAdicComplete_of_pow_le {A : Type} [CommRing A] {I J : Ideal A} {N : �
     have h1 := hf (m := n) (n := (N + 1) * n) (Nat.le_mul_of_pos_left n N.succ_pos)
     have h2 := hL ((N + 1) * n)
     rw [pow_mul] at h2
-    simpa using add_mem h1 (Ideal.pow_right_mono h n h2)
+    simpa using add_mem h1 (Ideal.pow_right_mono h n h2)⟩
 
 theorem ringHom_ext_of_sep {R B : Type} [CommRing R] [CommRing B] (f g : R⟦X⟧ →+* B)
     (hC : ∀ r, f (C r) = g (C r)) (hX : f X = g X) (hs : ∀ x : B, (∀ n, f X ^ n ∣ x) → x = 0) : f = g := by
@@ -944,8 +944,12 @@ def toAinf : Hom (ϖ.prism a) (ainfObj (ϖ.field a)) where
   f := ϖ.ev a
   f_δ := (deltaS l a).map_δ_of_map_φ (ainfDelta l) ainf_torsionFree (ϖ.ev a) (ϖ.ev_frobS a)
   f_I x hx := (ϖ.theta_ev_eq_zero_iff a x).2 (Ideal.mem_span_singleton.1 hx)
-  f_str r x h := ((isAinf_ainfObj _).mk_eq_str_iff r (ϖ.ev a x)).2
-    ((congrArg (ϖ.quotToOC a) h).trans (ϖ.quotToOC_strMap a r))
+  f_str r x h := by
+    have hθ : Per.θ l (ϖ.ev a x) = intToOC (ϖ.field a) r :=
+      (congrArg (ϖ.quotToOC a) h).trans (ϖ.quotToOC_strMap a r)
+    apply (ainfQuot l).injective
+    change Per.θ l (ϖ.ev a x) = (ainfQuot l) ((ainfQuot l).symm (intToOC (ϖ.field a) r))
+    rw [RingEquiv.apply_symm_apply, hθ]
 
 theorem span_ev_eis : Ideal.span {ϖ.ev a (eis l a e)} = RingHom.ker (Per.θ l) := by
   obtain ⟨ξ, h, -, h1⟩ := exists_generator l

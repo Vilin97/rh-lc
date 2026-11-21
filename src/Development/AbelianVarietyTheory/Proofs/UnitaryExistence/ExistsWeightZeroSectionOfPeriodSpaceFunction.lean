@@ -236,7 +236,7 @@ theorem exists_section_of_function : ∀ (E : Type) [Field E] [NumberField E] [I
     simpa using sec_mul Xo c 0 0 0 0 ha hb
   · rw [← Finset.prod_pow]
     refine Finset.prod_eq_one fun i _ => ?_
-    rw [one_add_smul_pow (h2 i), hm i, sub_self, zero_smul, add_zero]
+    rw [one_add_smul_pow (h2 i), hm i, sub_self, Algebra.smul_def, map_zero, zero_mul, add_zero]
   · have : IsReduced (CAt σ) := inferInstanceAs (IsReduced ℂ)
     have hy' := hA (CAt σ) y
     let ev : Rul Xo c →* CAt σ :=

@@ -214,13 +214,12 @@ theorem trace_eL {l : List ι} (hl : l.Nodup) :
       List.map_cons, List.prod_cons, smul_eq_mul]
     ring
 
-theorem isProj_eL : LinearMap.IsProj (ramFun K G M) (eL K G M Finset.univ.toList) where
-  map_mem F := by
-    refine (Submodule.mem_iInf _).2 fun i => ?_
-    show nmF K M i (eL K G M Finset.univ.toList F) = 0
-    rw [← Module.End.mul_apply, nmF_mul_eL (Finset.mem_toList.2 (Finset.mem_univ i))]
-    rfl
-  map_id F hF := eL_fix hF _
+theorem isProj_eL : LinearMap.IsProj (ramFun K G M) (eL K G M Finset.univ.toList) := by
+  refine ⟨?_, fun F hF => eL_fix hF _⟩
+  refine fun F => (Submodule.mem_iInf _).2 fun i => ?_
+  show nmF K M i (eL K G M Finset.univ.toList F) = 0
+  rw [← mul_apply_eq_comp, nmF_mul_eL (Finset.mem_toList.2 (Finset.mem_univ i))]
+  rfl
 
 theorem finrank_ramFun : finrank K (ramFun K G M) = finrank K M * ∏ i, (Fintype.card (G i) - 1) := by
   have h := (isProj_eL (K := K) (G := G) (M := M)).trace

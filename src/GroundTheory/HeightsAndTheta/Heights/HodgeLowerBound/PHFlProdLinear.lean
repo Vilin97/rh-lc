@@ -112,7 +112,7 @@ theorem I_update_fsHerm_add (hI : IsIntersectionFamily I) (hP : IsArithVar P (n 
   exact I_snoc_fsHerm_add hI hP _ (fun i => hL _) a b
 
 def fsMultilin (hI : IsIntersectionFamily I) (hP : IsArithVar P (n + 1)) :
-    MultilinearMap ℤ (fun _ : Fin (n + 1) => K → ℤ) ℝ where
+    MultilinearMap (RingHom.id ℤ) (fun _ : Fin (n + 1) => K → ℤ) ℝ where
   toFun v := I P (n + 1) (fun i => fsHerm ι (v i))
   map_update_add' := by
     intro inst v j a b
@@ -138,7 +138,8 @@ theorem I_fsHerm_sum (hI : IsIntersectionFamily I) (hP : IsArithVar P (n + 1)) {
     rw [← fsMultilin_apply hI hP, MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun r _ => ?_
   rw [MultilinearMap.map_smul_univ (fsMultilin hI hP) (fun i => ℓ i (r i)) (fun i => x (r i)),
-    fsMultilin_apply, zsmul_eq_mul, Int.cast_prod]
+    fsMultilin_apply]
+  simp only [RingHom.id_apply, zsmul_eq_mul, Int.cast_prod]
 
 end FS
 

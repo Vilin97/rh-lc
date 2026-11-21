@@ -35,9 +35,9 @@ private theorem gdet_map_chi_mapRingHom_eq_map_chi {n : ℕ} {A G : Type} [CommR
           - (MonoidAlgebra.mapRingHom G Polynomial.C) (MonoidAlgebra.mapRingHom G f x) := by
     rw [map_sub, MonoidAlgebra.mapRingHom_single]
     congr 1
-    · simp [φ]
+    · simp [φ, Polynomial.mapRingHom]
     · ext g
-      simp [φ, MonoidAlgebra.mapRingHom]
+      simp [φ, Polynomial.mapRingHom, MonoidAlgebra.mapRingHom]
   rw [e] at key
   exact key
 

@@ -154,7 +154,7 @@ theorem ringAct_apply (g : TameGal K l e a) (f : ZMod a → K⟦X⟧) (τ : ZMod
     ringAct g f τ = rescale (g.root τ) (f (τ - g.shift)) := rfl
 
 theorem ringAct_frobTot (g : TameGal K l e a) (f : ZMod a → K⟦X⟧) :
-    ringAct g (frobTot l f) = frobTot l (ringAct g f) := by
+    ringAct g (frobTot K a l f) = frobTot K a l (ringAct g f) := by
   ext τ n
   rw [ringAct_apply, frobTot_apply, frobTot_apply, ringAct_apply, coeff_rescale, coeff_frob,
     coeff_frob, coeff_rescale, TameGal.root_sub_one, sub_right_comm]

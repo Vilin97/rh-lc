@@ -101,6 +101,8 @@ theorem chain (H : Hyp U A φ) (hH : PHom U A φ) (hSm : PSmooth U A φ) (hD : P
     intro i hi
     simp only [Bf, hZ]
     congr 1
+    funext l
+    simp only [skip]
     rw [if_neg (by omega), show a + j - j + ↑l + 1 = a + 1 + ↑l by omega]
   have hBB : ∀ m : Fin (j + 1), Bf A φ c o j (skip (a + 1 + ↑m) g) =
       intS' ω (fun l => Y (m.succ.succAbove l)) := by
@@ -108,7 +110,9 @@ theorem chain (H : Hyp U A φ) (hH : PHom U A φ) (hSm : PSmooth U A φ) (hD : P
     simp only [Bf, hY]
     rw [hK _ (by omega)]
     congr 1
-    split_ifs <;> simp only [Fin.coe_castSucc, Fin.val_succ] <;>
+    funext l
+    simp only [skip, Fin.succAbove]
+    split_ifs <;> simp only [Fin.lt_def, Fin.val_castSucc, Fin.val_succ] at * <;>
       first | (exfalso; omega) | (congr 3; omega)
   have hExt : extDeriv ω = eta A φ c (j + 1) g := by rw [hω]; rfl
   have hSt := hS j ω (by

@@ -53,10 +53,10 @@ theorem exists_integral_root_of_quadratic (β γ ν : Fv F v) (hβ : β ∈ v.ad
       induction g using WithZero.expRecOn with
       | zero => simp
       | exp a => rw [← WithZero.exp_zero, WithZero.exp_lt_exp, WithZero.exp_le_exp]; omega
-  
+
     have v_algebraMap (l : L) : Valued.v (algebraMap L Lw l) = w.valuation L l :=
       valuedAdicCompletion_eq_valuation' w l
-  
+
     have exists_unif : ∃ π : Ow, Valued.v (π : Lw) = WithZero.exp (-1 : ℤ) := by
       obtain ⟨π, hπ⟩ := w.valuation_exists_uniformizer L
       have h : Valued.v (algebraMap L Lw π) = WithZero.exp (-1 : ℤ) := by
@@ -64,27 +64,27 @@ theorem exists_integral_root_of_quadratic (β γ ν : Fv F v) (hβ : β ∈ v.ad
       refine ⟨⟨algebraMap L Lw π, ?_⟩, h⟩
       rw [mem_adicCompletionIntegers, h]
       exact ((lt_one_iff_le _).2 le_rfl).le
-  
+
     have mem_max_iff (x : Ow) :
         x ∈ IsLocalRing.maximalIdeal Ow ↔ Valued.v (x : Lw) < 1 := by
       rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff,
         adicCompletionIntegers.isUnit_iff_valued_eq_one]
       have : Valued.v (x : Lw) ≤ 1 := (mem_adicCompletionIntegers R L w).1 x.2
       exact ⟨fun h => lt_of_le_of_ne this h, fun h => h.ne⟩
-  
+
     have max_eq_span {π : Ow} (hπ : Valued.v (π : Lw) = WithZero.exp (-1 : ℤ)) :
         IsLocalRing.maximalIdeal Ow = Ideal.span {π} := by
       ext x
       rw [mem_max_iff, Ideal.mem_span_singleton, lt_one_iff_le, ← hπ]
       exact (adicCompletionIntegers.integers L w).le_iff_dvd
-  
+
     have mem_max_pow_iff {π : Ow} (hπ : Valued.v (π : Lw) = WithZero.exp (-1 : ℤ)) (x : Ow) (n : ℕ) :
         x ∈ IsLocalRing.maximalIdeal Ow ^ n ↔ Valued.v (x : Lw) ≤ Valued.v (π : Lw) ^ n := by
       rw [max_eq_span hπ, Ideal.span_singleton_pow, Ideal.mem_span_singleton]
       have := (adicCompletionIntegers.integers L w).le_iff_dvd (x := x) (y := π ^ n)
       rw [map_pow, map_pow] at this
       exact this.symm
-  
+
     have isPrecomplete : IsPrecomplete (IsLocalRing.maximalIdeal Ow) Ow := by
       obtain ⟨π, hπ⟩ := exists_unif 
       have hπ1 : Valued.v (π : Lw) < 1 := (lt_one_iff_le _).2 hπ.le
@@ -134,7 +134,7 @@ theorem exists_integral_root_of_quadratic (β γ ν : Fv F v) (hβ : β ∈ v.ad
         rw [e]
         exact sub_mem (f 0).2 ((mem_adicCompletionIntegers R L w).2 (by simpa using key 0))
       exact ⟨⟨l, hl1⟩, fun n => key n⟩
-  
+
     have isAdicComplete : IsAdicComplete (IsLocalRing.maximalIdeal Ow) Ow :=
       { toIsHausdorff := inferInstance, toIsPrecomplete := isPrecomplete }
     exact isAdicComplete

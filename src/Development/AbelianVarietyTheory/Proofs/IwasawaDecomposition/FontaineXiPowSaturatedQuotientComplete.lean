@@ -61,8 +61,9 @@ theorem quot_dvd_iff (p y : R) (k : ℕ) (a : R) :
 
 theorem complete_quot [IsDomain R] (p y : R) [hc : IsAdicComplete (Ideal.span {p}) R]
     (h : ∀ a, y ∣ p * a → y ∣ a) :
-    IsAdicComplete (Ideal.span {Ideal.Quotient.mk (Ideal.span {y}) p}) (R ⧸ Ideal.span {y}) where
-  haus' x hx := by
+    IsAdicComplete (Ideal.span {Ideal.Quotient.mk (Ideal.span {y}) p}) (R ⧸ Ideal.span {y}) := by
+  refine { toIsHausdorff := ⟨?_⟩, toIsPrecomplete := ⟨?_⟩ }
+  · intro x hx
     obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
     simp only [smodEq_iff, sub_zero, quot_dvd_iff] at hx
     choose b c hbc using hx
@@ -86,7 +87,7 @@ theorem complete_quot [IsDomain R] (p y : R) [hc : IsAdicComplete (Ideal.span {p
       rw [smodEq_iff]
       exact ⟨c k + y * w, by linear_combination hbc k + y * hw⟩
     exact ⟨L, by linear_combination this⟩
-  prec' f hf := by
+  · intro f hf
     choose g hg using fun n => Ideal.Quotient.mk_surjective (f n)
     have h1 : ∀ n, ∃ b c, g n - g (n + 1) = y * b + p ^ n * c := fun n => by
       have := (smodEq_iff _ n _ _).1 (hf (Nat.le_succ n))

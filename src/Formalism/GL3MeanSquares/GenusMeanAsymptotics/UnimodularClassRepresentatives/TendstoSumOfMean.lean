@@ -65,7 +65,7 @@ theorem abs_prod_sub_le (S : Finset {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal})
   by_contra hlt
   have hni : n ∉ 𝔭.1 ^ (k + 1 - c 𝔭) := by
     intro hm
-    rw [if_pos hm] at hlt
+    rw [ite_eq_left hm] at hlt
     exact hlt le_rfl
   have hv := BoxSum.vF_lt_of_notMem hni
   have hk : vF 𝔭.1 n + c 𝔭 ≤ k := by omega
@@ -99,7 +99,7 @@ private theorem finsum_boxSet_inf_eq_sum_ite_mem (hK : Formalism.HermitianLattic
   rw [finsum_mem_eq_finite_toFinset_sum _ hfin, Finset.sum_ite, Finset.sum_const_zero, add_zero]
   refine Finset.sum_congr ?_ fun _ _ => rfl
   ext n
-  simp only [Set.Finite.mem_toFinset, Finset.mem_filter, Set.mem_setOf_eq, Submodule.mem_inf]
+  simp only [Set.Finite.mem_toFinset, Finset.mem_filter, Set.mem_ofPred_eq, Submodule.mem_inf]
   tauto
 
 private theorem local_density_error_le_of_bounded_congruent (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (m : ℕ)

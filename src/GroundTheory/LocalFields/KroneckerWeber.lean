@@ -46,6 +46,17 @@ theorem isAbelianGalois_lubinTateField_sup {n : ℕ} (hn : 0 < n) {E : Intermedi
     IsAbelianGalois K (lubinTateField Ω hπ hf n ⊔ E : IntermediateField K Ω) := by
   have := hE.1
   have := hE.isGalois
+  have : IsSepClosure K Ω := ⟨inferInstance, inferInstance⟩
+  have : Normal K (lubinTateField Ω hπ hf n) := by
+    refine normal_iff_forall_map_le'.mpr fun σ => ?_
+    rw [lubinTateField, adjoin_map, adjoin_le_iff]
+    rintro _ ⟨_, ⟨x, hx, rfl⟩, rfl⟩
+    change σ x.val ∈ lubinTateField Ω hπ hf n
+    rw [← lubinTateGalPointMap_val hf σ x]
+    apply val_mem_lubinTateField hπ hf
+    rw [mem_lubinTateTorsion, ← map_smul, (mem_lubinTateTorsion hf n x).mp hx, map_zero]
+  have : IsGalois K (lubinTateField Ω hπ hf n ⊔ E : IntermediateField K Ω) :=
+    isGalois_iff.mpr ⟨inferInstance, inferInstance⟩
   exact isAbelianGalois_of_mul_comm _ (lubinTateUnramified_mul_comm hπ hf hn hE)
 
 
@@ -90,15 +101,14 @@ theorem card_residueField : Nat.card 𝓀[ℚ_[p]] = p := by
 def multiplicativeLTPoly : 𝒪[ℚ_[p]][X] := (1 + X) ^ p - 1
 
 theorem isLubinTateSeries_multiplicativeLTPoly :
-    IsLubinTateSeries (p : 𝒪[ℚ_[p]]) (multiplicativeLTPoly p : PowerSeries 𝒪[ℚ_[p]]) where
-  constantCoeff_eq_zero := by
-    rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, Polynomial.coeff_coe,
+    IsLubinTateSeries (p : 𝒪[ℚ_[p]]) (multiplicativeLTPoly p : PowerSeries 𝒪[ℚ_[p]]) := by
+  refine ⟨?_, ?_, ?_⟩
+  · rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, Polynomial.coeff_coe,
       multiplicativeLTPoly, coeff_sub, coeff_one_add_X_pow]
     simp
-  coeff_one := by
-    rw [Polynomial.coeff_coe, multiplicativeLTPoly, coeff_sub, coeff_one_add_X_pow]
+  · rw [Polynomial.coeff_coe, multiplicativeLTPoly, coeff_sub, coeff_one_add_X_pow]
     simp [Polynomial.coeff_one]
-  dvd_coeff_sub n := by
+  · intro n
     rw [card_residueField, ← Polynomial.coe_X, ← Polynomial.coe_pow, ← Polynomial.coe_sub,
       Polynomial.coeff_coe, multiplicativeLTPoly, coeff_sub, coeff_sub, coeff_one_add_X_pow,
       coeff_one, coeff_X_pow]
@@ -109,7 +119,7 @@ theorem isLubinTateSeries_multiplicativeLTPoly :
     by_cases hpn : n = p
     · subst hpn
       simp [h0]
-    rw [if_neg h0, if_neg hpn, sub_zero, sub_zero]
+    rw [ite_eq_right h0, ite_eq_right hpn, sub_zero, sub_zero]
     rcases lt_or_gt_of_ne hpn with h | h
     · exact Nat.cast_dvd_cast (hp.out.dvd_choose_self h0 h)
     · rw [Nat.choose_eq_zero_of_lt h, Nat.cast_zero]

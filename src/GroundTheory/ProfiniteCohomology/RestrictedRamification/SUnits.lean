@@ -372,9 +372,9 @@ theorem exists_pow_eq_of_mem_sUnitsMax {n : ℕ} (hn : n ≠ 0)
 
 theorem sUnitsKummerSequence_shortExact (n : ℕ) [NeZero n]
     (hnS : ∀ v ∉ S, ((n : ℕ) : 𝓞 F) ∉ v.asIdeal) :
-    (sUnitsKummerSequence S (maxUnramifiedOutside F Ω S) n).ShortExact where
-  exact := by
-    apply shortComplex_exact_of_forall_exists
+    (sUnitsKummerSequence S (maxUnramifiedOutside F Ω S) n).ShortExact := by
+  refine ShortComplex.ShortExact.mk' ?_ ?_ ?_
+  · apply shortComplex_exact_of_forall_exists
     intro x hx
     let x' : Additive (sUnitsMax F Ω S) := x
     have hx2 : n • x' = 0 :=
@@ -387,11 +387,12 @@ theorem sUnitsKummerSequence_shortExact (n : ℕ) [NeZero n]
       rw [mem_rootsOfUnity, ← Subgroup.coe_pow, hx']
       rfl
     exact ⟨Additive.ofMul ⟨_, hmem⟩, rfl⟩
-  mono_f := (Rep.mono_iff_injective _).2 fun a b h =>
-    Additive.toMul.injective (Subtype.ext (congrArg
-      (fun z : Additive (sUnitsMax F Ω S) => ((Additive.toMul z : sUnitsMax F Ω S) :
-        (maxUnramifiedOutside F Ω S)ˣ)) h))
-  epi_g := (Rep.epi_iff_surjective _).2 fun y => by
+  · exact (Rep.mono_iff_injective _).2 fun a b h =>
+      Additive.toMul.injective (Subtype.ext (congrArg
+        (fun z : Additive (sUnitsMax F Ω S) => ((Additive.toMul z : sUnitsMax F Ω S) :
+          (maxUnramifiedOutside F Ω S)ˣ)) h))
+  · refine (Rep.epi_iff_surjective _).2 ?_
+    intro y
     obtain ⟨β, hβ, hβn⟩ := exists_pow_eq_of_mem_sUnitsMax S (NeZero.ne n) hnS
       (Additive.toMul y : sUnitsMax F Ω S).2
     refine ⟨Additive.ofMul ⟨β, hβ⟩, ?_⟩

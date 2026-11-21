@@ -50,7 +50,7 @@ theorem sum_inv_card_stab {G X : Type*} [Group G] [Finite G] [MulAction G X] (A 
     intro t ht
     have hset : MulAction.orbit G t = ↑(A'.filter (fun x => ∃ g : G, g • t = x)) := by
       ext x
-      simp only [MulAction.mem_orbit_iff, Finset.coe_filter, Set.mem_setOf_eq]
+      simp only [MulAction.mem_orbit_iff, Finset.coe_filter, Set.mem_ofPred_eq]
       constructor
       · rintro ⟨g, rfl⟩
         exact ⟨(hA' _).mpr (hA g t (hTA t ht)), g, rfl⟩

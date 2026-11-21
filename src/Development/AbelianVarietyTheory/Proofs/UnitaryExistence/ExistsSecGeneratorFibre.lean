@@ -34,10 +34,15 @@ theorem exists_sec_generator_fibre (hT : Out.SecTwistSt) {E : Type} [Field E] [N
       ∃ a : K, ∀ i, s.f i = constFn (pullback.snd o.t.G.hom y) _ a * β.f i := by
   have h := isGrpPullback_pullback o.t.G y
   obtain ⟨hL, hr, -, hs⟩ := Out.CubePf.cubePull _ _ o.t.G _ (cubeMapOf h) o.t.PP o.t.cub
-  have semi := IsSemiAbelian.pullback y o.t.G o.t.semi
-  have := semi.smooth
+  have := o.t.semi.smooth
+  have : Smooth ((Over.pullback y).obj o.t.G).hom := by
+    change Smooth (pullback.snd o.t.G.hom y)
+    infer_instance
   obtain ⟨am, kt⟩ := amplePt _ _ y _ _ _ h _ _ o.t.PP.isLB hL ⟨_, Out.CubePf.idIsoL_isGen hL⟩ o.ample o.ktriv
-  have := semi.geomConnected
+  have := o.t.semi.geomConnected
+  have : GeometricallyConnected ((Over.pullback y).obj o.t.G).hom := by
+    change GeometricallyConnected (pullback.snd o.t.G.hom y)
+    infer_instance
   have : ConnectedSpace ((Over.pullback y).obj o.t.G).left :=
     GeometricallyConnected.geometrically_connectedSpace (f := ((Over.pullback y).obj o.t.G).hom) (𝟙 _) (𝟙 _)
       ((Over.pullback y).obj o.t.G).hom (IsPullback.of_horiz_isIso ⟨by simp⟩)

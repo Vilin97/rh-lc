@@ -113,7 +113,7 @@ theorem UpperTheory.V.Loc.isCrys_isDR_sub_quot :
   obtain ⟨K, e, -, -, he, -, hK, hK0⟩ := openField φ hφ
   obtain ⟨T⟩ := tiedP l
   have hF := GlobalTheory.Per.FontaineBound.isField_of_tied T
-  have := GlobalTheory.Per.FontaineBound.isDomain_cris ((PP l).PD K) hF
+  have := GlobalTheory.Per.FontaineBound.isDomain_cris (PD := (PP l).PD K) hF
   have := hF.isDomain
   have := ((PP l).PD K).finK₀
   have := K.2

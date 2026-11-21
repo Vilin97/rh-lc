@@ -514,7 +514,7 @@ theorem wd_apply : ∀ (j : ℕ) (c : Fin j → Co Φ.A 1) (s : ComposableArrows
       rw [tm_sub]
       exact tm_congr s _ _ _ (funext fun i => Fin.ext (by simp [pr, CH.front]))
 
-variable {d : ℕ} (E : Frame Φ d)
+variable {d : ℕ} (E : Frame (Φ := Φ) d)
 
 def ca (σ : ∀ T : C, E.D ⟶ T) (i : Fin d) : Co Φ.A 1 := fun s => E.a σ i (s.map (homOfLE (Fin.le_last 0)))
 
@@ -589,7 +589,7 @@ namespace GlobalTheory.CompanionTheory.AltForm
 noncomputable section
 variable {R : Type} [CommRing R] {C : Type 1} [Category.{0} C]
 variable {Φ : PDF R C} {Fil : ℤ → IdF Φ.A}
-variable {d : ℕ} (E : Frame Φ d)
+variable {d : ℕ} (E : Frame (Φ := Φ) d)
 
 theorem cx_mem (σ : ∀ T : C, E.D ⟶ T) {q : ℕ} {x : Φ.A.obj E.D} (hx : x ∈ (Fil q).S E.D) :
     In (Fil (q : ℤ)) (cx E σ x) := fun s => (Fil q).map_mem _ hx
@@ -696,7 +696,7 @@ end GlobalTheory.CompanionTheory.AltForm
 namespace GlobalTheory.CompanionTheory.AltForm
 
 theorem form_alternating : ∀ {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {Φ : PDF R C} {Fil : ℤ → IdF Φ.A} (hF : IsFil Φ Fil)
-    {d : ℕ} (E : Frame Φ d) (σ : ∀ T : C, E.D ⟶ T) (hc : E.GrConst Fil) (j q : ℕ) (r : ℤ) (hr : r = j + q)
+    {d : ℕ} (E : Frame (Φ := Φ) d) (σ : ∀ T : C, E.D ⟶ T) (hc : E.GrConst Fil) (j q : ℕ) (r : ℤ) (hr : r = j + q)
     (I : Fin j → Fin d) (x : Φ.A.obj E.D) (hx : x ∈ (Fil q).S E.D) (c : CH.H (gr Fil r) j),
     Rep (Fil r) (Fil (r + 1)) (E.form σ I x) c →
       (¬ Function.Injective I → c = 0) ∧

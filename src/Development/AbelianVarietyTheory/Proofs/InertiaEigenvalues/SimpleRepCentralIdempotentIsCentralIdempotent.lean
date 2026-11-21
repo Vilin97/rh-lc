@@ -7,7 +7,8 @@ public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.CharIdem
 
 @[expose] public section
 
-open Formalism.IrreducibleCountingLemmas.TYPES Formalism.L2.NT GlobalTheory.SerOSys
+open Formalism.IrreducibleCountingLemmas.TYPES (zIdem)
+open Formalism.L2.NT
 open Polynomial CategoryTheory
 
 namespace GlobalTheory.SerOSys

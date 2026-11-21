@@ -516,7 +516,8 @@ variable [LinearOrder K] [∀ k, LinearOrder (ι k)]
 
 
 open Classical in
-def secCoch (s : Ω) (a : K → ℤ) : KH.CechC S ι (MRingOver S ι ⧸ idealOver y S) 0 := fun J =>
+def secCoch (y : (Σ k, ι k) → Ω) (S : Type) [CommRing S] (s : Ω) (a : K → ℤ) :
+    KH.CechC S ι (MRingOver S ι ⧸ idealOver y S) 0 := fun J =>
   if h : ∃ x, IsRep y S (KH.cellMon S J.1) x (cellChart J) s a then h.choose else 0
 
 theorem secCoch_spec {s : Ω} {a : K → ℤ} (hs : s ∈ chartLat y a 1) (J : KH.Cell K ι 0)

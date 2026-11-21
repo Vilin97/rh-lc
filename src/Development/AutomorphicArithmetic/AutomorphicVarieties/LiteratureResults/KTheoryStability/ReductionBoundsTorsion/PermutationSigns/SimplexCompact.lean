@@ -187,7 +187,7 @@ private theorem isClosed_nonneg_sum_le_one_simplex {q : ℕ} :
   rw [simplex_eq]
   refine (isClosed_iInter fun j => ?_).inter ?_
   · exact isClosed_le continuous_const (continuous_apply j)
-  · exact isClosed_le (continuous_finset_sum _ fun j _ => continuous_apply j) continuous_const
+  · exact isClosed_le (by fun_prop) continuous_const
 
 theorem simplex_meas {q : ℕ} : MeasurableSet {t : Fin q → ℝ | (∀ j, 0 ≤ t j) ∧ ∑ j, t j ≤ 1} := isClosed_nonneg_sum_le_one_simplex.measurableSet
 
@@ -211,10 +211,11 @@ theorem intS_pull {V V' : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [Norm
     intS ω (fun j => P (y j) + e) = intS (pullF ω P e) y := by
   unfold intS pullF
   congr 1
+  funext t
+  simp only [map_add (f := _), map_sum, map_sub, map_smul, add_sub_add_right_eq_sub,
+    ContinuousAlternatingMap.compContinuousLinearMap_apply]
   congr 1
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [map_add (f := _), map_sum, map_sub, map_smul, add_sub_add_right_eq_sub]
-    abel
+  · abel
   · funext j
     simp
 

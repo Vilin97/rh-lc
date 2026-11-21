@@ -18,6 +18,6 @@ def FibreSectionLift.Statement : Prop :=
     IsArithVar (mCoordIdeal y) (D + 1) → p.Prime →
     Subsingleton (KH.cechHc ι (KH.quotPart (ZMod p) (fibreIdeal p y)) a 1) →
     ∀ z ∈ KH.cechZc ι (KH.quotPart (ZMod p) (fibreIdeal p y)) a 0,
-      ∃ s ∈ chartLat y a 1, GenOnFibres.secCoch y (ZMod p) s a = z
+      ∃ s ∈ chartLat y a 1, GenOnFibres.secCoch (y := y) (S := ZMod p) s a = z
 
 end GroundTheory.Heights₂.Heights.HilbertSamuel

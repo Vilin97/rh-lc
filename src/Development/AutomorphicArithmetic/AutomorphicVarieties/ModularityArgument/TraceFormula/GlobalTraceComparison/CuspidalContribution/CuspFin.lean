@@ -19,6 +19,7 @@ open PositivityTheory.Rg.BcB.SpectralAccumulation PositivityTheory.Rg.Rs Measure
 
 private theorem expV_cusp {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ} (π : CuspSub E N)
     {r : ℕ} (hr : 0 < r) (hrN : r < N) : ExpV r π.V = ∅ := by
+  letI : MeasurableSpace (BlockIx N r → Ad E) := _root_.borel _
   refine Set.eq_empty_of_forall_notMem ?_
   rintro c ⟨φ, hφ, F₀, ⟨μ, 𝓕, hμ, h𝓕, e⟩, F, hF, hF0, -⟩
   have h0 : F₀ = 0 := by

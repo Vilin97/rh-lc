@@ -34,7 +34,7 @@ theorem isOpen_alt_bis (P : Ideal (MvPolynomial (Σ k, ι k) ℂ)) (p : (k : K) 
     IsOpen (SncRes.src P p) := by
   have h : SncRes.src P p = ⋂ k, {x : SncRes.Pts P | x.1 ⟨k, (p k, p k)⟩ ≠ 0} := by
     ext x
-    simp only [SncRes.src, Set.mem_setOf_eq, Set.mem_iInter]
+    simp only [SncRes.src, Set.mem_ofPred_eq, Set.mem_iInter]
     refine forall_congr' fun k => ?_
     rw [← SncRes.proj_rep x]
     exact (proj_diag_ne_zero_iff _ k (p k)).symm
