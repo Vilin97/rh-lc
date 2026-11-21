@@ -162,7 +162,7 @@ open NumberField IsDedekindDomain
 def bridge_lidx_det : Prop :=
   ∀ (K V : Type) [Field K] [NumberField K] [AddCommGroup V] [Module K V] [FiniteDimensional K V]
     [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (w : HeightOneSpectrum (𝓞 K)) (A B : Submodule (𝓞 K) V)
-    (γ : V ≃ₗ[K] V), Submodule.IsLattice K A →
+    (γ : V ≃ₗ[K] V), Submodule.IsFullLattice K A →
     Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (A.map ((γ : V →ₗ[K] V).restrictScalars (𝓞 K))) = Formalism.HermitianLatticesTheory.localization₂ w.asIdeal B →
     Formalism.HermitianLatticesTheory.lidx w.asIdeal A B = vAdd w (LinearMap.det (γ : V →ₗ[K] V))
 

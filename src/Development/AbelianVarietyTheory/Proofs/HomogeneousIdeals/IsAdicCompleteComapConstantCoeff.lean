@@ -48,17 +48,17 @@ def evalMod (A : Type*) [CommRing A] [Algebra A S] (J : Ideal S) {s : S} (hs : s
   map_mul' f g := by
     rw [← map_mul, ← map_mul, Ideal.Quotient.eq]
     refine aeval_sub_mem_pow hs fun i hi => ?_
-    rw [coeff_trunc, if_pos hi, coeff_mul, Polynomial.coeff_mul]
+    rw [coeff_trunc, ite_eq_left hi, coeff_mul, Polynomial.coeff_mul]
     refine Finset.sum_congr rfl fun x hx => ?_
     have := Finset.HasAntidiagonal.mem_antidiagonal.1 hx
-    rw [coeff_trunc, coeff_trunc, if_pos (by omega), if_pos (by omega)]
+    rw [coeff_trunc, coeff_trunc, ite_eq_left (by omega), ite_eq_left (by omega)]
   map_zero' := by simp
   map_add' f g := by simp
   commutes' a := by
     rw [← Ideal.Quotient.mk_algebraMap, Ideal.Quotient.eq,
       ← (Polynomial.aeval (R := A) s).commutes a]
     refine aeval_sub_mem_pow hs fun i hi => ?_
-    simp [coeff_trunc, hi, Polynomial.coeff_C, coeff_C, PowerSeries.algebraMap_apply]
+    simp [coeff_trunc, hi, Polynomial.coeff_C, coeff_C]
 
 theorem factor_comp_evalMod (J : Ideal S) {s : S} (hs : s ∈ J) {m n : ℕ} (hle : m ≤ n) :
     (Ideal.Quotient.factorₐ A (Ideal.pow_le_pow_right hle)).comp (evalMod A J hs n) =
@@ -68,7 +68,7 @@ theorem factor_comp_evalMod (J : Ideal S) {s : S} (hs : s ∈ J) {m n : ℕ} (hl
     Ideal.Quotient.mk _ (Polynomial.aeval s (trunc m f))
   rw [Ideal.Quotient.eq]
   refine aeval_sub_mem_pow hs fun i hi => ?_
-  rw [coeff_trunc, coeff_trunc, if_pos hi, if_pos (by omega)]
+  rw [coeff_trunc, coeff_trunc, ite_eq_left hi, ite_eq_left (by omega)]
 
 def evalAdic (A : Type*) [CommRing A] [Algebra A S] (J : Ideal S) [IsAdicComplete J S] {s : S}
     (hs : s ∈ J) : A⟦X⟧ →ₐ[A] S :=
@@ -188,7 +188,7 @@ theorem mem_pow_comap_constantCoeff_iff (n : ℕ) (f : A⟦X⟧) :
         have h3 := Ideal.mul_mem_mul h1 h2
         rw [← pow_add] at h3
         exact Ideal.pow_le_pow_right (by omega) h3
-      · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha i) (hb i)
+      · rw [map_add]; exact add_mem (ha i) (hb i)
   · intro h
     have hX : (X : A⟦X⟧) ∈ I.comap (constantCoeff (R := A)) := by simp
     rw [f.eq_X_pow_mul_shift_add_trunc n]

@@ -122,9 +122,9 @@ theorem _root_.GlobalTheory.ExtPrime.isPrime_map_and_generic_form_notMem (K L : 
       show e.toRingHom (X i) = C (X i) from commAlgEquiv_X (R := K) (S₂ := Fin N) i, map_X, map_C]
   rw [hπG] at hG₀Q
   have hcoeff := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single j 1)) hG₀Q
-  simp only [coeff_sum, coeff_zero] at hcoeff
-  simp_rw [mul_comm (X _), coeff_C_mul, coeff_X', Finsupp.single_left_inj one_ne_zero] at hcoeff
-  simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] at hcoeff
+  simp only [coeff_sum, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at hcoeff
+  simp_rw [mul_comm (X _), coeff_C_mul, coeff_X, Finsupp.single_left_inj one_ne_zero] at hcoeff
+  simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true] at hcoeff
   exact hj (Ideal.Quotient.eq_zero_iff_mem.mp hcoeff)
 
 end GlobalTheory.ExtPrime

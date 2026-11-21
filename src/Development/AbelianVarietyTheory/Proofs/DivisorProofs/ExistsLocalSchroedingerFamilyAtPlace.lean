@@ -121,6 +121,10 @@ theorem exists_locRho : ∀ (F : Type) [Field F] [NumberField F] (v : Pl (F := F
       change Continuous fun a => ((0 : Ainf F), GlobalTheory.AdelicU.singleFin v a)
       exact continuous_const.prodMk (GlobalTheory.AdelicU.continuous_singleFin v)
     exact hstd.1.comp h
+  have evFin_invOf_two : evFin F v (⅟(2 : AF F)) = ⅟(2 : Fv F v) := by
+    refine (invOf_eq_right_inv ?_).symm
+    have h : evFin F v (2 * ⅟(2 : AF F)) = 1 := by rw [mul_invOf_self, map_one]
+    rwa [map_mul, map_ofNat] at h
   have hat : ∀ x, At (evFin F v) (Xm x) := fun x => (hX (Xm x)).2 ⟨x, rfl⟩
   refine ⟨fun x => rhoSB v (GlobalTheory.LatVac.psiAt ψ v) hc (GlobalTheory.LatVac.locCo co v (Xm x)), ?_, ?_, ?_, ?_⟩
   · apply LinearMap.ext; intro φ
@@ -135,7 +139,7 @@ theorem exists_locRho : ∀ (F : Type) [Field F] [NumberField F] (v : Pl (F := F
     rw [schr_schr, map_add Xm, map_add (GlobalTheory.LatVac.locCo co v), ← hχ]
     congr 1
     rw [GlobalTheory.VacIndic.psi_of_at ψ (GlobalTheory.VacIndic.at_mul_left (GlobalTheory.LatVac.DualLoc.at_form co v (hat x) (Xm y))),
-      map_mul (evFin F v), GlobalTheory.VacAny.evFin_invOf_two, GlobalTheory.LatVac.DualLoc.evFin_form co v]
+      map_mul (evFin F v), evFin_invOf_two, GlobalTheory.LatVac.DualLoc.evFin_form co v]
     rfl
   · intro x φ
     exact GlobalTheory.VacBridge.rho_acts_locCo co ψ v (Xm x) (hat x) φ

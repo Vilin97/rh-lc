@@ -15,6 +15,13 @@ namespace GlobalTheory.ZM.ProjCoord
 variable {R : Type} [CommRing R] {N : ℕ} {A : Type} [CommRing A] {Y : Scheme.{0}}
 
 
+theorem pt_str (c : R →+* A) (v : Fin (N + 1) → A)
+    (hv : Ideal.span (Set.range v) = ⊤) : pt c v hv ≫ PSpace.str R N = spMap c := by
+  rw [pt, PSpace.str, ProjPoint.ofHom_toSpecZero_assoc, ← Spec.map_comp]
+  congr 1
+  ext1
+  exact RingHom.ext fun r => MvPolynomial.eval₂Hom_C c v r
+
 set_option backward.isDefEq.respectTransparency false in
 theorem secCoord_iff {σ : Type} (e : σ ≃ Fin (N + 1)) (φ : Y ⟶ PSpace R N) (c : R →+* A) (x : Sp A ⟶ Y)
     (hx : (x ≫ φ) ≫ PSpace.str R N = spMap c) (v : σ → A) :

@@ -116,8 +116,7 @@ def rdL : L ⊗[D.ntw.O i] D.nexp.Fm i ((j : ℕ) + 1) b →ₛₗ[e] (GA D (Wc 
   { toFun := φ
     map_add' := φ.map_add
     map_smul' := fun c x => by
-      induction x using TensorProduct.induction_on with
-      | zero => rw [smul_zero, map_zero, smul_zero]
+      induction x using TensorProduct.inductionOn with
       | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
       | tmul a f =>
         change e (c • a) • rd f = e c • e a • rd f
@@ -129,8 +128,7 @@ include he in
 theorem exists_coord (x : L ⊗[D.ntw.O i] D.nexp.Fm i ((j : ℕ) + 1) b) : ∃ c : _ → L,
     x = ∑ a, c a ⊗ₜ Module.finBasis (FractionRing (D.ntw.O i)) (D.nexp.Fm i ((j : ℕ) + 1) b) a := by
   set v := Module.finBasis (FractionRing (D.ntw.O i)) (D.nexp.Fm i ((j : ℕ) + 1) b)
-  induction x using TensorProduct.induction_on with
-  | zero => exact ⟨0, by simp⟩
+  induction x using TensorProduct.inductionOn with
   | add x y hx hy =>
     obtain ⟨c, rfl⟩ := hx
     obtain ⟨c', rfl⟩ := hy
@@ -206,8 +204,7 @@ theorem le_of_comb {ρ : Setup D.ntw} (hρ : ρ.Good) {ν : ℂ} {rd : Can p w j
   let Φ := rdL (rdAt p w j hρ ν) e hO
   have a1 : ∀ y, Φ (incl D.nexp (ex.nch.twI w) _ (ex.nch.sd w) (ex.nch.Oe w) (ex.nch.k' w) y) =
       rdK (rdAt p w j hρ ν) hρ (ex.nch.k' w) y := fun y => by
-    induction y using TensorProduct.induction_on with
-    | zero => rw [map_zero, map_zero, map_zero]
+    induction y using TensorProduct.inductionOn with
     | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
     | tmul a f => rw [rdK_tmul, ← h2]; rfl
   have a2 : ∀ G ∈ Submodule.span (imO ex.nch w e) (genFns ex.nch w j ρ), ∃ y ∈ twLat p w j hρ ν, Φ y = G := fun G hG => by
@@ -257,7 +254,7 @@ theorem le_of_comb {ρ : Setup D.ntw} (hρ : ρ.Good) {ν : ℂ} {rd : Can p w j
       rw [ha, algebraMap_smul]
       exact Submodule.smul_mem _ b hy
   | zero => rw [map_zero]; exact zero_mem _
-  | add _ _ _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add _ _ _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul a x _ hx =>
     obtain ⟨b, hb⟩ := mem_of_ringOfIntegers (O := ex.nch.Oe w) (ex.nch.embW w) a
     rw [show a • x = (a : D.what₂.LL) • x from rfl, map_smulₛₗ, ← hb, algebraMap_smul]
@@ -328,7 +325,7 @@ theorem series_eq_gen {k Q ψ} (hok : IntegralHeckeForms.TwOK i k Q ψ) {ω : Pa
   · have law := GlobalTheory.TwTraceCx.dualLaw_kern hB (D.sp.V_sig _) ht hadm hω γ (finPt _ h') κ ((ρ.B i j b).act (γ⁻¹ : GQ (Vc D j)) P)
     have e1 : GlobalTheory.TwTraceCx.ratAct (ρ.B i j b) γ ((ρ.B i j b).act (γ⁻¹ : GQ (Vc D j)) P) = P := by
       change (ρ.B i j b).act γ ((ρ.B i j b).act (γ⁻¹ : GQ (Vc D j)) P) = P
-      rw [← Module.End.mul_apply, ← map_mul, Subgroup.coe_inv, mul_inv_cancel, map_one, Module.End.one_apply]
+      rw [← mul_apply_eq_comp, ← map_mul, Subgroup.coe_inv, mul_inv_cancel, map_one, one_apply_eq_self]
     rw [h5, ← h6, e1, GlobalTheory.TwTraceCx.kern, GlobalTheory.TwTraceCx.kern, GlobalTheory.TwTraceCx.lift_finPt _ hh, GlobalTheory.TwTraceCx.lift_finPt _ h3,
       Units.val_one, map_one, one_smul] at law
     rw [mul_one, GlobalTheory.TwTraceCx.gen_eq_smul hB ht hadm (hρ.weil_base i j b) hω, law, smul_smul, map_units_inv, detChar, hu,

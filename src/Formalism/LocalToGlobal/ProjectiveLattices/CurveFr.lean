@@ -101,7 +101,6 @@ theorem curveModel_of_fr
             base_form_local := ?_ }⟩
   · have := top_span_mem G la hJh
     convert this using 1
-    exact Subtype.ext (by simp)
   · exact LinearEquiv.finiteDimensional qe.toLinearEquiv
   · exact isReduced_of_injective qe.symm.toRingEquiv.toRingHom qe.symm.injective
   · intro a₁ a₂ h12

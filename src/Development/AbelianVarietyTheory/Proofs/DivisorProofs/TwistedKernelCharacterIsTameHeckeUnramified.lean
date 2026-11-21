@@ -105,12 +105,14 @@ theorem frame_char (D : D7) (C : Formalism.L2.Host.CharFrame D) (i : Fin D.R.m) 
       rw [← Fin.prod_univ_two D.host.g]
       exact Finset.dvd_prod_of_mem D.host.g (Finset.mem_univ j)) hj)
     have a2 : (C.delAt l).UnrAt Q := hδ.unr Q fun hj => hQ (key Q _ _ (Dvd.intro_left _ rfl) hj)
-    rw [Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_inv, a1 x hx, a2 x hx,
+    change (C.mu0 i).loc Q x * (C.delAt l).loc Q x * ((C.eta.loc Q x)⁻¹) = 1
+    rw [a1 x hx, a2 x hx,
       C.isEta.unr Q x hx, inv_one, one_mul, one_mul]
   · rw [Formalism.L2.Host.HChar.resFin_mul, Formalism.L2.Host.HChar.resFin_mul, Formalism.L2.Host.HChar.resFin_inv,
       (C.isMu0 i).triv.1, hδ.triv.1, C.isEta.res.1, Formalism.L2.Host.etaFin, GlobalTheory.ClassScalarValue.above_eq,
-      Finset.card_pair hQ.symm, if_neg (by norm_num), inv_one, one_mul, one_mul]
-  · rw [Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_inv, (C.isMu0 i).tame Q x hx hx',
+      Finset.card_pair hQ.symm, ite_eq_right (by norm_num), inv_one, one_mul, one_mul]
+  · change (C.mu0 i).loc Q x * (C.delAt l).loc Q x * ((C.eta.loc Q x)⁻¹) = 1
+    rw [(C.isMu0 i).tame Q x hx hx',
       hδ.tame Q x hx hx', C.isEta.unr Q x hx, inv_one, one_mul, one_mul]
 
 

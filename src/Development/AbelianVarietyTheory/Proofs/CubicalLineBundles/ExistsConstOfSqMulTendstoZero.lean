@@ -91,7 +91,7 @@ private lemma exists_const_of_periodic_of_mul_tendsto_zero (L : PeriodPair) {F :
         exact sub_ne_zero.mpr hw
     refine (hK.comp hsh).congr' ?_
     filter_upwards [_root_.GlobalTheory.eventually_ne_notMem_periodLattice L l] with w hw
-    simp only [Function.comp_apply, hGdef, if_neg hw]
+    simp [hGdef, hw]
     rw [← hp (w - l) l hl, sub_add_cancel]
   have hdiff : Differentiable ℂ G := by
     intro z
@@ -475,16 +475,16 @@ theorem _root_.GlobalTheory.invariants_eq_of_periodic_solution :
   open Polynomial in
   have hcub : (C 4 * X ^ 3 - C L.g₂ * X - C L.g₃ : ℂ[X]) ≠ 0 := by
     intro h
-    have := congrArg (Polynomial.coeff · 3) h
+    have := congrArg (fun p : Polynomial ℂ => p.coeff 3) h
     norm_num [Polynomial.coeff_X, Polynomial.coeff_C] at this
   have hlin := pow_eq_zero_iff two_ne_zero |>.mp ((mul_eq_zero.mp hp).resolve_right hcub)
   have hβ₁ : 2 * b + 2 * W.a₁ * c = 0 := by
-    have := congrArg (Polynomial.coeff · 1) hlin
+    have := congrArg (fun p : Polynomial ℂ => p.coeff 1) hlin
     simp only [Polynomial.coeff_add, Polynomial.coeff_C_mul_X, Polynomial.coeff_C,
       Polynomial.coeff_zero, one_ne_zero, zero_ne_one, ↓reduceIte, add_zero, zero_add] at this
     exact this
   have hβ₀ : 2 * k' + 2 * W.a₁ * c * k + 2 * W.a₃ * c ^ 3 = 0 := by
-    have := congrArg (Polynomial.coeff · 0) hlin
+    have := congrArg (fun p : Polynomial ℂ => p.coeff 0) hlin
     simp only [Polynomial.coeff_add, Polynomial.coeff_C_mul_X, Polynomial.coeff_C,
       Polynomial.coeff_zero, one_ne_zero, zero_ne_one, ↓reduceIte, add_zero, zero_add] at this
     exact this

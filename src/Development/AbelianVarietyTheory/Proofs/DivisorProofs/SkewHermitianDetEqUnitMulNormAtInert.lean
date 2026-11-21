@@ -40,9 +40,9 @@ theorem exists_max_dual (w : HeightOneSpectrum (𝓞 E)) : ∃ e : E, e ≠ 0 �
   GlobalTheory.T.exists_inverseDifferent_max_valuation E w
 
 theorem exists_local_basis (w : HeightOneSpectrum (𝓞 E)) (n : ℕ) (L : Submodule (𝓞 E) (Fin n → E))
-    (hL : L.IsLattice E) : ∃ X : Matrix (Fin n) (Fin n) E, IsUnit X.det ∧ (∀ j, (fun i => X i j) ∈ L) ∧
+    (hL : L.IsFullLattice E) : ∃ X : Matrix (Fin n) (Fin n) E, IsUnit X.det ∧ (∀ j, (fun i => X i j) ∈ L) ∧
     ∀ x ∈ L, ∀ i, w.valuation E ((X⁻¹ *ᵥ x) i) ≤ 1 :=
-  GlobalTheory.T.exists_localBasis_at_prime_of_isLattice E w n L hL
+  GlobalTheory.exists_local_basis_of_isLattice E w n L hL
 
 theorem exists_den (w : HeightOneSpectrum (𝓞 E)) (a : E) (ha : w.valuation E a ≤ 1) :
     ∃ s : 𝓞 E, s ∉ w.asIdeal ∧ ∃ r : 𝓞 E, (s : E) * a = r :=
@@ -95,7 +95,7 @@ theorem form_cols (σ : E →ₐ[F] E) {n : ℕ} (J X : Matrix (Fin n) (Fin n) E
 
 theorem parity_at (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) (w : HeightOneSpectrum (𝓞 E))
     (hin : Formalism.UG.IsInertAt F E v w) (n : ℕ) (J : Matrix (Fin n) (Fin n) E) (L : Submodule (𝓞 E) (Fin n → E))
-    (hL : L.IsLattice E)
+    (hL : L.IsFullLattice E)
     (hdual : ∀ y, y ∈ L ↔ ∀ x ∈ L, ∀ o : 𝓞 E, IsIntegral ℤ (Algebra.trace ℚ E (o * form σ J y x)))
     (hn : Even n) (hJ : J.det ≠ 0) : ∃ a : E, a ≠ 0 ∧ w.valuation E J.det = w.valuation E a ^ 2 := by
   obtain ⟨e, he0, heD, hemax⟩ := exists_max_dual w

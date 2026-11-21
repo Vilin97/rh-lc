@@ -186,7 +186,8 @@ private theorem UpperTheory.ConvolutionTheory.Ci.eig_bot {H : Type*} [NormedAddC
   have h2 : ‖v‖ ≤ 0 := by nlinarith [norm_nonneg v, norm_nonneg A]
   exact norm_le_zero_iff.1 h2
 
-private theorem UpperTheory.ConvolutionTheory.Ci.ptCard {K : Type} [Field K] [NumberField K] {n : ℕ} (b : Datum K n) (S : Set (Pl K)) (Λ) (t)
+private theorem UpperTheory.ConvolutionTheory.Ci.ptCard {K : Type} [Field K] [NumberField K] {n : ℕ}
+    (b : Datum K n) (S : Set (Pl K)) (Λ : (K →+* ℂ) → Multiset ℂ) (t : Pl K → Multiset ℂ)
     (h : b.Pt S Λ t) : ∀ w ∉ S, (t w).card = n := by
   obtain ⟨lam, m, B, h1, -, h3⟩ := h
   intro w hw

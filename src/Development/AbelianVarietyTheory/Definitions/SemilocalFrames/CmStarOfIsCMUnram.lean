@@ -39,7 +39,7 @@ theorem orth_span (h : V →ₗ⋆[E] V →ₗ[E] E) {M : Submodule (𝓞 E) V} 
 
 omit [NumberField E] in
 theorem ndLat_of_isLattice {h : V →ₗ⋆[E] V →ₗ[E] E} (hn : h.Nondegenerate) {M : Submodule (𝓞 E) V}
-    (hM : Submodule.IsLattice E M) : NDLat h M :=
+    (hM : Submodule.IsFullLattice E M) : NDLat h M :=
   ⟨hM.fg, fun x _ h0 => hn.2 x fun y => orth_span h h0 y (by rw [hM.span_eq_top]; trivial)⟩
 
 end AnySpace

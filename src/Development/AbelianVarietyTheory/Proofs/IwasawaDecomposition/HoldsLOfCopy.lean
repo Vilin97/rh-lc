@@ -58,7 +58,10 @@ section Dat
 variable {px : PreX B.toPre} {I : ColIn B px} {hX : B.fields.Ok} {Tw : Top.TwDat B} {Wt : Set B.places.Pl}
   (s : SameGrp a b) {z : Dat a.st I hX Tw Wt}
 
-theorem holdsL_of_copy (h : HoldsL (copy b s z).R (copy b s z).F) : HoldsL z.R z.F := holdsL_back b (iK := z.alg) ((by with_unfolding_all exact (h :)))
+theorem holdsL_of_copy (h : HoldsL (DatCopy.copy b s z).R (DatCopy.copy b s z).F) :
+    HoldsL z.R z.F :=
+  holdsL_back b (iK := z.alg) (by
+    with_unfolding_all exact (h :))
 
 end Dat
 

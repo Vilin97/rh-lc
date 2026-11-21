@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.WdOfMono0L
-public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RankOneUnitary
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ThetaMod
 public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.DeRhamPotSemistable
 public import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations

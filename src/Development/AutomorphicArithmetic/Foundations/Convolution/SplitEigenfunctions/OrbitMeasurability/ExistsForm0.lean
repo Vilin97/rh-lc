@@ -35,7 +35,7 @@ private theorem exists_form0 {K : Type} [Field K] [NumberField K] {n : ℕ} (μ 
 private theorem oneInt (f : (AutomorphicForm.UPos 2 1 → A ℚ) → ℂ) :
     ∫ y in GroundTheory.Global.fundamentalSet ℚ, f (fun _ => y) ∂GroundTheory.Global.adeleMeasure ℚ =
       ∫ Y in unipFundamentalDomain ℚ 2 1, f Y ∂unipMeasure ℚ 2 1 := by
-  letI : Unique (AutomorphicForm.UPos 2 1) := ⟨⟨⟨(0, 1), by decide⟩⟩, by decide⟩
+  let _ : Unique (AutomorphicForm.UPos 2 1) := ⟨⟨⟨(0, 1), by decide⟩⟩, by decide⟩
   have hm : MeasurePreserving (MeasurableEquiv.funUnique (AutomorphicForm.UPos 2 1) (A ℚ)) (unipMeasure ℚ 2 1)
       (GroundTheory.Global.adeleMeasure ℚ) := by
     convert measurePreserving_funUnique (GroundTheory.Global.adeleMeasure ℚ) (AutomorphicForm.UPos 2 1)
@@ -89,7 +89,8 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.Cp.pairL : UpperTheory.Conv
       refine (MemLp.coeFn_toLp hm).symm.trans ?_
       rw [h]
       exact Lp.coeFn_zero _ _ _
-    have h2 : (fun y : normOneGL (K := ℚ) (n := 2) => ψ y) =ᵐ[μ] 0 := (quasiMeasurePreserving_mk _ μ).ae_eq h1
+    have h2 : (fun y : normOneGL (K := ℚ) (n := 2) => ψ y) =ᵐ[μ] 0 :=
+      QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk _ μ) h1
     have h3 : starRingEnd ℂ (F (x : AdelicGLn.AdelicGL ℚ 2)) = 0 :=
       congrFun ((Continuous.ae_eq_iff_eq μ (hψc.comp continuous_subtype_val) continuous_const).1 h2) x
     exact hx ((map_eq_zero _).1 h3)
@@ -112,4 +113,4 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.Cp.pairL : UpperTheory.Conv
       conv_lhs => rw [← Quotient.out_eq q]
       rfl
     rw [e3]
-    simp [hψdef]
+    simp [hψdef, Fb.ofCusp]

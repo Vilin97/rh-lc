@@ -41,7 +41,7 @@ theorem sgA_mem_hatId {𝔪 : Ideal (𝓞 D.host.E)} {y : AE D} (hy : y ∈ hatI
       VacMove.sgA_mem D hs, ?_⟩
     rw [map_mul, GlobalTheory.NormSum.PtsMem.sgA_inc]; rfl
   | zero => rw [map_zero]; exact zero_mem _
-  | add _ _ _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+  | add _ _ _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
   | neg _ _ h => rw [map_neg]; exact neg_mem h
 
 theorem prod_sub_prod_mem {𝔪 : Ideal (𝓞 D.host.E)} {ι : Type*} (s : Finset ι) (f g : ι → AE D)

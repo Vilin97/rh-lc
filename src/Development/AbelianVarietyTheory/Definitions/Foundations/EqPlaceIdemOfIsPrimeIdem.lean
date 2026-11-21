@@ -16,7 +16,7 @@ open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.Genus
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
 
-omit [NumberField E] in
+omit [NumberField F] [NumberField E] in
 theorem tens_map_map {R R' R'' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra F R'] [CommRing R'']
     [Algebra F R''] (φ : R →ₐ[F] R') (ψ : R' →ₐ[F] R'') (y : R ⊗[F] E) :
     Algebra.TensorProduct.map ψ (AlgHom.id F E) (Algebra.TensorProduct.map φ (AlgHom.id F E) y) =
@@ -37,6 +37,7 @@ theorem adTens_eq_one' {y : AF F ⊗[F] E} (h1 : ∀ w, compInf F E w y = 1) (h2
         (tens_map_map _ _ y).trans ((h2 v).trans (map_one _).symm))
   exact congrFun (congrFun this 0) 0
 
+omit [NumberField E] in
 theorem mul_idem_iff_mem_range_emb {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v : HeightOneSpectrum (𝓞 F)) (ε : AF F)
     (e0 : ∀ w, evInf F w ε = 0) (e1 : evFin F v ε = 1) (e2 : ∀ u, u ≠ v → evFin F u ε = 0) (g : GAd σ J) :
     (∀ i j, algebraMap (AF F) (AF F ⊗[F] E) ε * ((matHom _ σ J g).1 - 1) i j = ((matHom _ σ J g).1 - 1) i j) ↔
@@ -117,8 +118,7 @@ theorem singleTens_mul (v : HeightOneSpectrum (𝓞 F)) (y : Fv F v ⊗[F] E) (z
 
 theorem sigR_singleTens (v : HeightOneSpectrum (𝓞 F)) (y : Fv F v ⊗[F] E) :
     Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ σ (singleTens E v y) = singleTens E v (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ σ y) := by
-  induction y using TensorProduct.induction_on with
-  | zero => simp
+  induction y using TensorProduct.inductionOn with
   | tmul a x => rfl
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
@@ -253,7 +253,7 @@ theorem finPart_fj_mem_iff (y : Fv D.host.F v) :
     induction hz using AddSubgroup.closure_induction with
     | mem z hz => obtain ⟨a, ha, x, rfl⟩ := hz; exact tmul_mem_intLoc (ha v) x
     | zero => rw [map_zero]; exact zero_mem _
-    | add _ _ _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
+    | add _ _ _ _ h h' => rw [map_add]; exact add_mem h h'
     | neg _ _ h => rw [map_neg]; exact neg_mem h
   have h2 := absFin_le_one_of_mem_intLoc (key _ h)
   change absFin _ v (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV D.host.F v (singleFin v y) ⊗ₜ (1 : D.host.E)) ≤ 1 at h2

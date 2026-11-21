@@ -26,8 +26,8 @@ theorem every_vector_adapted_plane : ∀ (F E : Type) [Field F] [NumberField F] 
         (Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self _)))
     · exact Submodule.mem_sup_left (Submodule.mem_sup_right ⟨u, rfl⟩)
     · exact Submodule.mem_sup_right (Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self _))
-  letI : W.L.IsFullLattice E := hW.lat
-  rw [Submodule.IsFullLattice.span_eq_top (A := E) (M := W.L)] at hle
+  letI : Submodule.IsFullLattice E W.L := hW.lat
+  rw [Submodule.IsFullLattice.span_eq_top] at hle
   have hv : v ∈ V₀ := hle Submodule.mem_top
   obtain ⟨p, hp, q, hq, rfl⟩ := Submodule.mem_sup.mp hv
   obtain ⟨p1, hp1, p2, hp2, rfl⟩ := Submodule.mem_sup.mp hp

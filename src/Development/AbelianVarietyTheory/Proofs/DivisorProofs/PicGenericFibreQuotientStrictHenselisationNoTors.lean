@@ -127,6 +127,6 @@ theorem GlobalTheory.pic_generic_fibre_quotient_strictHenselisation_no_torsion :
       rw [← Ideal.map_comap_of_surjective (π : O →+* A) hπ (Q.comap (algebraMap A L)),
         ← Ideal.map_comap_of_surjective (π : O →+* A) hπ (Q'.comap (algebraMap A L))]
       exact congrArg _ hpp
-    rw [← IsLocalization.map_comap (Algebra.algebraMapSubmonoid A (nonZeroDivisors T)) L Q,
-      ← IsLocalization.map_comap (Algebra.algebraMapSubmonoid A (nonZeroDivisors T)) L Q']
+    rw [← IsLocalization.map_under (Algebra.algebraMapSubmonoid A (nonZeroDivisors T)) L Q,
+      ← IsLocalization.map_under (Algebra.algebraMapSubmonoid A (nonZeroDivisors T)) L Q']
     exact congrArg (Ideal.map (algebraMap A L)) hqq

@@ -30,9 +30,9 @@ def AdTup : Prop :=
     (∀ μ : Measure (HA (Af F) σ J), μ.IsHaarMeasure → SFinite μ) ∧
     (∀ (r : ℕ) (P : Frame E n r) (μ : Measure (Hsub (Ainf F) σ J P)), μ.IsHaarMeasure → SFinite (amb μ)) ∧
     (∀ (r : ℕ) (P : Frame E n r) (μ : Measure (Hsub (Af F) σ J P)), μ.IsHaarMeasure → SFinite (amb μ)) ∧
-    (∀ Λ : Set (Fin n → E), (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsLattice E L ∧ (L : Set (Fin n → E)) = Λ) →
+    (∀ Λ : Set (Fin n → E), (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsFullLattice E L ∧ (L : Set (Fin n → E)) = Λ) →
       MeasurableSet (Kf σ J Λ : Set (HA (Af F) σ J))) ∧
-    (∀ (Λ : Set (Fin n → E)) (μf : Measure (HA (Af F) σ J)), (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsLattice E L ∧ (L : Set (Fin n → E)) = Λ) → μf.IsHaarMeasure →
+    (∀ (Λ : Set (Fin n → E)) (μf : Measure (HA (Af F) σ J)), (∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsFullLattice E L ∧ (L : Set (Fin n → E)) = Λ) → μf.IsHaarMeasure →
       0 < μf (Kf σ J Λ) → μf (Kf σ J Λ) < ⊤ →
       ∀ (r : ℕ) (P : Frame E n r) (μ : Measure (Hsub (Af F) σ J P)), μ.IsHaarMeasure →
         0 < μ (Subtype.val ⁻¹' (Kf σ J Λ : Set (HA (Af F) σ J))) ∧

@@ -300,7 +300,7 @@ theorem slope_eig {K V G C : Type} [Field K] [NumberField K] [_root_.NumberField
       haveI : IsNoetherian (𝓞 K) M₀ := isNoetherian_of_fg_of_noetherian M₀ hM₀
       exact isNoetherian_submodule.1 inferInstance M hMle
     refine GlobalTheory.SumSlope.le_slope_sq_of_sum K V O (fun o => ι o) Nv M (fun o => Y o) (fun o => L o) Φ s hG hMfg
-      (fun o => hY o) (fun o => (hL o).toIsLattice) hinj hmem (fun v hv => ?_) (fun σ x => ?_) fun o => hs o
+      (fun o => hY o) (fun o => by letI := hL o; infer_instance) hinj hmem (fun v hv => ?_) (fun σ x => ?_) fun o => hs o
     · choose x hx using fun o : O => (hr o (e o v)).2 (h₁ o v)
       refine ⟨x, ?_⟩
       rw [hΦ']

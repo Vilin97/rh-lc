@@ -110,7 +110,7 @@ private theorem ex_tauA : ∃ τ : S.A →ₐ[O] S.A,
       · rw [h1']
         exact mul_mem (pow_mem (neg_mem (one_mem _)) _) (S.r_mem g i j)
     | algebraMap r => rw [τ.commutes r]; exact S.A.algebraMap_mem r
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := τ)]; exact add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
   let τA : S.A →ₐ[O] S.A := (τ.comp S.A.val).codRestrict S.A fun a => hA a a.2
   have e1 : ∀ g i j, τA (S.u.r g i j) = sg S.A (pw i j) * S.u.r g i j := fun g i j =>

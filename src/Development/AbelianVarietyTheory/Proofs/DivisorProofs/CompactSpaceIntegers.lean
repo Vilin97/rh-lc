@@ -153,7 +153,7 @@ theorem exists_adelic_limit (g : ℕ → D.La →+ D.La)
     rw [e, smul_add, one_nsmul]
     exact add_mem (smul_inAf_mem D ha' _) (smul_mem D ha' hw)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem main : ∀ (p : ℕ) [Fact (Nat.Prime p)] (D : Datum p) (g : ℕ → D.La →+ D.La),

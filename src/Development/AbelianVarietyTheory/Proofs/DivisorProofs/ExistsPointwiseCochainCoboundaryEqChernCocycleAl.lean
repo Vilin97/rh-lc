@@ -43,7 +43,7 @@ theorem exists_crystallineCochain_coboundary_eq_chernCocycle {R : Type} [CommRin
   have h1 := sm a h
   have h2 := sm b h1
   rw [d1_apply]
-  simp only [dif_pos h, dif_pos h1]
+  simp only [dite_eq_left h, dite_eq_left h1]
   refine commAlgFunctorCoboundaryOne_apply_of_eq_sub_vanishing hm (T := ⟨T, h⟩) (T' := ⟨T', h1⟩) (T'' := ⟨T'', h2⟩) (ObjectProperty.homMk a)
     (ObjectProperty.homMk b) ?_
   have := (hℓ ⟨T, h⟩ ⟨T', h1⟩ ⟨T'', h2⟩ (ObjectProperty.homMk a) (ObjectProperty.homMk b)).1
@@ -72,7 +72,7 @@ theorem exists_pointwiseCochain_coboundary_eq_chernCocycle : ∀ (R : Type) [Com
       (∀ c, f.φ c = ψ (φ c)) → V E E'' z _ (trivMap (ψ.comp φ) z) = V E E'' z y f := by
     intro y hy f hf
     subst hy
-    exact congrArg (V E E'' z _) (Thick.hom_ext fun c ↦ (hf c).symm)
+    exact congrArg (V E E'' z _) (Thick.Hom.ext' (AlgHom.ext fun c ↦ (hf c).symm))
   have hc := gen (spOver ψ ≫ spOver φ ≫ z) (by rw [← Category.assoc, spOver_comp])
     (trivMap φ z ≫ trivMap ψ (spOver φ ≫ z)) fun _ ↦ rfl
   have key := hV E E' E'' z _ _ (trivMap φ z) (trivMap ψ (spOver φ ≫ z)) ψ rfl hz

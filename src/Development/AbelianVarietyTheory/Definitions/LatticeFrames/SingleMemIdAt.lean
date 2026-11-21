@@ -78,9 +78,8 @@ theorem compAt_eq (u : Pl D) (z : AE D) : compAt D u z = GlobalTheory.AdelicU.co
 
 theorem single_mem_idAt (v : Pl D) (y : Fv D.host.F v ⊗[D.host.F] D.host.E) : singleTens D.host.E v y ∈ idAt D (· = v) := by
   refine Submodule.mem_inf.2 ⟨?_, (Submodule.mem_iInf _).2 fun u => ?_⟩
-  · induction y using TensorProduct.induction_on with
-    | zero => exact (congrArg (infPart D) (singleTens D.host.E v).map_zero').trans (infPart D).map_zero
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · induction y using TensorProduct.inductionOn with
+    | add x y hx hy => rw [map_add]; exact add_mem hx hy
     | tmul a x => exact TensorProduct.zero_tmul _ x
   · exact (compAt_eq u.1 _).trans (compFin_singleTens_ne u.2 y)
 

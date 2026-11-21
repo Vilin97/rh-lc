@@ -17,8 +17,8 @@ namespace GlobalTheory.PeriodSpan
 
 theorem main : PSpan := by
   intro A _ g hA _ L u P hP
-  refine GlobalTheory.T.period_map_span_top_and_finrank_from_cech_periods A g L u hA P fun c => ?_
-  exact GlobalTheory.T.crystalline_period_eq_cechDeRham_period A g L u c.1
+  exact GlobalTheory.CechPer.span_periods_eq_top_and_finrank A g L u hA P fun c =>
+    GlobalTheory.PerLink.main A g L u c.1
     { toFun := fun l => P l c, map_zero' := by simp, map_add' := fun x y => by simp }
     _ (fun _ => rfl) (hP c)
 

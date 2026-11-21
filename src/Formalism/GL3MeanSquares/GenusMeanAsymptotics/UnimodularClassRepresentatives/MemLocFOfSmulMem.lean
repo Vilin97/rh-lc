@@ -104,7 +104,7 @@ theorem mem_locF_of_smul_mem {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (A
   refine (LocalSpans.mem_locF 𝔭 A₀ _).2 ⟨s * t, fun h => (h𝔭.isPrime.mem_or_mem h).elim hs ht, ?_⟩
   rwa [map_mul, mul_smul]
 
-theorem exists_lift {A₀ : Submodule (𝓞 K) V} (hA₀ : Submodule.IsLattice K A₀) {𝔭 : Ideal (𝓞 F)}
+theorem exists_lift {A₀ : Submodule (𝓞 K) V} (hA₀ : Submodule.IsFullLattice K A₀) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) (k : ℕ)
     (Y : Module.End (𝓞 K) (↥(locF 𝔭 A₀) ⧸ ((extP K 𝔭) ^ k • ⊤ : Submodule (𝓞 K) ↥(locF 𝔭 A₀)))) :
     ∃ D : V →ₗ[K] V, ∀ x : ↥(locF 𝔭 A₀), ∃ hD : D x ∈ locF 𝔭 A₀,
@@ -170,14 +170,14 @@ theorem exists_lift {A₀ : Submodule (𝓞 K) V} (hA₀ : Submodule.IsLattice K
 
 theorem exists_redEnd_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {A₀ : Submodule (𝓞 K) V}
-    (hA₀ : Submodule.IsLattice K A₀) (hA₀i : Formalism.HermitianLatticesTheory.IsIntegralLat h A₀) {𝔭 : Ideal (𝓞 F)}
+    (hA₀ : Submodule.IsFullLattice K A₀) (hA₀i : Formalism.HermitianLatticesTheory.IsIntegralLat h A₀) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {k : ℕ} (hk : eA h (locF 𝔭 A₀) 𝔭 + 1 ≤ k)
     (Y : Module.End (𝓞 K) (↥(locF 𝔭 A₀) ⧸ ((extP K 𝔭) ^ k • ⊤ : Submodule (𝓞 K) ↥(locF 𝔭 A₀))))
     (hY : ∀ x y x' y' : ↥(locF 𝔭 A₀), Submodule.Quotient.mk x' = Y (Submodule.Quotient.mk x) →
       Submodule.Quotient.mk y' = Y (Submodule.Quotient.mk y) →
       CongrP 𝔭 k (h (x' : V) (y' : V)) (h (x : V) (y : V))) :
     ∃ (X : V ≃ₗ[K] V) (hX : X ∈ sSub h (locF 𝔭 A₀) 𝔭 k), redEnd (locF 𝔭 A₀) 𝔭 k X hX.1 = Y := by
-  obtain ⟨g, hg, hgY⟩ := exists_isom_lift hK hF hs hd hA₀ hA₀i h𝔭 hk Y hY
+  obtain ⟨g, hg, hgY⟩ := exists_isom_lift hK hF hs hd (by first | exact hA₀ | exact hA₀.toIsLattice) hA₀i h𝔭 hk Y hY
   have hgA : g ∈ glSub (locF 𝔭 A₀) := hg.2
   obtain ⟨D, hD⟩ := exists_lift hA₀ h𝔭 k Y
   have hle : extP K 𝔭 ^ (k - eA h (locF 𝔭 A₀) 𝔭) • locF 𝔭 A₀ ≤ extP K 𝔭 • locF 𝔭 A₀ :=
@@ -192,7 +192,7 @@ theorem exists_redEnd_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (h
       simp [E]
     rw [e3]
     exact h3
-  obtain ⟨Z, hZ, hZA⟩ := exists_equiv_of_mem_endL hA₀ h𝔭 hE
+  obtain ⟨Z, hZ, hZA⟩ := exists_equiv_of_mem_endL hA₀.toIsLattice h𝔭 hE
   have hXD : ∀ x, (g * Z) x = D x := fun x => by
     rw [LinearEquiv.mul_apply, hZ]
     simp [E]
@@ -226,7 +226,7 @@ theorem alphaL_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
 
 theorem akCount_eq_relIndex (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {A₀ : Submodule (𝓞 K) V}
-    (hA₀ : Submodule.IsLattice K A₀) (hA₀i : Formalism.HermitianLatticesTheory.IsIntegralLat h A₀) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
+    (hA₀ : Submodule.IsFullLattice K A₀) (hA₀i : Formalism.HermitianLatticesTheory.IsIntegralLat h A₀) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
     ∃ k₀ : ℕ, ∀ k ≥ k₀, akCount h (locF 𝔭 A₀) 𝔭 k =
       (nSub (locF 𝔭 A₀) 𝔭 k).relIndex (sSub h (locF 𝔭 A₀) 𝔭 k) := by
   refine ⟨eA h (locF 𝔭 A₀) 𝔭 + 1, fun k hk => ?_⟩

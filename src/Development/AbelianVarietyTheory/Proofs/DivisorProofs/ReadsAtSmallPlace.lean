@@ -178,9 +178,23 @@ theorem exists_reading_lat {E K : Type} [Field E] [NumberField E] [Field K] [Num
         rfl
       rw [h8] at h7
       have h9 := GlobalTheory.T.mem_localisedStandardWeyl_of_lift_mem _ l w e0 _ _ lam lamW _ F Φ hw (fun x => ((hF _).1 ⟨x, rfl⟩).2) hS hΦ _ h7
+      have hlatFull : ∀ τ, Submodule.IsFullLattice K (dualFr (tauLat lab τ (Lat c))) := by
+        intro τ
+        have hcol : Submodule.span K (colLat (B τ) : Set (Fin n → K)) = ⊤ := by
+          rw [colLat, Submodule.span_span_of_tower]
+          change Submodule.span K (Set.range ((B τ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K).col) = ⊤
+          rw [← Matrix.range_mulVecLin]
+          exact LinearMap.range_eq_top.mpr (Matrix.mulVec_surjective_iff_isUnit.mpr (B τ).isUnit)
+        refine { toIsLattice := hlat' τ, span_eq_top := ?_ }
+        rw [eq_top_iff, ← hcol, Submodule.span_le]
+        intro x hx
+        apply Submodule.span_le_restrictScalars (GlobalTheory.LatBasisAt.locRing w) K _
+        rw [← GlobalTheory.LatBasisAt.mem_localization_iff_mem_span, hB τ,
+          GlobalTheory.LatBasisAt.mem_localization_iff_mem_span]
+        exact Submodule.subset_span hx
       have h10 : ((e ((f : S.Cl → S.V) c) : VV K lam) : Pol K T n) ∈
           Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (delP lam fun τ => dualFr (tauLat lab τ (Lat c))) := by
-        rw [(GlobalTheory.TransLoc.nabDelLoc_free_leVV.1 _ _ _ lam _ hlat' w B hB).2]
+        rw [(GlobalTheory.TransLoc.nabDelLoc_free_leVV.1 _ _ _ lam _ hlatFull w B hB).2]
         refine ⟨_, h9, ?_⟩
         show (rhoP lam B * rhoP lam B⁻¹) _ = _
         rw [← map_mul, mul_inv_cancel, map_one]
@@ -296,8 +310,14 @@ theorem reads_rank (j : Fin D.R.m) (w : HeightOneSpectrum (𝓞 D.what₂.LL)) [
     exact hchi k
   have hsc := fun k : levJ p j (p.R.mu w) =>
     scalar_eq (intEmb Lf) (chi k) (fun τ => Matrix.GeneralLinearGroup.det (kap k τ)) cs _ (hχ k)
+  have hLatFull (g : Bridge.Gf (Vc D j)) : Submodule.IsFullLattice D.host.E (hLat (Vc D j) g) := by
+    obtain ⟨-, -, hfg, hsp, -⟩ := GlobalTheory.Member.latHat_eq_hat_and_gram D (Vc D j)
+    obtain ⟨Λ, hΛ, h1, h2, -⟩ := GlobalTheory.AdLat.exists_lattice_latOf D.host.F D.host.E (Vc D j).rank (GlobalTheory.Member.latC (Vc D j)) g.1 hfg hsp
+    rw [SetLike.coe_injective ((GlobalTheory.RepsCompare.coe_hLat (Vc D j) g).trans hΛ.symm)]
+    letI : Submodule.IsLattice D.host.E Λ := Submodule.IsLattice.of_fg D.host.E h1
+    exact { span_eq_top := h2 }
   obtain ⟨rd, h1, h2, h3, h4, h5, h6⟩ := exists_reading_lat (p.R.B.L j (p.R.mu w)).pres (labLL D) _ (c0L j) e hce
-    (fun c => hLat (Vc D j) ((p.R.B.L j (p.R.mu w)).pres.y c)) (fun c => GlobalTheory.RepsCompare.isLattice_hLat _ _) hN hD hM.2.1 hM.2.2 w e0 io hw hio
+    (fun c => hLat (Vc D j) ((p.R.B.L j (p.R.mu w)).pres.y c)) (fun c => hLatFull _) hN hD hM.2.1 hM.2.2 w e0 io hw hio
     (evG (Vc D j) ev)
     (fun γ => (evG_rat (Vc D j) (fun τ => (hev' τ).1) γ).imp fun γE h => ⟨hM.1 γ γE h.1, h.2⟩)
     (fun c B hB τ a b => ⟨GlobalTheory.T.localBasis_integral_relative_adelicPoint (Vc D j) _ _ _ (hev' τ) (p.stdV j).2 _ B hB a b,

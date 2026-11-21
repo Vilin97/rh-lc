@@ -114,19 +114,24 @@ variable {R K V V' V'' : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K]
   [AddCommGroup V'] [Module K V'] [Module R V'] [IsScalarTower R K V']
   [AddCommGroup V''] [Module K V''] [Module R V''] [IsScalarTower R K V''] in
 omit [StarRing K] in
-private lemma isLattice_img_of_isLattice (e : V ≃ₗ[K] V') (L : Submodule R V) (hL : Submodule.IsLattice K L) :
-    Submodule.IsLattice K (_root_.GlobalTheory.Mass.Transp.img e L) := by
-  refine ⟨hL.fg.map _, ?_⟩
-  rw [_root_.GlobalTheory.Mass.Transp.img, Submodule.map_coe, LinearMap.coe_restrictScalars]
-  intro s hs hli
-  change s ⊆ ⇑e '' _ at hs
-  have hpre := Set.preimage_mono (f := ⇑e) hs
-  rw [Set.preimage_image_eq _ e.injective] at hpre
-  rw [← Set.image_preimage_eq s e.surjective] at hli ⊢
-  exact (linearIndepOn_id_imageₛ_iff (f := e.toLinearMap) e.injective.injOn).2
-    (hL.linearIndepOn _ hpre
-      ((linearIndepOn_id_imageₛ_iff (f := e.toLinearMap.restrictScalars R)
-        e.injective.injOn).1 hli))
+private lemma isFullLattice_img (e : V ≃ₗ[K] V') (L : Submodule R V)
+    (hL : Submodule.IsFullLattice K L) :
+    Submodule.IsFullLattice K (_root_.GlobalTheory.Mass.Transp.img e L) := by
+  have hLat := hL.toIsLattice
+  refine { toIsLattice := ⟨hLat.fg.map _, ?_⟩, span_eq_top := ?_ }
+  · rw [_root_.GlobalTheory.Mass.Transp.img, Submodule.map_coe, LinearMap.coe_restrictScalars]
+    intro s hs hli
+    change s ⊆ ⇑e '' _ at hs
+    have hpre := Set.preimage_mono (f := ⇑e) hs
+    rw [Set.preimage_image_eq _ e.injective] at hpre
+    rw [← Set.image_preimage_eq s e.surjective] at hli ⊢
+    exact (linearIndepOn_id_imageₛ_iff (f := e.toLinearMap) e.injective.injOn).2
+      (hLat.linearIndepOn _ hpre
+        ((linearIndepOn_id_imageₛ_iff (f := e.toLinearMap.restrictScalars R)
+          e.injective.injOn).1 hli))
+  · change Submodule.span K (⇑e.toLinearMap '' (L : Set V)) = ⊤
+    rw [← LinearMap.map_span, hL.span_eq_top, Submodule.map_top]
+    exact LinearMap.range_eq_top_of_surjective _ e.surjective
 
 open NumberField Matrix in
 open scoped ENNReal Classical in
@@ -138,7 +143,7 @@ variable {h : V →ₗ⋆[K] V →ₗ[K] K} {h' : V' →ₗ⋆[K] V' →ₗ[K] K
 theorem _root_.GlobalTheory.Mass.Transp.intLat_img (e : V ≃ₗ[K] V') (he : ∀ x y, h' (e x) (e y) = h x y) (L : Submodule R V)
     (hL : _root_.GlobalTheory.Mass.IsIntLat h L) : _root_.GlobalTheory.Mass.IsIntLat h' (_root_.GlobalTheory.Mass.Transp.img e L) := by
   unfold _root_.GlobalTheory.Mass.IsIntLat _root_.Formalism.HermitianLatticesTheory.IsIntegralLat at *
-  refine ⟨isLattice_img_of_isLattice e L hL.1, fun x hx y hy => ?_⟩
+  refine ⟨isFullLattice_img e L hL.1, fun x hx y hy => ?_⟩
   rw [_root_.GlobalTheory.Mass.Transp.mem_img] at hx hy
   rw [← _root_.GlobalTheory.Mass.Transp.symm_isom e he]
   exact hL.2 _ hx _ hy
@@ -198,7 +203,8 @@ variable {R K V V' V'' : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K]
   [AddCommGroup V'] [Module K V'] [Module R V'] [IsScalarTower R K V']
   [AddCommGroup V''] [Module K V''] [Module R V''] [IsScalarTower R K V''] in
 variable {h : V →ₗ⋆[K] V →ₗ[K] K} {h' : V' →ₗ⋆[K] V' →ₗ[K] K} in
-private lemma mem_genus_iff_isLattice_and_locally_isom (L M : Submodule R V) : M ∈ _root_.Formalism.HermitianLatticesTheory.genus h L ↔ Submodule.IsLattice K M ∧
+private lemma mem_genus_iff_isFullLattice_and_locally_isom (L M : Submodule R V) :
+    M ∈ _root_.Formalism.HermitianLatticesTheory.genus h L ↔ Submodule.IsFullLattice K M ∧
     ∀ p : Ideal R, p.IsMaximal → ∃ g ∈ _root_.Formalism.HermitianLatticesTheory.isom h,
       _root_.GlobalTheory.Mass.Transp.img g (_root_.Formalism.HermitianLatticesTheory.loc (K := K) p L) = _root_.Formalism.HermitianLatticesTheory.loc (K := K) p M := Iff.rfl
 
@@ -228,8 +234,8 @@ variable {R K V V' V'' : Type} [CommRing R] [Field K] [StarRing K] [Algebra R K]
 variable {h : V →ₗ⋆[K] V →ₗ[K] K} {h' : V' →ₗ⋆[K] V' →ₗ[K] K} in
 theorem _root_.GlobalTheory.Mass.Transp.genus_img (e : V ≃ₗ[K] V') (he : ∀ x y, h' (e x) (e y) = h x y) (L M : Submodule R V)
     (hM : M ∈ _root_.Formalism.HermitianLatticesTheory.genus h L) : _root_.GlobalTheory.Mass.Transp.img e M ∈ _root_.Formalism.HermitianLatticesTheory.genus h' (_root_.GlobalTheory.Mass.Transp.img e L) := by
-  rw [mem_genus_iff_isLattice_and_locally_isom] at hM ⊢
-  refine ⟨isLattice_img_of_isLattice e M hM.1, fun p hp => ?_⟩
+  rw [mem_genus_iff_isFullLattice_and_locally_isom] at hM ⊢
+  refine ⟨isFullLattice_img e M hM.1, fun p hp => ?_⟩
   obtain ⟨g, hg, heq⟩ := hM.2 p hp
   refine ⟨(_root_.GlobalTheory.Mass.Transp.conj e he ⟨g, hg⟩ : _root_.Formalism.HermitianLatticesTheory.isom h'), SetLike.coe_mem _, ?_⟩
   rw [loc_img_eq_img_loc, loc_img_eq_img_loc, ← heq, ← img_trans_eq_img_img, ← img_trans_eq_img_img]
@@ -258,8 +264,8 @@ variable {h : V →ₗ⋆[K] V →ₗ[K] K} {h' : V' →ₗ⋆[K] V' →ₗ[K] K
 theorem _root_.GlobalTheory.Mass.Transp.genus_stable (L : Submodule R V) : _root_.GlobalTheory.Mass.Stable (_root_.Formalism.HermitianLatticesTheory.isom h) (_root_.Formalism.HermitianLatticesTheory.genus h L) := by
   intro g M hM
   rw [isom_smul_eq_img]
-  rw [mem_genus_iff_isLattice_and_locally_isom] at hM ⊢
-  refine ⟨isLattice_img_of_isLattice _ M hM.1, fun p hp => ?_⟩
+  rw [mem_genus_iff_isFullLattice_and_locally_isom] at hM ⊢
+  refine ⟨isFullLattice_img _ M hM.1, fun p hp => ?_⟩
   obtain ⟨g', hg', heq⟩ := hM.2 p hp
   refine ⟨g'.trans g.1, fun x y => ?_, ?_⟩
   · rw [LinearEquiv.trans_apply, LinearEquiv.trans_apply, (mem_isom_iff_preserves_form _).1 g.2,

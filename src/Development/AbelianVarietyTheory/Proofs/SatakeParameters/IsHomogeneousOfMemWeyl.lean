@@ -70,7 +70,7 @@ theorem coeff_subGen_mem {ν : Fin a → ℕ} {ν' : Fin b → ℕ} (hν : Antit
         beta_reduce
         rw [← lclosedeq_hw_map (algebraMap ℤ S), lclosedeq_applyWord_map]⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := map (algebraMap ℤ S))]; exact add_mem hx hy
     | smul c x _ hx => rw [map_zsmul]; exact zsmul_mem hx c
   have h2 := GlobalTheory.T.weylRowAction_mem_weylLattice_square S b ν' hν M _ (hmap _ h1)
   let ψ : MvPolynomial (Fin b × Fin b) S →+* MvPolynomial (Fin b × Fin a) (MvPolynomial (Fin b × Fin b) ℤ) :=
@@ -99,7 +99,7 @@ theorem coeff_subGen_mem {ν : Fin a → ℕ} {ν' : Fin b → ℕ} (hν : Antit
     · exact Submodule.subset_span ⟨w, rfl⟩
     · exact zero_mem _
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add (f := _), MvPolynomial.coeff_add]; exact add_mem (hx α) (hy α)
+  | add x y _ _ hx hy => rw [map_add (f := _), AddMonoidAlgebra.coeff_add]; exact add_mem (hx α) (hy α)
   | smul c x _ hx =>
     classical
     rw [smul_eq_C_mul, map_mul, coeff_mul]

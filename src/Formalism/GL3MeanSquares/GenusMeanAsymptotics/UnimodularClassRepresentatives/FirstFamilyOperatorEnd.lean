@@ -40,9 +40,11 @@ variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberFi
 variable {V : Type} [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V]
   [IsScalarTower (𝓞 K) K V]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+
 theorem nkCount_succ_fine (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {n : 𝓞 F} {v : ℕ} (hn : n ∉ 𝔭 ^ (v + 1)) {k : ℕ}
     (hk : vd h L 𝔭 + v + 1 ≤ k) :
     nkCount h L 𝔭 (k + 1) n = Ideal.absNorm 𝔭 ^ (2 * finrank K V - 1) * nkCount h L 𝔭 k n := by
@@ -78,7 +80,7 @@ theorem nkCount_succ_fine (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
 
 theorem alphaN_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {n : 𝓞 F} {v : ℕ} (hn : n ∉ 𝔭 ^ (v + 1)) {k : ℕ}
     (hk : vd h L 𝔭 + v + 1 ≤ k) :
     alphaN h L 𝔭 n =
@@ -89,7 +91,7 @@ theorem alphaN_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
 
 theorem nkCount_congr (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {n n' : 𝓞 F} {k : ℕ} (hc : n - n' ∈ 𝔭 ^ k) :
     nkCount h L 𝔭 k n = nkCount h L 𝔭 k n' := by
   haveI : Fact (IsFixF K F) := ⟨hF⟩
@@ -102,7 +104,7 @@ theorem nkCount_congr (hF : IsFixF K F)
 
 theorem akCount_succ_fine (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {k : ℕ} (hk : 2 * vd h L 𝔭 + 1 ≤ k) :
     akCount h L 𝔭 (k + 1) = Ideal.absNorm 𝔭 ^ (finrank K V ^ 2) * akCount h L 𝔭 k := by
   haveI : Fact (IsFixF K F) := ⟨hF⟩
@@ -115,7 +117,7 @@ theorem akCount_succ_fine (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
 
 theorem alphaL_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {k : ℕ} (hk : 2 * vd h L 𝔭 + 1 ≤ k) :
     alphaL h L 𝔭 = (akCount h L 𝔭 k : ℝ) / (Ideal.absNorm 𝔭 : ℝ) ^ (k * finrank K V ^ 2) := by
   unfold alphaL
@@ -124,7 +126,7 @@ theorem alphaL_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
 
 theorem akCount_pos (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) (k : ℕ) : 0 < akCount h L 𝔭 k := by
   haveI : Fact (IsFixF K F) := ⟨hF⟩
   obtain ⟨b, H, D, hb, hH, hHh, hD, hD0, hv⟩ := exists_local_data hF hs hd hL hLi h𝔭
@@ -137,7 +139,7 @@ theorem akCount_pos (hF : IsFixF K F)
 
 theorem nkCount_le_nat (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) (hm : 2 ≤ finrank K V)
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) (hm : 2 ≤ finrank K V)
     {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (k : ℕ) (n : 𝓞 F) :
     nkCount h L 𝔭 k n ≤ 2 * Ideal.absNorm 𝔭 ^ (2 * vd h L 𝔭 + 1) *
       Ideal.absNorm 𝔭 ^ (k * (2 * finrank K V - 1)) := by

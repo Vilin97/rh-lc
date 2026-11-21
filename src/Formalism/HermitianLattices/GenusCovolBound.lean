@@ -36,7 +36,7 @@ def AutFinite : Prop :=
     [IsScalarTower (NumberField.RingOfIntegers K) K V]
     (h : V →ₗ⋆[K] V →ₗ[K] K), h.IsSymm →
     (∀ x : V, x ≠ 0 → 0 < Algebra.trace ℚ K (h x x)) →
-    ∀ L : Submodule (NumberField.RingOfIntegers K) V, Submodule.IsLattice K L →
+    ∀ L : Submodule (NumberField.RingOfIntegers K) V, Submodule.IsFullLattice K L →
       Set.Finite {g : V ≃ₗ[K] V | g ∈ isom h ∧ gmap g L = L}
 
 end Formalism.HermitianLatticesTheory

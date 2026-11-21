@@ -6,6 +6,7 @@ public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemElt
 public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.VacExA
 public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FactPrincipalDatum
 public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceDualB
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LatticeVariant
 
 @[expose] public section
@@ -127,12 +128,12 @@ theorem lsd_mem (hΛS : IsSelfDualC S ΛS) (hΛT : IsSelfDualC T ΛT) :
   classical
   obtain ⟨c, hc, hc0⟩ := lsd_AA_ne (D := D)
   have hden : ∀ {n : ℕ} (L : Submodule (𝓞 D.host.E) (Fin n → D.host.E)),
-      Submodule.IsLattice D.host.E L → ∀ x : Fin n → D.host.E, ∃ d : 𝓞 D.host.E, d ≠ 0 ∧ (d : D.host.E) • x ∈ L := by
+      Submodule.IsFullLattice D.host.E L → ∀ x : Fin n → D.host.E, ∃ d : 𝓞 D.host.E, d ≠ 0 ∧ (d : D.host.E) • x ∈ L := by
     intro n L hL x
-    obtain ⟨N, hN, hNx⟩ := PDB.exists_nat_smul_mem hL x
+    obtain ⟨N, hN, hNx⟩ := PDA.exists_nat_smul_mem hL x
     exact ⟨N, Nat.cast_ne_zero.mpr hN.ne', by simpa using hNx⟩
-  choose dT hdT htT using fun i : Fin T.rank => hden ΛT hΛT.1 (Pi.single i 1)
-  choose dS hdS hsS using fun j : Fin S.rank => hden ΛS hΛS.1 (fun k => star (S.gram⁻¹ j k))
+  choose dT hdT htT using fun i : Fin T.rank => hden ΛT (PDA.selfDual_isFullLattice T ΛT hΛT) (Pi.single i 1)
+  choose dS hdS hsS using fun j : Fin S.rank => hden ΛS (PDA.selfDual_isFullLattice S ΛS hΛS) (fun k => star (S.gram⁻¹ j k))
   have hdT' : ∀ i, (dT i : D.host.E) ≠ 0 := fun i h => hdT i (FaithfulSMul.algebraMap_injective (𝓞 D.host.E) D.host.E
     (by rw [map_zero]; exact h))
   have hdS' : ∀ j, (dS j : D.host.E) ≠ 0 := fun j h => hdS j (FaithfulSMul.algebraMap_injective (𝓞 D.host.E) D.host.E

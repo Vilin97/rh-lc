@@ -60,8 +60,7 @@ theorem ker_rational [Fintype ι] {J : Type} [Fintype J] (σ : K →+* ℂ) (e :
     rw [ext, Module.Basis.constr_range]; exact hφ
   have hc : ∀ j t, ext σ e b ((n j).baseChange ℂ t) = N j (ext σ e b t) := by
     intro j t
-    induction t using TensorProduct.induction_on with
-    | zero => simp
+    induction t using TensorProduct.inductionOn with
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul c x =>
       have : ∀ y : V, c ⊗ₜ[K] y = c • ((1 : ℂ) ⊗ₜ[K] y) := fun y => by
@@ -95,9 +94,8 @@ theorem ker_rational [Fintype ι] {J : Type} [Fintype J] (σ : K →+* ℂ) (e :
     rw [LinearMap.baseChange_sub, LinearMap.sub_apply, hz]; simp
   rw [ht']
   generalize t = s
-  induction s using TensorProduct.induction_on with
-  | zero => simp
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
+  induction s using TensorProduct.inductionOn with
+  | add x y hx hy => simp only [map_add]; exact Submodule.add_mem _ hx hy
   | tmul c x =>
     have : ∀ y : V, c ⊗ₜ[K] y = c • ((1 : ℂ) ⊗ₜ[K] y) := fun y => by
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]

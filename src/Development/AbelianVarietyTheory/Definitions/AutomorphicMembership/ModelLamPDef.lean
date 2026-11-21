@@ -80,7 +80,7 @@ theorem stdJ_basis {L : Type} [Field L] (σ : L →+* ℂ) (n : ℕ) {κ : Type}
       induction hx using Submodule.span_induction with
       | mem y hy => obtain ⟨i, rfl⟩ := hy; exact Submodule.subset_span ⟨i, rfl⟩
       | zero => simp
-      | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+      | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
       | smul c y _ hy => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hy
     rw [eq_top_iff, ← (EuclideanSpace.basisFun (Fin n) ℂ).toBasis.span_eq, Submodule.span_le]
     rintro _ ⟨i, rfl⟩

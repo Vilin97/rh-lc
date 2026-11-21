@@ -101,3 +101,5 @@ theorem column_holds : Column := by
   exact absurd (WithTop.coe_le_coe.1 (show ((1 : ℤ) : WithTop ℤ) ≤ ((0 : ℤ) : WithTop ℤ) from h2)) (by norm_num)
 
 end PoleLengthBounds
+
+#print Formalism.MainNotions.Gaps.EtaleWeightGaps.sec._aux_1

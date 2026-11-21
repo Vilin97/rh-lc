@@ -275,8 +275,7 @@ theorem locChar_nu {μ₀ : T} (hL : L.Is μ₀) (t : T) (i j : Fin D.R.m) (w : 
   rw [e1, locChar_eq_of_chrEq (SqNum.chrEq_nu G t i j hL)]
   have hj : (j : ℕ) < D.R.m := j.2
   ext x
-  simp only [SqNum.nuH, Grid.nu, locGrid, muBase, dite_eq_left hj, MonoidHom.div_apply, Formalism.L2.Host.HChar.loc_mul,
-    Formalism.L2.Host.HChar.loc_inv, div_eq_mul_inv]
+  simp only [SqNum.nuH, Grid.nu, locGrid, muBase, dite_eq_left hj, Formalism.L2.Host.HChar.loc, MonoidHom.comp_apply, div_eq_mul_inv]
   rfl
 
 theorem ordX_colX_val (t : T) (i j : Fin D.R.m) (w : Pl D.host.E) (s : Fin (spX G i j).rank) :
@@ -305,7 +304,7 @@ theorem stdFst_eq_prodA : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTh
   funext x
   unfold GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.stdFst prodA
   by_cases hx : IsHalf ε x
-  · simp only [hx, true_and, if_true]
+  · simp only [hx, true_and, ite_true]
     refine (std_eq_prod _ he (X.c t) _ fun w hw => cpt_frMapO_eq_zero he _ _ _ _ hx hw).trans
       (Finset.prod_congr rfl fun w _ => ?_)
     have hb : (spX G i j).rank = (locGrid G t w).rank (i + 1, j + 1) + (locGrid G t w).rank (i, j) := by
@@ -330,7 +329,7 @@ theorem stdFst_eq_prodA : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTh
       rfl
     simp only [reindex_apply, submatrix_apply, transpose_apply, h4]
     rfl
-  · rw [if_neg hx, if_neg fun h => hx h.1]
+  · rw [ite_eq_right hx, ite_eq_right fun h => hx h.1]
 
 end GlobalTheory.TopFlip
 

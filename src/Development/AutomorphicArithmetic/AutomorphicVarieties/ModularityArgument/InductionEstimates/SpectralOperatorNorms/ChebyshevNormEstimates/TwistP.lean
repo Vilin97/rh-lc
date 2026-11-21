@@ -94,7 +94,10 @@ private theorem abs_main (J : L V →ₗᵢ[ℂ] H) (J' : L W →ₗᵢ[ℂ] H) 
 end Abstract
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.twistP :
-    ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢), θ.U ∘L 𝔵.P = 𝔵.P ∘L θ.U ∧
+    ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E]
+      {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ}
+      {𝔢 : Side θ 2} (𝔵 : _root_.UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.Fam 𝔢),
+      θ.U ∘L 𝔵.P = 𝔵.P ∘L θ.U ∧
       ∀ (T : ℝ) (Λ : L2 μ →L[ℂ] L2 μ), IsTrunc 𝔵.A.J 𝔵.A'.J T Λ → θ.U ∘L Λ = Λ ∘L θ.U := by
   intro E _ _ _ μ _ θ 𝔢 𝔵
   obtain ⟨U, hU, -, -⟩ := UpperTheory.ConvolutionTheory.C.twistUnitary E (2 + 2) μ θ

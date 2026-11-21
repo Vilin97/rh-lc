@@ -40,7 +40,7 @@ def QBridgeAt (large₂ : SizeData₂ D) (B : WeightFamilies.Prov D) (j : ℕ) (
 
 theorem qat_of_bridge (hL : QuotLocalStatement) (hLD : LenDescentStatement) (large₂ : SizeData₂ D)
     (B : WeightFamilies.Prov D) (j : ℕ) (ka : WeightFamilies.Wt D j) (CR Ck Ch Ah Cc Ac T c : ℝ)
-    (hlat : Submodule.IsLattice B.KO (B.Mlat j ka))
+    (hlat : Submodule.IsFullLattice B.KO (B.Mlat j ka))
     (hbr : QBridgeAt large₂ B j ka CR Ch Ah Cc Ac T c) :
     Formalism.MainNotions.Gaps.EtaleWeightGaps.QAt large₂ B j ka CR Ck Ch Ah Cc Ac T c := by
   intro hCR hOb hn hlast hsize hT hc hTc

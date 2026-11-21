@@ -69,7 +69,7 @@ def img {D : ℕ} (ι : Matrix (Fin A.Dg) (Fin D) K) (L : Submodule (𝓞 K) (Fi
 
 def FramesG : Prop := ∀ v, IsUnit (A.Xg v).det
 
-def LatG : Prop := Submodule.IsLattice K A.Rg
+def LatG : Prop := Submodule.IsFullLattice K A.Rg
 
 def EmbAt {D : ℕ} (ι : Matrix (Fin A.Dg) (Fin D) K) (ep : Matrix (Fin A.Dg) (Fin A.Dg) K) (h : ℕ)
     (XE : InfinitePlace K → Matrix (Fin D) (Fin D) ℂ) : Prop :=

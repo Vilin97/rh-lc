@@ -161,9 +161,18 @@ def LocAt (σ : D.what₂.FT) (w : PlE D.host) : Type 1 :=
   {p : (s : SplitPlace D.host.E) × IrrRep (GL (Fin D.R.r) (s.w.adicCompletion D.host.E)) //
     p.1.w = w ∧ IsLocS (rep σ).S p.1 p.2}
 
-def unrW : RowWD D :=
-  RowWD.unram D (fun _ _ => Multiset.replicate D.R.r 1) (fun _ _ h => by simpa using (Multiset.eq_of_mem_replicate h))
-    (fun _ _ => by simp)
+def unrW : RowWD D := by
+  let m : Multiset ℂ := Multiset.replicate D.R.r 1
+  have hm : (0 : ℂ) ∉ m := fun h => zero_ne_one (Multiset.eq_of_mem_replicate h)
+  exact
+    { par := fun _ w => GlobalTheory.WeilDeligne.WD.lpUnr (D.nd.plOm.2 w) m
+      sat := fun _ _ => m
+      dim := fun _ w =>
+        (GlobalTheory.WeilDeligne.WD.lpUnr_spec (h := D.nd.plOm.2 w) m hm).2.2.trans
+          (Multiset.card_replicate _ _)
+      tame := fun _ k v =>
+        GlobalTheory.WeilDeligne.WD.tame_of_unr
+          (GlobalTheory.WeilDeligne.WD.lpUnr_spec (h := D.nd.plOm.2 (D.naut.plGw k v)) m hm).1 }
 
 end Loc
 

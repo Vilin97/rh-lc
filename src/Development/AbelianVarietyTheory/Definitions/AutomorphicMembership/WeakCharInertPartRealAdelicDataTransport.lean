@@ -137,6 +137,23 @@ end Two
 
 variable {A : FamIn3 a.D.what₂.LL G Pl0 I0 (List ℕ) T a.D.R.m}
 
+theorem normalFrames_tr (Pg : Finset (Pl a.D.host.E))
+    (βY : ∀ j, GL (Fin (Yc a.D j).rank) (Datum.EAf a.D))
+    (βW : ∀ i : Fin a.D.R.m, GL (Fin (Wc a.D i).rank) (Datum.EAf a.D))
+    (h : Seed.Frm.NormalFrameConditionsDiagonal Pg βY βW) :
+    @Seed.Frm.NormalFrameConditionsDiagonal b.D Pg βY βW := by
+  rcases h with ⟨⟨e, ev, z, κ, t, h0, hW⟩, hX⟩
+  refine ⟨⟨e, ev, z, κ, t, ?_, ?_⟩, ?_⟩
+  · exact h0
+  · exact hW
+  · exact hX
+
+theorem framesExist_tr (Pg : Finset (Pl a.D.host.E))
+    (h : Seed.Frm.FramesExistDiagonal a.D Pg) : Seed.Frm.FramesExistDiagonal b.D Pg := by
+  rcases h with ⟨ΛY, ΛX, ΛV, ΛW, βY, βX, βV, βW, hSD, hN⟩
+  refine ⟨ΛY, ΛX, ΛV, ΛW, βY, βX, βV, βW, ?_, normalFrames_tr b Pg βY βW hN⟩
+  exact hSD
+
 section Kept
 
 variable {R : RealDat a.D A.A Ks} {F : Face a.D A.A}
@@ -149,7 +166,9 @@ theorem keep_tr (s : SameGrp a b) {cG : G0 R.Pg a.D.R.r ≃* G0g a.D.nd} (h : Ke
   case psi => exact (by with_unfolding_all exact ((psiPPTie_transport b s h.psi) :))
   case std => exact (by with_unfolding_all exact (h.std :))
   case signs => exact (by with_unfolding_all exact (h.signs :))
-  case frames => kexactB h.frames
+  case frames =>
+    intro hf
+    exact normalFrames_tr b R.Pg R.βY R.βW (h.frames (framesExist_tr a (real b R).Pg hf))
   case beta => exact (by with_unfolding_all exact (h.beta :))
   case prX => exact (by with_unfolding_all exact (h.prX :))
   case guard => exact (by with_unfolding_all exact (h.guard :))
@@ -167,7 +186,9 @@ theorem keep_back (s : SameGrp b a) {cG : G0 (levCh b R.toLevCh).Pg b.D.R.r ≃*
   case psi => exact (by with_unfolding_all exact ((psiPPTie_transport a s h.psi) :))
   case std => exact (by with_unfolding_all exact (h.std :))
   case signs => exact (by with_unfolding_all exact (h.signs :))
-  case frames => kexactB h.frames
+  case frames =>
+    intro hf
+    exact normalFrames_tr a (real b R).Pg (real b R).βY (real b R).βW (h.frames (framesExist_tr b R.Pg hf))
   case beta => exact (by with_unfolding_all exact (h.beta :))
   case prX => exact (by with_unfolding_all exact (h.prX :))
   case guard => exact (by with_unfolding_all exact (h.guard :))

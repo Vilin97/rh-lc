@@ -26,7 +26,7 @@ theorem betaD_dvd_of_res : ∀ (l : ℕ) [Fact l.Prime] (ϖ : Per.Fl l), Per.ker
     induction ha using Algebra.adjoin_induction with
     | mem x hx => rw [Set.mem_singleton_iff.1 hx, hb0]; exact zero_mem _
     | algebraMap r => rw [hA]; exact (Per.θ l r).2
-    | add x z _ _ hx hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hz
+    | add x z _ _ hx hz => rw [map_add (Per.θP l)]; exact add_mem hx hz
     | mul x z _ _ hx hz => rw [map_mul]; exact mul_mem hx hz
   have hs : ∀ s ∈ Sg ϖ, ‖Per.θD l s‖ ≤ 1 := by
     rintro _ ⟨a, ha, rfl⟩

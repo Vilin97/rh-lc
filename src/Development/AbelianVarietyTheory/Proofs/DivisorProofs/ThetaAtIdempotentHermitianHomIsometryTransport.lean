@@ -90,8 +90,9 @@ private theorem placeModel_move (ψ : AddChar (AF D.host.F) ℂ) (e : AE D) (Λ 
       congr 1
       have key := and_congr (hΛ t) (hH e t)
       by_cases h : t ∈ Λ ∧ IsHalf e t
-      · rw [if_pos (key.2 h), if_pos h]
-      · rw [if_neg (fun h' => h (key.1 h')), if_neg h]
+      · simp [key.2 h, h]
+      · have h' : ¬ (φ t ∈ Λ' ∧ IsHalf e (φ t)) := fun ht => h (key.1 ht)
+        simp [h', h]
     simp only [LinearMap.comp_apply, LinearEquiv.coe_coe]
     rw [e1, hT.vac]
 
@@ -238,7 +239,7 @@ private theorem homMap_mem_latO (IS : IsoMat S S') (IT : IsoMat T T') (LS : Subm
     apply AddSubgroup.subset_closure
     exact ⟨α, hα, hP, a, ha, Matrix.mulVec IS.P s, ⟨s, hs, rfl⟩, Matrix.mulVec IT.P t, ⟨t, ht, rfl⟩, homMap_gen IS IT _ a s t⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
   | neg y _ hy => rw [map_neg]; exact neg_mem hy
 
 private theorem homMap_mem_latO_iff (IS : IsoMat S S') (IT : IsoMat T T') (LS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E))

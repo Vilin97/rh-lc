@@ -41,7 +41,7 @@ theorem span_map_delSq (R A : Type) [CommRing R] [CommRing A] (φ : R →+* A) (
       simp only
       rw [← Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map, Formalism.GradedWeylDivisibility.lclosedeq_hw_map]
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
     | smul a y _ hy =>
       rw [smul_eq_C_mul, map_mul, map_C, ← smul_eq_C_mul]
       exact Submodule.smul_mem _ _ hy

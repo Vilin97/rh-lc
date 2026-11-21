@@ -18,9 +18,9 @@ open scoped Matrix
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E]
 
-theorem exists_smul_mem {S : HSpace E} (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsLattice E Λ)
+theorem exists_smul_mem {S : HSpace E} (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsFullLattice E Λ)
     (v : S.V) : ∃ c : 𝓞 E, c ≠ 0 ∧ c • v ∈ Λ := by
-  first | exact Bl.general_b_fact_left_alt.goal1 .. | (apply Bl.general_b_fact_left_alt.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_left_alt.goal1 <;> assumption) | (apply @Bl.general_b_fact_left_alt.goal1 <;> assumption) | (intros; apply @Bl.general_b_fact_left_alt.goal1 <;> assumption) | (apply @Bl.general_b_fact_left_alt.goal1 <;> first | assumption | infer_instance)
+  exact Bl.general_b_fact_left_alt.goal1 Λ hΛ v
 
 theorem finrank_orth_add_le (S : HSpace E) {ι : Type} [Fintype ι] (u : ι → S.V)
     (hu : LinearIndependent E u) (U : Submodule E S.V) (hU : ∀ i, u i ∈ U) :
@@ -68,7 +68,7 @@ theorem finrank_orth_add_le (S : HSpace E) {ι : Type} [Fintype ι] (u : ι → 
   omega
 
 theorem frame_mem_UUE {S : HSpace E} {r : ℕ} {T T' : E} (Λ : Submodule (𝓞 E) S.V)
-    (hΛ : Submodule.IsLattice E Λ) (F : LFlag S r T) (F' : LFlag S r T')
+    (hΛ : Submodule.IsFullLattice E Λ) (F : LFlag S r T) (F' : LFlag S r T')
     (hL : IsLift Λ F) (hL' : IsLift Λ F') :
     ∀ s, Sum.elim F.fl.fvec F'.fl.fvec s ∈ UUE Λ F F' := by
   have hUU : ∀ x, x ∈ UU Λ F F' → x ∈ UUE Λ F F' := fun x hx => Submodule.subset_span hx

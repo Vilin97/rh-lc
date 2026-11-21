@@ -16,25 +16,3 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFor
 public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.HarishChandraModulesOn
 public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HasDRepIffHasDerivAt
 public import GroundTheory.PAdicHodge.AInfGalois
-
-@[expose] public section
-
-open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S MeasureTheory IsDedekindDomain NumberField Matrix
-open Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.DivisionValues
-open Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.Cx
-open scoped TensorProduct InnerProductSpace
-open GlobalTheory.IndefiniteRowSideFullHecke.LabelSettingScalars (EigSys badPl IsIP IsUp IsUpTop topStep IsLValue)
-open GlobalTheory.LFun (Fam twist segFam seg val above IsCont Bounded IsSysParamD IsParamFunV UnrAt)
-open GlobalTheory.CompanionTheory.OntoAll
-open GlobalTheory.Hk3 GlobalTheory.CompanionTheory.Ipf.Aut
-open GlobalTheory.Chain (ChainPar IsStepWeil IsVacVec ptOf expS expT)
-open GlobalTheory.PairLift (Inputs RulePar)
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
-
-namespace GlobalTheory.CompanionTheory.Ipf.Aut.GaussEsym
-
-end GlobalTheory.CompanionTheory.Ipf.Aut.GaussEsym
-
-namespace GlobalTheory.CompanionTheory.Ipf.Aut
-
-end GlobalTheory.CompanionTheory.Ipf.Aut

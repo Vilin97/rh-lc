@@ -177,7 +177,9 @@ theorem isIsoSub_iso (ρ : ℕ) (h : 2 * ρ ≤ c) : IsIsoSub B (d.iso ρ h) := 
         (Fin.castLE (by omega) : Fin ρ → Fin c) = 1 := by
       refine Matrix.ext fun p q => ?_
       have := p.2; have := q.2
-      simp only [submatrix_apply, antiDiagonalSignGramMatrix, Fin.val_rev, Fin.val_castLE, one_apply, Fin.ext_iff]
+      have hp : p.1 + 1 ≤ c := by omega
+      have hrev : ρ ≤ c - (p.1 + 1) := by omega
+      simp only [submatrix_apply, antiDiagonalSignGramMatrix, Fin.val_rev, Fin.val_castLE, Matrix.one_apply, Fin.ext_iff]
       split_ifs <;> first | rfl | omega
     have h4 := congrArg (· *ᵥ u) (h2.trans h3)
     simp only [one_mulVec, ← mulVec_mulVec] at h4
@@ -297,7 +299,7 @@ def cosInd (e : AE D) {m n : ℕ} {Λ : Submodule (𝓞 D.host.E) (Fin n → D.h
   (cosSet e κ).indicator 1
 
 theorem homLat_fg {m n : ℕ} {Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E)}
-    {Λ' : Submodule (𝓞 D.host.E) (Fin m → D.host.E)} (h : Submodule.IsLattice D.host.E Λ) (h' : Λ'.FG) :
+    {Λ' : Submodule (𝓞 D.host.E) (Fin m → D.host.E)} (h : Submodule.IsFullLattice D.host.E Λ) (h' : Λ'.FG) :
     Module.Finite (𝓞 D.host.E) (homLat Λ Λ') := by
   obtain ⟨s, hs⟩ := h.fg
   haveI : Module.Finite (𝓞 D.host.E) Λ' := Module.Finite.iff_fg.2 h'
@@ -312,7 +314,7 @@ theorem homLat_fg {m n : ℕ} {Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.
   exact Matrix.toLin'.injective (by rw [Matrix.toLin'_apply', h2]; simp)
 
 theorem finite_cos {m n : ℕ} {Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E)}
-    {Λ' : Submodule (𝓞 D.host.E) (Fin m → D.host.E)} (h : Submodule.IsLattice D.host.E Λ) (h' : Λ'.FG)
+    {Λ' : Submodule (𝓞 D.host.E) (Fin m → D.host.E)} (h : Submodule.IsFullLattice D.host.E Λ) (h' : Λ'.FG)
     {𝔪 : Ideal (𝓞 D.host.E)} (h𝔪 : 𝔪 ≠ ⊥) : Finite (Cos Λ Λ' 𝔪) := by
   haveI := homLat_fg h h'
   haveI : Finite (𝓞 D.host.E ⧸ 𝔪) := Ideal.finiteQuotientOfFreeOfNeBot 𝔪 h𝔪

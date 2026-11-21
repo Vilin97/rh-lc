@@ -13,7 +13,7 @@ public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.Unitarisa
 
 @[expose] public section
 
-open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.ColumnForm GlobalTheory.GenericUnitary ValuativeRel
+open GlobalTheory.PRep GlobalTheory.SmGL
 
 noncomputable section
 

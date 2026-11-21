@@ -105,13 +105,7 @@ variable {G : Type} [Group G]
 theorem exists_reps {K : Subgroup G} (hK : Formalism.UG.IsCommensurated K) (g : G) :
     ∃ R : Finset G, (∀ γ ∈ R, ∃ k₁ ∈ K, ∃ k₂ ∈ K, γ = k₁ * g * k₂) ∧
       ∀ x : G, (∃ k₁ ∈ K, ∃ k₂ ∈ K, x = k₁ * g * k₂) → ∃! γ, γ ∈ R ∧ γ⁻¹ * x ∈ K := by
-  first
-  | exact @_root_.GlobalTheory.FinsetConjugateRepresentatives.exists_finset_reps
-  | exact _root_.GlobalTheory.FinsetConjugateRepresentatives.exists_finset_reps
-  | (apply _root_.GlobalTheory.FinsetConjugateRepresentatives.exists_finset_reps <;> assumption)
-  | (intros; apply _root_.GlobalTheory.FinsetConjugateRepresentatives.exists_finset_reps <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.FinsetConjugateRepresentatives.exists_finset_reps <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.FinsetConjugateRepresentatives.exists_finset_reps ..)
+  exact _root_.GlobalTheory.FinsetConjugateRepresentatives.exists_finset_reps hK g
 
 variable {H : Type} [Group H] {ρ : G →* H} {S : G → Prop} {K : Set G} {K' : Subgroup H}
 
@@ -249,7 +243,7 @@ theorem cf_mem {x : RF D} (hx : x ∈ intAE D) : cf D x ∈ intAE D := by
     refine AddSubgroup.subset_closure ⟨a, ha, ⟨star (x : D.host.E), ?_⟩, rfl⟩
     exact (RingOfIntegers.isIntegral_coe x).map (D.sp.cm.sig.toRingHom.toIntAlgHom)
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
   | neg y _ hy => rw [map_neg]; exact neg_mem hy
 
 theorem hh_eq (V : HSp D) (x y : Fin V.rank → RF D) :

@@ -16,6 +16,8 @@ open CompanionTheory.RgExh.Dec CompanionTheory.RgExh.Dec.L ReciprocityTheory.Cha
 
 namespace GlobalTheory.CompanionTheory.UGeo
 
+open Formalism.REAL (hs)
+
 variable {n : ℕ} {ε : Fin n → Bool} {A : Matrix (Fin n) (Fin n) ℂ}
 
 def Pz (A : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ := 1 - A * A

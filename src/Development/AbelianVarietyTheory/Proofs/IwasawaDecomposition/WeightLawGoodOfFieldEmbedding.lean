@@ -125,7 +125,7 @@ theorem exists_smul_mem {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K
   | (intros; apply @_root_.GlobalTheory.NonzeroSmulMemIntegralSpan.exists_ne_zero_smul_mem <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.NonzeroSmulMemIntegralSpan.exists_ne_zero_smul_mem ..)
 
-theorem values_isLattice (M : C.Cl → Submodule (𝓞 K) C.V) (hM : ∀ c, Submodule.IsLattice K (M c))
+theorem values_isLattice (M : C.Cl → Submodule (𝓞 K) C.V) (hM : ∀ c, Submodule.IsFullLattice K (M c))
     (L : Submodule (𝓞 K) C.Forms) (hL : ∀ x, x ∈ L ↔ ∀ c, x.1 c ∈ M c) :
     L.FG ∧ Submodule.span K (L : Set C.Forms) = ⊤ := by
   classical
@@ -134,8 +134,22 @@ theorem values_isLattice (M : C.Cl → Submodule (𝓞 K) C.V) (hM : ∀ c, Subm
     refine Submodule.FG.of_le (Submodule.fg_pi fun c => (hM c).fg) ?_
     rintro _ ⟨x, hx, rfl⟩ c _
     exact (hL x).1 hx c
-  · intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  · apply eq_top_iff.mpr
+    intro x _
+    have hx : ∀ c, ∃ d : 𝓞 K, d ≠ 0 ∧ d • x.1 c ∈ M c := fun c =>
+      exists_smul_mem (by rw [(hM c).span_eq_top]; trivial)
+    choose d hd hdx using hx
+    let a : 𝓞 K := ∏ c, d c
+    have ha : a ≠ 0 := Finset.prod_ne_zero_iff.mpr fun c _ => hd c
+    have hax : a • x ∈ L := (hL _).2 fun c => by
+      change a • x.1 c ∈ M c
+      rw [a, ← Finset.prod_erase_mul _ _ (Finset.mem_univ c), mul_smul]
+      exact (M c).smul_mem _ (hdx c)
+    have haK : algebraMap (𝓞 K) K a ≠ 0 := fun h =>
+      ha ((IsFractionRing.injective (𝓞 K) K) (by simpa using h))
+    have h := (Submodule.span K (L : Set C.Forms)).smul_mem
+      (algebraMap (𝓞 K) K a)⁻¹ (Submodule.subset_span hax)
+    simpa [← algebraMap_smul K a x, smul_smul, haK] using h
 end Datum
 
 theorem root_mem_cmMax {K : Type} [Field K] [StarRing K] (σ : K →+* ℂ)
@@ -182,11 +196,36 @@ theorem step_gram_posDef (hF : FOk emb σ) (hS : S.Ok) (h : (S.fam emb lam).Ok) 
     ((S.csd emb lam h).H.map φ).PosDef :=
   gram_posDef _ (hasRatBasis S emb σ lam hF hS h) φ (gramV_posDef S emb lam h φ)
 
+omit [StarRing K] in
+theorem dualFr_isFullLattice {n : ℕ} (M : Submodule (𝓞 K) (Fin n → K))
+    (hM : Submodule.IsLattice K M) : Submodule.IsFullLattice K (dualFr M) := by
+  classical
+  refine ⟨GlobalTheory.DualLat.isLattice_dualFr M hM, ?_⟩
+  apply eq_top_iff.mpr
+  intro x _
+  obtain ⟨S, hS⟩ := hM.fg
+  obtain ⟨d, hd, hdS⟩ := GlobalTheory.DualLat.exists_den_finset (S.image (fun y => x ⬝ᵥ y))
+  have hdx : d • x ∈ dualFr M := by
+    intro y hy
+    rw [← hS] at hy
+    induction hy using Submodule.span_induction with
+    | mem y hy =>
+      rw [smul_dotProduct]
+      exact hdS _ (Finset.mem_image.mpr ⟨y, hy, rfl⟩)
+    | zero => simp
+    | add y z _ _ hy hz => rw [dotProduct_add]; exact add_mem hy hz
+    | smul a y _ hy => rw [dotProduct_smul]; exact Submodule.smul_mem _ _ hy
+  have hdK : algebraMap (𝓞 K) K d ≠ 0 := fun h =>
+    hd ((IsFractionRing.injective (𝓞 K) K) (by simpa using h))
+  have h := (Submodule.span K (dualFr M : Set (Fin n → K))).smul_mem
+    (algebraMap (𝓞 K) K d)⁻¹ (Submodule.subset_span hdx)
+  simpa [← algebraMap_smul K d x, smul_smul, hdK] using h
+
 omit [StarRing E] [StarRing K] in
 theorem delAtr_isLattice (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsLattice E L) :
-    Submodule.IsLattice K (delAtr emb lam L) :=
+    Submodule.IsFullLattice K (delAtr emb lam L) :=
   (GlobalTheory.TransLattice.nabDelLattice K ι n lam _ fun τ =>
-    GlobalTheory.DualLat.isLattice_dualFr _ (GlobalTheory.TauLat.tauLatLattice E K ι n emb τ L hL)).2
+    dualFr_isFullLattice _ (GlobalTheory.TauLat.tauLatLattice E K ι n emb τ L hL)).2
 
 end Step
 

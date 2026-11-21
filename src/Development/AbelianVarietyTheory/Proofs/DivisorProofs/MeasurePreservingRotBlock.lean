@@ -239,7 +239,7 @@ theorem homog_coeff_along {K : Type} [Field K] {B N : ℕ} (b : Fin B) (u : Fin 
     · have : wt (some p) = wt none := by simp [wt, GlobalTheory.Chow.blockWeight, h]
       rw [this]
       exact (isWeightedHomogeneous_X K wt none).C_mul _
-    · simp only [inBlock, if_neg h, map_zero, zero_mul]
+    · simp only [inBlock, ite_eq_right h, map_zero, zero_mul]
       exact isWeightedHomogeneous_zero _ _ _
   have key : ∀ s ∈ ((along (inBlock b u) f).coeff j).support, ∀ i,
       ∑ l, s (i, l) + (Pi.single b j : Fin B → ℕ) i = a i := fun s hs' i => by
@@ -257,7 +257,7 @@ theorem homog_coeff_along {K : Type} [Field K] {B N : ℕ} (b : Fin B) (u : Fin 
     conv_lhs => rw [this, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     have := key s₀ hs₀ i
-    simp only [Finset.sum_pi_single', Finset.mem_univ, if_true]
+    simp only [Finset.sum_pi_single', Finset.mem_univ, ite_true]
     omega
 
 theorem gaussAbs_coeff_along_le {K ι : Type} [Field K] [NumberField K] (v : FinitePlace K) {d : ι → K}
@@ -267,10 +267,10 @@ theorem gaussAbs_coeff_along_le {K ι : Type} [Field K] [NumberField K] (v : Fin
   rw [along, optionEquivLeft_coeff_coeff]
   refine (coeff_le_gauss_abs v _ _).trans (GlobalTheory.GaussSubst.gaussAbs_aeval_le K v _ _ _ _ fun p => ?_)
   refine gauss_abs_le_of_coeff_le v _ zero_le_one fun m => ?_
-  rw [MvPolynomial.coeff_add, coeff_C_mul]
+  rw [AddMonoidAlgebra.coeff_add, Finsupp.add_apply, coeff_C_mul]
   refine (FinitePlace.add_le v _ _).trans (max_le ?_ ?_)
-  · rw [coeff_X']; split_ifs <;> simp
-  · rw [coeff_X']; split_ifs <;> simp [hd p]
+  · rw [coeff_X]; split_ifs <;> simp
+  · rw [coeff_X]; split_ifs <;> simp [hd p]
 
 theorem eq_C_of_natDegree_along {K : Type} [Field K] [Infinite K] {B N n : ℕ} {w : Matrix (Fin N) (Fin n) K}
     (hw : Submodule.span K (Set.range w.col) = ⊤) {f : MvPolynomial (Fin B × Fin N) K}
@@ -389,12 +389,18 @@ theorem formHeight_zero_ge {K : Type} [Field K] [NumberField K] {B N n : ℕ} (h
   have hih := ih (∑ i, a' i) (by omega) a' _ hL0 ha' rfl
   have harch := fun σ => mean_leadingCoeff_le σ (hA σ) b hx (hΛ k σ) hf0 hf ha'
   obtain ⟨P, hP'⟩ := GlobalTheory.HeightUnique.exists_right_inv hw
-  have hfin := (GlobalTheory.HSFinPart.finPart_props K _ _).2.1 _ _ (GlobalTheory.HeightUnique.linSubst_ne_zero hP' hf0)
-    (GlobalTheory.HeightUnique.linSubst_ne_zero hP' hL0) fun v => by
-      rw [Polynomial.leadingCoeff, linSubst_coeff_along]
-      refine gaussAbs_coeff_along_le v (fun p => ?_) _ _
-      simp only [inBlock, Pi.single_apply]
-      split_ifs <;> simp
+  have hfin : GlobalTheory.HSChoice.finPart (linSubst w (along (inBlock b (w.col k)) f).leadingCoeff) ≤
+      GlobalTheory.HSChoice.finPart (linSubst w f) := by
+    unfold GlobalTheory.HSChoice.finPart
+    refine div_le_div_of_nonneg_right ?_ (Nat.cast_nonneg _)
+    refine finsum_le_finsum
+      (ReciprocityTheory.ChartRestriction.G.T0.SatakeVectors.gaussAbs_support_finite _)
+      (ReciprocityTheory.ChartRestriction.G.T0.SatakeVectors.gaussAbs_support_finite _) fun v => ?_
+    apply Real.log_le_log (gauss_abs_pos_of_ne_zero v _ (GlobalTheory.HeightUnique.linSubst_ne_zero hP' hL0))
+    rw [Polynomial.leadingCoeff, linSubst_coeff_along]
+    refine gaussAbs_coeff_along_le v (fun p => ?_) _ _
+    simp only [inBlock, Pi.single_apply]
+    split_ifs <;> simp
   have hd : (0 : ℝ) < Module.finrank ℚ K := Nat.cast_pos.2 Module.finrank_pos
   have hsum := Finset.sum_le_sum fun σ (_ : σ ∈ Finset.univ) => harch σ
   rw [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ, NumberField.Embeddings.card, nsmul_eq_mul] at hsum

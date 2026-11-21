@@ -53,9 +53,11 @@ theorem cell_eq {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
     ∃ p ∈ parab k (stdBlocks d hd), ∃ u ∈ unipU k d hd, g = p * pm k (wOpen d hd) * u := by
   obtain ⟨p, hp, n, hn, rfl⟩ := hg
   obtain ⟨a, ha, u, hu, rfl⟩ := (GlobalTheory.CompanionTheory.Rodier.unipB_eq_levi_mul_rad k h N d hd).1 n hn
-  obtain ⟨m, hm⟩ : (MulAut.conj (pm k (wOpen d hd))).toMonoidHom a ∈ (leviEmb k (stdBlocks d hd)).range := ha.2
+  have hmem := (GlobalTheory.CompanionTheory.Rodier.OpenFactor.mem_unipL k d hd).mp ha
+  rcases hmem with ⟨hB, hmem⟩
+  obtain ⟨m, hm⟩ := hmem
   have hc : pm k (wOpen d hd) * a * (pm k (wOpen d hd))⁻¹ = leviEmb k (stdBlocks d hd) m := by
-    rw [hm]; rfl
+    exact hm.symm
   refine ⟨p * leviEmb k (stdBlocks d hd) m, mul_mem hp (leviEmb_mem_parab k _ m), u, hu, ?_⟩
   rw [← hc]; group
 

@@ -83,7 +83,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.orthCt :
   obtain ⟨c', hc', hiw⟩ := iwaInt μ μ₂ κ
   have hm : Measurable (constantTermL2 μ 2 w) :=
     (stronglyMeasurable_ctFun 2 (Lp.stronglyMeasurable w)).measurable
-  have h0 := hiw (fun g => ‖constantTermL2 μ 2 w g‖ₑ) hm.enorm
+  have h0 := hiw (fun g => ‖constantTermL2 μ 2 w g‖ₑ) hm.eNorm
   have hL : ∫⁻ g, ‖constantTermL2 μ 2 w g‖ₑ ∂μ = 0 := by
     refine lintegral_eq_zero_of_ae_eq_zero ?_
     filter_upwards [hw] with g hg
@@ -98,7 +98,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.orthCt :
   have h2 := ae4 μ₂ μ₂ volume κ (fun p : G1 K 2 × G1 K 2 × ℝ × KG K (2 + 2) =>
       ‖constantTermL2 μ 2 w (lv p.1 p.2.1 p.2.2.1 * (p.2.2.2 : G1 K (2 + 2)))‖ₑ *
         (ENNReal.ofReal (Real.exp (-4 * p.2.2.1)) * unipMeasure K (2 + 2) 2 univ))
-    ((hm.comp hcont.measurable).enorm.mul (Measurable.mul_const (by fun_prop) _)) h1
+    ((hm.comp hcont.measurable).eNorm.mul (Measurable.mul_const (by fun_prop) _)) h1
   have hU : unipMeasure K (2 + 2) 2 univ ≠ 0 := NeZero.ne _
   rw [heq]
   refine mul_eq_zero_of_right _ ?_
@@ -113,7 +113,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.orthCt :
   filter_upwards [h5] with k h6 _
   have h7 : constantTermL2 μ 2 w (lv m₁ m₂ t * (k : G1 K (2 + 2))) = 0 := by
     rcases mul_eq_zero.mp h6 with h | h
-    · exact enorm_eq_zero.mp h
+    · exact eNorm_eq_zero.mp h
     · exact absurd h (mul_ne_zero (ENNReal.ofReal_pos.mpr (Real.exp_pos _)).ne' hU)
   simp only [pt, mul_assoc, hFN]
   rw [integral_const_mul]

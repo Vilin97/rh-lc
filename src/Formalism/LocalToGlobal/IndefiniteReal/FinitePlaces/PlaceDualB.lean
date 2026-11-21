@@ -1,6 +1,7 @@
 module
 
 public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceDualBSt
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsFurtherLast
 
 @[expose] public section
@@ -96,7 +97,7 @@ lemma exists_nat_mem_AA : ∃ N : ℕ, 0 < N ∧ ((N : D.host.E)) ∈ (D.host.AA
   exact h3
 
 lemma exists_nat_smul_mem {n : ℕ} {Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E)}
-    (hΛ : Submodule.IsLattice D.host.E Λ) (x : Fin n → D.host.E) :
+    (hΛ : Submodule.IsFullLattice D.host.E Λ) (x : Fin n → D.host.E) :
     ∃ N : ℕ, 0 < N ∧ (N : D.host.E) • x ∈ Λ :=
   _root_.UpperTheory.Reformulated.B.Rd4.exists_nat_smul_mem hΛ x
 
@@ -112,9 +113,9 @@ lemma gen_single (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) (i : Fin T.ra
     ∃ NT NS : ℕ, 0 < NT ∧ 0 < NS ∧ ∀ α ∈ intAf D.host.F, ∀ a ∈ D.host.AA,
       Matrix.single i j (pairA D.host.F 0 α ⊗ₜ[D.host.F] (a * ((NT * NS : ℕ) : D.host.E))) ∈ latAll S T ΛS ΛT := by
   classical
-  obtain ⟨NT, hNT, ht⟩ := exists_nat_smul_mem hT.1 (Pi.single i (1 : D.host.E))
+  obtain ⟨NT, hNT, ht⟩ := exists_nat_smul_mem (PDA.selfDual_isFullLattice T ΛT hT) (Pi.single i (1 : D.host.E))
   set w : Fin S.rank → D.host.E := Matrix.vecMul (Pi.single j (1 : D.host.E)) S.gram⁻¹ with hw
-  obtain ⟨NS, hNS, hs⟩ := exists_nat_smul_mem hS.1 (star w)
+  obtain ⟨NS, hNS, hs⟩ := exists_nat_smul_mem (PDA.selfDual_isFullLattice S ΛS hS) (star w)
   refine ⟨NT, NS, hNT, hNS, fun α hα a ha => ?_⟩
   have hrow : ∀ j', ∑ k, star (((NS : D.host.E) • star w) k) * S.gram k j' =
       (NS : D.host.E) * (if j = j' then 1 else 0) := by

@@ -173,7 +173,7 @@ theorem levi_cutLog_lower : ∀ (χ : ℝ → ℝ) (A : ℝ), ContDiff ℝ ∞ �
   have hwdL : ∀ j m, wd n m (fun y => L j y) z = (ρ : ℂ)⁻¹ * (if j = m then 1 else 0) := by
     intro j m
     rw [wd_of_differentiableAt (L j).differentiableAt, (L j).fderiv, hLapp]
-    simp [bas, EuclideanSpace.single_apply]
+    simp [bas, PiLp.single_apply]
   have hLevi : leviV n (fun y => ((v y : ℝ) : ℂ)) z ξ =
       ((∑ j, Complex.normSq ((ρ : ℂ)⁻¹ * ξ j) : ℝ) : ℂ) := by
     rw [show (fun y => ((v y : ℝ) : ℂ)) = fun y => ((∑ j, Complex.normSq (L j y) : ℝ) : ℂ) from rfl,

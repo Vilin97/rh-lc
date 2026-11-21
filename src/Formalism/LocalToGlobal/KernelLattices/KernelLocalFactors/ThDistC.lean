@@ -23,6 +23,35 @@ theorem desc_map {K : Type} [Field K] (σ : K →+* ℂ) (k : K) : desc σ (σ k
   rw [dif_pos hex]
   exact σ.injective hex.choose_spec
 
+theorem sdLat_span {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
+    (L : Submodule (𝓞 E) (Sp E n)) (hL : IsSdLat L) :
+    Submodule.span E (L : Set (Sp E n)) = ⊤ := by
+  let W := Submodule.span E (L : Set (Sp E n))
+  change W = ⊤
+  by_contra h
+  let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
+  let g : Sp E n →ₗ[E] Module.Dual E W :=
+    (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
+  have hdim : Module.finrank E (Module.Dual E W) < Module.finrank E (Sp E n) := by
+    rw [Subspace.dual_finrank_eq]
+    exact Submodule.finrank_lt h
+  obtain ⟨x, hx, hx₀⟩ :=
+    Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+  have hsmul (a : E) : a • e x ∈ L := by
+    rw [← hL.2, dualBasic_mem_dual]
+    intro y hy
+    apply hStd_mem_one_symm
+    have hxy : hStd E n (e x) y = 0 :=
+      congrArg (fun f : Module.Dual E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+    simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+  let i : E →ₗ[𝓞 E] L :=
+    ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict L hsmul
+  let : Module.Finite (𝓞 E) L := Module.Finite.iff_fg.mpr hL.1.fg
+  let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+    smul_left_injective E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+  exact RingOfIntegers.not_isField E
+    (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
+
 section Jet
 
 variable {K : Type} [Field K] {ι : Type} [Fintype ι] {a b : ℕ}
@@ -459,8 +488,8 @@ theorem evY_subD (cD : ι → ℂ) (y' : ι × Fin b × Fin b → ℂ) : (evY cD
   split_ifs with h
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [map_sum, map_mul, evY, aeval_X, Sum.elim_inl, Sum.elim_inr]
-    refine Finset.sum_congr rfl fun β _ => ?_
-    ring
+      refine Finset.sum_congr rfl fun β _ => ?_
+      ring
   · simp
 
 theorem split_mono (m : ((ι × Fin b × Fin b) ⊕ DVar ι a b) →₀ ℕ) :
@@ -854,7 +883,7 @@ variable {a b} in
 theorem lf_exists_liftS (hAA : A.AAUnit Sall) (hAA0 : A.AA ≠ ⊥) (N : Submodule (𝓞 X.E) (Sp X.E a)) (N' : Submodule (𝓞 X.E) (Sp X.E b))
     (hN : IsSdLat N) (hN' : IsSdLat N') {D : ℕ} (hD : 0 < D) {x : HomE X.E a b} (hx : x ∈ divLat D (homAt Sall N N')) :
     ∃ s, IsLiftS Sall (perO A.AA N N') D x s := by
-  obtain ⟨n, hn0, hn⟩ := lf_span A.AA hAA0 N N' hN.1.fg hN'.1.span_eq_top x
+  obtain ⟨n, hn0, hn⟩ := lf_span A.AA hAA0 N N' hN.1.fg (sdLat_span N' hN') x
   refine exists_lift Sall (perO A.AA N N') D n hD hn0 hn fun P hP => ?_
   have h1 : ((D : 𝓞 X.E) • (LinearMap.id : HomE X.E a b →ₗ[𝓞 X.E] HomE X.E a b)) x ∈ homAt Sall N N' := hx
   rw [LinearMap.smul_apply, LinearMap.id_apply, Nat.cast_smul_eq_nsmul, ← Nat.cast_smul_eq_nsmul X.E] at h1
@@ -977,7 +1006,7 @@ theorem indTieD_of {X : Fields} (A : Amb X) (a b : ℕ) (Sall : Finset (HeightOn
   obtain ⟨hθ, hlev⟩ := hall N N' hN hN'
   obtain ⟨hyp, r1, r2, r3⟩ := hlev D hD
   have := hne
-  obtain ⟨s, hsA, hsx⟩ := ti_exists_lift A.AA Sall N N' hN.1.fg hN'.1.span_eq_top hAA hD hx
+  obtain ⟨s, hsA, hsx⟩ := ti_exists_lift A.AA Sall N N' hN.1.fg (sdLat_span N' hN') hAA hD hx
   have hsx' : s - x ∈ mulLat c (homAt Sall N N') := ti_mul_mono hcD _ hsx
   rw [hL N N' c x s hN hN' hc ⟨⟨D, hD, hsA⟩, hsx'⟩ z]
   congr 1
@@ -1456,15 +1485,18 @@ theorem hh_tw_lattice {n : ℕ} (N' : Submodule (𝓞 E) (Sp E n)) (hL : Submodu
 variable {a b : ℕ}
 
 theorem hh_perO_fg (AA0 : Submodule (𝓞 E) E) (hAA : AA0.FG) (N : Submodule (𝓞 E) (Sp E a)) (N' : Submodule (𝓞 E) (Sp E b))
-    (hN : Submodule.IsLattice E N) (hN' : Submodule.IsLattice E N') : (perO AA0 N N').FG := by
+    (hN : IsSdLat N) (hN' : IsSdLat N') : (perO AA0 N N').FG := by
   have sa := stdLat_lattice (E := E) (n := a)
   have sb := stdLat_lattice (E := E) (n := b)
-  obtain ⟨νa₁, ha₁0, ha₁⟩ := exists_smul_le (stdLat E a) N sa.fg hN.span_eq_top
-  obtain ⟨νb₁, hb₁0, hb₁⟩ := exists_smul_le N' (stdLat E b) hN'.fg sb.span_eq_top
+  obtain ⟨νa₁, ha₁0, ha₁⟩ := exists_smul_le (stdLat E a) N sa.fg (sdLat_span N hN)
+  obtain ⟨νb₁, hb₁0, hb₁⟩ := exists_smul_le N' (stdLat E b) hN'.1.fg (sdLat_span (stdLat E b) ⟨sb, stdLat_unimodular⟩)
   have h1 := perO_scale AA0 N (stdLat E a) N' (stdLat E b) νa₁ νb₁ ha₁ hb₁
   have hone : Submodule.span E (((1 : Submodule (𝓞 E) E) : Submodule (𝓞 E) E) : Set E) = ⊤ := by
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    apply eq_top_iff.mpr
+    intro x _
+    have h : (1 : E) ∈ Submodule.span E (((1 : Submodule (𝓞 E) E) : Submodule (𝓞 E) E) : Set E) :=
+      Submodule.subset_span (Submodule.mem_one.mpr ⟨1, by simp⟩)
+    simpa using (Submodule.smul_mem _ x h)
   obtain ⟨ν₀, h00, h0⟩ := exists_smul_le AA0 (1 : Submodule (𝓞 E) E) hAA hone
   have hM₀ : (perO AA0 (stdLat E a) (stdLat E b)).FG := by
     refine fg_of_scale _ _ (homO_std_fg (E := E) (a := a) (b := b)) ν₀ h00 ?_
@@ -1532,7 +1564,7 @@ theorem heisHyp_of {X : Fields} (A : Amb X) (a b : ℕ) (Sall : Finset (HeightOn
     ⟨hh_tw_lattice N' hN'.1 hc _ he2, twist_selfDual X.E b N' c _ hN'.1.fg hc hconj2 hN'.2⟩
   have hS := half_periods_of_lattice X.E X.Tau a b (X.embC A.σ₀) A.δ A.d A.sc A.AA Sall N N' c hδ hc hSS hN.1.fg (hall N N' hN hN').2
     (hall N _ hN sdB).2 (hall N _ hN sdA).2
-  have hP := hh_perO_fg A.AA hFG N N' hN.1 hN'.1
+  have hP := hh_perO_fg A.AA hFG N N' hN hN'
   have hBfg : (halfBO Sall (perO A.AA N N') c).FG := fg_of_scale _ _ hP (c : 𝓞 X.E) hc0 fun x hx => hh_of_tw _ hc _ he1 hx
   have hAfg : (halfAO Sall (perO A.AA N N') c).FG := fg_of_scale _ _ hP (c : 𝓞 X.E) hc0 fun x hx => hh_of_tw _ hc _ he2 hx
   refine ⟨hS, ?_, ?_, ?_⟩

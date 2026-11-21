@@ -300,10 +300,13 @@ theorem base_exists (Lc : Submodule (𝓞 E) S.V) (hfg : Lc.FG) (hsp : Submodule
 end Base
 
 theorem ColBase_exists (D : D7) (u : D.what₂.Word) (h : PosFrame D)
-    (rho : D.what₂.Tau → (D.host.E →+* D.what₂.LL)) : ∃ B : ColBase D u, B.rho = rho := by
+    (rho : D.what₂.Tau → (D.host.E →+* D.what₂.LL))
+    (hsp : ∀ c : (D.mem u).C.cls 0,
+      Submodule.span D.host.E (D.clsLat u 0 c : Set (D.sp.X 0).V) = ⊤) :
+    ∃ B : ColBase D u, B.rho = rho := by
   have key := fun (c : (D.mem u).C.cls 0) (τ : D.what₂.Tau) =>
     base_exists (LL := D.what₂.LL) (D.sp.X 0) (rho τ) (D.clsLat u 0 c) (D.clsLat_lat u 0 c).fg
-      (D.clsLat_lat u 0 c).span_eq_top (D.R.N 0) (D.sp.X_rank 0 (Nat.zero_le _)) h
+      (hsp c) (D.R.N 0) (D.sp.X_rank 0 (Nat.zero_le _)) h
   choose Q eQ bc h1 h2 h3 h4 using key
   exact ⟨⟨rho, Q, h1, eQ, bc, h2, h3, h4⟩, rfl⟩
 

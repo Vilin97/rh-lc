@@ -141,10 +141,7 @@ theorem dR_sec (l : Fin N) (i : Fin (WeightFamilies.dimY D j + 1)) :
   unfold sec
   rw [(dR_isDer X la N (0, l)).der_sum]
   simp only [dR_smul, dR_emb, smul_zero, add_zero, dK_Tv, Prod.mk.injEq]
-  split_ifs with hi
-  · subst hi
-    simp
-  · simp [hi]
+  by_cases hi : i = 0 <;> simp [hi]
 
 end Sec
 

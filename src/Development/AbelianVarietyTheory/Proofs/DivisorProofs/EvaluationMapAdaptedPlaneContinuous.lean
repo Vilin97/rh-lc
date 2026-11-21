@@ -65,7 +65,7 @@ theorem thetaSum_rho_rat (M : Model σ X W) {ψ : AddChar (AF F) ℂ} (hψ : IsS
   exact GlobalTheory.ThetaQuasiRat.thetaSum_schr_rat F ψ hψ.2.1 y z Φ
 
 theorem exists_split {d₁ : ℕ} {W₁ : Spc F E d₁} {B : Base F E} {H' : Plane E d d₁} {i₀ i₁ : ℕ}
-    (hH : H'.IsAdapted σ B W W₁ i₀ i₁) (hL : W.L.IsLattice E) (x : Matrix (Fin n) (Fin d) E) :
+    (hH : H'.IsAdapted σ B W W₁ i₀ i₁) (hL : W.L.IsFullLattice E) (x : Matrix (Fin n) (Fin d) E) :
     ∃ (s t : Fin n → E) (U : Matrix (Fin n) (Fin d₁) E),
       x = Matrix.vecMulVec s H'.x + U * H'.ιᵀ + Matrix.vecMulVec t H'.y := by
   have hrow : ∀ r : Fin d → E, ∃ (s t : E) (u : Fin d₁ → E), r = s • H'.x + H'.ι *ᵥ u + t • H'.y := by
@@ -82,7 +82,7 @@ theorem exists_split {d₁ : ℕ} {W₁ : Spc F E d₁} {B : Base F E} {H' : Pla
       refine Submodule.span_le.mpr fun z hz => ?_
       obtain ⟨s, t, u, -, -, -, h⟩ := hH.split z hz
       exact ⟨s, t, u, h⟩
-    rw [Submodule.IsLattice.span_eq_top] at hle
+    rw [Submodule.IsFullLattice.span_eq_top (self := hL)] at hle
     intro r
     exact hle (Submodule.mem_top (x := r))
   choose s t u hu using fun i => hrow (x i)

@@ -34,7 +34,7 @@ private theorem UpperTheory.V.KernelIndexFullLattice.pvFin_abs {G E M : Type} [G
   let f : ρ.kSpan C v →ₗ[ℂ] M := (LinearEquiv.ofInjective j hj).symm.toLinearMap ∘ₗ
     LinearMap.codRestrict (LinearMap.range j) _ hr
   have hf : ∀ x, j (f x) = P x := fun x =>
-    congrArg Subtype.val ((LinearEquiv.ofInjective j hj).apply_symm_apply ⟨_, hr x⟩)
+    LinearEquiv.ofInjective_symm_apply j (h := hj) ⟨_, hr x⟩
   refine ⟨f ⟨v, ρ.mem_kSpan_self C v⟩, hN' f (fun k x => hj ?_) (fun x => ?_) _, hf _⟩
   · rw [hjσ, hf, hf, ← hP]
     rfl

@@ -26,7 +26,7 @@ noncomputable section
 
 namespace GlobalTheory.ZH.CubeRootAut
 
-open GlobalTheory.CechPic GlobalTheory.TripleProd GlobalTheory.WeierstrassCurve GlobalTheory.CMCurve GlobalTheory.AddLaw
+open GlobalTheory.CechPic GlobalTheory.TripleProd GlobalTheory.WeierstrassCurve GlobalTheory.AddLaw
 
 section General
 

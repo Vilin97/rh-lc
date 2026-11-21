@@ -22,18 +22,18 @@ namespace GlobalTheory.IsoMove
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 theorem span_E {n n₁ : ℕ} {B : Base F E} {X : Spc F E n} {X₁ : Spc F E n₁} {H : Plane E n n₁} {j₀ j₁ : ℕ}
-    (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hlat : X.L.IsLattice E) (w : Fin n → E) :
+    (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hlat : X.L.IsFullLattice E) (w : Fin n → E) :
     ∃ (a b : E) (v : Fin n₁ → E), w = a • H.x + H.ι *ᵥ v + b • H.y := by
   have hL : Submodule.span E (X.L : Set (Fin n → E)) ≤ GlobalTheory.UnipLine.spanSet H.x H.y H.ι := by
     rw [Submodule.span_le]
     intro z hz
     obtain ⟨a, b, v, -, -, -, h⟩ := hH.split z hz
     exact ⟨a, b, v, h⟩
-  rw [hlat.span_eq_top] at hL
+  rw [Submodule.IsFullLattice.span_eq_top (self := hlat)] at hL
   exact hL (Submodule.mem_top (x := w))
 
 theorem span_A {n n₁ : ℕ} {B : Base F E} {X : Spc F E n} {X₁ : Spc F E n₁} {H : Plane E n n₁} {j₀ j₁ : ℕ}
-    (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hlat : X.L.IsLattice E) (w : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
+    (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hlat : X.L.IsFullLattice E) (w : Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     ∃ (a b : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (z : Fin n₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), w = a • incV F H.x + incM F H.ι *ᵥ z + b • incV F H.y := by
   suffices h : w ∈ GlobalTheory.UnipLine.spanSet (incV F H.x) (incV F H.y) (incM F H.ι) from h
   rw [pi_eq_sum_univ w]
@@ -62,7 +62,7 @@ theorem form_y_x {n n₁ : ℕ} {B : Base F E} {X : Spc F E n} {X₁ : Spc F E n
   ring
 
 theorem mulVec_y {n n₁ : ℕ} {B : Base F E} {X : Spc F E n} {X₁ : Spc F E n₁} {H : Plane E n n₁} {j₀ j₁ : ℕ}
-    (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hlat : X.L.IsLattice E) (hyx : form σ X.J H.y H.x ≠ 0) (u : UA σ X.J)
+    (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hlat : X.L.IsFullLattice E) (hyx : form σ X.J H.y H.x ≠ 0) (u : UA σ X.J)
     (hux : mat u *ᵥ incV F H.x = incV F H.x) :
     ∃ (c : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) (z₀ : Fin n₁ → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)), mat u *ᵥ incV F H.y = incV F H.y + c • incV F H.x + incM F H.ι *ᵥ z₀ := by
   set q := X.J *ᵥ fun i => σ (H.x i) with hq

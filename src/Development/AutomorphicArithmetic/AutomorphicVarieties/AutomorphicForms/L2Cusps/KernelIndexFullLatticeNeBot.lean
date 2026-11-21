@@ -6,6 +6,5 @@ public import GroundTheory.AutomorphicForms.L2LocalComponents.NonEmpty
 @[expose] public section
 
 theorem UpperTheory.V.KernelIndexFullLattice.kernelIndexFullLattice_neBot :
-    UpperTheory.V.KernelIndexFullLattice.NeBot := by
-  intro K _ _ n μ₁ _ V _ hV hirr
-  exact GroundTheory.Automorphic.CuspidalSpectrum.summandCuspForms_ne_bot μ₁ V hV hirr
+    UpperTheory.V.KernelIndexFullLattice.NeBot :=
+  @GroundTheory.Automorphic.CuspidalSpectrum.summandCuspForms_ne_bot

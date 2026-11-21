@@ -104,14 +104,14 @@ theorem exists_split {A B C : Submodule (𝓞 E) (Fin n → E)} (hA : Submodule.
   obtain ⟨x, hx⟩ := (hat_rational_points_and_approx F E n _ hM.fg hM.span_eq_top).2.2.1 z
   refine ⟨x, ?_, ?_, ?_⟩
   · rw [← (hat_rational_points_and_approx F E n _ hA.fg hA.span_eq_top).1, ← sub_sub_cancel z (fv F x)]
-    exact sub_mem h1 (hat_mono (fun _ h => h.1.1) hx)
+    exact sub_mem h1 (hat_mono (fun _ (h : _ ∈ ((A ⊓ B) ⊓ C : Submodule (𝓞 E) (Fin n → E))) => h.1.1) hx)
   · rw [← (hat_rational_points_and_approx F E n _ hB.fg hB.span_eq_top).1, ← sub_sub_cancel z (fv F x)]
-    exact sub_mem h2 (hat_mono (fun _ h => h.1.2) hx)
+    exact sub_mem h2 (hat_mono (fun _ (h : _ ∈ ((A ⊓ B) ⊓ C : Submodule (𝓞 E) (Fin n → E))) => h.1.2) hx)
   · rw [← (hat_rational_points_and_approx F E n _ hC.fg hC.span_eq_top).1]
     have : fv F (v - x) = (fv F v - z) + (z - fv F x) := by
       funext i; simp [fv, TensorProduct.tmul_sub]
     rw [this]
-    exact add_mem h3 (hat_mono (fun _ h => h.2) hx)
+    exact add_mem h3 (hat_mono (fun _ (h : _ ∈ ((A ⊓ B) ⊓ C : Submodule (𝓞 E) (Fin n → E))) => h.2) hx)
 
 end Lat
 
@@ -301,7 +301,8 @@ theorem hLat_split (V : HSp D) {e : AE D} (he : IsSplitIdem D e) {h h' : GA D V}
     obtain ⟨-, -, hfg, hsp, -⟩ := GlobalTheory.Member.latHat_eq_hat_and_gram D V
     obtain ⟨Λ, hΛ, h1, h2, -⟩ := GlobalTheory.AdLat.exists_lattice_latOf D.host.F D.host.E V.rank (GlobalTheory.Member.latC V) g.1 hfg hsp
     rw [SetLike.coe_injective ((GlobalTheory.RepsCompare.coe_hLat V g).trans hΛ.symm)]
-    exact ⟨Submodule.IsLattice.of_fg D.host.E h1, h2⟩
+    letI : Submodule.IsLattice D.host.E Λ := Submodule.IsLattice.of_fg D.host.E h1
+    exact { span_eq_top := h2 }
   refine exists_split (F := D.host.F) (hLat _) (hLat _)
     (hLat _) (z := finPart D t • fv D.host.F v) ?_ (hst _ _ hv') ?_
   · have := key _ _ _ h1

@@ -476,9 +476,20 @@ section Base
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable {n : ℕ} [NeZero n] (ST SG : Finset (Pl E))
 
+omit [NeZero n] in
+private theorem stdLat_span : Submodule.span E (stdLat E n : Set (Fin n → E)) = ⊤ := by
+  apply eq_top_iff.mpr
+  intro v _
+  have hv : v = ∑ i, v i • (Pi.single i 1 : Fin n → E) := by
+    funext j
+    simp [Finset.sum_apply, Pi.single_apply]
+  rw [hv]
+  exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _
+    (Submodule.subset_span (by simpa using single_mem_stdLat (E := E) i 1))
+
 theorem globLat_one_std : Formalism.UG.CS.globLat (F := F) (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (stdLat E n) = stdLat E n :=
   Formalism.UG.P.global_lattice_one_holds F E (Fin n) (stdLat E n) (Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg)
-    (stdLat_lattice (E := E) (n := n)).span_eq_top
+    (stdLat_span (E := E) (n := n))
 
 theorem pullV_one (v : Fin n → E) : pullV (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) v = fun i => iA F E (v i) := by
   simp [pullV]
@@ -547,7 +558,7 @@ theorem redN_surj (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (P : Pl E) 
   have hu : u ∈ Submodule.span (Formalism.L2.Herm.intAf F E)
       ((fun v : Fin n → E => fun i => iA F E (v i)) '' (Formalism.UG.CS.globLat x (stdLat E n) : Set (Fin n → E))) := by
     rw [Formalism.UG.P.span_recovery_of_integral_adelic_approx Formalism.UG.P.integral_adele_approximation_holds F E (Fin n) (stdLat E n)
-      (Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg) (stdLat_lattice (E := E) (n := n)).span_eq_top x u]
+      (Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg) (stdLat_span (E := E) (n := n)) x u]
     rw [mem_latS_std, hxu]
     intro i; exact iA_mem (a i)
   obtain ⟨m, f, g, hfg⟩ := Submodule.mem_span_set'.1 hu
@@ -611,7 +622,7 @@ theorem mem_congruence_of_action {x y : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.A
   have hN : Formalism.UG.CS.globLat x (stdLat E n) = Formalism.UG.CS.globLat y (stdLat E n) :=
     (congrArg Deco.N h).trans (Deco.act_one_N ST SG _ g)
   have hfin := Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg
-  have hspan := (stdLat_lattice (E := E) (n := n)).span_eq_top
+  have hspan := (stdLat_span (E := E) (n := n))
   have hSR := Formalism.UG.P.span_recovery_of_integral_adelic_approx Formalism.UG.P.integral_adele_approximation_holds F E (Fin n) (stdLat E n) hfin hspan
   have hkS : x⁻¹ * y ∈ St (1 : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) := by
     rw [St_one]
@@ -741,13 +752,44 @@ end Inj2
 section Ok
 
 
+open Formalism.BasicNotions in
+private theorem defUnimod_span
+    {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
+    {hc : CMData F E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {L : Submodule (𝓞 E) (Fin n → E)}
+    (hU : Formalism.L2.DIV.IsDefUnimod hc J L) : Submodule.span E (L : Set (Fin n → E)) = ⊤ := by
+  classical
+  obtain ⟨s, hs⟩ := hU.lat.fg
+  apply eq_top_iff.2
+  intro y _
+  obtain ⟨m, hm0, hm⟩ := Formalism.UG.P.adelstabL_den
+    (fun x : s => hform (hc.sig : E →+* E) J x y)
+  have hy : (m : E) • y ∈ L := by
+    change (m : E) • y ∈ (L : Set (Fin n → E))
+    rw [← hU.selfdual]
+    intro x hx
+    rw [Formalism.UG.P.csScale_hform_smul_right]
+    rw [← hs] at hx
+    induction hx using Submodule.span_induction with
+    | mem x hx => exact ⟨⟨_, hm ⟨x, hx⟩⟩, rfl⟩
+    | zero => rw [Formalism.UG.P.csScale_hform_zero_left, mul_zero]; exact zero_mem _
+    | add x z _ _ hx hz =>
+      rw [Formalism.UG.P.csScale_hform_add_left, mul_add]
+      exact add_mem hx hz
+    | smul r x _ hx =>
+      change (m : E) * hform (hc.sig : E →+* E) J ((algebraMap (𝓞 E) E r) • x) y ∈ _
+      rw [Formalism.UG.P.csScale_hform_smul_left, mul_left_comm]
+      exact mul_mem ⟨⟨_, Formalism.UG.P.csScale_sigma_int hc.sig r⟩, rfl⟩ hx
+  have hy' := (Submodule.span E (L : Set (Fin n → E))).smul_mem (m : E)⁻¹ (Submodule.subset_span hy)
+  rwa [smul_smul, inv_mul_cancel₀ (Int.cast_ne_zero.mpr hm0), one_smul] at hy'
+
+
 open Formalism.UG in
 theorem globLat_defUnimod {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
     {hc : Formalism.BasicNotions.CMData F E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {L : Submodule (𝓞 E) (Fin n → E)}
     (hL : Formalism.L2.DIV.IsDefUnimod hc J L) {y : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)} (hyU : y ∈ Formalism.L2.DIV.UA hc J) :
     Formalism.L2.DIV.IsDefUnimod hc J (Formalism.UG.CS.globLat y L) := by
   have hfin : Module.Finite (𝓞 E) L := Module.Finite.iff_fg.2 hL.lat.fg
-  have hspan := hL.lat.span_eq_top
+  have hspan := defUnimod_span hL
   have hint : ∀ x ∈ L, ∀ z ∈ L, IsIntegral ℤ (((1 : ℤ) : E) * hform (hc.sig : E →+* E) J x z) := by
     intro x hx z hz
     have hz' : z ∈ Formalism.BasicNotions.dualSet (hc.sig : E →+* E) J L := by rw [hL.selfdual]; exact hz
@@ -883,7 +925,7 @@ theorem decoOfOk_of (hK : RedKer F E n) : DecoOfOk hc n ST SG := by
       v ∈ Formalism.HermitianLatticesTheory.localization₂ P.asIdeal (Formalism.UG.CS.globLat x (stdLat E n)) := fun P v hv => le_locP P _ hv
   refine
     { lat := Formalism.UG.P.global_lattice_isLattice_holds F E (Fin n) (stdLat E n)
-        (Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg) (stdLat_lattice (E := E) (n := n)).span_eq_top x
+        (Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg) (stdLat_span (E := E) (n := n)) x
       uni := globLat_unimodular hc n hx
       f_add := ?_, f_smul := ?_, f_off := ?_, f_ne := ?_, be_add := ?_, be_smul := ?_, be_off := ?_, be_surj := ?_,
       be_ker := ?_ }
@@ -1007,19 +1049,31 @@ theorem idS_smul_span (P : Pl E) (N : Submodule (𝓞 E) (Fin n → E)) {t : For
     exact Submodule.smul_mem _ a ihx
 
 open scoped Pointwise in
-theorem smul_lattice (P : Pl E) {N : Submodule (𝓞 E) (Fin n → E)} (hN : Submodule.IsLattice E N) :
+theorem smul_lattice (P : Pl E) {N : Submodule (𝓞 E) (Fin n → E)} (hN : Submodule.IsFullLattice E N) :
     Module.Finite (𝓞 E) ↥(P.asIdeal • N : Submodule (𝓞 E) (Fin n → E)) ∧ Submodule.span E ((P.asIdeal • N : Submodule (𝓞 E) (Fin n → E)) : Set (Fin n → E)) = ⊤ := by
   haveI : IsNoetherian (𝓞 E) N := isNoetherian_of_fg_of_noetherian N hN.fg
   haveI : IsNoetherian (𝓞 E) ↥(P.asIdeal • N) := isNoetherian_of_le Submodule.smul_le_right
   refine ⟨inferInstance, ?_⟩
-  intro s hs hli
-  exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  apply eq_top_iff.mpr
+  intro v _
+  have hv : v ∈ Submodule.span E (N : Set (Fin n → E)) := by rw [hN.span_eq_top]; trivial
+  obtain ⟨a, ha, ha0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot P.ne_bot
+  have haE : algebraMap (𝓞 E) E a ≠ 0 := (IsFractionRing.injective (𝓞 E) E).ne ha0
+  induction hv using Submodule.span_induction with
+  | mem w hw =>
+    have hw' : a • w ∈ P.asIdeal • N := Submodule.smul_mem_smul ha hw
+    have := (Submodule.span E ((P.asIdeal • N : Submodule (𝓞 E) (Fin n → E)) : Set (Fin n → E))).smul_mem
+      (algebraMap (𝓞 E) E a)⁻¹ (Submodule.subset_span hw')
+    simpa [← IsScalarTower.algebraMap_smul E, smul_smul, inv_mul_cancel₀ haE] using this
+  | zero => exact Submodule.zero_mem _
+  | add x y _ _ hx hy => exact Submodule.add_mem _ hx hy
+  | smul c x _ hx => exact Submodule.smul_mem _ c hx
 theorem reduction_kernel_equality : RedKer F E n := by
   classical
   intro x P v hv h0
   have hfin := Module.Finite.iff_fg.2 (stdLat_lattice (E := E) (n := n)).fg
-  have hspan := (stdLat_lattice (E := E) (n := n)).span_eq_top
-  have hNl := Formalism.UG.P.global_lattice_isLattice_holds F E (Fin n) (stdLat E n) hfin hspan x
+  have hspan := (stdLat_span (E := E) (n := n))
+  have hNl := Formalism.UG.P.csGlob_lattice (stdLat E n) hfin hspan x
   have hSR := Formalism.UG.P.span_recovery_of_integral_adelic_approx Formalism.UG.P.integral_adele_approximation_holds F E (Fin n) (stdLat E n) hfin hspan x
   have hz : ∀ i, pullV x v i ∈ Formalism.L2.Herm.intAf F E := (mem_globLat x v).1 hv
   have hidS : ∀ i, (⟨_, hz i⟩ : Formalism.L2.Herm.intAf F E) ∈ Formalism.L2.DIV.idS F P.asIdeal := by

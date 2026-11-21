@@ -88,7 +88,9 @@ theorem isIsoPlane_of_adapted {F E : Type} [Field F] [NumberField F] [Field E] [
   refine DescB.IsIsoPlane.of_adapted hH' hW.cartan fun w => ?_
   have hspan : ⊤ ≤ Submodule.span E (Set.range ![H'.x, H'.y]) ⊔ LinearMap.range (Matrix.mulVecLin H'.ι) := by
     intro z _
-    have hz : z ∈ Submodule.span E (W.L : Set (Fin d → E)) := by rw [hW.lat.span_eq_top]; trivial
+    letI : W.L.IsFullLattice E := hW.lat
+    have hz : z ∈ Submodule.span E (W.L : Set (Fin d → E)) := by
+      rw [Submodule.IsFullLattice.span_eq_top]; trivial
     refine (Submodule.span_le.mpr ?_) hz
     intro z hz
     obtain ⟨s, t, u, -, -, -, rfl⟩ := hH'.split z hz

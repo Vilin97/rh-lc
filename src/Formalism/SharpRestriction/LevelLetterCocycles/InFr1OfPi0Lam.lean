@@ -48,7 +48,7 @@ def Msub : Submodule O (Fin d → W.EE) where
 
 def Psub : Submodule O (Fin d → W.EE) where
   carrier := {f | f ∈ Msub W A c e Rst ∧
-    ∃ g, InNL W T c e (abelian₂ W A c e) b g ∧ ∀ k, f k = ιE W.π₀ * g k}
+    ∃ g, InNL W T c e (abelian₂ W A c e) b g ∧ ∀ k, f k = algebraMap (LetA O n) W.EE W.π₀ * g k}
   add_mem' := by
     rintro f f' ⟨hf, g, hg, hfg⟩ ⟨hf', g', hg', hfg'⟩
     exact ⟨(Msub W A c e Rst).add_mem hf hf', g + g',

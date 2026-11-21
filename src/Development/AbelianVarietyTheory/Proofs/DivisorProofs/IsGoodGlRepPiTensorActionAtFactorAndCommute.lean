@@ -25,10 +25,12 @@ theorem atPl_tprod' (w : T) (L : Module.End ℂ (V w)) (f : ∀ i, V i) :
   · subst h; simp
   · simp [Function.update_of_ne h]
 
+omit [Fintype T] in
 theorem atPl_mul' (w : T) (L L' : Module.End ℂ (V w)) : atPl w (L * L') = atPl w L * atPl w L' := by
   refine PiTensorProduct.ext (MultilinearMap.ext fun f => ?_)
   simp [atPl_tprod']
 
+omit [Fintype T] in
 theorem atPl_comm' {w w' : T} (h : w ≠ w') (L : Module.End ℂ (V w)) (L' : Module.End ℂ (V w')) (x : ⨂[ℂ] i, V i) :
     atPl w L (atPl w' L' x) = atPl w' L' (atPl w L x) := by
   induction x using PiTensorProduct.induction_on with
@@ -42,9 +44,11 @@ def intersection_update_fsHerm_neg_one (f : ∀ i, V i) (w : T) : V w →ₗ[ℂ
 omit [Fintype T] in
 theorem position_apply (f : ∀ i, V i) (w : T) (v : V w) : intersection_update_fsHerm_neg_one f w v = PiTensorProduct.tprod ℂ (Function.update f w v) := rfl
 
+omit [Fintype T] in
 theorem position_self (f : ∀ i, V i) (w : T) : intersection_update_fsHerm_neg_one f w (f w) = PiTensorProduct.tprod ℂ f := by
   rw [position_apply, Function.update_eq_self]
 
+omit [Fintype T] in
 theorem atPl_tprod_update (f : ∀ i, V i) (w : T) (L : Module.End ℂ (V w)) (v : V w) :
     atPl w L (intersection_update_fsHerm_neg_one f w v) = intersection_update_fsHerm_neg_one f w (L v) := by
   simp [position_apply, atPl_tprod']

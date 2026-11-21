@@ -97,7 +97,7 @@ theorem GlobalTheory.LevMoveFibre.exists_fibreAut : ∀ (E : Type) [Field E] [Nu
   obtain ⟨n₀, hn₀⟩ := sabComp pullCubComp E H _ _ _ Xo.univ.t Xo.univ.t T.t ρ x ν m
   obtain ⟨n, hn⟩ := exists_cast hx n₀
   obtain ⟨ψ, hψ, hφ, hact, -⟩ := sabMap_iso n m rfl rfl
-  let θ : Aut T.t.G := ψ
+  let θ : Aut T.t.G := Aut.of ψ
   have hL := GlobalTheory.lawsFieldsSeparately
   obtain ⟨N, hN, hθN⟩ := GlobalTheory.AutFin.exists_pow_eq_one hL.2.2.2.2.2.1 hL.2.2.2.2.2.2.2.2.2.2.2.2.2.2.1
     Xo.univ.proper Xo.univ.ample Xo.univ.ktriv m n θ hφ
@@ -129,6 +129,6 @@ theorem GlobalTheory.LevMoveFibre.exists_fibreAut : ∀ (E : Type) [Field E] [Nu
   have hMc : ((l.M : ℕ) : 𝓞 E) ∈ l.Mb.map (H.bar : 𝓞 E →+* 𝓞 E) := (Ideal.mul_le_right : l.Mb * l.Mb.map (H.bar : 𝓞 E →+* 𝓞 E) ≤ l.Mb.map (H.bar : 𝓞 E →+* 𝓞 E)) hMM
   obtain ⟨hlin, hker, honto⟩ := alg (R := 𝓞 E) (La := Dw.La) (Q := 𝟙_ (Over (Sp ℂ)) ⟶ T.t.G) l.Mb (l.Mb.map (H.bar : 𝓞 E →+* 𝓞 E)) l.M l.coprime hMb hMc (fun c g => g ≫ T.t.act.act c) o.eta evM e1 e2 hM'' i1' i2' i3' e3
   refine ⟨T.pol, T.t.act, ψ.hom, N, o.eta, hψ, hN, ?_, hact, e1, hlin, hker, honto, fun a => ?_⟩
-  · rw [iterate_eq θ N, hθN]; rfl
+  · simpa only [hθN, Aut.one_asIso, Iso.refl_hom] using iterate_eq θ N
   · exact sec_move m.cart (o.eta (gM a)) (o.eta a) ψ.hom ν.φ ρ (hφ.trans (hn.trans hn₀)) _ _ (hev _) (hev _)
       (hlev.2.1 a) hx

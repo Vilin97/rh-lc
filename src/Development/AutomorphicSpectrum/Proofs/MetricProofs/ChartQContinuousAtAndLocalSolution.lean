@@ -20,6 +20,8 @@ noncomputable section
 
 namespace GlobalTheory.CompanionTheory.Ar.Cusp.BoundaryLimit.QuotientForm
 
+local notation "κ[" R "]" => Matrix.map R (fun x : ℝ => (x : ℂ))
+
 section Real
 
 variable {g : ℕ} {Pr : Matrix (Fin g) (Fin g) ℝ}
@@ -123,7 +125,7 @@ theorem star_kappa_mulVec (R : Matrix (Fin g) (Fin g) ℝ) (v : Fin g → ℂ) :
     star (κ[R] *ᵥ v) = κ[R] *ᵥ star v := by
   funext i
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [mulVec, dotProduct, map_sum]
+    simp [mulVec, dotProduct]
 
 theorem kappa_mulVec_ofReal (R : Matrix (Fin g) (Fin g) ℝ) (r : Fin g → ℝ) :
     κ[R] *ᵥ (fun k => (r k : ℂ)) = fun k => ((R *ᵥ r) k : ℂ) := by
@@ -172,7 +174,7 @@ theorem B_kill (hB : ∀ j, ((B j).map (fun x : ℤ => (x : ℝ))).PosSemidef)
       fun i _ => by simpa using (hB i).dotProduct_mulVec_nonneg (Pr *ᵥ v)
     have h1 := (Finset.sum_eq_zero_iff_of_nonneg hnn).1 h0 j (Finset.mem_univ j)
     rw [← Matrix.mulVec_mulVec]
-    exact ((hB j).dotProduct_mulVec_zero_iff _).1 (by simpa using h1)
+    exact (hB j).dotProduct_mulVec_zero_iff.mp (by simpa using h1)
   ext p q
   simpa using congrFun (key (Pi.single q 1)) p
 
@@ -250,7 +252,7 @@ theorem riemann_real (τ G : Matrix (Fin g) (Fin g) ℂ)
     have e2 : ((Pi.single i 1 : Fin g → ℤ) ⬝ᵥ (Pi.single j 1 : Fin g → ℤ)) = if i = j then 1 else 0 := by
       by_cases hij : i = j
       · subst hij; simp
-      · simp [hij, Pi.single_apply, Ne.symm hij]
+      · simp [hij, Ne.symm hij]
     have e3 : ∀ k, (G i k * star (τ k j)).im = -((G i k).re * (τ k j).im) := by
       intro k
       simp [Complex.mul_im, h1]

@@ -15,10 +15,11 @@ section ConjLat
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
 
 theorem topNeighbour_inf_eq (Q : HeightOneSpectrum (𝓞 E)) {N Z : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N)
+    (huN : IsUnimodular (hStd E n) N)
     (h : IsHeckeNbr Q.asIdeal n N Z) : Z ⊓ N = (conjPrime₂ Q).asIdeal • N := by
   obtain ⟨_, h2, ⟨e⟩⟩ := h
   rw [conjIdeal_asIdeal] at h2 e
-  obtain ⟨ρ, hρs, hρk⟩ := exists_redLat hN (conjPrime₂ Q)
+  obtain ⟨ρ, hρs, hρk⟩ := exists_redLat (hcnt_isFullLattice_of_unimodular hN huN) (conjPrime₂ Q)
   have hle : (conjPrime₂ Q).asIdeal • N ≤ Z ⊓ N := le_inf h2 Submodule.smul_le_right
   haveI : Finite (N ⧸ ((conjPrime₂ Q).asIdeal • N).comap N.subtype) :=
     finite_quot_smul N hN.fg _ (conjPrime₂ Q).ne_bot
@@ -47,7 +48,7 @@ theorem ideal_smul_topNeighbour_le (Q : HeightOneSpectrum (𝓞 E)) (hne : conjP
   have h2 := hH.2.1
   rw [conjIdeal_asIdeal] at h2
   calc Q.asIdeal • Z ≤ Z ⊓ N := le_inf Submodule.smul_le_right hZ.1
-    _ = (conjPrime₂ Q).asIdeal • N := topNeighbour_inf_eq Q hN hZ
+    _ = (conjPrime₂ Q).asIdeal • N := topNeighbour_inf_eq Q hN huN hZ
     _ ≤ H := h2
 
 theorem dual_ideal_smul_le (Q : HeightOneSpectrum (𝓞 E)) {Z H : Submodule (𝓞 E) (Sp E n)}
@@ -73,7 +74,7 @@ theorem neighbour_conj_of_topNeighbour (Q : HeightOneSpectrum (𝓞 E)) (hne : c
   · rw [conjIdeal_asIdeal, conjugatePrime_conjugatePrime]
     exact hQZ
   · rw [conjIdeal_asIdeal, conjugatePrime_conjugatePrime]
-    have hinf := topNeighbour_inf_eq Q hN hZ
+    have hinf := topNeighbour_inf_eq Q hN huN hZ
     haveI : Finite (𝓞 E ⧸ Q.asIdeal) := Ideal.finiteQuotientOfFreeOfNeBot Q.asIdeal Q.ne_bot
     have hq : 0 < Nat.card (𝓞 E ⧸ Q.asIdeal) := Nat.card_pos
     have hZs := wmp_isHeckeNbr_symm hN hZl huN huZ hZ

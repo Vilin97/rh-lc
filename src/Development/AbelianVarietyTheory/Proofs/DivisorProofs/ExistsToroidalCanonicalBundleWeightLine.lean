@@ -59,6 +59,6 @@ theorem exists_kap_theta : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   · obtain ⟨i₀, hi₀⟩ : ∃ i, genericPoint (X₀ TF.Y Z) ∈ K.bundle.U i :=
       Opens.mem_iSup.1 (K.isLB.cover.ge (Set.mem_univ _))
     have hP := presents_ofLB K.isLB i₀ hi₀
-    obtain ⟨h, hh⟩ := GlobalTheory.LogKSDiv.exists_logKS_div E H Dw l Xo c TF Z hpq hF K _ _ hP φ₀ f₀ hgen D hD
+    obtain ⟨h, hh⟩ := GlobalTheory.T.exists_logKodairaSpencer_divisor_toroidalComponent E H Dw l Xo c TF Z hpq hF K _ _ hP φ₀ f₀ hgen D hD
     exact GlobalTheory.Cartier.exists_sec_div_nonzeroLocus_eq D _ K.bundle _ hP _ h hh
 end GlobalTheory.LogCanon

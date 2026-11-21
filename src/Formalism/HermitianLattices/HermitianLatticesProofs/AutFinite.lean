@@ -50,6 +50,7 @@ end AutFiniteSec
 
 theorem autFinite : AutFinite := by
   intro K V _ _ _ _ _ _ _ _ h _ hpos L hL
+  letI : Submodule.IsFullLattice K L := hL
   obtain ⟨S, hS⟩ := Submodule.IsLattice.fg (A := K) (M := L)
   set R : ℚ := ∑ s ∈ S, Algebra.trace ℚ K (h s s) with hR
   have hSL : ∀ s ∈ S, s ∈ L := fun s hs => hS ▸ Submodule.subset_span hs
@@ -58,7 +59,7 @@ theorem autFinite : AutFinite := by
       (fun x _ => thetaSummable_nonneg h hpos x) hs
   have hT := autFinite_short h hpos L R
   have hspan : Submodule.span K (S : Set V) = ⊤ := by
-    rw [eq_top_iff, ← Submodule.IsLattice.span_eq_top (A := K) (M := L), Submodule.span_le]
+    rw [eq_top_iff, ← Submodule.IsFullLattice.span_eq_top (A := K) (M := L), Submodule.span_le]
     intro x hx
     rw [← hS] at hx
     exact Submodule.span_le_restrictScalars (NumberField.RingOfIntegers K) K (S : Set V) hx

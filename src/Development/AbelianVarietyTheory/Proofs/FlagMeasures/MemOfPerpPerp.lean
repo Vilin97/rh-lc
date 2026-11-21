@@ -221,12 +221,25 @@ theorem perp_lattice {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.
     have := hπU _ H
     rw [map_sub, hπι, sub_eq_zero] at this
     exact this.symm
-  refine ⟨⟨⟨?_, ?_⟩, fun x hx y hy => ?_⟩, ?_⟩
+  have hfull : Submodule.IsFullLattice K Λ :=
+    { toIsLattice := hΛ
+      span_eq_top := by
+        have he : dual h Λ = Λ := hu
+        simpa only [he] using span_dual_eq_top hn Λ hΛ.fg }
+  refine ⟨⟨{ toIsLattice := ⟨?_, ?_⟩, span_eq_top := ?_ }, fun x hx y hy => ?_⟩, ?_⟩
   · refine (hΛ.fg.map (π.restrictScalars (𝓞 K))).of_le fun w hw => ?_
     obtain ⟨l, hl, e⟩ := (hL w).1 hw
     exact ⟨l, hl, hπl (Submodule.mem_sup_left e)⟩
   · intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  · apply eq_top_iff.mpr
+    intro w _
+    obtain ⟨c, hc, hw⟩ := exists_smul_mem hfull (ι w)
+    have hc' : (c : K) ≠ 0 := (map_ne_zero_iff _ inj).mpr hc
+    have hcw : c • w ∈ L := (hL _).2 ⟨c • ι w, hw, by simp⟩
+    have hspan := Submodule.subset_span hcw
+    have := (Submodule.span K (L : Set W)).smul_mem (c : K)⁻¹ hspan
+    simpa [← algebraMap_smul K c w, ← mul_smul, hc'] using this
   · obtain ⟨l, hl, e⟩ := (hL y).1 hy
     rw [← hπl (Submodule.mem_sup_left e)]
     exact hpair x hx l hl (hperp (Submodule.mem_sup_left e))

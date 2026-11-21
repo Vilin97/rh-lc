@@ -1,5 +1,7 @@
 module
 
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.WdOfMono0L
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ExistsReadingLaws
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ThetaMod
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CohomologicalCsdTempered
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.HeckeOpen

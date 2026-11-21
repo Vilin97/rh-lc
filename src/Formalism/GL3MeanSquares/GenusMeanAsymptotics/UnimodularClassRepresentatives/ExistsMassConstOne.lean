@@ -79,12 +79,12 @@ theorem exists_massConst_one (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
     exact Complex.normSq_pos.mpr hx'
   have hn₀ : h₀ 1 1 ≠ 0 := by simp [hh]
   set L₀ : Submodule (𝓞 K) K := Submodule.span (𝓞 K) {(1 : K)}
-  have hL₀ : Submodule.IsLattice K L₀ := by
-    refine ⟨Submodule.fg_span_singleton _, ?_⟩
-    refine eq_top_iff.2 fun y _ => ?_
-    have h1 : (1 : K) ∈ Submodule.span K (L₀ : Set K) :=
-      Submodule.subset_span (Submodule.subset_span rfl)
-    simpa using Submodule.smul_mem _ y h1
+  have hL₀ : Submodule.IsLattice K L₀ :=
+    Submodule.IsLattice.of_fg K (Submodule.fg_span_singleton _)
+  have hL₀full : Submodule.IsFullLattice K L₀ := by
+    letI := hL₀
+    refine ⟨?_⟩
+    exact RankOne.span_eq_top_of_ne_zero (Submodule.subset_span rfl) one_ne_zero
   obtain ⟨hex₀, -, hpos₀⟩ := Formalism.HermitianLatticesTheory.massBasic K K h₀ hs₀ (RankOne.trace_pos hd₀) L₀ hL₀
   refine ⟨Formalism.HermitianLatticesTheory.mass h₀ L₀, hpos₀, ?_⟩
   intro V _ _ _ _ _ h L hs hd h1 hL hLi
@@ -93,6 +93,6 @@ theorem exists_massConst_one (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
     unfold lamG
     exact (tprod_congr fun p => localFactor_rank_one hK hF hs hd hL hLi h1 p.2).trans tprod_one
   rw [hlam, mul_one, ← hm]
-  exact RankOne.mass_eq_of_lattices hn₀ hn' hL₀ hA hex₀
+  exact RankOne.mass_eq_of_lattices hn₀ hn' hL₀full hA hex₀
 
 end Formalism.HermitianLattices.Ext.L3

@@ -17,6 +17,9 @@ open Formalism.HermitianLattices.Ext.L3 Formalism.L2.SG.Pf.Cnt
 variable {K F V : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
   [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+local notation "jK" => algebraMap (𝓞 K) K
+
 theorem mem_dual_iff (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (𝓞 K) V) (x : V) :
     x ∈ Formalism.HermitianLatticesTheory.dual h L ↔ ∀ y ∈ L, h y x ∈ (1 : Submodule (𝓞 K) K) := by
   simp only [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,
@@ -48,7 +51,8 @@ private theorem star_jK_eq_of_mem_closure_prime_compl (hF : IsFixF K F) {𝔭 : 
   induction hs using Submonoid.closure_induction with
   | mem y hy =>
     obtain ⟨t, _, rfl⟩ := hy
-    exact star_jK_ι hF t
+    rw [coe_iota_eq_algebraMap_coe]
+    exact (hF _).2 ⟨(t : F), rfl⟩
   | one => simp
   | mul y z _ _ hy hz => rw [map_mul, star_mul', hy, hz]
 
@@ -201,7 +205,8 @@ theorem mem_locF_dualIn_iff (hF : IsFixF K F) (h𝔭 : 𝔭.IsMaximal) (hL : IsL
         rw [map_add (f := _), LinearMap.add_apply]
         exact Submodule.add_mem _ hy hw
       | smul r y _ hy =>
-        obtain ⟨r', hr'⟩ := star_jK r
+        let r' := RingOfIntegers.mapRingHom (starRingEnd K) r
+        have hr' : jK r' = star (jK r) := rfl
         rw [smul_eq_jK r, LinearMap.map_smulₛₗ₂, starRingEnd_apply, ← hr', smul_eq_mul, ← Algebra.smul_def]
         exact Submodule.smul_mem _ r' hy
     refine Exists.intro (ι (∏ g, t g)) ⟨Submonoid.subset_closure ⟨_, hT, rfl⟩, ?_⟩

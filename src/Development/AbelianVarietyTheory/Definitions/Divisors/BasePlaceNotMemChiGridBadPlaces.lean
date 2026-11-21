@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Formalism.LocalToGlobal.IndefiniteReal.LinksChar
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 public import Formalism.LocalToGlobal.BesselHermitianTheta.AllTied
 public import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
 public import Development.AbelianVarietyTheory.Definitions.Divisors.CmHostImaginaryGeneratorNeZero
@@ -423,7 +424,9 @@ abbrev Datum : Type := ∀ i : Fin D.R.m, G.CosAt i
 
 theorem finite_datum (h : (L.ΛY 0).FG) : Finite G.Datum := by
   have : ∀ i : Fin D.R.m, Finite (G.CosAt i) := fun ⟨i, hi⟩ => by
-    refine finite_cos (G.sp.V_is (i + 1) 0 (by omega) hi (by omega)).sd.1 ?_ (G.pl.modul_ne_bot sc)
+    haveI := Formalism.IndefR.Fin.PDA.selfDual_isFullLattice _ _
+      (G.sp.V_is (i + 1) 0 (by omega) hi (by omega)).sd
+    refine finite_cos (inferInstance) ?_ (G.pl.modul_ne_bot sc)
     cases i with
     | zero => exact h
     | succ i => exact (G.sp.V_is (i + 1) 0 (by omega) (by omega) (by omega)).sd.1.fg

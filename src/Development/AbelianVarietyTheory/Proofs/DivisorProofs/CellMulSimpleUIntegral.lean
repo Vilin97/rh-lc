@@ -15,7 +15,7 @@ open GlobalTheory.GKFactor
 variable {L : Type} [Field L] {n : ℕ}
 
 theorem mem_GLint_iff_entries (O : Subring L) (g : GL (Fin n) L) :
-    g ∈ GLint (Fin n) O ↔ (∀ i j, (M g) i j ∈ O) ∧ ∀ i j, (M g⁻¹) i j ∈ O := by
+    g ∈ GLint (Fin n) O ↔ (∀ i j, g.val i j ∈ O) ∧ ∀ i j, (g⁻¹).val i j ∈ O := by
   have hi : Function.Injective fun A : Matrix (Fin n) (Fin n) O => A.map O.subtype :=
     Matrix.map_injective Subtype.val_injective
   constructor

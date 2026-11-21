@@ -163,7 +163,10 @@ theorem main : ∀ {I : Type} [Fintype I] [DecidableEq I] {g : ℕ} {Λ : Type} 
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← hT, map_sum]
   refine Eq.trans ?_ h1
-  rw [AddMonoidHom.finset_sum_apply]
-  exact Finset.sum_congr rfl fun i _ => by rw [map_mul, io.commutes, AddMonoidHom.smul_apply, hq, smul_eq_mul]
+  change _ = (AddMonoidHom.eval l) (∑ i, io (d i) • q i)
+  rw [map_sum]
+  exact Finset.sum_congr rfl fun i _ => by
+    change io (d i * algebraMap ℂ D (p i l)) = (io (d i) • q i) l
+    rw [map_mul, io.commutes, AddMonoidHom.smul_apply, hq, smul_eq_mul]
 
 end GlobalTheory.AnPer.TaylorCore

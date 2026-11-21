@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.Brauer
 public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BijectiveGsLocalInvRootsOfPlaces
 public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseCores
 public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BasePairing
@@ -37,7 +38,7 @@ theorem gsBaseBijective_of_fixing (hP : GsPairingInput n ℓ)
     hUeq ▸ gsBaseBijective_of_le S ιs n ℓ k hℓ hnk hS hodd h3 hP hcores W₀ hW₀ hL (hUeq ▸ hU)
 
 
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 8000000 in
 include hℓ hnk hS in
 theorem exists_compactDualityHypotheses_gs_of_pairing (hP : GsPairingInput n ℓ) :
     ∃ U₀ : OpenSubgroup (galUnramifiedOutside K.1 ℚ̄ S),

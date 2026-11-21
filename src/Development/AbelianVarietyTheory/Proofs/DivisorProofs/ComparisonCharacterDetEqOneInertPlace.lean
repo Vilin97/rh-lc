@@ -180,7 +180,7 @@ theorem valued_eq_one_of_isUnit {c : Formalism.UG.Ov E w} (hc : IsUnit c) : Valu
   calc (1 : _) = _ := h3.symm
     _ ≤ Valued.v (c : w.adicCompletion E) := mul_le_of_le_one_right' h2
 
-theorem valued_det_eq_one (hw : Formalism.UG.IsInertAt F E v w) {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E)
+theorem valued_det_eq_one (hw : Formalism.UG.IsInertAt F E v w) {d : ℕ} (W : Spc F E d) (hL : W.L.IsFullLattice E)
     (t : GL (Fin d) (AE F E))
     (ht : ∀ z ∈ GlobalTheory.InertSph.latAt W v, (t : Matrix (Fin d) (Fin d) (AE F E)) *ᵥ z ∈ GlobalTheory.InertSph.latAt W v ∧
       ((t⁻¹ : GL (Fin d) (AE F E)) : Matrix (Fin d) (Fin d) (AE F E)) *ᵥ z ∈ GlobalTheory.InertSph.latAt W v) :
@@ -194,7 +194,8 @@ theorem valued_det_eq_one (hw : Formalism.UG.IsInertAt F E v w) {d : ℕ} (W : S
     refine ⟨fun hz => hT1 ▸ mulVec_mem_latAt h W _ (fun z hz => (ht z hz).1) z hz, fun hz => ?_⟩
     have := mulVec_mem_latAt h W _ (fun z hz => (ht z hz).2) _ hz
     rwa [← hT2, Matrix.mulVec_mulVec, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.one_mulVec] at this
-  obtain ⟨a, ha⟩ := InertChart.exists_isFrameAt hw hL.fg hL.span_eq_top
+  obtain ⟨a, ha⟩ := InertChart.exists_isFrameAt hw hL.fg
+    (Submodule.IsFullLattice.span_eq_top (self := hL))
   obtain ⟨m, hm⟩ := ((InertChart.isFrameAt_mul ha (one_mem _)).2 T).1 hstab
   have hdet : Matrix.GeneralLinearGroup.det (a⁻¹ * T * a) = Matrix.GeneralLinearGroup.det T := by
     rw [map_mul, map_mul, map_inv, mul_comm _ (Matrix.GeneralLinearGroup.det a), ← mul_assoc, mul_inv_cancel, one_mul]

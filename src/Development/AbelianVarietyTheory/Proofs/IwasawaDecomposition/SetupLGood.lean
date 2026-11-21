@@ -128,14 +128,9 @@ theorem setupL_good {ρ : GlobalTheory.SeriesTie.Setup (Dof x).ntw} (h : ρ.Good
     Pg := (by with_unfolding_all exact (h.Pg :))
     delta := fun i j b => (by with_unfolding_all exact (congrArg (twL L) (h.delta i j b) : _))
     weil := fun i j b t ht => by
-      have hw := h.weil i j b (twB L t) (twB_good L ht)
-      delta GlobalTheory.ExportSeries.Base.IsWeil at hw ⊢
-      exact ⟨(by with_unfolding_all exact hw.std), (by with_unfolding_all exact hw.hecS),
-        (by with_unfolding_all exact hw.hecT), (by with_unfolding_all exact hw.resS),
-        (by with_unfolding_all exact hw.resT), (by with_unfolding_all exact hw.om_pres),
-        (by with_unfolding_all exact hw.om_heis), (by with_unfolding_all exact hw.om_aut),
-        (by with_unfolding_all exact hw.om_cont), (by with_unfolding_all exact hw.om_unit),
-        (by with_unfolding_all exact hw.om_split)⟩
+      delta GlobalTheory.ExportSeries.Base.IsWeil
+      tr_leaves x.o.Z (oL x L).Z
+      exact (by with_unfolding_all exact ((h.weil ((i)) ((j)) b (twB L t) (twB_good L ht)) : _))
     classes := fun i j b t ht hA =>
       have h' := h.classes ((by with_unfolding_all exact (i :))) ((by with_unfolding_all exact (j :))) b (twB L t) (twB_good L ht) ⟨(by with_unfolding_all exact ((placesOK_B L hA.1) :)), (by with_unfolding_all exact (hA.2 :))⟩
       ⟨(by with_unfolding_all exact (h'.fin :)), (by with_unfolding_all exact (h'.reps :)), (by with_unfolding_all exact (h'.stab :))⟩ }

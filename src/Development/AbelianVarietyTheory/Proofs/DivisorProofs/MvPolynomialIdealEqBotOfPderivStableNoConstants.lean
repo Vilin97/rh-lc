@@ -30,7 +30,7 @@ theorem mvPolynomial_ideal_eq_bot_of_pderiv_stable :
       have hdeg : (m.sum fun _ e => e) = n := by rw [← h, totalDegree, hmd]
       obtain ⟨i, hi⟩ : ∃ i, m i ≠ 0 := by
         by_contra hcon
-        push_neg at hcon
+        push Not at hcon
         have hm0 : m = 0 := Finsupp.ext hcon
         subst hm0
         simp at hdeg
@@ -39,7 +39,8 @@ theorem mvPolynomial_ideal_eq_bot_of_pderiv_stable :
       have hQne : pderiv i P ≠ 0 := by
         intro h0
         have hc := coeff_pderiv (i := i) P (m - single i 1)
-        rw [h0, coeff_zero, sub_add_single_one_cancel hi] at hc
+        rw [h0, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply,
+          sub_add_single_one_cancel hi] at hc
         have hcm : AddMonoidAlgebra.coeff P m ≠ 0 := MvPolynomial.mem_support_iff.mp hm
         have hk : (((m - single i 1 : Fin r →₀ ℕ) i : ℕ) : R) + 1 ≠ 0 :=
           Nat.cast_add_one_ne_zero _

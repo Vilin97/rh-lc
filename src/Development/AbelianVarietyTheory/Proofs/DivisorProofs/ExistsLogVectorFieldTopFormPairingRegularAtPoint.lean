@@ -43,7 +43,7 @@ theorem isUnit_det_of_span_eq_top (k A : Type) [CommRing k] [CommRing A] [Algebr
     simp only [KaehlerDifferential.linearMapEquivDerivation_apply_apply, ← hg] at h1
     rw [Matrix.mul_apply, Matrix.one_apply]
     have h2 : (∑ j, a i j • δ j) (g l) = ∑ j, a i j * δ j (g l) := by
-      have := map_sum (Derivation.coeFnAddMonoidHom (R := k) (A := A) (M := A)) (fun j => a i j • δ j) Finset.univ
+      have := map_sum (FunLike.coeAddMonoidHom (Derivation k A A) A A) (fun j => a i j • δ j) Finset.univ
       have h3 := congrFun this (g l)
       rw [Finset.sum_apply] at h3
       exact h3
@@ -119,7 +119,7 @@ theorem derivation_mem_map {k R A : Type} [CommRing k] [CommRing R] [CommRing A]
     rw [hδ]
     exact Ideal.mem_map_of_mem _ (hd r hr)
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul a x hx0 hx =>
     rw [smul_eq_mul, Derivation.leibniz, smul_eq_mul, smul_eq_mul]
     exact add_mem (Ideal.mul_mem_left _ _ hx) (Ideal.mul_mem_right _ _ hx0)

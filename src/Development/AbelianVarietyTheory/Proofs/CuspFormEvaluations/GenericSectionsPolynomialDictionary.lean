@@ -190,17 +190,17 @@ theorem polyDictionary : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : ModuliInt
     fun u s => PolyDict.sp_span R u s, fun u M => PolyDict.sp_finrank R u M⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    unfold Formalism.MainNotions.Gaps.EtaleWeightGaps.sec
-    refine Finset.sum_congr rfl fun k _ => ?_
-    rw [map_mul, PolyDict.toRp_X, PolyDict.toRp_C, Algebra.smul_def,
-      IsScalarTower.algebraMap_apply (Op X la N) (Kp X la N) (Rp X la N)]
+      unfold Formalism.MainNotions.Gaps.EtaleWeightGaps.sec
+      refine Finset.sum_congr rfl fun k _ => ?_
+      rw [map_mul, PolyDict.toRp_X, PolyDict.toRp_C, Algebra.smul_def,
+        IsScalarTower.algebraMap_apply (Op X la N) (Kp X la N) (Rp X la N)]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    unfold Rdg.s
-    refine Finset.sum_congr rfl fun k _ => ?_
-    rw [map_mul, PolyDict.toFn_X, PolyDict.toFn_C]
-    funext y
-    simp [Pi.mul_apply, Pi.smul_apply]
+      unfold Rdg.s
+      refine Finset.sum_congr rfl fun k _ => ?_
+      rw [map_mul, PolyDict.toFn_X, PolyDict.toFn_C]
+      funext y
+      simp [Pi.mul_apply, Pi.smul_apply]
   · exact PolyDict.ofWt_sum wL _ _ fun k _ => PolyDict.ofWt_X_mul wL _ _ (PolyDict.ofWt_C wL (w k))
 
 end GlobalTheory.Shares

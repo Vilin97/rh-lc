@@ -134,15 +134,14 @@ theorem fitsL : (oL x L).Fits :=
         induction j with
         | zero => rfl
         | succ j ih =>
-          change (RowSide.sharp b).downTo μ (j + 1) = (RowSide.sharp a).downTo μ (j + 1)
           with_unfolding_all
             rw [RowSide.downTo.eq_2 (RowSide.sharp b) μ j,
-              RowSide.downTo.eq_2 (RowSide.sharp a) μ j, ih] <;> rfl
+              RowSide.downTo.eq_2 (RowSide.sharp a) μ j, ih]; rfl
       have hiota (μ : w.C.Tup) : (RowSide.sharp b).iota μ = (RowSide.sharp a).iota μ := by
         unfold RowSide.iota
-        rw [hdown] <;> with_unfolding_all rfl
+        rw [hdown]; with_unfolding_all rfl
       have hset (μ : w.C.Tup) : (RowSide.sharp b).RRset μ = (RowSide.sharp a).RRset μ := by
-        simp only [RowSide.RRset, RowSide.LamSet, RowSide.Qsp, RowSide.Usp, hiota] <;> rfl
+        simp only [RowSide.RRset, RowSide.LamSet, RowSide.Qsp, RowSide.Usp, hiota]; rfl
       unfold RowSide.RRDef at h ⊢
       intro z
       refine (h z).trans (forall_congr' fun v => ?_)

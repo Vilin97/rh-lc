@@ -19,6 +19,9 @@ open Formalism.HermitianLattices.Ext.L3 Formalism.L2.SG.Pf.Cnt Formalism.L2.SG.P
 
 variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+local notation "jK" => algebraMap (𝓞 K) K
+
 theorem jK_conjO (z : 𝓞 K) : jK (conjO K z) = star (jK z) := rfl
 
 theorem jK_star (z : 𝓞 K) : jK (star z) = star (jK z) := rfl

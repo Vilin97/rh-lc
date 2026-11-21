@@ -134,16 +134,13 @@ section lead
 variable {k : Type*} [Field k] {n : ℕ} (f : MvPolynomial (Fin (n + 1)) k)
 variable (v w : Fin (n + 1) →₀ ℕ)
 
-variable {f v} in
-private lemma lt_up (vlt : ∀ i, v i < up) : ∀ l ∈ List.ofFn v, l < up := by
-  grind
-
-private lemma sum_r_mul_ne (vlt : ∀ i, v i < up) (wlt : ∀ i, w i < up) (ne : v ≠ w) :
-    ∑ x : Fin (n + 1), r x * v x ≠ ∑ x : Fin (n + 1), r x * w x := by
+private lemma sum_r_mul_ne {u : ℕ} (hu : 1 < u) (vlt : ∀ i, v i < u)
+    (wlt : ∀ i, w i < u) (ne : v ≠ w) :
+    ∑ i : Fin (n + 1), u ^ i.1 * v i ≠ ∑ i : Fin (n + 1), u ^ i.1 * w i := by
   intro h
   refine ne <| Finsupp.ext <| congrFun <| List.ofFn_inj.mp ?_
-  apply Nat.ofDigits_inj_of_len_eq (Nat.lt_add_right f.totalDegree one_lt_two)
-    (by simp) (lt_up vlt) (lt_up wlt)
+  apply Nat.ofDigits_inj_of_len_eq hu (by simp)
+    (List.forall_mem_ofFn_iff.mpr vlt) (List.forall_mem_ofFn_iff.mpr wlt)
   simpa only [Nat.ofDigits_eq_sum_mapIdx, List.mapIdx_eq_ofFn, List.get_ofFn, List.length_ofFn,
     Fin.val_cast, mul_comm, List.sum_ofFn] using! h
 
@@ -152,17 +149,17 @@ private lemma shear_X_zero (u : ℕ) : shear k n u (X 0) = X 0 := by simp [shear
 private lemma shear_X_succ (u : ℕ) (i : Fin n) :
     shear k n u (X i.succ) = X i.succ + X 0 ^ (u ^ i.succ.1) := by simp [shear, shearHom]
 
-private lemma degreeOf_zero_t {a : k} (ha : a ≠ 0) : (T (monomial v a)).degreeOf 0 =
-    ∑ i : Fin (n + 1), (r i) * v i := by
-  have hT : T (MvPolynomial.C a) = MvPolynomial.C a := (shear k n _).commutes a
+private lemma degreeOf_zero_t {u : ℕ} (hu : 0 < u) {a : k} (ha : a ≠ 0) :
+    (shear k n u (monomial v a)).degreeOf 0 = ∑ i : Fin (n + 1), u ^ i.1 * v i := by
+  have hT : shear k n u (MvPolynomial.C a) = MvPolynomial.C a := (shear k n u).commutes a
   rw [← natDegree_finSuccEquiv, monomial_eq, Finsupp.prod_pow v fun a ↦ X a]
   simp only [hT, Fin.prod_univ_succ, Fin.sum_univ_succ, map_mul, map_prod, map_pow,
     shear_X_zero, shear_X_succ, AlgEquiv.commutes, algebraMap_eq,
     map_add, finSuccEquiv_X_zero, finSuccEquiv_X_succ]
   have h (i : Fin n) :
-      (Polynomial.C (X (R := k) i) + Polynomial.X ^ r i.succ) ^ v i.succ ≠ 0 :=
-    pow_ne_zero (v i.succ) (Polynomial.leadingCoeff_ne_zero.mp <| by
-      simp [add_comm, Polynomial.leadingCoeff_X_pow_add_C])
+      (Polynomial.C (X (R := k) i) + Polynomial.X ^ (u ^ i.succ.1)) ^ v i.succ ≠ 0 := by
+    rw [add_comm (Polynomial.C _)]
+    exact pow_ne_zero _ (Polynomial.X_pow_add_C_ne_zero (pow_pos hu _) _)
   rw [Polynomial.natDegree_mul (by simp [ha]) (mul_ne_zero (by simp) (Finset.prod_ne_zero_iff.mpr
     (fun i _ ↦ h i))), Polynomial.natDegree_mul (by simp) (Finset.prod_ne_zero_iff.mpr (fun i _ ↦ h i)),
     Polynomial.natDegree_prod _ _ (fun i _ ↦ h i), natDegree_finSuccEquiv, degreeOf_C]
@@ -171,32 +168,34 @@ private lemma degreeOf_zero_t {a : k} (ha : a ≠ 0) : (T (monomial v a)).degree
     rw [add_comm (Polynomial.C _), Polynomial.natDegree_X_pow_add_C, mul_comm])
 
 private lemma degreeOf_t_ne_of_ne (hv : v ∈ f.support) (hw : w ∈ f.support) (ne : v ≠ w) :
-    (T <| monomial v <| coeff v f).degreeOf 0 ≠
-    (T <| monomial w <| coeff w f).degreeOf 0 := by
-  rw [degreeOf_zero_t _ _ <| mem_support_iff.mp hv, degreeOf_zero_t _ _ <| mem_support_iff.mp hw]
-  refine sum_r_mul_ne f v w (fun i ↦ ?_) (fun i ↦ ?_) ne <;>
+    (shear k n (2 + f.totalDegree) (monomial v (coeff v f))).degreeOf 0 ≠
+    (shear k n (2 + f.totalDegree) (monomial w (coeff w f))).degreeOf 0 := by
+  have hu : 0 < 2 + f.totalDegree := by omega
+  rw [degreeOf_zero_t v hu (mem_support_iff.mp hv), degreeOf_zero_t w hu (mem_support_iff.mp hw)]
+  refine sum_r_mul_ne v w (by omega) (fun i ↦ ?_) (fun i ↦ ?_) ne <;>
   exact lt_of_le_of_lt ((monomial_le_degreeOf i ‹_›).trans (degreeOf_le_totalDegree f i))
     (by lia)
 
-private lemma leadingCoeff_finSuccEquiv_t :
-    (finSuccEquiv k n (T ((monomial v) (coeff v f)))).leadingCoeff =
-    algebraMap k _ (coeff v f) := by
+private lemma leadingCoeff_finSuccEquiv_t {u : ℕ} (hu : 0 < u) (a : k) :
+    (finSuccEquiv k n (shear k n u (monomial v a))).leadingCoeff = algebraMap k _ a := by
   rw [monomial_eq, Finsupp.prod_fintype]
   · simp only [map_mul, map_prod, Polynomial.leadingCoeff_mul, Polynomial.leadingCoeff_prod]
-    have h0 : (finSuccEquiv k n (T (MvPolynomial.C (coeff v f)))).leadingCoeff = algebraMap k _ (coeff v f) := by
-      have : T (MvPolynomial.C (coeff v f)) = MvPolynomial.C (coeff v f) := (shear k n _).commutes (coeff v f)
+    have h0 : (finSuccEquiv k n (shear k n u (MvPolynomial.C a))).leadingCoeff = algebraMap k _ a := by
+      have : shear k n u (MvPolynomial.C a) = MvPolynomial.C a := (shear k n u).commutes a
       rw [this]; simp [finSuccEquiv_apply]
-    have : ∀ j, ((finSuccEquiv k n) (T (X j))).leadingCoeff = 1 := fun j ↦ by
+    have : ∀ j, (finSuccEquiv k n (shear k n u (X j))).leadingCoeff = 1 := fun j ↦ by
       cases j using Fin.cases with
       | zero => simp [shear_X_zero, finSuccEquiv_X_zero]
       | succ i =>
         simp only [shear_X_succ, map_add (f := _), map_pow, finSuccEquiv_X_succ, finSuccEquiv_X_zero]
-        simp [add_comm, Polynomial.leadingCoeff_X_pow_add_C]
+        rw [add_comm (Polynomial.C _), Polynomial.leadingCoeff_X_pow_add_C (pow_pos hu _)]
     simp only [h0, map_pow, Polynomial.leadingCoeff_pow, this, one_pow, Finset.prod_const_one, mul_one]
   exact fun i ↦ pow_zero _
 
 theorem shear_leadingCoeff_isUnit (fne : f ≠ 0) :
-    IsUnit (finSuccEquiv k n (T f)).leadingCoeff := by
+    IsUnit (finSuccEquiv k n (shear k n (2 + f.totalDegree) f)).leadingCoeff := by
+  let T := shear k n (2 + f.totalDegree)
+  change IsUnit (finSuccEquiv k n (T f)).leadingCoeff
   obtain ⟨v, vin, vs⟩ := Finset.exists_max_image f.support
     (fun v ↦ (T ((monomial v) (coeff v f))).degreeOf 0) (support_nonempty.mpr fne)
   set h := fun w ↦ (MvPolynomial.monomial w) (coeff w f)
@@ -207,8 +206,8 @@ theorem shear_leadingCoeff_isUnit (fne : f ≠ 0) :
     obtain ⟨h1, h2⟩ := Finset.mem_sdiff.mp hx
     apply Polynomial.degree_lt_degree <| lt_of_le_of_ne (vs x h1) ?_
     simpa only [natDegree_finSuccEquiv]
-      using degreeOf_t_ne_of_ne f _ _ h1 vin <| List.ne_of_not_mem_cons h2
-  have coeff : (finSuccEquiv k n (T (h v + ∑ x ∈ f.support \ {v}, h x))).leadingCoeff =
+      using degreeOf_t_ne_of_ne f _ _ h1 vin (fun heq ↦ h2 (Finset.mem_singleton.mpr heq))
+  have hcoeff : (finSuccEquiv k n (T (h v + ∑ x ∈ f.support \ {v}, h x))).leadingCoeff =
       (finSuccEquiv k n (T (h v))).leadingCoeff := by
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_add (f := _), map_sum]
@@ -220,8 +219,9 @@ theorem shear_leadingCoeff_isUnit (fne : f ≠ 0) :
     exact (Finset.sup_lt_iff <| Ne.bot_lt (fun x ↦ h2 <| Polynomial.degree_eq_bot.mp x)).mpr vs
   nth_rw 2 [← f.support_sum_monomial_coeff]
   rw [Finset.sum_eq_add_sum_sdiff_singleton_of_mem vin h]
-  rw [leadingCoeff_finSuccEquiv_t] at coeff
-  simpa only [coeff, algebraMap_eq] using (mem_support_iff.mp vin).isUnit.map MvPolynomial.C
+  have hu : 0 < 2 + f.totalDegree := by omega
+  rw [leadingCoeff_finSuccEquiv_t v hu (coeff v f)] at hcoeff
+  simpa only [hcoeff, algebraMap_eq] using (mem_support_iff.mp vin).isUnit.map MvPolynomial.C
 
 end lead
 

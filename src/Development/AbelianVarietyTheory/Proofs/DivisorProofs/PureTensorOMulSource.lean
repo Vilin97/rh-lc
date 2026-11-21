@@ -24,6 +24,8 @@ open GlobalTheory.FockCompare GlobalTheory.OrientedHeis
 
 variable {D : D7} {S T : HSp D} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D}
 
+local notation "dR" => Formalism.IndefR.Datum.dRho (heisO ψ S T) θ
+
 theorem dRho_laws (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f)
     (τ : D.what₂.Tau) (z : Matrix (Fin T.rank) (Fin S.rank) ℂ) :
     (∀ f', IsThetaFunO ψ S T f' → dR τ z (f + f') = dR τ z f + dR τ z f') ∧
@@ -36,8 +38,9 @@ theorem dRho_laws (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {f : WO S T �
   obtain ⟨σ, h⟩ := GlobalTheory.RealLineAt.exists_inverse_chart hθ
   have pl := @GlobalTheory.Ker.HeisDeriv.pi_lineAt D S T θ hθ
   have hE : ∀ τ z g, dR τ z g =
-      FockCompare.hD (iotaW σ T S) (piW θ T S) (omO S T) (piW θ T S (lineAt θ τ z 1)) g := fun τ z g =>
-    dLine_eq_hD h hψ (isRealDir_lineAt hθ τ z) g
+      FockCompare.hD (iotaW σ T S) (piW θ T S) (omO S T) (piW θ T S (lineAt θ τ z 1)) g := by
+    intro τ z g
+    rw [dRho_eq_dLine, dLine_eq_hD h hψ (isRealDir_lineAt hθ τ z)]
   have hs := theta_sm h hf
   have hd : ∀ {g}, IsThetaFunO ψ S T g → ∀ w, DifferentiableAt ℝ (fun x : RW T S => g (w + iotaW σ T S x)) 0 :=
     fun hg w => ((theta_sm h hg w).differentiable (by simp)).differentiableAt
@@ -47,13 +50,13 @@ theorem dRho_laws (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {f : WO S T �
       hD_eq_fderiv _ _ _ _ (theta_sm h hf')]
     have e : (fun x : RW T S => (f + f') (w + iotaW σ T S x)) =
         fun x : RW T S => f (w + iotaW σ T S x) + f' (w + iotaW σ T S x) := rfl
-    rw [e, fderiv_fun_add (hd hf w) (hd hf' w), ContinuousLinearMap.add_apply, Pi.add_apply]
+    rw [e, fderiv_fun_add (hd hf w) (hd hf' w), _root_.add_apply, Pi.add_apply]
     ring
   · funext w
     rw [Pi.smul_apply, hE, hE, hD_eq_fderiv _ _ _ _ (theta_sm h (theta_smul a hf)), hD_eq_fderiv _ _ _ _ hs]
     have e : (fun x : RW T S => (a • f) (w + iotaW σ T S x)) =
         fun x : RW T S => a • f (w + iotaW σ T S x) := rfl
-    rw [e, fderiv_fun_const_smul (hd hf w), ContinuousLinearMap.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul,
+    rw [e, fderiv_fun_const_smul (hd hf w), _root_.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul,
       smul_eq_mul]
     ring
   · have e : piW θ T S (lineAt θ τ (z + z') 1) =
@@ -79,7 +82,6 @@ theorem dRho_laws (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {f : WO S T �
       linarith
     rw [hE, hE, hE, hE, heisenberg_derivative_commutator _ _ _ _ _ (h.pi_iota T S)
       (fun g hg u w => hD_eq_fderiv _ _ _ g hg u w) sk f hs, pl, pl]
-    all_goals (congr 1; push_cast; ring)
 
 theorem onb_selfadjoint {k : ℕ} {G s B : Matrix (Fin k) (Fin k) ℂ} {p : ℕ} (h : IsONBasis G s B p) (hB : B.det ≠ 0) :
     sᴴ * G = G * s ∧ s * s = 1 := by
@@ -93,6 +95,8 @@ theorem onb_selfadjoint {k : ℕ} {G s B : Matrix (Fin k) (Fin k) ℂ} {p : ℕ}
         rw [h2, conjTranspose_mul, diagonal_conjTranspose]
         simp only [Matrix.mul_assoc]
         congr 2
+        funext a
+        exact Complex.conj_ofReal (ε a)
       _ = (Bᴴ * G * B) * (Matrix.diagonal fun a => (ε a : ℂ)) := by rw [h1]
       _ = _ := by simp only [Matrix.mul_assoc, h2]
   · refine hu.mul_right_cancel ?_

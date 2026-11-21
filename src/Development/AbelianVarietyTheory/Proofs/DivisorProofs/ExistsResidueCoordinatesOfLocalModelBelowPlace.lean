@@ -89,7 +89,7 @@ theorem exists_residue_coords_of_locModel : ∀ {L : Type} [Field L] (c : ℂ �
       rw [← key]; exact (residue_ne_zero_iff_isUnit _).2 hR
     have hb0 : b ≠ 0 := fun h => hb (by rw [h]; rfl)
     refine ⟨Polynomial.C b * Polynomial.X - Polynomial.C a, fun h => hb0 ?_, ?_⟩
-    · simpa using congrArg (Polynomial.coeff · 1) h
+    · simpa using congrArg (fun p => p.coeff 1) h
     · have e := congrArg (residue V.ring) hf
       rw [map_mul, key, key] at e
       simp only [map_sub, map_mul, Polynomial.aeval_C, Polynomial.aeval_X]

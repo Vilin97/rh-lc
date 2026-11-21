@@ -16,6 +16,9 @@ variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberFi
 variable {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 variable {κ : Type} [Fintype κ] [DecidableEq κ]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+local notation "jK" => algebraMap (𝓞 K) K
+
 def gramK (h : V →ₗ⋆[K] V →ₗ[K] K) (b : Basis κ K V) : Matrix κ κ K := Matrix.of fun i j => h (b i) (b j)
 
 theorem form_repr (h : V →ₗ⋆[K] V →ₗ[K] K) (b : Basis κ K V) (x y : V) :
@@ -39,7 +42,7 @@ theorem gramK_conjTranspose {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (
 
 theorem smul_basis_mem {𝔭 : Ideal (𝓞 F)} [𝔭.IsPrime] (b : Basis κ K V) {a : K} (ha : a ∈ SP K 𝔭)
     (i : κ) : a • b i ∈ locF 𝔭 (spanO b) := by
-  obtain ⟨t, ht, z, e⟩ := mem_SP.1 ha
+  obtain ⟨t, ht, z, e⟩ := (mem_SP (𝔭 := 𝔭) (a := a)).mp ha
   refine (mem_locF 𝔭 _ _).2 ⟨t, ht, ?_⟩
   rw [← algebraMap_smul K (ι t), smul_smul, ← e, algebraMap_smul]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

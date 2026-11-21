@@ -9,6 +9,7 @@ public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.
 public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.InverseGramEigenvaluesSumHsStatement
 public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.EigenvalueGapExistsStatement
 public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.FiniteNetOfGradedProjectionsStatement
+public import Formalism.RealPlaceAnalysis.Complexify
 
 @[expose] public section
 
@@ -20,11 +21,13 @@ open CompanionTheory.RgExh.Dec CompanionTheory.RgExh.Dec.L ReciprocityTheory.Cha
 
 namespace GlobalTheory.CompanionTheory.UGeo
 
+open Formalism.REAL (hs)
+
 variable {n : ℕ} {ε : Fin n → Bool} {A : Matrix (Fin n) (Fin n) ℂ}
 
 theorem continuous_hs : Continuous (fun M : Matrix (Fin n) (Fin n) ℂ => hs M) := by
   unfold Formalism.REAL.hs
-  exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     ((continuous_id.matrix_elem i j).norm).pow 2
 
 theorem hs_Pm_pos (hA : IsGrad ε A) (x : S7.UJ ε) : 0 < hs (S7.toM x * Pm A) :=

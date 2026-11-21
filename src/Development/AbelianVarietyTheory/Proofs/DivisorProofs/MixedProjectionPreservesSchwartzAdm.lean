@@ -52,7 +52,7 @@ theorem continuous_finRepl (v : Pl (F := F)) :
 theorem finProj_mem_SB [Fintype κ] (v : Pl (F := F)) {φ₀ : (κ → Fv F v) → ℂ} (hφ₀ : φ₀ ∈ SB (κ → Fv F v))
     (l : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ) {g : (κ → Af F) → ℂ} (hg : g ∈ SB (κ → Af F)) :
     finProj v φ₀ l g ∈ SB (κ → Af F) := by
-  haveI : T2Space (Af F) := GlobalTheory.AdelicUnitaryTop.t2Space_finiteAdeleRing_of_numberField F
+  have : T2Space (Af F) := GlobalTheory.AdelicUnitaryTop.t2Space_finiteAdeleRing_of_numberField F
   have he : Continuous fun z : κ → Af F => fun i => evalV F v (z i) :=
     continuous_pi fun i => (RestrictedProduct.continuous_eval v).comp (continuous_apply i)
   have hs : Continuous fun z : κ → Af F => fun i => GlobalTheory.AdelicU.singleFin v (evalV F v (z i)) :=
@@ -86,7 +86,7 @@ theorem finProj_mem_SB [Fintype κ] (v : Pl (F := F)) {φ₀ : (κ → Fv F v) �
     have h2 := right_ne_zero_of_mul h
     obtain ⟨x, hx⟩ : ∃ x, g (finRepl v z x) ≠ 0 := by
       by_contra hc
-      push_neg at hc
+      push Not at hc
       apply h2
       have : (fun x => g (finRepl v z x)) = 0 := funext hc
       rw [this, map_zero]
@@ -122,7 +122,7 @@ theorem proj_schA_adm : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fi
       rw [proj_pureA]
       exact Submodule.subset_span ⟨f, _, finProj_mem_SB v hφ₀ l hg, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
   · intro g hg
     obtain ⟨T, hT⟩ := hL _ (finProj_mem_SB v hφ₀ l hg)

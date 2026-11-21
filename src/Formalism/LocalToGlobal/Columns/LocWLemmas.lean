@@ -334,10 +334,19 @@ theorem lidxW_eq_vAdd_det (w : HeightOneSpectrum (𝓞 K)) (A B : Submodule (�
   unfold lidxW lenW
   rw [atW_inf]
 
-theorem bridge_lidx_det_holds : Formalism.BasicNotions.bridge_lidx_det := by
-  intro K V _ _ _ _ _ _ _ w A B γ hA h
+theorem bridge_lidx_det_holds (K V : Type) [Field K] [NumberField K] [AddCommGroup V]
+    [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
+    (w : HeightOneSpectrum (𝓞 K)) (A B : Submodule (𝓞 K) V) (γ : V ≃ₗ[K] V)
+    (hA : Submodule.IsFullLattice K A)
+    (h : Formalism.HermitianLatticesTheory.localization₂ w.asIdeal
+      (A.map ((γ : V →ₗ[K] V).restrictScalars (𝓞 K))) =
+      Formalism.HermitianLatticesTheory.localization₂ w.asIdeal B) :
+    Formalism.HermitianLatticesTheory.lidx w.asIdeal A B =
+      vAdd w (LinearMap.det (γ : V →ₗ[K] V)) := by
   rw [← lidxW_eq_lidx]
-  refine lidxW_eq_vAdd_det w A B γ hA.fg hA.span_eq_top ?_
+  letI : Submodule.IsFullLattice K A := hA
+  refine lidxW_eq_vAdd_det w A B γ (Submodule.IsLattice.fg K A)
+    (Submodule.IsFullLattice.span_eq_top (A := K) (M := A)) ?_
   rw [← atW_map]
   apply Submodule.restrictScalars_injective (𝓞 K)
   rw [atW_restrictScalars, atW_restrictScalars]

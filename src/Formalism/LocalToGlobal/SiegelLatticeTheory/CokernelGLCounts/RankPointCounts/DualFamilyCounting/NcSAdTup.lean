@@ -27,7 +27,7 @@ section Gen
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
 
-theorem kf_compact_open (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsLattice E L) :
+theorem kf_compact_open (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsFullLattice E L) :
     IsCompact (Kf σ J (L : Set (Fin n → E)) : Set (HA (Af F) σ J)) ∧
       IsOpen (Kf σ J (L : Set (Fin n → E)) : Set (HA (Af F) σ J)) := by
   have : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
@@ -35,8 +35,11 @@ theorem kf_compact_open (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.I
     MassDataMassesW.KCptW.latHatOpen_of @MassDataMassesW.KCptW.stdHatOpen_holds
   have hC : MassDataMassesW.KCptW.LatHatCompact :=
     MassDataMassesW.KCptW.latHatCompact_of @MassDataMassesW.KCptW.stdHatCompact_holds
-  have hMo := hO (F := F) L hL.span_eq_top hL.fg
-  have hMc := hC (F := F) L hL.span_eq_top hL.fg
+  letI : Submodule.IsFullLattice E L := hL
+  have hspan : Submodule.span E (L : Set (Fin n → E)) = ⊤ :=
+    Submodule.IsFullLattice.span_eq_top
+  have hMo := hO (F := F) L hspan hL.fg
+  have hMc := hC (F := F) L hspan hL.fg
   have eK : (Kf σ J (L : Set (Fin n → E)) : Set (HA (Af F) σ J)) =
       incAf σ J ⁻¹' MassDataMassesW.KCptW.stabGLHat (F := F) (L : Set (Fin n → E)) := by
     ext g
@@ -45,7 +48,7 @@ theorem kf_compact_open (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.I
   rw [eK]
   refine ⟨?_, (MassDataMassesW.KCptW.isOpen_stabGLHat L hMc hMo).preimage hinc⟩
   exact (PI.AdicCompletionValuation.isClosed_HR (Af F) σ J).isClosedEmbedding_subtypeVal.isCompact_preimage
-    (MassDataMassesW.KCptW.isCompact_stabGLHat L hL.span_eq_top hMc)
+    (MassDataMassesW.KCptW.isCompact_stabGLHat L hspan hMc)
 
 theorem isClosed_stabT (R : Type) [CommRing R] [Algebra F R] [TopologicalSpace R] [IsTopologicalRing R]
     [T2Space R] [FiniteDimensional F E] {a : ℕ} (X : Fin a → Fin n → E) :
