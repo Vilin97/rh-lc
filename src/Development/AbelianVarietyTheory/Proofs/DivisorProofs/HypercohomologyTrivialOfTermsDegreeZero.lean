@@ -95,14 +95,15 @@ theorem GlobalTheory.nullHtpy_stair : ∀ (R : Type) [CommRing R] (K M : Cx R) [
   intro R _ K M _ hA n
   have hK : ∀ (p m' m : ℤ), p ≤ 0 → m' + 1 = m → ∀ f : K.X p ⟶ M.X m, f ≫ M.d m (m + 1) = 0 →
       ∃ g : K.X p ⟶ M.X m', g ≫ M.d m' m = f :=
-    fun p m' m hp hm f hf => lift_of_subsingleton hm (hA p m hp) f hf
+    fun p m' m hp hm f hf => GlobalTheory.NullHtpyStair.lift_of_subsingleton hm (hA p m hp) f hf
   suffices h : ∀ x : CohomologyClass K M n, x = 0 from ⟨fun x y => (h x).trans (h y).symm⟩
   intro x
   obtain ⟨z, rfl⟩ := CohomologyClass.mk_surjective x
   rw [CohomologyClass.mk_eq_zero_iff, mem_coboundaries_iff _ (n - 1) (by omega)]
-  refine ⟨Cochain.mk (fun p q hpq => (seq hK z ((-p).toNat + 1)).1.v p q hpq), ?_⟩
+  refine ⟨Cochain.mk (fun p q hpq => (GlobalTheory.NullHtpyStair.seq hK z ((-p).toNat + 1)).1.v p q hpq), ?_⟩
   refine Cochain.ext _ _ fun p q hpq => ?_
   rw [δ_v (n - 1) n (by omega) _ p q hpq (q - 1) (p + 1) (by omega) rfl, Cochain.mk_v, Cochain.mk_v,
-    ← seq_agree hK z ((-(p + 1)).toNat + 1) ((-p).toNat + 1) (by omega) (p + 1) q _ (by omega),
+    ← GlobalTheory.NullHtpyStair.seq_agree hK z ((-(p + 1)).toNat + 1) ((-p).toNat + 1)
+      (by omega) (p + 1) q _ (by omega),
     ← δ_v (n - 1) n (by omega) _ p q hpq (q - 1) (p + 1) (by omega) rfl]
-  exact (seq hK z ((-p).toNat + 1)).2 p q hpq (by omega)
+  exact (GlobalTheory.NullHtpyStair.seq hK z ((-p).toNat + 1)).2 p q hpq (by omega)

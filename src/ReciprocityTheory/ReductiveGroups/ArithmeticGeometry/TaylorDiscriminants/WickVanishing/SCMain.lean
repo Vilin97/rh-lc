@@ -40,12 +40,11 @@ theorem sc_of (hN1 : ConnectionIntegrality) (hN2 : ConnectionCommutator) (hN3 : 
     rw [hE0def, hE1def, ← liftX_mul, ← WickVanishing.gt_expS_add _ _ hx0 (by rw [map_neg, hx0, neg_zero]),
       add_neg_cancel, expS_zero', liftX_eq_rename, map_one]
   have hE0 : constantCoeff E0 = 1 := by rw [hE0def, cc_liftX, cc_expS _ hx0]
-  have hgood : ∀ l X, GoodE R E0 X → GoodE R E0 (nablaL B h m (ξh l).1 (ξh l).2 X) := by
+  have hgood : ∀ l X, GoodE R E0 X → GoodE R E0 (nabla k B h m (ξh l).1 (ξh l).2 X) := by
     rintro l X ⟨G, hG, rfl⟩
     refine ⟨E1 * nabla k B h m (ξh l).1 (ξh l).2 (E0 * G),
       hN1 R d O k hRQ B h hcg w0 hw0 m (ξh l) (hH l) G hG, ?_⟩
     rw [← mul_assoc, hE, one_mul]
-    rfl
   have hσ : GoodE R E0 (liftX k (FB.expS k x * f)) := ⟨liftX k f, intAA_liftX f hf, liftX_mul _ _⟩
   have haa : ∀ l l', s l = s l' → betaH k (ξh l) (ξh l') = 0 := fun l l' e' => h11 l l' fun hh => hh.2 e'
   have hab : ∀ l l', s l = s l' → betaH k (ξh l) (0, ψ l') = 0 := fun l l' e' => h12 l l' fun hh => hh.2 e'
@@ -75,7 +74,7 @@ theorem sc_of (hN1 : ConnectionIntegrality) (hN2 : ConnectionCommutator) (hN3 : 
     obtain ⟨n', _, rfl⟩ := MvPolynomial.mem_coeffs_iff.mp ha
     exact RingHom.mem_range.mp (hPint n')
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [ordNabla_wick hN2 hN3 B h m s ξh (fun l => (0, ψ l)) (fun _ => rfl) haa hab P (FB.expS k x * f), map_sum]
+    rw [SCPf.ordNabla_wick hN2 hN3 B h m s ξh (fun l => (0, ψ l)) (fun _ => rfl) haa hab P (FB.expS k x * f), map_sum]
   refine Submodule.sum_mem _ fun n _ => ?_
   refine cc_ordEval_mem J e E0 hE0 (opL B h m s ξh) (opR B h m s ξh) (fun i => hgood _) (fun j => hgood _) _ hσ _
     fun mo => ?_

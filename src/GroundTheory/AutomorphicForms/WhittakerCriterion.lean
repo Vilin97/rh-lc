@@ -104,7 +104,7 @@ theorem heckeAct_apply_act [μ.IsMulRightInvariant] {f : G → ℂ} (hf : f ∈ 
   have hf' : (fun x => f (x * g⁻¹)) ∈ locallyConstantCompactSupport G ℂ ℂ :=
     (rtransL g⁻¹ ⟨f, hf⟩).2
   refine eq_of_forall_dual fun φ => ?_
-  rw [dual_heckeAct μ hf (smooth_apply_mem ρ hv g), dual_heckeAct μ hf' hv,
+  rw [dual_heckeAct (μ := μ) hf (smooth_apply_mem ρ hv g) φ, dual_heckeAct (μ := μ) hf' hv φ,
     ← integral_mul_right_eq_self (fun x => f (x * g⁻¹) * φ (ρ x v)) g]
   simp only [mul_inv_cancel_right, map_mul, Module.End.mul_apply]
 
@@ -124,7 +124,7 @@ theorem heckeAct_normInd {K : Subgroup G} (hKc : IsCompact (K : Set G)) (hKo : I
     rw [measureReal_ne_zero_iff hKc.measure_lt_top.ne]
     exact (hKo.measure_pos μ ⟨1, K.one_mem⟩).ne'
   refine eq_of_forall_dual fun φ => ?_
-  rw [dual_heckeAct μ (normInd_mem μ hKc hKo) hvs]
+  rw [dual_heckeAct (μ := μ) (normInd_mem μ hKc hKo) hvs φ]
   have hpt : ∀ g, normInd μ K g * φ (ρ g v) =
       (K : Set G).indicator (fun _ => ((μ.real (K : Set G))⁻¹ : ℂ) * φ v) g := by
     intro g
@@ -178,8 +178,7 @@ theorem coeffL_rtransL [μ.IsMulRightInvariant] (ℓ : Module.Dual ℂ V) (g : G
     coeffL μ hρ ℓ (rtransL g f) = contragredient ρ g (coeffL μ hρ ℓ f) := by
   refine Subtype.ext (LinearMap.ext fun v => ?_)
   rw [coeffL_apply, contragredient_apply_apply, coeffL_apply,
-    heckeAct_apply_act μ f.2 (hρ v) g⁻¹]
-  congr 2
+    heckeAct_apply_act μ f.2 (hρ v) g⁻¹, inv_inv, coe_rtransL]
 
 theorem coeffL_ltransL [μ.IsMulRightInvariant] (ℓ : Module.Dual ℂ V) (a : G) (f : locallyConstantCompactSupport G ℂ ℂ) :
     coeffL μ hρ ℓ (ltransL a f) = coeffL μ hρ (ℓ ∘ₗ ρ a) f := by
@@ -188,7 +187,7 @@ theorem coeffL_ltransL [μ.IsMulRightInvariant] (ℓ : Module.Dual ℂ V) (a : G
   rfl
 
 def convS (f₁ f₂ : locallyConstantCompactSupport G ℂ ℂ) : locallyConstantCompactSupport G ℂ ℂ :=
-  ⟨groupConv μ f₁ f₂, groupConv_mem μ f₁.2 f₂.2⟩
+  ⟨groupConv μ f₁ f₂, groupConv_mem (μ := μ) f₁.2 f₂.2⟩
 
 theorem coeffL_convS [μ.IsMulRightInvariant] (ℓ : Module.Dual ℂ V) (f₁ f₂ : locallyConstantCompactSupport G ℂ ℂ) :
     coeffL μ hρ ℓ (convS μ f₁ f₂) =
@@ -252,7 +251,9 @@ theorem compHomeoL_convS [LocallyCompactSpace G] [T2Space G] [TotallyDisconnecte
     rw [← integral_inv_eq_self (fun z => (f₂ : G → ℂ) z * (f₁ : G → ℂ) (σ x * z⁻¹)) μ,
       ← integral_mul_left_eq_self (fun y => (f₁ : G → ℂ) y * (f₂ : G → ℂ) (y⁻¹ * σ x)) (σ x)]
     congr 1
-    ring
+    funext y
+    simp only [mul_inv_rev, inv_mul_cancel_right, inv_inv]
+    exact mul_comm _ _
   rw [eL, eR]
 
 end Sigma
@@ -492,7 +493,7 @@ theorem apply_heckeAct_normInd (hρ : IsSmooth ρ) {K : Subgroup G} (hKc : IsCom
   have hK0 : μ.real (K : Set G) ≠ 0 := by
     rw [measureReal_ne_zero_iff hKc.measure_lt_top.ne]
     exact (hKo.measure_pos μ ⟨1, K.one_mem⟩).ne'
-  rw [dual_heckeAct μ (normInd_mem μ hKc hKo) (hρ v)]
+  rw [dual_heckeAct (μ := μ) (normInd_mem μ hKc hKo) (hρ v) (ξ : Module.Dual ℂ V)]
   have hpt : ∀ g, normInd μ K g * (ξ : Module.Dual ℂ V) (ρ g v) =
       (K : Set G).indicator
         (fun _ => ((μ.real (K : Set G))⁻¹ : ℂ) * (ξ : Module.Dual ℂ V) v) g := by

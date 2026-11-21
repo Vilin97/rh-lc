@@ -50,7 +50,7 @@ theorem exists_scale (hL : Laws) (hL₂ : Laws2) {ρ : S.Real} {p : ℕ} [Fact p
       (∀ a, sc ≠ 0 → ‖y₀ ⟨S.th a, S.th_mem a⟩‖ = sc → a ∈ l.yy.ker) ∧
       ∀ n : ℕ, 2 ≤ n → n ∣ S.r * S.N → ∀ a ∈ l.yy.ker, ∃ a' ∈ l.yy.ker, n • (a' - a) = 0 ∧
         ‖y₀ ⟨S.th a', S.th_mem a'⟩‖ = sc := by
-  obtain ⟨H, h₁, h₂, h₃, h₄⟩ := GlobalTheory.ZH.TestVal.hyps hL hL₂
+  obtain ⟨H, h₁, h₂, h₃, h₄⟩ := hyps hL hL₂
   have := charZero u
   have hm := odd_level ρ
   have hA : AdmBase u.V (IsLocalRing.maximalIdeal u.V) := ⟨inferInstance, inferInstance, inferInstance, u.complete⟩

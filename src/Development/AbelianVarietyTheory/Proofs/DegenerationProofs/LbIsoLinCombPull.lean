@@ -49,8 +49,8 @@ theorem lbIso_cube_zero (PP : RigLB G) {T : Over S} {n : ℕ} (x : Fin n → (T 
       exact this.symm
     rw [← Over.comp_left, e, e', ← MonObj.one_eq_one]
     rfl
-  refine GlobalTheory.PrimNorm.lbIso_nested PP.isLB _ _ _ _ _ _ ?_
-  simp only [h2, h1, one_zpow, Finset.prod_const_one]
+  exact GlobalTheory.PrimNorm.lbIso_nested PP.isLB _ _ _ _ _ _ (by
+    simp only [h2, h1, one_zpow, Finset.prod_const_one])
 
 variable {U : Scheme.{0}} {A : Over U} [GrpObj A] [IsCommMonObj A] {j : U ⟶ S} {a : A.left ⟶ G.left}
 

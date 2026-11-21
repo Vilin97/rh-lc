@@ -320,7 +320,7 @@ theorem valuation_pairwiseDifferenceProduct_pow_le_colength_sq (C : Type) [Field
       simp [R, Matrix.mul_apply, Matrix.mulVec, dotProduct]
     show (Mτ τ).B⁻¹ * R τ * _ = 1
     rw [Matrix.mul_assoc, hRd, hB]
-  obtain ⟨c, hcint, hcdet⟩ := exists_generic Q (fun τ i y => hQint τ i y) hsec
+  obtain ⟨c, hcint, hcdet⟩ := DeterminantValuationBounds.exists_generic Q hQint hsec
   let X : Matrix (Fin n × Fin s) (Fin n × Fin s) C :=
     Matrix.of fun x y => a x.1 ^ (y.1 : ℕ) * (M.B * c) x y.2
   have hXcols : ∀ y, (fun x => X x y) ∈ M.pts := by
@@ -329,8 +329,8 @@ theorem valuation_pairwiseDifferenceProduct_pow_le_colength_sq (C : Type) [Field
       refine ⟨fun r => c r y.2, fun r => hcint r y.2, ?_⟩
       ext x
       simp [Matrix.mul_apply, Matrix.mulVec, dotProduct]
-    exact pow_stable hM y.1 hw
-  have hle : v X.det ≤ v M.B.det := v_det_le_of_cols M X hXcols
+    exact DeterminantValuationBounds.pow_stable hM y.1 hw
+  have hle : v X.det ≤ v M.B.det := DeterminantValuationBounds.v_det_le_of_cols M X hXcols
   let G : Fin n → Matrix (Fin s) (Fin s) C := fun τ => (Mτ τ).B * (Q τ * c)
   have hG : ∀ τ i j, (M.B * c) (τ, i) j = G τ i j := by
     intro τ i j

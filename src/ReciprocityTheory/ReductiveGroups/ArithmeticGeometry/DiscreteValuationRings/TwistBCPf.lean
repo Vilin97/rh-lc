@@ -32,7 +32,7 @@ def TwistBaseChangeStatement : Prop :=
 theorem twistBCSpan_of (h : TwistBaseChangeStatement) : TwistBCSpanStatement := by
   intro R _ _ _ _ D k hk α R' _ _ f _ s'
   obtain ⟨m, b, -, hb⟩ := h R D k hk α
-  have hbasis := hb R' f (fun i => pullSec D.P.L (DegPre.famφB D α) (DegPre.famε k) (b i)
+  have hbasis := hb R' f (fun i => pullSec (L := D.P.L) (DegPre.famφB D α) (DegPre.famε k) (b i)
       (snd (Over.mk (Spec.map (CommRingCat.ofHom f))) D.P.A).left) (fun i j => rfl)
   obtain ⟨r, hr, -⟩ := hbasis s'
   exact ⟨m, r, b, hr⟩

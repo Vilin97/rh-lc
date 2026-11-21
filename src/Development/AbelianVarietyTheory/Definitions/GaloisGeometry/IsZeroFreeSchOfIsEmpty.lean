@@ -176,12 +176,17 @@ variable (l : ℕ) [Fact l.Prime]
 
 def RedCompat {Z X : Scheme.{0}} (f : Z ⟶ X) (n i : ℤ) : Prop :=
   ∀ (k : ℕ) (x : Ht (l ^ (k + 1)) (sch.obj Z) n i),
-    red (l ^ (k + 1)) (l ^ k) (sch.obj X) n i (trHt (l ^ (k + 1)) f n i x) = trHt (l ^ k) f n i (red (l ^ (k + 1)) (l ^ k) (sch.obj Z) n i x)
+    _root_.GlobalTheory.EtC.red (l ^ (k + 1)) (l ^ k) (sch.obj X) n i
+        (trHt (l ^ (k + 1)) f n i x) =
+      trHt (l ^ k) f n i (_root_.GlobalTheory.EtC.red (l ^ (k + 1)) (l ^ k) (sch.obj Z) n i x)
 
-def IsTrHl {Z X : Scheme.{0}} (f : Z ⟶ X) (n i : ℤ) (φ : Hl l (sch.obj Z) n i →ₗ[ℤ_[l]] Hl l (sch.obj X) n i) : Prop :=
-  ∀ (x : Hl l (sch.obj Z) n i) (k : ℕ), (φ x).1 k = trHt (l ^ k) f n i (x.1 k)
+def IsTrHl {Z X : Scheme.{0}} (f : Z ⟶ X) (n i : ℤ)
+    (φ : _root_.GlobalTheory.EtC.Hl l (sch.obj Z) n i →ₗ[ℤ_[l]]
+      _root_.GlobalTheory.EtC.Hl l (sch.obj X) n i) : Prop :=
+  ∀ (x : _root_.GlobalTheory.EtC.Hl l (sch.obj Z) n i) (k : ℕ), (φ x).1 k = trHt (l ^ k) f n i (x.1 k)
 
-def trHl {Z X : Scheme.{0}} (f : Z ⟶ X) (n i : ℤ) : Hl l (sch.obj Z) n i →ₗ[ℤ_[l]] Hl l (sch.obj X) n i :=
+def trHl {Z X : Scheme.{0}} (f : Z ⟶ X) (n i : ℤ) :
+    _root_.GlobalTheory.EtC.Hl l (sch.obj Z) n i →ₗ[ℤ_[l]] _root_.GlobalTheory.EtC.Hl l (sch.obj X) n i :=
   pick (IsTrHl l f n i)
 
 

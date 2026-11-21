@@ -26,19 +26,19 @@ def mixedToInfinite : mixedSpace K →+ InfiniteAdeleRing K :=
 
 omit [NumberField K] in
 theorem homeomorphMixedSpace_mixedToInfinite (m : mixedSpace K) :
-    homeomorphMixedSpace K (mixedToInfinite K m) = m := by
+    homeomorphMixedSpace K (mixedToInfinite m) = m := by
   rw [homeomorphMixedSpace_apply]
   exact (InfiniteAdeleRing.ringEquiv_mixedSpace K).apply_symm_apply m
 
 omit [NumberField K] in
 theorem mixedToInfinite_homeomorphMixedSpace (x : InfiniteAdeleRing K) :
-    mixedToInfinite K (homeomorphMixedSpace K x) = x := by
+    mixedToInfinite (homeomorphMixedSpace K x) = x := by
   rw [homeomorphMixedSpace_apply]
   exact (InfiniteAdeleRing.ringEquiv_mixedSpace K).symm_apply_apply x
 
 omit [NumberField K] in
-theorem continuous_mixedToInfinite : Continuous (mixedToInfinite K) := by
-  have : (mixedToInfinite K : mixedSpace K → InfiniteAdeleRing K) =
+theorem continuous_mixedToInfinite : Continuous (mixedToInfinite : mixedSpace K → InfiniteAdeleRing K) := by
+  have : ((mixedToInfinite : mixedSpace K →+ InfiniteAdeleRing K) : mixedSpace K → InfiniteAdeleRing K) =
       (homeomorphMixedSpace K).symm := by
     funext m
     apply (homeomorphMixedSpace K).injective
@@ -48,7 +48,7 @@ theorem continuous_mixedToInfinite : Continuous (mixedToInfinite K) := by
 
 omit [NumberField K] in
 theorem mixedToInfinite_mixedEmbedding (k : K) :
-    mixedToInfinite K (mixedEmbedding K k) = algebraMap K (InfiniteAdeleRing K) k := by
+    mixedToInfinite (mixedEmbedding K k) = algebraMap K (InfiniteAdeleRing K) k := by
   rw [InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp]
   exact (InfiniteAdeleRing.ringEquiv_mixedSpace K).symm_apply_apply _
 
@@ -255,7 +255,7 @@ theorem exists_eq_adelicChar_mul_of_integral (χ : AddChar 𝔸[K] Circle) (hχ 
     (hO : ∀ y ∈ integralFiniteAdeles (𝓞 K) K, χ (finiteAdeleInr y) = 1) :
     ∃ ξ : K, ∀ x : 𝔸[K], χ x = adelicChar K (algebraMap K 𝔸[K] ξ * x) := by
   let χM : AddChar (mixedSpace K) Circle :=
-    χ.compAddMonoidHom (infiniteAdeleInl.comp (mixedToInfinite K))
+    χ.compAddMonoidHom (infiniteAdeleInl.comp (mixedToInfinite))
   have hχM : Continuous χM :=
     hχ.comp (continuous_infiniteAdeleInl.comp continuous_mixedToInfinite)
   have hO' : ∀ a : 𝓞 K,
@@ -268,7 +268,7 @@ theorem exists_eq_adelicChar_mul_of_integral (χ : AddChar 𝔸[K] Circle) (hχ 
       mul_one] at h
     exact h
   have h1 : ∀ a : 𝓞 K, χM (mixedEmbedding K (algebraMap (𝓞 K) K a)) = 1 := fun a => by
-    show χ (infiniteAdeleInl (mixedToInfinite K (mixedEmbedding K _))) = 1
+    show χ (infiniteAdeleInl (mixedToInfinite (mixedEmbedding K _))) = 1
     rw [mixedToInfinite_mixedEmbedding]
     exact hO' a
   obtain ⟨ξ, hξO, hξ⟩ := exists_mixedSpace_char_eq χM hχM h1
@@ -289,7 +289,7 @@ theorem exists_eq_adelicChar_mul_of_integral (χ : AddChar 𝔸[K] Circle) (hχ 
     intro z
     have h := hξ (homeomorphMixedSpace K z)
     have e1 : χM (homeomorphMixedSpace K z) = χ (infiniteAdeleInl z) := by
-      show χ (infiniteAdeleInl (mixedToInfinite K _)) = _
+      show χ (infiniteAdeleInl (mixedToInfinite _)) = _
       rw [mixedToInfinite_homeomorphMixedSpace]
     rw [e1] at h
     rw [h, adelicChar_of_mem_invDifferentAdeles (mem_invDifferentAdeles.mpr

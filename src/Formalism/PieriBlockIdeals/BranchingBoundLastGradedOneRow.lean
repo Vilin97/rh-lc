@@ -64,7 +64,7 @@ def PeelRows : Prop :=
     (∀ a b, a ≤ b → b < n + s → lam b ≤ lam a) → lam 0 + (n + s) ≤ h + lam (n + s - 1) + 1 → Antitone ξ →
     ∀ (I : ℤ) (e : ℕ), ExpUpTo l n lam ξ I e → ExpUpTo l (n + s) lam ξ I (e + s * ((h - 1) / (l - 1)))
 
-def blockCost (l n t I : ℕ) (lam : ℕ → ℕ) : ℕ :=
+noncomputable def blockCost (l n t I : ℕ) (lam : ℕ → ℕ) : ℕ :=
   (Finset.range (I + 1)).sup fun i =>
     padicValInt l (Dn t (lam 0 - lam n) i fun b : Fin n => lam 0 - res n lam (Fin.rev b))
 

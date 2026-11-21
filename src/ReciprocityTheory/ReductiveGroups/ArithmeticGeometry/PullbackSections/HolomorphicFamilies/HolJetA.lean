@@ -31,12 +31,15 @@ theorem hom_ext_of_local {R : CommRingCat.{0}} [IsLocalRing R] {f₁ f₂ : Spec
     f₁ = f₂ := by
   apply (SpecToEquivOfLocalRing Y R).injective
   refine SpecToEquivOfLocalRing_eq_iff.mpr ⟨hpt, ?_⟩
+  have hsep : Inseparable (f₁ (IsLocalRing.closedPoint R)) (f₂ (IsLocalRing.closedPoint R)) := by
+    rw [hpt]
+  change Scheme.stalkClosedPointTo f₁ =
+    (Y.presheaf.stalkCongr hsep).hom ≫ Scheme.stalkClosedPointTo f₂
   refine TopCat.Presheaf.stalk_hom_ext _ fun U hU => ?_
-  change Y.presheaf.germ U (f₁ (IsLocalRing.closedPoint R)) hU ≫ Scheme.stalkClosedPointTo f₁ =
-    Y.presheaf.germ U (f₁ (IsLocalRing.closedPoint R)) hU ≫ (Y.presheaf.stalkCongr _).hom ≫
-      Scheme.stalkClosedPointTo f₂
-  rw [TopCat.Presheaf.stalkCongr_hom, TopCat.Presheaf.germ_stalkSpecializes_assoc, germ_stalkClosedPointTo_eq,
-    germ_stalkClosedPointTo_eq, happ]
+  rw [Y.presheaf.stalkCongr_hom hsep,
+    Y.presheaf.germ_stalkSpecializes_assoc hU hsep.ge,
+    germ_stalkClosedPointTo_eq, germ_stalkClosedPointTo_eq]
+  exact congrArg (fun g => g ≫ (Scheme.ΓSpecIso R).hom) (happ U _ _)
 
 section Lift
 

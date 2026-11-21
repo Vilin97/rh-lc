@@ -134,7 +134,7 @@ theorem exists_regularParameters_of_formallyEtale (k : Type*) [CommRing k] (ι :
 
 theorem exists_regularParameters_stalk_of_smooth (k : Type u) [Field k] [CharZero k] {X : Scheme.{u}}
     (p : X ⟶ Spec (CommRingCat.of k)) [AlgebraicGeometry.Smooth p] (x : X) :
-    letI := stalkAlgebra k p x
+    letI := stalkAlgebra k p x;
     ∃ (h : ℕ) (y : Fin h → X.presheaf.stalk x)
       (D : Fin h → Derivation k (X.presheaf.stalk x) (X.presheaf.stalk x)),
       Ideal.span (Set.range y) = IsLocalRing.maximalIdeal (X.presheaf.stalk x) ∧

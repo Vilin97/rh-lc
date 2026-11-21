@@ -86,8 +86,9 @@ theorem algebraMap_gaussRing_injective :
 
 instance : IsDiscreteValuationRing (gaussRing W) := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪
-  have hmax : maximalIdeal (gaussRing W) = Ideal.span {algebraMap W.toAffine.CoordinateRing
-      (gaussRing W) (algebraMap 𝒪 W.toAffine.CoordinateRing ϖ)} := by
+  have hmax : maximalIdeal (gaussRing W) = Ideal.span
+      {(algebraMap W.toAffine.CoordinateRing (gaussRing W)
+        (algebraMap 𝒪 W.toAffine.CoordinateRing ϖ))} := by
     have e := congrArg (Ideal.map (algebraMap W.toAffine.CoordinateRing (gaussRing W)))
       (gaussPrime_eq W hϖ)
     refine (Localization.AtPrime.map_eq_maximalIdeal (I := gaussPrime W)).symm.trans ?_
@@ -104,7 +105,7 @@ section Fraction
 
 variable (K : Type*) [Field K] [Algebra 𝒪 K] [IsFractionRing 𝒪 K]
 
-
+omit [IsDomain 𝒪] [IsDiscreteValuationRing 𝒪] in
 theorem coordinateRing_map_algebraMap {S : Type*} [CommRing S] (f : 𝒪 →+* S) (a : 𝒪) :
     CoordinateRing.map W f (algebraMap 𝒪 W.toAffine.CoordinateRing a) =
       algebraMap S (W.map f).toAffine.CoordinateRing (f a) := by

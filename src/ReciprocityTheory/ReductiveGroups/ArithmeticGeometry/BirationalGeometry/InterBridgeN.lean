@@ -26,7 +26,7 @@ private theorem log_max_norm_le_circleAverage_of_analyticOnNhd {h : ℂ → ℂ}
   · have hne : h 0 ≠ 0 := by intro e; rw [e, norm_zero] at h0; linarith
     have hh' : AnalyticOnNhd ℂ h (closedBall 0 |1|) := by rwa [abs_one]
     rw [max_eq_left h0.le]
-    have hJ := AnalyticOnNhd.circleAverage_log_norm (c := 0) (R := 1) one_ne_zero hh' hne
+    have hJ := AnalyticOnNhd.circleAverage_log_norm (c := 0) (R := 1) hh' hne
     have hdn := MeromorphicOn.AnalyticOnNhd.divisor_nonneg hh'
     have hsum : 0 ≤ ∑ᶠ u, ((MeromorphicOn.divisor h (closedBall 0 |1|)) u : ℝ) *
         Real.log (1 * ‖0 - u‖⁻¹) := by

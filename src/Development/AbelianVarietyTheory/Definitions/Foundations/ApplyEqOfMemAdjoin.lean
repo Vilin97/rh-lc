@@ -32,10 +32,10 @@ def KT (X : GlobalTheory.KZ.Tower Ω ε) (L : ℕ) : Subfield X.K :=
 variable {p : ℕ} [Fact p.Prime] {Ωl : Type} [Field Ωl] [Algebra (O0 p) Ωl]
 
 structure IsCusp (ε : Ω →+* ℂ) (A : ValuationSubring Ω) (T : GlobalTheory.K5.Tower p Ωl) (j : Ω →+* Ωl) : Prop where
-  int : ∀ x, x ∈ A ↔ IsInt p (j x)
-  alg : ∀ x, IsAlgZp p (j x)
+  int : ∀ x, x ∈ A ↔ IsInt (p := p) (j x)
+  alg : ∀ x, IsAlgZp (p := p) (j x)
   root : ∀ n, j (zt ε p n) = T.ζ n
-  dense : ∀ (k : ℕ) (e : Ωl), IsInt p e → IsAlgZp p e → ∃ a ∈ A, Cong p k e (j a)
+  dense : ∀ (k : ℕ) (e : Ωl), IsInt (p := p) e → IsAlgZp (p := p) e → ∃ a ∈ A, Cong (p := p) k e (j a)
   down : ∀ g : Gal p Ωl, ∃ s : Ω ≃ₐ[ℚ] Ω, Stab A s ∧ ∀ x, g (j x) = j (s x)
   up : ∀ (n : ℕ) (s : Ω ≃ₐ[ℚ] Ω), Stab A s → ∃ g : Gal p Ωl, g (T.qq n) = T.qq n ∧ ∀ x, g (j x) = j (s x)
 
@@ -43,7 +43,7 @@ structure IsIo (X : GlobalTheory.KZ.Tower Ω ε) (A : ValuationSubring Ω) (T : 
     (ψ : O0 p →+* Ωl) (io : KT X (p ^ n) →+* Ωl) : Prop where
   ev : ∀ (y : KT X (p ^ n)) (S : Finset Ω),
     (∀ r, (X.exp y).coeff r ∈ A ∧ (X.exp y).coeff r ∈ IntermediateField.adjoin ℚ (S : Set Ω)) →
-    ∃ x', Ev ψ (fun r : ℤ => j ((X.exp y).coeff ((r : ℚ) / (p : ℚ) ^ n))) (io y) x'
+    ∃ x', GlobalTheory.Glue.Ev ψ (fun r : ℤ => j ((X.exp y).coeff ((r : ℚ) / (p : ℚ) ^ n))) (io y) x'
   gal : ∀ (g : Gal p Ωl) (s : Ω ≃ₐ[ℚ] Ω), g (T.qq n) = T.qq n → (∀ x, g (j x) = j (s x)) →
     ∀ y y' : KT X (p ^ n), (y' : X.K) = X.gal s y → g (io y) = io y'
 

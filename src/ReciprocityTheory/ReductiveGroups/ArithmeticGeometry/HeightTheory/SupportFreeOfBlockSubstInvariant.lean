@@ -119,10 +119,8 @@ theorem one_block (b : Fin (D + 1)) (z : KTf K D N)
   have hcoef : ∀ k < M, algebraMap (KTp K D N) (KTf K D N) (compB b k p) - z * algebraMap (KTp K D N) (KTf K D N) (compB b k q) = 0 := by
     intro k hk
     have h4 := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P k) hQ
-    simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at h4
-    first
-    | rwa [Finset.sum_ite_eq', if_pos (Finset.mem_range.mpr hk)] at h4
-    | rwa [Finset.sum_ite_eq, if_pos (Finset.mem_range.mpr hk)] at h4
+    simpa only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial_apply,
+      Polynomial.coeff_zero, Finset.sum_ite_eq', if_pos (Finset.mem_range.mpr hk)] using h4
   have hqs : q = ∑ k ∈ Finset.range M, compB b k q := by
     ext t
     rw [MvPolynomial.coeff_sum]

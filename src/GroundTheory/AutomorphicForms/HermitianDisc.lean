@@ -20,12 +20,16 @@ namespace HermitianForm
 variable [Algebra.IsSeparable F E]
 
 def detUnit (h : HermitianForm F E V) {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (b : Basis ι E V) : Fˣ :=
-  Units.mk0 (h.det_gram_mem_range b).choose (by
+    (b : Basis ι E V) : Fˣ := by
+  have hdet : (gram h.toSesq b).det ∈ Set.range (algebraMap F E) := by
+    apply conj_eq_self_iff.1
+    rw [← conjHom_apply, RingHom.map_det, RingHom.mapMatrix_apply, ← det_transpose,
+      isHermitianFor_gram h b]
+  exact Units.mk0 hdet.choose (by
     intro h0
-    have := (h.det_gram_mem_range b).choose_spec
-    rw [h0, map_zero] at this
-    exact (isUnit_det_gram h b).ne_zero this.symm)
+    have heq := hdet.choose_spec
+    rw [h0, map_zero] at heq
+    exact (isUnit_det_gram h b).ne_zero heq.symm)
 
 end HermitianForm
 

@@ -7,7 +7,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeakShimura
 open IsLocalRing Polynomial UpperTheory.V.Alg UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws
 
 theorem UpperTheory.V.Ws.sxLaurDesc :
-    ∀ {Λ : Type} [CommRing Λ] [IsLocalRing Λ] {X : Type} [AddCommGroup X] [DecidableEq X] {R : Type} [CommRing R] [Algebra Λ R] (W : WPres Λ X R) {R' : Type} [CommRing R'] [Algebra Λ R'] [IsCO Λ R'] {S : Type} [CommRing S] [Algebra Λ S] [IsCO Λ S] {c : ℕ} {e : S →+* LaurentSeries R'}, Laur Λ c e → ∀ (τ : X →+ ℤ) (F : R →ₐ[Λ] S), (∀ j, ∀ x ∈ W.part j, ∃ y, e (F x) = HahnSeries.single (τ j) y) → ∃ f : W.A →ₐ[Λ] R', ∀ j, ∀ x ∈ W.gr j, e (F x) = HahnSeries.single (τ j) (f x) := by
+    ∀ {Λ : Type} [CommRing Λ] [IsLocalRing Λ] {X : Type} [AddCommGroup X] [DecidableEq X] {R : Type} [CommRing R] [Algebra Λ R] (W : WPres Λ X R) {R' : Type} [CommRing R'] [Algebra Λ R'] [IsCO Λ R'] {S : Type} [CommRing S] [Algebra Λ S] [IsCO Λ S] {c : ℕ} {e : S →+* LaurentSeries R'}, Laur (Λ := Λ) c e → ∀ (τ : X →+ ℤ) (F : R →ₐ[Λ] S), (∀ j, ∀ x ∈ W.part j, ∃ y, e (F x) = HahnSeries.single (τ j) y) → ∃ f : W.A →ₐ[Λ] R', ∀ j, ∀ x ∈ W.gr j, e (F x) = HahnSeries.single (τ j) (f x) := by
   intro Λ _ _ X _ _ R _ _ W R' _ _ _ S _ _ _ c e hL τ F hF
   let φ : ∀ j, W.gr j →ₗ[Λ] R' := fun j =>
     { toFun := fun x => (e (F ((x : W.A) : R))).coeff (τ j)

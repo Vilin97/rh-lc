@@ -98,7 +98,10 @@ def idealsIn (g : D.G) (n : ℕ) : Set (Ideal (𝓞 K)) :=
 
 
 def lamIdeal (I : Ideal (𝓞 K)) : ℝ :=
-  if ∃ (P : Ideal (𝓞 K)) (k : ℕ), P.IsPrime ∧ P ≠ ⊥ ∧ 1 ≤ k ∧ I = P ^ k then Real.log (Ideal.absNorm I.radical) else 0
+  by
+    classical
+    exact if ∃ (P : Ideal (𝓞 K)) (k : ℕ), P.IsPrime ∧ P ≠ ⊥ ∧ 1 ≤ k ∧ I = P ^ k then
+      Real.log (Ideal.absNorm I.radical) else 0
 
 def aRay (g : D.G) (n : ℕ) : ℝ := ((idealsIn D g n).ncard : ℝ)
 

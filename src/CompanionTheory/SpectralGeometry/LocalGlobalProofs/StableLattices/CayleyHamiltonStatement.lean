@@ -54,8 +54,17 @@ theorem eq_zero_of_eval (R : A[X]) (h : ∀ y : ℂ, R.eval (algebraMap ℂ A y)
     rw [← map_pow, ← Algebra.commutes, ← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]
   have h0 : r = 0 := Polynomial.funext (by simpa using hr)
   have hc : r.coeff k = φ (R.coeff k) := by
-    simp only [r, finsetSum_coeff, coeff_monomial, Finset.sum_ite_eq', mem_support_iff]
-    by_cases hk : R.coeff k = 0 <;> simp [hk]
+    classical
+    simp only [r, finsetSum_coeff]
+    rw [Finset.sum_eq_single k]
+    · simp [coeff_monomial]
+    · intro i hi hik
+      simp [coeff_monomial, hik]
+    · intro hk
+      have hk0 : R.coeff k = 0 := by
+        by_contra hne
+        exact hk (mem_support_iff.mpr hne)
+      simp [coeff_monomial, hk0]
   rw [← hc, h0, coeff_zero]
 
 def PolF (f : ℂ → A) : Prop := ∃ p : A[X], ∀ y : ℂ, p.eval (algebraMap ℂ A y) = f y

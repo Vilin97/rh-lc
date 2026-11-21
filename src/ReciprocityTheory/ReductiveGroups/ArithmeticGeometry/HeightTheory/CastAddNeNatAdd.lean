@@ -174,9 +174,9 @@ theorem psi_injective (sg : K →+* ℂ) (tt : Fin D × Fin (N + 1) → ℂ)
   apply homog_injective (K := K) (D := D) (N := N)
   rw [map_zero]
   refine MvPolynomial.ext _ _ fun γ => ?_
-  rw [coeff_zero]
+  simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   by_contra hne
-  have h0 : AddMonoidAlgebra.coeff (psi sg tt q) γ = 0 := by rw [hq, coeff_zero]
+  have h0 : AddMonoidAlgebra.coeff (psi sg tt q) γ = 0 := by rw [hq]; simp
   rw [psi, RingHom.comp_apply, coeff_map] at h0
   exact hG _ _ (homog_coeff_isMH q γ) hne (by simpa using h0)
 

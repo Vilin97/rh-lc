@@ -34,7 +34,9 @@ theorem recip : ∀ (F : Type) [Field F] [NumberField F] [MeasurableSpace (A F)]
     refine (hγ φ hφ).trans ?_
     rw [mul_smul, ← fou_smul (m : ℂ), map_neg]
     congr 2
-    rfl
+    ext u
+    simp [opU, opD, uA, c]
+    ring
   have hO : IsOrth B ρ 1 fun _ => 1 := ⟨by simp, fun _ => by simp⟩
   have hU := fun φ τ => (GlobalTheory.T.theta_function_modularity F ψ hψ ι M B ρ P hQ _ _ hO φ τ)
   have hW := GlobalTheory.T.theta_function_automorphy F lf hlf h1 ψ hψ ι M B ρ P hQ _ _ hO

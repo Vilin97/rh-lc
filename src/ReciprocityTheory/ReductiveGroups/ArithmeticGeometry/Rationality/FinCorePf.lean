@@ -70,10 +70,10 @@ theorem finCore_holds : FinCoreStatement := by
   constructor
   · intro μ
     by_contra hlt
-    push_neg at hlt
+    push Not at hlt
     have hp : P n ≠ 0 := by
       intro h
-      rw [h, MvPolynomial.coeff_zero, norm_zero] at hlt
+      rw [h, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, norm_zero] at hlt
       linarith
     obtain ⟨x, hx, hxδ, ν, hev, -, hmax⟩ := key (P n) hp
     have h1 := (step1 x hx hxδ n).1

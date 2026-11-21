@@ -60,8 +60,10 @@ variable {X : Scheme.{0}} {G : Over X} [GrpObj G] {p : X} (C : Chart G p)
 
 private def Chart.Rep {R : Type} [CommRing R] (φ : X.presheaf.stalk p →+* R) (c : Fin C.n → R)
     (v : Spec (CommRingCat.of (DualNumber R)) ⟶ G.left) : Prop :=
-  ∃ g : C.B →+* DualNumber R, (∀ b, (g b).fst = φ (C.sg.hom b)) ∧
-    (∀ b, (g b).snd = ∑ i, φ (C.d b i) * c i) ∧ v = Spec.map (CommRingCat.ofHom g) ≫ C.j
+  ∃ g : (C.B : Type) →+* DualNumber R,
+    (∀ b : (↑C.B), TrivSqZeroExt.fst (R := R) (M := R) (g b) = φ (C.sg.hom b)) ∧
+    (∀ b : (↑C.B), TrivSqZeroExt.snd (R := R) (M := R) (g b) = ∑ i, φ (C.d b i) * c i) ∧
+      v = Spec.map (CommRingCat.ofHom (R := C.B) g) ≫ C.j
 
 private theorem Chart.cancel {R : CommRingCat.{0}} {g g' : C.B ⟶ R}
     (h : Spec.map g ≫ C.j = Spec.map g' ≫ C.j) : g = g' := by
@@ -130,8 +132,9 @@ private theorem Chart.fac' [IsLocalRing R] {N : Type} [AddCommGroup N] [Module R
     (hx : x = Spec.map φ ≫ X.fromSpecStalk p)
     (u : Spec (CommRingCat.of (TrivSqZeroExt R N)) ⟶ G.left)
     (hu : Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom R R N).toRingHom) ≫ u = (1 : Over.mk x ⟶ G).left) :
-    ∃ g : C.B →+* TrivSqZeroExt R N, (∀ b, (g b).fst = φ.hom (C.sg.hom b)) ∧
-      u = Spec.map (CommRingCat.ofHom g) ≫ C.j := by
+    ∃ g : (C.B : Type) →+* TrivSqZeroExt R N,
+      (∀ b : (↑C.B), TrivSqZeroExt.fst (R := R) (M := N) (g b) = φ.hom (C.sg.hom b)) ∧
+      u = Spec.map (CommRingCat.ofHom (R := C.B) g) ≫ C.j := by
   rw [C.one, hx, Category.assoc] at hu
   obtain ⟨g, hg⟩ := C.fac (CommRingCat.of R) (CommRingCat.of (TrivSqZeroExt R N)) _ φ u
     (fun r => ⟨TrivSqZeroExt.inl r, rfl⟩) (fun y hy => by
@@ -143,7 +146,7 @@ private theorem Chart.fac' [IsLocalRing R] {N : Type} [AddCommGroup N] [Module R
 
 private theorem Chart.rep_of_tan [IsLocalRing R] (φ : X.presheaf.stalk p ⟶ CommRingCat.of R) (x : Spec (CommRingCat.of R) ⟶ X)
     (hx : x = Spec.map φ ≫ X.fromSpecStalk p) (v : epsAt x ⟶ G) (hv : IsTanAt G x v) :
-    ∃ c, C.Rep φ.hom c v.left := by
+    ∃ c : Fin C.n → R, C.Rep φ.hom c v.left := by
   obtain ⟨g, h1, hg⟩ := C.fac' φ x hx v.left hv
   have hw : v.left ≫ G.hom = Spec.map (CommRingCat.ofHom (algebraMap R (DualNumber R))) ≫ x := Over.w v
   rw [hg, Category.assoc, C.ovr, hx, ← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp,
@@ -178,7 +181,7 @@ private theorem Chart.rep_mul [IsLocalRing R] (φ : X.presheaf.stalk p ⟶ CommR
 
 private theorem Chart.coords [IsLocalRing R] (φ : X.presheaf.stalk p ⟶ CommRingCat.of R) (x : Spec (CommRingCat.of R) ⟶ X)
     (hx : x = Spec.map φ ≫ X.fromSpecStalk p) {E : Type} [AddCommGroup E] [Module R E]
-    (M : LieModel G x E) : ∃ κ : E ≃ₗ[R] (Fin C.n → R), ∀ e, C.Rep φ.hom (κ e) (M.pt e).left := by
+    (M : LieModel G x E) : ∃ κ : E ≃ₗ[R] (Fin C.n → R), ∀ e : E, C.Rep φ.hom (κ e) (M.pt e).left := by
   choose f hf using fun e => C.rep_of_tan φ x hx (M.pt e) (M.tan e)
   let l : E →ₗ[R] (Fin C.n → R) :=
     { toFun := f

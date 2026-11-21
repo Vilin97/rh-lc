@@ -52,7 +52,7 @@ variable (F : X.Modules) {G H : X.Modules} (V : X.Opens) (U : ι → X.Opens)
 
 def cechCube : Cube.{u} ι R := presheafCube (sectionsPresheaf R F) V U
 
-
+variable {F} in
 def cechCubeMap (φ : F ⟶ G) : cechCube R F V U ⟶ cechCube R G V U :=
   presheafCubeMap V U (sectionsPresheafMap R φ)
 
@@ -66,7 +66,7 @@ def cechCubeFunctor : X.Modules ⥤ Cube.{u} ι R where
 instance cechCubeFunctor_additive : (cechCubeFunctor R V U).Additive where
   map_add := rfl
 
-
+variable {V U} in
 def cechCubeRes {V' : X.Opens} {U' : ι → X.Opens} (h : ∀ s, cechOpen V' U' s ≤ cechOpen V U s) :
     cechCube R F V U ⟶ cechCube R F V' U' :=
   presheafCubeRes (sectionsPresheaf R F) h
@@ -100,9 +100,10 @@ theorem cech_d_apply (p : ℕ)
   exact Cube.d_apply (cechCube R F V U) (p + 1) x t
 
 
+variable {F} in
 def cechMap (φ : F ⟶ G) : cech R F V U ⟶ cech R G V U := cechComplexMap (cechCubeMap R V U φ)
 
-
+variable {F} in
 def cechHMap (φ : F ⟶ G) (n : ℕ) : cechH R F V U n ⟶ cechH R G V U n :=
   HomologicalComplex.homologyMap (cechMap R V U φ) n
 
@@ -126,6 +127,7 @@ def cechHFunctor (n : ℕ) : X.Modules ⥤ ModuleCat.{u} R where
 
 
 
+variable {F} in
 def cechHMapIso (e : F ≅ G) (n : ℕ) : cechH R F V U n ≅ cechH R G V U n :=
   (cechHFunctor R V U n).mapIso e
 
@@ -162,12 +164,14 @@ variable {V U} (hc : V ≤ ⨆ i, U i)
 
 
 
+include hc in
 theorem cechCube_exactAt_zero_one :
     (cubeComplex (cechCube R F V U)).ExactAt 0 ∧ (cubeComplex (cechCube R F V U)).ExactAt 1 :=
   presheafCube_exactAt_zero_one (T := X.toPresheafedSpace.carrier)
     (isSheaf_sectionsPresheaf R F) hc
 
 
+include hc in
 theorem toCechH_bijective : Function.Bijective (toCechH R F V U) :=
   presheafToCechH_bijective (T := X.toPresheafedSpace.carrier) (isSheaf_sectionsPresheaf R F) hc
 
@@ -231,6 +235,7 @@ def cechAbHEquiv (n : ℕ) : cechAbH F.presheaf V U n ≃+ cechH R F V U n :=
     ((cechAbCubeToCube R F V U).homology_bijective (fun _ _ => Function.bijective_id) n)
 
 
+variable {F} in
 theorem cechAbHEquiv_map (φ : F ⟶ G) (n : ℕ) (x : cechAbH F.presheaf V U n) :
     cechAbHEquiv R G V U n ((cechAbHMap V U φ.mapPresheaf n).hom x) =
       (cechHMap R V U φ n).hom (cechAbHEquiv R F V U n x) :=
@@ -251,7 +256,7 @@ variable (g : Y ⟶ X) (V : X.Opens) (U : ι → X.Opens)
 theorem preimage_cechOpen (s : Finset ι) :
     g ⁻¹ᵁ cechOpen V U s = cechOpen (g ⁻¹ᵁ V) (fun i => g ⁻¹ᵁ U i) s := by
   ext x
-  exact mem_cechOpen.trans (mem_cechOpen (V := g ⁻¹ᵁ V) (U := fun i => g ⁻¹ᵁ U i)).symm
+  exact (mem_cechOpen V U).trans (mem_cechOpen (g ⁻¹ᵁ V) (fun i => g ⁻¹ᵁ U i)).symm
 
 variable {R : Type v} [CommRing R] [Algebra R Γ(X, ⊤)] {S : Type t} [CommRing S]
   [Algebra S Γ(Y, ⊤)] {σ : R →+* S}
@@ -297,6 +302,7 @@ variable [Algebra R Γ(Y, ⊤)]
   (hg : ∀ r, g.appTop (algebraMap R Γ(X, ⊤) r) = algebraMap R Γ(Y, ⊤) r)
 
 
+variable (G) in
 def cechCubePushforwardIso : cechCube R ((Scheme.Modules.pushforward g).obj G) V U ≅
     cechCube R G (g ⁻¹ᵁ V) fun i => g ⁻¹ᵁ U i :=
   Cube.isoMk (fun s => LinearEquiv.ofBijective _
@@ -304,6 +310,7 @@ def cechCubePushforwardIso : cechCube R ((Scheme.Modules.pushforward g).obj G) V
     (cechCubeMapOver (σ := RingHom.id R) V U hg (𝟙 _)).app_res
 
 
+variable (G) in
 def cechPushforwardIso [LinearOrder ι] : cech R ((Scheme.Modules.pushforward g).obj G) V U ≅
     cech R G (g ⁻¹ᵁ V) fun i => g ⁻¹ᵁ U i :=
   (cechFunctor ι R).mapIso (cechCubePushforwardIso V U G hg)

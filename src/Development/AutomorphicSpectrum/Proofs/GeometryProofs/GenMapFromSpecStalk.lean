@@ -11,6 +11,7 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.Ar.LieCarrier
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj
+open GlobalTheory.CompanionTheory.Ar (dualMap)
 
 variable {S : Scheme.{0}} {R R' : Type} [CommRing R] [CommRing R']
 

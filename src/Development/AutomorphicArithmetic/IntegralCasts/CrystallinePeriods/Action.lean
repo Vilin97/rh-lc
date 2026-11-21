@@ -65,7 +65,6 @@ instance BdR.mulSemiringAction : MulSemiringAction G (BdR p R) :=
       simp [this, BdR.map_map])
 
 
-omit [IsAdicComplete (span {(p : R)}) R] in
 theorem BdR.smul_algebraMap (g : G) (x : BdRPlus p R) :
     g • algebraMap _ (BdR p R) x = algebraMap _ _ (g • x) := BdR.map_algebraMap _ x
 

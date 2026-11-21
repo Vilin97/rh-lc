@@ -7,7 +7,7 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LinearCha
 
 @[expose] public section
 
-open MeasureTheory ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.SplitWeil.FourierPi GlobalTheory.IndefiniteRowSideFullHecke.GLMatrixJoining
+open MeasureTheory ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.SplitWeil.FourierPi
 open scoped Topology
 
 noncomputable section

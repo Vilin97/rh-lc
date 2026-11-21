@@ -87,7 +87,7 @@ theorem defect_integrable (a : σ) {t : ℝ} (h0 : 0 < t) (h1 : t ≤ S.t₀) (�
   have hnull := (anSys_open_basics e σ S).2.1 j
   have hae : (Kc : Set (Fin e → ℂ)) =ᵐ[volume] (Kc ∩ O : Set (Fin e → ℂ)) := by
     filter_upwards [measure_eq_zero_iff_ae_notMem.1 hnull] with y hy
-    refine propext ⟨fun h => ⟨h, hK h, ?_⟩, fun h => h.1⟩
+    refine ⟨fun h => ⟨h, hK h, ?_⟩, fun h => h.1⟩
     by_contra hcon
     exact hy ⟨hK h, hcon⟩
   refine IntegrableOn.congr_set_ae ?_ hae

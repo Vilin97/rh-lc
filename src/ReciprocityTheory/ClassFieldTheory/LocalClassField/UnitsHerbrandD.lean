@@ -38,7 +38,6 @@ theorem filt_ball {A C ρ : ℝ} (hC : 0 ≤ C) (hρ : 0 ≤ ρ) (hA1 : ∀ x : 
   smul n g x hx := (norm_Phi_map g x).trans hx
   comp x hx := by
     have hx' : ∀ k, ‖Phi K L (x k)‖ ≤ ρ * (1 / 2 : ℝ) ^ k := fun k => by
-      change ‖Phi K L (x k)‖ ≤ ρ * (1 / 2 : ℝ) ^ k
       exact hx k
     have hsum : Summable fun k => Phi K L (x k) :=
       Summable.of_norm_bounded ((summable_geometric_of_lt_one (by norm_num) (by norm_num)).mul_left ρ) hx'
@@ -93,24 +92,29 @@ theorem filt_ball {A C ρ : ℝ} (hC : 0 ≤ C) (hρ : 0 ≤ ρ) (hA1 : ∀ x : 
       exact this.trans (rad_nonneg hρ n)
   e_mem n x hx := by
     classical
-    rw [pi_norm_le_iff_of_nonneg (norm_nonneg _)]
-    intro τ
-    show ‖Phi K L (Phi K L x 1 • IsGalois.normalBasis K L 1) τ‖ ≤ _
-    rw [map_smul, Pi.smul_apply]
-    have h : Phi K L (IsGalois.normalBasis K L 1) τ = if 1 = τ then 1 else 0 :=
-      Module.Basis.equivFun_self _ _ _
-    rw [h, smul_eq_mul]
-    split_ifs
-    · rw [mul_one]
-      exact norm_le_pi_norm _ _
-    · rw [mul_zero, norm_zero]
-      exact norm_nonneg _
+    have hbound : ‖Phi K L (Phi K L x 1 • IsGalois.normalBasis K L 1)‖ ≤ ‖Phi K L x‖ := by
+      rw [pi_norm_le_iff_of_nonneg (norm_nonneg _)]
+      intro τ
+      show ‖Phi K L (Phi K L x 1 • IsGalois.normalBasis K L 1) τ‖ ≤ _
+      rw [map_smul, Pi.smul_apply]
+      have h : Phi K L (IsGalois.normalBasis K L 1) τ = if 1 = τ then 1 else 0 :=
+        Module.Basis.equivFun_self _ _ _
+      rw [h, smul_eq_mul]
+      split_ifs
+      · rw [mul_one]
+        exact norm_le_pi_norm _ _
+      · rw [mul_zero, norm_zero]
+        exact norm_nonneg _
+    exact hbound.trans (by change ‖Phi K L x‖ ≤ _; exact hx)
   e_sum x := by
     calc ∑ σ : L ≃ₐ[K] L, σ • proj1 (K := K) (L := L) (σ⁻¹ • x)
         = ∑ σ : L ≃ₐ[K] L, Phi K L x σ • σ (IsGalois.normalBasis K L 1) := by
           refine Finset.sum_congr rfl fun σ _ => ?_
           show σ (Phi K L (σ⁻¹ • x) 1 • IsGalois.normalBasis K L 1) = _
-          rw [map_smul, Phi_map, inv_inv, mul_one]
+          rw [map_smul]
+          congr 1
+          have h := Phi_map (σ⁻¹) x (1 : L ≃ₐ[K] L)
+          simpa [inv_inv] using h
       _ = x := by
         rw [← Phi_symm_apply, ContinuousLinearEquiv.symm_apply_apply]
 

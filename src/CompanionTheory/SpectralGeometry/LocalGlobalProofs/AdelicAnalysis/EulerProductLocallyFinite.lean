@@ -163,7 +163,7 @@ theorem GlobalTheory.CompanionTheory.SW.EulerInt.euler_int : ∀ (F E : Type) [F
     · simp [Set.indicator_of_notMem hX]
   have hcv : ∀ v, Continuous (Φv v) := fun v => (hpure.1 v).1.continuous
   have hΨc : Continuous Ψ :=
-    (hc.comp hpi).mul (continuous_finset_prod _ fun v _ => (hcv v).comp ((hpv v).comp hpf))
+    (hc.comp hpi).mul (continuous_finsetProd _ fun v _ => (hcv v).comp ((hpv v).comp hpf))
   have hmI : MeasurableSet (intOff b S : Set (Fin n → Fin M → AF F ⊗[F] E)) := (hint S).measurableSet
   let a : HeightOneSpectrum (𝓞 F) → ℝ := fun v => (m v (latV b v)).toReal
   have hmul : Multipliable (fun v : {v // v ∉ S} => a v.1) :=

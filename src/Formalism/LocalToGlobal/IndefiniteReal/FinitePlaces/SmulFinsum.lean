@@ -210,6 +210,8 @@ theorem tfun_vac : tfun ρ χ L X Y f₀ (fun t => if t ∈ L ∧ t ∈ X then (
       rw [if_neg hy]
 
 
+include hX hY hXY hχl hχr hχ0 hLL hdY hfinX hfinY htf hoX hoY hfX hfY in
+open Classical in
 theorem exists_model : ∃ T : (W → ℂ) →ₗ[ℂ] V,
     (∀ Φ, IsSB L X Φ → T Φ = tfun ρ χ L X Y f₀ Φ) ∧
     (∀ Φ, IsSB L X Φ → ∀ x ∈ X, T (fun t => Φ (t + x)) = ρ x (T Φ)) ∧

@@ -17,7 +17,7 @@ theorem isIntegrallyClosedIn_closure_localization : ∀ (A R : Type) [CommRing A
     [IsIntegrallyClosed R] [Algebra A R], Function.Injective (algebraMap A R) →
     ∀ (D : Type) [CommRing D] [Algebra (GlobalTheory.LocAcyc.GenFib A R) D]
     [Module.Finite (GlobalTheory.LocAcyc.GenFib A R) D] [Algebra.Etale (GlobalTheory.LocAcyc.GenFib A R) D],
-    letI := GlobalTheory.KeyOriginNoeth.closureAlg A R D
+    letI := GlobalTheory.KeyOriginNoeth.closureAlg A R D;
     IsIntegrallyClosedIn (GlobalTheory.KeyOriginNoeth.closure A R D)
       (Localization (Algebra.algebraMapSubmonoid (GlobalTheory.KeyOriginNoeth.closure A R D)
         (nonZeroDivisors R))) := by

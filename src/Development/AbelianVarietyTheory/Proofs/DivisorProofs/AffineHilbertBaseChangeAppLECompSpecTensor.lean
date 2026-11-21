@@ -12,9 +12,18 @@ noncomputable section
 
 namespace GlobalTheory.HilbAff
 
-theorem bc_appLE_comp_psi : ∀ (A B C : Type) [CommRing A] [CommRing B] [Algebra A B] [CommRing C] [Algebra A C] (Z : Scheme.{0}) (h : Z ⟶ Spec (CommRingCat.of C)) (U : Z.Opens), letI := (GlobalTheory.HilbAff.secAlg A (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C))) U).toAlgebra; ∀ φ : C →ₐ[A] Γ(Z, U), φ.toRingHom = GlobalTheory.HilbAff.secAlg C h U → ((GlobalTheory.HilbAff.bc A B (Spec.map (CommRingCat.ofHom (algebraMap A C))) h).appLE ⊤ ((pullback.snd (GlobalTheory.HilbAff.str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))) ⁻¹ᵁ U) (by simp)).hom.comp (GlobalTheory.HilbAff.psi A B C) = (GlobalTheory.HilbAff.theta A B (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C))) U).comp (Algebra.TensorProduct.map φ (AlgHom.id A B)).toRingHom := by
+theorem bc_appLE_comp_psi :
+    ∀ (A B C : Type) [CommRing A] [CommRing B] [Algebra A B] [CommRing C] [Algebra A C]
+      (Z : Scheme.{0}) (h : Z ⟶ Spec (CommRingCat.of C)) (U : Z.Opens),
+      (letI := (secAlg A (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C))) U).toAlgebra
+       ∀ φ : C →ₐ[A] Γ(Z, U), φ.toRingHom = secAlg C h U →
+         ((bc A B (Spec.map (CommRingCat.ofHom (algebraMap A C))) h).appLE ⊤
+           ((pullback.snd (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))) ⁻¹ᵁ U)
+           (by simp)).hom.comp (psi A B C) =
+         (theta A B (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C))) U).comp
+           (Algebra.TensorProduct.map φ (AlgHom.id A B)).toRingHom) := by
   intro A B C _ _ _ _ _ Z h U
-  letI := (secAlg A (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C))) U).toAlgebra
+  let := (secAlg A (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C))) U).toAlgebra
   intro φ hφ
   have eL : (Scheme.ΓSpecIso (CommRingCat.of B)).inv ≫
       (pullback.fst (str A B) (Spec.map (CommRingCat.ofHom (algebraMap A C)))).appTop =
@@ -57,8 +66,7 @@ theorem bc_appLE_comp_psi : ∀ (A B C : Type) [CommRing A] [CommRing B] [Algebr
       (pullback.lift_snd _ _ _) _ _ _ (by simp)).trans ?_
     rw [Scheme.Hom.app_eq_appLE]; exact (Scheme.Hom.appLE_comp_appLE _ _ _ _ _ _ _).symm
   refine RingHom.ext fun x => ?_
-  induction x using TensorProduct.induction_on with
-  | zero => simp only [map_zero]
+  induction x using TensorProduct.inductionOn with
   | tmul c b =>
     have hF := congrArg (fun F => F.hom ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom b)) eF
     have hS := congrArg (fun F => F.hom ((Scheme.ΓSpecIso (CommRingCat.of C)).inv.hom c)) eS
@@ -74,20 +82,14 @@ theorem bc_appLE_comp_psi : ∀ (A B C : Type) [CommRing A] [CommRing B] [Algebr
         ((pullback.fst (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))).appLE ⊤
           ((pullback.snd (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))) ⁻¹ᵁ U)
           (by simp)).hom ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom b) := by
-      letI : Algebra A Γ(pullback (str A B)
+      let : Algebra A Γ(pullback (str A B)
           (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C))),
           (pullback.snd (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))) ⁻¹ᵁ U) :=
         (((pullback.snd (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))).app U).hom.comp
           (secAlg A (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C))) U)).toAlgebra
       exact Algebra.TensorProduct.lift_tmul _ _ _ _ _
     rw [hθ]
-    calc
-      _ = _ := by rw [mul_comm]
-      _ = _ := (congrArg (fun z => z *
-        ((pullback.fst (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))).appLE ⊤
-          ((pullback.snd (str A B) (h ≫ Spec.map (CommRingCat.ofHom (algebraMap A C)))) ⁻¹ᵁ U)
-          (by simp)).hom ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom b)) hS).symm
-      _ = _ := by congr 1 <;> rfl
+    rfl
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.HilbAff

@@ -414,7 +414,8 @@ private theorem assemble (hs : Seps rbar s) (A : ℕ → Type) [∀ N, CommRing 
     have e0 : Ideal.Quotient.liftₐ J (F 0) hJ0 (hom g a b) = (r 0).hom g a b := by
       rw [hhom, Ideal.Quotient.liftₐ_apply]
       exact hxe' g a b 0
-    rw [← res_map (Ideal.Quotient.liftₐ J (F 0) hJ0), e0, (r 0).red]
+    rw [← res_map (O := O) (R := MvPowerSeries (σ × ι × ι) O ⧸ J)
+      (Ideal.Quotient.liftₐ J (F 0) hJ0), e0, (r 0).red]
   have hcont : ∀ a b, AdicCont (maximalIdeal (MvPowerSeries (σ × ι × ι) O ⧸ J)) fun g => hom g a b := by
     intro a b K
     have hloc : IsLocallyConstant fun g => (r K).hom g a b := by
@@ -492,7 +493,7 @@ private theorem assemble (hs : Seps rbar s) (A : ℕ → Type) [∀ N, CommRing 
 end
 
 theorem UpperTheory.V.Alg.univ_lift :
-    ∀ (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [IsLocalRing O] [IsNoetherianRing O] [IsAdicComplete (maximalIdeal O) O] [Finite (ResidueField O)] [CharP (ResidueField O) l] (Γ ι : Type) [Group Γ] [TopologicalSpace Γ] [Fintype ι] [DecidableEq ι] (rbar : Γ →* Matrix ι ι (ResidueField O)) [IsTopologicalGroup Γ] [CompactSpace Γ] [TotallyDisconnectedSpace Γ] [T2Space Γ], PhiCond Γ l → IsLocallyConstant rbar →
+    ∀ (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [IsLocalRing O] [IsNoetherianRing O] [IsAdicComplete (maximalIdeal O) O] [Finite (ResidueField O)] [CharP (ResidueField O) l] (Γ ι : Type) [Group Γ] [TopologicalSpace Γ] [Fintype ι] [DecidableEq ι] (rbar : Γ →* Matrix ι ι (ResidueField O)) [IsTopologicalGroup Γ] [CompactSpace Γ] [TotallyDisconnectedSpace Γ] [T2Space Γ], PhiCond (Γ := Γ) l → IsLocallyConstant rbar →
       ∃ (R : Type) (_ : CommRing R) (_ : Algebra O R) (_ : IsCO O R) (r : Lift O rbar R), Represents (fun _ _ _ _ _ => True) r := by
   intro l _ O _ _ _ _ _ _ Γ ι _ _ _ _ rbar _ _ _ _ hphi hc
   haveI hD : IsCO O (DualNumber (ResidueField O)) := (co_res O).2

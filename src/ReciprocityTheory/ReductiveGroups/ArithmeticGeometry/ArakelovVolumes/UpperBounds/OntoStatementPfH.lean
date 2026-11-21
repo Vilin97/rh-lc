@@ -26,7 +26,7 @@ private theorem continuous_dmin_apply (τ : X.Ψ) (i : Fin (r + 1)) :
   refine Continuous.matrix_submatrix ?_ _ _
   refine continuous_pi fun a => continuous_pi fun b => ?_
   simp only [Matrix.of_apply]
-  refine continuous_finset_sum _ fun c _ => continuous_finset_sum _ fun d _ => ?_
+  refine continuous_finsetSum _ fun c _ => continuous_finsetSum _ fun d _ => ?_
   refine Continuous.mul (Continuous.mul ?_ continuous_const) ?_
   · exact (continuous_apply _).comp ((continuous_apply _).comp (continuous_apply τ))
   · exact Complex.continuous_conj.comp

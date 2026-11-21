@@ -96,7 +96,7 @@ variable [TopologicalSpace K] [IsTopologicalRing K]
 theorem continuous_hform (s : K →+* K) (hs : Continuous s) (L : Matrix (Fin N) (Fin N) K) :
     Continuous fun p : (Fin N → K) × (Fin N → K) => hform s L p.1 p.2 := by
   unfold hform
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   have h1 : Continuous fun p : (Fin N → K) × (Fin N → K) => p.1 i :=
     (continuous_apply i).comp continuous_fst
   have h2 : Continuous fun p : (Fin N → K) × (Fin N → K) => p.2 j :=

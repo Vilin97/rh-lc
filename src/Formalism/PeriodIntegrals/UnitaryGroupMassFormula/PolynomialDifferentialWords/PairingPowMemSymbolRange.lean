@@ -69,9 +69,11 @@ theorem bihom_zero_const (g : Pol K k) (hg : g ∈ Bihom K k 0) : ∃ r : K, g =
     · have h3 := (Finset.sum_eq_zero_iff.1 e2) i (Finset.mem_univ i)
       simp [h3]
 
-theorem bihom_le_Sc : ∀ c, c ≤ d → Bihom K k c ≤ Sc K k d c
-  | 0, _ => by
-    intro g hg
+theorem bihom_le_Sc : ∀ c, c ≤ d → Bihom K k c ≤ Sc K k d c := by
+  intro c
+  induction c with
+  | zero =>
+    intro _ g hg
     obtain ⟨r, rfl⟩ := bihom_zero_const K k g hg
     rw [mem_Sc]
     refine ⟨(r * (d.factorial : K)) • 1, Submodule.smul_mem _ _
@@ -79,8 +81,9 @@ theorem bihom_le_Sc : ∀ c, c ≤ d → Bihom K k c ≤ Sc K k d c
     rw [map_smul, symbolMapOne, smul_smul, mul_assoc,
       mul_inv_cancel₀ (Nat.cast_ne_zero.2 (Nat.factorial_ne_zero d)), mul_one, Nat.sub_zero,
       smul_eq_C_mul, mul_comm]
-  | c + 1, hc => by
-    have IH := bihom_le_Sc c (by omega)
+  | succ c ih =>
+    intro hc
+    have IH := ih (by omega)
     obtain ⟨n, hn⟩ : ∃ n, d - c = n + 1 := ⟨d - c - 1, by omega⟩
     have hn2 : d - (c + 1) = n := by omega
     intro g hg

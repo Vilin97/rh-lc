@@ -43,14 +43,21 @@ def sig (bs : List (Eˣ × ℕ+)) : ℕ → ℕ :=
 theorem sig_cons (t : Eˣ) (s : ℕ+) (bs : List (Eˣ × ℕ+)) (a : ℕ) :
     sig ((t, s) :: bs) a = if a < s then s - 1 - a else s + sig bs (a - s) := rfl
 
-theorem sig_sig : ∀ (bs : List (Eˣ × ℕ+)) (a : ℕ), sig bs (sig bs a) = a
-  | [], a => rfl
-  | (t, s) :: bs, a => by
-    by_cases h : a < s
+theorem sig_sig : ∀ (bs : List (Eˣ × ℕ+)) (a : ℕ), sig bs (sig bs a) = a := by
+  intro bs
+  induction bs with
+  | nil => intro a; rfl
+  | cons p bs ih =>
+    obtain ⟨t, s⟩ := p
+    intro a
+    by_cases h : a < (s : ℕ)
     · have h2 : (s : ℕ) - 1 - a < s := by omega
-      simp only [sig_cons, h, h2, if_true]; omega
+      rw [sig_cons t s bs a, ite_eq_left h, sig_cons, ite_eq_left h2]
+      omega
     · have h2 : ¬ ((s : ℕ) + sig bs (a - s) < s) := by omega
-      simp only [sig_cons, h, h2, if_false, Nat.add_sub_cancel_left, sig_sig bs]; omega
+      rw [sig_cons t s bs a, ite_eq_right h, sig_cons, ite_eq_right h2,
+        Nat.add_sub_cancel_left, ih]
+      omega
 
 theorem entry_zero : ∀ (bs : List (Eˣ × ℕ+)) (a b : ℕ), b ≠ sig bs a → ptEntryL bs a b = 0
   | [], a, b, _ => rfl
@@ -58,26 +65,32 @@ theorem entry_zero : ∀ (bs : List (Eˣ × ℕ+)) (a b : ℕ), b ≠ sig bs a �
     simp only [sig_cons] at hb
     simp only [ptEntryL]
     split_ifs with h1 h2 h3
-    · rw [if_pos h1.1] at hb; omega
+    · rw [ite_eq_left h1.1] at hb; omega
     · rfl
-    · rw [if_neg (by omega)] at hb
+    · rw [ite_eq_right (by omega)] at hb
       exact entry_zero bs _ _ (by omega)
     · rfl
 
 theorem entry_unit : ∀ (bs : List (Eˣ × ℕ+)) (a : ℕ), a < (bs.map (fun b => (b.2 : ℕ))).sum →
-    sig bs a < (bs.map (fun b => (b.2 : ℕ))).sum ∧ IsUnit (ptEntryL bs a (sig bs a))
-  | [], a, h => by simp at h
-  | (t, s) :: bs, a, h => by
+    sig bs a < (bs.map (fun b => (b.2 : ℕ))).sum ∧ IsUnit (ptEntryL bs a (sig bs a)) := by
+  intro bs
+  induction bs with
+  | nil => intro a h; simp at h
+  | cons p bs ih =>
+    obtain ⟨t, s⟩ := p
+    intro a h
     simp only [List.map_cons, List.sum_cons] at h ⊢
-    by_cases h1 : a < s
-    · simp only [sig_cons, ptEntryL, h1, if_true]
+    rw [sig_cons t s bs a]
+    by_cases h1 : a < (s : ℕ)
+    · rw [ite_eq_left h1]
       refine ⟨by omega, ?_⟩
-      rw [if_pos ⟨trivial, by omega⟩, if_pos (by omega)]
+      rw [ptEntryL, ite_eq_left ⟨h1, by omega⟩, ite_eq_left (by omega)]
       exact t.isUnit
-    · obtain ⟨h2, h3⟩ := entry_unit bs (a - s) (by omega)
-      simp only [sig_cons, ptEntryL, h1, if_false, false_and]
+    · obtain ⟨h2, h3⟩ := ih (a - s) (by omega)
+      rw [ite_eq_right h1]
       refine ⟨by omega, ?_⟩
-      rw [if_pos ⟨by omega, by omega⟩, Nat.add_sub_cancel_left]
+      rw [ptEntryL, ite_eq_right (fun h => h1 h.1), ite_eq_left ⟨by omega, by omega⟩,
+        Nat.add_sub_cancel_left]
       exact h3
 
 theorem det_mono {n : ℕ} (A : Matrix (Fin n) (Fin n) E) (σ : Fin n → Fin n)

@@ -61,7 +61,7 @@ theorem norm_integral (b : integralClosure O L) (hb : b ≠ 0) {ϖ : O} (hϖ : I
   have hsum : (∑ᶠ v : HeightOneSpectrum (integralClosure O L), v.asIdeal.inertiaDeg O *
       Multiset.count v.asIdeal (UniqueFactorizationMonoid.normalizedFactors (Ideal.span {b}))) = n := by
     rw [hnN]
-    exact finsum_comp_equiv (hoEquiv O F L)
+    exact finsum_comp_equiv (hoEquiv (O := O) (F := F) (L := L))
       (f := fun Q : {Q : Ideal (integralClosure O L) // Q.IsMaximal} => Q.1.inertiaDeg O *
         Multiset.count Q.1 (UniqueFactorizationMonoid.normalizedFactors (Ideal.span {b})))
   haveI : IsLocalization (Algebra.algebraMapSubmonoid (integralClosure O L) (nonZeroDivisors O)) L :=
@@ -186,7 +186,7 @@ theorem norm_eq_places (y : L) (hy : y ≠ 0) {ϖ : O} (hϖ : Irreducible ϖ) :
 
 
 theorem placesOver_finite : (PlacesOver O L).Finite := by
-  obtain ⟨e, -⟩ := placesOver_bij (O := O) (F := F) (L := L)
+  obtain ⟨e, he⟩ := placesOver_bij (O := O) (L := L)
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible O
   have hinj : Function.Injective (algebraMap O L) := by
     rw [IsScalarTower.algebraMap_eq O F L]

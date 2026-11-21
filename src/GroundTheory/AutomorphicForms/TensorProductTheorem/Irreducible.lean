@@ -104,7 +104,8 @@ theorem windowEmbed_mem (t : ⨂[ℂ] v : S, fixedVectors (π v) (K' v)) :
       rw [map_smul, windowEmbed_tprod]
       exact Submodule.smul_mem _ _ (tprod_mem_restrictedTensor (isRestricted_extend ξ S _))
     refine ⟨hmem, fun g hg => Subtype.ext ?_⟩
-    show tensorRep K π g (windowEmbed ξ S (c • tprod ℂ w)) = windowEmbed ξ S (c • tprod ℂ w)
+    show tensorRep (K := K) π g (windowEmbed ξ S (c • tprod ℂ w)) =
+      windowEmbed ξ S (c • tprod ℂ w)
     rw [map_smul, map_smul, windowEmbed_tprod, tensorRep_tprod]
     congr 2
     funext v

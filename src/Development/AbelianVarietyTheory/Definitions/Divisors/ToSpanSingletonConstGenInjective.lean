@@ -30,7 +30,7 @@ structure PDivGroup (p : ℕ) (O : Type) [CommRing O] : Type 1 where
 
   res_surjective : ∀ n, Function.Surjective (res n)
 
-  ker_res : ∀ n, RingHom.ker (res n) = torsionIdeal O (A (n + 1)) (p ^ n)
+  ker_res : ∀ n, RingHom.ker (res n) = torsionIdeal (R := O) (A := A (n + 1)) (p ^ n)
 
 namespace PDivGroup
 
@@ -46,7 +46,7 @@ theorem fibreDim_eq (n : ℕ) (q : PrimeSpectrum O) : fibreDim (G.A n) q = p ^ (
   (rankAtStalk_eq q).symm.trans (G.rank_eq n q)
 
 theorem mulBy_pow_self (n : ℕ) (a : G.A n) :
-    mulBy O (G.A n) (p ^ n) a = algebraMap O _ (counit a) := by
+    mulBy (R := O) (A := G.A n) (p ^ n) a = algebraMap O _ (counit a) := by
   obtain ⟨b, rfl⟩ := G.res_surjective n a
   rw [← map_mulBy, CoalgHomClass.counit_comp_apply]
   exact (kerIdeal_le_ker_iff _ (G.res n : G.A (n + 1) →ₐ[O] G.A n)).1 (G.ker_res n).ge b
@@ -74,27 +74,27 @@ theorem exists_comp_res_iff (n : ℕ) {B : Type*} [CommRing B] [Algebra O B]
     exact ⟨AlgHom.liftOfSurjective _ (G.res_surjective n) x h, AlgHom.liftOfSurjective_comp ..⟩
 
 def mulP (n : ℕ) : G.A n →ₐc[O] G.A (n + 1) :=
-  liftSurj (G.res n) (G.res_surjective n) (mulBy O _ p) <| by
+  liftSurj (G.res n) (G.res_surjective n) (mulBy (R := O) (A := _) p) <| by
     rw [G.ker_res]
-    refine (kerIdeal_le_ker_iff _ (mulBy O (G.A (n + 1)) p : G.A (n + 1) →ₐ[O] G.A (n + 1))).2 fun c => ?_
-    change mulBy O _ p (mulBy O _ (p ^ n) c) = _
+    refine (kerIdeal_le_ker_iff _ (mulBy (R := O) (A := G.A (n + 1)) p : G.A (n + 1) →ₐ[O] G.A (n + 1))).2 fun c => ?_
+    change mulBy (R := O) (A := _) p (mulBy (R := O) (A := _) (p ^ n) c) = _
     rw [mulBy_mulBy, ← pow_succ', mulBy_pow_self]
 
-@[simp] theorem mulP_res (n : ℕ) (a : G.A (n + 1)) : G.mulP n (G.res n a) = mulBy O _ p a :=
+@[simp] theorem mulP_res (n : ℕ) (a : G.A (n + 1)) : G.mulP n (G.res n a) = mulBy (R := O) (A := _) p a :=
   liftSurj_apply ..
 
-@[simp] theorem res_mulP (n : ℕ) (a : G.A n) : G.res n (G.mulP n a) = mulBy O _ p a := by
+@[simp] theorem res_mulP (n : ℕ) (a : G.A n) : G.res n (G.mulP n a) = mulBy (R := O) (A := _) p a := by
   obtain ⟨b, rfl⟩ := G.res_surjective n a
   rw [mulP_res, map_mulBy]
 
-theorem mulP_comp_res (n : ℕ) : (G.mulP n).comp (G.res n) = mulBy O _ p :=
+theorem mulP_comp_res (n : ℕ) : (G.mulP n).comp (G.res n) = mulBy (R := O) (A := _) p :=
   BialgHom.ext (G.mulP_res n)
 
-theorem res_comp_mulP (n : ℕ) : (G.res n).comp (G.mulP n) = mulBy O _ p :=
+theorem res_comp_mulP (n : ℕ) : (G.res n).comp (G.mulP n) = mulBy (R := O) (A := _) p :=
   BialgHom.ext (G.res_mulP n)
 
 theorem exists_res_le {m n : ℕ} (h : m ≤ n) : ∃ f : G.A n →ₐc[O] G.A m,
-    Function.Surjective f ∧ RingHom.ker f = torsionIdeal O _ (p ^ m) := by
+    Function.Surjective f ∧ RingHom.ker f = torsionIdeal (R := O) (A := _) (p ^ m) := by
   induction n, h using Nat.le_induction with
   | base =>
     refine ⟨BialgHom.id O _, Function.surjective_id, le_antisymm (fun a ha => ?_) ?_⟩
@@ -129,19 +129,19 @@ theorem dual_mulP_surjective (n : ℕ) : Function.Surjective (CartierDual.map (G
   ring
 
 theorem ker_dual_mulP (n : ℕ) : RingHom.ker (CartierDual.map (G.mulP n)) =
-    torsionIdeal O (CartierDual O (G.A (n + 1))) (p ^ n) := by
+    torsionIdeal (R := O) (A := CartierDual O (G.A (n + 1))) (p ^ n) := by
   refine ker_eq_of_fibreDim_eq
     (CartierDual.map (G.mulP n) : CartierDual O (G.A (n + 1)) →ₐ[O] CartierDual O (G.A n))
     (G.dual_mulP_surjective n) _ ?_ fun q => ?_
   · refine (kerIdeal_le_ker_iff _ _).2 fun φ => CartierDual.ext_apply fun a => ?_
     rw [← dual_mulBy]
-    change φ.ofConv (mulBy O _ (p ^ n) (G.mulP n a)) =
+    change φ.ofConv (mulBy (R := O) (A := _) (p ^ n) (G.mulP n a)) =
       (algebraMap O (CartierDual O (G.A n)) (φ.ofConv 1)) a
     rw [← map_mulBy, mulBy_pow_self, Algebra.algebraMap_eq_smul_one,
       Algebra.algebraMap_eq_smul_one, map_smul, map_one, map_smul]
     change _ = φ.ofConv 1 * counit a
     rw [smul_eq_mul, mul_comm]
-  · have h1 : kerIdeal (mulBy O (G.A (n + 1)) (p ^ n)) =
+  · have h1 : kerIdeal (mulBy (R := O) (A := G.A (n + 1)) (p ^ n)) =
       RingHom.ker (G.res n : G.A (n + 1) →ₐ[O] G.A n) := (G.ker_res n).symm
     rw [torsionIdeal, ← dual_mulBy, fibreDim_ker_dual, fibreDim_dual, h1]
     exact fibreDim_congr (Ideal.quotientKerAlgEquivOfSurjective
@@ -267,7 +267,7 @@ instance : Linear ℤ_[p] (PDivGroup p O) where
     rw [smul_conv, comp_conv_right, comp_conv_right, smul_conv, map_pow]
 
 theorem natCast_smul_id_app (G : PDivGroup p O) (k n : ℕ) :
-    Hom.app ((k : ℤ_[p]) • 𝟙 G) n = mulBy O _ k :=
+    Hom.app ((k : ℤ_[p]) • 𝟙 G) n = mulBy (R := O) (A := _) k :=
   congrArg ofConv (pow_digit_natCast (G.hom_pow_self n (toConv (BialgHom.id O _))) k)
 
 abbrev Action (Λ : Type*) [Semiring Λ] (G : PDivGroup p O) : Type _ := Λ →+* End G
@@ -670,14 +670,14 @@ def muRes (n : ℕ) :
   ker_res n := by
     have key : ∀ {E : Type} [CommRing E] [Algebra O E]
         (x : AddMonoidAlgebra O (ZMod (p ^ (n + 1))) →ₐ[O] E),
-        torsionIdeal O _ (p ^ n) ≤ RingHom.ker x ↔ x (muT O _) ^ p ^ n = 1 := fun x => by
+        torsionIdeal (R := O) (A := _) (p ^ n) ≤ RingHom.ker x ↔ x (muT O _) ^ p ^ n = 1 := fun x => by
       rw [torsionIdeal_le_ker_iff, ← convPow_apply_groupLike (toConv x) (isGroupLikeElem_muT O _)]
       refine ⟨fun h => by rw [h]; simp [(isGroupLikeElem_muT O _).counit_eq_one], fun h => ?_⟩
       exact ofConv_injective (mu_algHom_ext (h.trans
         (by simp [(isGroupLikeElem_muT O _).counit_eq_one])))
     refine le_antisymm (fun a ha => ?_) ((key (muRes p O n).toAlgHom).2 ?_)
     · let π := Ideal.Quotient.mkₐ O
-        (torsionIdeal O (AddMonoidAlgebra O (ZMod (p ^ (n + 1)))) (p ^ n))
+        (torsionIdeal (R := O) (A := AddMonoidAlgebra O (ZMod (p ^ (n + 1)))) (p ^ n))
       have h1 := (key π).1 fun a ha => Ideal.Quotient.eq_zero_iff_mem.2 ha
       have h2 : (muPoint O _ h1).comp (muRes p O n).toAlgHom = π := mu_algHom_ext <|
         (congrArg (muPoint O _ h1) (muRes_muT p O n)).trans (muPoint_muT _ h1)

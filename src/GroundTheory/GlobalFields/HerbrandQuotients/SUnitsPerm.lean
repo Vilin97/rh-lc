@@ -67,7 +67,7 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 
 section Infinite
 
-
+open scoped Classical in
 theorem prod_card_stabilizer_infinitePlace
     [Fintype (orbitRel.Quotient (L ≃ₐ[K] L) (InfinitePlace L))] :
     ∏ ω : orbitRel.Quotient (L ≃ₐ[K] L) (InfinitePlace L),
@@ -100,10 +100,8 @@ theorem eq_placeBelow_of_liesOver {w : HeightOneSpectrum (𝓞 L)} {v : HeightOn
 omit [NumberField K] [NumberField L] [IsGalois K L] in
 theorem placeBelow_smul (g : L ≃ₐ[K] L) (w : HeightOneSpectrum (𝓞 L)) :
     placeBelow (K := K) (g • w) = placeBelow w := by
-  symm
-  apply eq_placeBelow_of_liesOver
-  change ((g • w.asIdeal : Ideal (𝓞 L))).LiesOver _
-  infer_instance
+  have h : (g • w.asIdeal).LiesOver (placeBelow (K := K) w).asIdeal := inferInstance
+  exact HeightOneSpectrum.ext h.over.symm
 
 variable (S : Set (HeightOneSpectrum (𝓞 L)))
 
@@ -113,13 +111,13 @@ variable (S : Set (HeightOneSpectrum (𝓞 L)))
   mul_smul g h w := Subtype.ext (mul_smul g h w.1)
 
 theorem prod_card_stabilizer_finitePlace (hS : ∀ (g : L ≃ₐ[K] L), ∀ w ∈ S, g • w ∈ S) :
-    letI := stableMulAction S hS
+    letI _ := stableMulAction S hS
     ∀ [Fintype (orbitRel.Quotient (L ≃ₐ[K] L) S)],
     ∏ ω : orbitRel.Quotient (L ≃ₐ[K] L) S,
         (Nat.card (stabilizer (L ≃ₐ[K] L) (Quotient.out ω)) : ℚ) =
       ∏ᶠ (v : HeightOneSpectrum (𝓞 K)) (_ : ∃ w ∈ S, w.asIdeal.LiesOver v.asIdeal),
         ((v.asIdeal.ramificationIdxIn (𝓞 L) * v.asIdeal.inertiaDegIn (𝓞 L) : ℕ) : ℚ) := by
-  let := stableMulAction S hS
+  let _ := stableMulAction S hS
   intro _
   have hstab : ∀ x : S, Nat.card (stabilizer (L ≃ₐ[K] L) x) =
       (placeBelow (K := K) x.1).asIdeal.ramificationIdxIn (𝓞 L) *
@@ -132,8 +130,10 @@ theorem prod_card_stabilizer_finitePlace (hS : ∀ (g : L ≃ₐ[K] L), ∀ w �
     rw [h1]
     exact Ideal.card_stabilizer_eq (placeBelow (K := K) x.1).asIdeal x.1.asIdeal
   rw [← finprod_eq_prod_of_fintype, ← finprod_mem_univ]
-  refine finprod_mem_eq_of_bijOn (fun ω => placeBelow (K := K) (Quotient.out ω).1) ⟨?_, ?_, ?_⟩
-    fun ω _ => by rw [hstab]
+  refine finprod_mem_eq_of_bijOn (M := ℚ)
+    (t := {v : HeightOneSpectrum (𝓞 K) | ∃ w ∈ S, w.asIdeal.LiesOver v.asIdeal})
+    (fun ω : orbitRel.Quotient (L ≃ₐ[K] L) S => placeBelow (K := K) (Quotient.out ω).1)
+    ⟨?_, ?_, ?_⟩ ?_
   · intro ω _
     exact ⟨(Quotient.out ω).1, (Quotient.out ω).2, inferInstance⟩
   · intro ω₁ _ ω₂ _ h
@@ -155,6 +155,8 @@ theorem prod_card_stabilizer_finitePlace (hS : ∀ (g : L ≃ₐ[K] L), ∀ w �
     rw [← hg]
     change placeBelow (g • w) = v
     rw [placeBelow_smul, ← eq_placeBelow_of_liesOver hlies]
+  · intro ω _
+    rw [hstab]
 
 end Finite
 

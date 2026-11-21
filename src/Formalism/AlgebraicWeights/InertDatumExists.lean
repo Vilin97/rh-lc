@@ -15,6 +15,8 @@ section Inert
 
 variable (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ)
 
+local notation3 "L⁺" => maximalRealSubfield L
+
 open ReciprocityTheory.Aut
 
 structure InertDatum (v : HeightOneSpectrum (𝓞 L⁺)) (w : HeightOneSpectrum (𝓞 L)) where
@@ -38,6 +40,7 @@ def InertDatum.loc {v : HeightOneSpectrum (𝓞 L⁺)} {w : HeightOneSpectrum (�
     (Matrix.GeneralLinearGroup.map (compAt L v) (x : GL (Fin n) (AL L))) * D.P
 
 
+open Classical in
 def InertDatum.hval {v : HeightOneSpectrum (𝓞 L⁺)} {w : HeightOneSpectrum (𝓞 L)} (D : InertDatum L n v w)
     (h : Formalism.UG.GU D.σw n → ℂ) (y : GL (Fin n) (w.adicCompletion L)) : ℂ :=
   if hy : y ∈ Formalism.UG.GU D.σw n then h ⟨y, hy⟩ else 0
@@ -45,11 +48,12 @@ def InertDatum.hval {v : HeightOneSpectrum (𝓞 L⁺)} {w : HeightOneSpectrum (
 variable (L n)
 
 
+open Classical in
 def heckeFunI {W : Type} [AddCommGroup W] [Module ℂ W] (U : Subgroup (GAf L n))
     {v : HeightOneSpectrum (𝓞 L⁺)} {w : HeightOneSpectrum (𝓞 L)} (D : InertDatum L n v w)
     (h : Formalism.UG.GU D.σw n → ℂ) (f : GAf L n → W) : GAf L n → W :=
   fun g => ∑ᶠ c : GAf L n ⧸ U,
-    if hc : ∃ x : GAf L n, (x : GAf L n ⧸ U) = c ∧ TrivOutside {v} x then
+    if hc : ∃ x : GAf L n, (x : GAf L n ⧸ U) = c ∧ TrivOutside L {v} x then
       D.hval h (D.loc hc.choose) • f (g * hc.choose) else 0
 
 

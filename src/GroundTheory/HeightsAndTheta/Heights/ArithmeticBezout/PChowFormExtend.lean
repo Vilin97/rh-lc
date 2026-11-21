@@ -89,7 +89,7 @@ def coordPoly (φ : L →ₗ[K] K) : MvPolynomial Y L →+ MvPolynomial Y K wher
   toFun p := AddMonoidAlgebra.map φ.toAddMonoidHom p
   map_zero' := by
     ext m
-    rw [coeff_addMonoidAlgebraMap, coeff_zero, coeff_zero, map_zero]
+    simp [coeff_addMonoidAlgebraMap]
   map_add' p q := by
     ext m
     simp only [coeff_addMonoidAlgebraMap, MvPolynomial.coeff_add, map_add (f := _)]

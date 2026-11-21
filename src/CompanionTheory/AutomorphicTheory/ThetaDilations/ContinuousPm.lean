@@ -288,10 +288,12 @@ theorem par : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField 
     · show nM s _ _ (z _) = _
       rw [nM, nM, pm_map, map_one, Matrix.map_one _ (map_zero _) (map_one _)]
       congr 1
+      have ht : (algebraMap F (AF F ⊗[F] E)) t = inclR (AF F) ((algebraMap F E) t) :=
+        ((Algebra.TensorProduct.includeRight : E →ₐ[F] AF F ⊗[F] E).commutes t).symm
       set_option synthInstance.maxHeartbeats 100000 in
         · simp only [hz, hhf, hform, map_add (f := _), map_neg, map_mul, map_sum, ratTup, hsi, JR, Matrix.map_apply, hκ, hdl]
-        congr 2
-        exact ((Algebra.TensorProduct.includeRight : E →ₐ[F] AF F ⊗[F] E).commutes t).symm
+          rw [← IsScalarTower.algebraMap_apply F (AF F) (AF F ⊗[F] E) t, ht]
+          rfl
       · funext i
         simp [Matrix.vecMul, dotProduct, ratTup, hsi, JR]
   · rintro u ⟨g, hg, e⟩

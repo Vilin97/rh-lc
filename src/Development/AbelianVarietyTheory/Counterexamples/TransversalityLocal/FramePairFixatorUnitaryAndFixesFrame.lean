@@ -62,7 +62,7 @@ theorem img_one (Λ : Submodule M.L.O V) : img (1 : V ≃ₗ[E] V) Λ = Λ := by
     exact ⟨x, hx, rfl⟩
 
 theorem trel_equiv (P : FPair H r) : Equivalence (TRel P) where
-  refl t := ⟨1, P.St.one_mem, (img_one _).symm⟩
+  refl := fun t => ⟨1, P.St.one_mem, (img_one _).symm⟩
   symm := by
     rintro t t' ⟨s, hs, h⟩
     refine ⟨s⁻¹, P.St.inv_mem hs, ?_⟩
@@ -115,7 +115,7 @@ theorem perp_stable {g : V ≃ₗ[E] V} (hu : IsUnitary H g) (f : Fin (r + 1) �
   exact hv' x hx
 
 theorem rel_equiv (P : FPair H r) : Equivalence (Datum.Rel (P := P)) where
-  refl d := ⟨1, P.UW0.one_mem, by
+  refl := fun d => ⟨1, P.UW0.one_mem, by
     refine ⟨fun x y h => ?_, fun x y h => ?_, fun x' y' x y h' h => ?_⟩
     · rw [show y = x from Subtype.ext h]
     · rw [show y = x from Subtype.ext h]

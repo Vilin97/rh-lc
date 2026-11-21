@@ -35,7 +35,7 @@ def intPoly (σ : Type) (W : Subring Ω) : Subring (MvPolynomial σ Ω) where
     exact W.add_mem (hP e) (hQ e)
   zero_mem' := by
     intro e
-    rw [coeff_zero]
+    rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     exact W.zero_mem
   neg_mem' := by
     intro P hP e

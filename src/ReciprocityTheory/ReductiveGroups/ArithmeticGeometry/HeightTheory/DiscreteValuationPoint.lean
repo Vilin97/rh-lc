@@ -127,7 +127,7 @@ private theorem exists_dvr_embedding_of_dedekind {O C : Type} [CommRing O] [IsDo
   haveI := hNmax
   have hϖN : algebraMap O C ϖ ∈ N := by
     have hc : (N.comap (algebraMap O C)).IsMaximal := by
-      exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal N
+      exact Ideal.isMaximal_under_of_isIntegral_of_isMaximal N
     rw [← Ideal.mem_comap, IsLocalRing.eq_maximalIdeal hc]
     exact hϖm
   have hch : ∀ P : Ideal C, P.IsPrime → ⊥ ≤ P → P ≤ N → algebraMap O C ϖ ∈ P → P = N := by

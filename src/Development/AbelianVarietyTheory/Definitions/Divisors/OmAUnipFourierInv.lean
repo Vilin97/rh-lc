@@ -7,6 +7,7 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.RankEqCardIf
 
 open MeasureTheory ValuativeRel Matrix
 open scoped NNReal ENNReal Pointwise
+open scoped Classical
 
 noncomputable section
 namespace GlobalTheory.SplitFlip.Model
@@ -49,10 +50,10 @@ theorem val_le_iff_mem {ϖ : kˣ} (hϖ : IsUnif ϖ) (e : ℕ) (r : 𝒪[k]) :
   rfl
 
 
-theorem sum_psi {ϖ : kˣ} (hϖ : IsUnif ϖ) {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) (e : ℕ) (s s' : Res k e) :
-    ∑ t : Res k e, (ψ (((Quotient.out t : 𝒪[k]) : k) *
+theorem sum_psi {ϖ : kˣ} (hϖ : IsUnif ϖ) {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) (e : ℕ) (s s' : Res (k := k) e) :
+    ∑ t : Res (k := k) e, (ψ (((Quotient.out t : 𝒪[k]) : k) *
       ((((ϖ ^ e)⁻¹ : kˣ) : k) * (((Quotient.out s : 𝒪[k]) : k) - ((Quotient.out s' : 𝒪[k]) : k)))) : ℂ) =
-      if s = s' then (Fintype.card (Res k e) : ℂ) else 0 := by
+      if s = s' then (Fintype.card (Res (k := k) e) : ℂ) else 0 := by
   split_ifs with h
   · subst h; simp
   set x : k := (((ϖ ^ e)⁻¹ : kˣ) : k) * (((Quotient.out s : 𝒪[k]) : k) - ((Quotient.out s' : 𝒪[k]) : k)) with hx
@@ -81,9 +82,9 @@ theorem sum_psi {ϖ : kˣ} (hϖ : IsUnif ϖ) {ψ : AddChar k Circle} (hψ : HasC
       triv (((a - b : 𝒪[k]) : k) * x), mul_one]
     rw [map_mul, hvx, ← mul_assoc]
     exact mul_le_one' (by rw [mul_inv_le_iff₀ h0, one_mul]; exact hab) (Quotient.out s - Quotient.out s' : 𝒪[k]).2
-  set S := ∑ t : Res k e, (ψ (((Quotient.out t : 𝒪[k]) : k) * x) : ℂ) with hS
+  set S := ∑ t : Res (k := k) e, (ψ (((Quotient.out t : 𝒪[k]) : k) * x) : ℂ) with hS
   have hshift : S = ψ y * S := by
-    rw [hS, Finset.mul_sum, ← Equiv.sum_comp (Equiv.addRight (Ideal.Quotient.mk _ (⟨_, hr⟩ : 𝒪[k]) : Res k e))]
+    rw [hS, Finset.mul_sum, ← Equiv.sum_comp (Equiv.addRight (Ideal.Quotient.mk _ (⟨_, hr⟩ : 𝒪[k]) : Res (k := k) e))]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [key _ (Quotient.out t + ⟨_, hr⟩) (by simp), ← Circle.coe_mul, ← AddChar.map_add_eq_mul]
     congr 2
@@ -94,18 +95,18 @@ theorem sum_psi {ϖ : kˣ} (hϖ : IsUnif ϖ) {ψ : AddChar k Circle} (hψ : HasC
   exact hy' (Circle.ext (by simpa using (mul_left_eq_self₀.1 hshift.symm).resolve_right hne))
 
 theorem sum_invFourierSum {ϖ : kˣ} (hϖ : IsUnif ϖ) {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) (e : ℕ)
-    (P : Finset D) (Ψ : Matrix A D k → ℂ) (X : Matrix A D k) (S₀ : A → P → Res k e) :
-    ∑ T : A → P → Res k e, invFourierSum ψ ϖ e P Ψ (setCols P X (liftRes T)) *
+    (P : Finset D) (Ψ : Matrix A D k → ℂ) (X : Matrix A D k) (S₀ : A → P → Res (k := k) e) :
+    ∑ T : A → P → Res (k := k) e, GlobalTheory.SplitFlip.invFourierSum ψ ϖ e P Ψ (setCols P X (liftRes T)) *
       (ψ (pairCols P (setCols P X ((ϖ ^ e)⁻¹ • liftRes S₀)) (liftRes T)) : ℂ) =
-      (Fintype.card (Res k e) : ℂ) ^ (Fintype.card A * P.card) * Ψ (setCols P X ((ϖ ^ e)⁻¹ • liftRes S₀)) := by
+      (Fintype.card (Res (k := k) e) : ℂ) ^ (Fintype.card A * P.card) * Ψ (setCols P X ((ϖ ^ e)⁻¹ • liftRes S₀)) := by
   classical
   have h1 : ∀ T S, setCols P (setCols P X T) S = setCols P X S := fun T S => by
     ext i j; by_cases h : j ∈ P <;> simp [setCols, h]
-  have h2 : ∀ T : A → P → Res k e, ∀ i, ∀ j ∈ P, setCols P X (liftRes T) i j ∈ 𝒪[k] := fun T i j h => by
+  have h2 : ∀ T : A → P → Res (k := k) e, ∀ i, ∀ j ∈ P, setCols P X (liftRes T) i j ∈ 𝒪[k] := fun T i j h => by
     simpa [setCols, h] using liftRes_mem T i ⟨j, h⟩
-  simp only [invFourierSum_apply, if_pos (h2 _), h1, Finset.sum_mul]
+  simp only [GlobalTheory.SplitFlip.invFourierSum_apply, if_pos (h2 _), h1, Finset.sum_mul]
   rw [Finset.sum_comm]
-  have h3 : ∀ S T : A → P → Res k e,
+  have h3 : ∀ S T : A → P → Res (k := k) e,
       (ψ (-pairCols P (setCols P X (liftRes T)) ((ϖ ^ e)⁻¹ • liftRes S)) : ℂ) *
         (ψ (pairCols P (setCols P X ((ϖ ^ e)⁻¹ • liftRes S₀)) (liftRes T)) : ℂ) =
       ∏ i, ∏ j, (ψ (((Quotient.out (T i j) : 𝒪[k]) : k) * ((((ϖ ^ e)⁻¹ : kˣ) : k) *
@@ -122,17 +123,17 @@ theorem sum_invFourierSum {ϖ : kˣ} (hϖ : IsUnif ϖ) {ψ : AddChar k Circle} (
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     simp [setCols, liftRes, Units.smul_def]
     ring
-  have h4 : ∀ S : A → P → Res k e, ∑ T : A → P → Res k e,
+  have h4 : ∀ S : A → P → Res (k := k) e, ∑ T : A → P → Res (k := k) e,
       ∏ i, ∏ j, (ψ (((Quotient.out (T i j) : 𝒪[k]) : k) * ((((ϖ ^ e)⁻¹ : kˣ) : k) *
         (((Quotient.out (S₀ i j) : 𝒪[k]) : k) - ((Quotient.out (S i j) : 𝒪[k]) : k)))) : ℂ) =
-      if S₀ = S then (Fintype.card (Res k e) : ℂ) ^ (Fintype.card A * P.card) else 0 := fun S => by
-    rw [← Fintype.prod_sum (fun i (t : P → Res k e) => ∏ j, (ψ (((Quotient.out (t j) : 𝒪[k]) : k) *
+      if S₀ = S then (Fintype.card (Res (k := k) e) : ℂ) ^ (Fintype.card A * P.card) else 0 := fun S => by
+    rw [← Fintype.prod_sum (fun i (t : P → Res (k := k) e) => ∏ j, (ψ (((Quotient.out (t j) : 𝒪[k]) : k) *
       ((((ϖ ^ e)⁻¹ : kˣ) : k) *
         (((Quotient.out (S₀ i j) : 𝒪[k]) : k) - ((Quotient.out (S i j) : 𝒪[k]) : k)))) : ℂ))]
-    have h5 : ∀ i, ∑ t : P → Res k e, ∏ j, (ψ (((Quotient.out (t j) : 𝒪[k]) : k) * ((((ϖ ^ e)⁻¹ : kˣ) : k) *
+    have h5 : ∀ i, ∑ t : P → Res (k := k) e, ∏ j, (ψ (((Quotient.out (t j) : 𝒪[k]) : k) * ((((ϖ ^ e)⁻¹ : kˣ) : k) *
         (((Quotient.out (S₀ i j) : 𝒪[k]) : k) - ((Quotient.out (S i j) : 𝒪[k]) : k)))) : ℂ) =
-        ∏ j, if S₀ i j = S i j then (Fintype.card (Res k e) : ℂ) else 0 := fun i => by
-      rw [← Fintype.prod_sum (fun (j : P) (t : Res k e) => (ψ (((Quotient.out t : 𝒪[k]) : k) *
+        ∏ j, if S₀ i j = S i j then (Fintype.card (Res (k := k) e) : ℂ) else 0 := fun i => by
+      rw [← Fintype.prod_sum (fun (j : P) (t : Res (k := k) e) => (ψ (((Quotient.out t : 𝒪[k]) : k) *
         ((((ϖ ^ e)⁻¹ : kˣ) : k) *
         (((Quotient.out (S₀ i j) : 𝒪[k]) : k) - ((Quotient.out (S i j) : 𝒪[k]) : k)))) : ℂ))]
       exact Finset.prod_congr rfl fun j _ => by convert sum_psi hϖ hψ e (S₀ i j) (S i j)

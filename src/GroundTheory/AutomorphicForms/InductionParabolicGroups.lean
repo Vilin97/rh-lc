@@ -210,6 +210,7 @@ theorem diagGL_inv_conj_apply (d : Fin n → Fˣ) (g : GL (Fin n) F) (i j : Fin 
   rfl
 
 
+variable (β) in
 def blockRank (i : Fin n) : ℕ := (Finset.univ.filter fun j => β j < β i).card
 
 theorem blockRank_lt {i j : Fin n} (h : β i < β j) : blockRank β i < blockRank β j := by

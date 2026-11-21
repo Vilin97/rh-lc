@@ -150,7 +150,7 @@ theorem beta_apply (B : FB R d O) (p : ℕ) (y : (Fin d → R) × (Fin d → R))
 theorem transH_apply (φ ψ : Pt R 1 d) (lam : PS R 2 d) (y : (Fin d → R) × (Fin d → R)) :
     transH φ ψ lam y = ((lin φ 1).mulVec y.1,
       (lin ψ 1).transpose.mulVec (y.2 + (bil lam 1 1).transpose.mulVec y.1)) := by
-  simp only [transH, LinearMap.prod_apply, Function.prod_apply, Pi.prod, LinearMap.add_apply, LinearMap.comp_apply,
+  simp only [transH, LinearMap.prod_apply, Function.prod_apply, LinearMap.add_apply, LinearMap.comp_apply,
     Matrix.toLin'_apply, LinearMap.fst_apply, LinearMap.snd_apply]
 
 theorem rhoH_inr (B : FB R d O) (a : O) (φ : Fin d → R) :
@@ -164,7 +164,7 @@ theorem rhoH_fst (B : FB R d O) (a : O) (y : (Fin d → R) × (Fin d → R)) :
 theorem dotProduct_beta (B : FB R d O) (p : ℕ) (u : Fin d → R) (y : (Fin d → R) × (Fin d → R)) :
     u ⬝ᵥ beta B p y = pairH B (alpha B p u) y := by
   rw [beta_apply, alpha_apply]
-  simp only [pairH, Matrix.sub_mulVec, dotProduct_sub, Matrix.dotProduct_mulVec, Matrix.vecMul_transpose,
+  simp only [pairH, Matrix.sub_mulVec, dotProduct_sub, Matrix.dotProduct_mulVec,
     ← Matrix.mulVec_mulVec, Matrix.mulVec_transpose]
   have key : u ⬝ᵥ Matrix.vecMul ((bil B.sy 1 1).mulVec y.1) (hw B p) =
       Matrix.vecMul ((hw B p).mulVec u) (bil B.sy 1 1) ⬝ᵥ y.1 := by
@@ -182,7 +182,7 @@ theorem beta_alpha_apply (B : FB R d O) (p : ℕ) (u : Fin d → R) :
 theorem bil_one_eq_zero {m : ℕ} (hm : m ≠ 0) (n : ℕ) : bil (1 : PS R 2 d) m n = 0 := by
   ext i j
   simp only [bil, MvPowerSeries.coeff_one, Matrix.zero_apply]
-  rw [if_neg]
+  apply ite_eq_right
   intro h
   have h0 := congrArg (fun f => f ((0 : Fin 2), i)) h
   simp at h0
@@ -195,12 +195,21 @@ theorem lin_pt_eq_one : lin (pt R (n := 1) d 0) 1 = 1 := by
 
 theorem IsMapOf.trans {R₂ R₃ : Type} [CommRing R₂] [CommRing R₃] {f : R →+* R₂} {g : R₂ →+* R₃} {B : FB R d O}
     {B₂ : FB R₂ d O} {B₃ : FB R₃ d O} (h : IsMapOf f B B₂) (h' : IsMapOf g B₂ B₃) : IsMapOf (g.comp f) B B₃ where
-  F := fun i => by rw [h'.F, h.F, MvPowerSeries.map_comp]; rfl
-  act := fun a i => by rw [h'.act, h.act, MvPowerSeries.map_comp]; rfl
-  ph1 := by rw [h'.ph1, h.ph1, MvPowerSeries.map_comp]; rfl
-  ph2 := by rw [h'.ph2, h.ph2, MvPowerSeries.map_comp]; rfl
-  sy := by rw [h'.sy, h.sy, MvPowerSeries.map_comp]; rfl
-  ad := fun a => by rw [h'.ad, h.ad, MvPowerSeries.map_comp]; rfl
+  F := by
+    intro i
+    simp only [h'.F, h.F, MvPowerSeries.map_comp, RingHom.comp_apply]
+  act := by
+    intro a i
+    simp only [h'.act, h.act, MvPowerSeries.map_comp, RingHom.comp_apply]
+  ph1 := by
+    simp only [h'.ph1, h.ph1, MvPowerSeries.map_comp, RingHom.comp_apply]
+  ph2 := by
+    simp only [h'.ph2, h.ph2, MvPowerSeries.map_comp, RingHom.comp_apply]
+  sy := by
+    simp only [h'.sy, h.sy, MvPowerSeries.map_comp, RingHom.comp_apply]
+  ad := by
+    intro a
+    simp only [h'.ad, h.ad, MvPowerSeries.map_comp, RingHom.comp_apply]
 
 theorem ev_pt_self {n : ℕ} (a : Fin n → Pt R n d) (ha : ∀ j, a j = pt R d j) (f : PS R n d) : ev a f = f := by
   have hx : (fun q : Fin n × Fin d => a q.1 q.2) = MvPowerSeries.X := by

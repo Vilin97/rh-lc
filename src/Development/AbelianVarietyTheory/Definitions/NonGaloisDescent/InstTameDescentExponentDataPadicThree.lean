@@ -48,7 +48,7 @@ omit [NeZero a] in
 theorem powL_one (ζ : rootsOfUnity e K) : powL l (1 : ZMod a) ζ = ζ ^ l := by
   rw [powL_apply, ZMod.val_one_eq_one_mod, pow_pow_mod l, pow_one]
 
-
+variable (K e a) in
 def frobAut : Multiplicative (ZMod a) →* MulAut (rootsOfUnity e K) where
   toFun s :=
     { powL l s.toAdd with
@@ -58,7 +58,7 @@ def frobAut : Multiplicative (ZMod a) →* MulAut (rootsOfUnity e K) where
   map_one' := MulEquiv.ext fun ζ => powL_zero l ζ
   map_mul' s t := MulEquiv.ext fun ζ => powL_add l _ _ ζ
 
-
+variable (K e a) in
 abbrev TameGal : Type := rootsOfUnity e K ⋊[frobAut K l e a] Multiplicative (ZMod a)
 
 namespace TameGal
@@ -154,7 +154,7 @@ theorem ringAct_apply (g : TameGal K l e a) (f : ZMod a → K⟦X⟧) (τ : ZMod
     ringAct g f τ = rescale (g.root τ) (f (τ - g.shift)) := rfl
 
 theorem ringAct_frobTot (g : TameGal K l e a) (f : ZMod a → K⟦X⟧) :
-    ringAct g (frobTot K a l f) = frobTot K a l (ringAct g f) := by
+    ringAct g (frobTot l f) = frobTot l (ringAct g f) := by
   ext τ n
   rw [ringAct_apply, frobTot_apply, frobTot_apply, ringAct_apply, coeff_rescale, coeff_frob,
     coeff_frob, coeff_rescale, TameGal.root_sub_one, sub_right_comm]
@@ -304,7 +304,7 @@ def ofMatrix (P : PhiMod O K l e a ι) (G : TameGal K l e a → ZMod a → Matri
         simp [one, matAct_apply]
       map_mul' := fun g h => by
         refine LinearMap.ext fun v => funext fun τ => ?_
-        rw [Module.End.mul_apply, matAct_apply, matAct_apply, matAct_apply, mul,
+        rw [mul_apply_eq_comp, matAct_apply, matAct_apply, matAct_apply, mul,
           ← Matrix.mulVec_mulVec]
         congr 1
         ext1 i
@@ -397,7 +397,7 @@ def actD : Representation K (TameGal K l e a) P.D where
   toFun g := red ∘ₗ Δ.act g ∘ₗ cst
   map_one' := LinearMap.ext fun d => by simp
   map_mul' g h := LinearMap.ext fun d => by
-    simp only [map_mul, LinearMap.comp_apply, Module.End.mul_apply, red_act_cst_red]
+    simp only [map_mul, LinearMap.comp_apply, mul_apply_eq_comp, red_act_cst_red]
 
 theorem red_act (v : Vec K a ι) : red (Δ.act g v) = Δ.actD g (red v) :=
   (Δ.red_act_cst_red g v).symm
@@ -441,7 +441,7 @@ def plus [NeZero e] {y : Vec K a ι} (hy : y ∈ P.Mext (invE l e (A O K))) (hin
         rw [← join_eta w, plusAct_join]
         simp
       map_mul' := fun g h => LinearMap.ext fun w => by
-        rw [← join_eta w, Module.End.mul_apply, plusAct_join, plusAct_join, plusAct_join, map_mul,
+        rw [← join_eta w, mul_apply_eq_comp, plusAct_join, plusAct_join, plusAct_join, map_mul,
           map_mul]
         rfl }
   act_smul_tot g f w := by

@@ -49,8 +49,9 @@ theorem exists_integral_generator (E : Type) [Field E] [NumberField E] :
       exact Algebra.mem_top
     rw [Algebra.adjoin_singleton_eq_range_aeval] at ha
     obtain ⟨Q, hQ⟩ := ha
-    obtain ⟨b, hb⟩ := IsLocalization.integerNormalization_map_to_map (nonZeroDivisors ℤ) Q
-    refine ⟨b, IsLocalization.integerNormalization (nonZeroDivisors ℤ) Q, nonZeroDivisors.coe_ne_zero b, ?_⟩
+    obtain ⟨b, hbmem, hb⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors ℤ) Q
+    refine ⟨b, IsLocalization.integerNormalization (nonZeroDivisors ℤ) Q,
+      nonZeroDivisors.coe_ne_zero ⟨b, hbmem⟩, ?_⟩
     apply hinj
     have hQ' : aeval β Q = (a : E) := hQ
     rw [hcoe, ← aeval_map_algebraMap ℚ, hb, map_mul, map_intCast, zsmul_eq_mul, map_mul, map_intCast, hQ']

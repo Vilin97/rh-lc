@@ -21,7 +21,7 @@ theorem tele {B : Type*} [CommRing B] (P : ℕ → B) (m : ℕ) :
     ring
 
 variable {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {Φ : PDF R C} {d : ℕ}
-  (E : Frame Φ d) (σ : ∀ T : C, E.D ⟶ T)
+  (E : Frame (Φ := Φ) d) (σ : ∀ T : C, E.D ⟶ T)
 
 theorem a_comp (i : Fin d) {T T' T'' : C} (φ : T ⟶ T') (ψ : T' ⟶ T'') :
     E.a σ i (φ ≫ ψ) = (Φ.A.map ψ).hom (E.a σ i φ) + E.a σ i ψ := by
@@ -202,7 +202,7 @@ theorem d_form_mem {Fil : ℤ → IdF Φ.A} (hF : IsFil Φ Fil) (hc : E.GrConst 
   rwa [e] at h
 
 theorem rep_form {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {Φ : PDF R C} {Fil : ℤ → IdF Φ.A} (hF : IsFil Φ Fil)
-    {d : ℕ} (E : Frame Φ d) (σ : ∀ T : C, E.D ⟶ T) (hc : E.GrConst Fil) (j q : ℕ) (r : ℤ) (hr : r = j + q)
+    {d : ℕ} (E : Frame (Φ := Φ) d) (σ : ∀ T : C, E.D ⟶ T) (hc : E.GrConst Fil) (j q : ℕ) (r : ℤ) (hr : r = j + q)
     (I : Fin j → Fin d) (x : Φ.A.obj E.D) (hx : x ∈ (Fil q).S E.D) :
     ∃ c, Rep (Fil r) (Fil (r + 1)) (E.form σ I x) c := by
   subst hr

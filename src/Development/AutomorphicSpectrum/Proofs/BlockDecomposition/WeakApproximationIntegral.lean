@@ -120,8 +120,10 @@ theorem exists_small (s : Pl F) {d : 𝓞 F} (hd : d ≠ 0) {ε : ℝ} (hε : 0 
       exact v.intValuation_le_one b
 
 theorem norm_algebraMap_inf (w : InfinitePlace F) (a : F) :
-    ‖algebraMap F w.Completion a‖ = w a :=
-  InfinitePlace.Completion.norm_coe w _
+    ‖algebraMap F w.Completion a‖ = w a := by
+  rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+    Algebra.algebraMap_self_apply, AbsoluteValue.Completion.norm_coe, WithAbs.ofAbs_toAbs,
+    InfinitePlace.coe_apply]
 
 theorem exists_radius (c : ∀ w : InfinitePlace F, w.Completion) (U : ∀ w : InfinitePlace F, Set w.Completion)
     (hU : ∀ w, U w ∈ 𝓝 (c w)) :

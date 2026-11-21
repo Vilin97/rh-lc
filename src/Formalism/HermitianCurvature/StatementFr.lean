@@ -138,9 +138,11 @@ def Free (a : S) : Prop :=
     (∀ Y, FreeOf a (f.xi Y)) ∧ FreeOf a f.c ∧ FreeOf a f.ci ∧ ∀ Y, FreeOf a (f.ee Y)
 
 
+open scoped Classical in
 def hatT (Y : ℂ) : M2 (SlopeTestRemainingChoices S A) := if Y ∈ f.reg then (f.TT Y).map (fun b => f.F * b * f.Fi) else 0
 
 
+open scoped Classical in
 def hatQ (Y : ℂ) : ℂ := if Y ∈ f.reg ∧ Y + 1 ∈ f.reg then f.q Y else 0
 
 end FrameData

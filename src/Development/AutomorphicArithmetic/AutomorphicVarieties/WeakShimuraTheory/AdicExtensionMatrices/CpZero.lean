@@ -20,7 +20,8 @@ private theorem cpZeroPol_graded {Λ A : Type} [CommRing Λ] [CommRing A] [Algeb
     split_ifs
     · exact SetLike.one_mem_graded 𝒜
     · exact zero_mem _
-  mul_mem := fun i j p q hp hq n => by
+  mul_mem := by
+    intro i j p q hp hq n
     rw [coeff_mul]
     exact Submodule.sum_mem _ fun x _ => SetLike.mul_mem_graded (hp x.1) (hq x.2)
 

@@ -39,15 +39,14 @@ theorem eta_of_sq_one (K : UQ) {ε : K.E} (h : ε * ε = 1) (a : K.E) : K.eta (�
 theorem exists_basis_lat (K : UQ) {V : Type} [AddCommGroup V] [Module K.E V] [Module K.O V]
     [IsScalarTower K.O K.E V] [Module.Finite K.E V] (L : Submodule K.O V) (hfg : L.FG) (hsp : Submodule.span K.E (L : Set V) = ⊤) :
     ∃ e : Module.Basis (Fin (Module.finrank K.E V)) K.E V, Submodule.span K.O (Set.range e) = L := by
-  haveI : Submodule.IsLattice K.E L := ⟨hfg, hsp⟩
-  let b := Module.Free.chooseBasis K.O L
-  let e' := b.extendOfIsLattice K.E
-  have hc : Fintype.card (Module.Free.ChooseBasisIndex K.O L) = Module.finrank K.E V :=
-    (Module.finrank_eq_card_basis e').symm
-  refine ⟨e'.reindex (Fintype.equivFinOfCardEq hc), ?_⟩
-  rw [Module.Basis.range_reindex]
-  have : Set.range e' = L.subtype '' Set.range b := by
-    ext x; simp [e', Set.range_comp]
+  have : Submodule.IsLattice K.E L := Submodule.IsLattice.of_fg K.E hfg
+  have : Submodule.IsFullLattice K.E L := ⟨hsp⟩
+  have : Module.Finite K.O L := Submodule.IsLattice.finite K.E L
+  have : Module.Free K.O L := Submodule.IsLattice.free K.E L
+  let b := Module.finBasisOfFinrankEq K.O L (Submodule.IsFullLattice.finrank_eq K.E L)
+  refine ⟨b.extendOfIsFullLattice K.E, ?_⟩
+  have : Set.range (b.extendOfIsFullLattice K.E) = L.subtype '' Set.range b := by
+    ext x; simp
   rw [this, Submodule.span_image, b.span_eq, Submodule.map_top, Submodule.range_subtype]
 
 theorem exists_smul_mem (K : UQ) {V : Type} [AddCommGroup V] [Module K.E V] [Module K.O V]

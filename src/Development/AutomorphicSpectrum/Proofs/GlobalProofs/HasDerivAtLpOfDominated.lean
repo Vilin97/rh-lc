@@ -10,7 +10,7 @@ public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.NormIterat
 
 noncomputable section
 
-open MeasureTheory Complex Matrix GlobalTheory.RealWeil GlobalTheory.CompanionTheory.Hypotheses₂ Filter Topology
+open MeasureTheory Complex Matrix GlobalTheory.RealWeil Filter Topology
 open scoped Real SchwartzMap ComplexConjugate
 
 namespace GlobalTheory.CompanionTheory.Hypotheses₂.GaussCurve
@@ -70,8 +70,7 @@ theorem hasDerivAt_Lp_of_dominated {E : Type*} [MeasurableSpace E] {μ : Measure
           _ ≤ 2 * b x := by linarith [hbd x t₀ h0]
       rw [Real.norm_of_nonneg (by positivity)]
       exact pow_le_pow_left₀ (norm_nonneg _) hdn 2
-    · have := (memLp_two_iff_integrable_sq hb.1).1 hb
-      simpa [mul_pow] using this.const_mul (2 ^ 2)
+    · simpa [mul_pow] using hb.integrable_sq.const_mul (2 ^ 2)
     · refine Eventually.of_forall fun x => ?_
       have h1 := hasDerivAt_iff_tendsto_slope_zero.1 (hd x t₀ (Metric.mem_ball_self hδ))
       have h2 : Tendsto (fun s : ℝ => d s x) (𝓝[≠] 0) (𝓝 (f' t₀ x - f' t₀ x)) :=

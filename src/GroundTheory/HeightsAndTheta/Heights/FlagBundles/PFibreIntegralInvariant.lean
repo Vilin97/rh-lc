@@ -112,7 +112,7 @@ instance : IsProbabilityMeasure sphereMeasure := ⟨sphereMeasure_univ⟩
 theorem measurePreserving_sphereMap (R : E3 ≃ₗᵢ[ℝ] E3) :
     MeasurePreserving (sphereMap R) sphereMeasure sphereMeasure := by
   refine ⟨(continuous_sphereMap R).measurable, ?_⟩
-  rw [sphereMeasure, Measure.map_smul, toSphere_map]
+  rw [sphereMeasure, Measure.map_smul _ (continuous_sphereMap R).aemeasurable, toSphere_map]
 
 theorem measurePreserving_pair (R : E3 ≃ₗᵢ[ℝ] E3) :
     MeasurePreserving (Prod.map (sphereMap R) (sphereMap R)) pairMeasure pairMeasure :=

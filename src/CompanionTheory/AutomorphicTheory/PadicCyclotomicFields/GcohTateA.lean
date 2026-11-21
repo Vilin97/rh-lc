@@ -81,10 +81,9 @@ theorem exists_dualEquiv (hb : Function.Bijective b.flip) :
       rw [hy]
       simp
   let eB : M' ≃+ (A →ₗ[ULift.{0} ℤ] D) :=
-    (AddEquiv.ofBijective F hF).trans (uliftIntLinearEquivAddHom A D).symm
+    (AddEquiv.ofBijective F hF).trans uliftIntLinearEquivAddHom.symm
   have h2 : ∀ x y, eB y (eA x) = eD (b x y) := fun x y => by
-    change (uliftIntLinearEquivAddHom A D).symm (F y) (eA x) = _
-    rw [uliftIntLinearEquivAddHom_symm_apply]
+    change F y (eA x) = eD (b x y)
     simp [F]
   refine ⟨eB, fun g y => LinearMap.ext fun a => ?_, h2⟩
   obtain ⟨x, rfl⟩ := eA.surjective a

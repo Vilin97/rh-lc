@@ -87,7 +87,8 @@ def Fam.Over {Z S : Scheme.{0}} {p : Z ⟶ S} {R' R : Type} [CommRing R'] [CommR
 def Fam.IsImage {Z S : Scheme.{0}} {p : Z ⟶ S} {R' R : Type} [CommRing R'] [CommRing R] {I : Cx R'} {J : Cx R}
     (τ : Fam p I J) {n : ℤ} (α : Cochain ((chains R').obj (sch.obj Z)) I n) (β : Cochain ((chains R).obj (sch.obj S)) J n) :
     Prop :=
-  ∀ (k : ℕ) (s : ℤ) (h : -(k : ℤ) + n = s) (A : Sq p), ev β k s h A.U A.u = (τ.deg s).app A (ev α k s h A.V A.v)
+  ∀ (k : ℕ) (s : ℤ) (h : -(k : ℤ) + n = s) (A : Sq p),
+    ev R β k s h A.U A.u = (τ.deg s).app A (ev R' α k s h A.V A.v)
 
 def Fam.op {Z S : Scheme.{0}} {p : Z ⟶ S} {R' R : Type} [CommRing R'] [CommRing R] {I : Cx R'} {J : Cx R} (τ : Fam p I J)
     (n : ℤ) : CohomologyClass ((chains R').obj (sch.obj Z)) I n →+ CohomologyClass ((chains R).obj (sch.obj S)) J n :=

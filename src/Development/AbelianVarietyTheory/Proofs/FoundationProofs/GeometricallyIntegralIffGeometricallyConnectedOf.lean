@@ -181,9 +181,9 @@ variable {S : Scheme.{0}} (G : Over S) [Smooth G.hom]
 
 theorem smooth_powObj_hom : ∀ n : ℕ, Smooth (powObj G n).hom
   | 0 => inferInstanceAs (Smooth (𝟙 S))
-  | n + 1 =>
+  | n + 1 => by
     have := smooth_powObj_hom n
-    smooth_tensorObj_hom G (powObj G n)
+    exact smooth_tensorObj_hom G (powObj G n)
 
 variable [GeometricallyConnected G.hom]
 

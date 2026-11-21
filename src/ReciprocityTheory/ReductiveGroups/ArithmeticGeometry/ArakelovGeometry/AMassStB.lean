@@ -74,10 +74,10 @@ theorem gb_sum_cons (y : Fin D → ℂ) :
   rw [Fin.sum_univ_succ]
   simp
 
-theorem gb_sheetDensity {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric ℂ (Ix κ)}
-    (hFS : IsPullFS x e m) {y : Fin D → ℂ} {w : ((k : Unit) → GlobalTheory κ k) → ℂ}
+theorem gb_sheetDensity {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric (C := ℂ) (ι := Ix κ)}
+    (hFS : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.IsPullFS x e m) {y : Fin D → ℂ} {w : ((k : Unit) → GlobalTheory κ k) → ℂ}
     (h : ∃ γ, IsSheet (coordIdeal ℤ x) (gbPsi e) y w γ) :
-    sheetDensity (coordIdeal ℤ x) (gbPsi e) (purePot m D) (fun _ => 1) y w =
+    sheetDensity (coordIdeal ℤ x) (gbPsi e) (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.purePot m D) (fun _ => 1) y w =
       maDensity (fun _ : Fin D => gbPot) y := by
   have hs := h.choose_spec
   unfold sheetDensity
@@ -89,7 +89,7 @@ theorem gb_sheetDensity {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : Cone
   obtain ⟨-, hmem, hΨ⟩ := hy'
   rw [gb_mcPts_eq] at hmem
   rw [gbPsi_segre] at hΨ
-  simp only [purePot, gbPot]
+  simp only [ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.purePot, gbPot]
   rw [hFS _ hmem, ← gb_sum_cons y']
   congr 2
   refine Finset.sum_congr rfl (fun k _ => ?_)
@@ -194,10 +194,10 @@ theorem gb_fibre_good {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {Δ : MvPol
         funext k
         simp [hmem.2 k, hc]
 
-theorem gb_integrand_ae {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric ℂ (Ix κ)}
-    (hfr : IsProjFrame x e) (hFS : IsPullFS x e m) :
+theorem gb_integrand_ae {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric (C := ℂ) (ι := Ix κ)}
+    (hfr : IsProjFrame x e) (hFS : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.IsPullFS x e m) :
     ∀ᵐ y : Fin D → ℂ, ∑ᶠ w ∈ fibre (coordIdeal ℤ x) (gbPsi e) y,
-        sheetDensity (coordIdeal ℤ x) (gbPsi e) (purePot m D) (fun _ => 1) y w =
+        sheetDensity (coordIdeal ℤ x) (gbPsi e) (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.purePot m D) (fun _ => 1) y w =
       (projDeg x e : ℝ) * maDensity (fun _ : Fin D => gbPot) y := by
   obtain ⟨Δ, hΔ⟩ := exists_isDiscr hfr
   obtain ⟨c, hc, y₀, h₀⟩ := gb_exists_scale hΔ.1
@@ -207,9 +207,9 @@ theorem gb_integrand_ae {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : Cone
     finsum_mem_eq_finite_toFinset_sum _ hfin, Finset.sum_const, nsmul_eq_mul,
     ← Set.ncard_eq_toFinset_card _ hfin, hcard]
 
-theorem gb_ptsIntegralAt {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric ℂ (Ix κ)}
-    (hfr : IsProjFrame x e) (hFS : IsPullFS x e m) :
-    ptsIntegralAt (coordIdeal ℤ x) (gbPsi e) (purePot m D) (fun _ => 1) = projDeg x e := by
+theorem gb_ptsIntegralAt {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric (C := ℂ) (ι := Ix κ)}
+    (hfr : IsProjFrame x e) (hFS : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.IsPullFS x e m) :
+    ptsIntegralAt (coordIdeal ℤ x) (gbPsi e) (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.purePot m D) (fun _ => 1) = projDeg x e := by
   unfold ptsIntegralAt
   rw [integral_congr_ae (gb_integrand_ae hfr hFS)]
   first

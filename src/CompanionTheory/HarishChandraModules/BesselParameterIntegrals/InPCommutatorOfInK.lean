@@ -22,6 +22,8 @@ variable {n : ℕ} (ε : Fin n → Bool)
 
 theorem isCompact_Kset : IsCompact (Kset ε) := by
   have hcl : IsClosed (Kset ε) := by
+    change IsClosed ((Matrix.unitaryGroup (Fin n) ℂ : Set (Matrix (Fin n) (Fin n) ℂ)) ∩
+      {u | u * Jm ε = Jm ε * u})
     refine IsClosed.inter ?_ ?_
     · have : (Matrix.unitaryGroup (Fin n) ℂ : Set (Matrix (Fin n) (Fin n) ℂ)) =
           {u | star u * u = 1} := by ext u; exact Matrix.mem_unitaryGroup_iff'

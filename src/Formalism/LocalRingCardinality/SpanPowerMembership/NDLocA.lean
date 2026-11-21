@@ -85,7 +85,7 @@ theorem prime_l : Prime ((l : ℕ) : 𝓞 ℚ) := by
   simpa using h
 
 
-def vQ : HeightOneSpectrum (𝓞 ℚ) where
+def vQ (l : ℕ) [Fact l.Prime] : HeightOneSpectrum (𝓞 ℚ) where
   asIdeal := Ideal.span {((l : ℕ) : 𝓞 ℚ)}
   isPrime := (Ideal.span_singleton_prime (prime_l l).ne_zero).mpr (prime_l l)
   ne_bot := by rw [Ne, Ideal.span_singleton_eq_bot]; exact (prime_l l).ne_zero

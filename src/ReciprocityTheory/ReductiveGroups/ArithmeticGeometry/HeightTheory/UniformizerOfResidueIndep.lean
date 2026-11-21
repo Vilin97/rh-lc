@@ -251,9 +251,9 @@ theorem PlaceTrivialOrPositive (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (p : Ideal 
         aeval (fun e : {e : TVar d.D d.N // e.1 = 0 ∨ e.2 ≠ j0} => d.sH c (X e.1)) (G e) := by
       rintro ⟨i, j⟩
       by_cases h : i = 0 ∨ j ≠ j0
-      · simp only [G, dif_pos h, aeval_X]
-      set_option synthInstance.maxHeartbeats 100000 in
-        · simp only [G, dif_neg h, map_neg, map_sum, map_mul, aeval_X, aeval_C]
+      · simp only [G, dite_eq_left h, aeval_X]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          simp only [G, dite_eq_right h, map_neg, map_sum, map_mul, aeval_X, aeval_C]
         rw [not_or, not_not] at h
         obtain ⟨hi, hj⟩ := h
         subst j

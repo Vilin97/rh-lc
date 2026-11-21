@@ -17,6 +17,7 @@ namespace Formalism.FourierDecayAlt.J
 open Finset NumberField
 
 open scoped ComplexConjugate nonZeroDivisors
+open scoped Classical
 
 noncomputable section
 
@@ -122,6 +123,7 @@ def EmbFacts : Prop :=
     ∀ (g : ℕ) (c : ℝ) (l : E) (w : InfinitePlace E), ‖coord E w (dm E g c l)‖ = |2 / ((g : ℝ) * c)| * w l
 
 
+open scoped Classical in
 def EuclidFrame : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (L : Submodule ℤ E) (c : ℝ),
     DiscreteTopology (S6.frameLat E L c) →
@@ -377,6 +379,7 @@ def PhaseOk : Prop :=
     (phaseSys d S).Ok F
 
 
+open scoped Classical in
 def OutsideOk : Prop :=
   ∀ (E α : Type) [Field E] (L : AddSubgroup E) (F : Finset α),
     (∀ t t' : E, t - t' ∈ L → (if t ∈ L then (1 : ℂ) else 0) = if t' ∈ L then 1 else 0) ∧
@@ -385,6 +388,7 @@ def OutsideOk : Prop :=
       TB.PSDOn F (fun _ _ : α => (1 : ℂ) - ∑ t ∈ R, if t ∈ L then (1 : ℂ) else 0))
 
 
+open scoped Classical in
 def OutsideSysOk : Prop :=
   ∀ (E α : Type) [Field E] (N : E → E → α → α → ℂ) (L L' : AddSubgroup E) (F : Finset α),
     (∀ t t' : E, t ≠ 0 → t' ≠ 0 → ∀ h ∈ F, ∀ h' ∈ F, N t t' h h' ≠ 0 → t⁻¹ - t'⁻¹ ∈ L') →
@@ -393,6 +397,7 @@ def OutsideSysOk : Prop :=
     (LocSys.mk N (fun t _ _ => if t ∈ L then 1 else 0) (fun _ _ => 1) L L').Ok F
 
 
+open scoped Classical in
 def OutsideDomination : Prop :=
   ProductDomination →
   ∀ (E α P : Type) [Field E] [Fintype P] (k : P → α → α → ℂ) (L : P → AddSubgroup E) (t : E)

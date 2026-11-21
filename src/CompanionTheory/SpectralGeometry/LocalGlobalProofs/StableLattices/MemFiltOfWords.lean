@@ -217,7 +217,9 @@ theorem koszul : CAR → Koszul := by
       refine ⟨0, fun _ _ => rfl, ?_⟩
       rw [map_zero]
       funext A
-      simpa [filt, eq_comm] using hy A
+      have hA : y A ∈ (⊥ : Submodule ℂ Z) := hy A
+      have hA0 : y A = 0 := by simpa only [Submodule.mem_bot] using hA
+      exact hA0.symm
     | succ m ih =>
       intro y hy hdeg hc
       have hne : ((m : ℂ) + (j + 1 : ℕ)) ≠ 0 := by

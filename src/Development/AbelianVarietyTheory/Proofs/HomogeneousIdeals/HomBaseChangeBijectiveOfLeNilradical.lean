@@ -243,7 +243,7 @@ section Ring
 
 variable {A : Type*} [CommRing A] {X : Type*}
 
-
+open Classical in
 theorem coeff_mul_coeff {u : AddMonoidAlgebra A X} (hu : IsGroupLikeElem A u) (x y : X) :
     u.coeff x * u.coeff y = if x = y then u.coeff x else 0 := by
   let c : X → AddMonoidAlgebra A X →ₗ[A] A := fun x =>
@@ -334,7 +334,7 @@ theorem pull_one_chi {s : Spec B ⟶ S} (a : X) :
     pull (1 : Over.mk s ⟶ splitTorus S X) (chi X a) = 1 := by
   rw [pull_chi, val_one]; exact map_one _
 
-
+variable (X) in
 def univPt (t : Spec A ⟶ S) :
     Over.mk (Spec.map (CommRingCat.ofHom (algebraMap A (torusRing A X))) ≫ t) ⟶ splitTorus S X :=
   ofCoord (CommRingCat.ofHom (AddMonoidAlgebra.mapRingHom X
@@ -517,8 +517,7 @@ theorem exists_eq_torusMap [ConnectedSpace S] (f : splitTorus S X ⟶ splitTorus
   · rw [← hφ, val_add, hφ, hφ, ← val_id, ← val_id, ← val_id, val_add]
   · rw [val_torusMap, hφ]; rfl
 
-
-
+variable (X) in
 def uliftMultiples : X ≃ (ULift.{u} ℤ →+ X) where
   toFun a := (zmultiplesHom X a).comp (AddEquiv.ulift : ULift.{u} ℤ ≃+ ℤ).toAddMonoidHom
   invFun φ := φ (ULift.up 1)
@@ -549,8 +548,6 @@ variable {S S' : Scheme.{u}} (f : S' ⟶ S) (X Y : Type u) [AddCommGroup X] [Add
 def bcMap : (splitTorus S' X).left ⟶ (splitTorus S X).left :=
   pullback.lift (torusFst S' X) ((splitTorus S' X).hom ≫ f) (specULiftZIsTerminal.hom_ext _ _)
 
-  pullback.lift_fst _ _ _
-
 @[reassoc] theorem bcMap_hom : bcMap f X ≫ (splitTorus S X).hom = (splitTorus S' X).hom ≫ f :=
   pullback.lift_snd _ _ _
 
@@ -559,7 +556,8 @@ theorem chi_eq (a : X) : chi (S := S) X a = (torusFst S X).appTop.hom
   rw [chi, coord, Over.id_left, Category.id_comp]; rfl
 
 theorem bcMap_appTop_chi (a : X) : (bcMap f X).appTop.hom (chi X a) = chi X a := by
-  rw [chi_eq, chi_eq, ← appTop_comp_apply, bcMap_torusFst]
+  have h : bcMap f X ≫ torusFst S X = torusFst S' X := pullback.lift_fst _ _ _
+  rw [chi_eq, chi_eq, ← appTop_comp_apply, h]
 
 theorem isPullback_bcMap :
     IsPullback (bcMap f X) (splitTorus S' X).hom (splitTorus S X).hom f := by
@@ -567,7 +565,8 @@ theorem isPullback_bcMap :
     IsPullback.of_hasPullback _ _
   have h2 : IsPullback (bcMap f X ≫ torusFst S X) (splitTorus S' X).hom (splitTorusAff ZU X).hom
       (f ≫ toZ S) := by
-    rw [bcMap_torusFst, show f ≫ toZ S = toZ S' from specULiftZIsTerminal.hom_ext _ _]
+    have h : bcMap f X ≫ torusFst S X = torusFst S' X := pullback.lift_fst _ _ _
+    rw [h, show f ≫ toZ S = toZ S' from specULiftZIsTerminal.hom_ext _ _]
     exact IsPullback.of_hasPullback _ _
   exact h2.of_right (bcMap_hom f X) h1
 

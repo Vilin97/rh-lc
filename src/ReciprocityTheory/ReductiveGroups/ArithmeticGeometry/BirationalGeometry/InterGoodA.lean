@@ -31,17 +31,22 @@ theorem exists_ltSeries_lift {R S : Type*} [CommRing R] [CommRing S] [Algebra R 
       | simp [hp])
     have hlt : p.eraseLast.last < p.last := p.eraseLast_last_rel_last (by omega)
     obtain ⟨Q, hQle, hQ, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral_of_isPrime
-      p.last.asIdeal q'.last.asIdeal (by rw [hq'c]; exact hlt.le)
+      p.last.asIdeal q'.last.asIdeal (by
+        calc
+          under R q'.last.asIdeal = p.eraseLast.last.asIdeal := hq'c
+          _ ≤ p.last.asIdeal := hlt.le)
     have hlt' : q'.last.asIdeal < Q := by
       refine lt_of_le_of_ne hQle fun h => hlt.ne ?_
       ext1
-      rw [← hq'c, h, hQc]
+      calc
+        p.eraseLast.last.asIdeal = under R q'.last.asIdeal := hq'c.symm
+        _ = under R Q := congrArg (under R) h
+        _ = p.last.asIdeal := hQc
     refine ⟨q'.snoc ⟨Q, hQ⟩ hlt', ?_, ?_⟩
     · show q'.length + 1 = n + 1
       rw [hq'len]
-    · first
-      | (rw [RelSeries.last_snoc]; exact hQc)
-      | simpa using hQc
+    · rw [RelSeries.last_snoc]
+      exact hQc
 
 theorem le_ringKrullDim_of_isIntegral {R S : Type*} [CommRing R] [CommRing S] (f : R →+* S)
     (hf : f.IsIntegral) (hinj : Function.Injective f) (n : ℕ)

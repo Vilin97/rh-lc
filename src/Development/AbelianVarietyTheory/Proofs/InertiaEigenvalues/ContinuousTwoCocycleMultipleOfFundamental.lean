@@ -55,7 +55,8 @@ theorem span : ∀ (l : ℕ) [Fact l.Prime] (G : Type) [Group G] [TopologicalSpa
   intro l _ G _ _ _ _ χ c hχ hgen hfin
   have hl : l.Prime := Fact.out
   have hG := fun r => gen_zmod (hgen r)
-  have hcc : Continuous c := continuous_of_reductions c fun s => (hG (s + 1)).1.1.continuous
+  have hcc : Continuous c := GlobalTheory.PadicH2Separated.continuous_of_reductions c fun s =>
+    (hG (s + 1)).1.1.continuous
   have hcoc : ∀ g h k, (χ g : ℤ_[l]) * c (h, k) - c (g * h, k) + c (g, h * k) - c (g, h) = 0 := by
     intro g h k
     rw [← PadicInt.ext_of_toZModPow]
@@ -85,7 +86,8 @@ theorem span : ∀ (l : ℕ) [Fact l.Prime] (G : Type) [Group G] [TopologicalSpa
   have hlev : ∀ r, ∃ (x : ZMod (l ^ r)) (b : G → ZMod (l ^ r)), IsLocallyConstant b ∧ ∀ p,
       PadicInt.toZModPow r (w p) = PadicInt.toZModPow r (c p) * x +
         (PadicInt.toZModPow r (χ p.1 : ℤ_[l]) * b p.2 - b (p.1 * p.2) + b p.1) := fun r =>
-    (hG r).2.1 _ ((IsLocallyConstant.iff_continuous _).2 ((continuous_reduction r).comp hwc))
+    (hG r).2.1 _ ((IsLocallyConstant.iff_continuous _).2
+      ((GlobalTheory.PadicH2Separated.continuous_reduction r).comp hwc))
       fun g k m => by
         simpa only [map_sub, map_add (f := _), map_mul, map_zero] using
           congrArg (PadicInt.toZModPow r) (hwcoc g k m)
@@ -145,7 +147,8 @@ theorem span : ∀ (l : ℕ) [Fact l.Prime] (G : Type) [Group G] [TopologicalSpa
       B2 (charRep χ) := fun r =>
     GlobalTheory.padicInt_two_cocycle_eq_pow_smul_of_reduction_coboundary l G (charRep χ) hcont r _
       (hcompat r) _ hyZ (hyB r)
-  obtain ⟨f, hf, hfd⟩ := (separated_dvr_second_cohomology_mem _ _).1 (mem_coboundaries_of_forall_pow l G (charRep χ) _ hcompat hfin _ hyZ hker)
+  obtain ⟨f, hf, hfd⟩ := (separated_dvr_second_cohomology_mem _ _).1
+    (GlobalTheory.PadicH2Separated.mem_coboundaries_of_forall_pow l G (charRep χ) _ hcompat hfin _ hyZ hker)
   have hl0 : (l : ℚ_[l]) ^ m ≠ 0 := pow_ne_zero _ (Nat.cast_ne_zero.2 hl.ne_zero)
   refine ⟨(x : ℚ_[l]) / (l : ℚ_[l]) ^ m, fun g => (f g : ℚ_[l]) / (l : ℚ_[l]) ^ m,
     (continuous_subtype_val.comp hf).div_const _, fun g h => ?_⟩

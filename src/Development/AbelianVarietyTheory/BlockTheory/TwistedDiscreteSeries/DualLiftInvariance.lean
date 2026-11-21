@@ -6,7 +6,7 @@ public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.
 @[expose] public section
 
 open MeasureTheory ValuativeRel Matrix IsLocalRing
-open scoped Pointwise
+open scoped Classical Pointwise
 
 noncomputable section
 namespace GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData
@@ -100,10 +100,37 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKe
     exact ⟨by simpa using h1, (h2 0).1 (by norm_num)⟩
 
 
-theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.isGlue_last (q : _root_.GlobalTheory.LatPair.Unif k) (L : Submodule 𝒪[k] (n'' → k)) [L.IsLattice k] :
+theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.isGlue_last (q : _root_.GlobalTheory.LatPair.Unif k) (L : Submodule 𝒪[k] (n'' → k)) [L.IsFullLattice k] :
     _root_.GlobalTheory.LatPair.IsGlue (_root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKer L) (q.inv • _root_.GlobalTheory.LatPair.avec k n'' 1 1) := by
   rw [_root_.GlobalTheory.LatPair.isGlue_iff q]
-  refine ⟨_root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.lastKer_eq q L ▸ _root_.GlobalTheory.LatPair.gluedLat_isLattice q 1 2 L 0, ?_, ?_⟩
+  have hLat : (lastKer L).IsFullLattice k := by
+    refine { toIsLattice := Submodule.IsLattice.of_fg k ?_, span_eq_top := ?_ }
+    · exact ((Submodule.IsLattice.fg k L).map (inX k n'' 1)).sup
+        (Submodule.fg_span_singleton _)
+    · let W := Submodule.span k (lastKer L : Set (n'' ⊕ Fin 1 → k))
+      have hX (x : n'' → k) : inX k n'' 1 x ∈ W := by
+        have hx : x ∈ Submodule.span k (L : Set (n'' → k)) := by
+          rw [Submodule.IsFullLattice.span_eq_top]
+          trivial
+        induction hx using Submodule.span_induction with
+        | mem x hx => exact Submodule.subset_span (Submodule.mem_sup_left ⟨x, hx, rfl⟩)
+        | zero => simp
+        | add x y _ _ hx hy => simpa using W.add_mem hx hy
+        | smul a x _ hx =>
+          convert W.smul_mem a hx using 1
+          ext (i | i) <;> simp [inX]
+      have hA : avec k n'' 1 1 ∈ W :=
+        Submodule.subset_span (Submodule.mem_sup_right (Submodule.mem_span_singleton_self _))
+      refine eq_top_iff.2 fun y _ => ?_
+      have hy : y = inX k n'' 1 (y ∘ Sum.inl) + y (Sum.inr 0) • avec k n'' 1 1 := by
+        funext i
+        rcases i with i | i
+        · simp [inX, avec]
+        · fin_cases i
+          simp [inX, avec]
+      rw [hy]
+      exact W.add_mem (hX _) (W.smul_mem _ hA)
+  refine ⟨hLat, ?_, ?_⟩
   · rw [_root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.mem_lastKer]
     rintro ⟨-, h⟩
     have hinv : (((q : 𝒪[k]) : k))⁻¹ ∈ 𝒪[k] := by
@@ -120,7 +147,7 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.isGlue
       exact L.zero_mem
     · simpa [_root_.GlobalTheory.LatPair.avec] using one_mem 𝒪[k]
 
-def lastPair (q : Unif k) (L : Submodule 𝒪[k] (n'' → k)) [L.IsLattice k] : Pair k (n'' ⊕ Fin 1) :=
+def lastPair (q : Unif k) (L : Submodule 𝒪[k] (n'' → k)) [L.IsFullLattice k] : Pair k (n'' ⊕ Fin 1) :=
   glue (isGlue_last q L)
 
 variable [MeasurableSpace k]
@@ -147,7 +174,7 @@ variable (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 def TransformFormula : Prop :=
   ∀ (q : Unif k) (ψ : AddChar k Circle) (hψ : HasConductor ψ 1) (ε : 𝒪[k]ˣ) (μ : Measure (n → k))
-    [μ.IsAddHaarMeasure] (P : Pair k n') (LY : Submodule 𝒪[k] (n → k)) [LY.IsLattice k],
+    [μ.IsAddHaarMeasure] (P : Pair k n') (LY : Submodule 𝒪[k] (n → k)) [LY.IsFullLattice k],
     (∀ x₀ y, datum q P LY x₀ y = latInd (gluedS q 1 P.ker P.vec) LY (withCol x₀ y)) ∧
     0 < volQ μ q LY ∧
     ∀ (x₀ : Matrix n n' k) (η : n → k),
@@ -157,7 +184,7 @@ def TransformFormula : Prop :=
 
 def Decomposition : Prop :=
   ∀ (q : Unif k) (ψ : AddChar k Circle) (hψ : HasConductor ψ 1) (ε : 𝒪[k]ˣ)
-    (P : Pair k n') (LY : Submodule 𝒪[k] (n → k)) [LY.IsLattice k],
+    (P : Pair k n') (LY : Submodule 𝒪[k] (n → k)) [LY.IsFullLattice k],
     (∀ (fW : Module.Dual 𝓀[k] (Red LY)) (x₀ : Matrix n n' k),
       latInd P.ker LY x₀ = ∑ᶠ f' : Module.Dual 𝓀[k] (Red P.ker), compInd P.ker LY f' fW x₀ ∧
       term q (resChar ψ hψ q) (resUnit ε) P LY fW x₀ = ∑ᶠ f' : Module.Dual 𝓀[k] (Red P.ker),
@@ -179,7 +206,7 @@ def Decomposition : Prop :=
 
 def ClassSumFormula : Prop :=
   ∀ (q : Unif k) (ψ : AddChar k Circle) (hψ : HasConductor ψ 1) (ε : 𝒪[k]ˣ)
-    (L : Submodule 𝒪[k] (n' → k)) [L.IsLattice k] (Q : Pair k n)
+    (L : Submodule 𝒪[k] (n' → k)) [L.IsFullLattice k] (Q : Pair k n)
     (M : Type) [AddCommGroup M] [Module ℂ M] (φ : Form k n' M), φ ∈ Mram k n' M →
     (∀ x₀ : Matrix n n' k,
       ∑ P ∈ withKer L, mainDatum q (resChar ψ hψ q) (resUnit ε) P Q x₀ • φ P =
@@ -192,12 +219,12 @@ def ClassSumFormula : Prop :=
 
 
 def LastStep : Prop :=
-  ∀ (q : Unif k) (LY : Submodule 𝒪[k] (n → k)) [LY.IsLattice k] (L'' : Submodule 𝒪[k] (n'' → k)) [L''.IsLattice k],
+  ∀ (q : Unif k) (LY : Submodule 𝒪[k] (n → k)) [LY.IsFullLattice k] (L'' : Submodule 𝒪[k] (n'' → k)) [L''.IsFullLattice k],
     (∀ (fW : {f : Module.Dual 𝓀[k] (Red LY) // f ≠ 0}) (x' : Matrix n'' n k) (η : n → k),
       phiOne (ofDual LY fW) (lastPair q L'') (withRow x' η) =
         latInd LY L'' x' * (if Lifts LY (q.1 • η) fW.1 then 1 else 0) ∧
       phiOne (ofDual LY fW) (lastPair q L'') (withRow x' η) = latInd LY L'' x' * cosetInd q LY fW.1 η) ∧
-    ∀ (ψ : AddChar k Circle) (hψ : HasConductor ψ 1) (ε : 𝒪[k]ˣ) (L : Submodule 𝒪[k] (n' → k)) [L.IsLattice k]
+    ∀ (ψ : AddChar k Circle) (hψ : HasConductor ψ 1) (ε : 𝒪[k]ˣ) (L : Submodule 𝒪[k] (n' → k)) [L.IsFullLattice k]
       (M : Type) [AddCommGroup M] [Module ℂ M] (φ : Form k n' M), φ ∈ Mram k n' M →
       ∀ (x' : Matrix n'' n k) (η : n → k),
         (∀ x₀ : Matrix n n' k,

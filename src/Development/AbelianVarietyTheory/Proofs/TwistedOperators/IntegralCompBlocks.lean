@@ -72,20 +72,26 @@ variable {k : Type} [Field k] {n n' : Type} [Fintype n] [DecidableEq n] [Fintype
 
 def ext (p : ℕ) (e : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs} → k) :
     Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k :=
-  Matrix.of fun r s => if h : Free p (r, s) then e ⟨(r, s), h⟩ else 0
+  by
+    classical
+    exact Matrix.of fun r s => if h : Free p (r, s) then e ⟨(r, s), h⟩ else 0
 
 omit [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] in
 lemma affPt_eq (p : ℕ) (x₀ : Matrix n n' k) (e) :
-    affPt (c := c) p x₀ e = basePt c x₀ + ext p e := rfl
+    affPt (c := c) p x₀ e = basePt c x₀ + ext p e := by
+  classical
+  rfl
 
 omit [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] in
 lemma ext_free (p : ℕ) (e : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs} → k) (r s)
     (h : Free p (r, s)) : ext p e r s = e ⟨(r, s), h⟩ := by
+  classical
   simp [ext, h]
 
 omit [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] in
 lemma ext_not_free (p : ℕ) (e : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs} → k) (r s)
     (h : ¬ Free p (r, s)) : ext p e r s = 0 := by
+  classical
   simp [ext, h]
 
 omit [DecidableEq n] [Fintype n'] [DecidableEq n'] in
@@ -275,37 +281,43 @@ theorem GlobalTheory.RootEx.opE_om_embX : ∀ (k : Type) [Field k] [ValuativeRel
   refine ⟨fun g => ?_, fun g => ?_⟩
   · funext x₀
     unfold om
-    rw [opE_const_mul]
-    simp only [← map_inv, embX_val, Units.val_one, Matrix.mul_one, det_embX, Pi.smul_apply,
+    rw [GlobalTheory.RootEx.OpELevi.opE_const_mul]
+    simp only [← map_inv, GlobalTheory.RootEx.OpELevi.embX_val, Units.val_one, Matrix.mul_one,
+      GlobalTheory.RootEx.OpELevi.det_embX, Pi.smul_apply,
       smul_eq_mul, map_one, nabs_one, Real.one_rpow, Complex.ofReal_one]
-    erw [integral_left p ψ ν (g⁻¹).val (Matrix.GeneralLinearGroup.det g)⁻¹ (by rw [← map_inv]; rfl) Φ]
-    have hp := nabs_pos (Matrix.GeneralLinearGroup.det g)
+    erw [GlobalTheory.RootEx.OpELevi.integral_left p ψ ν (g⁻¹).val
+      (Matrix.GeneralLinearGroup.det g)⁻¹ (by rw [← map_inv]; rfl) Φ]
+    have hp := GlobalTheory.RootEx.OpELevi.nabs_pos (Matrix.GeneralLinearGroup.det g)
     set t := nabs k (Matrix.GeneralLinearGroup.det g) with ht
     have key : t ^ (-(Fintype.card (n' ⊕ Fin (c + 1)) : ℝ) / 2) *
         (t⁻¹ ^ Fintype.card {i : Fin (c + 1) // p < i.val + 1})⁻¹ =
         t ^ (((c : ℝ) + 1) / 2 - p) * t ^ (-(Fintype.card n' : ℝ) / 2) := by
-      rw [inv_pow, inv_inv, ← Real.rpow_natCast, card_cols p h1 h2, ← Real.rpow_add hp,
+      rw [inv_pow, inv_inv, ← Real.rpow_natCast,
+        GlobalTheory.RootEx.OpELevi.card_cols p h1 h2, ← Real.rpow_add hp,
         ← Real.rpow_add hp]
       congr 1
       simp only [Fintype.card_sum, Fintype.card_fin]
       push_cast; ring
-    rw [nabs_inv, ← ht, Complex.real_smul]
+    rw [GlobalTheory.RootEx.OpELevi.nabs_inv, ← ht, Complex.real_smul]
     have key' := congrArg (fun r : ℝ => (r : ℂ)) key
     simp only [Complex.ofReal_mul] at key'
     linear_combination (((μ (Matrix.GeneralLinearGroup.det g⁻¹) : ℂˣ) : ℂ) *
       opE ψ ν p Φ ((g⁻¹).val * x₀)) * key'
   · funext x₀
     unfold om
-    rw [opE_const_mul]
-    simp only [inv_one, embX_val, Units.val_one, Matrix.one_mul, det_embX, Pi.smul_apply,
+    rw [GlobalTheory.RootEx.OpELevi.opE_const_mul]
+    simp only [inv_one, GlobalTheory.RootEx.OpELevi.embX_val, Units.val_one, Matrix.one_mul,
+      GlobalTheory.RootEx.OpELevi.det_embX, Pi.smul_apply,
       smul_eq_mul, map_one, nabs_one, Real.one_rpow, Complex.ofReal_one]
-    erw [integral_right p ψ ν g.val (Matrix.GeneralLinearGroup.det g) rfl Φ]
-    have hp := nabs_pos (Matrix.GeneralLinearGroup.det g)
+    erw [GlobalTheory.RootEx.OpELevi.integral_right p ψ ν g.val
+      (Matrix.GeneralLinearGroup.det g) rfl Φ]
+    have hp := GlobalTheory.RootEx.OpELevi.nabs_pos (Matrix.GeneralLinearGroup.det g)
     set t := nabs k (Matrix.GeneralLinearGroup.det g) with ht
     have key : t ^ ((Fintype.card (n ⊕ Fin c) : ℝ) / 2) *
         (t ^ Fintype.card {l : Fin c // l.val + 1 < p})⁻¹ =
         t ^ (((c : ℝ) + 2) / 2 - p) * t ^ ((Fintype.card n : ℝ) / 2) := by
-      rw [← Real.rpow_natCast, card_rows p h1 h2, ← Real.rpow_neg hp.le, ← Real.rpow_add hp,
+      rw [← Real.rpow_natCast, GlobalTheory.RootEx.OpELevi.card_rows p h1 h2,
+        ← Real.rpow_neg hp.le, ← Real.rpow_add hp,
         ← Real.rpow_add hp]
       congr 1
       simp only [Fintype.card_sum, Fintype.card_fin]

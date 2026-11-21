@@ -20,12 +20,18 @@ def dGT : (n : ℕ) → (Fin n → ℤ) → ℕ
   | n + 1, μ => ∑ κ ∈ gtBox μ, dGT n κ
 
 
-def stripsUp {n : ℕ} (μ : Fin n → ℤ) (b : ℕ) : Finset (Fin n → ℤ) :=
-  (Fintype.piFinset fun i => Finset.Icc (μ i) (μ i + b)).filter fun ν => HStrip ν μ b
+def stripsUp {n : ℕ} (μ : Fin n → ℤ) (b : ℕ) : Finset (Fin n → ℤ) := by
+  letI : DecidablePred (fun ν => HStrip ν μ b) := fun ν => by
+    unfold HStrip
+    infer_instance
+  exact (Fintype.piFinset fun i => Finset.Icc (μ i) (μ i + b)).filter fun ν => HStrip ν μ b
 
 
-def stripsDown {n : ℕ} (μ : Fin n → ℤ) (b : ℕ) : Finset (Fin n → ℤ) :=
-  (Fintype.piFinset fun i => Finset.Icc (μ i - b) (μ i)).filter fun ν => HStrip μ ν b
+def stripsDown {n : ℕ} (μ : Fin n → ℤ) (b : ℕ) : Finset (Fin n → ℤ) := by
+  letI : DecidablePred (fun ν => HStrip μ ν b) := fun ν => by
+    unfold HStrip
+    infer_instance
+  exact (Fintype.piFinset fun i => Finset.Icc (μ i - b) (μ i)).filter fun ν => HStrip μ ν b
 
 def StripsMem : Prop :=
   ∀ (n : ℕ) (μ ν : Fin n → ℤ) (b : ℕ),

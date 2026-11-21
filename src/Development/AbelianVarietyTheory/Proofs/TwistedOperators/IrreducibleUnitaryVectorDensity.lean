@@ -57,7 +57,7 @@ theorem irreducibleUnitary_density (H : Type) [NormedAddCommGroup H] [InnerProdu
     (hs : ∀ B : H →L[ℂ] H, (∀ g, B.comp (π g) = (π g).comp B) →
       ∃ c : ℂ, B = c • ContinuousLinearMap.id ℂ H)
     (n : ℕ) (a : Fin n → H) (Λ : Fin n → (H →L[ℂ] ℂ)) (h : ∀ g, ∑ j, Λ j (π g (a j)) = 0)
-    (φ u : H) : ∑ j, ⟪φ, a j⟫_ℂ * Λ j u = 0 := by
+    (φ u : H) : ∑ j, ⟪φ, a j⟫_ℂ * Λ j u = 0 := open IrreducibleUnitaryDensity in by
   let a' : PiLp 2 (fun _ : Fin n => H) := WithLp.toLp 2 a
   let S : Submodule ℂ (PiLp 2 (fun _ : Fin n => H)) :=
     Submodule.span ℂ (Set.range fun g => diag n (π g) a')

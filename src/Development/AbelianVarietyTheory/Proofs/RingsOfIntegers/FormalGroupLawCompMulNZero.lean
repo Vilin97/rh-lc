@@ -117,7 +117,7 @@ theorem formalGroupLaw_comp_mulN_add (k : ℕ) {x y : Pt R n d} (hx : ∀ i, con
       add_add_add_comm_pt G (const_comp1 (const_mulN G k) hx) (const_comp1 (const_mulN G k) hy) hx hy]
 
 theorem coeff_single_one {σ : Type} (s : σ) (f : MvPowerSeries σ R) :
-    coeff (Finsupp.single s 1) f = constantCoeff (pderiv R s f) := by
+    coeff (Finsupp.single s 1) f = constantCoeff (pderiv s f) := by
   rw [← coeff_zero_eq_constantCoeff_apply, coeff_pderiv]
   simp
 

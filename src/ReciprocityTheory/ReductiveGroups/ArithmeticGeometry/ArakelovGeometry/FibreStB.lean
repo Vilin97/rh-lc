@@ -82,9 +82,9 @@ theorem Gen.deh_zOf (hw : G.Good w) {ρ : ℂ} (hρ : G.P.eval₂ (deh w 0) ρ =
   have h0 := hw.w0
   rw [deh_apply, G.zOf_e hw hρ 0]
   congr 1
-  first
-  | (field_simp; done)
-  | (field_simp; ring)
+  funext i
+  simp only [Gen.zOf]
+  field_simp [h0]
 
 private theorem map_eval₂_X_mul_C_eq {K : Type*} [Field K] (φ : MvPolynomial (Fin (D + 1)) ℤ →+* K) (t : K)
     (f : MvPolynomial ι ℤ) :
@@ -182,6 +182,8 @@ theorem Gen.deh_zOf_Θ (hw : G.Good w) {ρ : ℂ} (hρ : G.P.eval₂ (deh w 0) �
       deh x (e 0) G.Θ := by
     conv_rhs => rw [deh_apply]
     congr 1
+    funext i
+    simp only [Gen.evQ]
     rw [← G.hQ i, deh_X]
     first
     | exact mul_div_cancel_left₀ _ G.dd_ne

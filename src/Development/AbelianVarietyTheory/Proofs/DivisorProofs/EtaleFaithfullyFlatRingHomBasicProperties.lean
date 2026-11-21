@@ -26,9 +26,13 @@ theorem etFF_iff_spec {A B : CommRingCat.{0}} (g : A ⟶ B) :
   · rintro ⟨h1, h2⟩; exact ⟨h1, (RingHom.Etale.iff_flat_and_formallyUnramified.1 h1).1, h2⟩
 
 theorem etFF_isMultiplicative : EtFF.IsMultiplicative where
-  id_mem A := ⟨RingHom.Etale.of_bijective Function.bijective_id,
-    RingHom.FaithfullyFlat.of_bijective Function.bijective_id⟩
-  comp_mem f g hf hg := by
+  toContainsIdentities := by
+    refine ⟨fun A => ?_⟩
+    change (RingHom.id A).Etale ∧ (RingHom.id A).FaithfullyFlat
+    exact ⟨RingHom.Etale.of_bijective Function.bijective_id,
+      RingHom.FaithfullyFlat.of_bijective Function.bijective_id⟩
+  toIsStableUnderComposition := by
+    refine ⟨fun f g hf hg => ?_⟩
     change (f ≫ g).hom.Etale ∧ (f ≫ g).hom.FaithfullyFlat
     rw [CommRingCat.hom_comp]
     exact ⟨RingHom.Etale.stableUnderComposition _ _ hf.1 hg.1,

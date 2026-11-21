@@ -64,6 +64,8 @@ theorem map_scale_adele {F : Type} [Field F] [NumberField F] (hF : IsTotallyReal
   have hc : (fun y : AF F => pairA F (θ t) 1 * y) ∘ (MeasurableEquiv.funUnique Unit (AF F)) =
       (MeasurableEquiv.funUnique Unit (AF F)) ∘ (fun (x : Unit → AF F) (i : Unit) =>
         (show AdeleRing (𝓞 F) F from (θ t, 1)) * x i) := rfl
+  have hEquiv : AEMeasurable (MeasurableEquiv.funUnique Unit (AF F)) μ' :=
+    (MeasurableEquiv.measurable _).aemeasurable
   calc μA.map (fun y => pairA F (θ t) 1 * y)
       = (μ'.map (MeasurableEquiv.funUnique Unit (AF F))).map (fun y => pairA F (θ t) 1 * y) := by
         rw [he]
@@ -73,7 +75,7 @@ theorem map_scale_adele {F : Type} [Field F] [NumberField F] (hF : IsTotallyReal
         rw [Measure.map_map hf (MeasurableEquiv.measurable _),
           Measure.map_map (MeasurableEquiv.measurable _) hg, hc]
     _ = ENNReal.ofReal ((t ^ Module.finrank ℚ F)⁻¹) • μA := by
-        rw [h, Measure.map_smul, he]
+        rw [h, Measure.map_smul _ hEquiv, he]
         simp
 
 theorem exists_modulus_chi : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]

@@ -18,8 +18,10 @@ variable {d : ℕ}
 
 
 noncomputable def partialProd (p : Polynomial (MvPolynomial (Fin d) ℂ))
-    (u : Set ((Fin d → ℂ) × ℂ)) (x : Fin d → ℂ) : ℂ[X] :=
-  (((p.map (MvPolynomial.eval x)).roots.filter fun y => (x, y) ∈ u).map fun y => X - C y).prod
+    (u : Set ((Fin d → ℂ) × ℂ)) (x : Fin d → ℂ) : ℂ[X] := by
+  classical
+  exact (((p.map (MvPolynomial.eval x)).roots.filter fun y => (x, y) ∈ u).map
+    fun y => X - C y).prod
 
 theorem card_roots_map {p : Polynomial (MvPolynomial (Fin d) ℂ)} (hp : p.Monic) (x : Fin d → ℂ) :
     (p.map (MvPolynomial.eval x)).roots.card = p.natDegree := by
@@ -93,14 +95,14 @@ theorem differentiableAt_coeff_partialProd {p : Polynomial (MvPolynomial (Fin d)
   have heq : (fun x => (partialProd p u x).coeff k) =ᶠ[𝓝 x₀]
       fun x => ((R₀.filter fun y => (x₀, y) ∈ u).map fun y => X - C (ψ y x)).prod.coeff k := by
     filter_upwards [hroots, hall] with x hx hxa
-    unfold partialProd
-    rw [hx, Multiset.filter_map, Multiset.map_map]
-    congr 3
-    refine Multiset.filter_congr fun y hy => ?_
-    refine hxa y (Multiset.mem_toFinset.mpr hy) ?_
-    have hmem : ψ y x ∈ (p.map (MvPolynomial.eval x)).roots := by
-      rw [hx]; exact Multiset.mem_map_of_mem _ hy
-    exact (Polynomial.mem_roots (hp.map _).ne_zero).mp hmem
+    have hfilter : (R₀.filter fun y => (x, ψ y x) ∈ u) =
+        (R₀.filter fun y => (x₀, y) ∈ u) := by
+      refine Multiset.filter_congr fun y hy => ?_
+      refine hxa y (Multiset.mem_toFinset.mpr hy) ?_
+      have hmem : ψ y x ∈ (p.map (MvPolynomial.eval x)).roots := by
+        rw [hx]; exact Multiset.mem_map_of_mem _ hy
+      exact (Polynomial.mem_roots (hp.map _).ne_zero).mp hmem
+    simp only [partialProd, hx, Multiset.filter_map, Multiset.map_map, Function.comp_def, hfilter]
   refine DifferentiableAt.congr_of_eventuallyEq ?_ heq
   exact differentiableAt_coeff_prod _ ψ
     (fun y hy => (hψ y (Multiset.mem_of_mem_filter hy)).1.differentiableAt) k

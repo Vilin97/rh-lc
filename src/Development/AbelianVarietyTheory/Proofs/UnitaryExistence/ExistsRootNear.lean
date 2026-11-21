@@ -250,7 +250,7 @@ theorem finite_near (c : E ≃ₐ[F] E) (h2 : Module.finrank F E = 2) (hc : c �
     funext i
     rw [Subsingleton.elim i 0]
     simp
-  obtain ⟨hopen, hbas⟩ := GlobalTheory.T.isOpen_nsmul_adelicCompletionOfVectorSet F E 1 L hL
+  obtain ⟨hopen, hbas⟩ := GlobalTheory.AdLat.OpenLat.isOpen_nsmul_hat F E 1 L hL
   have hV0 : {y : RA F E | 1 + y ∈ V} ∈ 𝓝 (0 : RA F E) := by
     have : Continuous (fun y : RA F E => 1 + y) := continuous_const_add 1
     have h := this.tendsto 0
@@ -350,7 +350,7 @@ theorem exists_root_near : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     moduleTopology (InfiniteAdeleRing F) (InfiniteAdeleRing F ⊗[F] E)
   intro W hW
   obtain ⟨V, hV, hVW⟩ := units_nhds W hW
-  obtain ⟨e, he, hec, hes⟩ := GlobalTheory.T.exists_adeleRing_tensor_equiv_infinite_prod_finite F E
+  obtain ⟨e, he, hec, hes⟩ := GlobalTheory.AdSplit.exists_adele_equiv F E
   have hs1 : ∀ z, (e (sg (AdeleRing (𝓞 F) F) c z)).1 = sg _ c (e z).1 := fun z => by
     rw [(he _).1, (he _).1]
     exact map_sg F E c _ z

@@ -89,6 +89,7 @@ theorem linInd_bG {κ : Type} [DecidableEq κ] (G : MvPolynomial κ K) (hG : G �
     eq_zero_of_coord e _ (support_polyOf G S T hST p) (by rw [← sum_smul_bG]; exact hp)
   have h2 : polyOf S p = 0 := (mul_eq_zero.mp h1).resolve_left hG
   rw [← polyOf_coeff S p j, h2, MvPolynomial.coeff_zero]
+  rfl
 
 theorem w_int_le_one (w : FinitePlace K) (y : 𝓞 K) : w (y : K) ≤ 1 := by
   rw [← NumberField.FinitePlace.mk_maximalIdeal w]
@@ -342,10 +343,10 @@ theorem exists_int_multiple {κ : Type} (F : MvPolynomial κ K) :
   · exact IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors b.2
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    simp only [MvPolynomial.map_monomial, hy]
-    conv_rhs => rw [MvPolynomial.as_sum F]
-    rw [Finset.mul_sum]
-    refine Finset.sum_congr rfl fun s _ => ?_
-    rw [MvPolynomial.C_mul_monomial, Algebra.smul_def]
+      simp only [MvPolynomial.map_monomial, hy]
+      conv_rhs => rw [MvPolynomial.as_sum F]
+      rw [Finset.mul_sum]
+      refine Finset.sum_congr rfl fun s _ => ?_
+      rw [MvPolynomial.C_mul_monomial, Algebra.smul_def]
 
 end ReciprocityTheory.ChartRestriction.G.T0.SatakeVectors

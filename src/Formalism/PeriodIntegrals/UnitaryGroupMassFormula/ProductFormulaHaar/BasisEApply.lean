@@ -109,7 +109,7 @@ theorem trace_ιE_ql (L : LocAt F E sig p) (h : Module.finrank F E = 2) (x : E) 
   rw [trace_tower, trace_ιE L h]
 
 theorem psiE_ιE (L : LocAt F E sig p) (h : Module.finrank F E = 2) (x : E) :
-    haveI := L.ellPrime
+    letI := L.ellPrime
     ∃ a : ℚ, (∃ n : ℕ, a.den = (resChar p) ^ n) ∧
       ‖Algebra.trace ℚ_[resChar p] L.Fp (L.ιF (Algebra.trace F E x)) - (a : ℚ_[resChar p])‖ ≤ 1 ∧
       L.psiE (L.ιE x) = Complex.exp (2 * Real.pi * Complex.I * (a : ℂ)) := by

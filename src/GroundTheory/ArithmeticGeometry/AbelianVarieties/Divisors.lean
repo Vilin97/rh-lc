@@ -161,13 +161,14 @@ theorem isDiscreteValuationRing_localization_XYIdeal {x y : F} (h : W.toAffine.N
   rw [← IsLocalization.AtPrime.map_eq_maximalIdeal (XYIdeal W.toAffine x (C y)), ← Ideal.map_mul, mul_comm,
     XYIdeal_neg_mul h, XIdeal, Ideal.map_span, Set.image_singleton]
 
-instance isDedekindDomainDvr_coordinateRing : IsDedekindDomainDvr W.toAffine.CoordinateRing where
-  is_dvr_at_nonzero_prime P hP0 hP := by
-    obtain ⟨x, y, h, rfl⟩ := exists_eq_XYIdeal W hP0
-    exact isDiscreteValuationRing_localization_XYIdeal W h
+theorem isDedekindDomainDvr_coordinateRing (P : Ideal W.toAffine.CoordinateRing) (hP0 : P ≠ ⊥)
+    (hP : P.IsPrime) : IsDiscreteValuationRing (Localization.AtPrime P) := by
+  obtain ⟨x, y, h, rfl⟩ := exists_eq_XYIdeal W hP0
+  exact isDiscreteValuationRing_localization_XYIdeal W h
 
 instance isDedekindDomain_coordinateRing : IsDedekindDomain W.toAffine.CoordinateRing :=
-  inferInstance
+  isDedekindDomain_iff_isDiscreteValuationRing_atPrime.mpr
+    ⟨inferInstance, isDedekindDomainDvr_coordinateRing W⟩
 
 noncomputable def affinePointEquiv :
     {xy : F × F // W.toAffine.Nonsingular xy.1 xy.2} ≃

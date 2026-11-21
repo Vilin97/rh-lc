@@ -215,9 +215,19 @@ theorem tan_ext_cover {n : ℕ} (s : Fin n → S) (hs : Ideal.span (Set.range s)
   have e : 𝒰.f k = Spec.map (CommRingCat.ofHom (toL (s k))) ≫ Spec.map (CommRingCat.ofHom (dAway (s k))) := by
     show Spec.map (CommRingCat.ofHom (algebraMap (DualNumber S) (Ld (s k)))) = _
     rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, ← toL_comp]
-  rw [e, Category.assoc, Category.assoc]
-  congr 1
-  exact congrArg (fun q => Over.Hom.left q) (h k)
+  rw [e]
+  have hk := congrArg (fun q => Over.Hom.left q) (h k)
+  simp only [Over.comp_left] at hk
+  have hr : (dualMapS (Algebra.ofId S (Localization.Away (s k)))).toRingHom = dAway (s k) := by
+    ext x <;> simp [dualMapS_fst', dualMapS_snd', dAway, dualMapR,
+      TrivSqZeroExt.algebraMap_eq_inl']
+  rw [spMap_left, hr] at hk
+  calc
+    _ = Spec.map (CommRingCat.ofHom (toL (s k))) ≫
+        (Spec.map (CommRingCat.ofHom (dAway (s k))) ≫ Over.Hom.left v₁) := Category.assoc _ _ _
+    _ = Spec.map (CommRingCat.ofHom (toL (s k))) ≫
+        (Spec.map (CommRingCat.ofHom (dAway (s k))) ≫ Over.Hom.left v₂) := by rw [hk]
+    _ = _ := (Category.assoc _ _ _).symm
 
 end Over
 

@@ -109,7 +109,9 @@ private theorem two_pow_add_pow_sub_two_pow_mul_le (c : ℕ) (ε : ℝ) (h0 : 0 
     ∀ i : ℕ, ((2 : ℝ) ^ c + ε) ^ i - 2 ^ (c * i) ≤ i * ε * (2 ^ c + 1) ^ i
   | 0 => by simp
   | i + 1 => by
-    have ih := two_pow_add_pow_sub_two_pow_mul_le c ε h0 h1 i
+    have ih : ((2 : ℝ) ^ c + ε) ^ i - 2 ^ (c * i) ≤
+        i * ε * (2 ^ c + 1) ^ i :=
+      two_pow_add_pow_sub_two_pow_mul_le c ε h0 h1 i
     have hb : (0 : ℝ) ≤ 2 ^ c := by positivity
     have hB1 : (1 : ℝ) ≤ 2 ^ c + 1 := by linarith
     have hbB : (2 : ℝ) ^ (c * i) ≤ (2 ^ c + 1) ^ (i + 1) := by

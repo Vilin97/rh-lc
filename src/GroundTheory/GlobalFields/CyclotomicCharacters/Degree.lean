@@ -20,8 +20,8 @@ theorem continuous_unitsPadicEquiv_apply (q : Nat.Primes) :
     Continuous fun u : ℤ̂ˣ => unitsPadicEquiv u q := by
   simp_rw [unitsPadicEquiv_apply]
   rw [Units.continuous_iff]
-  exact ⟨(continuous_toPadicInt q).comp Units.continuous_val,
-    (continuous_toPadicInt q).comp Units.continuous_coe_inv⟩
+  exact ⟨(continuous_toPadicInt (ℓ := q)).comp Units.continuous_val,
+    (continuous_toPadicInt (ℓ := q)).comp Units.continuous_coe_inv⟩
 
 noncomputable def unitsDegree : ℤ̂ˣ →* Multiplicative ℤ̂ where
   toFun u := Multiplicative.ofAdd
@@ -30,8 +30,13 @@ noncomputable def unitsDegree : ℤ̂ˣ →* Multiplicative ℤ̂ where
     rw [show (fun q : Nat.Primes => Multiplicative.toAdd (padicUnitsLog q (unitsPadicEquiv 1 q))) =
       0 from funext fun q => by simp, map_zero, ofAdd_zero]
   map_mul' u v := by
-    rw [← ofAdd_add, ← map_add (f := _)]
-    congr 2
+    rw [← ofAdd_add, ← map_add ofPadics]
+    apply congrArg (fun x => Multiplicative.ofAdd (ofPadics x))
+    funext q
+    rw [map_mul unitsPadicEquiv]
+    change (padicUnitsLog q (unitsPadicEquiv u q * unitsPadicEquiv v q)).toAdd = _
+    rw [map_mul, toAdd_mul]
+    rfl
 
 theorem toPadicInt_unitsDegree (u : ℤ̂ˣ) (q : Nat.Primes) :
     toPadicInt q (Multiplicative.toAdd (unitsDegree u)) =
@@ -54,10 +59,10 @@ end UnitsDegree
 
 section Degree
 
-noncomputable def degree : Gal(ℚ̄/ℚ) →* Multiplicative ℤ̂ :=
+noncomputable def degree : Gal((AlgebraicClosure ℚ)/ℚ) →* Multiplicative ℤ̂ :=
   unitsDegree.comp character
 
-theorem degree_apply (σ : Gal(ℚ̄/ℚ)) : degree σ = unitsDegree (character σ) :=
+theorem degree_apply (σ : Gal((AlgebraicClosure ℚ)/ℚ)) : degree σ = unitsDegree (character σ) :=
   rfl
 
 theorem continuous_degree : Continuous degree :=
@@ -69,14 +74,15 @@ theorem degree_surjective : Function.Surjective degree :=
 theorem ker_character_le_ker_degree : character.ker ≤ degree.ker := fun σ h => by
   rw [MonoidHom.mem_ker, degree_apply, MonoidHom.mem_ker.1 h, map_one]
 
-noncomputable def degreeComponent (q : Nat.Primes) : Gal(ℚ̄/ℚ) →* Multiplicative ℤ_[q] :=
+noncomputable def degreeComponent (q : Nat.Primes) :
+    Gal((AlgebraicClosure ℚ)/ℚ) →* Multiplicative ℤ_[q] :=
   (padicUnitsLog q).comp ((Units.map (toPadicInt q).toMonoidHom).comp character)
 
-theorem degreeComponent_apply (q : Nat.Primes) (σ : Gal(ℚ̄/ℚ)) :
+theorem degreeComponent_apply (q : Nat.Primes) (σ : Gal((AlgebraicClosure ℚ)/ℚ)) :
     degreeComponent q σ = padicUnitsLog q (Units.map (toPadicInt q).toMonoidHom (character σ)) :=
   rfl
 
-theorem toPadicInt_degree (q : Nat.Primes) (σ : Gal(ℚ̄/ℚ)) :
+theorem toPadicInt_degree (q : Nat.Primes) (σ : Gal((AlgebraicClosure ℚ)/ℚ)) :
     toPadicInt q (Multiplicative.toAdd (degree σ)) = Multiplicative.toAdd (degreeComponent q σ) := by
   rw [degree_apply, toPadicInt_unitsDegree, unitsPadicEquiv_apply]
   rfl
@@ -89,10 +95,10 @@ end ComplexConjugation
 
 section FixedField
 
-noncomputable def zhatField : IntermediateField ℚ ℚ̄ :=
+noncomputable def zhatField : IntermediateField ℚ (AlgebraicClosure ℚ) :=
   fixedField degree.ker
 
-theorem isClosed_ker_degree : IsClosed (degree.ker : Set Gal(ℚ̄/ℚ)) :=
+theorem isClosed_ker_degree : IsClosed (degree.ker : Set Gal((AlgebraicClosure ℚ)/ℚ)) :=
   isClosed_singleton.preimage continuous_degree
 
 theorem fixingSubgroup_zhatField : zhatField.fixingSubgroup = degree.ker :=

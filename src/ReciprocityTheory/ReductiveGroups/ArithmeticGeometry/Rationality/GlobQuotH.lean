@@ -22,8 +22,7 @@ lemma norm_emb_eq (v : HeightOneSpectrum (𝓞 K)) {x : K} (hx : x ≠ 0) :
   have hv : v.valuation K x ≠ 0 := (Valuation.ne_zero_iff _).2 hx
   have h1 : Valued.v (FinitePlace.embedding v x) = v.valuation K x :=
     HeightOneSpectrum.valuedAdicCompletion_eq_valuation' v x
-  rw [FinitePlace.norm_def, h1, WithZeroMulInt.toNNReal_neg_apply _ hv, ordAt, neg_neg,
-    unzero_toAdd_eq_log _ hv]
+  rw [FinitePlace.norm_def, h1, WithZeroMulInt.toNNReal_neg_apply _ hv, ordAt, neg_neg]
   push_cast
   rfl
 

@@ -102,11 +102,11 @@ theorem connForm_map [Algebra B B'] [IsScalarTower R B B'] (f : Z1 (O (dp0 R) s)
         (IsScalarTower.toAlgHom R B B') e)) := by
   let a := Thick.trivHom (hx := hx) (T := Thick.triv B' x' hx') (IsScalarTower.toAlgHom R B B') e
   let Φ := (diagExt R B).thickHom (diagExt R B') (diagMap R B B') (IsScalarTower.toAlgHom R B B')
-    (fun c ↦ (fst_diagMap R c).symm) hx hx' e
+    (fun c ↦ (fst_diagMap R B B' c).symm) hx hx' e
   have k1 := ev_sq f a ((diagExt R B').secHom hx' (diagExt R B').i fun _ ↦ rfl)
     ((diagExt R B).secHom hx (diagExt R B).i fun _ ↦ rfl) Φ fun c ↦
-      TrivSqZeroExt.ext (fst_diagMap R (TrivSqZeroExt.inl c)).symm
-        ((snd_diagMap R (TrivSqZeroExt.inl c)).trans (map_zero _)).symm
+      TrivSqZeroExt.ext (fst_diagMap R B B' (TrivSqZeroExt.inl c)).symm
+        ((snd_diagMap R B B' (TrivSqZeroExt.inl c)).trans (map_zero _)).symm
   have k2 := ev_sq f a ((diagExt R B').secHom hx' (diagSec R B') (fst_derSec _))
     ((diagExt R B).secHom hx (diagSec R B) (fst_derSec _)) Φ fun c ↦
       by
@@ -138,6 +138,7 @@ def IsSmall {ι : Type} (U : ι → X.Opens) : ObjectProperty (Thick γ s) :=
   fun T ↦ ∃ i, ⊤ ≤ T.x ⁻¹ᵁ U i
 
 
+variable {γ s} in
 theorem Thick.Hom.le_preimage {T T' : Thick γ s} (φ : T ⟶ T') {U : X.Opens} (h : ⊤ ≤ T.x ⁻¹ᵁ U) :
     ⊤ ≤ T'.x ⁻¹ᵁ U := by
   rw [← φ.pt]
@@ -169,7 +170,9 @@ theorem firstDeRham_base_eq_zero (s : X ⟶ Sp R) [IsIso s] (c : FirstDeRham s) 
   refine H1.eq_zero_of_isInitial _ (T₀ := Thick.triv R (inv s) hx)
     (Limits.IsInitial.ofUniqueHom (fun T ↦ Thick.trivHom (Algebra.ofId R T.B) ?_) fun T m ↦ ?_) c
   · rw [IsIso.comp_inv_eq]; exact T.w.symm
-  · exact Thick.hom_ext fun b ↦ (m.φ.commutes b).trans ((Algebra.ofId R T.B).commutes b).symm
+  · have hφ : ∀ b : R, m.φ b = (Algebra.ofId R T.B) b :=
+      fun b ↦ (m.φ.commutes b).trans ((Algebra.ofId R T.B).commutes b).symm
+    exact Thick.Hom.ext' (AlgHom.ext hφ)
 
 open Polynomial
 

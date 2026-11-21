@@ -59,8 +59,8 @@ theorem irreducible_of_onto [CharZero Ω] (Z : IntermediateField F Ω) {m : ℕ}
     obtain ⟨i, hi, hic, rfl⟩ := (hζ.isPrimitiveRoot_iff).1 hμ
     obtain ⟨u, hu, hj⟩ := h (ZMod.unitOfCoprime i hic)
     rw [autToPow_eq_iff, ZMod.coe_unitOfCoprime, ZMod.val_natCast_of_lt hi] at hj
-    rw [Multiset.mem_toFinset, mem_aroots]
-    refine ⟨minpoly.ne_zero hint, ?_⟩
+    rw [Multiset.mem_toFinset, mem_aroots']
+    refine ⟨((minpoly.monic hint).map (algebraMap Z Ω)).ne_zero, ?_⟩
     let v : Ω ≃ₐ[Z] Ω := Z.fixingSubgroupEquiv ⟨u, hu⟩
     have hv : v ζ = ζ ^ i := hj
     rw [← hv, aeval_algHom_apply, minpoly.aeval, map_zero]

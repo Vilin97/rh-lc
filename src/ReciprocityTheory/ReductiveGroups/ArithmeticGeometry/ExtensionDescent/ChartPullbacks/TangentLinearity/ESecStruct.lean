@@ -36,7 +36,7 @@ theorem tLin_of (hGF : GlobalFnsSt) : TLinSt := by
   have hO := hlin.q_lin e
   have hi := hlin.i_lin e a
   obtain ⟨ρ, hρ⟩ := pair U ιD ιG e a χ hO u hu
-  have hinv := rho_inv U ιD ιG e a χ hO u hi ρ hρ
+  have hinv := rho_inv U ιD ιG e a χ u hi ρ hρ
   obtain ⟨v, hv⟩ := descend (U.gt e) ρ.val hinv
   obtain ⟨κ, hκ⟩ := const_pullback hGF (thick R I e) D.toPre.P.A D.toPre.P.isAb v
   have hq : (U.gt e).q.left ≫ (thickObj R I e D.toPre.P.A).hom = (thickObj R I e G).hom :=
@@ -46,7 +46,7 @@ theorem tLin_of (hGF : GlobalFnsSt) : TLinSt := by
     have := congrArg (fun φ : (thickObj R I e G).left ⟶ _ => φ.appTop.hom κ) hq
     rw [Scheme.Hom.comp_appTop] at this
     exact this
-  have he := rho_e U ιD ιG e a χ hO u hGF hu hu0 ρ hρ
+  have he := rho_e U ιD ιG e a χ u hGF hu hu0 ρ hρ
   have hκ1 : κ = 1 := by
     rw [hρκ, eSec_struct] at he
     exact he

@@ -13,7 +13,7 @@ noncomputable section
 
 namespace Formalism.D5
 
-open Formalism Formalism.CMTypeGaloisData Formalism.WT Formalism.WeightedSieveThreeParameter
+open Formalism Formalism.WT
 
 abbrev E0 := ZMod 2 × ZMod 2
 

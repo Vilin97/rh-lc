@@ -82,7 +82,7 @@ lemma meromorphicOrderAt_weierstrassP_sub_ne_top (c z : ℂ) :
 
 lemma le_toNat_torusOrder_weierstrassP_sub {z c : ℂ} (hz : z ∉ L.lattice) {n : ℕ}
     (h : ∀ i < n, iteratedDeriv i (fun w ↦ ℘[L] w - c) z = 0) :
-    n ≤ (torusOrder L (fun w ↦ ℘[L] w - c) (Torus.mk L z)).toNat := by
+    n ≤ (torusOrder (L := L) (fun w ↦ ℘[L] w - c) (Torus.mk L z)).toNat := by
   have ha : AnalyticAt ℂ (fun w ↦ ℘[L] w - c) z :=
     (L.analyticOnNhd_weierstrassP z hz).sub analyticAt_const
   have hne := meromorphicOrderAt_weierstrassP_sub_ne_top (L := L) c z
@@ -96,14 +96,14 @@ lemma le_toNat_torusOrder_weierstrassP_sub {z c : ℂ} (hz : z ∉ L.lattice) {n
   exact_mod_cast hle
 
 lemma one_le_toNat_torusOrder_weierstrassP_sub {z c : ℂ} (hz : z ∉ L.lattice) (hc : ℘[L] z = c) :
-    1 ≤ (torusOrder L (fun w ↦ ℘[L] w - c) (Torus.mk L z)).toNat :=
+    1 ≤ (torusOrder (L := L) (fun w ↦ ℘[L] w - c) (Torus.mk L z)).toNat :=
   le_toNat_torusOrder_weierstrassP_sub hz fun i hi ↦ by
     obtain rfl : i = 0 := by omega
     simp [hc]
 
 lemma two_le_toNat_torusOrder_weierstrassP_sub {z c : ℂ} (hz : z ∉ L.lattice) (hc : ℘[L] z = c)
     (h' : ℘'[L] z = 0) :
-    2 ≤ (torusOrder L (fun w ↦ ℘[L] w - c) (Torus.mk L z)).toNat :=
+    2 ≤ (torusOrder (L := L) (fun w ↦ ℘[L] w - c) (Torus.mk L z)).toNat :=
   le_toNat_torusOrder_weierstrassP_sub hz fun i hi ↦ by
     interval_cases i
     · simp [hc]
@@ -111,11 +111,11 @@ lemma two_le_toNat_torusOrder_weierstrassP_sub {z c : ℂ} (hz : z ∉ L.lattice
       exact h'
 
 lemma finsum_toNat_torusOrder_weierstrassP_sub (c : ℂ) :
-    ∑ᶠ x : Torus L, (torusOrder L (fun w ↦ ℘[L] w - c) x).toNat = 2 := by
+    ∑ᶠ x : Torus L, (torusOrder (L := L) (fun w ↦ ℘[L] w - c) x).toNat = 2 := by
   rw [finsum_toNat_torusOrder_sub_const isEllipticFunction_weierstrassP c, degree_weierstrassP]
 
 lemma finite_support_toNat_torusOrder_weierstrassP_sub (c : ℂ) :
-    (Function.support fun x ↦ (torusOrder L (fun w ↦ ℘[L] w - c) x).toNat).Finite :=
+    (Function.support fun x ↦ (torusOrder (L := L) (fun w ↦ ℘[L] w - c) x).toNat).Finite :=
   (finite_support_torusOrder (isEllipticFunction_weierstrassP_sub c)).subset fun x hx ↦ by
     simp only [Function.mem_support] at hx ⊢
     omega

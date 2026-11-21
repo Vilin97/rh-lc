@@ -21,6 +21,10 @@ def NoRel (T : Finset ℕ) (L : ℕ) : Prop :=
 
 def InTranslate {n : ℕ} (T : Finset ℕ) (u₀ x : ZMod n) : Prop := ∃ s ∈ T, x = (s : ZMod n) + u₀
 
+instance decidableInTranslate {n : ℕ} (T : Finset ℕ) (u₀ x : ZMod n) :
+    Decidable (InTranslate T u₀ x) := by
+  unfold InTranslate
+  exact Finset.decidableExistsAndFinset
 
 def HostThickOrbit : Prop :=
   ∀ (n L : ℕ), 0 < n → 2 ≤ L → ∀ T : Finset ℕ, (∀ s ∈ T, 4 * L * s < n) → NoRel T L →

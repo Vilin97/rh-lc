@@ -41,8 +41,8 @@ theorem isInvInvariant_haar {ε : Fin (2 * r + k + 1) → Bool} {P : Mat (2 * r 
     have : (Inv.inv ∘ f : UJ ε → _) = f ∘ Inv.inv := funext fun g => (map_inv f g).symm
     rw [this, ← Measure.map_map hf.measurable measurable_inv, Measure.map_inv_eq_self]
   refine ⟨?_⟩
-  rw [isMulLeftInvariant_eq_smul haar (Measure.map f (muG ε)), Measure.inv_def, Measure.map_smul, ← Measure.inv_def,
-    hinv]
+  rw [isMulLeftInvariant_eq_smul haar (Measure.map f (muG ε)), Measure.inv_def,
+    Measure.map_smul _ measurable_inv.aemeasurable, ← Measure.inv_def, hinv]
 
 def theta (k r : ℕ) : Mat (2 * r + k + 1) →L[ℝ] Mat (2 * r + k + 1) :=
   LinearMap.toContinuousLinearMap

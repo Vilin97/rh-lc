@@ -119,7 +119,7 @@ theorem terms_vanish [IsDiscreteValuationRing R] {ϖ : R} (hϖ : Irreducible ϖ)
     ∀ mu, mu ≠ 0 → ∀ j, (pullback.fst D.toPre.P.A.hom (thick R I 0)).app _ ((g mu).f j) = 0 := by
   subst hI
   classical
-  choose Q hQ using fun χ => QForm.exists_QVal hϖ D χ
+  choose Q hQ using QForm.exists_QVal (ϖ := ϖ) D
   have hQ' : QForm.IsQ D.toPre ϖ Q := hQ
   have hv := valOver_vK hϖ
   obtain ⟨hstd, hqc⟩ := prB_std D

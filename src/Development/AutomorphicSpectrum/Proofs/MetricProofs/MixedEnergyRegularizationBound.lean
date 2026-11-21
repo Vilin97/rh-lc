@@ -93,7 +93,8 @@ theorem tail_lintegral_le_of_eventually {e : ℕ} {X : Type} [TopologicalSpace X
     rw [integral_eq_lintegral_of_nonneg_ae (hnn _) hgm.aestronglyMeasurable,
       ← ENNReal.toReal_ofReal']
     exact ENNReal.toReal_mono ENNReal.ofReal_ne_top
-      ((lintegral_mono_set (fun y hy => hy.1)).trans ht)
+      ((lintegral_mono_set (show Es N ⊆ (bdry s)ᶜ ∩ {y | R ≤ rW L s y} from
+        fun _ hy => hy.1)).trans ht)
   rw [← ofReal_integral_eq_lintegral_ofReal (hint.mono_set hEK) (hnn _)]
   refine (ENNReal.ofReal_le_ofReal hle).trans (le_of_eq ?_)
   rcases le_total B 0 with h | h
@@ -131,7 +132,8 @@ theorem limit_measure_tail : TailBoundStatement → ∀ {e : ℕ} {X : Type} [To
         have h1 := ((hT (fun _ => t) fun _ => ht).2 R hRe).1
         simp only [ENNReal.ofReal_one, lintegral_const, one_mul, Measure.restrict_apply,
           MeasurableSet.univ, Set.univ_inter]
-        exact (measure_mono fun y hy => Or.inr hy.2).trans h1)
+        exact (measure_mono (show (bdry s)ᶜ ∩ {y | R ≤ rW L s y} ⊆
+          bdry s ∪ {y | R ≤ rW L s y} from fun _ hy => Or.inr hy.2)).trans h1)
     simpa using h
   have tail : ∀ R : ℝ, Real.exp 1 ≤ R →
       maMeasure A (fun i => th i + LocPot.ofFun (ph i) + Θ) (bdry s ∪ {y | R ≤ rW L s y}) ≤

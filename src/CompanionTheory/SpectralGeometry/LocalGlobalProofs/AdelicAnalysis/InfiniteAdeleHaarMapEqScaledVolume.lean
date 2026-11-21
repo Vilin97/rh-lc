@@ -136,7 +136,7 @@ theorem map_coord_eq (lam : Measure (Ainf F)) (hl : IsStdInf lam) :
       rw [hmΨ]
       exact (hΨalg b).symm
   have hq : Measure.QuasiMeasurePreserving Ψ lam volume := by
-    refine hmp.quasiMeasurePreserving.comp ⟨coord_measurable F, ?_⟩
+    refine hmp.quasiMeasurePreserving.comp ⟨(coord_measurable F).aemeasurable, ?_⟩
     rw [hc]
     intro s hs
     simp [hs]

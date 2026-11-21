@@ -334,8 +334,8 @@ theorem exists_clear {A K : Type*} [CommRing A] [IsDomain A] [Field K] [Algebra 
     IsLocalization.integerNormalization_spec (M := nonZeroDivisors A) (q i)
   refine ⟨∏ i, (b i : A), fun i => C (∏ j ∈ Finset.univ.erase i, (b j : A)) *
     IsLocalization.integerNormalization (nonZeroDivisors A) (q i), ?_, fun i => ?_⟩
-  · exact Finset.prod_ne_zero_iff.mpr fun i _ => nonZeroDivisors.coe_ne_zero (b i)
-  · rw [Polynomial.map_mul, hb i, Polynomial.map_C, ← algebraMap_smul K (b i : A) (q i),
+  · exact Finset.prod_ne_zero_iff.mpr fun i _ => nonZeroDivisors.ne_zero (hb i).1
+  · rw [Polynomial.map_mul, (hb i).2, Polynomial.map_C, ← algebraMap_smul K (b i : A) (q i),
       Polynomial.smul_eq_C_mul, ← Finset.prod_erase_mul _ _ (Finset.mem_univ i)]
     simp only [map_mul, Polynomial.C_mul, mul_assoc]
 

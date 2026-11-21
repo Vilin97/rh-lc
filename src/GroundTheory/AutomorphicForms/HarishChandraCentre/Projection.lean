@@ -15,6 +15,7 @@ variable {n : ℕ}
 
 
 noncomputable def hcProjLin : U n →ₗ[ℂ] MvPolynomial (Fin n) ℂ :=
+  open scoped Classical in
   pbw.constr ℂ fun m => if IsDiagExp m then monomial (diagExp m) 1 else 0
 
 theorem hcProjLin_canon_of_isDiagExp {m : Fin n × Fin n →₀ ℕ} (h : IsDiagExp m) :

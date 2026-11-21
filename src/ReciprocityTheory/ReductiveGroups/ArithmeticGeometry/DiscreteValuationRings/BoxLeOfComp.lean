@@ -29,7 +29,7 @@ abbrev prK (pG : IsPowGrp G' G j) (i : Fin j) : pullback G'.hom (jK R) ⟶ pullb
 
 lemma prK_fst (pG : IsPowGrp G' G j) (i : Fin j) :
     prK pG i ≫ pullback.fst G.hom (jK R) = pullback.fst G'.hom (jK R) ≫ (pG.pr i).left := by
-  simp only [prK, Over.pullback_map_left]
+  simp only [prK, Over.pullback_map_left, pullback.lift_fst]
 
 variable {LG : LB G.left} {LG' : LB G'.left}
 

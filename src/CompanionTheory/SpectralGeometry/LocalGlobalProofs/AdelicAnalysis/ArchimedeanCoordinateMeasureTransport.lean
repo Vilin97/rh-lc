@@ -98,9 +98,8 @@ theorem map_coord_pi {ι κ A : Type} [Fintype ι] [Fintype κ] [MeasurableSpace
     measurable_pi_iff.2 fun p => he.comp (measurable_pi_apply p)
   have h2 : (fun (y : ι → A) (w : κ) (p : ι) => e (y p) w) =
       (fun (f : ι → κ → ℝ) (w : κ) (p : ι) => f p w) ∘ (fun (y : ι → A) (p : ι) => e (y p)) := rfl
-  rw [h2, ← Measure.map_map hsw hc, h1, hlam, pi_smul_const, Measure.map_smul]
-  congr 1
-  exact map_swap_volume ι κ
+  rw [h2, ← Measure.map_map hsw hc, h1, hlam, pi_smul_const,
+    Measure.map_smul _ hsw.aemeasurable, ← volume_pi, map_swap_volume]
 
 end GlobalTheory.CompanionTheory.SW.BB.InfPush
 
@@ -123,6 +122,8 @@ theorem GlobalTheory.CompanionTheory.SW.BB.infPush : ∀ (F E : Type) [Field F] 
       (fun (y : Fin M × Fin d → Ainf F) (w : InfinitePlace F) (p : Fin M × Fin d) => e (y p) w) ∘
         (fun X : Fin 1 → Fin M → Ainf F ⊗[F] E => cv (Ainf F) b (X 0)) := rfl
   have hr : 0 ≤ (Real.sqrt |(discr F : ℝ)|)⁻¹ := inv_nonneg.2 (Real.sqrt_nonneg _)
-  rw [hcomp, ← Measure.map_map hΦ hemb.measurable, hcoord,
-    map_coord_pi laminf (fun x => e x) hem _ hmap, ENNReal.ofReal_pow hr]
-  simp [Fintype.card_prod, ENNReal.ofReal]
+  have hcard : Fintype.card (Fin M × Fin d) = M * d := by
+    simp only [Fintype.card_prod, Fintype.card_fin]
+  rw [hcomp, ← Measure.map_map hΦ hemb.measurable, hcoord, ENNReal.ofReal_pow hr, ← hcard]
+  exact InfPush.map_coord_pi laminf (fun x => e x) hem
+    ((Real.sqrt |(discr F : ℝ)|)⁻¹).toNNReal hmap

@@ -55,7 +55,7 @@ theorem closure_finite : ∀ (A R : Type) [CommRing A] [IsDomain A] [CommRing R]
     [IsIntegrallyClosed R] [Algebra A R], Function.Injective (algebraMap A R) →
     ∀ (D : Type) [CommRing D] [Algebra (GlobalTheory.LocAcyc.GenFib A R) D]
     [Module.Finite (GlobalTheory.LocAcyc.GenFib A R) D] [Algebra.Etale (GlobalTheory.LocAcyc.GenFib A R) D],
-    letI := GlobalTheory.KeyOriginNoeth.closureAlg A R D
+    letI := GlobalTheory.KeyOriginNoeth.closureAlg A R D;
     Module.Finite R (GlobalTheory.KeyOriginNoeth.closure A R D) := by
   intro A R _ _ _ _ _ _ _ hinj D _ _ _ _
   classical

@@ -54,7 +54,13 @@ theorem exp_conj_connection_integral {B : FB R d O} {h : PS k 2 d} (hc : B.IsCan
   have ccf' : constantCoeff (-((m : k) • B.hL k h w0)) = 0 := by rw [map_neg, ccf, neg_zero]
   have hinv : liftX k (FB.expS k (-((m : k) • B.hL k h w0))) * liftX k (FB.expS k ((m : k) • B.hL k h w0)) = 1 := by
     rw [← liftX_mul, ← gt_expS_add _ _ ccf' ccf, neg_add_cancel, nt_expS_zero, liftX_one]
-  rw [nabla_eq, vf_mul, vf_cf_liftX, dof_expS _ _ ccf, liftX_mul]
+  have hnabla (u φ : Fin d → k) (F : AA k d) :
+      nabla k B h m u φ F = vf (cf k B h u φ) F - (C (m : k) * fm k h u) * F := by
+    unfold nabla vf fm Dx
+    rw [Fintype.sum_sum_type]
+    simp only [cf_inl, cf_inr, add_mul, Finset.sum_add_distrib]
+    ring
+  rw [hnabla, vf_mul, vf_cf_liftX, dof_expS _ _ ccf, liftX_mul]
   have e : ∀ (a b x y z : AA k d), a * (b * x * G + b * y - z * (b * G)) = (a * b) * (x * G + y - z * G) :=
     fun a b x y z => by ring
   rw [e, hinv, one_mul, smul_eq_C_mul, dof_Cmul, liftX_mul, liftX_C]

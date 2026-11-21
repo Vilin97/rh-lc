@@ -53,8 +53,8 @@ def cong (γ : (ValueGroupWithZero k)ˣ) (hγ : γ ≤ 1) : Subgroup (GL n k) wh
     exact mul_small (intM_of_mem_KO (KOne_le_KO (inv_mem h1))).neg hg i j
 
 theorem isOpen_cong (γ : (ValueGroupWithZero k)ˣ) (hγ : γ ≤ 1) :
-    IsOpen (cong n γ hγ : Set (GL n k)) := by
-  have e : (cong n γ hγ : Set (GL n k)) = ⋂ i, ⋂ j,
+    IsOpen (cong (n := n) γ hγ : Set (GL n k)) := by
+  have e : (cong (n := n) γ hγ : Set (GL n k)) = ⋂ i, ⋂ j,
       (fun g : GL n k => (g.val - 1) i j) ⁻¹' {x | valuation k x < γ} := by
     ext g; simp only [SetLike.mem_coe, Set.mem_iInter]; rfl
   rw [e]
@@ -65,12 +65,12 @@ theorem isOpen_cong (γ : (ValueGroupWithZero k)ˣ) (hγ : γ ≤ 1) :
     exact Valuation.map_add_lt (valuation k) (g := γ) hx hy
 
 theorem isCompact_cong (γ : (ValueGroupWithZero k)ˣ) (hγ : γ ≤ 1) :
-    IsCompact (cong n γ hγ : Set (GL n k)) :=
-  SplitFlip.isCompact_KO.of_isClosed_subset (Subgroup.isClosed_of_isOpen _ (isOpen_cong γ hγ))
+    IsCompact (cong (n := n) γ hγ : Set (GL n k)) :=
+  SplitFlip.isCompact_KO.of_isClosed_subset (Subgroup.isClosed_of_isOpen _ (isOpen_cong (n := n) γ hγ))
     fun _ hg => KOne_le_KO (mem_KOne.2 fun i j => (hg i j).trans_le hγ)
 
 theorem exists_cong_subset {U : Set (GL n k)} (hU : U ∈ 𝓝 (1 : GL n k)) :
-    ∃ (γ : (ValueGroupWithZero k)ˣ) (hγ : γ ≤ 1), ∀ g ∈ cong n γ hγ, g ∈ U := by
+    ∃ (γ : (ValueGroupWithZero k)ˣ) (hγ : γ ≤ 1), ∀ g ∈ cong (n := n) γ hγ, g ∈ U := by
   rw [SplitFlip.isEmbedding_val_GL.nhds_eq_comap] at hU
   obtain ⟨T, hT, hTU⟩ := hU
   have h1 : (fun A : Matrix n n k => A + 1) ⁻¹' T ∈ 𝓝 (0 : Matrix n n k) :=
@@ -94,7 +94,7 @@ theorem exists_cong_subset {U : Set (GL n k)} (hU : U ∈ 𝓝 (1 : GL n k)) :
 variable {a b : Type} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
 
 theorem cong_factor (e : a ⊕ b ≃ n) (γ : (ValueGroupWithZero k)ˣ) (hγ : γ ≤ 1) :
-    ∀ g ∈ cong n γ hγ, ∃ x ∈ unipRad k (two e), ∃ c ∈ cong n γ hγ ⊓ parabLower k (two e), g = x * c := by
+    ∀ g ∈ cong (n := n) γ hγ, ∃ x ∈ unipRad k (two e), ∃ c ∈ cong (n := n) γ hγ ⊓ parabLower k (two e), g = x * c := by
   intro g hg
   let M : Matrix n n k := Matrix.of fun i j => if (e.symm j).isLeft then (1 : Matrix n n k) i j else g.val i j
   have hM : ∀ i j, valuation k ((M - 1) i j) < γ := fun i j => by
@@ -102,10 +102,10 @@ theorem cong_factor (e : a ⊕ b ≃ n) (γ : (ValueGroupWithZero k)ˣ) (hγ : �
     · simp [M, h]
     · simpa [M, h] using hg i j
   obtain ⟨p, -, hp⟩ := exists_mem_KOne (M := M) fun i j => (hM i j).trans_le hγ
-  have hpK : p ∈ cong n γ hγ := fun i j => hp ▸ hM i j
+  have hpK : p ∈ cong (n := n) γ hγ := fun i j => hp ▸ hM i j
   have hpP : p ∈ parab k (two e) := (mem_parab_two k).2 fun j i => by simp [hp, M, one_apply]
   let q : parab k (two e) := ⟨_, leviEmb_mem_parab k (two e) (leviProj k (two e) ⟨p, hpP⟩)⟩
-  have hqK : q.1 ∈ cong n γ hγ := by
+  have hqK : q.1 ∈ cong (n := n) γ hγ := by
     intro i j
     obtain ⟨⟨s, i⟩, rfl⟩ := (two e).surjective i
     obtain ⟨⟨t, j⟩, rfl⟩ := (two e).surjective j
@@ -135,12 +135,12 @@ theorem val_emb₂_scalar (e : a ⊕ b ≃ n) (z : kˣ) :
   obtain ⟨i, rfl⟩ := e.surjective i
   obtain ⟨j, rfl⟩ := e.surjective j
   rcases i with i | i <;> rcases j with j | j <;>
-    simp [GeneralLinearGroup.scalar, diagonal_apply, one_apply]
+    simp [GeneralLinearGroup.scalar, diagonal_apply, Matrix.one_apply]
 
 theorem cong_contract (e : a ⊕ b ≃ n) (γ : (ValueGroupWithZero k)ˣ) (hγ : γ ≤ 1) {z : kˣ}
-    (hz : valuation k (z : k) ≤ 1) : ∀ c ∈ cong n γ hγ ⊓ parabLower k (two e),
+    (hz : valuation k (z : k) ≤ 1) : ∀ c ∈ cong (n := n) γ hγ ⊓ parabLower k (two e),
       (emb₂ k e (GeneralLinearGroup.scalar a z, 1))⁻¹ * c * emb₂ k e (GeneralLinearGroup.scalar a z, 1) ∈
-        cong n γ hγ ⊓ parabLower k (two e) := by
+        cong (n := n) γ hγ ⊓ parabLower k (two e) := by
   intro c hcc
   obtain ⟨hc, hc'⟩ := Subgroup.mem_inf.1 hcc
   have hm : emb₂ k e (GeneralLinearGroup.scalar a z, 1) ∈ parabLower k (two e) :=
@@ -155,7 +155,7 @@ theorem cong_contract (e : a ⊕ b ≃ n) (γ : (ValueGroupWithZero k)ˣ) (hγ :
   rcases i with i | i <;> rcases j with j | j
   · simpa [mul_comm, mul_left_comm] using h1
   · simp [(mem_parabLower_two k).1 hc' i j, one_apply]
-  · simp only [one_apply, EmbeddingLike.apply_eq_iff_eq, reduceCtorEq, if_false, sub_zero] at h1 ⊢
+  · simp only [Matrix.one_apply, EmbeddingLike.apply_eq_iff_eq, reduceCtorEq, if_false, sub_zero] at h1 ⊢
     simpa using (mul_le_of_le_one_right' hz).trans_lt h1
   · simpa using h1
 

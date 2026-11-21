@@ -66,7 +66,7 @@ private theorem alg_monomial {R : Type} [CommRing R] (n : ℕ) (x : R) :
     HahnSeries.single_mul_single, zero_add, mul_one]
 
 theorem UpperTheory.V.Ws.sxLaur :
-    ∀ {Λ : Type} [CommRing Λ] [IsLocalRing Λ] {R : Type} [CommRing R] [Algebra Λ R] [IsCO Λ R], IsNilpotent (maximalIdeal R) → ∀ c : ℕ, ∃ (S : Type) (_ : CommRing S) (_ : Algebra Λ S) (_ : IsCO Λ S) (e : S →+* LaurentSeries R), Laur Λ c e := by
+    ∀ {Λ : Type} [CommRing Λ] [IsLocalRing Λ] {R : Type} [CommRing R] [Algebra Λ R] [IsCO Λ R], IsNilpotent (maximalIdeal R) → ∀ c : ℕ, ∃ (S : Type) (_ : CommRing S) (_ : Algebra Λ S) (_ : IsCO Λ S) (e : S →+* LaurentSeries R), Laur (Λ := Λ) c e := by
   intro Λ _ _ R _ _ hR hnil c
   haveI hP : IsCO Λ (PowerSeries R) := co_mvps Λ R Unit
   have hnilx : ∀ x ∈ maximalIdeal R, IsNilpotent x := fun x hx => by

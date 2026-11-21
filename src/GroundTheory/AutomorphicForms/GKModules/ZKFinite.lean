@@ -147,11 +147,11 @@ theorem rightTranslate_comp_rightUAction (a : G) (u : UniversalEnvelopingAlgebra
 
 variable (K : Subgroup G)
 
-def zkSpan (f : h.smoothFuns (F := F)) : Submodule ℂ (h.smoothFuns (F := F)) :=
+noncomputable def zkSpan (f : h.smoothFuns (F := F)) : Submodule ℂ (h.smoothFuns (F := F)) :=
   Submodule.span ℂ (range fun p : h.centerU × K =>
     h.rightUAction (p.1 : UniversalEnvelopingAlgebra ℝ h.lieSubalgebra) (h.rightTranslateEnd (p.2 : G) f))
 
-def zSpan (f : h.smoothFuns (F := F)) : Submodule ℂ (h.smoothFuns (F := F)) :=
+noncomputable def zSpan (f : h.smoothFuns (F := F)) : Submodule ℂ (h.smoothFuns (F := F)) :=
   Submodule.span ℂ ((fun z => h.rightUAction z f) '' (h.centerU : Set _))
 
 theorem self_mem_zkSpan (f : h.smoothFuns (F := F)) : f ∈ h.zkSpan K f :=

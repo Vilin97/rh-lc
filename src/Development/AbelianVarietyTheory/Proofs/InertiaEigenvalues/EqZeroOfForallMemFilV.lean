@@ -21,6 +21,7 @@ variable {Qp : Type} [Field Qp] (F : Type) [CommRing F] [Algebra Qp F]
     {V'' : Type} [AddCommGroup V''] [Module LL V''] [Module Qp V''] [IsScalarTower Qp LL V'']
 
 
+variable (Qp) in
 def bil (β : V →ₗ[LL] V' →ₗ[LL] V'') : V ⊗[Qp] F →ₗ[LL] V' ⊗[Qp] F →ₗ[LL] V'' ⊗[Qp] F :=
   TensorProduct.curry
     ((AlgebraTensorModule.map (TensorProduct.lift β) (LinearMap.mul' Qp F)).comp
@@ -31,6 +32,7 @@ def bil (β : V →ₗ[LL] V' →ₗ[LL] V'') : V ⊗[Qp] F →ₗ[LL] V' ⊗[Qp
   simp [bil]
 
 
+variable (Qp LL V) in
 def sm : LL ⊗[Qp] F →ₗ[LL] V ⊗[Qp] F →ₗ[LL] V ⊗[Qp] F := bil Qp F (LinearMap.lsmul LL V)
 
 @[simp] theorem sm_tmul (c : LL) (v : V) (b b' : F) :
@@ -38,10 +40,12 @@ def sm : LL ⊗[Qp] F →ₗ[LL] V ⊗[Qp] F →ₗ[LL] V ⊗[Qp] F := bil Qp F 
   simp [sm]
 
 
+variable (Qp) in
 abbrev ext (f : V →ₗ[LL] V') : V ⊗[Qp] F →ₗ[LL] V' ⊗[Qp] F :=
   AlgebraTensorModule.map f (LinearMap.id : F →ₗ[Qp] F)
 
 
+variable (Qp LL V) in
 abbrev mulR (b : F) : V ⊗[Qp] F →ₗ[LL] V ⊗[Qp] F :=
   AlgebraTensorModule.map (LinearMap.id : V →ₗ[LL] V) (LinearMap.mulLeft Qp b)
 
@@ -384,6 +388,7 @@ theorem act_bil (ρ : Representation LL G V) (ρ' : Representation LL G V') (ρ'
     | tmul w b'' => simp [hβ]
 
 
+variable (LL) in
 abbrev actR (g : G) : LL ⊗[Qp] F →ₗ[LL] LL ⊗[Qp] F := actVdR PD (Representation.trivial LL G LL) g
 
 theorem act_sm (ρ : Representation LL G V) (g : G) (r : LL ⊗[Qp] F) (x : V ⊗[Qp] F) :
@@ -520,11 +525,11 @@ theorem dual_family (ρ : Representation LL G V) (ρ' : Representation LL G V') 
       · simp
   · rw [← sub_eq_zero]
     refine hz _ ?_ fun j => ?_
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sub, ← sm_mul, he, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, ← sm_mul, he, map_sum]
       simp only [sm_comm e, hed']
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sub, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       simp only [bil_sm_right, hδ, sm_self]
       rw [Finset.sum_eq_single j (fun b _ hb => by simp [Ne.symm hb]) (by simp)]
       simp [mul_comm]

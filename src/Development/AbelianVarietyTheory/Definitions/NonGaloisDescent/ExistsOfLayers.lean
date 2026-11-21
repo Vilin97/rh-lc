@@ -86,7 +86,7 @@ structure WSer (Γ : WGam PD LL O v n s) where
   lev : ZMod n → LL → (LetA O n →ₐ[O] PowerSeries LL)
   lev_letter : ∀ i ζ a, a i = 0 → lev i ζ a = 0
   lev_π : ∀ i (ζ : LL), (∃ j : ℕ, IsPrimitiveRoot ζ (PD.p ^ j)) → ∃ E : PowerSeries LL, PowerSeries.constantCoeff E = 1 ∧
-    PowerSeries.derivative LL E = E ∧ 1 + lev i ζ letπ = PowerSeries.C ζ * E
+    PowerSeries.derivative (R := LL) E = E ∧ 1 + lev i ζ letπ = PowerSeries.C ζ * E
   lev_cont : ∀ (i : ZMod n) (ζ : LL) (a : LetA O n) (k r : ℕ), ∃ m₀ : ℕ, ∀ m ≥ m₀, (r : WithTop ℚ) ≤
     v (PowerSeries.coeff k (lev i ζ a) -
       PowerSeries.coeff k (lev i ζ (fun j => ((PowerSeries.trunc m (a j) : Polynomial O) : PowerSeries O))))

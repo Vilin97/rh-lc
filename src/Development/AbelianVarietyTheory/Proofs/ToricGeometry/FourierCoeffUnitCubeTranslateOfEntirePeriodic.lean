@@ -101,7 +101,9 @@ theorem setIntegral_unitCube_add_of_entire_periodic {g : ℕ} {f : (Fin g → �
       congr 1
       funext x
       congr 1
-      ring) (Set.mem_univ w) (Set.mem_univ 0)
+      funext i
+      simp only [Pi.add_apply, Complex.ofReal_add]
+      ac_rfl) (Set.mem_univ w) (Set.mem_univ 0)
   simpa using h
 
 theorem fourierCoeff_unitCube_translate_of_entire_periodic (g : ℕ) (f : (Fin g → ℂ) → ℂ)

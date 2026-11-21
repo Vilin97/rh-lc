@@ -167,12 +167,6 @@ def ChartResidueDegree.Statement : Prop :=
         linForm t ∉ W →
           Module.length (Localization.AtPrime p) (ChartLoc I t e p ⧸ chartIdeal I t e p W) = 1
 
-section Inhabitants
-
-open LineChowForm
-
-end Inhabitants
-
 end
 
 end GroundTheory.Heights₂.Heights

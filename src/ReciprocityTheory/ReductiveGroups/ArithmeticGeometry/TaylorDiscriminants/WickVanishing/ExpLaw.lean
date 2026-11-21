@@ -156,7 +156,8 @@ theorem dLin_comp1 {d : ℕ} (φ ψ : Pt k 1 d) (hψ : ∀ i, constantCoeff (ψ 
   unfold ev
   rw [subst_single_point_family]
   have hs : HasSubst (fun p : Fin 1 × Fin d => ψ p.2) := hasSubst_of_constantCoeff_zero fun p => hψ p.2
-  have hlow : ∀ p : Fin 1 × Fin d, Low 1 (ψ p.2) := fun p => (low_one_iff _).2 (hψ p.2)
+  have hlow : ∀ p : Fin 1 × Fin d, Formalism.FG.SolveVAux.Low 1 (ψ p.2) :=
+    fun p => (Formalism.FG.SolveVAux.low_one_iff _).2 (hψ p.2)
   rw [coeff_subst hs, finsum_eq_sum_of_support_subset _
     (s := Finset.univ.image (fun p : Fin 1 × Fin d => Finsupp.single p 1))]
   · rw [Finset.sum_image (fun p _ q _ h => Finsupp.single_left_injective one_ne_zero h), Fintype.sum_prod_type,
@@ -178,9 +179,9 @@ theorem dLin_comp1 {d : ℕ} (φ ψ : Pt k 1 d) (hψ : ∀ i, constantCoeff (ψ 
             exact (Finsupp.degree_eq_zero_iff e).1 this
           rw [he0, Finsupp.prod_zero_index, coeff_one, if_neg]
           exact Finsupp.single_ne_zero.2 one_ne_zero
-        · obtain ⟨p, rfl⟩ := degree_eq_one e (by omega)
+        · obtain ⟨p, rfl⟩ := Formalism.FG.SolveVAux.degree_eq_one e (by omega)
           exact absurd (Finset.mem_coe.2 (Finset.mem_image_of_mem _ (Finset.mem_univ p))) hne
-      · have hl := low_P hlow e
+      · have hl := Formalism.FG.SolveVAux.low_P hlow e
         exact hl _ (by rw [Finsupp.degree_single]; omega)
     rw [hz, smul_zero]
 

@@ -89,7 +89,7 @@ theorem fam_eq_zero (hϖ : Irreducible ϖ) (G : Fam D.toPre F 1)
     (h0 : ∀ j : Fin 4 → D.toPre.P.L.ι, (G.s 0).f j = 0) :
     ∀ (mu : D.toPre.X) (j : Fin 4 → D.toPre.P.L.ι), (G.s mu).f j = 0 := by
   classical
-  choose Q hQ using fun χ => QForm.exists_QVal hϖ D χ
+  choose Q hQ using QForm.exists_QVal (ϖ := ϖ) D
   intro mu j
   obtain ⟨u, hu, hc⟩ := exists_fe_gen (F := F) hϖ (Q := Q) hQ 1 mu 0
   have hrel := G.fe mu 0 u hu hc

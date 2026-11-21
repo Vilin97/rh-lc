@@ -54,10 +54,10 @@ theorem GlobalTheory.bessel_norm_sq_double_integral : HypsG → ∀ (k r : ℕ) 
       ⟪be z Formalism.QuantumDeterminants.cStd π R.σ μW μN w v ξ, be z Formalism.QuantumDeterminants.cStd π R.σ μW μN w v ξ⟫_ℂ := by
     rw [inner_self_eq_norm_sq_to_K]; simp
   rw [e0]
-  refine ((inner_integral_apply hint ξ _).1).trans (integral_congr_ae ?_)
+  refine ((GlobalTheory.BesselNormSq.inner_integral_apply hint ξ _).1).trans (integral_congr_ae ?_)
   filter_upwards [hae] with p hp
-  obtain ⟨-, h2, h3⟩ := inner_integral_apply hint ξ (beInt z Formalism.QuantumDeterminants.cStd π R.σ w v p ξ)
-  refine h2.trans ((integral_comp_mp (hmp _ hp.1 _ hp.2).1 h3).trans (integral_congr_ae ?_))
+  obtain ⟨-, h2, h3⟩ := GlobalTheory.BesselNormSq.inner_integral_apply hint ξ (beInt z Formalism.QuantumDeterminants.cStd π R.σ w v p ξ)
+  refine h2.trans ((GlobalTheory.BesselNormSq.integral_comp_mp (hmp _ hp.1 _ hp.2).1 h3).trans (integral_congr_ae ?_))
   filter_upwards [hae] with q hq
   obtain ⟨⟨p1, p2⟩, hp1, hp2⟩ : ∃ p' : Mx k r × Mx k r, p'.1 = Matrix.of p.1 ∧ p'.2 = Matrix.of p.2 :=
     ⟨(_, _), rfl, rfl⟩

@@ -317,10 +317,12 @@ def diagEntries {b : n → α} (hb : Function.Injective b) : blockQ k b →* (n 
     { toFun := fun q => (q : GL n k).val i i
       map_one' := by simp
       map_mul' := fun x y => by
-        have := congrFun (congrFun (blockPart_mul x.2 y.2) i) i
-        simp only [blockPart, if_true, mul_apply, hb.eq_iff] at this
-        show ((x : GL n k).val * (y : GL n k).val) i i = _
-        rw [mul_apply, this, Finset.sum_eq_single i] <;> simp +contextual [eq_comm] }
+        have hprod := congrArg (fun A : Matrix n n k => A i i) (blockPart_mul x.2 y.2)
+        change blockPart b (x.1.val * y.1.val) i i =
+          (blockPart b x.1.val * blockPart b y.1.val : Matrix n n k) i i at hprod
+        simp only [Matrix.mul_apply, blockPart, hb.eq_iff, ite_true] at hprod
+        change (∑ j, x.1.val i j * y.1.val j i) = _
+        rw [hprod, Finset.sum_eq_single i] <;> simp +contextual [eq_comm] }
 
 theorem diagEntries_val {b : n → α} (hb : Function.Injective b) (q : blockQ k b) (i : n) :
     (diagEntries hb q i : k) = (q : GL n k).val i i := rfl
@@ -750,8 +752,8 @@ def lineFirst (L : Type) [Field L] (n : ℕ) : blockL L (lineBlocks (n + 2)) →
     { toFun := fun g => g.1.val 0 0
       map_one' := by simp
       map_mul' := fun x y => by
-        show (x.1.val * y.1.val) 0 0 = _
-        simp [mul_apply, sum_line, x.2 0 (midIdx _), x.2 0 (Fin.last (n + 1))] }
+        change (x.1.val * y.1.val : Matrix (Fin (n + 2)) (Fin (n + 2)) L) 0 0 = _
+        simp [Matrix.mul_apply, sum_line, x.2 0 (midIdx _), x.2 0 (Fin.last (n + 1))] }
 
 def lineMid (L : Type) [Field L] (n : ℕ) : blockL L (lineBlocks (n + 2)) →* GL (Fin n) L :=
   MonoidHom.toHomUnits
@@ -759,8 +761,9 @@ def lineMid (L : Type) [Field L] (n : ℕ) : blockL L (lineBlocks (n + 2)) →* 
       map_one' := by ext i j; simp [Matrix.one_apply]
       map_mul' := fun x y => by
         ext i j
-        show (x.1.val * y.1.val) (midIdx i) (midIdx j) = _
-        simp [mul_apply, sum_line, x.2 (midIdx _) 0, x.2 (midIdx _) (Fin.last (n + 1))] }
+        change (x.1.val * y.1.val : Matrix (Fin (n + 2)) (Fin (n + 2)) L)
+          (midIdx i) (midIdx j) = _
+        simp [Matrix.mul_apply, sum_line, x.2 (midIdx _) 0, x.2 (midIdx _) (Fin.last (n + 1))] }
 
 variable {σ : L →+* L}
 

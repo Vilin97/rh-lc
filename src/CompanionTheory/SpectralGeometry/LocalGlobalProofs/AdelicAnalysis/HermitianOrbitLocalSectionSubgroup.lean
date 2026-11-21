@@ -185,6 +185,8 @@ theorem aMat_gram (ι : R →+* K) (sig : K →+* K) (hs : ∀ r, sig (ι r) = �
       = Matrix.diagonal (fun i => ι ((((u i : Rˣ) ^ 2 * d i : Rˣ)) : R)) := by
     simp only [Matrix.diagonal_mul_diagonal]
     congr 1
+    funext i
+    simp
     ring
   rw [aMat, cT_mul, hd, ← hm]
   simp only [Matrix.mul_assoc]

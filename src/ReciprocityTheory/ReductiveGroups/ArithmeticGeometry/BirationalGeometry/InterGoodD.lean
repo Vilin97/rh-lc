@@ -81,9 +81,9 @@ theorem homogeneousComponent_totalDegree_ne_zero {σ : Type*} {F : MvPolynomial 
   obtain ⟨m, hm, hmax⟩ := Finset.exists_mem_eq_sup F.support (support_nonempty.mpr hF)
     (fun s => s.sum fun _ e => e)
   intro h0
-  have := congrArg (AddMonoidAlgebra.coeff · m) h0
-  rw [coeff_homogeneousComponent, if_pos (by rw [totalDegree, hmax]; rfl), coeff_zero] at this
-  exact (mem_support_iff.mp hm) this
+  have hcoeff := congrArg (AddMonoidAlgebra.coeff · m) h0
+  rw [coeff_homogeneousComponent, if_pos (by rw [totalDegree, hmax]; rfl)] at hcoeff
+  exact (mem_support_iff.mp hm) (hcoeff.trans rfl)
 
 theorem eval_smul_of_degree {σ : Type*} [Fintype σ] (H : MvPolynomial σ k) (d : ℕ)
     (hH : ∀ m ∈ H.support, Finsupp.degree m = d) (c : k) (v : σ → k) :

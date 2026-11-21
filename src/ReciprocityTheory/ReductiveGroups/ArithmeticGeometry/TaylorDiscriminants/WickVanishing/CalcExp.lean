@@ -198,16 +198,17 @@ private theorem constantCoeff_log_eq_zero_wick_vanishing : PowerSeries.constantC
   simp
 
 private theorem isAddTorsionFree_coeff_ring : IsAddTorsionFree k := by
-  first
-  | infer_instance
-  | exact ⟨fun n hn a b hab => by
-      have h2 : (n : k) * (a - b) = 0 := by
-        simp only [nsmul_eq_mul] at hab; rw [mul_sub, hab, sub_self]
-      exact sub_eq_zero.mp (natCast_mul_eq_zero hn h2)⟩
+  constructor
+  intro n hn a b _ hab
+  rw [nsmul_eq_mul, nsmul_eq_mul] at hab
+  have h : (n : k) * (a - b) = 0 := by
+    rw [mul_sub, hab, sub_self]
+  exact sub_eq_zero.mp (natCast_mul_eq_zero hn h)
 
 private theorem subst_exp_sub_one_log_eq_X :
     PowerSeries.subst (PowerSeries.exp k - 1) (PowerSeries.log k) = PowerSeries.X := by
   haveI := isAddTorsionFree_coeff_ring (k := k)
+  haveI : HasUniqueDiv k := IsAddTorsionFree.hasUniqueDiv
   have hs : PowerSeries.HasSubst (PowerSeries.exp k - 1) :=
     PowerSeries.HasSubst.of_constantCoeff_zero' (by simp)
   apply PowerSeries.derivative.ext

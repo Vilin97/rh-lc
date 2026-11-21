@@ -39,7 +39,7 @@ theorem isTopRing [Module.Finite F E] : IsTopologicalRing (R ⊗[F] E) :=
 
 omit [IsTopologicalRing R] in
 theorem continuous_sigR (σ : E →ₐ[F] E) : Continuous (sigR R σ) := by
-  haveI : IsModuleTopology R (R ⊗[F] E) := isModTop R
+  haveI : IsModuleTopology R (R ⊗[F] E) := ⟨rfl⟩
   haveI : ContinuousAdd (R ⊗[F] E) := IsModuleTopology.toContinuousAdd R _
   exact IsModuleTopology.continuous_of_linearMap
     (Algebra.TensorProduct.map (AlgHom.id R R) σ).toLinearMap

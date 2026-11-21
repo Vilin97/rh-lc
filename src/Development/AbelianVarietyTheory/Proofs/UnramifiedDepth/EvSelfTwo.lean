@@ -51,19 +51,19 @@ theorem axis_law (G : FGLaw R d) :
 theorem partial_eq (G : FGLaw R d) (s : PS R 1 d)
     (h : ev (n := 2) ![G.add (pt R d 0) (pt R d 1)] s =
       ev (n := 2) ![pt R d 0] s * ev (n := 2) ![pt R d 1] s) (i : Fin d) :
-    ∑ j, ev (n := 1) ![pt R d 0, 0] (pderiv R ((1 : Fin 2), i) (G.F j)) *
-        pderiv R ((0 : Fin 1), j) s =
+    ∑ j, ev (n := 1) ![pt R d 0, 0] (pderiv (R := R) ((1 : Fin 2), i) (G.F j)) *
+        pderiv (R := R) ((0 : Fin 1), j) s =
       C (coeff (Finsupp.single ((0 : Fin 1), i) 1) s) * s := by
   have hadd : G.add (pt R (n := 2) d 0) (pt R d 1) = G.F := funext fun j => ev_self_two _
   rw [hadd] at h
-  have h0 : pderiv R ((1 : Fin 2), i) (ev (n := 2) ![pt R d 0] s) = 0 := by
+  have h0 : pderiv (R := R) ((1 : Fin 2), i) (ev (n := 2) ![pt R d 0] s) = 0 := by
     rw [pderiv_ev (const_one (const_pt 0))]
     simp [pderiv_pt]
-  have h1 : pderiv R ((1 : Fin 2), i) (ev (n := 2) ![pt R d 1] s) =
-      ev (n := 2) ![pt R d 1] (pderiv R ((0 : Fin 1), i) s) := by
+  have h1 : pderiv (R := R) ((1 : Fin 2), i) (ev (n := 2) ![pt R d 1] s) =
+      ev (n := 2) ![pt R d 1] (pderiv (R := R) ((0 : Fin 1), i) s) := by
     rw [pderiv_ev (const_one (const_pt 1))]
     simp [pderiv_pt]
-  have hd := congrArg (fun f => ev (n := 1) ![pt R d 0, 0] (pderiv R ((1 : Fin 2), i) f)) h
+  have hd := congrArg (fun f => ev (n := 1) ![pt R d 0, 0] (pderiv (R := R) ((1 : Fin 2), i) f)) h
   beta_reduce at hd
   rw [Derivation.leibniz, h0, h1, smul_zero, add_zero, smul_eq_mul, ev_mul const_axis,
     axis_pderiv, ev_ev_one (const_pt 0) const_axis, axis_pt_zero, ev_self_one,

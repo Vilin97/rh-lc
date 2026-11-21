@@ -118,11 +118,12 @@ private theorem pow_mul_inv_factorial_mem_Rp (K' : Type) [Field K'] [Algebra (K0
   have hpK : (p : K') ≠ 0 := Nat.cast_ne_zero.mpr hp.out.ne_zero
   have hvR : vp ∈ Rp p K' vp := Subring.subset_closure (Or.inr rfl)
   have hv : (p - 1) * padicValNat p k.factorial ≤ k := by
-    rw [sub_one_mul_padicValNat_factorial]
-    omega
+    rw [Nat.padicValNat_def]
+    rw [hp.out.sub_one_mul_multiplicity_factorial]
+    exact Nat.sub_le _ _
   have hdec : k.factorial = p ^ padicValNat p k.factorial * ordCompl[p] k.factorial := by
-    rw [← Nat.factorization_def _ hp.out]
-    exact (Nat.ordProj_mul_ordCompl_eq_self _ _).symm
+    simpa [Nat.padicValNat_def, Nat.factorization_def _ hp.out] using
+      (Nat.ordProj_mul_ordCompl_eq_self k.factorial p).symm
   have hnd : ¬ p ∣ ordCompl[p] k.factorial := Nat.not_dvd_ordCompl hp.out (Nat.factorial_ne_zero k)
   have hm0 : ((ordCompl[p] k.factorial : ℕ) : K') ≠ 0 :=
     Nat.cast_ne_zero.mpr (Nat.ordCompl_pos p (Nat.factorial_ne_zero k)).ne'

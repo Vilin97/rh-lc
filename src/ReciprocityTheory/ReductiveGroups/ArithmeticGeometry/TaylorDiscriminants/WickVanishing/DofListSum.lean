@@ -25,10 +25,7 @@ theorem dof_zero : Dof F v (0 : PS k 1 d) = 0 := by
   simp [Dof]
 
 theorem dof_C (a : k) : Dof F v (C a : PS k 1 d) = 0 := by
-  unfold Dof
-  have h : ∀ j : Fin d, pderiv k ((0 : Fin 1), j) (C a : PS k 1 d) = 0 := fun j => by
-    simp
-  simp [h]
+  simp [Dof]
 
 theorem dof_mul (f g : PS k 1 d) : Dof F v (f * g) = Dof F v f * g + f * Dof F v g := by
   unfold Dof

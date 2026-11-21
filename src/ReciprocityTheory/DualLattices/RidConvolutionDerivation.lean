@@ -111,7 +111,7 @@ lemma lowRed_mul {m : ℕ} {F G : MvPolynomial (Fin d) R} (hF : LowRed p m F)
   refine Finset.sum_eq_zero fun y hy => ?_
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hy
   by_cases h2 : y.2 = 0
-  · rw [h2, ← congrFun constantCoeff_eq G, hG, mul_zero]
+  · rw [h2, ← constantCoeff_eq G, hG, mul_zero]
   · have hle : ∀ j, y.1 j ≤ β j := fun j => by rw [← hy]; simp
     have h2' : y.2.degree ≠ 0 := fun h => h2 ((Finsupp.degree_eq_zero_iff _).1 h)
     have hdeg1 : y.1.degree < β.degree := by
@@ -220,7 +220,7 @@ theorem coeff_eq_zero_of_stable (ε : A →ₐ[R] R) (x : Fin d → A) (hx : ∀
       intro Q hQ _ α _ hα
       have h0 : α = 0 := (Finsupp.degree_eq_zero_iff α).1 hα
       subst h0
-      rw [← congrFun constantCoeff_eq Q, ← hε, hK _ hQ]
+      rw [← constantCoeff_eq Q, ← hε, hK _ hQ]
     | succ m ih =>
       intro Q hQ hlow α hα hdeg
       obtain ⟨i, hi⟩ : ∃ i, α i ≠ 0 := by

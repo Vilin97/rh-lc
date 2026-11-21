@@ -30,17 +30,18 @@ def IsUnitStable {V : Type} [AddCommGroup V] [Module 𝓀[k] V] (S : Finset {x :
 end Notions
 
 
+variable (k) in
 structure Vanishing (n : Type) [Fintype n] [DecidableEq n] (M : Type) [AddCommGroup M] [Module ℂ M] (ϖ : Unif k) :
     Prop where
 
-  trLat_eq_zero : ∀ φ ∈ Mram k n M, ∀ (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k], trLat L φ = 0
+  trLat_eq_zero : ∀ φ ∈ Mram k n M, ∀ (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k], trLat L φ = 0
 
-  trKer_eq_zero : ∀ φ ∈ Mram k n M, ∀ (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k], trKer L φ = 0
+  trKer_eq_zero : ∀ φ ∈ Mram k n M, ∀ (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k], trKer L φ = 0
 
-  partial_lat : ∀ φ ∈ Mram k n M, ∀ (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k]
+  partial_lat : ∀ φ ∈ Mram k n M, ∀ (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k]
     (S : Finset {f : Module.Dual 𝓀[k] (Red L) // f ≠ 0}), IsUnitStable (k := k) S → ∑ f ∈ S, φ (ofDual L f) = 0
 
-  partial_ker : ∀ φ ∈ Mram k n M, ∀ (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k]
+  partial_ker : ∀ φ ∈ Mram k n M, ∀ (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k]
     (S : Finset {x : Red L // x ≠ 0}), IsUnitStable (k := k) S → ∑ x ∈ S, φ (up L ϖ x) = 0
 
   invariant_eq_zero : ∀ (π : Representation ℂ (GL n k) M) (P : Pair k n) (v : levelVec π P),
@@ -48,10 +49,12 @@ structure Vanishing (n : Type) [Fintype n] [DecidableEq n] (M : Type) [AddCommGr
     ((∀ g ∈ latStab P.lat, ∀ w, θ (π g w) = θ w) ∨ (∀ g ∈ latStab P.ker, ∀ w, θ (π g w) = θ w)) → θ v = 0
 
 
+variable (k) in
 structure OperatorIdentities (n : Type) [Fintype n] (M : Type) [AddCommGroup M] [Module ℂ M] (ϖ : Unif k)
     (χ : AddChar 𝓀[k] ℂ) : Prop where
 
-  FFStar_formula : ∀ (φ : Form k n M) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] [Fintype {x : Red L // x ≠ 0}]
+  FFStar_formula : ∀ (φ : Form k n M) (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k]
+    [Fintype {x : Red L // x ≠ 0}]
     (f : {f : Module.Dual 𝓀[k] (Red L) // f ≠ 0}),
     FFStar ϖ χ φ (ofDual L f) = ∑ x : {x : Red L // x ≠ 0}, χ (-f.1 x.1) • φ (up L ϖ x)
 
@@ -88,7 +91,7 @@ structure OperatorIdentities (n : Type) [Fintype n] (M : Type) [AddCommGroup M] 
   phiOne_dia : ∀ (c : 𝓀[k]ˣ) (m : Type) [Fintype m] (P : Pair k n) (Q : Pair k m),
     phiOne (c • P) (c • Q) = phiOne P Q
 
-  twisted_class_sum : ∀ (ε : 𝓀[k]ˣ) (φ : Form k n M) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k]
+  twisted_class_sum : ∀ (ε : 𝓀[k]ˣ) (φ : Form k n M) (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k]
     [Fintype {x : Red L // x ≠ 0}] (f : {f : Module.Dual 𝓀[k] (Red L) // f ≠ 0}),
     ∑ x : {x : Red L // x ≠ 0}, χ (-((ε : 𝓀[k]) * f.1 x.1)) • φ (up L ϖ x) = dia ε (FFStar ϖ χ φ) (ofDual L f)
 
@@ -102,6 +105,7 @@ structure OperatorIdentities (n : Type) [Fintype n] (M : Type) [AddCommGroup M] 
     dia c (FFStar ϖ χ (dia c⁻¹ (FF ϖ χ φ))) = ((resCard k : ℂ) ^ Fintype.card n) • φ
 
 
+variable (k) in
 structure AdjointIdentities (n : Type) [Fintype n] (ϖ : Unif k) (χ : AddChar 𝓀[k] ℂ) : Prop where
 
   FF_finite : KeepsFinite (n := n) (FF ϖ χ) ∧ KeepsFinite (n := n) (FFStar ϖ χ)

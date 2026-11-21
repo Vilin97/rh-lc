@@ -29,9 +29,11 @@ def IsEffectiveVertical (P : Ideal (MRing ι O)) (ϖ : O) (b : K → ℤ) (f g :
 
 def cutIdentity (ϖ : O) (P : Ideal (MRing ι O)) (b : K → ℤ) (f g : MRing ι O) (c : K → ℕ)
     (s : MRing ι O) {d : ℕ} (L : Fin d → K → ℤ) : Prop :=
-  cycEval (fun G => vNum G (Matrix.vecCons (fun k => (c k : ℤ)) L)) (ratDiv P f g) =
-    cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then vNum W (Matrix.vecCons b L)
-        else cycEval (fun G => vNum G L) (ratDiv W f g)) (divCycle P s)
+  by
+    classical
+    exact cycEval (fun G => vNum G (Matrix.vecCons (fun k => (c k : ℤ)) L)) (ratDiv P f g) =
+      cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then vNum W (Matrix.vecCons b L)
+          else cycEval (fun G => vNum G L) (ratDiv W f g)) (divCycle P s)
 
 end Defs
 
@@ -87,7 +89,9 @@ def GenericFibProps.Statement : Prop :=
 
 
 def GenericCycleCorresp.Statement : Prop :=
-  ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
+  by
+  classical
+  exact ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)) (s : MRing ι O), P.IsPrime →
     P.comap (C : O →+* MRing ι O) = ⊥ → s ∉ P →
     ∀ n : Ideal (MRing ι (FractionRing O)) → ℤ,

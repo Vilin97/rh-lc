@@ -160,7 +160,8 @@ theorem coeff_eq_zero_of_axes (h : PS k 2 d) (h0 : ev (n := 1) ![0, pt k d 0] h 
 
 theorem gaugeBilinearTerm_eq_neg_double_sum (h : PS k 2 d) (i j : Fin d) :
     sg1 k h i j = -coeff (single ((0 : Fin 2), j) 1 + single ((1 : Fin 2), i) 1) h := by
-  show coeff (single ((0 : Fin 1), j) 1) (-ev (n := 1) ![pt k d 0, 0] (pderiv k ((1 : Fin 2), i) h)) = _
+  change coeff (single ((0 : Fin 1), j) 1) (sgOf k h i) = _
+  rw [sgOf]
   rw [map_neg, coeff_ev_zero_right, Finsupp.embDomain_single, coeff_pderiv]
   have he : eXv d ((0 : Fin 1), j) = ((0 : Fin 2), j) := rfl
   rw [he]

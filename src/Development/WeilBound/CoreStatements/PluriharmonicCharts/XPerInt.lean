@@ -83,7 +83,7 @@ theorem PositivityTheory.Xgp.t_per_int : ∀ (e : ℕ) (X : Type) [TopologicalSp
     Finset.prod_pos fun τ _ => Finset.prod_pos fun i _ => Finset.prod_pos fun l hl =>
       Finset.sum_pos (fun _ _ => one_pos) ⟨i, Finset.mem_Ico.2 ⟨le_rfl, Finset.mem_Ioi.1 hl⟩⟩
   have hC : ∀ a, ∀ x ∈ U, IsTwiceDifferentiableAt A (pot a) x := fun a x hx k hk =>
-    c2at A U hU _ _ (hth a) (hph a) x k
+    per_int.c2at A U hU _ _ (hth a) (hph a) x k
       ⟨(A.chart k).map_source hk, by simpa [(A.chart k).left_inv hk] using ⟨(th a).mem_U x, hx⟩⟩
   have hexp := fun c : Ψ × Fin N → ℝ => mInt_sumPot_expand e X A _ U pot (fun _ => c) (fun _ => 1) hN hC hI
   have hpt : ∀ k, ∀ᵐ y, y ∈ (A.chart k).target → ∃ ν : ℝ, 0 ≤ ν ∧
@@ -133,13 +133,13 @@ theorem PositivityTheory.Xgp.t_per_int : ∀ (e : ℕ) (X : Type) [TopologicalSp
       have h1 : ContinuousAt (fun y => ∑ w : Fin e → Ψ × Fin N, (∏ _i : Fin e, (1 : ℝ)) *
           locDens A (fun i => pot (w i)) k y) (A.chart k x) :=
         tendsto_finsetSum _ fun w _ => continuousAt_const.mul
-          (dens_cont A U hU _ _ (fun i => hth (w i)) (fun i => hph (w i)) k _ hyt (by rwa [hsx]))
+          (per_int.dens_cont A U hU _ _ (fun i => hth (w i)) (fun i => hph (w i)) k _ hyt (by rwa [hsx]))
       refine h1.congr ?_
       filter_upwards [((A.chart k).isOpen_inter_preimage_symm hU).mem_nhds ⟨hyt, show _ ∈ U by rwa [hsx]⟩] with y hy
       exact (locDens_sumPot_expand A pot (fun _ _ => 1) k hy.1 fun a => hC a _ hy.2).symm
     have hcf : ContinuousAt (fun y => hne.some.χ k ((A.chart k).symm y) * 1 *
         locDens A (fun _ => sumPot (fun _ => 1) pot) k y) (A.chart k x) :=
-      ((cont_chart A _ (hne.some.smooth k) k _ hyt).mul continuousAt_const).mul hcd
+      ((per_int.cont_chart A _ (hne.some.smooth k) k _ hyt).mul continuousAt_const).mul hcd
     obtain ⟨ν, -, hν, h⟩ := PositivityTheory.Xgp.t_per_point e X A Ψ N j hj pot x V g hg he k hxk
     have hv : hne.some.χ k ((A.chart k).symm (A.chart k x)) * 1 *
         locDens A (fun _ => sumPot (fun _ => 1) pot) k (A.chart k x) ≠ 0 := by

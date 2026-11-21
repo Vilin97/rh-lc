@@ -11,14 +11,7 @@ open IsLocalRing
 
 private theorem height_eq_order_height_lemma {R : Type*} [CommRing R] (I : Ideal R)
     [hI : I.IsPrime] : I.height = Order.height (⟨I, hI⟩ : PrimeSpectrum R) := by
-  have hmin : I.minimalPrimes = {I} := Ideal.minimalPrimes_eq_subsingleton_self
-  unfold Ideal.height
-  apply le_antisymm
-  · exact iInf₂_le I (by rw [hmin]; rfl)
-  · refine le_iInf₂ fun J hJ => ?_
-    have hJI : J = I := by rw [hmin] at hJ; exact hJ
-    subst hJI
-    exact le_rfl
+  exact PrimeSpectrum.height_eq_orderHeight ⟨I, hI⟩
 
 private theorem comap_map_mk_lemma_4 {R : Type*} [CommRing R] (I J : Ideal R) (h : I ≤ J) :
     Ideal.comap (Ideal.Quotient.mk I) (J.map (Ideal.Quotient.mk I)) = J := by

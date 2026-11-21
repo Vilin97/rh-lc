@@ -27,7 +27,7 @@ def fullRk (n d : ℕ) : Submodule ℂ (Matrix (Fin n) (Fin d) k → ℂ) where
   smul_mem' := fun c _ ha => ⟨Submodule.smul_mem _ c ha.1, fun Y hY => by simp [ha.2 Y hY]⟩
 
 def augRk (n d : ℕ) (ν : kˣ →* ℂˣ) : Submodule ℂ (Matrix (Fin n) (Fin d) k → ℂ) :=
-  Submodule.span ℂ {z | ∃ g : GL (Fin n) k, ∃ Ψ ∈ fullRk k n d, z = lact ν g Ψ - Ψ}
+  Submodule.span ℂ {z | ∃ g : GL (Fin n) k, ∃ Ψ ∈ fullRk n d, z = lact ν g Ψ - Ψ}
 
 
 def Y0 (n d : ℕ) : Matrix (Fin n) (Fin d) k := Matrix.of fun i j => if (j : ℕ) = d - n + i then 1 else 0
@@ -35,7 +35,7 @@ def Y0 (n d : ℕ) : Matrix (Fin n) (Fin d) k := Matrix.of fun i j => if (j : �
 
 def indSp (n d : ℕ) (ν : kˣ →* ℂˣ) : Submodule ℂ (GL (Fin d) k → ℂ) where
   carrier := {f | (∃ U ∈ nhds (1 : GL (Fin d) k), ∀ h, ∀ u ∈ U, f (h * u) = f h) ∧
-    ∀ (b h : GL (Fin d) k) (D : GL (Fin n) k), Y0 k n d * b.1 = D.1 * Y0 k n d →
+    ∀ (b h : GL (Fin d) k) (D : GL (Fin n) k), Y0 n d * b.1 = D.1 * Y0 n d →
       f (b * h) = (((ν (gdet D))⁻¹ : ℂˣ) : ℂ) * apow (gdet D) (-(d : ℂ) / 2) * f h}
   zero_mem' := ⟨⟨Set.univ, Filter.univ_mem, fun _ _ _ => rfl⟩, fun _ _ _ _ => by simp⟩
   add_mem' := by

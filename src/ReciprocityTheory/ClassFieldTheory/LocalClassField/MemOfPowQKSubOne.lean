@@ -39,7 +39,7 @@ theorem mem_resK_of_pow (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (hK : Fin
   have := Fintype.ofFinite (resK p K)
   have hq := one_lt_qK K hK
   set P : (kbar p)[X] := X ^ qK p K - X with hP
-  have hP0 : P ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero (kbar p) hq
+  have hP0 : P ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero hq
   have hdeg : P.natDegree = qK p K := Polynomial.natDegree_X_pow_sub_X (R := (kbar p)) hq
   let T : Finset (kbar p) := (Finset.univ : Finset (resK p K)).image Subtype.val
   have hT : T.card = qK p K := by

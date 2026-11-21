@@ -59,19 +59,19 @@ variable {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] {ϖ : 
   {D : DegData V (maximalIdeal V)} {Q : D.toPre.X → ℤ}
 
 theorem bOf_zero_left (hϖ : Irreducible ϖ) (hQ : IsQ D.toPre ϖ Q) (b : D.toPre.X) : bOf D.toPre Q 0 b = 0 := by
-  simp only [bOf, zero_add, QForm.Q_zero hϖ D hQ]; ring
+  simp [bOf, QForm.Q_zero D hQ]
 
 theorem bOf_nsmul_left (hϖ : Irreducible ϖ) (hQ : IsQ D.toPre ϖ Q) (n : ℕ) (a b : D.toPre.X) :
     bOf D.toPre Q (n • a) b = n * bOf D.toPre Q a b := by
   induction n with
   | zero => simp [bOf_zero_left hϖ hQ]
-  | succ n ih => rw [succ_nsmul, QForm.bOf_add_left hϖ D hQ, ih]; push_cast; ring
+  | succ n ih => rw [succ_nsmul, QForm.bOf_add_left D hQ, ih]; push_cast; ring
 
 theorem Q_nsmul (hϖ : Irreducible ϖ) (hQ : IsQ D.toPre ϖ Q) (n : ℕ) (a : D.toPre.X) : Q (n • a) = n ^ 2 * Q a := by
   induction n with
-  | zero => simp [QForm.Q_zero hϖ D hQ]
+  | zero => simp [QForm.Q_zero D hQ]
   | succ n ih =>
-    have h2 := QForm.two_Q_eq hϖ D hQ a
+    have h2 := QForm.two_Q_eq D hQ a
     have hb := bOf_nsmul_left hϖ hQ n a a
     have e : Q (n • a + a) = Q (n • a) + Q a + bOf D.toPre Q (n • a) a := by simp only [bOf]; ring
     rw [succ_nsmul, e, ih, hb, ← h2]; push_cast; ring

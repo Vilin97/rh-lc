@@ -198,7 +198,11 @@ theorem sum_eq_finsum {V Z : Ideal (MRingOver F ι)} [V.IsPrime] [hZp : Z.IsPrim
   push_cast
   rw [← finsum_mem_coe_finset]
   symm
-  refine finsum_mem_eq_of_bijOn (fun p => p.asIdeal.comap (algebraMap (MRingOver F ι) _))
+  refine finsum_mem_eq_of_bijOn
+    (s := {p : PrimeSpectrum (Localization.AtPrime (Z.map (Ideal.Quotient.mk V))) |
+      p.asIdeal.height = 1 ∧ algebraMap (MRingOver F ι) _ f ∈ p.asIdeal})
+    (t := (↑((divSupp_finite V f).toFinset.filter (· ≤ Z)) : Set (Ideal (MRingOver F ι))))
+    (fun p => p.asIdeal.comap (algebraMap (MRingOver F ι) _))
     ⟨?_, ?_, ?_⟩ ?_
   · intro p hp
     have hm := (h.height_eq_one_iff hVZ hex hfV p.asIdeal).mp hp

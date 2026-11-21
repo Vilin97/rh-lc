@@ -173,16 +173,16 @@ theorem _root_.GlobalTheory.AnPer.Charts.exists_primitive_of_rich {I : Type} [Fi
     (ω : ∀ k, Fin g → _root_.GlobalTheory.AnPer.Hol (K.W k))
     (hcoc : ∀ k k' k'' (e : K.le 0 k' k)
       (e' : K.le 0 k'' k') (e'' : K.le 0 k'' k),
-      a k k'' e'' = _root_.GlobalTheory.AnPer.Charts.sh e' (a k k' e) + a k' k'' e')
+      a k k'' e'' = K.sh e' (a k k' e) + a k' k'' e')
     (hcl : ∀ k i j, _root_.GlobalTheory.AnPer.dw i (ω k j) =
       _root_.GlobalTheory.AnPer.dw j (ω k i))
     (hd : ∀ k k' (e : K.le 0 k' k) i,
-      ω k' i - _root_.GlobalTheory.AnPer.Charts.sh e (ω k i) =
+      ω k' i - K.sh e (ω k i) =
         _root_.GlobalTheory.AnPer.dw i (a k k' e)) :
     ∃ G : ∀ k, _root_.GlobalTheory.AnPer.Hol (K.W k),
       (∀ k i, _root_.GlobalTheory.AnPer.dw i (G k) = ω k i) ∧
       ∀ k k' (e : K.le 0 k' k),
-        a k k' e = G k' - _root_.GlobalTheory.AnPer.Charts.sh e (G k) := by
+        a k k' e = G k' - K.sh e (G k) := by
   classical
   obtain ⟨hcov, hmeet⟩ := hR
   obtain ⟨k₀, hk₀⟩ := hB
@@ -194,7 +194,7 @@ theorem _root_.GlobalTheory.AnPer.Charts.exists_primitive_of_rich {I : Type} [Fi
     intro k k' k'' e e'
     simpa using K.le_trans e e'
   have hsh : ∀ {k k' : K.K} (e : K.le 0 k' k) (f : _root_.GlobalTheory.AnPer.Hol (K.W k)),
-      ∀ p ∈ K.W k', (_root_.GlobalTheory.AnPer.Charts.sh e f).fn p = f.fn p := by
+      ∀ p ∈ K.W k', (K.sh e f).fn p = f.fn p := by
     intro k k' e f p hp
     rw [_root_.GlobalTheory.AnPer.Charts.fn_sh e f hp, _root_.GlobalTheory.AnPer.Fam.shift_zero]
   have hdw : ∀ {k : K.K} (i : Fin g) (f : _root_.GlobalTheory.AnPer.Hol (K.W k)), ∀ p ∈ K.W k,

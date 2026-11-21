@@ -659,14 +659,15 @@ def hhA (ℓ : ℕ) : ℕ → ℕ
 
 theorem hhA_eq (ℓ : ℕ) [Fact ℓ.Prime] (r : ℕ) : hhA ℓ r = r + padicValNat ℓ r.factorial := by
   induction r with
-  | zero => simp [hhA]
+  | zero => simp [hhA, Nat.padicValNat_def]
   | succ r ih =>
     rw [hhA, ih, Nat.factorial_succ, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (Nat.factorial_ne_zero r)]
     omega
 
 theorem hhA_le (ℓ : ℕ) (hℓ : ℓ.Prime) (r : ℕ) : (ℓ - 1) * hhA ℓ r ≤ ℓ * r := by
   have := Fact.mk hℓ
-  rw [hhA_eq, mul_add, sub_one_mul_padicValNat_factorial]
+  rw [hhA_eq, mul_add, Nat.padicValNat_def,
+    Nat.Prime.sub_one_mul_multiplicity_factorial hℓ]
   have h1 : 1 ≤ ℓ := hℓ.one_le
   obtain ⟨t, rfl⟩ : ∃ t, ℓ = t + 1 := ⟨ℓ - 1, by omega⟩
   simp only [Nat.add_sub_cancel]
@@ -1185,8 +1186,9 @@ theorem one_add_pow_sub_one_valuation {ℓ : ℕ} (hp : ℓ.Prime) (h3 : 3 ≤ �
     rintro rfl
     exact hr' (dvd_zero _)
   have hv : padicValNat ℓ (ℓ ^ a * r') = a := by
-    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hr0, padicValNat.prime_pow,
-      padicValNat.eq_zero_of_not_dvd hr', add_zero]
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hr0,
+      Nat.padicValNat_def, Nat.multiplicity_prime_pow, Nat.padicValNat_def,
+      multiplicity_eq_zero_of_not_dvd hr', add_zero]
   have hco : Nat.Coprime r' ℓ := ((Nat.Prime.coprime_iff_not_dvd hp).2 hr').symm
   obtain ⟨y, hy, hya⟩ := one_add_pow_prime_power_unit hl hodd hx a
   obtain ⟨z, hz, hza⟩ := one_add_pow_coprime_unit hl hco a hy

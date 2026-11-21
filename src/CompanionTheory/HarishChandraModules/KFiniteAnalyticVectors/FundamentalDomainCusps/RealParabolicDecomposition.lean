@@ -93,7 +93,7 @@ theorem exists_isPr (W : Submodule ℂ (Fin n → ℂ)) : ∃ p, IsPr W p := by
     conv_rhs => rw [← Matrix.toEuclideanLin.apply_symm_apply P]
     rfl
   refine ⟨Matrix.toEuclideanLin.symm P, ?_, fun z => ?_, fun w hw => ?_⟩
-  · refine Matrix.isHermitian_iff_isSymmetric.2 ?_
+  · refine Matrix.isSymmetric_toEuclideanLin_iff.mp ?_
     rw [LinearEquiv.apply_symm_apply]
     exact K.starProjection_isSymmetric
   · rw [hP]; exact K.starProjection_apply_mem _

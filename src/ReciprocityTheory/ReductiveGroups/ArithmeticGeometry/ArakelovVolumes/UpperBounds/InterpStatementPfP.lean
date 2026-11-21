@@ -205,7 +205,7 @@ private theorem dmin_ne_zero' {x : Frame X.Ψ r} (hx : x ∈ X.dom) (τ : X.Ψ) 
 
 private theorem continuousOn_nfac (la : Wt X.Ψ r) : ContinuousOn (X.nfac la) X.dom := by
   unfold Data.nfac
-  refine continuousOn_finset_prod _ (fun τ _ => continuousOn_finset_prod _ (fun i _ => ?_))
+  refine continuousOn_finsetProd _ (fun τ _ => continuousOn_finsetProd _ (fun i _ => ?_))
   refine ContinuousOn.rpow_const ?_ (fun x hx => Or.inl ?_)
   · exact ((dmin_continuous X τ _).continuousOn.div (dmin_continuous X τ _).continuousOn
       (fun x hx => dmin_ne_zero' X hx τ _)).norm

@@ -50,6 +50,8 @@ theorem Gz_herm (ζ : ℂ) : (Gz hm D Y ζ)ᴴ = Gz hm D Y ζ := by
   have hD : (Matrix.diagonal fun k => (D k : ℂ))ᴴ = Matrix.diagonal fun k => (D k : ℂ) := by
     rw [Matrix.diagonal_conjTranspose]
     congr 1
+    funext k
+    simp
   first
   | simp only [Gz, Matrix.conjTranspose_submatrix, Matrix.conjTranspose_mul,
       Matrix.conjTranspose_conjTranspose, hD, Matrix.mul_assoc]

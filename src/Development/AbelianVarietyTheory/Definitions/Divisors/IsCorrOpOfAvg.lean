@@ -109,7 +109,7 @@ theorem isCorrOp_fold {X Z' : Scheme.{0}} {J : Type} [Fintype J] (f : J → (X �
   refine ⟨X, 𝟙 X, Unit, inferInstance, inferInstance, fun _ => 𝟙 X, J, inferInstance, Sigma.ι (fun _ : J => X),
     isGalois_id X, splits_fold X J, fun x => ?_⟩
   rw [CategoryTheory.Functor.map_id, pullTot_id, LinearMap.id_apply, LinearMap.sum_apply]
-  simp only [Sigma.ι_desc]
+  simp only [Sigma.ι_comp_desc]
 
 end GlobalTheory.GalV
 

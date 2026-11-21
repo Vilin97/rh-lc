@@ -41,6 +41,7 @@ theorem AinfInv.theta_gamma {n : ℕ} (hn : n ≠ 0) {x : AinfInv p R} (hx : Ain
 namespace AcrisZero
 
 
+variable (p R) in
 def pdIdeal : Ideal (AcrisZero p R) :=
   span {y | ∃ (n : ℕ) (x : Ainf p R) (hx : Ainf.theta p R x = 0), n ≠ 0 ∧ y = gamma n x hx}
 
@@ -118,6 +119,7 @@ theorem algebraMap_away_injective :
 namespace AcrisZero
 
 
+variable (p R) in
 def theta : AcrisZero p R →+* R where
   toFun y := (exists_theta_eq y).choose
   map_one' := algebraMap_away_injective (p := p) (by
@@ -155,8 +157,9 @@ end AcrisZero
 namespace Acris
 
 
+variable (p R) in
 def theta : Acris p R →+* R :=
-  ((AdicCompletion.ofAlgEquiv (span {(p : R)})).symm : _ →+* R).comp
+  (AdicCompletion.ofAlgEquiv (span {(p : R)})).symm.toRingHom.comp
     (adicMap _ _ (AcrisZero.theta p R) (span_natCast_le_comap p _))
 
 @[simp] theorem theta_algebraMap_zero (a : AcrisZero p R) :
@@ -177,6 +180,7 @@ end Acris
 namespace BcrisPlus
 
 
+variable (p R) in
 def theta : BcrisPlus p R →+* Localization.Away (p : R) :=
   lift ((algebraMap R _).comp (Acris.theta p R))
     (by simpa using IsLocalization.Away.algebraMap_isUnit (S := Localization.Away (p : R)) (p : R))

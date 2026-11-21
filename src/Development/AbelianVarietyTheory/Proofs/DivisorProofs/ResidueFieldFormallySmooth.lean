@@ -10,7 +10,13 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 open GlobalTheory GlobalTheory.LogPair
 open scoped TensorProduct
 
-theorem GlobalTheory.residueField_formallySmooth_of_isClosed : ∀ (k : Type) [Field k] [PerfectField k] (X : Scheme.{0}) (f : X ⟶ Sp k) [LocallyOfFiniteType f] (U : X.Opens) (x : X) (hxU : x ∈ U), IsClosed ({x} : Set X) → letI : Algebra k (X.presheaf.stalk x) := ((X.presheaf.germ U x hxU).hom.comp (cstOn f U)).toAlgebra; Algebra.FormallySmooth k (IsLocalRing.ResidueField (X.presheaf.stalk x)) := by
+theorem GlobalTheory.residueField_formallySmooth_of_isClosed :
+    ∀ (k : Type) [Field k] [PerfectField k] (X : Scheme.{0}) (f : X ⟶ Sp k)
+      [LocallyOfFiniteType f] (U : X.Opens) (x : X) (hxU : x ∈ U),
+      IsClosed ({x} : Set X) →
+        (letI : Algebra k (X.presheaf.stalk x) :=
+          ((X.presheaf.germ U x hxU).hom.comp (cstOn f U)).toAlgebra
+         Algebra.FormallySmooth k (IsLocalRing.ResidueField (X.presheaf.stalk x))) := by
   intro k _ _ X f _ U x hxU _
   letI : Algebra k (X.presheaf.stalk x) := ((X.presheaf.germ U x hxU).hom.comp (cstOn f U)).toAlgebra
   have key : f.appLE ⊤ U le_top ≫ X.presheaf.germ U x hxU =

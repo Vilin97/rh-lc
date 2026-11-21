@@ -24,7 +24,7 @@ section Real
 theorem prod_close {ι : Type} (S : Finset ι) (a : ι → ℝ) {ε : ℝ} (hε : 0 < ε) :
     ∃ δ > 0, ∀ r : ι → ℝ, (∀ v ∈ S, |r v - a v| ≤ δ) → |∏ v ∈ S, r v - ∏ v ∈ S, a v| ≤ ε := by
   have hc : Continuous (fun r : S → ℝ => ∏ v : S, r v) :=
-    continuous_finset_prod _ (fun i _ => continuous_apply i)
+    continuous_finsetProd _ (fun i _ => continuous_apply i)
   obtain ⟨δ, hδ, h⟩ := Metric.continuous_iff.1 hc (fun v => a v) ε hε
   refine ⟨δ / 2, half_pos hδ, fun r hr => ?_⟩
   have hd : dist (fun v : S => r v) (fun v : S => a v) < δ := by

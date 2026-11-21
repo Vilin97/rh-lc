@@ -78,7 +78,9 @@ theorem mem_of_mem_closure_of_finite (ρ : Γ → H →ₗ[ℂ] H) (hρ : ∀ g,
   have hcl : v' ∈ W.topologicalClosure := Submodule.sub_mem _ hv (W.le_topologicalClosure hPv)
   have h0 : ⟪v', v'⟫_ℂ = 0 := by
     have hc : IsClosed {x : H | ⟪x, v'⟫_ℂ = 0} := isClosed_eq (by fun_prop) continuous_const
-    exact closure_minimal (s := (W : Set H)) key hc hcl
+    exact closure_minimal (s := (W : Set H)) (by
+      intro x hx
+      exact key x hx) hc hcl
   have : v = E.starProjection v := sub_eq_zero.1 (inner_self_eq_zero.1 h0)
   rw [this]
   exact hPv

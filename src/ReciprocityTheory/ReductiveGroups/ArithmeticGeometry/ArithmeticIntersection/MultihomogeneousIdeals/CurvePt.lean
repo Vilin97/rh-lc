@@ -98,8 +98,8 @@ theorem exists_homog_chart (V : Ideal (MRingOver F ι)) (j : ∀ k, ι k) (b : M
         mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
       omega
     rwa [hsum] at h3
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  ·
+    set_option synthInstance.maxHeartbeats 100000 in rw [map_sum]
     set_option synthInstance.maxHeartbeats 100000 in
       conv_rhs => rw [MvPolynomial.as_sum b, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_

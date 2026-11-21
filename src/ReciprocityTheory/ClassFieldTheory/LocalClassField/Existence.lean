@@ -84,7 +84,7 @@ theorem exists_normGrp_le_pow (hK : FiniteDimensional ℚ_[p] K) {n : ℕ} (hn :
   obtain ⟨L, hL, hL'⟩ := exists_maxExp hfinM hn hfin
   have hMst : ∀ (σ : GK p K), ∀ x ∈ M, σ x ∈ M := (subG_normal_iff hM.le).1 hM.normal
   have hst : ∀ (σ : GK p K), ∀ x ∈ L, σ x ∈ L := fun σ x hx => maxExp_stable hM.le hMst hL hL' σ x hx
-  have : (subG p K L).Normal := subG_normal_of_stable hst
+  have : (subG p K L).Normal := subG_normal_of_stable p K L hst
   have hKL : K ≤ L := hM.le.trans hL.le
   have hsol := isSolvable_of_ab_of_ab hM hL
   obtain ⟨E, hE, hEL, hE'⟩ := exists_maxAb hL.fin hKL

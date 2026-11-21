@@ -9,7 +9,7 @@ noncomputable section
 
 namespace Formalism.HermitianLattices.IntegralLatticeDensity
 
-open Finset Formalism.LogVandermondeBounds.TaylorLogMetric
+open Finset
 
 
 

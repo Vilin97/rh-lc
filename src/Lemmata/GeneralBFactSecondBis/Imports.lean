@@ -17,7 +17,7 @@ theorem goal1 :
   classical
   have hp : 1 < g := hg.out.one_lt
   set f : Polynomial (Formalism.CyclotomicNorms.Fbar g) := Polynomial.X ^ g - Polynomial.X with hf
-  have hf0 : f ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero (Formalism.CyclotomicNorms.Fbar g) hp
+  have hf0 : f ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hp
   have hroot : ∀ x : Formalism.CyclotomicNorms.Fbar g, x ^ g = x → x ∈ f.roots.toFinset := by
     intro x hx
     rw [Multiset.mem_toFinset, Polynomial.mem_roots hf0, Polynomial.IsRoot.def, hf,

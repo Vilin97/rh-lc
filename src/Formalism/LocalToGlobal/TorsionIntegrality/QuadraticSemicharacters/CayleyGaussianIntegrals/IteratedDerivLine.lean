@@ -72,7 +72,7 @@ theorem LineUnique_of (h : LineCoeff) : LineUnique := by
     simp only [MvPolynomial.coeff_monomial]
     rw [Finset.sum_ite_eq' _ ν, if_pos hν]
   rw [← hc T, ← hc T']
-  exact congrArg _ hpq
+  exact congrArg (fun R => AddMonoidAlgebra.coeff R ν) hpq
 
 theorem lineUnique' : LineUnique := LineUnique_of lineCoeff'
 

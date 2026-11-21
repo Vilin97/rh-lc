@@ -27,7 +27,8 @@ theorem map_eq_of_conj {W V : Type} [AddCommGroup W] [TopologicalSpace W] [IsTop
     funext x
     simp [← hc x]
   rw [hT, ← Measure.map_map hs.measurable (hB.measurable.comp he.measurable),
-    ← Measure.map_map hB.measurable he.measurable, hν, Measure.map_smul,
+    ← Measure.map_map hB.measurable he.measurable, hν,
+    Measure.map_smul c (hs.measurable.aemeasurable),
     Measure.map_map hs.measurable he.measurable]
   have : (e.symm ∘ e : W → W) = id := by
     funext x

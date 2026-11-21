@@ -131,7 +131,7 @@ variable [IsClosedImmersion i] [Surjective i]
   (hD : ∀ j, i ⁻¹ᵁ U j = Z.basicOpen (f j))
   {s : Γ(Z, ⊤)} {σ : ∀ j, Γ(Y, U j)} (hσ : ∀ j, Lifts i (U j) (σ j) s)
 
-
+variable (i σ) in
 def IsCoboundary (r : Γ(Z, ⊤)) : Prop :=
   ∃ ρ t : ∀ j, Γ(Y, U j), (∀ j, Lifts i (U j) (ρ j) r) ∧ (∀ j, Lifts i (U j) (t j) 0) ∧
     ∀ j k, rs (inf_le_left : U j ⊓ U k ≤ U j) (t j) - rs inf_le_right (t k) =

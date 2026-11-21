@@ -43,7 +43,7 @@ theorem tprod_tprod_update_sigma [DecidableEq (Σ a, β a)] (x : ∀ p, M p) (a�
     intro h'
     exact h (congrArg Sigma.fst h')
 
-def curryML : MultilinearMap ℂ M (⨂[ℂ] a, ⨂[ℂ] b, M ⟨a, b⟩) where
+def curryML : (∀ p, M p) →ₘₗ[ℂ] ⨂[ℂ] a, ⨂[ℂ] b, M ⟨a, b⟩ where
   toFun x := tprod ℂ fun a => tprod ℂ fun b => x ⟨a, b⟩
   map_update_add' x p v w := by
     obtain ⟨a₀, b₀⟩ := p
@@ -51,8 +51,7 @@ def curryML : MultilinearMap ℂ M (⨂[ℂ] a, ⨂[ℂ] b, M ⟨a, b⟩) where
     rw [MultilinearMap.map_update_add, MultilinearMap.map_update_add]
   map_update_smul' x p c v := by
     obtain ⟨a₀, b₀⟩ := p
-    simp only [tprod_tprod_update_sigma]
-    rw [MultilinearMap.map_update_smul, MultilinearMap.map_update_smul]
+    simp only [tprod_tprod_update_sigma, MultilinearMap.map_update_smul, RingHom.id_apply]
 
 theorem curryML_apply (x : ∀ p, M p) : curryML M x = tprod ℂ fun a => tprod ℂ fun b => x ⟨a, b⟩ := rfl
 

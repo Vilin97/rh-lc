@@ -30,6 +30,7 @@ theorem s_mem {n : G} (hn : n ∈ N) : s n ∈ N := by
   rw [h]; exact N.mul_mem (N.inv_mem (hr n)) hn
 
 
+include hc hrs hr hrn hsn in
 theorem stepA (h0 : ∀ n ∈ N, ∀ m ∈ N, c n m = 0) (n : G) (hn : n ∈ N) (g : G) :
     c n g - D1 ρ (fun x => - c (r x) (s x)) n g = 0 := by
   have h1 := hc n (r g) (s g)
@@ -49,12 +50,13 @@ include hc in
 theorem theta_mul [N.Normal] (h0 : ∀ n ∈ N, ∀ g, c n g = 0) (g m : G) (hm : m ∈ N) (k : G) :
     c g (m * k) = c g m + ρ (g * m * g⁻¹) (c g k) := by
   have h1 := hc g m k
-  have h2 := mul_left_of_zero hc h0 (g * m * g⁻¹) (Subgroup.Normal.conj_mem ‹_› m hm g) g k
+  have h2 := mul_left_of_zero hc h0 (g * m * g⁻¹) (‹N.Normal›.conj_mem m hm g) g k
   rw [inv_mul_cancel_right] at h2
   rw [h0 m hm, map_zero, h2] at h1
   linear_combination (norm := abel) h1
 
 
+include hc hrs hr hrn hsn in
 theorem stepB [N.Normal] (h0 : ∀ n ∈ N, ∀ g, c n g = 0) (e : G → A) (he0 : ∀ g ∈ N, e g = 0)
     (he : ∀ g, ∀ n ∈ N, c g (g⁻¹ * n * g) = e g - ρ n (e g)) (n : G) (hn : n ∈ N) (g : G) :
     c n g - D1 ρ (fun x => ρ (r x) (e (s x))) n g = 0 ∧ c g n - D1 ρ (fun x => ρ (r x) (e (s x))) g n = 0 := by
@@ -64,13 +66,13 @@ theorem stepB [N.Normal] (h0 : ∀ n ∈ N, ∀ g, c n g = 0) (e : G → A) (he0
     rw [hrn n hn, hsn n hn, ha0, h0 n hn, map_mul, Module.End.mul_apply]
     abel
   · simp only [D1]
-    have hconj : g * n * g⁻¹ ∈ N := Subgroup.Normal.conj_mem ‹_› n hn g
+    have hconj : g * n * g⁻¹ ∈ N := ‹N.Normal›.conj_mem n hn g
     have h1 : g * n = (g * n * g⁻¹) * g := by group
     have h2 : c g n = ρ (r g) (e (s g)) - ρ (g * n * g⁻¹) (ρ (r g) (e (s g))) := by
       have h3 : c g n = ρ (r g) (c (s g) n) := by
         conv_lhs => rw [← hrs g]
         exact mul_left_of_zero hc h0 _ (hr g) _ _
-      have h4 := he (s g) (s g * n * (s g)⁻¹) (Subgroup.Normal.conj_mem ‹_› n hn _)
+      have h4 := he (s g) (s g * n * (s g)⁻¹) (‹N.Normal›.conj_mem n hn _)
       have h5 : (s g)⁻¹ * (s g * n * (s g)⁻¹) * s g = n := by group
       rw [h5] at h4
       rw [h3, h4, map_sub, ← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul]
@@ -82,23 +84,24 @@ theorem stepB [N.Normal] (h0 : ∀ n ∈ N, ∀ g, c n g = 0) (e : G → A) (he0
     abel
 
 
+include hc in
 theorem stepC [N.Normal] (h0 : ∀ n ∈ N, ∀ g, c n g = 0) (h0' : ∀ n ∈ N, ∀ g, c g n = 0) (n : G) (hn : n ∈ N)
     (g h : G) : c g (h * n) = c g h ∧ c (g * n) h = c g h ∧ ρ n (c g h) = c g h := by
   have hR : ∀ g h n, n ∈ N → c g (h * n) = c g h := fun g h n hn => by
     have h1 := hc g h n
-    rw [h0' n hn, h0' n hn, map_zero] at h1
+    simp only [h0' n hn, map_zero, zero_sub, sub_zero] at h1
     linear_combination (norm := abel) h1
   have hL : ∀ g h n, n ∈ N → c g (n * h) = c g h := fun g h n hn => by
     have : n * h = h * (h⁻¹ * n * h) := by group
-    rw [this, hR _ _ _ (Subgroup.Normal.conj_mem' ‹_› n hn h)]
+    rw [this, hR _ _ _ (‹N.Normal›.conj_mem' n hn h)]
   have hM : ∀ g h n, n ∈ N → c (g * n) h = c g h := fun g h n hn => by
     have h1 := hc g n h
-    rw [h0 n hn, h0' n hn, map_zero, hL _ _ _ hn] at h1
+    simp only [h0 n hn, h0' n hn, map_zero, hL _ _ _ hn, zero_sub, sub_zero] at h1
     linear_combination (norm := abel) - h1
   refine ⟨hR g h n hn, hM g h n hn, ?_⟩
   rw [← mul_left_of_zero hc h0 n hn]
   have : n * g = g * (g⁻¹ * n * g) := by group
-  rw [this, hM _ _ _ (Subgroup.Normal.conj_mem' ‹_› n hn g)]
+  rw [this, hM _ _ _ (‹N.Normal›.conj_mem' n hn g)]
 
 end Alg
 

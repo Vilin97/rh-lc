@@ -24,7 +24,7 @@ theorem eq_zero_of_mem_lowDeg_zero {f : ι → σ} {R : MvPolynomial σ K}
     (h : R ∈ lowDeg f 0) : R = 0 := by
   rw [mem_lowDeg] at h
   ext m
-  rw [coeff_zero]
+  change R.coeff m = 0
   by_contra hne
   exact Nat.not_lt_zero _ (h m (mem_support_iff.mpr hne))
 

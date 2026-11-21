@@ -27,8 +27,7 @@ def boxSub (s : kˣ) : OpenAddSubgroup (n → k) where
   isOpen' := isOpen_box s
 
 theorem nonarch : NonarchimedeanAddGroup (n → k) where
-  toIsTopologicalAddGroup := inferInstance
-  is_nonarchimedean U hU := by
+  is_nonarchimedean := fun U hU => by
     obtain ⟨s, hs⟩ := exists_box_subset hU
     exact ⟨boxSub s, hs⟩
 
@@ -106,6 +105,7 @@ theorem box_nhds (s : kˣ) : box n s ∈ 𝓝 (0 : n → k) :=
 omit [MeasurableSpace k] [BorelSpace k] in
 theorem invariant_nhds {f : (n → k) → ℂ} (hf : f ∈ SB (n → k)) :
     {t : n → k | ∀ x, f (x + t) = f x} ∈ 𝓝 (0 : n → k) := by
+  classical
   obtain ⟨s, hs⟩ := exists_box_invariant hf
   exact Filter.mem_of_superset (box_nhds s) fun t ht => hs t ht
 
@@ -242,6 +242,7 @@ theorem exists_adm (hχ : HasConductor χ c) (g : SB (n → k)) : ∃ s : kˣ, a
   exact ⟨s, isAdmissibleBoxForCharacter_of_subset hs⟩
 
 
+open scoped Classical in
 def ell (χ : AddChar k Circle) (μ : Measure (n → k)) (B : SB (n → k) →ₗ[ℂ] SB (n → k) →ₗ[ℂ] ℂ)
     (g : SB (n → k)) : ℂ :=
   if h : ∃ s : kˣ, admitted χ s g.1 then (μ.real (box n h.choose) : ℂ)⁻¹ * B (ind h.choose) g else 0

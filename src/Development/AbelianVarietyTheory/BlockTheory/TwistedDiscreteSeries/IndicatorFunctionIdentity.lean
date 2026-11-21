@@ -23,7 +23,7 @@ private lemma isOpen_stdLat : IsOpen (stdLat k n : Set (n → k)) := by
   rw [e]
   exact isOpen_set_pi Set.finite_univ fun _ _ => isOpen_int k
 
-theorem isOpen_lat (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] : IsOpen (L : Set (n → k)) := by
+theorem isOpen_lat (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k] : IsOpen (L : Set (n → k)) := by
   obtain ⟨g, rfl⟩ := exists_smul_lat (stdLat k n) L
   have e : ((g • stdLat k n : Submodule 𝒪[k] (n → k)) : Set (n → k)) =
       (fun x => (g⁻¹ : GL n k).val *ᵥ x) ⁻¹' (stdLat k n : Set (n → k)) := by
@@ -79,8 +79,8 @@ private lemma isCompact_isOpen_isClosed_integral_matrices : IsCompact {x : Matri
     isOpen_set_pi Set.finite_univ fun _ _ => isOpen_set_pi Set.finite_univ fun _ _ => isOpen_int k,
     isClosed_set_pi fun _ _ => isClosed_set_pi fun _ _ => hc⟩
 
-private lemma exists_sideMul_preimage_integral (S : Submodule 𝒪[k] (n' → k)) (L : Submodule 𝒪[k] (n → k)) [S.IsLattice k]
-    [L.IsLattice k] : ∃ (g : GL n' k) (h : GL n k), {x : Matrix n n' k | ∀ y ∈ S, x *ᵥ y ∈ L} =
+private lemma exists_sideMul_preimage_integral (S : Submodule 𝒪[k] (n' → k)) (L : Submodule 𝒪[k] (n → k))
+    [S.IsFullLattice k] [L.IsFullLattice k] : ∃ (g : GL n' k) (h : GL n k), {x : Matrix n n' k | ∀ y ∈ S, x *ᵥ y ∈ L} =
       (sideMul g h) ⁻¹' {x : Matrix n n' k | ∀ i j, x i j ∈ 𝒪[k]} := by
   obtain ⟨g, rfl⟩ := exists_smul_lat (stdLat k n') S
   obtain ⟨h, rfl⟩ := exists_smul_lat (stdLat k n) L
@@ -90,7 +90,7 @@ private lemma exists_sideMul_preimage_integral (S : Submodule 𝒪[k] (n' → k)
     ∀ i j, ((h⁻¹ : GL n k).val * x * g.val) i j ∈ 𝒪[k]
   rw [maps_smul_iff, maps_std_iff]
 
-theorem hom_lat (S : Submodule 𝒪[k] (n' → k)) (L : Submodule 𝒪[k] (n → k)) [S.IsLattice k] [L.IsLattice k] :
+theorem hom_lat (S : Submodule 𝒪[k] (n' → k)) (L : Submodule 𝒪[k] (n → k)) [S.IsFullLattice k] [L.IsFullLattice k] :
     IsCompact {x : Matrix n n' k | ∀ y ∈ S, x *ᵥ y ∈ L} ∧ IsOpen {x : Matrix n n' k | ∀ y ∈ S, x *ᵥ y ∈ L} := by
   obtain ⟨g, h, e⟩ := exists_sideMul_preimage_integral S L
   rw [e]
@@ -113,8 +113,8 @@ private lemma phiOne_congr_of_sub_mulVec_mem_ker {P : Pair k n'} {Q : Pair k n} 
   · rw [if_pos (key.2 hx), if_pos hx]
   · rw [if_neg (mt key.1 hx), if_neg hx]
 
-private lemma isClosed_setOf_mulVec_mem (S : Submodule 𝒪[k] (n' → k)) (L : Submodule 𝒪[k] (n → k)) [S.IsLattice k]
-    [L.IsLattice k] : IsClosed {x : Matrix n n' k | ∀ y ∈ S, x *ᵥ y ∈ L} := by
+private lemma isClosed_setOf_mulVec_mem (S : Submodule 𝒪[k] (n' → k)) (L : Submodule 𝒪[k] (n → k))
+    [S.IsFullLattice k] [L.IsFullLattice k] : IsClosed {x : Matrix n n' k | ∀ y ∈ S, x *ᵥ y ∈ L} := by
   obtain ⟨g, h, e⟩ := exists_sideMul_preimage_integral S L
   rw [e]
   exact isCompact_isOpen_isClosed_integral_matrices.2.2.preimage (sideMul g h).continuous
@@ -149,7 +149,7 @@ private lemma det_mem_of_integral_entries {u : GL n k} (hu : ∀ i j, u.val i j 
   rw [e, ← RingHom.map_det]
   exact (M.det).2
 
-theorem valuation_det_of_fix (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] {h : GL n k} (hh : h • L = L) :
+theorem valuation_det_of_fix (L : Submodule 𝒪[k] (n → k)) [L.IsFullLattice k] {h : GL n k} (hh : h • L = L) :
     valuation k ((Matrix.GeneralLinearGroup.det h : kˣ) : k) = 1 := by
   obtain ⟨g, rfl⟩ := exists_smul_lat (stdLat k n) L
   obtain ⟨u, hu⟩ : ∃ u : GL n k, u = g⁻¹ * h * g := ⟨_, rfl⟩
@@ -221,6 +221,7 @@ theorem K_apply (hμ : IsUnram μ) (hθ : IsEquivTheta μ π' π θ) (P₀ : Pai
   rfl
 
 
+open Classical in
 def midInd (q : Unif k) (L : Submodule 𝒪[k] (n' → k)) (e₁ : n' → k) (Q : Pair k n) (x : Matrix n n' k) : ℂ :=
   if (∀ y ∈ L, x *ᵥ y ∈ Q.lat) ∧ Q.HasVal (x *ᵥ (q.1 • e₁)) 1 then 1 else 0
 

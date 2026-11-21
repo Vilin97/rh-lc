@@ -23,7 +23,7 @@ theorem closure_hart : ∀ (A R : Type) [CommRing A] [IsDomain A] [CommRing R] [
       (∀ i, y i ∈ GlobalTheory.KeyOriginNoeth.closure A R D) →
       (∀ d : D, ∑ i, x i * algebraMap _ D (τ (y i * d)) =
         GlobalTheory.KeyOriginNoeth.baseHom A R D (algebraMap A R a₀) * d) →
-    letI := GlobalTheory.KeyOriginNoeth.closureAlg A R D
+    letI := GlobalTheory.KeyOriginNoeth.closureAlg A R D;
     GlobalTheory.GoodEtale.Hart A R (GlobalTheory.KeyOriginNoeth.closure A R D) := by
   intro A R _ _ _ _ _ hHR hinj D _ _ τ hτC a₀ ha₀ n x y hy hid
   set F := GlobalTheory.LocAcyc.GenFib A R

@@ -75,7 +75,7 @@ def linearGradedMap : grading W →+*ᵍ grading W' where
 
 variable (hs : ∀ i, coord W' i ∈ Ideal.span (Set.range L))
 
-
+include hs in
 theorem irrelevant_le_map_linearGradedMap :
     irrelevant (grading W') ≤ (irrelevant (grading W)).map (linearGradedMap W L hL h) := by
   rw [← toIdeal_le_toIdeal_iff, irrelevant_eq_span_coord, Ideal.span_le]
@@ -92,7 +92,7 @@ def linearHom : scheme W' ⟶ scheme W :=
 variable {A : Type u} [CommRing A] (ρ : R →+* A) (P : Fin 3 → A)
   (hP : IsUnimodularSol (W'.map ρ) P)
 
-
+include h hs in
 theorem isUnimodularSol_linear :
     IsUnimodularSol (W.map ρ) (evalHom W' ρ P hP.equation ∘ L) := by
   constructor
@@ -186,10 +186,14 @@ theorem ptHom_negHom {A : Type u} [CommRing A] (ρ : R →+* A) (P : Fin 3 → A
     ptHom W ρ P hP ≫ negHom W = ptHom W ρ ((W.map ρ).toProjective.neg P) hP.neg := by
   rw [negHom, ptHom_linearHom]
   refine ptHom_congr W _ _ _ rfl ?_ _
-  ext i
-  fin_cases i <;>
-    simp [WeierstrassCurve.Projective.neg, WeierstrassCurve.Projective.negY,
-      WeierstrassCurve.baseChange]
+  let f := evalHom W ρ P hP.equation
+  have hf : f.comp (algebraMap R (HomRing W)) = ρ :=
+    RingHom.ext (evalHom_algebraMap W ρ P hP.equation)
+  have hcoord : f ∘ coord W = P := funext (evalHom_coord W ρ P hP.equation)
+  change f ∘ (W.baseChange (HomRing W)).toProjective.neg (coord W) = _
+  rw [← WeierstrassCurve.Projective.map_neg, hcoord]
+  change (W.map (f.comp (algebraMap R (HomRing W)))).toProjective.neg P = _
+  rw [hf]
 
 theorem negHom_toSpec : negHom W ≫ toSpec W = toSpec W := linearHom_toSpec ..
 
@@ -219,6 +223,7 @@ end Neg
 section Sum
 
 open AddLaw
+open scoped WeierstrassCurve.Projective
 
 variable {A B : Type*} [CommRing A] [CommRing B]
 

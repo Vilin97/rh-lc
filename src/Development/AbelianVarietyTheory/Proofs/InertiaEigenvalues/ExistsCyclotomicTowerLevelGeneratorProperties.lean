@@ -147,7 +147,7 @@ theorem gen_dense : ∀ (l : ℕ) [Fact l.Prime] (act : GQ l →* (PadicComplex 
         linarith
       exact hW.mem_nhds (Set.mem_biUnion hxH (by simpa using hσU))
     obtain ⟨n, hn'⟩ := exists_subset_nhds_of_compactSpace hanti.directed_ge hcl
-      hint
+      (mem_nhdsSet_iff_forall.2 hint)
     obtain ⟨a, ha⟩ := hcos σ hσ n
     obtain ⟨h, hh, hU'⟩ := Set.mem_iUnion₂.1 (hn' ha)
     refine ⟨h * g ^ a, ?_, h, hh, a, rfl⟩

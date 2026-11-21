@@ -47,9 +47,8 @@ theorem withBot_eq_of_add_one {a : WithBot ℕ∞} {n : ℕ}
   | coe b =>
     induction b using ENat.recTopCoe with
     | top =>
-      simp at h
-      exact absurd h.symm (fun h2 => ENat.coe_ne_top n (WithBot.coe_injective
-        (show ((n : ℕ∞) : WithBot ℕ∞) = ((⊤ : ℕ∞) : WithBot ℕ∞) from h2)))
+      change ((⊤ : ℕ∞) : WithBot ℕ∞) = (((n + 1 : ℕ) : ℕ∞) : WithBot ℕ∞) at h
+      exact (ENat.top_ne_natCast (n + 1) (WithBot.coe_injective h)).elim
     | coe k =>
       have h' : ((k + 1 : ℕ) : WithBot ℕ∞) = ((n + 1 : ℕ) : WithBot ℕ∞) := by exact_mod_cast h
       have h2 : k + 1 = n + 1 := by exact_mod_cast h'

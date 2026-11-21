@@ -32,7 +32,7 @@ theorem measureReal_compactOpen_pos : 0 < μ.real (K : Set G) :=
   ENNReal.toReal_pos (hKo.measure_ne_zero μ ⟨1, K.one_mem⟩) hKc.measure_lt_top.ne
 
 def idem : HeckeAlgebra μ :=
-  mk μ ((K : Set G).indicator fun _ => ((μ.real (K : Set G) : ℂ))⁻¹)
+  mk (μ := μ) ((K : Set G).indicator fun _ => ((μ.real (K : Set G) : ℂ))⁻¹)
     (indicator_mem_locallyConstantCompactSupport hKc hKo _)
 
 variable {μ}

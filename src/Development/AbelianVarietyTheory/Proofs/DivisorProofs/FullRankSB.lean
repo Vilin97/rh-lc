@@ -40,7 +40,7 @@ def indScal (ν β : kˣ →* ℂˣ) (a b : ℕ) : Submodule ℂ (GL (Fin (a + b
 variable [MeasurableSpace k] [BorelSpace k]
 
 def fibre (ν β : kˣ →* ℂˣ) (a b : ℕ) (Φ : Matrix (Fin a) (Fin (a + b)) k → ℂ) (x : GL (Fin (a + b)) k) : ℂ :=
-  ∫ g : GL (Fin a) k, omA ν β 1 x Φ (g.val * X0 k finSumFinEquiv) * (ν (gdet g) : ℂ) *
+  ∫ g : GL (Fin a) k, omA ν β 1 x Φ (g.val * X0 (k := k) finSumFinEquiv) * (ν (gdet g) : ℂ) *
     apow (gdet g) (((a + b : ℕ) : ℂ) / 2) ∂(haarVol (GlobalTheory.SplitWeil.KO k (Fin a)))
 
 theorem fibre_omA (ν β : kˣ →* ℂˣ) (a b : ℕ) (h : GL (Fin (a + b)) k) (Φ : Matrix (Fin a) (Fin (a + b)) k → ℂ)

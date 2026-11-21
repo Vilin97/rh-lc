@@ -19,7 +19,9 @@ variable {R : Type*} [CommRing R] {K : Type*} {ι : K → Type*}
 
 
 def killB (B : Set K) : MRing ι R →ₐ[R] MRing ι R :=
-  aeval fun v => if v.1 ∈ B then 0 else X v
+  by
+    classical
+    exact aeval fun v => if v.1 ∈ B then 0 else X v
 
 def varIdeal (B : Set K) : Ideal (MRing ι R) :=
   Ideal.span {p | ∃ v : Σ k, ι k, v.1 ∈ B ∧ p = X v}

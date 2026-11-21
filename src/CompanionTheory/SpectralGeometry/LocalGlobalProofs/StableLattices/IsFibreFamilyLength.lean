@@ -114,7 +114,7 @@ theorem GlobalTheory.CompanionTheory.SW.isFibreFamily_length : ∀ (F E : Type) 
   haveI : BorelSpace (HermR R σ 1) := ⟨rfl⟩
   obtain ⟨hfib, hint, hcont⟩ := hm
   set q : (Fin 1 → Fin M → R ⊗[F] E) → R := fun X => Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.qR R σ J (X 0) with hq
-  have hqc : Continuous q := continuous_qR R hσ J
+  have hqc : Continuous q := LenFib.continuous_qR R hσ J
   have hUo : IsOpen {c : R | IsUnit c} := by
     have h := hOE.isOpen_range
     have he : Set.range (Units.val : Rˣ → R) = {c : R | IsUnit c} := by
@@ -123,7 +123,7 @@ theorem GlobalTheory.CompanionTheory.SW.isFibreFamily_length : ∀ (F E : Type) 
     rwa [he] at h
   have hemb : MeasurableEmbedding (hermScal R σ) := (OneHerm.hermHomeo R hσ).measurableEmbedding
   have hsub : ∀ X, IsUnit (q X) → IsUnit (gramR R σ J X).det := fun X h =>
-    isUnit_det_gramR R hσ hJ h
+    LenFib.isUnit_det_gramR R hσ hJ h
   have hres : μ.restrict {X | IsUnit (gramR R σ J X).det} = μ := by
     refine Measure.restrict_eq_self_of_ae_mem ?_
     refine measure_mono_null ?_ hμ0
@@ -133,7 +133,7 @@ theorem GlobalTheory.CompanionTheory.SW.isFibreFamily_length : ∀ (F E : Type) 
     intro c
     refine measure_mono_null ?_ (hfib (hermScal R σ c))
     intro X hX hXm
-    exact hX (qR_of_gram R hσ hJ hXm.1)
+    exact hX (LenFib.qR_of_gram R hσ hJ hXm.1)
   refine ⟨?_, ?_, ?_⟩
   · intro c
     refine measure_mono_null ?_ (hae c)
@@ -147,7 +147,7 @@ theorem GlobalTheory.CompanionTheory.SW.isFibreFamily_length : ∀ (F E : Type) 
     have key : ∀ c₀, IsUnit c₀ → Integrable φ (m (hermScal R σ c₀)) ∧
         ContinuousWithinAt (fun c => ∫ v, φ v ∂(m (hermScal R σ c))) {c | IsUnit c} c₀ := by
       intro c₀ hc₀
-      obtain ⟨χ, hχc, hχs, hχ1⟩ := exists_bump R hUo hc₀
+      obtain ⟨χ, hχc, hχs, hχ1⟩ := LenFib.exists_bump R hUo hc₀
       have hφ'c : Continuous fun X => φ X * χ (q X) := hφc.mul (hχc.comp hqc)
       have hφ's : HasCompactSupport fun X => φ X * χ (q X) := HasCompactSupport.mul_right hφs
       have hφ't : tsupport (fun X => φ X * χ (q X)) ⊆ {X | IsUnit (gramR R σ J X).det} := by
@@ -161,7 +161,7 @@ theorem GlobalTheory.CompanionTheory.SW.isFibreFamily_length : ∀ (F E : Type) 
         rw [hX, hc, mul_one]
       have hmaps : Set.MapsTo (hermScal R σ) {c : R | IsUnit c}
           {S : HermR R σ 1 | IsUnit (S : Matrix (Fin 1) (Fin 1) (R ⊗[F] E)).det} :=
-        fun c hc => isUnit_det_hermScal R σ hc
+        fun c hc => LenFib.isUnit_det_hermScal R σ hc
       have hC' : ContinuousOn (fun c => ∫ v, φ v * χ (q v) ∂(m (hermScal R σ c))) {c | IsUnit c} :=
         hC.comp (OneHerm.continuous_hermScal R σ).continuousOn hmaps
       refine ⟨(hI _ (hmaps hc₀)).congr (heq c₀ hχ1.self_of_nhds), ?_⟩

@@ -163,8 +163,6 @@ theorem radDZ_expr (P : M.Par) (Bs : B.RealPlaceData P.k P.r Wp Wq)
   refine radDZ_add (radDZ_neg (radDZ_sum _ _ fun j _ => radDZ_smul ?_ _)) (radDZ_neg (radDZ_smul ?_ _))
   · exact radDZ_kap_left P Bs X d hH e he hk ρ (hT _ a b)
   · refine radDZ_kap_left P Bs X d hH e he hk ρ ?_
-    have := radDZ_fn_left P Bs hpl X j0 (hj0.elim Or.inl fun h => Or.inr (Or.inl h)) (radDZ_one P Bs)
-    rwa [mul_one] at this
 
 theorem local_nabla_holds : GTCLNab := by
   intro Wp Wq _ _ _ _ _ _ P Bs X d hH hT e he hk

@@ -12,6 +12,8 @@ open scoped Pointwise
 noncomputable section
 namespace GlobalTheory.LatPair.Model
 
+open GlobalTheory.LatPair
+
 variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {n n' : Type*}
 
 theorem isAdj_sumOp (S S' : Pair k n → Finset (Pair k n)) (w w' : Pair k n → Pair k n → ℂ)
@@ -61,7 +63,7 @@ theorem FFStar_FF [Fintype n] (q : Unif k) {χ : AddChar 𝓀[k] ℂ} (hχ : χ 
     FFStar q χ (FF q χ φ) = (SplitWeil.resCard k ^ Fintype.card n : ℂ) • φ - tr φ := by
   classical
   ext P
-  obtain ⟨L, hL, f, rfl⟩ : ∃ (L : Submodule 𝒪[k] (n → k)) (_ : L.IsLattice k) (f : _), P = ofDual L f :=
+  obtain ⟨L, hL, f, rfl⟩ : ∃ (L : Submodule 𝒪[k] (n → k)) (_ : L.IsFullLattice k) (f : _), P = ofDual L f :=
     ⟨P.lat, P.isLat, _, P.ofDual_red.symm⟩
   letI := Fintype.ofFinite (Red L)
   letI := Fintype.ofFinite (Module.Dual 𝓀[k] (Red L))

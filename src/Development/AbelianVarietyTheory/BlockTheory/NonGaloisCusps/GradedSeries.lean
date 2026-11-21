@@ -81,14 +81,14 @@ def toDR (F : Submodule LL (T.V ⊗[Qp] B)) : Submodule LL (T.V ⊗[Qp] BdR) :=
   F.map (ιV PD (LL := LL) (V := T.V))
 
 def Nlev (i : ZMod n) (ζ : LL) : Submodule LL (ℤ → T.V ⊗[Qp] BdR) :=
-  serSpan LL (Set.range (W.levN T i ζ))
+  serSpan (Set.range (W.levN T i ζ))
 
 def IsExpansion (i : ZMod n) (ζ : LL) (y : W.DD T) (u : ℤ → T.V ⊗[Qp] BdR) : Prop :=
   IsLaurent u ∧ ∃ (m : ℕ) (hy : W.Q ^ m • y ∈ W.N T),
     serMul (W.lev i ζ (W.Q ^ m)) u = W.levN T i ζ ⟨W.Q ^ m • y, hy⟩
 
 def phiNlev (i : ZMod n) (ζ : LL) : Submodule LL (ℤ → T.V ⊗[Qp] BdR) :=
-  serSpan LL {u | ∃ y ∈ W.N T, IsExpansion W T i ζ (W.φD T y) u}
+  serSpan {u | ∃ y ∈ W.N T, IsExpansion W T i ζ (W.φD T y) u}
 
 
 def phiSer (j : ℕ) (u : ℤ → T.V ⊗[Qp] B) : ℤ → T.V ⊗[Qp] BdR :=
@@ -113,8 +113,8 @@ def resEmb {K : FinExt l} {s : ℕ} {LL : FinExt l} (h : Good K s LL)
     (τ : ↥(Ks K s) →ₐ[ℚ_[l]] ↥LL.1) : ↥K.1 →ₐ[ℚ_[l]] ↥LL.1 :=
   τ.comp (IntermediateField.inclusion h.2.2.1)
 
-def LatticeAtLevels (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (H : LocHW l P)
-    (F : LocFon l P AI H) (C : LocCmpT l P AI H F) : Prop :=
+def LatticeAtLevels (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P)
+    (H : LocHW l P) (F : LocFon l P AI H) (C : LocCmpT l P AI H F) : Prop :=
   ∀ (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL)
     (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)), IsCrys (P.PD K) T.ρ →
     ∀ (i : ZMod (Module.finrank ℚ_[l] ↥(K0 K))) (ζ : ↥LL.1),
@@ -129,8 +129,8 @@ def LatticeAtLevels (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P)
               toDR (PD := P.PD K) T (FilLet (H.W K s LL h) T i (resEmb h τ) a)) ∧
       (∀ j : ℕ, 1 ≤ j → IsPrimitiveRoot ζ (l ^ (s + j)) →
         Nlev (H.W K s LL h) T i ζ =
-            serSpan ↥LL.1 (phiSer (P.PD K) T j ''
-              (serSpan ↥LL.1 (Set.range
+            serSpan (phiSer T j ''
+              (serSpan (Set.range
                 ((C.C K s LL h).tie.levB T (i - (j : ZMod _)) (ζ ^ (l ^ j)))) :
                   Set (ℤ → T.V ⊗[ℚ_[l]] P.R.B))) ∧
           ∀ τ : ↥(Ks K s) →ₐ[ℚ_[l]] ↥LL.1, H.IsPt h (i - (j : ZMod _)) (ζ ^ (l ^ j)) τ →

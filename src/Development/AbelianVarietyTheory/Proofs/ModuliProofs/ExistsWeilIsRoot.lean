@@ -162,8 +162,37 @@ theorem exists_tObj : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [Numbe
     rw [← MonObj.comp_pow, ev_pow ob.etaA ob.etaA_add, ob.etaA_ker, MonObj.comp_one]
   have hβ : ∀ (K : Type) [Field K] (x : Sp K ⟶ S), x ≫ s = spMap (Spec.preimage (x ≫ s)).hom :=
     fun K _ x => (Spec.map_preimage (x ≫ s)).symm
-  have hiso : LBIso ob.t.PP.L (ob.t.PP.L.pull (𝟙 ob.t.G.left)) :=
-    (PolBaseChange.lbIso_refl ob.t.PP.isLB).chartPull (chartPullId _) (chartPullPull _ _ _ rfl)
+  have hiso : LBIso ob.t.PP.L (ob.t.PP.L.pull (𝟙 ob.t.G.left)) := by
+    let X := ob.t.G.left
+    let L : LB X := ob.t.PP.L
+    let M := L.pull (𝟙 X)
+    have chart_le (i : M.ι) : M.U i ≤ L.U (i PUnit.unit) := fun _ hi => mem_pull.1 hi
+    have transition (i j : M.ι) {W : X.Opens} (h : W ≤ M.U i ⊓ M.U j) :
+        res h (M.g i j) =
+          res (h.trans (inf_le_inf (chart_le i) (chart_le j))) (L.g (i PUnit.unit) (j PUnit.unit)) := by
+      refine (LB.res_lcg L (fun _ : PUnit => 𝟙 X) (fun _ => 1) i j h).trans ?_
+      rw [Fintype.prod_unique, zpow_one] <;> exact Units.ext rfl
+    let N := M.div L
+    have overlap_le (p : N.ι) : N.U p ≤ L.U (p.1 PUnit.unit) ⊓ L.U p.2 :=
+      inf_le_inf (chart_le p.1) le_rfl
+    refine ⟨⟨fun p => res (overlap_le p) (L.g (p.1 PUnit.unit) p.2)⟩, ?_⟩
+    intro p q
+    let W := N.U p ⊓ N.U q
+    have hp₁ : W ≤ L.U (p.1 PUnit.unit) := inf_le_left.trans ((overlap_le p).trans inf_le_left)
+    have hp₂ : W ≤ L.U p.2 := inf_le_left.trans inf_le_right
+    have hq₁ : W ≤ L.U (q.1 PUnit.unit) := inf_le_right.trans ((overlap_le q).trans inf_le_left)
+    have hq₂ : W ≤ L.U q.2 := inf_le_right.trans inf_le_right
+    have hM : W ≤ M.U p.1 ⊓ M.U q.1 :=
+      le_inf (inf_le_left.trans inf_le_left) (inf_le_right.trans inf_le_left)
+    change res (show W ≤ N.U p from inf_le_left) (res (overlap_le p) (L.g (p.1 PUnit.unit) p.2)) =
+      (res hM (M.g p.1 q.1) * (res (le_inf hp₂ hq₂) (L.g p.2 q.2))⁻¹) *
+        res (show W ≤ N.U q from inf_le_right) (res (overlap_le q) (L.g (q.1 PUnit.unit) q.2))
+    have hL : L.IsLB := ob.t.PP.isLB
+    have hc₁ := LB.res_cocycle hL (p.1 PUnit.unit) (q.1 PUnit.unit) q.2
+      (le_inf hp₁ hq₁) (le_inf hq₁ hq₂) (le_inf hp₁ hq₂)
+    have hc₂ := LB.res_cocycle hL (p.1 PUnit.unit) p.2 q.2
+      (le_inf hp₁ hp₂) (le_inf hp₂ hq₂) (le_inf hp₁ hq₂)
+    rw [LB.res_res, LB.res_res, transition, mul_right_comm, hc₁, ← hc₂, mul_inv_cancel_right]
   refine ⟨{ A := ob.t.G
             ab := ObjDim.isAbelianScheme ob
             dim := hg ▸ ObjDim.smoothOfRelativeDimension ob

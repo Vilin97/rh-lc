@@ -72,7 +72,7 @@ private lemma gaussAbs_cover_lemma_2 {κ : Type*} (F : MvPolynomial κ K) (hF : 
     ∀ w : FinitePlace K, w ∉ (⋃ s ∈ (F.support : Set (κ →₀ ℕ)),
       Function.mulSupport fun w : FinitePlace K => w (F.coeff s)) → ReciprocityTheory.MultiplicativeHeights.gaussAbs w F = 1 := by
   refine ⟨Set.Finite.biUnion F.support.finite_toSet fun s hs =>
-    FinitePlace.mulSupport_finite (MvPolynomial.mem_support_iff.mp (Finset.mem_coe.mp hs)), ?_⟩
+    FinitePlace.hasFiniteMulSupport (MvPolynomial.mem_support_iff.mp (Finset.mem_coe.mp hs)), ?_⟩
   intro w hw
   apply gaussAbs_of_lemma F hF w
   intro s hs
@@ -136,12 +136,10 @@ theorem finsum_log_norm (c : K) (hc : c ≠ 0) :
       | exact w.pos_iff.mpr hc
       | exact (FinitePlace.pos_iff).mpr hc
       | exact lt_of_le_of_ne (by positivity) (fun h => hc (by simpa using h.symm))
-  rw [finsum_log_eq (fun w : FinitePlace K => w c) hpos (FinitePlace.mulSupport_finite hc),
+  rw [finsum_log_eq (fun w : FinitePlace K => w c) hpos (FinitePlace.hasFiniteMulSupport hc),
     FinitePlace.prod_eq_inv_abs_norm hc]
-  first
-    | (rw [Rat.cast_inv, Rat.cast_abs, Real.log_inv])
-    | (push_cast; rw [Real.log_inv])
-    | simp [Real.log_inv]
+  push_cast
+  rw [Real.log_inv]
 
 theorem hT_C_mul {κ : Type} [Fintype κ] (F : MvPolynomial κ K) (hF : F ≠ 0) (c : K) (hc : c ≠ 0) :
     hT (MvPolynomial.C c * F) = hT F := by
