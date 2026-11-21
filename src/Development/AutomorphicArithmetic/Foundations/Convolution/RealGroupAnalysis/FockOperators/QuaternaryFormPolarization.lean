@@ -89,7 +89,7 @@ private theorem quaternaryForm_polarization {F : Type} [Field F] [NumberField F]
   rw [ψ, this, finiteAdelicChar_apply]
 
 private theorem level_of_mem {F : Type} [Field F] [NumberField F] (δ : F) {f : V4 F → ℂ}
-    (hf : f ∈ schwartzBruhatPi F (Fin 4)) :
+    (hf : f ∈ schwartzBruhatPi (K := F) (ι := Fin 4)) :
     ∃ Λ : OpenAddSubgroup (FiniteAdeleRing (𝓞 F) F), ∀ a : V4 F, (∀ i, (a i).1 = 0 ∧ (a i).2 ∈ Λ) →
       ∀ v, f (v + a) = f v ∧ ψ (B4 δ a v) * f v = f v := by
   induction hf using Submodule.span_induction with

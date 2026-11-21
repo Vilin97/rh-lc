@@ -63,8 +63,8 @@ private theorem fin_line {F : Type} [Field F] [NumberField F] [IsTotallyReal F] 
   · simp [finPartPi, Pi.single_eq_of_ne hj]
 
 theorem UpperTheory.ConvolutionTheory.R2.Fo.dEx :
-    ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (w : InfinitePlace F) (i : Fin 4) (φ : V4 F → ℂ), φ ∈ schwartzBruhatPi F (Fin 4) →
-    ∃ φ' ∈ schwartzBruhatPi F (Fin 4), ∀ v, HasDerivAt (fun t : ℝ => φ (v + Pi.single i (at1 w t))) (φ' v) 0 := by
+    ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (w : InfinitePlace F) (i : Fin 4) (φ : V4 F → ℂ), φ ∈ schwartzBruhatPi (K := F) (ι := Fin 4) →
+    ∃ φ' ∈ schwartzBruhatPi (K := F) (ι := Fin 4), ∀ v, HasDerivAt (fun t : ℝ => φ (v + Pi.single i (at1 w t))) (φ' v) 0 := by
   intro F _ _ _ w i φ hφ
   induction hφ using Submodule.span_induction with
   | mem G hG =>

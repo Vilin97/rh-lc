@@ -90,6 +90,7 @@ theorem family_eq_zero {p q : ℕ} (T : GrpData p q) (hgen : Subgroup.closure (T
     have := T.expt_add Y hY 1 (-1)
     rw [show ((1 : ℝ) + -1) = 0 by norm_num, zero_smul, T.expt_zero, one_smul] at this
     exact (eq_inv_of_mul_eq_one_right this.symm).symm
+  open scoped Pointwise in
   have hP : ∀ x ∈ Submonoid.closure (T.expt '' upq p q ∪ (T.expt '' upq p q)⁻¹),
       ∀ g : T.G, (∀ u, D g u = 0) → ∀ u, D (g * x) u = 0 := by
     intro x hx
@@ -108,6 +109,7 @@ theorem family_eq_zero {p q : ℕ} (T : GrpData p q) (hgen : Subgroup.closure (T
       intro g hg u
       rw [← mul_assoc]
       exact hy _ (hx g hg) u
+  open scoped Pointwise in
   have hg : g ∈ Submonoid.closure (T.expt '' upq p q ∪ (T.expt '' upq p q)⁻¹) := by
     rw [← Subgroup.closure_toSubmonoid, hgen]
     simp

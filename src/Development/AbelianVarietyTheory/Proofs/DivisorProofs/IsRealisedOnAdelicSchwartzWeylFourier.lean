@@ -76,7 +76,7 @@ theorem mem_SB_iff (g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ) :
     g ∈ SB (κ → FiniteAdeleRing (𝓞 F) F) ↔ g ∈ finiteSchwartzBruhatPi F :=
   (mem_finiteSchwartzBruhatPi F).symm
 
-theorem schA_eq : schA F κ = schwartzBruhatPi F κ := by
+theorem schA_eq : schA F κ = schwartzBruhatPi (K := F) (ι := κ) := by
   unfold schA schwartzBruhatPi
   congr 1
 

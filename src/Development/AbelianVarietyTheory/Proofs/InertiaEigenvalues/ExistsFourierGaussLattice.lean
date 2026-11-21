@@ -65,7 +65,7 @@ theorem ofAdd_le_one_iff (n : ℤ) :
 theorem exists_fourier_gauss_lattice : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (S : Finset (HeightOneSpectrum (𝓞 E)))
     (y₀ : Fin (m + 1) → Ad E),
     (∀ w ∉ S, ∀ j, pLoc E w (pFin E (y₀ j)) ∈ w.adicCompletionIntegers E) →
-    ∃ F ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi E (Fin (m + 1)),
+    ∃ F ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi (K := E) (ι := Fin (m + 1)),
       Continuous (GroundTheory.Automorphic.GJMatrix.adelicFourierPi E F) ∧
       (∀ y, 0 ≤ (GroundTheory.Automorphic.GJMatrix.adelicFourierPi E F y).re ∧
         (GroundTheory.Automorphic.GJMatrix.adelicFourierPi E F y).im = 0) ∧
@@ -91,7 +91,7 @@ theorem exists_fourier_gauss_lattice : ∀ (E : Type) [Field E] [NumberField E] 
   have hg : g ∈ finiteSchwartzBruhatPi E :=
     finiteTensor_mem fun j => cosetIndicator_mem_finiteSchwartzBruhat _ _
   let G := schwartzBruhatTensorPi φ g
-  have hG : G ∈ schwartzBruhatPi E (Fin (m + 1)) := schwartzBruhatTensorPi_mem φ hg
+  have hG : G ∈ schwartzBruhatPi (K := E) (ι := Fin (m + 1)) := schwartzBruhatTensorPi_mem φ hg
   have hG1 := adelicFourierPi_mem_schwartzBruhatPi hG
   have hG2 := adelicFourierPi_mem_schwartzBruhatPi hG1
   have hG3 := adelicFourierPi_mem_schwartzBruhatPi hG2

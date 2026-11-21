@@ -362,7 +362,7 @@ section Stratum
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   {a c : Type} [Fintype a] [DecidableEq a] [Fintype c] [DecidableEq c]
 
-@[reducible] def rMul (κ : ℕ) : MulAction (GL a k) (RankIn k a c {κ}) where
+@[reducible] def rMul (κ : ℕ) : MulAction (GL a k) (RankIn (k := k) (a := a) (b := c) {κ}) where
   smul g x := rAct {κ} x g⁻¹
   one_smul x := by
     show rAct {κ} x 1⁻¹ = x
@@ -372,8 +372,9 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
     rw [_root_.mul_inv_rev, rAct_mul]
 
 theorem continuous_rAct_inv (κ : ℕ) :
-    Continuous fun p : GL a k × RankIn k a c {κ} => rAct {κ} p.2 p.1⁻¹ := by
-  refine Continuous.subtype_mk (f := fun p : GL a k × RankIn k a c {κ} => act p.2.1 (p.1⁻¹, 1)) ?_ _
+    Continuous fun p : GL a k × RankIn (k := k) (a := a) (b := c) {κ} => rAct {κ} p.2 p.1⁻¹ := by
+  refine Continuous.subtype_mk
+    (f := fun p : GL a k × RankIn (k := k) (a := a) (b := c) {κ} => act p.2.1 (p.1⁻¹, 1)) ?_ _
   exact (continuous_const.matrix_mul (continuous_subtype_val.comp continuous_snd)).matrix_mul
     (Units.continuous_coe_inv.comp continuous_fst)
 

@@ -32,14 +32,14 @@ private theorem norm_psi (x : A F) : ‖ψ x‖ = 1 := Circle.norm_coe _
 private theorem continuous_quaternaryForm_left (δ : F) (v : V4 F) : Continuous fun y : V4 F => B4 δ y v := by
   exact continuous_form (v 2) (rt δ) (v 3) (v 0) (v 1)
 
-private theorem integrable_ft (δ : F) {φ : V4 F → ℂ} (hφ : φ ∈ schwartzBruhatPi F (Fin 4)) (v : V4 F) :
+private theorem integrable_ft (δ : F) {φ : V4 F → ℂ} (hφ : φ ∈ schwartzBruhatPi (K := F) (ι := Fin 4)) (v : V4 F) :
     Integrable (fun y => φ y * ψ (B4 δ y v)) (adeleMeasurePi F) := by
   refine (integrable_of_mem_schwartzBruhatPi hφ).mul_bdd (c := 1) ?_ ?_
   · exact (continuous_psi.comp (continuous_quaternaryForm_left δ v)).aestronglyMeasurable
   · exact Eventually.of_forall fun y => (norm_psi _).le
 
-private theorem quaternaryFourier_add (δ : F) {φ φ' : V4 F → ℂ} (hφ : φ ∈ schwartzBruhatPi F (Fin 4))
-    (hφ' : φ' ∈ schwartzBruhatPi F (Fin 4)) (v : V4 F) :
+private theorem quaternaryFourier_add (δ : F) {φ φ' : V4 F → ℂ} (hφ : φ ∈ schwartzBruhatPi (K := F) (ι := Fin 4))
+    (hφ' : φ' ∈ schwartzBruhatPi (K := F) (ι := Fin 4)) (v : V4 F) :
     ft4 δ (φ + φ') v = ft4 δ φ v + ft4 δ φ' v := by
   unfold ft4
   rw [← integral_add (integrable_ft δ hφ v) (integrable_ft δ hφ' v)]

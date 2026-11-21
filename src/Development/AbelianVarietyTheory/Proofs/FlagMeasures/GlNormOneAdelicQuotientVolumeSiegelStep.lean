@@ -21,7 +21,7 @@ variable (E : Type) [Field E] [NumberField E] (j : ℕ)
 
 theorem measurable_detNorm : Measurable (detNorm E j) := by
   have h : Continuous fun x : InfinitePlace E → Fin j → Fin j → ℂ => ∏ w, ‖(Matrix.of (x w)).det‖ ^ 2 := by
-    refine continuous_finset_prod _ fun w _ => ?_
+    refine continuous_finsetProd _ fun w _ => ?_
     refine (Continuous.norm (Continuous.matrix_det ?_)).pow 2
     exact continuous_apply w
   exact h.measurable

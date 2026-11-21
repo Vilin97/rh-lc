@@ -57,14 +57,14 @@ theorem scale_ne_zero {D : ℕ} {z : Ix (Idx D) → ℂ} (hz : z ≠ 0) : scale 
   simpa [scale, h2] using h1
 
 def metric (D : ℕ) : ConeMetric ℂ (Ix (Idx D)) where
-  ρ z := (fsMetric (Ix (Idx D))).ρ (scale D z)
-  pos z hz := (fsMetric (Ix (Idx D))).pos _ (scale_ne_zero hz)
+  ρ z := (fsMetric (ι := Ix (Idx D))).ρ (scale D z)
+  pos z hz := (fsMetric (ι := Ix (Idx D))).pos _ (scale_ne_zero hz)
   smul c z := by
     have : scale D (c • z) = c • scale D z := by
       funext q
       simp only [scale, Pi.smul_apply, smul_eq_mul]
       ring
-    rw [this, (fsMetric (Ix (Idx D))).smul]
+    rw [this, (fsMetric (ι := Ix (Idx D))).smul]
 
 def gram (D n : ℕ) {r : ℕ} (b : Fin r → MvPolynomial (Ix (Idx D)) ℚ) : Matrix (Fin r) (Fin r) ℝ :=
   fun k l => (1 / 2) *

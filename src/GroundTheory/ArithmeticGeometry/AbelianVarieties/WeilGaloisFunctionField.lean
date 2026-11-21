@@ -226,16 +226,17 @@ theorem map_galConj_genericPoint (σ : L ≃ₐ[K] L)
 variable [IsAlgClosed L]
 
 theorem galConj_translate (σ : L ≃ₐ[K] L) (R : (W₀.baseChange L).toAffine.Point) :
-    galConj W₀ σ (translate (W₀.baseChange L) R) =
-      translate (W₀.baseChange L) (galPointsHom K L W₀ σ R) := by
+    galConj W₀ σ (GroundTheory.Arith.Abelian.translate (W₀.baseChange L) R) =
+      GroundTheory.Arith.Abelian.translate (W₀.baseChange L) (galPointsHom K L W₀ σ R) := by
   apply algHom_eq_of_map_genericPoint
   rw [map_galConj_genericPoint, map_translate_genericPoint, map_add (f := _), galFFPoint_genericPoint,
     galFFPoint_constPoint, map_translate_genericPoint]
 
 theorem galFF_translate (σ : L ≃ₐ[K] L) (R : (W₀.baseChange L).toAffine.Point)
     (f : (W₀.baseChange L).toAffine.FunctionField) :
-    galFF W₀ σ (translate (W₀.baseChange L) R f) =
-      translate (W₀.baseChange L) (galPointsHom K L W₀ σ R) (galFF W₀ σ f) := by
+    galFF W₀ σ (GroundTheory.Arith.Abelian.translate (W₀.baseChange L) R f) =
+      GroundTheory.Arith.Abelian.translate (W₀.baseChange L) (galPointsHom K L W₀ σ R)
+        (galFF W₀ σ f) := by
   rw [← galConj_translate, galConj_apply, RingEquiv.symm_apply_apply]
 
 end Points

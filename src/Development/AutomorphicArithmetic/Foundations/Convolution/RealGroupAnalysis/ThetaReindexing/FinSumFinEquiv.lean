@@ -16,8 +16,8 @@ open scoped Classical
 namespace UpperTheory.ConvolutionTheory.R2.D.SliceScalingEquiv
 
 private theorem slice_mem {F : Type} [Field F] [NumberField F] {f : V4 F → ℂ}
-    (hf : f ∈ schwartzBruhatPi F (Fin 4)) (a b : A F) :
-    (fun z : Fin 2 → A F => f ![a, b, z 0, z 1]) ∈ schwartzBruhatPi F (Fin 2) := by
+    (hf : f ∈ schwartzBruhatPi (K := F) (ι := Fin 4)) (a b : A F) :
+    (fun z : Fin 2 → A F => f ![a, b, z 0, z 1]) ∈ schwartzBruhatPi (K := F) (ι := Fin 2) := by
   let e : Fin 2 ⊕ Fin 2 ≃ Fin 4 := finSumFinEquiv
   let M : Matrix (Fin 4) (Fin 2 ⊕ Fin 2) F := (1 : Matrix (Fin 4) (Fin 4) F).submatrix id e
   let N : Matrix (Fin 2 ⊕ Fin 2) (Fin 4) F := (1 : Matrix (Fin 4) (Fin 4) F).submatrix e id
@@ -86,7 +86,7 @@ theorem UpperTheory.ConvolutionTheory.R2.D.rowW :
     exact D.b.ne_zero 1 hb
   have hS : (W.Om (wW F) φ).1 = ft4 D.δ φ.1 := funext (W.Om_w φ)
   set G : (Fin 2 → A F) → ℂ := fun z => hat φ.1 ![-rt r₁, rt r₀, z 0, z 1] with hGdef
-  have hG : G ∈ schwartzBruhatPi F (Fin 2) :=
+  have hG : G ∈ schwartzBruhatPi (K := F) (ι := Fin 2) :=
     slice_mem (UpperTheory.ConvolutionTheory.R2.D.hatMem F φ).1 (-rt r₁) (rt r₀)
   have hR : ThRow (rt (-r₁)) (rt r₀) φ.1 = ∑' ξ : Fin 2 → F, G fun i => algebraMap F (A F) (ξ i) := by
     simp only [ThRow, hGdef, map_neg]

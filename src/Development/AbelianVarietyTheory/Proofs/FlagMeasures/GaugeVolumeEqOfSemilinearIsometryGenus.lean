@@ -149,8 +149,8 @@ theorem pi_smul {ι : Type} [Fintype ι] {α : ι → Type} [∀ i, MeasurableSp
     [∀ i, SigmaFinite (μ i)] (c : ι → ℝ≥0) :
     Measure.pi (fun i => c i • μ i) = (∏ i, c i) • Measure.pi μ := by
   refine Measure.pi_eq fun s _ => ?_
-  rw [Measure.coe_nnreal_smul_apply, Measure.pi_pi, ENNReal.coe_finset_prod, ← Finset.prod_mul_distrib]
-  simp only [Measure.coe_nnreal_smul_apply]
+  simp only [Measure.coe_nnreal_smul_apply, Measure.pi_pi, Measure.nnreal_smul_coe_apply]
+  simp [Finset.prod_mul_distrib]
 
 theorem map_pi_smul {ι ι' : Type} [Fintype ι] [Fintype ι'] {α : ι → Type} {α' : ι' → Type}
     [∀ i, MeasurableSpace (α i)] [∀ i, MeasurableSpace (α' i)] (μ : ∀ i, Measure (α i))
@@ -378,7 +378,7 @@ theorem mem_of_mem_span {R R' : Type} [CommRing R] [CommRing R'] {n m : ℕ} {S 
   induction hw using Submodule.span_induction with
   | mem x hx => exact hX x hx
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul c a _ ha =>
     rw [Subring.smul_def, hΨ]
     exact L.smul_mem ⟨_, hρ _ c.2⟩ ha
@@ -677,8 +677,8 @@ theorem gaugeVol_transport : ∀ (I I' : AutInst) (e : I'.E ≃+* I.E) (A : Matr
         ((∏ v, (c v).toNNReal : ℝ≥0) : ENNReal) ≠ 0 := by
     intro I c hc
     have e1 : ENNReal.ofReal (∏ v, c v) = ((∏ v, (c v).toNNReal : ℝ≥0) : ENNReal) := by
-      rw [ENNReal.ofReal_prod_of_nonneg fun v _ => (pos_of_isGauge (hc v)).le, ENNReal.coe_finset_prod]
-      rfl
+      rw [ENNReal.ofReal_prod_of_nonneg fun v _ => (pos_of_isGauge (hc v)).le]
+      simp [ENNReal.ofReal]
     exact ⟨e1, e1 ▸ (ENNReal.ofReal_pos.2 (Finset.prod_pos fun v _ => pos_of_isGauge (hc v))).ne'⟩
   obtain ⟨e1, n1⟩ := hC I c hc
   obtain ⟨e2, n2⟩ := hC I' c' hc'

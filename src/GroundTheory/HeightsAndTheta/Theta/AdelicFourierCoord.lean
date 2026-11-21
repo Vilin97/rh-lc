@@ -119,8 +119,8 @@ theorem finPartPi_mulVec (hNM : N * M = 1) (hMN : M * N = 1) (x : ι → 𝔸[K]
     mulVecHomeomorph_apply]
 
 theorem comp_mulVec_mem_schwartzBruhatPi (hNM : N * M = 1) (hMN : M * N = 1)
-    {F : (κ → 𝔸[K]) → ℂ} (hF : F ∈ schwartzBruhatPi K κ) :
-    (fun x ↦ F (M.map (algebraMap K 𝔸[K]) *ᵥ x)) ∈ schwartzBruhatPi K ι := by
+    {F : (κ → 𝔸[K]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := K) (ι := κ)) :
+    (fun x ↦ F (M.map (algebraMap K 𝔸[K]) *ᵥ x)) ∈ schwartzBruhatPi (K := K) (ι := ι) := by
   induction hF using Submodule.span_induction with
   | mem G hG =>
     obtain ⟨φ, g, hg, rfl⟩ := hG

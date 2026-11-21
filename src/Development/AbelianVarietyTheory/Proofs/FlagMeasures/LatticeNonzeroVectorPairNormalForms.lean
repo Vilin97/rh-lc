@@ -54,7 +54,7 @@ theorem exists_ideal_inv (𝔠 : Submodule (𝓞 E) E) (hfg : 𝔠.FG) (h1 : (1 
     rw [h0, FractionalIdeal.le_zero_iff] at hC1
     exact h10 hC1
   have hle : C⁻¹ ≤ 1 := by
-    simpa using FractionalIdeal.inv_anti_mono h10 hC0 hC1
+    simpa using FractionalIdeal.inv_anti_mono h10 hC1
   obtain ⟨𝔞, h𝔞⟩ := FractionalIdeal.le_one_iff_exists_coeIdeal.mp hle
   have ha : 𝔞 ≠ ⊥ := by
     rintro rfl
@@ -100,29 +100,41 @@ theorem exists_equiv_single {k : ℕ} (x : Fin (k + 1) → E) (hx : x ≠ 0) :
 theorem exists_extend {k : ℕ} (L : Submodule (𝓞 E) (Fin k → E)) (hL : Submodule.IsLattice E L)
     (l : L →ₗ[𝓞 E] E) : ∃ f : (Fin k → E) →ₗ[E] E, ∀ z : L, f z = l z := by
   obtain ⟨b, hbL, hbspan, hbli⟩ := exists_linearIndependent E (L : Set (Fin k → E))
-  have hsp : ⊤ ≤ Submodule.span E (Set.range ((↑) : b → Fin k → E)) := by
-    rw [Subtype.range_coe, hbspan, hL.span_eq_top]
-  set B := Module.Basis.mk hbli hsp with hB
-  have hBi : ∀ i, B i = (i : Fin k → E) := fun i => Module.Basis.mk_apply _ _ _
+  let P := Submodule.span E (Set.range ((↑) : b → Fin k → E))
+  let B := Module.Basis.span hbli
+  have hBi : ∀ i, (B i : Fin k → E) = i := fun i => Module.Basis.coe_span_apply hbli i
   have : Finite b := Module.Finite.finite_basis B
   let : Fintype b := Fintype.ofFinite _
-  refine ⟨B.constr E (fun i => l ⟨i.1, hbL i.2⟩), fun z => ?_⟩
+  obtain ⟨f, hf⟩ := (B.constr E (fun i => l ⟨i.1, hbL i.2⟩)).exists_extend
+  refine ⟨f, fun z => ?_⟩
+  have hz : (z : Fin k → E) ∈ P := by
+    change (z : Fin k → E) ∈ Submodule.span E (Set.range ((↑) : b → Fin k → E))
+    rw [Subtype.range_coe, hbspan]
+    exact Submodule.subset_span z.2
+  let z' : P := ⟨z, hz⟩
+  have hfz : f z = B.constr E (fun i => l ⟨i.1, hbL i.2⟩) z' :=
+    LinearMap.congr_fun hf z'
   obtain ⟨⟨d, hd⟩, hdint⟩ :=
-    IsLocalization.exist_integer_multiples (𝓞 E)⁰ Finset.univ (fun i => B.repr z i)
-  have hall : ∀ i, ∃ a : 𝓞 E, algebraMap (𝓞 E) E a = d • B.repr z i := fun i =>
+    IsLocalization.exist_integer_multiples (𝓞 E)⁰ Finset.univ (fun i => B.repr z' i)
+  have hall : ∀ i, ∃ a : 𝓞 E, algebraMap (𝓞 E) E a = d • B.repr z' i := fun i =>
     RingHom.mem_rangeS.mp (hdint i (Finset.mem_univ i))
   choose a ha using hall
   have hdz : (d • z : L) = ∑ i, a i • (⟨i.1, hbL i.2⟩ : L) := by
     apply Subtype.ext
-    rw [Submodule.coe_smul, ← B.sum_repr z, Finset.smul_sum, Submodule.coe_sum]
+    have hzrepr : (z : Fin k → E) = ∑ i, B.repr z' i • (B i : Fin k → E) := by
+      change (z' : Fin k → E) = _
+      simpa only [map_sum, Submodule.coe_sum, Submodule.coe_smul] using
+        congrArg (fun v : P => (v : Fin k → E)) (B.sum_repr z').symm
+    rw [Submodule.coe_smul, hzrepr, Finset.smul_sum, Submodule.coe_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Submodule.coe_smul, ← algebraMap_smul E (a i), ha, smul_assoc, hBi]
-  have key : d • (B.constr E (fun i => l ⟨i.1, hbL i.2⟩) z) = d • l z := by
+  have key : d • (B.constr E (fun i => l ⟨i.1, hbL i.2⟩) z') = d • l z := by
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← l.map_smul, hdz, map_sum, Module.Basis.constr_apply_fintype, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [l.map_smul, Module.Basis.equivFun_apply, ← algebraMap_smul E (a i), ha, smul_assoc]
   have hd0 : d ≠ 0 := nonZeroDivisors.ne_zero hd
+  rw [hfz]
   exact smul_right_injective E hd0 key
 
 theorem exists_section {k : ℕ} (Λ : Submodule (𝓞 E) (Fin (k + 1) → E)) (L : Submodule (𝓞 E) (Fin k → E))

@@ -34,7 +34,7 @@ structure HD (σ : K →+* K) (lam : PowerSeries K) (Φ : MvPowerSeries (Fin 2) 
 structure QCls (l : ℕ) (Φ : MvPowerSeries (Fin 2) K) (A : PowerSeries K) (b : K)
     (D : PowerSeries K) : Prop where
   D0 : constantCoeff D = 0
-  dInt : IntegralPS (derivative K D)
+  dInt : IntegralPS (PowerSeries.derivative D)
   add : DivByMv (l : K) (D.subst Φ - atX D - atY D)
   eig : DivBy (l : K) (D.subst A - C b * D)
 

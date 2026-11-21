@@ -246,7 +246,7 @@ theorem UpperTheory.ConvolutionTheory.R2.I.tenSpan :
   intro F _ _ _ v δ θ hδ hθ φ hφ
   set T := Submodule.span ℂ {φ : S4 F | ∃ u b, GoodU v δ θ u ∧ b ∈ SB (M2 v) ∧ φ.1 = ten v θ u b} with hT
   have key : ∀ p ∈ polyFn (F := F), ∀ g ∈ finiteSchwartzBruhatPi F (ι := Fin 4),
-      (fun X => p X * gauss δ X * g (finPartPi X)) ∈ T.map (schwartzBruhatPi F (Fin 4)).subtype := by
+      (fun X => p X * gauss δ X * g (finPartPi X)) ∈ T.map (schwartzBruhatPi (K := F) (ι := Fin 4)).subtype := by
     intro p hp g hg
     rw [finiteSchwartzBruhatPi_eq_span] at hg
     induction hg using Submodule.span_induction with
@@ -281,7 +281,7 @@ theorem UpperTheory.ConvolutionTheory.R2.I.tenSpan :
       rw [this]
       exact Submodule.smul_mem _ _ hx
   have hle : Submodule.span ℂ {φ : V4 F → ℂ | ∃ p ∈ polyFn (F := F), ∃ g ∈ finiteSchwartzBruhatPi F (ι := Fin 4),
-      φ = fun v => p v * gauss δ v * g (finPartPi v)} ≤ T.map (schwartzBruhatPi F (Fin 4)).subtype :=
+      φ = fun v => p v * gauss δ v * g (finPartPi v)} ≤ T.map (schwartzBruhatPi (K := F) (ι := Fin 4)).subtype :=
     Submodule.span_le.2 (by
       rintro _ ⟨p, hp, g, hg, rfl⟩
       exact key p hp g hg)

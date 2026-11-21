@@ -52,13 +52,17 @@ def HC.At (χ : HC E) (P : HeightOneSpectrum (𝓞 E)) (α : ℂ) : Prop :=
 theorem HC.At.mul {χ ψ : HC E} {P : HeightOneSpectrum (𝓞 E)} {a b : ℂ} (h : χ.At P a) (h' : ψ.At P b) :
     (χ * ψ).At P (a * b) := by
   refine ⟨fun u hu => ?_, fun ϖ hϖ => ?_⟩
-  · simp [h.1 u hu, h'.1 u hu]
-  · simp [← h.2 ϖ hϖ, ← h'.2 ϖ hϖ]
+  · change (χ.χ * ψ.χ) (Units.map (locM P) u) = 1
+    rw [MonoidHom.mul_apply, h.1 u hu, h'.1 u hu, one_mul]
+  · change (↑((χ.χ * ψ.χ) (Units.map (locM P) ϖ)) : ℂ) = a * b
+    rw [MonoidHom.mul_apply, Units.val_mul, h.2 ϖ hϖ, h'.2 ϖ hϖ]
 
 theorem HC.At.inv {χ : HC E} {P : HeightOneSpectrum (𝓞 E)} {a : ℂ} (h : χ.At P a) : (χ⁻¹).At P a⁻¹ := by
   refine ⟨fun u hu => ?_, fun ϖ hϖ => ?_⟩
-  · simp [h.1 u hu]
-  · simp [← h.2 ϖ hϖ]
+  · change χ.χ⁻¹ (Units.map (locM P) u) = 1
+    rw [MonoidHom.inv_apply, h.1 u hu, inv_one]
+  · change (↑(χ.χ⁻¹ (Units.map (locM P) ϖ)) : ℂ) = a⁻¹
+    rw [MonoidHom.inv_apply, Units.val_inv_eq_inv_val, h.2 ϖ hϖ]
 
 theorem exists_unif (P : HeightOneSpectrum (𝓞 E)) :
     ∃ ϖ : (P.adicCompletion E)ˣ, Valued.v (ϖ : P.adicCompletion E) = WithZero.exp (-1 : ℤ) := by
@@ -83,7 +87,6 @@ def locInf (v : InfinitePlace E) : v.Completion →* AdeleRing (𝓞 E) E where
     show ((Pi.mulSingle v (1 : v.Completion) : InfiniteAdeleRing E), (1 : FiniteAdeleRing (𝓞 E) E)) =
       ((1 : InfiniteAdeleRing E), (1 : FiniteAdeleRing (𝓞 E) E))
     rw [Pi.mulSingle_one]
-    rfl
   map_mul' x y := by
     show ((Pi.mulSingle v (x * y) : InfiniteAdeleRing E), (1 : FiniteAdeleRing (𝓞 E) E)) =
       ((Pi.mulSingle v x : InfiniteAdeleRing E) * Pi.mulSingle v y, (1 : FiniteAdeleRing (𝓞 E) E) * 1)

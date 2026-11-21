@@ -37,9 +37,9 @@ theorem mat_eq_emb {R : Type} [CommRing R] (x : GG (m := 3) (R := R)) (a b : Fin
 
 theorem unitaryEmbedding_residualRep_eq_zero_of_weight_ne {G R : Type} [Group G] [CommRing R] (η : G →* ℤˣ) (Ψ : G →* Rˣ) (g : G)
     (a b : Fin 3 ⊕ Fin 3) (h : wt6 a ≠ wt6 b) : emb (r0 η Ψ g) a b = 0 := by
-  show (if (r0 η Ψ g).right = 1 then Matrix.fromBlocks (tor R (Ψ g) : Matrix (Fin 3) (Fin 3) R) 0 0
-    (theta (tor R (Ψ g)) : Matrix (Fin 3) (Fin 3) R) else Matrix.fromBlocks 0 (tor R (Ψ g) : Matrix (Fin 3) (Fin 3) R)
-    (theta (tor R (Ψ g)) : Matrix (Fin 3) (Fin 3) R) 0) a b = 0
+  show (if (r0 η Ψ g).right = 1 then Matrix.fromBlocks (tor (Ψ g) : Matrix (Fin 3) (Fin 3) R) 0 0
+    (theta (tor (Ψ g)) : Matrix (Fin 3) (Fin 3) R) else Matrix.fromBlocks 0 (tor (Ψ g) : Matrix (Fin 3) (Fin 3) R)
+    (theta (tor (Ψ g)) : Matrix (Fin 3) (Fin 3) R) 0) a b = 0
   rw [theta_tor, tor_val]
   split_ifs <;> rcases a with a | a <;> rcases b with b | b <;>
     first
@@ -66,7 +66,7 @@ theorem origin_presentation_var_eq_zero {O X R : Type} [CommRing O] [AddCommGrou
 theorem mem_max_of_zero {O R : Type} [CommRing O] [IsLocalRing O] [IsNoetherianRing O]
     [IsAdicComplete (maximalIdeal O) O] [CommRing R] [Algebra O R] [IsCO O R] (x : R →ₐ[O] O) {z : R} (hz : x z = 0) :
     z ∈ maximalIdeal R := by
-  rw [← res_eq_zero_iff O, ← res_map x, hz, map_zero]
+  rw [← res_eq_zero_iff O, ← res_map (O := O) (R := R) (R' := O) x, hz, map_zero]
 
 theorem base_coord {O G R : Type} [CommRing O] [Group G] [CommRing R] [Algebra O R] {η : G →* ℤˣ} {Ψ : G →* Oˣ}
     {r : G →* GG (m := 3) (R := R)} {x : R →ₐ[O] O} (hx : push x r = r0 η Ψ) (g : G) (a b : Fin 3 ⊕ Fin 3) :

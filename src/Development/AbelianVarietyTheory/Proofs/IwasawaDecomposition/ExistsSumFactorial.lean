@@ -87,6 +87,7 @@ theorem exists_log : ∀ (l : ℕ) [Fact l.Prime] (j : Per.Acris l →+* Per.BdR
     rw [map_zero, mul_zero, map_zero, ← map_sub, LogFun.ev_alg, Ideal.Quotient.eq_zero_iff_mem,
       hs, LogFun.partial_eq u hu _ _ _ (hf _) hc, ← neg_sub]
     exact neg_mem (LogFun.partial_sub_mem _ u _ hmem (le_max_right _ _)))
-  rw [key, LogFun.ev_alg, ← map_natCast (Ideal.Quotient.mk (Per.kerP l ^ n)), ← map_mul, hc]
+  rw [key, LogFun.ev_alg]
+  simpa only [map_mul, map_natCast] using congrArg (Ideal.Quotient.mk (Per.kerP l ^ n)) hc
 
 end GlobalTheory.MemLoc.LogKer

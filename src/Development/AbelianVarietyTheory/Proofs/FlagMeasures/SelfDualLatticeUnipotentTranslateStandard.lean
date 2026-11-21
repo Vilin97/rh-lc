@@ -306,7 +306,10 @@ theorem lift_of_frame [IsNonarchimedeanLocalField F] [CharZero F] (Λ : Submodul
     (fun z => by
       rw [hmem, ← hΛ.2]
       refine ⟨fun h x hx => ?_, fun h x hx => ?_⟩
-      · have := h ((n * m).symm x) ((hmem _).2 (by simpa using hx))
+      · have := h ((n * m).symm x) ((hmem _).2 (by
+          change (n * m) ((n * m).symm x) ∈ Λ
+          rw [LinearEquiv.apply_symm_apply]
+          exact hx))
         rwa [← hNi, LinearEquiv.apply_symm_apply] at this
       · rw [← hNi]; exact h _ ((hmem _).1 hx))
     (fun b => (hmem _).2 (by change n (m (g b)) ∈ Λ; rw [hmg]; exact (hng b).1))

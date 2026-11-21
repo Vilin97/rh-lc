@@ -71,7 +71,6 @@ theorem core (Y : Type) (q N : ℕ) (l : Y → ℕ) (ψ : Y → ℂ) (β X₀ Z�
     ring
   rw [← ev]
   convert hprod using 1
-  case e'_3 => rfl
   funext p
   obtain ⟨a, b⟩ := p
   simp only

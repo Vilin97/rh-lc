@@ -542,7 +542,7 @@ theorem exists_adapted (N : NF H r) (Λ : Submodule (𝓞 K) V) (hΛ : Λ.FG) (b
       ∀ y ∈ Λ, y ∈ Ia N (b.val + 1) → H.B y (N.ist b) • v ∈ Λ := by
   by_cases h0 : ∃ y ∈ Λ ⊓ rs (𝓞 K) (Ia N (b.val + 1)), H.B.flip (N.ist b) y ≠ 0
   · obtain ⟨v, hv, h1, h⟩ := exists_section _ (hΛ.of_le inf_le_left) _ h0
-    have hv' : v ∈ Ia N (b.val + 1) := (Submodule.span_le.2 fun y hy => hy.2) hv
+    have hv' : v ∈ Ia N (b.val + 1) := (Submodule.span_le.2 fun y (hy : y ∈ Λ ⊓ rs (𝓞 K) (Ia N (b.val + 1))) => (show y ∈ Ia N (b.val + 1) from hy.2)) hv
     refine ⟨v, ?_, fun y hy hy' => (h y ⟨hy, hy'⟩).1⟩
     have := Ia_step N b hb hv'
     rwa [show H.B v (N.ist b) = 1 from h1, one_smul] at this

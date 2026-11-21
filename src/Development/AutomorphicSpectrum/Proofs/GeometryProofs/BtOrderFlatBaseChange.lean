@@ -12,7 +12,7 @@ public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExtensionOrde
 @[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
-open GlobalTheory.CompanionTheory.Ar.BT GroundTheory.PAdicHodge
+open GlobalTheory.CompanionTheory.Ar.BT
 
 noncomputable section
 
@@ -278,7 +278,9 @@ def secFn (Γ : QFGroup R T) : Submodule R (T → FractionRing R) where
 
 lemma mem_btOrder_iff [Finite T] (Γ : QFGroup R T) (f : T → R) :
     f ∈ Γ.btOrder ⊤ ↔ ∀ t, (fun h => algebraMap R (FractionRing R) (f (t * h))) ∈ secFn Γ := by
-  rw [GlobalTheory.T.mem_btOrder_iff_btSet R T Γ ⊤ f]
+  have hmem : f ∈ Γ.btOrder ⊤ ↔ f ∈ Γ.btSet ⊤ :=
+    mem_btOrder_iff_mem_btSet R T Γ ⊤ f
+  rw [hmem]
   refine forall_congr' fun t => ?_
   have := GlobalTheory.T.regular_function_iff_section R T Γ ⊤ (fun h => algebraMap R (FractionRing R) (f (t * h)))
   exact this
@@ -295,7 +297,6 @@ lemma pushout_induction {A B C D : CommRingCat.{0}} {a : A ⟶ B} {c : A ⟶ C} 
   haveI : IsScalarTower A C D := .of_algebraMap_eq fun r => congr($(h.w).hom r)
   have hpo : Algebra.IsPushout A C B D := CommRingCat.isPushout_iff_isPushout.mp h.flip
   induction x using hpo.out.inductionOn with
-  | zero => exact h0
   | tmul y => exact h1 y
   | smul s n hn => exact h2 s n hn
   | add x y hx hy => exact h3 x y hx hy

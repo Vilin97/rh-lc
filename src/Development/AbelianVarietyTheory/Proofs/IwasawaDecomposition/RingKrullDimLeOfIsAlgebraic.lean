@@ -189,7 +189,7 @@ theorem exists_normal_dominating (F : Type) [Field F] [NumberField F] (Y : Var F
   have : IsAffineHom (pullback.fst (r ≫ M.p) (spMap (algebraMap (𝓞 F) F))) :=
     MorphismProperty.of_isPullback hb.flip (isAffineHom_of_isAffine _)
   have : IsAffineHom h := by rw [hh]; infer_instance
-  have hpb := GlobalTheory.isPullback_toNormalization_of_isLocalization (nonZeroDivisors (𝓞 F)) hb f' (𝟙 _) h hh
+  have hpb := GlobalTheory.isPullback_toNormalization_of_isLocalization (M := nonZeroDivisors (𝓞 F)) hb f' (𝟙 _) h hh
   rw [Category.id_comp] at hpb
   have hfin : IsFinite h.fromNormalization :=
     GlobalTheory.isFinite_fromNormalization_of_over_fractionRing (o := .of (𝓞 F)) h (r ≫ M.p) F Y.str w

@@ -101,7 +101,7 @@ def famDC {E : Spc} (Z : Sub E) (K : Cx R) (m : ℤ) : DC where
 def Comp {E E' : Spc} (j : E ⟶ E') {Z : Sub E} {K : Cx R} {m N : ℤ} (γ : Cochain ((chains R).obj E') K N)
     (x : (famDC Z K m).Tot) : Prop :=
   ∀ (p : ℕ) (s : ℤ) (h : -(p : ℤ) + N = s + m) (U : Scheme.{0}) (z : Sx E p U),
-    (show Fam Z p (K.X (s + m)) from x p s).1 U z = ev γ p (s + m) h U (z.map j)
+    (show Fam Z p (K.X (s + m)) from x p s).1 U z = ev (R := R) γ p (s + m) h U (z.map j)
 
 def HRel {E : Spc} {K : Cx R} {n : ℤ} (x : (famDC (Sub.bot E) K 0).Tot) (c : CohomologyClass ((chains R).obj E) K n) : Prop :=
   ∃ γ : Cocycle ((chains R).obj E) K n, CohomologyClass.mk γ = c ∧ Comp (𝟙 E) γ.1 x
@@ -109,7 +109,7 @@ def HRel {E : Spc} {K : Cx R} {n : ℤ} (x : (famDC (Sub.bot E) K 0).Tot) (c : C
 def SRel {P : Arrow Spc} {K : Cx R} {m N : ℤ} (x : (famDC (Sub.img P.hom) K m).Tot)
     (c : CohomologyClass ((chains R).obj (dbl P)) K N) : Prop :=
   ∃ γ : Cocycle ((chains R).obj (dbl P)) K N, CohomologyClass.mk γ = c ∧ Comp (dbl.inl P) γ.1 x ∧
-    ∀ (p : ℕ) (s : ℤ) h (U : Scheme.{0}) (z : Sx P.right p U), ev γ.1 p s h U (z.map (dbl.inr P)) = 0
+    ∀ (p : ℕ) (s : ℤ) h (U : Scheme.{0}) (z : Sx P.right p U), ev (R := R) γ.1 p s h U (z.map (dbl.inr P)) = 0
 
 structure TModel (C : DC) (n : ℤ) {H : Type 1} [AddCommGroup H] (rel : C.Tot → H → Prop) : Prop where
   ex : ∀ x, C.Deg n x → C.D n x = 0 → ∃ c, rel x c
@@ -129,9 +129,11 @@ def IsRep {J : Cx R} {X : Scheme.{0}} (U : X.Opens) {m : ℤ} (β : Sec (J.X m) 
     (c : CohomologyClass ((chains R).obj (dbl (opn U))) J m) : Prop :=
   Sec.map (J.d m (m + 1)) β = 0 ∧ Sec.res U.ι β = 0 ∧
   ∃ γ : Cocycle ((chains R).obj (dbl (opn U))) J m, CohomologyClass.mk γ = c ∧
-    (∀ (W : Scheme.{0}) (x : W ⟶ X), ev γ.1 0 m (by simp) W (Sx.map (E := sch.obj X) (p := 0) (dbl.inl (opn U)) x) = Sec.res x β) ∧
-    (∀ (W : Scheme.{0}) (x : W ⟶ X), ev γ.1 0 m (by simp) W (Sx.map (E := sch.obj X) (p := 0) (dbl.inr (opn U)) x) = 0) ∧
-    ∀ (p : ℕ) (s : ℤ) h (W : Scheme.{0}) (z : Sx (dbl (opn U)) (p + 1) W), ev γ.1 (p + 1) s h W z = 0
+    (∀ (W : Scheme.{0}) (x : W ⟶ X),
+      ev (R := R) γ.1 0 m (by simp) W (Sx.map (E := sch.obj X) (p := 0) (dbl.inl (opn U)) x) = Sec.res x β) ∧
+    (∀ (W : Scheme.{0}) (x : W ⟶ X),
+      ev (R := R) γ.1 0 m (by simp) W (Sx.map (E := sch.obj X) (p := 0) (dbl.inr (opn U)) x) = 0) ∧
+    ∀ (p : ℕ) (s : ℤ) h (W : Scheme.{0}) (z : Sx (dbl (opn U)) (p + 1) W), ev (R := R) γ.1 (p + 1) s h W z = 0
 
 end UpperTheory.Et.Prd
 

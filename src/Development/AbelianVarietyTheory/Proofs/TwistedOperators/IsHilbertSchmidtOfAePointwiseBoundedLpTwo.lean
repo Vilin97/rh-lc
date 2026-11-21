@@ -108,7 +108,7 @@ theorem sum_le {X : Type} [MeasurableSpace X] {ν : Measure X} [IsFiniteMeasure 
         rw [integral_finsetSum s fun i _ => hint (T (e i))]
         exact Finset.sum_congr rfl fun i _ => hn _
     _ ≤ ∫ _x, C ^ 2 ∂ν :=
-        integral_mono_ae (integrable_finset_sum s fun i _ => hint (T (e i)))
+        integral_mono_ae (integrable_finsetSum s fun i _ => hint (T (e i)))
           (integrable_const _) (pointwise e he T C hT s)
     _ = C ^ 2 * ν.real univ := by rw [integral_const, smul_eq_mul, mul_comm]
 
@@ -120,4 +120,4 @@ theorem GlobalTheory.isHilbertSchmidt_of_ae_bounded : ∀ {X : Type} [Measurable
   intro X _ ν _ H _ _ _ T C hT
   unfold GlobalTheory.OpTrace.IsHilbertSchmidt
   refine summable_of_sum_le (c := C ^ 2 * ν.real univ) (fun i => sq_nonneg _) fun u => ?_
-  exact GlobalTheory.HSAbs.sum_le _ (GlobalTheory.OpTrace.stdBasis H).orthonormal T C hT u
+  exact GlobalTheory.HSAbs.sum_le _ (GlobalTheory.OpTrace.stdBasis (H := H)).orthonormal T C hT u

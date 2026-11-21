@@ -342,8 +342,10 @@ theorem congr_complex (h : ∀ w : InfinitePlace (maximalRealSubfield E), CongrO
   have hw : w.IsReal := IsTotallyReal.isReal w
   letI : Algebra (maximalRealSubfield E) ℂ := ρ.toAlgebra
   let g : w.Completion →ₐ[(maximalRealSubfield E)] ℂ :=
-    ⟨InfinitePlace.Completion.extensionEmbedding w, fun a =>
-      (InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ a)).trans
+    ⟨InfinitePlace.Completion.extensionEmbedding w, fun a => by
+      rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+        Algebra.algebraMap_self_apply]
+      exact (InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ a)).trans
         (DFunLike.congr_fun (InfinitePlace.embedding_mk_eq_of_isReal (InfinitePlace.isReal_mk_iff.1 hw)) a)⟩
   have hg : ∀ a, conj (g a) = g a := fun a => by
     have : g a = (InfinitePlace.Completion.extensionEmbeddingOfIsReal hw a : ℂ) :=
@@ -528,7 +530,7 @@ end Main
 
 theorem rationalEqAdelic : RationalEqAdelic := by
   intro E _ _ _ _ r G hG hG0 P
-  obtain ⟨θ, h0, hθ⟩ := GlobalTheory.Published.exists_cc_eq_neg E
+  obtain ⟨θ, h0, hθ⟩ := GlobalTheory.Published.exists_cc_eq_neg (E := E)
   let d : plus P := ⟨algebraMap E _ θ * algebraMap E _ θ, by
     change invol P _ = _
     rw [map_mul, invol_theta P hθ, neg_mul_neg]

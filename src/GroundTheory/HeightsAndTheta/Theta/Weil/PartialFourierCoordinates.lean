@@ -88,8 +88,8 @@ theorem finPartPi_sumElim (a : ι → 𝔸[K]) (x : κ → 𝔸[K]) :
   cases s <;> rfl
 
 theorem schwartzBruhatPi_sumElim_mem {F : ((ι ⊕ κ) → 𝔸[K]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi K (ι ⊕ κ)) (a : ι → 𝔸[K]) :
-    (fun x : κ → 𝔸[K] ↦ F (Sum.elim a x)) ∈ schwartzBruhatPi K κ := by
+    (hF : F ∈ schwartzBruhatPi (K := K) (ι := ι ⊕ κ)) (a : ι → 𝔸[K]) :
+    (fun x : κ → 𝔸[K] ↦ F (Sum.elim a x)) ∈ schwartzBruhatPi (K := K) (ι := κ) := by
   induction hF using Submodule.span_induction with
   | mem G hG =>
     obtain ⟨φ, g, hg, rfl⟩ := hG

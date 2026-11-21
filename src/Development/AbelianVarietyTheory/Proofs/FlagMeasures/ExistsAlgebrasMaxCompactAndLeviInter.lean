@@ -120,7 +120,7 @@ theorem exists_proj (W : Submodule ℂ (Fin n → ℂ)) :
     rw [hP]
     exact Submodule.starProjection_eq_self_iff.2 ⟨y, hy, rfl⟩
   refine ⟨P, ?_, h1, h2, ?_⟩
-  · apply Matrix.isHermitian_iff_isSymmetric.2
+  · apply Matrix.isSymmetric_toEuclideanLin_iff.mp
     rw [LinearEquiv.apply_symm_apply]
     exact W'.starProjection_isSymmetric
   · have h : LinearMap.IsProj W (Matrix.toLin' P) := ⟨h1, h2⟩

@@ -57,9 +57,7 @@ theorem isLattice_chainLat_and_comap :
     funext r
     have := congrFun hxy (Sum.inl r)
     simpa [inX_apply] using this
-  · refine span_eq_top_of_smul_mem _ fun v => ?_
-    obtain ⟨a, ha, hav⟩ := exists_smul_mem (K := k) Λ (v := inX k n c v)
-      (by rw [hΛ.span_eq_top]; trivial)
-    exact ⟨a, ha, by rw [Submodule.mem_comap, map_smul]; exact hav⟩
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 
 end GlobalTheory.RootEx.ChainLattice

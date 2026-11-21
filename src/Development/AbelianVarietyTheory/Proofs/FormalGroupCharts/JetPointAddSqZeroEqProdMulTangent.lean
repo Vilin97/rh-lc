@@ -78,7 +78,7 @@ theorem jet_sqZero_eq_lieExp {R : Type} [CommRing R] {G : Over (Spec (CommRingCa
       intro φ hφ
       have hk : J ^ (k + 1 + 1) = ⊥ :=
         le_bot_iff.1 ((Ideal.pow_le_pow_right (by omega)).trans hJ.le)
-      have e : φ = (jetLift R J hk δ hδ).comp (jetTruncR R (Fin d) (k + 1)) :=
+      have e : φ = (jetLift (R := R) J hk δ hδ).comp (jetTruncR R (Fin d) (k + 1)) :=
         jet_ext fun j => (hφ j).trans (jetLift_zR J hk δ hδ j).symm
       rw [e, ← spMap_comp, Category.assoc, hxt]
       exact ih _ (jetLift_zR J hk δ hδ)

@@ -107,15 +107,19 @@ private theorem dfam_mem_lower_span {E V : Type} [CommRing E] [AddCommGroup V]
     intro j hj
     have h1 : f j ∈ Submodule.span E (f '' {i | (i : ℕ) < J}) :=
       Submodule.subset_span ⟨j, hj, rfl⟩
+    have hs : {i : Fin m | i < j} ⊆ {i : Fin m | (i : ℕ) < J} :=
+      fun _ hi => lt_trans (Fin.lt_def.1 hi) hj
     have h2 : g j - f j ∈ Submodule.span E (f '' {i | (i : ℕ) < J}) :=
-      Submodule.span_mono (Set.image_mono fun i (hi : i < j) => lt_trans (Fin.lt_def.1 hi) hj) (hg j)
+      Submodule.span_mono (Set.image_mono hs) (hg j)
     simpa using Submodule.add_mem _ h2 h1
   have hf' : ∀ j : Fin m, (j : ℕ) < J → g' j ∈ Submodule.span E (f' '' {i | (i : ℕ) < J}) := by
     intro j hj
     have h1 : f' j ∈ Submodule.span E (f' '' {i | (i : ℕ) < J}) :=
       Submodule.subset_span ⟨j, hj, rfl⟩
+    have hs : {i : Fin m | i < j} ⊆ {i : Fin m | (i : ℕ) < J} :=
+      fun _ hi => lt_trans (Fin.lt_def.1 hi) hj
     have h2 : g' j - f' j ∈ Submodule.span E (f' '' {i | (i : ℕ) < J}) :=
-      Submodule.span_mono (Set.image_mono fun i (hi : i < j) => lt_trans (Fin.lt_def.1 hi) hj) (hg' j)
+      Submodule.span_mono (Set.image_mono hs) (hg' j)
     simpa using Submodule.add_mem _ h2 h1
   rcases a with j | j
   · exact Submodule.mem_sup_left (hf j ha)

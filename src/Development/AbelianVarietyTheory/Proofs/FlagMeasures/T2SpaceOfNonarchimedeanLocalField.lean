@@ -139,8 +139,8 @@ theorem locAt_topology : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [N
         exact Subring.sum_mem _ fun j _ => Subring.mul_mem _ (c j).2 (intCast_mem _ _)
       set_option synthInstance.maxHeartbeats 100000 in
         · rw [map_sum]
-        refine Finset.sum_congr rfl fun j _ => ?_
-        rw [map_smul, ← hint, Algebra.smul_def]
+          refine Finset.sum_congr rfl fun j _ => ?_
+          rw [map_smul, ← hint, Algebra.smul_def]
     · rintro ⟨c, hc, rfl⟩
       rw [hL]
       refine Subring.sum_mem _ fun i _ => (hO _).2 ⟨1, fun _ => ⟨c i, hc i trivial⟩, fun _ => w i, ?_⟩

@@ -48,8 +48,8 @@ private lemma quaternaryFourier_eq_adelic (δ : F) (φ : V4 F → ℂ) (v : V4 F
 end UpperTheory.ConvolutionTheory.R2.C
 
 theorem UpperTheory.ConvolutionTheory.R2.C.ftBasic :
-    ∀ (F : Type) [Field F] [NumberField F] (δ : F), δ ≠ 0 → ∀ φ ∈ schwartzBruhatPi F (Fin 4),
-    ft4 δ φ ∈ schwartzBruhatPi F (Fin 4) ∧ (∀ v, ft4 δ (ft4 δ φ) v = φ (-v)) ∧ Th (ft4 δ φ) = Th φ := by
+    ∀ (F : Type) [Field F] [NumberField F] (δ : F), δ ≠ 0 → ∀ φ ∈ schwartzBruhatPi (K := F) (ι := Fin 4),
+    ft4 δ φ ∈ schwartzBruhatPi (K := F) (ι := Fin 4) ∧ (∀ v, ft4 δ (ft4 δ φ) v = φ (-v)) ∧ Th (ft4 δ φ) = Th φ := by
   intro F _ _ δ hδ φ hφ
   have hGH := Gm_mul_Hm hδ
   have hHG := Hm_mul_Gm hδ

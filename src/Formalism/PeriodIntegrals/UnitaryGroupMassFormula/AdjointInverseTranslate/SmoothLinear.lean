@@ -109,8 +109,7 @@ lemma ana_rdLin (hH : HInvol H) {f f' : Matrix (Fin n) (Fin n) ℂ → E} (c : �
     ((hF.mono Set.inter_subset_left).add ((hF'.mono Set.inter_subset_right).const_smul c))
     (fun h hh hhH => by simp only [hfF h hh.1 hhH, hfF' h hh.2 hhH]) hX
   rw [e0, rd_extension_h n H E f F U g X hH hU hgU hg hF hfF hX,
-    rd_extension_h n H E f' F' U' g X hH hU' hgU' hg hF' hfF' hX,
-]
+    rd_extension_h n H E f' F' U' g X hH hU' hgU' hg hF' hfF' hX]
   have hD : HasFDerivAt (fun x => F x + c • F' x) (fderiv ℝ F g + c • fderiv ℝ F' g) g :=
     hd1.hasFDerivAt.add (hd2.hasFDerivAt.const_smul c)
   rw [hD.fderiv]

@@ -102,11 +102,11 @@ private theorem fock_rf [IsTotallyReal F] {δ : F} {χ : V4 F → ℂ} (hχ : χ
   | smul a x _ hx => exact Submodule.smul_mem _ a hx
 
 private theorem fock_le [IsTotallyReal F] {δ : F} (hδ : ∀ e : F →+* ℝ, e δ < 0) {χ : V4 F → ℂ}
-    (hχ : χ ∈ FockFn δ) : χ ∈ schwartzBruhatPi F (Fin 4) := by
+    (hχ : χ ∈ FockFn δ) : χ ∈ schwartzBruhatPi (K := F) (ι := Fin 4) := by
   refine (Submodule.span_le.2 ?_) hχ
   rintro _ ⟨p, hp, g, hg, rfl⟩
   have h := pgMem F δ hδ Real.pi Real.pi_pos p hp g hg
-  change _ ∈ schwartzBruhatPi F (Fin 4)
+  change _ ∈ schwartzBruhatPi (K := F) (ι := Fin 4)
   simpa only [gauss_eq] using h
 
 end UpperTheory.ConvolutionTheory.R2.G.FourierHatSurjective

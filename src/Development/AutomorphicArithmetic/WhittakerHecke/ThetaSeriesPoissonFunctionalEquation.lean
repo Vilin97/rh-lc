@@ -74,7 +74,7 @@ private theorem tsum_split {f : (Fin 2 → ℚ) → ℂ} (hf : Summable f) :
   rw [← hf.tsum_subtype_add_tsum_subtype_compl {0}, tsum_singleton]
   rfl
 
-private theorem poisson_row {Φ : (Fin 2 → A ℚ) → ℂ} (hΦ : Φ ∈ schwartzBruhatPi ℚ (Fin 2)) (a : (A ℚ)ˣ)
+private theorem poisson_row {Φ : (Fin 2 → A ℚ) → ℂ} (hΦ : Φ ∈ schwartzBruhatPi (K := ℚ) (ι := Fin 2)) (a : (A ℚ)ˣ)
     (h : GL (Fin 2) (A ℚ)) :
     Summable (fun ξ : Fin 2 → ℚ => Φ fun j => (a : A ℚ) * (rv ξ ᵥ* h.val) j) ∧
     Summable (fun ξ : Fin 2 → ℚ => adelicFourierPi ℚ Φ fun j =>
@@ -195,7 +195,7 @@ private theorem rv_w (ξ : Fin 2 → ℚ) :
   · rfl
 
 theorem UpperTheory.thetaSeries_poisson_functional_equation :
-    ∀ (Φ : (Fin 2 → A ℚ) → ℂ), Φ ∈ schwartzBruhatPi ℚ (Fin 2) → ∃ Ψ ∈ schwartzBruhatPi ℚ (Fin 2), ∀ (t : ℝ) (g : G1 ℚ) (u : (A ℚ)ˣ), ab u = 1 →
+    ∀ (Φ : (Fin 2 → A ℚ) → ℂ), Φ ∈ schwartzBruhatPi (K := ℚ) (ι := Fin 2) → ∃ Ψ ∈ schwartzBruhatPi (K := ℚ) (ι := Fin 2), ∀ (t : ℝ) (g : G1 ℚ) (u : (A ℚ)ˣ), ab u = 1 →
         ThR Φ t (gl g * dM u) = -Φ 0 + (Real.exp (-(2 * t)) : ℂ) * Ψ 0 + (Real.exp (-(2 * t)) : ℂ) * ThR Ψ (-t) (gl g * ((gl (wW ℚ))⁻¹ * dM u⁻¹)) := by
   intro Φ hΦ
   refine ⟨adelicFourierPi ℚ Φ, adelicFourierPi_mem_schwartzBruhatPi hΦ, ?_⟩

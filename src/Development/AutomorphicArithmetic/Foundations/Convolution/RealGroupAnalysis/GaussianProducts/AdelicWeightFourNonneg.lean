@@ -62,7 +62,7 @@ private theorem adelicWeightFour_nonneg (L : (FractionalIdeal (𝓞 F)⁰ F)ˣ) 
   Finset.prod_nonneg fun _ _ => GlobalTheory.CompanionTheory.EpConvB.adeleWeight_nonneg _ _ _
 
 private theorem common_majorant {n : ℕ} (Ψ : Fin n → V4 F → ℂ)
-    (hΨ : ∀ i, Ψ i ∈ schwartzBruhatPi F (Fin 4)) (N : ℕ) :
+    (hΨ : ∀ i, Ψ i ∈ schwartzBruhatPi (K := F) (ι := Fin 4)) (N : ℕ) :
     ∃ (B : ℝ) (L : (FractionalIdeal (𝓞 F)⁰ F)ˣ), 0 ≤ B ∧ ∀ i v, ‖Ψ i v‖ ≤ B * wt4 L N v := by
   have one : ∀ i, ∃ (B : ℝ) (L : (FractionalIdeal (𝓞 F)⁰ F)ˣ), 0 ≤ B ∧
       ∀ v, ‖Ψ i v‖ ≤ B * wt4 L N v := by

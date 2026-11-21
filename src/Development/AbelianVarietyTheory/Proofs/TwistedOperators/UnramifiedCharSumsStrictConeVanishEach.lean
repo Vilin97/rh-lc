@@ -21,7 +21,7 @@ private theorem ord_zpow_twisted_operators (x : kˣ) (n : ℤ) : ord k (x ^ n) =
 
 theorem valuation_div_zpow_ord {ϖ : kˣ} (hϖ : valuation k (ϖ : k) = uniformizer k) (x : kˣ) :
     valuation k ((x / ϖ ^ ord k x : kˣ) : k) = 1 := by
-  rw [← ord_eq_zero_iff, div_eq_mul_inv, ord_mul, ← zpow_neg, ord_zpow_twisted_operators, ord_eq_one hϖ]
+  rw [← ord_eq_zero_iff, div_eq_mul_inv, ord_mul, ← zpow_neg, ord_zpow_twisted_operators, _root_.GlobalTheory.SmGL.ord_eq_one hϖ]
   ring
 
 def powHom {G : Type} [CommGroup G] (ϖ : G) (r : ℕ) :

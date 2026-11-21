@@ -72,7 +72,7 @@ private theorem fin_eq {k : G1 ℚ} (z : A ℚ) :
   linear_combination (-z.2) * hd'
 
 theorem UpperTheory.schwartzBruhat_row_lintegral_abs_pow_bounded :
-    ∀ Φ ∈ schwartzBruhatPi ℚ (Fin 2), ∀ e : ℝ, 1 < e → ∃ C : ℝ≥0, ∀ k ∈ KK ℚ,
+    ∀ Φ ∈ schwartzBruhatPi (K := ℚ) (ι := Fin 2), ∀ e : ℝ, 1 < e → ∃ C : ℝ≥0, ∀ k ∈ KK ℚ,
         ∫⁻ z : IdeleGroup ℚ, ‖Φ fun j => ((z : (A ℚ)ˣ) : A ℚ) * row k j‖ₑ * ENNReal.ofReal (ab z ^ e) ∂(ideleMeasure ℚ) ≤ C := by
   intro Φ hΦ e he
   obtain ⟨M, hM⟩ := exists_nat_gt e

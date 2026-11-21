@@ -237,7 +237,7 @@ def logOnePlus (z : B) (hz : z ∈ I) : B :=
   seriesEval I z hz (log ℚ)
 
 theorem logOnePlus_sub_sum_mem {z : B} (hz : z ∈ I) (n : ℕ) :
-    logOnePlus z hz - ∑ i ∈ Finset.Ico 1 n, algebraMap ℚ B ((-1) ^ (i + 1) / i) * z ^ i ∈
+    logOnePlus I z hz - ∑ i ∈ Finset.Ico 1 n, algebraMap ℚ B ((-1) ^ (i + 1) / i) * z ^ i ∈
       I ^ n := by
   have hs : ∑ i ∈ Finset.Ico 1 n, algebraMap ℚ B ((-1) ^ (i + 1) / i) * z ^ i =
       ∑ i ∈ Finset.range n, algebraMap ℚ B (coeff i (log ℚ)) * z ^ i := by
@@ -251,7 +251,7 @@ theorem logOnePlus_sub_sum_mem {z : B} (hz : z ∈ I) (n : ℕ) :
   rw [hs]
   exact seriesEval_sub_sum_mem hz (log ℚ) n
 
-theorem logOnePlus_eq_mul {z : B} (hz : z ∈ I) : ∃ u, u - 1 ∈ I ∧ logOnePlus z hz = z * u := by
+theorem logOnePlus_eq_mul {z : B} (hz : z ∈ I) : ∃ u, u - 1 ∈ I ∧ logOnePlus I z hz = z * u := by
   set h : ℚ⟦X⟧ := mk fun n => coeff (n + 1) (log ℚ)
   have hlog : log ℚ = X * h := by
     conv_lhs => rw [eq_X_mul_shift_add_const (log ℚ)]
@@ -263,7 +263,7 @@ theorem logOnePlus_eq_mul {z : B} (hz : z ∈ I) : ∃ u, u - 1 ∈ I ∧ logOne
   · rw [logOnePlus, hlog, map_mul, seriesEval_X]
 
 theorem logOnePlus_pow {z : B} (hz : z ∈ I) (k : ℕ) (hk : (1 + z) ^ k - 1 ∈ I) :
-    logOnePlus ((1 + z) ^ k - 1) hk = k * logOnePlus z hz := by
+    logOnePlus I ((1 + z) ^ k - 1) hk = k * logOnePlus I z hz := by
   have hg : constantCoeff ((1 + X) ^ k - 1 : ℚ⟦X⟧) = 0 := by simp
   rw [logOnePlus, seriesEval_subst hz hg hk (by simp), log_subst_one_add_X_pow_sub_one, map_mul,
     map_natCast, logOnePlus]

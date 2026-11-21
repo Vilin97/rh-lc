@@ -47,7 +47,7 @@ theorem rsPsi_zero (φ φ' : GA E a → ℂ) (hs : tsupport Φ ⊆ rowSet E ℓ)
   simp only [rsPsi, thetaFn, rsInf, e, h, mul_zero, zero_mul]
 
 theorem rsPsi_mem (F F' : Sm E a) (hΦ : IsTest (rowSet E ℓ) Φ) (g : GA E a) :
-    rsPsi ℓ F.1 F'.1 Φ J η g ∈ schwartzBruhatPi E (Fin a) :=
+    rsPsi ℓ F.1 F'.1 Φ J η g ∈ schwartzBruhatPi (K := E) (ι := Fin a) :=
   thetaFn_mem ((isTest_rsInf F F' hΦ g).2.1.toSchwartzMap (isTest_rsInf F F' hΦ g).1) J η
 
 theorem rsHat_eq (F F' : Sm E a) (hΦ : IsTest (rowSet E ℓ) Φ) (g : GA E a) (y : Fin a → Ad E) :

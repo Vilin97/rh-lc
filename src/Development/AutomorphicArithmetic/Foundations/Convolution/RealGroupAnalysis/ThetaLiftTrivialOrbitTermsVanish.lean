@@ -29,7 +29,7 @@ instance : BorelSpace (G1 F) := ⟨rfl⟩
 
 abbrev V4 : Type := Fin 4 → A F
 
-abbrev S4 : Type := ↥(schwartzBruhatPi F (Fin 4))
+abbrev S4 : Type := ↥(schwartzBruhatPi (K := F) (ι := Fin 4))
 
 variable {F}
 
@@ -127,7 +127,7 @@ def gauss (δ : F) (v : V4 F) : ℂ :=
 
 def Fock (δ : F) : Submodule ℂ (S4 F) :=
   (Submodule.span ℂ {φ : V4 F → ℂ | ∃ p ∈ polyFn (F := F), ∃ g ∈ finiteSchwartzBruhatPi F (ι := Fin 4),
-    φ = fun v => p v * gauss δ v * g (finPartPi v)}).comap (schwartzBruhatPi F (Fin 4)).subtype
+    φ = fun v => p v * gauss δ v * g (finPartPi v)}).comap (schwartzBruhatPi (K := F) (ι := Fin 4)).subtype
 
 end Base
 

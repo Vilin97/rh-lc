@@ -83,8 +83,11 @@ theorem haarGL_eq_pi : ∀ (E : Type) [Field E] [NumberField E] (j : ℕ), haarG
   simp only [hloc]
   rw [pi_withDensity (ι := InfinitePlace E) volume F hF, ← volume_pi, haarGL]
   congr 1
+  funext x
   rw [← ENNReal.ofReal_prod_of_nonneg fun w _ => by positivity]
   congr 1
+  unfold MatInf at x
+  unfold detNorm
   rw [← Finset.prod_inv_distrib, ← Finset.prod_pow]
 
 end GlobalTheory.HaarPi

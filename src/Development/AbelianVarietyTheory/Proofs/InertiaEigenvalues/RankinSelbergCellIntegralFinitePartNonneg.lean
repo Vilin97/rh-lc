@@ -366,7 +366,7 @@ namespace GlobalTheory.RSnmFT
 
 theorem lintegral_whit_sq_ne_top {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {m : ℕ}
     {π' : CuspSub E (m + 1)} (hπ : π'.IsUnitary) {φ' : GA E (m + 1) → ℂ} (hφ : φ' ∈ GlobalTheory.JSW.mspanR π')
-    {G : (Fin (m + 1) → Ad E) → ℂ} (hG : G ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi E (Fin (m + 1)))
+    {G : (Fin (m + 1) → Ad E) → ℂ} (hG : G ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi (K := E) (ι := Fin (m + 1)))
     (hGc : Continuous G) (μ : Measure (GA E (m + 1))) [μ.IsHaarMeasure] {𝓕₀ : Set (GA E (m + 1))}
     (h𝓕 : IsFundamentalDomain (GlobalTheory.CellDec.NE E (m + 1)) 𝓕₀ μ) {x : ℝ} (hx : 1 < x) :
     ∫⁻ g in 𝓕₀, ‖GlobalTheory.JSW.whit φ' g‖ₑ ^ 2 * ‖G (GlobalTheory.ZEul.lastRow g)‖ₑ * ENNReal.ofReal (GlobalTheory.RSnm.detAbs g ^ x) ∂μ ≠ ⊤ := by
@@ -404,7 +404,7 @@ theorem exists_cellPart_unfoldedIntegral_positive_alt : ∀ (E : Type) [Field E]
         (∀ x : ℝ, ∫⁻ g in 𝓕₀ ∩ GlobalTheory.CellDec.C0 E (m + 1) S, (‖GlobalTheory.JSW.whit φ (GroundTheory.Automorphic.FourierWhittaker.blockGL (by omega : m + 1 ≤ m + r + 1 + 1) (g))‖ₑ ^ 2 * ‖GroundTheory.Automorphic.GJMatrix.adelicFourierPi E F (GlobalTheory.ZEul.lastRow (g))‖ₑ *
           ENNReal.ofReal (GlobalTheory.RSnm.detAbs (g) ^ (x - ((r : ℝ) + 1)))) ∂μ ≠ ⊤) ∧
         (∀ π' : CuspSub E (m + 1), π'.IsUnitary → φ' ∈ GlobalTheory.JSW.mspanR π' →
-          F ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi E (Fin (m + 1)) → ∀ x : ℝ, 1 < x →
+          F ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi (K := E) (ι := Fin (m + 1)) → ∀ x : ℝ, 1 < x →
           ∫⁻ g in 𝓕₀ ∩ GlobalTheory.CellDec.C0 E (m + 1) S, (‖GlobalTheory.JSW.whit φ' (g)‖ₑ ^ 2 * ‖GroundTheory.Automorphic.GJMatrix.adelicFourierPi E F (GlobalTheory.ZEul.lastRow (g))‖ₑ *
           ENNReal.ofReal (GlobalTheory.RSnm.detAbs (g) ^ x)) ∂μ ≠ ⊤) := by
   intro E _ _ _ m r S φ φ' κ F h1 h2 h3 h4 h5 h6 h7 h8 h9 h10 h11 hFc h13 μ _ 𝓕₀ h𝓕

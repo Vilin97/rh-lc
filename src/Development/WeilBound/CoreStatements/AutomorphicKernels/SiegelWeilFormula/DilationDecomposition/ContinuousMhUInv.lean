@@ -125,7 +125,7 @@ theorem crd_incM (X : Matrix (Fin d.m) (Fin d.n) E) : d.crd (incM F X) = Positiv
 
 theorem bound_cpt (Fn : Mx F E d.m d.n → ℂ) (hF : Fn ∈ d.schM) (Ω : Set (UA σ d.A.J)) (hΩ : IsCompact Ω) :
     ∃ u : (Ix d → F) → ℝ, Summable u ∧ ∀ h ∈ Ω, ∀ X, ‖Fn (mat h⁻¹ * incM F X)‖ ≤ u (xi d X) := by
-  have hG : (fun c => Fn (d.cmb c)) ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi F (Ix d) := hF
+  have hG : (fun c => Fn (d.cmb c)) ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi (K := F) (ι := Ix d) := hF
   obtain ⟨u, hu, hb⟩ := GlobalTheory.T.exists_summable_majorant_lattice_sum hG (hΩ.image (continuous_mhU_inv d))
   refine ⟨u, hu, fun h hh X => ?_⟩
   have e : Fn (mat h⁻¹ * incM F X) =

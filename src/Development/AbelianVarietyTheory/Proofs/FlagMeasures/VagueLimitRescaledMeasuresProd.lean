@@ -115,6 +115,8 @@ theorem tendsto_integral_of_prod {ι V W : Type} [MetricSpace V] [MetricSpace W]
         intro m
         rw [← integral_const_mul]
         congr 1
+        funext z
+        simp only [ContinuousMap.smul_apply, smul_eq_mul]
         ring
       rw [e M₀]
       exact (hg.const_mul k).congr fun i => (e (M i)).symm

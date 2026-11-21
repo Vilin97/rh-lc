@@ -26,7 +26,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Measu
 theorem qmp_mul (ν : Measure G) [SFinite ν] :
     Measure.QuasiMeasurePreserving (fun p : G × G => p.2 * p.1) (μ.prod ν) μ := by
   have hm : Measurable (fun p : G × G => p.2 * p.1) := measurable_snd.mul measurable_fst
-  refine ⟨hm, Measure.AbsolutelyContinuous.mk fun s hs h0 => ?_⟩
+  refine ⟨hm.aemeasurable, Measure.AbsolutelyContinuous.mk fun s hs h0 => ?_⟩
   rw [Measure.map_apply hm hs, Measure.prod_apply_symm (hm hs)]
   have h1 : ∀ y : G, μ ((fun x => (x, y)) ⁻¹' ((fun p : G × G => p.2 * p.1) ⁻¹' s)) = 0 := by
     intro y
@@ -37,7 +37,7 @@ theorem qmp_mul (ν : Measure G) [SFinite ν] :
 
 theorem ae_ae_mul (ν : Measure G) [SFinite ν] {p : G → Prop} (hp : ∀ᵐ y ∂μ, p y) :
     ∀ᵐ x ∂μ, ∀ᵐ m ∂ν, p (m * x) := by
-  have h := (qmp_mul (μ := μ) ν).ae hp
+  have h := QuasiMeasurePreserving.ae (qmp_mul (μ := μ) ν) hp
   exact Measure.ae_ae_of_ae_prod (p := fun q : G × G => p (q.2 * q.1)) h
 
 theorem constTerm_congr (ν : Measure G) [SFinite ν] {f g : G → ℂ} (h : f =ᵐ[μ] g) :
@@ -126,11 +126,11 @@ theorem exists_L1_bound_of_L2_section [T2Space G] [IsFiniteMeasureOnCompacts μ]
   have h2 : ∫⁻ y in C, ‖F (r y)‖ₑ ^ (2 : ℝ) ∂μ ≤ M * ∫⁻ x in D, ‖F x‖ₑ ^ (2 : ℝ) ∂μ :=
     setLIntegral_rep_le hD hDm hr hCm hM (hFm.measurable.enorm.pow_const _)
   have hF : ‖F‖ₑ = (∫⁻ x in D, ‖F x‖ₑ ^ (2 : ℝ) ∂μ) ^ (1 / 2 : ℝ) := by
-    rw [Lp.enorm_def, eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num)]
+    rw [Lp.enorm_def, eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num) hFm.aestronglyMeasurable]
     simp only [ENNReal.toReal_ofNat]
   have h1 := eLpNorm_le_eLpNorm_mul_rpow_measure_univ (p := 1) (q := 2) (by norm_num) hFr
-  rw [eLpNorm_one_eq_lintegral_enorm,
-    eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num),
+  rw [eLpNorm_one_eq_lintegral_enorm hFr,
+    eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num) hFr,
     Measure.restrict_apply_univ] at h1
   simp only [ENNReal.toReal_ofNat, ENNReal.toReal_one] at h1
   rw [show (1 : ℝ) / 1 - 1 / 2 = 1 / 2 by norm_num] at h1

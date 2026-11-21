@@ -35,8 +35,9 @@ theorem affine_fundamentalDomain_mean :
     have hLm : Measurable (L' : (Fin g → ℂ) → (Fin g → ℂ)) :=
       L'.toContinuousLinearEquiv.continuous.measurable
     rw [h1, ← Measure.map_map (measurable_add_const c) hLm, hmapL, Measure.map_smul, map_add_right_eq_self]
+    exact (measurable_add_const c).aemeasurable
   have hq : Measure.QuasiMeasurePreserving e volume volume :=
-    ⟨e.measurable, by rw [hmap]; exact Measure.smul_absolutelyContinuous⟩
+    ⟨e.measurable.aemeasurable, by rw [hmap]; exact Measure.smul_absolutelyContinuous⟩
   let ε : Λ' → Λ₁ := fun a => ⟨L.symm a, (hΛ _).1 (by rw [L.apply_symm_apply]; exact a.2)⟩
   have hε : Function.Bijective ε :=
     ⟨fun a b hab => Subtype.ext (L.symm.injective (congrArg Subtype.val hab)),

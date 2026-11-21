@@ -79,7 +79,7 @@ theorem eq_smul_map (N : Subgroup G) (hN : IsClosed (N : Set G)) {ν : Measure G
   have hsm := Measure.isMulLeftInvariant_eq_smul ν₀ μ
   calc ν = ν₀.map Subtype.val := hback.symm
     _ = (Measure.haarScalarFactor ν₀ μ • μ).map Subtype.val := congrArg (Measure.map Subtype.val) hsm
-    _ = Measure.haarScalarFactor ν₀ μ • μ.map Subtype.val := Measure.map_smul _ _ _
+    _ = Measure.haarScalarFactor ν₀ μ • μ.map Subtype.val := Measure.map_smul _ hemb.measurable.aemeasurable
 
 theorem exists_exp_smul (N : Subgroup G) (hN : IsClosed (N : Set G)) {ν ν' : Measure G}
     (h : IsHaarSub (N : Set G) ν) (h' : IsHaarSub (N : Set G) ν') :
@@ -190,7 +190,7 @@ theorem modulus (N : Subgroup G) (hN : IsClosed (N : Set G)) {ν : Measure G} (h
   have hadd : ∀ s t, T (s + t) = T s + T t := by
     intro s t
     apply eq_of_exp_smul_measure_eq hr0 hStop
-    rw [← hT (s + t), hcomp, ← Measure.map_map (e s).measurable (e t).measurable, hT t, Measure.map_smul, hT s,
+    rw [← hT (s + t), hcomp, ← Measure.map_map (e s).measurable (e t).measurable, hT t, Measure.map_smul _ (e s).measurable.aemeasurable, hT s,
       smul_smul, ← ENNReal.ofReal_mul (Real.exp_pos _).le, ← Real.exp_add, add_comm (T t) (T s)]
 
   have hm0 : 0 < (ν S).toReal := ENNReal.toReal_pos hr0 hStop

@@ -130,7 +130,6 @@ theorem measurePreserving_unrealify {ι : Type} [Fintype ι] {n : ℕ} (e : ι �
   have hσ1 : ∀ p : ι × ι, σ (Sum.inl p) = (e p.1, e p.2, false) := fun p => rfl
   have hσ2 : ∀ p : ι × ι, σ (Sum.inr p) = (e p.1, e p.2, true) := fun p => rfl
   convert total using 1
-  case e'_7 => exact volume_pi
   clear h1 h2 h3 h4 h5 total
   clear_value σ
   funext x p
@@ -336,7 +335,6 @@ theorem isOmegaLeb_frobenius (e : Fin P ⊕ Fin Q ≃ Fin n) :
     simp
   rw [Measure.map_prod_map _ _ hLs hLs, Measure.map_map hG (hLs.prodMap hLs)]
   convert hT.map_eq using 2
-  case e'_6 => rfl
   funext ab
   funext p
   show ((lieCoord e).symm ab.1 : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ) p.1 p.2 +

@@ -25,8 +25,8 @@ section SlopeTestRemainingChoices
 
 variable {k : Type} [Field k] [NumberField k] {ι : Type} [Fintype ι] [DecidableEq ι]
 
-theorem exists_schwartzBruhatPi_majorant {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi k ι) :
-    ∃ G ∈ schwartzBruhatPi k ι, ∃ r : (ι → 𝔸[k]) → ℝ,
+theorem exists_schwartzBruhatPi_majorant {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) :
+    ∃ G ∈ schwartzBruhatPi (K := k) (ι := ι), ∃ r : (ι → 𝔸[k]) → ℝ,
       (∀ x, G x = (r x : ℂ)) ∧ ∀ x, ‖F x‖ ≤ r x := by
   rw [schwartzBruhatPi_eq_cosetSpanPi] at hF
   induction hF using Submodule.span_induction with
@@ -62,7 +62,7 @@ theorem exists_schwartzBruhatPi_majorant {F : (ι → 𝔸[k]) → ℂ} (hF : F 
     · simp only [Pi.smul_apply, smul_eq_mul, norm_mul]
       exact mul_le_mul_of_nonneg_left (b x) (norm_nonneg _)
 
-theorem single_mem_schwartzBruhat {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi k ι) (i₀ : ι) :
+theorem single_mem_schwartzBruhat {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) (i₀ : ι) :
     (fun t : 𝔸[k] ↦ F (Pi.single i₀ t)) ∈ schwartzBruhat k := by
   induction hF using Submodule.span_induction with
   | mem G hG =>
@@ -98,7 +98,7 @@ theorem single_mem_schwartzBruhat {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ sch
   | add G H _ _ hG hH => exact add_mem hG hH
   | smul c G _ hG => exact Submodule.smul_mem _ c hG
 
-theorem line_mem_schwartzBruhat {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi k ι)
+theorem line_mem_schwartzBruhat {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι))
     {ξ : ι → k} (hξ : ξ ≠ 0) : (fun t : 𝔸[k] ↦ F (t • ratV ξ)) ∈ schwartzBruhat k := by
   obtain ⟨i₀, hi₀⟩ := Function.ne_iff.1 hξ
   set M : Matrix ι ι k := (1 : Matrix ι ι k).updateCol i₀ ξ with hM
@@ -179,18 +179,18 @@ theorem countable_proj : Countable (Projectivization k (ι → k)) := by
   haveI : Countable k := countable_numberField k
   exact ((lineEquiv (k := k) (ι := ι)).injective.comp (Prod.mk_right_injective (1 : kˣ))).countable
 
-theorem summable_norm_col {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi k ι)
+theorem summable_norm_col {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι))
     (h : GL ι 𝔸[k]) :
     Summable fun ξ : ι → k ↦ ‖F ((h : Matrix ι ι 𝔸[k]) *ᵥ ratV ξ)‖ := by
   obtain ⟨u, hu, hb⟩ := GlobalTheory.T.exists_summable_majorant_lattice_sum hF (isCompact_singleton (x := h))
   exact Summable.of_nonneg_of_le (fun _ ↦ norm_nonneg _) (fun ξ ↦ hb h rfl ξ) hu
 
-theorem summable_line {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi k ι) (h : GL ι 𝔸[k]) :
+theorem summable_line {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) (h : GL ι 𝔸[k]) :
     Summable fun p : kˣ × Projectivization k (ι → k) ↦
       ‖F ((h : Matrix ι ι 𝔸[k]) *ᵥ ratV (lineEquiv p).1)‖ :=
   (lineEquiv (k := k) (ι := ι)).summable_iff.2 ((summable_norm_col hF h).subtype {ξ | ξ ≠ 0})
 
-theorem tsum_finset_le {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi k ι)
+theorem tsum_finset_le {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι))
     (h : GL ι 𝔸[k]) (S : Finset (Projectivization k (ι → k))) :
     ∑' d : kˣ, ∑ l ∈ S, ‖F ((h : Matrix ι ι 𝔸[k]) *ᵥ ratV ((d : k) • l.rep))‖ ≤
       ∑' ξ : {ξ : ι → k // ξ ≠ 0}, ‖F ((h : Matrix ι ι 𝔸[k]) *ᵥ ratV ξ.1)‖ := by
@@ -206,7 +206,7 @@ theorem tsum_finset_le {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhat
   · refine summable_sum fun c _ ↦ ?_
     exact hf.comp_injective (i := fun d : kˣ ↦ (d, c)) fun a b hab ↦ (Prod.mk.inj hab).1
 
-theorem thetaC_sub_eq {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi k ι) (h : GL ι 𝔸[k]) :
+theorem thetaC_sub_eq {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) (h : GL ι 𝔸[k]) :
     thetaC F h - F 0 = ∑' ξ : {ξ : ι → k // ξ ≠ 0}, F ((h : Matrix ι ι 𝔸[k]) *ᵥ ratV ξ.1) := by
   classical
   have hs : Summable fun ξ : ι → k ↦ F ((h : Matrix ι ι 𝔸[k]) *ᵥ ratV ξ) :=
@@ -220,7 +220,7 @@ theorem thetaC_sub_eq {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatP
   rw [h4, thetaC, h3, ratV_zero, Matrix.mulVec_zero]
   ring
 
-theorem tsum_tsum_eq {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi k ι) (h : GL ι 𝔸[k]) :
+theorem tsum_tsum_eq {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) (h : GL ι 𝔸[k]) :
     ∑' d : kˣ, ∑' l : Projectivization k (ι → k),
         F ((h : Matrix ι ι 𝔸[k]) *ᵥ ratV ((d : k) • l.rep)) = thetaC F h - F 0 := by
   have hf : Summable fun p : kˣ × Projectivization k (ι → k) ↦
@@ -233,12 +233,12 @@ noncomputable def Gc (F : (ι → 𝔸[k]) → ℂ) (ω : HeckeCharacter k) (z :
     (l : Projectivization k (ι → k)) (x : IdeleGroup k) : ℂ :=
   F ((x : 𝔸[k]) • ratV l.rep) * (ω.toIdele x : ℂ) * ((ideleModule k x : ℝ) : ℂ) ^ z
 
-theorem integrable_Gc {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi k ι)
+theorem integrable_Gc {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι))
     (ω : HeckeCharacter k) {z : ℂ} (hz : 1 < z.re) (l : Projectivization k (ι → k)) :
     Integrable (Gc F ω z l) (ideleMeasure k) :=
   integrable_globalZetaIntegrand (line_mem_schwartzBruhat hF l.rep_nonzero) ω hz
 
-theorem continuous_Gc {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi k ι)
+theorem continuous_Gc {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι))
     (ω : HeckeCharacter k) (z : ℂ) (l : Projectivization k (ι → k)) : Continuous (Gc F ω z l) :=
   continuous_zetaIntegrand
     (continuous_of_mem_schwartzBruhat (line_mem_schwartzBruhat hF l.rep_nonzero)) ω z
@@ -263,7 +263,7 @@ theorem norm_Gc_diagonal_mul (F : (ι → 𝔸[k]) → ℂ) (ω : HeckeCharacter
     Complex.norm_cpow_eq_rpow_re_of_pos (ideleModule k x).2]
 
 theorem exists_bound (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi k ι) (r : ℕ) :
+    (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) (r : ℕ) :
     ∃ M : ℝ, 0 ≤ M ∧ ∀ t : {x : ℝ // 0 < x}, ∀ u ∈ normOneFundamentalDomain k,
       (1 ≤ (t : ℝ) → ∑' ξ : {ξ : ι → k // ξ ≠ 0},
         ‖F (((scalC (moduleSection w t * (u : IdeleGroup k)) : GL ι 𝔸[k]) : Matrix ι ι 𝔸[k]) *ᵥ
@@ -376,7 +376,7 @@ theorem pow_bound {σ δ : ℝ} {r n : ℕ} (hδ1 : δ ≤ 1) (hδ2 : δ ≤ σ 
     nlinarith
 
 theorem sum_integral_norm_le (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi k ι) (ω : HeckeCharacter k) {z : ℂ} (hz : (Fintype.card ι : ℝ) < z.re)
+    (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) (ω : HeckeCharacter k) {z : ℂ} (hz : (Fintype.card ι : ℝ) < z.re)
     (hz1 : 1 < z.re) :
     ∃ B : ℝ, ∀ S : Finset (Projectivization k (ι → k)),
       ∑ l ∈ S, ∫ x, ‖Gc F ω z l x‖ ∂ideleMeasure k ≤ B := by
@@ -444,14 +444,14 @@ theorem sum_integral_norm_le (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ
     simpa [hV] using h4
 
 theorem summable_integral_norm_Gc (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi k ι) (ω : HeckeCharacter k) {z : ℂ}
+    (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) (ω : HeckeCharacter k) {z : ℂ}
     (hz : (Fintype.card ι : ℝ) < z.re) (hz1 : 1 < z.re) :
     Summable fun l : Projectivization k (ι → k) ↦ ∫ x, ‖Gc F ω z l x‖ ∂ideleMeasure k := by
   obtain ⟨B, hB⟩ := sum_integral_norm_le w hF ω hz hz1
   exact summable_of_sum_le (fun c ↦ integral_nonneg fun x ↦ norm_nonneg _) hB
 
 theorem integrable_tsum_Gc (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi k ι) (ω : HeckeCharacter k) {z : ℂ}
+    (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) (ω : HeckeCharacter k) {z : ℂ}
     (hz : (Fintype.card ι : ℝ) < z.re) (hz1 : 1 < z.re) :
     Integrable (fun x ↦ ∑' l : Projectivization k (ι → k), Gc F ω z l x) (ideleMeasure k) := by
   haveI := countable_proj (k := k) (ι := ι)
@@ -471,7 +471,7 @@ theorem integrable_tsum_Gc (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
   exact lt_of_le_of_lt (lintegral_mono fun x ↦ enorm_tsum_le_tsum_enorm)
     (lt_top_iff_ne_top.2 hlin)
 
-theorem integrableOn_thetaC_mul {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi k ι)
+theorem integrableOn_thetaC_mul {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι))
     (ω : HeckeCharacter k) (a : IdeleGroup k) :
     IntegrableOn (fun u : normOneSubgroup k ↦
       thetaC F (scalC (a * (u : IdeleGroup k))) * (ω.toIdele (u : IdeleGroup k) : ℂ))
@@ -502,7 +502,7 @@ theorem integrableOn_char (ω : HeckeCharacter k) :
   exact (h2.continuousOn.integrableOn_compact hE).mono_set subset_closure
 
 theorem inner_eq (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi k ι) (ω : HeckeCharacter k) (z : ℂ) (t : {r : ℝ // 0 < r}) :
+    (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) (ω : HeckeCharacter k) (z : ℂ) (t : {r : ℝ // 0 < r}) :
     ∫ u in normOneFundamentalDomain k, ∑' ξ : kˣ, ∑' l : Projectivization k (ι → k),
         Gc F ω z l (diagonal k ξ * moduleSection w t * (u : IdeleGroup k)) ∂normOneMeasure k =
       (thetaCFun w F ω (t : ℝ) - thetaCConst F ω) *
@@ -532,7 +532,7 @@ theorem inner_eq (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
   ring
 
 theorem integral_tsum_Gc_eq (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi k ι) (ω : HeckeCharacter k) {z : ℂ}
+    (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) (ω : HeckeCharacter k) {z : ℂ}
     (hz : (Fintype.card ι : ℝ) < z.re) (hz1 : 1 < z.re) :
     ∫ x, ∑' l : Projectivization k (ι → k), Gc F ω z l x ∂ideleMeasure k =
       mellin (fun x ↦ thetaCFun w F ω x - thetaCConst F ω)
@@ -554,7 +554,7 @@ theorem integral_tsum_Gc_eq (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
   ring
 
 theorem lines_eq_mellin (w : InfinitePlace k) (ω : HeckeCharacter k) {F : (ι → 𝔸[k]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi k ι) {z : ℂ} (hz : (Fintype.card ι : ℝ) < z.re) (hz1 : 1 < z.re) :
+    (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) {z : ℂ} (hz : (Fintype.card ι : ℝ) < z.re) (hz1 : 1 < z.re) :
     Summable (fun l : Projectivization k (ι → k) ↦ ‖lineZeta F ω z (ratV l.rep)‖) ∧
       ∑' l : Projectivization k (ι → k), lineZeta F ω z (ratV l.rep) =
         mellin (fun x ↦ thetaCFun w F ω x - thetaCConst F ω)
@@ -599,7 +599,7 @@ end Unfold
 
 theorem epstein_eq_mellin {k : Type} [Field k] [NumberField k] {ι : Type} [Fintype ι]
     [DecidableEq ι] (w : InfinitePlace k) (ω : HeckeCharacter k) {Ψ : (ι → 𝔸[k]) → ℂ}
-    (hΨ : Ψ ∈ schwartzBruhatPi k ι) {z : ℂ} (hz : (Fintype.card ι : ℝ) < z.re)
+    (hΨ : Ψ ∈ schwartzBruhatPi (K := k) (ι := ι)) {z : ℂ} (hz : (Fintype.card ι : ℝ) < z.re)
     (m : GL ι 𝔸[k]) :
     Summable (fun l : Projectivization k (ι → k) ↦
         ‖lineZeta Ψ ω z (((m⁻¹ : GL ι 𝔸[k]) : Matrix ι ι 𝔸[k]) *ᵥ ratV l.rep)‖) ∧

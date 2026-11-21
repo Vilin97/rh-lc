@@ -158,7 +158,7 @@ theorem shell {fib : ℝ → Measure (Sp P Q)} (h : IsDxDq fib) (a b : ℝ) (hab
   simp only [e0] at key
   have e1 : qf ⁻¹' Set.Ioc a b = {x : Sp P Q | qf x ≤ b} \ {x | qf x ≤ a} := by
     ext x; simp [and_comm]
-  rw [← key, ← mul_sub, ← integral_diff (s := {x : Sp P Q | qf x ≤ b})
+  rw [← key, ← mul_sub, ← setIntegral_sdiff (s := {x : Sp P Q | qf x ≤ b})
       (t := {x : Sp P Q | qf x ≤ a}) (measurableSet_le hq measurable_const)
       integrable_gaussSp.integrableOn (fun x (hx : qf x ≤ a) => (hx.trans hab : qf x ≤ b)), ← e1,
     ENNReal.ofReal_mul (by positivity),

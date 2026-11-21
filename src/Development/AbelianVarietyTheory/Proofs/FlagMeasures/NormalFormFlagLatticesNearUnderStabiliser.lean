@@ -820,8 +820,57 @@ theorem denom (𝔠 : Ideal (𝓞 K))
       ipow N.𝔡 (((r : ℤ) - (a : ℕ)) + ((r : ℤ) - (b : ℕ)))) (a b : Fin N.j) :
     (∀ x ∈ 𝔠, (x : K) * A b a ∈ ipow N.𝔡 (((r : ℤ) - (a : ℕ)) - ((r : ℤ) - (b : ℕ)))) ∧
     ∀ x ∈ 𝔠, ∀ x' ∈ 𝔠, (x : K) * x' * star (B b a) ∈ ipow N.𝔡 (((r : ℤ) - (a : ℕ)) - ((r : ℤ) - (b : ℕ))) := by
+  have block_of : ∀ (bs : List (Kˣ × ℕ+)) (i : ℕ), i < (bs.map (fun b => (b.2 : ℕ))).sum →
+      ∃ (l' l : ℕ) (t : K), l' ≤ i ∧ i < l ∧ l ≤ (bs.map (fun b => (b.2 : ℕ))).sum ∧
+        (∀ a b, l' ≤ a → a < l → l' ≤ b → b < l → sameBlock bs a b = true) ∧
+        (∀ a b, l' ≤ a → a < l → ptEntryL bs a b = if a + b + 1 = l + l' then t else 0) ∧
+        (∀ a b, l ≤ a → b < l → ptEntryL bs a b = 0) ∧ (∀ a b, l' ≤ a → b < l' → ptEntryL bs a b = 0) := by
+    intro bs
+    induction bs with
+    | nil =>
+      intro i h
+      simp at h
+    | cons head bs ih =>
+      rcases head with ⟨t, s⟩
+      intro i h
+      simp only [List.map_cons, List.sum_cons] at h ⊢
+      by_cases h1 : i < s
+      · refine ⟨0, s, t, by omega, h1, by omega, ?_, ?_, ?_, ?_⟩
+        · intro a b _ ha _ hb
+          simp [sameBlock, ha, hb]
+        · intro a b _ ha
+          simp only [ptEntryL]
+          split_ifs <;> first | rfl | omega
+        · intro a b ha hb
+          simp only [ptEntryL]
+          split_ifs <;> first | rfl | omega
+        · intro a b ha hb
+          omega
+      · obtain ⟨l', l, t', e1, e2, e3, e4, e5, e6, e7⟩ := ih (i - s) (by omega)
+        refine ⟨s + l', s + l, t', by omega, by omega, by omega, ?_, ?_, ?_, ?_⟩
+        · intro a b ha' ha hb' hb
+          have := e4 (a - s) (b - s) (by omega) (by omega) (by omega) (by omega)
+          simp only [sameBlock, this, Bool.and_true, Bool.or_eq_true, decide_eq_true_eq]
+          omega
+        · intro a b ha' ha
+          simp only [ptEntryL, e5 (a - s) (b - s) (by omega) (by omega)]
+          split_ifs <;> first | rfl | omega
+        · intro a b ha hb
+          simp only [ptEntryL]
+          split_ifs
+          · omega
+          · omega
+          · exact e6 _ _ (by omega) (by omega)
+          · rfl
+        · intro a b ha hb
+          simp only [ptEntryL]
+          split_ifs
+          · omega
+          · omega
+          · exact e7 _ _ (by omega) (by omega)
+          · rfl
   obtain ⟨l', l, t, e1, e2, e3, e4, e5, e6, e7⟩ :=
-    GlobalTheory.OrbitDenom.block_of N.w.blocks b (by rw [N.w.size]; exact b.2)
+    block_of N.w.blocks b (by rw [N.w.size]; exact b.2)
   rw [N.w.size] at e3
   have e3' : l' ≤ N.j := by omega
   set W : Matrix (Fin N.j) (Fin N.j) K := Matrix.of fun a b => H.B (ej N.F N.j_le a) (ej N.F' N.j_le b) with hW

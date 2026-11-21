@@ -35,7 +35,19 @@ theorem re_fixed (B : RowsAut) : ∀ k ∈ B.I.Kg B.g, (B.R (1, k)).comp B.Re = 
     have := hm (1, a) (1, b)
     rwa [Prod.mk_mul_mk, mul_one] at this
   have ir : ∀ (a : B.I.Gf) (x z : B.I.L2 B.μf B.fund), ⟪x, B.R (1, a) z⟫_ℂ = ⟪B.R (1, a⁻¹) x, z⟫_ℂ :=
-    fun a x z => GlobalTheory.IdemProj.inner_rep (fun c => B.R (1, c)) h1 pm (fun c v => hn _ v) a x z
+    fun a x z => by
+      have hback : B.R (1, a) (B.R (1, a⁻¹) x) = x := by
+        have hident : B.R (1, 1) = 1 := h1
+        have h := congrArg (fun S : B.I.L2 B.μf B.fund →L[ℂ] B.I.L2 B.μf B.fund => S x)
+          (pm a a⁻¹)
+        simpa [hident, mul_apply_eq_comp] using h.symm
+      let U : B.I.L2 B.μf B.fund →ₗᵢ[ℂ] B.I.L2 B.μf B.fund :=
+        ⟨(B.R (1, a)).toLinearMap, hn (1, a)⟩
+      calc
+        ⟪x, B.R (1, a) z⟫_ℂ = ⟪U (B.R (1, a⁻¹) x), U z⟫_ℂ := by
+          change ⟪x, B.R (1, a) z⟫_ℂ = ⟪B.R (1, a) (B.R (1, a⁻¹) x), B.R (1, a) z⟫_ℂ
+          rw [hback]
+        _ = ⟪B.R (1, a⁻¹) x, z⟫_ℂ := U.inner_map_map _ _
   have he : ∀ x, B.e (k * x) = B.e x := fun x => by
     have := B.e_adm.2.2.2.2.2.1 x k hk 1 (one_mem_Kg B.I B.g)
     rwa [mul_one] at this
@@ -44,6 +56,6 @@ theorem re_fixed (B : RowsAut) : ∀ k ∈ B.I.Kg B.g, (B.R (1, k)).comp B.Re = 
     ← MeasureTheory.integral_mul_left_eq_self (fun g => B.e g * ⟪x, B.R (1, g) y⟫_ℂ) k]
   congr 1
   ext g
-  rw [he, pm, ContinuousLinearMap.mul_apply, ir k x]
+  rw [he, pm, mul_apply_eq_comp, ir k x]
 
 end GlobalTheory.Dec.CuspFrame

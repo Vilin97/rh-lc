@@ -30,8 +30,7 @@ theorem alt_pow_eq_prod {M A : Type*} [Monoid M] [CommRing A] (T : M → A) (y :
           exact ⟨a + b, by omega, by rw [Function.update_self]⟩
         · rw [Function.update_of_ne hj]
           exact hz j.succ
-    rw [hs, sub_zero]
-    rfl
+    rw [hs, sub_zero, Fin.tail_def]
 
 theorem IsPsChar.apply_eq_zero_of_pow {M A : Type*} [Monoid M] [CommRing A] [IsReduced A] {d : ℕ} {T : M → A}
     (hT : IsPsChar d T) (y : M) (hy : ∀ m, 2 ≤ m → T (y ^ m) = 0) : T y = 0 := by

@@ -89,10 +89,7 @@ theorem exists_infinite_decomp :
       w.1.LiesOver v := fun v w => ⟨congrArg Subtype.val w.2⟩
   haveI : ∀ w : InfinitePlace K, IsScalarTower F K w.Completion := fun w =>
     .of_algebraMap_eq fun x => by
-      apply InfinitePlace.Completion.ext
-      rw [InfinitePlace.Completion.algebraMap_toCompletion, InfinitePlace.Completion.algebraMap_toCompletion,
-        UniformSpace.Completion.algebraMap_def, UniformSpace.Completion.algebraMap_def]
-      rfl
+      simp [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply]
   let φ : ∀ (v : InfinitePlace F) (w : {w : InfinitePlace K // w.comap (algebraMap F K) = v}),
       v.Completion ⊗[F] K →ₐ[v.Completion] w.1.Completion := fun v w =>
     Algebra.TensorProduct.lift (Algebra.ofId _ _) (IsScalarTower.toAlgHom F K _) fun _ _ => Commute.all _ _

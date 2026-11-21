@@ -26,7 +26,7 @@ theorem main : ∀ (K F V : Type) [Field K] [NumberField K] [StarRing K] [Field 
   intro K F V _ _ _ _ _ _ _ _ _ _ _ hK hF h hs hd M hM P hPb b a hJ
   have hP : P.IsMaximal := hPb.1
   have hp : (P.comap (algebraMap (𝓞 F) (𝓞 K))).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal P
   have hpp := hp.isPrime
   have hl : ∀ L : Submodule (𝓞 K) V, locF (P.comap (algebraMap (𝓞 F) (𝓞 K))) L = loc (K := K) P L :=
     fun L => locF_eq_loc hK hF hP L

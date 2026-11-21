@@ -34,11 +34,11 @@ theorem ballMean_norm_integral_le {α E : Type*} [MeasurableSpace α] [NormedAdd
     (h : ∫⁻ x, (‖f x‖₊ : ENNReal) ^ 2 ∂ν ≤ ENNReal.ofReal (C * a ^ 2)) :
     Integrable f ν ∧ ‖∫ x, f x ∂ν‖ ≤ Real.sqrt C * (ν Set.univ).toReal ^ (1 / 2 : ℝ) * a := by
   have h2 := ballMean_eLpNorm_two_le hC ha h
-  have hL2 : MemLp f 2 ν := ⟨hf, lt_of_le_of_lt h2 ENNReal.ofReal_lt_top⟩
+  have hL2 : MemLp f 2 ν := lt_of_le_of_lt h2 ENNReal.ofReal_lt_top
   refine ⟨hL2.integrable (by norm_num), ?_⟩
   have h1 : eLpNorm f 1 ν ≤ eLpNorm f 2 ν * ν Set.univ ^ (1 / (1 : ENNReal).toReal - 1 / (2 : ENNReal).toReal) :=
     eLpNorm_le_eLpNorm_mul_rpow_measure_univ (by norm_num) hf
-  rw [eLpNorm_one_eq_lintegral_enorm] at h1
+  rw [eLpNorm_one_eq_lintegral_eNorm hf] at h1
   have hexp : (1 / (1 : ENNReal).toReal - 1 / (2 : ENNReal).toReal : ℝ) = 1 / 2 := by norm_num
   rw [hexp] at h1
   have hmu : ν Set.univ ^ (1 / 2 : ℝ) = ENNReal.ofReal ((ν Set.univ).toReal ^ (1 / 2 : ℝ)) := by

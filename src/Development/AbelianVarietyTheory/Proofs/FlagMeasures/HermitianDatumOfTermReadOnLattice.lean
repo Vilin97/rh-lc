@@ -311,8 +311,8 @@ theorem term_over (hM : M.OK) (c : Coord P S) (hP : P.RelG (theta M)) (d : Datum
     rw [hfB, hT']
     exact frame_of c P.B S.f' c.f'_eq hgB (by simpa using hli.comp Sum.inr Sum.inr_injective) n' hnS' t.abelian₂
       (fun x => by rw [hlatB]; exact TermBasic.trace_smul hgB hnS' (spB.2.1 (r + 1) le_rfl) x) hTB hB0
-  obtain ⟨s, ⟨hs0, hs1⟩, hs⟩ := FrameOnto.exists_matrix S S.f S.T S.gram (c.grp n) hnS
-  obtain ⟨s', ⟨hs0', hs1'⟩, hs'⟩ := FrameOnto.exists_matrix S S.f' S.T' S.gram' (c.grp n') hnS'
+  obtain ⟨s, ⟨hs0, hs1⟩, hs⟩ := FrameOnto.exists_matrix S S.f (c.grp n) hnS
+  obtain ⟨s', ⟨hs0', hs1'⟩, hs'⟩ := FrameOnto.exists_matrix S S.f' (c.grp n') hnS'
   have hDl : ∀ l, H.Dl t.f t.f' l = H.Dl P.A.f P.B.f l := fun l =>
     dl_change P.A.f P.B.f t.f t.f' s s' hs0 hs1 hs0' hs1'
       (fun j => by rw [hfA]; exact change_of c P.A S.f c.f_eq n s hs j)

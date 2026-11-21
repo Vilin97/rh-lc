@@ -59,8 +59,8 @@ theorem UpperTheory.ConvolutionTheory.R2.C.idxRat :
   obtain ⟨c, hc, -⟩ := idxEx F δ hδ b
   obtain ⟨g, hm, -, hne⟩ := testEx F
   generalize four (g1 g) = φ at hm hne
-  have hP : Pc δ (b : A F) φ ∈ schwartzBruhatPi F (Fin 4) := (pcMem F δ).2 hδ b φ hm
-  have hch : (fun x => ψ (UpperTheory.ConvolutionTheory.R2.rt t * q4 δ x) * φ x) ∈ schwartzBruhatPi F (Fin 4) := by
+  have hP : Pc δ (b : A F) φ ∈ schwartzBruhatPi (K := F) (ι := Fin 4) := (pcMem F δ).2 hδ b φ hm
+  have hch : (fun x => ψ (UpperTheory.ConvolutionTheory.R2.rt t * q4 δ x) * φ x) ∈ schwartzBruhatPi (K := F) (ι := Fin 4) := by
     simpa [B4] using chirpQ F δ (UpperTheory.ConvolutionTheory.R2.rt t) 0 φ hm
   have h1 : Th (Pc δ (b : A F) φ) = Th φ := by
     have e : ∀ ξ : Fin 4 → F, Pc δ (b : A F) φ (fun i => UpperTheory.ConvolutionTheory.R2.rt (ξ i)) =

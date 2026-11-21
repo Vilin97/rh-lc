@@ -52,10 +52,10 @@ private theorem psi_split (x : A F) :
   exact h
 
 private theorem chirp_poly (p : MvPolynomial (Fin 4) (A F)) (φ : V4 F → ℂ)
-    (hφ : φ ∈ schwartzBruhatPi F (Fin 4)) :
-    (fun v => ψ (MvPolynomial.eval v p) * φ v) ∈ schwartzBruhatPi F (Fin 4) := by
+    (hφ : φ ∈ schwartzBruhatPi (K := F) (ι := Fin 4)) :
+    (fun v => ψ (MvPolynomial.eval v p) * φ v) ∈ schwartzBruhatPi (K := F) (ι := Fin 4) := by
   refine Submodule.span_induction
-    (p := fun f _ => (fun v => ψ (MvPolynomial.eval v p) * f v) ∈ schwartzBruhatPi F (Fin 4))
+    (p := fun f _ => (fun v => ψ (MvPolynomial.eval v p) * f v) ∈ schwartzBruhatPi (K := F) (ι := Fin 4))
     ?_ ?_ ?_ ?_ hφ
   · rintro _ ⟨φ0, g, hg, rfl⟩
     have hT := chirpInf F (Fin 4) (p.map adeleInfHom) (lT F)
@@ -74,22 +74,22 @@ private theorem chirp_poly (p : MvPolynomial (Fin 4) (A F)) (φ : V4 F → ℂ)
     rw [SchwartzMap.smulLeftCLM_apply_apply hT, psi_split]
     simp only [smul_eq_mul, infPartPi_eq_adeleInfHom, finPartPi_eq_adeleFinHom, eval_map_hom]
     ring
-  · convert (schwartzBruhatPi F (Fin 4)).zero_mem using 1
+  · convert (schwartzBruhatPi (K := F) (ι := Fin 4)).zero_mem using 1
     funext v
     simp
   · intro f g _ _ hf hg
-    convert (schwartzBruhatPi F (Fin 4)).add_mem hf hg using 1
+    convert (schwartzBruhatPi (K := F) (ι := Fin 4)).add_mem hf hg using 1
     funext v
     simp [mul_add]
   · intro a f _ hf
-    convert (schwartzBruhatPi F (Fin 4)).smul_mem a hf using 1
+    convert (schwartzBruhatPi (K := F) (ι := Fin 4)).smul_mem a hf using 1
     ring
 
 end ChirpQ
 
 theorem UpperTheory.ConvolutionTheory.R2.C.chirpQ :
-    ∀ (F : Type) [Field F] [NumberField F] (δ : F) (b : A F) (y : V4 F) (φ : V4 F → ℂ), φ ∈ schwartzBruhatPi F (Fin 4) →
-    (fun v => ψ (b * q4 δ v + B4 δ v y) * φ v) ∈ schwartzBruhatPi F (Fin 4) := by
+    ∀ (F : Type) [Field F] [NumberField F] (δ : F) (b : A F) (y : V4 F) (φ : V4 F → ℂ), φ ∈ schwartzBruhatPi (K := F) (ι := Fin 4) →
+    (fun v => ψ (b * q4 δ v + B4 δ v y) * φ v) ∈ schwartzBruhatPi (K := F) (ι := Fin 4) := by
   intro F _ _ δ b y φ hφ
   open MvPolynomial in
   have h := chirp_poly (F := F)

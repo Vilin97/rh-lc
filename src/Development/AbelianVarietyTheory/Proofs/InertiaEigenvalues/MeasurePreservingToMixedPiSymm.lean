@@ -24,8 +24,8 @@ theorem vecMul_map_inv {R S : Type} [CommRing R] [CommRing S] (ρ : R →+* S) (
   rw [vecMul_vecMul, ← Matrix.map_mul, ← Units.val_mul, mul_inv_cancel, Units.val_one,
     Matrix.map_one _ (map_zero ρ) (map_one ρ), vecMul_one]
 
-theorem comp_vecMul_mem (h : GL (Fin n) 𝔸[K]) {F : (Fin n → 𝔸[K]) → ℂ} (hF : F ∈ schwartzBruhatPi K (Fin n)) :
-    (fun x => F (x ᵥ* (h : Matrix (Fin n) (Fin n) 𝔸[K]))) ∈ schwartzBruhatPi K (Fin n) := by
+theorem comp_vecMul_mem (h : GL (Fin n) 𝔸[K]) {F : (Fin n → 𝔸[K]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := K) (ι := Fin n)) :
+    (fun x => F (x ᵥ* (h : Matrix (Fin n) (Fin n) 𝔸[K]))) ∈ schwartzBruhatPi (K := K) (ι := Fin n) := by
   let q : 𝔸[K] →+* mixedEmbedding.mixedSpace K :=
     (InfiniteAdeleRing.ringEquiv_mixedSpace K).toRingHom.comp (RingHom.fst (InfiniteAdeleRing K) 𝔸ᶠ[K])
   let p : 𝔸[K] →+* 𝔸ᶠ[K] := RingHom.snd (InfiniteAdeleRing K) 𝔸ᶠ[K]
@@ -78,7 +78,7 @@ theorem adelicFourierPi_comp_vecMul (h : GL (Fin n) 𝔸[K]) (F : (Fin n → �
   simp only [adelicFourierPi, hp]
   exact hm.symm
 
-theorem poisson_vecMul (h : GL (Fin n) 𝔸[K]) {F : (Fin n → 𝔸[K]) → ℂ} (hF : F ∈ schwartzBruhatPi K (Fin n)) :
+theorem poisson_vecMul (h : GL (Fin n) 𝔸[K]) {F : (Fin n → 𝔸[K]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := K) (ι := Fin n)) :
     Summable (fun ξ : Fin n → K =>
       ‖F ((fun i => algebraMap K 𝔸[K] (ξ i)) ᵥ* (h : Matrix (Fin n) (Fin n) 𝔸[K]))‖) ∧
     Summable (fun ξ : Fin n → K => ‖adelicFourierPi K F
@@ -226,7 +226,7 @@ theorem thetaFn_eq (f : 𝓢(Fin n → Cinf E, ℂ)) (J : (FractionalIdeal (𝓞
   rfl
 
 theorem thetaFn_mem (f : 𝓢(Fin n → Cinf E, ℂ)) (J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) (η : Fin n → Af E) :
-    thetaFn f J η ∈ schwartzBruhatPi E (Fin n) := by
+    thetaFn f J η ∈ schwartzBruhatPi (K := E) (ι := Fin n) := by
   rw [thetaFn_eq]
   exact schwartzBruhatTensorPi_mem _ (finiteTensor_mem fun i => cosetIndicator_mem_finiteSchwartzBruhat J (η i))
 

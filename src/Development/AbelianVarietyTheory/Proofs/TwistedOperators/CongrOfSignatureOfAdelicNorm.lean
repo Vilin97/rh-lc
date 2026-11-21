@@ -121,7 +121,7 @@ theorem congr_of_signature_of_adelic_norm : ∀ (F E : Type) [Field F] [NumberFi
     exact congr_of_hasSignature h h'
   obtain ⟨a, ha⟩ := (cm.fixed (G.det / G'.det)).1 (by
     rw [star_div₀, ← Matrix.det_conjTranspose, ← Matrix.det_conjTranspose, hG, hG'])
-  obtain ⟨θ, h0, hθ⟩ := GlobalTheory.Published.exists_cc_eq_neg E
+  obtain ⟨θ, h0, hθ⟩ := GlobalTheory.Published.exists_cc_eq_neg (E := E)
   rw [hcc] at hθ
   obtain ⟨d, hdθ⟩ := (cm.fixed (θ * θ)).1 (by rw [star_mul', hθ]; ring)
   have hd0 : d ≠ 0 := fun h => mul_ne_zero h0 h0 (by rw [← hdθ, h, map_zero])

@@ -25,7 +25,7 @@ private theorem norm_chirp_le {F : Type} [Field F] [NumberField F] (δ : F) (b :
   exact (Circle.norm_coe _).le
 
 private theorem chirpFunctional_symm {F : Type} [Field F] [NumberField F] (δ : F) (hδ : δ ≠ 0) (b : (A F)ˣ)
-    (φ₁ φ₂ : V4 F → ℂ) (h1 : φ₁ ∈ schwartzBruhatPi F (Fin 4)) (h2 : φ₂ ∈ schwartzBruhatPi F (Fin 4)) :
+    (φ₁ φ₂ : V4 F → ℂ) (h1 : φ₁ ∈ schwartzBruhatPi (K := F) (ι := Fin 4)) (h2 : φ₂ ∈ schwartzBruhatPi (K := F) (ι := Fin 4)) :
     Lam4 δ (b : A F) φ₁ * ∫ v, φ₂ v ∂(adeleMeasurePi F) =
       Lam4 δ (b : A F) φ₂ * ∫ v, φ₁ v ∂(adeleMeasurePi F) :=
   symm (V4 F) (adeleMeasurePi F) (fun v => ψ ((b : A F) * q4 δ v)) φ₁ φ₂

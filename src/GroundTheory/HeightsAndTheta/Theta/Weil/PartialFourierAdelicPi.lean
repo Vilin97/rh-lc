@@ -123,12 +123,12 @@ theorem partialFourierPi_schwartzBruhatTensorPi (φ : 𝓢((ι ⊕ κ) → mixed
   rfl
 
 theorem integrable_partialFourierPi_slice {F : ((ι ⊕ κ) → 𝔸[K]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi K (ι ⊕ κ)) (a : ι → 𝔸[K]) :
+    (hF : F ∈ schwartzBruhatPi (K := K) (ι := ι ⊕ κ)) (a : ι → 𝔸[K]) :
     Integrable (fun y : κ → 𝔸[K] ↦ F (Sum.elim a y)) (adeleMeasurePi K) :=
   integrable_of_mem_schwartzBruhatPi (schwartzBruhatPi_sumElim_mem hF a)
 
-theorem partialFourierPi_mem {F : ((ι ⊕ κ) → 𝔸[K]) → ℂ} (hF : F ∈ schwartzBruhatPi K (ι ⊕ κ)) :
-    partialFourierPi F ∈ schwartzBruhatPi K (ι ⊕ κ) := by
+theorem partialFourierPi_mem {F : ((ι ⊕ κ) → 𝔸[K]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := K) (ι := ι ⊕ κ)) :
+    partialFourierPi F ∈ schwartzBruhatPi (K := K) (ι := ι ⊕ κ) := by
   induction hF using Submodule.span_induction with
   | mem G hG =>
     obtain ⟨φ, g, hg, rfl⟩ := hG
@@ -168,7 +168,7 @@ theorem tsum_sumElim {f : ((ι ⊕ κ) → K) → ℂ} (hf : Summable fun ξ ↦
   rw [← e.symm.tsum_eq, h1.tsum_prod' fun c ↦ h1.prod_factor c]
   rfl
 
-theorem tsum_partialFourierPi {F : ((ι ⊕ κ) → 𝔸[K]) → ℂ} (hF : F ∈ schwartzBruhatPi K (ι ⊕ κ)) :
+theorem tsum_partialFourierPi {F : ((ι ⊕ κ) → 𝔸[K]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := K) (ι := ι ⊕ κ)) :
     ∑' ξ : (ι ⊕ κ) → K, partialFourierPi F (fun s ↦ algebraMap K 𝔸[K] (ξ s)) =
       ∑' ξ : (ι ⊕ κ) → K, F (fun s ↦ algebraMap K 𝔸[K] (ξ s)) := by
   rw [tsum_sumElim (poisson_of_mem_schwartzBruhatPi (partialFourierPi_mem hF)).1,

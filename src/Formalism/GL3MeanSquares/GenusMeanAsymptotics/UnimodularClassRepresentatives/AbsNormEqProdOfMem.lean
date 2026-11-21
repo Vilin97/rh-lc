@@ -58,7 +58,7 @@ theorem absNorm_eq_prod [IsTotallyReal F] (n : 𝓞 F) :
   rw [Finset.prod_subtype (p := fun w : InfinitePlace F => w.IsReal) Finset.univ (by simp [h2])
     (fun w => w (n : F) ^ w.mult)]
   refine Finset.prod_congr rfl fun w _ => ?_
-  rw [InfinitePlace.mult, if_pos w.2, pow_one, rEmb_apply, ← Real.norm_eq_abs,
+  rw [w.2.mult_eq_one, pow_one, rEmb_apply, ← Real.norm_eq_abs,
     InfinitePlace.norm_embedding_of_isReal]
 
 theorem absNorm_eq_prod_of_mem (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) {T : ℝ} {n : 𝓞 F}

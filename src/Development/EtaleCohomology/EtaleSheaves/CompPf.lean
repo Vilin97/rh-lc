@@ -18,7 +18,7 @@ theorem eval_map_rr (p : R[X]) (x : D) :
   rw [eval₂_map]; rfl
 
 theorem alg_of (x : D) (p : R[X]) (n : ℕ) (hn : h (p.coeff n) ≠ 0) (hp : p.eval₂ h x = 0) :
-    letI : Algebra h.range D := h.range.subtype.toAlgebra
+    letI : Algebra h.range D := h.range.subtype.toAlgebra;
     IsAlgebraic h.range x := by
   letI : Algebra h.range D := h.range.subtype.toAlgebra
   refine ⟨p.map h.rangeRestrict, ?_, ?_⟩
@@ -29,7 +29,7 @@ theorem alg_of (x : D) (p : R[X]) (n : ℕ) (hn : h (p.coeff n) ≠ 0) (hp : p.e
   · rw [aeval_def]; exact (eval_map_rr h p x).trans hp
 
 theorem of_alg (x : D) :
-    letI : Algebra h.range D := h.range.subtype.toAlgebra
+    letI : Algebra h.range D := h.range.subtype.toAlgebra;
     IsAlgebraic h.range x → ∃ p : R[X], (∃ n, h (p.coeff n) ≠ 0) ∧ p.eval₂ h x = 0 := by
   letI : Algebra h.range D := h.range.subtype.toAlgebra
   rintro ⟨q, hq0, hq⟩

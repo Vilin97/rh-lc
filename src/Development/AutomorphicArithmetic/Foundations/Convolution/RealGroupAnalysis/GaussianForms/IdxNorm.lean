@@ -21,7 +21,7 @@ private theorem act_meas {F : Type} [Field F] [NumberField F] (g : GL (Fin 4) (A
 private theorem idx_of_equiv {F : Type} [Field F] [NumberField F] (δ : F) (b a : A F) (c : ℂ) (r : ℝ) (hr : 0 ≤ r)
     (T : V4 F ≃ᵐ V4 F) (hadd : ∀ x y, T (x + y) = T x + T y) (hq : ∀ v, q4 δ (T v) = a * q4 δ v)
     (hm : Measure.map T (adeleMeasurePi F) = ENNReal.ofReal r • adeleMeasurePi F (ι := Fin 4))
-    (hS : ∀ φ : S4 F, (fun v => φ.1 (T.symm v)) ∈ schwartzBruhatPi F (Fin 4))
+    (hS : ∀ φ : S4 F, (fun v => φ.1 (T.symm v)) ∈ schwartzBruhatPi (K := F) (ι := Fin 4))
     (hc : IsIdx δ b c) : IsIdx δ (b * a) (c * (r : ℂ)) := by
   intro φ
   have hL := (UpperTheory.ConvolutionTheory.R2.C.lamGen).2.2 (V4 F) (V4 F) (adeleMeasurePi F) (adeleMeasurePi F) T

@@ -396,6 +396,8 @@ theorem main_gen (X : ProvA) (H2 : admH2 X) (DS1 : DiscreteSeriesBlattner X) (Du
     intro z
     rw [inner_opE _ (fockRep F) hint (continuous_eFun D v), ← integral_const_mul]
     congr 1
+    funext g
+    unfold eFun
     ring
   set x₀ := opE (X.grp p q) (fockRep F).π (eFun D v) (F.ι Φ) with hx₀
   have horth : inner ℂ x₀ (F.ι Φ - x₀) = 0 := (hproj (F.ι Φ)).2 _ (hproj (F.ι Φ)).1

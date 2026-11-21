@@ -57,12 +57,7 @@ theorem isLattice_move {E : Type} [Field E] [NumberField E] {m : ℕ} (Λ Λ' : 
     · rintro ⟨y, hy, rfl⟩
       exact (h y).2 hy
   subst hmap
-  refine ⟨hΛ.fg.map _, ?_⟩
-  rw [Submodule.map_coe, LinearMap.coe_restrictScalars, Submodule.span_image, hΛ.span_eq_top,
-    Submodule.map_top, LinearMap.range_eq_top]
-  intro v
-  refine ⟨((γ⁻¹ : GL (Fin m) E) : Matrix (Fin m) (Fin m) E) *ᵥ v, ?_⟩
-  simp [Matrix.mulVec_mulVec]
+  exact Submodule.IsLattice.of_fg E (hΛ.fg.map _)
 
 theorem gram_mul {E : Type} [CommRing E] [StarRing E] {n p q : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (A : Matrix (Fin n) (Fin p) E) (B : Matrix (Fin n) (Fin q) E) (P : Matrix (Fin p) (Fin p) E)

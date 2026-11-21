@@ -27,7 +27,7 @@ theorem map_mem_flagStep {i : Ω →+* Ω'} {j : E →+ F} (hj : ∀ (a : Ω) (e
     obtain ⟨k, hk, rfl⟩ := hx
     exact Submodule.subset_span ⟨k, hk, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul a x _ hx => rw [hj]; exact Submodule.smul_mem _ _ hx
 
 theorem flagStep_map_eq {i : Ω →+* Ω'} {j : E →+ F} (hj : ∀ (a : Ω) (e : E), j (a • e) = i a • j e) {r : ℕ}
@@ -65,7 +65,7 @@ theorem pull_isFrameAt (hd : Dominates ξ' ξ f i) (hj : IsExtOver i j) {L : Lat
       obtain ⟨k, rfl⟩ := hx
       exact Submodule.subset_span ⟨k, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul a x _ hx =>
       have : j (a • x) = (⟨i a, hreg a a.2⟩ : regAt ξ' p') • j x := hj.1 (a : Ω) x
       rw [this]
@@ -279,8 +279,8 @@ variable {Ω₀ Ω₀' Ω Ω' : Type} [Field Ω₀] [Field Ω₀'] [Field Ω] [F
 
 theorem finrank_adjoin_pull (fn : Ω₀ →+* Ω) (fn' : Ω₀' →+* Ω') (ψ : Ω₀ ≃+* Ω₀') (i : Ω →+* Ω')
     (hc : fn'.comp ψ.toRingHom = i.comp fn) {T : Type} (w : T → Ω) :
-    letI := fn.toAlgebra
-    letI := fn'.toAlgebra
+    letI := fn.toAlgebra;
+    letI := fn'.toAlgebra;
     Module.finrank (IntermediateField.adjoin Ω₀' (Set.range fun q => i (w q))) Ω' =
       Module.finrank i.fieldRange Ω' * Module.finrank (IntermediateField.adjoin Ω₀ (Set.range w)) Ω := by
   letI := fn.toAlgebra
@@ -347,7 +347,7 @@ theorem genericFlag_pull (fn : Ω₀ →+* Ω) (fn' : Ω₀' →+* Ω') (ψ : Ω
     (V' : S → Submodule Ω₀' E) (hV : ∀ s e, e ∈ V' s ↔ e ∈ V s) (b : ∀ s, Fin (r s) → F) (d : ℕ)
     [FiniteDimensional i.fieldRange Ω']
     (h : letI := fn.toAlgebra; IsGenericFlag (Ω' := Ω) j₀ V b d) :
-    letI := fn'.toAlgebra
+    letI := fn'.toAlgebra;
     IsGenericFlag (Ω' := Ω') (j.comp j₀) V' (fun s k => j (b s k)) (Module.finrank i.fieldRange Ω' * d) := by
   letI := fn.toAlgebra
   letI := fn'.toAlgebra
@@ -392,7 +392,7 @@ theorem genericFlag_pull (fn : Ω₀ →+* Ω) (fn' : Ω₀' →+* Ω') (ψ : Ω
       funext k
       rw [map_sum]
       exact Finset.sum_congr rfl fun l _ => (hjs _ _).symm]
-    exact flagStep_map_eq hj.1 (hfl σ) s
+      exact flagStep_map_eq hj.1 (hfl σ) s
   · exact hai.ringHom_of_comp_eq ψ i ψ.surjective i.injective hc
   · exact Nat.mul_pos Module.finrank_pos hd0
   · have := finrank_adjoin_pull fn fn' ψ i hc (fun q : Σ σ, Fin (r σ) × Fin (r σ) => u q.1 q.2.1 q.2.2)

@@ -155,8 +155,8 @@ theorem exists_coeff : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
           Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) i j :=
       fun i j => (continuous_apply j).comp ((continuous_apply i).comp hM)
     simp only [hR, Formalism.UG.hform, lin, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct]
-    exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
-      continuous_const.mul (continuous_finset_sum _ fun k _ => (hMij j k).mul continuous_const)
+    exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
+      continuous_const.mul (continuous_finsetSum _ fun k _ => (hMij j k).mul continuous_const)
   · intro s x
     constructor
     · rintro rfl b

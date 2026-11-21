@@ -35,7 +35,7 @@ private noncomputable def ell : (Fin 4 → TR.Rinf F) →L[ℝ] (Fin 4 → mixed
     (continuous_pi fun i => (homeomorphMixedSpace F).continuous.comp
       ((TR.continuous_infEq F).comp (continuous_apply i)))
 
-private theorem differentiable_schwartz_translate (v : V4 F) {Φ : V4 F → ℂ} (h : Φ ∈ schwartzBruhatPi F (Fin 4)) :
+private theorem differentiable_schwartz_translate (v : V4 F) {Φ : V4 F → ℂ} (h : Φ ∈ schwartzBruhatPi (K := F) (ι := Fin 4)) :
     Differentiable ℝ fun x : Fin 4 → TR.Rinf F => Φ fun i => v i + TR.sInf F (x i) := by
   induction h using Submodule.span_induction with
   | mem G hG =>

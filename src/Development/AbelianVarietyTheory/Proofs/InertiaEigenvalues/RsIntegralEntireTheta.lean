@@ -367,7 +367,7 @@ variable (m) in
 def colSmooth (F : (Fin m → Ad E) → ℂ) (φ : GA E n → ℂ) (g : GA E n) : ℂ :=
   ∫ x, F x * φ (g * colGL m x) ∂GJMatrix.adeleMeasurePi E
 
-theorem continuous_colSmooth {F : (Fin m → Ad E) → ℂ} (hF : F ∈ GJMatrix.schwartzBruhatPi E (Fin m))
+theorem continuous_colSmooth {F : (Fin m → Ad E) → ℂ} (hF : F ∈ GJMatrix.schwartzBruhatPi (K := E) (ι := Fin m))
     {φ : GA E n → ℂ} (hc : Continuous φ) {C : ℝ} (hC : ∀ g, ‖φ g‖ ≤ C) : Continuous (colSmooth m F φ) :=
   continuous_of_dominated (bound := fun x => ‖F x‖ * C)
     (fun g => ((GJMatrix.continuous_of_mem_schwartzBruhatPi hF).mul
@@ -377,7 +377,7 @@ theorem continuous_colSmooth {F : (Fin m → Ad E) → ℂ} (hF : F ∈ GJMatrix
     (.of_forall fun x => continuous_const.mul (hc.comp (continuous_id.mul continuous_const)))
 
 theorem colSmooth_bound (hmn : m < n) {φ : GA E n → ℂ} (hφ : φ ∈ goodFns n) {F : (Fin m → Ad E) → ℂ}
-    (hF : F ∈ GJMatrix.schwartzBruhatPi E (Fin m)) (N : ℕ) :
+    (hF : F ∈ GJMatrix.schwartzBruhatPi (K := E) (ι := Fin m)) (N : ℕ) :
     ∃ C : ℝ, ∀ g, InS m g → ‖colSmooth m F φ g‖ ≤ C * (min (detAbs g) (detAbs g)⁻¹) ^ N := by
   obtain ⟨⟨L, hL, hsupp⟩, hint⟩ := GlobalTheory.T.schwartz_bruhat_integrable_moments E m F hF
   obtain ⟨C, hC0, hC⟩ := norm_le_of_inS hmn hφ hL N

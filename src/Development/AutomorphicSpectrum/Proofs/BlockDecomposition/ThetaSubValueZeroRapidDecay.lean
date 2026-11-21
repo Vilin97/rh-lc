@@ -256,7 +256,7 @@ theorem exists_decay_boundC_tensor (w : InfinitePlace k) (φ : 𝓢(ι → mixed
     exact hnn
 
 theorem exists_decay_boundC (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi k ι) {C : Set (GL ι 𝔸[k])} (hC : IsCompact C) (r : ℕ) :
+    (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) {C : Set (GL ι 𝔸[k])} (hC : IsCompact C) (r : ℕ) :
     ∃ u : (ι → k) → ℝ, Summable u ∧ ∀ h ∈ C, ∀ t : {x : ℝ // 0 < x}, 1 ≤ (t : ℝ) →
       ∀ ξ : ι → k, ξ ≠ 0 →
         ‖F (((scalC (moduleSection w t) * h : GL ι 𝔸[k]) : Matrix ι ι 𝔸[k]) *ᵥ ratV ξ)‖ ≤
@@ -280,7 +280,7 @@ theorem exists_decay_boundC (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
     exact mul_le_mul_of_nonneg_left (hGu a ha t ht ξ hξ) (norm_nonneg c)
 
 theorem exists_norm_thetaC_sub_le : ∀ {k : Type} [Field k] [NumberField k], ∀ {ι : Type} [Fintype ι]
-    [DecidableEq ι], ∀ (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi k ι)
+    [DecidableEq ι], ∀ (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι))
     {C : Set (GL ι 𝔸[k])} (hC : IsCompact C) (r : ℕ), ∃ M : ℝ, ∀ h ∈ C,
       ∀ t : {x : ℝ // 0 < x}, 1 ≤ (t : ℝ) →
       ‖thetaC F (scalC (moduleSection w t) * h) - F 0‖ ≤ ((t : ℝ) ^ r)⁻¹ * M := by

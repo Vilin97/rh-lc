@@ -276,9 +276,9 @@ theorem tensor_comp_twistCoord (φ : 𝓢(Fin n × Fin n → mixedSpace K, ℂ))
     twistCoord_map finHom]
 
 theorem comp_twistCoord_mem {F : (Fin n × Fin n → 𝔸[K]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi K (Fin n × Fin n)) (a b : GL (Fin n) 𝔸[K]) :
+    (hF : F ∈ schwartzBruhatPi (K := K) (ι := Fin n × Fin n)) (a b : GL (Fin n) 𝔸[K]) :
     F ∘ twistCoord (a : Matrix (Fin n) (Fin n) 𝔸[K]) (b : Matrix (Fin n) (Fin n) 𝔸[K]) ∈
-      schwartzBruhatPi K (Fin n × Fin n) := by
+      schwartzBruhatPi (K := K) (ι := Fin n × Fin n) := by
   induction hF using Submodule.span_induction with
   | mem G hG =>
     obtain ⟨φ, g, hg, rfl⟩ := hG

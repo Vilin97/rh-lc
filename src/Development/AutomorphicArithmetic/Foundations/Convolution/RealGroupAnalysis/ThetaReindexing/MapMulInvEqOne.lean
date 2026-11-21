@@ -67,7 +67,7 @@ end UpperTheory.ConvolutionTheory.R2.D
 
 theorem UpperTheory.ConvolutionTheory.R2.D.sClos :
     ∀ (F : Type) [Field F] [NumberField F] (ι : Type) [Fintype ι] [DecidableEq ι] (g : GL ι (A F)) (φ : (ι → A F) → ℂ),
-    φ ∈ schwartzBruhatPi F ι → (fun v => φ (g.val *ᵥ v)) ∈ schwartzBruhatPi F ι := by
+    φ ∈ schwartzBruhatPi (K := F) (ι := ι) → (fun v => φ (g.val *ᵥ v)) ∈ schwartzBruhatPi (K := F) (ι := ι) := by
   intro F _ _ ι _ _ g φ hφ
   induction hφ using Submodule.span_induction with
   | mem G hG =>

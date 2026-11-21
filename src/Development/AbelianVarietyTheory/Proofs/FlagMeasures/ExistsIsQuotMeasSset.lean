@@ -32,6 +32,7 @@ theorem exists_isQuotMeas_Sset : ∀ (k r : ℕ) (z : Fin (2 * r + k + 1) → �
   have hR' : PI.IsRightInvM (Sset k r z) μS := by
     intro s hs
     rw [hc, Measure.map_smul, hR s hs]
+    exact (GlobalTheory.ProdHaar.measurable_rmulQ s).aemeasurable
   obtain ⟨hGg, hGH⟩ := GlobalTheory.unitaryGroup_matGroup_unimodular k r
   exact GlobalTheory.QuotWeil.exists_isQuotM _ _ _ μG μS hGg hSg hsub (hGH μG hG).1 hS' hR'
 

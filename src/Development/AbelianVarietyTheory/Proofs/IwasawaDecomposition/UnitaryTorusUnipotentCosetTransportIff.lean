@@ -133,9 +133,11 @@ theorem cosetT_tMat_unit {σ : K →+* K} {u : K} (hσ : σ u = u) (hv : Valued.
         have h3 : ¬ (n - m ≤ (i.rev : ℕ) ∧ n - 1 - (i.rev : ℕ) < m) := by omega
         simp only [dif_neg h1, dif_neg h1', dif_neg h2, dif_neg h3, map_one, one_mul]
   obtain ⟨t, ht, ht'⟩ := fSatake_diag_exists f hf
-  refine ⟨t, ht, fSatake_diag_mem_K ht ht' (fun i => ?_)⟩
-  simp only [f]
-  split_ifs <;> simp [map_zpow₀, hv]
+  have hfval : ∀ i, Valued.v (f i) = 1 := by
+    intro i
+    simp only [f]
+    split_ifs <;> simp [map_zpow₀, hv]
+  exact ⟨t, ht, fSatake_diag_mem_K ht ht' hfval⟩
 
 theorem cosetT_guMap_mem_KU (g : K ≃+* K) {σ σ' : K →+* K} (hg : ∀ x, g (σ x) = σ' (g x))
     (hint : ∀ x, x ∈ intL K ↔ g x ∈ intL K) {n : ℕ} {k : GU σ n} (hk : k ∈ KU σ n) :

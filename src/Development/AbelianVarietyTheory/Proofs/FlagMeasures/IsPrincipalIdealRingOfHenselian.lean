@@ -226,7 +226,8 @@ theorem algebraMap_inj (L : LocE F E) : Function.Injective (algebraMap F E) := b
   exact (algebraMap F E).injective
 
 theorem algebraMap_mem_iff (L : LocE F E) (c : F) : algebraMap F E c ∈ L.O ↔ c ∈ 𝒪[F] := by
-  rw [L.O_def, isIntegral_algebraMap_iff (algebraMap_inj L), IsIntegrallyClosed.isIntegral_iff]
+  have : Nontrivial E := Module.nontrivial_of_finrank_pos (R := F) (by rw [L.rank]; omega)
+  rw [L.O_def, isIntegral_algebraMap_iff, IsIntegrallyClosed.isIntegral_iff]
   constructor
   · rintro ⟨y, rfl⟩; exact y.2
   · intro h; exact ⟨⟨c, h⟩, rfl⟩

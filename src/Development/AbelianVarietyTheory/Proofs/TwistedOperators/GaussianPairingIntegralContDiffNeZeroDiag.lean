@@ -163,7 +163,8 @@ theorem fderiv_gaussMoment_apply (ys : List (V →L[ℝ] V →L[ℝ] ℂ)) {B : 
     ContinuousLinearMap.integral_apply (integrable_integrandDeriv μ hε hBε ys)]
   unfold gaussMoment
   congr 1
-    List.map_cons, List.prod_cons]
+  funext x
+  simp [integrandDeriv, diagProd]
   ring
 
 theorem contDiffOn_gaussMoment (n : ℕ) :
@@ -198,7 +199,7 @@ def pairForm (M : ℝ → V →ₗ[ℝ] V →ₗ[ℝ] ℂ) (p : ℝ × ℝ) : V 
 omit [MeasurableSpace V] [BorelSpace V] in
 @[simp] theorem pairForm_apply (M : ℝ → V →ₗ[ℝ] V →ₗ[ℝ] ℂ) (p : ℝ × ℝ) (x y : V) :
     pairForm M p x y = M p.1 x y + starRingEnd ℂ (M p.2 x y) := by
-  simp [pairForm]
+  simp [pairForm, toCont]
 
 theorem gauss_pairing_smooth_ne_zero (M : ℝ → V →ₗ[ℝ] V →ₗ[ℝ] ℂ)
     (hM : ∀ x y, ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) fun t => M t x y)

@@ -278,7 +278,7 @@ theorem exists_prim {l : ℕ} [Fact l.Prime] {K : FinExt l} {s : ℕ} {LL : FinE
     ∃ μ : ↥(OL LL), IsPrimitiveRoot μ (l ^ s) := by
   have hp : l.Prime := Fact.out
   haveI : NeZero ((l ^ s : ℕ) : Om l) := ⟨by exact_mod_cast (pow_pos hp.pos s).ne'⟩
-  obtain ⟨z, hz⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot (Om l) (l ^ s)
+  obtain ⟨z, hz⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot (Om l) (l ^ s)
   have h1 : z ∈ Ks K s :=
     (le_sup_right : _ ≤ Ks K s) (IntermediateField.subset_adjoin _ _ hz.pow_eq_one)
   have h2 : z ∈ LL.1 := h.2.2.2 (Ks K s).val ⟨z, h1⟩

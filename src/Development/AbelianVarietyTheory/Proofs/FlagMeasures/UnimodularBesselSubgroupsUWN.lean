@@ -57,6 +57,7 @@ theorem rightInv_of_multiple {S : Set (Mat k r)} (hS : PI.IsMatGroup S) {μ ν :
   obtain ⟨c, -, -, hc⟩ := (GlobalTheory.MatHaar.haar_unique_locFinite_openPos _ S ν hS hν).1 μ hL
   have hνs : ν.map (rmulM s) = ν := hR s hs
   rw [hc, Measure.map_smul, hνs]
+  exact (continuous_rmulM s).measurable.aemeasurable
 
 private theorem exists_isHaarOnM_of_isMatGroup {m : ℕ} {G : Set (Matrix (Fin m) (Fin m) ℂ)} (hG : PI.IsMatGroup G) :
     ∃ μ : Measure (PI.MtM m), PI.IsHaarOnM G μ := by

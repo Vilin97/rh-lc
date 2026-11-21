@@ -121,7 +121,7 @@ theorem _root_.GlobalTheory.GaugeSubHaar.isGaugeSub_haar : ∀ (n : ℕ) (ε : F
   have hsmul := Measure.isMulLeftInvariant_eq_smul ν' ν
   set c := ν'.haarScalarFactor ν with hc
   have hμc : μ' = c • μ := by
-    rw [← hmap', hsmul, Measure.map_smul, hmap]
+    rw [← hmap', hsmul, Measure.map_smul c hme.measurable.aemeasurable, hmap]
   obtain ⟨-, -, h3⟩ := hμ
   obtain ⟨-, -, h3'⟩ := hμ'
   rw [hμc] at h3'

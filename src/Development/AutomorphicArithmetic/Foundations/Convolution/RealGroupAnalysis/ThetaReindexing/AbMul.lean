@@ -67,7 +67,7 @@ theorem UpperTheory.ConvolutionTheory.R2.D.lEx :
     ∀ h φ v, (L h φ).1 v = (((ab (nu F h))⁻¹ : ℝ) : ℂ) * φ.1 (D.act h⁻¹ v) := by
   intro F E _ _ _ _ _ D
   obtain ⟨ρ, hρ, -, -⟩ := UpperTheory.ConvolutionTheory.R2.D.actMat F E D
-  refine exHom (schwartzBruhatPi F (Fin 4)) (fun h => (((ab (nu F h))⁻¹ : ℝ) : ℂ)) D.act ?_ ?_ ?_ ?_ ?_
+  refine exHom (schwartzBruhatPi (K := F) (ι := Fin 4)) (fun h => (((ab (nu F h))⁻¹ : ℝ) : ℂ)) D.act ?_ ?_ ?_ ?_ ?_
   · show (((ab (nu F (1 : GL (Fin 2) (A E))))⁻¹ : ℝ) : ℂ) = 1
     rw [nuOne, abOne]
     simp

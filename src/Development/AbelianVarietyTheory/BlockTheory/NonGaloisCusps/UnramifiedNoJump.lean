@@ -84,7 +84,7 @@ def IsoLat (ρ ρ' : Γ →* GL (Fin n) A) : Prop :=
 
 end Rep
 
-variable (D : D7)
+variable (D : _root_.Formalism.BasicNotions.D7)
 
 def cycField (l : ℕ) : IntermediateField D.host.E D.nd.Om :=
   IntermediateField.adjoin D.host.E {x : D.nd.Om | x ^ l = 1}

@@ -42,7 +42,7 @@ section Perm
 variable {K} {ι : Type*} [Fintype ι]
 
 theorem comp_perm_mem_schwartzBruhatPi (σ : ι ≃ ι) {F : (ι → 𝔸[K]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi K ι) : (fun z ↦ F (fun i ↦ z (σ i))) ∈ schwartzBruhatPi K ι := by
+    (hF : F ∈ schwartzBruhatPi (K := K) (ι := ι)) : (fun z ↦ F (fun i ↦ z (σ i))) ∈ schwartzBruhatPi (K := K) (ι := ι) := by
   induction hF using Submodule.span_induction with
   | mem G hG =>
     obtain ⟨φ, g, hg, rfl⟩ := hG
@@ -74,7 +74,7 @@ def adelicMatrixMeasure : Measure (Matrix (Fin n) (Fin n) 𝔸[K]) :=
   matrixMeasure (adeleMeasure K)
 
 def matrixSchwartzBruhat : Submodule ℂ (Matrix (Fin n) (Fin n) 𝔸[K] → ℂ) :=
-  (schwartzBruhatPi K (Fin n × Fin n)).comap
+  (schwartzBruhatPi (K := K) (ι := Fin n × Fin n)).comap
     (LinearMap.funLeft ℂ ℂ (matrixCoordEquiv (n := n) (X := 𝔸[K])).symm)
 
 variable {K n}
@@ -82,7 +82,7 @@ variable {K n}
 theorem mem_matrixSchwartzBruhat {Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ} :
     Φ ∈ matrixSchwartzBruhat K n ↔
       (fun z : Fin n × Fin n → 𝔸[K] ↦ Φ (Matrix.of fun i j ↦ z (i, j))) ∈
-        schwartzBruhatPi K (Fin n × Fin n) :=
+        schwartzBruhatPi (K := K) (ι := Fin n × Fin n) :=
   Iff.rfl
 
 

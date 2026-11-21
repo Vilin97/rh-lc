@@ -180,7 +180,7 @@ variable [NumberField E]
 
 theorem isSchwartzBruhat_iff {d : ℕ} (b : Module.Basis (Fin d) F E)
     (Φ : (Fin 1 → Fin M → AF F ⊗[F] E) → ℂ) :
-    IsSchwartzBruhat Φ ↔ Φ ∘ (crd (AF F) b M).symm ∈ schwartzBruhatPi F (Fin M × Fin d) := by
+    IsSchwartzBruhat Φ ↔ Φ ∘ (crd (AF F) b M).symm ∈ schwartzBruhatPi (K := F) (ι := Fin M × Fin d) := by
   constructor
   · rintro ⟨k, Φinf, Φf, hi, hf, hs⟩
     choose φ hφ using fun i => exists_schwartz_of_arch b (hi i)
@@ -196,7 +196,7 @@ theorem isSchwartzBruhat_iff {d : ℕ} (b : Module.Basis (Fin d) F E)
     rw [key]
     exact Submodule.sum_mem _ fun i _ => schwartzBruhatTensorPi_mem _ (hg i)
   · intro h
-    have main : ∀ f ∈ schwartzBruhatPi F (Fin M × Fin d),
+    have main : ∀ f ∈ schwartzBruhatPi (K := F) (ι := Fin M × Fin d),
         IsSchwartzBruhat (f ∘ crd (AF F) b M) := by
       intro f hf
       induction hf using Submodule.span_induction with

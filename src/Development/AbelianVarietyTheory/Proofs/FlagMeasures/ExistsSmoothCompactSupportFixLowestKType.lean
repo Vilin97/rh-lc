@@ -45,7 +45,7 @@ private lemma contDiff_hs_sub_one {n : ℕ} :
   have hsub : ContDiff ℝ ∞ (fun y : Matrix (Fin n) (Fin n) ℂ => y - 1) :=
     contDiff_id.sub contDiff_const
   have hent : ContDiff ℝ ∞ (fun y : Matrix (Fin n) (Fin n) ℂ => (y - 1) i j) :=
-    (contDiff_apply_apply ℝ ℂ i j).comp hsub
+    (contDiff_apply_apply ℝ i j).comp hsub
   exact (contDiff_norm_sq ℝ).comp hent
 
 theorem exists_conjInvariant_bump (n : ℕ) (ε : Fin n → Bool) (U : Set (UJ ε))

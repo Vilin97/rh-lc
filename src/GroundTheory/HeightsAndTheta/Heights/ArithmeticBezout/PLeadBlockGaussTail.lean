@@ -32,7 +32,8 @@ theorem lintegral_pi_prod {E : Type*} [MeasurableSpace E] (μ : Measure E) [Sigm
           = ∫⁻ x, g (MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n + 1) => E) 0 x)
               ∂Measure.pi (fun _ => μ) := by
             refine lintegral_congr fun x => ?_
-            simp [g, Fin.prod_univ_succ, MeasurableEquiv.piFinSuccAbove, Fin.insertNthEquiv] <;> rfl
+            simp [g, Fin.prod_univ_succ, MeasurableEquiv.piFinSuccAbove, Fin.insertNthEquiv]
+            rfl
         _ = ∫⁻ a, g a ∂(μ.prod (Measure.pi fun _ : Fin n => μ)) :=
             e.lintegral_comp_emb (MeasurableEquiv.measurableEmbedding _) g
         _ = (∫⁻ y, f 0 y ∂μ) * ∫⁻ x, ∏ i : Fin n, f i.succ (x i) ∂(Measure.pi fun _ : Fin n => μ) :=

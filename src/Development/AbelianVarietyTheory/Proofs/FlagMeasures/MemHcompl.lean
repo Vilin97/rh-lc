@@ -177,7 +177,10 @@ theorem mem_hcompl {K : Type} [Field K] [NumberField K] [StarRing K] {P : Ideal 
   constructor
   · intro hs
     have := hP.isPrime
-    exact (Submonoid.closure_le (S := P.primeCompl)).2 (fun _ a => a.1) hs
+    induction hs using Submonoid.closure_induction with
+    | mem x hx => exact hx.1
+    | one => exact fun h => hP.ne_top ((Ideal.eq_top_iff_one P).2 h)
+    | mul a b _ _ ha hb => exact fun h => (hP.isPrime.mem_or_mem h).elim ha hb
   · intro hs
     refine Submonoid.subset_closure ⟨hs, fun t e ht => hs ?_⟩
     rw [← hc]

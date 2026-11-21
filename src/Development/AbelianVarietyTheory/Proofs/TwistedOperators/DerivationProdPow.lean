@@ -138,6 +138,8 @@ private theorem coordDer_lead_eq_sum_det_replaced (z : Fin p × Fin r → σ) (h
   by_cases h : Fin.castLE hp i = b
   · rw [if_pos h]
     congr 2
+    funext d
+    simp only [Matrix.of_apply, rowDer_X z hz, if_pos h]
   · rw [if_neg h]
     apply Matrix.det_eq_zero_of_row_eq_zero i
     intro d

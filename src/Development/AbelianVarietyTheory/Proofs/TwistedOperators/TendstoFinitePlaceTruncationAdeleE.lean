@@ -59,6 +59,7 @@ theorem tendsto_sum_placeIdem {F : Type} [Field F] [NumberField F]
 
 theorem tendsto_truncation : ∀ (D : D7) (ε : HeightOneSpectrum (𝓞 D.host.F) → AF D.host.F), (∀ v, IsPlaceIdem D v (ε v)) → ∀ a : AE D, infPart D a = 0 → Filter.Tendsto (fun s : Finset (HeightOneSpectrum (𝓞 D.host.F)) => algebraMap (AF D.host.F) (AE D) (∑ v ∈ s, ε v) * a) Filter.atTop (nhds a) := by
   intro D ε hε a ha
+  simp only [IsPlaceIdem] at hε
   choose α hαε hα1 hα0 using hε
   have hsum : ∀ s : Finset (HeightOneSpectrum (𝓞 D.host.F)),
       ∑ v ∈ s, ε v = pairA D.host.F 0 (∑ v ∈ s, α v) := by

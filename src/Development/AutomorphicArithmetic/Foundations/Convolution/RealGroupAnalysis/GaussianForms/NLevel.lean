@@ -52,7 +52,7 @@ private theorem tensor_case {F : Type} [Field F] [NumberField F] (δ : F)
     rw [hone, one_mul]
 
 private theorem span_case {F : Type} [Field F] [NumberField F] (δ : F) {f : V4 F → ℂ}
-    (hf : f ∈ schwartzBruhatPi F (Fin 4)) :
+    (hf : f ∈ schwartzBruhatPi (K := F) (ι := Fin 4)) :
     ∀ᶠ b in 𝓝 (0 : A F), b.1 = 0 → ∀ v, ψ (b * q4 δ v) * f v = f v := by
   refine Submodule.span_induction (p := fun f _ =>
     ∀ᶠ b in 𝓝 (0 : A F), b.1 = 0 → ∀ v, ψ (b * q4 δ v) * f v = f v) ?_ ?_ ?_ ?_ hf

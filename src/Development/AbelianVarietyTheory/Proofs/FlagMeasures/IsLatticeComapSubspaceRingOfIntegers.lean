@@ -33,12 +33,12 @@ theorem isLattice_comap_subtype_ringOfIntegers {K V : Type} [Field K] [NumberFie
     [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
     (Λ : Submodule (𝓞 K) V) (hΛ : Submodule.IsLattice K Λ) (W : Submodule K V) :
     Submodule.IsLattice K (Λ.comap (W.subtype.restrictScalars (𝓞 K))) := by
-  first
-  | exact @_root_.GlobalTheory.SmulMemComapLattice.isLattice_comap_subtype
-  | exact _root_.GlobalTheory.SmulMemComapLattice.isLattice_comap_subtype
-  | (apply _root_.GlobalTheory.SmulMemComapLattice.isLattice_comap_subtype <;> assumption)
-  | (intros; apply _root_.GlobalTheory.SmulMemComapLattice.isLattice_comap_subtype <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.SmulMemComapLattice.isLattice_comap_subtype <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.SmulMemComapLattice.isLattice_comap_subtype ..)
+  refine ⟨?_, ?_⟩
+  · have hinj : Function.Injective (W.subtype.restrictScalars (𝓞 K)) :=
+      W.injective_subtype
+    refine Submodule.fg_of_fg_map_injective _ hinj ?_
+    exact Submodule.FG.of_le hΛ.fg (Submodule.map_comap_le _ _)
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 
 end GlobalTheory

@@ -40,7 +40,10 @@ theorem modular_aut (e : G ≃* G) (hc : Continuous e) (hc' : Continuous e.symm)
   refine smul_inj (μ := μ.map e) ?_
   rw [← map_mul_right_eq, ← Measure.map_smul, ← map_mul_right_eq,
     Measure.map_map (measurable_mul_const _) hc.measurable, Measure.map_map hc.measurable (measurable_mul_const _)]
-  congr 1
+  · congr 1
+    funext x
+    exact (map_mul e x g).symm
+  · exact hc.aemeasurable
 
 theorem modular_bdd : ∃ K ∈ nhds (1 : G), ∃ C : ℝ≥0, ∀ g ∈ K, Measure.modularCharacter g ≤ C := by
   let μ : Measure G := Measure.haar
@@ -183,7 +186,7 @@ theorem tendsto_conj (l : ℕ) (L : Fin c → ℕ) (g : GL (n ⊕ Fin c) k)
     rw [mul_right_comm, ← mul_pow, Units.inv_mul, one_pow, one_mul]
   by_cases hR : r.isRight ∨ s.isRight
   · have hlim : fromBlocks g.val.toBlocks₁₁ 0 0 1 r s = (1 : Matrix (n ⊕ Fin c) (n ⊕ Fin c) k) r s := by
-      rcases r with r | r <;> rcases s with s | s <;> simp_all [one_apply]
+      rcases r with r | r <;> rcases s with s | s <;> simp_all [Matrix.one_apply, Sum.inr.injEq]
     rw [hlim]
     by_cases hle : lev s ≤ lev r
     · rw [hg r s hR hle]
@@ -230,7 +233,7 @@ theorem unimodular : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace
     rw [hS]
     intro r s hR _
     change fromBlocks x.val 0 0 1 r s = _
-    rcases r with r | r <;> rcases s with s | s <;> simp_all [one_apply]
+    rcases r with r | r <;> rcases s with s | s <;> simp_all [Matrix.one_apply, Sum.inr.injEq]
 
   let σ : n ⊕ Fin c ≃ n ⊕ Fin c := Equiv.sumCongr (Equiv.refl n) Fin.revPerm
   have hσ : ∀ r, σ (σ r) = r := fun r => by rcases r with r | r <;> simp [σ]
@@ -245,7 +248,7 @@ theorem unimodular : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace
     change (g⁻¹ : GL (n ⊕ Fin c) k).val (σ s) (σ r) = _
     rw [(hS _).1 (S.inv_mem hg) (σ s) (σ r) (by rw [hσR, hσR]; exact hR.symm)
       (by have := hσl r; have := hσl s; omega)]
-    simp only [one_apply, σ.apply_eq_iff_eq, eq_comm]
+    simp only [Matrix.one_apply, σ.apply_eq_iff_eq, eq_comm]
   have hchar : ∀ x : GL n k, Measure.modularCharacter (⟨embX c x, hX x⟩ : S) = 1 := by
     refine GlobalTheory.gl_character_eq_one_of_transpose_inv k n (Measure.modularCharacter.comp ((embX c).codRestrict S hX)) fun g g' h => ?_
     refine modular_restrict S (flipAut σ hσ) (continuous_flipInv σ) (continuous_flipInv σ) hflip hflip _ _ ?_
@@ -253,7 +256,7 @@ theorem unimodular : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace
     change fromBlocks g'.val 0 0 1 r s = ((embX c g)⁻¹ : GL (n ⊕ Fin c) k).val (σ s) (σ r)
     rw [← map_inv, h]
     change _ = fromBlocks (g⁻¹ : GL n k).val 0 0 1 (σ s) (σ r)
-    rcases r with r | r <;> rcases s with s | s <;> simp [σ, one_apply, eq_comm]
+    rcases r with r | r <;> rcases s with s | s <;> simp [σ, Matrix.one_apply, eq_comm, Sum.inr.injEq]
 
   have hconj : ∀ (t : kˣ), ∀ g ∈ S, (levDiag lev t)⁻¹ * g * levDiag lev t ∈ S := fun t g hg => by
     rw [hS]

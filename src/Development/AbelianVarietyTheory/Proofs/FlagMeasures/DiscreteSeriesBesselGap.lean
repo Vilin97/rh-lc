@@ -265,9 +265,17 @@ theorem nzOn_of_mass (hy : Hyps) {k r : ℕ} {ε : Fin (2 * r + k + 1) → Bool}
     refine aesm_of_contOn (s := {q : Mt k r × Mt k r | Matrix.of q.1 ∈ GG k r ∧ Matrix.of q.2 ∈ GG k r}) ?_
       ((isClosed_UH.preimage c1).inter (isClosed_UH.preimage c2)).measurableSet
       ((Measure.quasiMeasurePreserving_fst.ae hGae).and (Measure.quasiMeasurePreserving_snd.ae hνae))
-    exact (continuous_star.comp_continuousOn (hmc.comp continuous_fst.continuousOn fun q hq => hq.1)).mul
-      (((hΦ w hw).comp c2.continuousOn fun q hq => hq.2).inner
-        ((hΦ w hw).comp (c2.matrix_mul c1).continuousOn fun q hq => Formalism.FourierDecayAlt.P.DDSmoothness.uh_mul hq.2 hq.1))
+    have hm' : ContinuousOn (fun q : Mt k r × Mt k r => m q.1)
+        {q | Matrix.of q.1 ∈ GG k r ∧ Matrix.of q.2 ∈ GG k r} :=
+      hmc.comp continuous_fst.continuousOn (fun q hq => hq.1)
+    have hΦ2 : ContinuousOn (fun q : Mt k r × Mt k r => B (R.σ (Matrix.of q.2) w))
+        {q | Matrix.of q.1 ∈ GG k r ∧ Matrix.of q.2 ∈ GG k r} :=
+      (hΦ w hw).comp c2.continuousOn (fun q hq => hq.2)
+    have hΦ21 : ContinuousOn (fun q : Mt k r × Mt k r => B (R.σ (Matrix.of q.2 * Matrix.of q.1) w))
+        {q | Matrix.of q.1 ∈ GG k r ∧ Matrix.of q.2 ∈ GG k r} :=
+      (hΦ w hw).comp (c2.matrix_mul c1).continuousOn
+        (fun q hq => Formalism.FourierDecayAlt.P.DDSmoothness.uh_mul hq.2 hq.1)
+    exact (continuous_star.comp_continuousOn hm').mul (hΦ2.inner hΦ21)
   have hF1 : ∀ g : Mt k r, Matrix.of g ∈ GG k r → (fun y => F (g, y)) =ᵐ[νq] fun y =>
       star (m g) * ⟪B (R.σ (Matrix.of y) w), B (R.σ (Matrix.of y) (R.σ (Matrix.of g) w))⟫_ℂ := by
     intro g hg

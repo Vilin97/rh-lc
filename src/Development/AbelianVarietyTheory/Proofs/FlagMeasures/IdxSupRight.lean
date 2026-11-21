@@ -136,7 +136,7 @@ theorem key (H : HermSpace K V) {M : Submodule (𝓞 K) V} {S I : Submodule K V}
   have hU : IsUnimod HC (GlobalTheory.Mass.latIn C M) := by
     refine ⟨(isLatMod_top_bot_iff _).2 L, ?_⟩
     ext y
-    rw [mem_dual_iff, L.span_eq_top]
+    rw [mem_dual_iff, ((isLatMod_top_bot_iff _).2 L).2]
     change _ ↔ (y : V) ∈ M
     rw [hMd]
     refine ⟨fun hy => ⟨hCS y.2, fun x hx => ?_⟩, fun hy => ⟨trivial, fun x hx => hy.2 x hx⟩⟩

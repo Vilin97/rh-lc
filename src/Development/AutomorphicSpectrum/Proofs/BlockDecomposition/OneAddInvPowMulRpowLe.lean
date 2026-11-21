@@ -205,7 +205,7 @@ theorem majorant_tensor (φ : 𝓢(ι → mixedSpace K, ℂ)) (I : (FractionalId
   · rw [if_neg hm', mul_zero, norm_zero]
     exact hR0
 
-theorem exists_majorant {Ψ : (ι → 𝔸[K]) → ℂ} (hΨ : Ψ ∈ GJMatrix.schwartzBruhatPi K ι)
+theorem exists_majorant {Ψ : (ι → 𝔸[K]) → ℂ} (hΨ : Ψ ∈ GJMatrix.schwartzBruhatPi (K := K) (ι := ι))
     {C : Set (GL ι 𝔸[K])} (hC : IsCompact C) (A : ℕ) :
     ∃ (M : ℝ) (L : (FractionalIdeal (𝓞 K)⁰ K)ˣ), 0 ≤ M ∧ ∀ m ∈ C, ∀ y : ι → 𝔸[K],
       ‖Ψ ((m : Matrix ι ι 𝔸[K]) *ᵥ y)‖ ≤ M * ∏ i, adeleWeight L A (y i) := by
@@ -510,7 +510,7 @@ theorem summable_lineInt {L : (FractionalIdeal (𝓞 K)⁰ K)ˣ} {A : ℕ} {x c 
         mul_le_mul_of_nonneg_left (one_add_inv_pow_mul_rpow_le hs0 x n) (mul_nonneg (pow_nonneg hc n) hw0)
     _ = B t := by simp only [B]; ring
 
-theorem clause_one {Ψ : (ι → 𝔸[K]) → ℂ} (hΨ : Ψ ∈ GJMatrix.schwartzBruhatPi K ι) (i₀ : ι) (a b : ℝ)
+theorem clause_one {Ψ : (ι → 𝔸[K]) → ℂ} (hΨ : Ψ ∈ GJMatrix.schwartzBruhatPi (K := K) (ι := ι)) (i₀ : ι) (a b : ℝ)
     (C : Set (GL ι 𝔸[K])) (ha : 1 < a) (hC : IsCompact C) :
     ∃ f : IdeleGroup K → ℝ, Integrable f (ideleMeasure K) ∧ ∀ x : ℝ, a ≤ x → x ≤ b → ∀ m ∈ C,
       ∀ t : IdeleGroup K,
@@ -542,7 +542,7 @@ theorem clause_one {Ψ : (ι → 𝔸[K]) → ℂ} (hΨ : Ψ ∈ GJMatrix.schwar
       _ = _ := by ring
   · exact ⟨0, integrable_zero _ _ _, fun x hax hxb ↦ absurd (hax.trans hxb) hab⟩
 
-theorem clause_two {Ψ : (ι → 𝔸[K]) → ℂ} (hΨ : Ψ ∈ GJMatrix.schwartzBruhatPi K ι) (x : ℝ)
+theorem clause_two {Ψ : (ι → 𝔸[K]) → ℂ} (hΨ : Ψ ∈ GJMatrix.schwartzBruhatPi (K := K) (ι := ι)) (x : ℝ)
     (C : Set (GL ι 𝔸[K])) (hx : max 1 (Fintype.card ι : ℝ) < x) (hC : IsCompact C) :
     ∃ u : Projectivization K (ι → K) → ℝ, Summable u ∧ ∀ m ∈ C, ∀ l,
       ∫ t : IdeleGroup K, ‖Ψ ((t : 𝔸[K]) • ((m : Matrix ι ι 𝔸[K]) *ᵥ ratV l.rep))‖ *

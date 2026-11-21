@@ -130,7 +130,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.lLevel :
     have e := finPart_act D k⁻¹ (D.act (finGL E 2 k) (io w))
     rw [map_inv, D.act_inv_act, finPart_io] at e
     exact e.symm
-  have key : ∀ f ∈ schwartzBruhatPi F (Fin 4), ∀ᶠ k in 𝓝 (1 : GL (Fin 2) (Af E)),
+  have key : ∀ f ∈ schwartzBruhatPi (K := F) (ι := Fin 4), ∀ᶠ k in 𝓝 (1 : GL (Fin 2) (Af E)),
       ∀ v, f (D.act (finGL E 2 k)⁻¹ v) = f v := by
     intro f hf
     induction hf using Submodule.span_induction with

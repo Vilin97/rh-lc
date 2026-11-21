@@ -92,18 +92,21 @@ theorem exists_basis_locF {L : Submodule (𝓞 K) V} (hL : Submodule.IsFullLatti
   have : IsPrincipalIdealRing (RP K 𝔭) :=
     IsDedekindDomain.isPrincipalIdealRing_localization_over_prime (𝓞 K) 𝔭 hp0
   let M : Submodule (RP K 𝔭) V := Submodule.span (RP K 𝔭) (L : Set V)
-  have : Submodule.IsLattice K M :=
-    { fg := by
-        obtain ⟨s, hs⟩ := hL.fg
-        refine ⟨s, ?_⟩
-        show _ = Submodule.span (RP K 𝔭) (L : Set V)
-        rw [← hs, Submodule.span_span_of_tower]
+  have hMfg : M.FG := by
+    obtain ⟨s, hs⟩ := hL.fg
+    refine ⟨s, ?_⟩
+    show _ = Submodule.span (RP K 𝔭) (L : Set V)
+    rw [← hs, Submodule.span_span_of_tower]
+  have : Submodule.IsFullLattice K M :=
+    { toIsLattice := Submodule.IsLattice.of_fg K hMfg
       span_eq_top := by
         rw [eq_top_iff, ← hL.span_eq_top]
         exact Submodule.span_mono Submodule.subset_span }
+  have : Module.Free (RP K 𝔭) M := Submodule.IsLattice.free K M
+  have : Module.Finite (RP K 𝔭) M := Submodule.IsLattice.finite K M
   let b0 := Module.Free.chooseBasis (RP K 𝔭) M
-  let b1 := b0.extendOfIsLattice K
-  have hb1 : ∀ i, b1 i = (b0 i : V) := fun i => Basis.extendOfIsLattice_apply K b0 i
+  let b1 := b0.extendOfIsFullLattice K
+  have hb1 : ∀ i, b1 i = (b0 i : V) := fun i => Basis.extendOfIsFullLattice_apply K b0 i
   have hmem : ∀ i, ∃ t : 𝓞 F, t ∉ 𝔭 ∧ algebraMap (𝓞 F) (𝓞 K) t • b1 i ∈ L := fun i => by
     rw [← mem_locF, ← mem_span_RP, hb1]
     exact (b0 i).2

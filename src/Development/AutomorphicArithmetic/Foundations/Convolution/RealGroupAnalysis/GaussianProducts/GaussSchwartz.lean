@@ -95,7 +95,7 @@ private theorem gauss_schwartz {F : Type} [Field F] [NumberField F] [IsTotallyRe
 
 theorem UpperTheory.ConvolutionTheory.R2.G.pgMem :
     ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (δ : F), (∀ e : F →+* ℝ, e δ < 0) → ∀ t : ℝ, 0 < t → ∀ p ∈ polyFn (F := F), ∀ g ∈ finiteSchwartzBruhatPi F (ι := Fin 4),
-    (fun v => p v * Complex.exp (-(t : ℂ) * (qInf δ v : ℝ)) * g (finPartPi v)) ∈ schwartzBruhatPi F (Fin 4) := by
+    (fun v => p v * Complex.exp (-(t : ℂ) * (qInf δ v : ℝ)) * g (finPartPi v)) ∈ schwartzBruhatPi (K := F) (ι := Fin 4) := by
   intro F _ _ _ δ hδ t ht p hp g hg
   obtain ⟨f, hf, hfp⟩ := poly_temperate hp
   obtain ⟨s, hs⟩ := gauss_schwartz δ hδ ht

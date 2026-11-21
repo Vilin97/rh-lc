@@ -15,7 +15,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.RankTwoDesce
 open scoped Classical
 open UpperTheory.ConvolutionTheory.R2.G (FS2 Rw nE row)
 
-private theorem sb_le : schwartzBruhatPi ℚ (Fin 2) ≤ GroundTheory.Automorphic.Adele2.schwartzBruhat2 ℚ := by
+private theorem sb_le : schwartzBruhatPi (K := ℚ) (ι := Fin 2) ≤ GroundTheory.Automorphic.Adele2.schwartzBruhat2 ℚ := by
   refine Submodule.span_le.mpr ?_
   rintro F ⟨φ, g, hg, rfl⟩
   exact GroundTheory.Automorphic.Adele2.schwartzBruhatTensor2_mem φ
@@ -33,7 +33,7 @@ private theorem cont_iy : Continuous fun t : ℝ => iy (Real.exp t) := by
   rw [e]
   exact (TR.continuous_infId ℚ).comp hu
 
-private theorem summable_row {Φ : (Fin 2 → A ℚ) → ℂ} (hΦ : Φ ∈ schwartzBruhatPi ℚ (Fin 2))
+private theorem summable_row {Φ : (Fin 2 → A ℚ) → ℂ} (hΦ : Φ ∈ schwartzBruhatPi (K := ℚ) (ι := Fin 2))
     (a : (A ℚ)ˣ) (g : GL (Fin 2) (A ℚ)) :
     Summable fun ξ : Rw ℚ => Φ fun j => (a : A ℚ) * ((fun i => rt (ξ.1 i)) ᵥ* g.val) j := by
   have hs := (GroundTheory.Automorphic.Adele2.poisson_rightTranslate (sb_le hΦ)
@@ -48,7 +48,7 @@ private theorem summable_row {Φ : (Fin 2 → A ℚ) → ℂ} (hΦ : Φ ∈ schw
   rfl
 
 theorem UpperTheory.measurable_thetaSeries_comp_continuous :
-    ∀ (Φ : (Fin 2 → A ℚ) → ℂ), Φ ∈ schwartzBruhatPi ℚ (Fin 2) → ∀ {X : Type} [TopologicalSpace X] [MeasurableSpace X] [OpensMeasurableSpace X]
+    ∀ (Φ : (Fin 2 → A ℚ) → ℂ), Φ ∈ schwartzBruhatPi (K := ℚ) (ι := Fin 2) → ∀ {X : Type} [TopologicalSpace X] [MeasurableSpace X] [OpensMeasurableSpace X]
         (τ : X → ℝ) (h : X → GL (Fin 2) (A ℚ)), Continuous τ → Continuous h → Measurable fun x => ThR Φ (τ x) (h x) := by
   intro Φ hΦ X _ _ _ τ h hτ hh
   have hc := continuous_of_mem_schwartzBruhatPi hΦ

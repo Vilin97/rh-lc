@@ -28,14 +28,14 @@ theorem continuous_hgtW (D : D7) (V : HSp D) (a : GL (Fin V.rank) (AE D)) (w : I
   have h1 := hI.continuous_hgtH (GlobalTheory.Doubling.continuous_absEw w) hK
   have h2 := GlobalTheory.Doubling.continuous_ioH (R := w.Completion) (σ := D.sp.cm.sig) (GlobalTheory.Doubling.gram_hdbl V)
   have h3 : Continuous fun g : GlobalTheory.Doubling.Gw V w => ((GlobalTheory.Doubling.hgtArch D.sp.cm.sig (GlobalTheory.Doubling.dblSp V).gram w
-      (Formalism.UG.bc (GlobalTheory.AdelicU.compInf _ _ w) a) (GlobalTheory.Doubling.ioH _ D.sp.cm.sig (GlobalTheory.Doubling.gram_hdbl V) (g, 1)) : ℝ)) :=
+      (Formalism.UG.bc (GlobalTheory.AdelicU.compInf D.host.F D.host.E w) a) (GlobalTheory.Doubling.ioH w.Completion D.sp.cm.sig (GlobalTheory.Doubling.gram_hdbl V) (g, 1)) : ℝ)) :=
     NNReal.continuous_coe.comp (h1.comp (h2.comp (continuous_id.prodMk continuous_const)))
   exact h3
 
 theorem hgtW_pos (D : D7) (V : HSp D) (a : GL (Fin V.rank) (AE D)) (w : InfinitePlace D.host.F) (g : GlobalTheory.Doubling.Gw V w) :
     0 < GlobalTheory.IndefiniteRowSideFullHecke.SphericalVolumeLift.hgtW V a w g := by
   have h : 0 < ((GlobalTheory.Doubling.hgtArch D.sp.cm.sig (GlobalTheory.Doubling.dblSp V).gram w
-      (Formalism.UG.bc (GlobalTheory.AdelicU.compInf _ _ w) a) (GlobalTheory.Doubling.ioH _ D.sp.cm.sig (GlobalTheory.Doubling.gram_hdbl V) (g, 1)) : ℝ)) :=
+      (Formalism.UG.bc (GlobalTheory.AdelicU.compInf D.host.F D.host.E w) a) (GlobalTheory.Doubling.ioH w.Completion D.sp.cm.sig (GlobalTheory.Doubling.gram_hdbl V) (g, 1)) : ℝ)) :=
     NNReal.coe_pos.2 (GlobalTheory.Doubling.hgtH_pos _)
   exact h
 

@@ -72,7 +72,7 @@ theorem hermC_eq_sum_col (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) {A : 
 variable {X} in
 theorem EF_eq_coper {y : Frame X.Ψ r} (hy : ∀ τ, (mat y τ).det ≠ 0) (u v : Fin r → E) :
     ((EF X u v : ℚ) : ℂ) = I / 2 * (coper X y u ⬝ᵥ per X y v - per X y u ⬝ᵥ coper X y v) := by
-  have h := congrArg (fun t : ℝ => (t : ℂ)) (EF_eq_sum X u v)
+  have h := congrArg (fun t : ℝ => (t : ℂ)) (EF_eq_sum (X := X) u v)
   simp only [ofReal_ratCast, ofReal_sum] at h
   rw [h, dotProduct, dotProduct, ← Finset.sum_sub_distrib, Fintype.sum_prod_type, Finset.mul_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
@@ -426,7 +426,7 @@ include hs
 
 theorem differentiableOn_splitMat (i j : Fin g) :
     DifferentiableOn ℂ (fun x => splitMat X bas idx x i j) X.dom := by
-  simp only [splitMat, mul_apply]
+  change DifferentiableOn ℂ (fun x => ∑ l, coper X x (bas (Pi.single (Sum.inl l) 1)) (idx i) * hMat X bas idx x l j) X.dom
   exact DifferentiableOn.fun_sum fun l _ =>
     ((differentiableOn_coper X _ _).mono fun x hx τ => (hx τ).1).mul (differentiableOn_hMat idx hs l j)
 
@@ -498,16 +498,18 @@ theorem unip_mem_Bor (K : Frame X.Ψ r) : unip X K ∈ Bor X.Ψ r := fun τ =>
 theorem per_rmul_unip (x K : Frame X.Ψ r) : per X (rmul x (unip X K)) = per X x := by
   classical
   have h : borMat X (unip X K) = 1 := by
-    ext ⟨τ, a⟩ ⟨σ, c⟩
+    apply Matrix.ext
+    rintro ⟨τ, a⟩ ⟨σ, c⟩
+    change borMat X (unip X K) (τ, a) (σ, c) = (if (τ, a) = (σ, c) then 1 else 0)
     by_cases hτ : σ = τ
     · subst hτ
       rcases lt_or_ge (a : ℕ) X.p0 with ha | ha
       · rw [borMat_of_lt X _ _ ha, unip, if_neg (by omega)]
-        simp [one_apply, eq_comm]
+        simp [eq_comm]
       · rw [borMat_of_le X _ _ ha, inv_eq_left_inv (mat_unip_neg_mul X K σ), mat, of_apply, unip,
           if_neg (by omega)]
-        simp [one_apply]
-    · rw [borMat_of_ne X _ hτ, one_apply_ne fun h => hτ (congrArg Prod.fst h).symm]
+        simp
+    · rw [borMat_of_ne X _ hτ, if_neg (fun h => hτ (congrArg Prod.fst h).symm)]
   funext v
   rw [per_rmul x (unip_mem_Bor X K), h, one_mulVec]
 

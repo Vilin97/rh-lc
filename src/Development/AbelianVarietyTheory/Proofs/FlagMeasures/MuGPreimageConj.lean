@@ -50,7 +50,7 @@ theorem gauge_map_of_iso : ∀ (n n' : ℕ) (ε : Fin n → Bool) (ε' : Fin n' 
     have h3 := tendsto_nhds_unique h1 (h2.congr fun r => by
       rw [hball r, ENNReal.toReal_mul, ENNReal.coe_toReal]; ring)
     exact mul_right_cancel₀ hω.ne' h3
-  rw [Measure.map_smul, ha, hca, ENNReal.ofReal_mul' a.coe_nonneg, ENNReal.ofReal_coe_nnreal, mul_smul]
+  rw [Measure.map_smul _ (show AEMeasurable (⇑T) (Formalism.REAL.muG ε) from T.continuous.measurable.aemeasurable), ha, hca, ENNReal.ofReal_mul' a.coe_nonneg, ENNReal.ofReal_coe_nnreal, mul_smul]
   rfl
 
 end GlobalTheory.FlagMeas

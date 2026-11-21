@@ -66,7 +66,7 @@ theorem measurable_detNorm (E : Type) [Field E] [NumberField E] (j : ℕ) :
     Measurable (detNorm E j) := by
   have hc : Continuous (fun x : InfinitePlace E → Fin j → Fin j → ℂ =>
       ∏ w, ‖(Matrix.of (x w)).det‖ ^ 2) := by
-    refine continuous_finset_prod _ (fun w _ => ?_)
+    refine continuous_finsetProd _ (fun w _ => ?_)
     exact ((Continuous.matrix_det
       (A := fun x : InfinitePlace E → Fin j → Fin j → ℂ => Matrix.of (x w)) (continuous_apply w)).norm).pow 2
   exact hc.measurable

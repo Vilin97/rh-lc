@@ -45,7 +45,7 @@ open scoped nonZeroDivisors Classical
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
-theorem norm_mul_pow_le {G : (Fin a → Ad E) → ℂ} (hG : G ∈ schwartzBruhatPi E (Fin a)) (M : ℕ) :
+theorem norm_mul_pow_le {G : (Fin a → Ad E) → ℂ} (hG : G ∈ schwartzBruhatPi (K := E) (ι := Fin a)) (M : ℕ) :
     ∃ K : ℝ, 0 ≤ K ∧ ∀ y, ‖G y‖ * (1 + ‖fun i => pInf E (y i)‖) ^ M ≤ K := by
   induction hG using Submodule.span_induction with
   | mem G hG =>
@@ -77,7 +77,7 @@ theorem norm_mul_pow_le {G : (Fin a → Ad E) → ℂ} (hG : G ∈ schwartzBruha
     rw [Pi.smul_apply, norm_smul, mul_assoc]
     exact mul_le_mul_of_nonneg_left (hG y) (norm_nonneg _)
 
-theorem exists_latt {G : (Fin a → Ad E) → ℂ} (hG : G ∈ schwartzBruhatPi E (Fin a)) :
+theorem exists_latt {G : (Fin a → Ad E) → ℂ} (hG : G ∈ schwartzBruhatPi (K := E) (ι := Fin a)) :
     ∃ J : (FractionalIdeal (𝓞 E)⁰ E)ˣ, ∀ y, (fun i => pFin E (y i)) ∉ latt a J → G y = 0 := by
   obtain ⟨⟨L, hL, hs⟩, -⟩ := GlobalTheory.SchwartzBruhatMoments.compactSupport_and_integrable_moments E a G hG
   obtain ⟨J, hJ⟩ := exists_subset_idealFiniteAdeles
@@ -85,7 +85,7 @@ theorem exists_latt {G : (Fin a → Ad E) → ℂ} (hG : G ∈ schwartzBruhatPi 
   refine ⟨J, fun y hy => by_contra fun h => hy fun i => hJ (Set.mem_iUnion.2 ⟨i, _, hs y h, rfl⟩)⟩
 
 theorem exists_bound {π' : CuspSub E a} (hπ : π'.IsUnitary) {φ' : GA E a → ℂ} (hφ : φ' ∈ GlobalTheory.JSW.mspanR π')
-    {G : (Fin a → Ad E) → ℂ} (hG : G ∈ schwartzBruhatPi E (Fin a)) :
+    {G : (Fin a → Ad E) → ℂ} (hG : G ∈ schwartzBruhatPi (K := E) (ι := Fin a)) :
     ∃ C : ℝ, ∀ g : GA E a, ‖φ' g‖ₑ ^ 2 * (∑' ξ : {ξ : Fin a → E // ξ ≠ 0},
       ‖G (Matrix.vecMul (fun j => algebraMap E (Ad E) (ξ.1 j)) g.val)‖ₑ) ≤
         ENNReal.ofReal (C * (GlobalTheory.RSnm.detAbs g)⁻¹) := by
@@ -122,7 +122,7 @@ theorem exists_bound {π' : CuspSub E a} (hπ : π'.IsUnitary) {φ' : GA E a →
 end Bound
 
 theorem lintegral_low_ne_top : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (m : ℕ) (π' : CuspSub E (m + 1)), π'.IsUnitary →
-    ∀ φ' ∈ GlobalTheory.JSW.mspanR π', ∀ G ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi E (Fin (m + 1)),
+    ∀ φ' ∈ GlobalTheory.JSW.mspanR π', ∀ G ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi (K := E) (ι := Fin (m + 1)),
     ∀ (μ : Measure (GA E (m + 1))) [μ.IsHaarMeasure] (𝓕 : Set (GA E (m + 1))),
     IsFundamentalDomain (ratGL E (m + 1)).range 𝓕 μ → ∀ x : ℝ, 1 < x →
       ∫⁻ g in 𝓕 ∩ {g | GlobalTheory.RSnm.detAbs g ≤ 1}, ‖φ' g‖ₑ ^ 2 * (∑' ξ : {ξ : Fin (m + 1) → E // ξ ≠ 0}, ‖G (Matrix.vecMul (fun j => algebraMap E (Ad E) (ξ.1 j)) g.val)‖ₑ) * ENNReal.ofReal (GlobalTheory.RSnm.detAbs g ^ x) ∂μ ≠ ⊤ := by

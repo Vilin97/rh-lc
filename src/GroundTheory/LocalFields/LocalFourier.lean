@@ -79,20 +79,18 @@ section Multiplicative
 
 variable [MeasurableSpace K] [BorelSpace K]
 
-theorem measurableEmbedding_units_val : MeasurableEmbedding (Units.val : Kˣ → K) where
-  injective := Units.val_injective
-  measurable := comap_measurable _
-  measurableSet_image' := by
-    rintro _ ⟨t, ht, rfl⟩
-    have : (Units.val : Kˣ → K) '' (Units.val ⁻¹' t) = t ∩ {0}ᶜ := by
-      ext x
-      constructor
-      · rintro ⟨u, hu, rfl⟩
-        exact ⟨hu, u.ne_zero⟩
-      · rintro ⟨hx, hx0⟩
-        exact ⟨Units.mk0 x hx0, hx, rfl⟩
-    rw [this]
-    exact ht.inter (measurableSet_singleton 0).compl
+theorem measurableEmbedding_units_val : MeasurableEmbedding (Units.val : Kˣ → K) := by
+  refine ⟨Units.val_injective, comap_measurable _, ?_⟩
+  rintro _ ⟨t, ht, rfl⟩
+  have : (Units.val : Kˣ → K) '' (Units.val ⁻¹' t) = t ∩ {0}ᶜ := by
+    ext x
+    constructor
+    · rintro ⟨u, hu, rfl⟩
+      exact ⟨hu, u.ne_zero⟩
+    · rintro ⟨hx, hx0⟩
+      exact ⟨Units.mk0 x hx0, hx, rfl⟩
+  rw [this]
+  exact ht.inter (measurableSet_singleton 0).compl
 
 omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] [MeasurableSpace K]
   [BorelSpace K] in
@@ -272,8 +270,11 @@ theorem multHaar_unitFiltrationUnits_zero :
     rw [modulus_eq_one_iff.mpr ⟨hx0, hord⟩]
     simp
   have hm := (measurableSet_valBall (K := K) 0).diff (measurableSet_valBall 1)
+  have hsubset : (valBall K 1 : Set K) ⊆ valBall K 0 := by
+    intro x hx
+    exact mem_valBall_zero_iff.mpr (mem_valBall_one_iff.mp hx).le
   rw [setLIntegral_congr_fun hm hd, setLIntegral_const, one_mul,
-    measure_sdiff (valBall_antitone (by norm_num)) (measurableSet_valBall 1).nullMeasurableSet
+    measure_sdiff hsubset (measurableSet_valBall 1).nullMeasurableSet
       (isCompact_valBall 1).measure_lt_top.ne,
     haarIntegers_valBall, haarIntegers_valBall, neg_zero, zpow_zero, ENNReal.coe_one, zpow_neg_one,
     ENNReal.coe_inv residueCard_nnreal_ne_zero, ENNReal.coe_natCast, multHaarConst,

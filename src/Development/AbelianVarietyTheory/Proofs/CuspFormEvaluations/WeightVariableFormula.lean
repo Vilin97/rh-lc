@@ -55,7 +55,7 @@ theorem exists_order [Finite σ] (w : σ → ℕ) :
       exact ⟨by erw [map_add, h0, add_zero], Finsupp.toLex_monotone h⟩
     · left
       erw [map_add]; omega
-  · exact InvImage.wf key wellFounded_lt
+  · exact (InvImage.wf key wellFounded_lt).apply
   · intro c d h
     change key c < key d
     simp only [key, Prod.Lex.toLex_lt_toLex]
@@ -448,7 +448,7 @@ theorem prod_emb_monomial (e : S → Fin n × Fin n →₀ ℕ) :
   rw [← monomial_sum_one]
   congr 2
   ext ⟨s, v⟩
-  simp only [Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.equivFunOnFinite_symm_apply_apply]
+  simp only [Finset.sum_apply', Finsupp.equivFunOnFinite_symm_apply_apply]
   rw [Finset.sum_eq_single s]
   · exact Finsupp.mapDomain_apply_of_injective (fun a b h => (Prod.ext_iff.1 h).2) _ _
   · intro t _ ht
@@ -577,7 +577,7 @@ theorem mem_tensor [Infinite K] (V : S → Submodule K (MvPolynomial (Fin n × F
   simp only [Finset.mem_univ, if_true]
   generalize G = F
   induction F using MvPolynomial.induction_on' with
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | add p q hp hq => rw [map_add]; exact add_mem hp hq
   | monomial m c =>
     have : (monomial m c : MvPolynomial _ K) = c • monomial m 1 := by simp [smul_monomial]
     rw [this, map_smul, tens_monomial]
@@ -657,7 +657,7 @@ theorem closed_of_stable (M : Submodule ℚ (MvPolynomial (Fin n × Fin n) ℚ))
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← C_pow, mul_comm (Q.coeff i), ← smul_eq_C_mul, map_smul, smul_eq_mul, mul_comm]
   have := congrArg (fun P => P.coeff k) hR
-  simp only [R, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq', Polynomial.coeff_zero] at this
+  simp only [R, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finsupp.single_apply, Finset.sum_ite_eq', Polynomial.coeff_zero] at this
   split_ifs at this with hk
   · exact this
   · have : Q.coeff k = 0 := Polynomial.coeff_eq_zero_of_natDegree_lt (by simpa using hk)
@@ -981,8 +981,12 @@ theorem shift_act (g : Ix → GL (Fin n) K) {ρ ρ' : Row Ix p q} (hm : mat g ρ
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [AlgHom.comp_apply, act, shift, aeval_X, hl, if_true, map_sum, map_mul, map_add (f := _), algHom_C, algebraMap_eq,
       ← hm, Finset.mul_sum, ← Finset.sum_add_distrib]
-    exact Finset.sum_congr rfl fun j _ => by ring
-  · simp [act, shift, hl]
+      simp only [mul_add, Finset.sum_add_distrib]
+      congr 1
+      apply Finset.sum_congr rfl
+      intro j _
+      ring
+  · simp only [AlgHom.comp_apply, act, shift, aeval_X, hl, if_false, map_sum, map_mul, algHom_C, algebraMap_eq]
 
 theorem act_inv (g : Ix → GL (Fin n) K) {P : MvPolynomial (Lt Ix p q n) K} (hP : Inv P) : Inv (act g P) :=
   ⟨fun t i i' hi c => (shift_act g (by rfl) c P).trans (by rw [hP.1 t i i' hi]),

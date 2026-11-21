@@ -21,13 +21,7 @@ theorem isLattice_stdLat_and_act : ∀ (k : Type) [Field k] [ValuativeRel k] [To
   · intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · exact hL.fg.map _
-  · have himg : ((act g L : Submodule 𝒪[k] (ι → k)) : Set (ι → k))
-        = (g : Matrix ι ι k).mulVecLin '' (L : Set (ι → k)) := by
-      ext v
-      exact mem_act
-    rw [himg, ← Submodule.map_span, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
-    intro w
-    refine ⟨((g⁻¹ : GL ι k) : Matrix ι ι k) *ᵥ w, ?_⟩
-    rw [Matrix.mulVecLin_apply, Matrix.mulVec_mulVec, Units.mul_inv, Matrix.one_mulVec]
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 
 end GlobalTheory.RootEx.UnfoldShape

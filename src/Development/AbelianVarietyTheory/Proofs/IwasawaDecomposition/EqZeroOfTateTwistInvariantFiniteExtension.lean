@@ -113,7 +113,7 @@ theorem Vz_stable (n m : ℕ) (z : Om l) (hz : IsPrimitiveRoot z (l ^ (n + m)))
     refine Submodule.subset_span ⟨a * k, fun h => hk (hac'.dvd_of_dvd_mul_left h), ?_⟩
     rw [map_pow, ← ha, pow_mul]
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx =>
     change g ((c : Om l) * x) ∈ _
     rw [map_mul, (IntermediateField.mem_fixingSubgroup_iff _ _).1 hg c c.2]
@@ -141,8 +141,8 @@ theorem Fz_mono (C : Core l) : Monotone fun n => Fz (C.ζ n) := by
   exact pow_mem_Fz _ _
 
 theorem chi_eq_one (C : Core l) (g : GQ l) (hg : g ∈ (⨆ n, Fz (C.ζ n)).fixingSubgroup) : C.χ g = 1 := by
-  ext
-  rw [← PadicInt.ext_of_toZModPow]
+  apply Units.ext
+  apply PadicInt.ext_of_toZModPow.mp
   intro n
   have : NeZero (l ^ n) := ⟨(pow_pos (Fact.out : l.Prime).pos _).ne'⟩
   have h1 := C.χ_cyc g n _ (zeta_prim C n).pow_eq_one

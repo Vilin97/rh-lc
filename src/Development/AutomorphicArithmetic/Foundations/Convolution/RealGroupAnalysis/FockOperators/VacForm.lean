@@ -10,7 +10,7 @@ open UpperTheory.ConvolutionTheory.R2 UpperTheory.ConvolutionTheory.R2.Fo
 open scoped Classical
 
 private theorem slice_mem {F : Type} [Field F] [NumberField F] {f : V4 F → ℂ}
-    (hf : f ∈ schwartzBruhatPi F (Fin 4)) :
+    (hf : f ∈ schwartzBruhatPi (K := F) (ι := Fin 4)) :
     (fun y : Fin 4 → FiniteAdeleRing (𝓞 F) F => f fun i => ((0, y i) : A F)) ∈
       finiteSchwartzBruhatPi F (ι := Fin 4) := by
   induction hf using Submodule.span_induction with

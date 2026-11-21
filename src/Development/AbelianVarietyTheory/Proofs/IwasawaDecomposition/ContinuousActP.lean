@@ -101,8 +101,8 @@ theorem continuous_actP {X : Type} [TopologicalSpace X] (lam : ι → DomWeight 
     rw [← smul_eq_mul, ← map_smul, smul_monomial, smul_eq_mul, mul_one]
     rfl
   simp only [actP, LinearMap.smul_apply, AlgHom.toLinearMap_apply, map_smul, smul_eq_mul, h2, detTw_eq]
-  refine Continuous.mul (continuous_finset_prod _ fun τ _ => (hg τ).matrix_det.zpow₀ _ fun x => Or.inl ?_)
-    (continuous_finset_sum _ fun m _ => (P.coeff m).continuous.mul continuous_const)
+  refine Continuous.mul (continuous_finsetProd _ fun τ _ => (hg τ).matrix_det.zpow₀ _ fun x => Or.inl ?_)
+    (continuous_finsetSum _ fun m _ => (P.coeff m).continuous.mul continuous_const)
   exact ((Matrix.isUnit_iff_isUnit_det _).1 (g x τ).isUnit).ne_zero
 
 def gramOf (B : ι → GL (Fin n) ℂ) : ι → Matrix (Fin n) (Fin n) ℂ :=
@@ -170,7 +170,7 @@ theorem continuous_HV {X : Type} [TopologicalSpace X] (g : X → ι → GL (Fin 
     funext x
     exact ((stdOrthonormalBasis ℂ (HV lam B)).sum_repr' _).symm
   rw [this]
-  exact continuous_finset_sum _ fun i _ => (continuous_actP lam g hg _ _).smul continuous_const
+  exact continuous_finsetSum _ fun i _ => (continuous_actP lam g hg _ _).smul continuous_const
 
 end Poly
 

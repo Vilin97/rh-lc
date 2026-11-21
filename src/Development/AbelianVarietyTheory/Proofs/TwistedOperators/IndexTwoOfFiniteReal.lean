@@ -264,6 +264,7 @@ theorem normsEscape_of_pow_two (M : Type) [Field M] [Algebra A M] [FiniteDimensi
     have hn' : Module.finrank K' M = 2 ^ (n + 1) := by
       rw [IntermediateField.finrank_fixedField_eq_card, hH]
     letI : Algebra K' K := (IntermediateField.inclusion hK').toRingHom.toAlgebra
+    letI : Module.Free K' K := Module.Free.of_divisionRing K' K
     haveI : IsScalarTower A K' K := IsScalarTower.of_algebraMap_eq fun _ => rfl
     haveI : IsScalarTower K' K M := IsScalarTower.of_algebraMap_eq fun _ => rfl
     haveI : FiniteDimensional K' K := Module.Finite.of_restrictScalars_finite A K' K

@@ -93,7 +93,7 @@ theorem det_interp {E : Type} [Field E] [NumberField E] {r : ℕ} (n : ℕ) (hn 
     rw [this, h]
     ring
   have hy' : IsIntegral ℤ ((d - 1) / n) := by
-    rw [← isIntegral_algebraMap_iff , map_div₀, map_sub, map_one, map_natCast, hd',
+    rw [← isIntegral_algebraMap_iff (B := K), map_div₀, map_sub, map_one, map_natCast, hd',
       add_sub_cancel_left, mul_div_cancel_left₀ _ hn']
     exact hy
   obtain ⟨z, hz⟩ : ∃ z : 𝓞 E, (z : E) = (d - 1) / n := ⟨⟨_, hy'⟩, rfl⟩
@@ -148,9 +148,9 @@ variable {E : Type} [Field E] [NumberField E] {L : Type} [AddCommGroup L] [Modul
 
 theorem isLocalizedModule_int (φ : L →ₗ[𝓞 E] (Fin r → E)) (hf : Function.Injective φ)
     (hspan : Submodule.span E (Set.range φ) = ⊤) :
-    IsLocalizedModule ℤ⁰ (φ.restrictScalars ℤ) where
-  map_units s := (isLocalizedModule_id ℤ⁰ (Fin r → E) ℚ).map_units s
-  surj v := by
+    IsLocalizedModule ℤ⁰ (φ.restrictScalars ℤ) := by
+  refine ⟨(isLocalizedModule_id ℤ⁰ (Fin r → E) ℚ).map_units, ?_, ?_⟩
+  · intro v
     have hv : v ∈ Submodule.span E (Set.range φ) := by rw [hspan]; trivial
     obtain ⟨⟨t, n, hn, rfl⟩, ht⟩ := multiple_mem_span_of_mem_localization_span
       (Algebra.algebraMapSubmonoid (𝓞 E) ℤ⁰) E _ v hv
@@ -159,7 +159,8 @@ theorem isLocalizedModule_int (φ : L →ₗ[𝓞 E] (Fin r → E)) (hf : Functi
     refine ⟨(m, ⟨n, hn⟩), ?_⟩
     change n • v = φ m
     rw [hm, Submonoid.smul_def, algebraMap_smul]
-  exists_of_eq h := ⟨1, by rw [hf h]⟩
+  · intro x y h
+    exact ⟨1, by rw [hf h]⟩
 
 theorem isBaseChange (φ : L →ₗ[𝓞 E] (Fin r → E)) (hf : Function.Injective φ)
     (hspan : Submodule.span E (Set.range φ) = ⊤) : IsBaseChange E φ := by

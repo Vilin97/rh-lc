@@ -110,7 +110,7 @@ theorem fourier_ltr (A : GL ι 𝔸[k]) (F : (ι → 𝔸[k]) → ℂ) :
   GlobalTheory.CompanionTheory.LtrFourier.Hd.adelicFourierPi_ltr A F
 
 theorem thetaCFun_decay (w : InfinitePlace k) {Ψ : (ι → 𝔸[k]) → ℂ}
-    (hΨ : Ψ ∈ schwartzBruhatPi k ι) (ω : HeckeCharacter k) {C : Set (GL ι 𝔸[k])}
+    (hΨ : Ψ ∈ schwartzBruhatPi (K := k) (ι := ι)) (ω : HeckeCharacter k) {C : Set (GL ι 𝔸[k])}
     (hC : IsCompact C) (r : ℝ) :
     ∃ M : ℝ, 0 ≤ M ∧ ∀ A ∈ C, ∀ x : ℝ, 1 ≤ x →
       ‖thetaCFun w (ltr A Ψ) ω x - thetaCConst (ltr A Ψ) ω‖ ≤ M * x ^ (-r) := by
@@ -130,7 +130,7 @@ theorem thetaCFun_decay (w : InfinitePlace k) {Ψ : (ι → 𝔸[k]) → ℂ}
     _ = _ := mul_comm _ _
 
 theorem isBigO_thetaCFun_sub (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi k ι) (ω : HeckeCharacter k) (r : ℝ) :
+    (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) (ω : HeckeCharacter k) (r : ℝ) :
     (fun x ↦ thetaCFun w F ω x - thetaCConst F ω) =O[atTop] (· ^ r) := by
   obtain ⟨M, -, hM⟩ := thetaCFun_decay w hF ω (isCompact_singleton (x := (1 : GL ι 𝔸[k]))) (-r)
   refine IsBigO.of_bound M ?_
@@ -140,7 +140,7 @@ theorem isBigO_thetaCFun_sub (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ
   rwa [Real.norm_of_nonneg (Real.rpow_nonneg (zero_le_one.trans hx) r)]
 
 theorem continuousOn_thetaCFun_ltr (w : InfinitePlace k) {Ψ : (ι → 𝔸[k]) → ℂ}
-    (hΨ : Ψ ∈ schwartzBruhatPi k ι) (ω : HeckeCharacter k) :
+    (hΨ : Ψ ∈ schwartzBruhatPi (K := k) (ι := ι)) (ω : HeckeCharacter k) :
     ContinuousOn (fun q : GL ι 𝔸[k] × ℝ ↦ thetaCFun w (ltr q.1 Ψ) ω q.2) (univ ×ˢ Ioi 0) := by
   have h := GlobalTheory.CompanionTheory.EpsteinThetaC.continuous_thetaCInt_ltr w hΨ ω
   rw [continuousOn_iff_continuous_restrict]
@@ -153,7 +153,7 @@ theorem continuousOn_thetaCFun_ltr (w : InfinitePlace k) {Ψ : (ι → 𝔸[k]) 
   exact (thetaCFun_of_pos w _ ω q.2.2).symm
 
 theorem continuousOn_thetaCFun (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi k ι) (ω : HeckeCharacter k) :
+    (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) (ω : HeckeCharacter k) :
     ContinuousOn (thetaCFun w F ω) (Ioi 0) := by
   have h := continuousOn_thetaCFun_ltr w hF ω
   have h2 := h.comp (f := fun x : ℝ ↦ ((1 : GL ι 𝔸[k]), x)) (s := Ioi 0) (by fun_prop)
@@ -161,7 +161,7 @@ theorem continuousOn_thetaCFun (w : InfinitePlace k) {F : (ι → 𝔸[k]) → �
   simpa [Function.comp_def, ltr_one] using h2
 
 theorem thetaCFun_one_div (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi k ι) {ω : HeckeCharacter k} (hω : ω * ω = 1) (x : ℝ)
+    (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) {ω : HeckeCharacter k} (hω : ω * ω = 1) (x : ℝ)
     (hx : x ∈ Ioi (0 : ℝ)) :
     thetaCFun w F ω (1 / x) =
       ((1 : ℂ) * ((x ^ (Fintype.card ι : ℝ) : ℝ) : ℂ)) • thetaCFun w (adelicFourierPi k F) ω x := by
@@ -176,7 +176,7 @@ theorem thetaCFun_one_div (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
   simp
 
 noncomputable def pair [Nonempty ι] (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ}
-    (hF : F ∈ schwartzBruhatPi k ι) {ω : HeckeCharacter k} (hω : ω * ω = 1) : WeakFEPair ℂ where
+    (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) {ω : HeckeCharacter k} (hω : ω * ω = 1) : WeakFEPair ℂ where
   f := thetaCFun w F ω
   g := thetaCFun w (adelicFourierPi k F) ω
   k := Fintype.card ι
@@ -220,14 +220,14 @@ theorem thetaCConst_fourier_ltr (A : GL ι 𝔸[k]) (F : (ι → 𝔸[k]) → �
   rw [fourier_ltr, thetaCConst_smul, thetaCConst_ltr]
 
 noncomputable def pairAt [Nonempty ι] (w : InfinitePlace k) {Ψ : (ι → 𝔸[k]) → ℂ}
-    (hΨ : Ψ ∈ schwartzBruhatPi k ι) {ω : HeckeCharacter k} (hω : ω * ω = 1) (A : GL ι 𝔸[k]) :
+    (hΨ : Ψ ∈ schwartzBruhatPi (K := k) (ι := ι)) {ω : HeckeCharacter k} (hω : ω * ω = 1) (A : GL ι 𝔸[k]) :
     WeakFEPair ℂ :=
   pair w (GlobalTheory.CompanionTheory.LinearChangeSchwartzBruhat.ltr_mem hΨ A) hω
 
 section pairAt
 
 variable [Nonempty ι] (w : InfinitePlace k) {Ψ : (ι → 𝔸[k]) → ℂ}
-  (hΨ : Ψ ∈ schwartzBruhatPi k ι) {ω : HeckeCharacter k} (hω : ω * ω = 1)
+  (hΨ : Ψ ∈ schwartzBruhatPi (K := k) (ι := ι)) {ω : HeckeCharacter k} (hω : ω * ω = 1)
 
 theorem pairAt_bound {C : Set (GL ι 𝔸[k])} (hC : IsCompact C) (r : ℝ) :
     ∃ M : ℝ, 0 ≤ M ∧ ∀ A ∈ C, ∀ x : ℝ, 1 ≤ x →
