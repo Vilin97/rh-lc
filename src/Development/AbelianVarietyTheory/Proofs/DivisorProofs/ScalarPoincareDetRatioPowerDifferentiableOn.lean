@@ -106,8 +106,7 @@ theorem qS_differentiableOn (X : Data E r) (x0 : Frame X.Ψ r) (ho : IsOrth X x0
   have h1 := (hd1 τ).differentiableOn (s := X.dom)
   have h2 : DifferentiableOn ℂ (fun x => (KU.Mx X x0 x τ).toBlocks₂₂.det ^ 2) X.dom :=
     ((hd2 τ).differentiableOn).pow 2
-  have h3 : DifferentiableOn ℂ (fun x => (KU.Mx X x0 x τ).det / (KU.Mx X x0 x τ).toBlocks₂₂.det ^ 2) X.dom :=
-by
+  have h3 : DifferentiableOn ℂ (fun x => (KU.Mx X x0 x τ).det / (KU.Mx X x0 x τ).toBlocks₂₂.det ^ 2) X.dom := by
     simp only [div_eq_mul_inv]
     exact h1.mul (h2.inv hne)
   exact h3.pow k

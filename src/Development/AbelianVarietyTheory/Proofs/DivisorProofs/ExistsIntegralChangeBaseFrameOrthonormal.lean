@@ -23,21 +23,24 @@ open GlobalTheory.SelfDualGenus ReciprocityTheory.ChartRestriction.G.FD Formalis
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 attribute [local instance] IsCMField.starRing
 
+local notation "𝔽" => maximalRealSubfield E
+local notation "𝔸" => E ⊗[maximalRealSubfield E] Formalism.L2.Herm.Af (maximalRealSubfield E)
+local notation "𝕆" => Formalism.L2.Herm.intAf (maximalRealSubfield E) E
+
 def ev (v : HeightOneSpectrum (𝓞 𝔽)) : 𝔸 →+* LocAlg v :=
   (Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV 𝔽 v) (AlgHom.id 𝔽 E)).toRingHom.comp
     (Algebra.TensorProduct.comm 𝔽 E (Formalism.L2.Herm.Af 𝔽)).toAlgHom.toRingHom
 
 
 omit [IsCMField E] in
-theorem ev_ext {z z' : 𝔸} (h : ∀ v, ev v z = ev v z') : z = z' :=
+theorem ev_ext {z z' : 𝔸} (h : ∀ v, ev (E := E) v z = ev (E := E) v z') : z = z' :=
   (Algebra.TensorProduct.comm 𝔽 E (Formalism.L2.Herm.Af 𝔽)).injective
     (GlobalTheory.LatticeLocalGlobal.ext_components _ _ h)
 
 
 theorem ev_sigR (hc : CMData 𝔽 E) (v : HeightOneSpectrum (𝓞 𝔽)) (z : 𝔸) :
     ev v (Formalism.UG.sigR hc.sig (Formalism.L2.Herm.Af 𝔽) z) = locConj v (ev v z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x a => rfl
 
@@ -101,7 +104,7 @@ theorem exists_coeff {k : ℕ} (x : Fin k → 𝓞 E) (hx : Submodule.span ℤ (
   exact mul_one _
 
 theorem exists_of_components (z : ∀ v : HeightOneSpectrum (𝓞 𝔽), LocAlg v) (hz : ∀ v, z v ∈ locOrder v) :
-    ∃ Z : 𝕆, ∀ v, ev v Z = z v := by
+    ∃ Z : 𝕆, ∀ v, ev (E := E) v Z = z v := by
   obtain ⟨k, x, hx⟩ := Module.Finite.exists_fin (R := ℤ) (M := 𝓞 E)
   choose a ha using fun v => exists_coeff x hx v (hz v)
   let A : Fin k → Formalism.L2.Herm.Af 𝔽 := fun j =>
@@ -164,7 +167,8 @@ theorem exists_orth (hc : CMData 𝔽 E) {G : Matrix (Fin n) (Fin n) E} (hG : �
       rwa [← Units.inv_mul β] at this)) i
   choose A hA using fun i j => exists_of_components _ (ha i j)
   choose B hB using fun i j => exists_of_components _ (hb i j)
-  have ext : ∀ M M' : Matrix (Fin n) (Fin n) 𝔸, (∀ v, M.map (ev v) = M'.map (ev v)) → M = M' := fun M M' H =>
+  have ext : ∀ M M' : Matrix (Fin n) (Fin n) 𝔸,
+      (∀ v, M.map (ev (E := E) v) = M'.map (ev (E := E) v)) → M = M' := fun M M' H =>
     Matrix.ext fun i j => ev_ext fun v => congrFun (congrFun (H v) i) j
   let A' : Matrix (Fin n) (Fin n) 𝕆 := A
   let B' : Matrix (Fin n) (Fin n) 𝕆 := B
@@ -172,11 +176,13 @@ theorem exists_orth (hc : CMData 𝔽 E) {G : Matrix (Fin n) (Fin n) E} (hG : �
     fun v => Matrix.ext fun i j => hA i j v
   have eB : ∀ v, (B'.map (Subring.subtype 𝕆)).map (ev v) = ((h v)⁻¹).1 * β.1.map (ev v) :=
     fun v => Matrix.ext fun i j => hB i j v
-  have o : ∀ v, (1 : Matrix (Fin n) (Fin n) 𝔸).map (ev v) = 1 := fun v => Matrix.map_one _ (map_zero _) (map_one _)
+  have o : ∀ v, (1 : Matrix (Fin n) (Fin n) 𝔸).map (ev (E := E) v) = 1 :=
+    fun v => map_one (ev (E := E) v).mapMatrix
   have p1 : A' * B' = 1 := by
     apply Matrix.map_injective (f := Subring.subtype 𝕆) Subtype.val_injective
     change (A' * B').map _ = Matrix.map 1 _
-    rw [Matrix.map_mul, Matrix.map_one _ (map_zero _) (map_one _)]
+    rw [Matrix.map_mul, Matrix.map_one (Subring.subtype 𝕆)
+      (map_zero (Subring.subtype 𝕆)) (map_one (Subring.subtype 𝕆))]
     refine ext _ _ fun v => ?_
     rw [Matrix.map_mul, eA, eB, Matrix.mul_assoc, ← Matrix.mul_assoc (h v).1, Units.mul_inv, Matrix.one_mul,
       ← Matrix.map_mul, Units.inv_mul]
@@ -211,8 +217,11 @@ theorem isLattice_of_commensurable (V : HSpace E) {Λ : Submodule (𝓞 E) (Fin 
     refine (hfg.map f).of_le fun x hx => ⟨_, (mem _).2 (h2 x hx), ?_⟩
     change (N : E)⁻¹ • (N : E) • x = x
     rw [smul_smul, inv_mul_cancel₀ hN', one_smul]
-  · intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  · rw [eq_top_iff, ← hsp]
+    refine Submodule.span_le.2 fun x hx => ?_
+    have := Submodule.smul_mem (Submodule.span E (Λ : Set (Fin V.rank → E))) (N : E)⁻¹
+      (Submodule.subset_span (h1 x ((mem x).1 hx)))
+    rwa [smul_smul, inv_mul_cancel₀ hN', one_smul] at this
 theorem selfDual_iff (hc : CMData 𝔽 E) (V : HSpace E) {Λ : Submodule (𝓞 E) (Fin V.rank → E)}
     (h : Formalism.L2.Herm.dualL hc V Λ = Λ) (x : Fin V.rank → E) :
     x ∈ Λ ↔ ∀ y ∈ Λ, IsIntegral ℤ (herm V.gramᵀ x y) := by

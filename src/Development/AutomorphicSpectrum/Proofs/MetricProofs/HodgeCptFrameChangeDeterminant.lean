@@ -156,7 +156,7 @@ variable {Ψ : Type} [Fintype Ψ] {p q : ℕ}
 abbrev FullStep (Ψ : Type) (p q : ℕ) : Type := {t : StepIx Ψ p q // (t.2 : ℕ) + 1 = rk Ψ p q t.1}
 
 theorem blkF_ne_full (K₀ : Type) (t : FullStep Ψ p q) (r : Ψ × Fin (p + q)) :
-    blkF Ψ p q K₀ r ≠ some (.inr t.1) := by
+    blkF (p := p) (q := q) K₀ r ≠ some (.inr t.1) := by
   classical
   obtain ⟨⟨s, j⟩, ht⟩ := t
   obtain ⟨τ, i⟩ := r
@@ -177,7 +177,7 @@ theorem blkF_ne_full (K₀ : Type) (t : FullStep Ψ p q) (r : Ψ × Fin (p + q))
   · simp
 
 theorem exists_blkF_of_not_full (K₀ : Type) (t : StepIx Ψ p q) (ht : (t.2 : ℕ) + 1 ≠ rk Ψ p q t.1) :
-    ∃ r, blkF Ψ p q K₀ r = some (.inr t) := by
+    ∃ r, blkF (p := p) (q := q) K₀ r = some (.inr t) := by
   classical
   obtain ⟨s, j⟩ := t
   have hj := j.2
@@ -203,7 +203,7 @@ theorem exists_blkF_of_not_full (K₀ : Type) (t : StepIx Ψ p q) (ht : (t.2 : �
 
 
 variable (Ψ p q) in
-def baseFun (K₀ : Type) : K₀ ⊕ FullStep Ψ p q → NonPluckerBlocks (blkF Ψ p q K₀)
+def baseFun (K₀ : Type) : K₀ ⊕ FullStep Ψ p q → NonPluckerBlocks (blkF (Ψ := Ψ) (p := p) (q := q) K₀)
   | .inl k => ⟨.inl k, fun r => by
       classical
       unfold blkF
@@ -227,7 +227,7 @@ theorem baseFun_bijective (K₀ : Type) : Function.Bijective (baseFun Ψ p q K�
 
 
 variable (Ψ p q) in
-def baseEquiv (K₀ : Type) : K₀ ⊕ FullStep Ψ p q ≃ NonPluckerBlocks (blkF Ψ p q K₀) :=
+def baseEquiv (K₀ : Type) : K₀ ⊕ FullStep Ψ p q ≃ NonPluckerBlocks (blkF (Ψ := Ψ) (p := p) (q := q) K₀) :=
   Equiv.ofBijective _ (baseFun_bijective K₀)
 
 variable {Ω : Type} [Field Ω] {n : Ψ ⊕ Ψ → ℕ}
@@ -240,7 +240,7 @@ def fullMinor (A : ∀ s, Matrix (Fin (n s)) (Fin (rk Ψ p q s)) Ω) : (Σ t : F
 variable {K₀ : Type} [Fintype K₀] {J₀ : K₀ → Type} [∀ k, Fintype (J₀ k)]
 
 def baseIxEquiv (n : Ψ ⊕ Ψ → ℕ) : ∀ a : K₀ ⊕ FullStep Ψ p q, Sum.elim J₀ (fullIx n) a ≃
-    baseIdx (idx (p := p) (q := q) J₀ n) (blkF Ψ p q K₀) (baseEquiv Ψ p q K₀ a)
+    baseIdx (idx (p := p) (q := q) J₀ n) (blkF (p := p) (q := q) K₀) (baseEquiv Ψ p q K₀ a)
   | .inl _ => Equiv.refl _
   | .inr _ => Equiv.refl _
 

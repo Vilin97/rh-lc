@@ -308,15 +308,13 @@ theorem IsCusp.nu {x : IrrGL (k := k)} (h : x.IsCusp) (s : ℂ) : (x.nu s).IsCus
 theorem isCusp_ofChar (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) : (ofChar χ hχ).IsCusp := ⟨one_pos, isCuspidal_of_equiv (IrrRep.nonempty_equiv_rep (IrrRep.det (Fin 1) χ hχ)).some.symm
   (isCuspidal_detRep_one hχ)⟩
 
-theorem inert_equivalence : Equivalence (Inert (k := k)) where
-  refl x := ⟨1, fun _ _ => rfl, (tw_one x _).symm⟩
-  symm := by
-    rintro x y ⟨μ, hμ, rfl⟩
+theorem inert_equivalence : Equivalence (Inert (k := k)) := by
+  refine ⟨fun x => ⟨1, fun _ _ => rfl, (tw_one x _).symm⟩, ?_, ?_⟩
+  · rintro x y ⟨μ, hμ, rfl⟩
     refine ⟨μ⁻¹, isUnram_inv hμ, ?_⟩
     rw [tw_tw]
     exact ((tw_congr' x (mul_inv_cancel μ) _ isSmoothChar_one).trans (tw_one x _)).symm
-  trans := by
-    rintro x y z ⟨μ, hμ, rfl⟩ ⟨μ', hμ', rfl⟩
+  · rintro x y z ⟨μ, hμ, rfl⟩ ⟨μ', hμ', rfl⟩
     exact ⟨μ * μ', isUnram_mul hμ hμ', tw_tw _ _ _ _ _⟩
 
 theorem inert_nu (x : IrrGL (k := k)) (s : ℂ) : Inert x (x.nu s) := ⟨absPow k s, isUnram_absPow k s, rfl⟩

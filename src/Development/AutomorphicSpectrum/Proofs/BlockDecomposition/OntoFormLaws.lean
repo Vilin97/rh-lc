@@ -16,7 +16,7 @@ namespace GlobalTheory.CompanionTheory.OntoForms
 open exteriorPower
 
 theorem mem_of_span {R M X ι : Type*} [CommRing R] [AddCommGroup M] [Module R M] [AddCommGroup X]
-    [Module R X] [DecidableEq ι] (m : MultilinearMap R (fun _ : ι => M) X) (P : Submodule R X)
+    [Module R X] [DecidableEq ι] (m : (ι → M) →ₘₗ[R] X) (P : Submodule R X)
     (S : ι → Set M) (U : Finset ι) (hS : ∀ i ∈ U, Submodule.span R (S i) = ⊤)
     (h : ∀ v, (∀ j, v j ∈ S j) → m v ∈ P) :
     ∀ v, (∀ j, j ∉ U → v j ∈ S j) → m v ∈ P := by
@@ -37,7 +37,7 @@ theorem mem_of_span {R M X ι : Type*} [CommRing R] [AddCommGroup M] [Module R M
     simpa using h3
 
 theorem sub_mem_of_congr {R M X ι : Type*} [CommRing R] [AddCommGroup M] [Module R M]
-    [AddCommGroup X] [Module R X] [DecidableEq ι] (m : MultilinearMap R (fun _ : ι => M) X)
+    [AddCommGroup X] [Module R X] [DecidableEq ι] (m : (ι → M) →ₘₗ[R] X)
     (P : Submodule R X) (L : Submodule R M) (hP : ∀ v k, v k ∈ L → m v ∈ P) (U : Finset ι) :
     ∀ u u', (∀ k, k ∉ U → u k = u' k) → (∀ k, u k - u' k ∈ L) → m u - m u' ∈ P := by
   induction U using Finset.induction_on with

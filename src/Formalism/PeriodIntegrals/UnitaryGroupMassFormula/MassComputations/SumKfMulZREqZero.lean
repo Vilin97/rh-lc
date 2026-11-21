@@ -60,7 +60,7 @@ theorem hK_e (u : D.what₂.Word) : ∀ c b, ∑ j, Kf X X.fR c j * X.eR b j = i
   rw [this]
   by_cases h : c = b
   · subst h; simp
-  · rw [if_neg (Ne.symm h), if_neg h, star_zero]
+  · rw [ite_eq_right (Ne.symm h), ite_eq_right h, star_zero]
 
 theorem sum_Kf_mul_zR_eq_zero (u : D.what₂.Word) : ∀ a, ∑ j, Kf X X.eR a j * X.zR u j = 0 := by
   intro a

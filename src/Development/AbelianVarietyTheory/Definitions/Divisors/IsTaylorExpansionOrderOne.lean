@@ -122,7 +122,9 @@ def Real.coefD : CoefMap ι (O κ s') (K.OD η M) where
           φ₀ := Ideal.quotientMap S'.T.J (f.1.φ : S.T.C →+* S'.T.C) f.1.mem
           comm := fun _ ↦ rfl
           dp := letI := S'.T.ratAlg; isDPMorphism_of_rat S.T.δ S'.T.δ (f.1.φ : S.T.C →+* S'.T.C) f.1.mem
-          pt := r.analyticChartsRealization_comp_point_eq f.1 } }
+          pt := r.analyticChartsRealization_comp_point_eq f.1 }
+      map_id _ := Thick.Hom.ext' (AlgHom.ext fun _ ↦ rfl)
+      map_comp _ _ := Thick.Hom.ext' (AlgHom.ext fun _ ↦ rfl) }
   α S := RingHom.id S.T.C
   naturality _ _ := rfl
   smul S d c := (Algebra.smul_def (A := S.T.C) (ι d) c).symm

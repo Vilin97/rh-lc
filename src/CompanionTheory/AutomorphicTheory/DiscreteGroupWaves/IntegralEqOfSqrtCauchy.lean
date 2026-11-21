@@ -60,7 +60,9 @@ theorem tower_integral : ∀ (n : ℕ) (E : (j : ℕ) → (Fin j → ℂ) → �
       intro c hc
       rw [← (hs n (Nat.lt_succ_self n) c hc).2]
       exact integral_nonneg_of_ae (hGpos c hc)
-    obtain ⟨hI, hV⟩ := tower_integral n E hmn h0n fun j hj => hs j (Nat.lt_succ_of_lt hj)
+    have ih : Integrable (E n) ∧ ∫ c, E n c = E 0 (fun a => a.elim0) :=
+      tower_integral n E hmn h0n fun j hj => hs j (Nat.lt_succ_of_lt hj)
+    obtain ⟨hI, hV⟩ := ih
     have hGI : Integrable G ((volume : Measure (Fin n → ℂ)).prod (volume : Measure ℂ)) := by
       rw [integrable_prod_iff hGm]
       refine ⟨?_, ?_⟩
