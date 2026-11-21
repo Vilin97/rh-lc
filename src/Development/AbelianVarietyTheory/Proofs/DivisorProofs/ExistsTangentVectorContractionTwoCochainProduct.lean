@@ -21,9 +21,11 @@ namespace GlobalTheory.PtExt.ContrMor
 variable {R : Type} [CommRing R] {A B : Over (Sp R)} [GrpObj A] [GrpObj B]
   {D : Type} [CommRing D] [Algebra R D] {D' : Type} [CommRing D'] [Algebra R D']
 
+omit [GrpObj A] in
 theorem specOverOfAlgHom_pointWithZeroSecondCoord (φ : D →ₐ[R] D') (x : Pt A D) : spOver φ ≫ pt0 B x = pt0 B (spOver φ ≫ x) := by
   simp [pt0, comp_lift, MonObj.comp_one]
 
+omit [GrpObj A] in
 theorem spOver_fst_ptV (v : epsR R ⟶ B) (hv : IsTangent v) (x : Pt A D) :
     spOver (TrivSqZeroExt.fstHom R D D) ≫ ptV v x = pt0 B x := by
   have k : spOver (TrivSqZeroExt.fstHom R D D) ≫ spOver (EpsWeil.epsMap R D) =
@@ -40,12 +42,13 @@ theorem spOver_fst_ptV (v : epsR R ⟶ B) (hv : IsTangent v) (x : Pt A D) :
   · simp only [ptV, pt0, comp_lift, lift_snd]
     rw [← Category.assoc, k, Category.assoc, (GrpTangent.isTangent_iff v).1 hv, MonObj.comp_one]
 
+omit [GrpObj A] [GrpObj B] in
 theorem spOver_epsHom_ptV (v : epsR R ⟶ B) (φ : D →ₐ[R] D') (x : Pt A D) :
     spOver (epsHom φ) ≫ ptV v x = ptV v (spOver φ ≫ x) := by
   ext1
   · simp only [ptV, comp_lift, lift_fst, ← Category.assoc, spOver_comp]
     congr 2
-    ext c <;> simp [epsHom, DualNumber.lift_apply_apply]
+    ext c <;> simp [epsHom]
   · simp only [ptV, comp_lift, lift_snd, ← Category.assoc, spOver_comp]
     congr 2
     ext <;> simp only [AlgHom.comp_apply, EpsWeil.epsMap, epsHom, DualNumber.lift_apply_eps]

@@ -75,7 +75,10 @@ theorem coefD_pull1_of_family (res : ∀ k, Hol (K.W (ka k)) →+* Hol (K₀.W k
             change spMap (RingHom.id (S.T.C ⧸ S.T.J)) ≫ spMap ((Ideal.Quotient.mk S.T.J).comp (ρ' S)) ≫ r.x (ka S.T.k) =
               (spMap ((Ideal.Quotient.mk S.T.J).comp S.T.ρ) ≫ r₀.x S.T.k) ≫ φ₀
             rw [Cris.spMap_id, Category.id_comp, Category.assoc, ← h5, e, Cris.spMap_comp (res _), Category.assoc] }
-      naturality _ _ _ := Thick.hom_ext fun _ ↦ rfl }
+      naturality _ _ _ := by
+        apply Thick.Hom.ext'
+        ext b
+        rfl }
   refine (n.coef.pullCohomologyOne_comp (r₀.coefD dl H) c).symm.trans ?_
   refine (CoefMap.pullCohomologyOne_eq_of_natTrans _ _ t (fun _ _ ↦ rfl) c).symm.trans ?_
   rw [CoefMap.pullCohomologyOne_comp, hc, famCoef_perCl]

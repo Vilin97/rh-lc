@@ -62,10 +62,10 @@ theorem hasDerivAt_coeff_colSub_of_curve [Fintype ι] {d a : ℕ} (τ : ι) (S :
   induction R using MvPolynomial.induction_on generalizing m with
   | C c =>
     have h1 : colDer τ S (C c : Pol ι d a) = 0 := by simp [colDer_apply]
-    simp only [h1, algHom_C, coeff_zero]
+    simp only [h1, algHom_C, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     exact hasDerivAt_const _ _
   | add P Q hP hQ =>
-    simp only [map_add (f := _), MvPolynomial.coeff_add]
+    simp only [map_add (f := _), AddMonoidAlgebra.coeff_add, Finsupp.add_apply]
     exact (hP m).add (hQ m)
   | mul_X P v hP =>
     have e1 : ∀ h, AddMonoidAlgebra.coeff (colSub (g h) (P * X v)) m =
@@ -81,7 +81,7 @@ theorem hasDerivAt_coeff_colSub_of_curve [Fintype ι] {d a : ℕ} (τ : ι) (S :
     have hd := HasDerivAt.fun_sum (u := Finset.univ) fun k _ =>
       (hg v.1 k v.2.2).fun_mul (hasDerivAt_coeff_mul_X hP (v.1, v.2.1, k) m)
     refine hd.congr_deriv ?_
-    rw [colDer_mul_X, MvPolynomial.coeff_add, Finset.sum_add_distrib, add_comm]
+    rw [colDer_mul_X, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, Finset.sum_add_distrib, add_comm]
     congr 1
     · rw [h0, Finset.sum_eq_single v.2.2]
       · simp

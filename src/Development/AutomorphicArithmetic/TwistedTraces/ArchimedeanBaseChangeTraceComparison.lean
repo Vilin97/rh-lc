@@ -78,7 +78,7 @@ private theorem oloc_fix {w w' : Pl K} (h : w ≠ w') [MeasurableSpace (Gw n w)]
     rw [hB, ← ContinuousLinearMap.adjoint_inner_left, hB]
     refine integral_congr_ae (Filter.Eventually.of_forall fun g => ?_)
     have h1 := congrArg (· b) (rhoL_comm' μ h g x)
-    simp only [ContinuousLinearMap.mul_apply] at h1
+    simp only [mul_apply_eq_comp] at h1
     simp only
     rw [ContinuousLinearMap.adjoint_inner_left, h1]
   simp only [fixL, fixF, Submodule.mem_iInf] at hv ⊢

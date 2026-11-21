@@ -35,11 +35,12 @@ theorem weight_add_of_mul {σ F : Type} [Field F] (w : σ → ℕ) {P Q : MvPoly
     intro h0
     have := congrArg (AddMonoidAlgebra.coeff · s) h0
     apply (mem_support_iff.mp hs)
-    simpa only [coeff_weightedHomogeneousComponent, if_pos rfl,
+    simpa only [coeff_weightedHomogeneousComponent, j, ite_true,
       AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] using this
 
   have hne : weightedHomogeneousComponent w (k + j) (P * Q) ≠ 0 := by
-    rw [wcomp_mul_of_left w (k + j) hP Q, if_pos (Nat.le_add_right k j), Nat.add_sub_cancel_left]
+    simp only [wcomp_mul_of_left w (k + j) hP Q, Nat.le_add_right, ite_true,
+      Nat.add_sub_cancel_left]
     exact mul_ne_zero hP0 hc
   by_contra hkm
   exact hne (hm.weightedHomogeneousComponent_ne (k + j) hkm)

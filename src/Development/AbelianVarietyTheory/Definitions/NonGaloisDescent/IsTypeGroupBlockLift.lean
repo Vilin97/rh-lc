@@ -1,6 +1,7 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.CoeffRingsHaveRootsOfUnity
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RankOneUnitary
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ThetaMod
 
 @[expose] public section
@@ -10,7 +11,7 @@ noncomputable section
 namespace GlobalTheory.PendOf
 
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT NumberField
-  IsDedekindDomain Polynomial GlobalTheory.HeightCounting GlobalTheory.RowTie GlobalTheory.SplitRead GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.NPin ValuativeRel
+  IsDedekindDomain Polynomial GlobalTheory.HeightCounting GlobalTheory.SplitRead GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.NPin ValuativeRel
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
@@ -19,7 +20,7 @@ def IsConjGen (D : D7) (w w' : PlE D.host) (γ γ' : GE D.nd) : Prop :=
     (∀ x : D.host.E, c (algebraMap D.host.E D.nd.Om x) = algebraMap D.host.E D.nd.Om (D.host.conj x)) ∧
     (∀ y, y ∈ D.nd.plOm.1 w ↔ c y ∈ D.nd.plOm.1 w') ∧ ∀ y, γ' (c y) = c (γ y)
 
-def LabAll (D : D7) (T : WDTie D.nd D.naut) : Prop :=
+def LabAll (D : D7) (T : GlobalTheory.RowTie.WDTie D.nd D.naut) : Prop :=
   ∃ γ : Fin 2 → PlE D.host → GE D.nd, (∀ k v, γ k (D.naut.plGw k v) = D.ntypes.tg k v) ∧
     (∀ k v w', IsConjPl D.host (D.naut.plGw k v) w' →
       IsConjGen D (D.naut.plGw k v) w' (D.ntypes.tg k v) (γ k w')) ∧

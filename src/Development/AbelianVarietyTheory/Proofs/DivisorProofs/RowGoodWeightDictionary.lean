@@ -33,6 +33,7 @@ theorem goodW_core {D : D7} (T : CoreJ D) (hT : LawsJ T) (j : ℕ) (hj : InR D j
   have hl' : FullLat (cuspW (T.Q.Xo j) T.Q.c (T.U j) (wtZ (wtA w) w.n))
       (valSet (T.Q.Xo j) T.Q.c (algCls (T.Q.Xo j) T.Q.c)) fun la => isVal_valSet la :=
     fullLat_congr (cuspW_wtZ _ _).symm hl
+  change Submodule.IsFullLattice T.Q.c.F (latW (T.U j) (wtZ (wtA w) w.n)) at hl'
   refine ⟨?_, hl'.fg, Submodule.IsFullLattice.span_eq_top (self := hl')⟩
   haveI : FiniteDimensional T.Q.c.F (cuspW (T.Q.Xo j) T.Q.c (T.U j) (wtZ (wtA w) w.n)) := by
     obtain ⟨s, hs⟩ := hl'.fg

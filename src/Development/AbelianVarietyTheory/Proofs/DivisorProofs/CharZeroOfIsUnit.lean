@@ -86,6 +86,8 @@ theorem exists_zeroLocus {B Z : Over S} [GrpObj B] [IsCommMonObj B] (hB : IsAbel
     (Over.w (GlobalTheory.HTTorsRep.torsEta (A := B) n))
   have := GlobalTheory.HTTorsRep.mono_of_unit (GlobalTheory.HTTorsRep.torsEta (A := B) n)
   have := GlobalTheory.HTTorsRep.mono_ι (A := B) n
+  have hEta : GlobalTheory.HTTorsRep.torsEta n ≫ torsion.ι B n = η[B] :=
+    pullback.lift_fst _ _ _
   let g' : Z ⟶ torsion B n := pullback.lift g (toUnit Z) (by rw [comp_mulN, hg]; rfl)
   have hg' : g' ≫ torsion.ι B n = g := pullback.lift_fst _ _ _
   have hP := (IsPullback.of_hasPullback g' (GlobalTheory.HTTorsRep.torsEta n)).map (Over.forget S)
@@ -94,10 +96,10 @@ theorem exists_zeroLocus {B Z : Over S} [GrpObj B] [IsCommMonObj B] (hB : IsAbel
     MorphismProperty.of_isPullback (P := @IsClosedImmersion) hP.flip hsec.2, fun W y => ⟨?_, fun h => ?_⟩⟩
   · rintro ⟨z, rfl⟩
     rw [← hg', Category.assoc, ← Category.assoc (pullback.fst g' _), pullback.condition, Category.assoc,
-      GlobalTheory.HTTorsRep.torsEta_ι, ← Category.assoc, toUnit_unique (z ≫ pullback.snd g' _) (toUnit W)]
+      hEta, ← Category.assoc, toUnit_unique (z ≫ pullback.snd g' _) (toUnit W)]
     rfl
   · refine ⟨pullback.lift y (toUnit W) ?_, pullback.lift_fst _ _ _⟩
-    rw [← cancel_mono (torsion.ι B n), Category.assoc, hg', h, Category.assoc, GlobalTheory.HTTorsRep.torsEta_ι]
+    rw [← cancel_mono (torsion.ι B n), Category.assoc, hg', h, Category.assoc, hEta]
     rfl
 
 theorem exists_subgroup {A B C : Over S} [GrpObj A] [IsCommMonObj A] [GrpObj B] [IsCommMonObj B] [GrpObj C]

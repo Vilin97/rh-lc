@@ -57,7 +57,7 @@ theorem dual_of {n : ℕ} (π : Representation ℂ (GL (Fin n) k) V) (hs : IsSmo
   IrrGL.of_eq_of.2 ⟨compEquiv (IrrGL.equivOf π hs hi).symm (invTranspose n)⟩
 
 
-omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
+omit [IsNonarchimedeanLocalField k] in
 theorem dual_dual (x : IrrGL (k := k)) : dual (dual x) = x := by
   refine (dual_of _ _ _).trans (Eq.trans (IrrGL.of_eq_of.2 ⟨?_⟩) (IrrGL.of_rep x))
   refine Representation.Equiv.mk (LinearEquiv.refl ℂ _) fun g => ?_

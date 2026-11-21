@@ -30,13 +30,13 @@ theorem mem_hwSub' (act : Mat p q →ₗ[ℂ] Module.End ℂ V) (μ : Ix p q →
 
 theorem isKC_diag' (a : Ix p q) : IsKC (Eab a a) := by
   intro c d h
-  rw [Eab, Matrix.single_apply, if_neg]
+  rw [Eab, Matrix.single_apply, ite_eq_right]
   rintro ⟨rfl, rfl⟩
   cases a <;> simp [sameBlock] at h
 
 theorem isKC_pos' {a b : Ix p q} (hab : posC a b) : IsKC (Eab a b) := by
   intro c d h
-  rw [Eab, Matrix.single_apply, if_neg]
+  rw [Eab, Matrix.single_apply, ite_eq_right]
   rintro ⟨rfl, rfl⟩
   cases a <;> cases b <;> simp_all [sameBlock, posC]
 
@@ -59,7 +59,7 @@ theorem map_wts {a : Mat p q →ₗ[ℂ] Module.End ℂ V} {b : Mat p q →ₗ[�
     intro c
     rw [← hg, ← map_smul, ← map_sub, hy c, map_zero]
   · intro x y hx hy
-    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    rw [map_add]; exact add_mem hx hy
 
 end General
 

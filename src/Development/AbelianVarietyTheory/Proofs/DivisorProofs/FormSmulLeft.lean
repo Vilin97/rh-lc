@@ -87,7 +87,7 @@ namespace GlobalTheory.AnisRatInv
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem exists_split_vec {σ : E →ₐ[F] E} {B : Base F E} {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁}
-    {H' : Plane E d d₁} {i₀ i₁ : ℕ} (hH : H'.IsAdapted σ B W W₁ i₀ i₁) (hL : W.L.IsLattice E) (r : Fin d → E) :
+    {H' : Plane E d d₁} {i₀ i₁ : ℕ} (hH : H'.IsAdapted σ B W W₁ i₀ i₁) (hL : W.L.IsFullLattice E) (r : Fin d → E) :
     ∃ (s t : E) (u : Fin d₁ → E), r = s • H'.x + H'.ι *ᵥ u + t • H'.y := by
   let S : Submodule E (Fin d → E) :=
     { carrier := {r | ∃ (s t : E) (u : Fin d₁ → E), r = s • H'.x + H'.ι *ᵥ u + t • H'.y}
@@ -102,7 +102,7 @@ theorem exists_split_vec {σ : E →ₐ[F] E} {B : Base F E} {d d₁ : ℕ} {W :
     refine Submodule.span_le.mpr fun z hz => ?_
     obtain ⟨s, t, u, -, -, -, h⟩ := hH.split z hz
     exact ⟨s, t, u, h⟩
-  rw [Submodule.IsLattice.span_eq_top] at hle
+  rw [Submodule.IsFullLattice.span_eq_top (self := hL)] at hle
   exact hle (Submodule.mem_top (x := r))
 
 theorem form_add_left (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (v v' w : Fin d → E) :

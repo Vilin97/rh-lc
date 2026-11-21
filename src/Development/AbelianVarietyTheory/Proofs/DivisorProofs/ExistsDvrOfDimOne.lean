@@ -329,7 +329,7 @@ theorem exists_chart (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] [IsNoe
       rcases hx with ((rfl | ⟨i, rfl⟩) | ⟨i, rfl⟩) | ⟨i, rfl⟩
       exacts [⟨_, hφτ.symm⟩, hu' i, hw' i, hz' i]
     | algebraMap r => exact ⟨_, (hφr r).symm⟩
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   have mτ : τ ∈ A := Algebra.subset_adjoin (Or.inl (Or.inl (Or.inl rfl)))
   have mu : ∀ i, u i ∈ A := fun i => Algebra.subset_adjoin (Or.inl (Or.inl (Or.inr ⟨i, rfl⟩)))

@@ -198,7 +198,9 @@ theorem IsArcFr.isFramedPoint_changed_by_letters [Algebra c.F K] [Algebra c.F (A
   refine ⟨hb, ⟨z, hzj, hzx.trans hx.symm⟩, v, hL, fun τ i => ⟨y₀.u τ, fun k => ⟨u' τ k ≫ φ, ?_, ?_⟩, ?_⟩⟩
   · rw [Category.assoc, hφ, ← Category.assoc, hu2, Category.assoc]
   · rw [Category.assoc, hφ0, hu1]
-  · simpa only [hx, letM, Matrix.of_apply] using hcomb τ i
+  · have hrow : letM Dw K τ i = fun k => arcX Dw K τ i k :=
+      funext fun k => Matrix.of_apply (fun j k => arcX Dw K τ j k) i k
+    simpa only [hx, hrow] using hcomb τ i
 
 end Fld
 

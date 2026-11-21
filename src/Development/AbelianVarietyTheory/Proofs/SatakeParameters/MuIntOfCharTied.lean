@@ -13,7 +13,9 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 
 namespace GlobalTheory.MuIntegral
 
-theorem muInt_of_charTied : ∀ (D : D7) (C : Formalism.L2.Host.CharFrame D) (nch : NChoice D) (Tp : Formalism.L2.Host.TupTied D C nch), Formalism.L2.Host.NCharTied D C nch Tp → MuInt D.nd D.naut := by
+theorem muInt_of_charTied : ∀ (D : D7) (C : Formalism.L2.Host.CharFrame D) (nch : NChoice D)
+    (Tp : Formalism.L2.Host.TupTied D C nch),
+    Formalism.L2.Host.NCharTied D C nch Tp → GlobalTheory.SplitRead.MuInt D.nd D.naut := by
   intro D C nch Tp hT i τ z hz
   have hj := D.nd.j_range i
   let j : Fin D.R.m := ⟨D.nd.j i - 1, by omega⟩

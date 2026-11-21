@@ -32,7 +32,11 @@ theorem GlobalTheory.AdelicActs.schr_local_of_acts : ∀ {F : Type} [Field F] [N
   rw [GlobalTheory.SchrLoc.schr_tens_of_at ψ v w h1 h2 φ r hr.1] at e
   funext y
   let z : κ → AF F := fun i => GlobalTheory.EmbChart.atPlace v (y i - evFin F v (x₀ i))
-  have hz : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (evFin F v) z := GlobalTheory.VacAny.at_pi fun i => GlobalTheory.VacAny.at_atPlace _
+  have hz : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (evFin F v) z := by
+    intro u hu
+    funext i
+    change u * GlobalTheory.EmbChart.atPlace v (y i - evFin F v (x₀ i)) = 0
+    rw [mul_comm, GlobalTheory.EmbChart.atPlace_mul_right, hu, mul_zero, map_zero]
   have hrx : r (x₀ + z) = r x₀ := hr.1 x₀ z hz
   have hev : (fun i => evFin F v ((x₀ + z) i)) = y := by
     funext i

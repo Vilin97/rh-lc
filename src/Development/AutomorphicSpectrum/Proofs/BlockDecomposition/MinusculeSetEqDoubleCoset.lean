@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaBound.lift_levelP_alt₂
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NormSatakeLeOfUnitarySphericalGL
+public import GroundTheory.AutomorphicForms.SphericalMinuscule
 
 @[expose] public section
 
@@ -239,7 +240,7 @@ theorem cpow_eq_sqrt_pow (q : ℕ) {n r : ℕ} (hr : r ≤ n) :
 
 end Global
 
-theorem l12 : lift_levelP_alt₂ := by
+theorem l12 : PositivityTheory.JacquetShalikaLocal.lift_levelP_alt₂ := by
   intro E _ _ w
   have hq : qF (w.adicCompletion E) = Ideal.absNorm w.asIdeal := GlobalTheory.LFun.SatBoundGL.resCard_completion w
   refine ⟨hq, ?_⟩

@@ -17,10 +17,10 @@ open GlobalTheory.AllWt
 open scoped ENNReal Classical
 
 theorem eLpNorm_sq_le_add {α : Type} [MeasurableSpace α] {μ : Measure α} (hμ : μ Set.univ ≤ 1) {f g : α → ℝ} {C : ℝ}
-    (hC : 0 ≤ C) (h : ∀ a, f a ^ 2 ≤ g a ^ 2 + C) : eLpNorm f 2 μ ^ 2 ≤ eLpNorm g 2 μ ^ 2 + ENNReal.ofReal C := by
-  have key : ∀ u : α → ℝ, eLpNorm u 2 μ ^ 2 = ∫⁻ a, ENNReal.ofReal (u a ^ 2) ∂μ := fun u => by
-    have e := eLpNorm_nnreal_pow_eq_lintegral (f := u) (μ := μ) (p := 2) two_ne_zero
-    simp only [NNReal.coe_ofNat, ENNReal.rpow_ofNat, ENNReal.coe_ofNat] at e
+    (hC : 0 ≤ C) (h : ∀ a, f a ^ 2 ≤ g a ^ 2 + C) : eLpNorm' f 2 μ ^ 2 ≤ eLpNorm' g 2 μ ^ 2 + ENNReal.ofReal C := by
+  have key : ∀ u : α → ℝ, eLpNorm' u 2 μ ^ 2 = ∫⁻ a, ENNReal.ofReal (u a ^ 2) ∂μ := fun u => by
+    have e := (lintegral_rpow_eNorm_eq_rpow_eLpNorm' (f := u) (μ := μ) (q := 2) (by norm_num)).symm
+    simp only [ENNReal.rpow_ofNat] at e
     rw [e]
     refine lintegral_congr fun a => ?_
     rw [Real.enorm_eq_ofReal_abs, ← ENNReal.ofReal_pow (abs_nonneg _), sq_abs]
@@ -203,9 +203,9 @@ theorem bergOn_le_bergCusp {G : WTZ E} {σ : c.F →+* ℂ}
       simp only [ptN, FD.Data.pnorm, eq_zero_of_mem_span_cuspOn hQ hw, norm_zero, zero_mul]
   have hpet : petE (V (goodOf c σ)) (dict (goodOf c σ)) μ (modelWt (U (goodOf c σ)) G) Q ≤
       petE (V (goodOf c σ)) (dict (goodOf c σ)) μ (modelWt (U (goodOf c σ)) G) P :=
-    eLpNorm_mono fun q => by
+    eLpNorm'_mono_ae (by norm_num) (Filter.Eventually.of_forall fun q => by
       rw [Real.norm_of_nonneg (ptN_nonneg _ _ _), Real.norm_of_nonneg (ptN_nonneg _ _ _)]
-      exact hle _
+      exact hle _)
   have hz' : ptN (modelWt (U (goodOf c σ)) G) P ⟨z.1, z.2.1⟩ = ptN (modelWt (U (goodOf c σ)) G) Q ⟨z.1, z.2.1⟩ := by
     have := hPQ _ hz
     simp only [ptN, FD.Data.pnorm] at this ⊢

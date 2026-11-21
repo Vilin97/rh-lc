@@ -29,7 +29,7 @@ theorem ev_triv_congr {R : Type} [CommRing R] {X : Scheme.{0}} {s : X ⟶ Sp R} 
     (b : @Thick.triv R _ X s D _ j x hxj ⟶ @Thick.triv R _ X s D' _ j' x₂ hxj')
     (h : ∀ r, a.φ r = b.φ r) : ev f a = ev f b := by
   subst hi hi' hx₁
-  have : a = b := Thick.hom_ext h
+  have : a = b := Thick.Hom.ext' (AlgHom.ext h)
   subst this
   rfl
 

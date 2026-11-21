@@ -149,14 +149,14 @@ theorem polynomial_mem (V : ValuationSubring K) (hV : ∀ c : k, algebraMap k[X]
     (h : algebraMap k[X] K X ∈ V) (q : k[X]) : algebraMap k[X] K q ∈ V := by
   induction q using Polynomial.induction_on with
   | C a => exact hV a
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | add p q hp hq => rw [map_add]; exact add_mem hp hq
   | monomial n a ih => rw [pow_succ, ← mul_assoc, map_mul]; exact mul_mem ih h
 
 theorem exists_polynomial [Algebra.IsAlgebraic k[X] K] {a : K} (ha : a ≠ 0) :
     ∃ p : k[X], p ≠ 0 ∧ ∀ q : k[X], p ∣ q → q.natDegree ≠ 0 → ∀ V : ValuationSubring K,
       (∀ c : k, algebraMap k[X] K (C c) ∈ V) → V.valuation a < 1 →
         V.valuation (algebraMap k[X] K q) ≠ 1 := by
-  obtain ⟨b, hb, p, hp, e⟩ := (Algebra.IsAlgebraic.isAlgebraic (R := k[X]) a).exists_nonzero_eq_adjoin_mul
+  obtain ⟨b, hb, p, hp, e⟩ := (Algebra.IsAlgebraic.isAlgebraic (R := k[X]) a).exists_ne_zero_eq_adjoin_mul
     (mem_nonZeroDivisors_of_ne_zero ha)
   refine ⟨p, hp, ?_⟩
   rintro _ ⟨r, rfl⟩ hq V hV h h1
@@ -232,6 +232,7 @@ theorem finite_of_isClosed [NoetherianSpace C] (hd : topologicalKrullDim C = 1) 
   rw [← hg.def, (isClosed_singleton hd this).closure_eq]
   exact Set.finite_singleton _
 
+omit [IsIntegral C] in
 theorem krullDimLE_stalk (hd : topologicalKrullDim C = 1) (x : C) :
     Ring.KrullDimLE 1 (C.presheaf.stalk x) := by
   refine krullDimLE_of_coheight_le ?_

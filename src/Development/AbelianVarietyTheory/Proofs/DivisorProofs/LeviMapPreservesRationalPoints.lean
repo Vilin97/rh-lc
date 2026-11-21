@@ -22,7 +22,7 @@ open Matrix GlobalTheory.LeviElem GlobalTheory.LeviRat
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
-theorem decomp {B : Base F E} {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} (hlat : Submodule.IsLattice E W.L)
+theorem decomp {B : Base F E} {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} (hlat : Submodule.IsFullLattice E W.L)
     {H' : Plane E d d₁} {i₀ i₁ : ℕ} (hA : H'.IsAdapted σ B W W₁ i₀ i₁) :
     (∀ v : Fin d → E, ∃ (a b : E) (u : Fin d₁ → E), v = a • H'.x + H'.ι *ᵥ u + b • H'.y) ∧
     ∀ u : Fin d₁ → E, H'.ι *ᵥ u = 0 → u = 0 := by
@@ -31,8 +31,9 @@ theorem decomp {B : Base F E} {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d�
       (LinearMap.toSpanSingleton E _ H'.y)
   have hφ : ∀ p, φ p = p.1.1 • H'.x + H'.ι *ᵥ p.1.2 + p.2 • H'.y := fun p => by
     simp [φ, LinearMap.coprod_apply]
+  let : Submodule.IsFullLattice E W.L := hlat
   have hsurj : Function.Surjective φ := by
-    rw [← LinearMap.range_eq_top, eq_top_iff, ← hlat.span_eq_top, Submodule.span_le]
+    rw [← LinearMap.range_eq_top, eq_top_iff, ← (Submodule.IsFullLattice.span_eq_top (A := E) (M := W.L)), Submodule.span_le]
     intro z hz
     obtain ⟨a, b, u, -, -, -, rfl⟩ := hA.split z hz
     exact ⟨((a, u), b), hφ _⟩

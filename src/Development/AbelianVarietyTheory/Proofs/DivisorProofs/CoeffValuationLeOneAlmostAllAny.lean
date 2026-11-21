@@ -170,9 +170,15 @@ theorem coeff_valuation_le_one_almost_all_any : ∀ (E : Type) [Field E] [Number
     Set.finite_iUnion fun j => Filter.eventually_cofinite.1 (FractionalIdeal.finite_factors (z.ℓ j).I)
   have hfinT := Filter.eventually_cofinite.1 (FractionalIdeal.finite_factors z.Tl.I)
   refine ⟨S₁ ∪ hfin.toFinset ∪ hfinT.toFinset, fun p hp F hF hv G hG μ => ?_⟩
-  simp only [Finset.mem_union, not_or, Set.Finite.mem_toFinset, Set.mem_iUnion, Set.mem_setOf_eq, not_exists,
-    not_not] at hp
-  obtain ⟨⟨hp1, hp2⟩, hp3⟩ := hp
+  have hp1 : p ∉ S₁ := fun h => hp (Finset.mem_union_left _ (Finset.mem_union_left _ h))
+  have hp2 : ∀ j, FractionalIdeal.count z.K p (z.ℓ j).I = 0 := by
+    intro j
+    by_contra h
+    exact hp (Finset.mem_union_left _ (Finset.mem_union_right _
+      (hfin.mem_toFinset.mpr (Set.mem_iUnion.mpr ⟨j, h⟩))))
+  have hp3 : FractionalIdeal.count z.K p z.Tl.I = 0 := by
+    by_contra h
+    exact hp (Finset.mem_union_right _ (hfinT.mem_toFinset.mpr h))
   have hgen : ∀ j, Formalism.L2.LamCM.IsLocGen p (1 : z.K) (z.ℓ j).I := fun j =>
     ⟨one_ne_zero, by rw [FractionalIdeal.spanSingleton_one, FractionalIdeal.count_one, hp2 j]⟩
   obtain ⟨T, iK, hT, hiK⟩ := GlobalTheory.T.exists_completeDVR_completion_integral_iff z.K p

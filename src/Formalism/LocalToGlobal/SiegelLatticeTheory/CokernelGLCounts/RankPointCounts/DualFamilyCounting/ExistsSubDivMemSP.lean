@@ -19,14 +19,14 @@ open Formalism.HermitianLattices.Ext.L3
 
 variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+local notation "jK" => algebraMap (𝓞 K) K
+
 theorem jK_ι (t : 𝓞 F) : jK (ι t) = algebraMap F K (t : F) := rfl
 
 theorem jK_ι_ne_zero {t : 𝓞 F} (ht : t ≠ 0) : jK (ι t) ≠ 0 := by
   rw [jK_ι]
-  intro h
-  apply ht
-  have h1 : ((t : F)) = 0 := (map_eq_zero_iff _ (algebraMap F K).injective).1 h
-  exact_mod_cast h1
+  exact (map_ne_zero_iff _ (algebraMap F K).injective).2 (RingOfIntegers.coe_ne_zero_iff.2 ht)
 
 theorem ne_zero_of_notMem {𝔭 : Ideal (𝓞 F)} {t : 𝓞 F} (ht : t ∉ 𝔭) : t ≠ 0 := by
   rintro rfl
@@ -54,7 +54,7 @@ theorem exists_mul_mem_span {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {a 
       rw [hJ, pow_succ]
       exact Ideal.mul_mono_right hJ𝔭
     exact this (Ideal.mem_span_singleton_self a)
-  obtain ⟨t, htJ, ht𝔭⟩ := SetLike.not_le_iff_exists.1 hJp
+  obtain ⟨t, htJ, ht𝔭⟩ := IsConcreteLE.not_le_iff_exists.1 hJp
   refine ⟨t, ht𝔭, fun x hx => ?_⟩
   rw [hJ, mul_comm t x]
   exact Ideal.mul_mem_mul hx htJ
@@ -69,8 +69,7 @@ theorem div_mem_SP_iff {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {a : �
   · rintro ⟨t, ht, w, hw⟩
     have e1 : ι t * z = w * ι a := by
       apply FaithfulSMul.algebraMap_injective (𝓞 K) K
-      rw [map_mul, map_mul, hw]
-      field_simp
+      rw [map_mul, map_mul, hw, mul_assoc, div_mul_cancel₀ _ ha']
     obtain ⟨u, hu⟩ := exists_inv_mod h𝔭 ht (vF 𝔭 a)
     have hA : ι a ∈ extP K 𝔭 ^ vF 𝔭 a := localizedQuotients.ι_mem_pow (localValuationFiltration.mem_pow_vF h𝔭 ha)
     have e2 : z = ι u * (ι t * z) + ι (1 - t * u) * z := by
@@ -102,10 +101,8 @@ theorem div_mem_SP_iff {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {a : �
     obtain ⟨w, hw⟩ := Ideal.mem_span_singleton'.1
       (hle (Ideal.mul_mem_mul (Ideal.mem_span_singleton_self _) hz))
     refine ⟨w, ?_⟩
-    have := congrArg jK hw
-    rw [map_mul, map_mul] at this
-    field_simp
-    rw [this]
+    rw [← mul_div_assoc]
+    exact (eq_div_iff ha').2 (by simpa only [map_mul] using congrArg jK hw)
 
 theorem exists_sub_div_mem_SP {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {a : 𝓞 F} (ha : a ≠ 0) {r : K}
     (hr : haveI := h𝔭.isPrime; r ∈ HU.SP K 𝔭) :

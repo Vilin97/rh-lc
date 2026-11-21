@@ -47,7 +47,7 @@ theorem ctr_mem_of_span (v : Derivation R B B) {S : Set (DR R B)} {T : Ideal (DR
   induction hx using Submodule.span_induction with
   | mem x hx => exact hS x hx
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact add_mem hx hy
   | smul r x hx ih =>
     rw [smul_eq_mul, ctr_mul']
     exact add_mem (Ideal.mul_mem_left _ _ (hST hx))
@@ -103,7 +103,7 @@ theorem ι_mem_filDR (n : ℕ) {ω : Ω[B⁄R]} (hω : ω ∈ fil δ n • (⊤ 
   refine Submodule.smul_induction_on hu (fun c hc ω _ ↦ ?_) (fun x y hx hy ↦ ?_)
   · rw [map_smul, Algebra.smul_def, Algebra.commutes]
     exact Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨c, hc, rfl⟩)
-  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · rw [map_add (f := _)]; exact add_mem hx hy
 
 theorem dDR_mem_filDR (hv : ∀ n, ∀ a ∈ J, v (δ.dpow (n + 1) a) = δ.dpow n a * v a) (n : ℕ) {x : DR R B}
     (hx : x ∈ filDR R δ (n + 1)) : dDR R B x ∈ filDR R δ n := by
@@ -119,7 +119,7 @@ theorem dDR_mem_filDR (hv : ∀ n, ∀ a ∈ J, v (δ.dpow (n + 1) a) = δ.dpow 
     intro m a ha
     exact Ideal.subset_span ⟨m, a, ha, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact add_mem hx hy
   | smul r x hx ih =>
     rw [smul_eq_mul, dDR_mul]
     refine add_mem (Ideal.mul_mem_left _ _ ih) (Ideal.mul_mem_left _ _ ?_)

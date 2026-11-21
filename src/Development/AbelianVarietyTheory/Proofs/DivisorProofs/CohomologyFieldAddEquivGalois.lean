@@ -163,7 +163,7 @@ theorem cechPt_map (k : ℕ) {U V : Scheme.{0}} (g : V ⟶ U) (x : U ⟶ X) (y :
       erw [WidePullback.lift_base, WidePullback.lift_base]
       simp
   have := congrArg (fun φ => φ.app (op V) (𝟙 V)) key
-  simp only [FunctorToTypes.comp] at this
+  simp only [NatTrans.comp_app_apply] at this
   unfold cechPt
   have hn := ConcreteCategory.congr_hom ((WidePullback.lift (arrows := fun _ : Fin (k + 1) => yoneda.map f) (yoneda.map x)
       (fun i => yoneda.map (y i)) (fun i => by rw [← yoneda.map_comp, h i])).naturality g.op) (𝟙 U)
@@ -185,7 +185,7 @@ theorem cechPt_δ (m : ℕ) (i : Fin (m + 2)) {U : Scheme.{0}} (x : U ⟶ X) (y 
       rfl
     · erw [Category.assoc, WidePullback.lift_base, WidePullback.lift_base, WidePullback.lift_base]
   have := congrArg (fun φ => φ.app (op U) (𝟙 U)) key
-  simp only [FunctorToTypes.comp] at this
+  simp only [NatTrans.comp_app_apply] at this
   exact this
 end Cech
 

@@ -131,12 +131,13 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.killAvg :
   have hSa : ∀ ξ q, q ∈ S → act (u ξ) q ∈ S := fun ξ q hq =>
     hS q.out (q.out * u ξ) ξ rfl (by rwa [Quotient.out_eq])
   have hDa : ∀ ξ (q : Cos K) a, Dies F r (q.out : G1 K (2 + 2)) a → Dies F r ((act (u ξ) q).out : G1 K (2 + 2)) a := by
-    intro ξ q a h x
+    intro ξ q a h
+    unfold Dies at h ⊢
+    intro x
     rw [← h (unipOne (K := K) (n := 2 + 2) r ξ.1 * x)]
-    congr 1
-    funext y
+    refine setIntegral_congr_fun (GroundTheory.Global.measurableSet_fundamentalSet K) fun y _ => ?_
     rw [mul_assoc, act_val F hF, mul_assoc]
-    congr 2
+    refine congrArg (fun z : G1 K (2 + 2) => F ((q.out : G1 K (2 + 2)) * z)) ?_
     show unipOne (K := K) (n := 2 + 2) r ξ.1 * _ = _
     rw [← mul_assoc, ← mul_assoc, ← unipOne_add, ← unipOne_add, add_comm ξ.1]
   let c : Cos K → UPos (2 + 2) r → K := fun q => Classical.epsilon fun a => Dies F r (q.out : G1 K (2 + 2)) a
@@ -165,7 +166,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.killAvg :
   · rw [act_val F hF, unipOne_add, mul_assoc]
   · rintro q ⟨hq, rfl⟩ X
     have h : Dies F r (q.out : G1 K (2 + 2)) (c q) := Classical.epsilon_spec (hD q hq)
+    unfold Dies at h
     rw [← h (unipOne (K := K) (n := 2 + 2) r X * g)]
-    congr 1
-    funext y
+    refine setIntegral_congr_fun (GroundTheory.Global.measurableSet_fundamentalSet K) fun y _ => ?_
     rw [add_comm X, unipOne_add, mul_assoc, mul_assoc]

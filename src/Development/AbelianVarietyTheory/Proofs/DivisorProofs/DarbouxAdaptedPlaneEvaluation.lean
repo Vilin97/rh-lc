@@ -23,9 +23,11 @@ theorem piInf_inclR {w : InfinitePlace F} (τ : EmbOver E w) (e : E) :
   simpa [incM] using this
 
 theorem exists_plane_decomp {σ : E →ₐ[F] E} {B : Base F E} {d d₁ i₀ i₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁}
-    {H' : Plane E d d₁} (hH : H'.IsAdapted σ B W W₁ i₀ i₁) (hL : W.L.IsLattice E) (v : Fin d → E) :
+    {H' : Plane E d d₁} (hH : H'.IsAdapted σ B W W₁ i₀ i₁) (hL : W.L.IsFullLattice E) (v : Fin d → E) :
     ∃ (s t : E) (u : Fin d₁ → E), v = s • H'.x + H'.ι *ᵥ u + t • H'.y := by
-  have hv : v ∈ Submodule.span E (W.L : Set (Fin d → E)) := by rw [hL.span_eq_top]; trivial
+  letI := hL
+  have hv : v ∈ Submodule.span E (W.L : Set (Fin d → E)) := by
+    rw [Submodule.IsFullLattice.span_eq_top]; trivial
   induction hv using Submodule.span_induction with
   | mem z hz =>
     obtain ⟨s, t, u, -, -, -, h⟩ := hH.split z hz
@@ -40,7 +42,7 @@ theorem exists_plane_decomp {σ : E →ₐ[F] E} {B : Base F E} {d d₁ i₀ i�
     exact ⟨c * s, c * t, c • u, by rw [h, Matrix.mulVec_smul, smul_add, smul_add, smul_smul, smul_smul]⟩
 
 theorem one_eq_plane_decomp {σ : E →ₐ[F] E} {B : Base F E} {d d₁ i₀ i₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁}
-    {H' : Plane E d d₁} (hH : H'.IsAdapted σ B W W₁ i₀ i₁) (hL : W.L.IsLattice E) :
+    {H' : Plane E d d₁} (hH : H'.IsAdapted σ B W W₁ i₀ i₁) (hL : W.L.IsFullLattice E) :
     ∃ (U : Matrix (Fin d) (Fin d₁) E) (s t : Fin d → E),
       (1 : Matrix (Fin d) (Fin d) E) = U * H'.ιᵀ + Matrix.vecMulVec s H'.x + Matrix.vecMulVec t H'.y := by
   choose s t U hU using fun k : Fin d => exists_plane_decomp hH hL (Pi.single k 1)

@@ -5,6 +5,9 @@ public import Development.AutomorphicArithmetic.Foundations.Convolution.BlockHec
 public import Development.AutomorphicArithmetic.Foundations.Convolution.BlockHeckeSlices.CuspidalNormBounds.HkApply
 public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.TsphVec
 
+import all Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.TsphVec
+import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsContRep
+
 @[expose] public section
 
 open private kgl_eq tj_eq hop_apply mem_fixL from Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.TsphVec
@@ -32,7 +35,7 @@ private theorem cont_of (h : Rep μ v φ) : IsContRep μ v fun y => φ.1 (y : GA
     exact h.umg.left γ' _
   · have e := h.ae
     rw [out_eq h.umg] at e
-    filter_upwards [(quasiMeasurePreserving_mk _ μ).ae_eq e] with y hy
+    filter_upwards [QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk _ μ) e] with y hy
     exact hy.trans (cuspQuot_mk _ y)
 
 private theorem of_cont (hu : Umg φ) (hc : ∀ t g, φ.1 (zt E n t * g) = φ.1 g)
@@ -41,6 +44,7 @@ private theorem of_cont (hu : Umg φ) (hc : ∀ t g, φ.1 (zt E n t * g) = φ.1 
   conv_lhs => rw [← Quotient.out_eq y]
   rfl
 
+omit [μ.IsHaarMeasure] in
 private theorem retr (h : Rep μ v φ) (x g : GA E n) : φ.1 (x * g) = φ.1 (x * (retractOne g : GA E n)) := by
   have e1 : g = (retractOne g : AdelicGLn.AdelicGL E n) * centralSection E n (detModule E n g) := by
     rw [coe_retractOne, inv_mul_cancel_right]
@@ -108,8 +112,8 @@ theorem UpperTheory.ConvolutionTheory.BW.repOps :
         congr 1
         funext a
         by_cases ha : a ≤ i
-        · rw [if_pos ha, if_pos (Nat.lt_succ_of_le ha), zpow_one]
-        · rw [if_neg ha, if_neg (fun h' => ha (Nat.le_of_lt_succ h')), zpow_zero])
+        · rw [ite_eq_left ha, ite_eq_left (Nat.lt_succ_of_le ha), zpow_one]
+        · rw [ite_eq_right ha, ite_eq_right (fun h' => ha (Nat.le_of_lt_succ h')), zpow_zero])
     have hq : (0 : ℝ) < (Ideal.absNorm w.asIdeal : ℝ) := Nat.cast_pos.2 (Nat.pos_of_ne_zero (qV_ne_zero w))
     have he : (qc w) ^ (((((i : ℕ) + 1 : ℕ) : ℂ) * ((n : ℂ) - (((i : ℕ) + 1 : ℕ) : ℂ))) / 2) =
         ((((Ideal.absNorm w.asIdeal : ℝ) ^ (-((((i : ℕ) + 1) * (n - ((i : ℕ) + 1)) : ℕ) : ℝ) / 2) : ℝ) : ℂ))⁻¹ := by
@@ -117,6 +121,6 @@ theorem UpperTheory.ConvolutionTheory.BW.repOps :
       congr 1
       push_cast [Nat.cast_sub (Nat.succ_le_of_lt i.2)]
       ring
-    rw [Tsph, ContinuousLinearMap.smul_apply, kgl_eq, hop_apply μ w _ _ (Final.GLintComm E w n) hv, ← ht,
+    rw [Tsph, smul_apply, kgl_eq, hop_apply μ w _ _ (Final.GLintComm E w n) hv, ← ht,
       (hkOps E n w (i + 1)).1, he, inv_inv]
     simpa only [add_zero] using rep_comb (rep_hecke h w (Tj_mem_hecke hϖ (i + 1))) _ rep_zero

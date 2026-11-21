@@ -117,6 +117,8 @@ theorem dRep_smul_vec {ρ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} {v :
 
 section Theta
 
+local notation "θ" => PI.DSInfCharCap.thetaJ ε
+
 theorem theta_add (Y Z : Matrix (Fin n) (Fin n) ℂ) : θ (Y + Z) = θ Y + θ Z := by
   simp only [PI.DSInfCharCap.thetaJ, conjTranspose_add, mul_add, add_mul, neg_add]
 

@@ -66,7 +66,7 @@ theorem eq_zero_of_sum (lam : InfinitePlace E → DomWeight n) {ι : Type} [Fint
   · rw [← hP _ (hT k)]; simp
   · intro j _ hj
     rw [← hP _ (hT j)]
-    simp [Module.Basis.coord_apply, Module.Basis.repr_self, Finsupp.single_apply, hj]
+    simp [Module.Basis.coord_apply, Module.Basis.repr_self, hj]
   · simp
 
 end GlobalTheory.BCT.TrKer
@@ -89,7 +89,7 @@ theorem mem_span_values (lam : InfinitePlace E → DomWeight n) (π : Submodule 
       exact Submodule.subset_span ⟨_, comp_mem_infHom lam hT (splitFin E n g),
         fun w' => hπ.stable _ _ (hTπ w'), _, rfl⟩
     | zero => simp
-    | add a c _ _ ha hc => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hc
+    | add a c _ _ ha hc => rw [map_add]; exact add_mem ha hc
     | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
   obtain ⟨T, hT0, hTπ, hT⟩ := GlobalTheory.T.exists_ne_zero_weightTensor_intertwining_autRep E n lam π hπ hW
   obtain ⟨w, hw⟩ := DFunLike.ne_iff.1 hT0
@@ -169,7 +169,6 @@ theorem mem_range_of_mem (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w))
       rw [← hwi, hT j _ (inv_mem i.2)]
       change T j w ((finPt γ).1 * x.1) = T j w (x.1 * i.1⁻¹)
       rw [GlobalTheory.DefU.fin_mul_inf x.2 (inv_mem i.2), ← hl, hri]
-      congr 1
       group
     · refine LinearMap.ext fun w => ?_
       rw [hFa, hFa]

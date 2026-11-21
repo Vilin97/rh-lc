@@ -57,7 +57,7 @@ theorem scLat_isLattice {n : ℕ} {𝔞 : FractionalIdeal (𝓞 E)⁰ E} (h𝔞 
     intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem prod_span_eq_top {a b : ℕ} {M : Submodule (𝓞 E) (Fin a → E)} {N : Submodule (𝓞 E) (Fin b → E)}
-    (hM : Submodule.IsLattice E M) (hN : Submodule.IsLattice E N) :
+    (hM : Submodule.IsFullLattice E M) (hN : Submodule.IsFullLattice E N) :
     Submodule.span E ((M.prod N : Submodule (𝓞 E) ((Fin a → E) × (Fin b → E))) : Set ((Fin a → E) × (Fin b → E))) = ⊤ := by
   set S := Submodule.span E ((M.prod N : Submodule (𝓞 E) ((Fin a → E) × (Fin b → E))) : Set ((Fin a → E) × (Fin b → E)))
   have hl : ∀ x : Fin a → E, (x, 0) ∈ S := by
@@ -65,17 +65,18 @@ theorem prod_span_eq_top {a b : ℕ} {M : Submodule (𝓞 E) (Fin a → E)} {N :
       refine Submodule.span_le.mpr fun m hm => ?_
       exact Submodule.subset_span (show (m, (0 : Fin b → E)) ∈ M.prod N from ⟨hm, N.zero_mem⟩)
     intro x
-    have hx : x ∈ Submodule.span E (M : Set (Fin a → E)) := by rw [hM.span_eq_top]; trivial
+    have hx : x ∈ Submodule.span E (M : Set (Fin a → E)) := by rw [Submodule.IsFullLattice.span_eq_top (self := hM)]; trivial
     exact this hx
   have hr : ∀ y : Fin b → E, (0, y) ∈ S := by
     have : Submodule.span E (N : Set (Fin b → E)) ≤ S.comap (LinearMap.inr E (Fin a → E) (Fin b → E)) := by
       refine Submodule.span_le.mpr fun m hm => ?_
       exact Submodule.subset_span (show ((0 : Fin a → E), m) ∈ M.prod N from ⟨M.zero_mem, hm⟩)
     intro y
-    have hy : y ∈ Submodule.span E (N : Set (Fin b → E)) := by rw [hN.span_eq_top]; trivial
+    have hy : y ∈ Submodule.span E (N : Set (Fin b → E)) := by rw [Submodule.IsFullLattice.span_eq_top (self := hN)]; trivial
     exact this hy
-  intro s hs hli
-  exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  apply top_unique
+  intro ⟨x, y⟩ _
+  simpa using S.add_mem (hl x) (hr y)
 theorem pairLat_isLattice {a b d : ℕ} {M : Submodule (𝓞 E) (Fin a → E)} {N : Submodule (𝓞 E) (Fin b → E)}
     (hM : Submodule.IsLattice E M) (hN : Submodule.IsLattice E N) (e : Fin a ⊕ Fin b ≃ Fin d) :
     Submodule.IsLattice E (GlobalTheory.SkewLat.pairLat M N e) := by
@@ -87,10 +88,8 @@ theorem pairLat_isLattice {a b d : ℕ} {M : Submodule (𝓞 E) (Fin a → E)} {
     rfl
   rw [hφ]
   refine ⟨Submodule.FG.map _ (Submodule.FG.prod hM.fg hN.fg), ?_⟩
-  rw [Submodule.map_coe]
-  have : ⇑(φ.symm.restrictScalars (𝓞 E)).toLinearMap = ⇑φ.symm.toLinearMap := rfl
-  rw [this, Submodule.span_image, prod_span_eq_top hM hN, Submodule.map_top]
-  exact LinearMap.range_eq_top.mpr φ.symm.surjective
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 
 end GlobalTheory.SkewLat.PairLatLattice
 

@@ -91,7 +91,7 @@ theorem MulStable.baseChange (h : X.MulStable) : (X.baseChange E).MulStable := f
   change X'.mulW j w f ∈ S
   induction hw using Submodule.span_induction with
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add, LinearMap.add_apply]; exact add_mem ha hb
   | smul c a _ ha => rw [← algebraMap_smul E, map_smul, LinearMap.smul_apply, algebraMap_smul]; exact S.smul_mem _ ha
   | mem w hw =>
     obtain ⟨k, rfl⟩ := hw

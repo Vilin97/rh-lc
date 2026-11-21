@@ -337,10 +337,11 @@ theorem exists_pair (σ : E →ₐ[F] E) {γ : Type} [Fintype γ] [DecidableEq �
   rfl
 
 theorem span_of_adapted {σ : E →ₐ[F] E} {B : Base F E} {n n₁ i₀ i₁ : ℕ} {H : Plane E n n₁} {Y : Spc F E n}
-    {Y₁ : Spc F E n₁} (hL : Y.L.IsLattice E) (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (v : Fin n → E) :
+    {Y₁ : Spc F E n₁} (hL : Y.L.IsFullLattice E) (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (v : Fin n → E) :
     ∃ (s t : E) (u : Fin n₁ → E), v = s • H.x + H.ι *ᵥ u + t • H.y := by
   have hv : v ∈ Submodule.span E (Y.L : Set (Fin n → E)) := by
-    rw [hL.span_eq_top]; trivial
+    letI := hL
+    rw [Submodule.IsFullLattice.span_eq_top]; trivial
   have hle : Submodule.span E (Y.L : Set (Fin n → E)) ≤ LinearMap.range (frame H.x H.y H.ι).mulVecLin := by
     rw [Submodule.span_le]
     intro z hz

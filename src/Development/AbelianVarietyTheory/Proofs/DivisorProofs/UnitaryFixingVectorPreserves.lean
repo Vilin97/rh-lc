@@ -163,7 +163,8 @@ theorem span_E {n n₁ : ℕ} {B : Base F E} {X : Spc F E n} {X₁ : Spc F E n�
     intro z hz
     obtain ⟨a, b, v, -, -, -, h⟩ := hH.split z hz
     exact ⟨a, b, v, h⟩
-  rw [hX.lat.span_eq_top] at hL
+  let : X.L.IsFullLattice E := hX.lat
+  rw [Submodule.IsFullLattice.span_eq_top (A := E) (M := X.L)] at hL
   exact hL (Submodule.mem_top (x := w))
 
 theorem span_A {n n₁ : ℕ} {B : Base F E} {X : Spc F E n} {X₁ : Spc F E n₁} {H : Plane E n n₁} {j₀ j₁ r s : ℕ}

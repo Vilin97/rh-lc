@@ -41,7 +41,11 @@ theorem exists_baseKernel : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T
     intro P
     unfold Formalism.L2.Host.HChar.TameAt Formalism.L2.Host.HChar.LevelLe
     intro x hx hle
-    rw [hδ, Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_inv, hL.xi_tame (R.mu v) P x hx hle, hψ.tame P x hx hle,
+    have loc_mul (a b : Formalism.L2.Host.HChar D.host.E) :
+        (a * b).loc P x = a.loc P x * b.loc P x := rfl
+    have loc_inv (a : Formalism.L2.Host.HChar D.host.E) :
+        (a⁻¹).loc P x = (a.loc P x)⁻¹ := rfl
+    rw [hδ, loc_mul, loc_inv, hL.xi_tame (R.mu v) P x hx hle, hψ.tame P x hx hle,
       inv_one, mul_one]
   have htriv : (R.C.delAt (Formalism.EigenvalueLevelCeiling.plc v)).TrivOn D.host.F := by
     rw [hδ]; exact (hL.xi_triv (R.mu v)).mul hψ.triv.inv

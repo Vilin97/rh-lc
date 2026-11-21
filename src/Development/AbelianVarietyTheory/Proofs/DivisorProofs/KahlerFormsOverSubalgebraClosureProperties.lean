@@ -76,7 +76,7 @@ theorem dDR_mem_omB (B : Subalgebra k K) (p : ℕ) (a : DR k K) (ha : a ∈ omB 
     · rw [one_smul, ExteriorAlgebra.ιMulti_succ_apply]
       simp only [Matrix.vecTail, Function.comp_def, Fin.cons_succ, Fin.cons_zero]
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul r x _ hx => rw [map_smul]; exact Submodule.smul_mem _ r hx
 
 theorem smul_mem_omB (B : Subalgebra k K) (p : ℕ) (c : K) (hc : c ∈ B) (a : DR k K)

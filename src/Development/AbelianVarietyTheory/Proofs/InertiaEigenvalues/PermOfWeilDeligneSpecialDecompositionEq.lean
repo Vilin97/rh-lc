@@ -140,7 +140,7 @@ theorem sumList_perm {l l' : List (WD h)} (hp : l.Perm l') : sumList l = sumList
   | trans _ _ ih1 ih2 => exact ih1.trans ih2
 
 theorem lpDim_pos (p : WD h × ℕ) (hp : IsIrrWD p.1) :
-    0 < WD.lpDim (p.1.lpChar (WD.lpSp (p.2 + 1))) := by
+    0 < WD.lpDim (p.1.lpChar (WD.lpSp h (p.2 + 1))) := by
   obtain ⟨n, a, ha, hirr⟩ := hp
   rw [WD.lpDim_tensor, WD.lpDim_lpSp, ← ha, WD.lpDim_mk, Module.finrank_fin_fun]
   obtain ⟨v, hv⟩ := exists_ne_zero hirr
@@ -149,13 +149,13 @@ theorem lpDim_pos (p : WD h × ℕ) (hp : IsIrrWD p.1) :
     exact hv (Subsingleton.elim _ _)
   exact Nat.mul_pos (Nat.pos_of_ne_zero hn) (Nat.succ_pos _)
 
-theorem perm_of_sumList_lpChar_lpSp_eq : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (l l' : List (WD h × ℕ)), (∀ p ∈ l, IsIrrWD p.1) → (∀ p ∈ l', IsIrrWD p.1) → sumList (l.map (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp (p.2 + 1)))) = sumList (l'.map (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp (p.2 + 1)))) → l.Perm l' := by
+theorem perm_of_sumList_lpChar_lpSp_eq : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (l l' : List (WD h × ℕ)), (∀ p ∈ l, IsIrrWD p.1) → (∀ p ∈ l', IsIrrWD p.1) → sumList (l.map (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp h (p.2 + 1)))) = sumList (l'.map (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp h (p.2 + 1)))) → l.Perm l' := by
   intro E Ω _ _ _ _ _ A w h l l'
   classical
   suffices H : ∀ n (l l' : List (WD h × ℕ)), l.length = n → (∀ p ∈ l, IsIrrWD p.1) →
       (∀ p ∈ l', IsIrrWD p.1) →
-      sumList (l.map (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp (p.2 + 1)))) =
-        sumList (l'.map (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp (p.2 + 1)))) → l.Perm l' from
+      sumList (l.map (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp h (p.2 + 1)))) =
+        sumList (l'.map (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp h (p.2 + 1)))) → l.Perm l' from
     H _ l l' rfl
   intro n
   induction n with
@@ -184,17 +184,17 @@ theorem perm_of_sumList_lpChar_lpSp_eq : ∀ (E Ω : Type) [Field E] [NumberFiel
     obtain ⟨m, a, rfl, ha⟩ := hl _ hp
 
     have hQ : HasCopyW a.ρ k (lastEig h k)
-        (sumList (l.map (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp (p.2 + 1))))) := by
+        (sumList (l.map (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp h (p.2 + 1))))) := by
       refine hasCopyW_sumList _ l _ hp ?_
-      show HasCopyW a.ρ k (lastEig h k) ((WD.mk a).lpChar (WD.lpSp (k + 1)))
+      show HasCopyW a.ρ k (lastEig h k) ((WD.mk a).lpChar (WD.lpSp h (k + 1)))
       rw [WD.lpSp, WD.lpChar_mk, hasCopyW_mk]
       exact hasCopy_self a ha k
     have hZ : PowZeroW k
-        (sumList (l.map (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp (p.2 + 1))))) := by
+        (sumList (l.map (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp h (p.2 + 1))))) := by
       refine powZeroW_sumList _ l fun q hq => ?_
       rcases q with ⟨y', k'⟩
       obtain ⟨m', a', rfl, ha'⟩ := hl _ hq
-      show PowZeroW k ((WD.mk a').lpChar (WD.lpSp (k' + 1)))
+      show PowZeroW k ((WD.mk a').lpChar (WD.lpSp h (k' + 1)))
       rw [WD.lpSp, WD.lpChar_mk, powZeroW_mk]
       exact powZero_of_le a' ha' (hmax _ hq)
     rw [heq] at hQ hZ
@@ -210,7 +210,7 @@ theorem perm_of_sumList_lpChar_lpSp_eq : ∀ (E Ω : Type) [Field E] [NumberFiel
       exact hq'
 
     set p : WD h × ℕ := (WD.mk a, k) with hpdef
-    set F : WD h × ℕ → WD h := fun p => p.1.lpChar (WD.lpSp (p.2 + 1)) with hF
+    set F : WD h × ℕ → WD h := fun p => p.1.lpChar (WD.lpSp h (p.2 + 1)) with hF
     have e1 : sumList (l.map F) = (F p).lpSum (sumList ((l.erase p).map F)) :=
       sumList_perm ((List.perm_cons_erase hp).map F)
     have e2 : sumList (l'.map F) = (F p).lpSum (sumList ((l'.erase p).map F)) :=

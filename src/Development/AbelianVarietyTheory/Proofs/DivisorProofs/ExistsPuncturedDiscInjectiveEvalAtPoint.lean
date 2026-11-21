@@ -69,8 +69,8 @@ noncomputable def evalAt (u : ℂ) : absConv u →+* ℂ where
 
 theorem countable_closure {A : Type} [CommRing A] (S : Set A) (hS : S.Countable) :
     Countable (Subring.closure S) := by
-  haveI : Countable S := hS.to_subtype
-  haveI : Countable (MvPolynomial S ℤ) :=
+  have : Countable S := hS.to_subtype
+  have : Countable (MvPolynomial S ℤ) :=
     (MvPolynomial.basisMonomials S ℤ).repr.injective.countable
   let φ : MvPolynomial S ℤ →+* A := MvPolynomial.eval₂Hom (Int.castRingHom A) Subtype.val
   have hle : Subring.closure S ≤ φ.range := Subring.closure_le.2 fun s hs =>
@@ -100,7 +100,7 @@ end GlobalTheory.PowEval
 open GlobalTheory.PowEval in
 theorem GlobalTheory.exists_injective_evalAt_closure : ∀ (ε : ℝ) (S : Set (PowerSeries ℂ)), 0 < ε → S.Countable → (∀ Φ ∈ S, ∀ u : ℂ, u ≠ 0 → ‖u‖ < ε → Summable fun n => ‖PowerSeries.coeff n Φ * u ^ n‖) → ∃ (u : ℂ) (i : Subring.closure S →+* ℂ), u ≠ 0 ∧ ‖u‖ < ε ∧ Function.Injective i ∧ ∀ Φ : Subring.closure S, i Φ = ∑' n, PowerSeries.coeff n (Φ : PowerSeries ℂ) * u ^ n := by
   intro ε S hε hS h
-  haveI : Countable (Subring.closure S) := countable_closure S hS
+  have : Countable (Subring.closure S) := countable_closure S hS
   let p : PowerSeries ℂ → FormalMultilinearSeries ℂ ℂ ℂ := fun Φ =>
     FormalMultilinearSeries.ofScalars ℂ fun n => PowerSeries.coeff n Φ
   have hsum : ∀ (Φ : PowerSeries ℂ) (u : ℂ), (p Φ).sum u = ∑' n, PowerSeries.coeff n Φ * u ^ n := by
@@ -117,10 +117,10 @@ theorem GlobalTheory.exists_injective_evalAt_closure : ∀ (ε : ℝ) (S : Set (
     radius_ge ε Φ (hcl Φ hΦ)
   have hpos : ∀ Φ ∈ Subring.closure S, 0 < (p Φ).radius := fun Φ hΦ =>
     lt_of_lt_of_le (ENNReal.ofReal_pos.2 hε) (hrad Φ hΦ)
-  have hball : ∀ Φ ∈ Subring.closure S, Metric.ball (0 : ℂ) ε ⊆ EMetric.ball 0 (p Φ).radius := by
+  have hball : ∀ Φ ∈ Subring.closure S, Metric.ball (0 : ℂ) ε ⊆ Metric.eball 0 (p Φ).radius := by
     intro Φ hΦ
-    rw [← Metric.emetric_ball]
-    exact EMetric.ball_subset_ball (hrad Φ hΦ)
+    rw [← Metric.eball_ofReal]
+    exact Metric.eball_subset_eball (hrad Φ hΦ)
   let J := Option {Φ : Subring.closure S // Φ ≠ 0}
   let f : J → ℂ → ℂ := fun i => match i with
     | none => id
@@ -142,7 +142,7 @@ theorem GlobalTheory.exists_injective_evalAt_closure : ∀ (ε : ℝ) (S : Set (
         exact_mod_cast (by linarith : ε / 2 ≠ 0)
     | some Φ =>
       by_contra hcon
-      push_neg at hcon
+      push Not at hcon
       have hev : (p (Φ.1 : PowerSeries ℂ)).sum =ᶠ[nhds 0] 0 := by
         filter_upwards [Metric.ball_mem_nhds (0 : ℂ) hε] with y hy
         exact hcon y hy

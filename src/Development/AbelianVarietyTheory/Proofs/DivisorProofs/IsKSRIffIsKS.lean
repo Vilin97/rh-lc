@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsUniqueIsTanFrameOfIsEmpty
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WedgeOrdVpBaseChangeOfNeBot
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.LieModel
 
 @[expose] public section
 
@@ -12,7 +13,8 @@ set_option synthInstance.maxHeartbeats 400000
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits NumberField TensorProduct
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.Frames GlobalTheory.AllWt
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.Frames GlobalTheory.AllWt
+open Formalism.L2.Pj hiding dualMap
 open scoped Classical
 
 attribute [local instance] Over.cartesianMonoidalCategory
@@ -140,7 +142,7 @@ theorem IsKSR.baseChange (P : AbelianDeRham) {Φ : Finset (E →+* ℂ)} {S S' :
   refine ⟨B, _, B', _, φ ≫ π, φ' ≫ π', _, hj, b', fun σ k => tv (ub σ k), fun k => th (hb k),
     (hφ.comp hπ).congr h.1.symm rfl, hφ'.comp hπ', by rw [← Category.assoc, sq, Category.assoc, e], hpol',
     fun σ k => ?_, fun σ k => (hl σ k).baseChange (hφ := hφ) hF hL (hth _) (htv _), fun τ a => ?_⟩
-  · rw [← Category.assoc, htv, Category.assoc, hu, h.2.1]
+  · rw [← Category.assoc, htv, Category.assoc, hu, h.2.1] <;> rfl
   · obtain ⟨w, hw, f, hf, hd, hv⟩ := hM τ a
     refine ⟨tv w, combBase (fun _ => htv _) (htv w) hw, th f,
       mem_Fil_of_corr (hφ := hφ) hF (hth f) hf, fun k => ?_,

@@ -34,7 +34,7 @@ theorem pt_w (T : TT s) : pt T ≫ s = algStr R T.obj.B := by
   ext r
   exact (πe T).symm_apply_apply (algebraMap R T.obj.B r)
 
-def affF (s : X ⟶ Sp R) : AffOp X ⥤ TT s where
+abbrev affF (s : X ⟶ Sp R) : AffOp X ⥤ TT s where
   obj U := ⟨Thick.triv (Sec s U.unop.1) (affPt s U.unop) (affPt_w s U.unop), rfl⟩
   map {U V} a := ⟨Thick.trivHom (hx := affPt_w s U.unop)
     (T := Thick.triv (Sec s V.unop.1) (affPt s V.unop) (affPt_w s V.unop))

@@ -46,7 +46,7 @@ theorem ofFn_prod_comm : ∀ (n : ℕ) (g' : Fin n → Module.End E A') (g : Fin
   | zero => intro g' g _ x; simp
   | succ n ih =>
     intro g' g hg x
-    rw [List.ofFn_succ, List.prod_cons, List.ofFn_succ, List.prod_cons, Module.End.mul_apply, Module.End.mul_apply,
+    rw [List.ofFn_succ, List.prod_cons, List.ofFn_succ, List.prod_cons, mul_apply_eq_comp, mul_apply_eq_comp,
       ih _ _ (fun i => hg i.succ), hg 0]
 
 theorem pow_comm (f' : Module.End E A') (f : Module.End F A) (h : ∀ x, f' (ι x) = ι (f x)) :
@@ -54,14 +54,14 @@ theorem pow_comm (f' : Module.End E A') (f : Module.End F A) (h : ∀ x, f' (ι 
   intro n
   induction n with
   | zero => intro x; simp
-  | succ n ih => intro x; rw [pow_succ, pow_succ, Module.End.mul_apply, Module.End.mul_apply, h, ih]
+  | succ n ih => intro x; rw [pow_succ, pow_succ, mul_apply_eq_comp, mul_apply_eq_comp, h, ih]
 
 theorem mem_span_image (Y : Set A) : ∀ y ∈ Submodule.span F Y, ι y ∈ Submodule.span E (ι '' Y) := by
   intro y hy
   induction hy using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
 
 end Inter
@@ -76,7 +76,7 @@ theorem up_mul (S : Sys F A) : ∀ a b k l, Up S a k → Up S b l → Up S (a * 
   intro a b k l ha hb j hj x hx
   have h1 := hb j (by omega) x hx
   have h2 := ha (j + l) (by omega) _ h1
-  rw [Module.End.mul_apply]
+  rw [mul_apply_eq_comp]
   have e : j + (k + l) = j + l + k := by omega
   rw [e]; exact h2
 

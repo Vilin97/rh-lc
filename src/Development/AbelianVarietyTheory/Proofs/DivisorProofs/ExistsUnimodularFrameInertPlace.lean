@@ -53,7 +53,7 @@ theorem exists_frame_unimod : ∀ {F E : Type} [Field F] [NumberField F] [Field 
   have hc := isConjAt_conjW σ hw
   obtain ⟨t, ht0, hsd⟩ := selfDual_scaled σ B W r s hW hw
   haveI := hW.lat
-  obtain ⟨a, ha⟩ := InertChart.exists_isFrameAt (L := W.L) hw Submodule.IsLattice.fg Submodule.IsLattice.span_eq_top
+  obtain ⟨a, ha⟩ := InertChart.exists_isFrameAt (L := W.L) hw (Submodule.IsLattice.fg E W.L) Submodule.IsLattice.span_eq_top
   have hdet : (algebraMap F E t • W.Jᵀ).det ≠ 0 := by
     rw [Matrix.det_smul, Matrix.det_transpose]
     exact mul_ne_zero (pow_ne_zero _ ((map_ne_zero _).2 ht0)) (GlobalTheory.FinUniq.det_ne_zero_skew hW)

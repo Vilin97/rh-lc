@@ -29,7 +29,17 @@ theorem ev_eq_fv_of_triv {R : Type} [CommRing R] {X : Over (Sp R)} (f : Z1 (O (d
     exact Over.OverMorphism.ext hp
   subst e
   refine ⟨rfl, ?_⟩
-  have : a = trivMap φ x := Thick.hom_ext h
+  have : a = trivMap φ x := by
+    have ext_hom {T T' : Thick (dp0 R) (X.hom ≫ 𝟙 _)}
+        (f g : Thick.Hom T T') (hf : f.φ = g.φ) : f = g := by
+      rcases f with ⟨f, f₀, fc, fd, fp⟩
+      rcases g with ⟨g, g₀, gc, gd, gp⟩
+      obtain rfl : f = g := hf
+      obtain rfl : f₀ = g₀ := RingHom.ext fun c ↦ by
+        obtain ⟨b, rfl⟩ := T.surj c
+        exact (fc b).trans (gc b).symm
+      rfl
+    exact ext_hom a (trivMap φ x) (AlgHom.ext h)
   rw [this]
   rfl
 

@@ -35,10 +35,12 @@ theorem schr_adj (ψ₀ : AddChar (Fv F v) ℂ) (hψ : Continuous ψ₀) {κ : T
     simp
   rw [← integral_add_right_eq_self (fun y => f y * conj (schr ψ₀ (-w) g y)) w.1]
   congr 1
+  funext y
   have h2 : ⅟(2 : Fv F v) * 2 = 1 := invOf_mul_self 2
   have e : -((y + w.1) ⬝ᵥ -w.2 + ⅟(2 : Fv F v) * (-w.1 ⬝ᵥ -w.2)) = y ⬝ᵥ w.2 + ⅟(2 : Fv F v) * (w.1 ⬝ᵥ w.2) := by
     simp only [add_dotProduct, dotProduct_neg, neg_dotProduct, neg_neg]
     linear_combination (-(w.1 ⬝ᵥ w.2)) * h2
+  simp only [schr, Prod.fst_neg, Prod.snd_neg, map_mul, h1, add_neg_cancel_right]
   rw [e]; ring
 
 theorem ip_self_ne {κ : Type} [Fintype κ] [MeasurableSpace (κ → Fv F v)] [BorelSpace (κ → Fv F v)]
@@ -49,7 +51,7 @@ theorem ip_self_ne {κ : Type} [Fintype κ] [MeasurableSpace (κ → Fv F v)] [B
     funext y; exact Complex.mul_conj (g y)
   rw [e, integral_complex_ofReal, Complex.ofReal_ne_zero]
   refine ne_of_gt ?_
-  refine Continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero (x := x)
+  refine Continuous.integral_pos_of_hasCompactSupport_nonneg_ne_zero (x := x)
     (Complex.continuous_normSq.comp hg.1.continuous) (hg.2.comp_left (g := Complex.normSq) (map_zero _))
     (fun y => Complex.normSq_nonneg _) ?_
   simpa using hx

@@ -68,7 +68,21 @@ theorem exact_covolume_ratio : ∀ (hP : _root_.GlobalTheory.CovTop.PublishedHod
         hψm.norm.congr (Filter.Eventually.of_forall heq)
       refine eLpNorm_congr_norm_ae hψm hm (Filter.Eventually.of_forall fun q => ?_)
       rw [← heq q, Real.norm_eq_abs, abs_norm]
-    rw [e1, eLpNorm_const_smul, hK2, ← mul_assoc, Real.enorm_eq_ofReal (inv_nonneg.2 hc0.le),
+    have hadm : AEStronglyMeasurable (fun q : AutQ (Wc D i) =>
+        ‖GlobalTheory.IndefiniteRowSideFullHecke.OneMeasureSizes.adFun T i hV f q.out‖)
+        (muQ1 (Wc D i)) := by
+      have heq : (fun q : AutQ (Wc D i) =>
+          ‖GlobalTheory.IndefiniteRowSideFullHecke.OneMeasureSizes.adFun T i hV f q.out‖) =
+          c • (fun q => ‖ψ q‖) := by
+        funext q
+        simp only [hψdef, Pi.smul_apply, smul_eq_mul, Complex.norm_real, Real.norm_eq_abs,
+          abs_div, abs_norm, abs_of_pos hc0, hnorm]
+        field_simp
+      rw [heq]
+      exact hψm.norm.const_smul c
+    rw [e1, eLpNorm_const_smul, eLpNorm_eq_eLpNorm' (by norm_num) (by simp) hadm]
+    first | rw [hK2] | rw [← eLpNorm_eq_eLpNorm' (by norm_num) (by simp) hadm, hK2]
+    rw [← mul_assoc, Real.enorm_eq_ofReal (inv_nonneg.2 hc0.le),
       ← ENNReal.ofReal_mul (inv_nonneg.2 hc0.le), inv_mul_cancel₀ hc0.ne', ENNReal.ofReal_one, one_mul]
   have hψ : MemLp ψ 2 (muQ1 (Wc D i)) := by rw [memLp_iff, hE]; exact lt_top_iff_ne_top.2 hK3
   have hI := GlobalTheory.ReadingNorm.integral_star_mul (Wc D i) (D.sp.W_sig _) hμ hF.2 (F v) haut.left ψ hψ c

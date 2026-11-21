@@ -38,7 +38,7 @@ theorem ratFunc_top_fg {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω] (h : (�
     intro p
     induction p using Polynomial.induction_on with
     | C a => rw [RatFunc.algebraMap_C, ← RatFunc.algebraMap_eq_C]; exact hc a
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | monomial n a ih => rw [pow_succ, ← mul_assoc, map_mul, RatFunc.algebraMap_X]; exact mul_mem ih hX
   refine eq_top_iff.2 fun x _ => ?_
   rw [← RatFunc.num_div_denom x]
@@ -86,7 +86,7 @@ theorem isIntDeg_of_valBound : ∀ (K V Ω : Type) [Field K] [AddCommGroup V] [M
       rw [← map_mul, ← map_mul, mul_inv_cancel₀ ha, map_one, map_one]
     refine le_antisymm h1 ?_
     calc (1 : ℝ≥0) = _ := h3.symm
-      _ ≤ μ (algebraMap K (RatFunc Ω) a) := mul_le_of_le_one_right zero_le' h2
+      _ ≤ μ (algebraMap K (RatFunc Ω) a) := mul_le_of_le_one_right (zero_le _) h2
   obtain ⟨v, hv⟩ := hb (μ.comap (algebraMap Ω (RatFunc Ω))) fun a ha => by
     rw [Valuation.comap_apply, ← IsScalarTower.algebraMap_apply]; exact hK1 a ha
   rw [Valuation.comap_apply, Valuation.comap_apply] at hv
@@ -95,8 +95,8 @@ theorem isIntDeg_of_valBound : ∀ (K V Ω : Type) [Field K] [AddCommGroup V] [M
     rw [hφa, map_mul, RatFunc.algebraMap_X, RatFunc.algebraMap_C, RatFunc.algebraMap_eq_C]
   rw [hφa, map_mul, map_pow, RatFunc.algebraMap_X, RatFunc.algebraMap_C, ← RatFunc.algebraMap_eq_C, map_mul, map_pow]
   calc μ RatFunc.X ^ τ * μ (algebraMap Ω (RatFunc Ω) t)
-      ≤ μ RatFunc.X ^ τ * μ (algebraMap Ω (RatFunc Ω) (ev v)) ^ τ := mul_le_mul_of_nonneg_left hv zero_le'
+      ≤ μ RatFunc.X ^ τ * μ (algebraMap Ω (RatFunc Ω) (ev v)) ^ τ := mul_le_mul_of_nonneg_left hv (zero_le _)
     _ = μ (RatFunc.X * algebraMap Ω (RatFunc Ω) (ev v)) ^ τ := by rw [map_mul, mul_pow]
-    _ ≤ 1 := pow_le_one₀ zero_le' hXv
+    _ ≤ 1 := pow_le_one₀ (zero_le _) hXv
 
 end GlobalTheory.DegVal.ValInt

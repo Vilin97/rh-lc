@@ -156,7 +156,7 @@ theorem count_rank_lower : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsInteg
       refine Finset.sum_congr rfl fun α _ => ?_
       simp only [w, smul_mul_assoc])
     have h1 := congrArg (AddMonoidAlgebra.coeff · ia.2.1) (congrFun h0 ia.1)
-    simp only [T, coeff_sum, coeff_monomial, Pi.zero_apply, coeff_zero] at h1
+    simp only [T, coeff_sum, coeff_monomial, Pi.zero_apply, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h1
     have h2 : ∀ α : Deg D q, (if (α : Fin (D + 1) →₀ ℕ) = ia.2.1 then n (ia.1, α) else 0) =
         if α = ia.2 then n (ia.1, α) else 0 := fun α => by simp only [Subtype.coe_inj]
     rw [Finset.sum_congr rfl fun α _ => h2 α] at h1
@@ -184,7 +184,7 @@ theorem count_rank_lower : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsInteg
         ∀ i α, |((AddMonoidAlgebra.coeff (T i) α : ℤ) : ℝ)| ≤ R}
         (P.Bl (e * (q + c : ℕ) + a) b (((δ : ℝ) + 1) * M' * (q + D).choose D * R)) := by
       intro T hT
-      rw [Set.mem_setOf_eq] at hT
+      rw [Set.mem_ofPred_eq] at hT
       rw [hΦ T hT.1]
       obtain ⟨h1, h2⟩ := sum_zsmul P _ b w (fun ia => (hw ia).1) (fun ia => AddMonoidAlgebra.coeff (T ia.1) ia.2.1)
       refine ⟨h1, fun σ y => (h2 σ y).trans ?_⟩

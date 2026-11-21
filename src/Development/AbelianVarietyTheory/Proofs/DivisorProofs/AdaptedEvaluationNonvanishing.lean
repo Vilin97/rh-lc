@@ -85,7 +85,7 @@ theorem span_plane {B : Base F E} {d d₁ r' s' i₀ i₁ : ℕ} {W : Spc F E d}
     · exact Submodule.mem_sup_left (Submodule.mem_sup_left (Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self _)))
     · exact Submodule.mem_sup_left (Submodule.mem_sup_right ⟨u, rfl⟩)
     · exact Submodule.mem_sup_right (Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self _))
-  have hz : z ∈ S := hle (by rw [Submodule.IsLattice.span_eq_top (A := E)]; trivial)
+  have hz : z ∈ S := hle (by rw [Submodule.IsFullLattice.span_eq_top (M := W.L)]; trivial)
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hz
   obtain ⟨a₁, ha₁, a₂, ⟨u, rfl⟩, rfl⟩ := Submodule.mem_sup.1 ha
   obtain ⟨s, rfl⟩ := Submodule.mem_span_singleton.1 ha₁

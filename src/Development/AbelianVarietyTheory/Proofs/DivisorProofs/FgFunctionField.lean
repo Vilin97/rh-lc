@@ -58,7 +58,7 @@ theorem fg_functionField : ∀ (F : Type) [Field F] (G : Scheme.{0}) [IsIntegral
       simp only [CommRingCat.hom_comp, RingHom.comp_apply] at this
       rw [RingHom.algebraMap_toAlgebra, this, hβτ]
       exact IntermediateField.algebraMap_mem _ _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   refine ⟨s.image (G.presheaf.germ U _ hx).hom, eq_top_iff.2 fun f _ => ?_⟩
   have := functionField_isFractionRing_of_isAffineOpen G U hU

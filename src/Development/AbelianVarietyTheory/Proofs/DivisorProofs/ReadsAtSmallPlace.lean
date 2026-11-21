@@ -49,7 +49,7 @@ theorem exists_reading_lat {E K : Type} [Field E] [NumberField E] [Field K] [Num
     [DecidableEq T] {n : ℕ} {G Γ : Type} [Group G] [Group Γ] {ι : Γ →* G} {W : Type} [NormedAddCommGroup W] [InnerProductSpace ℂ W]
     {S : CSD K} {σ : K →+* ℂ} {ρ : Γ →* Module.End ℂ W} {J : Subgroup G} {χ : J →* ℂˣ} (P : ClassPres ι S σ ρ J χ)
     (lab : T → (E →+* K)) (lam : T → DomWeight n) (c0 : VV K lam →ₛₗ[σ] W) (e : S.V ≃ₗ[K] VV K lam) (hce : ∀ x, P.coef x = c0 (e x))
-    (Lat : S.Cl → Submodule (𝓞 E) (Fin n → E)) (hlat : ∀ c, Submodule.IsLattice E (Lat c))
+    (Lat : S.Cl → Submodule (𝓞 E) (Fin n → E)) (hlat : ∀ c, Submodule.IsFullLattice E (Lat c))
     (hN : ∀ c, (S.Nab c).map ((e : S.V →ₗ[K] VV K lam).restrictScalars (𝓞 K)) = nabAtr lab lam (Lat c))
     (hD : ∀ c, (S.Del c).map ((e : S.V →ₗ[K] VV K lam).restrictScalars (𝓞 K)) = delAtr lab lam (Lat c))
     (hc1 : LinearIndependent ℂ (fun i => c0 (bVV K lam i))) (hc2 : Submodule.span ℂ (Set.range fun i => c0 (bVV K lam i)) = ⊤)
@@ -110,7 +110,10 @@ theorem exists_reading_lat {E K : Type} [Field E] [NumberField E] [Field K] [Num
       (∀ τ a b, (u τ).val a b ∈ Set.range F.emb ∧ (u τ)⁻¹.val a b ∈ Set.range F.emb) ∧
       ∀ v, Λ (P.y c)⁻¹ (Φ v) = Λ0 u (Φ (rhoK lam B⁻¹ v)) := by
     intro c
-    have hb := fun τ => GlobalTheory.T.localBasis_dualBasis_embeddedLattice _ _ _ _ lab τ w l Fact.out hlw _ (hlat c)
+    have hb := fun τ => by
+      first
+      | exact GlobalTheory.T.localBasis_dualBasis_embeddedLattice _ _ _ _ lab τ w l Fact.out hlw _ (hlat c)
+      | exact GlobalTheory.T.localBasis_dualBasis_embeddedLattice _ _ _ _ lab τ w l Fact.out hlw _ (hlat c).toIsLattice
     rcases isEmpty_or_nonempty T with hE | ⟨⟨τ0⟩⟩
     · refine ⟨1, 1, fun τ => hE.elim τ, fun τ => hE.elim τ, fun τ => hE.elim τ, fun v => ?_⟩
       have : m (P.y c)⁻¹ = 1 := Subsingleton.elim _ _

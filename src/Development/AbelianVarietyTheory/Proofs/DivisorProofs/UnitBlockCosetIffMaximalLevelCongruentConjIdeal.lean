@@ -126,7 +126,7 @@ theorem sgA_hatId {I : Ideal (𝓞 D.host.E)} {x : Formalism.MainNotions.Standar
     rw [map_mul]
     rfl
   | zero => rw [map_zero]; exact zero_mem _
-  | add u v _ _ hu hv => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
+  | add u v _ _ hu hv => rw [map_add]; exact add_mem hu hv
   | neg u _ hu => rw [map_neg]; exact neg_mem hu
 
 theorem conj_idem {e : Formalism.L2.Theta.AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (c : Formalism.L2.DIV.Pl D.host.E → ℕ)
@@ -174,13 +174,13 @@ theorem core {R : Type} [CommRing R] (O : Subring R) (J : AddSubgroup R) (hJ : �
   · intro h i j
     have h3 := h ⟨o + i.1, by omega⟩ j
     rw [Matrix.mul_apply, Finset.sum_eq_single i] at h3
-    · have h4 : X ⟨o + i.1, by omega⟩ i = a := if_pos rfl
+    · have h4 : X ⟨o + i.1, by omega⟩ i = a := ite_eq_left rfl
       rw [h4] at h3
       have h5 : (H - 1) i j = (1 - a) * (H - 1) i j + a * (H - 1) i j := by ring
       rw [h5]
       exact add_mem (hJ _ ha _ (hH1 i j)) h3
     · intro l _ hl
-      have h4 : X ⟨o + i.1, by omega⟩ l = 0 := if_neg fun h' => hl (Fin.ext (by simp only at h'; omega))
+      have h4 : X ⟨o + i.1, by omega⟩ l = 0 := ite_eq_right fun h' => hl (Fin.ext (by simp only at h'; omega))
       rw [h4, zero_mul]
     · intro h'
       exact absurd (Finset.mem_univ i) h'

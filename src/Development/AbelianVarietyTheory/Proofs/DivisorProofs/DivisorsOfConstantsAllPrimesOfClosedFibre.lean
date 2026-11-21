@@ -57,7 +57,7 @@ theorem divConstAll_of_divConstLocal : DivConstLocal → DivConstAll := by
   have hmax : P'.comap (C : T' →+* T'[X]) = maximalIdeal T' := by
     rw [← IsLocalization.map_under p.primeCompl T' (P'.comap C),
       ← IsLocalization.map_under p.primeCompl T' (maximalIdeal T'),
-      IsLocalization.AtPrime.comap_maximalIdeal T' p]
+      IsLocalization.AtPrime.under_maximalIdeal T' p]
     congr 1
     ext a
     change C (algebraMap T T' a) ∈ P' ↔ C a ∈ P

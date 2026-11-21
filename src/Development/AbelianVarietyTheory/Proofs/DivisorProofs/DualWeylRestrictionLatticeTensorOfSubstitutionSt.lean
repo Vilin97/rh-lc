@@ -123,8 +123,7 @@ theorem mul_mem_range_lTensor {A B : Type} [CommRing A] [CommRing B] (N : Submod
     (x : A ⊗[ℤ] B) (hx : x ∈ LinearMap.range (LinearMap.lTensor A N.subtype)) :
     (u ⊗ₜ (1 : B)) * x ∈ LinearMap.range (LinearMap.lTensor A N.subtype) := by
   obtain ⟨w, rfl⟩ := hx
-  induction w using TensorProduct.induction_on with
-  | zero => simp
+  induction w using TensorProduct.inductionOn with
   | tmul a n => exact ⟨(u * a) ⊗ₜ n, by simp⟩
   | add x y hx hy => rw [map_add (f := _), mul_add]; exact add_mem hx hy
 
@@ -132,8 +131,7 @@ theorem mul_mem_range_rTensor {A B : Type} [CommRing A] [CommRing B] (N : Submod
     (x : A ⊗[ℤ] B) (hx : x ∈ LinearMap.range (LinearMap.rTensor B N.subtype)) :
     ((1 : A) ⊗ₜ u) * x ∈ LinearMap.range (LinearMap.rTensor B N.subtype) := by
   obtain ⟨w, rfl⟩ := hx
-  induction w using TensorProduct.induction_on with
-  | zero => simp
+  induction w using TensorProduct.inductionOn with
   | tmul n b => exact ⟨n ⊗ₜ (u * b), by simp⟩
   | add x y hx hy => rw [map_add (f := _), mul_add]; exact add_mem hx hy
 
@@ -166,7 +164,7 @@ theorem resT_mem_lTensor (hS : SubstMem) (p q : ℕ) (ν : Fin (p + q) → ℕ)
     rw [← bidet_map' (C : ℤ →+* MvPolynomial (Fin p × Fin p) ℤ), phiR_map]
     exact ⟨1 ⊗ₜ ⟨bideterminant ℤ sz hsz I, hsh ▸ bidetMem ℤ q q K sz hsz I⟩, rfl⟩
   · simp
-  · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
   · intro u x _ hx
     rw [smul_eq_C_mul, map_mul]
     have : phiR p q (C u) = u ⊗ₜ 1 := by simp [phiR]
@@ -201,7 +199,7 @@ theorem resT_mem_rTensor (hS : SubstMem) (p q : ℕ) (ν : Fin (p + q) → ℕ)
     rw [← bidet_map' (C : ℤ →+* MvPolynomial (Fin q × Fin q) ℤ), phiL_map]
     exact ⟨⟨bideterminant ℤ sz hsz I, hsh ▸ bidetMem ℤ p p K sz hsz I⟩ ⊗ₜ 1, rfl⟩
   · simp
-  · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
   · intro u x _ hx
     rw [smul_eq_C_mul, map_mul]
     have : phiL p q (C u) = 1 ⊗ₜ u := by simp [phiL]
@@ -240,11 +238,10 @@ theorem resLat_of_substMem : SubstMem → ResLat := by
     (resT_mem_lTensor hS p q ν f hf) (resT_mem_rTensor hS p q ν f hf)
   rw [← toQ_resT, ← hw]
   clear hw
-  induction w using TensorProduct.induction_on with
-  | zero => simp
+  induction w using TensorProduct.inductionOn with
   | tmul a b =>
     rw [TensorProduct.map_tmul, toQ_tmul]
     exact Submodule.subset_span ⟨a.1, a.2, b.1, b.2, rfl⟩
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
+  | add x y hx hy => simp only [map_add]; exact add_mem hx hy
 
 end GlobalTheory.LeviCut

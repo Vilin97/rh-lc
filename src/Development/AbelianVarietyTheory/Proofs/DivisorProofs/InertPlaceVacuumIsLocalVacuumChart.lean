@@ -23,7 +23,9 @@ theorem acts_eq {F : Type} [Field F] [NumberField F] (v : Pl (F := F)) {κ : Typ
     (h1 : Acts (evFin F v) T φ φ₁) (h2 : Acts (evFin F v) T φ φ₂) : φ₁ = φ₂ := by
   funext y
   set z : κ → AF F := fun i => GlobalTheory.LatVac.liftV v (y i - evFin F v (x₀ i)) with hz
-  have hza : At (evFin F v) z := GlobalTheory.VacAny.at_pi fun i => GlobalTheory.LatVac.at_liftV v _
+  have hza : At (evFin F v) z := fun u hu => funext fun i => by
+    simpa only [hz, Pi.smul_apply, Pi.zero_apply] using
+      GlobalTheory.LatVac.at_liftV v (y i - evFin F v (x₀ i)) u hu
   have hrx : r (x₀ + z) = r x₀ := hr.1 x₀ z hza
   have hy : (fun i => evFin F v ((x₀ + z) i)) = y := by
     funext i

@@ -74,7 +74,7 @@ theorem exists_algChar_unr : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     · have h1 : GlobalTheory.RayChar.cmp (infDiag k) v = 1 :=
         congrArg Units.val (GlobalTheory.ModelChar.finEv_infDiag v k)
       rw [h1, sub_self, map_zero]
-      exact zero_le'
+      exact zero_le
   obtain ⟨χ1, hχc, -, hχU, hχd⟩ := GlobalTheory.exists_unitary_char_of_open_subgroup_and_hom (Neutral.B1.Ideles E) Eˣ U hU
     (Neutral.B1.diagUnits E) 1 ψ hψ hψu (fun _ => by simp) (fun k hk => by
       obtain ⟨u, hu⟩ := GlobalTheory.DefU.NonTriv.exists_unit k hk.1
@@ -108,7 +108,8 @@ theorem exists_algChar_unr : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
       apply w.isPrime.ne_top
       rw [Ideal.eq_top_iff_one, ← hab]
       exact w.asIdeal.add_mem (w.asIdeal.mul_mem_left _ hw) (w.asIdeal.mul_mem_left _ hqw)
-    rw [HChar.loc_mul, hν.1 w x hx, mul_one]
+    change χ0.loc w x * ν.loc w x = 1
+    rw [hν.1 w x hx, mul_one]
     show χ1 (Neutral.B1.localIdele E w x) = 1
     rw [hχU _ ⟨GlobalTheory.RayChar.local_mem_unitIdl hx, GlobalTheory.RayChar.local_mem_congrIdl hwq x⟩]
     exact hψS w (Finset.notMem_empty w) x

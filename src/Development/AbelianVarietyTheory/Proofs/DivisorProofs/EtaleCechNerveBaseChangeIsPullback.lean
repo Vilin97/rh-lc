@@ -79,5 +79,5 @@ theorem GlobalTheory.cech_baseChange : ∀ (Y X Y' X' : Scheme.{0}) (a : Y' ⟶ 
         (fun i => by rw [← yoneda.map_comp, h' i]) := by
       exact lift_comp_lift hw k _ _ _ _ _ _ (yoneda.map_comp x b).symm (fun i => (yoneda.map_comp (y i) a).symm)
     unfold cechPt
-    erw [← FunctorToTypes.comp]
+    erw [← NatTrans.comp_app_apply]
     exact congrArg (fun φ : yoneda.obj U ⟶ (cech f).obj (op (SimplexCategory.mk k)) => φ.app (op U) (𝟙 U)) key

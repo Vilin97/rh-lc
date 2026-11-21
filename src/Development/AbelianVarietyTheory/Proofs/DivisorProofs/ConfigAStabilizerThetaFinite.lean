@@ -347,8 +347,9 @@ theorem exists_compact_entries {B : Base F E} {n r s : ℕ} {X : Spc F E n} (hB 
   have hcm : IsCMExt F E σ := hB.cm
   choose Rw hRw using fun w => GlobalTheory.isCartan_entries_bounded _ _ (hX.cartan w)
   set R : ℝ := ∑ w, |Rw w|
-  have hlat := hX.lat
-  obtain ⟨Cf, hCf, hCfe⟩ := GlobalTheory.StabCompact.exists_compact_entries F E X.L hlat.fg hlat.span_eq_top
+  letI := hX.lat
+  obtain ⟨Cf, hCf, hCfe⟩ := GlobalTheory.StabCompact.exists_compact_entries F E X.L
+    (Submodule.IsLattice.fg E X.L) Submodule.IsFullLattice.span_eq_top
   obtain ⟨C, hC, hCe⟩ := GlobalTheory.AdeleBoundedCompact.exists_compact_of_bounded F E σ hcm B.emb Cf hCf R
   refine ⟨C, hC, fun g hg i j => hCe _ ?_ ?_⟩
   · exact hCfe _ (GlobalTheory.FinPartLat.finite_part F E n X (mat g) fun z hz => (((hK g).1 hg).2 z hz).1) i j

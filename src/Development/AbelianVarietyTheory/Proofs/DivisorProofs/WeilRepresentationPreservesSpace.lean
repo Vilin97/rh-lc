@@ -20,7 +20,7 @@ theorem so_stable : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field
   unfold Model.So at hΦ ⊢
   induction hΦ using Submodule.span_induction with
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
   | mem x hx =>
     obtain ⟨f, φ, hSB, hcof, hloc, rfl⟩ := hx
@@ -31,7 +31,7 @@ theorem so_stable : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field
       GlobalTheory.T.theta_trivial_at_place_product hP F E σ B a a' G X om om' hT B.v₁ g₂ h₂ hg₂ hh₂ f φ hSB hcof
     obtain ⟨φ', hSB', hne', hacts, he'⟩ :=
       GlobalTheory.T.local_unitary_action_schwartz_inf hP F E σ B a a' G X om om' hT B.v₁ g₁ hg₁ h₁ hh₁ f₂ φ₂ hSB₂ hcof₂
-    rw [hγ, map_mul, Module.End.mul_apply, he₂, he']
+    rw [hγ, map_mul, mul_apply_eq_comp, he₂, he']
     refine Submodule.subset_span ⟨f₂, φ', hSB', ?_, ?_, rfl⟩
     · filter_upwards [hcof₂, (Set.finite_singleton B.v₁).compl_mem_cofinite] with w hw hw'
       rw [hne' w hw', hw]

@@ -124,7 +124,7 @@ theorem inv_int {n : ℕ} (σ : E →ₐ[F] E)
     (hσ : ∀ s ∈ Formalism.L2.Herm.intAf F E, Formalism.UG.sigR σ (Formalism.L2.Herm.Af F) s ∈ Formalism.L2.Herm.intAf F E)
     (J : Matrix (Fin n) (Fin n) E) (hJ : IsUnit J.det)
     (β : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (Λ : Submodule (𝓞 E) (Fin n → E))
-    (hlat : Submodule.IsLattice E Λ) (hfr : Formalism.L2.DIV.IsFrame β Λ)
+    (hlat : Submodule.IsFullLattice E Λ) (hfr : Formalism.L2.DIV.IsFrame β Λ)
     (hd : Formalism.L2.Forms.dualL (σ : E →+* E) J Λ ≤ Λ)
     (G' : Matrix (Fin n) (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F))
     (hG' : Formalism.UG.cT (Formalism.UG.sigR σ (Formalism.L2.Herm.Af F)) β.val *

@@ -21,7 +21,7 @@ namespace GlobalTheory.ThK.UnipCpt
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 theorem det_ne_zero_of_adapted (B : Base F E) {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} {H : Plane E d d₁}
-    {i₀ i₁ : ℕ} (hσ : ∀ x, σ (σ x) = x) (hL : W.L.IsLattice E) (hJ : W.J.det ≠ 0)
+    {i₀ i₁ : ℕ} (hσ : ∀ x, σ (σ x) = x) (hL : W.L.IsFullLattice E) (hJ : W.J.det ≠ 0)
     (hA : H.IsAdapted σ B W W₁ i₀ i₁) : W₁.J.det ≠ 0 := by
   have hdec := fun z => GlobalTheory.UnipCocompact.exists_decomp hL hA z
   obtain ⟨hn, hxx, hyy, hxy, horth, hgram, -⟩ := hA

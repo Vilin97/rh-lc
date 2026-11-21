@@ -3,6 +3,7 @@ module
 public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.CuspidalMultiplicityOneTotallyComplex
 public import Development.AutomorphicArithmetic.TwistedTraces.ExistsBoundOfIsRootExpMulForall
 public import Development.AutomorphicArithmetic.TwistedTraces.NormDerivOrbitLeOfPolynomialAnnihilated
+public import GroundTheory.AutomorphicForms.L2LocalComponents.Summand
 
 @[expose] public section
 

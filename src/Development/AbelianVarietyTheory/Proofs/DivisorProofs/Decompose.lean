@@ -36,7 +36,7 @@ theorem decompose : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Number
       intro z hz
       obtain ⟨s, t, u, -, -, -, rfl⟩ := hH.split z hz
       exact ⟨(s, u, t), hf s u t⟩
-    haveI : Submodule.IsFullLattice E W.L := hW.lat
+    letI : Submodule.IsFullLattice E W.L := hW.lat
     have hv : v ∈ Submodule.span E (W.L : Set (Fin d → E)) := by
       rw [Submodule.IsFullLattice.span_eq_top (A := E) (M := W.L)]; trivial
     obtain ⟨⟨s, u, t⟩, h⟩ := hle hv

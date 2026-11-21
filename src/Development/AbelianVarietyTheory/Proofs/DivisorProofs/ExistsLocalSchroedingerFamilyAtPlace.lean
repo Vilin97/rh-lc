@@ -78,7 +78,7 @@ theorem span_schr (F : Type) [Field F] [NumberField F] (v : Pl (F := F)) (ψ : A
   convert h using 1
   funext x
   have e : ∀ i, x i + (x₀ i - c i) - x₀ i = x i - c i := fun i => by ring
-  simp only [Set.indicator_apply, Set.mem_setOf_eq, Pi.add_apply, Pi.sub_apply, e, Pi.one_apply]
+  simp only [Set.indicator_apply, Set.mem_ofPred_eq, Pi.add_apply, Pi.sub_apply, e, Pi.one_apply]
 
 end GlobalTheory.SchrLocModel
 
@@ -134,7 +134,7 @@ theorem exists_locRho : ∀ (F : Type) [Field F] [NumberField F] (v : Pl (F := F
       χ x y • schr (GlobalTheory.LatVac.psiAt ψ v) (GlobalTheory.LatVac.locCo co v (Xm (x + y))) φ
     rw [schr_schr, map_add Xm, map_add (GlobalTheory.LatVac.locCo co v), ← hχ]
     congr 1
-    rw [GlobalTheory.VacIndic.psi_of_at ψ (GlobalTheory.VacAny.at_mul_left _ (GlobalTheory.LatVac.DualLoc.at_form co v (hat x) (Xm y))),
+    rw [GlobalTheory.VacIndic.psi_of_at ψ (GlobalTheory.VacIndic.at_mul_left (GlobalTheory.LatVac.DualLoc.at_form co v (hat x) (Xm y))),
       map_mul (evFin F v), GlobalTheory.VacAny.evFin_invOf_two, GlobalTheory.LatVac.DualLoc.evFin_form co v]
     rfl
   · intro x φ

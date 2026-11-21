@@ -29,6 +29,47 @@ open GlobalTheory.OrbitSep
 
 namespace GlobalTheory.QuotDescent
 
+private theorem descent_algebraMap_stalkCongr_of_eq {X : Scheme.{0}} [IsIntegral X] {x y : X} (h : x = y)
+    (a : X.presheaf.stalk x) :
+    algebraMap (X.presheaf.stalk y) X.functionField ((X.presheaf.stalkCongr (.of_eq h)).hom a) =
+      algebraMap (X.presheaf.stalk x) X.functionField a := by
+  subst h
+  simp
+
+private theorem descent_fromSpecResidueField_comp_eq_of_fixes (X : Scheme.{0}) [IsIntegral X] (Γ : Type) [Group Γ]
+    (ρ : Γ →* Aut X) (γ : Γ) (x : X) (hx : (ρ γ).asIso.hom x = x)
+    (h : ∀ u : X.functionFieldˣ, RegAt x u → ZeroAt x ((fnAct ρ γ u : X.functionField) - u)) :
+    X.fromSpecResidueField x ≫ (ρ γ).asIso.hom = X.fromSpecResidueField x := by
+  haveI : IsIso (ρ γ).asIso.hom := Iso.isIso_hom (ρ γ).asIso
+  set φ := (ρ γ).asIso.hom with hφ
+  have key : (X.residueFieldCongr hx.symm).hom ≫ φ.residueFieldMap x = 𝟙 _ := by
+    rw [← cancel_epi (X.residue x), Category.comp_id, X.residue_residueFieldCongr_assoc,
+      Scheme.residue_residueFieldMap]
+    ext a
+    change IsLocalRing.residue _ (φ.stalkMap x ((X.presheaf.stalkCongr (.of_eq hx.symm)).hom a)) =
+      IsLocalRing.residue _ a
+    set b := (X.presheaf.stalkCongr (.of_eq hx.symm)).hom a with hb
+    change Ideal.Quotient.mk _ _ = Ideal.Quotient.mk _ _
+    rw [Ideal.Quotient.eq]
+    by_cases ha : a = 0
+    · rw [hb, ha, map_zero, map_zero, sub_zero]
+      exact zero_mem _
+    · have hne : algebraMap (X.presheaf.stalk x) X.functionField a ≠ 0 :=
+        (map_ne_zero_iff _ (IsFractionRing.injective _ _)).2 ha
+      obtain ⟨c, hc, e⟩ := h (Units.mk0 _ hne) ⟨a, rfl⟩
+      have e2 : ((fnAct ρ γ (Units.mk0 _ hne) : X.functionFieldˣ) : X.functionField) =
+          GlobalTheory.functionFieldMap φ (algebraMap (X.presheaf.stalk x) X.functionField a) := rfl
+      have e4 : GlobalTheory.functionFieldMap φ (algebraMap (X.presheaf.stalk x) X.functionField a) =
+          algebraMap (X.presheaf.stalk x) X.functionField (φ.stalkMap x b) := by
+        rw [← descent_algebraMap_stalkCongr_of_eq hx.symm a, ← hb]
+        exact GlobalTheory.functionFieldMap_algebraMap φ x b
+      rw [e2, Units.val_mk0, e4, ← map_sub] at e
+      rwa [← IsFractionRing.injective _ _ e]
+  rw [← Scheme.Hom.SpecMap_residueFieldMap_fromSpecResidueField,
+    ← X.residueFieldCongr_fromSpecResidueField hx.symm, ← Category.assoc, ← Spec.map_comp, key,
+    Spec.map_id, Category.id_comp]
+
+
 theorem functionFieldMap_comp {X Y Z : Scheme.{0}} [IsIntegral X] [IsIntegral Y] [IsIntegral Z]
     (a : X ⟶ Y) (b : Y ⟶ Z) [IsDominant a] [IsDominant b] [IsDominant (a ≫ b)] :
     functionFieldMap (a ≫ b) = (functionFieldMap a).comp (functionFieldMap b) := by
@@ -48,7 +89,7 @@ theorem fnAct_mul : ∀ (X : Scheme.{0}) [IsIntegral X] (Γ : Type) [Group Γ] (
   haveI : IsIso (ρ δ).asIso.hom := Iso.isIso_hom (ρ δ).asIso
   haveI : IsIso (ρ (γ * δ)).asIso.hom := Iso.isIso_hom (ρ (γ * δ)).asIso
   have hc : (ρ (γ * δ)).asIso.hom = (ρ δ).asIso.hom ≫ (ρ γ).asIso.hom := by
-    rw [map_mul, Aut.Aut_mul_def]; rfl
+    rw [map_mul, Aut.mul_asIso]; rfl
   apply Units.ext
   change functionFieldMap (ρ (γ * δ)).asIso.hom (u : X.functionField) =
     functionFieldMap (ρ δ).asIso.hom (functionFieldMap (ρ γ).asIso.hom (u : X.functionField))
@@ -87,7 +128,7 @@ theorem descent : ∀ (F : Type) [Field F] [NumberField F] (X W : Scheme.{0}) [I
       have hs : Function.Surjective (ρ γ).asIso.hom.base := (ρ γ).asIso.hom.surjective
       simp only [Set.top_eq_univ, Set.image_univ, hs.range_eq, closure_univ] at h1
       exact h1.eq (genericPoint_spec X)
-    have hfix := GlobalTheory.T.fromSpecResidueField_comp_aut_eq_of_fixes X Γ ρ γ _ hη (fun u _ => by rw [hσu, hγ, sub_self]; exact zeroAt_zero _)
+    have hfix := descent_fromSpecResidueField_comp_eq_of_fixes X Γ ρ γ (genericPoint X) hη (fun u _ => by rw [hσu, hγ, sub_self]; exact zeroAt_zero _)
     have h0 := hin γ _ 1 hfix (D.isEqn_genericPoint 1)
     have h1 : ((fnAct ρ γ 1 * (c γ)⁻¹ * 1⁻¹ : X.functionFieldˣ) : X.functionField) - 1 = 0 := by
       by_contra hne

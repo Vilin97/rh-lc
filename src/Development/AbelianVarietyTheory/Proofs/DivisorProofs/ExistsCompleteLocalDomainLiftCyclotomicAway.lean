@@ -25,7 +25,7 @@ theorem charZero_witt (p : ℕ) [hp : Fact p.Prime] (K : Type) [Field K] [CharP 
       rwa [map_natCast, map_zero] at this
     have h4 : p = l := (Nat.prime_dvd_prime_iff_eq hp.out h).1 ((CharP.cast_eq_zero_iff K p l).1 h2)
     subst h4
-    exact WittVector.p_nonzero p K h1
+    exact WittVector.p_ne_zero p K h1
   · subst h
     exact CharP.charP_to_charZero _
 
@@ -107,10 +107,10 @@ theorem exists_complete_domain_lift : ∀ (n : ℕ), 3 ≤ n → ∀ (K : Type) 
   have hnK : (n : K) ≠ 0 := by simpa using ((isUnit_natCast hn).map β).ne_zero
   obtain ⟨p, hp⟩ := CharP.exists K
   rcases CharP.char_is_prime_or_zero K p with hpp | hp0
-  · haveI : Fact p.Prime := ⟨hpp⟩
-    haveI := charZero_witt p K
+  · have : Fact p.Prime := ⟨hpp⟩
+    have := charZero_witt p K
     have hinj := IsFractionRing.injective (WittVector p K) (FractionRing (WittVector p K))
-    haveI : CharZero (FractionRing (WittVector p K)) := charZero_of_injective_algebraMap hinj
+    have : CharZero (FractionRing (WittVector p K)) := charZero_of_injective_algebraMap hinj
     have hc : ∀ a : K, (WittVector.constantCoeff : WittVector p K →+* K) (WittVector.teichmuller p a) = a :=
       fun a => by rw [WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero]
     set t : WittVector p K := WittVector.teichmuller p (β (zetaAway n)) with ht_def
@@ -142,7 +142,7 @@ theorem exists_complete_domain_lift : ∀ (n : ℕ), 3 ≤ n → ∀ (K : Type) 
       | zero => show f 0 ∈ _; rw [map_zero]; exact zero_mem _
       | one => show f 1 ∈ _; rw [map_one]; exact one_mem _
       | add x y hx hy ihx ihy =>
-        show f (⟨x, hx⟩ + ⟨y, hy⟩) ∈ _; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ihx ihy
+        show f (⟨x, hx⟩ + ⟨y, hy⟩) ∈ _; rw [map_add]; exact add_mem ihx ihy
       | neg x hx ih => show f (-⟨x, hx⟩) ∈ _; rw [map_neg]; exact neg_mem ih
       | mul x y hx hy ihx ihy =>
         show f (⟨x, hx⟩ * ⟨y, hy⟩) ∈ _; rw [map_mul]; exact mul_mem ihx ihy
@@ -163,7 +163,7 @@ theorem exists_complete_domain_lift : ∀ (n : ℕ), 3 ≤ n → ∀ (K : Type) 
       show WittVector.constantCoeff (βV (zetaAway n)) = β (zetaAway n)
       rw [h1, hc]
   · subst hp0
-    haveI : CharZero K := CharP.charP_to_charZero K
+    have : CharZero K := CharP.charP_to_charZero K
     obtain ⟨f, hf, hfζ⟩ := exists_hom hn hβζ
     have hβ : β = f := hom_ext hn _ _ hfζ.symm
     refine ⟨K, inferInstance, inferInstance, inferInstance, inferInstance, β, RingHom.id K, ?_, hβ ▸ hf,

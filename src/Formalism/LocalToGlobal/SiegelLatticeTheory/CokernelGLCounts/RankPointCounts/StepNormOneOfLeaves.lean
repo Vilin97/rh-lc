@@ -113,7 +113,8 @@ theorem leadingMinor_map {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) 
 
 theorem frame_smul_mem {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T)
     (hz : F.fl.z ∈ Λ) (hX : XLam Λ F = XS D F.fl) (a : Fin (D.R.rS + 1)) :
-    ∀ x ∈ (((dI D ^ (D.R.rS - (a : ℕ)) : Ideal (𝓞 D.host.E)) : FI))⁻¹, x • frame F a ∈ Λ := by
+    ∀ x ∈ ((dI D ^ (D.R.rS - (a : ℕ)) : Ideal (𝓞 D.host.E)) :
+      FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E)⁻¹, x • frame F a ∈ Λ := by
   induction a using Fin.lastCases with
   | last =>
     intro x hx
@@ -130,7 +131,8 @@ theorem frame_smul_mem {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T : D.host.E} 
       have e : -((D.R.rS : ℤ) - (a : ℕ)) = -(((D.R.rS - (a : ℕ) : ℕ) : ℤ)) := by
         push_cast [Nat.cast_sub ha]; ring
       rw [e, zpow_neg, zpow_natCast,
-        show ddS D = ((dI D : Ideal (𝓞 D.host.E)) : FI) from rfl, ← FractionalIdeal.coeIdeal_pow]
+        show ddS D = (dI D : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) from rfl,
+        ← FractionalIdeal.coeIdeal_pow]
       simpa using hx
     have h : x • F.fl.e a ∈ XLam Λ F := by
       rw [hX]; exact Submodule.subset_span ⟨a, x, hx', rfl⟩

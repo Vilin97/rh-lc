@@ -126,7 +126,7 @@ theorem fockDeg_stable {n d : ℕ} {Y : Spc F E n} {W : Spc F E d} {M : Model σ
     exact Submodule.mem_sup_right (Submodule.subset_span ⟨_, at_mul_right hu _, A φ, ih hφ, hint u hu φ⟩)
 
 theorem levi_comm {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} {H' : Plane E d d₁} {B : Base F E} {i₀ i₁ : ℕ}
-    (hlat : W.L.IsLattice E) (hH : H'.IsAdapted σ B W W₁ i₀ i₁) {t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ} {k₁ : UA σ W₁.J} {k z : UA σ W.J}
+    (hlat : W.L.IsFullLattice E) (hH : H'.IsAdapted σ B W W₁ i₀ i₁) {t : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ} {k₁ : UA σ W₁.J} {k z : UA σ W.J}
     (hk : IsLevi H' 1 k₁ k) (hz : IsLevi (W₁ := W₁) H' t 1 z) : k * z = z * k := by
   obtain ⟨hkx, hky, hkι⟩ := hk
   obtain ⟨hzx, hzy, hzι⟩ := hz
@@ -150,7 +150,10 @@ theorem levi_comm {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} {H' : Pla
     intro u; funext i; exact RingHom.map_mulVec _ _ _ i
   have hall : ∀ v : Fin d → E, P *ᵥ incV F v = 0 := by
     intro v
-    have hv : v ∈ Submodule.span E (W.L : Set (Fin d → E)) := by rw [hlat.span_eq_top]; trivial
+    have hv : v ∈ Submodule.span E (W.L : Set (Fin d → E)) := by
+      letI := hlat
+      rw [Submodule.IsFullLattice.span_eq_top]
+      trivial
     induction hv using Submodule.span_induction with
     | mem v hv =>
       obtain ⟨s, t', u, -, -, -, rfl⟩ := hH.split v hv

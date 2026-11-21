@@ -15,8 +15,10 @@ open Matrix
 namespace GlobalTheory.AdelMatLat
 
 theorem exists_int_smul_mem {E : Type} [Field E] [NumberField E] {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E))
-    (hL : L.IsLattice E) (v : Fin n → E) : ∃ d : ℤ, d ≠ 0 ∧ d • v ∈ L := by
-  have hv : v ∈ Submodule.span E (L : Set (Fin n → E)) := by rw [hL.span_eq_top]; trivial
+    (hL : L.IsFullLattice E) (v : Fin n → E) : ∃ d : ℤ, d ≠ 0 ∧ d • v ∈ L := by
+  have hv : v ∈ Submodule.span E (L : Set (Fin n → E)) := by
+    let _ := hL
+    rw [Submodule.IsFullLattice.span_eq_top (A := E) (M := L)]; trivial
   induction hv using Submodule.span_induction with
   | mem x hx => exact ⟨1, one_ne_zero, by simpa using hx⟩
   | zero => exact ⟨1, one_ne_zero, by simp⟩
@@ -40,8 +42,8 @@ theorem exists_int_smul_mem {E : Type} [Field E] [NumberField E] {n : ℕ} (L : 
     exact L.smul_mem o hx
 
 theorem exists_int_mulVec_mem {E : Type} [Field E] [NumberField E] {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E))
-    (hL : L.IsLattice E) (N : Matrix (Fin n) (Fin n) E) : ∃ D : ℤ, D ≠ 0 ∧ ∀ x ∈ L, D • (N *ᵥ x) ∈ L := by
-  obtain ⟨s, hs⟩ := hL.fg
+    (hL : L.IsFullLattice E) (N : Matrix (Fin n) (Fin n) E) : ∃ D : ℤ, D ≠ 0 ∧ ∀ x ∈ L, D • (N *ᵥ x) ∈ L := by
+  obtain ⟨s, hs⟩ := hL.toIsLattice.fg
   choose d hd hdm using fun g : Fin n → E => exists_int_smul_mem L hL (N *ᵥ g)
   refine ⟨∏ g ∈ s, d g, Finset.prod_ne_zero_iff.2 fun g _ => hd g, ?_⟩
   let f : (Fin n → E) →ₗ[𝓞 E] (Fin n → E) := ((∏ g ∈ s, d g) • N.mulVecLin).restrictScalars (𝓞 E)
@@ -97,7 +99,7 @@ theorem finite_not_integral {F : Type} [Field F] [NumberField F] (c : AF F) :
   Filter.eventually_cofinite.1 c.2.2
 
 theorem finite_bad_smul_incM {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n d : ℕ}
-    (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsLattice E) (c : AF F) (N : Matrix (Fin n) (Fin n) E) :
+    (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsFullLattice E) (c : AF F) (N : Matrix (Fin n) (Fin n) E) :
     {w : Pl (F := F) | ¬ ∀ γ ∈ latAtV X Y w, (c • incM F N) * γ ∈ latAtV X Y w}.Finite := by
   obtain ⟨D, hD0, hD⟩ := exists_int_mulVec_mem X.L hX N
   refine (finite_not_integral (c * algebraMap F (AF F) (D : F)⁻¹)).subset ?_
@@ -105,7 +107,7 @@ theorem finite_bad_smul_incM {F E : Type} [Field F] [NumberField F] [Field E] [N
   exact hw (smul_incM_mul_stable X Y c N D hD0 hD w hint)
 
 theorem almost_all_stable : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n d : ℕ)
-    (X : Spc F E n) (Y : Spc F E d), X.L.IsLattice E → ∀ M : Matrix (Fin n) (Fin n) (AE F E),
+    (X : Spc F E n) (Y : Spc F E d), X.L.IsFullLattice E → ∀ M : Matrix (Fin n) (Fin n) (AE F E),
     Set.Finite {w : Pl (F := F) | ¬ ∀ γ ∈ latAtV X Y w, M * γ ∈ latAtV X Y w} := by
   intro F E _ _ _ _ _ n d X Y hX M
   let bad : Matrix (Fin n) (Fin n) (AE F E) → Set (Pl (F := F)) :=

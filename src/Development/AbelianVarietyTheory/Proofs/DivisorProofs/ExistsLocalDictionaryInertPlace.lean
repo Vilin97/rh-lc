@@ -111,7 +111,7 @@ theorem exists_local_dictionary : ∀ (F E : Type) [Field F] [NumberField F] [Fi
   have hι : ∀ x, ι x = iotaW hw (x : w.adicCompletion E) := fun _ => rfl
   have hι1 : ι 1 = iotaW hw 1 := rfl
   have hcv : ∀ x, ((c x : Formalism.UG.Ov E w) : w.adicCompletion E) = conjW σ hw x := fun _ => rfl
-  obtain ⟨a, ha⟩ := InertChart.exists_isFrameAt (L := X.L) hw hX.lat.fg hX.lat.span_eq_top
+  obtain ⟨a, ha⟩ := InertChart.exists_isFrameAt (L := X.L) hw hX.lat.fg (Submodule.IsLattice.span_eq_top (self := hX.lat))
   have hJ : (X.Jᵀ).det ≠ 0 := by
     rw [Matrix.det_transpose]; exact GlobalTheory.HermSelfDualLoc.det_ne_zero_of_isHerm σ B hX
   obtain ⟨Bm, ⟨k, hk⟩, eB⟩ := InertChart.exists_gram hw hc hJ

@@ -185,7 +185,7 @@ theorem one_eq_decomp {B : Base F E} {n n₁ : ℕ} {X : Spc F E n} {X₁ : Spc 
   have hz : ∀ z : Fin n → E, ∃ (s t : E) (u : Fin n₁ → E), z = s • H.x + H.ι *ᵥ u + t • H.y := by
     intro z
     have hm : z ∈ Submodule.span E (X.L : Set (Fin n → E)) := by
-      rw [Submodule.IsLattice.span_eq_top (self := hX.lat)]; trivial
+      rw [Submodule.IsFullLattice.span_eq_top (self := hX.lat)]; trivial
     induction hm using Submodule.span_induction with
     | mem z hz =>
       obtain ⟨s, t, u, -, -, -, h⟩ := hH.split z hz
@@ -238,6 +238,8 @@ theorem GlobalTheory.LagrUniq.eq_smul_evalZero : GlobalTheory.FunPr.Hypotheses�
   intro _ F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hP n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ hH hP₁ e he S hS hSh hSi hSa
   obtain ⟨j, co, hj, hco, hι, hx, hy⟩ := GlobalTheory.T.exists_adapted_basis_hermitian F E σ B n d X W r s r' s' hP.base hP.herm hP.skew n₁ X₁ H j₀ j₁ M₁ r₁ s₁
     hP₁.herm hH hP₁.good
+  change ∀ z, co.e (incM F H.ι * z) =
+    (Function.extend j (M₁.co.e z).1 0, Function.extend j (M₁.co.e z).2 0) at hι
   have hψ := hP.base.std
   have hone : ∀ z : Matrix (Fin n₁) (Fin d) (AE F E),
       incM F H.ι * z * (incM F (1 : Matrix (Fin d) (Fin d) E))ᵀ = incM F H.ι * z := fun z => by
@@ -271,6 +273,8 @@ theorem GlobalTheory.LagrUniq.eq_smul_evalZero : GlobalTheory.FunPr.Hypotheses�
     obtain ⟨a, z, hz, rfl⟩ := hlag u hu
     have h1 : (co.e (incM F H.ι * z)).1 = 0 := by rw [hι z, hz]; exact hext
     have hsy : symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J) (Matrix.vecMulVec (incV F H.x) a) (incM F H.ι * z) = 0 := by
+      change symp (Algebra.TensorProduct.map (AlgHom.id (AF F) (AF F)) σ) (-1)
+        (X.J.map (inclR (AF F))) (W.J.map (inclR (AF F))) _ _ = 0
       rw [co.form, (hx a).1, h1]; simp
     have hmul : M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) a + incM F H.ι * z) Φ =
         M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) a) (M.co.rho B.ψ (incM F H.ι * z) Φ) := by

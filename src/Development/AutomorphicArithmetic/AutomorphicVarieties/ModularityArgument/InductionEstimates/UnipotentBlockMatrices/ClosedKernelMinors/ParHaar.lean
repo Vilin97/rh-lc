@@ -5,6 +5,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityA
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.InductionEstimates.UnipotentBlockMatrices.ClosedKernelMinors.PkLaws
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.InductionEstimates.UnipotentBlockMatrices.ClosedKernelMinors.AdMeas
 public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.InductionEstimates.UnipotentBlockMatrices.ClosedKernelMinors.HpSpec
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.ExistsLintegralConstantTermL2SqLe
 
 @[expose] public section
 
@@ -146,13 +147,15 @@ private theorem par_homeo {K : Type} [Field K] [NumberField K] :
     exact ⟨e.symm X, by rw [he, e.apply_symm_apply]⟩
   let S : Subgroup (G1 K (2 + 2)) :=
     { carrier := {g | ∃ X m₁ m₂ t, g = nn X * lv m₁ m₂ t}
-      one_mem' := ⟨0, 1, 1, 0, by rw [hone, mul_one]; exact (unipOne_zero 2).symm⟩
+      one_mem' := ⟨0, 1, 1, 0, by
+        rw [hone, mul_one]
+        exact (unipOne_zero (K := K) (n := 2 + 2) 2).symm⟩
       mul_mem' := by
         rintro _ _ ⟨X, m₁, m₂, t, rfl⟩ ⟨X', m₁', m₂', t', rfl⟩
         obtain ⟨Y, hY⟩ := hcomm m₁ m₂ t X'
         refine ⟨X + Y, m₁ * m₁', m₂ * m₂', t + t', ?_⟩
         rw [mul_assoc, ← mul_assoc (lv m₁ m₂ t), hY, mul_assoc, hmul, ← mul_assoc]
-        exact congrArg (· * _) (unipOne_add 2 X Y).symm
+        exact congrArg (· * _) (unipOne_add (K := K) (n := 2 + 2) 2 X Y).symm
       inv_mem' := by
         rintro _ ⟨X, m₁, m₂, t, rfl⟩
         obtain ⟨Y, hY⟩ := hcomm m₁⁻¹ m₂⁻¹ (-t) (-X)
@@ -170,7 +173,7 @@ private theorem par_homeo {K : Type} [Field K] [NumberField K] :
     have : Continuous fun p : G1 K 2 × G1 K 2 × ℝ × (UPos (2 + 2) 2 → 𝔸[K]) => (p.1, p.2.1, p.2.2.1) := by fun_prop
     simpa only [Function.comp_def] using hc.comp this
   have hN : Continuous fun p : G1 K 2 × G1 K 2 × ℝ × (UPos (2 + 2) 2 → 𝔸[K]) => (nn p.2.2.2 : G1 K (2 + 2)) :=
-    (continuous_unipOne 2).comp (by fun_prop)
+    (continuous_unipOne (K := K) (n := 2 + 2) 2).comp (by fun_prop)
   refine ⟨S,
     { toFun := fun p => ⟨nn p.2.2.2 * lv p.1 p.2.1 p.2.2.1, _, _, _, _, rfl⟩
       invFun := fun s => ψ ⟨s.1, hSC _ s.2⟩
@@ -230,7 +233,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.parHaar :
       have := he (e.symm X)
       rw [e.apply_symm_apply] at this
       rw [Subgroup.coe_mul, hφ, hφ, hφ, mul_assoc, ← mul_assoc (lv a b u), ← this, mul_assoc, hmul, ← mul_assoc]
-      exact congrArg (· * _) (unipOne_add 2 Y _).symm
+      exact congrArg (· * _) (unipOne_add (K := K) (n := 2 + 2) 2 Y (e.symm X)).symm
     have h2 : ∀ (H : (UPos (2 + 2) 2 → 𝔸[K]) → ℝ≥0∞) (t : ℝ),
         ∫⁻ X, H (Y + e.symm X) * ENNReal.ofReal (Real.exp (-4 * t)) ∂unipMeasure K (2 + 2) 2 =
           ∫⁻ X, H X * ENNReal.ofReal (Real.exp (-4 * (u + t))) ∂unipMeasure K (2 + 2) 2 := by

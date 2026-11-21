@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Formalism.RealPlaceAnalysis.StatementE
 public import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CutPMulCutP
 public import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
@@ -32,7 +33,8 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ShiftedCapel
 
 noncomputable section
 
-open Matrix GlobalTheory.TorFin Formalism.REAL
+open Matrix
+open Formalism.REAL (qdet qminor Tm)
 
 namespace GlobalTheory.CentreFin
 

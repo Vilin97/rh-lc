@@ -112,9 +112,9 @@ theorem unitChar_eq_prod (ν : (AE D)ˣ →* Circle) {e : AE D} {S : Finset (Pl 
         exact one_mem _
     have hc : hx.choose = prodId S y := Units.ext (GlobalTheory.FunObj.ae_ext (hx.choose_spec.1.trans (infPart_prodId S y).symm)
       fun Q => by rw [hx.choose_spec.2.1, k1])
-    rw [unitChar, dif_pos hx, hc, ← Finset.prod_coe_sort, prodId, map_prod, ← Finset.prod_inv_distrib]
+    rw [unitChar, dite_eq_left hx, hc, ← Finset.prod_coe_sort, prodId, map_prod, ← Finset.prod_inv_distrib]
     refine (map_prod Circle.coeHom _ _).trans (Finset.prod_congr rfl fun w _ => ?_)
-    rw [unitInd, dif_pos (h w.1 w.2)]
+    rw [unitInd, dite_eq_left (h w.1 w.2)]
     rfl
   · rw [unitChar, dite_eq_right fun ⟨x, hx⟩ => h fun w hw => unit_of_isUnitDet he hx hw (hN w hw)]
     push Not at h
@@ -153,7 +153,7 @@ theorem stdA_eq {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNo
   have hM' : ∀ r s, M r s = N s r := hM
   have e1 : blk₁ M = (topL a N)ᵀ := by
     ext r s
-    rw [blk₁, of_apply, hM', transpose_apply, topL, dif_pos ⟨by omega, r.2⟩]
+    rw [blk₁, of_apply, hM', transpose_apply, topL, dite_eq_left ⟨by omega, r.2⟩]
     rfl
   have e2 : (blk₁ M).det = (topL a N).det := by rw [e1, det_transpose]
   have e3 : (∀ i j, blk₂ M i j ∈ cball (ϖ ^ c)) ↔ ∀ i j, a ≤ i.1 → N i j ∈ cball (ϖ ^ c) := by
@@ -172,7 +172,7 @@ theorem stdA_eq {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNo
     exact pow_le_one' hϖ c
   unfold stdA
   split_ifs with h1 h2 h2
-  · rw [unitInd, dif_pos ⟨e2 ▸ h1.1, e2 ▸ h1.2.1.2⟩]
+  · rw [unitInd, dite_eq_left ⟨e2 ▸ h1.1, e2 ▸ h1.2.1.2⟩]
     simp only [e2]
   · refine absurd ⟨fun i j => ?_, e3.1 h1.2.2⟩ h2
     refine Fin.addCases (fun i => ?_) (fun i => ?_) i
@@ -275,7 +275,7 @@ theorem locChar_nu {μ₀ : T} (hL : L.Is μ₀) (t : T) (i j : Fin D.R.m) (w : 
   rw [e1, locChar_eq_of_chrEq (SqNum.chrEq_nu G t i j hL)]
   have hj : (j : ℕ) < D.R.m := j.2
   ext x
-  simp only [SqNum.nuH, Grid.nu, locGrid, muBase, dif_pos hj, MonoidHom.div_apply, Formalism.L2.Host.HChar.loc_mul,
+  simp only [SqNum.nuH, Grid.nu, locGrid, muBase, dite_eq_left hj, MonoidHom.div_apply, Formalism.L2.Host.HChar.loc_mul,
     Formalism.L2.Host.HChar.loc_inv, div_eq_mul_inv]
   rfl
 

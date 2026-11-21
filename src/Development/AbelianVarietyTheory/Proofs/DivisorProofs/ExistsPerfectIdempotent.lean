@@ -34,6 +34,6 @@ theorem exists_perfect_idempotent (p : ℕ) [Fact p.Prime] (k : Type) [Field k] 
   refine ⟨⟨b, fun n => ?_⟩, ?_, fun n a => (hπ n).1 a, fun n a => (nat n n).2.2 a⟩
   · refine BialgHom.ext fun a => ?_
     exact (nat (n + 1) n).1 (G.res n : G.A (n + 1) →ₐ[k] G.A n) a
-  · exact hom_ext fun n => BialgHom.ext fun a => (nat n n).2.1 a
+  · exact Hom.ext (funext fun n => BialgHom.ext fun a => (nat n n).2.1 a)
 
 end GlobalTheory.PDivGroup

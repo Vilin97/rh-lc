@@ -4,7 +4,7 @@ public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEig
 public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.SummandsSpan
 public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.FormsIrr
 public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.ClsBasic
-public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.CuspRegions.ExCusp
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.FoundBridge
 public import GroundTheory.AutomorphicForms.GL2.GJGlobalMean
 
 @[expose] public section
@@ -94,12 +94,16 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.Cp.pairL : UpperTheory.Conv
       congrFun ((Continuous.ae_eq_iff_eq μ (hψc.comp continuous_subtype_val) continuous_const).1 h2) x
     exact hx ((map_eq_zero _).1 h3)
   obtain ⟨V, hV, f, hf, hi⟩ := exists_form0 μ hv hv0
-  obtain ⟨π, hπ, -⟩ := UpperTheory.ConvolutionTheory.Dr.exCusp ℚ 2 μ V hV
-  refine ⟨π, ?_, Fb.ofCusp ℚ 2 f, Fb.mem_carrier.1 (hπ.carrier_eq ▸ hf), fun hz => hi ?_⟩
+  obtain ⟨hs, hne, hirr, -⟩ := formsIrr ℚ 2 μ V hV
+  have hiπ := hs.isIrreducible_iff.2 ⟨hne, hirr⟩
+  let π := Fb.ofIrr (formsIn μ V) hs hiπ
+  have hπ : Fb.carrier π = formsIn μ V := Fb.carrier_ofIrr _ hs hiπ
+  have hfπ : f ∈ Fb.carrier π := by rwa [hπ]
+  refine ⟨π, ?_, Fb.ofCusp ℚ 2 f, Fb.mem_carrier.1 hfπ, fun hz => hi ?_⟩
   · intro φ hφ s g
-    rw [← Fb.map_carrier π] at hφ
+    rw [← Fb.map_carrier π, hπ] at hφ
     obtain ⟨ψ', hψ', rfl⟩ := hφ
-    exact (hπ.carrier_eq ▸ hψ' : ψ' ∈ formsIn μ V).1 s g
+    exact hψ'.1 s g
   · rw [L2.inner_def, ← hz]
     refine integral_congr_ae ?_
     filter_upwards [MemLp.coeFn_toLp hm, (clsBasic ℚ 2 μ).2.2.2 f hf.1] with q e1 e2

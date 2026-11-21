@@ -77,7 +77,8 @@ theorem span_plane {σ : E →ₐ[F] E} {B : Base F E} {n n₁ r s i₀ i₁ : �
     {H : Plane E n n₁} (hX : X.IsSkew σ B r s) (hH : H.IsAdapted σ B X X₁ i₀ i₁) (v : Fin n → E) :
     ∃ (s t : E) (u : Fin n₁ → E), v = s • H.x + H.ι *ᵥ u + t • H.y := by
   have hv : v ∈ Submodule.span E (X.L : Set (Fin n → E)) := by
-    rw [hX.lat.span_eq_top]; trivial
+    letI := hX.lat
+    rw [Submodule.IsFullLattice.span_eq_top]; trivial
   induction hv using Submodule.span_induction with
   | mem z hz =>
     obtain ⟨s, t, u, -, -, -, hz⟩ := hH.split z hz

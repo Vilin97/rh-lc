@@ -92,20 +92,15 @@ omit [NumberField E] in
 theorem hat_mono {L L' : Set (Fin n → E)} (h : L ⊆ L') : hat F L ≤ hat F L' :=
   AddSubgroup.closure_mono fun _ ⟨a, ha, x, hx, e⟩ => ⟨a, ha, x, h hx, e⟩
 
-theorem exists_split {A B C : Submodule (𝓞 E) (Fin n → E)} (hA : Submodule.IsLattice E A)
-    (hB : Submodule.IsLattice E B) (hC : Submodule.IsLattice E C) {v : Fin n → E} {z : Fin n → RA F E}
+theorem exists_split {A B C : Submodule (𝓞 E) (Fin n → E)} (hA : Submodule.IsFullLattice E A)
+    (hB : Submodule.IsFullLattice E B) (hC : Submodule.IsFullLattice E C) {v : Fin n → E} {z : Fin n → RA F E}
     (h1 : z ∈ hat F (A : Set (Fin n → E))) (h2 : z ∈ hat F (B : Set (Fin n → E)))
     (h3 : fv F v - z ∈ hat F (C : Set (Fin n → E))) : ∃ x, x ∈ A ∧ x ∈ B ∧ v - x ∈ C := by
-  have hM : Submodule.IsLattice E ((A ⊓ B) ⊓ C : Submodule (𝓞 E) (Fin n → E)) := by
-    refine ⟨hC.fg.of_le inf_le_right, eq_top_iff.2 fun x _ => ?_⟩
-    obtain ⟨a, ha, h1⟩ := cap_exists_denom A hA.span_eq_top x
-    obtain ⟨b, hb, h2⟩ := cap_exists_denom B hB.span_eq_top (a • x)
-    obtain ⟨c, hc, h3⟩ := cap_exists_denom C hC.span_eq_top (b • a • x)
-    have h4 : c • b • a • x ∈ (A ⊓ B) ⊓ C := ⟨⟨nsmul_mem (nsmul_mem h1 b) c, nsmul_mem h2 c⟩, h3⟩
-    have h5 : x = ((c * b * a : ℕ) : E)⁻¹ • c • b • a • x := by
-      rw [smul_smul c, smul_smul (c * b), ← Nat.cast_smul_eq_nsmul E, inv_smul_smul₀ (Nat.cast_ne_zero.2 (by positivity))]
-    rw [h5]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span h4)
+  have hM : Submodule.IsFullLattice E ((A ⊓ B) ⊓ C : Submodule (𝓞 E) (Fin n → E)) := by
+    letI := hA
+    letI := hB
+    letI := hC
+    infer_instance
   obtain ⟨x, hx⟩ := (hat_rational_points_and_approx F E n _ hM.fg hM.span_eq_top).2.2.1 z
   refine ⟨x, ?_, ?_, ?_⟩
   · rw [← (hat_rational_points_and_approx F E n _ hA.fg hA.span_eq_top).1, ← sub_sub_cancel z (fv F x)]
@@ -302,8 +297,13 @@ theorem hLat_split (V : HSp D) {e : AE D} (he : IsSplitIdem D e) {h h' : GA D V}
     ext i j
     have := congrArg (finPart D) (congrFun (congrFun hM i) j)
     simpa only [Matrix.smul_apply, smul_eq_mul, Matrix.map_apply, map_mul] using this
-  refine exists_split (F := D.host.F) (GlobalTheory.RepsCompare.isLattice_hLat V _) (GlobalTheory.RepsCompare.isLattice_hLat V _)
-    (GlobalTheory.RepsCompare.isLattice_hLat V _) (z := finPart D t • fv D.host.F v) ?_ (hst _ _ hv') ?_
+  have hLat (g : Bridge.Gf V) : Submodule.IsFullLattice D.host.E (Bridge.hLat V g) := by
+    obtain ⟨-, -, hfg, hsp, -⟩ := GlobalTheory.Member.latHat_eq_hat_and_gram D V
+    obtain ⟨Λ, hΛ, h1, h2, -⟩ := GlobalTheory.AdLat.exists_lattice_latOf D.host.F D.host.E V.rank (GlobalTheory.Member.latC V) g.1 hfg hsp
+    rw [SetLike.coe_injective ((GlobalTheory.RepsCompare.coe_hLat V g).trans hΛ.symm)]
+    exact ⟨Submodule.IsLattice.of_fg D.host.E h1, h2⟩
+  refine exists_split (F := D.host.F) (hLat _) (hLat _)
+    (hLat _) (z := finPart D t • fv D.host.F v) ?_ (hst _ _ hv') ?_
   · have := key _ _ _ h1
     rw [e0]
     exact this ▸ MovedLat.fwd V 1 _ (hst _ _ hw)

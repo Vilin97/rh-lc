@@ -24,10 +24,11 @@ theorem integral_mul_conj_eq_inner {X : Type} [MeasurableSpace X] {μ : Measure 
   simp [mul_comm]
 
 theorem eLpNorm_two_eq {X : Type} [MeasurableSpace X] {μ : Measure X} {u v : X → ℂ}
+    (hu : AEStronglyMeasurable u μ) (hv : AEStronglyMeasurable v μ)
     (h : ∫⁻ x, ‖u x‖ₑ ^ 2 ∂μ = ∫⁻ x, ‖v x‖ₑ ^ 2 ∂μ) : eLpNorm u 2 μ = eLpNorm v 2 μ := by
   have h2 : (2 : ENNReal) ≠ 0 := by norm_num
-  rw [eLpNorm_eq_lintegral_rpow_enorm h2 ENNReal.ofNat_ne_top,
-    eLpNorm_eq_lintegral_rpow_enorm h2 ENNReal.ofNat_ne_top]
+  rw [eLpNorm_eq_lintegral_rpow_eNorm_toReal h2 ENNReal.ofNat_ne_top hu,
+    eLpNorm_eq_lintegral_rpow_eNorm_toReal h2 ENNReal.ofNat_ne_top hv]
   simp only [ENNReal.toReal_ofNat, ENNReal.rpow_two]
   rw [h]
 
@@ -49,7 +50,8 @@ theorem pairing_eq : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Finty
   have hN : ∀ c : ℂ, ‖hTg2.toLp + c • hTf2.toLp‖ = ‖hg2.toLp + c • hf2.toLp‖ := by
     intro c
     have hw : g + c • f ∈ schA F κ := (schA F κ).add_mem hg ((schA F κ).smul_mem c hf)
-    have h := eLpNorm_two_eq (hiso μ hμ _ hw)
+    have h := eLpNorm_two_eq (hmem _ (hpres _ hw)).aestronglyMeasurable
+      (hmem _ hw).aestronglyMeasurable (hiso μ hμ _ hw)
     rw [map_add (f := _), map_smul] at h
     rw [← MemLp.toLp_const_smul, ← MemLp.toLp_add, ← MemLp.toLp_const_smul, ← MemLp.toLp_add,
       Lp.norm_toLp, Lp.norm_toLp, h]

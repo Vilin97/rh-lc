@@ -16,7 +16,7 @@ namespace GlobalTheory.ThK.PlaneCo.BlockRead
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem planeMat_mulVec_surjective {σ : E →ₐ[F] E} {B : Base F E} {n n₁ i₀ i₁ : ℕ} {Y : Spc F E n} {Y₁ : Spc F E n₁}
-    {H : Plane E n n₁} (hL : Y.L.IsLattice E) (hA : H.IsAdapted σ B Y Y₁ i₀ i₁) :
+    {H : Plane E n n₁} (hL : Y.L.IsFullLattice E) (hA : H.IsAdapted σ B Y Y₁ i₀ i₁) :
     Function.Surjective (planeMat H).mulVec := by
   have hle : Submodule.span E (Y.L : Set (Fin n → E)) ≤ LinearMap.range (Matrix.mulVecLin (planeMat H)) := by
     refine Submodule.span_le.mpr fun z hz => ?_
@@ -25,7 +25,8 @@ theorem planeMat_mulVec_surjective {σ : E →ₐ[F] E} {B : Base F E} {n n₁ i
     funext i
     simp [Matrix.mulVecLin_apply, planeMat, Matrix.mulVec, dotProduct, Fintype.sum_sum_type, Fin.sum_univ_two]
     ring
-  rw [hL.span_eq_top] at hle
+  letI := hL
+  rw [Submodule.IsFullLattice.span_eq_top] at hle
   intro y
   obtain ⟨w, hw⟩ := hle (Submodule.mem_top : y ∈ ⊤)
   exact ⟨w, by simpa [Matrix.mulVecLin_apply] using hw⟩

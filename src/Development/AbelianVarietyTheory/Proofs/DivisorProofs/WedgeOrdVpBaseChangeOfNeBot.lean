@@ -288,6 +288,7 @@ theorem IsKS.baseChange (P : AbelianDeRham) (h : FrMap ψ y y') {x : Sp (DualNum
     (hφ.comp hπ).congr h.1.symm rfl, hφ'.comp hπ', by rw [← Category.assoc, sq, Category.assoc, e], hpol',
     fun σ k => ?_, fun σ k => (hl σ k).baseChange (hφ := hφ) hF hL (hth _) (htv _), fun τ a => ?_⟩
   · rw [← Category.assoc, htv, Category.assoc, hu, h.2.1]
+    rfl
   · obtain ⟨w, hw, f, hf, hd, hv⟩ := hM τ a
     refine ⟨tv w, comb_bc (fun _ => htv _) (htv w) hw, th f,
       mem_Fil_of_corr (hφ := hφ) hF (hth f) hf, fun k => ?_,

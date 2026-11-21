@@ -24,13 +24,13 @@ open MvPolynomial
 
 instance isPrime_span_X_zero (m : ℕ) :
     (Ideal.span {(X 0 : MvPolynomial (Fin (m + 1)) ℂ)}).IsPrime :=
-  (Ideal.span_singleton_prime (X_ne_zero 0)).2 X_prime
+  (Ideal.span_singleton_prime (X_ne_zero 0)).2 prime_X
 
 theorem exists_X_zero_pow_mul {m : ℕ} {f : MvPolynomial (Fin (m + 1)) ℂ} (hf : f ≠ 0) :
     ∃ (n : ℕ) (g : MvPolynomial (Fin (m + 1)) ℂ),
       g ∉ Ideal.span {(X 0 : MvPolynomial (Fin (m + 1)) ℂ)} ∧ f = X 0 ^ n * g := by
   obtain ⟨n, g, hg, e⟩ := WfDvdMonoid.max_power_factor hf
-    (X_prime (R := ℂ) (i := (0 : Fin (m + 1)))).irreducible
+    (prime_X (R := ℂ) (i := (0 : Fin (m + 1)))).irreducible
   exact ⟨n, g, fun h => hg (Ideal.mem_span_singleton.1 h), e⟩
 
 theorem isDVR_atPrime (m : ℕ) : IsDiscreteValuationRing
@@ -105,7 +105,7 @@ theorem flat_aeval_placeAlg (k : ℕ) (R : Subring K)
     | C a =>
       rw [show (Polynomial.C (MvPolynomial.C a) : Polynomial (MvPolynomial (Fin k) ℂ)) =
         algebraMap ℂ _ a from rfl, AlgEquiv.commutes, AlgHom.commutes, aeval_C]
-    | add p r hp hr => rw [Polynomial.C_add, RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), hp, hr, RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]
+    | add p r hp hr => simp only [map_add, hp, hr]
     | mul_X p i hp =>
       rw [Polynomial.C_mul, map_mul, map_mul, hp, ← finSuccEquiv_X_succ, AlgEquiv.symm_apply_apply,
         map_mul, aeval_X, aeval_X]

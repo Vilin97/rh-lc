@@ -1,6 +1,9 @@
 module
 
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.ExistsIsOpenForallCuspRepTFinOneEq
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.ExistsLintegralConstantTermL2SqLe
 public import GroundTheory.AutomorphicForms.L2LocalComponents
+public import GroundTheory.AutomorphicForms.L2LocalComponents.CuspSmooth
 public import GroundTheory.AutomorphicForms.MultiplicityOne.FiniteLevelGroups
 public import GroundTheory.AutomorphicForms.StrongApproximationSLDense
 public import GroundTheory.AutomorphicForms.SmoothRep

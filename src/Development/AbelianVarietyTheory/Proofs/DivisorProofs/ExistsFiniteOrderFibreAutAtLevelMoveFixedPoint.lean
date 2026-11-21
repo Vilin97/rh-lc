@@ -59,7 +59,7 @@ theorem exists_cast {S S' : Scheme.{0}} {t : SAB H S} {t' : SAB H S'} {f f' : S'
   subst h; exact ⟨n, rfl⟩
 
 theorem iterate_eq {C : Type*} [Category C] {X : C} (θ : Aut X) (N : ℕ) :
-    (fun f : X ⟶ X => f ≫ θ.asIso.hom)^[N] (𝟙 X) = (θ ^ N).hom := by
+    (fun f : X ⟶ X => f ≫ θ.asIso.hom)^[N] (𝟙 X) = (θ ^ N).asIso.hom := by
   induction N with
   | zero => rfl
   | succ n ih =>

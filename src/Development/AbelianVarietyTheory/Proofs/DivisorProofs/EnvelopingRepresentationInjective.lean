@@ -36,11 +36,11 @@ theorem aeval_matDer_single {T : Type} {n : ℕ} (τ τ' : T) (a b c d : Fin n) 
   by_cases h : τ' = τ
   · subst h
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [if_true, map_sum, map_mul, MvPolynomial.aeval_X, MvPolynomial.aeval_C, Matrix.single_apply,
+      simp only [ite_true, map_sum, map_mul, MvPolynomial.aeval_X, MvPolynomial.aeval_C, Matrix.single_apply,
       Algebra.algebraMap_self, RingHom.id_apply, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ,
-      if_true, Prod.mk.injEq, true_and]
-  · simp only [h, if_false, map_zero]
-    rw [if_neg]; intro h'; exact h (congrArg Prod.fst h').symm
+      ite_true, Prod.mk.injEq, true_and]
+  · simp only [h, ite_false, map_zero]
+    rw [ite_eq_right]; intro h'; exact h (congrArg Prod.fst h').symm
 
 variable {D : D7} {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)} {V : HSp D}
 
@@ -62,7 +62,7 @@ theorem envRepAll_polyFun (R : RealPoints θ V) (u : GlobalTheory.AutFinLit.Env 
   let S : Subalgebra ℂ (GlobalTheory.AutFinLit.Env V) :=
     { carrier := {u | ∀ P, (envRepAll R u ⟨polyFun θ V P, polyFun_mem D θ V R P⟩).1 = polyFun θ V (polyRep V u P)}
       mul_mem' := fun {u v} hu hv P => by
-        rw [map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply, ← hu]
+        rw [map_mul, map_mul, mul_apply_eq_comp, mul_apply_eq_comp, ← hu]
         congr 2
         exact Subtype.ext (hv P)
       add_mem' := fun {u v} hu hv P => by
@@ -76,8 +76,7 @@ theorem envRepAll_polyFun (R : RealPoints θ V) (u : GlobalTheory.AutFinLit.Env 
     | zero => rw [map_zero]; exact S.zero_mem
     | add x y hx hy => rw [map_add (f := _)]; exact S.add_mem hx hy
     | of τ y =>
-      induction y using TensorProduct.induction_on with
-      | zero => rw [map_zero, map_zero]; exact S.zero_mem
+      induction y using TensorProduct.inductionOn with
       | add y y' hy hy' => rw [map_add (f := _), map_add (f := _)]; exact S.add_mem hy hy'
       | tmul c X =>
         intro P
@@ -130,10 +129,9 @@ theorem envRepAll_injective (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[
     refine Algebra.span_le_adjoin ℂ _ ?_
     induction x using DirectSum.induction_on with
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact add_mem hx hy
     | of τ y =>
-      induction y using TensorProduct.induction_on with
-      | zero => rw [map_zero, map_zero]; exact zero_mem _
+      induction y using TensorProduct.inductionOn with
       | add y y' hy hy' => rw [map_add (f := _), map_add (f := _)]; exact add_mem hy hy'
       | tmul c X =>
         rw [show c ⊗ₜ[ℝ] X = c • ((1 : ℂ) ⊗ₜ[ℝ] X) by rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one],

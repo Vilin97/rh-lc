@@ -44,7 +44,9 @@ theorem exists_compact_superset_stabK : ∀ (F E : Type) [Field F] [NumberField 
   choose Rw hRw using fun w => GlobalTheory.T.cartan_commuting_isometries_bounded _ _ (hX.cartan w)
   set R : ℝ := ∑ w, |Rw w|
   have hlat := hX.lat
-  obtain ⟨Cf, hCf, hCfe⟩ := GlobalTheory.StabCompact.exists_compact_entries F E X.L hlat.fg hlat.span_eq_top
+  letI : X.L.IsFullLattice E := hlat
+  obtain ⟨Cf, hCf, hCfe⟩ := GlobalTheory.StabCompact.exists_compact_entries F E X.L hlat.fg
+    (Submodule.IsFullLattice.span_eq_top (A := E) (M := X.L))
   obtain ⟨K, hK, hKe⟩ := GlobalTheory.T.bounded_norm_compact_preimage F E σ hcm B.emb Cf hCf R
   obtain ⟨C, hC, hCe⟩ := GlobalTheory.T.unitary_group_bounded_entries_compact F E σ n X.J hJ K hK
   refine ⟨C, hC, fun g hg => hCe g fun i j => hKe _ ?_ ?_⟩

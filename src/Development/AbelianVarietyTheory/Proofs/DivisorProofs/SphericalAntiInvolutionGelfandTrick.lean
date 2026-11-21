@@ -29,7 +29,7 @@ theorem inv_mem_locK_mul_locK : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
   have hσ : IsCMExt F E σ := hT.base.cm
   obtain ⟨w, h, hw⟩ := GlobalTheory.T.exists_inert_prime_nonsplit_place F E σ hσ hT.base.unram v hv
   obtain ⟨δ, hδ, hH, hsd⟩ := GlobalTheory.T.exists_self_dual_scaled_hermitian_inert F E σ B _ _ _ G.W hσ hT.base.unram hT.geo.hW v w h hw
-  have hlat := hT.geo.hW.lat
+  have hlat : G.W.L.IsFullLattice E := hT.geo.hW.lat
   obtain ⟨e1, he1⟩ := GlobalTheory.T.local_unitary_iso_stabilizer F E σ (InertChart.conj_conj hσ) _ G.W v δ hδ hlat.fg
   obtain ⟨-, hI⟩ := exists_isInertChart σ hσ v
   obtain ⟨-, ⟨c, hc, -⟩, -, -, hC⟩ := hI w h hw

@@ -492,7 +492,11 @@ theorem GlobalTheory.ArcQ.exists_normalForm : Out.Laws → Out.Laws2 → ∀ (E 
   have : CharZero K₁ := charZero_of_injective_ringHom (algebraMap c.F K₁).injective
   have : IsDomain (ArcS Dw K₁) := GlobalTheory.ArcConst.isDomain Dw K₁
   obtain ⟨ξ, N, y₀, hN, hξ, hchg, h1, e₀, h2, h3⟩ := exists_frame hL hL2 (GlobalTheory.ThetaShiftProofs.mono_j d.Y (mono_spMap_subtype _))
-    d.W d.e d.th (arcι Dw K₁) (letM Dw K₁) (isUnit_det_letM Dw K₁) d.yF z hz hzx v hv hvS θ
+    d.W d.e d.th (arcι Dw K₁) (letM Dw K₁) (isUnit_det_letM Dw K₁) d.yF z hz hzx v hv (by
+      intro τ i
+      have hrow : letM Dw K₁ τ i = fun k => arcX Dw K₁ τ i k :=
+        funext fun k => Matrix.of_apply (fun j k => arcX Dw K₁ τ j k) i k
+      simpa only [hrow] using hvS τ i) θ
     ⟨σ, fam, θ', a1, a2, a3, a4⟩ t m1 m2 w1 w2 σ' s1 θ2 r1 r2 i1 i2 ps hg
   obtain ⟨ζ, hζ⟩ := GlobalTheory.ArcConst.exists_const Dw K₁ ξ (algZ_of_pow hN hξ)
   have hζN : ζ ^ N = 1 := GlobalTheory.ArcConst.arcι_C_injective Dw K₁

@@ -74,6 +74,8 @@ end Free
 
 abbrev OmC : Type := C ⊗[O] omega P.Gt
 
+def actOm : Λ →+* Module.End C P.OmC := baseChangeAction C (omegaAct P.oGt)
+
 def inclOm : omega P.Gt →ₗ[O] P.OmC := TensorProduct.mk O C _ 1
 
 def latOm : Submodule O P.OmC := LinearMap.range P.inclOm

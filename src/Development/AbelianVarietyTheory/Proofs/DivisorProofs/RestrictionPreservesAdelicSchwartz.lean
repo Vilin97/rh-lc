@@ -68,12 +68,11 @@ theorem GlobalTheory.ThK.AdaptEv.restrL_mem_schA : ∀ (F : Type) [Field F] [Num
     · rw [pow_one, one_mul, ext0CLM_apply]
       linarith [norm_le_norm_extend_by_zero_block eq y]
     · have h1 : (0 : AdeleRing (𝓞 F) F).1 = 0 := rfl
-      have h2 : (0 : AdeleRing (𝓞 F) F).2 = 0 := rfl
       funext y
       simp only [restrL_apply, pureA, SchwartzMap.compCLM_apply, Function.comp_apply, ext0CLM_apply]
       congr 2
       · funext k; simp only [ext0]; cases eq k <;> simp only [Sum.elim_inl, Sum.elim_inr, h1, map_zero]
-      · funext k; simp only [ext0]; cases eq k <;> simp [h1, h2]
+      · funext k; simp only [ext0]; cases eq k <;> simp
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx

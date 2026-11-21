@@ -102,7 +102,7 @@ theorem map_closure_mem (I : Ideal (𝓞 D.host.E))
     obtain ⟨b, hb, z, hz, rfl⟩ := hz
     exact AddSubgroup.subset_closure ⟨b, hb, k z, hk z hz, hks b z⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 end Space

@@ -87,10 +87,10 @@ theorem tri_of_carries {F : Type} [Field F] {e : F ≃+* c.F} (C : FlagCpt Z e) 
   obtain rfl : φ₀' = φ₀ := RingHom.ext fun a =>
     hinj ((RingHom.congr_fun T1'.2.1 a).symm.trans (RingHom.congr_fun T1.2.1 a))
   have hφ : φ' = φ := T2'.2.1.trans T2.2.1.symm
-  obtain ⟨T, hT, hTd, hTl⟩ := (g₀.tri_iff _ C.f0 t).1 T1
-  obtain ⟨T₂, hT₂, hT₂d, hT₂l⟩ := (g₀'.tri_iff _ C.f0 t₂).1 T1'
-  obtain ⟨h, hh, hhd, hhl⟩ := (g₀.tri_iff _ g s).1 T2
-  obtain ⟨h₂, hh₂, hh₂d, hh₂l⟩ := (g₀'.tri_iff _ g' s₂).1 T2'
+  obtain ⟨T, hT, hTd, hTl⟩ := (g₀.tri_iff (algebraMap (C.Y.X.presheaf.stalk (p (IsLocalRing.closedPoint K))) C.Y.X.functionField) C.f0 t).1 T1
+  obtain ⟨T₂, hT₂, hT₂d, hT₂l⟩ := (g₀'.tri_iff (algebraMap (C.Y.X.presheaf.stalk (p (IsLocalRing.closedPoint K))) C.Y.X.functionField) C.f0 t₂).1 T1'
+  obtain ⟨h, hh, hhd, hhl⟩ := (g₀.tri_iff (Scheme.stalkClosedPointTo (R := CommRingCat.of K) p).hom g s).1 T2
+  obtain ⟨h₂, hh₂, hh₂d, hh₂l⟩ := (g₀'.tri_iff (Scheme.stalkClosedPointTo (R := CommRingCat.of K) p).hom g' s₂).1 T2'
   have hS₀ : g₀.Stable := EigStable.stable_of_isLocalRing E H Dw l Xo c O β Z _ _ _ g₀ inferInstance
   have hid : stalkPt C.Y (p (IsLocalRing.closedPoint K)) ≫ C.π ≫ genι Z =
       spMap (RingHom.id _) ≫ stalkPt C.Y (p (IsLocalRing.closedPoint K)) ≫ C.π ≫ genι Z := by

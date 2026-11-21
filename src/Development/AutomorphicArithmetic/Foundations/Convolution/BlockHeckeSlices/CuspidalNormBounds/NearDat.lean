@@ -37,15 +37,11 @@ private theorem pt_cons {r s : ℕ} (b : Blo S r) (d : Dat S s) (z₀ : ℂ) (z 
     | left i =>
       have e : (Dat.cons b d).idx (Fin.castAdd s i) = (0 : Fin (d.len + 1)) :=
         Fin.addCases_left (motive := fun _ => Fin (d.len + 1)) (left := fun _ => 0) (right := fun i => (d.idx i).succ) i
-      simp only [Dat.ptL, Dat.lam, Fin.addCases_left]
-      rw [e]
-      rfl
+      simp only [Dat.ptL, Dat.lam, Fin.addCases_left, e, Fin.cons_zero]
     | right i =>
       have e : (Dat.cons b d).idx (Fin.natAdd r i) = ((d.idx i).succ : Fin (d.len + 1)) :=
         Fin.addCases_right (motive := fun _ => Fin (d.len + 1)) (left := fun _ => 0) (right := fun i => (d.idx i).succ) i
-      simp only [Dat.ptL, Dat.lam, Fin.addCases_right]
-      rw [e]
-      rfl
+      simp only [Dat.ptL, Dat.lam, Fin.addCases_right, e, Fin.cons_succ]
   · dsimp only
     split_ifs
     · simp
@@ -119,5 +115,5 @@ theorem UpperTheory.ConvolutionTheory.BW.nearDat :
   rw [e₁]
   refine MvPolynomial.eval₂Hom_congr' rfl (fun x hx _ => ?_) rfl
   have e₂ := congrFun (congrArg Prod.snd hz) x.1
-  simp only [if_neg (hF x hx)] at e₂
+  simp only [ite_eq_right (hF x hx)] at e₂
   rw [Dat.ptH, Dat.ptH, e₂]

@@ -40,7 +40,7 @@ namespace GlobalTheory.UnipCocompact
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 theorem exists_decomp {B : Base F E} {n n₁ : ℕ} {H : Plane E n n₁} {Y : Spc F E n} {Y₁ : Spc F E n₁} {i₀ i₁ : ℕ}
-    (hL : Y.L.IsLattice E) (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (v : Fin n → E) :
+    (hL : Y.L.IsFullLattice E) (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (v : Fin n → E) :
     ∃ (s t : E) (u : Fin n₁ → E), v = s • H.x + H.ι *ᵥ u + t • H.y := by
   let S : Submodule E (Fin n → E) :=
     { carrier := {v | ∃ (s t : E) (u : Fin n₁ → E), v = s • H.x + H.ι *ᵥ u + t • H.y}
@@ -54,7 +54,7 @@ theorem exists_decomp {B : Base F E} {n n₁ : ℕ} {H : Plane E n n₁} {Y : Sp
   have hle : Submodule.span E (Y.L : Set (Fin n → E)) ≤ S := Submodule.span_le.2 fun z hz => by
     obtain ⟨s, t, u, -, -, -, e⟩ := hH.split z hz
     exact ⟨s, t, u, e⟩
-  rw [hL.span_eq_top] at hle
+  rw [Submodule.IsFullLattice.span_eq_top (self := hL)] at hle
   exact hle (Submodule.mem_top (x := v))
 
 end GlobalTheory.UnipCocompact

@@ -1,6 +1,7 @@
 module
 
 public import Development.WeilBound.CoreStatements.VolumeEquality.RootBranches
+public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.GoodOrigin
 public import Development.AutomorphicSpectrum.Statements.GeometryStatements.AgreementPos
 public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.PotentialsBoundedRegSettingEqReference
 public import GroundTheory.HeightsAndTheta.Heights.Regularisation.BoundedStatements

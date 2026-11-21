@@ -118,7 +118,7 @@ theorem val_det_le {K Γ n : Type} [CommRing K] [LinearOrderedCommMonoidWithZero
   rw [e, map_prod]
   exact Finset.prod_le_pow_card _ _ _ fun i _ => h _ _
 
-theorem val_det_le_one {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)}
+theorem val_det_le_one {d : ℕ} (W : Spc F E d) (hL : W.L.IsFullLattice E) {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)}
     (hw : w.under (𝓞 F) = v) (t : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
     (ht : ∀ z ∈ GlobalTheory.InertSph.latAt W v, t *ᵥ z ∈ GlobalTheory.InertSph.latAt W v) : Valued.v (piE F w t.det) ≤ 1 := by
   classical
@@ -192,7 +192,7 @@ theorem val_det_le_one {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) {v : Pl 
   have h0 : 0 < b ^ Fintype.card (Fin d) := (zero_lt_iff.2 hk).trans_le (by simpa using key 0)
   exact h ((mul_le_iff_le_one_left h0).1 (hn.trans (key n)))
 
-theorem chr_det_eq_one {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)}
+theorem chr_det_eq_one {d : ℕ} (W : Spc F E d) (hL : W.L.IsFullLattice E) {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)}
     (hw : Formalism.UG.IsInertAt F E v w) {χ : Chr F E} (hχ : UnrAt χ w) (t : GL (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))
     (h1 : At (evFin F v) ((t : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) - 1))
     (ht : ∀ z ∈ GlobalTheory.InertSph.latAt W v, (t : Matrix (Fin d) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) *ᵥ z ∈ GlobalTheory.InertSph.latAt W v ∧
@@ -292,8 +292,10 @@ theorem eigen_eq_one_of_diag : ∀ (F E : Type) [Field F] [NumberField F] [Field
       exact congrFun (congrFun e2 (Sum.inl i)) j
     · have hz' := hp.2 (Sum.elim z z) ⟨hz, hz⟩
       exact ⟨hvec p _ ht z ▸ hz'.1.1, hvec p⁻¹ _ ht' z ▸ hz'.2.1⟩
-  rw [hμ, map_smul, smul_eq_mul, hβ, Circle.coe_one, one_mul] at hrule
-  have hμ' := mul_right_cancel₀ hl hrule
+  have hm := congrArg (DiagForm.lDiag F (Fin a × Fin (a + a'))) hμ
+  rw [map_smul, smul_eq_mul] at hm
+  rw [hβ, Circle.coe_one, one_mul] at hrule
+  have hμ' := mul_right_cancel₀ hl (hm.symm.trans hrule)
   rw [hμ', Complex.norm_real, Real.norm_of_nonneg (Real.rpow_nonneg (NNReal.coe_nonneg _) _)] at hn
   rw [hμ', hn, Complex.ofReal_one]
 

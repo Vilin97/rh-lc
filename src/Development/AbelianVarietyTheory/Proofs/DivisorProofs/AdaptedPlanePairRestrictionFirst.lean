@@ -173,7 +173,7 @@ theorem partL_mem (e : ((κ → AF F) → ℂ) →ₗ[ℂ] (κ₁ → AF F) → 
     rw [h1 f]
     exact Submodule.subset_span ⟨P f, g₁, hg₁, rfl⟩
   | zero => show partLₗ e 0 ∈ _; rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => show partLₗ e (x + y) ∈ _; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => show partLₗ e (x + y) ∈ _; rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => show partLₗ e (c • x) ∈ _; rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem partR_mem (e : ((κ' → AF F) → ℂ) →ₗ[ℂ] (κ₁' → AF F) → ℂ) (he : IsLocOp e) :
@@ -187,7 +187,7 @@ theorem partR_mem (e : ((κ' → AF F) → ℂ) →ₗ[ℂ] (κ₁' → AF F) �
     rw [h1 f]
     exact Submodule.subset_span ⟨P f, g₁, hg₁, rfl⟩
   | zero => show partRₗ e 0 ∈ _; rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => show partRₗ e (x + y) ∈ _; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => show partRₗ e (x + y) ∈ _; rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => show partRₗ e (c • x) ∈ _; rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem partL_adm (e : ((κ → AF F) → ℂ) →ₗ[ℂ] (κ₁ → AF F) → ℂ) (he : IsLocOp e) :

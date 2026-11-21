@@ -266,7 +266,9 @@ theorem vacS_mem_SB : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Numb
     H.IsAdapted σ B X X₁ j₀ j₁ → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ v, vacS σ X W H H' v ∈ SB _ := by
   intro F E _ _ _ _ _ σ B n d n₁ d₁ r s r' s' i₀ i₁ j₀ j₁ X W X₁ W₁ H H' hB hX hW hH hH' v
   classical
-  obtain ⟨M, _, g, hg⟩ := GlobalTheory.LatParam.latAtV_param X W hX.lat hW.lat v
+  obtain ⟨M, _, g, hg⟩ := GlobalTheory.LatParam.latAtV_param X W
+    (by first | exact hX.lat | exact hX.lat.toIsLattice)
+    (by first | exact hW.lat | exact hW.lat.toIsLattice) v
   set O := v.adicCompletionIntegers F
   let w : M → Kc F E d₁ n₁ → Fv F v := fun m k => algebraMap F (Fv F v) (fRat F H H' (g m) k)
   have hΦ : ∀ (a : M → Fv F v) k, evFin F v ((planeT σ X W H H'

@@ -46,7 +46,7 @@ theorem exists_isCN_galois_of_finite : ∀ (A R : Type) [CommRing A] [IsDomain A
       have h1 : φ (algebraMap A R a) = 0 := ha
       rw [φ.commutes] at h1
       exact (Ideal.mem_bot).2 (hιK (h1.trans (map_zero _).symm))
-    have h2 := Ideal.eq_bot_of_comap_eq_bot hk
+    have h2 := Ideal.eq_bot_of_under_eq_bot hk
     exact (RingHom.injective_iff_ker_eq_bot _).2 h2
   have hint : ∀ x : R, IsIntegral A (φ x) := fun x => (Algebra.IsIntegral.isIntegral (R := A) x).map φ
   obtain ⟨s, hs⟩ := Module.Finite.fg_top (R := A) (M := R)
@@ -60,7 +60,7 @@ theorem exists_isCN_galois_of_finite : ∀ (A R : Type) [CommRing A] [IsDomain A
     induction hx using Submodule.span_induction with
     | mem y hy => exact IntermediateField.subset_adjoin K _ ⟨y, hy, rfl⟩
     | zero => rw [map_zero]; exact zero_mem L
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
     | smul r y _ hy =>
       rw [map_smul, Algebra.smul_def]
       refine mul_mem ?_ hy

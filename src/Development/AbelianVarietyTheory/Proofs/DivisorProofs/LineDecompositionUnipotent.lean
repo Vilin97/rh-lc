@@ -74,7 +74,9 @@ theorem exists_hyp (hcm : IsCMExt F E σ) (hW : W.IsSkew σ B r s) (hH : H.IsAda
     (LinearMap.toSpanSingleton E _ H.x).coprod ((Matrix.mulVecLin H.ι).coprod (LinearMap.toSpanSingleton E _ H.y))
   have hT : ∀ a u b, T (a, u, b) = a • H.x + (H.ι *ᵥ u + b • H.y) := fun a u b => rfl
   have hsurj : Function.Surjective T := by
-    rw [← LinearMap.range_eq_top, eq_top_iff, ← hW.lat.span_eq_top, Submodule.span_le]
+    letI := hW.lat
+    rw [← LinearMap.range_eq_top, eq_top_iff,
+      ← Submodule.IsFullLattice.span_eq_top (A := E) (M := W.L), Submodule.span_le]
     intro z hz
     obtain ⟨a, b, u, -, -, -, e⟩ := hH.split z hz
     exact ⟨(a, u, b), by rw [hT, e, add_assoc]⟩

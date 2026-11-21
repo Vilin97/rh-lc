@@ -60,7 +60,7 @@ theorem isAlgebraic_of_closure_eq_top (y : Fin N → Ω) (hy : y ≠ 0)
     exact mul_mem (hA _ (hXy j)) (hC _)
   have hall : ∀ p, ι p ∈ L := fun p => by
     induction p using Polynomial.induction_on' with
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | monomial n c =>
       rw [← Polynomial.C_mul_X_pow_eq_monomial, map_mul, map_pow]
       exact mul_mem (hC c) (pow_mem hX n)
@@ -89,7 +89,7 @@ theorem ringKrullDim_imageIdeal_of_birational : ∀ (k : Type) [Field k] (S : Li
   intro k _ S h hb ⟨η, hη, hr⟩
   have := HeightExists.isIntegral h
   let Ω := S.Y.residueField η
-  letI : Algebra k Ω := (S.baseHom (resPt η)).toAlgebra
+  let : Algebra k Ω := (S.baseHom (resPt η)).toAlgebra
   let x : S.Pt Ω := ⟨resPt η, S.comp_str _⟩
   set y : Fin S.N → Ω := S.coords (resPt η) with hy
   have hI : S.imageIdeal = coneIdeal k y :=

@@ -1,11 +1,13 @@
 module
 
+public import Development.AutomorphicArithmetic.Foundations.Convolution.ASmooth
 public import Development.AutomorphicArithmetic.Foundations.Convolution.BlockEvaluation.TruncSpec
 public import Development.AutomorphicArithmetic.Foundations.Convolution.PolynomialCoefficientBounds.KillLiftSingle
 public import Development.AutomorphicArithmetic.Foundations.Convolution.PolynomialCoefficientBounds.LiftSingleAlt
 public import Development.AutomorphicArithmetic.Foundations.Convolution.PolynomialCoefficientBounds.SubEqZeroIff
 public import Mathlib
 public import Development.AutomorphicArithmetic.Foundations.Convolution.PolynomialCoefficientBounds.PermOf
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TensFun
 
 @[expose] public section
 

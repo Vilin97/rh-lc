@@ -101,7 +101,7 @@ theorem etale_away_quotient_eq_localization :
           exact hQ'p.ne_top (Ideal.eq_top_of_isUnit_mem _ hg
             (IsLocalization.Away.algebraMap_isUnit g))
       rw [← hc]
-      exact (IsLocalization.map_comap (Submonoid.powers g) (Localization.Away g) Q').symm
+      exact (IsLocalization.map_under (Submonoid.powers g) (Localization.Away g) Q').symm
     have hle := GlobalTheory.T.etale_unique_prime_le_map_maximal B (Localization.Away g) P hP
       (Q.map (algebraMap D (Localization.Away g))) hfib
     have hres' := GlobalTheory.T.localization_residue_approximation B D P hP Q g hgQ hQP hres

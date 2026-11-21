@@ -60,11 +60,12 @@ theorem form_rows (σ : E →ₐ[F] E) {n : ℕ} (J P Q : Matrix (Fin n) (Fin n)
   rw [Finset.sum_comm]
   simp [mul_assoc]
 
-theorem exists_basis (n : ℕ) (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsLattice E L) :
+theorem exists_basis (n : ℕ) (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsFullLattice E L) :
     ∃ (t : 𝓞 F), t ∉ v.asIdeal ∧ ∃ b : Fin n → Fin n → E, LinearIndependent E b ∧ (∀ i, b i ∈ L) ∧
       ∀ w ∈ L, (algebraMap (𝓞 F) (𝓞 E) t) • w ∈ Submodule.span (𝓞 E) (Set.range b) := by
-  obtain ⟨s, b, hb, hbL, hs⟩ := GlobalTheory.PlaceInt.LocBasis.exists_basis_up_to (A := locR F E v) (locS F E v) L hL.fg
-    hL.span_eq_top
+  letI := hL
+  obtain ⟨s, b, hb, hbL, hs⟩ := GlobalTheory.PlaceInt.LocBasis.exists_basis_up_to (A := locR F E v) (locS F E v) L (Submodule.IsLattice.fg E L)
+    Submodule.IsFullLattice.span_eq_top
   obtain ⟨t, ht, hst⟩ := s.2
   exact ⟨t, ht, b, hb, hbL, fun w hw => by rw [hst]; exact hs w hw⟩
 

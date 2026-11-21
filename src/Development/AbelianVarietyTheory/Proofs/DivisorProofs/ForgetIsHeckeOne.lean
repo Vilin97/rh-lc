@@ -35,9 +35,9 @@ def inAfHom (D : Datum p) : D.La →+ AfP p ⊗[ℚ] VQ D where
   map_zero' := by simp [inAf]
   map_add' x y := by simp [inAf, TensorProduct.tmul_add]
 
-theorem acts_one_iff {G : HTGroup p} (L : Link D G) (n : ℕ) (hn : 0 < n) (hp : n.Coprime p) (x y : D.La) :
+theorem acts_one_iff {G : HTGroup p} (L : GlobalTheory.LKGeo.Link D G) (n : ℕ) (hn : 0 < n) (hp : n.Coprime p) (x y : D.La) :
     (∃ w ∈ LaHat D, ((1 : ℕ) : ℤ) • L.actG 1 (inAf D x) = inAf D y + n • w) ↔ ∃ u : D.La, x - y = n • u := by
-  simp only [map_one, Nat.cast_one, one_smul, Module.End.one_apply]
+  simp only [map_one, Nat.cast_one, one_smul, one_apply_eq_self]
   constructor
   · rintro ⟨w, hw, e⟩
     refine lattice_dvd n hn hp _ ⟨w, hw, ?_⟩

@@ -24,6 +24,8 @@ open GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle StandardFirstTheta
 
 variable {D : D7}
 
+local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
+
 private theorem isIntM_rightBlock {k d a : ℕ} {Y : Matrix (Fin k) (Fin d) (EAf D)} (h : IsIntM Y) :
     IsIntM (rightBlock a Y) := fun i j => by
   unfold rightBlock
@@ -74,7 +76,7 @@ private theorem stdSnd_shift {ν : (AE D)ˣ →* Circle} {e : AE D} {S : Finset 
       (rightBlock_shift (c := ((n * c : ℕ) : EAf D)) fun i j => ?_)).symm
     rw [h, Nat.cast_mul n₀]
     ring
-  · rw [if_neg hcnd, if_neg fun h' => hcnd ⟨hh.1 h'.1, hint.1 h'.2.1, hid.1 h'.2.2⟩]
+  · rw [ite_eq_right hcnd, ite_eq_right fun h' => hcnd ⟨hh.1 h'.1, hint.1 h'.2.1, hid.1 h'.2.2⟩]
 
 private theorem dualCoord_add (A WW : HSp D) (βA : GL (Fin A.rank) (EAf D)) (βW : GL (Fin WW.rank) (EAf D))
     (x y : WO A WW) : dualCoord A WW βA βW (x + y) = dualCoord A WW βA βW x + dualCoord A WW βA βW y := by
@@ -138,7 +140,7 @@ private theorem stdSnd_isSB {ν : (AE D)ˣ →* Circle} (hν : Continuous ν) {e
     fun u hu hh t => ?_, fun t ht => ?_⟩
   · unfold stdSnd at ht
     by_contra h
-    exact ht (if_neg fun h' => h h'.1)
+    exact ht (ite_eq_right fun h' => h h'.1)
   · refine stdSnd_shift he hnI hl hcS a A WW βA βW (W := K • dualCoord A WW βA βW (M • u))
       ?_ (GlobalTheory.PlaceVec.isIntM_nsmul (hB u hu) K) fun i j => ?_
     · rw [GlobalTheory.PlaceModel.isHalf_iff A WW, GlobalTheory.PlaceModel.isHalf_iff A WW]
@@ -147,7 +149,7 @@ private theorem stdSnd_isSB {ν : (AE D)ˣ →* Circle} (hν : Continuous ν) {e
   · have h : IsHalf (cA D e) t ∧ IsIntM (dualCoord A WW βA βW t) := by
       unfold stdSnd at ht
       by_contra h
-      exact ht (if_neg fun h' => h ⟨h'.1, h'.2.1⟩)
+      exact ht (ite_eq_right fun h' => h ⟨h'.1, h'.2.1⟩)
     rw [show (n₀ * (n * c)) * (K * M) = ((n₀ * (n * c)) * M) * K by ring, mul_smul]
     exact nsmul_mem (hC t h.1 h.2) _
 

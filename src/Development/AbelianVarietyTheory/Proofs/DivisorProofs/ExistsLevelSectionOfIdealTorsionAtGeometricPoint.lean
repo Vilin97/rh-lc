@@ -95,3 +95,6 @@ theorem exists_etaSecL_of_torsI : ∀ {E : Type} [Field E] [NumberField E] [IsCM
   · rw [hP, Category.assoc, etaSecL_w]
 
 end GlobalTheory.TorsSpec
+
+#print axioms GlobalTheory.EqvAct.pullG
+#print axioms GlobalTheory.TorsSpec.exists_etaSecL_of_torsI

@@ -33,7 +33,7 @@ theorem UpperTheory.eigenspace_inf_spherical_le_closed_invariant :
         ((V : Set (LL μ)) ∩ {u | Oinf μ ν a u = (x : ℂ) • u}) ∩
           ⋂ v ∈ {v : Pl K | v ∉ P}, ⋂ k ∈ {k | k ∈ GLnLocal.integralGL (v.adicCompletion K) n}, {u | rhoL μ v k u = u} := by
       ext u
-      simp only [SetLike.mem_coe, hmem, Set.mem_inter_iff, Set.mem_setOf_eq, Set.mem_iInter]
+      simp only [SetLike.mem_coe, hmem, Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_iInter]
     rw [this]
     refine (hV.closed.inter (isClosed_eq (Oinf μ ν a).continuous (continuous_const_smul _))).inter ?_
     exact isClosed_biInter fun v _ => isClosed_biInter fun k _ => isClosed_eq (rhoL μ v k).continuous continuous_id
@@ -41,7 +41,7 @@ theorem UpperTheory.eigenspace_inf_spherical_le_closed_invariant :
     obtain ⟨⟨huV, huA⟩, hus⟩ := (hmem u).1 hu
     refine (hmem _).2 ⟨⟨hV.inv _ _ huV, ?_⟩, fun v hv k hk => ?_⟩
     · have := congrArg (fun T : LL μ →L[ℂ] LL μ => T u) (hO (AdelicGLn.localEmbedding w g)).eq
-      simp only [ContinuousLinearMap.mul_apply] at this
+      simp only [mul_apply_eq_comp] at this
       change Oinf μ ν a (rhoF μ _ u) = _
       rw [this, huA, map_smul]
       rfl

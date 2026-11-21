@@ -13,7 +13,7 @@ public import Formalism.SharpRestriction.CuspSpanNormBounds.NonemptyParameterMod
 
 noncomputable section
 
-open Formalism.BasicNotions Formalism.MainNotions.S Formalism.L2.SG.HidaSetting Formalism.L2.SG.SplitPrimeNormLemmas Formalism.L2.SG.SettingExistsAdapted
+open Formalism.BasicNotions Formalism.MainNotions.S Formalism.L2.SG.HidaSetting Formalism.L2.SG.SplitPrimeNormLemmas
 
 namespace Formalism.L2.SG.Pf.Set3
 

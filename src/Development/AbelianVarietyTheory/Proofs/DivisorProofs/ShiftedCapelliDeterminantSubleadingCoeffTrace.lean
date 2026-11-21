@@ -6,8 +6,6 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.IsSquareInte
 
 @[expose] public section
 
-open Matrix GlobalTheory.TorFin
-
 namespace GlobalTheory.CapelliNext
 
 open Finset

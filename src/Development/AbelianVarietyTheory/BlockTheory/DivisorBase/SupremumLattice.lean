@@ -31,8 +31,9 @@ theorem supIn_full_iff :
   rw [h1, h2]
   constructor
   · rintro ⟨a, b⟩
-    refine ⟨Submodule.IsLattice.of_fg K a, Submodule.map_injective_of_injective C.injective_subtype ?_⟩
-    rw [b, Submodule.map_subtype_top]
+    exact { toIsLattice := Submodule.IsLattice.of_fg K a
+            span_eq_top := Submodule.map_injective_of_injective C.injective_subtype (by
+              rw [b, Submodule.map_subtype_top]) }
   · intro h
     exact ⟨h.fg, by rw [Submodule.IsFullLattice.span_eq_top (self := h), Submodule.map_subtype_top]⟩
 

@@ -7,7 +7,6 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.IsSquareInte
 
 @[expose] public section
 
-open Matrix GlobalTheory.TorFin
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.shifted_capelli_determinant_subleading_coeff_trace : ∀ (A : Type) [Ring A] [Algebra ℂ A] (m : ℕ) (E : Fin (m + 1) → Fin (m + 1) → A) (s : ℂ), ∃ (c : ℕ → A) (t : ℂ),
     c (m + 1) = 1 ∧ c m = ∑ i, E i i + t • (1 : A) ∧

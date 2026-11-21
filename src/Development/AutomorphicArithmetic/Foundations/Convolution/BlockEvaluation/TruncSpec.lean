@@ -1,6 +1,8 @@
 module
 
 public import Development.AutomorphicArithmetic.Foundations.Convolution.ASmooth
+public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.CuspidalMultiplicityOneTotallyComplex
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TensFun
 
 @[expose] public section
 

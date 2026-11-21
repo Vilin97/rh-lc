@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.ExistsIsOpenForallCuspRepTFinOneEq
 public import GroundTheory.AutomorphicForms.L2LocalComponents.NonEmptyOps
 public import GroundTheory.AutomorphicForms.MultiplicityOne.ArchTypeExists
 

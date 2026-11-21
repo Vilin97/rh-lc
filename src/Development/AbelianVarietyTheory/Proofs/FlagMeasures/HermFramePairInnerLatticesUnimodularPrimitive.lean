@@ -22,9 +22,11 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
 
 
 omit [StarRing K] in
-theorem exists_mult {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsLattice K Λ) (v : V) :
+theorem exists_mult {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.span K (Λ : Set V) = ⊤) (v : V) :
     ∃ c : K, c ≠ 0 ∧ c • v ∈ Λ := by
-  obtain ⟨s, hs⟩ := exists_smul_mem hΛ v
+  have hv : v ∈ Submodule.span K (Λ : Set V) := by rw [hΛ]; trivial
+  obtain ⟨s, hs⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 K)) K (Λ : Set V) v hv
+  rw [Submodule.span_eq] at hs
   refine ⟨algebraMap (𝓞 K) K s, IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors s.2, ?_⟩
   rw [algebraMap_smul]
   exact hs
@@ -58,7 +60,7 @@ theorem unimod_transfer [FiniteDimensional K V] (H : HermSpace K V) {Λ : Submod
     · rw [Submodule.span_le]
       exact fun y hy => hy.1
     · intro v hv
-      obtain ⟨c, hc, h⟩ := exists_mult hΛ v
+      obtain ⟨c, hc, h⟩ := exists_mult hΛ.2 v
       rw [← Submodule.smul_mem_iff _ hc]
       exact Submodule.subset_span ⟨U.smul_mem c hv, Submodule.mem_sup_left h⟩
   refine ⟨⟨?_, hspan⟩, ?_⟩

@@ -50,7 +50,7 @@ theorem form_skew {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {d : ℕ} {J
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
   ring
 
-theorem span_decomp {n n₁ : ℕ} (H : Plane E n n₁) (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.IsLattice E)
+theorem span_decomp {n n₁ : ℕ} (H : Plane E n n₁) (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.IsFullLattice E)
     (hs : ∀ z ∈ L, ∃ (s t : E) (u : Fin n₁ → E), z = s • H.x + H.ι *ᵥ u + t • H.y) (z : Fin n → E) :
     ∃ (s t : E) (u : Fin n₁ → E), z = s • H.x + H.ι *ᵥ u + t • H.y := by
   let S : Submodule E (Fin n → E) :=
@@ -66,7 +66,7 @@ theorem span_decomp {n n₁ : ℕ} (H : Plane E n n₁) (L : Submodule (𝓞 E) 
         refine ⟨c * s, c * t, c • u, ?_⟩
         rw [Matrix.mulVec_smul, smul_add, smul_add, smul_smul, smul_smul] }
   have h1 : Submodule.span E (L : Set (Fin n → E)) ≤ S := Submodule.span_le.2 fun z hz => hs z hz
-  rw [hL.span_eq_top] at h1
+  rw [Submodule.IsFullLattice.span_eq_top (self := hL)] at h1
   exact h1 Submodule.mem_top
 
 theorem trace_inclR (e : E) : Algebra.trace (AF F) (AE F E) (inclR (F := F) (AF F) e) =

@@ -89,7 +89,12 @@ theorem frL_good {S U : Formalism.BasicNotions.TH.HSp (Dof x)} {F : GlobalTheory
     sdT := (by with_unfolding_all exact (h.sdT :))
     frS := (by with_unfolding_all exact (h.frS :))
     frT := (by with_unfolding_all exact (h.frT :))
-    vac := by with_unfolding_all exact h.vac }
+    vac := by
+      rcases h.vac with ⟨hstd, hinf, htheta, hlat, hfock, hnorm⟩
+      exact ⟨(by with_unfolding_all exact hstd),
+        (by with_unfolding_all exact hinf), (by with_unfolding_all exact htheta),
+        (by with_unfolding_all exact hlat), (by with_unfolding_all exact hfock),
+        (by with_unfolding_all exact hnorm)⟩ }
 
 theorem baseL_good {S U : Formalism.BasicNotions.TH.HSp (Dof x)} {Z : GlobalTheory.ExportSeries.Base S U} (h : Z.Good) : (baseL L Z).Good :=
   { even := (by with_unfolding_all exact (h.even :))
@@ -121,10 +126,16 @@ theorem setupL_good {ρ : GlobalTheory.SeriesTie.Setup (Dof x).ntw} (h : ρ.Good
     latS := (by with_unfolding_all exact (h.latS :))
     latT := (by with_unfolding_all exact (h.latT :))
     Pg := (by with_unfolding_all exact (h.Pg :))
-    delta := fun i j b => kc% (congrArg (twL L) (h.delta (kc% i) (kc% j) b))
+    delta := fun i j b => (by with_unfolding_all exact (congrArg (twL L) (h.delta i j b) : _))
     weil := fun i j b t ht => by
-      delta GlobalTheory.ExportSeries.Base.IsWeil
-      exact (by with_unfolding_all exact ((h.weil ((i)) ((j)) b (twB L t) (twB_good L ht)) : _))
+      have hw := h.weil i j b (twB L t) (twB_good L ht)
+      delta GlobalTheory.ExportSeries.Base.IsWeil at hw ⊢
+      exact ⟨(by with_unfolding_all exact hw.std), (by with_unfolding_all exact hw.hecS),
+        (by with_unfolding_all exact hw.hecT), (by with_unfolding_all exact hw.resS),
+        (by with_unfolding_all exact hw.resT), (by with_unfolding_all exact hw.om_pres),
+        (by with_unfolding_all exact hw.om_heis), (by with_unfolding_all exact hw.om_aut),
+        (by with_unfolding_all exact hw.om_cont), (by with_unfolding_all exact hw.om_unit),
+        (by with_unfolding_all exact hw.om_split)⟩
     classes := fun i j b t ht hA =>
       have h' := h.classes ((by with_unfolding_all exact (i :))) ((by with_unfolding_all exact (j :))) b (twB L t) (twB_good L ht) ⟨(by with_unfolding_all exact ((placesOK_B L hA.1) :)), (by with_unfolding_all exact (hA.2 :))⟩
       ⟨(by with_unfolding_all exact (h'.fin :)), (by with_unfolding_all exact (h'.reps :)), (by with_unfolding_all exact (h'.stab :))⟩ }
@@ -136,7 +147,8 @@ theorem theta_eq (ρ : Setup (Dof x).ntw) :
   funext i j b h P
   delta GlobalTheory.SeriesTie.Setup.theta GlobalTheory.ExportSeries.Base.theta GlobalTheory.ExportSeries.Base.vecBase GlobalTheory.ExportSeries.Base.vecAt
     GlobalTheory.ExportSeries.Frame.vec GlobalTheory.ExportSeries.Frame.placeMap
-  with_unfolding_all rfl
+  tr_leaves x.o.Z (oL x L).Z
+  kexactB (Eq.refl (ρ.theta (kc% i) (kc% j) b (kc% h) (kc% P)))
 
 
 open GlobalTheory.SeriesTie in

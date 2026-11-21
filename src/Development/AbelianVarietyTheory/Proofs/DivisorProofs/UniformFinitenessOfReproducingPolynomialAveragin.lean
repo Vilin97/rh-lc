@@ -197,9 +197,9 @@ theorem typesIn_kStable (ε : Fin n → Bool) {H : Type} [NormedAddCommGroup H] 
     refine Submodule.iSup_induction _ (motive := fun z => σ g z ∈ _) hy (fun S w hw => ?_) (by simp) ?_
     · refine Submodule.iSup_induction _ (motive := fun w => σ g w ∈ _) hw (fun hS u hu => ?_) (by simp) ?_
       · exact Submodule.mem_iSup_of_mem μ (Submodule.mem_sSup_of_mem hS (hS.2.2.1 g hg u hu))
-      · intro a b ha hb; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
-    · intro a b ha hb; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
-  · intro a b ha hb; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+      · intro a b ha hb; rw [map_add]; exact add_mem ha hb
+    · intro a b ha hb; rw [map_add]; exact add_mem ha hb
+  · intro a b ha hb; rw [map_add]; exact add_mem ha hb
 
 theorem typesIn_fd (ε : Fin n → Bool) {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
     (σ : GlobalTheory.PsCo.Pc1.Mat n → (H →L[ℂ] H)) (hσ : IsURepOn (UJset ε) σ)
@@ -208,7 +208,7 @@ theorem typesIn_fd (ε : Fin n → Bool) {H : Type} [NormedAddCommGroup H] [Inne
   have hσ' : Formalism.MainNotions.S.IsURepOn (Formalism.MainNotions.S.UJset ε) σ := by
     rw [mir_isURepOn_iff, mir_UJset_eq]; exact hσ
   have hadm := GlobalTheory.PsCo.TrAdm.isAdmissibleSub_top n ε H σ hσ' hirr
-  haveI : Finite A := hA.to_subtype
+  have : Finite A := hA.to_subtype
   have : ∀ μ : A,
       FiniteDimensional ℂ (sSup {S : Submodule ℂ H | S ≤ ⊤ ∧ Formalism.MainNotions.S.IsKTypeOf ε σ μ S} : Submodule ℂ H) :=
     fun μ => hadm μ

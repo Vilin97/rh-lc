@@ -8,8 +8,7 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFor
 
 @[expose] public section
 
-open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial MeasureTheory Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.Whittaker GlobalTheory.WeilDeligne GlobalTheory.LocLanglands GlobalTheory.DZero
-attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
+open GlobalTheory.PRep GlobalTheory.SmGL
 
 namespace GlobalTheory.DZero
 
@@ -33,7 +32,7 @@ theorem exists_irrRep_quotient_of_finite_gen : ∀ (G V : Type) [Group G] [Topol
     refine ⟨sSup c, ⟨fun g v hv => ?_, fun htop' => ?_⟩, fun z hz => le_sSup hz⟩
     · obtain ⟨M, hM, hvM⟩ := (Submodule.mem_sSup_of_directed hne hd).1 hv
       exact le_sSup hM ((hcS hM).1 g v hvM)
-    · obtain ⟨M, hM, hsM⟩ := (CompleteLattice.isCompactElement_iff_le_of_directed_sSup_le _ _).1 hcomp c hne hd
+    · obtain ⟨M, hM, hsM⟩ := (isCompactElement_iff_le_of_directed_sSup_le _).1 hcomp c hne hd
         (by rw [htop']; exact le_top)
       exact (hcS hM).2 (htop M (hcS hM).1 hsM)) ⊥ hbot
   obtain ⟨hNst, hNtop⟩ := hmax.prop

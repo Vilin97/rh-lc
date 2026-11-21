@@ -84,7 +84,7 @@ theorem atPlace_eq_tens (k : Fin 2) (v : D.nd.PlG k)
     obtain ⟨i, hi, hgi⟩ := hex
     refine (Finset.prod_eq_zero (Finset.mem_univ i) ?_).symm
     rw [Function.update_of_ne hi, MonoidAlgebra.one_def, MonoidAlgebra.coeff_single, Finsupp.single_apply,
-      if_neg (Ne.symm hgi)]
+      ite_eq_right (Ne.symm hgi)]
 
 theorem atPlace_one (k : Fin 2) (v : D.nd.PlG k) : Formalism.MainNotions.ArithmeticCylinders.atPlace D k v 1 = 1 := by
   classical
@@ -111,6 +111,8 @@ end AtPlace
 section OnMt
 
 variable (D : D7) (μ : D.what₂.Tup) (j : ℕ)
+
+local notation "CZ" => Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd))
 
 theorem onMt_add {a b : MonoidAlgebra ℂ (G0g D.nd)} (ha : a ∈ CZ) (hb : b ∈ CZ) :
     D.ntypes.onMt μ j (a + b) = D.ntypes.onMt μ j a + D.ntypes.onMt μ j b := by
@@ -267,7 +269,7 @@ theorem good_labels {Sig : List (Part D.naut.CG)} (hg : goodSig D.nd D.naut Sig)
       Formalism.CyclotomicNorms.rootsBar (D.naut.items₂ k (D.naut.plGw k v) (isoLoc D.nd D.naut Sig (D.naut.plGw k v))) := by
     unfold Formalism.CyclotomicNorms.rootsBar
     rw [Polynomial.mem_roots (Polynomial.map_monic_ne_zero (h1.1 v).1)]
-    exact hr.map
+    exact hr.map (algebraMap (ZMod (D.host.g k)) (Formalism.CyclotomicNorms.Fbar (D.host.g k)))
   rcases hu with rfl | rfl
   · exact h1.2.2.2.1 ℓ hℓ hℓne v ⟨D.nd.j i - 1, by have := D.nd.j_range i; omega⟩ _ hmem rfl
   · exact h2.2.2.2.1 ℓ hℓ hℓne v ⟨D.nd.j i - 1, by have := D.nd.j_range i; omega⟩ _ hmem rfl
@@ -277,6 +279,8 @@ end Record
 section Series
 
 variable {D : D7}
+
+local notation "CZ" => Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd))
 
 theorem eSer_mem (k : Fin 2) (v : D.nd.PlG k) (f : (ZMod (D.host.g k))[X]) :
     Formalism.MainNotions.ArithmeticCylinders.atPlace D k v (D.ntypes.eSer k f) ∈ CZ :=
@@ -332,7 +336,7 @@ theorem cen_prod_fix {M : Type} [AddCommGroup M] [Module ℂ M] (cen : ↥CZ →
   induction S using Finset.induction_on with
   | empty => rw [Finset.prod_empty, map_one]; rfl
   | insert a S ha ih =>
-    rw [Finset.prod_insert ha, map_mul, Module.End.mul_apply,
+    rw [Finset.prod_insert ha, map_mul, mul_apply_eq_comp,
       ih fun b hb => h b (Finset.mem_insert_of_mem hb), h a (Finset.mem_insert_self a S)]
 
 theorem cen_prod_ne {M : Type} [AddCommGroup M] [Module ℂ M] (cen : ↥CZ →ₐ[ℂ] Module.End ℂ M)
@@ -340,7 +344,7 @@ theorem cen_prod_ne {M : Type} [AddCommGroup M] [Module ℂ M] (cen : ↥CZ →�
     (a : ι) (ha : a ∈ S) : cen (e a) F ≠ 0 := by
   intro h0
   apply hne
-  rw [← Finset.prod_erase_mul S e ha, map_mul, Module.End.mul_apply, h0, map_zero]
+  rw [← Finset.prod_erase_mul S e ha, map_mul, mul_apply_eq_comp, h0, map_zero]
 
 end Series
 
@@ -352,7 +356,8 @@ theorem lenUnit_natCast_le {D : D7} (i : D.nd.Loc) (n : ℕ) (hn : n ≠ 0) :
   have h := Formalism.MainNotions.TruncatedSeriesCountingIdentities.Br.addVal_int (O := D.nd.O i) (D.nd.l i) (Formalism.MainNotions.TruncatedSeriesCountingIdentities.Br.l_not_unit D.nd i) (n : ℤ)
     (by exact_mod_cast hn)
   rw [Int.cast_natCast, padicValInt.of_nat] at h
-  rw [Formalism.MainNotions.TruncatedSeriesCountingIdentities.Br.lenUnit_span D.nd i h]
+  rw [Formalism.MainNotions.TruncatedSeriesCountingIdentities.Br.lenUnit_span D.nd i h,
+    Nat.padicValNat_def]
 
 end Main
 

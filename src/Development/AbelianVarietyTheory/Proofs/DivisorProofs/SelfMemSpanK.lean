@@ -23,13 +23,13 @@ theorem spanK_stable (φ : Sm E a) : ∀ k, ∀ w ∈ spanK E a φ, cptRep E a k
   induction hw using Submodule.span_induction with
   | mem x hx =>
     obtain ⟨k', rfl⟩ := hx
-    exact Submodule.subset_span ⟨k * k', by simp only [map_mul, Module.End.mul_apply]⟩
+    exact Submodule.subset_span ⟨k * k', by simp only [map_mul, mul_apply_eq_comp]⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem self_mem_spanK (φ : Sm E a) : φ ∈ spanK E a φ :=
-  Submodule.subset_span ⟨1, by simp only [map_one, Module.End.one_apply]⟩
+  Submodule.subset_span ⟨1, by simp only [map_one, one_apply_eq_self]⟩
 
 def mapsJ (φ : Sm E a) (L : Subgroup (GL (Fin a) (Af E))) : Submodule ℂ (spanK E a φ →ₗ[ℂ] Sm E a) where
   carrier := {T | T ∈ maps L (spanK E a φ) (spanK_stable φ) ∧ ∀ z ∈ Zalg E a, z φ = 0 → ∀ w, z (T w) = 0}

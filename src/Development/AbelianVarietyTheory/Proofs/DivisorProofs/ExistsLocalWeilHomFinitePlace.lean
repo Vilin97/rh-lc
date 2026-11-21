@@ -22,7 +22,8 @@ theorem tens_cancel {F : Type} [Field F] [NumberField F] (v : Pl (F := F)) {κ :
     {φ₁ φ₂ : (κ → Fv F v) → ℂ} (h : tens (evFin F v) φ₁ R = tens (evFin F v) φ₂ R) : φ₁ = φ₂ := by
   funext y
   set z : κ → AF F := fun i => GlobalTheory.LatVac.liftV v (y i) with hz
-  have hza : At (evFin F v) z := GlobalTheory.VacAny.at_pi fun i => GlobalTheory.LatVac.at_liftV v _
+  have hza : At (evFin F v) z :=
+    fun u hu => funext fun i => GlobalTheory.LatVac.at_liftV v (y i) u hu
   have hrx : R (0 + z) = R 0 := hR 0 z hza
   have hy : (fun i => evFin F v ((0 + z) i)) = y := by
     funext i

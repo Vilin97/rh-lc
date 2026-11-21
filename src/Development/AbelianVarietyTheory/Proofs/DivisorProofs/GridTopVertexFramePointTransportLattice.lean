@@ -21,6 +21,8 @@ open Formalism.UG GlobalTheory.AutFunCounterexample
 
 variable {D : D7} {A B : HSp D}
 
+local notation "σ" => (D.sp.cm.sig : D.host.E →+* D.host.E)
+
 abbrev emb (d : HermitianOrthogonalExtensionData A B 1 1) : Matrix (Fin B.rank) (Fin A.rank) D.host.E := frameMat B A d.ι
 
 def prj (d : HermitianOrthogonalExtensionData A B 1 1) : Matrix (Fin A.rank) (Fin B.rank) D.host.E := A.gram⁻¹ * (cT σ (emb d) * B.gram)
@@ -138,6 +140,9 @@ section Lat
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
+local notation "hat" => Formalism.L2.Herm.hatL (F := F)
+local notation "ιf" => inclE (F := F) (E := E) (Formalism.L2.Herm.Af F)
+
 theorem hat_mulVec {p q : ℕ} (N : Matrix (Fin p) (Fin q) E) {Λ : Submodule (𝓞 E) (Fin q → E)}
     {Λ' : Submodule (𝓞 E) (Fin p → E)} (h : ∀ y ∈ Λ, N *ᵥ y ∈ Λ') {v} (hv : v ∈ hat Λ) :
     N.map ιf *ᵥ v ∈ hat Λ' := by
@@ -145,15 +150,12 @@ theorem hat_mulVec {p q : ℕ} (N : Matrix (Fin p) (Fin q) E) {Λ : Submodule (�
   · rintro _ ⟨x, hx, rfl⟩
     refine Submodule.subset_span ⟨N *ᵥ x, h x hx, ?_⟩
     funext i
-    set_option synthInstance.maxHeartbeats 100000 in
-      simp [Matrix.mulVec, dotProduct, map_sum]
+    exact RingHom.map_mulVec ιf N x i
   · rw [Matrix.mulVec_zero]; exact zero_mem _
   · intro x y _ _ hx hy
     rw [Matrix.mulVec_add]; exact add_mem hx hy
   · intro s x _ hx
-    have : N.map ιf *ᵥ (s • x) = s • (N.map ιf *ᵥ x) := by
-      rw [Subring.smul_def, Subring.smul_def, Matrix.mulVec_smul]
-    rw [this]
+    rw [Matrix.mulVec_smul]
     exact Submodule.smul_mem _ s hx
 
 variable {n k c : ℕ} {M : Matrix (Fin n) (Fin k) E} {a : Matrix (Fin n) (Fin c) E} {Q : Matrix (Fin k) (Fin n) E}

@@ -19,6 +19,30 @@ namespace GlobalTheory.GaussFrac
 
 variable {F : Type} [Field F] [NumberField F]
 
+private theorem gaussAbs_eq_iSup_local {K ι : Type} [Field K] [NumberField K]
+    (v : FinitePlace K) (g : MvPolynomial ι K) (s : Finset (ι →₀ ℕ))
+    (hs : g.support ⊆ s) (hne : s.Nonempty) :
+    gaussAbs v g = ⨆ k : s, v (AddMonoidAlgebra.coeff g (k : ι →₀ ℕ)) := by
+  classical
+  have : Nonempty s := hne.to_subtype
+  have hsup : (g.support.sup fun m => (v (AddMonoidAlgebra.coeff g m)).toNNReal) =
+      s.sup fun m => (v (AddMonoidAlgebra.coeff g m)).toNNReal := by
+    refine le_antisymm (Finset.sup_mono hs) (Finset.sup_le fun m hm => ?_)
+    by_cases hm' : m ∈ g.support
+    · exact Finset.le_sup (f := fun m => (v (AddMonoidAlgebra.coeff g m)).toNNReal) hm'
+    · rw [MvPolynomial.notMem_support_iff.1 hm', map_zero, Real.toNNReal_zero]
+      exact bot_le
+  unfold gaussAbs
+  rw [hsup]
+  obtain ⟨k, hk, hkeq⟩ := Finset.exists_mem_eq_sup s hne fun m => (v (AddMonoidAlgebra.coeff g m)).toNNReal
+  rw [hkeq, Real.coe_toNNReal _ (apply_nonneg _ _)]
+  refine le_antisymm (le_ciSup (f := fun k : s => v (AddMonoidAlgebra.coeff g (k : ι →₀ ℕ)))
+    (Set.finite_range _).bddAbove ⟨k, hk⟩) (ciSup_le fun m => ?_)
+  have h1 : (v (AddMonoidAlgebra.coeff g (m : ι →₀ ℕ))).toNNReal ≤ (v (AddMonoidAlgebra.coeff g k)).toNNReal := by
+    rw [← hkeq]
+    exact Finset.le_sup (f := fun m => (v (AddMonoidAlgebra.coeff g m)).toNNReal) m.2
+  exact (Real.toNNReal_le_toNNReal_iff (apply_nonneg _ _)).1 h1
+
 def scaledIdeal (c : 𝓞 F) (I : Submodule (𝓞 F) F) : Ideal (𝓞 F) :=
   (I.map (LinearMap.lsmul (𝓞 F) F c)).comap (Algebra.linearMap (𝓞 F) F)
 
@@ -98,7 +122,7 @@ theorem finsum_log_gaussAbs_le : ∀ (F : Type) [Field F] [NumberField F] (τ : 
       lt_of_lt_of_le (FinitePlace.pos_iff.2 (div_ne_zero hbi₀ hc'))
         (le_ciSup (f := fun i => q ((b i : F) / c)) (Set.finite_range _).bddAbove i₀)
     have hqδ : 0 < q δ := FinitePlace.pos_iff.2 hδ
-    rw [← Real.log_mul hqδ.ne' hpos.ne', GlobalTheory.HSChoice.BaseChange.gaussAbs_eq_iSup q g g.support subset_rfl ⟨m₀, hm₀⟩,
+    rw [← Real.log_mul hqδ.ne' hpos.ne', gaussAbs_eq_iSup_local q g g.support subset_rfl ⟨m₀, hm₀⟩,
       ← e.symm.iSup_comp, Real.mul_iSup_of_nonneg hqδ.le]
     congr 1
     refine iSup_congr fun i => ?_
