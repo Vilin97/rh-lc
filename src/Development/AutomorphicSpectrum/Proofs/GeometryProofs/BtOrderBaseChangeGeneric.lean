@@ -13,7 +13,7 @@ public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.BtOrderIsHop
 @[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
-open GlobalTheory.CompanionTheory.Ar.BT GroundTheory.PAdicHodge
+open GlobalTheory.CompanionTheory.Ar.BT
 
 noncomputable section
 
@@ -195,12 +195,16 @@ theorem exists_emb {Γ : QFGroup R T} {Γ' : QFGroup R' T} {F : Γ'.G.left ⟶ �
   have hcomm : ∀ a : A, transl hA' t⁻¹ (ψ a) = ψ (transl hA t⁻¹ a) := by
     intro a
     ext h
-    simp [hψt]
+    rw [hψt]
+    change (ψ a : T → R') (t⁻¹ * h) = algebraMap R R' ((a : T → R) (t⁻¹ * h))
+    exact hψt a (t⁻¹ * h)
   let P' : PrimeSpectrum A' := PrimeSpectrum.comap (transl hA' t⁻¹) P
   have hP' : j g₀ = Spec.map (CommRingCat.ofHom ψ) P' := by
     apply PrimeSpectrum.ext
     ext a
-    have h1 := hg₀ (transl hA t⁻¹ a) a (fun h => by simp)
+    have h1 := hg₀ (transl hA t⁻¹ a) a (fun h => by
+      change (a : T → R) h = (a : T → R) (t⁻¹ * (t * h))
+      rw [inv_mul_cancel_left])
     change a ∈ (j g₀).asIdeal ↔ transl hA' t⁻¹ (ψ a) ∈ P.asIdeal
     rw [← h1, hcomm]
     rfl
@@ -213,7 +217,8 @@ theorem exists_emb {Γ : QFGroup R T} {Γ' : QFGroup R' T} {F : Γ'.G.left ⟶ �
   change _ ↔ transl hA' t⁻¹ f' ∈ P.asIdeal
   have : transl hA' t⁻¹ f' = f := by
     ext h
-    simp [hf]
+    change (f' : T → R') (t⁻¹ * h) = (f : T → R') h
+    rw [hf, mul_inv_cancel_left]
   rw [this]
 
 end GlobalTheory.CompanionTheory.Ar.BT.BaseChangeOrder

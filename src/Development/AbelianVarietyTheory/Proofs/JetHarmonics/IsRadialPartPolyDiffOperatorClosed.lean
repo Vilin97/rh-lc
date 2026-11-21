@@ -59,7 +59,7 @@ private lemma totalDegree_lin_le_one {N : ℕ} (X : Matrix (Fin N) (Fin N) ℂ) 
     (_root_.PI.UnitaryGroupMassFormula.UsCompose.lin X i).totalDegree ≤ 1 := by
   rcases i with x | x <;>
   · simp only [_root_.PI.UnitaryGroupMassFormula.UsCompose.lin]
-    refine (totalDegree_finset_sum _ _).trans (Finset.sup_le fun c _ => ?_)
+    refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun c _ => ?_)
     exact (totalDegree_mul _ _).trans (by simp [totalDegree_C, totalDegree_X])
 
 open MvPolynomial in
@@ -86,7 +86,7 @@ variable {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp]
 private lemma totalDegree_dP_le {N : ℕ} (X : Matrix (Fin N) (Fin N) ℂ)
     (q : MvPolynomial (_root_.PI.UnitaryGroupMassFormula.UsCompose.Vr N) ℂ) : (_root_.PI.UnitaryGroupMassFormula.UsCompose.dP X q).totalDegree ≤ q.totalDegree := by
   unfold _root_.PI.UnitaryGroupMassFormula.UsCompose.dP
-  refine (totalDegree_finset_sum _ _).trans (Finset.sup_le fun i _ => ?_)
+  refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun i _ => ?_)
   by_cases h : pderiv i q = 0
   · simp [h]
   · exact (totalDegree_mul _ _).trans

@@ -21,7 +21,7 @@ open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComp
 
 namespace LateralTheory.KummerTheory.BockCut
 
-abbrev TZ (q : ℕ) (i : ℤ) : Shv ℤ := (restr ℤ (Int.castRingHom (ZMod q))).obj (tw q i)
+abbrev TZ (q : ℕ) (i : ℤ) : Shv ℤ := (restr (Int.castRingHom (ZMod q))).obj (tw q i)
 
 def genZ {q : ℕ} (i : ℤ) {U : Scheme.{0}} (ζ : Prim q Γ(U, ⊤)) : Sec (TZ q i) U := twGen i ζ
 
@@ -64,9 +64,9 @@ def TwSES : Prop := ∀ (l : ℕ) [Fact l.Prime] (b a : ℕ) (i : ℤ) (π₁ : 
   ∃ ι : TZ (l ^ a) i ⟶ TZ (l ^ (b + a)) i, π₁ ≫ ι = l ^ b • 𝟙 _ ∧ ∃ w : ι ≫ π₂ = 0, (ShortComplex.mk ι π₂ w).ShortExact
 
 def RestrRes : Prop := ∀ (R S : Type) [CommRing R] [CommRing S] (φ : R →+* S) (F : Shv S),
-  ∃ (T : Cx R) (σ : SemiMap (res S F) T) (ε : sgl ((restr R φ).obj F) ⟶ T), QuasiIso ε ∧
+  ∃ (T : Cx R) (σ : SemiMap (res S F) T) (ε : sgl ((restr φ).obj F) ⟶ T), QuasiIso ε ∧
     (∀ (U : Scheme.{0}) (s : ℤ), Function.Bijective (σ.app U s)) ∧
-    ∀ (U : Scheme.{0}) (a : Sec F U), Sec.map (ε.f 0) (Sec.map (sglι ((restr R φ).obj F)) (show Sec ((restr R φ).obj F) U from a)) =
+    ∀ (U : Scheme.{0}) (a : Sec F U), Sec.map (ε.f 0) (Sec.map (sglι ((restr φ).obj F)) (show Sec ((restr φ).obj F) U from a)) =
       σ.app U 0 (Sec.map (resι S F) a)
 
 def SemiUniq : Prop := ∀ (S : Type) [CommRing S] (F : Shv S) (G : Shv ℤ) (ρ ρ' : SemiMap (res S F) (res ℤ G)),

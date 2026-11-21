@@ -32,10 +32,15 @@ open Finset in
 private theorem exists_qw_eq_mul_pos_real_of_five_le_dist {S : Type} (q : ℂ → ℂ) (y : ℝ) :
     ∀ u : List (_root_.Formalism.FourierDecayAlt.Wd.Letter ℂ S), (∀ l ∈ u, ∃ t : ℝ, l.pt = t ∧ (l.plus = true → 5 ≤ |y - t|) ∧
       (l.plus = false → 5 ≤ |t - 1 - y|)) →
-      ∃ ρ : ℝ, 0 < ρ ∧ 1 ≤ (5 / 4 : ℝ) ^ u.length * ρ ∧ _root_.Formalism.FourierDecayAlt.Wd.qw q u (y : ℂ) = q y * ρ
-  | [], _ => ⟨1, one_pos, by simp, by simp [_root_.Formalism.FourierDecayAlt.Wd.qw]⟩
-  | l :: w, h => by
-    obtain ⟨ρ, hρ, hρ1, hρeq⟩ := exists_qw_eq_mul_pos_real_of_five_le_dist q y w (fun l' hl' => h l' (List.mem_cons_of_mem _ hl'))
+      ∃ ρ : ℝ, 0 < ρ ∧ 1 ≤ (5 / 4 : ℝ) ^ u.length * ρ ∧ _root_.Formalism.FourierDecayAlt.Wd.qw q u (y : ℂ) = q y * ρ := by
+  intro u
+  induction u with
+  | nil =>
+    intro _
+    exact ⟨1, one_pos, by simp, by simp [_root_.Formalism.FourierDecayAlt.Wd.qw]⟩
+  | cons l w ih =>
+    intro h
+    obtain ⟨ρ, hρ, hρ1, hρeq⟩ := ih (fun l' hl' => h l' (List.mem_cons_of_mem _ hl'))
     obtain ⟨t, ht, hplus, hminus⟩ := h l (List.mem_cons_self)
     cases hl : l.plus
     · obtain ⟨f0, f1⟩ := one_add_inv_pos_and_le_of_five_le_abs (hminus hl)

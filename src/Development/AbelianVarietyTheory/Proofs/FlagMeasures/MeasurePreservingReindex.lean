@@ -189,7 +189,8 @@ theorem cube_bound (B : RowsAut) (c : InfinitePlace B.I.F → ℝ) (s : ℝ) {m 
   have hJ := hSi (fun a => ‖φ (y * (a, 1))‖ₑ ^ 2)
     (hΦm.comp (continuous_const.mul (continuous_id.prodMk continuous_const)).measurable)
   obtain ⟨-, hK0, hK1⟩ := GlobalTheory.CongIndex.measure_Kset_le B.I B.μf B.g hg
-  have hK2 : B.μf (B.I.Kg B.g) ≠ ⊤ := ((measure_mono fun x hx => hx.1).trans_lt hK1).ne
+  have hKg : B.I.Kg B.g ⊆ B.I.Kset := fun _ hx => hx.1
+  have hK2 : B.μf (B.I.Kg B.g) ≠ ⊤ := ((measure_mono hKg).trans_lt hK1).ne
   have hK3 : 0 < (B.μf (B.I.Kg B.g)).toReal := ENNReal.toReal_pos hK0.ne' hK2
   have hcp : 0 ≤ ∏ v, c v := Finset.prod_nonneg fun v _ => (gauge_pos (hc v)).le
   have hM : 0 ≤ (1 + 4 * Real.sqrt B.I.n / tau1 B.I y ^ 2) ^ (2 * (B.I.n ^ 2 * B.I.f)) := by positivity

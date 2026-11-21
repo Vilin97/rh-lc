@@ -424,19 +424,19 @@ theorem wittDecomp_projX_anisotropicEmbedding : d.pX * mt S (d.emb0 g) = d.pX :=
   refine d.mat_ext ?_ ?_ ?_ <;>
     simp [Matrix.mul_assoc, wittDecomp_anisotropicEmbedding_inclX,
       wittDecomp_anisotropicEmbedding_inclAnisotropic, wittDecomp_anisotropicEmbedding_inclY]
-  all_goals simp [← Matrix.mul_assoc]
+  simp [← Matrix.mul_assoc]
 
 theorem wittDecomp_projAnisotropic_anisotropicEmbedding : d.p0 * mt S (d.emb0 g) = mt S₀ g * d.p0 := by
   refine d.mat_ext ?_ ?_ ?_ <;>
     simp [Matrix.mul_assoc, wittDecomp_anisotropicEmbedding_inclX,
       wittDecomp_anisotropicEmbedding_inclAnisotropic, wittDecomp_anisotropicEmbedding_inclY]
-  all_goals simp [← Matrix.mul_assoc]
+  simp [← Matrix.mul_assoc]
 
 theorem wittDecomp_projY_anisotropicEmbedding : d.pY * mt S (d.emb0 g) = d.pY := by
   refine d.mat_ext ?_ ?_ ?_ <;>
     simp [Matrix.mul_assoc, wittDecomp_anisotropicEmbedding_inclX,
       wittDecomp_anisotropicEmbedding_inclAnisotropic, wittDecomp_anisotropicEmbedding_inclY]
-  all_goals simp [← Matrix.mul_assoc]
+  simp [← Matrix.mul_assoc]
 
 theorem wittDecomp_anisotropicEmbedding_mem_rationalPoints {g : GA D S₀} (h : g ∈ GQ S₀) : d.emb0 g ∈ GQ S := by
   obtain ⟨A, hA⟩ := mem_ratMx.1 ((mem_GQ_iff S₀ g).1 h)
@@ -526,17 +526,17 @@ theorem pY_nB : d.pY * mt S (d.nB b) = d.pY := by
 theorem pX_nC : d.pX * mt S (d.nC c) = d.pX + c.1 * d.pY := by
   refine d.mat_ext ?_ ?_ ?_ <;>
     simp [Matrix.mul_assoc, nC_jX, nC_j0, nC_jY, Matrix.mul_add, Matrix.add_mul]
-  all_goals simp [← Matrix.mul_assoc]
+  simp [← Matrix.mul_assoc]
 
 theorem wittDecomp_projAnisotropic_unipotentSkew : d.p0 * mt S (d.nC c) = d.p0 := by
   refine d.mat_ext ?_ ?_ ?_ <;>
     simp [Matrix.mul_assoc, nC_jX, nC_j0, nC_jY, Matrix.mul_add]
-  all_goals simp [← Matrix.mul_assoc]
+  simp [← Matrix.mul_assoc]
 
 theorem pY_nC : d.pY * mt S (d.nC c) = d.pY := by
   refine d.mat_ext ?_ ?_ ?_ <;>
     simp [Matrix.mul_assoc, nC_jX, nC_j0, nC_jY, Matrix.mul_add]
-  all_goals simp [← Matrix.mul_assoc]
+  simp [← Matrix.mul_assoc]
 
 end Unip
 

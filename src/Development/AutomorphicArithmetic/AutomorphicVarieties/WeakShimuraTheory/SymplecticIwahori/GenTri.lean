@@ -44,10 +44,12 @@ private theorem gt_ord {I : Subgroup H} {ps : Fin 4 → H → R} {s₀ : H} {r :
   charpoly := by
     rw [gt_rep, RingHom.mapMatrix_apply, Matrix.charpoly_map, h.charpoly, Polynomial.map_prod]
     simp only [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C]
-  stable g i j hij := by
+  stable := by
+    intro g i j hij
     rw [gt_rep, gt_rep, gt_prj f (fun a => ps a s₀), gt_prj f (fun a => ps a s₀), ← map_mul, ← map_mul,
       h.stable g i j hij, map_zero]
-  inert s hs i := by
+  inert := by
+    intro s hs i
     rw [gt_rep, gt_rep, gt_prj f (fun a => ps a s₀), ← map_one f.mapMatrix, ← gt_smul, ← map_sub, ← map_mul,
       ← map_mul, h.inert s hs i, map_zero]
 

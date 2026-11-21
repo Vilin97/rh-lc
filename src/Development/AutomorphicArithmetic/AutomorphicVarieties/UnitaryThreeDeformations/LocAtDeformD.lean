@@ -10,7 +10,7 @@ section SlopeTestRemainingChoices
 
 variable {R : Type} [CommRing R]
 
-private theorem conj_mat {G : Type} [Group G] (h : GL (Fin 3) R) (r : G →* GG 3 R) (g : G) (hg : (r g).right = 1) :
+private theorem conj_mat {G : Type} [Group G] (h : GL (Fin 3) R) (r : G →* GG (m := 3) (R := R)) (g : G) (hg : (r g).right = 1) :
     (conjBy h⁻¹ r g).mat = ((h⁻¹ : GL (Fin 3) R) : Matrix _ _ R) * (r g).mat * (h : Matrix (Fin 3) (Fin 3) R) := by
   simp [conjBy, GG.mat, MulAut.conj_apply, hg]
 
@@ -106,7 +106,7 @@ end SlopeTestRemainingChoices
 section Aux2
 
 private theorem gRep_entry {k D : Type} [CommRing k] [Group D] (η : D →* ℤˣ) (Ψ : D →* kˣ) (j : ℤ) (g : D)
-    (hg : η g = 1) (X : Gb k j) (a b : Fin 3) :
+    (hg : η g = 1) (X : Gb (k := k) j) (a b : Fin 3) :
     (gRep η Ψ j g X).val a b * ((Ψ g ^ wt1 b : kˣ) : k) = ((Ψ g ^ wt1 a : kˣ) : k) * X.val a b := by
   rw [gRep_val]
   simp [adRep, GG.adFun, GG.mat, unitaryThreeReflection_left, unitaryThreeReflection_right, hg, tor_val, Matrix.inv_diagonal, Matrix.diagonal_mul,
@@ -117,7 +117,7 @@ private theorem gRep_entry {k D : Type} [CommRing k] [Group D] (η : D →* ℤ�
   rw [mul_assoc, this, mul_one]
 
 private theorem gRep_zero {k D : Type} [CommRing k] [Group D] (η : D →* ℤˣ) (Ψ : D →* kˣ) (g : D)
-    (hg : η g = 1) (X : Gb k 0) : gRep η Ψ 0 g X = X := by
+    (hg : η g = 1) (X : Gb (k := k) 0) : gRep η Ψ 0 g X = X := by
   have hw : ∀ a b : Fin 3, wt a b = 0 → a = b := by decide
   apply Subtype.ext
   ext a b
@@ -141,7 +141,7 @@ private theorem smul_f {f : R} (hf : ∀ x ∈ maximalIdeal R, x * f = 0) {o : O
   exact hf _ hm
 
 private theorem condD_of (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) {f : R}
-    (hf : ∀ x ∈ maximalIdeal R, x * f = 0) (hfm : f ∈ maximalIdeal R) (r r₂ : D →* GG 3 R)
+    (hf : ∀ x ∈ maximalIdeal R, x * f = 0) (hfm : f ∈ maximalIdeal R) (r r₂ : D →* GG (m := 3) (R := R))
     (z : D → Matrix (Fin 3) (Fin 3) (ResidueField O)) (γ : D → Matrix (Fin 3) (Fin 3) R) (hr : Red η Ψ r)
     (hD : CondD η Ψ I r) (hγ : ∀ g a b, ∃ o : O, residue O o = z g a b ∧ γ g a b = o • f) (hd : IsDeform r γ r₂)
     (y : Matrix (Fin 3) (Fin 3) (ResidueField O))
@@ -227,7 +227,7 @@ theorem UpperTheory.V.UnitaryThreeInertia.locAt_deform_d :
       {G Γ ι : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
       [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ] [T2Space Γ] [TotallyDisconnectedSpace Γ] [Finite ι] (F : Frame O G Γ ι), F.Ok →
     F.LocVan → ∀ {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (f : R), (∀ x ∈ maximalIdeal R, x * f = 0) → f ∈ maximalIdeal R → ∀ (j : ℤ) (v : ι), v ∈ F.Sb →
-      ∀ (r r₂ : F.D v →* GG 3 R) (z : F.D v → Gb (ResidueField O) j) (γ : F.D v → Matrix (Fin 3) (Fin 3) R), Red (F.ηv v) (F.Ψv v) r → F.LocAt v r →
+      ∀ (r r₂ : F.D v →* GG (m := 3) (R := R)) (z : F.D v → Gb (k := ResidueField O) j) (γ : F.D v → Matrix (Fin 3) (Fin 3) R), Red (F.ηv v) (F.Ψv v) r → F.LocAt v r →
       z ∈ F.ZL j v → (∀ g a b, ∃ o : O, residue O o = (z g).val a b ∧ γ g a b = o • f) → IsDeform r γ r₂ → F.LocAt v r₂ := by
   intro O _ _ _ _ _ _ G Γ ι _ _ _ _ _ _ _ _ _ _ _ _ _ F hF hV R _ _ _ f hf hfm j v hv r r₂ z γ hr hloc hz hγ hd
   unfold Frame.LocAt at hloc ⊢

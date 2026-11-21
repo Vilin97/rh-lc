@@ -234,34 +234,34 @@ theorem besselFrame_translated_perp_of_isFrame (hg : IsFrameW k r z g) : ((g * c
   rw [← hg.2.2, mulVec_smul, mulVec_smul, frame_perp_bvec hg.1 not_inB_last, smul_zero]
 
 theorem isFrame (hg : IsFrameW k r z g) (hz : inWb k r z) (hT : 0 < Tz k r z) :
-    IsFrame (Hpk k r) 1 (g * colW k r) (colE k r) z where
-  herm := Hpk_conjTranspose
-  unit := IsUnit.of_mul_eq_one _ Hpk_mul_self
-  unit₀ := isUnit_one
-  codim := by omega
+    IsFrame (Hpk k r) 1 (g * colW k r) (colE k r) z := {
+  herm := Hpk_conjTranspose,
+  unit := IsUnit.of_mul_eq_one _ Hpk_mul_self,
+  unit₀ := isUnit_one,
+  codim := by omega,
   gram := by
     ext a b
     have := frame_perp hg.1 (fun i => colW k r i b) a
-    rw [show colW k r (bl k r a) b = (1 : Matrix (Fin k) (Fin k) ℂ) a b by simp [colW, one_apply, blockIndex_injective.eq_iff]]
-      at this
-    exact this
+    rw [show colW k r (bl k r a) b = (1 : Matrix (Fin k) (Fin k) ℂ) a b by
+      simp only [colW, Matrix.one_apply, blockIndex_injective.eq_iff]] at this
+    exact this,
   e_indep := Matrix.mulVec_injective_iff.1 fun a b h => funext fun j => by
-    rw [← colE_apply (k := k) a, h, colE_apply]
+    rw [← colE_apply (k := k) a, h, colE_apply],
   e_iso := by
     ext a b
     have := colE_mulVec (fun i => colE k r i b) a
     rw [show colE k r (esI k r a) b = 0 from if_neg (by simp only [esI, eI, Fin.ext_iff]; omega)] at this
-    exact this
+    exact this,
   e_perp := by
     ext a b
     have := congrFun (frame_perp_bvec hg.1 (not_inB_eI b)) a
     rw [(hg.2.1 b).1, ← colE_col] at this
-    exact this
-  z_perpF := besselFrame_translated_perp_of_isFrame hg
-  z_perpE := funext fun a => (colE_mulVec z a).trans (hz _ (Or.inr (by simp only [esI]; omega)))
+    exact this,
+  z_perpF := besselFrame_translated_perp_of_isFrame hg,
+  z_perpE := funext fun a => (colE_mulVec z a).trans (hz _ (Or.inr (by simp only [esI]; omega))),
   z_ne := fun h => by
     have h' : herm (Hpk k r) z z = 0 := h
-    simp [Tz, h'] at hT
+    simp [Tz, h'] at hT }
 
 theorem isCharWith (hz : inWb k r z) (c : Fin r → ℂ) :
     IsCharWith (Hpk k r) (colE k r) z c (PI.BesselMapUniq.psiGen k r z c) := by

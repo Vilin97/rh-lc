@@ -105,19 +105,21 @@ theorem isHeis_of (hσ : ∀ x, σ (σ x) = x) (hv : ∀ x, Valued.v (σ x) = Va
     (hδ : σ δ = -δ) {ρ : Matrix (Fin n') (Fin n) L → Module.End ℂ M} (h0 : ρ 0 = 1)
     (hm : ∀ x y, ρ x * ρ y = ψ ((locH σ δ (antiG L n) (antiG L n') x y +
       σ (locH σ δ (antiG L n) (antiG L n') x y)) / 2) • ρ (x + y)) :
-    IsHeis (intConj hv) (half h2) (pairing σ δ ψ) ρ where
-  sg_sg r := Subtype.ext (hσ r)
-  w_add := Subtype.ext (by
+    IsHeis (intConj hv) (half h2) (pairing σ δ ψ) ρ := by
+  refine { sg_sg := fun r => Subtype.ext (hσ r)
+           w_add := ?_, add_left := ?_, add_right := ?_, alt := ?_
+           adj := ?_, zero := ?_, comp := ?_ }
+  · apply Subtype.ext
     have := two_ne_zero_of h2
     show (2⁻¹ : L) + σ 2⁻¹ = 1
-    rw [map_inv₀, map_ofNat]; field_simp; norm_num)
-  add_left x y z := by
+    rw [map_inv₀, map_ofNat]; field_simp; norm_num
+  · intro x y z
     simp only [pairing, ← AddChar.map_add_eq_mul, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add (f := _)]
     congr 1; ring
-  add_right x y z := by
+  · intro x y z
     simp only [pairing, ← AddChar.map_add_eq_mul, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add (f := _)]
     congr 1; ring
-  alt x := by
+  · intro x
     have : σ (∑ i, ∑ j, x i j * σ (x i.rev j.rev)) = ∑ i, ∑ j, x i j * σ (x i.rev j.rev) := by
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [map_sum, map_mul, hσ]
@@ -126,13 +128,14 @@ theorem isHeis_of (hσ : ∀ x, σ (σ x) = x) (hv : ∀ x, Valued.v (σ x) = Va
       rw [← Equiv.sum_comp Fin.revPerm]
       simp [mul_comm]
     rw [pairing, map_mul, this, hδ, neg_mul, add_neg_cancel, AddChar.map_zero_eq_one]
-  adj r x y := by
+  · intro r x y
     have : ∀ i j, (r • x) i j * σ (y i.rev j.rev) = x i j * σ ((intConj hv r • y) i.rev j.rev) := fun i j => by
       show (r : L) * x i j * _ = x i j * σ (σ r * y i.rev j.rev)
       rw [map_mul, hσ]; ring
     simp only [pairing, this]
-  zero v := by rw [h0]; rfl
-  comp x y v := by
+  · intro v
+    rw [h0]; rfl
+  · intro x y v
     have e : ∀ i j, (half h2 • x) i j * σ (y i.rev j.rev) = 2⁻¹ * (x i j * σ (y i.rev j.rev)) := fun i j =>
       mul_assoc _ _ _
     rw [← Module.End.mul_apply, hm, locH_antiG, pairing]

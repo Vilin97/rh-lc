@@ -43,12 +43,12 @@ theorem det_diagMat {κ : Type} [CommRing κ] {n N : ℕ} (hN : N = n + 1) (A : 
 
 theorem unitV_det_ext (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {n N : ℕ} (hN : N = n + 1) (j : GLint E n P) (k : GLint E N P)
     (h : redGL N P k = redGL N P (extI hN P j)) :
-    LocE.unitV χ ((LinearEquiv.det k.1 : Eˣ) : E) = LocE.unitV χ ((LinearEquiv.det j.1 : Eˣ) : E) := by
+    LocE.unitV P χ ((LinearEquiv.det k.1 : Eˣ) : E) = LocE.unitV P χ ((LinearEquiv.det j.1 : Eˣ) : E) := by
   refine unitV_congr χ ?_
   rw [(det_glint k).2, (det_glint j).2, ← redGL_val, h, redGL_extI, diagEmb_val, det_diagMat hN, redGL_val]
 
 theorem unitV_inv_det (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {n : ℕ} (k : GLint E n P) :
-    LocE.unitV χ⁻¹ ((LinearEquiv.det (k⁻¹).1 : Eˣ) : E) = LocE.unitV χ ((LinearEquiv.det k.1 : Eˣ) : E) := by
+    LocE.unitV P χ⁻¹ ((LinearEquiv.det (k⁻¹).1 : Eˣ) : E) = LocE.unitV P χ ((LinearEquiv.det k.1 : Eˣ) : E) := by
   rw [DatumLaw.unitV_eq, DatumLaw.unitV_eq, DatumLaw.extendByZeroOffSubset_mul_left_of_mem_lattice, (det_glint k).2, (det_glint k⁻¹).2]
   refine inv_eq_of_mul_eq_one_left ?_
   rw [← DatumLaw.matrixExtendByZero_mul, ← Matrix.det_mul, ← redGL_val, ← redGL_val, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one,

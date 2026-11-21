@@ -90,16 +90,8 @@ private theorem ce_compl (v : HeightOneSpectrum (𝓞 F)) (w : HeightOneSpectrum
   exact (IsUniformEmbedding.mk hu (completionMap v w).injective).isClosedEmbedding
 
 private theorem ce_infComp (v : InfinitePlace F) (w : InfinitePlace E) [w.LiesOver v] :
-    IsClosedEmbedding (LiesOver.completionMap (v := v) (w := w)) := by
-  have : Isometry (LiesOver.completionMap (v := v) (w := w)) := by
-    refine AddMonoidHomClass.isometry_of_norm _ fun y => ?_
-    refine InfinitePlace.Completion.induction_on v y
-      (isClosed_eq LiesOver.continuous_completionMap.norm continuous_norm) fun a => ?_
-    rw [LiesOver.completionMap_coe]
-    have h := (InfinitePlace.LiesOver.isometry_algebraMap w v).norm_map_of_map_zero (map_zero _) a
-    rw [InfinitePlace.Completion.norm_coe, InfinitePlace.Completion.norm_coe]
-    exact h
-  exact this.isClosedEmbedding
+    IsClosedEmbedding (AbsoluteValue.Completion.map v.1 w.1) :=
+  (AbsoluteValue.Completion.isometry_map v.1 w.1).isClosedEmbedding
 
 private theorem ce_incFin (v : HeightOneSpectrum (𝓞 F)) : IsClosedEmbedding (incFin E v) := by
   obtain ⟨P⟩ := Ideal.nonempty_primesOver (S := 𝓞 E) v.asIdeal
@@ -111,7 +103,7 @@ private theorem ce_infMap : IsClosedEmbedding (infMap F E) := by
   have hs : Function.Surjective (fun w : InfinitePlace E => w.comap (algebraMap F E)) := InfinitePlace.comap_surjective
   exact ce_pi (A := fun v : InfinitePlace F => v.Completion) (B := fun w : InfinitePlace E => w.Completion)
     (fun w : InfinitePlace E => w.comap (algebraMap F E)) hs
-    (fun w => LiesOver.completionMap (v := w.comap (algebraMap F E)) (w := w)) fun w => ce_infComp _ w
+    (fun w => AbsoluteValue.Completion.map (w.comap (algebraMap F E)).1 w.1) fun w => ce_infComp _ w
 end
 
 theorem UpperTheory.adele_baseChange_local_isClosedEmbedding :
