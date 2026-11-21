@@ -35,8 +35,8 @@ def LIRatio : Prop :=
       (h' : V' →ₗ⋆[K] V' →ₗ[K] K) (S : VecSplit h h') (L L₀ : Submodule (𝓞 K) V)
       (𝔭 : Ideal (𝓞 F)) (n : 𝓞 F),
       h.IsSymm → IsTotPosDef h → 𝔭.IsMaximal → n ≠ 0 → h S.x₀ S.x₀ = algebraMap F K (n : F) →
-      Submodule.IsLattice K L → Formalism.HermitianLatticesTheory.IsIntegralLat h L →
-      Submodule.IsLattice K L₀ → Formalism.HermitianLatticesTheory.IsIntegralLat h L₀ →
+      Submodule.IsFullLattice K L → Formalism.HermitianLatticesTheory.IsIntegralLat h L →
+      Submodule.IsFullLattice K L₀ → Formalism.HermitianLatticesTheory.IsIntegralLat h L₀ →
       psiP S L 𝔭 * repRatio h L₀ 𝔭 n = psiP S L₀ 𝔭 * repRatio h L 𝔭 n
 
 def LIPin : Prop :=
@@ -47,7 +47,7 @@ def LIPin : Prop :=
       [Module (𝓞 K) V'] [IsScalarTower (𝓞 K) K V'] (h : V →ₗ⋆[K] V →ₗ[K] K)
       (h' : V' →ₗ⋆[K] V' →ₗ[K] K) (S : VecSplit h h') (𝔭 : Ideal (𝓞 F)) (n : 𝓞 F),
       h.IsSymm → IsTotPosDef h → 𝔭.IsMaximal → n ≠ 0 → h S.x₀ S.x₀ = algebraMap F K (n : F) →
-      ∃ L₀ : Submodule (𝓞 K) V, Submodule.IsLattice K L₀ ∧ Formalism.HermitianLatticesTheory.IsIntegralLat h L₀ ∧
+      ∃ L₀ : Submodule (𝓞 K) V, Submodule.IsFullLattice K L₀ ∧ Formalism.HermitianLatticesTheory.IsIntegralLat h L₀ ∧
         repRatio h L₀ 𝔭 n ≠ 0 ∧
         psiP S L₀ 𝔭 = (Ideal.absNorm 𝔭 : ℝ) ^ ((finrank K V - 1) * vF 𝔭 n) *
           alphaStd K 𝔭 (finrank K V - 1) * repRatio h L₀ 𝔭 n

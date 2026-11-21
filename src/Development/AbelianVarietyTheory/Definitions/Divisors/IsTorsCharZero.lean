@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsDatNeZero
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TorsionTowersOfDivisibleGroup
 
 @[expose] public section
 
@@ -22,13 +23,11 @@ variable {R : Type} [CommRing R]
 abbrev RootFn (X : Over (Sp R)) (D : Type) [CommRing D] [Algebra R D] : Type 1 :=
   ∀ (D' : Type) [CommRing D'] [Algebra R D'], (D →ₐ[R] D') → Pt X D' → D'
 
-variable {A : Over (Sp R)} [GrpObj A]
-
-
-variable (A) in
-def HasRoots (n : ℕ) : Prop :=
+def HasRoots (A : Over (Sp R)) [GrpObj A] (n : ℕ) : Prop :=
   ∀ (D : Type) [CommRing D] [Algebra R D] (x : Pt A D), ∃ (D' : Type) (_ : CommRing D') (_ : Algebra R D')
-    (ψ : D →ₐ[R] D') (z : Pt A D'), (ψ : D →+* D').FaithfullyFlat ∧ z ^ n = spOver ψ ≫ x
+    (ψ : D →ₐ[R] D') (z : Pt A D'), (ψ : D →+* D').FaithfullyFlat ∧ (z ^ n : Pt A D') = spOver ψ ≫ x
+
+variable {A : Over (Sp R)} [GrpObj A]
 
 def IsTorsChar (n : ℕ) (b : Fn0 A) : Prop :=
   (∀ (D : Type) [CommRing D] [Algebra R D] (D' : Type) [CommRing D'] [Algebra R D'] (φ : D →ₐ[R] D') (w : Pt A D),

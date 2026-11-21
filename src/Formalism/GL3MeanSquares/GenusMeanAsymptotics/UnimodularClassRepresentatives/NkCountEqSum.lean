@@ -143,7 +143,7 @@ theorem nkCount_eq_sum (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF 
 
 theorem sum_oM (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm) (hd : IsTotPosDef h)
     (S : VecSplit h h') {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {s : Finset (Submodule (𝓞 K) V')} (hsr : IsLocReps S L 𝔭 s)
     {R : Finset (Submodule (𝓞 K) V)} (hR : IsMReps S L 𝔭 s R)
     (w : Submodule (𝓞 K) V' → ℝ) :
@@ -163,9 +163,14 @@ theorem sum_oM (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF
       rw [OrbF.relIndex_stab hs]
       obtain ⟨⟨⟨g, hg, rfl⟩, hxM⟩, -⟩ := hR.1 M hM
       rw [LocalizedFibreSets.gmap_locF] at hxM ⊢
-      have hLat : Submodule.IsLattice K (Formalism.HermitianLatticesTheory.gmap g L) :=
-        Submodule.IsLattice.of_fg K (hL.fg.map _)
-      exact oM_ne_zero hs S hLat h𝔭 hxM) w
+      have hLat : Submodule.IsFullLattice K (Formalism.HermitianLatticesTheory.gmap g L) := by
+        refine { toIsLattice := LocalizedFibreSets.isLattice_gmap g hL, span_eq_top := ?_ }
+        change Submodule.span K ((g : V →ₗ[K] V) '' (L : Set V)) = ⊤
+        rw [Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+        exact g.surjective
+      first
+      | exact oM_ne_zero hs S hLat h𝔭 hxM
+      | exact oM_ne_zero hs S hLat.toIsLattice h𝔭 hxM) w
   calc ∑ M ∈ R, (oM S M : ℝ) * w (S.cut M) = _ :=
         Finset.sum_congr rfl fun M _ => by rw [← OrbF.relIndex_stab hs]
     _ = _ := key

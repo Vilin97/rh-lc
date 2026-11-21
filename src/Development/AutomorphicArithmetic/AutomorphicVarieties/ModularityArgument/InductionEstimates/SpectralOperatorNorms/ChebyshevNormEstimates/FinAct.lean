@@ -102,7 +102,7 @@ theorem act_of {H V : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [No
     ⟨continuous_const, HasCompactSupport.zero⟩, fun x => ?_, fun z => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [Finsupp.onFinset_sum (g := fun (t : ℝ) (c : V →L[ℂ] V) => c.compLpL 2 volume (sh V t x)) _ fun t => h0 _, hc, add_zero, h, map_sum]
-    exact Finset.sum_congr rfl fun t ht => by rw [if_pos ht]
+      exact Finset.sum_congr rfl fun t ht => by rw [if_pos ht]
   · rw [Finsupp.onFinset_sum (g := fun (t : ℝ) (c : V →L[ℂ] V) => Complex.exp (z * t) • c) _ fun t => smul_zero _]
     simp only [symb, Pi.zero_apply, smul_zero, integral_zero, add_zero]
     exact Finset.sum_congr rfl fun t ht => by rw [if_pos ht]
@@ -112,6 +112,7 @@ theorem ofin_apply {n : ℕ} (μ : Measure (G1 K n)) [μ.IsHaarMeasure] (m : Mea
   UnitaryRep.integrated_ccToL1_apply _ m e w
 
 set_option maxHeartbeats 2000000 in
+set_option synthInstance.maxHeartbeats 200000 in
 theorem actEx [_root_.NumberField.IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] {μ₂ : Measure (G1 K 2)} [μ₂.IsHaarMeasure]
     {τ₁ τ₂ : Submodule ℂ (L2 μ₂)} (h₁ : CuspIrr μ₂ τ₁) (h₂ : CuspIrr μ₂ τ₂) {D : TypeDat K (2 + 2)} {d : ℕ} (A : Line μ τ₁ τ₂ D d)
     {Kf : Subgroup GF} (hL : D.Level Kf) (hle : Kf ≤ AdelicGLn.integralFiniteGL K (2 + 2)) (m : Measure GF) [m.IsHaarMeasure]

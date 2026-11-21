@@ -33,7 +33,7 @@ def CorankPosG : Prop :=
 def ScalarEquivG : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [StarRing E] (S : HSpace E) (r k g : ℕ),
     finrank E S.V = k + 2 * r + 1 →
-    ∀ Λ : Submodule (𝓞 E) S.V, Submodule.IsLattice E Λ →
+    ∀ Λ : Submodule (𝓞 E) S.V, Submodule.IsFullLattice E Λ →
     ∀ (T T' : E), T ≠ 0 → T' ≠ 0 → ∀ F : LFlag S r T, IsLift Λ F →
       Equivalence (fun x y : {F' : LFlag S r T' // IsLift Λ F' ∧ Gval F F' ≠ 0} => ScalRel Λ g k F x.1 y.1)
 
@@ -138,7 +138,7 @@ theorem tu_ne_zero (u : D.what₂.Word) : ((Tu D u : ℕ) : D.host.E) ≠ 0 :=
 
 theorem scalarEquiv_of_G (h : ScalarEquivG) (u u' : D.what₂.Word) : ScalarEquiv D u u' := by
   intro F0 Λ hΛ
-  have hlat : Submodule.IsLattice D.host.E Λ := hΛ.2.1.1
+  have hlat : Submodule.IsFullLattice D.host.E Λ := hΛ.1.1
   have hlift : IsLift Λ (lf D F0) := hΛ.2.1.2.2.1
   have e := h D.host.E (VS D) D.R.rS D.R.k (gS D) (finrank_VS D) Λ hlat ((Tu D u : ℕ) : D.host.E)
     ((Tu D u' : ℕ) : D.host.E) (tu_ne_zero u) (tu_ne_zero u') (lf D F0) hlift

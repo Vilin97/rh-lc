@@ -242,7 +242,7 @@ theorem frameConj : FrameConj := by
   intro F E _ _ _ _ _ σ B n Y r s hB hY K hK
   have hc := hB.cm
   have hσ := cm_conj_conj hc
-  have hL : Y.L.IsLattice E := hY.elim (·.lat) (·.lat)
+  have hL : Y.L.IsLattice E := hY.elim (·.lat.toIsLattice) (·.lat.toIsLattice)
   have hJ := Frame.det_ne hY
   obtain ⟨ε, hε, c, c1, c2⟩ : ∃ ε : ℤˣ, (Y.J.map σ)ᵀ = ((ε : ℤ) : E) • Y.J ∧ ∃ c : ℂ, star c * c = 1 ∧
       ∀ w, (c • Y.J.map (B.emb w).1)ᴴ = c • Y.J.map (B.emb w).1 ∧ IsCartan (c • Y.J.map (B.emb w).1) (Y.θ w) := by

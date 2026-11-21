@@ -24,7 +24,7 @@ theorem surjective_spMap_of_sq {A B : Type} [CommRing A] [CommRing B] (π : A �
   exact hx
 
 theorem pt_dual_le_of_fst : ∀ (R : Type) [CommRing R] (H : Over (Sp R)) (D : Type) [CommRing D] [Algebra R D]
-      (Z : Pt H (DualNumber D)) (U : H.left.Opens),
+      (Z : Over.mk (spMap (algebraMap R (DualNumber D))) ⟶ H) (U : H.left.Opens),
       ⊤ ≤ (spOver (TrivSqZeroExt.fstHom R D D) ≫ Z).left ⁻¹ᵁ U → ⊤ ≤ Z.left ⁻¹ᵁ U := by
   intro R _ H D _ _ Z U h x _
   have hs : Function.Surjective (spMap ((TrivSqZeroExt.fstHom R D D : DualNumber D →ₐ[R] D) : DualNumber D →+* D)) :=

@@ -96,7 +96,8 @@ theorem cobOne_eq_zero_of_connecting {x : G.VecExt} {b : G.A 1} (h : (∃ (c : G
       G.cob B = cocyclesMap ((p : ℤ_[p]) • 𝟙 G) c ∧ Coalgebra.counit (R := R) b = 0 ∧ B.1 1 = b)) :
     cobOne R _ b = 0 := by
   obtain ⟨c, B, -, h1, h2, rfl⟩ := h
-  have hm : ∀ a : G.A 1, mulBy R _ p a = algebraMap R _ (counit a) := G.resOne_mulBy 0
+  have hm (a : G.A 1) : mulBy R _ p a = algebraMap R _ (counit a) := by
+    simpa only [pow_one] using G.mulBy_pow_self 1 a
   have h3 : cobOne R _ (B.1 1) = pullbackTwo (mulBy R (G.A 1) p) (c.1 1) :=
     (congrArg (fun c : G.cocycles => c.1 1) h1).trans (G.cocyclesMap_natCast_val c 1)
   have h4 : (mulBy R (G.A 1) p).comp (mulBy R (G.A 1) p) = mulBy R (G.A 1) p :=

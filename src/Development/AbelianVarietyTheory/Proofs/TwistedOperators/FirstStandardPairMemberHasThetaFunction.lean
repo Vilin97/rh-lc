@@ -428,7 +428,9 @@ theorem exists_theta : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFa
     · simp [neg_gram, hc]
     · simp [neg_gram] at hc ⊢
       exact neg_eq_iff_eq_neg.2 hc
-  obtain ⟨K, hK, hC⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO (S := neg A) hSd.1 hW.1.1 rA.β rW.β
+  obtain ⟨K, hK, hC⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO (S := neg A)
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hSd)
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ (hW.1)) rA.β rW.β
   have hSB : IsSBHalf e (latO (neg A) WW rA.Λ rW.Λ fun _ => True) (stdFst ν e I A WW rA.β rW.β) :=
     stdFst_isSB hν.1 he hI A WW rA.β rW.β (latO (neg A) WW rA.Λ rW.Λ fun _ => True)
       (GlobalTheory.PlaceDatum.exists_den_frMapO (S := neg A) hSd.1.fg hW.1.1.fg rA.β rW.β)

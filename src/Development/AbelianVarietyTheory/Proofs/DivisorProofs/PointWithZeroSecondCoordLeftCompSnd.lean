@@ -38,24 +38,9 @@ theorem ptV_snd (v : epsR R ⟶ B) {D : Type} [CommRing D] [Algebra R D] (x : Pt
 theorem pointWithZeroSecondCoord_left_comp_snd (v : epsR R ⟶ B) (hv : IsTangent v) {D : Type} [CommRing D] [Algebra R D] (x : Pt A D) :
     (pt0 B x).left ≫ (snd A B).left =
       spMap (TrivSqZeroExt.fstHom R D D : DualNumber D →+* D) ≫ spMap (EpsWeil.epsMap R D : DualNumber R →+* DualNumber D) ≫ v.left := by
-  rw [← Over.comp_left]; unfold pt0; rw [lift_snd]
-  have e1 : (spOver (TrivSqZeroExt.fstHom R D D) ≫ spOver (EpsWeil.epsMap R D) ≫ v) = (1 : Pt B D) := by
-    rw [← Category.assoc, spOver_comp]
-    have : (TrivSqZeroExt.fstHom R D D).comp (EpsWeil.epsMap R D) = (Algebra.ofId R D).comp (TrivSqZeroExt.fstHom R R R) := by
-      apply AlgHom.ext; intro c
-      simp [EpsWeil.epsMap, DualNumber.lift_apply_apply, TrivSqZeroExt.algebraMap_eq_inl, TrivSqZeroExt.algebraMap_eq_inl']
-    rw [this, ← spOver_comp, Category.assoc]
-    have h1 : spOver (TrivSqZeroExt.fstHom R R R) ≫ v = (1 : Over.mk (spMap (algebraMap R R)) ⟶ B) := by
-      refine Over.OverMorphism.ext ?_
-      rw [Over.comp_left, spOver_left, Hom.one_def, Over.comp_left]
-      have : (CartesianMonoidalCategory.toUnit (Over.mk (spMap (algebraMap R R)))).left = 𝟙 (Sp R) := by
-        have h := Over.w (CartesianMonoidalCategory.toUnit (Over.mk (spMap (algebraMap R R))))
-        refine (Category.comp_id _).symm.trans (h.trans ?_)
-        exact Spec.map_id _
-      rw [this]
-      exact hv.trans (Category.id_comp _).symm
-    rw [h1, MonObj.comp_one]
-  rw [← e1]; rfl
+  have h := congrArg (fun p : Pt (A ⊗ B) D ↦ (p ≫ snd A B).left)
+    (ContrMor.spOver_fst_ptV v hv x).symm
+  simpa only [Over.comp_left, spOver_left, Category.assoc, ptV_snd] using h
 
 theorem epsMap_fst {D : Type} [CommRing D] [Algebra R D] (c : DualNumber R) :
     (EpsWeil.epsMap R D c).fst = algebraMap R D c.fst := by
@@ -228,7 +213,7 @@ theorem GlobalTheory.PtExt.cohom_contr_cupA : ∀ (R : Type) [CommRing R] (A B :
   intro D _ _ D' _ _ φ x _
   obtain ⟨s, i, s', i', a', b, τ, hs, hi, hs', hi', ha, hb, hτ⟩ := (GlobalTheory.T.exists_tangentVector_contraction_twoCochain_product R A B v hv).1 D D' φ x
   have hK := hκ D D' φ x s i s' i' a' b τ hs hi hs' hi' ha hb hτ
-  change κ D D' φ x = TrivSqZeroExt.snd (R := D')
+  change κ D D' φ x = TrivSqZeroExt.snd (R := D') (M := D')
     ((show DualNumber D' from τ.φ (ev a (m₁.functor.map s))) * (show DualNumber D' from ev β.1 (m₂.functor.map τ)) -
       (show DualNumber D' from s'.φ (ev a (m₁.functor.map a'))) * (show DualNumber D' from ev β.1 (m₂.functor.map s')) -
       (show DualNumber D' from τ.φ (ev a (m₁.functor.map i))) * (show DualNumber D' from ev β.1 (m₂.functor.map τ)) +

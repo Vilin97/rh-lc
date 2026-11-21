@@ -169,6 +169,7 @@ theorem adm_norm_of_carrier (hTF : FrameTie X u u' F0 F0') (hM : Formalism.L2.SG
       simp only [hY', Matrix.mulVec_mulVec, hκ', ← fmat_mul]
       congr 2
       group
+    -- Transport membership directly since `rw` cannot unfold the flag index at its default transparency.
     exact (congrArg (InAt X.B.I X.B.g X.B.g) e).mp h1
 
   have fixE : ∀ (w : D.what₂.Word) (h : Formalism.L2.SG.PoincareInHH.PoincareSetting.Hfin X w) (a : Fin D.R.rS),

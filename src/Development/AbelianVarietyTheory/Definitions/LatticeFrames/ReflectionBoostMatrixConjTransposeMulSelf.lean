@@ -128,8 +128,12 @@ theorem isCompact_half {e : AE D} (he : IsSplitIdem D e) {S T : HSp D}
     (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) :
     IsCompact {t : WO S T | t ∈ (latO S T ΛS ΛT fun _ => True) ∧ IsHalf e t} := by
   obtain ⟨v, π, hπ⟩ := GlobalTheory.SplitChart.exists_chart e he
-  have h := (GlobalTheory.PlaceCoord.isOpen_isCompact_map (S := S) (T := T) hS.1 hT.1 hπ he.1 (chart_one he.1 hπ)
-    (GlobalTheory.PlaceCoord.infPart_split he)).2
+  have h : IsCompact ((fun t : WO S T => t.map π) '' {t | t ∈ (latO S T ΛS ΛT fun _ => True) ∧ IsHalf e t}) := by
+    first
+    | exact (GlobalTheory.PlaceCoord.isOpen_isCompact_map hS hT hπ he.1 (chart_one he.1 hπ)
+        (GlobalTheory.PlaceCoord.infPart_split he)).2
+    | exact (GlobalTheory.PlaceCoord.isOpen_isCompact_map hS.1 hT.1 hπ he.1 (chart_one he.1 hπ)
+        (GlobalTheory.PlaceCoord.infPart_split he)).2
   have hc : Continuous fun y : Matrix (Fin T.rank) (Fin S.rank) (Fv D.host.F v) => (y.map (sec e v) : WO S T) :=
     continuous_id.matrix_map (sec_cont e v)
   have h2 := h.image hc

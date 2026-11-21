@@ -45,7 +45,7 @@ namespace GlobalTheory.AnnSum
 
 theorem latO_comm {D : D7} (S T : HSp D) {A A' : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)}
     {B B' : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)} (hA : A.FG) (hB : B.FG)
-    (hA' : Submodule.IsLattice D.host.E A') (hB' : Submodule.IsLattice D.host.E B') : ∃ N : ℕ, 0 < N ∧
+    (hA' : Submodule.IsFullLattice D.host.E A') (hB' : Submodule.IsFullLattice D.host.E B') : ∃ N : ℕ, 0 < N ∧
     ∀ y ∈ latO S T (A : Set (Fin S.rank → D.host.E)) (B : Set (Fin T.rank → D.host.E)) (fun _ => True),
       N • y ∈ latO S T (A' : Set (Fin S.rank → D.host.E)) (B' : Set (Fin T.rank → D.host.E)) (fun _ => True) := by
   obtain ⟨M, hM, hden⟩ := GlobalTheory.PlaceDatum.exists_den_latO (S := S) (T := T) hA hB
@@ -68,7 +68,9 @@ theorem std_le_hat {D : D7} (S T : HSp D) {A : Submodule (𝓞 D.host.E) (Fin S.
     {𝔪 : Ideal (𝓞 D.host.E)} (h𝔪 : 𝔪 ≠ ⊥) : ∃ N : ℕ, 0 < N ∧ ∀ u ∈ GlobalTheory.AdForm.stdHom S T,
       N • u ∈ GlobalTheory.ChiGrid.hatMx (𝔪 • GlobalTheory.ChiGrid.homLat A B) := by
   obtain ⟨M, hM, h1⟩ := latO_comm S T (Formalism.L2.Col.stdLat_lattice (E := D.host.E) (n := S.rank)).fg
-    (Formalism.L2.Col.stdLat_lattice (E := D.host.E) (n := T.rank)).fg hA.1 hB.1
+    (Formalism.L2.Col.stdLat_lattice (E := D.host.E) (n := T.rank)).fg
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S A hA)
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull T B hB)
   obtain ⟨K, hK, h2⟩ := GlobalTheory.GridWeil.exists_nsmul_latO (T := T) (ΛT := B) hA h𝔪
   refine ⟨K * M, Nat.mul_pos hK hM, fun u hu => ?_⟩
   rw [mul_smul]

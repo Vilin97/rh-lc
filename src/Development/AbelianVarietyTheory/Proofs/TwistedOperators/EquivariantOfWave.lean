@@ -217,7 +217,9 @@ theorem placeModel_span_ne {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D �
       (f₀ ≠ 0 → Φ ≠ 0 → Tm Φ ≠ 0) := by
   have hdual := (GlobalTheory.LatVac.latO_selfDual_approx_sign D ψ S T _ _ hψ hS hT).1
   have hfin0 := GlobalTheory.LatFinMod.latO_finite_mod D S T _ _ hS.1.fg hT.1.fg fun _ => True
-  have hden0 := fun t ht => exists_nsmul_mem_latO' hS.1 hT.1 t ht
+  have hden0 := fun t ht => exists_nsmul_mem_latO'
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hS)
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hT) t ht
   have he' : cA D e * cA D e = cA D e := by rw [← RingHom.map_mul, he]
   have hsm : ∀ a : AE D, a * a = a → ∀ u ∈ latO S T ΛS ΛT fun _ => True,
       a • u ∈ (latO S T ΛS ΛT fun _ => True) ⊓ half S T a := fun a ha u hu =>

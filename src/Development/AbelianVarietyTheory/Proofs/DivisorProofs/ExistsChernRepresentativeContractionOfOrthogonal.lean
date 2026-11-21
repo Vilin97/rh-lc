@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsDatNeZero
 public import Development.AbelianVarietyTheory.Definitions.Divisors.PtAlgSpOver
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.AbelianHodgeDeRham
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.PoincareDeRhamDuality
@@ -34,8 +35,8 @@ theorem isContr_add {z z' : C2 (O (dp0 R) ((A ⊗ B).hom ≫ 𝟙 _))} {v : epsR
   unfold IsContr at h h' ⊢
   intro D _ _ D' _ _ φ x s i s' i' a b τ hs hi hs' hi' ha hb hτ
   simp only [Fn1.add, Pi.add_apply, h D D' φ x s i s' i' a b τ hs hi hs' hi' ha hb hτ,
-    h' D D' φ x s i s' i' a b τ hs hi hs' hi' ha hb hτ, ← TrivSqZeroExt.snd_add]
-  congr 1
+    h' D D' φ x s i s' i' a b τ hs hi hs' hi' ha hb hτ,
+    TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_sub]
   abel
 
 theorem isContr_sum {n : ℕ} {z : Fin n → C2 (O (dp0 R) ((A ⊗ B).hom ≫ 𝟙 _))} {v : epsR R ⟶ B}
@@ -56,7 +57,8 @@ theorem isContr_eq {z : C2 (O (dp0 R) ((A ⊗ B).hom ≫ 𝟙 _))} {v : epsR R �
     κ D D' φ x = κ' D D' φ x := by
   obtain ⟨s, i, s', i', a, b, τ, hs, hi, hs', hi', ha, hb, hτ⟩ :=
     (GlobalTheory.PtExt.ContrMor.exists_contr R A B v hv).1 D D' φ x
-  rw [h D D' φ x s i s' i' a b τ hs hi hs' hi' ha hb hτ, h' D D' φ x s i s' i' a b τ hs hi hs' hi' ha hb hτ]
+  exact (h D D' φ x s i s' i' a b τ hs hi hs' hi' ha hb hτ).trans
+    (h' D D' φ x s i s' i' a b τ hs hi hs' hi' ha hb hτ).symm
 
 theorem sum_split {M N P : Type*} [AddCommGroup M] [Module R M] [AddCommGroup N] [Module R N]
     [AddCommGroup P] [Module R P] (Φ : M →ₗ[R] N →ₗ[R] P) {n : ℕ} (a a₁ : Fin n → M) (b b₁ : Fin n → N)

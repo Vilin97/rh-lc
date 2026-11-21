@@ -369,7 +369,9 @@ theorem isSBHalf_datumFn (hF : F.Good) (h : PlacesOK G.Pg Q) (hω : ∀ y y', (�
       (GlobalTheory.PlaceDatum.omegaG_congr G.levT G.muC))
     (GlobalTheory.PlaceDatum.isSBHalf_of_red _ _ (frMapO S T F.βS F.βT) (GlobalTheory.PlaceDatum.frMapO_add _ _)
       (GlobalTheory.PlaceDatum.exists_den_frMapO hF.sdS.1.fg hF.sdT.1.fg _ _) ?_ Q ω hω)
-  obtain ⟨K, hK, h'⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO hF.sdS.1 hF.sdT.1 F.βS F.βT
+  obtain ⟨K, hK, h'⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ (hF.sdS))
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ (hF.sdT)) F.βS F.βT
   exact ⟨K, hK, fun t ht => h' t (GlobalTheory.PlaceDatum.infPart_of_half hinf ht)⟩
 
 theorem isThetaAt_vec (hF : F.Good) (h : PlacesOK G.Pg Q) (hω : ∀ y y', (∀ PP ∈ Q, y PP = y' PP) → ω y = ω y') :

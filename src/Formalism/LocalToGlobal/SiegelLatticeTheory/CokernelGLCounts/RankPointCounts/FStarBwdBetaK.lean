@@ -154,7 +154,7 @@ theorem comb_mem {V : Type*} [AddCommGroup V] [Module D.host.E V] {X : Submodule
   rw [smul_sub]
   abel
 
-private theorem Hp_le_orth_Xsp (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hΛ : Submodule.IsLattice D.host.E Λ)
+private theorem Hp_le_orth_Xsp (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hΛ : Submodule.IsFullLattice D.host.E Λ)
     {T₁ T₂ : D.host.E} (F : LFlag (D.sp.Y 0) D.R.rS T₁) (F' : LFlag (D.sp.Y 0) D.R.rS T₂) :
     Hp Λ F F' ≤ orth (VS D) (Xsp F') := by
   have hX : Xsp F' ≤ UUE Λ F F' :=
@@ -196,7 +196,7 @@ theorem betaCore₂_of (h1 : BetaRat Zd u u' F0 what₂) (h2 : ScalarOf Zd u u' 
     intro w hw
     obtain ⟨w₂, hw₂, hd1, hd2⟩ := hW₀ w hw
     refine ⟨w₂, hw₂, hd1, ?_⟩
-    have hw₂o := BwdBetaCut.Hp_le_orth_Xsp Λ₂ hG.1.toIsLattice _ _ hw₂
+    have hw₂o := BwdBetaCut.Hp_le_orth_Xsp Λ₂ hG.1 _ _ hw₂
     have hs := (Xsp (liftF F'₂)).add_mem (hXv _ hd2) (hov _ hw₂o)
     rw [LinearEquiv.mul_apply]
     convert hs using 1

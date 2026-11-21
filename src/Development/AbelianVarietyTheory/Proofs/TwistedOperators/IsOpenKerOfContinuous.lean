@@ -83,11 +83,11 @@ def ballLat (m : Type) (s : kˣ) : Submodule 𝒪[k] (m → k) where
     rw [map_mul]
     exact (mul_le_of_le_one_left' ((Valuation.mem_integer_iff _ _).mp a.2)).trans (hx i)
 
-theorem ballLat_isLattice (s : kˣ) : (ballLat m s).IsLattice k := by
+theorem ballLat_isLattice (s : kˣ) : (ballLat m s).IsFullLattice k := by
   classical
   have hs : ∀ i : m, (Pi.single i (s : k) : m → k) ∈ ballLat m s := fun i j => by
     rw [Pi.single_apply]; split_ifs <;> simp [cball]
-  constructor
+  refine { toIsLattice := Submodule.IsLattice.of_fg k ?_, span_eq_top := ?_ }
   · refine ⟨Finset.univ.image fun i : m => (Pi.single i (s : k) : m → k), le_antisymm ?_ fun x hx => ?_⟩
     · rw [Submodule.span_le]
       intro y hy
@@ -104,8 +104,16 @@ theorem ballLat_isLattice (s : kˣ) : (ballLat m s).IsLattice k := by
         simp only [Pi.single_apply]; split_ifs <;> simp
       rw [e]
       exact Submodule.smul_mem _ _ (Submodule.subset_span (by simp))
-  · intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  · rw [eq_top_iff]
+    intro x _
+    rw [← Finset.univ_sum_single x]
+    refine sum_mem fun i _ => ?_
+    have e : (Pi.single i (x i) : m → k) = (x i * (s : k)⁻¹) • (Pi.single i (s : k) : m → k) := by
+      funext j
+      simp only [Pi.single_apply, Pi.smul_apply, smul_eq_mul]; split_ifs <;> simp
+    rw [e]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span (hs i))
+
 theorem exists_ballLat_subset {V : Set (m → k)} (hV : V ∈ 𝓝 (0 : m → k)) :
     ∃ s : kˣ, (ballLat m s : Set (m → k)) ⊆ V := by
   rw [nhds_pi, Filter.mem_pi] at hV
@@ -126,8 +134,8 @@ theorem exists_subset_ballLat {K : Set (m → k)} (hK : IsCompact K) :
     · exact ⟨a, subset_rfl, fun x (hx : x ∈ cball b) => le_trans (a := valuation k x) (c := valuation k (a : k)) hx h⟩
   exact ⟨s, fun x hx i => hs (Set.mem_iUnion.2 ⟨i, x, hx, rfl⟩)⟩
 
-theorem isCompact_lattice (L : Submodule 𝒪[k] (m → k)) (hL : L.IsLattice k) : IsCompact (L : Set (m → k)) := by
-  obtain ⟨S, hS⟩ := hL.fg
+theorem isCompact_lattice (L : Submodule 𝒪[k] (m → k)) (hL : L.IsFullLattice k) : IsCompact (L : Set (m → k)) := by
+  obtain ⟨S, hS⟩ := hL.toIsLattice.fg
   obtain ⟨s, hs⟩ := exists_subset_ballLat (K := (S : Set (m → k))) S.finite_toSet.isCompact
   have h1 : L ≤ ballLat m s := hS ▸ Submodule.span_le.2 hs
   have h2 : IsCompact (ballLat m s : Set (m → k)) := by
@@ -138,7 +146,7 @@ theorem isCompact_lattice (L : Submodule 𝒪[k] (m → k)) (hL : L.IsLattice k)
 
 variable {ψ : AddChar k Circle}
 
-theorem perp_mem_nhds (hψ : Continuous ψ) (L : Submodule 𝒪[k] (m → k)) (hL : L.IsLattice k) :
+theorem perp_mem_nhds (hψ : Continuous ψ) (L : Submodule 𝒪[k] (m → k)) (hL : L.IsFullLattice k) :
     (perp ψ L : Set (m → k)) ∈ 𝓝 (0 : m → k) := by
   obtain ⟨s, hs⟩ := exists_cball_addChar_eq_one ψ hψ
   refine IsCompact.eventually_forall_of_forall_eventually (isCompact_lattice L hL)
@@ -148,7 +156,7 @@ theorem perp_mem_nhds (hψ : Continuous ψ) (L : Submodule 𝒪[k] (m → k)) (h
   exact hs _ hq
 
 theorem isCompact_perp (hψ : Continuous ψ) (hψ1 : ψ ≠ 1) [DecidableEq m] (L : Submodule 𝒪[k] (m → k))
-    (hL : L.IsLattice k) : IsCompact (perp ψ L : Set (m → k)) := by
+    (hL : L.IsFullLattice k) : IsCompact (perp ψ L : Set (m → k)) := by
   have h := ExchangeSupport.mem_SB_of hψ1 ((perp ψ L : Set (m → k)).indicator fun _ => (1 : ℂ)) ?_ ?_
   · have h2 : IsCompact (closure _) := h.2
     rwa [Set.support_indicator, Function.support_const one_ne_zero, Set.inter_univ,

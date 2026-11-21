@@ -145,7 +145,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.dies :
   have hmul := (blkLaws (K := K)).2.1
   have hP : ∀ a d : Gam K 2, lv (a : G1 K 2) (d : G1 K 2) 0 ∈ PK K := fun a d =>
     ((pkLaws (K := K)).2.1 _).2 ⟨0, a, d, by
-      rw [show nn (0 : unipLattice K (2 + 2) 2).1 = 1 from unipOne_zero 2, one_mul]⟩
+      simp only [AddSubgroup.coe_zero, unipOne_zero, one_mul]⟩
   obtain ⟨X₀, m, C, hC⟩ := linAlg g r (by
     rcases hr with h | h | ⟨h, h1, h2⟩
     · exact Or.inl h

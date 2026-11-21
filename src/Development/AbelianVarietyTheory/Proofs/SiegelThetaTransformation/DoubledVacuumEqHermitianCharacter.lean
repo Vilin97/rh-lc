@@ -68,9 +68,9 @@ theorem mem_sup_of_dual_inf {V : Type} [AddCommGroup V] [Module ℚ V] [FiniteDi
   have hnd : B.Nondegenerate := by
     refine ⟨hsepL, fun n hn => hsepL n fun m => ?_⟩
     rw [hB, hn m, neg_zero]
-  have full₁ : N₁.IsFullLattice ℚ :=
-    GlobalTheory.isLattice_of_fg_dualSubmodule B hnd N₁ g₁ (by rw [sd₁]; exact g₁)
-  have hsup : (N₁ ⊔ N₂).IsFullLattice ℚ :=
+  have : N₁.IsFullLattice ℚ :=
+    GlobalTheory.isLattice_of_fg_dualSubmodule B hnd N₁ g₁ (sd₁.symm ▸ g₁)
+  have : (N₁ ⊔ N₂).IsFullLattice ℚ :=
     Submodule.IsFullLattice.of_le_of_fg ℚ (le_sup_left : N₁ ≤ N₁ ⊔ N₂) (g₁.sup g₂)
   obtain ⟨b, hb⟩ := GlobalTheory.exists_basis_span_eq_of_isLattice (N₁ ⊔ N₂)
 

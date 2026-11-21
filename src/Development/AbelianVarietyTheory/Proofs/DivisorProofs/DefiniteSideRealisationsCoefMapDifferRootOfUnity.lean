@@ -74,12 +74,12 @@ theorem coef_root : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type}
   have hi : IsIntegral ℤ a := by
     obtain ⟨cl, -⟩ := ((B.L i A.μ0).pres.reps 1).exists
     have hL := nabAtr_isLattice tauL (lamL i) _
-      (GlobalTheory.RepsCompare.isLattice_hLat (D.sp.V ((i : ℕ) + 1)) ((B.L i A.μ0).pres.y cl))
+      (GlobalTheory.CoefUniq.isFullLattice_hLat (D.sp.V ((i : ℕ) + 1)) ((B.L i A.μ0).pres.y cl))
     refine GlobalTheory.CoefUniq.isIntegral_of_keeps _ (fun h0 => ?_) hL.fg a (fun n hn => ?_)
     · let M := fun τ => dualFr (tauLat tauL τ (Bridge.hLat (D.sp.V ((i : ℕ) + 1)) ((B.L i A.μ0).pres.y cl)))
-      have hM : ∀ τ, Submodule.IsLattice D.what₂.LL (M τ) := fun τ =>
+      have hM : ∀ τ, Submodule.IsFullLattice D.what₂.LL (M τ) := fun τ =>
         dualFr_tauLat_isLattice tauL τ _
-          (GlobalTheory.RepsCompare.isLattice_hLat (D.sp.V ((i : ℕ) + 1)) ((B.L i A.μ0).pres.y cl))
+          (GlobalTheory.CoefUniq.isFullLattice_hLat (D.sp.V ((i : ℕ) + 1)) ((B.L i A.μ0).pres.y cl))
       obtain ⟨d, hd, -, hd2⟩ := nb_global (nb_comm_nab (lamL i)) M hM
       have hd' : algebraMap (𝓞 D.what₂.LL) D.what₂.LL d ≠ 0 := by
         rwa [Ne, FaithfulSMul.algebraMap_eq_zero_iff]

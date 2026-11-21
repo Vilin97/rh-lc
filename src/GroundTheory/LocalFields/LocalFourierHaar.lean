@@ -65,22 +65,17 @@ theorem residue_eq_residue_iff {a b : 𝒪[K]} :
 
 theorem smul_valBall {c : K} (hc : c ≠ 0) (n : ℤ) :
     c • (valBall (K := K) n : Set K) = valBall (K := K) (n + ord c) := by
-  have mul_mem {m k : ℤ} {a b : K} (ha : a ∈ valBall m) (hb : b ∈ valBall k) :
-      a * b ∈ valBall (m + k) := by
-    change normalizedValuation K (a * b) ≤ WithZero.exp (-(m + k))
-    rw [map_mul, neg_add, WithZero.exp_add]
-    exact mul_le_mul' ha hb
   ext x
   constructor
   · rintro ⟨y, hy, rfl⟩
-    have := mul_mem (mem_valBall_ord (x := c)) hy
+    have := mul_mem_valBall (mem_valBall_ord (x := c)) hy
     rw [add_comm]
     exact this
   · intro hx
     refine ⟨c⁻¹ * x, ?_, by simp [smul_eq_mul, hc]⟩
     have h1 : c⁻¹ ∈ valBall (K := K) (-ord c) := by
       rw [← ord_inv hc]; exact mem_valBall_ord
-    have := mul_mem h1 hx
+    have := mul_mem_valBall h1 hx
     simpa using this
 
 theorem isCompact_valBall (n : ℤ) : IsCompact (valBall (K := K) n : Set K) := by
@@ -203,17 +198,6 @@ theorem modulus_le_of_mem_valBall {n : ℤ} {x : K} (hx : x ∈ valBall (K := K)
   exact zpow_le_zpow_right₀ one_lt_residueCard_nnreal.le (by omega)
 
 theorem continuous_modulus : Continuous (modulus : K → ℝ≥0) := by
-  have hopen (n : ℤ) : IsOpen (valBall (K := K) n : Set K) := by
-    obtain ⟨y, hy⟩ := exists_normalizedValuation_eq (K := K) (-n)
-    have hy0 : y ≠ 0 := by
-      rintro rfl
-      exact WithZero.exp_ne_zero (by simpa only [map_zero] using hy.symm)
-    have hset : (valBall (K := K) n : Set K) = {z | valuation K (z - 0) ≤ valuation K y} := by
-      ext z
-      change normalizedValuation K z ≤ WithZero.exp (-n) ↔ valuation K (z - 0) ≤ valuation K y
-      rw [sub_zero, ← hy, normalizedValuation_le_iff]
-    rw [hset]
-    exact isOpen_setOf_valuation_sub_le (by simpa using hy0)
   rw [continuous_iff_continuousAt]
   intro x
   by_cases hx : x = 0
@@ -222,12 +206,13 @@ theorem continuous_modulus : Continuous (modulus : K → ℝ≥0) := by
     refine ⟨fun a ha => (not_lt_zero ha).elim, fun ε hε => ?_⟩
     obtain ⟨k, hk⟩ := exists_pow_lt_of_lt_one hε
       (inv_lt_one_of_one_lt₀ (one_lt_residueCard_nnreal (K := K)))
-    filter_upwards [(hopen k).mem_nhds (show (0 : K) ∈ valBall (k : ℤ) from zero_mem _)] with y hy
+    filter_upwards [valBall_mem_nhds (K := K) (k : ℤ)] with y hy
     calc modulus y ≤ (residueCard K : ℝ≥0) ^ (-(k : ℤ)) := modulus_le_of_mem_valBall hy
       _ = ((residueCard K : ℝ≥0))⁻¹ ^ k := by rw [zpow_neg, zpow_natCast, inv_pow]
       _ < ε := hk
   · have hmem : {y : K | y - x ∈ valBall (K := K) (ord x + 1)} ∈ 𝓝 x :=
-      ((hopen _).preimage (continuous_id.sub continuous_const)).mem_nhds (by simp)
+      ((isOpen_valBall (K := K) (ord x + 1)).preimage
+        (continuous_id.sub continuous_const)).mem_nhds (by simp)
     have hev : ∀ᶠ y in 𝓝 x, modulus x = modulus y := by
       filter_upwards [hmem] with y hy
       have := modulus_add_eq hx hy

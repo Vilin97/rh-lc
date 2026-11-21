@@ -110,19 +110,15 @@ theorem exists_unique_section : ∀ (R : Type) [CommRing R] (Y : Over (Sp R)) (U
     unfold evalAt
     simp only [RingHom.comp_apply]
     congr 1
-    have key : ∀ (g : Spec (CommRingCat.of E) ⟶ Y.left) (_ : w ≫ U.ι = g) (h : ⊤ ≤ g ⁻¹ᵁ U),
-        g.appLE U ⊤ h = U.ι.appLE U ⊤ (by simp) ≫ w.appLE ⊤ ⊤ le_top := by
-      rintro _ rfl h
-      exact (Scheme.Hom.appLE_comp_appLE _ _ _ _ _ _ _).symm
-    rw [key _ hw hz, CommRingCat.comp_apply, Scheme.Opens.ι_appLE]
-    have hid : ∀ (f : Opposite.op U ⟶ Opposite.op (U.ι ''ᵁ ⊤)) (g : Opposite.op (U.ι ''ᵁ ⊤) ⟶ Opposite.op U)
-        (x : Γ(Y.left, U.ι ''ᵁ ⊤)), Y.left.presheaf.map f (Y.left.presheaf.map g x) = x := by
-      intro f g x
-      rw [← ConcreteCategory.comp_apply, ← Functor.map_comp, Subsingleton.elim (g ≫ f) (𝟙 _),
-        CategoryTheory.Functor.map_id]
+    have hι : U.ι.appLE U ⊤ U.ι_preimage_self.ge = U.topIso.inv := by
+      rw [Scheme.Opens.ι_appLE, Scheme.Opens.topIso_inv]
       rfl
-    rw [Scheme.Opens.topIso_hom]
-    erw [hid]
+    have key : ∀ (g : Spec (CommRingCat.of E) ⟶ Y.left) (_ : w ≫ U.ι = g) (h : ⊤ ≤ g ⁻¹ᵁ U),
+        g.appLE U ⊤ h = U.topIso.inv ≫ w.appLE ⊤ ⊤ le_top := by
+      rintro _ rfl h
+      rw [← hι]
+      exact (Scheme.Hom.appLE_comp_appLE _ _ _ _ _ _ _).symm
+    rw [key _ hw hz, CommRingCat.comp_apply, Iso.hom_inv_id_apply]
     rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
     rfl
   refine ⟨U.topIso.hom s, hex, fun a ha ↦ ?_⟩

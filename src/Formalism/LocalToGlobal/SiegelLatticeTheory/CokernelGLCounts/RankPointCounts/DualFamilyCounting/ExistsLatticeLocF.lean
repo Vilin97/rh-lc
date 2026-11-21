@@ -51,7 +51,13 @@ theorem discMod_finite [FiniteDimensional K V] {h : V →ₗ⋆[K] V →ₗ[K] K
     Finite (DiscMod h (orthK h U) T 𝔭) := by
   subst hΛ₀
   have hp := h𝔭.isPrime
-  obtain ⟨r, hr⟩ := LIOrb.exists_pow_smul_le hN₀ (isLattice_sup hc.symm hT hM) h𝔭
+  have hTM : Submodule.IsFullLattice K (T ⊔ M) := by
+    refine { toIsLattice := isLattice_sup hc.symm hT hM, span_eq_top := ?_ }
+    rw [eq_top_iff, ← hc.symm.sup_eq_top, ← hT.2, ← hM.2]
+    exact sup_le
+      (Submodule.span_mono (SetLike.coe_subset_coe.mpr le_sup_left))
+      (Submodule.span_mono (SetLike.coe_subset_coe.mpr le_sup_right))
+  obtain ⟨r, hr⟩ := LIOrb.exists_pow_smul_le hN₀ hTM h𝔭
   have hsurj := toDisc_surj h hc.symm T (locF 𝔭 N₀) 𝔭 hiW hpr
   have hker : ((extP K 𝔭) ^ r • ⊤ : Submodule (𝓞 K) ↥(locF 𝔭 N₀)) ≤
       LinearMap.ker (toDisc h hc.symm T (locF 𝔭 N₀) 𝔭 hiW) := by

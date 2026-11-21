@@ -220,7 +220,7 @@ theorem UpperTheory.V.U3.tanCoc_isBK :
       rfl
     have e2 : adRep (push (dualFst (F.comp f)) U.r.hom) = (adRep (push (dualFst F) S.r.hom)).comp D.ι := by
       refine MonoidHom.ext fun h => ?_
-      show _ = GG.ad (m := 3) (GG.map _ (S.r.hom (D.ι h)))
+      show _ = GG.ad (m := 3) (R := PadicAlgCl l) (GG.map _ (S.r.hom (D.ι h)))
       rw [← hfg]
       rfl
     rw [e1, e2] at h1

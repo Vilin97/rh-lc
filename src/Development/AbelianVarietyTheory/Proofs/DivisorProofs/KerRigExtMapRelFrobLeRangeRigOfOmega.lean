@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobTwistBaseChangeHomApp
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RigExtMapRelFrobCompRigOfOmega
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobKerIdealLeAugIdeal
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowFinrankCotangentLeFinrankFrobeniusKernelQuoti
@@ -101,7 +102,8 @@ theorem ker_rigExtMap_relFrob_le_range_rigOfOmega (p : ℕ) [Fact p.Prime] (K : 
   have : CharP K p := (CharP.charP_iff_prime_eq_zero (Fact.out)).2 h
   intro x hx
   rw [LinearMap.mem_ker] at hx
-  obtain ⟨⟨c, w⟩, rfl⟩ : ∃ z, (frobTwist h G).rigMk z = x := Submodule.mkQ_surjective _ x
+  have hmk : Function.Surjective (frobTwist h G).rigMk := Submodule.mkQ_surjective _
+  obtain ⟨⟨c, w⟩, rfl⟩ := hmk x
   rw [rigExtMap_mk] at hx
   obtain ⟨B, hB⟩ := (Submodule.Quotient.mk_eq_zero _).1 hx
   have hB1 : G.cob B = cocyclesMap (relFrob h G) c := congrArg Prod.fst hB

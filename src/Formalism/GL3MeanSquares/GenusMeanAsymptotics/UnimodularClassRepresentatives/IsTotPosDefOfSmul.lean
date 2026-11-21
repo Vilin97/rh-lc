@@ -100,7 +100,8 @@ theorem alphaN_smul (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : I
     intro k hk
     obtain ⟨m, rfl⟩ : ∃ m, k = m + vF 𝔭 c := ⟨k - vF 𝔭 c, by omega⟩
     rw [PinA.nkCount_smul hK hF hs hd hL hLi h𝔭 hc n (k := m + vF 𝔭 c) (by omega), Nat.add_sub_cancel,
-      alphaN_eq_of_le hK hF hs hd hL.toIsLattice hLi h𝔭 hn (k := m) (by omega)]
+      firstFamilyOperatorEnd.alphaN_eq hK hF hs hd hL hLi h𝔭
+        (localValuationFiltration.notMem_pow_vF h𝔭 hn) (k := m) (by omega)]
     push_cast
     have h2 : 2 * vF 𝔭 c * finrank K V = vF 𝔭 c * (2 * finrank K V - 1) + vF 𝔭 c := by
       have h3 : 2 * finrank K V = (2 * finrank K V - 1) + 1 := by omega
@@ -183,7 +184,7 @@ theorem alphaL_split (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : 
     rw [Nat.cast_ne_zero, Ne, Ideal.absNorm_eq_zero_iff]
     exact Ring.ne_bot_of_isMaximal_of_not_isField h𝔭 (NumberField.RingOfIntegers.not_isField F)
   have hdim := S.finrank_add_one
-  have hA := alphaL_pos hK hF hs hd hL.toIsLattice hLi h𝔭
+  have hA := alphaL_pos hK hF hs hd hL hLi h𝔭
   have h1𝔭 : (1 : 𝓞 F) ∉ 𝔭 ^ (0 + 1) := by
     rw [zero_add, pow_one]; exact (Ideal.ne_top_iff_one 𝔭).1 h𝔭.ne_top
   have key : ∀ k, 2 * vd h L 𝔭 + 2 ≤ k → alphaN h L 𝔭 1 ≠ 0 ∧

@@ -65,8 +65,9 @@ theorem existsUnique_of_natural : ∀ (R : Type) [CommRing R] (X : Over (Sp R)) 
     ⨆ i, W i = ⊤ → ∀ (D : Type) [CommRing D] [Algebra R D] (y : Pt X D)
     (τ : ∀ (E : Type) [CommRing E] [Algebra R E], (D →ₐ[R] E) → E),
     (∀ (E : Type) [CommRing E] [Algebra R E] (E' : Type) [CommRing E'] [Algebra R E'] (ψ : D →ₐ[R] E)
-      (θ : E →ₐ[R] E'), Sm W (spOver ψ ≫ y) → τ E' (θ.comp ψ) = θ (τ E ψ)) →
-    ∃! d : D, ∀ (E : Type) [CommRing E] [Algebra R E] (ψ : D →ₐ[R] E), Sm W (spOver ψ ≫ y) → τ E ψ = ψ d := by
+      (θ : E →ₐ[R] E'), Sm W (D := E) (spOver ψ ≫ y) → τ E' (θ.comp ψ) = θ (τ E ψ)) →
+    ∃! d : D, ∀ (E : Type) [CommRing E] [Algebra R E] (ψ : D →ₐ[R] E),
+      Sm W (D := E) (spOver ψ ≫ y) → τ E ψ = ψ d := by
   intro R _ X K W hW D _ _ y τ hτ
 
   let S : Set D := {s | ∃ i, ∀ p : PrimeSpectrum D, p ∈ PrimeSpectrum.basicOpen s → y.left.base p ∈ W i}
@@ -80,7 +81,7 @@ theorem existsUnique_of_natural : ∀ (R : Type) [CommRing R] (X : Over (Sp R)) 
         (a := p) (u := (y.left ⁻¹ᵁ W i).carrier) hi (y.left ⁻¹ᵁ W i).isOpen
     simp only [TopologicalSpace.Opens.mem_iSup]
     exact ⟨s, ⟨i, fun q hq ↦ hsub hq⟩, hps⟩
-  have hψ : ∀ s ∈ S, Sm W (spOver (locMap R s) ≫ y) := by
+  have hψ : ∀ s ∈ S, Sm W (D := Localization.Away s) (spOver (locMap R s) ≫ y) := by
     rintro s ⟨i, hi⟩
     refine ⟨i, fun q _ ↦ hi _ ?_⟩
     show PrimeSpectrum.comap (algebraMap D (Localization.Away s)) q ∈ PrimeSpectrum.basicOpen s

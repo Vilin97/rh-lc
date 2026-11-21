@@ -137,7 +137,9 @@ theorem stepVec_vac {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp 
   classical
   obtain ⟨hf, e, he, ⟨Tm, hTm⟩, hall⟩ := h
   have hinf := infPart_idemSum he
-  obtain ⟨K, hK, hC⟩ := exists_nsmul_of_frMapO hS.1 hT.1 βS βT
+  obtain ⟨K, hK, hC⟩ := exists_nsmul_of_frMapO
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hS)
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hT) βS βT
   obtain ⟨h1, h2⟩ := placeModel_span_ne hf.1 hS hT (idemSum_mul_self he) he.2 hinf hTm
     (isSBHalf_of_red e _ (frMapO S T βS βT) (frMapO_add βS βT) (exists_den_frMapO hS.1.fg hT.1.fg βS βT)
       ⟨K, hK, fun t ht => hC t (infPart_of_half hinf ht)⟩ _

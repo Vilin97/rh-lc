@@ -25,7 +25,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E}
 
 theorem isScalar_trans {Λ : Submodule (𝓞 E) S.V} {r k : ℕ} {T T' : E} {F : LFlag S r T}
     {F' F'' F''' : LFlag S r T'} {β γ : S.V ≃ₗ[E] S.V}
-    (hΛ : Submodule.IsLattice E Λ) (hdim : finrank E S.V = k + 2 * r + 1)
+    (hΛ : Submodule.IsFullLattice E Λ) (hdim : finrank E S.V = k + 2 * r + 1)
     (hF : IsLift Λ F) (hL' : IsLift Λ F') (hG' : Gval F F' ≠ 0) (hL'' : IsLift Λ F'')
     (hG'' : Gval F F'' ≠ 0) (hi : β ∈ Formalism.HermitianLatticesTheory.isom S.hT)
     (hX : ∀ j, (Xflag F' j).map (β : S.V →ₗ[E] S.V) = Xflag F'' j) (hz : β F'.fl.z = F''.fl.z)
@@ -56,7 +56,6 @@ theorem scalar_pair_trans : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' 
   have hdim := Formalism.L2.SG.Corank.finrank_VS D
   have hGv : ∀ s : TauC Y u u', s.G ≠ 0 → Gval (lf D (X.Fu u)) s.frame ≠ 0 := fun s hs h =>
     hs ((Formalism.L2.SG.Pf.SatGram.gterm_G Y s).trans h)
-  have hlat : Submodule.IsLattice D.host.E t.lam := ((Y.rowsOK u).1 t.lam t.mem).2.1.1
   have hfull : Submodule.IsFullLattice D.host.E t.lam := ((Y.rowsOK u).1 t.lam t.mem).1.1
   have hLF : IsLift t.lam (lf D (X.Fu u)) := ((Y.rowsOK u).1 t.lam t.mem).2.1.2.2.1
   have hLt : ∀ s : TauC Y u u', IsLift s.lam s.frame := fun s => s.rep.2.2.2.2.1
@@ -93,7 +92,7 @@ theorem scalar_pair_trans : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' 
     unfold GTerm.frame
     rw [Formalism.L2.SG.Pf.MainEqClass.z_mapLF' t.lin hi1, Formalism.L2.SG.Pf.MainEqClass.z_mapLF' t'.lin hi2]
     simp
-  have hsc3 := isScalar_trans (β := t'.lin * t.lin⁻¹) (γ := t''.lin * t'.lin⁻¹) hlat hdim hLF (hLt t) (hGv t hG) hL'
+  have hsc3 := isScalar_trans (β := t'.lin * t.lin⁻¹) (γ := t''.lin * t'.lin⁻¹) hfull hdim hLF (hLt t) (hGv t hG) hL'
     (hGv t' hG') hiβ hX hz hs1 hS1 hS2
   have e3 : (t'.lin * t.lin⁻¹).trans (t''.lin * t'.lin⁻¹) = t''.lin * t.lin⁻¹ := hmul
   rw [e3] at hsc3

@@ -192,7 +192,7 @@ theorem exists_redEnd_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (h
       simp [E]
     rw [e3]
     exact h3
-  obtain ⟨Z, hZ, hZA⟩ := exists_equiv_of_mem_endL hA₀ h𝔭 hE
+  obtain ⟨Z, hZ, hZA⟩ := exists_equiv_of_mem_endL hA₀.toIsLattice h𝔭 hE
   have hXD : ∀ x, (g * Z) x = D x := fun x => by
     rw [LinearEquiv.mul_apply, hZ]
     simp [E]
@@ -214,7 +214,8 @@ end RedC
 
 theorem alphaL_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {A₀ : Submodule (𝓞 K) V}
-    (hA₀ : Submodule.IsFullLattice K A₀) (hA₀i : Formalism.HermitianLatticesTheory.IsIntegralLat h A₀) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
+    (hA₀ : Submodule.IsFullLattice K A₀) (hA₀i : Formalism.HermitianLatticesTheory.IsIntegralLat h A₀)
+    {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
     ∃ k₀ : ℕ, ∀ k ≥ k₀, alphaL h (locF 𝔭 A₀) 𝔭 =
       (akCount h (locF 𝔭 A₀) 𝔭 k : ℝ) / (Ideal.absNorm 𝔭 : ℝ) ^ (k * finrank K V ^ 2) := by
   refine ⟨2 * vd h A₀ 𝔭 + 1, fun k hk => ?_⟩

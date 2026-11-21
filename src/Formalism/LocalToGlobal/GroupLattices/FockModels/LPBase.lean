@@ -174,8 +174,11 @@ theorem bc_Hten (hinj : Function.Injective (algebraMap O Kf)) (hinj' : Function.
     (Λ : Fin n' → Submodule O (Fin (m + 1) → Kf)) (Λ' : Fin n' → Submodule O' (Fin (m + 1) → Kf'))
     (hΛ : ∀ s, IsLattice O (Λ s)) (hb : ∀ s, BC (vecS φ φK hφ (m + 1)) (Λ s) (Λ' s)) :
     BC (MvPolynomial.map φK) (Hten O lam0 Λ) (Hten O' lam0 Λ') :=
-  bc_tensorLat φK _ _ fun s =>
-    base_change_H0 φ φK hφ hinj hinj' m _ (kp_lamAt_antitone lam0 hd s) _ _ (hΛ s) (hb s)
+  bc_tensorLat φ φK hφ
+    (fun s => H0 O m (lamAt lam0 s) (Λ s))
+    (fun s => H0 O' m (lamAt lam0 s) (Λ' s)) fun s =>
+      base_change_H0 φ φK hφ hinj hinj' m (lamAt lam0 s) (kp_lamAt_antitone lam0 hd s)
+        (Λ s) (Λ' s) (hΛ s) (hb s)
 
 theorem Hten_le_V {n' m : ℕ} (lam0 : Fin n' → Fin (m + 1) → ℤ) (hd : IsDominant lam0)
     (Λ : Fin n' → Submodule O (Fin (m + 1) → Kf)) (hΛ : ∀ s, IsLattice O (Λ s)) :
@@ -199,7 +202,8 @@ theorem Hten_le_V {n' m : ℕ} (lam0 : Fin n' → Fin (m + 1) → ℤ) (hd : IsD
 theorem bc_Vsp {n' m : ℕ} (lam0 : Fin n' → Fin (m + 1) → ℤ) (hd : IsDominant lam0) :
     BC (MvPolynomial.map φK) (Vsp Kf lam0) (Vsp Kf' lam0) := by
   unfold Vsp
-  refine bc_tensorLat φK _ _ fun s => ?_
+  refine bc_tensorLat φK φK (fun _ => rfl) (S := Fin n') (k := m + 1) (n := m + 1) _ _ ?_
+  intro s
   have hanti := kp_lamAt_antitone lam0 hd s
   beta_reduce
   rw [if_pos hanti, if_pos hanti]

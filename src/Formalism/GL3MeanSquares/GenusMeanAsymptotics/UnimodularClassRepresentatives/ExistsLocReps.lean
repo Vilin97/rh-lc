@@ -55,7 +55,7 @@ theorem finite_fibG (hs : h.IsSymm) (hd : IsTotPosDef h) (S : VecSplit h h')
     have hCut := StabilizerLattices.isFullLattice_cut S hΛ.1.1
     rw [hΛ.2.2] at hCut
     have hN : Submodule.IsFullLattice K (S.adjoin Λ') := by
-      refine ⟨(S.isLattice_adjoin_iff Λ').2 hΛ', ?_⟩
+      refine { toIsLattice := (S.isLattice_adjoin_iff Λ').2 hΛ', span_eq_top := ?_ }
       rw [eq_top_iff]
       intro v _
       obtain ⟨c, a, rfl⟩ := S.cover v
@@ -88,8 +88,7 @@ theorem good_cut (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFi
     (hd : IsTotPosDef h) (S : VecSplit h h') {B : Submodule (𝓞 K) V}
     (hB : Submodule.IsFullLattice K B) (hBi : Formalism.HermitianLatticesTheory.IsIntegralLat h B) (hx : S.x₀ ∈ B) :
     GoodGenusOrbits.Good F S B (S.cut B) := by
-  letI := hB
-  letI hc := StabilizerLattices.isFullLattice_cut S hB
+  let hc := StabilizerLattices.isFullLattice_cut S hB
   refine ⟨inferInstance, fun 𝔮 h0 => ?_⟩
   have h1 := card_fibG_eq_prod (F := F) (L := B) (Λ' := S.cut B)
     hK hF hs hd S inferInstance hBi inferInstance
@@ -154,8 +153,8 @@ theorem exists_locReps' (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF
       have e1 : algebraMap (𝓞 F) (𝓞 K) t = 0 := Formalism.HermitianLatticesTheory.genusCovol_hinj (by rw [e, map_zero])
       have e2 : t = 0 := FaithfulSMul.algebraMap_injective (𝓞 F) (𝓞 K) (by rw [e1, map_zero])
       exact ht (e2 ▸ 𝔭.zero_mem)
-    letI hB : Submodule.IsFullLattice K (Formalism.HermitianLatticesTheory.gmap g L) := by
-      refine ⟨Submodule.IsLattice.of_fg K (hL.fg.map _), ?_⟩
+    let hB : Submodule.IsFullLattice K (Formalism.HermitianLatticesTheory.gmap g L) := by
+      refine { toIsLattice := LocalizedFibreSets.isLattice_gmap g hL, span_eq_top := ?_ }
       change Submodule.span K ((g : V →ₗ[K] V) '' (L : Set V)) = ⊤
       rw [Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
       exact g.surjective

@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ExistsUniquePairsToTower
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsKSValueOneOfRetraction
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TorsionTowersOfDivisibleGroup
 public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.LeftEqIffLieVecSmul
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DpExpEqSumRangeOfVanish
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DividedPowerFiltration
@@ -213,8 +214,8 @@ def IsChoice (P : LB (A ⊗ B).left) (j : ∀ (D : Type) [CommRing D] [Algebra R
 
 def tanCoc (P : LB (A ⊗ B).left) (j : ∀ (D : Type) [CommRing D] [Algebra R D], Pt A D → P.ι) (v : epsR R ⟶ B) :
     Fn1 A := fun D _ _ D' _ _ φ x ↦
-  dl (evU (ptV v (spOver φ ≫ x)).left (P.U (j D' (spOver φ ≫ x)) ⊓ P.U (j D x))
-    (P.g (j D' (spOver φ ≫ x)) (j D x)).val)
+  let x' : Pt A D' := spOver φ ≫ x
+  dl (evU (ptV v x').left (P.U (j D' x') ⊓ P.U (j D x)) (P.g (j D' x') (j D x)).val)
 
 def sndPull (u : Fn1 (A ⊗ B)) (v : epsR R ⟶ B) : Fn1 A := fun D _ _ D' _ _ φ x ↦
   (u (DualNumber D) (DualNumber D') (epsHom φ) (ptV v x)).snd
@@ -235,7 +236,8 @@ def IsContr (z : C2 (O (dp0 R) ((A ⊗ B).hom ≫ 𝟙 _))) (v : epsR R ⟶ B) (
     (b : trivAt (ptV v x) ⟶ trivAt (ptV v (spOver φ ≫ x))) (τ : thickAt B x ⟶ thickAt B (spOver φ ≫ x)),
     (∀ r, s.φ r = TrivSqZeroExt.inl r) → (∀ r, i.φ r = r) → (∀ r, s'.φ r = TrivSqZeroExt.inl r) → (∀ r, i'.φ r = r) →
     (∀ r, a.φ r = φ r) → (∀ r, b.φ r = epsHom φ r) → (∀ r, τ.φ r = epsHom φ r) →
-    κ D D' φ x = TrivSqZeroExt.snd (R := D') (z _ _ _ s τ - z _ _ _ a s' - z _ _ _ i τ + z _ _ _ b i')
+    κ D D' φ x = TrivSqZeroExt.snd (R := D') (M := D')
+      (z _ _ _ s τ - z _ _ _ a s' - z _ _ _ i τ + z _ _ _ b i')
 
 end Contract
 

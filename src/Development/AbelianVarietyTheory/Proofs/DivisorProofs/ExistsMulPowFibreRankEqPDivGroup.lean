@@ -24,15 +24,17 @@ theorem exists_mulPow_fibreRank_eq (p : ℕ) [Fact p.Prime] (O : Type) [CommRing
     rw [hk]
     refine (kerIdeal_le_ker_iff _
       (mulBy (R := O) (A := G.A (k + m)) (p ^ m) : G.A (k + m) →ₐ[O] G.A (k + m))).2 fun c => ?_
-    change mulBy (R := O) (p ^ m) (mulBy (R := O) (p ^ k) c) = _
+    change mulBy (R := O) (A := G.A (k + m)) (p ^ m)
+      (mulBy (R := O) (A := G.A (k + m)) (p ^ k) c) = _
     rw [mulBy_mulBy, ← pow_add, add_comm m k, mulBy_pow_self]
   let μ := liftSurj r hr (mulBy (R := O) (A := G.A (k + m)) (p ^ m)) hle
-  have hμ : ∀ a, μ (r a) = mulBy (R := O) (p ^ m) a := liftSurj_apply r hr _ hle
+  have hμ : ∀ a, μ (r a) = mulBy (R := O) (A := G.A (k + m)) (p ^ m) a :=
+    liftSurj_apply r hr _ hle
   refine ⟨r, μ, hr, hk, hμ, fun q => ?_⟩
   obtain ⟨f, hf, hfk⟩ := G.exists_res_le (m := m) (n := k + m) (by omega)
   have hker : kerIdeal μ = RingHom.ker (f : G.A (k + m) →ₐ[O] G.A m) := by
-    rw [← kerIdeal_comp_of_surjective μ hr, show μ.comp r = mulBy (R := O) (p ^ m) from
-      BialgHom.ext hμ]
+    rw [← kerIdeal_comp_of_surjective μ hr, show μ.comp r =
+      mulBy (R := O) (A := G.A (k + m)) (p ^ m) from BialgHom.ext hμ]
     exact hfk.symm
   have h1 := fibreDim_eq_ker_mul_range μ q
   rw [hker, fibreDim_congr (Ideal.quotientKerAlgEquivOfSurjective

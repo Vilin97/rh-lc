@@ -418,7 +418,7 @@ theorem aUp_embUp (v : HeightOneSpectrum (𝓞 F)) (p : upperParabolic (Fv F v) 
     · rw [unitFin_ideleAt_ne e, show projUp u (embUp v p) = 1 from Subtype.ext (proj_emb_ne σ Q e _), map_one]
 
 theorem isCompact_KUpFin (v : HeightOneSpectrum (𝓞 F)) : IsCompact (KUpFin σ Q v : Set (GLoc σ Q v)) :=
-  haveI : Submodule.IsLattice E (stdLattice E (n + n)) := isLattice_stdLattice
+  haveI : Submodule.IsFullLattice E (stdLattice E (n + n)) := isLattice_stdLattice
   isCompact_stabLoc σ Q _ v
 
 variable (hc : IsCMExt F E σ) (hI : ∀ g : GAd σ Q, ∃ p : upperParabolic (AF F) σ Q, ∃ k ∈ KUpAd σ Q, g = p * k)

@@ -131,7 +131,7 @@ def LIStat : Prop :=
       (h' : V' →ₗ⋆[K] V' →ₗ[K] K) (S : VecSplit h h') (L : Submodule (𝓞 K) V)
       (𝔭 : Ideal (𝓞 F)) (n : 𝓞 F),
       h.IsSymm → IsTotPosDef h → 𝔭.IsMaximal → n ≠ 0 → h S.x₀ S.x₀ = algebraMap F K (n : F) →
-      Submodule.IsLattice K L → Formalism.HermitianLatticesTheory.IsIntegralLat h L →
+      Submodule.IsFullLattice K L → Formalism.HermitianLatticesTheory.IsIntegralLat h L →
       psiP S L 𝔭 = (Ideal.absNorm 𝔭 : ℝ) ^ ((finrank K V - 1) * (vF 𝔭 n + vd h L 𝔭)) *
         alphaStd K 𝔭 (finrank K V - 1) * alphaN h L 𝔭 n / alphaL h L 𝔭
 

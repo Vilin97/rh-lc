@@ -137,7 +137,9 @@ theorem lattice_facts (hψ : IsStdChar D ψ (-1)) (hS : IsSelfDualC S ΛS) (hT :
     AddSubgroup.mem_inf.2 ⟨GlobalTheory.LatticeStable.smul_mem_latO D S T _ _ _ a
       (GlobalTheory.AdIdem.idempotent_mem_intAE D _ (by rw [← RingHom.map_mul, ha])) u hu, by rw [mem_half, smul_smul, ha]⟩
   refine ⟨fun u hu hu' y hy _ => (hdual u (infPart_of_half hinf hu')).1 hu y hy, fun x hx h => ?_, fun y hy h => ?_,
-    fun k hk => ?_, fun y hy => exists_nsmul_mem_latO' hS.1 hT.1 y (infPart_of_half (infPart_cA hinf) hy)⟩
+    fun k hk => ?_, fun y hy => exists_nsmul_mem_latO'
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hS)
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hT) y (infPart_of_half (infPart_cA hinf) hy)⟩
   · refine (hdual x (infPart_of_half hinf hx)).2 fun u hu => ?_
     have := h _ (hsm _ he' u hu).1 ((isHalf_iff S T).2 (hsm _ he' u hu).2)
     rwa [← symplO_smul, isHalf_smul.1 hx] at this

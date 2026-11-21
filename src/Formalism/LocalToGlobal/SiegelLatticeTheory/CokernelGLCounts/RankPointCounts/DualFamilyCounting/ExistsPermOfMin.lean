@@ -111,8 +111,12 @@ theorem genus_of_fib (h1 : JordanExists) (h2 : JordanInv) (h6 : GlueLoc) (hI : I
     (hfib : ∀ 𝔭 : Ideal (𝓞 F), 𝔭.IsMaximal → fibP h U 𝔭 M T ≠ 0) :
     SameGenusFix (F := F) h U (Λ₀ ⊓ (orthK h U).restrictScalars (𝓞 K)) T := by
   intro 𝔭 h𝔭
+  have hΛ₀full : Submodule.IsFullLattice K Λ₀ :=
+    { toIsLattice := hΛ₀.1
+      span_eq_top := GlobalTheory.LoopC.Base.span_eq_top_of_unimodular h hs
+        (nondegenerate_of hs hnd) hΛ₀.1 hΛ₀.2.1 }
   have hT₀ : IsLatIn (orthK h U) (Λ₀ ⊓ (orthK h U).restrictScalars (𝓞 K)) :=
-    isLatIn_cut hΛ₀.1 _
+    isLatIn_cut hΛ₀full _
   have hrefl : SameGenusFix (F := F) h U (Λ₀ ⊓ (orthK h U).restrictScalars (𝓞 K))
       (Λ₀ ⊓ (orthK h U).restrictScalars (𝓞 K)) := fun 𝔮 _ =>
     ⟨1, (isomFix h U).one_mem, by ext z; simp [Formalism.HermitianLatticesTheory.gmap]⟩

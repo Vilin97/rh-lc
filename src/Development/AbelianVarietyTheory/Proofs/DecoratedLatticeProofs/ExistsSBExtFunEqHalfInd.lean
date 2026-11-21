@@ -39,13 +39,13 @@ theorem wr_rd (α : Frame p S n') (β : Frame p T n) {t : WO S T} (ht : IsHalf p
 
 
 set_option maxHeartbeats 800000 in
-theorem open_compact_sec (p : SplitPt D k) {LS : Lat S} {LT : Lat T} (hS : Submodule.IsLattice D.host.E LS)
-    (hT : Submodule.IsLattice D.host.E LT) :
+theorem open_compact_sec (p : SplitPt D k) {LS : Lat S} {LT : Lat T} (hS : Submodule.IsFullLattice D.host.E LS)
+    (hT : Submodule.IsFullLattice D.host.E LT) :
     IsOpen {y : Matrix (Fin T.rank) (Fin S.rank) k | y.map p.sec ∈ latO S T (LS : Set _) (LT : Set _) fun _ => True} ∧
     IsCompact {y : Matrix (Fin T.rank) (Fin S.rank) k |
       y.map p.sec ∈ latO S T (LS : Set _) (LT : Set _) fun _ => True} := by
   have : CharZero k := charZero_of_injective_ringHom (f := p.pr.comp (incA D)) (RingHom.injective _)
-  obtain ⟨M, hM, hden⟩ := GlobalTheory.PlaceDatum.exists_den_latO (S := S) (T := T) hS.fg hT.fg
+  obtain ⟨M, hM, hden⟩ := GlobalTheory.PlaceDatum.exists_den_latO (S := S) (T := T) hS.toIsLattice.fg hT.toIsLattice.fg
   obtain ⟨N, hN, hmul⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO (S := S) (T := T) hS hT
   let A : AddSubgroup (Matrix (Fin T.rank) (Fin S.rank) k) :=
     (latO S T (LS : Set _) (LT : Set _) fun _ => True).comap p.sec.mapMatrix
@@ -79,7 +79,8 @@ theorem compact_open (α : Frame p S n') (β : Frame p T n) {LS : Lat S} {LT : L
       IsOpen {x | wr α β x ∈ latO S T (LS : Set _) (LT : Set _) (· = p.v) ∧ IsHalf p.e (wr α β x)} := by
   obtain ⟨ε, hε, heε⟩ := exists_idem p
   have hh : ∀ x, wr α β x ∈ GlobalTheory.PlaceModel.half S T p.e := fun x => (GlobalTheory.PlaceModel.isHalf_iff S T).1 (isHalf_wr α β x)
-  obtain ⟨ho, hc⟩ := open_compact_sec p hS.1 hT.1
+  obtain ⟨ho, hc⟩ := open_compact_sec p (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S LS hS)
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull T LT hT)
   have h1 : {x | wr α β x ∈ latO S T (LS : Set _) (LT : Set _) (· = p.v) ∧ IsHalf p.e (wr α β x)} =
       {x | wr α β x ∈ latO S T (LS : Set _) (LT : Set _) fun _ => True} := by
     ext x

@@ -136,20 +136,16 @@ theorem gmap_eq_self {h : V →ₗ⋆[K] V →ₗ[K] K} {U : Submodule K V} {g :
 
 theorem cut_isLatIn {Λ : Submodule (𝓞 K) V} (hΛ : Submodule.IsFullLattice K Λ) (X : Submodule K V) :
     IsLatIn X (Λ ⊓ X.restrictScalars (𝓞 K)) := by
-  refine ⟨?_, ?_⟩
-  · have := isNoetherian_of_fg_of_noetherian _ hΛ.fg
-    exact Submodule.FG.of_le_of_isNoetherian (inf_le_left : Λ ⊓ X.restrictScalars (𝓞 K) ≤ Λ)
-  · apply le_antisymm
-    · exact Submodule.span_le.mpr fun x hx => hx.2
-    · intro x hx
-      obtain ⟨r, hr, hrx⟩ := StabilizerLattices.exists_smul_mem hΛ x
-      have h1 : r • x ∈ Λ ⊓ X.restrictScalars (𝓞 K) :=
-        ⟨hrx, (X.restrictScalars (𝓞 K)).smul_mem r hx⟩
-      have hr' : algebraMap (𝓞 K) K r ≠ 0 := by simpa using hr
-      have e : x = (algebraMap (𝓞 K) K r)⁻¹ • (r • x) := by
-        rw [← algebraMap_smul K r x, smul_smul, inv_mul_cancel₀ hr', one_smul]
-      rw [e]
-      exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
+  refine ⟨hΛ.toIsLattice.fg.of_le inf_le_left, le_antisymm ?_ ?_⟩
+  · exact Submodule.span_le.mpr fun x hx => hx.2
+  · intro x hx
+    obtain ⟨r, hr, hrx⟩ := StabilizerLattices.exists_smul_mem hΛ x
+    have hcut : r • x ∈ Λ ⊓ X.restrictScalars (𝓞 K) :=
+      ⟨hrx, (X.restrictScalars (𝓞 K)).smul_mem r hx⟩
+    have hr' : algebraMap (𝓞 K) K r ≠ 0 := by simpa using hr
+    apply (Submodule.smul_mem_iff _ hr').mp
+    rw [algebraMap_smul]
+    exact Submodule.subset_span hcut
 
 theorem integral_of_unimod {h : V →ₗ⋆[K] V →ₗ[K] K} {Λ : Submodule (𝓞 K) V}
     (hU : Formalism.HermitianLatticesTheory.IsUnimodular h Λ) (X : Submodule (𝓞 K) V) :
@@ -253,9 +249,10 @@ theorem glueMass_of (h1 : JordanExists) (h2 : JordanInv) (h6 : GlueLoc) (h8 : Gl
   classical
   have hnd' : h.Nondegenerate := ⟨hnd, fun y hy => hnd y fun x => by
     rw [← hs.eq x y, hy x, map_zero]⟩
-  have hfull : ∀ {Λ : Submodule (𝓞 K) V}, Λ ∈ GlueSet h U M → Submodule.IsFullLattice K Λ :=
-    fun hΛ => { toIsLattice := hΛ.1, span_eq_top :=
-      GlobalTheory.LoopC.Base.span_eq_top_of_unimodular h hs hnd' hΛ.1 hΛ.2.1 }
+  have hfull {Λ : Submodule (𝓞 K) V} (hΛ : Λ ∈ GlueSet h U M) :
+      Submodule.IsFullLattice K Λ :=
+    { toIsLattice := hΛ.1
+      span_eq_top := GlobalTheory.LoopC.Base.span_eq_top_of_unimodular h hs hnd' hΛ.1 hΛ.2.1 }
   obtain ⟨Λ₀, hΛ₀⟩ := hne
   obtain ⟨T₀, hT⟩ : ∃ T₀, Λ₀ ⊓ (orthK h U).restrictScalars (𝓞 K) = T₀ := ⟨_, rfl⟩
   have hT₀ : IsLatIn (orthK h U) T₀ := hT ▸ G9.cut_isLatIn (hfull hΛ₀) _

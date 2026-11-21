@@ -73,7 +73,7 @@ structure Base (p : ℕ) [Fact p.Prime] (P : ∀ (k : Type) [CommRing k], PDivGr
     (∀ n a, u.app n a = t.app n (s.app n a)) → ∀ m : M G h, smap h'' h u m = smap h'' h' t (smap h' h s m)
   red_smap : ∀ {k k' : Type} [Field k] [CharP k p] [PerfectRing k p] [Field k'] [CharP k' p] [PerfectRing k' p]
     {σ : k →+* k'} {G' : PDivGroup p k'} {G : PDivGroup p k} (h' : P k' G') (h : P k G) (s : SemiHom σ G' G)
-    (m : M G h), red G' h' (smap h' h s m) = s.rig (red G h m)
+    (m : M G h), red G' h' (smap h' h s m) = SemiHom.rig s (red G h m)
 
 namespace Base
 

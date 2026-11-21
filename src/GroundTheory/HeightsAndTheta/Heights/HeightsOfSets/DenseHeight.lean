@@ -54,7 +54,8 @@ theorem height_standard_le (z : Cone n (AlgebraicClosure ℚ)) (hz : BlockNonzer
     (hδ : 0 < δ) {R : ℝ} (hR : 0 < R)
     (hint : ∀ k i, IsIntegral ℤ ((δ : AlgebraicClosure ℚ) * z k i))
     (harch : ∀ (σ : AlgebraicClosure ℚ →+* ℂ) k i, ‖σ (z k i)‖ ≤ R) :
-    height HermLine.standard z ≤ ∑ k, (Real.log δ + Real.log (Real.sqrt (n k + 1) * R)) := by
+    height (HermLine.standard (n := n)) z ≤
+      ∑ k, (Real.log δ + Real.log (Real.sqrt (n k + 1) * R)) := by
   set K := coordField z
   set d : ℝ := (Module.finrank ℚ K : ℝ) with hd_def
   have hd : 0 < d := by rw [hd_def]; exact_mod_cast Module.finrank_pos (R := ℚ) (M := K)
@@ -85,7 +86,7 @@ theorem height_standard_le (z : Cone n (AlgebraicClosure ℚ)) (hz : BlockNonzer
           field_simp
       _ ≤ (v (δ : K))⁻¹ * 1 := mul_le_mul_of_nonneg_left h3 (inv_pos.mpr hδv).le
       _ = (v (δ : K))⁻¹ := mul_one _
-  have hsupp1 := finite_support_height HermLine.standard z hz
+  have hsupp1 := finite_support_height (HermLine.standard (n := n)) z hz
   have hsupp2 : (Function.support fun v : FinitePlace K ↦ Real.log (v (δ : K))).Finite := by
     refine (FinitePlace.hasFiniteMulSupport hne).subset fun v hv h ↦ hv ?_
     have h' : v (δ : K) = 1 := h

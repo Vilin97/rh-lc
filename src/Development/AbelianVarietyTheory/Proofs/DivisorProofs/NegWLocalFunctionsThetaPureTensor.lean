@@ -197,7 +197,8 @@ theorem datum_of_placeModel (M : Model D.sp.cm.sig Y Z) {ψ : AddChar (AF D.host
       rw [hs, hs, map_smul, ← symplO_cA_smul, smul_of_isHalf hy]⟩)
     (by
       rintro w hw x hx q ⟨g, h1, h2, h3⟩
-      refine ⟨fun t => g (t + p x), sb_trans_latO hS.1 hX.1 hinf h1 (hA w hw _ hx), funext fun u => ?_, ?_⟩
+      refine ⟨fun t => g (t + p x), sb_trans_latO (GlobalTheory.PlaceVec.selfDual_isFullLattice S LS hS)
+        (GlobalTheory.PlaceVec.selfDual_isFullLattice X LX hX) hinf h1 (hA w hw _ hx), funext fun u => ?_, ?_⟩
       · rw [h2]; exact congrArg g (map_add p u x)
       · rw [hT.trans g h1 _ (hA w hw _ hx)]; exact hrho h3 x)
     (by

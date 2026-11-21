@@ -145,7 +145,7 @@ theorem fibres_of_gluing_facts (D : D7) (u : D.what₂.Word) (hpos : IsPosDef (D
     obtain ⟨Λ₀, _, huniq⟩ := hs.2 Λ₂ (hs.1 _ hΛ₂)
     exact (huniq Λ₁ ⟨hΛ₁, σ, hσ, hσe⟩).trans (huniq Λ₂ ⟨hΛ₂, 1, one_mem_flag_stabilizer D F0, gmap_one _⟩).symm
   have hAfin : Finite (MulAction.stabilizer (isom (D.sp.X 0).hT) M) := by
-    have hf := final_autFinite D.host.E (D.sp.X 0).V (D.sp.X 0).hT (D.sp.X 0).herm (trace_inner_self_pos _ hpos) M hM.1.toIsLattice
+    have hf := final_autFinite D.host.E (D.sp.X 0).V (D.sp.X 0).hT (D.sp.X 0).herm (trace_inner_self_pos _ hpos) M hM.1
     have := hf.to_subtype
     exact Finite.of_injective
       (fun γ : MulAction.stabilizer (isom (D.sp.X 0).hT) M =>

@@ -147,8 +147,8 @@ def cot : Cot R A →ₛₗ[σ] Cot R' A' :=
       simp only [d, map_mul f.toRingHom, AugCot.d_mul, counitAlgHom_apply, f.counit_map]) with }
 
 @[simp] theorem cot_d (a : A) : f.cot (dUnit (R := R) a) = dUnit (R := R') (f a) := by
-  change dUnit (R := R') (f (a - algebraMap R A (counit a))) = _
-  rw [map_sub f.toRingHom, f.map_algebraMap, dUnit, map_sub, AugCot.d_algebraMap, sub_zero]
+  simp only [cot, LinearMap.coe_mk, LinearMap.coe_toAddHom, dUnit, AugCot.lift_d]
+  rfl
 
 theorem two_cobOne (b : A) : f.two (cobOne R A b) = cobOne R' A' (f b) := by
   simp [cobOne_apply, two_comul]

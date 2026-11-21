@@ -260,7 +260,7 @@ theorem measure_box_eq_relIndex_mul [MeasurableSpace F] [BorelSpace F]
     (μ : Measure (PatIdx T → F)) [μ.IsAddHaarMeasure] [μ.Regular] {L : Subgroup (GL (Fin n) F)}
     (hL : L ≤ U ⊓ integralGL F n) (hLc : IsCompact (L : Set (GL (Fin n) F)))
     (hfin : L.relIndex (U ⊓ integralGL F n) ≠ 0) :
-    μ Measures.box = (L.relIndex (U ⊓ integralGL F n) : ℝ≥0∞) *
+    μ (Measures.box (F := F) (ι := PatIdx T)) = (L.relIndex (U ⊓ integralGL F n) : ℝ≥0∞) *
       μ (patCoord T '' (L : Set (GL (Fin n) F))) := by
   classical
   set U₀ := U ⊓ integralGL F n
@@ -530,7 +530,7 @@ theorem relIndex_inf_map_conj_diagPow (ν : Fin n → ℤ) :
     exact relIndex_map_conj_diagPow_ne_zero hT hTt hU hUc ν
   have key := measure_box_eq_relIndex_mul hT hU hTt μ (L := U₀ ⊓ M) inf_le_left hVc hfin
   rw [patCoord_image_inf_map_conj hT hU ν] at key
-  have hbox : μ Measures.box = 1 := by
+  have hbox : μ (Measures.box (F := F) (ι := PatIdx T)) = 1 := by
     rw [Measures.box, Measure.pi_pi]
     simp [GroundTheory.LocalField.haarIntegers_integers]
   have hchart : μ (Set.univ.pi fun p : PatIdx T =>

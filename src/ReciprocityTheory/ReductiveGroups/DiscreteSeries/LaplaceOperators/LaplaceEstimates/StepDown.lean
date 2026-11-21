@@ -56,6 +56,7 @@ theorem stepDown : StepDownStatement := by
     have hg : y₀⁻¹ * (P * g * P⁻¹) = P * (x₀⁻¹ * g) * P⁻¹ := by
       rw [hy₀inv]
       simp only [Matrix.mul_assoc, Matrix.nonsing_inv_mul_cancel_left P _ hdet]
+    dsimp only
     rw [hg]
   obtain ⟨β, hβ⟩ := evalM k r ε u lam h H σ D E V T μ ι hσ hD hV hc hVK hμ hcoef hp hq hsg hHC hGap z c Vp π
     μW μN P hP hBd y₀ w v ξ s x hy₀J hx hu hper

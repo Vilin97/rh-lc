@@ -22,7 +22,7 @@ variable {h : V →ₗ⋆[K] V →ₗ[K] K} {h' : V' →ₗ⋆[K] V' →ₗ[K] K
 
 private theorem isFullLattice_adjoin (S : VecSplit h h') {Λ' : Submodule (𝓞 K) V'}
     (hΛ' : Submodule.IsFullLattice K Λ') : Submodule.IsFullLattice K (S.adjoin Λ') := by
-  refine ⟨(S.isLattice_adjoin_iff Λ').2 hΛ'.toIsLattice, ?_⟩
+  refine { toIsLattice := (S.isLattice_adjoin_iff Λ').2 hΛ'.toIsLattice, span_eq_top := ?_ }
   rw [eq_top_iff]
   intro v _
   obtain ⟨c, a, rfl⟩ := S.cover v

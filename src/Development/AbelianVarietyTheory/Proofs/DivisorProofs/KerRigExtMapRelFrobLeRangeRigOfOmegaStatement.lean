@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobTwistBaseChangeHomApp
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KerRigExtMapRelFrobLeRangeRigOfOmega
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RigExtMapRelFrobCompRigOfOmega
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobKerIdealLeAugIdeal
@@ -8,7 +9,10 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowFinrankCo
 
 @[expose] public section
 
-open CategoryTheory TensorProduct Coalgebra Bialgebra GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup
-set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.ker_rigExtMap_relFrob_le_range_rigOfOmega' : ∀ (p : ℕ) [Fact p.Prime] (K : Type) [Field K] (h : (p : K) = 0) (G : PDivGroup p K), LinearMap.ker (rigExtMap (relFrob h G)) ≤ LinearMap.range (frobTwist h G).rigOfOmega := by
-  first | exact @GlobalTheory.PDivGroup.ker_rigExtMap_relFrob_le_range_rigOfOmega | exact GlobalTheory.PDivGroup.ker_rigExtMap_relFrob_le_range_rigOfOmega | (intros; apply GlobalTheory.PDivGroup.ker_rigExtMap_relFrob_le_range_rigOfOmega <;> assumption)
+open GlobalTheory GlobalTheory.PDivGroup
+
+theorem _root_.GlobalTheory.T.ker_rigExtMap_relFrob_le_range_rigOfOmega' :
+    ∀ (p : ℕ) [Fact p.Prime] (K : Type) [Field K] (h : (p : K) = 0) (G : PDivGroup p K),
+      LinearMap.ker (rigExtMap (PDivGroup.relFrob h G)) ≤
+        LinearMap.range (PDivGroup.frobTwist h G).rigOfOmega :=
+  @PDivGroup.ker_rigExtMap_relFrob_le_range_rigOfOmega

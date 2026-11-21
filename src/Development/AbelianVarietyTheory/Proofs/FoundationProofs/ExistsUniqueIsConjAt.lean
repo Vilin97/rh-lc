@@ -341,7 +341,9 @@ theorem exists_comp (h : w.under (𝓞 F) = v) (z : Fin n → w.adicCompletion E
 
 theorem exists_isFrameAt (hw : IsInertAt F E v w) (hL : L.FG) (hL' : Submodule.span E (L : Set (Fin n → E)) = ⊤) :
     ∃ a, IsFrameAt w L a := by
-  have : Submodule.IsLattice E L := Submodule.IsLattice.of_fg E hL
+  have : Submodule.IsFullLattice E L :=
+    { toIsLattice := Submodule.IsLattice.of_fg E hL
+      span_eq_top := hL' }
   have h := (under_eq_iff hw w).2 rfl
   obtain ⟨b, h1, h2⟩ := Frames.exists_rational_frame L v
   refine ⟨bc (toCompl h) (bc (inclR (Fv F v)) b), fun z => ?_⟩

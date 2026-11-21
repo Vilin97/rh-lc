@@ -102,12 +102,14 @@ theorem flatVec_existsUnique : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl
       GlobalTheory.AdTh.RecPair.selfDual_of_coe (GlobalTheory.AdTh.RecPair.coe_eq_of_frame (hR.lev.βV i))
     have sW : IsSelfDualC (Wc D i) (R.ΛW i) :=
       GlobalTheory.AdTh.RecPair.selfDual_of_coe (GlobalTheory.AdTh.RecPair.coe_eq_of_frame (hR.lev.βW i))
+    have fullV := GlobalTheory.PlaceVec.selfDual_isFullLattice (Vc D i) (R.ΛV i) sV
+    have fullW := GlobalTheory.PlaceVec.selfDual_isFullLattice (Wc D i) (R.ΛW i) sW
     obtain ⟨eg, eQ, hg, hq, h1, h2, h3⟩ := idemSum_split he (Formalism.IndefR.Fin.disjoint_Pg_Q R.toLevCh hR.lev t)
     have hinfg := GlobalTheory.PlaceVec.infPart_cA (GlobalTheory.PlaceVec.idemSum_infPart hg)
     obtain ⟨fg, hfg⟩ := GlobalTheory.PlaceVec.exists_isThetaAt hψ sV sW (a := cA D eg)
       (by rw [← RingHom.map_mul, GlobalTheory.PlaceVec.idemSum_mul_self hg]) hinfg
       (GlobalTheory.PlaceModelSum.placeModelExistsSum D R.ψ hψ _ _ _ _ sV sW _ eg hg _ hvac.2.theta hvac.2.lat).2
-      (GlobalTheory.PlaceVec.isSBHalf_of_red sV.1 sW.1 hinfg (frMapAdj (Vc D i) (Wc D i) (R.βV i) (R.βW i))
+      (GlobalTheory.PlaceVec.isSBHalf_of_red fullV fullW hinfg (frMapAdj (Vc D i) (Wc D i) (R.βV i) (R.βW i))
         (GlobalTheory.PlaceVec.frMapAdj_add _ _ _ _) (GlobalTheory.PlaceVec.frMapAdj_up _ _ _ _) (GlobalTheory.PlaceVec.frMapAdj_down _ _ _ _) R.Pg
         (fun y => omegaK R.Pg y) fun y y' h => GlobalTheory.PlaceVec.omegaK_congr R.Pg h)
     have hoQ := GlobalTheory.PlaceModelSum.isOrthSum_of_isIdemSum hq
@@ -123,7 +125,7 @@ theorem flatVec_existsUnique : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl
           (by rw [← RingHom.map_mul, h1, map_zero]) ((isHalf_iff _ _).2 hu.2) a b).symm)
         (hoQ.conj.heisO_eq (by rw [GlobalTheory.DualPairCheck.cA_cA, hq.2]) hvac.2.lat u hu))
     have hinfQ := GlobalTheory.PlaceDatum.infPart_idemSum hq
-    obtain ⟨K, hK, hC⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO sV.1 sW.1 (R.βV i) (R.βW i)
+    obtain ⟨K, hK, hC⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO fullV fullW (R.βV i) (R.βW i)
     obtain ⟨f, hf⟩ := GlobalTheory.PlaceDatum.exists_isThetaAt hψ sV sW (GlobalTheory.PlaceDatum.idemSum_mul_self hq) hinfQ hPM
       (GlobalTheory.PlaceDatum.isSBHalf_of_red eQ _ (frMapO (Vc D i) (Wc D i) (R.βV i) (R.βW i)) (GlobalTheory.PlaceDatum.frMapO_add _ _)
         (GlobalTheory.PlaceDatum.exists_den_frMapO sV.1.fg sW.1.fg _ _)

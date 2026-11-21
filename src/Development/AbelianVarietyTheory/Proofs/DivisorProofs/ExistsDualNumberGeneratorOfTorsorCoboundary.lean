@@ -22,11 +22,11 @@ namespace GlobalTheory.PtExt.EpsGenCob
 
 theorem evU_mul' {Y : Scheme.{0}} {D : Type} [CommRing D] (y : Sp D ⟶ Y) (U : Y.Opens) (h : ⊤ ≤ y ⁻¹ᵁ U)
     (a b : Γ(Y, U)) : evU y U (a * b) = evU y U a * evU y U b := by
-  unfold evU; rw [dite_eq_left h, dite_eq_left h, dite_eq_left h, map_mul]
+  simpa only [evU, dite_eq_left h] using map_mul (evalAt y U h) a b
 
 theorem evU_isUnit' {Y : Scheme.{0}} {D : Type} [CommRing D] (y : Sp D ⟶ Y) (U : Y.Opens) (h : ⊤ ≤ y ⁻¹ᵁ U)
     (a : Γ(Y, U)ˣ) : IsUnit (evU y U a.val) := by
-  unfold evU; rw [dite_eq_left h]; exact a.isUnit.map _
+  simpa only [evU, dite_eq_left h] using a.isUnit.map (evalAt y U h)
 
 theorem evU_cocycle {X : Scheme.{0}} (P : LB X) (hP : P.IsLB) {D : Type} [CommRing D] (y : Sp D ⟶ X)
     (a b c : P.ι) (ha : ⊤ ≤ y ⁻¹ᵁ P.U a) (hb : ⊤ ≤ y ⁻¹ᵁ P.U b) (hc : ⊤ ≤ y ⁻¹ᵁ P.U c) :
@@ -34,17 +34,14 @@ theorem evU_cocycle {X : Scheme.{0}} (P : LB X) (hP : P.IsLB) {D : Type} [CommRi
       evU y (P.U a ⊓ P.U b) (P.g a b).val * evU y (P.U b ⊓ P.U c) (P.g b c).val := by
   have h3 : ⊤ ≤ y ⁻¹ᵁ (P.U a ⊓ P.U b ⊓ P.U c) := fun p hp ↦ ⟨⟨ha hp, hb hp⟩, hc hp⟩
   have e := congrArg (fun u ↦ evU y _ (Units.val u)) (hP.cocycle a b c)
-  simp only [ReciprocityTheory.ChartRestriction.G.Semi.res, Units.val_mul, Units.coe_map, MonoidHom.coe_coe] at e
+  simp only [ReciprocityTheory.ChartRestriction.G.Semi.res, Units.val_mul, Units.coe_map, MonoidHom.coe_ofClass] at e
   rw [evU_mul' y _ h3, evalSectionAtPointOrZero_restriction, evalSectionAtPointOrZero_restriction, evalSectionAtPointOrZero_restriction] at e
   · exact e.symm
   all_goals exact h3
 
 theorem snd_eq_fst_mul_dl {D : Type} [CommRing D] (u : DualNumber D) (hu : IsUnit u) : u.snd = u.fst * dl u := by
-  obtain ⟨w, hw⟩ := hu.map (TrivSqZeroExt.fstHom D D D)
-  simp only [TrivSqZeroExt.fstHom_apply] at hw
-  unfold dl
-  rw [← hw, Ring.inverse_unit]
-  rw [mul_comm, _root_.mul_assoc, Units.inv_mul, _root_.mul_one]
+  have hfst : IsUnit u.fst := hu.map (TrivSqZeroExt.fstHom D D D)
+  rw [dl, mul_left_comm, Ring.mul_inverse_cancel _ hfst, _root_.mul_one]
 
 theorem dualNumber_inl_mul_one_add_inr_fst_snd {D : Type} [CommRing D] (a c : D) :
     (TrivSqZeroExt.inl a * (1 + TrivSqZeroExt.inr c) : DualNumber D).fst = a ∧
@@ -82,16 +79,10 @@ theorem red_ptV {v : epsR R ⟶ B} (hv : IsTangent v) {E : Type} [CommRing E] [A
 
 theorem ptV_mem (P : LB (A ⊗ B).left) {v : epsR R ⟶ B} (hv : IsTangent v) {E : Type} [CommRing E] [Algebra R E]
     (x : Pt A E) (i : P.ι) (h : ⊤ ≤ x.left ⁻¹ᵁ chartsA P i) : ⊤ ≤ (ptV v x).left ⁻¹ᵁ P.U i := by
-  intro p _
-  have hs : Function.Surjective (PrimeSpectrum.comap (TrivSqZeroExt.fstHom R E E : DualNumber E →+* E)) := by
-    refine (PrimeSpectrum.isHomeomorph_comap _ (fun a ↦ ⟨1, one_pos, TrivSqZeroExt.inl a, by simp⟩) ?_).surjective
-    intro a ha
-    obtain ⟨c, rfl⟩ := DualNumber.fst_eq_zero_iff_eps_dvd.1 (show TrivSqZeroExt.fst a = 0 from ha)
-    exact mem_nilradical.2 ⟨2, by rw [mul_pow, sq DualNumber.eps, DualNumber.eps_mul_eps, zero_mul]⟩
-  obtain ⟨p', rfl⟩ := hs p
-  have h1 : ⊤ ≤ (x ≫ AbDual.inl A B).left ⁻¹ᵁ P.U i := h
-  rw [← red_ptV hv] at h1
-  exact h1 (Set.mem_univ p')
+  apply dualNumberPoint_preimage_top_of_reduction
+  change ⊤ ≤ (spOver (TrivSqZeroExt.fstHom R E E) ≫ ptV v x).left ⁻¹ᵁ P.U i
+  rw [red_ptV hv x]
+  exact h
 
 theorem ptV_nat (v : epsR R ⟶ B) {E E' : Type} [CommRing E] [Algebra R E] [CommRing E'] [Algebra R E']
     (ψ : E →ₐ[R] E') (x : Pt A E) : ptV v (spOver ψ ≫ x) = spOver (epsHom ψ) ≫ ptV v x := by

@@ -232,10 +232,10 @@ theorem iUnion_cell {N : ℕ} {ϖ : kˣ} (hϖ : valuation k (ϖ : k) = uniformiz
           let o : kˣ →* Multiplicative ℤ := MonoidHom.mk' (fun x => .ofAdd (ord k x)) fun x y => by
             rw [ord_mul, ofAdd_add]
           have := map_zpow o ϖ m
-          rw [show o ϖ = .ofAdd 1 from congrArg Multiplicative.ofAdd (ord_eq_one k hϖ), ← ofAdd_zsmul,
+          rw [show o ϖ = .ofAdd 1 from congrArg Multiplicative.ofAdd (SmGL.ord_eq_one hϖ), ← ofAdd_zsmul,
             smul_eq_mul, mul_one] at this
           exact this
-        have h2 := (ord_eq_zero_iff k).1 (show ord k (Units.mk0 x hx * ϖ ^ (-ord k (Units.mk0 x hx))) = 0 by
+        have h2 := SmGL.ord_eq_zero_iff.1 (show ord k (Units.mk0 x hx * ϖ ^ (-ord k (Units.mk0 x hx))) = 0 by
           rw [ord_mul, h1, add_neg_cancel])
         rw [Units.val_mul, map_mul, Units.val_zpow_eq_zpow_val, map_zpow₀, _root_.zpow_neg,
           mul_inv_eq_one₀ (zpow_ne_zero _ (by simp))] at h2

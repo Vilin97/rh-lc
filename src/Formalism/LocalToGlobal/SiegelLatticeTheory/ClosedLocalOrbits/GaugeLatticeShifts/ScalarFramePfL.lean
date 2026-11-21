@@ -52,7 +52,7 @@ theorem gfacts_of (F : LFlag (D.sp.Y 0) D.R.rS T) (F' F'' : LFlag (D.sp.Y 0) D.R
     (hs : Lat.s0 Λ F F' F'' β D.R.k = 1) (hsc : IsScalar Λ F F' F'' β)
     (hG' : Gval F F' ≠ 0) (hG'' : Gval F F'' ≠ 0) (hT0 : T ≠ 0) (hT0' : T' ≠ 0) :
     GFacts Λ (frame F) (frameAct (frame F') (admXi D Λ F F')⁻¹) (frameAct (frame F'') (admXi D Λ F F'')⁻¹) β := by
-  obtain ⟨hlat, -, hlF, hcF⟩ := hF
+  obtain ⟨-, -, hlF, hcF⟩ := hF
   have hξ1 := admissibility_witness_unitriangular Λ F F'
   have hξ2 := admissibility_witness_unitriangular Λ F F''
   have hη1 := inv_unitri _ hξ1.1 hξ1.2
@@ -62,8 +62,8 @@ theorem gfacts_of (F : LFlag (D.sp.Y 0) D.R.rS T) (F' F'' : LFlag (D.sp.Y 0) D.R
   have hXF'' := X_le_spanE_of_conv Λ F'' _ hc''
   have hU1 := PI.ScalarPairDr.W.UUE_eq Λ F F' hlF.2 hl'.2 hXF hXF'
   have hU2 := PI.ScalarPairDr.W.UUE_eq Λ F F'' hlF.2 hl''.2 hXF hXF''
-  have hGN1 := PI.UnitaryGroupMassFormula.BetaLUniq.gram_matrix_nondegenerate (VS D) Λ F F' hlat hlF hl' hG'
-  have hGN2 := PI.UnitaryGroupMassFormula.BetaLUniq.gram_matrix_nondegenerate (VS D) Λ F F'' hlat hlF hl'' hG''
+  have hGN1 := PI.UnitaryGroupMassFormula.BetaLUniq.gram_matrix_nondegenerate_of_span_eq Λ F F' hU1 hG'
+  have hGN2 := PI.UnitaryGroupMassFormula.BetaLUniq.gram_matrix_nondegenerate_of_span_eq Λ F F'' hU2 hG''
   have hn := PI.UnitaryGroupMassFormula.BetaLUniq.finrank_hS D
   obtain ⟨hTh, hTh''⟩ := theta_eq Λ D.R.k F F' F'' β hn hGN1.1 hGN2.1 hU1 hG' hs
   have hXg1 : Xs (S := VS D) (frameAct (frame F') (admXi D Λ F F')⁻¹) = Xsp F' :=

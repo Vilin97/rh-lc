@@ -40,8 +40,13 @@ variable {R R' : Type} [CommRing R] [CommRing R'] {σ : R →+* R'} {A A' : Type
 
 def SemiBialgHom.prim (f : SemiBialgHom σ A A') :
     LinearMap.ker (cobOne R A) →ₛₗ[σ] LinearMap.ker (cobOne R' A') where
-  toFun b := ⟨f b.1, (f.two_cobOne b.1).symm.trans ((congrArg f.two b.2).trans (map_zero _))⟩
-  map_add' _ _ := Subtype.ext (map_add f.lin _ _)
+  toFun b := ⟨f b.1, by
+    have hb : cobOne R A b.1 = 0 := b.2
+    have hone : SemiBialgHom.lin f 1 = 1 := f.toRingHom.map_one
+    have h := congrArg (SemiBialgHom.two f) hb
+    simpa only [LinearMap.mem_ker, cobOne_apply, map_sub, SemiBialgHom.two_comul,
+      TensorProduct.map_tmul, hone, SemiBialgHom.lin_apply, map_zero] using h⟩
+  map_add' _ _ := Subtype.ext (f.toRingHom.map_add _ _)
   map_smul' _ _ := Subtype.ext (f.smul_map _ _)
 
 @[simp] theorem SemiBialgHom.prim_val (f : SemiBialgHom σ A A') (b : LinearMap.ker (cobOne R A)) :

@@ -25,11 +25,15 @@ set_option autoImplicit false
 
 namespace GlobalTheory.PtExt
 
-theorem exists_pushout_torsor : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] [IsCommMonObj A] (n : ℕ), (n : R) = 0 → HasRoots A n → ∀ b : Fn0 A, IsTorsChar n b → ∃ (u : Fn1 A) (g : Fn2 A), IsCoc (whole A) u ∧ IsAdd u g ∧ ∀ (D : Type) [CommRing D] [Algebra R D] (x : Pt A D), x ^ n = 1 → chi n g D x = b D x := by
-  intro R _ A _ _ n hn hR b hb
-  let S : SecFam A := fun D _ _ x ↦ Classical.choose (GlobalTheory.T.exists_pushoutTorsorSection_every_point R A n hR b hb D x)
+theorem exists_pushout_torsor (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] [IsCommMonObj A]
+    (n : ℕ) (hn : (n : R) = 0) (hR : HasRoots A n) (b : Fn0 A) (hb : IsTorsChar n b) :
+    ∃ (u : Fn1 A) (g : Fn2 A), IsCoc (whole A) u ∧ IsAdd u g ∧
+      ∀ (D : Type) [CommRing D] [Algebra R D] (x : Pt A D), (x ^ n : Pt A D) = 1 →
+        chi n g D x = b D x := by
+  have hSec := GlobalTheory.T.exists_pushoutTorsorSection_every_point R A n hR b hb
+  let S : SecFam A := fun D _ _ x ↦ Classical.choose (hSec D x)
   have hS : ∀ (D : Type) [CommRing D] [Algebra R D] (x : Pt A D), IsSec n b x (S D x) :=
-    fun D _ _ x ↦ Classical.choose_spec (GlobalTheory.T.exists_pushoutTorsorSection_every_point R A n hR b hb D x)
+    fun D _ _ x ↦ Classical.choose_spec (hSec D x)
   obtain ⟨u, hu⟩ := GlobalTheory.T.exists_sectionDifference_one_cochain R A n hR b hb S hS
   obtain ⟨g, hg⟩ := GlobalTheory.T.exists_sectionAddition_two_point_function R A n hR b hb S hS
   exact ⟨u, g, isCoc_of_isSecDiff R A n hR b hb S hS u hu,

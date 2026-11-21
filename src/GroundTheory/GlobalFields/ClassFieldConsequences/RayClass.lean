@@ -56,7 +56,8 @@ theorem map_idealLevel_sup_le :
   · rintro _ ⟨y, hy, rfl⟩
     refine 𝔪.mem_congruenceSubgroup.2 ⟨fun v ↦ ?_, fun w _ ↦ ?_⟩
     · rw [← finiteComponent_toFinite, toFinite_ofFinite]
-      exact mem_finiteLevel.1 hy v
+      have hfinite := FiniteMultiplicity.of_prime_left v.prime 𝔪.ideal_ne_bot
+      simpa only [exponent, ite_eq_left hfinite] using mem_finiteLevel.1 hy v
     · change 0 < InfinitePlace.Completion.extensionEmbeddingOfIsReal w.2
         ((toInfinite K (ofFinite y) : InfiniteAdeleRing K) w.1)
       rw [toInfinite_ofFinite]

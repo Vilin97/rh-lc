@@ -384,7 +384,9 @@ theorem datumBack : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topologi
   obtain ⟨hLL', hX, -, hfin, hden⟩ := dualPair hψ hS hT hs hε heq
   have hdX : ∀ x ∈ half S T p.e, ∃ k : ℕ, 0 < k ∧ k • x ∈ latO S T (LS : Set _) (LT : Set _) (· = p.v) := by
     intro x hx
-    obtain ⟨k, hk, hkx⟩ := exists_nsmul_mem_latO' hS.1 hT.1 x (infPart_half hε heε hx)
+    obtain ⟨k, hk, hkx⟩ := exists_nsmul_mem_latO'
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hS)
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hT) x (infPart_half hε heε hx)
     refine ⟨k, hk, ?_⟩
     have := (idem_smul_mem hε he heε hkx).1
     rwa [smul_comm, (mem_half S T).1 hx] at this

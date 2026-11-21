@@ -104,7 +104,7 @@ theorem tδ_comp_tateIsoH {S : ShortComplex (Rep k G)} (hS : S.ShortExact) (n : 
   ext z
   simp only [ModuleCat.hom_comp, LinearMap.comp_apply]
   have hz := tate_d_iCycles_int _ _ z
-  obtain ⟨y, x, hy, hx⟩ := exists_lift_of_cocycle
+  obtain ⟨y, x, hy, hx⟩ := exists_lift_of_cocycle hS
     (cocyclesMk (((tateComplex S.X₃).iCycles n).hom z) (tate_d_iCycles _ n z))
   have hd : ((tateComplex S.X₁).d (↑n + 1) (↑n + 1 + 1)).hom (iCocycles S.X₁ (n + 1) x) = 0 := by
     have := d_iCocycles x

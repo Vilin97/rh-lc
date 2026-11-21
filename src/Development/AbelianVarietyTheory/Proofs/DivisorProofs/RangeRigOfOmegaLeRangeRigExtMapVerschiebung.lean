@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobTwistBaseChangeHomApp
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RigExtMapRelFrobCompRigOfOmega
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobKerIdealLeAugIdeal
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PowFinrankCotangentLeFinrankFrobeniusKernelQuoti
@@ -23,7 +24,8 @@ theorem range_rigOfOmega_le_range_rigExtMap_verschiebung :
         LinearMap.range (rigExtMap (verschiebung h G)) := by
   intro p _ K _ h G
   rintro _ ⟨w, rfl⟩
-  obtain ⟨β, w', hβ, hd⟩ := GlobalTheory.T.exists_additive_frobeniusPullback_cotangent_mod_verschiebung p K h G (-(w.1 1))
+  obtain ⟨β, w', hβ, hd⟩ :=
+    GlobalTheory.T.exists_additive_frobeniusPullback_cotangent_mod_verschiebung p K h G (-(w.1 1))
   obtain ⟨-, c, B₀, -, hB₀, -, hB₀'⟩ := exists_of_cobOne_eq_zero hβ
   obtain ⟨B, hB⟩ : cocyclesMap (verschiebung h G) c ∈ LinearMap.range (frobTwist h G).cob :=
     (Submodule.Quotient.mk_eq_zero _).1

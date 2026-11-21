@@ -21,7 +21,8 @@ variable {p : ℕ} [hp : Fact p.Prime] {R A : Type} [CommRing R] [CommRing A]
 theorem exists_dualSystem (R M : Type) [CommRing R] [AddCommGroup M] [Module R M]
     [Module.Finite R M] [Module.Projective R M] :
     ∃ s : Finset (CartierDual R M × M), ∀ a, ∑ i ∈ s, i.1 a • i.2 = a := by
-  obtain ⟨u, hu⟩ := (dualTensorHom_bijective (R := R) (M := M) (N := M)).2 LinearMap.id
+  obtain ⟨u, hu⟩ :=
+    (dualTensorHom_bijective_of_finite_projective_right (R := R) (M := M) (N := M)).2 LinearMap.id
   obtain ⟨u, rfl⟩ := (LinearEquiv.rTensor M (CartierDual.toDual R M)).surjective u
   obtain ⟨s, rfl⟩ := TensorProduct.exists_finset u
   exact ⟨s, fun a => by simpa [CartierDual.toDual] using LinearMap.congr_fun hu a⟩

@@ -117,7 +117,7 @@ theorem continuous_mat : Continuous (mat : G D n → Mx D (n + n) (n + n)) :=
   Units.continuous_val.comp (isEmbedding_matHom (AF D.host.F) D.sp.cm.sig (Jst D n)).continuous
 
 theorem isCompact_K : IsCompact (K D n : Set (G D n)) :=
-  haveI : Submodule.IsLattice D.host.E (stdLattice D.host.E (n + n)) := isLattice_stdLattice
+  haveI : Submodule.IsFullLattice D.host.E (stdLattice D.host.E (n + n)) := isLattice_stdLattice
   isCompact_levelAll (isCMExt_host D) _ _ _
 
 theorem isClosed_P : IsClosed (P D n : Set (G D n)) := by

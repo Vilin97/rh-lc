@@ -40,7 +40,7 @@ theorem det_gram_smul {V κ : Type} [NormedAddCommGroup V] [InnerProductSpace �
 
 theorem red_inf (E : Type) [Field E] [NumberField E] (R : Type) [NormedCommRing R] [NormedAlgebra ℝ R]
     [FiniteDimensional ℝ R] (τ : E →+* R) (hτ : Submodule.span ℝ (Set.range τ) = ⊤) (hd : finrank ℝ R = finrank ℚ E)
-    (n : ℕ) : ∃ (M : ℕ) (C : ℝ), 0 < M ∧ ∀ (Λ : Submodule (𝓞 E) (Fin n → E)), Submodule.IsLattice E Λ →
+    (n : ℕ) : ∃ (M : ℕ) (C : ℝ), 0 < M ∧ ∀ (Λ : Submodule (𝓞 E) (Fin n → E)), Submodule.IsFullLattice E Λ →
       ∀ g : GL (Fin n) R, ∃ (δ : GL (Fin n) E) (l : Fin n → ℤ) (c : GL (Fin n) R), (∀ i, δ.1 i ∈ Λ) ∧
         (∀ x ∈ Λ, ∃ y : Fin n → 𝓞 E, (M : E) • x = (fun i => (y i : E)) ᵥ* δ.1) ∧
         (∀ i j, ‖c.1 i j‖ ≤ C ∧ ‖c⁻¹.1 i j‖ ≤ C) ∧

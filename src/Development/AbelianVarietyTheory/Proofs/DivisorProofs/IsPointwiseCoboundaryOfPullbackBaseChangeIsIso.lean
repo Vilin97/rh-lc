@@ -37,8 +37,9 @@ theorem ringOf_eq_of_spMap {E : Type} [CommRing E] (g : Sp E ⟶ X'.left) (τ : 
   exact congrArg CommRingCat.Hom.hom (Spec.map_injective h1)
 
 def ptBack [IsIso q] {E : Type} [CommRing E] (g : Sp E ⟶ X.left) :
-    @Pt R' _ X' E _ (ringOf (X' := X') (g ≫ inv q)).toAlgebra :=
-  @Over.homMk _ _ _ (@SpAlg R' E _ _ (ringOf (X' := X') (g ≫ inv q)).toAlgebra) X' (g ≫ inv q)
+    @Pt R' _ X' E _ (ringOf (X' := X') (g ≫ inv q)).toAlgebra := by
+  letI : Algebra R' E := (ringOf (X' := X') (g ≫ inv q)).toAlgebra
+  exact Over.homMk (U := SpAlg R' E) (V := X') (g ≫ inv q)
     (spMap_ringOf (X' := X') (g ≫ inv q)).symm
 
 theorem ringOf_comp (w : q ≫ X.hom = X'.hom ≫ spMap σ) [IsIso q] {E : Type} [CommRing E] [Algebra R E]

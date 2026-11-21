@@ -28,7 +28,7 @@ def Unram (E : Type) [Field E] [NumberField E] (p : ℕ) : Prop :=
 def ScalarEquivG : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [StarRing E] (S : HSpace E) (r k g : ℕ),
     finrank E S.V = k + 2 * r + 1 →
-    ∀ Λ : Submodule (𝓞 E) S.V, Submodule.IsLattice E Λ →
+    ∀ Λ : Submodule (𝓞 E) S.V, Submodule.IsFullLattice E Λ →
     ∀ (T T' : E), T ≠ 0 → T' ≠ 0 → ∀ F : LFlag S r T, IsLift Λ F →
       Equivalence (fun x y : {F' : LFlag S r T' // IsLift Λ F' ∧ Gval F F' ≠ 0} => ScalRel Λ g k F x.1 y.1)
 

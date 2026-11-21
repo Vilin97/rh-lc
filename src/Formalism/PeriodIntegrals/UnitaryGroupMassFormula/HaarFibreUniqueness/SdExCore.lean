@@ -111,7 +111,7 @@ theorem key (Φ : V → ℂ) (hc : Continuous Φ) (hs : HasCompactSupport Φ) (z
   have h2 : ∀ x, ∫ y in (M : Set V), Φ x * χ (x + z) y ∂μ =
       (ann χ M).indicator (fun _ => (μ.real (M : Set V) : ℂ)) (x + z) * Φ x := by
     intro x
-    rw [integral_const_mul, ← transform_indicator μ χ M hMo (x + z), ← integral_indicator hm,
+    rw [integral_const_mul, ← transform_indicator μ χ hχ M hMo (x + z), ← integral_indicator hm,
       mul_comm]
     congr 1
     refine integral_congr_ae (ae_of_all _ fun y => ?_)

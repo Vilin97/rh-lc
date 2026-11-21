@@ -1,5 +1,6 @@
 module
 
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ToBaseChangePtsBijective
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RigOfOmegaInjectiveOfEqZero
 
 @[expose] public section
@@ -45,9 +46,8 @@ theorem liftSemi_prim_baseChange_bijective {R A : Type} (R' : Type) [CommRing R]
         LinearMap.lTensor_tmul, Submodule.subtype_apply, smul_tmul', smul_eq_mul, mul_one]
   have hex := Module.Flat.lTensor_exact R' (LinearMap.exact_subtype_ker_map (cobOne R A))
   refine ⟨fun x y h => ?_, fun z => ?_⟩
-  · refine Module.Flat.lTensor_preserves_injective_linearMap (M := R') K.subtype
-      K.injective_subtype ?_
-    rw [← hsub, ← hsub, h]
+  · apply Module.Flat.lTensor_preserves_injective_linearMap (M := R') K.subtype K.injective_subtype
+    simpa only [hsub] using congrArg Subtype.val h
   · obtain ⟨x, hx⟩ := z
     have hz : (cobOne R A).lTensor R' x = 0 := by
       have h0 : cobOne R' (R' ⊗[R] A) x = 0 := hx

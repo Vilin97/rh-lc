@@ -22,11 +22,14 @@ theorem isSymCoc_of_isAdd : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpOb
     ∀ (f : Fn1 A) (g : Fn2 A), IsAdd f g → IsSymCoc g := by
   intro R _ A _ hA f g hfg
   have hc : IsCommMonObj A := hA.comm
+  unfold IsSymCoc
+  unfold IsAdd at hfg
   intro D _ _
   constructor
   · let k : Fn0 (A ⊗ A) := fun E _ _ w ↦
       g E (w ≫ fst A A) (w ≫ snd A A) - g E (w ≫ snd A A) (w ≫ fst A A)
     have hk : IsCob (whole (A ⊗ A)) (Fn1.zero (A ⊗ A)) k := by
+      unfold IsCob
       intro E _ _ E' _ _ φ w _
       have h1 := hfg E E' φ (w ≫ fst A A) (w ≫ snd A A)
       have h2 := hfg E E' φ (w ≫ snd A A) (w ≫ fst A A)
@@ -47,6 +50,7 @@ theorem isSymCoc_of_isAdd : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpOb
         + g E (w ≫ fst _ _) ((w ≫ snd _ _ ≫ fst A A) * (w ≫ snd _ _ ≫ snd A A))
         - g E (w ≫ fst _ _) (w ≫ snd _ _ ≫ fst A A)
     have hk : IsCob (whole (A ⊗ (A ⊗ A))) (Fn1.zero _) k := by
+      unfold IsCob
       intro E _ _ E' _ _ φ w _
       have h1 := hfg E E' φ (w ≫ snd _ _ ≫ fst A A) (w ≫ snd _ _ ≫ snd A A)
       have h2 := hfg E E' φ ((w ≫ fst _ _) * (w ≫ snd _ _ ≫ fst A A)) (w ≫ snd _ _ ≫ snd A A)

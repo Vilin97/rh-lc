@@ -24,6 +24,7 @@ theorem triv_pull_of_isPtGen : ∀ (R : Type) [CommRing R] (X Y : Over (Sp R)) (
     ∀ (q : Y ⟶ X) (t : ∀ (E : Type) [CommRing E] [Algebra R E], Pt Y E → L.ι → E), IsPtGen L q t →
     GlobalTheory.AbLaw.Triv (L.pull q.left) := by
   intro R _ X Y L _ q t ht
+  unfold IsPtGen at ht
   obtain ⟨hu, hn, hg⟩ := ht
   have hmul : ∀ {D : Type} [CommRing D] (x : Sp D ⟶ Y.left) (U : Y.left.Opens), ⊤ ≤ x ⁻¹ᵁ U →
       ∀ a b : Γ(Y.left, U), evU x U (a * b) = evU x U a * evU x U b := by

@@ -99,7 +99,7 @@ theorem line_pair (k : ℕ) (hdim : finrank E S.V = k + 2 * r + 1) (Λ : Submodu
   have hb12 : brS S y2 y2 = brS S y1 y1 := by
     rw [hy1, hy2, brS_yv_yv Fl.fl F2.fl hTs, brS_yv_yv Fl.fl F1.fl hTs]
     exact congrArg (T * ·) hG12
-  obtain ⟨hfin, hk1⟩ := Formalism.L2.SG.NGCut.CorankRelation.finrank_Hp k hdim Λ hΛ.toIsLattice Fl F1 hL hL1 hG1
+  obtain ⟨hfin, hk1⟩ := Formalism.L2.SG.NGCut.CorankRelation.finrank_Hp k hdim Λ hΛ Fl F1 hL hL1 hG1
 
   have hy2H : ∀ h ∈ Hp Λ Fl F1, S.hT h y2 = 0 := by
     intro h hh
@@ -119,7 +119,7 @@ theorem line_pair (k : ℕ) (hdim : finrank E S.V = k + 2 * r + 1) (Λ : Submodu
     · intro h hh
       exact hT_UUE_Hp Λ Fl F1 hh (z_mem_UUE Λ hΛ.toIsLattice Fl F1 hL hL1)
     · intro x hx hxH
-      exact Formalism.L2.SG.NGCut.CorankRelation.Xsp_Hp_eq_zero Λ hΛ.toIsLattice Fl F1 hL hL1 hG1 hx hxH
+      exact Formalism.L2.SG.NGCut.CorankRelation.Xsp_Hp_eq_zero Λ hΛ Fl F1 hL hL1 hG1 hx hxH
     · omega
     · rw [Formalism.L2.SG.NGCut.NormalVectorPairings.mem_Qsp]
       exact ⟨fun x hx => hT_X_yv Fl.fl F1.fl hx, hT_z_yv Fl.fl F1.fl,

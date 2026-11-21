@@ -103,7 +103,9 @@ theorem om_model_of_base : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : 
       a • u ∈ (latO S T ΛS ΛT fun _ => True) ⊓ half S T a := fun a ha u hu =>
     AddSubgroup.mem_inf.2 ⟨GlobalTheory.SplitScalar.idem_smul_mem ha u hu, by rw [mem_half, smul_smul, ha]⟩
   have hden : ∀ y ∈ half S T (cA D e), ∃ k : ℕ, 0 < k ∧ k • y ∈ latO S T ΛS ΛT fun _ => True := fun y hy =>
-    exists_nsmul_mem_latO' hS.1 hT.1 y (infPart_of_half (infPart_cA hinf) ((isHalf_iff S T).2 hy))
+    exists_nsmul_mem_latO'
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hS)
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hT) y (infPart_of_half (infPart_cA hinf) ((isHalf_iff S T).2 hy))
   have s0 := isSBHalf_actO hS.1 hT.1 g⁻¹ h⁻¹ (GlobalTheory.isSBHalf_halfInd e _)
   generalize latO S T ΛS ΛT (fun _ => True) = Λ at *
   have hLL' : ∀ u ∈ Λ ⊓ half S T e, ∀ y ∈ Λ ⊓ half S T (cA D e), ψ (symplO S T u y) = 1 := fun u hu y hy =>

@@ -230,7 +230,7 @@ theorem akCount_split (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
       have e := (Formalism.HermitianLattices.Ext.L3.integralBasisSpans.congrP_int h𝔭 k z 1).2 (by rw [map_one]; exact hform.symm)
       rwa [map_one, hz] at e
     obtain ⟨z', hz'L, hz'1, hz'd⟩ :=
-      Formalism.HermitianLattices.Ext.L3.PinF.exists_exact_lift hK hF hs hd hL.toIsLattice hLi h𝔭 h1 hk hwL hcong
+      Formalism.HermitianLattices.Ext.L3.PinF.exists_exact_lift hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi h𝔭 h1 hk hwL hcong
     obtain ⟨g, hg, hgx⟩ :=
       Formalism.HermitianLattices.Ext.L3.PinC.exists_aut_map hK hF hs hd S h1 hL hLi hx h𝔭 hv hz'L hz'1
     rw [← hbb] at hg

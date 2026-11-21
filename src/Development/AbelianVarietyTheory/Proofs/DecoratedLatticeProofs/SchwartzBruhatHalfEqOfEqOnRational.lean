@@ -49,17 +49,8 @@ theorem coe_stdLat (n : ℕ) :
 
 theorem exists_nsmul_mem_stdHom (S T : HSp D) : ∃ K : ℕ, 0 < K ∧ ∀ t : WO S T, t.map (infPart D) = 0 →
     (∀ i j, toEAf D (t i j) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E) → K • t ∈ stdHom S T := by
-  have hlat (n : ℕ) : Submodule.IsLattice D.host.E (Formalism.L2.Pj.stdLat D.host.E n) := by
-    let eqv : Formalism.L2.Pj.stdLat D.host.E n ≃ₗ[NumberField.RingOfIntegers D.host.E] (Fin n → NumberField.RingOfIntegers D.host.E) :=
-      { toFun := fun x i => ⟨x.1 i, by obtain ⟨c, hc⟩ := (GlobalTheory.LocM.Unim.mem_stdLat _).1 x.2 i; exact hc ▸ c.isIntegral_coe⟩
-        invFun := fun v => ⟨fun i => algebraMap (NumberField.RingOfIntegers D.host.E) D.host.E (v i), (GlobalTheory.LocM.Unim.mem_stdLat _).2 fun i => ⟨v i, rfl⟩⟩
-        map_add' := fun _ _ => rfl
-        map_smul' := fun _ _ => rfl
-        left_inv := fun _ => rfl
-        right_inv := fun _ => rfl }
-    exact Submodule.IsLattice.of_fg D.host.E (Module.Finite.iff_fg.1 (Module.Finite.equiv eqv.symm))
   obtain ⟨K, hK, h⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO (S := S) (T := T)
-    (hlat S.rank) (hlat T.rank)
+    (GlobalTheory.LocM.Unim.isLattice_stdLat S.rank) (GlobalTheory.LocM.Unim.isLattice_stdLat T.rank)
   refine ⟨K, hK, fun t h1 h2 => ?_⟩
   have := h t h1 h2
   rw [coe_stdLat, coe_stdLat] at this

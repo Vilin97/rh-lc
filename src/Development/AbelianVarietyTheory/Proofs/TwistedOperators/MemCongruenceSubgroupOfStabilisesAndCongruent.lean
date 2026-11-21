@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsCoreLat
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IntegrandSZero
 public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.WeilRepresentationUnitaryPair
@@ -68,7 +69,8 @@ theorem cong_assemble : ∀ (D : D7) (V : HSp D) (Λ : Submodule (𝓞 D.host.E)
     Lev.finE V g ∈ congLev D.sp.cm V.gram Λ 𝔪 := by
   classical
   intro D V Λ hsd Z e hZe 𝔪 h𝔪 g hg hx
-  obtain ⟨β, hfr⟩ := frame_exists_alt D.host.F D.host.E V.rank Λ hsd.1
+  obtain ⟨β, hfr⟩ := frame_exists_alt D.host.F D.host.E V.rank Λ
+    (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice V Λ hsd)
   have hUA := GlobalTheory.LevSplit.finE_mem_UA V g
   have hγ : (β⁻¹ * Lev.finE V g * β : GL (Fin V.rank) (Lev.EAf D)).1 =
       (β⁻¹ : GL (Fin V.rank) (Lev.EAf D)).1 * (Lev.finE V g).1 * β.1 := by

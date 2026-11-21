@@ -261,8 +261,6 @@ theorem psi_zPoly (al : Fin (WeightFamilies.dimY D j) → ℕ) (θ : B.Cusp j w0
   unfold SizeBoundsAlt.zPoly secPow sec psi
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_mul, map_prod, map_pow, map_sum, MvPolynomial.eval₂Hom_X', MvPolynomial.eval₂Hom_C, Algebra.smul_def]
-  unfold sec._aux_1
-  rfl
 
 theorem coe_zSum (ka : WeightFamilies.Wt D j) (al : Fin (WeightFamilies.dimY D j) → ℕ) (θ : B.Cusp j w0)
     (zc : (Idx D j N →₀ ℕ) →₀ B.Cusp j ka) (h : ∀ β, X.inc ka (zc β) = (SizeBoundsAlt.zPoly X w al θ).coeff β) :

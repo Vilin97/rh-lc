@@ -23,7 +23,7 @@ theorem eta_pow_sq (𝔭 : Ideal (𝓞 F)) (M : ℕ) : (etaF K F 𝔭 ^ M) ^ 2 =
 
 theorem alphaN_unit (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) (hv : vd h L 𝔭 = 0) (hm : 1 ≤ finrank K V) {n : 𝓞 F} (hn : n ∉ 𝔭) :
     alphaN h L 𝔭 n =
       1 - etaF K F 𝔭 ^ finrank K V * (Ideal.absNorm 𝔭 : ℝ) ^ (-(finrank K V : ℤ)) := by
@@ -32,7 +32,7 @@ theorem alphaN_unit (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : I
   apply Filter.Tendsto.limUnder_eq
   apply tendsto_const_nhds.congr'
   filter_upwards [Filter.eventually_ge_atTop 1] with k hk
-  rw [nkCount_eq_cnt hK hF hs hd hL hLi h𝔭 hv hk n, cnt_unit hK hF h𝔭 hm hk hn,
+  rw [nkCount_eq_cnt hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi h𝔭 hv hk n, cnt_unit hK hF h𝔭 hm hk hn,
     show k * (2 * finrank K V - 1) = (2 * finrank K V - 1) * k from mul_comm _ _,
     mul_div_cancel_left₀ _ (pow_ne_zero _ hq.ne')]
 
@@ -179,7 +179,7 @@ private theorem stab_lemma (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) 
 
 theorem alphaN_closed (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) (hv : vd h L 𝔭 = 0) (hm : 1 ≤ finrank K V) :
     ∀ (v : ℕ) (n : 𝓞 F), n ≠ 0 → vF 𝔭 n = v → alphaN h L 𝔭 n =
       (1 - etaF K F 𝔭 ^ finrank K V * (Ideal.absNorm 𝔭 : ℝ) ^ (-(finrank K V : ℤ))) *
@@ -190,14 +190,14 @@ theorem alphaN_closed (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
   have hc1 : ∀ n : 𝓞 F, n ∈ 𝔭 → (cnt hF 𝔭 1 (m + 1) (ι n) : ℝ) = (Ideal.absNorm 𝔭 : ℝ) ^ (2 * (m + 1)) -
       ((Ideal.absNorm 𝔭 : ℝ) - 1) * ((Ideal.absNorm 𝔭 : ℝ) ^ (2 * (m + 1) - 1) * (1 - etaF K F 𝔭 ^ (m + 1) * ((Ideal.absNorm 𝔭 : ℝ) ^ (m + 1))⁻¹)) := by
     intro n' hn'
-    have h := cnt_one_of_mem hK hF hs hd hL hLi h𝔭 hv hm hn'
+    have h := cnt_one_of_mem hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi h𝔭 hv hm hn'
     rw [hm'] at h
     rw [h, zpow_neg, zpow_natCast]
   rw [alphaN]
   apply Filter.Tendsto.limUnder_eq
   apply tendsto_const_nhds.congr'
   filter_upwards [Filter.eventually_ge_atTop (2 * v + 1)] with k hk
-  rw [nkCount_eq_cnt hK hF hs hd hL hLi h𝔭 hv (by omega) n, hm',
+  rw [nkCount_eq_cnt hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi h𝔭 hv (by omega) n, hm',
     stab_lemma hK hF h𝔭 hc1 v n hn hnv k hk]
   simp only [zpow_neg, zpow_natCast, Nat.add_sub_cancel]
 

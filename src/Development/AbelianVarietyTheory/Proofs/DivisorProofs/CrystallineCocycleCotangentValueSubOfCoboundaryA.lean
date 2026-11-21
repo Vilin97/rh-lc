@@ -25,8 +25,11 @@ theorem cotSnd_cotPt_eq_dUnit (R : Type) [CommRing R] (D : Type) [CommRing D] [B
     TrivSqZeroExt.inr (AugCot.d (Bialgebra.counitAlgHom R D) z)) = _
   rw [TrivSqZeroExt.snd_add, TrivSqZeroExt.algebraMap_eq_inl, TrivSqZeroExt.snd_inl, TrivSqZeroExt.snd_inr, zero_add]
 
-theorem crystallineCocycleCotangentValue_sub_of_coboundary : ∀ (R : Type) [CommRing R] (X : Over (Sp R)) (D : Type) [CommRing D] [Bialgebra R D] (y : Pt X D) (f f' : Z1 (O (dp0 R) (X.hom ≫ 𝟙 _))) (k : C0 (O (dp0 R) (X.hom ≫ 𝟙 _))), d0 _ k = f.1 - f'.1 → cotVal f y - cotVal f' y = dUnit (R := R) (show D from k (trivAt y)) := by
-  intro R _ X D _ _ y f f' k h
+theorem crystallineCocycleCotangentValue_sub_of_coboundary
+    (R : Type) [CommRing R] (X : Over (Sp R)) (D : Type) [CommRing D] [Bialgebra R D]
+    (y : Pt X D) (f f' : Z1 (O (dp0 R) (X.hom ≫ 𝟙 _)))
+    (k : C0 (O (dp0 R) (X.hom ≫ 𝟙 _))) (h : d0 _ k = f.1 - f'.1) :
+    cotVal f y - cotVal f' y = dUnit (R := R) (A := D) (k (Thick.triv D y.left y.w)) := by
   have hf : f - f' = ⟨d0 _ k, commAlgFunctorCoboundaryZero_mem_cocyclesOne _ k⟩ := Subtype.ext h.symm
   let y' : Pt X (cotExt R D).C := spOver (cotPt R D) ≫ y
   have h1 : (cotExt R D).val y'.left y'.w f - (cotExt R D).val y'.left y'.w f' =
@@ -35,8 +38,8 @@ theorem crystallineCocycleCotangentValue_sub_of_coboundary : ∀ (R : Type) [Com
     rw [← map_sub, hf]
     exact SqExt.tangentValue_coboundary _ _ _ k
   have h2 : fv f D (cotExt R D).C (cotPt R D) y - fv f' D (cotExt R D).C (cotPt R D) y =
-      (show (cotExt R D).C from k (trivAt y')) - cotPt R D (show D from k (trivAt y)) :=
-    (congrFun (congrFun (congrFun h _) _) (trivMap (cotPt R D) y)).symm
+      k (Thick.triv (cotExt R D).C y'.left y'.w) - cotPt R D (k (Thick.triv D y.left y.w)) :=
+    (congrFun (congrFun (congrFun h (trivAt y)) (trivAt y')) (trivMap (cotPt R D) y)).symm
   have key : ∀ a a' b b' c i p : (cotExt R D).C, a - a' = c - i → b - b' = c - p →
       (a - b) - (a' - b') = p - i := fun a a' b b' c i p e1 e2 ↦ by linear_combination e1 - e2
   have h3 := congrArg (cotSnd R D) (key _ _ _ _ _ _ _ h1 h2)

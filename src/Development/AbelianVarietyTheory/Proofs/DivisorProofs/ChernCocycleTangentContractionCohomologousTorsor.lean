@@ -31,8 +31,8 @@ theorem dl_mul (u u' : DualNumber D) (hu : IsUnit u.fst) (hu' : IsUnit u'.fst) :
   have e2 : (↑b : D) * ↑b⁻¹ = 1 := Units.mul_inv b
   have e3 : Ring.inverse ((↑a : D) * ↑b) = ↑b⁻¹ * ↑a⁻¹ := by
     rw [← Units.val_mul, Ring.inverse_unit, mul_inv_rev, Units.val_mul]
-  simp only [dl, TrivSqZeroExt.fst_mul, TrivSqZeroExt.snd_mul, ← ha, ← hb, e3,
-    Ring.inverse_unit, smul_eq_mul, MulOpposite.smul_eq_mul_unop, MulOpposite.unop_op]
+  simp only [dl, TrivSqZeroExt.fst_mul, DualNumber.snd_mul, ← ha, ← hb, e3,
+    Ring.inverse_unit]
   linear_combination (u'.snd * ↑b⁻¹) * e1 + (u.snd * ↑a⁻¹) * e2
 
 theorem dl_one_add (l : DualNumber D) (h : l.fst = 0) : dl (1 + l) = l.snd := by
@@ -82,6 +82,7 @@ theorem pointWithZeroSecondCoord_mem_chart_of_restricted (P : LB (A ⊗ B).left)
   rw [pointWithZeroSecondCoord_left, Scheme.Hom.comp_preimage]
   exact h
 
+omit [GrpObj A] in
 theorem ptV_mem (P : LB (A ⊗ B).left) {v : epsR R ⟶ B} (hv : IsTangent v) {D : Type} [CommRing D]
     [Algebra R D] {x : Pt A D} {c : P.ι} (h : ⊤ ≤ x.left ⁻¹ᵁ chartsA P c) : ⊤ ≤ (ptV v x).left ⁻¹ᵁ P.U c := by
   have hsurj : Surjective (spOver (TrivSqZeroExt.fstHom R D D)).left := by
@@ -216,7 +217,8 @@ theorem contr_cohom : ∀ (R : Type) [CommRing R] (A B : Over (Sp R)) [GrpObj A]
       (dl (U _ _ (sM h)) - dl (U _ _ (iM h))) + dl (gv P (ptV v x).left (j D x) (i (TV h)))
   refine ⟨fun D _ _ x ↦ if h : Sm (chartsA P) x then -k h else 0, ?_⟩
   intro D _ _ D' _ _ φ x hx
-  have hx' : Sm (chartsA P) (spOver φ ≫ x) := hx.map φ
+  let x' : Pt A D' := spOver φ ≫ x
+  have hx' : Sm (chartsA P) (D := D') (spOver φ ≫ x) := hx.map φ
   simp only [dite_eq_left hx, dite_eq_left hx', Fn1.add, Fn1.neg]
   let aM : T0 hx ⟶ T0 hx' := ObjectProperty.homMk (aHom φ x)
   let bM : TV hx ⟶ TV hx' := ObjectProperty.homMk (bHom v φ x)
@@ -280,11 +282,11 @@ theorem contr_cohom : ∀ (R : Type) [CommRing R] (A B : Over (Sp R)) [GrpObj A]
   have b3 : dl (D := D') (tM.hom.φ (U _ _ (iM hx))) = φ (dl (U _ _ (iM hx))) := dl_epsHom φ _ ui
   have b4 : dl (D := D') ((iM hx').hom.φ (U _ _ bM)) = tanCoc P j v D D' φ x +
       φ (dl (gv P (ptV v x).left (j D x) (i (TV hx)))) -
-      dl (gv P (ptV v (spOver φ ≫ x)).left (j D' (spOver φ ≫ x)) (i (TV hx'))) := by
-    have e : (iM hx').hom.φ (U _ _ bM) = gv P (ptV v (spOver φ ≫ x)).left (i (TV hx')) (i (TV hx)) :=
+      dl (gv P (ptV v x').left (j D' x') (i (TV hx'))) := by
+    have e : (iM hx').hom.φ (U _ _ bM) = gv P (ptV v x').left (i (TV hx')) (i (TV hx)) :=
       (hU _ _ bM).trans (gv_eq P _ _).symm
     have e' : spMap (epsHom φ : DualNumber D →+* DualNumber D') ≫ (ptV v x).left =
-        (ptV v (spOver φ ≫ x)).left := (bHom v φ x).pt
+        (ptV v x').left := (bHom v φ x).pt
     exact (congrArg (dl (D := D')) e).trans (dl_gv φ P hP _ _ e' (hi (TV hx)) (ptV_mem P hv (hj D x hx))
       (hi (TV hx')) (ptV_mem P hv (hj D' _ hx')))
   have hk := hκ D D' φ x (sHom x) (iHom v hv x) (sHom _) (iHom v hv _) (aHom φ x) (bHom v φ x) (τHom φ x)

@@ -327,10 +327,14 @@ theorem boxGraph_graph_heis : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Cons
       have hx₂ : IsHalf ε (mapB e x) := hx.2
       have s₁ : IsSBHalf ε (latA G t i j) (fun y' => φ₁ (y' + mapA t e x)) :=
         sb_trans_latO (S := spW₁ G i j) (T := spV G i j) (ΛS := G.Λ (.grid (i : ℕ) (j : ℕ)))
-          (ΛT := G.Λ (.grid (i : ℕ) ((j : ℕ) + 1))) sdW'.1 sdV.1 hinf hφ₁ hx₁
+          (ΛT := G.Λ (.grid (i : ℕ) ((j : ℕ) + 1)))
+          (GlobalTheory.PlaceVec.selfDual_isFullLattice _ _ sdW')
+          (GlobalTheory.PlaceVec.selfDual_isFullLattice _ _ sdV) hinf hφ₁ hx₁
       have s₂ : IsSBHalf ε (latB G i j) (fun y' => φ₂ (y' + mapB e x)) :=
         sb_trans_latO (S := negSp (spV₁ G i j)) (T := spW₁ G i j) (ΛS := G.Λ (.grid ((i : ℕ) + 1) (j : ℕ)))
-          (ΛT := G.Λ (.grid (i : ℕ) (j : ℕ))) sdV₁.1 sdW.1 hinf hφ₂ hx₂
+          (ΛT := G.Λ (.grid (i : ℕ) (j : ℕ)))
+          (GlobalTheory.PlaceVec.selfDual_isFullLattice (negSp (spV₁ G i j)) _ sdV₁)
+          (GlobalTheory.PlaceVec.selfDual_isFullLattice _ _ sdW) hinf hφ₂ hx₂
       show (fun u => boxS t e φ₁ φ₂ (u + x), heisS Γ W.ψ x (boxS t e (T₁ φ₁) (T₂ φ₂))) ∈ boxGraph t e ε T₁ T₂
       rw [heisS_box t e Γ hW hWW]
       refine Submodule.subset_span ⟨_, _, s₁, s₂, ?_⟩

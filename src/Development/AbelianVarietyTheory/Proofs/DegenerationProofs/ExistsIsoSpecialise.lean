@@ -69,7 +69,7 @@ theorem exists_fg_iso [QuasiCompact A.hom] [IsSeparated A.hom] [Flat A.hom] [Loc
     inferInstanceAs (IsSeparated (pullback.snd _ _))
   have : IsSeparated ((Over.pullback (spMap (algebraMap k R))).obj A').hom :=
     inferInstanceAs (IsSeparated (pullback.snd _ _))
-  have : IsIso g₁ := ExtUnique.isIso_of_isPullback (spMap R.val.toRingHom) (isGrpPullback_bcMap A R.val).1
+  have : IsIso g₁ := ExtUnique.isIso_of_isPullback (isGrpPullback_bcMap A R.val).1
     (isGrpPullback_bcMap A' R.val).1 e g₁ g₂ c₁ c₂
   exact ⟨R, asIso g₁, hR₁.sup hR₂, m₁⟩
 

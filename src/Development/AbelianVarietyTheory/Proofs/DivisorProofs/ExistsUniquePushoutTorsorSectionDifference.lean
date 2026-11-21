@@ -41,7 +41,7 @@ theorem root_spOver {R : Type} [CommRing R] {A : Over (Sp R)} [GrpObj A] {n : �
     {D : Type} [CommRing D] [Algebra R D] {x : Pt A D} {D' : Type} [CommRing D'] [Algebra R D']
     {D'' : Type} [CommRing D''] [Algebra R D''] (φ : D →ₐ[R] D') (ψ : D' →ₐ[R] D'')
     (z : Pt A D') (hz : z ^ n = spOver φ ≫ x) : (spOver ψ ≫ z) ^ n = spOver (ψ.comp φ) ≫ x := by
-  rw [← MonObj.comp_pow, hz, ← Category.assoc, spOver_comp]
+  rw [← MonObj.comp_pow z n (spOver ψ), hz, ← Category.assoc, spOver_comp]
 
 end GlobalTheory.PtExt
 

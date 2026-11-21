@@ -25,7 +25,7 @@ abbrev smallAt (W : K → X.left.Opens) {D : Type} [CommRing D] [Algebra R D] (x
     SmallCat W := ⟨trivAt x, h⟩
 
 theorem Sm.map {W : K → X.left.Opens} {D D' : Type} [CommRing D] [Algebra R D] [CommRing D'] [Algebra R D']
-    (φ : D →ₐ[R] D') {x : Pt X D} (h : Sm W x) : Sm W (spOver φ ≫ x) := by
+    (φ : D →ₐ[R] D') {x : Pt X D} (h : Sm W x) : Sm W (D := D') (spOver φ ≫ x) := by
   obtain ⟨i, hi⟩ := h
   exact ⟨i, (trivMap φ x).le_preimage hi⟩
 

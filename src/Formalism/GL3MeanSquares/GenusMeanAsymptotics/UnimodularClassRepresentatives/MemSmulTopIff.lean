@@ -276,10 +276,12 @@ theorem pair (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K
   set A₂ := locF 𝔭 M₂ with hA₂
   set C := autSub h A₁ ⊓ autSub h A₂ with hC
   set B := A₁ ⊓ A₂ with hB
-  obtain ⟨j₁, hj₁⟩ := exists_congr_mem_autSub h hM₁.toIsLattice hM₂.toIsLattice h𝔭
-  obtain ⟨j₂, hj₂⟩ := exists_congr_mem_autSub h hM₂.toIsLattice hM₁.toIsLattice h𝔭
-  obtain ⟨r₁, hr₁⟩ := exists_pow_smul_le hM₁.toIsLattice hM₂.toIsLattice h𝔭
-  obtain ⟨r₂, hr₂⟩ := exists_pow_smul_le hM₂.toIsLattice hM₁.toIsLattice h𝔭
+  obtain ⟨j₁, hj₁⟩ :=
+    exists_congr_mem_autSub h (M₁ := M₁) (M₂ := M₂) inferInstance inferInstance h𝔭
+  obtain ⟨j₂, hj₂⟩ :=
+    exists_congr_mem_autSub h (M₁ := M₂) (M₂ := M₁) inferInstance inferInstance h𝔭
+  obtain ⟨r₁, hr₁⟩ := exists_pow_smul_le (M₁ := M₁) (M₂ := M₂) inferInstance inferInstance h𝔭
+  obtain ⟨r₂, hr₂⟩ := exists_pow_smul_le (M₁ := M₂) (M₂ := M₁) inferInstance inferInstance h𝔭
   have hr₁' : ((extP K 𝔭) ^ r₁ • A₁ : Submodule (𝓞 K) V) ≤ B := le_inf Submodule.smul_le_right hr₁
   have hr₂' : ((extP K 𝔭) ^ r₂ • A₂ : Submodule (𝓞 K) V) ≤ B := le_inf hr₂ Submodule.smul_le_right
   have hlA₁ : locF 𝔭 A₁ = A₁ := LocalizedFibreSets.locF_idem 𝔭 M₁
@@ -337,8 +339,9 @@ theorem pair (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K
     (hle A₁ r₁ hr₁' (by omega)) hfinB n hΩB (hst A₁ r₁ hr₁' (by omega))
   have s₂ := cnt_sub hF (h := h) h𝔭 hlA₂ hlB (GoodPrimeTerms.isIntegralAt_locF h𝔭.isPrime hF hM₂i) inf_le_right
     (hle A₂ r₂ hr₂' (by omega)) hfinB n hΩB (hst A₂ r₂ hr₂' (by omega))
-  have i0 := card_quot_inf_ne_zero hM₁.toIsLattice hM₂.toIsLattice h𝔭
-  have im := card_quot_inf_mul hK hF hs hd hM₁.toIsLattice hM₁i hM₂.toIsLattice hM₂i h𝔭
+  have i0 := card_quot_inf_ne_zero (M₁ := M₁) (M₂ := M₂) inferInstance inferInstance h𝔭
+  have im := card_quot_inf_mul hK hF hs hd (M₁ := M₁) (M₂ := M₂)
+    inferInstance hM₁i inferInstance hM₂i h𝔭
   rw [← hA₁, ← hA₂, ← hB] at i0 im
   have hq : Ideal.absNorm 𝔭 ≠ 0 := (reductionMapsOfForms.absNorm_pos h𝔭).ne'
 

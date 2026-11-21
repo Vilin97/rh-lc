@@ -135,8 +135,8 @@ theorem iwasawa (B : Base F E) {n n₁ : ℕ} {X : Spc F E n} {X₁ : Spc F E n�
       ∃ β : GL (Fin 1) (Fv F v ⊗[F] E), (matHom _ σ X.Jᵀ q).1 * xc.map (inclR (F := F) (Fv F v)) =
         xc.map (inclR (F := F) (Fv F v)) * β.1 := fun v y =>
     if hv : Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v then
-      GlobalTheory.T.hyperbolic_pair_lattice_local_split F E σ hσ n X.Jᵀ hND xc yc hxx hyy hxy hyx X.L hX.lat.toIsLattice v hv (hSD v) y
-    else GlobalTheory.T.isotropic_vector_lattice_local F E σ hσ hB.unram n X.Jᵀ hND xc yc hxx hyx X.L hX.lat v hv (hSD v) y
+      GlobalTheory.T.hyperbolic_pair_lattice_local_split F E σ hσ n X.Jᵀ hND xc yc hxx hyy hxy hyx X.L (by first | exact hX.lat | exact hX.lat.toIsLattice) v hv (hSD v) y
+    else GlobalTheory.T.isotropic_vector_lattice_local F E σ hσ hB.unram n X.Jᵀ hND xc yc hxx hyx X.L (by first | exact hX.lat | exact hX.lat.toIsLattice) v hv (hSD v) y
   obtain ⟨a, ha, haK⟩ := GlobalTheory.T.majorant_frame_commutes_cartan F E σ B n X r s hB hX
   set g' := (ofGAd σ X.J).symm g with hg'
   choose qa ka hka hga βa hβa using fun w => GlobalTheory.T.archimedean_iwasawa_majorant_frame F E σ hσ n X.Jᵀ hND xc yc hxx hyx a ha w

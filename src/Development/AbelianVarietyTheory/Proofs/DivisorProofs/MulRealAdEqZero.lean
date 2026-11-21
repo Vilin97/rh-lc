@@ -252,7 +252,9 @@ theorem gram_xx (hA : H'.IsAdapted σ B W W₁ i₀ i₁) :
 
 theorem span_plane (hS : W.IsSkew σ B r' s') (hA : H'.IsAdapted σ B W W₁ i₀ i₁) (z : Fin d → E) :
     ∃ (s t : E) (u : Fin d₁ → E), z = s • H'.x + H'.ι *ᵥ u + t • H'.y := by
-  have htop : Submodule.span E (W.L : Set (Fin d → E)) = ⊤ := hS.lat.span_eq_top
+  have htop : Submodule.span E (W.L : Set (Fin d → E)) = ⊤ := by
+    let _ := hS.lat
+    exact Submodule.IsFullLattice.span_eq_top (A := E) (M := W.L)
   have hz : z ∈ Submodule.span E (W.L : Set (Fin d → E)) := by
     rw [htop]
     exact Submodule.mem_top

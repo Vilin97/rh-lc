@@ -137,24 +137,10 @@ private theorem quotient_norm_congr_of_quotient_eq (hF : IsFixF K F) {h : V →�
 
 theorem nkCount_eq_cnt (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) (hv : vd h L 𝔭 = 0) {k : ℕ} (hk : 1 ≤ k) (n : 𝓞 F) :
     nkCount h L 𝔭 k n = cnt hF 𝔭 k (finrank K V) (ι n) := by
   obtain ⟨z, g, hzo, hzg, hg1⟩ := exists_frame hK hF hs hd hL hLi h𝔭 hv hk
-  have hLfull : Submodule.IsFullLattice K L := by
-    obtain ⟨P, hP, hPcomap⟩ := exists_maximal_over hK hF h𝔭
-    have hle : extP K 𝔭 ≤ P := Ideal.map_le_iff_le_comap.mpr hPcomap.ge
-    have hdiag : ∀ i, h (z i : V) (z i : V) ≠ 0 := by
-      intro i hi
-      rw [hzg i] at hi
-      have hgi : g i = 0 := RingOfIntegers.coe_injective (hi.trans (map_zero _).symm)
-      have hmem : g i - 1 ∈ P := hle (Ideal.pow_le_self (by omega) (hg1 i))
-      exact hP.ne_top ((Ideal.eq_top_iff_one P).2 (by simpa [hgi] using P.neg_mem hmem))
-    have hli : LinearIndependent K (fun i => (z i : V)) :=
-      LinearMap.linearIndependent_of_isOrthoᵢ (B := h) hzo hdiag
-    refine { toIsLattice := hL, span_eq_top := top_unique ?_ }
-    rw [← hli.span_eq_top_of_card_eq_finrank' (Fintype.card_fin _)]
-    exact Submodule.span_mono (Set.range_subset_iff.mpr fun i => (z i).2)
   have hint : ∀ y : ↥L, ∃ o : 𝓞 K, h (y : V) (y : V) = algebraMap (𝓞 K) K o := fun y =>
     let ⟨o, ho⟩ := Submodule.mem_one.mp (hLi (y : V) y.2 (y : V) y.2)
     ⟨o, ho.symm⟩
@@ -175,7 +161,7 @@ theorem nkCount_eq_cnt (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF 
   haveI : Finite (Fin (finrank K V) → AQ K 𝔭 k) := vectorCountBounds.finite_vec h𝔭 k
   have hcard : Nat.card (↥L ⧸ ((extP K 𝔭) ^ k • ⊤ : Submodule (𝓞 K) ↥L)) =
       Nat.card (Fin (finrank K V) → AQ K 𝔭 k) := by
-    rw [MeanB.card_quot_extP hK hF hLfull h𝔭 k, vectorCountBounds.card_vec hK h𝔭 k, Fintype.card_fin]
+    rw [MeanB.card_quot_extP hK hF hL h𝔭 k, vectorCountBounds.card_vec hK h𝔭 k, Fintype.card_fin]
     ring_nf
   haveI : Finite (↥L ⧸ ((extP K 𝔭) ^ k • ⊤ : Submodule (𝓞 K) ↥L)) :=
     Nat.finite_of_card_ne_zero (by rw [hcard]; exact Nat.card_pos.ne')

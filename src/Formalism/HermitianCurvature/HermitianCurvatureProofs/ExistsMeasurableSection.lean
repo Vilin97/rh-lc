@@ -236,6 +236,8 @@ theorem secM_spec (S : B.RealPlaceData k r Wp Wq) (ν' : Fin (2 * r + k + 1) →
   set μ := Real.sqrt (T' / T) with hμdef
   have hμ : 0 < μ := Real.sqrt_pos.2 (div_pos hT' hT)
   have hμ' : (μ : ℂ) ≠ 0 := by exact_mod_cast hμ.ne'
+  have hprW := orthoProj_m0_intertwine m₀ (hmU := hmU) (hme := hme) (hms := hms)
+    hz hz' μ hμ.ne' hmz hzz0
   have hdet : Zm.det ≠ 0 := Sm.det_ne_of_gPoly (T := T) (T' := T') hT hT' hG
   have hdn : (‖Zm.det‖ : ℝ) ≠ 0 := norm_ne_zero_iff.mpr hdet
   have hdn' : 0 < ‖Zm.det‖ := norm_pos_iff.mpr hdet
@@ -327,8 +329,7 @@ theorem secM_spec (S : B.RealPlaceData k r Wp Wq) (ν' : Fin (2 * r + k + 1) →
       rw [hZ, cvec_sum, Matrix.mulVec_sum]
       refine Finset.sum_congr rfl (fun b _ => ?_)
       rw [← Matrix.mulVec_mulVec, hσf, cvec_smul, Matrix.mulVec_smul, kap]
-    rw [hcof, orthoProj_m0_intertwine m₀ hmU hme hms hz hz' μ hμ.ne' hmz hzz0,
-      prW_cvec hz' hν hνz hzz0, Matrix.mulVec_smul, hZ]
+    rw [hcof, hprW, prW_cvec hz' hν hνz hzz0, Matrix.mulVec_smul, hZ]
     congr 1
     have hsum : (∑ b, kap Zm b • xco T T' Zm b).2.2.2 = ∑ b, kap Zm b * be T T' Zm b := by
       simp [Prod.snd_sum, xco]
@@ -455,7 +456,7 @@ theorem secM_spec (S : B.RealPlaceData k r Wp Wq) (ν' : Fin (2 * r + k + 1) →
     have hinv : (m₀ * σ)⁻¹ *ᵥ u = v := by
       have : (m₀ * σ) *ᵥ v = u := by rw [← Matrix.mulVec_mulVec, hfix, hmv]
       rw [← this, Matrix.mulVec_mulVec, Matrix.nonsing_inv_mul _ hγu, Matrix.one_mulVec]
-    rw [hinv, ← hmv, orthoProj_m0_intertwine m₀ hmU hme hms hz hz' μ hμ.ne' hmz hzz0]
+    rw [hinv, ← hmv, hprW]
 
 end main
 

@@ -25,10 +25,15 @@ variable {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] [Algebra R 
 def SemiBialgHom.liftOver {ρ : R →+* R''} (f : SemiBialgHom ρ A A'') (τ : R' →+* R'')
     (h : ∀ r, ρ r = τ (algebraMap R R' r)) : SemiBialgHom τ (R' ⊗[R] A) A'' :=
   letI : Algebra R A'' := ((algebraMap R'' A'').comp ρ).toAlgebra
+  let f' : A →ₐ[R] A'' := ⟨f.toRingHom, fun r => by
+    change f (algebraMap R A r) = algebraMap R'' A'' (ρ r)
+    exact f.map_algebraMap r⟩
   let g : R' ⊗[R] A →ₐ[R] A'' := Algebra.TensorProduct.lift
     { (algebraMap R'' A'').comp τ with commutes' := fun r => congrArg (algebraMap R'' A'') (h r).symm }
-    { f.toRingHom with commutes' := f.map_algebraMap } fun _ _ => .all _ _
-  have hg : ∀ r a, g (r ⊗ₜ a) = τ r • f a := fun r a => (Algebra.smul_def (τ r) (f a)).symm
+    f' fun _ _ => .all _ _
+  have hg : ∀ r a, g (r ⊗ₜ a) = τ r • f a := fun r a => by
+    change algebraMap R'' A'' (τ r) * f a = τ r • f a
+    exact (Algebra.smul_def (τ r) (f a)).symm
   have hs : ∀ (r : R') x, g (r • x) = τ r • g x := fun r x => by
     induction x with
     | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
@@ -50,16 +55,17 @@ def SemiBialgHom.liftOver {ρ : R →+* R''} (f : SemiBialgHom ρ A A'') (τ : R
         rw [← mul_one r, ← smul_eq_mul, ← smul_tmul', hs, map_smul, map_smul, map_smulₛₗ, hg, map_one,
           one_smul]
         congr 1
-        change _ = TensorProduct.map _ _ (comul (toBaseChange R R' A a))
-        rw [← SemiBialgHom.two_comul, ← SemiBialgHom.two_comul]
+        rw [← f.two_comul, TensorProduct.comul_tmul, CommSemiring.comul_apply]
         generalize comul (R := R) a = c
         induction c with
-        | add x y hx hy => simp only [map_add (f := _), hx, hy]
+        | add x y hx hy => simp only [tmul_add, map_add (f := _), hx, hy]
         | tmul a b => simp [hg] }
 
 @[simp] theorem SemiBialgHom.liftOver_tmul {ρ : R →+* R''} (f : SemiBialgHom ρ A A'')
     (τ : R' →+* R'') (h : ∀ r, ρ r = τ (algebraMap R R' r)) (r : R') (a : A) :
-    f.liftOver τ h (r ⊗ₜ a) = τ r • f a := (Algebra.smul_def (τ r) (f a)).symm
+    f.liftOver τ h (r ⊗ₜ a) = τ r • f a := by
+  change algebraMap R'' A'' (τ r) * f a = τ r • f a
+  exact (Algebra.smul_def (τ r) (f a)).symm
 
 end Over
 
@@ -91,7 +97,9 @@ def frobBialg (h : (p : R) = 0) (A : Type) [CommRing A] [Bialgebra R A] :
     | tmul a b => simp [Algebra.TensorProduct.tmul_pow]
 
 @[simp] theorem frobBialg_apply (h : (p : R) = 0) {A : Type} [CommRing A] [Bialgebra R A] (a : A) :
-    frobBialg h A a = a ^ p := frobRing_apply (natCast_eq_zero_of_algebra h A) a
+    frobBialg h A a = a ^ p := by
+  change frobRing (natCast_eq_zero_of_algebra h A) a = a ^ p
+  exact frobRing_apply (natCast_eq_zero_of_algebra h A) a
 
 end Frobenius
 
@@ -109,14 +117,13 @@ variable {p : ℕ} {O O' O'' : Type} [CommRing O] [CommRing O'] [CommRing O''] [
 def SemiHom.liftOver {G'' : PDivGroup p O''} {ρ : O →+* O''} (s : SemiHom ρ G'' G) (τ : O' →+* O'')
     (h : ∀ r, ρ r = τ (algebraMap O O' r)) : SemiHom τ G'' (G.baseChange O') :=
   ⟨fun n => (s.app n).liftOver τ h, fun n x => by
-    induction x using TensorProduct.induction_on with
-    | zero => simp
+    induction x using TensorProduct.inductionOn with
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r a => simp [s.res_app]⟩
 
 @[simp] theorem SemiHom.liftOver_app {G'' : PDivGroup p O''} {ρ : O →+* O''} (s : SemiHom ρ G'' G)
     (τ : O' →+* O'') (h : ∀ r, ρ r = τ (algebraMap O O' r)) (n : ℕ) (r : O') (a : G.A n) :
-    (s.liftOver τ h).app n (r ⊗ₜ a) = τ r • s.app n a := (s.app n).liftOver_tmul τ h r a
+    (s.liftOver τ h).app n (r ⊗ₜ[O] a) = τ r • s.app n a := (s.app n).liftOver_tmul τ h r a
 
 
 variable (O') in

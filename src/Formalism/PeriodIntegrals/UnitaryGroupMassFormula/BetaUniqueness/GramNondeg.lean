@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BetaUniqueness.Skeleton
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BetaUniqueness.Lemmas
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ScalarPairOrthogonal.MemThPairs
 
 @[expose] public section
 
@@ -191,57 +192,14 @@ end Flag
 end GN
 
 open GN in
-theorem gram_matrix_nondegenerate : GramNondeg := by
-  intro E _ _ _ S Λ r T T' F F' hΛ hL hL' hG
+theorem gram_matrix_nondegenerate_of_span_eq {E : Type} [Field E] [NumberField E] [StarRing E]
+    {S : HSpace E} (Λ : Submodule (𝓞 E) S.V) {r : ℕ} {T T' : E}
+    (F : LFlag S r T) (F' : LFlag S r T')
+    (hsp : UUE Λ F F' = Submodule.span E (Set.range (Sum.elim F.fl.fvec F'.fl.fvec)))
+    (hG : Gval F F' ≠ 0) :
+    finrank E (UUE Λ F F') = 2 * r + 2 ∧ UUE Λ F F' ⊓ orth S (UUE Λ F F') = ⊥ := by
   let v : Fin (r + 1) ⊕ Fin (r + 1) → S.V := Sum.elim F.fl.fvec F'.fl.fvec
-  have hsp : UUE Λ F F' = Submodule.span E (Set.range v) := by
-    have hX : ∀ {T₀ : E} (F₀ : LFlag S r T₀), (∀ a, v (Sum.inl a) = F₀.fl.fvec a) ∨
-        (∀ b, v (Sum.inr b) = F₀.fl.fvec b) → Xsp F₀ ≤ Submodule.span E (Set.range v) := by
-      intro T₀ F₀ h
-      apply Submodule.span_mono
-      rintro _ ⟨i, rfl⟩
-      rcases h with h | h
-      · exact ⟨Sum.inl i.castSucc, by rw [h, fvec_castSucc]⟩
-      · exact ⟨Sum.inr i.castSucc, by rw [h, fvec_castSucc]⟩
-    apply le_antisymm
-    · unfold UUE spanE
-      rw [Submodule.span_le]
-      have hU : UU Λ F F' ≤ (Submodule.span E (Set.range v)).restrictScalars (𝓞 E) := by
-        unfold UU
-        refine sup_le (sup_le (sup_le ?_ ?_) ?_) ?_
-        · intro y hy
-          exact hX F (Or.inl fun _ => rfl) hy.2
-        · rw [Submodule.span_le, hL.2]
-          rintro _ rfl
-          exact Submodule.subset_span ⟨Sum.inl (Fin.last r), by simp [v, fvec_last]⟩
-        · intro y hy
-          exact hX F' (Or.inr fun _ => rfl) hy.2
-        · rw [Submodule.span_le, hL'.2]
-          rintro _ rfl
-          exact Submodule.subset_span ⟨Sum.inr (Fin.last r), by simp [v, fvec_last]⟩
-      exact hU
-    · rw [Submodule.span_le]
-      rintro _ ⟨i, rfl⟩
-      rcases i with a | b
-      · refine Fin.lastCases ?_ (fun i => ?_) a
-        · show F.fl.fvec (Fin.last r) ∈ UUE Λ F F'
-          rw [fvec_last, ← hL.2]
-          apply Submodule.subset_span
-          unfold UU
-          exact Submodule.mem_sup_left (Submodule.mem_sup_left (Submodule.mem_sup_right
-            (Submodule.mem_span_singleton_self _)))
-        · show F.fl.fvec i.castSucc ∈ UUE Λ F F'
-          rw [fvec_castSucc]
-          exact Xsp_le_UUE S Λ hΛ F F' (Submodule.subset_span ⟨i, rfl⟩)
-      · refine Fin.lastCases ?_ (fun i => ?_) b
-        · show F'.fl.fvec (Fin.last r) ∈ UUE Λ F F'
-          rw [fvec_last, ← hL'.2]
-          apply Submodule.subset_span
-          unfold UU
-          exact Submodule.mem_sup_right (Submodule.mem_span_singleton_self _)
-        · show F'.fl.fvec i.castSucc ∈ UUE Λ F F'
-          rw [fvec_castSucc]
-          exact Xsp_le_UUE' S Λ hΛ F F' (Submodule.subset_span ⟨i, rfl⟩)
+  change UUE Λ F F' = Submodule.span E (Set.range v) at hsp
   have hcoef : ∀ g : Fin (r + 1) ⊕ Fin (r + 1) → E,
       (∀ a, S.hT (F.fl.fvec a) (∑ i, g i • v i) = 0) →
       (∀ b, S.hT (F'.fl.fvec b) (∑ i, g i • v i) = 0) → g = 0 := by
@@ -273,5 +231,11 @@ theorem gram_matrix_nondegenerate : GramNondeg := by
     have hg := hcoef g (fun a => hw2 _ (Submodule.subset_span ⟨Sum.inl a, rfl⟩))
       (fun b => hw2 _ (Submodule.subset_span ⟨Sum.inr b, rfl⟩))
     simp [hg]
+
+theorem gram_matrix_nondegenerate : GramNondeg := by
+  intro E _ _ _ S Λ r T T' F F' hΛ hL hL' hG
+  refine gram_matrix_nondegenerate_of_span_eq Λ F F' ?_ hG
+  apply PI.ScalarPairDr.W.UUE_eq Λ F F' hL.2 hL'.2 <;>
+    simp only [spanE, XLam, span_inf_toO S Λ hΛ, le_refl]
 
 end PI.UnitaryGroupMassFormula.BetaLUniq

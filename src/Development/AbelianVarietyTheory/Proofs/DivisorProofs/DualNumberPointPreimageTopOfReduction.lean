@@ -70,30 +70,20 @@ theorem evalSectionAtPointOrZero_schemeHom_app (Y Z : Scheme.{0}) (D : Type) [Co
     rw [dite_eq_right h, dite_eq_right h']
 
 theorem dualNumberPoint_preimage_top_of_reduction (Y : Scheme.{0}) (D : Type) [CommRing D] (y : Sp (DualNumber D) ⟶ Y) (U : Y.Opens) (h : ⊤ ≤ (spMap (TrivSqZeroExt.fstHom D D D).toRingHom ≫ y) ⁻¹ᵁ U) : ⊤ ≤ y ⁻¹ᵁ U := by
+  let f : DualNumber D →+* D := (TrivSqZeroExt.fstHom D D D).toRingHom
+  have hf : Function.Surjective f := fun a ↦ ⟨TrivSqZeroExt.inl a, rfl⟩
   intro p _
-  let q : Sp D := PrimeSpectrum.comap (TrivSqZeroExt.inlHom D D) p
-  have hq : (spMap (TrivSqZeroExt.fstHom D D D).toRingHom) q = p := by
-    apply PrimeSpectrum.ext
-    ext z
-    change z ∈ (PrimeSpectrum.comap ((TrivSqZeroExt.fstHom D D D).toRingHom) q).asIdeal ↔ z ∈ p.asIdeal
-    simp only [q, PrimeSpectrum.comap_asIdeal, Ideal.mem_comap]
-    have heps : (DualNumber.eps : DualNumber D) ∈ p.asIdeal :=
-      p.isPrime.mem_of_pow_mem 2 (by rw [pow_two, DualNumber.eps_mul_eps]; exact p.asIdeal.zero_mem)
-    have hz : z = TrivSqZeroExt.inl z.fst + TrivSqZeroExt.inl z.snd * DualNumber.eps := by
-      ext <;> simp
-    constructor
-    · intro hm
-      rw [hz]
-      exact p.asIdeal.add_mem hm (p.asIdeal.mul_mem_left _ heps)
-    · intro hm
-      have : TrivSqZeroExt.inl z.fst = z - TrivSqZeroExt.inl z.snd * DualNumber.eps := by
-        rw [hz]; ext <;> simp
-      change TrivSqZeroExt.inl z.fst ∈ p.asIdeal
-      rw [this]
-      exact p.asIdeal.sub_mem hm (p.asIdeal.mul_mem_left _ heps)
-  have := h (Set.mem_univ q)
-  rw [← hq]
-  exact this
+  change PrimeSpectrum (DualNumber D) at p
+  have hp : p ∈ Set.range (PrimeSpectrum.comap f) := by
+    rw [range_comap_of_surjective D f hf, PrimeSpectrum.mem_zeroLocus]
+    intro z hz
+    change z.fst = 0 at hz
+    have hz₂ : z ^ 2 = 0 := by
+      rw [pow_two]
+      apply TrivSqZeroExt.ext <;> simp [hz]
+    exact p.isPrime.mem_of_pow_mem 2 (hz₂ ▸ p.asIdeal.zero_mem)
+  obtain ⟨q, hq⟩ := hp
+  exact hq ▸ h (Set.mem_univ q)
 
 theorem evU_dl_rules : (∀ (Y : Scheme.{0}) (D D' : Type) [CommRing D] [CommRing D'] (φ : D →+* D') (x : Sp D ⟶ Y) (U : Y.Opens) (a : Γ(Y, U)), ⊤ ≤ x ⁻¹ᵁ U → evU (spMap φ ≫ x) U a = φ (evU x U a)) ∧ (∀ (Y : Scheme.{0}) (D : Type) [CommRing D] (x : Sp D ⟶ Y) (U V : Y.Opens) (h : V ≤ U) (a : Γ(Y, U)), ⊤ ≤ x ⁻¹ᵁ V → evU x V ((Y.presheaf.map (homOfLE h).op).hom a) = evU x U a) ∧ (∀ (Y Z : Scheme.{0}) (D : Type) [CommRing D] (x : Sp D ⟶ Y) (q : Y ⟶ Z) (U : Z.Opens) (a : Γ(Z, U)), evU x (q ⁻¹ᵁ U) ((q.app U).hom a) = evU (x ≫ q) U a) ∧ (∀ (D : Type) [CommRing D] (u u' : DualNumber D), IsUnit u → IsUnit u' → dl (u * u') = dl u + dl u') ∧ (∀ (R D D' : Type) [CommRing R] [CommRing D] [Algebra R D] [CommRing D'] [Algebra R D'] (φ : D →ₐ[R] D') (u : DualNumber D), (epsHom φ u).fst = φ u.fst ∧ (epsHom φ u).snd = φ u.snd ∧ (IsUnit u → dl (epsHom φ u) = φ (dl u))) ∧ ∀ (Y : Scheme.{0}) (D : Type) [CommRing D] (y : Sp (DualNumber D) ⟶ Y) (U : Y.Opens), ⊤ ≤ (spMap (TrivSqZeroExt.fstHom D D D).toRingHom ≫ y) ⁻¹ᵁ U → ⊤ ≤ y ⁻¹ᵁ U :=
   ⟨evalSectionAtPointOrZero_specMap_comp, evalSectionAtPointOrZero_restriction, evalSectionAtPointOrZero_schemeHom_app, dualNumberSndMulInverseFst_mul_units, dualNumberAlgHomMap_fst_snd_logDerivative, dualNumberPoint_preimage_top_of_reduction⟩

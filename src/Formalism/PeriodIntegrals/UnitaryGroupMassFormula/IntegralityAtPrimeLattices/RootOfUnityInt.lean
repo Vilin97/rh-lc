@@ -46,8 +46,15 @@ theorem bases0 (T : Forms0 D u) (c : (D.mem u).C.cls 0) :
       IsLocBasis (D.mem u).A.T (Lk T.atT 0 (Nat.zero_le _) v c : Set _) B' := by
   have : Fact (D.mem u).A.T.Prime := ⟨(D.mem u).A.T_prime⟩
   have hL := bwB_clsCrd_lat D u 0 (Nat.zero_le _) c
+  have hLfull : Submodule.IsFullLattice D.host.E (clsCrd D u 0 (Nat.zero_le _) c) := by
+    refine { toIsLattice := hL, span_eq_top := ?_ }
+    letI := D.host.cmStar
+    unfold clsCrd
+    rw [Submodule.map_coe, LinearMap.coe_restrictScalars, Submodule.span_image,
+      (D.clsLat_lat u 0 c).span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+    exact LinearEquiv.surjective _
   obtain ⟨d, hd, hle⟩ := dual_le_bnd (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _))
-    (bwB_gramN_det D 0 (Nat.zero_le _)) _ hL
+    (bwB_gramN_det D 0 (Nat.zero_le _)) _ hLfull
   obtain ⟨d0, hd0, hle0⟩ := exists_le_bnd _ hL
   have hLd : Ld D u 0 (Nat.zero_le _) c ≤ bnd d := hle
   have hLd_sp := dual_span (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _)) _ hL

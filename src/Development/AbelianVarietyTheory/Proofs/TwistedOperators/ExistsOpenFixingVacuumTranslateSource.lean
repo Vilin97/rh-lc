@@ -50,7 +50,9 @@ theorem exists_open_fix_translate_source : ∀ (D : D7) (ψ : AddChar (AF D.host
     ∃ U : Subgroup (GA D S), IsOpen (U : Set (GA D S)) ∧ ∀ κ ∈ U, κ ∈ GfC S →
       heisO ψ S T (actO S T κ 1 u) f₀ = heisO ψ S T u f₀ := by
   intro D ψ θ S T sS sT ΛS ΛT hS hT f₀ hvac u hu
-  obtain ⟨M, hM, hMu⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO' hS.1 hT.1 u hu
+  obtain ⟨M, hM, hMu⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO'
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hS)
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hT) u hu
   have hN : 0 < 2 * (2 * 2) * M * M := by positivity
   have hev := GlobalTheory.LatNhds.eventually_move S T ΛS ΛT hS hT u hu (2 * (2 * 2) * M * M) hN
   have hc : Filter.Tendsto (fun κ : GA D S => (κ, (1 : GA D T))) (𝓝 1) (𝓝 1) := by

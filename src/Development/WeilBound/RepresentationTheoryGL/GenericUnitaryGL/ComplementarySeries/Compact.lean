@@ -74,7 +74,7 @@ theorem exists_pw (x : GL (Fin (d + d)) k) :
   obtain ⟨u, g, w, hw, rfl⟩ := GlobalTheory.SmGL.UnitInd.exists_iwasawa (blk2 d) x
   have hg : leviEmb k (blk2 d) g ∈ parab k (blk2 d) :=
     mem_parab_iff.2 fun _ _ i j hab => by
-      simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne']
+      simp [leviEmb, Matrix.blockDiagonal'_apply', hab.ne']
   exact ⟨⟨(u : GL (Fin (d + d)) k) * leviEmb k (blk2 d) g,
     mul_mem (unipRad_le_parab k (blk2 d) u.2) hg⟩, w, hw, rfl⟩
 

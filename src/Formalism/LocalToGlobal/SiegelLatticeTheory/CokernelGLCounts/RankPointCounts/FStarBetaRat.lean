@@ -34,7 +34,7 @@ theorem betaRat_holds : BetaRat Zd u u' F0 what₂ := by
   obtain ⟨hZd, hZ₁d', hx'⟩ := starMinors_holds u u' F0 what₂ γ Z hCtx
   have hZ : ZhatL (lf D F0) F'₂ = Z := hS.1
   have hrow := hC.2.1.1 γ.lam γ.mem
-  have hΛ : Submodule.IsLattice D.host.E γ.lam := hrow.2.1.1
+  have hΛ : Submodule.IsFullLattice D.host.E γ.lam := hrow.1.1
   have hLlf : IsLift γ.lam (lf D F0) := hrow.2.1.2.2.1
   have hLrep : IsLift γ.lam (repF γ) := hPD.1
   set f := frame (lf D F0) with hf

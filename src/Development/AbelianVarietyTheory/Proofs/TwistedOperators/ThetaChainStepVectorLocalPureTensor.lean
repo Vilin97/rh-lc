@@ -64,7 +64,9 @@ theorem stepVecLocal : ∀ D : D7, StepVecLocal D := by
   have hPi : ∀ i : ↥s, (Formalism.L2.NTheta.IsIdemAt (es i.1) i.1) := fun i => hes i.1 i.2
   have hsplit : ∀ i : ↥s, IsSplitIdem D (es i.1) ∧ es i.1 + cA D (es i.1) = idem D (.inl (vP i)) := fun i =>
     ⟨(hφ i).1, (hφ i).2.1⟩
-  obtain ⟨K, hK, hKC⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO hSd.1 hTd.1 βS βT
+  obtain ⟨K, hK, hKC⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hSd)
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hTd) βS βT
   have hsb : ∀ i : ↥s, IsSBHalf (es i.1) (latO S T ΛS ΛT fun _ => True) (Φ i) := fun i =>
     GlobalTheory.PlaceDatum.isSBHalf_of_red (es i.1) _ (frMapO S T βS βT) (GlobalTheory.PlaceDatum.frMapO_add βS βT)
       (GlobalTheory.PlaceDatum.exists_den_frMapO hSd.1.fg hTd.1.fg βS βT)

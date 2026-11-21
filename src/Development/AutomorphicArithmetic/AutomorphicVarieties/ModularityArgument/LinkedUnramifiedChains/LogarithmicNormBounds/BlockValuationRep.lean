@@ -202,14 +202,14 @@ private theorem move_all (ρ : G K Ω →* GL (Fin 3) (Qbar l)) (R : G ℚ Ω �
     have h2 : Af.PotCrysAt r₂ P' := UpperTheory.potentiallyCrystalline_contragredient (ρ.comp c.toMonoidHom) r₂ P' (fun s => rfl) h1
     have hJ : (Jgl (R := Qbar l) 3)⁻¹ = Jgl (R := Qbar l) 3 := inv_eq_of_mul_eq_one_left Jgl_mul_Jgl
     have t : ∀ x : GL (Fin 3) (Qbar l), theta x = thetaAut 3 (Qbar l) x := fun _ => rfl
-    refine ⟨h2.of_iso ⟨(theta (R u).left)⁻¹ * Jgl 3, fun s => ?_⟩, _, flag_neg ρ c.toMonoidHom _ _ hd κ hf _ ha,
+    refine ⟨h2.of_iso ⟨(theta (R u).left)⁻¹ * Jgl (R := Qbar l) 3, fun s => ?_⟩, _, flag_neg ρ c.toMonoidHom _ _ hd κ hf _ ha,
       j.rev, i.rev, MonoidHom.ext fun s => ?_⟩
     · have h3 : theta (ρ (c s)) = theta (R u).left * ρ s * (theta (R u).left)⁻¹ := by
         have := congrArg theta (ha s)
         simp only [t, map_mul, map_inv] at this ⊢
         simp only [← t, theta_theta] at this ⊢
         exact this
-      have h4 : theta (ρ (c s)) = Jgl 3 * r₂ s * Jgl 3 := rfl
+      have h4 : theta (ρ (c s)) = Jgl (R := Qbar l) 3 * r₂ s * Jgl (R := Qbar l) 3 := rfl
       rw [_root_.mul_inv_rev, inv_inv, hJ]
       calc ρ s = (theta (R u).left)⁻¹ * (theta (R u).left * ρ s * (theta (R u).left)⁻¹) * theta (R u).left := by group
         _ = _ := by rw [← h3, h4]; simp only [mul_assoc]

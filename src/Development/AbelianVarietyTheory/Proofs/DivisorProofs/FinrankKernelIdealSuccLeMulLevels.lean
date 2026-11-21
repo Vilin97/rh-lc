@@ -75,7 +75,7 @@ namespace PDivGroup
 theorem resOne_app {p : ℕ} {R : Type} [CommRing R] {G H : PDivGroup p R} (f : G ⟶ H) (n : ℕ)
     (a : H.A (n + 1)) : G.resOne n (f.app (n + 1) a) = f.app 1 (H.resOne n a) := by
   induction n with
-  | zero => rfl
+  | zero => simp only [resOne_zero]
   | succ n ih => rw [resOne_succ, resOne_succ, res_app, ih]
 
 theorem finrank_quot_kerIdeal_succ_le (p : ℕ) [Fact p.Prime] (k : Type) [Field k]

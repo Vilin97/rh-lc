@@ -33,8 +33,9 @@ namespace GlobalTheory.PtExt.OrthPt
 variable {R : Type} [CommRing R]
 
 theorem iSup_parCov {A B : Over (Sp R)} {K : Type} {W : K → (A ⊗ B).left.Opens} (hW : ⨆ i, W i = ⊤)
-    {D : Type} [CommRing D] [Algebra R D] (x : Pt A D) : ⨆ i, parCov W x i = ⊤ :=
-  Scheme.Hom.iSup_preimage_eq_top _ hW
+    {D : Type} [CommRing D] [Algebra R D] (x : Pt A D) : ⨆ i, parCov W x i = ⊤ := by
+  unfold parCov
+  exact (x ▷ B).left.iSup_preimage_eq_top hW
 
 theorem sm_parCov {A B : Over (Sp R)} {K : Type} {W : K → (A ⊗ B).left.Opens}
     {D D' E : Type} [CommRing D] [Algebra R D] [CommRing D'] [Algebra R D'] [CommRing E] [Algebra R E]

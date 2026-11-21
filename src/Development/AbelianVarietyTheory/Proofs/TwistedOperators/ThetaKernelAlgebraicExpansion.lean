@@ -232,8 +232,12 @@ theorem psi_mem {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {S 
     {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}
     (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) {x y : WO S T} (hx : x.map (infPart D) = 0)
     (hy : y.map (infPart D) = 0) : ψ (symplO S T x y) ∈ Qb := by
-  obtain ⟨k, hk, hkx⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO' hS.1 hT.1 x hx
-  obtain ⟨k', hk', hky⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO' hS.1 hT.1 y hy
+  obtain ⟨k, hk, hkx⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO'
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hS)
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hT) x hx
+  obtain ⟨k', hk', hky⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO'
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hS)
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hT) y hy
   have hd := ((GlobalTheory.LatVac.latO_selfDual_approx_sign D ψ S T ΛS ΛT hψ hS hT).1 _ (nsmul_finite hx k)).1 hkx _ hky
   have hb : IsBichar (fun x y : WO S T => ψ (symplO S T x y)) := by
     have hl (a b y : WO S T) : symplO S T (a + b) y = symplO S T a y + symplO S T b y := by

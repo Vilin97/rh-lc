@@ -37,7 +37,8 @@ variable {N : ℕ} {R : Type} [CommRing R] [Algebra O R]
 
 theorem one_left (B : Type) [CommRing B] [Algebra O B] :
     (1 : SpAlg O B ⟶ A).left = spMap (algebraMap O B) ≫ η[A].left := by
-  rw [Hom.one_def, Over.comp_left]; rfl
+  rw [Hom.one_def, Over.comp_left, Over.toUnit_left]
+  rfl
 
 theorem isUnivTorsion_of_isPullback (y : SpAlg O R ⟶ A)
     (h : IsPullback y.left (spMap (algebraMap O R)) (mulN A N).left η[A].left) :

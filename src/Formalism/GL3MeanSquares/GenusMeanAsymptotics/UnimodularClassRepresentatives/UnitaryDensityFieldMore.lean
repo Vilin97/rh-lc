@@ -163,32 +163,17 @@ variable {V : Type} [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Modul
 
 theorem cnt_one_of_mem (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) (hv : vd h L 𝔭 = 0) (hm : 1 ≤ finrank K V) {n : 𝓞 F} (hn : n ∈ 𝔭) :
     (cnt hF 𝔭 1 (finrank K V) (ι n) : ℝ) = (Ideal.absNorm 𝔭 : ℝ) ^ (2 * finrank K V) -
       ((Ideal.absNorm 𝔭 : ℝ) - 1) * ((Ideal.absNorm 𝔭 : ℝ) ^ (2 * finrank K V - 1) *
         (1 - etaF K F 𝔭 ^ finrank K V * (Ideal.absNorm 𝔭 : ℝ) ^ (-(finrank K V : ℤ)))) := by
   classical
-  obtain ⟨z, g, hzo, hzg, hg1⟩ := exists_frame hK hF hs hd hL hLi h𝔭 hv (k := 1) le_rfl
-  have hLfull : Submodule.IsFullLattice K L := by
-    obtain ⟨P, hP, hPcomap⟩ := exists_maximal_over hK hF h𝔭
-    have hle : extP K 𝔭 ≤ P := Ideal.map_le_iff_le_comap.mpr hPcomap.ge
-    have hdiag : ∀ i, h (z i : V) (z i : V) ≠ 0 := by
-      intro i hi
-      rw [hzg i] at hi
-      have hgi : g i = 0 := RingOfIntegers.coe_injective (hi.trans (map_zero _).symm)
-      have hmem : g i - 1 ∈ P := hle (Ideal.pow_le_self (by omega) (hg1 i))
-      exact hP.ne_top ((Ideal.eq_top_iff_one P).2 (by simpa [hgi] using P.neg_mem hmem))
-    have hli : LinearIndependent K (fun i => (z i : V)) :=
-      LinearMap.linearIndependent_of_isOrthoᵢ (B := h) hzo hdiag
-    refine { toIsLattice := hL, span_eq_top := top_unique ?_ }
-    rw [← hli.span_eq_top_of_card_eq_finrank' (Fintype.card_fin _)]
-    exact Submodule.span_mono (Set.range_subset_iff.mpr fun i => (z i).2)
-  have h0 := sum_nkCount hK hF hs hd hLfull hLi h𝔭 1
+  have h0 := sum_nkCount hK hF hs hd hL hLi h𝔭 1
   have := MeanC.finite_quot_pow h𝔭 1
   have := Fintype.ofFinite (𝓞 F ⧸ 𝔭 ^ 1)
   rw [finsum_eq_sum_of_fintype,
-    Finset.sum_congr rfl fun n' _ => nkCount_eq_cnt hK hF hs hd hL hLi h𝔭 hv le_rfl _,
+    Finset.sum_congr rfl fun n' _ => nkCount_eq_cnt hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi h𝔭 hv le_rfl _,
     ← Finset.add_sum_erase Finset.univ _ (Finset.mem_univ (0 : 𝓞 F ⧸ 𝔭 ^ 1))] at h0
   have h1 : (cnt hF 𝔭 1 (finrank K V) (ι (Quotient.out (0 : 𝓞 F ⧸ 𝔭 ^ 1))) : ℝ) +
       ∑ n' ∈ Finset.univ.erase (0 : 𝓞 F ⧸ 𝔭 ^ 1),

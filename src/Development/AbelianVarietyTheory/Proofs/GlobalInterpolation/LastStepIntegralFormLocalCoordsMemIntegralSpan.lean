@@ -59,8 +59,8 @@ theorem latCo_one {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (l : I.
     rfl
   rw [e1, ← bc_invTrK_embGL, ← GlobalTheory.ValCmp.use₂]
   have hB := (GlobalTheory.T.localBasisRepLattice_integralCoords_spec I hI l u a w c).2.2.2
-  have hM : Submodule.IsLattice B.fields.E (((I.chIn u a).S B.R.m).Lsh (I.perIn u a).b0 ((I.perIn u a).tilPt c)) :=
-    ((l.ch u a).step B.R.m).lsh_lat (I.perIn u a).b0 ((I.perIn u a).tilPt c)
+  have hM : Submodule.IsFullLattice B.fields.E (((I.chIn u a).S B.R.m).Lsh (I.perIn u a).b0 ((I.perIn u a).tilPt c)) :=
+    ((l.ch u a).step B.R.m).lsh_full_lat (I.perIn u a).b0 ((I.perIn u a).tilPt c)
   have hnat : ∀ τ, ((GlobalTheory.Mem.Col2.lamT (B.hcW u) B.R.m) τ).natW = (((I.rec7 l Z).fm u).lam (I.rec7 l Z).R.m τ).natW := by
     intro τ
     show (GlobalTheory.Mem.Col2.shW (Examples₂.lamOf (B.hcW u τ) B.R.m) _).natW = (Examples₂.lamOf (B.hcW u τ) B.R.m).natW

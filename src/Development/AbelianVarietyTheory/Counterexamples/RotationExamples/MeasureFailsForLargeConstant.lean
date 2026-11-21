@@ -22,7 +22,7 @@ def OneConstant {d : ℕ} (X X' : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ
 theorem lcv_of_oneConstant [_root_.NumberField.IsTotallyComplex K] {d : ℕ} (hd : 0 < d)
     (X X' : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ) (hX : ∀ v, IsUnit (X v).det) (hX' : ∀ v, IsUnit (X' v).det)
     (c : InfinitePlace K → ℝ) (hc : OneConstant X X' c) (M : Submodule (𝓞 K) (Fin d → K))
-    (hM : Submodule.IsLattice K M) :
+    (hM : Submodule.IsFullLattice K M) :
     Formalism.DivisionValues.lcv X M / (d : ℝ) = Formalism.DivisionValues.lcv X' M / (d : ℝ) + 2 / (finrank ℚ K : ℝ) * ∑ v, Real.log (c v) := by
   have hli : LinearIndependent K (fun i : Fin d => (Pi.basisFun K (Fin d)) i) := (Pi.basisFun K (Fin d)).linearIndependent
   rw [(Formalism.DivisionValues.covolume_via_basis K d X hX M hM _ hli).2, (Formalism.DivisionValues.covolume_via_basis K d X' hX' M hM _ hli).2]

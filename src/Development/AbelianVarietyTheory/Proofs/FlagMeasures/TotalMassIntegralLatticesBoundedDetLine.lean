@@ -137,10 +137,16 @@ theorem main : MaxMass → ∀ (K V : Type) [Field K] [NumberField K] [StarRing 
   obtain ⟨c, hc⟩ := hMM K hK 1 le_rfl
   obtain ⟨-, hu', ho'⟩ := GlobalTheory.T.exists_maximal_integralHermitianLattice_orthonormal_maximal K V' h' hK hs' hnd'
   obtain ⟨hIl, hIu, hIr⟩ := ho' I _ hI
-  obtain ⟨hImax, -, hIlam⟩ := hu' I hIl hIu
+  have hIfull : Submodule.IsFullLattice K I := by
+    refine { toIsLattice := hIl, span_eq_top := ?_ }
+    obtain ⟨e, -, hspan, rfl, -⟩ := hI
+    apply top_unique
+    rw [← hspan]
+    exact Submodule.span_mono Submodule.subset_span
+  obtain ⟨hImax, -, hIlam⟩ := hu' I hIfull hIu
   have hcI : mass h' I = c := by rw [hc V' h' hs' hp' hIr I hImax, hIlam, mul_one]
   have hdisc := GlobalTheory.T.hermitianLatticeDiscriminantOrder_ne_zero_unimodular K V h hK hs hnd
-  obtain ⟨hmass, hmpos, hYst, hfin, -⟩ := GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp M₀ hM₀.1.1.toIsLattice
+  obtain ⟨hmass, hmpos, hYst, hfin, -⟩ := GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp M₀ hM₀.1.1
   have hm₀ : mass h M₀ = c := by
     have : lamMax h M₀ = 1 := by
       unfold lamMax
@@ -156,7 +162,7 @@ theorem main : MaxMass → ∀ (K V : Type) [Field K] [NumberField K] [StarRing 
     intro n
     have hDst : Stable (isom h) (latsDisc (R := 𝓞 K) h n) := by
       intro g M hM
-      have h1 := (GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp M hM.1.1.toIsLattice).2.2.1 g M
+      have h1 := (GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp M hM.1.1).2.2.1 g M
         (SpaceMass.mem_genus_self h M hM.1.1)
       have h2 := (hdisc M hM.1).2.2.2.1 _ h1
       exact ⟨h2.1, h2.2.trans hM.2⟩
@@ -166,9 +172,9 @@ theorem main : MaxMass → ∀ (K V : Type) [Field K] [NumberField K] [StarRing 
       rintro g p ⟨h1, h2, h3⟩
       exact ⟨hDst g _ h1, hYst g _ h2, Submodule.map_mono h3⟩
     have f1 := GlobalTheory.T.orbitStabilizerMass_eq_weightedSum_fibres (isom h) _ _ Y (latsDisc (R := 𝓞 K) h n) Prod.fst (fun _ _ => rfl) hXst hDst
-      (fun p hp => hp.1) (fun y hy => hfin y hy.1.1.toIsLattice)
+      (fun p hp => hp.1) (fun y hy => hfin y hy.1.1)
     have f2 := GlobalTheory.T.orbitStabilizerMass_eq_weightedSum_fibres (isom h) _ _ Y (genus h M₀) Prod.snd (fun _ _ => rfl) hXst hYst
-      (fun p hp => hp.2.1) (fun y hy => hfin y hy.1.toIsLattice)
+      (fun p hp => hp.2.1) (fun y hy => hfin y hy.1)
     have s1 : orbMass (isom h) (latsDisc (R := 𝓞 K) h n) ≤ orbMass (isom h) Y := by
       rw [f1]
       refine mono _ _ _ _ subset_rfl fun M hM => ?_

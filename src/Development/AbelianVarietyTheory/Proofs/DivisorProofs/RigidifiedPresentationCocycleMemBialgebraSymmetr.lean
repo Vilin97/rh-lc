@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsDatNeZero
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TorsionTowersOfDivisibleGroup
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CocycleTensorLiftApplyEqTwoPointValueStatement
 
 @[expose] public section
@@ -13,7 +14,6 @@ open GlobalTheory GlobalTheory.CatCoh GlobalTheory.Cris GlobalTheory.DeRham Glob
 attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.PtExt
-
 
 open Algebra.TensorProduct in
 theorem coc_mem_symCocycles (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (p : ℕ) (G : PDivGroup p R)
@@ -31,8 +31,7 @@ theorem coc_mem_symCocycles (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A]
     fun D _ _ φ ψ ↦ t.mul n D (toConv φ) (toConv ψ)
   rw [mem_symCocycles]
   constructor
-  · let T := H ⊗[R] (H ⊗[R] H)
-    let i1 : H →ₐ[R] H ⊗[R] (H ⊗[R] H) := includeLeft
+  · let i1 : H →ₐ[R] H ⊗[R] (H ⊗[R] H) := includeLeft
     let i2 : H →ₐ[R] H ⊗[R] (H ⊗[R] H) := (includeRight : H ⊗[R] H →ₐ[R] H ⊗[R] (H ⊗[R] H)).comp includeLeft
     let i3 : H →ₐ[R] H ⊗[R] (H ⊗[R] H) := (includeRight : H ⊗[R] H →ₐ[R] H ⊗[R] (H ⊗[R] H)).comp includeRight
     let i12 := (toConv i1 * toConv i2).ofConv
@@ -70,7 +69,8 @@ theorem coc_mem_symCocycles (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A]
       | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
       | tmul a b => simp [i1, i2, Algebra.TensorProduct.tmul_mul_tmul, includeLeft_apply, includeRight_apply]
     rw [cobTwo_apply, e1, e2, e3, e4, V, V, V, V]
-    simp only [i12, i23, toConv_ofConv, M, _root_.mul_assoc]
+    simp only [i12, i23, toConv_ofConv, M]
+    rw [_root_.mul_assoc (toConv i1) (toConv i2) (toConv i3)]
     have hc := (hg (H ⊗[R] (H ⊗[R] H))).2 (spOver i1 ≫ t.y n) (spOver i2 ≫ t.y n) (spOver i3 ≫ t.y n)
     linear_combination hc
   · have e : ∀ x : H ⊗[R] H, TensorProduct.comm R H H x =

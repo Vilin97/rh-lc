@@ -24,10 +24,11 @@ namespace GlobalTheory.PtExt
 theorem sum_mul_eq_zero_of_isCob : GlobalTheory.Published.AbelianHodgeDeRham → ∀ (R : Type) [CommRing R] (B : Over (Sp R)) [GrpObj B] (g : ℕ), IsAbelianScheme B → SmoothOfRelativeDimension g B.hom → ∀ y ∈ Fil B, ∀ (D : Type) [CommRing D] [Algebra R D] (J : Type) [Fintype J] (d : J → D) (β : J → Z1 (O (dp0 R) (B.hom ≫ 𝟙 _))) (hβ : ∀ i, CatCoh.H1.mk _ (β i) ∈ primDR B), (∃ k, IsCob (whole _) (sumMul d fun i ↦ fv (β i)) k) → ∑ i, d i * algebraMap R D (y ⟨_, hβ i⟩) = 0 := by
   intro H R _ B _ g hB hg y hy D _ _ J _ d β hβ hcob
   obtain ⟨-, -, hBC⟩ := GlobalTheory.abelianDeRham_free_hodge_baseChange H
-  obtain ⟨B', _, π, q, hpb, hB', hg', -, hq1, hq2⟩ := GlobalTheory.exists_baseChange_spAlg_prod R D B g hB hg
+  obtain ⟨B', _, π, q, hpb, -, -, -, hq1, hq2⟩ :=
+    GlobalTheory.exists_baseChange_spAlg_prod R D B g hB hg
   have w : q ≫ (SpAlg R D ⊗ B).hom = B'.hom ≫ spMap (algebraMap R D) := by
-    rw [← Over.w (fst (SpAlg R D) B), ← Category.assoc, hq1]
-    rfl
+    rw [← Over.w (snd (SpAlg R D) B), ← Category.assoc, hq2]
+    exact hpb.1.w
   let m := GlobalTheory.Published.AbelianDeRham.bcMor hpb
   obtain ⟨hm, hspan⟩ := hBC R B g hB hg D B' π hpb
   obtain ⟨y', hy'⟩ := hm.exists y

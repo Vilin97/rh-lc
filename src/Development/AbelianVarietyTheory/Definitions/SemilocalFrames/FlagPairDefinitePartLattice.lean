@@ -300,11 +300,11 @@ theorem _root_.GlobalTheory.HermLat.autCard_eq_natCard {H : _root_.Formalism.Her
     rw [hset, ← hfin.cast_ncard_eq, Nat.card_coe_set_eq]
     simp
 
-open Formalism.HermitianLatticesTheory in
 theorem genusMass_eq {H : HermSpace K V} (hH : IsTraceDef H) {L : Submodule (𝓞 K) V}
     (hL : Submodule.IsFullLattice K L) :
     genusMass H L = ENNReal.ofReal (Formalism.HermitianLatticesTheory.mass H.B.flip L) := by
-  obtain ⟨⟨s, hs⟩, hm, -⟩ := massBasic K V H.B.flip (flip_isSymm H) hH L hL
+  obtain ⟨⟨s, hs⟩, hm, -⟩ :=
+    Formalism.HermitianLatticesTheory.massBasic K V H.B.flip (flip_isSymm H) hH L hL
   rw [genusMass, genusSum_eq_sum H hs (fun _ _ _ _ => rfl), hm s hs,
     ENNReal.ofReal_sum_of_nonneg (fun _ _ => by positivity)]
   refine Finset.sum_congr rfl fun M hM => ?_
@@ -314,8 +314,9 @@ theorem genusMass_eq {H : HermSpace K V} (hH : IsTraceDef H) {L : Submodule (�
 theorem genusMass_ne_zero {H : HermSpace K V} (hH : IsTraceDef H) {L : Submodule (𝓞 K) V}
     (hL : Submodule.IsFullLattice K L) : genusMass H L ≠ 0 := by
   rw [genusMass_eq hH hL]
-  exact (ENNReal.ofReal_pos.2 (Formalism.HermitianLatticesTheory.massBasic K V H.B.flip
-    (flip_isSymm H) hH L hL).2.2).ne'
+  have hpos :=
+    (Formalism.HermitianLatticesTheory.massBasic K V H.B.flip (flip_isSymm H) hH L hL).2.2
+  exact (ENNReal.ofReal_pos.2 hpos).ne'
 
 theorem genusMass_ne_top {H : HermSpace K V} (hH : IsTraceDef H) {L : Submodule (𝓞 K) V}
     (hL : Submodule.IsFullLattice K L) : genusMass H L ≠ ⊤ := by

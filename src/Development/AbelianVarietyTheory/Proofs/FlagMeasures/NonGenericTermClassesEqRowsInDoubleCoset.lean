@@ -115,7 +115,7 @@ theorem nonGeneric_terms_same_coset_corank_one (t t' : TauC Y u u') (ht : t ∈ 
     show Formalism.L2.SG.TermOp.Gt t = 0
     unfold Formalism.L2.SG.TermOp.Gt
     rw [if_pos ((Formalism.L2.SG.Pf.SatGram.gterm_G Y t).trans h)]
-  have hlat : Submodule.IsLattice D.host.E t.lam := ((Y.rowsOK u).1 t.lam t.mem).2.1.1
+  have hlat : Submodule.IsFullLattice D.host.E t.lam := ((Y.rowsOK u).1 t.lam t.mem).1.1
   have hLF : IsLift t.lam (lf D (X.Fu u)) := ((Y.rowsOK u).1 t.lam t.mem).2.1.2.2.1
   have hLt : IsLift t.lam t.frame := t.rep.2.2.2.2.1
   have hL' : IsLift t.lam t'.frame := by rw [hlam]; exact t'.rep.2.2.2.2.1

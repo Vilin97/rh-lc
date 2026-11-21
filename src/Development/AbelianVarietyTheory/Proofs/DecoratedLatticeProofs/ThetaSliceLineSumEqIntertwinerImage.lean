@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NsmulProjectionXColumnsMemSelfDualLattice
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LatIndLastKerRow
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SplitPlaceBaseVacuumDatumExistsUnique
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExtendByZeroSourceTensorColumnProduct
@@ -21,8 +22,8 @@ namespace GlobalTheory.LastTgtSlice
 
 variable {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
-theorem sb_sec (p : SplitPt D k) {S T : HSp D} {LS : Lat S} {LT : Lat T} (hS : Submodule.IsLattice D.host.E LS)
-    (hT : Submodule.IsLattice D.host.E LT) {Φ : WO S T → ℂ}
+theorem sb_sec (p : SplitPt D k) {S T : HSp D} {LS : Lat S} {LT : Lat T} (hS : Submodule.IsFullLattice D.host.E LS)
+    (hT : Submodule.IsFullLattice D.host.E LT) {Φ : WO S T → ℂ}
     (hΦ : IsSBHalf p.e (latO S T (LS : Set _) (LT : Set _) (· = p.v)) Φ) :
     (fun x : Matrix (Fin T.rank) (Fin S.rank) k => Φ (x.map p.sec)) ∈ SB (Matrix (Fin T.rank) (Fin S.rank) k) := by
   classical
@@ -79,13 +80,23 @@ theorem line_sum {L : HSp D} {ζ : Fin L.rank → D.host.E} (hζ : IsLineVec L �
   Finset.sum_eq_single j (fun i _ h => absurd (line_eq hζ i j) h) (by simp)
 
 theorem isLattice_span {L : HSp D} {ζ : Fin L.rank → D.host.E} (hζ : IsLineVec L ζ) :
-    Submodule.IsLattice D.host.E (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) := by
-  refine ⟨Submodule.fg_span (Set.finite_singleton _), ?_⟩
-  intro s hs hli
-  exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    Submodule.IsFullLattice D.host.E (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) := by
+  haveI : Submodule.IsLattice D.host.E (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) :=
+    Submodule.IsLattice.of_fg D.host.E (Submodule.fg_span_singleton ζ)
+  refine ⟨?_⟩
+  rw [Submodule.span_span_of_tower]
+  apply eq_top_iff.mpr
+  intro v _
+  let j : Fin L.rank := ⟨0, by have := hζ.1; omega⟩
+  have hs : Subsingleton (Fin L.rank) := by rw [hζ.1]; infer_instance
+  apply Submodule.mem_span_singleton.mpr
+  refine ⟨v j / ζ j, ?_⟩
+  funext i
+  rw [Subsingleton.elim i j]
+  simp [Pi.smul_apply, smul_eq_mul, div_mul_cancel₀ _ (line_ne hζ j)]
 theorem exists_colFun (p : SplitPt D k) {n : Type} [Fintype n] [DecidableEq n] {L S : HSp D}
     {ζ : Fin L.rank → D.host.E} (hζ : IsLineVec L ζ) (β : Frame p S n) {LL : Lat L} {LS : Lat S}
-    (hL : Submodule.IsLattice D.host.E LL) (hS : Submodule.IsLattice D.host.E LS) {Φ : WO L S → ℂ}
+    (hL : Submodule.IsFullLattice D.host.E LL) (hS : Submodule.IsFullLattice D.host.E LS) {Φ : WO L S → ℂ}
     (hΦ : IsSBHalf p.e (latO L S (LL : Set _) (LS : Set _) (· = p.v)) Φ) :
     ∃ b ∈ SB (n → k), colFun β ζ b = Φ := by
   classical
@@ -213,7 +224,7 @@ theorem main : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSp
   set Λ₁ := latO V₀ S (L₁ : Set (Fin V₀.rank → D.host.E)) (L₂ : Set (Fin S.rank → D.host.E)) (· = p.v) with hΛ₁
   have hbox : ∀ Φ : WO L S → ℂ, (fun t => h (r t).1 * Φ (r t).2) = o.boxS S h Φ := fun Φ => rfl
   have hcol : ∀ Φ, IsSBHalf p.e ΛL Φ → ∃ b ∈ SB (n → k), colFun β ζ b = Φ := fun Φ hΦ =>
-    exists_colFun p hζ β (isLattice_span hζ) hLS.1 hΦ
+    exists_colFun p hζ β (isLattice_span hζ) (GlobalTheory.ProjXCols.selfDual_isFullLattice S LS hLS) hΦ
   have hsb : ∀ Φ, IsSBHalf p.e ΛL Φ → IsSBHalf p.e Λ₁ (fun t => h (r t).1 * Φ (r t).2) := by
     intro Φ hΦ
     obtain ⟨b, hb, rfl⟩ := hcol Φ hΦ

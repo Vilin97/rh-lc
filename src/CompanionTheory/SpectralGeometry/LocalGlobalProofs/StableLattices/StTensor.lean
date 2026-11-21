@@ -52,7 +52,7 @@ theorem commute_embPl {v : Formalism.MainNotions.SchurIrreducible.Pl F} {g : GAd
     simp [h]
   · simp [projPl_embPl_ne σ J e]
 
-theorem exists_levelOff_fixed (hFix : StFixVec) (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L]
+theorem exists_levelOff_fixed (hFix : StFixVec) (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L]
     {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] {π : GAd σ J →* (H →L[ℂ] H)} (hπ : IsIrrUnitary π) :
     ∃ (S : Finset (HeightOneSpectrum (𝓞 F))) (w : H), w ≠ 0 ∧ ∀ k ∈ levelOff σ J L S, π k w = w := by
   haveI := hπ.complete

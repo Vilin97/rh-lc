@@ -97,14 +97,14 @@ theorem zt_mem (F : LFlag S r T) (F' : LFlag S r T') : F.zt ∈ UUE Λ F F' ∧ 
     unfold UU
     exact Submodule.mem_sup_right (Submodule.mem_span_singleton_self _)
 
-theorem xplus_le (hΛ : Submodule.IsLattice E Λ) (F : LFlag S r T) (F' : LFlag S r T') (hz : F.zt = F.fl.z) :
+theorem xplus_le (hΛ : Submodule.IsFullLattice E Λ) (F : LFlag S r T) (F' : LFlag S r T') (hz : F.zt = F.fl.z) :
     Xplus F ≤ UUE Λ F F' := by
   change F.fl.X ⊔ Submodule.span E {F.fl.z} ≤ _
   refine sup_le (PI.UnitaryGroupMassFormula.BetaLUniq.Xsp_le_UUE S Λ hΛ F F') ?_
   rw [Submodule.span_le, Set.singleton_subset_iff, ← hz]
   exact (zt_mem (Λ := Λ) F F').1
 
-theorem xplus_le' (hΛ : Submodule.IsLattice E Λ) (F : LFlag S r T) (F' : LFlag S r T') (hz' : F'.zt = F'.fl.z) :
+theorem xplus_le' (hΛ : Submodule.IsFullLattice E Λ) (F : LFlag S r T) (F' : LFlag S r T') (hz' : F'.zt = F'.fl.z) :
     Xplus F' ≤ UUE Λ F F' := by
   change F'.fl.X ⊔ Submodule.span E {F'.fl.z} ≤ _
   refine sup_le (PI.UnitaryGroupMassFormula.BetaLUniq.Xsp_le_UUE' S Λ hΛ F F') ?_
@@ -133,7 +133,7 @@ theorem ylift_rev (hTh : Th Λ F F' F'' β = Hp Λ F F') {y : S.V} (hy : y ∈ Y
   have e : p.1 = (p.1 - p.2) + p.2 := by abel
   rw [e, map_add (f := _), LinearMap.add_apply, e1, e2, add_zero]
 
-variable (hΛ : Submodule.IsLattice E Λ) (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) (hz'' : F''.zt = F''.fl.z)
+variable (hΛ : Submodule.IsFullLattice E Λ) (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) (hz'' : F''.zt = F''.fl.z)
 include hΛ hz hz' hz''
 
 theorem firstNormal_transport (hT : T ≠ 0) (hTh : Th'' Λ F F' F'' β = Hp Λ F F'') (hSc : IsScalar Λ F F' F'' β)

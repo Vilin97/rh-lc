@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BetaUniqueness.Skeleton
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BetaUniqueness.Lemmas
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.StandardBaseFlagComplementIntegralLattice
 
 @[expose] public section
 
@@ -15,7 +16,7 @@ namespace PI.UnitaryGroupMassFormula.BetaLUniq
 def LineReduce' : Prop :=
   ∀ {E : Type} [Field E] [NumberField E] [StarRing E] (S : HSpace E) (Λ : Submodule (𝓞 E) S.V) {r : ℕ} {T T' : E} (F : LFlag S r T) (F' F'' : LFlag S r T')
     (β₁ β₂ : S.V ≃ₗ[E] S.V) (k : ℕ), finrank E S.V = k + 2 * r + 1 →
-    Submodule.IsLattice E Λ → IsLift Λ F' →
+    Submodule.IsFullLattice E Λ → IsLift Λ F' →
     (finrank E (UUE Λ F F') = 2 * r + 2 ∧ UUE Λ F F' ⊓ orth S (UUE Λ F F') = ⊥) →
     (∀ w ∈ orth S (Xplus F'), S.hT w w = 0 → w ∈ Xsp F') →
     β₁ ∈ Formalism.HermitianLatticesTheory.isom S.hT → β₂ ∈ Formalism.HermitianLatticesTheory.isom S.hT →
@@ -304,10 +305,14 @@ theorem betaLUniq_of' (h1 : GramNondeg) (h2 : AgreeOnH) (h3 : WAniso) (h4 : Line
     (h5 : EigenvalueLastLineOne) : PI.BetaLUniq := by
   intro D u u' Λ F F' F'' β₁ β₂ hF hT' hT'' hG' hG'' hP1 hP2 hs1 hs2
   have hdim := finrank_hS D
-  have n' := h1 (hS D) Λ F F' hF.1 hF.2.2.1 hT'.1 hT'.2.2
-  have n'' := h1 (hS D) Λ F F'' hF.1 hF.2.2.1 hT''.1 hT''.2.2
+  have hfull : Submodule.IsFullLattice D.host.E Λ :=
+    { toIsLattice := hF.1
+      span_eq_top := GlobalTheory.LoopC.Base.span_eq_top_of_unimodular
+        (hS D).hT (hS D).herm (hS D).nondeg hF.1 hF.2.1 }
+  have n' := h1 (hS D) Λ F F' hfull hF.2.2.1 hT'.1 hT'.2.2
+  have n'' := h1 (hS D) Λ F F'' hfull hF.2.2.1 hT''.1 hT''.2.2
   have hH := h2 (hS D) Λ F F' F'' β₁ β₂ D.R.k hF.1 hF.2.2.1 hT''.1 hdim n' n'' hs1 hs2
-  exact h4 (hS D) Λ F F' F'' β₁ β₂ D.R.k hdim hF.1 hT'.1 n' (h3 D u' F') hP1.1.1 hP2.1.1 hP1.2.1
+  exact h4 (hS D) Λ F F' F'' β₁ β₂ D.R.k hdim hfull hT'.1 n' (h3 D u' F') hP1.1.1 hP2.1.1 hP1.2.1
     hP2.2.1 hP1.2.2.1 hP2.2.2.1 hH (h5 D u u' Λ F F' F'' β₁ β₂ hF hT' hT'' hG' hG'' hP1 hP2 hs1 hs2)
 
 theorem betaLUniq_of'' (h1 : GramNondeg) (h2 : AgreeOnH) (h3 : WAniso) (h5 : EigenvalueLastLineOne) :

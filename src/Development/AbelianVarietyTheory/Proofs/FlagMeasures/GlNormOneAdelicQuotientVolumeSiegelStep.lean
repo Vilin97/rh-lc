@@ -7,13 +7,13 @@ public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.TranslatedLat
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MeasurableTranslatedLatticeFunctionsStatement
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsScalarStableLatticeAutomorphismFundamentalStatement
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LineLatticeClassMeanCovolumeFunctionStatement
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LineLatticeClassMeanTraceFormDualLatticeStatement
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LineLatticeClassMeanTraceFormDualLattice
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.PoissonSummationInfinitePlaceGaussianLatticeStatement
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LineLatticeClassMeanSumNonzeroUnfoldStatement
 
 @[expose] public section
 
-open MeasureTheory NumberField Matrix Finset Formalism.MainNotions.S GlobalTheory.Count GlobalTheory.FlagMeas GlobalTheory.FlagBase GlobalTheory.MeanDual
+open MeasureTheory NumberField Matrix Finset Formalism.MainNotions.S GlobalTheory.Count GlobalTheory.FlagMeas GlobalTheory.FlagBase
 
 namespace GlobalTheory.FlagBase.SiegelStep
 
@@ -217,8 +217,11 @@ theorem weighted {c : ℝ} (hc : 0 < c) {A B : ENNReal} (h : 1 + A = ENNReal.ofR
       Set.indicator_of_notMem (show c⁻¹ ∉ Set.Ioo (0 : ℝ) 1 from fun h => hi h.2)]
     simp
 
-theorem latMean_dualAt_full : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E → ∀ j : ℕ, ∀ F : Submodule ℤ (VecInf E j) → ENNReal, (∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsFullLattice E Λ → Measurable (fun g : MatInf E j => {g | 0 < detNorm E j g}.indicator (fun g => F (latAt E j Λ g)) g)) → latMean E j (fun L => F (dualAt E j L)) = latMean E j F := by
-  intro E _ _ hE j F hF
+open GlobalTheory.MeanDual in
+private theorem latMean_dualAt_full (hE : IsTotallyComplex E) (F : Submodule ℤ (VecInf E j) → ENNReal)
+    (hF : ∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsFullLattice E Λ →
+      Measurable ({g | 0 < detNorm E j g}.indicator fun g => F (latAt E j Λ g))) :
+    latMean E j (fun L => F (dualAt E j L)) = latMean E j F := by
   let X := {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsFullLattice E Λ}
   let r : X → X → Prop := fun Λ Λ' => ∃ γ : GL (Fin j) E,
     ∀ y, (γ : Matrix (Fin j) (Fin j) E) *ᵥ y ∈ Λ'.1 ↔ y ∈ Λ.1
@@ -258,7 +261,7 @@ theorem glVol_step : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex 
   have e1 := GlobalTheory.T.lineLatticeClassMean_covolume_function E hE j hj1 _ m1
   have e2 := GlobalTheory.T.lineLatticeClassMean_sum_nonzero_unfold E hE j hj _ _ m2 mg
   have e3 := GlobalTheory.T.lineLatticeClassMean_sum_nonzero_unfold E hE j hj _ _ m3 mg
-  have e4 := latMean_dualAt_full E hE j (fun L => (Set.Ioo (0 : ℝ) 1).indicator (fun t => ENNReal.ofReal (t ^ 2))
+  have e4 := latMean_dualAt_full E j hE (fun L => (Set.Ioo (0 : ℝ) 1).indicator (fun t => ENNReal.ofReal (t ^ 2))
     (covAt E j L) * ∑' x : {x : VecInf E j // x ∈ L ∧ x ≠ 0}, ENNReal.ofReal (gaussV E j x.1))
     (measurable_weight_mul_sum E j hE _ _ m3 mg)
   have e5 := latMean_add E j hE hj1

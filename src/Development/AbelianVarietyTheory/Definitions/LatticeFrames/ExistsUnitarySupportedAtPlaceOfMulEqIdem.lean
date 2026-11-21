@@ -207,7 +207,9 @@ theorem ext_sb (Φ) : IsSBHalf p.e (latO S T ΛS ΛT fun _ => True) (ext p FS FT
   classical
   obtain ⟨N, hN, h1⟩ := exists_inv Φ _ (lat_compact p FS FT hS hT)
   obtain ⟨M, hM, h2⟩ := exists_supp Φ.2.2 _ (lat_open p FS FT hS hT) fun x => by
-    obtain ⟨n, hn, h⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO' hS.1 hT.1 _
+    obtain ⟨n, hn, h⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO'
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hS)
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hT) _
       (GlobalTheory.SplitScalar.half_fin p.split (up_half p FS FT x))
     exact ⟨n, hn, AddSubgroup.mem_comap.2 (by rw [map_nsmul]; exact h)⟩
   have hne : ∀ t, ext p FS FT Φ t ≠ 0 → IsHalf p.e t ∧ Φ.1 (p.down FS FT t) ≠ 0 := fun t ht => by

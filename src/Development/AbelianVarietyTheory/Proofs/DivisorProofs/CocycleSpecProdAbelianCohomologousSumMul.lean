@@ -6,7 +6,7 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.Abe
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.PoincareDeRhamDuality
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.CrysToDRBijective
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PointCochainPullbackBaseChangeCocycleCoboundaryWStatement
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAbelianSchemeBaseChangeSpecAlgebraProdStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAbelianSchemeBaseChangeSpecAlgebraProd
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsPointwiseCoboundaryOfPullbackBaseChangeIsIsoStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BaseChangePullSumMulPointValueEqStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbelianSchemeDeRhamFreeHodgeSequenceBaseChangeStatement
@@ -43,8 +43,7 @@ theorem cohom_of_cob {R : Type} [CommRing R] {X : Over (Sp R)} {K : Type} {W : K
   have h1 := hk₀ D D' φ x hx
   have h2 := hk D D' φ x hx
   have h3 := ha D D' φ x
-  simp only [Fn1.add, Fn1.neg] at h1 ⊢
-  rw [map_add (f := _)]
+  simp only [Fn1.add, Fn1.neg, map_add] at h1 ⊢
   linear_combination h1 + h2 + h3
 
 end GlobalTheory.PtExt.SurjD
@@ -53,7 +52,8 @@ end GlobalTheory.PtExt.SurjD
 open GlobalTheory.PtExt.SurjD in
 theorem GlobalTheory.PtExt.cohom_sumMul_fv_of_abelian : GlobalTheory.Published.AbelianHodgeDeRham → ∀ (R : Type) [CommRing R] (B : Over (Sp R)) [GrpObj B] (g : ℕ), IsAbelianScheme B → SmoothOfRelativeDimension g B.hom → ∀ (D : Type) [CommRing D] [Algebra R D] (u : Fn1 (SpAlg R D ⊗ B)), IsCoc (whole _) u → ∃ (n : ℕ) (d : Fin n → D) (β : Fin n → Z1 (O (dp0 R) (B.hom ≫ 𝟙 _))), Cohom (whole _) u (sumMul d fun i ↦ fv (β i)) := by
   intro H R _ B _ g hB hg D _ _ u hu
-  obtain ⟨B', _, π, q, hpb, hB', hg', hq, hfst, hsnd⟩ := GlobalTheory.T.exists_abelianScheme_baseChange_spec_algebra_prod R D B g hB hg
+  obtain ⟨B', _, π, q, hpb, hB', hg', hq, hfst, hsnd⟩ :=
+    GlobalTheory.exists_baseChange_spAlg_prod R D B g hB hg
   have w : q ≫ (SpAlg R D ⊗ B).hom = B'.hom ≫ spMap (algebraMap R D) := by
     rw [← Over.w (fst (SpAlg R D) B), ← Category.assoc, hfst]
     rfl

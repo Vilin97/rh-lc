@@ -352,9 +352,9 @@ theorem cut_isLattice {n d : ℕ} (E : Matrix (Fin n) (Fin d) K)
 
 theorem cut_isFullLattice {n d : ℕ} (E : Matrix (Fin n) (Fin d) K)
     (hE : Function.Injective (Matrix.mulVecLin E)) (A : Submodule (𝓞 K) (Fin n → K))
-    (hA : Submodule.IsFullLattice K A) : Submodule.IsFullLattice K (cutLat E A) where
-  toIsLattice := cut_isLattice E hE A hA.toIsLattice
-  span_eq_top := span_comap_eq_top E.mulVecLin A hA.span_eq_top
+    (hA : Submodule.IsFullLattice K A) : Submodule.IsFullLattice K (cutLat E A) := by
+  refine { toIsLattice := cut_isLattice E hE A hA.toIsLattice, span_eq_top := ?_ }
+  exact span_comap_eq_top E.mulVecLin A hA.span_eq_top
 
 theorem coe_natCast (m : ℕ) : (((m : 𝓞 K)) : K) = (m : K) := by simp
 

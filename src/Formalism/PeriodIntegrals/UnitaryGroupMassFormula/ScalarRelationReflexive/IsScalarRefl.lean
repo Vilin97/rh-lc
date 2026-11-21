@@ -179,7 +179,7 @@ theorem orth_beta {T' : E} {β : S.V ≃ₗ[E] S.V} (hβ : β ∈ Formalism.Herm
   (orth_transport hβ (U := Xsp x) (U' := Xsp y)
     (fun w => by rw [← hX, Submodule.mem_map_equiv]) (β v)).mpr (by simpa using hv)
 
-theorem scalRel_move (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsLattice E Λ) (g k : ℕ) {T T' : E}
+theorem scalRel_move (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsFullLattice E Λ) (g k : ℕ) {T T' : E}
     (F : LFlag S r T) (x y y' : LFlag S r T') (n m : S.V ≃ₗ[E] S.V) (h : DC Λ F y y' n m)
     (hs : PI.ScalRelRepFree.ScalRel Λ g k F x y) : PI.ScalRelRepFree.ScalRel Λ g k F x y' := by
   obtain ⟨β, ⟨hAut, hfl, hz, hI⟩, hs0, hsc⟩ := hs

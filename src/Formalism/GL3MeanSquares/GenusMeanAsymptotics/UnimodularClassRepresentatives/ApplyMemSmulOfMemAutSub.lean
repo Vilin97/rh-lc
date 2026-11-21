@@ -20,7 +20,7 @@ theorem pow_smul_anti (𝔭 : Ideal (𝓞 F)) (A : Submodule (𝓞 K) V) {i j : 
     ((extP K 𝔭) ^ j • A : Submodule (𝓞 K) V) ≤ (extP K 𝔭) ^ i • A := Submodule.smul_mono_left (Ideal.pow_le_pow_right hij)
 
 theorem exists_pow_smul_le {M₁ M₂ : Submodule (𝓞 K) V} (hM₁ : Submodule.IsLattice K M₁)
-    (hM₂ : Submodule.IsLattice K M₂) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
+    (hM₂ : Submodule.IsFullLattice K M₂) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
     ∃ r : ℕ, ((extP K 𝔭) ^ r • locF 𝔭 M₁ : Submodule (𝓞 K) V) ≤ locF 𝔭 M₂ := by
   have := h𝔭.isPrime
   obtain ⟨n, hn, hnx⟩ := LocF.exists_zsmul_le hM₁ hM₂
@@ -118,13 +118,13 @@ theorem congr_apply_mem {M₁ M₂ : Submodule (𝓞 K) V} {𝔭 : Ideal (𝓞 F
   exact add_mem hw hz
 
 theorem exists_congr_mem_autSub (h : V →ₗ⋆[K] V →ₗ[K] K) {M₁ M₂ : Submodule (𝓞 K) V}
-    (hM₁ : Submodule.IsLattice K M₁) (hM₂ : Submodule.IsLattice K M₂) {𝔭 : Ideal (𝓞 F)}
+    (hM₁ : Submodule.IsFullLattice K M₁) (hM₂ : Submodule.IsFullLattice K M₂) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) :
     ∃ j₀ : ℕ, ∀ j, j₀ ≤ j → ∀ g ∈ autSub h (locF 𝔭 M₁),
       (∀ z ∈ locF 𝔭 M₁, g z - z ∈ ((extP K 𝔭) ^ j • locF 𝔭 M₁ : Submodule (𝓞 K) V)) →
       g ∈ autSub h (locF 𝔭 M₂) := by
-  obtain ⟨r₁, h1⟩ := exists_pow_smul_le hM₁ hM₂ h𝔭
-  obtain ⟨r₂, h2⟩ := exists_pow_smul_le hM₂ hM₁ h𝔭
+  obtain ⟨r₁, h1⟩ := exists_pow_smul_le hM₁.toIsLattice hM₂ h𝔭
+  obtain ⟨r₂, h2⟩ := exists_pow_smul_le hM₂.toIsLattice hM₁ h𝔭
   refine ⟨r₂ + r₁, fun j hj g hg hc => ⟨hg.1, ?_⟩⟩
   apply le_antisymm
   · rintro _ ⟨z, hz, rfl⟩
@@ -201,11 +201,11 @@ theorem sub_mem_of_redA_eq {h : V →ₗ⋆[K] V →ₗ[K] K} {A : Submodule (�
   exact h2
 
 theorem relIndex_autSub_ne_zero (h : V →ₗ⋆[K] V →ₗ[K] K) {M₁ M₂ : Submodule (𝓞 K) V}
-    (hM₁ : Submodule.IsLattice K M₁) (hM₂ : Submodule.IsLattice K M₂) {𝔭 : Ideal (𝓞 F)}
+    (hM₁ : Submodule.IsFullLattice K M₁) (hM₂ : Submodule.IsFullLattice K M₂) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) :
     (autSub h (locF 𝔭 M₂)).relIndex (autSub h (locF 𝔭 M₁)) ≠ 0 := by
   obtain ⟨j, hj⟩ := exists_congr_mem_autSub h hM₁ hM₂ h𝔭
-  have := finite_quot hM₁ h𝔭 j
+  have := finite_quot hM₁.toIsLattice h𝔭 j
   have : Finite ((↥(locF 𝔭 M₁) ⧸ ((extP K 𝔭) ^ j • ⊤ : Submodule (𝓞 K) ↥(locF 𝔭 M₁))) →ₗ[𝓞 K]
       (↥(locF 𝔭 M₁) ⧸ ((extP K 𝔭) ^ j • ⊤ : Submodule (𝓞 K) ↥(locF 𝔭 M₁)))) :=
     Finite.of_injective _ DFunLike.coe_injective

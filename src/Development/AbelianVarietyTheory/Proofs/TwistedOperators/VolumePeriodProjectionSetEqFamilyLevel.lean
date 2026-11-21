@@ -12,6 +12,7 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Mem
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.BesselColumnFormCentralTranslation
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsWeilDatumPowersUnramifiedEtaTilde
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MemFlagNOfBlocks
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NsmulProjectionXColumnsMemSelfDualLattice
 
 @[expose] public section
 
@@ -281,7 +282,9 @@ theorem exists_frame (S : GridChoice W U) {j : ℕ} (hj : j < D.R.m) : ∃ β'' 
   choose y hy _ using fun p : Fin (D.R.m - 1 - j) =>
     exists_gen (rowId_ne_zero G j p) Set.finite_empty (fun _ => 0) fun _ h => absurd h (Set.notMem_empty _)
   obtain ⟨β', h1, h2⟩ := exists_sumFrame (by norm_num : (-1 : D.host.E) ≠ 0) (G.rowDec j hj)
-    (G.isV (X := .top j) hj.le fun _ e => by cases e).sd.1 (S.βp_is j hj.le) (rowId_ne_zero G j) y hy
+    (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _
+      (G.isV (X := .top j) hj.le fun _ e => by cases e).sd)
+    (S.βp_is j hj.le) (rowId_ne_zero G j) y hy
   exact ⟨β', rowLat_eq G j hj ▸ h1, fun w => ⟨_, h2 w⟩⟩
 
 theorem sgn_diag (t : T) (s : ℤˣ) (w : Pl D.host.E) (j : ℕ)

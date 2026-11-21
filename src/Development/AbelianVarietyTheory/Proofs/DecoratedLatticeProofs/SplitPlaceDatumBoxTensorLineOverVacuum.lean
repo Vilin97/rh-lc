@@ -307,7 +307,9 @@ theorem over_boxT : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topologi
   obtain ⟨hLL', hXX, -, hfin, hden⟩ := dualPair hψ hS hX hs hε heq
   have hdX : ∀ x ∈ half S X p.e, ∃ k : ℕ, 0 < k ∧ k • x ∈ latO S X (LS : Set _) (LX : Set _) (· = p.v) := by
     intro x hx
-    obtain ⟨k, hk, hkx⟩ := exists_nsmul_mem_latO' hS.1 hX.1 x (infPart_half hε heε hx)
+    obtain ⟨k, hk, hkx⟩ := exists_nsmul_mem_latO'
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hS)
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ hX) x (infPart_half hε heε hx)
     refine ⟨k, hk, ?_⟩
     have := (idem_smul_mem hε he heε hkx).1
     rwa [smul_comm, (mem_half S X).1 hx] at this

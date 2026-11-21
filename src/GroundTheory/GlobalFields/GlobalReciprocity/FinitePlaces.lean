@@ -172,7 +172,7 @@ theorem exists_abstractSymbol_eq_localSymbol (P : Ideal (𝓞 ℚ̄)) [P.IsPrime
     (hh : ∀ q : Nat.Primes, toPadicInt q (Multiplicative.toAdd (degree s)) ≠ 0) :
     ∃ y : ((FiniteSubfield.placeBelow P hP K).adicCompletion K.1)ˣ,
       abstractSymbol K L (IdeleClassGroup.mk K.1 (finiteEmbedding _ y)) =
-        Abelianization.of (restrictHom (E := L) (⟨s, hsK⟩ : K.1.fixingSubgroup)) ∧
+        Group.Abelianization.of (restrictHom (E := L) (⟨s, hsK⟩ : K.1.fixingSubgroup)) ∧
       localSymbol L.1 _ y = restrictHom (E := L) (⟨s, hsK⟩ : K.1.fixingSubgroup) := by
 
   set g := Nat.card (L.1 ≃ₐ[K.1] L.1) with hgdef
@@ -208,8 +208,9 @@ theorem exists_abstractSymbol_eq_localSymbol (P : Ideal (𝓞 ℚ̄)) [P.IsPrime
 
   have ha : abstractSymbol S M
       (IdeleClassGroup.mk S.1 (finiteEmbedding (FiniteSubfield.placeBelow P hP S) y)) =
-        Abelianization.of (restrictHom (E := M) (⟨s, hsS⟩ : S.1.fixingSubgroup)) := by
-    rw [abstractSymbol_mk_of_le_sup_zhatField S M hMsup, ideleSymbol_finiteEmbedding, hy]
+        Group.Abelianization.of (restrictHom (E := M) (⟨s, hsS⟩ : S.1.fixingSubgroup)) := by
+    rw [abstractSymbol_mk_of_le_sup_zhatField S M hMsup, ideleSymbol_finiteEmbedding]
+    exact congrArg Group.Abelianization.of hy
 
   have hb := abstractSymbol_ideleClassNorm (K := K) (L := L) (K' := S) (L' := M) hKS.out
     (le_layerField L m) _ _ ha
@@ -227,7 +228,7 @@ theorem exists_abstractSymbol_eq_localSymbol (P : Ideal (𝓞 ℚ̄)) [P.IsPrime
 theorem abstractSymbol_mk_finiteEmbedding (v : HeightOneSpectrum (𝓞 K.1))
     (x : (v.adicCompletion K.1)ˣ) :
     abstractSymbol K L (IdeleClassGroup.mk K.1 (finiteEmbedding v x)) =
-      Abelianization.of (localSymbol L.1 v x) := by
+      Group.Abelianization.of (localSymbol L.1 v x) := by
   obtain ⟨P, hPp, hP, rfl⟩ := exists_placeBelow_eq K v
   set σ := localSymbol L.1 (FiniteSubfield.placeBelow P hP K) x with hσdef
 

@@ -115,7 +115,9 @@ theorem isSBHalf_dat (hF : F.Good) {Q : Finset (Pl D.host.E)} (hQ : SplitSet Q) 
   have hinf := GlobalTheory.PlaceVec.idemSum_infPart hQ.isIdemSum
   refine GlobalTheory.PlaceDatum.isSBHalf_of_red _ _ (frMapO S T F.βS F.βT) (GlobalTheory.PlaceDatum.frMapO_add _ _)
       (GlobalTheory.PlaceDatum.exists_den_frMapO hF.sdS.1.fg hF.sdT.1.fg _ _) ?_ Q ω hω
-  obtain ⟨K, hK, h'⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO hF.sdS.1 hF.sdT.1 F.βS F.βT
+  obtain ⟨K, hK, h'⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ (hF.sdS))
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ (hF.sdT)) F.βS F.βT
   exact ⟨K, hK, fun t ht => h' t (GlobalTheory.PlaceDatum.infPart_of_half hinf ht)⟩
 
 theorem idem_split {Q J K : Finset (Pl D.host.E)} (hd : Disjoint J K) (hU : ∀ P, P ∈ Q ↔ P ∈ J ∨ P ∈ K) :

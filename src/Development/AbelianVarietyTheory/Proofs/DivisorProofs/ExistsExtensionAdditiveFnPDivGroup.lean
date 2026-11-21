@@ -41,7 +41,10 @@ theorem exists_funs_transl_eq_add {p : ℕ} {R : Type} [CommRing R] (G : PDivGro
       ∀ n, G.transl n (B.1 (n + 1)) = B.1 (n + 1) ⊗ₜ[R] 1 + 1 ⊗ₜ[R] b := by
   choose f hf hres using G.exists_res_eq_of_transl_eq_add hb
   have h0 : G.transl 0 b = b ⊗ₜ[R] 1 + 1 ⊗ₜ[R] b := by
-    have h : (G.resOne 0 : G.A 1 →ₗ[R] G.A 1) = LinearMap.id := rfl
+    have h : (G.resOne 0 : G.A 1 →ₗ[R] G.A 1) = LinearMap.id := by
+      apply LinearMap.ext
+      intro a
+      simp only [BialgHom.coe_toLinearMap, LinearMap.id_apply, resOne_zero]
     rw [transl_apply, h, LinearMap.lTensor_id, LinearMap.id_apply]
     rw [cobOne_apply, sub_sub, sub_eq_zero] at hb
     exact hb

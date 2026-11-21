@@ -139,7 +139,7 @@ theorem om_fock (hB : B.Good) {Q : Finset (Pl D.host.E)} (hQ : B.admitted Q) {ω
     (fun τ => (B.F.BS τ).val) (fun τ => (B.F.BS τ).val) B.F.sT B.F.sT B.F.BT B.F.BT 1 κ
     (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (one_mem _)])
     (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ hκ])
-    (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (one_mem _)])
+    (fun τ => by rw [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ (one_mem _), Matrix.one_mul])
     (fun τ => by simp [GlobalTheory.FiniteFock.compAt_mt_of_finite _ τ hκ]) _ hth P).2]
   rfl
 

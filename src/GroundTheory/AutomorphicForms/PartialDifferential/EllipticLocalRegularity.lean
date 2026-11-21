@@ -195,9 +195,14 @@ theorem OpBound.sub {A B : 𝓢'(E, ℂ) →L[ℂ] 𝓢'(E, ℂ)} {s t C D : ℝ
 theorem lintegral_mul_le_eLpNorm_mul (f g : E → ℂ) (hf : AEMeasurable (fun x ↦ ‖f x‖ₑ) volume)
     (hg : AEMeasurable (fun x ↦ ‖g x‖ₑ) volume) :
     ∫⁻ x, ‖f x‖ₑ * ‖g x‖ₑ ≤ eLpNorm f 2 volume * eLpNorm g 2 volume := by
+  have norm_le (u : E → ℂ) : eLpNorm' u 2 volume ≤ eLpNorm u 2 volume := by
+    by_cases hu : AEStronglyMeasurable u volume
+    · simp [eLpNorm_eq_eLpNorm' two_ne_zero ENNReal.ofNat_ne_top hu]
+    · rw [eLpNorm_of_not_aestronglyMeasurable hu]
+      exact le_top
   have h := L2Kernel.lintegral_mul_sq_le (volume : Measure E) hf hg
   rw [← L2Kernel.eLpNorm_two_sq, ← L2Kernel.eLpNorm_two_sq, ← mul_pow] at h
-  exact (ENNReal.pow_le_pow_left_iff two_ne_zero).1 h
+  exact ((ENNReal.pow_le_pow_left_iff two_ne_zero).1 h).trans (mul_le_mul' (norm_le f) (norm_le g))
 
 theorem norm_ofSchwartz_smulLeft_fourierMultiplier_le (χ : 𝓢(E, ℂ)) {g : E → ℂ}
     (hg : g.HasTemperateGrowth) (t : ℝ) (hA : MemLp (weight t : E → ℂ) 2 volume)

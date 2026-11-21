@@ -82,8 +82,7 @@ theorem abstractSymbol_mk (x : IdeleGroup K.1) :
         rintro _ ⟨a, rfl⟩
         change abstractSymbol K L (IdeleClassGroup.mk K.1 (infiniteEmbedding w a)) =
           Group.Abelianization.of (ideleSymbol K.1 L.1 (infiniteEmbedding w a))
-        rw [abstractSymbol_mk_infiniteEmbedding, ideleSymbol_infiniteEmbedding]
-        rfl)
+        rw [abstractSymbol_mk_infiniteEmbedding, ideleSymbol_infiniteEmbedding])
   have hfN : ∀ y : IdeleGroup L.1, f (ideleNorm K.1 L.1 y) = 1 := fun y ↦
     abstractSymbol_ideleClassNorm_eq_one K L (IdeleClassGroup.mk L.1 y)
   have hgN : ∀ y : IdeleGroup L.1, g (ideleNorm K.1 L.1 y) = 1 := fun y ↦ by

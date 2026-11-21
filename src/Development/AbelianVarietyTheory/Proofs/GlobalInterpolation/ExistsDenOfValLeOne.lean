@@ -23,8 +23,10 @@ open scoped Matrix in
 variable {K : Type} [Field K] [NumberField K] in
 theorem _root_.GlobalTheory.HAtBasis.isLattice_of_basisAt {n : ℕ} (w : HeightOneSpectrum (𝓞 K))
     {M : Submodule (𝓞 K) (Fin n → K)} (hM : M.FG)
-    {B : GL (Fin n) K} (hB : _root_.Formalism.L2.DIV.IsBasisAt w M B) : Submodule.IsLattice K M := by
-  refine ⟨hM, ?_⟩
+    {B : GL (Fin n) K} (hB : _root_.Formalism.L2.DIV.IsBasisAt w M B) : Submodule.IsFullLattice K M := by
+  haveI : Submodule.IsLattice K M := ⟨hM, fun s hs hli =>
+    (LinearIndependent.iff_fractionRing _ _).mp hli⟩
+  refine ⟨?_⟩
   have hcol : ∀ j, (fun i => (B : Matrix (Fin n) (Fin n) K) i j) ∈
       Submodule.span K (M : Set (Fin n → K)) := by
     intro j
@@ -45,8 +47,16 @@ theorem _root_.GlobalTheory.HAtBasis.isLattice_of_basisAt {n : ℕ} (w : HeightO
     convert h2 using 1
     funext i
     simp [Algebra.smul_def, hs0]
-  intro s hs hli
-  exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  apply top_unique
+  intro x hx
+  have hrange : LinearMap.range (B : Matrix (Fin n) (Fin n) K).mulVecLin ≤
+      Submodule.span K (M : Set (Fin n → K)) := by
+    rw [Matrix.range_mulVecLin]
+    exact Submodule.span_le.mpr (by rintro _ ⟨j, rfl⟩; exact hcol j)
+  apply hrange
+  refine ⟨(B⁻¹ : GL (Fin n) K).val *ᵥ x, ?_⟩
+  change B.val *ᵥ ((B⁻¹).val *ᵥ x) = x
+  rw [Matrix.mulVec_mulVec, show B.val * (B⁻¹).val = 1 from B.mul_inv, Matrix.one_mulVec]
 variable {ι : Type} [Fintype ι] {a : ℕ}
 
 
@@ -110,7 +120,7 @@ theorem _root_.GlobalTheory.HAtBasis.mem_HAt_iff : ∀ (K : Type) [Field K]
   intro K _ _ w ι _ a lam M B hMB F
   have hB' : ∀ τ, _root_.Formalism.L2.DIV.IsBasisAt w (_root_.Formalism.L2.DIV.dualFr (M τ)) (_root_.Formalism.BasicNotions.inside₂ K a (B τ)) :=
     fun τ => _root_.GlobalTheory.DualWeylDual.isBasisAt_dualFr w (hMB τ).1 (hMB τ).2
-  have hlat : ∀ τ, Submodule.IsLattice K (_root_.Formalism.L2.DIV.dualFr (M τ)) := fun τ =>
+  have hlat : ∀ τ, Submodule.IsFullLattice K (_root_.Formalism.L2.DIV.dualFr (M τ)) := fun τ =>
     _root_.GlobalTheory.DualLat.isLattice_dualFr _ (_root_.GlobalTheory.HAtBasis.isLattice_of_basisAt w (hMB τ).1 (hMB τ).2)
   have hloc := (_root_.GlobalTheory.TransLoc.nabDelLoc_free_leVV.1 K ι a lam
     (fun τ => _root_.Formalism.L2.DIV.dualFr (M τ)) hlat w (fun τ => _root_.Formalism.BasicNotions.inside₂ K a (B τ)) hB').1

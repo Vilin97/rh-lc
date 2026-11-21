@@ -283,7 +283,9 @@ private theorem std_isSB (hX : IsBottomTri W i j X) (t : T) :
   have sdA : IsSelfDualC (GlobalTheory.Grid.neg A) X.rA.Λ := GlobalTheory.RowTest.isSelfDualC_neg' h.rigA.1
   have sdW : IsSelfDualC WW X.rW.Λ := h.rigW.1
   have he := h.idem t
-  obtain ⟨K, hK, hC⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO (S := GlobalTheory.Grid.neg A) sdA.1 sdW.1 X.rA.β X.rW.β
+  obtain ⟨K, hK, hC⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO (S := GlobalTheory.Grid.neg A)
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ sdA)
+    (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull _ _ sdW) X.rA.β X.rW.β
   exact StandardFirstTheta.GlobalTheory.CompanionTheory.StdFstTheta.stdFst_isSB (h.weil' t).hecT.1 he (GlobalTheory.ConstRatio.ideal_ne_bot X (locPl G) t) A WW
     X.rA.β X.rW.β _ (GlobalTheory.PlaceDatum.exists_den_frMapO (S := GlobalTheory.Grid.neg A) sdA.1.fg sdW.1.fg X.rA.β X.rW.β)
     ⟨K, hK, fun u hu => hC u (GlobalTheory.PlaceDatum.infPart_of_half (GlobalTheory.PlaceDatum.infPart_idemSum he) hu)⟩
@@ -423,6 +425,8 @@ theorem _root_.GlobalTheory.T.definiteBottom_localDoublingIntegral_converges : G
     simp only [wcoef, hfix g hg, hc₀]
   have hK := openOff_eq hX X.rA.Λ hP.maj hP.maj_eq
   haveI : Submodule.IsLattice D.host.E X.rA.Λ := hU.sdA.1
+  haveI : Submodule.IsFullLattice D.host.E X.rA.Λ :=
+    GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull (GlobalTheory.Grid.neg A) _ hU.sdA
   have hhgt : ∀ g ∈ openOff (GlobalTheory.Grid.neg A) X.rA.Λ ∅, GlobalTheory.Core.Rk.IP.hgtL (GlobalTheory.Grid.neg A) X.rA.Λ a g = 1 := by
     rw [hK]
     intro g hg

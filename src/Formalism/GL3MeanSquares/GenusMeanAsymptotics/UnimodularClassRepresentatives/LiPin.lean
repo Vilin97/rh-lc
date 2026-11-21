@@ -26,7 +26,7 @@ theorem core (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K
     (hs' : (algebraMap F K (n : F) • h).IsSymm) (hd' : IsTotPosDef (algebraMap F K (n : F) • h))
     {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal)
     (hx : (algebraMap F K (n : F) • h) S.x₀ S.x₀ = algebraMap F K (n : F)) :
-    ∃ L₀ : Submodule (𝓞 K) V, Submodule.IsLattice K L₀ ∧
+    ∃ L₀ : Submodule (𝓞 K) V, Submodule.IsFullLattice K L₀ ∧
       Formalism.HermitianLatticesTheory.IsIntegralLat (algebraMap F K (n : F) • h) L₀ ∧
       repRatio (algebraMap F K (n : F) • h) L₀ 𝔭 n ≠ 0 ∧
       psiP S L₀ 𝔭 = (Ideal.absNorm 𝔭 : ℝ) ^ ((finrank K V - 1) * vF 𝔭 n) *
@@ -41,9 +41,6 @@ theorem core (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K
   have hs : h.IsSymm := isSymm_of_smul hF hc hs'
   have hd : IsTotPosDef h := isTotPosDef_of_smul hK hF hs hd' hx1
   have h1𝔭 : (1 : 𝓞 F) ∉ 𝔭 := fun h1 => h𝔭.ne_top ((Ideal.eq_top_iff_one _).2 h1)
-  have hx1' : h S₁.x₀ S₁.x₀ = algebraMap F K ((1 : 𝓞 F) : F) := by
-    rw [hx1]
-    simp
   have exists_full : ∃ L₀ : Submodule (𝓞 K) V, Submodule.IsFullLattice K L₀ ∧
       Formalism.HermitianLatticesTheory.IsIntegralLat h L₀ ∧ S₁.x₀ ∈ L₀ ∧ vd h L₀ 𝔭 ≤ 1 := by
     open Cell LocalSpans idealPowerSpanBounds localizedQuotients integralBasisSpans WCA in
@@ -255,26 +252,7 @@ theorem core (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K
   have hd₁' : IsTotPosDef h' := S₁.isTotPosDef hd
   have hsc' := S.isSymm hs'
   have hdc' := S.isTotPosDef hd'
-  have hadj : S₁.adjoin (S₁.cut L₀) = L₀ := S₁.adjoin_cut hx1 hLi hxL
-  have hC : Submodule.IsLattice K (S₁.cut L₀) := by
-    rw [← S₁.isLattice_adjoin_iff, hadj]
-    exact hL
-  have hCf : Submodule.IsFullLattice K (S₁.cut L₀) := by
-    refine { toIsLattice := hC, span_eq_top := ?_ }
-    rw [eq_top_iff]
-    intro a _
-    have ha : S₁.ι a ∈ Submodule.span K (L₀ : Set V) := by
-      rw [hLf.span_eq_top]
-      exact Submodule.mem_top
-    obtain ⟨y, hy, r, hya⟩ := (IsLocalization.mem_span_iff (nonZeroDivisors (𝓞 K))).mp ha
-    rw [Submodule.span_eq] at hy
-    have hr : (r : 𝓞 K) • a ∈ S₁.cut L₀ := by
-      rw [S₁.mem_cut_iff, ← algebraMap_smul K (r : 𝓞 K), map_smul, hya, smul_smul,
-        IsLocalization.mk'_spec', map_one, one_smul]
-      exact hy
-    have hmul := Submodule.smul_mem (Submodule.span K (S₁.cut L₀ : Set V'))
-      (IsLocalization.mk' K 1 r) (Submodule.subset_span hr)
-    rwa [← algebraMap_smul K (r : 𝓞 K), smul_smul, IsLocalization.mk'_spec, map_one, one_smul] at hmul
+  have hCf := StabilizerLattices.isFullLattice_cut S₁ hLf
   have hCi : Formalism.HermitianLatticesTheory.IsIntegralLat h' (S₁.cut L₀) := Formalism.HermitianLattices.Ext.L3.UnimodularLocalization.isIntegralLat_cut S₁ hLi
   have hvdC : vd h' (S₁.cut L₀) 𝔭 = vd h L₀ 𝔭 := PinC.vd_cut hK hF hs hd S₁ hx1 hLf hLi hxL h𝔭
   have hm := S₁.finrank_add_one
@@ -285,8 +263,8 @@ theorem core (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K
     exact_mod_cast (Ideal.absNorm_eq_zero_iff.not.mpr hb)
   have hsplit : alphaL h L₀ 𝔭 = alphaN h L₀ 𝔭 1 * alphaL h' (S₁.cut L₀) 𝔭 :=
     alphaL_split hK hF hs hd S₁ hx1 hLf hLi hxL h𝔭 hvd
-  have hαpos : 0 < alphaL h L₀ 𝔭 := alphaL_pos hK hF hs hd hL hLi h𝔭
-  have hαC : 0 < alphaL h' (S₁.cut L₀) 𝔭 := alphaL_pos hK hF hs₁' hd₁' hC hCi h𝔭
+  have hαpos : 0 < alphaL h L₀ 𝔭 := alphaL_pos hK hF hs hd hLf hLi h𝔭
+  have hαC : 0 < alphaL h' (S₁.cut L₀) 𝔭 := alphaL_pos hK hF hs₁' hd₁' hCf hCi h𝔭
   have hαN : alphaN h L₀ 𝔭 1 ≠ 0 := by
     intro h0
     rw [hsplit, h0, zero_mul] at hαpos
@@ -299,7 +277,7 @@ theorem core (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K
   have hvsm := PinA.vd_smul hK hF hs hd hLf hLi h𝔭 hn
   have hvT : vd (algebraMap F K (n : F) • h') (locF 𝔭 (S₁.cut L₀)) 𝔭 =
       vd h' (S₁.cut L₀) 𝔭 + finrank K V' * vF 𝔭 n := by
-    rw [vd_locF hK hF hsc' hdc' hC hCic h𝔭]
+    rw [vd_locF hK hF hsc' hdc' hCf.toIsLattice hCic h𝔭]
     exact PinA.vd_smul hK hF hs₁' hd₁' hCf hCi h𝔭 hn
   have hαT : alphaL (algebraMap F K (n : F) • h') (locF 𝔭 (S₁.cut L₀)) 𝔭 =
       (Ideal.absNorm 𝔭 : ℝ) ^ (vF 𝔭 n * finrank K V' ^ 2) * alphaL h' (S₁.cut L₀) 𝔭 := by
@@ -313,7 +291,7 @@ theorem core (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K
     rw [psiP_eq_sum hK hF hs' hd' S hL hLic h𝔭 hrep', Finset.sum_singleton, fibLoc_unscale hc,
       PinC.fibLoc_cut hK hF hs hd S₁ hx1 hLf hLi hxL h𝔭 hvd]
     simp
-  refine ⟨L₀, hL, hLic, ?_, ?_⟩
+  refine ⟨L₀, hLf, hLic, ?_, ?_⟩
   · unfold repRatio
     rw [hNsm, hLsm]
     exact div_ne_zero (mul_ne_zero (pow_ne_zero _ hN) (mul_ne_zero (pow_ne_zero _ hN) hαN))

@@ -82,7 +82,9 @@ theorem main_term (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
   have hν' : 0 < nu h' (S.cut (Formalism.HermitianLatticesTheory.gmap g (locF 𝔭 L))) 𝔭 := by
     rw [LocalizedFibreSets.gmap_locF, LocalizedFibreSets.cut_locF]
     exact nu_pos hK hF (S.isSymm hs) (S.isTotPosDef hd)
-      (StabilizerLattices.isLattice_cut S (by first | exact hL_gmap g | exact (hL_gmap g).toIsLattice))
+      (by
+        have hcut := StabilizerLattices.isFullLattice_cut S (hL_gmap g)
+        first | exact hcut | exact hcut.toIsLattice)
       (UnimodularLocalization.isIntegralLat_cut S (UnimodularLocalization.isIntegralLat_gmap hg hLi)) h𝔭
   have ho : (oM S (Formalism.HermitianLatticesTheory.gmap g (locF 𝔭 L)) : ℝ) ≠ 0 := by
     rw [LocalizedFibreSets.gmap_locF] at hxM ⊢

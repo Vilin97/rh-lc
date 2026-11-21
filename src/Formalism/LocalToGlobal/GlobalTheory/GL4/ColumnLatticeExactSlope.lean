@@ -174,12 +174,13 @@ theorem bc_mu (hc : CMData F E) (S : HSpace E) (hsig : S.SigOK) (hpos : S.IsPosD
       rw [hQL]
       rfl
     rw [himage, hQ.2.2]
-  have hrT' : rkK (Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E)))) = S.rank := by
+  have hrT : rkK (Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E)))) = S.rank := by
     change finrank K (Submodule.span K ((Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E))) : Submodule (𝓞 K) (Fin S.rank → K)) : Set (Fin S.rank → K))) = _
     rw [hspanT]
     simp
-  have hrM : rkK (crdLat S L) = S.rank := hbc.1.symm.trans hrT' 
-  have hspanM : Submodule.span E (crdLat S L : Set (Fin S.rank → E)) = ⊤ := by
+  have hrM : rkK (crdLat S L) = S.rank := hbc.1.symm.trans hrT
+  have hfullM : Submodule.IsFullLattice E (crdLat S L) := by
+    refine { toIsLattice := hM, span_eq_top := ?_ }
     apply Submodule.eq_top_of_finrank_eq
     simpa [rkK] using hrM
   have hfull : Submodule.IsFullLattice E L := by
@@ -187,14 +188,10 @@ theorem bc_mu (hc : CMData F E) (S : HSpace E) (hsig : S.SigOK) (hpos : S.IsPosD
     apply (LinearMap.map_injective (LinearMap.ker_eq_bot.mpr (crd S).injective) :
       Function.Injective (Submodule.map (crd S).toLinearMap))
     rw [Submodule.map_span, Submodule.map_top, LinearMap.range_eq_top.mpr (crd S).surjective]
-    exact hspanM
+    exact hfullM.span_eq_top
   refine ⟨?_, hfull⟩
   rw [hmu', hcomap]
-  have hfullM : Submodule.IsFullLattice E (crdLat S L) :=
-    { toIsLattice := hM, span_eq_top := hspanM }
   have hneM : crdLat S L ≠ ⊥ := Formalism.L2.Col.isLattice_ne_bot hfullM
-  have hfgT := hfg0
-  have hrT : rkK (Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E)))) = S.rank := hbc.1.trans hrM
   have hneT : Submodule.span (𝓞 K) (ιm '' (crdLat S L : Set (Fin S.rank → E))) ≠ ⊥ := by
     intro h0
     rw [h0] at hrT
@@ -202,7 +199,7 @@ theorem bc_mu (hc : CMData F E) (S : HSpace E) (hsig : S.SigOK) (hpos : S.IsPosD
       show finrank K (Submodule.span K ((⊥ : Submodule (𝓞 K) (Fin S.rank → K)) : Set (Fin S.rank → K))) = 0
       simp
     omega
-  rw [Formalism.L2.Col.brp_mu_degT _ _ hP1 _ hfgT hneT (by rw [hrT]; exact hn),
+  rw [Formalism.L2.Col.brp_mu_degT _ _ hP1 _ hfg0 hneT (by rw [hrT]; exact hn),
     Formalism.L2.Col.brp_mu_degT _ _ (fun v => (hY v).1) _ hM.fg hneM (by rw [hrM]; exact hn), hrM, hrT]
   congr 2
   exact hbc.2

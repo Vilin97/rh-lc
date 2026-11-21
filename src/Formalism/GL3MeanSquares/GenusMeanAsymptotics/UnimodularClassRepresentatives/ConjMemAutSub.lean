@@ -162,7 +162,7 @@ theorem cut_props (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
     have e2 : t = 0 := FaithfulSMul.algebraMap_injective (𝓞 F) (𝓞 K) (by rw [e1, map_zero])
     exact ht (e2 ▸ 𝔭.zero_mem)
   have hmap : Submodule.IsFullLattice K (Formalism.HermitianLatticesTheory.gmap g L) := by
-    refine ⟨LocalizedFibreSets.isLattice_gmap g hL, ?_⟩
+    refine { toIsLattice := LocalizedFibreSets.isLattice_gmap g hL, span_eq_top := ?_ }
     change Submodule.span K ((g : V →ₗ[K] V) '' (L : Set V)) = ⊤
     rw [Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
     exact g.surjective

@@ -198,7 +198,7 @@ theorem z'_mem_UUE (F : LFlag S r T) (F' : LFlag S r T') (hF' : IsLift Λ F') : 
   rw [← hF'.2]
   exact Submodule.mem_sup_right (Submodule.mem_span_singleton_self _)
 
-theorem sp_le_UUE (hΛ : Submodule.IsLattice E Λ) (F : LFlag S r T) (F' : LFlag S r T') (hF' : IsLift Λ F') :
+theorem sp_le_UUE (hΛ : Submodule.IsFullLattice E Λ) (F : LFlag S r T) (F' : LFlag S r T') (hF' : IsLift Λ F') :
     Submodule.span E (Set.range F'.fl.fvec) ≤ UUE Λ F F' := by
   rw [Submodule.span_le]
   rintro _ ⟨b, rfl⟩
@@ -207,7 +207,7 @@ theorem sp_le_UUE (hΛ : Submodule.IsLattice E Λ) (F : LFlag S r T) (F' : LFlag
   · rw [fvec_cs]
     exact PI.UnitaryGroupMassFormula.BetaLUniq.Xsp_le_UUE' S Λ hΛ F F' (Submodule.subset_span ⟨i, rfl⟩)
 
-theorem pair_core (hΛ : Submodule.IsLattice E Λ) (F : LFlag S r T) (F' F'' : LFlag S r T') (β : S.V ≃ₗ[E] S.V)
+theorem pair_core (hΛ : Submodule.IsFullLattice E Λ) (F : LFlag S r T) (F' F'' : LFlag S r T') (β : S.V ≃ₗ[E] S.V)
     (k : ℕ) (hLF : IsLift Λ F) (hL' : IsLift Λ F') (hL'' : IsLift Λ F'') (hG' : Gval F F' ≠ 0)
     (hdim : finrank E S.V = k + 2 * r + 1) (hT : T ≠ 0) (hs : s0 Λ F F' F'' β k = 1)
     (hsc : IsScalar Λ F F' F'' β) {Ω'' : S.V} (hΩ : OmV F.fl F''.fl Ω'') :
@@ -318,7 +318,7 @@ theorem omega_representative_holds : OmRep u u' F0 what₂ := by
   have r1 := Quot.eqvGen_exact eγ
   have r2 := Quot.eqvGen_exact e'
   have hRL := hrows.1 p.lam p.mem
-  have hΛ : Submodule.IsLattice D.host.E p.lam := hRL.2.1.1
+  have hΛ : Submodule.IsFullLattice D.host.E p.lam := hRL.1.1
   have hLF : IsLift p.lam (lf D F0) := hRL.2.1.2.2.1
 
   have i1 := (inv_eqv r1 (Inv (lf D F0) Ωγ) fun _ _ h => inv_dc h).1 ⟨Ωγ, hγ, by simp⟩

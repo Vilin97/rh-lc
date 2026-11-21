@@ -22,13 +22,11 @@ noncomputable section
 namespace GlobalTheory.PtExt
 
 theorem comp_pow_pt {R : Type} [CommRing R] {A : Over (Sp R)} [GrpObj A] {T T' : Over (Sp R)} (ρ : T' ⟶ T)
-    (x : T ⟶ A) (m : ℕ) : ρ ≫ x ^ m = (ρ ≫ x) ^ m := by
-  induction m with
-  | zero => rw [pow_zero, pow_zero, MonObj.comp_one]
-  | succ m ih => rw [pow_succ, pow_succ, MonObj.comp_mul, ih]
+    (x : T ⟶ A) (m : ℕ) : ρ ≫ x ^ m = (ρ ≫ x) ^ m :=
+  MonObj.comp_pow x m ρ
 
 theorem chi_eq_of_torsion : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] [IsCommMonObj A] (n : ℕ),
-    (n : R) = 0 → HasRoots A n → ∀ b : Fn0 A, IsTorsChar n b → ∀ S : SecFam A,
+    (n : R) = 0 → HasRoots (A := A) n → ∀ b : Fn0 A, IsTorsChar n b → ∀ S : SecFam A,
     (∀ (D : Type) [CommRing D] [Algebra R D] (x : Pt A D), IsSec n b x (S D x)) → ∀ g : Fn2 A, IsSecAdd n S g →
     ∀ (D : Type) [CommRing D] [Algebra R D] (x : Pt A D), x ^ n = 1 → chi n g D x = b D x := by
   intro R _ A _ _ n hn hR b hb S hS g hg D _ _ x hx
@@ -54,7 +52,7 @@ theorem chi_eq_of_torsion : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpOb
   rw [hsum, hx, pow_zero, pow_zero]
 
   have h1 : (1 : Pt A E) ^ n = spOver ψ ≫ (1 : Pt A D) := by rw [one_pow, MonObj.comp_one]
-  have h2 : (z ^ n) ^ n = 1 := by rw [hz, ← comp_pow_pt, hx, MonObj.comp_one]
+  have h2 : (z ^ n) ^ n = 1 := by rw [hpow n, hx, MonObj.comp_one]
   have hs := (hS D 1).2 E ψ 1 (z ^ n) h1 h2
   rw [_root_.one_mul] at hs
   rw [hs, add_sub_cancel_left, hz]

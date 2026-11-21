@@ -79,13 +79,13 @@ theorem gluing_mass_of_fibre_structure (D : D7) (u : D.what₂.Word) (hpos : IsP
   obtain ⟨hgen, hfib⟩ := hR hT h3 hsp F0 he hz Λ hΛ s hs
   let h := (D.sp.X 0).hT
   let L := L0X D Λ (lf D F0)
-  have hex := (Formalism.ThetaLiftIndependence.classRepsDefinite D.host.E (D.sp.X 0).V
-    h (D.sp.X 0).herm (trace_inner_self_pos h hpos) L (hlat hT h3 hsp F0 he hz Λ hΛ)).1
-  let reps := hex.choose
-  have hreps : Formalism.ThetaLiftIndependence.IsClassReps h L reps := hex.choose_spec
+  have hex : ∃ reps, Formalism.ThetaLiftIndependence.IsClassReps h L reps :=
+    (Formalism.ThetaLiftIndependence.classRepsDefinite D.host.E (D.sp.X 0).V
+      h (D.sp.X 0).herm (trace_inner_self_pos h hpos) L (hlat hT h3 hsp F0 he hz Λ hΛ)).1
+  have hreps := hex.choose_spec
   rw [Formalism.HermitianLatticesTheory.massBasic_mass_eq h L hex]
   unfold massRows
-  rw [sum_eq_sum_over_class_reps (D.sp.X 0).hT _ reps hreps s (fun Λ' => L0X D Λ' (lf D F0)) hgen,
+  rw [sum_eq_sum_over_class_reps h L hex.choose hreps s (fun Λ' => L0X D Λ' (lf D F0)) hgen,
     Finset.sum_congr rfl fun M hM => hfib M (hreps.1 M hM), ← Finset.mul_sum, mul_comm]
 
 end Rows

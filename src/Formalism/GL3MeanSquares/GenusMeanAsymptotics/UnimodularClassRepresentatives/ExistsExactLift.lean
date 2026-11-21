@@ -89,7 +89,7 @@ theorem newton_iter (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : I
 
 theorem exists_exact_lift (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {x₀ : V} (h1 : h x₀ x₀ = 1) {k : ℕ} (hk : 1 ≤ k) {y : V} (hy : y ∈ L)
     (hyy : CongrP 𝔭 k (h y y) 1) :
     ∃ z ∈ locF 𝔭 L, h z z = 1 ∧ z - y ∈ (extP K 𝔭 ^ k • locF 𝔭 L : Submodule (𝓞 K) V) := by

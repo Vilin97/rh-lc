@@ -30,8 +30,7 @@ theorem good_term (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
     exists_lattice_of_fibLoc_ne_zero_good hK hF hs hd S hL hLi h𝔭 hn hvL hvn hT
   constructor
   · rw [← fibLoc_congr S L e]
-    exact fibLoc_eq_one hK hF hs hd S (by first | exact hL | exact hL.toIsLattice) hLi
-      (by first | exact hC | exact hC.toIsLattice) hCi h𝔭 hn hvL hvn hvC
+    exact fibLoc_eq_one hK hF hs hd S hL hLi hC hCi h𝔭 hn hvL hvn hvC
   · rw [← hTl, ← e, localFactor_localField hK hF (S.isSymm hs) (S.isTotPosDef hd) hC.toIsLattice hCi h𝔭]
     exact localMassFactor_of_valuation_eq_zero hK hF (S.isSymm hs) (S.isTotPosDef hd) hC hCi h𝔭 hvC
 
@@ -47,9 +46,8 @@ theorem good_orbit (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : Is
   obtain ⟨C', hC', hCi', hvC', e'⟩ :=
     exists_lattice_of_fibLoc_ne_zero_good hK hF hs hd S hL hLi h𝔭 hn hvL hvn hT'
   rw [← e, ← e']
-  exact exists_isom_locF_of_vd_zero hK hF (S.isSymm hs) (S.isTotPosDef hd)
-    (by first | exact hC | exact hC.toIsLattice) (by first | exact hC' | exact hC'.toIsLattice)
-    hCi hCi' h𝔭 hvC hvC'
+  exact exists_isom_locF_of_vd_zero hK hF (S.isSymm hs) (S.isTotPosDef hd) hC hC' hCi hCi' h𝔭
+    hvC hvC'
 
 theorem isIntegralAt_locF {W : Type} [AddCommGroup W] [Module K W] [Module (𝓞 K) W]
     [IsScalarTower (𝓞 K) K W] {h₀ : W →ₗ⋆[K] W →ₗ[K] K} {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsPrime)
@@ -81,8 +79,7 @@ theorem psiP_eq_one' (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : 
   classical
   obtain ⟨C, hC, hCi, hvC⟩ := exists_unimod_lattice_good hK hF hs hd S hL hLi h𝔭 hn hvL hvn
   have hfC : fibLoc S L 𝔭 (locF 𝔭 C) ≠ 0 := by
-    rw [fibLoc_locF, fibLoc_eq_one hK hF hs hd S (by first | exact hL | exact hL.toIsLattice) hLi
-      (by first | exact hC | exact hC.toIsLattice) hCi h𝔭 hn hvL hvn hvC]
+    rw [fibLoc_locF, fibLoc_eq_one hK hF hs hd S hL hLi hC hCi h𝔭 hn hvL hvn hvC]
     exact one_ne_zero
   have hex : ∃ s, IsLocReps S L 𝔭 s := by
     refine ⟨{locF 𝔭 C}, ?_, ?_⟩
