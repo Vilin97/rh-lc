@@ -33,7 +33,7 @@ theorem cong_add' {k : ℕ} {x y x' y' : Ω} (h1 : Cong p k x y) (h2 : Cong p k 
   obtain ⟨z', hz', e'⟩ := h2
   exact ⟨z + z', hz.add hz', by rw [mul_add, ← e, ← e']; ring⟩
 
-theorem cong_mul_left' {k : ℕ} {x y : Ω} (a : Ω) (ha : IsInt p a) (h : Cong p k x y) :
+theorem cong_mul_left' {k : ℕ} {x y : Ω} (a : Ω) (ha : IsInt (p := p) a) (h : Cong p k x y) :
     Cong p k (a * x) (a * y) := by
   obtain ⟨z, hz, e⟩ := h
   exact ⟨a * z, ha.mul hz, by rw [← mul_sub, e]; ring⟩
@@ -106,11 +106,11 @@ theorem uniform_lc_on (hΩ : IsClo p Ω) (T : Tower p Ω) {k : ℕ} {c : Gal p �
 
 theorem uniform_lc_on_int (hΩ : IsClo p Ω) (T : Tower p Ω) {k : ℕ} {c : Gal p Ω → Ω}
     (hc : IntegralLocallyConstCochainModPow k (Ggeo p Ω ⊓ ⨅ n, Gn T n) c) :
-    ∃ S₁ : Finset Ω, (∀ s ∈ S₁, IsInt p s) ∧ ∀ g ∈ Ggeo p Ω ⊓ ⨅ n, Gn T n,
+    ∃ S₁ : Finset Ω, (∀ s ∈ S₁, IsInt (p := p) s) ∧ ∀ g ∈ Ggeo p Ω ⊓ ⨅ n, Gn T n,
       ∀ h ∈ Ggeo p Ω ⊓ ⨅ n, Gn T n, (∀ x ∈ S₁, h x = g x) → Cong p k (c h) (c g) := by
   classical
   obtain ⟨S₀, hS₀⟩ := uniform_lc_on hΩ T hc
-  have hm : ∀ x : Ω, ∃ a : O0 p, a ≠ 0 ∧ IsInt p (a • x) := fun x => by
+  have hm : ∀ x : Ω, ∃ a : O0 p, a ≠ 0 ∧ IsInt (p := p) (a • x) := fun x => by
     obtain ⟨a, ha, hi⟩ := (hΩ.alg.isAlgebraic x).exists_integral_multiple
     exact ⟨a, ha, hi⟩
   choose a ha hai using hm
@@ -136,7 +136,7 @@ theorem h1_killed_by_zeta_sub_one_geo : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 �
   obtain ⟨y, E, hy, hEH, hu, hsum⟩ :=
     GlobalTheory.T.smallTraces_subgroup_galois_towerTop p Ω hp2 hΩ T H inf_le_right S₁ j hj
   set x : Ω := ∑ g ∈ E, g y * c g with hx
-  have hxint : IsInt p x := by
+  have hxint : IsInt (p := p) x := by
     refine IsIntegral.sum _ fun g hg => ?_
     exact (IsIntegral.map g.toAlgHom hy).mul (hc.1 g (hEH g hg))
   refine ⟨-x, hxint.neg, fun h hh => ?_⟩

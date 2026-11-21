@@ -107,15 +107,15 @@ theorem cong_le {k k' : ℕ} (h : k' ≤ k) {x y : Ωl} (hc : Cong p k x y) : Co
   obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_le h
   exact ⟨(p : Ωl) ^ d * z, IsIntegral.mul (GlobalTheory.EdgeLoc.pint d) hz, by rw [e]; ring⟩
 
-theorem ev_coeff {ψ : O0 p →+* Ωl} {c : ℤ → Ωl} {x x' : Ωl} (h : Ev ψ c x x') (m : ℤ) : IsInt p (c m) ∧ IsAlgZp p (c m) := by
+theorem ev_coeff {ψ : O0 p →+* Ωl} {c : ℤ → Ωl} {x x' : Ωl} (h : Ev ψ c x x') (m : ℤ) : IsInt (p := p) (c m) ∧ IsAlgZp p (c m) := by
   obtain ⟨d, e, a, he, hc, -, -⟩ := h
   rw [hc m]
-  refine Finset.sum_induction _ (fun y => IsInt p y ∧ IsAlgZp p y)
+  refine Finset.sum_induction _ (fun y => IsInt (p := p) y ∧ IsAlgZp p y)
     (fun a b ha hb => ⟨IsIntegral.add ha.1 hb.1, GlobalTheory.GeoFix.isAlgZp_add ha.2 hb.2⟩)
     ⟨isIntegral_zero, by simpa using algZp_int (p := p) (Ωl := Ωl) 0⟩ (fun t _ => ?_)
   exact ⟨IsIntegral.mul (he t).1 isIntegral_algebraMap, EvRing.isAlgZp_mul (he t).2 (GlobalTheory.GeoFix.isAlgZp_zp _)⟩
 
-theorem cong_coeff_mul {n : ℕ} {U V : HahnSeries ℤ Ωl} (hU : ∀ i, Cong p n (U.coeff i) 0) (hV : ∀ i, IsInt p (V.coeff i))
+theorem cong_coeff_mul {n : ℕ} {U V : HahnSeries ℤ Ωl} (hU : ∀ i, Cong p n (U.coeff i) 0) (hV : ∀ i, IsInt (p := p) (V.coeff i))
     (m : ℤ) : Cong p n ((U * V).coeff m) 0 := by
   rw [HahnSeries.coeff_mul]
   refine Finset.sum_induction _ (fun y => Cong p n y 0) (fun a b ha hb => ?_) (Basic.cong_refl n 0) (fun t _ => ?_)
@@ -127,7 +127,7 @@ theorem value_cong {n c0 : ℕ} {Q go o gx x Ia Ja Ib Jb za zb : Ωl} {A₁ g B�
     (h2 : Cong p n ((p : Ωl) * o) x) (h3 : Cong p n ((p : Ωl) * go) gx)
     (ha : Cong p n Ia (-(A₁ : Ωl) * za)) (hja : Cong p n ((p : Ωl) * Ja) (-(p : Ωl) * (g : Ωl) * za))
     (hb : Cong p n Ib (-(B₁ : Ωl) * zb)) (hjb : Cong p n ((p : Ωl) * Jb) (-(p : Ωl) * (h : Ωl) * zb))
-    (iIa : IsInt p Ia) (iIb : IsInt p Ib) (iza : IsInt p za) (izb : IsInt p zb) :
+    (iIa : IsInt (p := p) Ia) (iIb : IsInt (p := p) Ib) (iza : IsInt (p := p) za) (izb : IsInt (p := p) zb) :
     Cong p n ((p : Ωl) ^ (c0 + 1) * Q)
       (gx - x - (((p : ℤ) ^ (c0 + 1) * (A₁ * h - g * B₁) * (t : ℤ) : ℤ) : Ωl) * (za * zb)) := by
   obtain ⟨z1, i1, e1⟩ := hlaw
@@ -147,8 +147,8 @@ theorem value_cong {n c0 : ℕ} {Q go o gx x Ia Ja Ib Jb za zb : Ωl} {A₁ g B�
       (Ia * f4 - (p : Ωl) * (h : Ωl) * zb * f1 - Ib * f2 + (p : Ωl) * (g : Ωl) * za * f3)
 
 theorem exists_xi {Ω : Type} [Field Ω] (A : ValuationSubring Ω) (j : Ω →+* Ωl) (n L : ℕ)
-    (hd : ∀ e : Ωl, IsInt p e → IsAlgZp p e → ∃ a ∈ A, Cong p n e (j a)) (C : HahnSeries ℤ Ωl)
-    (hC : ∀ m, IsInt p (C.coeff m) ∧ IsAlgZp p (C.coeff m)) :
+    (hd : ∀ e : Ωl, IsInt (p := p) e → IsAlgZp p e → ∃ a ∈ A, Cong p n e (j a)) (C : HahnSeries ℤ Ωl)
+    (hC : ∀ m, IsInt (p := p) (C.coeff m) ∧ IsAlgZp p (C.coeff m)) :
     ∃ ξ : ℚ → Ω, (∀ r, ξ r ∈ A) ∧ (∀ r, ξ r ≠ 0 → ∃ m : ℤ, C.order ≤ m ∧ r = (m : ℚ) / (p : ℚ) ^ L) ∧
       ∀ m : ℤ, Cong p n (C.coeff m) (j (ξ ((m : ℚ) / (p : ℚ) ^ L))) := by
   classical
@@ -179,7 +179,7 @@ theorem exists_xi {Ω : Type} [Field Ω] (A : ValuationSubring Ω) (j : Ω →+*
 
 theorem coef_bridge {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (A : ValuationSubring Ω)
     (hpA : ((p : ℕ) : Ω) ∈ A.nonunits) (hclo : IsClo p Ωl) (T : GlobalTheory.K5.Tower p Ωl) (j : Ω →+* Ωl)
-    (hint : ∀ x, x ∈ A ↔ IsInt p (j x)) (L n K0 : ℕ) (ψ : O0 p →+* Ωl) (hψ : IsReb T L ψ)
+    (hint : ∀ x, x ∈ A ↔ IsInt (p := p) (j x)) (L n K0 : ℕ) (ψ : O0 p →+* Ωl) (hψ : IsReb T L ψ)
     (PA PB φ : HahnSeries ℚ Ω) (hPA : Prim A PA) (hPB : Prim A PB)
     (sA : GlobalTheory.DlEx.Sp (p ^ L) PA) (sB : GlobalTheory.DlEx.Sp (p ^ L) PB) (sφ : GlobalTheory.DlEx.Sp (p ^ L) φ) (hφA : ∀ r, φ.coeff r ∈ A)
     (hφ : ∀ r, CgA A p n ((φ * PA * PB).coeff r)
@@ -426,9 +426,9 @@ theorem galois_side {p : ℕ} [hp : Fact p.Prime] {Ωl : Type} [Field Ωl] [Alge
 
 theorem unit_val {p : ℕ} [hp : Fact p.Prime] {Ωl : Type} [Field Ωl] [Algebra (O0 p) Ωl] {Ω : Type} [Field Ω]
     (hclo : IsClo p Ωl) {T : GlobalTheory.K5.Tower p Ωl} {n : ℕ} {ψ : O0 p →+* Ωl} (hreb : IsReb T n ψ) {A : ValuationSubring Ω}
-    {j : Ω →+* Ωl} (hint : ∀ z, z ∈ A ↔ IsInt p (j z)) {φ : HahnSeries ℚ Ω} {x x' : Ωl}
+    {j : Ω →+* Ωl} (hint : ∀ z, z ∈ A ↔ IsInt (p := p) (j z)) {φ : HahnSeries ℚ Ω} {x x' : Ωl}
     (hP : Prim A φ) (hs : GlobalTheory.DlEx.Sp (p ^ n) φ) (hx : Ev ψ (fun r : ℤ => j (φ.coeff ((r : ℚ) / (p : ℚ) ^ n))) x x') :
-    x ≠ 0 ∧ IsInt p x⁻¹ := by
+    x ≠ 0 ∧ IsInt (p := p) x⁻¹ := by
   obtain ⟨-, r0, h0, hinv⟩ := hP
   have hd := hs r0 h0
   have hpn : ((p ^ n : ℕ) : ℚ) ≠ 0 := by exact_mod_cast (pow_pos hp.out.pos n).ne'
@@ -521,7 +521,7 @@ theorem GlobalTheory.pair_edge_dlog : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → 
   obtain ⟨ηl, hcoc, hlc, hedge⟩ := galois_side (K := K) T L n E ζ α β hEζ hfix hα0 hβ0 xl yl hxl hyl x y hx hy η hη hηlc
   obtain ⟨o, hoi, hof, hlaw⟩ := hc0 Ωl hclo T L n hnL hn1 ψ hψ ι hι u v αa βa αb βb hdla hdlb _ _ hrα hrβ xl yl lz ηl
     hxl hyl hlz hcoc hlc
-  have ip : IsInt p (p : Ωl) := by simpa using GlobalTheory.EdgeLoc.pint (p := p) (Ω := Ωl) 1
+  have ip : IsInt (p := p) (p : Ωl) := by simpa using GlobalTheory.EdgeLoc.pint (p := p) (Ω := Ωl) 1
   obtain ⟨cξ, xo, xo', hEo, hco⟩ := GlobalTheory.GeoFix.geofix p Ωl hclo T L ψ hψ n ((p : Ωl) * o) (IsIntegral.mul ip hoi)
     (fun g' hg' => by rw [map_mul, map_natCast, hof g' hg'])
   have R := EvRing.ev_ring p Ωl hclo T L ψ hψ

@@ -17,7 +17,7 @@ namespace GlobalTheory.LevDer
 theorem int_div_of_mk {p : ℕ} [Fact p.Prime] {Ω : Type} [Field Ω] [Algebra (O0 p) Ω] [CharZero Ω]
     (m : ℕ) (a : integralClosure (O0 p) Ω)
     (ha : Ideal.Quotient.mk (Ideal.span {((p : integralClosure (O0 p) Ω)) ^ m}) a = 0) :
-    IsInt p ((a : Ω) / (p : Ω) ^ m) := by
+    IsInt (p := p) ((a : Ω) / (p : Ω) ^ m) := by
   rw [Ideal.Quotient.eq_zero_iff_mem, Ideal.mem_span_singleton'] at ha
   obtain ⟨c, rfl⟩ := ha
   have hp : (p : Ω) ^ m ≠ 0 := pow_ne_zero _ (Nat.cast_ne_zero.2 (Fact.out : p.Prime).ne_zero)

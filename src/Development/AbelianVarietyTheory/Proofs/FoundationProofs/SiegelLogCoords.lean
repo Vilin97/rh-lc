@@ -114,13 +114,13 @@ theorem siegel_logCoords : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClo
     refine finsum_congr fun i => ?_
     simp only [hcE, hcU]
     split_ifs <;> simp
-  have hzi : ∀ m : ℤ, IsInt p ((T.ζ L) ^ m) := by
+  have hzi : ∀ m : ℤ, IsInt (p := p) ((T.ζ L) ^ m) := by
     intro m
     rcases m with m | m
     · rw [Int.ofNat_eq_coe, zpow_natCast]; exact GlobalTheory.KumDlog.int_pow (GlobalTheory.KumDlog.int_zeta T L) m
     · rw [zpow_negSucc, ← inv_pow]; exact GlobalTheory.KumDlog.int_pow (GlobalTheory.KumDlog.int_zeta_inv T L) _
   obtain ⟨r, m, hrm⟩ := hunit
-  have hcu : cU r ≠ 0 ∧ IsInt p (cU r)⁻¹ := by
+  have hcu : cU r ≠ 0 ∧ IsInt (p := p) (cU r)⁻¹ := by
     have hz0 : (T.ζ L) ^ m ≠ 0 := zpow_ne_zero _ (GlobalTheory.KumDlog.zeta_ne T L)
     rcases hrm with hrm | hrm
     · simp only [hcU, hrm, map_zpow₀, hζ]

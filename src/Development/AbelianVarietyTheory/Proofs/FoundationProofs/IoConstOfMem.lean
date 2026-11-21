@@ -32,7 +32,7 @@ section Local
 
 variable {p : ℕ} [hp : Fact p.Prime] {Ωl : Type} [Field Ωl] [Algebra (O0 p) Ωl]
 
-theorem ev_single (ψ : O0 p →+* Ωl) (e : Ωl) (h1 : IsInt p e) (h2 : IsAlgZp p e) (a : Lau p) (c : ℤ → Ωl)
+theorem ev_single (ψ : O0 p →+* Ωl) (e : Ωl) (h1 : IsInt (p := p) e) (h2 : IsAlgZp p e) (a : Lau p) (c : ℤ → Ωl)
     (hc : ∀ r, c r = e * zp Ωl (a.coeff r)) :
     Ev ψ c (e * ψ (algebraMap (Lau p) (O0 p) a)) (e * ψ (algebraMap (Lau p) (O0 p) (thL a))) :=
   ⟨1, fun _ => e, fun _ => a, fun _ => ⟨h1, h2⟩, fun r => by simp [hc], by simp, by simp⟩

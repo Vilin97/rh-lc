@@ -48,11 +48,11 @@ theorem qq_pow_sub (T : GlobalTheory.K5.Tower p Ω) (m k : ℕ) : T.qq (m + k) ^
   | zero => simp
   | succ k ih => rw [pow_succ', pow_mul, ← add_assoc, T.qpow, ih]
 
-theorem isInt_nat (m : ℕ) : IsInt p (m : Ω) := by
+theorem isInt_nat (m : ℕ) : IsInt (p := p) (m : Ω) := by
   rw [IsInt, ← map_natCast (algebraMap (O0 p) Ω)]; exact isIntegral_algebraMap
 
 theorem isInt_emb (T : GlobalTheory.K5.Tower p Ω) (L : ℕ) (ι : On p L →ₐ[O0 p] Ω) (hι : IsEmb T L ι)
-    (x : On p L) : IsInt p (ι x) := by
+    (x : On p L) : IsInt (p := p) (ι x) := by
   have h : Algebra.adjoin (O0 p) {xn p L, yn p L} ≤ (integralClosure (O0 p) Ω).comap ι := by
     rw [Algebra.adjoin_le_iff]
     rintro z (rfl | rfl)
@@ -89,7 +89,7 @@ theorem locallyConstantModPrimePow_of_le {k m : ℕ} (h : k ≤ m) {w : Gal p Ω
     exact ⟨S, fun h' hh => cong_mono h (hS h' hh)⟩⟩
 
 theorem cong_mul' {k : ℕ} {x y x' y' : Ω} (h : Cong p k x y) (h' : Cong p k x' y')
-    (hx' : IsInt p x') (hy : IsInt p y) : Cong p k (x * x') (y * y') := by
+    (hx' : IsInt (p := p) x') (hy : IsInt (p := p) y) : Cong p k (x * x') (y * y') := by
   obtain ⟨a, ha, e⟩ := h
   obtain ⟨b, hb, e'⟩ := h'
   exact ⟨a * x' + y * b, (ha.mul hx').add (hy.mul hb), by linear_combination x' * e + y * e'⟩
@@ -182,8 +182,8 @@ theorem GlobalTheory.K5.LevelDown.cup_kummer_dlog_mod : ∀ (p : ℕ) [Fact p.Pr
   have hD : Cong p n ((lq h).val : Ω) ((qL h).val : Ω) := Basic.cong_natCast
     (LevelDown.kum_down T hnL (Basic.qq_ne_zero T _) hqL (by rw [hQn]; exact hlq) hh)
   have iN := fun m : ℕ => (LevelDown.isInt_nat (p := p) (Ω := Ω) m)
-  have iP : IsInt p ((p : Ω) ^ c) := IsIntegral.pow (iN p) c
-  have iX : IsInt p (ι (α * β' - β * α')) := LevelDown.isInt_emb T L ι hι _
+  have iP : IsInt (p := p) ((p : Ω) ^ c) := IsIntegral.pow (iN p) c
+  have iX : IsInt (p := p) (ι (α * β' - β * α')) := LevelDown.isInt_emb T L ι hι _
   refine Basic.cong_add ?_ ?_
   · exact LevelDown.cong_mul' (Basic.cong_refl _ _)
       (LevelDown.cong_mul' hA hB (iN _) (iN _)) ((iN _).mul (iN _)) iP

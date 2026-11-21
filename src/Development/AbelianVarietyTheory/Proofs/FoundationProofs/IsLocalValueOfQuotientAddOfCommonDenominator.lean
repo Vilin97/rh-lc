@@ -65,7 +65,7 @@ theorem restrict_mul {R R' : Type} [CommRing R] [CommRing R'] (j : R →+* R') {
 open scoped NNReal in
 theorem exists_ev {p : ℕ} [hp : Fact p.Prime] {K : Type} [Field K] [Algebra ℚ K] {Ω : Type} [Field Ω] [Algebra (O0 p) Ω]
     (hc : IsClo p Ω) (ψ : O0 p →+* Ω) (j : K →+* Ω) (hj : ∀ z, IsAlgZp p (j z)) (S : Finset K) (C : HahnSeries ℤ K)
-    (hC : ∀ r, IsInt p (j (C.coeff r)) ∧ C.coeff r ∈ IntermediateField.adjoin ℚ (S : Set K)) :
+    (hC : ∀ r, IsInt (p := p) (j (C.coeff r)) ∧ C.coeff r ∈ IntermediateField.adjoin ℚ (S : Set K)) :
     ∃ x x', Ev ψ (fun r => j (C.coeff r)) x x' := by
   classical
   obtain ⟨v, hv, -, h0, h1⟩ := exists_valuation_isInt p Ω hc
@@ -205,7 +205,7 @@ theorem coeff_algebraMap_mul (l : Ω) (φ : HahnSeries ℚ Ω) (r : ℚ) :
   rw [algMapC, HahnSeries.C_mul_eq_smul, HahnSeries.coeff_smul, smul_eq_mul]
 
 theorem val_smul (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) {φ : HahnSeries ℚ Ω} {x : Ωl} (l : Ω)
-    (hi : IsInt p (j l)) (ha : IsAlgZp p (j l))
+    (hi : IsInt (p := p) (j l)) (ha : IsAlgZp p (j l))
     (hx : IsVal j n ψ φ x) : IsVal j n ψ (algebraMap Ω (HahnSeries ℚ Ω) l * φ) (j l * x) := by
   obtain ⟨x', hx⟩ := hx
   have R := GlobalTheory.Glue.EvRing.ev_ring p Ωl hclo T n ψ hreb
@@ -228,7 +228,7 @@ theorem val_gal (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) {φ φ' : HahnSeries 
   rw [hφ, hgs]
 
 theorem val_ne (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) {A : ValuationSubring Ω}
-    (hint : ∀ z, z ∈ A ↔ IsInt p (j z)) {φ : HahnSeries ℚ Ω} {x : Ωl}
+    (hint : ∀ z, z ∈ A ↔ IsInt (p := p) (j z)) {φ : HahnSeries ℚ Ω} {x : Ωl}
     (hP : Prim A φ) (hs : Supp p n φ) (hx : IsVal j n ψ φ x) : x ≠ 0 := by
   obtain ⟨x', hx⟩ := hx
   obtain ⟨-, r0, h0, hinv⟩ := hP
@@ -297,7 +297,7 @@ variable [IsAlgClosure ℚ Ω] {X : GlobalTheory.KZ.Tower Ω ε} {A : ValuationS
 theorem supp_exp {a : X.K} (ha : a ∈ KT X (p ^ n)) : Supp p n (X.exp a) := (mem_KT_iff' X p n a).1 ha
 
 omit [IsAlgClosure ℚ Ω] in
-theorem val_exists (hclo : IsClo p Ωl) (hint : ∀ z, z ∈ A ↔ IsInt p (j z)) (halg : ∀ z, IsAlgZp p (j z))
+theorem val_exists (hclo : IsClo p Ωl) (hint : ∀ z, z ∈ A ↔ IsInt (p := p) (j z)) (halg : ∀ z, IsAlgZp p (j z))
     {φ : HahnSeries ℚ Ω} {S : Finset Ω} (hc : ∀ r, φ.coeff r ∈ RS A S) : ∃ x, IsVal j n ψ φ x := by
   obtain ⟨C, hC⟩ := exists_restrict (pow_pos (Fact.out : p.Prime).pos n) φ
   obtain ⟨x, x', h⟩ := exists_ev hclo ψ j halg S C
@@ -307,7 +307,7 @@ theorem val_exists (hclo : IsClo p Ωl) (hint : ∀ z, z ∈ A ↔ IsInt p (j z)
   rw [e] at h
   exact ⟨x, x', h⟩
 
-theorem cross (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) (hint : ∀ z, z ∈ A ↔ IsInt p (j z))
+theorem cross (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) (hint : ∀ z, z ∈ A ↔ IsInt (p := p) (j z))
     (halg : ∀ z, IsAlgZp p (j z)) {y a b a' b' : X.K} {κ κ' : Ω} {S S' : Finset Ω} {xa xb xa' xb' : Ωl}
     (hG : Good X A p n y a b κ S) (hG' : Good X A p n y a' b' κ' S') (hl : κ' / κ ∈ A)
     (ha : IsVal j n ψ (X.exp a) xa) (hb : IsVal j n ψ (X.exp b) xb)
@@ -336,7 +336,7 @@ theorem cross (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) (hint : ∀ z, z ∈ A 
   rw [← hκl, map_mul]
   linear_combination (j κ) * e
 
-theorem isQ_uniq (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) (hint : ∀ z, z ∈ A ↔ IsInt p (j z))
+theorem isQ_uniq (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) (hint : ∀ z, z ∈ A ↔ IsInt (p := p) (j z))
     (halg : ∀ z, IsAlgZp p (j z)) {y : X.K} {v w : Ωl}
     (hv : IsQ X A j n ψ y v) (hw : IsQ X A j n ψ y w) : v = w := by
   obtain ⟨a, b, κ, S, xa, xb, hG, ha, hb, hxb, rfl⟩ := hv
@@ -368,7 +368,7 @@ theorem isQ_mul (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) {y1 y2 : X.K} {v1 v2 
   · rw [map_mul]
     field_simp
 
-theorem isLocalValueOfQuotient_add_of_common_denominator (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) (hint : ∀ z, z ∈ A ↔ IsInt p (j z))
+theorem isLocalValueOfQuotient_add_of_common_denominator (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) (hint : ∀ z, z ∈ A ↔ IsInt (p := p) (j z))
     (halg : ∀ z, IsAlgZp p (j z)) {y1 y2 a1 b1 a2 b2 : X.K} {κ1 κ2 : Ω} {S1 S2 : Finset Ω}
     {xa1 xb1 xa2 xb2 : Ωl} (hG1 : Good X A p n y1 a1 b1 κ1 S1) (hG2 : Good X A p n y2 a2 b2 κ2 S2)
     (ha1 : IsVal j n ψ (X.exp a1) xa1) (hb1 : IsVal j n ψ (X.exp b1) xb1)
@@ -404,7 +404,7 @@ theorem isLocalValueOfQuotient_add_of_common_denominator (hclo : IsClo p Ωl) (h
     rw [e]
     field_simp
 
-theorem isQ_add (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) (hint : ∀ z, z ∈ A ↔ IsInt p (j z))
+theorem isQ_add (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) (hint : ∀ z, z ∈ A ↔ IsInt (p := p) (j z))
     (halg : ∀ z, IsAlgZp p (j z)) {y1 y2 : X.K} {v1 v2 : Ωl}
     (h1 : IsQ X A j n ψ y1 v1) (h2 : IsQ X A j n ψ y2 v2) : IsQ X A j n ψ (y1 + y2) (v1 + v2) := by
   obtain ⟨a1, b1, κ1, S1, xa1, xb1, hG1, ha1, hb1, hxb1, rfl⟩ := h1
@@ -428,7 +428,7 @@ theorem isQ_one : IsQ X A j n ψ 1 1 :=
 
 theorem isQ_exists (hX : ∃ φ : ℂ → ℂ, DifferentiableOn ℂ φ Hs ∧ X.an X.jK = (φ : Mero))
     (hpA : ((p : ℕ) : Ω) ∈ A.nonunits) (hclo : IsClo p Ωl) (hreb : IsReb T n ψ)
-    (hint : ∀ z, z ∈ A ↔ IsInt p (j z)) (halg : ∀ z, IsAlgZp p (j z)) (y : X.K) (hy : y ∈ KT X (p ^ n)) :
+    (hint : ∀ z, z ∈ A ↔ IsInt (p := p) (j z)) (halg : ∀ z, IsAlgZp p (j z)) (y : X.K) (hy : y ∈ KT X (p ^ n)) :
     ∃ v, IsQ X A j n ψ y v := by
   by_cases h0 : y = 0
   · exact ⟨0, h0 ▸ isQ_zero⟩
@@ -448,7 +448,7 @@ theorem isQ_exists (hX : ∃ φ : ℂ → ℂ, DifferentiableOn ℂ φ Hs ∧ X.
   exact ⟨_, a, b, κ, S, xa, xb, ⟨hκ, haK, hbK, hrel, fun r => ⟨hca r, hcb r⟩⟩, hxa, hxb,
     val_ne hclo hreb hint hPb (supp_exp hbK) hxb, rfl⟩
 
-theorem isQ_gal (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) (hint : ∀ z, z ∈ A ↔ IsInt p (j z))
+theorem isQ_gal (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) (hint : ∀ z, z ∈ A ↔ IsInt (p := p) (j z))
     (g : Gal p Ωl) (s : Ω ≃ₐ[ℚ] Ω) (hq : g (T.qq n) = T.qq n) (hgs : ∀ x, g (j x) = j (s x))
     {y : X.K} {v : Ωl} (h : IsQ X A j n ψ y v) : IsQ X A j n ψ (X.gal s y) (g v) := by
   classical
