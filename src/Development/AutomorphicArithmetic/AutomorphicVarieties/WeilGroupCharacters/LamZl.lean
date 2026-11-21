@@ -94,7 +94,7 @@ theorem UpperTheory.V.W.lam_zl :
     haveI : DiscreteTopology (R ⧸ maximalIdeal R ^ N) := ⟨rfl⟩
     rw [IsLocallyConstant.iff_continuous]
     simp only [MonoidHom.coe_mk, OneHom.coe_mk, Units.coe_prod, map_prod]
-    refine continuous_finset_prod _ fun i _ => ?_
+    refine continuous_finsetProd _ fun i _ => ?_
     exact (hc i N).continuous.comp (continuous_ofAdd.comp ((continuous_apply i).comp continuous_toAdd))
   · intro i
     simp only [MonoidHom.coe_mk, OneHom.coe_mk, toAdd_ofAdd]

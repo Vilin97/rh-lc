@@ -41,7 +41,10 @@ private theorem UpperTheory.V.Pa.BC.prime_chain_lift_extension (B B' : Type) [Co
     haveI := hp (Fin.succ 0)
     haveI := hE0
     obtain ⟨P1, hP1ge, hP1, hP1c⟩ := Ideal.exists_ideal_over_prime_of_isIntegral_of_isPrime
-      (p (Fin.succ 0)) E0 (by rw [hE0c]; exact he0r)
+      (p (Fin.succ 0)) E0 (by
+        change E0.comap (algebraMap B B') ≤ p (Fin.succ 0)
+        rw [hE0c]
+        exact he0r)
     obtain ⟨P', E', hP'0, hP', hE'⟩ := ih (fun i => p i.succ) (fun i => e i.succ)
       (fun i => hp i.succ)
       (fun i => by

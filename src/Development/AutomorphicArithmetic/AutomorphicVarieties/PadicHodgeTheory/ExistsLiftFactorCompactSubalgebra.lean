@@ -175,6 +175,6 @@ theorem UpperTheory.V.Loc.exists_lift_factor_compact_subalgebra :
     refine Ideal.Quotient.eq.2 ?_
     rw [hm, Algebra.smul_def, map_pow]
     exact Ideal.mul_mem_right _ _ (Ideal.pow_mem_pow hl N)
-  · rw [← res_map p, ← ρ.red, ← res_map x.rangeRestrict]
+  · rw [← res_map O C p, ← ρ.red, ← res_map O _ x.rangeRestrict]
     congr 1
     exact Subtype.ext (hr g a b)

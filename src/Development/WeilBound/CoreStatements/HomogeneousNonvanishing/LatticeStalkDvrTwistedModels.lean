@@ -88,3 +88,4 @@ theorem lattice_stalk_dvr_twisted_models : ∀ (E : Type) [Field E] [NumberField
   @GlobalTheory.CompanionTheory.Ar.OmDvrK.htOm_eq_of_dvr
 
 end PositivityTheory.UnitarySelfGeneration
+

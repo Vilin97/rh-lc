@@ -172,7 +172,8 @@ lemma letterSum_step (l : Letter ℂ S) (Y : ℂ) (hY : Y ≠ l.pt) :
         letterSum (l :: v) w Y
   | [], v, _ => by simp [letterSum, Ph_zero]
   | l' :: w, v, h => by
-    obtain ⟨h1, h2, h3⟩ := h l' List.mem_cons_self
+    have hhead := h l' List.mem_cons_self
+    rcases hhead with ⟨h1, h2, h3⟩
     have ih := letterSum_step l Y hY w (v ++ [l']) (fun l'' hl => h l'' (by simp [hl]))
     simp only [letterSum]
     rw [Ph_add, ih, Ph_res _ _ _ _ _ _ h2 h3 hY, ← mult_single, ← mul_assoc, mult_single_eU _ _ _ h1,

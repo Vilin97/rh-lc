@@ -111,7 +111,7 @@ theorem nice {R : Type} [CommRing R] [IsNoetherianRing R] [IsLocalRing R] (ϖ : 
   let T := Σ k : κ, {q : Ideal R // q ∈ (b k).minimalPrimes ∧ ∀ i, ¬ a i ≤ q}
   haveI : ∀ k : κ, Finite {q : Ideal R // q ∈ (b k).minimalPrimes ∧ ∀ i, ¬ a i ≤ q} := fun k =>
     ((Ideal.finite_minimalPrimes_of_isNoetherianRing R (b k)).subset
-      (fun q hq => hq.1)).to_subtype
+      (fun q (hq : q ∈ {q : Ideal R | q ∈ (b k).minimalPrimes ∧ ∀ i, ¬ a i ≤ q}) => hq.1)).to_subtype
   haveI : Finite T := inferInstance
   let c : ι ⊕ T → Ideal R := Sum.elim a (fun t => t.2.1)
   have hc : ∀ j, UpperTheory.V.Pr.qdim (c j) < N := by

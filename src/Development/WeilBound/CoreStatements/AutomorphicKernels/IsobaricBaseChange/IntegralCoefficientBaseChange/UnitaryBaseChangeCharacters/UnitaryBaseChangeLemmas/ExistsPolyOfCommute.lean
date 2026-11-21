@@ -61,7 +61,18 @@ theorem isCsr_charpoly {R : Type} [CommRing R] (s : R →+* R) {n : ℕ} (M J Ji
 
 theorem exists_poly_of_commute {O : Type} [CommRing O] [IsLocalRing O] {n : ℕ} (M x : Matrix (Fin n) (Fin n) O)
     (hs : M.charpoly.Separable) (hc : x * M = M * x) : ∃ p : O[X], x = aeval M p := by
-  obtain ⟨v, hv⟩ := GlobalTheory.BCT.UnitStable.exists_cyclic M hs
+  have cyclic : ∃ v, IsUnit (GlobalTheory.ClassParam.krylov M v) := by
+    haveI : Subsingleton (MaximalSpectrum O) := ⟨fun a b =>
+      MaximalSpectrum.ext ((IsLocalRing.eq_maximalIdeal a.isMaximal).trans
+        (IsLocalRing.eq_maximalIdeal b.isMaximal).symm)⟩
+    obtain ⟨w, hw⟩ := GlobalTheory.RegSS.Semilocal.cyclicSemilocal_of_cyclicField GlobalTheory.RegSS.cyclicField _ (Fin n) M hs
+    let σ : Equiv.Perm (Fin n) := (Fintype.equivFin (Fin n)).trans (finCongr (Fintype.card_fin n))
+    have hk : GlobalTheory.RegSS.krylov M w = (GlobalTheory.ClassParam.krylov M w).submatrix id σ := by
+      ext i j
+      simp [GlobalTheory.RegSS.krylov, GlobalTheory.ClassParam.krylov, σ]
+    rw [hk, Matrix.det_permute'] at hw
+    exact ⟨w, (Matrix.isUnit_iff_isUnit_det _).2 (isUnit_of_mul_isUnit_right hw)⟩
+  obtain ⟨v, hv⟩ := cyclic
   set K := GlobalTheory.ClassParam.krylov M v with hK
   have key : ∀ r : Matrix (Fin n) (Fin n) O, r * M = M * r →
       r * K = GlobalTheory.ClassParam.krylov M (r *ᵥ v) := by

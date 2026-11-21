@@ -40,7 +40,7 @@ theorem mem_adjoin_inv_of_isIntegral {R K : Type*} [CommRing R] [Field K] [Algeb
 
 theorem lev_closed : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω →
     ∀ (T : Tower p Ω) (m : ℕ), 1 ≤ m → ∀ a ∈ Lev T m, ∀ b ∈ Lev T m, b ≠ 0 →
-      IsInt p (a / b) → a / b ∈ Lev T m := by
+      IsInt (p := p) (a / b) → a / b ∈ Lev T m := by
   intro p _ Ω _ _ hΩ T m hm a ha b hb hb0 hint
   obtain ⟨ι, hι⟩ := GlobalTheory.K5.Basic.exists_isEmb T m
   obtain ⟨-, hrange⟩ := GlobalTheory.T.towerLevelEmbedding_injective_range_adjoinRoots p Ω hΩ T m hm ι hι

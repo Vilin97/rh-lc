@@ -41,10 +41,13 @@ theorem UpperTheory.V.Pa.map_star :
   · unfold GFrame.oEl
     rw [map_list_prod, List.map_ofFn]
     congr 2
-    rw [show g.p₀ (G.φ v (a i)) = G'.φ v (a i) from g.p₀_φ v (a i)]
+    funext i
+    simp only [Function.comp_apply, map_sub, ms_single, map_one, g.p₀_φ]
   · unfold q1El
     rw [map_list_prod, List.map_ofFn]
     congr 2
+    funext i
+    simp only [Function.comp_apply, map_sub, ms_single, map_one]
   · unfold q2El
     rw [map_mul, map_list_prod, List.map_ofFn]
     congr 1

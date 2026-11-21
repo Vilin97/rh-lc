@@ -60,7 +60,7 @@ theorem UpperTheory.exists_cocycle_extension_of_conjugation_invariant_restrictio
   have hc2 : ∀ h h' : H, c (h * h') = c h + ρ h (c h') := hc.2
   let cor : G → V := fun g => ∑ q : G ⧸ H, ρ (g • q).out (c (zm_h H g q))
   have hcor : cor ∈ Z1 ρ := by
-    refine ⟨continuous_finset_sum _ fun q _ => ?_, fun g g' => ?_⟩
+    refine ⟨continuous_finsetSum _ fun q _ => ?_, fun g g' => ?_⟩
     · have h1 := zm_cont H hH q
       have h2 : Continuous fun g : G => zm_h H g q :=
         Continuous.subtype_mk (h1.inv.mul (continuous_id.mul continuous_const)) _

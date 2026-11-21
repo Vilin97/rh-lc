@@ -79,14 +79,7 @@ theorem chart_ii : ∀ (A K : Type) [CommRing A] [IsDomain A] [IsNoetherianRing 
     rw [map_pow, map_natCast]
     exact pow_ne_zero _ (Nat.cast_ne_zero.2 hp.out.ne_zero)
   have hlat : D.om'.IsLattice K := by
-    haveI : Module.Finite A D.om := haveI := D.om_lat; Submodule.IsLattice.finite K D.om
-    refine ⟨Submodule.FG.of_le D.om_lat.fg (om'_le D), ?_⟩
-    rw [eq_top_iff, ← D.om_lat.span_eq_top, Submodule.span_le]
-    intro y hy
-    have : y = (algebraMap A K ((p : A) ^ R))⁻¹ • (((p : A) ^ R) • y) := by
-      rw [← algebraMap_smul K ((p : A) ^ R) y, smul_smul, inv_mul_cancel₀ hp0, one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (pow_smul_mem D hy))
+    exact Submodule.IsLattice.of_fg K (Submodule.FG.of_le D.om_lat.fg (om'_le D))
   refine test_incl A K Ω D.om' _ hlat hP fun q hq h1 => ?_
   by_cases hpq : (p : A) ∈ q
   swap

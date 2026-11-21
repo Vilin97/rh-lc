@@ -42,7 +42,7 @@ theorem mem_symN (hc : 1 ≤ c) {g : GL (n ⊕ Fin c) k}
 
 
 theorem mul_stepPt_apply {b : Matrix (n ⊕ Fin c) (n ⊕ Fin c) k} (hb : b.BlockTriangular (midLev (c / 2)))
-    (x₀ : Matrix n n' k) (e : StepVar n c n' → k) (r : n ⊕ Fin c) (j : Fin c)
+    (x₀ : Matrix n n' k) (e : StepVar (n := n) (c := c) (n' := n') → k) (r : n ⊕ Fin c) (j : Fin c)
     (h : symLev c r = symLev c (Sum.inr j : n ⊕ Fin c)) :
     (b * stepPt x₀ e) r (Sum.inr j.castSucc) = b r (Sum.inr j) := by
   rw [Matrix.mul_apply, Finset.sum_eq_single (Sum.inr j)]
@@ -68,7 +68,7 @@ variable [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 theorem exists_symR_mul (hc : 1 ≤ c) (ψ : AddChar k Circle) {γ δ : ValueGroupWithZero k} (hγ : 1 ≤ γ)
     (hψ : ∀ a : k, (∀ t, valuation k t ≤ δ → ψ (a * t) = 1) → valuation k a ≤ γ)
-    (h : GL (n ⊕ Fin c) k) (x₀ : Matrix n n' k) (e : StepVar n c n' → k)
+    (h : GL (n ⊕ Fin c) k) (x₀ : Matrix n n' k) (e : StepVar (n := n) (c := c) (n' := n') → k)
     (h1 : Bd γ ((h⁻¹).val * stepPt x₀ e))
     (h2 : ∀ d : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k, (∀ r s, ¬ Free (c / 2 + 1) (r, s) → d r s = 0) →
       (∀ r s, d r (Sum.inl s) = 0) → Bd δ ((h⁻¹).val * d) → ψ (ch d) = 1) :
@@ -147,9 +147,9 @@ theorem exists_symR_mul (hc : 1 ≤ c) (ψ : AddChar k Circle) {γ δ : ValueGro
 end Vertex
 
 section Shift
-variable {k : Type} [Field k] {G : Grid k} (hs : 1 ≤ G.s)
+variable {k : Type} [Field k] {G : Grid (k := k)} (hs : 1 ≤ G.s)
 
-abbrev Shifts (G : Grid k) : Type := ∀ j : Fin (G.m - 1),
+abbrev Shifts (G : Grid (k := k)) : Type := ∀ j : Fin (G.m - 1),
   Matrix (Fin (topRank G (j + 1)) ⊕ Fin (G.m - 2 - j)) (Fin (topRank G j) ⊕ Fin (G.m - 2 - j + 1)) k
 
 def IsAuxiliaryHeckeCharacter (d : Shifts G) : Prop :=
@@ -243,7 +243,7 @@ end Frame
 
 section Step
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-  [MeasurableSpace k] [BorelSpace k] {G : Grid k} (hs : 1 ≤ G.s) (ψ : AddChar k Circle) (ν : Measure k)
+  [MeasurableSpace k] [BorelSpace k] {G : Grid (k := k)} (hs : 1 ≤ G.s) (ψ : AddChar k Circle) (ν : Measure k)
   [ν.IsAddHaarMeasure]
 
 theorem char_eq_one {S : G.Args → ℂ} {x : ColArgs G} {y : RowArgs G} (hne : flatTensor hs ψ ν S x y ≠ 0)
@@ -370,7 +370,7 @@ theorem exists_unit_bd {ι : Type} [Fintype ι] [DecidableEq ι] {S : Set (GL ι
   have h1 : γ ≤ valuation k t := ht ▸ le_max_right _ _
   exact ⟨Units.mk0 t h0, fun g hg => ⟨(hγ _ (Or.inl ⟨g, hg, rfl⟩)).mono h1, (hγ _ (Or.inr ⟨g, hg, rfl⟩)).mono h1⟩⟩
 
-variable [MeasurableSpace k] [BorelSpace k] {G : Grid k} {hs : 1 ≤ G.s} {ψ : AddChar k Circle} (ν : Measure k)
+variable [MeasurableSpace k] [BorelSpace k] {G : Grid (k := k)} {hs : 1 ≤ G.s} {ψ : AddChar k Circle} (ν : Measure k)
   [ν.IsAddHaarMeasure]
 
 theorem finite_unfSupport_of_ne_one (hψ : ψ ≠ 1) {ϖ : kˣ} {e : ℕ} {T : G.Args → ℂ}
@@ -412,7 +412,7 @@ theorem finite_unfSupport_of_ne_one (hψ : ψ ≠ 1) {ϖ : kˣ} {e : ℕ} {T : G
 end Main
 
 theorem finite_unfSupport {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
-    [MeasurableSpace k] [BorelSpace k] (G : Grid k) (hs : 1 ≤ G.s) (ψ : AddChar k Circle) (ν : Measure k)
+    [MeasurableSpace k] [BorelSpace k] (G : Grid (k := k)) (hs : 1 ≤ G.s) (ψ : AddChar k Circle) (ν : Measure k)
     [ν.IsAddHaarMeasure] (ϖ : kˣ) (e : ℕ) (T : G.Args → ℂ) (J : G.Level) :
     Even G.m → IsUnif ϖ → HasConductor ψ 1 → G.IsTensor ϖ e (oppositePath G.m) T →
       (∀ j, 0 < j → j < G.m → IsOpen (J (G.m, j) : Set (GL (Fin (G.rank (G.m, j))) k))) →

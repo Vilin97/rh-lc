@@ -56,7 +56,7 @@ theorem actU_one (P : PX m n) : actU 1 P = P := by
   have h : actU (n := n) (1 : Matrix (Fin m) (Fin m) ℂ) = AlgHom.id ℂ _ := by
     apply MvPolynomial.algHom_ext
     rintro ⟨a, i, b⟩
-    cases b <;> simp [actU, one_apply]
+    cases b <;> simp [actU, Matrix.one_apply]
   rw [h]; rfl
 
 theorem evX_actU (u : Matrix (Fin m) (Fin m) ℂ) (P : PX m n) (v : Matrix (Fin m) (Fin n) ℂ) :
@@ -67,8 +67,8 @@ theorem evX_actU (u : Matrix (Fin m) (Fin m) ℂ) (P : PX m n) (v : Matrix (Fin 
     apply MvPolynomial.algHom_ext
     rintro ⟨a, i, b⟩
     cases b
-    · simp [actU, mul_apply]
-    · simp [actU, mul_apply, star_sum]
+    · simp [actU, Matrix.mul_apply]
+    · simp [actU, Matrix.mul_apply, star_sum]
   have e := congrArg (fun f : PX m n →ₐ[ℂ] ℂ => f P) h
   simp only [AlgHom.comp_apply, coe_aeval_eq_eval] at e
   exact e

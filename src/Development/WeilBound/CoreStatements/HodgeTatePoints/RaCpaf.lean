@@ -50,6 +50,8 @@ lemma tl_mem_order (hv : v.Integers R) (p : ℕ) [Fact p.Prime] (hp : v (p : C) 
     rw [map_div₀, val_nat_eq v p hp k h1 h2, map_pow, Valuation.map_neg, map_one, one_pow, div_one])
   have h3 := A.carrier.smul_mem r (pow_mem_order A (A.carrier.sub_mem hf A.one_mem) k)
   convert h3 using 1
+  funext x
+  simp only [Pi.smul_apply, Algebra.smul_def, Pi.pow_apply, Pi.sub_apply, Pi.one_apply, hr]
   ring
 
 end
@@ -149,8 +151,8 @@ theorem lifts : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C
       rw [Pi.smul_apply, Algebra.smul_def, map_mul]
       conv_lhs => rw [hr i, map_mul]
       field_simp
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum, ← Finset.sum_sub_distrib]
+    · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Finset.sum_sub_distrib]
       refine v.map_sum_lt one_ne_zero fun i _ => ?_
       have h0 := he0' i
       have h2 : algebraMap R C (l i) * (g i x / algebraMap R C (e i)) -

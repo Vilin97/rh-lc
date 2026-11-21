@@ -29,7 +29,7 @@ theorem UpperTheory.V.CF.cheb :
     refine Set.Infinite.nonempty (Set.Infinite.diff ?_ hT)
     intro hfin
     have h0 := GroundTheory.Global.hasDirichletDensity_zero_of_finite hfin
-    exact hpos.ne' (tendsto_nhds_unique hS h0)
+    exact hpos.ne' (hS.dirichletDensity_eq.symm.trans h0.dirichletDensity_eq)
   obtain ⟨v, ⟨hram, w, hwv, hfw⟩, hvT⟩ := key _ hD
   obtain ⟨c, hc⟩ := isConj_iff.mp hfw
   have hne : c⁻¹ • w.asIdeal ≠ ⊥ := by

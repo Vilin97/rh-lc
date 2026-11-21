@@ -71,7 +71,7 @@ private theorem fin_quot (A B : Type) [CommRing A] [IsDomain A] [IsDiscreteValua
   have hrank : Module.rank (A ⧸ maximalIdeal A) (B ⧸ (maximalIdeal A • ⊤ : Submodule A B)) ≤ n :=
     rank_le hbound
   haveI : Module.Finite (A ⧸ maximalIdeal A) (B ⧸ (maximalIdeal A • ⊤ : Submodule A B)) :=
-    Module.rank_lt_aleph0_iff.mp (hrank.trans_lt (Cardinal.nat_lt_aleph0 n))
+    Module.rank_lt_aleph0_iff.mp (hrank.trans_lt (Cardinal.natCast_lt_aleph0))
   exact Module.Finite.trans (A ⧸ maximalIdeal A) _
 
 private theorem haus (A B : Type) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] [CommRing B] [IsDomain B]

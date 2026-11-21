@@ -121,6 +121,7 @@ section Rows
 variable {ι : Type*} {σ : ι → ι} {Ψ : ι → Prop} {dim : ι → ℕ} {p q : ℕ}
 
 
+open scoped Classical in
 noncomputable def halfRowEquiv (hσ : Function.Involutive σ) (hΨ : ∀ τ, ¬ Ψ τ ↔ Ψ (σ τ))
     (hp : ∀ τ, Ψ τ → dim τ = p) (hq : ∀ τ, Ψ τ → dim (σ τ) = q) :
     (Σ τ : ι, Fin (dim τ)) ≃ {τ // Ψ τ} × (Fin p ⊕ Fin q) where

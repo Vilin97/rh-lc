@@ -45,8 +45,11 @@ theorem exists_left_inv {B : Type} [CommRing B] {n : ℕ} (φ : ZMod n →+* B) 
     have h2 : ∀ k, φ (e (b k • a • x) y) = ∑ l, ((b.repr (a * b k) l : ℤ) : B) * φ (e (b l • x) y) := by
       intro k
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [h1, map_sum, AddMonoidHom.finset_sum_apply, map_sum]
+        rw [h1, map_sum]
+      change φ ((AddMonoidHom.eval y) (∑ l, e ((b.repr (a * b k) l) • (b l • x)))) = _
+      rw [map_sum, map_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
+      change φ (e ((b.repr (a * b k) l) • (b l • x)) y) = _
       rw [map_zsmul, AddMonoidHom.zsmul_apply, map_zsmul, zsmul_eq_mul]
     simp only [Λ, h2, Finset.mul_sum]
     rw [Finset.sum_comm]

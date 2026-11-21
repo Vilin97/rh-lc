@@ -120,7 +120,7 @@ theorem exists_pow_eq {k : Type} [Field k] [Algebra (ZMod p) k] {ι : Type} [Fin
   rw [hn] at this
   exact congrArg Subtype.val this
 
-
+open Polynomial in
 theorem exists_prim (P : ℤ_[p][X]) (hP : P ≠ 0) :
     ∃ (c : ℤ_[p]) (Q : ℤ_[p][X]), c ≠ 0 ∧ P = C c * Q ∧ Q.map (PadicInt.toZMod (p := p)) ≠ 0 := by
   classical
@@ -135,7 +135,13 @@ theorem exists_prim (P : ℤ_[p][X]) (hP : P ≠ 0) :
       Ideal.mem_span_singleton] at this
   exact PadicInt.prime_p.not_unit (isPrimitive_primPart P (p : ℤ_[p]) ((C_dvd_iff_dvd_coeff _ _).2 hd))
 
-theorem coeff_lt_one : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω → ∀ (v : Valuation Ω ℝ≥0), (∀ x : Ω, v x ≤ 1 ↔ IsInt p x) → v (p : Ω) < 1 → ∀ (T : GlobalTheory.K5.Tower p Ω) (n : ℕ) (ψ : O0 p →+* Ω), IsReb T n ψ → ∀ (d : ℕ) (e : Fin d → Ω) (a : Fin d → Lau p), (∀ t, IsInt p (e t) ∧ IsAlgZp p (e t)) → v (∑ t, e t * ψ (algebraMap (Lau p) (O0 p) (a t))) < 1 → ∀ r : ℤ, v (∑ t, e t * zp Ω ((a t).coeff r)) < 1 := by
+theorem coeff_lt_one : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω],
+    IsClo p Ω → ∀ (v : Valuation Ω ℝ≥0), (∀ x : Ω, v x ≤ 1 ↔ IsInt (p := p) x) →
+    v (p : Ω) < 1 → ∀ (T : GlobalTheory.K5.Tower p Ω) (n : ℕ) (ψ : O0 p →+* Ω), IsReb T n ψ →
+    ∀ (d : ℕ) (e : Fin d → Ω) (a : Fin d → Lau p),
+    (∀ t, IsInt (p := p) (e t) ∧ IsAlgZp (p := p) (e t)) →
+    v (∑ t, e t * ψ (algebraMap (Lau p) (O0 p) (a t))) < 1 →
+    ∀ r : ℤ, v (∑ t, e t * zp Ω ((a t).coeff r)) < 1 := by
   intro p hp Ω _ _ hC v hv hvp T n ψ hψ d e a he hsum r
   have hq : p ^ n ≠ 0 := pow_ne_zero _ hp.out.ne_zero
   have hqq : IsIntegral (O0 p) (T.qq n) :=

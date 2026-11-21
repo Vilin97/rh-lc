@@ -379,7 +379,23 @@ theorem exists_norm_eq_norm_inf_ker (hax : ClassFieldAxiom G A) [IsDiscreteModul
     mem_fixedModule_of_smul_eq K hφK hdφ (norm _ _ _ _).2 hwφ
 
   have hbJ := hP'J _ b.2
-  have hNb := coe_norm_field_eq hLK s2 hφK hdφ b
+  have hNb : (norm A (K : Subgroup G) (s2.field hLK : Subgroup G) b : A) =
+      ∏ i : Fin s2.deg, φ ^ (i : ℕ) •
+        (norm A ((K : Subgroup G) ⊓ D.deg.ker) ((L : Subgroup G) ⊓ D.deg.ker) ⟨b, hbJ⟩ : A) := by
+    have hnormalizer₂ := FrobeniusLift.mem_normalizer (D := D) hLK s2.mem
+    have hmap := map_frobeniusClosure D.continuous_deg hnormalizer₂ s2.deg_eq
+    have hfield₂_inf_ker :
+        (s2.field hLK : Subgroup G) ⊓ D.deg.ker = (L : Subgroup G) ⊓ D.deg.ker :=
+      frobeniusClosure_inf_ker D.continuous_deg L.isOpen hnormalizer₂
+        (mul_ne_zero s2.deg_pos.ne' (D.inertiaDegree_ne_zero K)) s2.deg_eq
+    refine coe_norm_eq_prod_smul_norm D.deg s2.deg_pos (Nat.pos_of_ne_zero (D.inertiaDegree_ne_zero K))
+      (fun x hx => hLK (hP'L hx)) ?_ ?_ (fun _ hk => toAdd_deg_mem_multiples K hk) ?_ hφK hdφ b hbJ
+    · intro x hx
+      exact hmap.le ⟨x, hx, rfl⟩
+    · intro k _ hk
+      exact hmap.ge hk
+    · intro q hq
+      exact ⟨fun hqS => hfield₂_inf_ker.le ⟨hqS, hq.2⟩, fun hqJ => le_frobeniusClosure hqJ⟩
   refine ⟨⟨w, fixedModule_anti hLK hwK⟩ * norm A (L : Subgroup G)
     ((s2.field hLK : OpenSubgroup G) : Subgroup G) b, ?_⟩
   have hψK : ∀ i : ℕ, s1.elt ^ i ∈ (K : Subgroup G) := fun i => K.pow_mem s1.mem i

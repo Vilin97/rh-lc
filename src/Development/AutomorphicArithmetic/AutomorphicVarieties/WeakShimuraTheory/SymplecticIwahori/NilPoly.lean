@@ -24,7 +24,7 @@ theorem UpperTheory.V.Ws.Pp.nilPoly :
     have hcm : (Ideal.comap (algebraMap B S) J).IsMaximal := by
       rw [hc]
       exact IsLocalRing.maximalIdeal.isMaximal B
-    have hJm : J.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap J hcm
+    have hJm : J.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := B) J hcm
     rw [IsLocalRing.eq_maximalIdeal hJm]
     exact hv
   obtain ⟨n, hn⟩ := hrad

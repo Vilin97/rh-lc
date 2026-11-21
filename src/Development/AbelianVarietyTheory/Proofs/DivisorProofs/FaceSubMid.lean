@@ -126,17 +126,17 @@ variable {I J K : Cx R} (μ : Pair I J K) {n m : ℤ}
 
 def pv (a : Cochain ((chains R).obj E) I n) (b : Cochain ((chains R).obj E) J m) (w : ℤ) (p r : ℕ) (y : Sx E p U)
     (z : Sx E r U) : Sec (K.X w) U :=
-  if h : (-(p : ℤ) + n) + (-(r : ℤ) + m) = w then μ.mul U _ _ w h (ev a p _ rfl U y) (ev b r _ rfl U z) else 0
+  if h : (-(p : ℤ) + n) + (-(r : ℤ) + m) = w then μ.mul U _ _ w h (ev R a p _ rfl U y) (ev R b r _ rfl U z) else 0
 
 theorem pv_eq (a : Cochain ((chains R).obj E) I n) (b : Cochain ((chains R).obj E) J m) (w : ℤ) (p r : ℕ) (y : Sx E p U)
     (z : Sx E r U) (s t : ℤ) (hs : -(p : ℤ) + n = s) (ht : -(r : ℤ) + m = t) (h : s + t = w) :
-    pv μ a b w p r y z = μ.mul U s t w h (ev a p s hs U y) (ev b r t ht U z) := by
+    pv μ a b w p r y z = μ.mul U s t w h (ev R a p s hs U y) (ev R b r t ht U z) := by
   subst hs ht
   exact dif_pos h
 
 theorem ev_aw {k : ℤ} {hk : n + m = k} {a : Cochain ((chains R).obj E) I n} {b : Cochain ((chains R).obj E) J m}
     {c : Cochain ((chains R).obj E) K k} (hc : μ.IsAW hk a b c) (N : ℕ) (w : ℤ) (h : -(N : ℤ) + k = w) (x : Sx E N U) :
-    ev c N w h U x = ∑ q ∈ Finset.HasAntidiagonal.antidiagonal N, sg (m * q.1) • pv μ a b w q.1 q.2 (cl x 0 q.1) (cl x q.1 q.2) := by
+    ev R c N w h U x = ∑ q ∈ Finset.HasAntidiagonal.antidiagonal N, sg (m * q.1) • pv μ a b w q.1 q.2 (cl x 0 q.1) (cl x q.1 q.2) := by
   rw [hc N w h U x, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk, Finset.sum_range]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [pv_eq μ a b w _ _ _ _ _ _ rfl rfl (by omega), cl_eq x 0 p (by omega), cl_eq x p (N - p) (by omega)]
@@ -145,7 +145,7 @@ theorem ev_aw {k : ℤ} {hk : n + m = k} {a : Cochain ((chains R).obj E) I n} {b
 theorem pv_δ_left {n₁ : ℤ} (hn : n + 1 = n₁) (a : Cochain ((chains R).obj E) I n) (b : Cochain ((chains R).obj E) J m)
     (w : ℤ) (p r : ℕ) (y : Sx E p U) (z : Sx E r U) (s s' t : ℤ) (hs : -(p : ℤ) + n = s) (hs' : s + 1 = s')
     (ht : -(r : ℤ) + m = t) (h : s' + t = w) :
-    μ.mul U s' t w h (Sec.map (I.d s s') (ev a p s hs U y)) (ev b r t ht U z) =
+    μ.mul U s' t w h (Sec.map (I.d s s') (ev R a p s hs U y)) (ev R b r t ht U z) =
       pv μ (δ n n₁ a) b w p r y z - sg n₁ • bdL (pv μ a b w) p r y z := by
   rw [pv_eq μ _ b w p r y z s' t (by omega) ht h]
   cases p with
@@ -160,7 +160,7 @@ theorem pv_δ_left {n₁ : ℤ} (hn : n + 1 = n₁) (a : Cochain ((chains R).obj
 theorem pv_δ_right {m₁ : ℤ} (hm : m + 1 = m₁) (a : Cochain ((chains R).obj E) I n) (b : Cochain ((chains R).obj E) J m)
     (w : ℤ) (p r : ℕ) (y : Sx E p U) (z : Sx E r U) (s t t' : ℤ) (hs : -(p : ℤ) + n = s)
     (ht : -(r : ℤ) + m = t) (ht' : t + 1 = t') (h : s + t' = w) :
-    μ.mul U s t' w h (ev a p s hs U y) (Sec.map (J.d t t') (ev b r t ht U z)) =
+    μ.mul U s t' w h (ev R a p s hs U y) (Sec.map (J.d t t') (ev R b r t ht U z)) =
       pv μ a (δ m m₁ b) w p r y z - sg m₁ • bdR (pv μ a b w) p r y z := by
   rw [pv_eq μ a _ w p r y z s t' hs (by omega) h]
   cases r with
@@ -193,7 +193,7 @@ theorem rem_zero (a : Cochain ((chains R).obj E) I n) (b : Cochain ((chains R).o
 theorem rem_succ {k : ℤ} {hk : n + m = k} {a : Cochain ((chains R).obj E) I n} {b : Cochain ((chains R).obj E) J m}
     {c : Cochain ((chains R).obj E) K k} (hc : μ.IsAW hk a b c) (N : ℕ) (w : ℤ) (h : -(N : ℤ) + k = w)
     (x : Sx E (N + 1) U) :
-    rem μ a b w x = ∑ i : Fin (N + 2), (-1 : ℤ) ^ (i : ℕ) • ev c N w h U (x.face i) := by
+    rem μ a b w x = ∑ i : Fin (N + 2), (-1 : ℤ) ^ (i : ℕ) • ev R c N w h U (x.face i) := by
   simp only [ev_aw μ hc, Finset.smul_sum]
   rw [Finset.sum_comm, rem, Finset.Nat.sum_antidiagonal_succ, Finset.Nat.sum_antidiagonal_succ']
   simp only [bdL, bdR, smul_zero, zero_add]
@@ -215,7 +215,7 @@ theorem d_ev_aw {k n₁ m₁ k₁ : ℤ} {hk : n + m = k} (hn : n + 1 = n₁) (h
     {c₁ c₂ : Cochain ((chains R).obj E) K k₁} {e₁ : n₁ + m = k₁} {e₂ : n + m₁ = k₁} (hc : μ.IsAW hk a b c)
     (h₁ : μ.IsAW e₁ (δ n n₁ a) b c₁) (h₂ : μ.IsAW e₂ a (δ m m₁ b) c₂) (N : ℕ) (w w' : ℤ) (h : -(N : ℤ) + k = w)
     (h' : -(N : ℤ) + k₁ = w') (x : Sx E N U) :
-    Sec.map (K.d w w') (ev c N w h U x) + sg k₁ • rem μ a b w' x = ev c₁ N w' h' U x + sg n • ev c₂ N w' h' U x := by
+    Sec.map (K.d w w') (ev R c N w h U x) + sg k₁ • rem μ a b w' x = ev R c₁ N w' h' U x + sg n • ev R c₂ N w' h' U x := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [ev_aw μ hc, ev_aw μ h₁, ev_aw μ h₂, rem, Sec.map, map_sum, smul_add, Finset.smul_sum, Finset.smul_sum, Finset.smul_sum,
     ← Finset.sum_add_distrib, ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]

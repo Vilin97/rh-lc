@@ -391,8 +391,8 @@ private lemma gc_span [IsDomain O] [FaithfulSMul O E] {n : ℕ} (W : WPres O Y R
       exact zero_mem _
     · rw [AlgHom.commutes, AlgHom.commutes, hC]
       exact zero_mem _
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum, map_sum, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum, map_sum]
       refine Submodule.sum_mem _ (fun k _ => ?_)
       rw [map_smul, map_smul, hlinO]
       exact Submodule.smul_mem _ _ (hv k)

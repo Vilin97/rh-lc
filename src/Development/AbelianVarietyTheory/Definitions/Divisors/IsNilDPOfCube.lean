@@ -20,7 +20,7 @@ section Cube
 
 variable {A : Type} [CommRing A] {J : Ideal A} (g : A → A)
 
-
+open scoped Classical in
 def cubePow (J : Ideal A) (g : A → A) : ℕ → A → A
   | 0, x => if x ∈ J then 1 else 0
   | 1, x => if x ∈ J then x else 0
@@ -66,8 +66,8 @@ def cubeDP (hm : ∀ x ∈ J, g x ∈ J) (ha : ∀ x ∈ J, ∀ y ∈ J, g (x + 
     rcases m with _ | _ | _ | m <;> rcases n with _ | _ | _ | n <;>
       first
       | exact absurd rfl hn
-      | (rw [big (by nlinarith)]; simp [cubePow, hx, hg x hx, hm x hx, g0]; done)
-      | simp [cubePow, hx, hm x hx, g0, Nat.uniformBell_zero_left, Nat.uniformBell_one_left,
+      | (rw [big (by nlinarith)]; simp [cubePow, hx, hg x hx, hm x hx, g0])
+      | simp [cubePow, hx, hm x hx, Nat.uniformBell_zero_left, Nat.uniformBell_one_left,
           Nat.uniformBell_one_right]
 
 theorem isDPNilpotent_of_cube (δ : DividedPowers J) (h3 : ∀ a ∈ J, ∀ b ∈ J, ∀ c ∈ J, a * b * c = 0)
@@ -121,11 +121,63 @@ instance : Mul (Bi R B) := ⟨fun x y ↦ mk (x.1 * y.1) (x.1 • y.2.1 + y.1 �
 
 instance : One (Bi R B) := ⟨mk 1 0 0 0⟩
 
+@[ext] theorem ext' {x y : Bi R B} (h0 : x.1 = y.1) (h1 : x.2.1 = y.2.1) (h2 : x.2.2.1 = y.2.2.1)
     (h3 : x.2.2.2 = y.2.2.2) : x = y := Prod.ext h0 (Prod.ext h1 (Prod.ext h2 h3))
 
 section
 variable (b : B) (α β : Ω[B⁄R]) (η : Om R B 2) (x y : Bi R B) (r : R)
 
+@[simp] private theorem mk_0 : (mk b α β η).1 = b := rfl
+
+@[simp] private theorem mul_0 : (x * y).1 =
+    x.1 * y.1 := rfl
+
+@[simp] private theorem add_0 : (x + y).1 = x.1 + y.1 := rfl
+
+@[simp] private theorem smul_0 : (r • x).1 = r • x.1 := rfl
+
+@[simp] private theorem zero_0 : (0 : Bi R B).1 = 0 := rfl
+
+@[simp] private theorem one_0 : (1 : Bi R B).1 = 1 := rfl
+
+@[simp] private theorem mk_1 : (mk b α β η).2.1 = α := rfl
+
+@[simp] private theorem mul_1 : (x * y).2.1 =
+    x.1 • y.2.1 + y.1 • x.2.1 := rfl
+
+@[simp] private theorem add_1 : (x + y).2.1 = x.2.1 + y.2.1 := rfl
+
+@[simp] private theorem smul_1 : (r • x).2.1 = r • x.2.1 := rfl
+
+@[simp] private theorem zero_1 : (0 : Bi R B).2.1 = 0 := rfl
+
+@[simp] private theorem one_1 : (1 : Bi R B).2.1 = 0 := rfl
+
+@[simp] private theorem mk_2 : (mk b α β η).2.2.1 = β := rfl
+
+@[simp] private theorem mul_2 : (x * y).2.2.1 =
+    x.1 • y.2.2.1 + y.1 • x.2.2.1 := rfl
+
+@[simp] private theorem add_2 : (x + y).2.2.1 = x.2.2.1 + y.2.2.1 := rfl
+
+@[simp] private theorem smul_2 : (r • x).2.2.1 = r • x.2.2.1 := rfl
+
+@[simp] private theorem zero_2 : (0 : Bi R B).2.2.1 = 0 := rfl
+
+@[simp] private theorem one_2 : (1 : Bi R B).2.2.1 = 0 := rfl
+
+@[simp] private theorem mk_3 : (mk b α β η).2.2.2 = η := rfl
+
+@[simp] private theorem mul_3 : (x * y).2.2.2 =
+    x.1 • y.2.2.2 + y.1 • x.2.2.2 + wedge R B x.2.1 y.2.2.1 + wedge R B y.2.1 x.2.2.1 := rfl
+
+@[simp] private theorem add_3 : (x + y).2.2.2 = x.2.2.2 + y.2.2.2 := rfl
+
+@[simp] private theorem smul_3 : (r • x).2.2.2 = r • x.2.2.2 := rfl
+
+@[simp] private theorem zero_3 : (0 : Bi R B).2.2.2 = 0 := rfl
+
+@[simp] private theorem one_3 : (1 : Bi R B).2.2.2 = 0 := rfl
 end
 
 instance : CommRing (Bi R B) :=
@@ -146,8 +198,8 @@ instance : CommRing (Bi R B) :=
     mul_comm := fun a b ↦ by ext1 <;> simp [mul_comm] <;> abel }
 
 instance : Algebra R (Bi R B) := Algebra.ofModule
-  (fun r x y ↦ by ext1 <;> simp [wedge_smul_left, wedge_smul_right, smul_comm r])
-  (fun r x y ↦ by ext1 <;> simp [wedge_smul_left, wedge_smul_right, smul_comm r])
+  (fun r x y ↦ by ext1 <;> simp [smul_comm r])
+  (fun r x y ↦ by ext1 <;> simp [smul_comm r])
 
 theorem algebraMap_eq (r : R) : algebraMap R (Bi R B) r = mk (algebraMap R B r) 0 0 0 := by
   rw [Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one]
@@ -172,7 +224,7 @@ def dp : DividedPowers (RingHom.ker (π (R := R) (B := B))) :=
     (fun x hx y hy ↦ by rw [mem_ker] at hx hy; ext1 <;> simp [sq, hy])
     (fun x _ ↦ by ext1 <;> simp [sq])
 
-theorem dp_two {x : Bi R B} (hx : x.1 = 0) : dp.dpow 2 x = sq x := if_pos hx
+theorem dp_two {x : Bi R B} (hx : x.1 = 0) : dp.dpow 2 x = sq x := ite_eq_left hx
 
 theorem dp_high {n : ℕ} (hn : 3 ≤ n) (x : Bi R B) : dp.dpow n x = 0 := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le' hn; rfl

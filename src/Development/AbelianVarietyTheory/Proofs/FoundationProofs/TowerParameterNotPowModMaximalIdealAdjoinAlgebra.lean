@@ -215,19 +215,35 @@ theorem q_not_pow_mod (p : ℕ) [hp : Fact p.Prime] (a : O0 p) : ¬ (p : O0 p) �
   exact hp.out.not_dvd_one (by exact_mod_cast h4)
 
 theorem not_pow_mod_max : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω →
-  ∀ S : Finset Ω, (∀ s ∈ S, IsAlgZp p s) →
-  ∀ y ∈ Subfield.closure (Set.range (algebraMap (O0 p) Ω) ∪ (S : Set Ω)), IsInt p y →
-    ¬ ∃ m : ℕ, 0 < m ∧ IsInt p ((y ^ p - algebraMap (O0 p) Ω (qO p)) ^ m / (p : Ω)) := by
+  ∀ S : Finset Ω, (∀ s ∈ S, IsAlgZp (p := p) s) →
+  ∀ y ∈ Subfield.closure (Set.range (algebraMap (O0 p) Ω) ∪ (S : Set Ω)), IsInt (p := p) y →
+    ¬ ∃ m : ℕ, 0 < m ∧ IsInt (p := p) ((y ^ p - algebraMap (O0 p) Ω (qO p)) ^ m / (p : Ω)) := by
   intro p _ Ω _ _ hclo S hS y hy hyint
   rintro ⟨m, hm, hmint⟩
   classical
-  obtain ⟨v, hv, -, hvp0, hvp1⟩ := exists_valuation_isInt p Ω hclo
   haveI := Basic.charZero_of_isClo hclo
   obtain ⟨hdom, hdvr, hirr⟩ := completed_laurent_isDVR p
   have huni := (IsDiscreteValuationRing.irreducible_iff_uniformizer _).1 hirr
   have hmax : (Ideal.span {(p : O0 p)}).IsMaximal := by
     rw [← huni]
     exact IsLocalRing.maximalIdeal.isMaximal _
+  have : IsAdicComplete (IsLocalRing.maximalIdeal (O0 p)) (O0 p) := by
+    rw [huni]
+    exact GlobalTheory.T.unramified_integers_adic_complete p
+  have := hclo.alg
+  obtain ⟨v, hv⟩ := GlobalTheory.T.exists_valuation_le_one_iff_isIntegral_of_complete_dvr
+    (O0 p) Ω hclo.inj
+  have hp0 : (p : Ω) ≠ 0 := Nat.cast_ne_zero.2 (Fact.out : p.Prime).ne_zero
+  have hvp0 : 0 < v (p : Ω) := (Valuation.pos_iff v).2 hp0
+  have hvp1 : v (p : Ω) < 1 := by
+    have hpint : IsIntegral (O0 p) (p : Ω) := by
+      simpa only [map_natCast] using
+        (isIntegral_algebraMap (A := Ω) (x := (p : O0 p)))
+    refine lt_of_le_of_ne ((hv _).2 hpint) ?_
+    intro heq
+    have hinv : IsInt (p := p) ((p : Ω)⁻¹) := (hv _).1 (by rw [map_inv₀, heq, inv_one])
+    exact Basic.not_cong_one_zero hclo 1 one_ne_zero
+      ⟨(p : Ω)⁻¹, hinv, by rw [sub_zero, pow_one, mul_inv_cancel₀ hp0]⟩
   letI : Algebra ℤ_[p] Ω := ((algebraMap (O0 p) Ω).comp (algebraMap ℤ_[p] (O0 p))).toAlgebra
   haveI : IsScalarTower ℤ_[p] (O0 p) Ω := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
   have hinj : Function.Injective (algebraMap ℤ_[p] Ω) := by

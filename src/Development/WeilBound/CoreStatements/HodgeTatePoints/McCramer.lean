@@ -75,6 +75,7 @@ theorem det_mem_span (B : Module.Basis (Fin r) Ω E) {κ : Type} (z : κ → E) 
   rw [e]
   refine (show B.det _ = _ from e2) ▸ Submodule.sum_mem _ fun s _ => ?_
   rw [MultilinearMap.map_smul_univ]
+  simp only [RingHom.id_apply]
   have : (∏ i, ((c i (s i) : A) : Ω)) = ((∏ i, c i (s i) : A) : Ω) := by simp
   rw [this]
   exact Submodule.smul_mem _ (∏ i, c i (s i)) (Submodule.subset_span ⟨s, rfl⟩)

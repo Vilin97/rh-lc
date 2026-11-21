@@ -37,21 +37,23 @@ def fibChar (μ : kˣ →* ℂˣ) : GL a k × (GL c k × GL d k) →* ℂˣ :=
     (detChar d (μ * absPow k (-(Fintype.card a : ℂ) / 2) * absPow k ((Fintype.card c : ℂ) / 2))).comp
       ((MonoidHom.snd _ _).comp (MonoidHom.snd _ _))
 
-def fibBase (κ : ℕ) : Representation ℂ (GL a k × GL c k) (SB (RankIn k a c {κ})) :=
+def fibBase (κ : ℕ) :
+    Representation ℂ (GL a k × GL c k) (SB (RankIn (k := k) (a := a) (b := c) {κ})) :=
   sbRep (fun x γ => ⟨act x.1 γ, by rw [rank_act]; exact x.2⟩)
     (fun x => Subtype.ext (act_one x.1)) (fun x γ δ => Subtype.ext (act_mul x.1 γ δ))
     (fun γ => ((continuous_act γ).comp continuous_subtype_val).subtype_mk _)
 
 def fibRep (μ : kˣ →* ℂˣ) (κ : ℕ) :
-    Representation ℂ (GL a k × (GL c k × GL d k)) (SB (RankIn k a c {κ})) :=
+    Representation ℂ (GL a k × (GL c k × GL d k)) (SB (RankIn (k := k) (a := a) (b := c) {κ})) :=
   twist ((fibBase a c κ).comp ((MonoidHom.id _).prodMap (MonoidHom.fst _ _))) (fibChar a c d μ)
 
 theorem fibRep_apply (μ : kˣ →* ℂˣ) (κ : ℕ) (g : GL a k) (p₁ : GL c k) (p₂ : GL d k)
-    (φ : SB (RankIn k a c {κ})) (y : RankIn k a c {κ}) :
+    (φ : SB (RankIn (k := k) (a := a) (b := c) {κ})) (y : RankIn (k := k) (a := a) (b := c) {κ}) :
     (fibRep a c d μ κ (g, p₁, p₂) φ).1 y = (fibChar a c d μ (g, p₁, p₂) : ℂ) *
       φ.1 ⟨act y.1 (g, p₁), by rw [rank_act]; exact y.2⟩ := rfl
 
-def rightRep (κ : ℕ) : Representation ℂ (GL a k) (SB (RankIn k a c {κ})) :=
+def rightRep (κ : ℕ) :
+    Representation ℂ (GL a k) (SB (RankIn (k := k) (a := a) (b := c) {κ})) :=
   (fibBase a c κ).comp (MonoidHom.inl _ _)
 
 end Fibre

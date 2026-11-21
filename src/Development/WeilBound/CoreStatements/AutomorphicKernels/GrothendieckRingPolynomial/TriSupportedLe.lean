@@ -194,18 +194,27 @@ theorem uni_exists {M I C : Type*} (L : M ≃ I) (c : M → C) (w : M → ℕ) (
       rcases Finset.mem_union.1 (Finsupp.support_add hm) with hm1 | hm1
       · rw [Finsupp.support_single_ne_zero _ one_ne_zero, Finset.mem_singleton] at hm1
         rw [hm1]
-      · obtain ⟨i, hi, hmi⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hm1)
+      · have hex' : ∃ i ∈ v.support, m ∈ (v i • g i).support := by
+          by_contra h
+          have hz : (∑ i ∈ v.support, v i • g i) m = 0 := by
+            rw [Finset.sum_apply']
+            apply Finset.sum_eq_zero
+            intro i hi
+            apply Finsupp.notMem_support_iff.mp
+            exact fun hmi => h ⟨i, hi, hmi⟩
+          exact Finsupp.mem_support_iff.mp hm1 hz
+        obtain ⟨i, hi, hmi⟩ := hex'
         exact hg1 i hi m (Finsupp.support_smul hmi)
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_add (f := _), map_sum, Finsupp.linearCombination_single, one_smul]
-      rw [Finset.sum_congr rfl (fun i hi => by rw [map_smul, hg2 i hi])]
-      have hsum : ∑ i ∈ v.support, v i • Finsupp.single i (1 : ℤ) = v := by
-        conv_rhs => rw [← Finsupp.sum_single v]
-        rw [Finsupp.sum]
-        refine Finset.sum_congr rfl (fun i _ => ?_)
-        rw [Finsupp.smul_single, smul_eq_mul, mul_one]
-      rw [hsum, hv]
-      abel
+        rw [Finset.sum_congr rfl (fun i hi => by rw [map_smul, hg2 i hi])]
+        have hsum : ∑ i ∈ v.support, v i • Finsupp.single i (1 : ℤ) = v := by
+          conv_rhs => rw [← Finsupp.sum_single v]
+          rw [Finsupp.sum]
+          refine Finset.sum_congr rfl (fun i _ => ?_)
+          rw [Finsupp.smul_single, smul_eq_mul, mul_one]
+        rw [hsum, hv]
+        abel
 
 theorem uni_bij {M I C : Type*} (L : M ≃ I) (c : M → C) (w : M → ℕ) (b : C → ℕ) (f : M → I →₀ ℤ)
     (hb : ∀ m, w m ≤ b (c m)) (h1 : ∀ m, f m (L m) = 1)

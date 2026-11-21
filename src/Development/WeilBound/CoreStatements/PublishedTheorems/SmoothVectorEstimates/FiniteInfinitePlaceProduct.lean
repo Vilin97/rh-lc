@@ -42,7 +42,16 @@ theorem loc_eq_one_of_val {ν : HChar L} {v : HeightOneSpectrum (𝓞 L)} (hu : 
 
 theorem inf_eq_prod (ν : HChar L) (k : Lˣ) :
     ν.inf k = ∏ w ∈ (Finset.univ : Finset (InfinitePlace L)), ν.locInf w (atInf w k) := by
-  simp only [HChar.inf, HChar.locInf, infDiag, MonoidHom.comp_apply, MonoidHom.finset_prod_apply, map_prod]
+  classical
+  simp only [HChar.inf, HChar.locInf, infDiag, MonoidHom.comp_apply]
+  have hp : ∀ (s : Finset (InfinitePlace L)) (f : InfinitePlace L → Lˣ →* Ideles L),
+      (∏ w ∈ s, f w) k = ∏ w ∈ s, f w k := by
+    intro s f
+    induction s using Finset.induction_on with
+    | empty => simp
+    | insert a s ha ih => simp [ha, ih, MonoidHom.mul_apply]
+  rw [hp, map_prod]
+  rfl
 
 
 theorem eq_one (ν : HChar L) (h : ∀ᶠ w in cofinite, ν.val w = 1) : ν = 1 := by
@@ -78,11 +87,11 @@ theorem eq_one (ν : HChar L) (h : ∀ᶠ w in cofinite, ν.val w = 1) : ν = 1 
         (∏ v : S, ν.loc v.1 (p.1 v)) *
           ∏ w : (Finset.univ : Finset (InfinitePlace L)), ν.locInf w.1 (p.2 w) := by
       apply Continuous.mul
-      · apply continuous_finset_prod
+      · apply continuous_finsetProd
         intro v _
         exact (hνc.comp (GlobalTheory.Mem.Chr.Determ.continuous_localIdele v.1)).comp
           ((continuous_apply v).comp continuous_fst)
-      · apply continuous_finset_prod
+      · apply continuous_finsetProd
         intro w _
         exact (hνc.comp (GlobalTheory.InfTypeLocal.continuous_infIdele L w.1)).comp
           ((continuous_apply w).comp continuous_snd)

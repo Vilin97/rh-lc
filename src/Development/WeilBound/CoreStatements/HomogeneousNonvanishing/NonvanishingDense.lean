@@ -53,7 +53,10 @@ private theorem rootsLiftToZeros_statement : GroundTheory.Heights₂.Heights.Hil
     exact hG)
   letI : Algebra (Polynomial (MvPolynomial (Fin e) ℚ) ⧸
       Q.comap (algebraMap (Polynomial (MvPolynomial (Fin e) ℚ)) (MvPolynomial σ ℚ ⧸ P))) ℂ :=
-    (Ideal.Quotient.lift _ φ (fun a ha => by rw [hQc] at ha; exact ha)).toAlgebra
+    (Ideal.Quotient.lift _ φ (fun a ha => by
+      change a ∈ Ideal.under _ Q at ha
+      rw [hQc] at ha
+      exact ha)).toAlgebra
   haveI : IsDomain ((MvPolynomial σ ℚ ⧸ P) ⧸ Q) := Ideal.Quotient.isDomain Q
   haveI : Module.IsTorsionFree (Polynomial (MvPolynomial (Fin e) ℚ) ⧸
       Q.comap (algebraMap (Polynomial (MvPolynomial (Fin e) ℚ)) (MvPolynomial σ ℚ ⧸ P))) ((MvPolynomial σ ℚ ⧸ P) ⧸ Q) :=
@@ -64,7 +67,9 @@ private theorem rootsLiftToZeros_statement : GroundTheory.Heights₂.Heights.Hil
     intro x hx
     obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
     rw [RingHom.mem_ker] at hx
-    rw [Ideal.mem_bot, Ideal.Quotient.eq_zero_iff_mem, hQc]
+    rw [Ideal.mem_bot, Ideal.Quotient.eq_zero_iff_mem]
+    change a ∈ Ideal.under _ Q
+    rw [hQc]
     exact hx
   haveI : Algebra.IsIntegral (Polynomial (MvPolynomial (Fin e) ℚ) ⧸
       Q.comap (algebraMap (Polynomial (MvPolynomial (Fin e) ℚ)) (MvPolynomial σ ℚ ⧸ P))) ((MvPolynomial σ ℚ ⧸ P) ⧸ Q) :=

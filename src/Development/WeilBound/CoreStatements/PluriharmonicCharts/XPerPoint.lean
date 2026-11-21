@@ -61,7 +61,7 @@ theorem PositivityTheory.Xgp.t_per_point : ∀ (e : ℕ) (X : Type) [Topological
   obtain ⟨Lm, hcd, hlevi, hinj⟩ :=
     per_diag.levi_diagonal_of_isPeriodChart e X A Ψ N j hj pot x V g hP k hx
   have hcard : Fintype.card (Ψ × Pairs N) = e := by
-    rw [Fintype.card_prod, card_pairs, he, antisymDegree]
+    rw [Fintype.card_prod, per_point.card_pairs, he, antisymDegree]
   let eq : Fin e ≃ Ψ × Pairs N := (Fintype.equivFinOfCardEq hcard).symm
   let M : Matrix (Fin e) (Fin e) ℂ :=
     LinearMap.toMatrix' ((LinearMap.funLeft ℂ ℂ (eq : Fin e → Ψ × Pairs N)) ∘ₗ Lm)
@@ -90,7 +90,7 @@ theorem PositivityTheory.Xgp.t_per_point : ∀ (e : ℕ) (X : Type) [Topological
       unfold locDens
       rw [hx']
       rfl
-    obtain ⟨hC, hL⟩ := levi_sum Finset.univ c f (A.chart k x) (fun p => hcd p)
+    obtain ⟨hC, hL⟩ := per_point.levi_sum Finset.univ c f (A.chart k x) (fun p => hcd p)
     let dd : Fin e → ℝ := fun r => 1 / 2 * ∑ m ∈ Finset.Ico (eq r).2.1.1 (eq r).2.1.2, c ((eq r).1, m)
     have hprod : ∏ r, dd r = (1 / 2) ^ e *
         ∏ τ : Ψ, ∏ i : Fin N, ∏ l ∈ Finset.Ioi i, ∑ m ∈ Finset.Ico i l, c (τ, m) := by
@@ -99,7 +99,7 @@ theorem PositivityTheory.Xgp.t_per_point : ∀ (e : ℕ) (X : Type) [Topological
       rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, hcard, Fintype.prod_prod_type]
       congr 1
       refine Finset.prod_congr rfl (fun τ _ => ?_)
-      exact prod_pairs (fun i l => ∑ m ∈ Finset.Ico i l, c (τ, m))
+      exact per_point.prod_pairs (fun i l => ∑ m ∈ Finset.Ico i l, c (τ, m))
     rw [hloc, GlobalTheory.T.monge_ampere_density_diagonal_levi e _ (A.chart k x) dd M hC ?_]
     · rw [hprod]
       ring

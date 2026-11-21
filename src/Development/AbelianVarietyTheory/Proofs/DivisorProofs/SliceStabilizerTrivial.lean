@@ -11,7 +11,7 @@ namespace GlobalTheory.RankFibreKer
 
 theorem eq_one_of_mem_slice_of_mul_mem_slice (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (a d : ℕ) (Z : Matrix (Fin a) (Fin d) k) (g : GL (Fin a) k) :
-    Z ∈ slice k a d → g.val * Z ∈ slice k a d → g = 1 := by
+    Z ∈ slice (k := k) a d → g.val * Z ∈ slice (k := k) a d → g = 1 := by
   rintro ⟨J, hJ, hZ⟩ ⟨J', hJ', hgZ⟩
   have m1 : minor Z J = 1 := by rw [minor, hJ, det_one]
   have m1' : minor (g.val * Z) J' = 1 := by rw [minor, hJ', det_one]
@@ -23,7 +23,7 @@ theorem eq_one_of_mem_slice_of_mul_mem_slice (k : Type) [Field k] [ValuativeRel 
   have hZJ' : valuation k (minor Z J') = 1 := by
     refine le_antisymm (hZ J').1 ?_
     calc (1 : ValueGroupWithZero k) = valuation k (g.val.det) * valuation k (minor Z J') := e1.symm
-      _ ≤ 1 * valuation k (minor Z J') := mul_le_mul_of_nonneg_right hg zero_le'
+      _ ≤ 1 * valuation k (minor Z J') := mul_le_mul_of_nonneg_right hg zero_le
       _ = valuation k (minor Z J') := one_mul _
   have hg1 : valuation k (g.val.det) = 1 := by rwa [hZJ', mul_one] at e1
   have hJJ : J = J' := by

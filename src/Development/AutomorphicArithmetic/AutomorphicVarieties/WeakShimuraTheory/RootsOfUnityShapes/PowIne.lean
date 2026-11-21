@@ -54,7 +54,7 @@ private theorem frobenius_fixed_of_iterate_fixed_pow_prime {k : Type} [Field k] 
     intro z hz
     classical
     have hP0 : (Polynomial.X ^ (p ^ (m * n)) - Polynomial.X : Polynomial k) ≠ 0 :=
-      FiniteField.X_pow_card_sub_X_ne_zero k hpN
+      Polynomial.X_pow_sub_X_ne_zero hpN
     have hmem : ∀ w : k, w ^ (p ^ (m * n)) = w →
         w ∈ (Polynomial.X ^ (p ^ (m * n)) - Polynomial.X : Polynomial k).roots.toFinset := by
       intro w hw

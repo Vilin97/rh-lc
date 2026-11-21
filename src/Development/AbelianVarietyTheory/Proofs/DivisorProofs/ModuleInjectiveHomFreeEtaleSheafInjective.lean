@@ -31,12 +31,12 @@ def idealIncl : idealFree R P I ⟶ (freeP R).obj P where
     change Finsupp.mapRange (I.subtype) (map_zero _) (Finsupp.mapDomain _ (Finsupp.single x a)) =
       Finsupp.mapDomain _ (Finsupp.mapRange (I.subtype) (map_zero _) (Finsupp.single x a))
     simp only [Finsupp.mapDomain_single, Finsupp.mapRange_single]
-    erw [Finsupp.mapDomain_single]
     rfl
 
 instance : Mono (idealIncl R P I) := by
   have : ∀ U, Mono ((idealIncl R P I).app U) := fun U => by
-    rw [ModuleCat.mono_iff_injective]
+    apply (ModuleCat.mono_iff_injective _).2
+    change Function.Injective (Finsupp.mapRange (α := ULift.{1} (P.obj U)) I.subtype (map_zero _))
     exact Finsupp.mapRange_injective _ (map_zero _) Subtype.val_injective
   exact NatTrans.mono_of_mono_app _
 
@@ -82,7 +82,7 @@ theorem hom_free_injective (R : Type) [CommRing R] (J : Shv R) [Injective J] (P 
     (presheafToSheaf Scheme.etaleTopology _).map (idealIncl R P I)
   let ψ' : (presheafToSheaf Scheme.etaleTopology _).obj (idealFree R P I) ⟶ J :=
     ((sheafificationAdjunction Scheme.etaleTopology _).homEquiv _ _).symm (famHom R P I J g)
-  haveI : Mono m := inferInstanceAs (Mono ((presheafToSheaf Scheme.etaleTopology _).map (idealIncl R P I)))
+  have : Mono m := inferInstanceAs (Mono ((presheafToSheaf Scheme.etaleTopology _).map (idealIncl R P I)))
   let f := Injective.factorThru ψ' m
   refine ⟨LinearMap.toSpanSingleton _ _ f, fun a ha => ?_⟩
   rw [LinearMap.toSpanSingleton_apply]
@@ -101,7 +101,7 @@ theorem hom_free_injective (R : Type) [CommRing R] (J : Shv R) [Injective J] (P 
           Category.assoc (toSheafify Scheme.etaleTopology (idealFree R P I)) (sheafifyMap Scheme.etaleTopology (idealIncl R P I)) f.hom
       _ = famHom R P I J g := by rw [hm, hψ]
   apply Sheaf.hom_ext
-  apply sheafify_hom_ext _ _ _ J.cond
+  apply sheafify_hom_ext _ _ _ J.property
   ext U : 2
   apply ModuleCat.free_hom_ext
   intro x

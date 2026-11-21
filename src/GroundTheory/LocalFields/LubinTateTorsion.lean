@@ -71,17 +71,13 @@ theorem coeff_ltPoly_sub (π : 𝒪[K]) (n : ℕ) :
 theorem isLubinTateSeries_ltPoly (π : 𝒪[K]) :
     IsLubinTateSeries π (ltPoly π : PowerSeries 𝒪[K]) where
   constantCoeff_eq_zero := by
-    have hq := one_lt_card_residueField' K
+    have hq := one_lt_card_residueField' (K := K)
     rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, Polynomial.coeff_coe, ltPoly]
-    simp only [coeff_add, coeff_C_mul_X, coeff_X_pow]
-    simp
-    omega
+    simp [coeff_X_pow, show 0 ≠ Nat.card 𝓀[K] by omega]
   coeff_one := by
-    have hq := one_lt_card_residueField' K
+    have hq := one_lt_card_residueField' (K := K)
     rw [Polynomial.coeff_coe, ltPoly]
-    simp only [coeff_add, coeff_C_mul_X, coeff_X_pow]
-    simp
-    omega
+    simp [coeff_X_pow, hq.ne]
   dvd_coeff_sub n := by
     rw [coeff_ltPoly_sub, coeff_C_mul_X]
     split_ifs

@@ -20,9 +20,10 @@ variable {K L : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarc
   [Field L] [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
 
-
+omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace L]
+  [IsNonarchimedeanLocalField L] [FiniteDimensional K L] in
 theorem coe_normIntegerUnits_eq (u : 𝒪[L]ˣ) :
-    ((normIntegerUnits u : 𝒪[K]ˣ) : 𝒪[K]) = Algebra.norm 𝒪[K] (u : 𝒪[L]) :=
+    ((normIntegerUnits K L u : 𝒪[K]ˣ) : 𝒪[K]) = Algebra.norm 𝒪[K] (u : 𝒪[L]) :=
   rfl
 
 theorem exists_norm_one_add_smul (r : 𝒪[K]) (a : 𝒪[L]) :
@@ -115,7 +116,7 @@ theorem trace_integer_surjective : Function.Surjective (Algebra.trace 𝒪[K] �
   linear_combination c * Units.inv_mul hu.unit - (((hu.unit⁻¹ : 𝒪[K]ˣ) : 𝒪[K]) * c) * hu.unit_spec
 
 theorem normIntegerUnits_mem_unitFiltration {n : ℕ} {u : 𝒪[L]ˣ} (hu : u ∈ unitFiltration L n) :
-    normIntegerUnits u ∈ unitFiltration K n := by
+    normIntegerUnits K L u ∈ unitFiltration K n := by
   rcases Nat.eq_zero_or_pos n with rfl | hn
   · simp
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]
@@ -131,7 +132,7 @@ theorem normIntegerUnits_mem_unitFiltration {n : ℕ} {u : 𝒪[L]ˣ} (hu : u �
   ring
 
 theorem exists_normIntegerUnits_div_mem_one (h : 𝒪[K]ˣ) :
-    ∃ g : 𝒪[L]ˣ, h / normIntegerUnits g ∈ unitFiltration K 1 := by
+    ∃ g : 𝒪[L]ˣ, h / normIntegerUnits K L g ∈ unitFiltration K 1 := by
   obtain ⟨ζ, hζ⟩ := FiniteField.unitsMap_norm_surjective 𝓀[K] 𝓀[L] (unitsToResidue K h)
   obtain ⟨g, rfl⟩ := unitsToResidue_surjective L ζ
   refine ⟨g, ?_⟩
@@ -141,7 +142,7 @@ theorem exists_normIntegerUnits_div_mem_one (h : 𝒪[K]ˣ) :
 
 theorem exists_normIntegerUnits_div_mem_succ {n : ℕ} (hn : 1 ≤ n) {h : 𝒪[K]ˣ}
     (hh : h ∈ unitFiltration K n) :
-    ∃ g ∈ unitFiltration L n, h / normIntegerUnits g ∈ unitFiltration K (n + 1) := by
+    ∃ g ∈ unitFiltration L n, h / normIntegerUnits K L g ∈ unitFiltration K (n + 1) := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]
   have hϖL := irreducible_algebraMap_of_isUnramified (L := L) hϖ
   obtain ⟨c, hc⟩ := (mem_maximalIdeal_pow_iff hϖ).mp (mem_unitFiltration.mp hh)
@@ -153,7 +154,7 @@ theorem exists_normIntegerUnits_div_mem_succ {n : ℕ} (hn : 1 ≤ n) {h : 𝒪[
     exact dvd_mul_right _ _
   · rw [div_mem_unitFiltration_iff]
     obtain ⟨d, hd⟩ := exists_norm_one_add_smul (ϖ ^ n) a
-    have e1 : ((normIntegerUnits hu.unit : 𝒪[K]ˣ) : 𝒪[K]) =
+    have e1 : ((normIntegerUnits K L hu.unit : 𝒪[K]ˣ) : 𝒪[K]) =
         1 + ϖ ^ n * Algebra.trace 𝒪[K] 𝒪[L] a + (ϖ ^ n) ^ 2 * d := by
       rw [coe_normIntegerUnits_eq, IsUnit.unit_spec, ← hd, Algebra.smul_def, map_pow]
     have e2 : c - Algebra.trace 𝒪[K] 𝒪[L] a ∈ 𝓂[K] := by
@@ -170,10 +171,10 @@ theorem exists_normIntegerUnits_div_mem_succ {n : ℕ} (hn : 1 ≤ n) {h : 𝒪[
     linear_combination (ϖ ^ (m + 1)) * he
 
 theorem map_normIntegerUnits_unitFiltration (n : ℕ) :
-    (unitFiltration L n).map (normIntegerUnits) = unitFiltration K n :=
+    (unitFiltration L n).map (normIntegerUnits K L) = unitFiltration K n :=
   map_eq_of_graded_surjective (unitFiltration_antitone L) (unitFiltration_antitone K)
     filtrationComplete_unitFiltration filtrationSeparated_unitFiltration
-    (normIntegerUnits) (φ := id) tendsto_id n
+    (normIntegerUnits K L) (φ := id) tendsto_id n
     (fun _ _ _ hg ↦ normIntegerUnits_mem_unitFiltration hg)
     (fun m _ h hh ↦ by
       rcases Nat.eq_zero_or_pos m with rfl | hm
@@ -181,11 +182,11 @@ theorem map_normIntegerUnits_unitFiltration (n : ℕ) :
         exact ⟨g, by simp, hg⟩
       · exact exists_normIntegerUnits_div_mem_succ hm hh)
 
-theorem normIntegerUnits_surjective : Function.Surjective (normIntegerUnits (K := K) (L := L)) := by
+theorem normIntegerUnits_surjective : Function.Surjective (normIntegerUnits K L) := by
   intro h
   have e := map_normIntegerUnits_unitFiltration (K := K) (L := L) 0
   rw [unitFiltration_zero, unitFiltration_zero] at e
-  have hh : h ∈ (⊤ : Subgroup 𝒪[L]ˣ).map (normIntegerUnits (K := K) (L := L)) := by
+  have hh : h ∈ (⊤ : Subgroup 𝒪[L]ˣ).map (normIntegerUnits K L) := by
     rw [e]
     exact Subgroup.mem_top h
   obtain ⟨g, -, rfl⟩ := hh
@@ -212,7 +213,7 @@ theorem mem_range_normUnits_iff (x : Kˣ) :
       rw [← hk, ← hx, ord_unitsOfIntProd]
     obtain ⟨v, hv⟩ := normIntegerUnits_surjective (K := K) (L := L) u
     refine ⟨Units.map (algebraMap K L : K →* L) (uniformizerUnit hϖ) ^ k * unitsIncl L v, ?_⟩
-    have hnv : normUnits K L (unitsIncl L v) = unitsIncl K (normIntegerUnits v) := by
+    have hnv : normUnits K L (unitsIncl L v) = unitsIncl K (normIntegerUnits K L v) := by
       ext
       rw [coe_normUnits]
       change Algebra.norm K ((v : 𝒪[L]) : L) = _

@@ -129,10 +129,13 @@ theorem near_schwartz (h : SchwartzMap (κ' ⊕ κ'' → W) ℂ) (β : (κ'' →
         fun x => ∫ s in Ioc (0 : ℝ) 1,
           pder m (fun p : (κ' ⊕ κ'' → W) × ℝ => h (Ain p.2 p.1)) (x, s)
       from funext (hIF m)]
+    set_option synthInstance.maxSize 256 in
     exact differentiable_integral_Ioc_of_contDiff _ ((contDiff_pder m hc).of_le (by exact_mod_cast le_top))
   have hB : ContDiff ℝ ∞ (fun y : κ' ⊕ κ'' → W => (β (y ∘ Sum.inr) : ℂ)) := by
     have hL : ContDiff ℝ ∞ (fun y : κ' ⊕ κ'' → W => y ∘ Sum.inr) :=
-      contDiff_pi.2 fun j => contDiff_apply ℝ W (Sum.inr j)
+      contDiff_pi.2 fun j => by
+        simpa only [Function.comp_apply] using
+          (contDiff_apply ℝ (fun _ : κ' ⊕ κ'' => W) (Sum.inr j))
     exact Complex.ofRealCLM.contDiff.comp (hβ.comp hL)
   obtain ⟨R0, hR0⟩ := hβc.isCompact.isBounded.subset_closedBall 0
   have hR : 0 ≤ max R0 0 := le_max_right _ _

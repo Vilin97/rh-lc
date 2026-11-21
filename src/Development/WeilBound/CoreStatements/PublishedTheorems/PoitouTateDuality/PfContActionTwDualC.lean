@@ -45,7 +45,7 @@ theorem contAction_twDual_C {F Ω : Type} [Field F] [NumberField F] [Field Ω] [
     · rintro h m
       rw [← h, twDual_apply]
     · intro h
-      apply TDual.ext
+      apply DFunLike.ext
       intro m
       rw [twDual_apply]
       exact h m

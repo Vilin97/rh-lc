@@ -35,21 +35,26 @@ private theorem UpperTheory.V.Fr.single_coeff_mul {K : Type} [CommRing K] (p q :
   · simp
 
 theorem UpperTheory.V.Fr.alg_homog :
-    ∀ {C K : Type} [CommRing C] [IsLocalRing C] [CommRing K] [Algebra C K] {P : ℤ → Submodule C K} [SetLike.GradedMonoid P] (h : HasVertex P) (N : ℕ) (p : lauSub P), p ∈ vertex h ^ N → ∀ j : ℤ, (⟨AddMonoidAlgebra.single j (p.1.coeff j), single_mem_lauSub P (p.2 j)⟩ : lauSub P) ∈ vertex h ^ N := by
+    ∀ {C K : Type} [CommRing C] [IsLocalRing C] [CommRing K] [Algebra C K]
+      {P : ℤ → Submodule C K} [SetLike.GradedMonoid P] (h : HasVertex P) (N : ℕ) (p : lauSub P),
+      p ∈ vertex P h ^ N → ∀ j : ℤ,
+        (⟨AddMonoidAlgebra.single j (p.1.coeff j), single_mem_lauSub P (p.2 j)⟩ : lauSub P) ∈
+          vertex P h ^ N := by
   intro C K _ _ _ _ P _ h N
   let comp : lauSub P → ℤ → lauSub P := fun q k =>
     ⟨AddMonoidAlgebra.single k (q.1.coeff k), single_mem_lauSub P (q.2 k)⟩
   have hcomp : ∀ q k, (comp q k).1 = AddMonoidAlgebra.single k (q.1.coeff k) := fun _ _ => rfl
-  have base : ∀ q : lauSub P, q ∈ vertex h → ∀ k : ℤ, comp q k ∈ vertex h := by
+  have base : ∀ q : lauSub P, q ∈ vertex P h → ∀ k : ℤ, comp q k ∈ vertex P h := by
     intro q hq k
-    rw [mem_vertex] at hq ⊢
+    change ∃ c ∈ maximalIdeal C, algebraMap C K c = q.1.coeff 0 at hq
+    change ∃ c ∈ maximalIdeal C, algebraMap C K c = (comp q k).1.coeff 0
     obtain ⟨c, hc, hce⟩ := hq
     rw [hcomp, AddMonoidAlgebra.coeff_single]
     by_cases hk : k = 0
     · subst hk
       exact ⟨c, hc, by rw [Finsupp.single_eq_same, hce]⟩
     · exact ⟨0, Ideal.zero_mem _, by rw [Finsupp.single_eq_of_ne' hk, map_zero]⟩
-  show ∀ p : lauSub P, p ∈ vertex h ^ N → ∀ j, comp p j ∈ vertex h ^ N
+  show ∀ p : lauSub P, p ∈ vertex P h ^ N → ∀ j, comp p j ∈ vertex P h ^ N
   induction N with
   | zero =>
     intro p _ j
@@ -58,7 +63,7 @@ theorem UpperTheory.V.Fr.alg_homog :
   | succ n ih =>
     intro p hp
     rw [pow_succ] at hp
-    refine Submodule.mul_induction_on (C := fun r => ∀ j, comp r j ∈ vertex h ^ (n + 1)) hp ?_ ?_
+    refine Submodule.mul_induction_on (C := fun r => ∀ j, comp r j ∈ vertex P h ^ (n + 1)) hp ?_ ?_
     · intro x hx y hy j
       have e : comp (x * y) j =
           ∑ a ∈ x.1.coeff.support, comp x a * comp y (-a + j) := by

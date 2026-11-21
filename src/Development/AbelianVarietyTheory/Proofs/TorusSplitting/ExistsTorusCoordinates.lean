@@ -41,7 +41,7 @@ theorem _root_.GlobalTheory.TorusCoord.sum_emb_split {M : Type} [AddCommMonoid M
     · intro σ _
       rw [_root_.ReciprocityTheory.ChartRestriction.G.I2.TorusAtDataPf.conj_conj_X]
 
-
+open scoped Classical in
 def dimOf (X : Data E r) (σ : E →+* ℂ) : ℕ := if σ ∈ X.Ψ then X.p0 else r - X.p0
 
 theorem dimOf_mem (X : Data E r) {σ : E →+* ℂ} (h : σ ∈ X.Ψ) : dimOf X σ = X.p0 := by
@@ -111,7 +111,7 @@ theorem _root_.GlobalTheory.TorusCoord.lt_neg (X : _root_.ReciprocityTheory.Char
   have := X.p0_le
   omega
 
-
+open scoped Classical in
 def coord (X : Data E r) (e : X.Ψ → Fin r → (Fin r → ℂ)) (y : X.Ψ → Fin r → ℂ)
     (i : Idx (dimOf X)) : ℂ :=
   if h : i.1 ∈ X.Ψ then pr X e y ⟨i.1, h⟩ ⟨i.2.1, lt_pos X h i.2⟩

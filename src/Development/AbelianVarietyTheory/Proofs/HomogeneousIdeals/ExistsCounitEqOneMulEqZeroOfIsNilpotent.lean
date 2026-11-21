@@ -367,47 +367,42 @@ variable [HopfAlgebra V H] [IsFractionRing V K] (J : Ideal (K ⊗[V] H)) [J.IsHo
 
 theorem isHopfIdeal_closureIdeal_of_flat [Module.Flat V (H ⧸ closureIdeal K J)] :
     (closureIdeal K J).IsHopfIdeal V where
-  toIsCoideal := {
-    counit_eq_zero := by
-      intro x hx
-      have h := Submodule.IsCoideal.counit_eq_zero (I := J.restrictScalars K) hx
-      apply IsFractionRing.injective V K
-      simpa [Algebra.smul_def] using h
-    map_mkQ_comul_eq_zero := by
-      intro x hx
-      have h := Submodule.IsCoideal.map_mkQ_comul_eq_zero (I := J.restrictScalars K) hx
-      let Q := (K ⊗[V] H) ⧸ J.restrictScalars K
-      let P := H ⧸ closureIdeal K J
-      let π : H →ₗ[V] P := (Ideal.Quotient.mkₐ V (closureIdeal K J)).toLinearMap
-      let ι : P →ₗ[V] Q := ((closureIdeal K J).restrictScalars V).liftQ
-        ((J.restrictScalars K).mkQ.restrictScalars V ∘ₗ TensorProduct.mk V K H 1)
-        (fun y hy ↦ (Submodule.Quotient.mk_eq_zero _).2 hy)
-      have hι : Function.Injective ι := by
-        set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
-        intro y hy
-        obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective y
-        exact Ideal.Quotient.eq_zero_iff_mem.2
-          ((Submodule.Quotient.mk_eq_zero (J.restrictScalars K)).1 hy)
-      have hinj : Function.Injective (TensorProduct.map ι ι) := by
-        have : Module.Flat V K := IsLocalization.flat K (nonZeroDivisors V)
-        have : Module.Flat V Q := Module.Flat.trans V K Q
-        rw [← LinearMap.rTensor_comp_lTensor, LinearMap.coe_comp]
-        exact (Module.Flat.rTensor_preserves_injective_linearMap ι hι).comp
-          (Module.Flat.lTensor_preserves_injective_linearMap ι hι)
-      change TensorProduct.map π π (comul x) = 0
-      apply hinj
-      apply (IsLocalization.moduleTensorEquiv (nonZeroDivisors V) K Q Q).symm.injective
-      rw [map_zero, map_zero, ← h, Algebra.TensorProduct.includeRight_apply,
-        TensorProduct.comul_tmul]
-      generalize comul (R := V) x = t
-      induction t with
-      | add a b ha hb => simp only [map_add (f := _), TensorProduct.tmul_add, ha, hb]
-      | tmul a b =>
-        simp only [CommSemiring.comul_apply, TensorProduct.map_tmul, TensorProduct.AlgebraTensorModule.tensorTensorTensorComm_tmul]
-        rfl
-  }
-  antipode_mem := by
-    intro x hx
+  counit_eq_zero x hx := by
+    have h := Submodule.IsCoideal.counit_eq_zero (I := J.restrictScalars K) hx
+    apply IsFractionRing.injective V K
+    simpa [Algebra.smul_def] using h
+  map_mkQ_comul_eq_zero x hx := by
+    have h := Submodule.IsCoideal.map_mkQ_comul_eq_zero (I := J.restrictScalars K) hx
+    let Q := (K ⊗[V] H) ⧸ J.restrictScalars K
+    let P := H ⧸ closureIdeal K J
+    let π : H →ₗ[V] P := (Ideal.Quotient.mkₐ V (closureIdeal K J)).toLinearMap
+    let ι : P →ₗ[V] Q := ((closureIdeal K J).restrictScalars V).liftQ
+      ((J.restrictScalars K).mkQ.restrictScalars V ∘ₗ TensorProduct.mk V K H 1)
+      (fun y hy ↦ (Submodule.Quotient.mk_eq_zero _).2 hy)
+    have hι : Function.Injective ι := by
+      set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
+      intro y hy
+      obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective y
+      exact Ideal.Quotient.eq_zero_iff_mem.2
+        ((Submodule.Quotient.mk_eq_zero (J.restrictScalars K)).1 hy)
+    have hinj : Function.Injective (TensorProduct.map ι ι) := by
+      have : Module.Flat V K := IsLocalization.flat K (nonZeroDivisors V)
+      have : Module.Flat V Q := Module.Flat.trans V K Q
+      rw [← LinearMap.rTensor_comp_lTensor, LinearMap.coe_comp]
+      exact (Module.Flat.rTensor_preserves_injective_linearMap ι hι).comp
+        (Module.Flat.lTensor_preserves_injective_linearMap ι hι)
+    change TensorProduct.map π π (comul x) = 0
+    apply hinj
+    apply (IsLocalization.moduleTensorEquiv (nonZeroDivisors V) K Q Q).symm.injective
+    rw [map_zero, map_zero, ← h, Algebra.TensorProduct.includeRight_apply,
+      TensorProduct.comul_tmul]
+    generalize comul (R := V) x = t
+    induction t with
+    | add a b ha hb => simp only [map_add (f := _), TensorProduct.tmul_add, ha, hb]
+    | tmul a b =>
+      simp only [CommSemiring.comul_apply, TensorProduct.map_tmul, TensorProduct.AlgebraTensorModule.tensorTensorTensorComm_tmul]
+      rfl
+  antipode_mem x hx := by
     have h := Ideal.IsHopfIdeal.antipode_mem (R := K) (I := J) hx
     simpa using h
 
@@ -426,29 +421,25 @@ section Examples
 
 theorem isHopfIdeal_ker_counit (R H : Type*) [CommRing R] [CommRing H] [HopfAlgebra R H] :
     (RingHom.ker (counitAlgHom R H)).IsHopfIdeal R where
-  toIsCoideal := {
-    counit_eq_zero := fun _ hx ↦ hx
-    map_mkQ_comul_eq_zero := by
-      intro x hx
-      have hx' : counit (R := R) x = 0 := hx
-      set π := ((RingHom.ker (counitAlgHom R H)).restrictScalars R).mkQ with hπ
-      have h1 : ∀ y, π y = counit (R := R) y • π 1 := fun y ↦ by
-        rw [← map_smul, hπ, Submodule.mkQ_apply, Submodule.mkQ_apply, Submodule.Quotient.eq]
-        change counit (R := R) (y - counit (R := R) y • (1 : H)) = 0
-        simp
-      have h2 : ∀ t : H ⊗[R] H, TensorProduct.map π π t =
-          π 1 ⊗ₜ π (TensorProduct.lid R H ((counit (R := R)).rTensor H t)) := by
-        intro t
-        induction t with
-        | add a b ha hb => simp only [map_add (f := _), TensorProduct.tmul_add, ha, hb]
-        | tmul a b =>
-          rw [TensorProduct.map_tmul, h1 a, TensorProduct.smul_tmul, LinearMap.rTensor_tmul,
-            TensorProduct.lid_tmul, map_smul]
-      rw [h2, rTensor_counit_comul, TensorProduct.lid_tmul, one_smul, h1 x, hx', zero_smul,
-        TensorProduct.tmul_zero]
-  }
-  antipode_mem := by
-    intro x hx
+  counit_eq_zero _ hx := hx
+  map_mkQ_comul_eq_zero x hx := by
+    have hx' : counit (R := R) x = 0 := hx
+    set π := ((RingHom.ker (counitAlgHom R H)).restrictScalars R).mkQ with hπ
+    have h1 : ∀ y, π y = counit (R := R) y • π 1 := fun y ↦ by
+      rw [← map_smul, hπ, Submodule.mkQ_apply, Submodule.mkQ_apply, Submodule.Quotient.eq]
+      change counit (R := R) (y - counit (R := R) y • (1 : H)) = 0
+      simp
+    have h2 : ∀ t : H ⊗[R] H, TensorProduct.map π π t =
+        π 1 ⊗ₜ π (TensorProduct.lid R H ((counit (R := R)).rTensor H t)) := by
+      intro t
+      induction t with
+      | add a b ha hb => simp only [map_add (f := _), TensorProduct.tmul_add, ha, hb]
+      | tmul a b =>
+        rw [TensorProduct.map_tmul, h1 a, TensorProduct.smul_tmul, LinearMap.rTensor_tmul,
+          TensorProduct.lid_tmul, map_smul]
+    rw [h2, rTensor_counit_comul, TensorProduct.lid_tmul, one_smul, h1 x, hx', zero_smul,
+      TensorProduct.tmul_zero]
+  antipode_mem x hx := by
     have hx' : counit (R := R) x = 0 := hx
     change counit (R := R) (antipode R x) = 0
     simpa using hx'

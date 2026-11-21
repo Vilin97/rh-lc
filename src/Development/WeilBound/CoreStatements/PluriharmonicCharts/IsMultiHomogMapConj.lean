@@ -95,6 +95,8 @@ theorem eval_map_conj (G : MvPolynomial (Σ k, J k) ℂ) (z : (Σ k, J k) → �
     MvPolynomial.eval₂_comp_left,
     RingHom.comp_id]
   congr 1
+  funext p
+  simp
 
 theorem isMultiHomog_map_conj {G : MvPolynomial (Σ k, J k) ℂ} {a : K → ℕ} (hG : IsMultiHomog G a) :
     IsMultiHomog (map (starRingEnd ℂ) G) a := fun m hm => hG m (support_map_subset _ _ hm)

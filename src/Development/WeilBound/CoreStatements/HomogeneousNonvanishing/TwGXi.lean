@@ -91,7 +91,10 @@ theorem tw_g_xi : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (bar : 
         by_contra h
         exact hne m h (by simpa using hm))
     have hpQ : (p : 𝓞 E) ∈ Q := by
-      have : (p : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 E)) := hQp ▸ Ideal.mem_span_singleton_self _
+      have : (p : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 E)) := by
+        change (p : ℤ) ∈ Ideal.under ℤ Q
+        rw [hQp]
+        exact Ideal.mem_span_singleton_self _
       simpa using this
     have hQ0 : Q ≠ ⊥ := by
       rintro rfl
