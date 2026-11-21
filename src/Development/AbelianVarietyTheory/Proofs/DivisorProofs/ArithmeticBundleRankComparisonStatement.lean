@@ -58,7 +58,7 @@ noncomputable section
 
 namespace GlobalTheory.FlagCovQF
 
-open CategoryTheory.Limits GlobalTheory.FlagCell GlobalTheory.FlagConnect
+open CategoryTheory.Limits GlobalTheory.FlagCell
 
 private theorem finite_points {X Y : Scheme.{0}} (f : X ⟶ Y) [IsFinite f] (K : Type) [Field K] (y : Sp K ⟶ Y) :
     {x : Sp K ⟶ X | x ≫ f = y}.Finite := by

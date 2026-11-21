@@ -74,7 +74,7 @@ theorem elem_of_coset (n : ℕ) (ϖ : w.adicCompletion E) (hϖ : IsUnifV E w ϖ)
   obtain ⟨M, hM, hM'⟩ := diag_elem w n ϖ hϖ S D (by simp [D, Matrix.GeneralLinearGroup.mkOfDetNeZero, diagJ, S])
   rw [hS] at hM
   have hstd : ∀ k ∈ GLint (Fin n) (Ov E w), k • std (w.adicCompletionIntegers E) (w.adicCompletion E) n =
-      std (w.adicCompletionIntegers E) (w.adicCompletion E) n := fun k hk => GlobalTheory.LatHecke.Lat.ext ((stab_iff w n k).2 hk)
+      std (w.adicCompletionIntegers E) (w.adicCompletion E) n := fun k hk => Subtype.ext ((stab_iff w n k).2 hk)
   refine ⟨glLat a M, ?_, ?_⟩
   · have := (smul_mem_subElem_iff a j M (std (w.adicCompletionIntegers E) (w.adicCompletion E) n)).2 hM
     rw [hstd a ha] at this
@@ -186,7 +186,7 @@ theorem isUnitarySatakeAt_of_hasSatake : ∀ (E : Type) [Field E] [NumberField E
     rw [GlobalTheory.RowSatakeBound.qRes_eq_normV w]
     have hq : (Formalism.UG.qV E w : ℕ) = normV w := by
       unfold Formalism.UG.qV normV
-      rfl
+      exact Ideal.absNorm_eq_natCard _
     rw [Complex.ofReal_cpow (Nat.cast_nonneg _), hq]
     push_cast
     rfl

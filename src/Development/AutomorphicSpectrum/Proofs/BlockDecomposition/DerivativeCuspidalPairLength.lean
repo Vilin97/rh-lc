@@ -67,7 +67,7 @@ section Tensor
 variable {r c : ℕ} {X : Fin c → Type} [∀ j, AddCommGroup (X j)] [∀ j, Module ℂ (X j)]
 
 def dropMul {ι : Fin r → Fin c} (hι : Function.Injective ι) (z : ∀ j, X j) :
-    MultilinearMap ℂ (fun i => X (ι i)) (PiTensorProduct ℂ X) where
+    (Π i, X (ι i)) →ₘₗ[ℂ] PiTensorProduct ℂ X where
   toFun x := PiTensorProduct.tprod ℂ (extFam ι x z)
   map_update_add' := by
     intro _ m i x y

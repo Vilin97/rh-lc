@@ -150,7 +150,7 @@ theorem iota_exists : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
     have : dotL (κ w) = (LinearMap.applyₗ w : Module.Dual O G.omega →ₗ[O] O) ∘ₗ
         lie.toLinearMap ∘ₗ D.Fil.mkQ := by
       refine LinearMap.pi_ext' fun i => LinearMap.ext_ring ?_
-      simp [hκ]
+      simp [dotL, hκ]
     intro m
     exact LinearMap.congr_fun this m
   have hκi : Function.Injective κ := by
@@ -178,7 +178,7 @@ theorem iota_exists : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
     congr 1
     funext i
     rw [hκ, hw, LinearEquiv.symm_apply_apply]
-    simp [ψ]
+    simp [ψ, dotL]
   · rintro ⟨w, rfl⟩
     refine LinearMap.ext fun x => ?_
     change π (Φ (κ w)) x = 0

@@ -27,13 +27,12 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Ind
 @[expose] public section
 
 open scoped TensorProduct NNReal Matrix
-open NumberField MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.EisRes
+open NumberField MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet
 open GlobalTheory.Doubling (absE)
 
 noncomputable section
 namespace GlobalTheory.LaurentAut
 
-open GlobalTheory.EisCont.Smooth
 open scoped ContDiff
 
 theorem hasDerivAt_integral_cpt {𝕜 : Type} [RCLike 𝕜] [NormedSpace 𝕜 ℂ] [ProperSpace 𝕜] {H : Type} [TopologicalSpace H] [T2Space H]
@@ -74,8 +73,6 @@ variable [T2Space H] [SecondCountableTopology H] [MeasurableSpace H] [BorelSpace
 end Abstract
 
 section Unitary
-
-open GlobalTheory.EisRes.CentralEig
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {N : ℕ} {ι : GInf σ J →* Matrix (Fin N) (Fin N) ℂ}

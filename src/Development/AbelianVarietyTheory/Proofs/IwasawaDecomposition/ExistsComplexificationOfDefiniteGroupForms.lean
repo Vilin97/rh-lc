@@ -42,7 +42,7 @@ theorem conjSum_mem_center (R : Type) [CommSemiring R] (g : G) : conjSum R g ∈
 theorem mapRange_conjSum {R S : Type} [Semiring R] [Semiring S] (f : R →+* S) (g : G) :
     mapRingHom G f (conjSum R g) = conjSum S g := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [conjSum, map_sum, MonoidAlgebra.mapRangeRingHom_single]
+    simp [conjSum, map_sum, MonoidAlgebra.mapRingHom_single]
 
 theorem card_smul_eq {R : Type} [CommSemiring R] (z : MonoidAlgebra R G) (hz : z ∈ Subalgebra.center R (MonoidAlgebra R G)) :
     (Fintype.card G : R) • z = ∑ g, z.coeff g • conjSum R g := by
@@ -72,7 +72,7 @@ theorem coeff_mapRingHom {R S : Type} [Semiring R] [Semiring S] (f : R →+* S) 
   classical
   conv_lhs => rw [eq_sum_single a]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [map_sum, MonoidAlgebra.mapRangeRingHom_single, MonoidAlgebra.coeff_sum, Finsupp.single_apply, apply_ite f]
+    simp [map_sum, MonoidAlgebra.mapRingHom_single, MonoidAlgebra.coeff_sum, Finsupp.single_apply, apply_ite f]
 
 section Act
 

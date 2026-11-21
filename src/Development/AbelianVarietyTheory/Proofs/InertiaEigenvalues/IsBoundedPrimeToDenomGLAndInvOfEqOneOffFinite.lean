@@ -110,8 +110,10 @@ theorem one_entry_v_le_one {E : Type} [Field E] [NumberField E] (n : ℕ)
   split_ifs
   · have := natCast_adicCompletion_v_le_one Q 1
     simpa using this
-  · have := natCast_adicCompletion_v_le_one Q 0
-    simpa using this
+  · let ev : FiniteAdeleRing (𝓞 E) E →+* Q.adicCompletion E := RestrictedProduct.evalRingHom _ Q
+    change Valued.v (ev 0) ≤ 1
+    rw [map_zero, map_zero]
+    exact zero_le_one
 
 theorem inv_eq_one_off {E : Type} [Field E] [NumberField E] (n : ℕ)
     (G : GL (Fin n) (FiniteAdeleRing (𝓞 E) E)) (Q : HeightOneSpectrum (𝓞 E))

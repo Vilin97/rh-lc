@@ -67,7 +67,7 @@ theorem thetaInner_sum_sum {ψ : AddChar (AF D.host.F) ℂ} {μ : Measure (WO S 
     funext w
     simp only [Finset.sum_apply, star_sum, Finset.sum_mul, Finset.mul_sum]
     exact Finset.sum_comm
-  rw [e, integral_finsetSum _ fun i hi => integrable_finset_sum _ fun j hj => hint i hi j hj]
+  rw [e, integral_finsetSum _ fun i hi => integrable_finsetSum _ fun j hj => hint i hi j hj]
   exact Finset.sum_congr rfl fun i hi => integral_finsetSum _ fun j hj => hint i hi j hj
 
 end GlobalTheory.BadOrth

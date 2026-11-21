@@ -38,7 +38,7 @@ theorem eq_one_of_forall_cLoc {x : UA E a} (hx : x ∈ finU (E := E) (n := a)) (
     have := congrArg (fun g : GL (Fin a) (u.adicCompletion E) => g.val i j) (h u)
     simp only [Units.val_one, Matrix.one_apply] at this
     refine this.trans ?_
-    split_ifs with hij <;> simp [hij]
+    split_ifs with hij <;> simp [hij] <;> rfl
 
 theorem isCompact_integral :
     IsCompact {k : finU (E := E) (n := a) | ∀ u, cLoc u k.1 ∈ GlobalTheory.LFun.KGL u (n := a)} := by

@@ -230,7 +230,7 @@ theorem scalar_of_isCob (D : Formalism.BasicNotions.D7) (h2 : adm2 D) (h4 : Arch
   have H2 : ∀ σ ∈ Gj K s, ∀ τ ∈ Gj K s, ‖c (σ * τ) - c σ -
       (((D.loc l).χQ σ ^ (-(e : ℤ)) : ℚ_[l]ˣ) : ℚ_[l]) * c τ‖ ≤ 1 := fun σ hσ τ hτ => by
     have h1 : f ⟨σ * τ, hle (mul_mem hσ hτ)⟩ = _ := hf ⟨σ, hle hσ⟩ ⟨τ, hle hτ⟩
-    rw [hc σ (hle hσ), hc τ (hle hτ), hc _ (hle (mul_mem hσ hτ)), h1, ψ.map_add (f := _),
+    rw [hc σ (hle hσ), hc τ (hle hτ), hc _ (hle (mul_mem hσ hτ)), h1, map_add ψ,
       add_sub_cancel_left]
     exact hψe ⟨σ, hle hσ⟩ _
   have H3 : ∀ σ ∈ Gj K s, ∀ᶠ τ in nhdsWithin σ (Gj K s), ‖c τ - c σ‖ ≤ 1 := fun σ hσ => by
@@ -293,7 +293,7 @@ theorem mem_HfD_of_isCob (D : Formalism.BasicNotions.D7) (h2 : adm2 D) (h4 : Arc
     (s + padicValNat l (e + 1)) = k at hzc ⊢
   have A1 : ∀ g h, (l ^ k : ℕ) • Φ (f (g * h)) -
       ((l ^ k : ℕ) • Φ (f g) + V.ρ g ((l ^ k : ℕ) • Φ (f h))) ∈ V.L.T := fun g h => by
-    rw [hf g h, Φ.map_add (f := _), map_nsmul (V.ρ g), ← smul_add, ← smul_sub, add_sub_add_left_eq_sub]
+    rw [hf g h, map_add Φ, map_nsmul (V.ρ g), ← smul_add, ← smul_sub, add_sub_add_left_eq_sub]
     exact nsmul_mem (hΦ _ _) _
   have A2 : ∀ i (g : ↥(GK K)), (g : GQ l) ∈ Gj K s →
       ‖z i g - w.repr ((l ^ k : ℕ) • Φ (f g)) i‖ ≤ 1 := fun i g hg => by

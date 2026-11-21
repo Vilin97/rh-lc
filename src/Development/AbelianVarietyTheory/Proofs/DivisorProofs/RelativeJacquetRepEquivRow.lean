@@ -32,10 +32,10 @@ theorem piTensor_colRep_apply (χ₁ χ₂ : kˣ →* ℂˣ) (u v : ℕ) (x : �
   induction y using PiTensorProduct.induction_on with
   | add a b ha hb => rw [map_add (f := _), ha, hb, smul_add]
   | smul_tprod c f =>
-    rw [map_smul, smul_comm, piTensor_tprod, cellScal, Units.coe_prod, ← MultilinearMap.map_smul_univ]
-    congr 2
-    funext j
-    exact colRep_apply χ₁ χ₂ u v j (x j) (f j)
+    rw [map_smul, smul_comm, piTensor_tprod, cellScal, Units.coe_prod]
+    congr 1
+    simp_rw [colRep_apply]
+    exact (PiTensorProduct.tprod ℂ).map_smul_univ _ f
 
 theorem rowRep_apply (χ₁ χ₂ : kˣ →* ℂˣ) (u v : ℕ) (g : Levi k (Two (Fin u) (Fin (v + 1)))) (w : ℂ ⊗[ℂ] ℂ) :
     (extTensor (detRep (Fin u) χ₁) (detRep (Fin (v + 1)) χ₂)).comp
@@ -67,7 +67,7 @@ theorem rowJac_apply (χ₁ χ₂ : kˣ →* ℂˣ) (u v : ℕ) (x : ∀ j, Levi
       (relEmb k (rowPart u v) (swapBlocks k (fun i j => Fin (sz u v i j)) x) i) =
         GeneralLinearGroup.det (x true i) * GeneralLinearGroup.det (x false i) := fun i => by
     rw [relEmb_apply, det_leviEmb, Fintype.prod_bool]
-    rfl
+    simp only [hs]
   have h0 : GeneralLinearGroup.det (x false false) = 1 := CellFirstDet.det_eq_one_of_card rfl _
   have hr0 : deltaHalf k (fun j => Fin (sz u v false j))
       (swapBlocks k (fun i j => Fin (sz u v i j)) x false) = 1 :=

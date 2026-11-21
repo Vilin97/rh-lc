@@ -31,7 +31,7 @@ theorem subsingleton_H2 {N : ℕ} {G G' : Type} [Group G] [TopologicalSpace G] [
       rw [hrho, map_inv, Φ.symm_apply_apply, ← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one,
         Module.End.one_apply] at h3
       exact h3.symm
-    exact Subtype.ext (ReciprocityTheory.Gal.TDual.ext fun m => DFunLike.congr_fun h m)
+    exact Subtype.ext (LinearMap.ext fun m => DFunLike.congr_fun h m)
   refine subsingleton_of_forall_eq 0 fun y => ?_
   obtain ⟨⟨z, hz⟩, rfl⟩ := Submodule.Quotient.mk_surjective _ y
   have hz' : (fun p : G × G => z (Φ.symm p.1, Φ.symm p.2)) ∈ ReciprocityTheory.Gal.Z2 (rho.comp (MonoidHom.id G)) := by

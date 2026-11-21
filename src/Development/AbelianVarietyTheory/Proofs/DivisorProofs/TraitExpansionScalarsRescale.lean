@@ -68,8 +68,8 @@ theorem sval_smul {Y : Scheme.{0}} (L : LB X) {K : Type} [Fintype K] {φ : K →
     sval (a • s) r z J = gs r z ⊤ a * sval s r z J := by
   have hm := hJ.mem φ r
   unfold sval
-  rw [show (a • s).f (fun k => J (r ≫ φ k)) = resG Y le_top a * s.f (fun k => J (r ≫ φ k)) from GlobalTheory.LB.smul_f a s _,
-]
+  rw [show (a • s).f (fun k => J (r ≫ φ k)) = resG Y le_top a * s.f (fun k => J (r ≫ φ k)) from
+    GlobalTheory.LB.smul_f a s _]
   exact (gs_mul r z _ hm _ _).trans (congrArg (· * _) (gs_res r z le_top hm a))
 
 end GlobalTheory.Mum.TraitRescale

@@ -139,7 +139,7 @@ theorem equiv_lpDual (P : PlaceIso A w A' w' φ j i) (S : WD h ≃ WD h') (hS : 
     refine (hS _ _).1 ⟨n, b, GlobalTheory.WDTransport.pull c.symm.toMonoidHom hd1 hq.symm hs1 b, rfl,
       (GlobalTheory.WDTransport.pullWD_mk _ _ _ _ b).symm, rfl, fun σ σ' hσ => ?_⟩
     rw [← (hc σ σ').mp hσ]
-    simp
+    simp [GlobalTheory.WDTransport.pull]
   obtain ⟨n, b, rfl⟩ := WD.exists_rep y
   rw [hF, hF, WD.lpDual_mk, GlobalTheory.WDTransport.pullWD_mk, GlobalTheory.WDTransport.pullWD_mk, WD.lpDual_mk]
   refine WD.sound ⟨.refl _ _, fun σ v => ?_, fun v => rfl⟩

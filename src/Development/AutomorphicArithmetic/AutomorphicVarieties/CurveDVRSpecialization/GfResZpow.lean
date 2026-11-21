@@ -120,7 +120,7 @@ private theorem gf_pres [IsDomain O] [IsNoetherianRing O] [IsAdicComplete (maxim
 
 omit [IsLocalRing O] in
 private theorem gf_fin [IsNoetherianRing O] {R : Type} [CommRing R] [Algebra O R] (W : WPres O ℤ R)
-    (r : Γ →* GG 3 R) (h : ∀ g a b, (r g).mat a b ∈ W.part (wt a b)) (hf : Module.Finite O (W.part 0)) :
+    (r : Γ →* GG (m := 3) (R := R)) (h : ∀ g a b, (r g).mat a b ∈ W.part (wt a b)) (hf : Module.Finite O (W.part 0)) :
     Module.Finite O (weightZeroSubalgebra O r) := by
   have h1 : ∀ L : List (Γ × Fin 3 × Fin 3),
       (L.map fun s => (r s.1).mat s.2.1 s.2.2).prod ∈ W.part (L.map fun s => wt s.2.1 s.2.2).sum := by
@@ -142,7 +142,7 @@ private theorem gf_fin [IsNoetherianRing O] {R : Type} [CommRing R] [Algebra O R
 
 private theorem diag_eq_and_triangular_of_charpoly_eq [Finite (ResidueField O)] (h2 : IsUnit (2 : O)) {A : Type} [CommRing A] [IsDomain A]
     [IsLocalRing A] [Algebra O A] (h0 : ∀ a ∈ maximalIdeal O, algebraMap O A a = 0) {η : Γ →* ℤˣ} {Ψ : Γ →* Oˣ}
-    {c g₁ : Γ} (hM : Marks η Ψ c g₁) (r : Γ →* GG 3 A) (hr : UnitaryThreeInertia.Red η Ψ r) (hN : Normalised c g₁ r)
+    {c g₁ : Γ} (hM : Marks η Ψ c g₁) (r : Γ →* GG (m := 3) (R := A)) (hr : UnitaryThreeInertia.Red η Ψ r) (hN : Normalised c g₁ r)
     (U : Subgroup Γ) (hU : U.FiniteIndex)
     (hc : ∀ g ∈ U, η g = 1 → (r g).mat.charpoly = (((r0 η Ψ g).mat).map (algebraMap O A)).charpoly) :
     (∀ g a, (r g).mat a a = algebraMap O A ((r0 η Ψ g).mat a a)) ∧
@@ -182,7 +182,7 @@ end Gen
 
 theorem UpperTheory.V.Pr.finA_of_end :
     Loc.LocalPublishedTheorems → ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {K : Type} [Field K] [NumberField K] [Algebra K Ω] {l : ℕ} [Fact l.Prime] {c : Coef l} {N : ℕ} [NeZero N] {e : ℕ} {ψ : DirichletCharacter c.O N} (D : Dat Ω K c e ψ) (g₁ : G ℚ Ω), D.Marked g₁ →
-    ∀ (B : ValuationSubring Ω), (∀ x, x ∈ B ↔ ‖D.j x‖ ≤ 1) → FinEnd l D.η D.Ψ D.cc g₁ B → FinA D g₁ := by
+    ∀ (B : ValuationSubring Ω), (∀ x, x ∈ B ↔ ‖D.j x‖ ≤ 1) → FinEnd l D.η D.Ψ D.cc g₁ B → _root_.UpperTheory.V.Aut.FinA D g₁ := by
   intro hP Ω _ _ _ K _ _ _ l _ c N _ e ψ D g₁ hM B hB ⟨V, hV, hE⟩ U S
   obtain ⟨W, hz, hw, hp⟩ := gf_pres (Loc.locGood hP D.loc U).conj S
   refine gf_fin W _ hp (finCrit c.O S.R W hz fun A _ _ hA f hf h0 => ?_)

@@ -45,11 +45,10 @@ theorem range_valGL :
 variable [T2Space k]
 
 theorem isOpenEmbedding_valGL :
-    IsOpenEmbedding (Units.val : GL (Fin m) k → Matrix (Fin m) (Fin m) k) where
-  toIsEmbedding := isEmbedding_valGL
-  isOpen_range := by
-    rw [range_valGL]
-    exact isOpen_ne_fun (continuous_id.matrix_det) continuous_const
+    IsOpenEmbedding (Units.val : GL (Fin m) k → Matrix (Fin m) (Fin m) k) := by
+  refine ⟨isEmbedding_valGL, ?_⟩
+  rw [range_valGL]
+  exact isOpen_ne_fun (continuous_id.matrix_det) continuous_const
 
 
 open scoped Classical in

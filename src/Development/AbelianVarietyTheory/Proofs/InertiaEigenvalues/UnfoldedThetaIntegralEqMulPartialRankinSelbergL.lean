@@ -72,7 +72,7 @@ theorem zint_eq_mul_partialL_smooth : ∀ (E : Type) [Field E] [NumberField E] [
   obtain ⟨b, hb1, hbN, hbC, hbF⟩ := GlobalTheory.T.exists_bump_shintani_alt E m T hψ
   obtain ⟨φ, hφR, hU, hK, hW⟩ := hbF π αe hsat
   obtain ⟨φ', hφR', hU', hK', hW'⟩ := hbF π' αe' hsat'
-  obtain ⟨hφ0, hφ0', N, Φ, hN, hΦc, hΦs, hΦr, hΦp, hC2⟩ := GlobalTheory.T.unfolded_polarised_integral_bumped_forms E m T hTs hψ b hb1 hbN hbC π π' ω ω' hω hω' hωc hωc' αe αe'
+  obtain ⟨hφ0, hφ0', N, Φ, hN, hΦc, hΦs, hΦr, hΦp, hC2⟩ := GlobalTheory.ZEul.unfolded_bump_eq E m T hTs hψ b hb1 hbN hbC π π' ω ω' hω hω' hωc hωc' αe αe'
     hsat hsat' φ φ' hφR hφR' hU hK hU' hK' hW hW'
   refine ⟨N, Φ, π, π', φ, φ', rfl, rfl, hφR, hφR', hφ0, hφ0', hN, hΦc, hΦs, ?_, ?_⟩
   · intro ℓ hℓ

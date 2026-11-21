@@ -79,17 +79,17 @@ theorem finX_of_neat (hN : ∀ u, Formalism.L2.SG.PoincareInHH.Cut.NeatKu X u Y.
       rowOf Y.TR (Y.cs u) (Y.cs u') s₁ = rowOf Y.TR (Y.cs u) (Y.cs u') s₂ →
       rowOf Y.TR (Y.cs u) (Y.cs u') s₁' = rowOf Y.TR (Y.cs u) (Y.cs u') s₂' →
       s0T s₁ s₂ = s0T s₁' s₂' ∧ (liftScalar s₁ s₂ ↔ liftScalar s₁' s₂')) (hG : ∀ u u' (t : RT Y u u'), t.G ∈ D.host.F)
-    (hvol : VolPosC) : FinX Y where
-  shInj u := (sharp_bij_of_neat Y u (hN u)).1
-  shSurj u := (sharp_bij_of_neat Y u (hN u)).2
-  inHH := hin
-  puLin u := Formalism.L2.SG.PoincareInHH.Cut.puLinear_holds X u Y.hK (Y.Dt u)
-  finHH := hfin
-  fibFin := hfib
-  pairIndep := hpi
-  Greal := hG
-  cdEx n ε := cd_haar_scaling D.cd n ε
-  volPos u := hvol D X Y u (Formalism.L2.SG.Closed.level_subgroup_properties X)
+    (hvol : VolPosC) : FinX Y :=
+  { shInj := fun u => (sharp_bij_of_neat Y u (hN u)).1
+    shSurj := fun u => (sharp_bij_of_neat Y u (hN u)).2
+    inHH := hin
+    puLin := fun u => Formalism.L2.SG.PoincareInHH.Cut.puLinear_holds X u Y.hK (Y.Dt u)
+    finHH := hfin
+    fibFin := hfib
+    pairIndep := hpi
+    Greal := hG
+    cdEx := fun n ε => cd_haar_scaling D.cd n ε
+    volPos := fun u => hvol D X Y u (Formalism.L2.SG.Closed.level_subgroup_properties X) }
 
 end FinXN
 

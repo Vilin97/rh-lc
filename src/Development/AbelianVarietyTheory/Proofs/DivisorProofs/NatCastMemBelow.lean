@@ -50,10 +50,15 @@ theorem expIn_condF' (P : Places L) (v : HeightOneSpectrum (𝓞 D.host.F)) :
     expIn (condF P) v = if v ∈ P.S0 then condExp P v else 0 := by
   have key : ∀ S : Finset (HeightOneSpectrum (𝓞 D.host.F)), v ∉ S →
       ¬ v.asIdeal ∣ ∏ u ∈ S, u.asIdeal ^ condExp P u := fun S hS h => by
-    obtain ⟨u, hu, h⟩ := (v.prime.dvd_finset_prod_iff _).1 h
-    have h2 := v.prime.dvd_of_dvd_pow h
-    have : v = u := HeightOneSpectrum.ext (associated_iff_eq.1 (v.irreducible.associated_of_dvd u.irreducible h2))
-    exact hS (this ▸ hu)
+    induction S using Finset.induction_on with
+    | empty => exact v.prime.not_dvd_one (by simpa using h)
+    | @insert u S hu ih =>
+      rw [Finset.prod_insert hu] at h
+      rcases v.prime.dvd_mul.mp h with h | h
+      · have h2 := v.prime.dvd_of_dvd_pow h
+        have : v = u := HeightOneSpectrum.ext (associated_iff_eq.1 (v.irreducible.associated_of_dvd u.irreducible h2))
+        exact hS (this ▸ Finset.mem_insert_self u S)
+      · exact ih (fun hv => hS (Finset.mem_insert_of_mem hv)) h
   show multiplicity v.asIdeal (∏ u ∈ P.S0, u.asIdeal ^ condExp P u) = _
   split_ifs with h
   · rw [← Finset.mul_prod_erase _ _ h]
@@ -112,7 +117,8 @@ theorem isBaseCond_condF (P : Places L) (hg : ∀ i, D.host.g i % LevelStarExpon
     by_contra h
     have e := expIn_condF' P v
     rw [if_neg h] at e
-    have := multiplicity_eq_zero.1 e
+    have hne : condF P ≠ 0 := Finset.prod_ne_zero_iff.2 fun u _ => pow_ne_zero _ u.ne_bot
+    have := (multiplicity_eq_zero (FiniteMultiplicity.of_prime_left v.prime hne)).1 e
     exact this hv
   refine ⟨?_, ?_, fun v hv => ?_⟩
   · exact Finset.prod_ne_zero_iff.2 fun v _ => pow_ne_zero _ v.ne_bot

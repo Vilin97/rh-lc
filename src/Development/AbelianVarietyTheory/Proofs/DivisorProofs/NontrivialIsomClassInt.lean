@@ -495,20 +495,21 @@ namespace HermLB
 variable {L M : HermLB p} {D : ℕ}
 
 theorem Isometric.isArithHeight (hX : IsArithVar p D) (e : L.Isometric M) {h : X → ℝ} (H : L.IsArithHeight h) :
-    M.IsArithHeight h where
-  vertical Z i _ _ κ _ _ _ d hd := by
+    M.IsArithHeight h := by
+  constructor
+  · intro Z i _ _ κ _ _ _ d hd
     have ⟨w, hw, _⟩ := e.pull i rfl
     have e' : topSelfIntersection κ (L.B.pull i) d = topSelfIntersection κ (M.B.pull i) d := interNum_congr_lbIso κ _
       (fun _ => (L.restr i).isLB) (fun _ => (M.restr i).isLB) fun _ => ⟨w, hw⟩
     rw [H.vertical Z i κ d hd, e']
-  point Z i _ _ _ hc hd r hr := by
+  · intro Z i _ _ _ hc hd r hr
     obtain ⟨r', hr', h₁, h₂⟩ := (e.pull i rfl).symm.exists_isRatSec hr
     have hZ : IsArithVar (i ≫ p) 0 := hX.of_isClosedImmersion i hc hd
     rw [H.point Z i hc hd r' hr', curveDeg, curveDeg, h₁]
     refine congrArg _ (finsum_congr fun σ => finsum_congr fun y => h₂ σ (mem_offSupp.2 ?_))
     rw [hZ.under_eq_genericPoint]
     exact CartierDiv.genericPoint_notMem_supp _
-  recursion Z i _ _ _ hc d hd hd' m r hr := by
+  · intro Z i _ _ _ hc d hd hd' m r hr
     obtain ⟨r', hr', h₁, h₂⟩ := ((e.pull i rfl).pow m).symm.exists_isRatSec hr
     obtain ⟨h₃, h₄⟩ := H.recursion Z i hc d hd hd' m r' hr'
     simp only [ArchIntegrable, archInt, h₁, (e.pull i rfl).chernInt_eq,

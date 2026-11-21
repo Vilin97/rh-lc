@@ -17,7 +17,7 @@ theorem sum_padicValNat_mul_log_le_log (n : ℕ) (S : Finset ℕ) (hS : ∀ p �
   rw [Real.log_nat_eq_sum_factorization, Finsupp.sum]
   have h1 : ∑ p ∈ S, (padicValNat p n : ℝ) * Real.log p
       = ∑ p ∈ S, (n.factorization p : ℝ) * Real.log p :=
-    Finset.sum_congr rfl fun p hp => by rw [Nat.factorization_def n (hS p hp)]
+    Finset.sum_congr rfl fun p hp => by rw [Nat.factorization_def n (hS p hp), Nat.padicValNat_def]
   rw [h1]
   have h2 : ∑ p ∈ S ∪ n.factorization.support, (n.factorization p : ℝ) * Real.log p
       = ∑ p ∈ n.factorization.support, (n.factorization p : ℝ) * Real.log p := by

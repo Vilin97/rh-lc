@@ -144,6 +144,7 @@ theorem orbA' (G : HTGroup p) (v : AwayP p) (y : G.Cˣ) (hdeg : (minpoly G.F (y 
     rw [horb]; exact isClosed_conjClass' G v y hdeg hsep X
   obtain ⟨C, hC, hCg⟩ := @GlobalTheory.OrbitSumInt.exists_compact_reach _ _ _ _ _ hlc hsc act _ h2
     (by haveI := h2; infer_instance) hcs e hcl Ω hΩ
+  open scoped Pointwise in
   refine ⟨C⁻¹, hC.inv, fun g hg => ?_⟩
   obtain ⟨c, hc, hce⟩ := hCg g⁻¹ (by show g⁻¹ * e * g⁻¹⁻¹ ∈ Ω; rwa [inv_inv])
   change c * e * c⁻¹ = g⁻¹ * e * g⁻¹⁻¹ at hce
@@ -244,7 +245,9 @@ theorem normProper (G : HTGroup p) (v : AwayP p) (g0 : Gv G v)
   let Z : Subgroup (Qv v ⊗[ℚ] G.C)ˣ := Subgroup.centralizer {e}
   have hZ : ∀ z : (Qv v ⊗[ℚ] G.C)ˣ, z ∈ Z ↔ (z : Qv v ⊗[ℚ] G.C) * e = e * z := by
     intro z
-    rw [Subgroup.mem_centralizer_singleton_iff, Units.ext_iff, Units.val_mul, Units.val_mul]
+    rw [Subgroup.mem_centralizer_singleton_iff]
+    change z * e = e * z ↔ _
+    rw [Units.ext_iff, Units.val_mul, Units.val_mul]
   have hZc : IsClosed (Z : Set (Qv v ⊗[ℚ] G.C)ˣ) := by
     have : (Z : Set (Qv v ⊗[ℚ] G.C)ˣ) = {z | z * e = e * z} := by
       ext z; exact Subgroup.mem_centralizer_singleton_iff

@@ -73,7 +73,7 @@ theorem pnorm_factor (X : Data E r) {x : Frame X.Ψ r} (hx : x ∈ X.dom) (a : �
   have hprod : ∏ i : Fin r, ‖dmin X.Gm x τ i.succ / dmin X.Gm x τ i.castSucc‖ ^ (-(a : ℝ) / 2) =
       (‖dmin X.Gm x τ (Fin.last r)‖ / ‖dmin X.Gm x τ 0‖) ^ (-(a : ℝ) / 2) := by
     simp_rw [norm_div]
-    rw [Real.finset_prod_rpow _ _ (fun i _ => by positivity), ht]
+    rw [Real.finsetProd_rpow _ _ (fun i _ => by positivity) _, ht]
   rw [hprod]
   have h0 : dmin X.Gm x τ 0 = 1 := lminor_zero _
   have hl : dmin X.Gm x τ (Fin.last r) = (mat x τ).det * (X.Gm.map τ.1).det * starRingEnd ℂ (mat x τ).det := by

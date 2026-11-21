@@ -26,7 +26,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.RiemInt
 
-open GlobalTheory.RosatiAH GlobalTheory.AppellHumbertTrivial
+open GlobalTheory.AppellHumbertTrivial
 
 theorem im_hermForm_int {A : Over (Sp ℂ)} [GrpObj A] {L : LB A.left} {g : ℕ} (hL : L.IsLB) (u : HolUnif A L g)
     {Hm : Matrix (Fin g) (Fin g) ℂ} {χ : u.Λ → ℂ} (h : IsFactorAH u Hm χ) (l m : u.Λ) :

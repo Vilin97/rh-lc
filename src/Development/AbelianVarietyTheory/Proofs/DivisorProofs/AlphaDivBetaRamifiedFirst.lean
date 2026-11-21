@@ -38,7 +38,9 @@ theorem not_unrAt_alpha_div_beta_over_S₁ : ∀ {D : D7} {T : Type} {L : LevCh 
   have a1 := (L.C.isMu0 j).tame w x hx h1
   have a2 := hL.xi_tame t w x hx h1
   have a3 := hu x hx
-  simp only [nuH, div_eq_mul_inv, Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_inv, a1, a2, one_mul] at a3
+  change ((L.C.mu0 j).loc w x * (L.xiH t).loc w x) *
+    ((G.ch.chiH (D.R.m - i)).loc w x)⁻¹ = 1 at a3
+  rw [a1, a2, one_mul, one_mul] at a3
   exact inv_eq_one.1 a3
 
 end GlobalTheory.FunObj.SqNum

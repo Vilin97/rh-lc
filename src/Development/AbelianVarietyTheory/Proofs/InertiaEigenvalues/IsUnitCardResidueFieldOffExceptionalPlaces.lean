@@ -33,7 +33,7 @@ theorem natCast_mem_maximalIdeal_of_finite {O A : Type} [CommRing O] [IsLocalRin
     ((l : ℕ) : A) ∈ IsLocalRing.maximalIdeal A := by
   haveI : Algebra.IsIntegral O A := Algebra.IsIntegral.of_finite O A
   have hmax : ((IsLocalRing.maximalIdeal A).comap (algebraMap O A)).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal A)
+    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (IsLocalRing.maximalIdeal A)
   have heq := IsLocalRing.eq_maximalIdeal hmax
   have : ((l : ℕ) : O) ∈ (IsLocalRing.maximalIdeal A).comap (algebraMap O A) := heq ▸ hl
   simpa using this

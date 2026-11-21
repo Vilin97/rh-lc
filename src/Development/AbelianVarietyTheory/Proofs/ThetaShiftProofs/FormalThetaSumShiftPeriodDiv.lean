@@ -309,7 +309,7 @@ theorem sum_coeff_eq_zero [DecidableEq A.X] {j : ℕ} (hj : j ≠ 0) {ι : Type*
     (hwt : ∀ p p' μ, wt p = wt p' + j • μ → wt p = wt p') {a : ι → A.X → ℂ} (ha : ∀ p ∈ s, Summable (a p))
     (h : ∀ l : A.X →+ ℂ, (∀ x, (l x).im = 0) → ∑ p ∈ s, ∑' μ, a p μ * eTwoPi (l (wt p + j • μ)) = 0)
     (p₀ : ι) (μ₀ : A.X) : ∑ p ∈ s with wt p = wt p₀, a p μ₀ = 0 := by
-  have : IsAddTorsionFree A.X := .of_isTorsionFree ℤ _
+  have : HasUniqueDiv A.X := .of_isTorsionFree ℤ _
   have hinj : ∀ p, Function.Injective fun μ : A.X => wt p + j • μ := fun p μ ν hμ =>
     nsmul_right_injective hj (add_left_cancel hμ)
   let g : ι → A.X → ℂ := fun p => Function.extend (fun μ : A.X => wt p + j • μ) (a p) 0

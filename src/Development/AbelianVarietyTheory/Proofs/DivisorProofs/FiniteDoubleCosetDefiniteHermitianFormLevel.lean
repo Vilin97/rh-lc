@@ -43,7 +43,7 @@ theorem finite_of_cover {H : Type} [Group H] (Γ K : Subgroup H) (S : Set H) (hS
   obtain ⟨γ, hγ, s, hs, k, hk, e⟩ := h q.out
   refine ⟨⟨s, hs⟩, ?_⟩
   change DoubleCoset.mk Γ K s = q
-  conv_rhs => rw [← DoubleCoset.out_eq' Γ K q]
+  conv_rhs => rw [← DoubleCoset.out_eq' q]
   exact (@DoubleCoset.eq _ _ Γ K _ _).2 ⟨γ, hγ, k, hk, e⟩
 
 theorem cover_of_relIndex {A B : Type} [Group A] [Group B] (Γ : Subgroup (A × B)) (K₁ : Subgroup A)
@@ -169,7 +169,7 @@ theorem finite_doubleCoset : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p), G.a =
       ((L.K.toSubgroup.prod K' : Subgroup (G.GAf × Gr G 1)) : Set (G.GAf × Gr G 1))) := by
   intro p _ G _ L K' hK B
   obtain ⟨S, hS, hcov⟩ := cover_KHT ccf_holds G L B
-  obtain ⟨S', hS', hcov'⟩ := cover_of_relIndex B.emb.range L.K.toSubgroup _ K' hK.1 S hS hcov
+  obtain ⟨S', hS', hcov'⟩ := cover_of_relIndex B.emb.range L.K.toSubgroup _ K' hK.1.relIndex_ne_zero S hS hcov
   exact finite_of_cover _ _ S' hS' hcov'
 
 end GlobalTheory.DefClassFin

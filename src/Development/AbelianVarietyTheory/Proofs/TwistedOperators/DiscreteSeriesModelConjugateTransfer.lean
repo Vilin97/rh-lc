@@ -273,15 +273,15 @@ theorem mult_bw (θ : InfFam D) (M : DSModel V S) : ∀ F₁ ∈ MultT θ (conjM
     simp only [Pi.add_apply, LinearMap.add_apply, map_add (f := _), hx, hy]
 
 theorem modelTr_conjModel (θ : InfFam D) (M : DSModel V S) :
-    ModelTr (starRingEnd ℂ) false θ (V := V) (conjModel M) M (kap (csm θ M)) where
-  smul c x := kap_smul _ c x
-  cart τ := cart_conjModel M τ
-  act τ g _ x y := act_iff θ M τ g x y
-  der τ Y _ x y := der_iff θ M τ Y x y
-  ell w₁ := ell_field θ M w₁
-  vec v₁ := ⟨fun τ => csm θ M τ (v₁ τ), kap_tprod _ _, fun τ => rfl⟩
-  mult := mult_fw θ M
-  mult' := mult_bw θ M
+    ModelTr (starRingEnd ℂ) false θ (V := V) (conjModel M) M (kap (csm θ M)) :=
+  { smul := fun c x => kap_smul _ c x,
+    cart := cart_conjModel M,
+    act := fun τ g _ x y => act_iff θ M τ g x y,
+    der := fun τ Y _ x y => der_iff θ M τ Y x y,
+    ell := ell_field θ M,
+    vec := fun v₁ => ⟨fun τ => csm θ M τ (v₁ τ), kap_tprod _ _, fun _ => rfl⟩,
+    mult := mult_fw θ M,
+    mult' := mult_bw θ M }
 
 end Main
 

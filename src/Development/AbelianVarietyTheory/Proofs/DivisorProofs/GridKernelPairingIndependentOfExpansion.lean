@@ -265,7 +265,7 @@ theorem compl₁₂_smul_right (c : ℂ) (f : P →ₗ[ℂ] M) (g : Q →ₗ[ℂ
 end Compl
 
 def pairML (S : GridChoice W U) (t : T) (e : AE D) (x : ∀ j, FinPt G (.top j)) (y : ∀ i, FinPt G (.grid i D.R.m)) :
-    MultilinearMap ℂ (fun k => aSub S t e k)
+    (∀ k, aSub S t e k) →ₘₗ[ℂ]
       (VV ℂ (wt G (.top 0)) →ₗ[ℂ] VV ℂ (listedWt G (.grid 0 D.R.m)) →ₗ[ℂ] ℂ) where
   toFun g := (brPair (listedWt G (.grid D.R.m D.R.m)) G.sp.topDec.rank.symm (wt G (.top D.R.m))).compl₁₂
     (colOf S t e g x) (rowOf S t e g y)

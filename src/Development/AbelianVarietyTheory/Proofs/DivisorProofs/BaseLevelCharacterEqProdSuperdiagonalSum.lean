@@ -86,7 +86,9 @@ theorem baseLevelCharacter_eq_prod_superdiagonalSum {E : Type} [Field E] [Number
     (((P0 Pg r ψ).chi ⟨g, hg⟩ : ℂˣ) : ℂ) = ∏ PP : Pg, ψ PP.1 (edgeSum supEdge (g PP)) := by
   unfold P0 LevelP.ofLocal
   dsimp only
-  rw [MonoidHom.finset_prod_apply, Units.coe_prod]
+  letI : IsOneApply ((Subgroup.pi Set.univ (fun PP : Pg => unip (kP PP.1) r)) →* ℂˣ) := ⟨fun _ => rfl⟩
+  letI : IsMulApply ((Subgroup.pi Set.univ (fun PP : Pg => unip (kP PP.1) r)) →* ℂˣ) := ⟨fun _ _ _ => rfl⟩
+  rw [prod_apply, Units.coe_prod]
   rfl
 
 theorem mem_lastZeroOrthImageSubspace_iff {E : Type} [Field E] [NumberField E] {LL : Type} [CommRing LL] (Pg : Finset (Pl E)) (r : ℕ)

@@ -24,12 +24,17 @@ theorem pathConv_zip_fock (M : Vol G) (ρ : RealMatch W) (t : T) {e : AE D}
     ∀ {Y : Node} (p : Path T X Y), OnGrid D.R.m t p → ∀ (φ d : PureT G p), VecAll ρ e p φ d →
       ∀ (P' : PolT G p) (F : Fn G X), IsCuspListed W.θ X F →
       PathConv W M p (Path.Fam.zip (fun a (f : Sch G a) Q => W.fock a.pair f Q) d P') F ∧
-      IsCuspListed W.θ Y (liftP W M p (Path.Fam.zip (fun a (f : Sch G a) Q => W.fock a.pair f Q) d P') F)
-  | _, .nil, _, _, _, _, _, _, hF => ⟨trivial, hF⟩
-  | _, .snoc a p, hg, φ, d, hv, P', F, hF => by
+      IsCuspListed W.θ Y (liftP W M p (Path.Fam.zip (fun a (f : Sch G a) Q => W.fock a.pair f Q) d P') F) := by
+  intro Y p
+  induction p with
+  | nil =>
+    intro _ _ _ _ _ _ hF
+    exact ⟨trivial, hF⟩
+  | snoc a p ih =>
+    intro hg φ d hv P' F hF
     have hg' : OnGrid D.R.m t p := fun b hb => hg b (List.mem_append_left [a] hb)
     have ha : IsGridArrow D.R.m t a := hg a (List.mem_append_right p.arrows (List.mem_singleton_self a))
-    obtain ⟨h1, h2⟩ := pathConv_zip_fock M ρ t he hC p hg' φ.1 d.1 hv.1 P'.1 F hF
+    obtain ⟨h1, h2⟩ := ih hg' φ.1 d.1 hv.1 P'.1 F hF
     obtain ⟨h3, h4⟩ := hC a ha e he φ.2 d.2 hv.2 P'.2 _ h2
     exact ⟨⟨h1, h3⟩, h4⟩
 

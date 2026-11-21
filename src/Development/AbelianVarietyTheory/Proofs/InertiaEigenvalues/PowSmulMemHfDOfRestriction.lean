@@ -123,7 +123,7 @@ theorem corHf_exists_mul_eq_pow (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O]
     have hlm : ¬ l ∣ m := by
       rintro ⟨c, rfl⟩
       apply pow_succ_padicValNat_not_dvd (p := l) hn
-      exact ⟨c, by rw [pow_succ, mul_assoc]; exact hm⟩
+      exact ⟨c, by rw [pow_succ, mul_assoc]; simpa only [Nat.padicValNat_def] using hm⟩
     have hu : IsUnit (m : ℤ_[l]) := by
       rw [PadicInt.isUnit_iff]
       exact PadicInt.norm_natCast_eq_one_iff.mpr ((Nat.Prime.coprime_iff_not_dvd Fact.out).mpr hlm)

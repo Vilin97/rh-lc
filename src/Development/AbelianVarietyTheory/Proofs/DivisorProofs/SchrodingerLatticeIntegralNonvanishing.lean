@@ -67,7 +67,7 @@ theorem lagrForm_ne_zero : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddCha
   have hleft : ∀ x : Fin r → AF F, Cm *ᵥ (∑ j, x j • U j).1 = x := fun x => by
     rw [hfst]; exact mulVec_sum_eq (fun j => (u j).1) C hC x
   have hXc : Continuous fun x : Fin r → AF F => ∑ j, x j • U j :=
-    continuous_finset_sum _ fun j _ => (continuous_apply j).smul continuous_const
+    continuous_finsetSum _ fun j _ => (continuous_apply j).smul continuous_const
   set H : (Fin r → AF F) → ℂ := fun x => ψ (0 ⬝ᵥ (∑ j, x j • U j).2 +
     ⅟(2 : AF F) * ((∑ j, x j • U j).1 ⬝ᵥ (∑ j, x j • U j).2)) with hH
   have hHc : Continuous H := hψ.1.comp ((continuous_const.dotProduct (continuous_snd.comp hXc)).add

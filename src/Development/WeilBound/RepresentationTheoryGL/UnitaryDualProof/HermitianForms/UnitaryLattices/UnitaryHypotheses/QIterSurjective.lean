@@ -62,56 +62,15 @@ theorem ker_qIter (ψ : AddChar k Circle) {n : ℕ} :
     let L := twKer τ.ρ N θ
     let σ : Representation ℂ (Mir k (n + j)) (τ.V ⧸ K) := (MRep.phiM k ψ τ).ρ
     let T := twKer σ N₂ θ₂
-    have h₁ (u : N₁) : ∃ h : (u : Mir k (n + j + 1)) ∈ N, θ ⟨u, h⟩ = θ₁ u :=
-      GlobalTheory.CompanionTheory.BZMirStep.MirUin_step ψ (Nat.le_add_right n j) u
-    have h₂ (a : N₂) : ∃ h : s a ∈ N, θ ⟨s a, h⟩ = θ₂ a :=
-      GlobalTheory.CompanionTheory.BZMirStep.levi_step ψ (Nat.le_add_right n j) a
-    have hle : K ≤ L := by
-      refine Submodule.span_le.2 ?_
-      intro w hw
-      change ∃ (u : N₁) (v : τ.V), w = τ.ρ u v - (θ₁ u : ℂ) • v at hw
-      obtain ⟨u, v, rfl⟩ := hw
-      obtain ⟨h, hθ⟩ := h₁ u
-      exact Submodule.subset_span ⟨⟨u, h⟩, v, by rw [hθ]⟩
-    have e : T = L.map K.mkQ := by
-      refine le_antisymm ?_ ?_
-      · refine Submodule.span_le.2 ?_
-        intro w hw
-        change ∃ (a : N₂) (x : τ.V ⧸ K), w = σ a x - (θ₂ a : ℂ) • x at hw
-        obtain ⟨a, x, rfl⟩ := hw
-        obtain ⟨v, rfl⟩ := K.mkQ_surjective x
-        obtain ⟨h, hθ⟩ := h₂ a
-        refine ⟨τ.ρ (s a) v - (θ ⟨s a, h⟩ : ℂ) • v,
-          Submodule.subset_span ⟨⟨s a, h⟩, v, rfl⟩, ?_⟩
-        rw [hθ, map_sub, map_smul]
-        rfl
-      · refine Submodule.map_le_iff_le_comap.2 (Submodule.span_le.2 ?_)
-        intro w hw
-        change ∃ (u : N) (v : τ.V), w = τ.ρ u v - (θ u : ℂ) • v at hw
-        obtain ⟨u, v, rfl⟩ := hw
-        obtain ⟨u₁, a, hu⟩ := GlobalTheory.CompanionTheory.BZMirStep.derUnipM_decomp
-          (Nat.le_add_right n j) u
-        change (u : Mir k (n + j + 1)) = u₁ * s a at hu
-        obtain ⟨hu₁, hθ₁⟩ := h₁ u₁
-        obtain ⟨ha, hθ₂⟩ := h₂ a
-        have hθ : θ u = θ₁ u₁ * θ₂ a := by
-          have : u = ⟨u₁, hu₁⟩ * ⟨s a, ha⟩ := Subtype.ext hu
-          rw [this, map_mul, hθ₁, hθ₂]
-        have hdec : τ.ρ u v - (θ u : ℂ) • v =
-            (τ.ρ u₁ (τ.ρ (s a) v) - (θ₁ u₁ : ℂ) • τ.ρ (s a) v) +
-              (θ₁ u₁ : ℂ) • (τ.ρ (s a) v - (θ₂ a : ℂ) • v) := by
-          rw [hθ, hu, map_mul, Module.End.mul_apply, Units.val_mul, smul_sub, mul_smul]
-          abel
-        have hz : τ.ρ u₁ (τ.ρ (s a) v) - (θ₁ u₁ : ℂ) • τ.ρ (s a) v ∈ K :=
-          Submodule.subset_span ⟨u₁, _, rfl⟩
-        show K.mkQ _ ∈ T
-        rw [hdec, map_add, show K.mkQ _ = 0 from (Submodule.Quotient.mk_eq_zero _).2 hz,
-          zero_add, map_smul]
-        refine Submodule.smul_mem T _ (Submodule.subset_span ⟨a, K.mkQ v, ?_⟩)
-        rw [map_sub, map_smul]
-        rfl
+    have hnm : n ≤ n + j := Nat.le_add_right n j
+    have hmap : T = L.map K.mkQ ∧ K ≤ L :=
+      GlobalTheory.CompanionTheory.BZMirStep.twKer_twAct_eq_map τ.ρ N₁ θ₁ s
+        (levi_stab ψ (n + j)) N₂ θ₂ N θ
+        (GlobalTheory.CompanionTheory.BZMirStep.MirUin_step ψ hnm)
+        (GlobalTheory.CompanionTheory.BZMirStep.levi_step ψ hnm)
+        (GlobalTheory.CompanionTheory.BZMirStep.derUnipM_decomp hnm)
     have hcomap : T.comap K.mkQ = L := by
-      rw [e, Submodule.comap_map_mkQ, sup_eq_right.2 hle]
+      rw [hmap.1, Submodule.comap_map_mkQ, sup_eq_right.2 hmap.2]
     have ih := ker_qIter ψ j (MRep.phiM k ψ τ)
     exact (congrArg (Submodule.comap K.mkQ) ih).trans hcomap
 

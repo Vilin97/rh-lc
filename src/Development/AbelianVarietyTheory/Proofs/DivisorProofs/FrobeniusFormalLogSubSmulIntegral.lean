@@ -71,6 +71,8 @@ theorem in_frob_formalLog_sub_smul : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Type)
       (map ι (map σB g)) := by
     rw [hv, map_subst hXB]
     congr 1
+    funext i
+    simp
   have hσG1 : constantCoeff (map ι (map σB g)) = 1 := by simp [hg]
   have key : frob p s (formalLog (map ι g)) - (p : Q) • formalLog (map ι g) =
       formalLog (map ι h) := by

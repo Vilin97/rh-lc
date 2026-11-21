@@ -165,6 +165,7 @@ theorem GlobalTheory.PairStep.kltAt_add_general_member : GlobalTheory.Published.
     K (pullCart π G' - m'' • K) m'' c (fnPull π g'') (fnPull π (t * ya)) hη' hres.div hm''pos
     hsupp hc hΘm hΘe hH' E' hy'
   have e1 := GlobalTheory.T.form_order_birational_pullback ℂ X Y p π hres.bir E' E hE' n η hη.ne_zero
+  change E'.formOrd (EtaleKlt.ratPull p π n η) = E.formOrd η at e1
   have e2 := GlobalTheory.T.ord_functionField_pullback_primeDivisor_over ℂ X Y p π hres.bir E' E hE' g''
   have e3 := GlobalTheory.T.ord_functionField_pullback_primeDivisor_over ℂ X Y p π hres.bir E' E hE' (t * ya)
   simp only [discrep, e1, e2, e3] at key

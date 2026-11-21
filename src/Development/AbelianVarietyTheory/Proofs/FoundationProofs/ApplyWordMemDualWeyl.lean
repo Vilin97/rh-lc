@@ -265,9 +265,9 @@ private theorem mem_dualWeyl_rat_of_mem_map_weyl {r n : ℕ} (hn : n ≤ r) (ν 
   exact dualWeylMap ℤ ℚ (Int.castRingHom ℚ) r n ν G (weylLeDual ℤ r n hn ν hν hG)
 
 theorem weyl_isLattice {r n : ℕ} (hn : n ≤ r) (ν : Fin n → ℕ) (hν : Antitone ν) :
-    (inV ν ((weyl ℤ r n hn ν).map (intQ r n))).IsFullLattice ℚ where
-  toIsLattice := by
-    apply Submodule.IsLattice.of_fg ℚ
+    (inV ν ((weyl ℤ r n hn ν).map (intQ r n))).IsFullLattice ℚ := by
+  refine { toIsLattice := ?_, span_eq_top := ?_ }
+  · apply Submodule.IsLattice.of_fg ℚ
     have hW : (weyl ℤ r n hn ν).FG := by
       have := isNoetherian_of_fg_of_noetherian _ (dualWeyl_int_fg r n ν)
       exact Submodule.FG.of_le_of_isNoetherian (weylLeDual ℤ r n hn ν hν)
@@ -282,8 +282,7 @@ theorem weyl_isLattice {r n : ℕ} (hn : n ≤ r) (ν : Fin n → ℕ) (hν : An
         exact ⟨⟨P, hsub P hP⟩, hP, rfl⟩
     rw [heq]
     exact hW.map _
-  span_eq_top := by
-    have hsub := mem_dualWeyl_rat_of_mem_map_weyl hn ν hν
+  · have hsub := mem_dualWeyl_rat_of_mem_map_weyl hn ν hν
     apply Submodule.map_injective_of_injective (f := (dualWeyl ℚ r n ν).subtype) Subtype.val_injective
     rw [Submodule.map_span, Submodule.map_top, Submodule.range_subtype]
     apply le_antisymm

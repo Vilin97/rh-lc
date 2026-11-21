@@ -202,6 +202,7 @@ theorem dualPair_family (σ : E →ₐ[F] E) {n d : ℕ} (J : Matrix (Fin n) (Fi
   obtain ⟨i, j⟩ := p
   obtain ⟨k, l⟩ := q
   have hσt : σ (s.symm (b' j)) = b' j := s.apply_symm_apply (b' j)
+  change symp (cA σ) (-1) (incM F J) (incM F J') _ _ = _
   rw [GlobalTheory.ArchDualPair.lhs_eq, GlobalTheory.ArchDualPair.rhs_eq, symp, GlobalTheory.ArchDualPair.hTens_incM,
     GlobalTheory.ArchDualPair.hTens_vecMulVec', GlobalTheory.ArchDualPair.form_smul, hσt, h1, h2,
     show (-1 : AE F E) = inclR (F := F) (AF F) (-1) by simp, ← map_mul, GlobalTheory.ArchDualPair.trace_inclR']
@@ -343,7 +344,7 @@ theorem thetaSum_arch_decay : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F]
     rw [← map_smul, LinearMap.comp_apply, LinearMap.comp_apply]
     exact congrArg l (hev.inv _ (hUI p a) Ψ hΨ)
   obtain ⟨C₁, hC₁⟩ := scalar_decay B.ψ hB.std (fun q => M₁.co.e (Sm q)) (fun p => M₁.co.e (Um p))
-    (fun p q => by rw [← M₁.co.form]; convert ht p q) (l ∘ₗ e') hadm
+    (fun p q => by rw [← M₁.co.form]; convert ht p q <;> rfl) (l ∘ₗ e') hadm
     hinv Φ hΦ K
   obtain ⟨A, hA, hAw⟩ := sum_places_le (F := F) (E := E) d₁
   refine ⟨max C₁ 0 * (1 + A) ^ K, fun w _ => ?_⟩

@@ -57,7 +57,7 @@ theorem cE_ccK_eq (D : D7) :
       obtain ⟨c, hc, rfl⟩ := hz
       exact Submodule.subset_span ⟨c, hc, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | smul o a _ ha =>
       rw [smul_eq_mul, map_mul, ← Algebra.smul_def]
       exact Submodule.smul_mem _ o ha
@@ -156,13 +156,13 @@ theorem infPart_liftFin (z : Af D.host.F ⊗[D.host.F] D.host.E) : infPart D (Gl
     show (Algebra.TensorProduct.map _ _) _ = 0
     rw [Algebra.TensorProduct.map_tmul]
     exact TensorProduct.zero_tmul _ _
-  | add x y hx hy => rw [(GlobalTheory.LatticeStable.liftFin D).map_add (f := _), (infPart D).map_add (f := _), hx, hy, add_zero]
+  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
 
 theorem finPart_liftFin (z : Af D.host.F ⊗[D.host.F] D.host.E) : finPart D (GlobalTheory.LatticeStable.liftFin D z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul α e => rw [GlobalTheory.LatticeStable.liftFin_tmul]; rfl
-  | add x y hx hy => rw [(GlobalTheory.LatticeStable.liftFin D).map_add (f := _), (finPart D).map_add (f := _), hx, hy]
+  | add x y hx hy => rw [map_add, map_add, hx, hy]
 
 theorem toAfE_inc (e : D.host.E) :
     GlobalTheory.BotFormula.toAfE D (Formalism.MainNotions.StandardLatticesGL3.inc D e) = (1 : Af D.host.F) ⊗ₜ[D.host.F] e := by
@@ -261,7 +261,7 @@ theorem fwd {cc : Ideal (𝓞 D.host.K)} {r : D.host.E} (hc : cc ≠ ⊥) (hr : 
         (stdL D T.rank : Set (Fin T.rank → D.host.E)) (fun _ => True)) (i : Fin T.rank) (j : Fin S.rank) :
     Formalism.MainNotions.StandardLatticesGL3.inc D r * finQ D (u i j) ∈ Formalism.MainNotions.StandardLatticesGL3.IhE D cc := by
   let Ψ : WO S T →+ Formalism.MainNotions.StandardLatticesGL3.AE D := AddMonoidHom.mk' (fun u => Formalism.MainNotions.StandardLatticesGL3.inc D r * finQ D (u i j))
-    (fun x y => by rw [Matrix.add_apply, (finQ D).map_add (f := _), mul_add])
+    (fun x y => by rw [Matrix.add_apply, map_add, mul_add])
   have hle : latO S T (GlobalTheory.VacRead.lsB D cc r S.rank : Set (Fin S.rank → D.host.E))
       (stdL D T.rank : Set (Fin T.rank → D.host.E)) (fun _ => True) ≤ (Formalism.MainNotions.StandardLatticesGL3.IhE D cc).comap Ψ := by
     refine (AddSubgroup.closure_le _).2 ?_
@@ -293,7 +293,7 @@ theorem bwd {cc : Ideal (𝓞 D.host.K)} {r : D.host.E} (hc : cc ≠ ⊥) (hr : 
   refine sum_mem fun i _ => sum_mem fun j _ => ?_
   let Φ : Formalism.MainNotions.StandardLatticesGL3.AE D →+ WO S T := AddMonoidHom.mk'
     (fun x => Matrix.single i j (GlobalTheory.LatticeStable.liftFin D (GlobalTheory.BotFormula.toAfE D (Formalism.MainNotions.StandardLatticesGL3.inc D r⁻¹ * x))))
-    (fun x y => by rw [mul_add, (GlobalTheory.BotFormula.toAfE D).map_add (f := _), (GlobalTheory.LatticeStable.liftFin D).map_add (f := _), Matrix.single_add])
+    (fun x y => by rw [mul_add, map_add, map_add, Matrix.single_add])
   have hle : Formalism.MainNotions.StandardLatticesGL3.IhE D cc ≤ (latO S T (GlobalTheory.VacRead.lsB D cc r S.rank : Set (Fin S.rank → D.host.E))
       (stdL D T.rank : Set (Fin T.rank → D.host.E)) (fun _ => True)).comap Φ := by
     refine (AddSubgroup.closure_le _).2 ?_

@@ -54,7 +54,9 @@ theorem app_algX {k k' : Type} [CommRing k] [CommRing k'] {σ : k →+* k'} {X Y
     {q : Y ⟶ Sp k'} {j : Y ⟶ X} (w : j ≫ p = q ≫ spMap σ) (a : k) :
     j.app ⊤ (algX p ⊤ a) = algX q ⊤ (σ a) := by
   have e₁ : j.app ⊤ (algX p ⊤ a) = algX (j ≫ p) ⊤ a := by
-    simp [algX, Scheme.Hom.appLE]
+    simp only [algX, RingHom.comp_apply, Scheme.Hom.app_eq_appLE,
+      ← CommRingCat.comp_apply, Scheme.Hom.appLE_comp_appLE]
+    simp only [Opens.map_top]
     rfl
   rw [e₁, w]
   have e₂ := congrArg (fun ψ => ψ.hom a) (Scheme.ΓSpecIso_inv_naturality (CommRingCat.ofHom σ))

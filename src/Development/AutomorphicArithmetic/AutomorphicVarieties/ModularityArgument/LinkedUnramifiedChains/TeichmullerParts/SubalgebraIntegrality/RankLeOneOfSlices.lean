@@ -28,7 +28,8 @@ private theorem ev_tprod (f : ∀ i, Module.Dual ℂ (W i)) (m : ∀ i, W i) :
     ev f (PiTensorProduct.tprod ℂ m) = ∏ i, f i (m i) :=
   _root_.UpperTheory.Reformulated.B.CuspidalIrreducibleSubrep.ev_tprod f m
 
-private noncomputable def slM (v : I) (f : ∀ i, Module.Dual ℂ (W i)) : MultilinearMap ℂ W (W v) :=
+private noncomputable def slM (v : I) (f : ∀ i, Module.Dual ℂ (W i)) :
+    MultilinearMap (RingHom.id ℂ) W (W v) :=
   _root_.UpperTheory.Reformulated.B.SpecialLinearMap.slM v f
 
 private noncomputable def sl (v : I) (f : ∀ i, Module.Dual ℂ (W i)) : (⨂[ℂ] i, W i) →ₗ[ℂ] W v :=
@@ -111,7 +112,6 @@ variable {I : Type} [Fintype I] [dI : DecidableEq I] {W : I → Type} [∀ i, Ad
 private theorem piRep_tprod (h : ∀ i, G i) (m : ∀ i, W i) :
     piRep τ h (PiTensorProduct.tprod ℂ m) = PiTensorProduct.tprod ℂ fun i => τ i (h i) (m i) := by
   simp [piRep, PiTensorProduct.mapMonoidHom]
-  rfl
 
 private theorem sl_single (v : I) (f : ∀ i, Module.Dual ℂ (W i)) (g : G v) (x : ⨂[ℂ] i, W i) :
     sl v f (piRep τ (Pi.mulSingle v g) x) = τ v g (sl v f x) := by

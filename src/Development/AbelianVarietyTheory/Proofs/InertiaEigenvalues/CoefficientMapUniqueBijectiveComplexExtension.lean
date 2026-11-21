@@ -47,8 +47,8 @@ theorem exists_ext (c' : VV K lam →ₛₗ[σ] W) (hs : Submodule.span ℂ (Set
     rw [← hb, Module.Basis.equiv_apply]
     exact Module.Basis.mk_apply hli hsw j
   refine ⟨(b.equiv w (Equiv.refl _)).toLinearMap, fun v => ?_, (b.equiv w (Equiv.refl _)).bijective, fun d hd => ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [← (bVV K lam).sum_repr v, up_sum, map_sum, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (bVV K lam).sum_repr v, up_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, map_smulₛₗ, LinearEquiv.coe_coe, hc]
   · refine b.ext fun j => ?_
@@ -60,7 +60,7 @@ theorem li_basis (c' : VV K lam →ₛₗ[σ] W)
   let e := Fintype.equivFin (VVIdx lam)
   have h1 := h _ (bVV K lam ∘ e.symm) ((bVV K lam).linearIndependent.comp _ e.symm.injective)
   have h2 := h1.comp e e.injective
-  convert h2 using 1
+  simpa [Function.comp_def] using h2
 
 end General
 

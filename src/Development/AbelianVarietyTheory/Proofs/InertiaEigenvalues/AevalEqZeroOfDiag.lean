@@ -242,7 +242,8 @@ theorem spanIsLines_of_onto {N : Type} (L : N → ℤ → M) {r : ℕ} (u : Fin 
     simp only [he, serAct_lines]
     rw [← lines_sum, ← hf]
     congr 1
-    exact Finset.sum_congr rfl fun s _ => by ring
+    ext k
+    simp [Matrix.mulVec, dotProduct, Mx, mul_comm, mul_assoc]
 
 end Lines
 

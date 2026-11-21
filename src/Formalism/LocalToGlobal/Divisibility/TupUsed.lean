@@ -109,22 +109,22 @@ structure DivRows3G (P : RowSideFamily ex) : Prop where
   colsBk : ∀ u x y, D.div.Bk u (P.I.eNu u x) (P.I.eRR y) =
     (P.A3.colData2 P.C (fun _ => ⊥) (fun _ _ => ⊥) (fun _ _ _ _ => 0)).B (P.I.wU u) x y
 
-theorem DivRows3.toG (h : DivRows3 D P.A3 P.P0 P.ψ0 P.Ps P.ψs P.Zs P.S0 P.S1 ex.p0 P.C P.NuC P.I) : DivRows3G P where
-  sharpRR := h.sharpRR
-  baseRR := h.baseRR
-  divisionRows_rationalLift := lift_invariant_span_used_of h.divisionRows_rationalLift
-  thTheta := thThetaG_of h.thTheta
-  num := numTieG_of h.num
-  colsBk := h.colsBk
+theorem DivRows3.toG (h : DivRows3 D P.A3 P.P0 P.ψ0 P.Ps P.ψs P.Zs P.S0 P.S1 ex.p0 P.C P.NuC P.I) : DivRows3G P :=
+  { sharpRR := h.sharpRR
+    baseRR := h.baseRR
+    divisionRows_rationalLift := lift_invariant_span_used_of h.divisionRows_rationalLift
+    thTheta := thThetaG_of h.thTheta
+    num := numTieG_of h.num
+    colsBk := h.colsBk }
 
 theorem DivRows3G.toRows (hU : TupAllUsed P) (h : DivRows3G P) :
-    DivRows3 D P.A3 P.P0 P.ψ0 P.Ps P.ψs P.Zs P.S0 P.S1 ex.p0 P.C P.NuC P.I where
-  sharpRR := h.sharpRR
-  baseRR := h.baseRR
-  divisionRows_rationalLift := lift_invariant_span_of_used hU h.divisionRows_rationalLift
-  thTheta := thTheta_of_G hU h.thTheta
-  num := numTie_of_G hU h.num
-  colsBk := h.colsBk
+    DivRows3 D P.A3 P.P0 P.ψ0 P.Ps P.ψs P.Zs P.S0 P.S1 ex.p0 P.C P.NuC P.I :=
+  { sharpRR := h.sharpRR
+    baseRR := h.baseRR
+    divisionRows_rationalLift := lift_invariant_span_of_used hU h.divisionRows_rationalLift
+    thTheta := thTheta_of_G hU h.thTheta
+    num := numTie_of_G hU h.num
+    colsBk := h.colsBk }
 
 end IndefiniteRowSideFullHecke
 

@@ -107,7 +107,8 @@ theorem main : ∀ (D : D7) (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (F
       intro x' hx hz
       obtain ⟨η, s, hs⟩ := h54 x' hx hz
       rw [det_generic_eq_zero hinj (fun k p q => (θ k p q : S.X' → MatN D.nd i) x')
-        (fun q => ((yg D.nd r S (γ q) x').map (toK D.nd i)).mulVec η) ?_ ?_, MvPolynomial.coeff_zero]
+        (fun q => ((yg D.nd r S (γ q) x').map (toK D.nd i)).mulVec η) ?_ ?_, AddMonoidAlgebra.coeff_zero]
+      · rfl
       · intro h0
         apply hs
         obtain ⟨t, ht⟩ := hγ 1 (fun _ => 1) (fun _ => s) (fun _ => A.one_mem)
@@ -128,6 +129,7 @@ theorem main : ∀ (D : D7) (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (F
       (fun k p q => hbl _ (θ k p q).2)] at h2
     rw [Fintype.prod_option]
     convert h2 using 3
+    congr 1
     · congr 1
       ext1 pa qb
       simp only [Matrix.of_apply, ← hfρ]

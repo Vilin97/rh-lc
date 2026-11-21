@@ -29,4 +29,17 @@ theorem _root_.GlobalTheory.T.configuration_a_compact_integral : GlobalTheory.Th
       IsMatched B G X om om' R Rf → IsMatched B G₁ X om₁ om₁' R₁ Rf₁ →
       ∀ (A : InfinitePlace F → Matrix (Fin (b + 2)) (Formalism.BasicNotions.TH.Ix (b + 2 - G.p) G.p) ℂ) (C : InfinitePlace F → Matrix (Fin (b + 2 + a')) (Formalism.BasicNotions.TH.Ix (b + 2 + a' - (G.p + G.q)) (G.p + G.q)) ℂ) (Φ : GlobalTheory.RealLift.Tens F (b + 2 - G.p) G.p (b + 2 + a' - (G.p + G.q)) (G.p + G.q) →ₗ[ℂ] SInf F (Fin (b + 2) × Fin (b + 2 + a'))), IsFockData B G.M A C Φ → ∀ (w : InfinitePlace F) (Y : Formalism.BasicNotions.TH.Mat (b + 2 + a' - (G.p + G.q)) (G.p + G.q)),
       Formalism.BasicNotions.TH.IsKC Y → ∀ v ∈ lowPartInf B G.M R.p, fockOp (R.p ∘ₗ Φ) w Y v ∈ lowPartInf B G.M R.p := by
-  first | exact @GlobalTheory.FockLowStab.main | exact GlobalTheory.FockLowStab.main | (intros; apply GlobalTheory.FockLowStab.main <;> assumption)
+  open GlobalTheory.FockLowStab GlobalTheory.RealLift GlobalTheory.RealLift.Main Formalism.BasicNotions.TH in
+  intro hKP F E _ _ _ _ _ σ B b a' G G₁ H H' _hcfg X om om' R Rf om₁ om₁' R₁ Rf₁ hM _hM₁ A C Φ hD w Y hY v hv
+  by_cases h : Function.Surjective (R.p ∘ₗ Φ) ∧ ∀ Y, Keeps (R.p ∘ₗ Φ) (atPl w (fockAct2 _ _ _ _ Y))
+  · obtain ⟨hb, _, _, _, _⟩ := hM.triple
+    have hdeg := GlobalTheory.T.archimedean_theta_polynomial_lift_exists i_actslaws i_derex (i_vacline i_derex) F E σ _ _ _ _ _ _ G.V G.W G.M B.ψ B.emb A C Φ
+      hb.cm hb.std hD.1.1 hD.1.2.1 hD.1.2.2 hD.2
+    have e : lowPartInf B G.M R.p = (GlobalTheory.KFixIrr.degLE (InfinitePlace F) _ _ _ _ (lowDegInf B G.M R.p)).map (R.p ∘ₗ Φ) := by
+      rw [lowPartInf, hdeg, Submodule.map_comp]
+    rw [e] at hv ⊢
+    obtain ⟨T, hT, rfl⟩ := hv
+    rw [fockOp_apply h.1 h.2]
+    exact ⟨_, atPl_fockAct2_mem w hY _ T hT, rfl⟩
+  · rw [fockOp, dite_eq_right h]
+    exact Submodule.zero_mem _

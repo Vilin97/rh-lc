@@ -34,7 +34,10 @@ theorem exists_place_dvd_prime {K : Type} [Field K] [NumberField K] (l : ℕ) [h
       have : x = 0 := (algebraMap ℤ (𝓞 K)).injective_int (by simpa using hx)
       simp [this])
   have hmem : ((l : ℕ) : 𝓞 K) ∈ Q := by
-    have : (l : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := hQc ▸ Ideal.mem_span_singleton_self _
+    have : (l : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := by
+      change (l : ℤ) ∈ Ideal.under ℤ Q
+      rw [hQc]
+      exact Ideal.mem_span_singleton_self _
     simpa using this
   have hne : Q ≠ ⊥ := by
     rintro rfl

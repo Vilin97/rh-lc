@@ -77,12 +77,7 @@ theorem mem_conjLat {n : ℕ} (L : Submodule (𝓞 D.host.E) (Fin n → D.host.E
 
 theorem isLattice_conjLat {n : ℕ} {L : Submodule (𝓞 D.host.E) (Fin n → D.host.E)} (hL : L.IsLattice D.host.E) :
     (conjLat L).IsLattice D.host.E := by
-  refine ⟨hL.fg.map _, ?_⟩
-  have h1 : ((conjLat L : Submodule (𝓞 D.host.E) (Fin n → D.host.E)) : Set (Fin n → D.host.E)) = cvE D n '' (L : Set _) := by
-    rw [conjLat, Submodule.map_coe]; rfl
-  rw [h1, Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
-  intro z
-  exact ⟨fun i => star (z i), by ext i; simp [cvE]⟩
+  exact Submodule.IsLattice.of_fg D.host.E (hL.fg.map _)
 
 theorem isIntegral_star_iff (a : D.host.E) : IsIntegral ℤ (star a) ↔ IsIntegral ℤ a := by
   constructor

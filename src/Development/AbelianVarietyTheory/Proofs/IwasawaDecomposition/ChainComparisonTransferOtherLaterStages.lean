@@ -67,7 +67,11 @@ theorem chT_tr : ∀ (B : Base) (C : Cols B) (a b : Late B C) (G : Type) [Group 
       have h0 : t.jM μa 1 va ∈ (y.C F).CC bb μa 1 := cast (congrArg (t.jM μa 1 va ∈ ·) e.symm) ((h))
       have hv := chain_ioC b (R := R) (y.tupT μa) 0 (t.jM μa 1 va) ((h)) h0
       have e' := (t.io0 μa hUa x va h0).trans (congrArg (fun z => (y.C F).ipE bb (t.jE x) z) hv.symm)
-      kexactB e'
+      run_tac Lean.Elab.Tactic.withMainContext do
+        let goal ← Lean.Elab.Tactic.getMainGoal
+        let some decl := (← Lean.getLCtx).findFromUserName? `e' | throwError "missing proof"
+        goal.assign (Lean.mkFVar decl.fvarId)
+        Lean.Elab.Tactic.replaceMainGoal []
     io := fun μ hU j h1 h2 x v h => by
       let μa : a.D.what₂.Tup := (μ)
       have hUa : y.Us μa := (hU)
@@ -77,7 +81,11 @@ theorem chT_tr : ∀ (B : Base) (C : Cols B) (a b : Late B C) (G : Type) [Group 
       have h0 : t.jM μa (j + 1) va ∈ (y.C F).CC bb μa (j + 1) := cast (congrArg (t.jM μa (j + 1) va ∈ ·) e.symm) ((h))
       have hv := chain_ioC b (R := R) (y.tupT μa) j (t.jM μa (j + 1) va) ((h)) h0
       have e' := (t.io μa hUa j h1 h2a x va h0).trans (congrArg (fun z => (y.C F).ipP bb μa j (t.jM μa j x) z) hv.symm)
-      kexactB e'
+      run_tac Lean.Elab.Tactic.withMainContext do
+        let goal ← Lean.Elab.Tactic.getMainGoal
+        let some decl := (← Lean.getLCtx).findFromUserName? `e' | throwError "missing proof"
+        goal.assign (Lean.mkFVar decl.fvarId)
+        Lean.Elab.Tactic.replaceMainGoal []
     ioTop := fun μ hU x v v' hvv h => by
       let μa : a.D.what₂.Tup := (μ)
       have hUa : y.Us μa := (hU)

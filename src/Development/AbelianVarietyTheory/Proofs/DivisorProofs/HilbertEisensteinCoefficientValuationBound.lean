@@ -71,9 +71,9 @@ private theorem valBound_embedding_mem_mul_lemma_2 {l : ℕ} [Fact l.Prime] {lam
   have hMl : M * l ^ b ≠ 0 := Nat.mul_ne_zero (by rintro rfl; exact hM (dvd_zero l)) (pow_ne_zero _ hl0)
   have hq : _root_.GlobalTheory.LatVal.Sz l lam b (((1 / (M * l ^ b : ℕ) : ℚ)) : ℂ) := by
     refine (_root_.GlobalTheory.SizeRat.sz_rat_exp l lam).1 _ _ ?_
-    rw [one_div, padicValRat.inv, padicValRat.of_nat, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul)
-      (by rintro rfl; exact hM (dvd_zero l)) (pow_ne_zero _ hl0), padicValNat.prime_pow,
-      padicValNat.eq_zero_of_not_dvd hM]
+    rw [one_div, padicValRat.inv, padicValRat.of_nat, Nat.multiplicity_mul
+      (by rintro rfl; exact hM (dvd_zero l)) (pow_ne_zero _ hl0), Nat.multiplicity_prime_pow,
+      multiplicity_eq_zero_of_not_dvd hM]
     simp
   have heq : ((i ξ : ℝ) : ℂ) = (((1 / (M * l ^ b : ℕ) : ℚ)) : ℂ) * ((i (t * ξ) : ℝ) : ℂ) := by
     have : ((M * l ^ b : ℕ) : ℂ) ≠ 0 := by exact_mod_cast hMl
@@ -186,9 +186,9 @@ private theorem neg_padicValRat_le_of_mul_eq_natCast {l : ℕ} [hl : Fact l.Prim
   have hn' : (n : ℚ) ≠ 0 := by exact_mod_cast hn
   have hprod' : (((M * l ^ b) ^ d * D.natAbs : ℕ) : ℚ) ≠ 0 := by exact_mod_cast hprod
   rw [hA, hAbs1, hAbs2, ← Nat.cast_mul, padicValRat.div hn' hprod',
-    padicValRat.of_nat, padicValRat.of_nat, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hMl) hDn,
-    padicValNat.pow, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hM0 (pow_ne_zero _ hl0), padicValNat.prime_pow,
-    padicValNat.eq_zero_of_not_dvd hM]
+    padicValRat.of_nat, padicValRat.of_nat, Nat.multiplicity_mul (pow_ne_zero _ hMl) hDn,
+    Nat.multiplicity_pow, Nat.multiplicity_mul hM0 (pow_ne_zero _ hl0), Nat.multiplicity_prime_pow,
+    multiplicity_eq_zero_of_not_dvd hM]
   simp only [padicValInt]
   push_cast
   have h0 : (0 : ℤ) ≤ padicValRat l n := by rw [padicValRat.of_nat]; positivity

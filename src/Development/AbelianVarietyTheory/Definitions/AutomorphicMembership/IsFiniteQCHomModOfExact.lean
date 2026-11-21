@@ -134,10 +134,11 @@ theorem nsmul_id_modN (F : 𝒜) (n : ℕ) : n • 𝟙 (modN F n) = 0 := by
   simpa only [Preadditive.nsmul_comp, Category.id_comp] using cokernel.condition (n • 𝟙 F)
 
 def redMap {F G : 𝒜} {n m : ℕ} (h : n ∣ m) (φ : modN F m ⟶ modN G m) : modN F n ⟶ modN G n :=
-  cokernel.desc _ (cokernel.π _ ≫ φ ≫ modNRed G h) (by
+  cokernel.desc (n • 𝟙 F) (cokernel.π (m • 𝟙 F) ≫ φ ≫ modNRed G h) (by
     rw [Preadditive.nsmul_comp, Category.id_comp, ← Category.comp_id (cokernel.π _ ≫ φ ≫ modNRed G h),
       ← Preadditive.comp_nsmul, nsmul_id_modN, comp_zero])
 
+theorem modNRed_redMap {F G : 𝒜} {n m : ℕ} (h : n ∣ m) (φ : modN F m ⟶ modN G m) :
     modNRed F h ≫ redMap h φ = φ ≫ modNRed G h := by
   rw [← cancel_epi (cokernel.π (m • 𝟙 F)), π_modNRed_assoc, redMap, cokernel.π_desc]
 

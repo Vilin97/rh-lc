@@ -38,7 +38,7 @@ private theorem abs_deriv (hU : IsOpen U) (hA : ∀ b, ContinuousOn (A b) U)
     (F' := fun z x => ∑ b, (A b z).smulRight (f (D b v) z x))
     (bound := fun _ => ∑ b, (‖A b y‖ + 1) * C (D b v)) hs
     (Filter.eventually_of_mem (hU.mem_nhds hy) (hm v)) (hi v)
-    (integrable_finset_sum _ fun b _ => hL b).aestronglyMeasurable
+    (integrable_finsetSum _ fun b _ => hL b).aestronglyMeasurable
     (Filter.Eventually.of_forall fun x z hz => (norm_sum_le _ _).trans (Finset.sum_le_sum fun b _ => by
       rw [ContinuousLinearMap.norm_smulRight_apply]
       exact mul_le_mul (hz.2 b).le (hC _ z hz.1 x) (norm_nonneg _) (by positivity)))
@@ -107,7 +107,7 @@ private theorem chart_deriv (φ : Sm K n) (g : GA K n) {y : Lie K n} (hy : y ∈
   have e2 : ∀ b, cf K n b y (e X) = (Module.finBasis ℝ (Lie K n)).repr X b := fun b => by
     simp [cf, ← he]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smulRight_apply, e1, e2, ← map_smul, ← map_sum,
+    simp only [sum_apply, ContinuousLinearMap.smulRight_apply, e1, e2, ← map_smul, ← map_sum,
     Module.Basis.sum_repr]
 
 omit [_root_.NumberField.IsTotallyComplex K] in
@@ -167,7 +167,7 @@ private theorem coef_deriv (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL (K 
   · intro v x z hz
     refine ((chart_deriv v.1 ((x : AdelicGLn.AdelicGL K n) * g) hz).mul_const _).congr_fderiv ?_
     ext1 Z
-    simp only [f, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.smul_apply,
+    simp only [f, sum_apply, ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.smul_apply,
       smul_eq_mul, Finset.mul_sum, Complex.real_smul]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [mul_comm, mul_assoc]
@@ -218,7 +218,7 @@ private theorem coefMap_lie (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL (K
   have h2 := congrArg (fun L : Lie K n →L[ℝ] ℂ => L X) (coef_deriv hn μ h φ₂ g φ h1).fderiv
   refine Eq.trans ?_ h2.symm
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [e, map_sum, map_smul, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smulRight_apply, cf_one, hc,
+    simp only [e, map_sum, map_smul, sum_apply, ContinuousLinearMap.smulRight_apply, cf_one, hc,
     Submodule.coe_sum, Finset.sum_apply, Submodule.coe_smul, Pi.smul_apply, Complex.real_smul, smul_eq_mul]
   rfl
 

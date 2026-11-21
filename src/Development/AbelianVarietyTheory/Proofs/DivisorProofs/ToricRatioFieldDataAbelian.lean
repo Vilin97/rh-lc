@@ -62,7 +62,7 @@ theorem exists_extend {A B K : Type} [CommRing A] [IsDomain A] [CommRing B] [IsD
   have hJ : Function.Injective J0.toRingHom := by
     rw [RingHom.injective_iff_ker_eq_bot]
     refine Ideal.eq_bot_of_comap_eq_bot (R := A) ?_
-    rw [RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
+    rw [Ideal.under_def, RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
     intro a b hab
     exact hf ((J0.commutes a).symm.trans (Eq.trans hab (J0.commutes b)))
   exact ⟨IsFractionRing.lift hJ, fun a => by rw [IsFractionRing.lift_algebraMap]; exact J0.commutes a⟩

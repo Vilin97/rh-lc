@@ -65,6 +65,7 @@ theorem muCD_inv (ε : Fin n → Bool) : (muCD ε).IsInvInvariant := by
   show Measure.map (fun x => x⁻¹) (ENNReal.ofReal (cPQ ε) • ReciprocityTheory.ChartRestriction.DS.muPolar ε) =
     ENNReal.ofReal (cPQ ε) • ReciprocityTheory.ChartRestriction.DS.muPolar ε
   rw [Measure.map_smul, ReciprocityTheory.ChartRestriction.DS.muPolar_inv ε]
+  exact measurable_inv.aemeasurable
 
 def low (ε : Fin n → Bool) (B : Mode ε → ℂ) : PCoord ε → ℂ := fun x => pB ε B x.1.1 x.1.2
 
@@ -210,6 +211,7 @@ theorem map_pol (ε : Fin n → Bool) : ∃ c : ℝ≥0, c ≠ 0 ∧ muCD ε = c
       (c0 : ℝ≥0∞)⁻¹ • Measure.map (fun g : UJ ε => Formalism.MainNotions.S.umat g) (Measure.map (pol ε) (rho ε)) := by
     rw [← hmain, ENNReal.smul_def, Measure.prod_smul_right, Measure.map_smul, smul_smul,
       ENNReal.inv_mul_cancel (by exact_mod_cast hc0) ENNReal.coe_ne_top, one_smul]
+    exact hpolM.aemeasurable
   refine ⟨(cPQ ε).toNNReal * c0⁻¹,
     mul_ne_zero (Real.toNNReal_pos.mpr (ReciprocityTheory.ChartRestriction.DS.cPQ_pos ε)).ne' (inv_ne_zero hc0), ?_⟩
   unfold muCD ReciprocityTheory.ChartRestriction.DS.muPolarMat
@@ -217,10 +219,13 @@ theorem map_pol (ε : Fin n → Bool) : ∃ c : ℝ≥0, c ≠ 0 ∧ muCD ε = c
   ext s hs
   rw [Measure.smul_apply]
   erw [humP.comap_apply]
-  rw [Measure.smul_apply ((cPQ ε).toNNReal * c0⁻¹)]
-  erw [Measure.smul_apply ((c0 : ℝ≥0∞)⁻¹), humP.map_apply, humP.injective.preimage_image]
-  simp only [ENNReal.smul_def, smul_eq_mul, ENNReal.coe_mul, ENNReal.coe_inv hc0, mul_assoc]
-  rfl
+  change ENNReal.ofReal (cPQ ε) * ((c0 : ℝ≥0∞)⁻¹ *
+      (Measure.map (fun g : UJ ε => Formalism.MainNotions.S.umat g) (Measure.map (pol ε) (rho ε))) ((fun g : UJ ε => Formalism.MainNotions.S.umat g) '' s)) =
+    ((cPQ ε).toNNReal * c0⁻¹ : ℝ≥0) • (Measure.map (pol ε) (rho ε)) s
+  erw [humP.map_apply, humP.injective.preimage_image]
+  change ENNReal.ofReal (cPQ ε) * ((c0 : ℝ≥0∞)⁻¹ * (Measure.map (pol ε) (rho ε)) s) =
+    (((cPQ ε).toNNReal * c0⁻¹ : ℝ≥0) : ℝ≥0∞) * (Measure.map (pol ε) (rho ε)) s
+  simp only [ENNReal.coe_mul, ENNReal.coe_inv hc0, mul_assoc, ENNReal.ofReal]
 
 theorem left (ε : Fin n → Bool) (μ : Measure (UJ ε)) (c : ℝ≥0) (hc : c ≠ 0) [IsFiniteMeasureOnCompacts μ]
     (h : μ = c • Measure.map (pol ε) (rho ε)) (f : UJ ε → ℂ) (hf : Continuous f) (hs : HasCompactSupport f) :
@@ -238,6 +243,8 @@ theorem left (ε : Fin n → Bool) (μ : Measure (UJ ε)) (c : ℝ≥0) (hc : c 
   rw [integral_prod_symm _ hfp, integral_withDensity_eq_integral_smul (continuous_den ε).measurable,
     NNReal.smul_def, ← integral_smul]
   congr 1
+  funext B
+  simp only [pol, NNReal.smul_def, smul_eq_mul, Complex.real_smul]
   push_cast
   ring
 
@@ -262,6 +269,8 @@ theorem stPolar : StPolar := by
     constructor
     show Measure.map Inv.inv μ = μ
     rw [ha, Measure.map_smul]
+    swap
+    · exact measurable_inv.aemeasurable
     rw [show Measure.map Inv.inv (muCD ε) = muCD ε from (muCD_inv ε).inv_eq_self]
   have hJ : ∀ B, den ε (-B) = den ε B := fun B => by
     simp only [den, low_neg, ReciprocityTheory.ChartRestriction.DS.jac_neg]

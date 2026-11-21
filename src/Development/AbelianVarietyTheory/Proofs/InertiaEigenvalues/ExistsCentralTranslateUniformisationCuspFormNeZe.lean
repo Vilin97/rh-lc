@@ -44,6 +44,7 @@ namespace GlobalTheory.MovedUnifNe
 
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem indepToC_sec {D : D7} (T : Core D) (hM : LawsM T) {j : ℕ} (hj : InR D j) {σ : T.Q.c.F →+* ℂ}
     (hσ : GoodEmb T.Q.c σ) (a : (D.host.E →+* ℂ) × ℕ → ℕ) (n : ℕ) :
     ReciprocityTheory.ChartRestriction.G.PullbackSections.IndepToC ((rdU (T.U j σ)).comp (sec (T.Q.Xo j) T.Q.c a n).subtype) := by

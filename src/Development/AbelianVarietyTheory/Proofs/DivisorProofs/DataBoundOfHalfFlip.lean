@@ -74,8 +74,8 @@ theorem absLe_integral [MeasurableSpace X] [OpensMeasurableSpace X] [MeasurableA
   refine ⟨∑ c ∈ V, (r c : D.what₂.LL) * y c, ?_, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [hint, map_sum]
-    refine Finset.sum_congr rfl fun c hc' => ?_
-    rw [map_mul, map_ratCast, hy c hc', ← hr c hc', Complex.ofReal_ratCast]
+      refine Finset.sum_congr rfl fun c hc' => ?_
+      rw [map_mul, map_ratCast, hy c hc', ← hr c hc', Complex.ofReal_ratCast]
   · have h1 : ∑ c ∈ V, μ.real (f ⁻¹' {c}) ≤ Real.exp b := by
       rw [sum_measureReal_preimage_singleton V (fun c _ => hm c) hfi]
       exact ENNReal.toReal_le_of_le_ofReal (Real.exp_pos b).le ((measure_mono hsub).trans hSb)

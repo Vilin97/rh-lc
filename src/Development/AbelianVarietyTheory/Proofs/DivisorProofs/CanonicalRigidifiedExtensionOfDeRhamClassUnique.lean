@@ -25,7 +25,6 @@ theorem convMul_includeLeft_includeRight {R : Type} [CommRing R] {D : Type} [Com
   rw [AlgHom.convMul_apply]
   simp only [Bialgebra.comulAlgHom_apply]
   induction (Coalgebra.comul (R := R) a) with
-  | zero => simp
   | add u v hu hv => simp only [map_add (f := _), hu, hv]
   | tmul u v => simp
 

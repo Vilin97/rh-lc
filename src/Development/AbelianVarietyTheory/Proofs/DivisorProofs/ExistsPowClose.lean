@@ -96,7 +96,9 @@ theorem nu_arith : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.Ch
   have hsub : G.pl.W0 ⊆ locPl G t := fun w hw => by unfold locPl; simp [hw]
   have hf : ∀ w, (((locGrid G t w).nu i j (x w) : ℂˣ) : ℂ) =
       ((L.xiH t).loc w (x w) : ℂ) * (((locGrid G μ₀ w).nu i j (x w) : ℂˣ) : ℂ) := fun w => by
-    simp only [Grid.nu, locGrid, MonoidHom.div_apply, Formalism.L2.Host.HChar.loc_mul, hL.xi_base, Formalism.L2.Host.HChar.loc_one,
+    have loc_mul (a b : HChar D.host.E) : (a * b).loc w (x w) = a.loc w (x w) * b.loc w (x w) := rfl
+    have loc_one : (1 : HChar D.host.E).loc w (x w) = 1 := rfl
+    simp only [Grid.nu, locGrid, MonoidHom.div_apply, loc_mul, hL.xi_base, loc_one,
       Units.val_div_eq_div_val, Units.val_mul, Units.val_one]
     ring
   have hb : ∀ w ∈ locPl G t, GlobalTheory.KappaArith.AwayIm D (Qn G t) (((locGrid G μ₀ w).nu i j (x w) : ℂˣ) : ℂ) := fun w hw => by

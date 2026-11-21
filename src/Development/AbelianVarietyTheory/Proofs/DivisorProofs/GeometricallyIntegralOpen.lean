@@ -250,13 +250,13 @@ theorem exists_quot {Q P : Scheme.{0}} {J : Q ⟶ P} {N N' : LB P} {L : LB Q} (h
   rw [← val Z r z l hm, ← hτ l, gm_res r z _ hm]
 
 theorem isOn_div {P : Scheme.{0}} {N N' : LB P} {V V' : P.Opens} (hN : IsOn V N) (hN' : IsOn V' N') :
-    IsOn (V ⊓ V') (LB.div N N') where
-  le a := inf_le_inf (hN.le a.1) (hN'.le a.2)
-  cov x hx := by
+    IsOn (V ⊓ V') (LB.div N N') := by
+  refine ⟨fun a ↦ inf_le_inf (hN.le a.1) (hN'.le a.2), ?_, ?_⟩
+  · intro x hx
     obtain ⟨a, ha⟩ := hN.cov x hx.1
     obtain ⟨b, hb⟩ := hN'.cov x hx.2
     exact ⟨(a, b), ha, hb⟩
-  coc x a b c ha hb hc := by
+  · intro x a b c ha hb hc
     rw [gm_div' N N' (𝟙 P) x a b ha hb, gm_div' N N' (𝟙 P) x b c hb hc, gm_div' N N' (𝟙 P) x a c ha hc,
       ← hN.coc x a.1 b.1 c.1 ha.1 hb.1 hc.1, ← hN'.coc x a.2 b.2 c.2 ha.2 hb.2 hc.2, mul_inv,
       _root_.mul_mul_mul_comm]

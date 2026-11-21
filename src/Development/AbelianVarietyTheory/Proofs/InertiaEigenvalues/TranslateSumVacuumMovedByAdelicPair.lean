@@ -319,7 +319,7 @@ theorem moved_transSum : ∀ (D : D7) (H : Geo.Tor.Host D.host.E) (Dw : Datum H)
   letI : Fintype (Fin V.rank → LevQ Dw l) := Fintype.ofFinite _
   refine ⟨?_, ?_⟩
   · unfold transSum
-    refine GlobalTheory.OrientedHeis.theta_smul _ ?_
+    apply GlobalTheory.OrientedHeis.theta_smul
     rw [finsum_eq_sum_of_fintype]
     exact Finset.sum_induction _ (IsThetaFunO ψ V W) (fun _ _ => GlobalTheory.OrientedHeis.theta_add) GlobalTheory.OrientedHeis.theta_zero
       fun q _ => GlobalTheory.OrientedHeis.theta_smul _ (GlobalTheory.ThetaClosed.isThetaFunO_heisO_all hψ hvac.theta _)

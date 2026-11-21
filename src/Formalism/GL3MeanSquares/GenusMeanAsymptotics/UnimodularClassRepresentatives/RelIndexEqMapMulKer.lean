@@ -164,8 +164,7 @@ theorem one_mem_pK (𝔭 : Ideal (𝓞 F)) : (1 : K) ∈ pK K 𝔭 0 := by
   simpa using algebraMap_mem_pK (K := K) 𝔭 1
 
 theorem mul_mem_pK_zero {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {x y : K} (hx : x ∈ pK K 𝔭 0)
-    (hy : y ∈ pK K 𝔭 0) : x * y ∈ pK K 𝔭 0 :=
-by
+    (hy : y ∈ pK K 𝔭 0) : x * y ∈ pK K 𝔭 0 := by
   have := mul_mem_pK h𝔭 hx hy
   rwa [add_zero] at this
 

@@ -64,7 +64,15 @@ theorem exists_symplectic_hom {M g : ℕ} {G : Type} [CommGroup G] {R : Type} [C
     Multiplicative.ofAdd (bas a p.1 * Out.stdSymp g p.1 p.2 * bas b p.2)) Finset.univ
   rw [← ofAdd_sum, Fintype.sum_prod_type, Fintype.prod_prod_type] at s
   refine Eq.trans ?_ s.symm
-  rw [map_prod e, MonoidHom.finset_prod_apply]
+  dsimp only
+  rw [map_prod e]
+  have eval_prod (s : Finset (Fin (2 * g))) (f : Fin (2 * g) → G →* Rˣ) (y : G) :
+      (∏ i ∈ s, f i) y = ∏ i ∈ s, f i y := by
+    classical
+    induction s using Finset.induction_on with
+    | empty => simp
+    | insert i s hi ih => simp [hi, ih]
+  rw [eval_prod]
   refine Finset.prod_congr rfl fun i _ => ?_
   rw [map_prod]
   refine Finset.prod_congr rfl fun j _ => ?_

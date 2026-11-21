@@ -55,7 +55,7 @@ theorem tsum_integral_integral_mul {K L ι : Type} [MeasurableSpace K] [Measurab
     simp only [g, enorm_mul]
   have hsum : ∑' i, ∫⁻ p, ‖g i p‖ₑ ∂(μK.prod μ) ≠ ⊤ := by simpa only [hlin] using hs
   have hint : ∀ i, Integrable (g i) (μK.prod μ) := fun i =>
-    ⟨hgm i, lt_of_le_of_lt (ENNReal.le_tsum i) (lt_top_iff_ne_top.2 hsum)⟩
+    ⟨hgm i, lt_of_le_of_lt (le_tsum (fun j => ∫⁻ p, ‖g j p‖ₑ ∂(μK.prod μ)) i) (lt_top_iff_ne_top.2 hsum)⟩
   have hGm : AEStronglyMeasurable (fun p => ∑' i, g i p) (μK.prod μ) :=
     (AEMeasurable.tsum fun i => (hgm i).aemeasurable).aestronglyMeasurable
   have hG : Integrable (fun p => ∑' i, g i p) (μK.prod μ) := by

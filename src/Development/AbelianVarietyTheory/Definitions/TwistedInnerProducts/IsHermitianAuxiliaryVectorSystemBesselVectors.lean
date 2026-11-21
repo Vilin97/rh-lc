@@ -204,11 +204,12 @@ theorem hQ_vecB : hQ V (d.i₀ *ᵥ vecB o ζ) (d.i₀ *ᵥ vecB o ζ) = hQ L ζ
 
 variable {ζ} in
 theorem isHermitianAuxiliaryVectorSystem_besselVectors (hζ : IsLineVec L ζ) : IsHermitianAuxiliaryVectorSystem (2 * ρ + 1) V A (d.i₀ * o.iA) (besselAuxiliaryVectors d (vecB o ζ))
-    (fun i => if i = ρ then hQ L ζ ζ else 1) where
-  iso := by
+    (fun i => if i = ρ then hQ L ζ ζ else 1) := by
+  refine { iso := ?iso, perp := ?perp, pair := ?pair, ne := ?ne, card := ?card }
+  case iso =>
     rw [conjTranspose_mul, Matrix.mul_assoc o.iAᴴ, Matrix.mul_assoc o.iAᴴ, ← Matrix.mul_assoc _ d.i₀, d.iso,
       ← Matrix.mul_assoc, o.isoA]
-  perp := by
+  case perp =>
     intro i hi
     unfold besselAuxiliaryVectors
     split_ifs with h1 h2
@@ -218,7 +219,7 @@ theorem isHermitianAuxiliaryVectorSystem_besselVectors (hζ : IsLineVec L ζ) : 
       rw [conjTranspose_mul, Matrix.mul_assoc o.iAᴴ, Matrix.mul_assoc o.iAᴴ, ← Matrix.mul_assoc _ d.i₀, d.iso,
         ← Matrix.mul_assoc, o.orth']
     · rw [colN_eq_mulVec _ (show 2 * ρ - i < ρ by omega), ← vecMul_vecMul, perp_of_gram d.i₀e', zero_vecMul]
-  pair := by
+  case pair =>
     intro i hi l hl
     unfold besselAuxiliaryVectors
     rcases lt_trichotomy l ρ with h | h | h <;> rcases lt_trichotomy i ρ with h' | h' | h'
@@ -235,11 +236,15 @@ theorem isHermitianAuxiliaryVectorSystem_besselVectors (hζ : IsLineVec L ζ) : 
         if_neg (by omega)]
     · rw [if_neg (by omega), if_neg (by omega), if_pos (by omega), hQ_YX d (by omega) (by omega), if_neg h'.ne']
       exact if_congr (by omega) rfl rfl
-  ne := by
+  case ne =>
     intro i _
     split_ifs
     exacts [hζ.2, one_ne_zero]
-  card := by have := d.rank_add; have := o.rank_add; have := hζ.1; omega
+  case card =>
+    have := d.rank_add
+    have := o.rank_add
+    have := hζ.1
+    omega
 
 variable {β}
 

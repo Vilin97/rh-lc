@@ -60,7 +60,7 @@ def newC (C₀ : ReadC R (reFace F Dc Sp₀ Zsc₀) X0 Y) (ht : Y'.tup = Y.tup) 
         D.what₂.embLL ((Dc (zsOf R F)).Pt (C₀.wU u) t x f) =
           D.what₂.perCol u (tup t) (D.jN u (C₀.eNu u x)) (jA t ((rV0 D A3.A F.P1 F.ψ1 t).mulVec f)))
       (b := Y.jA) (b' := (by with_unfolding_all exact (Y'.jA :))) ht ((by with_unfolding_all exact (hj :))) ((by with_unfolding_all exact (C₀.pt :)))
-    kexactB h
+    with_unfolding_all exact (h :)
 
 
 set_option maxHeartbeats 4000000 in
@@ -136,9 +136,9 @@ def newTw (hC : GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTheory.Publ
   Y := Y'
   Z := Z'
   C := newC lam err C₀ ht hj
-  sEE := kc% sEE
+  sEE := (by with_unfolding_all exact (sEE :))
   div := (GlobalTheory.T.divisionCompatible_at_readIdentifications hC D G Pl0 I0 T A3 C.Q.c.F (newR R lam err) (reFace F Dc Sp Zsc) cG ex.p0 Y' Z' (newC lam err C₀ ht hj)
-    (kc% sEE) Yd (mj_new lam err hM hW).choose hP hH (fun _ _ => (by with_unfolding_all exact (hG :)))).1
+    (by with_unfolding_all exact (sEE :)) Yd (mj_new lam err hM hW).choose hP hH (fun _ _ => (by with_unfolding_all exact (hG :)))).1
   JA := (rationalFormsComparison_baseLevel_indep_scalars lam err hA ht hj0).choose
   amb0 := (rationalFormsComparison_baseLevel_indep_scalars lam err hA ht hj0).choose_spec
   JM := (mj_new lam err hM hW).choose
@@ -181,9 +181,9 @@ theorem twArgs_exists : (GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTh
       jW := (by with_unfolding_all exact (h13 :))
       eRR := (by with_unfolding_all exact (h12 :)) }
   refine ⟨a, rfl, HEq.rfl, rfl, ?_, ?_, ?_, ?_⟩
-  · kexactB HEq.refl sEE
-  · kexactB HEq.refl C₀.wU
-  · kexactB HEq.refl C₀.eNu
+  · with_unfolding_all exact (HEq.refl sEE :)
+  · with_unfolding_all exact (HEq.refl C₀.wU :)
+  · with_unfolding_all exact (HEq.refl C₀.eNu :)
   · exact (by with_unfolding_all exact (inGeo_new lam err t.inGeo :))
 
 end GlobalTheory.Mem.R3

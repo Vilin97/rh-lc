@@ -210,7 +210,8 @@ theorem shP_frobS_X :
     Pi.pow_apply]
   change sh (toAc t K X τ : K⟦X⟧) ^ l = _
   rw [show (toAc t K X τ : K⟦X⟧) = X from PowerSeries.ext fun n => by
-    rw [coeff_toAc, coeff_X, coeff_X]; split_ifs <;> simp, sh_X sh hsh]
+    rw [coeff_toAc, coeff_X, coeff_X]; split_ifs <;> simp]
+  rw [sh_X sh hsh]
 
 theorem evE_shP (x : (Wq l a)⟦X⟧) (hx : shP a sh (inclS t K (frobS l a x)) ∈ PPd t K e) :
     evE t ϖ g ⟨_, hx⟩ = ainfToAcris l (WittVector.frobenius (Per.σA (g : GQ l) (ϖ.ev a x))) := by
@@ -269,7 +270,8 @@ theorem φ₂_X : φ₂ X = (C X + X) ^ l - C (X ^ l) := by
   have := charZero_K (l := l) (K := K)
   have h : (X : K⟦X⟧⟦X⟧) = sh X - C X := by rw [sh_X sh hsh]; ring
   conv_lhs => rw [h]
-  rw [map_sub, hφsh, hφC, frob_X, map_pow, sh_X sh hsh]
+  rw [map_sub, hφsh, hφC, frob_X, map_pow]
+  rw [sh_X sh hsh]
 
 omit [NeZero e] in
 theorem bivariateFrobenius_bivariateEmbedding_CC (w : Wq l a) :

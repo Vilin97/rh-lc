@@ -78,24 +78,9 @@ variable (hUD : UDens k) (hUA : UAtom k) {ψ : AddChar k Circle} (hψc : Continu
 theorem chain_psd (hB : IsInvForm π B) : ∀ d, d + 1 ≤ N → IsPsd (chain hUD hψc hψ1 π hs B d)
   | 0, _ => isPsd_of_inv π B hB
   | d + 1, hd => by
-    have level : ∀ j (hj : j + 2 ≤ N),
-        Lvl k ψ π (N - 2 - j) (by omega) (j : ℝ) (chain hUD hψc hψ1 π hs B j) := by
-      intro j
-      induction j with
-      | zero =>
-        intro hj
-        refine ⟨isPsd_of_inv π B hB, kills_congr (a := N) (by omega) ?_, ?_⟩
-        · intro v hv w
-          rw [twKer_derUnip_self ψ π] at hv
-          rw [(Submodule.mem_bot ℂ).1 hv]
-          simp
-        · intro p _ v w
-          simp [chain_zero, hB.2.2]
-      | succ j ih =>
-        intro hj
-        obtain ⟨-, hP, hK, hM, -⟩ := chain_succ hUD hψc hψ1 π hs B j (by omega) (ih (by omega))
-        exact ⟨hP, kills_congr (by omega) hK, mirEq_congr (by omega) (by push_cast; ring) hM⟩
-    exact (chain_succ hUD hψc hψ1 π hs B d (by omega) (level d (by omega))).2.1
+    have hd2 : d + 2 ≤ N := by omega
+    have hL := chain_lvl hUD hψc hψ1 π hs B hB d hd2
+    exact (chain_succ hUD hψc hψ1 π hs B d hd2 hL).2.1
 
 theorem chain_kills (hB : IsInvForm π B) : ∀ d, d + 1 ≤ N → Kills ψ π (N - d) (chain hUD hψc hψ1 π hs B d) := by
   have killsZero : Kills ψ π N (chain hUD hψc hψ1 π hs B 0) := by
@@ -103,24 +88,13 @@ theorem chain_kills (hB : IsInvForm π B) : ∀ d, d + 1 ≤ N → Kills ψ π (
     rw [twKer_derUnip_self ψ π] at hv
     rw [(Submodule.mem_bot ℂ).1 hv]
     simp
-  have level : ∀ j (hj : j + 2 ≤ N),
-      Lvl k ψ π (N - 2 - j) (by omega) (j : ℝ) (chain hUD hψc hψ1 π hs B j) := by
-    intro j
-    induction j with
-    | zero =>
-      intro hj
-      refine ⟨isPsd_of_inv π B hB, kills_congr (by omega) killsZero, ?_⟩
-      intro p _ v w
-      simp [chain_zero, hB.2.2]
-    | succ j ih =>
-      intro hj
-      obtain ⟨-, hP, hK, hM, -⟩ := chain_succ hUD hψc hψ1 π hs B j (by omega) (ih (by omega))
-      exact ⟨hP, kills_congr (by omega) hK, mirEq_congr (by omega) (by push_cast; ring) hM⟩
   intro d hd
   cases d with
   | zero => exact killsZero
   | succ d =>
-    exact kills_congr (by omega) (chain_succ hUD hψc hψ1 π hs B d (by omega) (level d (by omega))).2.2.1
+    have hd2 : d + 2 ≤ N := by omega
+    have hL := chain_lvl hUD hψc hψ1 π hs B hB d hd2
+    exact kills_congr (by omega) (chain_succ hUD hψc hψ1 π hs B d hd2 hL).2.2.1
 
 
 include hUA in
@@ -140,14 +114,8 @@ theorem twisted_kernel_forms_nonvanishing (hUS : USplit k) (hB : IsInvForm π B)
     have hd2 : d + 2 ≤ N := by omega
     by_cases h0 : ∀ w, chain hUD hψc hψ1 π hs B (d + 1) w w = 0
     · have hA := atom_eq_self hUD hUA hψc hψ1 π hs B hUS hB d hd2 h0
-      have hL : ∃ hN : d + 2 ≤ N,
-          Lvl k ψ π (N - 2 - d) (by omega) (d : ℝ) (chain hUD hψc hψ1 π hs B d) := by
-        classical
-        by_contra hL
-        rw [atom, dite_eq_right hL] at hA
-        exact hv (by rw [← hA]; simp)
-      obtain ⟨hN, hL⟩ := hL
-      obtain ⟨-, -, -, hK, -⟩ := atom_spec hUD hUA hψc hψ1 π hs B d hN hL
+      have hL := chain_lvl hUD hψc hψ1 π hs B hB d hd2
+      obtain ⟨-, -, -, hK, -⟩ := atom_spec hUD hUA hψc hψ1 π hs B d hd2 hL
       refine ⟨N - 2 - d + 1, by omega, fun htop => hv ?_⟩
       have hmem : v ∈ DerKer k ψ π (N - 2 - d) := by
         unfold DerKer
@@ -155,25 +123,13 @@ theorem twisted_kernel_forms_nonvanishing (hUS : USplit k) (hB : IsInvForm π B)
         exact Submodule.mem_top
       have := hK v hmem v
       rwa [hA] at this
-    · obtain ⟨n', hn', hne⟩ :=
-        twisted_kernel_forms_nonvanishing hUS hB e (d + 1) (by omega) (not_forall.mp h0)
+    · have hnext : ∃ w, chain hUD hψc hψ1 π hs B (d + 1) w w ≠ 0 := not_forall.mp h0
+      obtain ⟨n', hn', hne⟩ :=
+        twisted_kernel_forms_nonvanishing hUS hB e (d + 1) (by omega) hnext
       exact ⟨n', by omega, hne⟩
 
 theorem chain_ne_of (hB : IsInvForm π B) (d n' : ℕ) (hd : d + 1 ≤ N) (hn' : n' + d < N)
     (hne : twKer π (derUnip k N n') (derChar k ψ N n') ≠ ⊤) : ∃ v, chain hUD hψc hψ1 π hs B d v v ≠ 0 := by
-  have level : ∀ j (hj : j + 2 ≤ N),
-      Lvl k ψ π (N - 2 - j) (by omega) (j : ℝ) (chain hUD hψc hψ1 π hs B j) := by
-    intro j
-    induction j with
-    | zero =>
-      intro hj
-      refine ⟨isPsd_of_inv π B hB, kills_congr (by omega) (chain_kills hUD hψc hψ1 π hs B hB 0 (by omega)), ?_⟩
-      intro p _ v w
-      simp [chain_zero, hB.2.2]
-    | succ j ih =>
-      intro hj
-      obtain ⟨-, hP, hK, hM, -⟩ := chain_succ hUD hψc hψ1 π hs B j (by omega) (ih (by omega))
-      exact ⟨hP, kills_congr (by omega) hK, mirEq_congr (by omega) (by push_cast; ring) hM⟩
   have radical : ∀ j, j + 1 ≤ N → ∀ v, chain hUD hψc hψ1 π hs B j v v = 0 →
       v ∈ twKer π (derUnip k N (N - j)) (lvlChar k ψ N (N - j)) := by
     intro j
@@ -188,7 +144,9 @@ theorem chain_ne_of (hB : IsInvForm π B) (d n' : ℕ) (hd : d + 1 ≤ N) (hn' :
         simp [hv] at hpos
     | succ j ih =>
       intro hj v hv
-      obtain ⟨-, -, -, -, hR⟩ := chain_succ hUD hψc hψ1 π hs B j (by omega) (level j (by omega))
+      have hj2 : j + 2 ≤ N := by omega
+      have hL := chain_lvl hUD hψc hψ1 π hs B hB j hj2
+      obtain ⟨-, -, -, -, hR⟩ := chain_succ hUD hψc hψ1 π hs B j hj2 hL
       have hmem := hR v hv
       have e : N - 2 - j + 1 = N - (j + 1) := by omega
       rw [e] at hmem

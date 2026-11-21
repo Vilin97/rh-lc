@@ -39,7 +39,7 @@ theorem ideleMap_inf (w : InfinitePlace F) (k : Fˣ) :
   refine Units.ext (Prod.ext (funext fun w' => ?_) ?_)
   · show GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.infiniteAdeleMap F E (infIdele F w (atInf w k) : AdeleRing (𝓞 F) F).1 w' = _
     rw [CharEx.aFi, Units.coe_prod, fst_prod_apply]
-    change LiesOver.completionMap (v := w'.comap (algebraMap F E)) (w := w')
+    change AbsoluteValue.Completion.map (w'.comap (algebraMap F E)).1 w'.1
       ((infIdele F w (atInf w k) : AdeleRing (𝓞 F) F).1 (w'.comap (algebraMap F E))) = _
     by_cases hw : w'.comap (algebraMap F E) = w
     · have hm : w' ∈ aboveInf (L := E) F w := by simp [aboveInf, hw]
@@ -47,7 +47,11 @@ theorem ideleMap_inf (w : InfinitePlace F) (k : Fˣ) :
         infIdele_fst_self]
       subst hw
       rw [infIdele_fst_self]
-      exact LiesOver.completionMap_coe (v := w'.comap (algebraMap F E)) (w := w') (WithAbs.toAbs _ (k : F))
+      change AbsoluteValue.Completion.map (w'.comap (algebraMap F E)).1 w'.1
+        (algebraMap F _ (k : F)) = algebraMap E _ (algebraMap F E (k : F))
+      rw [InfinitePlace.Completion.algebraMap_apply, InfinitePlace.Completion.algebraMap_apply,
+        AbsoluteValue.Completion.map_coe]
+      rfl
     · rw [infIdele_fst_ne F w _ hw, map_one]
       refine (Finset.prod_eq_one fun w'' hw'' => infIdele_fst_ne E w'' w' ?_ _).symm
       rintro rfl

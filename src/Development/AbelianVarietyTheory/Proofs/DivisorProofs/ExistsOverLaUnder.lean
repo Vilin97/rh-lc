@@ -30,7 +30,9 @@ theorem exists_overLa_under : ∀ (K K' : Type) [Field K] [NumberField K] [Field
     refine ⟨Nat.mul_pos he' (Nat.pos_of_ne_zero hr0), fun a => ?_⟩
 
     have key : la.valuation K a ^ r = la'.valuation K' (algebraMap K K' a) :=
-      HeightOneSpectrum.valuation_liesOver K' la la' a
+      by
+        rw [hr, Ideal.ramificationIdx'_eq_ramificationIdx _ _ la.ne_bot]
+        exact HeightOneSpectrum.valuation_liesOver K' la la' a
     rw [RingHom.comp_apply, hv, show i a = algebraMap K K' a from rfl, ← key, WithZero.log_pow]
     push_cast
     ring

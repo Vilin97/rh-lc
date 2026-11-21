@@ -467,6 +467,7 @@ theorem isPartFam_of_tie {emb : Ix → E →+* c.F} (hok : hwOK c lam hw)
   · replace hj : j < Dw.q := Harm.mult_conjEmb_of_mem Dw hτ ▸ hj
     exact key ⟨τ, hτ⟩ (Sum.inr ⟨i, hlt.trans hj⟩) (Sum.inr ⟨j, hj⟩) hlt
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem exists_lift {emb : Ix → E →+* c.F}
     (h : IoLF (Dw := Dw) c a io (rhoM c emb lam) cga nab0 hw (pG (Dw := Dw) c a n)) :
     ∃ φ : GL (Fin n) E →* Module.End c.F (VVc c lam), (∀ g v, io (φ g v) = letRep n Dw c g (io v)) ∧
@@ -479,6 +480,7 @@ theorem exists_lift {emb : Ix → E →+* c.F}
   rw [map_smul io, hφ, letRep_unitary, ← heq γ hγ v]
   exact congrArg (fun f => io (f v)) (rhoM_coe emb lam (uGL γ hγ)).symm
 
+set_option synthInstance.maxHeartbeats 100000 in
 theorem scalar_diag (e : Ix ≃ Psi H) (ha : IsPartFam Dw a) (d : Psi H → ℤ) (hok : hwOK c lam hw)
     (h : IoLF (Dw := Dw) c a io (rhoM c (fun x => embF c (e x).1) lam) cga nab0 hw (pG (Dw := Dw) c a n))
     {t : Fin n → E} (ht : ∀ i, star (t i) * t i = 1) :

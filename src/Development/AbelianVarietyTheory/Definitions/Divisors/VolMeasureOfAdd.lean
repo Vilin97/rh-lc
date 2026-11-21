@@ -77,7 +77,7 @@ theorem volDens_pos (hω : NowhereZero ω) (a : AlgChart p σ D) {y : CxPts p σ
     ((Y.mem_basicOpen _ _ (mem_ptsIn.1 hm)).2 (hω _ (mem_ptsIn.1 hm).1 _ (mem_ptsIn.1 hm).2)))
   have h₂ := mul_ne_zero (rv_ne_zero a.isFrame (K.isFrame _) (a.source_subset hy) hi) h₁
   rw [volDens_eq K ω a hy hi hj]
-  positivity
+  exact mul_pos (by positivity) (div_pos (pow_pos (norm_pos_iff.2 h₂) _) (Real.exp_pos _))
 
 variable [SecondCountableTopology (CxPts p σ)]
 
@@ -90,7 +90,7 @@ theorem volMeasure_of_add {s : ℝ} (h : ∀ j, ∀ y ∈ ptsIn p σ O, y ∈ pt
     volMeasure K φ' ω = ENNReal.ofReal (Real.exp s) • volMeasure K φ ω := by
   refine ext_of_cover _ (fun a : AlgChart p σ D => a.e.open_source) AlgChart.exists_mem_source fun a A hA hs => ?_
   have hA' := hA.inter (isOpen_ptsIn (p := p) (σ := σ) O).measurableSet
-  rw [Measure.smul_apply, volMeasure_apply K ω a hA hs, volMeasure_apply K ω a hA hs, smul_eq_mul,
+  rw [smul_apply, volMeasure_apply K ω a hA hs, volMeasure_apply K ω a hA hs, smul_eq_mul,
     ← lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
   refine setLIntegral_congr_fun (measurableSet_image a.e hA' (inter_subset_left.trans hs)) ?_
   rintro _ ⟨y, hy, rfl⟩
@@ -114,14 +114,15 @@ theorem volMeasure_pos (hω : NowhereZero ω) (hφ : ∀ j, ContinuousOn (φ.φ 
   have hO : S ⊆ ptsIn p σ O := fun z hz => (mem_ptsIn_inf.1 hz.2.2).1
   have hL : S ⊆ ptsIn p σ (L.U j) := fun z hz => (mem_ptsIn_inf.1 (mem_ptsIn_inf.1 hz.2.2).2).2
   have hc : ContinuousOn (volDens K φ ω a) S := (continuousOn_const.mul
-    (((((continuousOn_ev _).mono fun _ hz => hz.2.1).mul ((continuousOn_ev _).mono fun _ hz => hz.2.2)).norm.pow 2).div
+    (((((continuousOn_ev _).mono (t := S) fun _ hz => hz.2.1).mul
+      ((continuousOn_ev _).mono (t := S) fun _ hz => hz.2.2)).norm.pow 2).div
       ((hφ j).mono (subset_inter hO hL)).neg.rexp fun _ _ => (Real.exp_pos _).ne')).congr
     fun z hz => volDens_eq K ω a hz.1 (mem_ptsIn_inf.1 hz.2.1).2 (hL hz)
   have ho := a.e.isOpen_image_of_subset_source hS inter_subset_left
   have hm : MapsTo a.e.symm (a.e '' S) S := by
     rintro _ ⟨z, hz, rfl⟩
     rwa [a.e.left_inv hz.1]
-  have hc' := ENNReal.continuous_ofReal.comp_continuousOn (hc.comp (a.e.continuousOn_symm.mono
+  have hc' := ENNReal.continuous_ofReal.comp_continuousOn (hc.comp (a.e.continuousOn_symm.mono (t := a.e '' S)
     (image_subset_iff.2 fun _ hz => a.e.map_source hz.1)) hm)
   refine lt_of_lt_of_le ?_ (measure_mono (subset_univ S))
   rw [volMeasure_apply K ω a hS.measurableSet inter_subset_left, inter_eq_left.2 hO, pos_iff_ne_zero]
@@ -163,7 +164,7 @@ def homFac (la : AllWt.Weight Dw) (k : U.Comp) (w : (U.X k).dom) : ℝ :=
 
 theorem homN_eq_homFac (la : AllWt.Weight Dw) (f : Rul Xo c) (k : U.Comp) (w : (U.X k).dom) :
     homN U x (wtOf Dw la 0) f ⟨k, w.1⟩ = homFac U x la k w * ‖toC (evR Xo c f (U.un k w))‖ := by
-  have e : rdU U f k w.1 = toC (evR Xo c f (U.un k w)) := dif_pos w.2
+  have e : rdU U f k w.1 = toC (evR Xo c f (U.un k w)) := dite_eq_left w.2
   change _ * (‖rdU U f k w.1‖ * (U.X k).nfac _ _) = _
   rw [e, homFac]
   ring

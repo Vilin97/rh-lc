@@ -41,7 +41,7 @@ def lattice₂ (v : Pl D.host.F) : AddSubgroup (Matrix (Fin n) (Fin k) (AE D)) w
   carrier := {u | At (evFin D.host.F v) u ∧ m u ∈ Λ}
   zero_mem' := ⟨fun u _ => smul_zero u, by rw [map_zero]; exact zero_mem _⟩
   add_mem' := fun {a b} ha hb => ⟨fun u hu => by rw [smul_add, ha.1 u hu, hb.1 u hu, add_zero],
-    by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha.2 hb.2⟩
+    by rw [m.map_add]; exact add_mem ha.2 hb.2⟩
   neg_mem' := fun {a} ha => ⟨fun u hu => by rw [smul_neg, ha.1 u hu, neg_zero], by rw [map_neg]; exact neg_mem ha.2⟩
 
 def genP (v : Pl D.host.F) : Set (Matrix (Fin n) (Fin k) (AE D)) :=

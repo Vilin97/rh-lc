@@ -161,10 +161,10 @@ theorem exists_pairing {s : S ⟶ Sp R} {c : ℕ} {o o' : Obj b N s} {ψ : o.A �
             (G₁ ≫ snd o'.A T) _ hz w
           have hV : i ≫ G₂ = (i ≫ G₁) ≫ tr y := by
             apply CartesianMonoidalCategory.hom_ext
-            · rw [Category.assoc _ (tr y), tr_fst, MonObj.comp_mul, Category.assoc i G₁ (snd _ _ ≫ y),
+            · rw [Category.assoc _ (tr y), show tr y ≫ fst _ _ = _ from lift_fst _ _, MonObj.comp_mul, Category.assoc i G₁ (snd _ _ ≫ y),
                 ← Category.assoc G₁, ← hiz, Category.assoc i G₁, ← MonObj.comp_mul, mul_inv_cancel_left,
                 Category.assoc]
-            · rw [Category.assoc _ (tr y), tr_snd, Category.assoc, Category.assoc, ht]
+            · rw [Category.assoc _ (tr y), show tr y ≫ snd _ _ = _ from lift_snd _ _, Category.assoc, Category.assoc, ht]
           have hV' : i.left ≫ g₂ = (i.left ≫ g₁) ≫ (tr y).left := congrArg (fun q => q.left) hV
           choose J' hJ' using fun χ : V.left ⟶ (G2 o'.A).left => exists_chart hL (χ w')
           have e := ha _ i.left w' J' hJ'

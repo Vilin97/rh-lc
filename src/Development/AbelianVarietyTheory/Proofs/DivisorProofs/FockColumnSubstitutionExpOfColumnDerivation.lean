@@ -24,18 +24,18 @@ theorem totalDegree_colSub_le {d a : ℕ} (g : ι → Matrix (Fin a) (Fin a) ℂ
   have hX : ∀ y : Var ι d a, (colSub g (X y : Pol ι d a)).totalDegree ≤ 1 := by
     intro y
     rw [colSub, aeval_X]
-    refine (totalDegree_finset_sum _ _).trans (Finset.sup_le fun j _ => ?_)
+    refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun j _ => ?_)
     refine (totalDegree_mul _ _).trans ?_
     rw [totalDegree_C, totalDegree_X]
   conv_lhs => rw [as_sum P]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]
-  refine (totalDegree_finset_sum _ _).trans (Finset.sup_le fun m hm => ?_)
+  refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun m hm => ?_)
   refine le_trans ?_ (le_totalDegree hm)
   rw [monomial_eq, map_mul, algHom_C, algebraMap_eq, Finsupp.prod, map_prod]
   refine (totalDegree_mul _ _).trans ?_
   rw [totalDegree_C, zero_add]
-  refine (totalDegree_finset_prod _ _).trans (Finset.sum_le_sum fun y _ => ?_)
+  refine (totalDegree_finsetProd _ _).trans (Finset.sum_le_sum fun y _ => ?_)
   rw [map_pow]
   refine (totalDegree_pow _ _).trans ?_
   simpa using Nat.mul_le_mul_left (m y) (hX y)

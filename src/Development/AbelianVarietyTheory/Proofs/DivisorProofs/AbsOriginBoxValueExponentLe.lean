@@ -26,8 +26,9 @@ theorem abs_list_sum_le {α : Type*} (f : α → ℤ) (C : ℤ) :
     have h2 := abs_list_sum_le f C l fun x hx => h x (by simp [hx])
     rw [List.map_cons, List.sum_cons, List.length_cons]
     calc |f b + (l.map f).sum| ≤ |f b| + |(l.map f).sum| := abs_add_le _ _
-      _ ≤ C + l.length * C := add_le_add h1 h2
-      _ = ((l.length + 1 : ℕ) : ℤ) * C := by push_cast; ring
+      _ ≤ ((l.length + 1 : ℕ) : ℤ) * C := by
+        rw [Nat.cast_add, Nat.cast_one, add_mul, one_mul]
+        exact add_le_add h1 h2 |>.trans_eq (add_comm _ _)
 
 theorem abs_auxiliaryVectorUniformizerExponent_le (a a' : ℤ) {n : Type*} (c M : ℕ) (hc : c ≤ M) (y : n ⊕ Fin c) :
     |auxiliaryVectorUniformizerExponent a a' c y| ≤ (M : ℤ) * (|a| + |a'|) := by

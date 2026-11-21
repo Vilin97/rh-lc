@@ -198,7 +198,7 @@ theorem exists_anArc_of_period (D : Datum H) {g : ℕ} {ty : Fin g → (E →+* 
   have he : ∀ (a : 𝓞 E) v, e₀ (a • v) =
       (a • (e₀ v).1, (e₀ v).2.1.comp (DistribSMul.toAddMonoidHom Y (star a)), a • (e₀ v).2.2) := fun a v =>
     Prod.ext (by rw [he₁, he₁, map_smul]) (Prod.ext (AddMonoidHom.ext (he₂ a v)) (he₃ a v))
-  obtain ⟨A, e, f, h, hbe, hchi, hpsi, ⟨tyB, hF⟩, hfF, hEf, hact, hh, hB⟩ := exists_arc hw EM hEM
+  obtain ⟨A, e, f, h, hbe, hchi, hpsi, hQ, hfF, hEf, hact, hh, hB⟩ := exists_arc hw EM hEM
     (P.comp e₀.symm.toAddMonoidHom)
     ((congrArg _ (e₀.symm.surjective.range_comp P)).trans hspan) hrk' hconj hpos
     (fun v v' => by
@@ -209,6 +209,7 @@ theorem exists_anArc_of_period (D : Datum H) {g : ℕ} {ty : Fin g → (E →+* 
       rw [← he]
       simp [hPρ]) be be_symm be_pos be_adj be_even
     (fun n F => ∃ ty : Fin n → (E →+* ℂ), ∀ a z i, F a z i = ty i (a : E) * z i) exists_diag
+  obtain ⟨tyB, hF⟩ := hQ
   let gam : D.La ≃ₗ[𝓞 E] A.La :=
     { toFun := fun v => AnArc.La.mk (e.symm (e₀ v).1) ((e₀ v).2.1.comp e.toAddEquiv.toAddMonoidHom) (f (e₀ v).2.2)
       invFun := fun v => e₀.symm (e v.y, v.n.comp e.symm.toAddEquiv.toAddMonoidHom, f.symm v.l)

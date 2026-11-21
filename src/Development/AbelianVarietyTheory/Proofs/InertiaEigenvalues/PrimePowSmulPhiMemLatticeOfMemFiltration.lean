@@ -14,7 +14,8 @@ open PowerSeries
 
 theorem padicValNat_factorial_le_sub (l i j : ℕ) [hp : Fact l.Prime] (hji : j ≤ i) (hjl : j < l) :
     padicValNat l i.factorial ≤ i - j := by
-  have hL := sub_one_mul_padicValNat_factorial (p := l) i
+  have hL : (l - 1) * padicValNat l i.factorial = i - (l.digits i).sum := by
+    simpa only [Nat.padicValNat_def] using (Nat.Prime.sub_one_mul_multiplicity_factorial (n := i) hp.out)
   rcases Nat.eq_zero_or_pos i with rfl | hi
   · simp [_root_.Nat.padicValNat_def (n := 1)]
   have hpos : 0 < (l.digits i).sum := by
@@ -52,7 +53,8 @@ theorem norm_pow_sub_le_norm_factorial {i j : ℕ} (hji : j ≤ i) (hjl : j < l)
     exact_mod_cast i.factorial_ne_zero), Padic.valuation_natCast, inv_pow, zpow_neg, zpow_natCast]
   have h1 : (1 : ℝ) ≤ l := by exact_mod_cast (Fact.out : l.Prime).one_le
   exact inv_anti₀ (by positivity)
-    (pow_le_pow_right₀ h1 (padicValNat_factorial_le_sub l i j hji hjl))
+    (pow_le_pow_right₀ h1 (by
+      simpa only [Nat.padicValNat_def] using padicValNat_factorial_le_sub l i j hji hjl))
 
 theorem C_mem_S {e : ℕ} {c : K} (hc : ‖c‖ ≤ 1) : C c ∈ S O K e := by
   rw [← monomial_zero_eq_C_apply]

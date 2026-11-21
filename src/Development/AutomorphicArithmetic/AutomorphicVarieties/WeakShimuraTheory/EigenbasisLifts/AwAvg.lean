@@ -50,8 +50,16 @@ private theorem exists_coboundary_on_h_of_vanish_on_finiteIndex {K : Type*} [Fie
   abel
 
 theorem UpperTheory.V.Ws.Eb.bkAw :
-    ∀ {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω] {s : W.HidaSetting l L Ω} (V : s.Lev), V.S' = s.S → ∀ {c : Coef l} {n : ℕ} (r : W.Resid V.frame c.O n) (R : Representation (PadicAlgCl l) V.frame.Γ (Matrix (Fin n) (Fin n) (PadicAlgCl l))), ∀ z ∈ Z1 R, (∀ u, ∀ g ∈ r.Ip u, z g = 0) → (∀ g ∈ V.frame.I0, z g = 0) →
-        ∀ w : HeightOneSpectrum (𝓞 (W.Lp L)), ((l : ℕ) : 𝓞 (W.Lp L)) ∉ w.asIdeal → ∃ X, ∀ g ∈ Ine (F := W.Lp L) (s.A w), z (toGS Ω V.S' g) = R (toGS Ω V.S' g) X - X := by
+    ∀ {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMField L]
+      [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω] {s : W.HidaSetting l L Ω} (V : s.Lev),
+      V.S' = s.S → ∀ {c : Coef l} {n : ℕ} (r : W.Resid (W.HidaSetting.Lev.frame V) c.O n)
+      (R : Representation (PadicAlgCl l) (W.HidaSetting.Lev.frame V).Γ
+        (Matrix (Fin n) (Fin n) (PadicAlgCl l))),
+      ∀ z ∈ Z1 R, (∀ u, ∀ g ∈ r.Ip u, z g = 0) →
+        (∀ g ∈ (W.HidaSetting.Lev.frame V).I0, z g = 0) →
+        ∀ w : HeightOneSpectrum (𝓞 (W.Lp L)), ((l : ℕ) : 𝓞 (W.Lp L)) ∉ w.asIdeal →
+          ∃ X, ∀ g ∈ Ine (F := W.Lp L) (s.A w),
+            z (toGS Ω V.S' g) = R (toGS Ω V.S' g) X - X := by
   intro l _ L Ω _ _ _ _ _ _ s V hS c n r R z hz hIp hI0 w hw
   classical
   have hco : ∀ g h, z (g * h) = z g + R g (z h) := hz.2

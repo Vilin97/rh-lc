@@ -111,6 +111,8 @@ theorem GlobalTheory.HSShort.cnrm_col_le : ∀ (F A : Type) [Field F] [NumberFie
   congr 1
   calc _ = csq (S.nm S.T) σ (fun i => ∑ p, ((∏ q, u (β q, p.1 q)) * 1) * σ (b.repr (g p) i)) b := by
         congr 1
+        funext i
+        simp only [coordP, eval₂_sum, eval₂_mul, eval₂_C, eval₂_prod, eval₂_X, Fintype.sum_prod_type,
           Finset.univ_unique, Finset.sum_singleton, mul_one]
         refine Finset.sum_congr rfl fun e _ => ?_
         rw [← hc i (g (e, default))]

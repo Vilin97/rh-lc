@@ -162,7 +162,8 @@ theorem exists_datum_span : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
   · rw [pow_one, hδ]
     exact evalAt_one _ _ _ (hT _ _)
   · exact mem_span_of_map_mem_span_image (Formalism.L2.PjFree.rdU U) (sec Xo c a n)
-      (GlobalTheory.reading_linearIndependent_and_injective hB E H Dw l Xo c σ r U hU a n).1 _ (fun g hg => hg.1) hf
+      (GlobalTheory.reading_linearIndependent_and_injective hB E H Dw l Xo c σ r U hU a n).1
+      (shortGen Xo c nab 1 0 a n d) (fun g hg => hg.1) hf
       (bdd_mem_span_shortGen hC E H Dw l Xo c n d σ r U hσ hU hr hA hG hP hlev hnab hunit h3
         (fun _ => ⟨ph, 1, x₀, hpin⟩) nab 1 0 a Nat.one_pos hdom hn hχ htot _ hb fun k x hx => dif_neg hx)
 

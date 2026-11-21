@@ -40,7 +40,8 @@ theorem isLieImage_iff_lieCorr : GlobalTheory.Published.AbelianHodgeDeRham → �
     intro β hβ w hw
     have e : E ⟨_, hβ⟩ = G.rigOfOmega w := isCan_unique R A p G t _ hA _ _ (hE _) hw
     change (E.symm.dualMap h) (G.rigOfOmega w) = _
-    rw [LinearEquiv.dualMap_apply, ← e, LinearEquiv.symm_apply_apply]
+    change h (E.symm (G.rigOfOmega w)) = _
+    rw [← e, LinearEquiv.symm_apply_apply]
   constructor
   · rintro ⟨hv, hh⟩
     obtain ⟨x', hx', -⟩ := t.existsUnique_lieCorr hv

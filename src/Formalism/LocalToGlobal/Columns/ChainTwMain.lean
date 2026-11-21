@@ -48,19 +48,18 @@ theorem twSt_chrOk (hN : ∀ i, i < m2 → TwNormAt (Ch := Ch) (cst := cst) (twS
   | 0, _, _, _, _, h0 => absurd rfl h0
   | i + 1, b, P, hP, hd, _ => by
       by_cases h1 : i + 1 ≤ m2
-      · have hi : i < m2 := by omega
-        have hcand := twSt_cand h1 (hN i hi) b P hP
-        obtain ⟨hb, hnf, ⟨al, hal⟩, hint⟩ := hcand
-        have hs := twSt_of_twNormAt hN i hi al P hP
+      · have hi : i < m2 := Nat.lt_of_succ_le h1
+        obtain ⟨hb, hnf, ⟨al, hal⟩, hint⟩ :=
+          twSt_cand (Ch := Ch) (cst := cst) h1 (hN i hi) b P hP
+        have hs := twSt_of_twNormAt (Ch := Ch) (cst := cst) hN i hi al P hP
         exact hC.1 i hi P hP hd _ _ hs.1 hs.2 hb hnf hint hal
-      · revert b
-        by_cases h2 : i + 1 = m2 + 1
-        · rw [show twSt Ch sel mu cst m2 (i + 1) = twUnitSt _ (i + 1) by rw [twSt, ite_eq_right h1, ite_eq_left h2]]
-          intro _
-          obtain rfl : i = m2 := by omega
-          exact hC.2 P hP hd
-        · rw [show twSt Ch sel mu cst m2 (i + 1) = twEmptySt _ (i + 1) by rw [twSt, ite_eq_right h1, ite_eq_right h2]]
-          intro b; exact b.elim
+      · have hle := twSt_le Ch sel mu cst m2 (i + 1) b
+        have he : i = m2 := by omega
+        subst i
+        revert b
+        rw [twSt_last]
+        intro _
+        exact hC.2 P hP hd
 
 
 variable (Ch sel mu cst m2) in

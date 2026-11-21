@@ -24,19 +24,19 @@ theorem dIn_top_formalLog_map : ∀ (B Q : Type) [CommRing B] [CommRing Q] [Alge
   obtain ⟨u, hu⟩ : IsUnit g := isUnit_iff_constantCoeff.mpr (by rw [hg]; exact isUnit_one)
   set φ := algebraMap B Q
   have hG : constantCoeff (map φ g) = 1 := by simp [hg]
-  have hd : pderiv Q i (formalLog (map φ g)) = map φ ((↑u⁻¹ : MvPowerSeries σ B) * pderiv B i g) := by
+  have hd : pderiv (R := Q) i (formalLog (map φ g)) = map φ ((↑u⁻¹ : MvPowerSeries σ B) * pderiv (R := B) i g) := by
     have h1 := mul_pderiv_formalLog hG i
     rw [pderiv_map] at h1
     have h2 : map φ (↑u⁻¹ : MvPowerSeries σ B) * map φ g = 1 := by
       rw [← map_mul, ← hu, Units.inv_mul, map_one]
-    calc pderiv Q i (formalLog (map φ g))
-        = (map φ (↑u⁻¹ : MvPowerSeries σ B) * map φ g) * pderiv Q i (formalLog (map φ g)) := by
+    calc pderiv (R := Q) i (formalLog (map φ g))
+        = (map φ (↑u⁻¹ : MvPowerSeries σ B) * map φ g) * pderiv (R := Q) i (formalLog (map φ g)) := by
           rw [h2, one_mul]
-      _ = map φ ((↑u⁻¹ : MvPowerSeries σ B) * pderiv B i g) := by
+      _ = map φ ((↑u⁻¹ : MvPowerSeries σ B) * pderiv (R := B) i g) := by
           rw [mul_assoc, h1, map_mul]
   by_cases hα : α i = 0
   · exact ⟨0, Submodule.mem_top, by simp [hα]⟩
-  · refine ⟨coeff (α - Finsupp.single i 1) ((↑u⁻¹ : MvPowerSeries σ B) * pderiv B i g),
+  · refine ⟨coeff (α - Finsupp.single i 1) ((↑u⁻¹ : MvPowerSeries σ B) * pderiv (R := B) i g),
       Submodule.mem_top, ?_⟩
     rw [natCast_mul_coeff_of_pderiv_eq hd hα, coeff_map]
 

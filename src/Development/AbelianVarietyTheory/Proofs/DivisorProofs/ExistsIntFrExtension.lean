@@ -284,7 +284,7 @@ end Frame
 section Points
 
 open AlgebraicGeometry CategoryTheory Limits NumberField IsDedekindDomain IsLocalRing
-open ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.FactorDepth GlobalTheory.GenericCentre
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.FactorDepth
 attribute [local instance] Over.cartesianMonoidalCategory
 
 end Points

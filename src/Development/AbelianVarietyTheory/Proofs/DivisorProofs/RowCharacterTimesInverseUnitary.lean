@@ -15,8 +15,12 @@ open Formalism.L2.DIV
 
 theorem prod_hom_pow_eq_one {H M ι : Type} [Group H] [CommMonoid M] (s : Finset ι) (f : ι → H →* M) (N : ℕ)
     (h : ∀ i x, f i x ^ N = 1) (x : H) : (∏ i ∈ s, f i) x ^ N = 1 := by
-  rw [MonoidHom.finset_prod_apply, ← Finset.prod_pow]
-  exact Finset.prod_eq_one fun i _ => h i x
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp
+  | insert i s hi ih =>
+    have ih' : (∏ i ∈ s, f i x) ^ N = 1 := by simpa using ih
+    simp [hi, mul_pow, h, ih']
 
 theorem ofLocal_chi_pow {E : Type} [Field E] [NumberField E] {Pg : Finset (Pl E)} {r : ℕ} {LL : Type} [CommRing LL]
     (Hl : (PP : Pg) → Subgroup (GL (Fin r) (kP PP.1))) (cl : (PP : Pg) → Hl PP →* LLˣ) (N : ℕ)

@@ -49,10 +49,10 @@ theorem isIntegral_coord_of_isIntegral (E : Type) [Field E] [NumberField E] [IsC
   have hinj : Function.Injective (algebraMap (FR E) E) := (algebraMap (FR E) E).injective
   have hx : algebraMap (FR E) E (x j) = (x j : E) := rfl
   constructor
-  · rw [← isIntegral_algebraMap_iff , map_mul, map_pow, map_natCast, hx, hD']
+  · rw [← (isIntegral_algebraMap_iff (B := E)), map_mul, map_pow, map_natCast, hx, hD']
     have e : -r ^ 2 * (x j : E) ^ 2 = -((x j : E) * r * ((x j : E) * r)) := by ring
     rw [e]; exact (hj.mul hj).neg
-  · rw [← isIntegral_algebraMap_iff , map_mul, map_natCast, hx, hD']
+  · rw [← (isIntegral_algebraMap_iff (B := E)), map_mul, map_natCast, hx, hD']
     have e : -r ^ 2 * (x j : E) = -((x j : E) * r * r) := by ring
     rw [e]; exact (hj.mul hri).neg
 

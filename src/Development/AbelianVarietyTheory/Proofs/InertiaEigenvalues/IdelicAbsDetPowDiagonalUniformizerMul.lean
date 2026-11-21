@@ -78,8 +78,8 @@ theorem GlobalTheory.CellEvalDet.detPow_tl_mul : ∀ (E : Type) [Field E] [Numbe
     rw [GlobalTheory.AdeleScale.ideleModule_finId_adl ϖ hϖ _ l.support (fun v hv => by
       rw [Finsupp.notMem_support_iff] at hv; simp [hv])]
     simp
-  rw [hmod, Finset.prod_comm, ← Real.finset_prod_rpow _ _ (fun v _ =>
-    Finset.prod_nonneg fun i _ => inv_nonneg.2 (zpow_nonneg (Nat.cast_nonneg _) _))]
+  rw [hmod, Finset.prod_comm, ← Real.finsetProd_rpow _ _ (fun v _ =>
+    Finset.prod_nonneg fun i _ => inv_nonneg.2 (zpow_nonneg (Nat.cast_nonneg _) _)) x]
   refine Finset.prod_congr rfl fun v _ => ?_
   have hq := qV_pos (E := E) v
   have e : ∀ i, ((qV E v : ℝ) ^ (l v i))⁻¹ = (qV E v : ℝ) ^ (-(l v i : ℝ)) := fun i => by

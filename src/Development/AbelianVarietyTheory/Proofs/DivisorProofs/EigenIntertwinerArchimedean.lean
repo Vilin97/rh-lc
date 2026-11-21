@@ -43,7 +43,7 @@ theorem evI_zero : evI F 0 = 0 := by
   exact map_zero (InfiniteAdeleRing.ringEquiv_mixedSpace F)
 
 theorem evI_liftA (ξ : mixedEmbedding.mixedSpace F) : evI F (liftA F ξ) = ξ := by
-  simp [evI, liftA]
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply ξ
 
 theorem at_liftA (ξ : mixedEmbedding.mixedSpace F) (u : AF F) (hu : evI F u = 0) : u * liftA F ξ = 0 := by
   have h1 : u.1 = 0 := (InfiniteAdeleRing.ringEquiv_mixedSpace F).injective (by rw [map_zero]; exact hu)

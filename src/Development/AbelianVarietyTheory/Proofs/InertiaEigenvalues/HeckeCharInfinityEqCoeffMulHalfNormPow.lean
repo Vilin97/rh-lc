@@ -40,7 +40,7 @@ theorem phase_zpow_eq (z : ℂ) (hz : z ≠ 0) (b : ℤ) (r : ℕ) :
 
 theorem prod_norm_inv_pow {ι : Type} [Fintype ι] (z : ι → ℂ) (r : ℕ) :
     ∏ i, (((‖z i‖ : ℝ) : ℂ) ^ r)⁻¹ = (((∏ i, ‖z i‖ ^ 2) ^ (-(r : ℝ) / 2) : ℝ) : ℂ) := by
-  rw [← Real.finset_prod_rpow _ _ (fun i _ => by positivity)]
+  rw [← Real.finsetProd_rpow _ _ (fun i _ => by positivity) _]
   push_cast
   refine Finset.prod_congr rfl fun i _ => ?_
   rw [← Real.rpow_natCast_mul (norm_nonneg _)]

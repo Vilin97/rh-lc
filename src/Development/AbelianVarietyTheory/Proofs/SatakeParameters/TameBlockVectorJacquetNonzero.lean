@@ -201,7 +201,7 @@ theorem act_single {r t : ℕ} {χ : kˣ →* ℂˣ} {W : Type} [AddCommGroup W]
       have := congrFun (congrFun h1 i) j'
       simp only [Matrix.submatrix_apply] at this
       simp [this, Matrix.one_apply]) (Matrix.GeneralLinearGroup.det g) (by
-      rw [det_lowerRight _ h0 h1, ← Matrix.GeneralLinearGroup.val_det_apply, hdef, det_leviEmb k,
+      rw [det_lowerRight _ h0 h1, ← Matrix.GeneralLinearGroup.val_det_apply h, hdef, det_leviEmb k,
         Finset.prod_eq_single j.succ (fun b _ hb => by rw [single, Pi.mulSingle_eq_of_ne hb, map_one]) (by simp),
         single, Pi.mulSingle_eq_same])
   exact key

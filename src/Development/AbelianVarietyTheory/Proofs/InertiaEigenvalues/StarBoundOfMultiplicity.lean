@@ -233,7 +233,8 @@ theorem rhs_le {D : D7} (L : SizeData₂ D) (P : ParameterChoice' D L) (X : Kill
     have h1 := LargeLevelLemmas.vdel_le (D := D) i
     rw [UpperTheory.Small.localLevel_eq_one_of_not_mem_smallPrimes D.nd i hl2] at h1
     have h2 : (padicValNat (D.nd.l i) D.R.t.factorial : ℚ) ≤ D.R.t := by
-      exact_mod_cast padicValNat_factorial_le (D.nd.l i) D.R.t
+      rw [Nat.padicValNat_def]
+      exact_mod_cast multiplicity_factorial_le (D.nd.l i) D.R.t
     have h3 : D.nd.vdel i ≤ 2 * (D.R.t : ℚ) := by push_cast at h1; linarith
     exact_mod_cast h3
   have hS := typePrime_size_terms_le_elementary (D.R.n : ℝ) D.R.t D.R.r D.R.nV D.R.f L.etaSz (X.eta : ℝ) (D.nd.vdel i : ℝ) constantSecondHub C1 L.sc.x

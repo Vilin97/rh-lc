@@ -51,9 +51,9 @@ theorem exists_finite {F : Type} [Field F] [NumberField F] (ψ : F →+* PadicAl
   · exact IntermediateField.finiteDimensional_adjoin fun x _ => Algebra.IsIntegral.isIntegral x
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [← b.sum_repr a, map_sum]
-    refine sum_mem fun i _ => ?_
-    rw [Rat.smul_def, map_mul, map_ratCast]
-    exact mul_mem (SubfieldClass.ratCast_mem _ _) (IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩)
+      refine sum_mem fun i _ => ?_
+      rw [Rat.smul_def, map_mul, map_ratCast]
+      exact mul_mem (SubfieldClass.ratCast_mem _ _) (IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩)
   · let M : IntermediateField ℚ_[p] (PadicAlgCl p) :=
       ψ.fieldRange.topologicalClosure.toIntermediateField fun r => by
         have hc : IsClosed {r : ℚ_[p] | algebraMap ℚ_[p] (PadicAlgCl p) r ∈ ψ.fieldRange.topologicalClosure} :=

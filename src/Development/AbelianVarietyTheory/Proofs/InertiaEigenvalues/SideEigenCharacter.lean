@@ -36,8 +36,10 @@ theorem maximalIdeal_le_comap {p q : ℕ} [Fact p.Prime] [Fact q.Prime] (h : p =
   haveI : (Ideal.comap φ (IsLocalRing.maximalIdeal O₁)).IsPrime := Ideal.comap_isPrime _ _
   have h1 : (Ideal.comap (algebraMap ℤ_[p] O₀) (Ideal.comap φ (IsLocalRing.maximalIdeal O₁))).IsMaximal := by
     rw [Ideal.comap_comap, hc]
-    exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _
-  have h2 := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap _ h1
+    exact Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := ℤ_[p])
+      (IsLocalRing.maximalIdeal O₁)
+  have h2 := Ideal.isMaximal_of_isIntegral_of_isMaximal_under
+    (R := ℤ_[p]) (Ideal.comap φ (IsLocalRing.maximalIdeal O₁)) h1
   rw [IsLocalRing.eq_maximalIdeal h2]
 
 theorem continuous_of_le_comap {O₀ O₁ : Type} [CommRing O₀] [IsLocalRing O₀] [TopologicalSpace O₀]

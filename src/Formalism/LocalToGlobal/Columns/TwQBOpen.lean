@@ -150,8 +150,9 @@ theorem qbDF_prop (P : Q) : qbDF hc Θ hQ hΘ P ≠ 0 ∧ qbDF hc Θ hQ hΘ P �
 
 
 set_option maxHeartbeats 4000000 in
-theorem qbOpen : QOpen (qbLoc hc Θ hQ hΘ) where
-  princ P := by
+theorem qbOpen : QOpen (qbLoc hc Θ hQ hΘ) := by
+  refine { princ := ?_, glob := ?_ }
+  · intro P
     classical
     obtain ⟨hD0, -, w, hw, hDw⟩ := qbDF_prop hc Θ hQ hΘ P
     refine ⟨Ideal.absNorm (Ideal.span {qbDF hc Θ hQ hΘ P}), Nat.pos_of_ne_zero fun h => hD0 ?_, fun x _ hy => ?_⟩
@@ -178,8 +179,7 @@ theorem qbOpen : QOpen (qbLoc hc Θ hQ hΘ) where
     show f ((x : Matrix (Fin n) (Fin n) _) i j) - (1 : Matrix (Fin n) (Fin n) _) i j = _
     rw [← e4, e2, e3]
     ring
-  glob := by
-    classical
+  · classical
     refine ⟨∏ P ∈ Q.attach, algebraMap (𝓞 F) (𝓞 E) (qbDF hc Θ hQ hΘ P), ?_, fun u _ sa hu P => ?_⟩
     · refine Finset.prod_ne_zero_iff.2 fun P _ h => (qbDF_prop hc Θ hQ hΘ P).1 ?_
       have hinj : Function.Injective (algebraMap (𝓞 F) E) := by

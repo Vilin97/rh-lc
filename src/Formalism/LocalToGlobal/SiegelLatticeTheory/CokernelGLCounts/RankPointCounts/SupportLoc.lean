@@ -143,9 +143,13 @@ theorem modBlocks_map {A : Type} (f : ℕ → ℕ → A → S) : ∀ (l : List (
   | (t, s) :: l, a, L, h => by
     unfold modBlocks at h
     split at h
-    · obtain ⟨L1, hL1, rfl⟩ := Option.map_eq_some_iff.mp h
-      simp only [List.map_cons, mapBlocks, IsUnit.unit_spec, PNat.mk_coe,
-        modBlocks_map f l (a + s) L1 hL1]
+    · cases hL1 : modBlocks f (a + s) l with
+      | none => simp [hL1] at h
+      | some L1 =>
+        simp only [hL1, Option.map_some, Option.some.injEq] at h
+        subst L
+        simp only [List.map_cons, mapBlocks, IsUnit.unit_spec, PNat.mk_coe,
+          modBlocks_map f l (a + s) L1 hL1]
     · cases h
 
 theorem mapBlocks_snd {A B : Type} (f : ℕ → ℕ → A → B) : ∀ (l : List (A × ℕ)) (a : ℕ),

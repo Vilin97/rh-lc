@@ -59,7 +59,7 @@ theorem bijective_of_isCan_of_isNilpotent_of_hodgeDeRham : GlobalTheory.Publishe
     GlobalTheory.PtExt.isCan_unique R A p G t c.1 hA _ _ (hL c.1) (hψ c)
   refine ⟨(injective_iff_map_eq_zero L).2 fun c hc => ?_, fun x => ?_⟩
   · have hcF : c ∈ PrimitiveSubmodule A :=
-      GlobalTheory.T.mem_primitiveSubmodule_of_isCan_of_rigToExt_eq_zero p R N hN A hA G t c (L c) (hL c) (by rw [hc, map_zero])
+      GlobalTheory.T.mem_primitiveSubmodule_of_isCan_of_rigToExt_eq_zero p R N hN A hA G t c (L c) (hL c) (by rw [hc]; exact G.rigToExt.map_zero)
     have h1 : G.rigOfOmega (ψ ⟨c, hcF⟩) = 0 := by rw [← hLF ⟨c, hcF⟩]; exact hc
     have h2 : ψ ⟨c, hcF⟩ = 0 :=
       PDivGroup.rigOfOmega_injective_of_pow p R N hN G (by rw [h1, map_zero])
@@ -67,7 +67,8 @@ theorem bijective_of_isCan_of_isNilpotent_of_hodgeDeRham : GlobalTheory.Publishe
     exact congrArg Subtype.val h3
   · obtain ⟨c, x', hcx', hx'⟩ := GlobalTheory.T.exists_deRham_class_of_rigidified_extension p R N hN A hA hAll hO G t x
     have hx'L : x' = L c := GlobalTheory.PtExt.isCan_unique R A p G t c hA _ _ hcx' (hL c)
-    have hd : G.rigToExt (x - L c) = 0 := by rw [map_sub, ← hx'L, hx', sub_self]
+    have hd : G.rigToExt (x - L c) = 0 := by
+      exact (G.rigToExt.map_sub x (L c)).trans (sub_eq_zero.mpr (hx'L ▸ hx'.symm))
     obtain ⟨w, hw⟩ := (G.exact_rigOfOmega_rigToExt (x - L c)).1 hd
     obtain ⟨c₁, rfl⟩ := hψs w
     refine ⟨c + c₁.1, ?_⟩

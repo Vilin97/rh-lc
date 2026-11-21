@@ -111,7 +111,7 @@ theorem exists_finset_doubleCoset_cover_of_separable : ∀ (p : ℕ) [Fact p.Pri
   obtain ⟨hcomm, -, -, S₀, hS₀⟩ := hT
   obtain ⟨S, hS⟩ := GlobalTheory.FinAtP.prod_fin G (toP1 G β y₀)
     (fun w => by rw [GlobalTheory.FinAtP.charpoly_formGroupToPadicPoints_component]; exact (GlobalTheory.FinAtP.rho_charpoly_sep G w _ hdeg hsep).map) S₀
-  obtain ⟨T, hT⟩ := GlobalTheory.FinAtP.exists_finset_cosets (KHT p G.m G.n 1 G.Fw) K' hcomm.1
+  obtain ⟨T, hT⟩ := GlobalTheory.FinAtP.exists_finset_cosets (KHT p G.m G.n 1 G.Fw) K' hcomm.1.relIndex_ne_zero
   refine ⟨(S ×ˢ T).image fun x => x.1 * x.2, fun h hh => ?_⟩
   obtain ⟨a, ha, s, hs, k, hk, rfl⟩ := hS h (hS₀ _ hh)
   obtain ⟨t, ht, k', hk', rfl⟩ := hT k hk
@@ -168,11 +168,9 @@ theorem finite_pts_conj_fixL_sep : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p),
   by_cases hne : ∃ (b : Dat G v β) (γ : grp G β), FixL G v β (γ * y₀ * γ⁻¹) b.2.1 ∧
       f (b.1.1⁻¹ * toAfF G β x t hx (γ * y₀ * γ⁻¹) * b.1.1) * f' (b.1.2⁻¹ * toP1 G β (γ * y₀ * γ⁻¹) * b.1.2) ≠ 0
   swap
-  · convert Set.finite_empty
-    ext q
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
-    rintro ⟨γ, h1, h2⟩
-    exact hne ⟨_, γ, h1, h2⟩
+  · apply Set.Finite.subset Set.finite_empty
+    rintro q ⟨γ, h1, h2⟩
+    exact False.elim (hne ⟨_, γ, h1, h2⟩)
   obtain ⟨b₀, γ₀, hfix₀, hne₀⟩ := hne
   have hsd : (minpoly G.F (((y₀ : G.Cˣ × ℚˣ).1 : G.Cˣ) : G.C)).natDegree = G.n ∧
       (minpoly G.F (((y₀ : G.Cˣ × ℚˣ).1 : G.Cˣ) : G.C)).Separable := by

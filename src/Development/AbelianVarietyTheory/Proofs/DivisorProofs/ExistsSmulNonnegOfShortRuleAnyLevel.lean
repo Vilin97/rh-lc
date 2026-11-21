@@ -148,7 +148,12 @@ theorem exists_smul_nonneg_of_shortRule_any_level (D : D7) (H : ReciprocityTheor
       div_nonneg (by exact_mod_cast GlobalTheory.PlaceInt.HostChart.vV_nat_nonneg T' p) (Nat.cast_nonneg _)
     have h2 : D.host.vdH p ≤ ((NumberField.discr D.host.E).natAbs : ℝ) :=
       (div_le_self (Nat.cast_nonneg _) (by exact_mod_cast Module.finrank_pos)).trans
-        (by exact_mod_cast (padicValNat_le_nat_log _).trans (Nat.log_le_self _ _))
+        (by
+          have h : padicValNat p (NumberField.discr D.host.E).natAbs ≤
+              (NumberField.discr D.host.E).natAbs := by
+            rw [Nat.padicValNat_def]
+            exact Nat.multiplicity_le_self _
+          exact_mod_cast h)
     have h3 := D.host.vdH_nonneg p
     have h4 : (0 : ℝ) ≤ (Formalism.L2.Pj.DF Dw w : ℝ) := Nat.cast_nonneg _
     rw [Int.cast_mul, Int.cast_natCast, mul_div_assoc (X : ℝ), hX, Nat.cast_mul (NumberField.discr D.host.E).natAbs]

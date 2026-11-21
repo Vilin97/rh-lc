@@ -44,8 +44,8 @@ theorem rename_rowSub (κ : ι → Matrix (Fin d) (Fin d) ℂ) (P : Pol ι d a) 
       ← (rowEquiv ι d).sum_comp, Fintype.sum_prod_type, Finset.sum_comm, Finset.sum_eq_single y.1]
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [map_sum, map_mul, rename_C, rename_X, bigMat, submatrix_apply, varFlat, Equiv.symm_apply_apply]
-      refine Finset.sum_congr rfl fun i _ => ?_
-      rw [blockDiagonal_apply_eq]
+        refine Finset.sum_congr rfl fun i _ => ?_
+        rw [blockDiagonal_apply_eq]
     · intro τ _ hτ
       refine Finset.sum_eq_zero fun i _ => ?_
       simp [bigMat, varFlat, blockDiagonal_apply_ne _ _ _ hτ]

@@ -213,13 +213,18 @@ theorem mem_sh_span {n : ℕ} (b : Module.Basis (Fin n) k⸨X⸩ V) (s : ℤ) (x
 omit [Module k V] [IsScalarTower k k⸨X⸩ V] in
 theorem exists_lat_basis {M : Submodule k⟦X⟧ V} (hM : IsLat M) :
     ∃ (n : ℕ) (b : Module.Basis (Fin n) k⸨X⸩ V), M = Submodule.span k⟦X⟧ (Set.range b) := by
-  have : Submodule.IsLattice k⸨X⸩ M := ⟨hM.1, hM.2⟩
+  have : Submodule.IsLattice k⸨X⸩ M := Submodule.IsLattice.of_fg k⸨X⸩ hM.1
+  have : Submodule.IsFullLattice k⸨X⸩ M := ⟨hM.2⟩
+  have := Submodule.IsLattice.free k⸨X⸩ M
+  have := Submodule.IsLattice.finite k⸨X⸩ M
   let e := Module.finBasis k⟦X⟧ M
-  refine ⟨_, e.extendOfIsLattice k⸨X⸩, ?_⟩
+  refine ⟨_, e.extendOfIsFullLattice k⸨X⸩, ?_⟩
   have h := congrArg (Submodule.map M.subtype) e.span_eq
   rw [Submodule.map_span, Submodule.map_subtype_top, ← Set.range_comp] at h
   refine h.symm.trans ?_
   congr 2
+  ext i
+  simp
 
 omit [IsScalarTower k k⸨X⸩ V] in
 theorem pull_span {σ : k⸨X⸩ →ₐ[k] k⸨X⸩} (hσ : ∀ a : k⟦X⟧, ∃ b : k⟦X⟧, σ (a : k⸨X⸩) = (b : k⸨X⸩))

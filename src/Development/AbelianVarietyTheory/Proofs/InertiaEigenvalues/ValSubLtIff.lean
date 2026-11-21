@@ -12,7 +12,6 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomolog
 @[expose] public section
 
 open NumberField IsDedekindDomain ValuativeRel Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.LocGL GlobalTheory.WeilDeligne GlobalTheory.LocLanglands
-open GlobalTheory.DelEps
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 noncomputable section
@@ -34,11 +33,9 @@ theorem normV_eq_pow {K L : Type} [Field K] [NumberField K] [Field L] [NumberFie
     (w : HeightOneSpectrum (𝓞 L)) :
     normV w = normV (w.under (𝓞 K)) ^ w.asIdeal.inertiaDeg (𝓞 K) := by
   have : w.asIdeal.LiesOver (w.under (𝓞 K)).asIdeal := ⟨rfl⟩
-  have := w.isMaximal
-  have := (w.under (𝓞 K)).isMaximal
-  show Ideal.absNorm w.asIdeal = Ideal.absNorm (w.under (𝓞 K)).asIdeal ^ w.asIdeal.inertiaDeg (𝓞 K)
-  rw [← Ideal.absNorm_relNorm (𝓞 K) (𝓞 L) w.asIdeal,
-    Ideal.relNorm_eq_pow_of_isMaximal w.asIdeal (w.under (𝓞 K)).asIdeal, map_pow]
+  have := w.isPrime
+  simpa only [normV, Ideal.absNorm_eq_natCard] using
+    (Ideal.absNorm_pow_inertiaDeg (w.under (𝓞 K)).asIdeal w.asIdeal).symm
 
 theorem under_eq {K L : Type} [Field K] [NumberField K] [Field L] [NumberField L] [Algebra K L]
     [Algebra K Ω] [Algebra L Ω] [IsScalarTower K L Ω] {A : ValuationSubring Ω}

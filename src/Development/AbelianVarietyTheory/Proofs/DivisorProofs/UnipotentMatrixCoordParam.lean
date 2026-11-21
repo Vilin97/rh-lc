@@ -151,7 +151,7 @@ theorem GlobalTheory.ThK.UnipDom.exists_continuous_mat_eq_plane : ∀ (F E : Typ
       have := hrow (some (some i))
       simp only [Fintype.sum_option, col, Option.elim, hjx, hjy, hjj, zero_mul, zero_add] at this
       simpa [Matrix.mulVec, dotProduct] using this
-    have h4 := eq_zero_of_cartan B Y₁ hc₁ _ h3
+    have h4 := eq_zero_of_cartan B Y₁ hc₁.cartan _ h3
     funext o
     rcases o with _ | (_ | j)
     · exact h2

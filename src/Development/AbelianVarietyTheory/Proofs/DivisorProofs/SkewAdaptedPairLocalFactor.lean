@@ -62,7 +62,8 @@ theorem torus_evalZero_value : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : T
   have hsieg := hspl.2.2 Λ hadm hinv (gd * u) T (by rw [hp]; exact hT) φ₀ hφ₀
   have hdetT : Matrix.GeneralLinearGroup.det T = Units.map (cA σ).toMonoidHom t⁻¹ := Units.ext (by
     simp only [Matrix.GeneralLinearGroup.val_det_apply]; exact hdet)
-  rw [hdetT, hΛp φ₀ hφ₀] at hsieg
+  rw [hdetT] at hsieg
+  have hsieg := (hΛp φ₀ hφ₀).symm.trans hsieg
   have hc := GlobalTheory.T.witt_character_conjugate_inverse F E σ B n d X W M χX χW om r s r' s' hP t⁻¹
   have hmo := GlobalTheory.T.adelic_modulus_norm_eq_abs F E (Units.map (cA σ).toMonoidHom t⁻¹)
   have habs : (absE F E (Units.map (cA σ).toMonoidHom t⁻¹) : ℝ) = ((absE F E t : ℝ))⁻¹ := by

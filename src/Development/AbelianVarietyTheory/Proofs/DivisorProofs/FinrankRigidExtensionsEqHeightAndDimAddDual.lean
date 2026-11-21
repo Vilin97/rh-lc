@@ -46,6 +46,7 @@ theorem finrank_rigExt_omega (p : ℕ) [Fact p.Prime] (K : Type) [Field K] (h : 
   rw [LinearMap.range_eq_top.2 (G.rigToLie_surjective h), finrank_top,
     LinearMap.exact_iff.1 (G.exact_rigOfOmega_rigToLie h),
     LinearMap.finrank_range_of_inj (G.rigOfOmega_injective_of_eq_zero h)] at e
+  change Module.finrank K G.RigExt = G.height
   rw [← e, ← hsum, add_comm, Subspace.dual_finrank_eq]
 
 end GlobalTheory.PDivGroup

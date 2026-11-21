@@ -22,13 +22,18 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory.FormVal
 
 theorem bigC_and {Q Q' : ChQ} (h : BigC Q) (h' : BigC Q') : BigC fun F ch C b => Q F ch C b ∧ Q' F ch C b := by
-  first
-  | exact @_root_.GlobalTheory.BigConstantConjunction.bigC_and
-  | exact _root_.GlobalTheory.BigConstantConjunction.bigC_and
-  | (apply _root_.GlobalTheory.BigConstantConjunction.bigC_and <;> assumption)
-  | (intros; apply _root_.GlobalTheory.BigConstantConjunction.bigC_and <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.BigConstantConjunction.bigC_and <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.BigConstantConjunction.bigC_and ..)
+  obtain ⟨A0, hA⟩ := h
+  obtain ⟨B0, hB⟩ := h'
+  refine ⟨max A0 B0, fun CF hCF => ?_⟩
+  obtain ⟨C1, hC1⟩ := hA CF (le_trans (le_max_left _ _) hCF)
+  obtain ⟨C2, hC2⟩ := hB CF (le_trans (le_max_right _ _) hCF)
+  refine ⟨max C1 C2, fun ε C hC => ?_⟩
+  obtain ⟨x1, hx1⟩ := hC1 ε C (le_trans (le_max_left _ _) hC)
+  obtain ⟨x2, hx2⟩ := hC2 ε C (le_trans (le_max_right _ _) hC)
+  refine ⟨max x1 x2, ?_⟩
+  intro D large₂ hε hx Γ _ _ Pl0 T A Ks _ _ _ R F hS ch hIs hAt hOK
+  exact ⟨hx1 D large₂ hε (le_trans (le_max_left _ _) hx) Γ Pl0 T A Ks R F hS ch hIs hAt hOK,
+    hx2 D large₂ hε (le_trans (le_max_right _ _) hx) Γ Pl0 T A Ks R F hS ch hIs hAt hOK⟩
 
 theorem bigC_mono {Q Q' : ChQ} (h : BigC Q) (hQ : ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type}
     {A : FamIn D.what₂.LL Γ Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks}

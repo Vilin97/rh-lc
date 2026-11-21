@@ -45,8 +45,8 @@ theorem Fz_mono (ζ : ℕ → Om l) (χ : GQ l →* ℤ_[l]ˣ) (cZ0 : ζ 0 = 1) 
 
 theorem chi_eq_one (ζ : ℕ → Om l) (χ : GQ l →* ℤ_[l]ˣ) (cZ0 : ζ 0 = 1) (cZs : ∀ m, ζ (m + 1) ^ l = ζ m) (cZ1 : ζ 1 ≠ 1)
     (cχ : ∀ (g : GQ l) (m : ℕ) (x : Om l), x ^ (l ^ m) = 1 → g x = x ^ (PadicInt.toZModPow m (χ g : ℤ_[l])).val) (g : GQ l) (hg : g ∈ (⨆ n, Fz (ζ n)).fixingSubgroup) : χ g = 1 := by
-  ext
-  rw [← PadicInt.ext_of_toZModPow]
+  apply Units.ext
+  apply PadicInt.ext_of_toZModPow.mp
   intro n
   have : NeZero (l ^ n) := ⟨(pow_pos (Fact.out : l.Prime).pos _).ne'⟩
   have h1 := cχ g n _ (zeta_prim ζ χ cZ0 cZs cZ1 cχ n).pow_eq_one

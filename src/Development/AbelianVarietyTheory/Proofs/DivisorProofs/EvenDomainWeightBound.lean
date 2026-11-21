@@ -59,12 +59,17 @@ theorem petW_le_of_homN_le : ∀ (D : D7) (T : Core D) (j : ℕ) (Y : Deep T j) 
             (Y.dict (Formalism.L2.Pj.goodOf Y.d.c₂ σ) q.out) = 0 := by
           simp [AllWt.homN, AllWt.ptN, rdU, hz, ReciprocityTheory.ChartRestriction.G.FD.Data.pnorm]
         rw [h0]; exact hB
-    have h1 := MeasureTheory.eLpNorm_le_of_ae_enorm_bound (p := 2) (μ := μ) (Filter.Eventually.of_forall hb)
-    have h2 : MeasureTheory.eLpNorm (fun q : AutQ (D.sp.W j) => AllWt.homN (Y.U (Formalism.L2.Pj.goodOf Y.d.c₂ σ)) (xiR D) G f
-        (Y.dict (Formalism.L2.Pj.goodOf Y.d.c₂ σ) q.out)) 2 μ ≤ ENNReal.ofReal B := by
-      refine h1.trans ?_
-      rw [smul_eq_mul]
-      exact (mul_le_mul_right (ENNReal.rpow_le_one hμ (by positivity)) _).trans (by simp)
+    have h1 : MeasureTheory.eLpNorm' (fun q : AutQ (D.sp.W j) =>
+        AllWt.homN (Y.U (Formalism.L2.Pj.goodOf Y.d.c₂ σ)) (xiR D) G f
+          (Y.dict (Formalism.L2.Pj.goodOf Y.d.c₂ σ) q.out)) 2 μ ≤
+        MeasureTheory.eLpNorm' (fun _ : AutQ (D.sp.W j) => B) 2 μ := by
+      apply MeasureTheory.eLpNorm'_mono_eNorm_ae (by norm_num)
+      exact Filter.Eventually.of_forall (fun q => by simpa [Real.eNorm_eq_ofReal hB] using hb q)
+    rw [MeasureTheory.eLpNorm'_const B (by norm_num), Real.eNorm_eq_ofReal hB] at h1
+    have h2 : MeasureTheory.eLpNorm' (fun q : AutQ (D.sp.W j) =>
+        AllWt.homN (Y.U (Formalism.L2.Pj.goodOf Y.d.c₂ σ)) (xiR D) G f
+          (Y.dict (Formalism.L2.Pj.goodOf Y.d.c₂ σ) q.out)) 2 μ ≤ ENNReal.ofReal B := by
+      exact h1.trans ((mul_le_mul_right (ENNReal.rpow_le_one hμ (by positivity)) _).trans (by simp))
     exact ENNReal.toReal_le_of_le_ofReal hB h2
   refine ⟨key _ ?_, fun Z => key _ (AllWt.muPart_univ_le _ _ _)⟩
   rw [← AllWt.muPart_univ (D.sp.W j) (Y.dict (Formalism.L2.Pj.goodOf Y.d.c₂ σ))]

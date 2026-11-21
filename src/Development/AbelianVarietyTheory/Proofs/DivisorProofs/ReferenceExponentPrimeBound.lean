@@ -72,7 +72,7 @@ theorem different_vp_eq_zero {E : Type} [Field E] [NumberField E] [IsCMField E] 
   have : ¬ q ∣ (discr E).natAbs := fun hd => h (Nat.mem_primeFactors.2 ⟨hq, (hd.mul_left _).mul_right _,
     mul_ne_zero (mul_ne_zero (mul_ne_zero two_ne_zero H.d_prime.ne_zero) (Int.natAbs_ne_zero.2 (discr_ne_zero E)))
       (Nat.lcm_ne_zero (by have := l.three_le; omega) l.A_pos.ne')⟩)
-  rw [different_vp, padicValNat.eq_zero_of_not_dvd this]
+  rw [different_vp, Nat.padicValNat_def, multiplicity_eq_zero_of_not_dvd this]
   simp
 
 theorem refExp_vp_le_of_laws {E : Type} [Field E] [NumberField E] [IsCMField E] [IsGalois ℚ E]

@@ -201,6 +201,8 @@ theorem eq_of_infOf_eq {m : ℕ} {a b : Fin m → ℤ} (ha : Antitone a) (hb : A
       (Finset.univ.val.map fun i : Fin m => c i - (i : ℕ)).map fun z : ℤ => (z : ℂ) + ((m : ℂ) - 1) / 2 := fun c => by
     rw [NG.infOf, Multiset.map_map]
     congr 1
+    funext i
+    simp only [Function.comp_apply]
     push_cast
     ring
   rw [key, key] at h

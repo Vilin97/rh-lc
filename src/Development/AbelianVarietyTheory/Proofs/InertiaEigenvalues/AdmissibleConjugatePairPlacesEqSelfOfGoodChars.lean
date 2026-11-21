@@ -14,7 +14,11 @@ namespace GlobalTheory.AdmSelf
 theorem not_mem_placesOver_of_normV {D : D7} {l M : ℕ} (hM : 0 < M) {P : Pl D.host.E}
     (h : normV P % (2 * l ^ M) = 1) : P ∉ placesOver D.host.E l := by
   intro hl
-  have hmem : ((normV P : ℕ) : 𝓞 D.host.E) ∈ P.asIdeal := Ideal.absNorm_mem P.asIdeal
+  have hmem : ((normV P : ℕ) : 𝓞 D.host.E) ∈ P.asIdeal := by
+    have hn : normV P = Ideal.absNorm P.asIdeal := by
+      rw [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
+    rw [hn]
+    exact Ideal.absNorm_mem P.asIdeal
   have hl' : ((l : ℕ) : 𝓞 D.host.E) ∈ P.asIdeal := hl
   have hdm := Nat.div_add_mod (normV P) (2 * l ^ M)
   rw [h] at hdm

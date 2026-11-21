@@ -47,32 +47,29 @@ theorem eq_zero_of_trace (x : mixedEmbedding.mixedSpace F)
     show x.2 w = 0
     exact Complex.ext hre him
 
-theorem isPairing_trP (κ : Type) [Fintype κ] : IsPairing (trP F κ) where
-  addL x x' y := by
-    simp only [trP, Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)]
-  addR := by
-    intros
-    simp only [trP, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
-  smulL := by
-    intros
-    simp only [trP, Pi.smul_apply, smul_mul_assoc, ← Finset.smul_sum, map_smul, smul_eq_mul]
-  smulR := by
-    intros
-    simp only [trP, Pi.smul_apply, mul_smul_comm, ← Finset.smul_sum, map_smul, smul_eq_mul]
-  nondegL := by
-    intro x hx
-    funext i
-    apply eq_zero_of_trace
-    intro b
-    have h := hx (Pi.single i b)
-    simpa [trP, Pi.single_apply, mul_ite, Finset.sum_ite_eq'] using h
-  nondegR := by
-    intro y hy
-    funext i
-    apply eq_zero_of_trace
-    intro b
-    have h := hy (Pi.single i b)
-    simpa [trP, Pi.single_apply, ite_mul, Finset.sum_ite_eq', mul_comm] using h
+theorem isPairing_trP (κ : Type) [Fintype κ] : IsPairing (trP F κ) := by
+  exact {
+    addL x x' y := by
+      simp only [trP, Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)]
+    addR x y y' := by
+      simp only [trP, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
+    smulL c x y := by
+      simp only [trP, Pi.smul_apply, smul_mul_assoc, ← Finset.smul_sum, map_smul, smul_eq_mul]
+    smulR c x y := by
+      simp only [trP, Pi.smul_apply, mul_smul_comm, ← Finset.smul_sum, map_smul, smul_eq_mul]
+    nondegL x hx := by
+      funext i
+      apply eq_zero_of_trace
+      intro b
+      have h := hx (Pi.single i b)
+      simpa [trP, Pi.single_apply, mul_ite, Finset.sum_ite_eq'] using h
+    nondegR y hy := by
+      funext i
+      apply eq_zero_of_trace
+      intro b
+      have h := hy (Pi.single i b)
+      simpa [trP, Pi.single_apply, ite_mul, Finset.sum_ite_eq', mul_comm] using h
+  }
 
 
 variable (F) in
@@ -82,17 +79,14 @@ def evH : AF F →+* mixedEmbedding.mixedSpace F :=
 theorem evI_eq (a : AF F) : evI F a = evH F a := rfl
 
 theorem evI_realAd (c : ℝ) : evI F (realAd F c) = algebraMap ℝ _ c := by
-  first
-    | simp [evI, realAd]
-    | (unfold evI realAd; simp)
+  unfold evI realAd
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
 
 variable {κ : Type}
 
 theorem loc_lift (y : κ → mixedEmbedding.mixedSpace F) : locV (liftV y) = y := by
   funext i
-  first
-    | simp [locV, liftV, evI]
-    | simp [locV, liftV]
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply (y i)
 
 theorem loc_add (x y : κ → AF F) : locV (x + y) = locV x + locV y := by
   funext i
@@ -258,7 +252,43 @@ theorem gram_xx (hA : H'.IsAdapted σ B W W₁ i₀ i₁) :
 
 theorem span_plane (hS : W.IsSkew σ B r' s') (hA : H'.IsAdapted σ B W W₁ i₀ i₁) (z : Fin d → E) :
     ∃ (s t : E) (u : Fin d₁ → E), z = s • H'.x + H'.ι *ᵥ u + t • H'.y := by
-  have htop : Submodule.span E (W.L : Set (Fin d → E)) = ⊤ := hS.lat.span_eq_top
+  haveI : Submodule.IsLattice E W.L := hS.lat
+  have htop : Submodule.span E (W.L : Set (Fin d → E)) = ⊤ := by
+    rw [eq_top_iff]
+    intro y _
+    obtain ⟨generators, hgen⟩ := Submodule.IsLattice.fg E W.L
+    obtain ⟨a, ha, hclear⟩ :=
+      exists_integral_multiples ℤ ℚ (generators.image (form σ W.J y))
+    -- Clear denominators on the generators, then use self-duality.
+    have hint (x : Fin d → E) (hx : x ∈ W.L) :
+        IsIntegral ℤ (form σ W.J (a • y) x) := by
+      rw [← hgen] at hx
+      induction hx using Submodule.span_induction with
+      | mem x hx =>
+        rw [form, smul_dotProduct]
+        exact hclear _ (Finset.mem_image_of_mem _ hx)
+      | zero =>
+        simp only [form, Pi.zero_apply, map_zero]
+        change IsIntegral ℤ ((a • y) ⬝ᵥ W.J *ᵥ (0 : Fin d → E))
+        rw [Matrix.mulVec_zero, dotProduct_zero]
+        exact isIntegral_zero
+      | add x x' _ _ hx hx' =>
+        have hσ : (fun i => σ ((x + x') i)) = (fun i => σ (x i)) + fun i => σ (x' i) := by
+          funext i
+          simp only [Pi.add_apply, map_add]
+        rw [form, hσ, Matrix.mulVec_add, dotProduct_add]
+        exact hx.add hx'
+      | smul b x _ hx =>
+        have hσ : (fun i => σ ((b • x) i)) = σ (algebraMap _ E b) • fun i => σ (x i) := by
+          funext i
+          simp [Pi.smul_apply, Algebra.smul_def, smul_eq_mul]
+        rw [form, hσ, Matrix.mulVec_smul, dotProduct_smul, smul_eq_mul]
+        exact ((RingOfIntegers.isIntegral_coe b).map σ.toRingHom.toIntAlgHom).mul hx
+    have hy : a • y ∈ W.L := (hS.dual _).2 fun x hx o =>
+      Algebra.isIntegral_trace ((RingOfIntegers.isIntegral_coe o).mul (hint x hx))
+    have hmem := Submodule.subset_span (R := E) (s := (W.L : Set (Fin d → E))) hy
+    rw [← Int.cast_smul_eq_zsmul E] at hmem
+    exact (Submodule.smul_mem_iff _ (Int.cast_ne_zero.mpr ha)).mp hmem
   have hz : z ∈ Submodule.span E (W.L : Set (Fin d → E)) := by
     rw [htop]
     exact Submodule.mem_top

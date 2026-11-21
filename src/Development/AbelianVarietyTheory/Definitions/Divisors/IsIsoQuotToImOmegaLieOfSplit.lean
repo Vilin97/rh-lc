@@ -287,16 +287,25 @@ section Act
 variable {O : Type} [CommRing O] {G H : Over S} [GrpObj G] [GrpObj H] [QuasiSeparated G.hom]
   [QuasiSeparated H.hom] (i : OAct O G) (σ : O →+* Γ(S, ⊤))
 
-def omegaAct : O →+* End (omega G) :=
-  RingHom.mk' (α := O) (β := End (omega G))
-    { toFun a := @omegaMap _ _ _ _ _ (i.act a) (i.hom a)
-      map_one' := cotMap_id i.one _
-      map_mul' a b := (cotMap_comp _ _ (i.mul a b).symm _).symm }
-    fun a b => by
-      have := i.hom a
-      have := i.hom b
-      have : IsMonHom (i.act a * i.act b) := i.add a b ▸ i.hom _
-      exact (@omegaMap_congr _ _ _ _ _ _ _ (i.hom _) _ (i.add a b)).trans (omegaMap_mul _ _)
+def omegaAct : O →+* End (omega G) := by
+  have unit_hom (a : O) : η ≫ i.act a = η :=
+    letI := i.hom a
+    IsMonHom.one_hom (i.act a)
+  refine RingHom.mk'
+    { toFun a := End.of (@omegaMap _ _ _ _ _ (i.act a) (i.hom a))
+      map_one' := ?_
+      map_mul' := ?_ } ?_
+  · apply End.ext
+    exact cotMap_id i.one (unit_hom 1)
+  · intro a b
+    apply End.ext
+    exact (cotMap_comp (unit_hom b) (unit_hom a) (i.mul a b).symm (unit_hom (a * b))).symm
+  · intro a b
+    apply End.ext
+    have := i.hom a
+    have := i.hom b
+    have : IsMonHom (i.act a * i.act b) := i.add a b ▸ i.hom _
+    exact (@omegaMap_congr _ _ _ _ _ _ _ (i.hom _) _ (i.add a b)).trans (omegaMap_mul _ _)
 
 def lieAct : O →+* End (Lie G) := dualAct (omegaAct i)
 
@@ -541,7 +550,7 @@ section Examples
 variable {G : Over S} [GrpObj G] [QuasiSeparated G.hom]
 
 theorem actsThrough_omegaAct_int (i : OAct ℤ G) : ActsThrough (omegaAct i) (Int.castRingHom _) :=
-  fun a => congr($(RingHom.ext_int (omegaAct i) (scalarAct _ (Int.castRingHom _))) a)
+  fun a => congr(($(RingHom.ext_int (omegaAct i) (scalarAct _ (Int.castRingHom _))) a).asHom)
 
 theorem actsThrough_lieAct_int (i : OAct ℤ G) : ActsThrough (lieAct i) (Int.castRingHom _) :=
   (actsThrough_omegaAct_int i).dual

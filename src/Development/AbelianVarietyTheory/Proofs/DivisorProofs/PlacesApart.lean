@@ -26,6 +26,7 @@ theorem places_apart {D : D7} {T : Type} (L : LevCh D T) {μ0 : T} (h : L.Is μ0
     obtain ⟨⟨q, hq, hc, -, hne⟩, -⟩ := h.Q_pl t PP hP
     have h1 : (q : 𝓞 D.host.E) ∈ PP.asIdeal := by
       rw [← hc]
+      rw [← Ideal.absNorm_eq_natCard]
       exact Ideal.absNorm_mem PP.asIdeal
     exact hne k (prime_eq_of_mem PP hq (D.host.g_prime k) h1 hk)
   refine ⟨fun PP hP PP' hP' hc => ?_, Finset.disjoint_left.2 fun PP hP hP' => ?_⟩

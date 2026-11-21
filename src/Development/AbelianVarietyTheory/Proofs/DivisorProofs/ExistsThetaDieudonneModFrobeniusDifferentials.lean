@@ -51,11 +51,12 @@ theorem theta_spec (G : PDivGroup p k) :
   · obtain ⟨m, hm⟩ := (hG.1 (G.rigOfOmega w)).2 ⟨w, rfl⟩
     exact ⟨m, inj (by rw [T.rigOfOmega_theta, hm])⟩
   · rw [← hG.2.1 m, ← T.rigOfOmega_theta G m]
-    exact ⟨fun h => by rw [h, map_zero], fun h => inj (by rw [h, map_zero])⟩
+    exact ⟨fun h => by rw [h, map_zero]; rfl, fun h => inj (by rw [h, map_zero]; rfl)⟩
   · apply inj
     rw [T.rigOfOmega_theta, G.rigOfOmega.map_smul, T.rigOfOmega_theta, (T.V G).map_smulₛₗ,
       ← WittVector.frobeniusEquiv_apply, RingEquiv.coe_toRingHom, RingEquiv.symm_apply_apply,
       (T.red G).map_smulₛₗ]
+    rfl
   · apply inj
     have hV := (GlobalTheory.T.dieudonneTheory_V_eq_verschiebung_injective p T k G).2.2.2.2 H f m
     have hF := (GlobalTheory.T.dieudonneFunctorBase_functor_properties p (fun _ _ _ => True) T.base k G H H trivial trivial trivial).2.2.2.2.2.1 f

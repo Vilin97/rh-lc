@@ -74,6 +74,8 @@ def torsAct (f : A ⟶ A) [IsMonHom f] (hf : f ≫ mulN A n = mulN A n ≫ f) : 
   pullback.lift (torsion.ι A n ≫ f) (toUnit _) (by
     rw [Category.assoc, hf, ← Category.assoc, ι_mulN, Category.assoc, IsMonHom.one_hom])
 
+@[simp]
+theorem torsAct_ι (f : A ⟶ A) [IsMonHom f] (hf : f ≫ mulN A n = mulN A n ≫ f) :
     torsAct n f hf ≫ torsion.ι A n = torsion.ι A n ≫ f := pullback.lift_fst _ _ _
 
 theorem exists_openClosed {Ix : Type} [DecidableEq Ix] (act : Ix → (A ⟶ A)) [∀ a, IsMonHom (act a)]
@@ -81,6 +83,7 @@ theorem exists_openClosed {Ix : Type} [DecidableEq Ix] (act : Ix → (A ⟶ A)) 
     (t : Finset Ix) :
     ∃ (Z : Over S) (j : Z ⟶ torsion A n), Mono j ∧ IsOpenImmersion j.left ∧ IsClosedImmersion j.left ∧
       ∀ (W : Over S) (y : W ⟶ torsion A n), (∃ z, z ≫ j = y) ↔ ∀ a ∈ t, y ≫ torsion.ι A n ≫ act a = 1 := by
+  have hEta : torsEta n ≫ torsion.ι A n = η[A] := pullback.lift_fst _ _ _
   have hsec : IsOpenImmersion (torsEta (A := A) n).left ∧ IsClosedImmersion (torsEta (A := A) n).left :=
     GlobalTheory.isOpenImmersion_and_isClosedImmersion_of_section_of_etale (torsion A n).hom _ (Over.w (torsEta n))
   have := hsec.1; have := hsec.2
@@ -107,14 +110,14 @@ theorem exists_openClosed {Ix : Type} [DecidableEq Ix] (act : Ix → (A ⟶ A)) 
       · have e : j ≫ torsion.ι A n ≫ act b = g ≫ torsion.ι A n := by simp [g]
         simp only [Category.assoc]
         rw [e, ← Category.assoc (pullback.fst g _), pullback.condition]
-        simp only [Category.assoc, torsEta_ι]
+        simp only [Category.assoc, hEta]
         rw [← Category.assoc, toUnit_unique (z ≫ pullback.snd g (torsEta n)) (toUnit W)]; rfl
       · exact (hpts W _).1 ⟨z ≫ pullback.fst _ _, Category.assoc _ _ _⟩ b hb
     · intro h
       obtain ⟨w, hw⟩ := (hpts W y).2 (fun b hb => h b (Finset.mem_insert_of_mem hb))
       have hwg : w ≫ g = toUnit W ≫ torsEta n := by
         rw [← cancel_mono (torsion.ι A n)]
-        simp only [g, Category.assoc, torsAct_ι, torsEta_ι]
+        simp only [g, Category.assoc, torsAct_ι, hEta]
         rw [← Category.assoc w j, hw, h a (Finset.mem_insert_self a t)]; rfl
       exact ⟨pullback.lift w (toUnit W) hwg, by rw [← Category.assoc, pullback.lift_fst, hw]⟩
 

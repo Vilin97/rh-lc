@@ -46,7 +46,7 @@ theorem continuous_iB [FiniteDimensional F E] [IsTopologicalRing K] (P : PlaceMa
       P.inj ((Algebra.TensorProduct.basis K (Module.finBasis F E)).repr y k) •
         ((1 : AF F) ⊗ₜ[F] (Module.finBasis F E) k) := funext (iB_eq_sum P)
   rw [h]
-  exact continuous_finset_sum _ fun k _ =>
+  exact continuous_finsetSum _ fun k _ =>
     Continuous.smul (f := fun y => P.inj ((Algebra.TensorProduct.basis K (Module.finBasis F E)).repr y k))
       (g := fun _ => (1 : AF F) ⊗ₜ[F] (Module.finBasis F E) k) (P.cont_inj.comp (hc k)) continuous_const
 

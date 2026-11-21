@@ -19,7 +19,7 @@ namespace GlobalTheory.NgalENM
 
 theorem EN_mem_Man : GlobalTheory.Published.FontaineBcris → ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (ϖ : PiSys l e) (LL : FinExt l) [HasUnr a LL] [TameDescentExponentData ↥LL.1 l e a], l ≠ 2 → ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (P : PhiMod ↥(OL LL) ↥LL.1 l e a ι) (T : QLat LL) (I : Ident (thetaW a LL) ϖ P T) (jB : (ι → OB l ↥(OL LL)) ≃ₗ[OB l ↥(OL LL)] TW (OB l ↥(OL LL)) T) (Pl : LocPrime l) (AI : LocAinf l Pl), IsStd Pl AI → IsCrisCmp I jB → IsHoriz (thetaW a LL) ϖ (sQ l) P jB → ∀ m ∈ P.M, P.EN m ∈ P.Man := by
   intro hB l _ a e _ _ ϖ LL _ _ hl ι _ _ P T I jB Pl AI hS hC hH m hm
-  obtain ⟨n, hn⟩ := GlobalTheory.T.exists_eisensteinPow_smul_monodromy_mem_breuilKisin _ _ l e a ι P
+  obtain ⟨n, hn⟩ := GlobalTheory.T.exists_eisensteinPow_smul_monodromy_mem_breuilKisin ↥(OL LL) ↥LL.1 l e a ι P
   have hv := hn m hm
   obtain ⟨jD, hjD⟩ := GlobalTheory.T.kisinModule_tensor_bdRPlus_eq_lattice l a e _ _ (thetaW a LL) ϖ ι P T I
   let w : ZMod a → ι → Ahat ↥(OL LL) ↥LL.1 l e := fun τ i =>

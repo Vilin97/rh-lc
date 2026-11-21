@@ -193,7 +193,7 @@ theorem isLocUnif (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
       exact h𝔭.ne_top
     obtain ⟨𝔟, hb, hnd⟩ := (FiniteMultiplicity.of_not_isUnit hnu hc').exists_eq_pow_mul_and_not_dvd
     rw [Ideal.dvd_iff_le] at hnd
-    obtain ⟨t, ht, ht'⟩ := SetLike.not_le_iff_exists.1 hnd
+    obtain ⟨t, ht, ht'⟩ := IsConcreteLE.not_le_iff_exists.1 hnd
     generalize multiplicity 𝔭 (Ideal.span {n₀}) = l at hb
     refine ⟨l, mem_SP.2 ⟨t, ht', ?_⟩⟩
     have h1 : π₀ ^ l * t ∈ Ideal.span {n₀} := by

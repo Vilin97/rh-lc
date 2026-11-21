@@ -63,7 +63,7 @@ variable {a b : ℕ} (τ : D.what₂.Tau) (ε : Fin a → Bool) (ε' : Fin b →
 theorem sgn_sq (e : Bool) : sgn e * sgn e = 1 := by cases e <;> simp [sgn]
 
 theorem cc_rai_low (i i' : Fin b) (j j' : Fin a) :
-    cc ((raiO τ ε ε' i j * lowO τ ε ε' i' j') (1 : PolF D b a)) =
+    MvPolynomial.constantCoeff ((raiO τ ε ε' i j * lowO τ ε ε' i' j') (1 : PolF D b a)) =
       if i = i' ∧ j = j' ∧ ε' i ≠ ε j then -1 else 0 := by
   classical
   by_cases h1 : ε' i' = ε j'
@@ -95,7 +95,7 @@ theorem sum_half (e : Bool) {m : ℕ} (ε₁ : Fin m → Bool) :
   cases e <;> cases ε₁ i <;> simp [sgn] <;> norm_num
 
 theorem cc_fockS (Y : Matrix (Fin a) (Fin a) ℂ) :
-    cc (fockS τ ε ε' Y (1 : PolF D b a)) = ∑ j, Y j j * (sgn (ε j) * (idx ε' : ℂ) / 2) := by
+    MvPolynomial.constantCoeff (fockS τ ε ε' Y (1 : PolF D b a)) = ∑ j, Y j j * (sgn (ε j) * (idx ε' : ℂ) / 2) := by
   classical
   unfold fockS
   set_option synthInstance.maxHeartbeats 100000 in
@@ -116,7 +116,7 @@ theorem cc_fockS (Y : Matrix (Fin a) (Fin a) ℂ) :
   · simp
 
 theorem cc_fockT (Y : Matrix (Fin b) (Fin b) ℂ) :
-    cc (fockT τ ε ε' Y (1 : PolF D b a)) = ∑ i, Y i i * (sgn (ε' i) * (idx ε : ℂ) / 2) := by
+    MvPolynomial.constantCoeff (fockT τ ε ε' Y (1 : PolF D b a)) = ∑ i, Y i i * (sgn (ε' i) * (idx ε : ℂ) / 2) := by
   classical
   unfold fockT
   set_option synthInstance.maxHeartbeats 100000 in
@@ -137,14 +137,14 @@ theorem cc_fockT (Y : Matrix (Fin b) (Fin b) ℂ) :
   · simp
 
 theorem cc_subst (g : Matrix (Fin a) (Fin a) ℂ) (k : Matrix (Fin b) (Fin b) ℂ) (R : PolF D b a) :
-    cc (subst τ ε ε' g k R) = cc R := by
+    MvPolynomial.constantCoeff (subst τ ε ε' g k R) = MvPolynomial.constantCoeff R := by
   classical
   induction R using MvPolynomial.induction_on with
   | C r => rw [← MvPolynomial.algebraMap_eq, AlgHom.commutes]
   | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, hp, MvPolynomial.constantCoeff_X]
-    have : cc (subst τ ε ε' g k (MvPolynomial.X v)) = 0 := by
+    have : MvPolynomial.constantCoeff (subst τ ε ε' g k (MvPolynomial.X v)) = 0 := by
       simp only [subst, MvPolynomial.aeval_X]
       split_ifs <;> simp [MvPolynomial.smul_eq_C_mul]
     rw [this]
@@ -412,7 +412,7 @@ open scoped Classical
 variable {D : D7} {V W : HSp D} {θ : InfFam D} {ψ : AddChar (AF D.host.F) ℂ} {χS χT : (AE D)ˣ →* Circle}
   {ω : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)}
 
-theorem cc_smul_one {ι' : Type} (c : ℂ) : cc (c • (1 : MvPolynomial ι' ℂ)) = c := by
+theorem cc_smul_one {ι' : Type} (c : ℂ) : MvPolynomial.constantCoeff (c • (1 : MvPolynomial ι' ℂ)) = c := by
   simp [MvPolynomial.smul_eq_C_mul]
 
 theorem real_lie {n : ℕ} {G X : Matrix (Fin n) (Fin n) ℂ} (t : ℝ) (hX : Xᴴ * G + G * X = 0) :
@@ -433,11 +433,11 @@ theorem kappa_core {U : HSp D} {ι' : Type} (hθ : IsInfFam θ) (hω : IsWeilDat
     (hD : ∀ X ∈ lieAt U τ, ∀ P z, HasDerivAt (fun t : ℝ => ω (ι (oneP θ U τ X t)) (E P) z)
       (E (Q X P + κ X • P) z) 0)
     (x : Bool → ℤ) (sub : Matrix (Fin U.rank) (Fin U.rank) ℂ → MvPolynomial ι' ℂ →ₐ[ℂ] MvPolynomial ι' ℂ)
-    (hsub : ∀ h R, cc (sub h R) = cc R)
+    (hsub : ∀ h R, MvPolynomial.constantCoeff (sub h R) = MvPolynomial.constantCoeff R)
     (hK : ∀ h ∈ Formalism.REAL.Kset (C.ε τ), ∀ P, ω (ι (C.elt θ τ h)) (E P) =
       (signBlockDeterminant (C.ε τ) true h ^ x true * signBlockDeterminant (C.ε τ) false h ^ x false) • E (sub h P))
     (X : Matrix (Fin U.rank) (Fin U.rank) ℂ) (hX : X ∈ lieAt U τ) :
-    κ X = ∑ j, (C.fr τ * X * (C.fr τ)⁻¹) j j * (x (C.ε τ j) : ℂ) - cc (Q X 1) := by
+    κ X = ∑ j, (C.fr τ * X * (C.fr τ)⁻¹) j j * (x (C.ε τ j) : ℂ) - MvPolynomial.constantCoeff (Q X 1) := by
   have hF : IsUnit (C.fr τ).det := (Matrix.isUnit_iff_isUnit_det _).1 (C.fr_unit τ)
   have hG := C.fr_gram τ
   have hP : ∀ X ∈ lieAt U τ, ∀ P p z, HasDerivAt (fun t : ℝ => ω (p * ι (oneP θ U τ X t)) (E P) z)
@@ -473,7 +473,7 @@ theorem kappa_core {U : HSp D} {ι' : Type} (hθ : IsInfFam θ) (hω : IsWeilDat
       exact der_add hθ 𝒮 hc hd (φ := fun g => ω (ι g) (E 1) z) ⟨_, z, hE 1, rfl⟩ hX hY hXY
         (hD X hX 1 z) (hD Y hY 1 z) (hD _ hXY 1 z)
     rw [← map_add (f := _)] at key
-    have k2 := congrArg cc (hinj key)
+    have k2 := congrArg MvPolynomial.constantCoeff (hinj key)
     rw [hQ] at k2
     simp only [LinearMap.add_apply, map_add (f := _), cc_smul_one] at k2
     linear_combination k2
@@ -495,7 +495,7 @@ theorem kappa_core {U : HSp D} {ι' : Type} (hθ : IsInfFam θ) (hω : IsWeilDat
   have hlie : ∀ {Z}, (Zᴴ * gramAt D U τ + gramAt D U τ * Z = 0) → Z ∈ lieAt U τ := fun h => h
   have hXl : Xᴴ * gramAt D U τ + gramAt D U τ * X = 0 := hX
   have hKc : κ (partK (C.fr τ) (C.ε τ) X) = ∑ j, (C.fr τ * X * (C.fr τ)⁻¹) j j * (x (C.ε τ j) : ℂ) -
-      cc (Q (partK (C.fr τ) (C.ε τ) X) 1) := by
+      MvPolynomial.constantCoeff (Q (partK (C.fr τ) (C.ε τ) X) 1) := by
     have hZ := hlie (partK_lie hF hG hXl)
     have e1 : ∀ t : ℝ, ω (ι (oneP θ U τ (partK (C.fr τ) (C.ε τ) X) t)) (E 1) =
         (signBlockDeterminant (C.ε τ) true (NormedSpace.exp (t • (C.fr τ * partK (C.fr τ) (C.ε τ) X * (C.fr τ)⁻¹))) ^ x true *
@@ -513,10 +513,10 @@ theorem kappa_core {U : HSp D} {ι' : Type} (hθ : IsInfFam θ) (hω : IsWeilDat
       rw [map_smul, Pi.smul_apply, smul_eq_mul]
       refine h2.unique (h1.congr_of_eventuallyEq (Filter.Eventually.of_forall fun t => ?_))
       simp only [e1, Pi.smul_apply, smul_eq_mul]
-    have k2 := congrArg cc (hinj e2)
+    have k2 := congrArg MvPolynomial.constantCoeff (hinj e2)
     simp only [map_add (f := _), cc_smul_one, partK_diag hF] at k2
     linear_combination k2
-  have hPc : κ (partP (C.fr τ) (C.ε τ) X) = -cc (Q (partP (C.fr τ) (C.ε τ) X) 1) := by
+  have hPc : κ (partP (C.fr τ) (C.ε τ) X) = -MvPolynomial.constantCoeff (Q (partP (C.fr τ) (C.ε τ) X) 1) := by
     have hZl := partP_lie hF hG hXl
     have hZ := hlie hZl
     set Z := partP (C.fr τ) (C.ε τ) X with hZdef
@@ -561,7 +561,7 @@ theorem kappa_core {U : HSp D} {ι' : Type} (hθ : IsInfFam θ) (hω : IsWeilDat
         rw [← map_mul ι, hcomm, map_mul ι, map_mul ω, Module.End.mul_apply, h4, map_smul, Pi.smul_apply, smul_eq_mul,
           one_mul]
       exact mul_left_cancel₀ hd0 h3
-    have k2 := congrArg cc (hinj key)
+    have k2 := congrArg MvPolynomial.constantCoeff (hinj key)
     rw [hsub, hQn] at k2
     simp only [LinearMap.neg_apply, map_add (f := _), map_neg, cc_smul_one] at k2
     have k3 := hadd Z hZ (-Z) hnZ

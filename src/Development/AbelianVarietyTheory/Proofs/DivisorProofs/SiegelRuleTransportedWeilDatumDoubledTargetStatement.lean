@@ -38,4 +38,5 @@ theorem _root_.GlobalTheory.T.siegelRule_transported_weilDatum_doubledTarget : â
               ((GlobalTheory.WeilM.diagCols (Fin T.rank) : Matrix (Fin T.rank âŠ• Fin T.rank) (Fin T.rank) (AE D)).submatrix
                 finSumFinEquiv.symm id)
               (omp.comp (MonoidHom.inl _ _)) := by
-  first | exact @GlobalTheory.DblTargetSiegel.siegelRule_dblTarget | exact GlobalTheory.DblTargetSiegel.siegelRule_dblTarget | (intros; apply GlobalTheory.DblTargetSiegel.siegelRule_dblTarget <;> assumption)
+  set_option maxHeartbeats 10000000 in
+    exact @GlobalTheory.DblTargetSiegel.siegelRule_dblTarget

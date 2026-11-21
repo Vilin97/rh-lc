@@ -204,23 +204,27 @@ end Data
 section Vals
 
 theorem isHt_sub {G : Type} [Group G] [TopologicalSpace G] {Γ K P : Subgroup G} {a b : G → ℝ} (h1 : IsHt Γ K P a)
-    (h2 : IsHt Γ K ⊤ b) : IsHt Γ K P fun g => a g - b g where
-  left p hp g := by
+    (h2 : IsHt Γ K ⊤ b) : IsHt Γ K P fun g => a g - b g := by
+  refine { left := ?_, right := ?_, rat := ?_, cont := h1.cont.sub h2.cont }
+  · intro p hp g
     have e1 := h1.left p hp g
     have e2 := h2.left p (Subgroup.mem_top p) g
     simp only [e1, e2]; ring
-  right g k hk := by simp only [h1.right g k hk, h2.right g k hk]
-  rat γ hγ hp := by simp only [h1.rat γ hγ hp, h2.rat γ hγ (Subgroup.mem_top γ), sub_zero]
-  cont := h1.cont.sub h2.cont
+  · intro g k hk
+    simp only [h1.right g k hk, h2.right g k hk]
+  · intro γ hγ hp
+    simp only [h1.rat γ hγ hp, h2.rat γ hγ (Subgroup.mem_top γ), sub_zero]
 
 theorem isHt_neg {G : Type} [Group G] [TopologicalSpace G] {Γ K : Subgroup G} {b : G → ℝ}
-    (h : IsHt Γ K ⊤ b) : IsHt Γ K ⊤ fun g => - b g where
-  left p hp g := by
+    (h : IsHt Γ K ⊤ b) : IsHt Γ K ⊤ fun g => - b g := by
+  refine { left := ?_, right := ?_, rat := ?_, cont := h.cont.neg }
+  · intro p hp g
     have e := h.left p hp g
     simp only [e]; ring
-  right g k hk := by simp only [h.right g k hk]
-  rat γ hγ hp := by simp only [h.rat γ hγ hp, neg_zero]
-  cont := h.cont.neg
+  · intro g k hk
+    simp only [h.right g k hk]
+  · intro γ hγ hp
+    simp only [h.rat γ hγ hp, neg_zero]
 
 theorem isHt_inv {G : Type} [Group G] [TopologicalSpace G] {Γ K P : Subgroup G} {a : G → ℝ} (h : IsHt Γ K P a)
     (p : G) (hp : p ∈ P) : a p⁻¹ = - a p := by

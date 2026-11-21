@@ -486,7 +486,7 @@ theorem piece (R : RealDat D A Ks) (hL : R.toLevCh.Is A.μ0) (hω : R.thP_ωP) (
     have := GlobalTheory.SplitHecke.actO_inv_actO (1 : GA D (Vc D i)) h y
     rwa [inv_one] at this
   have hsh : Shape R.ψ (Vc D i) (Wc D i) e A₁ x₀ F := by
-    refine shape_of_forms hψ he.1 (fun z hz => hz.1) hFt (fun ℓ hℓ y hy z hz => ?_) fun ℓ hℓ y hy h0 => ?_
+    refine shape_of_forms hψ he.1 (A := A₁) (fun z hz => hz.1) hFt (fun ℓ hℓ y hy z hz => ?_) fun ℓ hℓ y hy h0 => ?_
     · have hyz := isHalf_add hy hz.1
       have e1 : y + z - x₀ ∈ A₁ ↔ y - x₀ ∈ A₁ := by
         have hz2 := ((mem_halfPow R i).1 hz).2
@@ -522,7 +522,7 @@ theorem piece (R : RealDat D A Ks) (hL : R.toLevCh.Is A.μ0) (hω : R.thP_ωP) (
   obtain ⟨b1, b2, b3⟩ := GlobalTheory.T.cmPlaceOperator_preserves_type_averages_shape D G Pl0 T A Ks R hω i t Sb v hvS h⁻¹ (fun a b => by rw [← he.2.1]; exact hh' a b) c
     (fun y hy => half_idem he.1 he.2.1 (hc y hy)) f hT hC hO
   have b4 : LikeOff R i t (dropPl Sb v) F :=
-    ⟨hFt, relOff_drop he.1 he.2.1 (fun z hz => hz.1) (fun x hx hn => hdual x hx fun h => hn ⟨hx, h⟩) hvp hsh hvS b3.2⟩
+    ⟨hFt, relOff_drop he.1 he.2.1 (A := A₁) (fun z hz => hz.1) (fun x hx hn => hdual x hx fun h => hn ⟨hx, h⟩) hvp hsh hvS b3.2⟩
   refine ⟨R.ωP i t (1, h) F, ⟨h, F, b1, b2, b4, rfl⟩, hW.om_pres _ _ hFt, fun ℓ hℓ x hx => ?_⟩
   have e1 := hmove ℓ hℓ x hx _ (hW.om_pres (1, h) _ hFt)
   rw [om_inv_om, hB ℓ hℓ _ (GlobalTheory.SplitHecke.isHalf_actO _ _ hx), hmove ℓ hℓ x hx f hf] at e1

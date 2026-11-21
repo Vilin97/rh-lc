@@ -69,6 +69,8 @@ theorem eigWith_of_diagWith {O F k Q : Type} [CommRing O] [Field F] [Field k] [A
     intro E _ _
     rw [Polynomial.map_multiset_prod, Multiset.map_map, Multiset.map_map]
     congr 2
+    funext s
+    simp
   rw [key, LinearMap.charpoly_baseChange] at h1
   refine ⟨inferInstance, ?_⟩
   rw [key, LinearMap.charpoly_baseChange, Polynomial.map_injective _ hinj h1]
@@ -258,8 +260,8 @@ theorem mem_NΔl_iff (hr : ∀ a, (∃ b, J b = a) ↔ ∀ δ ∈ W.DelF, W.γ�
     exact ⟨c, by rw [hxa, th_apply]; simp only [hc]⟩
   · rintro ⟨c, rfl⟩
     refine ⟨⟨th_mem_N W T J b i c, fun δ hδ => ?_⟩, th W T J b i c, th_mem_N W T J b i c, ?_⟩
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [th_apply, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [th_apply, map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [γD_smulA, γA_single, (hb _).2 δ hδ, (hr _).1 ⟨_, rfl⟩ δ hδ]
     · change (letE i : LetA O n) • th W T J b i c = _
@@ -644,7 +646,8 @@ theorem finrank_lattice {G LL O V : Type} [Group G] [Field LL] [CommRing O] [IsD
     [IsPrincipalIdealRing O]
     [IsFractionRing O LL] [AddCommGroup V] [Module LL V] [Module O V] [IsScalarTower O LL V]
     {ρ : Representation LL G V} (L : Lattice (O := O) ρ) : Module.finrank O ↥L.T = Module.finrank LL V := by
-  have : L.T.IsLattice LL := ⟨L.fg, L.span⟩
-  rw [Module.finrank, Module.finrank, Submodule.IsLattice.rank' LL]
+  have : L.T.IsLattice LL := Submodule.IsLattice.of_fg LL L.fg
+  have : L.T.IsFullLattice LL := ⟨L.span⟩
+  exact Submodule.IsFullLattice.finrank_eq LL L.T
 
 end GlobalTheory.SenLines

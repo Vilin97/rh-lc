@@ -176,7 +176,10 @@ theorem eq_zero_of_apply_one {f : IndSp e ρ} (hf : f ∈ fixed (parInd e ρ) (K
 theorem apply_one_fixed {f : IndSp e ρ} (hf : f ∈ fixed (parInd e ρ) (KO k n)) (g : Levi k m)
     (hg : ∀ a, g a ∈ KO k (m a)) : ρ g (f.1.1 1) = f.1.1 1 := by
   have hm : leviEmb k e g ∈ parab k e := mem_parab_iff.2 fun _ _ i j hab => by
-    simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hab.ne']
+    classical
+    letI : DecidableEq α := Classical.decEq α
+    simp [leviEmb]
+    exact Matrix.blockDiagonal'_apply_ne (fun a => (g a : Matrix (m a) (m a) k)) i j hab.ne'
   have hp : leviProj k e ⟨leviEmb k e g, hm⟩ = g := by
     funext a
     ext i j

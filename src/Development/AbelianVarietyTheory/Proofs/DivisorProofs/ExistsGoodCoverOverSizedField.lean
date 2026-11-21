@@ -29,7 +29,7 @@ open scoped IntermediateField
 namespace GlobalTheory.CovTop.SizedCover
 
 theorem stable_of_normal (R : IntermediateField ℚ ℂ) [hN : Normal ℚ R] (s : ℂ ≃+* ℂ) (a : ℂ) (ha : a ∈ R) : s a ∈ R := by
-  have h := @AlgHom.fieldRange_of_normal ℚ ℂ _ _ _ R (by convert hN; exact Subsingleton.elim _ _)
+  have h := @AlgHom.fieldRange_of_normal ℚ ℂ _ _ _ R (by convert hN)
     (s.toRingHom.toRatAlgHom.comp R.val)
   exact h.le ⟨⟨a, ha⟩, rfl⟩
 

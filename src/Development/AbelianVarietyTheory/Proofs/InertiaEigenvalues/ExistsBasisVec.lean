@@ -186,8 +186,8 @@ theorem finSumAt_core (hC : GlobalTheory.Published.CuspRapidDecay) (R : RealDat 
       rw [this]
       field_simp
     have h3 := (hF.congr_fun e hmeas).re
-    have h4 : Integrable (lowCoefSq R i v) ((R.νW i).restrict (realLev R i)) := by simpa using h3
-    exact h4
+    change IntegrableOn (fun x => Complex.re (lowCoefSq R i v x : ℂ)) (realLev R i) (R.νW i) at h3
+    simpa only [Complex.ofReal_re] using h3
   have hIpos : 0 < I := hI ▸ GlobalTheory.T.integral_lowestKTypeMatrixCoeff_sq_pos D G Pl0 T A Ks R F hL i hLP v hv hGint
 
   obtain ⟨a₀, ha₀, hA⟩ := hAdj th hth v hv n b

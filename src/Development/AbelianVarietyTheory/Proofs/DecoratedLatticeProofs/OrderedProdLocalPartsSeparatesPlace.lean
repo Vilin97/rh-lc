@@ -25,10 +25,9 @@ theorem list_ofFn_prod_eq {M : Type*} [Monoid M] : ∀ {n : ℕ} (f : Fin n → 
   | n + 1, f, i, h => by
     rw [List.ofFn_succ, List.prod_cons]
     rcases Fin.eq_zero_or_eq_succ i with rfl | ⟨i', rfl⟩
-    · rw [List.prod_eq_one, mul_one]
-      intro x hx
-      obtain ⟨j, rfl⟩ := List.mem_ofFn.1 hx
-      exact h _ (Fin.succ_ne_zero j)
+    · have hprod : (List.ofFn fun j : Fin n => f j.succ).prod = 1 :=
+        List.prod_eq_one (List.forall_mem_ofFn_iff.mpr fun j => h _ (Fin.succ_ne_zero j))
+      rw [hprod, mul_one]
     · rw [h 0 (Fin.succ_ne_zero i').symm, one_mul]
       exact list_ofFn_prod_eq (fun j => f j.succ) i' fun j hj => h _ fun e => hj (Fin.succ_injective _ e)
 

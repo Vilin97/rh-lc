@@ -94,7 +94,8 @@ theorem exists_of_last {m : ℕ} {t : T} {i j : ℕ} {X : Node} : ∀ {Y : Node}
     have h2 : edgeOf a = .theta i j := by
       have := congrArg List.getLast? h
       simpa [edges, Path.arrows] using this
-    obtain rfl := eq_down hp.2 h2
+    have ha : a = Arrow.down t i j := eq_down hp.2 h2
+    subst a
     exact ⟨q, HEq.rfl⟩
 
 theorem exists_cut {m : ℕ} {t : T} {i j : ℕ} {X : Node} : ∀ {Y : Node} (p : Path T X Y), OnGrid m t p →
@@ -106,11 +107,13 @@ theorem exists_cut {m : ℕ} {t : T} {i j : ℕ} {X : Node} : ∀ {Y : Node} (p 
     have he : edges (.snoc a q) = edges q ++ [edgeOf a] := by simp [edges, Path.arrows]
     rw [he] at h
     rcases infix_concat' h with h | ⟨l, hl, ha⟩
-    · obtain ⟨A, Bq, rfl⟩ := exists_cut q hp.1 h
+    · obtain ⟨A, Bq, rfl⟩ := exists_cut (m := m) (t := t) (i := i) (j := j) q hp.1 h
       exact ⟨A, .snoc a Bq, rfl⟩
-    · obtain rfl := eq_right hp.2 ha
-      obtain ⟨A, hA⟩ := exists_of_last q hp.1 l hl
-      obtain rfl := eq_of_heq hA
+    · have ha' : a = Arrow.right i j := eq_right (m := m) (t := t) hp.2 ha
+      subst a
+      obtain ⟨A, hA⟩ := exists_of_last (m := m) (t := t) q hp.1 l hl
+      have hq : q = Path.snoc (Arrow.down t i j) A := eq_of_heq hA
+      subst q
       exact ⟨A, .nil, rfl⟩
 
 end GlobalTheory.PathCut

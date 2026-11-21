@@ -160,7 +160,7 @@ theorem leadMinor_extM (A : Fin (R + 1)) (g : Matrix (Ix R S) (Ix R S) ℂ) (c :
       (fun i => i.1)).submatrix (lowEquiv A) (lowEquiv A) =
       Matrix.fromBlocks ((toBlocks₁₁ g).submatrix (fun i : {i : Fin R // (i : ℕ) < A} => i.1) (fun i => i.1)) 0 0
         (Matrix.of fun (_ _ : Unit) => c) := by
-    ext (i | i) (j | j) <;> simp [toBlocks₁₁, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,
+    ext (i | i) (j | j) <;> simp [lowEquiv, toBlocks₁₁, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,
       Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂]
   rw [this, Matrix.det_fromBlocks_zero₂₁, Matrix.det_unique (Matrix.of fun (_ _ : Unit) => c)]; rfl
 

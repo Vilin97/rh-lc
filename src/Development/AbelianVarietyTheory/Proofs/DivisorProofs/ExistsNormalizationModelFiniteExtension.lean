@@ -80,8 +80,7 @@ theorem exists_normalization_model : ∀ (k Ω : Type) [CommRing k] [IsNoetheria
     M.Z.presheaf.stalkSpecializes (M.pt_specializes (IsLocalRing.closedPoint Ω) (genericPoint M.Z)) ≫
       Scheme.stalkClosedPointTo M.pt
   have hρ : fieldPt ρ = M.pt := by
-    simp only [fieldPt, ρ, Spec.map_comp, Category.assoc, Scheme.SpecMap_stalkSpecializes_fromSpecStalk,
-]
+    simp only [fieldPt, ρ, Spec.map_comp, Category.assoc, Scheme.SpecMap_stalkSpecializes_fromSpecStalk]
     exact Scheme.Spec_stalkClosedPointTo_fromSpecStalk M.pt
   let ψ : M.Z.presheaf.stalk (genericPoint M.Z) ⟶ .of Ω' := ρ ≫ CommRingCat.ofHom (algebraMap Ω Ω')
   have hψ : fieldPt ψ = spMap (algebraMap Ω Ω') ≫ M.pt := by

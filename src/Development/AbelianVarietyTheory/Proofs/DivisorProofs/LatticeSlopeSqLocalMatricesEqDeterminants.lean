@@ -70,7 +70,8 @@ theorem relIndex_reindex {ι : Type} [Fintype ι] [DecidableEq ι] {n : ℕ} (e 
     rw [Submodule.map_span, ← Set.range_comp]
     congr 2
     funext j
-    simp [Pi.single_apply, e.symm_apply_eq, eq_comm]
+    ext k
+    simp [hφ, Pi.single_apply, e.symm_apply_eq, eq_comm]
   have h2 : (locLat A).map (φ : (ι → K) →ₗ[𝓞 K] (Fin n → K)) = locLat (fun w => Matrix.reindex e e (A w)) := by
     ext y
     constructor
@@ -181,12 +182,22 @@ theorem GlobalTheory.LocMatSlope.slope_sq_locLat : ∀ (K : Type) [Field K] [Num
       | (funext k; simp [he, Pi.basisFun_apply])
   have hle : Submodule.span (𝓞 K) (Set.range e) ≤ locLat A :=
     Submodule.span_le.2 (by rintro _ ⟨k, rfl⟩; exact smul_single_mem A d hd _)
+  have hspan : Submodule.span K (locLat A : Set (ι → K)) = ⊤ := by
+    apply eq_top_iff.mpr
+    intro x _
+    have hx : x = ∑ i : ι, (x i / (d : K)) • ((d : K) • (Pi.single i 1 : ι → K)) := by
+      funext j
+      simp [Finset.sum_apply, Pi.single_apply, smul_smul, div_mul_cancel₀ _ hdK]
+      rw [Algebra.smul_def, show algebraMap (𝓞 K) K d = (d : K) from rfl, mul_div_cancel₀ _ hdK]
+    rw [hx]
+    exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _
+      (Submodule.subset_span (smul_single_mem A d hd i))
   have hrk : Formalism.HN.rkK (locLat A) = n := by
     unfold Formalism.HN.rkK
-    rw [hL.span_eq_top, finrank_top, Module.finrank_fintype_fun_eq_card]
+    rw [hspan, finrank_top, Module.finrank_fintype_fun_eq_card]
   have hL0 : locLat A ≠ ⊥ := by
     intro h0
-    have h := hL.span_eq_top
+    have h := hspan
     rw [h0, Submodule.bot_coe, Submodule.span_zero_singleton] at h
     exact bot_ne_top h
   have hX : ∀ v : InfinitePlace K, IsUnit ((Y v.embedding)⁻¹).det := fun v => (hG v).1

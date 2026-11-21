@@ -142,7 +142,33 @@ theorem geomAt_transport {b : Base D R} {N : ℕ} (hN : 0 < N) (hNp : N.Coprime 
       ∃ u : R'ˣ, u ^ n = 1 ∧ Out.WeilIs A PP.L (n : ℤ) (ρ g) (ρ h) (unitOn (Units.map φ.toMonoidHom u)) ∧
         Out.WeilIs A PP.L (n : ℤ) (ρ' g) (ρ' h) (unitOn (Units.map φ'.toMonoidHom u)) := by
     intro n hn hnp g h hg hh
-    obtain ⟨u, hu, H⟩ := GlobalTheory.WeilRootLocal.exists_weilIs_root_local S A hA PP cub R' t n g h hg hh
+    have loc : ∀ z : Over.mk t ⟶ A, z ^ n = 1 → ∀ p : (Over.mk t).left,
+        ∃ V : (Over.mk t).left.Opens, p ∈ V ∧
+          ∃ θ : Out.ThetaGrp A PP.L (n : ℤ) (Out.overRes V), θ.pt = Out.overResι V ≫ z := by
+      intro z hz p
+      obtain ⟨θ, hθ⟩ := GlobalTheory.TorsionThetaLocal.exists_theta_of_pow_eq_one S A PP cub R' t n z hz
+      obtain ⟨θ', hθ'⟩ := GlobalTheory.CommutatorPairing.exists_pull PP.isLB θ (Out.overResι ⊤)
+      exact ⟨⊤, trivial, θ', by rw [hθ', hθ]⟩
+    obtain ⟨c, hc⟩ := GlobalTheory.CommutatorPairing.exists_weilIs GlobalTheory.globalFns_holds hA PP.isLB (loc g hg) (loc h hh)
+    have pw : ∀ m : ℕ, Out.WeilIs A PP.L (n : ℤ) (g ^ (m + 1)) h (c ^ (m + 1)) := by
+      intro m
+      induction m with
+      | zero => simpa using hc
+      | succ m ih =>
+        rw [pow_succ g (m + 1), pow_succ c (m + 1)]
+        exact GlobalTheory.DiagPairing.weilIs_mul_left GlobalTheory.globalFns_holds hA PP.isLB ih hc
+    have e := pw n
+    rw [pow_succ g, hg, _root_.one_mul] at e
+    have hcn := GlobalTheory.CommutatorPairing.weilIs_unique GlobalTheory.globalFns_holds hA PP.isLB e hc
+    rw [pow_succ, mul_eq_right] at hcn
+    obtain ⟨u, rfl⟩ : ∃ u : R'ˣ, unitOn u = c :=
+      (Units.mapEquiv (Scheme.ΓSpecIso (CommRingCat.of R')).symm.commRingCatIsoToRingEquiv.toMulEquiv).surjective c
+    have hu : u ^ n = 1 := by
+      apply unitOn_injective_of_commRing
+      show unitOn (u ^ n) = unitOn 1
+      rw [unitOn, unitOn, map_pow, map_one]
+      exact hcn
+    have H := hc
     exact ⟨u, hu, hpull φ n g h u H, hpull φ' n g h u H⟩
   have h10 : ∀ n : ℕ, 0 < n → n.Coprime p → ∀ (x y : Over.mk (spMap φ ≫ t) ⟶ A) (c c' : kˣ),
       Out.WeilIs A PP.L (n : ℤ) x y (unitOn c) → Out.WeilIs A PP.L (n : ℤ) x y (unitOn c') → c = c' :=

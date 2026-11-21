@@ -79,7 +79,7 @@ private theorem exists_res (e : Fin r ↪ Fin n) (h : GA E n) : ∃ T : Sm E n �
       exact ⟨a' + b', fun G => by rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hb, ha, map_add (f := _)]⟩
   refine ⟨(smEq E r).symm.toLinearMap ∘ₗ f ∘ₗ (smEq E n).toLinearMap, fun G x => hf _ x, fun u => ?_⟩
   induction u using TensorProduct.induction_on with
-  | zero => exact ⟨0, fun G => by simp⟩
+  | zero => exact ⟨0, fun G => by simp only [map_zero, LinearMap.zero_apply]⟩
   | tmul c x =>
     obtain ⟨x', hx⟩ := key x
     refine ⟨c ⊗ₜ x', fun G => ?_⟩

@@ -29,7 +29,7 @@ theorem opOf_conj : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : 
   have hc1 : Continuous (opOf (RU E n) t φ') := by
     have e : opOf (RU E n) t φ' = fun x => ∑ g ∈ t.support, t g * φ' (x * g) := funext (key φ')
     rw [e]
-    exact continuous_finset_sum _ fun g _ =>
+    exact continuous_finsetSum _ fun g _ =>
       continuous_const.mul (hφ'.cont.comp (continuous_id.mul continuous_const))
   have hc2 : Continuous (σ z • φ') := hφ'.cont.const_smul _
   have hl1 : ∀ γ ∈ ratU E n, ∀ x, opOf (RU E n) t φ' (γ * x) = opOf (RU E n) t φ' x := by

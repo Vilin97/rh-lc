@@ -130,10 +130,7 @@ theorem selfDual_move (I : IsoMat S S') (Λ : Submodule (𝓞 D.host.E) (Fin S.r
   have hPQ : ∀ y, I.P *ᵥ (I.Q *ᵥ y) = y := fun y => by rw [Matrix.mulVec_mulVec, I.PQ, Matrix.one_mulVec]
   have hQP : ∀ y, I.Q *ᵥ (I.P *ᵥ y) = y := fun y => by rw [Matrix.mulVec_mulVec, I.QP, Matrix.one_mulVec]
   obtain ⟨hl, hd⟩ := h
-  refine ⟨⟨hl.fg.map _, ?_⟩, ?_⟩
-  · rw [latMove, Submodule.map_coe, LinearMap.coe_restrictScalars, Submodule.span_image (Matrix.mulVecLin I.P),
-      hl.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
-    exact fun y => ⟨I.Q *ᵥ y, hPQ y⟩
+  refine ⟨Submodule.IsLattice.of_fg D.host.E (hl.fg.map _), ?_⟩
   · intro y
     rw [mem_latMove, hd (I.Q *ᵥ y)]
     simp only [sumForm_eq]

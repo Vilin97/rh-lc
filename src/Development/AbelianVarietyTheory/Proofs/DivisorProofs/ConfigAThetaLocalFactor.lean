@@ -29,9 +29,9 @@ theorem twPart_lowPart_irreducible : GlobalTheory.ThK.KP → ∀ (F E : Type) [F
       FiniteDimensional ℂ (twPart B G.M om R.p G₁.W H' X.α ((a' : ℝ) / 2) (lowPartInf B G.M R.p)) ∧ KStabL B G.M om R.p G₁.W H' (twPart B G.M om R.p G₁.W H' X.α ((a' : ℝ) / 2) (lowPartInf B G.M R.p)) ∧
       ∀ N : Submodule ℂ R.Pi, N ≤ twPart B G.M om R.p G₁.W H' X.α ((a' : ℝ) / 2) (lowPartInf B G.M R.p) → KStabL B G.M om R.p G₁.W H' N → N = ⊥ ∨ N = twPart B G.M om R.p G₁.W H' X.α ((a' : ℝ) / 2) (lowPartInf B G.M R.p) := by
   intro hKP F E _ _ _ _ _ σ B b a' G G₁ H H' hC X om om' R Rf om₁ om₁' R₁ Rf₁ hM hM₁
-  haveI := GlobalTheory.T.config_first_matched_reps_compat hKP F E σ B b a' G G₁ H H' hC X om om' R Rf om₁ om₁' R₁ Rf₁ hM hM₁
+  haveI := GlobalTheory.LowPartFin.lowPartInf_finiteDimensional hKP F E σ B b a' G G₁ H H' hC X om om' R Rf om₁ om₁' R₁ Rf₁ hM hM₁
   exact ⟨Submodule.finiteDimensional_of_le (twPart_le B G.M om R.p G₁.W H' X.α _ _),
-    GlobalTheory.T.kStabL_twPart_lowPartInf_of_isMatched hKP F E σ B b a' G G₁ H H' hC X om om' R Rf om₁ om₁' R₁ Rf₁ hM hM₁,
-    GlobalTheory.T.config_a_theta_lift_vanishing hKP F E σ B b a' G G₁ H H' hC X om om' R Rf om₁ om₁' R₁ Rf₁ hM hM₁⟩
+    GlobalTheory.TwPartStab.kStabL_twPart hKP F E σ B b a' G G₁ H H' hC X om om' R Rf om₁ om₁' R₁ Rf₁ hM hM₁,
+    GlobalTheory.IndLine.twPart_irred_real hKP F E σ B b a' G G₁ H H' hC X om om' R Rf om₁ om₁' R₁ Rf₁ hM hM₁⟩
 
 end GlobalTheory.IndLine

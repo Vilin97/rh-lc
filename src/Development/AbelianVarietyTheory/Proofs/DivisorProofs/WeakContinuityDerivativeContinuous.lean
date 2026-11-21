@@ -15,7 +15,7 @@ theorem finiteDimensional_multilinear {D : Type} [NormedAddCommGroup D] [NormedS
   haveI : FiniteDimensional ℝ (ContinuousMultilinearMap ℝ (fun _ : Fin n => D) ℂ) :=
     Module.Finite.of_injective
       ((ContinuousMultilinearMap.toMultilinearMapLinear :
-        ContinuousMultilinearMap ℝ (fun _ : Fin n => D) ℂ →ₗ[ℝ] MultilinearMap ℝ (fun _ : Fin n => D) ℂ))
+        ContinuousMultilinearMap ℝ (fun _ : Fin n => D) ℂ →ₗ[ℝ] ((Π _ : Fin n, D) →ₘₗ[ℝ] ℂ)))
       ContinuousMultilinearMap.toMultilinearMap_injective
   exact Module.Finite.of_restrictScalars_finite ℝ ℂ _
 
@@ -34,6 +34,6 @@ theorem continuous_iteratedFDeriv_of_weak {D S : Type} [NormedAddCommGroup D] [N
       (ContinuousMultilinearMap ℝ (fun _ : Fin n => D) ℂ)) => ℂ) i).comp
       ((e : ContinuousMultilinearMap ℝ (fun _ : Fin n => D) ℂ →L[ℂ] _).comp A))
   have h2 : Continuous fun s => e.symm (e (A (f s))) := e.symm.continuous.comp h1
-  simpa [A] using h2
+  simpa [A, GlobalTheory.SchwInt.iterEvalCLM, SchwartzMap.mkCLMtoNormedSpace] using h2
 
 end GlobalTheory.WeakDeriv

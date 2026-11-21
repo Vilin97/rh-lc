@@ -86,8 +86,10 @@ theorem exists_determining_lattice (P : HeightOneSpectrum (𝓞 E)) (N : Submodu
   have : Module.Flat (𝓞 E) N := inferInstance
   have : Module.Projective (𝓞 E) N := Module.Flat.projective_of_finitePresentation
   have : Finite (𝓞 E ⧸ P.asIdeal) := Ideal.finiteQuotientOfFreeOfNeBot _ P.ne_bot
-  have hr : Module.finrank (𝓞 E) N = n := by
-    simpa using finrank_of_span_top N hN.span_eq_top
+  have hr : Module.finrank (𝓞 E) N ≤ n := by
+    letI : Submodule.IsLattice E N := hN
+    rw [← Submodule.IsLattice.finrank_span_eq_finrank E N]
+    simpa using Submodule.finrank_le (Submodule.span E (N : Set (Sp E n)))
   obtain ⟨v, hv⟩ := exists_determining (R := 𝓞 E) (N := N) P.asIdeal
   have hle : N ≤ Formalism.HermitianLatticesTheory.localization₂ P.asIdeal N := fun x hx =>
     ⟨1, P.asIdeal.primeCompl.one_mem, by simpa using hx⟩
@@ -95,8 +97,12 @@ theorem exists_determining_lattice (P : HeightOneSpectrum (𝓞 E)) (N : Submodu
     { toFun := fun x => φ x
       map_add' := fun x y => hφ.1 x (hle x.2) y (hle y.2)
       map_smul' := fun a x => hφ.2 a x (hle x.2) }
-  refine ⟨fun i => v (Fin.cast hr.symm i), fun φ ψ hφ hψ h x hx => ?_⟩
-  have := hv (lin φ hφ) (lin ψ hψ) fun i => h (Fin.cast hr i)
+  classical
+  refine ⟨fun i => if hi : i.val < Module.finrank (𝓞 E) N then v ⟨i.val, hi⟩ else 0,
+    fun φ ψ hφ hψ h x hx => ?_⟩
+  have := hv (lin φ hφ) (lin ψ hψ) fun i => by
+    change φ (v i) = ψ (v i)
+    simpa using h ⟨i.val, lt_of_lt_of_le i.isLt hr⟩
   exact LinearMap.congr_fun this ⟨x, hx⟩
 
 theorem card_fibre_le (ST SG : Finset (HeightOneSpectrum (𝓞 E))) (N : Submodule (𝓞 E) (Sp E n)) :

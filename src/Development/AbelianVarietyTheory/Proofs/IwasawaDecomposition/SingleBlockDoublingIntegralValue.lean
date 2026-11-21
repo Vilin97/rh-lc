@@ -92,14 +92,15 @@ variable {F : Type} [Field F] [TopologicalSpace F] [IsTopologicalRing F]
 
 omit [IsTopologicalRing F] in
 theorem isUnrM_one (O : Subring F) (nrm : AbsoluteValue F ℝ) (r : ℕ) (χ : Fin 0 → F → ℂ) :
-    IsUnrM O nrm r 0 χ (1 : GL (Fin r) F × GL (Fin 0) F →* (ℂ ≃ₗᵢ[ℂ] ℂ)) where
-  smooth x := by
+    IsUnrM O nrm r 0 χ (1 : GL (Fin r) F × GL (Fin 0) F →* (ℂ ≃ₗᵢ[ℂ] ℂ)) := by
+  refine { smooth := ?_, irred := ?_, sph := ?_ }
+  · intro x
     convert isOpen_univ using 1
     ext m
     simp
-  irred W _ := Ideal.eq_bot_or_top W
-  sph := by
-    haveI : Subsingleton (GL (Fin 0) F) := ⟨fun a b => Units.ext (Subsingleton.elim _ _)⟩
+  · intro W _
+    exact Ideal.eq_bot_or_top W
+  · have : Subsingleton (GL (Fin 0) F) := ⟨fun a b => Units.ext (Subsingleton.elim _ _)⟩
     refine ⟨1, by simp, fun _ _ _ _ => rfl, fun _ => 1, Measure.dirac 1, ?_, ?_, ?_, ?_⟩
     · intro b _ k _
       simp

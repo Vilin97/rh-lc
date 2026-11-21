@@ -99,7 +99,7 @@ theorem hasInfExp_of_hasFinPart : ∀ {D : D7} {N : ℕ} (c : HeckeU D N) (e : �
       ((χ (T.toHomUnits z) : Circle) : ℂ) = ∏ τ, ((z τ : ℂ) / ((‖(z τ : ℂ)‖ : ℝ) : ℂ)) ^ (e * c.n τ) := by
     intro z
     refine (denseRange_units (tauE D) hd).induction_on z (isClosed_eq
-      (continuous_subtype_val.comp (hχ.1.comp Tc)) (continuous_finset_prod _ fun τ _ => ?_)) fun k => ?_
+      (continuous_subtype_val.comp (hχ.1.comp Tc)) (continuous_finsetProd _ fun τ _ => ?_)) fun k => ?_
     · have h1 : Continuous fun z : D.what₂.Tau → ℂˣ => (z τ : ℂ) := Units.continuous_val.comp (continuous_apply τ)
       have h2 : ∀ z : D.what₂.Tau → ℂˣ, ((‖(z τ : ℂ)‖ : ℝ) : ℂ) ≠ 0 := fun z =>
         Complex.ofReal_ne_zero.2 (norm_ne_zero_iff.2 (z τ).ne_zero)

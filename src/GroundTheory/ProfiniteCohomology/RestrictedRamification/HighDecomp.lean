@@ -63,8 +63,8 @@ theorem gsDecomp_eq_one_of_unramifiedDegree_eq_one
 theorem continuous_rangeRestrict_gsDecomp : Continuous (gsDecomp K S ιs v).rangeRestrict :=
   (continuous_gsDecomp K S ιs v).subtype_mk _
 
-instance t2Space_galUnramifiedOutside : T2Space (galUnramifiedOutside K.1 ℚ̄ S) :=
-  galois_t2Space K.1 (maxUnramifiedOutside K.1 ℚ̄ S)
+instance t2Space_galUnramifiedOutside : T2Space (galUnramifiedOutside K.1 (AlgebraicClosure ℚ) S) :=
+  galois_t2Space K.1 (maxUnramifiedOutside K.1 (AlgebraicClosure ℚ) S)
 
 instance compactSpace_range_gsDecomp : CompactSpace (gsDecomp K S ιs v).range := by
   refine isCompact_iff_compactSpace.mp ?_

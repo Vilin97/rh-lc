@@ -132,9 +132,12 @@ theorem big_le (b : Blo S r) (s : ℕ) (t : ℝ) (N : ℕ) : ∃ C : ℝ, 0 ≤ 
   refine ⟨C * (nu E r).real Set.univ, by positivity, fun φ B hφ hB g => ?_⟩
   exact (norm_integral_le_of_norm_le_const (.of_forall fun y => hC φ B hφ hB y g)).trans (le_of_eq (by ring))
 
-theorem cls (b : Blo S r) (s : ℕ) (t : ℝ) : Cls (nu E r) (pt r s t) (wt b.f.1) (IsCt r s) where
-  lie F X h := by rw [← uC_ιC]; exact h.uC _
-  meas F h g := by
+theorem cls (b : Blo S r) (s : ℕ) (t : ℝ) : Cls (nu E r) (pt r s t) (wt b.f.1) (IsCt r s) := by
+  refine { lie := ?_, meas := ?_, bdd := ?_ }
+  · intro F X h
+    rw [← uC_ιC]
+    exact h.uC _
+  · intro F h g
     have hc := h.continuous
     obtain ⟨φ, hφ, hF⟩ := h
     obtain ⟨hf, -⟩ := cuspUmg E r b.f b.cusp
@@ -146,8 +149,9 @@ theorem cls (b : Blo S r) (s : ℕ) (t : ℝ) : Cls (nu E r) (pt r s t) (wt b.f.
     have hcc : Continuous fun x : GA E r => F.1 (lev (Ad E) r s (zt E r t * x, 1) * g) * starRingEnd ℂ (b.f.1 x) :=
       (hc.comp ((Pair.continuous_lev.comp ((continuous_const.mul continuous_id).prodMk continuous_const)).mul
         continuous_const)).mul (Complex.continuous_conj.comp ((umgOps E r).2 b.f hf).1)
+    have := RightCosetSpace.borelSpace (Γ := rationalGLOne (K := E) (n := r))
     exact (continuous_cuspQuot hl hcc).aestronglyMeasurable.congr (.of_forall fun y => (Pair.out_eq hl y).symm)
-  bdd F h K hK := by
+  · intro F h K hK
     obtain ⟨φ, hφ, hF⟩ := h
     obtain ⟨N, hN⟩ := hφ.growth
     obtain ⟨B, hB⟩ := hN 1

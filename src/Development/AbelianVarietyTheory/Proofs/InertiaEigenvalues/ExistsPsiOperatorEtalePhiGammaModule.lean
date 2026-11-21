@@ -58,8 +58,8 @@ theorem psi_of_etale_basis {R E M Γ : Type*} [CommRing R] [CommRing E] [Algebra
   · rw [hψ, hψ, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, Finsupp.smul_apply, smul_eq_mul, hψφ, mul_smul]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [hψ z, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [hψ z, map_sum]
     set_option synthInstance.maxHeartbeats 100000 in
       conv_lhs => rw [hdec z, map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
@@ -73,8 +73,10 @@ theorem psiD_exists : ∀ (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
   obtain ⟨ψE, hψφ, hψγ, hψ1⟩ := GlobalTheory.T.wachFunctorRing_psiOperator_exists_of_good D HW F l K s LL h
   have hψone : ψE 1 = 1 := by
     have := hψ1 0 (Fact.out : l.Prime).pos 1
-    simpa using this
-  exact psi_of_etale_basis (W.φE : W.EE →+* W.EE) (W.φD T) (W.φD_smul T)
-    (fun g => (W.γE g : W.EE →+* W.EE)) (W.γD T) (W.γD_smul T) (W.φγ_comm T) b b' hb ψE hψφ hψγ hψone
+    set_option synthInstance.maxHeartbeats 200000 in
+      simpa using this
+  set_option synthInstance.maxHeartbeats 200000 in
+    exact psi_of_etale_basis (W.φE : W.EE →+* W.EE) (W.φD T) (W.φD_smul T)
+      (fun g => (W.γE g : W.EE →+* W.EE)) (W.γD T) (W.γD_smul T) (W.φγ_comm T) b b' hb ψE hψφ hψγ hψone
 
 end GlobalTheory

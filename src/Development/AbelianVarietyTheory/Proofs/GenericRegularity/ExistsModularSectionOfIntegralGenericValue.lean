@@ -91,7 +91,9 @@ theorem evC_aeval (hL : EvLaws Xo c) (h : GenFrEx Xo c) (Z : Comp Xo c) {N : ℕ
 
 theorem chart_mem (hL : EvLaws Xo c) {h : GenFrEx Xo c} (C : FChart h) {a : (E →+* ℂ) × ℕ → ℕ} {n : ℕ}
     {f : Rul Xo c} (hf : f ∈ sec Xo c a n) : wchar (ex Dw a n) C.t * evC h C.Z f ∈ C.R := by
+  set_option synthInstance.maxHeartbeats 200000 in
   have h1 := hL.wt a n f hf (Om C.Z) C.t (genFr h C.Z) C.yg (hL.test _ _) (hL.test _ _) C.bor
+  set_option synthInstance.maxHeartbeats 200000 in
   have h2 := GlobalTheory.T.naturalRule_value_baseChange_of_isReduced E H Dw l Xo c hL a n f hf C.R (Om C.Z) C.R.val C.y C.yg C.gen
   unfold evC
   rw [← h1, h2]
@@ -113,7 +115,7 @@ theorem mem_of_integral {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω] (R : S
     refine ⟨Polynomial.X ^ m + ∑ i : Fin m, Polynomial.C (r' i) * Polynomial.X ^ (i : ℕ),
       Polynomial.monic_X_pow_add (Polynomial.degree_sum_fin_lt r'), ?_⟩
     rw [← hx, Finset.sum_range (fun i => r i * x ^ i)]
-    simp [Polynomial.eval₂_finset_sum, r']
+    simp [Polynomial.eval₂_finsetSum, r']
   obtain ⟨y, rfl⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral hi
   exact y.2
 

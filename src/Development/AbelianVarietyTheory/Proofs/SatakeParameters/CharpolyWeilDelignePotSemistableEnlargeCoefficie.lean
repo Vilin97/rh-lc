@@ -205,6 +205,7 @@ theorem exists_decomp : ∃ (n : ℕ) (b : Fin n → ↥L₂.1) (π : Fin n → 
     IsScalarTower.of_algebraMap_eq fun c => ((IntermediateField.inclusion hL).commutes c).symm
   haveI := L₂.2
   haveI : Module.Finite ↥L₁.1 ↥L₂.1 := Module.Finite.of_restrictScalars_finite ℚ_[l] ↥L₁.1 ↥L₂.1
+  set_option synthInstance.maxHeartbeats 400000 in
   let B := Module.finBasis ↥L₁.1 ↥L₂.1
   have hsm : ∀ (a : ↥L₁.1) (y : ↥L₂.1), IntermediateField.inclusion hL a * y = a • y := fun a y => rfl
   refine ⟨_, fun j => B j, fun j => ((B.coord j).restrictScalars ℚ_[l]).compLeft (Fin m), ?_, ?_⟩
@@ -267,6 +268,7 @@ theorem charpoly_wdRho_eq (s : ↥L₁.1 →+* ↥L₂.1) (hs : ∀ a, (s a : Om
     (hsum : ∀ v, ∑ j, b j • f (π j v) = v)
     (hdim : finrank ℂ (WDSpace P ι ρ₁) ≤ finrank ℂ (WDSpace P ι ρ₂)) (σ : ↥(Weil h)) :
     (wdRho P ι Bw h hj ρ₂ σ).charpoly = (wdRho P ι Bw h hj ρ₁ σ).charpoly := by
+  set_option synthInstance.maxHeartbeats 400000 in
   have hT : ∀ (a : ↥L₁.1) (x : ↥(Dpst P ρ₁)), dQ P hf (a • x) = s a • dQ P hf x := fun a x =>
     Subtype.ext (tensQ_smul P s hfs a x.1)
   letI := algC ι L₁
@@ -287,6 +289,7 @@ theorem charpoly_wdRho_eq (s : ↥L₁.1 →+* ↥L₂.1) (hs : ∀ a, (s a : Om
     simp only [AddMonoidHom.mk'_apply] at hms
     rw [hx, hms]
     refine Submodule.sum_mem _ fun j _ => ?_
+    change wdMk P ι ρ₂ ((Dpst P ρ₂).module.toSMul.smul (b j) (dQ P hf (dQ P (hπ j) x))) ∈ Φ.range
     rw [wdMk_smul]
     exact Submodule.smul_mem _ _ ⟨wdMk P ι ρ₁ (dQ P (hπ j) x), chg_mk _ _ _ _ _ _ _ _ _ _⟩
   have hdvd := DpstMap.charpoly_dvd_of_surjective Φ hsurj _ _ hΦ

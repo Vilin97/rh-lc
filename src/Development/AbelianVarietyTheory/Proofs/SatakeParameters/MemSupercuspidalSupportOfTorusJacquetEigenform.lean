@@ -69,7 +69,7 @@ theorem inSupport_of_eigenform (n : ℕ) (V : Type) [AddCommGroup V] [Module ℂ
       l' (jac f π g (Submodule.Quotient.mk v)) = (χ g : ℂ) * l' (Submodule.Quotient.mk v) := by
     intro g v
     set t : Fin n → kˣ := fun j => Matrix.GeneralLinearGroup.det (g j) with ht
-    have h1 := hl t (Submodule.Quotient.mk v)
+    have h1 := hl t (Submodule.Quotient.mk v : Jacquet π (unipB k (Fin n)))
     rw [jacB_mk, map_smul, leviTorus_eq, leviEmb_torusToLevi, ← leviTorus_eq] at h1
     have hEmb : leviEmb k f g = diagT k (Fin n) t := by
       conv_lhs => rw [eq_torusToLevi n g]

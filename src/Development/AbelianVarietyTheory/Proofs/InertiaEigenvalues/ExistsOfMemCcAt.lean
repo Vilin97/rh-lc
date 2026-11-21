@@ -59,12 +59,15 @@ theorem exists_ne_zero {O X : Type} [CommRing O] [IsDomain O] [Fintype X] (T : S
   refine ⟨∏ x : {x // x ∉ Z}, (g x - algebraMap O T ((g x : X → O) x.1)), ?_, ?_⟩
   · rw [mem_ccIdeal_iff]
     intro y hy
-    rw [SubmonoidClass.coe_finset_prod, Finset.prod_apply]
+    change (T.val.toMonoidHom (∏ x : {x // x ∉ Z}, (g x - algebraMap O T ((g x : X → O) x.1)))) _ = _
+    rw [map_prod, Finset.prod_apply]
     refine Finset.prod_eq_zero (Finset.mem_univ ⟨y, hy⟩) ?_
     simp
-  · rw [SubmonoidClass.coe_finset_prod, Finset.prod_apply]
+  · change (T.val.toMonoidHom (∏ x : {x // x ∉ Z}, (g x - algebraMap O T ((g x : X → O) x.1)))) _ ≠ _
+    rw [map_prod, Finset.prod_apply]
     refine Finset.prod_ne_zero_iff.mpr fun x _ => ?_
     have e : ∀ c : O, ((algebraMap O T c : T) : X → O) π = c := fun c => by simp
+    change ((g x - algebraMap O T ((g x : X → O) x.1) : T) : X → O) π ≠ 0
     rw [AddSubgroupClass.coe_sub, Pi.sub_apply, e]
     exact sub_ne_zero.mpr (hg x).symm
 

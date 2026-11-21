@@ -94,7 +94,7 @@ theorem cob_core {ι : Type} [Fintype ι] (bT : Basis ι R T) (bV : Basis ι F V
     induction u using TensorProduct.induction_on with
     | zero => simp
     | tmul t m => exact ⟨ρV g t ⊗ₜ[F] ⟨_, hSb g _ m.2⟩, rfl⟩
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => simpa only [map_add] using Submodule.add_mem _ hx hy
   have h2 : Φ (r ^ N • (c g ⊗ₜ[R] one)) = algebraMap R F r ^ N • (i (c g) ⊗ₜ[F] β one) := by
     rw [hsm, hΦ, Phi_tmul, map_pow]
   have h3 : LinearMap.lTensor T Nb.mkQ (r ^ N • (c g ⊗ₜ[R] one)) =

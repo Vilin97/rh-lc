@@ -409,7 +409,7 @@ theorem exists_pres [IsDomain O] [IsPrincipalIdealRing O] [NeZero n] (hO : Funct
         rcases hg with hg | hg
         set_option synthInstance.maxHeartbeats 100000 in
           · rw [hy, map_sum]
-          exact Finset.sum_congr rfl fun i _ => by rw [hact T A q hq, (x i).2 _ hg]
+            exact Finset.sum_congr rfl fun i _ => by rw [hact T A q hq, (x i).2 _ hg]
         · refine Eq.trans ?_ h2
           set_option synthInstance.maxHeartbeats 100000 in
             rw [hy, map_sum, map_sum]

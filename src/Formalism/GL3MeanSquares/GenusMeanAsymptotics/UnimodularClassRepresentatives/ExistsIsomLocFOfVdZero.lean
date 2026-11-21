@@ -24,11 +24,11 @@ open WA
 omit [FiniteDimensional K V] in
 theorem isLatIn_loc {h : V →ₗ⋆[K] V →ₗ[K] K} {L : Submodule (𝓞 K) V}
     (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {P : Ideal (𝓞 K)}
-    (hP : P.IsPrime) : IsLatIn (locRing P) h ⊤ (Formalism.HermitianLatticesTheory.loc (K := K) P L).toAddSubgroup where
-  le := fun _ _ => Submodule.mem_top
-  smul_mem := fun a ha m hm => smul_mem_loc hP ha hm
-  int := by
-    intro x hx y hy
+    (hP : P.IsPrime) : IsLatIn (locRing P) h ⊤ (Formalism.HermitianLatticesTheory.loc (K := K) P L).toAddSubgroup := by
+  refine ⟨fun _ _ => Submodule.mem_top, ?_, ?_, ?_⟩
+  · intro a ha m hm
+    exact smul_mem_loc hP ha hm
+  · intro x hx y hy
     obtain ⟨s, hs, hsx⟩ := Formalism.HermitianLatticesTheory.locBasic_mem_locS.mp
       (show x ∈ Formalism.HermitianLatticesTheory.locS (Formalism.HermitianLatticesTheory.hcompl (K := K) P) L from hx)
     obtain ⟨t, ht, hty⟩ := Formalism.HermitianLatticesTheory.locBasic_mem_locS.mp
@@ -43,8 +43,7 @@ theorem isLatIn_loc {h : V →ₗ⋆[K] V →ₗ[K] K} {L : Submodule (𝓞 K) V
       field_simp
     rw [e]
     exact div_mem_locRing hP r (mul_mem hcs ht)
-  span := by
-    intro x _
+  · intro x _
     obtain ⟨n, hn, hnx⟩ := Formalism.HermitianLatticesTheory.traceReal_mult L hL x
     refine ⟨(n : K), by exact_mod_cast hn, ?_⟩
     rw [Int.cast_smul_eq_zsmul]

@@ -125,7 +125,7 @@ theorem transition : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type) [Group Γ] (a : �
       funext k
       simp only [Finset.sum_apply, Pi.smul_apply]
       rw [← hB k, hA k]
-    exact congrFun key i
+    exact congrArg _ (congrFun key i)
   · intro i j
     have hsingle : ∑ s, zOm l ((Pi.single j 1 : Fin d₂ → ℤ_[l]) s) • bb₂ s = bb₂ j := by
       simp [Pi.single_apply]

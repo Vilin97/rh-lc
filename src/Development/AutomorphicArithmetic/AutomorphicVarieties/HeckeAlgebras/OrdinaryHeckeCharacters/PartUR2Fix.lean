@@ -38,7 +38,7 @@ private theorem st_away (s : HidaSetting l L Ω) (u : s.St) : ((l : ℕ) : 𝓞 
   have h1 := (s.hw u.1 _).2 h
   simpa using h1
 
-private theorem inf_one {s : HidaSetting l L Ω} (V : s.Lev) (ι : Qbar l ≃+* ℂ) (lam : Wt L l n) {k : UA L n} (hk : k ∈ finU (E := L) (n := n)) :
+private theorem UpperTheory.V.Hi.inf_one {s : HidaSetting l L Ω} (V : s.Lev) (ι : Qbar l ≃+* ℂ) (lam : Wt L l n) {k : UA L n} (hk : k ∈ finU (E := L) (n := n)) :
     infRep (V := V) ι lam k = 1 := by
   have h1 : ∀ τ : L →+* ℂ, cEmb τ k = 1 := fun τ => by
     change Matrix.GeneralLinearGroup.map (coord τ) (cInf k) = 1
@@ -60,7 +60,7 @@ private theorem key {s : HidaSetting l L Ω} (V : s.Lev) (ι : Qbar l ≃+* ℂ)
       (((away l L n).rangeRestrict g, fun v : V.frame.Vl => cLoc (s.w v.1) g) * ((away l L n).rangeRestrict x, 1))))) := fun j => by
     change toForm ι e (F j) ℓ (g * x) = _
     unfold toForm
-    rw [mul_inv_rev, map_mul, inf_one V ι lam (inv_mem hx), one_mul]
+    rw [mul_inv_rev, map_mul, UpperTheory.V.Hi.inf_one V ι lam (inv_mem hx), one_mul]
     simp only [map_mul, hl, mul_one, Prod.mk_mul_mk]
   have e2 : ∀ g, F i g = ∑ j, a j • F j (g * ((away l L n).rangeRestrict x, 1)) := fun g => funext fun k => by
     rw [← h g k, Finset.sum_apply]

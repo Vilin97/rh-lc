@@ -400,7 +400,7 @@ theorem iso_of_hwAt (a a' : AlgWt L n) (lam : ι → Fin n → ℤ) (ha : ∀ τ
       (∀ l : ι → GL (Fin n) ℂ, (∀ τ, PI.UnitaryGroupMassFormula.HwConjInf.LowUni (l τ).val) → u ᵥ* Φ l = u) ∧
       (∀ g : ι → GL (Fin n) ℂ, (∀ τ, (g τ).val.BlockTriangular id) →
         Φ g *ᵥ v = (∏ τ, ∏ i, ((g τ).val i i) ^ (lam τ i)) • v) ∧
-      ∀ γ, LinearMap.toMatrix b b (c.ρ γ) = Φ (mtwEmb emb (mtwRat γ)) := by
+      ∀ γ, LinearMap.toMatrix b b (c.ρ γ) = Φ (mtwEmb emb (mtwRat (L := L) (n := n) γ)) := by
     intro c hc
     obtain ⟨_, κ, _, _, b, P, hP⟩ := c.alg
     have hP' : Agrees c b P := hP
@@ -435,14 +435,14 @@ theorem iso_of_hwAt (a a' : AlgWt L n) (lam : ι → Fin n → ℤ) (ha : ∀ τ
       rintro _ ⟨γ₀, hγ, rfl⟩
       exact ⟨mtwEmb emb γ₀, by simp only [ptOf_rat emb hinj hcm hall γ₀ hγ]⟩
     · simp only [ptOf_rat emb hinj hcm hall _ (mtwRat_mem γ)]
-      exact hP' γ (mtwRat γ) (congrArg Units.val (mtwInc_mtwRatFun γ)).symm
+      exact hP' γ (mtwRat (L := L) (n := n) γ) (congrArg Units.val (mtwInc_mtwRatFun γ)).symm
   obtain ⟨κ, _, _, b, Φ, u, v, m1, m2, m3, m4, m5, m6, m7, m8⟩ := data a ha
   obtain ⟨κ', _, _, b', Φ', u', v', n1, n2, n3, n4, n5, n6, n7, n8⟩ := data a' ha'
   obtain ⟨e, he⟩ := exists_equiv m1 n1 m2 n2 m3 n3 m4 m5 n4 n5 m6 n6 _ m7 n7
   refine ⟨(b.equivFun.trans e).trans b'.equivFun.symm, fun γ x => b'.equivFun.injective ?_⟩
-  have k1 : b.equivFun (a.ρ γ x) = Φ (mtwEmb emb (mtwRat γ)) *ᵥ b.equivFun x := by
+  have k1 : b.equivFun (a.ρ γ x) = Φ (mtwEmb emb (mtwRat (L := L) (n := n) γ)) *ᵥ b.equivFun x := by
     rw [← m8]; exact (LinearMap.toMatrix_mulVec_repr b b _ x).symm
-  have k2 : ∀ y, b'.equivFun (a'.ρ γ y) = Φ' (mtwEmb emb (mtwRat γ)) *ᵥ b'.equivFun y := fun y => by
+  have k2 : ∀ y, b'.equivFun (a'.ρ γ y) = Φ' (mtwEmb emb (mtwRat (L := L) (n := n) γ)) *ᵥ b'.equivFun y := fun y => by
     rw [← n8]; exact (LinearMap.toMatrix_mulVec_repr b' b' _ y).symm
   simp only [LinearEquiv.trans_apply, LinearEquiv.apply_symm_apply, k1, k2, he]
 

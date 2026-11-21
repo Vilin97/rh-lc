@@ -121,7 +121,7 @@ theorem finrank_le_card_mul_finrank_eig_baseChange : ∀ (K L Γ R W : Type) [Fi
           (Algebra.TensorProduct.includeRight : R →ₐ[K] L ⊗[K] R).mapMatrix
             ((Matrix.transpose (Matrix.of fun h g : H => act ((h : Γ) * g) u)).submatrix (Equiv.inv H) (Equiv.inv H)) := by
         ext h g
-        simp [actL_tmul, mul_inv_rev]
+        simp [actL_tmul, mul_inv_rev, Function.swap]
       show (Matrix.of fun h g : H => actL (((h * g : H) : Γ)⁻¹) ((1 : L) ⊗ₜ[K] u)).det ∈ _
       rw [hM, ← AlgHom.map_det, Matrix.det_submatrix_equiv_self, Matrix.det_transpose,
         Algebra.TensorProduct.includeRight_apply]

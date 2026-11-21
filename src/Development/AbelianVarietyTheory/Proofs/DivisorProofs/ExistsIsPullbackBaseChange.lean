@@ -291,7 +291,7 @@ theorem pow_y : letI := h.hopfAlgebra; ∀ (φ : WithConv (R →ₐ[O] B)) (k : 
 
 theorem exists_res {M : ℕ} {S : Type} [CommRing S] [Algebra O S] {x : SpAlg O S ⟶ A} (h' : IsUnivTorsion M x)
     (hy : y ^ M = 1) : letI := h.hopfAlgebra; letI := h'.hopfAlgebra; haveI := h'.isCocomm;
-    ∃ r : S →ₐc[O] R, Function.Surjective r ∧ RingHom.ker r = torsionIdeal O S N ∧
+    ∃ r : S →ₐc[O] R, Function.Surjective r ∧ RingHom.ker r = torsionIdeal (R := O) (A := S) N ∧
       spOver (r : S →ₐ[O] R) ≫ x = y := by
   let _ := h.hopfAlgebra
   let _ := h'.hopfAlgebra
@@ -301,16 +301,16 @@ theorem exists_res {M : ℕ} {S : Type} [CommRing S] [Algebra O S] {x : SpAlg O 
   have hc : ∀ {C : Type} [CommRing C] [Algebra O C] (f : R →ₐ[O] C), spOver (f.comp r) ≫ x = spOver f ≫ y :=
     fun f => h'.comp_lift_y f _ _
   have ht : ∀ {C : Type} [CommRing C] [Algebra O C] (f : S →ₐ[O] C),
-      torsionIdeal O S N ≤ RingHom.ker f ↔ (spOver f ≫ x) ^ N = 1 := fun {C} _ _ f => by
+      torsionIdeal (R := O) (A := S) N ≤ RingHom.ker f ↔ (spOver f ≫ x) ^ N = 1 := fun {C} _ _ f => by
     rw [torsionIdeal_le_ker_iff, ← ofConv_toConv f, ← h'.pow_y, ofConv_toConv,
       ← h'.counitMap_y (Algebra.ofId O C)]
     exact ⟨fun e => by rw [e]; rfl, fun e => ofConv_injective (h'.inj e)⟩
-  let π := Ideal.Quotient.mkₐ O (torsionIdeal O S N)
+  let π := Ideal.Quotient.mkₐ O (torsionIdeal (R := O) (A := S) N)
   have hπ := (ht π).1 fun a ha => Ideal.Quotient.eq_zero_iff_mem.2 ha
   let s := h.lift _ hπ
   have hs : s.comp r = π := h'.inj ((hc s).trans (h.lift_y _ _))
-  have hk : torsionIdeal O S N ≤ RingHom.ker r := (ht r).2 (by rw [hr, h.1])
-  let r' : (S ⧸ torsionIdeal O S N) →ₐ[O] R := Ideal.Quotient.liftₐ _ r hk
+  have hk : torsionIdeal (R := O) (A := S) N ≤ RingHom.ker r := (ht r).2 (by rw [hr, h.1])
+  let r' : (S ⧸ torsionIdeal (R := O) (A := S) N) →ₐ[O] R := Ideal.Quotient.liftₐ _ r hk
   have hr' : r'.comp π = r := Ideal.Quotient.liftₐ_comp _ _ _
   have hs' : r'.comp s = AlgHom.id O R := h.inj (by
     rw [h.comp_lift_y, ← Category.assoc, spOver_comp, hr', hr, spOver_id, Category.id_comp])

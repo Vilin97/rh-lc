@@ -10,7 +10,6 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibra
 
 @[expose] public section
 
-open private ex_bridge from Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.CrystallineBaseChange.PotRes
 open UpperTheory.Lit.CharWD GlobalTheory.Published
 
 section SlopeTestRemainingChoices
@@ -106,7 +105,30 @@ set_option maxHeartbeats 1000000 in
 theorem UpperTheory.Lit.CharWD.chRes :
     ChRes := by
   intro F F' Ω _ _ _ _ _ _ _ _ _ _ _ l _ A w w' ι h h' O _ _ _ Bw hj
-  obtain ⟨L', Bw', hBj⟩ := ex_bridge (E := F') (A := A) Bw.j hj
+  have hBridge : ∃ (L : FinExt l) (B : LocBridge l F' Ω (Dec (F := F') A) ↥(OL L)),
+      B.j = Bw.j := by
+    let K : FinExt l :=
+      ⟨IntermediateField.adjoin ℚ_[l] (Set.range fun x : F' => Bw.j (algebraMap F' Ω x)),
+        GlobalTheory.PlaceBridge.finiteDimensional_adjoin_range (Bw.j.comp (algebraMap F' Ω))⟩
+    have : FiniteDimensional ℚ_[l] ↥K.1 := K.2
+    let L : FinExt l := ⟨IntermediateField.normalClosure ℚ_[l] K.1 (PadicAlgCl l), inferInstance⟩
+    obtain ⟨e, he, he', hec⟩ := GlobalTheory.PlaceBridge.exists_mulEquiv (E := F') hj K rfl
+    exact ⟨L,
+      { Kw := K
+        j := Bw.j
+        j_E := fun x => IntermediateField.subset_adjoin _ _ ⟨x, rfl⟩
+        j_dense := GlobalTheory.PlaceBridge.adjoin_range_subset_closure (Bw.j.comp (algebraMap F' Ω))
+        e := e
+        e_cont := he
+        e_symm_cont := he'
+        e_comm := hec
+        LL := L
+        LL_split := fun τ x => AlgHom.fieldRange_le_normalClosure τ ⟨x, rfl⟩
+        eO := RingEquiv.refl _
+        eO_alg := fun _ => rfl
+        eO_cont := continuous_id
+        eO_symm_cont := continuous_id }, rfl⟩
+  obtain ⟨L', Bw', hBj⟩ := hBridge
   have hj' : Induces Bw' := fun x => by rw [hBj]; exact hj x
   refine ⟨↥(OL L'), inferInstance, inferInstance, inferInstance, Bw', hj', fun κ κ' _ hκ ξ hξ => ?_⟩
   obtain ⟨⟨L₀, r₀, hm₀, hV₀⟩, hs, hξ⟩ := hξ

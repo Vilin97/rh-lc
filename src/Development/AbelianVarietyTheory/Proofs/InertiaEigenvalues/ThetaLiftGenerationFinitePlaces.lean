@@ -45,6 +45,8 @@ theorem downInt_add (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.HV i t)
   unfold downInt
   rw [← integral_add hf hf']
   congr 1
+  funext h
+  simp [thetaKO, map_add, add_mul]
 
 theorem downInt_smul (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.HV i t).H) (c : ℂ) (f : WO (Vc D i) (Wc D i) → ℂ)
     (l : (R.cV i).W →ₗ[ℂ] ℂ) (g : GA D (Wc D i)) :
@@ -52,6 +54,8 @@ theorem downInt_smul (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.HV i t
   unfold downInt
   rw [← integral_const_mul]
   congr 1
+  funext h
+  simp [thetaKO, map_smul, mul_assoc]
 
 end GlobalTheory.DownLift.GenFinite
 

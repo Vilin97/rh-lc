@@ -64,7 +64,7 @@ theorem exists_normalised {l : ℕ} [Fact l.Prime] {G : Type} [Group G] [Topolog
   have hF0' : (z F : ℚ_[l]) ≠ 0 := fun h => hF0 (Subtype.ext (h.trans PadicInt.coe_zero.symm))
 
   let w : G → ℤ_[l] := fun σ => ⟨(z σ : ℚ_[l]) / (z F : ℚ_[l]), by
-    rw [norm_div, PadicInt.padic_norm_e_of_padicInt, PadicInt.padic_norm_e_of_padicInt,
+    rw [PadicInt.mem_subring_iff, norm_div, PadicInt.norm_coe, PadicInt.norm_coe,
       div_le_one (norm_pos_iff.mpr hF0)]
     exact hbound σ⟩
   have hw : ∀ σ, (w σ : ℚ_[l]) = (z σ : ℚ_[l]) / (z F : ℚ_[l]) := fun _ => rfl

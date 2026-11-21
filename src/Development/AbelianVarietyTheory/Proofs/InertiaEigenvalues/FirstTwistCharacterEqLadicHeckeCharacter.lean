@@ -35,9 +35,9 @@ theorem firstTwistCharacter_eq_ladic_heckeCharacter : ∀ (D : D7) (cf : CharFra
   obtain ⟨B1, hB1⟩ := T.chi1 i (j.1 + 1) b hj1 hj2
   have hχ : ∀ x, (chiD.firstHeckeCharacter i (j.1 + 1)).χ x = (cf.mu0 j * cf.delAt (D.ntw.l i) * cf.eta⁻¹).1 x := by
     intro x
-    simp only [Formalism.L2.NC.NChiData.firstHeckeCharacter, Formalism.L2.NC.HC.mul_χ, Formalism.L2.NC.HC.inv_χ, MonoidHom.mul_apply,
-      MonoidHom.inv_apply, hMu j x, hDel i x, hEta x]
-    rfl
+    change (chiD.mu0 (j.1 + 1)).χ x * (chiD.del i).χ x * (chiD.etaT.χ x)⁻¹ =
+      (cf.mu0 j).1 x * (cf.delAt (D.ntw.l i)).1 x * (cf.eta.1 x)⁻¹
+    rw [hMu j x, hDel i x, hEta x]
   set χb := GlobalTheory.Triple.blockChar cf (D.ntw.l i) j with hχb
   have hev : ∀ᶠ P in Filter.cofinite, P ∉ B1 := Filter.eventually_cofinite.2 (by simpa using B1.finite_toSet)
   have hc1 : Continuous (inQ ρ.κ (D.ntw.chi1 i (j.1 + 1) b)) :=

@@ -53,12 +53,14 @@ theorem CInfAt.comp₂ (h : CInfAt f y) (h' : CInfAt f' y) {G : ℝ × ℝ → �
     contDiff_pi.2 fun a => contDiff_apply _ _ _
   have cr : ContDiff ℝ ∞ fun (v : ι ⊕ ι' → ℂ) a => v (.inr a) :=
     contDiff_pi.2 fun a => contDiff_apply _ _ _
+  let domain : Set (ι ⊕ ι' → ℂ) :=
+    (fun v a => v (.inl a)) ⁻¹' O ∩ (fun v a => v (.inr a)) ⁻¹' O'
   refine ⟨W ⊓ W', ι ⊕ ι', inferInstance,
     Sum.elim (fun a => resG X inf_le_left (g a)) fun a => resG X inf_le_right (g' a),
     fun v => G (F fun a => v (.inl a), F' fun a => v (.inr a)),
-    (fun v a => v (.inl a)) ⁻¹' O ∩ (fun v a => v (.inr a)) ⁻¹' O', hW,
+    domain, hW,
     (h₂.preimage cl.continuous).inter (h₂'.preimage cr.continuous), ⟨?_, ?_⟩,
-    hG.comp_contDiffOn ((h₄.comp cl.contDiffOn fun _ hv => hv.1).prodMk
+    hG.comp_contDiffOn ((h₄.comp (s := domain) cl.contDiffOn fun _ hv => hv.1).prodMk
       (h₄'.comp cr.contDiffOn fun _ hv => hv.2)), ?_⟩
   · simpa only [mem_preimage, Sum.elim_inl, ev_res _ hW] using h₃
   · simpa only [mem_preimage, Sum.elim_inr, ev_res _ hW] using h₃'
@@ -344,7 +346,7 @@ theorem ord_algebraMap (hz : Order.coheight z = 1) {a : Z.presheaf.stalk z} (ha 
   have : Ring.KrullDimLE 1 (Z.presheaf.stalk z) := krullDimLE_of_coheight_le hz.le
   have h0 := mem_nonZeroDivisors_of_ne_zero ha
   refine (Scheme.ord_eq_iff hz ((map_ne_zero_iff _ (IsFractionRing.injective _ _)).2 ha)).2 ?_
-  exact (Ring.ordFrac_eq_ord _ ha).trans (Ring.ordMonoidWithZeroHom_eq_coe _ h0
+  exact (Ring.ordFrac_eq_ord _).trans (Ring.ordMonoidWithZeroHom_eq_coe _ h0
     (ENat.coe_toNat (Ring.ord_ne_top h0)).symm)
 
 namespace CartierDiv
@@ -1226,7 +1228,7 @@ theorem finsum_ord_prime {ℓ : ℕ} (hℓ : ℓ.Prime) :
         (congrArg (fun n : ℕ∞ => (n.toNat : ℤ)) (Ring.ord_of_irreducible hi))
     have h₂ : Nat.card (Z.residueField z₀) = ℓ :=
       (Nat.card_congr (((IsLocalization.AtPrime.equivQuotMaximalIdeal P.asIdeal
-        (Z.presheaf.stalk z₀)).symm.trans (Ideal.quotientEquiv (Ideal.span {(ℓ : ℤ)}) P.asIdeal e
+        (Z.presheaf.stalk z₀)).toRingEquiv.symm.trans (Ideal.quotientEquiv (Ideal.span {(ℓ : ℤ)}) P.asIdeal e
           (by rw [Ideal.map_span, image_singleton]; rfl)).symm).trans
         (Int.quotientSpanNatEquivZMod ℓ)).toEquiv).trans (Nat.card_zmod ℓ)
     rw [h₁, h₂, Int.cast_one, one_mul]

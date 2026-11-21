@@ -85,7 +85,7 @@ theorem parA_fst (D : D7) (ρ : D.what₂.Tau) {n : ℕ} (hn : n = D.R.r) :
       by_cases h2 : (c : ℕ) = 0 ∨ Even (c : ℕ)
       · exact Or.inr (Or.inr ⟨c, rfl, h2⟩)
       · push_neg at h2
-        exact Or.inl ⟨c, rfl, h2.1, Nat.not_even_iff_odd.mp h2.2⟩
+        exact Or.inl ⟨c, rfl, h2.1, h2.2⟩
 
 theorem tauE_inj {D : D7} {τ ρ : D.what₂.Tau} (h : tauE D τ = tauE D ρ) : τ = ρ :=
   D.eTau.injective (Subtype.ext (Formalism.IndefR.Conj.emb_injective h))

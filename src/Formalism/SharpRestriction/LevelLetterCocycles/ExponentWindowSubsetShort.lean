@@ -300,24 +300,25 @@ theorem finalNum_of (l : ℕ) (hl : 3 ≤ l) (n : ℕ) [NeZero n] (j Gp S η h :
     (hW : WordOK l (initialExponentBound l n j (gPar Gp S η) h H₁ H₂ cuts arcLen) ty cuts arcLen) :
     Formalism.ExponentWindows.E.FinalNum l (cutsOf hC) (kdOf ty) (bbOf ty) j (gPar Gp S η) Gp S η h
       (sigPar l (gPar Gp S η) h j) (rrPar l n H₁ H₂ cuts)
-      (kapPar l (gPar Gp S η) h (ellMax cuts arcLen)) (ellMax cuts arcLen) := {
-  G_le_g := G_le_gPar _ _ _
-  S_le_g := S_le_gPar _ _ _
-  η_le_g := η_le_gPar _ _ _
-  g_le_h := hgh
-  g_lt_b := fun i hi => (size_of_sizesOK hS i hi).1
-  b_le_h := fun i hi => (size_of_sizesOK hS i hi).2
-  one_le_j := hC.2.1
-  thin_after := fun c hc k h1 h2 => kdOf_thin.2 (hC.2.2.2.2 c hc k h1 h2)
-  j_le_ell := fun c hc => hC.2.2.2.1 c hc
-  ell_le := fun c hc => Finset.le_sup (f := arcLen) hc
-  word := fun c hc => textWord_of l _ hT hW c hc
-  sigOK := sigOK_of l _ h j hl
-  kapOK := fun c hc => by
-    obtain ⟨t₀, t₁, ht⟩ := two_thick (hT c hc)
-    exact kapOK_arc l (gPar Gp S η) Gp S η h (arcLen c) (ellMax cuts arcLen) (G_le_gPar _ _ _)
-      (S_le_gPar _ _ _) (η_le_gPar _ _ _) hgh _ _
-      (fun s hs => (size_of_sizesOK hS _ hs).2) (Finset.le_sup (f := arcLen) hc) t₀ t₁ ht
-}
+      (kapPar l (gPar Gp S η) h (ellMax cuts arcLen)) (ellMax cuts arcLen) := by
+  refine
+    { G_le_g := G_le_gPar _ _ _
+      S_le_g := S_le_gPar _ _ _
+      η_le_g := η_le_gPar _ _ _
+      g_le_h := hgh
+      g_lt_b := fun i hi => (size_of_sizesOK hS i hi).1
+      b_le_h := fun i hi => (size_of_sizesOK hS i hi).2
+      one_le_j := hC.2.1
+      thin_after := fun c hc k h1 h2 => kdOf_thin.2 (hC.2.2.2.2 c hc k h1 h2)
+      j_le_ell := fun c hc => hC.2.2.2.1 c hc
+      ell_le := fun c hc => Finset.le_sup (f := arcLen) hc
+      word := fun c hc => textWord_of l _ hT hW c hc
+      sigOK := sigOK_of l _ h j hl
+      kapOK := ?_ }
+  intro c hc
+  obtain ⟨t₀, t₁, ht⟩ := two_thick (hT c hc)
+  exact kapOK_arc l (gPar Gp S η) Gp S η h (arcLen c) (ellMax cuts arcLen) (G_le_gPar _ _ _)
+    (S_le_gPar _ _ _) (η_le_gPar _ _ _) hgh _ _
+    (fun s hs => (size_of_sizesOK hS _ hs).2) (Finset.le_sup (f := arcLen) hc) t₀ t₁ ht
 
 end Formalism.MainNotions.WachCoordinates

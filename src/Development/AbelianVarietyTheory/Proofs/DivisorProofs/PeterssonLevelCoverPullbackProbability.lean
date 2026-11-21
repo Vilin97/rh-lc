@@ -95,11 +95,11 @@ theorem petE_sq_mul_vol : ∀ (D : D7) (j : ℕ) (H : ReciprocityTheory.ChartRes
   rw [← this]
   congr 1
   unfold petE
-  have e : eLpNorm (fun q => ptN (modelWt (U σ) G) (rdU (U σ) f) (dict σ (Quotient.out q))) 2 (muQ1 (D.sp.W j)) ^ 2 =
+  have e : eLpNorm' (fun q => ptN (modelWt (U σ) G) (rdU (U σ) f) (dict σ (Quotient.out q))) 2 (muQ1 (D.sp.W j)) ^ 2 =
       ∫⁻ q, ‖ptN (modelWt (U σ) G) (rdU (U σ) f) (dict σ (Quotient.out q))‖ₑ ^ 2 ∂(muQ1 (D.sp.W j)) := by
-    have := eLpNorm_nnreal_pow_eq_lintegral (p := 2) (μ := muQ1 (D.sp.W j))
-      (f := fun q => ptN (modelWt (U σ) G) (rdU (U σ) f) (dict σ (Quotient.out q))) two_ne_zero
-    simpa using this
+    have := lintegral_rpow_eNorm_eq_rpow_eLpNorm' (μ := muQ1 (D.sp.W j))
+      (f := fun q => ptN (modelWt (U σ) G) (rdU (U σ) f) (dict σ (Quotient.out q))) (q := 2) (by norm_num)
+    simpa using this.symm
   rw [e]
   refine lintegral_congr fun q => ?_
   have hnn : 0 ≤ ptN (modelWt (U σ) G) (rdU (U σ) f) (dict σ (Quotient.out q)) := by

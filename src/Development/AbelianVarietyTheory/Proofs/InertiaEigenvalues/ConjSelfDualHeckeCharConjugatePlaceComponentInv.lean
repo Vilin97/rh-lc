@@ -55,6 +55,7 @@ theorem main : ∀ {R : Ranks} (Hs : Host R) (μ : HChar Hs.E), IsCSD Hs μ → 
   have he : ψ₁ = (μ⁻¹).loc w := (huniq _ h1).trans (huniq _ h2).symm
   intro x
   have := congrArg (fun f => f x) he
-  simpa [hψ₁, HChar.loc_inv] using this
+  have hinv : (μ⁻¹).loc w x = (μ.loc w x)⁻¹ := rfl
+  simpa only [hψ₁, MonoidHom.comp_apply, hinv] using this
 
 end GlobalTheory.ConjLocCsd

@@ -59,7 +59,7 @@ theorem latI_fg (rdV : RdV D ρ) (hV : Onto ρ rdV) (hL : ρ.LatFG) (i) :
   | n + 1, b, k, Q, ψ => by
     rw [latI]
     split_ifs with h
-    · obtain ⟨hinj, hon, -⟩ := hV i ⟨n, h.1⟩ b k Q ψ h.2
+    · rcases hV i ⟨n, h.1⟩ b k Q ψ h.2 with ⟨hinj, hon, _⟩
       refine Submodule.fg_of_fg_map_injective (rdVLin rdV i ⟨n, h.1⟩ b k Q ψ) hinj ?_
       rw [Submodule.map_comap_eq_self (f := rdVLin rdV i ⟨n, h.1⟩ b k Q ψ) (q := Via.lat (ρ.mt i ⟨n, h.1⟩ b k Q ψ))
         fun x (hx : x ∈ Via.lat (ρ.mt i ⟨n, h.1⟩ b k Q ψ)) => by obtain ⟨y, hy⟩ := hon (Via.out _ _ x) hx; exact ⟨y, hy⟩]

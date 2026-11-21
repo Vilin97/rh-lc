@@ -86,8 +86,8 @@ theorem freeOrbit_projector_eigen : ∀ (K V G C : Type) [Field K] [AddCommGroup
           exact hc ⟨h1.symm, h2.symm⟩
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum, Finset.sum_eq_single_of_mem o ho]
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_sum, Fintype.sum_eq_single g]
+      · set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, Fintype.sum_eq_single g]
         · rw [key o ho g, if_pos ⟨rfl, rfl⟩]
         · intro g' hg'
           rw [key o ho g', if_neg (fun h => hg' h.1)]

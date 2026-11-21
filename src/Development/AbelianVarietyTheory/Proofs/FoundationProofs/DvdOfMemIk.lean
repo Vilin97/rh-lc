@@ -118,7 +118,7 @@ def pairA (c : Coef l) (n : ℕ) (y : Mn c n) : Mn c n →+ ZMod (l ^ n) where
 
 def Phi (c : Coef l) (n : ℕ) : Mn c n →ₗ[ZMod (l ^ n)] TDual (ZMod (l ^ n)) (Mn c n) :=
   (AddMonoidHom.mk' (fun y => TDual.mk ((pairA c n y).toZModLinearMap (l ^ n))) (fun a b => by
-    ext x
+    refine DFunLike.ext _ _ fun x => ?_
     show tbA c n _ = tbA c n _ + tbA c n _
     rw [← map_add (f := _)]; congr 1; simp only [Pi.add_apply]; ring)).toZModLinearMap (l ^ n)
 

@@ -75,7 +75,8 @@ theorem det_relEmb_scalar {M : Bool → Type} [∀ i, Fintype (M i)] [∀ i, Dec
     (f : ∀ i, (Σ j, Fin (n i j)) ≃ M i) (ϖ : kˣ) (i : Bool) :
     GeneralLinearGroup.det
         (relEmb k f (fun i j => GeneralLinearGroup.scalar (Fin (n i j)) (cond j ϖ 1)) i) = cond i ϖ 1 := by
-  cases i <;> simp [relEmb_apply, det_leviEmb, Fintype.prod_bool, det_scalar_fin, h01, h11]
+  rw [relEmb_apply, det_leviEmb, Fintype.prod_bool]
+  cases i <;> simp [det_scalar_fin, h01, h11]
 
 end
 

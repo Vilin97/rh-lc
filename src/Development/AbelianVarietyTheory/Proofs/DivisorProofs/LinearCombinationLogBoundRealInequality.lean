@@ -85,7 +85,7 @@ theorem delta_log_le (l : ℕ) (hl : l.Prime) :
     rw [← Real.log_pow]
     exact Real.log_le_log (pow_pos (by exact_mod_cast hl.pos) _) hle'
   unfold delta_vp
-  rw [show padicValInt l (discr E) = padicValNat l (discr E).natAbs from rfl, div_mul_eq_mul_div, one_div_mul_eq_div]
+  rw [show padicValInt l (discr E) = padicValNat l (discr E).natAbs from by rw [padicValInt, Nat.padicValNat_def], div_mul_eq_mul_div, one_div_mul_eq_div]
   exact div_le_div_of_nonneg_right hlog hn.le
 
 end Generic

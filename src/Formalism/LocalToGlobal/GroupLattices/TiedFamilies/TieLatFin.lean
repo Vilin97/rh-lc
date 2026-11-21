@@ -55,12 +55,12 @@ theorem comparison_lattice_span_eq (H : CmpCore T Gt I) (hG : ∀ u w hg, GatIs 
   latM_rec' H hG hloc (surjRat_rec H hG hloc) u w hg
 
 theorem cmpHyp0P_of_cmpCore (H : CmpCore T Gt I) (hG : ∀ u w hg, GatIs D X.lev0 u w hg) (hloc : ValIntRec T Gt I) :
-    CmpHyp0P T Gt I where
-  ex := H.ex
-  evInj := fun u w hg => evInj_rec Gt I u w hg
-  ptEx := fun u w hg => ptEx_rec X T u w hg I.B
-  ptAll := fun u w hg => ptAll_rec X T u (H.same u) w hg I.B
-  chi := H.chi
-  latM := comparison_lattice_span_eq H hG hloc
+    CmpHyp0P T Gt I :=
+  { ex := H.ex,
+    evInj := fun u w hg => evInj_rec Gt I u w hg,
+    ptEx := fun u w hg => ptEx_rec X T u w hg I.B,
+    ptAll := fun u w hg => ptAll_rec X T u (H.same u) w hg I.B,
+    chi := H.chi,
+    latM := comparison_lattice_span_eq H hG hloc }
 
 end Formalism.L2.G

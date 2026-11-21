@@ -494,7 +494,7 @@ theorem admissibleClosure_gKSubmodule : GlobalTheory.Published.AdmissibleClosure
     refine Submodule.iSup_induction (vIso ε σ V) (motive := fun v => σ g v ∈ V.topologicalClosure)
       (le_iSup_vIso (isURepOn_Kset hU) (kType_exists hU) hV hv)
       (fun Λ y hy => rep_mem_closure_of_vIso hU hV hA Λ hg hy) (by simp)
-      (fun a b ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb)
+      (fun a b ha hb => by rw [map_add]; exact add_mem ha hb)
   have hw' : w ∈ closure (V : Set H) := by rwa [← Submodule.topologicalClosure_coe]
   have := map_mem_closure (σ g).continuous hw' (t := (V.topologicalClosure : Set H)) hgen
   rwa [(Submodule.isClosed_topologicalClosure V).closure_eq] at this

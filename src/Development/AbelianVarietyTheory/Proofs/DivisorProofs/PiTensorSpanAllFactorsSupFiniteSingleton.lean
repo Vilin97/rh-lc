@@ -25,6 +25,7 @@ theorem tensAll_sup_le {T : Type} [Fintype T] [DecidableEq T] {V : T → Type} [
   · subst hs
     refine Submodule.mem_sup_left (Submodule.subset_span ⟨u, hu, ?_⟩)
     congr 1
+    simp
   · obtain ⟨w, hw⟩ : ∃ w, w ∉ s := by
       by_contra h
       push_neg at h

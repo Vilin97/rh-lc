@@ -233,10 +233,10 @@ theorem acts_indicator {κ : Type} [Fintype κ] {W : Type} [AddCommGroup W] [Mod
       refine add_mem ?_ (mul_mem h2 ?_)
       set_option synthInstance.maxHeartbeats 100000 in
         · simp only [dotProduct, map_sum, map_mul]
-        exact sum_mem fun k _ => mul_mem (hx k) (hi2 k)
+          exact sum_mem fun k _ => mul_mem (hx k) (hi2 k)
       set_option synthInstance.maxHeartbeats 100000 in
         · simp only [dotProduct, map_sum, map_mul]
-        exact sum_mem fun k _ => mul_mem (hi1 k) (hi2 k)
+          exact sum_mem fun k _ => mul_mem (hi1 k) (hi2 k)
   · have hx' : ¬ ∀ k, evFin F v ((x + w.1) k) ∈ O := fun h => hx fun k => by
       have := sub_mem (h k) (hi1 k)
       rwa [Pi.add_apply, map_add, add_sub_cancel_right] at this

@@ -29,7 +29,6 @@ theorem isLattice_lowLat : ∀ (E : Type) [Field E] [NumberField E] (n n₁ : �
     (ι : Matrix (Fin n) (Fin n₁) E), L.IsLattice E → Function.Injective ι.mulVec → (lowLat ι L).IsLattice E := by
   intro E _ _ n n₁ L ι hL hι
   have hfg : L.FG := Submodule.IsLattice.fg (self := hL)
-  have hsp : Submodule.span E (L : Set (Fin n → E)) = ⊤ := Submodule.IsLattice.span_eq_top (self := hL)
   refine ⟨?_, ?_⟩
   · let f : (Fin n₁ → E) →ₗ[𝓞 E] (Fin n → E) := (Matrix.mulVecLin ι).restrictScalars (𝓞 E)
     have hf : Function.Injective f := hι

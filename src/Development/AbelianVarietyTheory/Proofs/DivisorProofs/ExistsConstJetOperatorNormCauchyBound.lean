@@ -285,7 +285,7 @@ theorem prod_eNorm_le (lam : ι → DomWeight a) {T : ℝ} (ha : (a : ℝ) ≤ T
     ∏ τ, eNorm (lam τ) ≤ T ^ (3 * ∑ τ, ∑ i, (lam τ).natW i) := by
   have hT : (0 : ℝ) ≤ T := le_trans (Nat.cast_nonneg _) ha
   rw [Finset.mul_sum, ← Finset.prod_pow_eq_pow_sum]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro τ _
     exact le_trans zero_le_one (one_le_eNorm _)
   · intro τ _

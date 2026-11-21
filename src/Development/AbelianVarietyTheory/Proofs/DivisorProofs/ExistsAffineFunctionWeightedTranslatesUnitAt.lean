@@ -106,16 +106,16 @@ theorem GlobalTheory.CharIndepAt.main : ∀ (X : Scheme.{0}) [IsIntegral X] (U :
     intro a
     by_contra hz
     refine hne a ⟨∑ i, liftStalk (σ i) (h1 i) (g a) * t i, ?_, ?_⟩
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [← IsLocalRing.residue_ne_zero_iff_isUnit, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+      rw [← IsLocalRing.residue_ne_zero_iff_isUnit, map_sum]
       intro h
       apply hz
       rw [← h]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, mul_comm]
       rfl
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, algebraMap_liftStalk, ht]
       congr 2

@@ -59,6 +59,8 @@ theorem charpoly_of_integral [Module.Free O Q] [Module.Finite O Q] (hinj : Funct
   apply Polynomial.map_injective _ hinj
   rw [h1, Polynomial.map_multiset_prod, Multiset.map_map, Multiset.map_map]
   congr 2
+  funext s
+  simp
 
 theorem exists_basis_quot (P' : Submodule O Q) {r : ℕ} (θ : (Fin r → O⟦X⟧) ≃ₗ[O] Q)
     (h : ∀ c, θ c ∈ P' ↔ ∀ k, (X : O⟦X⟧) ∣ c k) :
@@ -246,6 +248,7 @@ theorem senOp_of_diag [CharZero LL] (hinj : Function.Injective (algebraMap O LL)
 end Generic
 
 
+set_option synthInstance.maxHeartbeats 200000 in
 set_option maxHeartbeats 1000000 in
 theorem senOp_of_lines {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} {H : LocHW l P}
     {E : LocFon l P AI H} (C : LocCmpT l P AI H E) {K LL : FinExt l} (hA : CaseA K LL)
@@ -308,7 +311,10 @@ theorem mem_gradedSer_iff {r : ℕ} (u : Fin r → ℤ) (d : Fin r → M) (A : �
       · rw [h0 k hk]; exact zero_mem _
       · have := h1 k
         rw [hA] at this ⊢
-        exact Submodule.span_mono (Set.image_mono fun s (hs : a ≤ u s) => show -k ≤ u s by omega) this
+        exact Submodule.span_mono (Set.image_mono (show {s | a ≤ u s} ⊆ {s | -k ≤ u s} from fun s hs => by
+          change a ≤ u s at hs
+          change -k ≤ u s
+          omega)) this
     · exact ⟨⟨0, fun _ _ => rfl⟩, fun _ => zero_mem _⟩
     · rintro y z ⟨⟨m, hm⟩, hy⟩ ⟨⟨m', hm'⟩, hz⟩
       exact ⟨⟨min m m', fun k hk => by

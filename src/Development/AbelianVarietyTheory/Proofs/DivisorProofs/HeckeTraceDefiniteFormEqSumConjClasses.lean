@@ -188,7 +188,7 @@ theorem cent_map_eq (ι₁ : Γ →* G₁) (ι₂ : Γ →* G₂) (hι : Functio
     refine ⟨w, hι ?_, rfl⟩
     rw [map_mul, map_mul, hc]
   · rintro ⟨w, hw, rfl⟩
-    exact ⟨by rw [← map_mul, ← map_mul, hw], w, rfl⟩
+    exact ⟨hw.map (ι₁.prod ι₂), w, rfl⟩
 
 theorem orbital_eq_centSum (ι₁ : Γ →* G₁) (ι₂ : Γ →* G₂) (hι : Function.Injective (ι₁.prod ι₂))
     (K₁ : Subgroup G₁) (K₂ : Subgroup G₂) (f₁ : G₁ → ℂ) (f₂ : G₂ → ℂ) (γ : Γ) :

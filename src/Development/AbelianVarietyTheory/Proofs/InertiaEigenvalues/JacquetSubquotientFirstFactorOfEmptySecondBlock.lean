@@ -39,7 +39,7 @@ theorem leviEmb_mulSingle (f : (Σ j, Fin (c j)) ≃ Fin t) (hc : c true = 0) (h
     | true => exact absurd j.2 (by omega)
     | false =>
       rw [leviEmb_apply_same]
-      simp [val_reix]
+      simp [val_reix, falseEquiv, Equiv.ofBijective]
 
 end Reindex
 

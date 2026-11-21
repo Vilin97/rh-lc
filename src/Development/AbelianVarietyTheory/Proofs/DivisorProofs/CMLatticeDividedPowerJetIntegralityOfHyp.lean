@@ -117,13 +117,15 @@ theorem val_facts (l d : ℕ) (hl : l.Prime) (hd : d.Prime) (h4 : 4 < d) :
   haveI := Fact.mk hl
   haveI := Fact.mk hd
   have h1 : padicValNat l d = if l = d then 1 else 0 := by
+    rw [Nat.padicValNat_def]
     split_ifs with h
-    · subst h; exact padicValNat_self
-    · exact padicValNat_primes h
+    · subst h; exact Nat.Prime.multiplicity_self
+    · exact multiplicity_primes h
   have h2 : padicValNat l 4 = if l = 2 then 2 else 0 := by
+    rw [Nat.padicValNat_def]
     split_ifs with h
-    · subst h; exact padicValNat.prime_pow 2
-    · refine padicValNat.eq_zero_of_not_dvd fun hh => h ?_
+    · subst h; exact Nat.multiplicity_prime_pow 2
+    · refine multiplicity_eq_zero_of_not_dvd fun hh => h ?_
       exact (Nat.prime_dvd_prime_iff_eq hl Nat.prime_two).1 (hl.dvd_of_dvd_pow (n := 2) hh)
   by_cases h3 : d % 4 = 3
   · simp only [h3, if_true, h1, not_true, and_false, if_false]

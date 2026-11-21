@@ -27,7 +27,8 @@ theorem goodModel_eq_classSum : ∀ (D : D7) (X : RealSide D) (E : IntegralHecke
       ∃ F ∈ Submodule.span ℂ (Y.Z.ρ.mt i j b 0 ∅ 1 : Set (Bridge.Gf (Vc D j) → PolF D (Wc D j).rank (Vc D j).rank)),
         (X.R.HW j (sg0 D X.A3.A)).e w (X.geo.v₀ j _) = Y.Z.ρ.sum i j b 0 ∅ 1 F := by
   intro D X E Y hG i hB j b w hw hty
-  obtain ⟨t, hxi, hQ⟩ := hB j b
+  obtain ⟨t, hxi, hQ⟩ : ∃ t : X.T, X.R.xi t = (Y.Z.ρ.B i j b).de.chi ∧
+      X.R.Q t = (Y.Z.ρ.B i j b).de.Q := hB j b
   obtain ⟨y0, rfl⟩ : w ∈ LinearMap.range (X.R.thG j t) := by
     rw [hG j t]; exact hw
   obtain ⟨y, hlaw, heq⟩ := GlobalTheory.T.projectedLift_unipotentType_baseLevelForm D X E Y i j b t hxi hQ y0 hty

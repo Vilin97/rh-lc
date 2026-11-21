@@ -42,7 +42,8 @@ theorem specializes_ptY_genFr (h : GenFrEx Xo c) {L : Type} [Field L] [Algebra c
     (hQ : LiesOn Z Q) : ptOf (X.ptY (genFr h Z)) ⤳ ptOf (X.ptY Q) := by
   obtain ⟨C, ψ, z, t', hz, hb⟩ := (Reg.evLaws_genFr_atlas E H Dw l Xo c).2.2.2 h L Q
   have hsp : ptOf (X.ptY (genFr h C.Z)) ⤳ ptOf (X.ptY Q) := by
-    rw [X.ptY_frBor C.bor, ← X.ptY_frMap C.gen, ← X.ptY_frBor hb, ← X.ptY_frMap hz, ptOf_comp, ptOf_comp]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [X.ptY_frBor C.bor, ← X.ptY_frMap C.gen, ← X.ptY_frBor hb, ← X.ptY_frMap hz, ptOf_comp, ptOf_comp]
     refine Specializes.map ?_ (X.ptY C.y).continuous
     refine (PrimeSpectrum.le_iff_specializes _ _).1 ?_
     show ((spMap _ (IsLocalRing.closedPoint _) : Sp C.R) : PrimeSpectrum C.R).asIdeal ≤

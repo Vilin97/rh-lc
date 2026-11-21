@@ -219,8 +219,50 @@ theorem harmonicValue_translate_dvd_unit : ∀ (E : Type) [Field E] [NumberField
     have hj' : psJet m h = psJet m (∑ _i : Fin 1, (u * ∏ i, u₁ i) • boxSer f₀) := by
       rw [GermBasic.psJet_sum, Fin.sum_univ_one, BoxGerm.psJet_boxSer, hj]
       simp only [ha, hf₀, map_mul, AlgHom.commutes, Finset.prod_mul_distrib, map_prod, _root_.mul_assoc]
-    have h1 := harmonic_value_at E H Dw l Xo c nab hnab T io y C P τ hEL F φ hφ yF hyF N n m σ₀ hs f₀ htie
-      (fun i => by rw [hf₀]; exact ha₀ i) a Pp hPp le_rfl
+    have h1 : (∑ j ∈ Pp.support, algebraMap c.F F (Pp.coeff j) * ∏ i, nab yF (N : ℤ) (hs i) (colOf j i)) =
+        nabValN C.ch.B F (MvPowerSeries.map (algebraMap T.Fr F) C.ch.h) H.w0 N (boxSer f₀)
+          (fun ℓ : LtN Dw n => ℓ.2.2) (fun (ℓ : LtN Dw n) i => algebraMap T.Fr F (C.ch.uvec ⟨ℓ.1, ℓ.2.1⟩ i))
+          (MvPolynomial.map (algebraMap c.F F) Pp) := by
+      open GlobalTheory.GermValuationJetHarmonics GlobalTheory.ChartPush in
+      obtain ⟨x', e', h₁, h₂, h₃, h₄, h₅⟩ := exists_chart_baseChange φ hyF C.ch
+      rw [hφ] at h₁ h₂ h₃ h₄ h₅
+      have hg := RawChartBaseChange.isCanonGauge_mapFB (algebraMap T.Fr F) C.ch.B C.ch.h C.ch.gauge
+      let CF : ChartAt Xo c yF := ⟨C.ch.d, FBMap.mapFB (algebraMap T.Fr F) C.ch.B, fun ℓ j => algebraMap T.Fr F (C.ch.uvec ℓ j),
+        x', e', C.ch.wP, MvPowerSeries.map (algebraMap T.Fr F) C.ch.h, h₁, h₂, C.ch.prim, hg, h₃⟩
+      have hG : ∀ i, JetD yF CF.d CF.x CF.B.A.act CF.e CF.wP N (hs i) m (f₀ i) := fun i =>
+        jet_of_val ((isChart_iff yF _ _ _ _ _).1 h₁) h₂.gen C.ch.prim.1 m
+          fun z J hJ => by
+            have hf : JetAt P.U.toUnifPre m (C.xT m) (τ m) F N (σ₀ i) (psJet m (f₀ i)) := by rw [hf₀]; exact ha₀ i
+            obtain ⟨p, p₀, p₁, p₂, hp⟩ := frames_tied C m (spMap (jetCoef (algebraMap T.Fr F) (Fin 1 × Fin (chD C.ch)) m))
+            obtain ⟨zF, z₁, z₂, hz⟩ := hf
+            have hLG : P.U.LG.L.IsLB := P.U.LG.isLB
+            obtain ⟨J₂, hJ₂⟩ := DegPull.exists_good' hLG z
+            obtain ⟨J', hJ'⟩ := DegPull.exists_good' C.I.t'.PP.isLB z
+            obtain ⟨J₃, hJ₃, hv, hw⟩ := exists_good_cast (L' := C.I.t'.PP.L) (Φ := C.I.m2.φ)
+              (congrArg RigLB.L P.bundle).symm z J₂ hJ₂
+            obtain ⟨A, k₁, k₂⟩ := hp z J J₃ J' hJ hJ₃ hJ'
+            have ec : spMap (jetCoef (algebraMap T.Fr F) (Fin 1 × Fin (chD C.ch)) m) ≫
+                spMap (jetCoef (algebraMap T.V T.Fr) (Fin 1 × Fin (chD C.ch)) m) =
+                spMap (jetCoef (algebraMap T.V F) (Fin 1 × Fin (chD C.ch)) m) := by
+              rw [spMap_spMap, jetCoef_comp, ← IsScalarTower.algebraMap_eq]
+            rw [ec] at p₂ k₂
+            obtain ⟨b₁, b₂⟩ := ptSec_base (t := Xo.univ.t) m (x' m)
+            have key := (htie i).2 _ p zF _ (z₂.trans p₂.symm) (b₁.trans ((h₄ m).trans p₁.symm)) (z₁.trans b₂.symm) (by
+                rw [← Category.assoc, p₀]
+                refine (congrArg (· ≫ spMap (algebraMap T.Fr F)) b₂).trans ?_
+                exact RawChartGermBC.spMap_comp_eq _ _ _ _
+                  (RingHom.ext fun s => (jetBC_algebraMap (algebraMap T.Fr F) _ m s).symm))
+              z J J₂ (J' p) hJ hJ₂ (hJ' p)
+            rw [hw] at key
+            have k₃ := (val_corr hJ₂ (corr_of_val hLG (hEL m))
+              (spMap (jetCoef (algebraMap T.V F) (Fin 1 × Fin (chD C.ch)) m))).trans ((hv _ _ _ _).trans k₂)
+            exact (alg_tie key (hz z J₂ hJ₂) k₁ k₃).trans
+              (congrArg (fun v => gs (𝟙 _) z ⊤ (toΓ _ (psJet m (f₀ i))) * (v ^ N).val) (h₅ m z J hJ).symm)
+      have hh := GlobalTheory.OrderGerm.ord_holds E H Dw l Xo c nab hnab F yF CF N n m hs f₀ hG a Pp hPp
+        (fun j hj => (MvPolynomial.le_totalDegree hj).trans le_rfl)
+      refine hh.symm.trans ?_
+      exact (nabValN_columns (algebraMap c.F F) C.ch.B _ (HarmCopies.const_eq_zero hg) N n f₀
+        (fun ℓ j => algebraMap T.Fr F (C.ch.uvec ℓ j)) Pp).symm
     have h2 := hal a Pp hPp
     have h3 : algebraMap T.Fr F (evI y f) = thExpr Xo c nab yF Pp Fs := by
       first

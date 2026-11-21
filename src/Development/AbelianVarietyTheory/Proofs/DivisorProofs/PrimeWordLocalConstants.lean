@@ -141,7 +141,7 @@ theorem factorBounds_of_weights {K : Type} [Field K] [NumberField K] [StarRing K
 theorem one_le_f (R : Ranks) : (1 : ℝ) ≤ R.f := by
   have : 1 ≤ R.f := by
     unfold Ranks.f Ranks.n
-    have := And.intro (Nat.one_le_two_pow (n := R.e)) (show 0 < R.ord by positivity)
+    have := And.intro (Nat.one_le_two_pow (n := R.e)) (show 0 < R.ord from R.ord_pos)
     omega
   exact_mod_cast this
 

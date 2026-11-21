@@ -132,10 +132,9 @@ def bcTate (t : G.Tate) : (G.baseChange O').Tate :=
 
 omit [Fact p.Prime] in
 theorem isGroupLikeElem_one_tmul (χ : G.dual.Tate) (n : ℕ) :
-    IsGroupLikeElem O' ((1 : O') ⊗ₜ[O] charElem χ n) where
-  counit_eq_one := by simp [(isGroupLikeElem_charElem χ n).counit_eq_one]
-  comul_eq_tmul_self := by
-    simp [TensorProduct.comul_tmul, (isGroupLikeElem_charElem χ n).comul_eq_tmul_self]
+    IsGroupLikeElem O' ((1 : O') ⊗ₜ[O] charElem χ n) := by
+  have h := isGroupLikeElem_charElem χ n
+  exact ⟨by simp [h.counit_eq_one], by simp [TensorProduct.comul_tmul, h.comul_eq_tmul_self]⟩
 
 def bcChar (χ : G.dual.Tate) : (G.baseChange O').dual.Tate :=
   ⟨fun n => evalPoint _ (isGroupLikeElem_one_tmul O' χ n), fun n => AlgHom.ext fun φ => by
@@ -162,8 +161,10 @@ def dualBaseChange (G : PDivGroup p O) : (G.baseChange O').dual ≅ G.dual.baseC
         (CartierDual.map ((G.baseChange O').mulP n) (CartierDual.baseChange O O' (G.A (n + 1)) y))
     rw [baseChange_mulP, PDiv.bcMap, PDiv.bcMap, ← CartierDual.baseChange_map, BialgEquiv.symm_apply_apply,
       BialgEquiv.symm_apply_apply]⟩
-  hom_inv_id := hom_ext fun n => BialgHom.ext fun a => (CartierDual.baseChange O O' (G.A n)).apply_symm_apply a
-  inv_hom_id := hom_ext fun n => BialgHom.ext fun a => (CartierDual.baseChange O O' (G.A n)).symm_apply_apply a
+  hom_inv_id := PDivGroup.Hom.ext <| funext fun n => BialgHom.ext fun a =>
+    (CartierDual.baseChange O O' (G.A n)).apply_symm_apply a
+  inv_hom_id := PDivGroup.Hom.ext <| funext fun n => BialgHom.ext fun a =>
+    (CartierDual.baseChange O O' (G.A n)).symm_apply_apply a
 
 end BaseChange
 

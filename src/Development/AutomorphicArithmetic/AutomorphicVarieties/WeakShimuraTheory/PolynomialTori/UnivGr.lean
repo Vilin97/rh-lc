@@ -63,7 +63,9 @@ theorem UpperTheory.V.Ws.Po.univGr :
     CohomologyHyp → ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [Fact l.Prime] {c : Coef l} (D : Raw Ω c), D.Good → ¬ D.Fin0 →
       ∃ (U : Type) (_ : CommRing U) (_ : Algebra c.O U) (_ : IsCO c.O U) (ρ : Lift c.O D.rbar U) (W : WPres c.O (ℤ × ℤ) U),
         D.IsPt ρ ∧ (∀ s, W.z s ∈ maximalIdeal U) ∧
-        (∀ i, ∃ g a b, W.z i = ρ.hom g a b - algebraMap c.O U (D.r0 g a b) ∧ W.wt i = wt a b) ∧ ¬ Module.Finite c.O (W.gr 0) := by
+        (∀ i, ∃ g a b, W.z i = ρ.hom g a b - algebraMap c.O U (D.r0 g a b) ∧ W.wt i = wt a b) ∧
+        ¬ @Module.Finite c.O (W.gr 0) inferInstance (Submodule.addCommMonoid (W.gr 0))
+          (Submodule.module (W.gr 0)) := by
   intro hP Ω _ _ _ l _ c D hD hF
   have hex : ∃ (R : Type) (_ : CommRing R) (_ : Algebra c.O R) (_ : IsCO c.O R) (ρ : Lift c.O D.rbar R), D.IsPt ρ := by
     by_contra hn

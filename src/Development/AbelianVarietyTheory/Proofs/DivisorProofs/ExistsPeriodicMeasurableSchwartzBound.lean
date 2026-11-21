@@ -67,7 +67,9 @@ theorem exists_bump : ∃ f : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensor
   rw [b.one_of_mem_closedBall (Metric.mem_closedBall_self zero_le_one), Complex.ofReal_one]
 
 
-def intPts (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) : Set (κ → Fv F v) := {x | ∀ i, x i ∈ v.adicCompletionIntegers F}
+def intPts (κ : Type)
+    (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) :
+    Set (κ → Fv F v) := {x | ∀ i, x i ∈ v.adicCompletionIntegers F}
 
 theorem intPts_eq (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) :
     intPts κ v = Set.pi Set.univ fun _ => (v.adicCompletionIntegers F : Set (Fv F v)) := by

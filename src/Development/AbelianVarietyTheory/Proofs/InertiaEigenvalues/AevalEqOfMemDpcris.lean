@@ -49,7 +49,7 @@ theorem exists_gen : ∀ {G F : Type} [Group G] [Field F] (I : Subgroup G) (c : 
     rw [mem_rootsOfUnity]
     exact hc g
   haveI : Finite c.range := Finite.of_injective (Subgroup.inclusion hle) (Subgroup.inclusion_injective hle)
-  haveI : IsCyclic c.range := isCyclic_of_subgroup_isDomain ((Units.coeHom F).comp c.range.subtype)
+  haveI : IsCyclic c.range := isCyclic_of_injective_ringHom ((Units.coeHom F).comp c.range.subtype)
     (fun x y hxy => Subtype.ext (Units.ext hxy))
   obtain ⟨x, hx⟩ := IsCyclic.exists_monoid_generator (α := c.range)
   obtain ⟨γ, hγ⟩ := x.2
@@ -87,14 +87,12 @@ variable {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field 
 
 theorem actVB_mul (g g' : G) (x : V ⊗[Qp] B) :
     actVB PD ρ (g * g') x = actVB PD ρ g (actVB PD ρ g' x) := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
+  induction x using TensorProduct.inductionOn with
   | tmul v b => simp [actVB]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem actVB_one (x : V ⊗[Qp] B) : actVB PD ρ 1 x = x := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
+  induction x using TensorProduct.inductionOn with
   | tmul v b => simp [actVB]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
@@ -102,7 +100,7 @@ theorem actVB_pow (g : G) (n : ℕ) (x : V ⊗[Qp] B) :
     actVB PD ρ (g ^ n) x = (actVB PD ρ g ^ n) x := by
   induction n with
   | zero => simp [actVB_one]
-  | succ n ih => rw [pow_succ', actVB_mul, ih, pow_succ', Module.End.mul_apply]
+  | succ n ih => rw [pow_succ', actVB_mul, ih, pow_succ', mul_apply_eq_comp]
 
 theorem aeval_actVB (g : G) (q : LL[X]) {N : ℕ} (hN : q.natDegree < N) (x : V ⊗[Qp] B) :
     (aeval (actVB PD ρ g) q) x = ∑ n ∈ Finset.range N, q.coeff n • actVB PD ρ (g ^ n) x := by
@@ -302,7 +300,7 @@ theorem main : ∀ (D : D7) (P : Pend D), TieInePoly D → InertEq D → ∀ (i 
       (fun a => ((a g : (↥(D.nbr i w hw).LL.1)ˣ) : ↥(D.nbr i w hw).LL.1))
       (fun y hy => ⟨ch y, Finset.mem_image_of_mem ch (hMS y hy), rfl⟩)
     refine (aeval_eq_of_mem_Dpcris (pc (D.loc (D.nd.l i)) h hN hF hS) _ _ s hs.2 _ d hd).trans ?_
-    rw [hr, mul_comm, map_mul, Module.End.mul_apply, ← hq, hkill, map_zero]
+    rw [hr, mul_comm, map_mul, mul_apply_eq_comp, ← hq, hkill, map_zero]
   exact GlobalTheory.PassPolyPow.main (D.nd.l i) (D.loc (D.nd.l i)) (D.nbr i w hw).Kw K' (D.nbr i w hw).LL h hN hF hS _ _
     (S.image ch) G1 G2 G3 G4
 end GlobalTheory.InertiaChars

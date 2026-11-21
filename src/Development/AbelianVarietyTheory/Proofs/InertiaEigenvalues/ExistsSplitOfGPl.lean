@@ -91,9 +91,9 @@ theorem le_Umax_of_prod {J : Subgroup (GAf L n)} (hJ : NG.IsProdLevel J)
 theorem mem_Umax_of_para (s : SplitPlace L) {r : ℕ} {κ : GAf L n} (h1 : TrivOutside {s.v} κ) (h2 : NG.ParaRT s r (s.loc n κ)) :
     κ ∈ Umax L n := by
   have h := GlobalTheory.HeckeStdFacts.mem_GLint_iff.1 h2.1
-  refine GlobalTheory.HeckeStdFacts.mem_Umax_of_loc s κ h1 h.1 fun i j => ?_
-  rw [map_inv]
-  exact h.2 i j
+  exact GlobalTheory.HeckeStdFacts.mem_Umax_of_loc s κ h1 h.1 (fun i j => by
+    rw [map_inv]
+    exact (HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).1 (h.2 i j))
 
 end Plain
 

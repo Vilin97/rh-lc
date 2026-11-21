@@ -33,7 +33,7 @@ theorem mem_span_of_image_mem_span {K : Type} [Field K] {M : Type} [AddCommGroup
       ext x; simp [v]
     rw [this, Submodule.span_image, b.span_eq, Submodule.map_top, Submodule.range_subtype]
   have hli : LinearIndependent K (Fin.cons f₂ v : Fin (Module.finrank K G + 1) → M) := by
-    rw [linearIndependent_fin_cons]
+    rw [linearIndependent_finCons]
     exact ⟨b.linearIndependent.map' G.subtype (Submodule.ker_subtype G), by rwa [hvsp]⟩
   have hsecG : G ≤ S := by
     rw [hG, Submodule.span_le]
@@ -49,7 +49,7 @@ theorem mem_span_of_image_mem_span {K : Type} [Field K] {M : Type} [AddCommGroup
       Fin.cons (R f₂) (fun i => R (v i)) := by
     funext i
     refine Fin.cases ?_ (fun i => ?_) i <;> simp
-  rw [hfun, linearIndependent_fin_cons] at hC
+  rw [hfun, linearIndependent_finCons] at hC
   apply hC.2
   have hG' : ∀ x ∈ G, R x ∈ Submodule.span ℂ (Set.range fun i => R (v i)) := by
     intro x hx

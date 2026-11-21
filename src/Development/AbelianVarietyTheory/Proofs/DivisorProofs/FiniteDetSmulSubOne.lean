@@ -440,7 +440,7 @@ theorem finite_data (hψ : IsStdChar D ψ (-1)) (hS : IsSelfDualC S ΛS) (hT : I
   refine ⟨hbij, ?_⟩
   set A := (latQ S T ΛS ΛT).toAddSubgroup with hA
   obtain ⟨N, hN, hNA⟩ : ∃ N : ℕ, N ≠ 0 ∧ ∀ x ∈ A, N • sandw b a x ∈ A := by
-    obtain ⟨s, hs⟩ := fg
+    obtain ⟨s, hs⟩ := AddSubgroup.isAddFG_iff.mp fg
     choose k hk hk' using full
     refine ⟨∏ y ∈ s, k (sandw b a y), Finset.prod_ne_zero_iff.2 fun y _ => (hk _).ne', fun x hx => ?_⟩
     rw [← hs] at hx

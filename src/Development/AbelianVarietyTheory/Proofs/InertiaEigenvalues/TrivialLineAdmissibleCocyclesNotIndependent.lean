@@ -138,6 +138,12 @@ theorem exists_const_pair (F : DFun R n G) {r : ℕ} {Dt : TopData n r} (M : Mod
   refine ⟨b, g, fun i => (m i : k⸨X⸩) • F.unit i, c, hR, fun i => ⟨?_, ?_⟩⟩
   · rw [hβ, (hm i).1, eφ, add_smul, sub_smul]
     congr 1
+    apply funext
+    intro j
+    change (algebraMap k k⸨X⸩) (c i) * F.unit i j = c i • F.unit i j
+    rw [HahnSeries.algebraMap_apply', PowerSeries.algebraMap_apply, HahnSeries.ofPowerSeries_C,
+      HahnSeries.C_mul_eq_smul]
+    simp
   · rw [hδ, (hm i).2, eγ, sub_smul]
 
 theorem main : ∀ {k G : Type} [Field k] [Group G] {l n : ℕ} [Fact l.Prime] [CharP k l] [NeZero n] {R : RingPG k l} (F : DFun R n G) {r : ℕ} {Dt : TopData n r} (M : ModTh F Dt), Dt.T1 l → Dt.T2 l → Dt.T3 l → ∀ z : Fin 2 → G → Fin 1 → k, (∀ a, z a ∈ M.twistedModelAdmissibleCocycles (chr 1)) → ¬ LinearIndependent k (fun a => (cob (chr (1 : G →* kˣ))).mkQ (z a)) := by

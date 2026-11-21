@@ -18,7 +18,7 @@ theorem fixed_mem_range {g : ℕ} [hg : Fact (Nat.Prime g)] {d : ℕ} (hd : 0 < 
   have hcard : Fintype.card (GaloisField g d) = g ^ d := by rw [Fintype.card_eq_nat_card]; exact GaloisField.card g d hd.ne'
   have hq : 1 < g ^ d := Nat.one_lt_pow hd.ne' hg.out.one_lt
   set P : (AlgebraicClosure (ZMod g))[X] := X ^ (g ^ d) - X with hP
-  have hP0 : P ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero _ hq
+  have hP0 : P ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hq
   have hPdeg : P.natDegree = g ^ d := Polynomial.natDegree_X_pow_sub_X hq
   have hsub : Finset.univ.image ι ⊆ P.roots.toFinset := by
     intro x hx

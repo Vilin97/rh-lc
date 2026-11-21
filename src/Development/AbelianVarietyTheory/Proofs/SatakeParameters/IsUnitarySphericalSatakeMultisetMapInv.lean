@@ -35,7 +35,7 @@ theorem mem_std_iff {O K : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationR
 theorem glMap_std_le_iff (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K] [Algebra O K] [IsFractionRing O K] (r : ℕ) (g : GL (Fin r) K) :
     glMap g (std O K r).1 ≤ (std O K r).1 ↔ ∀ i j, (g : Matrix (Fin r) (Fin r) K) i j ∈ (algebraMap O K).range := by
   change Submodule.map _ (Submodule.span O (Set.range (Pi.basisFun K (Fin r)))) ≤ (std O K r).1 ↔ _
-  rw [Submodule.map_span, Submodule.span_le, ← Set.range_comp, Set.range_subset_iff, forall_swap]
+  rw [Submodule.map_span, Submodule.span_le, ← Set.range_comp, Set.range_subset_iff, forall_comm]
   refine forall_congr' fun j => ?_
   simp only [Function.comp_apply, LinearMap.coe_restrictScalars, Pi.basisFun_apply,
     Matrix.toLin'_apply, SetLike.mem_coe, mem_std_iff, Matrix.mulVec_single_one]
@@ -121,7 +121,7 @@ theorem glMap_tinv_inv_le_iff (A : GL (Fin r) K) :
     glMap (tinv A)⁻¹ (std O K r).1 ≤ (std O K r).1 ↔ glMap A (std O K r).1 ≤ (std O K r).1 := by
   rw [glMap_std_le_iff O K r, glMap_std_le_iff O K r]
   simp only [tinv_inv_val, transpose_apply]
-  exact forall_swap
+  exact forall_comm
 
 theorem glMap_tinv_std (X : GL (Fin r) K) (h : glMap X (std O K r).1 = (std O K r).1) :
     glMap (tinv X) (std O K r).1 = (std O K r).1 := by

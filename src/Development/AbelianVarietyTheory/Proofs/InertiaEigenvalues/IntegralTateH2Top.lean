@@ -199,7 +199,7 @@ theorem tateH2OAt_of_fund (P : LocPrime l) (K Lf : FinExt l) [CompactSpace ↥(G
     intro X _ F hF
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [Module.Basis.equivFun_symm_apply, map_sum, hsm]
-    exact continuous_finset_sum _ fun j _ => ((hAlg.comp (hcZ.comp (hF j))).mul continuous_const)
+    exact continuous_finsetSum _ fun j _ => ((hAlg.comp (hcZ.comp (hF j))).mul continuous_const)
   have hd1 : ∀ (f : ↥(GK K) → ↥Lf.1) g h, ReciprocityTheory.Def.d1 (Formalism.WeaklyAdmissibleFiltrations.charRep (cycLL (P.PD K) ↥Lf.1)) f (g, h) =
       ((cycLL (P.PD K) ↥Lf.1 g : (↥Lf.1)ˣ) : ↥Lf.1) * f h - f (g * h) + f g := by
     intro f g h
@@ -282,11 +282,10 @@ theorem tateH2OAt_of_fund (P : LocPrime l) (K Lf : FinExt l) [CompactSpace ↥(G
       funext j
       simp only [map_add (f := _), map_sub, map_smul, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul,
         FO, a, LinearEquiv.apply_symm_apply]
-      rw [hXF j g h, mul_comm]
+      simpa only [mul_comm (X j) (c (g, h))] using hXF j g h
     have hcalc' := congrArg ι hcalc
-    rw [map_add (f := _), map_sub, map_sub, ← hcyc, hzO' (g, h), ← haz0 a (g, h)] at hcalc'
-    refine (hd1 _ g h).trans (hcalc'.trans ?_)
-    rfl
+    rw [map_add (f := _), map_sub, map_sub, ← hcyc, hzO' (g, h)] at hcalc'
+    exact (hd1 _ g h).trans (hcalc'.trans (congrArg (fun x : ↥Lf.1 => z.1 (g, h) - x) (haz0 a (g, h)).symm))
 
 end GlobalTheory.IntTateTop
 

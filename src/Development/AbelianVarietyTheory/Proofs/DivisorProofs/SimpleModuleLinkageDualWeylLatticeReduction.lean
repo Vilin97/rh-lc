@@ -36,6 +36,7 @@ theorem pure_step {O : Type} [CommRing O] {N : ℕ} {ι : Type} [DecidableEq ι]
     · rw [AlgHom.commutes, Module.algebraMap_end_apply]; rfl
     · rw [AlgHom.commutes, AlgHom.commutes, Module.algebraMap_end_apply, MultilinearMap.map_update_smul,
         Function.update_eq_self]
+      rfl
   | grade1 p =>
     intro x
     obtain ⟨y, hy, he⟩ := hF p x

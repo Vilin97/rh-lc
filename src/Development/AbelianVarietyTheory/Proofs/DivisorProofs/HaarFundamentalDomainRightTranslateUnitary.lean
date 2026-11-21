@@ -31,7 +31,7 @@ theorem GlobalTheory.RightTranslateFundDomain.haar_and_fundDomain : ∀ {D : D7}
   · have h := Measure.isHaarMeasure_map_mul_right m g⁻¹
     exact h
   · refine hfd.preimage_of_equiv (e := id) ?_ Function.bijective_id ?_
-    · refine ⟨measurable_mul_const g, ?_⟩
+    · refine ⟨(measurable_mul_const g).aemeasurable, ?_⟩
       rw [Measure.map_map (measurable_mul_const g) hmeas]
       have : ((fun x : GA D V => x * g) ∘ fun x => x * g⁻¹) = id := by
         funext x; simp

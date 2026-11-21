@@ -70,8 +70,10 @@ theorem isIsog_hasLogDeg_map : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k]
       iff_of_true (kill x hx) (pow_zero x)).trans hdeg
     obtain ⟨j, -, hj⟩ := (Nat.dvd_prime_pow hp).1 (finrank_quot_kerIdeal_dvd (t.map t' f.hom) a)
     have hv : padicValNat p (deg f) = j := by
-      rw [← h01, hrank, hj, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) (fun h0 => hpm (by rw [h0]; exact dvd_zero p)),
-        padicValNat.prime_pow, padicValNat.eq_zero_of_not_dvd hpm, add_zero]
+      rw [← h01, hrank, hj, Nat.padicValNat_def,
+        Nat.multiplicity_mul (pow_ne_zero _ hp.ne_zero)
+          (fun h0 => hpm (by rw [h0]; exact dvd_zero p)),
+        Nat.multiplicity_prime_pow, multiplicity_eq_zero_of_not_dvd hpm, add_zero]
     refine ⟨a, fun n hn => ?_⟩
     rw [hv, ← hj]
     refine finrank_eq_of_kerPow (kerPow_kerPt t t' f n) (kerPow_kerPt t t' f a) fun R _ _ x hx => ?_

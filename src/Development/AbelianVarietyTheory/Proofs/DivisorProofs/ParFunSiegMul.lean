@@ -22,7 +22,8 @@ theorem GlobalTheory.KSp.parFun_sieg_mul : ∀ (F : Type) [Field F] [CharZero F]
     funext x
     have h1 : mat c (1 : UG c (stdJ ν E)) = 1 := rfl
     have h11 : (1 : Matrix (ν ⊕ ν) (ν ⊕ ν) E).toBlocks₁₁ = 1 := by
-      ext i j; simp [toBlocks₁₁, one_apply]
+      ext i j
+      by_cases h : i = j <;> simp [toBlocks₁₁, Matrix.one_apply, h]
     have h12 : (1 : Matrix (ν ⊕ ν) (ν ⊕ ν) E).toBlocks₁₂ = 0 := by
       ext i j; simp [toBlocks₁₂, one_apply]
     have hp0 : pr c Q x 0 = 0 := by rw [← hβ]; simp

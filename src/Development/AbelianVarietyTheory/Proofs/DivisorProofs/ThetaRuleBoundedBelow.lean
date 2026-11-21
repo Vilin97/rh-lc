@@ -24,9 +24,7 @@ theorem finite_vLa_ne_zero {K : Type} [Field K] [NumberField K] (x : K) :
     {w : HeightOneSpectrum (𝓞 K) | vLa w x ≠ 0}.Finite := by
   by_cases hx : x = 0
   · subst hx
-    convert Set.finite_empty
-    ext w
-    simp [vLa]
+    simpa [vLa] using (Set.finite_empty : (∅ : Set (HeightOneSpectrum (𝓞 K))).Finite)
   · refine (GlobalTheory.QNorm.finite_valuation_ne_one K (Units.mk0 x hx)).subset fun w hw h1 => hw ?_
     simp only [Units.val_mk0] at h1
     simp [vLa, h1]

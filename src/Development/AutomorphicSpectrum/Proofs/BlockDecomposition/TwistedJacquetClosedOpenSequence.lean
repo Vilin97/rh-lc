@@ -189,7 +189,8 @@ theorem good_nhds (H : Subgroup G) (σ : Representation ℂ H Z) (U : Subgroup G
   have hK : IsOpen {k : G | cInd H σ k gp = gp} := GlobalTheory.CompanionTheory.BZFun.isSmooth_cInd H σ gp
   have hop : IsOpen ((fun x => p⁻¹ * x) ⁻¹' {k : G | cInd H σ k gp = gp}) :=
     hK.preimage (by fun_prop)
-  refine ⟨_, hop.mem_nhds (by simp), L, hL, hLc, fun L' hL' hL'c hLL' g hg hge ω hω => ?_⟩
+  set_option synthInstance.maxHeartbeats 100000 in
+    refine ⟨_, hop.mem_nhds (by simp), L, hL, hLc, fun L' hL' hL'c hLL' g hg hge ω hω => ?_⟩
   by_contra hne
   obtain ⟨h', a1, a2, a3⟩ := exists_avg H σ hL'c (θ.comp (Subgroup.inclusion hL'))
     (isOpen_ker_comp θ hθ hL') gp
@@ -261,6 +262,7 @@ theorem glue (H : Subgroup G) (σ : Representation ℂ H Z) (U : Subgroup G) (hU
 
 end Glue
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem extension {G M Z VC VO AC AO : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [Group M]
     [AddCommGroup Z] [Module ℂ Z] [AddCommGroup VC] [Module ℂ VC] [AddCommGroup VO] [Module ℂ VO]
     [AddCommGroup AC] [Module ℂ AC] [AddCommGroup AO] [Module ℂ AO]

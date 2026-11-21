@@ -92,26 +92,8 @@ theorem isSdLat_of_transport (i : E ≃+* E') (hst : ∀ x, i (star x) = star (i
       have := key _ hy
       rwa [cwInv_cw] at this
   ·
-    rw [eq_top_iff]
-    intro x _
-    have hy : cw i x ∈ Submodule.span E' (L : Set (Fin n → E')) := hspan ▸ Submodule.mem_top
-    have key : ∀ y ∈ Submodule.span E' (L : Set (Fin n → E')),
-        cwInv i y ∈ Submodule.span E (N : Set (Sp E n)) := by
-      intro y hy
-      induction hy using Submodule.span_induction with
-      | mem y hy => exact Submodule.subset_span ((hmem y).1 hy)
-      | zero =>
-        have : cwInv i (0 : Fin n → E') = 0 := by funext k; simp [cwInv]
-        rw [this]; exact Submodule.zero_mem _
-      | add a b _ _ ha hb =>
-        have : cwInv i (a + b) = cwInv i a + cwInv i b := by funext k; simp [cwInv]
-        rw [this]; exact Submodule.add_mem _ ha hb
-      | smul r a _ ha =>
-        have : cwInv i (r • a) = i.symm r • cwInv i a := by
-          funext k; simp [cwInv]
-        rw [this]; exact Submodule.smul_mem _ _ ha
-    have := key _ hy
-    rwa [cwInv_cw] at this
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing (𝓞 E) E).mp hli
   ·
     have hform : ∀ x y : Sp E n, stdH E' n (cw i x) (cw i y) = i (hStd E n x y) := by
       intro x y

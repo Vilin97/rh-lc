@@ -255,7 +255,8 @@ theorem exists_bound_values {la : HeightOneSpectrum (𝓞 c.F)} {p : ℕ} (hp : 
     show vV T.V (κ (algebraMap c.F L x)) = _
     rw [ho.2]
     simp only [vLa]
-    rw [← HeightOneSpectrum.valuation_liesOver L la w x, WithZero.log_pow]
+    rw [← HeightOneSpectrum.valuation_liesOver L la w x,
+      ← Ideal.ramificationIdx'_eq_ramificationIdx la.asIdeal w.asIdeal la.ne_bot, WithZero.log_pow]
     push_cast
     simp [mul_assoc]
   let _ : Algebra c.F T.Fr := io.toAlgebra

@@ -75,14 +75,18 @@ theorem tensV_id (z : V ⊗[ℚ_[l]] Bst P) : tensV P (LinearMap.id : V →ₗ[L
 theorem tensV_zero (z : V ⊗[ℚ_[l]] Bst P) : tensV P (0 : V →ₗ[LL] V') z = 0 := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | tmul v b => simp
+  | tmul v b =>
+    change ((0 : V →ₗ[LL] V') v) ⊗ₜ[ℚ_[l]] b = 0
+    simp
   | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
 
 theorem tensV_add (f g : V →ₗ[LL] V') (z : V ⊗[ℚ_[l]] Bst P) :
     tensV P (f + g) z = tensV P f z + tensV P g z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | tmul v b => simp [add_tmul]
+  | tmul v b =>
+    change (f + g) v ⊗ₜ[ℚ_[l]] b = f v ⊗ₜ[ℚ_[l]] b + g v ⊗ₜ[ℚ_[l]] b
+    simp [add_tmul]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]; abel
 
 end Tens

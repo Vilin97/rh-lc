@@ -69,7 +69,9 @@ theorem linInd_map {F K σ ι : Type} [Field F] [Field K] (e : F →+* K) {v : �
   have key : ∑ i ∈ s, (B.repr (c i) j) • v i = 0 := by
     ext m
     have h1 := congrArg (AddMonoidAlgebra.coeff · m) hsum
-    simp only [coeff_sum, coeff_smul, coeff_map, smul_eq_mul, coeff_zero] at h1 ⊢
+    simp only [coeff_sum, coeff_smul, coeff_map, smul_eq_mul] at h1 ⊢
+    change ∑ x ∈ s, c x * e ((v x).coeff m) = 0 at h1
+    change ∑ x ∈ s, (B.repr (c x)) j * (v x).coeff m = 0
     have h2 := congrArg (fun x => B.repr x j) h1
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_zero, Finsupp.finsetSum_apply, Finsupp.coe_zero, Pi.zero_apply] at h2
@@ -149,12 +151,12 @@ theorem exists_phi (K C : Type) [Field K] [Field C] (e0 : K →+* C) (ι : Type)
     refine ⟨fun τ => ∑ j, e0 (a τ j) • u τ j, fun τ => ?_, ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [Submodule.coe_sum, Submodule.coe_smul, u, liftPol, ← ha, map_sum, Finset.mul_sum, smul_eq_C_mul, map_mul, map_C]
-      refine Finset.sum_congr rfl fun j _ => by ring
+        refine Finset.sum_congr rfl fun j _ => by ring
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [MultilinearMap.map_sum, hv', map_sum]
-      simp only [LinearMap.map_smulₛₗ, semiConstr_basis, MultilinearMap.map_smul_univ, map_prod]
-      refine Finset.sum_congr ?_ fun _ _ => rfl
-      ext i; simp
+        simp only [LinearMap.map_smulₛₗ, semiConstr_basis, MultilinearMap.map_smul_univ, map_prod]
+        refine Finset.sum_congr ?_ fun _ _ => rfl
+        ext i; simp
   · simp only [semiConstr_basis]
     refine LinearIndependent.of_comp (mulMap C n lamW) ?_
     have h1 := linInd_map e0 (bVVfun_spec K lam).1

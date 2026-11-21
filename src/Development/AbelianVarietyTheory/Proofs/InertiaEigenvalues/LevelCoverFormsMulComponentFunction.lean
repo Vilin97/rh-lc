@@ -20,7 +20,7 @@ theorem forms_mul_comp : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, Formalis
   obtain ⟨hlev, hA, hinc, hUnf, hdom, hr, g, e, F, ik, φ, th, hmod, hth, hdict⟩ := hU
   have hpq := (GlobalTheory.Member.exists_iotaOK D T.Q hL.pins j hj).2
   have hpos : 1 ≤ (T.Q.Dw j).p + (T.Q.Dw j).q := by omega
-  obtain ⟨hio, -⟩ := GlobalTheory.TupleCover.iotaOK_and_frame T hL j hj σ hσ (T.V j σ) rfl hr
+  have hio := (GlobalTheory.TupleCover.iotaOK_and_frame T hL j hj σ hσ (T.V j σ) rfl hr).1
   have hgood : GoodEmb C.d.c₂ C.σ₂ := by
     have h1 := hσ
     rw [← hinc] at h1

@@ -37,7 +37,7 @@ section Gen2
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
 theorem match_mtwRat (γ : GQ L n) : (((γ : GAf L n) : GL (Fin n) (ReciprocityTheory.Aut.AL L)) : Matrix (Fin n) (Fin n) (ReciprocityTheory.Aut.AL L)) =
-    ((Formalism.L2.Col.mtwRat γ : GL (Fin n) L) : Matrix (Fin n) (Fin n) L).map Algebra.TensorProduct.includeLeftRingHom :=
+    ((Formalism.L2.Col.mtwRat (L := L) (n := n) γ : GL (Fin n) L) : Matrix (Fin n) (Fin n) L).map Algebra.TensorProduct.includeLeftRingHom :=
   (congrArg Units.val (Formalism.L2.Col.mtwInc_mtwRatFun γ)).symm
 
 theorem domWeight_ext {N : ℕ} {a b : DomWeight N} (h : a.w = b.w) : a = b := by

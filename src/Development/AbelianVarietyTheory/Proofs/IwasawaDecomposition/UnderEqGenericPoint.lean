@@ -256,7 +256,7 @@ theorem step_of_linear {R : Type*} [CommRing R] [Algebra ℝ R] (Φ : R →ₗ[�
       map_smul, nsmul_eq_mul, smul_eq_mul]
     ring
   have h₂ (b : ℤ) : (P b).coeff 1 = (D + 1) * c := by
-    rw [finsetSum_coeff, Finset.sum_eq_single 1 (fun j _ hj => by rw [coeff_monomial, if_neg hj]) (by simp),
+    rw [finsetSum_coeff, Finset.sum_eq_single 1 (fun _ _ hj => coeff_monomial_of_ne _ hj.symm) (by simp),
       coeff_monomial_same, pow_one, Nat.add_sub_cancel, hc, Nat.choose_one_right, Nat.cast_succ]
   have h₃ (b : ℤ) : P b = taylor (b : ℝ) (P 0) := eq_of_infinite_eval_eq _ _ (hinf.mono (by
     rintro _ ⟨a, rfl⟩

@@ -348,10 +348,10 @@ theorem exists_scalar_multiProd {h N : ℕ} {d : Fin h → ℕ} (e : (Σ a, Fin 
     induction y using PiTensorProduct.induction_on with
     | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
     | smul_tprod c y =>
-      rw [map_smul, smul_comm, piTensor_tprod, ← MultilinearMap.map_smul_univ]
-      congr 2
-      funext a
-      exact hω a z _
+      rw [map_smul, piTensor_tprod]
+      simp_rw [show ∀ a, σ a (g a) (y a) = (ω a z : ℂ) • y a from fun a => hω a z _]
+      rw [MultilinearMap.map_smul_univ, smul_comm]
+      rfl
   refine ⟨(deltaHalf k _ g : ℂ) * ∏ a, (ω a z : ℂ), fun f => Subtype.ext (Subtype.ext (funext fun y => ?_))⟩
   have h4 := parInd_law e _ f ⟨_, leviEmb_mem_parab k e g⟩ y
   rw [leviProj_leviEmb, h2, smul_smul] at h4
@@ -371,7 +371,9 @@ theorem eq_singleton_of_isCusp {x : IrrGL (k := k)} (hx : x.IsCusp) {s : Multise
     by_contra hU
     haveI := hx.2.2 h _ e hU
     refine hι ((GlobalTheory.SmGL.Model.evalOne_bijective e hx.2.1 _).1 ?_)
-    refine Representation.IntertwiningMap.ext (LinearMap.ext fun v => ?_)
+    apply Representation.IntertwiningMap.ext
+    apply LinearMap.ext
+    intro v
     rw [Subsingleton.elim v 0, map_zero, map_zero]
   obtain ⟨⟨a, i⟩, -⟩ := e.surjective ⟨0, hx.1⟩
   have ha : ∀ j, j = a := by

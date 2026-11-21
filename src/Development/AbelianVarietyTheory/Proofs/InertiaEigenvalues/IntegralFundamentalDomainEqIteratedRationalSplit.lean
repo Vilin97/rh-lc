@@ -101,7 +101,7 @@ theorem integral_fundamentalDomain_eq_iterated_split : ∀ (D : D7) (r m s t : �
     intro A hA
     rw [hμm, Measure.smul_apply] at hA
     exact (smul_eq_zero.1 hA).resolve_left hc.ne'
-  have hqmp : Measure.QuasiMeasurePreserving Me lam μ := ⟨Me.measurable, hac⟩
+  have hqmp : Measure.QuasiMeasurePreserving Me lam μ := ⟨Me.measurable.aemeasurable, hac⟩
   let eΓ : GlobalTheory.MixModel.ratMx D r m → Γ := fun g => ⟨Ec.symm g, (hmemΓ _).2 (by simpa using g.2)⟩
   have heΓ : Function.Bijective eΓ := by
     refine ⟨fun g g' h => Subtype.ext ?_, fun p => ⟨⟨Ec p, (hmemΓ p).1 p.2⟩, Subtype.ext ?_⟩⟩

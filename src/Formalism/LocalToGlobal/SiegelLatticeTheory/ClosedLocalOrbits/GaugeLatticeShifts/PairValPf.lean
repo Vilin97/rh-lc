@@ -290,8 +290,8 @@ theorem pts_inj : ∀ (bs bs' : List (K × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 ∧ 1
     obtain ⟨e1, e2⟩ :
         pσ ((t, s) :: b1) 0 = pσ ((t', s') :: b1') 0 ∧
           pv ((t, s) :: b1) 0 = pv ((t', s') :: b1') 0 := h 0 hzero
-    simp only [pσ, ite_eq_left hs1, ite_eq_left hs1', Nat.sub_zero] at e1
-    simp only [pv, ite_eq_left hs1, ite_eq_left hs1'] at e2
+    simp [pσ, hs1, hs1'] at e1
+    simp [pv, hs1, hs1'] at e2
     have ess : s = s' := by omega
     subst ess e2
     have := pts_inj b1 b1' (fun b hb => hv b (by simp [hb])) (fun b hb => hv' b (by simp [hb])) (by omega)

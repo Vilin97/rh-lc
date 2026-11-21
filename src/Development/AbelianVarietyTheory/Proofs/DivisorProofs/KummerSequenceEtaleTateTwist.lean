@@ -30,7 +30,9 @@ def pu {A : Type} [CommRing A] (ζ : Prim q A) : Aˣ :=
   Units.ofPowEqOne ζ.1 q ((GlobalTheory.EtC.PrimBasic.prim_basic q A).1 ζ) (NeZero.ne q)
 
 theorem pu_pow {A : Type} [CommRing A] (ζ : Prim q A) : pu ζ ^ q = 1 :=
-  Units.ext (by simp [(GlobalTheory.EtC.PrimBasic.prim_basic q A).1 ζ])
+  Units.ext (by
+    change ζ.1 ^ q = 1
+    exact (GlobalTheory.EtC.PrimBasic.prim_basic q A).1 ζ)
 
 def coefHom {A : Type} [CommRing A] (u : Aˣ) (hu : u ^ q = 1) : ZMod q →+ Additive Aˣ :=
   ZMod.lift q ⟨zmultiplesHom _ (Additive.ofMul u), by
@@ -78,7 +80,9 @@ theorem twRel_le_gKer (A : Type) [CommRing A] : twRel q 1 A ≤ gKer A := by
   refine Submodule.span_le.2 ?_
   rintro x ⟨ζ, ξ, a, h, rfl⟩
   show gHom A _ = 0
-  have hu : pu ξ = pu ζ ^ (a : ZMod q).val := Units.ext (by simp [h])
+  have hu : pu ξ = pu ζ ^ (a : ZMod q).val := Units.ext (by
+    change ξ.1 = ζ.1 ^ (a : ZMod q).val
+    exact h)
   rw [map_sub, gHom_single, gHom_single, zpow_one]
   change coefHom (pu ξ) (pu_pow ξ) 1 - coefHom (pu ζ) (pu_pow ζ) (a : ZMod q) = 0
   rw [coefHom_one, coefHom_apply, hu, ofMul_pow, sub_self]
@@ -168,7 +172,7 @@ abbrev Rt (q : ℕ) [NeZero q] : Shv ℤ := (restr (Int.castRingHom (ZMod q))).o
 theorem kap_exists (q : ℕ) [NeZero q] :
     ∃ κ : (restr (Int.castRingHom (ZMod q))).obj (tw q 1) ⟶ Gm, eta q ≫ κ.hom = phi0 q := by
   have hW : Scheme.etaleTopology.W (eta q) := GrothendieckTopology.W_of_isLocallyBijective _ _
-  obtain ⟨f, hf⟩ := (hW Gm.obj Gm.cond).2 (phi0 q)
+  obtain ⟨f, hf⟩ := (hW Gm.obj Gm.property).2 (phi0 q)
   exact ⟨⟨f⟩, hf⟩
 
 end GlobalTheory.EtC.KummerSeq

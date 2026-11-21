@@ -84,8 +84,8 @@ theorem equivAt_of_ccIs_core : Formalism.MainNotions.ModuliIntegralCharts.H1.Cha
       obtain ⟨ρ, ν, -, hν, hm⟩ := mvPt_spec hact.total g y
       exact ⟨ρ, ν, _, hν, hm, evalAt_actL hact (h.evalWD _ hj) frMap_trans_id g hs.1 y⟩) p
   have h1 := chi_mul_mu hR.lev i hmu hk
-  change u * cc (O.dict p).1 * O.mu p * rdU _ _ (O.dict p).1 (O.dict p).2 =
-    _ * (u * cc (O.dict (p * k)).1 * O.mu (p * k) * rdU _ f (O.dict (p * k)).1 (O.dict (p * k)).2)
+  change u * cc (O.dict p).1 * O.mu p * rdU (T.U ((i : ℕ) + 1) O.s0) _ (O.dict p).1 (O.dict p).2 =
+    _ * (u * cc (O.dict (p * k)).1 * O.mu (p * k) * rdU (T.U ((i : ℕ) + 1) O.s0) f (O.dict (p * k)).1 (O.dict (p * k)).2)
   rw [hmul]
   linear_combination u * O.mu p * key - u * O.mu p * cc (O.dict (p * k)).1 *
     rdU (T.U ((i : ℕ) + 1) O.s0) f (O.dict (p * k)).1 (O.dict (p * k)).2 * h1

@@ -20,7 +20,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ArchIntegrab
 
 open CategoryTheory AlgebraicGeometry MvPolynomial MeasureTheory
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory GlobalTheory.ArInt GlobalTheory.CxForm GlobalTheory.CxPts GlobalTheory.VB GlobalTheory.Cartier GlobalTheory.CovTest GlobalTheory.CovTest.SwapLine GlobalTheory.LineForm
+open GlobalTheory GlobalTheory.ArInt GlobalTheory.CxForm GlobalTheory.CxPts GlobalTheory.VB GlobalTheory.Cartier GlobalTheory.CovTest GlobalTheory.LineForm
 open scoped Classical
 
 set_option autoImplicit false
@@ -31,7 +31,7 @@ namespace GlobalTheory.LogNormIntGen
 
 theorem archIntegrable : ∀ {k : Type} [CommRing k] {X : Scheme.{0}} [IsIntegral X] {p : X ⟶ Sp k}
     {D : ℕ}, IsArithVar p D → GenSmooth p D → ∀ (M N : HermLB p) {r : N.B.ι → X.functionFieldˣ}
-      (hr : IsRatSec N.B r), M.ArchIntegrable N D hr := by
+      (hr : GlobalTheory.Cartier.IsRatSec N.B r), M.ArchIntegrable N D hr := by
   intro k _ X _ p D hX hs M N r hr σ
   have := hX.compactSpace σ
   have := CxPts.secondCountableTopology_of_isProjOver σ hX.isProjOver

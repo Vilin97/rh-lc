@@ -48,7 +48,7 @@ theorem mem_range_iff (S : Submodule R M) (x : T ⊗[R] M) :
     | tmul t m =>
       rw [LinearMap.lTensor_tmul, co_tmul]
       exact S.smul_mem _ m.2
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact S.add_mem hx hy
+    | add x y hx hy => simpa only [map_add] using S.add_mem hx hy
   · intro h
     rw [← sum_co b x]
     exact Submodule.sum_mem _ fun k _ => ⟨b k ⊗ₜ[R] ⟨_, h k⟩, rfl⟩
@@ -163,7 +163,7 @@ theorem core {ι : Type} [Fintype ι] (bT : Basis ι R T) (bV : Basis ι F V)
       induction u using TensorProduct.induction_on with
       | zero => simp
       | tmul t m => exact ⟨ρV g t ⊗ₜ[F] ⟨_, hSb g _ m.2⟩, rfl⟩
-      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
+      | add x y hx hy => simpa only [map_add] using Submodule.add_mem _ hx hy
     rw [map_sub, map_smul, hwG] at h1
     have := Submodule.sub_mem _ hx h1
     convert this using 1

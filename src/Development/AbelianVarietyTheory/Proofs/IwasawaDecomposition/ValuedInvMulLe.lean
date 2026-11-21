@@ -126,6 +126,8 @@ section Splice
 
 variable (hc : CMData F E)
 
+local notation "σ" => Formalism.UG.sigR hc.sig (FiniteAdeleRing (𝓞 F) F)
+
 def splice {n : ℕ} (P : HeightOneSpectrum (𝓞 E)) (A B : Matrix (Fin n) (Fin n) (AfE F E)) :
     Matrix (Fin n) (Fin n) (AfE F E) :=
   Matrix.of fun i j => (1 - PtExist.idem F P - σ (PtExist.idem F P)) * A i j +

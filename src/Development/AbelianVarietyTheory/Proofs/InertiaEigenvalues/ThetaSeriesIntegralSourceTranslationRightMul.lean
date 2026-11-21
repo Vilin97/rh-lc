@@ -125,7 +125,46 @@ theorem hatSelfDual_of {V : HSp D} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank �
       change v j * V.gram i j * star (y i) = _
       ring
     rw [e]
-  exact hatL_selfDual_gen (GlobalTheory.Member.cF D) D.sp.cm.sig h3 V.gram Λ h.1.fg h.1.span_eq_top hcc hG hdet hmem h1 h2
+  have hsp : Submodule.span D.host.E (Λ : Set (Fin V.rank → D.host.E)) = ⊤ := by
+    apply top_unique
+    intro y _
+    let pairing (x z : Fin V.rank → D.host.E) :=
+      ∑ a, ∑ b, star (x a) * V.gram a b * z b
+    obtain ⟨s, hgen⟩ := h.1.fg
+    obtain ⟨d, hdint⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 D.host.E)) s (pairing · y)
+    have hd0 : (d : 𝓞 D.host.E) ≠ 0 := mem_nonZeroDivisors_iff_ne_zero.mp d.property
+    have hdE : (d : 𝓞 D.host.E) • y ∈ Λ := by
+      apply (h.2 _).2
+      intro x hx
+      show IsLocalization.IsInteger (𝓞 D.host.E) (pairing x ((d : 𝓞 D.host.E) • y))
+      have hscale (z : Fin V.rank → D.host.E) :
+          pairing z ((d : 𝓞 D.host.E) • y) = (d : 𝓞 D.host.E) • pairing z y := by
+        simp only [pairing, Pi.smul_apply, Algebra.smul_def, Finset.mul_sum, Finset.sum_mul,
+          mul_assoc, mul_left_comm, mul_comm]
+      rw [hscale]
+      refine Submodule.span_induction
+        (p := fun z _ => IsLocalization.IsInteger (𝓞 D.host.E) ((d : 𝓞 D.host.E) • pairing z y))
+        ?_ ?_ ?_ ?_ (hgen.symm ▸ hx)
+      · intro z hz
+        exact hdint z hz
+      · simp [pairing, IsLocalization.isInteger_zero]
+      · intro z z' _ _ hz hz'
+        convert IsLocalization.isInteger_add hz hz' using 1
+        simp only [pairing, Pi.add_apply, star_add, add_mul, Finset.sum_add_distrib, smul_add]
+      · intro a z _ hz
+        have ha : IsLocalization.IsInteger (𝓞 D.host.E) (star (a : D.host.E)) := by
+          refine ⟨⟨star (a : D.host.E), ?_⟩, rfl⟩
+          exact a.2.map (starRingEnd D.host.E).toIntAlgHom
+        convert IsLocalization.isInteger_mul ha hz using 1
+        simp only [pairing, Pi.smul_apply, Algebra.smul_def, star_mul', Finset.mul_sum, Finset.sum_mul,
+          mul_assoc, mul_left_comm, mul_comm]
+    have hspan := Submodule.subset_span (R := D.host.E) hdE
+    have hn : ((d : 𝓞 D.host.E) : D.host.E) ≠ 0 := by exact_mod_cast hd0
+    have hy := (Submodule.span D.host.E (Λ : Set (Fin V.rank → D.host.E))).smul_mem
+      (((d : 𝓞 D.host.E) : D.host.E)⁻¹) hspan
+    rwa [← IsScalarTower.algebraMap_smul D.host.E (d : 𝓞 D.host.E) y,
+      smul_smul, inv_mul_cancel₀ hn, one_smul] at hy
+  exact hatL_selfDual_gen (GlobalTheory.Member.cF D) D.sp.cm.sig h3 V.gram Λ h.1.fg hsp hcc hG hdet hmem h1 h2
 
 end LocalLift
 

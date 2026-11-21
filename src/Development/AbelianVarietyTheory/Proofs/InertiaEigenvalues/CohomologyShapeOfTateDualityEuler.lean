@@ -57,10 +57,10 @@ theorem shapeG_of_localDuality (hT : Formalism.GaloisCohomology.LocalTateDuality
     intro N
     have h := (GlobalTheory.T.cyclotomic_character_isLocallyConstant_mod_pow ε' hcyc' N).comp_continuous i.continuous
     convert h using 1
-    first
-      | rfl
-      | (congr 3; exact (i.symm_apply_apply g).symm)
-      | simp
+    funext g
+    change Ideal.Quotient.mk _ ((ε g : Oˣ) : O) =
+      Ideal.Quotient.mk _ ((ε (i.symm (i g)) : Oˣ) : O)
+    rw [i.symm_apply_apply]
   have hMt : ∀ m : M, ∃ n : ℕ, ϖ ^ n • m = 0 := fun m => by
     obtain ⟨n, hn⟩ := GlobalTheory.T.fractionRingQuot_killed_by_pow_uniformizer hϖ (u m)
     exact ⟨n, u.injective (by rw [map_smul, hn, map_zero])⟩

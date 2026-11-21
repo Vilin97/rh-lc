@@ -11,7 +11,7 @@ public import Development.AbelianVarietyTheory.Definitions.Foundations.T2SpaceTe
 @[expose] public section
 
 open scoped TensorProduct NNReal Matrix ComplexConjugate ContDiff
-open NumberField IsDedekindDomain Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.GLTwoHecke GlobalTheory.StdPar GlobalTheory.ULie
+open NumberField IsDedekindDomain Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.GLTwoHecke GlobalTheory.StdPar
 open GlobalTheory.Doubling (absE ideleAtInf)
 open GlobalTheory.UAut (IsMaxCpt)
 

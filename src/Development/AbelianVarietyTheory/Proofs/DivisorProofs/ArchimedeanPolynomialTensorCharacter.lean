@@ -147,6 +147,7 @@ theorem kFix_iff_mem_chiPart : GlobalTheory.RealLift.ActsLaws → GlobalTheory.R
         · subst h; simpa [hY'] using hY
         · rw [hY', Function.update_of_ne h]; show (0 : Formalism.BasicNotions.TH.Mat P Q)ᴴ * _ + _ * 0 = 0; simp
       obtain ⟨γ, hγ, hgen⟩ := hLine F E σ (Fin n) P Q B.emb (incM F X.J) 1 A hCM hFr Y' hY'u
+      change Multiplicative ℝ →* UA σ X.J at γ
       have hkin : ∀ t : ℝ, γ (Multiplicative.ofAdd t) ∈ KInf σ X B.emb := by
         intro t
         refine ⟨hγ.2 _, fun w' => ?_⟩
@@ -188,6 +189,7 @@ theorem kFix_iff_mem_chiPart : GlobalTheory.RealLift.ActsLaws → GlobalTheory.R
   · intro hT k hk
     rw [mem_chiPart] at hT
     obtain ⟨γ, hγ, Y, hgen, hYK, hγ1⟩ := hK F E σ (Fin n) P Q B.emb (incM F X.J) 1 A X.θ hCM hFr hθ k hk.1 hk.2
+    change Multiplicative ℝ →* UA σ X.J at γ
     set L := sumPl (V := fun _ : InfinitePlace F => Formalism.BasicNotions.TH.Pol P Q R S)
       (fun w => Formalism.BasicNotions.TH.fockAct1 P Q R S (Y w) + ((-((c w : ℚ) : ℂ)) * (Y w).trace) • 1) with hL
     have hLT : L T = 0 := by
@@ -210,7 +212,9 @@ theorem kFix_iff_mem_chiPart : GlobalTheory.RealLift.ActsLaws → GlobalTheory.R
     have hS := hSA T
     rw [hUT] at hS
     have hk1 : ((om.comp (MonoidHom.inl _ _)).comp γ) (Multiplicative.ofAdd 1) = om (k, 1) := by
-      simp [hγ1]
+      change om (γ (Multiplicative.ofAdd 1), 1) = om (k, 1)
+      change γ (Multiplicative.ofAdd 1) = k at hγ1
+      exact congrArg (fun x => om (x, 1)) hγ1
     rw [hk1] at hS
     exact (hLaws F (Fin n × Fin d) (Φ T) (Φ T) (Φ T)).2.1 _ (map_zero _) hS
 

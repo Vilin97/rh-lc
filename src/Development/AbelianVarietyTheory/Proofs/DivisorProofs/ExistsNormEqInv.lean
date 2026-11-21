@@ -8,9 +8,8 @@ public import GroundTheory.GlobalFields.LocalAtPlace
 @[expose] public section
 
 open scoped TensorProduct NNReal Matrix
-open NumberField MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.EisRes
+open NumberField MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet
 open GlobalTheory.Doubling (absE)
-open GlobalTheory.PoleFactor
 
 namespace GlobalTheory.NormFvFacts
 
@@ -23,9 +22,9 @@ theorem absNorm_gt_one (F : Type) [Field F] [NumberField F] (v : IsDedekindDomai
 theorem norm_eq_zpow (F : Type) [Field F] [NumberField F] (v : IsDedekindDomain.HeightOneSpectrum (𝓞 F))
     (x : Fv F v) (hx : x ≠ 0) : ∃ k : ℤ, ‖x‖ = (Ideal.absNorm v.asIdeal : ℝ) ^ k := by
   have hv : Valued.v x ≠ 0 := (Valuation.ne_zero_iff _).2 hx
-  refine ⟨Multiplicative.toAdd (WithZero.unzero hv), ?_⟩
-  rw [FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hv, NNReal.coe_zpow]
-  rfl
+  refine ⟨(Valued.v x).log, ?_⟩
+  simp only [FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hv, NNReal.coe_zpow,
+    NNReal.coe_natCast]
 
 theorem exists_norm_eq_inv (F : Type) [Field F] [NumberField F] (v : IsDedekindDomain.HeightOneSpectrum (𝓞 F)) :
     ∃ ϖ : Fv F v, ‖ϖ‖ = (Ideal.absNorm v.asIdeal : ℝ)⁻¹ := by
@@ -33,10 +32,7 @@ theorem exists_norm_eq_inv (F : Type) [Field F] [NumberField F] (v : IsDedekindD
   have h : Valued.v ((π : F) : v.adicCompletion F) = WithZero.exp (-1) := by
     rw [v.valuedAdicCompletion_eq_valuation']; exact hπ
   refine ⟨((π : F) : v.adicCompletion F), ?_⟩
-  rw [FinitePlace.norm_def, h, WithZeroMulInt.toNNReal_neg_apply _ WithZero.exp_ne_zero, NNReal.coe_zpow]
-  have key : ∀ (a : ℤ) (h : WithZero.exp a ≠ 0), Multiplicative.toAdd (WithZero.unzero h) = a := fun a h => rfl
-  rw [key, zpow_neg_one]
-  rfl
+  simp only [FinitePlace.norm_def, h, WithZeroMulInt.toNNReal_neg_apply _ WithZero.exp_ne_zero,
+    WithZero.log_exp, zpow_neg_one, NNReal.coe_inv, NNReal.coe_natCast]
 
 end GlobalTheory.NormFvFacts
-

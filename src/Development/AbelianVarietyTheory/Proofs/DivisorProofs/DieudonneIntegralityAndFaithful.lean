@@ -56,10 +56,12 @@ theorem divP_iff_red {G H : PDivGroup p k} (f : G ⟶ H) : DivP T f ↔ rigExtMa
     obtain ⟨m, rfl⟩ := T.base.red_surjective H trivial x
     obtain ⟨m', hm'⟩ := hf m
     have h := (T.base.red_eq_zero G trivial (T.map f m)).2 ⟨m', hm'⟩
-    rw [LinearMap.zero_apply, ← h]
-    exact (red_map' T f m).symm
+    change rigExtMap f (T.red H m) = 0
+    exact (red_map' T f m).symm.trans h
   · intro hf m
-    have h : T.red G (T.map f m) = 0 := by rw [red_map', hf, LinearMap.zero_apply]
+    have h : T.red G (T.map f m) = 0 := by
+      have h' := congrArg (fun φ => φ (T.red H m)) hf
+      exact (red_map' T f m).trans h'
     exact (T.base.red_eq_zero G trivial _).1 h
 
 theorem exists_of_isConn {G H : PDivGroup p k} (hG : G.IsConn) (f : G ⟶ H) (hf : DivP T f) :

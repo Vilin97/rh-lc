@@ -17,12 +17,11 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.DualCon
 
 theorem Good.good_of_isPullback' {g : ℕ} {X Y X' Y' : Scheme.{0}} {k : X' ⟶ X} {f' : X' ⟶ Y'} {f : X ⟶ Y}
-    {h : Y' ⟶ Y} (sq : IsPullback k f' f h) (hf : Good g f) : Good g f' where
-  proper := MorphismProperty.of_isPullback sq hf.proper
-  smooth := by
-    have := smoothOfRelativeDimension_isStableUnderBaseChange (n := g)
-    exact MorphismProperty.of_isPullback sq hf.smooth
-  conn := MorphismProperty.of_isPullback sq hf.conn
+    {h : Y' ⟶ Y} (sq : IsPullback k f' f h) (hf : Good g f) : Good g f' := by
+  exact
+    { proper := MorphismProperty.of_isPullback (P := @IsProper) sq hf.proper
+      smooth := MorphismProperty.of_isPullback (P := @SmoothOfRelativeDimension g) sq hf.smooth
+      conn := MorphismProperty.of_isPullback (P := @GeometricallyConnected) sq hf.conn }
 
 theorem HasRep.baseChange (S : Scheme.{0}) (A S' S'' : Over S) [GrpObj A] (g : ℕ) (h : S'' ⟶ S')
     (H : HasRep A g S') : HasRep A g S'' := by

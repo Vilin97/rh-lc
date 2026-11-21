@@ -23,12 +23,16 @@ open ReciprocityTheory.L2DbarEstimates (V)
 
 theorem goodBound_submatrix {n : ℕ} {K L : Type} [Fintype K] [DecidableEq K] [Fintype L] [DecidableEq L]
     (e : K ≃ L) {S : Finset (Fin n)} {c : ℝ} {N : ℕ} {G : V n → Matrix L L ℂ} {v : V n}
-    (h : GoodBound S c N G v) : GoodBound S c N (fun u => (G u).submatrix e e) v where
-  entry i j := h.entry (e i) (e j)
-  det := by simpa [det_submatrix_equiv_self] using h.det
-  form a i j := by simpa [GlobalTheory.HermFrame.conn_submatrix_equiv] using h.form a (e i) (e j)
-  dbar a b i j := by simpa [GlobalTheory.HermFrame.curv_submatrix_equiv] using h.dbar a b (e i) (e j)
-  del a b i j := by
+    (h : GoodBound S c N G v) : GoodBound S c N (fun u => (G u).submatrix e e) v := by
+  refine ⟨fun i j => h.entry (e i) (e j), ?_, ?_, ?_, ?_⟩
+  · simpa only [det_submatrix_equiv_self] using h.det
+  · intro a i j
+    simpa only [GlobalTheory.HermFrame.conn_submatrix_equiv, Matrix.submatrix_apply]
+      using h.form a (e i) (e j)
+  · intro a b i j
+    simpa only [GlobalTheory.HermFrame.curv_submatrix_equiv, Matrix.submatrix_apply]
+      using h.dbar a b (e i) (e j)
+  · intro a b i j
     have h1 : ∀ ξ, (fun u => GlobalTheory.HermFrame.conn (fun x => (G x).submatrix e e) u ξ) =
         fun u => (GlobalTheory.HermFrame.conn G u ξ).submatrix e e :=
       fun ξ => funext fun u => GlobalTheory.HermFrame.conn_submatrix_equiv G e u ξ
@@ -43,7 +47,7 @@ theorem frame_summands_goodBound : ∀ (n g : ℕ) (S : Finset (Fin n)) (W : Set
   let G₁ : V n → Matrix K K ℂ := fun u => (G₀ u).submatrix e e
   have hP : ∀ i k, DifferentiableOn ℂ (fun u => P u i k) (Metric.ball 0 r) := fun i k => hQ i.1 i.2 (e k)
   have hP0 : IsUnit (P 0).det := by
-    rw [← isUnit_iff_isUnit_det, ← linearIndependent_rows_iff_isUnit]
+    rw [← isUnit_iff_isUnit_det, ← linearIndependent_row_iff_isUnit]
     have h2 := hind.map' _ (LinearEquiv.ker (LinearEquiv.funCongrLeft ℂ ℂ e))
     have h3 : (P 0).row = ⇑(LinearEquiv.funCongrLeft ℂ ℂ e) ∘ fun p => Q p.1 0 p.2 := by
       funext p k; rfl

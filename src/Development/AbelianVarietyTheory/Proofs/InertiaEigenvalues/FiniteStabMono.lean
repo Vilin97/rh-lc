@@ -185,7 +185,7 @@ theorem exists_form [Finite ι] {K Γ₁ Γ₂ : Subgroup G} (hK : ∀ x, (cj K 
   refine ⟨∑ k, B k, c₂ * c₁ / ∑ k, c k, ⟨fun x y => ?_, fun x hx => ?_⟩, by positivity, fun γ hγ => hβinv γ (h₁ hγ), fun x x' => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [LinearMap.sum_apply, map_sum]
-    exact Finset.sum_congr rfl fun k _ => (hB k).1 x y
+      exact Finset.sum_congr rfl fun k _ => (hB k).1 x y
   · simp only [LinearMap.sum_apply, Complex.re_sum]
     exact Finset.sum_pos (fun k _ => (hB k).2 x hx) ⟨⟨_, hk₀⟩, Finset.mem_univ _⟩
   · have e₃ := e₁ (fun g => (∑ k, B k) (f x g) (f x' g)) (fun a ha g => hβinv a ha x x' g g) (hr₀ _ x x')

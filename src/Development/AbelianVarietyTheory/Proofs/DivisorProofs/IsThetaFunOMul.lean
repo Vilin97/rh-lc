@@ -47,7 +47,7 @@ theorem isThetaFunO_mul {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {S T S₁ T₁
     have a₂ := congrFun (hU₂ (p₂ u) hu.2 (hi u h0).2) (p₂ w)
     unfold heisO at a₁ a₂ ⊢
     beta_reduce
-    rw [← a₁, ← a₂, hH, p₁.map_add (f := _), p₂.map_add (f := _), AddChar.map_add_eq_mul]
+    rw [← a₁, ← a₂, hH, map_add (f := p₁), map_add (f := p₂), AddChar.map_add_eq_mul]
     ring
   · simp only [map_add (f := _)]
     exact (h₁.smooth k (p₁.comp L) (c₁.comp hL) (fun t => (hf _ (hL0 t)).1) (p₁ w)).mul

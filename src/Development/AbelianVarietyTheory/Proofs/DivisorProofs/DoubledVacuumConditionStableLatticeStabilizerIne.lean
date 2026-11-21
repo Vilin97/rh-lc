@@ -57,6 +57,7 @@ theorem acts_dblVacCond_of_mem_KAtD : ∀ (F E : Type) [Field F] [NumberField F]
     rw [← he]
     exact GlobalTheory.InertSph.symp_mul_transpose (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) _ _ _ (GlobalTheory.InertDbl.matD g⁻¹) (g⁻¹).2 _
   have hi := hS.impl g (Matrix.fromCols δ₁ δ₂) _ hrφ.2
+  simp only [actB] at hback hi
   rw [hback] at hi
   rw [← hAct r hrφ, ← hi, hvac δ₁ k₁ δ₂ k₂ r hrφ, hsym, etens, map_smul, hAct r hrφ, etens]
 

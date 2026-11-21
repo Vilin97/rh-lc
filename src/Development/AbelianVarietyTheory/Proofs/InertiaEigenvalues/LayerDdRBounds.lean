@@ -28,7 +28,7 @@ theorem stab_of_steps {L M : Type} [Field L] [AddCommGroup M] [Module L M] (F : 
     (∀ a ≤ -(N : ℤ), F a = F (-(N : ℤ))) ∧ ∀ b, (N : ℤ) + 1 ≤ b → F b = F ((N : ℤ) + 1) := by
   constructor
   · intro a ha
-    induction a, ha using Int.le_induction_down with
+    induction a, ha using Int.leInductionDown with
     | base => rfl
     | pred a ha ih =>
       rw [← ih]
@@ -36,7 +36,7 @@ theorem stab_of_steps {L M : Type} [Field L] [AddCommGroup M] [Module L M] (F : 
       rw [sub_add_cancel] at h1
       exact (Submodule.eq_of_le_of_finrank_eq (by simpa using anti (a - 1)) h1).symm
   · intro b hb
-    induction b, hb using Int.le_induction with
+    induction b, hb using Int.leInduction with
     | base => rfl
     | succ b hb ih =>
       rw [← ih]

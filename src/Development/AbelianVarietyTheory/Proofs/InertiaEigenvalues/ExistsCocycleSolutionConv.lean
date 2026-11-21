@@ -174,7 +174,8 @@ theorem tau_eq (s : ℕ) (hs : 1 ≤ s) (τ : (↥LL.1)⟦X⟧) (hτ : XX l ↥L
   have hX : XX l ↥LL.1 s ≠ 0 := fun h => by
     have h1 := logS_deriv (LL := LL)
     rw [h, zero_mul] at hτ
-    simp [← hτ] at h1
+    rw [← hτ, map_zero, mul_zero] at h1
+    exact zero_ne_one h1
   have hl0 : (l : ↥LL.1) ≠ 0 := by exact_mod_cast hl.out.ne_zero
   have hinv : C ((l : ↥LL.1)⁻¹) * (l : (↥LL.1)⟦X⟧) = 1 := by
     rw [← map_natCast (C (R := ↥LL.1)), ← map_mul, inv_mul_cancel₀ hl0, map_one]

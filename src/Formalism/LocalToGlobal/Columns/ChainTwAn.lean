@@ -721,14 +721,17 @@ theorem twAn_deep {m2 : ℕ} (hm : R.m = m2 + 2) (hd : ∀ P : rowSG Pr sel mu, 
 
 theorem twAnQ_of {m2 : ℕ} (hm : R.m = m2 + 2) (hd : ∀ P : rowSG Pr sel mu, P.1 ∉ Pr.vGs → TwDegOne X P.1) (hc : cst.Ok)
     (hA : m2 + 1 ≤ cst.A) (hB : m2 + 1 ≤ cst.B) (hM : m2 + 1 ≤ cst.M) (hD : ∀ P : rowSG Pr sel mu, P.1 ∉ Pr.vGs → m2 ≤ cst.D P)
-    (hqK : ∀ P : rowSG Pr sel mu, P.1 ∉ Pr.vGs → (qOf P.1 : X.K) ≠ 0) : TwAnQ Ch sel mu cst m2 where
-  deep := twAn_deep hm hd hc (fun i hi => by omega) (fun i hi => by omega) (fun i hi P hP => by have := hD P hP; omega) hqK
-  psiSupp := twAn_psiSupp hm hM
-  psiInv := twAn_psiInv hm hM hd
-  xiSupp := twAn_xiSupp (fun i hi => by omega)
-  xiInv := twAn_xiInv hm (fun i hi => by omega) hd
-  psiSuppX := twAn_psiSuppX hA
-  psiInvX := twAn_psiInvX hm hB hd
+    (hqK : ∀ P : rowSG Pr sel mu, P.1 ∉ Pr.vGs → (qOf P.1 : X.K) ≠ 0) : TwAnQ Ch sel mu cst m2 := by
+  refine
+    { deep := ?_
+      psiSupp := twAn_psiSupp hm hM
+      psiInv := twAn_psiInv hm hM hd
+      xiSupp := twAn_xiSupp (fun i hi => by omega)
+      xiInv := twAn_xiInv hm (fun i hi => by omega) hd
+      psiSuppX := twAn_psiSuppX hA
+      psiInvX := twAn_psiInvX hm hB hd }
+  exact twAn_deep hm hd hc (fun i hi => by omega) (fun i hi => by omega)
+    (fun i hi P hP => by have := hD P hP; omega) hqK
 
 theorem twAnQ_twCst {G : ChGlob X R.m} {m2 : ℕ} (hm : R.m = m2 + 2) (hPr : Pr.Ok) (hCh : Ch.Ok) (h4 : ∀ w ∈ Pr.vGs, qOf w % 4 = 1)
     (hK : TwCstQ (Pr := Pr) sel mu G) (hd : ∀ P : rowSG Pr sel mu, P.1 ∉ Pr.vGs → TwDegOne X P.1) :

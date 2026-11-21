@@ -165,8 +165,9 @@ theorem fin (D : BKDat O K l e a ι η H) (r : Vec K a ι) (hr : ∀ τ i, r τ 
 
 theorem taylor (f : K⟦X⟧) (hf : f ∈ Rpi O K l e) (B : ℕ) :
     ∃ g ∈ invL l (A O K), ∃ r ∈ Rpi O K l e, f - g = E K l e ^ B * r := by
-  obtain ⟨g, hg⟩ := Ideal.Quotient.mk_surjective
-    (AdicCompletion.evalₐ (idE O K l e) B (toHat O K l e ⟨f, hf⟩))
+  obtain ⟨g, hg⟩ : ∃ g : invL l (A O K),
+      Ideal.Quotient.mk _ g = AdicCompletion.evalₐ (idE O K l e) B (toHat O K l e ⟨f, hf⟩) :=
+    Ideal.Quotient.mk_surjective _
   obtain ⟨r, hr, h⟩ := (evalₐ_toHat_eq_iff l e B ⟨f, hf⟩ g).1 hg.symm
   exact ⟨g, g.2, r, hr, h⟩
 

@@ -170,7 +170,17 @@ theorem cell_identity : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberF
     exact prod_supp_add (fun v => (qV E v : ℝ)) hq (negSumHom (m + 1)) l₀.1 ν.1
   have hQν : (∏ v ∈ ν.1.support, ((qV E v : ℝ) ^ ∑ i, ν.1 v i)⁻¹) ^ x =
       ∏ v ∈ ν.1.support, (qV E v : ℝ) ^ (-((∑ i, (ν.1 v i : ℝ)) * x)) := by
-    rw [← Real.finset_prod_rpow _ _ (fun v _ => (inv_pos.2 (zpow_pos (hqpos v) _)).le)]
+    have hprod : ∀ s : Finset (HeightOneSpectrum (𝓞 E)),
+        (∏ v ∈ s, ((qV E v : ℝ) ^ ∑ i, ν.1 v i)⁻¹) ^ x =
+          ∏ v ∈ s, (((qV E v : ℝ) ^ ∑ i, ν.1 v i)⁻¹) ^ x := by
+      intro s
+      induction s using Finset.induction_on with
+      | empty => simp
+      | @insert a s ha ih =>
+        rw [Finset.prod_insert ha, Finset.prod_insert ha,
+          Real.mul_rpow (inv_pos.2 (zpow_pos (hqpos a) _)).le
+            (Finset.prod_nonneg fun v _ => (inv_pos.2 (zpow_pos (hqpos v) _)).le), ih]
+    rw [hprod]
     refine Finset.prod_congr rfl fun v _ => ?_
     rw [← Real.rpow_intCast, ← Real.rpow_neg (hqpos v).le, ← Real.rpow_mul (hqpos v).le]
     push_cast

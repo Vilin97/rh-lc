@@ -614,20 +614,19 @@ theorem tens_rel (h : ThetaAt p θ c tr nm) :
 
 theorem quadAlg_tens (h : ThetaAt p θ c tr nm) :
     QuadAlg (A := p.adicCompletion D.host.F ⊗[D.host.F] D.host.E) ((1 : p.adicCompletion D.host.F) ⊗ₜ θ)
-      (iotaR p tr) (iotaR p nm) where
-  span z := by
+      (iotaR p tr) (iotaR p nm) := by
+  refine ⟨?_, ?_, tens_rel h, ?_⟩
+  · intro z
     refine ⟨(basA h).repr z 0, (basA h).repr z 1, ?_⟩
     have hs := (basA h).sum_repr z
     rw [Fin.sum_univ_two, basA_zero, basA_one] at hs
     exact hs.symm
-  indep x y hxy := by
+  · intro x y hxy
     have hli := Fintype.linearIndependent_iff.1 (basA h).linearIndependent ![x, y] (by
       rw [Fin.sum_univ_two, basA_zero, basA_one]
       exact hxy)
     exact ⟨hli 0, hli 1⟩
-  rel := tens_rel h
-  disc := by
-    have e : iotaR p tr ^ 2 - 4 * iotaR p nm = iotaR p c := by
+  · have e : iotaR p tr ^ 2 - 4 * iotaR p nm = iotaR p c := by
       rw [← disc_O h]; simp only [map_sub, map_mul, map_pow, map_ofNat]
     rw [e]
     intro h0

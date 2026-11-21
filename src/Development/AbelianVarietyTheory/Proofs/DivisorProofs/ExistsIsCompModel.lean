@@ -54,7 +54,7 @@ theorem exists_flagPt (C : FlagCpt Z e) {K : Type} [Field K] (p : Sp K ⟶ C.Y.X
   have hp : p = spMap ψ ≫ stalkPt C.Y (below p) := (Scheme.Spec_stalkClosedPointTo_fromSpecStalk p).symm
   have hx : spMap ψ ≫ stalkPt C.Y (below p) ≫ C.π ≫ genι Z = (p ≫ C.π) ≫ genι Z := by
     rw [← Category.assoc, ← hp, Category.assoc]
-  obtain ⟨g, hg⟩ : ∃ g : EigFrame Z (ψ.comp φ) ((p ≫ C.π) ≫ genι Z), ∀ τ i, g.v τ i = spMap (dualMap ψ) ≫ f.v τ i := by
+  obtain ⟨g, hg⟩ : ∃ g : EigFrame Z (ψ.comp φ) ((p ≫ C.π) ≫ genι Z), ∀ τ i, g.v τ i = spMap (CompanionTheory.Ar.dualMap ψ) ≫ f.v τ i := by
     rw [← hx]
     exact EigFrame.exists_baseChange E H Dw l Xo c O β Z _ _ φ _ f ψ
   have ho : (p ≫ C.π) ≫ genStr Z = spMap (ψ.comp φ) := by
@@ -62,7 +62,7 @@ theorem exists_flagPt (C : FlagCpt Z e) {K : Type} [Field K] (p : Sp K ⟶ C.Y.X
   refine ⟨⟨ψ.comp φ, p ≫ C.π, ho, g.v, g.tan, g.eig, g.basis⟩, rfl, below p, ψ, φ, f, t, 1, hp, hT, hx.symm, rfl,
     fun τ i => ⟨Pi.single i 1, by simp, fun k hk => Pi.single_eq_of_ne hk.ne' _, ?_⟩⟩
   have := isCombAtG_single Z.t _ (g.tan τ) i
-  rw [show (fun k => spMap (dualMap ψ) ≫ f.v τ k) = g.v τ from funext fun k => (hg τ k).symm]
+  rw [show (fun k => spMap (CompanionTheory.Ar.dualMap ψ) ≫ f.v τ k) = g.v τ from funext fun k => (hg τ k).symm]
   exact this
 
 end Free

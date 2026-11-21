@@ -42,8 +42,11 @@ theorem aconv_support {G : Type} [AddMonoid G] (P : AddSubmonoid G) :
     have ih := aconv_support P l (fun e' he' => hl e' (List.mem_cons_of_mem _ he'))
     have he := hl e List.mem_cons_self
     change g ∈ (e.sum fun g a => (aconv l).sum fun h b => Finsupp.single (g + h) (a * b)).support at hg
-    obtain ⟨x, hx, hg⟩ := Finset.mem_biUnion.1 (Finsupp.support_sum hg)
-    obtain ⟨y, hy, hg⟩ := Finset.mem_biUnion.1 (Finsupp.support_sum hg)
+    obtain ⟨x, hx, hg⟩ := Finset.mem_biUnion.mp <|
+      Finsupp.support_sum (f := e)
+        (g := fun x a => (aconv l).sum fun y b => Finsupp.single (x + y) (a * b)) hg
+    obtain ⟨y, hy, hg⟩ := Finset.mem_biUnion.mp <|
+      Finsupp.support_sum (f := aconv l) (g := fun y b => Finsupp.single (x + y) (e x * b)) hg
     rw [Finset.mem_singleton.1 (Finsupp.support_single_subset hg)]
     exact P.add_mem (he x hx) (ih y hy)
 

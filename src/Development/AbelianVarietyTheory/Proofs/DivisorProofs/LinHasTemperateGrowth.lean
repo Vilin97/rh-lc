@@ -62,7 +62,9 @@ def liftA (v : mixedEmbedding.mixedSpace F) : AF F :=
   LinearMap.inl F (Ainf F) (Af F) ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm v)
 
 theorem evI_liftA (v : mixedEmbedding.mixedSpace F) : evI F (liftA v) = v := by
-  simp [evI, liftA]
+  change (InfiniteAdeleRing.ringEquiv_mixedSpace F)
+    ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm v) = v
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply v
 
 theorem smul_liftA {c : AF F} (hc : evI F c = 0) (v : mixedEmbedding.mixedSpace F) : c • liftA v = 0 := by
   have h1 : c.1 = 0 := (InfiniteAdeleRing.ringEquiv_mixedSpace F).injective (by rw [map_zero]; exact hc)

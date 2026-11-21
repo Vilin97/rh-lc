@@ -67,7 +67,9 @@ theorem exists_surjective_of_contra {G V : Type} [Group G] [TopologicalSpace G] 
     intro g v
     have h1 : f (ofChar (χ⁻¹) (g⁻¹) (1 : ℂ)) = contra π (g⁻¹) (f 1) :=
       LinearMap.congr_fun (f.isIntertwining' (g⁻¹)) (1 : ℂ)
-    have h2 : ofChar (χ⁻¹) (g⁻¹) (1 : ℂ) = (χ g : ℂ) • (1 : ℂ) := by simp [ofChar_apply]
+    have h2 : ofChar (χ⁻¹) (g⁻¹) (1 : ℂ) = (χ g : ℂ) • (1 : ℂ) := by
+      rw [ofChar_apply]
+      simp
     rw [h2, map_smul] at h1
     have h3 := congrArg (fun x : smoothPart π.dual => (x : Module.Dual ℂ V) v) h1
     simp only [contra_apply, inv_inv] at h3

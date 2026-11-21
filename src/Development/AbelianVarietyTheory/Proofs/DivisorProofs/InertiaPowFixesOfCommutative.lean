@@ -249,7 +249,8 @@ theorem inertia_pow_fixes_of_commutative : ∀ (R K Ω : Type) [CommRing R] [IsD
     rw [hQmem]
     have e : algebraMap L Ω (algebraMap B L (ρ • b - b)) =
         σ (algebraMap L Ω (algebraMap B L b)) - algebraMap L Ω (algebraMap B L b) := by
-      rw [AlgEquiv.smul_def, map_sub, map_sub, algebraMap_galRestrict_apply, AlgEquiv.restrictNormal_commutes]
+      rw [AlgEquiv.smul_def, (algebraMap B L).map_sub, (algebraMap L Ω).map_sub,
+        algebraMap_galRestrict_apply, AlgEquiv.restrictNormal_commutes]
     rw [e]
     exact hσ'.2 _ (hBV b)
   have hcomm : ∀ α β : B ≃ₐ[R] B, α * β = β * α := fun α β => by

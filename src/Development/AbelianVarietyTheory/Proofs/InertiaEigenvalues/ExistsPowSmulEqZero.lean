@@ -360,7 +360,23 @@ theorem free_and_tensIso [ContinuousMul G] [IsDomain O] [IsDiscreteValuationRing
     ∀ (X : Type) [AddCommGroup X] [Module O X] [Finite X], TensIso L χ X := by
   have := L.free
   have : Module.Finite O ↥L.T := Module.Finite.iff_fg.mpr L.fg
-  have := isAdicComplete_of_finite (Ideal.span {lam}) ↥L.T
+  have : IsAdicComplete (Ideal.span {lam}) ↥L.T := by
+    rw [isAdicComplete_iff]
+    refine ⟨IsHausdorff.of_le_jacobson _ _ (IsAdicComplete.le_jacobson _), ?_⟩
+    rw [← AdicCompletion.of_surjective_iff]
+    intro y
+    obtain ⟨t, rfl⟩ := AdicCompletion.ofTensorProduct_surjective_of_finite (Ideal.span {lam}) ↥L.T y
+    induction t with
+    | tmul a m =>
+      obtain ⟨r, rfl⟩ := AdicCompletion.of_surjective (Ideal.span {lam}) O a
+      refine ⟨r • m, ?_⟩
+      rw [AdicCompletion.ofTensorProduct_tmul, show AdicCompletion.of (Ideal.span {lam}) O r =
+        algebraMap O (AdicCompletion (Ideal.span {lam}) O) r by simp [AdicCompletion.algebraMap_apply],
+        algebraMap_smul, map_smul]
+    | add x y hx hy =>
+      obtain ⟨u, hu⟩ := hx
+      obtain ⟨v, hv⟩ := hy
+      exact ⟨u + v, by simp [hu, hv]⟩
   have hk := tensIso_res χ hB hc hl h2
   have : Nontrivial (O ⧸ Ideal.span {lam}) :=
     Ideal.Quotient.nontrivial_iff.mpr (by rw [Ne, Ideal.span_singleton_eq_top]; exact hi.not_isUnit)
@@ -431,8 +447,9 @@ theorem free_and_tensIso_gal {G Qp LL O : Type} [Group G] [TopologicalSpace G] [
   have hl0 : algebraMap O LL Γ.lam ≠ 0 := fun h =>
     hi.ne_zero (IsFractionRing.injective O LL (h.trans (map_zero _).symm))
   have hr : Module.finrank O ↥Γ.T₀.L.T = Module.finrank LL Γ.T₀.V := by
-    have : Submodule.IsLattice LL Γ.T₀.L.T := ⟨Γ.T₀.L.fg, Γ.T₀.L.span⟩
-    rw [Module.finrank, Module.finrank, Submodule.IsLattice.rank' LL]
+    have : Submodule.IsLattice LL Γ.T₀.L.T := Submodule.IsLattice.of_fg LL Γ.T₀.L.fg
+    have : Submodule.IsFullLattice LL Γ.T₀.L.T := ⟨Γ.T₀.L.span⟩
+    rw [Module.finrank, Module.finrank, Submodule.IsFullLattice.rank_eq LL]
   have hm := hi.maximalIdeal_eq
   have hF' : Finite (O ⧸ IsLocalRing.maximalIdeal O) := hF
   have hd : Γ.lam ∣ (l : O) := by

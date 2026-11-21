@@ -59,7 +59,7 @@ private theorem det_law (H : LawsT a ha rc) (t : ℕ) (χ : (w.adicCompletion E)
   refine List.map_congr_left fun j _ => ?_
   simp only [Function.comp_apply]
   show ((rc ((IrrGL.ofChar χ hχ).nu ((((t : ℝ) - 1) / 2 - j : ℝ) : ℂ))).lpTw ((((1 : ℕ) : ℝ) - 1) / 2)).lpChar
-      (WD.lpSp h 1) = _
+      (WD.lpSp (h := h) 1) = _
   have h0 : ((((1 : ℕ) : ℝ) - 1) / 2) = 0 := by norm_num
   rw [h0, (GlobalTheory.T.weilDeligne_charpoly_twist_special E Ω A w h _).1, H.nu]
 
@@ -78,7 +78,7 @@ private theorem prod_law (H : LawsT a ha rc) (r t : ℕ) (σ : IrrRep (GL (Fin r
       exact hp.of_equiv (equivRep π)), segSum_append_lpSum]
 
 private theorem charPol_seg (H : LawsT a ha rc) (Δ : Segment (w.adicCompletion E)) (σ : Weil h) :
-    (((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp h Δ.len)).charPol σ
+    (((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) Δ.len)).charPol σ
       = (Δ.ms.map fun y => (rc y).charPol σ).prod := by
   rw [(GlobalTheory.T.weilDeligne_charpoly_twist_special E Ω A w h (rc Δ.first)).2 Δ.len σ, Segment.ms, Multiset.map_map]
   have h1 : ∀ j : Fin Δ.len, (rc (Δ.term j)).charPol σ = ((rc Δ.first).lpTw ((j : ℕ) : ℝ)).charPol σ := by
@@ -160,7 +160,7 @@ private theorem dim_zero_of_irr_sum {x y : WD h} (hi : IsIrrWD (x.lpSum y)) : x.
     exact hv
 
 private theorem not_mono0_sp {x : WD h} (h0 : x.mono0) (hd : 0 < x.lpDim) {n : ℕ} (hn : 2 ≤ n) :
-    ¬ (x.lpChar (WD.lpSp h n)).mono0 := by
+    ¬ (x.lpChar (WD.lpSp (h := h) n)).mono0 := by
   obtain ⟨m, b, rfl⟩ := x.exists_rep
   rw [WD.lpDim_mk, Module.finrank_fin_fun] at hd
   rw [WD.monodromyZero_ofWeilDeligneRepClass_iff] at h0
@@ -173,7 +173,7 @@ private theorem not_mono0_sp {x : WD h} (h0 : x.mono0) (hd : 0 < x.lpDim) {n : �
   simpa using h1
 
 private theorem seg_dim_pos (H : LawsT a ha rc) (Δ : Segment (w.adicCompletion E)) :
-    0 < (((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp h Δ.len)).lpDim := by
+    0 < (((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) Δ.len)).lpDim := by
   rw [WD.lpDim_tensor, WD.lpDim_tw, H.dim, WD.lpSp, WD.lpDim_mk, Module.finrank_fin_fun]
   exact Nat.mul_pos Δ.isCusp_first.1 Δ.len_pos
 
@@ -184,15 +184,15 @@ private theorem cusp_law (H : LawsT a ha rc) (x : IrrGL (k := w.adicCompletion E
   have hs := GlobalTheory.T.langlandsClassification_supercuspidalSupport_multisegment Pr.zel _ _ x hm
   rw [H.langlands l x hm] at hx
   have key : ∀ (Δ : Segment (w.adicCompletion E)) (m : List (Segment (w.adicCompletion E))), segSum rc (Δ :: m) =
-      (((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp h Δ.len)).lpSum (segSum rc m) := fun _ _ => rfl
+      (((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) Δ.len)).lpSum (segSum rc m) := fun _ _ => rfl
   match l, hs, hx with
   | [], _, hx =>
     exact absurd (GlobalTheory.VWeil.IrrW.lpDim_pos ⟨_, hx⟩) (by
-      show ¬ 0 < (WD.lpZero h).lpDim
+      show ¬ 0 < (WD.lpZero (h := h)).lpDim
       rw [WD.lpDim_zero]
       exact lt_irrefl 0)
   | [Δ], hs, hx =>
-    have e : segSum rc [Δ] = ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp h Δ.len) := WD.lpSum_zero _
+    have e : segSum rc [Δ] = ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) Δ.len) := WD.lpSum_zero _
     rw [e] at hx
     have hf := H.cusp _ Δ.isCusp_first
     have hlen : Δ.len = 1 := by

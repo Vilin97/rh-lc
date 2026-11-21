@@ -55,16 +55,16 @@ private theorem sn_inv (a : GL (Fin m) (DualNumber κ)) :
   rw [Units.mul_inv, sn_one] at h
   rw [eq_neg_of_add_eq_zero_left h.symm, Matrix.mul_neg, neg_neg, ← Matrix.mul_assoc, fs_inv_mul, Matrix.one_mul]
 
-private def tc (x : GG m (DualNumber κ)) : Matrix (Fin m) (Fin m) κ :=
+private def tc (x : GG (m := m) (R := DualNumber κ)) : Matrix (Fin m) (Fin m) κ :=
   x.mat.map snd * ((x.left⁻¹ : GL _ _) : Matrix (Fin m) (Fin m) (DualNumber κ)).map (fr κ)
 
-private theorem tc_mul (x y : GG m (DualNumber κ)) : tc (x * y) = tc x + (GG.map (fr κ) x).adFun (tc y) := by
+private theorem tc_mul (x y : GG (m := m) (R := DualNumber κ)) : tc (x * y) = tc x + (GG.map (fr κ) x).adFun (tc y) := by
   have h : ((-1 : ℤˣ) = 1) = False := by decide
   have hJ : ∀ Y : Matrix (Fin m) (Fin m) κ, Jmat κ m * (Jmat κ m * Y) = Y := fun Y => by
     rw [← Matrix.mul_assoc, Jmat_mul_Jmat, Matrix.one_mul]
   obtain ⟨a, s⟩ := x
   obtain ⟨b, t⟩ := y
-  have e : (((GG.map (fr κ) (⟨a, s⟩ : GG m (DualNumber κ))).left⁻¹ : GL _ _) : Matrix (Fin m) (Fin m) κ) =
+  have e : (((GG.map (fr κ) (⟨a, s⟩ : GG (m := m) (R := DualNumber κ))).left⁻¹ : GL _ _) : Matrix (Fin m) (Fin m) κ) =
       ((a⁻¹ : GL _ _) : Matrix (Fin m) (Fin m) (DualNumber κ)).map (fr κ) := rfl
   have h1 : ∀ Y : Matrix (Fin m) (Fin m) κ, (b : Matrix (Fin m) (Fin m) (DualNumber κ)).map (fr κ) *
       (((b⁻¹ : GL _ _) : Matrix (Fin m) (Fin m) (DualNumber κ)).map (fr κ) * Y) = Y := fun Y => by
@@ -83,7 +83,7 @@ private theorem tc_mul (x y : GG m (DualNumber κ)) : tc (x * y) = tc x + (GG.ma
       Matrix.mul_zero, zero_add, add_zero, Matrix.transpose_neg, Matrix.transpose_mul, Matrix.neg_mul,
       Matrix.mul_neg, hJ, h2]
 
-private theorem tc_mul_mat (x : GG m (DualNumber κ)) : tc x * (GG.map (fr κ) x).mat = x.mat.map snd := by
+private theorem tc_mul_mat (x : GG (m := m) (R := DualNumber κ)) : tc x * (GG.map (fr κ) x).mat = x.mat.map snd := by
   rw [tc, GG.map_mat, Matrix.mul_assoc, GG.mat, fs_inv_mul, Matrix.mul_one]
 
 end UpperTheory.V.Loc.RootDualTransport
@@ -106,7 +106,7 @@ private theorem cont_inv {X E : Type} [TopologicalSpace X] [Field E] [Topologica
   refine Continuous.smul (ha.matrix_det.inv₀ fun x => ?_) ha.matrix_adjugate
   exact ((Matrix.isUnit_iff_isUnit_det _).1 (a x).isUnit).ne_zero
 
-private theorem adFun_map {A B : Type} [CommRing A] [CommRing B] {m : ℕ} (f : A →+* B) (x : GG m A)
+private theorem adFun_map {A B : Type} [CommRing A] [CommRing B] {m : ℕ} (f : A →+* B) (x : GG (m := m) (R := A))
     (X : Matrix (Fin m) (Fin m) A) : (x.adFun X).map f = (GG.map f x).adFun (X.map f) := by
   have e : (((GG.map f x).left⁻¹ : GL _ _) : Matrix (Fin m) (Fin m) B) =
       ((x.left⁻¹ : GL _ _) : Matrix (Fin m) (Fin m) A).map f := rfl
@@ -118,7 +118,7 @@ private theorem adFun_map {A B : Type} [CommRing A] [CommRing B] {m : ℕ} (f : 
 
 private theorem map_mem_finiteCocycles_adRep_of_continuous {l : ℕ} [Fact l.Prime] {A B : Type} [CommRing A] [CommRing B] [Algebra ℚ_[l] A]
     [Algebra ℚ_[l] B] [TopologicalSpace A] [TopologicalSpace B] [IsTopologicalRing A] [IsTopologicalRing B]
-    {m : ℕ} (ι : A →ₐ[ℚ_[l]] B) (hι : Continuous ι) (r : GQ l →* GG m A) (c : GQ l → Matrix (Fin m) (Fin m) A)
+    {m : ℕ} (ι : A →ₐ[ℚ_[l]] B) (hι : Continuous ι) (r : GQ l →* GG (m := m) (R := A)) (c : GQ l → Matrix (Fin m) (Fin m) A)
     (hc : c ∈ finiteCocycles (MonoidHom.id _) (adRep r)) :
     (fun g => (c g).map ι) ∈ finiteCocycles (MonoidHom.id _) (adRep ((GG.map (ι : A →+* B)).comp r)) := by
   obtain ⟨⟨hc, hcc⟩, x, hx⟩ := hc

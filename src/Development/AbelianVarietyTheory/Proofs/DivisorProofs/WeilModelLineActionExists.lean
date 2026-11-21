@@ -50,7 +50,8 @@ theorem fockMap_swap {σ : E →ₐ[F] E} {α β κ : Type} [Fintype α] [Decida
   have hr : ∀ t : ℝ, d'.rho ψ (realAd F t • u) = d.rho ψ (realAd F t • uᵀ) := fun t => by
     show schr ψ (d'.e _) = schr ψ (d.e _)
     rw [← hdd, Matrix.transpose_smul, Matrix.transpose_transpose]
-  simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, hr]
-  rwa [swapT_sumPl (fun w => heisOp (c w)) (fun w => heisOp (c w)ᵀ) (fun w f => swapE_heisOp (c w) f)]
+  set_option backward.isDefEq.respectTransparency false in
+    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, hr]
+    rwa [swapT_sumPl (fun w => heisOp (c w)) (fun w => heisOp (c w)ᵀ) (fun w f => swapE_heisOp (c w) f)]
 
 end GlobalTheory.RealLift.FirstLine

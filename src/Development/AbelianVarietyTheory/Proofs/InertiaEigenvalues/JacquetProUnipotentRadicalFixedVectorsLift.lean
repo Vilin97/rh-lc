@@ -158,8 +158,8 @@ theorem GlobalTheory.LocGL.ProRadOnto.exists_proRad_fixed_mk_eq : ∀ (k : Type)
   obtain ⟨v, hv, h⟩ := ProRadOnto.exists_fixed_mk_eq hπ (isOpen_levelPre _) (isCompact_levelPre _) (leviEmb k e)
     (N := unipRad k e) (leviEmb_mem_normalizer k e) (leviKOne k m)
     (fun d hd => jLevi_le_proRad e ⟨d, hd, rfl⟩) (jMinus k e) (fun g hg => by
-      obtain ⟨d, ⟨d', hd', rfl⟩, u, hu, c, hc, rfl⟩ := IwahoriFactor.levi_plus_minus e hg
-      exact ⟨d', hd', u, hu.1, c, hc, rfl⟩)
+      obtain ⟨d, ⟨d', hd', hd⟩, u, hu, c, hc, h⟩ := IwahoriFactor.levi_plus_minus e hg
+      exact ⟨d', hd', u, hu.1, c, hc, h.trans (by rw [hd])⟩)
     (fun U hU => by
       obtain ⟨t, ht, h⟩ := ProRadOnto.jMinus_contract e U hU
       exact ⟨t, fun d _ => ht d, h⟩) y hy

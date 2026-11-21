@@ -53,21 +53,25 @@ theorem map_pow_eq (t : H ⊗[k] H) :
       LinearMap.rTensor_tmul, TensorProduct.lid_tmul, map_smul, smul_pow, ← map_pow,
       Algebra.algebraMap_eq_smul_one, smul_tmul]
 
-theorem isHopfIdeal : (frobKerIdeal p k H).IsHopfIdeal k where
-  counit_eq_zero x hx := frobKerIdeal_le_augIdeal hp.out.ne_zero k H hx
-  map_mkQ_comul_eq_zero x hx := by
-    have h : frobKerIdeal p k H ≤ RingHom.ker
-        ((Algebra.TensorProduct.map (Ideal.Quotient.mkₐ k (frobKerIdeal p k H))
-          (Ideal.Quotient.mkₐ k (frobKerIdeal p k H))).comp (comulAlgHom k H)) := by
-      refine Ideal.span_le.2 ?_
-      rintro _ ⟨a, ha, rfl⟩
-      rw [SetLike.mem_coe, RingHom.mem_ker, map_pow, AlgHom.comp_apply, map_pow_eq,
-        comulAlgHom_apply, rTensor_counit_comul, TensorProduct.lid_tmul, one_smul, ← map_pow]
-      have : Ideal.Quotient.mkₐ k (frobKerIdeal p k H) (a ^ p) = 0 :=
-        Ideal.Quotient.eq_zero_iff_mem.2 (pow_mem_frobKerIdeal ha)
-      rw [this, tmul_zero]
-    exact h hx
-  antipode_mem x hx := by
+theorem isHopfIdeal : (frobKerIdeal p k H).IsHopfIdeal k := by
+  have : ((frobKerIdeal p k H).restrictScalars k).IsCoideal := by
+    refine ⟨?_, ?_⟩
+    · intro x hx
+      exact frobKerIdeal_le_augIdeal hp.out.ne_zero k H hx
+    · intro x hx
+      have h : frobKerIdeal p k H ≤ RingHom.ker
+          ((Algebra.TensorProduct.map (Ideal.Quotient.mkₐ k (frobKerIdeal p k H))
+            (Ideal.Quotient.mkₐ k (frobKerIdeal p k H))).comp (comulAlgHom k H)) := by
+        refine Ideal.span_le.2 ?_
+        rintro _ ⟨a, ha, rfl⟩
+        rw [SetLike.mem_coe, RingHom.mem_ker, map_pow, AlgHom.comp_apply, map_pow_eq,
+          comulAlgHom_apply, rTensor_counit_comul, TensorProduct.lid_tmul, one_smul, ← map_pow]
+        have : Ideal.Quotient.mkₐ k (frobKerIdeal p k H) (a ^ p) = 0 :=
+          Ideal.Quotient.eq_zero_iff_mem.2 (pow_mem_frobKerIdeal ha)
+        rw [this, tmul_zero]
+      exact h hx
+  refine ⟨?_⟩
+  · intro x hx
     have h : frobKerIdeal p k H ≤ (frobKerIdeal p k H).comap (HopfAlgebra.antipodeAlgHom k H) := by
       refine Ideal.span_le.2 ?_
       rintro _ ⟨a, ha, rfl⟩

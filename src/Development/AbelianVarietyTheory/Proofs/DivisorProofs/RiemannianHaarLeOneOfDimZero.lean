@@ -93,14 +93,18 @@ theorem GlobalTheory.SUVol.Degenerate.riemHaar_le_one : ∀ (E : Type) [Field E]
     intro s
     set b := (stdOrthonormalBasis ℝ K).toBasis
     have hb : b.addHaar Set.univ = 1 := by
-      rw [Module.Basis.addHaar, ← Set.Nonempty.eq_univ (b.parallelepiped).nonempty]
-      exact Measure.addHaarMeasure_self
+      rw [← Set.Nonempty.eq_univ (b.parallelepiped).nonempty]
+      exact b.addHaar_self
     calc riemLie Ψ G x s ≤ riemLie Ψ G x Set.univ := measure_mono (Set.subset_univ _)
       _ ≤ 1 := by
         unfold riemLie
         by_cases hm : AEMeasurable (fun Y : K => fromFrame x Y.1) b.addHaar
         · rw [Measure.map_apply_of_aemeasurable hm MeasurableSet.univ, Set.preimage_univ, hb]
-        · rw [Measure.map_of_not_aemeasurable hm]; simp
+        · have hne : b.addHaar ≠ 0 := by
+            intro he
+            simp [he] at hb
+          rw [Measure.map_of_not_aemeasurable_of_ne_zero hm hne]
+          simp
   set μ := (Measure.haar : Measure (realSU Ψ G))
   have hu0 : μ Set.univ ≠ 0 := (isOpen_univ.measure_ne_zero μ Set.univ_nonempty)
   have hut : μ Set.univ ≠ ⊤ := (isCompact_univ.measure_lt_top).ne

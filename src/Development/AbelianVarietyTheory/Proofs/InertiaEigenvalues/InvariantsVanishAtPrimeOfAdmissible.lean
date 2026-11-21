@@ -59,7 +59,7 @@ theorem killed_of_coordinates {G : Type} [Group G] [TopologicalSpace G] {Qp LL O
         ∑ j, b.repr (ac σ (b j)) a * b.repr t j := by
       conv_lhs => rw [← b.sum_repr t]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+        simp only [map_sum, map_smul, Finset.sum_apply', Finsupp.smul_apply,
         smul_eq_mul, mul_comm]
     have e3 := congrArg (fun z => ((b.repr z a : ℤ_[l]) : ℚ_[l])) e1
     simp only [map_sub, map_smul, Finsupp.sub_apply, Finsupp.smul_apply, smul_eq_mul, e2] at e3
@@ -86,7 +86,6 @@ theorem killed_of_coordinates {G : Type} [Group G] [TopologicalSpace G] {Qp LL O
     ext a
     have : b.repr t' a = z a := congrFun (b.repr_sum_self z) a
     simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, this]
-    apply Subtype.ext
     have hz : ((z a : ℤ_[l]) : ℚ_[l]) = (l : ℚ_[l]) ^ c * (((l : ℚ_[l]) ^ n)⁻¹ * (b.repr t a : ℚ_[l])) := rfl
     rw [PadicInt.coe_mul, PadicInt.coe_mul, hz]
     push_cast

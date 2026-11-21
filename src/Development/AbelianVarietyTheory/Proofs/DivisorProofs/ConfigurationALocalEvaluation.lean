@@ -82,7 +82,15 @@ private theorem line_core {F : Type} [Field F] [NumberField F] {κ : Type} [Fint
     (a b a' b' : κ → mixedEmbedding.mixedSpace F) (z : ℂ) (g g₁ : SInf F κ)
     (hv : dOp a b g = z • dOp a' b' g) (hg₁ : ⇑g₁ = schrF (trP F κ) (a, b) ⇑g) :
     ∃ c : ℂ, ∀ T : SInf F κ →L[ℂ] ℂ, (∀ f, T (dOp a' b' f) = 0) → T g₁ = c * T g := by
-  have hP := isPairing_trP (F := F) κ
+  have hAdd : ∀ x x' y, trP F κ (x + x') y = trP F κ x y + trP F κ x' y := by
+    intro x x' y
+    simp only [trP, Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)]
+  have hSmulL : ∀ (c : ℝ) x y, trP F κ (c • x) y = c * trP F κ x y := by
+    intro c x y
+    simp only [trP, Pi.smul_apply, smul_mul_assoc, ← Finset.smul_sum, map_smul, smul_eq_mul]
+  have hSmulR : ∀ (c : ℝ) x y, trP F κ x (c • y) = c * trP F κ x y := by
+    intro c x y
+    simp only [trP, Pi.smul_apply, mul_smul_comm, ← Finset.smul_sum, map_smul, smul_eq_mul]
   have hL : ∀ x, linL b x = trP F κ x b := fun x => by rw [linL_apply]; rfl
   let S : ℝ → SInf F κ →L[ℂ] SInf F κ := fun t =>
     (SchwartzMap.smulLeftCLM ℂ (fun x => Complex.exp (-(2 * Real.pi * Complex.I) *
@@ -95,12 +103,12 @@ private theorem line_core {F : Type} [Field F] [NumberField F] {κ : Type} [Fint
   have hS' : ∀ t f, ⇑(S t f) = schrF (trP F κ) (t • a, t • b) ⇑f := fun t f => by
     funext x
     rw [hS]
-    simp only [schrF, hP.smulL, hP.smulR]
+    simp only [schrF, hSmulL, hSmulR]
     congr 4
     ring
   have hadd : ∀ t h, S (t + h) g = S t (S h g) := fun t h => by
     ext x
-    rw [hS, hS, hS, ← mul_assoc, ← Complex.exp_add, hP.addL, hP.smulL, add_smul, add_assoc]
+    rw [hS, hS, hS, ← mul_assoc, ← Complex.exp_add, hAdd, hSmulL, add_smul, add_assoc]
     congr 2
     push_cast
     ring
@@ -123,7 +131,7 @@ private theorem line_core {F : Type} [Field F] [NumberField F] {κ : Type} [Fint
       refine h2.congr_deriv ?_
       rw [ContinuousLinearMap.comp_apply, hv, map_smul, map_smul,
         conj_explicit (t • a, t • b) a' b' g (S t g) _ (hS' t g) (hS' t _), map_add, hT, map_smul]
-      simp only [hP.smulL, hP.smulR, smul_eq_mul]
+      simp only [hSmulL, hSmulR, smul_eq_mul]
       push_cast
       ring
   have e1 : S 1 g = g₁ := DFunLike.coe_injective (by

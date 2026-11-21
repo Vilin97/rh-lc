@@ -661,8 +661,9 @@ theorem rel_of_finsupp {X V ι : Type} [AddCommGroup V] [Module ℂ V] (p : X �
       simp only [Finsupp.linearCombination_single]
   rw [← hc]
   refine H _ (fun u hu => ?_) (by rw [hc, h])
-  obtain ⟨i, hi, h⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hu)
-  rw [Finset.mem_singleton.1 (Finsupp.support_single_subset h)]
+  obtain ⟨i, hi, h⟩ := Finsupp.mem_support_finsetSum u hu
+  have hu_eq : u = w i := Finset.mem_singleton.1 (Finsupp.support_single_subset h)
+  subst u
   exact hw i hi
 
 section Real

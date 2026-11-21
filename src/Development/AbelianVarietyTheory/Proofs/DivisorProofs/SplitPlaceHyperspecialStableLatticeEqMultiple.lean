@@ -121,7 +121,7 @@ theorem half (V : HSp D) (e : Formalism.L2.Theta.AE D) (he : IsSplitIdem D e)
   have hN' : ((N : ℕ) : Fv D.host.F v) ≠ 0 := Nat.cast_ne_zero.2 hN.ne'
   have hφN : φ ((N : ℕ) : (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E)) = (N : Fv D.host.F v) := map_natCast φ N
   have hf' : finPart D (e + cA D e) * finPart D e = finPart D e := by
-    rw [(finPart D).map_add (f := _), add_mul, hpp, mul_comm (finPart D (cA D e)), hpq, add_zero]
+    rw [map_add, add_mul, hpp, mul_comm (finPart D (cA D e)), hpq, add_zero]
   obtain ⟨t, ht, hSt⟩ := GlobalTheory.LatticeBetweenMultiples.eq_multiple_of_standard_lattice v S (by
       intro o ho w hw
       obtain ⟨m, hm, rfl⟩ := hw

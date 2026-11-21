@@ -255,10 +255,13 @@ theorem lead_std {p t : ℕ} (μ : R →ₐ[ℂ] A) (E : Fin (p + t) → Fin (p 
 
 theorem exists_completion {p : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] (β : Fin p → V)
     (hβ : LinearIndependent ℂ β) : ∀ t : ℕ, p + t ≤ Module.finrank ℂ V →
-      ∃ γ : Fin (p + t) → V, LinearIndependent ℂ γ ∧ ∀ j, γ (Fin.castAdd t j) = β j
-  | 0, _ => ⟨β, hβ, fun _ => rfl⟩
-  | t + 1, h => by
-    obtain ⟨γ, hγ, e⟩ := exists_completion β hβ t (by omega)
+      ∃ γ : Fin (p + t) → V, LinearIndependent ℂ γ ∧ ∀ j, γ (Fin.castAdd t j) = β j := by
+  intro t
+  induction t with
+  | zero => exact fun _ => ⟨β, hβ, fun _ => rfl⟩
+  | succ t ih =>
+    intro h
+    obtain ⟨γ, hγ, e⟩ := ih (by omega)
     obtain ⟨x, hx⟩ := exists_linearIndependent_snoc_of_lt_finrank hγ (by omega)
     refine ⟨Fin.snoc (α := fun _ => V) γ x, hx, fun j => ?_⟩
     rw [← e j]

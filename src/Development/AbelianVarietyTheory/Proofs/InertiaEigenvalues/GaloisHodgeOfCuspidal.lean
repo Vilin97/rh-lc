@@ -93,9 +93,13 @@ variable {E Ω : Type} [Field E] [NumberField E] [IsCMField E] [Field Ω] [Algeb
 theorem isPolarized_twist {π : CuspSub E a} (hc : π.IsCsd) {ν : HChar E} {s : ℝ} (hν : ν.IsAbsPow s) :
     ∃ ψ, IsPolarized (π.twist ν) ψ := by
   obtain ⟨ψ, h1, h2⟩ := GlobalTheory.PolChar.exists_compNorm_eq hν
-  refine ⟨_, IsConjDualBy.isPolarized (m := 0) (χ := ψ) ?_ ?_⟩
-  · rw [h1]; exact GlobalTheory.T.isConjugateDualTwistBy_twist_of_conjSelfDual hc ν
-  · simpa using h2
+  refine ⟨ψ * quadChar E ^ a, ?_⟩
+  constructor
+  · intro v
+    change ψ.locInf v (-1) * (quadChar E ^ a).locInf v (-1) = (-1) ^ a
+    rw [locInf_pow, h2, quadChar_locInf, one_mul]
+  · rw [map_mul, map_pow, compNorm_quadChar, one_pow, mul_one, h1]
+    exact GlobalTheory.T.isConjugateDualTwistBy_twist_of_conjSelfDual hc ν
 
 theorem expo_mul (χ χ' : HChar E) (τ : E →+* ℂ) : expo (χ * χ') τ = expo χ τ + expo χ' τ := by
   have h := (CG.hasInfChar_ofChar χ τ).twist χ'
@@ -196,8 +200,7 @@ theorem exists_halfChar (D : D7) : haveI := host_isCMField D.host; ∃ ξ : HCha
   refine ⟨ξ, h.unr, isCsd_ofChar_of_res _ _ (Or.inr h.res), isCsd_ofChar_of_res _ _ (Or.inr ⟨fun v k => ?_, fun w k => ?_⟩), fun τ => ?_⟩
   · have e1 := h.res.1 v k
     have e2 : (ξ⁻¹.resFin v) k = ((ξ.resFin v) k)⁻¹ := by
-      simp only [HChar.resFin, MonoidHom.finset_prod_apply, ← Finset.prod_inv_distrib]
-      rfl
+      simp [HChar.resFin, HChar.locK, HChar.loc, MonoidHom.comp_apply]
     rw [e2, e1]
     unfold etaFin
     split_ifs
@@ -205,8 +208,7 @@ theorem exists_halfChar (D : D7) : haveI := host_isCMField D.host; ∃ ξ : HCha
     · exact inv_one
   · have e1 := h.res.2 w k
     have e2 : (ξ⁻¹.resInf w) k = ((ξ.resInf w) k)⁻¹ := by
-      simp only [HChar.resInf, MonoidHom.finset_prod_apply, ← Finset.prod_inv_distrib]
-      rfl
+      simp [HChar.resInf, HChar.locInf, MonoidHom.comp_apply]
     rw [e2, e1]
     unfold etaInf
     split_ifs

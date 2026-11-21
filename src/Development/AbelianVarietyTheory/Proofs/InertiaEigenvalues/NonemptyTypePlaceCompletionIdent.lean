@@ -71,7 +71,8 @@ theorem nonempty_ident : ∀ D : D7, Nonempty (GlobalTheory.TypeRec.Ident D) := 
     haveI : CharZero ((D.naut.plGw k v).adicCompletion D.host.E) :=
       charZero_of_injective_ringHom (algebraMap D.host.E _).injective
     obtain ⟨φ, h, -⟩ := GlobalTheory.QpChar.exists_ringEquiv_padic ((D.naut.plGw k v).adicCompletion D.host.E) (D.host.g k)
-      ((GlobalTheory.LocLanglands.resCard_eq_normV _).trans h1) (irreducible_natCast_compl _ (D.naut.plGw_over k v) h2)
+      ((GlobalTheory.LocLanglands.resCard_eq_normV _).trans (by
+        simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using h1)) (irreducible_natCast_compl _ (D.naut.plGw_over k v) h2)
     exact ⟨φ, h⟩
   exact ⟨⟨fun k v => (key k v).choose, fun k v => (key k v).choose_spec⟩⟩
 

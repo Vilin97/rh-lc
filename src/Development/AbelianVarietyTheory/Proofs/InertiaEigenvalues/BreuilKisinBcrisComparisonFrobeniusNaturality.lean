@@ -107,6 +107,8 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O
       change _ • frobOB l O (toB l O m) • TensorProduct.map (frobOB l O).toLinearMap LinearMap.id b = _
       rw [← map_smul_tw, hb, ← h3]
       congr 1
+      ext i
+      simp [Matrix.mulVec, dotProduct, map_sum, map_mul, toB_frobOA]
   · obtain ⟨c, hc⟩ := hK3 x
     refine ⟨1 ⊗ₜ (muOf ε ^ β), c, hunit β, hc.symm, ?_⟩
     have h4 := hjB c ((1 ⊗ₜ (muOf ε ^ β)) ⊗ₜ x) (by
@@ -130,5 +132,7 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O
       change _ • TensorProduct.map (galOB O (sQ l g)).toLinearMap (T.actT g) b = _
       rw [← map_smul_tw, hb, ← h3]
       congr 1
+      ext i
+      simp [Matrix.mulVec, dotProduct, map_sum, map_mul, toB_galOA]
 
 end GlobalTheory.CrisComparison

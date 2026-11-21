@@ -35,7 +35,9 @@ theorem exists_padic_equiv : ∀ (D : D7) (s : SplitPlace D.host.E), s.v ∈ gPl
   haveI : CharZero (s.w.adicCompletion D.host.E) :=
     charZero_of_injective_ringHom (algebraMap D.host.E _).injective
   obtain ⟨φ, h, -⟩ := GlobalTheory.QpChar.exists_ringEquiv_padic (s.w.adicCompletion D.host.E) (D.host.g k)
-    ((GlobalTheory.LocLanglands.resCard_eq_normV _).trans h1) (GlobalTheory.TypeIdent.irreducible_natCast_compl _ hsw h2)
+    ((GlobalTheory.LocLanglands.resCard_eq_normV _).trans (by
+      simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using h1))
+    (GlobalTheory.TypeIdent.irreducible_natCast_compl _ hsw h2)
   exact ⟨D.host.g k, inferInstance, φ, h⟩
 
 end GlobalTheory.SplitTypeCompl

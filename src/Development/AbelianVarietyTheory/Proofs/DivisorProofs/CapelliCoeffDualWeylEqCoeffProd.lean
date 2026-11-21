@@ -124,6 +124,7 @@ theorem coeff_eq_of_int (P : Type) [CommRing P] [IsDomain P] [CharZero P] (L : â
     ring
   have := congrArg (fun q : Polynomial P => q.coeff i) hQ
   simp only [Q, finsetSum_coeff, coeff_monomial, coeff_zero] at this
+  simp only [Finsupp.single_apply] at this
   rw [Finset.sum_eq_single i (fun j _ hj => if_neg hj) (fun h' => absurd (Finset.mem_range.2 hi) h'), if_pos rfl] at this
   exact sub_eq_zero.1 this
 

@@ -187,7 +187,7 @@ theorem UpperTheory.ConvolutionTheory.BW.killComp :
   have hQ : Q S C φ := ⟨hφ, hS⟩
   have hQk : Q S C (rt E n (k : GA E n) φ) := Q_rt hh hb hC k hQ
   have hop : ∀ i, Op S C (k : GA E n) (app (G i)) := fun i => Op_app hh hb hC fun β hβ p hp =>
-    hv p ((MvPolynomial.mem_vars p).2 ⟨β, vars_of_gen (hG i) hβ, hp⟩)
+    hv p ((MvPolynomial.mem_vars_iff_mem_support p).2 ⟨β, vars_of_gen (hG i) hβ, hp⟩)
   let W : ℕ → Sm E n := fun e => ∑ i ∈ Finset.range e, app (G i) φ
   have hWQ : ∀ e, Q S C (W e) := fun e => by
     have h := (Op_sum hb hC (Finset.range e) fun i _ => hop i) φ hQ

@@ -207,16 +207,18 @@ theorem transfer {V V' : HSp D} (hr : V'.rank = V.rank) {P : Pl D.host.E}
   · obtain ⟨g, e₃⟩ := Φ.surjective ⟨γ', hR' _ hγ'⟩
     obtain rfl : γ' = (Φ g : GA D V') := by rw [e₃]
     exact (hS g).1 (hR _ ((hRR g).2 hγ'))
-  · refine cosetRep_transfer Φ (fun k hk => hk.1.1) (fun k hk => hk.1.1) (fun k => ?_) hR' hRR ⟨α, hG α hα⟩ hC
-    constructor
-    · rintro ⟨⟨-, a, -⟩, b⟩
-      have b' := (hS k).1 b
-      exact ⟨⟨(Φ k).2, stab_iff_conj h1 h2 (hc k) (hL e f hP) (loc' e f hP) ((suppF_iff f (Φ k).2).1 b') a,
-        fun v hv => absurd hv (Finset.notMem_empty v)⟩, b'⟩
-    · rintro ⟨⟨-, a, -⟩, b⟩
-      have b' := (hS k).2 b
-      exact ⟨⟨k.2, stab_iff_conj h2 h1 (hc' k) (lat_inv h1 (hL e f hP)) (loc e f hP) ((suppF_iff f k.2).1 b') a,
-        fun v hv => absurd hv (Finset.notMem_empty v)⟩, b'⟩
+  · refine cosetRep_transfer Φ ?_ ?_ (fun k => ?_) hR' hRR ⟨α, hG α hα⟩ hC
+    · exact fun k hk => hk.1.1
+    · exact fun k hk => hk.1.1
+    · constructor
+      · rintro ⟨⟨-, a, -⟩, b⟩
+        have b' := (hS k).1 b
+        exact ⟨⟨(Φ k).2, stab_iff_conj h1 h2 (hc k) (hL e f hP) (loc' e f hP) ((suppF_iff f (Φ k).2).1 b') a,
+          fun v hv => absurd hv (Finset.notMem_empty v)⟩, b'⟩
+      · rintro ⟨⟨-, a, -⟩, b⟩
+        have b' := (hS k).2 b
+        exact ⟨⟨k.2, stab_iff_conj h2 h1 (hc' k) (lat_inv h1 (hL e f hP)) (loc e f hP) ((suppF_iff f k.2).1 b') a,
+          fun v hv => absurd hv (Finset.notMem_empty v)⟩, b'⟩
 
 
 set_option maxHeartbeats 800000 in

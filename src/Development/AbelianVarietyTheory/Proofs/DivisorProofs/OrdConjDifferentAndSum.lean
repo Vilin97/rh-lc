@@ -41,6 +41,7 @@ theorem ord_conjDifferent_and_sum : ∀ (E K : Type) [Field E] [NumberField E] [
       intro p hp
       rw [different_vp, Nat.factorization_def _ (Nat.prime_of_mem_primeFactors hp)]
       push_cast
+      rw [Nat.padicValNat_def]
       ring
     rw [Finset.sum_congr rfl h3, ← Finset.sum_div, h1]
     field_simp

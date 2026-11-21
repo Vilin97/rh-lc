@@ -50,7 +50,9 @@ theorem part_projector_mem_adjoin :
   choose s hsin hsout using hs
   set FA := F.filter (fun ψ => NCov.cls ψ = NCov.cls ψ0)
   set FB := F.filter (fun ψ => NCov.cls ψ ≠ NCov.cls ψ0)
-  letI : CommRing (Algebra.adjoin O S) := Algebra.adjoinCommRingOfComm O fun a ha b hb => (hS a ha b hb).eq
+  letI : IsMulCommutative (Algebra.adjoin O S) :=
+    Algebra.isMulCommutative_adjoin O (fun a ha b hb _ => hS a ha b hb)
+  open scoped IsMulCommutative in
   obtain ⟨f, hfdef⟩ : ∃ f : Algebra.adjoin O S, f = ∏ φ ∈ FB, s φ := ⟨_, rfl⟩
   have hres : ∀ ψ : Algebra.adjoin O S →ₐ[O] O, ∀ u, u ∈ NCov.cls ψ ↔ IsLocalRing.residue O (ψ u) = 0 :=
     fun ψ u => Iff.rfl

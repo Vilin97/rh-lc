@@ -8,18 +8,6 @@ public import GroundTheory.GlobalFields.ComplexMultiplication.AlgebraicityDescen
 
 @[expose] public section
 
-abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
-  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
-  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
-  one_mem' z hz := by simpa only [one_mul] using hz
-  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
-  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
-  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
-
-abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
-    (σ : K →+* ℂ) : Subring ℂ :=
-  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
-
 namespace GroundTheory.Global
 namespace Elliptic
 
@@ -149,7 +137,7 @@ theorem absNorm_prime_of_mem_degreeOnePrimes {K : Type*} [Field K] [NumberField 
   rw [← h]
   have hne : v.asIdeal.under (𝓞 ℚ) ≠ ⊥ := by
     intro hb
-    exact v.ne_bot (Ideal.eq_bot_of_comap_eq_bot hb)
+    exact v.ne_bot (Ideal.eq_bot_of_under_eq_bot hb)
   have : (v.asIdeal.under (𝓞 ℚ)).IsMaximal := Ideal.IsPrime.isMaximal inferInstance hne
   exact absNorm_prime_of_ringOfIntegers_rat _ hne
 
@@ -160,7 +148,7 @@ section LatticeForm
 variable {K : Type*} [Field K] [NumberField K] (σ₀ : K →+* ℂ) (hK : finrank ℚ K = 2)
   [_root_.NumberField.IsTotallyComplex K]
 
-
+include hK in
 theorem exists_unit_of_homConstSet_eq (L L' : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ₀)
     (𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (hL' : L'.lattice = idealLattice σ₀ ↑𝔞⁻¹ * L.lattice)
     (φ : Isogeny (weierstrassCurve L) (weierstrassCurve L'))
@@ -237,8 +225,9 @@ theorem exists_isogBaseChange_eq_of_isogeny {A A' : WeierstrassCurve L} [A.IsEll
   intro g
   set D := dualOver (isogBaseChange (F' := ℂ) φ)
   obtain ⟨Λ, C, hC⟩ := exists_variableChange_eq_weierstrassCurve (A.baseChange ℂ)
-  have hΛ : periodLatticeEnd Λ = cmRingOfEmbedding (algebraMap K ℂ) := latticeEnd_eq_cmRing_of_ringEquiv
-    (algebraMap K ℂ) hK Λ ((latticeEndEquiv Λ).trans ((vcEndEquiv C hC).symm.trans hA.some))
+  have hΛ : _root_.periodLatticeEnd Λ = cmRingOfEmbedding (algebraMap K ℂ) :=
+    latticeEnd_eq_cmRing_of_ringEquiv (algebraMap K ℂ) hK Λ
+      ((latticeEndEquiv Λ).trans ((vcEndEquiv C hC).symm.trans hA.some))
   have hmem : endConst (A.baseChange ℂ) (D.comp ψ).toHom ∈ cmRingOfEmbedding (algebraMap K ℂ) := by
     rw [← hΛ, ← range_endConst hC]
     exact ⟨_, rfl⟩

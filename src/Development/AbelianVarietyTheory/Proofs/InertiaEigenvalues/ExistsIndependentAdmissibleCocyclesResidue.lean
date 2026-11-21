@@ -22,7 +22,7 @@ theorem exists_residue (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [IsDomai
   have hm : IsLocalRing.maximalIdeal O = Ideal.span {lam} := h.maximalIdeal_eq
   have hl : (l : O) ∈ IsLocalRing.maximalIdeal O := by
     have h1 : ((IsLocalRing.maximalIdeal O).comap (algebraMap ℤ_[l] O)).IsMaximal :=
-      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _
+      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _ Algebra.IsIntegral.isIntegral _
     have h2 := IsLocalRing.eq_maximalIdeal h1
     have h3 : (l : ℤ_[l]) ∈ IsLocalRing.maximalIdeal ℤ_[l] := by
       rw [PadicInt.maximalIdeal_eq_span_p]; exact Ideal.mem_span_singleton_self _

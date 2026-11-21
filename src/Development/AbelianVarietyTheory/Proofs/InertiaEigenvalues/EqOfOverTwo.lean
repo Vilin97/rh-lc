@@ -24,7 +24,7 @@ theorem eq_of_over_two {E : Type} [Field E] [NumberField E] {p q : ℕ} (hp : p.
   exact add_mem (Ideal.mul_mem_left _ _ h1) (Ideal.mul_mem_left _ _ h2)
 
 theorem unrAt_inv {E : Type} [Field E] [NumberField E] {χ : HChar E} {w : HeightOneSpectrum (𝓞 E)}
-    (h : χ.UnrAt w) : (χ⁻¹).UnrAt w := fun x hx => by
-  rw [HChar.loc_inv, h x hx, inv_one]
+    (h : χ.UnrAt w) : (χ⁻¹).UnrAt w := by
+  exact HChar.UnrAt.inv h
 
 end GlobalTheory.MuUnrTie

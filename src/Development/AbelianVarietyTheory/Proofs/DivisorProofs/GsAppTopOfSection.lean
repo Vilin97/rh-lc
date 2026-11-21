@@ -341,7 +341,7 @@ theorem theta_bundle_lbIso (D : DegPre V₁) : LBIso (LB.LinComb D.P.L (D.famφB
     rfl
   have h2 : padd D.P.A (𝟙 D.P.A) (toUnit D.P.A ≫ η[D.P.A]) = 𝟙 D.P.A := mul_one (𝟙 D.P.A)
   have hc : LBIso (LB.LinComb D.P.L (D.famφB 0) (DegPre.famε 1)) (D.P.L.pull (𝟙 D.P.A.left)) := by
-    refine (GlobalTheory.PrimNorm.lbIso_iff hL _ _ _ _).2 ?_
+    apply (GlobalTheory.PrimNorm.lbIso_iff hL _ _ _ _).2
     simp only [DegPre.famφB, DegPre.famε, Fin.prod_univ_four, Matrix.cons_val_zero, Matrix.cons_val_one,
       Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons, h1, h2, Fintype.prod_unique]
     simp

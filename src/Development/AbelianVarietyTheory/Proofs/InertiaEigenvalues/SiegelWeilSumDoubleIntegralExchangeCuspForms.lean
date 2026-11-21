@@ -50,7 +50,8 @@ theorem exch_general {X ι : Type*} [MeasurableSpace X] [Countable ι] (ν : Mea
       exact AEMeasurable.tsum fun Y => by
         simpa [hnorm] using (hF Y).enorm
   have hint : ∀ Y, Integrable (F Y) ρ := fun Y =>
-    ⟨hF Y, lt_of_le_of_lt (ENNReal.le_tsum Y) (lt_top_iff_ne_top.2 hsum)⟩
+    ⟨hF Y, lt_of_le_of_lt (ENNReal.le_tsum (f := fun Y => ∫⁻ p, ‖F Y p‖ₑ ∂ρ) Y)
+      (lt_top_iff_ne_top.2 hsum)⟩
   refine ⟨hint, ?_, ?_⟩
   · refine Summable.of_norm_bounded (ENNReal.summable_toReal hsum) fun Y => ?_
     have h1 := enorm_integral_le_lintegral_enorm (μ := ρ) (F Y)

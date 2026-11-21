@@ -314,17 +314,18 @@ end MixedPi
 theorem isRestrTensor_charRep {ι G : Type} {Γ : ι → Type} [Group G] [∀ i, Group (Γ i)] (p : ∀ i, G →* Γ i)
     (χ : ∀ i, Γ i →* Circle) (ψ : G →* Circle) (h : ∀ g, ∀ᶠ i in cofinite, χ i (p i g) = 1)
     (hψ : ∀ g, (ψ g : ℂ) = ∏ᶠ i, (χ i (p i g) : ℂ)) :
-    IsRestrTensor p (fun i => charRep (χ i)) (fun _ => 1) (charRep ψ) (fun y => ∏ᶠ i, y i) where
-  unit := .of_forall fun _ => norm_one
-  fixed g := (h g).mono fun i hi => by simp [charRep, hi]
-  inner_pure y y' hy hy' := by
+    IsRestrTensor p (fun i => charRep (χ i)) (fun _ => 1) (charRep ψ) (fun y => ∏ᶠ i, y i) := by
+  refine ⟨Eventually.of_forall (fun _ => norm_one), ?_, ?_, ?_, ?_⟩
+  · intro g
+    exact (h g).mono fun i hi => by simp [charRep, hi]
+  · intro y y' hy hy'
     have h' : (Function.mulSupport fun i => conj (y' i)).Finite := Set.Finite.subset hy' fun i hi e => hi (by simp [e])
     simp only [RCLike.inner_apply]
     rw [finprod_mul_distrib hy h', map_finprod _ hy']
-  dense := eq_top_iff.2 (le_trans (fun z _ => by
-    simpa using Submodule.smul_mem _ z (Submodule.subset_span (s := {v : ℂ | ∃ y : ι → ℂ, Restr (fun _ => 1) y ∧
-      v = ∏ᶠ i, y i}) ⟨_, restr_self _, finprod_one.symm⟩)) (Submodule.le_topologicalClosure _))
-  apply_pure g y hy := by
+  · exact eq_top_iff.2 (le_trans (fun z _ => by
+      simpa using Submodule.smul_mem _ z (Submodule.subset_span (s := {v : ℂ | ∃ y : ι → ℂ, Restr (fun _ => 1) y ∧
+        v = ∏ᶠ i, y i}) ⟨_, restr_self _, finprod_one.symm⟩)) (Submodule.le_topologicalClosure _))
+  · intro g y hy
     change (ψ g : ℂ) * ∏ᶠ i, y i = ∏ᶠ i, (χ i (p i g) : ℂ) * y i
     rw [finprod_mul_distrib (Set.Finite.subset (h g) fun i hi e => hi (by simp [show χ i (p i g) = 1 from e])) hy, hψ]
 

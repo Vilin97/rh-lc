@@ -52,7 +52,7 @@ theorem phi_map : ∀ (D : D7) (V V' : HSp D) (r : ℕ) (P : PPol D.sp.cm.sig r)
   obtain ⟨hX, hmv⟩ := GlobalTheory.T.unitaryTorusEllipticElements_of_localLatticeIsometry _ _ D.sp.cm.sig hcm r V.rank V'.rank P V.gram V'.gram (frameLat V) (frameLat V')
     v j hj
   unfold Phi
-  rw [← finsum_comp_equiv (Equiv.setCongr hX.symm)]
+  rw [← finsum_comp_equiv (Equiv.subtypeEquivRight (fun c => by rw [hX]))]
   refine finsum_congr fun q => ?_
   obtain ⟨c, h2⟩ := q
   obtain ⟨x, φ, hc, h⟩ := id h2
@@ -75,12 +75,14 @@ theorem phi_map : ∀ (D : D7) (V V' : HSp D) (r : ℕ) (P : PPol D.sp.cm.sig r)
     apply Subtype.ext
     rw [he'', ht, ← he]
     rfl
-  calc orbCls (J := V'.gram) (μ.map j) dt (f ∘ j.symm) ((Equiv.setCongr hX.symm) ⟨QuotientGroup.mk x, h2⟩)
+  calc orbCls (J := V'.gram) (μ.map j) dt (f ∘ j.symm) ((Equiv.subtypeEquivRight (fun c => by rw [hX])) ⟨QuotientGroup.mk x, h2⟩)
       = orbInt (μ.map j) (gam h'') (centMeas h'' dt) (f ∘ j.symm) := v2.symm
     _ = orbInt (μ.map j) (gam h'') ((centMeas h dt).map (centEquiv j (gam h) hγ.symm)) (f ∘ j.symm) := by rw [hm]
     _ = orbInt μ (gam h) (centMeas h dt) ((f ∘ j.symm) ∘ j) := (hasOrbInt_map j hγ.symm (f ∘ j.symm) 0).2
     _ = orbInt μ (gam h) (centMeas h dt) f := by
       congr 1
+      ext g
+      simp
     _ = orbCls (J := V.gram) μ dt f ⟨QuotientGroup.mk x, h2⟩ := v1
 
 end GlobalTheory.IsomPhi

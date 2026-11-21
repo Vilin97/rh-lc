@@ -117,6 +117,7 @@ theorem mem_closure_su {K R : Type} [Field K] [CharZero K] [CommRing R] [Topolog
   · have e : cT c (1 + (c γ.det - 1) • P) = 1 + (γ.det - 1) • cT c P := by
       ext i j
       simp [cT, hc, one_apply, eq_comm]
+      by_cases h : i = j <;> simp [Matrix.one_apply, h, eq_comm]
     rw [cT_mul, e, Matrix.mul_assoc _ _ J, Matrix.mul_assoc, ← Matrix.mul_assoc _ γ, hγ', ← Matrix.mul_assoc]
     simp only [Matrix.add_mul, Matrix.mul_add, Matrix.one_mul, Matrix.mul_one, Matrix.smul_mul, Matrix.mul_smul, hPJ,
       Matrix.mul_assoc, hPP, smul_add, smul_smul]
@@ -283,6 +284,7 @@ theorem unitary_trunc {R : Type} [CommRing R] (σ : R →+* R) {n : ℕ} (J u : 
   have e1 : cT σ (1 + e • (u - 1)) = 1 + e • (cT σ u - 1) := by
     ext i j
     simp [cT, hσ, one_apply, eq_comm]
+    by_cases h : i = j <;> simp [Matrix.one_apply, h, eq_comm]
   rw [e1]
   simp only [Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub, Matrix.one_mul, Matrix.mul_one,
     Matrix.smul_mul, Matrix.mul_smul, smul_add, smul_sub, smul_smul, he, hu]

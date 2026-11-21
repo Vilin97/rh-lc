@@ -111,6 +111,8 @@ end Bock
 
 section Inv
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable (F E : Type) [Field F] [Field E] [Algebra F E]
 
 def galUnitsToZ : uliftIntToIntRep (galUnits.{0} F E) ⟶ galUnitsZ F E :=

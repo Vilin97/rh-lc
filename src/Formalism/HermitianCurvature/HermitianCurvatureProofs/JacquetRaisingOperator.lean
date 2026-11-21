@@ -66,6 +66,7 @@ theorem rw_clm (L : E →L[ℂ] E) : ∀ (w : List (Mat k r)), (∀ X ∈ w, inL
   | X :: w, hw, f, g, hg, hf => by
     have hspread : ∃ U : Set (Mat k r), IsOpen U ∧ g ∈ U ∧
         ∀ x ∈ U, Loc ((X :: w).length : ℕ∞) f x := by
+      unfold Loc at hf ⊢
       obtain ⟨U, f', hU, hgU, hc, he⟩ := hf
       exact ⟨U, hU, hgU, fun x hx => ⟨U, f', hU, hx, hc, he⟩⟩
     obtain ⟨U, hU, hgU, hUloc⟩ := hspread
@@ -78,7 +79,7 @@ theorem rw_clm (L : E →L[ℂ] E) : ∀ (w : List (Mat k r)), (∀ X ∈ w, inL
       have := loc_Rw (N := w.length + 1) (by simpa using hf) w hw' 1 (by omega)
       simpa using this
     have hd := loc_hasDerivAt le_rfl hl hg (hw X (by simp))
-    exact ((L.restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt (0 : ℝ) hd).deriv
+    exact ((L.restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt (x := (0 : ℝ)) hd).deriv
 
 theorem wsum_clm (L : E →L[ℂ] E) (u : ℂ) (c : Fin r → Fin (2 * r + k + 1)) (σ : Equiv.Perm (Fin r))
     (f : Mat k r → E) (g : Mat k r) (hg : g ∈ GV k r) (hf : Loc (r : ℕ∞) f g) :

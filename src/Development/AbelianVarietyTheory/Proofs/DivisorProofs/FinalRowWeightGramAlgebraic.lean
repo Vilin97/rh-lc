@@ -91,6 +91,8 @@ theorem keeps_hat {F E : Type} [Field F] [NumberField F] [Field E] [NumberField 
   intro z hz
   have h4 := GlobalTheory.PrincInLevel.swap_symm_mem_hat Λ _ (hN _ (GlobalTheory.PrincInLevel.swap_mem_hatL Λ z hz))
   convert h4 using 1
+  ext i
+  simp [Matrix.mulVec, dotProduct, hK, map_sum, map_mul]
 
 theorem exists_pow_hat {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
     {β : GL (Fin n) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)} {Λ : Submodule (𝓞 E) (Fin n → E)} (hfr : IsFrame β Λ)

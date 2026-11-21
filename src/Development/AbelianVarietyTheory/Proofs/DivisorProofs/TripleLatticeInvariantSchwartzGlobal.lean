@@ -33,9 +33,14 @@ theorem schrL_apply {K : Type} [CommRing K] [Invertible (2 : K)] (ψ : AddChar K
     (z : (κ → K) × (κ → K)) (f : (κ → K) → ℂ) : schrL ψ z f = schr ψ z f := rfl
 
 theorem ops_schrL {K : Type} [CommRing K] [Invertible (2 : K)] (ψ : AddChar K ℂ) {κ : Type} [Fintype κ] :
-    GlobalTheory.Published.SvN.Ops (fun z z' : (κ → K) × (κ → K) => ψ (⅟(2 : K) * (z.1 ⬝ᵥ z'.2 - z'.1 ⬝ᵥ z.2))) (schrL ψ) where
-  zero v := by funext x; simp [schrL_apply, schr]
-  mul x y v := by simp only [schrL_apply]; exact schr_schr ψ x y v
+    GlobalTheory.Published.SvN.Ops (fun z z' : (κ → K) × (κ → K) => ψ (⅟(2 : K) * (z.1 ⬝ᵥ z'.2 - z'.1 ⬝ᵥ z.2))) (schrL ψ) := by
+  constructor
+  · intro v
+    funext x
+    simp [schrL_apply, schr]
+  · intro x y v
+    simp only [schrL_apply]
+    exact schr_schr ψ x y v
 
 theorem addChar_ne_zero {A : Type} [AddGroup A] (ψ : AddChar A ℂ) (t : A) : ψ t ≠ 0 := by
   intro h

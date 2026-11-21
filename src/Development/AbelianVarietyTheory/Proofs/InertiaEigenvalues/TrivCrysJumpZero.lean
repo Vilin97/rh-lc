@@ -63,9 +63,7 @@ variable {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field 
     (ρ : Representation LL G V)
 
 theorem fil_mono {a c : ℤ} (h : a ≤ c) : PD.Fil c ≤ PD.Fil a := by
-  induction c, h using Int.le_induction with
-  | base => exact le_rfl
-  | succ n _ ih => exact (PD.Fil_anti n).trans ih
+  exact antitone_int_of_succ_le PD.Fil_anti h
 
 theorem nontrivial_B (PD : PeriodData G Qp K₀ K B BdR) : Nontrivial B := by
   by_contra h

@@ -45,7 +45,9 @@ theorem ringEquivReal_evInf_algebraMap {F : Type} [Field F] [NumberField F] {v :
     InfinitePlace.Completion.ringEquivRealOfIsReal hv (evInf F v (algebraMap F (AF F) c)) =
       InfinitePlace.embedding_of_isReal hv c := by
   rw [AlgHom.commutes]
-  exact InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hv ((WithAbs.equiv _).symm c)
+  rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+    Algebra.algebraMap_self_apply, InfinitePlace.Completion.ringEquivRealOfIsReal_apply]
+  simpa using InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hv ((WithAbs.equiv _).symm c)
 
 theorem neg_at_real {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) (w : InfinitePlace F) (τ : EmbOver E w) (hw : w.IsReal) {δ : F}

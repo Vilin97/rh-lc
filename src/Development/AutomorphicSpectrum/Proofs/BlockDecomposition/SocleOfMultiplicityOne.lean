@@ -163,6 +163,7 @@ theorem nontrivial_indSp (e : (Σ a, m a) ≃ n) {ρ : Representation ℂ (Levi 
   obtain ⟨f, hf, -⟩ := GlobalTheory.SmGL.ProdIrr.exists_indSp_apply_one e ρ hsρ u
   exact ⟨f, 0, fun h => hu (by rw [← hf, h]; rfl)⟩
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem one_le_jhMult_jac_atom (e : (Σ a, m a) ≃ n) {ρ : Representation ℂ (Levi k m) X}
     (hρ : ρ.IsIrreducible) (T : Subrepresentation (parInd e ρ)) (hT : IsAtom T) :
     1 ≤ jhMult ρ (jac e T.toRepresentation) := by

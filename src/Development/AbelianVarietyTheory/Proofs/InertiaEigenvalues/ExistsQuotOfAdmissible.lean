@@ -225,7 +225,8 @@ theorem exists_red {T : LocLat G Qp LL O} {U : ZMod n → Multiset ℤ} (h : Cry
   obtain ⟨A, q, hm, hq, hK, hg⟩ := exists_reduction hk.1 hk.2 (latRep T.L)
   obtain ⟨N, hN, -⟩ := hex T A q U ⟨hq, hg⟩ hK h
   refine ⟨A, q, N, hm.trans ?_, ⟨hq, hg⟩, hK, hN⟩
-  have : Submodule.IsLattice LL T.L.T := ⟨T.L.fg, T.L.span⟩
+  have : Submodule.IsFullLattice LL T.L.T :=
+    { toIsLattice := Submodule.IsLattice.of_fg LL T.L.fg, span_eq_top := T.L.span }
   rw [Module.finrank, Module.finrank, Submodule.IsLattice.rank' LL]
 
 theorem exists_red_sum {T T' : LocLat G Qp LL O} {U U' : ZMod n → Multiset ℤ} (h : CrysWith PD emb T.ρ U)

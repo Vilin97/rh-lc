@@ -16,4 +16,5 @@ theorem _root_.GlobalTheory.T.exists_fockMap_signatures_depend_on_place : ∀ (F
     (d : Darboux (symp (R := AF F) (cA σ) (-1) JA JB) κ) (a b : ℂ) (A : ∀ w : InfinitePlace F, Matrix α (Ix (P w) (Q w)) ℂ)
     (C : ∀ w : InfinitePlace F, Matrix β (Ix (R w) (S w)) ℂ), IsCMExt F E σ → IsStd ψ → FramedD τ JA JB a b A C →
     ∃ Φ, IsFockMapD ψ τ d A C Φ := by
-  first | exact @GlobalTheory.HoweD.exists_isFockMapD | exact GlobalTheory.HoweD.exists_isFockMapD | (intros; apply GlobalTheory.HoweD.exists_isFockMapD <;> assumption)
+  intro F E _ _ _ _ _ σ α β κ _ _ _ _ _ P Q R S ψ τ JA JB d a b A C hCM hψ hFr
+  exact GlobalTheory.HoweD.exists_isFockMapD F E σ α β κ P Q R S ψ τ JA JB d a b A C hCM hψ hFr

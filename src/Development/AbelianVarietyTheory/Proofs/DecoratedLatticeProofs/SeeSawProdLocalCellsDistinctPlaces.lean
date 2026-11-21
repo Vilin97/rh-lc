@@ -25,8 +25,9 @@ theorem prod_ofFn_mul {M : Type} [Monoid M] : ∀ {n : ℕ} (r u : Fin n → M),
     have ih := prod_ofFn_mul (fun i => r i.succ) (fun i => u i.succ)
       (fun i i' hi => h _ _ fun e => hi (Fin.succ_injective _ e))
     have hc : Commute (u 0) (List.ofFn fun i : Fin n => r i.succ).prod := by
-      refine Commute.list_prod_right _ _ fun x hx => ?_
-      obtain ⟨i, rfl⟩ := List.mem_ofFn.1 hx
+      refine Commute.list_prod_right _ _ ?_
+      rw [List.forall_mem_ofFn_iff]
+      intro i
       exact h _ _ (Fin.succ_ne_zero i).symm
     simp only [List.ofFn_succ, List.prod_cons]
     rw [ih, mul_assoc, mul_assoc, ← mul_assoc (u 0), hc.eq, mul_assoc]
@@ -39,8 +40,8 @@ theorem prod_ofFn_single {M : Type} [Monoid M] : ∀ {n : ℕ} (f : Fin n → M)
     induction i using Fin.cases with
     | zero =>
       rw [List.prod_eq_one, mul_one]
-      intro x hx
-      obtain ⟨i, rfl⟩ := List.mem_ofFn.1 hx
+      rw [List.forall_mem_ofFn_iff]
+      intro i
       exact h _ (Fin.succ_ne_zero i)
     | succ i =>
       rw [h 0 (Fin.succ_ne_zero i).symm, one_mul]
@@ -127,14 +128,14 @@ theorem GlobalTheory.SeeSaw.prod_local_cells : ∀ {D : D7} {c : Comm D} {v : VC
   have hus : ∀ i, SuppAt (G i).q.e (c.V j') (u i) := fun i => (hu i).1
   refine ⟨(List.ofFn r).prod, R.list_prod_mem ?_, Subgroup.list_prod_mem _ ?_, (List.ofFn u).prod,
     (hG.lev j' hj _).2 ⟨Subgroup.list_prod_mem _ ?_, ?_⟩, ?_⟩
-  · intro x hx
-    obtain ⟨i, rfl⟩ := List.mem_ofFn.1 hx
+  · rw [List.forall_mem_ofFn_iff]
+    intro i
     exact hr i
-  · intro x hx
-    obtain ⟨i, rfl⟩ := List.mem_ofFn.1 hx
+  · rw [List.forall_mem_ofFn_iff]
+    intro i
     exact mem_grpAt (G i).q (hrs i) (hP i)
-  · intro x hx
-    obtain ⟨i, rfl⟩ := List.mem_ofFn.1 hx
+  · rw [List.forall_mem_ofFn_iff]
+    intro i
     exact mem_grpAt (G i).q (hus i) (hP i)
   · intro i a ha y hy
     obtain rfl : a = b i := by have := hb i; omega

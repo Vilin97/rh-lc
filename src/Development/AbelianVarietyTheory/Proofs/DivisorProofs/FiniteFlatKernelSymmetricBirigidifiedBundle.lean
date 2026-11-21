@@ -46,16 +46,7 @@ theorem flat_of_finite_rep : ∀ (R : Type) [CommRing R] [IsNoetherianRing R] (B
   have hrep' := GlobalTheory.T.memKernelOfLineBundle_baseChange_representable _ _ f B M hM H j hrep
   have hth := GlobalTheory.AbLaw.CubeAffine.triv_theta_of_isProjBy GlobalTheory.T.abelianScheme_laws_unconditional.1 _ ((Over.pullback f).obj B) hB' hP _ hML
   have hcl : IsClosedImmersion ((Over.pullback f).map j).left := by
-    have e : ((Over.pullback f).map j).left =
-        pullback.map H.hom f B.hom f j.left (𝟙 _) (𝟙 _) (by simp [Over.w j]) (by simp) := by
-      first
-      | rfl
-      | (apply pullback.hom_ext <;> simp [Over.pullback_map_left])
-      | (simp only [Over.pullback_map_left]; apply pullback.hom_ext <;> simp)
-    rw [e]
-    haveI : MorphismProperty.IsStableUnderComposition @IsClosedImmersion :=
-      ⟨fun _ _ hf hg => by haveI := hf; haveI := hg; infer_instance⟩
-    exact MorphismProperty.pullback_map (P := @IsClosedImmersion) hj (inferInstance : IsClosedImmersion (𝟙 _)) (Over.w j).symm (by simp)
+    exact MorphismProperty.overPullbackMap (P := @IsClosedImmersion) f j hj
   have hfin' : IsFinite ((Over.pullback f).obj H).hom := by
     first
     | exact MorphismProperty.pullback_snd (P := @IsFinite) _ _ hfin

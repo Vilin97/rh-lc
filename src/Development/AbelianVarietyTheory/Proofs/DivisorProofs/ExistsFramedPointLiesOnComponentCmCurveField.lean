@@ -189,7 +189,12 @@ theorem exists_frPt_liesOn : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     apply hcancel
     rw [← Category.assoc, hg, ‹x ≫ strK = spMap (algebraMap c.F ℂ)›, spMap_comp_spMap_divisor]
     rfl
-  obtain ⟨y, hy⟩ := GlobalTheory.NonIntegralFrameExample.exists_framed (g ≫ GlobalTheory.FlatLine.prX Xo c) (GlobalTheory.FlatLine.prX_over hgK)
+  have hfr : ∀ (x : Sp K ⟶ Xo.X) (hx : x ≫ Xo.s = sOf c K), ∃ y : FrPt Xo c K, y.x = x := by
+    intro x hx
+    choose u hu using fun τ => GlobalTheory.IntFramesCompare.exists_eigenBasisAt (c := c) hx τ
+    obtain ⟨s, hs⟩ := gfp_gen GlobalTheory.abelianSchemeLaws_all.2.secTwist x
+    exact ⟨⟨x, hx, u, fun τ => (hu τ).1, fun τ => (hu τ).2.1, fun τ => (hu τ).2.2, s, hs⟩, rfl⟩
+  obtain ⟨y, hy⟩ := hfr (g ≫ GlobalTheory.FlatLine.prX Xo c) (GlobalTheory.FlatLine.prX_over hgK)
   refine ⟨y, fun s => ?_⟩
   rw [GlobalTheory.FlatLine.ptF_eq hgK hy]
   have hs : s = spMap (algebraMap K ℂ) default := Subsingleton.elim _ _

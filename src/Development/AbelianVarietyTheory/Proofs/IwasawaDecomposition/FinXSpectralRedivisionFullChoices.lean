@@ -50,23 +50,25 @@ theorem pairIndep_re {D : D7} (Z : New D) {X : HidaSetting D} {Y : Full X} (h : 
     rw [toTerm_eTT_symm, toTerm_eTT_symm, e₂]
   have := h.pairIndep u u' ((eTT Z Y u u').symm s₁) ((eTT Z Y u u').symm s₂)
     ((eTT Z Y u u').symm s₁') ((eTT Z Y u u').symm s₂') e₁' e₂' ((by with_unfolding_all exact (r₁ :))) ((by with_unfolding_all exact (r₂ :)))
-  kexactB this
+  with_unfolding_all exact this
 
 
-set_option maxHeartbeats 4000000 in
+set_option maxHeartbeats 16000000 in
 theorem finX_reY : ∀ (D : D7) (Z : New D) (X : HidaSetting D) (Y : Full X), FinX Y → FinX (reY Z Y) := by
   intro D Z X Y h
-  exact
+  refine
   { shInj := (by with_unfolding_all exact (h.shInj :))
     shSurj := (by with_unfolding_all exact (h.shSurj :))
-    inHH := by kexactB h.inHH
-    puLin := by kexactB h.puLin
+    inHH := by with_unfolding_all exact h.inHH
+    puLin := by with_unfolding_all exact h.puLin
     finHH := (by with_unfolding_all exact (h.finHH :))
     fibFin := (by with_unfolding_all exact (fibFin_re Z h :))
     pairIndep := (by with_unfolding_all exact (pairIndep_re Z h :))
-    Greal := (by with_unfolding_all exact (fun (u u' : D.what₂.Word) (t : RT (reY Z Y) (wd Z u) (wd Z u')) => h.Greal u u' ((eRT Z Y u u').symm t) :))
+    Greal := ?_
     cdEx := (by with_unfolding_all exact (h.cdEx :))
     volPos := (by with_unfolding_all exact (h.volPos :)) }
+  intro u u' t
+  with_unfolding_all exact h.Greal u u' ((eRT Z Y u u').symm t)
 
 end GlobalTheory.Mem.SRe
 

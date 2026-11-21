@@ -78,21 +78,17 @@ theorem unif_of_space_eq {D : D7} {r : ℕ} {C : Type} {X : C → Data D.host.E 
   exact ⟨Kf, th, hr, hK, h1, h2, hu⟩
 
 theorem laws_core (D : D7) (T : CoreJ D) (j : ℕ) (h : LawsJ T) (hj : InR D j) :
-    Laws D j (T.Q.Xo j) T.Q.c (T.U j) (coreDict T.toCore j) where
-  inR := hj
-  host := h.pins.1
-  dat := h.pins.2.2.2 j hj
-  levA := h.pins.2.1.2
-  unf := h.unf j hj
-  chiTriv := h.chiTriv j hj
-  dictU := fun σ hσ => by
+    Laws D j (T.Q.Xo j) T.Q.c (T.U j) (coreDict T.toCore j) := by
+  refine ⟨hj, h.pins.1, h.pins.2.2.2 j hj, h.pins.2.1.2, h.unf j hj, h.chiTriv j hj, ?_, ?_⟩
+  · intro σ hσ
     have hV := h.spaceW j hj σ hσ
     have e : coreDict T.toCore j σ = fun g => T.dict j σ (hV ▸ g) := by
-      funext g; simp only [coreDict, dif_pos hV]
+      funext g
+      simp only [coreDict, dite_eq_left hV]
     rw [e, h.pins.2.1.1]
     exact unif_of_space_eq _ _ hV (T.dict j σ) _ (T.Kf j σ) (h.levelK j hj σ hσ) (h.dictU j hj σ hσ)
       (h.muUnit j hj σ hσ).2.2.2
-  modelW := fun σ hσ => by
+  · intro σ hσ
     have := h.modelW j hj σ hσ
     rw [h.spaceW j hj σ hσ] at this
     exact this

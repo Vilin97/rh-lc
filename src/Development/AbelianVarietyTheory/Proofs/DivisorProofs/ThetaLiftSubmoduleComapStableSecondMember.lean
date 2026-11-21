@@ -32,6 +32,7 @@ theorem sumPl_single_add_smul {ι : Type} [Fintype ι] [DecidableEq ι] {V : ι 
     simp only [PiTensorProduct.mapMultilinear_apply, Function.update_eq_self, PiTensorProduct.map_id] at e e2
     simp only [atPl]
     rw [Module.End.one_eq_id, Module.End.one_eq_id, e, e2]
+    rfl
   have h0 : ∀ v, v ≠ w → atPl v (L v) = (0 : Module.End ℂ (⨂[ℂ] i, V i)) := by
     intro v hv
     rw [hL v hv]

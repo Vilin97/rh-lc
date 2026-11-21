@@ -120,14 +120,24 @@ theorem rankHyp_ofLabS {C3 : IntChart T io y} {ι : T.Fr →+* C} {Y : FBChart C
     (ha : LabSArith V io ι lab) (hg : LabSGeo C3 ι Y lab) (hr : lab.RankOK Dw) (o : Orb) :
     (Y.rawSelf (selfOfLab ha hg o)).RankHyp where
   big_compl := (hr o).1
-  rk_big := fun g a hb => by
-    fin_cases g
-    · exact (card_sigma_fst (fun a => Dw.mult (lab.tau o a)) a).trans ((hr o).2.1 a hb)
-    · exact (card_sigma_shift (fun a => Dw.mult (lab.tau o a)) lab.hd a).trans ((hr o).2.2.2.1 a hb)
-  rk_small := fun g a hb => by
-    fin_cases g
-    · exact (card_sigma_fst (fun a => Dw.mult (lab.tau o a)) a).trans ((hr o).2.2.1 a hb)
-    · exact (card_sigma_shift (fun a => Dw.mult (lab.tau o a)) lab.hd a).trans ((hr o).2.2.2.2 a hb)
+  rk_big := by
+    refine Fin.forall_fin_two.mpr ⟨?_, ?_⟩
+    · intro a hb
+      simp only [FBChart.rawSelf, selfOfLab]
+      convert (card_sigma_fst (fun b => Dw.mult (lab.tau o b)) a).trans ((hr o).2.1 a hb) using 2
+      exact Finset.filter_congr (fun _ _ => Iff.rfl)
+    · intro a hb
+      simp only [FBChart.rawSelf, selfOfLab, ite_eq_right (by decide : (1 : Fin 2) ≠ 0)]
+      exact (card_sigma_shift (fun b => Dw.mult (lab.tau o b)) lab.hd a).trans ((hr o).2.2.2.1 a hb)
+  rk_small := by
+    refine Fin.forall_fin_two.mpr ⟨?_, ?_⟩
+    · intro a hb
+      simp only [FBChart.rawSelf, selfOfLab]
+      convert (card_sigma_fst (fun b => Dw.mult (lab.tau o b)) a).trans ((hr o).2.2.1 a hb) using 2
+      exact Finset.filter_congr (fun _ _ => Iff.rfl)
+    · intro a hb
+      simp only [FBChart.rawSelf, selfOfLab, ite_eq_right (by decide : (1 : Fin 2) ≠ 0)]
+      exact (card_sigma_shift (fun b => Dw.mult (lab.tau o b)) lab.hd a).trans ((hr o).2.2.2.2 a hb)
 
 end Pairs
 

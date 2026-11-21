@@ -177,7 +177,7 @@ theorem scale_at_model : ∀ (o' Ω : Type) [CommRing o'] [Field Ω] [Algebra o'
     have e₀ : f q = f q₀ := (f₃ _ _).2 ((equiv_iff hB _ _).2 ⟨-z, by
       rw [smul_neg, ← hz', add_neg_cancel]; rfl, rfl⟩)
     obtain ⟨q', x', hy', hx', hpow, hval⟩ :=
-      (key q₀ (x a) ((f₁ _ _).2 (((f₁ _ _).1 hq₁).trans e₀))).2 ρ.n ρ.n_prime.two_le hnd rfl
+      (key q₀ (x a) ((f₁ _ _).2 (((f₁ _ _).1 hq₁).trans e₀))).2 ρ.n ρ.n_prime.two_le hnd (by simp [q₀])
     obtain ⟨a', rfl⟩ := xonto x' (hx' w₀ hw₀.1).1
     have := A.isAb.comm
     let X : Multiplicative S.Gam →* (TFK (R := V) F ⟶ A.A) :=
@@ -192,7 +192,7 @@ theorem scale_at_model : ∀ (o' Ω : Type) [CommRing o'] [Field Ω] [Algebra o'
       (qkMk hB 0 0 (by rw [smul_zero, map_zero]) : QkPt D.toPre F (S.r * S.N)) (f (qkMk hB 0 0 (by rw [smul_zero, map_zero]))) :=
     (f₁ _ _).2 rfl
   obtain ⟨a₁, ha₁⟩ := xonto _ (q0 w₀ hw₀.1).1
-  obtain ⟨a₀, -, ha₀⟩ := coset a₁ _ (ha₁ ▸ q0) ⟨0, by simp [qkMk]⟩
+  obtain ⟨a₀, -, ha₀⟩ := coset a₁ _ (ha₁ ▸ q0) ⟨0, by simp⟩
   set s := σ ⟨S.th a₀, S.th_mem a₀⟩ with hs_def
   have hs0 : s ≠ 0 := by
     intro h

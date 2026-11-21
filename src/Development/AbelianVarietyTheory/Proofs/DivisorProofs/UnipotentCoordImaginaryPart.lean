@@ -37,7 +37,7 @@ theorem GlobalTheory.ThK.UnipDom.coC_sub_conj_plane : ∀ (F E : Type) [Field F]
     have hM0 : (Complex.I • Y₁.J.map τ).det = 0 := by
       rw [Matrix.det_smul, ← RingHom.mapMatrix_apply, ← RingHom.map_det, h0, map_zero, mul_zero]
     obtain ⟨v, hv, hMv⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr hM0
-    have hpos := (hcY₁ w0).2.2 (star v) (by simpa using hv)
+    have hpos := (hcY₁.cartan w0).2.2 (star v) (by simpa using hv)
     rw [star_star, hMv, dotProduct_zero, Complex.zero_re] at hpos
     exact lt_irrefl _ hpos
   have hM : Matrix.vecMulVec H.x (Y.J *ᵥ fun i => σ (H.y i)) - Matrix.vecMulVec H.y (Y.J *ᵥ fun i => σ (H.x i)) + H.ι * (Y₁.Jᵀ)⁻¹ * (Y.J * H.ι.map σ)ᵀ = 1 :=

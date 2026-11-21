@@ -136,7 +136,7 @@ theorem constantCoeff_invDer_X (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) R
     (hswap : ∀ i, swap (μ i) = μ i) (u : Fin d → R) (i : Fin d) :
     constantCoeff (invDer μ u (X i)) = u i := by
   have hμ : HasSubst μ := hasSubst_of_constantCoeff_zero hc
-  have hp : ∀ k, constantCoeff (pderiv R (Sum.inr k) (μ i)) = if k = i then 1 else 0 := by
+  have hp : ∀ k, constantCoeff (pderiv (Sum.inr k) (μ i)) = if k = i then 1 else 0 := by
     intro k
     rw [← coeff_zero_eq_constantCoeff_apply, coeff_pderiv, zero_add, coeff_inr_of_unit μ hunit hswap]
     simp

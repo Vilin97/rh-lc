@@ -19,7 +19,7 @@ section SlopeTestRemainingChoices
 
 variable {E : Type} [Field E] [NumberField E]
 
-private def Nq (E : Type) [Field E] [NumberField E] : Subgroup (G1 E) where
+private noncomputable def Nq (E : Type) [Field E] [NumberField E] : Subgroup (G1 E) where
   carrier := Set.range fun ξ : E => (nU (rt ξ : A E) : G1 E)
   mul_mem' := by
     rintro _ _ ⟨a, rfl⟩ ⟨b, rfl⟩

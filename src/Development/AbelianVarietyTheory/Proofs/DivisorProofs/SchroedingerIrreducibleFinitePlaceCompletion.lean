@@ -113,9 +113,10 @@ theorem schr_irreducible_local (k : Type) [Field k] [ValuativeRel k] [Topologica
     rw [Submodule.mem_comap, hL] at hΦ ⊢
     have h := hS (0, fun r => b r ()) _ hΦ
     convert h using 1
-    congr 2
-    simp only [dotProduct, Finset.univ_unique, Finset.sum_singleton]
-    exact Finset.sum_congr rfl fun r _ => mul_comm _ _
+    funext y
+    simp [schr, dotProduct, coe_toCircle, e, colH, mul_comm]
+    change Φ (e y) * ψk (∑ r, b r () * y r) = ψk (∑ r, b r () * y r) * Φ (e y)
+    exact mul_comm _ _
   have h0' : φ₀ ∘ e.symm ∈ N.comap L := by
     rw [Submodule.mem_comap, hL]
     have : (φ₀ ∘ e.symm) ∘ e = φ₀ := by funext y; simp

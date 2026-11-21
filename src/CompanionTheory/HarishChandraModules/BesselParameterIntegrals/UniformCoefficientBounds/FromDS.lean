@@ -26,7 +26,8 @@ noncomputable section
 
 namespace CompanionTheory.D.Upq.Coef
 
-open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData Formalism.FourierDecayAlt.P.CutBP.Jmu Formalism.FourierDecayAlt.P.CutBP.Jmu.NDG ReciprocityTheory.ChartRestriction.DS
+open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData
+open ReciprocityTheory.ChartRestriction.DS
 
 theorem thrStar_le {n : ℕ} (hn : 1 ≤ n) (ε : Fin n → Bool) : thrStar ε ≤ 32 * (n : ℝ) ^ 3 := by
   have hp : pOf ε ≤ n := (Finset.card_le_univ _).trans_eq (Fintype.card_fin n)

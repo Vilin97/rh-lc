@@ -27,7 +27,7 @@ theorem norm_entry_le_opNorm {m : Type} [Fintype m] [DecidableEq m] (A : Matrix 
     _ ≤ ‖Matrix.toEuclideanCLM (n := m) (𝕜 := ℂ) A (EuclideanSpace.single k 1)‖ := PiLp.norm_apply_le _ _
     _ ≤ ‖Matrix.toEuclideanCLM (n := m) (𝕜 := ℂ) A‖ * ‖EuclideanSpace.single k (1 : ℂ)‖ :=
         ContinuousLinearMap.le_opNorm _ _
-    _ = (opNorm A : ℝ) := by rw [EuclideanSpace.norm_single, norm_one, mul_one]; rfl
+    _ = (opNorm A : ℝ) := by simp [opNorm]
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 

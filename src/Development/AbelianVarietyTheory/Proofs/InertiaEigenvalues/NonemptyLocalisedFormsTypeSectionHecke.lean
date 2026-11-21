@@ -182,7 +182,7 @@ theorem main : ∀ (D : D7) (M : MtFam D) (i : D.nd.Loc), HeckeTied D M → Heck
       obtain ⟨y, rfl⟩ := hx
       exact ⟨_, hpj y⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add a c _ _ ha hc => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hc
+    | add a c _ _ ha hc => rw [map_add πh]; exact add_mem ha hc
     | smul c a _ ha => rw [hπs]; exact Submodule.smul_mem _ _ ha
   have hrange : LinearMap.range p = ⊤ := by
     rw [eq_top_iff, ← (Pi.basisFun ℂ _).span_eq, Submodule.span_le]
@@ -238,7 +238,10 @@ theorem main : ∀ (D : D7) (M : MtFam D) (i : D.nd.Loc), HeckeTied D M → Heck
     refine (injective_iff_map_eq_zero Φ).2 fun u hu => ?_
     rw [hΦ] at hu
     have h1 : e.symm (πh u) = 0 := Subtype.ext hu
-    have h2 : πh u = 0 := by simpa using congrArg e h1
+    have h2 : πh u = 0 := by
+      have h := congrArg (fun z : G => e z) h1
+      rw [e.apply_symm_apply, e.map_zero] at h
+      exact h
     refine bW.repr.injective (Finsupp.ext fun k => ?_)
     have h3 := congrFun h2 k
     rw [hπ] at h3
@@ -256,10 +259,11 @@ theorem main : ∀ (D : D7) (M : MtFam D) (i : D.nd.Loc), HeckeTied D M → Heck
       refine iSup_le fun x' => ?_
       by_cases hx : x' = x
       · subst hx; exact le_sup_left
-      · exact le_sup_of_le_right (le_biSup (fun x' => typeSum D i (some x')) hx)
+      · exact le_sup_of_le_right (le_iSup_of_le x' (le_iSup_of_le hx le_rfl))
     obtain ⟨a, ha, c, hc, hac⟩ := Submodule.mem_sup.1 (hGle g.2)
     have hcG : c ∈ G := by
-      refine (iSup₂_le fun x' _ => le_iSup (fun x => typeSum D i (some x)) x') hc
+      change c ∈ ⨆ x, typeSum D i (some x)
+      exact (iSup₂_le fun x' _ => le_iSup (fun x : D.nd.X i => typeSum D i (some x)) x') hc
     have hpc : p c = 0 := by
       funext k
       by_cases hk : k.1 = x

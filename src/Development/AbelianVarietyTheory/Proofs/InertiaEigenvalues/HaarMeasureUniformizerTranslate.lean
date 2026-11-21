@@ -135,6 +135,7 @@ theorem modulus_conj : ∀ (E : Type) [Field E] [NumberField E] (n : ℕ) [Measu
         rw [hco]; exact hc
       rw [Measure.map_map hem hφc.measurable, hco, hSco, ← Measure.map_map hSm (hco ▸ hem), ← hco, hc',
         Measure.map_smul, Measure.map_smul, hS, hc', ← hK, smul_comm]
+      all_goals first | exact hem.aemeasurable | exact hSm.aemeasurable
     have h4 := congrArg (Measure.map e.toMeasurableEquiv.symm) h3
     rwa [show (⇑e : GlobalTheory.CellDec.NA E n → _) = ⇑e.toMeasurableEquiv from rfl, MeasurableEquiv.map_symm_map,
       MeasurableEquiv.map_symm_map] at h4

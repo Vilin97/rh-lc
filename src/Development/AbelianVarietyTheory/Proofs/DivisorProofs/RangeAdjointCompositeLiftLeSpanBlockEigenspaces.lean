@@ -101,7 +101,7 @@ theorem evC_splitC {D : D7} (V : HSp D) (P : Pl D.host.E) (a : List ℤ → ℂ)
     GlobalTheory.Hk3.evC V P a (GlobalTheory.Hk3.splitC V.rank z) = ∑ j ∈ Finset.range (V.rank + 1),
       z j * (if IsLab V P (splitLab V.rank j) then a (splitLab V.rank j) else 0) := by
   unfold GlobalTheory.Hk3.evC GlobalTheory.Hk3.splitC
-  rw [← Finsupp.sum_finset_sum_index (by simp) (by intro d x y; split_ifs <;> simp [add_mul])]
+  rw [← Finsupp.sum_finsetSum_index (by simp) (by intro d x y; split_ifs <;> simp [add_mul])]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [Finsupp.sum_single_index (by simp)]
   split_ifs <;> simp

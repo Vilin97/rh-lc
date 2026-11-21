@@ -16,11 +16,12 @@ noncomputable section
 
 namespace P1
 
-theorem isSmoothHerm_fs {κ : Type} [Fintype κ] : IsSmoothHerm (HermLine.ofCone (fsMetric (Ix κ))) := by
+theorem isSmoothHerm_fs {κ : Type} [Fintype κ] :
+    IsSmoothHerm (HermLine.ofCone (fsMetric (ι := Ix κ))) := by
   have hN : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (FSLevi.nsq (J := Ix κ)) := by
     unfold FSLevi.nsq
     exact ContDiff.sum fun p _ ↦ ((FSLevi.reP p).contDiff.pow 2).add ((FSLevi.imaginary p).contDiff.pow 2)
-  have he : (HermLine.ofCone (fsMetric (Ix κ))).h = fun z ↦ Real.sqrt (FSLevi.nsq z) := by
+  have he : (HermLine.ofCone (fsMetric (ι := Ix κ))).h = fun z ↦ Real.sqrt (FSLevi.nsq z) := by
     funext z
     simp [HermLine.ofCone, fsMetric, EuclideanSpace.norm_eq, FSLevi.nsq, FSLevi.reP_apply,
       FSLevi.imaginaryPart_apply, FSLevi.norm_sq_eq]

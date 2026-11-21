@@ -76,17 +76,22 @@ variable {F Ω : Type} [Field F] [NumberField F] [IsTotallyReal F] [Field Ω] [A
   {l : ℕ} [Fact l.Prime] {a : ℕ} {π : TR.CuspSub F a} {ι : Qbar l ≃+* ℂ} {r : G F Ω →* GL (Fin a) (Qbar l)} {wt : ℤ}
   {HT : (F →+* Qbar l) → Multiset ℤ}
 
-theorem IsGalRU.of_old (H : IsGalRepOfR π ι r wt HT) : IsGalRU π ι r wt HT where
-  cont := H.cont
-  ss := H.ss
-  away w hl A h rc hrc σ hσ := .of_eq ((H.away w hl A h rc hrc σ hσ).wdOf_eq hl)
-  ratio w hl A h rc hrc σ hσ hm := by
+theorem IsGalRU.of_old (H : IsGalRepOfR π ι r wt HT) : IsGalRU π ι r wt HT := by
+  refine {
+    cont := H.cont
+    ss := H.ss
+    away := ?_
+    ratio := ?_
+    weights := H.weights
+    weights_sym := H.weights_sym
+    above := ?_ }
+  · intro w hl A h rc hrc σ hσ
+    exact .of_eq ((H.away w hl A h rc hrc σ hσ).wdOf_eq hl)
+  · intro w hl A h rc hrc σ hσ hm
     obtain ⟨x, hx, ht⟩ := H.pure w hl A h
     rw [← hx.wdOf_eq hl] at ht
     exact .of_tempered (by rwa [(H.away w hl A h rc hrc σ hσ).wdOf_eq hl]) ht
-  weights := H.weights
-  weights_sym := H.weights_sym
-  above P AI T w A h O _ _ _ Bw hj := by
+  · intro P AI T w A h O _ _ _ Bw hj
     have k := H.above P AI T w A h O Bw hj
     exact ⟨k.1, k.2.1, fun σ hσ hi _ rc hrc => by rw [(k.2.2.1 σ hσ hi).2 rc hrc]; exact ⟨fun _ => rfl, id⟩, k.2.2.2⟩
 

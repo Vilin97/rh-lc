@@ -59,6 +59,7 @@ theorem SemiHom.mDR_ιMulti_D {σ : R →+* R'} {α : B →+* B'} (h : SemiHom �
   rw [ExteriorAlgebra.ιMulti_apply, ExteriorAlgebra.ιMulti_apply, map_list_prod, List.map_ofFn]
   congr 1
   congr 1
+  funext i
   exact (SemiHom.mDR_ι h _).trans (congrArg ι1 (SemiHom.m1_D h _))
 
 theorem SemiHom.mDR_mDR {σ : R →+* R'} {α : B →+* B'} {τ : R' →+* R''} {β : B' →+* B''}

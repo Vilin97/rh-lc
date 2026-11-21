@@ -64,7 +64,8 @@ theorem act_mulSingle_false_KOne {r t : ℕ} {χ : Fˣ →* ℂˣ} {W : Type} [A
   set h := emb₂ F (stdSum (rfl : r + t = r + t)) (g, 1) with hdef
   have hval : ∀ i j, h.val i j = Matrix.reindex (stdSum (rfl : r + t = r + t)) (stdSum (rfl : r + t = r + t))
       (Matrix.fromBlocks g.val 0 0 (1 : GL (Fin t) F).val) i j := fun i j => by
-    rw [hdef, val_emb₂]
+    rw [hdef]
+    exact congrFun (congrFun (val_emb₂ F _ (g, 1)) i) j
   have hKO : h ∈ KO F (Fin (r + t)) := by
     have hg' : g ∈ KO F (Fin r) := GlobalTheory.StepData.KOne_le_KO hg
     have e : h = leviEmb F (two (stdSum (rfl : r + t = r + t)))

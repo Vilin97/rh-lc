@@ -131,7 +131,7 @@ theorem de_mem_intLL (hX : FieldOk X) (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool) 
 
 theorem muC_mem_intLL (hX : FieldOk X) (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool) {PP : Pl D.host.E}
     (hPP : PP ∈ (Z.ρ.B i j b).G.Pg) (w : (kP PP)ˣ) : (((Z.ρ.B i j b).G.muC PP w : ℂˣ) : ℂ) ∈ intLL D := by
-  obtain ⟨k, hk⟩ := Z.good.Pg i j b PP hPP
+  obtain ⟨k, hk⟩ : ∃ k : Fin 2, PP ∈ placesOver D.host.E (D.host.g k) := Z.good.Pg i j b PP hPP
   have hw : w ^ (D.host.g k - 1) = 1 := by
     rw [← card_residueField_of_type hk, ← Nat.card_units]
     exact pow_card_eq_one'
@@ -148,7 +148,7 @@ theorem levLam_twVia_mem_intLL : ∀ (D : D7) (X : RealSide D) (X0 : BaseLevelRo
   obtain ⟨hg, hv⟩ := twistOf_good Z.good (c.twI w) j (c.sd w) (c.k' w) (c.Q w) (chr c w) H.ok (viaOk ι)
   have htw : ∀ z, (((twVia Z.ρ ι).chi z : Circle) : ℂ) ∈ intLL D := fun z => by
     obtain ⟨σ, hσ, n, hn, hp⟩ := hv z
-    obtain ⟨y, hy⟩ := H.val σ
+    obtain ⟨y, hy⟩ : ∃ y : D.what₂.LL, c.embW w y = algebraMap _ (KE c w) ((chr c w σ : (D.ntw.Ok (c.twI w) (c.k' w))ˣ) : D.ntw.Ok (c.twI w) (c.k' w)) := H.val σ
     refine mem_intLL_of_pow hn ?_ ⟨y, ?_⟩
     · refine (congrArg (· ^ n) hσ).trans ?_
       rw [← map_pow, ← Units.val_pow_eq_pow_val, hp, Units.val_one, map_one]

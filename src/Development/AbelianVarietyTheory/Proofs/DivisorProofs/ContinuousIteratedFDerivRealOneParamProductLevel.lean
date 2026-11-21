@@ -70,6 +70,8 @@ theorem GlobalTheory.UAut.continuous_iteratedFDeriv_prod_realLine : ∀ (F E : T
         (fun j => by simpa [Fin.append_right] using hγ j) i) x₀
     have h2 := h1.comp contDiff_append
     convert h2 using 1
+    funext q
+    simp [H, hP, hQ, prod_ofFn_append]
   have key : ∀ x, x₀⁻¹ * x ∈ W → ∀ t, φ (x * P t) = H (s (x₀⁻¹ * x), t) := by
     intro x hx t
     obtain ⟨u, huU, huf, e⟩ := hWs _ hx

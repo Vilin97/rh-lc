@@ -67,9 +67,10 @@ theorem pbWords_core (Bj : B.RealPlaceData k ρ Wp Wq) (B0 : B.RealPlaceData k n
   | l :: w, ew, y, hyU, hy => by
     have ih := pbWords_core Bj B0 e hzS i hi H Cs hL hCs hS U hU hD hP w (fun a => ew a.succ)
     set H' := D.uwG k n B0.z B0.z' H i hi w (fun a => ew a.succ) with hH'
-    have hLocSupp := uwG_locSupp (k := k) (n := n) (H := H) (Cs := Cs)
-      B0.z B0.z' i hi hCs.isClosed hL hS w (fun a => ew a.succ)
-    obtain ⟨hL', hS'⟩ := hLocSupp
+    have hCsClosed : IsClosed Cs := IsCompact.isClosed hCs
+    obtain ⟨hL', hS'⟩ :=
+      uwG_locSupp (k := k) (n := n) (E := Wq →L[ℂ] Wp) (H := H) (Cs := Cs)
+        B0.z B0.z' i hi hCsClosed hL hS w (fun a => ew a.succ)
     set c0 := Dmin k n B0.z B0.z' y ⟨i, by omega⟩ with hc0
     have hc0ne : c0 ≠ 0 := hD y hyU
     obtain ⟨Ht, hHt, hHtS, hHtE⟩ := cutoff_exists B0.z B0.z' i hi hL' hS' hc0ne

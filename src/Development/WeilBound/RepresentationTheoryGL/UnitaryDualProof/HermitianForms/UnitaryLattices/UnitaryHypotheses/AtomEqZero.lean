@@ -93,10 +93,32 @@ theorem lift (hUL : ULift k) (hTB : ThmB k) (hirr : π.IsIrreducible) (hB : IsIn
       (mirEq_congr (by omega) rfl hIL.2.2) hIle
     exact ⟨c, isDens_smul hD hID c hc⟩
 
-theorem chain_rad (hB : IsInvForm π B) :
-    ∀ d (hd : d + 1 ≤ N) v, chain hUD hψc hψ1 π hs B d v v = 0 →
-      v ∈ twKer π (derUnip k N (N - d)) (lvlChar k ψ N (N - d))
-  | 0, _, v, hv => by
+theorem chain_rad (hB : IsInvForm π B) (d : ℕ) (hd : d + 1 ≤ N) :
+    ∀ v, chain hUD hψc hψ1 π hs B d v v = 0 →
+      v ∈ twKer π (derUnip k N (N - d)) (lvlChar k ψ N (N - d)) := by
+  revert d
+  have level : ∀ j (hj : j + 2 ≤ N),
+      Lvl k ψ π (N - 2 - j) (by omega) (j : ℝ) (chain hUD hψc hψ1 π hs B j) := by
+    intro j
+    induction j with
+    | zero =>
+      intro hj
+      rw [chain_zero]
+      refine ⟨isPsd_of_inv π B hB, kills_congr (a := N) (by omega) ?_, ?_⟩
+      · intro v hv w
+        rw [twKer_derUnip_self ψ π] at hv
+        rw [(Submodule.mem_bot ℂ).1 hv]
+        simp
+      · intro p _ v w
+        simp [hB.2.2]
+    | succ j ih =>
+      intro hj
+      obtain ⟨-, hP, hK, hM, -⟩ := chain_succ hUD hψc hψ1 π hs B j (by omega) (ih (by omega))
+      exact ⟨hP, kills_congr (by omega) hK, mirEq_congr (by omega) (by push_cast; ring) hM⟩
+  intro d
+  induction d with
+  | zero =>
+    intro _ v hv
     have : v = 0 := by
       by_contra hne
       have := hB.2.1 v hne
@@ -105,25 +127,8 @@ theorem chain_rad (hB : IsInvForm π B) :
       simp at this
     rw [this]
     exact zero_mem _
-  | d + 1, hd, v, hv => by
-    have level : ∀ j (hj : j + 2 ≤ N),
-        Lvl k ψ π (N - 2 - j) (by omega) (j : ℝ) (chain hUD hψc hψ1 π hs B j) := by
-      intro j
-      induction j with
-      | zero =>
-        intro hj
-        rw [chain_zero]
-        refine ⟨isPsd_of_inv π B hB, kills_congr (a := N) (by omega) ?_, ?_⟩
-        · intro v hv w
-          rw [twKer_derUnip_self ψ π] at hv
-          rw [(Submodule.mem_bot ℂ).1 hv]
-          simp
-        · intro p _ v w
-          simp [hB.2.2]
-      | succ j ih =>
-        intro hj
-        obtain ⟨-, hP, hK, hM, -⟩ := chain_succ hUD hψc hψ1 π hs B j (by omega) (ih (by omega))
-        exact ⟨hP, kills_congr (by omega) hK, mirEq_congr (by omega) (by push_cast; ring) hM⟩
+  | succ d ih =>
+    intro hd v hv
     have hL := level d (by omega)
     obtain ⟨-, -, -, -, hR⟩ := chain_succ hUD hψc hψ1 π hs B d (by omega) hL
     have hmem := hR v hv
@@ -136,7 +141,7 @@ theorem chain_rad (hB : IsInvForm π B) :
       rw [LinearMap.mem_ker] at hx
       rw [hx]
       rfl
-    have hK := chain_rad hB d (by omega) x hx0
+    have hK := ih (by omega) x hx0
     rw [lvlChar_def] at hK ⊢
     exact twKer_derUnip_le ψ π (a := N - d) (b := N - (d + 1)) (x := N - d - 1) (y := N - (d + 1) - 1)
       (by omega) (by omega) (by omega) hK

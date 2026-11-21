@@ -93,9 +93,10 @@ theorem lowScal_mem_unitary {d a : ℕ} {t : ℂ} (ht : ‖t‖ = 1) : lowScal d
   rw [lowScal, Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
     ← Matrix.diagonal_one]
   congr 1
+  funext i
   by_cases hi : (i : ℕ) < a
   · simp [hi]
-  · simp only [hi, if_false, RCLike.star_def]
+  · simp only [Pi.star_apply, hi, if_false, RCLike.star_def]
     rw [Complex.conj_mul', ht]; simp
 
 theorem rowSub_lowScal_zero_mem {a d : ℕ} (S : Submodule ℂ (Pol ι d a))

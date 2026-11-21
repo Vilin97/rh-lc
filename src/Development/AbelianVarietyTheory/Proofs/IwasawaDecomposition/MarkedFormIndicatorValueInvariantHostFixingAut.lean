@@ -83,8 +83,12 @@ def twForm (σ : 𝓞 E ≃+* 𝓞 E) (n : ℕ) :
     LinearMap.BilinForm ℤ (Fin n → 𝓞 E) ≃+ LinearMap.BilinForm ℤ (Fin n → 𝓞 E) where
   toFun β := β.compl₁₂ (twPi σ n).toIntLinearEquiv.toLinearMap (twPi σ n).toIntLinearEquiv.toLinearMap
   invFun β := β.compl₁₂ (twPi σ.symm n).toIntLinearEquiv.toLinearMap (twPi σ.symm n).toIntLinearEquiv.toLinearMap
-  left_inv β := LinearMap.ext₂ fun a b => by simp
-  right_inv β := LinearMap.ext₂ fun a b => by simp
+  left_inv β := LinearMap.ext₂ fun a b => by
+    change β (fun j => σ (σ.symm (a j))) (fun j => σ (σ.symm (b j))) = β a b
+    simp only [RingEquiv.apply_symm_apply]
+  right_inv β := LinearMap.ext₂ fun a b => by
+    change β (fun j => σ.symm (σ (a j))) (fun j => σ.symm (σ (b j))) = β a b
+    simp only [RingEquiv.symm_apply_apply]
   map_add' _ _ := LinearMap.ext₂ fun a b => by simp
 
 @[simp] theorem twForm_apply (σ : 𝓞 E ≃+* 𝓞 E) (n : ℕ) (β : LinearMap.BilinForm ℤ (Fin n → 𝓞 E)) (a b : Fin n → 𝓞 E) :

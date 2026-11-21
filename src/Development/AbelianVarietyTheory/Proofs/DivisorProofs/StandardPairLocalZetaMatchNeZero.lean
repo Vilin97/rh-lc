@@ -328,60 +328,61 @@ theorem GlobalTheory.StdPairMatch.bigZetaIntegral_stdA_eq_smallZetaIntegral_stdB
       GlobalTheory.SplitFlip.bigP (GlobalTheory.SplitFlip.haarVol (GlobalTheory.SplitWeil.KO k (Fin a))) ϖ finSumFinEquiv ν β (stdA ν ϖ c a a') =
         GlobalTheory.SplitFlip.smallP (GlobalTheory.SplitFlip.haarVol (GlobalTheory.SplitWeil.KO k (Fin a'))) finSumFinEquiv ν α (stdB ν ϖ c a a') ∧
       GlobalTheory.SplitFlip.bigP (GlobalTheory.SplitFlip.haarVol (GlobalTheory.SplitWeil.KO k (Fin a))) ϖ finSumFinEquiv ν β (stdA ν ϖ c a a') ≠ 0 := by
-  intro k _ _ _ _ _ _ α β ν ϖ c m a a' hϖ hν _ _ _ _ _ _
-  have key : ∀ h : GL (Fin (a + a')) k,
-      bigP (haarVol (KO k (Fin a))) ϖ finSumFinEquiv ν β (stdA ν ϖ c a a') h =
-        smallP (haarVol (KO k (Fin a'))) finSumFinEquiv ν α (stdB ν ϖ c a a') h := by
-    intro h
-    rw [bigZetaIntegral_eq, smallP]
-    have hJ := det_mul_det_blk (k := k) (a := a) (a' := a') h
-    have hO := blk_orth (k := k) (a := a) (a' := a') h
-    set X := X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ _) * (invT h).val with hX
-    set Y := Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ _) * h.val with hY
-    by_cases hD : (blk₂ Y).det = 0
-    · have hP : (blk₁ X).det = 0 := by
-        rw [hD] at hJ; exact (mul_eq_zero.1 hJ).resolve_left (Units.ne_zero _)
-      rw [bigF_stdA_of_det_eq_zero _ _ _ hP, smallF_stdB_of_det_eq_zero _ _ _ hD]
-      simp
-    · have hP : (blk₁ X).det ≠ 0 := fun h0 => hD (by rw [← hJ, h0, mul_zero])
-      set g₀ := Matrix.GeneralLinearGroup.mkOfDetNeZero (blk₁ X) hP with hg₀
-      set g₁ := Matrix.GeneralLinearGroup.mkOfDetNeZero (blk₂ Y) hD with hg₁
-      rw [bigF_stdA hϖ c (g₀ := g₀) rfl, smallF_stdB c (g₀ := g₁) rfl]
-      have hrel := inv_mul_blk hO (g₀ := g₀) (g₁ := g₁) rfl rfl
-      have hcond : (∀ i j, ((g₀⁻¹).val * blk₂ X) i j ∈ cball (ϖ ^ c)) ↔
-          (∀ i j, ((g₁⁻¹).val * blk₁ Y) i j ∈ cball (ϖ ^ c)) := by
-        rw [hrel]
-        constructor
-        · intro H i j
-          rw [Matrix.neg_apply, Matrix.transpose_apply]
-          exact neg_mem_cball (H j i)
-        · intro H i j
-          have := neg_mem_cball (H j i)
-          rwa [Matrix.neg_apply, Matrix.transpose_apply, neg_neg] at this
-      rw [if_congr hcond rfl rfl]
-      have hdet : gdet g₁ = gdet h * gdet g₀ := Units.ext (by
-        simp only [Units.val_mul, Matrix.GeneralLinearGroup.val_det_apply, hg₀, hg₁,
-          Matrix.GeneralLinearGroup.val_mkOfDetNeZero]
-        exact hJ.symm)
-      rw [hdet, map_mul, apow_mul]
-      set I : ℂ := if ∀ (i : Fin a') (j : Fin a), ((g₁⁻¹).val * blk₁ Y) i j ∈ cball (ϖ ^ c) then 1 else 0 with hI
-      have eA : apow (gdet h) ((Fintype.card (Fin a') : ℂ) / 2) *
-          apow (gdet h) (-(Fintype.card (Fin (a + a')) : ℂ) / 2) = apow (gdet h) (-(a : ℂ) / 2) := by
-        rw [← apow_add]; congr 1; simp only [Fintype.card_fin]; push_cast; ring
-      have eN : (α (gdet h) : ℂ) = (ν (gdet h) : ℂ) * (β (gdet h) : ℂ) := by
-        rw [hν, ← Units.val_mul, MonoidHom.div_apply, div_mul_cancel]
-      have hx : (ν (gdet h) : ℂ) * (((ν (gdet h))⁻¹ : ℂˣ) : ℂ) = 1 := by
-        rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
-      rw [eN]
-      simp only [_root_.mul_inv_rev, Units.val_mul]
-      linear_combination (-(β (gdet h) : ℂ) * (((ν (gdet g₀))⁻¹ : ℂˣ) : ℂ) *
-          apow (gdet g₀) (-(Fintype.card (Fin (a + a')) : ℂ) / 2) * I * (ν (gdet h) : ℂ) *
-          (((ν (gdet h))⁻¹ : ℂˣ) : ℂ)) * eA +
-        (-(β (gdet h) : ℂ) * (((ν (gdet g₀))⁻¹ : ℂˣ) : ℂ) *
-          apow (gdet g₀) (-(Fintype.card (Fin (a + a')) : ℂ) / 2) * I * apow (gdet h) (-(a : ℂ) / 2)) * hx
-  refine ⟨funext key, fun H => ?_⟩
-  have h1 := congrFun H 1
-  rw [bigZetaIntegral_eq, map_one, Units.val_one, Matrix.mul_one,
-    bigF_stdA hϖ c (g₀ := 1) (by rw [Units.val_one, matrixFirstColumnBlock_standardFrame_eq_one]), matrixLastColumnBlock_standardFrame_eq_zero] at h1
-  have h0 : (0 : k) ∈ cball (ϖ ^ c) := by simp [cball]
-  simp [h0] at h1
+  open GlobalTheory.SplitFlip GlobalTheory.SplitWeil Matrix GlobalTheory.StdPairMatch in
+    intro k _ _ _ _ _ _ α β ν ϖ c m a a' hϖ hν _ _ _ _ _ _
+    have key : ∀ h : GL (Fin (a + a')) k,
+        bigP (haarVol (KO k (Fin a))) ϖ finSumFinEquiv ν β (stdA ν ϖ c a a') h =
+          smallP (haarVol (KO k (Fin a'))) finSumFinEquiv ν α (stdB ν ϖ c a a') h := by
+      intro h
+      rw [bigZetaIntegral_eq, smallP]
+      have hJ := det_mul_det_blk (k := k) (a := a) (a' := a') h
+      have hO := blk_orth (k := k) (a := a) (a' := a') h
+      set X := X0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ _) * (invT h).val with hX
+      set Y := Y0 k (finSumFinEquiv : Fin a ⊕ Fin a' ≃ _) * h.val with hY
+      by_cases hD : (blk₂ Y).det = 0
+      · have hP : (blk₁ X).det = 0 := by
+          rw [hD] at hJ; exact (mul_eq_zero.1 hJ).resolve_left (Units.ne_zero _)
+        rw [bigF_stdA_of_det_eq_zero _ _ _ hP, smallF_stdB_of_det_eq_zero _ _ _ hD]
+        simp
+      · have hP : (blk₁ X).det ≠ 0 := fun h0 => hD (by rw [← hJ, h0, mul_zero])
+        set g₀ := Matrix.GeneralLinearGroup.mkOfDetNeZero (blk₁ X) hP with hg₀
+        set g₁ := Matrix.GeneralLinearGroup.mkOfDetNeZero (blk₂ Y) hD with hg₁
+        rw [bigF_stdA hϖ c (g₀ := g₀) rfl, smallF_stdB c (g₀ := g₁) rfl]
+        have hrel := inv_mul_blk hO (g₀ := g₀) (g₁ := g₁) rfl rfl
+        have hcond : (∀ i j, ((g₀⁻¹).val * blk₂ X) i j ∈ cball (ϖ ^ c)) ↔
+            (∀ i j, ((g₁⁻¹).val * blk₁ Y) i j ∈ cball (ϖ ^ c)) := by
+          rw [hrel]
+          constructor
+          · intro H i j
+            rw [Matrix.neg_apply, Matrix.transpose_apply]
+            exact neg_mem_cball (H j i)
+          · intro H i j
+            have := neg_mem_cball (H j i)
+            rwa [Matrix.neg_apply, Matrix.transpose_apply, neg_neg] at this
+        rw [if_congr hcond rfl rfl]
+        have hdet : gdet g₁ = gdet h * gdet g₀ := Units.ext (by
+          simp only [Units.val_mul, Matrix.GeneralLinearGroup.val_det_apply, hg₀, hg₁,
+            Matrix.GeneralLinearGroup.val_mkOfDetNeZero]
+          exact hJ.symm)
+        rw [hdet, map_mul, apow_mul]
+        set I : ℂ := if ∀ (i : Fin a') (j : Fin a), ((g₁⁻¹).val * blk₁ Y) i j ∈ cball (ϖ ^ c) then 1 else 0 with hI
+        have eA : apow (gdet h) ((Fintype.card (Fin a') : ℂ) / 2) *
+            apow (gdet h) (-(Fintype.card (Fin (a + a')) : ℂ) / 2) = apow (gdet h) (-(a : ℂ) / 2) := by
+          rw [← apow_add]; congr 1; simp only [Fintype.card_fin]; push_cast; ring
+        have eN : (α (gdet h) : ℂ) = (ν (gdet h) : ℂ) * (β (gdet h) : ℂ) := by
+          rw [hν, ← Units.val_mul, MonoidHom.div_apply, div_mul_cancel]
+        have hx : (ν (gdet h) : ℂ) * (((ν (gdet h))⁻¹ : ℂˣ) : ℂ) = 1 := by
+          rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
+        rw [eN]
+        simp only [_root_.mul_inv_rev, Units.val_mul]
+        linear_combination (-(β (gdet h) : ℂ) * (((ν (gdet g₀))⁻¹ : ℂˣ) : ℂ) *
+            apow (gdet g₀) (-(Fintype.card (Fin (a + a')) : ℂ) / 2) * I * (ν (gdet h) : ℂ) *
+            (((ν (gdet h))⁻¹ : ℂˣ) : ℂ)) * eA +
+          (-(β (gdet h) : ℂ) * (((ν (gdet g₀))⁻¹ : ℂˣ) : ℂ) *
+            apow (gdet g₀) (-(Fintype.card (Fin (a + a')) : ℂ) / 2) * I * apow (gdet h) (-(a : ℂ) / 2)) * hx
+    refine ⟨funext key, fun H => ?_⟩
+    have h1 := congrFun H 1
+    rw [bigZetaIntegral_eq, map_one, Units.val_one, Matrix.mul_one,
+      bigF_stdA hϖ c (g₀ := 1) (by rw [Units.val_one, matrixFirstColumnBlock_standardFrame_eq_one]), matrixLastColumnBlock_standardFrame_eq_zero] at h1
+    have h0 : (0 : k) ∈ cball (ϖ ^ c) := by simp [cball]
+    simp [h0] at h1

@@ -324,7 +324,17 @@ theorem readsAs_one (fw : FWTie T Rl.toRealDat κ v₀) (hev : fw.Evaluates) {j 
   have hres : res T (sg0 D A3.A) = T.σ₀ := by
     rw [show sg0 D A3.A = D.what₂.embLL from sgAt_mk _ Rl.hv0, res_embLL T fw.alg_eq fw.laws.pins.2.2.1]
   have hV' : T.V ((j : ℕ) + 1) (res T (sg0 D A3.A)) = Wc D j := by rw [hres]; exact hV
-  obtain ⟨x, hx⟩ := exists_evW_eq_phiC YS fw hev j (hres ▸ T.toCore.good_σ₀) hV' f
+  have hex : ∃ x : NX.FmK S ((j : ℕ) + 1), evW YS v₀ j (Subtype.val x) =
+      phiC T hV' (wtA (κ j)) (f : T.R ((j : ℕ) + 1)) := by
+    have hx : (YS.fi j).e.symm ((fw.e j f : (Rl.FW j).WK) : Fin (Rl.nW j) → D.what₂.LL) ∈ (S.A ((j : ℕ) + 1)).WK := by
+      refine ((YS.fi j).wk _).2 ?_
+      rw [LinearEquiv.apply_symm_apply]
+      exact (fw.e j f).2
+    refine ⟨⟨_, hx⟩, Eq.trans ?_ (hev j (sg0 D A3.A) (hres ▸ T.toCore.good_σ₀) hV' f)⟩
+    simp only [evW, AddMonoidHom.coe_mk, ZeroHom.coe_mk]
+    rw [LinearEquiv.apply_symm_apply]
+    rfl
+  obtain ⟨x, hx⟩ := hex
   refine ⟨x, funext fun g => ?_⟩
   rw [one_smul, hx]
   exact (RatExpand.castDict_phiJ hres hV' hV _ _ g).symm

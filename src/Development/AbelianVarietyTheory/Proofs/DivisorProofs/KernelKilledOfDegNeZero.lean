@@ -33,13 +33,13 @@ theorem eq_one_of_coprime {A B : AbVar K} (f : A ⟶ B) (hf : IsIsogeny f) (m : 
   obtain ⟨C, q, i, hq, hi, hqi⟩ := GlobalTheory.T.exists_factorisation_through_abelianSubvariety K A (prod B A) (prodLift f ((m : ℤ) • 𝟙 A))
   have h1 : q ≫ (i ≫ prodFst B A) = f := by
     rw [← Category.assoc, hqi]
-    apply AbVar.hom_ext
-    simp [prodLift, prodFst]
+    apply Subtype.ext
+    change (prodLift f ((m : ℤ) • 𝟙 A)).hom ≫ (prodFst B A).hom = f.hom
     exact lift_fst _ _
   have h2 : q ≫ (i ≫ prodSnd B A) = (m : ℤ) • 𝟙 A := by
     rw [← Category.assoc, hqi]
-    apply AbVar.hom_ext
-    simp [prodLift, prodSnd]
+    apply Subtype.ext
+    change (prodLift f ((m : ℤ) • 𝟙 A)).hom ≫ (prodSnd B A).hom = ((m : ℤ) • 𝟙 A).hom
     exact lift_snd _ _
   have hfin : Finite (ptMap f).ker := (isFinite_iff_finite_ker K A B f).1 hf.1
   have hqfin : IsFinite q.hom.left := by

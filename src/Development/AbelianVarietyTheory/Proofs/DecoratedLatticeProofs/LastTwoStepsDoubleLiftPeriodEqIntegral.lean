@@ -47,10 +47,11 @@ theorem biTheta_of_maps {ψ : AddChar (AF D.host.F) ℂ} {V₀ A S X T : HSp D} 
     (hs : ∀ u v u' v', symplOH S T (p v) (p v') + symplOH V₀ S (a u + b v) (a u' + b v') =
       symplOH A S u u' + symplOH S X v v')
     {Ξ : WO V₀ S → ℂ} {Φ : WO S T → ℂ} (hΞ : IsThetaFunO ψ V₀ S Ξ) (hΦ : IsThetaFunO ψ S T Φ) :
-    IsBiTheta ψ A S X fun u v => Φ (p v) * Ξ (a u + b v) where
-  cont := (hΦ.cont.comp (cp.comp continuous_snd)).mul
-    (hΞ.cont.comp ((ca.comp continuous_fst).add (cb.comp continuous_snd)))
-  smooth n L L' hL hL' h0 h0' u v := by
+    IsBiTheta ψ A S X (fun u v => Φ (p v) * Ξ (a u + b v)) := by
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+  · exact (hΦ.cont.comp (cp.comp continuous_snd)).mul
+      (hΞ.cont.comp ((ca.comp continuous_fst).add (cb.comp continuous_snd)))
+  · intro n L L' hL hL' h0 h0' u v
     have h1 := hΦ.smooth n (p.comp L') (cp.comp hL') (fun t => fp _ (h0' t)) (p v)
     have h2 := hΞ.smooth n (a.comp L + b.comp L') ((ca.comp hL).add (cb.comp hL')) (fun t => by
       show (a (L t) + b (L' t)).map (finPart D) = 0
@@ -61,14 +62,14 @@ theorem biTheta_of_maps {ψ : AddChar (AF D.host.F) ℂ} {V₀ A S X T : HSp D} 
       simp only [map_add (f := _), AddMonoidHom.add_apply, AddMonoidHom.comp_apply, add_add_add_comm (a u) (a (L t))]
     rw [e]
     exact h1.mul h2
-  quasiL γ u v := by
+  · intro γ u v
     obtain ⟨γ', e⟩ := ra γ
     have h := hs (ratW S A γ) 0 u v
     simp only [map_zero, add_zero, sympl_zero_l, zero_add] at h
     show Φ (p v) * Ξ (a (ratW S A γ + u) + b v) = _ * (Φ (p v) * Ξ (a u + b v))
     rw [map_add (f := _), add_assoc, ← h, e, hΞ.quasi]
     ring
-  quasiR γ u v := by
+  · intro γ u v
     obtain ⟨γ', e⟩ := rb γ
     obtain ⟨γ'', e'⟩ := rp γ
     have h := hs 0 (ratW X S γ) u v
@@ -76,16 +77,14 @@ theorem biTheta_of_maps {ψ : AddChar (AF D.host.F) ℂ} {V₀ A S X T : HSp D} 
     show Φ (p (ratW X S γ + v)) * Ξ (a u + b (ratW X S γ + v)) = _ * (Φ (p v) * Ξ (a u + b v))
     rw [map_add (f := _), map_add (f := _), add_left_comm, ← h, e, e', hΞ.quasi, hΦ.quasi, neg_add, AddChar.map_add_eq_mul]
     ring
-  levL := by
-    obtain ⟨U, hU, k⟩ := hΞ.level
+  · obtain ⟨U, hU, k⟩ := hΞ.level
     refine ⟨U.comap a, hU.preimage ca, fun x hx h0 v => funext fun u => ?_⟩
     have e := congrFun (k (a x) hx (ia x h0)) (a u + b v)
     have h := hs u v x 0
     simp only [map_zero, add_zero, sympl_zero_r, zero_add] at h
     simp only [heisO] at e ⊢
     rw [← h, map_add (f := _), add_right_comm, mul_left_comm, e]
-  levR := by
-    obtain ⟨U, hU, k⟩ := hΞ.level
+  · obtain ⟨U, hU, k⟩ := hΞ.level
     obtain ⟨U', hU', k'⟩ := hΦ.level
     refine ⟨U.comap b ⊓ U'.comap p, (hU.preimage cb).inter (hU'.preimage cp), fun x hx h0 u => funext fun v => ?_⟩
     have e := congrFun (k (b x) hx.1 (ib x h0)) (a u + b v)

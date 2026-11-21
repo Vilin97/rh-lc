@@ -119,6 +119,8 @@ theorem thetaInner_smul_right (a : ℂ) (f g : WO S T → ℂ) : thetaIP μ 𝓕
   unfold thetaIP
   rw [← integral_const_mul]
   congr 1
+  funext w
+  simp only [Pi.smul_apply, smul_eq_mul]
   ring
 
 theorem thetaInner_re_pos (hψ : IsStdChar D ψ (-1)) (hcv : IsCovolOne (ratL T S) μ 𝓕) {f : WO S T → ℂ}

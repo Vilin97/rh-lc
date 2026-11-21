@@ -195,6 +195,10 @@ theorem exists_split_coords : ∀ (F E : Type) [Field F] [NumberField F] [Field 
     · rw [Matrix.map_sub _ (map_sub _), Matrix.map_add _ (map_add _), hTc, hMc, add_zero, hco, Matrix.mul_neg, Matrix.neg_mul, neg_neg,
         Matrix.mul_assoc, Matrix.mul_assoc, Matrix.mul_nonsing_inv _ hQ, Matrix.mul_one, ← Matrix.mul_assoc,
         Matrix.nonsing_inv_mul _ hP, Matrix.one_mul, sub_self]
-  · rw [GlobalTheory.T.local_lattice_hermitian_skew hcm v t G.V'.J G.W.J hTr.geo.hV'.herm hTr.geo.hW.skew x u hx, hco, hco]
+  · have h := GlobalTheory.T.local_lattice_hermitian_skew hcm v t G.V'.J G.W.J hTr.geo.hV'.herm hTr.geo.hW.skew x u hx
+    dsimp [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA,
+      GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM] at h
+    rw [hco, hco]
+    exact h
 
 end GlobalTheory.LinBarCoords

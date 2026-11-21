@@ -170,30 +170,33 @@ theorem isEquivariant : IsEquivariant ρ ρ ε := fun a => by
 
 theorem comp_act (a : O) : ε ≫ act ρ a = σ a • ε := (h.isEquivariant a).symm.trans (h.act_comp a)
 
-theorem dual : IsEigenProj (dualAct ρ) σ (GlobalTheory.CompanionTheory.Ar.dualMap ε) D where
-  act_comp a := by rw [act_dualAct, ← dualMap_comp, h.comp_act, dualMap_smul]
-  exists_sum := by
-    obtain ⟨n, c, b, rfl, e⟩ := h.exists_sum
+theorem dual : IsEigenProj (dualAct ρ) σ (GlobalTheory.CompanionTheory.Ar.dualMap ε) D := by
+  constructor
+  · intro a
+    rw [act_dualAct, ← dualMap_comp, h.comp_act, dualMap_smul]
+  · obtain ⟨n, c, b, rfl, e⟩ := h.exists_sum
     refine ⟨n, c, b, (map_sum (AddMonoidHom.mk' (fun φ : F ⟶ F => GlobalTheory.CompanionTheory.Ar.dualMap φ) dualMap_add) _ _).trans
       (Finset.sum_congr rfl fun i _ => dualMap_smul _ _), e⟩
 
 theorem pullback (f : Y ⟶ X) : IsEigenProj (pullAct ρ f) (f.appTop.hom.comp σ)
-    ((Scheme.Modules.pullback f).map ε) (f.appTop D) where
-  act_comp a := by rw [act_pullAct, ← Functor.map_comp, h.act_comp, pullback_map_smul]; rfl
-  exists_sum := by
-    obtain ⟨n, c, b, rfl, rfl⟩ := h.exists_sum
+    ((Scheme.Modules.pullback f).map ε) (f.appTop D) := by
+  constructor
+  · intro a
+    rw [act_pullAct, ← Functor.map_comp, h.act_comp, pullback_map_smul]
+    rfl
+  · obtain ⟨n, c, b, rfl, rfl⟩ := h.exists_sum
     refine ⟨n, fun i => f.appTop (c i), b, ?_, by simp⟩
     set_option synthInstance.maxHeartbeats 100000 in
       rw [Functor.map_sum]
     exact Finset.sum_congr rfl fun i _ => pullback_map_smul _ _ _
 
 theorem of_iso {ρ' : O →+* End G} {φ : F ≅ G} (hφ : IsEquivariant ρ ρ' φ.hom) :
-    IsEigenProj ρ' σ (φ.inv ≫ ε ≫ φ.hom) D where
-  act_comp a := by
+    IsEigenProj ρ' σ (φ.inv ≫ ε ≫ φ.hom) D := by
+  constructor
+  · intro a
     rw [reassoc_of% isEquivariant_inv hφ a, reassoc_of% h.act_comp a, Linear.smul_comp,
       Linear.comp_smul]
-  exists_sum := by
-    obtain ⟨n, c, b, rfl, e⟩ := h.exists_sum
+  · obtain ⟨n, c, b, rfl, e⟩ := h.exists_sum
     refine ⟨n, c, b, ?_, e⟩
     simp only [Preadditive.comp_sum, Preadditive.sum_comp, Linear.comp_smul, Linear.smul_comp,
       hφ _, Iso.inv_hom_id_assoc]
@@ -249,13 +252,14 @@ theorem act_comp_of_X {ρ : ℤ[X] →+* End F} {φ : F ⟶ G} (h : act ρ Polyn
   rfl
 
 theorem isEigenProj_twoAct :
-    IsEigenProj (twoAct F G) (zeroChar X) (2 • (biprod.fst ≫ biprod.inl)) 2 where
-  act_comp := act_comp_of_X (by simp [act_twoAct_X])
-  exists_sum := ⟨2, ![2, -1], ![1, Polynomial.X], by
+    IsEigenProj (twoAct F G) (zeroChar X) (2 • (biprod.fst ≫ biprod.inl)) 2 := by
+  constructor
+  · exact act_comp_of_X (by simp [act_twoAct_X])
+  · refine ⟨2, ![2, -1], ![1, Polynomial.X], ?_, by simp [zeroChar]⟩
     have e : act (twoAct F G) 1 = 𝟙 _ := congrArg End.asHom (map_one (twoAct F G))
     simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one, act_twoAct_X, e,
       two_smul, neg_smul, one_smul, ← biprod.total]
-    abel, by simp [zeroChar]⟩
+    abel
 
 def eigenImTwoIso [Mono (cartierDualToBidual F)] (h : IsRegularFn (2 : Γ(X, ⊤))) :
     eigenIm (twoAct F G) (zeroChar X) ≅ F where

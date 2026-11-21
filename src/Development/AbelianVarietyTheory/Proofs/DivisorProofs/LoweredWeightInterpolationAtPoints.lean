@@ -244,6 +244,8 @@ theorem prod_mem_SS {r : ℕ} (X : Data E r) (Xa : ArchInM X) (Fl : FlatM X Xa) 
       abel
     rw [hw] at h
     convert h using 1
+    funext x
+    simp only [Pi.mul_apply, Pi.pow_apply, Finset.prod_apply, monoM, hn', pow_succ]
     ring
   · have hsum : ∑ q, α q = Xa.T := by omega
     obtain ⟨k, hk⟩ : ∃ k, α k ≠ 0 := by
@@ -365,6 +367,8 @@ theorem lowered_interp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     have hsm := (siegelSpaceAlgebra_holds r X.toData (Xa.Fp + Xa.T • Xa.L - deMul X.Ψ r X.p0 s)
       (Xa.Fp + Xa.T • Xa.L - deMul X.Ψ r X.p0 s) 0).1.2.2 (Q (Fl.xs j))⁻¹ _ hp
     convert hsm using 1
+    funext x
+    simp only [Pi.smul_apply, smul_eq_mul]
     ring
 
 end GlobalTheory.LowerInterp

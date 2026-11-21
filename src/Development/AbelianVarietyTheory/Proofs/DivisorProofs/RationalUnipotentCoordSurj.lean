@@ -122,7 +122,7 @@ theorem GlobalTheory.ThK.UnipRat.exists_rat_unip_coA : ∀ (F E : Type) [Field F
       funext i
       have := congrFun hx0 i
       simpa using this
-    have hpos := (hcart₁ w).2.2 _ hx
+    have hpos := (hcart₁.cartan w).2.2 _ hx
     have hz : (Complex.I • Y₁.J.map τ) *ᵥ star (fun i => star (τ (v i))) = 0 := by
       have hs : star (fun i => star (τ (v i))) = fun i => τ (v i) := funext fun i => by simp
       rw [hs, smul_mulVec]

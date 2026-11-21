@@ -41,7 +41,10 @@ theorem f_mul_N_le_b (P : ParameterChoice' D large₂) (h4 : 4 * placeRankTwoOne
   have hk : 5 ≤ D.R.k := by have := D.R.m_add_three_le_k; have := D.R.two_le_m; omega
   have hk' : (1 : ℝ) ≤ D.R.k := by exact_mod_cast (by omega : 1 ≤ D.R.k)
   have hf : (0 : ℝ) < D.R.f := by
-    have : 0 < D.R.f := by unfold Ranks.f Ranks.n; positivity
+    have : 0 < D.R.f := by
+      have hn : 0 < D.R.n := D.R.ord_pos
+      unfold Ranks.f
+      omega
     exact_mod_cast this
   have ht := large₂.t_win.1
   have he := large₂.etaSz_pos

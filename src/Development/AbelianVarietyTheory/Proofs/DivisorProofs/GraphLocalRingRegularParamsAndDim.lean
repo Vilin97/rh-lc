@@ -35,18 +35,14 @@ theorem ennreal_volume_ratio_step_cancel (d : WithBot ℕ∞) (m n : ℕ) (hd : 
     rfl
 
 theorem isLocModel_top {K : Type} [Field K] [Algebra ℂ K] [Algebra.EssFiniteType ℂ K] :
-    IsLocModel (algebraMap ℂ K) (⊤ : Subring K) where
-  const_mem _ := Subring.mem_top _
-  isLocalRing := IsLocalRing.of_surjective' (Subring.topEquiv (R := K)).symm.toRingHom
-    (Subring.topEquiv (R := K)).symm.surjective
-  essFiniteType := by
-    letI : Algebra ℂ (⊤ : Subring K) :=
-      ((algebraMap ℂ K).codRestrict (⊤ : Subring K) fun _ => Subring.mem_top _).toAlgebra
-    show Algebra.EssFiniteType ℂ (⊤ : Subring K)
-    exact Algebra.EssFiniteType.of_surjective
-      { (Subring.topEquiv (R := K)).symm.toRingHom with commutes' := fun _ => rfl }
-      (Subring.topEquiv (R := K)).symm.surjective
-  frac f := ⟨f, Subring.mem_top _, 1, Subring.mem_top _, one_ne_zero, mul_one f⟩
+    IsLocModel (algebraMap ℂ K) (⊤ : Subring K) :=
+  { const_mem := fun _ => Subring.mem_top _
+    isLocalRing := (Subring.topEquiv (R := K)).symm.isLocalRing
+    essFiniteType := by
+      let e := (Subring.topEquiv (R := K)).symm
+      exact RingHom.EssFiniteType.comp (RingHom.essFiniteType_algebraMap.mpr inferInstance)
+        (RingHom.FiniteType.of_surjective e.toRingHom e.surjective).essFiniteType
+    frac := fun f => ⟨f, Subring.mem_top _, 1, Subring.mem_top _, one_ne_zero, mul_one f⟩ }
 
 variable {K κ' : Type} [Field K] [Field κ'] [Algebra ℂ K] [Algebra ℂ κ']
   (L : Type) [Field L] [Algebra (K ⊗[ℂ] κ') L] [IsFractionRing (K ⊗[ℂ] κ') L]

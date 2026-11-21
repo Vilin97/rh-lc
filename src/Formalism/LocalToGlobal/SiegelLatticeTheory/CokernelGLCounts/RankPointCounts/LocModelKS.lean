@@ -389,16 +389,21 @@ theorem gd_elt {δ : ∀ p : PlF D, (D.s.atP p).Fp} {M : ∀ p : PlF D, Loc.Mode
 
 theorem modBlocks_low {δ : ∀ p : PlF D, (D.s.atP p).Fp} (T T' : ℕ) (p : PlF D) (hδ : δ p ≠ 0) :
     ∀ (a : ℕ) (l : List (D.host.E × ℕ)), a + (l.map Prod.snd).sum ≤ D.R.rS + 1 →
-      (∀ b ∈ l, b.1 ≠ 0 ∧ 1 ≤ b.2) → ∃ l', modBlocks (blkTop δ T T' p) a l = some l'
-  | a, [], _, _ => ⟨[], rfl⟩
-  | a, (t, s) :: rest, hle, hb => by
+      (∀ b ∈ l, b.1 ≠ 0 ∧ 1 ≤ b.2) → ∃ l', modBlocks (blkTop δ T T' p) a l = some l' := by
+  intro a l
+  revert a
+  induction l with
+  | nil => exact fun _ _ _ => ⟨[], rfl⟩
+  | cons head rest ih =>
+    intro a hle hb
+    obtain ⟨t, s⟩ := head
     simp only [List.map_cons, List.sum_cons] at hle
     have h1 := hb (t, s) List.mem_cons_self
     have hnt : ¬ (a + s - 1 = D.R.rS + 1 ∧ s = 1) := by omega
     have hu : IsUnit (blkTop δ T T' p a s t) := by
       rw [blkTop_nonTop δ T T' p hnt]
       exact (isUnit_ιE p h1.1).mul (isUnit_hF p hδ _ _)
-    obtain ⟨l', hl'⟩ := modBlocks_low T T' p hδ (a + s) rest (by omega) fun b hb' => hb b (List.mem_cons_of_mem _ hb')
+    obtain ⟨l', hl'⟩ := ih (a + s) (by omega) fun b hb' => hb b (List.mem_cons_of_mem _ hb')
     have hs0 : 0 < s := by omega
     have e : modBlocks (blkTop δ T T' p) a ((t, s) :: rest) = some ((hu.unit, ⟨s, hs0⟩) :: l') := by
       simp only [modBlocks]
@@ -526,13 +531,19 @@ theorem pf_det (hMN : ModNorm D) {δ : ∀ p : PlF D, (D.s.atP p).Fp}
       (∀ p, IsUnit (PI.SupportDatumW.blkDet (mapBlocks (blkTop δ T T' p) b l))) ∧
       (Function.mulSupport fun p =>
         A5.modK (M p).R (PI.SupportDatumW.blkDet (mapBlocks (blkTop δ T T' p) b l))).Finite ∧
-      ∏ᶠ p, A5.modK (M p).R (PI.SupportDatumW.blkDet (mapBlocks (blkTop δ T T' p) b l)) = (blkNr D b l)⁻¹
-  | b, [], _, _ => by
+      ∏ᶠ p, A5.modK (M p).R (PI.SupportDatumW.blkDet (mapBlocks (blkTop δ T T' p) b l)) = (blkNr D b l)⁻¹ := by
+  intro b l
+  revert b
+  induction l with
+  | nil =>
+    intro b _ _
     simp [mapBlocks, PI.SupportDatumW.blkDet, blkNr, Formalism.FourierDecayAlt.P.A5x5.modK_one]
-  | b, (t, s) :: rest, hle, hb => by
+  | cons head rest ih =>
+    intro b hle hb
+    obtain ⟨t, s⟩ := head
     simp only [List.map_cons, List.sum_cons] at hle
     have h1 := hb (t, s) List.mem_cons_self
-    obtain ⟨hu, hf, hp⟩ := pf_det hMN hA T T' (b + s) rest (by omega) fun x hx => hb x (List.mem_cons_of_mem _ hx)
+    obtain ⟨hu, hf, hp⟩ := ih (b + s) (by omega) fun x hx => hb x (List.mem_cons_of_mem _ hx)
     have hnt : ¬ (b + s - 1 = D.R.rS + 1 ∧ s = 1) := by omega
     have hc : ∀ p, blkTop δ T T' p b s t = (D.s.atP p).ιE t * PI.SupportDatumW.hF D δ p b s :=
       fun p => blkTop_nonTop δ T T' p hnt t

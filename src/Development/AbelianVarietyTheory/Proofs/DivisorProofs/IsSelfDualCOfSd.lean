@@ -140,7 +140,7 @@ variable {S T : HSp D}
 theorem isSelfDualC_of_sd {V : HSp D} (hV : V.gram = 1) {L : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)}
     (hL : Formalism.MainNotions.StandardLatticesGL3.SD D L) : IsSelfDualC V L := by
   have hL' : IsSDLat D.host.E V.rank L := hL
-  refine ⟨⟨hL'.1, hL'.2.1⟩, fun y => ?_⟩
+  refine ⟨Submodule.IsLattice.of_fg D.host.E hL'.1, fun y => ?_⟩
   rw [hL'.2.2 y]
   refine forall₂_congr fun x _ => ?_
   have e : ∑ i, ∑ j, star (x i) * V.gram i j * y j = stdH D.host.E V.rank x y := by

@@ -22,6 +22,6 @@ theorem main : ∀ D : D7, KillingConditions.CommutingEndomorphismCondition D �
   simp only [padicValInt.of_nat] at hP
   have hR := (Rat.cast_le (K := ℝ)).2 hP
   push_cast at hR
-  exact hR
+  simpa only [Nat.padicValNat_def] using hR
 
 end GlobalTheory.EtaPassage

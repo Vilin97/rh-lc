@@ -51,7 +51,7 @@ theorem log_r_add_three_le (D : D7) (L : ℝ) (hL : GlobalTheory.IndefiniteRowSi
   have hr : 6 ≤ D.R.r := by
     unfold Ranks.r; have := D.R.two_le_m; have := D.R.m_add_three_le_k; omega
   have hf : 2 ≤ D.R.f := by
-    unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega
+    unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) D.R.ord_pos; omega
   have hn : D.R.r ≤ D.R.nV := by unfold Ranks.nV; omega
   have hr' : (6 : ℝ) ≤ D.R.r := by exact_mod_cast hr
   have hf' : (2 : ℝ) ≤ D.R.f := by exact_mod_cast hf

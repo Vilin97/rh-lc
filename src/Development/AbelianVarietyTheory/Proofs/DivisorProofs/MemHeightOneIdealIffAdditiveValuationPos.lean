@@ -133,7 +133,7 @@ theorem tauPib_norm {D : D7} (X : ErrX D) (i : Fin 2) (τ : D.what₂.Tau) :
 
 theorem padic_log_le (p n : ℕ) (hp : p.Prime) : (padicValNat p n : ℝ) * Real.log p ≤ Real.log n := by
   rcases Nat.eq_zero_or_pos n with rfl | hn
-  · simp
+  · simp [Nat.padicValNat_def]
   · have h : p ^ padicValNat p n ≤ n := Nat.le_of_dvd hn (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
     rw [← Real.log_pow]
     apply Real.log_le_log

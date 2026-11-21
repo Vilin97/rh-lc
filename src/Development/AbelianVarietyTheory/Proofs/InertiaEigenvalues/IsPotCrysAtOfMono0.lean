@@ -174,7 +174,7 @@ theorem exists_halfChar (D : D7) : haveI := host_isCMField D.host; ∃ ξ : HCha
   refine ⟨ξ, h.unr, isCsd_ofChar_of_res _ _ (Or.inr h.res), isCsd_ofChar_of_res _ _ (Or.inr ⟨fun v k => ?_, fun w k => ?_⟩), fun τ => ?_⟩
   · have e1 := h.res.1 v k
     have e2 : (ξ⁻¹.resFin v) k = ((ξ.resFin v) k)⁻¹ := by
-      simp only [HChar.resFin, MonoidHom.finset_prod_apply, ← Finset.prod_inv_distrib]
+      simp only [HChar.resFin, MonoidHom.finsetProd_apply, ← Finset.prod_inv_distrib]
       rfl
     rw [e2, e1]
     unfold etaFin
@@ -183,7 +183,7 @@ theorem exists_halfChar (D : D7) : haveI := host_isCMField D.host; ∃ ξ : HCha
     · exact inv_one
   · have e1 := h.res.2 w k
     have e2 : (ξ⁻¹.resInf w) k = ((ξ.resInf w) k)⁻¹ := by
-      simp only [HChar.resInf, MonoidHom.finset_prod_apply, ← Finset.prod_inv_distrib]
+      simp only [HChar.resInf, MonoidHom.finsetProd_apply, ← Finset.prod_inv_distrib]
       rfl
     rw [e2, e1]
     unfold etaInf

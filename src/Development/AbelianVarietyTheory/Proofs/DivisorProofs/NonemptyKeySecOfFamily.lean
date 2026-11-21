@@ -60,7 +60,25 @@ theorem nonempty_keySec_of_family (E : Type) [Field E] [NumberField E] [IsCMFiel
     positivity
   obtain ⟨κ, k₁, k₂, -, k₃, -, k₄, -⟩ := GlobalTheory.KeyFamClosing.keyFam_one
   obtain ⟨hL, -, h, hA⟩ := evLaws_genFr_atlas E H Dw l Xo c
-  obtain ⟨v, hv⟩ := exists_chart_units k₁ k₂ k₄ e hpq h
+  have hchart : ∃ v : ∀ Z : Comp Xo c, (Om Z)ˣ, ∀ C : FChart h,
+      ∃ (Φ : FibKey Xo C.R C.y.x) (u : (C.R)ˣ), Tied e C.y.s C.y.u Φ ∧
+        GlobalTheory.KeyCl.IsValue κ Φ.key (u : C.R) ∧
+        ((u : C.R) : Om C.Z) = ((kch C.t ^ 4 * v C.Z : (Om C.Z)ˣ) : Om C.Z) := by
+    have hc : ∀ Z : Comp Xo c, CharZero (Om Z) := fun Z =>
+      charZero_of_injective_algebraMap (algebraMap c.F (Om Z)).injective
+    choose Ψ hΨ using fun Z : Comp Xo c => GlobalTheory.T.exists_universalTripleFibre_at_framedPoint E H Dw l Xo c g e (Om Z) (genFr h Z) hpq
+    refine ⟨fun Z => κ (Om Z) (Ψ Z).key, fun C => ?_⟩
+    haveI := C.sm
+    haveI : IsIntegrallyClosed C.R := isIntegrallyClosed_of_smooth c.F C.R
+    haveI : IsNoetherianRing C.R := Algebra.FiniteType.isNoetherianRing c.F C.R
+    haveI : CharZero C.R := charZero_of_injective_algebraMap (algebraMap c.F C.R).injective
+    obtain ⟨Φ, hΦ⟩ := GlobalTheory.T.exists_universalTripleFibre_at_framedPoint E H Dw l Xo c g e C.R C.y hpq
+    obtain ⟨Φ', hΦ'⟩ := GlobalTheory.T.exists_universalTripleFibre_at_framedPoint E H Dw l Xo c g e (Om C.Z) C.yg hpq
+    obtain ⟨u, hu⟩ := k₄ C.R Φ.key
+    refine ⟨Φ, u, hΦ, hu, ?_⟩
+    rw [← GlobalTheory.T.theta_key_rule_triangular_frame_change_fourth_power κ k₁ k₂ E H Dw l Xo c g e (Om C.Z) C.t _ _ (Ψ C.Z) Φ' C.bor (hΨ _) hΦ']
+    exact (hu (Om C.Z) _ _ (GlobalTheory.T.universal_triple_fibres_base_change_key_data E H Dw l Xo c g e _ _ C.R.val C.y C.yg Φ Φ' C.gen hΦ hΦ')).symm
+  obtain ⟨v, hv⟩ := hchart
   have hroot : ∀ C : FChart h, ∃ (a : c.F) (b : C.R), a ≠ 0 ∧
       ((kch C.t ^ 4 * v C.Z : (Om C.Z)ˣ) : Om C.Z) = a • (b : Om C.Z) ^ 4 := by
     intro C

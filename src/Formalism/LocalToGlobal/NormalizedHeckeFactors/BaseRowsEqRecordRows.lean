@@ -14,8 +14,6 @@ open Formalism.BasicNotions Formalism.MainNotions NumberField IsDedekindDomain M
 
 namespace Formalism.L2.N.ExtNRows3
 
-open Formalism.L2.N.ExtNRows
-
 open Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows
 
 variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotions.G.Inst D L} {Gl : MainNotions.G.LatInst D} {K : MainNotions.G.Consts} {Y : DivX D}
@@ -30,7 +28,7 @@ theorem finrank_Mj_eq_dW (P : RowSideFamily ex) (i : Fin D.R.m) :
 
 section Pin
 
-variable (T : TiedDataSK ex) (P : RowSideFamily ex) (hp : RowSideDetermined T P) (hL : RowsHoldLam3 P) (h : RowsHold0_3 P)
+variable (P : RowSideFamily ex) (h : RowsHold0_3 P)
 
 
 include h in

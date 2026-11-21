@@ -58,12 +58,12 @@ private theorem sqInt_fin (ha : 1 ≤ a) {r : ℝ} {φ : Sm E a} (h : IsSq r φ)
   · simp only [Pi.smul_apply, mul_assoc, h3]
 
 private theorem isSq_fin (ha : 1 ≤ a) {r : ℝ} (x : GL (Fin a) (Af E)) (φ : Sm E a) (h : IsSq r φ) :
-    IsSq r (act (.fin x) φ) where
-  left γ g := by
+    IsSq r (act (.fin x) φ) := by
+  refine { left := ?_, level := ?_, one := ?_, sq := ?_ }
+  · intro γ g
     change φ.1 (ratGL E a γ * g * finGL E a x) = φ.1 (g * finGL E a x)
     rw [mul_assoc, h.left]
-  level := by
-    have e : {k | act (.fin k) (act (.fin x) φ) = act (.fin x) φ} =
+  · have e : {k | act (.fin k) (act (.fin x) φ) = act (.fin x) φ} =
         (fun k => x⁻¹ * k * x) ⁻¹' {k | act (.fin k) φ = φ} := by
       ext k
       change finRep E a k (finRep E a x φ) = finRep E a x φ ↔ finRep E a (x⁻¹ * k * x) φ = φ
@@ -76,11 +76,10 @@ private theorem isSq_fin (ha : 1 ≤ a) {r : ℝ} (x : GL (Fin a) (Af E)) (φ : 
         rwa [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply] at this
     rw [e]
     exact h.level.preimage (by fun_prop)
-  one := by
-    have e : lie E a (oneL E a) (act (.fin x) φ) = act (.fin x) (lie E a (oneL E a) φ) :=
+  · have e : lie E a (oneL E a) (act (.fin x) φ) = act (.fin x) (lie E a (oneL E a) φ) :=
       LinearMap.congr_fun (lie_rt_fin _ x) φ
     rw [e, h.one, map_smul]
-  sq l := by
+  · intro l
     rw [prod_fin]
     exact sqInt_fin ha (prod_sq h l) x
 

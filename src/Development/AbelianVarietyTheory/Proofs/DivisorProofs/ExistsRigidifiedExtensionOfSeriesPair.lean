@@ -42,6 +42,7 @@ theorem exists_rigMap (p : ℕ) (k : Type) [Field k] (d : ℕ) (G : PDivGroup p 
     rw [this]
     exact Subtype.ext (funext fun n => (hz n).symm)
   have h2 : U w = u := Subtype.ext (funext fun n => (hu n).symm)
-  simp [h1, h2]
+  change G.rigMk (T s, U w) = G.rigMk (z, u)
+  exact congrArg G.rigMk (Prod.ext h1 h2)
 
 end GlobalTheory.Katz

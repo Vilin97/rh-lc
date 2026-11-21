@@ -60,7 +60,7 @@ theorem passl : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (l : ℕ)
     apply pow_succ_padicValNat_not_dvd (p := l) hD.ne'
     refine ⟨e, ?_⟩
     calc D = l ^ padicValNat l D * D' := hD'
-      _ = l ^ (padicValNat l D + 1) * e := by rw [he, pow_succ]; ring
+      _ = l ^ (multiplicity l D + 1) * e := by rw [he, ← Nat.padicValNat_def, pow_succ]; ring
   have hnat : ∀ n : ℕ, IsIntegral ℤ (n : E) := fun n => by
     simpa using (isIntegral_algebraMap (R := ℤ) (A := E) (x := (n : ℤ)))
   have hDE : (D : E) ≠ 0 := by exact_mod_cast hD.ne'
