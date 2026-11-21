@@ -112,7 +112,6 @@ theorem crd_add_smul_snd (X Z : Mx F E d.m d.n) (t : ℝ) (k : Fin d.m × Fin d.
 theorem realAd_zero : realAd F 0 = 0 := by
   unfold realAd
   rw [map_zero, map_zero, map_zero]
-  rfl
 
 def qL (R : RD d) (X Z : Mx F E d.m d.n) (t : ℝ) : ℝ :=
   ∑ w, ∑ a, ∑ i, ‖(((R.fr w)⁻¹).1 * d.cw w X) a i + (t : ℂ) * (((R.fr w)⁻¹).1 * d.cw w Z) a i‖ ^ 2

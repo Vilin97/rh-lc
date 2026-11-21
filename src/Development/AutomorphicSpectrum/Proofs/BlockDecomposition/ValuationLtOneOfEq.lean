@@ -168,7 +168,7 @@ variable {l : ℕ} [Fact l.Prime]
 local instance finDim (K : FinExt l) : FiniteDimensional ℚ_[l] ↥K.1 := K.2
 
 local instance valExt (K : FinExt l) : ValuativeExtension ↥K.1 (Om l) :=
-  ⟨fun a b => by rw [CyclNorms.vle_iff_norm_le, subfield_vle_iff_norm_le]; rfl⟩
+  ⟨fun {a b} => by rw [CyclNorms.vle_iff_norm_le, subfield_vle_iff_norm_le]; rfl⟩
 
 theorem mem_integer_iff (K : FinExt l) (x : ↥K.1) : x ∈ 𝒪[↥K.1] ↔ ‖(x : Om l)‖ ≤ 1 := by
   rw [integer_eq_normInteger K.1, mem_normInteger]
@@ -216,7 +216,9 @@ theorem map_ltSeries (K : FinExt l) {π : 𝒪[↥K.1]} (hπ : Irreducible π) :
     PowerSeries.map ((intEquiv K : ↥(OL K) ≃+* 𝒪[↥K.1]) : ↥(OL K) →+* 𝒪[↥K.1])
       (ltSeries ((intEquiv K).symm π)) = (ltPoly π : PowerSeries 𝒪[↥K.1]) := by
   rw [ltSeries, card_quot K hπ, ltPoly]
-  simp
+  simp only [RingHom.map_add, RingHom.map_mul, RingHom.map_pow, PowerSeries.map_C,
+    PowerSeries.map_X, Polynomial.coe_add, Polynomial.coe_mul, Polynomial.coe_pow,
+    Polynomial.coe_C, Polynomial.coe_X, RingEquiv.coe_toRingHom, RingEquiv.apply_symm_apply]
 
 theorem norm_unit (K : FinExt l) (u : 𝒪[↥K.1]ˣ) : ‖(((u : 𝒪[↥K.1]) : ↥K.1) : Om l)‖ = 1 := by
   have ha : ‖(((u : 𝒪[↥K.1]) : ↥K.1) : Om l)‖ ≤ 1 :=

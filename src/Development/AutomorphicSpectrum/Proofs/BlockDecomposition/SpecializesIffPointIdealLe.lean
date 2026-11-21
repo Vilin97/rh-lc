@@ -130,8 +130,11 @@ theorem closure_mratio_of_eq (c : ∀ k, Bk n k) {W : (MP ℤ m n).Opens} (hW : 
   exact h
 
 theorem isAffineOpen_mchart_and_closure : ∀ (m : ℕ) (n : Fin (m + 1) → ℕ) (c : ∀ k, Bk n k),
-    IsAffineOpen (mchart c) ∧ Subring.closure (Set.range (mratio c)) = ⊤
-  | 0, n, c => by
+    IsAffineOpen (mchart c) ∧ Subring.closure (Set.range (mratio c)) = ⊤ := by
+  intro m
+  induction m with
+  | zero =>
+    intro n c
     let W : (MP ℤ 0 n).Opens := chart ℤ (n 0) (c 0)
     have e : W = mchart c := by
       apply Opens.ext
@@ -147,9 +150,10 @@ theorem isAffineOpen_mchart_and_closure : ∀ (m : ℕ) (n : Fin (m + 1) → ℕ
     refine Subring.subset_closure ⟨⟨0, j⟩, ?_⟩
     simp only [pullRatio, W]
     exact appLE_id_apply _ _ _
-  | m + 1, n, c => by
+  | succ m ih =>
+    intro n c
     let c' : ∀ k, Bk (Fin.tail n) k := fun j => c j.succ
-    obtain ⟨hV, hG⟩ := isAffineOpen_mchart_and_closure m (Fin.tail n) c'
+    obtain ⟨hV, hG⟩ := ih (Fin.tail n) c'
     have hU := isAffineOpen_chart ℤ (n 0) (c 0)
     let f := toSpecBase ℤ (n 0)
     let g := mpStr ℤ m (Fin.tail n)

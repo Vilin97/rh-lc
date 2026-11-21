@@ -144,7 +144,7 @@ theorem exists_basis_bc {R K : Type} [CommRing R] [CommRing K] (x₀ : R →+* K
   let b : Fin n → TanM (𝟙 (Sp K)) A := fun j =>
     PullbackSections.mkT (pushHom h (epsR K) (u j)) ((PullbackSections.isTangent_iff h _).1 (hu.1 j))
   have ts : ∀ f : Fin n → TanM (𝟙 (Sp K)) A, tv (∑ i, f i) = ∏ i, tv (f i) := fun f => by
-    simp only [tv, toMul_sum, Subgroup.val_finset_prod]
+    simp [tv, toMul_sum]
   have hcomb : ∀ (c : Fin n → K) (w : epsR K ⟶ A), IsLieComb c u w ↔
       pushHom h (epsR K) w = tv (∑ i, c i • b i) := fun c w => by
     rw [PullbackSections.isLieComb_iff h, ts]

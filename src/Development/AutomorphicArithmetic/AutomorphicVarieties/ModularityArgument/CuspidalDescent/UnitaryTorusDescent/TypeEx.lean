@@ -51,7 +51,8 @@ private theorem te_loc (P : GlobalTheory.Mem.LiteralAutomorphy.LitN) (NZ : Upper
   · rw [hπ π, UpperTheory.NonzeroTypeTheory.Cond]
     have e : IsTypeWD h (fun i => (χ i).comp (Subgroup.inclusion (Ine_le_Dec A))) (rc (algNorm π)) ↔ _ :=
       UpperTheory.isTypeWeilDeligne_iff_monodromy_zero_charpoly L Ω n w A h _ _
-    obtain ⟨a, ha, ε, H⟩ := Z.Win.toV hrc
+    have hV : Z.Win.IsRecV h rc := Z.Win.toV hrc
+    obtain ⟨a, ha, ε, H⟩ := hV
     rw [algNorm, H.nu_eq, (te_unr _ _).1] at e
     simp only [(te_unr _ _).2] at e
     simp only [WD.charPol_mk, WDRep.ofChars_ρ, charpoly_diagEnd]

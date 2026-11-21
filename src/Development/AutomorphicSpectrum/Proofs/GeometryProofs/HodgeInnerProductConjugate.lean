@@ -18,8 +18,6 @@ theorem cc_cc : cc ≫ cc = 𝟙 (Sp ℂ) := by
   rw [← Spec.map_comp, ← Spec.map_id]
   exact congrArg Spec.map (CommRingCat.hom_ext (RingHom.ext fun a => by simp))
 
-  rw [← Category.assoc, cc_cc, Category.id_comp]
-
 abbrev tw (T : Over (Sp ℂ)) : Over (Sp ℂ) := Over.mk (T.hom ≫ cc)
 
 def twEquiv (A T : Over (Sp ℂ)) : (T ⟶ tw A) ≃ (tw T ⟶ A) where
@@ -71,7 +69,7 @@ theorem pc_one {A : Over (Sp ℂ)} [GrpObj A] : pc (1 : 𝟙_ (Over (Sp ℂ)) �
 
 theorem pc_injective {A : Over (Sp ℂ)} : Function.Injective (pc (A := A)) := fun s t h => by
   have h1 := congrArg (fun r => cc ≫ r.left) h
-  simp only [pc_left, cc_cc_assoc'] at h1
+  simp only [pc_left, ← Category.assoc, cc_cc, Category.id_comp] at h1
   exact Over.OverMorphism.ext h1
 
 theorem pc_surjective {A : Over (Sp ℂ)} : Function.Surjective (pc (A := A)) := fun r => by
@@ -82,7 +80,7 @@ theorem pc_surjective {A : Over (Sp ℂ)} : Function.Surjective (pc (A := A)) :=
     simpa [cc_cc] using h2
   refine ⟨Over.homMk (cc ≫ r.left) (by simp [hr, cc_cc]), Over.OverMorphism.ext ?_⟩
   rw [pc_left]
-  simp [cc_cc_assoc']
+  simp [← Category.assoc, cc_cc, Category.id_comp]
 
 def ccIso : Sp ℂ ≅ Sp ℂ := ⟨cc, cc, cc_cc, cc_cc⟩
 
@@ -91,12 +89,12 @@ theorem isGrpPullback_tw {X : Scheme.{0}} {G : Over X} [GrpObj G] {A : Over (Sp 
     IsGrpPullback (tw A) G (cc ≫ z) φ := by
   refine ⟨?_, fun T x y x₀ y₀ hx hy => ?_⟩
   · exact h.1.of_iso (Iso.refl _) (Iso.refl _) ccIso (Iso.refl _) (by simp) (by simp [ccIso]) (by simp)
-      (by simp [ccIso, cc_cc_assoc'])
+      (by simp [ccIso, ← Category.assoc, cc_cc, Category.id_comp])
   · let e : Over.mk ((tw T).hom ≫ z) ⟶ Over.mk (T.hom ≫ cc ≫ z) := Over.homMk (𝟙 _) (by simp)
     have h1 := h.2 (tw T) (twEquiv A T x) (twEquiv A T y) (e ≫ x₀) (e ≫ y₀)
-      (by simpa [e] using hx) (by simpa [e] using hy)
+      (by simpa [e, twEquiv] using hx) (by simpa [e, twEquiv] using hy)
     rw [← comp_mul, ← twEquiv_mul] at h1
-    simpa [e] using h1
+    simpa [e, twEquiv] using h1
 
 theorem spMap_inv {R : Type} [CommRing R] (ψ : R →+* R) (hψ : ∀ a, ψ (ψ a) = a) :
     spMap ψ ≫ spMap ψ = 𝟙 _ := by

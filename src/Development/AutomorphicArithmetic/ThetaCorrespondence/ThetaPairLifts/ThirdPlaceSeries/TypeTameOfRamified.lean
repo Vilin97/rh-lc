@@ -80,7 +80,7 @@ theorem typeTame_of_ramified_alt : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExi
       have e : Units.map ((GlobalTheory.TypeTame.conjSP s).i : D.host.E →* s.v.adicCompletion (maximalRealSubfield D.host.E)) k =
           Units.map (s.i : D.host.E →* s.v.adicCompletion (maximalRealSubfield D.host.E))
             (Units.map (MonoidHomClass.toMonoidHom D.host.conj) k) := by
-        ext; simp [hci']
+        ext; simp [hci', MonoidHomClass.toMonoidHom]
       have e2 := hcs.2 (Units.map (MonoidHomClass.toMonoidHom D.host.conj) k)
       have e3 := hcsd.1 _ _ hconj k
       have e4 := hcomp.2 k

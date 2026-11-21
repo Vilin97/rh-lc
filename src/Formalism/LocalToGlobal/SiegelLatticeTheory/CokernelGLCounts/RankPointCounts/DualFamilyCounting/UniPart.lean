@@ -235,12 +235,12 @@ theorem uni_part {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K 
     constructor
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sum, LinearMap.sum_apply]
-      exact Finset.sum_eq_zero fun p _ => by
-        rw [map_smulₛₗ, LinearMap.smul_apply, hbP, ho _ _ (hne p), smul_zero]
+        exact Finset.sum_eq_zero fun p _ => by
+          rw [map_smulₛₗ, LinearMap.smul_apply, hbP, ho _ _ (hne p), smul_zero]
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sum]
-      exact Finset.sum_eq_zero fun p _ => by
-        rw [map_smul, hbP, ho _ _ (hne p).symm, smul_zero]
+        exact Finset.sum_eq_zero fun p _ => by
+          rw [map_smul, hbP, ho _ _ (hne p).symm, smul_zero]
   have hoc : ∀ i j, i ≠ j → h (c i) (c j) = 0 := by
     intro i j hij
     by_cases hi : e i = e i₀

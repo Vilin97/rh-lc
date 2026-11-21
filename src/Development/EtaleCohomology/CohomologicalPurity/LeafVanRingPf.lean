@@ -28,7 +28,8 @@ theorem chart_nbhd {d : ℕ} {A B : Type} [CommRing A] [CommRing B] (I : Ideal A
     (hc : ∀ a : A, φ a - ψ (MvPolynomial.C (Ideal.Quotient.mk I a)) ∈ I.map φ) :
     Nbhd ψ (Ideal.span (Set.range MvPolynomial.X)) := by
   refine ⟨hψ, ?_, ?_⟩
-  · rw [injective_iff_map_eq_zero]
+  · set_option synthInstance.maxHeartbeats 200000 in
+    apply (injective_iff_map_eq_zero _).2
     intro f hf
     obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective f
     rw [Ideal.quotientMap_mk, Ideal.Quotient.eq_zero_iff_mem, hJ] at hf

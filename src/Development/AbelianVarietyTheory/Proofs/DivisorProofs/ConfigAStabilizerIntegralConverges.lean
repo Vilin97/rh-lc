@@ -44,7 +44,7 @@ theorem admissible_integral_exchange {F : Type} [Field F] [NumberField F] {κ T 
   choose L hLl using fun j => hl (φ j) (hφ j)
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [hD, map_sum, hLl]
-  refine ⟨integrable_finset_sum _ fun j _ => (hL j _).1, ?_⟩
+  refine ⟨integrable_finsetSum _ fun j _ => (hL j _).1, ?_⟩
   rw [integral_finsetSum _ fun j _ => (hL j _).1]
   exact Finset.sum_congr rfl fun j _ => (hL j _).2
 
@@ -91,7 +91,7 @@ theorem exists_integrable_maj (F E : Type) [Field F] [NumberField F] [Field E] [
       (f := fun l : (AE F E)ˣ => ENNReal.ofReal
         ((1 + ∑ i, ∑ v : InfinitePlace F, ‖(GlobalTheory.XTermMaj.crd F E (l : AE F E) i).1 v‖) ^ (-(N : ℝ)))) ?_ ?_
     · refine (Continuous.measurable ?_).pow_const _ |>.ennreal_ofReal
-      exact continuous_const.add (continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun v _ =>
+      exact continuous_const.add (continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun v _ =>
         ((continuous_apply v).comp (continuous_fst.comp ((continuous_apply i).comp hc))).norm)
     · exact (hU.isClosed.preimage (continuous_pi fun i => continuous_snd.comp ((continuous_apply i).comp hc))).measurableSet
   have ha : Continuous fun l : (AE F E)ˣ => (absE F E l : ℝ) := NNReal.continuous_coe.comp GlobalTheory.Doubling.continuous_absE

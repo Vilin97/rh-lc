@@ -121,6 +121,7 @@ theorem nmlInt_of
   have hval' : brS (VS D) (NormalVectorPairings.yT' Y u u' t0) (NormalVectorPairings.yT' Y u u' t0) =
       ((Tu D u' : ℕ) : D.host.E) * GPt ((Tu D u : ℕ) * (Tu D u' : ℕ)) γ := by
     rw [yT'_self, NormalVectorPairings.brS_yv_yv _ _ (by simp), NormalVectorPairings.Gflag_swap, ← hG]
+    rfl
   have hc1ne : c1 ≠ 0 := by
     intro h
     have : (c1 : D.host.E) = 0 := by rw [h]; rfl

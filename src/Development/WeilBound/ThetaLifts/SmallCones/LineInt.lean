@@ -48,6 +48,8 @@ theorem exists_so {B : Base F E} {M : Model σ X W} (hM : M.IsGood B.ψ) {ι : T
   let x : Fin n × Fin d → mixedSpace F := fun i => evI F (w i)
   have h1 : ∑ i, g i x • φ i ∈ soSub B M := by
     convert contract hM hg x using 1
+    ext y
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, pureA_pt]
   have h2 := congrArg Subtype.val (LinearMap.congr_fun hq ⟨_, h1⟩)
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [LinearMap.comp_apply, Submodule.subtype_apply, map_sum, map_smul, LinearMap.id_apply, Submodule.coe_sum,

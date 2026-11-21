@@ -87,7 +87,9 @@ theorem GlobalTheory.MixedModel.mixed_model : GlobalTheory.FunPr.Hypotheses₂ �
   refine ⟨κa, inferInstance, ε, C, S, hC, hS, hSa, ?_, ?_, ?_, ?_⟩
   · intro z Φ hΦ
     funext v
-    rw [key _ Φ hΦ, hι z]
+    rw [key _ Φ hΦ]
+    unfold incM
+    rw [hι z]
     simp only [Darboux.rho, schr, GlobalTheory.ThK.Adapt.glue_dot, GlobalTheory.ThK.Adapt.glue_add, zero_dotProduct, zero_add, add_zero]
   · intro y Φ hΦ v
     obtain ⟨q, hq⟩ := hx y

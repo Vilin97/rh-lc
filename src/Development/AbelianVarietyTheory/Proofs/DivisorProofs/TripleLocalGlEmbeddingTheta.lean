@@ -194,6 +194,8 @@ theorem diagR_acts : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fiel
   intro hP F E _ _ _ _ _ σ B a a' G X om om' hT v hv t K hK S hS ν α ι hι hint d' hd' dd hdd omd hspl hres g gd' hgd'
     φ₁ h₁ φ₂ h₂
   obtain ⟨f, hf1, hf2, hf3, hf4, hf5⟩ := GlobalTheory.T.local_idempotent_conjugation_sign σ hT.base.cm v t
+  change UG (cA σ) (dbl (incM F G.V'.J)) →* _ at omd
+  change UG (cA σ) (dbl (incM F G.V'.J)) at gd'
   obtain ⟨w, hwm, -, hww, hconj⟩ := GlobalTheory.T.local_weyl_element_doubled σ G.V'.J v f hf1 hf2 hf3
   obtain ⟨c, hc⟩ := GlobalTheory.T.linear_model_local_good_place F E σ B a a' G X om om' hT v hv t ι hι d' hd' dd hdd omd hspl f hf1 hf2 hf3 hf4 hf5 w hwm
   set k := K g with hk
@@ -248,7 +250,8 @@ theorem diagR_acts : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fiel
     · rw [e1]; funext Y; simp only [neg_neg, Complex.conj_conj]
 
   have hww' : ∀ Φ, omd w (omd w Φ) = Φ := fun Φ => by
-    rw [← Module.End.mul_apply, ← map_mul, hww, map_one, Module.End.one_apply]
+    change (omd w * omd w) Φ = Φ
+    rw [← omd.map_mul, hww, omd.map_one, Module.End.one_apply]
   have hc2 : c * c = 1 := by
     let φ0 : ((Fin a' × Fin (a + a')) → Fv F v) → ℂ := Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1
     have h0 : φ0 ∈ SB _ := GlobalTheory.StdVacuum.indicator_mem_SB v
@@ -295,7 +298,9 @@ theorem diagR_acts : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fiel
   have A12 := actsComp v (fun Φ hΦ => hpres w Φ hΦ) A1 A2
   have A123 := actsComp v (fun Φ hΦ => hpres gd _ (hpres w Φ hΦ)) A12 A3
   rw [smul_smul, hc2, one_smul] at A123
-  have eg : omd gd' = omd w * omd gd * omd w := by rw [← map_mul, ← map_mul, hconj k (hK g).1 gd gd' hgd hgd']
+  change UG (cA σ) (dbl (incM F G.V'.J)) at gd
+  have eg : omd gd' = omd w * omd gd * omd w := by rw [← omd.map_mul, ← omd.map_mul, hconj k (hK g).1 gd gd' hgd hgd']
+  change Acts (evFin F v) (omd gd') (boxFun φ₁ φ₂) (boxFun φ₁ T₂)
   rw [eg]
   exact A123
 

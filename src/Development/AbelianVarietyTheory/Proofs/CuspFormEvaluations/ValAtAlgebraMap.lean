@@ -208,7 +208,11 @@ theorem finrank_host (D : D7) : Module.finrank ℚ D.host.E / 2 = D.R.f := by
   have h' : Module.finrank ℚ D.host.E = 2 * D.R.f := by exact_mod_cast h
   omega
 
-theorem f_pos (D : D7) : 0 < D.R.f := by unfold Ranks.f Ranks.n; positivity
+theorem f_pos (D : D7) : 0 < D.R.f := by
+  have := D.R.two_le_m
+  have := D.R.m_le_f
+  show 0 < 2 * D.R.ord
+  omega
 
 theorem two_mul_half (p : ℕ) : (2 : ℝ) * ((p * (p - 1) / 2 : ℕ) : ℝ) = p * (p - 1) := by
   rw [← Nat.choose_two_right, Nat.cast_choose_two]; ring

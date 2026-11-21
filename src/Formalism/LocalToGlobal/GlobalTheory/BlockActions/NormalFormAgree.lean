@@ -30,7 +30,7 @@ theorem desc_scalar {K σ : Type} [Field K] (j : K →+* ℂ) (Q F : MvPolynomia
   · obtain ⟨m, hm⟩ : ∃ m, F.coeff m ≠ 0 := by
       by_contra hc
       push Not at hc
-      exact hF (MvPolynomial.ext _ _ fun m => by rw [hc m, coeff_zero])
+      exact hF (MvPolynomial.ext _ _ fun m => by simp [hc m])
     have hc : j (Q.coeff m) = χ⁻¹ * j (F.coeff m) := by
       have := congrArg (AddMonoidAlgebra.coeff · m) h
       rwa [coeff_map, coeff_smul, coeff_map, smul_eq_mul] at this

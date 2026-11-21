@@ -108,85 +108,87 @@ theorem of_diag {n : ℕ} {P : Fin n → Fin n → Prop} (H : ∀ i, P i i) (i i
 
 set_option maxHeartbeats 4000000 in
 theorem res_ext (z : Dat (w.st Z) w.I hX T Wt) (e : z.R.toRealDat.ExAt) {Wt' : Set B.places.Pl} (h : Wt' ⊆ Wt)
-    (hc : ConjStable (w.st Z) Wt') : Ext z (res z e Wt' h hc) where
-  H := HEq.rfl
-  l := HEq.rfl
-  c := HEq.rfl
-  Dw := HEq.rfl
-  Xo := HEq.rfl
-  U := HEq.rfl
-  V := HEq.rfl
-  dict := HEq.rfl
-  mu := HEq.rfl
-  Kf := HEq.rfl
-  cE := HEq.rfl
-  chiW := HEq.rfl
-  x₀ := HEq.rfl
-  iota := HEq.rfl
-  ψ := HEq.rfl
-  θ := HEq.rfl
-  βW := HEq.rfl
-  βY := HEq.rfl
-  nW := HEq.rfl
-  βV := HEq.rfl
-  ΛV := HEq.rfl
-  ΛW := HEq.rfl
-  Pg := HEq.rfl
-  eG := HEq.rfl
-  Sb := HEq.rfl
-  BV i i' hi := by
-    obtain rfl : i = i' := Fin.ext hi
-    exact ⟨HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl⟩
-  MW i i' hi := by
-    obtain rfl : i = i' := Fin.ext hi
-    refine ⟨HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, fun φ φ' hφ => ?_⟩
-    have hT : (type_of% φ') = (type_of% φ) := rfl
-    have h2 : cast hT φ' = φ := (cast_eq_iff_heq).2 hφ
-    subst h2
-    exact HEq.rfl
-  forms i i' hi φ φ' hφ k k' hk := by
-    obtain rfl : i = i' := Fin.ext hi
-    have hT : (type_of% φ') = (type_of% φ) := rfl
-    have h2 : cast hT φ' = φ := (cast_eq_iff_heq).2 hφ
-    subst h2
-    have hN : (type_of% k') = (type_of% k) := rfl
-    have hnn : (res z e Wt' h hc).R.nW i = z.R.nW i := rfl
-    have h3 : cast hN k' = k := (cast_eq_iff_heq).2 ((Fin.heq_ext_iff hnn).2 hk.symm)
-    subst h3
-    rfl
-  W1 v v' hv := by
-    have e' : v = v' := (w.D Z).plEq.injective (HeightOneSpectrum.ext (Ideal.ext fun x => hv x x rfl))
-    subst e'
-    rw [restrictAdelicDataTwistedPlaces_nonzeroIndexPlaces]
-  cV i i' hi := by
-    obtain rfl : i = i' := Fin.ext hi
-    exact ⟨HEq.rfl, HEq.rfl⟩
-  pb := HEq.rfl
-  ΛY := (HEq.refl z.R.ΛY)
-  κ := by
-    refine of_diag fun i => ⟨?_, ?_, ?_⟩
-    · exact (HEq.refl (z.geo.κ i).aP)
-    · exact (HEq.refl (z.geo.κ i).aM)
-    · exact (Eq.refl (z.geo.κ i).n)
-  ref := by
-    refine of_diag fun i => ?_
-    refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
-    · exact (HEq.refl (z.R.vP i (mu0F (tuOf w.I (usedOf w.I T Wt)))))
-    · exact (HEq.refl (z.R.HV i (mu0F (tuOf w.I (usedOf w.I T Wt)))))
-    · exact (HEq.refl (z.R.thF i (mu0F (tuOf w.I (usedOf w.I T Wt)))))
-    · exact (HEq.refl (z.R.thG i (mu0F (tuOf w.I (usedOf w.I T Wt)))))
-    · exact (HEq.refl (z.R.νV i (mu0F (tuOf w.I (usedOf w.I T Wt)))))
-    · exact (HEq.refl (z.R.fdV i (mu0F (tuOf w.I (usedOf w.I T Wt)))))
-    · exact (HEq.refl (z.R.νW i))
-    · exact (HEq.refl (z.R.fdW i))
-  jL := by
-    refine of_diag fun i => ?_
-    intro ok ok' φ φ' hφ
-    have hT : (type_of% φ') = (type_of% φ) := rfl
-    have h2 : cast hT φ' = φ := Subtype.ext (funext fun d => Subtype.ext
-      (MvPolynomial.map_injective _ (RingHom.injective _) (eq_of_heq (hφ d d HEq.rfl))))
-    subst h2
-    exact (by with_unfolding_all exact (HEq.refl (z.R.B.jL i (mu0F (X := B.fields) (tuOf w.I (usedOf w.I T Wt))) ((by with_unfolding_all exact ((Formalism.L2.Col.mtKGSD (Pr := B.primes w.px) B.wts w.I.Ch w.I.sel (mu0F (X := B.fields) (tuOf w.I (usedOf w.I T Wt))).1 ((i : ℕ) + 1)).res ok (cast hT φ') :)))) :))
+    (hc : ConjStable (w.st Z) Wt') : Ext z (res z e Wt' h hc) := by
+  exact {
+    H := HEq.rfl
+    l := HEq.rfl
+    c := HEq.rfl
+    Dw := HEq.rfl
+    Xo := HEq.rfl
+    U := HEq.rfl
+    V := HEq.rfl
+    dict := HEq.rfl
+    mu := HEq.rfl
+    Kf := HEq.rfl
+    cE := HEq.rfl
+    chiW := HEq.rfl
+    x₀ := HEq.rfl
+    iota := HEq.rfl
+    ψ := HEq.rfl
+    θ := HEq.rfl
+    βW := HEq.rfl
+    βY := HEq.rfl
+    nW := HEq.rfl
+    βV := HEq.rfl
+    ΛV := HEq.rfl
+    ΛW := HEq.rfl
+    Pg := HEq.rfl
+    eG := HEq.rfl
+    Sb := HEq.rfl
+    BV i i' hi := by
+      obtain rfl : i = i' := Fin.ext hi
+      exact ⟨HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl⟩
+    MW i i' hi := by
+      obtain rfl : i = i' := Fin.ext hi
+      refine ⟨HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, fun φ φ' hφ => ?_⟩
+      have hT : (type_of% φ') = (type_of% φ) := rfl
+      have h2 : cast hT φ' = φ := (cast_eq_iff_heq).2 hφ
+      subst h2
+      exact HEq.rfl
+    forms i i' hi φ φ' hφ k k' hk := by
+      obtain rfl : i = i' := Fin.ext hi
+      have hT : (type_of% φ') = (type_of% φ) := rfl
+      have h2 : cast hT φ' = φ := (cast_eq_iff_heq).2 hφ
+      subst h2
+      have hN : (type_of% k') = (type_of% k) := rfl
+      have hnn : (res z e Wt' h hc).R.nW i = z.R.nW i := rfl
+      have h3 : cast hN k' = k := (cast_eq_iff_heq).2 ((Fin.heq_ext_iff hnn).2 hk.symm)
+      subst h3
+      rfl
+    W1 v v' hv := by
+      have e' : v = v' := (w.D Z).plEq.injective (HeightOneSpectrum.ext (Ideal.ext fun x => hv x x rfl))
+      subst e'
+      rw [restrictAdelicDataTwistedPlaces_nonzeroIndexPlaces]
+    cV i i' hi := by
+      obtain rfl : i = i' := Fin.ext hi
+      exact ⟨HEq.rfl, HEq.rfl⟩
+    pb := HEq.rfl
+    ΛY := (HEq.refl z.R.ΛY)
+    κ := by
+      refine of_diag fun i => ⟨?_, ?_, ?_⟩
+      · exact (HEq.refl (z.geo.κ i).aP)
+      · exact (HEq.refl (z.geo.κ i).aM)
+      · exact (Eq.refl (z.geo.κ i).n)
+    ref := by
+      refine of_diag fun i => ?_
+      refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+      · exact (HEq.refl (z.R.vP i (mu0F (tuOf w.I (usedOf w.I T Wt)))))
+      · exact (HEq.refl (z.R.HV i (mu0F (tuOf w.I (usedOf w.I T Wt)))))
+      · exact (HEq.refl (z.R.thF i (mu0F (tuOf w.I (usedOf w.I T Wt)))))
+      · exact (HEq.refl (z.R.thG i (mu0F (tuOf w.I (usedOf w.I T Wt)))))
+      · exact (HEq.refl (z.R.νV i (mu0F (tuOf w.I (usedOf w.I T Wt)))))
+      · exact (HEq.refl (z.R.fdV i (mu0F (tuOf w.I (usedOf w.I T Wt)))))
+      · exact (HEq.refl (z.R.νW i))
+      · exact (HEq.refl (z.R.fdW i))
+    jL := by
+      refine of_diag fun i => ?_
+      intro ok ok' φ φ' hφ
+      have hT : (type_of% φ') = (type_of% φ) := rfl
+      have h2 : cast hT φ' = φ := Subtype.ext (funext fun d => Subtype.ext
+        (MvPolynomial.map_injective _ (RingHom.injective _) (eq_of_heq (hφ d d HEq.rfl))))
+      subst h2
+      exact (by with_unfolding_all exact (HEq.refl (z.R.B.jL i (mu0F (X := B.fields) (tuOf w.I (usedOf w.I T Wt))) ((by with_unfolding_all exact ((Formalism.L2.Col.mtKGSD (Pr := B.primes w.px) B.wts w.I.Ch w.I.sel (mu0F (X := B.fields) (tuOf w.I (usedOf w.I T Wt))).1 ((i : ℕ) + 1)).res ok (cast hT φ') :)))) :))
+  }
 
 end GlobalTheory.Mem.R3.ResStd
 

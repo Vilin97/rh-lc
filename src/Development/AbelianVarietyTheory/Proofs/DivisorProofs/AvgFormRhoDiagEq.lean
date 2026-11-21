@@ -153,12 +153,12 @@ theorem avgForm_rho_diag_eq : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Ty
       _ = l₁ (ed (dd.rho B.ψ (Matrix.vecMulVec (incV F H'.y) (b + y) * Δt) Φ)) := congrArg l₁ s4
       _ = (l₁ ∘ₗ ed) (GlobalTheory.SiegelAvg.starFam dd B.ψ (incV F H'.y) (b + y) Φ) :=
           congrArg (fun u => l₁ (ed (dd.rho B.ψ u Φ))) (helim _ _).symm
-  rw [GlobalTheory.SiegelAvg.avgForm_apply _ _ _ (hconv _ (hρ _ Φ hΦ)), GlobalTheory.SiegelAvg.avgForm_apply _ _ _ (hconv Φ hΦ)]
+  erw [GlobalTheory.SiegelAvg.avgForm_apply _ _ _ (v := dd.rho B.ψ (z * (diagCols (Fin n))ᵀ) Φ) (hconv _ (hρ _ Φ hΦ)), GlobalTheory.SiegelAvg.avgForm_apply _ _ _ (hconv Φ hΦ)]
   letI : MeasurableSpace (Fin n → AE F E) := borel _
   haveI : BorelSpace (Fin n → AE F E) := ⟨rfl⟩
   haveI : μ.IsAddHaarMeasure := hμ
   haveI : ContinuousAdd (AE F E) := IsModuleTopology.toContinuousAdd (AF F) (AE F E)
-  simp only [key]
-  exact integral_add_left_eq_self (fun y => (l₁ ∘ₗ ed) (GlobalTheory.SiegelAvg.starFam dd B.ψ (incV F H'.y) y Φ)) b
+  apply Eq.trans (integral_congr_ae (Filter.Eventually.of_forall key))
+  exact integral_add_left_eq_self (μ := μ) (fun y => (l₁ ∘ₗ ed) (GlobalTheory.SiegelAvg.starFam dd B.ψ (incV F H'.y) y Φ)) b
 
 end GlobalTheory.SiegelAvgInv

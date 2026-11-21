@@ -117,16 +117,23 @@ theorem proj_schr_at (ψ : AddChar (AF F) ℂ) (v : Pl (F := F)) (φ₀ : (κ �
   have hs : (fun x => Φ (repl v y x)) ∈ SB (κ → Fv F v) := by
     have := restrict_liftV_mem_SB v _ (GlobalTheory.SchwartzTranslation.schA_add_const (fun i => y i - liftV v (evFin F v (y i))) Φ hΦ)
     convert this using 3
+    funext i
+    simp only [repl, Pi.add_apply]
+    ring
   have e : (fun x => schr ψ (fun i => liftV v (p i), fun i => liftV v (q i)) Φ (repl v y x)) =
       schr (psiAt ψ v) (p, q) fun x => Φ (repl v y x) := by
     funext x
     have e2 : (repl v y x + fun i => liftV v (p i)) = repl v y (x + p) := by
       funext i; simp only [repl, Pi.add_apply, map_add (f := _)]; ring
+    have evFin_invOf_two : evFin F v (⅟(2 : AF F)) = ⅟(2 : Fv F v) := by
+      refine (invOf_eq_right_inv ?_).symm
+      have ht : evFin F v (2 * ⅟(2 : AF F)) = 1 := by rw [mul_invOf_self, map_one]
+      rwa [map_mul, map_ofNat] at ht
     have e1 : (repl v y x ⬝ᵥ fun i => liftV v (q i)) +
         ⅟(2 : AF F) * ((fun i => liftV v (p i)) ⬝ᵥ fun i => liftV v (q i)) =
         liftV v (x ⬝ᵥ q + ⅟(2 : Fv F v) * (p ⬝ᵥ q)) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [dotProduct, mul_liftV, evFin_repl, evFin_liftV, ← map_sum, GlobalTheory.VacAny.evFin_invOf_two, map_add (f := _)]
+        simp only [dotProduct, mul_liftV, evFin_repl, evFin_liftV, ← map_sum, evFin_invOf_two, map_add (f := _)]
     simp only [schr, e1, e2]
     rfl
   rw [proj_apply, proj_apply, e, h _ hs]

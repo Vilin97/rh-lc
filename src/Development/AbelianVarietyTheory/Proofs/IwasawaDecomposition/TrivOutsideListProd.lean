@@ -156,21 +156,10 @@ namespace GlobalTheory.LiftStandardGroup
 open ReciprocityTheory.Aut
 
 theorem list_prod_map_eq {ι G : Type} [Monoid G] (f : ι → G) (a : ι) :
-    ∀ l : List ι, l.Nodup → a ∈ l → (∀ b ∈ l, b ≠ a → f b = 1) → (l.map f).prod = f a
-  | [], _, hm, _ => absurd hm List.not_mem_nil
-  | b :: l, hnd, hm, h1 => by
-    rw [List.map_cons, List.prod_cons]
-    by_cases hb : b = a
-    · subst hb
-      have hprod : (l.map f).prod = 1 := by
-        apply List.prod_eq_one
-        intro y hy
-        obtain ⟨c, hc, rfl⟩ := List.mem_map.1 hy
-        exact h1 c (List.mem_cons_of_mem _ hc) (fun e => (List.nodup_cons.1 hnd).1 (e ▸ hc))
-      rw [hprod, mul_one]
-    · rw [h1 b (by simp) hb, one_mul]
-      exact list_prod_map_eq f a l (List.nodup_cons.1 hnd).2 ((List.mem_cons.1 hm).resolve_left (Ne.symm hb))
-        (fun c hc => h1 c (List.mem_cons_of_mem _ hc))
+    ∀ l : List ι, l.Nodup → a ∈ l → (∀ b ∈ l, b ≠ a → f b = 1) → (l.map f).prod = f a := by
+  classical
+  intro l hnd hm h1
+  rw [List.prod_map_eq_pow_single a f (fun b hne hb => h1 b hb hne), hnd.count_of_mem hm, pow_one]
 
 theorem trivOutside_list_prod {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
     {T : Set (HeightOneSpectrum (𝓞 (maximalRealSubfield L)))} :

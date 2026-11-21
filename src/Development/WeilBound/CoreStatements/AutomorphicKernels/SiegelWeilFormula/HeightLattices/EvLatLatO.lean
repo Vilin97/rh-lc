@@ -100,8 +100,11 @@ theorem ev_OE_latO {k : ℕ} (bs : Module.Basis (Fin k) F E) : ∀ᶠ v : Height
     rw [OE_eq_image] at hz'
     obtain ⟨c, hc, rfl⟩ := hz'
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
+      rw [map_sum]
+    change (Finsupp.applyAddHom j) (∑ i, B.repr (c i ⊗ₜ[F] ((RingOfIntegers.basis E) i : E))) ∈ _
+    rw [map_sum]
     refine sum_mem fun i _ => ?_
+    change B.repr (c i ⊗ₜ[F] ((RingOfIntegers.basis E) i : E)) j ∈ _
     rw [Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul]
     exact mul_mem (hc i trivial) (h2 i j)
   · intro hz

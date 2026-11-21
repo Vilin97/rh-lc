@@ -48,8 +48,8 @@ theorem exists_away_isDomain {R : Type} [CommRing R] [IsNoetherianRing R] (q : I
     induction ha using Submodule.span_induction with
     | mem a ha =>
       obtain ⟨r, hr⟩ : (m ⟨a, ha⟩ : R) ∣ (g : R) := by
-        simp only [g, Submonoid.coe_finset_prod]
-        exact Finset.dvd_prod_of_mem (fun a => (m a : R)) (Finset.mem_univ _)
+        obtain ⟨b, hb⟩ := Finset.dvd_prod_of_mem m (Finset.mem_univ ⟨a, ha⟩)
+        exact ⟨b, congrArg (fun x : q.primeCompl => (x : R)) hb⟩
       rw [hr, mul_right_comm, hm ⟨a, ha⟩, zero_mul]
     | zero => exact mul_zero _
     | add a b _ _ ha hb => rw [mul_add, ha, hb, add_zero]

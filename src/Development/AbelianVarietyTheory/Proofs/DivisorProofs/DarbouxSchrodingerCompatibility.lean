@@ -62,7 +62,7 @@ theorem genRep : GlobalTheory.FunPr.Hypotheses₂ → DerEx → VacLine →
       rw [hω]
       exact Submodule.subset_span ⟨ρ g f, h, hh, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
   have h1m : At (evI F) (((1 : UG (cA σ) JB).1 : Matrix β β (AE F E)) - 1) := fun u _ => by simp
   have hact1 : ∀ x : Matrix α β (AE F E), actB (cA σ) (1 : UG (cA σ) JB) x = x := fun x => by simp [actB]
@@ -96,8 +96,10 @@ theorem genRep : GlobalTheory.FunPr.Hypotheses₂ → DerEx → VacLine →
   · intro γ hγ Y hY T h hh l hl
     obtain ⟨L, hL⟩ := hl h hh
     show HasDerivAt (fun t : ℝ => l (ω₀ (γ (Multiplicative.ofAdd t)) (pureA F (Φ T) h))) _ 0
-    simp only [hω, hL]
-    exact hder γ hγ Y hY T L
+    convert hder γ hγ Y hY T L using 1
+    · funext t
+      exact (congrArg l (hω (γ (Multiplicative.ofAdd t)) (Φ T) h)).trans (hL _)
+    · exact hL _
 
 end GlobalTheory.GenRep
 

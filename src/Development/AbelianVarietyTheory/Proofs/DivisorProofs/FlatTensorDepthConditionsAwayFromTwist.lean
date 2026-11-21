@@ -43,7 +43,7 @@ private theorem exists_depth (P : Finset (Pl D.host.E)) (n : Pl D.host.E → ℕ
   · have hN : N l ≤ B := Finset.sup_le fun w hw => by
       obtain ⟨h1, h2⟩ := Finset.mem_filter.1 hw
       exact hB w h1 (h2 ▸ Formalism.EigenvalueLevelCeiling.plc_mem w)
-    rw [← Nat.factorization_def _ hl, Nat.factorization_prod fun p hp => pow_ne_zero _ (hpr p hp).ne_zero,
+    rw [Nat.padicValNat_def, ← Nat.factorization_def _ hl, Nat.factorization_prod fun p hp => pow_ne_zero _ (hpr p hp).ne_zero,
       Finset.sum_congr rfl fun p hp => (hpr p hp).factorization_pow, Finset.sum_apply']
     simp only [Finsupp.single_apply, Finset.sum_ite_eq']
     split_ifs

@@ -98,7 +98,9 @@ theorem main : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [
     rw [schr_comm, LinearMap.map_smul, LinearMap.map_smul, smul_eq_mul]
     have hi := hinv c (dd.rho B.ψ (GlobalTheory.DblSiegelX.zs H u) Φ₁) (hmem _ _ hΦ₁)
     simp only [Darboux.rho] at hi
-    rw [hi, hp c u, dd.form]
+    rw [hi, hp c u]
+    exact congrArg (fun t => B.ψ t * l₁ (ed (schr B.ψ (dd.e (GlobalTheory.DblSiegelX.zs H u)) Φ₁)))
+      (dd.form (GlobalTheory.DblSiegelX.zs H u) (Matrix.vecMulVec (incV F H.x) c))
   have hN0 := GlobalTheory.T.eq_zero_of_adelicFourier_separatingChars_vanish F E B.ψ hψ d (Fin d ⊕ Fin d → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) p hpadd hpsep μ hμ N hNc hNi key
   apply hl₁Φ₁
   have h0 := congrFun hN0 0

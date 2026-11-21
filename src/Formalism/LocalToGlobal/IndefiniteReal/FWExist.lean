@@ -283,7 +283,8 @@ theorem nrmM_add (f g : T.R j) : T.nrmM j la y (f + g) ≤ max (T.nrmM j la y f)
 theorem nrmM_smul (a : T.Q.c.F) (f : T.R j) : T.nrmM j la y (a • f) = FinitePlace.mk la a * T.nrmM j la y f := by
   have hv := isVal_valSet la y.1 y.2
   by_cases ha : a = 0
-  · rw [ha, zero_smul, nrmM_zero, map_zero, zero_mul]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [ha, zero_smul, nrmM_zero, map_zero, zero_mul]
   · rw [Core.nrmM, hv.smul a f ha]
     exact nrmOf_smul la ha (hv.ne_bot f)
 

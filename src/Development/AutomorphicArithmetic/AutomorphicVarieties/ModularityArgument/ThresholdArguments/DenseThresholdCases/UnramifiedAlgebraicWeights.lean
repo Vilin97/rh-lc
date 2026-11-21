@@ -122,8 +122,10 @@ theorem not_dvd_level_of_satake_hecke_poly_cofinite : _root_.UpperTheory.V.Af.Hy
     ⟨hcusp.1, fun q u hu => hfix _ (kLocal _ hN q u hu), hc, hwt, hlo⟩
   refine hf0 (g.new _ hNM hNne f χ hf ?_)
   refine Filter.eventually_cofinite.2 ((Set.finite_le_nat g.M).subset fun q hq => ?_)
-  simp only [Set.mem_setOf_eq, _root_.not_imp] at hq
-  obtain ⟨hqp, hqe⟩ := hq
+  simp only [Set.mem_setOf_eq] at hq
+  have hqp : Nat.Prime q := by
+    by_contra h
+    exact hq (fun hp => False.elim (h hp))
   by_contra hqM
   have hqd : ¬ q ∣ g.M := fun h => hqM (Nat.le_of_dvd hM h)
   obtain ⟨wq, rfl⟩ := normV_surj' hqp
@@ -134,7 +136,7 @@ theorem not_dvd_level_of_satake_hecke_poly_cofinite : _root_.UpperTheory.V.Af.Hy
       rwa [(places wq).2.2.2 _ hN hqN, level_zero_eq_maximal_compact])))) hx0).map π₀.V.subtype (fun _ _ => rfl) hx0'
   obtain ⟨h1, -⟩ := UpperTheory.V.Br.eigOf k _ hk1 hN χ ω hχ f x.1 hL hhol wq α β hqN hv
   rw [hsum] at h1
-  exact hqe h1
+  exact hq (fun _ => h1)
 end GlobalTheory.NewLevel
 end
 end

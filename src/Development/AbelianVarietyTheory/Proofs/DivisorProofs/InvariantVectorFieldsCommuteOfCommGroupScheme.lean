@@ -49,7 +49,7 @@ theorem dualMap_comp_inc (φ : R →+* S) : (dualMap φ).comp (inc R) = (inc S).
   refine RingHom.ext fun x => ?_; ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem fst_comp_inc : (fstH S).comp (inc S) = RingHom.id S := by
-  refine RingHom.ext fun x => ?_; simp [TrivSqZeroExt.algebraMap_eq_inl]
+  refine RingHom.ext fun x => ?_; simp [fstH, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem swap_inc_inc_comp (φ : R →+* S) : (swap S).comp ((inc (DualNumber S)).comp ((inc S).comp φ)) =
     (inc (DualNumber S)).comp ((inc S).comp φ) := by
@@ -62,7 +62,7 @@ theorem swap_dualMap_inc (φ : R →+* S) : (swap S).comp (dualMap ((inc S).comp
   refine RingHom.ext fun x => ?_; ext <;> simp [swap, dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem fst_comp_dualMap (φ : R →+* S) : (fstH S).comp (dualMap φ) = φ.comp (fstH R) := by
-  refine RingHom.ext fun x => ?_; simp [dualMap]
+  refine RingHom.ext fun x => ?_; simp [fstH, dualMap]
 
 end Rings2
 

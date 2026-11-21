@@ -33,19 +33,19 @@ variable {B : Base} {C : Cols B} {a : Late B C} {G : Type} [Group G] [Fintype G]
   {R : RealDat3 a.D A Ks} {F : Face3 a.D A} {X0 : BaseLevelRowSide a.D} {Y : Read (A3 := A) R.toRealDat F.lv2 X0} (Z : ReadL R F X0 Y)
   (u : Parts R)
 
-theorem jWu_heq : HEq (jWu Z u) Z.jW := (by with_unfolding_all exact ((HEq.refl Z.jW) :))
+theorem jWu_heq : HEq (jWu Z u) Z.jW := (by rfl)
 
-theorem eRRu_heq : HEq (eRRu Z u) Z.eRR := (by with_unfolding_all exact ((HEq.refl Z.eRR) :))
+theorem eRRu_heq : HEq (eRRu Z u) Z.eRR := (by rfl)
 
-theorem eRR0u_heq : HEq (riemannRochSpaceCoordinateEquiv Z u) Z.eRR0 := (by with_unfolding_all exact ((HEq.refl Z.eRR0) :))
+theorem eRR0u_heq : HEq (riemannRochSpaceCoordinateEquiv Z u) Z.eRR0 := (by rfl)
 
 variable (c : Refill a)
 
-theorem readL_jW : HEq (letI := alg c.to iK; (readL c Z).jW) Z.jW := (by with_unfolding_all exact ((jWu_heq Z (partsB c R)) :))
+theorem readL_jW : HEq (letI := alg c.to iK; (readL c Z).jW) Z.jW := (by rfl)
 
-theorem readL_eRR : HEq (letI := alg c.to iK; (readL c Z).eRR) Z.eRR := (by with_unfolding_all exact ((eRRu_heq Z (partsB c R)) :))
+theorem readL_eRR : HEq (letI := alg c.to iK; (readL c Z).eRR) Z.eRR := (by rfl)
 
-theorem transportedReading_baseRowLatticeCoordinates : HEq (letI := alg c.to iK; (readL c Z).eRR0) Z.eRR0 := (by with_unfolding_all exact ((eRR0u_heq Z (partsB c R)) :))
+theorem transportedReading_baseRowLatticeCoordinates : HEq (letI := alg c.to iK; (readL c Z).eRR0) Z.eRR0 := (by rfl)
 
 end
 
@@ -56,13 +56,13 @@ theorem rowsAre_refill : ∀ (B : Base) (C : Cols B) (a : Late B C) (c : Refill 
   letI := r.z.alg
   refine ⟨⟨Mv.cpDat c.to c.same r.z, (by with_unfolding_all exact ((holds_tr c.to r.intersectionNumber_baseChange) :)), (by with_unfolding_all exact ((read c r.Y) :)), (by with_unfolding_all exact ((readL c r.Z) :)),
     (by with_unfolding_all exact (r.tup_ix :))⟩, rfl, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · kexactB (HEq.refl r.Y.tup)
+  · rfl
   · exact (by with_unfolding_all exact ((HEq.refl r.Y.tupT) :))
   · exact (by with_unfolding_all exact ((HEq.refl r.Y.PY.ψ) :))
   · exact (by with_unfolding_all exact ((HEq.refl (fun i => (r.Y.PW i).ψ)) :))
   · exact (by with_unfolding_all exact ((heq_of_eq (funext fun π => (rep_eq c r.Y π).symm)) :))
-  · kexactB (HEq.refl (fun x => (r.Y.Ish.jE x).1))
-  · kexactB (HEq.refl (fun x => (r.Y.Iz.jE x).1))
+  · rfl
+  · rfl
   · exact (by with_unfolding_all exact ((HEq.refl r.Y.eE) :))
   · exact (by with_unfolding_all exact ((HEq.refl r.Y.jA) :))
   · exact (by with_unfolding_all exact ((HEq.refl r.Y.jA0) :))

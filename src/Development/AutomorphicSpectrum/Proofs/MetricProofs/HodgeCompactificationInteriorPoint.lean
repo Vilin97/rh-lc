@@ -72,6 +72,7 @@ theorem exists_comp_eq_of_mono {O F : Type} [CommRing O] [Field F] [CharZero F] 
     refine Ideal.comap_ne_bot_of_algebraic_mem hx0 hx hxa ?_
     have e : Ideal.comap (algebraMap ℤ R) (RingHom.ker gb) = RingHom.ker (gb.comp (algebraMap ℤ R)) :=
       RingHom.comap_ker _ _
+    change Ideal.comap (algebraMap ℤ R) (RingHom.ker gb) = ⊥
     rw [e, (RingHom.injective_iff_ker_eq_bot _).1]
     have e2 : gb.comp (algebraMap ℤ R) = Int.castRingHom ℂ := RingHom.ext_int _ _
     rw [e2]

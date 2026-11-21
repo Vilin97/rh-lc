@@ -74,7 +74,8 @@ theorem LeafPurProj_of : EtalePurityProjection := by
   obtain ⟨ex, hex1, hex2⟩ := purT_char T q P hq (n + m) (i + j) (cup q (pull _ (sch.map P.ι) _ _ a) b)
   have hex : ex = cup q (pull (ZMod q) (T P).π (tw q i) n a) eb := by
     apply (((T P).ok q hq).1 (i + j) (n + m)).1
-    rw [hex1, (hA q).1, (hA q).1, heb1, ← pull_comp, ← pull_comp, pullback.condition]
+    set_option synthInstance.maxHeartbeats 200000 in
+      rw [hex1, (hA q).1, (hA q).1, heb1, ← pull_comp, ← pull_comp, pullback.condition]
   have hN : n + (m + 2 * (d : ℤ)) = n + m + 2 * d := by ring
   have hI : i + (j + (d : ℤ)) = i + j + d := by ring
   have key : purT T q P (n + m) (i + j) (cup q (pull _ (sch.map P.ι) _ _ a) b) =

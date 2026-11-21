@@ -29,9 +29,10 @@ theorem exists_proj {E : Type} [Field E] {N n : ℕ} (hN : n + 1 = N) (A : Matri
   refine ⟨Matrix.of fun a j => B⁻¹ (Fin.castSucc a) j, ?_, ?_⟩
   · ext a b
     have e := congrFun (congrFun h (Fin.castSucc a)) (Fin.castSucc b)
-    simp only [Matrix.mul_apply, hBdef, of_apply, Fin.val_castSucc, Fin.is_lt, dif_pos, Fin.eta, one_apply,
-      Fin.castSucc_inj] at e
-    simpa [Matrix.mul_apply, one_apply] using e
+    have hcol (j : Fin (n + 1)) : B j (Fin.castSucc b) = A j b := by
+      simp [hBdef]
+    simp only [Matrix.mul_apply, hcol, Matrix.one_apply, Fin.castSucc_inj] at e
+    simpa [Matrix.mul_apply, Matrix.one_apply] using e
   · funext a
     have e := congrFun (congrFun h (Fin.castSucc a)) (Fin.last n)
     simp only [Matrix.mul_apply, hBdef, of_apply, Fin.val_last, lt_irrefl, dif_neg, not_false_eq_true, one_apply] at e

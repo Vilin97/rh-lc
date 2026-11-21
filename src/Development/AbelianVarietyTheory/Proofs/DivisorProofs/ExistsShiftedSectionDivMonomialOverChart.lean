@@ -244,11 +244,31 @@ theorem exists_shift_div_monomial : ∀ (E : Type) [Field E] [NumberField E] [Is
     have hρm : ρ' ≫ (𝟙 P.D.toPre.P.A * cP P.D.toPre _ mu) = toUnit T' ≫ P.D.toPre.c mu := by
       rw [MonObj.comp_mul, Category.comp_id, comp_cP, hρ1, _root_.one_mul]
       rfl
-    have C : IsCub (cubV P.D.toPre.cub z J) := isCub_cubV (T := T') P.D.toPre.cub hJ
-    have c1 : cubN (cubV P.D.toPre.cub z J) e (ρ' ≫ cP P.D.toPre _ α) (ρ' ≫ cP P.D.toPre _ mu) ρ' = 1 := by
-      rw [hρ1]; exact C.N_one _ _ _
-    have c2 : cubV P.D.toPre.cub z J (ρ' ≫ cP P.D.toPre _ α) ρ' (ρ' ≫ cP P.D.toPre _ mu) = 1 := by
-      rw [hρ1]; exact C.face₂ _ _
+    have face (x y : T' ⟶ P.D.toPre.P.A) : cubV (T := T') P.D.toPre.cub z J 1 x y = 1 := by
+      have h := val_corr hJ (P.D.toPre.cub.face 0) (lift x y).left
+      rw [val_one] at h
+      refine Eq.trans ?_ h
+      refine Eq.trans ?_ (val_cub P.D.toPre.cub (lift x y) hJ (pzero _ _) (x2 _ 0) (x2 _ 1)).symm
+      congr 1 <;> simp [x2, pzero, Hom.one_def]
+    have swap01 (x y w : T' ⟶ P.D.toPre.P.A) :
+        cubV (T := T') P.D.toPre.cub z J x y w = cubV (T := T') P.D.toPre.cub z J y x w := by
+      have h := (val_corr hJ P.D.toPre.cub.cubeSymmetric_swap_first (lift x (lift y w)).left).trans
+        (val_cub P.D.toPre.cub (lift x (lift y w)) hJ _ _ _)
+      refine Eq.trans h ?_
+      congr 1 <;> simp [x3]
+    have swap12 (x y w : T' ⟶ P.D.toPre.P.A) :
+        cubV (T := T') P.D.toPre.cub z J x y w = cubV (T := T') P.D.toPre.cub z J x w y := by
+      have h := (val_corr hJ P.D.toPre.cub.cubeSymmetric_swap_last (lift x (lift y w)).left).trans
+        (val_cub P.D.toPre.cub (lift x (lift y w)) hJ _ _ _)
+      refine Eq.trans h ?_
+      congr 1 <;> simp [x3]
+    have c1 : cubN (cubV (T := T') P.D.toPre.cub z J) e (ρ' ≫ cP P.D.toPre _ α) (ρ' ≫ cP P.D.toPre _ mu) ρ' = 1 := by
+      rw [hρ1]
+      apply Finset.prod_eq_one
+      intro i hi
+      rw [swap12, swap01, face]
+    have c2 : cubV (T := T') P.D.toPre.cub z J (ρ' ≫ cP P.D.toPre _ α) ρ' (ρ' ≫ cP P.D.toPre _ mu) = 1 := by
+      rw [hρ1, swap01, face]
     have hv := hσu T' ρ' z J hJ
     rw [c1, c2, hρu, hρm, inv_one, _root_.one_mul, _root_.one_mul] at hv
     show sval σ₁u ρ'.left z J = _

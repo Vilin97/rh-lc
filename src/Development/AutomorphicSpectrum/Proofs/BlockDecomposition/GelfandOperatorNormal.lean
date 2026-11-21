@@ -388,7 +388,7 @@ theorem Tc_stab (blk : Fin n → ℕ) (s : Bool) (a b : Fin n) :
 theorem Tc_pos (blk : Fin n → ℕ) (s : Bool) (a b : Fin n) (hab : blk a < blk b) :
     ∀ x ∈ nilF V blk, RCalc.Tc (RCalc.DA n V) s a b x ∈ levZ V blk := by
   intro x hx g hg hb
-  rw [Tc_apply s a b x hg]
+  rw [RCalc.Tc_apply s a b x hg]
   have hs : ∀ z : ℂ, ∀ c d, ¬ blk c < blk d → (Matrix.single a b z : Mat n) c d = 0 := by
     intro z c d hcd
     rw [Matrix.single_apply, if_neg]
@@ -399,7 +399,7 @@ theorem Tc_pos (blk : Fin n → ℕ) (s : Bool) (a b : Fin n) (hab : blk a < blk
 theorem Tc_lev (blk : Fin n → ℕ) (s : Bool) (a b : Fin n) (hab : blk a = blk b) :
     ∀ x ∈ levZ V blk, RCalc.Tc (RCalc.DA n V) s a b x ∈ levZ V blk := by
   intro x hx g hg hb
-  rw [Tc_apply s a b x hg]
+  rw [RCalc.Tc_apply s a b x hg]
   have hs : ∀ z : ℂ, ∀ c d, blk c ≠ blk d → (Matrix.single a b z : Mat n) c d = 0 := by
     intro z c d hcd
     rw [Matrix.single_apply, if_neg]

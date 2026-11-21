@@ -43,7 +43,47 @@ theorem decomp {B : Base F E} {d d₁ r s : ℕ} {W : Spc F E d} {W₁ : Spc F E
   have hφ : ∀ p, φ p = p.1.1 • H'.x + H'.ι *ᵥ p.1.2 + p.2 • H'.y := fun p => by
     simp [φ, LinearMap.coprod_apply]
   have hsurj : Function.Surjective φ := by
-    rw [← LinearMap.range_eq_top, eq_top_iff, ← hW.lat.span_eq_top, Submodule.span_le]
+    have hspan : Submodule.span E (W.L : Set (Fin d → E)) = ⊤ := by
+      obtain ⟨S, hS⟩ := hW.lat.fg
+      apply eq_top_iff.mpr
+      intro y _
+      let f : (Fin d → E) → E := fun x => form σ W.J y x
+      obtain ⟨a, ha⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 E)) S f
+      have ha0 : (algebraMap (𝓞 E) E a) ≠ 0 :=
+        (FaithfulSMul.algebraMap_injective _ _).ne (mem_nonZeroDivisors_iff_ne_zero.mp a.2)
+      let P : Submodule (𝓞 E) (Fin d → E) := {
+        carrier := {x | IsIntegral ℤ ((a : 𝓞 E) * f x)}
+        zero_mem' := by simpa [f, form, dotProduct, mulVec] using (isIntegral_zero : IsIntegral ℤ (0 : E))
+        add_mem' := by
+          intro x z hx hz
+          simpa [f, form, dotProduct, mulVec, map_add, Finset.sum_add_distrib, mul_add, add_mul] using hx.add hz
+        smul_mem' := by
+          intro c x hx
+          have hc : IsIntegral ℤ (σ (c : E)) := (RingOfIntegers.isIntegral_coe c).map σ.toRingHom.toIntAlgHom
+          have he : ((a : 𝓞 E) : E) * f (c • x) = σ (c : E) * (((a : 𝓞 E) : E) * f x) := by
+            simp [f, form, dotProduct, mulVec, Pi.smul_apply, Algebra.smul_def, Finset.mul_sum, Finset.sum_mul, map_mul, mul_assoc, mul_left_comm, mul_comm]
+          change IsIntegral ℤ (((a : 𝓞 E) : E) * f (c • x))
+          rw [he]
+          exact hc.mul hx }
+      have hsP : (S : Set (Fin d → E)) ⊆ P := by
+        intro x hx
+        obtain ⟨b, hb⟩ := ha x hx
+        change IsIntegral ℤ (((a : 𝓞 E) : E) * f x)
+        rw [← show (b : E) = ((a : 𝓞 E) : E) * f x by simpa [Algebra.smul_def] using hb]
+        exact RingOfIntegers.isIntegral_coe b
+      have hy : ((a : 𝓞 E) : E) • y ∈ W.L := by
+        apply (hW.dual _).2
+        intro x hx o
+        have hxP : x ∈ P := (hS ▸ Submodule.span_le.mpr hsP) hx
+        apply Algebra.isIntegral_trace (L := ℚ)
+        have := (RingOfIntegers.isIntegral_coe o).mul hxP
+        change IsIntegral ℤ (o * form σ W.J (((a : 𝓞 E) : E) • y) x)
+        rw [form_smul_left]
+        simpa [P, f, mul_assoc, mul_left_comm, mul_comm] using this
+      have hy' := (Submodule.span E (W.L : Set (Fin d → E))).smul_mem ((a : 𝓞 E) : E)⁻¹ (Submodule.subset_span hy)
+      change ((a : 𝓞 E) : E)⁻¹ • (((a : 𝓞 E) : E) • y) ∈ _ at hy'
+      rwa [← smul_assoc, smul_eq_mul, inv_mul_cancel₀ ha0, one_smul] at hy'
+    rw [← LinearMap.range_eq_top, eq_top_iff, ← hspan, Submodule.span_le]
     intro z hz
     obtain ⟨a, b, u, -, -, -, rfl⟩ := hA.split z hz
     exact ⟨((a, u), b), hφ _⟩

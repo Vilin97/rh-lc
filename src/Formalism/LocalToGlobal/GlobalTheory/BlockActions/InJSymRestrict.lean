@@ -42,20 +42,24 @@ theorem jsym_of_blk {κ : Type} [Field κ] {n N : ℕ} (hN : n + 1 = N) {k rS t 
     rw [Matrix.mul_apply, Fin.sum_univ_castSucc, hl A hA x, zero_mul, add_zero]
   have e1 : R * R' = 1 := by
     ext x y
-    have := congrFun (congrFun (Mm.mul_inv) x.castSucc) y.castSucc
+    have := congrArg (fun M : Matrix (Fin (n + 1)) (Fin (n + 1)) κ => M x.castSucc y.castSucc)
+      (show Mm.1 * (Mm⁻¹).1 = 1 from Mm.mul_inv)
     rw [hmul _ _ h1] at this
     rw [Matrix.mul_apply]
     simp only [hRc, hR']
     rw [this]
-    simp [one_apply, Fin.castSucc_inj]
+    change (if x.castSucc = y.castSucc then (1 : κ) else 0) = (if x = y then 1 else 0)
+    simp only [Fin.castSucc_inj]
   have e2 : R' * R = 1 := by
     ext x y
-    have := congrFun (congrFun (Mm.inv_mul) x.castSucc) y.castSucc
+    have := congrArg (fun M : Matrix (Fin (n + 1)) (Fin (n + 1)) κ => M x.castSucc y.castSucc)
+      (show (Mm⁻¹).1 * Mm.1 = 1 from Mm.inv_mul)
     rw [hmul _ _ h2] at this
     rw [Matrix.mul_apply]
     simp only [hRc, hR']
     rw [this]
-    simp [one_apply, Fin.castSucc_inj]
+    change (if x.castSucc = y.castSucc then (1 : κ) else 0) = (if x = y then 1 else 0)
+    simp only [Fin.castSucc_inj]
   refine ⟨⟨R, R', e1, e2⟩, ⟨?_, ?_⟩, rfl⟩
   · exact inJSym_restrict _ R hRc h1
   · exact inJSym_restrict _ R' (fun x y => rfl) h2

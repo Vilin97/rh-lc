@@ -36,9 +36,14 @@ private theorem galA_tA (g : K.fixingSubgroup) : ∃ χ : ℤ_[l]ˣ, galA g (tA 
 private theorem phiA_tA : phiA l (tA l) = (l : Acris l) * tA l := ACris.phi_periodT_eq_mul _
 
 private theorem phiA_zA (x : ℤ_[l]) : phiA l (zA l x) = zA l x := by
-  change ACris.phi ℂ_[l] l (algebraMap (Ainf l) (Acris l) (IsPerfectoidField.padicIntToWitt l x)) = _
-  rw [ACris.phi_algebraMap, ACris.frobenius_padicIntToWitt]
-  rfl
+  change ACris.phi (algebraMap (Ainf l) (Acris l) (IsPerfectoidField.padicIntToWitt l x)) = _
+  rw [ACris.phi_algebraMap]
+  have h := AInf.isAdicComplete_p (K := ℂ_[l]) (p := l)
+  have he := RingHom.congr_fun (ringHom_ext_padicInt
+    ((WittVector.frobeniusEquiv l (PreTilt (↥(normInteger ℂ_[l])) l)).toRingHom.comp
+      (IsPerfectoidField.padicIntToWitt (K := ℂ_[l]) l))
+    (IsPerfectoidField.padicIntToWitt (K := ℂ_[l]) l)) x
+  exact congrArg _ he
 
 private theorem aux_sub {R Mo : Type*} [CommRing R] [AddCommGroup Mo] [Module R Mo] (A X t : R) (u s : ℕ) (G E : Mo)
     (h : A • G = (A * X ^ s) • E) : A • ((X * t) ^ u • G) - (A * X ^ (u + s)) • (t ^ u • E) = 0 := by

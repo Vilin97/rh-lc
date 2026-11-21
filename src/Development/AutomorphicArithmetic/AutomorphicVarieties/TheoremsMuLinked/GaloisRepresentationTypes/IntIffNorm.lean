@@ -57,6 +57,7 @@ private theorem exists_fac {l : ℕ} [Fact l.Prime] {c : Coef l} {R : Type} [Com
   obtain ⟨E, hE⟩ := Loc.ptFin (l := l) R ((TrivSqZeroExt.inlAlgHom c.O _ _).comp f) hf
   have hE' : ∀ a, f a ∈ E.1 := fun a => (hE a).1
   haveI := E.2
+  haveI : Algebra.IsIntegral ℤ_[l] c.O := Algebra.IsIntegral.of_finite ℤ_[l] c.O
   have hint : ∀ x, IsIntegral ℤ_[l] (f x) := fun x => by
     obtain ⟨a, ha⟩ := residue_surjective (res c.O R x)
     have hm : x - algebraMap c.O R a ∈ maximalIdeal R := by

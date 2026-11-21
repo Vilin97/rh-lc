@@ -36,6 +36,7 @@ theorem GlobalTheory.LevPrimeData.data_preT_alt : ∀ {B : GlobalTheory.Mem.Base
   have hpos : 0 < ((I.rec7 l Z).sp.X B.R.m).rank := by
     have h1 := (g.oT B.R.m rfl).rank_add
     have h2 : g.Lz.rank = 1 := hline.1
+    change 0 < ((GlobalTheory.Mem.assemble B (I.cols l) Z.W Z.V Z.S Z.N Z.G).sp.X B.R.m).rank
     omega
   have htop := fun i => GlobalTheory.StdPairTop.ker_stdPair _ k (p i) q _ _ _ (g.oT B.R.m rfl) (hG _) ζ₀ hline (X.piT u) _ hz' (hval i).1 (hval i).2
     (g.x B.R.m).L v.NT (fun z => (hPin.xs _ le_rfl).2.2 z)

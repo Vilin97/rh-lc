@@ -16,6 +16,8 @@ open CategoryTheory NumberField IsDedekindDomain IntermediateField GroundTheory.
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 theorem eq_zero_of_coprime_nsmul_eq_zero {A : Type*} [AddCommGroup A] {ℓ N k : ℕ} (hN : N.Coprime ℓ)
     {x : A} (h1 : N • x = 0) (h2 : ℓ ^ k • x = 0) : x = 0 := by
   have hd : addOrderOf x ∣ Nat.gcd N (ℓ ^ k) :=

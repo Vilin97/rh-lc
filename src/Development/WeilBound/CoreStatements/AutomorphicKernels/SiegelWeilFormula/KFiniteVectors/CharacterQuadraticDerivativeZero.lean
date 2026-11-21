@@ -188,7 +188,7 @@ theorem l_D {Ψ : d.Fn} (hΨ : Ψ ∈ d.sch) {u : Matrix (Fin d.m) (Fin d.n ⊕ 
     rw [Box.D, Box.DP_smul hx, map_smul, smul_eq_mul]
     exact ix.const_mul c
 
-theorem td_realAd_zero : realAd F 0 = 0 := by simp only [realAd, map_zero]; rfl
+theorem td_realAd_zero : realAd F 0 = 0 := by simp only [realAd, map_zero]
 
 theorem schr_zero_at (Ψ : d.Fn) (u : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E)) :
     d.dd.rho d.B.ψ (realAd F 0 • u) Ψ = Ψ := by

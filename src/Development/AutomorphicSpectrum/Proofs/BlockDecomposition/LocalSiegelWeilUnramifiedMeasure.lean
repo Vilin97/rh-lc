@@ -88,7 +88,7 @@ theorem GlobalTheory.CompanionTheory.AvgFree.scale_density : ∀ (F E : Type) [F
     intro g
     refine continuous_pi fun a => continuous_pi fun i => ?_
     unfold GlobalTheory.CompanionTheory.SW.rmul
-    exact continuous_finset_sum _ fun c _ =>
+    exact continuous_finsetSum _ fun c _ =>
       (continuous_apply_apply c i).mul continuous_const
   have hgm : ∀ Y' : Set (HermR (Fv F v) σ n), MeasurableSet Y' →
       MeasurableSet (gramIn (Fv F v) σ J (n := n) Y') := by
@@ -379,7 +379,7 @@ theorem GlobalTheory.CompanionTheory.AvgFree.exhaust_density : ∀ (F E : Type) 
       calc _ ≤ (α j i : ℝ≥0∞) * ((C : ℝ≥0∞) * ((β j i : ℝ≥0∞) * GlobalTheory.CompanionTheory.SW.coordHerm (Fv F v) σ b lv n Y)) := by gcongr
         _ = _ := by push_cast; ring
     refine le_trans (Finset.sum_le_sum h1) ?_
-    rw [← Finset.sum_mul, ← Finset.mul_sum, ← ENNReal.coe_finset_sum]
+    rw [← Finset.sum_mul, ← Finset.mul_sum, ← ENNReal.ofNNReal_finsetSum]
     have h3 : ((∑ i ∈ I j, α j i * β j i : ℝ≥0) : ℝ≥0∞) ≤ (ρ j : ℝ≥0∞) := by exact_mod_cast (hs j).1
     push_cast
     push_cast at h3

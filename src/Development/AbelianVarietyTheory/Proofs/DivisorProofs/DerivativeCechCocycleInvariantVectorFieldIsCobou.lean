@@ -65,7 +65,8 @@ def transSnd (P : GPt A) (v : epsR K ⟶ A) : transSrc P ⟶ A :=
     change (spMap _ ≫ v.left) ≫ A.hom = spMap _
     rw [Category.assoc, Over.w v]
     change spMap _ ≫ spMap _ = spMap _
-    rw [← Cris.spMap_comp, dualMap_comp_algebraMap])
+    rw [← Cris.spMap_comp]
+    exact congrArg spMap (dualMap_comp_algebraMap (algebraMap K P.B)))
 
 def transPair (P : GPt A) (v : epsR K ⟶ A) : Sp (DualNumber P.B) ⟶ (A ⊗ A).left :=
   (lift (transFst P) (transSnd P v)).left
@@ -89,7 +90,9 @@ theorem transPair_map {P Q : GPt A} (φ : P.Hom Q) (v : epsR K ⟶ A) :
     spMap (dualMap (φ.ρ : P.B →+* Q.B)) ≫ transPair P v = transPair Q v := by
   let j : transSrc Q ⟶ transSrc P := Over.homMk (spMap (dualMap (φ.ρ : P.B →+* Q.B))) (by
     change spMap _ ≫ spMap _ = spMap _
-    rw [← Cris.spMap_comp, ← RingHom.comp_assoc, dualMap_comp_algebraMap, RingHom.comp_assoc,
+    rw [← Cris.spMap_comp]
+    apply congrArg spMap
+    rw [← RingHom.comp_assoc, dualMap_comp_algebraMap, RingHom.comp_assoc,
       φ.ρ.comp_algebraMap])
   have h1 : j ≫ transFst P = transFst Q := by
     apply Over.OverMorphism.ext

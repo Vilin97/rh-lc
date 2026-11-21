@@ -206,7 +206,7 @@ theorem norm_key_of_frame : ∀ κ : GlobalTheory.KeyCl.Rule, GlobalTheory.KeyCl
     intro i
     obtain ⟨v₀, hl, v', h1, h2⟩ := hW i
     refine ⟨v', h1.trans ?_, h2⟩
-    rw [LieModel.Lifts, Category.comp_id] at hl
+    rw [Category.comp_id] at hl
     exact hl
   choose v' hv'1 hv'2 using hvv
   have hv' : ∀ j : Fin x.P.g, (v' (j.cast hg)).left ≫ ψ = spMap (Chart.dualMapR σ) ≫ (x.v j).left := by

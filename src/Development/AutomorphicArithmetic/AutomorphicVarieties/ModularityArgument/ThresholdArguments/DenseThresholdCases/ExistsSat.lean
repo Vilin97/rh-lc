@@ -51,10 +51,14 @@ theorem _root_.UpperTheory.Esk.pf_HRep_alt : _root_.UpperTheory.V.Af.HypothesesH
   set ν := GlobalTheory.HeckeGal.Model.absPow F (1 - (k : ℝ) / 2) with hν
   obtain ⟨hν1, hν2, -⟩ := GlobalTheory.HeckeGal.Model.absPow_isAbsPow F (1 - (k : ℝ) / 2)
   rw [← hν] at hν1 hν2
+  have hnorm (w : Pl F) : normV w = Ideal.absNorm w.asIdeal := by
+    simp [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
   have hq : ∀ w : Pl F, (0 : ℝ) < normV w := fun w =>
-    Nat.cast_pos.2 (zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm w))
+    Nat.cast_pos.2 (zero_lt_one.trans (by rw [hnorm]; exact NumberField.HeightOneSpectrum.one_lt_absNorm w))
   have hν3 : ∀ w, ((ν.val w : ℂˣ) : ℂ) = (((normV w : ℝ) ^ ((k : ℝ) / 2 - 1) : ℝ) : ℂ) := fun w => by
     rw [hν2, Complex.ofReal_cpow (hq w).le, ← Complex.ofReal_neg, neg_sub]
+    rw [hnorm]
+    push_cast
     rfl
   set π := π₀.twist ν
   set x₀ : π₀.V := ⟨ψ, hψ⟩
@@ -115,7 +119,9 @@ theorem _root_.UpperTheory.Esk.pf_HRep_alt : _root_.UpperTheory.V.Af.HypothesesH
     fin_cases i <;> fin_cases j <;> simp at e' ⊢ <;> omega
   · obtain ⟨i, -, rfl⟩ := Multiset.mem_map.1 hz
     exact ⟨_, add_comm _ _⟩
-  · simp only [HChar.locInf_mul, hν, sign_abs, mul_one]
+  · change ω.locInf v (-1) * ν.locInf v (-1) * ν.locInf v (-1) =
+      ω.locInf v' (-1) * ν.locInf v' (-1) * ν.locInf v' (-1)
+    simp only [hν, sign_abs, mul_one]
     exact Units.ext ((sign_hol hφ hne v).trans ((sign_eq k (t v)).trans ((sign_eq k (t v')).symm.trans (sign_hol hφ hne v').symm)))
   · obtain ⟨B, hl, hr, hf, hc, hX⟩ := P.gkR F 2 π
     refine TR.CuspSub.isSelfDualBy_of_iso B hl hr hf hc hX (P.smoR F 2 one_le_two _ _ ?_)

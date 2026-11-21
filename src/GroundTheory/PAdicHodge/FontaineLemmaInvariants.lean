@@ -178,6 +178,9 @@ end Generic
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
+local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
+local notation "𝔹dR" => BDeRham (normInteger ℂ_[p]) p
+
 variable {ε : PreTilt (normInteger ℂ_[p]) p} (hε : PreTilt.untilt ε = 1)
   (hζ : PreTilt.untilt ((_root_.frobeniusEquiv (PreTilt (normInteger ℂ_[p]) p) p).symm ε) ≠ 1)
 
@@ -292,13 +295,21 @@ theorem aeval_minpoly_eq_zero_of_iterate {y x₁ : BCrisPlus ℂ_[p] p} {m : ℕ
   obtain ⟨f, hf⟩ : ∃ f, algebraMap ℚ_[p] (BCrisPlus ℂ_[p] p) = f := ⟨_, rfl⟩
   obtain ⟨R, hR⟩ : ∃ R, homogEval f P y (t' ^ m) = R := ⟨_, rfl⟩
 
+  have hιf (q : ℚ_[p]) :
+      iotaPlus ℂ_[p] p (algebraMap ℚ_[p] (BCrisPlus ℂ_[p] p) q) = algebraMap ℚ_[p] 𝔹 q := by
+    have h : (iotaPlus ℂ_[p] p).comp padicToBCrisPlus = algebraMap ℚ_[p] 𝔹 := by
+      refine IsLocalization.ringHom_ext (nonZeroDivisors ℤ_[p]) (RingHom.ext fun x => ?_)
+      simp only [RingHom.comp_apply, padicToBCrisPlus, IsLocalization.lift_eq, padicIntToBCrisPlus,
+        iotaPlus_algebraMap]
+      exact iota_padicInt x
+    exact RingHom.congr_fun h q
   have hιs : iotaPlus ℂ_[p] p (t' ^ m) = τ ^ m := (map_pow _ _ _).trans (congrArg (· ^ m) hτ)
   have hιR : iotaPlus ℂ_[p] p R = 0 := by
     have e1 : iotaPlus ℂ_[p] p R = homogEval (algebraMap ℚ_[p] 𝔹) P (iotaPlus ℂ_[p] p y)
         (iotaPlus ℂ_[p] p (t' ^ m)) := by
       rw [← hR]
       exact map_homogEval f P y (t' ^ m) (iotaPlus ℂ_[p] p) (algebraMap ℚ_[p] 𝔹)
-        (fun q => by rw [← hf]; exact iotaPlus_algebraMap_padic q)
+        (fun q => by rw [← hf]; exact hιf q)
     have e2 : aeval (algClToBdR p β) P = 0 := by
       rw [aeval_algHom_apply, ← hP, minpoly.aeval, map_zero]
     rw [e1, hιy, hιs, homogEval_mul, ← aeval_def, e2, mul_zero]
@@ -337,8 +348,11 @@ theorem aeval_minpoly_eq_zero_of_iterate {y x₁ : BCrisPlus ℂ_[p] p} {m : ℕ
   have h1 : iotaPlus ℂ_[p] p (aeval x₁ P) = 0 := by
     rw [aeval_def, hf]
     exact map_eq_zero_of_pow_mul_eq_zero (iotaPlus ℂ_[p] p) hΦR hιc
-  have h2 := aeval_algHom_apply (iotaPlusAlg (p := p)) x₁ P
-  rw [iotaPlusAlg_apply, iotaPlusAlg_apply, hιx₁, h1, aeval_algHom_apply] at h2
+  let ι : BCrisPlus ℂ_[p] p →ₐ[ℚ_[p]] 𝔹 :=
+    { iotaPlus ℂ_[p] p with commutes' := hιf }
+  have h2 : aeval (iotaPlus ℂ_[p] p x₁) P = iotaPlus ℂ_[p] p (aeval x₁ P) :=
+    aeval_algHom_apply ι x₁ P
+  rw [hιx₁, h1, aeval_algHom_apply] at h2
   exact (injective_algClToBdR p) (h2.trans (map_zero _).symm)
 
 

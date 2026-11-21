@@ -53,3 +53,4 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.root_origin_constant_algebra_p
   have hpt : Small.ptF y' = Small.ptF y₂ := by
     simp only [Small.ptF, hx]
   simp only [Small.tanY, Small.tanF, GlobalTheory.CompanionTheory.Ar.Rec.FinRd.Roots.LieBasis.tanW, hpt]
+  simp only [Small.ptF, GlobalTheory.AllWt.ptF]

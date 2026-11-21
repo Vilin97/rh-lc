@@ -833,7 +833,7 @@ theorem isHaarOn_smul {k r : ℕ} {U : Set (Formalism.FourierDecayAlt.B.Mat k r)
   · intro K hK
     rw [Measure.smul_apply, smul_eq_mul]
     exact ENNReal.mul_lt_top h1.lt_top (h.finite_compact K hK)
-  ne_zero := by
+  ·
     intro h'
     apply h.ne_zero
     rw [← Measure.measure_univ_eq_zero]
@@ -939,7 +939,7 @@ theorem rootMeas_unique (hc : L.c = cStd) (μ : Measure (Mt (k0 + 1) r)) (hμ : 
     _ = (μ.map (rootCoords (k0 + 1) r L.z γ)).map (fun y => Matrix.of.symm (Formalism.FourierDecayAlt.P.Dx2.Rad.rhoF Ds g (wPt γ) (Tinv γ y))) :=
         (Measure.map_map hψ (meas_rootCoords _ γ)).symm
     _ = ENNReal.ofReal (Real.pi⁻¹ ^ (rootPat γ).card) • Formalism.FourierDecayAlt.D.muR Ds g (wPt γ) := by
-        rw [hμ.2, hcst, Measure.map_smul]
+        rw [hμ.2, hcst, Measure.map_smul _ hψ.aemeasurable]
         congr 1
         show _ = volume.map fun x => Matrix.of.symm (Formalism.FourierDecayAlt.P.Dx2.Rad.rhoF Ds g (wPt γ) x)
         rw [← (Tinv_mp γ).map_eq, Measure.map_map hm (Tinv_mp γ).measurable]
@@ -958,7 +958,7 @@ theorem root_measure_of_mu_R : RootMeasOfMuR := by
     field_simp
   refine ⟨?_, ?_⟩
   · rw [Measure.smul_apply, muR_conc L Ds hz γ hg hZ, smul_zero]
-  · rw [Measure.map_smul, muR_map_root L Ds hz γ hg hZ, hcst]
+  · rw [Measure.map_smul _ (meas_rootCoords _ γ).aemeasurable, muR_map_root L Ds hz γ hg hZ, hcst]
 
 theorem pair_inPair {k0 r : ℕ} (L : LocBessel (k0 + 1) r) (hκ0 : L.κN ≠ 0) (hκ1 : L.κN ≠ ⊤) :
     ∀ᵐ p ∂(pairMeas L), InPair L p := by

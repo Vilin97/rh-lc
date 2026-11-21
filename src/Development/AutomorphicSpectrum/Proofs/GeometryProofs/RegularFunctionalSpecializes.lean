@@ -31,7 +31,7 @@ theorem exists_lie_transport (c : R →+* R') {x : Sp R ⟶ S} {y : Sp R' ⟶ S}
   obtain ⟨j, hj, -⟩ := GlobalTheory.T.lie_model_existsUnique_semilinear S G R R' c x E E' M M'
   refine ⟨j, fun e => ?_⟩
   have := hj e
-  rw [LieModel.Lifts, Category.comp_id] at this
+  rw [Category.comp_id] at this
   exact this
 
 theorem lie_transport_induction [Smooth G.hom] (c : R →+* R') {x : Sp R ⟶ S} {y : Sp R' ⟶ S}
@@ -50,9 +50,9 @@ theorem lie_transport_induction [Smooth G.hom] (c : R →+* R') {x : Sp R ⟶ S}
       map_add' := j.map_add
       map_smul' := fun r e => j.map_smulₛₗ r e }
   have hb : IsBaseChange R' jl := GlobalTheory.T.lie_model_isBaseChange S G R R' x E E' M M' jl (fun e => by
-    rw [LieModel.Lifts, Category.comp_id]
+    rw [Category.comp_id]
     exact hj e)
-  exact hb.inductionOn n P zero base smul add
+  exact hb.inductionOn n base smul add
 
 end Transport
 

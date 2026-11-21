@@ -89,8 +89,11 @@ theorem realVanish_of (hA : ArchOp) (hD : PolDense) (hFr : FrameEx) (hFo : FockE
           (pureA F (Φ (PiTensorProduct.tprod ℂ (Function.update g w f))) g₀))) =
           fun _ => L (Φ (PiTensorProduct.tprod ℂ (Function.update g w f))) := funext fun t => by
         obtain ⟨T, hT, -⟩ := hA F E σ B n d X W M χX χW om r s r' s' hp _ (hγ.2 (Multiplicative.ofAdd t)) 1 (fun u _ => by simp [mat])
-        rw [MonoidHom.comp_apply, MonoidHom.inl_apply, hT.1 _ _ hg₀, hl' _ _ hg₀, hg₁, one_mul,
+        change l (om (γ (Multiplicative.ofAdd t), 1) (pureA F (Φ (PiTensorProduct.tprod ℂ (Function.update g w f))) g₀)) = _
+        rw [hT.1 _ _ hg₀, hl' _ _ hg₀, hg₁, one_mul,
           hinv _ (hγ.2 (Multiplicative.ofAdd t)) T hT]
+      change HasDerivAt (fun t : ℝ => l ((om.comp (MonoidHom.inl _ _)) (γ (Multiplicative.ofAdd t))
+          (pureA F (Φ (PiTensorProduct.tprod ℂ (Function.update g w f))) g₀))) _ 0 at h2
       rw [h3] at h2
       have h4 := h2.unique (hasDerivAt_const _ _)
       rw [hl' _ _ hg₀, hg₁, one_mul, sumPl_single _ w (fun i hi => by simp [Pi.single_eq_of_ne hi]), Function.update_idem,

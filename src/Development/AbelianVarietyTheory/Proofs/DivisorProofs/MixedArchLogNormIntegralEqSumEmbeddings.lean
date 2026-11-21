@@ -51,6 +51,7 @@ namespace GlobalTheory.MixPolar
 theorem injective_emb {k : Type} [CommRing k] [IsDomain k] [Module.Finite ℤ k] (σ : k →+* ℂ) :
     Function.Injective σ := by
   refine (RingHom.injective_iff_ker_eq_bot σ).2 (Ideal.eq_bot_of_comap_eq_bot (R := ℤ) ?_)
+  change Ideal.comap (algebraMap ℤ k) (RingHom.ker σ) = ⊥
   rw [RingHom.comap_ker, (RingHom.ext_int _ (Int.castRingHom ℂ) : σ.comp (algebraMap ℤ k) = _)]
   exact (RingHom.injective_iff_ker_eq_bot _).1 Int.cast_injective
 

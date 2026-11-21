@@ -29,8 +29,10 @@ namespace GlobalTheory.RefSum
 theorem refTheta_of_refCore_alt : _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.RefSum.ReferenceCore → _root_.GlobalTheory.RefSum.ReferenceTheta := by
   intro hS hR
   have hW := _root_.GlobalTheory.T.quotient_weight_gap_bounds' hS
-  refine Closed.imp (Closed.and hR hW) fun _ _ _ ⟨⟨C, hC, a, h⟩, _, _, b, h'⟩ =>
-    ⟨C, hC, max a b, fun x hx hle ι p hp i hi Y hY u1 hu => ?_⟩
+  refine Closed.imp (Closed.and hR hW) ?_
+  intro eps Fm CH inst H
+  obtain ⟨⟨C, hC, a, h⟩, _, _, b, h'⟩ := H
+  refine ⟨C, hC, max a b, fun x hx hle ι p hp i hi Y hY u1 hu => ?_⟩
   obtain ⟨S, e, s, hPS, hT, hq⟩ := h x hx ((le_max_left _ _).trans hle) ι p hp i hi u1 hu
   have hD := (h' x hx ((le_max_right _ _).trans hle) ι p hp i hi u1 hu).2.2.2.2.2.2.1
   refine ⟨S, e, s, hPS, hT, fun q hq' => le_trans ?_ (hq q hq')⟩

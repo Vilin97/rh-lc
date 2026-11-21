@@ -102,7 +102,9 @@ theorem spMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (d : A 
 
 theorem dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (d : A →+* B) (c : B →+* C) :
     (dualMap c).comp (dualMap d) = dualMap (c.comp d) := by
-  ext x <;> simp [dualMap]
+  apply RingHom.ext
+  intro x
+  ext <;> simp [dualMap]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 

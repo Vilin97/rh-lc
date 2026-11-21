@@ -36,8 +36,13 @@ variable {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B}
 
 theorem gIs2_iff (w : ColW B f T) (G : GJStage B w.C) : GIs2 K w G ↔
     ∀ W V S N, Formalism.L2.Theta.VolTieG (w.D ⟨W, V, S, N, G⟩) ∧ Nonempty (ColumnDataSplitPrimes K w ⟨W, V, S, N, G⟩) :=
-  ⟨fun h W V S N => ⟨(h W V S N).1, (h W V S N).2.2⟩,
-    fun h W V S N => let ⟨a, ⟨t⟩⟩ := h W V S N; ⟨a, gatNum_of_isRecG t.isRec, ⟨t⟩⟩⟩
+  by
+    constructor
+    · intro h W V S N
+      exact ⟨(h W V S N).1, (h W V S N).2.2⟩
+    · intro h W V S N
+      obtain ⟨a, ⟨t⟩⟩ := h W V S N
+      exact ⟨a, gatNum_of_isRecG t.isRec, ⟨t⟩⟩
 
 end GlobalTheory.Mem.Top.Bl.LayerTwoModel
 

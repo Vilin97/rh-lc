@@ -124,6 +124,8 @@ section GS
 
 attribute [local instance 2000] Rep.hV2
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 variable {K L : FiniteSubfield} [Fact (K ≤ L)] (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (ℓ : ℕ) [Fact ℓ.Prime]
 
@@ -136,6 +138,8 @@ theorem finrank_gsRootsZMod {S} (hℓS : ∀ v ∉ S, ((ℓ : ℕ) : 𝓞 K.1) �
   have : NeZero ℓ := ⟨hℓ.ne_zero⟩
   have hcard : Nat.card (gsRootsZMod S ℓ) = ℓ ^ 1 := by
     rw [pow_one]
+    obtain ⟨f⟩ := nonempty_addEquiv_gsRoots_of_mem S (n := ℓ) (fun v hv =>
+      by_contra fun h => hℓS v h hv)
     exact (Nat.card_congr f.toEquiv).trans (Nat.card_zmod ℓ)
   have : Finite (gsRootsZMod S ℓ) := Nat.finite_of_card_ne_zero (by rw [hcard]; exact pow_ne_zero _ hℓ.ne_zero)
   exact finrank_eq_of_natCard_zmod ℓ hcard
@@ -171,14 +175,18 @@ theorem finrank_shaSubmodule_two_eq_finrank_invariants (hℓS : ∀ v ∉ S, ((�
   have hP : (((gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).index : ℕ) : ZMod ℓ) ≠ 0 := by
     rw [Ne, ZMod.natCast_eq_zero_iff]
     exact (Nat.Prime.coprime_iff_not_dvd hℓ).1 hcop.symm
-  exact finrank_shaSubmodule_eq_finrank_invariants (gsFinFamily S ιs) (gsOpenSubgroup S hL) (gsRootsZMod S ℓ) M
+  let P := gsOpenSubgroup S hL
+  let N : Subgroup (galUnramifiedOutside K.1 ℚ̄ S) := P
+  have hS := gsKummer_shortExact S ℓ hℓS
+  have hTorsion := nsmul_gsRoots S ℓ
+  refine finrank_shaSubmodule_eq_finrank_invariants (gsFinFamily S ιs) P (gsRootsZMod S ℓ) M
     hT hM (finrank_gsRootsZMod ℓ hℓS) hP 2 (gsH1SUnitsModRep ℓ hL)
-    (kummerModNZMod _ (gsKummer_shortExact S ℓ hℓS) (nsmul_galRootsOfUnity_eq_zero ℓ) 1)
-    (isIntertwiningMap_kummerModNZMod _ (gsKummer_shortExact S ℓ hℓS) (nsmul_galRootsOfUnity_eq_zero ℓ) 1)
-    (kummerModNZMod_injective _ (gsKummer_shortExact S ℓ hℓS) (nsmul_galRootsOfUnity_eq_zero ℓ) 1)
-    (mem_shaSubmodule_iff_mem_range_kummerModNZMod _ (gsKummer_shortExact S ℓ hℓS) (nsmul_galRootsOfUnity_eq_zero ℓ)
-      (mackeyFamily (gsOpenSubgroup S hL) (gsFinFamily S ιs)) 1
-      (mem_ptSha_mackey_iff_exists_kummerModN hL ιs hℓ hℓS hK))
+    (kummerModNZMod N hS hTorsion 1) ?_ ?_ ?_
+  · exact isIntertwiningMap_kummerModNZMod N hS hTorsion 1
+  · exact kummerModNZMod_injective N hS hTorsion 1
+  · exact mem_shaSubmodule_iff_mem_range_kummerModNZMod N hS hTorsion
+      (mackeyFamily P (gsFinFamily S ιs)) 1
+      (mem_ptSha_mackey_iff_exists_kummerModN hL ιs hℓ hℓS hK)
 
 end GS
 

@@ -150,7 +150,7 @@ theorem UpperTheory.V.Z.Sym.W.aboveW : UpperTheory.V.Z.Sym.W.AboveW := by
   intro P L Ω _ _ _ _ _ l _ ι hl r hr m hm w hw HT hHT A h ⟨b, k, κ, hk, hf, hκ⟩ τ H hPT
   have hv : A.valuation (l : Ω) < 1 := by
     have := (h ((l : ℕ) : 𝓞 L)).2 hw
-    simpa using this
+    simpa only [map_natCast] using this
   let c : Fin 2 → ℤ := ![b + m, b]
   have hκ' : ∀ (i : Fin 2) (s : ↥(Dec (F := L) A)), (s : G L Ω) ∈ Ine (F := L) A → κ i s ^ k = (cycBar L Ω l s ^ c i) ^ k := by
     intro i s hs

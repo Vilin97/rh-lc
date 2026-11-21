@@ -330,9 +330,8 @@ theorem opNorm_sq_le {N n : ℕ} {X : Matrix (Fin N) (Fin N) ℂ} {X' : Matrix (
   refine hcl.closure_subset_iff.2 ?_ (hd w)
   rintro _ ⟨⟨y, hy⟩, rfl⟩
   have e : T (g y) = WithLp.toLp 2 (X'⁻¹ *ᵥ (M *ᵥ y)) := by
-    simp only [hT, g, LinearMap.coe_toContinuousLinearMap', Matrix.toEuclideanLin_apply, Matrix.mulVec_mulVec]
-    congr 2
-    rw [Matrix.mul_assoc, Matrix.mul_assoc, hXX, Matrix.mul_one]
+    change WithLp.toLp 2 ((X'⁻¹ * M * X) *ᵥ (X⁻¹ *ᵥ y)) = _
+    rw [Matrix.mulVec_mulVec, Matrix.mul_assoc, hXX, Matrix.mul_one, Matrix.mulVec_mulVec]
   refine (sq_le_sq₀ (norm_nonneg _) (mul_nonneg (Real.sqrt_nonneg _) (norm_nonneg _))).1 ?_
   simp only [Function.comp]
   rw [e, mul_pow, Real.sq_sqrt hB, norm_toLp_sq]

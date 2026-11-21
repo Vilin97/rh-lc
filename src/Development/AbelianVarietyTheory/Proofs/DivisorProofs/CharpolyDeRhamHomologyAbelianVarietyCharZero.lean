@@ -100,7 +100,7 @@ theorem charpoly_of_pullback {K L : Type} [Field K] [Field L] [Algebra K L] (B�
       by rw [← Over.comp_left, i.inv_hom_id, Over.id_left]⟩⟩
     exact ⟨inferInstanceAs (IsFinite i.hom.left), inferInstanceAs (Surjective i.hom.left)⟩
   rw [← AbVar.charpoly_bcMap K L B₀ (End.of f₀)]
-  refine AbVar.charpoly_eq_of_isogeny_intertwines L B _ u (End.of f) _ hu (AbVar.hom_ext ?_)
+  refine AbVar.charpoly_eq_of_isogeny_intertwines L B _ u (End.of f) _ hu (Subtype.ext ?_)
   change f.hom ≫ i.hom = i.hom ≫ (AbVar.bcMap L f₀).hom
   apply Over.OverMorphism.ext
   apply h'.1.hom_ext

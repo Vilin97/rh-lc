@@ -208,7 +208,7 @@ theorem form_ext [F.IsQuasicoherent] (hU : IsAffineOpen U) (hV : IsAffineOpen V)
   letI := QCoh.resModule F h
   haveI := QCoh.res_isScalarTower F h
   refine LinearMap.ext fun t => (QCoh.isBaseChange_resLinear F hU hV h).inductionOn t
-    (fun t => μ t = μ' t) (by simp) H (fun a t ht => ?_) fun a b ha hb => ?_
+    H (fun a t ht => ?_) fun a b ha hb => ?_
   · rw [μ.map_smulₛₗ, μ'.map_smulₛₗ, ht]
   · rw [map_add (f := _), map_add (f := _), ha, hb]
 

@@ -62,7 +62,7 @@ theorem scalB_rec : Formalism.MainNotions.ModuliIntegralCharts.H1.ChartIndepSt2 
     intro w s c hw hsp hs hc0 hc hsc
     obtain ⟨hRw, hrw, hlw⟩ := hW w hw
     have hn8 : 0 < w.n := by omega
-    obtain ⟨Sh, hSh1, hSh2⟩ := GlobalTheory.T.exists_finite_spanning_short_generators_small_supNorm hCI D T h hGam large₂ j hj w hRw hL2 hrw hlw hSh (hA j hj w.n) hsp
+    obtain ⟨Sh, hSh1, hSh2⟩ := GlobalTheory.RunIn.exists_short_family_small hCI D T h hGam large₂ j hj w hRw hL2 hrw hlw hSh (hA j hj w.n) hsp
     have hsize : 1 ≤ w.size := WeightFamilies.Wt.one_le_size w
     have key := GlobalTheory.T.shortGenerators_scaled_thetaLattice D _ _ j (recPJ h j hj) w s Sh c (400 * Zb D large₂ * w.size) hs hc0
       (mul_nonneg (by linarith) (by linarith)) hsc hSh1 hSh2

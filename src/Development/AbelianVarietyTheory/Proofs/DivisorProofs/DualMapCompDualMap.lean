@@ -81,11 +81,11 @@ def dualAlg {B B' : Type} [CommRing B] [Algebra R B] [CommRing B'] [Algebra R B'
 
 @[simp] theorem fst_dualAlg {B B' : Type} [CommRing B] [Algebra R B] [CommRing B'] [Algebra R B'] (ρ : B →ₐ[R] B')
     (c : DualNumber B) : (dualAlg ρ c).fst = ρ c.fst := by
-  simp [dualAlg, GlobalTheory.CompanionTheory.Ar.dualMap]
+  simp [dualAlg, dualMap]
 
 @[simp] theorem snd_dualAlg {B B' : Type} [CommRing B] [Algebra R B] [CommRing B'] [Algebra R B'] (ρ : B →ₐ[R] B')
     (c : DualNumber B) : (dualAlg ρ c).snd = ρ c.snd := by
-  simp [dualAlg, GlobalTheory.CompanionTheory.Ar.dualMap]
+  simp [dualAlg, dualMap]
 
 def Pt.Hom.dual {P Q : Pt s} (φ : P.Hom Q) : P.ext ⟶ Q.ext :=
   SqExt.thickHom (SqExt.ofModule R P.B P.B) (SqExt.ofModule R Q.B Q.B) (dualAlg φ.ρ) φ.ρ

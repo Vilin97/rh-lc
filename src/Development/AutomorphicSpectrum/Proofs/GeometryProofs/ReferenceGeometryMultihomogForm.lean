@@ -74,7 +74,7 @@ theorem sum_bcomp [DecidableEq (K → ℕ)] (g : MRing J) : ∑ d ∈ g.support.
 theorem bcomp_eq_zero [DecidableEq (K → ℕ)] (g : MRing J) {d : K → ℕ} (h : d ∉ g.support.image bdeg) : bcomp g d = 0 := by
   classical
   ext m
-  rw [coeff_bcomp, coeff_zero]
+  rw [coeff_bcomp, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
   split_ifs with e
   · by_contra h0
     exact h (e ▸ Finset.mem_image_of_mem _ (mem_support_iff.2 h0))
@@ -107,7 +107,7 @@ theorem aeval_bcomp_eq_zero (w : (Σ k, J k) → ℂ) (g : MRing J)
     rfl
   by_cases hd : d ∈ g.support.image bdeg
   · have h2 := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm d)) (h1.symm.trans h0)
-    rw [coeff_sum, coeff_zero] at h2
+    rw [coeff_sum, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h2
     simp only [hm, coeff_C_mul, coeff_monomial, mul_ite, _root_.mul_one, mul_zero, EmbeddingLike.apply_eq_iff_eq] at h2
     rwa [Finset.sum_ite_eq', if_pos hd] at h2
   · rw [bcomp_eq_zero g hd, map_zero]

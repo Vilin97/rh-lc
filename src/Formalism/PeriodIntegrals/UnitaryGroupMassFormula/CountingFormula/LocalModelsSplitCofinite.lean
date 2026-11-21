@@ -49,19 +49,21 @@ theorem resChar_finite (D : Formalism.BasicNotions.D7) (ℓ : ℕ) : {p : PlF D 
     exact ringChar.Nat.cast_ringChar
   by_cases hℓ : ℓ = 0
   · subst hℓ
-    convert Set.finite_empty
-    ext p
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
-    intro hp
-    have h1 : ((Ideal.absNorm p.asIdeal : ℕ) : 𝓞 D.host.F ⧸ p.asIdeal) = 0 := by
-      rw [← map_natCast (Ideal.Quotient.mk p.asIdeal), Ideal.Quotient.eq_zero_iff_mem]
-      exact Ideal.absNorm_mem p.asIdeal
-    have hc : CharP (𝓞 D.host.F ⧸ p.asIdeal) 0 := by
-      have h2 := ringChar.charP (𝓞 D.host.F ⧸ p.asIdeal)
-      unfold Loc.resChar at hp
-      rwa [hp] at h2
-    rw [CharP.cast_eq_zero_iff _ 0, zero_dvd_iff, Ideal.absNorm_eq_zero_iff] at h1
-    exact p.ne_bot h1
+    have hempty : {p : PlF D | Loc.resChar p = 0} = ∅ := by
+      ext p
+      simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
+      intro hp
+      have h1 : ((Ideal.absNorm p.asIdeal : ℕ) : 𝓞 D.host.F ⧸ p.asIdeal) = 0 := by
+        rw [← map_natCast (Ideal.Quotient.mk p.asIdeal), Ideal.Quotient.eq_zero_iff_mem]
+        exact Ideal.absNorm_mem p.asIdeal
+      have hc : CharP (𝓞 D.host.F ⧸ p.asIdeal) 0 := by
+        have h2 := ringChar.charP (𝓞 D.host.F ⧸ p.asIdeal)
+        unfold Loc.resChar at hp
+        rwa [hp] at h2
+      rw [CharP.cast_eq_zero_iff _ 0, zero_dvd_iff, Ideal.absNorm_eq_zero_iff] at h1
+      exact p.ne_bot h1
+    rw [hempty]
+    exact Set.finite_empty
   · refine (Ideal.finite_factors ?_).subset hsub
     rw [Ne, Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot]
     exact_mod_cast hℓ

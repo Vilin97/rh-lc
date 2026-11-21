@@ -186,7 +186,7 @@ theorem prod_maxPow (I : Ideal (𝓞 D.host.F)) (hI : I ≠ 0) :
   let φ : Ideal (𝓞 D.host.F) →* ℝ := (powMonoidHom 2).comp (invMonoidHom.comp
     ((Nat.castRingHom ℝ).toMonoidHom.comp (Ideal.absNorm : Ideal (𝓞 D.host.F) →*₀ ℕ).toMonoidHom))
   have hφ : ∀ J, φ J = (((Ideal.absNorm J : ℕ) : ℝ)⁻¹) ^ 2 := fun J => rfl
-  have hfin := Ideal.finite_mulSupport hI
+  have hfin := Ideal.hasFiniteMulSupport hI
   have hsub : (Function.mulSupport fun p : PlF D => φ (p.maxPowDividing I)) ⊆
       Function.mulSupport fun p : PlF D => p.maxPowDividing I :=
     Function.mulSupport_comp_subset (map_one φ) _

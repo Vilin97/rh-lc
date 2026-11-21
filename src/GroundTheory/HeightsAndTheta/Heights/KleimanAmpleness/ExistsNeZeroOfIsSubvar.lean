@@ -96,7 +96,8 @@ theorem SectionCount.transfer (hBase : BaseRealises.Statement)
   refine ⟨by rw [h1, h2]; push_cast; ring, fun n => ?_⟩
   rw [hP F K ι Ω y k₀ N e x hx hmod Q ν hQ n (-((n : ℤ) * q))]
   congr 1
-  simp only [smul_eq_mul, nsmul_eq_mul]
+  funext j
+  simp only [smul_eq_mul, nsmul_eq_mul, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, Pi.mul_apply, Pi.natCast_apply]
   ring
 
 theorem SectionCount.equiv (hG : GraphModel.Statement) (hB : BundleOfDeg.Statement) (hD : ModelDim.Statement)

@@ -84,8 +84,9 @@ theorem galHodge0_of_cgTrue (sw : _root_.UpperTheory.One.M.TrivialCondition) (hL
     obtain ⟨B, hB, e⟩ := hS _ π w (by omega) hu
     rw [e] at hα
     obtain ⟨b, hb, rfl⟩ := Multiset.mem_map.1 hα
-    have k : UpperTheory.GalN.OpenB (Formalism.ConjugateSelfDual.normV w) (b : ℂ) :=
-      PositivityTheory.JacquetShalikaLocal.jacquetShalikaBound D.host.E _ _ (hU _ π (by omega)) w B hB b hb
+    have k : UpperTheory.GalN.OpenB (Formalism.ConjugateSelfDual.normV w) (b : ℂ) := by
+      simpa [UpperTheory.GalN.OpenB, normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
+        PositivityTheory.JacquetShalikaLocal.jacquetShalikaBound D.host.E _ _ (hU _ π (by omega)) w B hB b hb
     rw [Units.val_inv_eq_inv_val]
     have hq := UpperTheory.GalN.one_lt_q (H := D.host) w
     refine (k.inv hq).2.le.trans (Real.rpow_le_rpow_of_exponent_le (by exact_mod_cast hq.le) ?_)
@@ -151,11 +152,9 @@ theorem galHodge0_of_cgTrue (sw : _root_.UpperTheory.One.M.TrivialCondition) (hL
     have hone : ∀ v, (1 : HChar D.host.E).UnrAt v := fun v x _ => rfl
     have cone : (CG.ofChar (1 : HChar D.host.E)).IsCsd := isCsd_ofChar_of_res _ _ (Or.inl
       ⟨fun v k => by
-        simp only [HChar.resFin, MonoidHom.finset_prod_apply]
-        exact Finset.prod_eq_one fun _ _ => rfl,
+        simp [HChar.resFin, HChar.locK, HChar.loc],
       fun v k => by
-        simp only [HChar.resInf, MonoidHom.finset_prod_apply]
-        exact Finset.prod_eq_one fun _ _ => rfl⟩)
+        simp [HChar.resInf, HChar.locInf]⟩)
     rcases Int.even_or_odd' ((D.R.r : ℤ) - 1 - wt) with ⟨k, hk | hk⟩
     · have hsk : (s : ℂ) = k := by
         rw [hk] at hs2

@@ -39,7 +39,7 @@ structure PX (J : Matrix (Fin n) (Fin n) E) (b : GL (Fin n) (Fv F v)) (x y : Fin
   y2 : (b.1ᵀ * J.map t) *ᵥ (fun i => t (σ (y i))) = Pi.single j₀ 1
 
 theorem pe_one (J : Matrix (Fin n) (Fin n) E) (b : GL (Fin n) (Fv F v)) : PE σ t J J b b 1 id := by
-  have : emb (Fv F v) (id : Fin n → Fin n) = 1 := by ext i j; simp [emb, one_apply]
+  have : emb (Fv F v) (id : Fin n → Fin n) = 1 := by ext i j; by_cases h : i = j <;> simp [emb, Matrix.one_apply, h]
   refine ⟨?_, ?_⟩ <;> rw [this, Matrix.map_one _ (map_zero _) (map_one _), Matrix.mul_one, Matrix.one_mul]
 
 theorem form_swap (hσ : IsCMExt F E σ) {J : Matrix (Fin n) (Fin n) E} {ε : E} (hJ : ∀ i j, σ (J j i) = ε * J i j) (hε : ε * ε = 1)

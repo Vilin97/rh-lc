@@ -137,7 +137,8 @@ variable {M M'} {hMM'}
 omit [FiniteDimensional ℚ_[p] K] in
 theorem finiteDimensional_extendScalars_of_le :
     FiniteDimensional M (IntermediateField.extendScalars hMM') := by
-  apply Module.finite_of_finrank_pos
+  set_option synthInstance.maxHeartbeats 200000 in
+    apply Module.finite_of_finrank_pos
   have h : 0 < Module.finrank K M' := Module.finrank_pos
   rw [finrank_eq_mul_finrank_extendScalars hMM'] at h
   exact Nat.pos_of_ne_zero fun h0 => by simp [h0] at h

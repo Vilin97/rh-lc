@@ -101,7 +101,6 @@ theorem constMor_surjective (P : AbelianDeRham) {A : Over (Sp R)} [GrpObj A] {g 
   obtain ⟨z, rfl⟩ := bc.2 q
   refine ⟨z, ?_⟩
   induction z with
-  | zero => rw [map_zero, map_zero, map_zero]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul r c =>
     rw [liftSemi_tmul, liftSemi_tmul, map_smul,
@@ -280,9 +279,17 @@ theorem IsKS.unique (P : AbelianDeRham) {Φ : Finset (E →+* ℂ)} {y : FrPt Xo
       rw [map_sub, map_sum] at this
     simpa [h0] using this
   have ed : ∀ k, th (hb k) - kb k ∈ Fil B := fun k => by
-    have := (hl k.1 k.2).baseChange (hφ := hφ) hF hL (hth _) (htv _)
-    rw [et] at this
-    exact this.sub_mem (hl₂ k.1 k.2)
+    rw [Fil, hF, Submodule.mem_dualAnnihilator]
+    intro c hc
+    refine (Submodule.span_le (p := LinearMap.ker (th (hb k) - kb k))).2 (fun c hc => ?_) hc
+    obtain ⟨⟨c, hc'⟩, hc, rfl⟩ := hc
+    change c ∈ F1 _ at hc
+    rw [hodgeFiltration_eq_range] at hc
+    obtain ⟨f, rfl⟩ := hc
+    change th (hb k) _ - kb k _ = 0
+    rw [hth (hb k), (hl k.1 k.2).2 f hc', ← tanVal_baseChange (AbelianDeRham.bcMor hφ).isMor (htv _) f, et, sub_eq_zero]
+    exact ((hl₂ k.1 k.2).2 _ ((AbelianDeRham.bcMor hφ).pullback_mem_primitive hc')).symm
+
   funext t
   obtain ⟨τ, r, s⟩ := t
   obtain ⟨w₁, hc₁, f₁, hf₁, hd₁, hv₁⟩ := hM τ r

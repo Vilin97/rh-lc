@@ -36,8 +36,8 @@ theorem exists_local_section {F G : X.Modules} (φ : F ⟶ G) [Epi φ] {s : ℕ}
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [Module.Basis.constr_apply_fintype, Module.Basis.equivFun_apply, map_sum,
       resM_smul, resM_resM]
-    refine Finset.sum_congr rfl fun i _ => ?_
-    rw [← he.repr_resM (h.trans hU) h']
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [← he.repr_resM (h.trans hU) h']
   · rw [← appLinear_apply]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [Module.Basis.constr_apply_fintype, Module.Basis.equivFun_apply, map_sum,

@@ -216,6 +216,7 @@ variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
 theorem exists_r (v : Pl (F := F)) : ∃ r : (κ → AF F) → ℂ, (∀ x z, At (evFin F v) z → r (x + z) = r x) ∧
     (∀ ψ ∈ SB (κ → Fv F v), tens (evFin F v) ψ r ∈ schA F κ) ∧ r 0 ≠ 0 := by
+  classical
   obtain ⟨f, hf⟩ := GlobalTheory.TensUniq.exists_sInf_ne_zero F κ
   let φs : ∀ w : Pl (F := F), (κ → Fv F w) → ℂ :=
     fun w => Set.indicator {x | ∀ i, x i ∈ w.adicCompletionIntegers F} 1

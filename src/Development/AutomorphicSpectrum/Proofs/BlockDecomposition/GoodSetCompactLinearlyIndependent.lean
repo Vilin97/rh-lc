@@ -32,7 +32,7 @@ lemma isOpen_nearK (κ : K ≃+* (W → ℂ)) (hκ : IsHomeomorph κ) {n M : ℕ
   refine isOpen_iInter_of_finite fun i => ?_
   refine isOpen_lt ?_ continuous_const
   refine Continuous.norm ?_
-  refine continuous_finset_sum _ fun b _ => ?_
+  refine continuous_finsetSum _ fun b _ => ?_
   exact continuous_const.mul (cont_coord κ hκ b i w)
 
 lemma isCompact_boxK (κ : K ≃+* (W → ℂ)) (hκ : IsHomeomorph κ) {n M : ℕ} (r : Fin n → W → ℝ) :

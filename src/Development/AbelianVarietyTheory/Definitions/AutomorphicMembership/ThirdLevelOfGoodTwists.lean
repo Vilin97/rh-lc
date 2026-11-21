@@ -67,9 +67,9 @@ theorem del_mul_ne_one {p : ℕ} (hp : p.Prime) (hS : p ∈ offSet B.toPre) {δ 
       exact u.isPrime.ne_top ((Ideal.eq_top_iff_one _).2 (hab ▸ Ideal.add_mem _ (Ideal.mul_mem_left _ _ h3) (Ideal.mul_mem_left _ _ hpQ)))
   have h15 := (hδ.ine u hu 1).1 fun x hx => by
     have e := congrArg (fun χ : HChar B.host.E => χ.loc u x) h
-    simp only [HChar.loc_mul, hψ x hx, mul_one] at e
+    change δ.loc u x * (T.psi v).loc u x = 1 at e
+    rw [hψ x hx, mul_one] at e
     rw [pow_one, e]
-    rfl
   omega
 
 theorem twisted_iff (x : St P) (v : B.places.Pl) : TwistedAt (Dof x) v ↔ v ∈ P.Wt := by

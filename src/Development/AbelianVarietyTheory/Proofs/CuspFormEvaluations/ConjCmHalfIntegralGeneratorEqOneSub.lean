@@ -71,7 +71,9 @@ theorem extra_weight_exists : ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ) (
   have hp0 : ((T.U j T.σ₀).X k).p0 = D.R.m - j :=
     ((h.unf j hj T.σ₀ T.good_σ₀).2.1 k).1.trans (h.pins.2.2.2 j hj).2.1
   have hf1 : (1 : ℝ) ≤ D.R.f := by
-    have : 0 < D.R.f := by unfold Ranks.f Ranks.n; positivity
+    have : 0 < D.R.f := by
+      have hp : 0 < Module.finrank ℚ D.host.E := Module.finrank_pos
+      omega
     exact_mod_cast this
   obtain ⟨cu⟩ := h.cuNe j hj k
   have hρ : 0 < WeightFamilies.rho D j := by

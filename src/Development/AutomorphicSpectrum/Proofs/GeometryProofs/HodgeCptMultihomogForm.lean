@@ -47,7 +47,6 @@ theorem isNoetherianRing_chart (ξ : Spec (CommRingCat.of Ω) ⟶ X) (x : κ →
     rw [h0] at h1
     refine h1.trans ?_
     simp only [map_zero]
-    exact (map_zero (genMap ξ ⟨q, sp q hq⟩)).symm
   have hsurj : Function.Surjective ρ := by
     rintro ⟨a, ha⟩
     obtain ⟨s, hs⟩ := exists_ev_eq hU hη sp a ((hreg a).1 ha)

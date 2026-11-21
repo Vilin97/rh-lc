@@ -29,7 +29,7 @@ theorem monic_eval_capP : ∀ (n : ℕ) (p : ℂ[X]), p.Monic → p.natDegree = 
       have hdeg : 0 < p.degree := by
         rw [degree_eq_natDegree hm.ne_zero, hd]
         exact_mod_cast Nat.succ_pos n
-      obtain ⟨z, hz⟩ := _root_.Complex.exists_root (f := p) hdeg
+      obtain ⟨z, hz⟩ := IsAlgClosed.exists_root p (ne_of_gt hdeg)
       have hq : (X - C z) * (p /ₘ (X - C z)) = p := mul_divByMonic_eq_iff_isRoot.2 hz
       have hqm : (p /ₘ (X - C z)).Monic := (monic_X_sub_C z).of_mul_monic_left (hq.symm ▸ hm)
       have hqd : (p /ₘ (X - C z)).natDegree = n := by

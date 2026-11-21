@@ -97,7 +97,9 @@ theorem countK_alt :
       obtain ⟨B, hB⟩ := hsat π hπ ⟨w, hwM⟩
       rw [hsys π _ B hB, algSat, Multiset.card_map, ← hB.card]
       simp)
-    (by exact zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm w))
+    (by
+      rw [normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply]
+      exact zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm w))
     (fun π hπ => by
       obtain ⟨B, hB⟩ := hsat π hπ ⟨w, hwM⟩
       rw [hsys π _ B hB]
@@ -163,7 +165,9 @@ theorem countP_alt :
       obtain ⟨B, hB⟩ := hsat π hπ ⟨w, hwM⟩
       rw [hsys π _ B hB, algSat, Multiset.card_map, ← hB.card]
       simp)
-    (by exact zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm w))
+    (by
+      rw [normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply]
+      exact zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm w))
     (fun π hπ => by
       obtain ⟨B, hB⟩ := hsat π hπ ⟨w, hwM⟩
       rw [hsys π _ B hB]

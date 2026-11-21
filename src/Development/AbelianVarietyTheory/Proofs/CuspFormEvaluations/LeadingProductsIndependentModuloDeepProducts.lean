@@ -171,6 +171,8 @@ theorem indep_disjoint {Y : Type} {δ D m : ℕ} (T a : ℕ) (xs : Fin δ → Y)
     have h1 := coeff_eq_zero T a xs s w0 θ H hch hθ
       (fun α k => if h : ∑ i, α i < a then g (⟨α, h⟩, k) else 0) (by
         convert hg using 1
+        funext y
+        simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.mul_apply, Finset.prod_apply,
           Pi.pow_apply]
         rw [Finset.sum_subtype (multiLt D a) (fun α => GlobalTheory.LeadIndep.mem_multiLt),
           Fintype.sum_prod_type]
@@ -214,7 +216,8 @@ theorem main : ∀ (D : D7) (T : Top D) (h : LawsP T) (j : ℕ) (hj : InR D j) (
       e.symm ⟨k, ⟨cpt ((T.U j T.σ₀).X k) ((Fl.Fl k).xs i) z, hz⟩⟩ else xs q
   let U : Set (V (nd ((T.U j T.σ₀).X k))) :=
     cpt ((T.U j T.σ₀).X k) ((Fl.Fl k).xs i) ⁻¹' ((T.U j T.σ₀).X k).dom
-  have hU : IsOpen U := (FourierCoefficientDomain.isOpen_dom _).preimage (IW.cpt_diff _ _).continuous
+  have hU : IsOpen U := (FourierCoefficientDomain.isOpen_dom _).preimage
+    (IW.cpt_diff ((T.U j T.σ₀).X k) ((Fl.Fl k).xs i)).continuous
   have h0U : (0 : V (nd ((T.U j T.σ₀).X k))) ∈ U := by
     simp only [U, Set.mem_preimage, IW.cpt_zero]
     exact hx0

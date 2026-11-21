@@ -252,7 +252,7 @@ theorem liftC_real (μ : ∀ n, Measure (GA D (V n))) (fd : ∀ n, Set (GA D (V 
     rcases hLevel with ⟨h1, ⟨K₀, h2, h3, h4⟩, h5⟩
     have hArrow : ArrowOK comp ρ ker Λ n := hc n hn'
     rcases hArrow with ⟨-, a2, a3, a4, a5, -, a7, a8⟩
-    obtain ⟨hfin, κ, hκH, hκP, hU⟩ := GlobalTheory.DefiniteClassReal.integral_eq_finClSum_avg (V n) a2 K₀ (K n) h2 h1 h3 (μ n) (fd n) h4
+    have hAvg := GlobalTheory.DefiniteClassReal.integral_eq_finClSum_avg (V n) a2 K₀ (K n) h2 h1 h3 (μ n) (fd n) h4
       (fun g => ker n g h * liftC μ fd ker F n g)
       (fun γ hγ g => by
         rw [a5 γ hγ, liftC_left hc hFa μ fd n (by omega) γ hγ])
@@ -265,6 +265,7 @@ theorem liftC_real (μ : ∀ n, Measure (GA D (V n))) (fd : ∀ n, Set (GA D (V 
           rw [ih, finOf_mul_inf, mul_inv_rev, map_mul, Module.End.mul_apply]
         simp only [e]
         exact a4 _))
+    rcases hAvg with ⟨hfin, κ, hκH, hκP, hU⟩
     haveI := Fintype.ofFinite (FinCl (V n) (K n))
     simp only [liftC, sumV]
     set_option synthInstance.maxHeartbeats 100000 in

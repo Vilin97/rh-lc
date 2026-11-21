@@ -86,7 +86,13 @@ theorem q_frame_degree (D : D7) : QFrameDeg D := by
     rw [hfam p, hbK p]
   obtain ⟨-, -, hmuQ⟩ := mu_of_frames (CV.Q c τ) hQ (ownFrame (CV.Q c τ) (CV.eQ c τ) g hg hloc)
   have hML := MQ_lattice CV c τ
-  have hstdGood : (stdHL D.what₂.LL (MQ CV c τ)).Good := ⟨fun _ => by simp, hML.fg, hML.span_eq_top⟩
+  have hspan : Submodule.span D.what₂.LL (MQ CV c τ : Set (Fin (D.R.N 0) → D.what₂.LL)) = ⊤ := by
+    unfold MQ
+    rw [Submodule.map_coe, LinearMap.coe_restrictScalars]
+    rw [show ⇑(crdQ CV c τ : (CV.Q c τ).V →ₗ[D.what₂.LL] (Fin (D.R.N 0) → D.what₂.LL)) = ⇑(crdQ CV c τ) from rfl]
+    rw [← LinearEquiv.coe_coe, Submodule.span_image, hQ.2.2, Submodule.map_top]
+    exact LinearEquiv.range _
+  have hstdGood : (stdHL D.what₂.LL (MQ CV c τ)).Good := ⟨fun _ => by simp, hML.fg, hspan⟩
   let FS : FrameData (stdHL D.what₂.LL (MQ CV c τ)) (Fin (D.R.N 0)) :=
     { e := Pi.basisFun D.what₂.LL (Fin (D.R.N 0))
       Γ := g

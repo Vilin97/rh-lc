@@ -52,6 +52,8 @@ theorem psJet_subst_psIn {ι' : Type} [Fintype ι'] [DecidableEq ι'] (m : ℕ) 
   rw [subst_rename_lemma Q hQ, ExpGF.psJet_subst_trunc m _ (fun _ => hQ _) g]
   congr 1
   congr 1
+  funext p
+  simp
 
 end Help
 

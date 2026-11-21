@@ -45,7 +45,7 @@ theorem injective_gsRealRes_of_four_le {n : ℕ} (hn : n ≠ 0)
     (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((n : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
     (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) {r : ℕ} (hr : 4 ≤ r) :
-    Function.Injective (gsRealRes S ιr M r).hom := by
+    Function.Injective (gsRealRes S ιr M r).hom := set_option maxHeartbeats 16000000 in by
   obtain ⟨ιs'⟩ : Nonempty (∀ v : S,
       ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1)) :=
     ⟨fun _ => Classical.choice nonempty_algHom_of_isSepClosed⟩
@@ -65,7 +65,7 @@ theorem surjective_gsRealRes_of_three_le {n : ℕ} (hn : n ≠ 0)
     (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((n : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
     (M : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)) [IsDiscreteRep M] [Finite M]
     (hM : ∀ m : M, n • m = 0) {r : ℕ} (hr : 3 ≤ r) :
-    Function.Surjective (gsRealRes S ιr M r).hom := by
+    Function.Surjective (gsRealRes S ιr M r).hom := set_option maxHeartbeats 16000000 in by
   obtain ⟨ιs'⟩ : Nonempty (∀ v : S,
       ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1)) :=
     ⟨fun _ => Classical.choice nonempty_algHom_of_isSepClosed⟩

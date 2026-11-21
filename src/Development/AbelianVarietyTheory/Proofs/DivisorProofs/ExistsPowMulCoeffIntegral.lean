@@ -302,6 +302,7 @@ theorem harm_mem_coefLat : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0
   set r : (O i).c'.F := f ((k : T.Q.c.F) ^ Dg) with hrdef
   have hr : r = (k : (O i).c'.F) ^ Dg := by rw [hrdef]; erw [map_pow, map_natCast]
   have hr0 : r ≠ 0 := by rw [hr]; exact pow_ne_zero _ (Nat.cast_ne_zero.2 hk0)
+  set_option synthInstance.maxHeartbeats 200000 in
   refine ⟨r⁻¹ • y0, s * k ^ Dg, ?_, ?_, ?_⟩
   · rw [map_smul, hy0io]
     exact inv_smul_smul₀ hr0 _
@@ -311,6 +312,7 @@ theorem harm_mem_coefLat : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0
     · exact hs h1
     · exact hklam (lam.isPrime.mem_of_pow_mem _ h1)
   · refine ⟨gramR, c0R, c0L, hFT, s • x0, hsx, ?_⟩
+    set_option synthInstance.maxHeartbeats 200000 in
     have hsm : (s * k ^ Dg) • (r⁻¹ • y0) = s • y0 := by
       rw [← Nat.cast_smul_eq_nsmul (O i).c'.F, ← Nat.cast_smul_eq_nsmul (O i).c'.F s, smul_smul, Nat.cast_mul,
         Nat.cast_pow, ← hr, mul_assoc, mul_inv_cancel₀ hr0, mul_one]

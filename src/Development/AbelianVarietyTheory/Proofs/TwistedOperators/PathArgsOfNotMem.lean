@@ -185,7 +185,8 @@ theorem edges_bound {m : ℕ} {t : T} {i j : ℕ} : ∀ {Y : Node} (p : Path T (
     rw [edges_snoc]
     rcases OnGrid.last hg with ⟨k, l, -, -, rfl⟩ | ⟨k, l, -, -, rfl⟩
     · change Node.grid k l = Node.grid i' j' at h1
-      obtain ⟨hk, hl⟩ := Node.grid.inj h1
+      simp only [Node.grid.injEq] at h1
+      rcases h1 with ⟨hk, hl⟩
       subst i' j'
       refine ⟨k + 1, l, rfl, by omega, h3, List.nodup_append.2 ⟨h4, List.nodup_singleton _, fun b hb c hc e => ?_⟩, fun b hb => ?_⟩
       · obtain rfl := List.mem_singleton.1 hc
@@ -197,7 +198,8 @@ theorem edges_bound {m : ℕ} {t : T} {i j : ℕ} : ∀ {Y : Node} (p : Path T (
         · obtain rfl := List.mem_singleton.1 hb
           simp only [edgeOf]; omega
     · change Node.grid k (l + 1) = Node.grid i' j' at h1
-      obtain ⟨hk, hl⟩ := Node.grid.inj h1
+      simp only [Node.grid.injEq] at h1
+      rcases h1 with ⟨hk, hl⟩
       subst i' j'
       refine ⟨k, l, rfl, h2, by omega, List.nodup_append.2 ⟨h4, List.nodup_singleton _, fun b hb c hc e => ?_⟩, fun b hb => ?_⟩
       · obtain rfl := List.mem_singleton.1 hc

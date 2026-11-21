@@ -27,7 +27,7 @@ theorem main_alt_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : T
   refine isFinComb_smul _ _ (isFinComb_smul _ _ (GlobalTheory.QPl.ThetaPin.isFinComb_aconv _ fun e he => ?_))
   obtain ⟨i, rfl⟩ := List.mem_ofFn.1 he
   obtain ⟨ε, hε, hsum⟩ := (J.G i).q.above
-  have hs := (J.G i).hs
+  have hs : (J.G i).s + 1 + 1 = B.R.m := (J.G i).hs
   refine GlobalTheory.QPl.ThetaPin.isFinComb_of_half hε _ fun w hw => hsum ▸ ?_
   have hm : (I.rec7 l Z).R.m = B.R.m := rfl
   rcases Nat.lt_or_ge j (J.G i).s with h1 | h1

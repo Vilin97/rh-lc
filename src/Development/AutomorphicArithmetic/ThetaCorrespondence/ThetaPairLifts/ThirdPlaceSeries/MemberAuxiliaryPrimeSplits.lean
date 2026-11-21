@@ -25,7 +25,8 @@ namespace GlobalTheory.SplitPrimeAuxiliary
 open scoped Pointwise
 theorem exists_auxiliary_prime_split_alt : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, AllSt fun _ _ _ _ _ _ x => ∀ _ : _root_.GlobalTheory.HeightCounting.Up.StrictHenselianAcyclicLevel hL x, ∀ v, v ∈ placesOver (Dof x).host.E (Dof x).host.pde ∨ v ∈ placesOver (Dof x).host.E (Dof x).host.pde' → IsSplitPl (Dof x).host v := by
   intro _ hL
-  refine StepW.of_all fun K B f T w _ _ _ P x _ v hv => ?_
+  apply StepW.of_all
+  intro K B f T w _ _ _ P x _ v hv
   rcases hv with hv | hv
   · exact isSplitPl_of_split B.host B.host.pde_prime B.toPre.pde_split.1 v hv
   · exact isSplitPl_of_split B.host B.host.pde'_prime B.toPre.pde_split.2 v hv

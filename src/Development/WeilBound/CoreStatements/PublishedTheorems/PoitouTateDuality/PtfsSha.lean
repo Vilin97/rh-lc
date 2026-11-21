@@ -136,7 +136,7 @@ theorem perfectQZ_of_found {X Y : Type} [AddCommGroup X] [AddCommGroup Y]
       Nonempty (Y ≃+ ptSha (gsFinFamily S' ιs) A 1) ∧
       Nonempty (X ≃+ ptSha (gsFinFamily S' ιs) (dualRep (gsRoots S' N) A) 2)) : PerfectQZ X Y := by
   obtain ⟨K', S', _, ιs, N, _, hS, hK, A, _, _, hA, ⟨eY⟩, ⟨eX⟩⟩ := h
-  obtain ⟨h1, h2, h3, h4⟩ := poitouTate_sha_gs S' ιs hS hK A hA
+  obtain ⟨h1, h2, h3, h4⟩ := poitouTate_sha_gs (K := K') (N := N) S' ιs hS hK A hA
   exact perfectQZ_of_addEquiv eX eY (perfectQZ_symm ⟨h1, h2, _, h3, h4⟩)
 
 end FoundSide

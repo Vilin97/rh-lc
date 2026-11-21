@@ -20,7 +20,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem rankGapBound_alt : _root_.GlobalTheory.BigTop.Fun.RankGapBound' := by
   refine ⟨0, fun CF _ => ⟨1, one_pos, fun eps heps heps1 => ⟨⟨0, fun _ => 0, fun _ => 0, fun _ => 0⟩,
     fun Fm CH hF _ => ?_⟩⟩⟩
-  intro _
+  refine fun _ => ?_
   refine ⟨1, fun C hC => ?_⟩
   obtain ⟨-, heP, hcTO, -, -, -, -, -, hfix⟩ := hF.1
   have hW : PageWin Fm := hF.2.1

@@ -66,7 +66,8 @@ theorem gram_inv (hF : MatrixFrechetDerivativeAtZeroLaws) (lam : Fin n → ℤ) 
       = Fk lam (k' * k) := by
     intro k'
     simp only [Fk, Ak_mul hF, ← ContinuousLinearMap.star_eq_adjoint, star_mul, mul_assoc]
-  rw [gramQ_def, mul_assoc, ← hL, ← L.integral_comp_comm (Fk_int hF lam)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [gramQ_def, mul_assoc, ← hL, ← L.integral_comp_comm (Fk_int hF lam)]
   simp only [hL, hF']
   exact integral_mul_right_haar (Fk lam) k
 

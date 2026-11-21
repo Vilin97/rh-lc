@@ -147,6 +147,8 @@ theorem aeval_scaleForm {A : Type} [CommRing A] (c : K' → ℕ) (f : MRing ι) 
     aeval z (scaleForm c f) = aeval (fun p => (c p.1 : A) * z p) f := by
   rw [scaleForm, aeval_bind₁]
   congr 2
+  funext p
+  simp
 
 theorem exists_scale {Ω : Type} [Field Ω] [CharZero Ω] (y : (Σ k, ι k) → Ω) {f : MRing ι}
     (hf : f ∉ mCoordIdeal y) : ∃ c : K' → ℕ, (∀ k, c k ≠ 0) ∧ aeval y (scaleForm c f) ≠ 0 := by

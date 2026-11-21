@@ -48,6 +48,10 @@ theorem evalZero_adapted : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type)
   · intro z Φ _
     funext x
     simp only [evA_apply, Darboux.rho, schr, incM_one', Matrix.one_mul]
+    change B.ψ (ins0 hd x ⬝ᵥ (co.e (z * (incM F H'.ι)ᵀ)).2 +
+      ⅟2 * (co.e (z * (incM F H'.ι)ᵀ)).1 ⬝ᵥ (co.e (z * (incM F H'.ι)ᵀ)).2) *
+      Φ (ins0 hd x + (co.e (z * (incM F H'.ι)ᵀ)).1) = _
+    unfold incM
     rw [hlow z, ins0_dotProduct_ins0, ins0_dotProduct_ins0, ← ins0_add]
   · rintro u ⟨y, rfl⟩ Φ _
     funext x

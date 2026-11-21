@@ -67,15 +67,15 @@ private theorem swap_int {K : Type} [Field K] [NumberField K] (F : G1 K (2 + 2) 
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.thCt :
     ∀ {K : Type} [Field K] [NumberField K] (F : G1 K (2 + 2) → ℂ), PFun F → InBand F → ∀ g,
-      ∫ X in unipFundamentalDomain K (2 + 2) 1, th F (unipOne K (2 + 2) 1 X * g) ∂unipMeasure K (2 + 2) 1 = 0 ∧
-      ∫ X in unipFundamentalDomain K (2 + 2) 3, th F (unipOne K (2 + 2) 3 X * g) ∂unipMeasure K (2 + 2) 3 = 0 ∧
+      ∫ X in unipFundamentalDomain K (2 + 2) 1, th F (unipOne (K := K) (n := 2 + 2) 1 X * g) ∂unipMeasure K (2 + 2) 1 = 0 ∧
+      ∫ X in unipFundamentalDomain K (2 + 2) 3, th F (unipOne (K := K) (n := 2 + 2) 3 X * g) ∂unipMeasure K (2 + 2) 3 = 0 ∧
       HasCompactSupport (fun X : UPos (2 + 2) 2 → 𝔸[K] => F (w0 K * nn X * g)) ∧
-      ∫ X in unipFundamentalDomain K (2 + 2) 2, th F (unipOne K (2 + 2) 2 X * g) ∂unipMeasure K (2 + 2) 2 = volN K * F g + ∫ X, F (w0 K * nn X * g) ∂unipMeasure K (2 + 2) 2 := by
+      ∫ X in unipFundamentalDomain K (2 + 2) 2, th F (unipOne (K := K) (n := 2 + 2) 2 X * g) ∂unipMeasure K (2 + 2) 2 = volN K * F g + ∫ X, F (w0 K * nn X * g) ∂unipMeasure K (2 + 2) 2 := by
   intro K _ _ F hF hB g
   obtain ⟨hfin, -⟩ := thBasic (Measure.haar : Measure (G1 K (2 + 2))) F hF.cont hF.rat hB
   obtain ⟨-, -, -, -, -, -, hw, hwΓ, -⟩ := blkLaws (K := K)
   obtain ⟨hpar, hPK, -, hout⟩ := pkLaws (K := K)
-  have hodd : ∀ r, r = 1 ∨ r = 3 → ∫ X in unipFundamentalDomain K (2 + 2) r, th F (unipOne K (2 + 2) r X * g)
+  have hodd : ∀ r, r = 1 ∨ r = 3 → ∫ X in unipFundamentalDomain K (2 + 2) r, th F (unipOne (K := K) (n := 2 + 2) r X * g)
       ∂unipMeasure K (2 + 2) r = 0 := fun r hr => by
     have := killAvg F hF.cont hF.rat hB r univ (fun _ _ _ _ _ => mem_univ _)
       (fun q _ => dies F hF q.out r (hr.imp_right Or.inl)) g

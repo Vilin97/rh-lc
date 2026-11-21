@@ -26,12 +26,7 @@ section T
 variable {D : D7} {u : D.what₂.Word} (CV : ColVal D u)
 
 theorem MQ_lattice (c : (D.mem u).C.cls 0) (τ : D.what₂.Tau) : Submodule.IsLattice D.what₂.LL (MQ CV c τ) := by
-  refine ⟨(CV.Q_good c τ).2.1.map _, ?_⟩
-  unfold MQ
-  rw [Submodule.map_coe, LinearMap.coe_restrictScalars]
-  rw [show ⇑(crdQ CV c τ : (CV.Q c τ).V →ₗ[D.what₂.LL] (Fin (D.R.N 0) → D.what₂.LL)) = ⇑(crdQ CV c τ) from rfl]
-  rw [← LinearEquiv.coe_coe, Submodule.span_image, (CV.Q_good c τ).2.2, Submodule.map_top]
-  exact LinearEquiv.range _
+  exact Submodule.IsLattice.of_fg _ ((CV.Q_good c τ).2.1.map _)
 
 theorem detTwK_inv_ne (c : (D.mem u).C.cls 0) (v : InfinitePlace D.what₂.LL) :
     detTwK ((D.fm u).lam 0) (invFr CV v c)⁻¹ ≠ 0 := by

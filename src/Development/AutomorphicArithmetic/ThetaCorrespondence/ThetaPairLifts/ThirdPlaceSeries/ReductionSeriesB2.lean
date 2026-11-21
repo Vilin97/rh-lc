@@ -45,7 +45,8 @@ namespace GlobalTheory.HeightCounting.Up
 open GlobalTheory.Mem.R3.Tr in
 theorem points_step_alt_alt : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → SerN → ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, ∀ cDep : ℝ, _root_.GlobalTheory.HeightCounting.Up.ModuliPointsExistList' hL cDep := by
   intro hPr hSer hL cDep
-  refine StepW.trans (_root_.GlobalTheory.T.geoLaws_iC_at_levelB1_of_serN hPr hSer hL) (StepW.of_all fun K B f T w _ _ hq P x l => ?_)
+  refine StepW.trans (_root_.GlobalTheory.T.geoLaws_iC_at_levelB1_of_serN hPr hSer hL) (StepW.of_all ?_)
+  intro K B f T w _ _ hq P x l
   have hlaw := hq P x l
   obtain ⟨x', hl', ho, hLc⟩ := _root_.GlobalTheory.T.exists_levelB2_twist_of_thetaTie hL x l (GlobalTheory.GeoTie.geoNTh hlaw) (GlobalTheory.GeoTie.geoTie hlaw)
   obtain ⟨o', fits', G_eq', etaF', bk', m', copy', coh', s', r', pin'⟩ := x'
@@ -59,7 +60,7 @@ theorem points_step_alt_alt : _root_.GlobalTheory.HeightCounting.Up.PublishedInp
   show ListPin _ m'.z.R.toRealDat.toLevCh cDep K.s.b
   rw [eL]
   exact ⟨(by with_unfolding_all exact ((GlobalTheory.Mem.GridMove.gdC (a := x.o.Z) (oTw x (thTw (Dof x) (GlobalTheory.GeoTie.geoNTh hlaw))).Z G) :)),
-    ⟨(by with_unfolding_all exact (hF.values :)), (by with_unfolding_all exact (hF.roots :))⟩, kc% hTie⟩
+    ⟨(by with_unfolding_all exact (hF.values :)), (by with_unfolding_all exact (hF.roots :))⟩, (by dsimp only [GlobalTheory.BigTop.Fun.lamOf, GlobalTheory.Mem.GridMove.gdC, GlobalTheory.Mem.GridMove.plC, GlobalTheory.Mem.GridMove.chC] at hTie ⊢; exact hTie)⟩
 end GlobalTheory.HeightCounting.Up
 end
 end

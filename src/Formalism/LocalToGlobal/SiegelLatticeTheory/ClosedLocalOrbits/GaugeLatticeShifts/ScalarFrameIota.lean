@@ -66,7 +66,38 @@ theorem loc_gen (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hL : Submodule.IsLatt
     (X₁ : Submodule (D.s.atP p).Ep (Vp D p)) (hX : ∀ a, baseChange₂ D p (F'.fl.e a) ∈ X₁) {x : Vp D p}
     (hx : x ∈ lattice₂ D Z.M p Λ) (hxo : x ∈ (locH Z p).perp X₁) :
     x ∈ Submodule.span (Z.M p).L.O (baseChange₂ D p '' (Lrep Λ F' : Set (VS D).V)) := by
-  obtain ⟨u, hu⟩ := proj_exists Λ hL hU F'
+  have hFull : Submodule.IsFullLattice D.host.E Λ := by
+    let := hL
+    refine { span_eq_top := ?_ }
+    let W := Submodule.span D.host.E (Λ : Set (VS D).V)
+    change W = ⊤
+    by_contra h
+    let e : (VS D).V ≃ₗ⋆[D.host.E] (VS D).V :=
+      (VS D).frame.equivFun.trans ((starLinearEquiv D.host.E).trans (VS D).frame.equivFun.symm)
+    let g : (VS D).V →ₗ[D.host.E] Module.Dual D.host.E W :=
+      (LinearMap.domRestrict' W).comp ((VS D).hT.comp e.toLinearMap)
+    have hdim : Module.finrank D.host.E (Module.Dual D.host.E W) < Module.finrank D.host.E (VS D).V := by
+      rw [Subspace.dual_finrank_eq]
+      exact Submodule.finrank_lt h
+    obtain ⟨x, hx, hx₀⟩ :=
+      Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+    have hsmul (a : D.host.E) : a • e x ∈ Λ := by
+      rw [← hU, Formalism.HermitianLatticesTheory.dualBasic_mem_dual]
+      intro y hy
+      have hxy : (VS D).hT (e x) y = 0 :=
+        congrArg (fun f : Module.Dual D.host.E W => f ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+      have hyx : (VS D).hT y (e x) = 0 := by
+        have hh := (VS D).herm.eq (e x) y
+        simpa [hxy] using hh.symm
+      simp [map_smul, hyx]
+    let i : D.host.E →ₗ[𝓞 D.host.E] Λ :=
+      ((LinearMap.toSpanSingleton D.host.E _ (e x)).restrictScalars (𝓞 D.host.E)).codRestrict Λ hsmul
+    let : Module.Finite (𝓞 D.host.E) Λ := Module.Finite.iff_fg.mpr hL.fg
+    let : Module.Finite (𝓞 D.host.E) D.host.E := Module.Finite.of_injective i fun a b hab =>
+      smul_left_injective D.host.E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+    exact RingOfIntegers.not_isField D.host.E
+      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 D.host.E) D.host.E) (Field.toIsField D.host.E))
+  obtain ⟨u, hu⟩ := proj_exists Λ hFull hU F'
   have hPv : ∀ v, (LinearMap.id - ∑ a, ((VS D).hT (F'.fl.e a)).smulRight (u a) :
       (VS D).V →ₗ[D.host.E] (VS D).V) v = v - ∑ a, (VS D).hT (F'.fl.e a) v • u a := fun v => by
     simp only [LinearMap.sub_apply, LinearMap.id_apply, LinearMap.sum_apply,

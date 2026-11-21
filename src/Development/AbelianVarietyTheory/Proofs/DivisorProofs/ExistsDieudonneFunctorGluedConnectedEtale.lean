@@ -62,13 +62,13 @@ theorem rig_split₀ {G G₀ G₁ : PDivGroup p k} (i₀ : G₀ ⟶ G) (q₀ : G
     (h₀ : i₀ ≫ q₀ = 𝟙 G₀) (z : i₀ ≫ q₁ = 0) (r₀ : ((G₀.cocycles × G₀.omega) ⧸ _root_.LinearMap.range (G₀.cob.prod (_root_.LinearMap.codRestrict G₀.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G₀.A i))).domRestrict G₀.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) (r₁ : ((G₁.cocycles × G₁.omega) ⧸ _root_.LinearMap.range (G₁.cob.prod (_root_.LinearMap.codRestrict G₁.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G₁.A i))).domRestrict G₁.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) :
     rigExtMap i₀ (rigExtMap q₀ r₀ + rigExtMap q₁ r₁) = r₀ := by
   rw [LinearMap.map_add (f := _), rigExtMap_rigExtMap, rigExtMap_rigExtMap, h₀, z, rigExtMap_zero', rigExtMap_id]
-  simp
+  exact add_zero r₀
 
 theorem rig_split₁ {G G₀ G₁ : PDivGroup p k} (i₁ : G₁ ⟶ G) (q₀ : G ⟶ G₀) (q₁ : G ⟶ G₁)
     (h₁ : i₁ ≫ q₁ = 𝟙 G₁) (z : i₁ ≫ q₀ = 0) (r₀ : ((G₀.cocycles × G₀.omega) ⧸ _root_.LinearMap.range (G₀.cob.prod (_root_.LinearMap.codRestrict G₀.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G₀.A i))).domRestrict G₀.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) (r₁ : ((G₁.cocycles × G₁.omega) ⧸ _root_.LinearMap.range (G₁.cob.prod (_root_.LinearMap.codRestrict G₁.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (G₁.A i))).domRestrict G₁.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) :
     rigExtMap i₁ (rigExtMap q₀ r₀ + rigExtMap q₁ r₁) = r₁ := by
   rw [LinearMap.map_add (f := _), rigExtMap_rigExtMap, rigExtMap_rigExtMap, h₁, z, rigExtMap_zero', rigExtMap_id]
-  simp
+  exact zero_add r₁
 
 def redSum {W : Type} [CommRing W] (τ : W →+* k) {M₀ M₁ : Type} [AddCommGroup M₀] [Module W M₀]
     [AddCommGroup M₁] [Module W M₁] {G G₀ G₁ : PDivGroup p k} (q₀ : G ⟶ G₀) (q₁ : G ⟶ G₁)
@@ -84,9 +84,9 @@ theorem rig_semiThrough {k' : Type} [CommRing k'] {σ : k →+* k'} {G' A' : PDi
     (i : A' ⟶ G') (q' : G' ⟶ A') (s : SemiHom σ G' G) (q : G ⟶ A)
     (h : ∀ n a, q'.app n (i.app n (s.app n (q.app n a))) = s.app n (q.app n a)) (r : ((A.cocycles × A.omega) ⧸ _root_.LinearMap.range (A.cob.prod (_root_.LinearMap.codRestrict A.omegaSub ((_root_.LinearMap.piMap fun i => _root_.GlobalTheory.AugCot.d (_root_.Bialgebra.counitAlgHom _ (A.A i))).domRestrict A.funs) (fun b n => (_root_.GlobalTheory.PDiv.cotMap_d _ _).trans (_root_.congrArg _ (b.2 n))))))) :
     rigExtMap q' ((semiThrough i s q).rig r) = s.rig (rigExtMap q r) := by
-  rw [← SemiHom.ofHom_rig, ← SemiHom.ofHom_rig, SemiHom.rig_rig (semiThrough i s q) (SemiHom.ofHom q') (s.comp (SemiHom.ofHom q))
-    (fun n a => (h n a).symm)]
-  exact SemiHom.comp_rig _ _ _
+  rw [← SemiHom.ofHom_rig, ← SemiHom.ofHom_rig]
+  exact (SemiHom.rig_rig (semiThrough i s q) (SemiHom.ofHom q') (s.comp (SemiHom.ofHom q))
+    (fun n a => (h n a).symm) r).trans (SemiHom.comp_rig _ _ _)
 
 end Base
 
@@ -124,8 +124,11 @@ theorem exists_katz_etDual : ∀ (p : ℕ) [Fact p.Prime] (Bc : GlobalTheory.Die
       obtain ⟨m₁, e₁⟩ := Be.red_surjective (G₁ k G) (he k G) (rigExtMap (i₁ k G) x)
       refine ⟨(m₀, m₁), ?_⟩
       change rigExtMap (q₀ k G) (Bc.red _ _ m₀) + rigExtMap (q₁ k G) (Be.red _ _ m₁) = x
-      rw [e₀, e₁, rigExtMap_rigExtMap, rigExtMap_rigExtMap, ← LinearMap.add_apply, ← (rigExtMap_add_and_natCast_smul_id p k (CharP.cast_eq_zero k p) G G).1,
-        hs, rigExtMap_id, LinearMap.id_apply]
+      rw [e₀, e₁, rigExtMap_rigExtMap, rigExtMap_rigExtMap]
+      change ((rigExtMap (q₀ k G ≫ i₀ k G) + rigExtMap (q₁ k G ≫ i₁ k G)) x) = x
+      rw [← (rigExtMap_add_and_natCast_smul_id p k (CharP.cast_eq_zero k p) G G).1,
+        hs, rigExtMap_id]
+      rfl
     red_eq_zero := fun {k} _ _ _ G _ m => by
       obtain ⟨m₀, m₁⟩ := m
       have ke₀ := Bc.red_eq_zero (G₀ k G) (hc k G) m₀
@@ -145,8 +148,10 @@ theorem exists_katz_etDual : ∀ (p : ℕ) [Fact p.Prime] (Bc : GlobalTheory.Die
       · rintro ⟨n, h⟩
         have h' : ((m₀, m₁) : Bc.M (G₀ k G) (hc k G) × Be.M (G₁ k G) (he k G)) = (p • n.1, p • n.2) := h
         obtain ⟨e₀, e₁⟩ := Prod.ext_iff.1 h'
+        have z₀ := map_zero (rigExtMap (q₀ k G))
+        have z₁ := map_zero (rigExtMap (q₁ k G))
         exact (congrArg₂ (fun a b => rigExtMap (q₀ k G) a + rigExtMap (q₁ k G) b) (ke₀.2 ⟨n.1, e₀⟩)
-          (ke₁.2 ⟨n.2, e₁⟩)).trans (by simp)
+          (ke₁.2 ⟨n.2, e₁⟩)).trans ((congrArg₂ (· + ·) z₀ z₁).trans (add_zero 0))
     smap_smul := fun {k k'} _ _ _ _ _ _ {σ G' G} _ _ s a m =>
       Prod.ext (Bc.smap_smul (hc k' G') (hc k G) _ a m.1) (Be.smap_smul (he k' G') (he k G) _ a m.2)
     smap_id := fun {k} _ _ _ G _ m => by

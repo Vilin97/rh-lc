@@ -34,7 +34,9 @@ theorem tempered_of_true_cuspidal_alt (hF : GlobalTheory.Published.AutomorphicFo
   obtain ⟨B, hB, e⟩ := hS a π w ha hu
   rw [e] at hα
   obtain ⟨b, hb, rfl⟩ := Multiset.mem_map.1 hα
-  have k : OpenB (Formalism.ConjugateSelfDual.normV w) (b : ℂ) := PositivityTheory.JacquetShalikaLocal.jacquetShalikaBound D.host.E a _ (hU a π ha) w B hB b hb
+  have k : OpenB (Formalism.ConjugateSelfDual.normV w) (b : ℂ) := by
+    simpa only [OpenB, Formalism.ConjugateSelfDual.normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
+      PositivityTheory.JacquetShalikaLocal.jacquetShalikaBound D.host.E a _ (hU a π ha) w B hB b hb
   rw [Units.val_inv_eq_inv_val]
   exact k.inv (one_lt_q w)
 theorem allCuspidalOpenBound_of_cuspU_character_choice : GlobalTheory.Published.AutomorphicFormsFiniteGL → _root_.UpperTheory.GalS.CuspUAlt →

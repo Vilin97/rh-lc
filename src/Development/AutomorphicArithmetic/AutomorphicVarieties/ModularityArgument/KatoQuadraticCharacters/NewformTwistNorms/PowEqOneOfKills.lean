@@ -157,7 +157,7 @@ theorem exists_rep (P : Af.Hypotheses₂) [IsAlgClosure ℚ Ω] {k : ℕ} (hk : 
     · have h1 := (hw A hA).1 s hs
       have h2 : cycZ ℚ Ω l s = 1 := by
         refine Units.ext (PadicInt.ext_of_toZModPow.mp fun n => ?_)
-        rw [cycZ_toZModPow_eq (v := w) hwl hA (q := 1) (fun x hx => by simpa using hs.2 x hx) n]
+        rw [cycZ_toZModPow_eq (v := w) (σ := s) hwl hA (q := 1) (fun x hx => by simpa only [pow_one] using hs.2 x hx) n]
         simp
       have h3 : (cycBar ℚ Ω l ^ j) s = 1 := by
         rw [MonoidHom.zpow_apply, cycBar, MonoidHom.comp_apply, h2, map_one, one_zpow]
@@ -220,7 +220,8 @@ theorem cyc_inf [IsAlgClosure ℚ Ω] {A : ValuationSubring Ω} (hA : OverL l A)
     ∃ s ∈ Ine (F := ℚ) A, ∀ k : ℕ, k ≠ 0 → cycBar ℚ Ω l s ^ k ≠ 1 := by
   have hl : Fact l.Prime := inferInstance
   obtain ⟨v, hv, hlv⟩ := hA
-  have hA : A.valuation (l : Ω) < 1 := by simpa using (hv (l : 𝓞 ℚ)).2 hlv
+  have hA : A.valuation (l : Ω) < 1 := by
+    simpa only [map_natCast] using (hv (l : 𝓞 ℚ)).2 hlv
   have hu : IsUnit ((l + 1 : ℕ) : ℤ_[l]) := by
     rw [PadicInt.isUnit_iff]
     exact PadicInt.norm_natCast_eq_one_iff.2 (by simp)

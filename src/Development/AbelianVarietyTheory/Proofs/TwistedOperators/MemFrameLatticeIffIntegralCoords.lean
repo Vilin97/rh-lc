@@ -31,11 +31,11 @@ variable {D : D7}
 
 def frameLat (V : HSp D) : Submodule (𝓞 D.host.E) V.V := Submodule.span (𝓞 D.host.E) (Set.range V.frame)
 
-theorem frameLat_isLattice (V : HSp D) : Submodule.IsFullLattice D.host.E (frameLat V) where
-  toIsLattice := Submodule.IsLattice.of_fg D.host.E (Submodule.fg_span (Set.finite_range _))
-  span_eq_top := by
-    rw [frameLat, Submodule.span_span_of_tower]
-    exact V.frame.span_eq
+theorem frameLat_isLattice (V : HSp D) : Submodule.IsFullLattice D.host.E (frameLat V) := by
+  refine Submodule.IsFullLattice.mk
+    (toIsLattice := Submodule.IsLattice.of_fg D.host.E (Submodule.fg_span (Set.finite_range _))) ?_
+  rw [frameLat, Submodule.span_span_of_tower]
+  exact V.frame.span_eq
 
 theorem frameLat_unimod (V : HSp D) (hV : V.gram = 1) : Formalism.HermitianLatticesTheory.IsUnimodular V.hT (frameLat V) := by
   have key := (Formalism.E.hermDual (𝓞 D.host.E) D.host.E V.V (Fin V.rank) V.hT V.frame

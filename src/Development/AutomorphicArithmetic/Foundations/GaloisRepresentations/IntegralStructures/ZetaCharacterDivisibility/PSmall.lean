@@ -45,7 +45,11 @@ theorem frobSeed_of (h1 : InFacts) (h2 : GenPin) (h3 : AlgGen) (h4 : DetFrob) : 
   obtain ⟨e1, e2⟩ := he A hA
   refine ⟨fun s hs => i1 s (e1 s hs), fun σ hσ => ?_⟩
   have hc : B.card = a := hB.choose_spec.2.card
-  refine h2 l ι a _ _ (by simp [algSat, hc]) (h3 a _ B (GlobalTheory.LFun.qV_ne_zero w) hg) (i2 σ⁻¹ _ (e2 σ hσ)) ?_
+  have hn : normV w ≠ 0 := by
+    have h := NumberField.HeightOneSpectrum.one_lt_absNorm w
+    rw [Ideal.absNorm_apply, Submodule.cardQuot_apply] at h
+    exact h.ne_bot
+  refine h2 l ι a _ _ (by simp [algSat, hc]) (h3 a _ B hn hg) (i2 σ⁻¹ _ (e2 σ hσ)) ?_
   rw [hdet]
   exact (h4 E Ω l ι a U ψ hψ w hw hl B hB A hA).2 σ hσ
 

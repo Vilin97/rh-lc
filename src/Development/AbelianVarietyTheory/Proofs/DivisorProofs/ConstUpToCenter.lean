@@ -62,7 +62,9 @@ theorem GlobalTheory.OnCmp.const_upTo_center : ∀ (D : D7) (G : Type) [Group G]
       obtain ⟨hgc, x, hx, hgx⟩ := hg
       exact gen x hx g ((mem_cusp _ _ _ _ _ _).1 hgc).1 hgx q
     | zero =>
+      set_option synthInstance.maxHeartbeats 200000 in
       have e := geo_smul (O i) (u • cc) 1 0 0 q
+      set_option synthInstance.maxHeartbeats 200000 in
       have e' := geo_smul (O i) (T.J.cE ((i : ℕ) + 1) (O i).s0) z 0 0 q
       rw [zero_smul] at e e'
       rw [e, e']

@@ -125,7 +125,8 @@ end Sec
 section Main
 
 theorem dualMapR_eq {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') : Chart.dualMapR f = dualMap f := by
-  ext a <;> simp [Chart.dualMapR, dualMap]
+  refine RingHom.ext fun a => ?_
+  ext <;> simp [Chart.dualMapR, dualMap]
 
 theorem mem_basicOpen_appLE {X Y : Scheme.{0}} (φ : Y ⟶ X) {U : X.Opens} {V : Y.Opens} (h : V ≤ φ ⁻¹ᵁ U) (f : Γ(X, U))
     {z : Y} (hz : z ∈ V) (hy : φ z ∈ X.basicOpen f) : z ∈ Y.basicOpen ((φ.appLE U V h).hom f) := by

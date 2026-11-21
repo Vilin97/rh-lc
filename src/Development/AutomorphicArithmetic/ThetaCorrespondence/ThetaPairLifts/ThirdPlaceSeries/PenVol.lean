@@ -43,7 +43,7 @@ theorem GlobalTheory.PenVol.pen_vol_alt : ∀ {B : GlobalTheory.Mem.Base} {X : P
     rw [hidx, Nat.cast_prod, _root_.GlobalTheory.Fam.QuadraticExtensionData.wt]
     refine Finset.prod_congr rfl fun i _ => ?_
     rw [GlobalTheory.T.relIndex_couplingCosetStabilizer_eq_chartWeight (J.G i) (J.E i)]
-    exact GlobalTheory.PenVol.wt_cast _ (J.E i).wt (by have h1 := (J.G i).hs; have h2 : (I.rec7 l Z).R.m = B.R.m := rfl; omega) (α i)
+    exact GlobalTheory.PenVol.wt_cast _ (J.E i).wt (by have h1 : (J.G i).s + 1 + 1 = B.R.m := (J.G i).hs; omega) (α i)
   by_cases hex : ∃ t, ∃ J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t, J.Reads ∧ Nonempty (J.Ch j)
   · obtain ⟨t0, J0, hR0, ⟨α0⟩⟩ := hex
     obtain ⟨h1, -, h3, h4⟩ := key t0 J0 hR0 α0

@@ -32,4 +32,5 @@ theorem _root_.GlobalTheory.T.section_value_eq_at_first_order_of_tangents : ∀ 
       valR yw ((LPow P.A P.L (k : ℤ) (Over.mk (spMap (algebraMap K C)))).U fun _ => i₀) (t.f fun _ => i₀) =
         TrivSqZeroExt.inl (valR (spMap (algebraMap K C)) ((P.L.pull (eSec P.A)).U fun _ => i₀) (ρ.s fun _ => i₀).val ^ k) *
           (TrivSqZeroExt.inl a' + TrivSqZeroExt.inr b') → a = a' := by
-  first | exact @GlobalTheory.TangentFirstOrder.fst_eq_of_tangent | exact GlobalTheory.TangentFirstOrder.fst_eq_of_tangent | (intros; apply GlobalTheory.TangentFirstOrder.fst_eq_of_tangent <;> assumption)
+  intro K C hK hC hKC P ρ k t i₀ hi v w hv hw yv yw hv1 hv2 hw1 hw2 a b a' b' ev ew
+  exact @GlobalTheory.TangentFirstOrder.fst_eq_of_tangent K C hK hC hKC P ρ k t i₀ hi v w hv hw yv yw hv1 hv2 hw1 hw2 a b a' b' ev ew

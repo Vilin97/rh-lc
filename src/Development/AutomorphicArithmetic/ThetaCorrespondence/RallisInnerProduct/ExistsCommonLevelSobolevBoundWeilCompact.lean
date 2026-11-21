@@ -73,7 +73,7 @@ def dirSize (θ : InfFam D) (S T : HSp D) (x : GA D S × GA D T) : ℝ :=
 
 theorem continuous_dirSize {θ : InfFam D} (hθ : IsInfFam θ) (S T : HSp D) : Continuous (dirSize θ S T) := by
   unfold dirSize
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   have h1 : Continuous fun x : GA D S × GA D T => compAt θ a.1 (Formalism.L2.Theta.mt T x.2⁻¹) :=
     (GlobalTheory.RealWeil.continuous_compAt hθ a.1 _ _).comp ((continuous_mt_eq T).comp continuous_snd.inv)
   have h2 : Continuous fun x : GA D S × GA D T => compAt θ a.1 (Formalism.L2.Theta.mt S x.1) :=
@@ -191,9 +191,9 @@ theorem UpperTheory.Lit.Rallis.ThetaDens.om_compact_sobCont : ∀ (D : D7) (ψ :
       fun f hf x hx => ?_⟩
     show wordSum (heisDer ψ θ) (l2O μ 𝓕) d (om x f) ≤ _
     unfold wordSum
-    rw [ENNReal.coe_finset_sum, Finset.sum_mul]
+    rw [ENNReal.ofNNReal_finsetSum, Finset.sum_mul]
     refine Finset.sum_le_sum fun k hk => ?_
-    rw [ENNReal.coe_finset_sum, Finset.sum_mul]
+    rw [ENNReal.ofNNReal_finsetSum, Finset.sum_mul]
     refine Finset.sum_le_sum fun a _ => ?_
     calc _ ≤ (C k : ℝ≥0∞) * sobO ψ θ μ 𝓕 k f := hC k _ (List.length_ofFn) x hx f hf.1
       _ ≤ C k * sobO ψ θ μ 𝓕 d f := by

@@ -393,7 +393,8 @@ theorem main2 (hLL : LocalLift) (h : IsCMExt F E σ) {ψ : AddChar (AF F) ℂ} (
     MonoidHom.pi fun w => (piInf (τ w)).mapMatrix.toMonoidHom
   let γ0 : ℝ → SG K := fun t => ⟨Units.map mp (γ (Multiplicative.ofAdd t)).1, funext fun w => (hKJ w _).2 (by
     have := congrArg (fun X : Matrix β β (AE F E) => X.map (piInf (τ w))) (γ (Multiplicative.ofAdd t)).2
-    simp only [map_form h] at this
+    change (((γ (Multiplicative.ofAdd t)).1.1)ᵀ * JB * ((γ (Multiplicative.ofAdd t)).1.1).map (cA σ)).map (piInf (τ w)) = JB.map (piInf (τ w)) at this
+    rw [map_form h (τ w)] at this
     exact this)⟩
   have e0 : ∀ t, γ (Multiplicative.ofAdd t) = ι (γ0 t) := fun t => Subtype.ext (Units.ext (ext_at h τ (by
     have := At.sub' (hγ.2 (Multiplicative.ofAdd t)) (hι (γ0 t))

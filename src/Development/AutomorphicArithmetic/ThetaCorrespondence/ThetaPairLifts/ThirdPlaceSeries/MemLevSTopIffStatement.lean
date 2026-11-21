@@ -61,7 +61,9 @@ theorem _root_.GlobalTheory.T.true_geometry_twist_scalar_alt : ∀ {B : GlobalTh
     exact GlobalTheory.TopLevQ.moved_mat _ _ (a.Q PP ⟨t, hP⟩).FT.γβ _ e
   have hsupp' : Formalism.L2.Theta.SuppAt (a.Q PP ⟨t, hP⟩).q.e _ (a.g.bT⁻¹ * g * a.g.bT) := GlobalTheory.TopLevQ.suppAt_conj g a.g.bT hsupp
   have hr : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.r = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.k + ((a.Q PP ⟨t, hP⟩).s + 1) := by
-    have := (a.Q PP ⟨t, hP⟩).hs
+    have hs : (a.Q PP ⟨t, hP⟩).s + 1 + 1 =
+        (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m :=
+      (a.Q PP ⟨t, hP⟩).hs
     unfold Ranks.r
     omega
   have hPg : ∀ PP' ∈ (_root_.GlobalTheory.Fam.pk_z W).Pg,

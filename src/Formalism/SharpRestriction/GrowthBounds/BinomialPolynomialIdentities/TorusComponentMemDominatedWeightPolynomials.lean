@@ -186,10 +186,10 @@ theorem restAct : RestAct := by
       · by_cases hvec : LL.vec l = true
         set_option synthInstance.maxHeartbeats 100000 in
           · simp only [if_pos hS, if_pos hvec, map_sum, map_mul, rename_C, rename_X, iv]
-          exact Finset.sum_congr rfl fun b _ => mul_comm _ _
+            exact Finset.sum_congr rfl fun b _ => mul_comm _ _
         set_option synthInstance.maxHeartbeats 100000 in
           · simp only [if_pos hS, if_neg hvec, map_sum, map_mul, rename_C, rename_X, iv]
-          exact Finset.sum_congr rfl fun b _ => mul_comm _ _
+            exact Finset.sum_congr rfl fun b _ => mul_comm _ _
       · simp only [if_neg hS, rename_X, iv]
   exact congrArg (fun f => f G) this
 

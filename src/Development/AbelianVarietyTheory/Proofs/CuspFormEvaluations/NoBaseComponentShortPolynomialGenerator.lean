@@ -47,7 +47,7 @@ theorem rank_of_pins {D : D7} {Q : Par D} (h : Q.Pins) {j : ℕ} (hj : InR D j) 
   obtain ⟨hp, hq, -⟩ := h.2.2.2 j hj
   obtain ⟨h1, h2⟩ := hj
   rw [hp, hq]
-  have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity)
+  have := And.intro (Nat.one_le_two_pow (n := D.R.e)) D.R.ord_pos
   simp only [Ranks.sigW, Ranks.r, Ranks.k]
   omega
 

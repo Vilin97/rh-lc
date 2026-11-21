@@ -51,10 +51,13 @@ theorem eq_zero_of_pow_nsmul_cohomology_gsDiv_int {q : ℕ} (hq : 3 ≤ q) (x : 
   rw [h0, map_zero] at e
   exact e
 
+local instance highSUnitsDiscreteQuotient : IsDiscreteRep (galUnitsModSUnits K.1 ℚ̄ S) :=
+  isDiscreteRep_sUnitsQuotSequence_X₃ K.1 ℚ̄ S
 
 include hℓ hS hD in
 theorem eq_zero_of_pow_nsmul_cohomology_galUnitsModSUnits {q : ℕ} (hq : 3 ≤ q)
     (x : cohomology (galUnitsModSUnits K.1 ℚ̄ S) q) (k : ℕ) (hx : ℓ ^ k • x = 0) : x = 0 := by
+  let : IsDiscreteRep (picSequence K S ιs).X₁ := highSUnitsDiscreteQuotient K S
   have hP := picSequence_shortExact K S ιs
   obtain ⟨p, rfl⟩ : ∃ p, q = p + 1 := ⟨q - 1, by omega⟩
   let x' : cohomology (picSequence K S ιs).X₁ (p + 1) := x

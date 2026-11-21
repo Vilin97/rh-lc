@@ -46,7 +46,7 @@ theorem GlobalTheory.CechKS.isTangent_of_fibre : ∀ {E : Type} [Field E] [Numbe
       apply CommRingCat.hom_ext
       apply RingHom.ext
       intro x
-      simp [dualMap]
+      simp [dualMap, TrivSqZeroExt.fst_add, TrivSqZeroExt.fst_inl, TrivSqZeroExt.fst_inr]
     rw [hr, Spec.map_comp, Category.assoc, (hv a).2, Hom.one_def, Over.comp_left, Over.toUnit_left,
       ← Category.assoc]
     congr 1

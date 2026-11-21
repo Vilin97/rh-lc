@@ -206,7 +206,7 @@ private theorem cart_heq (hP : B'.toPre = B.toPre) (hW : HEq W' W) (h : DSTie M'
   subst ε'
   have : fr' = fr := by with_unfolding_all exact eq_of_heq h7
   subst fr'
-  exact (by with_unfolding_all exact ((HEq.refl (cart M)) :))
+  with_unfolding_all rfl
 
 private theorem ioW_of (hP : B'.toPre = B.toPre) (hV : HEq V' V) (hW : HEq W' W) (h : DSTie M' M)
     {θ : InfFam a.D} {θ' : InfFam a'.D} (hθ : HEq θ' θ)

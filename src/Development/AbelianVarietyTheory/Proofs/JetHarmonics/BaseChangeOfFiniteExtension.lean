@@ -48,7 +48,7 @@ theorem isIntegral_of_scale (S : CDVR) {W L : Type} [CommRing W] [IsDomain W] [I
   have : CharZero S.Fr := IsFractionRing.charZero_of_isFractionRing S.V
   have hded : IsDedekindDomain (integralClosure S.V L) := integralClosure.isDedekindDomain S.V S.Fr L
   have hval : ValuationRing (integralClosure S.V L) := by
-    have := ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain (integralClosure S.V L)).out 2 1).1 hded
+    have := ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain (integralClosure S.V L)).out 3 2).1 hded
     exact this
   have hBW : ∀ b : integralClosure S.V L, ∃ v : W, algebraMap W L v = b := fun b =>
     IsIntegrallyClosed.isIntegral_iff.1 (IsIntegral.tower_top (A := W) b.2)
@@ -61,7 +61,8 @@ theorem isIntegral_of_scale (S : CDVR) {W L : Type} [CommRing W] [IsDomain W] [I
       map_add' := fun a b => hinj (by simp [hk0]) }
   have hk : ∀ b, algebraMap W L (k b) = b := hk0
   have hmax : ((maximalIdeal W).comap k).IsMaximal := by
-    refine Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := S.V) _ ?_
+    refine Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (algebraMap S.V (integralClosure S.V L))
+      (fun x => Algebra.IsIntegral.isIntegral x) ((maximalIdeal W).comap k) ?_
     have hle : maximalIdeal S.V ≤ ((maximalIdeal W).comap k).comap (algebraMap S.V (integralClosure S.V L)) := by
       intro a ha
       by_cases h0 : a = 0

@@ -107,7 +107,7 @@ theorem exists_frame_map_mkQ {I : Type} [Finite I] {L : Lat ξ Li} {p : Cpt ξ} 
   have hli : LinearIndependent Ω Bt := by
     rw [Fintype.linearIndependent_iff]
     rintro c hc ⟨s, k⟩
-    have hz := (iSupIndep_iff_finset_sum_eq_zero_imp_eq_zero _).1 hV Finset.univ
+    have hz := (iSupIndep_iff_finsetSum_eq_zero_imp_eq_zero _).1 hV Finset.univ
       (fun s => ∑ k, c ⟨s, k⟩ • B s k) (fun s _ => Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (hBV s k))
       (by rw [← hc, Fintype.sum_sigma])
     exact Fintype.linearIndependent_iff.1 (hfB s).1 (fun k => c ⟨s, k⟩) (hz s (Finset.mem_univ s)) k

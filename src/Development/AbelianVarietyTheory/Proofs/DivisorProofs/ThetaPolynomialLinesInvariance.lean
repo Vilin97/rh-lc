@@ -98,7 +98,8 @@ theorem polStab' : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFie
       (GlobalTheory.RealLift.locFin_sumPl _ _ _ fun w => locFin_fock1 _ _ _ _ (Yg w) (hKC w) _) (fun t l hl => hadm _ l hl)
       (fun T => hW1 γ hγ Yg hgen T)
     have h2 := (hL F _ (Φ T) (Φ (U T)) f₁).2.1 _ (map_zero _) (hSA T)
-    rw [MonoidHom.comp_apply, hγ1] at h2
+    change Acts (evI F) (om' (γ (Multiplicative.ofAdd 1), 1)) (Φ T) (Φ (U T)) at h2
+    rw [hγ1] at h2
     have e := (hL F _ (Φ T) _ f₁).2.2.2.1 _ h2 h1
     rw [← e]
     exact mem _
@@ -115,7 +116,8 @@ theorem polStab' : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFie
       (GlobalTheory.RealLift.locFin_sumPl _ _ _ fun w => locFin_fock2 _ _ _ _ (Yg w) (hKC w) _) (fun t l hl => hadm _ l hl)
       (fun T => hW2 γ hγ Yg hgen T)
     have h2 := (hL F _ (Φ T) (Φ (U T)) (Φ (U T))).2.1 _ (map_zero _) (hSA T)
-    rw [MonoidHom.comp_apply, hγ1] at h2
+    change Acts (evI F) (om' (1, γ (Multiplicative.ofAdd 1))) (Φ T) (Φ (U T)) at h2
+    rw [hγ1] at h2
     exact ⟨_, mem _, h2, fun f₂ h3 => (hL F _ (Φ T) _ _).2.2.2.1 _ h3 h2⟩
 
 end GlobalTheory.PolStabInfW

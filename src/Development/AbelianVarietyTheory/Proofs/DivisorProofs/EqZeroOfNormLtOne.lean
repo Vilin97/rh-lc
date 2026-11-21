@@ -73,14 +73,15 @@ theorem coord_of_mem {n : ℕ} {x : Fin n → E} (hx : x ∈ Formalism.MainNotio
     obtain ⟨a, ha⟩ := hx
     exact ⟨r * a, by simp [← ha, Algebra.smul_def]⟩
 
-theorem isLattice_std (n : ℕ) : Submodule.IsFullLattice E (Formalism.MainNotions.StandardLattice.stdLat E n) where
-  toIsLattice := Submodule.IsLattice.of_fg E (Submodule.fg_span (Set.finite_range _))
-  span_eq_top := by
-    rw [eq_top_iff, ← (Pi.basisFun E (Fin n)).span_eq]
-    refine Submodule.span_mono ?_
-    rintro _ ⟨j, rfl⟩
-    rw [Pi.basisFun_apply]
-    exact Submodule.subset_span ⟨j, rfl⟩
+theorem isLattice_std (n : ℕ) : Submodule.IsFullLattice E (Formalism.MainNotions.StandardLattice.stdLat E n) := by
+  have : Submodule.IsLattice E (Formalism.MainNotions.StandardLattice.stdLat E n) :=
+    Submodule.IsLattice.of_fg E (Submodule.fg_span (Set.finite_range _))
+  refine { span_eq_top := ?_ }
+  rw [eq_top_iff, ← (Pi.basisFun E (Fin n)).span_eq]
+  refine Submodule.span_mono ?_
+  rintro _ ⟨j, rfl⟩
+  rw [Pi.basisFun_apply]
+  exact Submodule.subset_span ⟨j, rfl⟩
 
 variable [StarRing E]
 

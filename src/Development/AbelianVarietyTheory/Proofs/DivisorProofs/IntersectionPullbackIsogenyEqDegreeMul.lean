@@ -41,7 +41,7 @@ theorem inter_pull_isogeny_eq_deg_mul : ∀ (K : Type) [Field K] (A B : AbVar K)
     rw [Set.image_univ_of_surjective f.hom.left.surjective, closure_univ] at h1
     exact h1.eq (genericPoint_spec B.X.left)
   obtain ⟨V, hgV, hV, hV', hfree⟩ := GlobalTheory.GenFree.exists_affine_finite_free K A.X.left B.X.left B.X.hom
-    f.hom.left hXproj hBproj hgen (by rw [hAd, hBd, hdim]) _ rfl
+    f.hom.left hXproj hBproj hgen (by rw [hAd, hBd, hdim]) (f.hom.left.residueDegree (genericPoint A.X.left)) rfl
   set n := f.hom.left.residueDegree (genericPoint A.X.left)
 
   have hn : deg f = n := by

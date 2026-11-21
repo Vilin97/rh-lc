@@ -30,6 +30,7 @@ theorem frameData (d : SD σ) : ∃ t0 : GL (Fin d.n) E,
   · rw [← hBx]; exact frame_xy_A d.ok.frame
   · rw [← incM_mul, Units.mul_inv, incM_one]
 
+set_option backward.isDefEq.respectTransparency false in
 theorem tPar : TPar := by
   intro F E _ _ _ _ _ σ d Φ hΦ
   have h := d.ok.dbl
@@ -57,7 +58,9 @@ theorem tPar : TPar := by
       rw [Matrix.mul_assoc, ← Matrix.transpose_mul, h2.2]
       simp [Matrix.transpose_mul, Matrix.transpose_add, Matrix.mul_add, Matrix.mul_assoc, Matrix.transpose_neg]
     simp only [SD.T, SD.tt, SD.gram]
-    rw [l_rho_om h x _ hΦ, l_om_par h hpar (mem _), key, l_shift h hψ _ _ hΦ, symp_N _ _ _ _ _ _ hf]
+    rw [l_rho_om h x (X * (incM F d.b.1.toCols₂)ᵀ) hΦ, l_om_par h hpar (mem _), key, l_shift h hψ _ _ hΦ]
+    change _ * (d.B.ψ (-(⅟(2 : AF F) * symp (cA σ) (-1) (incM F d.A.J) (dbl (incM F d.Y.J)) (-(X * βᵀ * (incM F t0.1)ᵀ) * (diagCols (Fin d.n))ᵀ) (X * (incM F d.b.1.toCols₂)ᵀ))) * _) = _
+    rw [symp_N _ _ _ _ _ _ hf]
     simp
   · have h1 := inFrame_mul hx
     have h2 := inv_mul_frame h1 (N' := Matrix.fromBlocks (t⁻¹ : GL (Fin d.n) (AE F E)).1 0 0 (u⁻¹ : GL (Fin d.n) (AE F E)).1)
@@ -86,13 +89,14 @@ theorem tPar : TPar := by
       rw [Matrix.mul_assoc, ← Matrix.transpose_mul, h2.2]
       simp [Matrix.transpose_mul, Matrix.mul_assoc]
     simp only [SD.T]
-    rw [l_rho_om h x _ hΦ, l_om_par h hpar (mem _), hdet, key]
+    rw [l_rho_om h x (X * (incM F d.b.1.toCols₂)ᵀ) hΦ, l_om_par h hpar (mem _), hdet, key]
   · simp only [SD.T]
-    rw [l_rho_S h hψ g _ hΦ, Matrix.mul_assoc]
+    rw [l_rho_S h hψ g (X * (incM F d.b.1.toCols₂)ᵀ) hΦ, Matrix.mul_assoc]
 
 def TThetaSum : Prop := ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
   (d : SD σ), ∀ Φ ∈ d.sch, HasSum (fun X : Matrix (Fin d.m) (Fin d.n) E => d.T Φ (incM F X)) (thetaSum F Φ)
 
+set_option backward.isDefEq.respectTransparency false in
 theorem tThetaSum : TThetaSum := by
   intro F E _ _ _ _ _ σ d Φ hΦ
   have h := d.ok.dbl
@@ -139,8 +143,11 @@ theorem tThetaSum : TThetaSum := by
     have ec : incM F (y * M.toRows₂ᵀ * d.b.1.toCols₂ᵀ) = incM F (y * M.toRows₂ᵀ) * (incM F d.b.1.toCols₂)ᵀ := by
       simp only [incM_mul, incM_transpose]
     have hr := psi_rat h hψ (y * M.toRows₁ᵀ * t0.1ᵀ * (diagCols (Fin d.n) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n) E)ᵀ) (y * M.toRows₂ᵀ * d.b.1.toCols₂ᵀ)
+    change d.B.ψ (-(⅟(2 : AF F) * symp (cA σ) (-1) (incM F d.A.J) (dbl (incM F d.Y.J)) (incM F (y * M.toRows₁ᵀ * t0.1ᵀ * (diagCols (Fin d.n) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n) E)ᵀ)) (incM F (y * M.toRows₂ᵀ * d.b.1.toCols₂ᵀ)))) = 1 at hr
     rw [ea, ec] at hr
-    rw [hy, incM_add, ea, ec, l_shift h hψ _ _ hΦ, hr, one_mul]
+    rw [hy, incM_add, ea, ec, l_shift h hψ _ _ hΦ]
+    change d.B.ψ (-(⅟(2 : AF F) * symp (cA σ) (-1) (incM F d.A.J) (dbl (incM F d.Y.J)) (incM F (y * M.toRows₁ᵀ * t0.1ᵀ) * (diagCols (Fin d.n))ᵀ) (incM F (y * M.toRows₂ᵀ) * (incM F d.b.1.toCols₂)ᵀ))) * _ = _
+    rw [hr, one_mul]
     rfl
   have hs := h.theta Φ hΦ
   rw [show (fun y : Matrix (Fin d.m) (Fin d.n) E => d.l (d.dd.rho d.B.ψ (incM F (Matrix.fromCols y (-y))) Φ)) =

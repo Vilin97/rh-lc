@@ -40,7 +40,7 @@ theorem eq_cspB_rule {C : Set (Xo.XF c)} (hC : IsClopen C) (e : Formalism.L2.Pj.
   rw [hl, ← range_fpt_subset_iff] at hsp
   have hi : Formalism.L2.Pj.CompSplitPfB.cspB_rule Xo c C hC p z =
       Formalism.L2.Pj.CompSplitPfB.cspB_idem C hC z.x z.x_over := rfl
-  rw [hi, map_sub]
+  rw [hi, ψ.map_sub]
   set i := Formalism.L2.Pj.CompSplitPfB.cspB_idem C hC z.x z.x_over
   have hker : i ∉ (kerPt ψ).asIdeal ↔ ψ i ≠ 0 := Iff.rfl
   rw [hker] at hsp
@@ -182,8 +182,8 @@ theorem exists_flat_sec : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
         · rw [ew j, h.2.1, ← Category.assoc, dualMap_spMap_comp]
       · rw [(D1.1 hr).1, (D1.1 hr).2, (D2.1 hr).1, (D2.1 hr).2]
         exact ⟨rfl, rfl⟩
-    exact ⟨sub_eq_zero.1 (zero q _ fun F _ ψ => by rw [map_sub, (key F ψ).1, sub_self]),
-      sub_eq_zero.1 (zero q _ fun F _ ψ => by rw [map_sub, (key F ψ).2, sub_self])⟩
+    exact ⟨sub_eq_zero.1 (zero q _ fun F _ ψ => by rw [ψ.map_sub, (key F ψ).1, sub_self]),
+      sub_eq_zero.1 (zero q _ fun F _ ψ => by rw [ψ.map_sub, (key F ψ).2, sub_self])⟩
   have hnat' : ∀ (p q : Formalism.L2.Pj.TRing c.F) (f : p.R →ₐ[c.F] q.R) (y : Formalism.L2.Pj.FrPt Xo c p.R)
       (z : Formalism.L2.Pj.FrPt Xo c q.R), Formalism.L2.Pj.FrMap f y z → s' q z = f (s' p y) := fun p q f y z h => by
     obtain ⟨h1, h2⟩ := hnat p q f y z h
@@ -215,11 +215,11 @@ theorem exists_flat_sec : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
         exact hl.chg F _ _ v w v' w' A B (hfr _ hr) (hfr' _ hr) hA hB
       · rw [(D1.1 hr).1, (D1.1 hr).2, (D2.1 hr).1, (D2.1 hr).2]
         simp
-    have k1 : e p y' - e p y = 0 := zero p _ fun F _ ψ => by rw [map_sub, (key F ψ).1, sub_self]
+    have k1 : e p y' - e p y = 0 := zero p _ fun F _ ψ => by rw [ψ.map_sub, (key F ψ).1, sub_self]
     have k2 : s p y' * Formalism.L2.Pj.wchar (detE D τ.1) t - s p y * Formalism.L2.Pj.wchar (detE D (ComplexEmbedding.conjugate τ.1)) t = 0 :=
       zero p _ fun F _ ψ => by
         have := (key F ψ).2
-        exact (map_sub ψ _ _).trans (sub_eq_zero.2 this)
+        exact (ψ.map_sub _ _).trans (sub_eq_zero.2 this)
     exact ⟨sub_eq_zero.1 k1, sub_eq_zero.1 k2⟩
   have hunitW : ∀ (p : Formalism.L2.Pj.TRing c.F) (t : Formalism.L2.Pj.Ix D → (p.R)ˣ) (b : Formalism.L2.Pj.Ix D → ℕ),
       IsUnit (Formalism.L2.Pj.wchar b t) := fun p t b => IsUnit.prod_univ_iff.2 fun i => (t i).isUnit.pow _

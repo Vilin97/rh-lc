@@ -5678,17 +5678,17 @@ theorem UpperTheory.LiteratureTheorems.local_finiteness_k_of_open (O : _root_.Up
   CompanionTheory.LocalTateOrthogonality.Gcoh.top_locfin
 theorem UpperTheory.LiteratureTheorems.local_tate_duality_k_of_open (O : _root_.UpperTheory.LiteratureTheorems.OpenImageCondition) : Formalism.GaloisCohomology.LocalTateDualityK :=
   CompanionTheory.LocalTateOrthogonality.Gcoh.top_tate
-theorem UpperTheory.LiteratureTheorems.galois_cohomology_from_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenImageCondition) : GlobalTheory.Mem.LiteralAutomorphy.LitCoh where
-  pt := (_root_.UpperTheory.LiteratureTheorems.poitou_tate_normalised_of_open O)
-  lf := (_root_.UpperTheory.LiteratureTheorems.local_finiteness_of_open O)
-  lt := (_root_.UpperTheory.LiteratureTheorems.local_tate_duality_of_open O)
-  le := (_root_.UpperTheory.LiteratureTheorems.localEulerChar_alt O)
-  gf := (_root_.UpperTheory.LiteratureTheorems.global_finiteness_of_open O)
-  ge := (_root_.UpperTheory.LiteratureTheorems.global_euler_char_of_open O)
-  uo := (_root_.UpperTheory.LiteratureTheorems.unramified_orthogonality_of_open O)
-  gw := (_root_.UpperTheory.LiteratureTheorems.greenberg_wiles_of_open O)
-  lfK := (_root_.UpperTheory.LiteratureTheorems.local_finiteness_k_of_open O)
-  ltK := (_root_.UpperTheory.LiteratureTheorems.local_tate_duality_k_of_open O)
-  leK := (_root_.UpperTheory.LiteratureTheorems.local_euler_char_k_of_open O)
-  bk := (_root_.UpperTheory.LiteratureTheorems.bloch_kato_local_of_open O)
+theorem UpperTheory.LiteratureTheorems.galois_cohomology_from_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenImageCondition) : GlobalTheory.Mem.LiteralAutomorphy.LitCoh :=
+  { pt := _root_.UpperTheory.LiteratureTheorems.poitou_tate_normalised_of_open O
+    lf := _root_.UpperTheory.LiteratureTheorems.local_finiteness_of_open O
+    lt := _root_.UpperTheory.LiteratureTheorems.local_tate_duality_of_open O
+    le := _root_.UpperTheory.LiteratureTheorems.localEulerChar_alt O
+    gf := _root_.UpperTheory.LiteratureTheorems.global_finiteness_of_open O
+    ge := _root_.UpperTheory.LiteratureTheorems.global_euler_char_of_open O
+    uo := _root_.UpperTheory.LiteratureTheorems.unramified_orthogonality_of_open O
+    gw := _root_.UpperTheory.LiteratureTheorems.greenberg_wiles_of_open O
+    lfK := _root_.UpperTheory.LiteratureTheorems.local_finiteness_k_of_open O
+    ltK := _root_.UpperTheory.LiteratureTheorems.local_tate_duality_k_of_open O
+    leK := _root_.UpperTheory.LiteratureTheorems.local_euler_char_k_of_open O
+    bk := _root_.UpperTheory.LiteratureTheorems.bloch_kato_local_of_open O }
 end

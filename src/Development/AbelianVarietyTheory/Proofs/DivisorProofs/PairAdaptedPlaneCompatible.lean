@@ -104,7 +104,10 @@ theorem admissible_of_slice_zero (ε : κ ≃ κ₀ ⊕ κ₁) : ∀ l ∈ (adel
   refine ⟨S.comp T, fun f => ?_⟩
   rw [ContinuousLinearMap.comp_apply, ← hS, LinearMap.comp_apply]
   congr 1
-  rw [glue_map ε (fun z : AF F => InfiniteAdeleRing.ringEquiv_mixedSpace F z.1), glue_map ε (fun z : AF F => z.2)]
+  funext b
+  simp only [LinearMap.funLeft_apply, pureA, hT]
+  rw [glue_map ε (fun z : AF F => InfiniteAdeleRing.ringEquiv_mixedSpace F z.1),
+    glue_map ε (fun z : AF F => z.2)]
 
 
 open scoped Classical in

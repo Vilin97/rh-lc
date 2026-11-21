@@ -240,6 +240,8 @@ theorem UpperTheory.V.Z.J.D.dense_threshold_order_one :
     · left
       rw [al, upow, ← (diagT k (Fin n)).map_one]
       congr 1
+      ext i
+      simp
     · exact Or.inr ⟨⟨j, by omega⟩, rfl⟩
   by_cases hne : locEig π b φ μ = ⊥
   · rw [hne, rank_bot]; exact zero_le_one

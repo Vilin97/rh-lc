@@ -112,8 +112,15 @@ theorem config_b_real_place_branch : GlobalTheory.ThK.KP → ∀ (F E : Type) [F
     simp only [LinearMap.comp_apply, Submodule.subtype_apply]
     rw [hπ y hy o ho, ← himg]
     exact Submodule.mem_map_of_mem hy
-  · have hoff : ∀ z ∈ off, φ z = 0 := fun z hz => LinearMap.mem_ker.1 ((Submodule.span_le.2 fun y hy =>
-      LinearMap.mem_ker.2 (frobInf_offEig_of_beta hM hM₁ hφ hy.2)) hz)
+  · have hoff : ∀ z ∈ off, φ z = 0 := by
+      intro z hz
+      change z ∈ Submodule.span ℂ {y | y ∈ V ∧ IsOffEig B G.M om R.p G₁.W H' X.β ((a : ℝ) / 2) y} at hz
+      apply LinearMap.mem_ker.1
+      have hle : Submodule.span ℂ {y | y ∈ V ∧ IsOffEig B G.M om R.p G₁.W H' X.β ((a : ℝ) / 2) y} ≤ LinearMap.ker φ := by
+        apply Submodule.span_le.2
+        intro y hy
+        exact LinearMap.mem_ker.2 (frobInf_offEig_of_beta hM hM₁ hφ hy.2)
+      exact hle hz
     refine ⟨φ ∘ₗ tw.subtype ∘ₗ s, ?_, ?_⟩
     · intro k₁ hk₁ f hf f₁ hf₁ hfV g hg g₁ hg₁ hT
       rw [← himg] at hfV

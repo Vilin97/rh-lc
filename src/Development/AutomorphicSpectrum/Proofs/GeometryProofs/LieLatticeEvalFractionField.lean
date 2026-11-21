@@ -25,7 +25,8 @@ theorem dualMap_comp (f : A →+* B) (g : B →+* D) :
 theorem spec_dualMap_comp (f : A →+* B) (g : B →+* D) :
     Spec.map (CommRingCat.ofHom (dualMap (g.comp f))) =
       Spec.map (CommRingCat.ofHom (dualMap g)) ≫ Spec.map (CommRingCat.ofHom (dualMap f)) := by
-  rw [dualMap_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
+  rw [dualMap_comp]
+  exact Spec.map_comp (CommRingCat.ofHom (dualMap f)) (CommRingCat.ofHom (dualMap g))
 
 theorem isTanAt_epsHom {G : Over S} [GrpObj G] (φ : A →+* B) (x : Spec (CommRingCat.of A) ⟶ S)
     (x' : Spec (CommRingCat.of B) ⟶ S) (h : Spec.map (CommRingCat.ofHom φ) ≫ x = x') (v : epsAt x ⟶ G)
@@ -38,7 +39,7 @@ theorem isTanAt_epsHom {G : Over S} [GrpObj G] (φ : A →+* B) (x : Spec (CommR
     rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp]
     congr 2
     refine RingHom.ext fun a => ?_
-    simp [dualMap]
+    simp [dualMap, TrivSqZeroExt.fst_add]
   rw [← Category.assoc, key, Category.assoc, hv, MonObj.comp_one]
 
 theorem stalk_hom_ext {X : Scheme.{0}} (c : X) (a b : X.presheaf.stalk c →+* B)
@@ -66,6 +67,7 @@ theorem valAt_base (M : LieModel G ξ E) (z : Spec (CommRingCat.of R) ⟶ X) {e 
     (u : epsAt z ⟶ G) (ht : t.left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap R C))) ≫ u.left)
     (hu : u.left = Spec.map (CommRingCat.ofHom (dualMap (Scheme.stalkClosedPointTo z).hom)) ≫ v.left) :
     M.ValAt (Spec.map (CommRingCat.ofHom (algebraMap R C)) ≫ z) e t := by
+  set_option maxHeartbeats 0 in
   have hsp := centre_specializes (C := C) z
   have F1 : Spec.map (CommRingCat.ofHom (X.presheaf.stalkSpecializes hsp).hom) ≫ X.fromSpecStalk (centre z) =
       X.fromSpecStalk (centre (Spec.map (CommRingCat.ofHom (algebraMap R C)) ≫ z)) :=

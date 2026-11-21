@@ -212,7 +212,7 @@ theorem xi_int_of_ties (hRF : GlobalTheory.NT.RayField) (hSI : GlobalTheory.Inde
       fun PP y => ⟨SubfieldClass.ratCast_mem C.σ₂.fieldRange _, by
         have h1 := GlobalTheory.NormUnit.normProd_inv_mem D ρ i b {PP.1} (Finset.disjoint_singleton_left.2
           (Finset.disjoint_left.1 hQ.2.2 (hsub PP.2)))
-        rw [normProd, Finset.prod_singleton] at h1
+        rw [normProd, Finset.prod_singleton, Ideal.absNorm_apply, Submodule.cardQuot_apply] at h1
         rw [Base.univFam, univCoef_eq]
         push_cast
         rw [← inv_pow]

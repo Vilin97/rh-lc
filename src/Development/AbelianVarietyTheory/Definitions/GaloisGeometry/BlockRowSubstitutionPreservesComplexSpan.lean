@@ -1657,15 +1657,16 @@ structure LatTies (w : D.what₂.places.Pl) (Fo : FormsIn M (j + 1) hj) (β : Fo
 set_option maxHeartbeats 8000000 in
 theorem latIn_of {Fo : FormsIn M (j + 1) hj} {Lc : LocIn X u w hg Lv j Fo.Ch}
     {pos : (Σ v : Fin (Fl.Pj (j + 1)).nV, Fin ((Fl.Pj (j + 1)).n' v)) ≃ D.what₂.Tau} {β : Fo.Ch}
-    (hfr : FrRatJ (Lc.t β) Lc.B) (H : LatTies hj w Fo β (Lc.Lb β)) : LatIn (stepInOf hj Fo Lc pos) w β where
-  prime := hg.1
-  resChar := rfl
-  siteGood_prime_torsion := H.siteGood_prime_torsion
-  alg := fun v a => (X.g u w hg).spl_alg _ ((X.g u w hg).pl v).2 a
-  base := fun v t => frlat_re (rankN D (j + 1) hj) ((X.g u w hg).pl v).1 ((X.g u w hg).spl _ ((X.g u w hg).pl v).2) (Lc.Lb β)
-    Lc.B ((Lc.t β).fr _ ((X.g u w hg).pl v).2) (hfr _ _) ((Lc.t β).fr_lat _ ((X.g u w hg).pl v).2) (Fo.K β).lev.Lb H.Lb_eq t
-  lat := H.lat
-  chi := H.chi
+    (hfr : FrRatJ (Lc.t β) Lc.B) (H : LatTies hj w Fo β (Lc.Lb β)) : LatIn (stepInOf hj Fo Lc pos) w β := by
+  exact {
+    prime := hg.1
+    resChar := rfl
+    siteGood_prime_torsion := H.siteGood_prime_torsion
+    alg := fun v a => (X.g u w hg).spl_alg _ ((X.g u w hg).pl v).2 a
+    base := fun v t => frlat_re (rankN D (j + 1) hj) ((X.g u w hg).pl v).1 ((X.g u w hg).spl _ ((X.g u w hg).pl v).2) (Lc.Lb β)
+      Lc.B ((Lc.t β).fr _ ((X.g u w hg).pl v).2) (hfr _ _) ((Lc.t β).fr_lat _ ((X.g u w hg).pl v).2) (Fo.K β).lev.Lb H.Lb_eq t
+    lat := H.lat
+    chi := H.chi }
 
 
 set_option maxHeartbeats 8000000 in
@@ -2052,21 +2053,23 @@ theorem StepTies.chi (S : StepTies hj Fo Lc Gt c) (β : Fo.Ch) (κ : (Fo.K β).l
 
 
 set_option maxHeartbeats 4000000 in
-theorem StepTies.ties (S : StepTies hj Fo Lc Gt c) (β : Fo.Ch) : LocTiesR hj Fo Lc (c.embW u w h) β where
-  frRat := S.frRat β
-  sameU := S.sameU β
-  hypT := S.hypT β
-  bad_p := S.bad_p
-  std := S.std
-  psi := S.psi β
-  chiRat := fun κ => let ⟨r, _, _, hr⟩ := S.chi β κ; ⟨r, hr⟩
-  chRat := S.chRat β
+theorem StepTies.ties (S : StepTies hj Fo Lc Gt c) (β : Fo.Ch) : LocTiesR hj Fo Lc (c.embW u w h) β := by
+  exact {
+    frRat := S.frRat β
+    sameU := S.sameU β
+    hypT := S.hypT β
+    bad_p := S.bad_p
+    std := S.std
+    psi := S.psi β
+    chiRat := fun κ => let ⟨r, _, _, hr⟩ := S.chi β κ; ⟨r, hr⟩
+    chRat := S.chRat β }
 
-theorem StepTies.lat (S : StepTies hj Fo Lc Gt c) (β : Fo.Ch) : LatTies hj w Fo β (Lc.Lb β) where
-  siteGood_prime_torsion := S.siteGood_prime_torsion
-  Lb_eq := S.Lb_eq β
-  lat := fun cl => isLattice_chart (Fo.K β) cl
-  chi := S.chi β
+theorem StepTies.lat (S : StepTies hj Fo Lc Gt c) (β : Fo.Ch) : LatTies hj w Fo β (Lc.Lb β) := by
+  exact {
+    siteGood_prime_torsion := S.siteGood_prime_torsion
+    Lb_eq := S.Lb_eq β
+    lat := fun cl => isLattice_chart (Fo.K β) cl
+    chi := S.chi β }
 
 theorem StepTies.core (S : StepTies hj Fo Lc Gt c) (K : CmpTied D X0 T Gt c) (ht : Fl.t = D.R.t) (hF : FillTie Gt u w h Fl) (β : Fo.Ch) :
     (stepInOf hj Fo Lc (Gt.gat_pos u w h)).Core (c.embW u w h) β :=
@@ -2094,11 +2097,12 @@ theorem StepTies.twUnit (S : StepTies hj Fo Lc Gt c) (K : CmpTied D X0 T Gt c) (
     (stepInOf hj Fo Lc (Gt.gat_pos u w h)).TwUnit w β :=
   twUnit_of (stepInOf hj Fo Lc (Gt.gat_pos u w h)) (c.embW u w h) w β (S.core K ht hF β) (fun x => c.embW_int u w h x) (latIn_of hj (S.ties β).frRat (S.lat β))
 
-theorem StepTies.chX (S : StepTies hj Fo Lc Gt c) : ChX (stepInOf hj Fo Lc (Gt.gat_pos u w h)) where
-  hypC := fun (β : Fo.Ch) => locHypC_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β) (S.frRat β) (S.hypC β)
-  inj := fun (β : Fo.Ch) a => gamI_inj_locJ hj (Lc.t β) Lc.B a
-  onto := fun (β : Fo.Ch) a => gamOnto_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β) a
-  cinj := fun (β : Fo.Ch) => compInj_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β)
+theorem StepTies.chX (S : StepTies hj Fo Lc Gt c) : ChX (stepInOf hj Fo Lc (Gt.gat_pos u w h)) := by
+  exact {
+    hypC := fun (β : Fo.Ch) => locHypC_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β) (S.frRat β) (S.hypC β)
+    inj := fun (β : Fo.Ch) a => gamI_inj_locJ hj (Lc.t β) Lc.B a
+    onto := fun (β : Fo.Ch) a => gamOnto_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β) a
+    cinj := fun (β : Fo.Ch) => compInj_locJ hj (Lc.t β) Lc.B (Fo.K β).lev (S.sameU β) }
 
 end Step
 

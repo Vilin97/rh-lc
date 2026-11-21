@@ -1392,7 +1392,7 @@ theorem jnt_sizes_slopes (D : D7) (L : SizeData₂ D) (hS : SizesAt L) (hx2 : 2 
   have hkR : (5 : ℝ) ≤ D.R.k := by exact_mod_cast hkN
   have hk0 : (0 : ℝ) < D.R.k := by linarith
   have hnpos : (0 : ℝ) < D.R.n := by
-    have : 0 < D.R.n := by unfold Ranks.n; positivity
+    have : 0 < D.R.n := D.R.toFrame.ord_pos
     exact_mod_cast this
   have hn1 : (1 : ℝ) ≤ D.R.n := by
     have : 1 ≤ D.R.n := D.R.toFrame.ord_pos

@@ -67,7 +67,7 @@ theorem locF_of_loc (p : PlF D) (B : Submodule (𝓞 D.host.E) V) {x : V}
     by_contra htp
     exact hnot ((Formalism.HermitianLattices.Ext.L3.LocalSpans.mem_locF p.asIdeal B x).2 ⟨t, htp, ht⟩)
   obtain ⟨Q, hIQ, hQ, hQp⟩ := Ideal.exists_ideal_over_prime_of_isIntegral p.asIdeal I hle
-  have hQm : Q.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := 𝓞 D.host.F) Q (by rw [hQp]; exact p.isMaximal)
+  have hQm : Q.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := 𝓞 D.host.F) Q (by rw [hQp]; exact p.isMaximal)
   obtain ⟨s, hs, hsx⟩ := hx Q hQm hQp
   exact hs (hIQ hsx)
 
@@ -147,7 +147,7 @@ theorem latPatch_holds : Formalism.L2.SG.Pf.FrameGlobalPatching.LatPatch := by
     exact loc_eq_of_locF_eq (plOf P hPm) hPm.isPrime rfl ((localLattice_eq_iff Zd _ (hΛ' _) hΛ₀).1 h1)
   obtain ⟨L, ⟨hLfull, hLloc⟩, huniq⟩ := latLocGlob (𝓞 D.host.E) D.host.E (VS D).V Λ₀ (hfullΛ Λ₀ hΛ₀) M
     (fun P hP => ⟨Λ' (plOf P hP), hfullΛ _ (hΛ' _), hMP P hP⟩) hexc
-  have hL : Submodule.IsLattice D.host.E L := ⟨hLfull.1, hLfull.2⟩
+  have hL : Submodule.IsLattice D.host.E L := Submodule.IsLattice.of_fg D.host.E hLfull.1
   have hlocP : ∀ (p : PlF D) (P : Ideal (𝓞 D.host.E)), P.IsMaximal →
       P.comap (algebraMap (𝓞 D.host.F) (𝓞 D.host.E)) = p.asIdeal →
       PI.LatLocGlob.loc P L = PI.LatLocGlob.loc P (Λ' p) := by

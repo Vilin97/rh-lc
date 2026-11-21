@@ -42,7 +42,7 @@ private theorem tsum_enorm_le_seminorm {V : Type} [NormedAddCommGroup V] [Normed
   have hbdd' : BddAbove (Set.range p) := (Seminorm.bddAbove_range_iff).2 hbdd
   have hpc : ∀ a, Continuous (p a) := fun a => by
     rw [show ⇑(p a) = fun f => ∑ i ∈ a.2, ‖T a.1 i f‖ from funext (hp a)]
-    exact continuous_finset_sum _ fun i _ => (T a.1 i).continuous.norm
+    exact continuous_finsetSum _ fun i _ => (T a.1 i).continuous.norm
   have hcont : Continuous (⨆ a, p a) := Seminorm.continuous_iSup _ hpc hbdd'
   have hS : Continuous ⇑(⨆ a, p a : Seminorm ℂ (SchwartzMap V ℂ)) := by
     rw [Seminorm.coe_iSup_eq hbdd']

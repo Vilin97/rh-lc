@@ -49,7 +49,7 @@ theorem exists_symData_symRead : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies 
   · exact ⟨fun h PP => (red_sym (l PP) (S PP) hπ (x PP) (reord π x PP) fun _ _ => rfl).1.2 (h PP (Set.mem_univ _)),
       fun h PP _ => (red_sym (l PP) (S PP) hπ (x PP) (reord π x PP) fun _ _ => rfl).1.1 (h PP)⟩
   · refine (hχ x hx ((hH _).1 hx)).trans ?_
-    refine (MonoidHom.finset_prod_apply _ _ _).trans (Finset.prod_congr rfl fun PP _ => Units.ext ?_)
+    refine (map_prod (MonoidHom.eval _) _ _).trans (Finset.prod_congr rfl fun PP _ => Units.ext ?_)
     exact ((red_sym (l PP) (S PP) hπ (x PP) (reord π x PP) fun _ _ => rfl).2 _ (h3 PP) _ (hxy PP)).symm
 end GlobalTheory.SymReadEx
 end

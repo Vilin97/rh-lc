@@ -36,7 +36,9 @@ theorem rowsU_of_colPins_alt : ∀ CY CT : ℝ, 0 ≤ CT → ∃ C0 : ℝ, ∀ (
   have hpos : ∀ v : InfinitePlace D.what₂.LL, (((P.A3.side3 P.Ps P.ψs Pk.Zs).HV P.A3.fam3.base3.μ0).map v.embedding).PosDef :=
     fun v => Formalism.L2.DIV.BlockDat.HV_pos (ℓ := P.A3.fam3.F.lvl P.Ps P.ψs) K.ok1.ok2.conj (K.ok1.ok2.what₂ _) K.ok1.ok2.irr v
   have hlat : Submodule.IsLattice D.what₂.LL (Cons.nuOf L u e) :=
-    nuLat_comap_isLattice D L hN u ⟨(hNu u).1, (hNu u).2⟩ _ e
+    nuLat_comap_isLattice D L hN u ⟨(hNu u).1, by
+      intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli⟩ _ e
   have ha : 0 < (K.c.face Pk.Zs).a w := by
     have h := hrk u
     change 0 < Module.finrank D.what₂.LL (Submodule.span D.what₂.LL ((D.div.Nu u).L : Set (D.div.Nu u).V)) at h

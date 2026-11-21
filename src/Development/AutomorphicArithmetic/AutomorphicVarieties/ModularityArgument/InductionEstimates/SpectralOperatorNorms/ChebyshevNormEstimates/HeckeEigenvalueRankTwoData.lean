@@ -70,7 +70,12 @@ private theorem act_cc {H V : Type} [NormedAddCommGroup H] [InnerProductSpace �
   have tc : ∀ t, Continuous fun x => a t (u (x + t)) := fun t => (a t).continuous.comp (hc.comp (continuous_add_const t))
   have ts : ∀ t, HasCompactSupport fun x => a t (u (x + t)) := fun t =>
     (hs.comp_homeomorph (Homeomorph.addRight t)).comp_left (g := a t) (map_zero _)
-  have sc : Continuous fun x => ∑ t ∈ a.support, a t (u (x + t)) := continuous_finset_sum _ fun t _ => tc t
+  have sc : Continuous fun x => ∑ t ∈ a.support, a t (u (x + t)) := by
+    induction a.support using Finset.induction_on with
+    | empty => simp only [Finset.sum_empty]; exact continuous_const
+    | insert t T ht ih =>
+      simp only [Finset.sum_insert ht]
+      exact (tc t).add ih
   have ss : HasCompactSupport fun x => ∑ t ∈ a.support, a t (u (x + t)) := by
     induction a.support using Finset.induction_on with
     | empty => simp only [Finset.sum_empty]; exact HasCompactSupport.zero

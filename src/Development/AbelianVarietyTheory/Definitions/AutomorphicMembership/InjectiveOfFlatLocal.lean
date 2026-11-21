@@ -51,7 +51,7 @@ theorem exists_etale_local (V : Type) [CommRing V] [IsLocalRing V] [IsNoetherian
       (AdjoinRoot.quotEquivQuotMap f (maximalIdeal V)).toRingEquiv.toMulEquiv)
   have hl : IsLocalRing (AdjoinRoot f) := by
     refine IsLocalRing.of_unique_max_ideal ⟨_, hmax, fun M hM => ?_⟩
-    have hc : (M.comap (algebraMap V (AdjoinRoot f))).IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M
+    have hc : (M.comap (algebraMap V (AdjoinRoot f))).IsMaximal := Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := V) M
     exact (hmax.eq_of_le hM.ne_top (Ideal.map_le_iff_le_comap.2 (IsLocalRing.eq_maximalIdeal hc).ge)).symm
   have hme : (maximalIdeal V).map (algebraMap V (AdjoinRoot f)) = maximalIdeal (AdjoinRoot f) :=
     IsLocalRing.eq_maximalIdeal hmax

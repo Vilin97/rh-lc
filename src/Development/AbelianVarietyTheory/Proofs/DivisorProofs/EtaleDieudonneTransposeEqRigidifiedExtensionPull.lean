@@ -17,8 +17,12 @@ theorem rigToLie_toBase_rig {p : ℕ} [Fact p.Prime] {k k' : Type} [Field k] [Ch
     (G.baseChange k').rigToLie (p_eq_zero p k') ((G.toBase k').rig r)
       (omegaMap _ _ (PerfdLat.dualBaseChange k' G).hom ((G.dual.toBase k').omega w)) =
       algebraMap k k' (G.rigToLie (p_eq_zero p k) r w) := by
-  rw [rigToLie_apply, rigToLie_apply, SemiHom.rigToExt_rig,
-    SemiHom.extChar_vecExt _ (p_eq_zero p k)]
+  set_option backward.isDefEq.respectTransparency false in
+   change (G.baseChange k').primLie ((G.baseChange k').extChar (p_eq_zero p k')
+    ((G.baseChange k').rigToExt ((G.toBase k').rig r))) _ =
+    algebraMap k k' (G.primLie (G.extChar (p_eq_zero p k) (G.rigToExt r)) w)
+  set_option backward.isDefEq.respectTransparency false in
+   rw [SemiHom.rigToExt_rig, SemiHom.extChar_vecExt _ (p_eq_zero p k)]
   exact primLie_toBase G _ w
 
 theorem linearMap_eq_of_liftSemi_surjective {R R' M N : Type} [CommRing R] [CommRing R']
@@ -64,8 +68,10 @@ theorem red_of_isTr (p : ℕ) [Fact p.Prime] (B : Base p (fun _ _ G => G.IsConn)
       (r' lb).comp (G.dual.baseChange k').rigOfOmega :=
     linearMap_eq_of_liftSemi_surjective (G.dual.toBase k').omega
       (T.omega_baseChange_bijective_of_p_eq_zero G.dual k' (p_eq_zero p k)).2 _ _ fun w => by
-        rw [LinearMap.comp_apply, LinearMap.comp_apply, rigToLie_toBase_rig, key1]
-        rfl
+        set_option backward.isDefEq.respectTransparency false in
+          simp only [LinearMap.comp_apply]
+          rw [rigToLie_toBase_rig]
+          exact (key1 w).symm
   have hinj := (PDivGroup.rigToLie_bijective_and_dual_rigOfOmega_bijective_of_isEt p k'
     (p_eq_zero p k') G' h').1.1
   apply hinj
@@ -93,7 +99,7 @@ theorem red_of_isTr (p : ℕ) [Fact p.Prime] (B : Base p (fun _ _ G => G.IsConn)
   rw [← hx', (redDual_spec B G' h').1, h2, ← hψ, e4, e5]
   have e7 := LinearMap.congr_fun key2 (omegaMap _ _ (PerfdLat.dualBaseChange k' G).inv
     (omegaMap _ _ (dualHom G' (G.baseChange k') s.lift) w'))
-  rw [LinearMap.comp_apply, LinearMap.comp_apply, e6] at e7
+  simp only [LinearMap.comp_apply, e6] at e7
   exact e7.symm
 
 end GlobalTheory.Dieu.EtFromConn

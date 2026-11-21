@@ -45,6 +45,6 @@ theorem UpperTheory.ConvolutionTheory.K.hsOfKer :
   rw [← lintegral_tsum]
   · simp only [← enorm_sq_eq_tsum b]
     rw [← UpperTheory.ConvolutionTheory.K.hsOfKer_sq]
-    exact ENNReal.pow_lt_top hk.2
+    exact ENNReal.pow_lt_top hk
   · intro i
-    exact ((aestronglyMeasurable_const.inner hk.1).enorm).pow_const 2
+    exact ((aestronglyMeasurable_const.inner hk.aestronglyMeasurable).enorm).pow_const 2

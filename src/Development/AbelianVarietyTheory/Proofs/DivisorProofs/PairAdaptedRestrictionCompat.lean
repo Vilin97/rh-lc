@@ -66,14 +66,14 @@ theorem avg_ne_zero : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fie
     exact integral_zero _ _
   have hc0 : c ≠ 0 := by
     rintro rfl
-    have := hc _ (hmem y₀)
-    rw [hgv, zero_smul] at this
+    have := (hgv y₀).symm.trans (hc _ (hmem y₀))
+    rw [zero_smul] at this
     exact smul_ne_zero hy₀ hφne this
   have key : ∀ y, (l₁ ∘ₗ ed) (GlobalTheory.SiegelAvg.starFam dd B.ψ (incV F H'.y) y Φ) = (c⁻¹ * l₁ φ₀) * g y := fun y => by
-    have h1 := hc _ (hmem y)
-    rw [hgv] at h1
+    have h1 := (hgv y).symm.trans (hc _ (hmem y))
     have h2 : ed (GlobalTheory.SiegelAvg.starFam dd B.ψ (incV F H'.y) y Φ) = (c⁻¹ * g y) • φ₀ := by
       rw [mul_smul, h1, smul_smul, inv_mul_cancel₀ hc0, one_smul]
+      rfl
     rw [LinearMap.comp_apply, h2, map_smul, smul_eq_mul]
     ring
   have hconv : GlobalTheory.SiegelAvg.Conv μ (l₁ ∘ₗ ed) (GlobalTheory.SiegelAvg.starFam dd B.ψ (incV F H'.y)) Φ := by
