@@ -225,7 +225,7 @@ theorem combAt : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     (hφ₀ : ∀ Y, ι φ₀ Y = c * (GlobalTheory.SplitFlip.matLat (Fin a') Λ : Set _).indicator 1 (P.val * Y)),
     ∃ z : H →₀ ℂ, (∀ k ∈ z.support, k ∈ Set.range kf) ∧ zdeg z ≠ 0 ∧
       ∀ {m : ℕ} (f : Fin m → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin a' × Fin (a + a')))
-        (φ : Fin m → ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F, (Fin a' × Fin (a + a') → Fv F v) → ℂ),
+        (φ : Fin m → ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F), (Fin a' × Fin (a + a') → Fv F v) → ℂ),
         (∀ k v, φ k v ∈ GlobalTheory.WeilM.SB _) → (∀ k, ∀ᶠ v in Filter.cofinite, φ k v = Γ.M'.vac v) → (∀ k, φ k B.v₁ = φ₀) →
         (z.sum fun k c => c • om' (κ k, 1) (∑ k, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f k) (φ k))) ∈ Γ.M'.So B.ψ B.τ₁ := by
   intro F E _ _ _ _ _ σ a a' B Γ hM' hlt om' H κ kf ν α hν ι hι hact φ₀ P Λ c hφ₀
@@ -326,7 +326,7 @@ theorem comp_mem_SB {Z : Type} [TopologicalSpace Z] (T : Z ≃ₜ Z) {f : Z → 
 
 theorem isLinBar_one {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
     {n d : ℕ} {Y : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E n} {Wd : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E d} (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd)
-    (ψ : AddChar (AF F) ℂ) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (t : E →ₐ[F] Fv F v) (b bt : GL (Fin n) (Fv F v)) (hbt : bt.val = b.valᵀ)
+    (ψ : AddChar (AF F) ℂ) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (t : E →ₐ[F] Fv F v) (b bt : GL (Fin n) (Fv F v)) (hbt : bt.val = b.valᵀ)
     (c : GL (Fin d) (Fv F v)) (ι : ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Matrix (Fin n) (Fin d) (Fv F v) → ℂ))
     (h : M.IsLinBar ψ t b c ι) : M.IsLinBar ψ t 1 1 ((LinearMap.funLeft ℂ ℂ (mulHomeo bt c)).comp ι) := by
   have hco : ∀ u : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E),
@@ -360,7 +360,7 @@ theorem decAlg : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     (ψ : AddChar (AF F) ℂ) (emb : ∀ w : InfinitePlace F, GlobalTheory.AdelicU.EmbOver E w) (Φ : (Fin n × Fin d → AF F) → ℂ),
     Φ ∈ GlobalTheory.SquareAgree.algD M ψ emb →
     ∃ (m : ℕ) (f : Fin m → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin n × Fin d))
-      (φ : Fin m → ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F, (Fin n × Fin d → Fv F v) → ℂ),
+      (φ : Fin m → ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F), (Fin n × Fin d → Fv F v) → ℂ),
       Φ = ∑ k, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f k) (φ k) ∧ (∀ k v, φ k v ∈ GlobalTheory.WeilM.SB _) ∧
         ∀ k, ∀ᶠ v in Filter.cofinite, φ k v = M.vac v := by
   intro F E _ _ _ _ _ σ n d Y Wd M ψ emb Φ hΦ

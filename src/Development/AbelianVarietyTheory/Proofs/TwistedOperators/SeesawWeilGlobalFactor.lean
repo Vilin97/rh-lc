@@ -218,7 +218,7 @@ theorem toUX_surj (X : HSp D) {k : ℕ} (e : Fin k ≃ Fin X.rank) {J : Matrix (
     simp
 
 theorem mem_GfC_of_at (X : HSp D) {k : ℕ} (e : Fin k ≃ Fin X.rank) (Wd : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc D.host.F D.host.E k)
-    (hJ : Wd.J = D.host.xi0 • (X.gramᵀ).submatrix e e) (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl D.host.F) (g : GA D X)
+    (hJ : Wd.J = D.host.xi0 • (X.gramᵀ).submatrix e e) (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := D.host.F)) (g : GA D X)
     (hg : GlobalTheory.TripleRead.toUX X e hJ g ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.UAt D.sp.cm.sig Wd (GlobalTheory.AdelicU.evFin D.host.F v)) :
     g ∈ GfC X := by
   let u : AF D.host.F := Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.pairA D.host.F 1 0

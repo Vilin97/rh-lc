@@ -21,7 +21,7 @@ namespace GlobalTheory.InertChars
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem eq_mul_of_at {v : Pl F} {y : AE F E} (hy : At (evFin F v) y) :
+theorem eq_mul_of_at {v : Pl (F := F)} {y : AE F E} (hy : At (evFin F v) y) :
     y = algebraMap (AF F) (AE F E) (GlobalTheory.EmbChart.atPlace v 1) * y := by
   have h0 : evFin F v (1 - GlobalTheory.EmbChart.atPlace v 1) = 0 := by
     rw [map_sub, map_one, GlobalTheory.EmbChart.evFin_atPlace, sub_self]
@@ -29,13 +29,13 @@ theorem eq_mul_of_at {v : Pl F} {y : AE F E} (hy : At (evFin F v) y) :
   rw [Algebra.smul_def, map_sub, map_one, sub_mul, one_mul, sub_eq_zero] at h1
   exact h1
 
-private lemma tensorProduct_map_eq_zero_of_at_of_atPlace_eq_zero {R : Type} [CommRing R] [Algebra F R] {v : Pl F} (φ : AF F →ₐ[F] R)
+private lemma tensorProduct_map_eq_zero_of_at_of_atPlace_eq_zero {R : Type} [CommRing R] [Algebra F R] {v : Pl (F := F)} (φ : AF F →ₐ[F] R)
     (hφ : φ (GlobalTheory.EmbChart.atPlace v 1) = 0) {y : AE F E} (hy : At (evFin F v) y) :
     Algebra.TensorProduct.map φ (AlgHom.id F E) y = 0 := by
   rw [eq_mul_of_at hy, map_mul, Algebra.TensorProduct.algebraMap_apply, Algebra.TensorProduct.map_tmul,
     Algebra.algebraMap_self_apply, hφ, TensorProduct.zero_tmul, zero_mul]
 
-theorem eq_ideleAt_of_at {v : Pl F} (z : (AE F E)ˣ) (hz : At (evFin F v) ((z : AE F E) - 1)) :
+theorem eq_ideleAt_of_at {v : Pl (F := F)} (z : (AE F E)ˣ) (hz : At (evFin F v) ((z : AE F E) - 1)) :
     z = GlobalTheory.Doubling.ideleAt F E v (GlobalTheory.Doubling.unitFin F E v z) := by
   have hev : ∀ {R : Type} [CommRing R] [Algebra F R] (φ : AF F →ₐ[F] R), φ (GlobalTheory.EmbChart.atPlace v 1) = 0 →
       Algebra.TensorProduct.map φ (AlgHom.id F E) (z : AE F E) = 1 := by
@@ -66,7 +66,7 @@ namespace GlobalTheory.InertChars
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem locIdele_eq_of_inert {v : Pl F} {w : HeightOneSpectrum (𝓞 E)} (hw : Formalism.UG.IsInertAt F E v w)
+theorem locIdele_eq_of_inert {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)} (hw : Formalism.UG.IsInertAt F E v w)
     (α β : Chr F E) (hres : ∀ b : (AF F)ˣ, α (ideleMap F E b) = β (ideleMap F E b))
     (hα : UnrAt α w) (hβ : UnrAt β w) (y : (w.adicCompletion E)ˣ) :
     α (locIdele F w y) = β (locIdele F w y) := by
@@ -105,7 +105,7 @@ theorem locIdele_eq_of_inert {v : Pl F} {w : HeightOneSpectrum (𝓞 E)} (hw : F
 
 theorem beta_eq_alpha_of_inert : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ (v : Pl F) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T →
+    ∀ (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T →
       ∀ z : (AE F E)ˣ, At (evFin F v) ((z : AE F E) - 1) → X.β z = X.α z := by
   intro F E _ _ _ _ _ σ B a a' G X om om' hT v w hw hv z hz
   have h := GlobalTheory.LFun.under_eq_of_isInertAt hw
@@ -122,7 +122,7 @@ theorem beta_eq_alpha_of_inert : ∀ (F E : Type) [Field F] [NumberField F] [Fie
     have e2 : ((X.β (ideleMap F E b) : Circle) : ℂ) = _ := hT.chars.resβ b
     apply Circle.ext
     rw [e1, e2, hpow]
-  have hnot : ¬ (w.under (𝓞 F) ∈ (X.T : Set (Pl F))) := by
+  have hnot : ¬ (w.under (𝓞 F) ∈ (X.T : Set (Pl (F := F)))) := by
     rw [h]
     exact hv
   rw [eq_ideleAt_of_at z hz, GlobalTheory.LFun.ideleAt_eq_locIdele_of_isInertAt h hw]

@@ -32,17 +32,17 @@ def mc (M : Model σ X W) (φ : UA σ X.J → ℂ) (g : UA σ X.J) : ℂ := pet 
 def gInf : Subgroup (UA σ X.J) := Subgroup.closure (UAt σ X (evI F))
 
 
-def gAt (S : Finset (Pl F)) : Subgroup (UA σ X.J) := ⨆ v ∈ S, locGrp σ X v
+def gAt (S : Finset (Pl (F := F))) : Subgroup (UA σ X.J) := ⨆ v ∈ S, locGrp σ X v
 
 
-def gOff (S : Finset (Pl F)) : Subgroup (UA σ X.J) :=
+def gOff (S : Finset (Pl (F := F))) : Subgroup (UA σ X.J) :=
   Subgroup.closure {g | (∀ w : InfinitePlace F, (mat g).map (compInf F E w) = 1) ∧ ∀ v ∈ S, OffAt v g}
 
 def IntAll (g : UA σ X.J) : Prop := ∀ v, IntAt v g
 
 def IsFn (φ : UA σ X.J → ℂ) : Prop := Continuous φ ∧ ∀ γ ∈ ratU σ X.J, ∀ g, φ (γ * g) = φ g
 
-def IsBump (B : Base F E) (M : Model σ X W) (om : Rep σ X W) (v : Pl F) (H : Subgroup (UA σ X.J))
+def IsBump (B : Base F E) (M : Model σ X W) (om : Rep σ X W) (v : Pl (F := F)) (H : Subgroup (UA σ X.J))
     (φ : (Fin n × Fin d → Fv F v) → ℂ) : Prop :=
   φ ∈ SB (Fin n × Fin d → Fv F v) ∧ φ ≠ 0 ∧ H ≤ locGrp σ X v ∧ (∀ g ∈ H, IntAt v g) ∧
     (∃ O : Set (UA σ X.J), IsOpen O ∧ 1 ∈ O ∧ ∀ g ∈ locGrp σ X v, g ∈ O → g ∈ H) ∧
@@ -111,7 +111,7 @@ def TLift : Prop :=
         (∀ w k, (d : ℤ) + mW w ≤ 2 * (lam w).w k) → ∃ U' : Submodule ℂ (GlobalTheory.UnitaryBC.UA E d → ℂ), IsLift B χX χW mX mW lam U U'
 
 def IsFin {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ}
-    {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (φ : ∀ v : Pl F, (Fin n × Fin d → Fv F v) → ℂ) : Prop :=
+    {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (φ : ∀ v : Pl (F := F), (Fin n × Fin d → Fv F v) → ℂ) : Prop :=
   (∀ v, φ v ∈ SB (Fin n × Fin d → Fv F v)) ∧ ∀ᶠ v in cofinite, φ v = M.vac v
 
 def BrEx : Prop :=
@@ -122,8 +122,8 @@ def Datum : Prop :=
   ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d)
     (M : Model σ X W) (χX χW : Chr F E) (om : Rep σ X W), IsPair B M χX χW om n 0 d 0 → 1 ≤ n →
     ∀ K a (e : UA σ X.J × UA σ X.J →* G2 σ X), IsStab2 B K → IsHgt K a → (∀ g g', IsEmb g g' (e (g, g'))) →
-    ∀ ν, @Measure.IsAddHaarMeasure _ _ _ (borel _) ν → ∀ S : Finset (Pl F), UnrOff χW (S : Set (Pl F)) →
-    ∀ (H : Pl F → Subgroup (UA σ X.J)) φ, IsFin M φ → (∀ v ∈ S, IsBump B M om v (H v) (φ v)) → (∀ v ∉ S, φ v = M.vac v) →
+    ∀ ν, @Measure.IsAddHaarMeasure _ _ _ (borel _) ν → ∀ S : Finset (Pl (F := F)), UnrOff χW (S : Set (Pl (F := F))) →
+    ∀ (H : Pl (F := F) → Subgroup (UA σ X.J)) φ, IsFin M φ → (∀ v ∈ S, IsBump B M om v (H v) (φ v)) → (∀ v ∉ S, φ v = M.vac v) →
     ∀ f₀ ∈ M.Pol B.ψ B.emb, f₀ ≠ 0 → coef om ν (pure f₀ φ) 1 ≠ 0 ∧
       ∀ x ∈ gInf σ X, ∀ b ∈ gAt σ X S, ∀ c ∈ gOff σ X S, (b ∉ ⨆ v ∈ S, H v → coef om ν (pure f₀ φ) (x * b * c) = 0) ∧
         ∃ s : ℂ, ‖s‖ = a (e (c, 1)) ^ ((d : ℝ) / 2) ∧ (IntAll c → s = 1) ∧

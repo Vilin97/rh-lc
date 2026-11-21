@@ -115,7 +115,7 @@ theorem bijOn_funLeft {X Y : Type} [TopologicalSpace X] [TopologicalSpace Y] (Θ
 section Mix
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
-  {n d : ℕ} {X : Spc F E n} {Y : Spc F E d} {M : Model σ X Y} {ψ : AddChar (AF F) ℂ} {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F}
+  {n d : ℕ} {X : Spc F E n} {Y : Spc F E d} {M : Model σ X Y} {ψ : AddChar (AF F) ℂ} {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)}
 
 theorem exists_mixed {k R C : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     [Fintype R] [DecidableEq R] [Fintype C] [DecidableEq C] {ψ₀ : AddChar k Circle} {ϖ : kˣ} (hϖ : IsUnif ϖ)
@@ -202,7 +202,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels (tens AE cA incM)
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
-theorem eq_of_tens_eq {κ : Type} (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) (R : (κ → AF F) → ℂ)
+theorem eq_of_tens_eq {κ : Type} (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) (R : (κ → AF F) → ℂ)
     (hR0 : R 0 ≠ 0) (hinv : ∀ x z, At (evFin F v) z → R (x + z) = R x) (φ₁ φ₂ : (κ → Fv F v) → ℂ)
     (h : tens (evFin F v) φ₁ R = tens (evFin F v) φ₂ R) : φ₁ = φ₂ := by
   funext y
@@ -215,13 +215,13 @@ theorem eq_of_tens_eq {κ : Type} (v : GlobalTheory.IndefiniteRowSideFullHecke.W
   simp only [tens, GlobalTheory.LatVac.evFin_liftV, hR] at e
   exact mul_right_cancel₀ hR0 e
 
-theorem tens_add_smul {κ : Type} (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) (R : (κ → AF F) → ℂ) (x y : (κ → Fv F v) → ℂ) (c : ℂ) :
+theorem tens_add_smul {κ : Type} (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) (R : (κ → AF F) → ℂ) (x y : (κ → Fv F v) → ℂ) (c : ℂ) :
     tens (evFin F v) (c • x + y) R = c • tens (evFin F v) x R + tens (evFin F v) y R := by
   funext z
   simp only [tens, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   ring
 
-theorem exists_comps (hcm : IsCMExt F E σ) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (t : E →ₐ[F] Fv F v) {m n : Type}
+theorem exists_comps (hcm : IsCMExt F E σ) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (t : E →ₐ[F] Fv F v) {m n : Type}
     (P Q : Matrix m n (Fv F v)) :
     ∃ u : Matrix m n (AE F E), At (evFin F v) u ∧ u.map (piW t) = P ∧ u.map (piW (t.comp σ)) = Q :=
   ⟨Matrix.of fun r s => GlobalTheory.SplitGLLift.liftPair hcm t (P r s, Q r s),
@@ -248,7 +248,7 @@ variable {a a' : ℕ} {B : Base F E} {G : GlobalTheory.IndefiniteRowSideFullHeck
 
 
 theorem exists_right_translate (hT : IsTriple B G X om om') (dV : G.V.J.det ≠ 0) (dW : G.W.J.det ≠ 0)
-    {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (t : E →ₐ[F] Fv F v) (b : GL (Fin a) (Fv F v)) (c : GL (Fin (a + a')) (Fv F v)) {ι}
+    {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (t : E →ₐ[F] Fv F v) (b : GL (Fin a) (Fv F v)) (c : GL (Fin (a + a')) (Fv F v)) {ι}
     (hι : G.M.IsLinW B.ψ t b c ι) {h : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.UA σ G.W.J} (hh : h ∈ UAt σ G.W (evFin F v))
     {k : GL (Fin (a + a')) (Fv F v)} (hk : (mat h).map (piW t) = k.val) :
     ∃ c' : ℂ, c' ≠ 0 ∧ ∀ φ ∈ GlobalTheory.WeilM.SB (Fin a × Fin (a + a') → Fv F v), ∃ φ₃ ∈ GlobalTheory.WeilM.SB (Fin a × Fin (a + a') → Fv F v),

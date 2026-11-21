@@ -21,7 +21,7 @@ theorem _root_.GlobalTheory.T.evaluation_adapted_good_model : ∀ {F E : Type} [
       (hT : ∀ u, T u = planeT σ X W H H' u)
       (hf : ∀ w w', symp (cA σ) (-1) (incM F X.J) (incM F W.J) w w' =
         (T w).1.1 ⬝ᵥ (T w').1.2 - (T w').1.1 ⬝ᵥ (T w).1.2 + symp (cA σ) (-1) (incM F X₁.J) (incM F W₁.J) (T w).2 (T w').2)
-      (μ : Measure (UA σ X.J)) (D : Set (UA σ X.J)) (v : Pl F),
+      (μ : Measure (UA σ X.J)) (D : Set (UA σ X.J)) (v : Pl (F := F)),
       Model.IsVac (Model.mk (glueDarboux M₁.co eq T hf) (fun v => vacGlue eq (vacS σ X W H H' v) (M₁.vac v)) μ D) B.ψ v
         (vacGlue eq (vacS σ X W H H' v) (M₁.vac v)) := by
   first | exact @GlobalTheory.ThK.PlaneCo.isVac_vacGlue | exact GlobalTheory.ThK.PlaneCo.isVac_vacGlue | (intros; apply GlobalTheory.ThK.PlaneCo.isVac_vacGlue <;> assumption)

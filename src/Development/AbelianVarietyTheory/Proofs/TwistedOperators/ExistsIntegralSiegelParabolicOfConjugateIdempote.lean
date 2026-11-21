@@ -74,7 +74,7 @@ end FinTwoTypeFamily
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem evFin_half_mem (v : Pl F) (h2 : (2 : 𝓞 F) ∉ v.asIdeal) :
+theorem evFin_half_mem (v : Pl (F := F)) (h2 : (2 : 𝓞 F) ∉ v.asIdeal) :
     evFin F v (⅟2 : AF F) ∈ v.adicCompletionIntegers F := by
   have hv2 : Valued.v (2 : Fv F v) = 1 := by
     have e : ((algebraMap (𝓞 F) (v.adicCompletionIntegers F) 2 : v.adicCompletionIntegers F) : Fv F v) = 2 := by
@@ -91,7 +91,7 @@ theorem evFin_half_mem (v : Pl F) (h2 : (2 : 𝓞 F) ∉ v.asIdeal) :
   rw [map_mul, hv2, one_mul, map_one] at this
   exact this.le
 
-theorem symmetricScalarBlockMatrix_mulVec_mem_doubledLattice {d : ℕ} {W : Spc F E d} {v : Pl F} {a b : AE F E} (ha : GlobalTheory.SplitConj.Mult W v a)
+theorem symmetricScalarBlockMatrix_mulVec_mem_doubledLattice {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} {a b : AE F E} (ha : GlobalTheory.SplitConj.Mult W v a)
     (hb : GlobalTheory.SplitConj.Mult W v b) (z : Fin d ⊕ Fin d → AE F E) (hz : z ∈ GlobalTheory.InertDbl.latAtD W v) :
     blk2 d a b *ᵥ z ∈ GlobalTheory.InertDbl.latAtD W v := by
   constructor
@@ -100,20 +100,20 @@ theorem symmetricScalarBlockMatrix_mulVec_mem_doubledLattice {d : ℕ} {W : Spc 
   · simp only [symmetricScalarBlockMatrix_mulVec_inr]
     exact add_mem (hb _ hz.1) (ha _ hz.2)
 
-theorem mult_neg {d : ℕ} {W : Spc F E d} {v : Pl F} {a : AE F E} (ha : GlobalTheory.SplitConj.Mult W v a) :
+theorem mult_neg {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} {a : AE F E} (ha : GlobalTheory.SplitConj.Mult W v a) :
     GlobalTheory.SplitConj.Mult W v (-a) := fun z hz => by
   have : (fun i => -a * z i) = -(fun i => a * z i) := by ext i; simp
   rw [this]; exact neg_mem (ha z hz)
 
-theorem mult_sub {d : ℕ} {W : Spc F E d} {v : Pl F} {a b : AE F E} (ha : GlobalTheory.SplitConj.Mult W v a)
+theorem mult_sub {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} {a b : AE F E} (ha : GlobalTheory.SplitConj.Mult W v a)
     (hb : GlobalTheory.SplitConj.Mult W v b) : GlobalTheory.SplitConj.Mult W v (a - b) := by
   rw [sub_eq_add_neg]; exact GlobalTheory.SplitConj.mult_add ha (mult_neg hb)
 
-theorem mult_one {d : ℕ} (W : Spc F E d) (v : Pl F) : GlobalTheory.SplitConj.Mult W v 1 := fun z hz => by
+theorem mult_one {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) : GlobalTheory.SplitConj.Mult W v 1 := fun z hz => by
   simpa using hz
 
 theorem exists_par : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
-    B.IsGood σ → ∀ (d : ℕ) (W : Spc F E d) (v : Pl F), (2 : 𝓞 F) ∉ v.asIdeal →
+    B.IsGood σ → ∀ (d : ℕ) (W : Spc F E d) (v : Pl (F := F)), (2 : 𝓞 F) ∉ v.asIdeal →
     ∀ Eid : AE F E, Eid * Eid = Eid → Eid + cA σ Eid = algebraMap (AF F) (AE F E) (GlobalTheory.LatVac.liftV v 1) →
     Eid * cA σ Eid = 0 →
     (∀ z ∈ GlobalTheory.InertSph.latAt W v, (fun i => Eid * z i) ∈ GlobalTheory.InertSph.latAt W v) →

@@ -46,7 +46,7 @@ def basMat {E : Type} [Field E] {n m : ℕ} (H : Plane E n m) (e : Ix m ≃ Fin 
   fun r k => colS H.x H.y H.ι (e.symm k) r
 
 
-def basGL {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {v : Pl F} (t : E →ₐ[F] Fv F v) {n m : ℕ}
+def basGL {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {v : Pl (F := F)} (t : E →ₐ[F] Fv F v) {n m : ℕ}
     (H : Plane E n m) (e : Ix m ≃ Fin n) : GL (Fin n) (Fv F v) :=
   if h : IsUnit ((basMat H e).map t).det then Matrix.nonsingInvUnit _ h else 1
 
@@ -67,7 +67,7 @@ def levDual {R : Type} [CommRing R] {m : ℕ} (K : GL (Fin m) R) (l : Levi R (fu
 section Idele
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
-  {v : Pl F}
+  {v : Pl (F := F)}
 
 def ptA (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (p q : Fv F v) : AE F E :=
   1 + tensAt E v ((splitAlgEquiv hcm t).symm (p, q) - 1)

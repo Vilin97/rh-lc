@@ -65,7 +65,7 @@ theorem incM_zsmul {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
 
 theorem smul_incM_mul_stable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n d : ℕ}
     (X : Spc F E n) (Y : Spc F E d) (c : AF F) (N : Matrix (Fin n) (Fin n) E) (D : ℤ) (hD0 : D ≠ 0)
-    (hD : ∀ x ∈ X.L, D • (N *ᵥ x) ∈ X.L) (w : Pl F)
+    (hD : ∀ x ∈ X.L, D • (N *ᵥ x) ∈ X.L) (w : Pl (F := F))
     (hw : evFin F w (c * algebraMap F (AF F) (D : F)⁻¹) ∈ w.adicCompletionIntegers F) :
     ∀ γ ∈ latAtV X Y w, (c • incM F N) * γ ∈ latAtV X Y w := by
   intro γ hγ
@@ -93,12 +93,12 @@ theorem smul_incM_mul_stable {F E : Type} [Field F] [NumberField F] [Field E] [N
   | neg x _ hx => rw [Matrix.mul_neg]; exact neg_mem hx
 
 theorem finite_not_integral {F : Type} [Field F] [NumberField F] (c : AF F) :
-    {w : Pl F | evFin F w c ∉ w.adicCompletionIntegers F}.Finite :=
+    {w : Pl (F := F) | evFin F w c ∉ w.adicCompletionIntegers F}.Finite :=
   Filter.eventually_cofinite.1 c.2.2
 
 theorem finite_bad_smul_incM {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n d : ℕ}
     (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsLattice E) (c : AF F) (N : Matrix (Fin n) (Fin n) E) :
-    {w : Pl F | ¬ ∀ γ ∈ latAtV X Y w, (c • incM F N) * γ ∈ latAtV X Y w}.Finite := by
+    {w : Pl (F := F) | ¬ ∀ γ ∈ latAtV X Y w, (c • incM F N) * γ ∈ latAtV X Y w}.Finite := by
   obtain ⟨D, hD0, hD⟩ := exists_int_mulVec_mem X.L hX N
   refine (finite_not_integral (c * algebraMap F (AF F) (D : F)⁻¹)).subset ?_
   intro w hw hint
@@ -106,9 +106,9 @@ theorem finite_bad_smul_incM {F E : Type} [Field F] [NumberField F] [Field E] [N
 
 theorem almost_all_stable : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n d : ℕ)
     (X : Spc F E n) (Y : Spc F E d), X.L.IsLattice E → ∀ M : Matrix (Fin n) (Fin n) (AE F E),
-    Set.Finite {w : Pl F | ¬ ∀ γ ∈ latAtV X Y w, M * γ ∈ latAtV X Y w} := by
+    Set.Finite {w : Pl (F := F) | ¬ ∀ γ ∈ latAtV X Y w, M * γ ∈ latAtV X Y w} := by
   intro F E _ _ _ _ _ n d X Y hX M
-  let bad : Matrix (Fin n) (Fin n) (AE F E) → Set (Pl F) :=
+  let bad : Matrix (Fin n) (Fin n) (AE F E) → Set (Pl (F := F)) :=
     fun M => {w | ¬ ∀ γ ∈ latAtV X Y w, M * γ ∈ latAtV X Y w}
   have hadd : ∀ M M', (bad M).Finite → (bad M').Finite → (bad (M + M')).Finite := by
     intro M M' h h'

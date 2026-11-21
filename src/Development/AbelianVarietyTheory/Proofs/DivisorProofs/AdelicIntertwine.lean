@@ -108,7 +108,7 @@ open scoped TensorProduct
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 theorem chrW_comp (h : IsCMExt F E σ) (χ : Chr F E) {m : ℕ}
-    (hχ : ResEtaPow (Units.map (algebraMap F (AF F)).toMonoidHom).range χ m) {v : Pl F} (t : E →ₐ[F] Fv F v) :
+    (hχ : ResEtaPow (Units.map (algebraMap F (AF F)).toMonoidHom).range χ m) {v : Pl (F := F)} (t : E →ₐ[F] Fv F v) :
     chrW χ (t.comp σ) = (chrW χ t)⁻¹ := by
   obtain ⟨ξ, hξ⟩ := exists_isQuad h
   ext x
@@ -189,7 +189,7 @@ section Adelic
 open Matrix GlobalTheory.SplitGLLift GlobalTheory.KSplit
 open GlobalTheory.Div.CoordOpp (piW_cA incM_map_piW unit_map)
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {v : Pl F}
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {v : Pl (F := F)}
 
 theorem eq_zero_of_at (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {z : AE F E} (hz : At (evFin F v) z) (h1 : piW t z = 0)
     (h2 : piW (t.comp σ) z = 0) : z = 0 := by

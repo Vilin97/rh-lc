@@ -68,7 +68,7 @@ theorem exists_trace_not_int (v : HeightOneSpectrum (𝓞 F)) :
   omega
 
 theorem psiV_ne_one : ∀ {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsStd ψ →
-    ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F, GlobalTheory.VacAny.psiV ψ v ≠ 1 := by
+    ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F), GlobalTheory.VacAny.psiV ψ v ≠ 1 := by
   intro F _ _ ψ hψ v h1
   obtain ⟨z, hz, hzt⟩ := exists_trace_not_int (F := F) v
   have hloc : ∀ t : Fv F v, ψ (GlobalTheory.EmbChart.atPlace v t) = 1 := fun t => by

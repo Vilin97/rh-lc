@@ -340,7 +340,7 @@ theorem proportional (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] 
   refine ⟨c₁ / c₂, fun φ hφ => ?_⟩
   rw [hc₁ φ hφ, hc₂ φ hφ, ← mul_assoc, div_mul_cancel₀ c₁ hc2ne]
 
-theorem proportional_at_place : ∀ (F : Type) [Field F] [NumberField F] (v : Pl F) (ψv : AddChar (Fv F v) ℂ), Continuous ψv → ψv ≠ 1 →
+theorem proportional_at_place : ∀ (F : Type) [Field F] [NumberField F] (v : Pl (F := F)) (ψv : AddChar (Fv F v) ℂ), Continuous ψv → ψv ≠ 1 →
     ∀ (κ : Type) [Fintype κ] (Λ : Submodule (Fv F v) ((κ → Fv F v) × (κ → Fv F v))),
     (∀ a ∈ Λ, ∀ b ∈ Λ, a.1 ⬝ᵥ b.2 = b.1 ⬝ᵥ a.2) → Module.finrank (Fv F v) Λ = Fintype.card κ →
     ∀ l₁ l₂ : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ,

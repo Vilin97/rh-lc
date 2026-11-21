@@ -120,7 +120,7 @@ section Adelic
 open Matrix GlobalTheory.SplitGLLift GlobalTheory.KSplit
 open GlobalTheory.Div.CoordOpp (piW_cA incM_map_piW unit_map)
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {v : Pl F}
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {v : Pl (F := F)}
 
 theorem eq_zero_of_at (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {z : AE F E} (hz : At (evFin F v) z) (h1 : piW t z = 0)
     (h2 : piW (t.comp σ) z = 0) : z = 0 := by
@@ -344,7 +344,7 @@ theorem GlobalTheory.JacGeom.isJacMap_of_equivariant : GlobalTheory.ThK.KP → �
     ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (R : RealMaps F a (b + 2)) (Rf : FinMaps F a (b + 2))
       (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W) (R₁ : RealMaps F a b) (Rf₁ : FinMaps F a b),
       IsMatched B G X om om' R Rf → IsMatched B G₁ X om₁ om₁' R₁ Rf₁ →
-      ∀ (v : Pl F) (t : E →ₐ[F] Fv F v), ∃ (c : GL (Fin (a + (b + 2))) (Fv F v)) (c₁ : GL (Fin (a + b)) (Fv F v)),
+      ∀ (v : Pl (F := F)) (t : E →ₐ[F] Fv F v), ∃ (c : GL (Fin (a + (b + 2))) (Fv F v)) (c₁ : GL (Fin (a + b)) (Fv F v)),
         GlobalTheory.KSplit.IsSmU (chrW X.α t) ∧ GlobalTheory.KSplit.IsSmU (chrW X.β t) ∧
         ∀ (eB : Rf.Pi v ≃ₗ[ℂ] GlobalTheory.KSplit.indSp a (b + 2) (chrW X.α t) (chrW X.β t))
           (eS : Rf₁.Pi v ≃ₗ[ℂ] GlobalTheory.KSplit.indSp a b (chrW X.α t) (chrW X.β t)),

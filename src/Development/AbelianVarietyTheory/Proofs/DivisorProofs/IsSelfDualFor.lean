@@ -16,14 +16,14 @@ namespace GlobalTheory.WeylFour
 
 variable {F : Type} [Field F] [NumberField F]
 
-def IsSelfDualFor {v : Pl F} (χ : AddChar (Fv F v) ℂ) (ν : Measure (Fv F v)) : Prop :=
+def IsSelfDualFor {v : Pl (F := F)} (χ : AddChar (Fv F v) ℂ) (ν : Measure (Fv F v)) : Prop :=
   ν.IsAddHaarMeasure ∧ ∀ f ∈ SB (Fv F v), ∫ y, (∫ x, f x * χ (x * y) ∂ν) ∂ν = f 0
 
 
-def measV (ψ : AddChar (AF F) ℂ) (v : Pl F) : Measure (Fv F v) :=
+def measV (ψ : AddChar (AF F) ℂ) (v : Pl (F := F)) : Measure (Fv F v) :=
   if h : ∃ ν, IsSelfDualFor (GlobalTheory.LatVac.psiAt ψ v) ν then h.choose else 0
 
-def fourV (ψ : AddChar (AF F) ℂ) (v : Pl F) {κ : Type} [Fintype κ] (φ : (κ → Fv F v) → ℂ) (y : κ → Fv F v) : ℂ :=
+def fourV (ψ : AddChar (AF F) ℂ) (v : Pl (F := F)) {κ : Type} [Fintype κ] (φ : (κ → Fv F v) → ℂ) (y : κ → Fv F v) : ℂ :=
   ∫ x, φ x * GlobalTheory.LatVac.psiAt ψ v (x ⬝ᵥ y) ∂(Measure.pi fun _ : κ => measV ψ v)
 
 

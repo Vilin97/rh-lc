@@ -29,7 +29,7 @@ theorem main : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField
     (BoundedContinuousFunction.evalCLM ℂ (fun i => evI F (y i))).comp
       (SchwartzMap.toBoundedContinuousFunctionCLM ℂ _ ℂ)
   have hδ : ∀ h : SInf F (Fin n × Fin d₁), δ h = h (fun i => evI F (y i)) := fun _ => rfl
-  have hev : ∀ (v : Pl F) (a : AF F), evFin F v a = evalV F v a.2 := fun _ _ => rfl
+  have hev : ∀ (v : Pl (F := F)) (a : AF F), evFin F v a = evalV F v a.2 := fun _ _ => rfl
   intro g hg
 
   refine Submodule.span_induction (p := fun g _ => ∃ T : SInf F (Fin n × Fin d) →L[ℂ] ℂ,

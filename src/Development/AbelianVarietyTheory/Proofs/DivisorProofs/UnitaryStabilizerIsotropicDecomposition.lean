@@ -28,14 +28,14 @@ lemma mat_inv_mul' {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
 lemma mat_mul_inv' {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (g : UA σ J) : mat g * mat g⁻¹ = 1 := by
   rw [← mat_mul', mul_inv_cancel, mat_one']
 
-lemma uAt_mul {σ : E →ₐ[F] E} {n : ℕ} {X : Spc F E n} {v : Pl F} {g h : UA σ X.J}
+lemma uAt_mul {σ : E →ₐ[F] E} {n : ℕ} {X : Spc F E n} {v : Pl (F := F)} {g h : UA σ X.J}
     (hg : g ∈ UAt σ X (evFin F v)) (hh : h ∈ UAt σ X (evFin F v)) : g * h ∈ UAt σ X (evFin F v) := by
   intro u hu
   have e : mat (g * h) - 1 = (mat g - 1) * mat h + (mat h - 1) := by
     rw [mat_mul', Matrix.sub_mul, Matrix.one_mul]; abel
   rw [e, smul_add, ← Matrix.smul_mul, hg u hu, hh u hu, Matrix.zero_mul, add_zero]
 
-lemma uAt_inv {σ : E →ₐ[F] E} {n : ℕ} {X : Spc F E n} {v : Pl F} {g : UA σ X.J}
+lemma uAt_inv {σ : E →ₐ[F] E} {n : ℕ} {X : Spc F E n} {v : Pl (F := F)} {g : UA σ X.J}
     (hg : g ∈ UAt σ X (evFin F v)) : g⁻¹ ∈ UAt σ X (evFin F v) := by
   intro u hu
   have e : mat g⁻¹ - 1 = -((mat g - 1) * mat g⁻¹) := by
@@ -44,7 +44,7 @@ lemma uAt_inv {σ : E →ₐ[F] E} {n : ℕ} {X : Spc F E n} {v : Pl F} {g : UA 
 
 theorem parabolic_decomp : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (d d₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ r s r₁ s₁ : ℕ), B.IsGood σ →
-    W.IsSkew σ B r s → W₁.IsSkew σ B r₁ s₁ → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ v : Pl F,
+    W.IsSkew σ B r s → W₁.IsSkew σ B r₁ s₁ → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ v : Pl (F := F),
     ∀ p ∈ UAt σ W (evFin F v), ∀ a : AE F E, mat p *ᵥ incV F H'.x = a • incV F H'.x →
     ∃ (n m : UA σ W.J) (t : (AE F E)ˣ) (h₁ : UA σ W₁.J), n ∈ unip σ W H' ∧
       n ∈ UAt σ W (evFin F v) ∧ m ∈ UAt σ W (evFin F v) ∧ h₁ ∈ UAt σ W₁ (evFin F v) ∧ IsLevi H' t h₁ m ∧

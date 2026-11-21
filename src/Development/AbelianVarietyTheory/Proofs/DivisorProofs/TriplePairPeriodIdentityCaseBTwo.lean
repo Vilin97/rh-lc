@@ -45,7 +45,7 @@ section SlopeTestRemainingChoices
 
 open GlobalTheory.ConeBumpB
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {v : Pl F}
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {v : Pl (F := F)}
   {ψ : AddChar (Fv F v) ℂ} [MeasurableSpace (Fv F v ⊗[F] E)] {m : Measure (Fv F v ⊗[F] E)}
 
 omit [NumberField E] in

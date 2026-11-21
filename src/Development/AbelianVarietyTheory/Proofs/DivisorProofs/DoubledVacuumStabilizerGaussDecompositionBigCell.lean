@@ -19,7 +19,7 @@ open GlobalTheory.DblVac
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem evFin_invOf_two_mem (v : Pl F) (h : (2 : 𝓞 F) ∉ v.asIdeal) :
+theorem evFin_invOf_two_mem (v : Pl (F := F)) (h : (2 : 𝓞 F) ∉ v.asIdeal) :
     evFin F v (⅟(2 : AF F)) ∈ v.adicCompletionIntegers F := by
   have e : evFin F v (⅟(2 : AF F)) = algebraMap F (Fv F v) (2 : F)⁻¹ := by
     have h1 : evFin F v (⅟(2 : AF F)) * 2 = 1 := by
@@ -33,7 +33,7 @@ theorem evFin_invOf_two_mem (v : Pl F) (h : (2 : 𝓞 F) ∉ v.asIdeal) :
   rw [e]
   exact GlobalTheory.LatVac.half_mem_adicCompletionIntegers F v h
 
-theorem invOf_two_smul_mem_latAt {d : ℕ} (W : Spc F E d) (v : Pl F) (h : (2 : 𝓞 F) ∉ v.asIdeal)
+theorem invOf_two_smul_mem_latAt {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (h : (2 : 𝓞 F) ∉ v.asIdeal)
     {z : Fin d → AE F E} (hz : z ∈ GlobalTheory.InertSph.latAt W v) : (⅟(2 : AF F)) • z ∈ GlobalTheory.InertSph.latAt W v := by
   induction hz using AddSubgroup.closure_induction with
   | mem x hx =>
@@ -49,7 +49,7 @@ theorem invOf_two_smul_mem_latAt {d : ℕ} (W : Spc F E d) (v : Pl F) (h : (2 : 
 
 section Grp
 
-variable {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl F}
+variable {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl (F := F)}
 
 theorem matD_mul (g h : UD σ W) : matD (g * h) = matD g * matD h := rfl
 
@@ -75,7 +75,7 @@ end Grp
 
 section Blocks
 
-variable {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl F}
+variable {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl (F := F)}
 
 def nb (Z : Matrix (Fin d) (Fin d) (AE F E)) : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (AE F E) :=
   Matrix.fromBlocks (1 + Z) Z (-Z) (1 - Z)
@@ -105,7 +105,7 @@ theorem fromBlocks_mul_fromRows' {d : ℕ} (A B C D X Y : Matrix (Fin d) (Fin d)
     Matrix.fromBlocks A B C D * Matrix.fromRows X Y = Matrix.fromRows (A * X + B * Y) (C * X + D * Y) := by
   ext (i | i) j <;> simp [Matrix.mul_apply, Fintype.sum_sum_type, Matrix.fromRows_apply_inl, Matrix.fromRows_apply_inr, Matrix.add_apply]
 
-variable {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl F}
+variable {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl (F := F)}
 
 def nbU (σ : E →ₐ[F] E) (W : Spc F E d) (Z : Matrix (Fin d) (Fin d) (AE F E))
     (hZ : Zᵀ * incM F W.J + incM F W.J * Z.map (cA σ) = 0) : UD σ W :=
@@ -172,7 +172,7 @@ theorem fromRows_mul' {d : ℕ} (X Y B : Matrix (Fin d) (Fin d) (AE F E)) :
   ext (i | i) j <;> simp [Matrix.mul_apply, Matrix.fromRows_apply_inl, Matrix.fromRows_apply_inr]
 
 theorem gauss_decomp : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
-    {d : ℕ} (W : Spc F E d) (v : Pl F), (2 : 𝓞 F) ∉ v.asIdeal → ∀ g ∈ GlobalTheory.DblVac.KD σ W v, GlobalTheory.DblVac.BigCell W v g →
+    {d : ℕ} (W : Spc F E d) (v : Pl (F := F)), (2 : 𝓞 F) ∉ v.asIdeal → ∀ g ∈ GlobalTheory.DblVac.KD σ W v, GlobalTheory.DblVac.BigCell W v g →
       ∃ q ∈ GlobalTheory.DblVac.KD σ W v, q ∈ GlobalTheory.DblVac.PAnti σ W ∧ ∃ p ∈ GlobalTheory.DblVac.KD σ W v, p ∈ GlobalTheory.DblVac.PDiag σ W ∧
         g = q * p := by
   intro F E _ _ _ _ _ σ d W v h2 g hg hbig

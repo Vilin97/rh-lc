@@ -26,7 +26,7 @@ theorem exists_locOp : ∀ {F : Type} [Field F] [NumberField F] {W : Type} [AddC
     (dd : Darboux Bf κ) (ψ : AddChar (AF F) ℂ), IsStd ψ →
     ∀ {G : Type} [Group G] (act : G → W → W) (om : G →* Module.End ℂ ((κ → AF F) → ℂ)),
     IsSplitting (adeleClass F) ψ dd act om →
-    ∀ (v : Pl F) (p : G), (∀ u, At (evFin F v) u → At (evFin F v) (act p u)) →
+    ∀ (v : Pl (F := F)) (p : G), (∀ u, At (evFin F v) u → At (evFin F v) (act p u)) →
     (∀ Φ ∈ SB (κ → Fv F v), ∃ Φ₁ ∈ SB (κ → Fv F v), Acts (evFin F v) (om p) Φ Φ₁) →
     ∃ S : ((κ → Fv F v) → ℂ) → (κ → Fv F v) → ℂ,
       (∀ Φ ∈ SB (κ → Fv F v), S Φ ∈ SB (κ → Fv F v) ∧ Acts (evFin F v) (om p) Φ (S Φ)) ∧

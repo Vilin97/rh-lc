@@ -26,7 +26,7 @@ open scoped TensorProduct
 open GlobalTheory.AdelicU
 
 theorem map_eq_zero_of_at {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {B : Type} [CommRing B]
-    [Algebra F B] {v : Pl F} {x : AE F E} (hx : At (evFin F v) x) {a : AF F}
+    [Algebra F B] {v : Pl (F := F)} {x : AE F E} (hx : At (evFin F v) x) {a : AF F}
     (ha : evFin F v a = 0) (f : AF F →ₐ[F] B) (hf : f a = 1) :
     Algebra.TensorProduct.map f (AlgHom.id F E) x = 0 := by
   have h := hx a ha
@@ -36,7 +36,7 @@ theorem map_eq_zero_of_at {F E : Type} [Field F] [NumberField F] [Field E] [Alge
   simpa [hf, ← Algebra.TensorProduct.one_def] using h2
 
 theorem eq_locIdele_splitPrime {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) {v : Pl F} (τ : E →ₐ[F] Fv F v) (z : (AE F E)ˣ)
+    {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (z : (AE F E)ˣ)
     (hz : At (evFin F v) ((z : AE F E) - 1)) (h1 : piW (τ.comp σ) (z : AE F E) = 1) :
     z = GlobalTheory.LFun.locIdele F (splitPrime τ)
       (Units.map (GlobalTheory.LFun.complMap (splitPrime_under τ)).toMonoidHom (Units.map (piW τ).toMonoidHom z)) := by
@@ -79,7 +79,7 @@ theorem eq_locIdele_splitPrime {F E : Type} [Field F] [NumberField F] [Field E] 
       change (1 : u.adicCompletion E) = Neutral.B1.finiteSingle E (splitPrime τ) _ u
       exact (GlobalTheory.LFun.finSingle_ne (fun e => hu (by rw [e]; exact splitPrime_under τ)) _).symm
 
-theorem chrW_piW_eq : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (χ : Chr F E) (v : Pl F) (τ : E →ₐ[F] Fv F v) (z : (AE F E)ˣ), At (evFin F v) ((z : AE F E) - 1) →
+theorem chrW_piW_eq : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (χ : Chr F E) (v : Pl (F := F)) (τ : E →ₐ[F] Fv F v) (z : (AE F E)ˣ), At (evFin F v) ((z : AE F E) - 1) →
     piW (τ.comp σ) (z : AE F E) = 1 → chrW χ τ (Units.map (piW τ).toMonoidHom z) = Circle.toUnits (χ z) := by
   intro F E _ _ _ _ _ σ hσ χ v τ z hz h1
   change Circle.toUnits (χ (GlobalTheory.LFun.locIdele F (splitPrime τ) _)) = _

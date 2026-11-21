@@ -30,7 +30,7 @@ theorem conj_conj {σ : E →ₐ[F] E} (hc : IsCMExt F E σ) (x : E) : σ (σ x)
   apply τ.injective
   rw [hc.2.2.2 τ, hc.2.2.2 τ, star_star]
 
-theorem exists_anti_unit {σ : E →ₐ[F] E} (hc : IsCMExt F E σ) {v : Pl F} (hv : Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v) :
+theorem exists_anti_unit {σ : E →ₐ[F] E} (hc : IsCMExt F E σ) {v : Pl (F := F)} (hv : Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v) :
     ∃ (τ : E →ₐ[F] Fv F v) (δ : 𝓞 E), σ (δ : E) = -(δ : E) ∧ Valued.v (τ (δ : E)) = 1 := by
   obtain ⟨P, Q, hPQ, hP, hQ⟩ := hv
   have hPv : P.under (𝓞 F) = v := HeightOneSpectrum.ext hP
@@ -62,13 +62,13 @@ theorem exists_anti_unit {σ : E →ₐ[F] E} (hc : IsCMExt F E σ) {v : Pl F} (
     rw [mem_splitPrime] at hnot
     exact le_antisymm (apply_coe_mem τ _) (not_lt.1 hnot)
 
-theorem smul_eq_self_of_at {M : Type} [AddCommGroup M] [Module (AF F) M] {v : Pl F} {z : M}
+theorem smul_eq_self_of_at {M : Type} [AddCommGroup M] [Module (AF F) M] {v : Pl (F := F)} {z : M}
     (hz : At (evFin F v) z) : GlobalTheory.LatVac.liftV v 1 • z = z := by
   have h := hz (1 - GlobalTheory.LatVac.liftV v 1) (by rw [map_sub, map_one, GlobalTheory.LatVac.evFin_liftV, sub_self])
   rw [sub_smul, one_smul, sub_eq_zero] at h
   exact h.symm
 
-theorem liftV_mul_liftV (v : Pl F) (a b : Fv F v) :
+theorem liftV_mul_liftV (v : Pl (F := F)) (a b : Fv F v) :
     GlobalTheory.LatVac.liftV v a * GlobalTheory.LatVac.liftV v b = GlobalTheory.LatVac.liftV v (a * b) := by
   rw [show GlobalTheory.LatVac.liftV v a * GlobalTheory.LatVac.liftV v b = _ from GlobalTheory.EmbChart.atPlace_mul_right v a _]
   show GlobalTheory.LatVac.liftV v (a * evFin F v (GlobalTheory.LatVac.liftV v b)) = _
@@ -78,7 +78,7 @@ end GlobalTheory.SplitSign
 
 
 theorem GlobalTheory.SplitSign.exists_split_sign : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E), B.IsGood σ →
-    ∀ (v : Pl F), Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v → ∃ c : AE F E, cA σ c = -c ∧ At (evFin F v) c ∧
+    ∀ (v : Pl (F := F)), Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v → ∃ c : AE F E, cA σ c = -c ∧ At (evFin F v) c ∧
       (∀ z : AE F E, At (evFin F v) z → c * c * z = z) ∧
       ∀ (d : ℕ) (W : Spc F E d), ∀ z ∈ GlobalTheory.InertSph.latAt W v, c • z ∈ GlobalTheory.InertSph.latAt W v := by
   intro F E _ _ _ _ _ σ B hB v hv

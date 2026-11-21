@@ -110,7 +110,7 @@ theorem tr_nondeg (t : AE F E) (h : ∀ e : E, Algebra.trace (AF F) (AE F E) (t 
   simp [h]
 
 theorem locCo_form {W : Type} [AddCommGroup W] [Module (AF F) W]
-    {B : W → W → AF F} {κ : Type} [Fintype κ] (co : Darboux B κ) (v : Pl F) (x u : W) :
+    {B : W → W → AF F} {κ : Type} [Fintype κ] (co : Darboux B κ) (v : Pl (F := F)) (x u : W) :
     (GlobalTheory.LatVac.locCo co v x).1 ⬝ᵥ (GlobalTheory.LatVac.locCo co v u).2 -
       (GlobalTheory.LatVac.locCo co v u).1 ⬝ᵥ (GlobalTheory.LatVac.locCo co v x).2 = evFin F v (B x u) := by
   rw [co.form]
@@ -118,7 +118,7 @@ theorem locCo_form {W : Type} [AddCommGroup W] [Module (AF F) W]
     simp [GlobalTheory.LatVac.locCo, dotProduct, map_sum, map_mul, map_sub]
 
 theorem locCo_surj {W : Type} [AddCommGroup W] [Module (AF F) W]
-    {B : W → W → AF F} {κ : Type} [Fintype κ] (co : Darboux B κ) (v : Pl F)
+    {B : W → W → AF F} {κ : Type} [Fintype κ] (co : Darboux B κ) (v : Pl (F := F))
     (w : (κ → Fv F v) × (κ → Fv F v)) : ∃ u : W, At (evFin F v) u ∧ GlobalTheory.LatVac.locCo co v u = w := by
   refine ⟨co.e.symm (fun k => GlobalTheory.LatVac.liftV v (w.1 k), fun k => GlobalTheory.LatVac.liftV v (w.2 k)), ?_, ?_⟩
   · intro a ha
@@ -177,7 +177,7 @@ theorem hTens_left (σ : E →ₐ[F] E) {n d : ℕ} (JX : Matrix (Fin n) (Fin n)
   refine Finset.sum_congr rfl fun j _ => ?_
   ring
 
-theorem at_mulVec {n d : ℕ} {v : Pl F} {m : Matrix (Fin n) (Fin d) (AE F E)} (hm : At (evFin F v) m) (e : Fin d → AE F E) :
+theorem at_mulVec {n d : ℕ} {v : Pl (F := F)} {m : Matrix (Fin n) (Fin d) (AE F E)} (hm : At (evFin F v) m) (e : Fin d → AE F E) :
     At (evFin F v) (m *ᵥ e) := by
   intro u hu
   funext i
@@ -187,12 +187,12 @@ theorem at_mulVec {n d : ℕ} {v : Pl F} {m : Matrix (Fin n) (Fin d) (AE F E)} (
   simp only [Matrix.smul_apply, Matrix.zero_apply] at h
   rw [← smul_mul_assoc, h, zero_mul]
 
-theorem at_mul {n d k : ℕ} {v : Pl F} {m : Matrix (Fin n) (Fin d) (AE F E)} (hm : At (evFin F v) m)
+theorem at_mul {n d k : ℕ} {v : Pl (F := F)} {m : Matrix (Fin n) (Fin d) (AE F E)} (hm : At (evFin F v) m)
     (N : Matrix (Fin d) (Fin k) (AE F E)) : At (evFin F v) (m * N) := by
   intro u hu
   rw [← Matrix.smul_mul, hm u hu, Matrix.zero_mul]
 
-theorem at_vecMulVec {n d : ℕ} {v : Pl F} {yv : Fin n → AE F E} (hy : At (evFin F v) yv) (x : Fin d → AE F E) :
+theorem at_vecMulVec {n d : ℕ} {v : Pl (F := F)} {yv : Fin n → AE F E} (hy : At (evFin F v) yv) (x : Fin d → AE F E) :
     At (evFin F v) (Matrix.vecMulVec yv x) := by
   intro u hu
   ext i j
@@ -221,7 +221,7 @@ theorem form_single (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E
   simp
 
 theorem vanish_of_orth (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {n : ℕ} (JX : Matrix (Fin n) (Fin n) E)
-    (hJX : JX.det ≠ 0) (v : Pl F) (b : Fin n → AE F E) (hb : At (evFin F v) b)
+    (hJX : JX.det ≠ 0) (v : Pl (F := F)) (b : Fin n → AE F E) (hb : At (evFin F v) b)
     (h : ∀ yv : Fin n → AE F E, At (evFin F v) yv →
       evFin F v (Algebra.trace (AF F) (AE F E) (-1 * ∑ i, ∑ k, yv i * incM F JX i k * cA σ (b k))) = 0) :
     b = 0 := by
@@ -285,7 +285,7 @@ theorem vanish_of_orth (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {n : �
 
 theorem isotropic_orbit_orthogonal_at_place : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d d₁ r s r' s' i₀ i₁ : ℕ) (X : Spc F E n) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (M : Model σ X W),
-    B.IsGood σ → X.IsHerm σ B r s → W.IsSkew σ B r' s' → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ v : Pl F,
+    B.IsGood σ → X.IsHerm σ B r s → W.IsSkew σ B r' s' → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ v : Pl (F := F),
     (∀ u ∈ iso0 (F := F) n H', At (evFin F v) u → ∀ u' ∈ iso0 (F := F) n H', At (evFin F v) u' →
       (GlobalTheory.LatVac.locCo M.co v u).1 ⬝ᵥ (GlobalTheory.LatVac.locCo M.co v u').2 -
         (GlobalTheory.LatVac.locCo M.co v u').1 ⬝ᵥ (GlobalTheory.LatVac.locCo M.co v u).2 = 0) ∧

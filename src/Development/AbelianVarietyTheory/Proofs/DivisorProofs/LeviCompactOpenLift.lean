@@ -231,7 +231,7 @@ namespace GlobalTheory.IndLine.LeviK
 theorem levi_mem_KAt : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (d d₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ r s r₁ s₁ : ℕ),
     B.IsGood σ → W.IsSkew σ B r s → W₁.IsSkew σ B r₁ s₁ → H'.IsAdapted σ B W W₁ i₀ i₁ →
-    ∀ (v : Pl F), ∀ k₁ ∈ KAt σ W₁ v, ∃ m ∈ KAt σ W v, IsLevi (W₁ := W₁) H' 1 k₁ m := by
+    ∀ (v : Pl (F := F)), ∀ k₁ ∈ KAt σ W₁ v, ∃ m ∈ KAt σ W v, IsLevi (W₁ := W₁) H' 1 k₁ m := by
   intro F E _ _ _ _ _ σ B d d₁ W W₁ H' i₀ i₁ r s r₁ s₁ hB hW hW₁ hA v k₁ hk₁
   have hσ : ∀ a, (σ : E →+* E) ((σ : E →+* E) a) = a := sigma_sigma hB
   have hd : W₁.J.det ≠ 0 := det_ne_zero_of_isSkew hW₁

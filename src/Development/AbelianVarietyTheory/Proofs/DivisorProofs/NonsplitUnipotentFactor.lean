@@ -19,14 +19,14 @@ namespace GlobalTheory.IwasawaLineInert
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem uAt_mul {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl F} {g h : UA σ W.J}
+theorem uAt_mul {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} {g h : UA σ W.J}
     (hg : g ∈ UAt σ W (evFin F v)) (hh : h ∈ UAt σ W (evFin F v)) : g * h ∈ UAt σ W (evFin F v) := by
   intro u hu
   have e : mat (g * h) - 1 = mat g * (mat h - 1) + (mat g - 1) := by
     rw [show mat (g * h) = mat g * mat h from rfl, Matrix.mul_sub, Matrix.mul_one]; abel
   rw [e, smul_add, ← Matrix.mul_smul, hh u hu, hg u hu, Matrix.mul_zero, add_zero]
 
-theorem uAt_inv {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl F} {g : UA σ W.J}
+theorem uAt_inv {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} {g : UA σ W.J}
     (hg : g ∈ UAt σ W (evFin F v)) : g⁻¹ ∈ UAt σ W (evFin F v) := by
   intro u hu
   have e : mat g⁻¹ - 1 = -(mat g⁻¹ * (mat g - 1)) := by
@@ -36,7 +36,7 @@ theorem uAt_inv {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl F} {g : U
 theorem iwasawa_line_inert : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (d d₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ r s r₁ s₁ : ℕ),
     B.IsGood σ → W.IsSkew σ B r s → W₁.IsSkew σ B r₁ s₁ → H'.IsAdapted σ B W W₁ i₀ i₁ →
-    ∀ (v : Pl F), IsEmpty (E →ₐ[F] Fv F v) → ∀ g ∈ UAt σ W (evFin F v),
+    ∀ (v : Pl (F := F)), IsEmpty (E →ₐ[F] Fv F v) → ∀ g ∈ UAt σ W (evFin F v),
       ∃ u ∈ unip σ W H', u ∈ UAt σ W (evFin F v) ∧ ∃ (t : (AE F E)ˣ) (h₁ : UA σ W₁.J) (m : UA σ W.J),
         IsLevi H' t h₁ m ∧ m ∈ UAt σ W (evFin F v) ∧ h₁ ∈ UAt σ W₁ (evFin F v) ∧
         ∃ k ∈ KAt σ W v, g = u * m * k := by

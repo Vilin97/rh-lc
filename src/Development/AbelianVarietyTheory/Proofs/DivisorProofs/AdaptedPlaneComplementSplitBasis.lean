@@ -17,7 +17,7 @@ open GlobalTheory.AdelicU
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem mulVec_mem_splitLat {v : Pl F} (τ : E →ₐ[F] Fv F v) {m k : ℕ} (M : Matrix (Fin m) (Fin k) E)
+theorem mulVec_mem_splitLat {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) {m k : ℕ} (M : Matrix (Fin m) (Fin k) E)
     {L : Submodule (𝓞 E) (Fin k → E)} {L' : Submodule (𝓞 E) (Fin m → E)} (hM : ∀ x ∈ L, M *ᵥ x ∈ L')
     {u : Fin k → Fv F v} (hu : u ∈ splitLat τ L) : M.map τ *ᵥ u ∈ splitLat τ L' := by
   obtain ⟨y, hy, rfl⟩ := hu

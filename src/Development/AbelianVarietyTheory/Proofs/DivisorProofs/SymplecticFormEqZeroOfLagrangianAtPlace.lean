@@ -17,7 +17,7 @@ namespace GlobalTheory.InertVacIso
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem smul_eq_map_compFin (v : Pl F) (a : AE F E) :
+theorem smul_eq_map_compFin (v : Pl (F := F)) (a : AE F E) :
     GlobalTheory.EmbChart.atPlace v 1 • a =
       TensorProduct.map (GlobalTheory.EmbChart.atPlace v) LinearMap.id (compFin F E v a) := by
   induction a using TensorProduct.induction_on with
@@ -27,11 +27,11 @@ theorem smul_eq_map_compFin (v : Pl F) (a : AE F E) :
     rw [TensorProduct.smul_tmul', smul_eq_mul, GlobalTheory.EmbChart.atPlace_mul_right, one_mul]
     simp [compFin, Algebra.TensorProduct.map_tmul]
 
-theorem smul_eq_zero_of_compFin (v : Pl F) {a : AE F E} (h : compFin F E v a = 0) :
+theorem smul_eq_zero_of_compFin (v : Pl (F := F)) {a : AE F E} (h : compFin F E v a = 0) :
     GlobalTheory.EmbChart.atPlace v 1 • a = 0 := by
   rw [smul_eq_map_compFin, h, map_zero]
 
-theorem compFin_cA (σ : E →ₐ[F] E) (v : Pl F) (a : AE F E) :
+theorem compFin_cA (σ : E →ₐ[F] E) (v : Pl (F := F)) (a : AE F E) :
     compFin F E v (cA σ a) =
       Algebra.TensorProduct.map (AlgHom.id (Fv F v) (Fv F v)) σ (compFin F E v a) := by
   induction a using TensorProduct.induction_on with
@@ -39,7 +39,7 @@ theorem compFin_cA (σ : E →ₐ[F] E) (v : Pl F) (a : AE F E) :
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
   | tmul x b => simp [cA, compFin, Algebra.TensorProduct.map_tmul]
 
-theorem self_eq_smul_of_at {n d : ℕ} (v : Pl F) {u : Matrix (Fin n) (Fin d) (AE F E)} (h : At (evFin F v) u) :
+theorem self_eq_smul_of_at {n d : ℕ} (v : Pl (F := F)) {u : Matrix (Fin n) (Fin d) (AE F E)} (h : At (evFin F v) u) :
     u = GlobalTheory.EmbChart.atPlace v 1 • u := by
   have h1 := h (1 - GlobalTheory.EmbChart.atPlace v 1) (by rw [map_sub, map_one, GlobalTheory.EmbChart.evFin_atPlace, sub_self])
   rw [sub_smul, one_smul, sub_eq_zero] at h1
@@ -57,7 +57,7 @@ theorem hTens_eq_sum {α β : Type} [Fintype α] [Fintype β] (c : AE F E →ₐ
   ring
 
 theorem symp_eq_zero_of_lagAt : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) {n d m : ℕ}
-    (JX : Matrix (Fin n) (Fin n) E) (W : Spc F E d) (v : Pl F) (C : Matrix (Fin d) (Fin m) (AE F E)),
+    (JX : Matrix (Fin n) (Fin n) E) (W : Spc F E d) (v : Pl (F := F)) (C : Matrix (Fin d) (Fin m) (AE F E)),
     GlobalTheory.InertVacLag.IsLagrAt σ W v C → ∀ (ξ : AE F E) (u u' : Matrix (Fin n) (Fin d) (AE F E)),
     u ∈ GlobalTheory.InertVacLag.lagAt v C → u' ∈ GlobalTheory.InertVacLag.lagAt v C →
     symp (cA σ) ξ (incM F JX) (incM F W.J) u u' = 0 := by

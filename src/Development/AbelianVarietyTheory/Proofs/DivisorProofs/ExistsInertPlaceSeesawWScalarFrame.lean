@@ -16,7 +16,7 @@ noncomputable section
 namespace GlobalTheory.SkewFrameInert
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  {v : Pl F} {w : HeightOneSpectrum (𝓞 E)}
+  {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)}
 
 theorem mul_mem_range_of_trace {t : 𝓞 E} (ht : t ∈ differentIdeal ℤ (𝓞 E)) {z : E}
     (hz : ∀ o : 𝓞 E, IsIntegral ℤ (Algebra.trace ℚ E (o * z))) : (t : E) * z ∈ (algebraMap (𝓞 E) E).range := by
@@ -224,7 +224,7 @@ theorem exists_frame_skew {σ : E →ₐ[F] E} {B : Base F E} (hB : B.IsGood σ)
           simp
 
 theorem exists_inertPlace_seesawW_scalar_frame : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
-    (a a' : ℕ) (G : Geo σ a a'), B.IsGood σ → G.IsGood B → ∀ (v : Pl F) (w : HeightOneSpectrum (𝓞 E)),
+    (a a' : ℕ) (G : Geo σ a a'), B.IsGood σ → G.IsGood B → ∀ (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)),
     Formalism.UG.IsInertAt F E v w → ∀ (h : w.under (𝓞 F) = v) (σL : w.adicCompletion E →+* w.adicCompletion E), IsConjAt σ h σL →
     ∃ (δ : w.adicCompletion E) (Bm : GL (Fin (a + a')) (w.adicCompletion E)), Valued.v δ = 1 ∧ σL δ = -δ ∧
       IsFrameAt w G.W.L Bm ∧

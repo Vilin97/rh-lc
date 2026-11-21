@@ -28,7 +28,7 @@ theorem latPos_indicator_mem_SB : ∀ {F E : Type} [Field F] [NumberField F] [Fi
     X.IsHerm σ B r s → W.IsSkew σ B r' s' →
     (∀ x : Matrix (Fin n) (Fin d) E, ∃ y z : Fin n × Fin d → F,
         co.e (incM F x) = (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i))) →
-    ∀ v : Pl F, Set.indicator (GlobalTheory.ThK.AdaptEv.VacuumBlock.latPos X W co eq v : Set (ι → Fv F v)) 1 ∈ SB (ι → Fv F v) := by
+    ∀ v : Pl (F := F), Set.indicator (GlobalTheory.ThK.AdaptEv.VacuumBlock.latPos X W co eq v : Set (ι → Fv F v)) 1 ∈ SB (ι → Fv F v) := by
   intro F E _ _ _ _ _ σ B n d X W r s r' s' ι κ₁ _ _ co eq hX hW hrat v
   obtain ⟨hOpen, hCpt⟩ := GlobalTheory.LatOpenCpt.main σ B X W r s r' s' hX hW
     (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model.mk co (fun _ => 0) 0 ∅) hrat v

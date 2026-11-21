@@ -13,7 +13,7 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 
 namespace GlobalTheory.ThKTorus.IntegralOfAdic
 
-theorem evFin_realAd (F : Type) [Field F] [NumberField F] (v : Pl F) (x : ℝ) :
+theorem evFin_realAd (F : Type) [Field F] [NumberField F] (v : Pl (F := F)) (x : ℝ) :
     evFin F v (realAd F x) = 0 := by
   show evalV F v 0 = 0
   exact map_zero _

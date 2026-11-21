@@ -29,7 +29,7 @@ namespace GlobalTheory.InertVacLagP
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem exists_map_compFin (v : Pl F) {d m : ℕ} (Cy : Matrix (Fin d) (Fin m) (Fv F v ⊗[F] E)) :
+theorem exists_map_compFin (v : Pl (F := F)) {d m : ℕ} (Cy : Matrix (Fin d) (Fin m) (Fv F v ⊗[F] E)) :
     ∃ C : Matrix (Fin d) (Fin m) (AE F E), C.map (compFin F E v) = Cy := by
   have hs : Function.Surjective (compFin F E v) := by
     intro t
@@ -45,7 +45,7 @@ theorem exists_map_compFin (v : Pl F) {d m : ℕ} (Cy : Matrix (Fin d) (Fin m) (
   choose f hf using hs
   exact ⟨Cy.map f, by ext i j; simp [hf]⟩
 
-def lagSub {n d m : ℕ} (v : Pl F) (C : Matrix (Fin d) (Fin m) (AE F E)) : AddSubgroup (Matrix (Fin n) (Fin d) (AE F E)) where
+def lagSub {n d m : ℕ} (v : Pl (F := F)) (C : Matrix (Fin d) (Fin m) (AE F E)) : AddSubgroup (Matrix (Fin n) (Fin d) (AE F E)) where
   carrier := GlobalTheory.InertVacLag.lagAt v C
   zero_mem' := ⟨fun u _ => smul_zero u, 0, by simp⟩
   add_mem' := by
@@ -55,7 +55,7 @@ def lagSub {n d m : ℕ} (v : Pl F) (C : Matrix (Fin d) (Fin m) (AE F E)) : AddS
     rintro x ⟨hx, z, rfl⟩
     exact ⟨fun u hu => by rw [smul_neg, hx u hu, neg_zero], -z, by rw [Matrix.neg_mul]⟩
 
-theorem acts_unique {κ : Type} [Fintype κ] (v : Pl F) (T : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ)
+theorem acts_unique {κ : Type} [Fintype κ] (v : Pl (F := F)) (T : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ)
     (φ φ₁ φ₂ : (κ → Fv F v) → ℂ) (hφ : φ ∈ SB (κ → Fv F v)) (h1 : Acts (evFin F v) T φ φ₁)
     (h2 : Acts (evFin F v) T φ φ₂) : φ₁ = φ₂ := by
   obtain ⟨R, hR0, hR⟩ := GlobalTheory.T.exists_complementary_adelicSchwartz_restFunction κ v
@@ -72,7 +72,7 @@ theorem acts_unique {κ : Type} [Fintype κ] (v : Pl F) (T : ((κ → AF F) → 
   exact mul_right_cancel₀ hR0 hy
 
 theorem eq_of_locCo {W : Type} [AddCommGroup W] [Module (AF F) W] {Bf : W → W → AF F} {κ : Type} [Fintype κ]
-    (co : Darboux Bf κ) (v : Pl F) (g u : W) (hg : At (evFin F v) g) (hu : At (evFin F v) u)
+    (co : Darboux Bf κ) (v : Pl (F := F)) (g u : W) (hg : At (evFin F v) g) (hu : At (evFin F v) u)
     (h : GlobalTheory.LatVac.locCo co v g = GlobalTheory.LatVac.locCo co v u) : g = u := by
   have hA : ∀ z : W, At (evFin F v) z → ∀ k, At (evFin F v) ((co.e z).1 k) ∧ At (evFin F v) ((co.e z).2 k) := by
     intro z hz k
@@ -92,7 +92,7 @@ theorem eq_of_locCo {W : Type} [AddCommGroup W] [Module (AF F) W] {Bf : W → W 
 
 theorem exists_lagr_inv_vac : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ (v : Pl F) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T →
+    ∀ (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T →
     ∃ (C : Matrix (Fin (a + a')) (Fin ((a + a') / 2)) (AE F E)) (l : ((Fin a' × Fin (a + a') → Fv F v) → ℂ) →ₗ[ℂ] ℂ),
       GlobalTheory.InertVacLag.IsLagrAt σ G.W v C ∧ GlobalTheory.InertVacLag.HeisInv G.M' B.ψ v C l ∧ l (G.M'.vac v) ≠ 0 := by
   intro F E _ _ _ _ _ σ B a a' G X om om' hT v w hin _

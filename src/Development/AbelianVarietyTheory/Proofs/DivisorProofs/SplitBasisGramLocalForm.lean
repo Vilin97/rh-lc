@@ -100,7 +100,7 @@ namespace GlobalTheory.SplitCoord
 theorem basMat_gram : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (n m : ℕ) (W : Spc F E n) (W₁ : Spc F E m) (H : Plane E n m) (i₀ i₁ : ℕ),
     (∀ x, σ (σ x) = x) → H.IsAdapted σ B W W₁ i₀ i₁ →
-    (∀ i j, σ (W.J j i) = -W.J i j) → ∀ (v : Pl F) (t : E →ₐ[F] Fv F v) (e : GlobalTheory.SplitCoord.Ix m ≃ Fin n),
+    (∀ i j, σ (W.J j i) = -W.J i j) → ∀ (v : Pl (F := F)) (t : E →ₐ[F] Fv F v) (e : GlobalTheory.SplitCoord.Ix m ≃ Fin n),
     ((GlobalTheory.SplitCoord.basMat H e).map t)ᵀ * W.J.map t * (GlobalTheory.SplitCoord.basMat H e).map (t.comp σ) =
       GlobalTheory.SplitCoord.gam e (W₁.J.map t) := by
   intro F E _ _ _ _ _ σ B n m W W₁ H i₀ i₁ hσ hH hJ v t e

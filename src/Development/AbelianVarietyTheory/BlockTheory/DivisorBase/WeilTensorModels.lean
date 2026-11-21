@@ -23,6 +23,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 abbrev AE : Type := AF F ⊗[F] E
 
 
+variable (F) in
 abbrev Pl : Type := HeightOneSpectrum (𝓞 F)
 
 scoped instance lcAdele : LocallyCompactSpace (AF F) := GlobalTheory.AdelicUnitaryTop.locallyCompact_adele F
@@ -82,6 +83,8 @@ def ActsD {R κ : Type} [Zero R] [Fintype κ] (ev : AF F → R) (T : ℝ → ((�
   ∀ r, Rest ev φ r → ∀ x, HasDerivAt (fun t => T t (tens ev φ r) x) (tens ev φ₁ r x) 0
 
 
+open scoped Classical in
+variable (F) in
 abbrev SInf (κ : Type) [Fintype κ] : Type := SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ
 
 def pure {κ : Type} [Fintype κ] (f : SInf F κ) (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) : (κ → AF F) → ℂ :=
@@ -149,6 +152,7 @@ structure Base where
   τ₁ : E →ₐ[F] Fv F v₁
 
 
+variable (F E) in
 structure Spc (n : ℕ) where
 
   J : Matrix (Fin n) (Fin n) E

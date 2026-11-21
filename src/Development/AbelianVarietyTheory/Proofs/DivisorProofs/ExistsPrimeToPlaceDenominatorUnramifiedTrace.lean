@@ -19,7 +19,7 @@ open scoped TensorProduct Matrix GlobalTheory.VacAny
 namespace GlobalTheory.UnramTraceDenom
 
 theorem exists_not_mem_mul_isIntegral : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E],
-    Algebra.Unramified (𝓞 F) (𝓞 E) → ∀ (v : Pl F) (e : E),
+    Algebra.Unramified (𝓞 F) (𝓞 E) → ∀ (v : Pl (F := F)) (e : E),
     (∀ o : 𝓞 E, algebraMap F (Fv F v) (Algebra.trace F E ((o : E) * e)) ∈ v.adicCompletionIntegers F) →
     ∃ t : 𝓞 F, t ∉ v.asIdeal ∧ IsIntegral ℤ (algebraMap F E (t : F) * e) := by
   intro F E _ _ _ _ _ hU v e h

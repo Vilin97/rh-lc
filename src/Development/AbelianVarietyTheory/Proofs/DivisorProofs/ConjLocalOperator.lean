@@ -40,18 +40,18 @@ theorem conj_mem_SB {X : Type} [TopologicalSpace X] {φ : X → ℂ} (h : φ ∈
     (fun x => starRingEnd ℂ (φ x)) ∈ SB X :=
   ⟨h.1.comp (starRingEnd ℂ), h.2.comp_left (g := starRingEnd ℂ) (map_zero _)⟩
 
-theorem conj_stdInd_apply (κ : Type) (v : Pl F) (y : κ → Fv F v) :
+theorem conj_stdInd_apply (κ : Type) (v : Pl (F := F)) (y : κ → Fv F v) :
     starRingEnd ℂ (stdInd F κ v y) = stdInd F κ v y := by
   unfold stdInd
   by_cases hy : y ∈ {x : κ → Fv F v | ∀ i, x i ∈ v.adicCompletionIntegers F}
   · rw [Set.indicator_of_mem hy, Pi.one_apply, map_one]
   · rw [Set.indicator_of_notMem hy, map_zero]
 
-theorem conj_stdInd (κ : Type) (v : Pl F) :
+theorem conj_stdInd (κ : Type) (v : Pl (F := F)) :
     (fun y => starRingEnd ℂ (stdInd F κ v y)) = stdInd F κ v :=
   funext (conj_stdInd_apply κ v)
 
-theorem conj_pure {κ : Type} [Fintype κ] (f : SInf F κ) (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) (x : κ → AF F) :
+theorem conj_pure {κ : Type} [Fintype κ] (f : SInf F κ) (φ : ∀ v : Pl (F := F), (κ → Fv F v) → ℂ) (x : κ → AF F) :
     starRingEnd ℂ (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ x) = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (conjSchR κ f) (fun v y => starRingEnd ℂ (φ v y)) x := by
   simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure, conjSchR_apply, map_mul]
   congr 1

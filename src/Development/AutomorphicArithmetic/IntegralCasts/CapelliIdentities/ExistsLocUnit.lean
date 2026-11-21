@@ -28,7 +28,7 @@ theorem UpperTheory.Reformulated.B.Gs6.exists_locUnit :
         ∀ {ξ : E},
           ξ ≠ (0 : E) →
             (σ : E → E) ξ = -ξ →
-              ∀ (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F),
+              ∀ (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)),
                 ∃ (u : (TensorProduct F (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F v) E)ˣ),
                   (↑u : TensorProduct F (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F v) E) ∈ GlobalTheory.AdelicU.intLoc F E v ∧
                     (↑u⁻¹ : TensorProduct F (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F v) E) ∈ GlobalTheory.AdelicU.intLoc F E v ∧

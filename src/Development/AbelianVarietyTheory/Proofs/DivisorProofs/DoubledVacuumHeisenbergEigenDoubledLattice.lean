@@ -49,7 +49,7 @@ namespace GlobalTheory.DblVacEigen
 
 variable {F : Type} [Field F] [NumberField F]
 
-theorem dot_congr_at {κ : Type} [Fintype κ] (v : Pl F) {y : κ → AF F} (hy : At (evFin F v) y) {z z' : κ → AF F}
+theorem dot_congr_at {κ : Type} [Fintype κ] (v : Pl (F := F)) {y : κ → AF F} (hy : At (evFin F v) y) {z z' : κ → AF F}
     (h : ∀ i, evFin F v (z i) = evFin F v (z' i)) : z ⬝ᵥ y = z' ⬝ᵥ y := by
   unfold dotProduct
   refine Finset.sum_congr rfl fun i _ => ?_
@@ -58,7 +58,7 @@ theorem dot_congr_at {κ : Type} [Fintype κ] (v : Pl F) {y : κ → AF F} (hy :
   rw [sub_mul] at e
   exact sub_eq_zero.mp e
 
-theorem eigen_pointwise {κ : Type} [Fintype κ] (v : Pl F) (ψ : AddChar (AF F) ℂ) {φ : (κ → Fv F v) → ℂ}
+theorem eigen_pointwise {κ : Type} [Fintype κ] (v : Pl (F := F)) (ψ : AddChar (AF F) ℂ) {φ : (κ → Fv F v) → ℂ}
     (hφ : φ ∈ SB (κ → Fv F v)) (p : (κ → AF F) × (κ → AF F)) (hp1 : At (evFin F v) p.1) (hp2 : At (evFin F v) p.2)
     (c : ℂ) (h : Acts (evFin F v) (schr ψ p) φ (c • φ)) (z : κ → AF F) :
     ψ (z ⬝ᵥ p.2 + ⅟(2 : AF F) * (p.1 ⬝ᵥ p.2)) * φ (fun i => evFin F v ((z + p.1) i)) =
@@ -79,7 +79,7 @@ theorem eigen_pointwise {κ : Type} [Fintype κ] (v : Pl F) (ψ : AddChar (AF F)
   rw [hev, hev'] at e
   exact mul_right_cancel₀ hR0 (by linear_combination e)
 
-theorem acts_box {κ κ' : Type} [Fintype κ] [Fintype κ'] (v : Pl F) (ψ : AddChar (AF F) ℂ)
+theorem acts_box {κ κ' : Type} [Fintype κ] [Fintype κ'] (v : Pl (F := F)) (ψ : AddChar (AF F) ℂ)
     {φ₁ : (κ → Fv F v) → ℂ} {φ₂ : (κ' → Fv F v) → ℂ} (X₁ Y₁ : κ → AF F)
     (X₂ Y₂ : κ' → AF F) (h11 : At (evFin F v) X₁) (h21 : At (evFin F v) X₂) (c₁ c₂ : ℂ)
     (h₁ : ∀ z, ψ (z ⬝ᵥ Y₁ + ⅟(2 : AF F) * (X₁ ⬝ᵥ Y₁)) * φ₁ (fun i => evFin F v ((z + X₁) i)) =
@@ -116,7 +116,7 @@ namespace GlobalTheory.DblVacEigen
 
 theorem doubled_vac_eigen : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ (v : Pl F) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T →
+    ∀ (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T →
     ∀ (d' : Darboux (symp (cA σ) (-1 : AE F E) (incM F G.W.J) (incM F G.V.J)) (Fin a × Fin (a + a'))),
     (∀ x : Matrix (Fin a) (Fin (a + a')) (AE F E), d'.e xᵀ = G.M.co.e x) →
     ∀ (dd : Darboux (symp (cA σ) (-1 : AE F E) (incM F G.W.J) (dbl (incM F G.V.J))) ((Fin a × Fin (a + a')) ⊕ (Fin a × Fin (a + a')))),

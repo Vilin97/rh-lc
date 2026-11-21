@@ -31,7 +31,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem at_of_mem {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
     {Bf : Matrix (Fin n) (Fin d) (AE F E) → Matrix (Fin n) (Fin d) (AE F E) → AF F} {κ : Type} [Fintype κ]
-    (co : Darboux Bf κ) (v : Pl F) :
+    (co : Darboux Bf κ) (v : Pl (F := F)) :
     ∀ γ ∈ latAtV X W v, ∀ k, At (evFin F v) ((co.e γ).1 k) ∧ At (evFin F v) ((co.e γ).2 k) := by
   intro γ hγ
   induction hγ using AddSubgroup.closure_induction with
@@ -55,7 +55,7 @@ theorem at_of_mem {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
 
 theorem psi_symp_eq_one {σ : E →ₐ[F] E} (B : Base F E) (hB : B.IsGood σ) {n d : ℕ} (X : Spc F E n) (W : Spc F E d)
     (r s r' s' : ℕ) (hX : X.IsHerm σ B r s) (hW : W.IsSkew σ B r' s')
-    (co : Darboux (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J)) (Fin n × Fin d)) (v : Pl F) :
+    (co : Darboux (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J)) (Fin n × Fin d)) (v : Pl (F := F)) :
     ∀ γ ∈ latAtV X W v, ∀ γ' ∈ latAtV X W v,
       B.ψ (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J) γ γ') = 1 := by
   intro γ hγ γ' hγ'
@@ -106,11 +106,11 @@ theorem sum_of_inr {M κ ι κ₁ : Type} [AddCommMonoid M] [Fintype κ] [Fintyp
   rw [← eq.symm.sum_comp, Fintype.sum_sum_type]
   simp [hf]
 
-theorem psi_eq_psiV (ψ : AddChar (AF F) ℂ) (v : Pl F) {z : AF F} (hz : At (evFin F v) z) :
+theorem psi_eq_psiV (ψ : AddChar (AF F) ℂ) (v : Pl (F := F)) {z : AF F} (hz : At (evFin F v) z) :
     ψ z = GlobalTheory.VacAny.psiV ψ v (evFin F v z) := by
   rw [GlobalTheory.VacAny.psiV_apply, ← GlobalTheory.SchrLoc.eq_atPlace_of_at hz]
 
-theorem finite_evaluation_extend_by_zero (v : Pl F) {κ ι κ₁ : Type} (eq : κ ≃ ι ⊕ κ₁) (a : κ₁ → AF F) (k : κ) :
+theorem finite_evaluation_extend_by_zero (v : Pl (F := F)) {κ ι κ₁ : Type} (eq : κ ≃ ι ⊕ κ₁) (a : κ₁ → AF F) (k : κ) :
     evFin F v (ext0 eq a k) = ext0 eq (fun j => evFin F v (a j)) k := by
   simp only [ext0]
   rcases eq k with i | j <;> simp
@@ -134,7 +134,7 @@ theorem phase {σ : E →ₐ[F] E} (B : Base F E) (hB : B.IsGood σ) {n d n₁ d
     (co : Darboux (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J)) (Fin n × Fin d))
     {ι : Type} [Fintype ι] (eq : Fin n × Fin d ≃ ι ⊕ (Fin n₁ × Fin d₁))
     (hι : ∀ z, co.e (incM F H.ι * z * (incM F H'.ι)ᵀ) = (ext0 eq (M₁.co.e z).1, ext0 eq (M₁.co.e z).2))
-    (θ : 𝓞 E) (hθ : (θ : E) + σ θ = 1) (v : Pl F) {p q g : Matrix _ _ _}
+    (θ : 𝓞 E) (hθ : (θ : E) + σ θ = 1) (v : Pl (F := F)) {p q g : Matrix _ _ _}
     (hpA : p ∈ spanA (F := F) H H') (hqA : q ∈ spanAd (F := F) H H')
     (hp : (co.e p).1 = 0 ∧ ∀ j, (co.e p).2 (eq.symm (Sum.inr j)) = 0)
     (hq : (co.e q).2 = 0 ∧ ∀ j, (co.e q).1 (eq.symm (Sum.inr j)) = 0)
@@ -181,7 +181,7 @@ theorem local_vac {σ : E →ₐ[F] E} (B : Base F E) {n d n₁ d₁ : ℕ} (r s
         co.e (incM F x) = (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i)))
     (hι : ∀ z, co.e (incM F H.ι * z * (incM F H'.ι)ᵀ) = (ext0 eq (M₁.co.e z).1, ext0 eq (M₁.co.e z).2))
     (hA : ∀ u ∈ isoA H H', (co.e u).1 = 0 ∧ ∀ j, (co.e u).2 (eq.symm (Sum.inr j)) = 0)
-    (hAd : ∀ u ∈ isoAd H H', (co.e u).2 = 0 ∧ ∀ j, (co.e u).1 (eq.symm (Sum.inr j)) = 0) (v : Pl F) :
+    (hAd : ∀ u ∈ isoAd H H', (co.e u).2 = 0 ∧ ∀ j, (co.e u).1 (eq.symm (Sum.inr j)) = 0) (v : Pl (F := F)) :
     Model.IsVac (Model.mk (σ := σ) (X := X) (W := W) co (fun _ => 0) 0 ∅) B.ψ v
       (prodVac eq (Set.indicator (latPos X W co eq v : Set (ι → Fv F v)) 1) (M₁.vac v)) := by
   set P := latPos X W co eq v with hPdef
@@ -278,13 +278,13 @@ theorem GlobalTheory.ThK.AdaptEv.exists_vac_adapted_isoA : ∀ (F E : Type) [Fie
     (∀ z, co.e (incM F H.ι * z * (incM F H'.ι)ᵀ) = (ext0 eq (M₁.co.e z).1, ext0 eq (M₁.co.e z).2)) →
     (∀ u ∈ isoA H H', (co.e u).1 = 0 ∧ ∀ j, (co.e u).2 (eq.symm (Sum.inr j)) = 0) →
     (∀ u ∈ isoAd H H', (co.e u).2 = 0 ∧ ∀ j, (co.e u).1 (eq.symm (Sum.inr j)) = 0) →
-    ∃ A : ∀ v : Pl F, (Fin (2 * (n + d₁)) → Fv F v) → ℂ,
+    ∃ A : ∀ v : Pl (F := F), (Fin (2 * (n + d₁)) → Fv F v) → ℂ,
       (∀ v, A v ∈ SB _ ∧ A v 0 = 1 ∧
         Model.IsVac (Model.mk (σ := σ) (X := X) (W := W) co (fun _ => 0) 0 ∅) B.ψ v (prodVac eq (A v) (M₁.vac v))) ∧
       ∀ᶠ v in cofinite, A v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1 := by
   intro F E _ _ _ _ _ σ B n d n₁ d₁ r s r' s' i₀ i₁ j₀ j₁ X W X₁ W₁ H H' M₁ co eq hB hX hW hH hH' hM₁ hrat hι hA hAd
   classical
-  let good : Pl F → Prop := fun v =>
+  let good : Pl (F := F) → Prop := fun v =>
     M₁.vac v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1 ∧
       (Model.mk (σ := σ) (X := X) (W := W) co (fun _ => 0) 0 ∅).IsVac B.ψ v
         (Set.indicator {x : Fin n × Fin d → Fv F v | ∀ k, x k ∈ v.adicCompletionIntegers F} 1)

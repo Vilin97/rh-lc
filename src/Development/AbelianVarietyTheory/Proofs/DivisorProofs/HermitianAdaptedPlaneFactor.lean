@@ -67,9 +67,9 @@ theorem exists_model {B : Base F E} {n d : ℕ} {X : Spc F E n} {W : Spc F E d} 
     (co : Darboux (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J)) (Fin n × Fin d))
     (hco : ∀ x : Matrix (Fin n) (Fin d) E, ∃ y z : Fin n × Fin d → F,
       co.e (incM F x) = (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i))) :
-    ∃ (vac : ∀ v : Pl F, (Fin n × Fin d → Fv F v) → ℂ) (T : Fn F n d →ₗ[ℂ] Fn F n d)
+    ∃ (vac : ∀ v : Pl (F := F), (Fin n × Fin d → Fv F v) → ℂ) (T : Fn F n d →ₗ[ℂ] Fn F n d)
       (ei : SInf F (Fin n × Fin d) →L[ℂ] SInf F (Fin n × Fin d))
-      (ev : ∀ v : Pl F, ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Fin n × Fin d → Fv F v) → ℂ),
+      (ev : ∀ v : Pl (F := F), ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Fin n × Fin d → Fv F v) → ℂ),
       (⟨co, vac, M.μ, M.dom⟩ : Model σ X W).IsGood B.ψ ∧ Function.Surjective ei ∧
       (∀ Φ ∈ schA F (Fin n × Fin d), T Φ ∈ schA F (Fin n × Fin d)) ∧
       (∀ u, ∀ Φ ∈ schA F (Fin n × Fin d), T (M.co.rho B.ψ u Φ) = co.rho B.ψ u (T Φ)) ∧

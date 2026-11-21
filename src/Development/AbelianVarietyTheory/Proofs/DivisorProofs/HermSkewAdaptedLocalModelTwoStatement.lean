@@ -27,7 +27,7 @@ theorem _root_.GlobalTheory.T.herm_skew_adapted_local_model_two : ∀ (F E : Typ
     (n n₁ d d₁ r s r' s' i₀ i₁ j₀ j₁ : ℕ) (X : Spc F E n) (X₁ : Spc F E n₁) (W : Spc F E d) (W₁ : Spc F E d₁)
     (H : Plane E n n₁) (H' : Plane E d d₁) (M : Model σ X W),
     B.IsGood σ → X.IsHerm σ B r s → W.IsSkew σ B r' s' → H.IsAdapted σ B X X₁ j₀ j₁ → H'.IsAdapted σ B W W₁ i₀ i₁ →
-    ∀ (v : Pl F) (w : (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v)),
+    ∀ (v : Pl (F := F)) (w : (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v)),
       (∀ u ∈ isoA (F := F) H H', At (evFin F v) u →
         (GlobalTheory.LatVac.locCo M.co v u).1 ⬝ᵥ w.2 - w.1 ⬝ᵥ (GlobalTheory.LatVac.locCo M.co v u).2 = 0) →
       ∃ z₀ : Fin n → AE F E, At (evFin F v) (Matrix.vecMulVec z₀ (incV F H'.x)) ∧

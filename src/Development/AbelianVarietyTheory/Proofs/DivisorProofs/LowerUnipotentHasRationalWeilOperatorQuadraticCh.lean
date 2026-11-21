@@ -60,7 +60,7 @@ theorem eventually_integral (x : κ → AF F) :
     ∀ᶠ v : Pl F in cofinite, ∀ i, evFin F v (x i) ∈ v.adicCompletionIntegers F :=
   eventually_all.2 fun i => (x i).2.2
 
-theorem finite_mulSupport {φ : ∀ v : Pl F, (κ → Fv F v) → ℂ} (hφ : IsFam φ) (x : κ → AF F) :
+theorem finite_mulSupport {φ : ∀ v : Pl (F := F), (κ → Fv F v) → ℂ} (hφ : IsFam φ) (x : κ → AF F) :
     (Function.mulSupport fun v : Pl F => φ v fun i => evFin F v (x i)).Finite := by
   refine (Filter.eventually_cofinite.1 (hφ.2.and (eventually_integral x))).subset fun v hv => ?_
   intro h
@@ -90,13 +90,13 @@ theorem mulQ_bijOn {K : Type} [CommRing K] [TopologicalSpace K] [IsTopologicalRi
   have := mulQ_neg_mulQ χ h (-A) φ
   rwa [neg_neg] at this
 
-theorem quad_mem {v : Pl F} {h : Fv F v} (hh : h ∈ v.adicCompletionIntegers F) {A : Matrix κ κ (Fv F v)}
+theorem quad_mem {v : Pl (F := F)} {h : Fv F v} (hh : h ∈ v.adicCompletionIntegers F) {A : Matrix κ κ (Fv F v)}
     (hA : ∀ i j, A i j ∈ v.adicCompletionIntegers F) {x : κ → Fv F v} (hx : ∀ i, x i ∈ v.adicCompletionIntegers F) :
     quad h A x ∈ v.adicCompletionIntegers F := by
   unfold quad
   refine mul_mem hh (sum_mem fun i _ => mul_mem (hx i) (sum_mem fun j _ => mul_mem (hA i j) (hx j)))
 
-theorem invOf_two_eq (v : Pl F) : ⅟(2 : Fv F v) = algebraMap F (Fv F v) (2⁻¹) := by
+theorem invOf_two_eq (v : Pl (F := F)) : ⅟(2 : Fv F v) = algebraMap F (Fv F v) (2⁻¹) := by
   refine (invOf_eq_right_inv ?_)
   rw [← map_ofNat (algebraMap F (Fv F v)) 2, ← map_mul, mul_inv_cancel₀ two_ne_zero, map_one]
 
@@ -126,7 +126,7 @@ theorem invOf_two_eq' (R : Type) [CommRing R] [Algebra F R] [Invertible (2 : R)]
   refine (invOf_eq_right_inv ?_)
   rw [← map_ofNat (algebraMap F R) 2, ← map_mul, mul_inv_cancel₀ two_ne_zero, map_one]
 
-theorem evFin_quad (b : Matrix κ κ F) (v : Pl F) (x : κ → AF F) :
+theorem evFin_quad (b : Matrix κ κ F) (v : Pl (F := F)) (x : κ → AF F) :
     evFin F v (quad (⅟2) (-(b.map (algebraMap F (AF F)))) x) =
       quad (⅟2) (-(b.map (algebraMap F (Fv F v)))) (fun i => evFin F v (x i)) := by
   set_option synthInstance.maxHeartbeats 100000 in
@@ -170,7 +170,7 @@ theorem at_pairA (a : AF F) : At (evI F) (pairA F (fstA F a) 0) := by
     exact mul_zero _
 
 theorem mulQ_pure (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (b : Matrix κ κ F) (f : SInf F κ)
-    {φ : ∀ v : Pl F, (κ → Fv F v) → ℂ} (hφ : IsFam φ) :
+    {φ : ∀ v : Pl (F := F), (κ → Fv F v) → ℂ} (hφ : IsFam φ) :
     mulQ ψ (⅟2) (-(b.map (algebraMap F (AF F)))) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) =
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (SchwartzMap.smulLeftCLM ℂ
                    (archMul (qI F (⅟2)) ((-(b.map (algebraMap F (AF F)))).map (qI F))) f)

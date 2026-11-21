@@ -99,7 +99,7 @@ def piE (P : HeightOneSpectrum (𝓞 E)) : AE F E →+* P.adicCompletion E :=
 theorem piE_tmul (P : HeightOneSpectrum (𝓞 E)) (a : AF F) (x : E) :
     piE F P (a ⊗ₜ[F] x) = complMap rfl (evFin F (P.under (𝓞 F)) a) * algebraMap E _ x := rfl
 
-theorem piE_algebraMap {P : HeightOneSpectrum (𝓞 E)} {v : Pl F} (h : P.under (𝓞 F) = v) (a : AF F) :
+theorem piE_algebraMap {P : HeightOneSpectrum (𝓞 E)} {v : Pl (F := F)} (h : P.under (𝓞 F) = v) (a : AF F) :
     piE F P (algebraMap (AF F) (AE F E) a) = complMap h (evFin F v a) := by
   subst h
   exact (piE_tmul P a 1).trans (by rw [map_one, mul_one])
@@ -117,7 +117,7 @@ theorem val_det_le {K Γ n : Type} [CommRing K] [LinearOrderedCommMonoidWithZero
   rw [e, map_prod]
   exact Finset.prod_le_pow_card _ _ _ fun i _ => h _ _
 
-theorem val_det_le_one {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) {v : Pl F} {w : HeightOneSpectrum (𝓞 E)}
+theorem val_det_le_one {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)}
     (hw : w.under (𝓞 F) = v) (t : Matrix (Fin d) (Fin d) (AE F E))
     (ht : ∀ z ∈ GlobalTheory.InertSph.latAt W v, t *ᵥ z ∈ GlobalTheory.InertSph.latAt W v) : Valued.v (piE F w t.det) ≤ 1 := by
   classical
@@ -191,7 +191,7 @@ theorem val_det_le_one {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) {v : Pl 
   have h0 : 0 < b ^ Fintype.card (Fin d) := (zero_lt_iff.2 hk).trans_le (by simpa using key 0)
   exact h ((mul_le_iff_le_one_left h0).1 (hn.trans (key n)))
 
-theorem chr_det_eq_one {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) {v : Pl F} {w : HeightOneSpectrum (𝓞 E)}
+theorem chr_det_eq_one {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)}
     (hw : Formalism.UG.IsInertAt F E v w) {χ : Chr F E} (hχ : UnrAt χ w) (t : GL (Fin d) (AE F E))
     (h1 : At (evFin F v) ((t : Matrix (Fin d) (Fin d) (AE F E)) - 1))
     (ht : ∀ z ∈ GlobalTheory.InertSph.latAt W v, (t : Matrix (Fin d) (Fin d) (AE F E)) *ᵥ z ∈ GlobalTheory.InertSph.latAt W v ∧
@@ -240,7 +240,7 @@ theorem chr_det_eq_one {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) {v : Pl 
 
 theorem eigen_eq_one_of_diag : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ (v : Pl F) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T →
+    ∀ (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T →
     ∀ (dd : Darboux (symp (cA σ) (-1 : AE F E) (incM F G.V.J) (dbl (incM F G.W.J))) ((Fin a × Fin (a + a')) ⊕ (Fin a × Fin (a + a'))))
       (omd : GlobalTheory.DblVac.UD σ G.W →* Module.End ℂ (((Fin a × Fin (a + a')) ⊕ (Fin a × Fin (a + a')) → AF F) → ℂ)),
     IsDblCoord (cA σ) (-1 : AE F E) (incM F G.V.J) (incM F G.W.J) G.M.co dd →

@@ -13,7 +13,7 @@ open scoped TensorProduct Matrix
 
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.cayleyTransform_mem_unitaryLatticeStabilizer : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (d : ℕ)
-    (W : Spc F E d) (v : Pl F) (Y : Matrix (Fin d) (Fin d) (AE F E)), At (evFin F v) Y →
+    (W : Spc F E d) (v : Pl (F := F)) (Y : Matrix (Fin d) (Fin d) (AE F E)), At (evFin F v) Y →
     (∀ z ∈ GlobalTheory.InertSph.latAt W v, Y *ᵥ z ∈ GlobalTheory.InertSph.latAt W v) →
     Yᵀ * incM F W.J + incM F W.J * Y.map (cA σ) = 0 →
     (∃ M : Matrix (Fin d) (Fin d) (AE F E), (1 + Y) * M = 1 ∧ M * (1 + Y) = 1 ∧

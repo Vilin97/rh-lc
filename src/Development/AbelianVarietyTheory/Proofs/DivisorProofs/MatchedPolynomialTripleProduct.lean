@@ -30,7 +30,7 @@ variable {F : Type} [Field F] [NumberField F]
 
 theorem exists_rest (κ : Type) [Fintype κ] : ∃ r : (κ → AF F) → ℂ, (∀ f : SInf F κ, Rest (evI F) (⇑f) r) ∧
     ∀ y : κ → mixedEmbedding.mixedSpace F, r (fun i => liftA (y i)) = 1 := by
-  let φs : ∀ v : Pl F, (κ → Fv F v) → ℂ :=
+  let φs : ∀ v : Pl (F := F), (κ → Fv F v) → ℂ :=
     fun v => Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1
   have hSB : ∀ v, φs v ∈ SB _ := fun v => GlobalTheory.StdVacuum.indicator_mem_SB v
   let rr : (κ → AF F) → ℂ := fun x => ∏ᶠ v, φs v fun i => evFin F v (x i)

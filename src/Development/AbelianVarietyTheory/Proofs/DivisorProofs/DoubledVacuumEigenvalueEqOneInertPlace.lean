@@ -17,7 +17,7 @@ open GlobalTheory.DblVacSiegel
 
 theorem eigen_eq_one_of_diag : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ (v : Pl F) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T →
+    ∀ (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T →
     ∀ (d' : Darboux (symp (cA σ) (-1 : AE F E) (incM F G.W.J) (incM F G.V.J)) (Fin a × Fin (a + a'))),
     (∀ x : Matrix (Fin a) (Fin (a + a')) (AE F E), d'.e xᵀ = G.M.co.e x) →
     ∀ (dd : Darboux (symp (cA σ) (-1 : AE F E) (incM F G.W.J) (dbl (incM F G.V.J))) ((Fin a × Fin (a + a')) ⊕ (Fin a × Fin (a + a'))))
@@ -57,7 +57,7 @@ theorem eigen_eq_one_of_diag : ∀ (F E : Type) [Field F] [NumberField F] [Field
           ((t⁻¹ : GL (Fin a) (AE F E)) : Matrix (Fin a) (Fin a) (AE F E)) := by
           rw [Matrix.mul_assoc, Matrix.mul_assoc, t.mul_inv, Matrix.mul_one]
       _ = _ := by rw [← ht, ← Matrix.mul_assoc, e1, Matrix.one_mul]
-  have hwT : w ∉ above E (X.T : Set (Pl F)) := fun h => hv (by rw [← under_eq_of_isInertAt hw]; exact h)
+  have hwT : w ∉ above E (X.T : Set (Pl (F := F))) := fun h => hv (by rw [← under_eq_of_isInertAt hw]; exact h)
   have hunr : UnrAt (X.β / X.α) w := by
     rw [div_eq_mul_inv]
     exact (hT.chars.unrβ w hwT).mul (hT.chars.unrα w hwT).inv

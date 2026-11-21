@@ -13,7 +13,7 @@ open scoped TensorProduct Matrix
 namespace GlobalTheory.InertDbl
 
 theorem diag_mulVec_mem_latAt {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    {d : ℕ} (W : Spc F E d) (v : Pl F) (M : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (AE F E))
+    {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (M : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (AE F E))
     (t : Matrix (Fin d) (Fin d) (AE F E)) (h : M * (diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) (AE F E)) = (diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) (AE F E)) * t)
     (hM : ∀ z ∈ latAtD W v, M *ᵥ z ∈ latAtD W v) (z : Fin d → AE F E) (hz : z ∈ GlobalTheory.InertSph.latAt W v) :
     t *ᵥ z ∈ GlobalTheory.InertSph.latAt W v := by
@@ -28,7 +28,7 @@ theorem diag_mulVec_mem_latAt {F E : Type} [Field F] [NumberField F] [Field E] [
   exact h2.1
 
 theorem parD_diag_action :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl F),
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl (F := F)),
     ∀ p ∈ GlobalTheory.InertDbl.ParD σ W v, ∀ t : GL (Fin d) (AE F E),
       GlobalTheory.InertDbl.matD p * diagCols (Fin d) = diagCols (Fin d) * (t : Matrix (Fin d) (Fin d) (AE F E)) →
       At (evFin F v) ((t : Matrix (Fin d) (Fin d) (AE F E)) - 1) ∧

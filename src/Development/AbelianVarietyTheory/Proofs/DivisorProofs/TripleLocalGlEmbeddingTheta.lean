@@ -69,14 +69,14 @@ theorem negSB {Y : Type} [TopologicalSpace Y] [AddGroup Y] [IsTopologicalAddGrou
     (fun y => φ (-y)) ∈ SB Y :=
   ⟨h.1.comp_continuous continuous_neg, h.2.comp_homeomorph (Homeomorph.neg Y)⟩
 
-theorem tens_box (v : Pl F) {κ κ' : Type} (φ₁ : (κ → Fv F v) → ℂ) (φ₂ : (κ' → Fv F v) → ℂ)
+theorem tens_box (v : Pl (F := F)) {κ κ' : Type} (φ₁ : (κ → Fv F v) → ℂ) (φ₂ : (κ' → Fv F v) → ℂ)
     (r₁ : (κ → AF F) → ℂ) (r₂ : (κ' → AF F) → ℂ) :
     tens (evFin F v) (boxFun φ₁ φ₂) (boxFun r₁ r₂) = boxFun (tens (evFin F v) φ₁ r₁) (tens (evFin F v) φ₂ r₂) := by
   funext x
   simp only [tens, boxFun, Function.comp_def]
   ring
 
-theorem rest_box (v : Pl F) {κ κ' : Type} [Fintype κ] [Fintype κ'] {φ₁ : (κ → Fv F v) → ℂ} {φ₂ : (κ' → Fv F v) → ℂ}
+theorem rest_box (v : Pl (F := F)) {κ κ' : Type} [Fintype κ] [Fintype κ'] {φ₁ : (κ → Fv F v) → ℂ} {φ₂ : (κ' → Fv F v) → ℂ}
     {r₁ : (κ → AF F) → ℂ} {r₂ : (κ' → AF F) → ℂ} (h₁ : Rest (evFin F v) φ₁ r₁) (h₂ : Rest (evFin F v) φ₂ r₂) :
     Rest (evFin F v) (boxFun φ₁ φ₂) (boxFun r₁ r₂) := by
   refine ⟨fun x z hz => ?_, ?_⟩
@@ -90,7 +90,7 @@ theorem rest_box (v : Pl F) {κ κ' : Type} [Fintype κ] [Fintype κ'] {φ₁ : 
   · rw [tens_box]
     exact GlobalTheory.SchwartzBox.boxFun_mem_schA F _ _ _ h₁.2 _ h₂.2
 
-theorem eq_of_tens_ne (v : Pl F) {κ : Type} {ψ₁ ψ₂ : (κ → Fv F v) → ℂ} {r : (κ → AF F) → ℂ}
+theorem eq_of_tens_ne (v : Pl (F := F)) {κ : Type} {ψ₁ ψ₂ : (κ → Fv F v) → ℂ} {r : (κ → AF F) → ℂ}
     (hr : ∀ x z, At (evFin F v) z → r (x + z) = r x) {x₀ : κ → AF F} (h0 : r x₀ ≠ 0)
     (h : tens (evFin F v) ψ₁ r = tens (evFin F v) ψ₂ r) : ψ₁ = ψ₂ := by
   funext y
@@ -105,7 +105,7 @@ theorem eq_of_tens_ne (v : Pl F) {κ : Type} {ψ₁ ψ₂ : (κ → Fv F v) → 
   simp only [tens, hev, hr x₀ z hz] at e
   exact mul_right_cancel₀ h0 e
 
-theorem actsComp (v : Pl F) {κ : Type} [Fintype κ] {T₁ T₂ : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ}
+theorem actsComp (v : Pl (F := F)) {κ : Type} [Fintype κ] {T₁ T₂ : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ}
     (hT₂ : ∀ f ∈ schA F κ, T₂ f ∈ schA F κ) {φ φ₁ φ₂ : (κ → Fv F v) → ℂ}
     (h₂ : Acts (evFin F v) T₂ φ φ₁) (h₁ : Acts (evFin F v) T₁ φ₁ φ₂) :
     Acts (evFin F v) (fun f => T₁ (T₂ f)) φ φ₂ := by
@@ -115,11 +115,11 @@ theorem actsComp (v : Pl F) {κ : Type} [Fintype κ] {T₁ T₂ : ((κ → AF F)
   show T₁ (T₂ _) = _
   rw [e, h₁ r hr₁]
 
-theorem tens_smul (v : Pl F) {κ : Type} (c : ℂ) (φ : (κ → Fv F v) → ℂ) (r : (κ → AF F) → ℂ) :
+theorem tens_smul (v : Pl (F := F)) {κ : Type} (c : ℂ) (φ : (κ → Fv F v) → ℂ) (r : (κ → AF F) → ℂ) :
     tens (evFin F v) (c • φ) r = c • tens (evFin F v) φ r := by
   funext x; simp only [tens, Pi.smul_apply, smul_eq_mul]; ring
 
-theorem actsSmul (v : Pl F) {κ : Type} [Fintype κ] (T : Module.End ℂ ((κ → AF F) → ℂ)) {φ φ₁ : (κ → Fv F v) → ℂ}
+theorem actsSmul (v : Pl (F := F)) {κ : Type} [Fintype κ] (T : Module.End ℂ ((κ → AF F) → ℂ)) {φ φ₁ : (κ → Fv F v) → ℂ}
     (h : Acts (evFin F v) T φ φ₁) (c : ℂ) : Acts (evFin F v) T (c • φ) (c • φ₁) := by
   intro r hr
   by_cases hc : c = 0
@@ -139,7 +139,7 @@ end GlobalTheory.DblSwap
 namespace GlobalTheory.DblSwap
 open GlobalTheory.SplitWeil GlobalTheory.SplitFlip
 
-theorem conj_apow {F : Type} [Field F] [NumberField F] {v : Pl F} (x : (Fv F v)ˣ) (z : ℂ) (hz : starRingEnd ℂ z = z) :
+theorem conj_apow {F : Type} [Field F] [NumberField F] {v : Pl (F := F)} (x : (Fv F v)ˣ) (z : ℂ) (hz : starRingEnd ℂ z = z) :
     starRingEnd ℂ (apow x z) = apow x z := by
   unfold apow
   have harg : ((nabs (Fv F v) x : ℝ) : ℂ).arg ≠ Real.pi := by
@@ -148,7 +148,7 @@ theorem conj_apow {F : Type} [Field F] [NumberField F] {v : Pl F} (x : (Fv F v)�
   rw [hz, Complex.conj_ofReal] at e
   exact e.symm
 
-theorem conj_omB {F : Type} [Field F] [NumberField F] {v : Pl F} {A' D : Type} [Fintype A'] [DecidableEq A'] [Fintype D]
+theorem conj_omB {F : Type} [Field F] [NumberField F] {v : Pl (F := F)} {A' D : Type} [Fintype A'] [DecidableEq A'] [Fintype D]
     [DecidableEq D] (ν α : (Fv F v)ˣ →* ℂˣ) (g : GL A' (Fv F v)) (Ψ : Matrix A' D (Fv F v) → ℂ) (Y : Matrix A' D (Fv F v)) :
     starRingEnd ℂ (omB ν α g 1 Ψ Y) =
       (starRingEnd ℂ (ν (gdet g) : ℂ) / (ν (gdet g) : ℂ)) * omB ν α g 1 (fun Z => starRingEnd ℂ (Ψ Z)) Y := by

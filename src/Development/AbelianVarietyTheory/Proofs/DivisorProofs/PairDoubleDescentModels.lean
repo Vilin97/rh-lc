@@ -81,7 +81,7 @@ theorem infRel_surjective (hP : GlobalTheory.FunPr.Hypotheses₂) (B : Base F E)
     have := h₁.Heisenberg₂ u Φ hΦ
     rwa [incM_one_eq, incM_one_eq, Matrix.transpose_one, Matrix.one_mul, Matrix.mul_one] at this
   let ei₀ : SInf F (Fin n × Fin d) →L[ℂ] SInf F (Fin n × Fin d₁) := (ei F hd).comp ei₁
-  let ev₀ : ∀ v : Pl F, ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Fin n × Fin d₁ → Fv F v) → ℂ := fun v => (ev hd v).comp (ev₁ v)
+  let ev₀ : ∀ v : Pl (F := F), ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Fin n × Fin d₁ → Fv F v) → ℂ := fun v => (ev hd v).comp (ev₁ v)
   have hs₀ : Function.Surjective ei₀ := (ei_surjective hd).comp hs₁
   have hne₀ : ei₀ ≠ 0 := by
     intro h0

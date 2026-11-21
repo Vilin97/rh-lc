@@ -84,12 +84,12 @@ private theorem sigR_sigR' {F E : Type} [Field F] [Field E] [Algebra F E] (R : T
     rw [hσ]
 
 private theorem atV_incV {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
-    (v : Pl F) (x : Fin n → E) (i : Fin n) : atV v (incV F x) i = inclR (F := F) (Fv F v) (x i) := by
+    (v : Pl (F := F)) (x : Fin n → E) (i : Fin n) : atV v (incV F x) i = inclR (F := F) (Fv F v) (x i) := by
   change evFin F v 1 ⊗ₜ[F] x i = (1 : Fv F v) ⊗ₜ[F] x i
   rw [map_one]
 
 private theorem pair_eq {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
-    {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) (J : Matrix (Fin n) (Fin n) E) (v : Pl F) (x y : Fin n → E)
+    {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) (J : Matrix (Fin n) (Fin n) E) (v : Pl (F := F)) (x y : Fin n → E)
     (hxy : form σ J x y = 1) (c : AE F E) (a : Fv F v ⊗[F] E) :
     pairV σ J v (atV v (c • incV F x)) (fun i => sigR (Fv F v) σ a * atV v (incV F y) i) = compFin F E v c * a := by
   have h1 : ∀ i, atV v (c • incV F x) i = compFin F E v c * inclR (F := F) (Fv F v) (x i) := fun i => by
@@ -104,7 +104,7 @@ private theorem pair_eq {F E : Type} [Field F] [NumberField F] [Field E] [Number
   simp only [Finset.mul_sum]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
-private theorem acts_smul {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] {v : Pl F}
+private theorem acts_smul {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] {v : Pl (F := F)}
     {T : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ} {φ φ₁ : (κ → Fv F v) → ℂ} (c : ℂ) (h : Acts (evFin F v) T φ φ₁) :
     Acts (evFin F v) (fun Ψ => c • T Ψ) φ (c • φ₁) := by
   intro r hr

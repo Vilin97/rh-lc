@@ -15,7 +15,7 @@ open scoped TensorProduct NNReal ENNReal
 noncomputable section
 namespace GlobalTheory.LocTateInt
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (v : Pl F)
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (v : Pl (F := F))
 
 theorem finite_FE : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
 

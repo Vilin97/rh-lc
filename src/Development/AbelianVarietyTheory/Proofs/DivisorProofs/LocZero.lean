@@ -16,7 +16,7 @@ namespace GlobalTheory.InertAvg
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
-theorem tens_inj (v : Pl F) {κ : Type} (R : (κ → AF F) → ℂ) (hR0 : R 0 ≠ 0)
+theorem tens_inj (v : Pl (F := F)) {κ : Type} (R : (κ → AF F) → ℂ) (hR0 : R 0 ≠ 0)
     (hRt : ∀ x z, At (evFin F v) z → R (x + z) = R x) {φ₁ φ₂ : (κ → Fv F v) → ℂ}
     (e : tens (evFin F v) φ₁ R = tens (evFin F v) φ₂ R) : φ₁ = φ₂ := by
   funext t

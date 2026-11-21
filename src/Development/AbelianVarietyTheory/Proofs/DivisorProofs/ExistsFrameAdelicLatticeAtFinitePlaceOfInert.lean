@@ -96,16 +96,16 @@ section Adelic
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
-def genAt (v : Pl F) : Set (AE F E) := {z : AE F E | ∃ a : AF F, At (evFin F v) a ∧
+def genAt (v : Pl (F := F)) : Set (AE F E) := {z : AE F E | ∃ a : AF F, At (evFin F v) a ∧
   evFin F v a ∈ v.adicCompletionIntegers F ∧ ∃ o : 𝓞 E, z = a • inclR (F := F) (AF F) (o : E)}
 
-theorem at_mul {v : Pl F} {z : AE F E} (hz : At (evFin F v) z) (y : AE F E) : At (evFin F v) (z * y) :=
+theorem at_mul {v : Pl (F := F)} {z : AE F E} (hz : At (evFin F v) z) (y : AE F E) : At (evFin F v) (z * y) :=
   fun u hu => by rw [← smul_mul_assoc, hz u hu, zero_mul]
 
-theorem at_smul_one {v : Pl F} {a : AF F} (ha : At (evFin F v) a) : At (evFin F v) (a • (1 : AE F E)) :=
+theorem at_smul_one {v : Pl (F := F)} {a : AF F} (ha : At (evFin F v) a) : At (evFin F v) (a • (1 : AE F E)) :=
   fun u hu => by rw [smul_smul, ← smul_eq_mul, ha u hu, zero_smul]
 
-theorem mul_incl_mem {v : Pl F} {s : AE F E} (hs : s ∈ AddSubgroup.closure (genAt F E v)) (o : 𝓞 E) :
+theorem mul_incl_mem {v : Pl (F := F)} {s : AE F E} (hs : s ∈ AddSubgroup.closure (genAt F E v)) (o : 𝓞 E) :
     s * inclR (F := F) (AF F) (o : E) ∈ AddSubgroup.closure (genAt F E v) := by
   induction hs using AddSubgroup.closure_induction with
   | mem x hx =>
@@ -115,7 +115,7 @@ theorem mul_incl_mem {v : Pl F} {s : AE F E} (hs : s ∈ AddSubgroup.closure (ge
   | add x y _ _ hx hy => rw [add_mul]; exact add_mem hx hy
   | neg x _ hx => rw [neg_mul]; exact neg_mem hx
 
-theorem smul_latAt_mem {n : ℕ} (X : Spc F E n) {v : Pl F} {a : AF F} (ha : At (evFin F v) a)
+theorem smul_latAt_mem {n : ℕ} (X : Spc F E n) {v : Pl (F := F)} {a : AF F} (ha : At (evFin F v) a)
     (hev : evFin F v a ∈ v.adicCompletionIntegers F) {z : Fin n → AE F E} (hz : z ∈ GlobalTheory.InertSph.latAt X v) :
     a • z ∈ GlobalTheory.InertSph.latAt X v := by
   unfold GlobalTheory.InertSph.latAt at hz ⊢
@@ -130,7 +130,7 @@ theorem smul_latAt_mem {n : ℕ} (X : Spc F E n) {v : Pl F} {a : AF F} (ha : At 
   | add x y _ _ hx hy => rw [smul_add]; exact add_mem hx hy
   | neg x _ hx => rw [smul_neg]; exact neg_mem hx
 
-theorem mul_incl_latAt {n : ℕ} (X : Spc F E n) {v : Pl F} {s : AE F E}
+theorem mul_incl_latAt {n : ℕ} (X : Spc F E n) {v : Pl (F := F)} {s : AE F E}
     (hs : s ∈ AddSubgroup.closure (genAt F E v)) {y : Fin n → E} (hy : y ∈ X.L) :
     (fun i => s * inclR (F := F) (AF F) (y i)) ∈ GlobalTheory.InertSph.latAt X v := by
   induction hs using AddSubgroup.closure_induction with
@@ -144,7 +144,7 @@ theorem mul_incl_latAt {n : ℕ} (X : Spc F E n) {v : Pl F} {s : AE F E}
   | add x x' _ _ hx hx' => convert add_mem hx hx' using 1; funext i; simp [add_mul]
   | neg x _ hx => convert neg_mem hx using 1; funext i; simp
 
-theorem mul_latAt {n : ℕ} (X : Spc F E n) {v : Pl F} {s : AE F E}
+theorem mul_latAt {n : ℕ} (X : Spc F E n) {v : Pl (F := F)} {s : AE F E}
     (hs : s ∈ AddSubgroup.closure (genAt F E v)) {z : Fin n → AE F E} (hz : z ∈ GlobalTheory.InertSph.latAt X v) :
     (fun i => s * z i) ∈ GlobalTheory.InertSph.latAt X v := by
   unfold GlobalTheory.InertSph.latAt at hz
@@ -161,7 +161,7 @@ theorem mul_latAt {n : ℕ} (X : Spc F E n) {v : Pl F} {s : AE F E}
 
 end Adelic
 
-theorem exists_basis_at_inert : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (v : Pl F) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w →
+theorem exists_basis_at_inert : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w →
     ∀ (n : ℕ) (X : Spc F E n), X.L.IsLattice E →
     ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] (ι : L →+ AE F E),
       Function.Injective ι → (∀ z : AE F E, At (evFin F v) z ↔ ∃ x, ι x = z) → (∀ x y, ι (x * y) = ι x * ι y) →

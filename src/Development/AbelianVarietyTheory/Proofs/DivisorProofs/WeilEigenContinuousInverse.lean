@@ -36,7 +36,7 @@ theorem evI_infAd (s : mixedEmbedding.mixedSpace F) : evI F (infAd s) = s :=
 
 theorem sndA_infAd (s : mixedEmbedding.mixedSpace F) : sndA F (infAd s) = 0 := rfl
 
-theorem evFin_infAd (v : Pl F) (s : mixedEmbedding.mixedSpace F) : evFin F v (infAd s) = 0 := by
+theorem evFin_infAd (v : Pl (F := F)) (s : mixedEmbedding.mixedSpace F) : evFin F v (infAd s) = 0 := by
   show evalV F v (sndA F (infAd s)) = 0
   rw [sndA_infAd, map_zero]
 
@@ -70,7 +70,7 @@ theorem evIHom_invOf [Invertible (2 : AF F)] [Invertible (2 : mixedEmbedding.mix
 
 theorem schr_pure [Invertible (2 : AF F)] [Invertible (2 : mixedEmbedding.mixedSpace F)] {κ : Type} [Fintype κ]
     (Ψ : AddChar (AF F) ℂ) (a b : κ → mixedEmbedding.mixedSpace F) (f : SInf F κ)
-    (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) (x : κ → AF F) :
+    (φ : ∀ v : Pl (F := F), (κ → Fv F v) → ℂ) (x : κ → AF F) :
     schr Ψ (fun i => infAd (a i), fun i => infAd (b i)) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) x =
       schr (Ψ.compAddMonoidHom infAd) (a, b) (f : (κ → mixedEmbedding.mixedSpace F) → ℂ) (fun i => evI F (x i)) *
         ∏ᶠ v, φ v fun i => evFin F v (x i) := by
@@ -99,7 +99,7 @@ theorem schr_pure [Invertible (2 : AF F)] [Invertible (2 : mixedEmbedding.mixedS
   ring
 
 
-theorem exists_finprod_ne {κ : Type} [Fintype κ] (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) (h0 : ∀ v, φ v ≠ 0)
+theorem exists_finprod_ne {κ : Type} [Fintype κ] (φ : ∀ v : Pl (F := F), (κ → Fv F v) → ℂ) (h0 : ∀ v, φ v ≠ 0)
     (hstd : ∀ᶠ v in Filter.cofinite, φ v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1)
     (y : κ → mixedEmbedding.mixedSpace F) :
     ∃ x : κ → AF F, (fun i => evI F (x i)) = y ∧ ∏ᶠ v, φ v (fun i => evFin F v (x i)) ≠ 0 := by
@@ -147,7 +147,7 @@ theorem ei_schr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
     IsPair B M χX χW om r s r' s' → ∀ M₁ : Model σ X W, M₁.IsGood B.ψ → ∀ e : Fn F n d →ₗ[ℂ] Fn F n d,
     IsEv B M M₁ 1 1 ∅ e →
     ∀ (ei : SInf F (Fin n × Fin d) →L[ℂ] SInf F (Fin n × Fin d))
-      (ev : ∀ v : Pl F, ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Fin n × Fin d → Fv F v) → ℂ), ei ≠ 0 →
+      (ev : ∀ v : Pl (F := F), ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Fin n × Fin d → Fv F v) → ℂ), ei ≠ 0 →
       (∀ v, ev v (M.vac v) = M₁.vac v ∧ (SB _).map (ev v) = SB _) →
       (∀ f φ, (∀ v, φ v ∈ SB _) → (∀ᶠ v in Filter.cofinite, φ v = M.vac v) →
         e (pure f φ) = pure (ei f) fun v => ev v (φ v)) →

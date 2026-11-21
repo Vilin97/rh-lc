@@ -41,7 +41,7 @@ theorem rho_smul' {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {σ : E →ₐ[F] 
   ring
 
 theorem schA_le_of_pure' {κ : Type} [Fintype κ] {N : Submodule ℂ ((κ → AF F) → ℂ)}
-    (h : ∀ (f : SInf F κ) (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ), (∀ v, φ v ∈ SB (κ → Fv F v)) →
+    (h : ∀ (f : SInf F κ) (φ : ∀ v : Pl (F := F), (κ → Fv F v) → ℂ), (∀ v, φ v ∈ SB (κ → Fv F v)) →
       (∀ᶠ v in cofinite, φ v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1) → pure f φ ∈ N) :
     schA F κ ≤ N := by
   refine Submodule.span_le.2 ?_

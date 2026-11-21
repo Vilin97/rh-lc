@@ -97,7 +97,7 @@ end GlobalTheory.IdeleCyl
 
 
 theorem GlobalTheory.IdeleCyl.exists_isCompact_box : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    (M : ∀ w : InfinitePlace F, Set (w.Completion ⊗[F] E)) (L : ∀ v : Pl F, Set (Fv F v ⊗[F] E)),
+    (M : ∀ w : InfinitePlace F, Set (w.Completion ⊗[F] E)) (L : ∀ v : Pl (F := F), Set (Fv F v ⊗[F] E)),
     (∀ w, IsCompact (M w)) → (∀ v, IsCompact (L v)) → (∀ᶠ v in Filter.cofinite, L v ⊆ (intLoc F E v : Set (Fv F v ⊗[F] E))) →
     ∃ K : Set (AE F E), IsCompact K ∧ ∀ z : AE F E, (∀ w, compInf F E w z ∈ M w) → (∀ v, compFin F E v z ∈ L v) → z ∈ K := by
   intro F E _ _ _ _ _ M L hM hL hLc
@@ -109,7 +109,7 @@ theorem GlobalTheory.IdeleCyl.exists_isCompact_box : ∀ (F E : Type) [Field F] 
   have he : Continuous e.symm := IsModuleTopology.continuous_of_linearMap e.symm.toLinearMap
   let Mc : Fin (Module.finrank F E) → ∀ w : InfinitePlace F, Set w.Completion := fun j w =>
     (fun y => (Algebra.TensorProduct.basis w.Completion b).repr y j) '' M w
-  let Lc : Fin (Module.finrank F E) → ∀ v : Pl F, Set (Fv F v) := fun j v =>
+  let Lc : Fin (Module.finrank F E) → ∀ v : Pl (F := F), Set (Fv F v) := fun j v =>
     (fun y => (Algebra.TensorProduct.basis (Fv F v) b).repr y j) '' L v
   have hMc : ∀ j w, IsCompact (Mc j w) := fun j w => by
     haveI : IsModuleTopology w.Completion (w.Completion ⊗[F] E) := ⟨rfl⟩

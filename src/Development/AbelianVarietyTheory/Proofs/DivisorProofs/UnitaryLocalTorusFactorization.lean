@@ -178,7 +178,7 @@ lemma at_blkT {R : Type} [Zero R] (ev : AF F → R) (σ : E →ₐ[F] E) {d₁ :
 theorem exists_isLevi_at : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (d d₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (i₀ i₁ r s r₁ s₁ : ℕ),
     B.IsGood σ → W.IsSkew σ B r s → W₁.IsSkew σ B r₁ s₁ → H'.IsAdapted σ B W W₁ i₀ i₁ →
-    ∀ (v : Pl F) (t : (AE F E)ˣ), At (F := F) (evFin F v) (t.1 - 1) → ∀ h₁ : UA σ W₁.J, h₁ ∈ UAt σ W₁ (evFin F v) →
+    ∀ (v : Pl (F := F)) (t : (AE F E)ˣ), At (F := F) (evFin F v) (t.1 - 1) → ∀ h₁ : UA σ W₁.J, h₁ ∈ UAt σ W₁ (evFin F v) →
       ∃ m : UA σ W.J, IsLevi H' t h₁ m ∧ m ∈ UAt σ W (evFin F v) := by
   intro F E _ _ _ _ _ σ B d d₁ W W₁ H' i₀ i₁ r s r₁ s₁ hB hW hW₁ hA v t ht h₁ hh₁
   have hσ : ∀ z, σ (σ z) = z := GlobalTheory.AdelicPlaneLevi.sigma_invol hB.cm

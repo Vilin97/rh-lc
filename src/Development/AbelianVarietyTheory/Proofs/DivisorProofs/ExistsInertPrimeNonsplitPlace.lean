@@ -20,7 +20,7 @@ noncomputable section
 namespace GlobalTheory.InertOfNoEmb
 
 theorem exists_isInertAt : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E),
-    IsCMExt F E σ → Algebra.Unramified (𝓞 F) (𝓞 E) → ∀ v : Pl F, IsEmpty (E →ₐ[F] Fv F v) →
+    IsCMExt F E σ → Algebra.Unramified (𝓞 F) (𝓞 E) → ∀ v : Pl (F := F), IsEmpty (E →ₐ[F] Fv F v) →
     ∃ w : HeightOneSpectrum (𝓞 E), w.under (𝓞 F) = v ∧ Formalism.UG.IsInertAt F E v w := by
   intro F E _ _ _ _ _ σ hc hu v hv
   have hU : Formalism.MainNotions.SchurIrreducible.IsUnram (E := E) v := by

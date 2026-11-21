@@ -141,7 +141,7 @@ theorem _root_.GlobalTheory.VacCocycle.psi_half_symp_add : ∀ {F E : Type} [Fie
     ∀ {n d : ℕ} (X : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E n) (Y : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E d)
     (r s r' s' : ℕ),
     X.IsHerm σ B r s → Y.IsSkew σ B r' s' →
-    ∀ θ : 𝓞 E, (θ : E) + σ θ = 1 → ∀ v : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F,
+    ∀ θ : 𝓞 E, (θ : E) + σ θ = 1 → ∀ v : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F),
     ∀ γ ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.latAtV X Y v, ∀ γ' ∈ _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.latAtV X Y v,
       B.ψ (⅟(2 : _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF F) * _root_.GlobalTheory.WeilM.symp
           (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ) (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF F) (θ : E))

@@ -68,7 +68,7 @@ theorem GlobalTheory.ThK.IsoComp.main : GlobalTheory.ThK.KP → ∀ (F E : Type)
       rw [map_sum, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     have hv : ∀ᶠ v in cofinite, φ i v = M.vac v := by
-      filter_upwards [hM.std, (Set.Finite.compl_mem_cofinite T.finite_toSet : (↑T : Set (Pl F))ᶜ ∈ cofinite)] with v h1 h2
+      filter_upwards [hM.std, (Set.Finite.compl_mem_cofinite T.finite_toSet : (↑T : Set (Pl (F := F)))ᶜ ∈ cofinite)] with v h1 h2
       rw [h1, hT i v h2]
     rw [hcomp (f i) (φ i) (hφ i) hv]
     have : ei' (ei₀ (f i)) = 0 := by

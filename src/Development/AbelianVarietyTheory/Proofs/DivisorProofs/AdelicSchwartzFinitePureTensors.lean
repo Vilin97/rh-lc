@@ -23,12 +23,12 @@ variable {F : Type} [Field F] [NumberField F]
 
 
 def intA : AddSubgroup (FiniteAdeleRing (𝓞 F) F) where
-  carrier := {a | ∀ v : Pl F, a v ∈ v.adicCompletionIntegers F}
+  carrier := {a | ∀ v : Pl (F := F), a v ∈ v.adicCompletionIntegers F}
   zero_mem' := fun v => zero_mem (v.adicCompletionIntegers F)
   add_mem' := fun ha hb v => add_mem (ha v) (hb v)
   neg_mem' := fun ha v => neg_mem (ha v)
 
-theorem evalV_eq (v : Pl F) (a : FiniteAdeleRing (𝓞 F) F) : evalV F v a = a v := rfl
+theorem evalV_eq (v : Pl (F := F)) (a : FiniteAdeleRing (𝓞 F) F) : evalV F v a = a v := rfl
 
 theorem intA_eq_range : ((intA F : AddSubgroup _) : Set (FiniteAdeleRing (𝓞 F) F)) =
     Set.range (RestrictedProduct.structureMap (fun v : Pl F => v.adicCompletion F)
@@ -45,7 +45,7 @@ theorem isOpen_intA : IsOpen ((intA F : AddSubgroup _) : Set (FiniteAdeleRing (�
   exact (RestrictedProduct.isOpenEmbedding_structureMap (fun v => Valued.isOpen_integer _)).isOpen_range
 
 theorem isCompact_intA : IsCompact ((intA F : AddSubgroup _) : Set (FiniteAdeleRing (𝓞 F) F)) := by
-  haveI : CompactSpace (∀ v : Pl F, ((v.adicCompletionIntegers F : Set (v.adicCompletion F)))) :=
+  haveI : CompactSpace (∀ v : Pl (F := F), ((v.adicCompletionIntegers F : Set (v.adicCompletion F)))) :=
     @Pi.compactSpace _ _ _ (fun v => GlobalTheory.AdelicUnitaryTop.compactSpace_adicCompletionIntegers F v)
   rw [intA_eq_range]
   have hc := (RestrictedProduct.isOpenEmbedding_structureMap (R := fun v : Pl F => v.adicCompletion F)
@@ -127,12 +127,12 @@ open Topology Filter
 
 variable {F : Type} [Field F] [NumberField F]
 
-def locInd {κ : Type} (c : FiniteAdeleRing (𝓞 F) F) (r : κ → FiniteAdeleRing (𝓞 F) F) (v : Pl F) :
+def locInd {κ : Type} (c : FiniteAdeleRing (𝓞 F) F) (r : κ → FiniteAdeleRing (𝓞 F) F) (v : Pl (F := F)) :
     (κ → Fv F v) → ℂ :=
   Set.indicator {x | ∀ i, c v * (x i - r i v) ∈ v.adicCompletionIntegers F} 1
 
 theorem natCast_mul_apply {N : ℕ} {c : FiniteAdeleRing (𝓞 F) F} (hNc : (N : FiniteAdeleRing (𝓞 F) F) * c = 1)
-    (v : Pl F) : (N : Fv F v) * c v = 1 := by
+    (v : Pl (F := F)) : (N : Fv F v) * c v = 1 := by
   have := congrArg (evalV F v) hNc
   rw [map_mul, map_natCast, map_one] at this
   exact this
@@ -159,7 +159,7 @@ theorem locInd_std {κ : Type} [Fintype κ] {N : ℕ} {c : FiniteAdeleRing (𝓞
     exact mul_mem hcv (sub_mem (h i) (hrv i))
 
 theorem locInd_mem_SB {κ : Type} [Fintype κ] {N : ℕ} {c : FiniteAdeleRing (𝓞 F) F}
-    (hNc : (N : FiniteAdeleRing (𝓞 F) F) * c = 1) (r : κ → FiniteAdeleRing (𝓞 F) F) (v : Pl F) :
+    (hNc : (N : FiniteAdeleRing (𝓞 F) F) * c = 1) (r : κ → FiniteAdeleRing (𝓞 F) F) (v : Pl (F := F)) :
     locInd c r v ∈ SB (κ → Fv F v) := by
   have hc0 : c v ≠ 0 := right_ne_zero_of_mul_eq_one (natCast_mul_apply hNc v)
   let h : (κ → Fv F v) ≃ₜ (κ → Fv F v) :=
@@ -272,7 +272,7 @@ theorem pureA_eq_sum (κ : Type) [Fintype κ] (f : SInf F κ) (g : (κ → Finit
 end GlobalTheory.SchADecomp
 
 theorem GlobalTheory.SchADecomp.exists_sum_pure : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] (Ψ : (κ → AF F) → ℂ), Ψ ∈ schA F κ →
-    ∃ (T : Finset (Pl F)) (m : ℕ) (f : Fin m → SInf F κ) (φ : Fin m → ∀ v : Pl F, (κ → Fv F v) → ℂ),
+    ∃ (T : Finset (Pl (F := F))) (m : ℕ) (f : Fin m → SInf F κ) (φ : Fin m → ∀ v : Pl (F := F), (κ → Fv F v) → ℂ),
       (∀ i v, φ i v ∈ SB (κ → Fv F v)) ∧
       (∀ i v, v ∉ T → φ i v = Set.indicator {x | ∀ j, x j ∈ v.adicCompletionIntegers F} 1) ∧
       Ψ = ∑ i, pure (f i) (φ i) := by
@@ -281,7 +281,7 @@ theorem GlobalTheory.SchADecomp.exists_sum_pure : ∀ (F : Type) [Field F] [Numb
   | mem Φ hΦ =>
     obtain ⟨f, g, hg, rfl⟩ := hΦ
     obtain ⟨N, c, R, hNc, hsum⟩ := GlobalTheory.SchADecomp.pureA_eq_sum κ f g hg
-    have hfin : ∀ r : κ → FiniteAdeleRing (𝓞 F) F, {v : Pl F | ¬ GlobalTheory.SchADecomp.locInd c r v =
+    have hfin : ∀ r : κ → FiniteAdeleRing (𝓞 F) F, {v : Pl (F := F) | ¬ GlobalTheory.SchADecomp.locInd c r v =
         Set.indicator {x | ∀ j, x j ∈ v.adicCompletionIntegers F} 1}.Finite :=
       fun r => Filter.eventually_cofinite.1 (GlobalTheory.SchADecomp.locInd_std hNc r)
     let e := R.equivFin

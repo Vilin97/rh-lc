@@ -65,16 +65,16 @@ def boxL {k κ κ' : Type} [CommRing k] (φ₂ : (κ' → k) → ℂ) : ((κ →
 
 variable {F : Type} [Field F] [NumberField F]
 
-theorem one_sub_smul_of_at {M : Type} [AddCommGroup M] [Module (AF F) M] {v : Pl F} {u : M} (hu : At (evFin F v) u) :
+theorem one_sub_smul_of_at {M : Type} [AddCommGroup M] [Module (AF F) M] {v : Pl (F := F)} {u : M} (hu : At (evFin F v) u) :
     (1 - liftV v (1 : Fv F v)) • u = 0 := hu _ (by rw [map_sub, map_one, evFin_liftV, sub_self])
 
-theorem smul_of_at {M : Type} [AddCommGroup M] [Module (AF F) M] {v : Pl F} {u : M} (hu : At (evFin F v) u) :
+theorem smul_of_at {M : Type} [AddCommGroup M] [Module (AF F) M] {v : Pl (F := F)} {u : M} (hu : At (evFin F v) u) :
     liftV v (1 : Fv F v) • u = u := by
   have h := one_sub_smul_of_at hu
   rw [sub_smul, one_smul] at h
   exact (sub_eq_zero.1 h).symm
 
-theorem at_of_one_sub_smul {M : Type} [AddCommGroup M] [Module (AF F) M] {v : Pl F} {u : M}
+theorem at_of_one_sub_smul {M : Type} [AddCommGroup M] [Module (AF F) M] {v : Pl (F := F)} {u : M}
     (h : (1 - liftV v (1 : Fv F v)) • u = 0) : At (evFin F v) u := fun t ht => by
   have h1 : t * (1 - liftV v (1 : Fv F v)) = t := by
     have h2 := at_liftV v (1 : Fv F v) t ht
@@ -82,11 +82,11 @@ theorem at_of_one_sub_smul {M : Type} [AddCommGroup M] [Module (AF F) M] {v : Pl
     rw [mul_sub, mul_one, h2, sub_zero]
   rw [← h1, mul_smul, h, smul_zero]
 
-def Scales {κ : Type} [Fintype κ] (v : Pl F) (Λ : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ) (T : Module.End ℂ ((κ → AF F) → ℂ))
+def Scales {κ : Type} [Fintype κ] (v : Pl (F := F)) (Λ : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ) (T : Module.End ℂ ((κ → AF F) → ℂ))
     (a : ℂ) : Prop :=
   ∀ Φ ∈ SB (κ → Fv F v), ∃ Φ₁ ∈ SB (κ → Fv F v), Acts (evFin F v) T Φ Φ₁ ∧ Λ Φ₁ = a * Λ Φ
 
-theorem Scales.mul {κ : Type} [Fintype κ] {v : Pl F} {Λ : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ}
+theorem Scales.mul {κ : Type} [Fintype κ] {v : Pl (F := F)} {Λ : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ}
     {T T' : Module.End ℂ ((κ → AF F) → ℂ)} {a a' : ℂ} (h : Scales v Λ T a) (h' : Scales v Λ T' a')
     (hp : ∀ Φ ∈ schA F κ, T' Φ ∈ schA F κ) : Scales v Λ (T * T') (a * a') := by
   intro Φ hΦ
@@ -97,7 +97,7 @@ theorem Scales.mul {κ : Type} [Fintype κ] {v : Pl F} {Λ : ((κ → Fv F v) �
   show T (T' _) = _
   rw [hA₁ r hr, hA₂ r hr1]
 
-theorem Scales.unique {κ : Type} [Fintype κ] {v : Pl F} {Λ : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ}
+theorem Scales.unique {κ : Type} [Fintype κ] {v : Pl (F := F)} {Λ : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ}
     {T : Module.End ℂ ((κ → AF F) → ℂ)} {a a' : ℂ} (h : Scales v Λ T a) (h' : Scales v Λ T a')
     {Φ : (κ → Fv F v) → ℂ} (hΦ : Φ ∈ SB (κ → Fv F v)) (h0 : Λ Φ ≠ 0) : a = a' := by
   obtain ⟨Φ₁, -, hA₁, e₁⟩ := h Φ hΦ
@@ -106,10 +106,10 @@ theorem Scales.unique {κ : Type} [Fintype κ] {v : Pl F} {Λ : ((κ → Fv F v)
   rw [e, e₂] at e₁
   exact (mul_right_cancel₀ h0 e₁).symm
 
-theorem scales_one {κ : Type} [Fintype κ] (v : Pl F) (Λ : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ) : Scales v Λ 1 1 :=
+theorem scales_one {κ : Type} [Fintype κ] (v : Pl (F := F)) (Λ : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ) : Scales v Λ 1 1 :=
   fun Φ hΦ => ⟨Φ, hΦ, fun _ _ => rfl, (one_mul _).symm⟩
 
-theorem scales_of_box {κ : Type} [Fintype κ] {v : Pl F} (ψ : AddChar (Fv F v) ℂ) (hψ : Continuous ψ) (hψ1 : ψ ≠ 1)
+theorem scales_of_box {κ : Type} [Fintype κ] {v : Pl (F := F)} (ψ : AddChar (Fv F v) ℂ) (hψ : Continuous ψ) (hψ1 : ψ ≠ 1)
     (Λ : ((κ ⊕ κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ) (T : Module.End ℂ ((κ ⊕ κ → AF F) → ℂ)) (a : ℂ)
     (hex : ∀ Φ ∈ SB (κ ⊕ κ → Fv F v), ∃ Φ₁ ∈ SB (κ ⊕ κ → Fv F v), Acts (evFin F v) T Φ Φ₁)
     (r : (κ ⊕ κ → AF F) → ℂ) (hr0 : r 0 ≠ 0) (hr : ∀ Φ ∈ SB (κ ⊕ κ → Fv F v), Rest (evFin F v) Φ r)
@@ -150,7 +150,7 @@ theorem scales_of_box {κ : Type} [Fintype κ] {v : Pl F} (ψ : AddChar (Fv F v)
 
 theorem char_eq_one : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ (v : Pl F) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T →
+    ∀ (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T →
     ∀ (m : ℕ) (C : Matrix (Fin (a + a')) (Fin m) (AE F E)), GlobalTheory.InertVacLag.IsLagrAt σ G.W v C →
     ∀ l : ((Fin a' × Fin (a + a') → Fv F v) → ℂ) →ₗ[ℂ] ℂ, GlobalTheory.InertVacLag.HeisInv G.M' B.ψ v C l →
     (∃ φ ∈ SB (Fin a' × Fin (a + a') → Fv F v), l φ ≠ 0) →

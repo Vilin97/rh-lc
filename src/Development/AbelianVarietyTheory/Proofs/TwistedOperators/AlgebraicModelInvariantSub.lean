@@ -79,7 +79,7 @@ theorem exp_stable {V : Type} [AddCommGroup V] [Module ℂ V] {L U : Module.End 
   exact hl1 (h1.unique hasSum_zero)
 
 def pureL {κ : Type} [Fintype κ] {F : Type} [Field F] [NumberField F]
-    (φ : ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F, (κ → Fv F v) → ℂ) :
+    (φ : ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F), (κ → Fv F v) → ℂ) :
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F κ →ₗ[ℂ] ((κ → AF F) → ℂ) where
   toFun f := GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ
   map_add' f g := by funext x; simp [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure, add_mul]

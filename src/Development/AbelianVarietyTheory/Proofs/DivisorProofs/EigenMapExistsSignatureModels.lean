@@ -28,7 +28,7 @@ theorem GlobalTheory.ThK.EvOnto.main : GlobalTheory.ThK.KP → ∀ (F E : Type) 
     ei ev hei hv hl
   have hsurj := GlobalTheory.ThK.EvTwoNe.infRel_surjective hK.base B hB hX hW hM hH hM₁ ei hei hR
 
-  have hloc : ∀ (v : Pl F) (φ₁ : (Fin n × Fin d₁ → Fv F v) → ℂ), φ₁ ∈ SB (Fin n × Fin d₁ → Fv F v) →
+  have hloc : ∀ (v : Pl (F := F)) (φ₁ : (Fin n × Fin d₁ → Fv F v) → ℂ), φ₁ ∈ SB (Fin n × Fin d₁ → Fv F v) →
       ∃ φ, φ ∈ SB (Fin n × Fin d → Fv F v) ∧ ev v φ = φ₁ ∧ (φ₁ = M₁.vac v → φ = M.vac v) := by
     intro v φ₁ h
     by_cases hc : φ₁ = M₁.vac v
@@ -39,7 +39,7 @@ theorem GlobalTheory.ThK.EvOnto.main : GlobalTheory.ThK.KP → ∀ (F E : Type) 
   choose pre hpreSB hpreEv hpreVac using hloc
   obtain ⟨T, m, f, φ, hφSB, hφstd, rfl⟩ := GlobalTheory.SchADecomp.exists_sum_pure F _ Ψ₁ hΨ₁
   choose f' hf' using fun i => hsurj (f i)
-  let φ' : Fin m → ∀ v : Pl F, (Fin n × Fin d → Fv F v) → ℂ := fun i v => pre v (φ i v) (hφSB i v)
+  let φ' : Fin m → ∀ v : Pl (F := F), (Fin n × Fin d → Fv F v) → ℂ := fun i v => pre v (φ i v) (hφSB i v)
   have hcof : ∀ i, ∀ᶠ v in cofinite, φ i v = M₁.vac v := fun i => by
     have hT : ∀ᶠ v in cofinite, v ∉ T := Filter.eventually_cofinite.2 (T.finite_toSet.subset fun v hv => by simpa using hv)
     filter_upwards [hM₁.std, hT] with v h1 h2

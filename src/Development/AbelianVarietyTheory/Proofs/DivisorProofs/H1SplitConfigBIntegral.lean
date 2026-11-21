@@ -26,7 +26,7 @@ namespace GlobalTheory.IndLine.SplitB
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 
-theorem one_mem_UAt' {n : ℕ} (Y : Spc F E n) (v : Pl F) : (1 : UA σ Y.J) ∈ UAt σ Y (evFin F v) := fun u _ => by
+theorem one_mem_UAt' {n : ℕ} (Y : Spc F E n) (v : Pl (F := F)) : (1 : UA σ Y.J) ∈ UAt σ Y (evFin F v) := fun u _ => by
   rw [show mat (1 : UA σ Y.J) = 1 from rfl, sub_self, smul_zero]
 
 theorem isHecke_div' {χ₁ χ₂ : Chr F E} (h₁ : IsHecke F E χ₁) (h₂ : IsHecke F E χ₂) : IsHecke F E (χ₁ / χ₂) := by
@@ -58,7 +58,7 @@ theorem GlobalTheory.IndLine.SplitB.indLineFin_beta_of_isMatched_of_nonempty_alg
     ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (R : RealMaps F a (b + 2)) (Rf : FinMaps F a (b + 2))
       (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W) (R₁ : RealMaps F a b) (Rf₁ : FinMaps F a b),
       IsMatched B G X om om' R Rf → IsMatched B G₁ X om₁ om₁' R₁ Rf₁ →
-      ∀ v : Pl F, Nonempty (E →ₐ[F] Fv F v) → IndLineFin v om om₁ (Rf.p v) (Rf₁.p v) H' X.β ((a : ℝ) / 2) := by
+      ∀ v : Pl (F := F), Nonempty (E →ₐ[F] Fv F v) → IndLineFin v om om₁ (Rf.p v) (Rf₁.p v) H' X.β ((a : ℝ) / 2) := by
   intro hK F E _ _ _ _ _ σ B a b G G₁ H H' hC X om om' R Rf om₁ om₁' R₁ Rf₁ hM hM₁ v ⟨t⟩ A A' hA hA'
   obtain ⟨c, c₁, hα, hβ, hG⟩ := GlobalTheory.T.config_b_theta_descent_identity hK F E σ B a b G G₁ H H' hC X om om' R Rf om₁ om₁' R₁ Rf₁ hM hM₁ v t
   obtain ⟨eB, heB⟩ := GlobalTheory.T.matched_local_induced_space_iso hK F E σ B a (b + 2) G X om om' R Rf hM v t c

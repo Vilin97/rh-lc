@@ -25,7 +25,7 @@ theorem mulVec_conj_col {R S : Type} [CommRing R] [CommRing S] {d : ℕ} (π : R
   funext i
   simp [Matrix.mulVec_single]
 
-theorem single_mem {F : Type} [Field F] [NumberField F] (v : Pl F) {d : ℕ} (k i : Fin d) :
+theorem single_mem {F : Type} [Field F] [NumberField F] (v : Pl (F := F)) {d : ℕ} (k i : Fin d) :
     (Pi.single k (1 : Fv F v) : Fin d → Fv F v) i ∈ v.adicCompletionIntegers F := by
   by_cases h : i = k
   · subst h; simp only [Pi.single_eq_same]; exact (v.adicCompletionIntegers F).one_mem
@@ -34,7 +34,7 @@ theorem single_mem {F : Type} [Field F] [NumberField F] (v : Pl F) {d : ℕ} (k 
 end GlobalTheory.IntKeepConj
 
 open GlobalTheory.IntKeepConj in
-theorem GlobalTheory.IntKeepConj.conj_integral : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {d : ℕ} (W : Spc F E d) (v : Pl F) (π₁ π₂ : AE F E →+* Fv F v) (b₁ b₂ : GL (Fin d) (Fv F v)),
+theorem GlobalTheory.IntKeepConj.conj_integral : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (π₁ π₂ : AE F E →+* Fv F v) (b₁ b₂ : GL (Fin d) (Fv F v)),
   (∀ z : Fin d → AE F E, z ∈ GlobalTheory.InertSph.latAt W v ↔ At (evFin F v) z ∧
       (∀ i, (((b₁⁻¹ : GL (Fin d) (Fv F v)) : Matrix (Fin d) (Fin d) (Fv F v)) *ᵥ fun j => π₁ (z j)) i ∈
         v.adicCompletionIntegers F) ∧

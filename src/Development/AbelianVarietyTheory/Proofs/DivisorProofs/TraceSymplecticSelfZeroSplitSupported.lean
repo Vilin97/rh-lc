@@ -28,7 +28,7 @@ namespace GlobalTheory.VacIso
 open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
 
 theorem piW_cA {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    (σ : E →ₐ[F] E) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (t : E →ₐ[F] Fv F v) (x : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E) :
+    (σ : E →ₐ[F] E) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (t : E →ₐ[F] Fv F v) (x : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E) :
     piW t (cA σ x) = piW (t.comp σ) x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
@@ -36,7 +36,7 @@ theorem piW_cA {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] 
   | tmul a e => rfl
 
 theorem eq_zero_of_at_split {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (τ : E →ₐ[F] Fv F v)
+    {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (τ : E →ₐ[F] Fv F v)
     {z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E} (hz : At (evFin F v) z) (h1 : piW τ z = 0) (h2 : piW (τ.comp σ) z = 0) : z = 0 := by
   have hc : compFin F E v z = 0 :=
     GlobalTheory.AdelicU.split_ext h τ (by rw [map_zero]; exact h1) (by rw [map_zero]; exact h2)

@@ -22,7 +22,7 @@ noncomputable section
 
 namespace GlobalTheory.DblVacLine
 
-theorem norm_psiAt_le {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (v : Pl F)
+theorem norm_psiAt_le {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (v : Pl (F := F))
     (y : Fv F v) : ‖GlobalTheory.LatVac.psiAt ψ v y‖ ≤ 1 := by
   have hc := GlobalTheory.SchrSB.continuous_psiAt ψ hψ v
   have hK := (ReciprocityTheory.GeneralLinearIntegers.GeneralLinearIntegersOpenCompact.isCompact_integers v).image
@@ -37,7 +37,7 @@ theorem norm_psiAt_le {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) 
     rw [mul_comm, ← nsmul_eq_mul, AddChar.map_nsmul_eq_pow, norm_pow]
   linarith
 
-theorem norm_psiAt {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (v : Pl F)
+theorem norm_psiAt {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (v : Pl (F := F))
     (y : Fv F v) : ‖GlobalTheory.LatVac.psiAt ψ v y‖ = 1 := by
   have h1 := norm_psiAt_le ψ hψ v y
   have h2 := norm_psiAt_le ψ hψ v (-y)
@@ -45,7 +45,7 @@ theorem norm_psiAt {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ
     rw [← norm_mul, ← AddChar.map_add_eq_mul, add_neg_cancel, AddChar.map_zero_eq_one, norm_one]
   nlinarith [norm_nonneg (GlobalTheory.LatVac.psiAt ψ v y), norm_nonneg (GlobalTheory.LatVac.psiAt ψ v (-y))]
 
-theorem star_psiAt {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (v : Pl F)
+theorem star_psiAt {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (v : Pl (F := F))
     (y : Fv F v) : star (GlobalTheory.LatVac.psiAt ψ v y) = GlobalTheory.LatVac.psiAt ψ v (-y) := by
   rw [AddChar.map_neg_eq_inv]
   refine eq_inv_of_mul_eq_one_left ?_
@@ -69,7 +69,7 @@ theorem symp_dbl_fromCols {R E : Type} [CommRing R] [CommRing E] [Algebra R E] (
 
 theorem at_symp_self {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) {n d : ℕ} (JA : Matrix (Fin n) (Fin n) (AE F E)) (JB : Matrix (Fin d) (Fin d) (AE F E))
-    (ξ : AE F E) (v : Pl F) {w : Matrix (Fin n) (Fin d) (AE F E)} (hw : At (evFin F v) w) :
+    (ξ : AE F E) (v : Pl (F := F)) {w : Matrix (Fin n) (Fin d) (AE F E)} (hw : At (evFin F v) w) :
     At (evFin F v) (symp (R := AF F) (cA σ) ξ JA JB w w) := by
   intro u hu
   have h1 := GlobalTheory.LatVac.symp_smul_smul σ JA JB ξ u 1 w w
@@ -84,7 +84,7 @@ namespace GlobalTheory.DblVacLine
 
 theorem dbl_vac_acts : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ (v : Pl F) (dd : Darboux (symp (cA σ) (-1) (incM F G.V'.J) (dbl (incM F G.W.J))) (Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a'))), IsDblCoord (cA σ) (-1) (incM F G.V'.J) (incM F G.W.J) G.M'.co dd →
+    ∀ (v : Pl (F := F)) (dd : Darboux (symp (cA σ) (-1) (incM F G.V'.J) (dbl (incM F G.W.J))) (Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a'))), IsDblCoord (cA σ) (-1) (incM F G.V'.J) (incM F G.W.J) G.M'.co dd →
     ∀ θ : 𝓞 E, (θ : E) + σ θ = 1 →
     (∀ γ ∈ latAtV G.V' G.W v, Acts (evFin F v) (G.M'.co.rho B.ψ γ) (G.M'.vac v)
         (B.ψ (⅟(2 : AF F) * symp (cA σ) (inclR (F := F) (AF F) (θ : E)) (incM F G.V'.J) (incM F G.W.J) γ γ) • (G.M'.vac v))) →

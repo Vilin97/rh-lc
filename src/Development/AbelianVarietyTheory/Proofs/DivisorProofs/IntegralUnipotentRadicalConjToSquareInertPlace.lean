@@ -18,14 +18,14 @@ open scoped Classical
 
 variable {F : Type} [Field F] [NumberField F]
 
-def atV (v : Pl F) (x : Fv F v) : AF F :=
+def atV (v : Pl (F := F)) (x : Fv F v) : AF F :=
   ((0 : InfiniteAdeleRing F), RestrictedProduct.single (fun w : Pl F => w.adicCompletionIntegers F) v x)
 
-theorem evFin_atV (v : Pl F) (x : Fv F v) : evFin F v (atV v x) = x := by
+theorem evFin_atV (v : Pl (F := F)) (x : Fv F v) : evFin F v (atV v x) = x := by
   show RestrictedProduct.single (fun w : Pl F => w.adicCompletionIntegers F) v x v = x
   exact RestrictedProduct.single_eq_same _ _ _
 
-theorem mul_atV (v : Pl F) (a : AF F) (x : Fv F v) : a * atV v x = atV v (evFin F v a * x) := by
+theorem mul_atV (v : Pl (F := F)) (a : AF F) (x : Fv F v) : a * atV v x = atV v (evFin F v a * x) := by
   refine Prod.ext (mul_zero _) ?_
   have key : ∀ f : RestrictedProduct (fun w : Pl F => w.adicCompletion F) (fun w => (w.adicCompletionIntegers F : Set (w.adicCompletion F))) Filter.cofinite,
       f * RestrictedProduct.single (fun w : Pl F => w.adicCompletionIntegers F) v x =
@@ -39,13 +39,13 @@ theorem mul_atV (v : Pl F) (a : AF F) (x : Fv F v) : a * atV v x = atV v (evFin 
     · simp [RestrictedProduct.single_eq_of_ne _ _ h]
   exact key a.2
 
-theorem atV_add (v : Pl F) (x y : Fv F v) : atV v (x + y) = atV v x + atV v y :=
+theorem atV_add (v : Pl (F := F)) (x y : Fv F v) : atV v (x + y) = atV v x + atV v y :=
   Prod.ext (add_zero _).symm (RestrictedProduct.single_add _ _ _ _)
 
-theorem atV_sub (v : Pl F) (x y : Fv F v) : atV v (x - y) = atV v x - atV v y :=
+theorem atV_sub (v : Pl (F := F)) (x y : Fv F v) : atV v (x - y) = atV v x - atV v y :=
   Prod.ext (sub_zero _).symm (RestrictedProduct.single_sub _ _ _ _)
 
-theorem atV_zero (v : Pl F) : atV v 0 = 0 :=
+theorem atV_zero (v : Pl (F := F)) : atV v 0 = 0 :=
   Prod.ext rfl (RestrictedProduct.single_zero _ _)
 
 end GlobalTheory.InertConjSq
@@ -229,7 +229,7 @@ theorem antiCols_transpose_mul (d : ℕ) :
     (antiCols (F := F) (E := E) d : Matrix (Fin d ⊕ Fin d) (Fin d) (AE F E))ᵀ * antiCols (F := F) (E := E) d = (1 : Matrix (Fin d) (Fin d) (AE F E)) + 1 := by
   simp [antiCols, transpose_fromRows, fromCols_mul_fromRows]
 
-theorem at_b {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl F} (n : UD σ W) (hK : At (evFin F v) (matD n - 1))
+theorem at_b {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} (n : UD σ W) (hK : At (evFin F v) (matD n - 1))
     (b : Matrix (Fin d) (Fin d) (AE F E))
     (hb : matD n * (diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) (AE F E)) = diagCols (Fin d) + antiCols (F := F) (E := E) d * b) :
     At (evFin F v) b := by
@@ -248,7 +248,7 @@ theorem at_b {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl F} (n : UD �
     _ = c • (u • (b + b)) := by rw [add_smul, ← smul_add, ← smul_add]
     _ = 0 := by rw [e2, smul_zero]
 
-theorem mkS_conj (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl F) (α β : AE F E)
+theorem mkS_conj (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (α β : AE F E)
     (h1 : α * cA σ α - β * cA σ β = 1) (h2 : α * cA σ β = β * cA σ α) (n : UD σ W) (hn : n ∈ NabD σ W v)
     (hkey : ∀ b : Matrix (Fin d) (Fin d) (AE F E), At (evFin F v) b → (α - β) • b = (2 * (α + β)) • b) :
     mkS σ W α β h1 h2 * n * (mkS σ W α β h1 h2)⁻¹ = n * n := by
@@ -294,7 +294,7 @@ theorem blk_mulVec_inr (d : ℕ) (x y : AE F E) (z : Fin d ⊕ Fin d → AE F E)
     (fun i => (blk d x y *ᵥ z) (Sum.inr i)) = y • (fun i => z (Sum.inl i)) + x • (fun i => z (Sum.inr i)) := by
   funext i; simp [blk, fromBlocks_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec, Function.comp_def]
 
-theorem blk_mulVec_mem {d : ℕ} {W : Spc F E d} {v : Pl F} (x y : AE F E)
+theorem blk_mulVec_mem {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} (x y : AE F E)
     (hx : ∀ z ∈ GlobalTheory.InertSph.latAt W v, x • z ∈ GlobalTheory.InertSph.latAt W v)
     (hy : ∀ z ∈ GlobalTheory.InertSph.latAt W v, y • z ∈ GlobalTheory.InertSph.latAt W v) :
     ∀ z ∈ latAtD W v, blk d x y *ᵥ z ∈ latAtD W v := by
@@ -310,7 +310,7 @@ theorem blk_sub_one (d : ℕ) (x y : AE F E) : blk d x y - 1 = blk d (x - 1) y :
 theorem smul_blk (d : ℕ) (u : AF F) (x y : AE F E) : u • blk d x y = blk d (u • x) (u • y) := by
   simp [blk, fromBlocks_smul, smul_assoc]
 
-theorem mkS_mem_ParD (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl F) (α β : AE F E)
+theorem mkS_mem_ParD (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (α β : AE F E)
     (h1 : α * cA σ α - β * cA σ β = 1) (h2 : α * cA σ β = β * cA σ α)
     (hAt : ∀ u : AF F, evFin F v u = 0 → u • (α - 1) = 0 ∧ u • β = 0)
     (hL : ∀ r ∈ ({α, β, cA σ α, -cA σ β} : Set (AE F E)), ∀ z ∈ GlobalTheory.InertSph.latAt W v, r • z ∈ GlobalTheory.InertSph.latAt W v) :
@@ -340,7 +340,7 @@ open Matrix GlobalTheory.InertDbl
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem smul_latAt {d : ℕ} {W : Spc F E d} {v : Pl F} (p q : AF F)
+theorem smul_latAt {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} (p q : AF F)
     (hp : evFin F v p ∈ v.adicCompletionIntegers F) (hq : evFin F v q ∈ v.adicCompletionIntegers F) (a₀ : 𝓞 E) :
     ∀ z ∈ GlobalTheory.InertSph.latAt W v,
       (algebraMap (AF F) (AE F E) p + algebraMap (AF F) (AE F E) q * inclR (F := F) (AF F) (a₀ : E)) • z ∈
@@ -384,7 +384,7 @@ open Matrix GlobalTheory.InertDbl IsDedekindDomain.HeightOneSpectrum
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem valued_evFin_half (v : Pl F) (h2 : (2 : 𝓞 F) ∉ v.asIdeal) :
+theorem valued_evFin_half (v : Pl (F := F)) (h2 : (2 : 𝓞 F) ∉ v.asIdeal) :
     Valued.v (evFin F v (⅟(2 : AF F))) = 1 := by
   have e2 : ((algebraMap (𝓞 F) (v.adicCompletionIntegers F) 2 : v.adicCompletionIntegers F) : Fv F v) = 2 := by
     rw [GlobalTheory.InertUnitNorm.coe_algebraMap_adicCompletionIntegers]
@@ -411,7 +411,7 @@ open Matrix GlobalTheory.InertDbl IsDedekindDomain.HeightOneSpectrum
 attribute [-instance] CStarMatrix.instHMulOfFintypeOfMulOfAddCommMonoid
 
 theorem conj_sq : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
-    (B : Base F E), B.IsGood σ → ∀ (d : ℕ) (W : Spc F E d) (v : Pl F) (w : HeightOneSpectrum (𝓞 E)),
+    (B : Base F E), B.IsGood σ → ∀ (d : ℕ) (W : Spc F E d) (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)),
     Formalism.UG.IsInertAt F E v w → ∀ n ∈ GlobalTheory.InertDbl.NabD σ W v, ∃ s ∈ GlobalTheory.InertDbl.ParD σ W v, s * n * s⁻¹ = n * n := by
   intro F E _ _ _ _ _ σ B hB d W v w hvw n hn
   have hp : (v.asIdeal.map (algebraMap (𝓞 F) (𝓞 E))).IsPrime := by

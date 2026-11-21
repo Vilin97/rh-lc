@@ -43,9 +43,9 @@ theorem dual_one [IsTotallyReal F] {ψ : AddChar (AF F) ℂ} (hψ : IsCharAF F �
     ∀ y, (∀ a : Af F, (∀ v, a v ∈ v.adicCompletionIntegers F) → ψ (fi F (a * y)) = 1) → y ∈ C := by
   obtain ⟨h1, h2, -⟩ := GlobalTheory.GaugeEx.CharLoc.char_local F ψ hψ
   choose b hb using h1
-  have hO : ∀ v : Pl F, IsCompact (v.adicCompletionIntegers F : Set (Fv F v)) := fun v => isCompact_iff_compactSpace.2
+  have hO : ∀ v : Pl (F := F), IsCompact (v.adicCompletionIntegers F : Set (Fv F v)) := fun v => isCompact_iff_compactSpace.2
     (GlobalTheory.AdelicUnitaryTop.compactSpace_adicCompletionIntegers F v)
-  let P : Pl F → Prop := fun v => ∀ y : Fv F v,
+  let P : Pl (F := F) → Prop := fun v => ∀ y : Fv F v,
     (∀ t ∈ v.adicCompletionIntegers F, psiV F ψ v (y * t) = 1) ↔ y ∈ v.adicCompletionIntegers F
   refine ⟨_, isCompact_box (fun v => if P v then (v.adicCompletionIntegers F : Set (Fv F v)) else
     (b v * ·) '' (v.adicCompletionIntegers F : Set (Fv F v))) (fun v => ?_) ?_, fun y hy v => ?_⟩

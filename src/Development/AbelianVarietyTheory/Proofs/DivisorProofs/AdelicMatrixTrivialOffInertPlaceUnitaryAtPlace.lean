@@ -32,7 +32,7 @@ theorem idem_split_mul {R S : Type} [CommRing R] [Ring S] (e : R) (ι : S →+ R
   linear_combination (A i k * B k j) * he + A i k * hι (Y k j) + B k j * hι (X i k)
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  {v : Pl F} {w : HeightOneSpectrum (𝓞 E)}
+  {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)}
 
 theorem iotaW_apply (hw : Formalism.UG.IsInertAt F E v w) (x : w.adicCompletion E) :
     iotaW hw x = GlobalTheory.InertLocField.liftT E v ((InertChart.complEquiv hw (under_eq_of_isInertAt hw)).symm x) := rfl
@@ -52,7 +52,7 @@ theorem one_sub_mul_iotaW (hw : Formalism.UG.IsInertAt F E v w) (x : w.adicCompl
     (1 - algebraMap (AF F) (AE F E) (GlobalTheory.LatVac.liftV v 1)) * iotaW hw x = 0 := by
   rw [sub_mul, one_mul, idem_mul_iotaW, sub_self]
 
-theorem one_sub_idem (v : Pl F) :
+theorem one_sub_idem (v : Pl (F := F)) :
     (1 - algebraMap (AF F) (AE F E) (GlobalTheory.LatVac.liftV v 1)) * (1 - algebraMap (AF F) (AE F E) (GlobalTheory.LatVac.liftV v 1)) =
       1 - algebraMap (AF F) (AE F E) (GlobalTheory.LatVac.liftV v 1) := by
   have h : algebraMap (AF F) (AE F E) (GlobalTheory.LatVac.liftV v 1) * algebraMap (AF F) (AE F E) (GlobalTheory.LatVac.liftV v 1) =
@@ -90,7 +90,7 @@ end GlobalTheory.InertBigCell
 namespace GlobalTheory.InertBigCell
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  {v : Pl F} {w : HeightOneSpectrum (𝓞 E)}
+  {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)}
 
 theorem iotaW_one (hw : Formalism.UG.IsInertAt F E v w) :
     iotaW hw 1 = algebraMap (AF F) (AE F E) (GlobalTheory.LatVac.liftV v 1) := by

@@ -16,7 +16,7 @@ namespace GlobalTheory.VacLine
 variable {F : Type} [Field F] [NumberField F]
 
 theorem at_latAtV {E : Type} [Field E] [NumberField E] [Algebra F E] {n d : ℕ} {X : Spc F E n}
-    {W : Spc F E d} {v : Pl F} {γ : Matrix (Fin n) (Fin d) (AE F E)} (hγ : γ ∈ latAtV X W v) :
+    {W : Spc F E d} {v : Pl (F := F)} {γ : Matrix (Fin n) (Fin d) (AE F E)} (hγ : γ ∈ latAtV X W v) :
     At (evFin F v) γ := by
   induction hγ using AddSubgroup.closure_induction with
   | mem z hz =>

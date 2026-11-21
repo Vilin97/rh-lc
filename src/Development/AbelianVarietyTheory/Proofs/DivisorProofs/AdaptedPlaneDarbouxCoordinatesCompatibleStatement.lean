@@ -23,7 +23,7 @@ theorem _root_.GlobalTheory.T.exists_vacuum_family_eventually_indicator_ev_eq : 
         ∀ p, (co.e (Matrix.vecMulVec b (incV F H'.y))).1 ((idx hd).symm (Sum.inl p)) = 0) ∧
       ∀ x : Matrix (Fin n) (Fin d) E, ∃ y z : Fin n × Fin d → F,
         co.e (incM F x) = (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i))) →
-    ∃ vac : ∀ v : Pl F, (Fin n × Fin d → Fv F v) → ℂ,
+    ∃ vac : ∀ v : Pl (F := F), (Fin n × Fin d → Fv F v) → ℂ,
       (∀ v, (Model.mk co vac 0 ∅ : Model σ X W).IsVac B.ψ v (vac v)) ∧
       (∀ᶠ v in cofinite, vac v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1) ∧
       ∀ v, ev hd v (vac v) = M₁.vac v := by

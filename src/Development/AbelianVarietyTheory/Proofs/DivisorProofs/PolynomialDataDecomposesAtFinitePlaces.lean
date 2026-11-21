@@ -17,15 +17,15 @@ namespace GlobalTheory.ThK.CycGen
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
-theorem smul_pure {κ : Type} [Fintype κ] (c : ℂ) (f : SInf F κ) (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) :
+theorem smul_pure {κ : Type} [Fintype κ] (c : ℂ) (f : SInf F κ) (φ : ∀ v : Pl (F := F), (κ → Fv F v) → ℂ) :
     c • pure f φ = pure (c • f) φ := by
   funext x
   simp [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure, mul_assoc]
 
 theorem exists_decOn_some {B : Base F E} {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X W)
     (Φ : (Fin n × Fin d → AF F) → ℂ) (hΦ : Φ ∈ PolData B M) :
-    ∃ (T₀ : Finset (Pl F)) (m : ℕ) (f : Fin m → SInf F (Fin n × Fin d))
-      (φ : Fin m → ∀ v : Pl F, (Fin n × Fin d → Fv F v) → ℂ), DecOn B M T₀ Φ m f φ := by
+    ∃ (T₀ : Finset (Pl (F := F))) (m : ℕ) (f : Fin m → SInf F (Fin n × Fin d))
+      (φ : Fin m → ∀ v : Pl (F := F), (Fin n × Fin d → Fv F v) → ℂ), DecOn B M T₀ Φ m f φ := by
   classical
   induction hΦ using Submodule.span_induction with
   | mem x hx =>

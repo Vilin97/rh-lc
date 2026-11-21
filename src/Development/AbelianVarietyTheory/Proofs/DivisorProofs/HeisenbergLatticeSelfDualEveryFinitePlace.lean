@@ -18,7 +18,7 @@ namespace GlobalTheory.LatSelfDualAll
 section Scalar
 variable {F : Type} [Field F] [NumberField F]
 
-theorem exists_codiff_sub {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (v : Pl F) (c : Fv F v)
+theorem exists_codiff_sub {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (v : Pl (F := F)) (c : Fv F v)
     (h : ∀ y ∈ v.adicCompletionIntegers F, psiLoc ψ v (c * y) = 1) :
     ∃ f : F, f ∈ codiff F ∧ c - algebraMap F (Fv F v) f ∈ v.adicCompletionIntegers F := by
   set α : Af F := singleFin v c with hα
@@ -128,7 +128,7 @@ section Gen
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem smul_mem_latAtV (σ : E →ₐ[F] E) (B : Base F E) {n d r s r' s' : ℕ} {X : Spc F E n} {W : Spc F E d}
-    (hstd : IsStd B.ψ) (hX : X.IsHerm σ B r s) (hW : W.IsSkew σ B r' s') (v : Pl F) {t : AF F} (ht : At (evFin F v) t)
+    (hstd : IsStd B.ψ) (hX : X.IsHerm σ B r s) (hW : W.IsSkew σ B r' s') (v : Pl (F := F)) {t : AF F} (ht : At (evFin F v) t)
     (hψ : ∀ y ∈ v.adicCompletionIntegers F, psiLoc B.ψ v (evFin F v t * y) = 1) {x : Fin n → E} (hx : x ∈ X.L)
     {y : Fin d → E} (hy : y ∈ W.L) (hyd : ∀ x' ∈ W.L, form σ W.J y x' ∈ (algebraMap (𝓞 E) E).range) :
     t • incM F (Matrix.vecMulVec x y) ∈ latAtV X W v := by
@@ -159,7 +159,7 @@ open GlobalTheory.InertSelfDual (exists_traceFamily det_ne_zero_of_herm det_ne_z
 theorem latAtV_selfDual : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (r s r' s' : ℕ), B.IsGood σ →
     X.IsHerm σ B r s → W.IsSkew σ B r' s' →
-    ∀ (v : Pl F) (z : Matrix (Fin n) (Fin d) (AE F E)), At (evFin F v) z →
+    ∀ (v : Pl (F := F)) (z : Matrix (Fin n) (Fin d) (AE F E)), At (evFin F v) z →
       (z ∈ latAtV X W v ↔ ∀ γ ∈ latAtV X W v, B.ψ (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J) z γ) = 1) := by
   intro F E _ _ _ _ _ σ B n d X W r₁ s₁ r₂ s₂ hB hX hW v z hz
   constructor

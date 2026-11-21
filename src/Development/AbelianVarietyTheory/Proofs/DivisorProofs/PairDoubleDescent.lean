@@ -63,7 +63,7 @@ theorem eq_smul_isEv : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fi
     fun z Φ hΦ => hev.Heisenberg₂ z Φ hΦ
 
   obtain ⟨ei, ev, hei, hloc0, hloc⟩ := hev.loc
-  have hex : ∀ v : Pl F, ∃ p : (Fin n × Fin d → Fv F v) → ℂ, p ∈ SB _ ∧
+  have hex : ∀ v : Pl (F := F), ∃ p : (Fin n × Fin d → Fv F v) → ℂ, p ∈ SB _ ∧
       ev v p = Set.indicator {x : Fin n₁ × Fin d₁ → Fv F v | ∀ i, x i ∈ v.adicCompletionIntegers F} 1 ∧
       (M₁.vac v = Set.indicator {x : Fin n₁ × Fin d₁ → Fv F v | ∀ i, x i ∈ v.adicCompletionIntegers F} 1 →
         p = M.vac v) := by

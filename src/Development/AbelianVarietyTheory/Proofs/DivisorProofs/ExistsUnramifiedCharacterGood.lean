@@ -23,7 +23,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 namespace GlobalTheory.GoodPlaceAct
 
 theorem chrW_pow_not_real {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    (χ : Chr F E) {v : Pl F} (t : E →ₐ[F] Fv F v)
+    (χ : Chr F E) {v : Pl (F := F)} (t : E →ₐ[F] Fv F v)
     (h : ∀ k : ℤ, k ≠ 0 → chrW χ t (unifAt v) ^ k ≠ 1) :
     ∀ m : ℕ, 0 < m → ∀ r : ℝ, ((chrW χ t (unifAt v) : ℂ)) ^ m ≠ (r : ℂ) := by
   intro m hm r hr

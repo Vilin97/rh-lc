@@ -102,7 +102,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem I_eq_zero (hT : IsTriple B G X om om')
     {l : ((Fin a × Fin (a + a') → AF F) → ℂ) →ₗ[ℂ] ℂ} (hla : l ∈ (adeleClass F).adm _)
     (hl : ∀ Φ ∈ schA F _, l Φ = G.M.I om Φ 1)
-    (hrat : ∀ γ ∈ ratU σ G.W.J, ∀ Φ ∈ schA F _, thetaSum F (om (1, γ) Φ) = thetaSum F Φ) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (hv : v ∈ X.T)
+    (hrat : ∀ γ ∈ ratU σ G.W.J, ∀ Φ ∈ schA F _, thetaSum F (om (1, γ) Φ) = thetaSum F Φ) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (hv : v ∈ X.T)
     (hloc : ∀ k ∈ UAt σ G.W (evFin F v), ∀ φ ∈ GlobalTheory.WeilM.SB _, ∃ φ₁ ∈ GlobalTheory.WeilM.SB _, Acts (evFin F v) (om (1, k)) φ φ₁)
     (hsa : ∀ s : UA σ G.W.J, (mat s).det = 1 → s ∈ closure {x | ∃ γ ∈ ratU σ G.W.J, ∃ k ∈ UAt σ G.W (evFin F v), x = γ * k})
     {H : Set (UA σ G.W.J)} (hH : ∀ x, ∃ s, ∃ g ∈ H, (mat s).det = 1 ∧ x = s * g) {f : SInf F (Fin a × Fin (a + a'))}

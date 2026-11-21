@@ -51,7 +51,7 @@ theorem coef_eigen {ψ : AddChar (AF F) ℂ} (hn : ∀ x, ‖ψ x‖ = 1) (μ : 
   simp only [add_dotProduct, neg_dotProduct]
   linear_combination (-(u.1 ⬝ᵥ u.2)) * h2
 
-variable {v : Pl F}
+variable {v : Pl (F := F)}
 
 theorem indep_of_rest {φ : (κ → Fv F v) → ℂ} {r : (κ → AF F) → ℂ} (h : Rest (evFin F v) φ r) : Indep v r :=
   fun x t => h.1 x _ ((at_iff _).2 (funext fun i => (ep_mul _).trans (by rw [evFin_atPlace])))

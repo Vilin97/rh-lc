@@ -31,7 +31,7 @@ theorem exists_zsmul_mem {E : Type} [Field E] [NumberField E] {n : ℕ} (L : Sub
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem exists_sub_mem (v : Pl F) (t : Fv F v) {k : F} (hk : k ≠ 0) :
+theorem exists_sub_mem (v : Pl (F := F)) (t : Fv F v) {k : F} (hk : k ≠ 0) :
     ∃ s : F, (algebraMap F (Fv F v) k)⁻¹ * (t - algebraMap F (Fv F v) s) ∈ v.adicCompletionIntegers F := by
   have hk' : algebraMap F (Fv F v) k ≠ 0 := (map_ne_zero _).2 hk
   have hkv : Valued.v (algebraMap F (Fv F v) k) ≠ 0 := (Valuation.ne_zero_iff _).2 hk'
@@ -61,11 +61,11 @@ theorem single_sub {A : Type} [AddGroup A] {n d : ℕ} (i : Fin n) (j : Fin d) (
     Matrix.single i j a - Matrix.single i j b = Matrix.single i j (a - b) := by
   ext k l; simp only [Matrix.sub_apply, Matrix.single_apply]; split_ifs <;> simp
 
-theorem atPlace_one_smul_tmul (v : Pl F) (a : AF F) (x : E) :
+theorem atPlace_one_smul_tmul (v : Pl (F := F)) (a : AF F) (x : E) :
     GlobalTheory.EmbChart.atPlace v 1 • (a ⊗ₜ[F] x) = GlobalTheory.EmbChart.atPlace v (evFin F v a) ⊗ₜ[F] x := by
   rw [TensorProduct.smul_tmul', smul_eq_mul, GlobalTheory.EmbChart.atPlace_mul_right, one_mul]
 
-theorem core {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsLattice E) (hY : Y.L.IsLattice E) (v : Pl F)
+theorem core {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsLattice E) (hY : Y.L.IsLattice E) (v : Pl (F := F))
     (i : Fin n) (j : Fin d) (t : Fv F v) (x : E) :
     ∃ X₀ : Matrix (Fin n) (Fin d) E,
       Matrix.single i j (GlobalTheory.EmbChart.atPlace v t ⊗ₜ[F] x) - GlobalTheory.EmbChart.atPlace v 1 • incM F X₀ ∈ latAtV X Y v := by
@@ -99,7 +99,7 @@ theorem core {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsLattice E) 
     field_simp
 
 theorem decomp : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n d : ℕ} (X : Spc F E n)
-    (Y : Spc F E d), X.L.IsLattice E → Y.L.IsLattice E → ∀ (v : Pl F) (z : Matrix (Fin n) (Fin d) (AE F E)),
+    (Y : Spc F E d), X.L.IsLattice E → Y.L.IsLattice E → ∀ (v : Pl (F := F)) (z : Matrix (Fin n) (Fin d) (AE F E)),
     At (evFin F v) z → ∃ X₀ : Matrix (Fin n) (Fin d) E, z - GlobalTheory.EmbChart.atPlace v 1 • incM F X₀ ∈ latAtV X Y v := by
   intro F E _ _ _ _ _ n d X Y hX hY v z hz
   have hz' : z = GlobalTheory.EmbChart.atPlace v 1 • z := by

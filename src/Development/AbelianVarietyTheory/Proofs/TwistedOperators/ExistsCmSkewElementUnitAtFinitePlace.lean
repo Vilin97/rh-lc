@@ -40,7 +40,7 @@ end GlobalTheory.CMSkewUnit
 
 namespace GlobalTheory.CMSkewUnit
 
-theorem exists_unit_of_val_eq_one {F : Type} [Field F] [NumberField F] {v : Pl F} {x : Fv F v} (hx : Valued.v x = 1) :
+theorem exists_unit_of_val_eq_one {F : Type} [Field F] [NumberField F] {v : Pl (F := F)} {x : Fv F v} (hx : Valued.v x = 1) :
     ∃ u : (v.adicCompletionIntegers F)ˣ, ((u : v.adicCompletionIntegers F) : Fv F v) = x := by
   have hx0 : x ≠ 0 := by
     intro h0; rw [h0, map_zero] at hx; exact zero_ne_one hx
@@ -57,7 +57,7 @@ end GlobalTheory.CMSkewUnit
 namespace GlobalTheory.CMSkewUnit
 
 theorem exists_skew_unit_at : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E),
-    IsCMExt F E σ → ∀ (v : Pl F) (π : AE F E →+* Fv F v),
+    IsCMExt F E σ → ∀ (v : Pl (F := F)) (π : AE F E →+* Fv F v),
     (∀ a : AF F, π (algebraMap (AF F) (AE F E) a) = evFin F v a) →
     ∃ δ : E, σ δ = -δ ∧ ∃ u : (v.adicCompletionIntegers F)ˣ,
       ((u : v.adicCompletionIntegers F) : Fv F v) = π (inclR (F := F) (AF F) δ) := by

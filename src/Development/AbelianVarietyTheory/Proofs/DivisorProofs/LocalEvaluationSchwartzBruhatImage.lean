@@ -75,7 +75,7 @@ theorem isLocallyConstant_indicator_one {Z : Type} [TopologicalSpace Z] {W : Set
   · filter_upwards [hW.isClosed.isOpen_compl.mem_nhds hx] with y hy
     simp [Set.indicator_of_notMem hy, Set.indicator_of_notMem hx]
 
-theorem map_ev_SB (F : Type) [Field F] [NumberField F] (n d d₁ : ℕ) (hd : d = d₁ + 2) (v : Pl F) :
+theorem map_ev_SB (F : Type) [Field F] [NumberField F] (n d d₁ : ℕ) (hd : d = d₁ + 2) (v : Pl (F := F)) :
     (SB (Fin n × Fin d → Fv F v)).map (ev hd v) = SB (Fin n × Fin d₁ → Fv F v) := by
   haveI : CompactSpace (v.adicCompletionIntegers F) := GlobalTheory.AdelicUnitaryTop.compactSpace_adicCompletionIntegers F v
   have hOc : IsCompact ((v.adicCompletionIntegers F : Set (Fv F v))) := isCompact_iff_compactSpace.2 this

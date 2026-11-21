@@ -48,7 +48,7 @@ end Alg
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem vecMulVec_mem {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F) {x : Fin n → E} (hx : x ∈ X.L)
+theorem vecMulVec_mem {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl (F := F)) {x : Fin n → E} (hx : x ∈ X.L)
     {z : Fin d → AE F E} (hz : z ∈ GlobalTheory.InertSph.latAt Y v) :
     Matrix.vecMulVec (fun i => inclR (F := F) (AF F) (x i)) z ∈ latAtV X Y v := by
   induction hz using AddSubgroup.closure_induction with
@@ -65,7 +65,7 @@ theorem vecMulVec_mem {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F) {x 
   | add z z' _ _ h h' => rw [Matrix.vecMulVec_add]; exact add_mem h h'
   | neg z _ h => rw [Matrix.vecMulVec_neg]; exact neg_mem h
 
-theorem mul_transpose_mem {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F) (h : Matrix (Fin d) (Fin d) (AE F E))
+theorem mul_transpose_mem {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl (F := F)) (h : Matrix (Fin d) (Fin d) (AE F E))
     (hh : ∀ z ∈ GlobalTheory.InertSph.latAt Y v, h *ᵥ z ∈ GlobalTheory.InertSph.latAt Y v)
     {γ : Matrix (Fin n) (Fin d) (AE F E)} (hγ : γ ∈ latAtV X Y v) : γ * hᵀ ∈ latAtV X Y v := by
   induction hγ using AddSubgroup.closure_induction with
@@ -91,7 +91,7 @@ theorem tens_smul {R κ : Type} (ev : AF F → R) (c : ℂ) (φ : (κ → R) →
 
 theorem transport : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ (v : Pl F), ∀ k ∈ GlobalTheory.InertSph.KAt σ G.W v, ∀ θ : 𝓞 E, (θ : E) + σ θ = 1 →
+    ∀ (v : Pl (F := F)), ∀ k ∈ GlobalTheory.InertSph.KAt σ G.W v, ∀ θ : 𝓞 E, (θ : E) + σ θ = 1 →
     ∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v), ∀ φ₁ ∈ SB (Fin a × Fin (a + a') → Fv F v),
       (∀ γ ∈ latAtV G.V G.W v, Acts (evFin F v) (G.M.co.rho B.ψ γ) φ
         (B.ψ (⅟(2 : AF F) * symp (cA σ) (inclR (F := F) (AF F) (θ : E)) (incM F G.V.J) (incM F G.W.J) γ γ) • φ)) → Acts (evFin F v) (om (1, k)) φ φ₁ →

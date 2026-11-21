@@ -18,7 +18,7 @@ noncomputable section
 
 namespace GlobalTheory.HeisUniqLoc
 
-theorem eigen_unique : ∀ {F : Type} [Field F] [NumberField F] (v : Pl F) {κ G : Type} [Fintype κ] [AddCommGroup G]
+theorem eigen_unique : ∀ {F : Type} [Field F] [NumberField F] (v : Pl (F := F)) {κ G : Type} [Fintype κ] [AddCommGroup G]
     (ψ₀ : AddChar (Fv F v) ℂ), Continuous ψ₀ → ψ₀ ≠ 1 →
     ∀ (ℓ : G →+ (κ → Fv F v) × (κ → Fv F v)) (Γ : AddSubgroup G),
       IsOpen ((Γ.map ℓ : AddSubgroup ((κ → Fv F v) × (κ → Fv F v))) : Set ((κ → Fv F v) × (κ → Fv F v))) →

@@ -20,7 +20,7 @@ namespace RD
 
 variable {d : SD σ} (R : RD d) (w : InfinitePlace F)
 
-theorem compFin_det (t : GL (Fin d.n) (AE F E)) (hf : finOne F • t.1 = finOne F • 1) (v : Pl F) :
+theorem compFin_det (t : GL (Fin d.n) (AE F E)) (hf : finOne F • t.1 = finOne F • 1) (v : Pl (F := F)) :
     compFin F E v (t.1.det) = 1 := by
   have hm : t.1.map (compFin F E v) = 1 := by
     ext i j

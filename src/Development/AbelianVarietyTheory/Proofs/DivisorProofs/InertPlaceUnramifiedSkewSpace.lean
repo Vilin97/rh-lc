@@ -92,7 +92,7 @@ def gens {L : Type} [Field L] (O : Subring L) (φ : E →+* L) {n : ℕ} (Lat : 
     Set (Fin n → L) :=
   {z | ∃ t ∈ O, ∃ y ∈ Lat, z = t • fun i => φ (y i)}
 
-theorem exists_mul_mem [Algebra.Unramified (𝓞 F) (𝓞 E)] (v : Pl F) (hv : ¬ differentIdeal ℤ (𝓞 F) ≤ v.asIdeal)
+theorem exists_mul_mem [Algebra.Unramified (𝓞 F) (𝓞 E)] (v : Pl (F := F)) (hv : ¬ differentIdeal ℤ (𝓞 F) ≤ v.asIdeal)
     (e : E) (he : ∀ o : 𝓞 E, IsIntegral ℤ (Algebra.trace ℚ E ((o : E) * e))) :
     ∃ d : 𝓞 F, d ∉ v.asIdeal ∧ algebraMap F E (algebraMap (𝓞 F) F d) * e ∈ (algebraMap (𝓞 E) E).range := by
   obtain ⟨d, hd, hdv⟩ := SetLike.not_le_iff_exists.mp hv
@@ -124,7 +124,7 @@ theorem exists_mul_mem [Algebra.Unramified (𝓞 F) (𝓞 E)] (v : Pl F) (hv : �
   rw [hy, mul_assoc, ← Algebra.smul_def (algebraMap (𝓞 F) F d) (e * (a : E)), map_smul, smul_eq_mul]
 
 theorem gram_skew_unimodular : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E), B.IsGood σ →
-    ∀ (v : Pl F) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w →
+    ∀ (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w →
     ∀ (n r s : ℕ) (X : Spc F E n), X.IsSkew σ B r s →
     ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] (ϖ : L) (σL : L →+* L) (q : ℕ) (δ : L) (ι : L →+ AE F E),
       Formalism.UG.IsUnramInv ϖ σL q → Odd q → (Valued.v δ = 1 ∧ σL δ = -δ) → Function.Injective ι → (∀ z : AE F E, At (evFin F v) z ↔ ∃ x, ι x = z) → (∀ x y, ι (x * y) = ι x * ι y) → (∀ x, ι (σL x) = cA σ (ι x)) →

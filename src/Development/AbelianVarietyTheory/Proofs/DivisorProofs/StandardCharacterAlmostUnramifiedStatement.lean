@@ -12,5 +12,5 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 open scoped GlobalTheory.VacAny
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.standard_character_almost_unramified : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ →
-    (∀ᶠ v in cofinite, PsiUnr ψ v) ∧ ∀ v : Pl F, ∃ x, psiLoc ψ v x ≠ 1 := by
+    (∀ᶠ v in cofinite, PsiUnr ψ v) ∧ ∀ v : Pl (F := F), ∃ x, psiLoc ψ v x ≠ 1 := by
   first | exact @GlobalTheory.PsiStdCond.psi_std_conductor | exact GlobalTheory.PsiStdCond.psi_std_conductor | (intros; apply GlobalTheory.PsiStdCond.psi_std_conductor <;> assumption)

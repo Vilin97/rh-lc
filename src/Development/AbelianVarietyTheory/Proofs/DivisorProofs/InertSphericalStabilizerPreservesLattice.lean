@@ -39,7 +39,7 @@ lemma vecMulVec_mul_transpose {n d : ℕ} (p : Fin n → AE F E) (q : Fin d → 
   refine Finset.sum_congr rfl fun l _ => ?_
   ring
 
-lemma vecMulVec_mem {n d : ℕ} (X : Spc F E n) (W : Spc F E d) (v : Pl F) {x : Fin n → E} (hx : x ∈ X.L)
+lemma vecMulVec_mem {n d : ℕ} (X : Spc F E n) (W : Spc F E d) (v : Pl (F := F)) {x : Fin n → E} (hx : x ∈ X.L)
     {q : Fin d → AE F E} (hq : q ∈ GlobalTheory.InertSph.latAt W v) :
     Matrix.vecMulVec (fun i => inclR (F := F) (AF F) (x i)) q ∈ latAtV X W v := by
   induction hq using AddSubgroup.closure_induction with

@@ -30,7 +30,7 @@ namespace GlobalTheory.ThK.EvUniq
 theorem finRel_unique : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d d₁ r s r' s' i₀ i₁ : ℕ) (X : Spc F E n) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁) (M : Model σ X W)
     (M₁ : Model σ X W₁), B.IsGood σ → X.IsHerm σ B r s → W.IsSkew σ B r' s' → M.IsGood B.ψ → H'.IsAdapted σ B W W₁ i₀ i₁ →
-    M₁.IsGood B.ψ → ∀ (v : Pl F) (T T' : ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Fin n × Fin d₁ → Fv F v) → ℂ),
+    M₁.IsGood B.ψ → ∀ (v : Pl (F := F)) (T T' : ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Fin n × Fin d₁ → Fv F v) → ℂ),
     GlobalTheory.ThK.EvUniq.FinRel B M M₁ H' v T → GlobalTheory.ThK.EvUniq.FinRel B M M₁ H' v T' → (SB _).map T = SB _ → (SB _).map T' = SB _ →
     T (M.vac v) = M₁.vac v → T' (M.vac v) = M₁.vac v → ∀ φ ∈ SB (Fin n × Fin d → Fv F v), T' φ = T φ := by
   intro _ F E _ _ _ _ _ σ B n d d₁ r s r' s' i₀ i₁ X W W₁ H' M M₁ hB hX hW hM hH hM₁ v T T' hT hT' hTs hT's hv hv'

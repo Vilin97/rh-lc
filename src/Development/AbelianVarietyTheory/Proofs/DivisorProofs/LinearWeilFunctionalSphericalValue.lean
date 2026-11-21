@@ -23,11 +23,11 @@ namespace GlobalTheory.SchurCharV
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem two_ne_zero_Fv (v : Pl F) : (2 : Fv F v) ≠ 0 := by
+theorem two_ne_zero_Fv (v : Pl (F := F)) : (2 : Fv F v) ≠ 0 := by
   have h := (algebraMap F (Fv F v)).injective.ne (two_ne_zero (α := F))
   rwa [map_ofNat, map_zero] at h
 
-theorem eq_liftU_of_UAt {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {v : Pl F} (t : E →ₐ[F] Fv F v) {n : ℕ}
+theorem eq_liftU_of_UAt {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {v : Pl (F := F)} (t : E →ₐ[F] Fv F v) {n : ℕ}
     (X : Spc F E n) (herm : ∀ i j, σ (X.J j i) = algebraMap F E 1 * X.J i j) (hJ : IsUnit (X.J.map t).det)
     (g : UA σ X.J) (hg : g ∈ UAt σ X (evFin F v)) :
     g = GlobalTheory.SplitUnitLift.liftU h t X.J 1 herm hJ (Matrix.GeneralLinearGroup.map (piW t) g.1) := by

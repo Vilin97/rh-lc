@@ -13,7 +13,7 @@ open scoped TensorProduct Matrix
 
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.exists_inverse_preserving_adelicLatticeAtPlace : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (d : ℕ) (W : Spc F E d),
-    W.L.IsLattice E → ∀ (v : Pl F) (p : ℕ), (p : 𝓞 F) ∈ v.asIdeal → ∀ c : AF F, IsUnit c →
+    W.L.IsLattice E → ∀ (v : Pl (F := F)) (p : ℕ), (p : 𝓞 F) ∈ v.asIdeal → ∀ c : AF F, IsUnit c →
     ∀ M : Matrix (Fin d) (Fin d) (AE F E), At (evFin F v) (M - c • (1 : Matrix (Fin d) (Fin d) (AE F E))) →
     (∀ z ∈ GlobalTheory.InertSph.latAt W v, M *ᵥ z ∈ GlobalTheory.InertSph.latAt W v) →
     (∀ z ∈ GlobalTheory.InertSph.latAt W v, ∃ y ∈ GlobalTheory.InertSph.latAt W v, ∃ y' ∈ GlobalTheory.InertSph.latAt W v, z = M *ᵥ y + p • y') →

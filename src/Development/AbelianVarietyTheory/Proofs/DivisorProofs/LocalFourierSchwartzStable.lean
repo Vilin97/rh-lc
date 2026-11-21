@@ -22,7 +22,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 variable {F : Type} [Field F] [NumberField F]
 
-theorem exists_circle_conductor (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (v : Pl F) (h1 : ∃ x, psiLoc ψ v x ≠ 1) :
+theorem exists_circle_conductor (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (v : Pl (F := F)) (h1 : ∃ x, psiLoc ψ v x ≠ 1) :
     ∃ (χ : AddChar (Fv F v) Circle) (c : (Fv F v)ˣ), GlobalTheory.SplitWeil.HasConductor χ c ∧
       ∀ x, (χ x : ℂ) = GlobalTheory.LatVac.psiAt ψ v x := by
   have hc : Continuous (GlobalTheory.LatVac.psiAt ψ v) := GlobalTheory.VacAny.continuous_psiV hψ v
@@ -40,7 +40,7 @@ theorem exists_circle_conductor (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) 
   obtain ⟨c, hc0⟩ := GlobalTheory.SplitWeil.exists_hasConductor_of_continuous χ hχc hχ1
   exact ⟨χ, c, hc0, hχ⟩
 
-theorem isSelfDualFor_measV (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (v : Pl F) (h1 : ∃ x, psiLoc ψ v x ≠ 1) :
+theorem isSelfDualFor_measV (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (v : Pl (F := F)) (h1 : ∃ x, psiLoc ψ v x ≠ 1) :
     IsSelfDualFor (GlobalTheory.LatVac.psiAt ψ v) (measV ψ v) := by
   obtain ⟨χ, c, hc, hχ⟩ := exists_circle_conductor ψ hψ v h1
   have h : ∃ ν, IsSelfDualFor (GlobalTheory.LatVac.psiAt ψ v) ν := by
@@ -51,7 +51,7 @@ theorem isSelfDualFor_measV (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (v :
   rw [measV, dite_eq_left h]
   exact h.choose_spec
 
-theorem fourV_sb : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → ∀ v : Pl F, (∃ x, psiLoc ψ v x ≠ 1) →
+theorem fourV_sb : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → ∀ v : Pl (F := F), (∃ x, psiLoc ψ v x ≠ 1) →
     ∀ (κ : Type) [Fintype κ],
     (∀ φ ∈ SB (κ → Fv F v), fourV ψ v φ ∈ SB (κ → Fv F v)) ∧
     (∀ φ ∈ SB (κ → Fv F v), ∀ χ ∈ SB (κ → Fv F v), fourV ψ v (φ + χ) = fourV ψ v φ + fourV ψ v χ) ∧

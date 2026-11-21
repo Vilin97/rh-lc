@@ -20,7 +20,7 @@ open scoped GlobalTheory.VacAny
 namespace GlobalTheory.SplitCoord
 
 theorem exists_at_coord : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ →
-    ∀ {n d : ℕ} (X : Spc F E n) (Y : Spc F E d), X.J.det ≠ 0 → Y.J.det ≠ 0 → ∀ (v : Pl F) (t : E →ₐ[F] Fv F v)
+    ∀ {n d : ℕ} (X : Spc F E n) (Y : Spc F E d), X.J.det ≠ 0 → Y.J.det ≠ 0 → ∀ (v : Pl (F := F)) (t : E →ₐ[F] Fv F v)
     (Z : Matrix (Fin n) (Fin d) (Fv F v)),
     (∃ x : Matrix (Fin n) (Fin d) (AE F E), At (evFin F v) x ∧ x.map (piW t) = 0 ∧
       GlobalTheory.FlipMatch.coY σ X Y t 1 1 x = Z) ∧

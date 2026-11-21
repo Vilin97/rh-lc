@@ -48,7 +48,7 @@ end GlobalTheory.SkewLocDual
 
 open GlobalTheory.SkewLocDual in
 theorem GlobalTheory.SkewLocDual.exists_smul_mem_of_integral : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
-    (B : Base F E) {d r s : ℕ} (Y : Spc F E d), Y.IsSkew σ B r s → ∀ (v : Pl F) (u : Fin d → E),
+    (B : Base F E) {d r s : ℕ} (Y : Spc F E d), Y.IsSkew σ B r s → ∀ (v : Pl (F := F)) (u : Fin d → E),
     (∀ y ∈ Y.L, ∃ t : 𝓞 F, t ∉ v.asIdeal ∧ IsIntegral ℤ (algebraMap F E (t : F) * form σ Y.J u y)) →
     ∃ t : 𝓞 F, t ∉ v.asIdeal ∧ algebraMap F E (t : F) • u ∈ Y.L := by
   intro F E _ _ _ _ _ σ B d r s Y hY v u hu

@@ -29,17 +29,17 @@ namespace GlobalTheory.CompanionTheory.GodementH
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n : ℕ} {Y : Spc F E n}
   {J : Type} [Fintype J]
 
-theorem absBar_one (v : Pl F) : absBar F v 1 = 1 := by
+theorem absBar_one (v : Pl (F := F)) : absBar F v 1 = 1 := by
   simpa using absBar_algebraMap F v 1
 
-theorem le_supBar (v : Pl F) (τ : E →ₐ[F] FvBar F v) (u : J → E) (f : J) : absBar F v (τ (u f)) ≤ supBar v τ u :=
+theorem le_supBar (v : Pl (F := F)) (τ : E →ₐ[F] FvBar F v) (u : J → E) (f : J) : absBar F v (τ (u f)) ≤ supBar v τ u :=
   Finset.le_sup (f := fun f => absBar F v (τ (u f))) (Finset.mem_univ f)
 
-theorem one_le_supBar (v : Pl F) (τ : E →ₐ[F] FvBar F v) {u : J → E} {f₀ : J} (hu : u f₀ = 1) : 1 ≤ supBar v τ u := by
+theorem one_le_supBar (v : Pl (F := F)) (τ : E →ₐ[F] FvBar F v) {u : J → E} {f₀ : J} (hu : u f₀ = 1) : 1 ≤ supBar v τ u := by
   have := le_supBar v τ u f₀
   rwa [hu, map_one, absBar_one] at this
 
-theorem one_le_locFin (v : Pl F) {u : J → E} {f₀ : J} (hu : u f₀ = 1) : 1 ≤ locFin σ v u :=
+theorem one_le_locFin (v : Pl (F := F)) {u : J → E} {f₀ : J} (hu : u f₀ = 1) : 1 ≤ locFin σ v u :=
   one_le_mul_of_one_le_of_one_le (one_le_supBar v _ hu) (one_le_supBar v _ hu)
 
 open Classical in
@@ -57,11 +57,11 @@ theorem one_le_supInf (w : InfinitePlace F) {u : J → E} {f₀ : J} (hu : u f�
 theorem one_le_locInf (w : InfinitePlace F) {u : J → E} {f₀ : J} (hu : u f₀ = 1) : 1 ≤ locInf w u :=
   one_le_pow₀ (one_le_supInf w hu)
 
-theorem absBar_le_absFin (v : Pl F) (τ : E →ₐ[F] FvBar F v) (x : E) : absBar F v (τ x) ≤ absFin F v ((1 : Fv F v) ⊗ₜ[F] x) := by
+theorem absBar_le_absFin (v : Pl (F := F)) (τ : E →ₐ[F] FvBar F v) (x : E) : absBar F v (τ x) ≤ absFin F v ((1 : Fv F v) ⊗ₜ[F] x) := by
   have := le_absFin F v τ ((1 : Fv F v) ⊗ₜ[F] x)
   simpa using this
 
-theorem compFin_inclR (v : Pl F) (x : E) : compFin F E v (inclR (F := F) (AF F) x) = (1 : Fv F v) ⊗ₜ[F] x := by
+theorem compFin_inclR (v : Pl (F := F)) (x : E) : compFin F E v (inclR (F := F) (AF F) x) = (1 : Fv F v) ⊗ₜ[F] x := by
   simp [compFin, inclR]
 
 theorem eventually_abs_le_one (x : E) : ∀ᶠ v : Pl F in cofinite, ∀ τ : E →ₐ[F] FvBar F v, absBar F v (τ x) ≤ 1 := by
@@ -83,7 +83,7 @@ theorem one_le_vecHt {u : J → E} {f₀ : J} (hu : u f₀ = 1) : 1 ≤ vecHt σ
 
 theorem absE_mul_vecHt_le (hcm : IsCMExt F E σ) (e : ∀ w : InfinitePlace F, EmbOver E w) {u : J → E} {f₀ : J} (hu : u f₀ = 1)
     (δ : (AE F E)ˣ) (z : J → AE F E) (hz : ∀ f, z f = inclR (F := F) (AF F) (u f) * δ.1)
-    (Bi : InfinitePlace F → ℝ≥0) (Bf : Pl F → ℝ≥0) (hB : (Function.mulSupport Bf).Finite)
+    (Bi : InfinitePlace F → ℝ≥0) (Bf : Pl (F := F) → ℝ≥0) (hB : (Function.mulSupport Bf).Finite)
     (hi : ∀ w f, ‖piInf (e w) (z f)‖₊ ≤ Bi w) (hf : ∀ v f, absFin F v (compFin F E v (z f)) ≤ Bf v) :
     absE F E δ * vecHt σ u ≤ (∏ w, Bi w ^ 2) * ∏ᶠ v, Bf v ^ 2 := by
   have hs := finite_mulSupport_locFin σ hu
@@ -128,7 +128,7 @@ theorem isIntegral_of_quad {z b c : E} (hb : IsIntegral ℤ b) (hc : IsIntegral 
 theorem denom_one (hcm : IsCMExt F E σ) {u : J → E} {f₀ : J} (hu : u f₀ = 1) (f : J) :
     ∃ m : ℕ, 0 < m ∧ (m : ℝ≥0) ≤ (∏ᶠ v, locFin σ v u) ^ 2 ∧ IsIntegral ℤ ((m : E) * u f) := by
   obtain ⟨y₁, y₂, hq, hy⟩ := GlobalTheory.T.quadratic_integral_coefficients_bound F E σ hcm (u f)
-  have hloc : ∀ (v : Pl F), max 1 ‖algebraMap F (Fv F v) y₁‖₊ ≤ locFin σ v u ∧ max 1 ‖algebraMap F (Fv F v) y₂‖₊ ≤ locFin σ v u := by
+  have hloc : ∀ (v : Pl (F := F)), max 1 ‖algebraMap F (Fv F v) y₁‖₊ ≤ locFin σ v u ∧ max 1 ‖algebraMap F (Fv F v) y₂‖₊ ≤ locFin σ v u := by
     intro v
     obtain ⟨h1, h2⟩ := hy v (embBar F E v)
     have a1 := le_supBar v (embBar F E v) u f
@@ -143,8 +143,8 @@ theorem denom_one (hcm : IsCMExt F E σ) {u : J → E} {f₀ : J} (hu : u f₀ =
       · rw [hl]; exact hb1.trans (le_mul_of_one_le_left' a2)
     · rw [h2, hl]; exact mul_le_mul' a1 hb1
   have hs := finite_mulSupport_locFin σ hu
-  have hsup : ∀ y : F, (∀ v : Pl F, max 1 ‖algebraMap F (Fv F v) y‖₊ ≤ locFin σ v u) →
-      ∏ᶠ v : Pl F, max 1 ‖algebraMap F (Fv F v) y‖₊ ≤ ∏ᶠ v, locFin σ v u := by
+  have hsup : ∀ y : F, (∀ v : Pl (F := F), max 1 ‖algebraMap F (Fv F v) y‖₊ ≤ locFin σ v u) →
+      ∏ᶠ v : Pl (F := F), max 1 ‖algebraMap F (Fv F v) y‖₊ ≤ ∏ᶠ v, locFin σ v u := by
     intro y hy
     have hsub : (Function.mulSupport fun v : Pl F => max 1 ‖algebraMap F (Fv F v) y‖₊).Finite := by
       refine hs.subset fun v hv hv' => hv ?_

@@ -57,7 +57,7 @@ open PositivityTheory.ThKH.Iwas (sgE comp_sgE at_sgE sgE_comp eq_zero_of_at)
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-private theorem oh_induct {v : Pl F} {P : AE F E → Prop}
+private theorem oh_induct {v : Pl (F := F)} {P : AE F E → Prop}
     (hg : ∀ a : AF F, At (evFin F v) a → evFin F v a ∈ v.adicCompletionIntegers F → ∀ o : 𝓞 E,
       P (a • inclR (F := F) (AF F) (o : E)))
     (h0 : P 0) (ha : ∀ x y, P x → P y → P (x + y)) (hn : ∀ x, P x → P (-x)) {x : AE F E} (hx : x ∈ Oh E v) : P x := by
@@ -65,16 +65,16 @@ private theorem oh_induct {v : Pl F} {P : AE F E → Prop}
   rintro z ⟨a, h1, h2, o, rfl⟩
   exact hg a h1 h2 o
 
-private theorem e_smul {v : Pl F} {M : Type} [AddCommGroup M] [Module (AF F) M] {z : M} (h : At (evFin F v) z) :
+private theorem e_smul {v : Pl (F := F)} {M : Type} [AddCommGroup M] [Module (AF F) M] {z : M} (h : At (evFin F v) z) :
     sg v 1 • z = z := by
   have h1 := h (1 - sg v 1) (by rw [map_sub, map_one, ev_sg, sub_self])
   rw [sub_smul, one_smul, sub_eq_zero] at h1
   exact h1.symm
 
-private theorem gen_mem {v : Pl F} (t : Fv F v) (ht : t ∈ v.adicCompletionIntegers F) : sg v t • (1 : AE F E) ∈ Oh E v :=
+private theorem gen_mem {v : Pl (F := F)} (t : Fv F v) (ht : t ∈ v.adicCompletionIntegers F) : sg v t • (1 : AE F E) ∈ Oh E v :=
   AddSubgroup.subset_closure ⟨sg v t, at_sg t, by rw [ev_sg]; exact ht, 1, by simp⟩
 
-private theorem oh_at {v : Pl F} {x : AE F E} (hx : x ∈ Oh E v) : At (evFin F v) x := by
+private theorem oh_at {v : Pl (F := F)} {x : AE F E} (hx : x ∈ Oh E v) : At (evFin F v) x := by
   refine oh_induct (P := fun x => At (evFin F v) x) ?_ ?_ ?_ ?_ hx
   · intro a h1 _ o u hu
     rw [← smul_assoc, h1 u hu, zero_smul]
@@ -82,7 +82,7 @@ private theorem oh_at {v : Pl F} {x : AE F E} (hx : x ∈ Oh E v) : At (evFin F 
   · intro x y hx hy u hu; rw [smul_add, hx u hu, hy u hu, add_zero]
   · intro x hx u hu; rw [smul_neg, hx u hu, neg_zero]
 
-private theorem oh_mul {v : Pl F} {x y : AE F E} (hx : x ∈ Oh E v) (hy : y ∈ Oh E v) : x * y ∈ Oh E v := by
+private theorem oh_mul {v : Pl (F := F)} {x y : AE F E} (hx : x ∈ Oh E v) (hy : y ∈ Oh E v) : x * y ∈ Oh E v := by
   refine oh_induct (P := fun x => x * y ∈ Oh E v) ?_ (by simp [zero_mem]) ?_ ?_ hx
   · intro a h1 h2 o
     refine oh_induct (P := fun y => a • inclR (F := F) (AF F) (o : E) * y ∈ Oh E v) ?_ (by simp [zero_mem]) ?_ ?_ hy
@@ -97,19 +97,19 @@ private theorem oh_mul {v : Pl F} {x y : AE F E} (hx : x ∈ Oh E v) (hy : y ∈
   · intro x z hx hz; rw [add_mul]; exact add_mem hx hz
   · intro x hx; rw [neg_mul]; exact neg_mem hx
 
-private theorem sgE_mul {v : Pl F} (x y : TensorProduct F (Fv F v) E) : sgE E v (x * y) = sgE E v x * sgE E v y := by
+private theorem sgE_mul {v : Pl (F := F)} (x y : TensorProduct F (Fv F v) E) : sgE E v (x * y) = sgE E v x * sgE E v y := by
   have h : compFin F E v (sgE E v x * sgE E v y) = x * y := by rw [map_mul, comp_sgE, comp_sgE]
   rw [← h, sgE_comp]
   refine e_smul (v := v) fun u hu => ?_
   rw [← smul_mul_assoc, at_sgE x u hu, zero_mul]
 
-private theorem sgE_one {v : Pl F} : sgE E v 1 = sg v 1 • (1 : AE F E) := by
+private theorem sgE_one {v : Pl (F := F)} : sgE E v 1 = sg v 1 • (1 : AE F E) := by
   simpa using sgE_comp (E := E) (v := v) (1 : AE F E)
 
-private def phi (E : Type) [Field E] [Algebra F E] (v : Pl F) : v.adicCompletionIntegers F →+* TensorProduct F (Fv F v) E :=
+private def phi (E : Type) [Field E] [Algebra F E] (v : Pl (F := F)) : v.adicCompletionIntegers F →+* TensorProduct F (Fv F v) E :=
   (algebraMap (Fv F v) (TensorProduct F (Fv F v) E)).comp (v.adicCompletionIntegers F).subtype
 
-private def SS (E : Type) [Field E] [NumberField E] [Algebra F E] (v : Pl F) : Subring (TensorProduct F (Fv F v) E) where
+private def SS (E : Type) [Field E] [NumberField E] [Algebra F E] (v : Pl (F := F)) : Subring (TensorProduct F (Fv F v) E) where
   carrier := {x | sgE E v x ∈ Oh E v ∧ (phi E v).IsIntegralElem x}
   mul_mem' := fun {x y} hx hy => ⟨by rw [sgE_mul]; exact oh_mul hx.1 hy.1, RingHom.IsIntegralElem.mul _ hx.2 hy.2⟩
   one_mem' := ⟨by rw [sgE_one]; exact gen_mem 1 (one_mem _), by
@@ -118,7 +118,7 @@ private def SS (E : Type) [Field E] [NumberField E] [Algebra F E] (v : Pl F) : S
   zero_mem' := ⟨by rw [map_zero]; exact zero_mem _, RingHom.isIntegralElem_zero _⟩
   neg_mem' := fun {x} hx => ⟨by rw [map_neg]; exact neg_mem hx.1, RingHom.IsIntegralElem.neg _ hx.2⟩
 
-private theorem phi_mem {v : Pl F} (t : v.adicCompletionIntegers F) : phi E v t ∈ SS E v := by
+private theorem phi_mem {v : Pl (F := F)} (t : v.adicCompletionIntegers F) : phi E v t ∈ SS E v := by
   refine ⟨?_, (phi E v).isIntegralElem_map⟩
   have h : sgE E v (phi E v t) = sg v (t : Fv F v) • (1 : AE F E) := by
     change sg v (t : Fv F v) ⊗ₜ[F] (1 : E) = sg v (t : Fv F v) • ((1 : AF F) ⊗ₜ[F] (1 : E))
@@ -126,7 +126,7 @@ private theorem phi_mem {v : Pl F} (t : v.adicCompletionIntegers F) : phi E v t 
   rw [h]
   exact gen_mem _ t.2
 
-private theorem comp_mem {v : Pl F} {x : AE F E} (hx : x ∈ Oh E v) : compFin F E v x ∈ SS E v := by
+private theorem comp_mem {v : Pl (F := F)} {x : AE F E} (hx : x ∈ Oh E v) : compFin F E v x ∈ SS E v := by
   refine ⟨by rw [sgE_comp, e_smul (oh_at hx)]; exact hx, ?_⟩
   refine oh_induct (P := fun x => (phi E v).IsIntegralElem (compFin F E v x)) ?_ ?_ ?_ ?_ hx
   · intro a _ h2 o
@@ -151,7 +151,7 @@ private theorem comp_mem {v : Pl F} {x : AE F E} (hx : x ∈ Oh E v) : compFin F
   · intro x y hx hy; rw [map_add (f := _)]; exact RingHom.IsIntegralElem.add _ hx hy
   · intro x hx; rw [map_neg]; exact RingHom.IsIntegralElem.neg _ hx
 
-private theorem smul_comp {v : Pl F} (a : AF F) (z : AE F E) : compFin F E v (a • z) = evFin F v a • compFin F E v z := by
+private theorem smul_comp {v : Pl (F := F)} (a : AF F) (z : AE F E) : compFin F E v (a • z) = evFin F v a • compFin F E v z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul b x =>
@@ -160,10 +160,10 @@ private theorem smul_comp {v : Pl F} (a : AF F) (z : AE F E) : compFin F E v (a 
     rw [TensorProduct.smul_tmul', smul_eq_mul, map_mul]
   | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
-private theorem at_entry {v : Pl F} {ι κ : Type} {A : Matrix ι κ (AE F E)} (h : At (evFin F v) A) (i : ι) (j : κ) :
+private theorem at_entry {v : Pl (F := F)} {ι κ : Type} {A : Matrix ι κ (AE F E)} (h : At (evFin F v) A) (i : ι) (j : κ) :
     At (evFin F v) (A i j) := fun u hu => congrFun (congrFun (h u hu) i) j
 
-private theorem mat_eq {v : Pl F} {ι κ : Type} {A B : Matrix ι κ (AE F E)} (hA : At (evFin F v) A) (hB : At (evFin F v) B)
+private theorem mat_eq {v : Pl (F := F)} {ι κ : Type} {A B : Matrix ι κ (AE F E)} (hA : At (evFin F v) A) (hB : At (evFin F v) B)
     (h : A.map (compFin F E v) = B.map (compFin F E v)) : A = B := by
   ext i j
   have h1 : compFin F E v (A i j - B i j) = 0 := by
@@ -172,16 +172,16 @@ private theorem mat_eq {v : Pl F} {ι κ : Type} {A B : Matrix ι κ (AE F E)} (
     rw [smul_sub, at_entry hA i j u hu, at_entry hB i j u hu, sub_zero]
   exact sub_eq_zero.1 (eq_zero_of_at h2 h1)
 
-private theorem at_eM {v : Pl F} {n : ℕ} : At (evFin F v) (eM (E := E) v n) := fun u hu => by
+private theorem at_eM {v : Pl (F := F)} {n : ℕ} : At (evFin F v) (eM (E := E) v n) := fun u hu => by
   rw [eM, ← smul_assoc, at_sg 1 u hu, zero_smul]
 
-private theorem eM_mul {v : Pl F} {n : ℕ} {A : Matrix (Fin n) (Fin n) (AE F E)} (h : At (evFin F v) A) : eM v n * A = A := by
+private theorem eM_mul {v : Pl (F := F)} {n : ℕ} {A : Matrix (Fin n) (Fin n) (AE F E)} (h : At (evFin F v) A) : eM v n * A = A := by
   rw [eM, Matrix.smul_mul, one_mul, e_smul h]
 
-private theorem mul_eM {v : Pl F} {n : ℕ} {A : Matrix (Fin n) (Fin n) (AE F E)} (h : At (evFin F v) A) : A * eM v n = A := by
+private theorem mul_eM {v : Pl (F := F)} {n : ℕ} {A : Matrix (Fin n) (Fin n) (AE F E)} (h : At (evFin F v) A) : A * eM v n = A := by
   rw [eM, Matrix.mul_smul, mul_one, e_smul h]
 
-private theorem max_mem {v : Pl F} {ϖ : Fv F v} (hϖ : ϖ ∈ v.adicCompletionIntegers F) (hlt : Valued.v ϖ < 1) :
+private theorem max_mem {v : Pl (F := F)} {ϖ : Fv F v} (hϖ : ϖ ∈ v.adicCompletionIntegers F) (hlt : Valued.v ϖ < 1) :
     (⟨ϖ, hϖ⟩ : v.adicCompletionIntegers F) ∈ IsLocalRing.maximalIdeal (v.adicCompletionIntegers F) := by
   rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
   intro hu
@@ -196,7 +196,7 @@ end UpperTheory.AdelicOrderPrincipalUnitInverse
 
 open UpperTheory.AdelicOrderPrincipalUnitInverse in
 theorem UpperTheory.latticeOrder_exists_inverse_one_add_uniformizer_smul :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n : ℕ) (X : Spc F E n) (v : Pl F) (b c : Matrix (Fin n) (Fin n) (AE F E)), IsFr X v b c → ∀ ϖ : Fv F v, ϖ ∈ v.adicCompletionIntegers F → Valued.v ϖ < 1 → ∀ p ∈ abelian₂ (E := E) v b c, ∃ q ∈ abelian₂ (E := E) v b c, (eM v n + sg v ϖ • p) * q = eM v n := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n : ℕ) (X : Spc F E n) (v : Pl (F := F)) (b c : Matrix (Fin n) (Fin n) (AE F E)), IsFr X v b c → ∀ ϖ : Fv F v, ϖ ∈ v.adicCompletionIntegers F → Valued.v ϖ < 1 → ∀ p ∈ abelian₂ (E := E) v b c, ∃ q ∈ abelian₂ (E := E) v b c, (eM v n + sg v ϖ • p) * q = eM v n := by
   intro F E _ _ _ _ _ n X v b c hX ϖ hϖ hlt p hp
   have hpat : At (evFin F v) (c * p * b) := fun u hu => by
     rw [← Matrix.smul_mul, ← Matrix.smul_mul, hX.at_c u hu, Matrix.zero_mul, Matrix.zero_mul]

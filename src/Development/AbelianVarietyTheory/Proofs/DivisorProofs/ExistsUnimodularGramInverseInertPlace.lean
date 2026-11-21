@@ -19,7 +19,7 @@ open GlobalTheory.InertLocFrame
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {L : Type} [Field L]
 
-def intAt (v : Pl F) : AddSubgroup (AE F E) :=
+def intAt (v : Pl (F := F)) : AddSubgroup (AE F E) :=
   AddSubgroup.closure {z : AE F E | ∃ a : AF F, At (evFin F v) a ∧
     evFin F v a ∈ v.adicCompletionIntegers F ∧ ∃ o : 𝓞 E, z = a • inclR (F := F) (AF F) (o : E)}
 
@@ -48,7 +48,7 @@ theorem hA_zero_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) 
 theorem hA_zero_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (U : Fin n → AE F E) :
     hA σ J U 0 = 0 := by simp [hA]
 
-theorem at_mul {v : Pl F} {a b : AF F} (ha : At (evFin F v) a) : At (evFin F v) (a * b) := fun u hu => by
+theorem at_mul {v : Pl (F := F)} {a b : AF F} (ha : At (evFin F v) a) : At (evFin F v) (a * b) := fun u hu => by
   have := ha u hu
   rw [smul_eq_mul] at this ⊢
   rw [← mul_assoc, this, zero_mul]
@@ -62,7 +62,7 @@ theorem hA_gen (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (a 
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
   ring
 
-theorem hA_mem (σ : E →ₐ[F] E) (B : Base F E) {n r s : ℕ} (X : Spc F E n) (hX : X.IsHerm σ B r s) (v : Pl F)
+theorem hA_mem (σ : E →ₐ[F] E) (B : Base F E) {n r s : ℕ} (X : Spc F E n) (hX : X.IsHerm σ B r s) (v : Pl (F := F))
     {U V : Fin n → AE F E} (hU : U ∈ GlobalTheory.InertSph.latAt X v) (hV : V ∈ GlobalTheory.InertSph.latAt X v) :
     hA σ X.J U V ∈ intAt (E := E) v := by
   induction hU using AddSubgroup.closure_induction with
@@ -82,7 +82,7 @@ theorem hA_mem (σ : E →ₐ[F] E) (B : Base F E) {n r s : ℕ} (X : Spc F E n)
   | add U U' _ _ h1 h2 => rw [hA_add_left]; exact add_mem h1 h2
   | neg U _ h => rw [hA_neg_left]; exact neg_mem h
 
-theorem mul_lat_mem {d : ℕ} (W : Spc F E d) (v : Pl F) {c : AE F E} (hc : c ∈ intAt (E := E) v) {y : Fin d → E}
+theorem mul_lat_mem {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) {c : AE F E} (hc : c ∈ intAt (E := E) v) {y : Fin d → E}
     (hy : y ∈ W.L) : (fun k => c * inclR (F := F) (AF F) (y k)) ∈ GlobalTheory.InertSph.latAt W v := by
   induction hc using AddSubgroup.closure_induction with
   | mem z hz =>
@@ -104,12 +104,12 @@ open GlobalTheory.InertLocFrame
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {L : Type} [Field L]
 
-theorem at_mul_left' {v : Pl F} {z : AE F E} (hz : At (evFin F v) z) (w : AE F E) : At (evFin F v) (z * w) :=
+theorem at_mul_left' {v : Pl (F := F)} {z : AE F E} (hz : At (evFin F v) z) (w : AE F E) : At (evFin F v) (z * w) :=
   fun u hu => by rw [← smul_mul_assoc, hz u hu, zero_mul]
 
 section Emb
 
-variable {v : Pl F} {ι : L →+ AE F E} (himg : ∀ z : AE F E, At (evFin F v) z ↔ ∃ x, ι x = z)
+variable {v : Pl (F := F)} {ι : L →+ AE F E} (himg : ∀ z : AE F E, At (evFin F v) z ↔ ∃ x, ι x = z)
   (hmul : ∀ x y, ι (x * y) = ι x * ι y)
 include himg hmul
 
@@ -160,7 +160,7 @@ namespace GlobalTheory.InertGram
 open GlobalTheory.InertLocFrame
 
 theorem exists_gram_inv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E), B.IsGood σ →
-    ∀ (v : Pl F) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w →
+    ∀ (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w →
     ∀ (n r s : ℕ) (X : Spc F E n), X.IsHerm σ B r s →
     ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] (ϖ : L) (σL : L →+* L) (q : ℕ) (ι : L →+ AE F E),
       Formalism.UG.IsUnramInv ϖ σL q → Function.Injective ι → (∀ z : AE F E, At (evFin F v) z ↔ ∃ x, ι x = z) → (∀ x y, ι (x * y) = ι x * ι y) → (∀ x, ι (σL x) = cA σ (ι x)) →

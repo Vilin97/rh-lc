@@ -30,7 +30,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem incM_add' {m k : Type} (A B : Matrix m k E) : incM F (A + B) = incM F A + incM F B := by
   ext i j; simp [incM]
 
-theorem gen_mem_latAtV {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {v : Pl F} {a : AF F}
+theorem gen_mem_latAtV {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {v : Pl (F := F)} {a : AF F}
     (ha : At (evFin F v) a) (hi : evFin F v a ∈ v.adicCompletionIntegers F) {x : Fin n → E} {y : Fin d → E}
     (hx : x ∈ X.L) (hy : y ∈ W.L) : a • incM F (Matrix.vecMulVec x y) ∈ latAtV X W v :=
   AddSubgroup.subset_closure ⟨a, ha, hi, x, hx, y, hy, rfl⟩
@@ -95,7 +95,7 @@ namespace GlobalTheory.ThK.AdaptEv.VacuumBlock
 open GlobalTheory.ThK.AdaptEv.VacuumBlock.Dec
 
 theorem latAtV_adapted_decomp : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
-    {n d n₁ d₁ : ℕ} (X : Spc F E n) (W : Spc F E d) (X₁ : Spc F E n₁) (W₁ : Spc F E d₁) (H : Plane E n n₁) (H' : Plane E d d₁) (i₀ i₁ j₀ j₁ : ℕ), H.IsAdapted σ B X X₁ j₀ j₁ → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ v : Pl F, ∀ γ ∈ latAtV X W v,
+    {n d n₁ d₁ : ℕ} (X : Spc F E n) (W : Spc F E d) (X₁ : Spc F E n₁) (W₁ : Spc F E d₁) (H : Plane E n n₁) (H' : Plane E d d₁) (i₀ i₁ j₀ j₁ : ℕ), H.IsAdapted σ B X X₁ j₀ j₁ → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ v : Pl (F := F), ∀ γ ∈ latAtV X W v,
     ∃ p ∈ GlobalTheory.ThK.AdaptEv.VacuumBlock.spanA (F := F) H H', ∃ q ∈ GlobalTheory.ThK.AdaptEv.VacuumBlock.spanAd (F := F) H H', ∃ g ∈ latAtV X₁ W₁ v,
       p ∈ latAtV X W v ∧ q ∈ latAtV X W v ∧ γ = p + q + incM F H.ι * g * (incM F H'.ι)ᵀ := by
   intro F E _ _ _ _ _ σ B n d n₁ d₁ X W X₁ W₁ H H' i₀ i₁ j₀ j₁ hH hH' v γ hγ

@@ -406,14 +406,14 @@ theorem mul_vecMulVec_mul {R : Type} [CommRing R] {p q r s : Type} [Fintype q] [
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem mem_int_iff {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (x : Fv F v) : x ∈ 𝒪[Fv F v] ↔ x ∈ v.adicCompletionIntegers F := by
+theorem mem_int_iff {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (x : Fv F v) : x ∈ 𝒪[Fv F v] ↔ x ∈ v.adicCompletionIntegers F := by
   rw [HeightOneSpectrum.mem_adicCompletionIntegers]
   haveI : (Valued.v : Valuation (v.adicCompletion F) (WithZero (Multiplicative ℤ))).Compatible :=
     Valuation.Compatible.ofValuation _
   exact (ValuativeRel.isEquiv (ValuativeRel.valuation (Fv F v))
     (Valued.v : Valuation (v.adicCompletion F) (WithZero (Multiplicative ℤ)))).le_one_iff_le_one
 
-theorem piW_smul {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (t : E →ₐ[F] Fv F v) (a : AF F) (z : AE F E) :
+theorem piW_smul {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (t : E →ₐ[F] Fv F v) (a : AF F) (z : AE F E) :
     piW t (a • z) = evFin F v a * piW t z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
@@ -423,11 +423,11 @@ theorem piW_smul {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.P
     show evFin F v (a * b) * t e = evFin F v a * (evFin F v b * t e)
     rw [map_mul, mul_assoc]
 
-theorem map_piW_smul {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (t : E →ₐ[F] Fv F v) (a : AF F) {p q : Type} (u : Matrix p q (AE F E)) :
+theorem map_piW_smul {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (t : E →ₐ[F] Fv F v) (a : AF F) {p q : Type} (u : Matrix p q (AE F E)) :
     (a • u).map (piW t) = evFin F v a • u.map (piW t) := by
   ext i j; simp [piW_smul]
 
-theorem map_piW_smul_incM {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (t : E →ₐ[F] Fv F v) (a : AF F) {p q : Type} (J : Matrix p q E) :
+theorem map_piW_smul_incM {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (t : E →ₐ[F] Fv F v) (a : AF F) {p q : Type} (J : Matrix p q E) :
     (a • incM F J).map (piW t) = evFin F v a • J.map t := by
   ext i j
   simp only [Matrix.map_apply, Matrix.smul_apply, incM, GlobalTheory.VacIndic.smul_inclR_eq, smul_eq_mul]
@@ -450,7 +450,7 @@ theorem isConjOf_sig (D : D7) : Formalism.L2.DIV.IsConjOf D.sp.cm.sig := by
     omega
   · exact (D.sp.cm.fixed e).1 he
 
-theorem exists_unit_diff {D : D7} {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl D.host.F} (τ : D.host.E →ₐ[D.host.F] Fv D.host.F v)
+theorem exists_unit_diff {D : D7} {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := D.host.F)} (τ : D.host.E →ₐ[D.host.F] Fv D.host.F v)
     (hU : Algebra.Unramified (𝓞 D.host.F) (𝓞 D.host.E)) :
     ∃ (b : 𝓞 D.host.E) (α : Fv D.host.F v), α ∈ v.adicCompletionIntegers D.host.F ∧
       α * (τ (D.sp.cm.sig (b : D.host.E)) - τ (b : D.host.E)) = 1 := by

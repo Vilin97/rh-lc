@@ -27,7 +27,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 section Support
 
-variable {v : Pl F} {m k : Type} [Fintype m] [Fintype k]
+variable {v : Pl (F := F)} {m k : Type} [Fintype m] [Fintype k]
 
 theorem at_sub {A B : Matrix m k (AE F E)} (hA : At (evFin F v) A) (hB : At (evFin F v) B) :
     At (evFin F v) (A - B) := fun u hu => by rw [smul_sub, hA u hu, hB u hu, sub_zero]
@@ -54,7 +54,7 @@ theorem at_map_cA (σ : E →ₐ[F] E) {A : Matrix m k (AE F E)} (hA : At (evFin
 
 end Support
 
-theorem eq_of_compFin {n : ℕ} {v : Pl F} {A B : Matrix (Fin n) (Fin n) (AE F E)}
+theorem eq_of_compFin {n : ℕ} {v : Pl (F := F)} {A B : Matrix (Fin n) (Fin n) (AE F E)}
     (hA : At (evFin F v) (A - 1)) (hB : At (evFin F v) (B - 1))
     (h : A.map (compFin F E v) = B.map (compFin F E v)) : A = B := by
   have hz : At (evFin F v) (A - B) := by
@@ -88,11 +88,11 @@ theorem JR_map_sigR (R : Type) [CommRing R] [Algebra F R] (X : Matrix (Fin n) (F
     (JR (F := F) R X).map (sigR R σ) = JR (F := F) R (X.map σ) := by
   ext i j; simp [JR, sigR_inclR]
 
-theorem compFin_incM (v : Pl F) (X : Matrix (Fin n) (Fin n) E) :
+theorem compFin_incM (v : Pl (F := F)) (X : Matrix (Fin n) (Fin n) E) :
     (incM F X).map (compFin F E v) = JR (Fv F v) X := by
   ext i j; simp [incM, JR, compFin_inclR]
 
-theorem unitary_compFin (hσ : ∀ x, σ (σ x) = x) (J : Matrix (Fin n) (Fin n) E) (δ : E) (v : Pl F) (g : UA σ J) :
+theorem unitary_compFin (hσ : ∀ x, σ (σ x) = x) (J : Matrix (Fin n) (Fin n) E) (δ : E) (v : Pl (F := F)) (g : UA σ J) :
     Formalism.UG.cT (sigR (Fv F v) σ) ((mat g).map (compFin F E v)) * JR (Fv F v) (δ • J.map σ) * (mat g).map (compFin F E v) =
       JR (Fv F v) (δ • J.map σ) := by
   set M := (mat g).map (compFin F E v) with hM
@@ -114,7 +114,7 @@ end Fwd
 
 section Up
 
-variable {n : ℕ} (v : Pl F)
+variable {n : ℕ} (v : Pl (F := F))
 
 def up (H : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) : Matrix (Fin n) (Fin n) (AE F E) :=
   1 + (H - 1).map (lift v)
@@ -154,7 +154,7 @@ section Bwd
 
 variable (σ : E →ₐ[F] E) {n : ℕ}
 
-theorem unitary_of_loc (hσ : ∀ x, σ (σ x) = x) (J : Matrix (Fin n) (Fin n) E) {δ : E} (hδ : δ ≠ 0) (v : Pl F)
+theorem unitary_of_loc (hσ : ∀ x, σ (σ x) = x) (J : Matrix (Fin n) (Fin n) E) {δ : E} (hδ : δ ≠ 0) (v : Pl (F := F))
     (H : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E))
     (hH : Formalism.UG.cT (sigR (Fv F v) σ) H * JR (Fv F v) (δ • J.map σ) * H = JR (Fv F v) (δ • J.map σ)) :
     Hᵀ * JR (Fv F v) J * H.map (sigR (Fv F v) σ) = JR (Fv F v) J := by
@@ -172,7 +172,7 @@ theorem unitary_of_loc (hσ : ∀ x, σ (σ x) = x) (J : Matrix (Fin n) (Fin n) 
   simp only [← hu, smul_smul, Units.inv_mul, one_smul] at h3
   exact h3
 
-theorem unitary_up (J : Matrix (Fin n) (Fin n) E) (v : Pl F) (H : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E))
+theorem unitary_up (J : Matrix (Fin n) (Fin n) E) (v : Pl (F := F)) (H : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E))
     (hH : Hᵀ * JR (Fv F v) J * H.map (sigR (Fv F v) σ) = JR (Fv F v) J) :
     (up v H)ᵀ * incM F J * (up v H).map (cA σ) = incM F J := by
   set X := up v H - 1 with hX
@@ -203,10 +203,10 @@ open GlobalTheory.KBridge
 
 variable {n : ℕ}
 
-theorem evFin_liftV_ne {v u : Pl F} (h : u ≠ v) (a : Fv F v) : evFin F u (GlobalTheory.LatVac.liftV v a) = 0 :=
+theorem evFin_liftV_ne {v u : Pl (F := F)} (h : u ≠ v) (a : Fv F v) : evFin F u (GlobalTheory.LatVac.liftV v a) = 0 :=
   evalV_singleFin_ne h a
 
-theorem infT_liftV_smul (v : Pl F) (x : AE F E) : infT F E (GlobalTheory.LatVac.liftV v 1 • x) = 0 := by
+theorem infT_liftV_smul (v : Pl (F := F)) (x : AE F E) : infT F E (GlobalTheory.LatVac.liftV v 1 • x) = 0 := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e =>
@@ -215,11 +215,11 @@ theorem infT_liftV_smul (v : Pl F) (x : AE F E) : infT F E (GlobalTheory.LatVac.
     rw [this, TensorProduct.zero_tmul]
   | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, add_zero]
 
-theorem compFin_liftV_smul {v u : Pl F} (h : u ≠ v) (x : AE F E) :
+theorem compFin_liftV_smul {v u : Pl (F := F)} (h : u ≠ v) (x : AE F E) :
     compFin F E u (GlobalTheory.LatVac.liftV v 1 • x) = 0 := by
   rw [compFin_smul, evFin_liftV_ne h, zero_smul]
 
-theorem vecLoc_finT (u : Pl F) (z : Fin n → AE F E) :
+theorem vecLoc_finT (u : Pl (F := F)) (z : Fin n → AE F E) :
     vecLoc u (fun i => finT F E (z i)) = fun i => compFin F E u (z i) := by
   funext i
   show Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F u) (AlgHom.id F E) (finT F E (z i)) = compFin F E u (z i)
@@ -234,13 +234,13 @@ theorem mem_latHat_iff_comp {W : Spc F E n} (hL : W.L.FG) (z : Fin n → AE F E)
   rw [GlobalTheory.KBridge.mem_latHat_iff, GlobalTheory.AdelicU.mem_latHat_iff hL]
   simp only [vecLoc_finT]
 
-theorem comp_of_idem {v : Pl F} {y : Fin n → AE F E} (hy : GlobalTheory.LatVac.liftV v 1 • y = y) :
+theorem comp_of_idem {v : Pl (F := F)} {y : Fin n → AE F E} (hy : GlobalTheory.LatVac.liftV v 1 • y = y) :
     (∀ i, infT F E (y i) = 0) ∧ ∀ u, u ≠ v → (fun i => compFin F E u (y i)) = 0 := by
   refine ⟨fun i => ?_, fun u hu => funext fun i => ?_⟩
   · rw [← hy]; exact infT_liftV_smul v (y i)
   · rw [← hy]; exact compFin_liftV_smul hu (y i)
 
-theorem comp_mulVec {v : Pl F} {A : Matrix (Fin n) (Fin n) (AE F E)} (hA : At (evFin F v) (A - 1))
+theorem comp_mulVec {v : Pl (F := F)} {A : Matrix (Fin n) (Fin n) (AE F E)} (hA : At (evFin F v) (A - 1))
     (z : Fin n → AE F E) :
     (∀ i, infT F E ((A *ᵥ z) i) = infT F E (z i)) ∧
       (∀ u, u ≠ v → (fun i => compFin F E u ((A *ᵥ z) i)) = fun i => compFin F E u (z i)) ∧
@@ -259,18 +259,18 @@ theorem comp_mulVec {v : Pl F} {A : Matrix (Fin n) (Fin n) (AE F E)} (hA : At (e
   · funext i
     exact RingHom.map_mulVec (compFin F E v) A z i
 
-def liftVec (v : Pl F) (y : Fin n → Fv F v ⊗[F] E) : Fin n → AE F E := fun i => lift v (y i)
+def liftVec (v : Pl (F := F)) (y : Fin n → Fv F v ⊗[F] E) : Fin n → AE F E := fun i => lift v (y i)
 
-theorem liftVec_idem (v : Pl F) (y : Fin n → Fv F v ⊗[F] E) :
+theorem liftVec_idem (v : Pl (F := F)) (y : Fin n → Fv F v ⊗[F] E) :
     GlobalTheory.LatVac.liftV v 1 • liftVec v y = liftVec v y := by
   funext i
   simp only [liftVec, Pi.smul_apply]
   rw [liftV_one_smul_eq, compFin_lift]
 
-theorem compFin_liftVec (v : Pl F) (y : Fin n → Fv F v ⊗[F] E) :
+theorem compFin_liftVec (v : Pl (F := F)) (y : Fin n → Fv F v ⊗[F] E) :
     (fun i => compFin F E v (liftVec v y i)) = y := funext fun i => compFin_lift v (y i)
 
-theorem liftVec_mem_iff {W : Spc F E n} (hL : W.L.FG) (v : Pl F) (y : Fin n → Fv F v ⊗[F] E) :
+theorem liftVec_mem_iff {W : Spc F E n} (hL : W.L.FG) (v : Pl (F := F)) (y : Fin n → Fv F v ⊗[F] E) :
     liftVec v y ∈ latHat W ↔ y ∈ latLoc F W.L v := by
   obtain ⟨h1, h2⟩ := comp_of_idem (liftVec_idem v y)
   rw [mem_latHat_iff_comp hL]
@@ -282,7 +282,7 @@ theorem liftVec_mem_iff {W : Spc F E n} (hL : W.L.FG) (v : Pl F) (y : Fin n → 
     · subst hu; rw [compFin_liftVec]; exact hy
     · rw [h2 u hu]; exact zero_mem _
 
-theorem mulVec_mem_iff {W : Spc F E n} (hL : W.L.FG) {v : Pl F} {A : Matrix (Fin n) (Fin n) (AE F E)}
+theorem mulVec_mem_iff {W : Spc F E n} (hL : W.L.FG) {v : Pl (F := F)} {A : Matrix (Fin n) (Fin n) (AE F E)}
     (hA : At (evFin F v) (A - 1)) (z : Fin n → AE F E) :
     A *ᵥ z ∈ latHat W ↔ (∀ i, infT F E (z i) = 0) ∧
       (∀ u, u ≠ v → (fun i => compFin F E u (z i)) ∈ latLoc F W.L u) ∧
@@ -305,7 +305,7 @@ end Lat
 
 section Main
 
-variable (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {d : ℕ} (W : Spc F E d) (v : Pl F)
+variable (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {d : ℕ} (W : Spc F E d) (v : Pl (F := F))
 
 def toLoc (δ : E) (g : GlobalTheory.SphLine.locU σ W v) : GLoc σ (δ • W.J.map σ) v :=
   ⟨Formalism.UG.bc (compFin F E v) g.1.1, unitary_compFin σ hσ W.J δ v g.1⟩
@@ -358,7 +358,7 @@ theorem locEquiv_mem_iff {δ : E} (hδ : δ ≠ 0) (hL : W.L.FG) (g : GlobalTheo
 end Main
 
 theorem exists_locEquiv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E),
-    (∀ x, σ (σ x) = x) → ∀ (d : ℕ) (W : Spc F E d) (v : Pl F) (δ : E), δ ≠ 0 → W.L.FG →
+    (∀ x, σ (σ x) = x) → ∀ (d : ℕ) (W : Spc F E d) (v : Pl (F := F)) (δ : E), δ ≠ 0 → W.L.FG →
     ∃ e : GlobalTheory.SphLine.locU σ W v ≃* GLoc σ (δ • W.J.map σ) v,
       ∀ g, g.1 ∈ GlobalTheory.SphLine.locK σ W v ↔ e g ∈ stabLoc σ (δ • W.J.map σ) W.L v := by
   intro F E _ _ _ _ _ σ hσ d W v δ hδ hL

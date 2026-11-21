@@ -19,10 +19,10 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 namespace GlobalTheory.EvKer
 
 theorem ker_trivial : ∀ {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] (e : ((κ → AF F) → ℂ) →ₗ[ℂ] ((κ → AF F) → ℂ)) (ei : SInf F κ →L[ℂ] SInf F κ)
-    (ev : ∀ v : Pl F, ((κ → Fv F v) → ℂ) →ₗ[ℂ] (κ → Fv F v) → ℂ),
+    (ev : ∀ v : Pl (F := F), ((κ → Fv F v) → ℂ) →ₗ[ℂ] (κ → Fv F v) → ℂ),
     (∀ v, ∀ φ ∈ SB (κ → Fv F v), ev v φ ∈ SB (κ → Fv F v)) →
     (∀ᶠ v in cofinite, ev v (stdInd F κ v) = stdInd F κ v) →
-    (∀ (f : SInf F κ) (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ), (∀ v, φ v ∈ SB (κ → Fv F v)) →
+    (∀ (f : SInf F κ) (φ : ∀ v : Pl (F := F), (κ → Fv F v) → ℂ), (∀ v, φ v ∈ SB (κ → Fv F v)) →
       (∀ᶠ v in cofinite, φ v = stdInd F κ v) → e (pure f φ) = pure (ei f) fun v => ev v (φ v)) →
     Set.InjOn e (schA F κ : Set ((κ → AF F) → ℂ)) →
     ∀ v, ∀ ψ ∈ SB (κ → Fv F v), ev v ψ = 0 → ψ = 0 := by
@@ -30,7 +30,7 @@ theorem ker_trivial : ∀ {F : Type} [Field F] [NumberField F] {κ : Type} [Fint
   classical
   by_contra hne
   obtain ⟨f₀, hf₀⟩ := GlobalTheory.TensUniq.exists_sInf_ne_zero F κ
-  set φ : ∀ w : Pl F, (κ → Fv F w) → ℂ := Function.update (fun w => stdInd F κ w) v ψ with hφdef
+  set φ : ∀ w : Pl (F := F), (κ → Fv F w) → ℂ := Function.update (fun w => stdInd F κ w) v ψ with hφdef
   have hφSB : ∀ w, φ w ∈ SB (κ → Fv F w) := by
     intro w
     by_cases h : w = v

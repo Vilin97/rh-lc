@@ -54,7 +54,7 @@ def HoweDualityUnitary : Prop :=
     HoweDualityFor om ∧ HoweDualityFor (om.comp (MulEquiv.prodComm (M := UG c JB) (N := UG c JA)).toMonoidHom)
 
 def ThetaSub {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ}
-    {X : Spc F E n} {W : Spc F E d} (om : Rep σ X W) (v : Pl F) (N : Submodule ℂ ((Fin n × Fin d → Fv F v) → ℂ)) : Prop :=
+    {X : Spc F E n} {W : Spc F E d} (om : Rep σ X W) (v : Pl (F := F)) (N : Submodule ℂ ((Fin n × Fin d → Fv F v) → ℂ)) : Prop :=
   augAt om v ≤ N ∧ N ≤ SB _ ∧
     ∀ h ∈ UAt σ W (evFin F v), ∀ φ ∈ N, ∀ φ₁ ∈ SB _, Acts (evFin F v) (om (1, h)) φ φ₁ → φ₁ ∈ N
 

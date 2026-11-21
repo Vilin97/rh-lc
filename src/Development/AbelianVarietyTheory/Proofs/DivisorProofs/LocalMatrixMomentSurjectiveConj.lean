@@ -32,7 +32,7 @@ theorem trace_tmul' [FiniteDimensional F E] {R : Type} [CommRing R] [Algebra F R
   rw [h1, map_smul, Algebra.trace_apply, Algebra.trace_apply, ← Algebra.baseChange_lmul,
     LinearMap.trace_baseChange, smul_eq_mul]
 
-theorem evFin_trace [FiniteDimensional F E] (v : Pl F) (z : AE F E) :
+theorem evFin_trace [FiniteDimensional F E] (v : Pl (F := F)) (z : AE F E) :
     evFin F v (Algebra.trace (AF F) (AE F E) z) =
       Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (compFin F E v z) := by
   induction z using TensorProduct.induction_on with
@@ -42,12 +42,12 @@ theorem evFin_trace [FiniteDimensional F E] (v : Pl F) (z : AE F E) :
     have e : compFin F E v (a ⊗ₜ[F] x) = evFin F v a ⊗ₜ[F] x := rfl
     rw [e, trace_tmul', trace_tmul', map_mul, AlgHom.commutes]
 
-theorem trace_split {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {v : Pl F} (t : E →ₐ[F] Fv F v) (y : Fv F v ⊗[F] E) :
+theorem trace_split {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {v : Pl (F := F)} (t : E →ₐ[F] Fv F v) (y : Fv F v ⊗[F] E) :
     Algebra.trace (Fv F v) (Fv F v ⊗[F] E) y = splitProj t y + splitProj (t.comp σ) y := by
   rw [← Algebra.trace_eq_of_algEquiv (splitAlgEquiv h t) y, Algebra.trace_prod_apply, splitAlgEquiv_apply]
   simp [Algebra.trace_self_apply]
 
-theorem piW_cA {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {v : Pl F} (t : E →ₐ[F] Fv F v) (y : AE F E) :
+theorem piW_cA {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {v : Pl (F := F)} (t : E →ₐ[F] Fv F v) (y : AE F E) :
     piW (t.comp σ) (cA σ y) = piW t y := by
   have e : compFin F E v (cA σ y) = sigR (Fv F v) σ (compFin F E v y) := by
     induction y using TensorProduct.induction_on with
@@ -58,16 +58,16 @@ theorem piW_cA {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {v : Pl F} (t : E →�
   rw [e]
   exact splitProj_comp_sigR h t _
 
-theorem piW_inclR {v : Pl F} (t : E →ₐ[F] Fv F v) (x : E) : piW t (inclR (AF F) x) = t x := by
+theorem piW_inclR {v : Pl (F := F)} (t : E →ₐ[F] Fv F v) (x : E) : piW t (inclR (AF F) x) = t x := by
   change splitProj t (evFin F v 1 ⊗ₜ[F] x) = t x
   rw [map_one]
   exact splitProj_inclR t x
 
-theorem piW_tensAt {v : Pl F} (t : E →ₐ[F] Fv F v) (y : Fv F v ⊗[F] E) : piW t (tensAt E v y) = splitProj t y := by
+theorem piW_tensAt {v : Pl (F := F)} (t : E →ₐ[F] Fv F v) (y : Fv F v ⊗[F] E) : piW t (tensAt E v y) = splitProj t y := by
   change splitProj t (compFin F E v (tensAt E v y)) = _
   rw [compFin_tensAt]
 
-theorem at_tensAt {v : Pl F} (y : Fv F v ⊗[F] E) : At (evFin F v) (tensAt E v y) := by
+theorem at_tensAt {v : Pl (F := F)} (y : Fv F v ⊗[F] E) : At (evFin F v) (tensAt E v y) := by
   intro a ha
   rw [Algebra.smul_def, mul_comm, tensAt_mul_right]
   have : compFin F E v (algebraMap (AF F) (AE F E) a) = 0 := by
@@ -75,7 +75,7 @@ theorem at_tensAt {v : Pl F} (y : Fv F v ⊗[F] E) : At (evFin F v) (tensAt E v 
     rw [ha, TensorProduct.zero_tmul]
   rw [this, mul_zero, map_zero]
 
-theorem eq_liftV_of_at {v : Pl F} {a : AF F} (ha : At (evFin F v) a) : a = GlobalTheory.LatVac.liftV v (evFin F v a) := by
+theorem eq_liftV_of_at {v : Pl (F := F)} {a : AF F} (ha : At (evFin F v) a) : a = GlobalTheory.LatVac.liftV v (evFin F v a) := by
   have h1 : evFin F v (1 - atPlace v 1) = 0 := by rw [map_sub, map_one, evFin_atPlace, sub_self]
   have h2 := ha _ h1
   rw [smul_eq_mul, sub_mul, one_mul, sub_eq_zero] at h2
@@ -92,7 +92,7 @@ open GlobalTheory.EmbChart (tensAt)
 
 theorem char_eq_psi_symp : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
     B.IsGood σ → ∀ (n d r s r' s' : ℕ) (X : Spc F E n) (W : Spc F E d), X.IsHerm σ B r s → W.IsSkew σ B r' s' →
-    ∀ (v : Pl F) (t : E →ₐ[F] Fv F v) (Z : Matrix (Fin n) (Fin d) (Fv F v)), ∃ u : Matrix (Fin n) (Fin d) (AE F E),
+    ∀ (v : Pl (F := F)) (t : E →ₐ[F] Fv F v) (Z : Matrix (Fin n) (Fin d) (Fv F v)), ∃ u : Matrix (Fin n) (Fin d) (AE F E),
       At (evFin F v) u ∧ u.map (piW (t.comp σ)) = 0 ∧ ∀ x : Matrix (Fin n) (Fin d) (AE F E), At (evFin F v) x →
         x.map (piW t) = 0 → B.ψ (symp (cA σ) (-1) (incM F X.J) (incM F W.J) x u) =
           GlobalTheory.LatVac.psiAt B.ψ v (∑ i, ∑ j, (-((1 : GL (Fin n) (Fv F v)).1ᵀ * X.J.map t * (x).map (piW (t.comp σ)) * (W.J.map t)ᵀ * (1 : GL (Fin d) (Fv F v)).1)) i j * Z i j) := by

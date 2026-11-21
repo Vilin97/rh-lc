@@ -18,7 +18,7 @@ namespace GlobalTheory.InertLocField
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem liftV_mul (v : Pl F) (a b : Fv F v) :
+theorem liftV_mul (v : Pl (F := F)) (a b : Fv F v) :
     GlobalTheory.LatVac.liftV v (a * b) = GlobalTheory.LatVac.liftV v a * GlobalTheory.LatVac.liftV v b := by
   refine Prod.ext ?_ ?_
   · change (0 : Ainf F) = 0 * 0
@@ -26,7 +26,7 @@ theorem liftV_mul (v : Pl F) (a b : Fv F v) :
   · change GlobalTheory.AdelicU.singleFin v (a * b) = GlobalTheory.AdelicU.singleFin v a * GlobalTheory.AdelicU.singleFin v b
     exact GlobalTheory.AdelicU.singleFin_mul v a b
 
-theorem liftV_one_mul (v : Pl F) (a : AF F) :
+theorem liftV_one_mul (v : Pl (F := F)) (a : AF F) :
     GlobalTheory.LatVac.liftV v 1 * a = GlobalTheory.LatVac.liftV v (evFin F v a) := by
   refine Prod.ext ?_ ?_
   · change (0 : Ainf F) * a.1 = 0
@@ -40,25 +40,25 @@ theorem liftV_one_mul (v : Pl F) (a : AF F) :
       rw [GlobalTheory.AdelicU.evalV_singleFin_self, GlobalTheory.AdelicU.evalV_singleFin_self, one_mul]
     · rw [GlobalTheory.AdelicU.evalV_singleFin_ne hu, GlobalTheory.AdelicU.evalV_singleFin_ne hu, zero_mul]
 
-theorem evFin_one_sub (v : Pl F) : evFin F v (1 - GlobalTheory.LatVac.liftV v 1) = 0 := by
+theorem evFin_one_sub (v : Pl (F := F)) : evFin F v (1 - GlobalTheory.LatVac.liftV v 1) = 0 := by
   rw [map_sub, map_one, GlobalTheory.LatVac.evFin_liftV, sub_self]
 
-theorem eq_liftV_of_at (v : Pl F) {a : AF F} (ha : At (evFin F v) a) :
+theorem eq_liftV_of_at (v : Pl (F := F)) {a : AF F} (ha : At (evFin F v) a) :
     a = GlobalTheory.LatVac.liftV v (evFin F v a) := by
   have h := ha _ (evFin_one_sub v)
   rw [smul_eq_mul, sub_mul, one_mul, sub_eq_zero, liftV_one_mul] at h
   exact h
 
 
-def liftT (v : Pl F) : Fv F v ⊗[F] E →ₗ[F] AE F E := TensorProduct.map (GlobalTheory.LatVac.liftV v) LinearMap.id
+def liftT (v : Pl (F := F)) : Fv F v ⊗[F] E →ₗ[F] AE F E := TensorProduct.map (GlobalTheory.LatVac.liftV v) LinearMap.id
 
-theorem liftT_tmul (v : Pl F) (a : Fv F v) (e : E) :
+theorem liftT_tmul (v : Pl (F := F)) (a : Fv F v) (e : E) :
     liftT E v (a ⊗ₜ[F] e) = GlobalTheory.LatVac.liftV v a ⊗ₜ[F] e := rfl
 
 
-def evT (v : Pl F) : AE F E →ₐ[F] Fv F v ⊗[F] E := Algebra.TensorProduct.map (evFin F v) (AlgHom.id F E)
+def evT (v : Pl (F := F)) : AE F E →ₐ[F] Fv F v ⊗[F] E := Algebra.TensorProduct.map (evFin F v) (AlgHom.id F E)
 
-theorem evT_liftT (v : Pl F) (y : Fv F v ⊗[F] E) : evT E v (liftT E v y) = y := by
+theorem evT_liftT (v : Pl (F := F)) (y : Fv F v ⊗[F] E) : evT E v (liftT E v y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a e =>
@@ -67,10 +67,10 @@ theorem evT_liftT (v : Pl F) (y : Fv F v ⊗[F] E) : evT E v (liftT E v y) = y :
     rw [GlobalTheory.LatVac.evFin_liftV]
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
-theorem liftT_injective (v : Pl F) : Function.Injective (liftT E v) :=
+theorem liftT_injective (v : Pl (F := F)) : Function.Injective (liftT E v) :=
   Function.LeftInverse.injective (evT_liftT (E := E) v)
 
-theorem liftV_one_smul (v : Pl F) (z : AE F E) : GlobalTheory.LatVac.liftV v 1 • z = liftT E v (evT E v z) := by
+theorem liftV_one_smul (v : Pl (F := F)) (z : AE F E) : GlobalTheory.LatVac.liftV v 1 • z = liftT E v (evT E v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e =>
@@ -78,7 +78,7 @@ theorem liftV_one_smul (v : Pl F) (z : AE F E) : GlobalTheory.LatVac.liftV v 1 �
     rfl
   | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]
 
-theorem at_liftT (v : Pl F) (y : Fv F v ⊗[F] E) : At (evFin F v) (liftT E v y) := by
+theorem at_liftT (v : Pl (F := F)) (y : Fv F v ⊗[F] E) : At (evFin F v) (liftT E v y) := by
   intro u hu
   induction y using TensorProduct.induction_on with
   | zero => simp
@@ -87,13 +87,13 @@ theorem at_liftT (v : Pl F) (y : Fv F v ⊗[F] E) : At (evFin F v) (liftT E v y)
       ← liftV_one_mul, ← mul_assoc, mul_comm u, liftV_one_mul, hu, map_zero, zero_mul, TensorProduct.zero_tmul]
   | add x y hx hy => rw [map_add (f := _), smul_add, hx, hy, add_zero]
 
-theorem at_iff (v : Pl F) (z : AE F E) : At (evFin F v) z ↔ ∃ y, liftT E v y = z := by
+theorem at_iff (v : Pl (F := F)) (z : AE F E) : At (evFin F v) z ↔ ∃ y, liftT E v y = z := by
   refine ⟨fun hz => ⟨evT E v z, ?_⟩, fun ⟨y, hy⟩ => hy ▸ at_liftT v y⟩
   have h := hz _ (evFin_one_sub v)
   rw [sub_smul, one_smul, sub_eq_zero, liftV_one_smul] at h
   exact h.symm
 
-theorem liftT_mul (v : Pl F) (y y' : Fv F v ⊗[F] E) : liftT E v (y * y') = liftT E v y * liftT E v y' := by
+theorem liftT_mul (v : Pl (F := F)) (y y' : Fv F v ⊗[F] E) : liftT E v (y * y') = liftT E v y * liftT E v y' := by
   induction y using TensorProduct.induction_on with
   | zero => simp
   | add x z hx hz => rw [add_mul, map_add (f := _), hx, hz, map_add (f := _), add_mul]
@@ -105,7 +105,7 @@ theorem liftT_mul (v : Pl F) (y y' : Fv F v ⊗[F] E) : liftT E v (y * y') = lif
       rw [Algebra.TensorProduct.tmul_mul_tmul, liftT_tmul, liftT_tmul, liftT_tmul, liftV_mul,
         Algebra.TensorProduct.tmul_mul_tmul]
 
-theorem liftT_sigR (σ : E →ₐ[F] E) (v : Pl F) (y : Fv F v ⊗[F] E) :
+theorem liftT_sigR (σ : E →ₐ[F] E) (v : Pl (F := F)) (y : Fv F v ⊗[F] E) :
     liftT E v (sigR (Fv F v) σ y) = cA σ (liftT E v y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
@@ -125,11 +125,11 @@ theorem trace_tmul_base {R : Type} [CommRing R] [Algebra F R] (a : R) (e : E) :
   rw [h1, map_smul, Algebra.trace_apply, Algebra.trace_apply, ← Algebra.baseChange_lmul,
     LinearMap.trace_baseChange, smul_eq_mul]
 
-theorem liftV_mul_algebraMap (v : Pl F) (t : Fv F v) (r : F) :
+theorem liftV_mul_algebraMap (v : Pl (F := F)) (t : Fv F v) (r : F) :
     GlobalTheory.LatVac.liftV v t * algebraMap F (AF F) r = GlobalTheory.LatVac.liftV v (algebraMap F (Fv F v) r * t) := by
   rw [← Algebra.smul_def, LinearMap.map_smul, Algebra.smul_def, mul_comm]
 
-theorem trace_liftT (v : Pl F) (y : Fv F v ⊗[F] E) :
+theorem trace_liftT (v : Pl (F := F)) (y : Fv F v ⊗[F] E) :
     Algebra.trace (AF F) (AE F E) (liftT E v y) =
       GlobalTheory.LatVac.liftV v (Algebra.trace (Fv F v) (Fv F v ⊗[F] E) y) := by
   induction y using TensorProduct.induction_on with
@@ -138,7 +138,7 @@ theorem trace_liftT (v : Pl F) (y : Fv F v ⊗[F] E) :
     rw [liftT_tmul, trace_tmul_base, trace_tmul_base, liftV_mul_algebraMap, mul_comm]
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
-theorem trace_mem_of_mem_intLoc (v : Pl F) {y : Fv F v ⊗[F] E} (hy : y ∈ intLoc F E v) :
+theorem trace_mem_of_mem_intLoc (v : Pl (F := F)) {y : Fv F v ⊗[F] E} (hy : y ∈ intLoc F E v) :
     Algebra.trace (Fv F v) (Fv F v ⊗[F] E) y ∈ v.adicCompletionIntegers F :=
   intLoc_induction (p := fun y => Algebra.trace (Fv F v) (Fv F v ⊗[F] E) y ∈ v.adicCompletionIntegers F)
     (fun a ha o => by
@@ -170,7 +170,7 @@ theorem odd_absNorm_of_two_notMem (P : HeightOneSpectrum (𝓞 F)) (h : (2 : �
   · exact h (Ideal.Quotient.eq_zero_iff_mem.1 (by rw [map_ofNat]; exact h3))
   · exact h0 h3
 
-theorem half_mem (v : Pl F) (h : (2 : 𝓞 F) ∉ v.asIdeal) :
+theorem half_mem (v : Pl (F := F)) (h : (2 : 𝓞 F) ∉ v.asIdeal) :
     algebraMap F (Fv F v) 2⁻¹ ∈ v.adicCompletionIntegers F := by
   have hval : Valued.v (algebraMap F (Fv F v) ((2 : 𝓞 F) : F)) = v.valuation F ((2 : 𝓞 F) : F) :=
     HeightOneSpectrum.valuedAdicCompletion_eq_valuation' v _
@@ -188,7 +188,7 @@ namespace GlobalTheory.InertLocField
 open InertChart
 
 theorem field_data : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
-    B.IsGood σ → ∀ (v : Pl F) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w →
+    B.IsGood σ → ∀ (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w →
     ∃ (L : Type) (_ : Field L) (_ : CharZero L) (_ : Valued L (WithZero (Multiplicative ℤ))) (_ : CompleteSpace L)
       (ϖ : L) (σL : L →+* L) (q : ℕ) (δ : L) (ψL : AddChar L ℂ) (ι : L →+ AE F E),
       Formalism.UG.IsUnramInv ϖ σL q ∧ Odd q ∧ (Valued.v δ = 1 ∧ σL δ = -δ) ∧

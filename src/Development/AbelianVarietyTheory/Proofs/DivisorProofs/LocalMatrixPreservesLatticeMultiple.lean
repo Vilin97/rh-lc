@@ -19,7 +19,7 @@ namespace GlobalTheory.SphLineComm.Bound
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem exists_nat_mul_mem_int (v : Pl F) (x : Fv F v) :
+theorem exists_nat_mul_mem_int (v : Pl (F := F)) (x : Fv F v) :
     ∃ N : ℕ, N ≠ 0 ∧ (N : Fv F v) * x ∈ v.adicCompletionIntegers F := by
   obtain ⟨b, hb, hbx⟩ := HeightOneSpectrum.adicCompletion.mul_nonZeroDivisor_mem_adicCompletionIntegers v x
   have hb0 : b ≠ 0 := nonZeroDivisors.ne_zero hb
@@ -105,14 +105,14 @@ def satHat {d : ℕ} (W : Spc F E d) : AddSubgroup (Fin d → AE F E) where
     rintro y ⟨n, h, hy⟩
     exact ⟨n, h, by rw [smul_neg]; exact neg_mem hy⟩
 
-def atV (v : Pl F) (c : Fv F v) : AF F := LinearMap.inr F (Ainf F) (Af F) (singleFin v c)
+def atV (v : Pl (F := F)) (c : Fv F v) : AF F := LinearMap.inr F (Ainf F) (Af F) (singleFin v c)
 
-theorem atV_smul (v : Pl F) (a : F) (c : Fv F v) : atV v (a • c) = a • atV v c := by
+theorem atV_smul (v : Pl (F := F)) (a : F) (c : Fv F v) : atV v (a • c) = a • atV v c := by
   show LinearMap.inr F (Ainf F) (Af F) (singleFin v (a • c)) = a • atV v c
   rw [map_smul, map_smul]
   rfl
 
-theorem unitAt_mul (v : Pl F) (b : AF F) :
+theorem unitAt_mul (v : Pl (F := F)) (b : AF F) :
     GlobalTheory.SphLineComm.unitAt v * b = atV v (evFin F v b) := by
   refine Prod.ext (zero_mul _) ?_
   change singleFin v 1 * sndA F b = singleFin v (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v (sndA F b))
@@ -124,7 +124,7 @@ theorem unitAt_mul (v : Pl F) (b : AF F) :
   · subst e; rw [evalV_singleFin_self, evalV_singleFin_self, one_mul]
   · rw [evalV_singleFin_ne e, evalV_singleFin_ne e, zero_mul]
 
-theorem single_tmul_mem {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) (v : Pl F) (c : Fv F v) (f : E) (i : Fin d) :
+theorem single_tmul_mem {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) (v : Pl (F := F)) (c : Fv F v) (f : E) (i : Fin d) :
     (Pi.single i (atV v c ⊗ₜ[F] f) : Fin d → AE F E) ∈ satHat W := by
   classical
   obtain ⟨m, hm, hx⟩ := exists_nat_smul_mem W.L hL (Pi.single i f)
@@ -159,7 +159,7 @@ namespace GlobalTheory.SphLineComm.Bound
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem single_unitAt_smul_mem {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) (v : Pl F) (i : Fin d) (t : AE F E) :
+theorem single_unitAt_smul_mem {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) (v : Pl (F := F)) (i : Fin d) (t : AE F E) :
     (Pi.single i (GlobalTheory.SphLineComm.unitAt v • t) : Fin d → AE F E) ∈ satHat W := by
   induction t using TensorProduct.induction_on with
   | zero => rw [smul_zero, Pi.single_zero]; exact zero_mem _
@@ -168,7 +168,7 @@ theorem single_unitAt_smul_mem {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) 
     exact single_tmul_mem W hL v _ f i
   | add s t hs ht => rw [smul_add, Pi.single_add]; exact add_mem hs ht
 
-theorem mem_satHat_of_at {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) (v : Pl F) (y : Fin d → AE F E)
+theorem mem_satHat_of_at {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) (v : Pl (F := F)) (y : Fin d → AE F E)
     (hy : At (evFin F v) y) : y ∈ satHat W := by
   have h1 : (1 - GlobalTheory.SphLineComm.unitAt v) • y = 0 :=
     hy _ (by rw [map_sub, map_one, GlobalTheory.SphLineComm.evFin_unitAt_self, sub_self])
@@ -195,7 +195,7 @@ theorem int_smul_mem_latHat {d : ℕ} (W : Spc F E d) (o : 𝓞 E) {z : Fin d �
   | add x y _ _ hx hy => rw [smul_add]; exact add_mem hx hy
   | neg x _ hx => rw [smul_neg]; exact neg_mem hx
 
-theorem nsmul_mulVec_mem_latHat : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (d : ℕ) (W : Spc F E d) (v : Pl F)
+theorem nsmul_mulVec_mem_latHat : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (d : ℕ) (W : Spc F E d) (v : Pl (F := F))
     (M : Matrix (Fin d) (Fin d) (AE F E)), W.L.IsLattice E → At (evFin F v) M →
     ∃ n : ℕ, n ≠ 0 ∧ ∀ z ∈ latHat W, n • (M *ᵥ z) ∈ latHat W := by
   intro F E _ _ _ _ _ d W v M hL hM

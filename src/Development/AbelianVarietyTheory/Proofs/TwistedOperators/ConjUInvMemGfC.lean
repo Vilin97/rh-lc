@@ -32,34 +32,34 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {Y : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E n} {Wd : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E d}
 
 def relD (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd) (om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ Y Wd) (ψ : AddChar (AF F) ℂ)
-    (emb : ∀ w : InfinitePlace F, GlobalTheory.AdelicU.EmbOver E w) (v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) :
+    (emb : ∀ w : InfinitePlace F, GlobalTheory.AdelicU.EmbOver E w) (v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) :
     Submodule ℂ ((Fin n × Fin d → AF F) → ℂ) :=
   Submodule.span ℂ {Ψ | ∃ g ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.UAt σ Y (evFin F v₁), ∃ Ψ₀ ∈ algD M ψ emb, Ψ = om (g, 1) Ψ₀ - Ψ₀}
 
-theorem tens_sub' (v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) (a b : (Fin n × Fin d → Fv F v₁) → ℂ) (r : (Fin n × Fin d → AF F) → ℂ) :
+theorem tens_sub' (v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) (a b : (Fin n × Fin d → Fv F v₁) → ℂ) (r : (Fin n × Fin d → AF F) → ℂ) :
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v₁) (a - b) r =
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v₁) a r - GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v₁) b r := by
   funext x; simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens, Pi.sub_apply]; ring
 
-theorem tens_add' (v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) (a b : (Fin n × Fin d → Fv F v₁) → ℂ) (r : (Fin n × Fin d → AF F) → ℂ) :
+theorem tens_add' (v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) (a b : (Fin n × Fin d → Fv F v₁) → ℂ) (r : (Fin n × Fin d → AF F) → ℂ) :
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v₁) (a + b) r =
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v₁) a r + GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v₁) b r := by
   funext x; simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens, Pi.add_apply]; ring
 
-theorem tens_smul' (v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) (c : ℂ) (a : (Fin n × Fin d → Fv F v₁) → ℂ)
+theorem tens_smul' (v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) (c : ℂ) (a : (Fin n × Fin d → Fv F v₁) → ℂ)
     (r : (Fin n × Fin d → AF F) → ℂ) :
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v₁) (c • a) r = c • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v₁) a r := by
   funext x; simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens, Pi.smul_apply, smul_eq_mul]; ring
 
-theorem tens_zero' (v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) (r : (Fin n × Fin d → AF F) → ℂ) :
+theorem tens_zero' (v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) (r : (Fin n × Fin d → AF F) → ℂ) :
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v₁) (0 : (Fin n × Fin d → Fv F v₁) → ℂ) r = 0 := by
   funext x; simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens, Pi.zero_apply, zero_mul]
 
 theorem tens_mem_relD (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd) (om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ Y Wd) (ψ : AddChar (AF F) ℂ)
-    (emb : ∀ w : InfinitePlace F, GlobalTheory.AdelicU.EmbOver E w) (v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F)
+    (emb : ∀ w : InfinitePlace F, GlobalTheory.AdelicU.EmbOver E w) (v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F))
     (hstd : ∀ᶠ v in Filter.cofinite, M.vac v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1)
     {f : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin n × Fin d)} (hf : f ∈ M.Pol ψ emb)
-    {φ : ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F, (Fin n × Fin d → Fv F v) → ℂ} (hSB : ∀ v, φ v ∈ SB _)
+    {φ : ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F), (Fin n × Fin d → Fv F v) → ℂ} (hSB : ∀ v, φ v ∈ SB _)
     (hcof : ∀ᶠ v in Filter.cofinite, φ v = M.vac v) {r : (Fin n × Fin d → AF F) → ℂ}
     (hr : ∀ x z, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (evFin F v₁) z → r (x + z) = r x)
     (hrt : ∀ ψ₀, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v₁) ψ₀ r = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f (Function.update φ v₁ ψ₀)) :
@@ -93,7 +93,7 @@ theorem tens_mem_relD (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorMod
   | smul c a _ ha => rw [tens_smul']; exact Submodule.smul_mem _ c ha
 
 theorem exists_So (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd) (om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ Y Wd) (ψ : AddChar (AF F) ℂ)
-    (emb : ∀ w : InfinitePlace F, GlobalTheory.AdelicU.EmbOver E w) {v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (t : E →ₐ[F] Fv F v₁)
+    (emb : ∀ w : InfinitePlace F, GlobalTheory.AdelicU.EmbOver E w) {v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (t : E →ₐ[F] Fv F v₁)
     (hstd : ∀ᶠ v in Filter.cofinite, M.vac v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1)
     {P : Type} [AddCommGroup P] [Module ℂ P] (p : ((Fin n × Fin d → Fv F v₁) → ℂ) →ₗ[ℂ] P)
     (hco : ∀ φ ∈ SB (Fin n × Fin d → Fv F v₁), p φ = 0 ↔ φ ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.augAt om v₁)
@@ -196,7 +196,7 @@ end Gen
 
 
 theorem conjUInv_mem_GfC {D : D7} (V : HSp D) (Yp : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc D.host.F D.host.E V.rank) (c : D.host.E)
-    (hc : c ≠ 0) (h : Yp.J = c • V.gram) (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl D.host.F) (x : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.UB Yp.J)
+    (hc : c ≠ 0) (h : Yp.J = c • V.gram) (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := D.host.F)) (x : GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.UB Yp.J)
     (hx : x ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.UAt D.sp.cm.sig Yp (evFin D.host.F v)) :
     GlobalTheory.ConjUTransport.conjUInv V c hc h x ∈ GfC V := by
   set a : AF D.host.F := 1 - GlobalTheory.EmbChart.atPlace v 1 with ha

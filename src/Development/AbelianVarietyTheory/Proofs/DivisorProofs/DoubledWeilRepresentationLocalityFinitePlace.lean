@@ -24,7 +24,7 @@ theorem comm_off {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E
     (dd : Darboux (symp (cA σ) (-1) (incM F G.V'.J) (dbl (incM F G.W.J))) (Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a')))
     (omd : UG (cA σ) (dbl (incM F G.W.J)) →* Module.End ℂ (((Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a')) → AF F) → ℂ))
     (hW : IsUSplitting (adeleClass F) B.ψ dd (actB (cA σ)) omd)
-    (v : Pl F) (g : UG (cA σ) (dbl (incM F G.W.J))) (hg : At (evFin F v) (GlobalTheory.InertDbl.matD g - 1))
+    (v : Pl (F := F)) (g : UG (cA σ) (dbl (incM F G.W.J))) (hg : At (evFin F v) (GlobalTheory.InertDbl.matD g - 1))
     (u : AF F) (hu : evFin F v u = 0) (p q : (Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a')) → AF F)
     (Φ : ((Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a')) → AF F) → ℂ)
     (hΦ : Φ ∈ GlobalTheory.WeilM.schA F (Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a'))) :
@@ -44,12 +44,12 @@ theorem comm_off {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E
   rw [hact] at h
   simpa only [Darboux.rho, LinearEquiv.apply_symm_apply] using h
 
-private lemma at_add_divisor {F : Type} [Field F] [NumberField F] {κ : Type} (v : Pl F) {z z' : κ → AF F}
+private lemma at_add_divisor {F : Type} [Field F] [NumberField F] {κ : Type} (v : Pl (F := F)) {z z' : κ → AF F}
     (hz : At (evFin F v) z) (hz' : At (evFin F v) z') : At (evFin F v) (z + z') := by
   intro u hu
   rw [smul_add, hz u hu, hz' u hu, add_zero]
 
-private lemma at_liftV' {F : Type} [Field F] [NumberField F] {κ : Type} (v : Pl F) (t : κ → Fv F v) :
+private lemma at_liftV' {F : Type} [Field F] [NumberField F] {κ : Type} (v : Pl (F := F)) (t : κ → Fv F v) :
     At (evFin F v) (fun i => GlobalTheory.LatVac.liftV v (t i)) := by
   intro u hu
   funext i
@@ -58,7 +58,7 @@ private lemma at_liftV' {F : Type} [Field F] [NumberField F] {κ : Type} (v : Pl
 
 theorem locality : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ (v : Pl F) (dd : Darboux (symp (cA σ) (-1) (incM F G.V'.J) (dbl (incM F G.W.J))) (Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a'))) (omd : UG (cA σ) (dbl (incM F G.W.J)) →* Module.End ℂ (((Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a')) → AF F) → ℂ)),
+    ∀ (v : Pl (F := F)) (dd : Darboux (symp (cA σ) (-1) (incM F G.V'.J) (dbl (incM F G.W.J))) (Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a'))) (omd : UG (cA σ) (dbl (incM F G.W.J)) →* Module.End ℂ (((Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a')) → AF F) → ℂ)),
     IsUWeilSplit (cA σ) (adeleClass F) B.ψ (-1) (incM F G.V'.J) (dbl (incM F G.W.J)) dd X.α (diagCols (Fin (a + a'))) omd →
     ∀ g : UG (cA σ) (dbl (incM F G.W.J)), At (evFin F v) (GlobalTheory.InertDbl.matD g - 1) →
     ∀ φ ∈ SB ((Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a')) → Fv F v), ∃ φ₁ ∈ SB ((Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a')) → Fv F v), Acts (evFin F v) (omd g) φ φ₁ := by

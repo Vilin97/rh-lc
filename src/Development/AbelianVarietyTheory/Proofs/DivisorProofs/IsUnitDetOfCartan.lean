@@ -18,7 +18,7 @@ namespace GlobalTheory.SplitUnitLift
 open GlobalTheory.SplitGLLift
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
-  {v : Pl F} {n : ℕ}
+  {v : Pl (F := F)} {n : ℕ}
 
 theorem unitary_eps (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) (J : Matrix (Fin n) (Fin n) E) (ε : F)
     (herm : ∀ i j, σ (J j i) = algebraMap F E ε * J i j) (hJ : IsUnit (J.map τ).det) (g : GL (Fin n) (Fv F v)) :

@@ -217,7 +217,7 @@ theorem bA_repr_inclR (e : E) (j : Fin (Module.finrank F E)) :
   simp
 
 theorem evFin_planeT_smul_incM (σ : E →ₐ[F] E) {n d n₁ d₁ : ℕ} (X : Spc F E n) (W : Spc F E d) (H : Plane E n n₁)
-    (H' : Plane E d d₁) (v : Pl F) (c : Fv F v) (g : Matrix (Fin n) (Fin d) E) (k : Kc F E d₁ n₁) :
+    (H' : Plane E d d₁) (v : Pl (F := F)) (c : Fv F v) (g : Matrix (Fin n) (Fin d) E) (k : Kc F E d₁ n₁) :
     evFin F v ((planeT σ X W H H' (GlobalTheory.EmbChart.atPlace v c • incM F g)).1.1 k) =
       c * algebraMap F (Fv F v) (fRat F H H' g k) := by
   rw [map_smul]

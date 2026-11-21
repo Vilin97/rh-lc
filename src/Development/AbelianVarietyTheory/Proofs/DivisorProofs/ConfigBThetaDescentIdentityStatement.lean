@@ -21,7 +21,7 @@ theorem _root_.GlobalTheory.T.config_b_theta_descent_identity : GlobalTheory.ThK
     ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (R : RealMaps F a (b + 2)) (Rf : FinMaps F a (b + 2))
       (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W) (R₁ : RealMaps F a b) (Rf₁ : FinMaps F a b),
       IsMatched B G X om om' R Rf → IsMatched B G₁ X om₁ om₁' R₁ Rf₁ →
-      ∀ (v : Pl F) (t : E →ₐ[F] Fv F v), ∃ (c : GL (Fin (a + (b + 2))) (Fv F v)) (c₁ : GL (Fin (a + b)) (Fv F v)),
+      ∀ (v : Pl (F := F)) (t : E →ₐ[F] Fv F v), ∃ (c : GL (Fin (a + (b + 2))) (Fv F v)) (c₁ : GL (Fin (a + b)) (Fv F v)),
         GlobalTheory.KSplit.IsSmU (chrW X.α t) ∧ GlobalTheory.KSplit.IsSmU (chrW X.β t) ∧
         ∀ (eB : Rf.Pi v ≃ₗ[ℂ] GlobalTheory.KSplit.indSp a (b + 2) (chrW X.α t) (chrW X.β t))
           (eS : Rf₁.Pi v ≃ₗ[ℂ] GlobalTheory.KSplit.indSp a b (chrW X.α t) (chrW X.β t)),

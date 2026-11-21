@@ -164,7 +164,7 @@ theorem rank_SB_le (X : Type) [TopologicalSpace X] [SecondCountableTopology X] :
     _ ≤ Cardinal.mk S := rank_span_le S
     _ ≤ Cardinal.aleph0 := Cardinal.mk_le_aleph0_iff.2 hS.to_subtype
 
-theorem sc_Fv {F : Type} [Field F] [NumberField F] (v : Pl F) : SecondCountableTopology (Fv F v) := by
+theorem sc_Fv {F : Type} [Field F] [NumberField F] (v : Pl (F := F)) : SecondCountableTopology (Fv F v) := by
   have : Countable F := (Module.finBasis ℚ F).equivFun.injective.countable
   have : TopologicalSpace.SeparableSpace (v.adicCompletion F) :=
     ⟨_, Set.countable_range _, v.denseRange_algebraMap F⟩
@@ -271,13 +271,13 @@ section Ker
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
-theorem acts_zero_zero {κ : Type} [Fintype κ] (v : Pl F) (T : Module.End ℂ ((κ → AF F) → ℂ)) :
+theorem acts_zero_zero {κ : Type} [Fintype κ] (v : Pl (F := F)) (T : Module.End ℂ ((κ → AF F) → ℂ)) :
     Acts (evFin F v) T (0 : (κ → Fv F v) → ℂ) 0 := by
   intro r _
   have e : tens (evFin F v) (0 : (κ → Fv F v) → ℂ) r = 0 := by funext x; simp [tens]
   rw [e, map_zero]
 
-theorem ker_maximal {n d : ℕ} {Y : Spc F E n} {Z : Spc F E d} (om : Rep σ Y Z) (v : Pl F) {P : Type} [AddCommGroup P]
+theorem ker_maximal {n d : ℕ} {Y : Spc F E n} {Z : Spc F E d} (om : Rep σ Y Z) (v : Pl (F := F)) {P : Type} [AddCommGroup P]
     [Module ℂ P] [Nontrivial P] (p : ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] P)
     (onto : (SB (Fin n × Fin d → Fv F v)).map p = ⊤) (inv : augAt om v ≤ LinearMap.ker p)
     (stab : ∀ h ∈ UAt σ Z (evFin F v), ∀ φ ∈ SB (Fin n × Fin d → Fv F v), ∀ φ₁ ∈ SB (Fin n × Fin d → Fv F v),

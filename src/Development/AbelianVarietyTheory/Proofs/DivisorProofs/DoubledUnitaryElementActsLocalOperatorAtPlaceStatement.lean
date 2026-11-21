@@ -17,7 +17,7 @@ theorem _root_.GlobalTheory.T.doubledUnitaryElement_acts_localOperatorAtPlace : 
     ∀ (dd : Darboux (symp (cA σ) (-1) (incM F G.W.J) (dbl (incM F G.V'.J))) ((Fin a' × Fin (a + a')) ⊕ (Fin a' × Fin (a + a'))))
       (omd : UG (cA σ) (dbl (incM F G.V'.J)) →* Module.End ℂ (((Fin a' × Fin (a + a')) ⊕ (Fin a' × Fin (a + a')) → AF F) → ℂ)),
       IsUSplitting (adeleClass F) B.ψ dd (actB (cA σ)) omd →
-    ∀ (v : Pl F) (p : UG (cA σ) (dbl (incM F G.V'.J))),
+    ∀ (v : Pl (F := F)) (p : UG (cA σ) (dbl (incM F G.V'.J))),
       At (evFin F v) (((p : GL (Fin a' ⊕ Fin a') (AE F E)) : Matrix (Fin a' ⊕ Fin a') (Fin a' ⊕ Fin a') (AE F E)) - 1) →
     ∀ φ ∈ SB ((Fin a' × Fin (a + a')) ⊕ (Fin a' × Fin (a + a')) → Fv F v), ∃ φ₁ ∈ SB ((Fin a' × Fin (a + a')) ⊕ (Fin a' × Fin (a + a')) → Fv F v),
       Acts (evFin F v) (omd p) φ φ₁ := by

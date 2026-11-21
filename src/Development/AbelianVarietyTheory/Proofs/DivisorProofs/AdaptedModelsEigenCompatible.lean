@@ -107,7 +107,7 @@ theorem exists_isEv_iso : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Nu
         ContinuousLinearMap.comp_apply, hR, LinearMap.smul_apply, LinearMap.comp_apply]
       have hI : (fun i => evI F (Function.extend j y 0 i)) = Function.extend j (fun i => evI F (y i)) 0 :=
         extend_map hj (evI F) (by unfold evI; exact map_zero _) y
-      have hF : ∀ v : Pl F, (fun i => evFin F v (Function.extend j y 0 i)) =
+      have hF : ∀ v : Pl (F := F), (fun i => evFin F v (Function.extend j y 0 i)) =
           Function.extend j (fun i => evFin F v (y i)) 0 := fun v => extend_map hj _ (map_zero _) y
       simp only [hI, hF]
       have hfin1 : (Function.mulSupport fun v : Pl F => (c v)⁻¹).Finite := by

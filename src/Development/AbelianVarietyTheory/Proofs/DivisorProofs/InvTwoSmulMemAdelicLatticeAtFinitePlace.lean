@@ -12,7 +12,7 @@ open scoped TensorProduct Matrix
 
 namespace GlobalTheory.InertSph
 
-theorem evFin_invTwo_mem {F : Type} [Field F] [NumberField F] (v : Pl F) (h2 : (2 : 𝓞 F) ∉ v.asIdeal) :
+theorem evFin_invTwo_mem {F : Type} [Field F] [NumberField F] (v : Pl (F := F)) (h2 : (2 : 𝓞 F) ∉ v.asIdeal) :
     evFin F v (⅟(2 : AF F)) ∈ v.adicCompletionIntegers F := by
   rw [HeightOneSpectrum.mem_adicCompletionIntegers]
   have hv2 : Valued.v (2 : Fv F v) = 1 := by
@@ -26,7 +26,7 @@ theorem evFin_invTwo_mem {F : Type} [Field F] [NumberField F] (v : Pl F) (h2 : (
   exact hvm.le
 
 theorem invTwo_smul_mem_latAt : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (d : ℕ) (W : Spc F E d)
-    (v : Pl F), (2 : 𝓞 F) ∉ v.asIdeal → ∀ z ∈ GlobalTheory.InertSph.latAt W v, (⅟(2 : AF F)) • z ∈ GlobalTheory.InertSph.latAt W v := by
+    (v : Pl (F := F)), (2 : 𝓞 F) ∉ v.asIdeal → ∀ z ∈ GlobalTheory.InertSph.latAt W v, (⅟(2 : AF F)) • z ∈ GlobalTheory.InertSph.latAt W v := by
   intro F E _ _ _ _ _ d W v h2 z hz
   induction hz using AddSubgroup.closure_induction with
   | mem z hz =>

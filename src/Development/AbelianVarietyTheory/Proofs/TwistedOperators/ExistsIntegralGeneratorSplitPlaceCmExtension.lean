@@ -22,7 +22,7 @@ namespace GlobalTheory.SplitGen
 open IsDedekindDomain.HeightOneSpectrum Polynomial
 
 theorem exists_integral_gen_split : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
-    B.IsGood σ → ∀ v : Pl F, Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v →
+    B.IsGood σ → ∀ v : Pl (F := F), Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v →
     ∃ (a : 𝓞 E) (b c : 𝓞 F), (a : E) ^ 2 + algebraMap F E (b : F) * a + algebraMap F E (c : F) = 0 ∧
       σ (a : E) = -algebraMap F E (b : F) - a ∧ c ∈ v.asIdeal ∧ b ∉ v.asIdeal := by
   intro F E _ _ _ _ _ σ B hB v hv

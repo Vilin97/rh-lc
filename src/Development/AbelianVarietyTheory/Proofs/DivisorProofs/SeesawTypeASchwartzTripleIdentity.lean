@@ -100,7 +100,7 @@ theorem eventually_schr_pureA {κ : Type} [Fintype κ] {ψ : AddChar (AF F) ℂ}
 
 theorem exists_den {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) : ∃ D : ℕ, 0 < D ∧ ∀ y : Af F,
     (∀ α : Af F, (∀ v, α v ∈ v.adicCompletionIntegers F) → ψ (pairA F 0 (α * y)) = 1) →
-      ∀ v : Pl F, (D : Fv F v) * y v ∈ v.adicCompletionIntegers F := by
+      ∀ v : Pl (F := F), (D : Fv F v) * y v ∈ v.adicCompletionIntegers F := by
   obtain ⟨a, ha, H⟩ := (GlobalTheory.StdDual.codiff F).isFractional
   have ha0 : Ideal.span {a} ≠ ⊥ := by simpa using nonZeroDivisors.ne_zero ha
   obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.1 (Ideal.absNorm_mem (Ideal.span {a}))

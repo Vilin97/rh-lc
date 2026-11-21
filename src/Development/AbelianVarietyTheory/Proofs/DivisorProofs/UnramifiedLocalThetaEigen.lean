@@ -20,7 +20,7 @@ namespace GlobalTheory.IndLine
 theorem fixed_eq_smul_pVac : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W)
     (R : RealMaps F a a') (Rf : FinMaps F a a'), IsMatched B G X om om' R Rf →
-    ∀ (v : Pl F), IsEmpty (E →ₐ[F] Fv F v) → v ∉ X.T → ∀ ξ : Rf.Pi v,
+    ∀ (v : Pl (F := F)), IsEmpty (E →ₐ[F] Fv F v) → v ∉ X.T → ∀ ξ : Rf.Pi v,
       (∀ k ∈ KAt σ G.W v, ∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v), ∀ φ₁ ∈ SB (Fin a × Fin (a + a') → Fv F v),
         Acts (evFin F v) (om (1, k)) φ φ₁ → Rf.p v φ = ξ → Rf.p v φ₁ = ξ) →
       ∃ c : ℂ, ξ = c • Rf.p v (G.M.vac v) := by

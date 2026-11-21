@@ -78,7 +78,7 @@ end Alg
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem local_identity (v : Pl F) {W : Type} [AddCommGroup W] [Module (AF F) W] {B : W → W → AF F} {κ : Type} [Fintype κ]
+theorem local_identity (v : Pl (F := F)) {W : Type} [AddCommGroup W] [Module (AF F) W] {B : W → W → AF F} {κ : Type} [Fintype κ]
     (co : Darboux B κ) (ψ : AddChar (AF F) ℂ) (γ : W) (f : (κ → Fv F v) → ℂ) (χ : ℂ) (hγ : At (evFin F v) γ)
     (r : (κ → AF F) → ℂ) (hr : ∀ x z, At (evFin F v) z → r (x + z) = r x)
     (hA : co.rho ψ γ (tens (evFin F v) f r) = χ • tens (evFin F v) f r) (x₀ : κ → AF F) (hx₀ : r x₀ ≠ 0)
@@ -125,14 +125,14 @@ theorem local_identity (v : Pl F) {W : Type} [AddCommGroup W] [Module (AF F) W] 
   simp only [GlobalTheory.LatVac.locCo, AddMonoidHom.coe_mk, ZeroHom.coe_mk]
   ring
 
-def latDbl {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F) :
+def latDbl {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl (F := F)) :
     AddSubgroup (Matrix (Fin n) (Fin d ⊕ Fin d) (AE F E)) where
   carrier := {z | z.toCols₁ ∈ latAtV X Y v ∧ z.toCols₂ ∈ latAtV X Y v}
   zero_mem' := ⟨(latAtV X Y v).zero_mem, (latAtV X Y v).zero_mem⟩
   add_mem' := fun ha hb => ⟨(latAtV X Y v).add_mem ha.1 hb.1, (latAtV X Y v).add_mem ha.2 hb.2⟩
   neg_mem' := fun ha => ⟨(latAtV X Y v).neg_mem ha.1, (latAtV X Y v).neg_mem ha.2⟩
 
-theorem at_latDbl {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F) :
+theorem at_latDbl {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl (F := F)) :
     ∀ γ ∈ latDbl X Y v, At (evFin F v) γ := by
   intro γ hγ u hu
   have h1 := (GlobalTheory.LatVac.latAtV_at_stable X Y v).1 _ hγ.1 u hu
@@ -141,12 +141,12 @@ theorem at_latDbl {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F) :
   · exact congrFun (congrFun h1 i) j
   · exact congrFun (congrFun h2 i) j
 
-theorem vecMulVec_mem_latDbl {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F) {x : Fin n → E} (hx : x ∈ X.L)
+theorem vecMulVec_mem_latDbl {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl (F := F)) {x : Fin n → E} (hx : x ∈ X.L)
     {z : Fin d ⊕ Fin d → AE F E} (hz : z ∈ GlobalTheory.DblVac.latD Y v) :
     Matrix.vecMulVec (fun i => inclR (F := F) (AF F) (x i)) z ∈ latDbl X Y v :=
   ⟨GlobalTheory.VacTransport.vecMulVec_mem X Y v hx hz.1, GlobalTheory.VacTransport.vecMulVec_mem X Y v hx hz.2⟩
 
-theorem mul_transpose_mem_doubledTensorLattice_of_into_doubled {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F)
+theorem mul_transpose_mem_doubledTensorLattice_of_into_doubled {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl (F := F))
     (h : Matrix (Fin d ⊕ Fin d) (Fin d) (AE F E))
     (hh : ∀ z ∈ GlobalTheory.InertSph.latAt Y v, h *ᵥ z ∈ GlobalTheory.DblVac.latD Y v)
     {γ : Matrix (Fin n) (Fin d) (AE F E)} (hγ : γ ∈ latAtV X Y v) : γ * hᵀ ∈ latDbl X Y v := by
@@ -165,7 +165,7 @@ theorem mul_transpose_mem_doubledTensorLattice_of_into_doubled {n d : ℕ} (X : 
   | add z z' _ _ h h' => rw [Matrix.add_mul]; exact add_mem h h'
   | neg z _ h => rw [Matrix.neg_mul]; exact neg_mem h
 
-theorem mul_transpose_mem_latDbl {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F)
+theorem mul_transpose_mem_latDbl {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl (F := F))
     (h : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (AE F E))
     (hh : ∀ z ∈ GlobalTheory.DblVac.latD Y v, h *ᵥ z ∈ GlobalTheory.DblVac.latD Y v)
     {γ : Matrix (Fin n) (Fin d ⊕ Fin d) (AE F E)} (hγ : γ ∈ latDbl X Y v) : γ * hᵀ ∈ latDbl X Y v := by
@@ -186,7 +186,7 @@ theorem mul_transpose_mem_latDbl {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v 
     rw [e1]
     exact hh _ ⟨(GlobalTheory.InertSph.latAt Y v).zero_mem, hz⟩
 
-theorem latDbl_selfDual (σ : E →ₐ[F] E) {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F) (ψ : AddChar (AF F) ℂ)
+theorem latDbl_selfDual (σ : E →ₐ[F] E) {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl (F := F)) (ψ : AddChar (AF F) ℂ)
     (hsd : ∀ z : Matrix (Fin n) (Fin d) (AE F E), At (evFin F v) z → (z ∈ latAtV X Y v ↔ ∀ γ ∈ latAtV X Y v,
       ψ (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F Y.J) z γ) = 1))
     (z : Matrix (Fin n) (Fin d ⊕ Fin d) (AE F E)) (hz : At (evFin F v) z) :
@@ -209,7 +209,7 @@ theorem latDbl_selfDual (σ : E →ₐ[F] E) {n d : ℕ} (X : Spc F E n) (Y : Sp
       exact inv_eq_one.1 this
 
 theorem dbl_eigen (σ : E →ₐ[F] E) {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsLattice E)
-    (hY : Y.L.IsLattice E) (M : Model σ X Y) (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (v : Pl F) (hunr : PsiUnr ψ v)
+    (hY : Y.L.IsLattice E) (M : Model σ X Y) (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (v : Pl (F := F)) (hunr : PsiUnr ψ v)
     (hsd : ∀ z : Matrix (Fin n) (Fin d) (AE F E), At (evFin F v) z → (z ∈ latAtV X Y v ↔ ∀ γ ∈ latAtV X Y v,
       ψ (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F Y.J) z γ) = 1))
     (φ : (Fin n × Fin d → Fv F v) → ℂ) (hφ : M.IsVac ψ v φ)
@@ -348,7 +348,7 @@ theorem dbl_eigen (σ : E →ₐ[F] E) {n d : ℕ} (X : Spc F E n) (Y : Spc F E 
 
 theorem split_eigen : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ (v : Pl F), (∀ w : HeightOneSpectrum (𝓞 E), ¬ Formalism.UG.IsInertAt F E v w) → v ∉ X.T → PsiUnr B.ψ v →
+    ∀ (v : Pl (F := F)), (∀ w : HeightOneSpectrum (𝓞 E), ¬ Formalism.UG.IsInertAt F E v w) → v ∉ X.T → PsiUnr B.ψ v →
     ∀ (dd : Darboux (symp (cA σ) (-1 : AE F E) (incM F G.V.J) (dbl (incM F G.W.J))) ((Fin a × Fin (a + a')) ⊕ (Fin a × Fin (a + a'))))
       (omd : GlobalTheory.DblVac.UD σ G.W →* Module.End ℂ (((Fin a × Fin (a + a')) ⊕ (Fin a × Fin (a + a')) → AF F) → ℂ)),
     IsDblCoord (cA σ) (-1 : AE F E) (incM F G.V.J) (incM F G.W.J) G.M.co dd →

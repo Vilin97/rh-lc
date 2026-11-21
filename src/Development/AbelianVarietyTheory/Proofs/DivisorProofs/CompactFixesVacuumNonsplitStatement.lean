@@ -14,6 +14,6 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.compact_fixes_vacuum_nonsplit : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ v : Pl F, IsEmpty (E →ₐ[F] Fv F v) → v ∉ X.T → ∀ k ∈ KAt σ G.W v,
+    ∀ v : Pl (F := F), IsEmpty (E →ₐ[F] Fv F v) → v ∉ X.T → ∀ k ∈ KAt σ G.W v,
       Acts (evFin F v) (om (1, k)) (G.M.vac v) (G.M.vac v) := by
   first | exact @GlobalTheory.VacFixKAt.vacFixed | exact GlobalTheory.VacFixKAt.vacFixed | (intros; apply GlobalTheory.VacFixKAt.vacFixed <;> assumption)

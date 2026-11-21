@@ -23,7 +23,7 @@ namespace GlobalTheory.SphLine
 
 theorem inv_mem_locK_mul_locK : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W)
-    (om' : Rep σ G.V' G.W), IsTriple B G X om om' → ∀ v : Pl F, IsEmpty (E →ₐ[F] Fv F v) →
+    (om' : Rep σ G.V' G.W), IsTriple B G X om om' → ∀ v : Pl (F := F), IsEmpty (E →ₐ[F] Fv F v) →
     ∀ g ∈ locU σ G.W v, ∃ x ∈ locK σ G.W v, ∃ y ∈ locK σ G.W v, g⁻¹ = x * g * y := by
   intro F E _ _ _ _ _ σ B a a' G X om om' hT v hv g hg
   have hσ : IsCMExt F E σ := hT.base.cm
@@ -65,7 +65,7 @@ theorem inv_mem_locK_mul_locK : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
 
 theorem gelfand_inv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W),
-    IsTriple B G X om om' → ∀ v : Pl F, IsEmpty (E →ₐ[F] Fv F v) →
+    IsTriple B G X om om' → ∀ v : Pl (F := F), IsEmpty (E →ₐ[F] Fv F v) →
     ∃ θ : GlobalTheory.SphLine.locU σ G.W v → GlobalTheory.SphLine.locU σ G.W v, (∀ x y, θ (x * y) = θ y * θ x) ∧ (∀ x, θ (θ x) = x) ∧
       ∀ g, ∃ a ∈ (GlobalTheory.SphLine.locK σ G.W v).subgroupOf (GlobalTheory.SphLine.locU σ G.W v),
         ∃ b ∈ (GlobalTheory.SphLine.locK σ G.W v).subgroupOf (GlobalTheory.SphLine.locU σ G.W v), θ g = a * g * b := by

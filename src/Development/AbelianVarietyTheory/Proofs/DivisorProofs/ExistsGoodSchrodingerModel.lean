@@ -39,9 +39,9 @@ theorem model_exists : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
   obtain ⟨μ, 𝓕, hμ, h𝓕⟩ := exists_haar_fundDom F E σ n X.J
   have hS := GlobalTheory.VacIndic.eventually_isVac_indicator B hB X W r s r' s' hX hW co hco
   let M₀ : Model σ X W := ⟨co, fun _ => 0, 0, ∅⟩
-  let ind : ∀ v : Pl F, (Fin n × Fin d → Fv F v) → ℂ := fun v =>
+  let ind : ∀ v : Pl (F := F), (Fin n × Fin d → Fv F v) → ℂ := fun v =>
     Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1
-  let vac : ∀ v : Pl F, (Fin n × Fin d → Fv F v) → ℂ := fun v =>
+  let vac : ∀ v : Pl (F := F), (Fin n × Fin d → Fv F v) → ℂ := fun v =>
     if M₀.IsVac B.ψ v (ind v) then ind v else (GlobalTheory.T.exists_finitePlace_vacuum_any_darboux_coordinates B hB X W r s r' s' hX hW co v).choose
   refine ⟨⟨co, vac, μ, 𝓕⟩, ⟨hco, fun v => ?_, ?_, hμ, h𝓕⟩⟩
   · show M₀.IsVac B.ψ v (vac v)

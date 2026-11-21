@@ -342,7 +342,7 @@ theorem map_neg_mulG {D : D7} (w : Pl D.host.E) (S : HSp D) {m : ℕ} (x : Matri
   exact Matrix.map_neg (cw w) (RingHom.map_neg (cw w)) _
 
 theorem chart_coX {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n d : ℕ}
-    {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (t : E →ₐ[F] Fv F v) (b : GL (Fin n) (Fv F v)) (c : GL (Fin d) (Fv F v)) {k : Type} [Field k]
+    {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (t : E →ₐ[F] Fv F v) (b : GL (Fin n) (Fv F v)) (c : GL (Fin d) (Fv F v)) {k : Type} [Field k]
     (j : Fv F v ≃+* k) (u : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)) :
     (coX t b c u).map j = ((GeneralLinearGroup.map j.toRingHom b)⁻¹).val * (u.map (piW t)).map j *
       ((GeneralLinearGroup.map j.toRingHom c)⁻¹).valᵀ := by
@@ -351,7 +351,7 @@ theorem chart_coX {F E : Type} [Field F] [NumberField F] [Field E] [NumberField 
   rfl
 
 theorem chart_coY {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) {n d : ℕ}
-    (X : Spc F E n) (Y : Spc F E d) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (t : E →ₐ[F] Fv F v) (b : GL (Fin n) (Fv F v))
+    (X : Spc F E n) (Y : Spc F E d) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (t : E →ₐ[F] Fv F v) (b : GL (Fin n) (Fv F v))
     (c : GL (Fin d) (Fv F v)) {k : Type} [Field k] (j : Fv F v ≃+* k) (u : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E)) :
     (coY σ X Y t b c u).map j = -((GeneralLinearGroup.map j.toRingHom b).valᵀ * (X.J.map t).map j *
       (u.map (piW (t.comp σ))).map j * ((Y.J.map t).map j)ᵀ * (GeneralLinearGroup.map j.toRingHom c).val) := by
@@ -360,7 +360,7 @@ theorem chart_coY {F E : Type} [Field F] [NumberField F] [Field E] [NumberField 
   rfl
 
 theorem charts {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) {n p q d : ℕ}
-    (e : Fin p ⊕ Fin q ≃ Fin d) (X : Spc F E n) (Y : Spc F E d) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (t : E →ₐ[F] Fv F v)
+    (e : Fin p ⊕ Fin q ≃ Fin d) (X : Spc F E n) (Y : Spc F E d) {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} (t : E →ₐ[F] Fv F v)
     (b : GL (Fin n) (Fv F v)) (c : GL (Fin d) (Fv F v)) {k : Type} [Field k] (j : Fv F v ≃+* k)
     (β g : GL (Fin n) k) (Gm : Matrix (Fin n) (Fin n) k) (hg : g.val = -(β.valᵀ * Gmᵀ * b.val.map j))
     (cc : GL (Fin d) k) (βV : GL (Fin p) k) (β₁ : GL (Fin q) k) (hC : c.val.map j * cc.val = blk e βV.val (-β₁.val))

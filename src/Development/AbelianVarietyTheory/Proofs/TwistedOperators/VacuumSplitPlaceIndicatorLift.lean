@@ -26,13 +26,13 @@ open GlobalTheory.LFun GlobalTheory.Doubling
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem at_inFin (v : Pl F) (a : Fv F v) : At (evFin F v) (inFin v a) := by
+theorem at_inFin (v : Pl (F := F)) (a : Fv F v) : At (evFin F v) (inFin v a) := by
   intro u hu
   have h := GlobalTheory.InertDetChr.at_inFin_one (F := F) v u hu
   rw [smul_eq_mul] at h ⊢
   rw [show a = 1 * a from (one_mul a).symm, inFin_mul, ← mul_assoc, h, zero_mul]
 
-theorem compFin_smul_inclR (v : Pl F) (a : AF F) (y : E) :
+theorem compFin_smul_inclR (v : Pl (F := F)) (a : AF F) (y : E) :
     compFin F E v (a • inclR (F := F) (AF F) y) = evFin F v a ⊗ₜ[F] y := by
   rw [Algebra.smul_def, map_mul, GlobalTheory.InertDetChr.compFin_algebraMap]
   have : compFin F E v (inclR (F := F) (AF F) y) = (1 : Fv F v) ⊗ₜ[F] y := by
@@ -41,7 +41,7 @@ theorem compFin_smul_inclR (v : Pl F) (a : AF F) (y : E) :
   rw [this]
   simp [Algebra.TensorProduct.algebraMap_apply]
 
-theorem comp_mem_latLoc {d : ℕ} (W : Spc F E d) (v : Pl F) {z : Fin d → AE F E}
+theorem comp_mem_latLoc {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) {z : Fin d → AE F E}
     (hz : z ∈ GlobalTheory.InertSph.latAt W v) : compFin F E v ∘ z ∈ latLoc F W.L v := by
   induction hz using AddSubgroup.closure_induction with
   | mem z hz =>
@@ -59,7 +59,7 @@ theorem comp_mem_latLoc {d : ℕ} (W : Spc F E d) (v : Pl F) {z : Fin d → AE F
     convert neg_mem hx using 1
     funext i; exact map_neg _ _
 
-theorem mulVec_mem_latLoc {d : ℕ} (W : Spc F E d) (v : Pl F) (g : Matrix (Fin d) (Fin d) (AE F E))
+theorem mulVec_mem_latLoc {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (g : Matrix (Fin d) (Fin d) (AE F E))
     (hg : ∀ z ∈ GlobalTheory.InertSph.latAt W v, g *ᵥ z ∈ GlobalTheory.InertSph.latAt W v) :
     ∀ y ∈ latLoc F W.L v, (compFin F E v).mapMatrix g *ᵥ y ∈ latLoc F W.L v := by
   intro y hy
@@ -80,7 +80,7 @@ theorem mulVec_mem_latLoc {d : ℕ} (W : Spc F E d) (v : Pl F) (g : Matrix (Fin 
   rw [e2]
   exact comp_mem_latLoc W v (hg _ hz)
 
-theorem det_mem_intLoc {d : ℕ} {L : Submodule (𝓞 E) (Fin d → E)} {v : Pl F} (P : GL (Fin d) (Fv F v ⊗[F] E))
+theorem det_mem_intLoc {d : ℕ} {L : Submodule (𝓞 E) (Fin d → E)} {v : Pl (F := F)} (P : GL (Fin d) (Fv F v ⊗[F] E))
     (hP : ∀ y : Fin d → Fv F v ⊗[F] E, (∀ i, y i ∈ intLoc F E v) ↔ P.1 *ᵥ y ∈ latLoc F L v)
     (g : GL (Fin d) (Fv F v ⊗[F] E)) (hg : ∀ y ∈ latLoc F L v, g.1 *ᵥ y ∈ latLoc F L v) :
     ((Matrix.GeneralLinearGroup.det g : (Fv F v ⊗[F] E)ˣ) : Fv F v ⊗[F] E) ∈ intLoc F E v := by

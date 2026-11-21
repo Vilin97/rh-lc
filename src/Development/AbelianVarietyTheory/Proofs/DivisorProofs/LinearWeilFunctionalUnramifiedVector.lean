@@ -29,7 +29,7 @@ noncomputable section
 
 namespace GlobalTheory.UnitWShape
 
-theorem eq_of_tens_eq {F : Type} [Field F] [NumberField F] {κ : Type} (v : Pl F) (R : (κ → AF F) → ℂ)
+theorem eq_of_tens_eq {F : Type} [Field F] [NumberField F] {κ : Type} (v : Pl (F := F)) (R : (κ → AF F) → ℂ)
     (hR0 : R 0 ≠ 0) (hinv : ∀ x z, At (evFin F v) z → R (x + z) = R x) (φ₁ φ₂ : (κ → Fv F v) → ℂ)
     (h : tens (evFin F v) φ₁ R = tens (evFin F v) φ₂ R) : φ₁ = φ₂ := by
   funext y
@@ -42,7 +42,7 @@ theorem eq_of_tens_eq {F : Type} [Field F] [NumberField F] {κ : Type} (v : Pl F
   simp only [tens, GlobalTheory.LatVac.evFin_liftV, hR] at e
   exact mul_right_cancel₀ hR0 e
 
-theorem tens_add_smul {F : Type} [Field F] [NumberField F] {κ : Type} (v : Pl F) (R : (κ → AF F) → ℂ)
+theorem tens_add_smul {F : Type} [Field F] [NumberField F] {κ : Type} (v : Pl (F := F)) (R : (κ → AF F) → ℂ)
     (x y : (κ → Fv F v) → ℂ) (c : ℂ) :
     tens (evFin F v) (c • x + y) R = c • tens (evFin F v) x R + tens (evFin F v) y R := by
   funext z
@@ -51,7 +51,7 @@ theorem tens_add_smul {F : Type} [Field F] [NumberField F] {κ : Type} (v : Pl F
 
 theorem exists_localOp : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W)
-    (om' : Rep σ G.V' G.W), IsTriple B G X om om' → ∀ (v : Pl F), ∀ h ∈ UAt σ G.W (evFin F v),
+    (om' : Rep σ G.V' G.W), IsTriple B G X om om' → ∀ (v : Pl (F := F)), ∀ h ∈ UAt σ G.W (evFin F v),
     ∃ S : ((Fin a × Fin (a + a') → Fv F v) → ℂ) → (Fin a × Fin (a + a') → Fv F v) → ℂ,
       (∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v), S φ ∈ SB (Fin a × Fin (a + a') → Fv F v)) ∧
       (∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v), ∀ φ₁, Acts (evFin F v) (om (1, h)) φ φ₁ → φ₁ = S φ) ∧
@@ -130,7 +130,7 @@ theorem pair_mul_transpose {K : Type} [CommRing K] {m n : Type} [Fintype m] [Fin
   rw [sum_mul_eq_trace, sum_mul_eq_trace, Matrix.transpose_mul, Matrix.transpose_transpose, Matrix.mul_assoc]
 
 theorem at_hTens {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
-    {v : Pl F} {m n : ℕ} (JA : Matrix (Fin m) (Fin m) E) (JB : Matrix (Fin n) (Fin n) E)
+    {v : Pl (F := F)} {m n : ℕ} (JA : Matrix (Fin m) (Fin m) E) (JB : Matrix (Fin n) (Fin n) E)
     (x u : Matrix (Fin m) (Fin n) (AE F E)) (hx : At (evFin F v) x) :
     At (evFin F v) ((-1 : AE F E) * hTens (cA σ) (incM F JA) (incM F JB) x u) := by
   intro r hr
@@ -149,7 +149,7 @@ theorem sigma_invol {F E : Type} [Field F] [NumberField F] [Field E] [NumberFiel
 
 theorem heisW {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {a a' : ℕ}
     (B : Base F E) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W)
-    (hTr : IsTriple B G X om om') (v : Pl F) (t : E →ₐ[F] Fv F v) (h : UA σ G.W.J)
+    (hTr : IsTriple B G X om om') (v : Pl (F := F)) (t : E →ₐ[F] Fv F v) (h : UA σ G.W.J)
     (S : ((Fin a × Fin (a + a') → Fv F v) → ℂ) → (Fin a × Fin (a + a') → Fv F v) → ℂ)
     (hSB : ∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v), S φ ∈ SB (Fin a × Fin (a + a') → Fv F v))
     (hcomm : ∀ γ : Matrix (Fin a) (Fin (a + a')) (AE F E), At (evFin F v) γ →

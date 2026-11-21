@@ -24,7 +24,7 @@ theorem mat_one {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} : 
 theorem mat_inv_mul {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (g : UA σ J) : mat g⁻¹ * mat g = 1 := by
   rw [← mat_mul, inv_mul_cancel, mat_one]
 
-def locU (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl F) : Subgroup (UA σ W.J) where
+def locU (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) : Subgroup (UA σ W.J) where
   carrier := UAt σ W (evFin F v)
   one_mem' := fun u _ => by simp [mat_one]
   mul_mem' := by
@@ -40,7 +40,7 @@ def locU (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl F) : Subgroup (U
     show u • (mat g⁻¹ - 1) = 0
     rw [e, smul_neg, ← Matrix.mul_smul, hg u hu, Matrix.mul_zero, neg_zero]
 
-def locK (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl F) : Subgroup (UA σ W.J) where
+def locK (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) : Subgroup (UA σ W.J) where
   carrier := KAt σ W v
   one_mem' := one_mem_KAt σ W v
   mul_mem' := by
@@ -56,10 +56,10 @@ def locK (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl F) : Subgroup (U
     rw [inv_inv]
     exact (hg.2 z hz).1
 
-theorem mem_locK {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl F} {g : UA σ W.J} :
+theorem mem_locK {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} {g : UA σ W.J} :
     g ∈ locK σ W v ↔ g ∈ KAt σ W v := Iff.rfl
 
-theorem locK_le_locU (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl F) : locK σ W v ≤ locU σ W v :=
+theorem locK_le_locU (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) : locK σ W v ≤ locU σ W v :=
   fun _ hg => hg.1
 
 end GlobalTheory.SphLine

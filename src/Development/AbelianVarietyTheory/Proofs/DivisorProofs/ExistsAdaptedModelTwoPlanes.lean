@@ -23,7 +23,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem isEv_restrL (B : Base F E) {n d n₁ d₁ m : ℕ} {X : Spc F E n} {W : Spc F E d} {X₁ : Spc F E n₁}
     {W₁ : Spc F E d₁} (Ma : Model σ X W) (M₁ : Model σ X₁ W₁) (ι₀ : Matrix (Fin n) (Fin n₁) E)
     (ι₀' : Matrix (Fin d) (Fin d₁) E) (I : Set (Matrix (Fin n) (Fin d) (AE F E)))
-    (eq : Fin n × Fin d ≃ Fin m ⊕ (Fin n₁ × Fin d₁)) (A : ∀ v : Pl F, (Fin m → Fv F v) → ℂ)
+    (eq : Fin n × Fin d ≃ Fin m ⊕ (Fin n₁ × Fin d₁)) (A : ∀ v : Pl (F := F), (Fin m → Fv F v) → ℂ)
     (h1 : ∀ z, Ma.co.e (incM F ι₀ * z * (incM F ι₀')ᵀ) = (ext0 eq (M₁.co.e z).1, ext0 eq (M₁.co.e z).2))
     (h2 : ∀ u ∈ I, (Ma.co.e u).1 = 0 ∧ ∀ j, (Ma.co.e u).2 (eq.symm (Sum.inr j)) = 0)
     (hA : ∀ v, A v ∈ SB _ ∧ A v 0 = 1) (hv : ∀ v, Ma.vac v = prodVac eq (A v) (M₁.vac v)) :

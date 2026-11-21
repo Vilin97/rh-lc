@@ -24,10 +24,10 @@ section Local
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
-theorem acts_one_loc (v : Pl F) (φ : (κ → Fv F v) → ℂ) :
+theorem acts_one_loc (v : Pl (F := F)) (φ : (κ → Fv F v) → ℂ) :
     Acts (evFin F v) (1 : Module.End ℂ ((κ → AF F) → ℂ)) φ φ := fun _ _ => rfl
 
-theorem acts_mul_loc (v : Pl F) {T₁ T₂ : Module.End ℂ ((κ → AF F) → ℂ)}
+theorem acts_mul_loc (v : Pl (F := F)) {T₁ T₂ : Module.End ℂ ((κ → AF F) → ℂ)}
     (h₁ : ∀ Φ ∈ schA F κ, T₁ Φ ∈ schA F κ) {φ φ₁ φ₂ : (κ → Fv F v) → ℂ}
     (a : Acts (evFin F v) T₁ φ φ₁) (b : Acts (evFin F v) T₂ φ₁ φ₂) :
     Acts (evFin F v) (T₂ * T₁) φ φ₂ := by
@@ -36,7 +36,7 @@ theorem acts_mul_loc (v : Pl F) {T₁ T₂ : Module.End ℂ ((κ → AF F) → �
   show T₂ (T₁ _) = _
   rw [a r hr, b r hr1]
 
-theorem acts_lin_loc (v : Pl F) (T : Module.End ℂ ((κ → AF F) → ℂ))
+theorem acts_lin_loc (v : Pl (F := F)) (T : Module.End ℂ ((κ → AF F) → ℂ))
     (hex : ∀ φ ∈ SB (κ → Fv F v), ∃ φ₁ ∈ SB (κ → Fv F v), Acts (evFin F v) T φ φ₁)
     {φ ψ φ₁ ψ₁ : (κ → Fv F v) → ℂ} (hφ : φ ∈ SB (κ → Fv F v)) (hψ : ψ ∈ SB (κ → Fv F v))
     (h₁ : Acts (evFin F v) T φ φ₁) (h₂ : Acts (evFin F v) T ψ ψ₁) (a b : ℂ) :
@@ -67,7 +67,7 @@ end Local
 
 theorem exists_locRep : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W)
-    (R : RealMaps F a a') (Rf : FinMaps F a a'), IsMatched B G X om om' R Rf → ∀ v : Pl F,
+    (R : RealMaps F a a') (Rf : FinMaps F a a'), IsMatched B G X om om' R Rf → ∀ v : Pl (F := F),
     ∃ ρ : Representation ℂ (GlobalTheory.SphLine.locU σ G.W v) (Rf.Pi v),
       (∀ h : GlobalTheory.SphLine.locU σ G.W v, ∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v),
         ∃ φ₁ ∈ SB (Fin a × Fin (a + a') → Fv F v), Acts (evFin F v) (om (1, (h : UA σ G.W.J))) φ φ₁) ∧

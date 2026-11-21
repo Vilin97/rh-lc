@@ -27,7 +27,7 @@ theorem _root_.GlobalTheory.T.seesaw_identity_config_a_first : ∀ (F E : Type) 
     (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a') (H : Plane E (b + 2) b)
     (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' →
     ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W),
-      IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' → ∀ (v : Pl F) (t : E →ₐ[F] Fv F v),
+      IsTriple B G X om om' → IsTriple B G₁ X om₁ om₁' → ∀ (v : Pl (F := F)) (t : E →ₐ[F] Fv F v),
       ∃ (c : GL (Fin (b + 2 + a')) (Fv F v)) (e : (Σ i : Fin 3, Fin (blk3 (b + a') i)) ≃ Fin (b + 2 + a'))
         (ξ₁ ξ₂ : (Fv F v)ˣ →* ℂˣ),
         (∀ h ∈ UAt σ G.W (evFin F v), GlobalTheory.KSplit.locMat t c h ∈ unipRad (Fv F v) e → h ∈ unip σ G.W H') ∧

@@ -119,7 +119,7 @@ end Local
 section Adelic
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {L : Type} [Field L]
-  {v : Pl F} {ι : L →+ AE F E}
+  {v : Pl (F := F)} {ι : L →+ AE F E}
 
 open GlobalTheory.InertLocFrame
 
@@ -177,7 +177,7 @@ theorem glue_mul_glue (a b : L) : (1 - ι 1 + ι a) * (1 - ι 1 + ι b) = 1 - ι
   rw [hmul]
   linear_combination h1 - h2 - h3
 
-theorem mulVec_mem_latHat {d : ℕ} (W : Spc F E d) (v : Pl F) {M : Matrix (Fin d) (Fin d) (AE F E)}
+theorem mulVec_mem_latHat {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) {M : Matrix (Fin d) (Fin d) (AE F E)}
     (hM : At (evFin F v) (M - 1)) (hL : ∀ z ∈ GlobalTheory.InertSph.latAt W v, M *ᵥ z ∈ GlobalTheory.InertSph.latAt W v)
     {z : Fin d → AE F E} (hz : z ∈ latHat W) : M *ᵥ z ∈ latHat W := by
   have h1 : evFin F v (1 - GlobalTheory.VacFixKAt.eAt v) = 0 := by
@@ -189,7 +189,7 @@ theorem mulVec_mem_latHat {d : ℕ} (W : Spc F E d) (v : Pl F) {M : Matrix (Fin 
   rw [h2]
   exact add_mem (sub_mem hz (GlobalTheory.VacFixKAt.latAt_le_latHat W v h3)) (GlobalTheory.VacFixKAt.latAt_le_latHat W v (hL _ h3))
 
-theorem mem_KAt {σ : E →ₐ[F] E} {d : ℕ} (W : Spc F E d) (v : Pl F) {k : UA σ W.J}
+theorem mem_KAt {σ : E →ₐ[F] E} {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) {k : UA σ W.J}
     (hk : k ∈ GlobalTheory.InertSph.KAt σ W v) : k ∈ KAt σ W v := by
   obtain ⟨hU, hL⟩ := hk
   have hinv : mat k⁻¹ * mat k = 1 := Units.inv_mul k.1
@@ -233,7 +233,7 @@ end Alg
 theorem exists_stab_line : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (d : ℕ) (W : Spc F E d) (r s : ℕ), B.IsGood σ → W.IsSkew σ B r s →
     ∀ (x : Fin d → E), x ≠ 0 → form σ W.J x x = 0 →
-    ∀ (v : Pl F), IsEmpty (E →ₐ[F] Fv F v) → ∀ g ∈ UAt σ W (evFin F v),
+    ∀ (v : Pl (F := F)), IsEmpty (E →ₐ[F] Fv F v) → ∀ g ∈ UAt σ W (evFin F v),
       ∃ k ∈ KAt σ W v, ∃ t : (AE F E)ˣ, mat (g * k⁻¹) *ᵥ incV F x = t.1 • incV F x := by
   intro F E _ _ _ _ _ σ B d W r s hB hW x hx0 hx v hv g hg
   obtain ⟨w, hin⟩ : ∃ w : HeightOneSpectrum (𝓞 E), Formalism.UG.IsInertAt F E v w :=

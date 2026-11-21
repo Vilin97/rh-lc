@@ -19,6 +19,6 @@ theorem _root_.GlobalTheory.T.adapted_basis_hermitian_unique : ∀ (F E : Type) 
         (∀ z, co.e (incM F H.ι * z) = (Function.extend j (M₁.co.e z).1 0, Function.extend j (M₁.co.e z).2 0)) →
         (∀ z, (co.e (Matrix.vecMulVec (incV F H.x) z)).1 = 0 ∧ ∀ k, (co.e (Matrix.vecMulVec (incV F H.x) z)).2 (j k) = 0) →
         (∀ z, (co.e (Matrix.vecMulVec (incV F H.y) z)).2 = 0 ∧ ∀ k, (co.e (Matrix.vecMulVec (incV F H.y) z)).1 (j k) = 0) →
-        ∀ (v : Pl F) (φ : (Fin n × Fin d → Fv F v) → ℂ), (⟨co, fun _ => 0, 0, ∅⟩ : Model σ X W).IsVac B.ψ v φ →
+        ∀ (v : Pl (F := F)) (φ : (Fin n × Fin d → Fv F v) → ℂ), (⟨co, fun _ => 0, 0, ∅⟩ : Model σ X W).IsVac B.ψ v φ →
           ∃ c : ℂ, c ≠ 0 ∧ (fun y => φ (Function.extend j y 0)) = c • M₁.vac v := by
   first | exact @GlobalTheory.VacResX.vac_restrict_eq_smul | exact GlobalTheory.VacResX.vac_restrict_eq_smul | (intros; apply GlobalTheory.VacResX.vac_restrict_eq_smul <;> assumption)

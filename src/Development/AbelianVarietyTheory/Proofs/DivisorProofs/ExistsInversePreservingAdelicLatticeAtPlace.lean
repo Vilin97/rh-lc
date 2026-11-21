@@ -17,7 +17,7 @@ open GlobalTheory.InertLocField
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem at_of_mem {d : ℕ} {W : Spc F E d} {v : Pl F} {z : Fin d → AE F E} (hz : z ∈ latAt W v) (i : Fin d) :
+theorem at_of_mem {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} {z : Fin d → AE F E} (hz : z ∈ latAt W v) (i : Fin d) :
     At (evFin F v) (z i) := by
   induction hz using AddSubgroup.closure_induction with
   | mem z hz =>
@@ -28,11 +28,11 @@ theorem at_of_mem {d : ℕ} {W : Spc F E d} {v : Pl F} {z : Fin d → AE F E} (h
   | add x y _ _ hx hy => intro u hu; rw [Pi.add_apply, smul_add, hx u hu, hy u hu, add_zero]
   | neg x _ hx => intro u hu; rw [Pi.neg_apply, smul_neg, hx u hu, neg_zero]
 
-theorem liftT_evT_of_at {v : Pl F} {x : AE F E} (hx : At (evFin F v) x) : liftT E v (evT E v x) = x := by
+theorem liftT_evT_of_at {v : Pl (F := F)} {x : AE F E} (hx : At (evFin F v) x) : liftT E v (evT E v x) = x := by
   obtain ⟨y, rfl⟩ := (at_iff v x).1 hx
   rw [evT_liftT]
 
-theorem liftT_smul (v : Pl F) (t : Fv F v) (y : Fv F v ⊗[F] E) :
+theorem liftT_smul (v : Pl (F := F)) (t : Fv F v) (y : Fv F v ⊗[F] E) :
     liftT E v (t • y) = GlobalTheory.LatVac.liftV v t • liftT E v y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
@@ -40,7 +40,7 @@ theorem liftT_smul (v : Pl F) (t : Fv F v) (y : Fv F v ⊗[F] E) :
     rw [TensorProduct.smul_tmul', liftT_tmul, liftT_tmul, smul_eq_mul, liftV_mul, TensorProduct.smul_tmul', smul_eq_mul]
   | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
-theorem evT_smul (v : Pl F) (a : AF F) (x : AE F E) : evT E v (a • x) = evFin F v a • evT E v x := by
+theorem evT_smul (v : Pl (F := F)) (a : AF F) (x : AE F E) : evT E v (a • x) = evFin F v a • evT E v x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul b e =>
@@ -49,7 +49,7 @@ theorem evT_smul (v : Pl F) (a : AF F) (x : AE F E) : evT E v (a • x) = evFin 
     rw [map_mul, TensorProduct.smul_tmul', smul_eq_mul]
   | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
-theorem smul_mem {d : ℕ} {W : Spc F E d} {v : Pl F} {t : Fv F v} (ht : t ∈ v.adicCompletionIntegers F)
+theorem smul_mem {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} {t : Fv F v} (ht : t ∈ v.adicCompletionIntegers F)
     {z : Fin d → AE F E} (hz : z ∈ latAt W v) : GlobalTheory.LatVac.liftV v t • z ∈ latAt W v := by
   induction hz using AddSubgroup.closure_induction with
   | mem z hz =>
@@ -64,7 +64,7 @@ theorem smul_mem {d : ℕ} {W : Spc F E d} {v : Pl F} {t : Fv F v} (ht : t ∈ v
   | add x y _ _ hx hy => rw [smul_add]; exact add_mem hx hy
   | neg x _ hx => rw [smul_neg]; exact neg_mem hx
 
-theorem mul_liftT (v : Pl F) (x : AE F E) (y : Fv F v ⊗[F] E) :
+theorem mul_liftT (v : Pl (F := F)) (x : AE F E) (y : Fv F v ⊗[F] E) :
     x * liftT E v y = liftT E v (evT E v x * y) := by
   have h1 : liftT E v y = GlobalTheory.LatVac.liftV v 1 • liftT E v y := by
     rw [liftV_one_smul, evT_liftT]
@@ -72,7 +72,7 @@ theorem mul_liftT (v : Pl F) (x : AE F E) (y : Fv F v ⊗[F] E) :
     _ = (GlobalTheory.LatVac.liftV v 1 • x) * liftT E v y := by rw [smul_mul_assoc]
     _ = liftT E v (evT E v x * y) := by rw [liftV_one_smul, liftT_mul]
 
-theorem mulVec_liftT {d : ℕ} (v : Pl F) (X : Matrix (Fin d) (Fin d) (AE F E)) (u : Fin d → Fv F v ⊗[F] E) :
+theorem mulVec_liftT {d : ℕ} (v : Pl (F := F)) (X : Matrix (Fin d) (Fin d) (AE F E)) (u : Fin d → Fv F v ⊗[F] E) :
     X *ᵥ (fun i => liftT E v (u i)) = fun i => liftT E v (((X.map (evT E v)) *ᵥ u) i) := by
   funext i
   set_option synthInstance.maxHeartbeats 100000 in
@@ -86,7 +86,7 @@ open GlobalTheory.InertLocField
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-def latV {d : ℕ} (W : Spc F E d) (v : Pl F) : Submodule (v.adicCompletionIntegers F) (Fin d → Fv F v ⊗[F] E) where
+def latV {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) : Submodule (v.adicCompletionIntegers F) (Fin d → Fv F v ⊗[F] E) where
   carrier := {u | (fun i => liftT E v (u i)) ∈ latAt W v}
   add_mem' := by
     intro a b ha hb
@@ -103,17 +103,17 @@ def latV {d : ℕ} (W : Spc F E d) (v : Pl F) : Submodule (v.adicCompletionInteg
     simp_rw [liftT_smul]
     exact smul_mem r.2 hu
 
-theorem mem_latV {d : ℕ} {W : Spc F E d} {v : Pl F} {u : Fin d → Fv F v ⊗[F] E} :
+theorem mem_latV {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} {u : Fin d → Fv F v ⊗[F] E} :
     u ∈ latV W v ↔ (fun i => liftT E v (u i)) ∈ latAt W v := Iff.rfl
 
-theorem evT_mem_latV {d : ℕ} {W : Spc F E d} {v : Pl F} {z : Fin d → AE F E} (hz : z ∈ latAt W v) :
+theorem evT_mem_latV {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} {z : Fin d → AE F E} (hz : z ∈ latAt W v) :
     (fun i => evT E v (z i)) ∈ latV W v := by
   rw [mem_latV]
   convert hz using 1
   funext i
   exact liftT_evT_of_at (at_of_mem hz i)
 
-theorem natCast_mem_maximalIdeal (v : Pl F) {p : ℕ} (hp : (p : 𝓞 F) ∈ v.asIdeal) :
+theorem natCast_mem_maximalIdeal (v : Pl (F := F)) {p : ℕ} (hp : (p : 𝓞 F) ∈ v.asIdeal) :
     (p : v.adicCompletionIntegers F) ∈ IsLocalRing.maximalIdeal (v.adicCompletionIntegers F) := by
   rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
   intro hu
@@ -135,7 +135,7 @@ theorem natCast_mem_maximalIdeal (v : Pl F) {p : ℕ} (hp : (p : 𝓞 F) ∈ v.a
     lt_of_le_of_lt (mul_le_of_le_one_right' h2) hlt
   exact absurd h3 h4.ne
 
-theorem latV_le {d : ℕ} {W : Spc F E d} {v : Pl F} {p : ℕ} (hp : (p : 𝓞 F) ∈ v.asIdeal) (hfg : (latV W v).FG)
+theorem latV_le {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} {p : ℕ} (hp : (p : 𝓞 F) ∈ v.asIdeal) (hfg : (latV W v).FG)
     (M : Matrix (Fin d) (Fin d) (AE F E))
     (hsurj : ∀ z ∈ latAt W v, ∃ y ∈ latAt W v, ∃ y' ∈ latAt W v, z = M *ᵥ y + p • y') :
     ∀ u ∈ latV W v, ∃ y ∈ latV W v, u = (M.map (evT E v)) *ᵥ y := by
@@ -174,12 +174,12 @@ open GlobalTheory.InertLocField
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-def oneT (v : Pl F) (d : ℕ) : (Fin d → E) →ₗ[F] (Fin d → Fv F v ⊗[F] E) :=
+def oneT (v : Pl (F := F)) (d : ℕ) : (Fin d → E) →ₗ[F] (Fin d → Fv F v ⊗[F] E) :=
   LinearMap.pi fun i => (TensorProduct.mk F (Fv F v) E 1).comp (LinearMap.proj i)
 
-theorem oneT_apply (v : Pl F) {d : ℕ} (x : Fin d → E) (i : Fin d) : oneT v d x i = (1 : Fv F v) ⊗ₜ[F] x i := rfl
+theorem oneT_apply (v : Pl (F := F)) {d : ℕ} (x : Fin d → E) (i : Fin d) : oneT v d x i = (1 : Fv F v) ⊗ₜ[F] x i := rfl
 
-theorem oneT_mem {d : ℕ} {W : Spc F E d} (v : Pl F) {y : Fin d → E} (hy : y ∈ W.L) : oneT v d y ∈ latV W v := by
+theorem oneT_mem {d : ℕ} {W : Spc F E d} (v : Pl (F := F)) {y : Fin d → E} (hy : y ∈ W.L) : oneT v d y ∈ latV W v := by
   rw [mem_latV]
   refine AddSubgroup.subset_closure ⟨GlobalTheory.LatVac.liftV v 1, GlobalTheory.LatVac.at_liftV v 1,
     by rw [GlobalTheory.LatVac.evFin_liftV]; exact one_mem _, y, hy, ?_⟩
@@ -187,7 +187,7 @@ theorem oneT_mem {d : ℕ} {W : Spc F E d} (v : Pl F) {y : Fin d → E} (hy : y 
   rw [oneT_apply, liftT_tmul, Pi.smul_apply, show inclR (F := F) (AF F) (y i) = (1 : AF F) ⊗ₜ[F] y i from rfl,
     TensorProduct.smul_tmul', smul_eq_mul, mul_one]
 
-theorem latV_fg {d : ℕ} {W : Spc F E d} (hL : W.L.IsLattice E) (v : Pl F) : (latV W v).FG := by
+theorem latV_fg {d : ℕ} {W : Spc F E d} (hL : W.L.IsLattice E) (v : Pl (F := F)) : (latV W v).FG := by
   obtain ⟨G, hG⟩ := (hL.fg.restrictScalars (R := ℤ))
   let φ : (Fin d → E) →ₗ[ℤ] (Fin d → Fv F v ⊗[F] E) := (oneT v d).restrictScalars ℤ
   have hφ : ∀ y ∈ W.L, oneT v d y ∈ Submodule.span (v.adicCompletionIntegers F) (oneT v d '' G) := by
@@ -239,7 +239,7 @@ open GlobalTheory.InertLocField
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem mulVec_surj {d : ℕ} {W : Spc F E d} (hL : W.L.IsLattice E) (v : Pl F)
+theorem mulVec_surj {d : ℕ} {W : Spc F E d} (hL : W.L.IsLattice E) (v : Pl (F := F))
     (Mv : Matrix (Fin d) (Fin d) (Fv F v ⊗[F] E)) (h : ∀ u ∈ latV W v, ∃ y, u = Mv *ᵥ y) :
     Function.Surjective (Mv *ᵥ ·) := by
   let T := LinearMap.range (Matrix.mulVecLin Mv)
@@ -286,7 +286,7 @@ theorem mulVec_surj {d : ℕ} {W : Spc F E d} (hL : W.L.IsLattice E) (v : Pl F)
   obtain ⟨y, hy⟩ := hw
   exact ⟨y, hy⟩
 
-theorem mat_ext {d : ℕ} (v : Pl F) {X Y : Matrix (Fin d) (Fin d) (AE F E)} (h1 : X.map (evT E v) = Y.map (evT E v))
+theorem mat_ext {d : ℕ} (v : Pl (F := F)) {X Y : Matrix (Fin d) (Fin d) (AE F E)} (h1 : X.map (evT E v) = Y.map (evT E v))
     (h2 : (1 - GlobalTheory.LatVac.liftV v 1 : AF F) • X = (1 - GlobalTheory.LatVac.liftV v 1 : AF F) • Y) : X = Y := by
   ext i j
   have a := congrFun (congrFun h1 i) j
@@ -305,7 +305,7 @@ namespace GlobalTheory.InertSph
 open GlobalTheory.InertLocField GlobalTheory.InertSph.Invert
 
 theorem exists_inv_keeps_latAt : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (d : ℕ) (W : Spc F E d),
-    W.L.IsLattice E → ∀ (v : Pl F) (p : ℕ), (p : 𝓞 F) ∈ v.asIdeal → ∀ c : AF F, IsUnit c →
+    W.L.IsLattice E → ∀ (v : Pl (F := F)) (p : ℕ), (p : 𝓞 F) ∈ v.asIdeal → ∀ c : AF F, IsUnit c →
     ∀ M : Matrix (Fin d) (Fin d) (AE F E), At (evFin F v) (M - c • (1 : Matrix (Fin d) (Fin d) (AE F E))) →
     (∀ z ∈ GlobalTheory.InertSph.latAt W v, M *ᵥ z ∈ GlobalTheory.InertSph.latAt W v) →
     (∀ z ∈ GlobalTheory.InertSph.latAt W v, ∃ y ∈ GlobalTheory.InertSph.latAt W v, ∃ y' ∈ GlobalTheory.InertSph.latAt W v, z = M *ᵥ y + p • y') →

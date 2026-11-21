@@ -129,6 +129,6 @@ end Helpers
 end GlobalTheory.AdelicPointsAt
 
 theorem GlobalTheory.AdelicPointsAt.range_emb_iff_smul : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
-    (n : ℕ) (J : Matrix (Fin n) (Fin n) E) (v : Pl F) (g : GAd σ J), g ∈ (emb σ J v).range ↔
+    (n : ℕ) (J : Matrix (Fin n) (Fin n) E) (v : Pl (F := F)) (g : GAd σ J), g ∈ (emb σ J v).range ↔
       ∀ u : AF F, evFin F v u = 0 → u • ((HA.mat (AF F) σ J g : Matrix (Fin n) (Fin n) (AF F ⊗[F] E)) - 1) = 0 :=
   fun _ _ _ _ _ _ _ _ _ _ v g => GlobalTheory.AdelicPointsAt.mem_range_emb_iff v g

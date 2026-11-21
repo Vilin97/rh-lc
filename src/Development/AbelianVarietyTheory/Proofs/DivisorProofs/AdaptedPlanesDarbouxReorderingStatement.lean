@@ -23,7 +23,7 @@ theorem _root_.GlobalTheory.T.adapted_planes_darboux_reordering : ∀ (F E : Typ
     (∀ z, co.e (incM F H.ι * z * (incM F H'.ι)ᵀ) = (ext0 eq (M₁.co.e z).1, ext0 eq (M₁.co.e z).2)) →
     (∀ u ∈ isoA H H', (co.e u).1 = 0 ∧ ∀ j, (co.e u).2 (eq.symm (Sum.inr j)) = 0) →
     (∀ u ∈ isoAd H H', (co.e u).2 = 0 ∧ ∀ j, (co.e u).1 (eq.symm (Sum.inr j)) = 0) →
-    ∃ A : ∀ v : Pl F, (Fin (2 * (n + d₁)) → Fv F v) → ℂ,
+    ∃ A : ∀ v : Pl (F := F), (Fin (2 * (n + d₁)) → Fv F v) → ℂ,
       (∀ v, A v ∈ SB _ ∧ A v 0 = 1 ∧
         Model.IsVac (Model.mk (σ := σ) (X := X) (W := W) co (fun _ => 0) 0 ∅) B.ψ v (prodVac eq (A v) (M₁.vac v))) ∧
       ∀ᶠ v in cofinite, A v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1 := by

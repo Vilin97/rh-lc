@@ -21,7 +21,7 @@ namespace GlobalTheory.VacLocEig
 
 open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
 
-theorem acts_eq_of_rest {F : Type} [Field F] [NumberField F] (v : Pl F) {κ : Type} [Fintype κ]
+theorem acts_eq_of_rest {F : Type} [Field F] [NumberField F] (v : Pl (F := F)) {κ : Type} [Fintype κ]
     {φ : (κ → Fv F v) → ℂ} {r : (κ → AF F) → ℂ} (hr : Rest (evFin F v) φ r) {x₀ : κ → AF F} (hx₀ : r x₀ ≠ 0)
     (T : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ) (φ₁ φ₂ : (κ → Fv F v) → ℂ)
     (h1 : Acts (evFin F v) T φ φ₁) (h2 : Acts (evFin F v) T φ φ₂) : φ₁ = φ₂ := by
@@ -38,7 +38,7 @@ theorem acts_eq_of_rest {F : Type} [Field F] [NumberField F] (v : Pl F) {κ : Ty
   exact mul_right_cancel₀ hx₀ e
 
 theorem isVac_iff_loc {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ}
-    {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (v : Pl F) (φ : (Fin n × Fin d → Fv F v) → ℂ) :
+    {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (v : Pl (F := F)) (φ : (Fin n × Fin d → Fv F v) → ℂ) :
     M.IsVac ψ v φ ↔ φ ∈ SB _ ∧ φ ≠ 0 ∧ ∃ θ : 𝓞 E, (θ : E) + σ θ = 1 ∧ ∀ γ ∈ latAtV X W v,
       schr (GlobalTheory.LatVac.psiAt ψ v) (GlobalTheory.LatVac.locCo M.co v γ) φ =
         ψ (⅟(2 : AF F) * symp (R := AF F) (cA σ) (inclR (F := F) (AF F) (θ : E)) (incM F X.J) (incM F W.J) γ γ) • φ := by

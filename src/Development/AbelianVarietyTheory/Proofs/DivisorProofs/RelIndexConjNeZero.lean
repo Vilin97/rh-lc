@@ -19,7 +19,7 @@ namespace GlobalTheory.SphLineComm
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem smul_mem_latHat {d : ℕ} (W : Spc F E d) (a : AF F) (ha : evI F a = 0)
-    (hv : ∀ w : Pl F, evFin F w a ∈ w.adicCompletionIntegers F) {z : Fin d → AE F E} (hz : z ∈ latHat W) :
+    (hv : ∀ w : Pl (F := F), evFin F w a ∈ w.adicCompletionIntegers F) {z : Fin d → AE F E} (hz : z ∈ latHat W) :
     a • z ∈ latHat W := by
   induction hz using AddSubgroup.closure_induction with
   | mem z hz =>
@@ -41,17 +41,17 @@ namespace GlobalTheory.SphLineComm
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-noncomputable def unitAt (v : Pl F) : AF F := LinearMap.inr F (Ainf F) (Af F) (singleFin v 1)
+noncomputable def unitAt (v : Pl (F := F)) : AF F := LinearMap.inr F (Ainf F) (Af F) (singleFin v 1)
 
-theorem evFin_unitAt_self (v : Pl F) : evFin F v (unitAt v) = 1 := by
+theorem evFin_unitAt_self (v : Pl (F := F)) : evFin F v (unitAt v) = 1 := by
   show Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v (singleFin v 1) = 1
   exact evalV_singleFin_self v 1
 
-theorem evFin_unitAt_ne {v w : Pl F} (h : w ≠ v) : evFin F w (unitAt v) = 0 := by
+theorem evFin_unitAt_ne {v w : Pl (F := F)} (h : w ≠ v) : evFin F w (unitAt v) = 0 := by
   show Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F w (singleFin v 1) = 0
   exact evalV_singleFin_ne h 1
 
-theorem evI_unitAt (v : Pl F) : evI F (unitAt v) = 0 := by
+theorem evI_unitAt (v : Pl (F := F)) : evI F (unitAt v) = 0 := by
   show InfiniteAdeleRing.ringEquiv_mixedSpace F 0 = 0
   exact map_zero _
 

@@ -213,7 +213,7 @@ theorem traceDual_iff_mul_different : ∀ (E : Type) [Field E] [NumberField E] (
     exact h d hd
 
 theorem exists_delta_inert : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    (σ : E →ₐ[F] E) (B : Base F E), B.IsGood σ → ∀ v : Pl F, IsEmpty (E →ₐ[F] Fv F v) →
+    (σ : E →ₐ[F] E) (B : Base F E), B.IsGood σ → ∀ v : Pl (F := F), IsEmpty (E →ₐ[F] Fv F v) →
     ∃ δ : E, δ ≠ 0 ∧ σ δ = -δ ∧ ∃ m : 𝓞 F, m ∉ v.asIdeal ∧
       (∀ z : E, (∀ o : 𝓞 E, IsIntegral ℤ (Algebra.trace ℚ E ((o : E) * z))) →
         IsIntegral ℤ (((algebraMap (𝓞 F) (𝓞 E) m : 𝓞 E) : E) * δ * z)) ∧
@@ -303,7 +303,7 @@ theorem form_smul_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n
   simp [form, smul_dotProduct]
 
 theorem skew_isSelfDualAt_inert : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
-    (B : Base F E) (d r s : ℕ) (W : Spc F E d), B.IsGood σ → W.IsSkew σ B r s → ∀ v : Pl F,
+    (B : Base F E) (d r s : ℕ) (W : Spc F E d), B.IsGood σ → W.IsSkew σ B r s → ∀ v : Pl (F := F),
     IsEmpty (E →ₐ[F] Fv F v) → ∃ δ : E, δ ≠ 0 ∧ σ δ = -δ ∧ IsSelfDualAt σ (δ • W.Jᵀ) W.L v := by
   intro F E _ _ _ _ _ σ B d r s W hB hW v hv
   obtain ⟨δ, hδ0, hσδ, m, hm, ha, hb⟩ := exists_delta_inert F E σ B hB v hv

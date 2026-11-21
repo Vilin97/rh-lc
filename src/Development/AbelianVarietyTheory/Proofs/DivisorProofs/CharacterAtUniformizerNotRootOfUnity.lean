@@ -17,7 +17,7 @@ namespace GlobalTheory.NuGood
 theorem not_root_of_unity : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' → ∀ v, X.Good v → (∀ (t : E →ₐ[F] Fv F v) (k : ℤ), k ≠ 0 → chrW X.ν t (unifAt v) ^ k ≠ 1) := by
   intro F E _ _ _ _ _ σ B a a' G X om om' h v hv t k hk hpow
-  have hW : splitPrime t ∉ above E (X.T : Set (Pl F)) := by
+  have hW : splitPrime t ∉ above E (X.T : Set (Pl (F := F))) := by
     intro hmem
     exact hv.1 (by simpa [above, splitPrime_under] using hmem)
   have hunr : UnrAt X.ν (splitPrime t) := by

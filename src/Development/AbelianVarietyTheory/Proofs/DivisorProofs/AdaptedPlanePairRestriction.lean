@@ -78,7 +78,7 @@ end GlobalTheory.ThKMixXEx
 
 namespace GlobalTheory.ThKMixXEx
 
-theorem std_extend {F : Type} [Field F] [NumberField F] {κ₁ κ : Type} {j : κ₁ → κ} (hj : Function.Injective j) (v : Pl F) :
+theorem std_extend {F : Type} [Field F] [NumberField F] {κ₁ κ : Type} {j : κ₁ → κ} (hj : Function.Injective j) (v : Pl (F := F)) :
     (fun y : κ₁ → Fv F v => Set.indicator {x : κ → Fv F v | ∀ i, x i ∈ v.adicCompletionIntegers F} (1 : (κ → Fv F v) → ℂ)
       (Function.extend j y 0)) = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} (1 : (κ₁ → Fv F v) → ℂ) := by
   funext y
@@ -177,7 +177,7 @@ theorem exists_isEv_mixedX : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Typ
         ContinuousLinearMap.comp_apply, hR, LinearMap.smul_apply, LinearMap.comp_apply]
       have hI : (fun i => evI F (Function.extend j y 0 i)) = Function.extend j (fun i => evI F (y i)) 0 :=
         extend_map hj (evI F) (by unfold evI; exact map_zero _) y
-      have hF : ∀ v : Pl F, (fun i => evFin F v (Function.extend j y 0 i)) =
+      have hF : ∀ v : Pl (F := F), (fun i => evFin F v (Function.extend j y 0 i)) =
           Function.extend j (fun i => evFin F v (y i)) 0 := fun v => extend_map hj _ (map_zero _) y
       simp only [hI, hF]
       have hfin1 : (Function.mulSupport fun v : Pl F => (c v)⁻¹).Finite := by

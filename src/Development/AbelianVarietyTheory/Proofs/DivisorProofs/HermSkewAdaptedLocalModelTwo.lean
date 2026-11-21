@@ -29,22 +29,22 @@ namespace GlobalTheory.IsoAOrthLoc
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem at_transpose {m k : ℕ} {v : Pl F} {Z : Matrix (Fin m) (Fin k) (AE F E)} (hZ : At (evFin F v) Z) :
+theorem at_transpose {m k : ℕ} {v : Pl (F := F)} {Z : Matrix (Fin m) (Fin k) (AE F E)} (hZ : At (evFin F v) Z) :
     At (evFin F v) Zᵀ := by
   intro u hu
   rw [← Matrix.transpose_smul, hZ u hu, Matrix.transpose_zero]
 
-theorem at_mulVec_vec {n k : ℕ} {v : Pl F} (N : Matrix (Fin n) (Fin k) (AE F E)) {g : Fin k → AE F E}
+theorem at_mulVec_vec {n k : ℕ} {v : Pl (F := F)} (N : Matrix (Fin n) (Fin k) (AE F E)) {g : Fin k → AE F E}
     (hg : At (evFin F v) g) : At (evFin F v) (N *ᵥ g) := by
   intro u hu
   rw [← Matrix.mulVec_smul, hg u hu, Matrix.mulVec_zero]
 
-theorem at_mul_left {n k m : ℕ} {v : Pl F} (N : Matrix (Fin n) (Fin k) (AE F E)) {Z : Matrix (Fin k) (Fin m) (AE F E)}
+theorem at_mul_left {n k m : ℕ} {v : Pl (F := F)} (N : Matrix (Fin n) (Fin k) (AE F E)) {Z : Matrix (Fin k) (Fin m) (AE F E)}
     (hZ : At (evFin F v) Z) : At (evFin F v) (N * Z) := by
   intro u hu
   rw [← Matrix.mul_smul, hZ u hu, Matrix.mul_zero]
 
-theorem at_vecMulVec_right {n d : ℕ} {v : Pl F} (a : Fin n → AE F E) {b : Fin d → AE F E}
+theorem at_vecMulVec_right {n d : ℕ} {v : Pl (F := F)} (a : Fin n → AE F E) {b : Fin d → AE F E}
     (hb : At (evFin F v) b) : At (evFin F v) (Matrix.vecMulVec a b) := by
   intro u hu
   ext i j
@@ -123,7 +123,7 @@ theorem isoA_orth_at : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     (n n₁ d d₁ r s r' s' i₀ i₁ j₀ j₁ : ℕ) (X : Spc F E n) (X₁ : Spc F E n₁) (W : Spc F E d) (W₁ : Spc F E d₁)
     (H : Plane E n n₁) (H' : Plane E d d₁) (M : Model σ X W),
     B.IsGood σ → X.IsHerm σ B r s → W.IsSkew σ B r' s' → H.IsAdapted σ B X X₁ j₀ j₁ → H'.IsAdapted σ B W W₁ i₀ i₁ →
-    ∀ (v : Pl F) (w : (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v)),
+    ∀ (v : Pl (F := F)) (w : (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v)),
       (∀ u ∈ isoA (F := F) H H', At (evFin F v) u →
         (GlobalTheory.LatVac.locCo M.co v u).1 ⬝ᵥ w.2 - w.1 ⬝ᵥ (GlobalTheory.LatVac.locCo M.co v u).2 = 0) →
       ∃ z₀ : Fin n → AE F E, At (evFin F v) (Matrix.vecMulVec z₀ (incV F H'.x)) ∧

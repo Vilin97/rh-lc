@@ -36,7 +36,7 @@ namespace GlobalTheory.DblShape
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem at_hTens {σ : E →ₐ[F] E} {v : Pl F} {α β : Type} [Fintype α] [Fintype β] (JA : Matrix α α (AE F E))
+theorem at_hTens {σ : E →ₐ[F] E} {v : Pl (F := F)} {α β : Type} [Fintype α] [Fintype β] (JA : Matrix α α (AE F E))
     (JB : Matrix β β (AE F E)) (x u : Matrix α β (AE F E)) (hx : At (evFin F v) x) :
     At (evFin F v) ((-1 : AE F E) * hTens (cA σ) JA JB x u) := by
   intro r hr
@@ -50,7 +50,7 @@ theorem at_hTens {σ : E →ₐ[F] E} {v : Pl F} {α β : Type} [Fintype α] [Fi
 theorem local_intertw {σ : E →ₐ[F] E} {α β : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
     {JA : Matrix α α (AE F E)} {JB : Matrix β β (AE F E)} {κ : Type} [Fintype κ] {ψ : AddChar (AF F) ℂ}
     (dd : Darboux (symp (R := AF F) (cA σ) (-1) JA JB) κ) (omd : UG (cA σ) JB →* Module.End ℂ ((κ → AF F) → ℂ))
-    (hS : IsUSplitting (adeleClass F) ψ dd (actB (cA σ)) omd) (v : Pl F) (p : UG (cA σ) JB)
+    (hS : IsUSplitting (adeleClass F) ψ dd (actB (cA σ)) omd) (v : Pl (F := F)) (p : UG (cA σ) JB)
     (u : Matrix α β (AE F E)) (φ φ₁ φ₂ φ₃ φ₄ : (κ → Fv F v) → ℂ) (hφ : φ ∈ SB (κ → Fv F v))
     (hφ₁ : φ₁ ∈ SB (κ → Fv F v)) (hφ₂ : φ₂ ∈ SB (κ → Fv F v))
     (h1 : Acts (evFin F v) (dd.rho ψ u) φ φ₁) (h2 : Acts (evFin F v) (omd p) φ φ₂)
@@ -80,7 +80,7 @@ open GlobalTheory.DblScal
 
 theorem shape_dbl : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ)
     (X : Spc F E n) (W : Spc F E d) (M : Model σ X W) (χX χW : Chr F E) (om : Rep σ X W) (r s r' s' : ℕ), IsPair B M χX χW om r s r' s' →
-    ∀ (v : Pl F) (t : E →ₐ[F] Fv F v) (b : GL (Fin n) (Fv F v)) (c : GL (Fin d) (Fv F v))
+    ∀ (v : Pl (F := F)) (t : E →ₐ[F] Fv F v) (b : GL (Fin n) (Fv F v)) (c : GL (Fin d) (Fv F v))
       (dd : GlobalTheory.DblScal.DblCo σ X W) (omd : GlobalTheory.DblScal.DblRep σ (n := n) W),
       IsUSplitting (adeleClass F) B.ψ dd (actB (cA σ)) omd → GlobalTheory.DblScal.LocOps omd v →
       ∀ ιd, GlobalTheory.DblScal.IsLinD B.ψ dd t b c ιd → ∃ cd : GlobalTheory.DblScal.UD σ W.J → ℂ, GlobalTheory.DblScal.IsShapeD omd t c ιd cd := by

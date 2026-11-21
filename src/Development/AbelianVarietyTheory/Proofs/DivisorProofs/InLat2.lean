@@ -18,7 +18,7 @@ noncomputable section
 namespace GlobalTheory.InertBigCell
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-  {v : Pl F} {w : HeightOneSpectrum (𝓞 E)}
+  {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)}
 
 def iotaW (hw : Formalism.UG.IsInertAt F E v w) : w.adicCompletion E →+ AE F E :=
   (GlobalTheory.InertLocField.liftT E v).toAddMonoidHom.comp

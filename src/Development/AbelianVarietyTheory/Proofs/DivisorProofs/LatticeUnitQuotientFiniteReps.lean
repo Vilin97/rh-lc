@@ -22,7 +22,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 
 def intAd : AddSubgroup (AF F) where
-  carrier := {a | evI F a = 0 ∧ ∀ w : Pl F, evFin F w a ∈ w.adicCompletionIntegers F}
+  carrier := {a | evI F a = 0 ∧ ∀ w : Pl (F := F), evFin F w a ∈ w.adicCompletionIntegers F}
   add_mem' {a b} ha hb := by
     refine ⟨?_, fun w => ?_⟩
     · have e : evI F (a + b) = evI F a + evI F b := map_add (InfiniteAdeleRing.ringEquiv_mixedSpace F) a.1 b.1
@@ -39,23 +39,23 @@ def intAd : AddSubgroup (AF F) where
       rw [e, ha.1, neg_zero]
     · rw [map_neg]; exact neg_mem (ha.2 w)
 
-def atPl (v : Pl F) : Fv F v →ₗ[F] AF F := (LinearMap.inr F (Ainf F) (Af F)).comp (singleFin v)
+def atPl (v : Pl (F := F)) : Fv F v →ₗ[F] AF F := (LinearMap.inr F (Ainf F) (Af F)).comp (singleFin v)
 
-theorem evI_atPl (v : Pl F) (β : Fv F v) : evI F (atPl v β) = 0 := by
+theorem evI_atPl (v : Pl (F := F)) (β : Fv F v) : evI F (atPl v β) = 0 := by
   show InfiniteAdeleRing.ringEquiv_mixedSpace F (0 : InfiniteAdeleRing F) = 0
   exact map_zero _
 
-theorem evFin_atPl (v w : Pl F) (β : Fv F v) :
+theorem evFin_atPl (v w : Pl (F := F)) (β : Fv F v) :
     evFin F w (atPl v β) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F w (singleFin v β) := rfl
 
-theorem atPl_mem_intAd (v : Pl F) {β : Fv F v} (hβ : β ∈ v.adicCompletionIntegers F) : atPl v β ∈ intAd F := by
+theorem atPl_mem_intAd (v : Pl (F := F)) {β : Fv F v} (hβ : β ∈ v.adicCompletionIntegers F) : atPl v β ∈ intAd F := by
   refine ⟨evI_atPl v β, fun w => ?_⟩
   rw [evFin_atPl]
   by_cases hw : w = v
   · subst hw; rw [evalV_singleFin_self]; exact hβ
   · rw [evalV_singleFin_ne hw]; exact zero_mem _
 
-theorem eq_atPl (v : Pl F) (x : AF F) (hx : evI F x = 0) (hxw : ∀ w : Pl F, w ≠ v → evFin F w x = 0) :
+theorem eq_atPl (v : Pl (F := F)) (x : AF F) (hx : evI F x = 0) (hxw : ∀ w : Pl (F := F), w ≠ v → evFin F w x = 0) :
     x = atPl v (evFin F v x) := by
   have h1 : x.1 = 0 := (InfiniteAdeleRing.ringEquiv_mixedSpace F).injective (by rw [map_zero]; exact hx)
   refine Prod.ext h1 ?_
@@ -102,7 +102,7 @@ theorem latHat_decomp {d r : ℕ} (W : Spc F E d) (g : Fin r → Fin d → E)
     obtain ⟨a, ha, rfl⟩ := hx
     exact ⟨-a, fun j => neg_mem (ha j), by simp [neg_smul, Finset.sum_neg_distrib]⟩
 
-theorem fin_reps (v : Pl F) (m : ℕ) (hm : m ≠ 0) :
+theorem fin_reps (v : Pl (F := F)) (m : ℕ) (hm : m ≠ 0) :
     ∃ R : Finset (Fv F v), (∀ ρ ∈ R, ρ ∈ v.adicCompletionIntegers F) ∧
       ∀ β ∈ v.adicCompletionIntegers F, ∃ ρ ∈ R, ∃ γ ∈ v.adicCompletionIntegers F, β = ρ + m * γ := by
   classical
@@ -139,8 +139,8 @@ theorem fin_reps (v : Pl F) (m : ℕ) (hm : m ≠ 0) :
     rw [Subring.coe_mul, h3, h4] at h2
     linear_combination -h2
 
-theorem smul_latHat_finite_mod : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (d : ℕ) (W : Spc F E d) (v : Pl F)
-    (u : AF F), W.L.IsLattice E → evI F u = 0 → (∀ w : Pl F, w ≠ v → evFin F w u = 0) →
+theorem smul_latHat_finite_mod : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (d : ℕ) (W : Spc F E d) (v : Pl (F := F))
+    (u : AF F), W.L.IsLattice E → evI F u = 0 → (∀ w : Pl (F := F), w ≠ v → evFin F w u = 0) →
     evFin F v u ∈ v.adicCompletionIntegers F → ∀ m : ℕ, m ≠ 0 →
     ∃ S : Finset (Fin d → AE F E), (∀ s ∈ S, s ∈ latHat W) ∧
       ∀ z ∈ latHat W, ∃ s ∈ S, ∃ y ∈ latHat W, u • z - s = m • y := by

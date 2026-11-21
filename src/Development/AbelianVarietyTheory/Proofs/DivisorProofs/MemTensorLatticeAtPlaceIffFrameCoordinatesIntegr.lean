@@ -31,17 +31,17 @@ theorem mem_of_bil {A B C : Type} [AddCommGroup A] [AddCommGroup B] [AddCommGrou
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-def intAt (v : Pl F) : AddSubgroup (AE F E) :=
+def intAt (v : Pl (F := F)) : AddSubgroup (AE F E) :=
   AddSubgroup.closure {z : AE F E | ∃ a : AF F, At (evFin F v) a ∧
     evFin F v a ∈ v.adicCompletionIntegers F ∧ ∃ o : 𝓞 E, z = a • inclR (F := F) (AF F) (o : E)}
 
-theorem at_mul {v : Pl F} {a : AF F} (b : AF F) (ha : At (evFin F v) a) : At (evFin F v) (a * b) := by
+theorem at_mul {v : Pl (F := F)} {a : AF F} (b : AF F) (ha : At (evFin F v) a) : At (evFin F v) (a * b) := by
   intro u hu
   have h := ha u hu
   rw [smul_eq_mul] at h ⊢
   rw [← mul_assoc, h, zero_mul]
 
-theorem int_mul {v : Pl F} {a b : AF F} (ha : evFin F v a ∈ v.adicCompletionIntegers F)
+theorem int_mul {v : Pl (F := F)} {a b : AF F} (ha : evFin F v a ∈ v.adicCompletionIntegers F)
     (hb : evFin F v b ∈ v.adicCompletionIntegers F) : evFin F v (a * b) ∈ v.adicCompletionIntegers F := by
   rw [map_mul]
   exact mul_mem ha hb
@@ -50,7 +50,7 @@ def smulHom (n : ℕ) : AE F E →+ (Fin n → AE F E) →+ (Fin n → AE F E) :
   AddMonoidHom.mk' (fun c => DistribSMul.toAddMonoidHom _ c)
     (fun c c' => AddMonoidHom.ext fun x => by funext i; simp [add_mul])
 
-theorem smul_mem_latAt {v : Pl F} {n : ℕ} (X : Spc F E n) {c : AE F E} (hc : c ∈ intAt v) {x : Fin n → AE F E}
+theorem smul_mem_latAt {v : Pl (F := F)} {n : ℕ} (X : Spc F E n) {c : AE F E} (hc : c ∈ intAt v) {x : Fin n → AE F E}
     (hx : x ∈ GlobalTheory.InertSph.latAt X v) : c • x ∈ GlobalTheory.InertSph.latAt X v := by
   refine mem_of_bil (smulHom n) ?_ hc hx
   rintro _ ⟨b, hb, hbi, o, rfl⟩ _ ⟨a, ha, hai, y, hy, rfl⟩
@@ -61,7 +61,7 @@ theorem smul_mem_latAt {v : Pl F} {n : ℕ} (X : Spc F E n) {c : AE F E} (hc : c
   simp only [Algebra.smul_def, map_mul, ho]
   ring
 
-theorem smul_incl_mem_latAt {v : Pl F} {n : ℕ} (X : Spc F E n) {c : AE F E} (hc : c ∈ intAt v) {y : Fin n → E}
+theorem smul_incl_mem_latAt {v : Pl (F := F)} {n : ℕ} (X : Spc F E n) {c : AE F E} (hc : c ∈ intAt v) {y : Fin n → E}
     (hy : y ∈ X.L) : (c • fun i => inclR (F := F) (AF F) (y i)) ∈ GlobalTheory.InertSph.latAt X v := by
   refine mem_of_bil (smulHom n) (SB := {fun i => inclR (F := F) (AF F) (y i)}) ?_ hc (AddSubgroup.subset_closure rfl)
   rintro _ ⟨b, hb, hbi, o, rfl⟩ _ rfl
@@ -72,7 +72,7 @@ theorem smul_incl_mem_latAt {v : Pl F} {n : ℕ} (X : Spc F E n) {c : AE F E} (h
   simp only [Algebra.smul_def, map_mul, ho]
   ring
 
-theorem vecMulVec_mem {v : Pl F} {n d : ℕ} (X : Spc F E n) (W : Spc F E d) {x : Fin n → AE F E} {y : Fin d → AE F E}
+theorem vecMulVec_mem {v : Pl (F := F)} {n d : ℕ} (X : Spc F E n) (W : Spc F E d) {x : Fin n → AE F E} {y : Fin d → AE F E}
     (hx : x ∈ GlobalTheory.InertSph.latAt X v) (hy : y ∈ GlobalTheory.InertSph.latAt W v) : Matrix.vecMulVec x y ∈ latAtV X W v := by
   let g : (Fin n → AE F E) →+ (Fin d → AE F E) →+ Matrix (Fin n) (Fin d) (AE F E) :=
     AddMonoidHom.mk' (fun x => AddMonoidHom.mk' (fun y => Matrix.vecMulVec x y)
@@ -92,7 +92,7 @@ end GlobalTheory.InertLocFrame.Lat
 namespace GlobalTheory.InertLocFrame
 
 
-theorem mem_latAtV_iff_xm : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (v : Pl F) (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] (ι : L →+ AE F E),
+theorem mem_latAtV_iff_xm : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (v : Pl (F := F)) (n d : ℕ) (X : Spc F E n) (W : Spc F E d) (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] (ι : L →+ AE F E),
       Function.Injective ι → (∀ z : AE F E, At (evFin F v) z ↔ ∃ x, ι x = z) → (∀ x y, ι (x * y) = ι x * ι y) →
       (∀ x, x ∈ Formalism.UG.intL L ↔ ι x ∈ AddSubgroup.closure {z : AE F E | ∃ a : AF F, At (evFin F v) a ∧
         evFin F v a ∈ v.adicCompletionIntegers F ∧ ∃ o : 𝓞 E, z = a • inclR (F := F) (AF F) (o : E)}) →

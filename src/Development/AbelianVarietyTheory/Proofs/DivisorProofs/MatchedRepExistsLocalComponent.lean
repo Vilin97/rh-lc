@@ -29,7 +29,7 @@ namespace GlobalTheory.LocRepSplit
 theorem locRep : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W)
     (R : RealMaps F a a') (Rf : FinMaps F a a'), IsMatched B G X om om' R Rf →
-    ∀ (v : Pl F) (t : E →ₐ[F] Fv F v) (c : GL (Fin (a + a')) (Fv F v)),
+    ∀ (v : Pl (F := F)) (t : E →ₐ[F] Fv F v) (c : GL (Fin (a + a')) (Fv F v)),
       ∃ π : Representation ℂ (GL (Fin (a + a')) (Fv F v)) (Rf.Pi v),
         IsSmooth π ∧ Nonempty (π.Equiv (prod₂ (detRep (Fin a) (chrW X.α t)) (detRep (Fin a') (chrW X.β t)))) ∧
         ∀ h ∈ UAt σ G.W (evFin F v), ∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v), ∀ φ₁ ∈ SB (Fin a × Fin (a + a') → Fv F v),

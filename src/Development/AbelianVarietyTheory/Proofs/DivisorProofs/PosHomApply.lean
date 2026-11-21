@@ -31,12 +31,12 @@ def posHom {R κ ι κ₁ : Type} [AddCommGroup R] (eq : κ ≃ ι ⊕ κ₁) : 
 
 def latPos {n d : ℕ} (X : Spc F E n) (W : Spc F E d)
     {Bf : Matrix (Fin n) (Fin d) (AE F E) → Matrix (Fin n) (Fin d) (AE F E) → AF F} {ι κ₁ : Type}
-    (co : Darboux Bf (Fin n × Fin d)) (eq : Fin n × Fin d ≃ ι ⊕ κ₁) (v : Pl F) : AddSubgroup (ι → Fv F v) :=
+    (co : Darboux Bf (Fin n × Fin d)) (eq : Fin n × Fin d ≃ ι ⊕ κ₁) (v : Pl (F := F)) : AddSubgroup (ι → Fv F v) :=
   ((latAtV X W v).map (GlobalTheory.LatVac.locCo co v)).map (posHom eq)
 
 theorem mem_latPos {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
     {Bf : Matrix (Fin n) (Fin d) (AE F E) → Matrix (Fin n) (Fin d) (AE F E) → AF F} {ι κ₁ : Type}
-    {co : Darboux Bf (Fin n × Fin d)} {eq : Fin n × Fin d ≃ ι ⊕ κ₁} {v : Pl F} {y : ι → Fv F v} :
+    {co : Darboux Bf (Fin n × Fin d)} {eq : Fin n × Fin d ≃ ι ⊕ κ₁} {v : Pl (F := F)} {y : ι → Fv F v} :
     y ∈ latPos X W co eq v ↔ ∃ γ ∈ latAtV X W v, ∀ i, evFin F v ((co.e γ).1 (eq.symm (Sum.inl i))) = y i := by
   simp only [latPos, AddSubgroup.mem_map]
   constructor

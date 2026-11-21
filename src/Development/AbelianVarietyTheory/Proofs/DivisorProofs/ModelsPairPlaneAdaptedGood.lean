@@ -35,7 +35,7 @@ theorem GlobalTheory.ThK.IsoUniq.finRel_unique : GlobalTheory.ThK.KP → ∀ (F 
     (n d n₁ d₁ : ℕ) (X : Spc F E n) (W : Spc F E d) (X₁ : Spc F E n₁) (W₁ : Spc F E d₁) (M : Model σ X W) (M₂ : Model σ X₁ W₁)
     (H : Plane E n n₁) (H' : Plane E d d₁) (i₀ i₁ j₀ j₁ : ℕ), B.IsGood σ → (∃ r s r' s' : ℕ, X.IsHerm σ B r s ∧ W.IsSkew σ B r' s') →
     M.IsGood B.ψ → M₂.IsGood B.ψ → H.IsAdapted σ B X X₁ j₀ j₁ → H'.IsAdapted σ B W W₁ i₀ i₁ →
-    ∀ (v : Pl F) (T T' : ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Fin n₁ × Fin d₁ → Fv F v) → ℂ),
+    ∀ (v : Pl (F := F)) (T T' : ((Fin n × Fin d → Fv F v) → ℂ) →ₗ[ℂ] (Fin n₁ × Fin d₁ → Fv F v) → ℂ),
     GlobalTheory.ThK.EvUniqB.FinRel B M M₂ H.ι H'.ι (isoA H H') v T → GlobalTheory.ThK.EvUniqB.FinRel B M M₂ H.ι H'.ι (isoA H H') v T' →
     (SB _).map T = SB _ → (SB _).map T' = SB _ → T (M.vac v) = M₂.vac v → T' (M.vac v) = M₂.vac v →
     ∀ φ ∈ SB (Fin n × Fin d → Fv F v), T' φ = T φ := by
@@ -187,7 +187,7 @@ theorem GlobalTheory.ThK.IsoUniq.main : GlobalTheory.ThK.KP → ∀ (F E : Type)
     rw [map_sum, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have hv : ∀ᶠ v in cofinite, φ i v = M.vac v := by
-    filter_upwards [hM.std, (Set.Finite.compl_mem_cofinite T.finite_toSet : (↑T : Set (Pl F))ᶜ ∈ cofinite)] with v h1 h2
+    filter_upwards [hM.std, (Set.Finite.compl_mem_cofinite T.finite_toSet : (↑T : Set (Pl (F := F)))ᶜ ∈ cofinite)] with v h1 h2
     rw [h1, hT i v h2]
   rw [hloc' (f i) (φ i) (hφ i) hv, hloc (f i) (φ i) (hφ i) hv, hc]
   have hfe : (fun v => ev' v (φ i v)) = fun v => ev v (φ i v) := funext fun v => hfin v _ (hφ i v)

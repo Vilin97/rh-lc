@@ -29,7 +29,7 @@ theorem map_cA {p q : Type} (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : Emb
   Matrix.ext fun i j => piInf_cA h τ (X i j)
 
 
-theorem compFin_finOne (v : Pl F) (z : AE F E) : compFin F E v (finOne F • z) = compFin F E v z := by
+theorem compFin_finOne (v : Pl (F := F)) (z : AE F E) : compFin F E v (finOne F • z) = compFin F E v z := by
   have e0 := St.compFin_smul (E := E) v (a := 1 - St.eF F) (sub_self (1 : Af F)) z
   rw [sub_smul, one_smul, map_sub, sub_eq_zero] at e0
   exact e0.symm

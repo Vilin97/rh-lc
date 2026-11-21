@@ -130,22 +130,22 @@ private theorem decompL {n n₁ k : ℕ} (x y : Fin n → E) (ι : Matrix (Fin n
     Matrix.transpose_transpose, Matrix.transpose_transpose] at h
   exact h
 
-private theorem at_transpose {n d : ℕ} {v : Pl F} {m : Matrix (Fin n) (Fin d) (AE F E)} (hm : At (evFin F v) m) :
+private theorem at_transpose {n d : ℕ} {v : Pl (F := F)} {m : Matrix (Fin n) (Fin d) (AE F E)} (hm : At (evFin F v) m) :
     At (evFin F v) mᵀ := by
   intro u hu
   rw [← Matrix.transpose_smul, hm u hu, Matrix.transpose_zero]
 
-private theorem at_mul_left {n d k : ℕ} {v : Pl F} {m : Matrix (Fin n) (Fin d) (AE F E)} (hm : At (evFin F v) m)
+private theorem at_mul_left {n d k : ℕ} {v : Pl (F := F)} {m : Matrix (Fin n) (Fin d) (AE F E)} (hm : At (evFin F v) m)
     (N : Matrix (Fin k) (Fin n) (AE F E)) : At (evFin F v) (N * m) := by
   intro u hu
   rw [← Matrix.mul_smul, hm u hu, Matrix.mul_zero]
 
-private theorem at_mulVec_right {n d : ℕ} {v : Pl F} (m : Matrix (Fin n) (Fin d) (AE F E)) {e : Fin d → AE F E}
+private theorem at_mulVec_right {n d : ℕ} {v : Pl (F := F)} (m : Matrix (Fin n) (Fin d) (AE F E)) {e : Fin d → AE F E}
     (he : At (evFin F v) e) : At (evFin F v) (m *ᵥ e) := by
   intro u hu
   rw [← Matrix.mulVec_smul, he u hu, Matrix.mulVec_zero]
 
-private theorem at_vecMulVec_right {n d : ℕ} {v : Pl F} (x : Fin n → AE F E) {e : Fin d → AE F E}
+private theorem at_vecMulVec_right {n d : ℕ} {v : Pl (F := F)} (x : Fin n → AE F E) {e : Fin d → AE F E}
     (he : At (evFin F v) e) : At (evFin F v) (Matrix.vecMulVec x e) := by
   rw [← Matrix.transpose_vecMulVec]
   exact at_transpose (at_vecMulVec he x)
@@ -185,7 +185,7 @@ open GlobalTheory.IsoOrthLoc GlobalTheory.IsoAOrthLoc in
 theorem _root_.GlobalTheory.T.adapted_model_local_place_second : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (n d n₁ d₁ r s r' s' i₀ i₁ j₀ j₁ : ℕ) (X : Spc F E n) (W : Spc F E d) (X₁ : Spc F E n₁) (W₁ : Spc F E d₁) (H : Plane E n n₁)
     (H' : Plane E d d₁) (M : Model σ X W), B.IsGood σ → X.IsHerm σ B r s → W.IsSkew σ B r' s' →
-    H.IsAdapted σ B X X₁ j₀ j₁ → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ v : Pl F,
+    H.IsAdapted σ B X X₁ j₀ j₁ → H'.IsAdapted σ B W W₁ i₀ i₁ → ∀ v : Pl (F := F),
     ∀ w : (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v),
       (∀ u ∈ isoA (F := F) H H', At (evFin F v) u →
         (GlobalTheory.LatVac.locCo M.co v u).1 ⬝ᵥ w.2 - w.1 ⬝ᵥ (GlobalTheory.LatVac.locCo M.co v u).2 = 0) →

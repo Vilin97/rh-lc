@@ -100,7 +100,7 @@ private theorem at_evI_iff (h : IsCMExt F E σ) {m : ℕ} (M : Matrix (Fin m) (F
   · have h1 : u.1 = 0 := (InfiniteAdeleRing.ringEquiv_mixedSpace F).map_eq_zero_iff.1 hu
     exact Prod.ext ((congrArg (· * _) h1).trans (zero_mul _)) ((congrArg (u.2 * ·) (sub_self _)).trans (mul_zero _))
 
-private theorem at_evFin_iff (h : IsCMExt F E σ) (v : Pl F) {m : ℕ} (M : Matrix (Fin m) (Fin m) (AE F E)) :
+private theorem at_evFin_iff (h : IsCMExt F E σ) (v : Pl (F := F)) {m : ℕ} (M : Matrix (Fin m) (Fin m) (AE F E)) :
     At (evFin F v) M ↔ ∀ i j, (toAdele F E (M i j)).1 = 0 ∧
       ∀ Q : HeightOneSpectrum (𝓞 E), Q.under (𝓞 F) ≠ v → (toAdele F E (M i j)).2 Q = 0 := by
   obtain ⟨ε, hε⟩ := GlobalTheory.UnitaryHeckeBaseChange.exists_isIndicator v
@@ -183,12 +183,12 @@ private theorem piInf_eq [IsCMField E] {w : InfinitePlace F} (τ : EmbOver E w) 
     rw [GlobalTheory.UnitaryHeckeBaseChange.toAdele_tmul, map_mul, map_mul, coord_adeleMap, GlobalTheory.CuspRep.coord_algebraMap]
     rfl
 
-private theorem complMap_at {v : Pl F} {w : HeightOneSpectrum (𝓞 E)} (h : w.under (𝓞 F) = v) (a : Af F) :
+private theorem complMap_at {v : Pl (F := F)} {w : HeightOneSpectrum (𝓞 E)} (h : w.under (𝓞 F) = v) (a : Af F) :
     complMap h (a v) = GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.finiteCompletionMap F E w (a (w.under (𝓞 F))) := by
   subst h
   exact GlobalTheory.CharTransport.locMap_eq F E w _
 
-private theorem piW_eq {v : Pl F} (t : E →ₐ[F] Fv F v) (z : AE F E) :
+private theorem piW_eq {v : Pl (F := F)} (t : E →ₐ[F] Fv F v) (z : AE F E) :
     complMap (splitPrime_under t) (piW t z) = pLoc E (splitPrime t) (pFin E (toAdele F E z)) := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]

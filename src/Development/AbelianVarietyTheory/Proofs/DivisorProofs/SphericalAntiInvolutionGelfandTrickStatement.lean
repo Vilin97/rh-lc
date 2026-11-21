@@ -16,7 +16,7 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.spherical_anti_involution_gelfand_trick : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W),
-    IsTriple B G X om om' → ∀ v : Pl F, IsEmpty (E →ₐ[F] Fv F v) →
+    IsTriple B G X om om' → ∀ v : Pl (F := F), IsEmpty (E →ₐ[F] Fv F v) →
     ∃ θ : GlobalTheory.SphLine.locU σ G.W v → GlobalTheory.SphLine.locU σ G.W v, (∀ x y, θ (x * y) = θ y * θ x) ∧ (∀ x, θ (θ x) = x) ∧
       ∀ g, ∃ a ∈ (GlobalTheory.SphLine.locK σ G.W v).subgroupOf (GlobalTheory.SphLine.locU σ G.W v),
         ∃ b ∈ (GlobalTheory.SphLine.locK σ G.W v).subgroupOf (GlobalTheory.SphLine.locU σ G.W v), θ g = a * g * b := by

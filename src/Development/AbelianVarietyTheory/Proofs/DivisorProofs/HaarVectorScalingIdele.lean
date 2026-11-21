@@ -24,7 +24,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups (tensNU)
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem continuous_compFinV (v : Pl F) : Continuous (compFin F E v) := by
+theorem continuous_compFinV (v : Pl (F := F)) : Continuous (compFin F E v) := by
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
   exact GlobalTheory.AutFunCompare.continuous_tensNU (E := E) (evFin F v).toLinearMap (map_mul (evFin F v))
     ((RestrictedProduct.continuous_eval v).comp continuous_snd)

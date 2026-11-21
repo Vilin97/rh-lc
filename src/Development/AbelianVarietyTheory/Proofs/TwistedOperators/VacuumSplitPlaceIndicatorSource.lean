@@ -26,7 +26,7 @@ open GlobalTheory.DblVacSiegel
 
 theorem siegel_eigen_eq_one_any : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ (v : Pl F), v ∉ X.T →
+    ∀ (v : Pl (F := F)), v ∉ X.T →
     ∀ (d' : Darboux (symp (cA σ) (-1 : AE F E) (incM F G.W.J) (incM F G.V.J)) (Fin a × Fin (a + a'))),
     ∀ (dd : Darboux (symp (cA σ) (-1 : AE F E) (incM F G.W.J) (dbl (incM F G.V.J))) ((Fin a × Fin (a + a')) ⊕ (Fin a × Fin (a + a'))))
       (omd : GlobalTheory.DblVac.UD σ G.V →* Module.End ℂ (((Fin a × Fin (a + a')) ⊕ (Fin a × Fin (a + a')) → AF F) → ℂ)),
@@ -66,7 +66,7 @@ theorem siegel_eigen_eq_one_any : ∀ (F E : Type) [Field F] [NumberField F] [Fi
           rw [Matrix.mul_assoc, Matrix.mul_assoc, t.mul_inv, Matrix.mul_one]
       _ = _ := by rw [← ht, ← Matrix.mul_assoc, e1, Matrix.one_mul]
   have hunr : ∀ P : HeightOneSpectrum (𝓞 E), P.under (𝓞 F) = v → UnrAt (X.β / X.α) P := fun P hP => by
-    have hPT : P ∉ above E (X.T : Set (Pl F)) := fun h => hv (hP ▸ (h : P.under (𝓞 F) ∈ (X.T : Set (Pl F))))
+    have hPT : P ∉ above E (X.T : Set (Pl (F := F))) := fun h => hv (hP ▸ (h : P.under (𝓞 F) ∈ (X.T : Set (Pl (F := F)))))
     rw [div_eq_mul_inv]
     exact (hT.chars.unrβ P hPT).mul (hT.chars.unrα P hPT).inv
   have hβ : (X.β / X.α) (Matrix.GeneralLinearGroup.det t) = 1 := by

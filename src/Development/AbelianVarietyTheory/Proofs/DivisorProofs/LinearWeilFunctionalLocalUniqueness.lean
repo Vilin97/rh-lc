@@ -87,13 +87,13 @@ section Proj
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
-theorem liftV_mul (v : Pl F) (a : Fv F v) (y : AF F) : liftV v a * y = liftV v (a * evFin F v y) :=
+theorem liftV_mul (v : Pl (F := F)) (a : Fv F v) (y : AF F) : liftV v a * y = liftV v (a * evFin F v y) :=
   GlobalTheory.EmbChart.atPlace_mul_right v a y
 
-theorem mul_liftV (v : Pl F) (a : Fv F v) (y : AF F) : y * liftV v a = liftV v (evFin F v y * a) := by
+theorem mul_liftV (v : Pl (F := F)) (a : Fv F v) (y : AF F) : y * liftV v a = liftV v (evFin F v y * a) := by
   rw [mul_comm, liftV_mul, mul_comm]
 
-theorem proj_schr_off (ψ : AddChar (AF F) ℂ) (v : Pl F) (φ₀ : (κ → Fv F v) → ℂ) (l : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ)
+theorem proj_schr_off (ψ : AddChar (AF F) ℂ) (v : Pl (F := F)) (φ₀ : (κ → Fv F v) → ℂ) (l : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ)
     (p q : κ → AF F) (hp : ∀ i, evFin F v (p i) = 0) (hq : ∀ i, evFin F v (q i) = 0) (Φ : (κ → AF F) → ℂ) :
     proj v φ₀ l (schr ψ (p, q) Φ) = schr ψ (p, q) (proj v φ₀ l Φ) := by
   funext y
@@ -109,7 +109,7 @@ theorem proj_schr_off (ψ : AddChar (AF F) ℂ) (v : Pl F) (φ₀ : (κ → Fv F
   simp only [schr, proj_apply, Pi.add_apply, map_add (f := _), hp, add_zero, smul_eq_mul]
   ring
 
-theorem proj_schr_at (ψ : AddChar (AF F) ℂ) (v : Pl F) (φ₀ : (κ → Fv F v) → ℂ) (l : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ)
+theorem proj_schr_at (ψ : AddChar (AF F) ℂ) (v : Pl (F := F)) (φ₀ : (κ → Fv F v) → ℂ) (l : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ)
     (p q : κ → Fv F v) (h : ∀ φ ∈ SB (κ → Fv F v), l (schr (psiAt ψ v) (p, q) φ) = l φ) (Φ : (κ → AF F) → ℂ)
     (hΦ : Φ ∈ schA F κ) :
     proj v φ₀ l (schr ψ (fun i => liftV v (p i), fun i => liftV v (q i)) Φ) = proj v φ₀ l Φ := by
@@ -131,7 +131,7 @@ theorem proj_schr_at (ψ : AddChar (AF F) ℂ) (v : Pl F) (φ₀ : (κ → Fv F 
     rfl
   rw [proj_apply, proj_apply, e, h _ hs]
 
-theorem mixed_inv (ψ : AddChar (AF F) ℂ) (v : Pl F) (φ₀ : (κ ⊕ κ → Fv F v) → ℂ) (hφ₀ : φ₀ ∈ SB (κ ⊕ κ → Fv F v))
+theorem mixed_inv (ψ : AddChar (AF F) ℂ) (v : Pl (F := F)) (φ₀ : (κ ⊕ κ → Fv F v) → ℂ) (hφ₀ : φ₀ ∈ SB (κ ⊕ κ → Fv F v))
     (l₁ l₂ : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ) (p₁ q₁ p₂ q₂ : κ → AF F)
     (hp : (1 - liftV v 1) • p₁ = (1 - liftV v 1) • p₂) (hq : (1 - liftV v 1) • q₁ = (1 - liftV v 1) • q₂)
     (h₁ : ∀ φ ∈ SB (κ → Fv F v), l₁ (schr (psiAt ψ v) (fun i => evFin F v (p₁ i), fun i => evFin F v (q₁ i)) φ) = l₁ φ)
@@ -251,7 +251,7 @@ end Mixed
 
 section Place
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {v : Pl F}
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {v : Pl (F := F)}
 
 omit [NumberField E] in
 theorem piW_algebraMap (τ : E →ₐ[F] Fv F v) (a : AF F) : piW τ (algebraMap (AF F) (AE F E) a) = evFin F v a := by
@@ -370,7 +370,7 @@ end Place
 
 section Linear
 
-variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {v : Pl F}
+variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {v : Pl (F := F)}
   {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
 
 theorem exists_at (M : Model σ X W) (w : Matrix (Fin n) (Fin d) (AE F E)) : ∃ u : Matrix (Fin n) (Fin d) (AE F E),

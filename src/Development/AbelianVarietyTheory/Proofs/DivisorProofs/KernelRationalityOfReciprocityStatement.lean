@@ -19,7 +19,7 @@ theorem _root_.GlobalTheory.T.adapted_evaluation_block_transform : ∀ {F E : Ty
     (T : Matrix (Fin n) (Fin d) (AE F E) ≃ₗ[AF F] ((κ' → AF F) × (κ' → AF F)) × Matrix (Fin n₁) (Fin d₁) (AE F E))
     (hf : ∀ w w', symp (cA σ) (-1) (incM F X.J) (incM F W.J) w w' =
         (T w).1.1 ⬝ᵥ (T w').1.2 - (T w').1.1 ⬝ᵥ (T w).1.2 + symp (cA σ) (-1) (incM F X₁.J) (incM F W₁.J) (T w).2 (T w').2)
-    (l : ∀ v : Pl F, (κ' → Fv F v) → ℂ) (μ : Measure (UA σ X.J)) (D : Set (UA σ X.J)),
+    (l : ∀ v : Pl (F := F), (κ' → Fv F v) → ℂ) (μ : Measure (UA σ X.J)) (D : Set (UA σ X.J)),
     (∀ z, T (incM F ι * z * (incM F ι')ᵀ) = ((0, 0), z)) → (∀ u ∈ I, (T u).1.1 = 0 ∧ (T u).2 = 0) →
     (∀ v, l v ∈ SB _ ∧ l v 0 = 1) → (∀ v, M₁.vac v ∈ SB _) →
     IsEv B (Model.mk (glueDarboux M₁.co eq T hf) (fun v => vacGlue eq (l v) (M₁.vac v)) μ D) M₁ ι ι' I (restr eq) := by

@@ -13,7 +13,7 @@ open scoped TensorProduct Matrix GlobalTheory.VacAny
 noncomputable section
 namespace GlobalTheory.InertLagChar
 
-variable {F : Type} [Field F] [NumberField F] {v : Pl F} {κ : Type} [Fintype κ]
+variable {F : Type} [Field F] [NumberField F] {v : Pl (F := F)} {κ : Type} [Fintype κ]
 
 def diagW (ψ : AddChar (Fv F v) ℂ) (μ : @Measure (κ → Fv F v) (borel _)) (Φ : (κ ⊕ κ → Fv F v) → ℂ)
     (w : (κ → Fv F v) × (κ → Fv F v)) : ℂ :=

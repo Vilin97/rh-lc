@@ -40,7 +40,7 @@ def IsPos (δ : E) (emb : ∀ w : InfinitePlace F, EmbOver E w) : Prop :=
   ∀ w, ∃ c : ℝ, 0 < c ∧ Complex.I * (emb w).1 δ = c
 
 def GoodField (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] : Prop :=
-  IsGalois ℚ E ∧ ∀ (v : Pl F) w, Formalism.UG.IsInertAt F E v w →
+  IsGalois ℚ E ∧ ∀ (v : Pl (F := F)) w, Formalism.UG.IsInertAt F E v w →
     (2 : 𝓞 F) ∉ v.asIdeal ∧ 3 < Ideal.absNorm v.asIdeal ∧ ¬ differentIdeal ℤ (𝓞 F) ≤ v.asIdeal
 
 def SpacesEx : Prop :=

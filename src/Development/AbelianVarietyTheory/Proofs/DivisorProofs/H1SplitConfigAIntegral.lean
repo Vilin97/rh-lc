@@ -22,12 +22,12 @@ noncomputable section
 namespace GlobalTheory.IndLine.AlphaInert
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
-theorem one_mem_uAt {n : ℕ} (X : Spc F E n) (v : Pl F) : (1 : UA σ X.J) ∈ UAt σ X (evFin F v) := by
+theorem one_mem_uAt {n : ℕ} (X : Spc F E n) (v : Pl (F := F)) : (1 : UA σ X.J) ∈ UAt σ X (evFin F v) := by
   intro u _
   show u • ((1 : Matrix (Fin n) (Fin n) (AE F E)) - 1) = 0
   simp
 
-theorem mul_mem_uAt {n : ℕ} {X : Spc F E n} {v : Pl F} {g h : UA σ X.J} (hg : g ∈ UAt σ X (evFin F v))
+theorem mul_mem_uAt {n : ℕ} {X : Spc F E n} {v : Pl (F := F)} {g h : UA σ X.J} (hg : g ∈ UAt σ X (evFin F v))
     (hh : h ∈ UAt σ X (evFin F v)) : g * h ∈ UAt σ X (evFin F v) := by
   intro u hu
   have e : mat (g * h) - 1 = (mat g - 1) * mat h + (mat h - 1) := by
@@ -48,7 +48,7 @@ theorem indLine : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFiel
     ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (R : RealMaps F (b + 2) a') (Rf : FinMaps F (b + 2) a')
       (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W) (R₁ : RealMaps F b a') (Rf₁ : FinMaps F b a'),
       IsMatched B G X om om' R Rf → IsMatched B G₁ X om₁ om₁' R₁ Rf₁ →
-      ∀ v : Pl F, IsEmpty (E →ₐ[F] Fv F v) → IndLineFin v om om₁ (Rf.p v) (Rf₁.p v) H' X.α ((a' : ℝ) / 2) := by
+      ∀ v : Pl (F := F), IsEmpty (E →ₐ[F] Fv F v) → IndLineFin v om om₁ (Rf.p v) (Rf₁.p v) H' X.α ((a' : ℝ) / 2) := by
   intro hKP F E _ _ _ _ _ σ B b a' G G₁ H H' hC X om om' R Rf om₁ om₁' R₁ Rf₁ hM hM₁ v hv
   have hvT : v ∉ X.T := fun h => hv.false (B.τ ⟨v, hM.triple.chars.sub h⟩)
   have hvac : G.M.vac v ∈ SB _ := (hM.triple.geo.hM.vac v).1

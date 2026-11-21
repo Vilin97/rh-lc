@@ -81,7 +81,7 @@ variable [NumberField F]
 def evIr : AF F →+* mixedEmbedding.mixedSpace F :=
   (InfiniteAdeleRing.ringEquiv_mixedSpace F).toRingHom.comp (RingHom.fst _ _)
 
-theorem mulVec_mem {v : Pl F} (M : Matrix κ κ F)
+theorem mulVec_mem {v : Pl (F := F)} (M : Matrix κ κ F)
     (hM : ∀ i j, algebraMap F (Fv F v) (M i j) ∈ v.adicCompletionIntegers F) (x : κ → Fv F v)
     (hx : ∀ i, x i ∈ v.adicCompletionIntegers F) (i : κ) :
     (M.map (algebraMap F (Fv F v)) *ᵥ x) i ∈ v.adicCompletionIntegers F := by
@@ -95,7 +95,7 @@ theorem eventually_int (M : Matrix κ κ F) :
 
 
 theorem hasOp_levi : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → (∀ᶠ v in cofinite, PsiUnr ψ v) →
-    (∀ v : Pl F, ∃ x, psiLoc ψ v x ≠ 1) → ∀ (κ : Type) [Fintype κ] [DecidableEq κ] (A : Matrix κ κ F), IsUnit A.det →
+    (∀ v : Pl (F := F), ∃ x, psiLoc ψ v x ≠ 1) → ∀ (κ : Type) [Fintype κ] [DecidableEq κ] (A : Matrix κ κ F), IsUnit A.det →
     GlobalTheory.SympChange.HasOp ψ (GlobalTheory.SympChange.leviM A) := by
   intro F _ _ ψ _ _ _ κ _ _ A hA
   let gI : F →+* mixedEmbedding.mixedSpace F := (evIr (F := F)).comp (algebraMap F (AF F))

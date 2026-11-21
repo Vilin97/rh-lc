@@ -38,7 +38,7 @@ theorem symp_transpose {R : Type} [CommRing R] {K : Type} [CommRing K] [Algebra 
   ring
 
 omit [NumberField E] in
-theorem at_transpose {m n : Type} (v : Pl F) (z : Matrix m n (AE F E)) :
+theorem at_transpose {m n : Type} (v : Pl (F := F)) (z : Matrix m n (AE F E)) :
     At (evFin F v) zᵀ ↔ At (evFin F v) z := by
   constructor
   · intro h u hu
@@ -48,7 +48,7 @@ theorem at_transpose {m n : Type} (v : Pl F) (z : Matrix m n (AE F E)) :
   · intro h u hu
     rw [← Matrix.transpose_smul, h u hu, Matrix.transpose_zero]
 
-theorem transpose_mem_latAtV {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F) {z : Matrix (Fin n) (Fin d) (AE F E)}
+theorem transpose_mem_latAtV {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl (F := F)) {z : Matrix (Fin n) (Fin d) (AE F E)}
     (hz : z ∈ latAtV X Y v) : zᵀ ∈ latAtV Y X v := by
   have hle : latAtV X Y v ≤ (latAtV Y X v).comap (Matrix.transposeAddEquiv (Fin n) (Fin d) (AE F E)).toAddMonoidHom := by
     refine (AddSubgroup.closure_le _).mpr ?_
@@ -58,13 +58,13 @@ theorem transpose_mem_latAtV {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl
     simp only [incM, Matrix.transpose_smul, ← Matrix.transpose_map, Matrix.transpose_vecMulVec]
   exact hle hz
 
-theorem mem_latAtV_transpose {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F) (z : Matrix (Fin n) (Fin d) (AE F E)) :
+theorem mem_latAtV_transpose {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl (F := F)) (z : Matrix (Fin n) (Fin d) (AE F E)) :
     zᵀ ∈ latAtV Y X v ↔ z ∈ latAtV X Y v :=
   ⟨fun h => by simpa using transpose_mem_latAtV Y X v h, transpose_mem_latAtV X Y v⟩
 
 
 theorem dbl_line_co {σ : E →ₐ[F] E} {n d : ℕ} {X : Spc F E n} {Y : Spc F E d} {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ)
-    (v : Pl F) (hunr : PsiUnr ψ v) (hX : X.L.IsLattice E) (hY : Y.L.IsLattice E)
+    (v : Pl (F := F)) (hunr : PsiUnr ψ v) (hX : X.L.IsLattice E) (hY : Y.L.IsLattice E)
     (hsd : ∀ z : Matrix (Fin n) (Fin d) (AE F E), At (evFin F v) z → (z ∈ latAtV X Y v ↔ ∀ γ ∈ latAtV X Y v,
       ψ (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F Y.J) z γ) = 1))
     {κ : Type} [Fintype κ] [DecidableEq κ]

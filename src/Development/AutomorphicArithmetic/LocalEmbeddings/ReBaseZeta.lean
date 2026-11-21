@@ -91,9 +91,9 @@ open GlobalTheory.FlipMatch (coX coY pairM)
 open scoped GlobalTheory.VacAny ValuativeRel
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
-  {n d r s r' s' : ℕ} {X : Spc F E n} {W : Spc F E d} {B : Base F E} {v : Pl F}
+  {n d r s r' s' : ℕ} {X : Spc F E n} {W : Spc F E d} {B : Base F E} {v : Pl (F := F)}
 
-theorem psiLoc_zero' (ψ : AddChar (AF F) ℂ) (v : Pl F) : psiLoc ψ v 0 = 1 := by
+theorem psiLoc_zero' (ψ : AddChar (AF F) ℂ) (v : Pl (F := F)) : psiLoc ψ v 0 = 1 := by
   rw [psiLoc, map_zero, map_zero]
   exact AddChar.map_zero_eq_one ψ
 
@@ -191,7 +191,7 @@ theorem linBar_change (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (hW : W.IsSkew
   · rw [act _ _ _ (hzX _) (by rw [y0, p0]) x hx ι hι, y0, add_zero, pairM_mul, ← eX, hzXe, pairM_neg, neg_neg, pairM_lin]
     rfl
 
-theorem mem_O_iff (v : Pl F) (a : Fv F v) : a ∈ 𝒪[Fv F v] ↔ a ∈ v.adicCompletionIntegers F := by
+theorem mem_O_iff (v : Pl (F := F)) (a : Fv F v) : a ∈ 𝒪[Fv F v] ↔ a ∈ v.adicCompletionIntegers F := by
   rw [Valuation.mem_integer_iff, ← map_one (ValuativeRel.valuation (Fv F v)), ← Valuation.Compatible.vle_iff_le,
     IsDedekindDomain.HeightOneSpectrum.mem_adicCompletionIntegers,
     ← map_one (Valued.v : Valuation (v.adicCompletion F) (WithZero (Multiplicative ℤ)))]
@@ -205,7 +205,7 @@ theorem mem_KO_of_bases {t : E →ₐ[F] Fv F v} {L : Submodule (𝓞 E) (Fin n 
 
 variable {a a' : ℕ}
 
-def kap (G : Geo σ a a') (V : Spc F E a) (V' : Spc F E a') (Z : Spc F E (a + a')) (v : Pl F) : (Fv F v)ˣ :=
+def kap (G : Geo σ a a') (V : Spc F E a) (V' : Spc F E a') (Z : Spc F E (a + a')) (v : Pl (F := F)) : (Fv F v)ˣ :=
   GlobalTheory.SplitFlip.gdet ((G.V.bas v)⁻¹ * V.bas v) * GlobalTheory.SplitFlip.gdet ((G.V'.bas v)⁻¹ * V'.bas v) *
     GlobalTheory.SplitFlip.gdet ((G.W.bas v)⁻¹ * Z.bas v)
 

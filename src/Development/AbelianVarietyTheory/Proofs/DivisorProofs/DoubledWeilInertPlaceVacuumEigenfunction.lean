@@ -68,7 +68,7 @@ end Alg
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem fromCols_mul_transpose {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F)
+theorem fromCols_mul_transpose {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl (F := F))
     (h : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (AE F E))
     (hh : ∀ z ∈ GlobalTheory.InertDbl.latAtD Y v, h *ᵥ z ∈ GlobalTheory.InertDbl.latAtD Y v)
     {γ₁ γ₂ : Matrix (Fin n) (Fin d) (AE F E)} (h₁ : γ₁ ∈ latAtV X Y v) (h₂ : γ₂ ∈ latAtV X Y v) :
@@ -96,7 +96,7 @@ theorem fromCols_mul_transpose {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : 
   · rw [Matrix.fromBlocks_transpose, Matrix.fromCols_mul_fromBlocks]
 
 omit [NumberField E] in
-theorem at_fromCols {n d : ℕ} (v : Pl F) {γ₁ γ₂ : Matrix (Fin n) (Fin d) (AE F E)} (h₁ : At (evFin F v) γ₁)
+theorem at_fromCols {n d : ℕ} (v : Pl (F := F)) {γ₁ γ₂ : Matrix (Fin n) (Fin d) (AE F E)} (h₁ : At (evFin F v) γ₁)
     (h₂ : At (evFin F v) γ₂) : At (evFin F v) (Matrix.fromCols γ₁ γ₂) := by
   intro u hu
   ext i (j | j)
@@ -118,7 +118,7 @@ theorem box_mem_SB {k : Type} [CommRing k] [TopologicalSpace k] [T2Space k] {κ 
   · rw [image_eq_zero_of_notMem_tsupport h, zero_mul]
   · rw [image_eq_zero_of_notMem_tsupport h, mul_zero]
 
-theorem eq_of_tens (v : Pl F) {κ : Type} {φ₁ φ₂ : (κ → Fv F v) → ℂ} {r : (κ → AF F) → ℂ}
+theorem eq_of_tens (v : Pl (F := F)) {κ : Type} {φ₁ φ₂ : (κ → Fv F v) → ℂ} {r : (κ → AF F) → ℂ}
     (hr : ∀ x z, At (evFin F v) z → r (x + z) = r x) {x₀ : κ → AF F} (h0 : r x₀ ≠ 0)
     (h : tens (evFin F v) φ₁ r = tens (evFin F v) φ₂ r) : φ₁ = φ₂ := by
   funext y
@@ -133,14 +133,14 @@ theorem eq_of_tens (v : Pl F) {κ : Type} {φ₁ φ₂ : (κ → Fv F v) → ℂ
   simp only [tens, hev, hr x₀ z hz] at e
   exact mul_right_cancel₀ h0 e
 
-theorem dblFun_tens (v : Pl F) {κ : Type} (φ : (κ → Fv F v) → ℂ) (r : (κ → AF F) → ℂ) :
+theorem dblFun_tens (v : Pl (F := F)) {κ : Type} (φ : (κ → Fv F v) → ℂ) (r : (κ → AF F) → ℂ) :
     GlobalTheory.InertDbl.dblFun (tens (evFin F v) φ r) =
       tens (evFin F v) (boxFun φ fun x => star (φ x)) (GlobalTheory.InertDbl.dblFun r) := by
   funext x
   simp only [GlobalTheory.InertDbl.dblFun, tens, boxFun, Function.comp_def, star_mul']
   ring
 
-theorem rest_dbl (v : Pl F) {κ : Type} [Fintype κ] {φ : (κ → Fv F v) → ℂ} {r : (κ → AF F) → ℂ}
+theorem rest_dbl (v : Pl (F := F)) {κ : Type} [Fintype κ] {φ : (κ → Fv F v) → ℂ} {r : (κ → AF F) → ℂ}
     (h : Rest (evFin F v) φ r) : Rest (evFin F v) (boxFun φ fun x => star (φ x)) (GlobalTheory.InertDbl.dblFun r) := by
   refine ⟨fun x z hz => ?_, ?_⟩
   · have hz1 : At (evFin F v) (z ∘ Sum.inl) := fun u hu => by
@@ -156,7 +156,7 @@ theorem rest_dbl (v : Pl F) {κ : Type} [Fintype κ] {φ : (κ → Fv F v) → �
 theorem acts_of_at {σ : E →ₐ[F] E} {α β κ : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ]
     {JA : Matrix α α (AE F E)} {JB : Matrix β β (AE F E)} {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ)
     (dd : Darboux (symp (R := AF F) (cA σ) (-1) JA JB) κ) (omd : UG (cA σ) JB →* Module.End ℂ ((κ → AF F) → ℂ))
-    (hS : IsUSplitting (adeleClass F) ψ dd (actB (cA σ)) omd) (v : Pl F) (p : UG (cA σ) JB)
+    (hS : IsUSplitting (adeleClass F) ψ dd (actB (cA σ)) omd) (v : Pl (F := F)) (p : UG (cA σ) JB)
     (hp : At (evFin F v) (((p : GL β (AE F E)) : Matrix β β (AE F E)) - 1)) (φ : (κ → Fv F v) → ℂ)
     (hφ : φ ∈ SB (κ → Fv F v)) : ∃ φ₁ ∈ SB (κ → Fv F v), Acts (evFin F v) (omd p) φ φ₁ := by
   refine GlobalTheory.DblActs.acts_of_comm v ψ hψ (omd p) (fun Φ hΦ => hS.pres p Φ hΦ)
@@ -179,7 +179,7 @@ theorem acts_of_at {σ : E →ₐ[F] E} {α β κ : Type} [Fintype α] [Decidabl
   exact h3
 
 theorem dbl_line {σ : E →ₐ[F] E} {n d : ℕ} {X : Spc F E n} {Y : Spc F E d} {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ)
-    (v : Pl F) (hunr : PsiUnr ψ v) (hX : X.L.IsLattice E) (hY : Y.L.IsLattice E)
+    (v : Pl (F := F)) (hunr : PsiUnr ψ v) (hX : X.L.IsLattice E) (hY : Y.L.IsLattice E)
     (hsd : ∀ z : Matrix (Fin n) (Fin d) (AE F E), At (evFin F v) z → (z ∈ latAtV X Y v ↔ ∀ γ ∈ latAtV X Y v,
       ψ (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F Y.J) z γ) = 1))
     (M : Model σ X Y) (φ : (Fin n × Fin d → Fv F v) → ℂ) (hφ : M.IsVac ψ v φ)
@@ -303,7 +303,7 @@ theorem dbl_line {σ : E →ₐ[F] E} {n d : ℕ} {X : Spc F E n} {Y : Spc F E d
 
 theorem dblFun_eigen : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
     (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ (v : Pl F) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T → ∀ (dd : Darboux (symp (cA σ) (-1) (incM F G.V'.J) (dbl (incM F G.W.J))) (Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a')))
+    ∀ (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → v ∉ X.T → ∀ (dd : Darboux (symp (cA σ) (-1) (incM F G.V'.J) (dbl (incM F G.W.J))) (Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a')))
       (omd : UG (cA σ) (dbl (incM F G.W.J)) →* Module.End ℂ ((Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a') → AF F) → ℂ)),
       IsDblCoord (cA σ) (-1) (incM F G.V'.J) (incM F G.W.J) G.M'.co dd →
       IsUWeilSplit (cA σ) (adeleClass F) B.ψ (-1) (incM F G.V'.J) (dbl (incM F G.W.J)) dd X.α (diagCols (Fin (a + a'))) omd →

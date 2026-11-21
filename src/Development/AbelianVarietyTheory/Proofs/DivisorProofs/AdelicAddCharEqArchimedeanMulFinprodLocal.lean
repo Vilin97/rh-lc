@@ -101,7 +101,7 @@ theorem psiAt_eq_one_of_integral {F : Type} [Field F] [NumberField F] (ψ : AddC
 
 theorem psi_prod : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), Continuous ψ → ∀ x : AF F,
     (Function.mulSupport fun v : Pl F => GlobalTheory.LatVac.psiAt ψ v (evFin F v x)).Finite ∧
-    ψ x = ψ (pairA F (fstA F x) 0) * ∏ᶠ v : Pl F, GlobalTheory.LatVac.psiAt ψ v (evFin F v x) := by
+    ψ x = ψ (pairA F (fstA F x) 0) * ∏ᶠ v : Pl (F := F), GlobalTheory.LatVac.psiAt ψ v (evFin F v x) := by
   intro F _ _ ψ hψ x
   classical
   obtain ⟨I, hI⟩ := exists_finset_trivial ψ hψ

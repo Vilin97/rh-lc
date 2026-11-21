@@ -19,14 +19,14 @@ section Defs
 
 variable (F : Type) [Field F] [NumberField F] (E : Type) [Field E] [NumberField E] [Algebra F E]
 
-def embBar (v : Pl F) : E →ₐ[F] FvBar F v := IsAlgClosed.lift
+def embBar (v : Pl (F := F)) : E →ₐ[F] FvBar F v := IsAlgClosed.lift
 
 variable {F E} {J : Type} [Fintype J]
 
-def supBar (v : Pl F) (τ : E →ₐ[F] FvBar F v) (u : J → E) : ℝ≥0 :=
+def supBar (v : Pl (F := F)) (τ : E →ₐ[F] FvBar F v) (u : J → E) : ℝ≥0 :=
   Finset.univ.sup fun f => absBar F v (τ (u f))
 
-def locFin (σ : E →ₐ[F] E) (v : Pl F) (u : J → E) : ℝ≥0 :=
+def locFin (σ : E →ₐ[F] E) (v : Pl (F := F)) (u : J → E) : ℝ≥0 :=
   supBar v (embBar F E v) u * supBar v ((embBar F E v).comp σ) u
 
 

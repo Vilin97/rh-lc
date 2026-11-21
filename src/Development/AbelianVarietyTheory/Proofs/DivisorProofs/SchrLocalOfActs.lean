@@ -22,7 +22,7 @@ open scoped GlobalTheory.VacAny
 
 noncomputable section
 
-theorem GlobalTheory.AdelicActs.schr_local_of_acts : ∀ {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ) (v : Pl F) {κ : Type} [Fintype κ]
+theorem GlobalTheory.AdelicActs.schr_local_of_acts : ∀ {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ) (v : Pl (F := F)) {κ : Type} [Fintype κ]
     (w : (κ → AF F) × (κ → AF F)), (∀ i, At (evFin F v) (w.1 i)) → (∀ i, At (evFin F v) (w.2 i)) →
     ∀ φ φ' : (κ → Fv F v) → ℂ, φ ∈ SB (κ → Fv F v) → Acts (evFin F v) (schr ψ w) φ φ' →
       schr (GlobalTheory.VacAny.psiV ψ v) (fun i => evFin F v (w.1 i), fun i => evFin F v (w.2 i)) φ = φ' := by

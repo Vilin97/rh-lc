@@ -24,7 +24,7 @@ namespace GlobalTheory.SphLine
 
 theorem fixed_eq_smul_vac : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W)
-    (R : RealMaps F a a') (Rf : FinMaps F a a'), IsMatched B G X om om' R Rf → ∀ v : Pl F, IsEmpty (E →ₐ[F] Fv F v) →
+    (R : RealMaps F a a') (Rf : FinMaps F a a'), IsMatched B G X om om' R Rf → ∀ v : Pl (F := F), IsEmpty (E →ₐ[F] Fv F v) →
     ∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v), (∀ k ∈ KAt σ G.W v, ∀ φ₁ ∈ SB (Fin a × Fin (a + a') → Fv F v),
       Acts (evFin F v) (om (1, k)) φ φ₁ → Rf.p v φ₁ = Rf.p v φ) → ∃ c : ℂ, Rf.p v φ = c • Rf.p v (G.M.vac v) := by
   intro hKP F E _ _ _ _ _ σ B a a' G X om om' R Rf hM v hv φ hφ hfix

@@ -24,7 +24,7 @@ theorem _root_.GlobalTheory.T.config_a_theta_unfolding : GlobalTheory.ThK.KP →
     ∀ (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (R : RealMaps F (b + 2) a') (Rf : FinMaps F (b + 2) a')
       (om₁ : Rep σ G₁.V G₁.W) (om₁' : Rep σ G₁.V' G₁.W) (R₁ : RealMaps F b a') (Rf₁ : FinMaps F b a'),
       IsMatched B G X om om' R Rf → IsMatched B G₁ X om₁ om₁' R₁ Rf₁ →
-      ∀ v : Pl F, Nonempty (E →ₐ[F] Fv F v) →
+      ∀ v : Pl (F := F), Nonempty (E →ₐ[F] Fv F v) →
       ∃ (π : Representation ℂ (GL (Fin (b + 2 + a')) (Fv F v)) (Rf.Pi v))
         (σ₁ : Representation ℂ (GL (Fin (b + a')) (Fv F v)) (Rf₁.Pi v)) (α₀ β₀ ξ₁ ξ₂ : (Fv F v)ˣ →* ℂˣ)
         (e : (Σ i : Fin 3, Fin (blk3 (b + a') i)) ≃ Fin (b + 2 + a'))

@@ -56,7 +56,7 @@ theorem cA_incM (σ : E →ₐ[F] E) {m n : Type} (A : Matrix m n E) : (incM F A
   simp [incM, cA, inclR, Matrix.map_apply]
 
 theorem mul_mem_latAtV {n d n₁ : ℕ} (X : Spc F E n) (W : Spc F E d) (X₁ : Spc F E n₁) (ι : Matrix (Fin n) (Fin n₁) E)
-    (hlow : ∀ u, u ∈ X₁.L ↔ ι *ᵥ u ∈ X.L) (v : Pl F) :
+    (hlow : ∀ u, u ∈ X₁.L ↔ ι *ᵥ u ∈ X.L) (v : Pl (F := F)) :
     ∀ z ∈ latAtV X₁ W v, incM F ι * z ∈ latAtV X W v := by
   intro z hz
   induction hz using AddSubgroup.closure_induction with
@@ -77,7 +77,7 @@ theorem GlobalTheory.VacRestr.restr_eigen : ∀ (F E : Type) [Field F] [NumberFi
     ∀ (j : Fin n₁ × Fin d → Fin n × Fin d) (co : Darboux (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J)) (Fin n × Fin d)),
       Function.Injective j →
       (∀ z, co.e (incM F H.ι * z) = (Function.extend j (M₁.co.e z).1 0, Function.extend j (M₁.co.e z).2 0)) →
-      ∀ (v : Pl F) (φ : (Fin n × Fin d → Fv F v) → ℂ) (θ : 𝓞 E),
+      ∀ (v : Pl (F := F)) (φ : (Fin n × Fin d → Fv F v) → ℂ) (θ : 𝓞 E),
         (∀ γ ∈ latAtV X W v, schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo co v γ) φ =
           B.ψ (⅟(2 : AF F) * symp (R := AF F) (cA σ) (inclR (F := F) (AF F) (θ : E)) (incM F X.J) (incM F W.J) γ γ) • φ) →
         ∀ z ∈ latAtV X₁ W v, schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo M₁.co v z) (fun y => φ (Function.extend j y 0)) =
