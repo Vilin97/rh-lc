@@ -1058,7 +1058,8 @@ def IsCrysE (P : LocPrime l) (LL' : FinExt l) {m : ℕ} (r : ↥Gw →* Matrix.G
   IsCrys (P.PD Bw.Kw) (Bw.repE LL' r)
 
 def IsdRE (P : LocPrime l) (LL' : FinExt l) {m : ℕ} (r : ↥Gw →* Matrix.GeneralLinearGroup (Fin m) ↥LL'.1) : Prop :=
-  Module.finrank ↥LL'.1 ↥(DdR (P.PD Bw.Kw) (Bw.repE LL' r)) = Module.finrank ℚ_[l] ↥Bw.Kw.1 * m
+  (letI := (DdR (P.PD Bw.Kw) (Bw.repE LL' r)).module
+   Module.finrank ↥LL'.1 ↥(DdR (P.PD Bw.Kw) (Bw.repE LL' r))) = Module.finrank ℚ_[l] ↥Bw.Kw.1 * m
 
 def IsPotCrysE (P : LocPrime l) (LL' : FinExt l) {m : ℕ}
     (r : ↥Gw →* Matrix.GeneralLinearGroup (Fin m) ↥LL'.1) : Prop :=
