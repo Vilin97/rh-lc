@@ -39,15 +39,7 @@ theorem _root_.GlobalTheory.T.exists_finset_reps_maximalIdealMatrix_mod_mul :
       fun i j => sum_mem fun l _ => mul_mem (hX i l) (hY l j)
     let t := GlobalTheory.GLDoubling.torusElt (k := k) (n := D) ϖ (indic s)
     have ht : t.1 = diagonal fun i => (ϖ : k) ^ indic s i := by
-      ext i j
-      change blockDiagonal'
-        (fun l : D => (GeneralLinearGroup.scalar Unit (ϖ ^ indic s l) : Matrix Unit Unit k))
-        ⟨i, ()⟩ ⟨j, ()⟩ = diagonal (fun l => (ϖ : k) ^ indic s l) i j
-      by_cases h : i = j
-      · subst j
-        rw [blockDiagonal'_apply_eq, GeneralLinearGroup.coe_scalar, Matrix.scalar_apply]
-        simp only [diagonal_apply_eq, Units.val_zpow_eq_zpow_val]
-      · rw [blockDiagonal'_apply_ne _ _ _ h, diagonal_apply_ne _ h]
+      exact GlobalTheory.GLDoubling.val_torusElt ϖ (indic s)
     let D0 : Matrix D D k := diagonal fun i => (ϖ : k) ^ (1 - indic s i)
     have hD0 : t.1 * D0 = (ϖ : k) • (1 : Matrix D D k) := by
       rw [ht, diagonal_mul_diagonal, smul_one_eq_diagonal]

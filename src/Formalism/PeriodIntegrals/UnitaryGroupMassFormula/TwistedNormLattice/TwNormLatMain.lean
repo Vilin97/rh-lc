@@ -28,7 +28,8 @@ theorem twNormLat_main : PI.TwNormLat.TwNormLat := by
     rw [LinearEquiv.coe_inv, LinearEquiv.apply_symm_apply, mem_lam] at this
     simpa [smul_eq_mul] using this l
   obtain ⟨K, b, hKj, hbM, hbl, hUT, hrep⟩ :=
-    herm P (fun v => h⁻¹ v ∈ LocE.lamY P (Ideal.absNorm P.asIdeal) N c 0) hp hq j Mbd
+    herm P (fun v => h⁻¹ v ∈ LocE.lamY P (Ideal.absNorm P.asIdeal) N c 0)
+      (Madd := Madd) (Msmul := Msmul) (Mlam := Mlam) hp hq j Mbd
   have hq0 := qE_ne_zero P hp
   have hbd : ∀ l, b l l ≠ 0 := fun l => by rw [hbl]; exact inv_ne_zero (pow_ne_zero _ hq0)
   let d : Fin (N + c) → E := fun l => if l.1 < N then 1 else qE P ^ K l

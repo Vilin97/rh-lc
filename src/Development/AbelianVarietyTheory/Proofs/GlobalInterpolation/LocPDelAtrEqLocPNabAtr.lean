@@ -29,7 +29,7 @@ theorem localization_delAtr_eq_localization_nabAtr : GlobalTheory.Published.Indu
     ∀ (X : Fields) (n p : ℕ) (lam : X.Tau → DomWeight n), p.Prime →
       (∀ τ (a b : Fin n), 2 * ((lam τ).w a - (lam τ).w b + (n : ℤ)) < (p : ℤ)) →
       ∀ w : HeightOneSpectrum (𝓞 X.K), ((p : ℕ) : 𝓞 X.K) ∈ w.asIdeal →
-        ∀ L : Submodule (𝓞 X.E) (Sp X.E n), Submodule.IsLattice X.E L →
+        ∀ L : Submodule (𝓞 X.E) (Sp X.E n), Submodule.IsFullLattice X.E L →
           localization₂ w.asIdeal (delAtr X.emb lam L) = localization₂ w.asIdeal (nabAtr X.emb lam L) := by
   intro h X n p lam hp hl w hw L hL
   refine le_antisymm ?_ ?_

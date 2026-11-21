@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.LiftLatLemmas
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FixedCoefficientFieldInComplex
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.W1idxUnionW1jwFinite
 
@@ -156,7 +157,8 @@ theorem finite_nonzeroIndexPlaces_referenceTuple (w : ColW B f T) (Z : w.Lt) (hX
       (((R3.famR (w.st Z) w.I hX (R3.usedOf w.I T Wt) z.Xg z.tr).side3 z.F.P0 z.F.ψ0 (R3.zsOf z.R z.F)).Tl j
         (R3.famR (w.st Z) w.I hX (R3.usedOf w.I T Wt) z.Xg z.tr).A.μ0) ≠ 0}.Finite :=
     fun j => GlobalTheory.Mem.NonzeroPlacesOverPrimes.jw_finite_of_lat _ (Formalism.L2.DIV.BlockDat.HZ_det hok.conj (hok.lifts j _) hok.irr) _
-      (Formalism.L2.DIV.BlockDat.Tl_lat hok.conj (hok.lifts j _) hok.irr)
+      (Formalism.L2.DIV.matLat_full _ (Formalism.L2.DIV.BlockDat.lPr_surj hok.conj (hok.lifts j _) hok.irr) _
+        (Formalism.L2.DIV.CSD.lf_lvlNab_isFullLattice _ (hok.lifts j _).good _ _ _))
   have hF := Set.finite_iUnion fun j => (hIw j).union (hjw j)
   refine ((hF.preimage (w.st Z).toD7.plEq.injective.injOn).union
     ((hF.preimage GlobalTheory.Mem.NonzeroPlacesOverPrimes.conjPl_injective.injOn).preimage (w.st Z).toD7.plEq.injective.injOn)).subset ?_

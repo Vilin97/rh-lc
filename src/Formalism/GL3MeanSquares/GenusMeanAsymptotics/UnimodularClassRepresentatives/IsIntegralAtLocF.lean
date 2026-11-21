@@ -22,7 +22,7 @@ open UnimodularLocalization
 
 theorem good_term (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm)
     (hd : IsTotPosDef h) (S : VecSplit h h') {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {n : 𝓞 F} (hn : h S.x₀ S.x₀ = algebraMap F K (n : F))
     (hvL : vd h L 𝔭 = 0) (hvn : vF 𝔭 n = 0) {T : Submodule (𝓞 K) V'} (hTl : locF 𝔭 T = T)
     (hT : fibLoc S L 𝔭 T ≠ 0) : fibLoc S L 𝔭 T = 1 ∧ lamP h' T 𝔭 = 1 := by
@@ -30,13 +30,14 @@ theorem good_term (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
     exists_lattice_of_fibLoc_ne_zero_good hK hF hs hd S hL hLi h𝔭 hn hvL hvn hT
   constructor
   · rw [← fibLoc_congr S L e]
-    exact fibLoc_eq_one hK hF hs hd S hL hLi hC hCi h𝔭 hn hvL hvn hvC
-  · rw [← hTl, ← e, localFactor_localField hK hF (S.isSymm hs) (S.isTotPosDef hd) hC hCi h𝔭]
+    exact fibLoc_eq_one hK hF hs hd S (by first | exact hL | exact hL.toIsLattice) hLi
+      (by first | exact hC | exact hC.toIsLattice) hCi h𝔭 hn hvL hvn hvC
+  · rw [← hTl, ← e, localFactor_localField hK hF (S.isSymm hs) (S.isTotPosDef hd) hC.toIsLattice hCi h𝔭]
     exact localMassFactor_of_valuation_eq_zero hK hF (S.isSymm hs) (S.isTotPosDef hd) hC hCi h𝔭 hvC
 
 theorem good_orbit (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm)
     (hd : IsTotPosDef h) (S : VecSplit h h') {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {n : 𝓞 F} (hn : h S.x₀ S.x₀ = algebraMap F K (n : F))
     (hvL : vd h L 𝔭 = 0) (hvn : vF 𝔭 n = 0) {T T' : Submodule (𝓞 K) V'}
     (hT : fibLoc S L 𝔭 T ≠ 0) (hT' : fibLoc S L 𝔭 T' ≠ 0) :
@@ -46,8 +47,9 @@ theorem good_orbit (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : Is
   obtain ⟨C', hC', hCi', hvC', e'⟩ :=
     exists_lattice_of_fibLoc_ne_zero_good hK hF hs hd S hL hLi h𝔭 hn hvL hvn hT'
   rw [← e, ← e']
-  exact exists_isom_locF_of_vd_zero hK hF (S.isSymm hs) (S.isTotPosDef hd) hC hC' hCi hCi' h𝔭
-    hvC hvC'
+  exact exists_isom_locF_of_vd_zero hK hF (S.isSymm hs) (S.isTotPosDef hd)
+    (by first | exact hC | exact hC.toIsLattice) (by first | exact hC' | exact hC'.toIsLattice)
+    hCi hCi' h𝔭 hvC hvC'
 
 theorem isIntegralAt_locF {W : Type} [AddCommGroup W] [Module K W] [Module (𝓞 K) W]
     [IsScalarTower (𝓞 K) K W] {h₀ : W →ₗ⋆[K] W →ₗ[K] K} {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsPrime)
@@ -73,13 +75,14 @@ theorem isIntegralAt_locF {W : Type} [AddCommGroup W] [Module K W] [Module (𝓞
 
 theorem psiP_eq_one' (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm)
     (hd : IsTotPosDef h) (S : VecSplit h h') {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {n : 𝓞 F} (hn : h S.x₀ S.x₀ = algebraMap F K (n : F))
     (hvL : vd h L 𝔭 = 0) (hvn : vF 𝔭 n = 0) : psiP S L 𝔭 = 1 := by
   classical
   obtain ⟨C, hC, hCi, hvC⟩ := exists_unimod_lattice_good hK hF hs hd S hL hLi h𝔭 hn hvL hvn
   have hfC : fibLoc S L 𝔭 (locF 𝔭 C) ≠ 0 := by
-    rw [fibLoc_locF, fibLoc_eq_one hK hF hs hd S hL hLi hC hCi h𝔭 hn hvL hvn hvC]
+    rw [fibLoc_locF, fibLoc_eq_one hK hF hs hd S (by first | exact hL | exact hL.toIsLattice) hLi
+      (by first | exact hC | exact hC.toIsLattice) hCi h𝔭 hn hvL hvn hvC]
     exact one_ne_zero
   have hex : ∃ s, IsLocReps S L 𝔭 s := by
     refine ⟨{locF 𝔭 C}, ?_, ?_⟩

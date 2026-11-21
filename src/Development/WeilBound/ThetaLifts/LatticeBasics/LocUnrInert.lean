@@ -154,7 +154,7 @@ theorem frame {B : Base F E} {r s : ℕ} (hσ : IsCMExt F E σ) (hY : Y.IsHerm �
       rw [Pi.single_apply]; exact if_congr eq_comm rfl rfl
     simp [he, hi']
   obtain ⟨a, h1, h2⟩ := exists_frame_antiJ hσ (J := (1 : E) • Y.Jᵀ) ⟨fun i j => by simp [hY.herm], hd⟩ hY.lat.fg hspan hw hc
-    (PositivityTheory.ThKG.Loc.Iwa.selfDual_of hd hY.lat (fun y hy x hx => SelfDual.inclR_mem_intLoc v (by
+    (PositivityTheory.ThKG.Loc.Iwa.selfDual_of hd hY.lat.toIsLattice (fun y hy x hx => SelfDual.inclR_mem_intLoc v (by
       rw [PositivityTheory.ThKG.Loc.Iwa.hE_smul, one_mul]; exact ⟨⟨_, (hY.dual y).1 hy x hx⟩, rfl⟩)) (s := 1)
       ((Ideal.ne_top_iff_one _).1 v.isPrime.ne_top) fun y hy => by
         simp only [OneMemClass.coe_one, map_one, one_smul]

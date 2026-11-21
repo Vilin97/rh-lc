@@ -35,7 +35,7 @@ theorem conj_apply (ϖ : kˣ) (x : Fin n → ℤ) (l : GL (Fin n) k) (i j : Fin 
 theorem val_zpow_lt_one {ϖ : kˣ} (hϖ : ord k ϖ = 1) {m : ℤ} (hm : 0 < m) :
     valuation k ((ϖ ^ m : kˣ) : k) < 1 := by
   have h := GlobalTheory.OrdShellInt.val_le_iff_ord (k := k) 1 (ϖ ^ m)
-  have h_one : ord k (1 : kˣ) = 0 := ord_eq_zero k (by simp)
+  have h_one : ord k (1 : kˣ) = 0 := ord_eq_zero (k := k) (by simp)
   rw [GlobalTheory.OrdShellInt.ord_zpow, hϖ, h_one] at h
   rw [Units.val_one, map_one] at h
   exact not_le.1 fun h' => absurd (h.1 h') (by omega)

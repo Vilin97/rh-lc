@@ -419,6 +419,22 @@ theorem G_finite (hV : ValBasic) (hIC : IdxChange) (hLB : LcvBasis) (hPF : ProdF
     exact Set.toFinite _
   obtain ⟨w1⟩ := hne
   have hb := (he w1).1
+  have hLamFull : Submodule.IsFullLattice K abelian₂ := by
+    refine { toIsLattice := hLam, span_eq_top := top_unique ?_ }
+    rw [← idxChange_span_top hb, Submodule.span_le]
+    rintro _ ⟨i, rfl⟩
+    have hi : e w1 i ∈ Formalism.HermitianLatticesTheory.loc (K := K) w1.asIdeal abelian₂ := by
+      rw [← (he w1).2]
+      exact Formalism.HermitianLatticesTheory.locBasic_le_locS _ _
+        (Submodule.subset_span (Set.mem_range_self i))
+    obtain ⟨s, hs, hsi⟩ := Formalism.HermitianLatticesTheory.locBasic_mem_locS.mp hi
+    have hs0 : algebraMap (𝓞 K) K s ≠ 0 := by
+      apply RingOfIntegers.coe_ne_zero_iff.mpr
+      rintro rfl
+      exact Formalism.HermitianLatticesTheory.locBasic_hcompl_not_mem (K := K) w1.asIdeal 0 hs
+        w1.asIdeal.zero_mem
+    apply (Submodule.smul_mem_iff _ hs0).mp
+    exact Submodule.subset_span (by rwa [algebraMap_smul K])
   choose γ hγ using fun w => exists_coords (e w1) hb (e w)
   have hv0' : ∀ a : K, v0.embedding (star a) = starRingEnd ℂ (v0.embedding a) := hv0
   have hGne : ∀ w, G w ≠ 0 := fun w h => gram_ne XQ hXQ (e w) (he w).1 v0 (by rw [← hG w, h, map_zero])
@@ -440,7 +456,7 @@ theorem G_finite (hV : ValBasic) (hIC : IdxChange) (hLB : LcvBasis) (hPF : ProdF
     rw [hdet w, hmul _ _ (mul_ne_zero (star_ne_zero.mpr (hγne w)) (hγne w)) (hGne w1),
       hmul _ _ (star_ne_zero.mpr (hγne w)) (hγne w), hstar, i1, i2]
     ring
-  have s1 := (hLB K D XQ hXQ abelian₂ hLam (e w1) hb).1
+  have s1 := (hLB K D XQ hXQ abelian₂ hLamFull (e w1) hb).1
   have s2 := supp_conj hV _ s1
   have s3 := (hPF K (G w1) (hGne w1)).1
   refine (supp_add _ _ (supp_add _ _ s1 s2) s3).subset ?_

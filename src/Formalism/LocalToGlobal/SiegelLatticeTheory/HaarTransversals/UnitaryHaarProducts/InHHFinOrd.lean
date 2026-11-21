@@ -152,7 +152,7 @@ def latOfC (h : Hfin X u) : Set (VS D).V :=
 
 def LatOfLattice : Prop :=
   ∀ h : Hfin X u, ∃ Λ : Submodule (NumberField.RingOfIntegers D.host.E) (VS D).V,
-    (Λ : Set (VS D).V) = latOfC X u h ∧ Submodule.IsLattice D.host.E Λ
+    (Λ : Set (VS D).V) = latOfC X u h ∧ Submodule.IsFullLattice D.host.E Λ
 
 theorem gf_eq_one_of_snd (y : X.B.I.GA) (hy : y ∈ X.B.I.GFset) (h2 : y.2 = 1) : y = 1 := by
   obtain ⟨γ, -, hinf, hfin⟩ := hy
@@ -265,7 +265,7 @@ theorem fmat_one' : X.B.I.fmat 1 = 1 := by
 
 theorem delta_finOrd (δ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hδiso : δ ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT)
     (hUfix : ∀ w ∈ Submodule.span D.host.E (Set.range X.eX ∪ Set.range X.fY ∪ {X.zu u}), δ w = w)
-    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hΛlat : Submodule.IsLattice D.host.E Λ)
+    (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hΛlat : Submodule.IsFullLattice D.host.E Λ)
     (hδΛ : ∀ v, δ v ∈ Λ ↔ v ∈ Λ) : ∃ m : ℕ, 0 < m ∧ δ ^ m = 1 := by
   have hdec := fun v => decomp X u v
   set U : Submodule D.host.E (VS D).V := Submodule.span D.host.E (Set.range X.eX ∪ Set.range X.fY ∪ {X.zu u})
@@ -311,7 +311,21 @@ theorem delta_finOrd (δ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hδiso : δ ∈ 
     simp [hc0]
   haveI := hΛlat
   set Q := qEquiv δ W ⊥ hWmap hX with hQ
-  have hlat := qLat_isLattice Λ W ⊥
+  haveI : Submodule.IsFullLattice D.host.E (qLat Λ W ⊥) := by
+    refine { toIsLattice := qLat_isLattice Λ W ⊥, span_eq_top := ?_ }
+    rw [eq_top_iff]
+    intro q _
+    induction q using Submodule.Quotient.induction_on with | H w => ?_
+    obtain ⟨s, hs, hsw⟩ := Formalism.L2.SG.Pf.exists_smul_mem Λ (w : (VS D).V)
+    have hmem : Submodule.Quotient.mk (s • w) ∈ qLat Λ W ⊥ :=
+      mem_qLat.2 ⟨s • w, hsw, rfl⟩
+    have hsE : algebraMap (𝓞 D.host.E) D.host.E s ≠ 0 := by simpa using hs
+    have e : (Submodule.Quotient.mk w : QW W ⊥) =
+        (algebraMap (𝓞 D.host.E) D.host.E s)⁻¹ • (Submodule.Quotient.mk (s • w) : QW W ⊥) := by
+      rw [Submodule.Quotient.mk_smul, ← algebraMap_smul D.host.E s, smul_smul,
+        inv_mul_cancel₀ hsE, one_smul]
+    rw [e]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
   have hiso : Q ∈ Formalism.HermitianLatticesTheory.isom (qForm (VS D).hT W ⊥ hR hLb) := by
     have : ∀ a b, qForm (VS D).hT W ⊥ hR hLb (Q a) (Q b) = qForm (VS D).hT W ⊥ hR hLb a b := by
       intro a b
@@ -351,7 +365,7 @@ theorem delta_finOrd (δ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hδiso : δ ∈ 
     exact this
   have hQfin : IsOfFinOrder Q :=
     Formalism.L2.Col.isOfFinOrder_of_isom (qForm (VS D).hT W ⊥ hR hLb) (qForm_isSymm (VS D).hT (VS D).herm W ⊥ hR hLb)
-      hpq hlat hiso haut
+      hpq inferInstance hiso haut
   obtain ⟨m, hm, hQm⟩ := (isOfFinOrder_iff_pow_eq_one).1 hQfin
   have hpowQ : ∀ j : ℕ, ∀ w : W, ∃ hw' : (δ ^ j) (w : (VS D).V) ∈ W,
       (Q ^ j) (Submodule.Quotient.mk w) = Submodule.Quotient.mk ⟨(δ ^ j) (w : (VS D).V), hw'⟩ := by

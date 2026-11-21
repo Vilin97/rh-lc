@@ -64,7 +64,7 @@ theorem kerBig_eq_theta : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} 
   obtain ⟨h1, h2, h3⟩ := GlobalTheory.T.hermitianSelfDualLatticeSpace_form_hermitian_nondeg_unimodular D Bs hTr.base _ Γ.V _ _ hTr.geo.hV
   obtain ⟨hJ, LS, hLS, h4, h5, h6⟩ := GlobalTheory.T.skewHermitian_neg_traceZero_inv_hermitian_unimodular D Bs hTr.base _ Γ.W _ _ hTr.geo.hW
   have hξ0 : D.host.xi0 ≠ 0 := GlobalTheory.DualPairCompare.embedding_xi_zero_ne_zero D
-  have eA : Γ.V.J = (GlobalTheory.WeilSchrodinger.hspOf D Γ.V.Jᵀ h1 h2 Γ.V.L hTr.geo.hV.lat h3 (fun _ => (0, 0))).gramᵀ := by
+  have eA : Γ.V.J = (GlobalTheory.WeilSchrodinger.hspOf D Γ.V.Jᵀ h1 h2 Γ.V.L hTr.geo.hV.lat.toIsLattice h3 (fun _ => (0, 0))).gramᵀ := by
     rw [GlobalTheory.WeilSchrodinger.gram_hspOf]; exact (Matrix.transpose_transpose _).symm
   have eB : (-1 : AF D.host.F ⊗[D.host.F] D.host.E) • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Γ.W.J = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F (D.host.xi0 •
       (GlobalTheory.WeilSchrodinger.hspOf D (-D.host.xi0 • Γ.W.J⁻¹) h4 h5 LS hLS h6 (fun _ => (0, 0))).gram⁻¹) := by
@@ -81,15 +81,15 @@ theorem kerBig_eq_theta : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} 
     simp [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM]
   obtain ⟨ω, hω, -, hth⟩ := GlobalTheory.WeilBridge.exists_theta_eq D Bs hTr.base
     (GlobalTheory.WeilSchrodinger.hspOf D (-D.host.xi0 • Γ.W.J⁻¹) h4 h5 LS hLS h6 (fun _ => (0, 0)))
-    (GlobalTheory.WeilSchrodinger.hspOf D Γ.V.Jᵀ h1 h2 Γ.V.L hTr.geo.hV.lat h3 (fun _ => (0, 0))) Γ.V Γ.W _ _ _ _ hTr.geo.hV hTr.geo.hW eA eB
+    (GlobalTheory.WeilSchrodinger.hspOf D Γ.V.Jᵀ h1 h2 Γ.V.L hTr.geo.hV.lat.toIsLattice h3 (fun _ => (0, 0))) Γ.V Γ.W _ _ _ _ hTr.geo.hV hTr.geo.hW eA eB
     Γ.M hTr.geo.hM X.β (X.β / X.α) hTr.chars.heckeβ (isHecke_div hTr.chars.heckeβ hTr.chars.heckeα) hTr.chars.resβ
     (resEtaPow_div hTr.chars.resβ hTr.chars.resα) om hTr.weil
   rw [h.ψ] at hω
-  obtain ⟨ξ, hξ, hss⟩ := GlobalTheory.T.bigRoute_seesaw_arrow_kernels_product W t i j M e Bs Γ X om om' h hTr h1 h2 _ hTr.geo.hV.lat h3 _ h4 h5 LS hLS h6 _ ω hω g g₁
+  obtain ⟨ξ, hξ, hss⟩ := GlobalTheory.T.bigRoute_seesaw_arrow_kernels_product W t i j M e Bs Γ X om om' h hTr h1 h2 _ hTr.geo.hV.lat.toIsLattice h3 _ h4 h5 LS hLS h6 _ ω hω g g₁
   refine ⟨ξ, hξ, fun u => ?_⟩
   obtain ⟨g', h', hh', hg'⟩ := GlobalTheory.WeilSchrodinger.match_pair D
     (GlobalTheory.WeilSchrodinger.hspOf D (-D.host.xi0 • Γ.W.J⁻¹) h4 h5 LS hLS h6 (fun _ => (0, 0)))
-    (GlobalTheory.WeilSchrodinger.hspOf D Γ.V.Jᵀ h1 h2 Γ.V.L hTr.geo.hV.lat h3 (fun _ => (0, 0))) Γ.V.J Γ.W.J (-1) eA eB (conjU (spW G i j) 1 h.JW u)
+    (GlobalTheory.WeilSchrodinger.hspOf D Γ.V.Jᵀ h1 h2 Γ.V.L hTr.geo.hV.lat.toIsLattice h3 (fun _ => (0, 0))) Γ.V.J Γ.W.J (-1) eA eB (conjU (spW G i j) 1 h.JW u)
     (blkU (spV G i j) (spV₁ G i j) e h.JWW (g, g₁))
   have key := hth _ _ g' h' hh' hg' Φ hΦ.1
   refine Eq.trans ?_ (congrArg (fun z => ξ * z) key.symm)

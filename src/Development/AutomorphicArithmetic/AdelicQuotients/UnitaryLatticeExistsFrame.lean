@@ -37,7 +37,7 @@ private theorem at_one {F : Type} [Field F] [NumberField F] (v : Pl (F := F)) {M
   rw [smul_smul, mul_sg, hu, zero_mul, map_zero, zero_smul]
 
 theorem UpperTheory.unitaryLattice_exists_frame :
-    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n : ℕ) (X : Spc F E n) (v : Pl (F := F)), X.L.IsLattice E → ∃ b c, IsFr X v b c := by
+    ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n : ℕ) (X : Spc F E n) (v : Pl (F := F)), X.L.IsFullLattice E → ∃ b c, IsFr X v b c := by
   intro F E _ _ _ _ _ n X v hL
   haveI := hL
   obtain ⟨P, h1, h2⟩ := GlobalTheory.AdelicU.Frames.exists_rational_frame (F := F) X.L v

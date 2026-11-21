@@ -47,7 +47,8 @@ theorem exists_finset_lbIso {k A : Type} [CommRing k] [CommRing A] [Algebra k A]
       (N.pull (pullback.fst pB (spMap (algebraMap k (Algebra.adjoin k (s : Set A)))))) := by
   classical
   obtain ⟨j, g, hg⟩ := exists_lbIso_of_isLimit (bcDiagram pB A)
-    (fun s => bcMap pB (Algebra.adjoin k (s.unop : Set A)).val) (i := Opposite.op ∅)
+    (bcCone pB A).π.app (fun {_ _} f => (bcCone pB A).w f) (isLimitBcCone pB A)
+    (i := Opposite.op ∅)
     (M.pull (pullback.fst _ _)) (N.pull (pullback.fst _ _))
     (LB.isLB_pull hM _) (LB.isLB_pull hN _)
     ((lbIso_pull_iff_lbIso_pull_pull_of_eq_comp hM hN _ (bcMap_fst pB _).symm).mp H)

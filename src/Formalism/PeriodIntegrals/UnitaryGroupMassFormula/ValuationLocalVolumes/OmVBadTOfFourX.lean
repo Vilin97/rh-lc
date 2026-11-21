@@ -26,9 +26,11 @@ def IdxVP (a : ℕ) (Y : TupV (E := E) v n a) : Prop :=
   GoodP σ J ψ v Λ a Y → ∀ ϖ : Fv F v, IsUnif v ϖ →
     (lattice₂ v Λ ϖ).relIndex (latA v Λ) = (Ideal.absNorm v.asIdeal) ^ (2 * n)
 
-theorem localLattice_hasBasis (a : ℕ) (Y : TupV (E := E) v n a) : LatBasOP σ J ψ v Λ a Y := by
+theorem localLattice_hasBasis
+    (hFull : ∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsFullLattice E L ∧ (L : Set _) = Λ) (a : ℕ) (Y : TupV (E := E) v n a) : LatBasOP σ J ψ v Λ a Y := by
   classical
-  rintro ⟨⟨hCM, -⟩, ⟨L, hLat, rfl⟩, -⟩
+  rintro ⟨⟨hCM, -⟩, -, -⟩
+  obtain ⟨L, hLat, rfl⟩ := hFull
   have : FiniteDimensional F E := Module.Finite.of_restrictScalars_finite ℚ F E
   have h2 : Module.finrank F E = 2 := hCM.2.2.1
   obtain ⟨m, b, hli, hmem, hsp⟩ := exists_basO v L hLat
@@ -95,14 +97,15 @@ theorem idxP_of (a : ℕ) (Y : TupV (E := E) v n a) (h : IdxVP σ J ψ v Λ a Y)
     rw [← hV, AddSubgroup.relIndex, AddSubgroup.index]
   rw [hq, ← pow_mul]
 
-theorem MeasP₂ (a : ℕ) (Y : TupV (E := E) v n a) : MeasP σ J ψ v Λ a Y := by
+theorem MeasP₂
+    (hFull : ∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsFullLattice E L ∧ (L : Set _) = Λ) (a : ℕ) (Y : TupV (E := E) v n a) : MeasP σ J ψ v Λ a Y := by
   intro hG ϖ hϖ
   have := PI.VolStabSW.secondCountable_Fv F v
   have : IsModuleTopology (Fv F v) (Fv F v ⊗[F] E) := ⟨rfl⟩
   have : IsTopologicalAddGroup (Fv F v ⊗[F] E) :=
     IsModuleTopology.topologicalAddGroup (Fv F v) (Fv F v ⊗[F] E)
   have : BorelSpace (Fv F v ⊗[F] E) := ⟨rfl⟩
-  have hOpen := (lamOC_holds v Λ a hG.2.1).1
+  have hOpen := (lamOC_holds v Λ a hFull hG.2.1).1
   refine ⟨inferInstance, hOpen.measurableSet, ?_⟩
   have e : (lamP v Λ a ϖ : Set (TupV (E := E) v n a)) = (fun X => ϖ • X) '' LamT v Λ a := by
     unfold lamP
@@ -116,8 +119,9 @@ theorem MeasP₂ (a : ℕ) (Y : TupV (E := E) v n a) : MeasP σ J ψ v Λ a Y :=
   rw [e]
   exact (isOpenMap_smul₀ (unif_ne_zero v hϖ) _ hOpen).measurableSet
 
-theorem idxP_holds (a : ℕ) (Y : TupV (E := E) v n a) : IdxP σ J ψ v Λ a Y :=
-  idxP_of σ J ψ v Λ a Y (idxVP_of σ J ψ v Λ a Y (localLattice_hasBasis σ J ψ v Λ a Y) (resIdx_holds v))
+theorem idxP_holds
+    (hFull : ∃ L : Submodule (𝓞 E) (Fin n → E), Submodule.IsFullLattice E L ∧ (L : Set _) = Λ) (a : ℕ) (Y : TupV (E := E) v n a) : IdxP σ J ψ v Λ a Y :=
+  idxP_of σ J ψ v Λ a Y (idxVP_of σ J ψ v Λ a Y (localLattice_hasBasis σ J ψ v Λ hFull a Y) (resIdx_holds v))
 
 end Gen
 
@@ -134,9 +138,12 @@ theorem omVBadT_of_primDual_cls (hStd : OmVStd X ψ) (hLat : OmVLat X) (hGram : 
     (hPD : ∀ v : PlX X, PrimDual X.B.I.cm.sig X.B.I.J ψ v (abelian₂ X) (D.R.rS + 1 + D.R.rS))
     (hCl : ∀ v : PlX X, ((Tw u' : ℕ) : 𝓞 X.B.I.F) ∈ v.asIdeal →
       ClsP X.B.I.cm.sig X.B.I.J ψ v (abelian₂ X) (D.R.rS + 1 + D.R.rS) (yTup X u' v)) :
-    OmVBadT X u' ψ :=
-  omVBadT_of_steps X u' ψ hStd hLat hGram hExt hPC hPD (fun v => MeasP₂ _ _ _ _ _ _ _)
-    (fun v => idxP_holds _ _ _ _ _ _ _) hCl
+    OmVBadT X u' ψ := by
+  have hFull : ∃ L : Submodule (𝓞 X.B.I.E) (Fin X.B.I.n → X.B.I.E),
+      Submodule.IsFullLattice X.B.I.E L ∧ (L : Set _) = abelian₂ X :=
+    ⟨X.B.I.L, { toIsLattice := Submodule.IsLattice.of_fg _ X.B.I.L_fg, span_eq_top := X.B.I.L_span }, rfl⟩
+  exact omVBadT_of_steps X u' ψ hStd hLat hGram hExt hPC hPD (fun v => MeasP₂ _ _ _ _ _ hFull _ _)
+    (fun v => idxP_holds _ _ _ _ _ hFull _ _) hCl
 
 end Loc
 

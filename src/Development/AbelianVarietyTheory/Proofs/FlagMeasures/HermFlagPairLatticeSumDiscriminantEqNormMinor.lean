@@ -360,7 +360,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
     intro x hx
     rw [← hU.2] at hx
     exact ((mem_dual_iff H Λ x).1 hx).2
-  have hfg : Λ.FG := ((isUnimod_iff H Λ).1 hU).1.fg
+  have hfg : Λ.FG := ((isUnimod_iff H Λ).1 hU).1.1
   obtain ⟨y, M, d1, c1, s1, l1, i1⟩ := exists_vectors N N.F hF hr hl
   obtain ⟨y', M', d2, c2, s2, l2, i2⟩ := exists_vectors N N.F' hF' hr hl
   have m1 : ∀ a, y a ∈ latF N.F Λ l := fun a => l1 (Submodule.subset_span ⟨a, rfl⟩)

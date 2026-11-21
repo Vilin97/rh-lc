@@ -164,7 +164,8 @@ private theorem main (ν : (AE D)ˣ →* Circle) (hν : Continuous ν) (e : AE D
   obtain ⟨k₁, hk₁, h₁⟩ := dualCoord_up A WW βA βW
   obtain ⟨k₂, hk₂, h₂⟩ := dualCoord_down A WW βA βW
   obtain ⟨k₃, hk₃, h₃⟩ := GlobalTheory.PlaceVec.exists_nsmul_latO_int (S := A) (T := WW) hA.1.fg hW.1.fg
-  obtain ⟨k₄, hk₄, h₄⟩ := GlobalTheory.PlaceVec.exists_nsmul_int_mem_latO hA.1 hW.1
+  obtain ⟨k₄, hk₄, h₄⟩ := GlobalTheory.PlaceVec.exists_nsmul_int_mem_latO
+    (GlobalTheory.PlaceVec.selfDual_isFullLattice A ΛA hA) (GlobalTheory.PlaceVec.selfDual_isFullLattice WW ΛW hW)
   refine stdSnd_isSB hν he hI a A WW βA βW _ ⟨k₁ * k₃, mul_pos hk₁ hk₃, fun u hu => ?_⟩
     ⟨k₄ * k₂, mul_pos hk₄ hk₂, fun t ht hi => ?_⟩
   · have hn : dualCoord A WW βA βW (k₁ • k₃ • u) = k₁ • dualCoord A WW βA βW (k₃ • u) :=

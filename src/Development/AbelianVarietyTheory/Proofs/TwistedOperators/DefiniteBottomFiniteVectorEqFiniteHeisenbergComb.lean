@@ -16,6 +16,7 @@ public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ToricSymb
 public import Development.AbelianVarietyTheory.Definitions.Foundations.NormSumPairRankZeroOfCurveCoordNorm
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MeasurePreservingMulRightOfMem
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IntegralEqFinClSumAvg
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NsmulProjectionXColumnsMemSelfDualLattice
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.CompAtMtOfMemGfC
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsCompactParahoricLevelAndContainsLifts
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaIntegrandIntegrable
@@ -213,7 +214,9 @@ theorem finVec_isFinComb : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts}
   obtain ⟨m, hm, hmem⟩ : ∃ m : ℕ, 0 < m ∧ ∀ s : WO A' WW, IsHalf (cA D (X.e t)) s →
       IsIntM (frMapAdj A' WW X.rA'.β X.rW.β s) → m • s ∈ (latO A' WW X.rA'.Λ X.rW.Λ fun _ => True) := by
     obtain ⟨N, hN, h'⟩ := GlobalTheory.PlaceVec.frMapAdj_down A' WW X.rA'.β X.rW.β
-    obtain ⟨K, hK, h⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO hX.is.rigA'.1.1 hX.is.rigW.1.1
+    obtain ⟨K, hK, h⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO
+      (GlobalTheory.ProjXCols.selfDual_isFullLattice A' X.rA'.Λ hX.is.rigA'.1)
+      (GlobalTheory.ProjXCols.selfDual_isFullLattice WW X.rW.Λ hX.is.rigW.1)
     refine ⟨N * K, Nat.mul_pos hN hK, fun s hs hi => ?_⟩
     have ht := GlobalTheory.PlaceDatum.infPart_of_half hcinf hs
     rw [mul_nsmul]

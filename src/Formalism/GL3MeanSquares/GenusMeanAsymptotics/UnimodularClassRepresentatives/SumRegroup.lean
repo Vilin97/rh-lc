@@ -23,11 +23,11 @@ open UnimodularLocalization GoodPrimeTerms GoodGenusOrbits LocalFactorEquality
 open Classical in
 theorem sum_regroup (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm)
     (hd : IsTotPosDef h) (S : VecSplit h h') {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {c : ℝ}
+    (hLfull : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {c : ℝ}
     (hc : MassConst K F (finrank K V - 1) c)
     {s' : Finset (Submodule (𝓞 K) V')} (hs' : IsFibReps S L s')
     {n : 𝓞 F} (hn : h S.x₀ S.x₀ = algebraMap F K (n : F))
-    {A : Submodule (𝓞 K) V'} (hA : Submodule.IsLattice K A) (hAi : Formalism.HermitianLatticesTheory.IsIntegralLat h' A)
+    {A : Submodule (𝓞 K) V'} (hAfull : Submodule.IsFullLattice K A) (hAi : Formalism.HermitianLatticesTheory.IsIntegralLat h' A)
     (Z : Finset {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal})
     (hZL : ∀ 𝔭 ∉ Z, vd h L 𝔭.1 = 0) (hZn : ∀ 𝔭 ∉ Z, vF 𝔭.1 n = 0)
     (hZA : ∀ 𝔭 ∉ Z, vd h' A 𝔭.1 = 0)
@@ -35,8 +35,11 @@ theorem sum_regroup (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : I
     (hsr : ∀ 𝔭, IsLocReps S L 𝔭.1 (s 𝔭)) :
     ∑ Λ' ∈ s', (Nat.card (fibG S L Λ') : ℝ) / (Nat.card (Formalism.ThetaLiftIndependence.autL h' Λ') : ℝ) =
       c * ∏ 𝔭 ∈ Z, ∑ T ∈ s 𝔭, (fibLoc S L 𝔭.1 T : ℝ) * lamP h' T 𝔭.1 := by
+  have hL := hLfull.toIsLattice
+  have hA := hAfull.toIsLattice
   have hZ1 : ∀ 𝔭 ∉ Z, fibLoc S L 𝔭.1 A = 1 := fun 𝔭 h𝔭 =>
-    fibLoc_eq_one hK hF hs hd S hL hLi hA hAi 𝔭.2 hn (hZL 𝔭 h𝔭) (hZn 𝔭 h𝔭) (hZA 𝔭 h𝔭)
+    fibLoc_eq_one hK hF hs hd S (by first | exact hLfull | exact hL) hLi
+      (by first | exact hAfull | exact hA) hAi 𝔭.2 hn (hZL 𝔭 h𝔭) (hZn 𝔭 h𝔭) (hZA 𝔭 h𝔭)
   have hex : ∀ τ : ↥Z → Submodule (𝓞 K) V', τ ∈ Fintype.piFinset (fun 𝔭 : ↥Z => s 𝔭.1) →
       ∃ M, Good F S L M ∧ (∀ 𝔭 : ↥Z, locF 𝔭.1.1 M = τ 𝔭) ∧
         ∀ 𝔭 ∉ Z, locF 𝔭.1 M = locF 𝔭.1 A := by
@@ -82,7 +85,7 @@ theorem sum_regroup (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : I
       · have := (hτ₀ ⟨𝔭, h𝔭⟩).2
         rw [hMZ τ₀ hmem ⟨𝔭, h𝔭⟩]
         exact this
-      · exact good_orbit hK hF hs hd S hL hLi 𝔭.2 hn (hZL 𝔭 h𝔭) (hZn 𝔭 h𝔭)
+      · exact good_orbit hK hF hs hd S (by first | exact hLfull | exact hL) hLi 𝔭.2 hn (hZL 𝔭 h𝔭) (hZn 𝔭 h𝔭)
           ((hMg τ₀ hmem).2 𝔭) (hg.2 𝔭)
     · intro τ hτ hne
       rw [if_neg]
@@ -143,14 +146,15 @@ theorem repMass_eq_prod_psi' (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
     obtain ⟨M₀, hM₀, -, -⟩ := exists_patch hK hF S hL hLi hA Z (fun 𝔭 => locF 𝔭.1 (T 𝔭))
       (fun 𝔭 _ => ⟨LocF.locF_idem _ _, by rw [fibLoc_locF]; exact hT 𝔭⟩)
       (fun 𝔭 h𝔭 => by
-        rw [fibLoc_eq_one hK hF hs hd S hL hLi hA hAi 𝔭.2 hn (hZL 𝔭 h𝔭) (hZn 𝔭 h𝔭) (hZA 𝔭 h𝔭)]
+        rw [fibLoc_eq_one hK hF hs hd S (by first | exact hLfull | exact hL) hLi
+          (by first | exact hAfull | exact hA) hAi 𝔭.2 hn (hZL 𝔭 h𝔭) (hZn 𝔭 h𝔭) (hZA 𝔭 h𝔭)]
         exact one_ne_zero)
     have hex := fun 𝔭 => exists_locReps hK hF hs hd S hL hLi hM₀ 𝔭
-    rw [sum_regroup hK hF hs hd S hL hLi hc hs' hn hA hAi Z hZL hZn hZA
+    rw [sum_regroup hK hF hs hd S hLfull hLi hc hs' hn hAfull hAi Z hZL hZn hZA
       (fun 𝔭 => (hex 𝔭).choose) (fun 𝔭 => (hex 𝔭).choose_spec)]
     congr 1
     rw [tprod_eq_prod (s := Z) (fun 𝔭 h𝔭 =>
-      psiP_eq_one' hK hF hs hd S hL hLi 𝔭.2 hn (hZL 𝔭 h𝔭) (hZn 𝔭 h𝔭))]
+      psiP_eq_one' hK hF hs hd S (by first | exact hLfull | exact hL) hLi 𝔭.2 hn (hZL 𝔭 h𝔭) (hZn 𝔭 h𝔭))]
     exact Finset.prod_congr rfl fun 𝔭 _ => (psiP_eq S L 𝔭.1 (hex 𝔭)).symm
   · push Not at H
     obtain ⟨𝔭, H⟩ := H

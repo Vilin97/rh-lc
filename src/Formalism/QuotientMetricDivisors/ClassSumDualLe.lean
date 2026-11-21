@@ -49,12 +49,12 @@ def CutDualLat : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (n d : ℕ) (H : Matrix (Fin n) (Fin n) K),
     Hᴴ = H → IsUnit H.det →
     ∀ (E : Matrix (Fin n) (Fin d) K) (Pr : Matrix (Fin d) (Fin n) K), IsOrthProj H E Pr →
-    ∀ A : Submodule (𝓞 K) (Fin n → K), Submodule.IsLattice K A →
+    ∀ A : Submodule (𝓞 K) (Fin n → K), Submodule.IsFullLattice K A →
       Formalism.HermitianLatticesTheory.dual (hform (Eᴴ * H * E)) (cutLat E A) = matLat Pr (Formalism.HermitianLatticesTheory.dual (hform H) A)
 
 def ExpIndexLoc : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (D : ℕ)
-    (A B : Submodule (𝓞 K) (Fin D → K)), Submodule.IsLattice K A → Submodule.IsLattice K B →
+    (A B : Submodule (𝓞 K) (Fin D → K)), Submodule.IsFullLattice K A → Submodule.IsFullLattice K B →
     ∀ (w : HeightOneSpectrum (𝓞 K)) (a : 𝓞 K), a ≠ 0 →
     (∀ x ∈ A, a • x ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal B) →
       idx w A B ≤ (D : ℤ) * vw w (a : K)
@@ -70,21 +70,21 @@ def BoundsI : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (n' n : ℕ) (H' : Matrix (Fin n') (Fin n') K),
     H'ᴴ = H' → IsUnit H'.det →
     ∀ (E : Matrix (Fin n') (Fin n) K) (Pr : Matrix (Fin n) (Fin n') K), IsOrthProj H' E Pr →
-    ∀ A B : Submodule (𝓞 K) (Fin n' → K), Submodule.IsLattice K A →
+    ∀ A B : Submodule (𝓞 K) (Fin n' → K), Submodule.IsFullLattice K A →
     ∀ s : ℕ, (∀ x ∈ Formalism.HermitianLatticesTheory.dual (hform H') A, (s : 𝓞 K) • x ∈ B) →
     ∀ G : ℕ, (∀ x ∈ B, (G : 𝓞 K) • (E * Pr).mulVec x ∈ A) →
-      Submodule.IsLattice K (cutLat E A) ∧
+      Submodule.IsFullLattice K (cutLat E A) ∧
       ∀ x ∈ Formalism.HermitianLatticesTheory.dual (hform (Eᴴ * H' * E)) (cutLat E A), ((G * s : ℕ) : 𝓞 K) • x ∈ cutLat E A
 
 def BoundsIVGen : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (n d : ℕ) (H : Matrix (Fin n) (Fin n) K),
     Hᴴ = H → IsUnit H.det →
     ∀ (E : Matrix (Fin n) (Fin d) K) (Pr : Matrix (Fin d) (Fin n) K), IsOrthProj H E Pr →
-    ∀ A B : Submodule (𝓞 K) (Fin n → K), Submodule.IsLattice K A →
+    ∀ A B : Submodule (𝓞 K) (Fin n → K), Submodule.IsFullLattice K A →
     ∀ DG : ℕ, 0 < DG → (∀ y ∈ B, (DG : 𝓞 K) • y ∈ Formalism.HermitianLatticesTheory.dual (hform H) A) →
     ∀ (w : HeightOneSpectrum (𝓞 K)) (a : 𝓞 K), a ≠ 0 →
     (∀ z ∈ cutLat E A, a • z ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (cutLat E B)) →
-      Submodule.IsLattice K (matLat Pr A) ∧ Submodule.IsLattice K (cutLat E A) ∧
+      Submodule.IsFullLattice K (matLat Pr A) ∧ Submodule.IsFullLattice K (cutLat E A) ∧
       cutLat E A ≤ matLat Pr A ∧
       jw (Eᴴ * H * E) w (matLat Pr A) ≤
         (Formalism.HermitianLatticesTheory.locLen w.asIdeal (matLat Pr A) (cutLat E A) : ℤ) +
@@ -94,11 +94,11 @@ def BoundsIV : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (n d : ℕ) (H : Matrix (Fin n) (Fin n) K),
     Hᴴ = H → IsUnit H.det →
     ∀ (E : Matrix (Fin n) (Fin d) K) (Pr : Matrix (Fin d) (Fin n) K), IsOrthProj H E Pr →
-    ∀ A B : Submodule (𝓞 K) (Fin n → K), Submodule.IsLattice K A →
+    ∀ A B : Submodule (𝓞 K) (Fin n → K), Submodule.IsFullLattice K A →
     ∀ DG : ℕ, 0 < DG → (∀ y ∈ B, (DG : 𝓞 K) • y ∈ Formalism.HermitianLatticesTheory.dual (hform H) A) →
     ∀ (w : HeightOneSpectrum (𝓞 K)) (ϖ : 𝓞 K) (J : ℕ), vw w (ϖ : K) = 1 →
     (∀ z ∈ cutLat E A, (ϖ ^ J) • z ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (cutLat E B)) →
-      Submodule.IsLattice K (matLat Pr A) ∧ Submodule.IsLattice K (cutLat E A) ∧
+      Submodule.IsFullLattice K (matLat Pr A) ∧ Submodule.IsFullLattice K (cutLat E A) ∧
       cutLat E A ≤ matLat Pr A ∧
       jw (Eᴴ * H * E) w (matLat Pr A) ≤
         (Formalism.HermitianLatticesTheory.locLen w.asIdeal (matLat Pr A) (cutLat E A) : ℤ) +

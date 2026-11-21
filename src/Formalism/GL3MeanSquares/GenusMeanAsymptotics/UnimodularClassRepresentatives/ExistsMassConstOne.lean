@@ -45,7 +45,7 @@ theorem exists_model [FiniteDimensional K V] {h : V →ₗ⋆[K] V →ₗ[K] K} 
     intro x y
     simp [h']
   have htr := trace_pos hd
-  obtain ⟨hex, -, -⟩ := Formalism.HermitianLatticesTheory.massBasic K V h hs htr L hL.toIsLattice
+  obtain ⟨hex, -, -⟩ := Formalism.HermitianLatticesTheory.massBasic K V h hs htr L hL
   obtain ⟨hex', hm⟩ := mass_mapE φ hh' hex
   refine ⟨h', mapE φ L, ?_, isFullLattice_mapE φ hL, hex', hm⟩
   have h0 : φ.symm 1 ≠ 0 := by simp
@@ -83,7 +83,7 @@ theorem exists_massConst_one (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
     { toIsLattice := Submodule.IsLattice.of_fg K (Submodule.fg_span_singleton _)
       span_eq_top := RankOne.span_eq_top_of_ne_zero (Submodule.subset_span rfl) one_ne_zero }
   obtain ⟨hex₀, -, hpos₀⟩ := Formalism.HermitianLatticesTheory.massBasic K K h₀ hs₀
-    (RankOne.trace_pos hd₀) L₀ hL₀.toIsLattice
+    (RankOne.trace_pos hd₀) L₀ hL₀
   refine ⟨Formalism.HermitianLatticesTheory.mass h₀ L₀, hpos₀, ?_⟩
   intro V _ _ _ _ _ h L hs hd h1 hL hLi
   obtain ⟨h', A, hn', hA, -, hm⟩ := RankOne.exists_model hs hd h1 hL

@@ -27,48 +27,7 @@ variable {D : D7}
 
 private theorem isFullLattice_of_good {V : HSp D} {l : Lvl V} (hl : l.Good) :
     Submodule.IsFullLattice D.host.E l.L := by
-  refine { toIsLattice := hl.1, span_eq_top := ?_ }
-  by_contra hspan
-  obtain ⟨f, hf₀, hf⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hspan)
-  obtain ⟨v, _⟩ := exists_split_place (isCMExt_host D)
-  let A : Matrix (Fin 1) (Fin V.rank) D.host.E := Matrix.of fun _ j => f (Pi.single j 1)
-  have hA (x : Fin V.rank → D.host.E) : (A *ᵥ x) 0 = f x := by
-    conv_rhs => rw [pi_eq_sum_univ' x]
-    simp [A, Matrix.mulVec, dotProduct, mul_comm]
-  have hker {y} (hy : y ∈ latLoc D.host.F l.L v) :
-      (A.map (inclR (Fv D.host.F v)) *ᵥ y) 0 = 0 := by
-    refine latLoc_induction (p := fun z => (A.map (inclR (Fv D.host.F v)) *ᵥ z) 0 = 0)
-      (fun a _ x hx => ?_) (by simp) (fun x y hx hy => by simp [Matrix.mulVec_add, hx, hy])
-      (fun x hx => by simp [Matrix.mulVec_neg, hx]) hy
-    have e : (A.map (inclR (Fv D.host.F v)) *ᵥ (fun i => a ⊗ₜ[D.host.F] x i)) 0 =
-        a ⊗ₜ[D.host.F] (A *ᵥ x) 0 := by
-      simp [Matrix.mulVec, dotProduct, inclR, TensorProduct.tmul_sum]
-    rw [e, hA, LinearMap.mem_ker.mp (hf (Submodule.subset_span hx)), TensorProduct.tmul_zero]
-  -- The dual of any full lattice containing the level lattice lies in its local dual.
-  let M := l.L ⊔ frameLat V
-  let := SelfDual.isLattice_frameLat V
-  have hM : Submodule.IsFullLattice D.host.E M :=
-    Submodule.IsFullLattice.of_le_of_fg D.host.E le_sup_right
-      (hl.1.fg.sup (SelfDual.isLattice_frameLat V).fg)
-  have hLM : l.L ≤ M := le_sup_left
-  have hle : latLoc D.host.F l.L v ≤ latLoc D.host.F M v := fun _ hy =>
-    latLoc_induction (p := fun z => z ∈ latLoc D.host.F M v)
-      (fun _ ha _ hx => tmul_mem_latLoc ha (hLM hx)) (zero_mem _)
-      (fun _ _ => add_mem) (fun _ => neg_mem) hy
-  have hdet := (GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.gram_det_isUnit V).ne_zero
-  have hdual := SelfDual.isLattice_dualGlob (σ := D.sp.cm.sig) hdet hM
-  apply hf₀
-  apply LinearMap.ext_on hdual.span_eq_top
-  intro y hy
-  change f y = 0
-  have hmem := tmul_mem_latLoc (v := v) (one_mem _) hy
-  rw [SelfDual.latLoc_dualGlob hdet hM] at hmem
-  have hy' : (fun i => inclR (Fv D.host.F v) (y i)) ∈ latLoc D.host.F l.L v := by
-    rw [hl.2.1 v]
-    exact fun z hz => hmem z (hle hz)
-  have hzero := hker hy'
-  rw [SelfDual.map_mulVec_inclR, hA, ← map_zero (inclR (Fv D.host.F v))] at hzero
-  exact Algebra.TensorProduct.includeRight_injective (algebraMap D.host.F (Fv D.host.F v)).injective hzero
+  exact hl.1
 
 def relat (V : HSp D) (l : Lvl V) (hl : l.Good) : HSp D :=
   { V with

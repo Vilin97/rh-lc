@@ -165,7 +165,7 @@ instance : (isDiscreteRep.{w} (k := k) (G := G)).IsClosedUnderQuotients where
 
 theorem isDiscreteRep_X₃_of_shortExact {S : ShortComplex (Rep.{w} k G)} (hS : S.ShortExact)
     [IsDiscreteRep S.X₂] : IsDiscreteRep S.X₃ :=
-  isDiscreteRep.prop_X₃_of_shortExact hS ‹_›
+  IsDiscreteRep.of_surjective S.g ((Rep.epi_iff_surjective S.g).1 hS.epi_g)
 
 end Subcategory
 

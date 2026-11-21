@@ -158,8 +158,8 @@ theorem exists_max_over {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
 
 theorem fibSet_eq_singleton (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm)
     (hd : IsTotPosDef h) (S : VecSplit h h') {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {Λ' : Submodule (𝓞 K) V'}
-    (hN : Submodule.IsLattice K (S.adjoin Λ')) (hNi : Formalism.HermitianLatticesTheory.IsIntegralLat h (S.adjoin Λ'))
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {Λ' : Submodule (𝓞 K) V'}
+    (hN : Submodule.IsFullLattice K (S.adjoin Λ')) (hNi : Formalism.HermitianLatticesTheory.IsIntegralLat h (S.adjoin Λ'))
     {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (hvL : vd h L 𝔭 = 0) (hvN : vd h (S.adjoin Λ') 𝔭 = 0) :
     fibSet S L 𝔭 Λ' = {locF 𝔭 (S.adjoin Λ')} := by
   obtain ⟨P, hP, rfl⟩ := exists_max_over (K := K) h𝔭
@@ -187,7 +187,10 @@ theorem fibSet_eq_singleton (hK : Formalism.HermitianLatticesTheory.IsCMUnram K)
     · rintro ⟨hc, ha⟩
       exact Λ.add_mem (smul_mem_of_loc_eq h1 hc h3) ha
   · rintro rfl
-    refine ⟨locF_idem _ _, exists_isom_locF_of_vd_zero hK hF hs hd hL hN hLi hNi h𝔭 hvL hvN,
+    let _ := hL
+    let _ := hN
+    refine ⟨locF_idem _ _, exists_isom_locF_of_vd_zero (A := L) (B := S.adjoin Λ')
+      hK hF hs hd inferInstance inferInstance hLi hNi h𝔭 hvL hvN,
       le_locF _ _ (S.x₀_mem_adjoin Λ'), ?_⟩
     rw [cut_locF, S.cut_adjoin]
 

@@ -54,7 +54,7 @@ theorem normD_pos {h : V →ₗ⋆[K] V →ₗ[K] K} (hd : IsTotPosDef h) {L : S
 
 theorem tendsto_left (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L)
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L)
     {s : Finset (Submodule (𝓞 K) V)} (hsr : Formalism.ThetaLiftIndependence.IsClassReps h L s) :
     Tendsto (fun j : ℕ => (∑ M ∈ s, (ballCount h M ((j : ℝ) ^ 2) : ℝ) /
         (Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℝ)) / (j : ℝ) ^ (2 * Formalism.HermitianLatticesTheory.fDeg K * finrank K V))
@@ -65,7 +65,7 @@ theorem tendsto_left (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : 
   simp_rw [Finset.sum_div]
   refine tendsto_finsetSum _ fun M hM => ?_
   have hg := hsr.1 M hM
-  obtain ⟨hMi, -, hMD⟩ := integral_of_mem_genus hK hF hs hd hL hLi hg
+  obtain ⟨hMi, -, hMD⟩ := integral_of_mem_genus hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi hg
   have ht := (tendsto_ballCount hK hF hs hd (by first | exact hg.1 | exact hg.1.toIsLattice) hMi).const_mul
     ((Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℝ)⁻¹)
   rw [hMD] at ht
@@ -107,7 +107,7 @@ theorem massConst_succ (hH : HermRepUnram) (hLI : LIStat) (hK : Formalism.Hermit
   intro V _ _ _ _ _ h L hs hd hfin hL hLi
   subst hfin
   obtain ⟨s, hsr⟩ := StabilizerLattices.exists_classReps hs hd hL.toIsLattice
-  have hlim := Step.tendsto_left hK hF hs hd hL.toIsLattice hLi hsr
+  have hlim := Step.tendsto_left hK hF hs hd hL hLi hsr
   have hlim2 := Step.tendsto_right hH hLI hK hF hs hd hL hLi hm hc
   have hfun : (fun j : ℕ => (∑ M ∈ s, (ballCount h M ((j : ℝ) ^ 2) : ℝ) /
         (Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℝ)) / (j : ℝ) ^ (2 * Formalism.HermitianLatticesTheory.fDeg K * finrank K V)) =

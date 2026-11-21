@@ -147,7 +147,7 @@ theorem globLat_mem_genus (hfix : ∀ e : E, σ e = e → ∃ a : F, algebraMap 
     globLat g Λ ∈ Formalism.HermitianLatticesTheory.genus (formJ (σ : E →+* E) hs J 1) Λ := by
   letI := starOfInv (σ : E →+* E) hs
   have hL := csGlob_lattice Λ hΛ hsp g
-  refine ⟨hL.toIsLattice, fun p hp => ?_⟩
+  refine ⟨hL, fun p hp => ?_⟩
   obtain ⟨v, hv⟩ := exists_place (F := F) p hp
   obtain ⟨D, hD, hc⟩ := GlobalTheory.GenusCong.eps_mem_latS_iff F E n Λ hΛ hsp v
   obtain ⟨γ, hγ, X, hX, e⟩ := GlobalTheory.Mass.OnePlace.weak_approx_at F E σ hs hne n J hJ hdet v D hD g hg

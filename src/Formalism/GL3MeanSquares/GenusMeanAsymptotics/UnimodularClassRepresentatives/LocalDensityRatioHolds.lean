@@ -68,8 +68,8 @@ theorem local_density_ratio_holds :
   obtain ⟨k₅, hk₅⟩ := D2.relIndex_inf_glSub hK hF hs hd hA₀ hA₀i hB₀ h𝔭
   obtain ⟨k₆, hk₆⟩ := D2.relIndex_inf_glSub hK hF hs hd hB₀ hB₀i hA₀ h𝔭
   obtain ⟨k₇, hk₇⟩ := D2.nSub_le_glSub hB₀ hA₀ h𝔭
-  obtain ⟨k₈, hk₈⟩ := D2.alphaL_eq hK hF hs hd hA₀.toIsLattice hA₀i h𝔭
-  obtain ⟨k₉, hk₉⟩ := D2.alphaL_eq hK hF hs hd hB₀.toIsLattice hB₀i h𝔭
+  obtain ⟨k₈, hk₈⟩ := D2.alphaL_eq hK hF hs hd hA₀ hA₀i h𝔭
+  obtain ⟨k₉, hk₉⟩ := D2.alphaL_eq hK hF hs hd hB₀ hB₀i h𝔭
   set k := k₁ + k₂ + k₃ + k₄ + k₅ + k₆ + k₇ + k₈ + k₉ with hk
   obtain ⟨hJI, hIJ⟩ := hk₁ k (by omega)
   obtain ⟨hNN, hNNi⟩ := hk₂ k (by omega)

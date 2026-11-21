@@ -24,91 +24,13 @@ theorem cover_OE (Z : VS E) :
   set lam := Real.sqrt (4 * f * t⁻¹) with hlam_def
   have hlam : 0 < lam := Real.sqrt_pos.mpr (by positivity)
   have hlam2 : lam ^ 2 = 4 * f * t⁻¹ := Real.sq_sqrt (by positivity)
-  have trace_ed_local (i j : Free.ChooseBasisIndex ℤ (𝓞 E)) :
-      Algebra.trace ℚ E (integralBasis E i * ed j) = if i = j then 1 else 0 := by
-    rw [← Algebra.traceForm_apply]
-    exact LinearMap.BilinForm.apply_dualBasis_right _ (Algebra.traceForm_isSymm ℚ) _ i j
-  have trace_int_local (c : Free.ChooseBasisIndex ℤ (𝓞 E) → ℤ) (γ : 𝓞 E) :
-      ∃ m : ℤ, Algebra.trace ℚ E ((∑ j, c j • ed j) * (γ : E)) = m := by
-    obtain ⟨m, hm⟩ : ∃ m : Free.ChooseBasisIndex ℤ (𝓞 E) → ℤ,
-        (γ : E) = ∑ i, m i • integralBasis E i := by
-      refine ⟨(RingOfIntegers.basis E).repr γ, ?_⟩
-      conv_lhs => rw [← (RingOfIntegers.basis E).sum_repr γ]
-      simp [integralBasis_apply]
-    have key : ∀ j i, Algebra.trace ℚ E ((c j • ed j) * (m i • integralBasis E i)) =
-        if i = j then ((c j * m i : ℤ) : ℚ) else 0 := by
-      intro j i
-      rw [smul_mul_smul_comm, map_zsmul, mul_comm (ed j), trace_ed_local]
-      split_ifs <;> simp
-    refine ⟨∑ j, c j * m j, ?_⟩
-    set_option synthInstance.maxHeartbeats 100000 in
-      rw [hm, Finset.sum_mul_sum, map_sum]
-    set_option synthInstance.maxHeartbeats 100000 in
-      simp_rw [map_sum, key]
-    simp [Finset.sum_ite_eq']
-  let bdd : Free.ChooseBasisIndex ℤ (𝓞 E) → VS E := fun j => iota E (2 * cc (ed j))
-  have inner_bas_bdd (i j : Free.ChooseBasisIndex ℤ (𝓞 E)) :
-      inner ℝ (bas E i) (bdd j) = if i = j then 1 else 0 := by
-    rw [bas_apply]
-    change inner ℝ (iota E (integralBasis E i)) (iota E (2 * cc (ed j))) = _
-    rw [inner_iota_eq_trace, cc_mul, cc_cc, cc_two]
-    have h2 : integralBasis E i * (2 * ed j) = (2 : ℚ) • (integralBasis E i * ed j) := by
-      rw [Algebra.smul_def, map_ofNat]
-      ring
-    rw [h2, LinearMap.map_smul, trace_ed_local]
-    split_ifs <;> norm_num
-  have hmin : ∀ x ∈ span ℤ (Set.range bdd), x ≠ 0 → lam ≤ ‖x‖ := by
+  have hmin : ∀ x ∈ span ℤ (Set.range (bd E)), x ≠ 0 → lam ≤ ‖x‖ := by
     intro x hx hx0
-    obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).mp hx
-    let β : E := ∑ j, c j • ed j
-    have hxβ : x = iota E (2 * cc β) := by
-      rw [← hc]
-      set_option synthInstance.maxHeartbeats 100000 in
-        simp only [bdd, β, cc, map_sum, map_zsmul, Finset.mul_sum, mul_smul_comm]
-    have hβ0 : β ≠ 0 := by
-      intro hβ
-      apply hx0
-      rw [hxβ, hβ, cc, map_zero, mul_zero, map_zero]
-    have hint : ∀ γ : 𝓞 E, ∃ m : ℤ, Algebra.trace ℚ E (β * γ) = m := by
-      intro γ
-      exact trace_int_local c γ
-    have hN := norm_discr β hβ0 hint
-    have h2n : ‖(2 : ℂ)‖ = 2 := by norm_num
-    have hnorm : ‖x‖ ^ 2 = 4 * ∑ w : CP E, ‖w.1.embedding β‖ ^ 2 := by
-      rw [hxβ, norm_sq_iota, Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro w _
-      rw [map_mul, norm_mul, cc, IsCMField.complexEmbedding_complexConj, Complex.norm_conj,
-        map_ofNat, h2n]
-      ring
-    have hn : (0 : ℝ) < Fintype.card (CP E) := by exact_mod_cast card_complexPlaces_pos
-    have hd : 0 < dE E := dE_pos
-    have hNinv : (dE E)⁻¹ ≤ |(Algebra.norm ℚ β : ℝ)| := by
-      rw [inv_eq_one_div, div_le_iff₀ hd]
-      exact hN
-    have hgm := Real.geom_mean_le_arith_mean_weighted (Finset.univ : Finset (CP E))
-      (fun _ => 1 / (Fintype.card (CP E) : ℝ)) (fun w => ‖w.1.embedding β‖ ^ 2)
-      (fun _ _ => by positivity)
-      (by rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]; field_simp)
-      (fun _ _ => by positivity)
-    rw [Real.finsetProd_rpow _ _ (fun _ _ => by positivity), prod_norm, ← Finset.mul_sum] at hgm
-    have h1 : dE E ^ (-(1 / (Fintype.card (CP E) : ℝ))) ≤
-        |(Algebra.norm ℚ β : ℝ)| ^ (1 / (Fintype.card (CP E) : ℝ)) := by
-      rw [Real.rpow_neg hd.le, ← Real.inv_rpow hd.le]
-      exact Real.rpow_le_rpow (inv_nonneg.mpr hd.le) hNinv (by positivity)
-    have h3 := mul_le_mul_of_nonneg_left (h1.trans hgm)
-      (by positivity : (0 : ℝ) ≤ 4 * (Fintype.card (CP E) : ℝ))
-    have hnormbd : 4 * (Fintype.card (CP E) : ℝ) * dE E ^ (-(1 / (Fintype.card (CP E) : ℝ))) ≤ ‖x‖ ^ 2 := by
-      calc 4 * (Fintype.card (CP E) : ℝ) * dE E ^ (-(1 / (Fintype.card (CP E) : ℝ)))
-          ≤ 4 * (Fintype.card (CP E) : ℝ) *
-            (1 / (Fintype.card (CP E) : ℝ) * ∑ w : CP E, ‖w.1.embedding β‖ ^ 2) := h3
-        _ = 4 * ∑ w : CP E, ‖w.1.embedding β‖ ^ 2 := by
-          rw [← mul_assoc, mul_assoc 4, mul_one_div_cancel hn.ne', mul_one]
-        _ = ‖x‖ ^ 2 := hnorm.symm
-    rw [← hf_def, ← hD_def, htinv] at hnormbd
+    have hnorm := norm_bd_ge x hx hx0
+    rw [← hf_def, ← hD_def, htinv] at hnorm
     rw [hlam_def, ← Real.sqrt_sq (norm_nonneg x)]
-    exact Real.sqrt_le_sqrt hnormbd
-  obtain ⟨x, hx, hxb⟩ := BabaiCovering.cover (bas E) bdd inner_bas_bdd lam hlam hmin Z
+    exact Real.sqrt_le_sqrt hnorm
+  obtain ⟨x, hx, hxb⟩ := BabaiCovering.cover (bas E) (bd E) inner_bas_bd lam hlam hmin Z
   obtain ⟨α, rfl⟩ := mem_span_bas hx
   refine ⟨α, ?_⟩
   have hn : (finrank ℝ (VS E) : ℝ) = 2 * f := by

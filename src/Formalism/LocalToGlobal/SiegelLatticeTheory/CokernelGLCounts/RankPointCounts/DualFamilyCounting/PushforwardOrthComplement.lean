@@ -114,7 +114,8 @@ theorem genusMassW_of (h1 : JordanExists) (h5 : AlphaDisc) : GenusMassW := by
   have hT'i := (isIntegralLat_push T').1 hT₀i
   have hWs := formOn_isSymm hs (orthK h U)
   have hWd := isTotPosDef_formOn hpos
-  have hMB := Formalism.HermitianLatticesTheory.massBasic K ↥(orthK h U) (formOn h (orthK h U)) hWs (StabilizerLattices.trace_pos hWd) T' hT'.toIsLattice
+  have hMB := Formalism.HermitianLatticesTheory.massBasic K ↥(orthK h U) (formOn h (orthK h U)) hWs
+    (StabilizerLattices.trace_pos hWd) T' hT'
   obtain ⟨s', hs'⟩ := hMB.1
   have hmass := hMB.2.1 s' hs'
   have hMpos := hMB.2.2
@@ -145,7 +146,7 @@ theorem genusMassW_of (h1 : JordanExists) (h5 : AlphaDisc) : GenusMassW := by
   · rw [Finset.sum_image (fun x _ y _ e => push_injective _ e)]
     simp_rw [card_stab_push hs hc]
     rw [← hmass, hMC]
-    have hZ := finite_vd_ne_zero hK hF hWs hWd hT'.toIsLattice hT'i
+    have hZ := finite_vd_ne_zero hK hF hWs hWd hT' hT'i
     set Z := hZ.toFinset with hZdef
     have hout : ∀ 𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}, 𝔭 ∉ Z →
         vd (formOn h (orthK h U)) T' 𝔭.1 = 0 := fun 𝔭 h𝔭 => by
@@ -165,7 +166,7 @@ theorem genusMassW_of (h1 : JordanExists) (h5 : AlphaDisc) : GenusMassW := by
     have hD1 : ∀ 𝔭 ∉ Z, discAut h (orthK h U) (push _ T') 𝔭.1 = 1 := by
       intro 𝔭 h𝔭
       have hv := hout 𝔭 h𝔭
-      have hl := localMassFactor_of_valuation_eq_zero hK hF hWs hWd hT'.toIsLattice hT'i 𝔭.2 hv
+      have hl := localMassFactor_of_valuation_eq_zero hK hF hWs hWd hT' hT'i 𝔭.2 hv
       rw [hlam 𝔭, hv, (hjd 𝔭).2.2 hv, Nat.sub_zero, mul_zero, pow_zero, mul_one] at hl
       have hA := (alphaStd_pos hK hF 𝔭.2 (finrank K ↥(orthK h U))).ne'
       have hDA : (discAut h (orthK h U) (push _ T') 𝔭.1 : ℝ) *
@@ -180,7 +181,7 @@ theorem genusMassW_of (h1 : JordanExists) (h5 : AlphaDisc) : GenusMassW := by
         ∏ 𝔭 ∈ Z, discAut h (orthK h U) (push _ T') 𝔭.1 := tprod_eq_prod hD1
     have e2 : lamG F (formOn h (orthK h U)) T' = ∏ 𝔭 ∈ Z, lamP (formOn h (orthK h U)) T' 𝔭.1 := by
       unfold lamG
-      exact tprod_eq_prod fun 𝔭 h𝔭 => localMassFactor_of_valuation_eq_zero hK hF hWs hWd hT'.toIsLattice hT'i 𝔭.2 (hout 𝔭 h𝔭)
+      exact tprod_eq_prod fun 𝔭 h𝔭 => localMassFactor_of_valuation_eq_zero hK hF hWs hWd hT' hT'i 𝔭.2 (hout 𝔭 h𝔭)
     have e3 : nM F h (orthK h U) (push _ T') =
         ∏ 𝔭 ∈ Z, (Ideal.absNorm 𝔭.1 : ℝ) ^ vd (formOn h (orthK h U)) T' 𝔭.1 := by
       unfold nM

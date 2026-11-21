@@ -77,7 +77,7 @@ theorem exists_vacS (hL : L.Is μ₀) (h : IsTripleOf W M t i j e Bs Γ X) (hT :
         rw [Subsingleton.elim ξ' default]
         exact h0
       rw [div_mul_cancel₀ _ hv0]
-    obtain ⟨c, hc0, hcb⟩ := GlobalTheory.LatBound.locCo_latAtV_bounded Γ.V' Γ.W v Γ.M'.co hT.geo.hV'.lat hT.geo.hW.lat
+    obtain ⟨c, hc0, hcb⟩ := GlobalTheory.LatBound.locCo_latAtV_bounded Γ.V' Γ.W v Γ.M'.co hT.geo.hV'.lat.toIsLattice hT.geo.hW.lat.toIsLattice
     have hsdl := GlobalTheory.LatVac.DualLoc.map_selfDual v Γ.M'.co W.ψ (latPtS t e v) (fun γ hγ => hγ.1) ((hsd v).2)
     have hcont : Continuous (GlobalTheory.LatVac.psiAt W.ψ v) := by
       show Continuous (fun x => W.ψ (GlobalTheory.LatVac.liftV v x))

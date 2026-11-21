@@ -65,8 +65,12 @@ lemma massTelescope_ortho (n : ℕ) :
   · intro hi
     exact absurd (Finset.mem_univ i) hi
 
-lemma massTelescope_isLattice (n : ℕ) : Submodule.IsLattice K (massTelescope_lat K n) :=
-  Submodule.IsLattice.of_fg K (Submodule.fg_span (Set.finite_range _))
+lemma massTelescope_isLattice (n : ℕ) : Submodule.IsFullLattice K (massTelescope_lat K n) := by
+  letI : Submodule.IsLattice K (massTelescope_lat K n) :=
+    Submodule.IsLattice.of_fg K (Submodule.fg_span (Set.finite_range _))
+  refine { span_eq_top := ?_ }
+  unfold massTelescope_lat
+  rw [Submodule.span_span_of_tower (RingOfIntegers K), (Pi.basisFun K (Fin n)).span_eq]
 
 lemma massTelescope_trace_pos (hCM : IsCMUnram K) (a : K) (ha : a ≠ 0) :
     0 < Algebra.trace ℚ K (star a * a) := by

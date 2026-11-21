@@ -27,7 +27,7 @@ theorem gm_support_finite [_root_.NumberField.IsTotallyComplex K] {Df : DefSide 
     (hL : Submodule.IsFullLattice K (Df.abelian₂ t)) :
     (Function.support fun y => vw y (GmOf Df t y)).Finite := by
   have h := (reduction_lemma_second K Bs.K0 wf.cm Bs.v0 wf.conj (Df.nV t) (Df.dQ t) (Df.HV t) (wf.HV_rat t) (wf.HV_pos t)
-    (Df.Pq t) (wf.Pq_surj t) (Df.XQ t) (wf.XQ_quot t) (Df.Mt t) (wf.Mt_lat t) (fun y => ebOf Df t y)
+    (Df.Pq t) (wf.Pq_surj t) (Df.XQ t) (wf.XQ_quot t) (Df.Mt t) (wf.Mt_lat t).toIsLattice (fun y => ebOf Df t y)
     (ebOf_spec t hL)).1
   refine h.subset fun y hy => ?_
   rw [Function.mem_support] at hy ⊢

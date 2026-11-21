@@ -18,9 +18,9 @@ namespace GlobalTheory.CompanionTheory.CuspTransfer
 
 theorem sq_norm_toLp {X : Type*} [MeasurableSpace X] {m : Measure X} {F : X → ℂ} (h : MemLp F 2 m) :
     ENNReal.ofReal (‖h.toLp F‖ ^ 2) = ∫⁻ q, ‖F q‖ₑ ^ 2 ∂m := by
-  have h1 := eLpNorm_nnreal_pow_eq_lintegral (f := F) (μ := m) (p := 2) (by norm_num)
+  have h1 := eLpNorm_nnreal_pow_eq_lintegral (f := F) (μ := m) (p := 2) (by norm_num) h.aestronglyMeasurable
   have h2 : ENNReal.ofReal ‖h.toLp F‖ = eLpNorm F 2 m := by
-    rw [Lp.norm_toLp, ENNReal.ofReal_toReal h.2.ne]
+    rw [Lp.norm_toLp, ENNReal.ofReal_toReal h.ne]
   rw [ENNReal.ofReal_pow (norm_nonneg _), h2]
   simpa using h1
 
@@ -139,8 +139,8 @@ theorem cuspRep_toCusp (hm : ∀ φ : cuspidalL2Functions μ, MemLp (resQ φ.1) 
 theorem memLp_resQ (ha : 0 < a) (c : ENNReal) (hct : c ≠ ⊤)
     (hmap : Measure.map (fun p : normOneGL (K := E) (n := a) × ℝ => splitCentre E a p.2 * (p.1 : GA E a)) (ν.prod volume) = c • μ)
     (φ : cuspidalL2Functions μ) : MemLp (resQ φ.1) 2 (RightCosetSpace.quotientMeasure (rationalGLOne (K := E) (n := a)) ν) := by
-  refine ⟨(continuous_resQ φ.2.1.1 φ.2.1.2.1).aestronglyMeasurable, ?_⟩
-  rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top two_ne_zero ENNReal.ofNat_ne_top]
+  rw [memLp_iff, eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top two_ne_zero ENNReal.ofNat_ne_top
+    (continuous_resQ φ.2.1.1 φ.2.1.2.1).aestronglyMeasurable]
   simp only [ENNReal.toReal_ofNat, ENNReal.rpow_ofNat]
   rw [lintegral_resQ ha μ ν c hmap φ.1 φ.2.1.1 φ.2.1.2.1 φ.2.1.2.2.1, ← sq_norm_toLp φ.2.2.2]
   exact ENNReal.mul_lt_top hct.lt_top ENNReal.ofReal_lt_top

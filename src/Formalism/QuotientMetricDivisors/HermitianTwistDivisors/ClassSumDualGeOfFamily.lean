@@ -115,6 +115,34 @@ theorem valLatF_isLattice {K : Type} [Field K] [NumberField K] [StarRing K]
     exact (Submodule.fg_pi fun c => (hN c).fg).of_le (Submodule.map_comap_le _ _)
   · intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
+
+theorem valLatF_isFullLattice {K : Type} [Field K] [NumberField K] [StarRing K]
+    {n : ℕ} {Cl V : Type} [Fintype Cl] [AddCommGroup V] [Module K V]
+    [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (I : (Fin n → K) →ₗ[K] (Cl → V))
+    (hI : Function.Injective I) (N : Cl → Submodule (𝓞 K) V) (hN : ∀ c, Submodule.IsFullLattice K (N c)) :
+    Submodule.IsFullLattice K (valLatF I N) := by
+  classical
+  refine { toIsLattice := valLatF_isLattice I hI N (fun c => (hN c).toIsLattice)
+           span_eq_top := ?_ }
+  let M : Submodule (𝓞 K) (Cl → V) := Submodule.pi Set.univ N
+  change Submodule.span K (M.comap (I.restrictScalars (𝓞 K)) : Set (Fin n → K)) = ⊤
+  apply span_comap_eq_top
+  refine eq_top_iff.mpr fun x _ => ?_
+  rw [← LinearMap.sum_single_apply (φ := fun _ : Cl => V) (v := x)]
+  refine Submodule.sum_mem _ fun c _ => ?_
+  let S := Submodule.span K (M : Set (Cl → V))
+  have hle : Submodule.span K (N c : Set V) ≤ S.comap (LinearMap.single K (fun _ : Cl => V) c) := by
+    refine Submodule.span_le.mpr fun v hv => Submodule.subset_span ?_
+    change Pi.single c v ∈ M
+    rw [show M = Submodule.pi Set.univ N from rfl, Submodule.mem_pi]
+    intro j _
+    by_cases hj : j = c
+    · subst j
+      simpa using hv
+    · simp [Pi.single_eq_of_ne hj]
+  rw [(hN c).span_eq_top] at hle
+  exact hle Submodule.mem_top
+
 end ValuationLatticeField
 
 open ValuationLatticeField
@@ -122,7 +150,7 @@ open ValuationLatticeField
 theorem bounds_class_field_fixed : BoundsIClassF := by
   intro K _ _ _ n' n H' hH hdet E Pr hO Cl _ V _ _ _ _ _ pair hs hn Gam _ _ ρ hiso I hinj hI hCS
     Nab Del hNab s hDel hle hstab G0 _ r c G he hc hr
-  have hA := valLatF_isLattice I hinj Nab hNab
+  have hA := valLatF_isFullLattice I hinj Nab hNab
   have h1 := class_sum_dual_le_fixed K n' H' Cl V pair hs hn Gam ρ hiso I hI hCS Nab Del hNab s hDel hstab
   have h2 : valLatF I Del ≤ valLatF I Nab := valLatF_mono I hle
   have h3 := projection_integral K n' G0 r c G hc (valLatF I Del) hr
@@ -132,7 +160,7 @@ theorem bounds_class_field_fixed : BoundsIClassF := by
 theorem bounds_fourth_class_fixed : BoundsIVClassF := by
   intro K _ _ _ n d H hH hdet E Pr hO Cl _ V _ _ _ _ pair I g hinj hg hCS Nab Del hNab s hs0 hDel
     DG hDG hdvd w ϖ J hϖ hJ
-  have hA := valLatF_isLattice I hinj Nab hNab
+  have hA := valLatF_isFullLattice I hinj Nab hNab
   have h1 := class_sum_dual_ge_fixed K n H Cl V pair I g hg hCS Nab Del s hDel DG hdvd
   have h := bounds_fourth K n d H hH hdet E Pr hO _ _ hA (DG * s) (Nat.mul_pos hDG hs0) h1 w ϖ J hϖ hJ
   have hG' : (DG : K) ≠ 0 := by exact_mod_cast hDG.ne'

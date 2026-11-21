@@ -64,7 +64,7 @@ variable {R} in
 lemma toH'_smul {F : X.Modules} {U : X.Opens} {n : ℕ} (r : R) (x : cohOn F U n) :
     toH' F U n (r • x) =
       SiteCoh.map ((toAbSheaf (X := X)).map (smulHom F (algebraMap R Γ(X, ⊤) r))) n U (toH' F U n x) :=
-  (WithAction.toBase_smul (action F U n) R r x).trans (action_apply F U n _ _)
+  (WithAction.toBase_smul (R := R) (action F U n) r x).trans (action_apply F U n _ _)
 
 instance instIsScalarTower (S : Type t) [CommRing S] [Algebra S Γ(X, ⊤)] [Algebra R S]
     [IsScalarTower R S Γ(X, ⊤)] (F : X.Modules) (U : X.Opens) (n : ℕ) :

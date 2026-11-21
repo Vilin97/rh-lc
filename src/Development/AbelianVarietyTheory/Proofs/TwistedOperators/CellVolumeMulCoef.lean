@@ -281,7 +281,7 @@ theorem eq_zero_of_places {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum 
       · rw [hx w h, mul_zero]
       · rw [e2 w h, zero_mul]
   have h3 := congrArg (cA D) (key _ h2)
-  rw [map_mul, cA_cA, map_zero] at h3
+  rw [map_mul, SeeSaw.cA_cA, map_zero] at h3
   rw [← ha, add_mul, key a h1, h3, add_zero]
 
 theorem adj_blk (S : HSp D) (g : GA D S) {p q : ℕ} (J : Mx D S.rank p) (J' : Mx D S.rank q) :

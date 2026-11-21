@@ -43,7 +43,7 @@ theorem exists_normalisation_adjoin_finset_dvr :
   have : Algebra.FiniteType O R := (Subalgebra.fg_iff_finiteType R).mp (Subalgebra.fg_adjoin_finset s)
   have : Algebra.EssFiniteType R Ω := Algebra.EssFiniteType.of_isLocalization Ω (nonZeroDivisors R)
   have hfin : Module.Finite R (integralClosure R Ω) :=
-    finite_integralClosure_of_essFiniteType_field R Ω
+    finite_integralClosure_of_essFiniteType_field (o := O) (R := R) Ω
   set B : Subalgebra R Ω := integralClosure R Ω with hBdef
   have hRB : ∀ x, x ∈ R → x ∈ B := fun x hx => B.algebraMap_mem ⟨x, hx⟩
   have htB : Set.range (algebraMap O Ω) ∪ (s : Set Ω) ⊆ Set.range (algebraMap B Ω) := by

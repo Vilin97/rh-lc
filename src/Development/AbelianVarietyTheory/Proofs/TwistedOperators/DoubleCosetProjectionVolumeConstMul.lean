@@ -134,7 +134,8 @@ theorem pr_vol_of (hpr : Big fun {D} _ _ _ _ _ _ _ _ _ _ _ ch => ∀ (s : ℤˣ)
     omega
   obtain ⟨c, hc, hcb⟩ := h s j hj hjm ν hν
   have hMax : IsCO (ch.G.V (.top j)) (ch.G.levMax (.top j)) :=
-    congLev_open_compact _ (ch.G.isV (X := .top j) (show j ≤ D.R.m by omega) (fun _ h => Node.noConfusion h)).sd.1
+    congLev_open_compact _ (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice _ _
+      (ch.G.isV (X := .top j) (show j ≤ D.R.m by omega) (fun _ h => Node.noConfusion h)).sd)
       (by simp)
   refine ⟨c * ν.real {g | Lev.finE (ch.G.V (.top j)) g.1 ∈ ch.G.levMax (.top j)}, mul_pos hc (vol_pos _ hMax ν), ?_⟩
   intro t Φ β b hb M M' hM hM' x hx hbj

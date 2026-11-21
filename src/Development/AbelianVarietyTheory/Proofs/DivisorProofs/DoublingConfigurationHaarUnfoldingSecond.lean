@@ -67,7 +67,7 @@ theorem iwasawa_formula : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
     obtain ⟨C, hC1, hC2⟩ := GlobalTheory.T.relatively_compact_stabilizer F E σ B (b + 2) G.V _ _ hB hG.hV
     rw [hKe]
     exact hC1.of_isClosed_subset (GlobalTheory.StabHaar.isClosed_stabK B G.V
-      (GlobalTheory.LatHatClosed.isClosed_latHat F E _ G.V hG.hV.lat)) hC2
+      (GlobalTheory.LatHatClosed.isClosed_latHat F E _ G.V hG.hV.lat.toIsLattice)) hC2
   obtain ⟨hmul, hcont⟩ := GlobalTheory.T.levi_section_multiplicative F E σ B b a' G G₁ H H' hC hB hG hG₁ m hm
   have h11 : m 1 1 = 1 := by
     have h := hmul 1 1 1 1

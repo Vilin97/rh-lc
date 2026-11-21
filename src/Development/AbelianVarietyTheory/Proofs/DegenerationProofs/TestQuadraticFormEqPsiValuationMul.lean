@@ -21,7 +21,7 @@ namespace GlobalTheory.ZH.PsiForm
 theorem q_eq_val_mul : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o Ω] (S : ThetaSys o Ω) (ρ : S.Real) (p : ℕ) [Fact p.Prime] (y₀ : S.R →+* PadicAlgCl p) (u : ρ.UTest p y₀) (l : u.Lab), ∃ (ϖ : u.V) (Q : u.D.toPre.X → ℤ), Irreducible ϖ ∧ DVR.QForm.IsQ u.D.toPre ϖ Q ∧ ‖(u.j ϖ : PadicAlgCl p)‖ < 1 ∧ ∀ χ, l.q χ = Q χ * (-Real.log ‖(u.j ϖ : PadicAlgCl p)‖) := by
   intro o Ω _ _ _ _ S ρ p _ y₀ u l
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible u.V
-  choose Q hQ using DVR.QForm.exists_QVal (ϖ := ϖ) u.D
+  choose Q hQ using DVR.QForm.exists_QVal hϖ u.D
   have hj : (u.j ϖ : PadicAlgCl p) =
       algebraMap (FractionRing u.V) (PadicAlgCl p) (algebraMap u.V (FractionRing u.V) ϖ) := rfl
   refine ⟨ϖ, Q, hϖ, hQ, ?_, fun χ => ?_⟩

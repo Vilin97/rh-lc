@@ -80,17 +80,25 @@ open LatticeCoordinateLemmas in
 theorem latOfLattice_holds {D : D7} (X : HidaSetting D) (u : D.what₂.Word) : LatOfLattice X u := by
   intro h
   have : RingHomSurjective (sO' X) := ⟨(RingOfIntegers.mapRingEquiv X.ιE).surjective⟩
-  have hfg := (PIW.AdelClassFin.mLat_of PIW.AdelClassFin.lattice_intersection'
-    PIW.AdelClassFin.lattice_denominator X.B.I ((h : X.B.I.Gf) * X.xu u)).1
-  refine ⟨(PIW.AdelClassFin.abelian₂ X.B.I ((h : X.B.I.Gf) * X.xu u)).map (gvO X), ?_, ?_⟩
-  · ext y
-    constructor
-    · rintro ⟨v, hv, rfl⟩
-      show X.B.I.fmat ((h : X.B.I.Gf) * X.xu u)⁻¹ *ᵥ incl X.B.I (X.crd (gv X v)) ∈ X.B.I.Lf
-      rw [crd_gv]
-      exact hv
-    · intro hy
-      exact ⟨X.crd y, hy, gv_crd X y⟩
-  · exact Submodule.IsLattice.of_fg D.host.E (hfg.map (gvO X))
+  have : RingHomSurjective (sE X) := ⟨X.ιE.surjective⟩
+  let L := PIW.AdelClassFin.abelian₂ X.B.I ((h : X.B.I.Gf) * X.xu u)
+  have ⟨hfg, hspan⟩ := PIW.AdelClassFin.lattice_m_is_lattice X.B.I ((h : X.B.I.Gf) * X.xu u)
+  have : Submodule.IsFullLattice D.host.E (L.map (gvO X)) := by
+    refine
+      { toIsLattice := Submodule.IsLattice.of_fg D.host.E (hfg.map (gvO X))
+        span_eq_top := ?_ }
+    rw [Submodule.map_coe]
+    change Submodule.span D.host.E (gvE X '' (L : Set _)) = ⊤
+    rw [← Submodule.map_span, hspan, Submodule.map_top, LinearMap.range_eq_top]
+    exact fun y => ⟨X.crd y, gv_crd X y⟩
+  refine ⟨L.map (gvO X), ?_, inferInstance⟩
+  ext y
+  constructor
+  · rintro ⟨v, hv, rfl⟩
+    show X.B.I.fmat ((h : X.B.I.Gf) * X.xu u)⁻¹ *ᵥ incl X.B.I (X.crd (gv X v)) ∈ X.B.I.Lf
+    rw [crd_gv]
+    exact hv
+  · intro hy
+    exact ⟨X.crd y, hy, gv_crd X y⟩
 
 end Formalism.L2.SG.PoincareInHH.Cut

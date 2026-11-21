@@ -34,20 +34,20 @@ end Defs
 
 def ShiftIndex : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (d : ℕ)
-    (N N' : Submodule (𝓞 K) (Fin d → K)), Submodule.IsLattice K N →
+    (N N' : Submodule (𝓞 K) (Fin d → K)), Submodule.IsFullLattice K N →
     ∀ (w : HeightOneSpectrum (𝓞 K)) (s : ℤ), IsShiftAt w N N' s →
       idx w N N' = -((d : ℤ) * s)
 
 def MuLcv : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (d : ℕ), 0 < d →
     ∀ X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ, (∀ v, IsUnit (X v).det) →
-    ∀ N : Submodule (𝓞 K) (Fin d → K), Submodule.IsLattice K N →
+    ∀ N : Submodule (𝓞 K) (Fin d → K), Submodule.IsFullLattice K N →
       Formalism.HN.muDef (Pi.basisFun K (Fin d)) X N = -(lcv X N) / d
 
 def ShiftMu : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] [_root_.NumberField.IsTotallyComplex K] (d : ℕ)
     (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ), (∀ v, IsUnit (X v).det) →
-    ∀ N N' : Submodule (𝓞 K) (Fin d → K), Submodule.IsLattice K N → Submodule.IsLattice K N' →
+    ∀ N N' : Submodule (𝓞 K) (Fin d → K), Submodule.IsFullLattice K N → Submodule.IsFullLattice K N' →
     ∀ σ : HeightOneSpectrum (𝓞 K) → ℤ, IsShift N N' σ →
       lcv X N' = lcv X N - 2 * (d : ℝ) * ∑ᶠ w : HeightOneSpectrum (𝓞 K), lw w * (σ w : ℝ) ∧
       (0 < d → (Function.support σ).Finite ∧
@@ -57,10 +57,10 @@ def ShiftMu : Prop :=
 
 def ShiftEx : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (d : ℕ)
-    (N : Submodule (𝓞 K) (Fin d → K)), Submodule.IsLattice K N →
+    (N : Submodule (𝓞 K) (Fin d → K)), Submodule.IsFullLattice K N →
     ∀ σ : HeightOneSpectrum (𝓞 K) → ℤ, (Function.support σ).Finite →
       IsShift N (Formalism.HermitianLatticesTheory.idealSmul (shiftIdeal σ : Submodule (𝓞 K) K) N) σ ∧
-      Submodule.IsLattice K (Formalism.HermitianLatticesTheory.idealSmul (shiftIdeal σ : Submodule (𝓞 K) K) N) ∧
+      Submodule.IsFullLattice K (Formalism.HermitianLatticesTheory.idealSmul (shiftIdeal σ : Submodule (𝓞 K) K) N) ∧
       ∀ N' : Submodule (𝓞 K) (Fin d → K), IsShift N N' σ →
         N' = Formalism.HermitianLatticesTheory.idealSmul (shiftIdeal σ : Submodule (𝓞 K) K) N
 

@@ -454,7 +454,7 @@ theorem pTerm_std : GlobalTheory.IndefiniteRowSideFullHecke.JetSumTable.JetMomen
     zpow_sub₀ hT0, zpow_natCast]
   refine GlobalTheory.ColPeriod.smul_mem_localizationAt_of_le w _ (le_of_eq hscal) ?_
   rw [div_mul_eq_mul_div, mul_inv_cancel_left₀ (pow_ne_zero _ hT0), div_self (zpow_ne_zero _ hT0), one_smul]
-  rw [GlobalTheory.KerT.localization_delAtr_eq_localization_nabAtr hKnown Z.X _ (Z.Pr.T u) _ hTp halc w hTw _ d'.2.L_lattice]
+  rw [GlobalTheory.KerT.localization_delAtr_eq_localization_nabAtr hKnown Z.X _ (Z.Pr.T u) _ hTp halc w hTw _ (by first | exact hfullL d' | exact (hfullL d').toIsLattice)]
   exact hG
 
 end GlobalTheory.KerT.PStd

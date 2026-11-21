@@ -12,6 +12,7 @@ public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsAde
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HeisOFixOfIsThetaAt
 public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceAt
 public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.LatSelf
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 
 @[expose] public section
 
@@ -675,7 +676,9 @@ theorem isSBHalf_flatDat (hC : GlobalTheory.Hk3.Core R F) (i : Fin D.R.m) {Q : F
   have hinf := GlobalTheory.PlaceVec.idemSum_infPart he
   refine GlobalTheory.PlaceDatum.isSBHalf_of_red _ _ (frMapO (Vc D i) (Wc D i) (R.βV i) (R.βW i)) (GlobalTheory.PlaceDatum.frMapO_add _ _)
       (GlobalTheory.PlaceDatum.exists_den_frMapO sV.1.fg sW.1.fg _ _) ?_ Q _ fun y y' h => GlobalTheory.FlatVecExist.omegaFlat_congr _ _ _ h
-  obtain ⟨K, hK, h'⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO sV.1 sW.1 (R.βV i) (R.βW i)
+  obtain ⟨K, hK, h'⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO
+    (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice _ _ sV)
+    (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice _ _ sW) (R.βV i) (R.βW i)
   exact ⟨K, hK, fun t ht => h' t (GlobalTheory.PlaceDatum.infPart_of_half hinf ht)⟩
 
 theorem base_facts (hC : GlobalTheory.Hk3.Core R F) (hG : QGuard R) {i : Fin D.R.m} {t : T0} (hV : VStd D i)

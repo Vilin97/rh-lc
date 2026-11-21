@@ -10,6 +10,7 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Sie
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.AdelicIwasawaDoubledGroupSelfDualLatticeStatement
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.DoubledThetaVectorFixedUnramifiedStabilizerStatement
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsUniqueSphericalDoublingSectionUnramifiedStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NsmulProjectionXColumnsMemSelfDualLattice
 
 @[expose] public section
 
@@ -49,6 +50,7 @@ theorem sphFactor_of_weilRepresentationUnitaryPair (hW : GlobalTheory.Published.
   have hlaw := GlobalTheory.T.siegelWeilSection_degeneratePrincipalSeries_law hW D ψ A B χB omh homh ν 𝓕 hP.covol _ hδ
   have hvac := GlobalTheory.T.doubledTheta_vector_fixed_unramified_stabilizer D ψ A B χB omh homh LA LB Sf Φ₁ Φ₂ hΦ₁ hΦ₂ hU v hv
   haveI : Submodule.IsLattice D.host.E LA := hU.sdA.1
+  haveI : Submodule.IsFullLattice D.host.E LA := GlobalTheory.ProjXCols.selfDual_isFullLattice A LA hU.sdA
   have hI : HasIwasawa D.sp.cm.sig (dblSp A).gram (KAd D.sp.cm.sig (dblSp A).gram LA a) :=
     GlobalTheory.T.adelicIwasawa_doubledGroup_selfDualLattice D A LA a hU.sdA hP.maj
   haveI := t2Space_adeleRing' (F := D.host.F)
@@ -71,7 +73,7 @@ theorem sphFactor_of_weilRepresentationUnitaryPair (hW : GlobalTheory.Published.
           npow (absE D.host.F D.host.E (aH _ D.sp.cm.sig (dblSp A).gram p)) (s - sZero A B) := by
       rw [← npow_add (hom_pos (absE D.host.F D.host.E) (aH _ D.sp.cm.sig (dblSp A).gram p))]
       congr 1; ring
-    rw [hlaw p g, hleft, npow_mul, hr]
+    rw [hlaw p g, hleft, Doubling.npow_mul, hr]
     ring
   have hΨright : ∀ g, ∀ k ∈ KFin D.sp.cm.sig (dblSp A).gram LA v,
       Ψ (g * emb D.sp.cm.sig (dblSp A).gram v k) = Ψ g := by

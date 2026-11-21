@@ -329,7 +329,12 @@ theorem rowLat_gmap {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hγ : γ ∈ stab
       obtain ⟨y', rfl⟩ : ∃ y', γ y' = y := ⟨γ.symm y, by simp⟩
       rw [key]
       exact H y' ((mem_gmap γ Λ y').1 hy)
-  refine ⟨⟨Formalism.HermitianLatticesTheory.isomAct_lattice γ Λ hgen.1, fun p hp => ?_⟩,
+  have hfull : Submodule.IsFullLattice D.host.E (Formalism.HermitianLatticesTheory.gmap γ Λ) := by
+    refine { toIsLattice := Formalism.HermitianLatticesTheory.isomAct_lattice γ Λ hgen.1.toIsLattice, span_eq_top := ?_ }
+    change Submodule.span D.host.E ((γ : (VS D).V →ₗ[D.host.E] (VS D).V) '' (Λ : Set (VS D).V)) = ⊤
+    rw [Submodule.span_image, hgen.1.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
+    exact γ.surjective
+  refine ⟨⟨hfull, fun p hp => ?_⟩,
     ⟨Formalism.HermitianLatticesTheory.isomAct_lattice γ Λ hlat, ?_, ⟨?_, hzt⟩, ?_, ?_⟩, hXL.trans hXS⟩
   · obtain ⟨g, hg, hgl⟩ := hgen.2 p hp
     refine ⟨γ * g, mul_mem hiso hg, ?_⟩

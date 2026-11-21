@@ -116,16 +116,16 @@ theorem sum_genus (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
   have hs2 := S.isSymm hs
   have hd2 := S.isTotPosDef hd
   have hMi := hM.integral hF hL hLi
+  have hMfull : Submodule.IsFullLattice K M := by
+    obtain ⟨Λ, hΛ, -, rfl⟩ := hM.nonempty hK hF hs hd hL hLi
+    exact StabilizerLattices.isFullLattice_cut S hΛ.1
   have hmass : Formalism.HermitianLatticesTheory.mass h' M = ∑ Λ' ∈ s'.filter (fun Λ' => Formalism.HermitianLatticesTheory.SameGenus h' M Λ'),
       ((Nat.card (Formalism.ThetaLiftIndependence.autL h' Λ') : ℕ) : ℝ)⁻¹ :=
-    (Formalism.HermitianLatticesTheory.massBasic K V' h' hs2 (StabilizerLattices.trace_pos hd2) M hM.1).2.1 _
+    (Formalism.HermitianLatticesTheory.massBasic K V' h' hs2 (StabilizerLattices.trace_pos hd2) M hMfull).2.1 _
       (isClassReps_filter hK hF hs hd S hL hLi hs' hM)
   have hfr : finrank K V' = finrank K V - 1 := by
     have := S.finrank_add_one
     omega
-  have hMfull : Submodule.IsFullLattice K M := by
-    obtain ⟨Λ, hΛ, -, rfl⟩ := hM.nonempty hK hF hs hd hL hLi
-    exact StabilizerLattices.isFullLattice_cut S hΛ.1
   have hmc := hc V' h' M hs2 hd2 hfr hMfull hMi
   have e1 : ∀ Λ' ∈ s'.filter (fun Λ' => Formalism.HermitianLatticesTheory.SameGenus h' M Λ'),
       (Nat.card (fibG S L Λ') : ℝ) / (Nat.card (Formalism.ThetaLiftIndependence.autL h' Λ') : ℝ) =
@@ -152,8 +152,11 @@ theorem sum_genus (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
     simp only [e4]
     apply tprod_eq_prod
     intro 𝔭 h𝔭
-    rw [hMA 𝔭 h𝔭, localFactor_localField hK hF hs2 hd2 hA hAi 𝔭.2]
-    exact localMassFactor_of_valuation_eq_zero hK hF hs2 hd2 hA hAi 𝔭.2 (hZ2 𝔭 h𝔭)
+    have hv : vd h' M 𝔭.1 = 0 := by
+      rw [← localizedQuotients.vd_locF hF h' M 𝔭.2, hMA 𝔭 h𝔭,
+        localizedQuotients.vd_locF hF h' A 𝔭.2, hZ2 𝔭 h𝔭]
+    rw [localFactor_localField hK hF hs2 hd2 hM.1 hMi 𝔭.2]
+    exact localMassFactor_of_valuation_eq_zero hK hF hs2 hd2 hMfull hMi 𝔭.2 hv
   rw [e3]
   ring
 

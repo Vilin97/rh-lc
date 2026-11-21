@@ -30,7 +30,7 @@ def boundBR (P : IndefCoreR Df0 Df1 Dc Sp N) (LG E3 : ℝ) (E2 : Bs.J → ℝ) :
 structure DivInputs0R {Pl : Type} [Fintype Pl] [DecidableEq Pl] (P : IndefCoreR Df0 Df1 Dc Sp N) (R : RecNums Bs.J Pl)
     (u : Dc.Mem) (Nu : Submodule (𝓞 K) (Fin (Dc.a u) → K)) (sg : HeightOneSpectrum (𝓞 K) → ℝ) where
 
-  Nu_lat : Submodule.IsLattice K Nu
+  Nu_lat : Submodule.IsFullLattice K Nu
 
   sg_fin : (Function.support (shiftZ sg)).Finite
 

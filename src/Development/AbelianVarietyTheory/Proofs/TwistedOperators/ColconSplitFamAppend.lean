@@ -83,7 +83,7 @@ theorem colcon_gen (G : GridData L sc) (W : G.Weil) (t : T) {M : Vol G} (hM : M.
       (chainFrom G W t hM σ j hj vN).Iter
         (colPer W hM σ j hj vN (dataFrom G W t hM (downFam t D.R.m D.R.m Φ) σ j hj vN) F φ g) z →
       NIter ρ (fun j => M.ν (.grid D.R.m j)) (fun h' => jPer W M t (conAt W hM Φ h') F σ j hj φ)
-        (List.range' (j + 1) (2 * σ)) h z
+        (List.range' (j + 1) (2 * σ)) h z := fun
   | 0, j, hj, vN, h, g, φ, z, hg, hz => by
       subst hg
       have hc : conAt W hM Φ h j = lastDat W hM j hj vN (h j) (Φ ⟨j, by omega⟩)

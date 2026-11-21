@@ -34,7 +34,7 @@ theorem exists_dual_bound (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
   obtain ⟨b, hb, -⟩ := LocalSpans.exists_basis_locF hA₀ h𝔭
   have hnd := nondegenerate hd
   obtain ⟨bs, hbs⟩ := Formalism.HermitianLatticesTheory.dualLattice_dualBasis h hnd b
-  choose n hn using fun j => exists_pow_smul_mem hA₀.toIsLattice h𝔭 hπ (bs j)
+  choose n hn using fun j => exists_pow_smul_mem hA₀ h𝔭 hπ (bs j)
   refine ⟨∑ j, n j, fun k x hx => ?_⟩
   rw [Formalism.HermitianLatticesTheory.dualLattice_expand h hnd b bs hbs x]
   refine Submodule.sum_mem _ fun j _ => ?_
@@ -53,8 +53,8 @@ theorem exists_endL_le {A₀ B₀ : Submodule (𝓞 K) V} (hA₀ : Submodule.IsF
     (hB₀ : Submodule.IsFullLattice K B₀) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
     ∃ r : ℕ, ∀ d : ℕ, endL (locF 𝔭 A₀) (extP K 𝔭 ^ (d + r) • locF 𝔭 A₀) ≤
       endL (locF 𝔭 B₀) (extP K 𝔭 ^ d • locF 𝔭 B₀) := by
-  obtain ⟨r1, h1⟩ := exists_smul_le hA₀.toIsLattice hB₀.toIsLattice h𝔭
-  obtain ⟨r2, h2⟩ := exists_smul_le hB₀.toIsLattice hA₀.toIsLattice h𝔭
+  obtain ⟨r1, h1⟩ := exists_smul_le hA₀.toIsLattice hB₀ h𝔭
+  obtain ⟨r2, h2⟩ := exists_smul_le hB₀.toIsLattice hA₀ h𝔭
   obtain ⟨π, hπ, hπ'⟩ := exists_unif h𝔭
   have hπ0 := unif_ne_zero (K := K) hπ'
   refine ⟨r1 + r2, fun d D hD y hy => ?_⟩
@@ -87,7 +87,7 @@ theorem nSub_le_glSub {A₀ B₀ : Submodule (𝓞 K) V} (hA₀ : Submodule.IsFu
     (hB₀ : Submodule.IsFullLattice K B₀) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
     ∃ k₀ : ℕ, ∀ k ≥ k₀, nSub (locF 𝔭 A₀) 𝔭 k ≤ glSub (locF 𝔭 B₀) := by
   obtain ⟨r, hr⟩ := exists_endL_le hA₀ hB₀ h𝔭
-  refine ⟨1 + r, fun k hk X hX => mem_glSub_of_sub_mem hB₀.toIsLattice h𝔭 fun y hy => ?_⟩
+  refine ⟨1 + r, fun k hk X hX => mem_glSub_of_sub_mem hB₀ h𝔭 fun y hy => ?_⟩
   have h1 : ((X : V →ₗ[K] V) - LinearMap.id) ∈ endL (locF 𝔭 A₀) (extP K 𝔭 ^ (1 + r) • locF 𝔭 A₀) :=
     fun x hx => smul_anti 𝔭 _ hk (hX.2 x hx)
   have := hr 1 h1 y hy

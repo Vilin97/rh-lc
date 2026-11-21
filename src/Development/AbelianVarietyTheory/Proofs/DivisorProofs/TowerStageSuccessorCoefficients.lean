@@ -60,7 +60,7 @@ theorem parts_eq_zero {n n₁ : ℕ} {J : Matrix (Fin n) (Fin n) E} {x y : Fin n
 
 theorem IsSum.exists_bases (hCM : IsCMExt F E σ) (B : Base F E) {n₁ : ℕ} {Y : Spc F E (n₁ + 2)} {Y₁ : Spc F E n₁}
     {x₀ y₀ : Fin (n₁ + 2) → E} {ι : Matrix (Fin (n₁ + 2)) (Fin n₁) E} (h : IsSum σ Y Y₁ x₀ y₀ ι) (hyx : form σ Y.J y₀ x₀ ≠ 0)
-    (hL : Y.L.IsLattice E) (hb : ∀ v : B.P, IsSplitBasis (B.τ v) Y₁.L (Y₁.bas v)) {i₀ i₁ : ℕ} (h01 : i₀ < i₁) (h1n : i₁ < n₁ + 2) :
+    (hL : Y.L.IsFullLattice E) (hb : ∀ v : B.P, IsSplitBasis (B.τ v) Y₁.L (Y₁.bas v)) {i₀ i₁ : ℕ} (h01 : i₀ < i₁) (h1n : i₁ < n₁ + 2) :
     ∃ (x y : Fin (n₁ + 2) → E) (𝔟 : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) (β : ∀ v : Pl F, GL (Fin (n₁ + 2)) (Fv F v)),
       IsSum σ Y Y₁ x y ι ∧ (∀ s : E, s ∈ 𝔟 ↔ s • x ∈ Y.L) ∧ (∀ v : B.P, IsSplitBasis (B.τ v) Y.L (β v)) ∧
       ∀ (v : B.P) (i : Fin (n₁ + 2)), (i.1 = i₀ → ∀ r, (β v).1 r i = B.τ v (x r)) ∧ (i.1 = i₁ → ∀ r, (β v).1 r i = B.τ v (y r)) ∧
@@ -89,7 +89,7 @@ theorem IsSum.exists_bases (hCM : IsCMExt F E σ) (B : Base F E) {n₁ : ℕ} {Y
     have e1 : (s' / c) • x = s' • x₀ := by rw [hxdef, smul_smul, div_mul_cancel₀ _ hc]
     have e2 : (t * σ c) • y = t • y₀ := by rw [hydef, smul_smul, mul_assoc, mul_inv_cancel₀ hσc, mul_one]
     exact ⟨s' / c, t * σ c, u, e1 ▸ h1, e2 ▸ h2, h3, by rw [e1, e2]⟩
-  obtain ⟨𝔟, h𝔟⟩ := GlobalTheory.T.exists_fractionalIdeal_mem_iff_smul_mem_lattice E (n₁ + 2) Y.L hL x (smul_ne_zero hc hx₀)
+  obtain ⟨𝔟, h𝔟⟩ := GlobalTheory.T.exists_fractionalIdeal_mem_iff_smul_mem_lattice E (n₁ + 2) Y.L hL.toIsLattice x (smul_ne_zero hc hx₀)
   have eL : lowLat ι Y.L = Y₁.L := Submodule.ext fun u => (hlow u).symm
   choose βY hβY using fun v : B.P => GlobalTheory.T.exists_splitPlace_localLatticeBasis_hyperbolicPlane F E σ hCM v.1 (B.τ v) n₁ Y.L x y ι (Y₁.bas v) i₀ i₁ h01 h1n
     (fun z hz => by

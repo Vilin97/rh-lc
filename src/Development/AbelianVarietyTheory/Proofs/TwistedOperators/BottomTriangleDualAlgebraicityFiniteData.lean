@@ -168,7 +168,9 @@ theorem eventually_fix (hW : IsWeilDatumO ψ S T χS χT om)
   have htr : ∀ y : WO S T, y.map (infPart D) = 0 →
       ∀ᶠ k in 𝓝 (1 : GA D T), k ∈ GfC T → om (1, k) (heisO ψ S T y f₀) = heisO ψ S T y f₀ := by
     intro y hy0
-    obtain ⟨M, hM, hy⟩ := GlobalTheory.PlaceVec.exists_nsmul_mem_latO hsdS.1 hsdT.1 y hy0
+    obtain ⟨M, hM, hy⟩ := GlobalTheory.PlaceVec.exists_nsmul_mem_latO
+      (GlobalTheory.PlaceVec.selfDual_isFullLattice S ΛS hsdS)
+      (GlobalTheory.PlaceVec.selfDual_isFullLattice T ΛT hsdT) y hy0
     have hmv := hpair.eventually ((GlobalTheory.LatNhds.eventually_actO D S T ΛS ΛT hsdS hsdT
       (GlobalTheory.LatFinGen.latO_finitely_generated D S T ΛS ΛT hsdS hsdT)).2 y hy0 (2 * M) (Nat.mul_pos two_pos hM))
     filter_upwards [hN', hmv] with k hk hm hkf

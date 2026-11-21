@@ -94,8 +94,8 @@ theorem sec_fin {s : (Af D.host.F ⊗[D.host.F] D.host.E) →+ AE D} (s2 : ∀ a
   · rw [RingHom.map_sub, s3, RingHom.map_mul, GlobalTheory.FinPlLoc.infPart_of_idAt ha, mul_zero, sub_zero]
   · rw [RingHom.map_sub, s2, sub_self]
 
-theorem finLat_latO {S T : HSp D} {LS : Lat S} {LT : Lat T} (hS : Submodule.IsLattice D.host.E LS)
-    (hT : Submodule.IsLattice D.host.E LT) : FinLat (latO S T (LS : Set _) (LT : Set _) fun _ => True) := by
+theorem finLat_latO {S T : HSp D} {LS : Lat S} {LT : Lat T} (hS : Submodule.IsFullLattice D.host.E LS)
+    (hT : Submodule.IsFullLattice D.host.E LT) : FinLat (latO S T (LS : Set _) (LT : Set _) fun _ => True) := by
   obtain ⟨M, hM, hden⟩ := GlobalTheory.PlaceDatum.exists_den_latO (S := S) (T := T) hS.fg hT.fg
   obtain ⟨K, hK, hmul⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO (S := S) (T := T) hS hT
   obtain ⟨s, s1, s2, s3⟩ := GlobalTheory.SchwartzBruhatTensor.exists_finSection D
@@ -350,12 +350,12 @@ theorem is_pcs (uni : ∀ u : UX D ρ, MxAt (fun _ => True) (u.1.1 - 1) →
       dV.extX W (x ⬝ u.1.1 - x) ∈ homL dV dW LV₀ LW₀ 𝔟 𝔠 (fun _ => True) → psiUni ψ u.1 = 1) :
     (pcs dV dW LV₀ LW₀ 𝔟 𝔠 ψ).Is dV dW x ψ := by
   exact
-    { a₁ := finLat_comap (finLat_latO hV.1 hW.1) _ (A := 1) (A' := 1) (fun a => by rw [Matrix.one_mul]; rfl) (Matrix.one_mul _) dV.pX_jX
+    { a₁ := finLat_comap (finLat_latO (GlobalTheory.ProjXCols.selfDual_isFullLattice V _ hV) (GlobalTheory.ProjXCols.selfDual_isFullLattice W _ hW)) _ (A := 1) (A' := 1) (fun a => by rw [Matrix.one_mul]; rfl) (Matrix.one_mul _) dV.pX_jX
       a₂ := by
         rw [pcs_A₂ hψ hV hW]
-        exact finLat_comap (finLat_latO hV.1 hW.1) _ (A := 1) (A' := 1) (fun a => by rw [Matrix.one_mul]; rfl) (Matrix.one_mul _) dV.pY_jY
-      b₁ := finLat_comap (finLat_latO hV.1 hW.1) _ (fun _ => rfl) dW.pX_jX dV.p0_j0
-      b₂ := finLat_comap (finLat_latO hV.1 hW.1) _ (fun _ => rfl) dW.pY_jY dV.p0_j0
+        exact finLat_comap (finLat_latO (GlobalTheory.ProjXCols.selfDual_isFullLattice V _ hV) (GlobalTheory.ProjXCols.selfDual_isFullLattice W _ hW)) _ (A := 1) (A' := 1) (fun a => by rw [Matrix.one_mul]; rfl) (Matrix.one_mul _) dV.pY_jY
+      b₁ := finLat_comap (finLat_latO (GlobalTheory.ProjXCols.selfDual_isFullLattice V _ hV) (GlobalTheory.ProjXCols.selfDual_isFullLattice W _ hW)) _ (fun _ => rfl) dW.pX_jX dV.p0_j0
+      b₂ := finLat_comap (finLat_latO (GlobalTheory.ProjXCols.selfDual_isFullLattice V _ hV) (GlobalTheory.ProjXCols.selfDual_isFullLattice W _ hW)) _ (fun _ => rfl) dW.pY_jY dV.p0_j0
       dualA a ha := by
         rw [pcs_A₂ hψ hV hW]
         exact dualX hV hW hψ ha
@@ -559,13 +559,14 @@ theorem inhabitants (hψ : IsStdChar D ψ (-1)) {V V₀ W W₀ : HSp D} {ρ : �
   have hW₀ := GlobalTheory.PlaceModel.isSelfDualC_latFrame W₀
   have hV := isSelfDualC_splitL dV b0 hV₀
   have hW := isSelfDualC_splitL dW c0 hW₀
-  obtain ⟨N, hN, hy⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO' (S := V₀) (T := W) hV₀.1 hW.1
+  obtain ⟨N, hN, hy⟩ := GlobalTheory.PlaceDatum.exists_nsmul_mem_latO' (S := V₀) (T := W)
+    (GlobalTheory.ProjXCols.selfDual_isFullLattice V₀ _ hV₀) (GlobalTheory.ProjXCols.selfDual_isFullLattice W _ hW)
     (idem D (fun _ => True) • dW.incAdj V₀ (yZero V₀ ρ z₀))
     (Matrix.ext fun i j => GlobalTheory.FinPlLoc.infPart_of_idAt (mxAt_idem (P := fun _ => True) _ i j))
   rw [smul_comm, ← map_nsmul, ← yZero_nsmul] at hy
   have hp := is_pcs hψ hV hV₀ hW hW₀ (x := xZero dW) fun u _ => uni_xZero hψ hV hW hα α0 h2 u
   obtain ⟨f, hf, f0⟩ := exists_vac hψ hV hW
-  refine ⟨_, _, _, GlobalTheory.PlaceModel.latFrame V₀, _, GlobalTheory.PlaceModel.latFrame W₀, N, hN, finLat_latO hV.1 hW.1, hp, splits_pcs hψ hV hV₀ hW hW₀ (xZero_mem hV hW hα α0 h1) hy,
+  refine ⟨_, _, _, GlobalTheory.PlaceModel.latFrame V₀, _, GlobalTheory.PlaceModel.latFrame W₀, N, hN, finLat_latO (GlobalTheory.ProjXCols.selfDual_isFullLattice V _ hV) (GlobalTheory.ProjXCols.selfDual_isFullLattice W _ hW), hp, splits_pcs hψ hV hV₀ hW hW₀ (xZero_mem hV hW hα α0 h1) hy,
     ⟨f, vac_mem_cls hψ hV hV₀ hW (xZero_mem hV hW hα α0 h1) hy hf, f0⟩, fun v => ⟨stdAt_pcs _ _ _ _ _ _ v,
       condK_one hV hW hp (stdAt_pcs _ _ _ _ _ _ v) (xZero_mem hV hW hα α0 h1) fun ξ hξ =>
         psi_eq_one hψ hV₀ hW hy (GlobalTheory.PlaceModel.latO_le_top _ ((wittExtendByZero_mem_completedHomLattice hV hV₀ hW).1 hξ))⟩, Filter.Eventually.and ?_ ?_⟩

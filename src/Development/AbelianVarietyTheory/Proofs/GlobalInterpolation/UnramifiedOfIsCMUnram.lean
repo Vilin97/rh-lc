@@ -199,8 +199,12 @@ theorem mass_eq_std (hc : Formalism.HermitianLatticesTheory.IsCMUnram E) (W : Fo
     (hp : ∀ τ : E →+* ℂ, W.sig τ = (W.rank, 0)) :
     Formalism.HermitianLatticesTheory.mass W.hT W.L0 = Formalism.HermitianLatticesTheory.mass (stdForm E W.rank) (stdLat E W.rank) := by
   obtain ⟨e, he⟩ := exists_isometry hc W hs hp
+  have hL : Submodule.IsFullLattice E W.L0 :=
+    { toIsLattice := W.standardTuple_isLattice
+      span_eq_top := GlobalTheory.LocalConjugacy.span_eq_top_of_unimodular W W.L0
+        W.standardTuple_isLattice W.baseLattice_isUnimodular }
   obtain ⟨h1, h2, -⟩ := Formalism.HermitianLatticesTheory.massBasic _ _ W.hT W.herm
-    (GlobalTheory.IndefiniteRowSideFullHecke.MassFormulaPositivity.trace_pos hc.2.1 W hs hp) W.L0 W.standardTuple_isLattice
+    (GlobalTheory.IndefiniteRowSideFullHecke.MassFormulaPositivity.trace_pos hc.2.1 W hs hp) W.L0 hL
   have h3 := mass_transport e.symm (isoSymm e he) (tMap e W.L0) (by rwa [tMap_symm]) (by rwa [tMap_symm])
   rw [tMap_symm] at h3
   rw [← h3]

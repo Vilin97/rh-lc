@@ -280,7 +280,12 @@ theorem genusCovolBound_trace_int (r : 𝓞 K) :
 end PartB
 
 theorem genusCovolBound : GenusCovolBound := by
-  intro K V _ _ _ _ _ _ _ _ h hs hpos N ι hι L hL
+  intro K V _ _ _ _ _ _ _ _ h hs hpos N ι hι L _
+  classical
+  by_cases hgenus : (genus h L).Nonempty
+  swap
+  · exact ⟨0, fun M hM => (hgenus ⟨M, hM⟩).elim⟩
+  obtain ⟨L₀, hL₀⟩ := hgenus
   have hnd : h.Nondegenerate := by
     refine ⟨fun x hx => ?_, fun y hy => ?_⟩
     · by_contra hne
@@ -297,8 +302,9 @@ theorem genusCovolBound : GenusCovolBound := by
       have := (RingOfIntegers.isIntegral_coe r).map ((starRingEnd K).toIntAlgHom)
       rwa [RingHom.toIntAlgHom_apply, starRingEnd_apply] at this
     exact (IsIntegralClosure.isIntegral_iff (A := 𝓞 K)).mp hi
-  have hdL := dualLattice (𝓞 K) K V h hs hnd hstar L hL
-  obtain ⟨d, hd0, hd⟩ := genusScale K V h hs (dual h L) hdL.1
+  have hdL₀ := dualLattice (𝓞 K) K V h hs hnd hstar L₀ hL₀.1
+  obtain ⟨d, hd0, hd⟩ := genusScale K V h hs (dual h L₀) hdL₀.1.toIsLattice
+  have hgenusEquiv := (genusBasic (𝓞 K) K V h hs hstar).1
   set δ : ℤ := NumberField.discr K with hδ
   have hδ0 : δ ≠ 0 := NumberField.discr_ne_zero K
   refine ⟨Real.sqrt (((d * δ.natAbs ^ 2 : ℕ) : ℝ) ^ N), fun M hM _ _ => ?_⟩
@@ -320,7 +326,9 @@ theorem genusCovolBound : GenusCovolBound := by
     rw [← hz, ← algebraMap_smul K s x, LinearMap.map_smulₛₗ, LinearMap.smul_apply, hs',
       starRingEnd_apply, star_star, smul_eq_mul, mul_comm]
   intro y y' hy hy'
-  have hmem := genusCovolBound_dual_genus h hs hnd hstar L hL M hM
+  have hML₀ : M ∈ genus h L₀ :=
+    ⟨hM.1, hgenusEquiv.trans (hgenusEquiv.symm hL₀.2) hM.2⟩
+  have hmem := genusCovolBound_dual_genus h hs hnd hstar L₀ hL₀.1.toIsLattice M hML₀
   have h1 := hd (dual h M) hmem _ (key y hy) _ (key y' hy')
   obtain ⟨w, hw⟩ := Submodule.mem_one.mp h1
   obtain ⟨z, hz⟩ := genusCovolBound_trace_int w

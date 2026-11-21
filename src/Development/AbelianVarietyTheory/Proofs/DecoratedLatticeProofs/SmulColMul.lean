@@ -232,7 +232,7 @@ theorem orth_line {X T L : HSp D} (o : OrthDec X T L) {Λ : Lat X} {ΛT : Lat T}
     and_iff_right (zero_mem _)]
 
 theorem line_idele {X T L : HSp D} (o : OrthDec X T L) {ζ : Fin L.rank → D.host.E} (hζ : IsLineVec L ζ) {Λ : Lat X}
-    (hΛ : Submodule.IsLattice D.host.E Λ) (ΛT : Lat T) (P : Pl D → Prop)
+    (hΛ : Submodule.IsFullLattice D.host.E Λ) (ΛT : Lat T) (P : Pl D → Prop)
     (h : ∀ x, ¬ P x → ∃ ΛL : Lat L, IsSelfDualC L ΛL ∧ OrthAt o Λ ΛT ΛL x) :
     ∃ μ : (AE D)ˣ, ∀ x, ¬ P x → ∀ a ∈ idAt D (· = x),
       a • ratV (vecB o ζ) ∈ latV X Λ (· = x) ↔ ((μ⁻¹ : (AE D)ˣ) : AE D) * a ∈ intAt D (· = x) := by

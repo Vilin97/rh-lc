@@ -48,8 +48,16 @@ theorem latRow_bidual : All fun {D} _ _ {sc} {G} W _ => ∀ i, i < D.R.m → ∀
     · exact fun v hv => GlobalTheory.T.depthLatticeGridRow_zero_le_selfDualHomLattice D hq T L μ0 hL sc G W M hM hi hv
     · exact fun v hv => GlobalTheory.T.depthLatticeGridRow_le_selfDualHomLatticeShift D hq T L μ0 hL sc G W M hM i hi1 hi hv
   have hdep := GlobalTheory.T.idempotent_smul_mem_hat_lattice D hq T L μ0 hL sc G W M hM i hi
-  have finO := (GlobalTheory.AscFinWit.finLat_latO sdS.1 sdT.1).fin
-  have finB := (GlobalTheory.AscFinWit.finLat_latO (LS := G.Λ (.grid (i + 1) 0)) sdS.1 sdB.1).fin
+  have finO := (GlobalTheory.AscFinWit.finLat_latO
+    (S := G.V (.grid (i + 1) 0)) (T := G.V (.grid i 0))
+    (LS := G.Λ (.grid (i + 1) 0)) (LT := G.Λ (.grid i 0))
+    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdS | exact (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdS).toIsLattice)
+    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdT | exact (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdT).toIsLattice)).fin
+  have finB := (GlobalTheory.AscFinWit.finLat_latO
+    (S := G.V (.grid (i + 1) 0)) (T := G.V (.grid i 0))
+    (LS := G.Λ (.grid (i + 1) 0)) (LT := idLat (shiftId G) (G.Λ (.grid i 0)))
+    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdS | exact (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdS).toIsLattice)
+    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdB | exact (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdB).toIsLattice)).fin
   have uO : u ∈ latO (G.V (.grid (i + 1) 0)) (G.V (.grid i 0)) (G.Λ (.grid (i + 1) 0) : Set _)
       (G.Λ (.grid i 0) : Set _) (fun _ => True) := by
     refine (GlobalTheory.SelfDualAt.latO_ann_at D W.ψ W.ψ_std _ _ _ _ sdS sdT (fun _ => True) u hu).2 fun u' hu' => ?_

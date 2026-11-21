@@ -989,9 +989,14 @@ theorem mass_ortho (K : Type) [Field K] [NumberField K] [StarRing K] (hK : Forma
     · rintro ⟨i, rfl⟩
       refine ⟨b i, ⟨i, rfl⟩, ?_⟩
       exact heB i
+  have hLat : Submodule.IsFullLattice K (stdLat K n) := by
+    obtain ⟨v, -, hvSpan, hvLat, -⟩ := stdLat_ortho K n
+    rw [hvLat]
+    exact
+      { toIsLattice := Submodule.IsLattice.of_fg K (Submodule.fg_span (Set.finite_range v))
+        span_eq_top := by rw [Submodule.span_span_of_tower (𝓞 K), hvSpan] }
   have hMB := Formalism.HermitianLatticesTheory.final_massBasic K (Fin n → K) (stdForm K n) (stdForm_symm K n)
-    (by rw [standard_form_eq_telescope_form]; exact Formalism.HermitianLatticesTheory.massTelescope_def K hK n) (stdLat K n)
-    (by rw [standard_lattice_eq_telescope_lattice]; exact Formalism.HermitianLatticesTheory.massTelescope_isLattice K n)
+    (by rw [standard_form_eq_telescope_form]; exact Formalism.HermitianLatticesTheory.massTelescope_def K hK n) (stdLat K n) hLat
   rw [← hT] at hMB ⊢
   exact mass_transport e he L hMB.1 hMB.2.1
 

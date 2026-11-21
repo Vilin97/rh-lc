@@ -256,7 +256,8 @@ variable (g : Y ⟶ X) (V : X.Opens) (U : ι → X.Opens)
 theorem preimage_cechOpen (s : Finset ι) :
     g ⁻¹ᵁ cechOpen V U s = cechOpen (g ⁻¹ᵁ V) (fun i => g ⁻¹ᵁ U i) s := by
   ext x
-  exact (mem_cechOpen V U).trans (mem_cechOpen (g ⁻¹ᵁ V) (fun i => g ⁻¹ᵁ U i)).symm
+  exact (mem_cechOpen (V := V) (U := U)).trans
+    (mem_cechOpen (V := g ⁻¹ᵁ V) (U := fun i => g ⁻¹ᵁ U i)).symm
 
 variable {R : Type v} [CommRing R] [Algebra R Γ(X, ⊤)] {S : Type t} [CommRing S]
   [Algebra S Γ(Y, ⊤)] {σ : R →+* S}

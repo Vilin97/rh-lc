@@ -4,6 +4,7 @@ public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsFlipDet
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FlipIdxNeZero
 public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IdemSumMulOfSubset
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NsmulProjectionXColumnsMemSelfDualLattice
 public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ApplyAddInfRat
 public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.EqZeroOfLintegralEqZero
 public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.MemLatOIffExistsActO
@@ -45,7 +46,9 @@ theorem eq_smul_vacuum {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D}
   classical
   obtain ⟨σ, h⟩ := GlobalTheory.RealLineAt.exists_inverse_chart hθ
   obtain ⟨h1, h2, h3⟩ := GlobalTheory.T.self_dual_lattice_pairing_dual D ψ S T ΛS ΛT hψ hΛS hΛT
-  have hden := GlobalTheory.T.scaled_finite_matrix_mem_lattice D S T ΛS ΛT hΛS.1 hΛT.1
+  have hden := GlobalTheory.T.scaled_finite_matrix_mem_lattice D S T ΛS ΛT
+    (GlobalTheory.ProjXCols.selfDual_isFullLattice S ΛS hΛS)
+    (GlobalTheory.ProjXCols.selfDual_isFullLattice T ΛT hΛT)
   have hlat := hf.2.lat
   have hinf := fun u => latO_inf (u := u) S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E))
     fun _ => True

@@ -69,11 +69,11 @@ theorem finrank_orth_add (U : Submodule E S.V) :
   rw [hco, hΦ] at this
   omega
 
-theorem exists_smul_mem (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsLattice E Λ) (x : S.V) :
-    ∃ a : 𝓞 E, a ≠ 0 ∧ a • x ∈ Λ := by
-  first | exact Bl.general_b_fact_third''''.goal1 .. | (apply Bl.general_b_fact_third''''.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_third''''.goal1 <;> assumption) | (apply @Bl.general_b_fact_third''''.goal1 <;> assumption) | (intros; apply @Bl.general_b_fact_third''''.goal1 <;> assumption) | (apply @Bl.general_b_fact_third''''.goal1 <;> first | assumption | infer_instance) | exact @Bl.general_b_fact_third''''.goal1 E ‹_› ‹_› ‹_› S Λ hΛ x | exact @Bl.general_b_fact_third''''.goal1 E ‹_› ‹_› ‹_› S Λ hΛ | exact @Bl.general_b_fact_third''''.goal1 E ‹_› ‹_› ‹_› S Λ | exact @Bl.general_b_fact_third''''.goal1 E ‹_› ‹_› ‹_› S | exact @Bl.general_b_fact_third''''.goal1 E ‹_› ‹_› ‹_› | exact @Bl.general_b_fact_third''''.goal1 E ‹_› ‹_› | exact @Bl.general_b_fact_third''''.goal1 E ‹_› | exact @Bl.general_b_fact_third''''.goal1 E
+theorem exists_smul_mem (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsFullLattice E Λ) (x : S.V) :
+    ∃ a : 𝓞 E, a ≠ 0 ∧ a • x ∈ Λ :=
+  Bl.general_b_fact_third''''.goal1 S Λ hΛ x
 
-theorem span_inf_toO (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsLattice E Λ) (U : Submodule E S.V) :
+theorem span_inf_toO (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsFullLattice E Λ) (U : Submodule E S.V) :
     Submodule.span E ((Λ ⊓ toO S U : Submodule (𝓞 E) S.V) : Set S.V) = U := by
   apply le_antisymm
   · rw [Submodule.span_le]
@@ -90,7 +90,7 @@ theorem span_inf_toO (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsLattice E 
     rw [hx']
     exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
 
-theorem Xsp_le_UUE (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsLattice E Λ) {r : ℕ} {T T' : E}
+theorem Xsp_le_UUE (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsFullLattice E Λ) {r : ℕ} {T T' : E}
     (F : LFlag S r T) (F' : LFlag S r T') : Xsp F ≤ UUE Λ F F' := by
   rw [← span_inf_toO S Λ hΛ (Xsp F)]
   apply Submodule.span_mono
@@ -98,7 +98,7 @@ theorem Xsp_le_UUE (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsLattice E Λ
   simp only [UU]
   exact Submodule.mem_sup_left (Submodule.mem_sup_left (Submodule.mem_sup_left hx))
 
-theorem Xsp_le_UUE' (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsLattice E Λ) {r : ℕ} {T T' : E}
+theorem Xsp_le_UUE' (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsFullLattice E Λ) {r : ℕ} {T T' : E}
     (F : LFlag S r T) (F' : LFlag S r T') : Xsp F' ≤ UUE Λ F F' := by
   rw [← span_inf_toO S Λ hΛ (Xsp F')]
   apply Submodule.span_mono

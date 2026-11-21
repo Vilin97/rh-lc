@@ -164,18 +164,34 @@ end Rb
 
 
 open Rb in
+open Formalism.HermitianLatticesTheory (loc locBasic_le_locS locBasic_mem_locS
+  locBasic_hcompl_not_mem) in
 theorem lemmaRb_of (hPF : ProdFormula) (hCS : DetCS) (hLB : LcvBasis) (hIC : IdxChange)
     (hVB : ValBasic) (hGC : GramChange) (hFC : FinsumConj) : LemmaRb := by
   intro K _ _ _ _ K0 hK0 v0 hv0 n D H hH hHpos P hP XQ hXQ M hM e he
   classical
 
-  have hΛ : Submodule.IsLattice K (matLat P M) := by
-    refine ⟨(Submodule.IsLattice.fg (self := hM)).map _, ?_⟩
-    have : ((matLat P M : Submodule (𝓞 K) (Fin D → K)) : Set (Fin D → K)) =
-        (Matrix.mulVecLin P) '' (M : Set (Fin n → K)) := by
-      rw [matLat, Submodule.map_coe]
-      rfl
-    exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
+  have hΛ : Submodule.IsFullLattice K (matLat P M) := by
+    refine {
+      toIsLattice := Submodule.IsLattice.of_fg K (hM.fg.map _)
+      span_eq_top := ?_ }
+    obtain ⟨p, hp, hp'⟩ := Ring.not_isField_iff_exists_prime.mp (RingOfIntegers.not_isField K)
+    let w : HeightOneSpectrum (𝓞 K) := ⟨p, hp', hp⟩
+    have hspan : Submodule.span K (Set.range (e w)) = ⊤ :=
+      (he w).1.span_eq_top_of_card_eq_finrank' (by simp)
+    rw [eq_top_iff, ← hspan, Submodule.span_le]
+    rintro _ ⟨i, rfl⟩
+    have hi : e w i ∈ loc (K := K) w.asIdeal (matLat P M) := by
+      rw [← (he w).2]
+      exact locBasic_le_locS _ _ (Submodule.subset_span (Set.mem_range_self i))
+    obtain ⟨s, hs, hsi⟩ := locBasic_mem_locS.mp hi
+    have hs0 : s ≠ 0 := fun h =>
+      locBasic_hcompl_not_mem (K := K) w.asIdeal s hs (h ▸ w.asIdeal.zero_mem)
+    have hsK : algebraMap (𝓞 K) K s ≠ 0 :=
+      (map_ne_zero_iff _ (IsFractionRing.injective (𝓞 K) K)).mpr hs0
+    apply (Submodule.smul_mem_iff _ hsK).mp
+    rw [algebraMap_smul K]
+    exact Submodule.subset_span hsi
 
   have hli : LinearIndependent K (fun i => (Pi.single i 1 : Fin D → K)) := by
     have : (fun i => (Pi.single i 1 : Fin D → K)) = ⇑(Pi.basisFun K (Fin D)) := by
@@ -256,7 +272,7 @@ theorem lemmaRb_of (hPF : ProdFormula) (hCS : DetCS) (hLB : LcvBasis) (hIC : Idx
       exact ((Matrix.isUnit_iff_isUnit_det _).mp hu).ne_zero
     have hlb : IsLocBasis (matLat P M) w (fun i => ∑ k, γ k i • (Pi.single k (1 : K) : Fin D → K)) := by
       rw [hew]; exact he w
-    obtain ⟨hi1, hi2⟩ := hIC K D (matLat P M) hΛ _ hli w γ hlb
+    obtain ⟨hi1, hi2⟩ := hIC K D (matLat P M) hΛ.toIsLattice _ hli w γ hlb
     have hgc : gramR (quotGram P H) (e w) =
         star γ.det * γ.det * gramR (quotGram P H) (fun i => (Pi.single i 1 : Fin D → K)) := by
       rw [← hew]

@@ -145,7 +145,7 @@ open MeasureTheory GlobalTheory.AdelicU GlobalTheory.OpTrace GlobalTheory.Orb Nu
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
 
-theorem exists_repOp_tensor_eq_mul {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsLattice E L]
+theorem exists_repOp_tensor_eq_mul {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsFullLattice E L]
     {μa : ∀ w, Measure (GArch σ J w)} {μf : ∀ v, Measure (GLoc σ J v)} {μ : Measure (GAd σ J)}
     (hμ : IsRestrictedProd σ J L μa μf μ) {fa : ∀ w, GArch σ J w → ℂ} {ff : ∀ v, GLoc σ J v → ℂ}
     (hfa : ∀ w, fa w ∈ CcArch σ J w) (hff : IsFinFamily σ J L ff)

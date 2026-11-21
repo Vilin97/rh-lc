@@ -23,7 +23,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 
 open Classical in
-theorem tensor_eq_mul_update {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsLattice E L]
+theorem tensor_eq_mul_update {L : Submodule (𝓞 E) (Fin n → E)} [Submodule.IsFullLattice E L]
     {fa : ∀ w, GArch σ J w → ℂ} {ff : ∀ v, GLoc σ J v → ℂ} (hf : IsFinFamily σ J L ff)
     (v : HeightOneSpectrum (𝓞 F)) (g : GAd σ J) :
     tensor σ J fa ff g = ff v (proj σ J v g) * tensor σ J fa (Function.update ff v fun _ => 1) g := by
@@ -89,8 +89,8 @@ end GlobalTheory.TestConstTerm
 
 namespace GlobalTheory.TestConstTerm
 
-local instance {D : D7} (V : HSp D) : Submodule.IsLattice D.host.E (frameLat V) :=
-  Submodule.IsLattice.of_fg D.host.E (frameLat_fg V)
+local instance {D : D7} (V : HSp D) : Submodule.IsFullLattice D.host.E (frameLat V) :=
+  SelfDual.isLattice_frameLat V
 
 open Classical in
 theorem unipIntegralsVanish_tensor : ∀ (D : D7) (V : HSp D) (𝔉 : IsoFlag V) (fa : ∀ w, GArch D.sp.cm.sig V.gram w → ℂ)

@@ -16,6 +16,7 @@ public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.SplitOffB
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GramMapMulInv
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsPowLocKMulInf
 public import Formalism.LocalToGlobal.UnitaryNorms.CharProd
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RelIndexLevelSelfDualStabilizerEqProdLocal
 
 @[expose] public section
 
@@ -161,10 +162,10 @@ open GlobalTheory.StdFrames (cpt OA)
 
 theorem nabAtr_scale {E K : Type} [Field E] [NumberField E] [Field K] [NumberField K] {ι : Type} [Fintype ι]
     {n : ℕ} (emb : ι → E →+* K) (lam : ι → Formalism.BasicNotions.DomWeight n) {M M' : Submodule (𝓞 E) (Fin n → E)} (N : ℕ)
-    (hM : Submodule.IsLattice E M) (h1 : ∀ x ∈ M, (N : 𝓞 E) • x ∈ M') (h2 : ∀ x ∈ M', (N : 𝓞 E) • x ∈ M) :
+    (hM : Submodule.IsFullLattice E M) (h1 : ∀ x ∈ M, (N : 𝓞 E) • x ∈ M') (h2 : ∀ x ∈ M', (N : 𝓞 E) • x ∈ M) :
     ∀ F ∈ nabAtr emb lam M, ((N : K) ^ GlobalTheory.NabScale.scaleExp lam) • F ∈ nabAtr emb lam M' := by
   intro F hF
-  have hL : ∀ τ, Submodule.IsLattice K (dualFr (tauLat emb τ M)) := fun τ => dualFr_tauLat_isLattice emb τ M hM
+  have hL : ∀ τ, Submodule.IsFullLattice K (dualFr (tauLat emb τ M)) := fun τ => dualFr_tauLat_isLattice emb τ M hM
   have hLL' : ∀ τ, ∀ φ ∈ dualFr (tauLat emb τ M), (N : K) • φ ∈ dualFr (tauLat emb τ M') :=
     fun τ => GlobalTheory.NabScale.dualFr_tauLat_smul_mem emb τ N h2
   have hL'L : ∀ τ, ∀ φ ∈ dualFr (tauLat emb τ M'), (N : K) • φ ∈ dualFr (tauLat emb τ M) :=
@@ -265,6 +266,27 @@ theorem smul_mem_hLat {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)}
 variable {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
+theorem hLat_full (V : HSp D) (g : Bridge.Gf V) :
+    Submodule.IsFullLattice D.host.E (Bridge.hLat V g) := by
+  obtain ⟨-, -, hfg, hsp, -⟩ := GlobalTheory.Member.latHat_eq_hat_and_gram D V
+  obtain ⟨Λ, hΛ, h1, h2, -⟩ := GlobalTheory.AdLat.exists_lattice_latOf
+    D.host.F D.host.E V.rank (GlobalTheory.Member.latC V) g.1 hfg hsp
+  rw [SetLike.coe_injective ((GlobalTheory.RepsCompare.coe_hLat V g).trans hΛ.symm)]
+  letI : Submodule.IsLattice D.host.E Λ := Submodule.IsLattice.of_fg D.host.E h1
+  exact ⟨h2⟩
+
+theorem frame_full (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D))
+    (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E))
+    (hβ : IsSDFrame V β Λ 1) (hΛ : Submodule.IsLattice D.host.E Λ) :
+    Submodule.IsFullLattice D.host.E Λ := by
+  refine { toIsLattice := hΛ, span_eq_top := ?_ }
+  obtain ⟨c, hB⟩ := hβ
+  rw [one_pow] at hB
+  rw [eq_top_iff, ← GlobalTheory.ParIndex.hermitianSpace_standard_lattice_span_eq_top D V]
+  refine Submodule.span_mono fun x hx => ?_
+  have h := hB.2.2.2.1 x hx
+  simpa using h
+
 theorem inCoefLat_pow (R : RealDat D A Ks) (i : Fin D.R.m) (hβ : IsSDFrame (Vc D i) (R.βV i) (R.ΛV i) 1) {a : AE D}
     {k : GA D (Vc D i)} (hk : Formalism.L2.Theta.SuppAt a (Vc D i) k) {p : ℕ}
     (ha : ∀ PP : Pl D.host.E, (p : 𝓞 D.host.E) ∉ PP.asIdeal → cpt PP (toEAf D (a + cA D a)) = 0) :
@@ -279,7 +301,7 @@ theorem inCoefLat_pow (R : RealDat D A Ks) (i : Fin D.R.m) (hβ : IsSDFrame (Vc 
   have e2 := smul_mem_hLat hβ (k := k⁻¹) (by rw [inv_inv]; exact h₁ (m₁ + m₂) (Nat.le_add_right _ _)) (h * k)
   rw [mul_inv_cancel_right] at e2
   have e3 := Submodule.smul_mem _ ((p ^ d : ℕ) : 𝓞 D.what₂.LL)
-    (nabAtr_scale (labLL D) (lamV D i) _ (GlobalTheory.RepsCompare.isLattice_hLat _ _) e1 e2 P hP)
+    (nabAtr_scale (labLL D) (lamV D i) _ (hLat_full _ _) e1 e2 P hP)
   refine ⟨_, e3, ?_⟩
   rw [Nat.cast_smul_eq_nsmul, map_nsmul, map_smulₛₗ, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul]
   congr 1
@@ -794,7 +816,7 @@ theorem vecFree_base_translate : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (
         ← map_natCast (algebraMap D.host.E (PP.adicCompletion D.host.E)), Formalism.UG.P.levelaf_valued_algebraMap]
   have hν2 : ∀ PP, PP ∉ Q → GlobalTheory.StdFrames.cpt (D := D) PP (toEAf D (a * (N : AE D) + (1 - a))) = 1 := fun PP h => by
     rw [hν, (cpt_sum ha PP).2 h, zero_mul, sub_zero, zero_add]
-  have hSB := GlobalTheory.PlaceVec.isSBHalf_of_red hS.1 hT.1 (GlobalTheory.PlaceVec.infPart_cA (GlobalTheory.PlaceVec.idemSum_infPart he))
+  have hSB := GlobalTheory.PlaceVec.isSBHalf_of_red (frame_full _ _ _ (hL.βV i) hS.1) (frame_full _ _ _ (hL.βW i) hT.1) (GlobalTheory.PlaceVec.infPart_cA (GlobalTheory.PlaceVec.idemSum_infPart he))
     (frMapAdj _ _ (R.βV i) (R.βW i)) (GlobalTheory.PlaceVec.frMapAdj_add _ _ _ _) (GlobalTheory.PlaceVec.frMapAdj_up _ _ _ _)
     (GlobalTheory.PlaceVec.frMapAdj_down _ _ _ _) _ (fun y => omegaK R.Pg y * omegaQ Q (Wc D i).rank ξR (-1) y) fun y y' h => by
       rw [GlobalTheory.PlaceVec.omegaK_congr R.Pg fun PP hPP => h PP ((@Finset.mem_union _ (Classical.decEq _) _ Q PP).2 (Or.inl hPP)),

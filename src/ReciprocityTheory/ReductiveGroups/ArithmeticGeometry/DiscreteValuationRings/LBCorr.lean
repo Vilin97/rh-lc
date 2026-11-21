@@ -248,7 +248,7 @@ lemma mulGen_isGen_of_isGen (t : LB.Gen (LB.LinComb L φ ε)) (ht : t.IsGen) (t�
     (ht₂ : t₂.IsGen) : (LB.mulGen L _ _ _ _ t t₂).IsGen := by
   intro i j
   ext
-  exact (mulSec φ ε φ₂ ε₂ (genSec t ht) (genSec t₂ ht₂)).compat i j
+  exact (mulSec L φ ε φ₂ ε₂ (genSec t ht) (genSec t₂ ht₂)).compat i j
 
 theorem exists_normalized_to {X Y Z : Scheme.{0}} {L : LB X} (hL : L.IsLB) {K Kr : Type} [Fintype K] [Fintype Kr]
     (φ : K → (Y ⟶ X)) (ε : K → ℤ) (t : LB.Gen (LB.LinComb L φ ε)) (ht : t.IsGen)

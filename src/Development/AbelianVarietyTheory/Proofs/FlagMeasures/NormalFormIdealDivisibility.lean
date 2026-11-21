@@ -570,7 +570,7 @@ theorem normal_position : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K
   have hγ : ∀ γ ∈ 𝔠, ∀ y ∈ ipow N.𝔡 (2 * ∑ a ∈ Finset.range N.j, ((r : ℤ) - a)),
       (γ : K) * y / Dl N.F N.F' N.j (N.j_le.trans (Nat.le_succ r)) ∈ (1 : Submodule (𝓞 K) K) :=
     fun γ h y hy => (h𝔠 N.j _ le_rfl (Dl_ne N) γ h y hy).1
-  have hfg : Λ.FG := ((isUnimod_iff H Λ).1 hΛ.1).1.fg
+  have hfg : Λ.FG := ((isUnimod_iff H Λ).1 hΛ.1).1.1
   choose! v hv hvΛ using exists_adapted N Λ hfg
   obtain ⟨u, hu, huz, huv⟩ := exists_unitri N v hv
   have hz : (1 : K) ∈ lead N.F Λ (Fin.last r) := by rw [hΛ.2.1.2]; exact Submodule.mem_one.2 ⟨1, map_one _⟩

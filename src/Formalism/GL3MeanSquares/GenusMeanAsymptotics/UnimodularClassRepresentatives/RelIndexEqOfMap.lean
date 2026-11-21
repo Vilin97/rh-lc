@@ -74,7 +74,7 @@ theorem relIndex_nSub_eq {A₀ B₀ : Submodule (𝓞 K) V}
       intro x hx
       have := smul_anti 𝔭 (locF 𝔭 A₀) hk1 (hD x hx)
       rwa [pow_one] at this
-    obtain ⟨X, hX, hXg⟩ := exists_equiv_of_mem_endL hA₀.toIsLattice h𝔭 hD1
+    obtain ⟨X, hX, hXg⟩ := exists_equiv_of_mem_endL hA₀ h𝔭 hD1
     refine ⟨X, mem_nSub.2 ⟨hXg, fun x hx => ?_⟩, ?_⟩
     · rw [hX, add_sub_cancel_left]
       exact hD x hx

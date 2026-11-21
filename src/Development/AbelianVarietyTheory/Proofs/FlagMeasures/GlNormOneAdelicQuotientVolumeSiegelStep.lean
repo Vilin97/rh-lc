@@ -13,7 +13,7 @@ public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.LineLatticeCl
 
 @[expose] public section
 
-open MeasureTheory NumberField Matrix Finset Formalism.MainNotions.S GlobalTheory.Count GlobalTheory.FlagMeas GlobalTheory.FlagBase
+open MeasureTheory NumberField Matrix Finset Formalism.MainNotions.S GlobalTheory.Count GlobalTheory.FlagMeas GlobalTheory.FlagBase GlobalTheory.MeanDual
 
 namespace GlobalTheory.FlagBase.SiegelStep
 
@@ -44,9 +44,9 @@ theorem latMean_congr (hj : 1 ≤ j) {F G : Submodule ℤ (VecInf E j) → ENNRe
   filter_upwards [ae_detNorm_pos E j hj] with g hg using h _ (Quot.out c).2 g hg
 
 theorem latMean_add (hE : IsTotallyComplex E) (hj : 1 ≤ j) {F G : Submodule ℤ (VecInf E j) → ENNReal}
-    (hF : ∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsLattice E Λ →
+    (hF : ∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsFullLattice E Λ →
       Measurable (fun g : MatInf E j => {g | 0 < detNorm E j g}.indicator (fun g => F (latAt E j Λ g)) g))
-    (hG : ∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsLattice E Λ →
+    (hG : ∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsFullLattice E Λ →
       Measurable (fun g : MatInf E j => {g | 0 < detNorm E j g}.indicator (fun g => G (latAt E j Λ g)) g)) :
     latMean E j (fun L => F L + G L) = latMean E j F + latMean E j G := by
   unfold latMean
@@ -86,13 +86,13 @@ theorem latMean_add (hE : IsTotallyComplex E) (hj : 1 ≤ j) {F G : Submodule �
     funext g
     by_cases hg : g ∈ {g | 0 < detNorm E j g} <;> simp [hg]
   dsimp only
-  have hFm := hF Λ hΛ.toIsLattice
-  have hGm := hG Λ hΛ.toIsLattice
+  have hFm := hF Λ hΛ
+  have hGm := hG Λ hΛ
   rw [key F hFm, key G hGm, key (fun L => F L + G L) (by rw [hadd]; exact hFm.add hGm),
     hadd, lintegral_add_left hFm]
 
 theorem measurable_weight_mul_sum (hE : IsTotallyComplex E) (w : ℝ → ENNReal) (Φ : VecInf E j → ENNReal)
-    (hw : Measurable w) (hΦ : Measurable Φ) (Λ : Submodule (𝓞 E) (Fin j → E)) (hΛ : Submodule.IsLattice E Λ) :
+    (hw : Measurable w) (hΦ : Measurable Φ) (Λ : Submodule (𝓞 E) (Fin j → E)) (hΛ : Submodule.IsFullLattice E Λ) :
     Measurable (fun g : MatInf E j => {g | 0 < detNorm E j g}.indicator (fun g => w (covAt E j (latAt E j Λ g)) *
       ∑' x : {x : VecInf E j // x ∈ latAt E j Λ g ∧ x ≠ 0}, Φ x.1) g) := by
   obtain ⟨h1, h2, -⟩ := GlobalTheory.T.measurable_translatedLattice_functions E hE j w Φ hw hΦ Λ hΛ
@@ -217,6 +217,34 @@ theorem weighted {c : ℝ} (hc : 0 < c) {A B : ENNReal} (h : 1 + A = ENNReal.ofR
       Set.indicator_of_notMem (show c⁻¹ ∉ Set.Ioo (0 : ℝ) 1 from fun h => hi h.2)]
     simp
 
+theorem latMean_dualAt_full : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E → ∀ j : ℕ, ∀ F : Submodule ℤ (VecInf E j) → ENNReal, (∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsFullLattice E Λ → Measurable (fun g : MatInf E j => {g | 0 < detNorm E j g}.indicator (fun g => F (latAt E j Λ g)) g)) → latMean E j (fun L => F (dualAt E j L)) = latMean E j F := by
+  intro E _ _ hE j F hF
+  let X := {Λ : Submodule (𝓞 E) (Fin j → E) // Submodule.IsFullLattice E Λ}
+  let r : X → X → Prop := fun Λ Λ' => ∃ γ : GL (Fin j) E,
+    ∀ y, (γ : Matrix (Fin j) (Fin j) E) *ᵥ y ∈ Λ'.1 ↔ y ∈ Λ.1
+  let d : X → X := fun Λ => ⟨trDual E j Λ.1, (GlobalTheory.T.isLattice_traceDual_and_traceDual_traceDual E j Λ.1 Λ.2).1⟩
+  have hdd : ∀ Λ, d (d Λ) = Λ := fun Λ => Subtype.ext (GlobalTheory.T.isLattice_traceDual_and_traceDual_traceDual E j Λ.1 Λ.2).2
+  have hd : ∀ ⦃a b⦄, r a b → r (d a) (d b) := fun a b ⟨γ, h⟩ => ⟨_, Carries.trDual h⟩
+  let D : Quot r → Quot r := Quot.map d hd
+  have hD : Function.Involutive D := by
+    rintro ⟨Λ⟩
+    exact congrArg (Quot.mk r) (hdd Λ)
+  let t : Quot r → ENNReal := Quot.lift (fun Λ => term E j F Λ.1) fun a b ⟨γ, h⟩ =>
+    le_antisymm (term_le_of_carries h F (hF _ b.2)) (term_le_of_carries (Carries.inv h) F (hF _ a.2))
+  have h1 : ∀ c : Quot r, term E j F (Quot.out c).1 = t c := fun c => by
+    conv_rhs => rw [← Quot.out_eq c]
+  have h2 : ∀ c : Quot r, term E j (fun L => F (dualAt E j L)) (Quot.out c).1 = t (D c) := fun c => by
+    rw [term_dual hE (Quot.out c).2 F (hF _ (d (Quot.out c)).2)]
+    conv_rhs => rw [← Quot.out_eq c]
+    rfl
+  unfold latMean
+  with_unfolding_all
+    change (∑' c : Quot r, term E j (fun L => F (dualAt E j L)) (Quot.out c).1) =
+      ∑' c : Quot r, term E j F (Quot.out c).1
+  simp only [h1, h2]
+  exact hD.toPerm.tsum_eq t
+
+
 theorem glVol_step : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E → ∀ j : ℕ, 2 ≤ j → glVol E (j - 1) < ⊤ → glVol E j = glVol E (j - 1) * ENNReal.ofReal (Formalism.HermitianLatticesTheory.vInv E ^ (Formalism.HermitianLatticesTheory.fDeg E * (2 * j - 1)) * zetaE E j) := by
   intro E _ _ hE j hj hfin
   have hj1 : 1 ≤ j := by omega
@@ -230,7 +258,7 @@ theorem glVol_step : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex 
   have e1 := GlobalTheory.T.lineLatticeClassMean_covolume_function E hE j hj1 _ m1
   have e2 := GlobalTheory.T.lineLatticeClassMean_sum_nonzero_unfold E hE j hj _ _ m2 mg
   have e3 := GlobalTheory.T.lineLatticeClassMean_sum_nonzero_unfold E hE j hj _ _ m3 mg
-  have e4 := GlobalTheory.T.lineLatticeClassMean_traceFormDualLattice E hE j (fun L => (Set.Ioo (0 : ℝ) 1).indicator (fun t => ENNReal.ofReal (t ^ 2))
+  have e4 := latMean_dualAt_full E hE j (fun L => (Set.Ioo (0 : ℝ) 1).indicator (fun t => ENNReal.ofReal (t ^ 2))
     (covAt E j L) * ∑' x : {x : VecInf E j // x ∈ L ∧ x ≠ 0}, ENNReal.ofReal (gaussV E j x.1))
     (measurable_weight_mul_sum E j hE _ _ m3 mg)
   have e5 := latMean_add E j hE hj1

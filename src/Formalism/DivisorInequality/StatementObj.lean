@@ -25,15 +25,15 @@ def BoundsMu : Prop :=
     ∀ (Tup : Type) (μ0 : Tup) (μ : HeightOneSpectrum (𝓞 K) → Tup), (∀ y, μ (conjPl y) = μ y) →
     {y | μ y ≠ μ0}.Finite →
     ∀ (XQ : Tup → InfinitePlace K → Matrix (Fin D) (Fin D) ℂ), (∀ t v, IsUnit (XQ t v).det) →
-    ∀ (abelian₂ : Tup → Submodule (𝓞 K) (Fin D → K)), (∀ t, Submodule.IsLattice K (abelian₂ t)) →
+    ∀ (abelian₂ : Tup → Submodule (𝓞 K) (Fin D → K)), (∀ t, Submodule.IsFullLattice K (abelian₂ t)) →
     ∀ (ι : Tup → Matrix (Fin D) (Fin D) K), (∀ t, IsUnit (ι t).det) →
     ∀ (J : Type) [Fintype J]
       (XW : J → InfinitePlace K → Matrix (Fin D) (Fin D) ℂ), (∀ j v, IsUnit (XW j v).det) →
-    ∀ (M : J → Submodule (𝓞 K) (Fin D → K)), (∀ j, Submodule.IsLattice K (M j)) →
+    ∀ (M : J → Submodule (𝓞 K) (Fin D → K)), (∀ j, Submodule.IsFullLattice K (M j)) →
     ∀ (HT : J → Tup → Matrix (Fin D) (Fin D) K)
       (XT : J → Tup → InfinitePlace K → Matrix (Fin D) (Fin D) ℂ),
       (∀ j, IsRatHerm K0 (HT j μ0) (XT j μ0)) → (∀ j t, IsHermAt v0 (HT j t) (XT j t)) →
-    ∀ (Tl : J → Tup → Submodule (𝓞 K) (Fin D → K)), (∀ j t, Submodule.IsLattice K (Tl j t)) →
+    ∀ (Tl : J → Tup → Submodule (𝓞 K) (Fin D → K)), (∀ j t, Submodule.IsFullLattice K (Tl j t)) →
     ∀ (θ : J → Tup → Matrix (Fin D) (Fin D) K), (∀ j t, IsUnit (θ j t).det) →
     ∀ (κ : InfinitePlace K → ℝ), (∀ v, 0 < κ v) →
     ∀ (ρt : Tup → K) (ρr : Tup → ℝ), (∀ t, v0.embedding (ρt t) = (ρr t : ℂ)) → ρt μ0 = 1 →
@@ -48,9 +48,9 @@ def BoundsMu : Prop :=
     ∀ (nH : ℕ) (Hm : Matrix (Fin nH) (Fin nH) K), (∀ i j, Hm i j ∈ K0) →
     (∀ v : InfinitePlace K, (Hm.map v.embedding).PosDef) →
     ∀ Pm : Matrix (Fin D) (Fin nH) K, Function.Surjective Pm.mulVec → IsQuotMetric Pm Hm (XQ μ0) →
-    ∀ Mt : Submodule (𝓞 K) (Fin nH → K), Submodule.IsLattice K Mt → abelian₂ μ0 = matLat Pm Mt →
+    ∀ Mt : Submodule (𝓞 K) (Fin nH → K), Submodule.IsFullLattice K Mt → abelian₂ μ0 = matLat Pm Mt →
     (∀ y, Gm μ0 y = gramR (quotGram Pm Hm) (eb μ0 y)) →
-    ∀ R : Submodule (𝓞 K) (Fin D → K), Submodule.IsLattice K R →
+    ∀ R : Submodule (𝓞 K) (Fin D → K), Submodule.IsFullLattice K R →
     (∀ y, Formalism.HermitianLatticesTheory.localization₂ y.asIdeal R = Formalism.HermitianLatticesTheory.localization₂ y.asIdeal (matLat (ι (μ y)) (abelian₂ (μ y)))) →
 
     ∀ (Sy Tw : Finset (HeightOneSpectrum (𝓞 K))), Tw ⊆ Sy →

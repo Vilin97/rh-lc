@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NabBaseChange
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FlatVecExistsUnique
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 
 @[expose] public section
 
@@ -62,13 +63,15 @@ theorem flatTwoStep_holds : FlatTwoStep := by
     GlobalTheory.AdTh.RecPair.selfDual_of_coe (GlobalTheory.AdTh.RecPair.coe_eq_of_frame (hR.lev.βV i))
   have sW : IsSelfDualC (Wc D i) (R.ΛW i) :=
     GlobalTheory.AdTh.RecPair.selfDual_of_coe (GlobalTheory.AdTh.RecPair.coe_eq_of_frame (hR.lev.βW i))
+  have fV := Formalism.IndefR.Fin.PDA.selfDual_isFullLattice (Vc D i) (R.ΛV i) sV
+  have fW := Formalism.IndefR.Fin.PDA.selfDual_isFullLattice (Wc D i) (R.ΛW i) sW
   have hdisj : Disjoint R.Pg B.de.Q := h.Pg ▸ hB.places.disj
   obtain ⟨eg, eQ, hg, hq, h1, h2, h3⟩ := GlobalTheory.FlatVecExist.idemSum_split he hdisj
   have hinfg := GlobalTheory.PlaceVec.infPart_cA (GlobalTheory.PlaceVec.idemSum_infPart hg)
   obtain ⟨fg, hfg⟩ := GlobalTheory.PlaceVec.exists_isThetaAt hψ sV sW (a := cA D eg)
     (by rw [← RingHom.map_mul, GlobalTheory.PlaceVec.idemSum_mul_self hg]) hinfg
     (GlobalTheory.PlaceModelSum.placeModelExistsSum D R.ψ hψ _ _ _ _ sV sW _ eg hg _ hvac.2.theta hvac.2.lat).2
-    (GlobalTheory.PlaceVec.isSBHalf_of_red sV.1 sW.1 hinfg (frMapAdj (Vc D i) (Wc D i) (R.βV i) (R.βW i))
+    (GlobalTheory.PlaceVec.isSBHalf_of_red fV fW hinfg (frMapAdj (Vc D i) (Wc D i) (R.βV i) (R.βW i))
       (GlobalTheory.PlaceVec.frMapAdj_add _ _ _ _) (GlobalTheory.PlaceVec.frMapAdj_up _ _ _ _) (GlobalTheory.PlaceVec.frMapAdj_down _ _ _ _) R.Pg
       (fun y => omegaK R.Pg y) fun y y' h => GlobalTheory.PlaceVec.omegaK_congr R.Pg h)
   have hoQ := GlobalTheory.PlaceModelSum.isOrthSum_of_isIdemSum hq
@@ -84,7 +87,7 @@ theorem flatTwoStep_holds : FlatTwoStep := by
         (by rw [← RingHom.map_mul, h1, map_zero]) ((isHalf_iff _ _).2 hu.2) a b).symm)
       (hoQ.conj.heisO_eq (by rw [GlobalTheory.DualPairCheck.cA_cA, hq.2]) hvac.2.lat u hu))
   have hinfQ := GlobalTheory.PlaceDatum.infPart_idemSum hq
-  obtain ⟨K, hK', hC⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO sV.1 sW.1 (R.βV i) (R.βW i)
+  obtain ⟨K, hK', hC⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO fV fW (R.βV i) (R.βW i)
   obtain ⟨f, hf⟩ := GlobalTheory.PlaceDatum.exists_isThetaAt hψ sV sW (GlobalTheory.PlaceDatum.idemSum_mul_self hq) hinfQ hPM
     (GlobalTheory.PlaceDatum.isSBHalf_of_red eQ _ (frMapO (Vc D i) (Wc D i) (R.βV i) (R.βW i)) (GlobalTheory.PlaceDatum.frMapO_add _ _)
       (GlobalTheory.PlaceDatum.exists_den_frMapO sV.1.fg sW.1.fg _ _)

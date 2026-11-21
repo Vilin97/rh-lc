@@ -68,8 +68,8 @@ theorem isHerm_conjLat : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {
   intro D T L sc G μ₀ hL W i j B τf hemb
   have hX : (Node.grid ((i : ℕ) + 1) ((j : ℕ) + 1)).InRange D.R.m := ⟨i.2, j.2⟩
   have hV := node_isV G hL hX
-  haveI hlat : (conjSub (G.Λ (.grid ((i : ℕ) + 1) ((j : ℕ) + 1)))).IsLattice D.host.E :=
-    GlobalTheory.TripleSpaceW.conjSub_isLattice hV.sd.1
+  haveI hlat : (conjSub (G.Λ (.grid ((i : ℕ) + 1) ((j : ℕ) + 1)))).IsFullLattice D.host.E :=
+    GlobalTheory.TripleSpaceW.conjSub_isFullLattice (GlobalTheory.FunObj.selfDual_isFullLattice _ _ hV.sd)
   choose bas0 hbas0 using fun v : B.P =>
     GlobalTheory.AdelicU.exists_isSplitBasis (B.τ v) (conjSub (G.Λ (.grid ((i : ℕ) + 1) ((j : ℕ) + 1))))
       (GlobalTheory.AdelicU.isCMExt_host D)
@@ -143,10 +143,11 @@ theorem isSkew_conjLat : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {
     exact zero_ne_one this
   set Λ := pairLat (scLat D.host.AA (G.Λ (.grid (i : ℕ) ((j : ℕ) + 1))))
     (conjSub (scLat D.host.AA (conjSub (G.Λ (.grid ((i : ℕ) + 1) (j : ℕ)))))) e with hΛ
-  have hlat : Submodule.IsLattice D.host.E Λ :=
-    GlobalTheory.SkewLat.PairLatLattice.pairLat_isLattice (GlobalTheory.SkewLat.PairLatLattice.scLat_isLattice hAA hV.sd.1)
-      (GlobalTheory.TripleSpaceW.conjSub_isLattice (GlobalTheory.SkewLat.PairLatLattice.scLat_isLattice hAA
-        (GlobalTheory.TripleSpaceW.conjSub_isLattice hV₁.sd.1))) e
+  haveI hlat : Submodule.IsFullLattice D.host.E Λ :=
+    GlobalTheory.SkewLat.pairLat_isFull (GlobalTheory.SkewLat.scLat_isFull hAA
+      (GlobalTheory.FunObj.selfDual_isFullLattice _ _ hV.sd))
+      (GlobalTheory.TripleSpaceW.conjSub_isFullLattice (GlobalTheory.SkewLat.scLat_isFull hAA
+        (GlobalTheory.TripleSpaceW.conjSub_isFullLattice (GlobalTheory.FunObj.selfDual_isFullLattice _ _ hV₁.sd)))) e
   have hex : ∀ v : B.P, ∃ β, GlobalTheory.AdelicU.IsSplitBasis (B.τ v) Λ β := fun v => GlobalTheory.AdelicU.exists_isSplitBasis (B.τ v) Λ hcm
   classical
   refine ⟨fun v => if h : v ∈ B.P then (hex ⟨v, h⟩).choose else 1, ?skew, ?sig, hlat, ?dual, ?cartan, ?bas⟩

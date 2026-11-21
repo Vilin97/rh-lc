@@ -6,6 +6,7 @@ public import Formalism.QuotientMetricDivisors.Statement
 public import Formalism.JacquetSubsetSums.JacquetSubsetSum
 public import Formalism.DivisorInequality.StatementObj
 public import Formalism.QuotientMetricDivisors.DivIntoDualShift
+import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ImageLcv
 
 @[expose] public section
 
@@ -205,19 +206,15 @@ theorem IndefRows.detId (hS : SpecDet) {Bs : DefBase K} {Df : DefSide Bs} (wf : 
     (S.κ v) (fun j p => S.lam j t p v) (S.l1c.2.2.2.2.1 t v h) (fun j => S.l1c.2.2.2.2.2 j t v h)
 
 theorem matLat_lattice {d d' : ℕ} (φ : Matrix (Fin d') (Fin d) K) (h : Function.Surjective φ.mulVec)
-    (L : Submodule (𝓞 K) (Fin d → K)) (hL : Submodule.IsLattice K L) :
-    Submodule.IsLattice K (matLat φ L) := by
-  refine ⟨hL.fg.map _, ?_⟩
-  have h1 : ((matLat φ L : Submodule (𝓞 K) (Fin d' → K)) : Set (Fin d' → K)) =
-      φ.mulVecLin '' (L : Set (Fin d → K)) := by
-    ext x; simp [matLat]
-  exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
+    (L : Submodule (𝓞 K) (Fin d → K)) (hL : Submodule.IsFullLattice K L) :
+    Submodule.IsFullLattice K (matLat φ L) :=
+  matLat_isFullLattice φ h L hL
 
 theorem twisted_finite {Bs : DefBase K} {Df : DefSide Bs} (S : IndefRows Df) : {w | S.μ w ≠ Bs.μ0}.Finite := (S.Tw.finite_toSet).subset fun w hw => (S.5.2 w).mpr hw
 
 theorem IndefRows.RR_spec (hG : LatticeGlue) {Bs : DefBase K} {Df : DefSide Bs} (wf : Df.WF)
     (S : IndefRows Df) :
-    Submodule.IsLattice K S.RR ∧ ∀ w : HeightOneSpectrum (𝓞 K), Formalism.HermitianLatticesTheory.localization₂ w.asIdeal S.RR =
+    Submodule.IsFullLattice K S.RR ∧ ∀ w : HeightOneSpectrum (𝓞 K), Formalism.HermitianLatticesTheory.localization₂ w.asIdeal S.RR =
       Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (matLat (S.ι (S.μ w)) (Df.abelian₂ (S.μ w))) := by
   refine hG K S.D (matLat (S.ι Bs.μ0) (Df.abelian₂ Bs.μ0)) (fun w => matLat (S.ι (S.μ w)) (Df.abelian₂ (S.μ w)))
     (matLat_lattice _ (S.l1c.1 _).2 _ (wf.Lam_lat _)) (fun w => matLat_lattice _ (S.l1c.1 _).2 _ (wf.Lam_lat _))

@@ -58,12 +58,12 @@ theorem exists_pow_latAt {B : Base S T} (hF : B.F.Good) {a : AE D} {k : GA D S} 
 
 theorem coefLatFn_le {K : Type} [Field K] [NumberField K] (σ : K →+* ℂ) (emb : D.what₂.Tau → (D.host.E →+* K)) (O : Subring ℂ)
     {n : ℕ} (lam : D.what₂.Tau → DomWeight n) {M M' : Submodule (𝓞 D.host.E) (Fin n → D.host.E)} {N : ℕ} (hN : N ≠ 0)
-    (hO : (N : ℂ)⁻¹ ∈ O) (hM : Submodule.IsLattice D.host.E M) (h1 : ∀ x ∈ M, (N : 𝓞 D.host.E) • x ∈ M')
+    (hO : (N : ℂ)⁻¹ ∈ O) (hM : Submodule.IsFullLattice D.host.E M) (h1 : ∀ x ∈ M, (N : 𝓞 D.host.E) • x ∈ M')
     (h2 : ∀ x ∈ M', (N : 𝓞 D.host.E) • x ∈ M) : coefLatFn σ emb O lam M ≤ coefLatFn σ emb O lam M' := by
   refine Submodule.span_le.2 ?_
   rintro _ ⟨F, hF, rfl⟩
   have h3 : coefFn σ lam (((N : K) ^ GlobalTheory.NabScale.scaleExp lam • F : VV K lam) : Pol K D.what₂.Tau n) ∈ coefLatFn σ emb O lam M' :=
-    Submodule.subset_span ⟨_, nabAtr_scale emb lam N hM h1 h2 F hF, rfl⟩
+    Submodule.subset_span ⟨_, nabAtr_scale emb lam N (by first | exact hM.toIsLattice | exact hM) h1 h2 F hF, rfl⟩
   have h4 := Submodule.smul_mem _ ((⟨_, hO⟩ : O) ^ GlobalTheory.NabScale.scaleExp lam) h3
   have h0 : (N : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hN
   rw [SetLike.mem_coe]
@@ -84,7 +84,7 @@ theorem coefLat_mul {B : Base S T} (hF : B.F.Good) {K : Type} [Field K] [NumberF
   have e2 := h₂ (m₁ + m₂) (Nat.le_add_left _ _) h
   rw [mul_inv_cancel_right] at e1
   rw [show finPt S k⁻¹ = (finPt S k)⁻¹ from MonoidHom.map_inv _ k, inv_inv] at e2
-  have hL : ∀ y : Bridge.Gf S, Submodule.IsLattice D.host.E (B.latAt y) := by
+  have hL : ∀ y : Bridge.Gf S, Submodule.IsFullLattice D.host.E (B.latAt y) := by
     intro y
     classical
     have hspan : Submodule.span D.host.E (B.F.ΛS : Set (Fin S.rank → D.host.E)) = ⊤ := by
@@ -140,7 +140,7 @@ theorem coefLat_mul {B : Base S T} (hF : B.F.Good) {K : Type} [Field K] [NumberF
       have : Module.Finite (𝓞 D.host.E) D.host.E := Module.finite_def.mpr (htop ▸ hF.sdS.1.fg.map coord)
       exact RingOfIntegers.not_isField D.host.E
         (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 D.host.E) D.host.E) (Field.toIsField D.host.E))
-    exact Formalism.UG.P.global_lattice_isLattice_holds _ _ _ _ (Module.Finite.iff_fg.2 hF.sdS.1.fg) hspan _
+    exact Formalism.UG.P.csGlob_lattice _ (Module.Finite.iff_fg.2 hF.sdS.1.fg) hspan _
   have hO' : ((N ^ (m₁ + m₂) : ℕ) : ℂ)⁻¹ ∈ O := by
     rw [Nat.cast_pow, ← inv_pow]
     exact pow_mem hO _

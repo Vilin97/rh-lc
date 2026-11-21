@@ -30,10 +30,12 @@ theorem exists_isHerm_lat {D : D7} (B : Base D.host.F D.host.E) (τf : InfiniteP
     (hs : ∀ τ, IsCartanInv (gramAt D S τ) (s τ)) {p q : ℕ} (hsig : ∀ τ, Formalism.UG.HasSignature (gramAt D S τ) p q) :
     ∃ bas, Spc.IsHerm D.sp.cm.sig B (Spc.mk ((-1 : D.host.E) • S.gram) (conjSub Λ) (fun w => -s (τf w)) bas) q p := by
   have hlat := GlobalTheory.TripleSpaceW.conjSub_isLattice hsd.1
+  have hfull := GlobalTheory.TripleSpaceW.conjSub_isFullLattice
+    (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ hsd)
   obtain ⟨bas, hbas⟩ := exists_bas B _ hlat
   have eJ : ∀ w, ((-1 : D.host.E) • S.gram).map (B.emb w).1 = -((gramAt D S (τf w)).map star) := fun w => by
     ext a b; simp [gramAt, hB]
-  refine ⟨bas, ⟨fun a b => ?_, fun w => ?_, hlat, fun y => GlobalTheory.TripleSpace.mem_starLat_iff_form S hsd y, fun w => ?_, hbas⟩⟩
+  refine ⟨bas, ⟨fun a b => ?_, fun w => ?_, hfull, fun y => GlobalTheory.TripleSpace.mem_starLat_iff_form S hsd y, fun w => ?_, hbas⟩⟩
   · show star (((-1 : D.host.E) • S.gram) b a) = ((-1 : D.host.E) • S.gram) a b
     simp only [Matrix.smul_apply, smul_eq_mul, star_mul', star_neg, star_one, GlobalTheory.TripleSpace.star_gram]
   · show GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.HasSig (((-1 : D.host.E) • S.gram).map (B.emb w).1) _ _
@@ -59,10 +61,15 @@ theorem exists_isSkew_lat {D : D7} (B : Base D.host.F D.host.E) (τf : InfiniteP
     congrArg (D.host.xi0 • ·) (blk_empty e _ _).symm
   have hZ := GlobalTheory.LineSelfDual.isSelfDualC_selfDualLatticeCoordsInFrame D (zeroSp D)
   have hlat := GlobalTheory.SkewLat.isLattice_pairLat GlobalTheory.SkewLat.DualPair.AA_ne hA.1 hZ.1 e'
+  have hfull := GlobalTheory.SkewLat.pairLat_isFull
+    (GlobalTheory.SkewLat.scLat_isFull GlobalTheory.SkewLat.DualPair.AA_ne
+      (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ hA))
+    (GlobalTheory.SkewLat.scLat_isFull GlobalTheory.SkewLat.DualPair.AA_ne
+      (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ hZ)) e'
   obtain ⟨bas, hbas⟩ := exists_bas B _ hlat
   have hsub : Subsingleton (Matrix (Fin (zeroSp D).rank) (Fin (zeroSp D).rank) ℂ) :=
     inferInstanceAs (Subsingleton (Matrix (Fin 0) (Fin 0) ℂ))
-  refine ⟨_, bas, fun y hy => ?_, ⟨fun a b => ?_, fun w => ?_, hlat, fun y => ?_, fun w => ?_, hbas⟩⟩
+  refine ⟨_, bas, fun y hy => ?_, ⟨fun a b => ?_, fun w => ?_, hfull, fun y => ?_, fun w => ?_, hbas⟩⟩
   · refine GlobalTheory.SkewLat.mem_pairLat.2 ⟨hy, ?_⟩
     have : (fun k => y (e' (.inr k))) = 0 := funext fun k => Fin.elim0 k
     rw [this]

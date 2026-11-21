@@ -93,23 +93,23 @@ theorem tendsto_val [IsDiscreteValuationRing V] {ϖ : V} (hϖ : Irreducible ϖ)
 theorem exists_quadraticMap [IsDiscreteValuationRing V] {ϖ : V} (hϖ : Irreducible ϖ)
     (D : DegData V (IsLocalRing.maximalIdeal V)) {Q : D.toPre.X → ℤ} (hQ : QForm.IsQ D.toPre ϖ Q) (a : ℝ) :
     ∃ q : QuadraticMap ℤ D.toPre.X ℝ, ∀ χ, q χ = a * Q χ := by
-  have h0 := QForm.Q_zero D hQ
+  have h0 := QForm.Q_zero hϖ D hQ
   have hd : HasConstSecondDiff fun χ => a * (Q χ : ℝ) := by
     refine (hasConstSecondDiff_iff _).2 fun b m ν => ?_
-    have h := QForm.bOf_add_left D hQ b m ν
+    have h := QForm.bOf_add_left hϖ D hQ b m ν
     simp only [QForm.bOf] at h
     have h' : Q (b + m + ν) - Q (b + m) - Q (b + ν) + Q b = Q (m + ν) - Q m - Q ν + Q 0 := by rw [h0]; linarith
     have h'' := congrArg (fun z : ℤ => a * (z : ℝ)) h'
     push_cast at h''
     linarith
-  refine ⟨hd.quadraticMap fun χ => by rw [QForm.Q_neg D hQ], fun χ => ?_⟩
+  refine ⟨hd.quadraticMap fun χ => by rw [QForm.Q_neg hϖ D hQ], fun χ => ?_⟩
   change a * (Q χ : ℝ) - a * (Q 0 : ℝ) = a * (Q χ : ℝ)
   simp [h0]
 
 theorem main : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o Ω] (S : ThetaSys o Ω) (ρ : S.Real) (p : ℕ) [Fact p.Prime] (y₀ : S.R →+* PadicAlgCl p) (u : ρ.UTest p y₀), ∃ q : QuadraticMap ℤ u.D.toPre.X ℝ, Filter.Tendsto q Filter.cofinite Filter.atTop ∧ ∀ χ, u.PsiNorm χ (Real.exp (-q χ)) := by
   intro o Ω _ _ _ _ S ρ p _ y₀ u
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible u.V
-  choose Q hQ using QForm.exists_QVal u.D
+  choose Q hQ using QForm.exists_QVal hϖ u.D
   obtain ⟨q, hq⟩ := exists_quadraticMap hϖ u.D hQ
     (-Real.log ‖algebraMap (FractionRing u.V) (PadicAlgCl p) (algebraMap u.V (FractionRing u.V) ϖ)‖)
   refine ⟨q, ?_, fun χ j hj => ?_⟩

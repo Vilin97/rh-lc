@@ -22,7 +22,7 @@ def LatticeGlue : Prop :=
     Submodule.IsFullLattice K L0 → (∀ w, Submodule.IsFullLattice K (L w)) →
     {w : HeightOneSpectrum (𝓞 K) |
       Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (L w) ≠ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal L0}.Finite →
-    Submodule.IsLattice K (glueLat L) ∧
+    Submodule.IsFullLattice K (glueLat L) ∧
       ∀ w : HeightOneSpectrum (𝓞 K),
         Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (glueLat L) = Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (L w)
 

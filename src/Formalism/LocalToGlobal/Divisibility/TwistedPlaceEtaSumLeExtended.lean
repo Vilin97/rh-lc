@@ -110,7 +110,7 @@ structure DivInputsDef3 (A3 : FamIn3 K G Pl0 I0 Ty T m) (s : ℕ) (P0 : Subgroup
     {Pl : Type} [Fintype Pl] [DecidableEq Pl] (R : RecNums A3.fam3.base3.J Pl) (u : (Dc Pk.Zs).Mem)
     (Nu : Submodule (𝓞 K) (Fin ((Dc Pk.Zs).a u) → K)) (sg : HeightOneSpectrum (𝓞 K) → ℝ) where
 
-  Nu_lat : Submodule.IsLattice K Nu
+  Nu_lat : Submodule.IsFullLattice K Nu
 
   sg_fin : (Function.support (shiftZ sg)).Finite
 
@@ -180,7 +180,7 @@ structure DivisionInputsWithoutNorm (A3 : FamIn3 K G Pl0 I0 Ty T m) (s : ℕ) (P
     {Pl : Type} [Fintype Pl] [DecidableEq Pl] (R : RecNums A3.fam3.base3.J Pl) (u : (Dc Pk.Zs).Mem)
     (Nu : Submodule (𝓞 K) (Fin ((Dc Pk.Zs).a u) → K)) (sg : HeightOneSpectrum (𝓞 K) → ℝ) (bd : Fin m → ℝ) where
 
-  Nu_lat : Submodule.IsLattice K Nu
+  Nu_lat : Submodule.IsFullLattice K Nu
 
   sg_fin : (Function.support (shiftZ sg)).Finite
 

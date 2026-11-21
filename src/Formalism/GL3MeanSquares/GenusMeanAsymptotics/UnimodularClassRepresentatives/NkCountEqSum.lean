@@ -49,7 +49,7 @@ theorem card_fib (S : VecSplit h h') (L : Submodule (𝓞 K) V) (𝔭 : Ideal (�
 
 theorem exists_mReps (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm) (hd : IsTotPosDef h)
     (S : VecSplit h h') {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)}
     (h𝔭 : 𝔭.IsMaximal) {n : 𝓞 F} (hn : n ≠ 0) (hx : h S.x₀ S.x₀ = algebraMap F K (n : F))
     {s : Finset (Submodule (𝓞 K) V')} (hsr : IsLocReps S L 𝔭 s) : ∃ R, IsMReps S L 𝔭 s R := by
   have hfin : {M | M ∈ MSet S L 𝔭 ∧ S.cut M ∈ s}.Finite := by

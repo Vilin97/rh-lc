@@ -319,9 +319,12 @@ theorem exists_tiedBoth (hL : L.Is μ₀) (W : G.Weil) (t : T) (i j : Fin D.R.m)
   classical
   obtain ⟨e, Bs, Γ, X, om, om', h, hT, hti⟩ := GlobalTheory.T.exists_thetaTripleOfSquareGrid_latticeCompatible hL W t i j hst M hM
   have hsd := (node_isV G hL (X := .grid i j) ⟨i.2.le, j.2.le⟩).sd
-  haveI hlat := GlobalTheory.TripleSpaceW.conjSub_isLattice hsd.1
-  choose bas hbas using fun v : Bs.P =>
-    exists_isSplitBasis (Bs.τ v) (GlobalTheory.TripleSpaceW.conjSub (G.Λ (.grid i j))) (isCMExt_host D)
+  haveI hlat := GlobalTheory.TripleSpaceW.conjSub_isFullLattice
+    (GlobalTheory.FunObj.selfDual_isFullLattice _ _ hsd)
+  let bas := fun v : Bs.P => Classical.choose
+    (exists_isSplitBasis (Bs.τ v) (GlobalTheory.TripleSpaceW.conjSub (G.Λ (.grid i j))) (isCMExt_host D))
+  have hbas := fun v : Bs.P => Classical.choose_spec
+    (exists_isSplitBasis (Bs.τ v) (GlobalTheory.TripleSpaceW.conjSub (G.Λ (.grid i j))) (isCMExt_host D))
   let V' : Spc D.host.F D.host.E (spW₁ G i j).rank :=
     ⟨Γ.V'.J, GlobalTheory.TripleSpaceW.conjSub (G.Λ (.grid i j)), Γ.V'.θ, fun v => if h : v ∈ Bs.P then bas ⟨v, h⟩ else 1⟩
   have hV' : V'.IsHerm D.sp.cm.sig Bs Γ.q ((spW₁ G i j).rank - Γ.q) :=

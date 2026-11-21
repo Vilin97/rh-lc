@@ -116,8 +116,6 @@ theorem sum_ballCount (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
     ∑ M ∈ s, (ballCount h M T : ℝ) / (Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℝ) =
       Formalism.HermitianLatticesTheory.mass h L + ∑ᶠ n ∈ boxSet K F T, repMass h L (algebraMap F K (n : F)) := by
   classical
-  have hM : ∀ M ∈ s, Submodule.IsLattice K M ∧ Formalism.HermitianLatticesTheory.IsIntegralLat h M := fun M hMs =>
-    ⟨(hsr.1 M hMs).1.toIsLattice, integral_of_mem_genus hs hL hLi (hsr.1 M hMs)⟩
   have hmass : Formalism.HermitianLatticesTheory.mass h L = ∑ M ∈ s, ((Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℕ) : ℝ)⁻¹ := by
     have hex : ∃ s, Formalism.ThetaLiftIndependence.IsClassReps h L s := ⟨s, hsr⟩
     rw [Formalism.HermitianLatticesTheory.massBasic_mass_eq h L hex]
@@ -130,7 +128,8 @@ theorem sum_ballCount (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
       ((Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℕ) : ℝ)⁻¹ + ∑ n ∈ (finite_boxSet hK hF T).toFinset,
         (repCount h M (algebraMap F K (n : F)) : ℝ) / ((Nat.card (Formalism.ThetaLiftIndependence.autL h M) : ℕ) : ℝ) := by
     intro M hMs
-    rw [ballCount_eq hK hF hs hd (hM M hMs).1 (hM M hMs).2 hT]
+    have hMg := hsr.1 M hMs
+    rw [ballCount_eq hK hF hs hd hMg.1.toIsLattice (integral_of_mem_genus hs hL hLi hMg) hT]
     push_cast
     rw [add_div, one_div, Finset.sum_div]
   rw [Finset.sum_congr rfl hsplit, Finset.sum_add_distrib, Finset.sum_comm]

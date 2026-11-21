@@ -13,6 +13,7 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Exi
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.PlacedP
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.CenterMtEqSmulOne
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MemIntLocIffValBar
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NsmulProjectionXColumnsMemSelfDualLattice
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.PlacedBesselTranslateVector
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SelfDualLatticeFrameChainStatement
 public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.PlacedBesselAwayPlaces
@@ -71,7 +72,10 @@ theorem centralRatio_stab_atT_alt : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTi
   have hMinv : Moves (D.sp.Y 0) z⁻¹ ((_root_.GlobalTheory.Fam.pk_z W).ΛY 0) ((_root_.GlobalTheory.Fam.pk_z W).ΛY 0) (· = v) := by
     intro y hy
     rw [hc, Matrix.smul_mulVec, Matrix.one_mulVec]
-    refine GlobalTheory.LineUnit.smul_mem_latV_iff D (D.sp.Y 0) _ hsd.1 v _ h5 c _ hunit ?_ y hy
+    refine GlobalTheory.LineUnit.smul_mem_latV_iff D (D.sp.Y 0) _
+      (by
+        have hfull := GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ hsd
+        first | exact hfull | exact hfull.toIsLattice) v _ h5 c _ hunit ?_ y hy
     intro b hb
     have h3b := h3 b
     have h3b' := h3' b

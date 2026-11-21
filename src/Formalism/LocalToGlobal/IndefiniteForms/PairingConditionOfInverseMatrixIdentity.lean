@@ -162,7 +162,7 @@ theorem log_eigenvalue_sum_le_min [Nonempty Bs.Ix] (v : InfinitePlace K) :
   Finset.le_inf' _ _ fun p _ => Finset.sum_le_sum fun j _ => S.l6 j p v
 
 theorem RR_spec (hG : LatticeGlue) (wf : Df.WF) :
-    Submodule.IsLattice K S.RR ∧ ∀ w : HeightOneSpectrum (𝓞 K), Formalism.HermitianLatticesTheory.localization₂ w.asIdeal S.RR =
+    Submodule.IsFullLattice K S.RR ∧ ∀ w : HeightOneSpectrum (𝓞 K), Formalism.HermitianLatticesTheory.localization₂ w.asIdeal S.RR =
       Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (matLat (S.ι (S.μ w)) (Df.abelian₂ (S.μ w))) := by
   have hfin : {w | S.μ w ≠ Bs.μ0}.Finite := S.Tw.finite_toSet.subset fun w hw => (S.h0.2 w).2 hw
   refine hG K S.D (matLat (S.ι Bs.μ0) (Df.abelian₂ Bs.μ0)) (fun w => matLat (S.ι (S.μ w)) (Df.abelian₂ (S.μ w)))

@@ -448,7 +448,10 @@ theorem isDatum_linB : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheor
       ((congrArg _ (linB_ne B t i j w' hne hx)).trans (add_zero _))))
     (fun w hw u => ⟨_, ((hh w hw).2.2.2.2 u).1, hco w u, ((hh w hw).2.2.2.2 u).2.1⟩)
     (fun w hw x hx p ⟨hp, g, g1, g2, g3⟩ => ⟨GlobalTheory.HeisSchA.rho_mem_schA Γ.M' W.ψ hstd x _ hp, _,
-      GlobalTheory.BigDat.GraphHeis.sb_trans_latO sW.1 sX.1 (GlobalTheory.PlaceVec.infPart_cA hinf) g1 (hA w hw _ hx),
+      GlobalTheory.BigDat.GraphHeis.sb_trans_latO
+        (GlobalTheory.PlaceVec.selfDual_isFullLattice _ _ sW)
+        (GlobalTheory.PlaceVec.selfDual_isFullLattice _ _ sX)
+        (GlobalTheory.PlaceVec.infPart_cA hinf) g1 (hA w hw _ hx),
       funext fun u => (congrFun g2 _).trans (congrArg g (ptB_add e u x)), by
         rw [hT₁.trans g g1 _ (hA w hw _ hx), ← heisS_ptB e Γ h.JW₁ h.JWW, ← g3]
         exact thetaS_rho Γ W.ψ p.2 x⟩)

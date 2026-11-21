@@ -317,7 +317,7 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
   refine ⟨X, U, M, c, ⟨Matrix.linearIndependent_rows_of_det_ne_zero hXne, ?_⟩,
     ⟨linearIndependent_mkQ (filSpace Fil τ) hq U M hMF hAne, ?_⟩, ⟨hMli, ?_⟩, hMF,
     ⟨hc0, ?_⟩, hdet'⟩
-  ·
+  · as_aux_lemma =>
       refine span_eq_of_basis hv (GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.eigSub (liftA hv a) τ (Fin (p + q) → RS (liftA hv a))) h
         LinearMap.id (fun z i => ((GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) (p + q) τ z i : Int0 (toAddVal w ℓ h0 h1)) : C))
         (fun z z' => by funext i; simp only [map_add (f := _), Pi.add_apply]; rfl)
@@ -326,7 +326,7 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
         (fun k => (h k : Fin (p + q) → RS (liftA hv a))) (fun k => rfl) _ (fun y => ?_)
       rw [eigenSub_iff C w _ hv S a (p + q) τ ha hinj hrange y]
       simp only [LinearMap.id_apply]
-  ·
+  · as_aux_lemma =>
       refine span_eq_of_basis hv (GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.eigSub (liftA hv a) τ ((Fin (p + q) → RS (liftA hv a)) ⧸
           (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}))) l (proj (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})))
         (fun z => quotMap (w := w) (filSpace Fil τ)
@@ -346,7 +346,7 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
         funext i
         rfl
       · exact lie_iff C w _ hv S a (p + q) Fil τ ha hF hinj hrange hmem hcomp y
-  ·
+  · as_aux_lemma =>
       refine span_eq_of_basis hv (eigQuot (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})) τ) fb
         LinearMap.id (fun z i => ((z i : Int0 (toAddVal w ℓ h0 h1)) : C))
         (fun z z' => by funext i; rfl) (fun c z => by funext i; rfl)

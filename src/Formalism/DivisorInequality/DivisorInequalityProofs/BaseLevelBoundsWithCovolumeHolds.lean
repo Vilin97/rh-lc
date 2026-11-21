@@ -66,8 +66,7 @@ theorem slope_bounds : BoundsMu := by
     Finset.sum_congr rfl (fun j _ => hs3 j)
   rw [hF] at hch
   refine ⟨?_, fun j => ?_⟩
-  · rw [dual_lattice_measure K D hD XE hXE R hR]
-    exact hch
+  · simpa only [dual_lattice_measure K D hD XE hXE R hR] using hch
   · rw [Formalism.ExtensionFiltration.log_covolume_slope_mu K D hD (XW j) (hXW j) (M j) (hM j)]
     have : (D : ℝ) ≠ 0 := by exact_mod_cast hD.ne'
     field_simp

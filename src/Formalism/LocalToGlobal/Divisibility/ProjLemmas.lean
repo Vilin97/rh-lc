@@ -1176,6 +1176,52 @@ theorem mem_dual_iff {K : Type} [Field K] [NumberField K] [StarRing K] {n : ℕ}
   unfold Formalism.HermitianLatticesTheory.dual Formalism.E.hdual
   simp only [Submodule.mem_iInf, Submodule.mem_comap, LinearMap.restrictScalars_apply]
 
+theorem span_eq_top_of_scaled_dual_le {K V : Type} [Field K] [NumberField K] [StarRing K]
+    [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
+    (pair : V →ₗ⋆[K] V →ₗ[K] K) (M : Submodule (𝓞 K) V)
+    (hfg : M.FG) {c : 𝓞 K} (hc : c ≠ 0)
+    (hdual : ∀ x ∈ Formalism.HermitianLatticesTheory.dual pair M, c • x ∈ M) :
+    Submodule.span K (M : Set V) = ⊤ := by
+  rw [eq_top_iff]
+  intro x _
+  obtain ⟨generators, hgen⟩ := hfg
+  obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 K))
+    generators (fun y => pair y x)
+  have hmem : (d : 𝓞 K) • x ∈ Formalism.HermitianLatticesTheory.dual pair M := by
+    rw [Formalism.HermitianLatticesTheory.dualBasic_mem_dual]
+    intro y hy
+    rw [← hgen] at hy
+    induction hy using Submodule.span_induction with
+    | mem y hy =>
+        rw [LinearMap.map_smul_of_tower]
+        exact Submodule.mem_one.mpr (hd y hy)
+    | zero => simp
+    | add y z _ _ hy hz =>
+        rw [map_add, LinearMap.add_apply]
+        exact add_mem hy hz
+    | smul a y _ hy =>
+        obtain ⟨b, hb⟩ := exponent_index_lattice.hstar (K := K) a
+        rw [← algebraMap_smul K a y, LinearMap.map_smulₛₗ₂]
+        change star (algebraMap (𝓞 K) K a) • pair y ((d : 𝓞 K) • x) ∈ _
+        rw [← hb, algebraMap_smul K]
+        exact Submodule.smul_mem _ _ hy
+  have hcK : algebraMap (𝓞 K) K c ≠ 0 := by
+    simpa only [map_zero] using (IsFractionRing.injective (𝓞 K) K).ne hc
+  have hdK : algebraMap (𝓞 K) K d ≠ 0 :=
+    IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors d.2
+  apply (Submodule.smul_mem_iff _ hdK).mp
+  rw [algebraMap_smul K]
+  apply (Submodule.smul_mem_iff _ hcK).mp
+  rw [algebraMap_smul K]
+  exact Submodule.subset_span (hdual _ hmem)
+
+theorem CSD.Good.nab_isFullLattice {K : Type} [Field K] [NumberField K] [StarRing K]
+    {S : CSD K} {s : ℕ} (h : S.Good s) (c : S.Cl) : Submodule.IsFullLattice K (S.Nab c) := by
+  have hs : (s : 𝓞 K) ≠ 0 := by exact_mod_cast h.s_pos.ne'
+  exact { toIsLattice := h.nab_lat c
+          span_eq_top := span_eq_top_of_scaled_dual_le S.pair _ (h.nab_lat c).fg hs
+            (fun x hx => h.del_le c (h.dual_le c x hx)) }
+
 private theorem hform_eq_lemma {K : Type} [Field K] [NumberField K] [StarRing K] {m : ℕ} (M : Matrix (Fin m) (Fin m) K)
     (u v : Fin m → K) : hform M u v = star u ⬝ᵥ (M *ᵥ v) := by
   unfold hform
@@ -1200,9 +1246,10 @@ theorem boundsIAt_of (h : BoundsIHyps) : BoundsIAt := by
     (by intro x y _; exact Subsingleton.elim _ _)
   obtain ⟨hl1, hl2, hl3⟩ := bounds_class_field_fixed K S.dim (S.BaseDimension r X P ψ) S.H hH hdet (S.V0E r X P ψ)
     (S.goodPartProjection r X P ψ) hp S.Cl S.V S.pair hS.symm hS.nondeg S.Gam S.ρ hS.inv S.I S.I_injective S.I_onto
-    S.isClassSum S.Nab S.Del hS.nab_lat s hS.dual_le hS.del_le hS.del_stable G (S.actMat r)
+    S.isClassSum S.Nab S.Del hS.nab_isFullLattice
+    s hS.dual_le hS.del_le hS.del_stable G (S.actMat r)
     (fun t => (goodAt X P ψ).coeff t) (Fintype.card G * Nat.card P) he hint hdel
-  refine ⟨hl1, hl2, ?_⟩
+  refine ⟨hl1.toIsLattice, hl2.toIsLattice, ?_⟩
   intro x hx
   have hP : (Nat.card P : K) ≠ 0 := by exact_mod_cast (Nat.card_pos (α := P)).ne'
   have hx' : ((Nat.card P : K)⁻¹ • x) ∈

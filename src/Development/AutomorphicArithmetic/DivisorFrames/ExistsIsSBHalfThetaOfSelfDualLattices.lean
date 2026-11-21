@@ -296,7 +296,8 @@ theorem UpperTheory.exists_isSBHalf_theta_of_selfDual_lattices :
       obtain ⟨y, rfl⟩ := hbij.2 x
       have hy : IsHalf eh y := (hH y).1 fun i j =>
         (h₀ _).2 (halfEl_of_at t₀ v (at_entry hx.1 i j) (congrFun (congrFun hx.2 i) j))
-      obtain ⟨k, hk, hky⟩ := GlobalTheory.PlaceVec.exists_nsmul_mem_latO (S := sgn ε S) (T := X) sdS.1 sdX.1 y
+      obtain ⟨k, hk, hky⟩ := GlobalTheory.PlaceVec.exists_nsmul_mem_latO (S := sgn ε S) (T := X)
+        (GlobalTheory.PlaceVec.selfDual_isFullLattice _ _ sdS) (GlobalTheory.PlaceVec.selfDual_isFullLattice _ _ sdX) y
         (Matrix.ext fun i j => infPart_halfEl ((h₀ _).1 (hy i j)))
       refine ⟨GlobalTheory.HeisSchA.rho_mem_schA M _ hstd _ _ hp.1, ?_, ?_⟩
       · simp only [← ptO_add]
@@ -308,7 +309,8 @@ theorem UpperTheory.exists_isSBHalf_theta_of_selfDual_lattices :
       obtain ⟨y, rfl⟩ := hbij.2 x
       have hy : IsHalf (cA D eh) y := (isHalf_iff_ptO (sgn ε S).gram hG e _ y).2 fun i j =>
         (h₁ _).2 (halfEl_of_at t₁ v (at_entry hx.1 i j) (congrFun (congrFun hx.2 i) j))
-      obtain ⟨k, hk, hky⟩ := GlobalTheory.PlaceVec.exists_nsmul_mem_latO (S := sgn ε S) (T := X) sdS.1 sdX.1 y
+      obtain ⟨k, hk, hky⟩ := GlobalTheory.PlaceVec.exists_nsmul_mem_latO (S := sgn ε S) (T := X)
+        (GlobalTheory.PlaceVec.selfDual_isFullLattice _ _ sdS) (GlobalTheory.PlaceVec.selfDual_isFullLattice _ _ sdX) y
         (Matrix.ext fun i j => infPart_halfEl ((h₁ _).1 (hy i j)))
       refine ⟨GlobalTheory.HeisSchA.rho_mem_schA M _ hstd _ _ hp.1, ?_, ?_⟩
       · simp only [lsym]

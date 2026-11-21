@@ -25,7 +25,7 @@ namespace GlobalTheory.BarStd
 
 open GlobalTheory.IndefiniteRowSideFullHecke.JetSumTable (adj suppBar StdAtT InIntClosure Induces jetSum RatIdx)
 open GlobalTheory.IndefiniteRowSideFullHecke.SubstitutionAdjoint (WtCompat InDeg HAt LatWithBasis detFac extLat admitted InClosure ptTable)
-open GlobalTheory.CharVal (intAt_iff valuation_conjP conjP_conjP')
+open GlobalTheory.CharVal (intAt_iff valuation_conjP)
 
 section Lat
 
@@ -375,7 +375,7 @@ theorem stdOver (hPr : Pr.Ok) {u : Pr.Word} {n : ℕ} {SG : Finset (HeightOneSpe
   rcases P.isPrime.mem_or_mem hP with h1 | h1
   · exact h ⟨P, (mem_divs (hPr.piT_ne_zero u) _).2 h1⟩
   · have h2 := GlobalTheory.StdReps.at_conj_eq d (h ⟨conjPrime₂ P, (mem_divs (hPr.piT_ne_zero u) _).2 h1⟩)
-    rwa [conjP_conjP'] at h2
+    rwa [Formalism.L2.Ker.conjP_conjP'] at h2
 
 theorem sub_eq_half {R : Ranks} (W : Wts X Pr.Word R) (u : Pr.Word) {i : ℕ} (hi : i < R.m) {hab : R.N i < R.N (i + 1)}
     {s s' : X.Tau → ℤ} {n : X.Tau → ℕ} (hw : WtCompat hab (W.lamTrue u i) (W.lamTrue u (i + 1)) s s' n) (τ : X.Tau) :
@@ -427,11 +427,11 @@ theorem barStd : GlobalTheory.IndefiniteRowSideFullHecke.JetSumTable.JetMoments 
   have hval := fun τ => (GlobalTheory.CharVal.splitOver_vT hX hPr u (hv τ)).val
   choose Bs hBs hBd using fun τ => exists_basis_Lsh d ⟨_, hv τ⟩ (hstd.1 _) (hval τ)
   choose Bt hBt hBd' using fun τ => exists_basis_Lsh d' ⟨_, hv τ⟩ (hstd.2 _) (hval τ)
-  simp only [conjP_conjP'] at hBs hBd hBt hBd'
+  simp only [Formalism.L2.Ker.conjP_conjP'] at hBs hBd hBt hBd'
   obtain ⟨G, hG, hGe⟩ := jetOp_of_closure hind hun hwt d.2.Lsh_lattice d'.2.Lsh_lattice hBs hBt (Sup := suppBar d.1 d'.1)
     (fun x hx τ y hy => by
       have := adj_mem d d' hx ⟨_, hv τ⟩ hy
-      rwa [conjP_conjP'] at this) 1
+      rwa [Formalism.L2.Ker.conjP_conjP'] at this) 1
     (M := RatIdx (ambOf s B χ cD) (Sall sel mu u) (cAof sel mu cst) (cBof sel mu cst u) d.1.N d'.1.N
       fun x => phiT Z.X.K d.1 d'.1 x * Ξ₀ x)
     (fun m hm x hx _ => hJ _ _ hsd hsd' x hx m fun τ => by
@@ -440,7 +440,11 @@ theorem barStd : GlobalTheory.IndefiniteRowSideFullHecke.JetSumTable.JetMoments 
       ring)
     (by simpa only [map_one, one_mul] using hclo) y
     (localization_mono _ (Submodule.comap_mono (usage₁₁ _ _)) hy)
-  rw [← GlobalTheory.KerT.localization_delAtr_eq_localization_nabAtr hP Z.X _ _ _ (hPr.T_prime u) hAl w hTw _ d'.2.Lsh_lattice] at hG
+  have hfullLsh : Submodule.IsFullLattice Z.X.E d'.1.Lsh := by
+    letI := Formalism.L2.Ker.full_of_sd hsd'
+    letI := d'.2.Lsh_lattice
+    exact Submodule.IsFullLattice.of_le Z.X.E d'.2.N_le_Lsh
+  rw [← GlobalTheory.KerT.localization_delAtr_eq_localization_nabAtr hP Z.X _ _ _ (hPr.T_prime u) hAl w hTw _ (by first | exact hfullLsh | exact hfullLsh.toIsLattice)] at hG
   have hT0 : (Z.Pr.T u : Z.X.K) ≠ 0 := Nat.cast_ne_zero.2 (hPr.T_prime u).ne_zero
   have hvT : w.valuation Z.X.K (Z.Pr.T u) ≠ 0 := by simpa using hT0
   have hdet : ∀ {n : ℕ} (τ : Z.X.Tau) (C : GL (Fin n) Z.X.E),

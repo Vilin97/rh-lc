@@ -115,7 +115,9 @@ theorem om_placeModel : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp
     exact GlobalTheory.AdIdem.idempotent_mem_intAE D _ (by rw [← map_mul, hw])
   have hfm := GlobalTheory.LatFinMod.latO_finite_mod D S T ΛS ΛT hS.1.fg hT.1.fg (fun _ => True)
   have hnm : ∀ t : WO S T, t.map (infPart D) = 0 → ∃ k : ℕ, 0 < k ∧ k • t ∈ (latO S T ΛS ΛT fun _ => True) :=
-    fun t ht => GlobalTheory.PlaceDatum.exists_nsmul_mem_latO' hS.1 hT.1 t ht
+    fun t ht => GlobalTheory.PlaceDatum.exists_nsmul_mem_latO'
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S ΛS hS)
+      (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull T ΛT hT) t ht
   generalize (latO S T ΛS ΛT fun _ => True) = Λ at hdual hsm hfm hnm hTm hΛ hΦ ⊢
   have hcA : cA D a * cA D a = cA D a := by rw [← map_mul, ha]
   have hinf' : infPart D (cA D a) = 0 := GlobalTheory.PlaceDatum.infPart_cA hinf

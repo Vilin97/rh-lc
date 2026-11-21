@@ -74,7 +74,7 @@ theorem denom (A B : Submodule R V) (hA : A.FG) (hB : Submodule.span K (B : Set 
 theorem glue_spec (hR : ¬ IsField R) (L0 : Submodule R V) (L : HeightOneSpectrum R → Submodule R V)
     (h0 : Submodule.IsFullLattice K L0) (hL : ∀ w, Submodule.IsFullLattice K (L w))
     (hfin : {w : HeightOneSpectrum R | localization₂ w.asIdeal (L w) ≠ localization₂ w.asIdeal L0}.Finite) :
-    Submodule.IsLattice K (⨅ w : HeightOneSpectrum R, localization₂ w.asIdeal (L w)) ∧
+    Submodule.IsFullLattice K (⨅ w : HeightOneSpectrum R, localization₂ w.asIdeal (L w)) ∧
       ∀ w : HeightOneSpectrum R,
         localization₂ w.asIdeal (⨅ w : HeightOneSpectrum R, localization₂ w.asIdeal (L w)) =
           localization₂ w.asIdeal (L w) := by
@@ -130,7 +130,7 @@ theorem glue_spec (hR : ¬ IsField R) (L0 : Submodule R V) (L : HeightOneSpectru
     have : algebraMap R K r ≠ 0 := by
       simpa using (IsFractionRing.injective R K).ne hr
     rw [← algebraMap_smul K r y, smul_smul, inv_mul_cancel₀ this, one_smul]
-  refine ⟨⟨?_, ?_⟩, ?_⟩
+  refine ⟨{ toIsLattice := ⟨?_, ?_⟩, span_eq_top := ?_ }, ?_⟩
   ·
     have hN : IsNoetherian R L0 :=
       isNoetherian_of_fg_of_noetherian L0 (Submodule.IsLattice.fg (self := h0.toIsLattice))
@@ -145,6 +145,13 @@ theorem glue_spec (hR : ¬ IsField R) (L0 : Submodule R V) (L : HeightOneSpectru
   ·
     intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  · have haK : algebraMap R K a ≠ 0 := by
+      simpa only [map_zero] using (IsFractionRing.injective R K).ne ha0
+    rw [eq_top_iff, ← h0.span_eq_top, Submodule.span_le]
+    intro x hx
+    apply (Submodule.smul_mem_iff _ haK).mp
+    rw [algebraMap_smul K]
+    exact Submodule.subset_span (ha x hx)
   · intro w
     apply le_antisymm
     · have h1 : G ≤ localization₂ w.asIdeal (L w) := iInf_le _ w
@@ -189,7 +196,7 @@ theorem glueLat_spec {D : ℕ} (L0 : Submodule (𝓞 K) (Fin D → K))
     (L : HeightOneSpectrum (𝓞 K) → Submodule (𝓞 K) (Fin D → K))
     (h0 : Submodule.IsFullLattice K L0) (hL : ∀ w, Submodule.IsFullLattice K (L w))
     (hfin : {w : HeightOneSpectrum (𝓞 K) | localization₂ w.asIdeal (L w) ≠ localization₂ w.asIdeal L0}.Finite) :
-    Submodule.IsLattice K (glueLat L) ∧
+    Submodule.IsFullLattice K (glueLat L) ∧
       ∀ w : HeightOneSpectrum (𝓞 K), localization₂ w.asIdeal (glueLat L) = localization₂ w.asIdeal (L w) :=
   glue_spec (NumberField.RingOfIntegers.not_isField K) L0 L h0 hL hfin
 
@@ -233,7 +240,7 @@ theorem lattice_gluing (K : Type) [Field K] [NumberField K] (D : ℕ)
     (h0 : Submodule.IsFullLattice K L0) (hL : ∀ w, Submodule.IsFullLattice K (L w))
     (hfin : {w : HeightOneSpectrum (𝓞 K) |
       localization₂ w.asIdeal (L w) ≠ localization₂ w.asIdeal L0}.Finite) :
-    Submodule.IsLattice K (glueLat L) ∧
+    Submodule.IsFullLattice K (glueLat L) ∧
       ∀ w : HeightOneSpectrum (𝓞 K),
         localization₂ w.asIdeal (glueLat L) = localization₂ w.asIdeal (L w) :=
   glueLat_spec L0 L h0 hL hfin

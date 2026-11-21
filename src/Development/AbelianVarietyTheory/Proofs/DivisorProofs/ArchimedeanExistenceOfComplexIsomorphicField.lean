@@ -39,11 +39,11 @@ theorem archF_of_arch : ∀ κ : Rule, Funct κ → Arch κ → ArchF κ := by
   have h1 : ∀ a j α, (jc ν' (s' a) (gm' j) (I.e α)).fst = e (jc ν (s a) (gm j) α).fst := by
     intro a j α
     rw [hs2 a _ _ (hpull j) α]
-    simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    simp [dualMap]
   have h2 : ∀ a j α, (jc ν' (s' a) (gm' j) (I.e α)).snd = e (jc ν (s a) (gm j) α).snd := by
     intro a j α
     rw [hs2 a _ _ (hpull j) α]
-    simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    simp [dualMap]
   refine ⟨ε, hε, fun u hu hu' => ?_⟩
   obtain ⟨hsum, x₀, hg₀, lev₀, ϑ, hϑ, hJ, hκ⟩ := H u hu hu'
   refine ⟨fun a j => ⟨?_, ?_⟩, x₀, hg₀, lev₀, ϑ, fun a j => ?_, ?_, hκ⟩

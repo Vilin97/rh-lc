@@ -94,8 +94,10 @@ theorem n1e : GermIntegrality := by
   intro V _ _ _ ϖ hϖ D Q hQ F _ _ v k s hs χ
   have hQ0 : (0 : ℚ) ≤ Q χ := by
     by_cases hχ : χ = 0
-    · subst hχ; rw [Q_zero (D := D) (hQ := hQ)]; simp
-    · have := Q_pos (D := D) (hQ := hQ) hχ; exact_mod_cast (by omega : (0 : ℤ) ≤ Q χ)
+    · subst hχ
+      simp [Q_zero hϖ D hQ]
+    · have hQpos := Q_pos hϖ D hQ hχ
+      exact_mod_cast (by omega : (0 : ℤ) ≤ Q χ)
   exact (hs χ).mono (by have : (0 : ℚ) ≤ (Q χ : ℚ) / k := div_nonneg hQ0 (Nat.cast_nonneg k); linarith)
 
 end ReciprocityTheory.ChartRestriction.G.DVR

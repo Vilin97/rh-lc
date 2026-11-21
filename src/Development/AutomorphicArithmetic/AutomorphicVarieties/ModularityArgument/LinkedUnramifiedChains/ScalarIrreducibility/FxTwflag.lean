@@ -250,7 +250,7 @@ private theorem fx_core (ρD : Fr.NRep F n (DualNumber Q))
   have c2 : Continuous fun g : G.G₀ => (ρD.map (dF Q)).r (K.π g)⁻¹ :=
     continuous_matrix fun i j => (hrc i j).comp (K.π_cont.inv)
   have hy : fxY K ρD ∈ Z1 (Loc.adGL (K.tw (ρD.map (dF Q))).toHomUnits) := ⟨c1.matrix_mul c2, fx_coc K ρD⟩
-  obtain ⟨hP, hrel⟩ := cocRel G O _ (fxY K ρD) (K.tw ρD).toHomUnits (Jgl n) ht (fx_form K ρD)
+  obtain ⟨hP, hrel⟩ := cocRel G O _ (fxY K ρD) (K.tw ρD).toHomUnits (Jgl (R := DualNumber Q) n) ht (fx_form K ρD)
   obtain ⟨R, hR⟩ := adExt G O _ _ hfull hP
   obtain ⟨Z, hZ'⟩ := hrel R hR
   obtain ⟨z, hz, hzy⟩ := cocExt G _ _ R hfull hcont hR _ hy Z hZ'

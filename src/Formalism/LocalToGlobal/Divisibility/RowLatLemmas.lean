@@ -21,44 +21,6 @@ namespace Formalism.L2.DIV
 
 open Formalism.DivisionValues Formalism.L2.Indef
 
-private theorem span_eq_top_of_scaled_dual_le {K : Type} [Field K] [NumberField K] [StarRing K]
-    {n : ℕ} (H : Matrix (Fin n) (Fin n) K) (M : Submodule (𝓞 K) (Fin n → K))
-    (hfg : M.FG) {c : 𝓞 K} (hc : c ≠ 0)
-    (hdual : ∀ x ∈ Formalism.HermitianLatticesTheory.dual (hform H) M, c • x ∈ M) :
-    Submodule.span K (M : Set (Fin n → K)) = ⊤ := by
-  rw [eq_top_iff]
-  intro x _
-  obtain ⟨generators, hgen⟩ := hfg
-  obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 K))
-    generators (fun y => hform H y x)
-  have hmem : (d : 𝓞 K) • x ∈ Formalism.HermitianLatticesTheory.dual (hform H) M := by
-    rw [mem_dual_iff]
-    intro y hy
-    rw [← hgen] at hy
-    induction hy using Submodule.span_induction with
-    | mem y hy =>
-        rw [← algebraMap_smul K, LinearMap.map_smul, algebraMap_smul K]
-        exact Submodule.mem_one.mpr (hd y hy)
-    | zero => simp
-    | add y z _ _ hy hz =>
-        rw [map_add, LinearMap.add_apply]
-        exact add_mem hy hz
-    | smul a y _ hy =>
-        obtain ⟨b, hb⟩ := Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range a
-        rw [← algebraMap_smul K a y, LinearMap.map_smulₛₗ₂]
-        change star (algebraMap (𝓞 K) K a) • hform H y ((d : 𝓞 K) • x) ∈ _
-        rw [← hb, algebraMap_smul K]
-        exact Submodule.smul_mem _ _ hy
-  have hcK : algebraMap (𝓞 K) K c ≠ 0 := by
-    simpa only [map_zero] using (IsFractionRing.injective (𝓞 K) K).ne hc
-  have hdK : algebraMap (𝓞 K) K d ≠ 0 :=
-    IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors d.2
-  apply (Submodule.smul_mem_iff _ hdK).mp
-  rw [algebraMap_smul K]
-  apply (Submodule.smul_mem_iff _ hcK).mp
-  rw [algebraMap_smul K]
-  exact Submodule.subset_span (hdual _ hmem)
-
 theorem matLat_full {K : Type} [Field K] [NumberField K] {m n : ℕ}
     (A : Matrix (Fin m) (Fin n) K) (hA : Function.Surjective A.mulVec)
     (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.IsFullLattice K M) :
@@ -90,8 +52,17 @@ theorem HV_rat (i j) : B.HV ℓ i j ∈ cmMax K :=
 theorem HV_pos (v : InfinitePlace K) : ((B.HV ℓ).map v.embedding).PosDef :=
   (good_part_hermitian_spec K v0 hv0 B.S h.hrat h.hpos G B.r h.actRat ℓ.X hX ℓ.P ℓ.ψ).2.2 v
 
+omit hv0 hX in
+private theorem nab_full : Submodule.IsFullLattice K B.S.nabLat :=
+  ValuationLatticeField.valLatF_isFullLattice B.S.I B.S.I_injective B.S.Nab h.good.nab_isFullLattice
+
 theorem nab_lat : Submodule.IsLattice K B.S.nabLat :=
   (local_bounds_first K v0 hv0 B.S s h.good (h.hpos v0) G B.r h.act ℓ.X hX ℓ.P ℓ.ψ).1
+
+omit hv0 hX in
+theorem Mt_full : Submodule.IsFullLattice K (B.Mt ℓ) :=
+  exponent_index_lattice.cut_isFullLattice (B.vE ℓ)
+    (image_idempotent_spec K _ (B.S.gaMat B.r (goodAt ℓ.X ℓ.P ℓ.ψ))).1 _ (nab_full h)
 
 theorem Mt_lat : Submodule.IsLattice K (B.Mt ℓ) :=
   (local_bounds_first K v0 hv0 B.S s h.good (h.hpos v0) G B.r h.act ℓ.X hX ℓ.P ℓ.ψ).2.1
@@ -122,14 +93,8 @@ theorem XQ_quot : IsQuotMetric (B.Pq ℓ Z) (B.HV ℓ) (B.XQ ℓ Z) :=
 theorem Lam_lat : Submodule.IsLattice K (B.abelian₂ ℓ Z) :=
   GluingInclusion.matLat_lattice' (B.Pq ℓ Z) (Pq_surj hv0 h hX) (B.Mt ℓ) (Mt_lat hv0 h hX)
 
-theorem Lam_full : Submodule.IsFullLattice K (B.abelian₂ ℓ Z) := by
-  have hc : ((Fintype.card G * s : ℕ) : 𝓞 K) ≠ 0 := by
-    exact_mod_cast (Nat.mul_pos (Fintype.card_pos (α := G)) h.good.s_pos).ne'
-  have hLat := Mt_lat hv0 h hX
-  have hMt : Submodule.IsFullLattice K (B.Mt ℓ) :=
-    { toIsLattice := hLat
-      span_eq_top := span_eq_top_of_scaled_dual_le _ _ hLat.fg hc (Mt_dual hv0 h hX) }
-  exact matLat_full (B.Pq ℓ Z) (Pq_surj hv0 h hX) (B.Mt ℓ) hMt
+theorem Lam_full : Submodule.IsFullLattice K (B.abelian₂ ℓ Z) :=
+  matLat_full (B.Pq ℓ Z) (Pq_surj hv0 h hX) (B.Mt ℓ) (Mt_full h)
 
 theorem XQ_herm : IsHermAt v0 (B.HZ ℓ Z) (B.XQ ℓ Z) :=
   quotFrameHermAt K v0 hv0 _ _ (B.HV ℓ) (HV_pos hv0 h hX) (B.zE ℓ Z) (B.Pq ℓ Z) (Pq_orth hv0 h hX)
@@ -160,6 +125,11 @@ theorem lvlNab_lat : Submodule.IsLattice K (B.S.lvlNab B.r ℓ.P ℓ.ψ) :=
 
 theorem Tl_lat : Submodule.IsLattice K (B.Tl ℓ Z) :=
   GluingInclusion.matLat_lattice' (B.lPr ℓ Z) (lPr_surj hv0 h hX) _ (lvlNab_lat hv0 h hX)
+
+theorem Tl_full : Submodule.IsFullLattice K (B.Tl ℓ Z) :=
+  matLat_full (B.lPr ℓ Z) (lPr_surj hv0 h hX) _
+    (exponent_index_lattice.cut_isFullLattice (B.S.lvlE B.r ℓ.P ℓ.ψ)
+      (image_idempotent_spec K _ (B.S.gaMat B.r (lvlIdem ℓ.P ℓ.ψ))).1 _ (nab_full h))
 
 end Basic
 
@@ -685,10 +655,10 @@ theorem side_WF {s : ℕ} (h : F.Ok s) (P : Subgroup G) (ψ : P →* Kˣ) (Zs : 
     conj := h.conj
     HV_rat t := BlockDat.HV_rat (ℓ := F.lvl P ψ) h.conj (h.what₂ t) h.irr
     HV_pos t := BlockDat.HV_pos (ℓ := F.lvl P ψ) h.conj (h.what₂ t) h.irr
-    Mt_lat t := BlockDat.Mt_lat (ℓ := F.lvl P ψ) h.conj (h.what₂ t) h.irr
+    Mt_lat t := BlockDat.Mt_full (ℓ := F.lvl P ψ) (h.what₂ t)
     Pq_surj t := BlockDat.Pq_surj (ℓ := F.lvl P ψ) (Z := Zs.Z t) h.conj (h.what₂ t) h.irr
     XQ_quot t := BlockDat.XQ_quot (ℓ := F.lvl P ψ) (Z := Zs.Z t) h.conj (h.what₂ t) h.irr
-    Lam_lat t := BlockDat.Lam_lat (ℓ := F.lvl P ψ) (Z := Zs.Z t) h.conj (h.what₂ t) h.irr
+    Lam_lat t := BlockDat.Lam_full (ℓ := F.lvl P ψ) (Z := Zs.Z t) h.conj (h.what₂ t) h.irr
     Qp_indep := (F.R F.μ0).part_indep (F.lvl P ψ) (Zs.Z F.μ0) (h.what₂ F.μ0).comm (fun p : F.base.Ix => p.1)
       fun p p' hpp => (F.R F.μ0).sep_of_mem_ixFin p.2 p'.2 fun e => hpp (Subtype.ext e)
     Qp_top := (F.R F.μ0).part_top (F.lvl P ψ) (Zs.Z F.μ0) h.conj (h.what₂ F.μ0) h.irr (stable_rows hst F.μ0)
@@ -696,7 +666,7 @@ theorem side_WF {s : ℕ} (h : F.Ok s) (P : Subgroup G) (ψ : P →* Kˣ) (Zs : 
       ((F.sameTypes_base h P ψ hin).trans ((F.R F.μ0).good_part_coordinates_mono _
         (Col.eigSum_mono fun x hx => (F.isType_iff _ id x).1 hx)))
     XT_herm j t := BlockDat.XQ_herm (ℓ := F.lvlA P ψ) (Z := Zs.Zl j t) h.conj (h.lifts j t) h.irr
-    Tl_lat j t := BlockDat.Tl_lat (ℓ := F.lvlA P ψ) (Z := Zs.Zl j t) h.conj (h.lifts j t) h.irr
+    Tl_lat j t := BlockDat.Tl_full (ℓ := F.lvlA P ψ) (Z := Zs.Zl j t) h.conj (h.lifts j t) h.irr
     Zp_indep j := (F.L j F.μ0).part_indep (F.lvlA P ψ) (Zs.Zl j F.μ0) (h.lifts j F.μ0).comm
       (fun p : F.base.Ix => F.tr j p.1) fun p p' hpp => hsep p.1 p.2 p'.1 p'.2 (fun e => hpp (Subtype.ext e)) j
   }

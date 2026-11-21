@@ -26,8 +26,14 @@ theorem rowsHook : RowsHook := young_diagram_hook
 
 theorem rowsStepEOrigin : RowsStepEOrigin := young_diagram_step_origin
 
-theorem shiftMu : ShiftMu := shift_slope_mu
-theorem shiftEx : ShiftEx := shift_existence
+theorem shiftMu : ShiftMu := by
+  unfold ShiftMu
+  exact shift_slope_mu
+
+theorem shiftEx : ShiftEx := by
+  unfold ShiftEx
+  exact shift_existence
+
 theorem divIntoDualShift : DivIntoDualShift := divisor_into_dual_shift
 
 theorem primeLogSum : PrimeLogSum := prime_log_sum_bound

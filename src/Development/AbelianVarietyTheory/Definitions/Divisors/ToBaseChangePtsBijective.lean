@@ -137,16 +137,16 @@ def ofPts (g : A →+* A') (hg : ∀ r, g (algebraMap R A r) = algebraMap R' A' 
 
 def cot : Cot R A →ₛₗ[σ] Cot R' A' :=
   letI : Module R (Cot R' A') := Module.compHom _ σ
+  let d := AugCot.d (counitAlgHom R' A')
   let D : A →ₗ[R] Cot R' A' :=
-    { toFun := fun a => dUnit (f a)
-      map_add' := fun a b => by rw [map_add f.toRingHom, dUnit, map_add (f := _)]
-      map_smul' := fun r a => by rw [f.smul_map, dUnit, LinearMap.map_smul]; rfl }
+    { toFun := fun a => d (f a)
+      map_add' := fun a b => (congrArg d (map_add f.toRingHom a b)).trans (d.map_add _ _)
+      map_smul' := fun r a => (congrArg d (f.smul_map r a)).trans (d.map_smul _ _) }
   { (AugCot.lift (counitAlgHom R A) D fun a b => by
-      change dUnit (R := R') (f (a * b)) = σ (counit a) • dUnit (f b) + σ (counit b) • dUnit (f a)
-      rw [map_mul f.toRingHom, dUnit, AugCot.d_mul, ← f.counit_map, ← f.counit_map]
-      rfl) with }
+      change d (f (a * b)) = σ (counit a) • d (f b) + σ (counit b) • d (f a)
+      simp only [d, map_mul f.toRingHom, AugCot.d_mul, counitAlgHom_apply, f.counit_map]) with }
 
-@[simp] theorem cot_d (a : A) : f.cot (dUnit a) = dUnit (f a) := by
+@[simp] theorem cot_d (a : A) : f.cot (dUnit (R := R) a) = dUnit (R := R') (f a) := by
   change dUnit (R := R') (f (a - algebraMap R A (counit a))) = _
   rw [map_sub f.toRingHom, f.map_algebraMap, dUnit, map_sub, AugCot.d_algebraMap, sub_zero]
 

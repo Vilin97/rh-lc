@@ -312,7 +312,7 @@ theorem locK_eq_zpow {E : Type} [Field E] [NumberField E] {χ : HChar E} {P : He
 theorem ordDet_gmap {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} (P : HeightOneSpectrum (𝓞 E))
     (f : Sp E n ≃ₗ[E] Sp E n) {N : Submodule (𝓞 E) (Sp E n)} (hN : IsSdLat N) :
     ordDet P (gmap f N) = ordE P ((LinearEquiv.det f : Eˣ) : E) + ordDet P N := by
-  obtain ⟨g, hg⟩ := GlobalTheory.CharValCompare.exists_isFr P hN.1
+  obtain ⟨g, hg⟩ := GlobalTheory.CharValCompare.exists_isFr P hN
   have h2 : GlobalTheory.CharValCompare.IsFr P (gmap f N) (f * g) := fun x => by
     rw [mem_localization_gmap, ← hg x]
     simp

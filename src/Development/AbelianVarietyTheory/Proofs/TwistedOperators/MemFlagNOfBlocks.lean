@@ -128,7 +128,7 @@ theorem ae_zero {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) {z : 
       · rw [show piAt w e = 0 from e2 w hw, zero_mul]
   have e3 : cA D e * z = 0 := by
     have := congrArg (cA D) (key _ h2)
-    rwa [RingHom.map_mul, cA_cA, RingHom.map_zero] at this
+    rwa [RingHom.map_mul, Formalism.L2.Theta.cA_cA, RingHom.map_zero] at this
   rw [← h, add_mul, key _ h1, e3, add_zero]
 
 theorem entry_zero {e : AE D} {Q : Finset (Pl D.host.E)} (he : IsIdemSum e Q) {V : HSp D} {g : GA D V} (hg : SuppAt e V g) {l m : ℕ}

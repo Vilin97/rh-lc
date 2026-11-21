@@ -83,7 +83,7 @@ theorem tprod_localPsi_eq (hLI : LIStat) (hK : Formalism.HermitianLatticesTheory
     unfold lamG
     exact tprod_eq_prod fun 𝔭 h𝔭 => localMassFactor_of_valuation_eq_zero hK hF hs hd hLfull hLi 𝔭.2 (hU1 𝔭 h𝔭)
   have e3 : normD h L = ∏ 𝔭 ∈ U, (Ideal.absNorm 𝔭.1 : ℝ) ^ vd h L 𝔭.1 := by
-    rw [normD_eq_prod hK hF hs hd hL hLi]
+    rw [normD_eq_prod hK hF hs hd (by first | exact hLfull | exact hL) hLi]
     exact tprod_eq_prod fun 𝔭 h𝔭 => by rw [hU1 𝔭 h𝔭, pow_zero]
   have h4 : ∀ 𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}, 𝔭 ∉ U →
       alphaN h L 𝔭.1 n / (1 - etaF K F 𝔭.1 ^ finrank K V *

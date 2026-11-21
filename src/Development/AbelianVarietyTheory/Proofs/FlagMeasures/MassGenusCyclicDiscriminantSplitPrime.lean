@@ -132,8 +132,14 @@ theorem main : MaxMass → ∀ (K V : Type) [Field K] [NumberField K] [StarRing 
     exact hT0 hprod
   obtain ⟨o1, o2⟩ := GlobalTheory.T.exists_unimodular_overlattice_cyclic_split_discriminant K V h hK hs hnd _ hP0 hcop
   rw [hprod] at o1 o2
-  have hex : ∀ N ∈ genus h L, ∃! M, Over h (∏ P ∈ s, P) N M := fun N hN =>
-    o1 N ((hgen L N hL hLq).1 hN).1 ((hgen L N hL hLq).1 hN).2
+  have hex : ∀ N ∈ genus h L, ∃! M, Over h (∏ P ∈ s, P) N M := by
+    intro N hN
+    obtain ⟨M, hM, hu⟩ := o1 N ((hgen L N hL hLq).1 hN).1 ((hgen L N hL hLq).1 hN).2
+    refine ⟨M, ⟨hM.1.toIsLattice, hM.2⟩, ?_⟩
+    intro M' hM'
+    letI := hN.1
+    letI := hM'.1
+    exact hu M' ⟨Submodule.IsFullLattice.of_le K hM'.2.2.1, hM'.2⟩
   obtain ⟨M0, hM0, -⟩ := o1 L hL hLq
   have hM0full : Submodule.IsFullLattice K M0 := by
     letI := hL.1
@@ -143,16 +149,23 @@ theorem main : MaxMass → ∀ (K V : Type) [Field K] [NumberField K] [StarRing 
   obtain ⟨-, m2', m3'⟩ := GlobalTheory.T.exists_maximal_integralHermitianLattice_orthonormal_maximal K V' h' hK hs' hnd'
   obtain ⟨c, hc⟩ := hMM K hK _ hn
   obtain ⟨iL, iU, iR⟩ := m3' I _ hI
+  have iLfull : Submodule.IsFullLattice K I := by
+    obtain ⟨e, -, he, hIeq, -⟩ := hI
+    refine { toIsLattice := iL, span_eq_top := ?_ }
+    rw [hIeq, Submodule.span_span_of_tower (𝓞 K), he]
   have e0 : mass h M0 = mass h' I := by
     rw [hc V h hs hp rfl M0 (m2 M0 hM0.1 hM0.2.1).1, (m2 M0 hM0.1 hM0.2.1).2.2,
-      hc V' h' hs' hp' iR I (m2' I iL iU).1, (m2' I iL iU).2.2]
+      hc V' h' hs' hp' iR I (m2' I iLfull iU).1, (m2' I iLfull iU).2.2]
   obtain ⟨b1, b2, b3, b4, -⟩ := GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp L hL.1
   obtain ⟨a1, a2, a3, -, -⟩ := GlobalTheory.T.hermitianGenusMass_eq_orbitStabilizerMass K V h hK hs hp M0 hM0full
   have hmaps : Set.MapsTo (up h (∏ P ∈ s, P)) (genus h L) (genus h M0) := by
     intro N hN
     obtain ⟨M, hM, -⟩ := hex N hN
     rw [up_eq h _ N M (hex N hN) hM]
-    exact (GlobalTheory.T.mem_genus_iff_maximalIntegralHermitianLattice K V h hK hs hp M0 M (m2 M0 hM0.1 hM0.2.1).1).2 (m2 M hM.1 hM.2.1).1
+    exact (GlobalTheory.T.mem_genus_iff_maximalIntegralHermitianLattice K V h hK hs hp M0 M (m2 M0 hM0.1 hM0.2.1).1).2 (m2 M (by
+      letI := hN.1
+      letI := hM.1
+      exact Submodule.IsFullLattice.of_le K hM.2.2.1) hM.2.1).1
   have hfib := GlobalTheory.T.orbitStabilizerMass_eq_weightedSum_fibres (isom h) _ _ (genus h L) (genus h M0) (up h (∏ P ∈ s, P))
     (up_smul h _) b3 a3 hmaps (fun y hy => b4 y hy.1)
   set B : ℕ := (∑ i ∈ Finset.range (Module.finrank K V), T ^ i) ^ s.card with hB
@@ -171,7 +184,7 @@ theorem main : MaxMass → ∀ (K V : Type) [Field K] [NumberField K] [StarRing 
         subst this
         exact hM1.2.2
       · rintro ⟨h1, h2⟩
-        have hN : N ∈ genus h L := (hgen L N hL hLq).2 (o2 M N hM.1.toIsLattice hU h1 h2)
+        have hN : N ∈ genus h L := (hgen L N hL hLq).2 (o2 M N hM.1 hU h1 h2)
         exact ⟨hN, up_eq h _ N M (hex N hN) ⟨hM.1.toIsLattice, hU, h1, h2⟩⟩
     rw [hset, GlobalTheory.T.card_sublattices_quotient_prod_degree_one_primes K V M hM.1 T s hT hsP]
     exact ENat.toENNReal_coe _

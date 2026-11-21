@@ -138,11 +138,11 @@ theorem exists_newton (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
     exact (pK K 𝔭 k).smul_mem θ₀ (hZ.2 y hy x hx)
   have hDA : Y ∈ endL (locF 𝔭 A₀) (extP K 𝔭 • locF 𝔭 A₀) := fun x hx =>
     Submodule.smul_mono_left (Ideal.pow_le_self (by omega)) (hYA x hx)
-  obtain ⟨X, hXeq, hXA⟩ := exists_equiv_of_mem_endL hA₀.toIsLattice h𝔭 hDA
+  obtain ⟨X, hXeq, hXA⟩ := exists_equiv_of_mem_endL hA₀ h𝔭 hDA
   have hYB := IA.end_scale h𝔭 hr hr' Y (n := 1) (m := k - e) (by omega) hYA
   have hDB : Y ∈ endL (locF 𝔭 B₀) (extP K 𝔭 • locF 𝔭 B₀) := fun x hx => by
     simpa only [pow_one] using hYB x hx
-  obtain ⟨X', hX'eq, hX'B⟩ := exists_equiv_of_mem_endL hB₀.toIsLattice h𝔭 hDB
+  obtain ⟨X', hX'eq, hX'B⟩ := exists_equiv_of_mem_endL hB₀ h𝔭 hDB
   have hXX : X = X' := LinearEquiv.ext fun x => by rw [hXeq, hX'eq]
   have hphi : ∀ x y, IA.phi h X x y - Z x y = h (Y x) (Y y) := by
     intro x y
@@ -176,8 +176,8 @@ theorem relIndex_sSub_inf_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
       (sSub h (locF 𝔭 B₀) 𝔭 (k + c) ⊓ glSub (locF 𝔭 A₀)).relIndex
           (sSub h (locF 𝔭 A₀) 𝔭 k ⊓ glSub (locF 𝔭 B₀)) =
         (hermL (locF 𝔭 B₀) 𝔭 (k + c)).relIndex (hermL (locF 𝔭 A₀) 𝔭 k) := by
-  obtain ⟨r, hr⟩ := exists_smul_le hA₀.toIsLattice hB₀.toIsLattice h𝔭
-  obtain ⟨r', hr'⟩ := exists_smul_le hB₀.toIsLattice hA₀.toIsLattice h𝔭
+  obtain ⟨r, hr⟩ := exists_smul_le hA₀.toIsLattice hB₀ h𝔭
+  obtain ⟨r', hr'⟩ := exists_smul_le hB₀.toIsLattice hA₀ h𝔭
   obtain ⟨e, he⟩ := exists_dual_bound hK hF hs hd hA₀ h𝔭
   refine ⟨2 * r, fun c hc => ⟨c + 2 * e + 2 * r' + r + r' + 1, fun k hk => ?_⟩⟩
 

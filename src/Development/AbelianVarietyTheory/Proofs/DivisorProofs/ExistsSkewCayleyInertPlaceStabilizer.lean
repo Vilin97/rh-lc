@@ -371,12 +371,12 @@ theorem exists_skew_cayley : ∀ (F E : Type) [Field F] [NumberField F] [Field E
     unfold SelfAdj at hsa
     rw [hYdef, Matrix.transpose_smul, Matrix.smul_mul, hsa, smul_map, hβσ, Matrix.mul_smul, ← AlgHom.mapMatrix_apply,
       neg_smul, add_neg_cancel]
-  · refine GlobalTheory.T.exists_inverse_preserving_adelicLatticeAtPlace F E (a + a') G.W hlat v _ hpv 1 isUnit_one _ ?_ (keepAdd keepOne hYk) s1
+  · refine GlobalTheory.T.exists_inverse_preserving_adelicLatticeAtPlace F E (a + a') G.W hT.geo.hW.lat v _ hpv 1 isUnit_one _ ?_ (keepAdd keepOne hYk) s1
     rw [one_smul, add_sub_cancel_left]; exact hYat
-  · refine GlobalTheory.T.exists_inverse_preserving_adelicLatticeAtPlace F E (a + a') G.W hlat v _ hpv 1 isUnit_one _ ?_ (keepSub keepOne hYk) s2
+  · refine GlobalTheory.T.exists_inverse_preserving_adelicLatticeAtPlace F E (a + a') G.W hT.geo.hW.lat v _ hpv 1 isUnit_one _ ?_ (keepSub keepOne hYk) s2
     intro u hu
     rw [one_smul, sub_sub_cancel_left, smul_neg, hYat u hu, neg_zero]
-  · refine GlobalTheory.T.exists_inverse_preserving_adelicLatticeAtPlace F E (a + a') G.W hlat v _ hpv 2 (isUnit_of_invertible _) _ ?_
+  · refine GlobalTheory.T.exists_inverse_preserving_adelicLatticeAtPlace F E (a + a') G.W hT.geo.hW.lat v _ hpv 2 (isUnit_of_invertible _) _ ?_
       (keepAdd (keepAdd keepOne hYk) (keepMul hKk (keepSub keepOne hYk))) s3
     intro u hu
     have e : 1 + Y + mat k * (1 - Y) - (2 : AF F) • (1 : Matrix (Fin (a + a')) (Fin (a + a')) (AE F E)) =

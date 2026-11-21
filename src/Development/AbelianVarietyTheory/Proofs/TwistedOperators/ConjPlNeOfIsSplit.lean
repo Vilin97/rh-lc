@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsNatSmulSingle
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsLevMeas
 public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.UpNeNSOfUpNe
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsIsSplitChartOfBasis
@@ -79,7 +80,8 @@ theorem GlobalTheory.ChainTw.invFam_bounded : ∀ D : D7, ForStageQ D fun c _ j 
     intro w hw
     have hv : w.under (𝓞 D.host.F) ∉ (c.S : Set (HeightOneSpectrum (𝓞 D.host.F))) := hw
     have hd :=
-      (GlobalTheory.AdelicU.SelfDual.forall_isSelfDualAt_iff (σ := D.sp.cm.sig) hJ.2 hsd.1).2 (fun y => hsd.2 y) (w.under (𝓞 D.host.F))
+      (GlobalTheory.AdelicU.SelfDual.forall_isSelfDualAt_iff (σ := D.sp.cm.sig) hJ.2
+        (Formalism.IndefR.Fin.PDA.selfDual_isFullLattice s.V s.Λ hsd)).2 (fun y => hsd.2 y) (w.under (𝓞 D.host.F))
     have hx := hP (w.under (𝓞 D.host.F)) hv w rfl
     by_cases hc : Formalism.DivisionValues.conjPl w = w
     · rw [hc]

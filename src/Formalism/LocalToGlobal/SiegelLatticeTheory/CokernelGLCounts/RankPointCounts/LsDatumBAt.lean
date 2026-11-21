@@ -110,7 +110,6 @@ theorem atPtG_holds {D : Formalism.BasicNotions.D7} (u u' : D.what₂.Word) (F0 
     rw [CntLocal.gz_eq]
     unfold CntLocal.GZ Gpt
     rw [N_eq (D.R.rS + 1) le_rfl, N_eq D.R.rS (Nat.le_succ _)]
-    rfl
   rw [← key]
   exact hG
 

@@ -46,7 +46,8 @@ theorem exists_orth_basis (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
       (∀ i j, algebraMap (𝓞 K) K (diagonal u i j) = h (b i) (b j)) ∧
       (∀ i, conjO K (u i) = u i) ∧ ∀ i, Ideal.span {u i} ⊔ extP K 𝔭 = ⊤ := by
   obtain ⟨P, hP, rfl⟩ := exists_maximal_over hK hF h𝔭
-  have hU : Formalism.HermitianLatticesTheory.IsUnimodularAt h P L := (isUnimodularAt_iff_vd hK hF hs hd hL.toIsLattice hLi hP).2 hv
+  have hU : Formalism.HermitianLatticesTheory.IsUnimodularAt h P L :=
+    (isUnimodularAt_iff_vd hK hF hs hd hL hLi hP).2 hv
   have hSD := Formalism.HermitianLattices.Ext.L3.WA.isSelfDualMod_loc hL hP.isPrime hU
   have hdd : ∀ x, h x x = 0 → x = 0 := by
     intro x hx

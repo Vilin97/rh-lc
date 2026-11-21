@@ -4,6 +4,7 @@ public import Mathlib
 public import Formalism.LocalToGlobal.Columns.ColFormsLemmas
 public import Formalism.LocalToGlobal.Columns.LevGCount
 public import Formalism.LocalToGlobal.Columns.AlgebraMapMemMaximalIdealPowIff
+public import Formalism.LocalToGlobal.Columns.HeckeSpCount
 public import Formalism.LocalToGlobal.Columns.Inputs
 public import Formalism.GL3MeanSquares.HookFormulaTorsion.DimensionMassJointBound
 public import Formalism.GL3MeanSquares.HookFormulaTorsion.OneAddInvPowLeExpOne
@@ -82,7 +83,8 @@ abbrev autU (N : UniLat E n) : Subgroup (UF E n) := MulAction.stabilizer (UF E n
 variable {E n}
 
 theorem finite_autU (hE : PosStar E) (N : UniLat E n) : Finite (autU E n N) := by
-  have hA := final_autFinite E (Sp E n) (hStd E n) hStd_isSymm (hStd_pos hE) N.1 N.2.1
+  have hA := final_autFinite E (Sp E n) (hStd E n) hStd_isSymm (hStd_pos hE) N.1
+    (hcnt_isFullLattice_of_unimodular N.2.1 N.2.2)
   have : Finite {g : Sp E n ≃ₗ[E] Sp E n | g ∈ isom (hStd E n) ∧ gmap g N.1 = N.1} := hA
   refine Finite.of_injective
     (fun a : autU E n N => (⟨a.1.1, a.1.2, congrArg Subtype.val a.2⟩ :

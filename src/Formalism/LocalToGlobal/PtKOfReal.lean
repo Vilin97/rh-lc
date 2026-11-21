@@ -100,7 +100,7 @@ def RowsU [_root_.NumberField.IsTotallyComplex D.what₂.LL] {P : RowSideFamily 
           (Formalism.HN.dualFrame X0) v ch.PtL ^ 2 ≤ Real.exp hn.hPn)
       (cb : CBData ch.X ch.Kj),
       (∀ j v, Real.log (cb.sq j v) ≤ ∑ l ∈ Finset.univ.filter (fun l => ch.lf l = j), hn.sz l v) ∧
-      (∀ v, IsUnit ((c.face Pk.Zs).Xc w v).det) ∧ 0 < (c.face Pk.Zs).a w ∧ Submodule.IsLattice D.what₂.LL Nu
+      (∀ v, IsUnit ((c.face Pk.Zs).Xc w v).det) ∧ 0 < (c.face Pk.Zs).a w ∧ Submodule.IsFullLattice D.what₂.LL Nu
 
 end Formalism.L2.RowDataTransport
 

@@ -39,7 +39,7 @@ variable {Y Y' : Type} [Fintype Y] [DecidableEq Y] [Fintype Y'] [DecidableEq Y']
 theorem model (q : GlobalTheory.FinPl.SplitPt D k) (FS : Frame k S.rank Y') (FT : Frame k T.rank Y)
     {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1))
     {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}
-    (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT)
+    (hS : Submodule.IsFullLattice D.host.E ΛS) (hT : Submodule.IsFullLattice D.host.E ΛT)
     (βS : GL (Fin S.rank) (EAf D)) (βT : GL (Fin T.rank) (EAf D)) {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D} (he : IsIdemSum e P)
     {w : Formalism.L2.DIV.Pl D.host.E} (hw : w ∈ P) (hq : Formalism.L2.NTheta.IsIdemAt q.e w) {π' : EAf D →+* k}
     (hint : ∀ z : EAf D, z ∈ Formalism.L2.Herm.intAf D.host.F D.host.E ↔ (1 - toEAf D q.e) * z ∈ Formalism.L2.Herm.intAf D.host.F D.host.E ∧ π' z ∈ 𝒪[k])
@@ -65,8 +65,8 @@ theorem model (q : GlobalTheory.FinPl.SplitPt D k) (FS : Frame k S.rank Y') (FT 
       obtain ⟨K, hK, h⟩ := GlobalTheory.PlaceDatum.exists_nsmul_of_frMapO hS hT βS βT
       exact ⟨K, hK, fun t ht => h t (GlobalTheory.PlaceDatum.infPart_of_half hinf' ht)⟩) (P.erase w) W hW
   refine ⟨_, isModel_extend (ofSplit q) FS FT hqe hTm
-    (GlobalTheory.DiagLiftFix.isTheta_placeModel hψ hS hT hee he.2 hinf hf₀ Tm hTm) _
-    (GlobalTheory.T.isSchwartzBruhatHalf_splitPlace_product D k q Y Y' S T FS FT ΛS ΛT hS hT e hee hqe _ hΩ), fun om Φ₀ h0 h1 Φ hΦ => ?_⟩
+    (GlobalTheory.DiagLiftFix.isTheta_placeModel hψ hS.toIsLattice hT.toIsLattice hee he.2 hinf hf₀ Tm hTm) _
+    (GlobalTheory.T.isSchwartzBruhatHalf_splitPlace_product D k q Y Y' S T FS FT ΛS ΛT hS.toIsLattice hT.toIsLattice e hee hqe _ hΩ), fun om Φ₀ h0 h1 Φ hΦ => ?_⟩
   refine congrArg Tm (funext fun x => ?_)
   rw [extend_apply, hΦ]
   have h3 : ∀ i j, frMapO S T βS βT ((1 - q.e) • x) i j = (1 - toEAf D q.e) * frMapO S T βS βT x i j :=
@@ -94,7 +94,7 @@ variable {Y Y' : Type} [Fintype Y] [DecidableEq Y] [Fintype Y'] [DecidableEq Y']
 theorem puts (q : GlobalTheory.FinPl.SplitPt D k) {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} (hθ : IsInfFam θ) {χS χT} {om : Om S T}
     (hom : IsWeilDatumO ψ S T χS χT om)
     {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}
-    (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT)
+    (hS : Submodule.IsFullLattice D.host.E ΛS) (hT : Submodule.IsFullLattice D.host.E ΛT)
     (βS : GL (Fin S.rank) (EAf D)) (βT : GL (Fin T.rank) (EAf D)) {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D} (he : IsIdemSum e P)
     {w : Formalism.L2.DIV.Pl D.host.E} (hw : w ∈ P) (hq : Formalism.L2.NTheta.IsIdemAt q.e w)
     {f₀ : WO S T → ℂ} (hf₀ : IsThetaFunO ψ S T f₀) {Tm : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ)}

@@ -177,7 +177,7 @@ theorem mass_std_one_le (hK : IsCMUnram K) :
       exact Pi.single_eq_same _ _
     rw [he, Set.range_const]
   obtain ⟨hex, -, -⟩ := massBasic K (Fin 1 → K) (stdForm K 1) hs
-    (trace_pos (isTotPosDef_of_ortho hK hs ho)) (stdLat K 1) (isLattice_of_ortho ho)
+    (trace_pos (isTotPosDef_of_ortho hK hs ho)) (stdLat K 1) (isFullLattice_of_ortho ho)
   have e := (mass_mapE φ hφ hex).2
   rw [hmap] at e
   rw [← e]

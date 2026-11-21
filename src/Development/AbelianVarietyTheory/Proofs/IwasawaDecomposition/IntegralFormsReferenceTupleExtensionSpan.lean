@@ -193,7 +193,9 @@ theorem nab_round_bc (X : Formalism.L2.Col.Fields) {L : Type} [Field L] [NumberF
     (fun c => polOfVV lam (nabAtr X.emb lam (Quotient.out c : Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₂)).1.N))
     (fun c x => (mem_polOfVV_iff lam _ x).symm) fun c x => ?_
   rw [← (nablaDeltaBaseChangeAt_holds X.E X.K L ι X.Tau n X.emb lam _
-    (Quotient.out c : Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₂)).2.lat).2.2.1]
+    (Formalism.L2.Col.hcnt_isFullLattice_of_unimodular
+      (Quotient.out c : Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₂)).2.lat
+      (Quotient.out c : Formalism.L2.Col.DecoSet (E := X.E) (n := n) (ST := ∅) (SG := SG₂)).2.uni)).2.2.1]
   exact (mem_polOfVV_iff lam _ x).symm
 
 theorem nab_glue_inv_H {E K L : Type} [Field E] [NumberField E] [Field K] [Field L] {n : ℕ}

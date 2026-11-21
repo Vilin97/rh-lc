@@ -43,7 +43,7 @@ theorem ext_inv (A : Places F E sig) {n : ℕ} {p} {a : (Fin n → E) ≃ₗ[E] 
   rw [← h, LinearEquiv.symm_apply_apply]
 
 theorem eq_map_of_local (A : Places F E sig) {n : ℕ} {Λ Γ : Submodule (𝓞 E) (Fin n → E)}
-    (hΛ : Submodule.IsLattice E Λ) (hΓ : Submodule.IsLattice E Γ) (x : (Fin n → E) ≃ₗ[E] (Fin n → E))
+    (hΛ : Submodule.IsFullLattice E Λ) (hΓ : Submodule.IsFullLattice E Γ) (x : (Fin n → E) ≃ₗ[E] (Fin n → E))
     (h : ∀ p, ∃ g, A.Ext p x g ∧ A.lat p Γ = g • A.lat p Λ) :
     Γ = Λ.map ((x : (Fin n → E) →ₗ[E] (Fin n → E)).restrictScalars (𝓞 E)) := by
   ext y
@@ -67,14 +67,54 @@ theorem eq_map_of_local (A : Places F E sig) {n : ℕ} {Λ Γ : Submodule (𝓞 
     rw [← hg z]
     exact Submodule.smul_mem_pointwise_smul _ g _ hz'
 
+private theorem full_lattice_of_term {A : Places F E sig} {r k : ℕ} (G : GFrames A r k)
+    {d : G.Dat} {Λ : G.Lt} (hΛ : G.IsTerm d Λ) : Submodule.IsFullLattice E Λ := by
+  refine { toIsLattice := hΛ.1, span_eq_top := ?_ }
+  by_contra hne
+  obtain ⟨φ, hφ, hzero⟩ :=
+    Submodule.exists_dual_map_eq_bot_of_lt_top (lt_top_iff_ne_top.mpr hne) inferInstance
+  obtain ⟨P, hP⟩ := Ideal.exists_maximal (𝓞 F)
+  let p : IsDedekindDomain.HeightOneSpectrum (𝓞 F) :=
+    ⟨P, hP.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hP (RingOfIntegers.not_isField F)⟩
+  have := (A.loc p).lf
+  have := (A.loc p).char0
+  have := PlacesInt.nontrivial_Ep (A.loc p)
+  have hspan := (TermBasic.term_basic (A.L p) r k (G.S p) (d p) (A.lat p Λ) (hΛ.2 p)).1.1.2
+  let ψ : (Fin (k + 2 * r + 1) → (A.loc p).Ep) →ₗ[(A.loc p).Ep] (A.loc p).Ep :=
+    ∑ i : Fin (k + 2 * r + 1), (A.loc p).ιE (φ fun j => if i = j then 1 else 0) • LinearMap.proj i
+  have hψ (z : G.V) : ψ (A.bc p z) = (A.loc p).ιE (φ z) := by
+    rw [φ.pi_apply_eq_sum_univ z, map_sum]
+    simp only [ψ, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.proj_apply,
+      smul_eq_mul, map_mul, Places.bc]
+    exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
+  have hlat : A.lat p Λ ≤ (LinearMap.ker ψ).restrictScalars (A.L p).O := by
+    apply Submodule.span_le.mpr
+    rintro _ ⟨z, hz, rfl⟩
+    have hz' : φ z ∈ (⊥ : Submodule E E) := by
+      rw [← hzero]
+      exact Submodule.mem_map_of_mem (Submodule.subset_span hz)
+    change ψ (A.bc p z) = 0
+    rw [hψ, (Submodule.mem_bot E).mp hz', map_zero]
+  have hker : Submodule.span (A.loc p).Ep (A.lat p Λ : Set _) ≤ LinearMap.ker ψ :=
+    Submodule.span_le.mpr hlat
+  rw [hspan] at hker
+  apply hφ
+  apply LinearMap.ext
+  intro z
+  have hz := LinearMap.mem_ker.mp (hker (Submodule.mem_top (x := A.bc p z)))
+  rw [hψ] at hz
+  exact (map_eq_zero_iff _ (A.loc p).ιE.injective).mp hz
+
 theorem term_eq_map {A : Places F E sig} {r k : ℕ} (G : GFrames A r k) (hk : 4 * r + 7 ≤ k) {d : G.Dat}
     {Λ Γ : G.Lt} (hΛ : G.IsTerm d Λ) (hΓ : G.IsTerm d Γ) :
     (∃ x ∈ G.N, Γ = Λ.map ((x : G.V →ₗ[E] G.V).restrictScalars (𝓞 E))) ∧
       ∃ x ∈ G.N', Γ = Λ.map ((x : G.V →ₗ[E] G.V).restrictScalars (𝓞 E)) := by
   obtain ⟨⟨n0, hn0, n0', hn0', h0⟩, -⟩ := GlobalTheory.T.globalHermitianFrames_rational_witnesses_phase A r k G hk d Λ hΛ
   obtain ⟨⟨n1, hn1, n1', hn1', h1⟩, -⟩ := GlobalTheory.T.globalHermitianFrames_rational_witnesses_phase A r k G hk d Γ hΓ
-  refine ⟨⟨n1 * n0⁻¹, G.N.mul_mem hn1 (G.N.inv_mem hn0), eq_map_of_local A hΛ.1 hΓ.1 _ fun p => ?_⟩,
-    ⟨n1' * n0'⁻¹, G.N'.mul_mem hn1' (G.N'.inv_mem hn0'), eq_map_of_local A hΛ.1 hΓ.1 _ fun p => ?_⟩⟩
+  have hΛfull := full_lattice_of_term G hΛ
+  have hΓfull := full_lattice_of_term G hΓ
+  refine ⟨⟨n1 * n0⁻¹, G.N.mul_mem hn1 (G.N.inv_mem hn0), eq_map_of_local A hΛfull hΓfull _ fun p => ?_⟩,
+    ⟨n1' * n0'⁻¹, G.N'.mul_mem hn1' (G.N'.inv_mem hn0'), eq_map_of_local A hΛfull hΓfull _ fun p => ?_⟩⟩
   · obtain ⟨m0, -, e0⟩ := hn0 p
     obtain ⟨m0', -, e0'⟩ := hn0' p
     obtain ⟨m1, -, e1⟩ := hn1 p

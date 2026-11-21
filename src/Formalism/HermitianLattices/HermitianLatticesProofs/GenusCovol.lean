@@ -567,24 +567,27 @@ end PartF
 theorem genusCovol : GenusCovol := by
   intro K V _ _ _ _ _ _ _ _ h hs hpos N ι hι L M hL hM _ _ _ _
   classical
-  have hMl : Submodule.IsLattice K M := hM.1
   obtain ⟨d, hd0, hd⟩ := genusScale K V h hs L hL
-  have hLgen : L ∈ genus h L := ⟨hL, fun p _ => ⟨1, (isom h).one_mem, genusBasic_gmap_one _⟩⟩
-  have hDmem : ∀ A ∈ genus h L, ∀ x ∈ A, d • x ∈ genusCovol_tdual h A := by
-    intro A hA x hx y hy
-    obtain ⟨r, hr⟩ := Submodule.mem_one.mp (hd A hA y hy x hx)
+  have hdM := hd M hM
+  have hdL := genusScale_transfer genusCovol_hinj star_algebraMap_ringOfIntegers_mem_range
+    h (d : K) M L (genusBasic_symm h L M hM.2) hdM
+  have hDmem (A : Submodule (𝓞 K) V)
+      (hA : ∀ x ∈ A, ∀ y ∈ A, (d : K) * h x y ∈ (1 : Submodule (𝓞 K) K)) :
+      ∀ x ∈ A, d • x ∈ genusCovol_tdual h A := by
+    intro x hx y hy
+    obtain ⟨r, hr⟩ := Submodule.mem_one.mp (hA y hy x hx)
     obtain ⟨z, hz⟩ := genusCovolBound_trace_int r
     refine ⟨z, ?_⟩
     rw [map_nsmul, nsmul_eq_mul, ← hz, hr]
-  obtain ⟨hL1, hL2, hLsq⟩ := genusCovol_sq h hpos N ι hι L d hd0 (hDmem L hLgen)
-  obtain ⟨hM1, hM2, hMsq⟩ := genusCovol_sq h hpos N ι hι M d hd0 (hDmem M hM)
+  obtain ⟨hL1, hL2, hLsq⟩ := genusCovol_sq h hpos N ι hι L d hd0 (hDmem L hdL)
+  obtain ⟨hM1, hM2, hMsq⟩ := genusCovol_sq h hpos N ι hι M d hd0 (hDmem M hdM)
   have hloc : ∀ (P : Ideal (𝓞 K)) [P.IsMaximal], ∃ g : V ≃ₗ[K] V,
       gmap g (locS P.primeCompl L) = locS P.primeCompl M ∧
       gmap g (locS P.primeCompl (genusCovol_tdual h L)) =
         locS P.primeCompl (genusCovol_tdual h M) := by
     intro P hP
     obtain ⟨g, hg, hgL⟩ := hM.2 P hP
-    exact ⟨g, genusCovol_local h L M hL.fg hMl.fg P g hg hgL⟩
+    exact ⟨g, genusCovol_local h L M hL.fg hM.1.toIsLattice.fg P g hg hgL⟩
   have hinf : ∀ (P : Ideal (𝓞 K)) [P.IsMaximal] (g : V ≃ₗ[K] V),
       gmap g (locS P.primeCompl L) = locS P.primeCompl M →
       gmap g (locS P.primeCompl (genusCovol_tdual h L)) =

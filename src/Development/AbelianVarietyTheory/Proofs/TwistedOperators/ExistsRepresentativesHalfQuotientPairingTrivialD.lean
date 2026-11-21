@@ -126,7 +126,7 @@ theorem _root_.GlobalTheory.T.exists_representatives_half_quotient_pairing_trivi
   have hKΛle : KΛ ≤ Λ := by
     rintro _ ⟨w, hw, rfl⟩
     exact nsmul_mem hw K
-  have finΛ : GlobalTheory.AscFin.FinLat Λ := GlobalTheory.AscFinWit.finLat_latO hS.1 hT.1
+  have finΛ : GlobalTheory.AscFin.FinLat Λ := GlobalTheory.AscFinWit.finLat_latO (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ hS) (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ hT)
   have finKΛ : GlobalTheory.AscFin.FinLat KΛ :=
     finLat_of_nsmul finΛ hKΛle hK (fun u hu => ⟨u, hu, rfl⟩)
   let N : AddSubgroup ↥Λ := KΛ.addSubgroupOf Λ

@@ -108,6 +108,20 @@ theorem exists_basis {A : HSp D} {Λ : Lat A} (hΛ : IsSelfDualC A Λ) : ∃ g :
     ∀ x : Fin A.rank → k, (∀ i, x i ∈ 𝒪[k]) ↔ (fun i => p.sec ((g.val *ᵥ x) i)) ∈ latV A Λ (· = p.v) := by
   obtain ⟨β, hβ⟩ := ((GlobalTheory.InhPt.exists_splitPt_frame_char D).2 k p).1 A (Fin A.rank) 1 1 (by simp) (by simp)
   obtain ⟨Λ', h1, h2, -⟩ := exists_lat D k p A (Fin A.rank) β Λ hΛ
+  letI : Λ'.IsLattice k := h1
+  letI : Λ'.IsFullLattice k := by
+    refine ⟨?_⟩
+    rw [eq_top_iff]
+    intro x _
+    obtain ⟨m, s, c, hs, hc, -⟩ := exists_gen (p := p) hΛ
+    have hexp := hc (β.b *ᵥ x)
+    have hexp' := congrArg (β.b' *ᵥ ·) hexp
+    simp only [mulVec_sum, mulVec_smul, mulVec_mulVec, β.b'b, one_mulVec] at hexp'
+    rw [hexp']
+    refine Submodule.sum_mem _ fun l _ => Submodule.smul_mem _ _ ?_
+    apply Submodule.subset_span
+    apply (h2 _).2
+    simpa [mulVec_mulVec, β.bb', one_mulVec] using (sec_inc_mem (p := p) (hs l))
   obtain ⟨g, hg⟩ := GlobalTheory.LatPair.Det.exists_smul_stdLat_eq Λ'
   refine ⟨g, fun x => ?_⟩
   have h3 := h2 (g • x)

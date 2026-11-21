@@ -42,6 +42,15 @@ theorem exists_locGen (v : Pl F) : ∃ δ : E, δ ≠ 0 ∧ InD δ ∧ ∀ z, In
     rw [inD_iff]
     exact ⟨by rintro ⟨y, hy, rfl⟩; exact hy, fun h => ⟨x 0, h, funext fun i => by rw [Subsingleton.elim i 0]; rfl⟩⟩
   have : L.IsLattice E := Submodule.IsLattice.of_fg E ((FractionalIdeal.fg_of_isNoetherianRing le_rfl I).map _)
+  have : L.IsFullLattice E := ⟨by
+    apply top_unique
+    intro x _
+    have h : (fun _ : Fin 1 => (1 : E)) ∈ L := (hL _).2
+      ((inD_iff _).2 (FractionalIdeal.one_le_dual_one ℤ ℚ (FractionalIdeal.one_mem_one _)))
+    have hx := (Submodule.span E (L : Set (Fin 1 → E))).smul_mem (x 0) (Submodule.subset_span h)
+    convert hx using 1
+    ext i
+    simp [Subsingleton.elim i 0]⟩
   obtain ⟨P, h1, h2⟩ := Frames.exists_rational_frame L v
   obtain ⟨s, hs, hs'⟩ := h1 0
   have hP : P.1 0 0 * (P⁻¹).1 0 0 = 1 := by
@@ -158,7 +167,7 @@ theorem hasIwasawa_fin' {B : Base F E} (hB : B.IsGood σ) {Y : Spc F E n} {r s :
     (hJ : Y.J.det ≠ 0) {ξ : E} (hξ : ξ ≠ 0) (hh : ∀ i j, σ ((ξ • Y.Jᵀ) j i) = (ξ • Y.Jᵀ) i j) (v : Pl F) :
     HasIwasawa σ (dblGram finSumFinEquiv (ξ • Y.Jᵀ)) (GlobalTheory.Doubling.KFin σ _ Y.L v) := by
   have hσ := cm_conj_conj hB.cm
-  have hL : Y.L.IsLattice E := hY.elim (·.lat) (·.lat)
+  have hL : Y.L.IsFullLattice E := hY.elim (·.lat) (·.lat)
   obtain ⟨P, h1, h2⟩ := Frames.exists_rational_frame Y.L v
   obtain ⟨δ, h0, G', hG', b1, b2⟩ : ∃ δ : E, δ ≠ 0 ∧ ∃ G' : Matrix (Fin n) (Fin n) E, G' * (P.1ᵀ * Y.J * P.1.map σ) = 1 ∧
       (∀ i j, LocInt v (δ⁻¹ * (P.1ᵀ * Y.J * P.1.map σ) i j)) ∧ ∀ i j, LocInt v (δ * G' i j) := by

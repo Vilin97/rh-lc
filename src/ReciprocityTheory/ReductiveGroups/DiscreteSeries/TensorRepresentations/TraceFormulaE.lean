@@ -17,9 +17,9 @@ variable {n : ℕ}
 private theorem finiteMeasure_muG_of_zero {ε : Fin n → Bool} (hn : n = 0) :
     IsFiniteMeasure (Formalism.REAL.muG ε) := by
   subst n
-  letI : Subsingleton (Formalism.REAL.UJ ε) :=
+  have : Subsingleton (Formalism.REAL.UJ ε) :=
     ⟨fun a b => Subtype.ext (Units.ext (Matrix.ext fun i => Fin.elim0 i))⟩
-  letI : CompactSpace (Formalism.REAL.UJ ε) := Finite.compactSpace
+  have : CompactSpace (Formalism.REAL.UJ ε) := Finite.compactSpace
   infer_instance
 
 private theorem memLp_of_weighted {ε : Fin n → Bool} {f : Formalism.REAL.UJ ε → ℂ}
@@ -28,7 +28,7 @@ private theorem memLp_of_weighted {ε : Fin n → Bool} {f : Formalism.REAL.UJ �
       (Real.sqrt (S7.hs (Formalism.MainNotions.S.umat g)) : ℂ) * f g)
       2 (Formalism.REAL.muG ε)) : MemLp f 2 (Formalism.REAL.muG ε) := by
   rcases Nat.eq_zero_or_pos n with hn | hn
-  · letI := finiteMeasure_muG_of_zero (ε := ε) hn
+  · have := finiteMeasure_muG_of_zero (ε := ε) hn
     exact MemLp.of_bound hf.aestronglyMeasurable C (Filter.Eventually.of_forall hbound)
   · refine hweighted.of_le hf.aestronglyMeasurable (Filter.Eventually.of_forall fun g => ?_)
     have h1 : 1 ≤ Real.sqrt (S7.hs (Formalism.MainNotions.S.umat g)) :=
@@ -111,12 +111,9 @@ theorem tf_sqInt_of_hW {lam : Fin n → ℝ} {H : Type*} [NormedAddCommGroup H] 
       rw [Submodule.coe_inner, tfClRep_coe σ _ (hst _ (umat_mem_UJset ε g))]
     rw [hcoe]
     exact memLp_of_weighted hcont _ hbound (hW y hyG y hyG)
-  letI : (Formalism.REAL.muG ε).IsMulRightInvariant :=
-    ⟨fun g => Formalism.REAL.indefinite_unitary_unimodular n ε g⟩
-  have hR : ∀ h : Formalism.REAL.UJ ε,
-      MeasurePreserving (fun g => g * h) (Formalism.REAL.muG ε) (Formalism.REAL.muG ε) :=
-    measurePreserving_mul_right (Formalism.REAL.muG ε)
-  exact memLp_coefficients (ρ := ρ) hR (Measure.measurePreserving_inv (Formalism.REAL.muG ε))
-    hone hmul hiso hirr y0 hy0 h0
+  change ∀ v w : closGen E V, MemLp (fun g => inner ℂ w (ρ g v)) 2 (Formalism.REAL.muG ε)
+  exact memLp_coefficients (ρ := ρ)
+    (ReciprocityTheory.ChartRestriction.DS.measurePreserving_mul_right ε)
+    (Measure.measurePreserving_inv (Formalism.REAL.muG ε)) hone hmul hiso hirr y0 hy0 h0
 
 end ReciprocityTheory.ChartRestriction.DS

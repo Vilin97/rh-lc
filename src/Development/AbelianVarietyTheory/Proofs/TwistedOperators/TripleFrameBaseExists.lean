@@ -148,7 +148,7 @@ theorem exists_weil {D : D7} (B : Base D.host.F D.host.E) (hB : B.IsGood D.sp.cm
   obtain ⟨h1, h2, h3⟩ := GlobalTheory.WeilSchrodingerHerm.main D B hB _ Y r s hY
   obtain ⟨hJ, Λ, hΛ, h4, h5, h6⟩ := GlobalTheory.WeilSchrodingerSkew.main D B hB k Z r' s' hZ
   have hξ : D.host.xi0 ≠ 0 := GlobalTheory.DualPairCompare.embedding_xi_zero_ne_zero D
-  let T' := hspOf D Y.Jᵀ h1 h2 Y.L hY.lat h3 (fun _ => (r, s))
+  let T' := hspOf D Y.Jᵀ h1 h2 Y.L hY.lat.toIsLattice h3 (fun _ => (r, s))
   let S' := hspOf D (-D.host.xi0 • Z.J⁻¹) h4 h5 Λ hΛ h6 (fun _ => (s', r'))
   have eA : Y.J = T'.gramᵀ := by rw [gram_hspOf]; rfl
   have e0 : (-D.host.xi0 • Z.J⁻¹)⁻¹ = (-D.host.xi0)⁻¹ • Z.J := Matrix.inv_eq_left_inv (by
@@ -256,9 +256,10 @@ theorem hasSignature_map_conj {n p q : ℕ} {M : Matrix (Fin n) (Fin n) ℂ} (h 
   exact this
 
 theorem exists_bas {D : D7} (B : Base D.host.F D.host.E) {n : ℕ} (Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E))
-    (hΛ : Λ.IsLattice D.host.E) : ∃ bas : ∀ v : HeightOneSpectrum (𝓞 D.host.F), GL (Fin n) (Fv D.host.F v),
+    (hΛ : Λ.IsFullLattice D.host.E) : ∃ bas : ∀ v : HeightOneSpectrum (𝓞 D.host.F), GL (Fin n) (Fv D.host.F v),
       ∀ v : B.P, GlobalTheory.AdelicU.IsSplitBasis (B.τ v) Λ (bas v) := by
   classical
+  letI := hΛ
   have hex : ∀ v : B.P, ∃ β, GlobalTheory.AdelicU.IsSplitBasis (B.τ v) Λ β := fun v =>
     GlobalTheory.AdelicU.exists_isSplitBasis (B.τ v) Λ (GlobalTheory.AdelicU.isCMExt_host D)
   refine ⟨fun v => if h : v ∈ B.P then (hex ⟨v, h⟩).choose else 1, fun v => ?_⟩
@@ -271,7 +272,20 @@ theorem exists_isHerm {D : D7} (B : Base D.host.F D.host.E) (τf : InfinitePlace
     (hs : ∀ τ, IsCartanInv (gramAt D S τ) (s τ)) {p q : ℕ} (hsig : ∀ τ, Formalism.UG.HasSignature (gramAt D S τ) p q) :
     ∃ Λ bas, Spc.IsHerm D.sp.cm.sig B (Spc.mk ((-1 : D.host.E) • S.gram) Λ (fun w => -s (τf w)) bas) q p := by
   have hsd := GlobalTheory.LineSelfDual.isSelfDualC_selfDualLatticeCoordsInFrame D S
-  have hlat := Formalism.L2.Col.brp_starLat_lattice _ _ hsd.1
+  have hfull := GlobalTheory.ProjXCols.selfDual_isFullLattice S _ hsd
+  haveI := Formalism.L2.Col.brp_starLat_lattice _ _ hsd.1
+  have hlat : Submodule.IsFullLattice D.host.E
+      (Formalism.L2.Col.starLat D.host.E (GlobalTheory.LineSelfDual.selfDualLatticeCoordsInHermitianFrame D S)) := by
+    refine ⟨?_⟩
+    have heq : (Formalism.L2.Col.starLat D.host.E (GlobalTheory.LineSelfDual.selfDualLatticeCoordsInHermitianFrame D S) : Set (Fin S.rank → D.host.E)) =
+        star '' (GlobalTheory.LineSelfDual.selfDualLatticeCoordsInHermitianFrame D S : Set (Fin S.rank → D.host.E)) := by
+      ext x
+      simp only [Formalism.L2.Col.mem_starLat, Set.mem_image, SetLike.mem_coe]
+      constructor
+      · intro hx; exact ⟨star x, hx, star_star x⟩
+      · rintro ⟨y, hy, rfl⟩; simpa using hy
+    rw [heq]
+    exact Formalism.L2.Col.brp_star_span_top _ _ (Submodule.IsFullLattice.span_eq_top (self := hfull))
   obtain ⟨bas, hbas⟩ := exists_bas B _ hlat
   have eJ : ∀ w, ((-1 : D.host.E) • S.gram).map (B.emb w).1 = -((gramAt D S (τf w)).map star) := fun w => by
     ext a b; simp [gramAt, hB]
@@ -311,7 +325,9 @@ theorem exists_isSkew {D : D7} (B : Base D.host.F D.host.E) (τf : InfinitePlace
     congrArg (D.host.xi0 • ·) (blk_empty e _ _).symm
   have hA := GlobalTheory.LineSelfDual.isSelfDualC_selfDualLatticeCoordsInFrame D X
   have hZ := GlobalTheory.LineSelfDual.isSelfDualC_selfDualLatticeCoordsInFrame D (zeroSp D)
-  have hlat := GlobalTheory.SkewLat.isLattice_pairLat GlobalTheory.SkewLat.DualPair.AA_ne hA.1 hZ.1 e'
+  have hlat := GlobalTheory.SkewLat.pairLat_isFull
+    (GlobalTheory.SkewLat.scLat_isFull GlobalTheory.SkewLat.DualPair.AA_ne (GlobalTheory.ProjXCols.selfDual_isFullLattice X _ hA))
+    (GlobalTheory.SkewLat.scLat_isFull GlobalTheory.SkewLat.DualPair.AA_ne (GlobalTheory.ProjXCols.selfDual_isFullLattice (zeroSp D) _ hZ)) e'
   obtain ⟨bas, hbas⟩ := exists_bas B _ hlat
   have hsub : Subsingleton (Matrix (Fin (zeroSp D).rank) (Fin (zeroSp D).rank) ℂ) :=
     inferInstanceAs (Subsingleton (Matrix (Fin 0) (Fin 0) ℂ))

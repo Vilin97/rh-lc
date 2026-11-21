@@ -113,7 +113,8 @@ theorem sum_nkCount (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : I
 
 theorem alphaN_eq_of_le (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodule (𝓞 K) V}
-    (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal)
+    (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L)
+    {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal)
     {n : 𝓞 F} (hn : n ≠ 0) {k : ℕ} (hk : 2 * vd h L 𝔭 + 2 * vF 𝔭 n + 2 ≤ k) :
     alphaN h L 𝔭 n =
       (nkCount h L 𝔭 k n : ℝ) / (Ideal.absNorm 𝔭 : ℝ) ^ (k * (2 * finrank K V - 1)) := by
@@ -125,7 +126,7 @@ theorem tendsto_mean_alphaN (hK : Formalism.HermitianLatticesTheory.IsCMUnram K)
     Tendsto (fun k : ℕ => (Ideal.absNorm 𝔭 : ℝ) ^ (-(k : ℤ)) *
       ∑ᶠ n' : 𝓞 F ⧸ 𝔭 ^ k, alphaN h L 𝔭 (Quotient.out n')) atTop (𝓝 1) := by
   classical
-  obtain ⟨C0, hC0⟩ := nkCount_le hK hF hs hd hL.toIsLattice hLi hm h𝔭
+  obtain ⟨C0, hC0⟩ := nkCount_le hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi hm h𝔭
   have hN1 := MeanC.one_lt_absNorm h𝔭
   have hNpos : (0:ℝ) < (Ideal.absNorm 𝔭 : ℝ) := by exact_mod_cast (by omega : 0 < Ideal.absNorm 𝔭)
   have hCnn : (0:ℝ) ≤ max C0 0 := le_max_right _ _
@@ -137,7 +138,7 @@ theorem tendsto_mean_alphaN (hK : Formalism.HermitianLatticesTheory.IsCMUnram K)
       (Ideal.absNorm 𝔭 : ℝ) ^ (k * (2 * finrank K V - 1)) := fun k n => by positivity
   have hα : ∀ n : 𝓞 F, n ≠ 0 → |alphaN h L 𝔭 n| ≤ max C0 0 := by
     intro n hn
-    rw [alphaN_eq_of_le hK hF hs hd hL.toIsLattice hLi h𝔭 hn (k := 2 * vd h L 𝔭 + 2 * vF 𝔭 n + 2) le_rfl,
+    rw [alphaN_eq_of_le hK hF hs hd hL hLi h𝔭 hn (k := 2 * vd h L 𝔭 + 2 * vF 𝔭 n + 2) le_rfl,
       abs_of_nonneg (hratio0 _ _)]
     exact hratio _ _
   let j : ℕ → ℕ := fun k => (k - 2 * vd h L 𝔭) / 2
@@ -197,7 +198,7 @@ theorem tendsto_mean_alphaN (hK : Formalism.HermitianLatticesTheory.IsCMUnram K)
             rw [abs_of_nonneg h3]
             linarith
       · obtain ⟨hn0, hk⟩ := hgood k _ hin
-        rw [alphaN_eq_of_le hK hF hs hd hL.toIsLattice hLi h𝔭 hn0 hk, sub_self, abs_zero]
+        rw [alphaN_eq_of_le hK hF hs hd hL hLi h𝔭 hn0 hk, sub_self, abs_zero]
     have hcount : ((Finset.univ.filter fun n' : 𝓞 F ⧸ 𝔭 ^ k =>
         Quotient.out n' ∈ 𝔭 ^ j k).card : ℝ) * (Ideal.absNorm 𝔭 : ℝ) ^ (j k) =
           (Ideal.absNorm 𝔭 : ℝ) ^ k := by

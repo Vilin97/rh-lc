@@ -250,7 +250,7 @@ def KForm : Prop :=
 
 def EWnorm : Prop := ∀ j (x y : X.WC b j Bs.v0), ⟪X.eW b j x, X.eW b j y⟫_ℂ = ((X.nP b : ℝ) : ℂ) * ⟪x, y⟫_ℂ
 
-def MLat : Prop := ∀ j, Submodule.IsLattice K (X.M b j)
+def MLat : Prop := ∀ j, Submodule.IsFullLattice K (X.M b j)
 
 def H5 : Prop :=
   ∀ j t, Function.Injective (X.tC cr b j t) ∧ LinearMap.range (X.tC cr b j t) = LinearMap.range (X.w0C b j)

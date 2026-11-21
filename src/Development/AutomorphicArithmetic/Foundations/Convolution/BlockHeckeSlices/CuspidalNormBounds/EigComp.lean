@@ -145,7 +145,8 @@ private theorem ae_comb {ψ : AdelicGLn.AdelicGL E n → ℂ} (hψ : IsLeftInvar
     exact (Lp.coeFn_add _ _).trans (hx.add hy)
   | single k c =>
     simp only [Finsupp.linearCombination_single]
-    have h1 := (measurePreserving_rightMul μ (k1 k)).quasiMeasurePreserving.ae_eq hv
+    have h1 := QuasiMeasurePreserving.ae_eq_comp
+      (measurePreserving_rightMul μ (k1 k)).quasiMeasurePreserving hv
     filter_upwards [Lp.coeFn_smul c (rightRegularRep (rationalGLOne (K := E) (n := n)) μ (k1 k) v),
       coeFn_rightRegularRep (rationalGLOne (K := E) (n := n)) μ (k1 k) v, h1] with q e1 e2 e3
     rw [e1, Pi.smul_apply, e2]
@@ -157,6 +158,9 @@ private theorem exists_form' {ψ : AdelicGLn.AdelicGL E n → ℂ} (hψ : IsLeft
       ∫ y, ψ (Quotient.out y : normOneGL (K := E) (n := n)) * starRingEnd ℂ (f.1 (Quotient.out y : normOneGL (K := E) (n := n)))
         ∂quotientMeasure (rationalGLOne (K := E) (n := n)) μ ≠ 0 ∧ ∀ x : KA E n →₀ ℂ,
       (∀ g, (x.sum fun k c => c * ψ (g * k)) = 0) → ∀ g, (x.sum fun k c => c * f.1 (g * k)) = 0 := by
+  have : OpensMeasurableSpace (RightCosetSpace (rationalGLOne (K := E) (n := n))) := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      infer_instance
   have := Reduction.isFiniteMeasure_quotientMeasure (K := E) (n := n) μ
   obtain ⟨C, hC⟩ := hb
   have hm : MemLp (cuspQuot hψ) 2 (quotientMeasure (rationalGLOne (K := E) (n := n)) μ) := by
@@ -174,7 +178,8 @@ private theorem exists_form' {ψ : AdelicGLn.AdelicGL E n → ℂ} (hψ : IsLeft
       refine (MemLp.coeFn_toLp hm).symm.trans ?_
       rw [h]
       exact Lp.coeFn_zero _ _ _
-    have h2 : (fun y : normOneGL (K := E) (n := n) => ψ y) =ᵐ[μ] 0 := (quasiMeasurePreserving_mk _ μ).ae_eq h1
+    have h2 : (fun y : normOneGL (K := E) (n := n) => ψ y) =ᵐ[μ] 0 :=
+      QuasiMeasurePreserving.ae_eq_comp (quasiMeasurePreserving_mk _ μ) h1
     exact hx (congrFun ((Continuous.ae_eq_iff_eq μ (hc.comp continuous_subtype_val) continuous_const).1 h2) x)
   obtain ⟨V, hV, f, hf, hi, hk⟩ := exists_form μ hv hv0
   refine ⟨V, hV, f, hf, fun hz => hi ?_, fun x hx => hk x ?_⟩

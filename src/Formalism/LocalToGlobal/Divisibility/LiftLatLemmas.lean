@@ -245,52 +245,6 @@ theorem lf_delLat_isLattice {s : ℕ} (hS : S.Good s) : Submodule.IsLattice K S.
 
 theorem lf_delLat_le {s : ℕ} (hS : S.Good s) : S.delLat ≤ S.nabLat := ValuationLatticeField.valLatF_mono S.I hS.del_le
 
-private theorem lf_delLat_locS {s : ℕ} (hS : S.Good s) (x : Fin S.dim → K) :
-    x ∈ locS (nonZeroDivisors (𝓞 K)) S.delLat := by
-  classical
-  choose generators hgen using fun c => (hS.nab_lat c).fg
-  let values (i : Σ c, ↥(generators c)) : K := S.pair i.2.1 (S.I x i.1)
-  obtain ⟨a, ha⟩ := IsLocalization.exist_integer_multiples_of_finite (nonZeroDivisors (𝓞 K)) values
-  have hs : (s : 𝓞 K) ∈ nonZeroDivisors (𝓞 K) :=
-    mem_nonZeroDivisors_of_ne_zero (by exact_mod_cast hS.s_pos.ne')
-  refine ⟨(s : 𝓞 K) * a.1, Submonoid.mul_mem _ hs a.2, ?_⟩
-  rw [mul_smul, show S.delLat = valLatF S.I S.Del from rfl, ValuationLatticeField.mem_valLatF]
-  intro c
-  simp only [LinearMap.map_smul_of_tower, Pi.smul_apply]
-  apply hS.dual_le c
-  rw [dualBasic_mem_dual, ← hgen c]
-  intro y hy
-  induction hy using Submodule.span_induction with
-  | mem y hy =>
-    rw [LinearMap.map_smul_of_tower]
-    exact Submodule.mem_one.mpr (ha ⟨c, ⟨y, hy⟩⟩)
-  | zero => simp
-  | add y z _ _ hy hz =>
-    rw [map_add, LinearMap.add_apply]
-    exact add_mem hy hz
-  | smul r y _ hy =>
-    obtain ⟨t, ht⟩ := exponent_index_lattice.hstar (K := K) r
-    rw [← algebraMap_smul K r y, LinearMap.map_smulₛₗ₂, starRingEnd_apply, ← ht, algebraMap_smul]
-    exact Submodule.smul_mem _ t hy
-
-theorem lf_lvlNab_isFullLattice {s : ℕ} (hS : S.Good s) {G : Type} [Group G] [Fintype G]
-    (r : Representation K G S.Forms) (P : Subgroup G) (ψ : P →* Kˣ) :
-    Submodule.IsFullLattice K (S.lvlNab r P ψ) := by
-  have hinj : Function.Injective (S.lvlE r P ψ).mulVec := (image_idempotent_spec K _ _).1
-  change Submodule.IsFullLattice K (cutLat (S.lvlE r P ψ) S.nabLat)
-  refine { toIsLattice := exponent_index_lattice.cut_isLattice _ hinj _ (S.lf_nabLat_isLattice hS)
-           span_eq_top := ?_ }
-  refine eq_top_iff.mpr fun z _ => ?_
-  obtain ⟨a, ha, haz⟩ := S.lf_delLat_locS hS ((S.lvlE r P ψ).mulVec z)
-  have haK : algebraMap (𝓞 K) K a ≠ 0 :=
-    IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors ha
-  apply (Submodule.smul_mem_iff _ haK).mp
-  rw [algebraMap_smul K]
-  apply Submodule.subset_span
-  change a • z ∈ cutLat (S.lvlE r P ψ) S.nabLat
-  rw [exponent_index_lattice.mem_cutLat, exponent_index_lattice.mulVec_osmul]
-  exact S.lf_delLat_le hS haz
-
 end CSD
 
 namespace BlockDat
@@ -365,7 +319,7 @@ theorem lf_exp_spec (h : BlockHyp B ℓ v0 s) (w : HeightOneSpectrum (𝓞 K)) :
     ∀ a ∈ w.asIdeal ^ B.JexpW ℓ Z w, ∀ z ∈ B.cutZ ℓ Z, a • z ∈ localization₂ w.asIdeal (B.delZ ℓ Z) := by
   have hAB : B.cutZ ℓ Z ≤ locS (nonZeroDivisors (𝓞 K)) (B.delZ ℓ Z) := by
     intro z _
-    obtain ⟨a, ha, hz⟩ := B.S.lf_delLat_locS h.ok.good ((B.fE ℓ Z).mulVec z)
+    obtain ⟨a, ha, hz⟩ := B.S.delLat_mem_locS h.ok.good ((B.fE ℓ Z).mulVec z)
     refine ⟨a, ha, (exponent_index_lattice.mem_cutLat _ _ _).mpr ?_⟩
     rwa [exponent_index_lattice.mulVec_osmul]
   exact (exponent_weight_spectral w _ _ (lf_cutZ_isLattice (Z := Z) h).fg hAB).1
@@ -390,7 +344,8 @@ theorem local_bounds_from_exponent : BoundsIVAt := by
     exact BlockDat.lf_exp_incl h w ϖ hϖ
   have key := (bounds_fourth_class_fixed K _ _ (B.S.lvlH B.r ℓ.P ℓ.ψ) hH hdet (B.lE ℓ Z) (B.lPr ℓ Z) (BlockDat.lf_l_proj (Z := Z) h)
     B.S.Cl B.S.V B.S.pair (B.S.lvlI B.r ℓ.P ℓ.ψ) (fun c => Nat.card ℓ.P * B.S.wt c) hinj
-    (fun c => Nat.mul_pos Nat.card_pos (B.S.wt_pos c)) hCS B.S.Nab B.S.Del h.ok.good.nab_lat s h.ok.good.s_pos
+    (fun c => Nat.mul_pos Nat.card_pos (B.S.wt_pos c)) hCS B.S.Nab B.S.Del
+    h.ok.good.nab_isFullLattice s h.ok.good.s_pos
     h.ok.good.del_dual (B.DG ℓ) (Nat.mul_pos Nat.card_pos B.S.DGam_pos)
     (fun c => Nat.mul_dvd_mul_left _ (B.S.wt_dvd_DGam c)) w ϖ (B.JexpW ℓ Z w) hv hJ).2
   rw [← hnab, BlockDat.lf_cut_nab (Z := Z) h, BlockDat.lf_lE_form (Z := Z) h] at key

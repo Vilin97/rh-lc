@@ -313,8 +313,12 @@ theorem semiOf_semiOf {τ : O' →+* O''} {υ : O →+* O''} {G'' : PDivGroup p 
     (h' : ∀ n, spMap (s'.app n).toRingHom ≫ (t'.y n).left = (t''.y n).left ≫ ψ)
     (h'' : ∀ n, spMap (s''.app n).toRingHom ≫ (t.y n).left = (t''.y n).left ≫ ψ ≫ φ)
     (n : ℕ) (a : G.A n) : s''.app n a = s'.app n (s.app n a) :=
-  RingHom.congr_fun (t.ringHom_ext (g := (s'.app n).toRingHom.comp (s.app n).toRingHom) (by
-    rw [Cris.spMap_comp, Category.assoc, h, h'', ← Category.assoc, ← Category.assoc, h'])) a
+  RingHom.congr_fun (t.ringHom_ext (f := (s''.app n).toRingHom)
+    (g := (s'.app n).toRingHom.comp (s.app n).toRingHom) (by
+      calc
+        _ = (t''.y n).left ≫ ψ ≫ φ := h'' n
+        _ = (spMap (s'.app n).toRingHom ≫ (t'.y n).left) ≫ φ := by rw [h' n, Category.assoc]
+        _ = _ := by simp only [Cris.spMap_comp, Category.assoc, h n])) a
 
 end Semi
 

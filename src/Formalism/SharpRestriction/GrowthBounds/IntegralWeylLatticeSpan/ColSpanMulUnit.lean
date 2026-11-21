@@ -2,6 +2,7 @@ module
 
 public import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan.RestGramW
 public import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLocBases
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PKerAtP
 public import Formalism.LocalToGlobal.GlobalTheory.GL6.PSplitT
 public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.ChiMemSubfield
 
@@ -181,8 +182,10 @@ theorem restExB (D : D7) : RestExB D := by
   intro u w _ c
   have : Fact (D.what₂.places.resChar w).Prime := ⟨D.what₂.places.resChar_prime w⟩
   have hL := bwB_clsCrd_lat D u 0 (Nat.zero_le _) c
+  have hFull : Submodule.IsFullLattice D.host.E (clsCrd D u 0 (Nat.zero_le _) c) :=
+    { toIsLattice := hL, span_eq_top := (tld_isLat 0 (Nat.zero_le _) c).2 }
   obtain ⟨d, hd, hle⟩ := dual_le_bnd (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _))
-    (bwB_gramN_det D 0 (Nat.zero_le _)) _ hL
+    (bwB_gramN_det D 0 (Nat.zero_le _)) _ hFull
   have hLd : Ld D u 0 (Nat.zero_le _) c ≤ bnd d := hle
   have hLd_sp := dual_span (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _)) _ hL
   obtain ⟨B, hB⟩ := exists_isLocBasis (D.what₂.places.resChar w) _ _ (fg_of_le_bnd hd hLd) hLd_sp

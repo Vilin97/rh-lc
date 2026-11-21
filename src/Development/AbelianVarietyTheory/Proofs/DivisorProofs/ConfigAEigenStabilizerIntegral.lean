@@ -118,7 +118,7 @@ theorem stab_compact {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     exact hK g
   obtain ⟨C, hC, hsub⟩ := GlobalTheory.StabBounded.exists_compact_superset_stabK F E σ B n X r s hB hX
   rw [hKe]
-  exact hC.of_isClosed_subset (GlobalTheory.StabHaar.isClosed_stabK B X (GlobalTheory.LatHatClosed.isClosed_latHat F E n X hX.lat)) hsub
+  exact hC.of_isClosed_subset (GlobalTheory.StabHaar.isClosed_stabK B X (GlobalTheory.LatHatClosed.isClosed_latHat F E n X hX.lat.toIsLattice)) hsub
 
 theorem supp : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' →

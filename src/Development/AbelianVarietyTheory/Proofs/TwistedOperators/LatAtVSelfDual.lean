@@ -42,11 +42,11 @@ theorem latAtV_selfDual : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
   · intro hψ
     haveI := hT.base.unram
     obtain ⟨m, s, c, hsc⟩ := exists_traceFamily (F := F) (E := E)
-    obtain ⟨k, S, T, hS, hTm, hTS⟩ := exists_formFrame σ G.V.J (det_ne_zero_of_herm σ B hV) G.V.L hV.lat
+    obtain ⟨k, S, T, hS, hTm, hTS⟩ := exists_formFrame σ G.V.J (det_ne_zero_of_herm σ B hV) G.V.L hV.lat.toIsLattice
       (fun y hy => (hV.dual y).2 fun x hx => by
         obtain ⟨r, hr⟩ := hy x hx
         rw [← hr]; exact RingOfIntegers.isIntegral_coe r)
-    obtain ⟨k', S', T', hS', hTm', hTS'⟩ := exists_formFrame σ G.W.J (det_ne_zero_of_skew σ B hW) G.W.L hW.lat
+    obtain ⟨k', S', T', hS', hTm', hTS'⟩ := exists_formFrame σ G.W.J (det_ne_zero_of_skew σ B hW) G.W.L hW.lat.toIsLattice
       (fun y hy => (hW.dual y).2 fun x hx o => by
         obtain ⟨r, hr⟩ := hy x hx
         rw [← hr]

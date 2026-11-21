@@ -390,7 +390,7 @@ variable {E V : Type} [Field E] [NumberField E] [StarRing E]
 
 theorem isOfFinOrder_of_isom (h : V →ₗ⋆[E] V →ₗ[E] E) (hsymm : h.IsSymm)
     (hpos : ∀ x : V, x ≠ 0 → 0 < Algebra.trace ℚ E (h x x))
-    {N : Submodule (𝓞 E) V} (hN : Submodule.IsLattice E N) {γ : V ≃ₗ[E] V}
+    {N : Submodule (𝓞 E) V} (hN : Submodule.IsFullLattice E N) {γ : V ≃ₗ[E] V}
     (hγ : γ ∈ HermitianLatticesTheory.isom h) (hγN : γ ∈ autLat N) : IsOfFinOrder γ := by
   have hfin := Formalism.HermitianLatticesTheory.autFinite E V h hsymm hpos N hN
   have : Finite (HermitianLatticesTheory.isom h ⊓ autLat N : Subgroup (V ≃ₗ[E] V)) := hfin.to_subtype
@@ -405,7 +405,7 @@ theorem isometry_unipotent_mod_eq_one (h : V →ₗ⋆[E] V →ₗ[E] E) (hsymm 
     (hγ : γ ∈ HermitianLatticesTheory.isom h) (hu : UnipMod w N γ) : γ = 1 := by
   have : Module.IsTorsionFree (𝓞 E) V := Module.IsTorsionFree.trans_faithfulSMul (𝓞 E) E V
   exact stab0 hw hN.toIsLattice.fg hN.span_eq_top hg hgw hbig hu
-    (isOfFinOrder_of_isom h hsymm hpos hN.toIsLattice hγ hu.1)
+    (isOfFinOrder_of_isom h hsymm hpos hN hγ hu.1)
 
 end Definite
 

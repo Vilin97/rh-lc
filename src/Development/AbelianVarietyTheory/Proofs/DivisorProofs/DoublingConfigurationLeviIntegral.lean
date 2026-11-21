@@ -35,7 +35,7 @@ theorem conv : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F
     have hX := hT.geo.hV
     obtain ⟨C, hCc, hsub⟩ := GlobalTheory.T.relatively_compact_stabilizer F E σ B (b + 2) G.V _ _ hT.base hX
     rw [hKeq]
-    exact hCc.of_isClosed_subset (GlobalTheory.StabHaar.isClosed_stabK B G.V (GlobalTheory.T.isClosed_adelic_lattice_closure F E (b + 2) G.V hX.lat)) hsub
+    exact hCc.of_isClosed_subset (GlobalTheory.StabHaar.isClosed_stabK B G.V (GlobalTheory.T.isClosed_adelic_lattice_closure F E (b + 2) G.V hX.lat.toIsLattice)) hsub
   haveI : CompactSpace K := isCompact_iff_compactSpace.mp hKc
   have hμKfin : μK Set.univ < ⊤ := isCompact_univ.measure_lt_top
 
