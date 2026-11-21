@@ -7,7 +7,7 @@ public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.InertFixe
 
 @[expose] public section
 
-open GlobalTheory.KCoh Polynomial
+open Polynomial
 
 namespace GlobalTheory.K4
 
@@ -97,10 +97,10 @@ theorem thmA_on_open_geo : GlobalTheory.NeedB.ThmA → ∀ (k F Ω : Type) [Fiel
     intro θ hθ h1 h2
     constructor
     · refine (mem_integralClosure_iff _ _).2 ?_
-      refine (isIntegral_algebraMap_iff ).1 ?_
+      refine (isIntegral_algebraMap_iff (B := Ω)).1 ?_
       exact h1.pow N
     · refine (mem_integralClosure_iff _ _).2 ?_
-      refine (isIntegral_algebraMap_iff ).1 ?_
+      refine (isIntegral_algebraMap_iff (B := Ω)).1 ?_
       rw [map_inv₀, IntermediateField.algebraMap_apply, ← inv_pow]
       exact h2.pow N
   have hne : ∀ {θ : Ω} (hθ : θ ^ N ∈ K'), θ ≠ 0 → (⟨θ ^ N, hθ⟩ : K') ≠ 0 := by

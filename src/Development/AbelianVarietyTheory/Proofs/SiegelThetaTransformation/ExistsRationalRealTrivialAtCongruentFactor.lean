@@ -73,7 +73,8 @@ theorem exists_cut (c : E ≃ₐ[F] E) (G : Matrix (Fin n) (Fin n) E) (hG : IsHe
     · simp [he1' v hv]
     · simp [he0' v hv]
   have hee₀ : e * e₀ = 0 := by
-    ext v
+    ext v : 1
+    change e v * e₀ v = 0
     by_cases hv : I ≤ v.asIdeal
     · have : e₀ v = 0 := by
         by_contra hne
@@ -176,10 +177,10 @@ theorem place_mul_eq_zero {D : D7} (V : HSp D) {g : GA D V} (α : Af D.host.F)
       rw [hal]; exact Algebra.TensorProduct.map_tmul _ _ _ _
     have h2 : finPart D ((mt V g - 1) i j) = ((finHom V g).1 - 1) i j := by
       rw [hfm, Matrix.sub_apply, Matrix.sub_apply, Matrix.map_apply, map_sub, Matrix.one_apply, Matrix.one_apply]
-      split_ifs <;> simp
+      split_ifs <;> simp only [map_one, map_zero]
     rw [h1, h2]
     have := congrFun (congrFun h i) j
-    simpa [Matrix.smul_apply] using this
+    simpa only [Matrix.smul_apply, Matrix.zero_apply, Pi.zero_apply, smul_eq_mul] using this
 
 
 set_option maxHeartbeats 1000000 in
@@ -227,7 +228,8 @@ theorem exists_rat_real_trivAt_cong : ∀ (D : D7) (V : HSp D) (L : Lt D.host.E 
     apply place_mul_eq_zero V α _ i j
     rw [hk₁f]
     have hαe : α * e = 0 := by
-      ext v'
+      ext v' : 1
+      change α v' * e v' = 0
       by_cases hvv : v' = v
       · rw [hvv]; simp [he0 v hv]
       · have : α v' = 0 := hα0 v' hvv

@@ -120,8 +120,6 @@ def ofHerm (H : Host R) (b : Pl R → Matrix (Fin n) (Fin n) ℂ) (hb : ∀ τ, 
 
 def IsPD (B : Bal H n) : Prop := ∀ u, u ≠ 0 → 0 < bil B u u
 
-open GlobalTheory.IndefiniteRowSideFullHecke.ThetaWeightHeightConstants
-
 end GlobalTheory.IndefiniteRowSideFullHecke.TotallyPositiveExponents
 
 end

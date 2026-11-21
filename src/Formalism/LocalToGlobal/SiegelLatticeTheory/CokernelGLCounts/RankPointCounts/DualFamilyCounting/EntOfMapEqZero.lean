@@ -52,7 +52,19 @@ private theorem exists_add_conj_sub_one_mem_extP (hK : Formalism.HermitianLattic
     (h𝔭 : 𝔭.IsMaximal) : ∃ t : 𝓞 K, t + conjO K t - 1 ∈ extP K 𝔭 := by
   by_cases h : ∃ t : 𝓞 K, t + conjO K t ∉ extP K 𝔭
   · obtain ⟨t0, ht0⟩ := h
-    obtain ⟨a, ha⟩ := exists_tr hF t0
+    have htrace : ∃ a : 𝓞 F, algebraMap (𝓞 F) (𝓞 K) a = t0 + conjO K t0 := by
+      let w := t0 + conjO K t0
+      have hw : star (w : K) = (w : K) := by
+        change star ((t0 : K) + star (t0 : K)) = (t0 : K) + star (t0 : K)
+        rw [star_add, star_star, add_comm]
+      obtain ⟨f, hf⟩ := (hF (w : K)).mp hw
+      have hfIntegral : IsIntegral ℤ f := by
+        apply (isIntegral_algebraMap_iff (B := K)).mp
+        rw [hf]
+        exact RingOfIntegers.isIntegral_coe w
+      refine ⟨⟨f, hfIntegral⟩, RingOfIntegers.ext ?_⟩
+      exact hf
+    obtain ⟨a, ha⟩ := htrace
     have haP : a ∉ 𝔭 := by
       intro haP
       apply ht0
@@ -60,8 +72,11 @@ private theorem exists_add_conj_sub_one_mem_extP (hK : Formalism.HermitianLattic
       exact Ideal.mem_map_of_mem _ haP
     obtain ⟨b, c, hc, hbc⟩ := h𝔭.exists_inv haP
     refine ⟨algebraMap (𝓞 F) (𝓞 K) b * t0, ?_⟩
+    have hb : conjO K (algebraMap (𝓞 F) (𝓞 K) b) = algebraMap (𝓞 F) (𝓞 K) b := by
+      apply RingOfIntegers.ext
+      exact (hF (algebraMap F K (b : F))).mpr ⟨(b : F), rfl⟩
     have e1 : algebraMap (𝓞 F) (𝓞 K) b * t0 + conjO K (algebraMap (𝓞 F) (𝓞 K) b * t0) - 1 = algebraMap (𝓞 F) (𝓞 K) (b * a - 1) := by
-      rw [map_mul, conjO_map hF, map_sub, map_mul, map_one, ha]; ring
+      rw [map_mul, hb, map_sub, map_mul, map_one, ha]; ring
     have e2 : b * a - 1 = -c := by linear_combination hbc
     rw [e1, e2, map_neg]
     exact (extP K 𝔭).neg_mem (Ideal.mem_map_of_mem _ hc)

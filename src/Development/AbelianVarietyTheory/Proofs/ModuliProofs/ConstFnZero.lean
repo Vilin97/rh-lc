@@ -50,14 +50,15 @@ theorem constFn_zero' {K : Type} [Field K] {Y : Scheme.{0}} (q : Y ⟶ Sp K) (O 
 theorem locDerK_sub {K : Type} [Field K] {Y X : Scheme.{0}} {R : Type} [CommRing R] {q : Y ⟶ Sp K} {p : X ⟶ Sp R}
     {m : Y ⟶ X} {D : R → K} {W₁ W₂ W₀ : X.Opens} {d₁ d₂ : ∀ W : X.Opens, Γ(X, W) → Γ(Y, m ⁻¹ᵁ W)}
     (h₁ : LocDerK q p m D W₁ d₁) (h₂ : LocDerK q p m D W₂ d₂) (l₁ : W₀ ≤ W₁) (l₂ : W₀ ≤ W₂) :
-    LocDerK q p m (fun _ => 0) W₀ (fun W f => d₂ W f - d₁ W f) where
-  add W hW f f' := by
+    LocDerK q p m (fun _ => 0) W₀ (fun W f => d₂ W f - d₁ W f) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro W hW f f'
     rw [h₁.add W (hW.trans l₁), h₂.add W (hW.trans l₂)]; ring
-  mul W hW f f' := by
+  · intro W hW f f'
     rw [h₁.mul W (hW.trans l₁), h₂.mul W (hW.trans l₂)]; ring
-  res W W' h hW f := by
+  · intro W W' h hW f
     rw [h₁.res W W' h (hW.trans l₁), h₂.res W W' h (hW.trans l₂), rsT_sub (m.preimage_mono h)]
-  base W hW r := by
+  · intro W hW r
     rw [h₁.base W (hW.trans l₁), h₂.base W (hW.trans l₂), sub_self, constFn_zero']
 
 theorem basis_id (K : Type) [Field K] (A₀ : Over (Sp K)) [GrpObj A₀] (g : ℕ) (v : Fin g → (epsR K ⟶ A₀))

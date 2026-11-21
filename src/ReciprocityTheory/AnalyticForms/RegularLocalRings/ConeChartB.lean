@@ -9,7 +9,7 @@ namespace ReciprocityTheory.AnForm.R
 
 open MvPolynomial IsLocalRing
 
-def jacSpanAt {σ : Type} (I : Ideal (MvPolynomial σ ℂ)) (z : σ → ℂ) : Submodule ℂ (σ → ℂ) :=
+noncomputable def jacSpanAt {σ : Type} (I : Ideal (MvPolynomial σ ℂ)) (z : σ → ℂ) : Submodule ℂ (σ → ℂ) :=
   Submodule.span ℂ ((fun h : MvPolynomial σ ℂ => fun j => eval z (pderiv j h)) '' (I : Set _))
 
 theorem locAt_isLocalRing_isNoetherian {σ : Type} [Finite σ] (I : Ideal (MvPolynomial σ ℂ))

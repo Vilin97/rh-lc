@@ -24,12 +24,13 @@ open Formalism.IndefR.PeterssonHilbertSpace
 variable {X : Type} [AddCommGroup X] [Module ℂ X]
 
 theorem hermPos_mono {C C' : Submodule ℂ X} {ip : X → X → ℂ} (h : IsHermPos C ip) (hle : C' ≤ C) :
-    IsHermPos C' ip where
-  fd := by haveI := h.fd; exact Submodule.finiteDimensional_of_le hle
-  add x x' y := h.add ⟨x, hle x.2⟩ ⟨x', hle x'.2⟩ ⟨y, hle y.2⟩
-  smul s x y := h.smul s ⟨x, hle x.2⟩ ⟨y, hle y.2⟩
-  herm x y := h.herm ⟨x, hle x.2⟩ ⟨y, hle y.2⟩
-  pos x hx := h.pos ⟨x, hle x.2⟩ (fun e => hx (Subtype.ext (show (x : X) = 0 from congrArg Subtype.val e)))
+    IsHermPos C' ip := by
+  have := h.fd
+  refine ⟨Submodule.finiteDimensional_of_le hle, ?_, ?_, ?_, ?_⟩
+  · exact fun x x' y => h.add ⟨x, hle x.2⟩ ⟨x', hle x'.2⟩ ⟨y, hle y.2⟩
+  · exact fun s x y => h.smul s ⟨x, hle x.2⟩ ⟨y, hle y.2⟩
+  · exact fun x y => h.herm ⟨x, hle x.2⟩ ⟨y, hle y.2⟩
+  · exact fun x hx => h.pos ⟨x, hle x.2⟩ (fun e => hx (Subtype.ext (show (x : X) = 0 from congrArg Subtype.val e)))
 
 theorem hermPos_of_ipOn {C : Submodule ℂ X} {ip : X → X → ℂ} (h : Bridge.IPOnG C ip) : IsHermPos C ip :=
   ⟨h.fd, h.add, h.smul, h.herm, h.pos⟩

@@ -63,7 +63,7 @@ theorem exists_entire {V W : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] [N
       (((hd _).differentiableAt ((hopen _).mem_nhds (hch (w k z)))).comp z (hwd k z)).zpow
         (Or.inl (hne _ _ (hch (w k z))))
     have hq : DifferentiableAt ℂ (R j) z :=
-      (hd'.differentiableAt hn).mul (HasFDerivAt.finset_prod fun k _ => (d1 k).hasFDerivAt).differentiableAt
+      (hd'.differentiableAt hn).mul (HasFDerivAt.finsetProd fun k _ => (d1 k).hasFDerivAt).differentiableAt
     refine hq.congr_of_eventuallyEq ?_
     filter_upwards [hn] with y hy
     exact hrR y j ((hiff y j).1 hy.2)

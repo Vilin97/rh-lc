@@ -45,7 +45,38 @@ theorem exists_pelUnif_pull (hC : CubePullSt) (hP : PolBaseChangeSt) (hU : UnifB
         hD.e.hom ≫ (Over.pullback (specOf g)).map (P.oD.onB.act x)) := by
   letI := H.starRing
   have hO := polOActPull
-  obtain ⟨PP', cub, sym, adj, prim, m₁, hm₁⟩ := sabPull hC (spMap g) t
+  have hpull : ∃ (PP' : RigLB ((Over.pullback (spMap g)).obj t.G)) (cub : CubicalStr _ PP')
+      (sym : PP'.IsSymmetric) (adj : _) (prim : _)
+      (m : SABMap ⟨(Over.pullback (spMap g)).obj t.G, IsSemiAbelian.pullback _ t.G t.semi,
+        OAct.pullback _ t.G t.act, PP', cub, sym, adj, prim⟩ t (spMap g)),
+      m.φ = pullback.fst t.G.hom (spMap g) := by
+    have h := isGrpPullback_pullback t.G (spMap g)
+    obtain ⟨hL, hr, ⟨c', hc'⟩, hs⟩ := hC _ _ t.G _ (cubeMapOf h) t.PP t.cub
+    have hact : ∀ a, ((OAct.pullback (spMap g) t.G t.act).act a).left ≫ pullback.fst t.G.hom (spMap g) =
+        pullback.fst t.G.hom (spMap g) ≫ (t.act.act a).left := fun a => pullback.lift_fst _ _ _
+    have pa : ∀ {T : Over (Sp R')} (x : T ⟶ (Over.pullback (spMap g)).obj t.G) a,
+        pushPt h.1.w (x ≫ (OAct.pullback (spMap g) t.G t.act).act a) = pushPt h.1.w x ≫ t.act.act a := fun x a =>
+      Over.OverMorphism.ext (by
+        show (x.left ≫ _) ≫ _ = (x.left ≫ _) ≫ _
+        rw [Category.assoc, hact, Category.assoc])
+    refine ⟨(cubeMapOf h).rigLB t.PP hL hr, c', hs t.sym, fun a => ?_, ?_, ⟨cubeMapOf h, h, rfl, hact, hc'⟩, rfl⟩
+    · let U := lift (pushPt h.1.w (fst ((Over.pullback (spMap g)).obj t.G) ((Over.pullback (spMap g)).obj t.G)))
+        (pushPt h.1.w (snd ((Over.pullback (spMap g)).obj t.G) ((Over.pullback (spMap g)).obj t.G)))
+      refine LBIso.chartPull (chartPullLinComb t.PP.L _ _ _ _ U.left fun I => psum_push h _ _ U (fun i => ?_) I.down)
+        (chartPullLinComb t.PP.L _ _ _ _ U.left fun I => psum_push h _ _ U (fun i => ?_) I.down) (t.adj a)
+      · fin_cases i
+        · exact (pa _ a).trans (by simp [U])
+        · simp [U]
+      · fin_cases i
+        · simp [U]
+        · exact (pa _ _).trans (by simp [U])
+    · let U := pushPt h.1.w (𝟙 ((Over.pullback (spMap g)).obj t.G))
+      refine LBIso.chartPull (chartPullPull t.PP.L _ U.left (Category.id_comp _))
+        (chartPullLinComb t.PP.L _ _ _ _ U.left fun I => psum_push h _ _ U (fun i => ?_) I.down) t.prim
+      fin_cases i
+      · simp [U]
+      · exact (congrArg (pushPt h.1.w) (Category.id_comp _).symm).trans (pa _ _)
+  obtain ⟨PP', cub, sym, adj, prim, m₁, hm₁⟩ := hpull
   let t' : SAB H (Sp R') := ⟨(Over.pullback (spMap g)).obj t.G, IsSemiAbelian.pullback _ t.G t.semi,
     OAct.pullback _ t.G t.act, PP', cub, sym, adj, prim⟩
   let m₀ : SABMap t' t (spMap g) := m₁

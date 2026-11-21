@@ -32,7 +32,7 @@ theorem UpperTheory.V.Pa.alSel :
     rw [← Finset.sum_mul]
     congr 1
     ext i j
-    simp [Matrix.map_apply, Matrix.sum_apply, AddMonoidHom.finset_sum_apply]
+    simp [Matrix.map_apply, Matrix.sum_apply]
   · intro ι _ c μ
     funext g
     rw [Finset.sum_apply]
@@ -41,4 +41,4 @@ theorem UpperTheory.V.Pa.alSel :
     rw [← Finset.sum_mul]
     congr 1
     ext i j
-    simp [Matrix.map_apply, Matrix.sum_apply, AddMonoidHom.finset_sum_apply]
+    simp [Matrix.map_apply, Matrix.sum_apply]

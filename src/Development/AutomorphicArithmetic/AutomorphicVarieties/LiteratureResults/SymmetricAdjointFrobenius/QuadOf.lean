@@ -34,6 +34,11 @@ private theorem norm_deg (w : HeightOneSpectrum (𝓞 E)) :
   have : w.asIdeal.LiesOver (w.under (𝓞 F)).asIdeal := ⟨rfl⟩
   have := w.isMaximal
   have := (w.under (𝓞 F)).isMaximal
+  have hnorm : ∀ {L : Type} [Field L] [NumberField L] (v : HeightOneSpectrum (𝓞 L)),
+      normV v = Ideal.absNorm v.asIdeal := by
+    intro L _ _ v
+    rw [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
+  rw [hnorm, hnorm]
   exact (Ideal.absNorm_pow_inertiaDeg (w.under (𝓞 F)).asIdeal w.asIdeal).symm
 
 private theorem deg_sum (h2 : Module.finrank F E = 2) (v : HeightOneSpectrum (𝓞 F))

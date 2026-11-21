@@ -47,6 +47,8 @@ private theorem key {l : ℕ} [Fact l.Prime] {k : Type} [Field k] [CharP k l] {F
     · have := (hc.1 i i N).mul (hΨ.comp fun u : kˣ =>
         Ideal.Quotient.mk (maximalIdeal Q ^ N) (f (((u ^ w n i)⁻¹ : kˣ) : k)))
       convert this using 1
+      ext x
+      simp [χ, map_mul]
     · rw [← residue_eq_zero_iff, map_sub, map_one, sub_eq_zero, hχ, map_mul]
       have h2 : residue Q (ρ.r g i i) = residue Q (f ((F.Ψ g ^ w n i : kˣ) : k)) := hb.1 g i
       rw [h2, ← map_mul, mul_comm, hinv, map_one]

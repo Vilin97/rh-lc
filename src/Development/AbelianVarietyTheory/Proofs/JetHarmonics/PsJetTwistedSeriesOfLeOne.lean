@@ -25,9 +25,8 @@ open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalC
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ (PS Pt ev pt comp1 FGLaw FB)
 open ReciprocityTheory.ChartRestriction.G.TB (dLin)
-open ReciprocityTheory.ChartRestriction.G.TB.LogPf (logOf CZ)
+open ReciprocityTheory.ChartRestriction.G.TB.LogPf (CZ)
 open Formalism.MainNotions.ModuliIntegralCharts.H1 Formalism.MainNotions.ModuliIntegralCharts.H1.CIndFrFix
-open GlobalTheory.IndefiniteRowSideFullHecke.ScaledBilinearLog
 
 attribute [local instance] Over.cartesianMonoidalCategory
 

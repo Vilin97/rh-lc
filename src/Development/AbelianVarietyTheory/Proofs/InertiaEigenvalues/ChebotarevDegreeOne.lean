@@ -57,7 +57,8 @@ theorem chebotarevDegreeOne' : ChebotarevDegreeOne := by
   have key := hcross (σ.restrictScalars F) (fun x => σ.commutes x) fun ζ hζ => by
     have hq : ζ ^ (τ : ZMod m).val = ζ ^ normV w := by
       rw [← hτ, ZMod.val_natCast]
-      exact (pow_eq_pow_mod _ hζ).symm
+      simpa only [normV, Ideal.absNorm_eq_natCard] using
+        (pow_eq_pow_mod (Ideal.absNorm w.asIdeal) hζ).symm
     rw [hq]
     have h1 := not_valuation_lt_one_of_isPlaceOver hmw hB 1
     rw [pow_one] at h1

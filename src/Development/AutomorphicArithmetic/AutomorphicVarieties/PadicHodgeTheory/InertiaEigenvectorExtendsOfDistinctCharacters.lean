@@ -177,7 +177,7 @@ theorem UpperTheory.inertia_eigenvector_extends_of_distinct_characters :
     exact (mul_eq_zero.mp h2).resolve_right hcard0
   have hdim : Module.finrank ℂ W = n := by
     rw [← LinearMap.charpoly_natDegree (ρ 1), hchar 1]
-    rw [Polynomial.natDegree_finset_prod_X_sub_C_eq_card, Finset.card_univ, Fintype.card_fin]
+    rw [Polynomial.natDegree_finsetProd_X_sub_C_eq_card, Finset.card_univ, Fintype.card_fin]
   let b := basisOfLinearIndependentOfCardEqFinrank' yv hli (by rw [Fintype.card_fin, hdim])
   have hb : ∀ k, b k = yv k := fun k => by simp [b]
   have hspan : ∀ k y, E k y → y = b.repr y k • yv k := by

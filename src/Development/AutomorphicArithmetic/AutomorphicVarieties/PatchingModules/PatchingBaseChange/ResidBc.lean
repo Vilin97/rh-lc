@@ -26,7 +26,7 @@ private theorem star_eq {l : ℕ} [Fact l.Prime] (F : GFrame l) (O O' : Type) [C
 private theorem diag_map {H A B : Type} [Group H] [CommRing A] [CommRing B] {n : ℕ} (f : A →+* B)
     (χ : Fin n → H →* Aˣ) :
     (GDet.ofRep (diagRep χ)).map f = GDet.ofRep (diagRep fun i => pushCh f (χ i)) := by
-  rw [(UpperTheory.V.CA.d_gmap (GDet.ofRep (diagRep χ))).2.2.2]
+  rw [(UpperTheory.V.CA.d_gmap (GDet.ofRep (diagRep χ))).2.2.2 f (diagRep χ)]
   congr 1
   ext g a b
   by_cases hab : a = b

@@ -229,7 +229,6 @@ theorem projRep_projective_ample : ∀ (R σ : Type) [CommRing R] [Finite σ] (I
       obtain ⟨F, hF⟩ := (chart_affine H (e.symm i)).2 a
       refine ⟨MvPolynomial.rename e F, ?_⟩
       rw [MvPolynomial.eval₂Hom_rename, ← hF]
-      congr 2
   have hpr : IsProper Z.hom := ((isProjOver_iff_isProper_and_exists_isAmpleLB _).1 hp).1
   refine ⟨hp, hpr, (relAmple_iff_isAmpleLB_of_isAffine Z H.1).2 ?_⟩
   have e : ∀ i, nonzeroLocus (secToPow (th i) 1) = nonzeroLocus (th i) := fun i =>

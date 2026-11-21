@@ -44,8 +44,8 @@ private theorem ptFin_finite {O S : Type} [CommRing O] [IsLocalRing O] [IsAdicCo
     have h1 : maximalIdeal O ≤ P.comap (algebraMap O S) := Ideal.map_le_iff_le_comap.1 hJP
     have h2 : P.comap (algebraMap O S) = maximalIdeal O :=
       ((maximalIdeal.isMaximal O).eq_of_le (Ideal.comap_ne_top _ hP.ne_top) h1).symm
-    have h3 : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := O) P
-      (h2 ▸ maximalIdeal.isMaximal O)
+    have h3 : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := O) P
+      (by change (P.comap (algebraMap O S)).IsMaximal; rw [h2]; infer_instance)
     exact (eq_maximalIdeal h3).ge
   obtain ⟨n, hn⟩ := Ideal.exists_pow_le_of_le_radical_of_fg hrad (IsNoetherian.noetherian _)
   obtain ⟨N, hN, h⟩ := ptFin_pow (maximalIdeal S) hres n

@@ -391,9 +391,10 @@ section Groups
 variable {E R : Type} [Field E] [CommRing R] {ι : Type} [Fintype ι] [DecidableEq ι] {s : Set ι}
 
 theorem tri_mem (A : Ad E R) (hσ : ∀ x, A.σ (A.σ x) = x) (ε : ℤˣ) (g : GL (ι ⊕ ι) R) (h1 : g ∈ A.uSub ε ι)
-    (h2 : g ∈ stab R (Sum.inl '' s : Set (ι ⊕ ι))) : Tri s (g : Matrix (ι ⊕ ι) (ι ⊕ ι) R) where
-  col := fun r hr i hi => (h2 r hr _ ⟨i, hi, rfl⟩).1
-  row := row_of_stab A.σ hσ ε g h1 fun r hr c hc => (h2 r hr c hc).2
+    (h2 : g ∈ stab R (Sum.inl '' s : Set (ι ⊕ ι))) : Tri s (g : Matrix (ι ⊕ ι) (ι ⊕ ι) R) := by
+  constructor
+  · exact fun r hr i hi => (h2 r hr _ ⟨i, hi, rfl⟩).1
+  · exact row_of_stab A.σ hσ ε g h1 fun r hr c hc => (h2 r hr c hc).2
 
 variable [Fintype ↥sᶜ] [DecidableEq ↥sᶜ]
 

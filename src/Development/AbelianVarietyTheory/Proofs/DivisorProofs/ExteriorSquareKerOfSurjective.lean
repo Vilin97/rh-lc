@@ -47,7 +47,7 @@ noncomputable def descend {J : Type} (p : M →ₗ[R] H) (hp : Function.Surjecti
       · simp [h]
     simp only [e]
     rw [upd_congr p F hF _ j _ (c • Function.surjInv hp x)
-      (by simp [Function.surjInv_eq hp]), F.map_update_smul]
+      (by simp [Function.surjInv_eq hp]), F.map_update_smul, RingHom.id_apply]
   map_eq_zero_of_eq' := by
     intro v a b hv hab
     exact F.map_eq_zero_of_eq _ (by simp [hv]) hab

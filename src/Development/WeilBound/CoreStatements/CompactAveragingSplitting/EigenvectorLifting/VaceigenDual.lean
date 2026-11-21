@@ -22,7 +22,7 @@ theorem eq_liftV {v : Pl F} {a : AF F} (ha : At (evFin F v) a) : a = liftV v (ev
   (GlobalTheory.LatVacArith.eq_liftV_of_at ha).trans (GlobalTheory.LatVacArith.liftV_one_mul v a)
 
 theorem liftV_mul (v : Pl F) (t : Fv F v) (a : AF F) : liftV v t * a = liftV v (t * evFin F v a) :=
-  (eq_liftV (GlobalTheory.VacAny.at_mul_right (at_liftV v t) a)).trans (by rw [map_mul, evFin_liftV])
+  (eq_liftV (fun u hu => by rw [smul_eq_mul, ← mul_assoc, show u * liftV v t = 0 from at_liftV v t u hu, zero_mul])).trans (by rw [map_mul, evFin_liftV])
 
 theorem mem_int_of_psi {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (v : Pl F) (c : Fv F v)
     (h : ∀ t ∈ codiff F, ∀ a ∈ v.adicCompletionIntegers F, ψ (liftV v (a * (algebraMap F (Fv F v) t * c))) = 1) :

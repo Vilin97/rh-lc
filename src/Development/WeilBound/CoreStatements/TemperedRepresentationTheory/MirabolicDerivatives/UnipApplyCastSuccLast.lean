@@ -163,7 +163,6 @@ def twAct (ρ : Representation ℂ G V) (N : Subgroup G) (θ : N →* ℂˣ) {M 
   map_mul' a b := by
     ext v
     simp
-    rfl
 
 end Twisted
 

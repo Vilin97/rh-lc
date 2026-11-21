@@ -34,8 +34,8 @@ theorem isMonHom_of_mul_comp (f : G ⟶ H)
     rw [MonObj.one_eq_one, MonObj.one_eq_one]
     exact map_one (MonoidHom.mk' (fun x : 𝟙_ (Over S) ⟶ G ↦ x ≫ f) (h _))
   mul_hom := by
-    rw [MonObj.mul_eq_mul, h, MonObj.mul_eq_mul, MonObj.comp_mul]
-    simp
+    rw [MonObj.mul_eq_mul G, h, MonObj.mul_eq_mul H, MonObj.comp_mul,
+      tensorHom_fst, tensorHom_snd]
 
 theorem isMonHom_mul [IsCommMonObj H] (f g : G ⟶ H) [IsMonHom f] [IsMonHom g] :
     IsMonHom (f * g) :=
@@ -153,6 +153,9 @@ def hom (x : Pts a T) : T ⟶ G := Additive.toMul x
 
 @[simp] theorem mk_hom (x : Pts a T) : mk a x.hom = x := rfl
 
+@[ext] theorem ext {x y : Pts a T} (h : x.hom = y.hom) : x = y :=
+  (mk a).symm.injective h
+
 variable [IsCommMonObj G] [IsCommMonObj H] [IsCommMonObj K]
 
 instance : AddCommGroup (Pts a T) := inferInstanceAs (AddCommGroup (Additive (T ⟶ G)))
@@ -174,15 +177,15 @@ theorem mk_comp_act (x : T ⟶ G) (r : O) : mk a (x ≫ a.act r) = r • mk a x 
 
 def pre (a : OAct O G) (u : T' ⟶ T) : Pts a T →ₗ[O] Pts a T' where
   toFun x := mk a (u ≫ x.hom)
-  map_add' x y := ext (MonObj.comp_mul u x.hom y.hom)
-  map_smul' r x := ext (Category.assoc u x.hom (a.act r)).symm
+  map_add' x y := Pts.ext (MonObj.comp_mul u x.hom y.hom)
+  map_smul' r x := Pts.ext (Category.assoc u x.hom (a.act r)).symm
 
 @[simp] theorem hom_pre (u : T' ⟶ T) (x : Pts a T) : (pre a u x).hom = u ≫ x.hom := rfl
 
 def post {f : G ⟶ H} (hf : IsLinearHom a b f) (T : Over S) : Pts a T →ₗ[O] Pts b T where
   toFun x := mk b (x.hom ≫ f)
-  map_add' x y := ext (by have := hf.1; exact MonObj.mul_comp x.hom y.hom f)
-  map_smul' r x := ext (by simp [hf.comm])
+  map_add' x y := Pts.ext (by have := hf.1; exact MonObj.mul_comp x.hom y.hom f)
+  map_smul' r x := Pts.ext (by simp [hf.comm])
 
 @[simp] theorem hom_post {f : G ⟶ H} (hf : IsLinearHom a b f) (x : Pts a T) :
     (post hf T x).hom = x.hom ≫ f := rfl
@@ -194,7 +197,8 @@ theorem pre_post {f : G ⟶ H} (hf : IsLinearHom a b f) (u : T' ⟶ T) (x : Pts 
   ext; simp
 
 def postEquiv (e : G ≅ H) (he : IsLinearHom a b e.hom) (T : Over S) : Pts a T ≃ₗ[O] Pts b T :=
-  LinearEquiv.ofLinear (post he T) (post (he.inv e) T) (by ext x; simp) (by ext x; simp)
+  LinearEquiv.ofLinearMap (post he T) (post (he.inv e) T)
+    (LinearMap.ext fun x ↦ Pts.ext (by simp)) (LinearMap.ext fun x ↦ Pts.ext (by simp))
 
 section Yoneda
 
@@ -298,7 +302,6 @@ theorem induction_on {P : (T ⟶ H) → Prop} (y : T ⟶ H) (one : P 1)
   rw [e]
   clear hz e
   induction z with
-  | zero => simpa using one
   | tmul m x => simpa using tmul m x.hom
   | add z w hz hw => simpa using mul _ _ hz hw
 
@@ -371,20 +374,20 @@ theorem hom_equiv_comp_map (φ : M →ₗ[O] M') {f : G ⟶ G'} (hf : IsLinearHo
     (h.equiv T z).hom ≫ h.map h' φ hf =
       (h'.equiv T (TensorProduct.map φ (Pts.post hf T) z)).hom := by
   induction z with
-  | tmul m x => simp
+  | tmul m x => simp [Category.assoc, tmul_map]
   | add z w hz hw => simp only [map_add (f := _), Pts.hom_add, MonObj.mul_comp, hz, hw]
 
 @[simp] theorem map_id : h.map h LinearMap.id (IsLinearHom.id a) = 𝟙 H :=
-  h.hom_ext fun m ↦ by simp
+  h.hom_ext fun m ↦ by simp [tmul_map]
 
 theorem map_add_left (φ ψ : M →ₗ[O] M') {f : G ⟶ G'} (hf : IsLinearHom a a' f) :
     h.map h' (φ + ψ) hf = h.map h' φ hf * h.map h' ψ hf := by
   have := isMonHom_mul (h.map h' φ hf) (h.map h' ψ hf)
-  exact h.hom_ext fun m ↦ by simp [MonObj.comp_mul, tmul_add]
+  exact h.hom_ext fun m ↦ by simp [MonObj.comp_mul, tmul_map, tmul_add]
 
 @[simp] theorem map_zero_left {f : G ⟶ G'} (hf : IsLinearHom a a' f) : h.map h' 0 hf = 1 := by
   have := isMonHom_one (G := H) (H := H')
-  exact h.hom_ext fun m ↦ by simp
+  exact h.hom_ext fun m ↦ by simp [tmul_map]
 
 end Map
 
@@ -402,7 +405,7 @@ instance isMonHom_mapLeft (φ : M →ₗ[O] M') : IsMonHom (h.mapLeft h' φ) :=
 
 @[reassoc (attr := simp)]
 theorem tmul_mapLeft (φ : M →ₗ[O] M') (m : M) : h.tmul m ≫ h.mapLeft h' φ = h'.tmul (φ m) := by
-  simp [mapLeft]
+  simp [mapLeft, tmul_map]
 
 theorem hom_equiv_comp_mapLeft (φ : M →ₗ[O] M') (z : M ⊗[O] Pts a T) :
     (h.equiv T z).hom ≫ h.mapLeft h' φ = (h'.equiv T (φ.rTensor _ z)).hom := by
@@ -444,7 +447,7 @@ instance isMonHom_mapRight {f : G ⟶ G'} (hf : IsLinearHom a a' f) :
 
 theorem tmul_mapRight {f : G ⟶ G'} (hf : IsLinearHom a a' f) (m : M) :
     h.tmul m ≫ h.mapRight h' hf = f ≫ h'.tmul m := by
-  simp [mapRight]
+  simp [mapRight, tmul_map]
 
 end MapRight
 
@@ -480,8 +483,9 @@ def ofIso (h : IsTensor H b G a M) (e : H ≅ H') (he : IsLinearHom b b' e.hom) 
     IsTensor H' b' G a M where
   equiv T := h.equiv T ≪≫ₗ Pts.postEquiv e he T
   natural u z := by
-    ext
-    simp [h.natural]
+    change Pts.post he _ (h.equiv _ ((Pts.pre a u).lTensor M z)) =
+      Pts.pre b' u (Pts.post he _ (h.equiv _ z))
+    rw [h.natural, Pts.pre_post]
 
 def self (a : OAct O G) : IsTensor G a G a O where
   equiv T := TensorProduct.lid O (Pts a T)
@@ -515,7 +519,7 @@ theorem tmul_algAct (c : O') (m : M) : h.tmul m ≫ (h.algAct O').act c = h.tmul
 @[simp] theorem algAct_algebraMap (c : O) : (h.algAct O').act (algebraMap O O' c) = b.act c := by
   have := b.hom c
   have := (h.algAct O').hom (algebraMap O O' c)
-  exact h.hom_ext fun m ↦ by simp [tmul_smul]
+  exact h.hom_ext fun m ↦ by rw [tmul_algAct, algebraMap_smul, tmul_smul]
 
 
 variable (O') in
@@ -534,7 +538,7 @@ def algEquiv (T : Over S) : M ⊗[O] Pts a T ≃ₗ[O'] Pts (h.algAct O') T wher
     have := (h.algAct O').hom c
     apply Pts.ext
     induction z with
-    | tmul m x => simp [smul_tmul']
+    | tmul m x => simp [smul_tmul', Category.assoc, tmul_algAct]
     | add z w hz hw =>
       simp only [Pts.hom_mk, RingHom.id_apply, Pts.hom_smul] at hz hw ⊢
       simp only [smul_add, map_add (f := _), Pts.hom_add, hz, hw, MonObj.mul_comp]
@@ -561,7 +565,7 @@ def trans {K : Over S} [GrpObj K] [IsCommMonObj K] {c : OAct O' K} {N : Type} [A
     | tmul w x =>
       induction w with
       | add v w hv hw => simp only [add_tmul, map_add (f := _), hv, hw]
-      | tmul n m => ext; simp
+      | tmul n m => apply Pts.ext; simp [algEquiv]
 
 end Algebra
 
@@ -588,7 +592,7 @@ def powAct {n : ℕ} (p : IsPowGrp G' G n) (a : OAct O G) : OAct O G' where
   hom c := isMonHom_of_mul_comp _ fun T x y ↦ pow_hom_ext p fun i ↦ by
     have := p.hom i
     have := a.hom c
-    simp [MonObj.mul_comp, MonObj.mul_comp_assoc]
+    simp [MonObj.mul_comp]
   one := pow_hom_ext p fun i ↦ by simp [a.one]
   mul c d := pow_hom_ext p fun i ↦ by simp [a.mul]
   add c d := pow_hom_ext p fun i ↦ by
@@ -623,13 +627,13 @@ def pow {n : ℕ} (p : IsPowGrp G' G n) (a : OAct O G) :
     (Pts.powEquiv p a T).symm
   natural u z := by
     induction z with
-    | tmul m x => exact Pts.ext (pow_hom_ext p fun i ↦ by simp)
+    | tmul m x => exact Pts.ext (pow_hom_ext p fun i ↦ by simp [Pts.powEquiv])
     | add z w hz hw => simp only [map_add (f := _), hz, hw]
 
 @[reassoc (attr := simp)]
 theorem pow_tmul_pr {n : ℕ} (p : IsPowGrp G' G n) (a : OAct O G) (v : Fin n → O) (i : Fin n) :
     (pow p a).tmul v ≫ p.pr i = a.act (v i) := by
-  simp [tmul, pow, -hom_equiv_tmul]
+  simp [tmul, pow, Pts.powEquiv, -hom_equiv_tmul]
 
 theorem pow_mapLeft_pr {n k : ℕ} (p : IsPowGrp G' G n) (q : IsPowGrp H G k) (a : OAct O G)
     (A : Matrix (Fin k) (Fin n) O) (i : Fin k) :
@@ -821,7 +825,7 @@ theorem fixProj_incl {K : Over S} {p : K ⟶ K} (hp : p ≫ p = p) : fixProj hp 
 
 theorem fixIncl_proj {K : Over S} {p : K ⟶ K} (hp : p ≫ p = p) :
     fixIncl p ≫ fixProj hp = 𝟙 _ := by
-  rw [← cancel_mono (fixIncl p)]; simp
+  rw [← cancel_mono (fixIncl p), Category.assoc, fixProj_incl, fixIncl_comp, Category.id_comp]
 
 @[reducible] def fixGrp {p : K ⟶ K} [IsMonHom p] (hp : p ≫ p = p) : GrpObj (fixObj p) :=
   haveI : IsMonHom (fixProj hp ≫ fixIncl p) := by rw [fixProj_incl]; infer_instance
@@ -832,7 +836,7 @@ theorem isMonHom_fixIncl {p : K ⟶ K} [IsMonHom p] (hp : p ≫ p = p) :
   letI := fixGrp hp
   refine isMonHom_of_mul_comp _ fun T x y ↦ ?_
   change (lift x y ≫ (fst _ _ ≫ fixIncl p * snd _ _ ≫ fixIncl p) ≫ fixProj hp) ≫ fixIncl p = _
-  simp [MonObj.mul_comp, MonObj.comp_mul]
+  simp [fixProj_incl, MonObj.mul_comp, MonObj.comp_mul, fixIncl_comp]
 
 theorem isMonHom_fixProj {p : K ⟶ K} [IsMonHom p] (hp : p ≫ p = p) :
     letI := fixGrp hp; IsMonHom (fixProj hp) := by
@@ -840,7 +844,7 @@ theorem isMonHom_fixProj {p : K ⟶ K} [IsMonHom p] (hp : p ≫ p = p) :
   have := isMonHom_fixIncl hp
   refine isMonHom_of_mul_comp _ fun T x y ↦ ?_
   rw [← cancel_mono (fixIncl p)]
-  simp [MonObj.mul_comp]
+  simp [fixProj_incl, MonObj.mul_comp]
 
 theorem isCommMonObj_fix [IsCommMonObj K] {p : K ⟶ K} [IsMonHom p] (hp : p ≫ p = p) :
     letI := fixGrp hp; IsCommMonObj (fixObj p) := by
@@ -883,7 +887,7 @@ def IsTensor.ofRetract {G : Over S} [GrpObj G] [IsCommMonObj G] [IsCommMonObj K]
     (hst : t ∘ₗ s = LinearMap.id) {i : H ⟶ K} {r : K ⟶ H} (hi : IsLinearHom b c i)
     (hr : IsLinearHom c b r) (hir : i ≫ r = 𝟙 H) (hri : r ≫ i = k.mapLeft k (s ∘ₗ t)) :
     IsTensor H b G a M where
-  equiv T := LinearEquiv.ofLinear
+  equiv T := LinearEquiv.ofLinearMap
     (Pts.post hr T ∘ₗ (k.equiv T).toLinearMap ∘ₗ s.rTensor _)
     (t.rTensor _ ∘ₗ (k.equiv T).symm.toLinearMap ∘ₗ Pts.post hi T)
     (by

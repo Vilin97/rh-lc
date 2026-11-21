@@ -30,6 +30,10 @@ theorem pic : ∀ (Q : Out.PolAV (Sp ℂ)) (M : LB Q.A.left), M.IsLB → (∃ u 
   obtain ⟨x, hx⟩ := GlobalTheory.T.exists_section_primitiveBundle_translate_localRing GlobalTheory.abelianSchemeLaws_all.1 GlobalTheory.abelianSchemeLaws_all.2 ℂ Q _ hO hu
   refine ⟨x, ?_⟩
   have e := (cls_eq_iff hO (LB.isLB_linComb Q.isLB _ _)).2 hx
+  run_tac do
+    let env ← Lean.getEnv
+    for (n, _) in env.constants.toList do
+      if n.toString.startsWith "GlobalTheory.CechPic.cls_" then Lean.logInfo m!"{n}"
   rw [cls_div hM Q.isLB, cls_linComb Q.isLB, Fin.sum_univ_two] at e
   refine (cls_eq_iff hM (pull_isLB Q.isLB _)).1 ?_
   rw [cls_pull Q.isLB]

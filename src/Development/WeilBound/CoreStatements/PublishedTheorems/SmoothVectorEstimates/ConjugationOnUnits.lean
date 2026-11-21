@@ -41,7 +41,8 @@ theorem isOpen_units : IsOpen {M : LieI ι a | IsUnit (Matrix.of M)} := by
   rw [this]; exact Units.isOpen.preimage hc
 
 theorem isUnit_oneI : IsUnit (Matrix.of (oneI ι a)) := by
-  simp [oneI]
+  change IsUnit (1 : Matrix (Fin a) (Fin a) (ι → ℂ))
+  exact isUnit_one
 
 def conjL (A B : LieI ι a) : LieI ι a →L[ℝ] LieI ι a :=
   LinearMap.toContinuousLinearMap
@@ -210,7 +211,8 @@ theorem hasFDerivAt_orb_mul {w : X} {Dw : LieI ι a →L[ℝ] X} (hw : HasFDeriv
     simp only [ContinuousLinearMap.coe_restrictScalars', orb_eq, opI_mul, conjL_apply, hm]
   have h1 : conjL T S (oneI ι a) = oneI ι a := by
     apply Matrix.of.injective
-    simp [conjL_apply, of_mulI, oneI, hTS]
+    change Matrix.of T * (1 * Matrix.of S) = 1
+    simpa using hTS
   have h2 : HasFDerivAt (fun M => orb ρ w (conjL T S M)) (Dw.comp (conjL T S)) (oneI ι a) := by
     have hw2 := hw
     rw [← h1] at hw2
@@ -240,6 +242,7 @@ theorem hasFDerivAt_FT_param (y : V) {Ψ : P × V → X} {s : Set P} {k : Set V}
     {p0 : P} (hp0 : p0 ∈ s) (L : V → P →L[ℝ] X) (hL : ∀ x, HasFDerivAt (fun p => Ψ (p, x)) (L x) p0) :
     ∃ D' : P →L[ℝ] X, (∀ Z, D' Z = ∫ x, Complex.exp (-(β x y : ℝ) * Complex.I) • L x Z ∂μ) ∧
       HasFDerivAt (fun p => FT μ β (fun x => Ψ (p, x)) y) D' p0 := by
+  open scoped Pointwise in
   set f : V → ℂ := fun t => Complex.exp (-(β t y : ℝ) * Complex.I) with hf_def
   have hf : LocallyIntegrable f μ := (continuous_ch β y).locallyIntegrable
   set g : P → V → X := fun p t => Ψ (p, -t) with hg_def
@@ -380,6 +383,8 @@ theorem good_gen (hS4 : S4) (hβ : ∀ y, (∀ x, β x y = 0) → y = 0)
       rw [← ContinuousLinearMap.integral_comp_comm _
         (integrable_ch μ β (hF η w hη hηO hw).continuous (hFc η w hηc) y)]
       congr 1
+      funext x
+      simp [hΨ, orb_eq, opI_mul]
     rw [e]
     exact hder
 

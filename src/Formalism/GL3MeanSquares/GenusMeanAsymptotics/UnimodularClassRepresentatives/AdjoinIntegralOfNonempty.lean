@@ -94,11 +94,7 @@ theorem adjoin_integral_of_nonempty (hK : Formalism.HermitianLatticesTheory.IsCM
 
 private theorem isLattice_gmap_of_isLattice (g : V ≃ₗ[K] V) {L : Submodule (𝓞 K) V}
     (hL : Submodule.IsLattice K L) : Submodule.IsLattice K (Formalism.HermitianLatticesTheory.gmap g L) := by
-  obtain ⟨hfg, hspan⟩ := hL
-  refine ⟨hfg.map _, ?_⟩
-  show Submodule.span K ((L.map ((g : V →ₗ[K] V).restrictScalars (𝓞 K)) : Set V)) = ⊤
-  rw [Submodule.map_coe, LinearMap.coe_restrictScalars, Submodule.span_image, hspan,
-    Submodule.map_top, LinearEquiv.range]
+  exact Submodule.IsLattice.of_fg K (hL.fg.map _)
 
 private theorem comap_algebraMap_isMaximal_of_isMaximal (P : Ideal (𝓞 K)) (hP : P.IsMaximal) :
     (P.comap (algebraMap (𝓞 F) (𝓞 K))).IsMaximal := by

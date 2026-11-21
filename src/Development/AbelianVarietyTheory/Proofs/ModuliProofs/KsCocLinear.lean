@@ -34,23 +34,29 @@ theorem locDerK_comb {K : Type} [Field K] {Y X : Scheme.{0}} {R : Type} [CommRin
     {m : Y ⟶ X} {D D' : R → K} {c : K} {W₀ : X.Opens} {d d' d'' : ∀ W : X.Opens, Γ(X, W) → Γ(Y, m ⁻¹ᵁ W)}
     (h : LocDerK q p m D W₀ d) (h' : LocDerK q p m D' W₀ d')
     (h'' : LocDerK q p m (fun r => c * D r + D' r) W₀ d'') :
-    LocDerK q p m (fun _ => 0) W₀ (fun W f => d'' W f - constFn q (m ⁻¹ᵁ W) c * d W f - d' W f) where
-  add W hW f f' := by
+    LocDerK q p m (fun _ => 0) W₀ (fun W f => d'' W f - constFn q (m ⁻¹ᵁ W) c * d W f - d' W f) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro W hW f f'
     rw [h.add W hW, h'.add W hW, h''.add W hW]; ring
-  mul W hW f f' := by
+  · intro W hW f f'
     rw [h.mul W hW, h'.mul W hW, h''.mul W hW]; ring
-  res W W' l hW f := by
+  · intro W W' l hW f
     rw [h.res W W' l hW, h'.res W W' l hW, h''.res W W' l hW, rsT_sub, rsT_sub, rsT_mul,
       rsT_constFn q (m.preimage_mono l)]
-  base W hW r := by
+  · intro W hW r
     rw [h.base W hW, h'.base W hW, h''.base W hW, constFn_lin]
 
 theorem locDerK_zero {K : Type} [Field K] {Y X : Scheme.{0}} {R : Type} [CommRing R] (q : Y ⟶ Sp K) (p : X ⟶ Sp R)
-    (m : Y ⟶ X) (W₀ : X.Opens) : LocDerK q p m (fun _ => 0) W₀ (fun _ _ => 0) where
-  add W hW f f' := by simp
-  mul W hW f f' := by simp
-  res W W' l hW f := by rw [rsT_zero]
-  base W hW r := by simp [constFn]
+    (m : Y ⟶ X) (W₀ : X.Opens) : LocDerK q p m (fun _ => 0) W₀ (fun _ _ => 0) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro W hW f f'
+    simp
+  · intro W hW f f'
+    simp
+  · intro W W' l hW f
+    rw [rsT_zero]
+  · intro W hW r
+    simp [constFn]
 
 theorem basis_id (K : Type) [Field K] (A₀ : Over (Sp K)) [GrpObj A₀] (g : ℕ) (v : Fin g → (epsR K ⟶ A₀))
     (dd : Fin g → ∀ O : A₀.left.Opens, Γ(A₀.left, O) → Γ(A₀.left, O)) (hs : Smooth A₀.hom) (hv : IsLieBasis v)

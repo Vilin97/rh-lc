@@ -31,15 +31,45 @@ private theorem val_unif : valuation k (unif k : k) = uniformizer k := by
   exact le_antisymm (le_uniformizer_iff.2 unif_spec.1) (hp ▸ unif_spec.2 p (hp ▸ uniformizer_lt_one))
 
 private theorem eq_of_unram (ξ ξ' : kˣ →* ℂˣ) (h : IsUnram (ξ * ξ'⁻¹)) (e : ξ (unif k) = ξ' (unif k)) : ξ = ξ' := by
-  have h1 : IsUnram (1 : kˣ →* ℂˣ) := fun _ _ => rfl
-  have a := eq_unrChar h (val_unif (k := k))
-  have b := eq_unrChar h1 (val_unif (k := k))
-  have c : (ξ * ξ'⁻¹) (unif k) = 1 := by
-    rw [MonoidHom.mul_apply, MonoidHom.inv_apply, e, mul_inv_cancel]
-  rw [c] at a
-  rw [MonoidHom.one_apply] at b
-  rw [← b] at a
-  exact mul_inv_eq_one.1 a
+  let ord (x : kˣ) : ℤ :=
+    -WithZero.log (IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt k (valuation k (x : k)))
+  have ord_mul (x y : kˣ) : ord (x * y) = ord x + ord y := by
+    simp only [ord, Units.val_mul, map_mul]
+    rw [WithZero.log_mul (by simp) (by simp)]
+    ring
+  have ord_one : ord (unif k) = 1 := by
+    set φ := IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt k
+    have h0 : φ (uniformizer k) ≠ 0 := by simp
+    have key : φ (uniformizer k) = WithZero.exp (-1) := by
+      apply le_antisymm
+      · have ht : φ (uniformizer k) < φ 1 := φ.strictMono uniformizer_lt_one
+        rw [map_one, ← WithZero.exp_log h0, ← WithZero.exp_zero, WithZero.exp_lt_exp] at ht
+        rw [← WithZero.exp_log h0, WithZero.exp_le_exp]
+        omega
+      · have ht : φ.symm (WithZero.exp (-1)) ≤ uniformizer k := by
+          rw [le_uniformizer_iff, ← map_one φ.symm]
+          exact φ.symm.strictMono (by rw [← WithZero.exp_zero, WithZero.exp_lt_exp]; omega)
+        simpa using φ.strictMono.monotone ht
+    simp [ord, val_unif, φ, key]
+  have val_of_ord_zero (x : kˣ) (hx : ord x = 0) : valuation k (x : k) = 1 := by
+    set φ := IsNonarchimedeanLocalField.valueGroupWithZeroIsoInt k
+    have h0 : φ (valuation k (x : k)) ≠ 0 := by simp
+    have h1 : WithZero.log (φ (valuation k (x : k))) = 0 := neg_eq_zero.1 hx
+    apply φ.strictMono.injective
+    rw [map_one, ← WithZero.exp_log h0, h1, WithZero.exp_zero]
+  let o : kˣ →* Multiplicative ℤ := MonoidHom.mk' (fun x => .ofAdd (ord x)) fun x y => by
+    rw [ord_mul, ofAdd_add]
+  apply mul_inv_eq_one.mp
+  refine MonoidHom.ext fun x => ?_
+  have h0 : o (x / unif k ^ ord x) = 1 := by
+    rw [_root_.map_div, map_zpow, show o (unif k) = .ofAdd 1 from congrArg Multiplicative.ofAdd ord_one,
+      ← ofAdd_zsmul, smul_eq_mul, mul_one]
+    exact div_self' _
+  have hx := h _ (val_of_ord_zero _ (ofAdd_eq_one.mp h0))
+  have he : (ξ * ξ'⁻¹) (unif k) = 1 := by
+    simp [e]
+  rw [_root_.map_div, map_zpow, he, one_zpow, div_one] at hx
+  exact hx
 
 private noncomputable def pfac (χ : kˣ →* ℂˣ) (y : IrrGL (k := k)) : ℂ[X] :=
   if h : ∃ ξ : kˣ →* ℂˣ, (∃ hξ, y = IrrGL.ofChar ξ hξ) ∧ IsUnram (ξ * χ) then

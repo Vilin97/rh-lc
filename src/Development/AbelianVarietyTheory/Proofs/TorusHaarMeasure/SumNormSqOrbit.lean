@@ -125,9 +125,9 @@ theorem exists_flat : LineBundleFirstBoundGlobalGeneration (E := E) → MahlerCo
         (fun x => (∑ k, ‖Xa.w k x‖ ^ 2) / ∑ i : Fin (nd X), ‖sf i.succ x‖ ^ 2) (C \ U) := by
       refine ContinuousOn.div ?_ ?_ fun x hx => (hpos x (hCd hx.1) hx.2).ne'
       · exact continuousOn_finsetSum _ fun k _ =>
-          (((hwsec k).1.continuousOn.mono fun x hx => hCd hx.1).norm.pow 2)
+          (((hwsec k).1.continuousOn.mono fun x (hx : x ∈ C \ U) => hCd hx.1).norm.pow 2)
       · exact continuousOn_finsetSum _ fun k _ =>
-          (((hsec k.succ).1.continuousOn.mono fun x hx => hCd hx.1).norm.pow 2)
+          (((hsec k.succ).1.continuousOn.mono fun x (hx : x ∈ C \ U) => hCd hx.1).norm.pow 2)
     obtain ⟨M, hM⟩ := (hCU.image_of_continuousOn hcont).bddAbove
     refine ⟨max M (|K| * (ε⁻¹ + 1)), fun x hx hxU' => ?_⟩
     rw [sum_pnorm_sq_eq, sum_pnorm_sq_eq, ← mul_assoc]

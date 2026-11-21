@@ -148,7 +148,7 @@ theorem normOne_relDet {L L' : Submodule (𝓞 E) (Sp E n)} (hL : IsSdLat L) (hL
   rw [star_div₀, div_mul_div_comm, map_div₀, mul_comm (dt _), mul_comm (dt _), h1, h2, map_one, div_one]
 
 theorem isSdLat_of {L : Submodule (𝓞 E) (Sp E n)} (h : IsSDLat E n L) : IsSdLat L := by
-  refine ⟨⟨h.1, h.2.1⟩, ?_⟩
+  refine ⟨Submodule.IsLattice.of_fg E h.1, ?_⟩
   ext x
   rw [mem_dual, h.2.2]
   refine forall₂_congr fun y _ => ?_

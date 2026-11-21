@@ -50,8 +50,8 @@ theorem exists_model (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G] [
   have h2 : ((TensorProduct.piScalarRight R R' R' (Fin g)).symm.trans hb.equiv) (fun i => c (e i)) = j e := by
     rw [LinearEquiv.trans_apply, h1, IsBaseChange.equiv_tmul, one_smul]
     rfl
-  change M.Lifts c (𝟙 _) e (M'.pt (((TensorProduct.piScalarRight R R' R' (Fin g)).symm.trans hb.equiv)
-    (fun i => c (e i))))
+  change ((M'.pt (((TensorProduct.piScalarRight R R' R' (Fin g)).symm.trans hb.equiv)
+    (fun i => c (e i)))).left ≫ 𝟙 _) = _
   rw [h2]
   exact hj e
 

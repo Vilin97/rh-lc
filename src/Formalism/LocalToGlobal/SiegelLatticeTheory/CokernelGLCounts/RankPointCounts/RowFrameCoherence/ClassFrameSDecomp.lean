@@ -20,22 +20,22 @@ variable {D : Formalism.BasicNotions.D7} (X : HidaSetting D)
 
 theorem frameLoc (w : D.what₂.Word) (v : NumberField.InfinitePlace X.B.I.F) :
     PI.SchurPlaces.LeviLA.Frame (X.B.I.ε v) (fun a => rv X.B.I v (X.eR a)) (fun a => rv X.B.I v (X.fR a))
-      (rv X.B.I v (X.zR w)) (X.wfr w v) where
-  ee := (Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v).ee
-  ef := (Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v).ef
-  ff := (Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v).ff
-  ez := (Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v).ez
-  fz := (Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v).fz
-  ew := (Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v).ew
-  fw := (Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v).fw
-  zw := (Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v).zw
-  ww := (Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v).ww
-  zz := fun h0 =>
-    (Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v).T_ne
-      (neg_eq_zero.1 (((Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v).zz).symm.trans h0))
-  card := by
-    have h := (Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v).card
-    omega
+      (rv X.B.I v (X.zR w)) (X.wfr w v) := by
+  let fr := Formalism.L2.SG.RealObj.InfCut.PtRepPf.frU X w v
+  exact
+    { ee := fr.ee
+      ef := fr.ef
+      ff := fr.ff
+      ez := fr.ez
+      fz := fr.fz
+      ew := fr.ew
+      fw := fr.fw
+      zw := fr.zw
+      ww := fr.ww
+      zz := fun h0 => fr.T_ne (neg_eq_zero.1 (fr.zz.symm.trans h0))
+      card := by
+        have h := fr.card
+        omega }
 
 end LocalFrameDecomposition
 

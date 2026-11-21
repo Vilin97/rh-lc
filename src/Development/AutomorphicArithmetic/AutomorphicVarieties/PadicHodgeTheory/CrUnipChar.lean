@@ -148,7 +148,7 @@ private theorem fil {l : ℕ} [Fact l.Prime] {G : Type} [Group G] (φ : G →* G
     · exact fun lam => hanti h (ha lam)
     have key : ∀ m, a ≤ m → m ≤ 0 → ∀ lam, ctr lam x ∈ F m := by
       intro m hm
-      induction m, hm using Int.le_induction with
+      induction m, hm using Int.leInduction with
       | base => exact fun _ => ha
       | succ m hm ih => exact fun h => up x hx m (by omega) (ih (by omega))
     exact key 0 h le_rfl
@@ -156,7 +156,7 @@ private theorem fil {l : ℕ} [Fact l.Prime] {G : Type} [Group G] (φ : G →* G
     have h1 := (mem_iff (F 1) x).1 hx.2
     have key : ∀ m : ℤ, 1 ≤ m → ∀ lam, ctr lam x ∈ F m := by
       intro m hm
-      induction m, hm using Int.le_induction with
+      induction m, hm using Int.leInduction with
       | base => exact h1
       | succ m hm ih => exact up x hx.1 m (by omega) ih
     have h0 : ∀ lam, ctr lam x = 0 := fun lam => ((PP l).PD K).Fil_sep _ fun a =>

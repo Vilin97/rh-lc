@@ -16,17 +16,21 @@ noncomputable section
 open Classical
 
 theorem ptEntry_append_start (rest : C.LPt) : ∀ (H : C.LPt) (a b : ℕ),
-    D.ptEntry (H ++ rest) (D.ptSize H + a) b = if D.ptSize H ≤ b then D.ptEntry rest a (b - D.ptSize H) else 0
-  | [], a, b => by simp [D.ptSize]
-  | (s, t) :: H', a, b => by
-    have ih := ptEntry_append_start rest H' a (b - s)
+    D.ptEntry (H ++ rest) (D.ptSize H + a) b = if D.ptSize H ≤ b then D.ptEntry rest a (b - D.ptSize H) else 0 := by
+  intro H
+  induction H with
+  | nil => simp [D.ptSize]
+  | cons block H' ih =>
+    obtain ⟨s, t⟩ := block
+    intro a b
     have hsz : D.ptSize ((s, t) :: H') = s + D.ptSize H' := by simp [D.ptSize]
     rw [hsz]
     show D.ptEntry ((s, t) :: (H' ++ rest)) (s + D.ptSize H' + a) b = _
     simp only [D.ptEntry]
     rw [if_neg (by omega)]
     by_cases hb : s ≤ b
-    · rw [if_pos ⟨by omega, hb⟩, show s + D.ptSize H' + a - s = D.ptSize H' + a by omega, ih]
+    · rw [if_pos ⟨by omega, hb⟩, show s + D.ptSize H' + a - s = D.ptSize H' + a by omega,
+        ih a (b - s)]
       by_cases h2 : D.ptSize H' ≤ b - s
       · rw [if_pos h2, if_pos (by omega), show b - s - D.ptSize H' = b - (s + D.ptSize H') by omega]
       · rw [if_neg h2, if_neg (by omega)]

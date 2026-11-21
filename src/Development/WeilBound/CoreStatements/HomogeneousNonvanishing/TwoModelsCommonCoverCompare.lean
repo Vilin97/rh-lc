@@ -17,8 +17,11 @@ namespace PositivityTheory.UnitarySelfGeneration
 section
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {S S' S'' : Scheme.{0}}
 
+#check ReciprocityTheory.ChartRestriction.G.Geo.Tor.sabPull
+#check GlobalTheory.ModFam.exists_sabPull
+#check Out.proved_CubePullSt
 theorem tm_pull (t : SAB H S) (f : S' ⟶ S) : ∃ t' : SAB H S', Nonempty (SABMap t' t f) := by
-  obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.proved_CubePullSt f t
+  obtain ⟨PP, cub, sym, adj, prim, m, hm⟩ := sabPull Out.proved_CubePullSt f t
   exact ⟨_, ⟨m⟩⟩
 
 theorem tm_comp {t : SAB H S} {t' : SAB H S'} {t'' : SAB H S''} {f : S' ⟶ S} {g : S'' ⟶ S'}

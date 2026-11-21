@@ -62,6 +62,7 @@ private theorem exists_small (v : HeightOneSpectrum (𝓞 F)) (g : (WithZero (Mu
   rw [h0, map_zero] at h1
   exact (WithZero.exp_ne_zero) h1.symm
 
+set_option maxHeartbeats 200000 in
 private theorem ce_compl (v : HeightOneSpectrum (𝓞 F)) (w : HeightOneSpectrum (𝓞 E)) [w.asIdeal.LiesOver v.asIdeal] :
     IsClosedEmbedding (completionMap v w) := by
   have he0 : w.asIdeal.ramificationIdx (𝓞 F) ≠ 0 := (Ideal.ramificationIdx_pos (R := 𝓞 F) w.asIdeal).ne'
@@ -73,7 +74,8 @@ private theorem ce_compl (v : HeightOneSpectrum (𝓞 F)) (w : HeightOneSpectrum
       exact this.le_comap
     · intro s hs
       obtain ⟨γ, hγ⟩ := Valued.mem_nhds_zero.1 hs
-      obtain ⟨a, ha0, ha⟩ := exists_small v (Units.map (MonoidWithZeroHom.ValueGroup₀.embedding (f := (.ofClass (Valued.v : Valuation (v.adicCompletion F) _)))) γ)
+      obtain ⟨a, ha0, ha⟩ := exists_small v (Units.map (MonoidWithZeroHom.ValueGroup₀.embedding
+        (f := (Valued.v : v.adicCompletion F →*₀ WithZero (Multiplicative ℤ)))).toMonoidHom γ)
       have hfa : completionMap v w a ≠ 0 := (map_ne_zero_iff _ (completionMap v w).injective).2 ha0
       have hopen := Valued.isOpen_ball (w.adicCompletion E) ((Valued.v : Valuation (w.adicCompletion E) _).restrict (completionMap v w a))
       have hmem : (0 : w.adicCompletion E) ∈ {x | (Valued.v : Valuation (w.adicCompletion E) _).restrict x < (Valued.v : Valuation (w.adicCompletion E) _).restrict (completionMap v w a)} := by
@@ -89,6 +91,7 @@ private theorem ce_compl (v : HeightOneSpectrum (𝓞 F)) (w : HeightOneSpectrum
   have hu : IsUniformInducing (completionMap v w) := AddMonoidHom.isUniformInducing_of_isInducing hind
   exact (IsUniformEmbedding.mk hu (completionMap v w).injective).isClosedEmbedding
 
+omit [NumberField F] [NumberField E] in
 private theorem ce_infComp (v : InfinitePlace F) (w : InfinitePlace E) [w.LiesOver v] :
     IsClosedEmbedding (AbsoluteValue.Completion.map v.1 w.1) :=
   (AbsoluteValue.Completion.isometry_map v.1 w.1).isClosedEmbedding
@@ -99,8 +102,16 @@ private theorem ce_incFin (v : HeightOneSpectrum (𝓞 F)) : IsClosedEmbedding (
   exact ce_of_comp (g := fun y : CompletionsOver E v => y w)
     (continuous_pi fun u => continuous_completionMap v u.1) (continuous_apply w) (ce_compl v w.1)
 
+open scoped NumberField.LiesOver in
+set_option maxHeartbeats 200000 in
 private theorem ce_infMap : IsClosedEmbedding (infMap F E) := by
   have hs : Function.Surjective (fun w : InfinitePlace E => w.comap (algebraMap F E)) := InfinitePlace.comap_surjective
+  have hmap : (infMap F E : InfiniteAdeleRing F → InfiniteAdeleRing E) = fun x w =>
+      AbsoluteValue.Completion.map (w.comap (algebraMap F E)).1 w.1 (x (w.comap (algebraMap F E))) := by
+    funext x w
+    exact (GroundTheory.Global.InfinitePlace.infiniteAdeleRingMap_apply x w).trans
+      (AbsoluteValue.Completion.algebraMap_apply_of_liesOver (w.comap (algebraMap F E)).1 w.1 _)
+  rw [hmap]
   exact ce_pi (A := fun v : InfinitePlace F => v.Completion) (B := fun w : InfinitePlace E => w.Completion)
     (fun w : InfinitePlace E => w.comap (algebraMap F E)) hs
     (fun w => AbsoluteValue.Completion.map (w.comap (algebraMap F E)).1 w.1) fun w => ce_infComp _ w

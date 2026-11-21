@@ -28,6 +28,7 @@ theorem exists_basis_up_to {O A E : Type} [CommRing O] [CommRing A] [IsDomain A]
       span_eq_top := by rw [hM, Submodule.span_span_of_tower, hsp] }
   have hrk : Module.finrank A M = n := by
     simpa using ((Submodule.IsFullLattice.finrank_eq E M).trans (Module.finrank_fintype_fun_eq_card E))
+  haveI : Module.Finite A M := Submodule.IsLattice.finite E M
   let c : Basis (Fin n) A M := Module.finBasisOfFinrankEq A M hrk
   have hc : ∀ i, ∃ t : S, (t : O) • (c i : Fin n → E) ∈ L := fun i => by
     obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span S A (L : Set (Fin n → E)) _ (c i).2
@@ -41,9 +42,9 @@ theorem exists_basis_up_to {O A E : Type} [CommRing O] [CommRing A] [IsDomain A]
       Submodule.coe_smul_of_tower]
   let b : Fin n → Fin n → E := fun i => (c' i : Fin n → E)
   have hli : LinearIndependent E b := by
-    have h : b = c'.extendOfIsLattice E := funext fun i => by simp [b]
+    have h : b = c'.extendOfIsFullLattice E := funext fun i => by simp [b]
     rw [h]
-    exact (c'.extendOfIsLattice E).linearIndependent
+    exact (c'.extendOfIsFullLattice E).linearIndependent
   have hspanA : Submodule.span A (Set.range b) = M := by
     have : Set.range b = M.subtype '' Set.range c' := by
       rw [← Set.range_comp]; rfl

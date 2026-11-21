@@ -95,6 +95,7 @@ theorem coeff_criterion_snc : ∀ (k : Type) [Field k] [CharZero k] (Y : Scheme.
     (E.ord_nonneg_iff _).mpr (hE _ (by rw [hc.val j hj]; exact regAt_fnOf hy _ _))
   set F := E.formOrd (formOf U hgen (dOn q z)) with hFdef
   set S := ∑ j ∈ J, E.ord (u j) with hSdef
+  change S - 1 ≤ F at hF1
   set T := ∑ j ∈ J, (G - m • K).mult (w j) * E.ord (u j) with hTdef
   have hm' : (0 : ℚ) < m := by exact_mod_cast hm
   have hdisc : discrep E η m g = ((m * F - T : ℤ) : ℚ) / m := by

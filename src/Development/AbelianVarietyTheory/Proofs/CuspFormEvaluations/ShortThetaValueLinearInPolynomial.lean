@@ -38,9 +38,7 @@ theorem sum_support_eq_constr {ι F S : Type} [Field F] [CommRing S] [Algebra F 
   refine Finset.sum_congr ?_ fun μ _ => ?_
   · ext μ
     simp [MvPolynomial.basisMonomials]
-    exact Iff.rfl
   · simp [MvPolynomial.basisMonomials, Algebra.smul_def]
-    rfl
 
 theorem formula_linear {ι F S Qt J : Type} [Field F] [CommRing S] [Algebra F S] [Finite Qt] [Fintype J]
     (k N : F) (w : Qt → F) (G : Qt → J → (ι →₀ ℕ) → S) (d m : ℕ) (cf : Fin m → F)

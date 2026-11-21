@@ -54,7 +54,10 @@ theorem log_count_le_mul_size : âˆ€ (D : D7) (B : WeightFamilies.Prov D) (largeâ
   have h := log_le_of_le_pow_mul_pow (by linarith) (by linarith) hP (hp.1 0) (hp.1 1) hO.1 hX hN
   have hs := frn_le_size_sub_one w
   have hf : 0 < D.R.f := by
-    unfold Ranks.f Ranks.n; positivity
+    have := D.R.two_le_m
+    have := D.R.m_le_f
+    unfold Ranks.f Ranks.n
+    omega
   have hr : 0 < D.R.r := by
     have := D.R.m_add_three_le_k
     unfold Ranks.r; omega

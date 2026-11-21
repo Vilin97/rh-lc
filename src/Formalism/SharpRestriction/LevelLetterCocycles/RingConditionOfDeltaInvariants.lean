@@ -161,14 +161,14 @@ theorem ComΔ.inv {ψ : PowerSeries O →ₐ[O] PowerSeries O} (hψ : ComΔ W ψ
   intro δ hδ
   rw [hψ.comm δ hδ a, ha δ hδ]
 
-theorem comΔ_φ : ComΔ W W.φ₀ where
-  const := by rw [W.φ₀_X, map_mul, PowerSeries.constantCoeff_X, zero_mul]
-  comm δ _ a := (W.γ₀_comm δ a).symm
+theorem comΔ_φ : ComΔ W W.φ₀ := by
+  refine ⟨?_, fun δ _ a => (W.γ₀_comm δ a).symm⟩
+  rw [W.φ₀_X, map_mul, PowerSeries.constantCoeff_X, zero_mul]
 
-theorem comΔ_γ (g : W.Gam) : ComΔ W (W.γ₀ g) where
-  const := (W.γ₀_X g).1
-  comm δ _ a := by
-    rw [← AlgHom.mul_apply, ← AlgHom.mul_apply, ← map_mul, ← map_mul, mul_comm]
+theorem comΔ_γ (g : W.Gam) : ComΔ W (W.γ₀ g) := by
+  refine ⟨(W.γ₀_X g).1, ?_⟩
+  intro δ _ a
+  rw [← AlgHom.mul_apply, ← AlgHom.mul_apply, ← map_mul, ← map_mul, mul_comm]
 
 theorem pre_const (hR : Ring9 W) {ψ : PowerSeries O →ₐ[O] PowerSeries O} (hψ : ComΔ W ψ) :
     PowerSeries.constantCoeff (pre hR (ψ W.π₀₁) (hψ.inv (π₀₁_inv hR))) = 0 := by
@@ -339,14 +339,15 @@ theorem fourth_lefschetz_of_first (hR : Ring9 W) (hγ : W.gamK = W.gam) : (baseI
 theorem primBase_of (hR : Ring9 W) (hγ : W.gamK = W.gam) (h3 : 3 ≤ PD.p) {ϖ : O} {eO : ℕ}
     (he : 1 ≤ eO) (hass : Associated (((PD.p : ℕ) : O)) (ϖ ^ eO))
     (hcomp : IsAdicComplete (Ideal.span {(((PD.p : ℕ) : O))}) O) :
-    Formalism.ExponentWindows.E.PrimBase (baseIdOf hR).Bs ϖ eO where
-  prime := PD.hp
-  three_le := h3
-  one_le_e := he
-  assoc := hass
-  complete := hcomp
-  e3 := frobenius_uniformizer_identity hR
-  e4 := fourth_lefschetz_of_first hR hγ
+    Formalism.ExponentWindows.E.PrimBase (baseIdOf hR).Bs ϖ eO := by
+  exact
+    { prime := PD.hp
+      three_le := h3
+      one_le_e := he
+      assoc := hass
+      complete := hcomp
+      e3 := frobenius_uniformizer_identity hR
+      e4 := fourth_lefschetz_of_first hR hγ }
 
 end Dom
 

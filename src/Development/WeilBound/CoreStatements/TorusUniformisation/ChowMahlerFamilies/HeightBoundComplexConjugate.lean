@@ -97,7 +97,7 @@ theorem PositivityTheory.Xgn.height_bound_complex_conjugate : ∀ (E : Type) [Fi
     have s₁ : lf (v' ≫ P'.τ.q ≫ P'.e.hom) = lf v' ≫ (P'.τ.q ≫ P'.e.hom).left := rfl
     have s₂ : lf (v ≫ P.τ.q ≫ P.e.hom) = lf v ≫ (P.τ.q ≫ P.e.hom).left := rfl
     rw [hb₁, s₁, s₂, Category.assoc, ← c2, ← Category.assoc, hv'', Category.assoc]
-  have h₁ := GlobalTheory.T.hodge_inner_product_conjugate E H (Sp ℂ) P.tB (𝟙 _) _ _ a a c ha ha hc
+  have h₁ := GlobalTheory.CompanionTheory.Ar.HodgeConj.hodgeInnerProduct_conj_abelianScheme E H (Sp ℂ) P.tB (𝟙 _) _ _ a a c ha ha hc
   have hab : lf a = lf b := ha.trans hb₁.symm
   have h₂ := hodge_congr P.tB.PP.L hid.symm hab hab h₁
   have h₃ := ((GlobalTheory.T.hodge_inner_product_pullback_unique E H (Sp ℂ) (Sp ℂ) P'.tB P.tB (spMap (starRingEnd ℂ)) mB (𝟙 _) _ _ b b e₂ e₂).1 _).2 h₂

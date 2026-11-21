@@ -52,25 +52,26 @@ private theorem isDiscrete_of_norm' {E : Type} [Field E] [NumberField E] [IsCMFi
     exact GlobalTheory.DiscChar.isSqInt_of_bounded (hn φ hφ) (C := C) fun g => by simpa using hC g
 
 private theorem cuspFin_of (hF : FinDisc) : CuspFin := by
-  intro E _ _ _ N hN K W R hK hW
-  letI : MeasurableSpace (GA E N) := _root_.borel _
-  haveI : BorelSpace (GA E N) := ⟨rfl⟩
-  let μ : Measure (GA E N) := Measure.haar
-  obtain ⟨V₀, hV₀⟩ := hF E N μ K W R 1 hK hW one_pos (PositivityTheory.Rg.BcB.CG.reproEx_holds E N μ K W R hK hW)
-  have hex : ∀ π : {π : CuspSub E N | GlobalTheory.DiscSpec.IsNormalised π ∧ HasType K W π.V ∧ InfBdd R π.V},
-      ∃ V' ∈ V₀, IsoV π.1.V V' := fun π =>
-    hV₀ _ (isDiscrete_of_norm' π.2.1) π.2.2.1 π.2.2.2 fun r hr hrN c hc => by
-      rw [expV_cusp π.1 hr hrN] at hc
-      exact hc.elim
-  choose f hf hfi using hex
-  let g : {π : CuspSub E N | GlobalTheory.DiscSpec.IsNormalised π ∧ HasType K W π.V ∧ InfBdd R π.V} → V₀ :=
-    fun π => ⟨f π, hf π⟩
-  have hg : Function.Injective g := fun a b hab => by
-    have e : f a = f b := congrArg Subtype.val hab
-    have h := iso_of_isoV (hfi a) (e ▸ hfi b)
-    exact Subtype.ext ((UpperTheory.ConvolutionTheory.Dp.isoEq E N _ _).1 h)
-  haveI := Finite.of_injective g hg
-  exact Set.toFinite _
+  set_option synthInstance.maxHeartbeats 200000 in
+    intro E _ _ _ N hN K W R hK hW
+    letI : MeasurableSpace (GA E N) := _root_.borel _
+    haveI : BorelSpace (GA E N) := ⟨rfl⟩
+    let μ : Measure (GA E N) := Measure.haar
+    obtain ⟨V₀, hV₀⟩ := hF E N μ K W R 1 hK hW one_pos (PositivityTheory.Rg.BcB.CG.reproEx_holds E N μ K W R hK hW)
+    have hex : ∀ π : {π : CuspSub E N | GlobalTheory.DiscSpec.IsNormalised π ∧ HasType K W π.V ∧ InfBdd R π.V},
+        ∃ V' ∈ V₀, IsoV π.1.V V' := fun π =>
+      hV₀ _ (isDiscrete_of_norm' π.2.1) π.2.2.1 π.2.2.2 fun r hr hrN c hc => by
+        rw [expV_cusp π.1 hr hrN] at hc
+        exact hc.elim
+    choose f hf hfi using hex
+    let g : {π : CuspSub E N | GlobalTheory.DiscSpec.IsNormalised π ∧ HasType K W π.V ∧ InfBdd R π.V} → V₀ :=
+      fun π => ⟨f π, hf π⟩
+    have hg : Function.Injective g := fun a b hab => by
+      have e : f a = f b := congrArg Subtype.val hab
+      have h := iso_of_isoV (hfi a) (e ▸ hfi b)
+      exact Subtype.ext ((UpperTheory.ConvolutionTheory.Dp.isoEq E N _ _).1 h)
+    haveI := Finite.of_injective g hg
+    exact Set.toFinite _
 
 theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Cusp.cuspFin :
     CuspFin :=

@@ -21,7 +21,7 @@ private theorem exists_poly {n : ℕ} {A' A G : Type} [CommRing A'] [CommRing A]
   have h1 : ∀ α, AddMonoidAlgebra.coeff (D.toDet.poly z) α ∈ f.range := by
     refine d_coef_mem D.toDet (MonoidHom.mrange (MonoidAlgebra.of A G)) f.range ?_ z (fun a => ⟨a, rfl⟩)
     rintro x ⟨g, rfl⟩ i - -
-    rw [(d_toDet D _).2.1]
+    rw [MonoidAlgebra.of_apply, (d_toDet D (MonoidAlgebra.single g 1)).2.1]
     exact h i g
   obtain ⟨Q, hQ⟩ : D.toDet.poly z ∈ Set.range (MvPolynomial.map f) := by
     rw [MvPolynomial.mem_range_map_iff_coeffs_subset]

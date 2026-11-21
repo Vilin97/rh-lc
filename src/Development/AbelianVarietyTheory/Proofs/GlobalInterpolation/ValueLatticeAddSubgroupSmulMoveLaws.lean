@@ -240,11 +240,17 @@ theorem ten_mem_intSpan {n : ℕ} (w : D.what₂.places.Pl) (lam : D.what₂.Tau
       rw [← hc τ, Finsupp.sum, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [wlocal_map_smul, wlocal_map_applyWord, wlocal_map_applyWord, wlocal_map_hw, wlocal_map_hw]
-  rw [h1, ← Formalism.MainNotions.product_first_zeroth_parts.tenM_apply, MultilinearMap.map_sum_finset]
+  let T : (D.what₂.Tau → MvPolynomial (Fin n × Fin n) ℂ) →ₘₗ[ℂ]
+      MvPolynomial (D.what₂.Tau × Fin n × Fin n) ℂ :=
+    (MultilinearMap.mkPiAlgebra ℂ D.what₂.Tau _).compLinearMap
+      (fun τ => (MvPolynomial.rename (Prod.mk τ) : MvPolynomial (Fin n × Fin n) ℂ →ₐ[ℂ] _).toLinearMap)
+  have hT (f : D.what₂.Tau → MvPolynomial (Fin n × Fin n) ℂ) : T f = ten f := by
+    simp [T, Formalism.MainNotions.product_first_zeroth_parts.ten]
+  rw [h1, ← hT, MultilinearMap.map_sum_finset]
   refine AddSubgroup.sum_mem _ fun a _ => ?_
-  rw [MultilinearMap.map_smul_univ, Formalism.MainNotions.product_first_zeroth_parts.tenM_apply, ← map_prod]
+  rw [MultilinearMap.map_smul_univ, hT, ← map_prod]
   exact AddSubgroup.subset_closure ⟨_, fun τ => Formalism.GradedWeylDivisibility.applyWord ℤ (a τ) (Formalism.GradedWeylDivisibility.hw ℤ le_rfl (lam τ).natW),
-    (∏ τ, c τ (a τ)).2, fun τ => Submodule.subset_span ⟨a τ, rfl⟩, rfl⟩
+    (∏ τ, c τ (a τ)).2, fun τ => Submodule.subset_span ⟨a τ, rfl⟩, by simp [embO, map_prod]⟩
 
 theorem blk_mem_intSpan {n : ℕ} (w : D.what₂.places.Pl) (lam : D.what₂.Tau → DomWeight n) (s : ℤ)
     (g : D.what₂.Tau → GL (Fin n) (Ow D w))

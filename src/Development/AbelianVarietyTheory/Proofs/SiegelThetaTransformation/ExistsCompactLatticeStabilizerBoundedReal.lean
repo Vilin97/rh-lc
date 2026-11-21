@@ -191,7 +191,8 @@ theorem exists_compact_stab : ∀ (D : D7) (V : HSp D) (θ : D.what₂.Tau → (
     intro v _
     obtain ⟨x, rfl⟩ := V.frame.equivFun.surjective v
     have hx : x ∈ Submodule.span D.host.E (V.L0 : Set V.V) := by
-      rw [V.standardTuple_isLattice.span_eq_top]; trivial
+      letI := V.standardTuple_isLattice
+      rw [Submodule.IsFullLattice.span_eq_top]; trivial
     have := Submodule.mem_map_of_mem (f := f) hx
     rw [Submodule.map_span] at this
     exact this

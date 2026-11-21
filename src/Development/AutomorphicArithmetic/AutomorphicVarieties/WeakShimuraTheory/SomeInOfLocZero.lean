@@ -104,9 +104,11 @@ theorem allIn_of_chain {O Γ : Type} [CommRing O] [Group Γ] [TopologicalSpace �
     induction h using Relation.ReflTransGen.head_induction_on with
     | refl =>
       intro k1 k2 x e
-      refine hch x (e ▸ k1) (e ▸ k2) ((conn Φ l a hΦ X J x x₁ ?_).2 (hch x₁ k1 k2 h₁))
-      rw [e]
-      exact linked_self k1
+      have hl : Φ.Linked ((residue Λ).comp a) (X.P.map (x : X.A →+* ResidueField Λ))
+          (X.P.map (x₁ : X.A →+* ResidueField Λ)) := by
+        rw [e]
+        exact linked_self k1
+      exact hch x (e ▸ k1) (e ▸ k2) ((conn Φ l a hΦ X J x x₁ hl).2 (hch x₁ k1 k2 h₁))
     | head hl _ ih =>
       rintro k1 k2 x rfl
       obtain ⟨x', rfl⟩ := end_pt X hl.2

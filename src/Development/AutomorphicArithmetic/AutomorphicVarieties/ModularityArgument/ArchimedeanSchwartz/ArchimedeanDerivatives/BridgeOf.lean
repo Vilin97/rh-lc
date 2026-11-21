@@ -131,7 +131,7 @@ private theorem nrm_pos {x : Lie K n} (hx : x ∈ invSet K n) : 0 < nrm x := by
 
 private theorem continuous_nrm : Continuous (nrm : Lie K n → ℝ) := by
   have h : Continuous fun x : Lie K n => (Matrix.of x).det := Continuous.matrix_det continuous_id
-  exact continuous_finset_prod _ fun w _ => (((continuous_apply w).comp h).norm).pow 2
+  exact continuous_finsetProd _ fun w _ => (((continuous_apply w).comp h).norm).pow 2
 
 private theorem haar_eq (hH : HaarL) (μ : Measure (AdelicGLn.InfiniteAdelicGL K n)) [μ.IsHaarMeasure] :
     ∃ c : ℂ, c ≠ 0 ∧ ∀ (F : AdelicGLn.InfiniteAdelicGL K n → ℂ) (H : Lie K n → ℂ), ContinuousOn H (invSet K n) →
@@ -140,6 +140,12 @@ private theorem haar_eq (hH : HaarL) (μ : Measure (AdelicGLn.InfiniteAdelicGL K
   haveI : BorelSpace (GL (Fin n) (Cinf K)) := ⟨rfl⟩
   obtain ⟨m, hm, hmap⟩ := hH K n
   haveI : (Measure.map (grpC K n) m).IsHaarMeasure := (grpC K n).isHaarMeasure_map _
+  haveI : LocallyCompactSpace (AdelicGLn.InfiniteAdelicGL K n) := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      infer_instance
+  haveI : SecondCountableTopology (AdelicGLn.InfiniteAdelicGL K n) := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      infer_instance
   have h := Measure.isMulLeftInvariant_eq_smul μ (Measure.map (grpC K n) m)
   have hpos := Measure.haarScalarFactor_pos_of_isHaarMeasure μ (Measure.map (grpC K n) m)
   generalize Measure.haarScalarFactor μ (Measure.map (grpC K n) m) = c at h hpos

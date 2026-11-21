@@ -248,7 +248,7 @@ theorem norm_pt (CR : CovReal FA Cv) (S' : Sw M' τ a b k₀' ca cb) (hy' : IsAr
   have hb := CPts.base_mem M' m₀
   have hG' : M'.GoodAt F' (mCoordIdeal (basePart M'.blk u₀)) := by rw [ideal_orbit (base_orbit o₀)]; exact hg'
   have hlc := LC _ hj F' hF' hG' (H τ) t (fl₀.2.1 τ).1 (fl₀.2.1 τ).2 (fun i => ex₀ (τ, i))
-    (by rw [e₁]; simpa only [Function.update_self] using ex₁ (τ, a))
+    (by rw [e₁]; simpa only [FlagModel.ExactAt, Function.update_self] using ex₁ (τ, a))
   rw [e₀] at hlc
   have ht : t ≠ 0 := fun e => g1 (by rw [hlc, e, zero_mul, zero_mul])
   have hbv := (GlobalTheory.T.flag_cover_base_point_in_points K ι Φ y Ψ N j M K' ι' Φ' y' M' Cv _ hb).1
@@ -271,7 +271,7 @@ theorem norm_pt (CR : CovReal FA Cv) (S' : Sw M' τ a b k₀' ca cb) (hy' : IsAr
   have hbz := mem_mcPts_of_sameOrbit (CoordinateConeArithVar.isMultiHomogIdeal _) bx₀ hbv
   refine ⟨z₀, z₁, F, Cv.trans F' F (basePart M'.blk u₀) τ * H τ, t, hF, hGz, orbit_trans oz₀ ox₀, orbit_trans oz₁ ox₁,
     (fx₀.2.1 τ).1, (fx₀.2.1 τ).2, ht, fun i => ez₀ (τ, i),
-    fun i => by simpa only [Function.update_self, Matrix.mul_assoc] using ez₁ (τ, i), ?_⟩
+    fun i => by simpa only [FlagModel.ExactAt, Function.update_self, Matrix.mul_assoc] using ez₁ (τ, i), ?_⟩
   have A' := fun i => log_A M' hb hG' τ a i (fl₀.2.1 τ).1 (fl₀.2.1 τ).2
   have A := fun i => log_A M hbz hGz τ a i (fx₀.2.1 τ).1 (fx₀.2.1 τ).2
   have hU' : ∀ p, M'.upsLog F' p u₁ = M'.upsLog F' p u₀ := fun p => by simp only [FlagModel.upsLog, bu]

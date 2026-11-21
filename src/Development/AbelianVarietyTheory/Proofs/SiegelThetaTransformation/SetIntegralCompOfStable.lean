@@ -47,7 +47,10 @@ theorem exists_mean {K V : Type} [Group K] [TopologicalSpace K] [IsTopologicalGr
   let μ : Measure K := (Measure.haarMeasure ⊤).inv
   have hp : IsProbabilityMeasure (Measure.haarMeasure (⊤ : TopologicalSpace.PositiveCompacts K)) :=
     ⟨by simpa using Measure.haarMeasure_self (K₀ := (⊤ : TopologicalSpace.PositiveCompacts K))⟩
-  have hp' : IsProbabilityMeasure μ := Measure.isProbabilityMeasure_map measurable_inv.aemeasurable
+  have hp' : IsProbabilityMeasure μ := by
+    change IsProbabilityMeasure ((Measure.haarMeasure ⊤).inv)
+    rw [Measure.inv_def]
+    infer_instance
   have hχ0 : ∀ t, χ t ≠ 0 := fun t h => by simpa [h] using hχ1 t
   have hcont : ContinuousOn (Function.uncurry fun t x => (χ t)⁻¹ * F (A t x)) (Set.univ ×ˢ U) := by
     refine ContinuousOn.mul ?_ ?_
@@ -230,7 +233,7 @@ theorem integral_mul_ortho (la : Wt X.Ψ r) {x₀ : Frame X.Ψ r}
     simp only [Matrix.mul_assoc, Matrix.nonsing_inv_mul_cancel_left _ _ (hdet τ), Circle.coe_mul,
       ← Matrix.diagonal_mul_diagonal]
   have a3 : Continuous fun t : X.Ψ → Fin r → Circle => ∏ τ, ∏ i, (t τ i : ℂ) ^ la τ i := by
-    refine continuous_finset_prod _ fun τ _ => continuous_finset_prod _ fun i _ => ?_
+    refine continuous_finsetProd _ fun τ _ => continuous_finsetProd _ fun i _ => ?_
     exact Continuous.zpow₀ (by fun_prop) _ fun t => Or.inl (Circle.coe_ne_zero _)
   have a4 : ∀ s t : X.Ψ → Fin r → Circle, ∏ τ, ∏ i, ((t * s) τ i : ℂ) ^ la τ i =
       (∏ τ, ∏ i, (t τ i : ℂ) ^ la τ i) * ∏ τ, ∏ i, (s τ i : ℂ) ^ la τ i := by

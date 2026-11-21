@@ -42,7 +42,7 @@ private theorem exists_inv_matrix (hf : FracInv PD) (hu : LineUnit PD) (ρ : Rep
     intro g w k
     conv_lhs => rw [← e.sum_repr w]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, sig_smul, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+      simp only [map_sum, sig_smul, map_smul, Finset.sum_apply', Finsupp.smul_apply,
       smul_eq_mul]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [mul_comm]

@@ -30,6 +30,7 @@ theorem aeval_red (π : R →+* E) {X : M4 R} {c : Fin 4 → R} (H : X.map π = 
   refine Polynomial.induction_on' p (fun p q hp hq => ?_) (fun n a => ?_)
   · rw [map_add (f := _), Matrix.map_add _ (map_add π), hp, hq, Matrix.diagonal_add]
     congr 1
+    simp only [Polynomial.eval_add, map_add]
   · have H' : π.mapMatrix X = Matrix.diagonal fun a => π (c a) := H
     change π.mapMatrix _ = _
     rw [Polynomial.aeval_monomial, map_mul, map_pow, H', Matrix.diagonal_pow, RingHom.mapMatrix_apply,
@@ -446,7 +447,7 @@ theorem UpperTheory.V.Loc.spFlag :
     rw [sub_eq_zero] at h0
     have h1 := IsFractionRing.injective ℤ_[l] ℚ_[l] h0
     have h2 : cycZ ℚ Ω l (D.s0 : G ℚ Ω) ^ D.wts4 i = cycZ ℚ Ω l (D.s0 : G ℚ Ω) ^ D.wts4 j := by
-      ext
+      apply Units.ext
       simpa using h1
     exact hij (hw i j ((pow_inj_iff_of_orderOf_eq_zero (orderOf_eq_zero_iff.mpr hD.decompSigma_ord)).mp h2))
   have hu : ∀ i, IsUnit (algebraMap c.O B (D.ps i (D.s0 : G ℚ Ω))) := fun i =>

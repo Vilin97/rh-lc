@@ -116,7 +116,7 @@ private theorem ncard_primesOver_eq_finrank_iff_frob_eq_one {F R : Type} [Field 
     have hroots := Polynomial.card_le_degree_of_subset_roots
       (p := (X ^ Fintype.card (𝓞 F ⧸ 𝔭.asIdeal) - X : (𝓞 R ⧸ P)[X])) (Z := Finset.univ)
       (fun y _ => by
-        rw [Polynomial.mem_roots (FiniteField.X_pow_card_sub_X_ne_zero _ hq1)]
+        rw [Polynomial.mem_roots (Polynomial.X_pow_sub_X_ne_zero hq1)]
         simp [hall y])
     rw [Finset.card_univ, Polynomial.natDegree_X_pow_sub_X hq1, hcard] at hroots
     have hle := (Nat.pow_le_pow_iff_right hq1).mp (hroots.trans (pow_one _).symm.le)

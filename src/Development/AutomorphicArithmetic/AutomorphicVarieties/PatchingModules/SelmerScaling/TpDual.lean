@@ -147,5 +147,15 @@ theorem UpperTheory.V.Pa.tpDual :
     ∀ (l : ℕ) [Fact l.Prime] (S : Ctx l), Module.Finite S.F S.Tp ∧ (∀ b ∈ maximalIdeal S.Bh, (∀ α ∈ S.Tp, α b = 0) → b ∈ S.J2) ∧ ∀ ξ : Module.Dual S.F S.Tp, ∃ b ∈ maximalIdeal S.Bh, ∀ α : S.Tp, (α : S.Bh →+ S.F) b = ξ α := by
   intro l _ S
   haveI : IsNoetherianRing S.Bh := { noetherian := S.d6.noetherian }
-  obtain ⟨-, -, -, -, -, hI, hJ⟩ := prAdd l S
+  have hI : ired S.U.N ≤ maximalIdeal S.Bh := by
+    refine Ideal.span_le.2 ?_
+    rintro b ⟨x, hx, y, hy, e⟩
+    obtain ⟨c, hc, e'⟩ := S.U.mul_mem x hx y hy
+    have : b = c := S.U.inj (e.symm.trans e')
+    rw [this]
+    exact hc
+  have hJ : S.J2 ≤ maximalIdeal S.Bh := by
+    refine sup_le (sup_le ?_ (Ideal.pow_le_self two_ne_zero)) hI
+    exact ((IsLocalRing.local_hom_tfae (algebraMap S.OO S.Bh)).out 1 3).1
+      (IsCO.isLocalHom (O := S.OO) (R := S.Bh))
   exact tp_abs S.rF S.rF_ker S.oo_surj (ired S.U.N) S.J2 rfl hI hJ S.Tp fun _ => Iff.rfl

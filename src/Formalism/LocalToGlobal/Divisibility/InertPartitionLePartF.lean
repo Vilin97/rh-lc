@@ -386,7 +386,7 @@ theorem sameTypes_base3 {s : ℕ} (h : F3.Ok3 s) (P : Subgroup G) (ψ : P →* K
 theorem side_well_formed {s : ℕ} (h : F3.Ok3 s) (P : Subgroup G) (ψ : P →* Kˣ) (Zs : DefSub F3.amb3) (hst : Zs.Stable)
     (hin : Zs.InBlock) (hsep : F3.TypesSep3) : (F3.side3 P ψ Zs).WF where
   cm := isCMSub_cmMax' K
-  conj := h.ok2.conj
+  «conj» := h.ok2.conj
   HV_rat t := BlockDat.HV_rat (ℓ := F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
   HV_pos t := BlockDat.HV_pos (ℓ := F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr
   Mt_lat t := BlockDat.Mt_lat (ℓ := F3.F.lvl P ψ) h.ok2.conj (h.ok2.what₂ t) h.ok2.irr

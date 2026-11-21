@@ -113,7 +113,7 @@ theorem smul_mem_Fil (P : LocPrime l) (K : FinExt l) (a : ℤ) (c : Om l) {x : P
   rw [← SetLike.mem_coe, P.PD_Fil K K' a, SetLike.mem_coe]
   exact ((P.PD K').Fil a).smul_mem (⟨c, hcK⟩ : K'.1) hx'
 
-def filOm (P : LocPrime l) (K : FinExt l) (a : ℤ) : Submodule (Om l) P.R.BdR where
+noncomputable def filOm (P : LocPrime l) (K : FinExt l) (a : ℤ) : Submodule (Om l) P.R.BdR where
   carrier := ((P.PD K).Fil a : Set P.R.BdR)
   zero_mem' := ((P.PD K).Fil a).zero_mem
   add_mem' := fun h h' => ((P.PD K).Fil a).add_mem h h'
@@ -154,12 +154,12 @@ theorem jump_descends (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K E : FinExt l)
     AddMonoidHom.mk' (fun v => ((M g).map am).mulVec (fun i => P.actQdR g (v i)))
       (fun v w => by simp only [Pi.add_apply, map_add (f := _)]; exact Matrix.mulVec_add _ _ _)
   have hAapp : ∀ g v, A g v = ((M g).map am).mulVec (fun i => P.actQdR g (v i)) := fun _ _ => rfl
-  let σ : ↥(GK K) → Om l →* Om l := fun g => MonoidHomClass.toMonoidHom (g : GQ l)
-  let ι : ↥E.1 →* Om l := MonoidHomClass.toMonoidHom E.1.val
+  let σ : ↥(GK K) → Om l →* Om l := fun g => MonoidHom.ofClass (g : GQ l)
+  let ι : ↥E.1 →* Om l := MonoidHom.ofClass E.1.val
   have hσ : ∀ g h c, σ (g * h) c = σ g (σ h c) := fun g h c => by
-    simp only [σ, MonoidHom.coe_coe, Subgroup.coe_mul, AlgEquiv.mul_apply]
+    simp only [σ, MonoidHom.coe_ofClass, Subgroup.coe_mul, AlgEquiv.mul_apply]
   have hσ1 : ∀ c, σ 1 c = c := fun c => by
-    simp only [σ, MonoidHom.coe_coe, OneMemClass.coe_one, AlgEquiv.one_apply]
+    simp only [σ, MonoidHom.coe_ofClass, OneMemClass.coe_one, AlgEquiv.one_apply]
   have hH : ∀ g, g ∈ (GK E).subgroupOf (GK K) ↔ ∀ c, σ g (ι c) = ι c := by
     intro g
     rw [Subgroup.mem_subgroupOf]
@@ -184,7 +184,7 @@ theorem jump_descends (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K E : FinExt l)
     rw [hAapp, hAapp]
     funext i
     simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, Pi.smul_apply, Algebra.smul_def,
-      map_mul, P.actQdR_Om, Finset.mul_sum, σ, MonoidHom.coe_coe]
+      map_mul, P.actQdR_Om, Finset.mul_sum, σ, MonoidHom.coe_ofClass]
     exact Finset.sum_congr rfl (fun j _ => by ring)
   let N₀ : Submodule (Om l) (Fin d → P.R.BdR) := Submodule.pi Set.univ (fun _ => filOm P K a)
   let N₁ : Submodule (Om l) (Fin d → P.R.BdR) := Submodule.pi Set.univ (fun _ => filOm P K (a + 1))

@@ -40,7 +40,7 @@ theorem wdMk_add (x y : ↥(Dpst P ρ)) : wdMk P ι ρ (x + y) = wdMk P ι ρ x 
   letI := algC ι LL; letterMk_add _ _ _ x y
 
 theorem wdMk_smul (a : ↥LL.1) (x : ↥(Dpst P ρ)) :
-    wdMk P ι ρ (a • x) = ι (a : Om l) • wdMk P ι ρ x :=
+    wdMk P ι ρ ((Dpst P ρ).module.toSMul.smul a x) = ι (a : Om l) • wdMk P ι ρ x :=
   letI := algC ι LL; letterMk_smul _ _ _ a x
 
 theorem wdMk_mul (c : ↥(MaximalUnramifiedExtension l)) (x : ↥(Dpst P ρ)) :
@@ -103,8 +103,13 @@ variable [FiniteDimensional ↥(MaximalUnramifiedExtension l) (DpstUr P ρ)]
 
 def wdRho : Representation ℂ ↥(Weil h) (WDSpace P ι ρ) where
   toFun σ := wdMap P ι ρ (weilD Bw h P ρ σ) (weilD_mulD Bw h P ρ hj σ)
-  map_one' := wd_ext P ι ρ fun x => by simp
-  map_mul' σ τ := wd_ext P ι ρ fun x => by simp
+  map_one' := wd_ext P ι ρ fun x => by
+    change wdMk P ι ρ (weilD Bw h P ρ 1 x) = wdMk P ι ρ x
+    rw [map_one, one_apply_eq_self]
+  map_mul' σ τ := wd_ext P ι ρ fun x => by
+    change wdMk P ι ρ (weilD Bw h P ρ (σ * τ) x) =
+      wdMk P ι ρ (weilD Bw h P ρ σ (weilD Bw h P ρ τ x))
+    rw [map_mul, mul_apply_eq_comp]
 
 @[simp] theorem wdRho_mk (σ : ↥(Weil h)) (x : ↥(Dpst P ρ)) :
     wdRho P ι Bw h hj ρ σ (wdMk P ι ρ x) = wdMk P ι ρ (weilD Bw h P ρ σ x) := rfl
@@ -115,13 +120,15 @@ theorem isSmooth_wdRho : IsSmooth (wdRho P ι Bw h hj ρ) :=
 theorem wdRho_wdN (σ : ↥(Weil h)) : wdRho P ι Bw h hj ρ σ * wdN P ι ρ =
     ((normV w : ℕ) : ℂ) ^ deg σ • (wdN P ι ρ * wdRho P ι Bw h hj ρ σ) :=
   wd_ext P ι ρ fun x => by
+    let a : ↥LL.1 := (normV w : ℕ) ^ deg σ
+    let y := monD P ρ (weilD Bw h P ρ σ x)
     have h1 := LinearMap.congr_fun (weilD_monD Bw h P ρ hj σ) x
-    rw [End.mul_apply, LinearMap.smul_apply, End.mul_apply] at h1
-    have e : ι (((((normV w : ℕ) : ↥LL.1) ^ deg σ : ↥LL.1)) : Om l) = ((normV w : ℕ) : ℂ) ^ deg σ :=
+    change weilD Bw h P ρ σ (monD P ρ x) = (Dpst P ρ).module.toSMul.smul a y at h1
+    have e : ι (a : Om l) = ((normV w : ℕ) : ℂ) ^ deg σ :=
       (map_zpow₀ (ι.toRingHom.comp (algebraMap ↥LL.1 (Om l))) ((normV w : ℕ) : ↥LL.1) (deg σ)).trans
         (by rw [map_natCast])
-    have h2 := congrArg (wdMk P ι ρ) h1
-    rw [wdMk_smul, e] at h2
+    have h2 := (congrArg (wdMk P ι ρ) h1).trans (wdMk_smul P ι ρ a y)
+    rw [e] at h2
     exact h2
 
 def wdRep : WDRep h (WDSpace P ι ρ) :=

@@ -22,6 +22,7 @@ private theorem ex_place (K : Type) [Field K] [NumberField K] {w : ℕ} (hw : w.
       exact Ideal.zero_mem _)
   have hmem : (w : 𝓞 K) ∈ Q := by
     have hc : (w : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := by
+      change (w : ℤ) ∈ Ideal.under ℤ Q
       rw [hQ]
       exact Ideal.mem_span_singleton_self _
     simpa using hc

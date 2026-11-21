@@ -17,11 +17,16 @@ private theorem gDet_chi_map_C_mapRingHom_gen {n : ℕ} {B B' G : Type} [CommRin
       commutes' := fun b => by simp [RingHom.algebraMap_toAlgebra] }
   have key := D.nat _ _ φ (MonoidAlgebra.single 1 Polynomial.X - MonoidAlgebra.mapRingHom G Polynomial.C (GDet.gen y))
   have hx : MonoidAlgebra.mapRingHom G (φ : Polynomial (MvPolynomial (Fin m) B) →+* Polynomial (MvPolynomial (Fin m) B')) (MonoidAlgebra.single 1 Polynomial.X - MonoidAlgebra.mapRingHom G Polynomial.C (GDet.gen y)) = MonoidAlgebra.single 1 Polynomial.X - MonoidAlgebra.mapRingHom G Polynomial.C (MonoidAlgebra.mapRingHom G (MvPolynomial.map g) (GDet.gen y)) := by
-    ext h
-    simp [φ, MonoidAlgebra.mapRingHom, MonoidAlgebra.single_apply, Finsupp.single_apply]
-    rcases eq_or_ne h 1 with rfl | hh
-    · simp [Polynomial.coeff_X]
-    · simp [Finsupp.single_eq_of_ne hh, Finsupp.single_eq_of_ne hh.symm]
+    rw [map_sub, MonoidAlgebra.mapRingHom_single]
+    have hX : (φ : Polynomial (MvPolynomial (Fin m) B) →+* Polynomial (MvPolynomial (Fin m) B')) Polynomial.X = Polynomial.X := by
+      change Polynomial.map (MvPolynomial.map g) Polynomial.X = _
+      exact Polynomial.map_X _
+    rw [hX]
+    congr 1
+    ext h a b
+    simp only [MonoidAlgebra.coeff_mapRingHom]
+    change ((Polynomial.map (MvPolynomial.map g) (Polynomial.C _)).coeff a).coeff b = _
+    rw [Polynomial.map_C]
   rw [hx] at key
   exact key
 

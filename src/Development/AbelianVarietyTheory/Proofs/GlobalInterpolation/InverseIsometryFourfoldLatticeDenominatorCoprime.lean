@@ -90,7 +90,8 @@ theorem inverseIsometry_fourfoldLattice_denominator_coprime : ∀ (D : D7) (cc :
     rw [e1, map_smul, map_smul, hgy, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, mul_assoc]
 
   obtain ⟨τ⟩ : Nonempty D.what₂.Tau := Fintype.card_pos_iff.mp (by
-    rw [Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.FL.card_tau]; positivity)
+    rw [Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.FL.card_tau]
+    exact Nat.mul_pos (by decide) D.R.ord_pos)
   refine ⟨n * N, Nat.Coprime.mul_left hnq hNq, fun a => ?_⟩
   obtain ⟨e, he, hee⟩ := lamMM_form D cc δ _ (hm₀ a)
   have h2 := congrFun hee τ

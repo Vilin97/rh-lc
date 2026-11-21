@@ -27,10 +27,22 @@ theorem lat_val (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCommMonObj G] (Ω : 
       (∀ (a : regAt ξ ⟨centre z, h⟩) (r : R) e, ValAt ξ z (a : Ω) r → ev (a • e) = r • ev e) ∧
       Submodule.span R (Set.range ev) = ⊤ := by
   intro hξ hs
+  have exists_base {S : Scheme.{0}} {G : Over S} [GrpObj G] {A R : Type} [CommRing A] [CommRing R] (φ : A →+* R)
+      (x : Spec (CommRingCat.of A) ⟶ S) (z : Spec (CommRingCat.of R) ⟶ S)
+      (hz : Spec.map (CommRingCat.ofHom φ) ≫ x = z) {E F : Type} [AddCommGroup E] [Module A E] [AddCommGroup F]
+      [Module R F] (M : LieModel G x E) (N : LieModel G z F) :
+      ∃ j : E →+ F, (∀ e, (N.pt (j e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) ≫ (M.pt e).left) ∧
+        (∀ (a : A) e, j (a • e) = φ a • j e) ∧
+        (Smooth G.hom → ∀ (n : ℕ) (b : Module.Basis (Fin n) A E),
+          Submodule.span R (Set.range fun k => j (b k)) = ⊤) := by
+    subst hz
+    letI := φ.toAlgebra
+    obtain ⟨j, h1, h2, h3⟩ := GlobalTheory.T.lie_model_base_change_map S G A R x E F M N
+    exact ⟨j, h1, h2, fun hs n b => (h3 hs n b).2⟩
   obtain ⟨EA, _, _, ⟨MA⟩⟩ := lieModel_exists X G (X.presheaf.stalk (centre z)) (X.fromSpecStalk (centre z))
-  obtain ⟨j, hj, hjs, hjb⟩ := LieVal.exists_base (A := X.presheaf.stalk (centre z)) (Scheme.stalkClosedPointTo z).hom _ z
+  obtain ⟨j, hj, hjs, hjb⟩ := exists_base (A := X.presheaf.stalk (centre z)) (Scheme.stalkClosedPointTo z).hom _ z
     (LieTangent.spec_centre z) MA MR
-  obtain ⟨i, hi, his, -⟩ := LieVal.exists_base (genMap ξ ⟨centre z, h⟩) _ ξ
+  obtain ⟨i, hi, his, -⟩ := exists_base (genMap ξ ⟨centre z, h⟩) _ ξ
     (LieTangent.spec_genMap ξ ⟨centre z, h⟩) MA M
 
   have hext : ∀ a, M.Extends ⟨centre z, h⟩ (i a) (MA.pt a) := fun a => ⟨MA.tan a, hi a⟩
@@ -222,8 +234,20 @@ theorem co_map [IsCommMonObj G] (τ : ℂ →+* ℂ) (M : LieModel G ξ Li) (B :
     (hz : spMap τ ≫ z = z') (v : epsAt z ⟶ G) (v' : epsAt z' ⟶ G) (hv' : v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap τ) ≫ v.left)
     {c : Fin r → ℂ} (h : Co M B z v c) : Co M B z' v' fun i => τ (c i) := by
   obtain ⟨V, _, _, Mz, b, hb, hv⟩ := h
+  have exists_base {S : Scheme.{0}} {G : Over S} [GrpObj G] {A R : Type} [CommRing A] [CommRing R] (φ : A →+* R)
+      (x : Spec (CommRingCat.of A) ⟶ S) (z : Spec (CommRingCat.of R) ⟶ S)
+      (hz : Spec.map (CommRingCat.ofHom φ) ≫ x = z) {E F : Type} [AddCommGroup E] [Module A E] [AddCommGroup F]
+      [Module R F] (M : LieModel G x E) (N : LieModel G z F) :
+      ∃ j : E →+ F, (∀ e, (N.pt (j e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) ≫ (M.pt e).left) ∧
+        (∀ (a : A) e, j (a • e) = φ a • j e) ∧
+        (Smooth G.hom → ∀ (n : ℕ) (b : Module.Basis (Fin n) A E),
+          Submodule.span R (Set.range fun k => j (b k)) = ⊤) := by
+    subst hz
+    letI := φ.toAlgebra
+    obtain ⟨j, h1, h2, h3⟩ := GlobalTheory.T.lie_model_base_change_map S G A R x E F M N
+    exact ⟨j, h1, h2, fun hs n b => (h3 hs n b).2⟩
   obtain ⟨V', _, _, ⟨M'⟩⟩ := lieModel_exists X G ℂ z'
-  obtain ⟨j, hj, hjs, -⟩ := LieVal.exists_base τ z z' hz Mz M'
+  obtain ⟨j, hj, hjs, -⟩ := exists_base τ z z' hz Mz M'
   refine ⟨V', inferInstance, inferInstance, M', fun i => j (b i),
     fun i => valAt_map τ M hz _ _ _ (hj _) (hb i), Over.OverMorphism.ext ?_⟩
   have : ∑ i, τ (c i) • j (b i) = j (∑ i, c i • b i) := by
@@ -268,11 +292,23 @@ theorem co_val [IsCommMonObj G] [Smooth G.hom] (hξ : IsCptGen ξ) (M : LieModel
     (B : Module.Basis (Fin r) Ω Li) (z : Sp ℂ ⟶ X) (h : genPt ξ ⤳ centre z)
     (hB : M.lat.IsFrameAt B ⟨centre z, h⟩) {e : Li} {v : epsAt z ⟶ G} (hv : M.ValAt z e v) (i : Fin r) :
     ValAt ξ z (B.repr e i) (co M B z v i) := by
+  have exists_base {S : Scheme.{0}} {G : Over S} [GrpObj G] {A R : Type} [CommRing A] [CommRing R] (φ : A →+* R)
+      (x : Spec (CommRingCat.of A) ⟶ S) (z : Spec (CommRingCat.of R) ⟶ S)
+      (hz : Spec.map (CommRingCat.ofHom φ) ≫ x = z) {E F : Type} [AddCommGroup E] [Module A E] [AddCommGroup F]
+      [Module R F] (M : LieModel G x E) (N : LieModel G z F) :
+      ∃ j : E →+ F, (∀ e, (N.pt (j e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) ≫ (M.pt e).left) ∧
+        (∀ (a : A) e, j (a • e) = φ a • j e) ∧
+        (Smooth G.hom → ∀ (n : ℕ) (b : Module.Basis (Fin n) A E),
+          Submodule.span R (Set.range fun k => j (b k)) = ⊤) := by
+    subst hz
+    letI := φ.toAlgebra
+    obtain ⟨j, h1, h2, h3⟩ := GlobalTheory.T.lie_model_base_change_map S G A R x E F M N
+    exact ⟨j, h1, h2, fun hs n b => (h3 hs n b).2⟩
   obtain ⟨V, _, _, ⟨Mz⟩⟩ := lieModel_exists X G ℂ z
   obtain ⟨β, hβ, hβ'⟩ := frame_basis hξ M B z h hB Mz
   obtain ⟨h0, v₀, hv₀, hl⟩ := id hv
   obtain ⟨V₀, _, _, ⟨M₀⟩⟩ := lieModel_exists X G (X.presheaf.stalk (centre z)) (X.fromSpecStalk (centre z))
-  obtain ⟨j, hj, -, -⟩ := LieVal.exists_base (A := X.presheaf.stalk (centre z)) (Scheme.stalkClosedPointTo z).hom _ z
+  obtain ⟨j, hj, -, -⟩ := exists_base (A := X.presheaf.stalk (centre z)) (Scheme.stalkClosedPointTo z).hom _ z
     (LieTangent.spec_centre z) M₀ Mz
   obtain ⟨u₀, hu₀⟩ := M₀.onto v₀ hv₀.1
   have hu : v = Mz.pt (j u₀) := Over.OverMorphism.ext (by rw [hj, hu₀, hl])

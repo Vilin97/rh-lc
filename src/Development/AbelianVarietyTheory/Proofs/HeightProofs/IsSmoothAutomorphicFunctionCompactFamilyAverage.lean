@@ -49,7 +49,7 @@ theorem continuous_infMat_atTau_inv (hθ : IsInfFam θ) (hκ : Continuous κ)
 theorem continuous_normInf_atTau (hθ : IsInfFam θ) (hκ : Continuous κ)
     (hU : ∀ k, κ k ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ)) : Continuous fun k => normInf θ V (atTau θ V τ (κ k)) := by
   unfold normInf
-  refine continuous_finset_sum _ fun τ' _ => continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun τ' _ => continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact (((continuous_infMat_atTau hθ hκ hU τ').matrix_elem i j).norm).add
     (((continuous_infMat_atTau_inv hθ hκ hU τ').matrix_elem i j).norm)
 

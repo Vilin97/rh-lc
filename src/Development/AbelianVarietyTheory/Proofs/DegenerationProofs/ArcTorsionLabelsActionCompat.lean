@@ -20,12 +20,22 @@ theorem b_eq_of_equiv {R : Type} [CommRing R] [IsDomain R] {D : DegPre R} {F : T
     [Algebra (FractionRing R) F] (hB : D.TauBimult) {j : ℕ} (hj : 0 < j) {p p' : QkPt D F j}
     (h : QkPt.Equiv D F p p') (hy : p.y = 0) (hy' : p'.y = 0) : p'.g.b = p.g.b := by
   letI := gtGroup D F
-  obtain ⟨z, h₁, h₂⟩ := (equiv_iff hB _ _).1 h
+  obtain ⟨z, h₁, t, ht, h₂⟩ := h
   rw [hy, hy', zero_add] at h₁
   have hz : z = 0 := by
     have : (j : ℤ) • z = 0 := by rw [natCast_zsmul]; exact h₁.symm
     exact (smul_eq_zero.1 this).resolve_left (by exact_mod_cast hj.ne')
-  rw [h₂, hz, map_zero, add_zero]
+  obtain ⟨z₀, hz₀, t₀, ht₀, ht₁⟩ := qk_equiv_refl hB p
+  have hz₀' : z₀ = 0 := by
+    have h : j • z₀ = 0 := add_left_cancel (hz₀.symm.trans (add_zero _).symm)
+    have h' : (j : ℤ) • z₀ = 0 := by rw [natCast_zsmul]; exact h
+    exact (smul_eq_zero.1 h').resolve_left (by exact_mod_cast hj.ne')
+  have htzero : t = 0 := by
+    have he := (isAdd_iff_eq _ _ _).1 ht₁
+    have hz0 : t₀ = 0 := add_left_cancel (he.trans (add_zero _).symm)
+    exact (isIota_unique (hz ▸ ht) (hz₀' ▸ ht₀)).trans hz0
+  have he := (isAdd_iff_eq _ _ _).1 h₂
+  rw [he, htzero, add_zero]
 
 theorem act_compat_on_torsion : Laws → BrGtSt → AllD fun {E} _ _ _ {H} D => letI := H.starRing; ∀ (R : Type) [CommRing R] [IsDomain R] (C : Type) [NormedField C] [IsAlgClosed C] [Algebra (FractionRing R) C] (A : ArcF D R C) (o : Full D C) (M : Mdl o), M.P.TorsionIso → ∀ (N' : NumD C) (ν' : NumOf M.P.D.toPre C N') (k : ℕ) (β : A.N.Form k) (u r : Cˣ) (J : NumD.Iso (A.N.twist β u) N') (j : ℕ), 0 < j → r ^ j = u → (∀ x (p : (A.N.twist β u).QT j) (q' : N'.QT j) p' z, TwRel β u r (A.q _ x) p → q'.1.1.toAdd = J.e p.1.1.toAdd → J.Rel p.1.2 q'.1.2 → ν'.QPt p' q' → z.left = (o.I.ev j x).left ≫ M.φ → M.P.ToA C j p' z) → ∀ (x : 𝓞 E) (b : A.N.A), b ^ j = 1 → J.φ (actV (N := A.N) A.ν A.oa.onB x b) = actV ν' M.P.oD.onB x (J.φ b) := by
   intro hL hBr E _ _ _ H D R _ _ C _ _ _ A o M hT N' ν' k β u r J j hj hr hlab x b hb

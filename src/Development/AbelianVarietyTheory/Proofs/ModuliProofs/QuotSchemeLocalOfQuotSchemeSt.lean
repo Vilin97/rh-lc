@@ -23,7 +23,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 noncomputable section
 namespace GlobalTheory.TQCompare
-open GlobalTheory.UU GlobalTheory.IndefiniteRowSideFullHecke.TorusQuotientTorsionLift
+open GlobalTheory.UU
 
 section Clauses
 variable {S S' : Scheme.{0}} {X : Type} [AddCommGroup X]

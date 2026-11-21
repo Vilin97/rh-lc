@@ -123,7 +123,7 @@ private theorem ring_laws (hb : ∀ R, Function.Bijective (e R))
       Over.OverMorphism.ext ((ha b s x _ (hl R s x)).symm.trans (hE R s _).symm)
     have h₃ : (E R s).symm (e R x) ≫ ρ.act (a + b) =
         ((E R s).symm (e R x) ≫ ρ.act a) * ((E R s).symm (e R x) ≫ ρ.act b) := by
-      rw [ρ.map_add (f := _)]
+      rw [ρ.map_add]
       exact MonObj.comp_mul _ _ _
     rw [hm, h₁, h₂, h₃]
     exact (hE R s _).symm.trans (congrArg (fun q => q.left) (map_mul (E R s) _ _))

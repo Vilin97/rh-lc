@@ -87,8 +87,14 @@ theorem volC_pos : Formalism.L2.Ker.VolCPos := by
   have la : Submodule.IsLattice E (Formalism.L2.Col.stdLat E a) := Formalism.L2.Col.stdLat_lattice
   have lb : Submodule.IsLattice E (Formalism.L2.Col.stdLat E b) := Formalism.L2.Col.stdLat_lattice
   have f₀ := PeriodComp.full AA _ _ la.fg lb hA0
-  have f₁ := PeriodComp.full AA N N' hN ⟨hN', hs'⟩ hA0
-  have g₀ := perO_fg hA (homO_fg la.fg lb.fg la.span_eq_top)
+  have f₁ := PeriodComp.full AA N N' hN (Submodule.IsLattice.of_fg E hN') hA0
+  have hspan : Submodule.span E (Formalism.L2.Col.stdLat E a : Set (Sp E a)) = ⊤ := by
+    rw [Formalism.L2.Col.stdLat_eq_span, Submodule.span_span_of_tower]
+    convert (Pi.basisFun E (Fin a)).span_eq using 1
+    congr 2
+    ext i
+    exact congrFun (Pi.basisFun_apply E (Fin a) i).symm _
+  have g₀ := perO_fg hA (homO_fg la.fg lb.fg hspan)
   have g₁ := perO_fg hA (homO_fg hN hN' hs)
   refine Finset.prod_pos fun P _ => div_pos ?_ ?_
   · exact Nat.cast_pos.2 (Nat.pos_of_ne_zero (relIndex_localized_ne_zero P f₀ f₁ g₁))

@@ -74,7 +74,7 @@ theorem swap_mem_int (y : v.adicCompletion F ⊗[F] E) : y ∈ GlobalTheory.Adel
   constructor
   · refine GlobalTheory.AdelicU.intLoc_induction (p := fun y => swap v y ∈
       tensInt (F := F) (v.adicCompletion F) (intOE E) (v.adicCompletionIntegers F).toSubring) (fun a ha x => ?_)
-      (by simp) (fun y z hy hz => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz)
+      (by simp) (fun y z hy hz => by rw [map_add]; exact add_mem hy hz)
       (fun y hy => by rw [map_neg]; exact neg_mem hy)
     have : swap v (a ⊗ₜ[F] (x : E)) = ((x : E) ⊗ₜ[F] (1 : v.adicCompletion F)) * ((1 : E) ⊗ₜ[F] a) := by
       rw [swap_tmul, Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
@@ -204,7 +204,8 @@ theorem relIndex_conj_levelVL : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
     have := (LinearEquiv.ofBijective (Algebra.linearMap F E) ⟨(algebraMap F E).injective, hs⟩).finrank_eq
     rw [hc.deg2, Module.finrank_self] at this
     omega
-  haveI : Submodule.IsLattice E N := ⟨Module.Finite.iff_fg.1 hN, hspan⟩
+  haveI : Submodule.IsLattice E N := Submodule.IsLattice.of_fg E (Module.Finite.iff_fg.1 hN)
+  haveI : Submodule.IsFullLattice E N := ⟨hspan⟩
   obtain ⟨g, rfl⟩ := exists_toGL hc.sig J v hγ
   have h := relIndex_conj_comm (GlobalTheory.HeckeDual.modular_eq_one hc.sig J (fun x => star_star x) hδ hσδ
     ⟨fun i j => congrFun (congrFun hJ i) j, hd.ne_zero⟩ v) _ (GlobalTheory.AdelicU.isOpen_stabLoc hc.sig J N v)

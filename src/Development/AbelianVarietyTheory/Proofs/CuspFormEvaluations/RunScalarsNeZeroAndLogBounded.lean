@@ -19,7 +19,7 @@ namespace GlobalTheory.RunIn.ScalSize
 variable {D : D7} {j : ℕ}
 
 theorem one_le_f (D : D7) : (1 : ℝ) ≤ D.R.f := by
-  have : 1 ≤ D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega
+  have : 1 ≤ D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) D.R.ord_pos; omega
   exact_mod_cast this
 
 theorem one_le_r (D : D7) : (1 : ℝ) ≤ D.R.r := by

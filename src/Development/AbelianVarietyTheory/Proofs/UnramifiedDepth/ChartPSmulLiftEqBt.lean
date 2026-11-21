@@ -117,14 +117,14 @@ theorem chart_p_smul_lift_eq_bt :
     rw [B.tg_nat (Tw.π 1) D.wd.πW (Tw.sqZero 1) hsq, ← hpth, smul_comm p, ← map_nsmul,
       smul_smul, pow_two]
   refine ⟨∑ i, n i • B.map D.wd.ψ (p • th i), ?_, ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [ptOf, map_sum, map_nsmul]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ptOf, map_sum, map_nsmul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← B.map_comp, hc1, B.map_comp, hth, ← B.map_comp, hc2, D.L.τ_compat i 0, map_nsmul]
   · refine ⟨hpt ▸ map_tg_ker B _ _ hsq _ D.wd.ρW_eq v, fun k => ?_⟩
     refine ⟨∑ i, n i • D.wd.ψ.1 (btTanCrd D.ch.gb _ k (w i)), ?_, ?_⟩
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [map_sum, map_nsmul, Matrix.mulVec, dotProduct, map_mul, Function.comp_apply]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_nsmul, Matrix.mulVec, dotProduct, map_mul, Function.comp_apply]
       refine Finset.sum_congr rfl fun i _ => ?_
       have h1 := congrArg (btTanCrd D.ch.gb _ k) (hw i)
       rw [btTanCrd_nat, btTanCrd_nat] at h1

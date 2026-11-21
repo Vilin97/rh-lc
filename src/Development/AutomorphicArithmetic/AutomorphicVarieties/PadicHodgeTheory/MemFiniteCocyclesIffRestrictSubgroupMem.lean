@@ -31,3 +31,4 @@ theorem UpperTheory.mem_finiteCocycles_iff_restrict_subgroup_mem :
       (LinearMap.inr ℚ_[l] B B) (fun g x => by rw [hM]; simp) _ h2
     have k := add_mem k1 k2
     convert k using 1
+    ext g <;> simp

@@ -219,7 +219,9 @@ theorem compatEx : CompatEx := by
     have hk1 : k = 1 := by exact_mod_cast h3
     rw [hk, hk1, one_smul]
   haveI : ν₀.IsMulRightInvariant := ⟨hR⟩
-  refine ⟨c • ν₀, IsHaarMeasure.nnreal_smul _ hc0.ne', ⟨fun h => by rw [Measure.map_smul, hR]⟩, ?_⟩
+  refine ⟨c • ν₀, IsHaarMeasure.nnreal_smul _ hc0.ne', ⟨fun h => by
+    rw [Measure.map_smul, hR]
+    exact (measurable_mul_const h).aemeasurable⟩, ?_⟩
   intro fa' fb' ψ' hfa' hfb' hψ' hψc'
   change ∫ g, tensH fa' fb' ψ' g ∂D.μ = _
   rw [hc, integral_tensH_splitH, integral_smul_nnreal_measure]

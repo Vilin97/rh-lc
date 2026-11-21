@@ -105,16 +105,17 @@ theorem dblz'_shift (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) (h : (aLin X x₁ x�
   congr 2
   conv_rhs => rw [← one_mulVec (w τ k), ← e, ← mulVec_mulVec, ← mulVec_add]
   congr 1
+  funext c
   by_cases hc : (c : ℕ) < X.p0
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [if_pos hc, hermC, map_sum, map_mul, conj_conj, DblPer.conj_Gm, mulVec, dotProduct,
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [if_pos hc, zR, Equiv.apply_symm_apply, hermC, map_sum, map_mul, conj_conj, DblPer.conj_Gm, mulVec, dotProduct,
       aLin, of_apply, Finset.sum_mul, FD.col, mat, Pi.add_apply]
     rw [Finset.sum_comm (f := fun i j => τ.1 (X.Gm i j) * conj (x₂ τ j c) * w τ k i),
       ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun _ _ => ?_
     rw [← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun _ _ => by ring
-  · simp only [if_neg hc, mulVec, dotProduct, aLin, of_apply, Pi.add_apply]
+  · simp only [if_neg hc, zR, Equiv.apply_symm_apply, mulVec, dotProduct, aLin, of_apply, Pi.add_apply]
     rw [← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun _ _ => by ring
 
@@ -129,16 +130,17 @@ theorem dblz_shift (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) (h : (aAnti X x₁ x�
   congr 2
   conv_rhs => rw [← one_mulVec (star (w τ k)), ← e, ← mulVec_mulVec, ← mulVec_add]
   congr 1
+  funext c
   by_cases hc : (c : ℕ) < X.p0
-  · simp only [if_pos hc, hermC, map_add (f := _), mulVec, dotProduct,
+  · simp only [if_pos hc, zR, Equiv.apply_symm_apply, hermC, map_add (f := _), mulVec, dotProduct,
       aAnti, of_apply, Finset.sum_mul, FD.col, mat, Pi.add_apply, Pi.star_apply, RCLike.star_def]
     rw [Finset.sum_comm (f := fun i j => x₁ τ j c * τ.1 (X.Gm j i) * conj (w τ k i)),
       ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun _ _ => ?_
     rw [← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun _ _ => by ring
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [if_neg hc, mulVec, dotProduct, aAnti, of_apply, Pi.add_apply, map_sum, map_mul,
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [if_neg hc, zR, Equiv.apply_symm_apply, mulVec, dotProduct, aAnti, of_apply, Pi.add_apply, map_sum, map_mul,
       map_add, Pi.star_apply, RCLike.star_def]
     rw [← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun _ _ => by ring

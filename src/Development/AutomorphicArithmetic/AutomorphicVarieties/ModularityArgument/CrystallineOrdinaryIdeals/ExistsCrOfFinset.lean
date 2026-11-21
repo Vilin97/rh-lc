@@ -34,7 +34,7 @@ theorem qcont_sum {X V ι : Type} [Fintype ι] [TopologicalSpace X] [AddCommGrou
   letI := moduleTopology ℚ_[l] V
   haveI : IsModuleTopology ℚ_[l] V := ⟨rfl⟩
   haveI : ContinuousAdd V := IsModuleTopology.toContinuousAdd ℚ_[l] V
-  exact continuous_finset_sum _ fun i _ => hc i
+  exact continuous_finsetSum _ fun i _ => hc i
 
 theorem contAction_of_qcont {V : Type} [AddCommGroup V] [Module ℚ_[l] V] [FiniteDimensional ℚ_[l] V]
     [TopologicalSpace V] [IsModuleTopology ℚ_[l] V] (ρ : Representation ℚ_[l] G V)
@@ -52,7 +52,7 @@ theorem contAction_of_qcont {V : Type} [AddCommGroup V] [Module ℚ_[l] V] [Fini
     simp only [map_smul, Basis.coord_apply]
   unfold ReciprocityTheory.Gal.ContAction
   rw [e]
-  exact continuous_finset_sum _ fun i _ =>
+  exact continuous_finsetSum _ fun i _ =>
     ((IsModuleTopology.continuous_of_linearMap (b.coord i)).comp continuous_snd).smul ((h' _).comp continuous_fst)
 
 theorem qcont_colRep {B : Type} [CommRing B] [Algebra ℚ_[l] B] (ρ : G →* GL (Fin 3) B)

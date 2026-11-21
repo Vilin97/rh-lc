@@ -165,7 +165,7 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.abP :
     haveI hfin : Finite (Subgroup.map D.ψ (D.Ip p)) :=
       Finite.of_injective (Subgroup.inclusion (Subgroup.map_le_range D.ψ _))
         (Subgroup.inclusion_injective _)
-    haveI : IsCyclic (Subgroup.map D.ψ (D.Ip p)) := subgroup_units_cyclic _
+    haveI : IsCyclic (Subgroup.map D.ψ (D.Ip p)) := isCyclic_subgroup_units _
     obtain ⟨γ, hγ⟩ := IsCyclic.exists_generator (α := Subgroup.map D.ψ (D.Ip p))
     obtain ⟨τ, hτI, hτγ⟩ := Subgroup.mem_map.mp γ.2
     refine ⟨τ, hτI, ?_, ?_⟩

@@ -306,7 +306,54 @@ theorem Core.exists_coord : ∀ C : Core, C.HasTests → C.Fib → ∀ w : C.G.t
   intro C hT hF w hwc
   obtain ⟨-, hlft, -, hint, hflat, -, -, -, -, -, -, hdom, -⟩ := GlobalTheory.ZJ.core_basic C
   haveI := C.lft
-  obtain ⟨p, _, b, hb, hbU⟩ := padicAlgCl_integral_points.1 C.G.toScheme (C.GG.hom ≫ C.π) w hwc
+  have integral_points : ∀ (X : Scheme.{0}) [IsIntegral X] (π : X ⟶ Sp ℤ)
+      [Flat π] [LocallyOfFiniteType π] (z : X), IsClosed ({z} : Set X) →
+      ∀ U : X.Opens, (U : Set X).Nonempty →
+      ∃ (p : ℕ) (_ : Fact p.Prime) (y : Sp (OO p) ⟶ X),
+        y (cPt p) = z ∧ Set.range (gPt p ≫ y) ⊆ U := by
+    intro X _ π _ _ z hz U hU
+    obtain ⟨p, hp, hpz⟩ := exists_prime_residueField_eq_zero π hz
+    haveI : Fact p.Prime := ⟨hp⟩
+    obtain ⟨K, hK, y, hy, hyU, -⟩ := exists_padic_point_scheme π hz hpz U hU
+    have norm_iff (x : PadicAlgCl p) : x ∈ OO p ↔ ‖x‖ ≤ 1 := by
+      rw [Valuation.mem_valuationSubring_iff, ← NNReal.coe_le_coe]
+      rfl
+    let integralClosureToPadicAlgClIntegers : integralClosure ℤ_[p] K →+* OO p :=
+      (K.val.toRingHom.comp (integralClosure ℤ_[p] K).val.toRingHom).codRestrict (OO p) fun x =>
+        (norm_iff _).mpr ((mem_integralClosure_padicInt_iff K _).mp x.2)
+    haveI : IsLocalHom integralClosureToPadicAlgClIntegers := by
+      refine ⟨fun x hx => ?_⟩
+      obtain ⟨y, hy⟩ := hx.exists_right_inv
+      have hy' : ((x : K) : PadicAlgCl p) * (y : PadicAlgCl p) = 1 :=
+        congrArg (fun z : OO p => (z : PadicAlgCl p)) hy
+      have h0 : (x : K) ≠ 0 := by
+        intro h0
+        rw [h0] at hy'
+        simp at hy'
+      have hinv : (x : K)⁻¹ ∈ integralClosure ℤ_[p] K := by
+        rw [mem_integralClosure_padicInt_iff, IntermediateField.coe_inv,
+          ← eq_inv_of_mul_eq_one_right hy']
+        exact (norm_iff _).mp y.2
+      exact IsUnit.of_mul_eq_one ⟨_, hinv⟩ (Subtype.ext (mul_inv_cancel₀ h0))
+    refine ⟨p, inferInstance, spMap integralClosureToPadicAlgClIntegers ≫ y, ?_, ?_⟩
+    · exact (Scheme.Hom.comp_apply _ _ _).trans
+        ((congrArg y (IsLocalRing.comap_closedPoint integralClosureToPadicAlgClIntegers)).trans hy)
+    · rintro _ ⟨x, rfl⟩
+      rw [← Category.assoc, Scheme.Hom.comp_apply]
+      have key : spMap integralClosureToPadicAlgClIntegers ((gPt p) x) =
+          genericPoint (Sp (integralClosure ℤ_[p] K)) := by
+        rw [genericPoint_eq_bot_of_affine]
+        apply PrimeSpectrum.ext
+        apply le_antisymm _ bot_le
+        intro a ha
+        have ha' : ((a : K) : PadicAlgCl p) ∈ (x : PrimeSpectrum (PadicAlgCl p)).asIdeal := ha
+        haveI := (x : PrimeSpectrum (PadicAlgCl p)).isPrime
+        rw [Ideal.eq_bot_of_prime (x : PrimeSpectrum (PadicAlgCl p)).asIdeal,
+          Ideal.mem_bot] at ha'
+        exact Subtype.ext (Subtype.ext ha')
+      rw [Scheme.Hom.comp_apply, key]
+      exact hyU
+  obtain ⟨p, _, b, hb, hbU⟩ := integral_points C.G.toScheme (C.GG.hom ≫ C.π) w hwc
     (C.GG.hom ⁻¹ᵁ C.U) (by
       obtain ⟨z, hz, x, rfl⟩ := C.GG.hom.denseRange.inter_open_nonempty _ C.U.isOpen C.ne
       exact ⟨x, hz⟩)
@@ -372,7 +419,7 @@ theorem Core.exists_coord : ∀ C : Core, C.HasTests → C.Fib → ∀ w : C.G.t
     haveI := hW.isLocalization_stalk ⟨w, hw⟩
     haveI : Finite (C.G.toScheme.presheaf.stalk w ⧸ IsLocalRing.maximalIdeal (C.G.toScheme.presheaf.stalk w)) :=
       ‹Finite (C.G.toScheme.residueField w)›
-    rw [hm, ← IsLocalization.AtPrime.comap_maximalIdeal (C.G.toScheme.presheaf.stalk w)
+    rw [hm, ← IsLocalization.AtPrime.under_maximalIdeal (C.G.toScheme.presheaf.stalk w)
       (hW.primeIdealOf ⟨w, hw⟩).asIdeal]
     exact Finite.of_injective _ Ideal.quotientMap_injective
   obtain ⟨u, s, hs, hu, H⟩ := exists_coords_ring α

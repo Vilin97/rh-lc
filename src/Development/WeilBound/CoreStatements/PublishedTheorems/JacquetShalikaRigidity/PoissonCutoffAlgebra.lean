@@ -45,7 +45,7 @@ theorem eL_val (hi : Function.Injective (algebraMap E (Ad E))) (ξ : Fin k → E
 def B (ψ : AddChar (Ad E) ℂ) (x y : Fin k → Ad E) : ℂ := ψ (∑ i, x i * y i)
 
 theorem B_cont {ψ : AddChar (Ad E) ℂ} (hψ : StdPsi ψ) (y : Fin k → Ad E) : Continuous fun x => B ψ x y :=
-  hψ.cont.comp (continuous_finset_sum _ fun i _ => (continuous_apply i).mul continuous_const)
+  hψ.cont.comp (continuous_finsetSum _ fun i _ => (continuous_apply i).mul continuous_const)
 
 theorem B_symm (ψ : AddChar (Ad E) ℂ) (x y : Fin k → Ad E) : B ψ x y = B ψ y x := by
   simp only [B, mul_comm]

@@ -125,7 +125,9 @@ theorem UpperTheory.V.Kum.cardSel :
       rw [← hab, powMonoidHom_apply, (radClMul K S n hn).2.2]
       refine finprod_induction (fun c => c ∈ clSub S) (one_mem _) (fun _ _ => mul_mem) fun v => ?_
       by_cases hv : v ∈ S
-      · exact zpow_mem (Subgroup.subset_closure ⟨v, hv, rfl⟩) _
+      · have hmem : primeCl v ∈ clSub S :=
+          Subgroup.subset_closure (show primeCl v ∈ primeCl '' S from ⟨v, hv, rfl⟩)
+        exact zpow_mem hmem _
       · rw [(mem_unit_iff u).1 hu v hv]
         simp
   rw [card_parity_sign_length_of_eq _ _ _ hU hP f hf]

@@ -61,8 +61,9 @@ private theorem isUnifAt_unif {K : Type} [Field K] [NumberField K] (v : HeightOn
 theorem UpperTheory.V.Z.ImaginaryQuadraticEtaCharacter.charAbs :
     UpperTheory.V.Z.ImaginaryQuadraticEtaCharacter.CharAbs := by
   intro K _ _ χ
-  refine ⟨-(GlobalTheory.HeckeNormPow.toQC χ).exponent, fun v => ⟨GlobalTheory.HeckeComp.smooth_loc χ v, ?_⟩⟩
-  have h1 := (GlobalTheory.HeckeNormPow.toQC χ).norm_apply
+  obtain ⟨s, hs⟩ := (GlobalTheory.HeckeNormPow.toQC χ).exists_norm_eq_rpow
+  refine ⟨-s, fun v => ⟨GlobalTheory.HeckeComp.smooth_loc χ v, ?_⟩⟩
+  have h1 := hs
     (GroundTheory.Global.IdeleClassGroup.mk K (GroundTheory.Global.IdeleGroup.finiteEmbedding v
       (UpperTheory.V.Z.ImaginaryQuadraticEtaCharacter.unif (v.adicCompletion K))))
   rw [GroundTheory.Global.IdeleClassGroup.ideleModule_mk,

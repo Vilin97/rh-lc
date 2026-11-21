@@ -132,7 +132,7 @@ theorem subsingleton_coh_of_decomp : ∀ (p : ℕ) [Fact p.Prime] (X : Scheme.{0
       exact ⟨c, CartierDiv.mem_secOn.1 hc y rfl, rfl⟩
   obtain ⟨L0⟩ := nonempty_latModel_of_presents X M (toLB M) _ (presents_toLB M)
   obtain ⟨L1⟩ := (GlobalTheory.T.lattice_model_unique_injective X _ (LB.toMod (toLB M)) (LB.toMod (toLB M)) φ hφ L0).1
-  haveI := LB.isQuasicoherent_toMod (isLB_toLB M)
+  haveI := LB.isQuasicoherent_toMod (presents_toLB M).isLB
   refine (GlobalTheory.T.cech_lattice_cohomology_vanish X _ (LB.toMod (toLB M)) 𝒜.U L1 𝒜.affine 𝒜.gen 𝒜.cover q hq).1 ?_
   have hfam : cechFam 𝒜 (G 0) d = fun s =>
       latSec (fun y => ((M.secOn {y}).toAddSubgroup).map φ.toAddMonoidHom) (inter 𝒜.U s) := by

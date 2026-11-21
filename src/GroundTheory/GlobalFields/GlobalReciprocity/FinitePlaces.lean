@@ -16,6 +16,8 @@ open scoped Pointwise GroundTheory.LocalField.Abstract
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 namespace IdeleClassLimit
 
 open FiniteSubfield _root_.GroundTheory.Global.Cyclotomic ProfiniteInteger

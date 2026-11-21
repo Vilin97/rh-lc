@@ -73,6 +73,7 @@ theorem exists_nat_coprime (s : 𝓞 E) (N : ℕ)
       (Ideal.span {s}) hle
     refine h Q hQp (hQ (Ideal.mem_span_singleton_self s)) ?_
     have : ((N : ℕ) : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 E)) := by
+      change ((N : ℕ) : ℤ) ∈ Ideal.under ℤ Q
       rw [hQc, Ideal.mem_span_singleton]; exact_mod_cast hpN
     simpa using this
   · have h1 : s ∣ ((a : ℤ) : 𝓞 E) := by

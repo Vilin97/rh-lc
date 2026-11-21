@@ -162,7 +162,7 @@ theorem differentiable_translate (X : I2.PT E) (q n : ℕ) (π : I2.Vsp X.dim �
     unfold I2.s0
     have hk : ∀ k : Fin n, Differentiable ℂ fun v : Fin n → I2.Vsp X.dim => s fun _ => π (v k) := fun k =>
       hs.comp (differentiable_pi.2 fun _ => hπ.comp (differentiable_apply k))
-    exact fun v => (HasFDerivAt.finset_prod fun k _ => (hk k v).hasFDerivAt).differentiableAt
+    exact fun v => (HasFDerivAt.finsetProd fun k _ => (hk k v).hasFDerivAt).differentiableAt
   have h1 : Differentiable ℂ fun v : Fin n → I2.Vsp X.dim => I2.HC v b := by
     unfold I2.HC I2.Hf
     fun_prop

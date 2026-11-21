@@ -300,7 +300,7 @@ theorem finalNum_of (l : ℕ) (hl : 3 ≤ l) (n : ℕ) [NeZero n] (j Gp S η h :
     (hW : WordOK l (initialExponentBound l n j (gPar Gp S η) h H₁ H₂ cuts arcLen) ty cuts arcLen) :
     Formalism.ExponentWindows.E.FinalNum l (cutsOf hC) (kdOf ty) (bbOf ty) j (gPar Gp S η) Gp S η h
       (sigPar l (gPar Gp S η) h j) (rrPar l n H₁ H₂ cuts)
-      (kapPar l (gPar Gp S η) h (ellMax cuts arcLen)) (ellMax cuts arcLen) where
+      (kapPar l (gPar Gp S η) h (ellMax cuts arcLen)) (ellMax cuts arcLen) := {
   G_le_g := G_le_gPar _ _ _
   S_le_g := S_le_gPar _ _ _
   η_le_g := η_le_gPar _ _ _
@@ -318,5 +318,6 @@ theorem finalNum_of (l : ℕ) (hl : 3 ≤ l) (n : ℕ) [NeZero n] (j Gp S η h :
     exact kapOK_arc l (gPar Gp S η) Gp S η h (arcLen c) (ellMax cuts arcLen) (G_le_gPar _ _ _)
       (S_le_gPar _ _ _) (η_le_gPar _ _ _) hgh _ _
       (fun s hs => (size_of_sizesOK hS _ hs).2) (Finset.le_sup (f := arcLen) hc) t₀ t₁ ht
+}
 
 end Formalism.MainNotions.WachCoordinates

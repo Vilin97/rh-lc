@@ -62,7 +62,7 @@ private theorem supp_iff (V : Lev k) (d : Fin 3 → kˣ) (hd : SDom d) (x y z : 
     (g₀ w : GL (Fin 3) k) :
     V.unitaryDoubleCosetIndicator d (w⁻¹ * (g₀ * dg ![x, y, z] * Phi k * (th k 3 g₀)⁻¹) * th k 3 w) ≠ 0 ↔
       ∃ u, (w : GL (Fin 3) k ⧸ V.J 3) = ((g₀ * dg u : GL (Fin 3) k) : GL (Fin 3) k ⧸ V.J 3) ∧ Cd V d x y z u := by
-  have hf : ∀ g, V.unitaryDoubleCosetIndicator d g ≠ 0 ↔ g * (Phi k)⁻¹ ∈ V.DC d := by
+  have hf : ∀ g : GL (Fin 3) k, V.unitaryDoubleCosetIndicator d g ≠ 0 ↔ g * (Phi k)⁻¹ ∈ V.DC d := by
     intro g
     unfold Lev.unitaryDoubleCosetIndicator
     split_ifs <;> simp_all
@@ -113,6 +113,7 @@ private theorem cd_act (V : Lev k) (d : Fin 3 → kˣ) (x y z a : kˣ) (u : Fin 
 end
 
 theorem orbital_integral_over_base_group : UnitaryHyperbolicOrbitCount := by
+  unfold UnitaryHyperbolicOrbitCount
   intro k _ _ _ _ V T _ r hr g₀ ι hι d hd x₁ y₁ z₁ hv
   letI : MulAction T (GL (Fin 3) k ⧸ V.J 3) := MulAction.compHom _ ι
   set δ := g₀ * dg ![x₁, y₁, z₁] * Phi k * (th k 3 g₀)⁻¹ with hδ

@@ -151,7 +151,7 @@ theorem isLocalHom_of_integral {V W Ω : Type} [CommRing V] [IsLocalRing V] [Com
   have hP : P.IsPrime := Ideal.comap_isPrime _ _
   have e : P.comap (algebraMap V W) = IsLocalRing.maximalIdeal V :=
     ((IsLocalRing.maximalIdeal.isMaximal V).eq_of_le (Ideal.comap_isPrime _ P).ne_top h).symm
-  have hm : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := V) P
+  have hm : P.IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := V) P
     (e ▸ IsLocalRing.maximalIdeal.isMaximal V)
   exact ((IsLocalRing.local_hom_tfae g).out 5 1).1 (IsLocalRing.eq_maximalIdeal hm)
 
@@ -203,7 +203,7 @@ theorem exists_split (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRi
   let ρ := Ideal.Quotient.mk m
   have := isAlgClosed_of_surjective ρ Ideal.Quotient.mk_surjective
   have hV : ∀ v ∈ IsLocalRing.maximalIdeal V, ρ (algebraMap V _ v) = 0 := fun v hv => by
-    have := IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := V) m)
+    have := IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := V) m)
     rw [← this] at hv
     exact Ideal.Quotient.eq_zero_iff_mem.2 hv
   have l₀ : IsLocalHom (ρ.comp (algebraMap V _)) := isLocalHom_of_integral (V := V) _ fun v hv => by

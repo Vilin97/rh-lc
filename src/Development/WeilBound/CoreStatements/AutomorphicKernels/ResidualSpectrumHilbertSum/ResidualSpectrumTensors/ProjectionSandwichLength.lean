@@ -21,7 +21,8 @@ omit [IsTotallyComplex E] in
 theorem eq_of_isAbsPow {ν ν' : HChar E} {s : ℝ} (h : ν.IsAbsPow s) (h' : ν'.IsAbsPow s) : ν = ν' := by
   have h0 : (ν * ν'⁻¹).IsAbsPow 0 := by
     refine ⟨fun v x hx => ?_, fun v => ?_, fun k => ?_⟩
-    · simp only [HChar.loc_mul, HChar.loc_inv, h.1 v x hx, h'.1 v x hx, inv_one, mul_one]
+    · change ν.loc v x * (ν'.loc v x)⁻¹ = 1
+      rw [h.1 v x hx, h'.1 v x hx, inv_one, mul_one]
     · have e : ν.val v = ν'.val v := Units.ext ((h.2.1 v).trans (h'.2.1 v).symm)
       simp [HChar.val_mul, HChar.val_inv, e]
     · have e : ν.inf k = ν'.inf k := Units.ext ((h.2.2 k).trans (h'.2.2 k).symm)

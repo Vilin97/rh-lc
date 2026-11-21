@@ -46,18 +46,18 @@ theorem exists_int_inv_half : ∀ (D : D7) (P : Finset (Formalism.L2.DIV.Pl D.ho
   refine ⟨cA D (∑ PP ∈ P, es PP) * incA D ((s : D.host.E)⁻¹), ?_, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, Finset.sum_mul, map_sum]
-    refine sum_mem fun PP hPP => ?_
-    have hc0 : Formalism.L2.Col.cO D.host.E s ≠ 0 := by
-      intro h0; apply hs0
-      rw [← Formalism.L2.Col.cO_cO s, h0, map_zero]
-    have hnot : Formalism.L2.Col.cO D.host.E s ∉ PP.asIdeal := fun hm => hs PP hPP (mem_conjI_of D _ s hm)
-    have hint := not_not.1 (mt ((hes PP hPP).2 _ hc0).2 hnot)
-    have := GlobalTheory.MovedIdem.finPart_conj_mem hint
-    have hst : star (((Formalism.L2.Col.cO D.host.E s : 𝓞 D.host.E) : D.host.E)⁻¹) = (s : D.host.E)⁻¹ := by
-      rw [star_inv₀]
-      congr 1
-      exact star_star (s : D.host.E)
-    rwa [hst] at this
+      refine sum_mem fun PP hPP => ?_
+      have hc0 : Formalism.L2.Col.cO D.host.E s ≠ 0 := by
+        intro h0; apply hs0
+        rw [← Formalism.L2.Col.cO_cO s, h0, map_zero]
+      have hnot : Formalism.L2.Col.cO D.host.E s ∉ PP.asIdeal := fun hm => hs PP hPP (mem_conjI_of D _ s hm)
+      have hint := not_not.1 (mt ((hes PP hPP).2 _ hc0).2 hnot)
+      have := GlobalTheory.MovedIdem.finPart_conj_mem hint
+      have hst : star (((Formalism.L2.Col.cO D.host.E s : 𝓞 D.host.E) : D.host.E)⁻¹) = (s : D.host.E)⁻¹ := by
+        rw [star_inv₀]
+        congr 1
+        exact star_star (s : D.host.E)
+      rwa [hst] at this
   · have h1 : incA D ((s : D.host.E)⁻¹) * incA D (s : D.host.E) = 1 := by
       rw [← map_mul, inv_mul_cancel₀ hsE, map_one]
     calc cA D (∑ PP ∈ P, es PP) * incA D ((s : D.host.E)⁻¹) * incA D (s : D.host.E) * cA D (∑ PP ∈ P, es PP)

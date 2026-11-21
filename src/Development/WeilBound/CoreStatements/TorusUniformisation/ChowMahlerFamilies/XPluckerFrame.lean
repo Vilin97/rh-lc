@@ -108,7 +108,7 @@ private theorem exists_pow_mul_basis_repr_mem {o Ω : Type} [CommRing o] [Field 
           (f l ^ m l * (B l).repr (f l' ^ n₁ l' q' • b l' q') q)) := by
     rw [he']
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.coe_smul,
+      simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul,
       Pi.smul_apply, smul_eq_mul]
     rw [Finset.mul_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun q' _ => ?_

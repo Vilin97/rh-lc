@@ -57,6 +57,8 @@ section Real
 
 variable {P Q : ℕ}
 
+local notation "Mat" => Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ
+
 def sigJ (W : Mat) : Mat := HcS.UG.Jpq P Q * Wᴴ * HcS.UG.Jpq P Q
 
 theorem Jpq_mul_mul (X : Mat) : HcS.UG.Jpq P Q * (HcS.UG.Jpq P Q * X) = X := by

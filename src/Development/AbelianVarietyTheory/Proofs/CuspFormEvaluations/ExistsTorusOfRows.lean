@@ -217,7 +217,7 @@ theorem exists_torusOf_rows : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     refine ⟨hrow' j, ?_⟩
     ext i
     rw [hψ]
-    simp only [PiLp.smul_apply, EuclideanSpace.single_apply, smul_eq_mul, Pi.single_apply]
+    simp only [PiLp.smul_apply, EuclideanSpace.single, PiLp.ofLp_single, smul_eq_mul, Pi.single_apply]
     have hiff : e.symm i = j ↔ i = ⟨ty j, ⟨row j, hrow' j⟩⟩ := by
       rw [Equiv.symm_apply_eq]
       rfl

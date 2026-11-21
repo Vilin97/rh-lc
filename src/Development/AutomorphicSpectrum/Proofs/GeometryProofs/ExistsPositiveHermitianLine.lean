@@ -25,7 +25,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 open GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree GroundTheory.Heights₂.Heights.FubiniStudyLeviForm
 
 theorem log_rho_eq_phi (I : Type) [Fintype I] :
-    (fun z : I → ℂ => Real.log ((fsMetric I).ρ z)) = FubiniLevi.phi := by
+    (fun z : I → ℂ => Real.log ((fsMetric («ι» := I)).ρ z)) = FubiniLevi.phi := by
   funext z
   change Real.log ‖WithLp.toLp 2 z‖ = _
   rw [EuclideanSpace.norm_eq, Real.log_sqrt (Finset.sum_nonneg fun _ _ => sq_nonneg _)]
@@ -49,28 +49,32 @@ theorem levi_fsMulti_pos {z w : (Σ k, J k) → ℂ} (hz : ∀ k, ∃ i, z ⟨k,
   classical
   obtain ⟨k₀, hk₀⟩ := exists_block_ne hw
   set F : K → ((Σ k, J k) → ℂ) → ℝ :=
-    fun k y => Real.log ((fsMetric (J k)).ρ (fun i => y ⟨k, i⟩)) with hF
+    fun k y => Real.log ((fsMetric («ι» := J k)).ρ (fun i => y ⟨k, i⟩)) with hF
   have hev : (fun y => Real.log ((fsMulti J).h y)) =ᶠ[𝓝 z] fun y => ∑ k ∈ Finset.univ, F k y := by
     have hopen : ∀ k, ∀ᶠ y in 𝓝 z, ∃ i, y ⟨k, i⟩ ≠ 0 := fun k => by
       obtain ⟨i, hi⟩ := hz k
       exact Filter.mem_of_superset (((continuous_apply _).isOpen_preimage _ isOpen_ne).mem_nhds hi)
         fun y hy => ⟨i, hy⟩
     filter_upwards [Filter.eventually_all.mpr hopen] with y hy
-    have hpos : ∀ k, 0 < (fsMetric (J k)).ρ (fun i => y ⟨k, i⟩) := fun k => by
+    have hpos : ∀ k, 0 < (fsMetric («ι» := J k)).ρ (fun i => y ⟨k, i⟩) := fun k => by
       obtain ⟨i, hi⟩ := hy k
-      exact (fsMetric (J k)).pos _ fun h0 => hi (congrFun h0 i)
+      exact (fsMetric («ι» := J k)).pos _ fun h0 => hi (congrFun h0 i)
     simp only [fsMulti, HermLine.ofMetrics, zpow_one, hF]
     exact Real.log_prod fun k _ => (hpos k).ne'
   have hk0 : ∀ k, (fun i => z ⟨k, i⟩) ≠ 0 := fun k h0 => by
     obtain ⟨i, hi⟩ := hz k
     exact hi (congrFun h0 i)
-  have hφ : ∀ k, ContDiffAt ℝ 2 (fun u => Real.log ((fsMetric (J k)).ρ u)) (blockProj J k z) := fun k =>
-    ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.adens_contDiffAt_logρ_id
-      (HilbertSamuel.ProjLine.isSmoothMetric_fs (J := J k)) (hk0 k)
-  have hFk : ∀ k, F k = (fun u => Real.log ((fsMetric (J k)).ρ u)) ∘ blockProj J k := fun k => rfl
+  have hφ : ∀ k, ContDiffAt ℝ 2 (fun u => Real.log ((fsMetric («ι» := J k)).ρ u)) (blockProj J k z) := by
+    intro k
+    have hne : blockProj J k z ≠ 0 := hk0 k
+    have hsm := HilbertSamuel.ProjLine.isSmoothMetric_fs (J := J k)
+    have hρ : ContDiffAt ℝ 2 (fsMetric («ι» := J k)).ρ (blockProj J k z) :=
+      (hsm.contDiffAt (isOpen_ne.mem_nhds hne)).of_le (WithTop.coe_le_coe.2 le_top)
+    exact hρ.log ((fsMetric («ι» := J k)).pos _ hne).ne'
+  have hFk : ∀ k, F k = (fun u => Real.log ((fsMetric («ι» := J k)).ρ u)) ∘ blockProj J k := fun k => rfl
   have hC : ∀ k, ContDiffAt ℝ 2 (F k) z := fun k =>
     hFk k ▸ (hφ k).comp z ((blockProj J k).restrictScalars ℝ).contDiff.contDiffAt
-  have hL : ∀ k v, ReciprocityTheory.AnForm.levi (F k) z v = leviForm (fun u => Real.log ((fsMetric (J k)).ρ u))
+  have hL : ∀ k v, ReciprocityTheory.AnForm.levi (F k) z v = leviForm (fun u => Real.log ((fsMetric («ι» := J k)).ρ u))
       (fun i => z ⟨k, i⟩) (fun i => v ⟨k, i⟩) := fun k v => by
     rw [hFk, ReciprocityTheory.AnForm.levi_comp v ((blockProj J k).analyticAt z) (hφ k), (blockProj J k).fderiv]
     rfl

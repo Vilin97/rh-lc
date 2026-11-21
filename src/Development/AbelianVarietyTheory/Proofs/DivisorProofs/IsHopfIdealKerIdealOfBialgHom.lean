@@ -17,9 +17,11 @@ namespace GlobalTheory.PDiv
 
 theorem isHopfIdeal_kerIdeal_of_bialgHom (k A B : Type) [CommRing k] [CommRing A] [CommRing B]
     [HopfAlgebra k A] [HopfAlgebra k B] (f : B →ₐc[k] A) : (kerIdeal f).IsHopfIdeal k where
-  counit_eq_zero x hx :=
-    (kerIdeal_le_ker_iff f (counitAlgHom k A)).2 (fun c => by simp) hx
-  map_mkQ_comul_eq_zero x hx := by
+  counit_eq_zero := by
+    intro x hx
+    exact (kerIdeal_le_ker_iff f (counitAlgHom k A)).2 (fun c => by simp) hx
+  map_mkQ_comul_eq_zero := by
+    intro x hx
     have h0 := (kerIdeal_le_ker_iff f (Ideal.Quotient.mkₐ k (kerIdeal f))).1
       fun a ha => Ideal.Quotient.eq_zero_iff_mem.2 ha
     have h : kerIdeal f ≤ RingHom.ker
@@ -42,7 +44,8 @@ theorem isHopfIdeal_kerIdeal_of_bialgHom (k A B : Type) [CommRing k] [CommRing A
       rw [AlgHom.comp_apply, comulAlgHom_apply, ← pullTwo_comul, key, rTensor_counit_comul,
         TensorProduct.lid_tmul, one_smul]
     exact h hx
-  antipode_mem x hx := by
+  antipode_mem := by
+    intro x hx
     have h : kerIdeal f ≤ (kerIdeal f).comap (HopfAlgebra.antipodeAlgHom k A) := by
       refine Ideal.map_le_iff_le_comap.2 fun a ha => ?_
       have ha' : counit (R := k) a = 0 := ha

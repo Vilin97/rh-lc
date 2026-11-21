@@ -34,10 +34,10 @@ theorem ramLoss_le_vLa_pPow (D : D7) (K : Type) [Field K] [NumberField K] (la : 
       ((vLa la (p : K) : ℤ) : ℝ) * D.host.vdH p * (DF w : ℝ) / 2 = 0 := fun p hp hne => by
     have hpp := Nat.prime_of_mem_primeFactors hp
     haveI : Fact p.Prime := ⟨hpp⟩
-    rw [Crude.crv_vLa_natCast la hpp.ne_zero, padicValNat_primes hne.symm]; simp
+    rw [Crude.crv_vLa_natCast la hpp.ne_zero, Nat.padicValNat_def, multiplicity_primes hne.symm]; simp
   rw [ramLoss, hR]
   by_cases hm : resCharOf la ∈ D.host.condN.primeFactors
-  · rw [Finset.sum_eq_single_of_mem _ hm hz, Crude.crv_vLa_natCast la hl.ne_zero, padicValNat_self]
+  · rw [Finset.sum_eq_single_of_mem _ hm hz, Crude.crv_vLa_natCast la hl.ne_zero, Nat.padicValNat_def, Nat.Prime.multiplicity_self]
     have key : D.host.vdH (resCharOf la) * (DF w : ℝ) / 2 ≤ (padicValNat (resCharOf la) (pPow D a b b) : ℝ) := by
       have hv0 := D.host.vdH_nonneg (resCharOf la)
       have hle : ∀ k : ℕ, resCharOf la ^ k ∣ pPow D a b b → (k : ℝ) ≤ (padicValNat (resCharOf la) (pPow D a b b) : ℝ) :=

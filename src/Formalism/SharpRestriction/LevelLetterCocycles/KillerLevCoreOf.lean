@@ -23,9 +23,11 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ}
     {PD : PeriodData G Qp K₀ K B BdR}
 
-section Gen
-
 variable (W : LocWach PD LL O v n)
+
+local notation "ιE" => algebraMap (LetA O n) W.EE
+
+section Gen
 
 theorem γA_comm (g h : W.Gam) (a : LetA O n) : W.γA g (W.γA h a) = W.γA h (W.γA g a) := by
   funext i
@@ -78,7 +80,7 @@ theorem toLin_pow_apply (σ : W.EE →ₐ[O] W.EE) (k : ℕ) (f : W.EE) :
     (σ.toLinearMap ^ k) f = (σ ^ k) f := by
   induction k generalizing f with
   | zero => simp
-  | succ k ih => rw [pow_succ, Module.End.mul_apply, pow_succ, AlgHom.mul_apply]; exact ih _
+  | succ k ih => rw [pow_succ, mul_apply_eq_comp, pow_succ, AlgHom.mul_apply]; exact ih _
 
 theorem ι_lE (κ : ℕ) : ιE (lA W ^ κ) = lE W κ := by
   simp [lA, lE]
@@ -89,8 +91,6 @@ theorem smul_eq_ι (c : O) (f : W.EE) : c • f = ιE (algebraMap O (LetA O n) c
 end Gen
 
 section Red
-
-variable (W : LocWach PD LL O v n)
 
 abbrev numI (e : ℕ) (α : ℕ → ℤ) : LetA O n := ∏ s ∈ Finset.range e, ps W s ^ (α s).toNat
 abbrev denI (e : ℕ) (α : ℕ → ℤ) : LetA O n := ∏ s ∈ Finset.range e, ps W s ^ (-(α s)).toNat
@@ -187,7 +187,7 @@ theorem inId_aeval (hS : PsStable W) {a : ZMod n} {e : ℕ} {α : ℕ → ℤ} (
     intro f hf; rw [map_add (f := _), LinearMap.add_apply]; exact inId_add W (hp f hf) (hq f hf)
   | monomial k c ih =>
     intro f hf
-    rw [pow_succ, ← mul_assoc, map_mul, Module.End.mul_apply, Polynomial.aeval_X]
+    rw [pow_succ, ← mul_assoc, map_mul, mul_apply_eq_comp, Polynomial.aeval_X]
     exact ih _ (inId_γ W hS hf)
 
 theorem aeval_lE (P : Polynomial O) (κ : ℕ) (f : W.EE) :
@@ -200,8 +200,6 @@ theorem aeval_lE (P : Polynomial O) (κ : ℕ) (f : W.EE) :
 end Red
 
 section Step
-
-variable (W : LocWach PD LL O v n)
 
 def chiL (ell : ℕ) : Oˣ := W.χΓ W.gam ^ ((PD.p : ℤ) ^ ell)
 
@@ -270,8 +268,6 @@ theorem chi_pow_eq (ell : ℕ) (z : ℤ) :
 end Step
 
 section Main
-
-variable (W : LocWach PD LL O v n)
 
 theorem step (hU : PsUnitE W) (hC : PsCoprime W) (hG : LevGrad W) (hS : PsStable W)
     (hπ : W.π₀ ∈ W.AΔ) {a : ZMod n} {ell : ℕ} {α : ℕ → ℤ} {s : ℕ} (hs : s < ell) {f : W.EE}
@@ -404,8 +400,6 @@ end Main
 
 section Core
 
-variable (W : LocWach PD LL O v n)
-
 theorem lE_add (κ κ' : ℕ) : lE W (κ + κ') = lE W κ * lE W κ' := by
   simp [lE, pow_add]
 
@@ -413,7 +407,7 @@ theorem aeval_mul_apply (P Q : Polynomial O) (f : W.EE) :
     Polynomial.aeval ((W.γE W.gam).toLinearMap : Module.End O W.EE) (P * Q) f =
       Polynomial.aeval ((W.γE W.gam).toLinearMap : Module.End O W.EE) P
         (Polynomial.aeval ((W.γE W.gam).toLinearMap : Module.End O W.EE) Q f) := by
-  rw [map_mul, Module.End.mul_apply]
+  rw [map_mul, mul_apply_eq_comp]
 
 theorem Ico_succ (a : ℤ) (N : ℕ) :
     Finset.Ico a (a + ((N + 1 : ℕ) : ℤ)) = insert (a + N) (Finset.Ico a (a + N)) := by
@@ -461,7 +455,7 @@ theorem levels (hU : PsUnitE W) (hC : PsCoprime W) (hG : LevGrad W) (hS : PsStab
     | zero =>
       refine ⟨0, ?_⟩
       simp only [Nat.cast_zero, add_zero, Finset.Ico_self, Finset.prod_empty, map_one,
-        Module.End.one_apply, Function.update_eq_self]
+        one_apply_eq_self, Function.update_eq_self]
       simpa [lE] using hf
     | succ N ih =>
       obtain ⟨κ, hκ⟩ := ih

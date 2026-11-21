@@ -123,14 +123,15 @@ theorem FBChart.rawSelf_axis1 (Y : FBChart C V O dd) (p : SelfData Y d I0) (e : 
   show MvPowerSeries.coeff e (∑ col, hCol col Y.h) = 0
   exact van_sum Finset.univ _ (fun col _ => van_hCol col 1 Y.h (gauge_axes Y 1)) e he
 
-theorem FBChart.rawSelf_basic (Y : FBChart C V O dd) (p : SelfData Y d I0) : SelfConjCharts.Basic (Y.rawSelf p) V where
-  lg0 := Y.self_chart_log_constantCoeff p
-  exlg := Y.rawSelf_exlg p
-  lin := Y.rawSelf_lin p
-  axis0 := Y.rawSelf_axis0 p
-  axis1 := Y.rawSelf_axis1 p
-  uint := Y.rawSelf_u_integral p
-  hmis := hStabSelf_holds C V O dd Y d I0 p
+theorem FBChart.rawSelf_basic (Y : FBChart C V O dd) (p : SelfData Y d I0) : SelfConjCharts.Basic (Y.rawSelf p) V := by
+  exact
+    { lg0 := Y.self_chart_log_constantCoeff p
+      exlg := Y.rawSelf_exlg p
+      lin := Y.rawSelf_lin p
+      axis0 := Y.rawSelf_axis0 p
+      axis1 := Y.rawSelf_axis1 p
+      uint := Y.rawSelf_u_integral p
+      hmis := hStabSelf_holds C V O dd Y d I0 p }
 
 end Self
 

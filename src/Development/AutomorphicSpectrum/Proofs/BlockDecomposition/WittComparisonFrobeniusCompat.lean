@@ -38,8 +38,8 @@ theorem cr_square_gen {O : Type} [CommRing O] {F₁ F₂ F₃ F₄ : B.Fn O} {b�
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 
 theorem w_frobenius (r : CrystallineSemistableComparison.Res l K) (w : WittVector l r.k) :
-    ACris.phi ℂ_[l] l (r.w w) = r.w (WittVector.frobenius w) := by
-  change ACris.phi ℂ_[l] l (algebraMap (Ainf l) (Acris l) (WittVector.map r.s w)) =
+    ACris.phi (K := ℂ_[l]) (p := l) (r.w w) = r.w (WittVector.frobenius w) := by
+  change ACris.phi (K := ℂ_[l]) (p := l) (algebraMap (Ainf l) (Acris l) (WittVector.map r.s w)) =
     algebraMap (Ainf l) (Acris l) (WittVector.map r.s (WittVector.frobenius w))
   rw [ACris.phi_algebraMap]
   congr 1
