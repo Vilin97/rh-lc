@@ -107,11 +107,9 @@ variable {V V' : HSp D} {M : ℕ} {φ : GfC V ≃* GfC V'}
   {J' : Matrix (Fin V.rank) (Fin V'.rank) (Af D.host.F ⊗[D.host.F] D.host.E)} (h : Link V V' M φ J J')
 include h
 
-theorem symm : Link V' V M φ.symm J' J where
-  rank := h.rank.symm
-  h1 := h.h2
-  h2 := h.h1
-  hc := fun g => by
+theorem symm : Link V' V M φ.symm J' J := by
+  refine ⟨h.rank.symm, h.h2, h.h1, ?_, ?_, h.loc', h.loc⟩
+  · intro g
     have e := h.hc (φ.symm g)
     rw [MulEquiv.apply_symm_apply] at e
     have e' : finMat D.sp.cm.sig V'.gram (g : GA D V') * J = J * finMat D.sp.cm.sig V.gram (φ.symm g : GA D V) := e
@@ -124,11 +122,9 @@ theorem symm : Link V' V M φ.symm J' J where
       _ = J' * (finMat D.sp.cm.sig V'.gram (g : GA D V') * J) * J' := by rw [← e']
       _ = J' * finMat D.sp.cm.sig V'.gram (g : GA D V') * (J * J') := by simp only [Matrix.mul_assoc]
       _ = J' * finMat D.sp.cm.sig V'.gram (g : GA D V') := by rw [h1', Matrix.mul_one]
-  lat := fun f hf y => by
+  · intro f hf y
     have h1' : J * J' = 1 := h.h1
     rw [h.lat f hf (J'.mulVec y), Matrix.mulVec_mulVec, h1', Matrix.one_mulVec]
-  loc := h.loc'
-  loc' := h.loc
 
 theorem supp (f : Formalism.L2.Theta.AE D) (g : GfC V) : SuppF V f (g : GA D V) ↔ SuppF V' f (φ g : GA D V') := by
   have h1' : J * J' = 1 := h.h1

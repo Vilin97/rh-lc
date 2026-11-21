@@ -112,7 +112,8 @@ theorem exists_localization : ∀ (R : Type) [CommRing R] (I : Ideal R) (κ : Di
     exact ⟨n, hm⟩
   · intro S u hu
     refine ⟨lift u hu, ?_, ?_⟩
-    · ext c
+    · apply Thick.Hom.ext'
+      ext c
       simp only [Thick.comp_φ]
       exact liftφ_algebraMap u hu c
     · intro v hv
@@ -124,7 +125,8 @@ theorem exists_localization : ∀ (R : Type) [CommRing R] (I : Ideal R) (κ : Di
         show v.φ (algebraMap T.B (Localization.Away b) c) =
           liftφ u hu (algebraMap T.B (Localization.Away b) c)
         exact hc.trans (liftφ_algebraMap u hu c).symm
-      ext y
-      exact RingHom.congr_fun (IsLocalization.ringHom_ext (Submonoid.powers b) h) y
+      apply Thick.Hom.ext'
+      exact AlgHom.ext fun y ↦
+        RingHom.congr_fun (IsLocalization.ringHom_ext (Submonoid.powers b) h) y
 
 end GlobalTheory.ThickLoc

@@ -24,8 +24,11 @@ theorem cechPt_eq : cechPt f k x y h = (cmp f k x y h).app (op Z) (𝟙 Z) := rf
 theorem map_cechPt {U : Scheme.{0}} (g : U ⟶ Z) :
     ((cech f).obj (op ⦋k⦌)).map g.op (cechPt f k x y h) = (cmp f k x y h).app (op U) g := by
   rw [cechPt_eq]
-  refine (FunctorToTypes.naturality (cmp f k x y h) g.op (𝟙 Z)).symm.trans ?_
-  congr 1
+  have hn := (congrArg (fun t => t (𝟙 Z)) ((cmp f k x y h).naturality g.op)).symm
+  change _ = (cmp f k x y h).app (op U) (g ≫ 𝟙 Z)
+  change ((cech f).obj (op ⦋k⦌)).map g.op ((cmp f k x y h).app (op Z) (𝟙 Z)) =
+    (cmp f k x y h).app (op U) (g ≫ 𝟙 Z) at hn
+  exact hn
 
 theorem app_eq {U : Scheme.{0}} (g : U ⟶ Z) :
     (cmp f k x y h).app (op U) g = yonedaEquiv (yoneda.map g ≫ cmp f k x y h) := by
@@ -84,7 +87,39 @@ theorem GlobalTheory.EtC.CechPts.main : ∀ (R : Type) [CommRing R] (F : Shv R) 
     refine ⟨fun g g' hg => hb.1 ((map_cechPt f k x y h g).symm.trans (hg.trans (map_cechPt f k x y h g'))), fun v => ?_⟩
     obtain ⟨g, hg⟩ := hb.2 v
     exact ⟨g, (map_cechPt f k x y h g).trans hg⟩
-  obtain ⟨hext, hex, hnat, -⟩ := GlobalTheory.EtC.FreeHom.main R ((cech f).obj (op ⦋k⦌)) F
+  have hext : ∀ s s' : (free R).obj ((cech f).obj (op ⦋k⦌)) ⟶ F,
+      (∀ U v, val s U v = val s' U v) → s = s' := by
+    intro s s' hs
+    apply Sheaf.hom_ext
+    apply sheafify_hom_ext _ _ _ F.property
+    apply NatTrans.ext
+    funext U
+    apply ModuleCat.free_hom_ext
+    rintro ⟨v⟩
+    exact hs U.unop v
+  have hnat : ∀ (s : (free R).obj ((cech f).obj (op ⦋k⦌)) ⟶ F) (V U : Scheme.{0}) (g : V ⟶ U) (v : ((cech f).obj (op ⦋k⦌)).obj (op U)),
+      val s V (((cech f).obj (op ⦋k⦌)).map g.op v) = Sec.res g (val s U v) := by
+    intro s V U g v
+    let η := toSheafify Scheme.etaleTopology ((freeP R).obj ((cech f).obj (op ⦋k⦌))) ≫ s.hom
+    change (η.app (op V)).hom (ModuleCat.freeMk (ULift.up (((cech f).obj (op ⦋k⦌)).map g.op v))) =
+      (F.obj.map g.op).hom ((η.app (op U)).hom (ModuleCat.freeMk (ULift.up v)))
+    rw [← GlobalTheory.EtC.FreeHom.freePresheaf_map_freeMk _ g.op v]
+    exact congrArg (fun t => t.hom (ModuleCat.freeMk (ULift.up v))) (η.naturality g.op)
+  have hex : ∀ φ : ∀ U : Scheme.{0}, ((cech f).obj (op ⦋k⦌)).obj (op U) → Sec F U,
+      (∀ (V U : Scheme.{0}) (g : V ⟶ U) v, φ V (((cech f).obj (op ⦋k⦌)).map g.op v) = Sec.res g (φ U v)) →
+      ∃ s : (free R).obj ((cech f).obj (op ⦋k⦌)) ⟶ F, ∀ U v, val s U v = φ U v := by
+    intro φ hφ
+    refine ⟨GlobalTheory.EtC.FreeHom.desc _ F φ hφ, ?_⟩
+    intro U v
+    change ((toSheafify Scheme.etaleTopology ((freeP R).obj _) ≫ (GlobalTheory.EtC.FreeHom.desc _ F φ hφ).hom).app (op U)).hom (ModuleCat.freeMk (ULift.up v)) = _
+    have hd : toSheafify Scheme.etaleTopology ((freeP R).obj ((cech f).obj (op ⦋k⦌))) ≫ (GlobalTheory.EtC.FreeHom.desc _ F φ hφ).hom = GlobalTheory.EtC.FreeHom.descP _ F φ hφ := by
+      have ht := ((sheafificationAdjunction Scheme.etaleTopology.{0} (ModuleCat.{1} (ULift.{1} R))).homEquiv _ _).apply_symm_apply (GlobalTheory.EtC.FreeHom.descP _ F φ hφ)
+      rw [Adjunction.homEquiv_unit] at ht
+      exact ht
+    rw [hd]
+    change (ModuleCat.freeDesc _).hom (ModuleCat.freeMk (ULift.up v)) = _
+    erw [ModuleCat.freeDesc_apply]
+    rfl
   constructor
   · intro s s' hs
     change val s Z (cechPt f k x y h) = val s' Z (cechPt f k x y h) at hs
@@ -114,6 +149,9 @@ theorem GlobalTheory.EtC.CechPts.main : ∀ (R : Type) [CommRing R] (F : Shv R) 
       apply (e Z).1
       change ((cech f).obj (op ⦋k⦌)).map (c Z _).op (cechPt f k x y h) =
         ((cech f).obj (op ⦋k⦌)).map (𝟙 Z).op (cechPt f k x y h)
-      rw [hc' Z, op_id, FunctorToTypes.map_id_apply]
+      rw [hc' Z, op_id]
+      change _ = ((cech f).obj (op ⦋k⦌)).map (𝟙 (op Z)) _
+      rw [CategoryTheory.Functor.map_id]
+      rfl
     rw [h2]
     simp [Sec.res]

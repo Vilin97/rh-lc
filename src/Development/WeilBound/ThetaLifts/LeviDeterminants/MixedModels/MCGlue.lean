@@ -106,7 +106,7 @@ theorem rel_fin (ev : ∀ v : Pl F, ((κ → Fv F v) → ℂ) →ₗ[ℂ] ((κ �
           unfold tens r GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure
           rw [funext hprod, finprod_mul_distrib ht hsupport,
             finprod_eq_single t v (fun w e => ite_eq_right e)]
-          simp only [t, ite_true]
+          simp only [t, if_true]
           ac_rfl
         funext x
         have hs : (fun y => pure g θ (repl v x y)) = r x • θ v := by

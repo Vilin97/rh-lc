@@ -40,7 +40,8 @@ theorem formOrd_neg (η : Forms c n) : E.formOrd (-η) = E.formOrd η := by
     rw [formOrd, formOrd, dite_eq_right h, dite_eq_right h']
 
 theorem disc_neg (η : Forms c n) (φ : K →₀ ℚ) : E.disc (-η) φ = E.disc η φ := by
-  rw [disc, disc, formOrd_neg]
+  change (E.formOrd (-η) : ℚ) - E.ordQ φ = (E.formOrd η : ℚ) - E.ordQ φ
+  rw [E.formOrd_neg]
 
 end GlobalTheory.FieldPair.Place
 

@@ -107,7 +107,8 @@ theorem GlobalTheory.FockAlg.min_second : ∀ (p q r s : ℕ) (M1 : GKMod p q) (
     obtain ⟨Q, hQ, hQe⟩ := hB (e.symm R)
       (ofType_equiv e.symm _ _ (symm_equivariant e _ _ h1) _ _ hR)
     refine ⟨e Q, ?_, ?_⟩
-    · exact genSub_map e.toLinearMap (fockAct2 r s p q) (fockAct1 p q r s) h2 _
+    · exact genSub_map e.toLinearMap (fockAct2 r s p q) (fockAct1 p q r s) h2
+        {Q | Q ∈ jointHarm r s p q ∧ OfType (fockAct1 r s p q) μ' Q}
         {Q | Q ∈ jointHarm p q r s ∧ OfType (fockAct2 p q r s) μ' Q}
         (fun v hv => ⟨hJ v hv.1, ofType_equiv e _ _ h1 _ _ hv.2⟩) Q hQ
     · rw [hg, hg, e.apply_symm_apply] at hQe

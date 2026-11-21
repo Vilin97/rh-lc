@@ -132,7 +132,7 @@ theorem directedSystem_etaleBaseChange : ∀ (T : Type) [CommRing T] (ι : Type)
       | monomial n c =>
         obtain ⟨j, hj⟩ := hcov c
         refine ⟨j, fun m => ?_⟩
-        rw [coeff_monomial]
+        rw [coeff_monomial_apply]
         split_ifs
         · exact hj
         · exact zero_mem _

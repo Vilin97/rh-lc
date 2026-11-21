@@ -41,14 +41,41 @@ theorem sum_single {G M : Type*} [Group G] [AddCommGroup M] (B : G → G → M)
     · rw [if_neg a₁, z₁, smul_zero]
 
 
-#check GlobalTheory.CechPic.cls_linComb_add
-#check GlobalTheory.CechPic.cls_linComb_single
-#check GlobalTheory.CechPic.cls_pull
-#check GlobalTheory.CechPic.pull_id
-#check GlobalTheory.CechPic.pull_comp
 open GlobalTheory.CechPic in
 theorem relAmple_diag : ∀ (W : Matrix (Fin 8) (Fin 8) ℤ) (S : Scheme.{0}) [IsLocallyNoetherian S] (G A : Over S) [GrpObj G] [IsCommMonObj G] [GrpObj A] [IsCommMonObj A] (pr : Fin 8 → (G ⟶ A)) (L : LB G.left) (P : LB (G2 A).left), IsE8 W → IsAbelianScheme G → IsAbelianScheme A → (∀ u, IsMonHom (pr u)) → (∀ (T : Over S) (y : Fin 8 → (T ⟶ A)), ∃! x : T ⟶ G, ∀ u, x ≫ pr u = y u) → L.IsLB → P.IsLB → (∀ (T : Over S) (x x' y : T ⟶ A), (∃ t : (LB.LinComb P (K := Fin 3) ![(lift (x * x') y).left, (lift x y).left, (lift x' y).left] ![1, -1, -1]).Gen, t.IsGen) ∧ ∃ t : (LB.LinComb P (K := Fin 3) ![(lift y (x * x')).left, (lift y x).left, (lift y x').left] ![1, -1, -1]).Gen, t.IsGen) → LBIso L (LB.LinComb P (K := Fin 8 × Fin 8) (fun uv => (lift (pr uv.1) (pr uv.2)).left) (fun uv => W uv.1 uv.2)) → Out.RelAmple G L → Out.RelAmple A (P.pull (lift (𝟙 A) (𝟙 A)).left) := by
   intro W S _ G A _ _ _ _ pr L P hW hG hA _ hpr hL hP hbi hiso hamp
+  have cls_pull {X Y Z : Scheme.{0}} {L : LB X} (hL : L.IsLB) (f : Y ⟶ X) (h : (L.pull f).IsLB) :
+      cls (L.pull f) h = pull f (cls L hL) := rfl
+  have pull_id {X Y Z : Scheme.{0}} (c : Pic X) : pull (𝟙 X) c = c := by
+    obtain ⟨A, hA, rfl⟩ := cls_surj c
+    exact (cls_eq_iff (pull_isLB hA _) hA).2 (iso_of_chart hA (chartPullPull A _ _ rfl))
+  have pull_comp {X Y Z : Scheme.{0}} (g : Z ⟶ Y) (f : Y ⟶ X) (c : Pic X) : pull (g ≫ f) c = pull g (pull f c) := by
+    obtain ⟨A, hA, rfl⟩ := cls_surj c
+    exact ((cls_eq_iff (pull_isLB (pull_isLB hA _) _) (pull_isLB hA _)).2 (iso_of_chart (pull_isLB hA _)
+      (chartPullLinComb A f (fun _ : PUnit => g) (fun _ => g ≫ f) (fun _ => 1) (𝟙 _)
+        fun _ => (Category.id_comp _).symm))).symm
+  have cls_linComb_single {X Y Z : Scheme.{0}} {L : LB X} (hL : L.IsLB) {K : Type} [Fintype K] [DecidableEq K] (φ : K → (Y ⟶ X)) (k : K) :
+      cls _ (LB.isLB_linComb hL φ (Pi.single k 1)) = pull (φ k) (cls L hL) := by
+    refine (cls_eq_iff _ (pull_isLB hL _)).2 (iso_of_chart (pull_isLB hL _)
+      ⟨fun j _ => j k, fun _ _ h => mem_pull.2 (Set.mem_iInter.1 h k), ?_⟩)
+    intro y p q hp hq
+    refine (gm_linComb L φ _ (𝟙 Y) y p q hp hq).trans (Eq.symm ((gm_pull_g L (φ k) (𝟙 Y) y (fun _ => p k) (fun _ => q k)
+      (mem_pull.2 (Set.mem_iInter.1 hp k)) (mem_pull.2 (Set.mem_iInter.1 hq k))).trans ?_))
+    rw [Finset.prod_eq_single k (fun b _ hb => by rw [Pi.single_eq_of_ne hb, zpow_zero]) (by simp),
+      Pi.single_eq_same, zpow_one]
+  have cls_linComb {X Y Z : Scheme.{0}} {L : LB X} (hL : L.IsLB) {K : Type} [Fintype K] (φ : K → (Y ⟶ X)) (ε : K → ℤ)
+      (h : (LB.LinComb L φ ε).IsLB) : cls _ h = ∑ k, ε k • pull (φ k) (cls L hL) := by
+    classical
+    let F : (K → ℤ) →+ Pic Y := AddMonoidHom.mk' (fun ε => cls _ (LB.isLB_linComb hL φ ε)) (cls_linComb_add hL φ)
+    have e : ε = ∑ k, ε k • (Pi.single k 1 : K → ℤ) := by
+      ext i
+      simp [Finset.sum_apply, Pi.single_apply]
+    show F ε = _
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
+    refine Finset.sum_congr rfl fun k _ => ?_
+    rw [map_zsmul, ← e]
+    exact congrArg _ (cls_linComb_single hL φ k)
   obtain ⟨j, hj, -⟩ := hpr A fun v => if v = 0 then 𝟙 A else 1
   have := hG.proper
   have hcl : IsClosedImmersion j.left := GlobalTheory.Retract.isClosedImmersion_section (r := (pr 0).left)

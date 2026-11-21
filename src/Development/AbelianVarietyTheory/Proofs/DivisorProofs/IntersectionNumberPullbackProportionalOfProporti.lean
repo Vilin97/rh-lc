@@ -39,6 +39,13 @@ theorem interNumRed_pull_curve {k : Type} [Field k] {M W : Scheme.{0}} (p : W �
       interNumRed k C ![L.pull f] = d * interNumRed k C' ![L] := by
   letI := algebraΓOfHom p
   letI := algebraΓOfHom (f ≫ p)
+  have hcomp {X Y Z : Scheme.{0}} {L : LB X} (hL : L.IsLB)
+      (f : Y ⟶ X) (g : Z ⟶ Y) :
+      cls ((L.pull f).pull g) (LB.isLB_pull (LB.isLB_pull hL f) g) =
+        cls (L.pull (g ≫ f)) (LB.isLB_pull hL _) := by
+    exact (cls_eq_iff _ _).2 (iso_of_chart (LB.isLB_pull hL _)
+      (chartPullLinComb L f (fun _ : PUnit => g) (fun _ => g ≫ f) (fun _ => 1) (𝟙 _)
+        fun _ => (Category.id_comp _).symm))
   intro hC
   have : IsIntegral (Scheme.IdealSheafData.vanishingIdeal C).subscheme :=
     isIntegral_red hC.isIrreducible
@@ -64,16 +71,13 @@ theorem interNumRed_pull_curve {k : Type} [Field k] {M W : Scheme.{0}} (p : W �
     (strHom k (Scheme.IdealSheafData.vanishingIdeal C).subscheme)
   have hdeg : ∀ L : LB W, L.IsLB → interNumRed k C ![L.pull f] = topSelfIntersection k (L.pull g) 1 := by
     intro L hL
-    have hL' := pull_isLB hL f
+    have hL' := LB.isLB_pull hL f
     refine (interNumOn_eq_interNum_pull (appTop_algebraΓOfHom (redι C) (f ≫ p) rfl)
       (isLB_vecOne hL')).trans ?_
-    refine interNum_congr_cls k _ (fun i => by fin_cases i; exact pull_isLB hL' _)
-      (fun _ => pull_isLB hL g) fun i => ?_
+    refine interNum_congr_cls k _ (fun i => by fin_cases i; exact LB.isLB_pull hL' _)
+      (fun _ => LB.isLB_pull hL g) fun i => ?_
     fin_cases i
-    refine (cls_pull hL' _ _).trans ?_
-    refine Eq.trans ?_ (cls_pull hL g _).symm
-    rw [cls_pull hL f]
-    exact (pull_comp (redι C) f _).symm
+    exact hcomp hL f (redι C)
   by_cases hc : ∀ z, g z = g (genericPoint _)
   · left
     intro L hL
@@ -112,18 +116,17 @@ theorem interNumRed_pull_curve {k : Type} [Field k] {M W : Scheme.{0}} (p : W �
   have : IsProper (g.imageι ≫ strHom k W) := by rw [hsW]; infer_instance
   refine ⟨⟨Set.range g.imageι, g.imageι.isClosedEmbedding.isClosed_range⟩,
     isCompleteCurve_range g.imageι hdZ, φ.residueDegree (genericPoint _), fun L hL => ?_⟩
-  have hN := pull_isLB hL g.imageι
+  have hN := LB.isLB_pull hL g.imageι
   have h₁ := ProjFin.interNumOn_eq_residueDegree_mul k g.image _ φ hproj hdZ hgen
     (L.pull g.imageι) hN
   have h₂ := interNumOn_eq_interNum_pull (k := k) (L := ![L.pull g.imageι]) hf (isLB_vecOne hN)
   have h₃ : topSelfIntersection k (L.pull g) 1 = interNum k (structureModule _)
       fun i => (![L.pull g.imageι] i).pull φ := by
-    refine interNum_congr_cls _ _ (fun _ => pull_isLB hL g)
-      (fun i => by fin_cases i; exact pull_isLB hN φ) fun i => ?_
+    refine interNum_congr_cls _ _ (fun _ => LB.isLB_pull hL g)
+      (fun i => by fin_cases i; exact LB.isLB_pull hN φ) fun i => ?_
     fin_cases i
-    refine (cls_pull hL g _).trans ?_
-    refine Eq.trans ?_ (cls_pull hN φ _).symm
-    exact (congrArg (fun f => pull f (cls L hL)) e.symm).trans (pull_comp φ g.imageι _)
+    change cls (L.pull g) _ = cls ((L.pull g.imageι).pull φ) _
+    simpa only [e] using (hcomp hL g.imageι φ).symm
   have h₄ : interNumRed k ⟨Set.range g.imageι, g.imageι.isClosedEmbedding.isClosed_range⟩ ![L] =
       interNum k (structureModule g.image) ![L.pull g.imageι] :=
     (InterModel.interNumRed_eq_interNumOn k g.imageι _ rfl _).trans

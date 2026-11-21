@@ -133,6 +133,10 @@ variable (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (x : ℝ) {D : D7} (V : (c.
 
 def genPoint (Z : Comp Xo c) (C : Submodule c.F (Rul Xo c)) : C →ₗ[c.F] Om Z := (genVal Z).toLinearMap ∘ₗ C.subtype
 
+section
+
+set_option synthInstance.maxHeartbeats 100000
+
 def compIdeal (Z : Comp Xo c) (G : WTZ E) {N : ℕ} (b : Basis (Fin N) c.F (cuspOn U Z G)) :
     Ideal (MvPolynomial (Fin N) c.F) := imageIdeal (genPoint Z (cuspOn U Z G)) b
 
@@ -144,6 +148,8 @@ def compHeight (Z : Comp Xo c) (G : WTZ E) : ℝ :=
 
 def CompPresents (Z : Comp Xo c) (G : WTZ E) (T : Adelic.HermSys c.F) : Prop :=
   T.D = dimFlag Dw ∧ Presents T (normOn U x V dict Z G) (latOn U Z G) (genPoint Z (cuspOn U Z G))
+
+end
 
 theorem not_goodEmb_conj {σ : c.F →+* ℂ} (h : GoodEmb c σ) : ¬ GoodEmb c ((starRingEnd ℂ).comp σ) := fun h' => by
   have h1 : starRingEnd ℂ H.rt0 = H.rt0 := (congrArg (starRingEnd ℂ) h).symm.trans h'

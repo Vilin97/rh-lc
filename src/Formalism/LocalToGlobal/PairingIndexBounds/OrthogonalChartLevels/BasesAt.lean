@@ -60,8 +60,8 @@ def chAt : ∀ j, (sysAt Ch std vp unif eO eO_spec dG dG_spec om).Lt j → PtCh 
       { J := (gramN D (i + 1) hi).reindex (finCongr ((I.at' i hi).st.loc ((I.at' i hi).st.eC.symm La.1).1).rk.symm)
             (finCongr ((I.at' i hi).st.loc ((I.at' i hi).st.eC.symm La.1).1).rk.symm)
         Lb := ((I.at' i hi).st.K ((I.at' i hi).st.eC.symm La.1).1).lev.Lb.map
-          (((reE (E := D.host.E) (n := ((sysAt Ch std vp unif eO eO_spec dG dG_spec om).Pj (i + 1)).m + 1) (by exact ((I.at' i hi).st.loc ((I.at' i hi).st.eC.symm La.1).1).rk.symm) : _ ≃ₗ[D.host.E] _) :
-            _ →ₗ[D.host.E] _).restrictScalars (𝓞 D.host.E))
+          ((reE (E := D.host.E) ((I.at' i hi).st.loc ((I.at' i hi).st.eC.symm La.1).1).rk.symm).toLinearMap.restrictScalars
+            (𝓞 D.host.E))
         Uloc := fun v => (((I.at' i hi).st.K ((I.at' i hi).st.eC.symm La.1).1).lev.Uloc v).map
           (reGL (finCongr ((I.at' i hi).st.loc ((I.at' i hi).st.eC.symm La.1).1).rk.symm))
         y := reGL (finCongr ((I.at' i hi).st.loc ((I.at' i hi).st.eC.symm La.1).1).rk.symm)

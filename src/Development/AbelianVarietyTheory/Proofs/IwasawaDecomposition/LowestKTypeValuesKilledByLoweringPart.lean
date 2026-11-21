@@ -181,7 +181,7 @@ theorem values_killed : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp
         rw [← Module.End.mul_apply, ← map_mul, Prod.mk_mul_mk, mul_one]
       rw [e]
       exact hx τ Z hZ (h * u)
-  let B : MultilinearMap ℂ (fun τ => lowT M τ) (PolF D T.rank S.rank) :=
+  let B : MultilinearMap (RingHom.id ℂ) (fun τ => lowT M τ) (PolF D T.rank S.rank) :=
     (io.flip w).compMultilinearMap (PiTensorProduct.tprod ℂ)
   refine mem_of_translates h1 h2 B N v₀ (fun ρ h0 => ?_) (step1 w) ?_ v τ Z hZ h
   · have := hv₀ ρ

@@ -64,13 +64,14 @@ theorem memLp_pureA (μ : @Measure (κ → AF F) (borel _)) (hμ : @Measure.IsAd
       (Submodule.subset_span ⟨f, g, hg, rfl⟩)
     have h2 := h1.comp (GlobalTheory.WeilAdm.HaarSplit.continuous_splitE_symm F κ)
     convert h2 using 1
+    funext x
+    simp
   have hf : ∫⁻ z, ‖f z‖ₑ ^ 2 < ⊤ := by
-    have := (f.memLp 2 volume).2
-    rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top (by norm_num) (by norm_num)] at this
+    have := lintegral_rpow_eNorm_lt_top_of_eLpNorm_lt_top (p := 2)
+      (by norm_num) (by norm_num) (f.memLp 2 volume)
     simpa using this
   have hν2 : MemLp (pureA F f g) 2 ν := by
-    refine ⟨hc.aestronglyMeasurable, ?_⟩
-    rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top (by norm_num) (by norm_num)]
+    rw [memLp_iff, eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top (by norm_num) (by norm_num) hc.aestronglyMeasurable]
     have := (h f).trans_lt (ENNReal.mul_lt_top hC.lt_top hf)
     simpa using this
   rw [Measure.isAddLeftInvariant_eq_smul μ ν]

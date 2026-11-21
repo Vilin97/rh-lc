@@ -92,11 +92,20 @@ theorem rigidified_galois_lin_carries_rig_and_cube : ∀ (R : Type) [CommRing R]
     (LB.pullGen _ _ _ U'.cubG.t (cubeMapOf hc).F3) (DVR.pullGen_isGen _ _ _ _ U'.cubG.isGen _) hψ _ e.left he3 sj
     fun y J J' hJ hJ' => ?_)
   refine ((val_pull hJ _ _ _).trans (congrArg (fun r => val U'.cubG.t r y J) eF)).trans ?_
-  have f1 := (isCub_cubV U'.cubG (T := Over.mk ((cubeMapOf hc).e ≫ (𝟙_ (Over (Sp R'))).hom)) hJ).face 1 1
+  have face {T : Over (Sp R')} {z : T.left} {I : (T.left ⟶ G'.left) → U'.LG.L.ι}
+      (hI : Good U'.LG.L z I) (x y : T ⟶ G') :
+      val U'.cubG.t (lift 1 (lift x y)).left z I = 1 := by
+    have hv := val_corr hI (U'.cubG.face 0) (lift x y).left
+    rw [val_one] at hv
+    refine (Eq.trans ?_ (val_pull hI _ _ _).symm).trans hv
+    congr 1
+    rw [← Over.comp_left]
+    simp [faceMap, x2, pzero, Hom.one_def]
+  have f1 := face (T := Over.mk ((cubeMapOf hc).e ≫ (𝟙_ (Over (Sp R'))).hom)) hJ 1 1
   have p := prod_cub (1 : 𝟙_ (Over (Sp R')) ⟶ G') 1 1
     (fun q => gw (Classical.choose hP.lg) q y (J (q ≫ bc.hom.left ≫ pullback.fst G'.hom (specOf (Gal.hom σ)))) (J' q))
   rw [_root_.mul_one, _root_.mul_one] at p
-  refine f1.trans (Eq.trans ?_ (congrArg₂ (· * ·) p ((isCub_cubV U'.cubG hJ').face 1 1)).symm)
+  refine f1.trans (Eq.trans ?_ (congrArg₂ (· * ·) p (face hJ' 1 1)).symm)
   simp
 
 end GlobalTheory.Mum

@@ -18,7 +18,7 @@ public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HermitianFram
 @[expose] public section
 
 noncomputable section
-open ValuativeRel Formalism.MainNotions.S Formalism.MainNotions.S.Loc GlobalTheory.HL GlobalTheory.IndefiniteRowSideFullHecke.FrameCoefficientData
+open ValuativeRel Formalism.MainNotions.S Formalism.MainNotions.S.Loc GlobalTheory.HL
 open scoped Pointwise ENNReal Classical
 
 namespace GlobalTheory.NonGenericCompare
@@ -39,12 +39,8 @@ variable {o : Type} [CommRing o] [IsDomain o] [IsDiscreteValuationRing o] [Algeb
 variable {M : Model F E} {V : Type} [AddCommGroup V] [Module E V] {H : HermSp M V} {r k : ℕ}
 
 namespace Match
-variable {P : LocNG.FPair H r} {D : Data o F E V r} {S : Frames M.L r k}
-variable (m : Match P D) (c : Coord P S)
-
-include m
-
-
+variable {P : LocNG.FPair H r} {S : Frames M.L r k}
+variable (c : Coord P S)
 
 end Match
 

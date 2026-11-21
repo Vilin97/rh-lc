@@ -55,7 +55,7 @@ structure Pieces.Is (ψ : AddChar (AF D.host.F) ℂ) : Prop where
   dualA' : ∀ a', MxAt (fun _ => True) a' → (a' ∈ p.A₂ ↔ ∀ a ∈ p.A₁, ψ (symplO V W (dV.extX W a) (dV.extY W a')) = 1)
   dualB : ∀ ξ, MxAt (fun _ => True) ξ → (ξ ∈ p.B₁ ↔ ∀ η ∈ p.B₂, ψ (symplO V₀ W (dW.incX V₀ ξ) (dW.incY V₀ η)) = 1)
   dualB' : ∀ η, MxAt (fun _ => True) η → (η ∈ p.B₂ ↔ ∀ ξ ∈ p.B₁, ψ (symplO V₀ W (dW.incX V₀ ξ) (dW.incY V₀ η)) = 1)
-  uni : ∀ u : UX D ρ, MxAt (fun _ => True) (u.1.1 - 1) → x ⬝ u.1.1 - x ∈ p.A₁ → psiUni ψ u.1 = 1
+  uni : ∀ u : UX D ρ, MxAt (fun _ => True) (u.1.1 - 1) → x * u.1.1 - x ∈ p.A₁ → psiUni ψ u.1 = 1
   fin₀ : ∀ u ∈ p.Γ₀, MxAt (fun _ => True) (show Mx D W₀.rank V₀.rank from u)
   vac₀ : ∃ f, VacG ψ V₀ W₀ p.Γ₀ f ∧ f ≠ 0
 
@@ -67,9 +67,9 @@ def cls (ψ : AddChar (AF D.host.F) ℂ) : Set (WO V W → ℂ) :=
     IsLatVac (fun w f => heisO ψ V W w f) (p.Γ₀.map ((dV.ext0 W).comp (dW.inc0 V₀))) Φ}
 
 structure Cond (ψ : AddChar (AF D.host.F) ℂ) (P : GlobalTheory.FinPl.Pl D → Prop) (h : GA D W) : Prop where
-  pt : ∃ u : UX D ρ, ∃ a ∈ p.A₁, MxOff P (mt W h⁻¹ ⬝ (x ⬝ u.1.1) - x - a)
-  shift : ∀ N : Mx D ρ ρ, MxAt P N → (∀ i j, j ≤ i → N i j = 0) → mt W h⁻¹ ⬝ (x ⬝ N) ∈ p.A₁ → psiE ψ (upSum N) = 1
-  iso : ∀ ξ ∈ p.B₁, ∀ ξ' : Mx D σ V₀.rank, MxAt P ξ → mt W h ⬝ dW.incX V₀ ξ = dW.incX V₀ ξ' →
+  pt : ∃ u : UX D ρ, ∃ a ∈ p.A₁, MxOff P (mt W h⁻¹ * (x * u.1.1) - x - a)
+  shift : ∀ N : Mx D ρ ρ, MxAt P N → (∀ i j, j ≤ i → N i j = 0) → mt W h⁻¹ * (x * N) ∈ p.A₁ → psiE ψ (upSum N) = 1
+  iso : ∀ ξ ∈ p.B₁, ∀ ξ' : Mx D σ V₀.rank, MxAt P ξ → mt W h * dW.incX V₀ ξ = dW.incX V₀ ξ' →
     ψ (symplO V₀ W (dW.incAdj V₀ y) (dW.incX V₀ ξ')) = ψ (symplO V₀ W (dW.incAdj V₀ y) (dW.incX V₀ ξ))
 
 def CondK (ψ : AddChar (AF D.host.F) ℂ) (LW : Lat W) (P : GlobalTheory.FinPl.Pl D → Prop) (h : GA D W) : Prop :=

@@ -25,7 +25,7 @@ variable {E : Type u} [AddCommGroup E] [Module ℝ E] {D : ℕ}
 
 
 variable (E D) in
-abbrev Form : Type u := MultilinearMap ℝ (fun _ : Fin (D + 1) => E) ℝ
+abbrev Form : Type u := (Π _ : Fin (D + 1), E) →ₘₗ[ℝ] ℝ
 
 variable {num : Form E D} {G : Set E}
 

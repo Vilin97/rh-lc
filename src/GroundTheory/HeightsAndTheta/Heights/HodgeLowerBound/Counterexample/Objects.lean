@@ -43,10 +43,10 @@ structure WeightReg (ι : K → Type) [∀ k, Fintype (ι k)] where
 
 open GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.HeightsSet in
 def weightRegRef : WeightReg (PBlk 2) where
-  reg _ A := (HermLine.ofMetrics (fun k => fsMetric (PBlk 2 k)) A.a).tensor
-    (constLine (A.h (fun _ => 1) / (HermLine.ofMetrics (fun k => fsMetric (PBlk 2 k)) A.a).h (fun _ => 1))
+  reg _ A := (HermLine.ofMetrics (fun k => fsMetric (ι := PBlk 2 k)) A.a).tensor
+    (constLine (A.h (fun _ => 1) / (HermLine.ofMetrics (fun k => fsMetric (ι := PBlk 2 k)) A.a).h (fun _ => 1))
       (div_pos (A.pos _ fun _ => ⟨0, one_ne_zero⟩)
-        ((HermLine.ofMetrics (fun k => fsMetric (PBlk 2 k)) A.a).pos _ fun _ => ⟨0, one_ne_zero⟩)))
+        ((HermLine.ofMetrics (fun k => fsMetric (ι := PBlk 2 k)) A.a).pos _ fun _ => ⟨0, one_ne_zero⟩)))
   deg _ A := by simp [HermLine.tensor, constLine, HermLine.ofMetrics]
   smooth _ A _ := isSmoothHerm_tensor (Inter.isSmoothHerm_ofMetrics_fs _) (isSmoothHerm_constLine _ _)
   shift _ A A' k hk ha hh z _ := by

@@ -116,7 +116,7 @@ theorem ch_apply (H : Subgroup G) (hH : ∀ g ∈ H, η g = 1) (i : Fin 3) (g : 
 def IsGam (h : B) (β : G → B × B) (γ : G → B) : Prop :=
   ∀ g g', γ (g * g') = γ g + T.χ2 g * γ g' + h * omg (β g) (T.M1 g (β g'))
 
-structure Coord (h : B) (β : G → B × B) (γ : G → B) (u : G →* GG 3 B) : Prop where
+structure Coord (h : B) (β : G → B × B) (γ : G → B) (u : G →* GG (m := 3) (R := B)) : Prop where
   right : ∀ g, (u g).right = η g
   mat : ∀ g, (u g).mat = triM (T.t g) (β g).1 (β g).2 (γ g + h * (β g).1 * (β g).2)
 
@@ -209,7 +209,8 @@ theorem crOn_top {G A V : Type} [Group G] [CommRing A] [Algebra ℚ_[l] A] [AddC
   unfold CrOn IsCr
   rw [h1, h2]
 
-def LCr {B : Type} [CommRing B] [Algebra ℚ_[l] B] (H : Subgroup (GQ l)) (u : GQ l →* GG 3 B) : Prop :=
+def LCr {B : Type} [CommRing B] [Algebra ℚ_[l] B] (H : Subgroup (GQ l))
+    (u : GQ l →* GG (m := 3) (R := B)) : Prop :=
   ∃ ρ : ↥H →* GL (Fin 3) B, (∀ g, ρ g = (u g).left) ∧ IsCr H.subtype (colRep ρ)
 
 variable {E : Type} [Field E] [Algebra ℚ_[l] E] [Algebra ℤ_[l] E]
@@ -252,16 +253,16 @@ theorem algebraMap_cycA [Algebra ℚ_[l] B] [Algebra ℤ_[l] B] [IsScalarTower �
 theorem Tor.Good.chars [Algebra ℚ_[l] B] [Algebra ℤ_[l] B] [IsScalarTower ℤ_[l] ℚ_[l] B] [IsScalarTower ℤ_[l] ℚ_[l] E]
     [IsScalarTower ℚ_[l] E B] {η : GQ l →* ℤˣ} {T : Tor η B} {π : B →ₐ[E] E} {Ψ : GQ l →* Eˣ} (hT : T.Good π Ψ)
     {H : Subgroup (GQ l)} {e : ℕ} (hD : TriDat η Ψ H e) :
-    Chars H.subtype π e (Ψ.comp H.subtype) (T.ch H hD.ηH) where
-  e_pos := hD.e_pos
-  cont i := (hT.cont i).comp continuous_subtype_val
-  ine g hg i := by
-    apply Units.ext
-    rw [Tor.ch_apply, hT.ine g hg, hD.ΨH g g.2 hg, ← algebraMap_cycA (E := E) (B := B), zpow_mul, zpow_natCast, ← map_pow (Units.map _),
-      ← map_zpow (Units.map (algebraMap E B : E →* B))]
-    rfl
-  red g i := hT.red g i
-  wt g hg := hD.ΨH g g.2 hg
+    Chars H.subtype π e (Ψ.comp H.subtype) (T.ch H hD.ηH) :=
+  { e_pos := hD.e_pos
+    cont i := (hT.cont i).comp continuous_subtype_val
+    ine g hg i := by
+      apply Units.ext
+      rw [Tor.ch_apply, hT.ine g hg, hD.ΨH g g.2 hg, ← algebraMap_cycA (E := E) (B := B), zpow_mul, zpow_natCast, ← map_pow (Units.map _),
+        ← map_zpow (Units.map (algebraMap E B : E →* B))]
+      rfl
+    red g i := hT.red g i
+    wt g hg := hD.ΨH g g.2 hg }
 
 end admitted
 

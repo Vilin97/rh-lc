@@ -285,7 +285,7 @@ theorem exists_character_ne_one : ∀ (K : Type) [Field K] (N : Over (Sp K)) [Gr
     rw [pairingMap_tmul, LinearMap.id_apply] at h2
     simp only [ofConv_toConv, AlgHom.id_apply]
     rw [← h2]
-    simp [one_apply, Algebra.algebraMap_eq_smul_one, mul_comm, AlgHom.convOne_apply]
+    simp [_root_.one_apply, Algebra.algebraMap_eq_smul_one, mul_comm, AlgHom.convOne_apply]
   have hgl := (isPerfectBicharacter_canonical K B).left
   have hu : IsUnit (canonical K B) := by
     have := hgl.isUnit

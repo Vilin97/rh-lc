@@ -62,7 +62,7 @@ variable {k} {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
 
 def speh (a : WD h) (d : ℕ) : WD h :=
-  (List.range d).foldr (fun j acc => (a.lpTw (((d : ℝ) - 1) / 2 - j)).lpSum acc) (WD.lpZero h)
+  (List.range d).foldr (fun j acc => (a.lpTw (((d : ℝ) - 1) / 2 - j)).lpSum acc) (WD.lpZero (h := h))
 
 structure RecLaws (rc : ∀ n, Irr k n → WD h) : Prop where
   dim : ∀ n π, (rc n π).lpDim = n

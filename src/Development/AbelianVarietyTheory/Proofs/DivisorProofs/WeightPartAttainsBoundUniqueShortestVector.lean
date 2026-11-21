@@ -161,6 +161,7 @@ theorem pull_term (hL : LL) (hT : TwistBCSpanStatement) (hVR : TWM.VRatioGtState
   have a₀ := (GlobalTheory.T.valuations_symmetricFrame_and_terms hL hT hVR hTW hUU V hcp ϖ hϖ D Q hQ F v hv).1 _ hm2 _ wt hwt
   obtain ⟨a₁, a₂, -⟩ := (GlobalTheory.T.valuations_symmetricFrame_and_terms hL hT hVR hTW hUU V hcp ϖ hϖ D Q hQ F v hv).2 m hm.pos _ wt hwt _ hg κ hκ w' hw' e
   have hb := hv₂ w' _ _ hw' a₂ a₁
+  simp only [qkMk_y, QForm.Q_zero hϖ D hQ, bOf_zero_left hϖ hQ, Int.cast_zero, zero_div, add_zero] at hb a₀
   have hϑ := (expBijF_and_expandsF_lin hL V _ hA D A G hG U).2 _ 1 w₀ th₀ th₀ th ϑ ϑ (c - 1) hexp hexp fun j => by
       refine (hc j).trans ?_
       show con A _ c * _ = con A _ (c - 1) * _ + _

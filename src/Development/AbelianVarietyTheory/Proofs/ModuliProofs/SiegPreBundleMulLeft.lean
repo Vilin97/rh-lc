@@ -24,7 +24,7 @@ theorem siegPre_bundle_mul_left : (∀ (S : Scheme.{0}) (P : Out.PolAV S) (M : L
   have := hpr 0
   have := hpr 1
 
-  have hL : (c.P.pull (lift (pr 0) (pr 1)).left).IsLB := pull_isLB c.isLB _
+  have hL : (c.P.pull (lift (pr 0) (pr 1)).left).IsLB := LB.isLB_pull c.isLB _
   have hθ := hΘ (Sp K) P _ hL
 
   have hpt : ∀ z : T ⟶ P.A, CechPic.pull z.left (cls _ hL) =
@@ -36,13 +36,13 @@ theorem siegPre_bundle_mul_left : (∀ (S : Scheme.{0}) (P : Out.PolAV S) (M : L
     intro v
     have e : lift (1 : T ⟶ c.A) v = v ≫ lift (1 : c.A ⟶ c.A) (𝟙 c.A) := by
       rw [comp_lift, comp_one, Category.comp_id]
-    rw [e, Over.comp_left, pull_comp, ← cls_pull c.isLB _ (pull_isLB c.isLB _),
+    rw [e, Over.comp_left, pull_comp, ← cls_pull c.isLB _ (LB.isLB_pull c.isLB _),
       (cls_eq_zero_iff _).2 c.rig₁, map_zero]
   have hax₂ : ∀ u : T ⟶ c.A, CechPic.pull (lift u (1 : T ⟶ c.A)).left (cls c.P c.isLB) = 0 := by
     intro u
     have e : lift u (1 : T ⟶ c.A) = u ≫ lift (𝟙 c.A) (1 : c.A ⟶ c.A) := by
       rw [comp_lift, comp_one, Category.comp_id]
-    rw [e, Over.comp_left, pull_comp, ← cls_pull c.isLB _ (pull_isLB c.isLB _),
+    rw [e, Over.comp_left, pull_comp, ← cls_pull c.isLB _ (LB.isLB_pull c.isLB _),
       (cls_eq_zero_iff _).2 c.rig₂, map_zero]
 
   obtain ⟨a, ha, -⟩ := huniv T (fun u => if u = 0 then x else 1)

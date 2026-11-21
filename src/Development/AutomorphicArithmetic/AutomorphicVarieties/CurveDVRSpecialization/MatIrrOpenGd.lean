@@ -277,13 +277,13 @@ private theorem roots {k : Type} [Field k] (a b : kˣ) (h : ∀ n : ℕ, ((a * b
   have e2 : (a : k) * b ^ 2 + a + 1 = 0 := mul_left_cancel₀ (mul_ne_zero a.ne_zero hb) (by linear_combination h' 2 - h' 0)
   exact mul_ne_zero (mul_ne_zero a.ne_zero b.ne_zero) hb1 (by linear_combination e2 - e1)
 
-private theorem conj_mat {G R : Type} [Group G] [CommRing R] (h : GL (Fin 3) R) (r : G →* GG 3 R) {g : G}
+private theorem conj_mat {G R : Type} [Group G] [CommRing R] (h : GL (Fin 3) R) (r : G →* GG (m := 3) (R := R)) {g : G}
     (hg : (r g).right = 1) : (conjBy h r g).mat = (h : Matrix _ _ R) * (r g).mat * ((h⁻¹ : GL (Fin 3) R) : Matrix _ _ R) := by
   simp [conjBy, GG.mat, hg]
 
 private theorem frame {O A K G : Type} [CommRing O] [IsLocalRing O] [CommRing A] [IsLocalRing A] [Algebra O A] [Field K]
     [Algebra O K] [FaithfulSMul O K] [Group G] (j : A →ₐ[O] K) (hj : Function.Injective j) (η : G →* ℤˣ) (Ψ : G →* Oˣ)
-    (D : Subgroup G) (I : Subgroup D) (r' : G →* GG 3 A) (hpt : Red η Ψ r')
+    (D : Subgroup G) (I : Subgroup D) (r' : G →* GG (m := 3) (R := A)) (hpt : Red η Ψ r')
     (ht : CondT (η.comp D.subtype) (Ψ.comp D.subtype) I (r'.comp D.subtype))
     (hI : TypeI η (UpperTheory.V.UnitaryThreeInertia.push j r')) (U : Subgroup G) [U.Normal]
     (hU : U ≤ η.ker) (x : D) (hx : η x = 1) (hx' : IsUnit ((Ψ x : O) ^ 2 - 1))
@@ -346,7 +346,7 @@ open NumberField IsLocalRing Formalism.ConjugateSelfDual ReciprocityTheory.Gal G
 
 theorem UpperTheory.V.Pr.matIrr_open_gd :
     ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {K : Type} [Field K] [NumberField K] [Algebra K Ω] {l : ℕ} [Fact l.Prime] {c : Coef l} {N : ℕ} [NeZero N] {e : ℕ} {ψ : DirichletCharacter c.O N} (D : Dat Ω K c e ψ) (g₁ : G ℚ Ω), D.Marked g₁ →
-    ∀ (B : ValuationSubring Ω), B.valuation (l : Ω) < 1 → ∀ (A : Subalgebra c.O (PadicAlgCl l)) [IsDiscreteValuationRing A] [Module.Finite c.O A] (r : G ℚ Ω →* GG 3 A), OrdPt l D.η D.Ψ D.cc g₁ B r → TypeI D.η (UnitaryThreeInertia.push A.val r) →
+    ∀ (B : ValuationSubring Ω), B.valuation (l : Ω) < 1 → ∀ (A : Subalgebra c.O (PadicAlgCl l)) [IsDiscreteValuationRing A] [Module.Finite c.O A] (r : G ℚ Ω →* GG (m := 3) (R := A)), OrdPt l D.η D.Ψ D.cc g₁ B r → TypeI D.η (UnitaryThreeInertia.push A.val r) →
       ∀ V : Subgroup (G ℚ Ω), IsOpen (V : Set (G ℚ Ω)) → V ≤ D.η.ker → MatIrr V (mats (UnitaryThreeInertia.push A.val r)) := by
   intro Ω _ _ _ K _ _ _ l hl c N _ e ψ D g₁ _ B hv A _ _ r hr hI U hU hUη
   have : IsGalois ℚ Ω := IsAlgClosure.isGalois ℚ Ω

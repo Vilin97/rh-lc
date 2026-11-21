@@ -92,21 +92,22 @@ theorem IsStep.fld {U : Subgroup (GL (Fin a) (Af E))} {f : GA E a → ℝ} {Y : 
     (h : IsStep U f Y C c f₀) : IsFld U Y C := ⟨h.Y_sm, h.Y_left, h.Y_cpt, h.Y_lev, h.root⟩
 
 theorem IsFld.neg {U : Subgroup (GL (Fin a) (Af E))} {Y : GA E a → Herm E a} {C : ℝ} (h : IsFld U Y C) :
-    IsFld U (-Y) C where
-  sm i j w := by
+    IsFld U (-Y) C := by
+  refine { sm := ?_, left := ?_, cpt := ?_, lev := ?_, root := ?_ }
+  · intro i j w
     obtain ⟨φ, h1, h2⟩ := h.sm i j w
     refine ⟨-φ, fun g => congrArg Neg.neg (h1 g), fun X l => ?_⟩
     obtain ⟨B, hB⟩ := h2 X l
     exact ⟨B, fun g => by rw [map_neg]; exact (norm_neg _).trans_le (hB g)⟩
-  left γ t g := congrArg Neg.neg (h.left γ t g)
-  cpt k g := by
+  · exact fun γ t g => congrArg Neg.neg (h.left γ t g)
+  · intro k g
     have e := congrArg Subtype.val (h.cpt k g)
     refine Subtype.ext ?_
     change k.1 * (-(Y (g * infGL E a (Unitary.toUnits k))).1) * star k.1 = -(Y g).1
     rw [mul_neg, neg_mul, ← e]
     rfl
-  lev u hu g := congrArg Neg.neg (h.lev u hu g)
-  root g t ht := by
+  · exact fun u hu g => congrArg Neg.neg (h.lev u hu g)
+  · intro g t ht
     obtain ⟨x, h1, h2⟩ := h.root g (-t) (by rwa [abs_neg])
     exact ⟨x, by rw [h1, neg_smul]; exact congrArg (1 + ·) (smul_neg t (Y g).1).symm, h2⟩
 
@@ -122,7 +123,7 @@ theorem Bd.mono {Ξ : AlgRep E a} {q : ℕ} {α : Co Ξ q} {g : GA E a} {M M' : 
 
 theorem Bd.sub {Ξ : AlgRep E a} {q : ℕ} {α β : Co Ξ q} {g : GA E a} {M M' : ℝ} (h : Bd α g M) (h' : Bd β g M') :
     Bd (α - β) g (M + M') := fun X => by
-  rw [AlternatingMap.sub_apply, map_sub, Pi.sub_apply, add_mul]
+  rw [sub_apply, map_sub, Pi.sub_apply, add_mul]
   exact (norm_sub_le _ _).trans (add_le_add (h X) (h' X))
 
 end Ad

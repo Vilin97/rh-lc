@@ -42,7 +42,7 @@ theorem mem_of_forall_dvd {O A : Type} [CommRing O] [IsDomain O] [ValuationRing 
   have hxz : x = (z : A) := by
     have h1 : q • x = q • (z : A) := by
       rw [← hψ, hz]; rfl
-    exact Module.IsTorsionFree.isSMulRegular (isRegular_of_ne_zero hq) h1
+    exact Module.IsTorsionFree.isSMulRegular (IsRegular.of_ne_zero hq) h1
   rw [hxz]
   exact z.2
 
@@ -56,7 +56,7 @@ theorem dUnit_mulBy {A : Type} [CommRing A] [Bialgebra O A] [IsCocomm O A] (k : 
   simp [cotMap_id]
 
 theorem dUnit_of_mem_torsionIdeal {A : Type} [CommRing A] [Bialgebra O A] [IsCocomm O A] (k : ℕ)
-    {t : A} (ht : t ∈ torsionIdeal O A k) : ∃ y, dUnit (R := O) t = (k : O) • y := by
+    {t : A} (ht : t ∈ torsionIdeal (R := O) (A := A) k) : ∃ y, dUnit (R := O) t = (k : O) • y := by
   suffices H : counitAlgHom O A t = 0 ∧ ∃ y, dUnit (R := O) t = (k : O) • y from H.2
   change t ∈ Ideal.span _ at ht
   induction ht using Submodule.span_induction with
@@ -85,7 +85,7 @@ theorem exists_of_cotMap_res_eq_zero (G : PDivGroup p O) (n : ℕ) (y : Cot O (G
   have hx' : dUnit (R := O) (x : G.A (n + 1)) = y := by
     rw [← hx]
     exact (AugCot.kerMap_apply _ _ x).symm
-  have hxmem : (x : G.A (n + 1)) ∈ torsionIdeal O (G.A (n + 1)) (p ^ n) := by
+  have hxmem : (x : G.A (n + 1)) ∈ torsionIdeal (R := O) (A := G.A (n + 1)) (p ^ n) := by
     rw [← G.ker_res n]
     exact x.2
   obtain ⟨y', hy'⟩ := dUnit_of_mem_torsionIdeal (p ^ n) hxmem

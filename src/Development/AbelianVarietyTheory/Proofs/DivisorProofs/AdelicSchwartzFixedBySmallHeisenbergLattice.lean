@@ -25,7 +25,7 @@ theorem heis_fix_finDiv : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [
       (∀ i, (w.1 i).1 = 0 ∧ GlobalTheory.FinSupp.FinDiv F N (w.1 i) ∧ (w.2 i).1 = 0 ∧ GlobalTheory.FinSupp.FinDiv F N (w.2 i)) →
       schr ψ w Φ = Φ := by
   intro F _ _ κ _ ψ hψ Φ hΦ
-  obtain ⟨m₀, hm₀, h⟩ := GlobalTheory.ThetaLevel.heis_fix ψ hψ Φ hΦ
+  obtain ⟨m₀, hm₀, h⟩ := GlobalTheory.ThetaLevel.heis_fix (F := F) (κ := κ) ψ hψ Φ hΦ
   refine ⟨m₀, hm₀, fun w hw => ?_⟩
   exact h w.1 w.2 ⟨fun i => (hw i).1, fun v i => norm_le_of_finDiv (hw i).2.1 v⟩
     ⟨fun i => (hw i).2.2.1, fun v i => norm_le_of_finDiv (hw i).2.2.2 v⟩

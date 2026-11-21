@@ -16,7 +16,7 @@ noncomputable section
 open MeasureTheory NumberField IsDedekindDomain
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace GroundTheory.Automorphic.AutomorphicForm
 open GroundTheory.Automorphic.CuspidalSpectrum GroundTheory.Global GroundTheory.Global.SemiLocal
-open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Geo UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C UpperTheory.ConvolutionTheory.L1
+open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Geo UpperTheory.ConvolutionTheory UpperTheory.ConvolutionTheory.C
 open scoped ComplexConjugate InnerProductSpace Classical
 
 namespace UpperTheory.ConvolutionTheory.L1.TY
@@ -200,8 +200,7 @@ theorem rhoL_comm {v w : Pl K} (h : v ≠ w) (g : Gw n v) (x : Gw n w) : Commute
   rw [← hm, ← hm, hc]
 
 theorem arch_fin (a : archGroup K n) (h : AdelicGLn.FiniteAdelicGL K n) :
-    Commute (CuspidalSpectrum.archP (K := K) (n := n) a) (MultiplicityOne.finProj h) :=
-  (MultiplicityOne.finProj_mul_archProj_comm h a).symm
+    Commute (archP K n a) (MultiplicityOne.finProj K n h) := (MultiplicityOne.finProj_mul_archProj_comm h a).symm
 
 theorem mem_eigL {w : Pl K} {J' : Subgroup (Gw n w)} {χ' : Gw n w → ℂ} {x : LL μ} :
     x ∈ eigL μ w J' χ' ↔ ∀ y ∈ J', rhoL μ w y x = χ' y • x := by
@@ -303,8 +302,8 @@ theorem compact_typed (hn : 0 < n) (ν : Measure (archGroup K n)) [ν.IsHaarMeas
   rw [inv_smul_smul₀ (Complex.ofReal_ne_zero.2 hκ.ne')]
 
 theorem split_fin (M : Submonoid (normOneGL (K := K) (n := n))) (B : Finset (Pl K))
-    (hM : ∀ b ∈ B, ∀ y, MultiplicityOne.finProj (AdelicGLn.localEmbedding b y) ∈ M) (h : AdelicGLn.FiniteAdelicGL K n) :
-    ∃ x ∈ M, ∃ h', MultiplicityOne.finProj h = x * MultiplicityOne.finProj h' ∧
+    (hM : ∀ b ∈ B, ∀ y, MultiplicityOne.finProj K n (AdelicGLn.localEmbedding b y) ∈ M) (h : AdelicGLn.FiniteAdelicGL K n) :
+    ∃ x ∈ M, ∃ h', MultiplicityOne.finProj K n h = x * MultiplicityOne.finProj K n h' ∧
       ∀ w ∈ B, finAt w (finEmb K n h') = 1 := by
   induction B using Finset.induction_on with
   | empty => exact ⟨1, M.one_mem, h, (one_mul _).symm, by simp⟩

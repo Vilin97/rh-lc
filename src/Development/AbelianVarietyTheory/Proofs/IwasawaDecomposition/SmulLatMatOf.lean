@@ -123,7 +123,8 @@ theorem sd_lat (hok : s.Ok) {n : ℕ} {N : Submodule (𝓞 X.E) (Sp X.E n)} (hN 
   · rw [eq_top_iff]
     intro y _
     have h1 : (fun i => s.iE.symm (y i) : Sp X.E n) ∈ Submodule.span X.E (N : Set (Sp X.E n)) := by
-      rw [hN.1.span_eq_top]; trivial
+      letI := hN.1
+      rw [Submodule.IsFullLattice.span_eq_top]; trivial
     have h2 := vec_spanE s _ h1
     rw [vec_surj s] at h2
     exact Submodule.span_mono (fun z hz => Submodule.subset_span hz) h2

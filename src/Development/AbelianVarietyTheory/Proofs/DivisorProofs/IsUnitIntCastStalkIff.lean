@@ -19,6 +19,10 @@ namespace GlobalTheory.UPoinc.LocSpread
 
 set_option backward.isDefEq.respectTransparency false
 
+#check ExtUnique.isIso_of_isPullback
+#check exists_lbIso_of_isLimit
+#check pull_isLB
+#check PolPull.isAbelianScheme_of_isGrpPullback
 section Loc
 
 variable {R K : Type} [CommRing R] [CommRing K]
@@ -94,7 +98,7 @@ theorem exists_lbIso (hσ : IsStalkMap σ) {Y Y₀ : Scheme.{0}} (p : Y ⟶ Sp R
   let ι₀ : (StalkLimit.diagram _ p).obj V₀ ⟶ Y := pullback.fst p V₀.1.ι
   have e₀ : φ = (StalkLimit.cone h₁).π.app V₀ ≫ ι₀ := (StalkLimit.cone_π_fst h₁ V₀).symm
   obtain ⟨V, i, HV⟩ := exists_lbIso_of_isLimit (StalkLimit.diagram _ p) (fun V => (StalkLimit.cone h₁).π.app V)
-    (fun i => (StalkLimit.cone h₁).w i) hc (M.pull ι₀) (N.pull ι₀) (pull_isLB hM _) (pull_isLB hN _)
+    (w := fun i => (StalkLimit.cone h₁).w i) (hc := hc) (M.pull ι₀) (N.pull ι₀) (pull_isLB hM _) (pull_isLB hN _)
     (LBIso.trans (pull_isLB (pull_isLB hM _) _) (pull_isLB hM _) (pull_isLB (pull_isLB hN _) _)
       (lbIso_pull_pull hM _ e₀).symm
       (LBIso.trans (pull_isLB hM _) (pull_isLB hN _) (pull_isLB (pull_isLB hN _) _) H (lbIso_pull_pull hN _ e₀)))
@@ -295,6 +299,7 @@ theorem exists_spread {Xo : Moduli D l} {c : Coeff l} (hc : ∀ n : ℤ, n ≠ 0
     ⟨V, le_rfl, hV, hw, rfl⟩ h
   exact ⟨U, hle, hU, hwU, H⟩
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem exists_model_of_subring {Xo : Moduli D l} {c : Coeff l} {S R₁ : Subalgebra o Ω} (hS : R₁ ≤ S) {R : Subring S}
     {P : PolAV (Sp R)} {v : Sp S ⟶ Xo.XF c} (h : UOver Xo c P R.subtype v) {t : Finset R}
     (ht : Algebra.adjoin ℤ (t : Set R) = ⊤) (hR : (fun a : R => ((a : S) : Ω)) '' t ⊆ R₁) :

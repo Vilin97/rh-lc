@@ -116,8 +116,10 @@ theorem block_loc {μ η : HChar E} {r : ℕ} {v : HeightOneSpectrum (𝓞 E)} (
     (hx : IsUnitAt v x) : (block μ η r).loc v x = μ.loc v x := by
   have loc_mul (a b : HChar E) (v : HeightOneSpectrum (𝓞 E)) (x : (v.adicCompletion E)ˣ) :
       (a * b).loc v x = a.loc v x * b.loc v x := rfl
-  rw [block, loc_mul, loc_mul, HChar.loc_inv, hη x hx, (Model.absPow_isAbsPow E _).1 v x hx]
-  simp [loc_mul, HChar.loc_inv, hη x hx, (Model.absPow_isAbsPow E _).1 v x hx]
+  have loc_inv (a : HChar E) (v : HeightOneSpectrum (𝓞 E)) (x : (v.adicCompletion E)ˣ) :
+      (a⁻¹).loc v x = (a.loc v x)⁻¹ := rfl
+  rw [block, loc_mul, loc_mul, loc_inv, hη x hx, (Model.absPow_isAbsPow E _).1 v x hx]
+  simp [loc_mul, loc_inv, hη x hx, (Model.absPow_isAbsPow E _).1 v x hx]
 
 theorem isAlgPos_mul {χ χ' : HChar E} {n n' : (E →+* ℂ) → ℤ} (h : IsAlgPos χ n) (h' : IsAlgPos χ' n') :
     IsAlgPos (χ * χ') (n + n') := fun k hk => by
@@ -556,6 +558,8 @@ theorem hostHeckeFrame_toric_quotient_character (hcc : IsCMConjOm H.E Ω cc) (ha
     ToricHeckeQuotientCharacter H cc C art := by
   have loc_mul (a b : HChar H.E) (v : HeightOneSpectrum (𝓞 H.E)) (x : (v.adicCompletion H.E)ˣ) :
       (a * b).loc v x = a.loc v x * b.loc v x := rfl
+  have loc_inv (a : HChar H.E) (v : HeightOneSpectrum (𝓞 H.E)) (x : (v.adicCompletion H.E)ˣ) :
+      (a⁻¹).loc v x = (a.loc v x)⁻¹ := rfl
   intro l _ O _ _ _ _ _ _ _ hO κ hκ ι K _ ε f f' hf hf' pD hpD delta hd O' _ _ _ _ _ hO' hlO' j b χ c hχF hχi hχw hμ hδ hχ
     S0 hS1 hS2 hS3 hS4
   have hl : l.Prime := Fact.out
@@ -583,7 +587,7 @@ theorem hostHeckeFrame_toric_quotient_character (hcc : IsCMConjOm H.E Ω cc) (ha
     have hv' := (hmem v).1 hv
     obtain ⟨n, hn⟩ := (GlobalTheory.Mem.WildChar.orders_on_units _ χ v).2 (hχw v hv) x hx
     have e1 := hr.loc (Or.inl (notMem_of_ne hp hl hpl hv')) ex
-    rw [loc_mul, loc_mul, HChar.loc_inv,
+    rw [loc_mul, loc_mul, loc_inv,
       (C.isMu0 _).unr v (fun k => notMem_of_ne hp (H.g_prime k) (hpg k) hv') x hx, one_mul] at e1
     have e2 := hd.side hm0 hm b ex
     refine ⟨n, ?_⟩

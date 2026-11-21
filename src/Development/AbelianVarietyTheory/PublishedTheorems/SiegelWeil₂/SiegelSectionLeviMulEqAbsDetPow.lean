@@ -38,9 +38,7 @@ def relat (V : HSp D) (l : Lvl V) (hl : l.Good) : HSp D :=
           change V.frame.equivFun (V.frame.equivFun.symm y) ∈ l.L
           rwa [LinearEquiv.apply_symm_apply]
       rw [e]
-      refine ⟨hl.1.fg.map _, ?_⟩
-      change Submodule.span D.host.E (V.frame.equivFun.symm.toLinearMap '' (l.L : Set _)) = ⊤
-      rw [← Submodule.map_span, hl.1.span_eq_top, Submodule.map_top, LinearEquiv.range]
+      exact Submodule.IsLattice.of_fg D.host.E (hl.1.fg.map _)
     baseLattice_isUnimodular := by
       have h := (SelfDual.forall_isSelfDualAt_iff (GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.gram_det_isUnit V).ne_zero hl.1).1 hl.2.1
       have e : ∀ x y, hE D.sp.cm.sig V.gram (V.frame.equivFun x) (V.frame.equivFun y) = V.hT x y := fun x y => by

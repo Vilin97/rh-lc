@@ -78,6 +78,7 @@ theorem lintegral_mul_invT_sq : ∀ {k : Type} [Field k] [ValuativeRel k] [Topol
     have e1 : (EM ∘ L) = (fun x => K *ᵥ x) ∘ EM := by funext Y; exact (hK Y).symm
     rw [e1, ← Measure.map_map (GlobalTheory.CompanionTheory.SW.DetScale.measurable_mulVec K) EM.measurable]
     exact h1
+    exact EM.measurable.aemeasurable
   have hl := lintegral_map_equiv (fun Y => ‖Φ Y‖ₑ ^ 2) L (μ := ν)
   rw [key] at hl
   refine hl.symm.trans ?_

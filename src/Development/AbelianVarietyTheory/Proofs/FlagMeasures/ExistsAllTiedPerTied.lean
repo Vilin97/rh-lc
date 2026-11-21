@@ -95,12 +95,14 @@ theorem emb_continuous (hι : HSpace.IsIsomEmb A B ι) (hs : ∀ h, EmbRel B A �
 
 theorem bes_inv {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) (hι : HSpace.IsIsomEmb A B ι) (d : BesDat A B ι)
     (hs : ∀ h, EmbRel B A ι (s h) h) (hφ : IsAutFun A φ) (hF : IsAutFun B F) :
-    IsRatInv ι d.e fun h n => star (φ h) * F (n * s h * (d.y : GA D B)) * star (besChar ψ d n) where
-  norm δ γ h n hn := (BesselChar.besChar_conj ψ d δ γ h n hn).1
-  left g n hn γ hγ hq := by
+    IsRatInv ι d.e fun h n => star (φ h) * F (n * s h * (d.y : GA D B)) * star (besChar ψ d n) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro δ γ h n hn
+    exact (BesselChar.besChar_conj ψ d δ γ h n hn).1
+  · intro g n hn γ hγ hq
     rw [BesselChar.besChar_mul ψ d γ n hγ hn, BesselChar.besChar_rat ψ hψ.1 d γ hγ hq, one_mul, mul_assoc γ, mul_assoc γ,
       hF.left γ hq]
-  conj g n hn γ hγ δ hδ := by
+  · intro g n hn γ hγ δ hδ
     rw [(BesselChar.besChar_conj ψ d δ γ hδ n hn).2, conj_arg hι hs hF hγ hδ, hφ.left γ hγ]
 
 end Integrands

@@ -146,8 +146,9 @@ theorem joint_top : ∀ {N : ℕ} (W : Fin N → I → Submodule K V) (e : Fin N
     refine eq_top_iff.2 fun x hx0 => ?_
     clear hx0
     have hx : x ∈ (⨆ t : Fin N → I, ⨅ i, W i.succ (t i)) := by rw [ih]; trivial
-    induction hx using Submodule.iSup_induction' with
-    | mem t y hy =>
+    refine Submodule.iSup_induction _ (motive := fun y => y ∈ ⨆ t : Fin (N + 1) → I, ⨅ i, W i (t i))
+      hx ?_ (Submodule.zero_mem _) ?_
+    · intro t y hy
       obtain ⟨T, hT⟩ := (h 0).cover y
       rw [hT]
       refine Submodule.sum_mem _ fun mu _ => ?_
@@ -158,8 +159,8 @@ theorem joint_top : ∀ {N : ℕ} (W : Fin N → I → Submodule K V) (e : Fin N
       · simpa using (h 0).mem mu y
       · simp only [Fin.cons_succ]
         exact hc 0 j.succ (Fin.succ_ne_zero j).symm mu (t j) y ((Submodule.mem_iInf _).1 hy j)
-    | zero => exact Submodule.zero_mem _
-    | add a b _ _ ha hb => exact Submodule.add_mem _ ha hb
+    · intro a b ha hb
+      exact Submodule.add_mem _ ha hb
 
 theorem list_fix (l : List (Module.End K V)) (x : V) (h : ∀ A ∈ l, A x = x) : l.prod x = x := by
   induction l with
@@ -195,8 +196,9 @@ theorem proj_eq_sum {N : ℕ} (W : Fin N → I → Submodule K V) (e : Fin N →
     E = ∑ t ∈ T, (List.ofFn fun i => e i (t i)).prod := by
   refine LinearMap.ext fun x => ?_
   have hx : x ∈ (⨆ t : Fin N → I, ⨅ i, W i (t i)) := by rw [joint_top W e h hc]; trivial
-  induction hx using Submodule.iSup_induction' with
-  | mem t y hy =>
+  refine Submodule.iSup_induction _
+    (motive := fun y => E y = (∑ t ∈ T, (List.ofFn fun i => e i (t i)).prod) y) hx ?_ ?_ ?_
+  · intro t y hy
     have hy' : ∀ i, y ∈ W i (t i) := (Submodule.mem_iInf _).1 hy
     have hsame : (List.ofFn fun i => e i (t i)).prod y = y := by
       refine list_fix _ y fun A hA => ?_
@@ -216,8 +218,9 @@ theorem proj_eq_sum {N : ℕ} (W : Fin N → I → Submodule K V) (e : Fin N →
     · rw [h1 t ht y hy, Finset.sum_eq_single_of_mem t ht fun t' _ hne => hdiff t' hne, hsame]
     · rw [h0 t ht y hy]
       exact (Finset.sum_eq_zero fun t' ht' => hdiff t' (fun hh => ht (hh ▸ ht'))).symm
-  | zero => simp
-  | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
+  · simp
+  · intro a b ha hb
+    rw [map_add (f := _), map_add (f := _), ha, hb]
 
 end Abstract
 
@@ -227,7 +230,10 @@ variable {K : Type} [Field K] [CharZero K] {ι : Type} [Fintype ι] {n : ℕ} [N
 
 theorem sys_of (D : Formalism.BasicNotions.D7) (S : Set ι) (e : (Fin n → ℤ) → Module.End K (MvPolynomial (ι × Fin n) K))
     (he : ∀ lam, IsIsoProj (glOps K n LL S) lam (e lam)) : DecSys (isoSub (glOps K n LL S)) e := by
-  obtain ⟨e0, s⟩ := isoDecomp (glOps K n LL S) D (weight_condition_from_integral_form D) (isGLRep_glOps K ι LL n S)
+  have hweights : Formalism.MainNotions.CovariantDegrees.adm2 D := by
+    intro K' V' _ _ _ _ _ n' E hE W hW
+    exact cr_compl E hE.1 hE.2.2 W hW
+  obtain ⟨e0, s⟩ := isoDecomp (glOps K n LL S) D hweights (isGLRep_glOps K ι LL n S)
   have : e = e0 := decSys_congr s (fun mu => (he mu).1) (fun mu nu hne => (he mu).2 nu hne)
   rw [this]; exact s
 
@@ -368,7 +374,7 @@ noncomputable def L (u : ℚ_[p]) : ℚ_[p] := ∑' k : ℕ, (-1 : ℚ_[p]) ^ k 
 lemma inv_norm_le (n : ℕ) (hn : n ≠ 0) : ‖(n : ℚ_[p])‖⁻¹ ≤ (n : ℝ) := by
   have h0 : (n : ℚ_[p]) ≠ 0 := by exact_mod_cast hn
   rw [Padic.norm_eq_zpow_neg_valuation h0, Padic.valuation_natCast, zpow_neg, inv_inv, zpow_natCast]
-  exact_mod_cast Nat.le_of_dvd (Nat.pos_of_ne_zero hn) (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
+  exact_mod_cast Nat.le_of_dvd (Nat.pos_of_ne_zero hn) (pow_multiplicity_dvd p n)
 
 lemma choose_tendsto (n : ℕ → ℕ) (hn : Tendsto (fun m => ((n m : ℚ_[p]) + 1)) atTop (𝓝 0)) (k : ℕ) :
     Tendsto (fun m => ((n m).choose k : ℚ_[p])) atTop (𝓝 ((-1) ^ k)) := by
@@ -514,15 +520,8 @@ theorem coarse_unit_product_prime_power (p : ℕ) [hp : Fact p.Prime] (t : ℕ) 
       ∏ i ∈ Finset.range n, ∏ y ∈ Finset.Ico 1 (p ^ (t + 1)), (1 + ((p ^ (t + 1) : ℕ) : ℚ) * i / y) :=
   Formalism.GrowthSums.blockFactorialQuotientProd (p ^ (t + 1)) n (Nat.one_le_pow _ _ hp.1.pos)
 
-theorem inv_norm_nat_le (p : ℕ) [hp : Fact p.Prime] (m : ℕ) (hm : m ≠ 0) : ‖(m : ℚ_[p])‖⁻¹ ≤ (m : ℝ) := by
-  have h0 : ((m : ℚ)) ≠ 0 := by exact_mod_cast hm
-  have h1 : ‖(m : ℚ_[p])‖ = ((p : ℝ) ^ (padicValNat p m))⁻¹ := by
-    rw [show (m : ℚ_[p]) = ((m : ℚ) : ℚ_[p]) by norm_cast, Padic.eq_padicNorm,
-      padicNorm.eq_zpow_of_nonzero h0, padicValRat.of_nat, zpow_neg, zpow_natCast, Rat.cast_inv, Rat.cast_pow,
-      Rat.cast_natCast]
-  rw [h1, inv_inv]
-  have : p ^ padicValNat p m ≤ m := Nat.le_of_dvd (Nat.pos_of_ne_zero hm) (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
-  exact_mod_cast this
+theorem inv_norm_nat_le (p : ℕ) [hp : Fact p.Prime] (m : ℕ) (hm : m ≠ 0) : ‖(m : ℚ_[p])‖⁻¹ ≤ (m : ℝ) :=
+  F1.inv_norm_le p m hm
 
 theorem summable_log (p : ℕ) [hp : Fact p.Prime] (u : ℚ_[p]) (hu : ‖u‖ < 1) :
     Summable fun k : ℕ => (-1 : ℚ_[p]) ^ k * u ^ (k + 1) / ((k : ℚ_[p]) + 1) := by
@@ -1573,7 +1572,7 @@ theorem redKer : RedKer := by
     rw [C_dvd_iff_dvd_coeff]
     intro m
     have h4 : IsLocalRing.residue O (AddMonoidAlgebra.coeff P m) = 0 := by
-      rw [← coeff_map, h2, coeff_zero]
+      rw [← coeff_map, h2] <;> rfl
     rw [IsLocalRing.residue_eq_zero_iff, (IsDiscreteValuationRing.irreducible_iff_uniformizer w).1 hw,
       Ideal.mem_span_singleton] at h4
     exact h4

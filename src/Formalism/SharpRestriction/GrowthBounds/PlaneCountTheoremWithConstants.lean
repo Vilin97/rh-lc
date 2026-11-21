@@ -962,15 +962,10 @@ theorem gauss_binomial_ge (q : ℕ) : ∀ n k : ℕ, k ≤ n → q ^ (k * (n - k
       have h1 := gauss_binomial_ge q k k le_rfl
       simp only [Nat.sub_self, Nat.mul_zero, pow_zero] at h1 ⊢
       omega
-    · have h1 := gauss_binomial_ge q n (k + 1) (by omega)
-      obtain ⟨d, rfl⟩ : ∃ d, n = k + 1 + d := ⟨n - (k + 1), by omega⟩
-      have e1 : k + 1 + d + 1 - (k + 1) = d + 1 := by omega
-      have e2 : k + 1 + d - (k + 1) = d := by omega
-      rw [e2] at h1
-      rw [e1]
-      calc q ^ ((k + 1) * (d + 1)) = q ^ (k + 1) * q ^ ((k + 1) * d) := by rw [← pow_add]; congr 1; ring
-        _ ≤ q ^ (k + 1) * Formalism.G0.gaussBinom q (k + 1 + d) (k + 1) := Nat.mul_le_mul_left _ h1
-        _ ≤ _ := Nat.le_add_left _ _
+    · have hkn : k + 1 ≤ n := by omega
+      have h1 := gauss_binomial_ge q n (k + 1) hkn
+      rw [Nat.sub_add_comm hkn, Nat.mul_add, Nat.mul_one, pow_add, mul_comm]
+      exact (Nat.mul_le_mul_left _ h1).trans (Nat.le_add_left _ _)
 
 theorem rational_planes_count (D : D7) : SelectionLemmas.ColumnFamilyClosure D := by
   intro FF _ _ k r hr
@@ -1238,31 +1233,33 @@ structure Loc8 : Prop where
 
   tRES : ∀ D : D7, flipOneThree.adm7 D
 
-theorem loc8All_of (h70 : ExtremalProjectorTools) (h6 : Loc6) (h : Loc8) : Loc8All where
-  p13B := h.p13B
-  p13A := h.p13A
-  p15 := h.p15
-  windowClauseTwo := h.windowClauseTwo
-  windowClauseThree := h.windowClauseThree
-  lWeylV := h.lWeylV
-  lWitt := h6.wittIdent
-  tFlatTop := h6.flatTop
-  tFlatHH := h.tFlatHH
-  hyperLatticeBasis := h6.dualHeightBasis
-  hyperDualInclusion := h6.dualInclusionLattices
-  tBePerfect := h6.bePerfect
-  tHLSpans := h6.hlSpans
-  tTestSide := h6.testSide
-  tLPOneEvery := h6.lpOneEvery
-  tCartanDomain := h.tCartanDomain
-  tCartanOnto := h.tCartanOnto
-  tKP1 := CountingStatementReduction.key_positivity_condition
-  tKP2 := h.tKP2
-  tKP3 := h.tKP3
-  tRES := h.tRES
-  thresholdClauseOne := CountingStatementReduction.positivity_condition_eventually
-  thresholdClauseThree := CountingStatementReduction.exponent_bound_eventually
-  instanceClauseEight := fun D X => PolBridge.combined_weight_of_nested_sets D X (GLWeightTheory.weight_condition_from_integral_form D) (ColumnFamilies.Top.b15 D)
+theorem loc8All_of (h70 : ExtremalProjectorTools) (h6 : Loc6) (h : Loc8) : Loc8All := by
+  exact {
+    p13B := h.p13B
+    p13A := h.p13A
+    p15 := h.p15
+    windowClauseTwo := h.windowClauseTwo
+    windowClauseThree := h.windowClauseThree
+    lWeylV := h.lWeylV
+    lWitt := h6.wittIdent
+    tFlatTop := h6.flatTop
+    tFlatHH := h.tFlatHH
+    hyperLatticeBasis := h6.dualHeightBasis
+    hyperDualInclusion := h6.dualInclusionLattices
+    tBePerfect := h6.bePerfect
+    tHLSpans := h6.hlSpans
+    tTestSide := h6.testSide
+    tLPOneEvery := h6.lpOneEvery
+    tCartanDomain := h.tCartanDomain
+    tCartanOnto := h.tCartanOnto
+    tKP1 := CountingStatementReduction.key_positivity_condition
+    tKP2 := h.tKP2
+    tKP3 := h.tKP3
+    tRES := h.tRES
+    thresholdClauseOne := CountingStatementReduction.positivity_condition_eventually
+    thresholdClauseThree := CountingStatementReduction.exponent_bound_eventually
+    instanceClauseEight := fun D X => PolBridge.combined_weight_of_nested_sets D X
+      (GLWeightTheory.weight_condition_from_integral_form D) (ColumnFamilies.Top.b15 D) }
 
 end TheoremI
 

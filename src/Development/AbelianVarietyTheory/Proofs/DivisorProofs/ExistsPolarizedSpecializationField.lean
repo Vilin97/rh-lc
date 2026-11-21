@@ -82,7 +82,7 @@ theorem fibre_exists : ∀ (W : Matrix (Fin 8) (Fin 8) ℤ) (gQ : ℕ) (V V₁ :
     hQ ▸ hP, hpr, ?_, ?_⟩
   · rw [hg, GlobalTheory.T.sharpEighthPower_relative_dimension_eq_eight_mul W V V₁ Q ρ D e hS, hQ]
   · have ht' : LBIso (D.P.L.pull φ) P'.L := ⟨t, ht⟩
-    exact LBIso.trans (pull_isLB D.P.isLB _) (pull_isLB (pull_isLB D.P.isLB _) _) (pull_isLB P'.isLB _)
+    exact LBIso.trans (LB.isLB_pull D.P.isLB _) (LB.isLB_pull (LB.isLB_pull D.P.isLB _) _) (LB.isLB_pull P'.isLB _)
       (GlobalTheory.GenSpread.lbIso_pull_pull D.P.isLB i.hom.left hiφ.symm) (GlobalTheory.GenSpread.lbIso_pullback ht' i.hom.left)
   · have ht' : LBIso (D.P.L.pull φ) P'.L := ⟨t, ht⟩
     have H : LBIso M.L (Q.M.L.pull (pullback.fst B₁.hom (spMap ev) ≫ pullback.fst Q.B.hom (spMap ρ))) := by
@@ -91,7 +91,9 @@ theorem fibre_exists : ∀ (W : Matrix (Fin 8) (Fin 8) ℤ) (gQ : ℕ) (V V₁ :
     have hx : ∀ a, (pr a).left ≫ pullback.fst B₁.hom (spMap ev) = φ ≫ (pr₀ a).left := fun a => by
       show (i.inv ≫ (Over.pullback (spMap ev)).map (pr₀ a)).left ≫ _ = _
       rw [Over.comp_left, Category.assoc]
-      simp only [Over.pullback_map_left]
+      have hp : ((Over.pullback (spMap ev)).map (pr₀ a)).left ≫ pullback.fst B₁.hom (spMap ev) =
+          pullback.fst D.P.A.hom (spMap ev) ≫ (pr₀ a).left := pullback.lift_fst _ _ _
+      rw [hp, ← Category.assoc, hinv]
     have ha := GlobalTheory.ShapePull.iso_linComb_pull H (fun k : (Fin 8 × Fin 8) × Fin 4 => lamPts (pr k.1.1) (pr k.1.2) k.2)
       (fun k => lamPts (pr₀ k.1.1) (pr₀ k.1.2) k.2 ≫ pullback.fst Q.B.hom (spMap ρ)) (fun k => -(W k.1.1 k.1.2 * negε k.2)) φ
       (fun k => by
@@ -99,8 +101,8 @@ theorem fibre_exists : ∀ (W : Matrix (Fin 8) (Fin 8) ℤ) (gQ : ℕ) (V V₁ :
           (pr₀ k.1.1) (pr₀ k.1.2) (hx _) (hx _) k.2, Category.assoc]
         rfl)
     have hb := GlobalTheory.GenSpread.lbIso_pullback (⟨w, hw⟩ : LBIso D.P.L _) φ
-    exact LBIso.trans P'.isLB (pull_isLB D.P.isLB _) (LB.isLB_linComb M.isLB _ _) (LBIso.symm ht')
-      (LBIso.trans (pull_isLB D.P.isLB _) (pull_isLB (LB.isLB_linComb Q.M.isLB _ _) _) (LB.isLB_linComb M.isLB _ _)
+    exact LBIso.trans P'.isLB (LB.isLB_pull D.P.isLB _) (LB.isLB_linComb M.isLB _ _) (LBIso.symm ht')
+      (LBIso.trans (LB.isLB_pull D.P.isLB _) (LB.isLB_pull (LB.isLB_linComb Q.M.isLB _ _) _) (LB.isLB_linComb M.isLB _ _)
         hb (LBIso.symm ha))
   · intro n y hy q hq1 hq2
     have hw' : (q ≫ i.hom.left) ≫ P'.A.hom = (baseOver (Sp K)).hom := by

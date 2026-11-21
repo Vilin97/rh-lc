@@ -38,16 +38,17 @@ theorem dual_dvd_iff {O : Type} [CommRing O] (p n : ℕ) (x : DualNumber O) :
 theorem isAdicComplete_dualNumber {O : Type} [CommRing O] (p : ℕ)
     [h : IsAdicComplete (Ideal.span {(p : O)}) O] :
     IsAdicComplete (Ideal.span {(p : DualNumber O)}) (DualNumber O) where
-  haus' x hx := by
+  toIsHausdorff.haus' x hx := by
     simp only [SModEq.zero, mem_pow_iff, dual_dvd_iff] at hx
-    refine TrivSqZeroExt.ext (h.haus' x.fst fun n => ?_) (h.haus' x.snd fun n => ?_)
+    refine TrivSqZeroExt.ext (h.toIsHausdorff.haus' x.fst fun n => ?_)
+      (h.toIsHausdorff.haus' x.snd fun n => ?_)
     · rw [SModEq.zero, mem_pow_iff]; exact (hx n).1
     · rw [SModEq.zero, mem_pow_iff]; exact (hx n).2
-  prec' f hf := by
+  toIsPrecomplete.prec' f hf := by
     simp only [SModEq.sub_mem, mem_pow_iff, dual_dvd_iff] at hf ⊢
-    obtain ⟨a, ha⟩ := h.prec' (fun n => (f n).fst) fun {m n} hmn => by
+    obtain ⟨a, ha⟩ := h.toIsPrecomplete.prec' (fun n => (f n).fst) fun {m n} hmn => by
       rw [SModEq.sub_mem, mem_pow_iff]; exact (hf hmn).1
-    obtain ⟨b, hb⟩ := h.prec' (fun n => (f n).snd) fun {m n} hmn => by
+    obtain ⟨b, hb⟩ := h.toIsPrecomplete.prec' (fun n => (f n).snd) fun {m n} hmn => by
       rw [SModEq.sub_mem, mem_pow_iff]; exact (hf hmn).2
     simp only [SModEq.sub_mem, mem_pow_iff] at ha hb
     exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, fun n => ⟨by simpa using ha n, by simpa using hb n⟩⟩

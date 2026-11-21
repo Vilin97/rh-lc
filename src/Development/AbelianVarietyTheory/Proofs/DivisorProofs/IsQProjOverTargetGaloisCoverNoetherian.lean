@@ -20,18 +20,18 @@ theorem isQProjOver_of_isGaloisCover : ∀ (K : Type) [CommRing K] [IsNoetherian
   intro K _ _ X Y π sY Ga _ ρ hG _ _ hX
   have := hG.finite
   let τ : Ga →* Aut X := MonoidHom.mk'
-    (fun a => (⟨ρ a⁻¹, ρ a, by rw [← hG.mul, inv_mul_cancel, hG.one], by rw [← hG.mul, mul_inv_cancel, hG.one]⟩ :
+    (fun a => Aut.of (⟨ρ a⁻¹, ρ a, by rw [← hG.mul, inv_mul_cancel, hG.one], by rw [← hG.mul, mul_inv_cancel, hG.one]⟩ :
       X ≅ X))
-    fun a c => Iso.ext (by
+    fun a c => Aut.ext (Iso.ext (by
       change ρ (a * c)⁻¹ = ρ c⁻¹ ≫ ρ a⁻¹
-      rw [mul_inv_rev, hG.mul])
+      rw [mul_inv_rev, hG.mul]))
   have := OrbitsInAffineOpens.of_isQProjOver hX τ
-  have hq := finiteQuotient.isAffineQuotient τ
+  obtain ⟨Y', q, hq⟩ := (exists_isAffineQuotient_iff τ).mpr inferInstance
   have hD := (GlobalTheory.ZM.galoisCover_descent X Y π Ga ρ hG).1
-  obtain ⟨u, hu, -⟩ := hD _ (finiteQuotient.π τ) fun a => by
+  obtain ⟨u, hu, -⟩ := hD _ q fun a => by
     simpa only [inv_inv] using (show ρ a⁻¹⁻¹ ≫ _ = _ from hq.comp_eq a⁻¹)
   let v := hq.desc π fun a => hG.inv a⁻¹
-  have hv : finiteQuotient.π τ ≫ v = π := hq.comp_desc _ _
+  have hv : q ≫ v = π := hq.comp_desc _ _
   have : IsIso u := ⟨v, (hD Y π hG.inv).unique (by rw [reassoc_of% hu, hv]) (Category.comp_id _),
     hq.hom_ext (by rw [reassoc_of% hv, hu, Category.comp_id])⟩
   obtain ⟨L, hL⟩ := exists_isAmpleLB_of_isAffineQuotient hq hX

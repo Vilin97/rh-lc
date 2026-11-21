@@ -171,14 +171,14 @@ def theta (h : Setup I π p α) (hπ : Function.Surjective π) (β : B →ₐ[R]
   map_add' x y := by rw [map_add (f := _)]; rfl
 
 theorem isTheta_theta (h : Setup I π p α) (hπ : Function.Surjective π) (β : B →ₐ[R] B')
-    (hβ : ∀ b, α b - β b ∈ I.map (algebraMap R B')) : IsTheta I p α β (theta h hπ β hβ) where
-  smul b w := by
+    (hβ : ∀ b, α b - β b ∈ I.map (algebraMap R B')) : IsTheta I p α β (theta h hπ β hβ) := by
+  refine ⟨?_, ?_, fun w ↦ J.mem _⟩
+  · intro b w
     change ((der h hπ β hβ).liftKaehlerDifferential (p b • w)).val = _
     rw [LinearMap.map_smul, smul_val h rfl]; rfl
-  der b := by
+  · intro b
     change ((der h hπ β hβ).liftKaehlerDifferential (D R₀ B₀ (p b))).val = _
     rw [Derivation.liftKaehlerDifferential_comp_D, der_val]
-  mem w := J.mem _
 
 theorem theta_unique (h : Setup I π p α) {β : B →ₐ[R] B'} {θ₁ θ₂ : Ω[B₀⁄R₀] →+ B'}
     (h₁ : IsTheta I p α β θ₁) (h₂ : IsTheta I p α β θ₂) : θ₁ = θ₂ := by
@@ -211,12 +211,11 @@ def betaOf (h : Setup I π p α) (θ : Ω[B₀⁄R₀] →+ B') (hs : ∀ b w, �
     rw [AlgHom.commutes, h.semi.map_algebraMap, Derivation.map_algebraMap, map_zero, sub_zero]
 
 theorem isTheta_betaOf (h : Setup I π p α) (θ : Ω[B₀⁄R₀] →+ B') (hs : ∀ b w, θ (p b • w) = α b * θ w)
-    (hm : ∀ w, θ w ∈ I.map (algebraMap R B')) : IsTheta I p α (betaOf h θ hs hm) θ where
-  smul := hs
-  der b := by
-    change _ = α b - (α b - θ (D R₀ B₀ (p b)))
-    ring
-  mem := hm
+    (hm : ∀ w, θ w ∈ I.map (algebraMap R B')) : IsTheta I p α (betaOf h θ hs hm) θ := by
+  refine ⟨hs, ?_, hm⟩
+  intro b
+  change _ = α b - (α b - θ (D R₀ B₀ (p b)))
+  ring
 
 end GlobalTheory.LiftSys.SqZeroDiff
 

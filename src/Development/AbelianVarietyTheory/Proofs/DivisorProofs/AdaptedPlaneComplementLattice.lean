@@ -21,6 +21,23 @@ theorem isLattice_complement_of_adapted_plane : ∀ (F E : Type) [Field F] [Numb
     rw [hH.low u]
     rfl
   rw [hL]
-  exact isLattice_comap_mulVecLin_of_leftInverse E n n₁ W.L H.ι P hP hW.lat
+  set f : (Fin n₁ → E) →ₗ[𝓞 E] (Fin n → E) :=
+    (Matrix.mulVecLin H.ι).restrictScalars (𝓞 E)
+  set g : (Fin n → E) →ₗ[𝓞 E] (Fin n₁ → E) :=
+    (Matrix.mulVecLin P).restrictScalars (𝓞 E)
+  have hgf : ∀ u, g (f u) = u := by
+    intro u
+    simp [f, g, Matrix.mulVec_mulVec, hP]
+  have hN : IsNoetherian (𝓞 E) W.L := isNoetherian_of_fg_of_noetherian W.L hW.lat.fg
+  have h1 : ((W.L.comap f).map f).FG :=
+    isNoetherian_submodule.1 hN _ (Submodule.map_comap_le f W.L)
+  have h2 : ((W.L.comap f).map f).map g = W.L.comap f := by
+    rw [← Submodule.map_comp]
+    ext u
+    simp only [Submodule.mem_map, LinearMap.coe_comp, Function.comp_apply, hgf]
+    exact ⟨fun ⟨v, hv, he⟩ => he ▸ hv, fun hu => ⟨u, hu, rfl⟩⟩
+  apply Submodule.IsLattice.of_fg E
+  rw [← h2]
+  exact h1.map g
 
 end GlobalTheory

@@ -48,7 +48,7 @@ theorem two_by_two :
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;>
   · ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [q₁, q₂, q₃, q₄, hyp, Matrix.mul_apply, Fin.sum_univ_two, Matrix.one_apply, Matrix.vecMul, dotProduct, Matrix.transpose_apply] <;> ring
+      simp [q₁, q₂, q₃, q₄, hyp, Matrix.mul_apply, Fin.sum_univ_two, Matrix.one_apply, Matrix.vecMul, dotProduct, Matrix.transpose_apply, Function.swap, vecHead, vecTail] <;> ring
 
 end GlobalTheory.DblWitt
 
