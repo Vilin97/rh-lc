@@ -16,8 +16,6 @@ public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentation
 
 @[expose] public section
 
-local macro "kc%" t:term:max : term => `(by with_unfolding_all exact ($t :))
-
 set_option synthInstance.maxHeartbeats 200000
 
 section
@@ -45,6 +43,8 @@ local elab "exact_by_kernel " term:term : tactic =>
     | .ok true => pure value
     | .ok false => throwError "expected{indentExpr target}\nbut the term has type{indentExpr actual}"
     | .error error => throwError (error.toMessageData (← getOptions))
+
+local macro "kc%" t:term:max : term => `(by first | exact_by_kernel $t | with_unfolding_all exact ($t :))
 
 section
 open GlobalTheory.ExportSeries
@@ -74,9 +74,8 @@ private theorem gens_eq_pz (ρ : Setup (Dof x).ntw) :
     (setupL L ρ).gens = fun i j b k Q ψ h P => (by exact ρ.gens i j b k Q ψ h P) := by
   funext i j b k Q ψ h P
   delta GlobalTheory.SeriesTie.Setup.gens GlobalTheory.ExportSeries.Base.genSet GlobalTheory.ExportSeries.Base.gen GlobalTheory.ExportSeries.Base.vecFlat
-  with_unfolding_all
-    rewrite [setupVecAtL_eq L ρ i j b]
-    rfl
+  with_unfolding_all rewrite [setupVecAtL_eq L ρ i j b]
+  exact_by_kernel Eq.refl (ρ.gens (kc% i) (kc% j) b k (kc% Q) (kc% ψ) (kc% h) (kc% P))
 open GlobalTheory.SeriesTie in
 private theorem sum_eq_pz (ρ : Setup (Dof x).ntw) :
     (setupL L ρ).sum = fun i j b k Q ψ => (by exact ρ.sum i j b k Q ψ) := by
@@ -89,7 +88,9 @@ private theorem sum_eq_pz (ρ : Setup (Dof x).ntw) :
 open GlobalTheory.SeriesTie in
 private theorem xi_eq_pz (ρ : Setup (Dof x).ntw) (i : (DL x L).ntw.Tw) (j : Fin (DL x L).R.m) (b : Bool) :
     (setupL L ρ).xi i j b (DL x L).nexp =
-      fun Q M h P a => kc% (ρ.xi (kc% i) (kc% j) b (Dof x).nexp (kc% Q) M (kc% h) (kc% P) (kc% a)) := by
+      fun Q M h P a => by
+        exact_by_kernel ρ.xi (by exact_by_kernel i) (by exact_by_kernel j) b (Dof x).nexp
+          (by exact_by_kernel Q) M (by exact_by_kernel h) (by exact_by_kernel P) (by exact_by_kernel a) := by
   funext Q M
   let places := admissibleConjugatePairPlaces (Dof x).ntw (kc% i) (kc% Q) M
   let u := univOf (Dof x).nexp (kc% i) places M ρ.rc
@@ -121,31 +122,31 @@ private theorem heckeTie_imp_pz {rd : Rd ρ (Dof x).nexp ((i)) ((j)) c} (h : Hec
   delta HeckeTie HeckeAt
   rewrite [isHeckeDatum_eq_pz L ρ]
   exact (by with_unfolding_all exact (h :))
-set_option maxHeartbeats 8000000 in
 private def cellL_pz {hρ : ρ.Good} {rd : Rd ρ (Dof x).nexp ((i)) ((j)) c} (t : CellTie hρ (Dof x).nexp rd) :
     CellTie (setupL_good L hρ) (DL x L).nexp (i := i) (j := j) (b := c) (@rdL_pz K B f T w P x L ρ i j c rd) where
-  supp := (by with_unfolding_all exact (t.supp :))
-  cls := (by with_unfolding_all exact (t.cls :))
-  coef := (by with_unfolding_all exact (t.coef :))
-  rdV := (by with_unfolding_all exact (t.rdV :))
-  U_eq := (by with_unfolding_all exact (t.U_eq :))
-  psiU_eq := (by with_unfolding_all exact (t.psiU_eq :))
-  dat := by rewrite [isDatum_eq L ρ]; exact (by with_unfolding_all exact (t.dat :))
-  dat_onto := by rewrite [isDatum_eq L ρ, theta_eq L ρ]; exact (by with_unfolding_all exact (t.dat_onto :))
-  lev_iff := (by with_unfolding_all exact (t.lev_iff :))
-  th_eq := by rewrite [theta_eq L ρ]; exact (by with_unfolding_all exact (t.th_eq :))
-  thPsi_iff := by rewrite [gens_eq_pz L ρ]; exact (by with_unfolding_all exact (t.thPsi_iff :))
+  supp := by exact_by_kernel t.supp
+  cls := by exact_by_kernel t.cls
+  coef := by exact_by_kernel t.coef
+  rdV := by exact_by_kernel t.rdV
+  U_eq := by exact_by_kernel t.U_eq
+  psiU_eq := by exact_by_kernel t.psiU_eq
+  dat := by rewrite [isDatum_eq L ρ]; exact_by_kernel t.dat
+  dat_onto := by rewrite [isDatum_eq L ρ, theta_eq L ρ]; exact_by_kernel t.dat_onto
+  lev_iff := by exact_by_kernel t.lev_iff
+  th_eq := by rewrite [theta_eq L ρ]; exact_by_kernel t.th_eq
+  thPsi_iff := by rewrite [gens_eq_pz L ρ]; exact_by_kernel t.thPsi_iff
   thU_eq := by
     intro Q M d hQ coeffs hcoeffs
     rewrite [xi_eq_pz L ρ i j c] at hcoeffs
-    exact_by_kernel t.thU_eq (kc% Q) M (kc% d) (kc% hQ) (kc% coeffs) (kc% hcoeffs)
+    exact_by_kernel t.thU_eq (by exact_by_kernel Q) M (by exact_by_kernel d)
+      (by exact_by_kernel hQ) (by exact_by_kernel coeffs) (by exact_by_kernel hcoeffs)
   thU_off := by
     intro Q M d hOff
     rewrite [xi_eq_pz L ρ i j c] at hOff
-    exact_by_kernel t.thU_off (kc% Q) M (kc% d) (kc% hOff)
-  rdV_inj := (by with_unfolding_all exact (t.rdV_inj :))
+    exact_by_kernel t.thU_off (by exact_by_kernel Q) M (by exact_by_kernel d) (by exact_by_kernel hOff)
+  rdV_inj := by exact_by_kernel t.rdV_inj
   mtLat_iff := by exact_by_kernel t.mtLat_iff
-  thP_eq := by rewrite [sum_eq_pz L ρ]; exact (by with_unfolding_all exact (t.thP_eq :))
+  thP_eq := by rewrite [sum_eq_pz L ρ]; exact_by_kernel t.thP_eq
 private theorem isNormL_pz (ρ : Setup (Dof x).ntw) (i : (DL x L).ntw.Tw) (j : Fin (DL x L).R.m) (c : Bool) (ν : ℂ) :
     IsNorm (datL x L).R (datL x L).geo.v₀ ((setupL L ρ).B i j c) ν ↔
       IsNorm x.m.z.R x.m.z.geo.v₀ (ρ.B ((i)) ((j)) c) ν := by
@@ -175,16 +176,20 @@ theorem is_scalar_local_y_structure_of_is_scalar {ρ : Setup (Dof x).ntw} {h : �
   ρ := setupL L l.b.ser.ex.ρ
   good := setupL_good L l.b.ser.ex.good
   pin := _root_.GlobalTheory.HeightCounting.Fin3.real_pin_setup_local L l
-  vec := (by with_unfolding_all exact (l.b.ser.ex.vec :))
-  ν := (by with_unfolding_all exact (l.b.ser.ex.ν :))
-  scalar := fun i j c => _root_.GlobalTheory.HeightCounting.Fin3.is_scalar_local_y_structure_of_is_scalar L l (h := l.b.ser.ex.good) ((by with_unfolding_all exact ((l.b.ser.ex.scalar ((i)) ((j)) c) : _)))
-  tie := fun i j c => (by with_unfolding_all exact ((@cellL_pz K B f T w P x L l.b.ser.ex.ρ i j c l.b.ser.ex.good
-    (((l.b.ser.ex.rd (kc% i) (kc% j) c))) (((l.b.ser.ex.tie (kc% i) (kc% j) c)))) : _))
-  hecke := fun i j c => (by with_unfolding_all exact ((@heckeTie_imp_pz K B f T w P x L l.b.ser.ex.ρ i j c
-    (((l.b.ser.ex.rd (kc% i) (kc% j) c))) (((l.b.ser.ex.hecke (kc% i) (kc% j) c)))) : _))
+  vec := by exact_by_kernel l.b.ser.ex.vec
+  ν := by exact_by_kernel l.b.ser.ex.ν
+  scalar := fun i j c =>
+    _root_.GlobalTheory.HeightCounting.Fin3.is_scalar_local_y_structure_of_is_scalar L l
+      (h := l.b.ser.ex.good) (by exact_by_kernel l.b.ser.ex.scalar (kc% i) (kc% j) c)
+  tie := fun i j c => by
+    exact_by_kernel @cellL_pz K B f T w P x L l.b.ser.ex.ρ i j c l.b.ser.ex.good
+      (l.b.ser.ex.rd (kc% i) (kc% j) c) (l.b.ser.ex.tie (kc% i) (kc% j) c)
+  hecke := fun i j c => by
+    exact_by_kernel @heckeTie_imp_pz K B f T w P x L l.b.ser.ex.ρ i j c
+      (l.b.ser.ex.rd (kc% i) (kc% j) c) (l.b.ser.ex.hecke (kc% i) (kc% j) c)
   univ := _root_.GlobalTheory.HeightCounting.Fin3.is_univ_char_local L l
 private def lamL_pz (Z : GlobalTheory.LamTie.LamDat (Dof x)) : GlobalTheory.LamTie.LamDat (DL x L) :=
-  ⟨(by with_unfolding_all exact ((chFr (a := x.o.Z) (oL x L).Z ((Z.C))) : _)), (by with_unfolding_all exact (Z.q0 :)), (by with_unfolding_all exact (Z.w0 :)), (by with_unfolding_all exact (Z.c :)), (by with_unfolding_all exact (Z.chi :))⟩
+  ⟨(by with_unfolding_all exact ((chFr (a := x.o.Z) (oL x L).Z ((Z.C))) : _)), (by exact_by_kernel Z.q0), (by exact_by_kernel Z.w0), (by exact_by_kernel Z.c), (by exact_by_kernel Z.chi)⟩
 private theorem lamL_ok_pz {Z : GlobalTheory.LamTie.LamDat (Dof x)} (h : Z.Ok) : (lamL_pz L Z).Ok := ⟨(by with_unfolding_all exact (h.places :)), (by with_unfolding_all exact (h.aux :)), (by with_unfolding_all exact (h.big :))⟩
 private theorem lamL_tie_pz {Z : GlobalTheory.LamTie.LamDat (Dof x)} (h : GlobalTheory.LamTie.IsLamTieFull (Dof x).ntw Z) :
     GlobalTheory.LamTie.IsLamTieFull (DL x L).ntw (lamL_pz L Z) := (by with_unfolding_all exact (h :))
@@ -199,8 +204,8 @@ private theorem reads_heq_of_eq {D D' : D7} (e : D = D') (X : NExpTied D) :
 @[no_expose] def seriesAtLocal (X : Formalism.L2.NExpTied (withLoc L)) (h : ExpRel L l.b.Bs.exp X) :
     SerAt (_root_.GlobalTheory.HeightCounting.Fin3.yStructureLocal L l) (datL x L).geo.v₀ (expD L X) (_root_.GlobalTheory.HeightCounting.Fin3.psiVectorLocal L l) (cfD x L) (_root_.GlobalTheory.HeightCounting.Fin3.placeMapLocal L l) where
   ex := _root_.GlobalTheory.HeightCounting.Fin3.localYStructureExportTie L l
-  bad := (by with_unfolding_all exact (l.b.ser.bad :))
-  ch := (by with_unfolding_all exact (l.b.ser.ch :))
+  bad := by exact_by_kernel l.b.ser.bad
+  ch := by exact_by_kernel l.b.ser.ch
   join := by
     intro i j b k Q ψ hA ht
     have hread := h.reads (kc% i) (j.1 + 1) b k (kc% Q) (kc% ψ) (Nat.le_add_left _ _) (kc% j.2) (kc% hA)
@@ -217,12 +222,12 @@ private theorem reads_heq_of_eq {D D' : D7} (e : D = D') (X : NExpTied D) :
   sup := by
     intro i j b h1 h2 z
     exact_by_kernel l.b.ser.sup (kc% i) j b h1 (kc% h2) (kc% z)
-  off := (by with_unfolding_all exact (l.b.ser.off :))
+  off := by exact_by_kernel l.b.ser.off
   lam := lamL_pz L l.b.ser.lam
   lam_ok := lamL_ok_pz L l.b.ser.lam_ok
-  lam_teich := (by with_unfolding_all exact (l.b.ser.lam_teich :))
+  lam_teich := by exact_by_kernel l.b.ser.lam_teich
   lam_C := lamL_C_pz L l.b.ser.lam_C
-  lam_q := (by with_unfolding_all exact (l.b.ser.lam_q :))
+  lam_q := by exact_by_kernel l.b.ser.lam_q
   lam_tie := lamL_tie_pz L l.b.ser.lam_tie
 end Comparison₂
 end GlobalTheory.HeightCounting.Fin3
