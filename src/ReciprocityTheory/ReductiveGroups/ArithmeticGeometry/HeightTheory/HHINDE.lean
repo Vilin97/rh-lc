@@ -234,7 +234,7 @@ theorem four_sg (hd : d.AxH 𝒜) (h : d.S1) (G : WT) (ta : ∀ c, A c)
     ((d.delc c : ℝ) * Real.log (d.supN sg G ta)) 0 (integrable_const 0) I2 I2 ?_
   · simp only [integral_zero, zero_mul, add_zero] at k
     linarith
-  filter_upwards [d.norm_at_sg hd h c sg] with z hz
+  filter_upwards [d.norm_at_sg_B hd h c sg] with z hz
   obtain ⟨hfin0, hcard0, -, -⟩ := hz
   have hfin : (d.ST c sg (fun i j => spherePoint (z i) j)).Finite := hfin0
   have hcard : (d.ST c sg (fun i j => spherePoint (z i) j)).ncard = d.delc c := hcard0

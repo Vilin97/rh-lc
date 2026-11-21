@@ -183,7 +183,7 @@ theorem nsg_smul (hd : d.AxH 𝒜) (h : d.S1) (Nr : ∀ c, A c → (Ω c →+* �
         ∂(blockSphereProb d.D (d.N + 1)) - ∫ z, d.lsum c sg a z ∂(blockSphereProb d.D (d.N + 1)) := by
   have hae : d.aI Nr c (a • f) sg =ᵐ[blockSphereProb d.D (d.N + 1)]
       fun z => d.lsum c sg a z + d.aI Nr c f sg z := by
-    filter_upwards [d.norm_at_sg hd h c sg] with z hz
+    filter_upwards [d.norm_at_sg_B hd h c sg] with z hz
     unfold aI lsum
     rw [finsum_mem_eq_finite_toFinset_sum _ hz.1, finsum_mem_eq_finite_toFinset_sum _ hz.1,
       finsum_mem_eq_finite_toFinset_sum _ hz.1, ← Finset.sum_add_distrib]

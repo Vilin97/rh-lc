@@ -68,7 +68,7 @@ theorem pf_arch (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (a : Ω c) (ha : a ≠ 0)
   have hIA := sphereLogIntegrable (d.D + 1) (d.N + 1) eA _ hsA (isMultiHomogeneous_map_ring eA PA hAm sg)
   have hIB := sphereLogIntegrable (d.D + 1) (d.N + 1) eB _ hsB (isMultiHomogeneous_map_ring eB PB hBm sg)
   have hB0 := ae_blockSphere_eval_ne_zero (d.D + 1) (d.N + 1) eB _ hsB (isMultiHomogeneous_map_ring eB PB hBm sg)
-  have hS := hsnd.quasiMeasurePreserving.ae (d.norm_at_sg hd h c sg)
+  have hS := hsnd.quasiMeasurePreserving.ae (d.norm_at_sg_B hd h c sg)
   have hae : (fun z => Real.log ‖eval (blockPoint z) (MvPolynomial.map sg PA)‖ -
       Real.log ‖eval (blockPoint z) (MvPolynomial.map sg PB)‖) =ᵐ[blockSphereProb (d.D + 1) (d.N + 1)]
       fun z => d.lsum c sg a (e z).2 := by

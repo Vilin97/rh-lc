@@ -36,7 +36,7 @@ theorem disc_pointwise (hd : d.AxH 𝒜) (h : d.S1) (a b : KTp K d.D d.N) (hab :
     rw [map_zero] at habE
     exact mul_ne_zero hDe ((map_ne_zero_iff _ (IsFractionRing.injective _ _)).mpr hb0) habE.symm
   have heW : ∀ c, hd.a4.choose c ∈ 𝒜 c d.wF ∧ hd.a4.choose c ≠ 0 := hd.a4.choose_spec.1
-  have hST := MeasureTheory.ae_all_iff.mpr fun c => d.norm_at_sg hd h c sg
+  have hST := MeasureTheory.ae_all_iff.mpr fun c => d.norm_at_sg_B hd h c sg
   filter_upwards [hST, d.de_fibre hd h a b ⟨hb0, habE, m, hm0, hma, hmb⟩ sg,
     d.ae_evT_ne_zero sg a ha0 m hm0 hma, d.ae_evT_ne_zero sg b hb0 m hm0 hmb] with z hz hfib haz hbz
   set e := hd.a4.choose with he

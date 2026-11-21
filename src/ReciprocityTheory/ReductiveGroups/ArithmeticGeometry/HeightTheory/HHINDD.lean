@@ -126,7 +126,7 @@ theorem aI_mul_ae (hd : d.AxH 𝒜) (h : d.S1) {G G' : WT} (c : ι) {f g : A c}
     (hf : f ∈ 𝒜 c G) (hg : g ∈ 𝒜 c G') (hf0 : f ≠ 0) (hg0 : g ≠ 0) (sg : K →+* ℂ) :
     d.aI (fun c f P => d.nrm c (G + G') f P) c (f * g) sg =ᵐ[blockSphereProb d.D (d.N + 1)]
       fun z => d.aI (fun c f P => d.nrm c G f P) c f sg z + d.aI (fun c f P => d.nrm c G' f P) c g sg z := by
-  filter_upwards [d.norm_at_sg hd h c sg] with z hz
+  filter_upwards [d.norm_at_sg_B hd h c sg] with z hz
   unfold aI
   rw [finsum_mem_eq_finite_toFinset_sum _ hz.1, finsum_mem_eq_finite_toFinset_sum _ hz.1,
     finsum_mem_eq_finite_toFinset_sum _ hz.1, ← Finset.sum_add_distrib]

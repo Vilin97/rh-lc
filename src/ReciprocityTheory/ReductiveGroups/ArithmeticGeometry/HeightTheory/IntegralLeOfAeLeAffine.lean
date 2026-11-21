@@ -74,7 +74,7 @@ theorem sg_one (hd : d.AxH 𝒜) (h : d.S1) (hI2be : d.HeightIntegralBoundEstima
     (hint.1 (d.n1 • d.wde) (d.et c) (by simp) (hd.et_mem c) (hd.et_ne c))
   set κ := d.tableLineDegreeFive * d.DF + d.cc * d.tableLineDegreeTwo
   refine integral_le_of_ae_le_affine _ _ _ _ _ _ I1 I2 I3 ?_
-  filter_upwards [d.norm_at_sg hd h c sg] with z hz
+  filter_upwards [d.norm_at_sg_B hd h c sg] with z hz
   obtain ⟨hfin0, hcard0, -, -⟩ := hz
   have hfin : (d.ST c sg (fun i j => ReciprocityTheory.MultiplicativeHeights.spherePoint (z i) j)).Finite := hfin0
   have hcard : (d.ST c sg (fun i j => ReciprocityTheory.MultiplicativeHeights.spherePoint (z i) j)).ncard = d.delc c := hcard0
