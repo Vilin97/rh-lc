@@ -159,7 +159,7 @@ theorem exists_div (h𝔭 : 𝔭.IsMaximal) {n : 𝓞 F} (hn : n ≠ 0) {v : ℕ
     exact h𝔭.ne_top
   obtain ⟨𝔟, hb, hnd⟩ := (FiniteMultiplicity.of_not_isUnit hu hc').exists_eq_pow_mul_and_not_dvd
   rw [Ideal.dvd_iff_le] at hnd
-  obtain ⟨s, hsb, hsp⟩ := SetLike.not_le_iff_exists.mp hnd
+  obtain ⟨s, hsb, hsp⟩ := IsConcreteLE.not_le_iff_exists.mp hnd
   set m := multiplicity 𝔭 (Ideal.span {n}) with hm
   have hmv : m ≤ v := by
     by_contra hlt

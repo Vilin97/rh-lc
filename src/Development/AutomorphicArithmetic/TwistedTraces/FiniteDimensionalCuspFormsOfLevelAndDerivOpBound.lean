@@ -6,10 +6,6 @@ public import Development.AutomorphicArithmetic.TwistedTraces.ExistsNhdsOneNormO
 public import Development.AutomorphicArithmetic.TwistedTraces.ExistsApproximateIdentityIntegrated
 public import Development.AutomorphicArithmetic.TwistedTraces.FiniteDimensionalOfCompactNearIdentity
 public import GroundTheory.AutomorphicForms.UnitaryAdmissible.CuspFinite
-public import GroundTheory.AutomorphicForms.L2LocalComponents.Summand
-public import GroundTheory.AutomorphicForms.L2LocalComponents.CuspSmooth
-public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.ExistsIsOpenForallCuspRepTFinOneEq
-public import GroundTheory.AutomorphicForms.CuspidalDiscreteness
 
 @[expose] public section
 
@@ -22,11 +18,7 @@ theorem UpperTheory.finiteDimensional_cuspForms_of_level_and_derivOp_bound :
   intro K _ _ n μ _ d b C U S hU hS hfix hbound
   obtain ⟨N, hN, hNv⟩ := UpperTheory.exists_nhds_displacement_le_half_of_derivOp_bound _ _ _ (isExpLieAlgebra K n) d b C
   obtain ⟨N', hN', hN'd⟩ := UpperTheory.exists_nhds_one_normOneGL_factorization K n N U hN hU
-  obtain ⟨f, hf⟩ : ∃ f : CompactlySupportedContinuousMap (normOneGL (K := K) (n := n)) ℂ,
-      ∀ (v : CuspL2 μ) (r : ℝ),
-        (∀ g ∈ N', ‖cuspRepT μ g v - v‖ ≤ r) →
-        ‖(cuspRepT μ).integrated μ (UnitaryRep.ccToL1 μ f) v - v‖ ≤ r :=
-    UpperTheory.exists_approximate_identity_integrated (normOneGL (K := K) (n := n)) (CuspL2 μ) (cuspRepT μ) μ N' hN' 
+  obtain ⟨f, hf⟩ := UpperTheory.exists_approximate_identity_integrated (normOneGL (K := K) (n := n)) (CuspL2 μ) (cuspRepT μ) μ N' hN'
   have key : ∀ v ∈ S.map (cuspVecL μ),
       ‖(cuspRepT μ).integrated μ (UnitaryRep.ccToL1 μ f) v - v‖ ≤ 1 / 2 * ‖v‖ := by
     rintro _ ⟨φ, hφ, rfl⟩

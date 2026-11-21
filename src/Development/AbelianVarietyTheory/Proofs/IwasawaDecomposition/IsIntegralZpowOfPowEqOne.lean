@@ -162,7 +162,9 @@ theorem fullLat_of [Algebra (𝓞 K) R] [IsScalarTower (𝓞 K) K R] (C : Submod
     (N : (K →+* ℂ) → R → ℝ) (hN : ∀ σ, IsNormOn C σ (N σ)) (B : ℝ)
     (hB : ∀ F ∈ C, (∀ la, ∀ v ∈ Vs la, 0 ≤ v F) → F ≠ 0 → -B ≤ ∑ σ : K →+* ℂ, Real.log (N σ F))
     (h : ∀ f ∈ C, Den Vs (fun _ => True) f) : Formalism.IndefR.FWT.FullLat C Vs hV :=
-  Submodule.IsLattice.of_fg K (GlobalTheory.IntCuspLat.fg_latOf_of_lowerBound C Vs hV N hN B hB)
+  { toIsLattice := Submodule.IsLattice.of_fg K
+      (GlobalTheory.IntCuspLat.fg_latOf_of_lowerBound C Vs hV N hN B hB)
+    span_eq_top := span_latOf_eq_top hV C h }
 
 omit hV in
 theorem exists_prime_mem (la : HeightOneSpectrum (𝓞 K)) {N : ℕ} (h0 : N ≠ 0) (h : (N : 𝓞 K) ∈ la.asIdeal) :

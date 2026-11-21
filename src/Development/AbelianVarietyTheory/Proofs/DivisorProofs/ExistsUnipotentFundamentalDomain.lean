@@ -368,7 +368,7 @@ theorem exists_haar_unip_mass_one : ∀ (F E : Type) [Field F] [NumberField F] [
       v = s • H'.x + H'.ι *ᵥ u + t • H'.y := by
     intro v
     have hv : v ∈ Submodule.span E (G.W.L : Set (Fin (b + 2 + a') → E)) := by
-      rw [hW.lat.span_eq_top]; trivial
+      rw [Submodule.IsFullLattice.span_eq_top (self := hW.lat)]; trivial
     induction hv using Submodule.span_induction with
     | mem z hz =>
       obtain ⟨s, t, u, -, -, -, hz⟩ := hH.split z hz

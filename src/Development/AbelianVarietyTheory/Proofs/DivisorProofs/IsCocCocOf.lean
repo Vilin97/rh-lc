@@ -40,6 +40,16 @@ end GlobalTheory.PtExt
 namespace GlobalTheory.PtExt
 variable {R : Type} [CommRing R] {X : Over (Sp R)} {K : Type}
 
+private theorem thickHom_ext {T T' : Thick (dp0 R) (X.hom ≫ 𝟙 _)}
+    {f g : Thick.Hom T T'} (h : ∀ b, f.φ b = g.φ b) : f = g := by
+  rcases f with ⟨φ, φ₀, comm, dp, pt⟩
+  rcases g with ⟨ψ, ψ₀, comm', dp', pt'⟩
+  obtain rfl : φ = ψ := AlgHom.ext h
+  obtain rfl : φ₀ = ψ₀ := RingHom.ext fun c ↦ by
+    obtain ⟨b, rfl⟩ := T.surj c
+    rw [comm, comm']
+  rfl
+
 theorem isCoc_cocOf (W : K → X.left.Opens)
     (n : C1 ((IsSmall (dp0 R) (X.hom ≫ 𝟙 _) W).ι ⋙ O (dp0 R) (X.hom ≫ 𝟙 _)))
     (hn : ∀ (T T' T'' : SmallCat W) (a : T ⟶ T') (b : T' ⟶ T''), T.obj.J = ⊥ → T'.obj.J = ⊥ →
@@ -49,12 +59,12 @@ theorem isCoc_cocOf (W : K → X.left.Opens)
       (f : smallAt W x hx ⟶ smallAt W y h) (f' : smallAt W x hx ⟶ smallAt W y' h'),
       (∀ r, f.hom.φ r = f'.hom.φ r) → n _ _ f = n _ _ f' := by
     rintro y _ rfl h h' f f' hf
-    have : f = f' := ObjectProperty.hom_ext _ (Thick.hom_ext hf)
+    have : f = f' := ObjectProperty.hom_ext _ (thickHom_ext hf)
     subst this; rfl
   have key := hn (smallAt W x hx) (smallAt W _ (hx.map φ)) (smallAt W _ ((hx.map φ).map ψ))
     (ObjectProperty.homMk (trivMap φ x)) (ObjectProperty.homMk (trivMap ψ _)) rfl rfl rfl
   rw [d1_apply] at key
-  simp only [cocOf, dif_pos hx, dif_pos (hx.map φ), dif_pos (hx.map (ψ.comp φ))]
+  simp only [cocOf, dite_eq_left hx, dite_eq_left (hx.map φ)]
   have e := tr (spOver (ψ.comp φ) ≫ x) (spOver ψ ≫ spOver φ ≫ x)
     (by rw [← spOver_comp, Category.assoc]) (hx.map (ψ.comp φ)) ((hx.map φ).map ψ)
     (ObjectProperty.homMk (trivMap (ψ.comp φ) x))

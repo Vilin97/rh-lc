@@ -269,8 +269,8 @@ theorem main : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u :
         valHom u V.1 ((cmpZZ (str A) f).1.1 _ _ a) + eva u f V := by
           rw [cmpZZ_f (str A) f a]
           exact k2
-      simp only [H, map_sub]
-      linear_combination k1' + k2'
+      simp only [H, RingHom.map_sub]
+      linear_combination (norm := abel1) k1' + k2'
     have k4 := congrArg (fun x : Hol (W u V.1) => x.fn (pt z)) k3
     simp only [Hol.fn_add _ _ hz'] at k4
     rw [Charts.fn_cst _ _ _ hz', Charts.fn_sh hle _ hz', fn_valHom u _ _ hz', hper, Hol.fn_algebraMap (W := ⊤) _ (Opens.mem_top _)] at k4

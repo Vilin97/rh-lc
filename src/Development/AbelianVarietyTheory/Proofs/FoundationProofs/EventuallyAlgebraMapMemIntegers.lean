@@ -34,7 +34,9 @@ theorem eventually_map_evalV_mem_intLoc (z : Af F ⊗[F] E) :
       Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v) (AlgHom.id F E) z ∈ intLoc F E v := by
   induction z using TensorProduct.induction_on with
   | zero => exact Eventually.of_forall fun v => by rw [map_zero]; exact zero_mem _
-  | add y z hy hz => filter_upwards [hy, hz] with v h h' using by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
+  | add y z hy hz =>
+    filter_upwards [hy, hz] with v h h'
+    simpa only [map_add] using add_mem h h'
   | tmul a e =>
     filter_upwards [a.2, eventually_one_tmul_mem_intLoc (F := F) e] with v h h'
     have := mul_mem (tmul_mem_intLoc (a := Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v a) h (1 : 𝓞 E)) h'
@@ -117,26 +119,28 @@ theorem eventually_latLoc_le {L L' : Submodule (𝓞 E) (Fin n → E)} (hL : L.F
 
 
 variable (F) in
-theorem eventually_latLoc_eq (L L' : Submodule (𝓞 E) (Fin n → E)) [hL : Submodule.IsLattice E L]
-    [hL' : Submodule.IsLattice E L'] :
+theorem eventually_latLoc_eq (L L' : Submodule (𝓞 E) (Fin n → E)) [hL : Submodule.IsFullLattice E L]
+    [hL' : Submodule.IsFullLattice E L'] :
     ∀ᶠ v : HeightOneSpectrum (𝓞 F) in cofinite, latLoc F L v = latLoc F L' v := by
-  filter_upwards [eventually_latLoc_le (F := F) hL.fg hL'.span_eq_top,
-    eventually_latLoc_le (F := F) hL'.fg hL.span_eq_top] with v h h' using le_antisymm h h'
+  filter_upwards [eventually_latLoc_le (F := F) (Submodule.IsLattice.fg E L) (Submodule.IsFullLattice.span_eq_top (A := E) (M := L')),
+    eventually_latLoc_le (F := F) (Submodule.IsLattice.fg E L') (Submodule.IsFullLattice.span_eq_top (A := E) (M := L))] with v h h' using le_antisymm h h'
 
 
-omit [NumberField E] in
-theorem isLattice_stdLattice : Submodule.IsLattice E (stdLattice E n) := by
-  refine ⟨Submodule.fg_pi fun _ => ?_, eq_top_iff.2 fun y _ => ?_⟩
-  · rw [LinearMap.range_eq_map]
-    exact Module.Finite.fg_top.map _
-  · rw [← Finset.univ_sum_single y]
-    refine sum_mem fun i _ => ?_
-    have h1 : (Pi.single i 1 : Fin n → E) ∈ stdLattice E n := fun j _ => ⟨Pi.single (M := fun _ => 𝓞 E) i 1 j, by
+theorem isLattice_stdLattice : Submodule.IsFullLattice E (stdLattice E n) := by
+  haveI : Submodule.IsLattice E (stdLattice E n) := Submodule.IsLattice.of_fg E (by
+    refine Submodule.fg_pi fun _ => ?_
+    rw [LinearMap.range_eq_map]
+    exact Module.Finite.fg_top.map _)
+  refine ⟨eq_top_iff.2 ?_⟩
+  intro y _
+  rw [← Finset.univ_sum_single y]
+  refine sum_mem fun i _ => ?_
+  have h1 : (Pi.single i 1 : Fin n → E) ∈ stdLattice E n := fun j _ => ⟨Pi.single (M := fun _ => 𝓞 E) i 1 j, by
       by_cases e : j = i
       · subst e; simp
       · simp [e]⟩
-    convert Submodule.smul_mem _ (y i) (Submodule.subset_span h1) using 1
-    rw [← Pi.single_smul, smul_eq_mul, mul_one]
+  convert Submodule.smul_mem _ (y i) (Submodule.subset_span h1) using 1
+  rw [← Pi.single_smul, smul_eq_mul, mul_one]
 
 variable (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E)
 
@@ -160,13 +164,13 @@ theorem mem_stabLoc_stdLattice_iff {v : HeightOneSpectrum (𝓞 F)} {k : GLoc σ
   have := h2 _ h.2 _ hy
   rwa [Matrix.mulVec_mulVec, map_inv, Units.inv_mul, Matrix.one_mulVec] at this
 
-theorem eventually_stabLoc_eq (L L' : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L]
-    [Submodule.IsLattice E L'] :
+theorem eventually_stabLoc_eq (L L' : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L]
+    [Submodule.IsFullLattice E L'] :
     ∀ᶠ v : HeightOneSpectrum (𝓞 F) in cofinite, stabLoc σ J L v = stabLoc σ J L' v := by
   filter_upwards [eventually_latLoc_eq F L L'] with v h
   rw [stabLoc, stabLoc, h]
 
-variable (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L]
+variable (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L]
 
 theorem eventually_projFinLoc_mem_stabLoc (g : GFin σ J) :
     ∀ᶠ v in cofinite, projFinLoc σ J v g ∈ stabLoc σ J L v := by

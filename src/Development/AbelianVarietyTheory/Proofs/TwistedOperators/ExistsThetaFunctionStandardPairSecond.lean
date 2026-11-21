@@ -23,6 +23,8 @@ namespace GlobalTheory.CompanionTheory.StdSndTheta
 
 variable {D : D7}
 
+local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
+
 theorem frMapAdj_nsmul (A' WW : HSp D) (βA' : GL (Fin A'.rank) (EAf D)) (βW : GL (Fin WW.rank) (EAf D)) (k : ℕ)
     (x : WO A' WW) : frMapAdj A' WW βA' βW (k • x) = k • frMapAdj A' WW βA' βW x :=
   map_nsmul (AddMonoidHom.mk' (frMapAdj A' WW βA' βW) (GlobalTheory.PlaceVec.frMapAdj_add A' WW βA' βW)) k x

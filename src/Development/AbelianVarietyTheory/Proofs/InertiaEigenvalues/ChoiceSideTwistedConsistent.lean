@@ -61,7 +61,7 @@ theorem image_span {R V A : Type} [CommRing R] [AddCommGroup V] [Module R V] [Ad
     induction hx using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul r x _ hx => rw [hf]; exact Submodule.smul_mem _ (⟨φ r, r, rfl⟩ : φ.range) hx
   · induction hy using Submodule.span_induction with
     | mem x hx => exact Set.image_mono Submodule.subset_span hx
@@ -135,8 +135,7 @@ theorem coefficient_ring_of_integral_le {O : Subring ℂ} (h : intLL D ≤ O) : 
 
 theorem span_latT (j : ℕ) : Submodule.span (KE c w) (latT c w j : Set (Tgt c w j)) = ⊤ := by
   refine top_unique fun y _ => ?_
-  induction y using TensorProduct.induction_on with
-  | zero => exact zero_mem _
+  induction y using TensorProduct.inductionOn with
   | add x y hx hy => exact add_mem (hx trivial) (hy trivial)
   | tmul a f =>
     have hf : f ∈ Submodule.span (FractionRing (D.ntw.Ok (c.twI w) (c.k' w)))
@@ -182,14 +181,12 @@ theorem rdF_thPe (T : CellTie hρ D.nexp rd) {ε : KE c w →+* ℂ} (hε : Exte
     rdF rd hρ hε (NChoice.thPe D c w (j.1 + 1) y) = ρ.sum (c.twI w) j (c.sd w) (c.k' w) (c.Q w) (chr c w) (rdE T hε y) := by
   have key : ∀ m, rdF rd hρ hε (((Algebra.linearMap (D.ntw.Ok (c.twI w) (c.k' w)) (KE c w)).restrictScalars (D.ntw.O (c.twI w))).rTensor
       (D.nexp.Fm (c.twI w) (j.1 + 1) (c.sd w)) m) = rdK rd hρ (c.k' w) m := fun m => by
-    induction m using TensorProduct.induction_on with
-    | zero => rw [map_zero, map_zero, map_zero]
+    induction m using TensorProduct.inductionOn with
     | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
     | tmul a f =>
       rw [LinearMap.rTensor_tmul, rdF_tmul, rdK_tmul, ← hε.apply]
       rfl
-  induction y using TensorProduct.induction_on with
-  | zero => rw [map_zero, map_zero, map_zero, map_zero]
+  induction y using TensorProduct.inductionOn with
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   | tmul a f =>
     have e : (a ⊗ₜ f : Tgt c w (j.1 + 1)) = a • ((1 : KE c w) ⊗ₜ f) := by rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
@@ -372,7 +369,7 @@ theorem mem_span_basis {L K V W I : Type} [Field L] [Field K] [AddCommGroup V] [
     obtain ⟨i, rfl⟩ := hx
     exact Submodule.subset_span ⟨i, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul a x _ hx => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
 
 end GlobalTheory.PlaceRead

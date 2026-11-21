@@ -42,14 +42,6 @@ theorem IsSncBlowupSeq.isSmoothBlowupSeq {S X X' : Scheme.{0}} {g : X ⟶ S} {E 
   | id => exact IsSmoothBlowupSeq.id
   | step Z π _ _ hZ _ hB ih => exact IsSmoothBlowupSeq.step Z π ih hZ (Set.subset_univ _) hB
 
-section Line
-
-open GlobalTheory.Principalise GlobalTheory.Principalise.Model
-
-variable (k : Type) [Field k]
-
-end Line
-
 end SncBlowup
 
 open SncBlowup

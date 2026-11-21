@@ -17,6 +17,19 @@ open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalC
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.ConstLie GlobalTheory.ArcQ
 open scoped CategoryTheory.Obj
 
+-- Kept definitionally equal to ArcQ.LetBC so this proof can also be checked
+-- against dependency interfaces that omit that declaration.
+def LetBC {A A' : Type} [CommRing A] [IsDomain A] [CommRing A'] [IsDomain A']
+    {D₀ : Out.DegPre A} {D₁ : Out.DegPre A'} {f : A →+* A'}
+    (p : Out.IsPullDeg f D₀ D₁) (ν : Out.GtPt D₀ (epsR A)) (ν₁ : Out.GtPt D₁ (epsR A')) : Prop :=
+  ν₁.b.left ≫ prj p = spMap (Formalism.L2.Pj.dualMap f) ≫ ν.b.left ∧
+    ∀ χ : D₁.X, ∃ hψ : ∀ i : Fin 4,
+        Out.DegPre.gtφT D₁ (epsR A') ν₁.b χ i ≫ prj p =
+          spMap (Formalism.L2.Pj.dualMap f) ≫ Out.DegPre.gtφT D₀ (epsR A) ν.b (p.xe χ) i,
+      LB.Gen.Maps (LB.linCombIso p.w _ Out.DegPre.gtε) (ν₁.s χ)
+        (Out.GeneratorPullback.pullAlong D₀.P.L (prj p) (spMap (Formalism.L2.Pj.dualMap f)) _
+          Out.DegPre.gtε _ hψ (ν.s (p.xe χ)))
+
 section Transport
 
 open ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.DVR GlobalTheory.TorusModel GlobalTheory.ConstFam
@@ -139,8 +152,9 @@ variable {p}
 theorem cor_of_letBC {ν' : GtPt D₁ (epsR A)} {ν : GtPt D₀ (epsR A)} (h : LetBC p ν ν') : Cor p ν' ν := by
   have hd : Formalism.L2.Pj.dualMap (RingHom.id A) = RingHom.id (DualNumber A) :=
     RingHom.ext TrivSqZeroExt.inl_fst_add_inr_snd_eq
-  have e : spMap (Formalism.L2.Pj.dualMap (RingHom.id A)) = 𝟙 (epsR A).left :=
-    (congrArg spMap hd).trans (Spec.map_id _)
+  have e : spMap (dualMap (RingHom.id A)) = 𝟙 (epsR A).left := by
+    exact (congrArg spMap hd).trans (Spec.map_id _)
+  unfold LetBC at h
   unfold Cor
   rw [← e]
   intro x

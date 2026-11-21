@@ -56,7 +56,9 @@ private theorem F_ins (u : K → K → A) (v : K → A) (hs : ∀ a b, u a b = u
       F u v (2 * E) g * v x := by
   intro E
   induction E with
-  | zero => intro g; simp [F]
+  | zero =>
+    intro g
+    simp [F]
   | succ E ih =>
     intro g
     obtain ⟨a, b, rest, rfl⟩ : ∃ (a b : K) (rest : Fin (2 * E) → K),
@@ -74,7 +76,11 @@ private theorem F_ins (u : K → K → A) (v : K → A) (hs : ∀ a b, u a b = u
         F u v (n + 2) (Fin.cons c (Fin.cons d f) : Fin (n + 2) → K) = u c d * F u v n f := by
       rw [F]
       simp only [Fin.cons_zero, Fin.cons_one, Fin.cons_succ]
-    rw [hpair, Fin.sum_univ_succ, Fin.sum_univ_succ, mul_assoc (u a b), ← ih rest, Finset.mul_sum]
+    change (∑ i : Fin (2 * E + 1 + 1 + 1), (-1 : A) ^ (i : ℕ) * F u v (2 * E + 1 + 2)
+      (Fin.insertNth (α := fun _ => K) i x (Fin.cons a (Fin.cons b rest)))) =
+      F u v (2 * E + 2) (Fin.cons a (Fin.cons b rest)) * v x
+    rw [hpair (2 * E) a b rest, Fin.sum_univ_succ, Fin.sum_univ_succ, mul_assoc (u a b),
+      ← ih rest, Finset.mul_sum]
     simp only [Fin.insertNth_succ_cons, Fin.insertNth_zero', hpair, Fin.val_zero, Fin.val_succ, hs x a]
     rw [← add_assoc]
     refine (congrArg₂ (· + ·) (by ring : _ = (0 : A)) (Finset.sum_congr rfl fun j _ => by ring)).trans (zero_add _)

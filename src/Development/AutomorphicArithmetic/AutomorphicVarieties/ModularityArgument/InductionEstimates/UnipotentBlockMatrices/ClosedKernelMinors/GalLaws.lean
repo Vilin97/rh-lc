@@ -155,15 +155,21 @@ end SlopeTestRemainingChoices
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.galLaws :
     ∀ {K : Type} [Field K] [NumberField K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (σ : K ≃+* K) (θ : Twist μ) (θ₂ : Twist μ₂), UpperTheory.ConvolutionTheory.K.IsGal σ θ → UpperTheory.ConvolutionTheory.K.IsGal σ θ₂ →
-      (∀ m₁ m₂ t, θ.e (lv m₁ m₂ t) = lv (θ₂.e m₁) (θ₂.e m₂) t) ∧ (∀ X, (∃ Y, θ.e (nn X) = nn Y) ∧ ∃ Y, θ.e.symm (nn X) = nn Y) ∧
+      (∀ m₁ m₂ t, θ.e (lv m₁ m₂ t) = lv (θ₂.e m₁) (θ₂.e m₂) t) ∧
+      (∀ X : UPos (2 + 2) 2 → 𝔸[K],
+        (∃ Y, θ.e (unipOne (K := K) (n := 2 + 2) 2 X) = unipOne (K := K) (n := 2 + 2) 2 Y) ∧
+        ∃ Y, θ.e.symm (unipOne (K := K) (n := 2 + 2) 2 X) = unipOne (K := K) (n := 2 + 2) 2 Y) ∧
       (∀ k, θ.e k ∈ KG K (2 + 2) ↔ k ∈ KG K (2 + 2)) ∧ (∀ γ, θ.e γ ∈ PK K ↔ γ ∈ PK K) ∧ ∀ g, HH (θ.e g) = HH g := by
   intro K _ _ μ _ μ₂ _ σ θ θ₂ h h₂
   have e : ∀ g, ((θ.e g : G1 K (2 + 2)) : AdelicGLn.AdelicGL K (2 + 2)) = act σ g := h
   have e₂ : ∀ g, ((θ₂.e g : G1 K 2) : AdelicGLn.AdelicGL K 2) = act σ g := h₂
   have hl : ∀ (m₁ m₂ : G1 K 2) (t : ℝ), θ.e (lv m₁ m₂ t) = lv (θ₂.e m₁) (θ₂.e m₂) t := fun m₁ m₂ t => Subtype.ext (by
     rw [e, blkLaws.1, blkLaws.1, act_blk, act_mul, act_mul, e₂, e₂, zt, zt, act_central, act_central])
-  have hn : ∀ X, θ.e (nn X) = nn fun p => Formalism.L2.Host.CT.adMap σ (X p) := fun X => Subtype.ext (by
-    rw [e, coe_unipOne, coe_unipOne, act_unip])
+  have hn (X : UPos (2 + 2) 2 → 𝔸[K]) :
+      θ.e (unipOne (K := K) (n := 2 + 2) 2 X) =
+        unipOne (K := K) (n := 2 + 2) 2 (fun p => Formalism.L2.Host.CT.adMap σ (X p)) := by
+    apply Subtype.ext
+    rw [e, coe_unipOne, coe_unipOne, act_unip]
   have hk : ∀ k, θ.e k ∈ KG K (2 + 2) ↔ k ∈ KG K (2 + 2) := fun k => by
     change ((θ.e k : G1 K (2 + 2)) : AdelicGLn.AdelicGL K (2 + 2)) ∈ (maxCompact : Subgroup _) ↔
       (k : AdelicGLn.AdelicGL K (2 + 2)) ∈ (maxCompact : Subgroup _)
@@ -175,7 +181,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.galLaws :
   refine ⟨hl, fun X => ⟨⟨_, hn X⟩, fun p => Formalism.L2.Host.CT.adMap σ.symm (X p), ?_⟩, hk, fun γ => ?_, fun g => ?_⟩
   · apply θ.e.injective
     rw [θ.e.apply_symm_apply, hn]
-    exact congrArg nn (funext fun p => (ad_symm σ.symm (X p)).symm)
+    exact congrArg (unipOne (K := K) (n := 2 + 2) 2) (funext fun p => (ad_symm σ.symm (X p)).symm)
   · rw [hP, hP, θ.mem_gam, e]
     refine and_congr_right fun _ => forall₄_congr fun i j _ _ => ?_
     change Formalism.L2.Host.CT.adMap σ (((γ : AdelicGLn.AdelicGL K (2 + 2)) : Matrix _ _ 𝔸[K]) i j) = 0 ↔ _

@@ -31,8 +31,7 @@ def lift (D : D7) : Af D.host.F ⊗[D.host.F] D.host.E →ₗ[D.host.F] AE D :=
 
 theorem lift_eq (z : Af D.host.F ⊗[D.host.F] D.host.E) :
     lift D z = finEmb D (Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul a e => rfl
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
@@ -42,8 +41,7 @@ theorem lift_finPart (z : AE D) (h : infPart D z = 0) : lift D (finPart D z) = z
         LinearMap.inl D.host.F (Ainf D.host.F) (Af D.host.F)).rTensor D.host.E (infPart D z) +
       lift D (finPart D z) := by
     intro z
-    induction z using TensorProduct.induction_on with
-    | zero => simp
+    induction z using TensorProduct.inductionOn with
     | tmul a e =>
       change _ = (pairA D.host.F a.1 0) ⊗ₜ[D.host.F] e + (pairA D.host.F 0 a.2) ⊗ₜ[D.host.F] e
       rw [← TensorProduct.add_tmul]
@@ -99,7 +97,7 @@ theorem col_mem (V W : HSp D) (hV : V.gram = 1) (k : GA D W) (b : Fin V.rank)
       rfl
     · simp
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
   | neg y _ hy => rw [map_neg]; exact neg_mem hy
 
 theorem mem_latO_of_cols : ∀ (D : D7) (V W : HSp D), V.gram = 1 → ∀ (k : GA D W) (x : WO V W), x.map (infPart D) = 0 → (∀ b, (fun a => finPart D (x a b)) ∈ latGHat W k) → x ∈ (latO V W (Formalism.L2.Pj.stdLat D.host.E V.rank : Set (Fin V.rank → D.host.E)) (Bridge.hLat W (fin W k) : Set (Fin W.rank → D.host.E)) fun _ => True) := by

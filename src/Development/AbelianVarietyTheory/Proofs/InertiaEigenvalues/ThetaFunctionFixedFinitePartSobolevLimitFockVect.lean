@@ -100,10 +100,10 @@ theorem closure : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (
       rw [hPf, hpt, GlobalTheory.FiniteHeisComb.sum_heisO_pureTensorO D R.ψ R.θ (Vc D i) (Wc D i) hψ hθ _ _ _ _ c hc0 f₀ h1.1 P, ha,
         GlobalTheory.FiniteFock.pureTensorO_smul, map_smul]
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
   set C : ENNReal := ∑ u ∈ c.support, ‖c u‖ₑ with hCdef
-  have hCt : C ≠ ⊤ := ENNReal.sum_ne_top.2 fun _ _ => enorm_ne_top
+  have hCt : C ≠ ⊤ := ENNReal.sum_ne_top.2 fun _ _ => eNorm_ne_top
   rcases eq_or_ne C 0 with hC0 | hC0
   · obtain ⟨g, hg, hgU, -⟩ := hdense d 1 one_pos
     obtain ⟨P, hP⟩ := himg g hg

@@ -15,6 +15,8 @@ open Formalism.MainNotions.BigCellDensity Formalism.FourierDecayAlt.P.Dx2.Rad Fo
 
 variable {r : ℕ} (pN : Formalism.MainNotions.S.Point ℂ (r + 1))
 
+local notation "W" => wPt pN
+
 theorem mp_model {k0 : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
     [InnerProductSpace ℂ Wq] (Ds : Formalism.FourierDecayAlt.B.RealPlaceData (k0 + 1) r Wp Wq) {δ : Formalism.FourierDecayAlt.B.Mat (k0 + 1) r}
     (hδ : δ ∈ Formalism.FourierDecayAlt.B.GV (k0 + 1) r) {d : Fin (r + 1) → ℂ} (hd : ∀ a, d a ≠ 0)
@@ -117,8 +119,9 @@ theorem mp_model {k0 : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProduct
     have hTm : Measurable (Tmap pN) := (Tmap_mp pN).measurable
     have e : φ' = Tinv pN ∘ (Tmap pN ∘ φ') := by
       funext x; simp [Tinv_Tmap]
-    rw [e, ← Measure.map_map (Tinv_mp pN).measurable (hTm.comp hφ'c.measurable), hA, Measure.map_smul,
-      (Tinv_mp pN).map_eq]
+    have hTi := Tinv_mp pN
+    rw [e, ← Measure.map_map hTi.measurable (hTm.comp hφ'c.measurable), hA,
+      Measure.map_smul c hTi.aemeasurable, hTi.map_eq]
   have hC : μ.map φ = c • volume := by
     have hlinv := Formalism.L2.SG.lowerTriangularModel.linv_mp W
     have hR := Rm_mp pN d hd hdm
@@ -126,8 +129,8 @@ theorem mp_model {k0 : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProduct
       filter_upwards [hae] with x hx
       exact hkey x hx)]
     rw [← Measure.map_map hlinv.measurable (hR.measurable.comp hφ'c.measurable),
-      ← Measure.map_map hR.measurable hφ'c.measurable, hB, Measure.map_smul, hR.map_eq, Measure.map_smul,
-      hlinv.map_eq]
+      ← Measure.map_map hR.measurable hφ'c.measurable, hB, Measure.map_smul c hR.aemeasurable, hR.map_eq,
+      Measure.map_smul c hlinv.aemeasurable, hlinv.map_eq]
   have hrho := rhoF_meas Ds hδ hd hG
   have hD : μ = μ.map ((fun y => Matrix.of.symm (rhoF Ds δ W y)) ∘ φ) := by
     conv_lhs => rw [← Measure.map_id (μ := μ)]
@@ -139,7 +142,7 @@ theorem mp_model {k0 : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProduct
     show x = Matrix.of.symm (rhoF Ds δ W (φ x))
     rw [← hρ]
     rfl
-  rw [hD, ← Measure.map_map hrho hφc.measurable, hC, Measure.map_smul]
+  rw [hD, ← Measure.map_map hrho hφc.measurable, hC, Measure.map_smul c hrho.aemeasurable]
   rfl
 
 end Formalism.L2.SG.flagStabilizerModel

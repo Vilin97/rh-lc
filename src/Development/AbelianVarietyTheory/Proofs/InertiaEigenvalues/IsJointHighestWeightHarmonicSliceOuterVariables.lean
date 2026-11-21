@@ -47,21 +47,21 @@ variable {ι}
 
 theorem slice_X_inner (hι : Function.Injective ι) (u : σ₀) : slice ι (X (ι u)) = C (X u) := by
   have h : ι u ∈ Set.range ι := ⟨u, rfl⟩
-  simp only [slice, aeval_X, sliceVar, dif_pos h]
+  simp only [slice, aeval_X, sliceVar, dite_eq_left h]
   rw [hι h.choose_spec]
 
 theorem slice_X_outer {v : σ} (hv : v ∉ Set.range ι) : slice ι (X v) = X ⟨v, hv⟩ := by
-  simp only [slice, aeval_X, sliceVar, dif_neg hv]
+  simp only [slice, aeval_X, sliceVar, dite_eq_right hv]
 
 theorem slice_C (a : ℂ) : slice ι (C a) = C (C a) := by
-  simp [slice, aeval_C, MvPolynomial.algebraMap_apply]
+  simp [slice, MvPolynomial.algebraMap_apply]
 
 variable (ι)
 
 noncomputable def coefAt (t : Outer ι →₀ ℕ) : MvPolynomial σ ℂ →ₗ[ℂ] MvPolynomial σ₀ ℂ where
   toFun Q := AddMonoidAlgebra.coeff (slice ι Q) t
   map_add' _ _ := by simp
-  map_smul' c Q := by simp [coeff_smul]
+  map_smul' c Q := by simp
 
 variable {ι}
 
@@ -74,7 +74,7 @@ theorem coefAt_pderiv (hι : Function.Injective ι) (u : σ₀) (Q : MvPolynomia
   classical
   simp only [coefAt, LinearMap.coe_mk, AddHom.coe_mk]
   induction Q using MvPolynomial.induction_on with
-  | C a => intro t; simp only [pderiv_C, map_zero, coeff_zero, slice_C, coeff_C]; split_ifs <;> simp
+  | C a => intro t; simp only [pderiv_C, map_zero, AddMonoidAlgebra.coeff_zero, slice_C, coeff_C]; split_ifs <;> simp
   | add p q hp hq => intro t; simp [hp, hq]
   | mul_X p v hp =>
     intro t
@@ -88,10 +88,10 @@ theorem coefAt_pderiv (hι : Function.Injective ι) (u : σ₀) (Q : MvPolynomia
       · have h1 : ι u ≠ ι w := fun h => huw (hι h).symm
         have h2 : u ≠ w := fun h => huw h.symm
         simp [Derivation.leibniz, map_mul, slice_X_inner hι, hp, pderiv_X,
-          Pi.single_apply, h1, h2, coeff_C_mul, mul_comm (slice ι p) (C (X w))]
+          h1, h2, coeff_C_mul, mul_comm (slice ι p) (C (X w))]
     · have h1 : ι u ≠ v := fun h => hv ⟨u, h⟩
-      simp only [Derivation.leibniz, map_add (f := _), map_mul, smul_eq_mul, pderiv_X, Pi.single_apply,
-        if_neg h1.symm, mul_zero, zero_add, slice_X_outer hv]
+      simp only [Derivation.leibniz, map_mul, smul_eq_mul, pderiv_X, Pi.single_apply,
+        ite_eq_right h1.symm, mul_zero, zero_add, slice_X_outer hv]
       rw [coeff_X_mul', coeff_mul_X']
       split_ifs
       · rw [hp]

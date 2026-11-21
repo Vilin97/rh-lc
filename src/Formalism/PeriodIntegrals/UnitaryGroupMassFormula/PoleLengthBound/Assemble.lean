@@ -74,8 +74,11 @@ theorem psiRaw_smul (a : Fin G.N → OsK X la G.w) (k : ℕ) (r : Op X la G.N) (
   funext α
   simp only [psiRaw, Pi.smul_apply, Finset.smul_sum]
   refine Finset.sum_congr rfl fun col _ => ?_
-  rw [restricted_derivative_linear G la k _ r x hx (le_of_eq (colIdx_mon col α))]
-  exact smul_comm _ _ _
+  calc
+    _ = a col • (r • rD G la (colIdx D j col α.1) x) :=
+      congrArg (fun y => a col • y)
+        (restricted_derivative_linear G la k _ r x hx (le_of_eq (colIdx_mon col α)))
+    _ = _ := smul_comm _ _ _
 
 theorem psiRaw_congr (a : Fin G.N → OsK X la G.w) {k T : ℕ} (hk : k < a0 D j T) {x x' : ↥(HK X la G.w wF)}
     (h : toWK X la G.w wF (a0 D j T) x = toWK X la G.w wF (a0 D j T) x') : psiRaw G la a k x = psiRaw G la a k x' := by

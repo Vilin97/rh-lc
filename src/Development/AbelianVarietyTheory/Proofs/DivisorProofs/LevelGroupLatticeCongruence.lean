@@ -182,7 +182,7 @@ theorem det_sub_mem_completedIdeal_of_level (F : Type) {E : Type} [Field F] [Num
         simp only [map_sub, map_neg, map_one]
         rw [show algebraMap (𝓞 E) E (φ (a i) i) = _ from h3]
         ring
-      rw [if_pos rfl, this]
+      simp only [↓reduceIte, this]
       exact I.neg_mem (hm i)
     · have : φ (a j) i = 0 := by
         apply RingOfIntegers.coe_injective
@@ -261,7 +261,7 @@ theorem det_sub_mem_completedIdeal_of_level (F : Type) {E : Type} [Field F] [Num
       rw [adCoord_smul]
       exact hmul _ _ _ (one_tmul_mem_adelicCompletionOfElementSet F (FractionalIdeal.mem_coeIdeal_of_mem _ hb)) _ (key z hz i)
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
   have hmono : ∀ {A B : FractionalIdeal (𝓞 E)⁰ E}, A ≤ B → ∀ {z : RA F E}, z ∈ hat1 F (A : Set E) →
       z ∈ hat1 F (B : Set E) := by

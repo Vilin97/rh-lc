@@ -120,8 +120,8 @@ theorem key (Y : Scheme.{0}) [IsIntegral Y] [IsLocallyNoetherian Y] (q : Y ⟶ S
     fun a => rfl
   have hpm : ∀ a, a ∈ p ↔ Y.presheaf.germ U y hy a ∈ maximalIdeal (Y.presheaf.stalk y) := by
     intro a
-    rw [← IsLocalization.AtPrime.comap_maximalIdeal (Y.presheaf.stalk y) p, ← hgerm]
-    rfl
+    rw [← hgerm]
+    exact (IsLocalization.AtPrime.to_map_mem_maximal_iff (Y.presheaf.stalk y) p a).symm
   have hIp : I ≤ p := Ideal.span_le.2 (by
     rintro _ ⟨j, hj, rfl⟩
     exact (hpm _).2 (hz ⟨j, hj⟩))

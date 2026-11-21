@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CosetRefinement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RelIndexOfLeNsmul
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.StarDetMulDetMem
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RationalPoints
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianLatticeTransportPreservesSelfDual
 public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IdealPeriodLatticeOfCurveDatum
@@ -190,7 +191,9 @@ theorem pres_thInd : ∀ (D : D7) (X : Fields) (s : Seam D X) (cc : Ideal (𝓞 
   intro D X s cc dl B χ cD hX hs hC a b S L L' c x hL hL' hc
   have hdl : dl ≠ 0 := (GlobalTheory.CurveLattice.lattice_of_curve D (GlobalTheory.InducedType.induced_type D).1 cc dl hC).2.1
   have : Nonempty X.Tau := Fintype.card_pos_iff.1 hX.f_pos
-  obtain ⟨hA, hB, hcard⟩ := GlobalTheory.ColNorms.HalfReps.half_reps X.E X.Tau a b (X.embC s.σ₀) dl (ambOf s B χ cD).AA S L L' c hdl (AA_fg s cc dl B χ cD) hL.1 hL'.1 hc
+  have hfull : Submodule.IsFullLattice X.E L :=
+    { hL.1 with span_eq_top := GlobalTheory.DetSelfDual.span_eq_top_of_isSdLat hL }
+  obtain ⟨hA, hB, hcard⟩ := GlobalTheory.ColNorms.HalfReps.half_reps X.E X.Tau a b (X.embC s.σ₀) dl (ambOf s B χ cD).AA S L L' c hdl (AA_fg s cc dl B χ cD) hfull hL'.1 hc
   obtain ⟨hQ, hrat⟩ := GlobalTheory.RationalPoints.rational_points D cc dl hC a b _ _ ((GlobalTheory.SeamSelfDual.seam_selfDual D X s hs a).2 L hL) ((GlobalTheory.SeamSelfDual.seam_selfDual D X s hs b).2 L' hL')
   set Hh : Sesq (Formalism.L2.Ker.VV X.Tau a b) := Formalism.L2.Ker.HV (TaylorLogMetric.area (TaylorLogMetric.lamOf D cc dl))⁻¹ with hHh
   have hQ' : ∀ u : HomE X.E a b, StandardLatticesGL3.LaQ D (TaylorLogMetric.tor0 D cc dl) (s.lat L) (s.lat L') (rel s (embH (X.embC s.σ₀) dl u)) := fun u => by

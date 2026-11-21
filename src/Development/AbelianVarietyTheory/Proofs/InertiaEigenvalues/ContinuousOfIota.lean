@@ -72,8 +72,43 @@ theorem continuous_of_iota (i : N.Loc) {Y : Type} [TopologicalSpace Y] (u : Y �
   rw [map_sub]
   exact hx
 
+private theorem diagM_ss_local {Γ k : Type} [Group Γ] [Field k] :
+    ∀ {t : ℕ} (χ : Fin t → Γ →* kˣ), IsSSRep (GlobalTheory.SSComplement.diagM χ).toHomUnits := by
+  have scalar_ss {a : ℕ} (ρ : Γ →* GL (Fin a) k) (c : Γ → k)
+      (h : ∀ g v, (ρ g : Matrix (Fin a) (Fin a) k).mulVec v = c g • v) : IsSSRep ρ := by
+    intro W _
+    obtain ⟨W', hW'⟩ := W.exists_isCompl
+    exact ⟨W', fun g v hv => by rw [h]; exact W'.smul_mem _ hv, hW'⟩
+  intro t
+  induction t with
+  | zero =>
+    intro χ
+    exact scalar_ss _ (fun _ => 0) fun g v => funext fun c => c.elim0
+  | succ t ih =>
+    intro χ
+    refine GlobalTheory.Proof.SemisimpleRepresentationIntegralConjugate.isSSRep_of_prod
+      (ρ₁ := (GlobalTheory.SSComplement.diagM fun c : Fin t => χ (Fin.castAdd 1 c)).toHomUnits)
+      (ρ₂ := (GlobalTheory.SSComplement.diagM fun c : Fin 1 => χ (Fin.natAdd t c)).toHomUnits)
+      ((LinearEquiv.funCongrLeft k k finSumFinEquiv).trans
+        (LinearEquiv.sumArrowLequivProdArrow _ _ k k)) (fun g v => ?_) (ih _)
+      (scalar_ss _ (fun g => ((χ (Fin.last t) g : kˣ) : k)) fun g v => ?_)
+    · show _ = _
+      ext i <;> simp [GlobalTheory.SSComplement.diagM, Matrix.mulVec_diagonal, LinearMap.funLeft]
+    · funext c
+      obtain rfl : c = 0 := Subsingleton.elim _ _
+      change (Matrix.diagonal fun c : Fin 1 => ((χ (Fin.natAdd t c) g : kˣ) : k)).mulVec v 0 = _
+      exact Matrix.mulVec_diagonal _ _ _
+
 theorem lattice_of_point (hLaw : GlobalTheory.ThetaExh.ParamLaws N A) (hO : Formalism.MainNotions.SumRepresentations.At.OLarge N A)
-    (hXi : GlobalTheory.SplitRead.XiOverO N A) (a : N.Loc) (x : N.X a) (P : A.AV a) (hP : A.ptV a P = some x) (π : A.CG R.r)
+    (hXi : ∀ i : N.Loc, ∃ ξ : G H.E N.Om →* (N.O i)ˣ,
+      Continuous (fun g => ((ξ g : (N.O i)ˣ) : N.O i)) ∧
+      ∀ w : PlE H, w ∉ placesOver H.E (N.l i) →
+        (∀ σ ∈ Ine (F := H.E) (N.plOm.1 w), ξ σ = 1) ∧
+        ∀ (B : ValuationSubring N.Om) (σ : G H.E N.Om),
+          IsPlaceOver (F := H.E) B w → IsFrob (F := H.E) B (normV w) σ →
+          A.frobEig (A.lpTw (A.locG A.etaTinv w) (-(R.t : ℝ) / 2)) =
+            {iotaO N A i ((ξ σ : (N.O i)ˣ) : N.O i)})
+    (a : N.Loc) (x : N.X a) (P : A.AV a) (hP : A.ptV a P = some x) (π : A.CG R.r)
     (hloc : ∀ w, IsSplitPl H w → A.locV a P w = GlobalTheory.ThetaExh.liftPar N A a w (A.locG π w))
     (hun : ∀ w, (∀ k, w ∉ placesOver H.E (H.g k)) → A.unr (A.locG π w))
     (ρ₀ : G H.E N.Om →* GL (Fin R.r) (Qbar (N.l a)))
@@ -119,7 +154,7 @@ theorem lattice_of_point (hLaw : GlobalTheory.ThetaExh.ParamLaws N A) (hO : Form
     refine Continuous.matrix_fromBlocks hR1c continuous_const continuous_const ?_
     exact Continuous.matrix_diagonal (continuous_pi fun c => hιc.comp (N.chi_cont a _))
   have hRqs : IsSSRep Rq :=
-    GlobalTheory.SSComplement.blockM_ss _ _ _ (isSSRep_twGL _ _ hs0) (GlobalTheory.SSComplement.diagM_ss χ)
+    GlobalTheory.SSComplement.blockM_ss _ _ _ (isSSRep_twGL _ _ hs0) (diagM_ss_local χ)
   have hq : Formalism.MainNotions.SumRepresentations.At.IsHeckeGaloisQ N A a x Rq := by
     refine ⟨hRqc, hRqs, fun v hso B g hBv hg => ?_⟩
     have h4 : A.unr (A.locG π v) := hun v fun k hk => hso.2.2.1 ((N.S_def a v).2 ⟨by

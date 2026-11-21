@@ -245,7 +245,7 @@ theorem archRep : GlobalTheory.FunPr.Hypotheses₂ → DerEx → VacLine →
         rw [map_one]
         exact hVE f
       map_mul' := fun g h => ContinuousLinearMap.ext fun f => by
-        simp only [map_mul, ContinuousLinearMap.mul_apply, ContinuousLinearMap.comp_apply, hEV] }
+        simp only [map_mul, mul_apply_eq_comp, ContinuousLinearMap.comp_apply, hEV] }
   have hρ' : ∀ g f, ρ' g f = toV (ρ g (toE f)) := fun _ _ => rfl
   clear_value ρ'
   refine ⟨ρ', fun w => kk w / 2, fun g _ => ⟨fun u hu f f₁ hf h => ?_, fun ν hν f₁ f₂ => ?_⟩, fun L f => ?_,
@@ -268,7 +268,7 @@ theorem archRep : GlobalTheory.FunPr.Hypotheses₂ → DerEx → VacLine →
       have := congrFun ((GlobalTheory.T.heisenbergOp_archimedean_vector_acts_by_schrodinger_trace F E σ α β κ ψ JA JB d hψ u hu f fun _ => 1).symm.trans (hf fun _ => 1)) (liftV y)
       simp only [pureA, mul_one] at this
       change schrF (trP F κ) (locV (d.e u).1, locV (d.e u).2) ⇑f (fun i => evI F (liftV y i)) = f₁ (fun i => evI F (liftV y i)) at this
-      have hy : (fun i => evI F (liftV y i)) = y := funext (GlobalTheory.ArchHeis.evI_liftV y)
+      have hy : (fun i => evI F (liftV y i)) = y := funext fun i => (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply (y i)
       rw [hy] at this
       exact this.symm
     have e2 : ⇑(toE f₁) = rhoFun (φ c) ⇑(toE f) := by

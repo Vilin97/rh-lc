@@ -80,7 +80,7 @@ theorem Dec.add {γ δ : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteR
   refine ⟨⟨a + a', add_mem ha ha', ?_⟩, ⟨b + b', add_mem hb hb', ?_⟩, ?_⟩
   · rw [map_add (f := _), map_add (f := _), ea, ea']; simp only [Prod.mk_add_mk, add_zero, Prod.fst_add, Prod.snd_add]
   · rw [map_add (f := _), map_add (f := _), eb, eb']; simp only [Prod.mk_add_mk, add_zero, Prod.fst_add]
-  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hc hc'
+  · rw [map_add]; exact add_mem hc hc'
 
 theorem Dec.neg {γ : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))} (h : Dec σ X W H H' X₁ W₁ v γ) :
     Dec σ X W H H' X₁ W₁ v (-γ) := by

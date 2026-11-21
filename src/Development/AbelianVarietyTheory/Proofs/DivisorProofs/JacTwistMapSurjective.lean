@@ -3,14 +3,14 @@ module
 public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsParahoricVec
 public import Development.AbelianVarietyTheory.Definitions.Foundations.SecondCountableAndT2LocalField
+public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsUnitarisableOfCharIff
 public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.WeilTensorLiftConclusion
 
 @[expose] public section
 
 noncomputable section
 
-open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.TypeTwo
-open scoped TensorProduct
+open GlobalTheory.SmGL (twist twist_apply)
 
 namespace GlobalTheory.TypeTwo.EndTwist
 
@@ -21,7 +21,7 @@ variable {F G V W : Type} [Field F] [Group G] [AddCommGroup V] [Module F V] [Add
 def twistSubIso (ρ : Representation F G V) (χ : G →* Fˣ) :
     Subrepresentation ρ ≃o Subrepresentation (twist ρ χ) where
   toFun S := ⟨S.toSubmodule, fun g v hv => by
-    show (χ g : F) • ρ g v ∈ S.toSubmodule
+    rw [twist_apply]
     exact S.toSubmodule.smul_mem _ (S.apply_mem_toSubmodule g hv)⟩
   invFun S := ⟨S.toSubmodule, fun g v hv => by
     have h := S.toSubmodule.smul_mem ((χ g)⁻¹ : Fˣ).val (S.apply_mem_toSubmodule g hv)

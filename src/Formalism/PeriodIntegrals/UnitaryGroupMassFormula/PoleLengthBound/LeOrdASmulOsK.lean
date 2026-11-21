@@ -52,7 +52,9 @@ theorem hasse_smul_Op (β : Idx D j G.N →₀ ℕ) (r : Op X la G.N) (x : ↥(H
   show PI.HJP.H X la G.w β _ = ∑ q ∈ antidiagonal β, @algebraMap (Op X la G.N) (Kp X la G.N) _ _ _
     (hasseOp X la G.N q.1 r) • PI.HJP.H X la G.w q.2 (x : Lw X la G.w)
   rw [e0, PI.HJP.H_mul]
-  simp only [hA, algebraMap_Op_mul la G.w]
+  refine Finset.sum_congr rfl fun q _ => ?_
+  rw [hA]
+  exact algebraMap_Op_mul la G.w _ _
 
 theorem rD_smul (β : Idx D j G.N →₀ ℕ) (r : Op X la G.N) (x : ↥(HK X la G.w wF)) :
     rD G la β (@algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ r • x) =

@@ -1,7 +1,9 @@
 module
 
+public import Formalism.WachLatticeTwists.CoprimeLiftBounds.Statement
 public import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapTheorem
 public import Formalism.WachLatticeTwists.RealClassMaps.StatClassMapReal
+public import Formalism.WachLatticeTwists.ShapeRowIsomorphisms.Statement
 
 @[expose] public section
 

@@ -43,9 +43,9 @@ theorem exists_nat_mul_int (e : E) : ∃ (k : ℕ) (o : 𝓞 E), k ≠ 0 ∧ (k 
     rw [← h1, map_mul]
     field_simp
 
-theorem exists_nat_smul_mem {d : ℕ} (L : Submodule (𝓞 E) (Fin d → E)) (hL : L.IsLattice E) (x : Fin d → E) :
+theorem exists_nat_smul_mem {d : ℕ} (L : Submodule (𝓞 E) (Fin d → E)) (hL : L.IsFullLattice E) (x : Fin d → E) :
     ∃ m : ℕ, m ≠ 0 ∧ m • x ∈ L := by
-  have hx : x ∈ Submodule.span E (L : Set (Fin d → E)) := by rw [hL.2]; trivial
+  have hx : x ∈ Submodule.span E (L : Set (Fin d → E)) := by rw [hL.span_eq_top]; trivial
   induction hx using Submodule.span_induction with
   | mem y hy => exact ⟨1, one_ne_zero, by simpa using hy⟩
   | zero => exact ⟨1, one_ne_zero, by simp⟩
@@ -124,7 +124,7 @@ theorem unitAt_mul (v : Pl (F := F)) (b : AF F) :
   · subst e; rw [evalV_singleFin_self, evalV_singleFin_self, one_mul]
   · rw [evalV_singleFin_ne e, evalV_singleFin_ne e, zero_mul]
 
-theorem single_tmul_mem {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) (v : Pl (F := F)) (c : Fv F v) (f : E) (i : Fin d) :
+theorem single_tmul_mem {d : ℕ} (W : Spc F E d) (hL : W.L.IsFullLattice E) (v : Pl (F := F)) (c : Fv F v) (f : E) (i : Fin d) :
     (Pi.single i (atV v c ⊗ₜ[F] f) : Fin d → AE F E) ∈ satHat W := by
   classical
   obtain ⟨m, hm, hx⟩ := exists_nat_smul_mem W.L hL (Pi.single i f)
@@ -159,7 +159,7 @@ namespace GlobalTheory.SphLineComm.Bound
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-theorem single_unitAt_smul_mem {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) (v : Pl (F := F)) (i : Fin d) (t : AE F E) :
+theorem single_unitAt_smul_mem {d : ℕ} (W : Spc F E d) (hL : W.L.IsFullLattice E) (v : Pl (F := F)) (i : Fin d) (t : AE F E) :
     (Pi.single i (GlobalTheory.SphLineComm.unitAt v • t) : Fin d → AE F E) ∈ satHat W := by
   induction t using TensorProduct.induction_on with
   | zero => rw [smul_zero, Pi.single_zero]; exact zero_mem _
@@ -168,7 +168,7 @@ theorem single_unitAt_smul_mem {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) 
     exact single_tmul_mem W hL v _ f i
   | add s t hs ht => rw [smul_add, Pi.single_add]; exact add_mem hs ht
 
-theorem mem_satHat_of_at {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) (v : Pl (F := F)) (y : Fin d → AE F E)
+theorem mem_satHat_of_at {d : ℕ} (W : Spc F E d) (hL : W.L.IsFullLattice E) (v : Pl (F := F)) (y : Fin d → AE F E)
     (hy : At (evFin F v) y) : y ∈ satHat W := by
   have h1 : (1 - GlobalTheory.SphLineComm.unitAt v) • y = 0 :=
     hy _ (by rw [map_sub, map_one, GlobalTheory.SphLineComm.evFin_unitAt_self, sub_self])
@@ -196,12 +196,12 @@ theorem int_smul_mem_latHat {d : ℕ} (W : Spc F E d) (o : 𝓞 E) {z : Fin d �
   | neg x _ hx => rw [smul_neg]; exact neg_mem hx
 
 theorem nsmul_mulVec_mem_latHat : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (d : ℕ) (W : Spc F E d) (v : Pl (F := F))
-    (M : Matrix (Fin d) (Fin d) (AE F E)), W.L.IsLattice E → At (evFin F v) M →
+    (M : Matrix (Fin d) (Fin d) (AE F E)), W.L.IsFullLattice E → At (evFin F v) M →
     ∃ n : ℕ, n ≠ 0 ∧ ∀ z ∈ latHat W, n • (M *ᵥ z) ∈ latHat W := by
   intro F E _ _ _ _ _ d W v M hL hM
   have hsupp : ∀ x : Fin d → E, At (evFin F v) (M *ᵥ incV F x) := fun x u hu => by
     rw [← Matrix.smul_mulVec, hM u hu, Matrix.zero_mulVec]
-  obtain ⟨S, hS⟩ := hL.1
+  obtain ⟨S, hS⟩ := hL.toIsLattice.fg
   obtain ⟨n, hn, hnS⟩ := exists_common_nsmul (latHat W) S (fun x => M *ᵥ incV F x)
     fun s _ => mem_satHat_of_at W hL v _ (hsupp s)
   refine ⟨n, hn, ?_⟩

@@ -226,12 +226,13 @@ theorem finrank_of_isKsForm {m : ℕ} (F : FormsL L K (Fin m → L) W G) (h : F.
 variable {Rg : Type} [CommRing Rg] [Algebra K Rg] [Algebra (𝓞 K) Rg] [IsScalarTower (𝓞 K) K Rg]
 
 def FullLat (Cs : Submodule K Rg) (Vs : HeightOneSpectrum (𝓞 K) → Set (Rg → EReal)) (hV : ∀ la, ∀ v ∈ Vs la, IsVal la v) : Prop :=
-  Submodule.IsLattice K (latOf Cs Vs hV)
+  Submodule.IsFullLattice K (latOf Cs Vs hV)
 
 theorem mkFull_of [Fintype G] [Module (𝓞 K) WL] [IsScalarTower (𝓞 K) K WL] (F : FormsL L K WL W G) {Cs : Submodule K Rg}
     {Vs : HeightOneSpectrum (𝓞 K) → Set (Rg → EReal)} {hV : ∀ la, ∀ v ∈ Vs la, IsVal la v} (ι : Cs →ₗ[K] WL)
     (hW : F.WK = LinearMap.range ι) (hM : ∀ x, x ∈ F.MK ↔ ∃ f : Cs, (∀ la, ∀ v ∈ Vs la, 0 ≤ v (f : Rg)) ∧ ι f = x)
     (h : FullLat Cs Vs hV) : F.MKFull := by
+  letI : Submodule.IsFullLattice K (latOf Cs Vs hV) := h
   have e : F.MK = (latOf Cs Vs hV).map (ι.restrictScalars (𝓞 K)) := by
     ext x
     rw [hM, Submodule.mem_map]
@@ -239,7 +240,7 @@ theorem mkFull_of [Fintype G] [Module (𝓞 K) WL] [IsScalarTower (𝓞 K) K WL]
   refine ⟨e ▸ h.fg.map _, ?_⟩
   rw [e, hW]
   show Submodule.span K (ι '' (latOf Cs Vs hV : Set Cs)) = _
-  rw [Submodule.span_image, h.span_eq_top, Submodule.map_top]
+  rw [Submodule.span_image, Submodule.IsFullLattice.span_eq_top, Submodule.map_top]
 
 end Ext
 

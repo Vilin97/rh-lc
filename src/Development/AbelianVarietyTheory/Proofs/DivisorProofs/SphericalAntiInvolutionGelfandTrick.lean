@@ -34,7 +34,7 @@ theorem inv_mem_locK_mul_locK : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
   obtain ⟨-, hI⟩ := exists_isInertChart σ hσ v
   obtain ⟨-, ⟨c, hc, -⟩, -, -, hC⟩ := hI w h hw
   obtain ⟨⟨ϖ, hU⟩, hE⟩ := hC c hc
-  obtain ⟨e2, he2, -⟩ := hE _ _ _ hH hlat.fg hlat.span_eq_top hsd
+  obtain ⟨e2, he2, -⟩ := hE _ _ _ hH hlat.fg (Submodule.IsFullLattice.span_eq_top (self := hlat)) hsd
   let e := e1.trans e2
   have hK : ∀ k : locU σ G.W v, k.1 ∈ locK σ G.W v ↔ e k ∈ Formalism.UG.KU c (a + a') := fun k =>
     (he1 k).trans (he2.2.2 _)

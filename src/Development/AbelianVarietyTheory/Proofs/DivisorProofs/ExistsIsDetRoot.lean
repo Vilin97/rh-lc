@@ -22,13 +22,12 @@ theorem sigR_mem_intAE (D : D7) {y : Af D.host.F ⊗[D.host.F] D.host.E} (hy : y
     exact AddSubgroup.subset_closure ⟨a, ha,
       ⟨D.sp.cm.sig x, (x.2 : IsIntegral ℤ (x : D.host.E)).map D.sp.cm.sig.toRingHom.toIntAlgHom⟩, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | neg a _ ha => rw [map_neg]; exact neg_mem ha
 
 theorem sigR_sigR (D : D7) (a : Af D.host.F ⊗[D.host.F] D.host.E) :
     sigR (Af D.host.F) D.sp.cm.sig (sigR (Af D.host.F) D.sp.cm.sig a) = a := by
-  induction a using TensorProduct.induction_on with
-  | zero => simp
+  induction a using TensorProduct.inductionOn with
   | tmul a b => exact congrArg (fun x => a ⊗ₜ[D.host.F] x) (star_star b)
   | add a b ha hb => simp only [map_add (f := _), ha, hb]
 

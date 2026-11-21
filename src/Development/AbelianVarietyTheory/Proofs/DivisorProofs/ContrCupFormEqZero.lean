@@ -33,10 +33,10 @@ theorem contr_cup_form_eq_zero : ∀ (R : Type) [CommRing R] (A B : Over (Sp R))
         rw [← Over.comp_left, h1, ← Over.comp_left, h2, Over.comp_left]
         rfl }
   have he0 : α.1.1 _ _ e = 0 := α.2 e rfl rfl
-  have hes : e ≫ m₁.functor.map i = m₁.functor.map s := Thick.hom_ext fun c ↦ by
+  have hes : e ≫ m₁.functor.map i = m₁.functor.map s := Thick.Hom.ext' (AlgHom.ext fun c ↦ by
     change i.φ (TrivSqZeroExt.inl c) = s.φ c
     rw [hi]
-    exact (hs c).symm
+    exact (hs c).symm)
   have hsi : (m₁.coef.pullbackOneCocycle α.1).1 _ _ s = (m₁.coef.pullbackOneCocycle α.1).1 _ _ i := by
     change α.1.1 _ _ (m₁.functor.map s) = α.1.1 _ _ (m₁.functor.map i)
     rw [← hes]

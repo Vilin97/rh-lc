@@ -76,7 +76,7 @@ theorem sum_spread_modelWt_le {E : Type} [Field E] [NumberField E] [IsCMField E]
     intro τ
     unfold Data.spread
     rcases isEmpty_or_nonempty (Fin r) with hr | hr
-    · simp [Real.iSup_of_isEmpty, Real.iInf_of_isEmpty]; linarith
+    · simp; linarith
     · have hb := fun i => abs_le.1 (abs_modelWt_le U la k τ i)
       have h1 : (⨆ i, ((AllWt.modelWt U (wtOf Dw la 0) k τ i : ℤ) : ℝ)) ≤ S := ciSup_le fun i => (hb i).2
       have h2 : -S ≤ ⨅ i, ((AllWt.modelWt U (wtOf Dw la 0) k τ i : ℤ) : ℝ) := le_ciInf fun i => (hb i).1

@@ -134,7 +134,9 @@ theorem actLev_idem (hL : ActLev (Xo := Xo) c lev) (g : G) {Z Z' : Comp Xo c}
     · rw [evR_idem hc ⟨p, φ, _, hm⟩, evR_idem ((h _ z z' hz').1 hc) ⟨p, φ, _, hz⟩]
     · rw [idem_mem_suppOn Z _ z' ((liesOff_iff Z z').2 hc),
         idem_mem_suppOn Z' _ z ((liesOff_iff Z' z).2 fun h' => hc ((h _ z z' hz').2 h'))]
-  rw [← Ideal.ker_algebraMap_residueField q.asIdeal, RingHom.mem_ker, map_sub, sub_eq_zero]
+  rw [← Ideal.ker_algebraMap_residueField q.asIdeal, RingHom.mem_ker]
+  change φ (_ - _) = 0
+  rw [map_sub, sub_eq_zero]
   exact e₁.symm.trans (e₃.trans e₂)
 
 theorem exists_move (hL : ActLev (Xo := Xo) c lev) (g : G) {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt Xo c S) :
@@ -240,7 +242,7 @@ theorem slope_eig {K V G C : Type} [Field K] [NumberField K] [_root_.NumberField
     (h₂ : ∀ Z Z' v, Z ≠ Z' → e Z (e Z' v) = 0) (h₃ : ∀ v, ∑ Z, e Z v = v)
     (h₄ : ∀ g Z v, ρ g (e Z v) = e (g • Z) (ρ g v)) (hG : HasGram Nv) (hM₀ : M₀.FG)
     (hM : ∀ v, v ∈ M ↔ v ∈ M₀ ∧ ∀ g, ρ g v = (χ g : K) • v) (hρ : ∀ g, ∀ v ∈ M₀, ρ g v ∈ M₀)
-    (hY : ∀ o σ, (Y o σ).det ≠ 0) (hL : ∀ o, Submodule.IsLattice K (L o)) (hφ : ∀ o, Function.Injective (φ o))
+    (hY : ∀ o σ, (Y o σ).det ≠ 0) (hL : ∀ o, Submodule.IsFullLattice K (L o)) (hφ : ∀ o, Function.Injective (φ o))
     (hr : ∀ o v, v ∈ LinearMap.range (φ o) ↔ e o v = v) (hφL : ∀ o, ∀ x ∈ L o, φ o x ∈ M₀)
     (hN₀ : ∀ σ v, 0 ≤ Nv σ v)
     (hN : ∀ σ v (B : ℝ), (∀ Z, ∃ (g : G) (o : C) (x : ι o → K) (u : K), Z = g • o ∧ ‖σ u‖ = 1 ∧
@@ -298,7 +300,7 @@ theorem slope_eig {K V G C : Type} [Field K] [NumberField K] [_root_.NumberField
       haveI : IsNoetherian (𝓞 K) M₀ := isNoetherian_of_fg_of_noetherian M₀ hM₀
       exact isNoetherian_submodule.1 inferInstance M hMle
     refine GlobalTheory.SumSlope.le_slope_sq_of_sum K V O (fun o => ι o) Nv M (fun o => Y o) (fun o => L o) Φ s hG hMfg
-      (fun o => hY o) (fun o => hL o) hinj hmem (fun v hv => ?_) (fun σ x => ?_) fun o => hs o
+      (fun o => hY o) (fun o => (hL o).toIsLattice) hinj hmem (fun v hv => ?_) (fun σ x => ?_) fun o => hs o
     · choose x hx using fun o : O => (hr o (e o v)).2 (h₁ o v)
       refine ⟨x, ?_⟩
       rw [hΦ']

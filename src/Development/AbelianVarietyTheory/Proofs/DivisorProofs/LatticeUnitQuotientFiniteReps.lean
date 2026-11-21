@@ -28,7 +28,8 @@ def intAd : AddSubgroup (AF F) where
     refine ⟨?_, fun w => ?_⟩
     · have e : evI F (a + b) = evI F a + evI F b := map_add (InfiniteAdeleRing.ringEquiv_mixedSpace F) a.1 b.1
       rw [e, ha.1, hb.1, add_zero]
-    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha.2 w) (hb.2 w)
+    · rw [map_add (evFin F w)]
+      exact add_mem (ha.2 w) (hb.2 w)
   zero_mem' := by
     refine ⟨?_, fun w => ?_⟩
     · show InfiniteAdeleRing.ringEquiv_mixedSpace F (0 : InfiniteAdeleRing F) = 0

@@ -152,12 +152,17 @@ theorem eq_ofU {R : Ranks} {H : Formalism.BasicNotions.Host R} (σ : HostCGu H 1
     haveI := host_isCMField H; σ = ofU (CGu.equivChar H.E σ).1 (CGu.equivChar H.E σ).2 :=
   haveI := host_isCMField H; Subtype.ext (CGu.ofChar_equivChar σ).symm
 
-theorem unr_symm (w) (x) : D.naut.unr ((T.e w).symm x) ↔ x.unr := by rw [T.unr, Equiv.apply_symm_apply]
+theorem unr_symm (w : PlE D.host) (x : WD (D.nd.plOm.2 w)) :
+    D.naut.unr ((T.e w).symm x) ↔ x.unr := by
+  rw [T.unr, Equiv.apply_symm_apply]
 
-theorem frob_symm (w) (x) (h : x.unr) : D.naut.frobEig ((T.e w).symm x) = x.frobEig := by
+theorem frob_symm (w : PlE D.host) (x : WD (D.nd.plOm.2 w)) (h : x.unr) :
+    D.naut.frobEig ((T.e w).symm x) = x.frobEig := by
   rw [T.frobEig _ _ ((unr_symm T w x).2 h), Equiv.apply_symm_apply]
 
-theorem dim_symm (w) (x) : D.naut.lpDim ((T.e w).symm x) = x.lpDim := by rw [← T.dim, Equiv.apply_symm_apply]
+theorem dim_symm (w : PlE D.host) (x : WD (D.nd.plOm.2 w)) :
+    D.naut.lpDim ((T.e w).symm x) = x.lpDim := by
+  rw [← T.dim, Equiv.apply_symm_apply]
 
 theorem ofU_spec {χ : HChar D.host.E} (h : χ.IsUnitary) {w} (hu : χ.UnrAt w) :
     D.naut.unr ((T.e w).symm (ParLaws.locG hL D.nd.plOm (ofU χ h) w)) ∧

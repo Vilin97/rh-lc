@@ -200,7 +200,7 @@ theorem elim_eq_glue {R : Type} (hd : d = d₁ + 2) (u₁ u₂ : Fin n × Fin d 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 theorem exists_plane_equiv {B : Base F E} {X : Spc F E n} {W : Spc F E d} {W₁ : Spc F E d₁} {H' : Plane E d d₁} {i₀ i₁ : ℕ}
-    (hH : H'.IsAdapted σ B W W₁ i₀ i₁) (hL : W.L.IsLattice E) (hd : d = d₁ + 2)
+    (hH : H'.IsAdapted σ B W W₁ i₀ i₁) (hL : W.L.IsFullLattice E) (hd : d = d₁ + 2)
     (co : Darboux (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J)) (Fin n × Fin d))
     (hlow : ∀ (z : Matrix (Fin n) (Fin d₁) (AE F E)) k, (co.e (z * (incM F H'.ι)ᵀ)).1 ((idx hd).symm (.inr k)) = 0)
     (hx : ∀ a : Fin n → AE F E, (co.e (Matrix.vecMulVec a (incV F H'.x))).1 = 0)

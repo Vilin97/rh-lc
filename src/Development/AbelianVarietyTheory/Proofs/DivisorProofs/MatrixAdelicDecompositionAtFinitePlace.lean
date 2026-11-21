@@ -20,14 +20,8 @@ noncomputable section
 namespace GlobalTheory.LatPtDecomp
 
 theorem exists_zsmul_mem {E : Type} [Field E] [NumberField E] {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E))
-    (hL : L.IsLattice E) (w : Fin n → E) : ∃ N : ℤ, N ≠ 0 ∧ N • w ∈ L := by
-  first
-  | exact @_root_.GlobalTheory.IntSmulMemSubmodule.exists_int_smul_mem
-  | exact _root_.GlobalTheory.IntSmulMemSubmodule.exists_int_smul_mem
-  | (apply _root_.GlobalTheory.IntSmulMemSubmodule.exists_int_smul_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.IntSmulMemSubmodule.exists_int_smul_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.IntSmulMemSubmodule.exists_int_smul_mem <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.IntSmulMemSubmodule.exists_int_smul_mem ..)
+    (hL : L.IsFullLattice E) (w : Fin n → E) : ∃ N : ℤ, N ≠ 0 ∧ N • w ∈ L := by
+  exact _root_.GlobalTheory.IntSmulMemSubmodule.exists_int_smul_mem L hL w
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
@@ -65,7 +59,7 @@ theorem atPlace_one_smul_tmul (v : Pl (F := F)) (a : AF F) (x : E) :
     GlobalTheory.EmbChart.atPlace v 1 • (a ⊗ₜ[F] x) = GlobalTheory.EmbChart.atPlace v (evFin F v a) ⊗ₜ[F] x := by
   rw [TensorProduct.smul_tmul', smul_eq_mul, GlobalTheory.EmbChart.atPlace_mul_right, one_mul]
 
-theorem core {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsLattice E) (hY : Y.L.IsLattice E) (v : Pl (F := F))
+theorem core {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsFullLattice E) (hY : Y.L.IsFullLattice E) (v : Pl (F := F))
     (i : Fin n) (j : Fin d) (t : Fv F v) (x : E) :
     ∃ X₀ : Matrix (Fin n) (Fin d) E,
       Matrix.single i j (GlobalTheory.EmbChart.atPlace v t ⊗ₜ[F] x) - GlobalTheory.EmbChart.atPlace v 1 • incM F X₀ ∈ latAtV X Y v := by
@@ -75,7 +69,8 @@ theorem core {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsLattice E) 
   obtain ⟨s, hs⟩ := exists_sub_mem v t hK
   set r := (algebraMap F (Fv F v) ((N * N' : ℤ) : F))⁻¹ * (t - algebraMap F (Fv F v) s) with hr
   refine ⟨Matrix.single i j (algebraMap F E s * x), ?_⟩
-  refine AddSubgroup.subset_closure ⟨GlobalTheory.EmbChart.atPlace v r, GlobalTheory.VacAny.at_atPlace r, ?_, _, hNx, _, hNy, ?_⟩
+  refine AddSubgroup.subset_closure ⟨GlobalTheory.EmbChart.atPlace v r, (fun u hu => by
+    rw [smul_eq_mul, mul_comm, GlobalTheory.EmbChart.atPlace_mul_right, hu, mul_zero, map_zero]), ?_, _, hNx, _, hNy, ?_⟩
   · rw [GlobalTheory.EmbChart.evFin_atPlace]; exact hs
   · have hv : Matrix.vecMulVec (N • Pi.single i x) (N' • Pi.single j (1 : E)) =
         Matrix.single i j (((N * N' : ℤ) : F) • x) := by
@@ -99,7 +94,7 @@ theorem core {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsLattice E) 
     field_simp
 
 theorem decomp : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n d : ℕ} (X : Spc F E n)
-    (Y : Spc F E d), X.L.IsLattice E → Y.L.IsLattice E → ∀ (v : Pl (F := F)) (z : Matrix (Fin n) (Fin d) (AE F E)),
+    (Y : Spc F E d), X.L.IsFullLattice E → Y.L.IsFullLattice E → ∀ (v : Pl (F := F)) (z : Matrix (Fin n) (Fin d) (AE F E)),
     At (evFin F v) z → ∃ X₀ : Matrix (Fin n) (Fin d) E, z - GlobalTheory.EmbChart.atPlace v 1 • incM F X₀ ∈ latAtV X Y v := by
   intro F E _ _ _ _ _ n d X Y hX hY v z hz
   have hz' : z = GlobalTheory.EmbChart.atPlace v 1 • z := by

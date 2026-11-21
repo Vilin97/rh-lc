@@ -1,7 +1,6 @@
 module
 
 public import Mathlib
-public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RankOneUnitary
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.CharpolySmulOfProd
 public import Formalism.LocalToGlobal.UnitaryNorms.CharUniq
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AttOfFrobMatch
@@ -43,7 +42,6 @@ namespace GlobalTheory.TripleLocal
 
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.MainNotions.BlochKatoReduction Formalism.MainNotions.BlochKatoReduction.Gen Formalism.ConjugateSelfDual ReciprocityTheory.Gal NumberField IsDedekindDomain Polynomial
 open Formalism.L2.Host Formalism.FrobeniusOrbits Neutral.B1 ReciprocityTheory.Neutral.Bridge.HCFR
-open GlobalTheory.RowTie (WDTie)
 open GlobalTheory.HeightCounting (CharSide)
 open GlobalTheory.GalOfCusp GlobalTheory.TripleGal GlobalTheory.Triple
 open GlobalTheory.TypeLeaf (FrobDense)
@@ -198,7 +196,7 @@ theorem isSSRep_of_smul {Γ K : Type} [Group Γ] [Field K] {n : ℕ} {ρ ρ' : �
 
 section Triple
 
-variable {D : D7} {T : WDTie D.nd D.naut} {C₀ C : CharFrame D} (S : CharSide D C₀)
+variable {D : D7} {C₀ C : CharFrame D} (S : CharSide D C₀)
   {art : Ideles D.host.E →* GlobalTheory.HeckeGal.Gab D.host.E D.nd.Om} {i : D.ntw.Tw} {s : D.ntw.Sig i}
   {ρ : Reading D.ntw i (D.ntw.side i s)} {σ : D.what₂.FT} {π : D.naut.CG D.R.r}
   {r : GlobalTheory.IndefiniteRowSideFullHecke.RayClassPrimeCounting.GalE D →* GL (Fin D.R.r) (Qbar (D.ntw.l i))} {ν : GlobalTheory.IndefiniteRowSideFullHecke.RayClassPrimeCounting.GalE D →* (D.ntw.O0 i)ˣ}

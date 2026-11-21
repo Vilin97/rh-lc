@@ -66,7 +66,7 @@ theorem nondeg_of_perfect {q : ℕ} [NeZero q] (χ : G →* (ZMod q)ˣ) {X N : T
     ((card_dual_le (n := q) (M := N)).trans ((Nat.card_le_card_of_injective _ h2).trans
       (card_dual_le (n := q) (M := X))))
   let e : X ≃ₗ[ZMod q] TDual (ZMod q) N := LinearEquiv.ofBijective β hbij
-  have hea : ∀ g x, e (a g x) = twDual χ rho g (e x) := fun g x => TDual.ext fun m => by
+  have hea : ∀ g x, e (a g x) = twDual χ rho g (e x) := fun g x => DFunLike.ext _ _ fun m => by
     change β (a g x) m = (χ g : ZMod q) * β x (rho g⁻¹ m)
     rw [← he, ← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]
   have hcup : ∀ (y : Z1 ((twDual χ rho).comp (MonoidHom.id G))) (x : Z1 (rho.comp (MonoidHom.id G))),

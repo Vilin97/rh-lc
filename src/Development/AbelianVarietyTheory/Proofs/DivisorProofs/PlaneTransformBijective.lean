@@ -66,7 +66,7 @@ theorem cA_bijective (σ : E →ₐ[F] E) : Function.Bijective (cA σ) := by
   exact AlgEquiv.bijective _
 
 theorem planeCoef_inv : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
-    {n n₁ i₀ i₁ : ℕ} (Y : Spc F E n) (Y₁ : Spc F E n₁) (H : Plane E n n₁), H.IsAdapted σ B Y Y₁ i₀ i₁ → Y.L.IsLattice E →
+    {n n₁ i₀ i₁ : ℕ} (Y : Spc F E n) (Y₁ : Spc F E n₁) (H : Plane E n n₁), H.IsAdapted σ B Y Y₁ i₀ i₁ → Y.L.IsFullLattice E →
     planeCoef H * planeMat H = 1 ∧ planeMat H * planeCoef H = 1 := by
   intro F E _ _ _ _ _ σ B n n₁ i₀ i₁ Y Y₁ H hH hL
   have h : n₁ + 2 = n := hH.rank.symm
@@ -82,8 +82,9 @@ theorem planeCoef_inv : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Nu
     simp [planeMat, Matrix.mulVec, dotProduct, Fintype.sum_sum_type, Fin.sum_univ_two]
     ring
   have hr : LinearMap.range Q.mulVecLin = ⊤ := by
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    apply top_le_iff.mp
+    rw [← hL.span_eq_top]
+    exact Submodule.span_le.mpr hsub
   have hQ : IsUnit Q := by
     rw [← Matrix.mulVec_surjective_iff_isUnit]
     intro v

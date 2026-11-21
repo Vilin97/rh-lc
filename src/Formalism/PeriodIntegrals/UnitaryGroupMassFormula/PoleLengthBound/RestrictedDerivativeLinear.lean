@@ -24,6 +24,7 @@ theorem restricted_derivative_linear (G : GlobalFamilyData X ka wL wF) (la : Hei
   set c := @algebraMap (Op X la G.N) (Kp X la G.N) _ _ _ r with hc
   have h1 : hasse X la G.w β ((c • x : ↥(HK X la G.w wF)) : Lw X la G.w) ∈ HK X la G.w wF := hP β _ (c • x).2
   have h2 : hasse X la G.w β (x : Lw X la G.w) ∈ HK X la G.w wF := hP β _ x.2
+  change rD G la β (c • x) = r • rD G la β x
   unfold rD
   rw [dite_eq_left h1, dite_eq_left h2]
   show _ = c • toA0K X la G.w wF ⟨_, h2⟩

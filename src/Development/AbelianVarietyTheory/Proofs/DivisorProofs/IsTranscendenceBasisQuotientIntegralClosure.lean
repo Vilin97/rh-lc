@@ -23,7 +23,7 @@ theorem isTranscendenceBasis_quotient_integralClosure
     (hy : IsTranscendenceBasis k (fun j => Ideal.Quotient.mk (Ideal.span {t}) (y j)))
     (y' : Fin m → B) (hy' : ∀ j, (y' j : K) = algebraMap F K (y j)) :
     IsTranscendenceBasis k (fun j => Ideal.Quotient.mk Q (y' j)) := by
-  haveI := hQ
+  have := hQ
   have hBK : ∀ x : K, x ∈ B ↔ IsIntegral A x := by
     intro x; rw [hB, Subalgebra.mem_restrictScalars, mem_integralClosure_iff]
   have hmem : ∀ a : A, algebraMap F K (a : F) ∈ B := fun a =>
@@ -43,8 +43,8 @@ theorem isTranscendenceBasis_quotient_integralClosure
     intro x hx
     obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
     exact Ideal.Quotient.eq_zero_iff_mem.2 ((hg a).1 hx)
-  letI : Algebra (A ⧸ Ideal.span {t}) (B ⧸ Q) := f.toAlgebra
-  haveI : IsScalarTower k (A ⧸ Ideal.span {t}) (B ⧸ Q) := by
+  let : Algebra (A ⧸ Ideal.span {t}) (B ⧸ Q) := f.toAlgebra
+  have : IsScalarTower k (A ⧸ Ideal.span {t}) (B ⧸ Q) := by
     refine IsScalarTower.of_algebraMap_eq fun c => ?_
     change Ideal.Quotient.mk Q (algebraMap k B c) = f (Ideal.Quotient.mk _ (algebraMap k A c))
     rw [hf]
@@ -53,12 +53,12 @@ theorem isTranscendenceBasis_quotient_integralClosure
     rw [hι]
     change algebraMap k K c = algebraMap F K (algebraMap k F c)
     exact IsScalarTower.algebraMap_apply k F K c
-  haveI : FaithfulSMul (A ⧸ Ideal.span {t}) (B ⧸ Q) :=
+  have : FaithfulSMul (A ⧸ Ideal.span {t}) (B ⧸ Q) :=
     (faithfulSMul_iff_algebraMap_injective _ _).2 hinj
-  haveI : NoZeroDivisors (A ⧸ Ideal.span {t}) :=
+  have : NoZeroDivisors (A ⧸ Ideal.span {t}) :=
     hinj.noZeroDivisors f (map_zero f) (map_mul f)
-  haveI : Nontrivial (A ⧸ Ideal.span {t}) := f.domain_nontrivial
-  haveI : Algebra.IsIntegral (A ⧸ Ideal.span {t}) (B ⧸ Q) := by
+  have : Nontrivial (A ⧸ Ideal.span {t}) := f.domain_nontrivial
+  have : Algebra.IsIntegral (A ⧸ Ideal.span {t}) (B ⧸ Q) := by
     constructor
     intro z
     obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective z
@@ -76,7 +76,8 @@ theorem isTranscendenceBasis_quotient_integralClosure
     rw [hfg, ← Polynomial.hom_eval₂, h0, map_zero]
   have key := hy.algebraMap_comp (A := B ⧸ Q)
   convert key using 1
-  congr 1
-  exact Subtype.ext ((hy' j).trans (hι (y j)).symm)
+  funext j
+  change Ideal.Quotient.mk Q (y' j) = Ideal.Quotient.mk Q (ι (y j))
+  exact congrArg (Ideal.Quotient.mk Q) (Subtype.ext ((hy' j).trans (hι (y j)).symm))
 
 end GlobalTheory

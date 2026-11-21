@@ -106,7 +106,9 @@ end Comb
 
 section Val
 
-variable {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))] {n : ℕ}
+local notation "Γ" => WithZero (Multiplicative ℤ)
+
+variable {L : Type} [Field L] [Valued L Γ] {n : ℕ}
 
 def MinorLe (c : Γ) (r : ℕ) (M : Matrix (Fin n) (Fin n) L) : Prop :=
   ∀ I J : Fin r → Fin n, Valued.v (M.submatrix I J).det ≤ c
@@ -260,7 +262,8 @@ theorem elemDiv_mul_minuscule : ∀ (L : Type) [Field L] [Valued L (WithZero (Mu
   have ea' : ((l₁ * a * l₂ : GL (Fin n) L) : Matrix (Fin n) (Fin n) L) = Matrix.diagonal fun i => ϖ ^ ω i := by
     rw [ea]
     congr 1
-    split_ifs <;> simp
+    funext i
+    by_cases hi : (i : ℕ) < k <;> simp [ω, hi]
   have hA : m₁ * k₁⁻¹ ∈ Formalism.UG.GLint (Fin n) (Formalism.UG.intL L) := mul_mem hm₁ (inv_mem hk₁)
   have hh : k₂⁻¹ * l₁⁻¹ ∈ Formalism.UG.GLint (Fin n) (Formalism.UG.intL L) := mul_mem (inv_mem hk₂) (inv_mem hl₁)
   have hB : l₂⁻¹ * m₂ ∈ Formalism.UG.GLint (Fin n) (Formalism.UG.intL L) := mul_mem (inv_mem hl₂) hm₂

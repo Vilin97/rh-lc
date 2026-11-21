@@ -45,7 +45,7 @@ theorem exists_ringEquiv_completion : ∀ (E L E' L' : Type) [Field E] [NumberFi
     induction hx using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | smul c a _ ha =>
       rw [Algebra.smul_def, map_mul, hjL, ← Algebra.smul_def]; exact Submodule.smul_mem _ _ ha
   have htop : Submodule.span E' (Set.range jL) = ⊤ := by
@@ -72,7 +72,7 @@ theorem exists_ringEquiv_completion : ∀ (E L E' L' : Type) [Field E] [NumberFi
       obtain ⟨x, hx, rfl⟩ := hz
       exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
     | smul c a _ ha =>
       have e : algebraMap L' (v'.adicCompletion L') (c • a) =
           (algebraMap E' (w'.adicCompletion E') c) • algebraMap L' (v'.adicCompletion L') a := by

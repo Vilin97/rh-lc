@@ -46,7 +46,7 @@ theorem planeMat_eq_frame {n n₁ : ℕ} (H : Plane E n n₁) : planeMat H = Glo
   · fin_cases t <;> rfl
 
 theorem planeMat_mul_planeCoef {σ : E →ₐ[F] E} {B : Base F E} {n n₁ i₀ i₁ : ℕ} {Y : Spc F E n} {Y₁ : Spc F E n₁}
-    {H : Plane E n n₁} (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hL : Y.L.IsLattice E) : planeMat H * planeCoef H = 1 := by
+    {H : Plane E n n₁} (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hL : Y.L.IsFullLattice E) : planeMat H * planeCoef H = 1 := by
   obtain ⟨Q, h1, -, -⟩ := GlobalTheory.ThK.Adapt.exists_frame_inv hH hL
   have hr : n₁ + 2 = n := hH.rank.symm
   have hM : (planeMat H).submatrix id (finSumFinEquiv.trans (finCongr hr)).symm *

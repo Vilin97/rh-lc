@@ -42,6 +42,8 @@ section At
 
 variable {v : HeightOneSpectrum (𝓞 F)}
 
+local notation "ev" => GlobalTheory.AdelicU.evFin F v
+
 theorem evFin_invOf_two : ev (⅟(2 : AF F)) = ⅟(2 : Fv F v) := by
   refine (invOf_eq_right_inv ?_).symm
   have h : ev (2 * ⅟(2 : AF F)) = 1 := by rw [mul_invOf_self, map_one]

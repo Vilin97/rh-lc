@@ -29,14 +29,8 @@ namespace GlobalTheory.LatOpenCpt
 open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
 
 theorem exists_zsmul_mem {E : Type} [Field E] [NumberField E] {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E))
-    (hL : L.IsLattice E) (z : Fin n → E) : ∃ m : ℤ, m ≠ 0 ∧ m • z ∈ L := by
-  first
-  | exact @_root_.GlobalTheory.IntegerMultipleMembership.exists_int_smul_mem
-  | exact _root_.GlobalTheory.IntegerMultipleMembership.exists_int_smul_mem
-  | (apply _root_.GlobalTheory.IntegerMultipleMembership.exists_int_smul_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.IntegerMultipleMembership.exists_int_smul_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.IntegerMultipleMembership.exists_int_smul_mem <;> first | assumption | infer_instance)
-  | (intros; exact _root_.GlobalTheory.IntegerMultipleMembership.exists_int_smul_mem ..)
+    (hL : L.IsFullLattice E) (z : Fin n → E) : ∃ m : ℤ, m ≠ 0 ∧ m • z ∈ L := by
+  exact _root_.GlobalTheory.IntegerMultipleMembership.exists_int_smul_mem L hL z
 
 theorem vecMulVec_mem {E : Type} [Field E] [NumberField E] {n d : ℕ} {LX : Submodule (𝓞 E) (Fin n → E)}
     {LY : Submodule (𝓞 E) (Fin d → E)} (sX : Finset LX) (hsX : Submodule.span ℤ (sX : Set LX) = ⊤) (sY : Finset LY)
@@ -94,7 +88,7 @@ theorem single_eq_vecMulVec {E : Type} [Field E] {n d : ℕ} (i : Fin n) (j : Fi
   split_ifs <;> simp_all
 
 theorem span_top {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n d : ℕ}
-    {LX : Submodule (𝓞 E) (Fin n → E)} {LY : Submodule (𝓞 E) (Fin d → E)} (hX : LX.IsLattice E) (hY : LY.IsLattice E)
+    {LX : Submodule (𝓞 E) (Fin n → E)} {LY : Submodule (𝓞 E) (Fin d → E)} (hX : LX.IsFullLattice E) (hY : LY.IsFullLattice E)
     {ι : Type} (t : ι → Matrix (Fin n) (Fin d) E)
     (ht : ∀ x ∈ LX, ∀ y ∈ LY, incM F (vecMulVec x y) ∈ Submodule.span (AF F) (Set.range fun i => incM F (t i)))
     (Z : Matrix (Fin n) (Fin d) (AE F E)) : Z ∈ Submodule.span (AF F) (Set.range fun i => incM F (t i)) := by
@@ -204,7 +198,7 @@ theorem main : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
   have hOo : IsOpen (v.adicCompletionIntegers F : Set (Fv F v)) := Valued.isOpen_valuationSubring _
   have hφc : Continuous φ := by
     rw [show (φ : (ι → Fv F v) → _) = fun f => ∑ i, f i • ρ i from rfl]
-    exact continuous_finset_sum _ fun i _ => (continuous_apply i).smul continuous_const
+    exact continuous_finsetSum _ fun i _ => (continuous_apply i).smul continuous_const
   have hset : ((Opi.map φ.toAddMonoidHom : AddSubgroup _) : Set _) =
       φ '' Set.pi Set.univ fun _ => (v.adicCompletionIntegers F : Set (Fv F v)) := by
     ext w
@@ -220,8 +214,8 @@ theorem main : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
       simp only [sec, map_add (f := _), map_sum, map_smul, hf1, hf2]
     ext k <;> simp [Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Pi.single_apply]
   have hsc : Continuous sec :=
-    (continuous_finset_sum _ fun k _ => ((continuous_apply k).comp continuous_fst).smul continuous_const).add
-      (continuous_finset_sum _ fun k _ => ((continuous_apply k).comp continuous_snd).smul continuous_const)
+    (continuous_finsetSum _ fun k _ => ((continuous_apply k).comp continuous_fst).smul continuous_const).add
+      (continuous_finsetSum _ fun k _ => ((continuous_apply k).comp continuous_snd).smul continuous_const)
   constructor
   · apply AddSubgroup.isOpen_of_mem_nhds (g := 0)
     have hU : IsOpen (sec ⁻¹' Set.pi Set.univ fun _ => (v.adicCompletionIntegers F : Set (Fv F v))) :=

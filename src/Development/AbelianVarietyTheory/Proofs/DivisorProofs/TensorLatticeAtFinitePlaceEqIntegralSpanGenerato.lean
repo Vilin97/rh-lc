@@ -69,7 +69,9 @@ theorem latAtV_param : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Num
       exact ⟨-a, by simp only [Pi.neg_apply, NegMemClass.coe_neg, map_neg, neg_smul, Finset.sum_neg_distrib]⟩
   · rintro ⟨a, rfl⟩
     refine AddSubgroup.sum_mem _ fun m _ => AddSubgroup.subset_closure ?_
-    refine ⟨_, GlobalTheory.VacAny.at_atPlace _, ?_, ex m.1, ?_, fy m.2, ?_, rfl⟩
+    refine ⟨_, ?_, ?_, ex m.1, ?_, fy m.2, ?_, rfl⟩
+    · intro u hu
+      rw [smul_eq_mul, mul_comm, GlobalTheory.EmbChart.atPlace_mul_right, hu, mul_zero, map_zero]
     · rw [GlobalTheory.EmbChart.evFin_atPlace]; exact (a m).2
     · have : ex m.1 ∈ Submodule.span ℤ (Set.range ex) := Submodule.subset_span ⟨m.1, rfl⟩
       rw [hex] at this; exact this

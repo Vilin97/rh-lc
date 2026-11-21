@@ -14,5 +14,5 @@ open ReciprocityTheory.DiscreteGroups.LocalClassField
 open scoped TensorProduct
 open scoped TensorProduct
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.adelicGroupAlgebraAction_injective : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : Link D G), Function.Injective (actOn L.rep (AfP p)) := by
-  first | (exact @GlobalTheory.LKGeo.actOn_rep_afP_injective) | (exact GlobalTheory.LKGeo.actOn_rep_afP_injective) | (intros; apply GlobalTheory.LKGeo.actOn_rep_afP_injective  <;> assumption)
+theorem _root_.GlobalTheory.T.adelicGroupAlgebraAction_injective : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L : GlobalTheory.LKGeo.Link D G), Function.Injective (GlobalTheory.LKGeo.actOn L.rep (AfP p)) := by
+  exact GlobalTheory.LKGeo.actOn_rep_afP_injective

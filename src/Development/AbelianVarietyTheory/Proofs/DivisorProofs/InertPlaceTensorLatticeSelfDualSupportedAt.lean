@@ -152,7 +152,8 @@ theorem lemD (σ : E →ₐ[F] E) (B : Base F E) {n d r s r' s' : ℕ} (X : Spc 
     rw [Algebra.smul_def ((tp k : F) * (tw k : F))⁻¹, map_inv₀, map_mul]
     rw [eq_comm, inv_mul_eq_iff_eq_mul₀ hcE]
     ring
-  refine ⟨GlobalTheory.EmbChart.atPlace v (algebraMap F (Fv F v) ((tp k * tw k : 𝓞 F) : F)⁻¹), GlobalTheory.VacAny.at_atPlace _, ?_, _,
+  refine ⟨GlobalTheory.EmbChart.atPlace v (algebraMap F (Fv F v) ((tp k * tw k : 𝓞 F) : F)⁻¹), (fun u hu => by
+      rw [smul_eq_mul, mul_comm, GlobalTheory.EmbChart.atPlace_mul_right, hu, mul_zero, map_zero]), ?_, _,
     hpX k, _, hwY k, ?_⟩
   · rw [GlobalTheory.EmbChart.evFin_atPlace]
     exact inv_mem_O hc0

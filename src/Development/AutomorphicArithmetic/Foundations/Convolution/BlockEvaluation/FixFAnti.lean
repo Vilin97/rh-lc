@@ -115,14 +115,6 @@ theorem UpperTheory.ConvolutionTheory.Ci.evVal :
     choose t ht using hB
     choose Λ hΛ using fun τ => (p1 τ).exists
     exact ⟨Λ, t, And.intro hΛ ht⟩
-  · obtain ⟨h1, h2⟩ := h
-    obtain ⟨h1', h2'⟩ := h'
-    refine ⟨funext fun τ => ?_, fun w hw => ?_⟩
-    · obtain ⟨m, -, hm⟩ := p1 τ
-      beta_reduce at hm
-      rw [hm (Λ τ) (h1 τ), hm (Λ' τ) (h1' τ)]
-    · have h3 := h2 w hw
-      obtain ⟨-, h4, -⟩ := h2 w hw
-      obtain ⟨m, -, hm⟩ := p2 w h4
-      beta_reduce at hm
-      rw [hm (t w) h3, hm (t' w) (h2' w hw)]
+  · refine ⟨funext fun τ => (p1 τ).unique (h.1 τ) (h'.1 τ), fun w hw => ?_⟩
+    have hs := h.2 w hw
+    exact (p2 w hs.2.1).unique hs (h'.2 w hw)

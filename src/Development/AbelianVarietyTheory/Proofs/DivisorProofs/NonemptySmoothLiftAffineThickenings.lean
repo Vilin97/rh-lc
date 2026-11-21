@@ -55,6 +55,18 @@ theorem exists_dp (D : Data) (U : D.X.affineOpens) :
   haveI := D.sec_smooth U
   exact GlobalTheory.T.exists_isDPMorphism_of_flat_algebra D.R (Sec D.s U.1) D.I D.κ
 
+theorem thick_hom_ext {R : Type} [CommRing R] {I : Ideal R}
+    {X : Scheme} {γ : DividedPowers I} {s : X ⟶ Sp R}
+    {T T' : Thick γ s} {f g : T ⟶ T'}
+    (h : ∀ b, f.φ b = g.φ b) : f = g := by
+  rcases f with ⟨φ, φ₀, comm, dp, pt⟩
+  rcases g with ⟨ψ, ψ₀, comm', dp', pt'⟩
+  obtain rfl : φ = ψ := AlgHom.ext h
+  obtain rfl : φ₀ = ψ₀ := RingHom.ext fun c ↦ by
+    obtain ⟨b, rfl⟩ := T.surj c
+    rw [comm, comm']
+  rfl
+
 theorem nonempty_lift : ∀ D : Data, Nonempty (Lift D) := by
   intro D
   choose δ hδ using exists_dp D
@@ -85,8 +97,8 @@ theorem nonempty_lift : ∀ D : Data, Nonempty (Lift D) := by
         rfl }
   refine ⟨{ L := { obj := fun U ↦ T U.unop
                    map := fun a ↦ m (leOfHom a.unop)
-                   map_id := fun U ↦ Thick.hom_ext fun b ↦ mp_id (OAff D.s) U b
-                   map_comp := fun a b ↦ Thick.hom_ext fun c ↦ mp_comp (OAff D.s) a b c }
+                   map_id := fun U ↦ thick_hom_ext fun b ↦ mp_id (OAff D.s) U b
+                   map_comp := fun a b ↦ thick_hom_ext fun c ↦ mp_comp (OAff D.s) a b c }
             e := fun _ ↦ AlgEquiv.refl
             nat := fun _ _ ↦ rfl
             gen := fun _ ↦ rfl

@@ -246,8 +246,8 @@ theorem exists_ring (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRin
     omega
   · rw [← hvz, ← map_pow, hl, map_one]
   · have key : (⊤ : Submodule O W) ≤ Subalgebra.toSubmodule (Algebra.adjoin O {z}) := by
-      refine Submodule.le_of_le_smul_of_le_jacobson_bot (I := maximalIdeal O) Module.Finite.fg_top
-        (maximalIdeal_le_jacobson _) fun y _ => ?_
+      refine Submodule.le_of_le_smul_of_le_jacobson (I := maximalIdeal O) Module.Finite.fg_top
+        (by simpa only [Ideal.jacobson_bot] using maximalIdeal_le_jacobson (⊥ : Ideal O)) fun y _ => ?_
       have hm : ∀ t : W, v t = 0 → t ∈ (maximalIdeal O • ⊤ : Submodule O W) := fun t ht => by
         rw [Ideal.smul_top_eq_map, Submodule.restrictScalars_mem, ← hmax, ← hker]
         exact ht
@@ -348,7 +348,7 @@ theorem exists_unramified_ext : ∀ (K : UQ) (d : ℕ), Odd d → ∃ (K' : UQ) 
         obtain rfl : x = z := hx
         exact IntermediateField.mem_adjoin_simple_self _ _
       | algebraMap r => rw [← hφ]; exact IntermediateField.algebraMap_mem _ _
-      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
       | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
     show Algebra.adjoin K.E {algebraMap W L z} = ⊤
     rw [← IntermediateField.adjoin_simple_toSubalgebra_of_isAlgebraic hint.isAlgebraic, eq_top_iff]

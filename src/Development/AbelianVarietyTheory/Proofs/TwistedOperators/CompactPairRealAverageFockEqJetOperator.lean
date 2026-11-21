@@ -267,8 +267,7 @@ theorem grid_vals {i : ℕ} (hi : i + 1 ≤ D.R.m) (τ : D.what₂.Tau)
     intro j hj
     unfold parV
     rw [entries_shift, Finset.card_image_of_injective _ (add_left_injective _)]
-    exact (GlobalTheory.FunObj.card_entries_parD D sc.cGap τ hj).trans
-      (GlobalTheory.FunObj.rank_grid G hj).symm
+    exact (card_entries_parD D sc.cGap τ hj).trans (rank_grid G hj).symm
   have cardN : ∀ j, j ≤ D.R.m →
       ((entries (parV D sc.cGap j D.R.m τ)).image Neg.neg).card = (G.V (.grid j D.R.m)).rank := by
     intro j hj

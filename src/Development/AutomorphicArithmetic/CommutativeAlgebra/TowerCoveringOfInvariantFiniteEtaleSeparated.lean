@@ -29,9 +29,9 @@ private theorem conj_mem {N : ℕ} {k u : G.GAf} (hk : k ∈ L.KN 1) (hu : u ∈
     obtain ⟨w, hw, e⟩ := hu _ (integ_of_mem (inv_mem hk) v hv)
     refine ⟨L.actG k w, integ_of_mem hk w hw, ?_⟩
     have h1 : L.actG (k * u * k⁻¹) v = L.actG k (L.actG u (L.actG k⁻¹ v)) := by
-      simp only [map_mul, Module.End.mul_apply]
+      simp only [map_mul, mul_apply_eq_comp]
     have h2 : L.actG k (L.actG k⁻¹ v) = v := by
-      rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]
+      rw [← mul_apply_eq_comp, ← map_mul, mul_inv_cancel, map_one, one_apply_eq_self]
     rw [h1, e, map_add (L.actG k), map_nsmul, h2]
   refine ⟨key _ hu.1, ?_⟩
   have : (k * u * k⁻¹)⁻¹ = k * u⁻¹ * k⁻¹ := by group
@@ -95,18 +95,20 @@ private structure Dat (X : UpperTheory.Gal.G3.Tower B Γ) (i : X.ι) (K₀ : Sub
   mem : ∀ k ∈ K₀, k ∈ X.Δ
   nrm : ∀ k ∈ K₀, ∀ u ∈ X.K i, k * u * k⁻¹ ∈ X.K i
 
-variable {X : UpperTheory.Gal.G3.Tower B Γ} {i : X.ι} {K₀ : Subgroup Γ} (d : Dat X i K₀)
+variable {X : UpperTheory.Gal.G3.Tower B Γ} {i : X.ι} {K₀ : Subgroup Γ}
 
 private def trK (d : Dat X i K₀) (x : K₀) : X.Z i ⟶ X.Z i :=
   X.tr i i x (d.mem _ x.2) (d.nrm _ x.2)
 
-private theorem trK_mul (x y : K₀) : trK d x ≫ trK d y = trK d (y * x) :=
+private theorem trK_mul (d : Dat X i K₀) (x y : K₀) : trK d x ≫ trK d y = trK d (y * x) :=
   X.tr_mul i i i x y (d.mem _ x.2) (d.nrm _ x.2) (d.mem _ y.2) (d.nrm _ y.2)
     (d.mem _ (y * x).2) (d.nrm _ (y * x).2)
 
-private theorem trK_self (x : K₀) (hx : (x : Γ) ∈ X.K i) : trK d x = 𝟙 _ := X.tr_self _ _ _ _ hx
+private theorem trK_self (d : Dat X i K₀) (x : K₀) (hx : (x : Γ) ∈ X.K i) :
+    trK d x = 𝟙 _ := X.tr_self _ _ _ _ hx
 
-private theorem trK_mk {x y : K₀} (h : (x : K₀ ⧸ (X.K i).subgroupOf K₀) = y) : trK d x = trK d y := by
+private theorem trK_mk (d : Dat X i K₀) {x y : K₀}
+    (h : (x : K₀ ⧸ (X.K i).subgroupOf K₀) = y) : trK d x = trK d y := by
   have hu : ((x⁻¹ * y : K₀) : Γ) ∈ X.K i := Subgroup.mem_subgroupOf.1 (QuotientGroup.eq.1 h)
   calc trK d x = trK d (x⁻¹ * y) ≫ trK d x := by rw [trK_self d _ hu, Category.id_comp]
     _ = trK d y := by rw [trK_mul, mul_inv_cancel_left]
@@ -116,25 +118,28 @@ variable [((X.K i).subgroupOf K₀).Normal]
 private def act (d : Dat X i K₀) (δ : K₀ ⧸ (X.K i).subgroupOf K₀) : X.Z i ⟶ X.Z i :=
   trK d (δ⁻¹).out
 
-private theorem act_mk (u : K₀) : act d (((u⁻¹ : K₀) : K₀ ⧸ (X.K i).subgroupOf K₀)) = trK d u :=
+private theorem act_mk (d : Dat X i K₀) (u : K₀) :
+    act d (((u⁻¹ : K₀) : K₀ ⧸ (X.K i).subgroupOf K₀)) = trK d u :=
   trK_mk d (by rw [QuotientGroup.out_eq', ← QuotientGroup.mk_inv, inv_inv])
 
-private theorem act_one : act d 1 = 𝟙 _ := by
+private theorem act_one (d : Dat X i K₀) : act d 1 = 𝟙 _ := by
   have h := act_mk d (1 : K₀)
   rw [inv_one, QuotientGroup.mk_one] at h
   rw [h]
   exact trK_self d _ (one_mem _)
 
-private theorem act_mul (g h : K₀ ⧸ (X.K i).subgroupOf K₀) : act d (g * h) = act d g ≫ act d h := by
+private theorem act_mul (d : Dat X i K₀) (g h : K₀ ⧸ (X.K i).subgroupOf K₀) :
+    act d (g * h) = act d g ≫ act d h := by
   rw [act, act, act, trK_mul]
   refine trK_mk d ?_
   rw [QuotientGroup.out_eq', QuotientGroup.mk_mul, QuotientGroup.out_eq', QuotientGroup.out_eq', mul_inv_rev]
 
-private theorem act_q (δ : K₀ ⧸ (X.K i).subgroupOf K₀) : act d δ ≫ X.q i = X.q i :=
+private theorem act_q (d : Dat X i K₀) (δ : K₀ ⧸ (X.K i).subgroupOf K₀) :
+    act d δ ≫ X.q i = X.q i :=
   let x := (δ⁻¹).out
   X.tr_q i i x (d.mem _ x.2) (d.nrm _ x.2)
 
-private theorem act_inj {j : X.ι} (hj : K₀ ≤ X.K j) (Ω : Type) [Field Ω] [IsAlgClosed Ω]
+private theorem act_inj (d : Dat X i K₀) {j : X.ι} (hj : K₀ ≤ X.K j) (Ω : Type) [Field Ω] [IsAlgClosed Ω]
     (z : UpperTheory.Gal.G3.sp Ω ⟶ X.Z i) (δ δ' : K₀ ⧸ (X.K i).subgroupOf K₀) (h : z ≫ act d δ = z ≫ act d δ') : δ = δ' := by
   have h' : z ≫ trK d (δ⁻¹).out = z ≫ trK d (δ'⁻¹).out := h
   set x := (δ⁻¹).out with hx
@@ -149,8 +154,8 @@ private theorem act_inj {j : X.ι} (hj : K₀ ≤ X.K j) (Ω : Type) [Field Ω] 
   exact inv_injective hq
 
 omit [((X.K i).subgroupOf K₀).Normal] in
-include d in
-private theorem fin_quot {j : X.ι} (hj : K₀ ≤ X.K j) : Finite (K₀ ⧸ (X.K i).subgroupOf K₀) := by
+private theorem fin_quot (d : Dat X i K₀) {j : X.ι} (hj : K₀ ≤ X.K j) :
+    Finite (K₀ ⧸ (X.K i).subgroupOf K₀) := by
   have h := X.idx i j
   rw [← Subgroup.relIndex_mul_relIndex _ _ _ d.le hj] at h
   have : ((X.K i).subgroupOf K₀).FiniteIndex := ⟨left_ne_zero_of_mul h⟩
@@ -252,8 +257,8 @@ theorem UpperTheory.tower_covering_of_invariant_finiteEtale_separated :
         rw [T.K_eq] at hu ⊢
         simpa using KN_anti (g j).dvd hu
       have hs : Sigma.ι (fun _ : (g j).I => T.X.Z (T.lev (g j).M)) c ≫ (T.tower N g).s j =
-          T.X.tr _ _ 1 (one_mem _) hb := Sigma.ι_desc _ c
-      refine (Sigma.ι_desc _ c).trans ?_
+          T.X.tr _ _ 1 (one_mem _) hb := Sigma.ι_comp_desc _ c
+      refine (Sigma.ι_comp_desc _ c).trans ?_
       refine (tr_step T.X hM' hh (hmem _) _ _ (one_mem _) hb (hd.mem _ (δ⁻¹).out.2) (hd.nrm _ (δ⁻¹).out.2)).trans ?_
       exact (congrArg (· ≫ act hd δ) hs).symm.trans (Category.assoc _ _ _)
   have hspl := hSplit (T.X.Z (T.lev N)) _ (pullback.lift (S.pi T C) (T.X.q (T.lev N)) e)

@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import GroundTheory.AutomorphicForms.TraceClass
 public import GroundTheory.AutomorphicForms.CuspidalDiscreteness
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.ExistsLintegralConstantTermL2SqLe
 public import GroundTheory.AutomorphicForms.L2LocalComponents.Summand
 public import GroundTheory.AutomorphicForms.GKModules.Casimir
 

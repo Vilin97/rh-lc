@@ -61,8 +61,8 @@ theorem FlagModelJoinLeftAlt.proof (hVert : JoinVerticalDivisor.Statement)
       hG.rename_isHomogeneous.mul hQ.rename_isHomogeneous
     rwa [show c + (d + 1 - c) = d + 1 by omega] at h
   unfold FlagModel.value
-  rw [hNum O Ω K ι x F.K' F.ι' F.z K₂ ι₂ w d F.model hZ (hfn.trans F.birat.symm) I I₁ hI hI₁ (N + r)
-    _ _ _ _ hvert _ hH]
+  refine (hNum O Ω K ι x F.K' F.ι' F.z K₂ ι₂ w d F.model hZ
+    (hfn.trans F.birat.symm) I I₁ hI hI₁ (N + r) _ _ _ _ hvert _ hH).trans ?_
   congr 1 <;> funext i <;> refine Fin.addCases (fun j => ?_) (fun j => ?_) i <;>
     simp [hdeg, hdeg', hf, hg, assocDeg_pullDeg, assocVar_comp_liftVar]
 

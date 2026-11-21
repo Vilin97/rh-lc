@@ -14,6 +14,9 @@ namespace UpperTheory.ConvolutionTheory.R2.G.similitudePositivity
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (D : Dat F E)
 
+local notation "ι" => AdeleBaseChange.adeleMap F E
+local notation "BB" => AdeleBaseChange.adeleBasis (K := F) (L := E) (Dat.b D)
+
 private theorem basis0 : BB 0 = 1 := by
   rw [AdeleBaseChange.adeleBasis_apply, D.b0, map_one]
 
@@ -59,11 +62,9 @@ private theorem norm_mkE (u t : A F) :
 variable [IsTotallyReal F]
 
 private theorem pInf_δ (v : InfinitePlace F) : TR.pInf F (rt D.δ) v < 0 := by
-  have h := D.neg (InfinitePlace.embedding_of_isReal (IsTotallyReal.isReal v))
-  have e : TR.pInf F (rt D.δ) v = InfinitePlace.embedding_of_isReal (IsTotallyReal.isReal v) D.δ :=
-    InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe (IsTotallyReal.isReal v) (WithAbs.toAbs _ D.δ)
-  rw [e]
-  exact h
+  change InfinitePlace.Completion.ringEquivRealOfIsReal (IsTotallyReal.isReal v)
+    (algebraMap F (InfiniteAdeleRing F) D.δ v) < 0
+  simpa using D.neg (InfinitePlace.embedding_of_isReal (IsTotallyReal.isReal v))
 
 include D in
 private theorem nu_pos (h : GL (Fin 2) (A E)) (v : InfinitePlace F) :

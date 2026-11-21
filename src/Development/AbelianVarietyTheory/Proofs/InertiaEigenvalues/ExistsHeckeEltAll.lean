@@ -55,7 +55,7 @@ theorem exists_heckeElt_all {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks 
     have : Formalism.L2.Col.cO D.host.E a = a' := RingOfIntegers.ext e.symm
     rwa [this]
   obtain ⟨e, he⟩ := GlobalTheory.MovedIdem.exists_isIdemAt P hso.1
-  obtain ⟨ϖ, h1, h2⟩ := SetLike.exists_of_lt (Ideal.pow_lt_self P.asIdeal P.ne_bot P.isPrime.ne_top 2 le_rfl)
+  obtain ⟨ϖ, h1, h2⟩ := IsConcreteLE.exists_of_lt (Ideal.pow_lt_self P.asIdeal P.ne_bot P.isPrime.ne_top 2 le_rfl)
   obtain ⟨-, hrep, hel⟩ := GlobalTheory.SplitPlace.split_local (Wc D i) P e he
   obtain ⟨α, hα⟩ := (hel ϖ h1 h2).1 k (hk.trans (r_le_rank_Wc i))
   obtain ⟨Lp, hLp, -, hs, hK⟩ := loc_package hβ (L := R.datWp i R.triv) ⟨hso.1, hN, hoff⟩ he
@@ -145,7 +145,7 @@ theorem hkFR_bsup (i : D.ntw.Tw) (j : ℕ) (b : Bool) (hL : ℕ → PlE D.host �
     rw [← e4, ← key] at this
     exact this
   · simp
-  · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
   · intro a x _ hx
     change hkFR S i j b hL hs k P (algebraMap (D.ntw.O i) (FractionRing (D.ntw.O i)) a • x) ∈ Bsup S i j b
     rw [map_smul]

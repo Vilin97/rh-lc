@@ -179,7 +179,7 @@ private theorem posK {K : Type} [Field K] [NumberField K] (μ₂ : Measure (G1 K
     rw [← Complex.ofReal_re (∫ m₁, ∫ m₂, ‖f (lv m₁ m₂ 0 * x)‖ ^ 2 ∂fd μ₂ ∂fd μ₂)]
     simp only [pm, ← integral_complex_ofReal, Complex.conj_mul', Complex.ofReal_pow]
   rw [← RCLike.re_to_complex, ← integral_re (intK μ₂ κ hf hf)]
-  refine Continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero (f := fun k : KG K (2 + 2) => (pm μ₂ f f k k).re)
+  refine Continuous.integral_pos_of_hasCompactSupport_nonneg_ne_zero (f := fun k : KG K (2 + 2) => (pm μ₂ f f k k).re)
     (Complex.continuous_re.comp (contK μ₂ hf hf))
     (HasCompactSupport.of_compactSpace _) (fun x => ?_) (x := ⟨k, hkK⟩) (ne_of_gt ?_)
   · exact (integral_nonneg fun _ => integral_nonneg fun _ => sq_nonneg _).trans_eq (hre x).symm

@@ -164,7 +164,7 @@ theorem exists_cls (hQ : Q = ∅) (hs : ∀ P ∈ uSG SG ∅, conjPrime₂ P ∉
         IsPtOf hc ((R.y c).1 * x.1) ((stp Λ Θ pref).act c.1 κ ((stp Λ Θ pref).rep c)).1.1 →
         ((L.chi x : ℂˣ) : ℂ) = σ (((stp Λ Θ pref).chr c.1 κ : X.Kˣ) : X.K)) ∧
       (∀ c s, (R.stabI c s).1 = (stp Λ Θ pref).gam c.1 s.1) ∧
-      ∀ c (s : (stp Λ Θ pref).Stab c) (κ : L.U), (R.y c).1 = bc (inclE (F := X.F) (E := X.E) (AfE X.F X.E)) (R.stabI c s).1 * (R.y c).1 * κ.1 →
+      ∀ c (s : (stp Λ Θ pref).Stab c) (κ : L.U), (R.y c).1 = bc (iA X.F X.E) (R.stabI c s).1 * (R.y c).1 * κ.1 →
         ((L.chi κ : ℂˣ) : ℂ) = σ (((stp Λ Θ pref).chr c.1 s.1 : X.Kˣ) : X.K) := by
   classical
   subst hQ hJ hb
@@ -179,7 +179,7 @@ theorem exists_cls (hQ : Q = ∅) (hs : ∀ P ∈ uSG SG ∅, conjPrime₂ P ∉
     fun c q g₀ h => StepZero.exists_lift pref (fun _ => rfl) (fun _ => rfl) hΘ c.1 _ q g₀ h
   have orb : ∀ c (x : GL (Fin n) (AfE X.F X.E)) (hx : x ∈ UAd hc n) (κ : (stp Λ Θ pref).G c.1),
       decoOf ∅ SG x = ((stp Λ Θ pref).act c.1 κ ((stp Λ Θ pref).rep c)).1.1.deco →
-      ∃ k : levU hc n ∅ SG Λ.grp, Formalism.L2.Col.levRed hc n ∅ SG Λ.grp k = κ.2.1 ∧ x = bc (inclE (F := X.F) (E := X.E) (AfE X.F X.E)) (ufGL X.E n κ.1) * y c * k.1⁻¹ := by
+      ∃ k : levU hc n ∅ SG Λ.grp, Formalism.L2.Col.levRed hc n ∅ SG Λ.grp k = κ.2.1 ∧ x = bc (iA X.F X.E) (ufGL X.E n κ.1) * y c * k.1⁻¹ := by
     intro c x hx κ h
     obtain ⟨γ, k, h1, h2, h3⟩ := rlc_rel_of_orbit hc n ∅ SG Λ.grp (x := ⟨x, hx⟩) (y := Y c) (κ.1, κ.2.1)
       (by rw [h, hd]; exact StepZero.deco_smul pref (fun _ => rfl) c.1 κ _)
@@ -233,14 +233,14 @@ theorem exists_cls (hQ : Q = ∅) (hs : ∀ P ∈ uSG SG ∅, conjPrime₂ P ∉
       have e' : ufGL X.E n s.1.1 = γ := congrArg Subtype.val e
       rw [e'] at h2
       show y c * k.1 * (y c)⁻¹ = _
-      have h3 : y c = bc (inclE (F := X.F) (E := X.E) (AfE X.F X.E)) γ * y c * k.1⁻¹ := h2
+      have h3 : y c = bc (iA X.F X.E) γ * y c * k.1⁻¹ := h2
       rw [mul_inv_eq_iff_eq_mul, ← eq_mul_inv_iff_mul_eq]
       exact h3
     · rintro ⟨k, hk, e⟩
-      have e' : y c * k * (y c)⁻¹ = bc (inclE (F := X.F) (E := X.E) (AfE X.F X.E)) γ := e
+      have e' : y c * k * (y c)⁻¹ = bc (iA X.F X.E) γ := e
       have h1 := sm ⟨γ, hγ⟩ ⟨k, hk⟩ (Y c)
       have h2 : bc (iA X.F X.E) γ * (Y c).1 * k⁻¹ = (Y c).1 := by
-        show bc (inclE (F := X.F) (E := X.E) (AfE X.F X.E)) γ * y c * k⁻¹ = y c
+        show bc (iA X.F X.E) γ * y c * k⁻¹ = y c
         rw [← e']
         group
       rw [show bc (iA X.F X.E) ((⟨γ, hγ⟩ : URat hc n) : GL (Fin n) X.E) * (Y c).1 *

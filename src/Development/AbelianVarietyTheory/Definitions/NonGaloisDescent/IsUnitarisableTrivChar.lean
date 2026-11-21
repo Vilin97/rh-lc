@@ -49,10 +49,4 @@ def BcSpeh : Prop :=
         (∀ i w, IsUnitarisable (ρ i w).ρ ∧ IsUnitarisable (σ i w).ρ ∧ GlobalTheory.LocGL.IsSpeh (GlobalTheory.LocGL.IrrGL.of (ρ i w).ρ (ρ i w).smooth (ρ i w).irred) (d i) (σ i w).ρ) ∧
         ∀ w, IsSplitAt w → IsCompAlong π (locU n w) ((cLoc w).comp (locU n w).subtype) (locProd h w (σ · w))
 
-section Trivial
-
-open GlobalTheory.PRep GlobalTheory.UnitaryBC.Model
-
-end Trivial
-
 end GlobalTheory.BcSpeh

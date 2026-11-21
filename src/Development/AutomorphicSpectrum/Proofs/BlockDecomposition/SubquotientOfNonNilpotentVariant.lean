@@ -1,7 +1,7 @@
 module
 
 public import Mathlib
-public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.SubOfEig
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.SubOfNonNil
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HkMemFixed
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SubquotientOfNonNilpotent
 public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.NontrivialOfIrreducible
@@ -55,12 +55,5 @@ theorem exists_iterate_eq_zero_of_subquot {V U : Type} [AddCommGroup V] [Module 
       exact (Submodule.Quotient.mk_eq_zero (T.toSubmodule.comap S.toSubmodule.subtype)).1 h2
     rw [Function.iterate_succ_apply]
     exact hr _ h3 (GlobalTheory.CompanionTheory.HeckeFix.hk_mem_fixed F ι K e hE U ρ u hufix).1
-
-theorem subOfNonNil_of_subquot : ∀ (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] (ι : Type) [Fintype ι] [DecidableEq ι], SubOfNonNil' F ι := by
-  intro F _ _ _ _ ι _ _ K e hE V _ _ π _ _ U _ _ ρ hρ hfl hkill hnil
-  by_contra hns
-  obtain ⟨r, hr⟩ := exists_iterate_eq_zero_of_subquot hE π ρ hρ hfl hkill hns ⊤
-  obtain ⟨u, hu, hne⟩ := hnil r
-  exact hne (hr u trivial hu)
 
 end GlobalTheory.CompanionTheory.HeckeSub

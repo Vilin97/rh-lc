@@ -46,7 +46,7 @@ theorem exists_algHom_factor (E A : Type) [Field E] [CommRing A] [Algebra E A] [
     induction ha using Submodule.span_induction with
     | mem x hx => exact hgen x hx
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact Subalgebra.smul_mem _ hx c
   refine ⟨(AlgEquiv.ofInjective j hj).symm.toAlgHom.comp (φ.codRestrict j.range hall), fun a => ?_⟩
   exact (congrArg Subtype.val ((AlgEquiv.ofInjective j hj).apply_symm_apply ⟨φ a, hall a⟩)).symm
@@ -59,7 +59,7 @@ theorem exists_point_factor (E : Type) [Field E] {Z : Scheme.{0}} (f : Z ⟶ Sp 
   have : IsAffine Z := isAffine_of_isAffineHom f
   obtain ⟨g, hg⟩ := Spec.map_surjective (R := CommRingCat.of E) (Z.isoSpec.inv ≫ f)
   have hfin : g.hom.Finite := (IsFinite.SpecMap_iff g).1 (hg ▸ inferInstance)
-  letI : Algebra E Γ(Z, ⊤) := g.hom.toAlgebra
+  let : Algebra E Γ(Z, ⊤) := g.hom.toAlgebra
   have : Module.Finite E Γ(Z, ⊤) := hfin
   obtain ⟨p, hp⟩ := exists_algHom_factor E Γ(Z, ⊤)
   refine ⟨p, fun Ω _ _ _ _ z hz => ?_⟩

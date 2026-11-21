@@ -36,13 +36,13 @@ namespace Bl.general_b_fact_third''''
 theorem goal1 :
   ∀ {E : Type} [inst : Field.{0} E] [inst_1 : NumberField.{0} E] [inst_2 : StarRing.{0} E] (S : Formalism.BasicNotions.HSpace E)
   (Λ : Submodule.{0, 0} (NumberField.RingOfIntegers.{0} E) S.V),
-  Submodule.IsLattice.{0, 0, 0} E Λ →
+  Submodule.IsFullLattice.{0, 0, 0} E Λ →
     ∀ (x : S.V),
       Exists.{1} fun (a : NumberField.RingOfIntegers.{0} E) ↦
         And (Ne.{1} a 0) (Membership.mem.{0, 0} Λ (HSMul.hSMul.{0, 0, 0} a x)) := by
   intro E _ _ _ S Λ hL x
   have hx : x ∈ Submodule.span E (Λ : Set S.V) := by
-    rw [hL.2]; exact Submodule.mem_top
+    rw [hL.span_eq_top]; exact Submodule.mem_top
   induction hx using Submodule.span_induction with
   | mem y hy => exact ⟨1, one_ne_zero, by rw [one_smul]; exact hy⟩
   | zero => exact ⟨1, one_ne_zero, by rw [smul_zero]; exact Λ.zero_mem⟩

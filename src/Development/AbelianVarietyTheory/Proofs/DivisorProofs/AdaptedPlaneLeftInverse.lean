@@ -43,7 +43,9 @@ theorem exists_leftInv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     (d d₁ r' s' i₀ i₁ : ℕ) (W : Spc F E d) (W₁ : Spc F E d₁) (H' : Plane E d d₁), W.IsSkew σ B r' s' →
     H'.IsAdapted σ B W W₁ i₀ i₁ → ∃ L : Matrix (Fin d₁) (Fin d) E, L * H'.ι = 1 := by
   intro F E _ _ _ _ _ σ B d d₁ r' s' i₀ i₁ W W₁ H' hW hH
-  refine exists_leftInv_of_span hH.rank H'.ι H'.x H'.y (W.L : Set (Fin d → E)) hW.lat.span_eq_top ?_
+  letI : W.L.IsFullLattice E := hW.lat
+  refine exists_leftInv_of_span hH.rank H'.ι H'.x H'.y (W.L : Set (Fin d → E))
+    Submodule.IsFullLattice.span_eq_top ?_
   intro z hz
   obtain ⟨s, t, u, -, -, -, hz'⟩ := hH.split z hz
   exact ⟨s, t, u, hz'⟩

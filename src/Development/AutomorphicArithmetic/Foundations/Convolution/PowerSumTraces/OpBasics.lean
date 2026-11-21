@@ -14,11 +14,13 @@ private theorem compact_of_restrict {H : Type*} [NormedAddCommGroup H] [InnerPro
   have hmem : ∀ v, prj W v ∈ W := fun v => by
     have h1 : prj W v ∈ W.topologicalClosure := W.topologicalClosure.starProjection_apply_mem v
     rwa [hW.submodule_topologicalClosure_eq] at h1
-  have e : A ∘L prj W = W.subtypeL ∘L (T ∘L (prj W).codRestrict W hmem) := by
-    rw [← ContinuousLinearMap.comp_assoc, h]
-    rfl
+  let P := (prj W).codRestrict W hmem
+  have hP : W.subtypeL ∘L P = prj W :=
+    ContinuousLinearMap.subtypeL_comp_codRestrict _ _ _
+  have e : A ∘L prj W = (W.subtypeL ∘L T) ∘L P := by
+    rw [h, ContinuousLinearMap.comp_assoc, hP]
   rw [e]
-  exact (hT.comp_clm ((prj W).codRestrict W hmem)).clm_comp W.subtypeL
+  exact (hT.clm_comp W.subtypeL).comp_clm P
 
 theorem UpperTheory.ConvolutionTheory.C.opBasics :
     UpperTheory.ConvolutionTheory.C.OpBasics := by

@@ -50,7 +50,7 @@ theorem polyChartHom_range :
     | C a =>
       rw [polyChartHom_C]
       exact Algebra.subset_adjoin (Or.inl ⟨a, a.2, rfl⟩)
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add]; exact add_mem hp hq
     | mul_X p v hp =>
       rw [map_mul, polyChartHom_X]
       exact mul_mem hp (Algebra.subset_adjoin (Or.inr ⟨v, rfl⟩))

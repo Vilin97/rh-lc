@@ -132,7 +132,16 @@ theorem kapF_of_rule4 : ∀ κ : Rule, Rule4 κ → KapF κ := by
         _ ≤ 3 ^ j := Nat.pow_le_pow_right (by norm_num) (le_max_right _ _)
     nlinarith
 
-  obtain ⟨vB, r, bX, σ, y', gm₀, gm, hy', hAd, hT⟩ := GlobalTheory.T.exists_adaptedLieBasis_torusExtensionModel V hcomp D x.P G hSA U C hCE N ν hInt
+  have hAdapt : ∃ (vB : Fin D.toPre.P.g → (epsR V ⟶ D.toPre.P.A))
+      (r : ℕ) (bX : Module.Basis (Fin r) ℤ N.X)
+      (σ : Fin x.P.g ≃ Fin D.toPre.P.g ⊕ Fin r)
+      (y' : Fin x.P.g → (epsR V ⟶ G)) (gm₀ : Fin x.P.g → GtPt D.toPre (epsR V))
+      (gm : Fin x.P.g → GtPt D.toPre (TE V C)),
+      IsLieBasis y' ∧ Adapted ν vB bX σ gm ∧ ∀ j,
+        TanRel U.toUnifPre (y' j) (gm₀ j) ∧ GtTan (gm₀ j) ∧
+          GtPt.IsPull (spMap (dualMap (toF V C))) (gm₀ j) (gm j) :=
+    GlobalTheory.T.exists_adaptedLieBasis_torusExtensionModel V hcomp D x.P G hSA U C hCE N ν hInt
+  obtain ⟨vB, r, bX, σ, y', gm₀, gm, hy', hAd, hT⟩ := hAdapt
   have hvec := fun j => GlobalTheory.T.existsUnique_genericFibreDualNumberPoint_of_model V hcomp D x.P G hSA U C (y' j)
   choose yA hyA _ using fun j => (hvec j).1
   choose v' hv'o _ using fun j => (hvec j).2.1
@@ -223,13 +232,14 @@ theorem kapF_of_rule4 : ∀ κ : Rule, Rule4 κ → KapF κ := by
     fun a j α => (jc ν (s' a) (gm j) α).snd / ν.rg ^ (m ^ 2) with hbb
   have hSa : ∀ a, c⁻¹ * Sf a j₁ = ∑' α, aa a α := fun a => by
     rw [hSf, ← tsum_mul_left]
-    congr 1
-    ring
+    apply tsum_congr
+    intro α
+    simp [haa, hs', jc_smul, TrivSqZeroExt.fst_mul, mul_div_assoc]
   have hSb : ∀ a j, c⁻¹ * Ss a j = ∑' α, bb a j α := fun a j => by
     rw [hSs, ← tsum_mul_left]
-    congr 1
-    simp
-    ring
+    apply tsum_congr
+    intro α
+    simp [hbb, hs', jc_smul, TrivSqZeroExt.snd_mul, mul_div_assoc]
   have hJ3 : ThJet x'' hgC m (levelPoint lev hgC) (fun i => ∑' α, aa i α) (fun i j => ∑' α, bb i j α) := by
     have e1 : (fun i => ∑' α, aa i α) = fun i => c⁻¹ * Sf i j₁ := funext fun i => (hSa i).symm
     have e2 : (fun i j => ∑' α, bb i j α) = fun i j => c⁻¹ * Ss i j := funext fun i => funext fun j => (hSb i j).symm

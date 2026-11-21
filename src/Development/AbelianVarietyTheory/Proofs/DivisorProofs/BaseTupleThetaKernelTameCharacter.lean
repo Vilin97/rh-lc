@@ -55,7 +55,9 @@ theorem kerDat_of_isBaseKernel : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (
         have h15 : 15 ∣ Formalism.EigenvalueLevelCeiling.plc v ^ a := by
           refine (hD.ine PP hover _).1 fun x hx => ?_
           have h1 := hu x hx
-          rw [Formalism.L2.Host.HChar.loc_mul] at h1
+          have loc_mul (a b : Formalism.L2.Host.HChar D.host.E) :
+              (a * b).loc PP x = a.loc PP x * b.loc PP x := rfl
+          rw [loc_mul] at h1
           have h2 : ψ.loc PP x ^ (Formalism.EigenvalueLevelCeiling.plc v ^ a) = 1 := by
             have h3 := congrArg (fun χ' : Formalism.L2.Host.HChar D.host.E => χ'.loc PP x) ha
             exact h3

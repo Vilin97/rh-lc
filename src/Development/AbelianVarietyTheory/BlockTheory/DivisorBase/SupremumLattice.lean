@@ -22,7 +22,7 @@ def supIn : Submodule (𝓞 K) R := (latOf C Vs hV).map (C.subtype.restrictScala
 
 theorem supIn_full_iff :
     ((supIn C Vs hV).FG ∧ Submodule.span K (supIn C Vs hV : Set R) = C) ↔
-      Submodule.IsLattice K (latOf C Vs hV) := by
+      Submodule.IsFullLattice K (latOf C Vs hV) := by
   have h1 : (supIn C Vs hV).FG ↔ (latOf C Vs hV).FG :=
     ⟨Submodule.fg_of_fg_map_injective (C.subtype.restrictScalars (𝓞 K)) C.injective_subtype, fun h => h.map _⟩
   have h2 : Submodule.span K (supIn C Vs hV : Set R) =
@@ -31,10 +31,10 @@ theorem supIn_full_iff :
   rw [h1, h2]
   constructor
   · rintro ⟨a, b⟩
-    refine ⟨a, Submodule.map_injective_of_injective C.injective_subtype ?_⟩
+    refine ⟨Submodule.IsLattice.of_fg K a, Submodule.map_injective_of_injective C.injective_subtype ?_⟩
     rw [b, Submodule.map_subtype_top]
   · intro h
-    exact ⟨h.fg, by rw [h.span_eq_top, Submodule.map_subtype_top]⟩
+    exact ⟨h.fg, by rw [Submodule.IsFullLattice.span_eq_top (self := h), Submodule.map_subtype_top]⟩
 
 end Ambient
 

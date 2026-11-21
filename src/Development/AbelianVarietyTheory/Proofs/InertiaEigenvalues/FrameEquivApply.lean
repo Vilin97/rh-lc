@@ -80,7 +80,7 @@ theorem weight_match (hFm : ∀ x, Fm x ∈ Bridge.AdForms ι ρ J χ) (hread : 
       exact Submodule.subset_span ⟨g * h, (hA x₀).1.1 g h⟩
     · simp
     · intro a b _ _ ha hb
-      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+      rw [map_add]; exact add_mem ha hb
     · intro c a _ ha
       rw [map_smul]; exact Submodule.smul_mem _ c ha⟩
   have hU : U = ⊤ := by

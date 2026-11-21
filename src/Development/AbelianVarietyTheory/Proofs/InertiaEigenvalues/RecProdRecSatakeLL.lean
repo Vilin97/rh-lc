@@ -59,16 +59,3 @@ theorem rec_hasSatGL (H : IsRec h rc) {n : ℕ} (σ : SmIrr (GL (Fin n) (w.adicC
 end Core2
 
 end GlobalTheory.RecLaws
-
-namespace GlobalTheory.RecLaws
-
-section Record
-
-variable {R : Ranks} {H : Host R} {what₂ : Rows.Data R} {N : NData R H what₂} {A : NAut N}
-
-variable (T : GlobalTheory.RowTie.WDTie N A)
-  {rec : ∀ w : PlE H, IrrGL (k := w.adicCompletion H.E) → WD (E := H.E) (A := N.plOm.1 w) (w := w) (N.plOm.2 w)}
-
-end Record
-
-end GlobalTheory.RecLaws

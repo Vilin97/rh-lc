@@ -1,5 +1,6 @@
 module
 
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.BlockSplitAll
 public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.BlockCharIntegral
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CohomologicalCsdTempered
 public import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CuspidalGaloisUnramified

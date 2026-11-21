@@ -60,11 +60,11 @@ theorem descConn_xiExt (P : PhiMod O K l e a ι) (i : ℕ) (w : Vec K a ι) :
   induction i generalizing w with
   | zero => simp [descN]
   | succ i ih =>
-    rw [descPochhammer_succ_right, map_mul, Module.End.mul_apply, map_sub, Polynomial.aeval_X, map_natCast,
+    rw [descPochhammer_succ_right, map_mul, mul_apply_eq_comp, map_sub, Polynomial.aeval_X, map_natCast,
       LinearMap.sub_apply, Module.End.natCast_apply, PhiMod.conn_xiExt, ← map_nsmul, ← map_sub, ih]
     congr 1
     funext τ j
-    simp only [descN, descPochhammer_succ_right, map_mul, Module.End.mul_apply, map_sub, Polynomial.aeval_X,
+    simp only [descN, descPochhammer_succ_right, map_mul, mul_apply_eq_comp, map_sub, Polynomial.aeval_X,
       map_natCast, LinearMap.sub_apply, Module.End.natCast_apply, Pi.sub_apply, Pi.smul_apply]
     rfl
 
@@ -75,14 +75,14 @@ theorem aeval_descPochhammer_mem {V R : Type} [AddCommGroup V] [Module K V] [Com
   | zero => intro m hm; simpa using hm
   | succ n ih =>
     intro m hm
-    rw [descPochhammer_succ_right, map_mul, Module.End.mul_apply, map_sub, Polynomial.aeval_X, map_natCast,
+    rw [descPochhammer_succ_right, map_mul, mul_apply_eq_comp, map_sub, Polynomial.aeval_X, map_natCast,
       LinearMap.sub_apply, Module.End.natCast_apply]
     exact ih _ (sub_mem (hφ m hm) (nsmul_mem hm n))
 
 theorem descConn_mem (P : PhiMod O K l e a ι) (hP : ∀ m ∈ P.MM, P.conn m ∈ P.MM) {v : Vec K a ι} {c : ℕ}
     (hv : (l : K) ^ c • P.conn v ∈ P.MM) (i : ℕ) :
     (l : K) ^ c • Polynomial.aeval P.conn (descPochhammer K (i + 1)) v ∈ P.MM := by
-  rw [descPochhammer_succ_left, mul_comm, map_mul, Module.End.mul_apply, Polynomial.aeval_X, ← LinearMap.map_smul,
+  rw [descPochhammer_succ_left, mul_comm, map_mul, mul_apply_eq_comp, Polynomial.aeval_X, ← LinearMap.map_smul,
     Polynomial.aeval_comp, map_sub, Polynomial.aeval_X, map_one]
   exact aeval_descPochhammer_mem P.MM (P.conn - 1) (fun m hm => sub_mem (hP m hm) hm) i _ hv
 
@@ -297,6 +297,7 @@ theorem lpow_galDiff_eq_jB_toOB : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZe
       R.jB ((l ^ (n₁ + n₂)) • fun i => toOB l O (z i)) := (map_nsmul _ _ _).symm
   rw [eL, eR]
   congr 1
-  linear_combination key k
+  ext k
+  simpa only [Pi.smul_apply, Finset.sum_apply, smul_eq_mul, nsmul_eq_mul, Nat.cast_mul, Nat.cast_pow] using key k
 
 end GlobalTheory.GalTaylor

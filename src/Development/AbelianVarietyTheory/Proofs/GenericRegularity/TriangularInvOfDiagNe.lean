@@ -72,6 +72,8 @@ theorem frBor_of_tie : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
       (y.u τ) (fun j => (b τ)⁻¹ j i) (zu τ i) (fun j => hΛ τ j)).mpr ?_
     have hv := (GlobalTheory.T.modelChartLift_coords_generator_indep E H Dw l Xo c O β Y M L f y.x Λ' Λ).1 _ _ (hΛ'u τ i)
     convert hv using 1
+    ext k
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     calc ∑ j, (b τ)⁻¹ j i * (u τ * b τ) k j = (u τ * b τ * (b τ)⁻¹) k i := by
           rw [Matrix.mul_apply]
           exact Finset.sum_congr rfl fun j _ => _root_.mul_comm _ _

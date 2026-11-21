@@ -344,7 +344,7 @@ theorem rename_mem_symO {n m : ℕ} (g : Fin n → Fin m) (Λ : GenLat E n) (Λ'
       exact ⟨σ, i, b', hb', e σ i⟩
   | zero => simp
   | one => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 

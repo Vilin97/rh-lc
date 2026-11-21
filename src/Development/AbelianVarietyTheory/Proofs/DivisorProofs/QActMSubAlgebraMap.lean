@@ -56,10 +56,10 @@ theorem mSub_stable (σ : O →+* Module.End k H) (χ : C →+* k) (X : Submodul
   | mem z hz =>
     obtain ⟨c, y, hy, rfl⟩ := hz
     refine Submodule.subset_span ⟨c, σ a y, hX a y hy, ?_⟩
-    rw [map_sub, map_smul, ← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul,
+    rw [map_sub, map_smul, ← mul_apply_eq_comp, ← mul_apply_eq_comp, ← map_mul, ← map_mul,
       Algebra.commutes]
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem jSub_stable {ι : Type*} (σ : O →+* Module.End k H) (χ : ι → C →+* k) (X : Submodule k H)
@@ -72,9 +72,9 @@ theorem jSub_stable {ι : Type*} (σ : O →+* Module.End k H) (χ : ι → C �
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
-    rw [map_smul, ← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul, Algebra.commutes]
+    rw [map_smul, ← mul_apply_eq_comp, ← mul_apply_eq_comp, ← map_mul, ← map_mul, Algebra.commutes]
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem qAct_mSub_algebraMap (σ : O →+* Module.End k H) (χ : C →+* k) (c : C) :

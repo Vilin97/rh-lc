@@ -40,7 +40,7 @@ theorem vol_one_of_ann {μ : Measure V} {χ : V → V → ℂ} (hμ : SelfDual �
     HasCompactSupport.intro hLc fun x hx => Set.indicator_of_notMem hx _
   have hT : ∀ y, ∫ x, Φ x * χ x y ∂μ = (L : Set V).indicator (fun _ => ((c : ℝ) : ℂ)) y := by
     intro y
-    rw [hΦ, transform_indicator μ χ L hLo y, hA]
+    rw [hΦ, transform_indicator μ χ hχ L hLo y, hA]
   have hfin : μ (L : Set V) < ⊤ := hLc.measure_lt_top
   have hI : Integrable (fun y => ∫ x, Φ x * χ x y ∂μ) μ := by
     have e : (fun y => ∫ x, Φ x * χ x y ∂μ) = (L : Set V).indicator (fun _ => ((c : ℝ) : ℂ)) :=
@@ -52,7 +52,7 @@ theorem vol_one_of_ann {μ : Measure V} {χ : V → V → ℂ} (hμ : SelfDual �
     funext y
     rw [hT y]
     by_cases hy : y ∈ (L : Set V) <;> simp [hΦ, hy]
-  rw [e1, integral_const_mul, hΦ, transform_indicator μ χ L hLo 0, hA,
+  rw [e1, integral_const_mul, hΦ, transform_indicator μ χ hχ L hLo 0, hA,
     Set.indicator_of_mem (SetLike.mem_coe.2 L.zero_mem), neg_zero,
     Set.indicator_of_mem (SetLike.mem_coe.2 L.zero_mem)] at h0
   have h1 : c * c = 1 := by exact_mod_cast h0

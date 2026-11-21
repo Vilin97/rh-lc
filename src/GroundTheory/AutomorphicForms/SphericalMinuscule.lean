@@ -66,9 +66,8 @@ theorem bdd_neg_one_iff {x : F} : Bdd F (-1) x ↔ π * x ∈ 𝒪[F] := by
 
 variable (F n) in
 def minusculeSet (k : ℕ) : Set (GL (Fin n) F) :=
-  {g | (∀ i j, g i j ∈ 𝒪[F]) ∧
-    (∀ i j, (GLnLocal.uniformizer F : F) * (g⁻¹ : GL (Fin n) F) i j ∈ 𝒪[F]) ∧
-    valuation F (g : Matrix (Fin n) (Fin n) F).det = valuation F (GLnLocal.uniformizer F : F) ^ k}
+  {g | (∀ i j, g i j ∈ 𝒪[F]) ∧ (∀ i j, π * (g⁻¹ : GL (Fin n) F) i j ∈ 𝒪[F]) ∧
+    valuation F (g : Matrix (Fin n) (Fin n) F).det = valuation F π ^ k}
 
 theorem mul_mem_of_forall_mem {A B : Matrix (Fin n) (Fin n) F} (hA : ∀ i j, A i j ∈ 𝒪[F])
     (hB : ∀ i j, B i j ∈ 𝒪[F]) (i j : Fin n) : (A * B) i j ∈ 𝒪[F] := by

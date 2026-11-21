@@ -165,7 +165,33 @@ theorem exists_root_of_unity : ∀ (D : D7) (X : RealSide D) (c c₂ : ∀ j : F
     have hL := nabAtr_isLattice (labLL D) (FWT.lamV D j) _
       (GlobalTheory.RepsCompare.isLattice_hLat (Vc D j) ((X.R.B.L j X.A3.A.μ0).pres.y cl))
     refine isIntegral_of_keeps _ (fun h0 => ?_) hL.fg a (fun n hn => ?_)
-    · have h1 := hL.span_eq_top
+    · let M := fun τ => dualFr (tauLat (labLL D) τ (Bridge.hLat (Vc D j) ((X.R.B.L j X.A3.A.μ0).pres.y cl)))
+      have hM : ∀ τ, Submodule.IsLattice D.what₂.LL (M τ) := fun τ =>
+        dualFr_tauLat_isLattice (labLL D) τ _
+          (GlobalTheory.RepsCompare.isLattice_hLat (Vc D j) ((X.R.B.L j X.A3.A.μ0).pres.y cl))
+      obtain ⟨d, hd, -, hd2⟩ := nb_global (nb_comm_nab (FWT.lamV D j)) M hM
+      have hd' : algebraMap (𝓞 D.what₂.LL) D.what₂.LL d ≠ 0 := by
+        rwa [Ne, FaithfulSMul.algebraMap_eq_zero_iff]
+      have h1 : Submodule.span D.what₂.LL (nabAtr (labLL D) (FWT.lamV D j) (Bridge.hLat (Vc D j) ((X.R.B.L j X.A3.A.μ0).pres.y cl)) : Set (VV D.what₂.LL (FWT.lamV D j))) = ⊤ := by
+        apply Submodule.map_injective_of_injective (f := (VV D.what₂.LL (FWT.lamV D j)).subtype) (VV D.what₂.LL (FWT.lamV D j)).injective_subtype
+        rw [Submodule.map_top, Submodule.range_subtype, Submodule.map_span]
+        apply le_antisymm
+        · rw [Submodule.span_le]
+          rintro _ ⟨x, -, rfl⟩
+          exact x.2
+        · refine le_trans (le_of_eq (nb_VV_eq_bid (FWT.lamV D j))) ?_
+          rw [Submodule.span_le]
+          intro P hP
+          have hP1 : P ∈ nabStd D.what₂.LL (FWT.lamV D j) := by
+            rw [nb_nabStd_eq]
+            exact Submodule.subset_span hP
+          have hP2 := hd2 P hP1
+          have hP3 : d • P ∈ VV D.what₂.LL (FWT.lamV D j) := nb_le_VV (nb_comm_nab (FWT.lamV D j)) M hM _ hP2
+          have hP4 : d • P ∈ Submodule.span D.what₂.LL ((VV D.what₂.LL (FWT.lamV D j)).subtype ''
+              (nabAtr (labLL D) (FWT.lamV D j) (Bridge.hLat (Vc D j) ((X.R.B.L j X.A3.A.μ0).pres.y cl)) : Set (VV D.what₂.LL (FWT.lamV D j)))) :=
+            Submodule.subset_span ⟨⟨d • P, hP3⟩, hP2, rfl⟩
+          have := Submodule.smul_mem _ (algebraMap (𝓞 D.what₂.LL) D.what₂.LL d)⁻¹ hP4
+          rwa [nb_osmul, smul_smul, inv_mul_cancel₀ hd', one_smul] at this
       rw [h0, Submodule.bot_coe, Submodule.span_zero_singleton] at h1
       exact bot_ne_top h1
     · rw [← hnab₂ cl] at hn

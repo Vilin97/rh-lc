@@ -1,8 +1,8 @@
 module
 
 public import Mathlib
-public import Formalism.LocalToGlobal.ProjectiveLattices.SectionOfLineBundleOne
 public import Formalism.LocalToGlobal.ProjectiveLattices.IsCombAt
+public import Formalism.LocalToGlobal.ProjectiveLattices.SectionOfLineBundleOne
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.UniversalCharts.ChartLawPf
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.LawsChart
 public import Formalism.LocalToGlobal.ProjectiveLattices.ArchimedeanQuadraticData.ArcLineFunctions.FunDef
@@ -198,8 +198,7 @@ theorem IsArcFr.isFramedPoint_changed_by_letters [Algebra c.F K] [Algebra c.F (A
   refine ⟨hb, ⟨z, hzj, hzx.trans hx.symm⟩, v, hL, fun τ i => ⟨y₀.u τ, fun k => ⟨u' τ k ≫ φ, ?_, ?_⟩, ?_⟩⟩
   · rw [Category.assoc, hφ, ← Category.assoc, hu2, Category.assoc]
   · rw [Category.assoc, hφ0, hu1]
-  · rw [hx]
-    exact hcomb τ i
+  · simpa only [hx, letM, Matrix.of_apply] using hcomb τ i
 
 end Fld
 

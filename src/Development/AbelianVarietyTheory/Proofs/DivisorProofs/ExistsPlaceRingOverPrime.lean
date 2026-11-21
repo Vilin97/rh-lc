@@ -21,7 +21,7 @@ namespace GlobalTheory.ThK.PlaneCo.VacSB
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 theorem planeCoef_mul_planeMat (σ : E →ₐ[F] E) (B : Base F E) {n n₁ j₀ j₁ : ℕ} (X : Spc F E n) (X₁ : Spc F E n₁)
-    (H : Plane E n n₁) (hL : X.L.IsLattice E) (hH : H.IsAdapted σ B X X₁ j₀ j₁) : planeCoef H * planeMat H = 1 := by
+    (H : Plane E n n₁) (hL : X.L.IsFullLattice E) (hH : H.IsAdapted σ B X X₁ j₀ j₁) : planeCoef H * planeMat H = 1 := by
   classical
   have hn : n₁ + 2 = n := hH.rank.symm
   set e : Fin n₁ ⊕ Fin 2 ≃ Fin n := finSumFinEquiv.trans (finCongr hn) with he
@@ -42,8 +42,9 @@ theorem planeCoef_mul_planeMat (σ : E →ₐ[F] E) (B : Base F E) {n n₁ j₀ 
       simp [planeMat, Matrix.mulVec, dotProduct, Fintype.sum_sum_type, Fin.sum_univ_two]
       ring
     have htop : LinearMap.range Q'.mulVecLin = ⊤ := by
-      intro s hs hli
-      exact (LinearIndependent.iff_fractionRing _ _).mp hli
+      apply top_unique
+      rw [← Submodule.IsFullLattice.span_eq_top (self := hL)]
+      exact Submodule.span_le.mpr hrange
     intro z
     obtain ⟨w, hw⟩ := (LinearMap.range_eq_top.1 htop) z
     exact ⟨w, hw⟩
@@ -56,7 +57,7 @@ theorem planeCoef_mul_planeMat (σ : E →ₐ[F] E) (B : Base F E) {n n₁ j₀ 
 
 
 variable (F) in
-theorem span_lattice_eq_top {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.IsLattice E) :
+theorem span_lattice_eq_top {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.IsFullLattice E) :
     Submodule.span F (L : Set (Fin n → E)) = ⊤ := by
   have hsm : ∀ (e : E), ∀ x ∈ L, e • x ∈ Submodule.span F (L : Set (Fin n → E)) := by
     intro e x hx
@@ -80,7 +81,8 @@ theorem span_lattice_eq_top {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) (hL
     | add a b _ _ ha hb => rw [smul_add]; exact add_mem ha hb
     | smul c a _ ha => rw [smul_comm]; exact Submodule.smul_mem _ _ ha
   refine Submodule.eq_top_iff'.2 fun z => ?_
-  have hz : z ∈ Submodule.span E (L : Set (Fin n → E)) := by rw [hL.span_eq_top]; trivial
+  have hz : z ∈ Submodule.span E (L : Set (Fin n → E)) := by
+    rw [Submodule.IsFullLattice.span_eq_top (self := hL)]; trivial
   induction hz using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span hx
   | zero => exact zero_mem _
@@ -90,7 +92,7 @@ theorem span_lattice_eq_top {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) (hL
 
 variable (F) in
 theorem span_vecMulVec {n d : ℕ} (LX : Submodule (𝓞 E) (Fin n → E)) (LW : Submodule (𝓞 E) (Fin d → E))
-    (hX : LX.IsLattice E) (hW : LW.IsLattice E) :
+    (hX : LX.IsFullLattice E) (hW : LW.IsFullLattice E) :
     Submodule.span F {m : Matrix (Fin n) (Fin d) E | ∃ x ∈ LX, ∃ y ∈ LW, m = Matrix.vecMulVec x y} = ⊤ := by
   classical
   set P := Submodule.span F {m : Matrix (Fin n) (Fin d) E | ∃ x ∈ LX, ∃ y ∈ LW, m = Matrix.vecMulVec x y}
@@ -182,8 +184,8 @@ theorem posS_injective {d₁ n₁ : ℕ} : Function.Injective (posS (d₁ := d�
   rintro (j|a) (j'|a') h <;> simp_all [posS]
 
 theorem fRat_surjective (σ : E →ₐ[F] E) (B : Base F E) {n d n₁ d₁ i₀ i₁ j₀ j₁ : ℕ} (X : Spc F E n) (W : Spc F E d)
-    (X₁ : Spc F E n₁) (W₁ : Spc F E d₁) (H : Plane E n n₁) (H' : Plane E d d₁) (hXL : X.L.IsLattice E)
-    (hWL : W.L.IsLattice E) (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hH' : H'.IsAdapted σ B W W₁ i₀ i₁) :
+    (X₁ : Spc F E n₁) (W₁ : Spc F E d₁) (H : Plane E n n₁) (H' : Plane E d d₁) (hXL : X.L.IsFullLattice E)
+    (hWL : W.L.IsFullLattice E) (hH : H.IsAdapted σ B X X₁ j₀ j₁) (hH' : H'.IsAdapted σ B W W₁ i₀ i₁) :
     Function.Surjective (fRat F H H') := by
   classical
   intro t
@@ -300,15 +302,15 @@ theorem vacS_mem_SB : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Numb
   have hcpt : IsCompact (S : Set (Kc F E d₁ n₁ → Fv F v)) := by
     haveI := GlobalTheory.AdelicUnitaryTop.compactSpace_adicCompletionIntegers F v
     refine isCompact_range ?_
-    exact continuous_finset_sum _ fun m _ =>
-      Continuous.smul (f := fun a : M → O => ((a m : O) : Fv F v)) (continuous_subtype_val.comp (continuous_apply m))
-        continuous_const
+    fun_prop
   have hmem : ∀ x ∈ X.L, ∀ y ∈ W.L, (fun k => algebraMap F (Fv F v) (fRat F H H' (Matrix.vecMulVec x y) k)) ∈ S := by
     intro x hx y hy
     show _ ∈ (S : Set (Kc F E d₁ n₁ → Fv F v))
     rw [hSset]
     refine ⟨GlobalTheory.EmbChart.atPlace v 1 • incM F (Matrix.vecMulVec x y), AddSubgroup.subset_closure
-      ⟨GlobalTheory.EmbChart.atPlace v 1, GlobalTheory.VacAny.at_atPlace 1, ?_, x, hx, y, hy, rfl⟩, fun k => ?_⟩
+      ⟨GlobalTheory.EmbChart.atPlace v 1, ?_, ?_, x, hx, y, hy, rfl⟩, fun k => ?_⟩
+    · intro u hu
+      rw [smul_eq_mul, mul_comm, GlobalTheory.EmbChart.atPlace_mul_right, hu, mul_zero, map_zero]
     · rw [GlobalTheory.EmbChart.evFin_atPlace]; exact one_mem _
     · rw [evFin_planeT_smul_incM, one_mul]
   have hspF : Submodule.span F {t | ∃ x ∈ X.L, ∃ y ∈ W.L, t = fRat F H H' (Matrix.vecMulVec x y)} = ⊤ := by

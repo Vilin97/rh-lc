@@ -111,8 +111,8 @@ def functor (b : (I₁ → ℂ) → I₂ → ℂ) (hb : AnalyticOnNhd ℂ b F₁
     (hle : ∀ l k' k, K₁.le l k' k → K₂.le (A l) (κ k') (κ k)) : K₁.Obj ⥤ K₂.Obj where
   obj := objMap b hb hbV M κ hΦ hW
   map f := homMap b hb hbV M A hτ κ hΦ hW hle f
-  map_id T := Charts.hom_ext (fun _ ↦ rfl) (map_zero A)
-  map_comp f f' := Charts.hom_ext (fun _ ↦ rfl) (map_add A _ _)
+  map_id _ := Charts.hom_ext (fun _ ↦ rfl) (map_zero A)
+  map_comp _ _ := Charts.hom_ext (fun _ ↦ rfl) (map_add A _ _)
 
 def coef (b : (I₁ → ℂ) → I₂ → ℂ) (hb : AnalyticOnNhd ℂ b F₁.V) (hbV : ∀ z ∈ F₁.V, b z ∈ F₂.V)
     (M : (Fin g₁ → ℂ) →ₗ[ℂ] (Fin g₂ → ℂ)) (A : Λ₁ →+ Λ₂)
@@ -148,7 +148,7 @@ theorem period_pullback_eq_of_chartMap : ∀ {I₁ : Type} [Fintype I₁] {g₁ 
                 r₂.x (κ T.k)
             rw [Cris.spMap_id, Category.id_comp, Category.assoc, ← hx T.k,
               Cris.spMap_comp (Hol.comap _ (hΦ T.k) (hW T.k)).toRingHom, Category.assoc] }
-      naturality := fun _ _ _ ↦ Thick.hom_ext fun _ ↦ rfl }
+      naturality := fun _ _ _ ↦ Thick.Hom.ext' (AlgHom.ext fun _ ↦ rfl) }
   have e₁ : r₁.coef.pull1 (m.pull1 c) = (m.coef.comp r₁.coef).pull1 c := (m.coef.pullCohomologyOne_comp r₁.coef c).symm
   have e₂ : (m.coef.comp r₁.coef).pull1 c = (r₂.coef.comp n).pull1 c :=
     CoefMap.pullCohomologyOne_eq_of_natTrans _ _ θ (fun _ _ ↦ rfl) c

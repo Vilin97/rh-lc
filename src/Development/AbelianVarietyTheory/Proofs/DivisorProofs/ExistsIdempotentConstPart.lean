@@ -329,8 +329,7 @@ theorem map_endo_endo (n : ℕ) (z : G.A n ⊗[O] G.A n) :
       ∑ x : (G.A n →ₐ[O] IsLocalRing.ResidueField O) × (G.A n →ₐ[O] IsLocalRing.ResidueField O),
         Algebra.TensorProduct.lift (sig G s hpt n x.1) (sig G s hpt n x.2) (fun _ _ => .all _ _) z •
           (e n x.1 ⊗ₜ[O] e n x.2) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul a b =>
     rw [Algebra.TensorProduct.map_tmul, endo_apply, endo_apply, TensorProduct.sum_tmul,
       Fintype.sum_prod_type]
@@ -397,7 +396,7 @@ include hs hw hpt he in
 theorem exists_endo (H : HasIdem O) : ∃ u : G ⟶ G, u ≫ u = u ∧
     (∀ (n : ℕ) (c : G.A n →ₐ[O] IsLocalRing.ResidueField O) (a : G.A n), c (u.app n a) = c a) ∧
     ∀ n, ∃ N : ℕ, Nonempty ((u.app n : G.A n →ₐ[O] G.A n).range ≃ₐ[O] (Fin N → O)) := by
-  refine ⟨uEnd s hpt hs hw he H, hom_ext fun n => BialgHom.ext fun a => endo_endo hs hw he n a,
+  refine ⟨uEnd s hpt hs hw he H, PDivGroup.Hom.ext (funext fun n => BialgHom.ext fun a => endo_endo hs hw he n a),
     fun n c a => ?_, fun n => ⟨Fintype.card (G.A n →ₐ[O] IsLocalRing.ResidueField O), ⟨?_⟩⟩⟩
   · change c (endo s hpt he n a) = c a
     set_option synthInstance.maxHeartbeats 100000 in

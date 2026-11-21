@@ -3,6 +3,7 @@ module
 public import Development.AutomorphicArithmetic.Foundations.Convolution.BlockEvaluation.TruncSpec
 public import Development.AutomorphicArithmetic.Foundations.Convolution.PolynomialCoefficientBounds.ChebBd
 public import Development.AutomorphicArithmetic.Foundations.Convolution.PolynomialCoefficientBounds.ChebClosed
+public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.DecayTraceClassAlt
 public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.OpBasics
 public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.CommProj
 
@@ -218,7 +219,7 @@ theorem UpperTheory.ConvolutionTheory.Ci.oneSide :
   have hP : ‖1 - Pc μ‖ ≤ 1 := by
     have : 1 - Pc μ = (cuspidalL2 μ)ᗮ.starProjection := by
       unfold Pc
-      rw [Submodule.starProjection_orthogonal]; rfl
+      exact (Submodule.starProjection_orthogonal' (cuspidalL2 μ)).symm
     rw [this]
     exact Submodule.starProjection_norm_le _
   have hu := norm_pow_le_clm (𝔰.Uq 0) j

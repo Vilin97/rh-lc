@@ -34,7 +34,8 @@ def intAd : AddSubgroup (AF F) where
     refine ⟨?_, fun v => ?_⟩
     · simp only [evI] at ha hb ⊢
       rw [show (a + b).1 = a.1 + b.1 from rfl, map_add (f := _), ha, hb, add_zero]
-    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha' v) (hb' v)
+    · rw [map_add (evFin F v)]
+      exact add_mem (ha' v) (hb' v)
   neg_mem' := by
     rintro a ⟨ha, ha'⟩
     refine ⟨?_, fun v => ?_⟩
@@ -84,7 +85,7 @@ theorem isClosed_latHat : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
       map_add' := fun c d => by simp [add_smul, Finset.sum_add_distrib] }
   let P : AddSubgroup (s → AF F) := AddSubgroup.pi Set.univ (fun _ => intAd F)
   have hψc : Continuous ψ :=
-    continuous_finset_sum _ fun i _ => by
+    continuous_finsetSum _ fun i _ => by
       show Continuous fun c : s → AF F => c i • incV F (i : Fin n → E)
       exact (continuous_apply i : Continuous fun c : s → AF F => c i).smul
         (continuous_const : Continuous fun _ : s → AF F => incV F (i : Fin n → E))

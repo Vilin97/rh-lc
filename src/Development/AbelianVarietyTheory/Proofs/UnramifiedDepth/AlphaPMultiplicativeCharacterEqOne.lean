@@ -29,9 +29,9 @@ theorem poly_eq_one {Ω : Type} [Field Ω] (p : ℕ) [CharP Ω p] (w : Polynomia
   ext n
   rcases n with _ | n
   · simpa using h0
-  · rw [coeff_one, if_neg (Nat.succ_ne_zero n)]
+  · simp only [coeff_one, Nat.succ_ne_zero, ite_false]
     by_cases hn : n + 1 < p
-    · have h2 := congrArg (fun q => coeff q n) h
+    · have h2 := congrArg (fun q : Polynomial Ω => q.coeff n) h
       simp only [coeff_derivative, coeff_zero] at h2
       have h3 : ((n : Ω) + 1) ≠ 0 := by
         intro h3

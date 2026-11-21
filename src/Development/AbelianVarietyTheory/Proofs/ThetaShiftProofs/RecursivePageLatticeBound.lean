@@ -33,9 +33,6 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions F
 set_option autoImplicit false
 
 namespace GlobalTheory.RunJoin
-#check GlobalTheory.ArcCM.room_of_bounds
-#check GlobalTheory.ArcCM.log₂
-#check Formalism.L2.Pj.QAt.qat_of_bridge'
 
 
 set_option maxHeartbeats 4000000 in

@@ -597,12 +597,6 @@ theorem isIrrAdm_det : IsIrrAdm ε fun g => g.det • (1 : ℂ →L[ℂ] ℂ) :=
 
 end Characters
 
-section RankOne
-
-open GlobalTheory.FlagMeas.Model
-
-end RankOne
-
 end GlobalTheory.RealInd
 
 end

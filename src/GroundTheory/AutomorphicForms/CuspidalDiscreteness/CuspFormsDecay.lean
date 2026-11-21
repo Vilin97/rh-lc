@@ -57,10 +57,12 @@ theorem memLp_cuspQuot {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ : φ ∈ cuspF
 
 theorem toLp_mem_cuspidalL2 {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ : φ ∈ cuspForms K n) :
     (memLp_cuspQuot μ hφ).toLp _ ∈ cuspidalL2 μ := by
+  change IsCuspidalL2 μ ((memLp_cuspQuot μ hφ).toLp _)
   intro r hr hrn
   filter_upwards [ae_ctFun_congr μ r (MemLp.coeFn_toLp (memLp_cuspQuot μ hφ))] with y hy
   rw [constantTermL2, hy]
-  exact hφ.2 r hr hrn y
+  simpa only [ctFun, cuspQuot_mk, Subgroup.coe_mul, coe_unipOne, constantTerm, Pi.zero_apply]
+    using hφ.2 r hr hrn y
 
 def cuspToL2 : cuspForms K n →ₗ[ℂ] cuspidalL2 μ where
   toFun φ := ⟨(memLp_cuspQuot μ φ.2).toLp _, toLp_mem_cuspidalL2 μ φ.2⟩
@@ -142,7 +144,8 @@ theorem cuspToL2_rightTranslate (g : Reduction.normOneGL (K := K) (n := n)) (φ 
     cuspToL2 μ ψ = cuspRep μ g (cuspToL2 μ φ) := by
   refine Subtype.ext ?_
   rw [coe_cuspRep_apply]
-  have h1 := QuasiMeasurePreserving.ae_eq_comp (measurePreserving_rightMul μ g).quasiMeasurePreserving
+  have h1 := QuasiMeasurePreserving.ae_eq_comp
+    (measurePreserving_rightMul (Γ := Γ₁) μ g).quasiMeasurePreserving
     (coeFn_cuspToL2 μ φ)
   have h2 : cuspQuot ψ.2.1.isLeftInvariant =
       fun q => cuspQuot φ.2.1.isLeftInvariant (rightMul Γ₁ g q) := by

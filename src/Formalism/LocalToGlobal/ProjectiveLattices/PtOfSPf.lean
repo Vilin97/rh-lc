@@ -145,7 +145,7 @@ theorem pos_sec_eval :
     unfold Formalism.MainNotions.Gaps.EtaleWeightGaps.sec
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum]
-    simp only [map_smul]
+    simp only [map_smul, Formalism.MainNotions.Gaps.EtaleWeightGaps.sec._aux_1]
   refine (congrArg (fun v => χ (algebraMap (RZ X la N Ω) (RZs X la N Ω gF w) v)) e).trans ?_
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_sum]

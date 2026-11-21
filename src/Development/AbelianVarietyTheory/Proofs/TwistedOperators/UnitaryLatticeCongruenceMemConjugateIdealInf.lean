@@ -135,7 +135,9 @@ theorem inId_hform {V : HSp D} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D
     {β : GL (Fin V.rank) (Lev.EAf D)} (hfr : Formalism.L2.DIV.IsFrame β Λ) {𝔪 : Ideal (𝓞 D.host.E)}
     {a b : Fin V.rank → Lev.EAf D} (ha : a ∈ Formalism.L2.Herm.hatL (F := D.host.F) Λ)
     (hb : b ∈ Formalism.L2.Herm.hatL (F := D.host.F) (𝔪 • Λ)) :
-    GlobalTheory.FrameIdeal.InId (F := D.host.F) 𝔪 (Formalism.UG.hform σA (V.gram.map ιA) a b) := by
+    GlobalTheory.FrameIdeal.InId (F := D.host.F) 𝔪
+      (Formalism.UG.hform (Formalism.UG.sigR D.sp.cm.sig (Formalism.L2.Herm.Af D.host.F))
+        (V.gram.map (Formalism.UG.inclE (F := D.host.F) (Formalism.L2.Herm.Af D.host.F))) a b) := by
   have hc := (GlobalTheory.FrameIdeal.mem_hatL_smul_iff β Λ hfr 𝔪 b).1 hb
   have e : b = β.1 *ᵥ ((β⁻¹).1 *ᵥ b) := by
     rw [Matrix.mulVec_mulVec, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.one_mulVec]

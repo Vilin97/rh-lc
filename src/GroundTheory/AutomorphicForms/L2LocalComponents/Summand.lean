@@ -71,7 +71,7 @@ theorem aeval_uAction_cuspVecL {φ : cuspForms K n} (hφ : φ ∈ centralCuspFor
   | add p q hp hq =>
     rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, Submodule.coe_add, hp, hq, map_add (f := _)]
   | monomial k c =>
-    rw [aeval_monomial, aeval_monomial, Module.End.mul_apply, Module.End.mul_apply,
+    rw [aeval_monomial, aeval_monomial, mul_apply_eq_comp, mul_apply_eq_comp,
       Module.algebraMap_end_apply, Module.algebraMap_end_apply, ← map_pow, ← map_pow,
       Submodule.coe_smul, uAction_cuspToL2 μ hφ, map_smul]
 
@@ -166,7 +166,7 @@ theorem sup_orthRel_of_finite {H : Type*} [NormedAddCommGroup H] [InnerProductSp
       Δ φ = ∑ i, (gkModuleCusp K n).ρ (b i) ((gkModuleCusp K n).ρ (b i) φ) := by
     intro φ
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Δ, laplacianU, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply]
+      simp only [Δ, laplacianU, map_sum, map_mul, LinearMap.sum_apply, mul_apply_eq_comp]
     rfl
   have hΔV : ∀ φ ∈ centralCuspForms K n, Δ φ ∈ centralCuspForms K n :=
     fun φ hφ => uActionCusp_mem_centralCuspForms _ hφ
@@ -218,7 +218,7 @@ theorem sup_orthRel_of_finite {H : Type*} [NormedAddCommGroup H] [InnerProductSp
     refine ⟨p, ?_, hHC U₀ hU₀sub _ hQm hQd _ fun φ hφ =>
       ⟨hφ.2, ρ_centralZ_eq_zero hφ.1.1, hφ.1.2⟩⟩
     show aeval Δ (p.map (algebraMap ℝ ℂ)) x = 0
-    rw [hp, mul_comm, map_mul, Module.End.mul_apply, hP, map_zero]
+    rw [hp, mul_comm, map_mul, mul_apply_eq_comp, hP, map_zero]
   · obtain ⟨e, heU, hefix, he⟩ := exists_average ι hτ U hU hUτ U₀ hU₀sub hu
     exact ⟨e, ⟨heU, hU heU, hefix⟩, fun w hw => he w hw.1 hw.2⟩
 

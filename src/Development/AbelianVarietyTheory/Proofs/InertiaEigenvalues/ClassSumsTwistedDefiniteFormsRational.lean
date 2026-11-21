@@ -94,7 +94,7 @@ theorem term_mem (hR : RatTwist hρ rd) {k Q ψ} (hψ : TwOK i k Q ψ) (hQ : Cls
   have hlaw := ((ρ.B i j b).mem_formsC.1 hF1).2 γ (finPt _ h') κ
   have hinv : ((ρ.B i j b).act ((γ⁻¹ : GQ (Vc D j)) : GA D (Vc D j))) ((ρ.B i j b).act (γ : GA D (Vc D j)) (F (finPt _ h'))) =
       F (finPt _ h') := by
-    rw [← mul_apply_eq_comp, ← map_mul, Subgroup.coe_inv, inv_mul_cancel, map_one, Module.End.one_apply]
+    rw [← mul_apply_eq_comp, ← map_mul, Subgroup.coe_inv, inv_mul_cancel, map_one, one_apply_eq_self]
   rw [e, hlaw, LinearMap.map_smul, GlobalTheory.BaseClassSum.series_move hB (D.sp.V_sig _) ht hadm (hρ.weil i j b _ ht) hh hh' γ κ e, hinv,
     smul_smul, mul_inv_cancel₀ (Units.ne_zero _), one_smul]
   have hspan : F (finPt _ h') ∈ Submodule.span (ρ.eOk i b k).range

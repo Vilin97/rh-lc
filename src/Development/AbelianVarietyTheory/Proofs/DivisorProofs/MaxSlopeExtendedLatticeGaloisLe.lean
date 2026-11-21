@@ -241,7 +241,7 @@ theorem tw_mem_span (hc : ∀ a : Fin n → K', c (∑ k, a k • ι (b k)) = a)
   induction hx using Submodule.span_induction with
   | mem x h => obtain ⟨v, hv, rfl⟩ := h; rw [tw_map hc]; exact Submodule.subset_span ⟨v, hv, rfl⟩
   | zero => simp
-  | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+  | add x y _ _ h1 h2 => rw [map_add (tw b ι c g.toLinearMap)]; exact add_mem h1 h2
   | smul r x _ h1 =>
     have := Submodule.smul_mem _ (RingOfIntegers.mapRingHom (g : K' →+* K') r) h1
     rw [← algebraMap_smul K'] at this
@@ -493,7 +493,7 @@ theorem slopeMax_sq_span_le : ∀ (K K' V V' : Type) [Field K] [NumberField K] [
     induction hx using Submodule.span_induction with
     | mem x h => exact Submodule.subset_span (hst g x h)
     | zero => simp
-    | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+    | add x y _ _ h1 h2 => rw [map_add (tw b ι c g.toLinearMap)]; exact add_mem h1 h2
     | smul a x _ h1 => rw [tw_smul]; exact W.smul_mem _ h1
   have hMW : L' ⊓ W.restrictScalars (𝓞 K') = M := by
     have h1 : M ≤ L' ⊓ W.restrictScalars (𝓞 K') := fun x hx => ⟨hM hx, Submodule.subset_span hx⟩

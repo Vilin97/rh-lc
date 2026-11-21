@@ -123,7 +123,7 @@ theorem single_mem_stdLattice (i : Fin n) : (Pi.single i 1 : Fin n → E) ∈ st
     · subst e; simp
     · simp [e]⟩
 
-theorem exists_rational_frame (L : Submodule (𝓞 E) (Fin n → E)) [hL : Submodule.IsLattice E L]
+theorem exists_rational_frame (L : Submodule (𝓞 E) (Fin n → E)) [hL : Submodule.IsFullLattice E L]
     (v : HeightOneSpectrum (𝓞 F)) : ∃ P : GL (Fin n) E,
       (∀ j, ∃ s : 𝓞 F, s ∉ v.asIdeal ∧ algebraMap F E s • (fun i => P.1 i j) ∈ L) ∧
       ∀ x ∈ L, ∃ s : 𝓞 F, s ∉ v.asIdeal ∧ algebraMap F E s • ((P⁻¹).1 *ᵥ x) ∈ stdLattice E n := by
@@ -155,7 +155,7 @@ theorem exists_rational_frame (L : Submodule (𝓞 E) (Fin n → E)) [hL : Submo
     have : Set.range u = N.subtype '' Set.range b := by rw [← Set.range_comp]; rfl
     rw [this, Submodule.span_image, b.span_eq, Submodule.map_top, Submodule.range_subtype]
   have hspan : ⊤ ≤ Submodule.span E (Set.range u) := by
-    rw [← hL.span_eq_top, Submodule.span_le]
+    rw [← Submodule.IsFullLattice.span_eq_top (A := E) (M := L), Submodule.span_le]
     intro x hx
     have hxN : x ∈ Submodule.span A (Set.range u) := by rw [hspanA]; exact Submodule.subset_span hx
     exact Submodule.span_le_restrictScalars A E _ hxN
@@ -200,13 +200,18 @@ theorem exists_smul_le {L L' : Submodule (𝓞 E) (Fin n → E)} (hL : L.FG)
   | add y z _ _ hy hz => rw [smul_add]; exact add_mem hy hz
   | smul a y _ hy => rw [smul_comm]; exact L'.smul_mem a hy
 
-theorem exists_finset_latLoc_eq (L : Submodule (𝓞 E) (Fin n → E)) [hL : Submodule.IsLattice E L] :
+theorem exists_finset_latLoc_eq (L : Submodule (𝓞 E) (Fin n → E)) [hL : Submodule.IsFullLattice E L] :
     ∃ S : Finset (HeightOneSpectrum (𝓞 F)), ∀ v ∉ S, ∀ y, (∀ i, y i ∈ intLoc F E v) ↔ y ∈ latLoc F L v := by
   obtain ⟨d, hd, h⟩ := exists_smul_le (F := F) (L' := L)
-    (Submodule.fg_span (Set.finite_range fun j : Fin n => (Pi.single j 1 : Fin n → E))) hL.span_eq_top
+    (Submodule.fg_span (Set.finite_range fun j : Fin n => (Pi.single j 1 : Fin n → E)))
+    (Submodule.IsFullLattice.span_eq_top (A := E) (M := L))
   obtain ⟨d', hd', h'⟩ := exists_smul_le (F := F) (L' := stdLattice E n) hL.fg (by
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    apply top_unique
+    rw [← (Pi.basisFun E (Fin n)).span_eq]
+    apply Submodule.span_le.mpr
+    rintro _ ⟨i, rfl⟩
+    apply Submodule.subset_span
+    simpa using (single_mem_stdLattice (E := E) i))
   have hf := Ideal.finite_factors (I := Ideal.span {d * d'}) (by simp [hd, hd'])
   refine ⟨hf.toFinset, fun v hv y => ?_⟩
   have hv' : d * d' ∉ v.asIdeal := fun hc => hv (hf.mem_toFinset.2 (Ideal.dvd_span_singleton.2 hc))
@@ -216,7 +221,7 @@ theorem exists_finset_latLoc_eq (L : Submodule (𝓞 E) (Fin n → E)) [hL : Sub
     (fun x hx => ⟨d', fun hc => hv' (Ideal.mul_mem_left _ _ hc), by simpa using h' x hx⟩) y
   rwa [map_one, Units.val_one, Matrix.one_mulVec] at this
 
-theorem exists_isLatticeFrame_of_arch (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L]
+theorem exists_isLatticeFrame_of_arch (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L]
     (c : ∀ w : InfinitePlace F, GL (Fin n) (w.Completion ⊗[F] E)) :
     ∃ a : GL (Fin n) (AF F ⊗[F] E), IsLatticeFrame L a ∧ ∀ w, bc (compInf F E w) a = c w := by
   classical
@@ -230,7 +235,7 @@ theorem exists_isLatticeFrame_of_arch (L : Submodule (𝓞 E) (Fin n → E)) [Su
   · rw [if_pos hv]; exact frame_of_rational _ (h1 v) (h2 v) y
   · rw [if_neg hv, Units.val_one, Matrix.one_mulVec]; exact hS v hv y
 
-theorem exists_isLatticeFrame (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L] :
+theorem exists_isLatticeFrame (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L] :
     ∃ a : GL (Fin n) (AF F ⊗[F] E), IsLatticeFrame L a :=
   (exists_isLatticeFrame_of_arch L fun _ => 1).imp fun _ h => h.1
 
@@ -345,7 +350,7 @@ theorem isCompact_stabArch (h : IsCMExt F E σ) (J : Matrix (Fin n) (Fin n) E) (
   exact mem_stabArch
 
 theorem exists_isLatticeFrame_isMajorantFrame (h : IsCMExt F E σ) {J : Matrix (Fin n) (Fin n) E} (hJ : IsHermND σ J)
-    (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L] :
+    (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsFullLattice E L] :
     ∃ a : GL (Fin n) (AF F ⊗[F] E), IsLatticeFrame L a ∧ IsMajorantFrame σ J a := by
   choose c ε hc using exists_arch_frame h hJ
   obtain ⟨a, ha, hw⟩ := exists_isLatticeFrame_of_arch L c

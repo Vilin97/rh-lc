@@ -74,14 +74,13 @@ theorem toOB_tmul_mem_filO {C : GlobalTheory.MemLoc.Core l} {n : ℕ} {c : Per.A
   exact (alg_mem_FilD_iff n _).2 h
 
 theorem toOB_mem_filO_zero (C : GlobalTheory.MemLoc.Core l) (x : OCr l O) : toOB l O x ∈ filO O C 0 := by
-  induction x using TensorProduct.induction_on with
-  | zero => rw [map_zero]; exact zero_mem _
+  induction x using TensorProduct.inductionOn with
   | tmul o c =>
     have : (o ⊗ₜ[ℤ_[l]] c : OCr l O) = o • ((1 : O) ⊗ₜ[ℤ_[l]] c) := by
       rw [smul_tmul', smul_eq_mul, mul_one]
     rw [this, map_smul]
     exact Submodule.smul_mem _ o (toOB_tmul_mem_filO (n := 0) (GlobalTheory.BdRQuot.mem_filtration_zero _))
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y hx hy => rw [map_add]; exact add_mem hx hy
 
 theorem isUnit_l_BdRp : IsUnit (l : Per.BdRp l) := by
   refine (GlobalTheory.MemLoc.thetaD_props l).2.2.1 _ ?_

@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.RefLinked
+public import GroundTheory.HeightsAndTheta.Heights.Antisymmetric.Statements
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSt
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.FlagVarietyBoundaryDimensionDropStatement
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.TestHeightBoundStatement

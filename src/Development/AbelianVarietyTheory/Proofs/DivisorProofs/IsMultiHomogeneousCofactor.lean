@@ -15,7 +15,7 @@ theorem wcomp_mul_of_left {σ F : Type} [Field F] (w : σ → ℕ) (n : ℕ) {P 
     weightedHomogeneousComponent w n (P * Q) =
       if k ≤ n then P * weightedHomogeneousComponent w (n - k) Q else 0 := by
   classical
-  letI := weightedGradedAlgebra F w
+  let := weightedGradedAlgebra F w
   have h := DirectSum.coe_decompose_mul_of_left_mem (weightedHomogeneousSubmodule F w) (a := P) (b := Q) n
     ((mem_weightedHomogeneousSubmodule F w k P).2 hP)
   have e : ∀ (m : ℕ) (R : MvPolynomial σ F),
@@ -34,8 +34,10 @@ theorem weight_add_of_mul {σ F : Type} [Field F] (w : σ → ℕ) {P Q : MvPoly
   have hc : weightedHomogeneousComponent w j Q ≠ 0 := by
     intro h0
     have := congrArg (AddMonoidAlgebra.coeff · s) h0
-    rw [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
-    exact (mem_support_iff.mp hs) this
+    apply (mem_support_iff.mp hs)
+    simpa only [coeff_weightedHomogeneousComponent, if_pos rfl,
+      AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] using this
+
   have hne : weightedHomogeneousComponent w (k + j) (P * Q) ≠ 0 := by
     rw [wcomp_mul_of_left w (k + j) hP Q, if_pos (Nat.le_add_right k j), Nat.add_sub_cancel_left]
     exact mul_ne_zero hP0 hc
@@ -57,7 +59,7 @@ theorem GlobalTheory.HSShort.isMultiHomogeneous_cofactor :
     exact weight_add_of_mul _ h0 (ha₁ b) (ha b) s hs
   obtain ⟨s₀, hs₀⟩ : ∃ s, s ∈ G'.support := by
     by_contra hno
-    push_neg at hno
+    push Not at hno
     apply h0
     rw [show G' = 0 from by
       ext s; by_contra hc; exact hno s (mem_support_iff.mpr hc), mul_zero]

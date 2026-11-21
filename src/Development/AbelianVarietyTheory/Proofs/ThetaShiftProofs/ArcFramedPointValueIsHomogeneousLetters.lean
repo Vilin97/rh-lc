@@ -79,8 +79,8 @@ theorem evR_letters_equivariant (h1 : Out.Laws) (h2 : Out.Laws2) (hev : GlobalTh
   have c₃ : FrChg b 1 z₁ z₂ := (cT.1 _ b _ 1 _ _ _ c₁).2 c₂
   have hbu : ∀ τ i, b τ i i ≠ 0 := fun τ i => by
     have hu := ((GlobalTheory.ArcQ.frChg_exists_unique_units E H Dw l Xo c T b 1 z₁).2.2.1 z₂ c₃).1 τ
-    rw [Matrix.det_of_lowerTriangular (b τ) (fun i j hij => hb τ i j hij)] at hu
-    exact (isUnit_of_dvd_unit (Finset.dvd_prod_of_mem (fun i => b τ i i) (Finset.mem_univ i)) hu).ne_zero
+    have htri : (b τ).IsLowerTriangular := fun i j hij => hb τ i j hij
+    exact (htri.det_ne_zero_iff.mp hu.ne_zero) i
   let t : Ix Dw → Tˣ := fun o => match o with
     | none => 1
     | some x => Units.mk0 (b x.1 x.2 x.2) (hbu x.1 x.2)

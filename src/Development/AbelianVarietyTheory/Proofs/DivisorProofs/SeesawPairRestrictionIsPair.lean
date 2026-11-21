@@ -5,6 +5,7 @@ public import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAn
 public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnipMat
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorusMulVecX
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.VectorDecompositionAlongAdaptedPlane
 
 @[expose] public section
 
@@ -136,30 +137,14 @@ theorem GlobalTheory.DiagUnip.diag_stab : ∀ (F E : Type) [Field F] [NumberFiel
 
   have hspan : ∀ k : Fin d, ∃ (a b : AE F E) (w : Fin d₁ → AE F E),
       (Pi.single k 1 : Fin d → AE F E) = a • incV F H'.x + b • incV F H'.y + incM F H'.ι *ᵥ w := by
-    have key : ∀ z ∈ Submodule.span E (W.L : Set (Fin d → E)), ∃ (a b : AE F E) (w : Fin d₁ → AE F E),
-        incV F z = a • incV F H'.x + b • incV F H'.y + incM F H'.ι *ᵥ w := by
-      intro z hz
-      induction hz using Submodule.span_induction with
-      | mem z hz =>
-        obtain ⟨s₀, t₀, u₀, -, -, -, rfl⟩ := hA.split z hz
-        refine ⟨inclR (F := F) (AF F) s₀, inclR (F := F) (AF F) t₀, incV F u₀, ?_⟩
-        rw [GlobalTheory.DiagUnip.incV_add, GlobalTheory.DiagUnip.incV_add, GlobalTheory.DiagUnip.incV_smul, GlobalTheory.DiagUnip.incV_smul,
-          GlobalTheory.DiagUnip.incV_mulVec]
-        abel
-      | zero => exact ⟨0, 0, 0, by simp [GlobalTheory.DiagUnip.incV_zero]⟩
-      | add z z' _ _ h h' =>
-        obtain ⟨a, b, w, e⟩ := h
-        obtain ⟨a', b', w', e'⟩ := h'
-        refine ⟨a + a', b + b', w + w', ?_⟩
-        rw [GlobalTheory.DiagUnip.incV_add, e, e', Matrix.mulVec_add, add_smul, add_smul]; abel
-      | smul e z _ h =>
-        obtain ⟨a, b, w, h⟩ := h
-        refine ⟨inclR (F := F) (AF F) e * a, inclR (F := F) (AF F) e * b, inclR (F := F) (AF F) e • w, ?_⟩
-        rw [GlobalTheory.DiagUnip.incV_smul, h, Matrix.mulVec_smul, smul_add, smul_add, smul_smul, smul_smul]
     intro k
-    have hk : Pi.single k (1 : E) ∈ Submodule.span E (W.L : Set (Fin d → E)) := by
-      rw [hP.skew.lat.span_eq_top]; trivial
-    simpa only [GlobalTheory.DiagUnip.incV_single] using key _ hk
+    obtain ⟨a, b, u, hu⟩ := GlobalTheory.Decomp.every_vector_adapted_plane F E σ B d d₁ W W₁ H' i₀ i₁ r' s' hP.skew hA (Pi.single k 1)
+    refine ⟨inclR (F := F) (AF F) a, inclR (F := F) (AF F) b, incV F u, ?_⟩
+    have h := congrArg (incV F) hu
+    rw [GlobalTheory.DiagUnip.incV_single, GlobalTheory.DiagUnip.incV_add,
+      GlobalTheory.DiagUnip.incV_add, GlobalTheory.DiagUnip.incV_smul,
+      GlobalTheory.DiagUnip.incV_smul, GlobalTheory.DiagUnip.incV_mulVec] at h
+    linear_combination h
 
   have hm1 : mat m * incM F H'.ι = incM F H'.ι := by rw [hLι]; simp [mat]
   have hmul := GlobalTheory.DiagUnip.diag_eq (cA σ).toRingHom (incM F W.J) (incV F H'.x) (incV F H'.y) (incM F H'.ι) (mat m) t

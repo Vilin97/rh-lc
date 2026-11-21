@@ -26,6 +26,9 @@ end CL
 
 section CLback
 
+def Base.QLin {O A : Type} [CommRing O] [CommRing A] [Algebra O A] (B : Base O A) : Prop :=
+  B.Q = B.X + (B.p : A)
+
 variable {p : ℕ} [Fact p.Prime] {A : Type} [CommRing A] [Algebra ℤ_[p] A]
 
 def toCL (B : Base ℤ_[p] A) (hp : B.p = p) (hq : B.QLin) (hφ : B.PhiX (p - 1)) :
@@ -34,7 +37,7 @@ def toCL (B : Base ℤ_[p] A) (hp : B.p = p) (hq : B.QLin) (hφ : B.PhiX (p - 1)
   γA := B.γ
   π₀ := B.X
   q := B.Q
-  hq := by rw [hq, hp]; simp
+  hq := by simpa [Base.QLin, hp] using hq
   hφ := hφ
   comm := B.comm
 

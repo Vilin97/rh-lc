@@ -1,5 +1,6 @@
 module
 
+public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.GoodOrigin
 public import Development.WeilBound.CoreStatements.VolumeEquality.BaseUnifEx2
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects

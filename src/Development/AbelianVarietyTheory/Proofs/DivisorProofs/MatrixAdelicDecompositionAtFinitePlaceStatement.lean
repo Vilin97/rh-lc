@@ -16,6 +16,9 @@ open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.Genus
 open scoped TensorProduct Matrix GlobalTheory.VacAny
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.matrix_adelic_decomposition_at_finite_place : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n d : ℕ} (X : Spc F E n)
-    (Y : Spc F E d), X.L.IsLattice E → Y.L.IsLattice E → ∀ (v : Pl (F := F)) (z : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))),
+    (Y : Spc F E d), X.L.IsFullLattice E → Y.L.IsFullLattice E → ∀ (v : Pl (F := F)) (z : Matrix (Fin n) (Fin d) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))),
     At (evFin F v) z → ∃ X₀ : Matrix (Fin n) (Fin d) E, z - GlobalTheory.EmbChart.atPlace v 1 • incM F X₀ ∈ latAtV X Y v := by
-  first | exact @GlobalTheory.LatPtDecomp.decomp | exact GlobalTheory.LatPtDecomp.decomp | (intros; apply GlobalTheory.LatPtDecomp.decomp <;> assumption)
+  first
+  | exact @GlobalTheory.LatPtDecomp.decomp
+  | intro F E _ _ _ _ _ n d X Y hX hY v z hz
+    exact GlobalTheory.LatPtDecomp.decomp F E X Y hX.toIsLattice hY.toIsLattice v z hz

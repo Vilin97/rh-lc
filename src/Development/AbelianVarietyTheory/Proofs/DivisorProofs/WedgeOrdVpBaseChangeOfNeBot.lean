@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.LieModel
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsUniqueIsTanFrameOfIsEmpty
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.CrysToDRBijective
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsChernExistsUniqueAndIso

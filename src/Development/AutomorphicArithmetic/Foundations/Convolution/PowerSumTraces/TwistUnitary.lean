@@ -47,7 +47,7 @@ theorem UpperTheory.ConvolutionTheory.C.twistUnitary :
     simp only [Function.comp_apply] at b
     rw [a, b, hTS]
   let U : L2 μ ≃ₗᵢ[ℂ] L2 μ :=
-    { toLinearEquiv := LinearEquiv.ofLinear Ul.toLinearMap Ui.toLinearMap
+    { toLinearEquiv := LinearEquiv.ofLinearMap Ul.toLinearMap Ui.toLinearMap
         (LinearMap.ext hlr) (LinearMap.ext hrl)
       norm_map' := Ul.norm_map }
   have hUU : ∀ v, U v = Ul v := fun _ => rfl

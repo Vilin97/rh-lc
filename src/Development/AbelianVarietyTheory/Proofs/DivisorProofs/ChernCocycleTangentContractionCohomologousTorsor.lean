@@ -71,10 +71,12 @@ section Pts
 
 variable {R : Type} [CommRing R] {A B : Over (Sp R)} [GrpObj A] [GrpObj B]
 
+omit [GrpObj A] in
 theorem pointWithZeroSecondCoord_left {D : Type} [CommRing D] [Algebra R D] (x : Pt A D) :
     (pt0 B x).left = x.left ≫ (AbDual.inl A B).left := by
   rw [← Over.comp_left, pt0, AbDual.inl, comp_lift, Category.comp_id, MonObj.comp_one]
 
+omit [GrpObj A] in
 theorem pointWithZeroSecondCoord_mem_chart_of_restricted (P : LB (A ⊗ B).left) {D : Type} [CommRing D] [Algebra R D] {x : Pt A D} {c : P.ι}
     (h : ⊤ ≤ x.left ⁻¹ᵁ chartsA P c) : ⊤ ≤ (pt0 B x).left ⁻¹ᵁ P.U c := by
   rw [pointWithZeroSecondCoord_left, Scheme.Hom.comp_preimage]
@@ -127,7 +129,7 @@ abbrev gv (L : LB X) {C : Type} [CommRing C] (x : Sp C ⟶ X) (a b : L.ι) : C :
   evU x (L.U a ⊓ L.U b) (L.g a b).val
 
 theorem gv_eq (L : LB X) {C : Type} [CommRing C] (x : Sp C ⟶ X) {a b : L.ι}
-    (h : ⊤ ≤ x ⁻¹ᵁ (L.U a ⊓ L.U b)) : gv L x a b = evalAt x (L.U a ⊓ L.U b) h (L.g a b).val := dif_pos h
+    (h : ⊤ ≤ x ⁻¹ᵁ (L.U a ⊓ L.U b)) : gv L x a b = evalAt x (L.U a ⊓ L.U b) h (L.g a b).val := dite_eq_left h
 
 theorem isUnit_gv (L : LB X) {C : Type} [CommRing C] (x : Sp C ⟶ X) {a b : L.ι}
     (ha : ⊤ ≤ x ⁻¹ᵁ L.U a) (hb : ⊤ ≤ x ⁻¹ᵁ L.U b) : IsUnit (gv L x a b) := by
@@ -215,16 +217,16 @@ theorem contr_cohom : ∀ (R : Type) [CommRing R] (A B : Over (Sp R)) [GrpObj A]
   refine ⟨fun D _ _ x ↦ if h : Sm (chartsA P) x then -k h else 0, ?_⟩
   intro D _ _ D' _ _ φ x hx
   have hx' : Sm (chartsA P) (spOver φ ≫ x) := hx.map φ
-  simp only [dif_pos hx, dif_pos hx', Fn1.add, Fn1.neg]
+  simp only [dite_eq_left hx, dite_eq_left hx', Fn1.add, Fn1.neg]
   let aM : T0 hx ⟶ T0 hx' := ObjectProperty.homMk (aHom φ x)
   let bM : TV hx ⟶ TV hx' := ObjectProperty.homMk (bHom v φ x)
   let tM : TT hx ⟶ TT hx' := ObjectProperty.homMk (τHom φ x)
-  have c1 : sM hx ≫ tM = aM ≫ sM hx' := ObjectProperty.hom_ext _ (Thick.hom_ext fun r ↦ by
+  have c1 : sM hx ≫ tM = aM ≫ sM hx' := ObjectProperty.hom_ext _ (Thick.Hom.ext' (AlgHom.ext fun r ↦ by
     change epsHom φ (TrivSqZeroExt.inl r) = TrivSqZeroExt.inl (φ r)
     ext
     · exact fst_epsHom φ _
-    · exact (snd_epsHom' φ _).trans (map_zero φ))
-  have c2 : iM hx ≫ tM = bM ≫ iM hx' := ObjectProperty.hom_ext _ (Thick.hom_ext fun r ↦ rfl)
+    · exact (snd_epsHom' φ _).trans (map_zero φ)))
+  have c2 : iM hx ≫ tM = bM ≫ iM hx' := ObjectProperty.hom_ext _ (Thick.Hom.ext' (AlgHom.ext fun r ↦ rfl))
   have uU : ∀ (S S' : SmallCat P.U) (f : S ⟶ S'), IsUnit (S'.obj.π (U S S' f)) := fun S S' f ↦ by
     rw [hU]; exact (P.g _ _).isUnit.map _
   have key : ∀ (S S' : SmallCat P.U) (f : S ⟶ S') (g : S' ⟶ TT hx'),
@@ -267,9 +269,9 @@ theorem contr_cohom : ∀ (R : Type) [CommRing R] (A B : Over (Sp R)) [GrpObj A]
         (f : TV hx ⟶ smallAt P.U y h) (f' : TV hx ⟶ smallAt P.U y' h'),
         (∀ r, f.hom.φ r = f'.hom.φ r) → n _ _ f = n _ _ f' := by
       rintro y _ rfl h h' f f' hf
-      have : f = f' := ObjectProperty.hom_ext _ (Thick.hom_ext hf)
+      have : f = f' := ObjectProperty.hom_ext _ (Thick.Hom.ext' (AlgHom.ext hf))
       subst this; rfl
-    simp only [sndPull, cocOf, dif_pos (sV hx)]
+    simp only [sndPull, cocOf, dite_eq_left (sV hx)]
     exact congrArg (TrivSqZeroExt.snd (R := D') (M := D'))
       (tr _ _ (spOver_epsHom_ptV v φ x).symm (sV hx') ((sV hx).map (epsHom φ)) bM
         (ObjectProperty.homMk (trivMap (epsHom φ) (ptV v x))) fun _ ↦ rfl)

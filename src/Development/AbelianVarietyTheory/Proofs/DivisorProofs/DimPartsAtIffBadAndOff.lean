@@ -337,7 +337,7 @@ theorem TameTie.idemTie (hG : Green) {om : ∀ i : Fin 2, (ZMod (D.host.g i))ˣ 
     have e2 := Label.label_unique (L kv.1) (h5 _) _ (m kv.1 kv.2).1 _ _ (m kv.1 kv.2).2 (e1 ▸ (m' kv.1 kv.2).2)
     funext i
     rw [← Formalism.CyclotomicNorms.Sqf.coeff_monicOf_lt (a kv) i, ← Formalism.CyclotomicNorms.Sqf.coeff_monicOf_lt (a' kv) i]
-    exact congrArg (Polynomial.coeff · i) e2
+    exact congrArg (fun p => p.coeff i) e2
   · obtain ⟨s, hs, rfl⟩ := (Set.Finite.mem_toFinset _).1 hτ
     obtain ⟨a, ha⟩ := exa s
     have hg := (good a s ha).2 hs

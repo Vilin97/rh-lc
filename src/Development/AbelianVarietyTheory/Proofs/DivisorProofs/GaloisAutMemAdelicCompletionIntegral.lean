@@ -23,8 +23,7 @@ theorem exists_sub_notMem {A B : Type} [CommRing A] [CommRing B] [IsDomain B] [A
   let φ : B ⊗[A] B →ₐ[A] B := Algebra.TensorProduct.productMap (AlgHom.id A B) σ
   have h1 : ∀ z, Algebra.TensorProduct.lmul' A (S := B) z - φ z ∈ P := by
     intro z
-    induction z using TensorProduct.induction_on with
-    | zero => simp
+    induction z using TensorProduct.inductionOn with
     | tmul x y =>
       have := P.mul_mem_left x (hcon y)
       simpa [φ, mul_sub] using this
@@ -202,7 +201,7 @@ theorem galoisAut_mem_adelicCompletionIntegral (c : E ≃ₐ[F] E) {a : RA F E} 
     rw [Model.sg_tmul]
     exact AddSubgroup.subset_closure ⟨a, ha, c s, IsIntegral.map (c : E →+* E).toIntAlgHom hs, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem smul_mem_hat (Λ : Submodule (𝓞 E) (Fin n → E)) {a : RA F E} {z : Fin n → RA F E}

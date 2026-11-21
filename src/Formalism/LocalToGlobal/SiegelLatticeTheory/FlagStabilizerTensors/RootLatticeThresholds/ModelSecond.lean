@@ -13,6 +13,8 @@ namespace Formalism.L2.SG.lowerTriangularModel
 
 variable {m : ℕ} (w : Equiv.Perm (Fin m))
 
+local notation "L" => Formalism.FourierDecayAlt.P.Dx2.Rad.low w
+
 def ht (q : Formalism.FourierDecayAlt.C2.Lstidx w) : ℕ := q.1.1.val - q.1.2.val
 
 theorem low_upper (y : Formalism.FourierDecayAlt.C2.Lstidx w → ℂ) (i j : Fin m) (h : i < j) : L y i j = 0 := by
@@ -28,7 +30,7 @@ theorem low_bt (y : Formalism.FourierDecayAlt.C2.Lstidx w → ℂ) : (L y).Block
   exact low_upper w y i j hij
 
 theorem low_det (y : Formalism.FourierDecayAlt.C2.Lstidx w → ℂ) : (L y).det = 1 := by
-  rw [Matrix.det_of_lowerTriangular _ (low_bt w y)]
+  rw [Matrix.det_of_isLowerTriangular _ (low_bt w y)]
   exact Finset.prod_eq_one fun i _ => low_diag w y i
 
 abbrev M (y : Formalism.FourierDecayAlt.C2.Lstidx w → ℂ) : Matrix (Fin m) (Fin m) ℂ := (L y)⁻¹

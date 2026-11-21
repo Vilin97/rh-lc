@@ -44,9 +44,6 @@ namespace GlobalTheory.RecT
 
 open GlobalTheory.RowTie
 
-variable {rc : RecFam} {D : D7} {T : WDTie D.nd D.naut}
-
-
 section Read
 
 open Formalism.MainNotions Formalism.MainNotions.N ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 GlobalTheory.UnitaryBC GlobalTheory.FormDict GlobalTheory.DefiniteBC

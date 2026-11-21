@@ -127,7 +127,8 @@ theorem fullLat_of (hV : ∀ la, ∀ v ∈ Vs la, IsVal la v) (C : Submodule K R
     (N : (K →+* ℂ) → R → ℝ) (hN : ∀ σ, IsNormOn C σ (N σ)) (B : ℝ)
     (hB : ∀ F ∈ C, (∀ la, ∀ v ∈ Vs la, 0 ≤ v F) → F ≠ 0 → -B ≤ ∑ σ : K →+* ℂ, Real.log (N σ F))
     (h : ∀ f ∈ C, ∃ s : 𝓞 K, s ≠ 0 ∧ ∀ la, ∀ v ∈ Vs la, 0 ≤ v (s • f)) : Formalism.IndefR.FWT.FullLat C Vs hV :=
-  Submodule.IsLattice.of_fg K (fg_latOf_of_lowerBound C Vs hV N hN B hB)
+  { Submodule.IsLattice.of_fg K (fg_latOf_of_lowerBound C Vs hV N hN B hB) with
+    span_eq_top := span_latOf_eq_top hV C h }
 
 end Abstract
 

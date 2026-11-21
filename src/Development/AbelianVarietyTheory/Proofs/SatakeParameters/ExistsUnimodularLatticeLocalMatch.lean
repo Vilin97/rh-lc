@@ -140,7 +140,7 @@ theorem exists_glue {L L' : Submodule (𝓞 E) (Sp E n)} (hL : Submodule.IsLatti
   · have hsup : Submodule.IsLattice E (L' ⊔ L) :=
       ⟨hL'.fg.sup hL.fg, by
         intro s hs hli
-        exact (LinearIndependent.iff_fractionRing _ _).mp hli
+        exact (LinearIndependent.iff_fractionRing _ _).mp hli⟩
     exact lattice_of_smul hL' hsup (sup_le_sup Submodule.smul_le_right Submodule.smul_le_right) hs0 hA
   · obtain ⟨t, htP, htQ⟩ := exists_mem_notMem hQ.symm
     have ht : t ^ k ∈ P.asIdeal ^ k := Ideal.pow_mem_pow htP k

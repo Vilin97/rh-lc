@@ -994,7 +994,8 @@ private theorem whc_ne_lemma_2 {σ M : Type} [AddCommMonoid M] (w : σ → M) {m
   classical
   rw [mem_weightedHomogeneousSubmodule] at h
   ext d
-  rw [coeff_weightedHomogeneousComponent, coeff_zero]
+  change (weightedHomogeneousComponent w n φ).coeff d = 0
+  rw [coeff_weightedHomogeneousComponent]
   split_ifs with hd
   · by_contra hne
     exact hnm (hd.symm.trans (h hne))
@@ -2665,7 +2666,7 @@ theorem count_le (bad : ι → Prop) [DecidablePred bad]
   have hπVF : ∀ i, ∀ g ∈ Cset p L j0 J M, π i g ∈ (GA p (r := r) L j0).gS {h i} := by
     intro i g hg
     refine Submodule.iSup_induction _ (motive := fun x => π i x ∈ (GA p (r := r) L j0).gS {h i}) (hsp hg) ?_
-      (by simp) (fun x y hx hy => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy)
+      (by simp) (fun x y hx hy => by rw [map_add]; exact add_mem hx hy)
     intro k x hx
     by_cases hk : k = i
     · subst hk; rw [hπ1 k x hx]; exact hx
@@ -2738,7 +2739,7 @@ theorem transport_le (i0 : ι) (v : MvPolynomial (Fin N × Fin r) ℚ_[p]) (hv :
   have hVF : ∀ g ∈ Cset p L j0 J M, φ g ∈ (GA p (r := r) L j0).gS {v} := by
     intro g hg
     refine Submodule.iSup_induction _ (motive := fun x => φ x ∈ (GA p (r := r) L j0).gS {v}) (hsp hg) ?_
-      (by simp) (fun x y hx hy => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy)
+      (by simp) (fun x y hx hy => by rw [map_add]; exact add_mem hx hy)
     intro k x hx
     by_cases hk : k = i0
     · subst hk

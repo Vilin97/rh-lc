@@ -124,10 +124,32 @@ def tpD : TupTied (DL x L) (cfD x L) (chD L l) := (tpL L l.c.tp)
 def expD (X : NExpTied (withLoc L)) : NExpTied (DL x L) := (X)
 
 theorem fitsL : (oL x L).Fits :=
-  ⟨⟨x.fits.div.left, fun _ _ G => by
-      rw [AbsolutelyIrreducibleSpan.sharp_RRDef]
-      have h := (AbsolutelyIrreducibleSpan.sharp_RRDef _).mp (x.fits.div.2 x.o.S x.o.N G)
-      with_unfolding_all exact (h :)⟩,
+  ⟨⟨x.fits.div.left, fun S N G => by
+      let a := assemble B w.C (P.q.W x.o.η x.o.hη) x.o.V x.o.S x.o.N G
+      let b := assemble B w.C (P.q.W (oL x L).η (oL x L).hη) (oL x L).V S N G
+      change (RowSide.sharp b).RRDef
+      have h : (RowSide.sharp a).RRDef := x.fits.div.2 x.o.S x.o.N G
+      have hdown (μ : w.C.Tup) (j : ℕ) :
+          (RowSide.sharp b).downTo μ j = (RowSide.sharp a).downTo μ j := by
+        induction j with
+        | zero => rfl
+        | succ j ih =>
+          simp only [RowSide.downTo.eq_2, ih] <;> with_unfolding_all rfl
+      have hiota (μ : w.C.Tup) : (RowSide.sharp b).iota μ = (RowSide.sharp a).iota μ := by
+        unfold RowSide.iota
+        rw [hdown] <;> with_unfolding_all rfl
+      have hset (μ : w.C.Tup) : (RowSide.sharp b).RRset μ = (RowSide.sharp a).RRset μ := by
+        simp only [RowSide.RRset, RowSide.LamSet, RowSide.Qsp, RowSide.Usp, hiota] <;> rfl
+      unfold RowSide.RRDef at h ⊢
+      intro z
+      refine (h z).trans (forall_congr' fun v => ?_)
+      apply Iff.of_eq
+      let z' : a.div.RR.V := by with_unfolding_all exact z
+      with_unfolding_all
+        exact (congrArg (fun s : Set a.what₂.EE =>
+          ∃ d : 𝓞 a.what₂.LL, d ∉ (a.plEq v).asIdeal ∧
+            d • z' ∈ Submodule.span (𝓞 a.what₂.LL) {y | a.jEE y ∈ s})
+          (hset (a.what₂.muAt v)).symm :)⟩,
     ⟨(x.fits.grp.pl), (x.fits.grp.teich), (x.fits.grp.chi), (x.fits.grp.ser)⟩,
     ⟨(x.fits.grpAt.pl), (x.fits.grpAt.idem), (x.fits.grpAt.cen)⟩,
     fun eR h => ⟨((x.fits.cen eR h).amb), ((x.fits.cen eR h).mt)⟩⟩

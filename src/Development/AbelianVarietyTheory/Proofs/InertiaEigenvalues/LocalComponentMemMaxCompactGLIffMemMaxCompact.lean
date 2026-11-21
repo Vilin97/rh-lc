@@ -34,7 +34,7 @@ theorem kappa_mem_int {L : Type} [Field L] [NumberField L] [IsCMField L] {n : â„
       exact GlobalTheory.AdeleBaseChange.adMap_int ha w
   | one => rw [map_one]; exact one_mem _
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | neg a _ ha => rw [map_neg]; exact neg_mem ha
   | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
 

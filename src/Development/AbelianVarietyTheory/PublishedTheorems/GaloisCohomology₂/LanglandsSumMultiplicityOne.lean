@@ -37,7 +37,8 @@ variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAl
   {rc : IrrGL (k := w.adicCompletion E) → WD h}
 
 theorem IsRec.segment (H : IsRec h rc) {Δ : Segment (w.adicCompletion E)} {x : IrrGL (k := w.adicCompletion E)}
-    (hx : IsLSeg Δ x.rep) : rc x = ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp Δ.len) := by
+    (hx : IsLSeg Δ x.rep) :
+    rc x = ((rc Δ.first).lpTw (((Δ.len : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) Δ.len) := by
   obtain ⟨a, ha, ε, -, H⟩ := H
   exact (H.langlands [Δ] x hx.isL).trans (WD.lpSum_zero _)
 

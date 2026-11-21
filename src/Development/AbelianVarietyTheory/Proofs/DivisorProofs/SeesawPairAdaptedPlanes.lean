@@ -30,10 +30,10 @@ theorem hTens_sandwich {R E : Type} [CommRing R] [CommRing E] [Algebra R E] (c :
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 theorem span_decomp {B : Base F E} {n n₁ : ℕ} {Y : Spc F E n} {Y₁ : Spc F E n₁} {H : Plane E n n₁} {i₀ i₁ : ℕ}
-    (hlat : Y.L.IsLattice E) (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (z : Fin n → E) :
+    (hlat : Y.L.IsFullLattice E) (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (z : Fin n → E) :
     ∃ (s t : E) (u : Fin n₁ → E), z = s • H.x + H.ι *ᵥ u + t • H.y := by
   have hm : z ∈ Submodule.span E (Y.L : Set (Fin n → E)) := by
-    rw [Submodule.IsLattice.span_eq_top (self := hlat)]; trivial
+    rw [Submodule.IsFullLattice.span_eq_top (self := hlat)]; trivial
   induction hm using Submodule.span_induction with
   | mem z hz =>
     obtain ⟨s, t, u, -, -, -, h⟩ := hH.split z hz
@@ -48,7 +48,7 @@ theorem span_decomp {B : Base F E} {n n₁ : ℕ} {Y : Spc F E n} {Y₁ : Spc F 
     exact ⟨c * s, c * t, c • u, by rw [Matrix.mulVec_smul]; module⟩
 
 theorem indep {B : Base F E} {n n₁ : ℕ} {Y : Spc F E n} {Y₁ : Spc F E n₁} {H : Plane E n n₁} {i₀ i₁ : ℕ}
-    (hlat : Y.L.IsLattice E) (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (s t : E) (u : Fin n₁ → E)
+    (hlat : Y.L.IsFullLattice E) (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (s t : E) (u : Fin n₁ → E)
     (h : s • H.x + H.ι *ᵥ u + t • H.y = 0) : s = 0 ∧ u = 0 ∧ t = 0 := by
   let b : Fin n₁ ⊕ Fin 2 → (Fin n → E) := Sum.elim (fun k i => H.ι i k) ![H.x, H.y]
   have hsum : ∀ g : Fin n₁ ⊕ Fin 2 → E, ∑ i, g i • b i = g (Sum.inr 0) • H.x + H.ι *ᵥ (g ∘ Sum.inl) + g (Sum.inr 1) • H.y := by
@@ -165,7 +165,7 @@ theorem row_eq (y : Fin n → E) (z₂ : Fin d₁ → E) (z : Matrix (Fin n₁) 
   congr 1
   congr 1 <;> exact Finset.sum_congr rfl fun k _ => by ring
 
-theorem mixed_injective (hX : X.L.IsLattice E) (hW : W.L.IsLattice E) (hH : H.IsAdapted σ B X X₁ j₀ j₁)
+theorem mixed_injective (hX : X.L.IsFullLattice E) (hW : W.L.IsFullLattice E) (hH : H.IsAdapted σ B X X₁ j₀ j₁)
     (hH' : H'.IsAdapted σ B W W₁ i₀ i₁) (y : Fin n → E) (z₂ : Fin d₁ → E) (z : Matrix (Fin n₁) (Fin d₁) E)
     (h : Matrix.vecMulVec y H'.x + Matrix.vecMulVec H.x (H'.ι *ᵥ z₂) + H.ι * z * H'.ιᵀ = 0) :
     y = 0 ∧ z₂ = 0 ∧ z = 0 := by

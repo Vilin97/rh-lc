@@ -143,7 +143,7 @@ theorem valuation_conj (x : K.E) : (IsDiscreteValuationRing.maximalIdeal K.O).va
   have hmono : ∀ a b : K.E, b ≠ 0 → v a ≤ v b → v (K.c a) ≤ v (K.c b) := by
     intro a b hb h
     have h1 : v (a / b) ≤ 1 := by
-      rw [map_div₀]; exact div_le_one_of_le₀ h zero_le'
+      rw [map_div₀]; exact div_le_one_of_le₀ h zero_le
     have h2 := val_conj_le _ h1
     rw [map_div₀, map_div₀, div_le_one₀ (zero_lt_iff.2 (by simpa using hb))] at h2
     exact h2
@@ -446,7 +446,7 @@ theorem adjoin_stable (B : InvAlg K) (hu : B.g * B.σ B.g = 1) (hi : IsIntegral 
   induction hy using Algebra.adjoin_induction with
   | mem x hx => rw [Set.mem_singleton_iff.1 hx]; exact hg
   | algebraMap a => obtain ⟨b, hb⟩ := hO a; rw [hb]; exact Subalgebra.algebraMap_mem _ _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
 end GlobalTheory.UnitLemma.Orbit

@@ -173,12 +173,13 @@ theorem isFullLattice_map {O : Type} [CommRing O] [Algebra O F] {V W : Type}
   haveI := isLattice_map φ L hL.toIsLattice
   refine { span_eq_top := ?_ }
   change Submodule.span F (φ.toLinearMap '' (L : Set V)) = ⊤
-  rw [← Submodule.map_span, hL.span_eq_top, Submodule.map_top, LinearEquiv.range]
+  rw [← Submodule.map_span φ.toLinearMap, hL.span_eq_top, Submodule.map_top, LinearEquiv.range]
 
 theorem latticeNormalFormCoord_of : GlobalTheory.IndefiniteRowSideFullHecke.FlagUnipotentSemidirect.LatticeNormalForm → GlobalTheory.IndefiniteRowSideFullHecke.FlagUnipotentSemidirect.LatticeNormalFormCoord := by
   intro H O F _ _ _ _ _ _ q hq n c L hL Λ hΛ
   let φ := LinearEquiv.ofInjective (Loc.inX F n c) inX_injective
-  obtain ⟨r, e, z, hr, ⟨z', rfl⟩, h⟩ := H O F (Fin (n + c) → F) q hq c _ _ isFrame _ (isFullLattice_map φ L hL) Λ hΛ
+  obtain ⟨r, e, z, hr, ⟨z', rfl⟩, h⟩ := H O F (Fin (n + c) → F) q hq c _ _ isFrame _ (by
+    first | exact isFullLattice_map φ L hL | exact isLattice_map φ L hL) Λ hΛ
   refine ⟨r, mem_unipotentRadical_of_isSemidirect hr, e, z', ?_⟩
   rw [h]
   congr 1

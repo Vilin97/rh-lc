@@ -2,6 +2,8 @@ module
 
 public import Formalism.AdmissibleDesigns.SelmerInequalityOpen
 public import Formalism.AdmissibleDesigns.CharacterTrivialWhereLattice
+public import Formalism.AdmissibleDesigns.RealDisplayAllK
+public import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapSecondPlace
 
 @[expose] public section
 
@@ -13,7 +15,8 @@ open Finset Classical Formalism.BasicNotions
 
 namespace Formalism.MainNotions.N.K.St
 
-open Formalism.NG Formalism.RepresentationBoundsCohomology.BR Formalism.RepresentationBoundsCohomology.TorsionBoundCyclotomic Formalism.RepresentationBoundsCohomology.JL Formalism.RepresentationBoundsCohomology.JT Formalism.RepresentationBoundsCohomology.SplitClassesAll Formalism.RepresentationBoundsCohomology.LocallyConstantCohomology Formalism.RepresentationBoundsCohomology.FIN
+open Formalism.NG Formalism.RepresentationBoundsCohomology.BR Formalism.RepresentationBoundsCohomology.TorsionBoundCyclotomic Formalism.RepresentationBoundsCohomology.JL Formalism.RepresentationBoundsCohomology.JT Formalism.RepresentationBoundsCohomology.LocallyConstantCohomology
+open Formalism.RepresentationBoundsCohomology.FIN (InChiFixReal InChiLoc InRhoFixReal2 decs)
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.RepresentationBoundsCohomology.LOC
 open ReciprocityTheory.ChartRestriction.T2 (PadicCoeff FracTop IsFGTop cupFG)
 open Formalism.RepresentationBoundsCohomology.ringDataObjects (RingData RingDef)

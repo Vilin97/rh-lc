@@ -143,8 +143,7 @@ open TensorProduct LinearMap
 theorem exists_fg_tens {S A B : Type*} [CommRing S] [AddCommGroup A] [Module S A] [AddCommGroup B] [Module S B]
     (y : A ⊗[S] B) : ∃ (A0 : Submodule S A) (B0 : Submodule S B) (y0 : A0 ⊗[S] B0), A0.FG ∧ B0.FG ∧
       TensorProduct.map A0.subtype B0.subtype y0 = y := by
-  induction y using TensorProduct.induction_on with
-  | zero => exact ⟨⊥, ⊥, 0, Submodule.fg_bot, Submodule.fg_bot, map_zero _⟩
+  induction y using TensorProduct.inductionOn with
   | tmul a b =>
     exact ⟨S ∙ a, S ∙ b, ⟨a, Submodule.mem_span_singleton_self a⟩ ⊗ₜ ⟨b, Submodule.mem_span_singleton_self b⟩,
       Submodule.fg_span_singleton a, Submodule.fg_span_singleton b, rfl⟩
@@ -160,8 +159,7 @@ theorem exists_fg_tens {S A B : Type*} [CommRing S] [AddCommGroup A] [Module S A
 theorem comm_lTensor {S M N N' : Type*} [CommRing S] [AddCommGroup M] [Module S M] [AddCommGroup N] [Module S N]
     [AddCommGroup N'] [Module S N'] (h : N →ₗ[S] N') (z : M ⊗[S] N) :
     TensorProduct.comm S M N' (lTensor M h z) = rTensor M h (TensorProduct.comm S M N z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul a b => rfl
   | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
@@ -262,9 +260,8 @@ theorem tensor_locally_zero_of_exact {A B M N : Scheme.{0}ᵒᵖ ⥤ ModuleCat.{
       locZero2 A B V := by
     refine sup_le ?_ ?_
     · rintro _ ⟨u, rfl⟩
-      induction u using TensorProduct.induction_on with
-      | zero => simp
-      | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+      induction u using TensorProduct.inductionOn with
+      | add a b ha hb => rw [map_add]; exact add_mem ha hb
       | tmul a b =>
         have hb : (g.app (op V)).hom b.1 = 0 := by
           have := b.2
@@ -274,9 +271,8 @@ theorem tensor_locally_zero_of_exact {A B M N : Scheme.{0}ᵒᵖ ⥤ ModuleCat.{
         change TensorProduct.map _ _ (a ⊗ₜ b.1) = 0
         rw [TensorProduct.map_tmul, h, TensorProduct.tmul_zero]
     · rintro _ ⟨u, rfl⟩
-      induction u using TensorProduct.induction_on with
-      | zero => simp
-      | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+      induction u using TensorProduct.inductionOn with
+      | add a b ha hb => rw [map_add]; exact add_mem ha hb
       | tmul a b =>
         have ha : (f.app (op V)).hom a.1 = 0 := by
           have := a.2
@@ -309,9 +305,8 @@ theorem tens_locIm {ι : Type} {A B M N : ι → Scheme.{0}ᵒᵖ ⥤ ModuleCat.
   | zero => exact zero_mem _
   | add a b ha hb => exact add_mem ha hb
   | of i y =>
-    induction y using TensorProduct.induction_on with
-    | zero => rw [map_zero]; exact zero_mem _
-    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    induction y using TensorProduct.inductionOn with
+    | add a b ha hb => rw [map_add]; exact add_mem ha hb
     | tmul a b =>
       refine loc_mono (fun V k h => ?_) (loc_and (hfs i U a) (hgs i U b))
       obtain ⟨⟨a', ha'⟩, ⟨b', hb'⟩⟩ := h

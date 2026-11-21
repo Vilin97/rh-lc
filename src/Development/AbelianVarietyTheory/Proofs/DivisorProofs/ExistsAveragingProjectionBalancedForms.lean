@@ -23,7 +23,6 @@ theorem exists_avg_proj_balForms : ∀ (O : Type) [CommRing O] (bar : O → O) (
   have hP : ∀ β x y, P β x y = ∑ s, ∑ t, T s t * β (b s • x) (b t • y) := by
     intro β x y
     simp [P, f, LinearMap.sum_apply]
-    rfl
 
   let sp : X → O →ₗ[ℤ] X := fun y => (LinearMap.toSpanSingleton O X y).restrictScalars ℤ
   have hsp : ∀ y u, sp y u = u • y := fun y u => rfl

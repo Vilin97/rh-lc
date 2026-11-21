@@ -73,18 +73,6 @@ include hm
 
 end Residual
 
-section Concl
-
-variable {i : Fin D.R.m} {σ : D.what₂.LL →+* ℂ}
-
-variable {t : T} {s : ℂ →+* ℂ} {P : LevelP R.Pg D.R.r ℂ} (X : LiftFormsMainTerm.LiftInput R i σ)
-  (HV : HMod (Bridge.Gf (Vc D i) → X.coef.W)) (φ : HV.H ≃ₗ[ℂ] X.src t s P)
-  (hφ : ∀ x, (φ x : GA D (Vc D i) → X.coef.W) = X.coef.ext (HV.e x))
-  (hip : ∀ x y, IntegrableOn (fun h => ⟪X.coef.ext (HV.e x) h, X.coef.ext (HV.e y) h⟫_ℂ) X.fd X.ν ∧
-    ∫ h in X.fd, ⟪X.coef.ext (HV.e x) h, X.coef.ext (HV.e y) h⟫_ℂ ∂X.ν = ⟪x, y⟫_ℂ)
-
-end Concl
-
 variable (R)
 
 variable {R} {F : Face D A}

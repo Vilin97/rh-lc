@@ -17,8 +17,9 @@ theorem plane_iota_leftInverse : ∀ (F E : Type) [Field F] [NumberField F] [Fie
   intro F E _ _ _ _ _ σ B _ n n₁ W W₁ H i₀ i₁ r s hW hH
   set f : (Fin n₁ → E) →ₗ[E] (Fin n → E) := Matrix.toLin' H.ι with hf
   have htop : Submodule.span E {H.x} ⊔ Submodule.span E {H.y} ⊔ LinearMap.range f = ⊤ := by
-    have hl := hW.lat
-    rw [eq_top_iff, ← hl.span_eq_top, Submodule.span_le]
+    haveI := hW.lat
+    rw [eq_top_iff, ← Submodule.IsFullLattice.span_eq_top (A := E) (M := W.L),
+      Submodule.span_le]
     intro z hz
     obtain ⟨s, t, u, -, -, -, rfl⟩ := hH.split z hz
     refine Submodule.add_mem _ (Submodule.add_mem _ ?_ ?_) ?_

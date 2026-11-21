@@ -95,7 +95,7 @@ theorem exists_gens {O : Type} [CommRing O] {X : Scheme.{0}} (s : X ⟶ Sp O) [L
         have := DFunLike.congr_fun hφβ r
         change ψ₁ ((φ.comp β) r) ∈ _
         rw [this]; exact h1 r
-      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
       | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
     let eq := RingEquiv.ofBijective a₁.rangeRestrict ⟨fun x y h => ha (congrArg Subtype.val h), a₁.rangeRestrict_surjective⟩
     let γ₁ : C →+* V₁ := eq.symm.toRingHom.comp ((ψ₁.comp φ).codRestrict a₁.range hall)
