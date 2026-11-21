@@ -6,8 +6,8 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFinite
 
 @[expose] public section
 
-open NumberField IsDedekindDomain GlobalTheory.FixNormCls GlobalTheory.LocalDivisor
-open scoped TensorProduct Classical
+open NumberField IsDedekindDomain GlobalTheory.FixNormCls
+open scoped TensorProduct Classical nonZeroDivisors
 
 namespace GlobalTheory.FixNormField
 

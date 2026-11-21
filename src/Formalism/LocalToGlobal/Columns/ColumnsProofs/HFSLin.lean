@@ -30,7 +30,7 @@ theorem hfs_iSup_maxGen_of_splits [FiniteDimensional L W] (f : Module.End L W) (
       (minpoly L f).Splits → finrank L W = n → ⨆ μ, f.maxGenEigenspace μ = ⊤ from H _ W f hs rfl
   intro n
   induction n using Nat.strong_induction_on with
-  | h n ih =>
+  | ind n ih =>
   intro W _ _ _ f hs h_dim
   rcases n with - | n
   · rw [← top_le_iff]
@@ -309,6 +309,8 @@ theorem sum_lift_coordForm (φ : S'.EqFun) : ∑ k, F.e k • b.lift (b.coordFor
 
 
 theorem mem_span_lift (φ : S'.EqFun) : φ ∈ Submodule.span L (Set.range b.lift) := by
+  classical
+  let ⟨F⟩ := CoefFrame.nonempty ι
   rw [← b.sum_lift_coordForm F φ]
   exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
 

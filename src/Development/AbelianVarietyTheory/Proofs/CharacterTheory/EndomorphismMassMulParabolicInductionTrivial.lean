@@ -13,6 +13,7 @@ open Polynomial GlobalTheory.CuspGL
 
 namespace GlobalTheory.CuspGL.MassMult
 
+open scoped Classical
 
 theorem finsum_subtype_dite {α : Type} [Fintype α] (p : α → Prop) (f : {x // p x} → ℂ) :
     ∑ᶠ x, f x = ∑ x, if h : p x then f ⟨x, h⟩ else 0 := by

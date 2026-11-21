@@ -19,20 +19,20 @@ variable {p : ℕ} [hp : Fact p.Prime] {Ω : Type} [Field Ω] [Algebra (O0 p) Ω
 def zpHom : ℤ_[p] →+* Ω :=
   (algebraMap (O0 p) Ω).comp ((algebraMap (Lau p) (O0 p)).comp HahnSeries.C)
 
-theorem zpHom_apply (z : ℤ_[p]) : zpHom Ω z = zp Ω z := by
+theorem zpHom_apply (z : ℤ_[p]) : zpHom (Ω := Ω) z = zp Ω z := by
   simp [zpHom, zp, HahnSeries.C_apply]
 
 theorem zp_neg (z : ℤ_[p]) : zp Ω (-z) = - zp Ω z := by
   rw [← zpHom_apply, map_neg, zpHom_apply]
 
-theorem zpHom_injective (hc : IsClo p Ω) : Function.Injective (zpHom (p := p) Ω) := by
+theorem zpHom_injective (hc : IsClo p Ω) : Function.Injective (zpHom (p := p) (Ω := Ω)) := by
   haveI := Basic.charZero_of_isClo hc
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro m hm
   by_contra h0
   rw [PadicInt.unitCoeff_spec h0, map_mul, map_pow, map_natCast] at hm
-  have hu : zpHom Ω ((PadicInt.unitCoeff h0 : ℤ_[p])) ≠ 0 :=
-    ((Units.isUnit (PadicInt.unitCoeff h0)).map (zpHom Ω)).ne_zero
+  have hu : zpHom (Ω := Ω) ((PadicInt.unitCoeff h0 : ℤ_[p])) ≠ 0 :=
+    ((Units.isUnit (PadicInt.unitCoeff h0)).map (zpHom (Ω := Ω))).ne_zero
   have hp0 : (p : Ω) ^ m.valuation ≠ 0 := pow_ne_zero _ (Nat.cast_ne_zero.2 hp.out.ne_zero)
   exact mul_ne_zero hu hp0 hm
 
@@ -40,7 +40,7 @@ theorem exists_coords (hc : IsClo p Ω) {ι : Type} [Fintype ι] (E : ι → Ω)
     ∃ (κ : Type) (_ : Fintype κ) (f : κ → Ω) (M : ι → κ → ℤ_[p]),
       (∀ k, E k = ∑ i, zp Ω (M k i) * f i) ∧
       ∀ v : ι → ℤ_[p], ∑ k, zp Ω (v k) * E k = 0 → ∀ i, ∑ k, v k * M k i = 0 := by
-  letI : Algebra ℤ_[p] Ω := (zpHom (p := p) Ω).toAlgebra
+  letI : Algebra ℤ_[p] Ω := (zpHom (p := p) (Ω := Ω)).toAlgebra
   have hsm : ∀ (m : ℤ_[p]) (x : Ω), m • x = zp Ω m * x := fun m x => by
     rw [Algebra.smul_def, RingHom.algebraMap_toAlgebra, zpHom_apply]
   haveI : NoZeroSMulDivisors ℤ_[p] Ω := ⟨fun {m x} hmx => by
@@ -68,7 +68,7 @@ theorem exists_coords (hc : IsClo p Ω) {ι : Type} [Fintype ι] (E : ι → Ω)
       exact hv
     have := congrArg (fun s => b.repr s i) h0
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+      simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
       smul_eq_mul, map_zero, Finsupp.coe_zero, Pi.zero_apply] at this
     exact this
 
@@ -94,7 +94,8 @@ theorem sum_psi_eq_zero (hc : IsClo p Ω) {T : Tower p Ω} {n : ℕ} {ψ : O0 p 
   obtain ⟨κ, _, f, M, hE, hind⟩ := exists_coords hc E
   have hB : ∀ i, ∑ k, HahnSeries.C (M k i) * G k = 0 := by
     intro i
-    ext r
+    apply HahnSeries.ext
+    funext r
     rw [HahnSeries.coeff_sum]
     simp only [HahnSeries.C_mul_eq_smul, HahnSeries.coeff_smul, smul_eq_mul, hG,
       HahnSeries.coeff_zero]
@@ -129,7 +130,9 @@ theorem ev_unique : ∀ (p : ℕ) [Fact p.Prime], ∀ (Ω : Type) [Field Ω] [Al
   have h2 := sum_psi_eq_zero hc h E A (fun k => thL (A k)) (fun r => (r : ℤ_[p])) hA
     (fun k r => thL_coeff _ _)
   have thL_neg : ∀ b : Lau p, thL (-b) = - thL b := fun b => by
-    ext r; simp only [thL_coeff, HahnSeries.coeff_neg]; ring
+    apply HahnSeries.ext
+    funext r
+    simp only [thL_coeff, HahnSeries.coeff_neg, mul_neg]
   simp only [E, A, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, map_neg, mul_neg,
     Finset.sum_neg_distrib, thL_neg] at h1 h2
   exact ⟨sub_eq_zero.1 (by simpa [sub_eq_add_neg] using h1), sub_eq_zero.1 (by simpa [sub_eq_add_neg] using h2)⟩

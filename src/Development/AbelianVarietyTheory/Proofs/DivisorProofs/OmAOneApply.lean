@@ -30,8 +30,11 @@ def IsFirstMax {a d : ℕ} (Y : Matrix (Fin a) (Fin d) k) (J : Fin a ↪ Fin d) 
     (idx J' < idx J → valuation k (minor Y J') < valuation k (minor Y J))
 
 
-def sec {a d : ℕ} (Y : Matrix (Fin a) (Fin d) k) : GL (Fin a) k :=
-  if h : ∃ J, IsFirstMax Y J then GeneralLinearGroup.mkOfDetNeZero (Y.submatrix id h.choose) h.choose_spec.1 else 1
+def sec {a d : ℕ} (Y : Matrix (Fin a) (Fin d) k) : GL (Fin a) k := by
+  classical
+  exact if h : ∃ J, IsFirstMax Y J then
+    GeneralLinearGroup.mkOfDetNeZero (Y.submatrix id h.choose) h.choose_spec.1
+  else 1
 
 theorem tw_mul (ν : kˣ →* ℂˣ) (d : ℕ) {a : ℕ} (g x : GL (Fin a) k) : tw ν d (g * x) = tw ν d g * tw ν d x := by
   simp only [tw, gdet_mul, map_mul, Units.val_mul, apow_mul]; ring

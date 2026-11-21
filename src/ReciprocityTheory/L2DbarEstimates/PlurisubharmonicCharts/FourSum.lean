@@ -81,6 +81,8 @@ theorem four_sum (f : ℕ) : FOURSumStatement f := by
     have := hper _ (hreal y) n
     simp only [hgdef]
     convert this using 2
+    funext k
+    simp only [Pi.add_apply, Complex.ofReal_add, Complex.ofReal_intCast]
   let F : C(UnitAddTorus (Fin f), ℂ) := ⟨fsFun g, fsFun_continuous g hg hgper⟩
   have hcoef : ∀ ν, UnitAddTorus.mFourierCoeff F ν = fourCoeff h 0 ν := by
     intro ν

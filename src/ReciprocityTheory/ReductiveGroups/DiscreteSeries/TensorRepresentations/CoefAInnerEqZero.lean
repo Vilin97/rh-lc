@@ -112,7 +112,9 @@ theorem coefA_toSum {T : X →ₗ[ℂ] X} (hT : ∀ x y, inner ℂ (T x) y = inn
   · exact hz (b i) (Submodule.subset_span ⟨(hb i).1, θ i, hθ, (hb i).2⟩)
   · push_neg at hθ
     rw [hhigh (b i) (hb i).1 (θ i) hθ (hb i).2]
-    exact inner_span_eq_zero_of_eigenvalue_gt hT (fun u hu => hu.2) (hb i).2 hθ z hzL
+    exact inner_span_eq_zero_of_eigenvalue_gt hT
+      (s := {y | y ∈ M' ∧ ∃ θ : ℝ, θ ≤ C ∧ T y = (θ : ℂ) • y})
+      (fun _ hu => hu.2) (hb i).2 hθ z hzL
 
 theorem coefA_high {T : Y →ₗ[ℂ] Y} (hT : ∀ x y, inner ℂ (T x) y = inner ℂ x (T y))
     {L : Submodule ℂ Y} (hLd : FiniteDimensional ℂ L) (hL : ∀ x ∈ L, T x ∈ L) :

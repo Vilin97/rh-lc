@@ -13,8 +13,6 @@ open ReciprocityTheory.ChartRestriction.G.Semi
 
 namespace GlobalTheory.Compare.AbelianSchemeTorusCompare
 
-open GlobalTheory.IndefiniteRowSideFullHecke.SemiAbelianModels
-
 theorem isAbelianScheme_of_iso {S : Scheme.{0}} {A B : Over S} [GrpObj A] [GrpObj B]
     (e : A ≅ B) (he : IsMonHom e.hom) (hB : IsAbelianScheme B) : IsAbelianScheme A := by
   have hw : A.hom = e.hom.left ≫ B.hom := (Over.w e.hom).symm

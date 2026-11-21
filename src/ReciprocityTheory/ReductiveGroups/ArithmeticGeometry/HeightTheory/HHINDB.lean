@@ -56,12 +56,13 @@ theorem pf_arch (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (a : Ω c) (ha : a ≠ 0)
   have hSF : SFinite (blockSphereProb d.D (d.N + 1)) := by have := hPD; infer_instance
   have hSF1 : SFinite (sphereProb (d.N + 1)) := by have := hP1; infer_instance
   set e := ReciprocityTheory.MultiplicativeHeights.lh0Split d.D (d.N + 1)
-  have hmp : MeasurePreserving e.symm ((sphereProb (d.N + 1)).prod (blockSphereProb d.D (d.N + 1)))
-      (blockSphereProb (d.D + 1) (d.N + 1)) :=
-    (measurePreserving_piFinSuccAbove (fun _ => sphereProb (d.N + 1)) 0).symm _
   have hmp' : MeasurePreserving e (blockSphereProb (d.D + 1) (d.N + 1))
       ((sphereProb (d.N + 1)).prod (blockSphereProb d.D (d.N + 1))) :=
-    measurePreserving_piFinSuccAbove (fun _ => sphereProb (d.N + 1)) 0
+    measurePreserving_piFinSuccAbove
+      (n := d.D) (α := fun _ : Fin (d.D + 1) => UnitSphereC (d.N + 1))
+      (μ := fun _ => sphereProb (d.N + 1)) 0
+  have hmp : MeasurePreserving e.symm ((sphereProb (d.N + 1)).prod (blockSphereProb d.D (d.N + 1)))
+      (blockSphereProb (d.D + 1) (d.N + 1)) := hmp'.symm
   have hsnd : MeasurePreserving (fun z => (e z).2) (blockSphereProb (d.D + 1) (d.N + 1))
       (blockSphereProb d.D (d.N + 1)) :=
     (measurePreserving_snd (μ := sphereProb (d.N + 1)) (ν := blockSphereProb d.D (d.N + 1))).comp hmp'

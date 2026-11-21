@@ -105,12 +105,11 @@ theorem nu_left {μ : Measure (Mt k r)} (hμ : IsHaarOn U μ) : (nu hU μ).IsMul
     Set.preimage_image_eq s (me_val hU).injective] at h1
 
 theorem nu_inv (HI : HaarInv) {μ : Measure (Mt k r)} (hμ : IsHaarOn U μ) : (nu hU μ).IsInvInvariant := by
-  have hae : AEMeasurable invM μ := by
-    by_contra h
-    exact hμ.ne_zero (by rw [← HI k r U μ hU hμ, Measure.map_of_not_aemeasurable h])
+  have hae : AEMeasurable invM μ := InvGrp.measurable_invM.aemeasurable
   constructor
   ext s hs
-  have hset : (fun g : SG hU => g.1) '' s⁻¹ = invM ⁻¹' ((fun g : SG hU => g.1) '' s) ∩
+  have hset : (fun g : SG hU => g.1) '' (Inv.inv ⁻¹' s) =
+      invM ⁻¹' ((fun g : SG hU => g.1) '' s) ∩
       {x : Mt k r | (Matrix.of x : Mat k r) ∈ U} := by
     ext y
     constructor
@@ -127,7 +126,7 @@ theorem nu_inv (HI : HaarInv) {μ : Measure (Mt k r)} (hμ : IsHaarOn U μ) : (n
       show (@id (SG hU) ⟨y, hy⟩)⁻¹ ∈ s
       rw [e]
       exact hx
-  rw [Measure.inv_apply]
+  rw [Measure.inv_def, Measure.map_apply measurable_inv hs]
   simp only [nu]
   rw [(me_val hU).comap_apply, (me_val hU).comap_apply, hset,
     measure_inter_conull (t := {x : Mt k r | (Matrix.of x : Mat k r) ∈ U}) hμ.conc,

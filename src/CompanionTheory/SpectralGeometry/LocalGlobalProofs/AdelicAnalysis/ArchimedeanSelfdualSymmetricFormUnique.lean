@@ -46,7 +46,7 @@ theorem selfDual_matrix_unique_of_equiv {R P ι : Type} [CommRing R] [Topologica
       rw [this])
     (fun y => hLc.comp (by
       have : Continuous fun x : ι → R => ∑ i, x i * (AR *ᵥ y) i :=
-        continuous_finset_sum _ fun i _ => (continuous_apply i).mul continuous_const
+        continuous_finsetSum _ fun i _ => (continuous_apply i).mul continuous_const
       exact this))
     (fun x h => by
       funext i

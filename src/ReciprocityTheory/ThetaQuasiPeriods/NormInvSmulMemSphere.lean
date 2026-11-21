@@ -277,8 +277,8 @@ theorem thetaMTest_holds : ThetaMTestStatement := by
 theorem thetaSummable_holds : ThetaSummableStatement := by
   intro ι _ a b z τ hτ
   obtain ⟨u, hu, hb⟩ := thetaMTest_holds ι a {(z, Matrix.of.symm τ)} isCompact_singleton
-    (by rintro p rfl; simpa using hτ)
+    (by rintro p rfl; simpa only [Prod.snd, Equiv.apply_symm_apply] using hτ)
   refine Summable.of_nonneg_of_le (fun l => norm_nonneg _) (fun l => ?_) hu
-  simpa using hb b (z, Matrix.of.symm τ) rfl l
+  simpa only [Prod.fst, Prod.snd, Equiv.apply_symm_apply] using hb b (z, Matrix.of.symm τ) rfl l
 
 end ReciprocityTheory.PTheta

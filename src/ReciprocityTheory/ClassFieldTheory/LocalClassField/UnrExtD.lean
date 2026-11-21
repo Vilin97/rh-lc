@@ -91,7 +91,10 @@ theorem exists_isFrobOn (hK : FiniteDimensional ℚ_[p] K) {n : ℕ} (hn : 0 < n
   let E : IntermediateField K (PadicAlgCl p) := IntermediateField.extendScalars (le_Kn p K n)
   have hgal : IsGalois K E := isGalois_Kn p K hK hn
   have hfr : Module.finrank K E = n := finrank_extendScalars_Kn p K hK hn
-  have hfd : FiniteDimensional K E := Module.finite_of_finrank_pos (by rw [hfr]; exact hn)
+  have hfd : FiniteDimensional K E := by
+    change FiniteDimensional K (IntermediateField.extendScalars (le_Kn p K n))
+    rw [extendScalars_Kn_eq_adjoin (p := p) (K := K) (n := n) hζ₀ hm0]
+    exact IntermediateField.finiteDimensional_adjoin (fun x _ => Algebra.IsIntegral.isIntegral x)
   have hcard : Nat.card (E ≃ₐ[K] E) = n := by rw [IsGalois.card_aut_eq_finrank, hfr]
   have hsurj := AlgEquiv.restrictNormalHom_surjective (F := K) (K₁ := E) (PadicAlgCl p)
   have hex : ∀ τ : E ≃ₐ[K] E, ∃ i : Fin n, ∃ σ : GK p K,

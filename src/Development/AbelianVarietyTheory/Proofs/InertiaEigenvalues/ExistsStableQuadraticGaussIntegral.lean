@@ -46,6 +46,7 @@ theorem formL_symm_nondeg [U : Unram F E] (A : Et F E) (v : A.Kˣ) :
   exact ⟨hs, ⟨hl, fun y h => hl y fun y' => by rw [hs.eq]; exact h y'⟩⟩
 
 
+open scoped Classical in
 theorem integral_indicator_char {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopologicalAddGroup V]
     [MeasurableSpace V] [BorelSpace V] (μ : Measure V) [μ.IsAddHaarMeasure] (M : AddSubgroup V)
     (hMo : IsOpen (M : Set V)) (χ : V → ℂ) (hχ : ∀ a b, χ (a + b) = χ a * χ b) :
@@ -66,6 +67,7 @@ theorem integral_indicator_char {V : Type} [AddCommGroup V] [TopologicalSpace V]
 end GlobalTheory.JR.WeilQuad.GaussStable
 
 
+open GlobalTheory.JR.WeilQuad.GaussStable in
 theorem GlobalTheory.JR.WeilQuad.exists_stableGauss : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E]
     [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E) (ψ : AddChar F ℂ) (x : A.Kˣ) (μ : Measure A.L)
     (ω : A.K → ℂ), Hyp A ψ x μ ω → ∀ u : A.Kˣ, ∃ G, IsStableGauss A ψ x μ u G := by

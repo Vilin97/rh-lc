@@ -38,28 +38,30 @@ theorem unitChoice_of_isArtinianRing_isReduced :
   refine ⟨fun i => φ.symm (E i), ?_, ?_, ?_, ?_⟩
   · intro i
     rw [← map_mul]
-    congr 1
-    split_ifs <;> simp
+    apply congrArg φ.symm
+    funext I
+    by_cases h : c I = i <;> simp [Pi.mul_apply, E, h]
   · intro i j hij
     rw [← map_mul, ← map_zero φ.symm]
-    congr 1
-    split_ifs with h1 h2 <;> simp_all
+    apply congrArg φ.symm
+    funext I
+    by_cases hi : c I = i
+    · simp [Pi.mul_apply, E, hi, hij]
+    · simp [Pi.mul_apply, E, hi]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [← map_sum, ← map_one φ.symm]
-    congr 1
-    rw [Finset.sum_ite_eq]
-    simp
+      apply congrArg φ.symm
+      funext I
+      simp [Finset.sum_apply, E]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [← isUnit_map_iff φ, map_sum, Pi.isUnit_iff]
-    intro I
-    have hcomp : (∑ i, φ (φ.symm (E i) * f i)) I = φ (f (c I)) I := by
-      simp only [map_mul, AlgEquiv.apply_symm_apply, Finset.sum_apply, Pi.mul_apply, E, ite_mul,
-        one_mul, zero_mul]
-      rw [Finset.sum_ite_eq]
-      simp
-    rw [hcomp]
-    haveI : I.asIdeal.IsMaximal := I.isMaximal
-    letI := Ideal.Quotient.field I.asIdeal
-    exact isUnit_iff_ne_zero.2 (hc I)
+      intro I
+      have hcomp : (∑ i, φ (φ.symm (E i) * f i)) I = φ (f (c I)) I := by
+        simp only [map_mul, AlgEquiv.apply_symm_apply, Finset.sum_apply, Pi.mul_apply, E, ite_mul,
+          one_mul, zero_mul, Fintype.sum_ite_eq]
+      rw [hcomp]
+      haveI : I.asIdeal.IsMaximal := I.isMaximal
+      letI := Ideal.Quotient.field I.asIdeal
+      exact isUnit_iff_ne_zero.2 (hc I)
 
 end GlobalTheory.CompanionTheory.SW

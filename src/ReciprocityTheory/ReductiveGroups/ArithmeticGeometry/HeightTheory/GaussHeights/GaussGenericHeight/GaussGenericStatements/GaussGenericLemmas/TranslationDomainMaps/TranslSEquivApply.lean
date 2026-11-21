@@ -67,10 +67,10 @@ private theorem diag_cS_Pimg (j₀ : Fin (N + 1)) (x : Fin N → Ω) (b : Fin (D
     · subst hi
       rw [if_pos rfl, diag_X]
       rfl
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [if_neg hi, map_neg, map_sum, mul_neg, Finset.mul_sum]
-      congr 1
-      refine Finset.sum_congr rfl fun k _ => ?_
+    · rw [if_neg hi, map_neg, map_sum, mul_neg, Finset.mul_sum]
+      apply congrArg Neg.neg
+      apply Finset.sum_congr rfl
+      intro k hk
       rw [map_mul, diag_X, hC, mul_assoc]
       rfl
   · rw [Pimg_succAbove, diag_X]

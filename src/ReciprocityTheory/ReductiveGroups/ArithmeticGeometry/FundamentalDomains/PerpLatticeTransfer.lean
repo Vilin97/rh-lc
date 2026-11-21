@@ -78,8 +78,68 @@ lemma LB_lattice (hli : LinearIndependent E (Fin.cons ξ β : Fin (n + 1) → Fi
     have h1 := IsNoetherian.noetherian ((LinearMap.range (Tmap β ξ) ⊓ X.L').comap X.L'.subtype)
     have h2 := h1.map X.L'.subtype
     rwa [Submodule.map_comap_subtype, inf_eq_right.mpr inf_le_right] at h2
-  · intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  · rw [Submodule.eq_top_iff']
+    intro c
+    have hc : (∑ k, c k • β k) ∈ Submodule.span E (X.L' : Set (Fin r → E)) := by
+      rw [span_L' X]
+      simp
+    have hdenom (v : Fin r → E) (hv : v ∈ Submodule.span E (X.L' : Set (Fin r → E))) :
+        ∃ a : 𝓞 E, a ≠ 0 ∧ (a : E) • v ∈ X.L' := by
+      refine Submodule.span_induction (p := fun v _ => ∃ a : 𝓞 E, a ≠ 0 ∧ (a : E) • v ∈ X.L')
+        (fun v hv => ⟨1, one_ne_zero, by simpa using hv⟩)
+        ⟨1, one_ne_zero, by simp⟩
+        ?_ ?_ hv
+      · intro x y hx hy ⟨a, ha, hax⟩ ⟨b, hb, hby⟩
+        refine ⟨a * b, mul_ne_zero ha hb, ?_⟩
+        change ((a : E) * (b : E)) • (x + y) ∈ X.L'
+        rw [smul_add]
+        have hleft : (b : 𝓞 E) • ((a : E) • x) ∈ X.L' := X.L'.smul_mem b hax
+        have hright : (a : 𝓞 E) • ((b : E) • y) ∈ X.L' := X.L'.smul_mem a hby
+        have hleft' : ((a : E) * (b : E)) • x ∈ X.L' := by
+          convert hleft using 1 <;> ext i <;> simp [smul_eq_mul, Algebra.smul_def] <;> ring
+        have hright' : ((a : E) * (b : E)) • y ∈ X.L' := by
+          convert hright using 1 <;> ext i <;> simp [smul_eq_mul, Algebra.smul_def] <;> ring
+        exact X.L'.add_mem hleft' hright'
+      · intro c x hx ⟨a, ha, hax⟩
+        have hdiv : ∃ u v : 𝓞 E, v ∈ nonZeroDivisors (𝓞 E) ∧
+            (algebraMap (𝓞 E) E u) / algebraMap (𝓞 E) E v = c :=
+          IsFractionRing.div_surjective (A := 𝓞 E) (z := c)
+        obtain ⟨u, v, hv, hcv⟩ := hdiv
+        have hvO : v ≠ 0 := nonZeroDivisors.ne_zero hv
+        refine ⟨a * v, mul_ne_zero ha hvO, ?_⟩
+        have hvE : (v : E) ≠ 0 := by
+          intro h
+          exact hvO ((IsFractionRing.injective (𝓞 E) E) h)
+        have hmul : ((a * v : 𝓞 E) : E) * c = (u * a : 𝓞 E) := by
+          change (a : E) * (v : E) * c = (u : E) * (a : E)
+          calc
+            (a : E) * (v : E) * c = (a : E) * (v : E) * ((u : E) / (v : E)) := by rw [hcv]
+            _ = (u : E) * (a : E) := by field_simp [hvE] <;> ring
+        rw [smul_smul]
+        change (((a * v : 𝓞 E) : E) * c) • x ∈ X.L'
+        rw [hmul]
+        change ((u : E) * (a : E)) • x ∈ X.L'
+        convert X.L'.smul_mem u hax using 1 <;> ext i <;>
+          simp [smul_eq_mul, Algebra.smul_def] <;> ring
+    obtain ⟨a, ha, hmem⟩ := hdenom _ hc
+    have hcoef : a • c ∈ LBsub X β ξ := by
+      refine ⟨0, ?_⟩
+      have hsmul : (∑ k, (a • c) k • β k) + (0 : E) • ξ = a • (∑ k, c k • β k) := by
+        simp only [Pi.smul_apply, smul_eq_mul, Finset.smul_sum, mul_smul]
+        simp
+      rw [hsmul]
+      exact hmem
+    have haE : (a : E) ≠ 0 := by
+      intro h
+      exact ha ((IsFractionRing.injective (𝓞 E) E) (by simpa using h))
+    have hcspan : a • c ∈ Submodule.span E (LBsub X β ξ : Set (Fin n → E)) :=
+      Submodule.subset_span hcoef
+    have := Submodule.smul_mem _ ((a : E)⁻¹) hcspan
+    have heq : ((a : E)⁻¹) • (a • c) = c := by
+      ext k
+      change (a : E)⁻¹ * ((a : E) * c k) = c k
+      field_simp [haE]
+    simpa [heq] using this
 def Sform : ReciprocityTheory.MultiplicativeHeights.HermForm E n where
   c := (IsCMField.complexConj E).toRingEquiv.toRingHom
   c_invol x := IsCMField.complexConj_apply_apply E x

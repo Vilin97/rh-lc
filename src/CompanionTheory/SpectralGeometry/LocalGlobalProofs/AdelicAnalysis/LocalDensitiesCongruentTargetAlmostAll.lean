@@ -53,7 +53,7 @@ theorem continuous_rmul (R : Type) [CommRing R] [Algebra F R] [TopologicalSpace 
   haveI := hK
   refine continuous_pi fun a => continuous_pi fun i => ?_
   simp only [rmul]
-  exact continuous_finset_sum _ fun c _ =>
+  exact continuous_finsetSum _ fun c _ =>
     (continuous_apply_apply c i).mul continuous_const
 
 theorem mass_eq_of_integral (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) {M : ℕ}

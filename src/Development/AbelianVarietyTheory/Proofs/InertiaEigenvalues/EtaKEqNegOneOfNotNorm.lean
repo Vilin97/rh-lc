@@ -61,7 +61,7 @@ theorem not_two_dvd_ord_norm (F K L : Type) [Field F] [ValuativeRel F] [Topologi
   ValuativeRel.ofValuation (NormedField.valuation (K := F))
 
 theorem isLocalField (F : Type) [NontriviallyNormedField F] [IsUltrametricDist F] [LocallyCompactSpace F] :
-    letI := normRel F
+    letI := normRel F;
     IsNonarchimedeanLocalField F := by
   letI := normRel F
   have hc : (NormedField.valuation (K := F)).Compatible := Valuation.Compatible.ofValuation _
@@ -73,8 +73,8 @@ theorem isLocalField (F : Type) [NontriviallyNormedField F] [IsUltrametricDist F
 
 theorem ord_eq_of_norm_eq (F : Type) [NontriviallyNormedField F] [IsUltrametricDist F] [LocallyCompactSpace F]
     (x y : F) (h : ‖x‖ = ‖y‖) :
-    letI := normRel F
-    haveI := isLocalField F
+    letI := normRel F;
+    haveI := isLocalField F;
     ord x = ord y := by
   letI := normRel F
   haveI := isLocalField F

@@ -148,14 +148,9 @@ theorem two_form_sq_finset_sum_le {n N : ℕ} (σ : Fin N → Fin n → Fin n �
 theorem loc_memLp_iff {M E : Type*} [MeasurableSpace M] [NormedAddCommGroup E] (ν : Measure M)
     (f : M → E) (hf : AEStronglyMeasurable f ν) :
     MemLp f 2 ν ↔ ∫⁻ x, ‖f x‖ₑ ^ 2 ∂ν < ⊤ := by
-  constructor
-  · intro h
-    have := (eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top (p := 2) (by norm_num) (by norm_num)).mp h.2
-    simpa [ENNReal.rpow_two] using this
-  · intro h
-    refine ⟨hf, ?_⟩
-    refine (eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top (p := 2) (by norm_num) (by norm_num)).mpr ?_
-    simpa [ENNReal.rpow_two] using h
+  rw [memLp_iff]
+  simpa [ENNReal.rpow_two] using
+    eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top (p := 2) (by norm_num) (by norm_num) hf
 
 theorem locL2_of_le_sum {M E F₁ F₂ : Type*} [TopologicalSpace M] [MeasurableSpace M]
     [NormedAddCommGroup E] [NormedAddCommGroup F₁] [NormedAddCommGroup F₂] (μ : Measure M)

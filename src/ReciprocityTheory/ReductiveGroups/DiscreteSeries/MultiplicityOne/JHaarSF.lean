@@ -36,6 +36,7 @@ theorem haarUniqueSF' : HaarUniqueSF := by
   refine ⟨c, hc0, ?_⟩
   rw [← HaarSigmaFiniteUniqueness.map_comap_val (U := U) μ hcμ, hc, Measure.map_smul,
     HaarSigmaFiniteUniqueness.map_comap_val (U := U) μ₀ hcν]
+  exact (HaarSigmaFiniteUniqueness.mEmb (U := U)).measurable.aemeasurable
 
 theorem haarUniqueSF (_h : UnitaryGroupStructuralFacts) : HaarUniqueSF := haarUniqueSF'
 

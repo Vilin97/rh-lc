@@ -182,6 +182,8 @@ theorem pa_contDiff_of_diff {S : EuclideanSpace ℂ ι → ℂ} (hS : Differenti
   have h2 : ContDiff ℂ (⊤ : ℕ∞) (S ∘ e.symm) := contDiff_of_differentiable h1
   have h3 := h2.comp e.contDiff
   convert h3 using 1
+  funext x
+  exact congrArg S (e.symm_apply_apply x).symm
 
 theorem pa_iter_tsum (n : ℕ) : ∀ {κ : Type} (G : κ → EuclideanSpace ℂ ι → ℂ),
     (∀ k, ContDiff ℂ (⊤ : ℕ∞) (G k)) →

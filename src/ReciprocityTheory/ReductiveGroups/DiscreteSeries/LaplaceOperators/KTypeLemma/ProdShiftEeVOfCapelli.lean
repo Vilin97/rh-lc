@@ -270,7 +270,11 @@ theorem shiftPoly_aeval (E : Fin (m + 1) → Fin (m + 1) → Module.End ℂ M) (
   unfold prodShift
   rw [← key (m + 1) (fun t => eeV E - ((θ t : ℝ) : ℂ) • (1 : Module.End ℂ (Fin (m + 1) → M)))]
   congr 2
-    Algebra.algebraMap_eq_smul_one]
+  funext t
+  change Polynomial.aeval (-eeV E)
+    (Polynomial.X + Polynomial.C ((θ t : ℝ) : ℂ)) = -(eeV E - ((θ t : ℝ) : ℂ) • 1)
+  simp only [Polynomial.aeval_add, Polynomial.aeval_X, Polynomial.aeval_C]
+  rw [Algebra.algebraMap_eq_smul_one]
   abel
 
 theorem prodShift_eeV_of_capelli (E : Fin (m + 1) → Fin (m + 1) → Module.End ℂ M) (hE : IsGlRep E)

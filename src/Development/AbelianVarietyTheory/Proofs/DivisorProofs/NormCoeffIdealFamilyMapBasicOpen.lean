@@ -16,7 +16,7 @@ namespace GlobalTheory.NormSheafDescent
 
 theorem isLocalization_away_of_eq_basicOpen {X : Scheme.{0}} {U : X.Opens} (hU : IsAffineOpen U)
     (g : Γ(X, U)) (V : X.Opens) (hV : V = X.basicOpen g) (hle : V ≤ U) :
-    letI := (X.presheaf.map (homOfLE hle).op).hom.toAlgebra
+    letI := (X.presheaf.map (homOfLE hle).op).hom.toAlgebra;
     IsLocalization.Away g Γ(X, V) := by
   subst hV
   exact hU.isLocalization_basicOpen g

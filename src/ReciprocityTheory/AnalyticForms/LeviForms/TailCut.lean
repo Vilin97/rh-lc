@@ -81,7 +81,7 @@ theorem bdry_null : BdryNullStatement := by
   split_ifs with h
   swap
   · simp
-  simp only [Measure.coe_finset_sum, Finset.sum_apply]
+  simp only [FunLike.coe_sum, Finset.sum_apply]
   refine Finset.sum_eq_zero fun j _ => ?_
   have hT : MeasurableSet (A.chart j).target := (A.chart j).open_target.measurableSet
   rw [Measure.map_apply_of_aemeasurable (((A.chart j).continuousOn_symm.aemeasurable hT).mono_ac
@@ -279,7 +279,7 @@ theorem maMeasure_congr_open : MaMeasureCongrOpenStatement := by
   split_ifs with h
   · ext t ht
     rw [Measure.restrict_apply ht, Measure.restrict_apply ht]
-    simp only [Measure.coe_finset_sum, Finset.sum_apply]
+    simp only [FunLike.coe_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     have hT : MeasurableSet (A.chart j).target := (A.chart j).open_target.measurableSet
     have hW : IsOpen ((A.chart j).target ∩ (A.chart j).symm ⁻¹' V) :=

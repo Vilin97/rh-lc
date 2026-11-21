@@ -277,13 +277,12 @@ theorem exists_eq_adelicChar_mul_of_integral (χ : AddChar 𝔸[K] Circle) (hχ 
   have hx : x = algebraMap K 𝔸[K] k + infiniteAdeleInl (x.1 - algebraMap K _ k) +
       finiteAdeleInr (x.2 - algebraMap K _ k) := by
     conv_lhs => rw [← infiniteAdeleInl_add_finiteAdeleInr x]
-    refine Prod.ext (α := InfiniteAdeleRing K) (β := FiniteAdeleRing (𝓞 K) K) ?_ ?_
-    · simp only [adeleRing_add_fst, infiniteAdeleInl_fst, finiteAdeleInr_fst,
-        adeleRing_algebraMap_fst]
-      abel
-    · simp only [adeleRing_add_snd, infiniteAdeleInl_snd, finiteAdeleInr_snd,
-        adeleRing_algebraMap_snd]
-      abel
+    rw [← infiniteAdeleInl_add_finiteAdeleInr x,
+      ← infiniteAdeleInl_add_finiteAdeleInr (algebraMap K 𝔸[K] k)]
+    simp only [map_sub, infiniteAdeleInl_fst, infiniteAdeleInl_snd,
+      finiteAdeleInr_fst, finiteAdeleInr_snd, adeleRing_algebraMap_fst,
+      adeleRing_algebraMap_snd]
+    abel
   have hinf : ∀ z, χ (infiniteAdeleInl z) =
       adelicChar K (infiniteAdeleInl (algebraMap K (InfiniteAdeleRing K) ξ * z)) := by
     intro z

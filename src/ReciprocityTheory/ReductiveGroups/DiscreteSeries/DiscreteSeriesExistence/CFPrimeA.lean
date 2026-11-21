@@ -125,6 +125,8 @@ theorem fockBasis_wt (ε : Fin n → Bool) (s : Finset (Fin (n * n))) (c : Fin n
     simp [fockBasis, Module.Basis.ExteriorAlgebra, ExteriorAlgebra.ιMulti_family,
       Set.powersetCard.ofFinEmbEquiv_symm_apply]
     congr 1
+    funext i
+    simp [Pi.basisFun_apply]
     rfl
   rw [hb, sg_ιMulti]
   congr 2

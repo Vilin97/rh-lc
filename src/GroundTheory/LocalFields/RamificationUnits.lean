@@ -155,7 +155,7 @@ def ramificationToUnits (n : ℕ) :
     rw [this, QuotientGroup.mk_one]
   map_mul' σ τ := by
     rw [← QuotientGroup.mk_mul, QuotientGroup.eq, Subgroup.mem_subgroupOf]
-    have h := map_mul_inv_mem σ.2 (uniformizerRatio hϖ (τ : L ≃ₐ[K] L))
+    have h := map_mul_inv_mem hϖ σ.2 (uniformizerRatio hϖ (τ : L ≃ₐ[K] L))
     have key : (((⟨uniformizerRatio hϖ ((σ * τ : lowerRamificationGroup K L n) : L ≃ₐ[K] L),
         uniformizerRatio_mem hϖ (σ * τ)⟩ : unitFiltration L n)⁻¹ *
         (⟨uniformizerRatio hϖ (σ : L ≃ₐ[K] L), uniformizerRatio_mem hϖ σ⟩ *

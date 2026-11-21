@@ -211,6 +211,7 @@ def pullInd (e : (Σ a, m a) ≃ n) (ρ : Representation ℂ (Levi k m) W) :
       exact parInd_law e ρ f ⟨glIso k e p, glIso_mem_parab k e p.2⟩ (glIso k e g)⟩,
     mem_smoothPart_of_nhds (Filter.mem_of_superset
       ((continuous_glIso e).continuousAt.preimage_mem_nhds
+        (t := {g : GL n k | ind (parab k e) ((twist ρ (deltaHalf k m)).comp (leviProj k e)) g f.1 = f.1})
         (by rw [map_one]; exact IsOpen.mem_nhds f.2 (by simp))) fun g hg => by
       have hg' : ind (parab k e) ((twist ρ (deltaHalf k m)).comp (leviProj k e)) (glIso k e g) f.1 = f.1 := hg
       apply Subtype.ext
@@ -227,7 +228,10 @@ def pullMap (e : (Σ a, m a) ≃ n) (ρ : Representation ℂ (Levi k m) W) :
   toLinearMap := pullInd e ρ
   isIntertwining' g := by
     refine LinearMap.ext fun f => Subtype.ext (Subtype.ext (funext fun x => ?_))
-    show f.1.1 (glIso k e x * glIso k e g) = f.1.1 (glIso k e (x * g))
+    change (parInd e ρ (glIso k e g) f).1.1 (glIso k e x) =
+      (parInd finSigmaFinEquiv (ρ.comp (leviMap k e)) g (pullInd e ρ f)).1.1 x
+    rw [parInd_apply, parInd_apply]
+    change f.1.1 (glIso k e x * glIso k e g) = f.1.1 (glIso k e (x * g))
     rw [map_mul]
 
 theorem pullInd_injective (e : (Σ a, m a) ≃ n) (ρ : Representation ℂ (Levi k m) W) :

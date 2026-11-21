@@ -48,7 +48,86 @@ theorem dualLen_fin {C : Type} [Field C] {v : Valuation C NNReal} [Algebra R C]
     (hc₁ : HasLen v R ((Fin d → R) ⧸ LinearMap.range A.mulVecLin) c₁) :
     ∃ y : NNReal, HasLen v R ((Fin d → R) ⧸ zSub A c) y ∧ y * c₁ = v (algebraMap R C c) ^ d := by
   classical
-  obtain ⟨P, Q, a, hP, hQ, hD⟩ := Smith.smith_mat hv d n A
+  have hsmith : ∀ (d n : ℕ) (A : Matrix (Fin d) (Fin n) R),
+      ∃ (P : Matrix (Fin d) (Fin d) R) (Q : Matrix (Fin n) (Fin n) R) (a : Fin d → R),
+        IsUnit P.det ∧ IsUnit Q.det ∧
+          ∀ j k, (P * A * Q) j k = if (k : ℕ) = (j : ℕ) then a j else 0 := by
+    intro d
+    induction d with
+    | zero =>
+      intro n A
+      exact ⟨1, 1, Fin.elim0, by simp, by simp, fun j => j.elim0⟩
+    | succ d ih =>
+      intro n A
+      cases n with
+      | zero => exact ⟨1, 1, 0, by simp, by simp, fun _ k => k.elim0⟩
+      | succ n =>
+        let g : Fin (n + 1) → Fin (d + 1) → R := fun j i => A i j
+        obtain ⟨i0, a, u, s, hu, hau, hs, hz, hnz⟩ := Smith.exists_pivot hv g
+        by_cases ha : a = 0
+        · have hA : A = 0 := by
+            ext i j
+            simpa [g] using congrFun (hz ha j) i
+          exact ⟨1, 1, 0, by simp, by simp, fun j k => by simp [hA]⟩
+        · obtain ⟨j0, hj0, hs0⟩ := hnz ha
+          have hAj0 : ∀ i, A i j0 = a * u i := fun i => by
+            simpa [g] using congrFun hj0 i
+          have hAi0 : ∀ l, A i0 l = a * s l := fun l => hs l
+          set B := (Smith.Vm i0 u)ᵀ * A * Smith.Vm j0 s with hBdef
+          have hB : ∀ k l, B k l = if k = i0 then (if l = j0 then a else 0) else
+              (if l = j0 then 0 else A k l - s l * (a * u k)) := by
+            intro k l
+            rw [hBdef, Matrix.mul_assoc, Smith.VmT_mul, Smith.mul_Vm, Smith.mul_Vm]
+            by_cases hk : k = i0 <;> by_cases hl : l = j0
+            · subst hk; subst hl; simp [hAj0, hu]
+            · subst hk; simp [hl, hAi0, hs0] <;> ring
+            · subst hl; simp [hk, hAj0, hu] <;> ring
+            · simp [hk, hl, hAj0, hAi0, hu] <;> ring
+          let A₀ : Matrix (Fin d) (Fin n) R := Matrix.of fun l k => B (i0.succAbove l) (j0.succAbove k)
+          obtain ⟨P₀, Q₀, a₀, hP₀, hQ₀, hD₀⟩ := ih n A₀
+          set M := B.submatrix (Smith.piv i0) (Smith.piv j0) with hM
+          let U : Matrix (Fin (d + 1)) (Fin (d + 1)) R := (Smith.piv i0).toPEquiv.toMatrix
+          let V : Matrix (Fin (n + 1)) (Fin (n + 1)) R := (Smith.piv j0).symm.toPEquiv.toMatrix
+          have hM_eq : U * B * V = M := by
+            dsimp only [U, V]
+            rw [PEquiv.toMatrix_toPEquiv_mul, PEquiv.mul_toMatrix_toPEquiv, Equiv.symm_symm]
+            rfl
+          have hrow : ∀ k : Fin n, M 0 k.succ = 0 := by
+            intro k
+            simp only [hM, Matrix.submatrix_apply, Smith.piv_zero, Smith.piv_succ, hB,
+              ite_true, Fin.succAbove_ne, ite_false]
+          have hcol : ∀ l : Fin d, M l.succ 0 = 0 := by
+            intro l
+            simp only [hM, Matrix.submatrix_apply, Smith.piv_zero, Smith.piv_succ, hB,
+              Fin.succAbove_ne, ite_false, ite_true]
+          have hsub : (Matrix.of fun (l : Fin d) (k : Fin n) => M l.succ k.succ) = A₀ := by
+            ext l k
+            simp only [hM, Matrix.of_apply, Matrix.submatrix_apply, Smith.piv_succ]
+            rfl
+          obtain ⟨e00, e0s, es0, ess⟩ := Smith.blockOne_mul_mul_blockOne P₀ M Q₀ hrow hcol
+          refine ⟨Smith.bd1 P₀ * U * (Smith.Vm i0 u)ᵀ, Smith.Vm j0 s * V * Smith.bd1 Q₀,
+            Fin.cons a a₀, ?_, ?_, ?_⟩
+          · rw [Matrix.det_mul, Matrix.det_mul, Smith.det_blockOne_alt, Matrix.det_transpose,
+              Smith.det_Vm, mul_one]
+            exact hP₀.mul (Smith.isUnit_det_perm (Smith.piv i0))
+          · rw [Matrix.det_mul, Matrix.det_mul, Smith.det_blockOne_alt, Smith.det_Vm, one_mul]
+            exact (Smith.isUnit_det_perm (Smith.piv j0).symm).mul hQ₀
+          · have hfull : Smith.bd1 P₀ * U * (Smith.Vm i0 u)ᵀ * A *
+                  (Smith.Vm j0 s * V * Smith.bd1 Q₀) = Smith.bd1 P₀ * M * Smith.bd1 Q₀ := by
+              rw [← hM_eq, hBdef]
+              simp only [Matrix.mul_assoc]
+            intro j k
+            rw [hfull]
+            refine Fin.cases ?_ (fun l => ?_) j <;> refine Fin.cases ?_ (fun k' => ?_) k
+            · rw [e00]
+              simp [hM, Smith.piv_zero, hB]
+            · rw [e0s]
+              simp
+            · rw [es0]
+              simp
+            · rw [ess, hsub, hD₀]
+              simp [Fin.val_succ]
+  obtain ⟨P, Q, a, hP, hQ, hD⟩ := hsmith d n A
   have hPQ : ∀ t : Fin n → R, (P * A * Q) *ᵥ (Q⁻¹ *ᵥ t) = P *ᵥ (A *ᵥ t) := by
     intro t
     rw [Matrix.mulVec_mulVec, Matrix.mul_assoc (P * A), Matrix.mul_nonsing_inv _ hQ,
@@ -179,6 +258,9 @@ theorem dualLen : DualLenStatement := by
     simp only [Matrix.mulVec, dotProduct]
     exact (Fintype.sum_equiv e (fun j => A i j * t (e j)) _ (fun j => by simp [A'])).symm
   have hmv' : ∀ y : Fin d → R, A'ᵀ *ᵥ y = (Aᵀ *ᵥ y) ∘ e.symm := fun y => by funext k; rfl
+  have hreindex (t : κ → R) : (t ∘ e.symm) ∘ e = t := by
+    funext j
+    exact congrArg t (e.symm_apply_apply j)
   have hrange : LinearMap.range A'.mulVecLin = LinearMap.range A.mulVecLin := by
     ext x
     simp only [LinearMap.mem_range, Matrix.mulVecLin_apply]
@@ -186,9 +268,7 @@ theorem dualLen : DualLenStatement := by
     · rintro ⟨t, rfl⟩
       exact ⟨t ∘ e, (hmv t).symm⟩
     · rintro ⟨t, rfl⟩
-      refine ⟨t ∘ e.symm, ?_⟩
-      rw [hmv]
-      congr 1
+      exact ⟨t ∘ e.symm, by rw [hmv, hreindex]⟩
   have hz : zSub A' c = zSub A c := by
     ext y
     show (∃ z, A'ᵀ *ᵥ y = c • z) ↔ (∃ z, Aᵀ *ᵥ y = c • z)
@@ -206,8 +286,7 @@ theorem dualLen : DualLenStatement := by
   have hk : ∀ w : Fin d → R, ∃ t, A' *ᵥ t = c • w := by
     intro w
     obtain ⟨t, ht⟩ := hkill w
-    have h1 : (t ∘ e.symm) ∘ e = t := by funext j; simp
-    exact ⟨t ∘ e.symm, by rw [hmv, h1, ht]⟩
+    exact ⟨t ∘ e.symm, by rw [hmv, hreindex, ht]⟩
   have hc₁' : HasLen v R ((Fin d → R) ⧸ LinearMap.range A'.mulVecLin) c₁ := by
     rw [hrange]; exact hc₁
   obtain ⟨y, hy, hyc⟩ := dualLen_fin hv A' c hc hk hc₁'

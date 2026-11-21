@@ -37,6 +37,10 @@ theorem haarUniq2 : HaarUniq2Statement := by
     rw [← HaarSigmaFiniteUniqueness.map_comap_val ν hνc', h, Measure.map_zero]
   obtain ⟨c, hc, hcE⟩ := HaarSigmaFiniteUniqueness.eq_smul_of_sigmaFinite _ _ hν0' hμ0'
   refine ⟨c, pos_iff_ne_zero.mpr hc, ?_⟩
-  rw [← HaarSigmaFiniteUniqueness.map_comap_val ν hνc', hcE, Measure.map_smul, HaarSigmaFiniteUniqueness.map_comap_val μ hμc']
+  have hval : AEMeasurable (Subtype.val : HaarSigmaFiniteUniqueness.Aset U → Formalism.QuantumDeterminants.Mt k r)
+      (μ.comap (Subtype.val : HaarSigmaFiniteUniqueness.Aset U → Formalism.QuantumDeterminants.Mt k r)) :=
+    (HaarSigmaFiniteUniqueness.mEmb (U := U)).measurable.aemeasurable
+  rw [← HaarSigmaFiniteUniqueness.map_comap_val ν hνc', hcE, Measure.map_smul _ hval,
+    HaarSigmaFiniteUniqueness.map_comap_val μ hμc']
 
 end ReciprocityTheory.ChartRestriction.DS.Lap

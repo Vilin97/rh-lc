@@ -72,7 +72,7 @@ theorem bigCell_one_mono (c : Fin r → ℂ) :
     · have hs := sg_val_in (k := k) (r := r) (i := j) ⟨by omega, hj2⟩
       simp only [dif_pos hj2, hs]
       by_cases hi : r ≤ i.val ∧ i.val ≤ r + k
-      · rw [dif_pos hi, one_apply]
+      · rw [dif_pos hi, Matrix.one_apply]
         congr 1
         apply propext; constructor
         · intro h; apply Fin.ext; have := congrArg Fin.val h; simp at this; omega
@@ -168,7 +168,7 @@ theorem bigCell_star_mul (c : Fin r → ℂ) (hc : ∀ a, c a ≠ 0) :
   rw [bigCell_one_mono, bigCell_one_mono]
   ext i j
   rw [mul_mono]
-  simp only [mono, of_apply, sg_sg, one_apply]
+  simp only [mono, of_apply, sg_sg, Matrix.one_apply]
   by_cases hij : i = j
   · subst hij
     rw [if_pos rfl, if_pos rfl]
@@ -260,10 +260,10 @@ theorem embWb_mul (X Y : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) :
 
 theorem embWb_one : embWb k r (1 : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) = 1 := by
   ext i j
-  rw [one_apply]
+  rw [Matrix.one_apply]
   by_cases hi : r ≤ i.val ∧ i.val ≤ r + k
   · by_cases hj : r ≤ j.val ∧ j.val ≤ r + k
-    · rw [embWb_in _ hi hj, one_apply]
+    · rw [embWb_in _ hi hj, Matrix.one_apply]
       congr 1; apply propext; constructor
       · intro h; apply Fin.ext; have := congrArg Fin.val h; simp at this; omega
       · rintro rfl; rfl

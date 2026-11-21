@@ -67,7 +67,9 @@ def TransH (γ : M2 E N) (φ ψ : Matrix (Fin n) (Fin N) E → ℂ) : Prop :=
 
 
 def weil (γ : M2 E N) (φ : Matrix (Fin n) (Fin N) E → ℂ) : Matrix (Fin n) (Fin N) E → ℂ :=
-  if h : ∃ ψ, IsSB ψ ∧ TransH Ψ γ φ ψ then h.choose else 0
+  by
+    classical
+    exact if h : ∃ ψ, IsSB ψ ∧ TransH Ψ γ φ ψ then h.choose else 0
 
 def botSpan (γ : M2 E N) : Submodule E (Fin N ⊕ Fin N → E) :=
   Submodule.span E (Set.range fun a : Fin N => γ (Sum.inr a))
@@ -153,8 +155,9 @@ def swd (M : ℕ) (φ : Fam E n N) (Z : CM Ψ N N) (z z' : CM Ψ n N) : ℂ :=
   classSum M fun Λ => thH Ψ (φ Λ) Z z z' - eis Ψ (φ Λ) Z z z'
 
 
-def twist (R : ℕ) (𝔛 : Lt E N) (φ : Fam E n N) : Fam E n N := fun Λ x =>
-  if h : (∀ ξ ∈ 𝔛, (R : E) • (x *ᵥ ξ) ∈ Λ) ∧
+def twist (R : ℕ) (𝔛 : Lt E N) (φ : Fam E n N) : Fam E n N := by
+  classical
+  exact fun Λ x => if h : (∀ ξ ∈ 𝔛, (R : E) • (x *ᵥ ξ) ∈ Λ) ∧
       ∃ s : ℕ, s ≡ 1 [MOD R ^ 2] ∧ ∀ v ∈ stdL E N, (s : E) • v ∈ 𝔛 then
     φ Λ ((h.2.choose : E) • x) else 0
 

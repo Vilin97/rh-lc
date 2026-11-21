@@ -65,9 +65,19 @@ theorem isAbLK_of_cyclic (hL : FiniteDimensional ℚ_[p] L) (h : K ≤ L) [(subG
   obtain ⟨j, rfl⟩ := hg b
   exact (zpow_mul_comm g₀ i j)
 
-theorem isAbLK_Kn (hK : FiniteDimensional ℚ_[p] K) {n : ℕ} (hn : 0 < n) : IsAbLK p K (Kn p K n) :=
-  isAbLK_of_cyclic (finiteDimensional_Kn p K hK hn) (le_Kn p K n) (frobLK p K (Kn p K n))
-    (mem_zpowers_frobLK_Kn hK hn)
+theorem isAbLK_Kn (hK : FiniteDimensional ℚ_[p] K) {n : ℕ} (hn : 0 < n) : IsAbLK p K (Kn p K n) := by
+  letI : (subG p K (Kn p K n)).Normal :=
+    subG_normal_of_stable p K (Kn p K n) (Kn_stable p K n)
+  exact isAbLK_of_cyclic (finiteDimensional_Kn p K hK hn) (le_Kn p K n)
+    (frobLK p K (Kn p K n)) (by
+      intro g
+      obtain ⟨σ, rfl⟩ := QuotientGroup.mk_surjective g
+      obtain ⟨i, -, hi⟩ := IsFrobOn.exists_pow p K hK hn
+        ((isFrob_frobK hK).isFrobOn n) σ
+      refine ⟨i, ?_⟩
+      change frobLK p K (Kn p K n) ^ (i : ℤ) = _
+      rw [zpow_natCast, frobLK_pow]
+      exact ((mk_eq_mk_iff _ _).2 hi).symm)
 
 theorem toAbK_surjective : Surjective (toAbK p K) := QuotientGroup.mk'_surjective _
 

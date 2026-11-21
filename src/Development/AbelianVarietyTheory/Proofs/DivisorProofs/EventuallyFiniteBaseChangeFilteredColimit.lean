@@ -167,8 +167,8 @@ theorem eventually_finite_baseChange : ∀ (J : Type) [SmallCategory J] [IsFilte
     (letI : Algebra (F.obj j) c.pt := (c.ι.app j).hom.toAlgebra;
       Module.Finite c.pt (c.pt ⊗[F.obj j] A)) →
     ∃ (k₀ : J) (f₀ : j ⟶ k₀), ∀ (k : J) (f : k₀ ⟶ k),
-      letI : Algebra (F.obj j) (F.obj k) := (F.map (f₀ ≫ f)).hom.toAlgebra;
-      Module.Finite (F.obj k) (F.obj k ⊗[F.obj j] A) := by
+      (letI : Algebra (F.obj j) (F.obj k) := (F.map (f₀ ≫ f)).hom.toAlgebra;
+        Module.Finite (F.obj k) (F.obj k ⊗[F.obj j] A)) := by
   intro J _ _ F c hc j A _ _ hfp hfin
   classical
   obtain ⟨n, φ, hφ, hfg⟩ := hfp.out
@@ -230,11 +230,11 @@ theorem eventually_finite_baseChange : ∀ (J : Type) [SmallCategory J] [IsFilte
     obtain ⟨i, -, hx⟩ := Finset.mem_biUnion.1 hx
     obtain ⟨m, -, rfl⟩ := MvPolynomial.mem_coeffs_iff.1 hx
     have := congrArg (AddMonoidAlgebra.coeff · m) (hE i)
-    rwa [MvPolynomial.coeff_map, MvPolynomial.coeff_zero] at this)
+    rwa [MvPolynomial.coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this)
   have hE2 : ∀ i, MvPolynomial.map (F.map g₂).hom (E i) = 0 := by
     intro i
     ext m
-    rw [MvPolynomial.coeff_map, MvPolynomial.coeff_zero]
+    rw [MvPolynomial.coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     by_cases hm : m ∈ (E i).support
     · exact hg₂ _ (Finset.mem_biUnion.2 ⟨i, Finset.mem_univ _,
         MvPolynomial.coeff_mem_coeffs _ (MvPolynomial.mem_support_iff.1 hm)⟩)

@@ -90,9 +90,7 @@ lemma primeLogSum_theta (N : ℕ) :
     · rintro ⟨h1, h2⟩
       exact ⟨by omega, h2⟩
   have hprod : ∏ p ∈ (Finset.range (N + 1)).filter Nat.Prime, p ≤ 4 ^ N := by
-    first
-    | exact primorial_le_4_pow N
-    | exact Nat.primorial_le_4_pow N
+    exact primorial_le_four_pow N
   have hne : ∀ p ∈ (Finset.range (N + 1)).filter Nat.Prime, ((p : ℕ) : ℝ) ≠ 0 :=
     fun p hp => Nat.cast_ne_zero.mpr (Finset.mem_filter.mp hp).2.ne_zero
   have hpos : (0:ℝ) < ((∏ p ∈ (Finset.range (N + 1)).filter Nat.Prime, p : ℕ) : ℝ) :=

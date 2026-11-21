@@ -31,8 +31,7 @@ theorem gxSeries_mul (l : Fin n → ℂ) (r : Fin n) :
   ext k
   rcases k with _ | k
   · simp [gxSeries, gx]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [show gxSeries l r * (1 - PowerSeries.C (l r) * PowerSeries.X) =
+  · rw [show gxSeries l r * (1 - PowerSeries.C (l r) * PowerSeries.X) =
         gxSeries l r - PowerSeries.C (l r) * (gxSeries l r * PowerSeries.X) by ring,
       map_sub, PowerSeries.coeff_C_mul, PowerSeries.coeff_succ_mul_X, map_sub,
       PowerSeries.coeff_succ_X_mul, map_sum]

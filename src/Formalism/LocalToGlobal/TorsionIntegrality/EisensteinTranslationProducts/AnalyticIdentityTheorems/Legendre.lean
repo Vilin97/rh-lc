@@ -112,7 +112,8 @@ lemma sumA (u v : ℂ) (h : 0 < (v / u).im) :
   funext n
   unfold EisensteinSeries.e2Summand
   rw [← tsum_mul_left]
-  congr 1
+  refine tsum_congr fun m => ?_
+  simp only [eisSummand, Matrix.cons_val, hc]
   apply one_div_sq_eq_of_eq_mul
   field_simp
   ring
@@ -137,7 +138,8 @@ lemma sumB (u v : ℂ) (h : 0 < (v / u).im) :
   rw [← he]
   unfold EisensteinSeries.e2Summand
   rw [← tsum_mul_left]
-  congr 1
+  refine tsum_congr fun n => ?_
+  simp only [eisSummand, Matrix.cons_val, hw]
   apply one_div_sq_eq_of_eq_mul
   field_simp
   push_cast

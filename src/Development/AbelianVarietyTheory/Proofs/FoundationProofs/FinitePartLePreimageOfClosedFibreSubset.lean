@@ -180,6 +180,10 @@ theorem mem_finitePart_of_eq_closedPoint (f : X ⟶ Spec R) [LocallyOfFiniteType
     (PrimeSpectrum.localization_away_comap_range (Localization.Away e) e).ge hey
   exact ⟨z, by simp [hz]⟩
 
+theorem preimage_finitePart_eq_top (f : X ⟶ Spec R) [LocallyOfFiniteType f] [LocallyQuasiFinite f]
+    (h : Y ⟶ X) [IsFinite (h ≫ f)] : h ⁻¹ᵁ finitePart f = ⊤ :=
+  preimage_eq_top_of_closedFibre_subset f _ (mem_finitePart_of_eq_closedPoint f) h
+
 variable (f : X ⟶ Spec R) [IsSeparated f] [LocallyOfFiniteType f] [QuasiCompact f]
   [LocallyQuasiFinite f]
 
@@ -199,11 +203,6 @@ instance isFinite_finitePart : IsFinite ((finitePart f).ι ≫ f) := by
   obtain ⟨U, _, hU⟩ := key _ (f.finite_preimage_singleton (closedPoint R))
     (mem_finitePart_of_eq_closedPoint f)
   rwa [finitePart_eq_of_closedFibre_subset f U hU]
-
-
-theorem preimage_finitePart_eq_top (h : Y ⟶ X) [IsFinite (h ≫ f)] : h ⁻¹ᵁ finitePart f = ⊤ :=
-  preimage_eq_top_of_closedFibre_subset f _ (mem_finitePart_of_eq_closedPoint f) h
-
 
 end Henselian
 

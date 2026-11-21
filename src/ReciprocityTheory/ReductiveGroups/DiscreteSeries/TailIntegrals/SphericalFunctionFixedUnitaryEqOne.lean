@@ -31,7 +31,8 @@ lemma hpk_mulVec (v : Fin (2 * 0 + k + 1) → ℂ) (i : Fin (2 * 0 + k + 1)) :
 lemma hpk_sq (k : ℕ) : Hpk k 0 * Hpk k 0 = 1 := by
   rw [hpk_diag, Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
   congr 1
-  split_ifs <;> norm_num
+  funext i
+  by_cases h : i = iK k <;> simp [sg, h]
 
 lemma herm0 (v w : Fin (2 * 0 + k + 1) → ℂ) :
     herm (Hpk k 0) v w = ∑ i, star (w i) * (sg k i * v i) := by

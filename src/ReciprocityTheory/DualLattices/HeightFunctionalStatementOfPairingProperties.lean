@@ -264,7 +264,8 @@ private lemma exists_c (h1 : PairingPropertiesStatement B) {R : LAlg R₀} (Dp :
     have := congrArg Units.val h1z
     simpa using this
   have hmem : (z : (Dp.D : Type u)) - 1 ∈ RingHom.ker Dp.π.1 := by
-    rw [RingHom.mem_ker, RingHom.map_sub, hz1, map_one, sub_self]
+    change Dp.π.1 ((z : (Dp.D : Type u)) - 1) = 0
+    rw [map_sub, hz1, map_one, sub_self]
   rw [Dp.ker_eq, Ideal.mem_span_singleton'] at hmem
   obtain ⟨d, hd⟩ := hmem
   have hd' : d - Dp.σ.1 (Dp.π.1 d) ∈ RingHom.ker Dp.π.1 := by

@@ -104,27 +104,27 @@ theorem normF_mem (n : ℕ) (F : (Fin (n + 1) → G) → M.V) (hF : F ∈ hcoch 
     rw [this]
     refine continuous_finsetSum _ fun c _ => (continuous_rho M _).comp (hF.1.comp ?_)
     exact continuous_pi fun i => continuous_const.mul (continuous_apply i)
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [normF_eq, normF_eq, map_sum]
-    have key : ∀ c : Quotient (QuotientGroup.rightRel U),
-        M.rho c.out⁻¹ (F fun i => c.out * (g • x i)) =
-        M.rho g (M.rho (cosetMul U g c).out⁻¹ (F fun i => (cosetMul U g c).out * x i)) := by
-      intro c
-      have e := out_mul U g c
-      have h1 : (fun i => c.out * (g • x i)) =
-          fun i => retr U (c.out * g) • ((cosetMul U g c).out * x i) := by
-        funext i
-        show c.out * (g * x i) = (retr U (c.out * g) : G) * ((cosetMul U g c).out * x i)
-        rw [← mul_assoc, ← mul_assoc, ← e]
-      rw [h1, hF.2]
-      show M.rho c.out⁻¹ (M.rho (retr U (c.out * g) : G) _) = _
-      rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul]
-      congr 2
-      rw [show (retr U (c.out * g) : G) = c.out * g * ((cosetMul U g c).out)⁻¹ by
-        rw [eq_mul_inv_iff_mul_eq]; exact e.symm]
-      group
-    simp only [key]
-    exact Fintype.sum_bijective _ (cosetMul_bij U g) _ _ fun _ => rfl
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [normF_eq, normF_eq, map_sum]
+      have key : ∀ c : Quotient (QuotientGroup.rightRel U),
+          M.rho c.out⁻¹ (F fun i => c.out * (g • x i)) =
+          M.rho g (M.rho (cosetMul U g c).out⁻¹ (F fun i => (cosetMul U g c).out * x i)) := by
+        intro c
+        have e := out_mul U g c
+        have h1 : (fun i => c.out * (g • x i)) =
+            fun i => retr U (c.out * g) • ((cosetMul U g c).out * x i) := by
+          funext i
+          show c.out * (g * x i) = (retr U (c.out * g) : G) * ((cosetMul U g c).out * x i)
+          rw [← mul_assoc, ← mul_assoc, ← e]
+        rw [h1, hF.2]
+        show M.rho c.out⁻¹ (M.rho (retr U (c.out * g) : G) _) = _
+        rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul]
+        congr 2
+        rw [show (retr U (c.out * g) : G) = c.out * g * ((cosetMul U g c).out)⁻¹ by
+          rw [eq_mul_inv_iff_mul_eq]; exact e.symm]
+        group
+      simp only [key]
+      exact Fintype.sum_bijective _ (cosetMul_bij U g) _ _ fun _ => rfl
 
 theorem normF_hd (n : ℕ) (F : (Fin (n + 1) → G) → M.V) :
     normF M U (n + 1) (hd n F) = hd n (normF M U n F) := by

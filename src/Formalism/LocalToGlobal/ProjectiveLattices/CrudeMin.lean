@@ -418,9 +418,10 @@ theorem crRho_coeff (R : Type) [CommRing R] (β : (Σ σ : T, Fin (r σ)) → Fi
     rw [crRho_monomial]
     split_ifs with h
     · rfl
-    · rw [coeff_zero, coeff_monomial, if_neg]
-      rintro rfl
-      exact h hm
+    · have hne : u ≠ m := by
+        rintro rfl
+        exact h hm
+      rw [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, coeff_monomial, ite_eq_right hne]
   · intro p q hp hq
     rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]
 

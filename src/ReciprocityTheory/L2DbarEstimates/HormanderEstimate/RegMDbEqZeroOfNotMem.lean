@@ -105,8 +105,8 @@ theorem regM_locInt {n : ℕ} (z : M → V n) (hz : IsLocalHomeomorph z)
   haveI : IsFiniteMeasure (volume.restrict K) :=
     ⟨by rw [Measure.restrict_apply_univ]; exact hK.measure_lt_top⟩
   have hL2 : MemLp (F ∘ e.symm) 2 (volume.restrict K) := by
-    refine ⟨hmeas, ?_⟩
-    rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top two_ne_zero ENNReal.ofNat_ne_top]
+    rw [memLp_iff,
+      eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top two_ne_zero ENNReal.ofNat_ne_top hmeas]
     simpa [ENNReal.rpow_two] using h2
   exact hL2.integrable one_le_two
 

@@ -62,8 +62,9 @@ def IsSecBasis (x : J → Ω) (n : ℕ) {r : ℕ} (b : Fin r → MvPolynomial J 
     Submodule.span ℤ (Set.range fun k => aeval x (b k)) = sec ℤ x n
 
 
-def chi (x : J → Ω) (m : ConeMetric ℂ J) (μ : Measure (J → ℂ)) (n : ℕ) : ℝ :=
-  if h : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial J ℚ), IsSecBasis x n p.2 then
+def chi (x : J → Ω) (m : ConeMetric (C := ℂ) (ι := J)) (μ : Measure (J → ℂ)) (n : ℕ) : ℝ := by
+  classical
+  exact if h : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial J ℚ), IsSecBasis x n p.2 then
     l2Degree (K := ℚ) (fun _ => m) (fun _ => μ) n h.choose.2
   else 0
 
@@ -79,7 +80,8 @@ section Top
 
 variable {κ : Type} [Fintype κ]
 
-def _root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.ofCone (m : ConeMetric ℂ (Ix κ)) : HermLine (GlobalTheory κ) where
+def _root_.ReciprocityTheory.ChartRestriction.G.Geo.HermLine.ofCone
+    (m : ConeMetric (C := ℂ) (ι := Ix κ)) : HermLine (GlobalTheory κ) where
   a := 1
   h := m.ρ
   pos z hz := m.pos z fun h0 => by
@@ -101,10 +103,11 @@ def AllFam.IsFamily (I : AllFam) : Prop :=
 
 variable {Ω : Type*} [Field Ω] [CharZero Ω]
 
-def top (I : AllFam) (x : Ix κ → Ω) (m : ConeMetric ℂ (Ix κ)) (D : ℕ) : ℝ :=
+def top (I : AllFam) (x : Ix κ → Ω) (m : ConeMetric (C := ℂ) (ι := Ix κ)) (D : ℕ) : ℝ :=
   I Unit (GlobalTheory κ) (coordIdeal ℤ x) (D + 1) fun _ => HermLine.ofCone m
 
-structure IsGood (D : ℕ) (x : Ix κ → Ω) (m : ConeMetric ℂ (Ix κ)) (μ : Measure (Ix κ → ℂ)) :
+structure IsGood (D : ℕ) (x : Ix κ → Ω) (m : ConeMetric (C := ℂ) (ι := Ix κ))
+    (μ : Measure (Ix κ → ℂ)) :
     Prop where
   arith : IsArithVar (ι := GlobalTheory κ) (coordIdeal ℤ x) (D + 1)
   indep : LinearIndependent ℚ x

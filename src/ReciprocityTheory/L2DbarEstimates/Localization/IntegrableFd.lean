@@ -189,7 +189,8 @@ theorem flatGraph (n : ℕ) (hGraph : B.GraphSt (V n) volume ℝ) (hSmooth : B.S
     refine (lintegral_congr fun y => ?_).trans (lintegral_finsetSum' _ (fun j _ => ?_))
     · rw [enorm_sq_V]
       rfl
-    · exact (((hmc j).continuous.aestronglyMeasurable.sub (hGj j).1).enorm).pow_const 2
+    · exact ((hmc j).continuous.aestronglyMeasurable.sub
+        (hGj j).aestronglyMeasurable).eNorm.pow_const 2
   · refine lt_of_le_of_lt (le_of_eq (lintegral_congr fun y => ?_)) h2
     exact congrArg (fun s => ‖s - D y‖ₑ ^ 2)
       (dop_div (fun j => B.moll (B.Kernel.std (V n) volume t) (fun u => G u j)) y).symm
@@ -198,8 +199,8 @@ theorem flatGraph (n : ℕ) (hGraph : B.GraphSt (V n) volume ℝ) (hSmooth : B.S
           (![fun u => G u k, fun u => G u k, fun u => G u j, fun u => G u j] p)) -
         fun u => S u j k) y‖ₑ ^ 2
     have hmeas : ∀ j k, AEMeasurable (Q j k) volume := fun j k =>
-      ((((Finset.measurable_sum _ fun p _ => (measurable_fderiv_apply_const ℝ _ _).const_mul
-        _).aestronglyMeasurable).sub (hSjk j k).1).enorm).pow_const 2
+      ((Finset.measurable_sum _ fun p _ => (measurable_fderiv_apply_const ℝ _ _).const_mul
+        _).aestronglyMeasurable.sub (hSjk j k).aestronglyMeasurable).eNorm.pow_const 2
     have hsum : ∫⁻ y, ∑ j, ∑ k, Q j k y = ∑ j, ∑ k, ∫⁻ y, Q j k y := by
       rw [lintegral_finsetSum' _ (fun j _ => Finset.aemeasurable_fun_sum _ fun k _ => hmeas j k)]
       exact Finset.sum_congr rfl fun j _ => lintegral_finsetSum' _ fun k _ => hmeas j k

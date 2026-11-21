@@ -33,8 +33,13 @@ lemma pform_h (X : Data E r) (x y : Fin r → E) : (pform X).h x y = herm X.Gm y
 
 lemma isLattice (X : DataX E r) : ReciprocityTheory.MultiplicativeHeights.IsLattice X.L' := by
   refine ⟨X.L'_fg, ?_⟩
-  intro s hs hli
-  exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  rw [eq_top_iff, ← X.Λ_span, Submodule.span_le]
+  intro x hx
+  have hmem : (X.NA : E) • x ∈ Submodule.span E (X.L' : Set (Fin r → E)) :=
+    Submodule.subset_span (X.NA_sub x hx)
+  have hNA : (X.NA : E) ≠ 0 := Nat.cast_ne_zero.mpr X.NA_pos.ne'
+  have hx' := Submodule.smul_mem _ ((X.NA : E)⁻¹) hmem
+  rwa [smul_smul, inv_mul_cancel₀ hNA, one_smul] at hx'
 lemma selfDual (X : DataX E r) : ReciprocityTheory.MultiplicativeHeights.IsSelfDual (pform X.toData) X.L' := by
   have key : ∀ x y, (pform X.toData).h x y = cc (herm X.Gm x y) := fun x y => by
     rw [pform_h, ReciprocityTheory.ChartRestriction.G.FD.HermitianPairingAlgebra.herm_symm X.Gm_herm]

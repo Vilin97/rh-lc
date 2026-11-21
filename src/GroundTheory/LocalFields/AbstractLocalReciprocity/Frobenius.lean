@@ -74,7 +74,7 @@ theorem deg_zpow_mul {N : ℕ} (hdσ : d σ = Multiplicative.ofAdd (N : ℤ̂)) 
 variable [TopologicalSpace G] [IsTopologicalGroup G]
 
 
-def frobeniusClosure : Subgroup G :=
+def frobeniusClosure (d : G →* Multiplicative ℤ̂) (L : Subgroup G) (σ : G) : Subgroup G :=
   (Subgroup.zpowers σ ⊔ (L ⊓ d.ker)).topologicalClosure
 
 theorem le_frobeniusClosure : L ⊓ d.ker ≤ frobeniusClosure d L σ :=

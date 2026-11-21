@@ -16,7 +16,7 @@ open MeasureTheory Metric Filter Topology Matrix
 open scoped ContDiff
 open ReciprocityTheory.AnForm (levi)
 open ReciprocityTheory.AnForm.A (polyMax Mollifier molli regMax coordDiv)
-open ReciprocityTheory.AnForm.M (FinHolAtlas LocPot IsPotential IsPosPot IsCompatChart maMeasure)
+open ReciprocityTheory.AnForm.M (FinHolAtlas LocPot IsPotential IsPosPot IsCompatChart)
 
 noncomputable section
 

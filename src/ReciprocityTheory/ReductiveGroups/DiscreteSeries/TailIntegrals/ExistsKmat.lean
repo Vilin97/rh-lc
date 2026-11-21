@@ -93,7 +93,7 @@ theorem exists_Kmat (hk : 1 ≤ k) (c u : Fin (r + 1) → EE k r) (hc : Orthonor
     convert h2 using 1
     · refine Finset.sum_congr rfl fun m _ => ?_
       simp [mulVec_single, mul_comm]
-    · simp [Pi.single_apply, eq_comm]
+    · simp [Pi.single_apply, Matrix.one_apply, eq_comm]
   have hv : ∀ v, κ *ᵥ (Hpk k r *ᵥ v) = Hpk k r *ᵥ (κ *ᵥ v) := by
     intro v
     have := hκH (WithLp.toLp 2 v)

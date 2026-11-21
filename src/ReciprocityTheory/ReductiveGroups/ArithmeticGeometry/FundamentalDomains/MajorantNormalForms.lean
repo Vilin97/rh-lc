@@ -220,7 +220,8 @@ theorem exists_normal {x : Frame X.Ψ r} (hx : x ∈ X.dom) (τ : X.Ψ) :
     exact mul_ne_zero hLdet (Finset.prod_ne_zero_iff.mpr fun c _ =>
       Complex.ofReal_ne_zero.mpr (hs0 c))
   · intro a c hca
-    rw [Matrix.mul_diagonal, Matrix.transpose_apply, LDL.lowerInv_triangular hH hca, zero_mul]
+    rw [Matrix.mul_diagonal, Matrix.transpose_apply,
+      LDL.isLowerTriangular_lowerInv hH hca, zero_mul]
   · intro a c
     rw [col_mul_eq, col_mul_eq, Hf_sum_sum]
     have hHkl : ∀ k l, X.Hf x τ (col (mat x τ) k) (col (mat x τ) l) = H k l := fun k l => by

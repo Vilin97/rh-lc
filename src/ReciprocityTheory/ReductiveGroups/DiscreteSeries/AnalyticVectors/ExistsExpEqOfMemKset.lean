@@ -16,6 +16,8 @@ lemma kExp_Jm_conjTranspose (ε : Fin n → Bool) : (Jm ε)ᴴ = Jm ε := by
   unfold Jm
   rw [Matrix.diagonal_conjTranspose]
   congr 1
+  funext i
+  simp only [Pi.star_apply]
   split_ifs <;> simp
 
 section L2

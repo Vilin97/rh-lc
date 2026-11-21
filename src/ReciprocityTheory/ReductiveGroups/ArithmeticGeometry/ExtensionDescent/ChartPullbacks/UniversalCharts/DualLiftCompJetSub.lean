@@ -34,7 +34,7 @@ theorem sum_single {a : ℕ} (c : Fin a → R) : ∑ i, c i • Pi.single i (1 :
   simp [Pi.single_apply]
 
 def jetSub {a b : ℕ} (T : (Fin a → R) →ₗ[R] (Fin b → R)) (m : ℕ) : JetR R (Fin b) m →ₐ[R] JetR R (Fin a) m :=
-  jetLift R (RingHom.ker (jetAug R (Fin a) m)) (ker_jetAug_pow (Fin a) m)
+  jetLift (RingHom.ker (jetAug R (Fin a) m)) (ker_jetAug_pow (Fin a) m)
     (fun k => ∑ i, T (Pi.single i 1) k • zR m i) (fun k => sum_smul_zR_mem m _)
 
 theorem jetSub_zR {a b : ℕ} (T : (Fin a → R) →ₗ[R] (Fin b → R)) (m : ℕ) (k : Fin b) :

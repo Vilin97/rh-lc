@@ -35,8 +35,6 @@ theorem weylSum_split {n : ℕ} (ε : Fin n → Bool) (f : Fin n → ℝ) :
       ∑ s ∈ univ.filter (fun s => ε s = false), f s := by
   rw [← Finset.sum_filter_add_sum_filter_not univ (fun s => ε s = true)]
   congr 1
-  refine Finset.sum_congr ?_ fun _ _ => rfl
-  ext s; simp
 
 theorem weylSum_card_split {n : ℕ} (ε : Fin n → Bool) :
     ((univ.filter (fun s => ε s = true)).card : ℝ) + ((univ.filter (fun s => ε s = false)).card : ℝ) = n := by

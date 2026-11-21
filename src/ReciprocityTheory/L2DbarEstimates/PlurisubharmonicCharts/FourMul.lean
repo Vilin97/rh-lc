@@ -97,6 +97,8 @@ theorem four_mul' (f : ℕ) : FOURMulStatement' f := by
     intro x
     show (fun k => ((x k : ℂ) + (b k : ℂ) * Complex.I).im) ∈ Ω
     convert hb using 1
+    ext k
+    simp [Complex.add_im]
   have hc : ∀ hh : (Fin f → ℂ) → ℂ, DifferentiableOn ℂ hh (tube f Ω) →
       Continuous (fmLine hh b) := by
     intro hh hd
@@ -112,7 +114,10 @@ theorem four_mul' (f : ℕ) : FOURMulStatement' f := by
     have := hp _ (hmem x) n
     simp only [fmLine]
     convert this using 2
-    push_cast
+    ext k
+    simp only [Pi.add_apply, Complex.ofReal_add]
+    have hn : ((n k : ℝ) : ℂ) = (n k : ℂ) := by norm_cast
+    rw [hn]
     ring
   have hper12 : ∀ x (n : Fin f → ℤ),
       fmLine (h1 * h2) b (x + fun i => (n i : ℝ)) = fmLine (h1 * h2) b x := by
@@ -133,6 +138,8 @@ theorem four_mul' (f : ℕ) : FOURMulStatement' f := by
         Complex.exp (2 * Real.pi * ∑ k, ((ν - ν') k : ℂ) * (b k : ℂ)) := by
     rw [← Complex.exp_add, ← mul_add, ← Finset.sum_add_distrib]
     congr 3
+    ext k
+    simp only [Pi.sub_apply, Int.cast_sub]
     ring
   rw [hE]
   simp only [F1, F2, ContinuousMap.coe_mk]

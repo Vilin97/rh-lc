@@ -160,6 +160,8 @@ end General
 
 section Local
 
+attribute [local instance] MvPolynomial.gradedAlgebra
+
 theorem finite_localizedModule_integralClosure {R L : Type*} [CommRing R] [CommRing L]
     [Algebra R L] (g : R) [Algebra (Localization.Away g) L]
     [IsScalarTower R (Localization.Away g) L]
@@ -412,6 +414,7 @@ theorem finite_integralClosure_of_injective (L : Type*) [Field L] [CharZero o] [
     exact ha
 
 
+include o in
 theorem finite_integralClosure_of_essFiniteType_field (L : Type*) [Field L] [CharZero L]
     [Algebra R L] [Algebra.EssFiniteType R L] : Module.Finite R (integralClosure R L) := by
   let χ := (algebraMap R L).comp (algebraMap o R)
@@ -453,6 +456,7 @@ theorem finite_of_isIntegralClosure_dedekind [CharZero o] [IsDomain R] [Faithful
   .equiv (IsIntegralClosure.equiv R (integralClosure R L) L C).toLinearEquiv
 
 
+include o in
 theorem finite_integralClosure_of_essFiniteType_of_isReduced (B : Type*) [CommRing B]
     [IsReduced B] [IsAddTorsionFree B] [Algebra R B] [Algebra.EssFiniteType R B] :
     Module.Finite R (integralClosure R B) := by
@@ -509,7 +513,7 @@ theorem essFiniteType_stalkMap_SpecMap {A B : CommRingCat.{u}} (φ : A ⟶ B)
     (RingHom.FiniteType.of_surjective _
       (ConcreteCategory.bijective_of_isIso (Scheme.ΓSpecIso B).inv).2).essFiniteType)
 
-include g
+include g in
 
 theorem isFinite_fromNormalization_of_dense [IsReduced X] {D : Set X} (hD : Dense D)
     (hfin : ∀ W : X.Opens, IsCompact (W : Set X) → (D ∩ W).Finite)
@@ -563,6 +567,8 @@ theorem finite_genericPoints_inter [IsLocallyNoetherian X] (W : X.Opens)
   rw [W.ι.isOpenEmbedding.isInducing.closure_eq_preimage_closure_image]
   convert h using 3
   exact Set.image_singleton
+
+include g
 
 theorem isFinite_fromNormalization_of_genericPoints [IsReduced X] [IsLocallyNoetherian X]
     (hchar : ∀ x ∈ genericPoints X, CharZero (X.residueField x))

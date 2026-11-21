@@ -94,9 +94,9 @@ lemma eq_zero_of_aeval_mem {ι : Type*} (q : Ideal (MvPolynomial σ ℤ)) [q.IsP
         rw [MvPolynomial.C_dvd_iff_dvd_coeff]
         intro i
         have h0 := congrArg (AddMonoidAlgebra.coeff · i) (hred G hG)
-        rw [MvPolynomial.coeff_map, MvPolynomial.coeff_zero, eq_intCast,
-          ZMod.intCast_zmod_eq_zero_iff_dvd] at h0
-        exact h0
+        rw [MvPolynomial.coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply,
+          eq_intCast] at h0
+        exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp h0
       obtain ⟨H, rfl⟩ := hdiv
       have hH : aeval x H ∈ q := by
         rw [map_mul, MvPolynomial.aeval_C] at hG

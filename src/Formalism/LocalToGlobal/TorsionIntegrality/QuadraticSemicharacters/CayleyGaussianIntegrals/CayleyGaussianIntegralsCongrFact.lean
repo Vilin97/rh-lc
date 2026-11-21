@@ -181,8 +181,8 @@ theorem stdData_seven :
     StdData L7 1 (((Formalism.L2.Th1.F.area L7 : ℝ) : ℂ)⁻¹ • (1 : Matrix n n ℂ)) (stdLat L7 n)
       (alphaQ (Real.sqrt (7 : ℕ) / 2) (matH (((Formalism.L2.Th1.F.area L7 : ℝ) : ℂ)⁻¹ • (1 : Matrix n n ℂ))))
       (alphaQ (Real.sqrt (7 : ℕ) / 2) (stdH L7 (Fin 4 × n))) (gU n) := by
-  have h := CmData.stdData_cm 1 1 2 7 one_pos (by norm_num) 1 one_ne_zero (by norm_num) (by decide) (by norm_num)
-    _ _ _ (gU_isom n) (stdSelfDual L7 n) (fun x hx => th_stable_std hx)
+  have h := Formalism.L2.Th1.H.stdDataCm 1 1 2 7 one_pos (by norm_num) 1 one_ne_zero (by norm_num) (by decide) (by norm_num)
+    _ _ _ (gU n) (gU_isom n) (stdSelfDual L7 n) (fun x hx => th_stable_std hx)
     (by rw [fourth_power_standard_lattice]; exact idxU₁ _) (by rw [fourth_power_standard_lattice]; exact idxU₂ _)
   have e : (1 : ℂ) * ((1 : ℕ) : ℂ) = 1 := by norm_num
   rw [e] at h

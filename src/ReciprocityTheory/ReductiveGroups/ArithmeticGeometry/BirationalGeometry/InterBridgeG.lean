@@ -84,8 +84,11 @@ theorem exists_inj_cover {O : Set (Fin e → ℂ)} {Q : (Fin e → ℂ) → (Fin
   classical
   set s : Set (Set (Fin e → ℂ)) :=
     insert ∅ {b | b ∈ TopologicalSpace.countableBasis (Fin e → ℂ) ∧ b ⊆ O ∧ InjOn Q b}
-  have hs : s.Countable :=
-    ((TopologicalSpace.countable_countableBasis _).mono fun b hb => hb.1).insert ∅
+  have hs : s.Countable := by
+    apply Set.Countable.insert
+    apply (TopologicalSpace.countable_countableBasis (Fin e → ℂ)).mono
+    intro b hb
+    exact hb.1
   have hmem : ∀ n, Set.enumerateCountable hs ∅ n ∈ s := Set.enumerateCountable_mem hs
     (Set.mem_insert _ _)
   refine ⟨Set.enumerateCountable hs ∅, fun n => ?_, fun n => ?_, fun n => ?_, ?_⟩
@@ -149,7 +152,8 @@ theorem tsum_finsum_disjointed {α : Type*} {D : ℕ → Set α} (hd : Pairwise 
   have hsub : ∀ n, D n ⊆ O := fun n => hU ▸ subset_iUnion D n
   have hterm : ∀ n, ∑ᶠ u ∈ D n ∩ G, f u = ∑ u ∈ hG.toFinset, if u ∈ D n then f u else 0 := by
     intro n
-    rw [finsum_mem_eq_finite_toFinset_sum f (hG.subset fun u hu => ⟨hsub n hu.1, hu.2⟩),
+    have hfin : (D n ∩ G).Finite := hG.subset fun u hu => ⟨hsub n hu.1, hu.2⟩
+    rw [finsum_mem_eq_finite_toFinset_sum f hfin,
       Finset.sum_ite, Finset.sum_const_zero, add_zero]
     congr 1
     ext u

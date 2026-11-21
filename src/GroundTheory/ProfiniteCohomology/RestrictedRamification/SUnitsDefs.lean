@@ -128,11 +128,11 @@ section Max
 variable (F : Type u) [Field F] [NumberField F] (Ω : Type u) [Field Ω] [Algebra F Ω]
 variable (S : Set (HeightOneSpectrum (𝓞 F)))
 
-noncomputable abbrev sUnitsMax : Subgroup (maxUnramifiedOutside F Ω S)ˣ :=
-  sUnitsOf S (maxUnramifiedOutside F Ω S)
+noncomputable abbrev sUnitsMax : Subgroup (maxUnramifiedOutside (F := F) (Ω := Ω) S)ˣ :=
+  sUnitsOf S (maxUnramifiedOutside (F := F) (Ω := Ω) S)
 
-noncomputable abbrev galSUnitsMax : Rep.{u} (ULift.{u} ℤ) (galUnramifiedOutside F Ω S) :=
-  galSUnits S (maxUnramifiedOutside F Ω S)
+noncomputable abbrev galSUnitsMax : Rep.{u} (ULift.{u} ℤ) (galUnramifiedOutside (F := F) (Ω := Ω) S) :=
+  galSUnits S (maxUnramifiedOutside (F := F) (Ω := Ω) S)
 
 end Max
 

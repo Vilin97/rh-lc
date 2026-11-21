@@ -50,8 +50,7 @@ lemma emb_comb [IsCMField E] (σ : E →+* ℂ) (c : ℂ) :
     · rw [if_pos h, ← hy, ← hcoord, h]
     · by_cases h' : (mk τ).embedding = τ
       · rw [if_pos h', ← hy, ← hcoord, h']
-      set_option synthInstance.maxHeartbeats 100000 in
-        · rw [if_neg h', ← hy, ← hcoord, map_sum]
+      · rw [if_neg h', ← hy, ← hcoord, map_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [h, map_mul, Complex.conj_ofReal, ComplexEmbedding.conjugate_coe_eq]
         simp

@@ -20,8 +20,8 @@ theorem bwtDiag_inG (ε : Fin n → Bool) (θ : Fin n → ℝ) : inG ε (bwtDiag
   rw [bwtDiag, Jm, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
     Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, ← Matrix.diagonal_zero]
   congr 1
-    Complex.conj_I]
-  ring
+  funext i
+  by_cases hε : ε i = true <;> simp [hε, Complex.conj_I] <;> ring_nf
 
 theorem bwt_exp (θ : Fin n → ℝ) (t : ℝ) :
     NormedSpace.exp ((t : ℂ) • bwtDiag θ) =
@@ -46,7 +46,13 @@ theorem bwt_diag_mem_Kset (ε : Fin n → Bool) (θ : Fin n → ℝ) :
   · rw [Matrix.mem_unitaryGroup_iff, Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose,
       Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
     congr 1
-    rw [← Complex.exp_conj, ← Complex.exp_add]
+    funext a
+    simp only [Pi.star_apply]
+    rw [Complex.star_def, ← Complex.exp_conj, map_mul, Complex.conj_ofReal, Complex.conj_I,
+      ← Complex.exp_add]
+    congr 1
+    push_cast
+    ring
     simp
   · rw [Formalism.REAL.Jm, Matrix.diagonal_mul_diagonal, Matrix.diagonal_mul_diagonal]
     congr 1

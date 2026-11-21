@@ -18,22 +18,22 @@ namespace RationalSymbol
 open _root_.GroundTheory.Global.Cyclotomic GroundTheory.LocalField.Abstract
 
 instance isGalois_maxCyclotomic : IsGalois ℚ maxCyclotomic := by
-  have : IsGalois ℚ ℚ̄ := IsAlgClosure.isGalois ℚ ℚ̄
+  have : IsGalois ℚ (AlgebraicClosure ℚ) := IsAlgClosure.isGalois ℚ (AlgebraicClosure ℚ)
   have h : @IsGalois ℚ _ maxCyclotomic _ (IntermediateField.algebra' maxCyclotomic) := by
     rw [← InfiniteGalois.normal_iff_isGalois, ← ker_character]
     infer_instance
   convert h
-  exact Subsingleton.elim _ _
 
-abbrev cycRestrict : Gal(ℚ̄/ℚ) →* Gal(maxCyclotomic/ℚ) :=
+abbrev cycRestrict : Gal(AlgebraicClosure ℚ/ℚ) →* Gal(maxCyclotomic/ℚ) :=
   AlgEquiv.restrictNormalHom maxCyclotomic
 
 theorem cycRestrict_surjective : Function.Surjective cycRestrict := by
-  have : IsGalois ℚ ℚ̄ := IsAlgClosure.isGalois ℚ ℚ̄
-  exact AlgEquiv.restrictNormalHom_surjective ℚ̄
+  have : IsGalois ℚ (AlgebraicClosure ℚ) := IsAlgClosure.isGalois ℚ (AlgebraicClosure ℚ)
+  exact AlgEquiv.restrictNormalHom_surjective (F := ℚ) (K₁ := maxCyclotomic)
+    (E := AlgebraicClosure ℚ)
 
-theorem coe_cycRestrict_apply (σ : Gal(ℚ̄/ℚ)) (x : maxCyclotomic) :
-    ((cycRestrict σ x : maxCyclotomic) : ℚ̄) = σ x :=
+theorem coe_cycRestrict_apply (σ : Gal(AlgebraicClosure ℚ/ℚ)) (x : maxCyclotomic) :
+    ((cycRestrict σ x : maxCyclotomic) : AlgebraicClosure ℚ) = σ x :=
   AlgEquiv.restrictNormal_commutes σ maxCyclotomic x
 
 theorem ker_cycRestrict : cycRestrict.ker = character.ker := by
@@ -55,9 +55,9 @@ def cycCharacter : Gal(maxCyclotomic/ℚ) ≃* ℤ̂ˣ :=
     ((QuotientGroup.quotientMulEquivOfEq ker_cycRestrict).trans
       (QuotientGroup.quotientKerEquivOfSurjective character character_surjective))
 
-theorem cycCharacter_cycRestrict (σ : Gal(ℚ̄/ℚ)) : cycCharacter (cycRestrict σ) = character σ := by
+theorem cycCharacter_cycRestrict (σ : Gal(AlgebraicClosure ℚ/ℚ)) : cycCharacter (cycRestrict σ) = character σ := by
   have h : (QuotientGroup.quotientKerEquivOfSurjective cycRestrict cycRestrict_surjective).symm
-      (cycRestrict σ) = (σ : Gal(ℚ̄/ℚ) ⧸ cycRestrict.ker) := by
+      (cycRestrict σ) = (σ : Gal(AlgebraicClosure ℚ/ℚ) ⧸ cycRestrict.ker) := by
     rw [MulEquiv.symm_apply_eq]
     rfl
   rw [cycCharacter, MulEquiv.trans_apply, MulEquiv.trans_apply, h]
@@ -74,11 +74,11 @@ theorem cycCharacter_spec (τ : Gal(maxCyclotomic/ℚ)) (n : ℕ+) {ζ : maxCycl
 
 def unitPart : IdeleClassGroup ℚ →* ℤ̂ˣ :=
   (Units.map padicEquiv.symm.toRingHom.toMonoidHom).comp
-    ((MonoidHom.snd _ _).comp RationalIdeles.ideleClassGroupEquiv.toMulEquiv.toMonoidHom)
+    ((MonoidHom.snd _ _).comp _root_.GroundTheory.Global.RationalIdeles.ideleClassGroupEquiv.toMulEquiv.toMonoidHom)
 
 theorem toPadicInt_unitPart (x : IdeleClassGroup ℚ) (q : Nat.Primes) :
     toPadicInt q (unitPart x : ℤ̂) =
-      ((RationalIdeles.ideleClassGroupEquiv x).2 : Π p : Nat.Primes, ℤ_[p]) q := by
+      ((_root_.GroundTheory.Global.RationalIdeles.ideleClassGroupEquiv x).2 : Π p : Nat.Primes, ℤ_[p]) q := by
   change toPadics (padicEquiv.symm _) q = _
   rw [← padicEquiv_apply, RingEquiv.apply_symm_apply]
   rfl

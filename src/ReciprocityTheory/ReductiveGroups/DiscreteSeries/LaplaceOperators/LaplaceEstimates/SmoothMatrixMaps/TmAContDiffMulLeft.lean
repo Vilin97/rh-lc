@@ -99,7 +99,7 @@ theorem tmA_contDiff_mulLeft (x : Matrix (Fin n) (Fin n) ℂ) :
     ContDiff ℝ ∞ (fun g : Matrix (Fin n) (Fin n) ℂ => x * g) := by
   refine contDiff_pi.mpr fun i => contDiff_pi.mpr fun j => ?_
   simp only [Matrix.mul_apply]
-  exact ContDiff.sum fun k _ => contDiff_const.mul (contDiff_apply_apply ℝ ℂ k j)
+  exact ContDiff.sum fun k _ => contDiff_const.mul (contDiff_apply_apply (𝕜 := ℝ) (n := ∞) k j)
 
 theorem tmA_sm_left {f : Matrix (Fin n) (Fin n) ℂ → ℂ} (hf : Formalism.REAL.SmoothOnG ε f)
     {x : Matrix (Fin n) (Fin n) ℂ} (hx : Formalism.REAL.inUJ ε x) : Formalism.REAL.SmoothOnG ε (fun g => f (x * g)) := by

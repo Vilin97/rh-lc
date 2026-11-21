@@ -123,7 +123,7 @@ theorem norm_ratio_pi (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (x : Fin (d.N + 1) �
   classical
   have hmem := d.x4v4_wx_mem hd x c
   have hg0 := d.x4v4_ratio_ne hd c hmem hx
-  obtain ⟨κ, hκ, hN⟩ := d.norm_factorization_clause hd h c _ hg0
+  obtain ⟨κ, hκ, hN⟩ := (d.norm_factorization hd h).1 c _ hg0
   refine ⟨κ, hκ, ?_⟩
   rw [hN, mul_assoc]
   congr 1

@@ -62,7 +62,7 @@ def A9 : Prop := ∀ (R : Type) [CommRing R] (F : Shv R), (∀ (E : Spc) (n : �
   ∃ e : ∀ X : Scheme.{0}, Sec F X ≃+ H R (sch.obj X) F 0,
     (∀ {Y X : Scheme.{0}} (f : Y ⟶ X) (s : Sec F X), pull R (sch.map f) F 0 (e X s) = e Y (Sec.res f s)) ∧
     ∀ (X : Scheme.{0}) (s : Sec F X), ∃ α : Cocycle _ _ 0, CohomologyClass.mk α = e X s ∧
-      ev α.1 0 0 (by simp) X (𝟙 X) = Sec.map (resι R F) s
+      ev R α.1 0 0 (by simp) X (𝟙 X) = Sec.map (resι R F) s
 
 def A10 : Prop := ∀ (R : Type) [CommRing R] (E : Spc) {F G : Shv R} (φ : F ⟶ G),
   (∀ U : Scheme.{0}, Nonempty (Sx E 0 U) → Function.Bijective (Sec.map φ (U := U))) →

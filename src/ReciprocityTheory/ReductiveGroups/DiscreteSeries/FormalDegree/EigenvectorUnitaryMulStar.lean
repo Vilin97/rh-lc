@@ -130,9 +130,11 @@ theorem trace_leading_submatrix_pmat {ε : Fin n → Bool} (z : PCoord ε → �
 theorem lemma3c {ε : Fin n → Bool} (z : PCoord ε → ℂ) {i : ℕ} (hi : i ≤ n) :
     ∑ S, wS z hi S * yS z S.1 = 0 := by
   have hP := sum_weights_coeff_eq_det z hi (fun s => ((pev z s : ℝ) : ℂ)) (pmat z) (pmat_eq_eigenvectorUnitary_conj_diagonal_pev z).symm 1
+  beta_reduce at hP
   rw [Matrix.coeff_det_one_add_X_smul_one, trace_leading_submatrix_pmat z hi] at hP
   have hc : ∀ S : {S : Finset (Fin n) // S.card = i},
-      (∏ s ∈ S.1, (1 + X * C ((pev z s : ℝ) : ℂ))).coeff 1 = ((yS z S.1 : ℝ) : ℂ) := by
+      (∏ s ∈ S.1, (1 + Polynomial.X * Polynomial.C ((pev z s : ℝ) : ℂ))).coeff 1 =
+        ((yS z S.1 : ℝ) : ℂ) := by
     intro S
     rw [(coeff_prod_one_add_low S.1 _).2.1, yS]
     push_cast
@@ -152,8 +154,8 @@ theorem lemma3d {ε : Fin n → Bool} (z : PCoord ε → ℂ) {i : ℕ} (hi : i 
   have h2 := coeff_two_det_hermitian _ ((pmat_isHermitian z).submatrix (Fin.castLE hi))
   rw [trace_leading_submatrix_pmat z hi] at h2
   have hS : ∀ S : {S : Finset (Fin n) // S.card = i}, ((yS z S.1 : ℝ) : ℂ) ^ 2 =
-      2 * (∏ s ∈ S.1, (1 + X * C ((pev z s : ℝ) : ℂ))).coeff 2 +
-        (∏ s ∈ S.1, (1 + X * C (((pev z s : ℝ) : ℂ) ^ 2))).coeff 1 := by
+      2 * (∏ s ∈ S.1, (1 + Polynomial.X * Polynomial.C ((pev z s : ℝ) : ℂ))).coeff 2 +
+        (∏ s ∈ S.1, (1 + Polynomial.X * Polynomial.C (((pev z s : ℝ) : ℂ) ^ 2))).coeff 1 := by
     intro S
     obtain ⟨-, -, h2'⟩ := coeff_prod_one_add_low S.1 (fun s => ((pev z s : ℝ) : ℂ))
     obtain ⟨-, h1'', -⟩ := coeff_prod_one_add_low S.1 (fun s => ((pev z s : ℝ) : ℂ) ^ 2)

@@ -21,6 +21,7 @@ open GlobalTheory.MvPoly GlobalTheory.GridSize
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 
+variable (E n) in
 noncomputable def conjVec : (Fin n → E) →ₛₗ[((IsCMField.ringOfIntegersComplexConj E).toRingEquiv :
     𝓞 E →+* 𝓞 E)] (Fin n → E) where
   toFun v k := cc (v k)
@@ -109,6 +110,7 @@ theorem _root_.GlobalTheory.Harm.one_le_add_of_one_le_typeDegree {T : Type*} [Fi
   simp [_root_.GlobalTheory.Harm.typeDegree, _root_.GlobalTheory.Harm.partSize] at ha
 
 
+variable (E n) in
 noncomputable def hermPairing : (Fin n → E) →ₗ[E] ((Fin n → E) → E) where
   toFun x y := herm 1 x y
   map_add' x x' := funext fun y => by simp [herm_one_eq_sum, add_mul, Finset.sum_add_distrib]

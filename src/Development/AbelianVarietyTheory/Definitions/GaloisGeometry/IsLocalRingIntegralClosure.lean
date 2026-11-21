@@ -124,14 +124,19 @@ def galIntMap (σ : Ω ≃ₐ[K] Ω) : intFib Ω p ⟶ intFib Ω p :=
     ext r
     exact congrArg Subtype.val (galInt_algebraMap σ r).symm)
 
+@[reassoc] theorem galIntMap_fst (σ : Ω ≃ₐ[K] Ω) :
+    galIntMap p σ ≫ pullback.fst _ _ = pullback.fst _ _ :=
   pullback.lift_fst _ _ _
 
+@[reassoc] theorem galIntMap_snd (σ : Ω ≃ₐ[K] Ω) :
     galIntMap p σ ≫ intStr Ω p = intStr Ω p ≫ Spec.map (CommRingCat.ofHom (galInt O K σ).toRingHom) :=
   pullback.lift_snd _ _ _
 
 theorem galGen_j (σ : Ω ≃ₐ[K] Ω) : GlobalTheory.Et.galMap Ω (genStr K p) σ ≫ jGen K Ω p = jGen K Ω p ≫ galIntMap p σ := by
   apply pullback.hom_ext
-  · rw [Category.assoc, Category.assoc, galIntMap_fst, jGen_fst, GlobalTheory.Et.galMap_fst_assoc]
+  · have h : jGen K Ω p ≫ pullback.fst _ _ = pullback.fst _ _ ≫ pullback.fst _ _ :=
+      pullback.lift_fst _ _ _
+    rw [Category.assoc, Category.assoc, galIntMap_fst, h, GlobalTheory.Et.galMap_fst_assoc]
   · have e : CommRingCat.ofHom (integralClosure O Ω).val.toRingHom ≫ CommRingCat.ofHom (σ : Ω →+* Ω) =
         CommRingCat.ofHom (galInt O K σ).toRingHom ≫ CommRingCat.ofHom (integralClosure O Ω).val.toRingHom := by
       ext x; rfl

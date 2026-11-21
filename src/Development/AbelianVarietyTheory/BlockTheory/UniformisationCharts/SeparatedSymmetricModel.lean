@@ -89,8 +89,8 @@ def bcMap (f : H ⟶ (Over.pullback p).obj G) [IsMonHom f] : CubeMap H G where
     rw [h1, h2, dn_pzero, pzero, Over.comp_left, eSec]
     congr 1
   psum_comm := fun I => by
-    have h1 : (psum H (x3 H) I).left ≫ (dn p f).left = (dn p (psum H (x3 H) I ≫ f)).left := by
-      simp
+    have h1 : (psum H (x3 H) I).left ≫ (dn p f).left = (dn p (psum H (x3 H) I ≫ f)).left :=
+      (Category.assoc _ _ _).symm
     have h2 : (dn3 p f).left ≫ (psum G (x3 G) I).left = (dn3 p f ≫ psum G (x3 G) I).left := rfl
     rw [h1, h2]
     congr 1

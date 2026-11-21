@@ -126,7 +126,7 @@ theorem xi_bd {k r : ℕ} (s : Fin (r + 1) → ℝ) (hs : ∀ l, 0 ≤ s l) (h :
     xiR k r s (h * m) ≤ (∏ l, (K ^ (l.val + 1)) ^ s l) * xiR k r s m := by
   unfold xiR
   rw [← Finset.prod_mul_distrib]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro l _
     exact Real.rpow_nonneg (Real.sqrt_nonneg _) _
   · intro l _

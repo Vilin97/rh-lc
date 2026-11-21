@@ -30,7 +30,8 @@ theorem exists_of_ratRoot {Ω M : Type*} [Field Ω] [IsAlgClosed Ω] [Field M] (
 theorem exists_e_eq {d l : ℕ} [Fact l.Prime] (e : Om d →+* PadicAlgCl l)
     (r : PadicAlgCl l →+* PadicAlgCl l) (x : Om d) : ∃ y : Om d, e y = r (e x) := by
   obtain ⟨p, hp, hpx⟩ := Om_isAlgebraic d x
-  have : IsAlgClosed (Om d) := (inferInstance : IsAlgClosure (KQ d) (Om d)).isAlgClosed
+  have : IsAlgClosed (Om d) :=
+    (IsAlgClosed.algebraicClosure_eq_bot_iff (Om d) ℂ).mp (algebraicClosure.algebraicClosure_eq_bot (KQ d) ℂ)
   let f₀ : ℚ →+* Om d := algebraMap ℚ (Om d)
   have h0 : p.eval₂ f₀ x = 0 := by
     apply (algebraMap (Om d) ℂ).injective

@@ -144,9 +144,9 @@ theorem exists_unitaryPoints_prod (hH : IsUnit H.det) {S : Type*} [CommRing S] [
     simp only [map_zero, Finsupp.coe_zero, Pi.zero_apply]
     have hrepr :
         ((Algebra.TensorProduct.basis R b).repr (tensorMap (AlgHom.fst K R S) z) k =
-          ((Algebra.TensorProduct.basis (R × S) b).repr z k).1) ∧
+          AlgHom.fst K R S ((Algebra.TensorProduct.basis (R × S) b).repr z k)) ∧
         ((Algebra.TensorProduct.basis S b).repr (tensorMap (AlgHom.snd K R S) z) k =
-          ((Algebra.TensorProduct.basis (R × S) b).repr z k).2) := by
+          AlgHom.snd K R S ((Algebra.TensorProduct.basis (R × S) b).repr z k)) := by
       clear hz₁ hz₂
       constructor <;> induction z using TensorProduct.inductionOn with
       | tmul r e => simp [Algebra.TensorProduct.basis_repr_tmul, Finsupp.mapRange_apply]
@@ -378,25 +378,29 @@ theorem unitaryProdHom_bijective (hH : IsUnit H.det) :
   · intro y
     let M : Matrix ι ι ((R × S) ⊗[K] E) := (matrixCoords b (R × S)).symm fun p =>
       (unitaryCoords H R b y.1 p, unitaryCoords H S b y.2 p)
-    have hmap :
-        (matrixCoords b R (M.map (tensorMap (E := E) (AlgHom.fst K R S))) =
-          AlgHom.fst K R S ∘ matrixCoords b (R × S) M) ∧
-        (matrixCoords b S (M.map (tensorMap (E := E) (AlgHom.snd K R S))) =
-          AlgHom.snd K R S ∘ matrixCoords b (R × S) M) := by
-      constructor <;> funext ⟨i, j, k⟩
-      all_goals
-        simp only [matrixCoords, Equiv.coe_fn_mk, Function.comp_apply, Matrix.map_apply]
-        generalize M i j = x
-        induction x using TensorProduct.inductionOn with
-        | tmul r e => simp [Algebra.TensorProduct.basis_repr_tmul, Finsupp.mapRange_apply]
-        | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+    have hrepr (z : (R × S) ⊗[K] E) (k : Fin (finrank K E)) :
+        ((Algebra.TensorProduct.basis R b).repr (tensorMap (AlgHom.fst K R S) z) k =
+          AlgHom.fst K R S ((Algebra.TensorProduct.basis (R × S) b).repr z k)) ∧
+        ((Algebra.TensorProduct.basis S b).repr (tensorMap (AlgHom.snd K R S) z) k =
+          AlgHom.snd K R S ((Algebra.TensorProduct.basis (R × S) b).repr z k)) := by
+      constructor <;> induction z using TensorProduct.inductionOn with
+      | tmul r e => simp [Algebra.TensorProduct.basis_repr_tmul, Finsupp.mapRange_apply]
+      | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
     have h₁ : M.map (tensorMap (E := E) (AlgHom.fst K R S)) = unitaryMat y.1 := by
       apply (matrixCoords b R).injective
-      rw [hmap.1, Equiv.apply_symm_apply]
+      have hmap : matrixCoords b R (M.map (tensorMap (E := E) (AlgHom.fst K R S))) =
+          AlgHom.fst K R S ∘ matrixCoords b (R × S) M := by
+        funext ⟨i, j, k⟩
+        exact (hrepr (M i j) k).1
+      rw [hmap, Equiv.apply_symm_apply]
       rfl
     have h₂ : M.map (tensorMap (E := E) (AlgHom.snd K R S)) = unitaryMat y.2 := by
       apply (matrixCoords b S).injective
-      rw [hmap.2, Equiv.apply_symm_apply]
+      have hmap : matrixCoords b S (M.map (tensorMap (E := E) (AlgHom.snd K R S))) =
+          AlgHom.snd K R S ∘ matrixCoords b (R × S) M := by
+        funext ⟨i, j, k⟩
+        exact (hrepr (M i j) k).2
+      rw [hmap, Equiv.apply_symm_apply]
       rfl
     obtain ⟨g, hg⟩ := exists_unitaryPoints_prod hH M ⟨y.1, h₁.symm⟩ ⟨y.2, h₂.symm⟩
     refine ⟨g, Prod.ext ?_ ?_⟩

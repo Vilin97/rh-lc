@@ -159,9 +159,9 @@ theorem KType_continuous_op {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KTyp
 
 theorem integrable_dk_of_continuous {ε : Fin n → Bool} {E : Type*} [NormedAddCommGroup E] {g : KG ε → E} (hg : Continuous g) :
     Integrable g (dk ε) := by
-  first
-  | exact hg.integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace g)
-  | exact (BoundedContinuousFunction.mkOfCompact ⟨g, hg⟩).integrable (dk ε)
+  letI := (dk_props ε).1
+  rw [← integrableOn_univ]
+  exact hg.continuousOn.integrableOn_compact isCompact_univ
 
 theorem fF_eq_integral {ε : Fin n → Bool} (lam : Fin n → ℝ) {Λ : Fin n → ℝ} (T : KType ε Λ)
     (X : Matrix (Fin n) (Fin n) ℂ) :

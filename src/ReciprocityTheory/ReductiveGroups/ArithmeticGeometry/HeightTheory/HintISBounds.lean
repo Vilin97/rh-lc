@@ -30,7 +30,8 @@ theorem hint_fs (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (sg : K →+* ℂ) :
     ∀ᵐ z ∂(blockSphereProb d.D (d.N + 1)), ∃ s : Finset (Ω c →+* ℂ), s.card = d.delc c ∧
       (∀ P ∈ s, P ∈ PT (Ω := Ω c) sg) ∧ ∀ φ, d.hintSm c sg φ z = ∑ P ∈ s, φ P := by
   letI : Algebra (KTf K d.D d.N) (OmS (Ω c) d.D d.N) := (d.KTtoS h c).toAlgebra
-  filter_upwards [d.norm_at_sg_B hd h c sg] with z hz
+  refine (d.norm_at_sg hd h c sg).mono ?_
+  intro z hz
   obtain ⟨hfin, hcard, -, -⟩ := hz
   refine ⟨hfin.toFinset, ?_, fun P hP => (hfin.mem_toFinset.1 hP).1, fun φ => ?_⟩
   · rw [← hcard, Set.ncard_eq_toFinset_card _ hfin]

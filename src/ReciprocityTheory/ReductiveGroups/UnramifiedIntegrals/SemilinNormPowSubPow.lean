@@ -54,6 +54,7 @@ theorem FrobField.norm_sq_sub_pow_le {l : ℕ} {σ : K →+* K} (h : FrobField K
     rw [norm_pow]; exact pow_le_one₀ (norm_nonneg _) hx
 
 
+open Polynomial in
 theorem semilin_root {l : ℕ} (hR : ResClosed K l) {m : ℕ} (hm : 2 ≤ m) (a b : K) (ha : ‖a‖ ≤ 1)
     (hb : ‖b‖ ≤ 1) : ∃ x : K, ‖x‖ ≤ 1 ∧ ‖x ^ m + a * x + b‖ ≤ ‖(l : K)‖ := by
   have hdeg : (C a * X + C b : K[X]).degree < (X ^ m : K[X]).degree := by
@@ -148,12 +149,12 @@ theorem lang_semilinear {l : ℕ} {σ : K →+* K} (h : FrobField K l σ) (hR : 
     exact hud n
   obtain ⟨ε, hlim⟩ := cauchySeq_tendsto_of_complete hcau
   have hσc : Continuous σ := ((AddMonoidHomClass.isometry_iff_norm σ).mpr h.isom).continuous
-  have hres : Tendsto (fun n => u n - c * σ (σ (u n))) atTop (𝓝 (ε - c * σ (σ ε))) :=
+  have hres : Filter.Tendsto (fun n => u n - c * σ (σ (u n))) Filter.atTop (nhds (ε - c * σ (σ ε))) :=
     hlim.sub ((((hσc.comp hσc).tendsto ε).comp hlim).const_mul c)
-  have hres0 : Tendsto (fun n => u n - c * σ (σ (u n))) atTop (𝓝 0) :=
+  have hres0 : Filter.Tendsto (fun n => u n - c * σ (σ (u n))) Filter.atTop (nhds 0) :=
     squeeze_zero_norm (fun n => (hu n).2.trans (pow_le_pow_of_le_one (norm_nonneg _) hl1.le (Nat.le_succ n)))
       (tendsto_pow_atTop_nhds_zero_of_lt_one (norm_nonneg _) hl1)
-  have hn : Tendsto (fun n => ‖u n‖) atTop (𝓝 ‖ε‖) := hlim.norm
+  have hn : Filter.Tendsto (fun n => ‖u n‖) Filter.atTop (nhds ‖ε‖) := hlim.norm
   have hconst : (fun n => ‖u n‖) = fun _ => (1 : ℝ) := funext fun n => (hu n).1
   rw [hconst] at hn
   exact ⟨ε, tendsto_nhds_unique hn tendsto_const_nhds, sub_eq_zero.mp (tendsto_nhds_unique hres hres0)⟩

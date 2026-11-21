@@ -155,7 +155,7 @@ theorem split_at (E : Ideal (KTp K d.D d.N) → ℤ) (hE : {q | q ∈ d.HtOne �
         simp [hp]
       · simp [hx]
     conv_lhs => rw [hins]
-    rw [finprod_mem_insert' _ (fun h => h.2 (Set.mem_singleton p)) hfin]
+    rw [finprod_mem_insert' _ (by simp) hfin]
 
 theorem b_mem_p (hd : d.AxH 𝒜) (h : d.S1) {p : Ideal (KTp K d.D d.N)} (hp : p ∈ d.HtOne)
     (k : Fin d.del) (c : ι) (w : AddValuation (OmS (Ω c) d.D d.N) (WithTop ℤ))
@@ -193,8 +193,14 @@ theorem de_local (hd : d.AxH 𝒜) (h : d.S1) {p : Ideal (KTp K d.D d.N)} (hp : 
       (2 * ∑ c, d.nP h c d.wF (hd.a4.choose c) p)) := by
   classical
   letI : ∀ c, Algebra (KTf K d.D d.N) (OmS (Ω c) d.D d.N) := fun c => (d.KTtoS h c).toAlgebra
-  haveI : ∀ c, FiniteDimensional (KTf K d.D d.N) (OmS (Ω c) d.D d.N) := fun c =>
-    (d.omS_finite hd h c).1
+  haveI : ∀ c, FiniteDimensional (KTf K d.D d.N) (OmS (Ω c) d.D d.N) := fun c => by
+    haveI := d.KT_finiteDimensional hd c
+    let e : KTf K d.D d.N ≃+* d.KT c :=
+      (d.KTtoS h c).rangeRestrictFieldEquiv.trans (RingEquiv.subfieldCongr (d.KTtoS_fieldRange h c))
+    apply Module.Finite.of_equiv_equiv e.symm (RingEquiv.refl (OmS (Ω c) d.D d.N))
+    refine RingHom.ext fun x => ?_
+    change d.KTtoS h c (e.symm x) = (x : OmS (Ω c) d.D d.N)
+    exact congrArg (fun y : d.KT c => (y : OmS (Ω c) d.D d.N)) (e.apply_symm_apply x)
   haveI : CharZero (KTf K d.D d.N) :=
     charZero_of_injective_algebraMap (algebraMap K (KTf K d.D d.N)).injective
   haveI : ∀ c, Algebra.IsSeparable (KTf K d.D d.N) (OmS (Ω c) d.D d.N) := fun c =>
@@ -204,11 +210,13 @@ theorem de_local (hd : d.AxH 𝒜) (h : d.S1) {p : Ideal (KTp K d.D d.N)} (hp : 
       (algebraMap (KTp K d.D d.N) (KTf K d.D d.N) x) := fun c x =>
     (IsFractionRing.lift_algebraMap (A := KTp K d.D d.N) (g := (d.sH c).toRingHom) (h c) x).symm
   have hOver : ∀ c, d.OverP c p =
-      HNm.OverR (KTp K d.D d.N) (KTf K d.D d.N) (OmS (Ω c) d.D d.N) p := by
+      HNm.OverR (R := KTp K d.D d.N) (F := KTf K d.D d.N)
+        (L := OmS (Ω c) d.D d.N) p := by
     intro c; ext w; simp only [OverP, HNm.OverR, Set.mem_ofPred_eq, hsH]
   let n : ∀ c, AddValuation (OmS (Ω c) d.D d.N) (WithTop ℤ) → ℤ := fun c w =>
     if w ∈ d.GoodP c p then d.ord c (d.Wres c w) d.wF (hd.a4.choose c) else 0
-  have hb : ∀ k c, ∀ w ∈ HNm.OverR (KTp K d.D d.N) (KTf K d.D d.N) (OmS (Ω c) d.D d.N) p,
+  have hb : ∀ k c, ∀ w ∈ HNm.OverR (R := KTp K d.D d.N) (F := KTf K d.D d.N)
+      (L := OmS (Ω c) d.D d.N) p,
       0 ≤ w (d.bvecG hd.sel hd.a4.choose k c) + (n c w : WithTop ℤ) := by
     intro k c w hw
     rw [← hOver c] at hw
@@ -223,8 +231,9 @@ theorem de_local (hd : d.AxH 𝒜) (h : d.S1) {p : Ideal (KTp K d.D d.N)} (hp : 
       · rw [hr, AddValuation.map_zero]; exact le_top
       · rw [hz _ hr]
   have hexp : ∀ c, (∑ᶠ (w : AddValuation (OmS (Ω c) d.D d.N) (WithTop ℤ))
-      (_ : w ∈ HNm.OverR (KTp K d.D d.N) (KTf K d.D d.N) (OmS (Ω c) d.D d.N) p),
-        (HNm.fz (KTf K d.D d.N) w : ℤ) * n c w) = d.nP h c d.wF (hd.a4.choose c) p := by
+      (_ : w ∈ HNm.OverR (R := KTp K d.D d.N) (F := KTf K d.D d.N)
+        (L := OmS (Ω c) d.D d.N) p),
+        (HNm.fz (F := KTf K d.D d.N) w : ℤ) * n c w) = d.nP h c d.wF (hd.a4.choose c) p := by
     intro c
     rw [← hOver c]
     simp only [nP]

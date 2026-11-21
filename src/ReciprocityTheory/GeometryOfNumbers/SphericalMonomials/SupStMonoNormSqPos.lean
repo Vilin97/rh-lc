@@ -59,6 +59,9 @@ theorem supSt_norm_mono_le {D : ℕ} (a : Fin (D + 1) → ℕ) (z : Fin (D + 1) 
 
 theorem supSt_integrable {D : ℕ} (a b : Fin (D + 1) → ℕ) :
     Integrable (fun z => starRingEnd ℂ (monoC a z) * monoC b z) (sphProb (D + 1)) := by
+  have : IsFiniteMeasure (sphProb (D + 1)) := by
+    unfold sphProb
+    apply Measure.isFiniteMeasure_map
   have hae : ∀ᵐ z ∂(sphProb (D + 1)), sqN z = 1 := mem_ae_iff.mpr (sphProb_compl_sphere D)
   refine Integrable.of_bound (sphMonom_continuous_f a b).aestronglyMeasurable 1 ?_
   filter_upwards [hae] with z hz

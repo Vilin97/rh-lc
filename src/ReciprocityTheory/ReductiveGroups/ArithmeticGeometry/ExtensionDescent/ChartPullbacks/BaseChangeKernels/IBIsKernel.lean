@@ -93,7 +93,6 @@ lemma qB_sq : IsPullback (pullback.fst G.hom f) (qB f q).left q.left (pullback.f
   refine IsPullback.of_bot ?_ (qB_h f q).symm (IsPullback.of_hasPullback B.hom f)
   have e1 : (qB f q).left ≫ pullback.snd B.hom f = pullback.snd G.hom f := by
     simp [qB]
-    exact pullback.lift_snd _ _ _
   have e2 : q.left ≫ B.hom = G.hom := Over.w q
   rw [e1, e2]
   exact IsPullback.of_hasPullback G.hom f

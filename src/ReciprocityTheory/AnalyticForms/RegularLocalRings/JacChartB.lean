@@ -137,7 +137,7 @@ theorem finrank_residueField : Module.finrank ℂ (ResidueField (locR K p)) = 1 
   obtain ⟨x, rfl⟩ := IsLocalRing.residue_surjective w
   refine ⟨evRing K hK x, ?_⟩
   rw [Algebra.smul_def, mul_one, IsScalarTower.algebraMap_apply ℂ (locR K p) (ResidueField (locR K p)),
-    IsLocalRing.ResidueField.algebraMap_eq, ← sub_eq_zero, ← map_sub, IsLocalRing.residue_eq_zero_iff,
+    IsLocalRing.ResidueField.algebraMap_eq, ← sub_eq_zero, ← (IsLocalRing.residue (locR K p)).map_sub, IsLocalRing.residue_eq_zero_iff,
     ← ker_evRing (K := K) (p := p) hK, RingHom.mem_ker, map_sub, algebraMap_eq_psi, evRing_psi, eval_C,
     sub_self]
 

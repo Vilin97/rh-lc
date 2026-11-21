@@ -27,9 +27,9 @@ theorem UpperTheory.ConvolutionTheory.FX.gen_piecesK :
   refine ⟨∑ γ ∈ F.support, |K γ|, fun k => ∑ γ ∈ F.support, monomial γ (G γ k), fun k => ⟨?_, ?_, fun β => ?_⟩⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, pieceK]
-    refine Finset.sum_congr rfl fun γ _ => ?_
-    rw [map_monomial, ← (hG γ k).1]
-    rfl
+      refine Finset.sum_congr rfl fun γ _ => ?_
+      rw [map_monomial, ← (hG γ k).1]
+      rfl
   · intro β hβ
     rw [mem_support_iff, hc] at hβ
     by_contra hn

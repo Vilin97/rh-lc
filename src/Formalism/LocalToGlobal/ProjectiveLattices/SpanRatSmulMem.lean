@@ -179,18 +179,23 @@ theorem crdI_span (𝔄 : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) (h𝔄 :
 
 theorem crdI_lat (𝔄 : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) (h𝔄 : 𝔄 ≠ 0) {X : Data E r}
     (cu : CuspFD X ρ) : Submodule.IsLattice ℚ ((crdI 𝔄 cu).restrictScalars ℤ) :=
-  ⟨(crdI_fg 𝔄 cu).restrictScalars, by rw [Submodule.coe_restrictScalars]; exact crdI_span 𝔄 h𝔄 cu⟩
+  Submodule.IsLattice.of_fg ℚ ((crdI_fg 𝔄 cu).restrictScalars)
 
 theorem exists_basis (𝔄 : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) (h𝔄 : 𝔄 ≠ 0) {X : Data E r}
     (cu : CuspFD X ρ) : ∃ (ι : Type) (_ : Fintype ι) (b : Module.Basis ι ℚ (Fin ρ → E)),
       Submodule.span ℤ (Set.range b) = (crdI 𝔄 cu).restrictScalars ℤ := by
-  have := crdI_lat 𝔄 h𝔄 cu
+  classical
   set X0 := (crdI 𝔄 cu).restrictScalars ℤ
+  letI : Submodule.IsFullLattice ℚ X0 := {
+    toIsLattice := crdI_lat 𝔄 h𝔄 cu
+    span_eq_top := by rw [Submodule.coe_restrictScalars]; exact crdI_span 𝔄 h𝔄 cu }
+  letI : Module.Finite ℤ X0 := Submodule.IsLattice.finite ℚ X0
+  letI : Module.Free ℤ X0 := Submodule.IsLattice.free ℚ X0
   let b := Module.Free.chooseBasis ℤ X0
-  refine ⟨_, inferInstance, b.extendOfIsLattice ℚ, ?_⟩
-  have hr : Set.range (b.extendOfIsLattice ℚ) = X0.subtype '' Set.range b := by
+  refine ⟨_, inferInstance, b.extendOfIsFullLattice ℚ, ?_⟩
+  have hr : Set.range (b.extendOfIsFullLattice ℚ) = X0.subtype '' Set.range b := by
     ext v
-    simp [Module.Basis.extendOfIsLattice_apply]
+    simp [Module.Basis.extendOfIsFullLattice_apply]
   rw [hr, Submodule.span_image, b.span_eq, Submodule.map_subtype_top]
 
 theorem xcFD_restrict (𝔄 : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) {X : Data E r} (cu : CuspFD X ρ) :

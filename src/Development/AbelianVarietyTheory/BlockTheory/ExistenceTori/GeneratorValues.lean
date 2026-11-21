@@ -166,9 +166,9 @@ variable {φ : FractionRing R →+* F}
 
 end Normed
 
-theorem isOverPrime_padicInt (p : ℕ) [hp : Fact p.Prime] : IsOverPrime ℤ_[p] p where
-  prime := hp.out
-  ne_zero := Nat.cast_ne_zero.2 hp.out.ne_zero
-  mem := by rw [PadicInt.maximalIdeal_eq_span_p]; exact Ideal.mem_span_singleton_self _
+theorem isOverPrime_padicInt (p : ℕ) [hp : Fact p.Prime] : IsOverPrime ℤ_[p] p := by
+  refine ⟨hp.out, Nat.cast_ne_zero.2 hp.out.ne_zero, ?_⟩
+  rw [PadicInt.maximalIdeal_eq_span_p]
+  exact Ideal.mem_span_singleton_self _
 
 end GlobalTheory.IndefiniteRowSideFullHecke.GeneratorValues

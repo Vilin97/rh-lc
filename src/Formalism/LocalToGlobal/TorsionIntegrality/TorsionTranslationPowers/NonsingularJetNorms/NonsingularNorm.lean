@@ -117,18 +117,32 @@ open unitAtAlt WeierstrassCurve.Affine WeierstrassCurve.Affine.Point
 theorem nonsingular_norm : NonsingNorm := by
   intro K _ _ W hW x y hx hy hE
   obtain ⟨h1, h2, h3, h4, h6, hΔ⟩ := hW
-  have hFy : ‖2 * y + W.a₁ * x + W.a₃‖ ≤ 1 := by integ
-  have hFx : ‖3 * x ^ 2 + 2 * W.a₂ * x + W.a₄ - W.a₁ * y‖ ≤ 1 := by integ
+  have hFy : ‖2 * y + W.a₁ * x + W.a₃‖ ≤ 1 :=
+    i_add (i_add (i_mul (i_ofNat 2) hy) (i_mul h1 hx)) h3
+  have hFx : ‖3 * x ^ 2 + 2 * W.a₂ * x + W.a₄ - W.a₁ * y‖ ≤ 1 :=
+    i_sub (i_add (i_add (i_mul (i_ofNat 3) (i_pow hx 2))
+      (i_mul (i_mul (i_ofNat 2) h2) hx)) h4) (i_mul h1 hy)
   by_contra hne
   push_neg at hne
   obtain ⟨hy1, hx1⟩ := hne
   have hy1' : ‖2 * y + W.a₁ * x + W.a₃‖ < 1 := lt_of_le_of_ne hFy hy1
   have hx1' : ‖3 * x ^ 2 + 2 * W.a₂ * x + W.a₄ - W.a₁ * y‖ < 1 := lt_of_le_of_ne hFx hx1
   have hlt : ‖W.Δ‖ < 1 := by
+    have hShift : ‖W.a₂ + 3 * x‖ ≤ 1 := i_add h2 (i_mul (i_ofNat 3) hx)
+    have hb₂ : ‖W.a₁ ^ 2 + 4 * (W.a₂ + 3 * x)‖ ≤ 1 :=
+      i_add (i_pow h1 2) (i_mul (i_ofNat 4) hShift)
+    have hb₄ : ‖2 * (3 * x ^ 2 + 2 * W.a₂ * x + W.a₄ - W.a₁ * y) +
+        W.a₁ * (2 * y + W.a₁ * x + W.a₃)‖ ≤ 1 :=
+      i_add (i_mul (i_ofNat 2) hFx) (i_mul h1 hFy)
     rw [disc_comb W x y hE]
     apply s_add
-    · exact s_mul hy1' (by integ)
-    · exact s_mul hx1' (by integ)
+    · apply s_mul hy1'
+      refine i_add (i_sub (i_sub ?_ ?_) ?_) ?_
+      · exact i_mul (i_neg (i_pow hb₂ 2)) (i_add (i_mul (i_neg h1) hFx) (i_mul hShift hFy))
+      · exact i_mul (i_mul (i_ofNat 8) h1) (i_pow hb₄ 2)
+      · exact i_mul (i_ofNat 27) (i_pow hFy 3)
+      · exact i_mul (i_mul (i_mul (i_ofNat 9) hb₂) hb₄) hFy
+    · exact s_mul hx1' (i_sub (i_mul (i_pow hb₂ 2) hFx) (i_mul (i_ofNat 16) (i_pow hb₄ 2)))
   rw [hΔ] at hlt
   exact lt_irrefl _ hlt
 
@@ -189,7 +203,8 @@ theorem UnitPsi2_of (hN : NonsingNorm) : UnitPsi2 := by
       (i_add (i_add (i_add e2 h2) hxi) hxi) (by simp only [addX]; ring)
     change ‖2 * y + W.a₁ * x + W.a₃‖ = 1
     by_contra hne
-    have hpsi_lt : ‖2 * y + W.a₁ * x + W.a₃‖ < 1 := lt_of_le_of_ne (by integ) hne
+    have hpsi_lt : ‖2 * y + W.a₁ * x + W.a₃‖ < 1 :=
+      lt_of_le_of_ne (i_add (i_add (i_mul (i_ofNat 2) hyi) (i_mul h1 hxi)) h3) hne
     have hk : ‖3 * x ^ 2 + 2 * W.a₂ * x + W.a₄ - W.a₁ * y‖ = 1 := by
       rcases hN K W hW x y hxi hyi h.1 with h' | h'
       · exact absurd h' hne
@@ -273,11 +288,13 @@ theorem UnitDiff_of (hN : NonsingNorm) : UnitDiff := by
       have hdlt : ‖x₁ - x₂‖ < 1 := lt_of_le_of_ne (i_sub hx1 hx2) hne
       rcases hN K W hW x₁ y₁ hx1 hy1 h₁.1 with h' | h'
       · rw [hpsi] at h'
-        have hlt : ‖(x₁ - x₂) * (Lp + Lm + W.a₁)‖ < 1 := s_mul hdlt (by integ)
+        have hlt : ‖(x₁ - x₂) * (Lp + Lm + W.a₁)‖ < 1 :=
+          s_mul hdlt (i_add (i_add hLpi hLmi) ha1)
         rw [h'] at hlt
         exact lt_irrefl _ hlt
       · rw [hkap] at h'
-        have hlt : ‖(x₁ - x₂) * (Lp * Lm + 2 * x₁ + x₂ + W.a₂)‖ < 1 := s_mul hdlt (by integ)
+        have hlt : ‖(x₁ - x₂) * (Lp * Lm + 2 * x₁ + x₂ + W.a₂)‖ < 1 :=
+          s_mul hdlt (i_add (i_add (i_add (i_mul hLpi hLmi) (i_mul (i_ofNat 2) hx1)) hx2) ha2)
         rw [h'] at hlt
         exact lt_irrefl _ hlt
 

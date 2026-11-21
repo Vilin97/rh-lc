@@ -66,10 +66,11 @@ theorem exists_sepElt {E : Type} [Field E] [NumberField E] {F : Type} [Field F] 
     rw [Algebra.adjoin_singleton_eq_range_aeval] at ha
     obtain ⟨r, hr⟩ := ha
     obtain ⟨b, hb⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors ℤ) r
-    refine ⟨(b : ℤ), IsLocalization.integerNormalization (nonZeroDivisors ℤ) r, nonZeroDivisors.coe_ne_zero b, ?_⟩
+    refine ⟨(b : ℤ), IsLocalization.integerNormalization (nonZeroDivisors ℤ) r,
+      nonZeroDivisors.coe_ne_zero ⟨b, hb.1⟩, ?_⟩
     apply hinjE
     have hr' : aeval (algebraMap (𝓞 E) E α) r = algebraMap (𝓞 E) E a := hr
-    rw [← Polynomial.aeval_algebraMap_apply, ← Polynomial.aeval_map_algebraMap ℚ, hb, map_zsmul, hr', map_mul,
+    rw [← Polynomial.aeval_algebraMap_apply, ← Polynomial.aeval_map_algebraMap ℚ, hb.2, map_zsmul, hr', map_mul,
       map_intCast, zsmul_eq_mul]
 
 end ReciprocityTheory.ChartRestriction.G.PullbackSections

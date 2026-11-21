@@ -163,6 +163,9 @@ private lemma mdisc_piecewise (T : Finset (Fin D)) (A B : Matrix (Fin D) (Fin D)
   obtain ⟨σ, hσ⟩ := exists_perm_mem_iff T
   rw [← mdisc_comp_perm _ σ]
   congr 1
+  funext k
+  simp only [Function.comp_apply]
+  simp only [hσ k]
 
 theorem det_smul_add_smul_eq_sum_mdisc (s t : ℂ) (A B : Matrix (Fin D) (Fin D) ℂ) :
     (s • A + t • B).det =

@@ -21,10 +21,10 @@ section Length
 variable {R : Type*} [CommRing R]
 
 theorem telescope_enat : ∀ (n : ℕ) (f : Fin (n + 1) → ℕ∞) (c : Fin n → ℕ∞),
-    (∀ j : Fin n, f j.castSucc = c j + f j.succ) → f 0 = ∑ j, c j + f (Fin.last n)
+    (∀ j : Fin n, f j.castSucc = c j + f j.succ) → f 0 = (∑ j, c j) + f (Fin.last n)
   | 0, f, c, _ => by simp
   | n + 1, f, c, h => by
-    have ih : f (Fin.succ 0) = ∑ j : Fin n, c j.succ + f (Fin.last n).succ :=
+    have ih : f (Fin.succ 0) = (∑ j : Fin n, c j.succ) + f (Fin.last n).succ :=
       telescope_enat n (fun k => f k.succ) (fun j => c j.succ) (fun j => h j.succ)
     calc f 0 = c 0 + f (Fin.succ 0) := by simpa using h 0
       _ = ∑ j, c j + f (Fin.last (n + 1)) := by

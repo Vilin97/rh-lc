@@ -18,10 +18,14 @@ variable {E : Type} [Field E] [NumberField E]
 def soPsi (x : E) : EuclideanSpace ℂ (E →+* ℂ) := WithLp.toLp 2 fun σ => σ x
 
 theorem soPsi_add (x y : E) : soPsi (x + y) = soPsi x + soPsi y := by
-  ext σ; simp
+  ext σ
+  change σ (x + y) = σ x + σ y
+  exact map_add σ x y
 
 theorem soPsi_zero : soPsi (0 : E) = 0 := by
-  ext σ; simp
+  ext σ
+  change σ 0 = 0
+  exact map_zero σ
 
 theorem so_li_complex :
     LinearIndependent ℂ (fun i => soPsi (RingOfIntegers.basis E i : E)) := by
@@ -43,7 +47,7 @@ theorem so_li_complex :
   have hσ : ∀ σ : E →+* ℂ, ∑ j, c j * σ (RingOfIntegers.basis E j : E) = 0 := by
     intro σ
     have := congr_arg (fun v : EuclideanSpace ℂ (E →+* ℂ) => v σ) hc
-    simpa using this
+    simpa [soPsi, WithLp.ofLp_toLp] using this
   obtain ⟨v, hv⟩ := hsurj (Pi.single i 1)
   have h0 : ∑ j, c j * T v j = 0 := by
     simp only [T, LinearMap.coe_mk, AddHom.coe_mk, Finset.mul_sum]
@@ -116,6 +120,7 @@ theorem omega_exists' [IsCMField E] : ∃ (n : ℕ) (ω : Fin n → 𝓞 E),
       refine ⟨n • α, ?_⟩
       rw [map_zsmul, Submodule.coe_smul_of_tower, hα]
       ext σ
+      change n • σ (α : E) = σ ((↑(n • α)) : E)
       simp
   have hrdpos : 0 < PT.rd E := by
     unfold PT.rd
@@ -140,7 +145,7 @@ theorem omega_exists' [IsCMField E] : ∃ (n : ℕ) (ω : Fin n → 𝓞 E),
           (((∑ σ, starRingEnd ℂ (k σ) * σ (RingOfIntegers.basis E i : E)).re : ℝ) : ℂ) := by
         congr 1
         rw [real_inner_eq_Hf]
-        simp [Hf, g, mul_comm]
+        simp only [Hf, g, soPsi, PiLp.toLp_apply, mul_comm]
       have hswap : ∑ σ, k (ComplexEmbedding.conjugate σ) * σ (RingOfIntegers.basis E i : E) =
           starRingEnd ℂ (∑ σ, starRingEnd ℂ (k σ) * σ (RingOfIntegers.basis E i : E)) := by
         set_option synthInstance.maxHeartbeats 100000 in
@@ -330,7 +335,7 @@ theorem omega_exists' [IsCMField E] : ∃ (n : ℕ) (ω : Fin n → 𝓞 E),
         have := congrArg σ hq
         set_option synthInstance.maxHeartbeats 100000 in
           simp only [map_sum, map_zero, map_rat_smul] at this
-        simpa [Rat.smul_def, Complex.real_smul] using this
+        simpa [soPsi, WithLp.ofLp_toLp, Rat.smul_def, Complex.real_smul] using this
       have h1 : ∑ i, (q i : ℝ) • v i = 0 := by
         have h3 : ∑ i, (q i : ℝ) • e.symm (v i) = 0 := Subtype.ext (by simpa using h2)
         have h4 := congrArg e h3

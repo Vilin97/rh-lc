@@ -49,7 +49,7 @@ theorem ae_eval_ne_zero_of_ne_zero_fin : ∀ (m : ℕ) (f : MvPolynomial (Fin m)
       rw [measure_eq_zero_iff_ae_notMem] at hnull
       filter_upwards [hnull] with y hy
       have hc : (e.symm (y, s) : Fin (m + 1) → ℂ) = Fin.cons y s := by
-        simp [e, MeasurableEquiv.piFinSuccAbove_symm_apply]; rfl
+        simp [e, MeasurableEquiv.piFinSuccAbove_symm_apply]
       rw [hc, MvPolynomial.eval_eq_eval_mv_eval']
       exact hy
     have := he.quasiMeasurePreserving.ae key

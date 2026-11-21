@@ -13,7 +13,7 @@ namespace Formalism.ZeroFreeDirichlet
 
 lemma convolution_nonneg_of_divisors (f g : ArithmeticFunction ℂ) (n : ℕ)
     (hf : ∀ d, d ∣ n → 0 ≤ f d) (hg : ∀ d, d ∣ n → 0 ≤ g d) : 0 ≤ (f * g) n := by
-  rw [mul_apply]
+  change 0 ≤ ∑ x ∈ Nat.divisorsAntidiagonal n, f x.1 * g x.2
   refine Finset.sum_nonneg fun x hx => ?_
   have h := (Nat.mem_divisorsAntidiagonal.1 hx).1
   exact mul_nonneg (hf _ (Dvd.intro _ h)) (hg _ (Dvd.intro_left _ h))
@@ -25,7 +25,7 @@ lemma character_convolution_eq {N N' M : ℕ} (χ : DirichletCharacter ℂ N) (�
       = χ' (n : ZMod N') * DirichletCharacter.zetaMul χ n := by
   rcases eq_or_ne n 0 with rfl | hn
   · simp
-  rw [mul_apply, Nat.sum_divisorsAntidiagonal' (fun a b => toArithmeticFunction (fun m : ℕ => χ' (m : ZMod N')) a *
+  rw [ArithmeticFunction.mul_apply, Nat.sum_divisorsAntidiagonal' (fun a b => toArithmeticFunction (fun m : ℕ => χ' (m : ZMod N')) a *
       toArithmeticFunction (fun m : ℕ => ψ (m : ZMod M)) b), DirichletCharacter.zetaMul,
     coe_zeta_mul_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i hi => ?_

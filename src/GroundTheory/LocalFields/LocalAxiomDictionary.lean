@@ -18,7 +18,7 @@ variable (K L Ω : Type*) [Field K] [Field L] [Field Ω] [Algebra K L] [Algebra 
 
 theorem algebraMap_norm_eq_prod_embeddings_of_splits
     (hL : ∀ x : L, ((minpoly K x).map (algebraMap K Ω)).Splits) (x : L) :
-    haveI : Fintype (L →ₐ[K] Ω) := Fintype.ofFinite _
+    let : Fintype (L →ₐ[K] Ω) := Fintype.ofFinite _
     algebraMap K Ω (Algebra.norm K x) = ∏ τ : L →ₐ[K] Ω, τ x := by
   classical
   let _ : Fintype (L →ₐ[K] Ω) := Fintype.ofFinite _
@@ -41,6 +41,8 @@ end Embeddings
 section Fields
 
 variable {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
+
+local notation "G" => Ω ≃ₐ[K] Ω
 
 def fixingOpenSubgroup (L : IntermediateField K Ω) [FiniteDimensional K L] : OpenSubgroup G :=
   ⟨L.fixingSubgroup, L.fixingSubgroup_isOpen⟩
@@ -89,7 +91,9 @@ section Units
 
 variable {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω] [IsGalois K Ω]
 
+local notation "G" => Ω ≃ₐ[K] Ω
 
+omit [IsGalois K Ω] in
 theorem mem_fixedModule_units_iff' (H : Subgroup G) (a : Ωˣ) :
     a ∈ fixedModule Ωˣ H ↔ ∀ σ ∈ H, σ (a : Ω) = a := by
   rw [mem_fixedModule]
@@ -166,6 +170,8 @@ section Norm
 
 variable {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω] [IsGalois K Ω]
 
+local notation "G" => Ω ≃ₐ[K] Ω
+
 variable (L : IntermediateField K Ω)
 
 def restrictEmbedding (σ : G) : L →ₐ[K] Ω :=
@@ -177,6 +183,7 @@ theorem restrictEmbedding_apply (σ : G) (x : L) : restrictEmbedding L σ x = σ
   rfl
 
 
+omit [IsGalois K Ω] in
 theorem restrictEmbedding_eq_iff (σ τ : G) :
     restrictEmbedding L σ = restrictEmbedding L τ ↔ σ⁻¹ * τ ∈ L.fixingSubgroup := by
   rw [IntermediateField.mem_fixingSubgroup_iff]
@@ -252,6 +259,7 @@ variable (K' L' : Subgroup (Ω ≃ₐ[K] Ω)) {E F : IntermediateField K Ω} (hE
   (hK : E.fixingSubgroup = K') (hL : F.fixingSubgroup = L')
 
 
+include hK hL in
 theorem normal_extendScalars [(L'.subgroupOf K').Normal] :
     Normal E (extendScalars hEF) := by
   subst hK hL
@@ -279,6 +287,7 @@ instance isSeparable_extendScalars : Algebra.IsSeparable E (extendScalars hEF) :
   Algebra.isSeparable_tower_bot_of_isSeparable E (extendScalars hEF) Ω
 
 
+omit [IsGalois K Ω] in
 theorem finiteDimensional_extendScalars [FiniteDimensional K F] :
     FiniteDimensional E (extendScalars hEF) :=
   have : FiniteDimensional K (extendScalars hEF) := inferInstanceAs (FiniteDimensional K F)
@@ -398,6 +407,7 @@ noncomputable def cosetEmbeddingEquivRel : K' ⧸ L'.subgroupOf K' ≃ (extendSc
       exact ⟨(σ : K' ⧸ L'.subgroupOf K'), rfl⟩⟩
 
 
+include hK in
 theorem coe_norm_eq_algebraMap_norm [FiniteDimensional K F] [(L'.subgroupOf K').FiniteIndex]
     (a : fixedModule Ωˣ L') :
     (((norm Ωˣ K' L' a : fixedModule Ωˣ K') : Ωˣ) : Ω) =

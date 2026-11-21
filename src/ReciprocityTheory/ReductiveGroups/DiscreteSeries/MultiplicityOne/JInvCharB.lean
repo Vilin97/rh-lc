@@ -220,10 +220,15 @@ theorem frame_conjugation_fixes_vector (z : Fin (2 * r + k + 1) → ℂ) (hT : 0
   rw [hinv]
   conv_rhs => rw [hz]
   rw [← Matrix.mulVec_smul]
-  congr 1
-  congr 1
-  simp only [bvec, Pi.single_apply]
-  split_ifs <;> simp
+  apply congrArg (fun v => embWb k r γ *ᵥ v)
+  funext i
+  let e : Fin (2 * r + k + 1) → ℂ := Pi.single (wI k r (Fin.last k)) 1
+  have hsingle : ∀ i, conj (e i) = e i := by
+    intro i
+    by_cases hi : i = wI k r (Fin.last k) <;> simp [e, Pi.single_apply, hi]
+  change conj ((((Real.sqrt (Tz k r z) : ℝ) : ℂ) * e i)) =
+    ((Real.sqrt (Tz k r z) : ℝ) : ℂ) * e i
+  rw [map_mul, Complex.conj_ofReal, hsingle i]
 
 theorem gbar_apply_off (g : Mat k r) (i j : Fin (2 * r + k + 1)) (hi : ¬ isW k r i) (hj : ¬ isW k r j) :
     gbar k r γ g i j = conj (g i j) := by

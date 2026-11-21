@@ -103,7 +103,7 @@ def SubQuotient.Statement : Prop :=
         (∀ z, z ∈ BU.lat c ↔ j z ∈ B.lat c) ∧ (∀ z, z ∈ BU'.lat c ↔ j z ∈ B'.lat c) ∧
         (∀ q, q ∈ BV.lat c ↔ ∃ z ∈ B.lat c, π z = q) ∧
         (∀ q, q ∈ BV'.lat c ↔ ∃ z ∈ B'.lat c, π z = q)) →
-    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → MRing ι O),
       IsFlagPair ϖ y B B' w w' x x' f g →
     ∀ (wU wU' : Module.Basis (Fin r) Ω U) (xU xU' : Fin r → K → ℤ) (fU gU : Fin r → MRing ι O),
       IsFlagPair ϖ y BU BU' wU wU' xU xU' fU gU →
@@ -128,7 +128,7 @@ def ScalarQuotient.Statement : Prop :=
       (n : ℕ) (u : Oˣ),
       (∀ c, segreVec y c ≠ 0 → ∀ z, z ∈ B'.lat c ↔
         ∃ z₀ ∈ B.lat c, z = algebraMap O Ω ((u : O) * ϖ ^ n) • z₀) →
-    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → MRing ι O),
       IsFlagPair ϖ y B B' w w' x x' f g →
     ∀ (k : ℕ) (Gs : Fin N → MvPolynomial (Fin N ⊕ Fin N) ℤ),
       IsPairExpansion k (psum (Fin N) ℤ k) Gs →

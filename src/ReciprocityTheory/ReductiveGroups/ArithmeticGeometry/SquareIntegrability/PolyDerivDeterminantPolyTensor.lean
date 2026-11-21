@@ -54,8 +54,10 @@ variable (X : PT E) (bs : Fin nb → Block E n X.dim)
 
 
 def lst (T : Choice bs) : List (Fin n × Vsp X.dim) :=
-  (Multiset.map (letter bs T) Finset.univ.val).toList.map
-    (fun l => (l.1, EuclideanSpace.single l.2 (1 : ℂ)))
+  by
+    classical
+    exact (Multiset.map (letter bs T) Finset.univ.val).toList.map
+      (fun l => (l.1, EuclideanSpace.single l.2 (1 : ℂ)))
 
 theorem prod_X_letter (T : Choice bs) :
     (∏ t : Slot bs, MvPolynomial.X (letter bs T t) : MvPolynomial (Letter n X.dim) ℂ) =

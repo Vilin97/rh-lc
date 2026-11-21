@@ -284,10 +284,7 @@ theorem conv_dens_of_closed {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHo
     rw [show Gm = fun Ms => (e.factorial : ℝ) * (2 / Real.pi) ^ e * (mdisc Ms).re from funext hGm]
     refine continuous_const.mul (Complex.continuous_re.comp ?_)
     unfold mdisc
-    refine continuous_const.mul (continuous_finset_sum _ fun T' _ => continuous_const.mul ?_)
-    first
-      | exact Continuous.matrix_det (continuous_finset_sum _ fun k _ => continuous_apply k)
-      | fun_prop
+    fun_prop
   have hE : ∀ u : Fin e → X → ℝ,
       (∀ k, ∀ y ∈ K, ∀ᶠ z in 𝓝 y, ContDiffAt ℝ (2 : ℕ) (u k ∘ (A.chart j).symm) z) →
       ∀ y ∈ K, locDens A (fun i => th i + LocPot.ofFun (u i) + Θ) j y =

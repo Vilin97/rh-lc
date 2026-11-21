@@ -190,8 +190,9 @@ theorem vol_restrict_source {M : Type*} [TopologicalSpace M] [SecondCountableTop
     vol_image n z hz e.source e.open_source (injOn_source_of_chart n z e he) _
       (hB.inter e.open_source.measurableSet) Set.inter_subset_right]
   congr 1
-  rw [Set.image_congr (fun x hx => he hx.2), Set.inter_comm B e.source,
-    e.image_source_inter_eq']
+  have hImage : z '' (B ∩ e.source) = e '' (B ∩ e.source) :=
+    Set.image_congr (fun _ hx => he hx.2)
+  rw [hImage, Set.inter_comm B e.source, e.image_source_inter_eq']
   exact Set.inter_comm _ _
 
 theorem lintegral_vol_chart {M : Type*} [TopologicalSpace M] [SecondCountableTopology M] [MeasurableSpace M] [BorelSpace M] (n : ℕ) (z : M → V n) (hz : IsLocalHomeomorph z) (e : OpenPartialHomeomorph M (V n)) (he : IsChart n z e) (f : M → ℝ≥0∞) (hf : Measurable f) (hs : ∀ x, x ∉ e.source → f x = 0) :

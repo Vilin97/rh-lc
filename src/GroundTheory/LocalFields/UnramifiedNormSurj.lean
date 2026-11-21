@@ -22,7 +22,7 @@ variable {K L : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarc
 
 
 theorem coe_normIntegerUnits_eq (u : 𝒪[L]ˣ) :
-    ((normIntegerUnits K L u : 𝒪[K]ˣ) : 𝒪[K]) = Algebra.norm 𝒪[K] (u : 𝒪[L]) :=
+    ((normIntegerUnits u : 𝒪[K]ˣ) : 𝒪[K]) = Algebra.norm 𝒪[K] (u : 𝒪[L]) :=
   rfl
 
 theorem exists_norm_one_add_smul (r : 𝒪[K]) (a : 𝒪[L]) :
@@ -63,20 +63,20 @@ def residueBasis : Module.Basis (Module.Free.ChooseBasisIndex 𝒪[K] 𝒪[L]) �
         IsUnramified.finrank_residueField K L])
 
 theorem residueBasis_apply (i : Module.Free.ChooseBasisIndex 𝒪[K] 𝒪[L]) :
-    residueBasis K L i = residue 𝒪[L] (Module.Free.chooseBasis 𝒪[K] 𝒪[L] i) := by
+    residueBasis i = residue 𝒪[L] (Module.Free.chooseBasis 𝒪[K] 𝒪[L] i) := by
   simp [residueBasis]
 
 theorem residueBasis_repr (y : 𝒪[L]) (i : Module.Free.ChooseBasisIndex 𝒪[K] 𝒪[L]) :
-    (residueBasis K L).repr (residue 𝒪[L] y) i =
+    (residueBasis).repr (residue 𝒪[L] y) i =
       residue 𝒪[K] ((Module.Free.chooseBasis 𝒪[K] 𝒪[L]).repr y i) := by
   have h : residue 𝒪[L] y = ∑ j, residue 𝒪[K] ((Module.Free.chooseBasis 𝒪[K] 𝒪[L]).repr y j) •
-      residueBasis K L j := by
+      residueBasis j := by
     simp only [residueBasis_apply]
     exact residue_eq_sum_repr y
-  rw [h, (residueBasis K L).repr_sum_self]
+  rw [h, (residueBasis).repr_sum_self]
 
 theorem leftMulMatrix_residueBasis (y : 𝒪[L]) :
-    Algebra.leftMulMatrix (residueBasis K L) (residue 𝒪[L] y) =
+    Algebra.leftMulMatrix (residueBasis) (residue 𝒪[L] y) =
       (Algebra.leftMulMatrix (Module.Free.chooseBasis 𝒪[K] 𝒪[L]) y).map (residue 𝒪[K]) := by
   ext i j
   rw [Algebra.leftMulMatrix_eq_repr_mul, Matrix.map_apply, Algebra.leftMulMatrix_eq_repr_mul,
@@ -86,20 +86,20 @@ theorem residue_norm (y : 𝒪[L]) :
     residue 𝒪[K] (Algebra.norm 𝒪[K] y) = Algebra.norm 𝓀[K] (residue 𝒪[L] y) := by
   classical
   rw [Algebra.norm_eq_matrix_det (Module.Free.chooseBasis 𝒪[K] 𝒪[L]),
-    Algebra.norm_eq_matrix_det (residueBasis K L), leftMulMatrix_residueBasis, RingHom.map_det]
+    Algebra.norm_eq_matrix_det (residueBasis), leftMulMatrix_residueBasis, RingHom.map_det]
   rfl
 
 theorem residue_trace (y : 𝒪[L]) :
     residue 𝒪[K] (Algebra.trace 𝒪[K] 𝒪[L] y) = Algebra.trace 𝓀[K] 𝓀[L] (residue 𝒪[L] y) := by
   rw [Algebra.trace_eq_matrix_trace (Module.Free.chooseBasis 𝒪[K] 𝒪[L]),
-    Algebra.trace_eq_matrix_trace (residueBasis K L), leftMulMatrix_residueBasis]
+    Algebra.trace_eq_matrix_trace (residueBasis), leftMulMatrix_residueBasis]
   exact AddMonoidHom.map_trace (residue 𝒪[K]).toAddMonoidHom _
 
 theorem irreducible_algebraMap_of_isUnramified {ϖ : 𝒪[K]} (hϖ : Irreducible ϖ) :
     Irreducible (algebraMap 𝒪[K] 𝒪[L] ϖ) := by
   rw [IsDiscreteValuationRing.irreducible_iff_uniformizer]
   have h := map_maximalIdeal K L
-  rw [IsUnramified.ramificationIndex_eq_one, pow_one, hϖ.maximalIdeal_eq, Ideal.map_span,
+  rw [ramificationIndex, IsUnramified.ramificationIndex_eq_one, pow_one, hϖ.maximalIdeal_eq, Ideal.map_span,
     Set.image_singleton] at h
   exact h.symm
 
@@ -115,7 +115,7 @@ theorem trace_integer_surjective : Function.Surjective (Algebra.trace 𝒪[K] �
   linear_combination c * Units.inv_mul hu.unit - (((hu.unit⁻¹ : 𝒪[K]ˣ) : 𝒪[K]) * c) * hu.unit_spec
 
 theorem normIntegerUnits_mem_unitFiltration {n : ℕ} {u : 𝒪[L]ˣ} (hu : u ∈ unitFiltration L n) :
-    normIntegerUnits K L u ∈ unitFiltration K n := by
+    normIntegerUnits u ∈ unitFiltration K n := by
   rcases Nat.eq_zero_or_pos n with rfl | hn
   · simp
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]
@@ -131,7 +131,7 @@ theorem normIntegerUnits_mem_unitFiltration {n : ℕ} {u : 𝒪[L]ˣ} (hu : u �
   ring
 
 theorem exists_normIntegerUnits_div_mem_one (h : 𝒪[K]ˣ) :
-    ∃ g : 𝒪[L]ˣ, h / normIntegerUnits K L g ∈ unitFiltration K 1 := by
+    ∃ g : 𝒪[L]ˣ, h / normIntegerUnits g ∈ unitFiltration K 1 := by
   obtain ⟨ζ, hζ⟩ := FiniteField.unitsMap_norm_surjective 𝓀[K] 𝓀[L] (unitsToResidue K h)
   obtain ⟨g, rfl⟩ := unitsToResidue_surjective L ζ
   refine ⟨g, ?_⟩
@@ -141,7 +141,7 @@ theorem exists_normIntegerUnits_div_mem_one (h : 𝒪[K]ˣ) :
 
 theorem exists_normIntegerUnits_div_mem_succ {n : ℕ} (hn : 1 ≤ n) {h : 𝒪[K]ˣ}
     (hh : h ∈ unitFiltration K n) :
-    ∃ g ∈ unitFiltration L n, h / normIntegerUnits K L g ∈ unitFiltration K (n + 1) := by
+    ∃ g ∈ unitFiltration L n, h / normIntegerUnits g ∈ unitFiltration K (n + 1) := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]
   have hϖL := irreducible_algebraMap_of_isUnramified (L := L) hϖ
   obtain ⟨c, hc⟩ := (mem_maximalIdeal_pow_iff hϖ).mp (mem_unitFiltration.mp hh)
@@ -153,7 +153,7 @@ theorem exists_normIntegerUnits_div_mem_succ {n : ℕ} (hn : 1 ≤ n) {h : 𝒪[
     exact dvd_mul_right _ _
   · rw [div_mem_unitFiltration_iff]
     obtain ⟨d, hd⟩ := exists_norm_one_add_smul (ϖ ^ n) a
-    have e1 : ((normIntegerUnits K L hu.unit : 𝒪[K]ˣ) : 𝒪[K]) =
+    have e1 : ((normIntegerUnits hu.unit : 𝒪[K]ˣ) : 𝒪[K]) =
         1 + ϖ ^ n * Algebra.trace 𝒪[K] 𝒪[L] a + (ϖ ^ n) ^ 2 * d := by
       rw [coe_normIntegerUnits_eq, IsUnit.unit_spec, ← hd, Algebra.smul_def, map_pow]
     have e2 : c - Algebra.trace 𝒪[K] 𝒪[L] a ∈ 𝓂[K] := by
@@ -170,10 +170,10 @@ theorem exists_normIntegerUnits_div_mem_succ {n : ℕ} (hn : 1 ≤ n) {h : 𝒪[
     linear_combination (ϖ ^ (m + 1)) * he
 
 theorem map_normIntegerUnits_unitFiltration (n : ℕ) :
-    (unitFiltration L n).map (normIntegerUnits K L) = unitFiltration K n :=
+    (unitFiltration L n).map (normIntegerUnits) = unitFiltration K n :=
   map_eq_of_graded_surjective (unitFiltration_antitone L) (unitFiltration_antitone K)
     filtrationComplete_unitFiltration filtrationSeparated_unitFiltration
-    (normIntegerUnits K L) (φ := id) tendsto_id n
+    (normIntegerUnits) (φ := id) tendsto_id n
     (fun _ _ _ hg ↦ normIntegerUnits_mem_unitFiltration hg)
     (fun m _ h hh ↦ by
       rcases Nat.eq_zero_or_pos m with rfl | hm
@@ -181,11 +181,11 @@ theorem map_normIntegerUnits_unitFiltration (n : ℕ) :
         exact ⟨g, by simp, hg⟩
       · exact exists_normIntegerUnits_div_mem_succ hm hh)
 
-theorem normIntegerUnits_surjective : Function.Surjective (normIntegerUnits K L) := by
+theorem normIntegerUnits_surjective : Function.Surjective (normIntegerUnits (K := K) (L := L)) := by
   intro h
   have e := map_normIntegerUnits_unitFiltration (K := K) (L := L) 0
   rw [unitFiltration_zero, unitFiltration_zero] at e
-  have hh : h ∈ (⊤ : Subgroup 𝒪[L]ˣ).map (normIntegerUnits K L) := by
+  have hh : h ∈ (⊤ : Subgroup 𝒪[L]ˣ).map (normIntegerUnits (K := K) (L := L)) := by
     rw [e]
     exact Subgroup.mem_top h
   obtain ⟨g, -, rfl⟩ := hh
@@ -212,7 +212,13 @@ theorem mem_range_normUnits_iff (x : Kˣ) :
       rw [← hk, ← hx, ord_unitsOfIntProd]
     obtain ⟨v, hv⟩ := normIntegerUnits_surjective (K := K) (L := L) u
     refine ⟨Units.map (algebraMap K L : K →* L) (uniformizerUnit hϖ) ^ k * unitsIncl L v, ?_⟩
-    rw [← hx, unitsOfIntProd_eq, map_mul, map_zpow, normUnits_unitsIncl, hv, hm, zpow_mul]
+    have hnv : normUnits K L (unitsIncl L v) = unitsIncl K (normIntegerUnits v) := by
+      ext
+      rw [coe_normUnits]
+      change Algebra.norm K ((v : 𝒪[L]) : L) = _
+      rw [← coe_norm_integer (K := K) (L := L) (v : 𝒪[L])]
+      exact congrArg (algebraMap 𝒪[K] K) (coe_normIntegerUnits_eq v)
+    rw [← hx, unitsOfIntProd_eq, map_mul, map_zpow, hnv, hv, hm, zpow_mul]
     congr 2
     ext
     simp [Algebra.norm_algebraMap]

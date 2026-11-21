@@ -61,6 +61,9 @@ theorem muPolarMat_mul_right (ε : Fin n → Bool) {G : Matrix (Fin n) (Fin n) �
   have hR : Measurable (rmulPR G) := (continuous_rmulPR G).measurable
   have hA : Measurable (actR (ε := ε) G) := (JacB.actR_continuous hG).measurable
   have hc := coreP hG
+  have : IsFiniteMeasure (dk ε) := by
+    rw [isFiniteMeasure_iff, (dk_props ε).1.measure_univ]
+    exact ENNReal.one_lt_top
 
   have key : ∀ S : Set (Fin n → Fin n → ℂ), MeasurableSet S →
       muPolarMat ε S = ∫⁻ z, dk ε {k | polarPR (k, z) ∈ S}

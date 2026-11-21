@@ -18,24 +18,7 @@ namespace XI
 private theorem lintegral_prod_le_lintegral_lintegral {α β : Type*} [MeasurableSpace α] [MeasurableSpace β]
     (μ : Measure α) (ν : Measure β) (f : α × β → ℝ≥0∞) :
     ∫⁻ p, f p ∂(μ.prod ν) ≤ ∫⁻ x, ∫⁻ y, f (x, y) ∂ν ∂μ := by
-  obtain ⟨g, hgm, hgle, hgeq⟩ := exists_measurable_le_lintegral_eq (μ.prod ν) f
-  rw [hgeq]
-  have e : μ.prod ν = Measure.bind μ (fun x => Measure.map (Prod.mk x) ν) := by
-    first
-      | exact Measure.prod_def μ ν
-      | rw [Measure.prod_def]
-      | rw [Measure.prod]
-  rw [e]
-  first
-    | rw [Measure.bind, Measure.lintegral_join hgm.aemeasurable]
-    | (unfold Measure.bind; rw [Measure.lintegral_join hgm.aemeasurable])
-    | rw [Measure.bind, Measure.lintegral_join hgm]
-  calc ∫⁻ m, ∫⁻ p, g p ∂m ∂(Measure.map (fun x => Measure.map (Prod.mk x) ν) μ)
-      ≤ ∫⁻ x, ∫⁻ p, g p ∂(Measure.map (Prod.mk x) ν) ∂μ :=
-        lintegral_map_le (fun m : Measure (α × β) => ∫⁻ p, g p ∂m) _
-    _ ≤ ∫⁻ x, ∫⁻ y, g (x, y) ∂ν ∂μ := lintegral_mono fun x => lintegral_map_le g (Prod.mk x)
-    _ ≤ ∫⁻ x, ∫⁻ y, f (x, y) ∂ν ∂μ :=
-        lintegral_mono fun x => lintegral_mono fun y => hgle (x, y)
+  exact lintegral_prod_le f
 
 private theorem side {k r : ℕ} (s : Fin (r + 1) → ℝ) (hs : ∀ l, 0 ≤ s l) (z : Fin (2 * r + k + 1) → ℂ)
     (μW μN : Measure (Mt k r)) (hW : IsHaarOn (UWset k r z) μW)

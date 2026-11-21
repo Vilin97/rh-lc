@@ -29,7 +29,8 @@ def RegularAt (y : (Σ k, ι k) → Ω) (a : Ω) (z : (Σ k, ι k) → ℂ) : Pr
 
 
 def valAt (y : (Σ k, ι k) → Ω) (a : Ω) (z : (Σ k, ι k) → ℂ) : ℂ :=
-  if h : RegularAt y a z then h.choose else 0
+  by classical
+     exact if h : RegularAt y a z then h.choose else 0
 
 end Values
 

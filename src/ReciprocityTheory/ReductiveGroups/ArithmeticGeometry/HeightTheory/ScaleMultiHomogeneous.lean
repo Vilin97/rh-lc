@@ -136,8 +136,8 @@ theorem scale_sImg_expr (b : Fin (D + 1)) (hb : b ≠ 0) (u : Ωˣ) (j₀ : Fin 
       have hb' : ¬ ((0 : Fin (D + 1)) = b) := fun h => hb h.symm
       rw [if_pos rfl, if_neg hb', one_mul, scaleEquiv_X]
       simp [InBlock]
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [if_neg h0, map_neg, map_sum, mul_neg, Finset.mul_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [if_neg h0, map_neg, map_sum, mul_neg, Finset.mul_sum]
       congr 1
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_mul, hX, scaleEquiv_C, mul_assoc]

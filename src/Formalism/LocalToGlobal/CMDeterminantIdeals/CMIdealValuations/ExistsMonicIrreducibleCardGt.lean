@@ -113,7 +113,10 @@ theorem largeResidueExtension : BigResExt := by
   have hM0 : M0.IsMaximal := (Ideal.Quotient.maximal_ideal_iff_isField_quotient _).2
     (MulEquiv.isField (Field.toIsField (AdjoinRoot (g.map (residue V)))) (quotResidueEquiv g).toMulEquiv)
   have hloc : IsLocalRing W := IsLocalRing.of_unique_max_ideal ⟨M0, hM0, fun M hM => by
-    have hc : (M.comap (algebraMap V W)).IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M
+    letI := hM
+    have hc : (M.comap (algebraMap V W)).IsMaximal :=
+      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap V W)
+        (fun x => Algebra.IsIntegral.isIntegral x) M
     have h1 := eq_maximalIdeal hc
     have hle : M0 ≤ M := by
       rw [hM0def, ← h1]

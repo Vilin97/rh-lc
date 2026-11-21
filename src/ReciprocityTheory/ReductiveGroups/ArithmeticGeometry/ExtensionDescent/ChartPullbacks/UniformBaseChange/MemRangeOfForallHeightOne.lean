@@ -163,13 +163,8 @@ theorem finite_height_one [IsNoetherianRing A] {a : A} (ha : a ≠ 0) :
       rw [← hb] at h3
       exact Ideal.mem_bot.mp h3
     have h1' : Order.height (⟨P, hP⟩ : PrimeSpectrum A) = 1 := by
-      first
-      | (rw [Ideal.IsPrime.height_eq_primeHeight] at h1; exact h1)
-      | (rw [Ideal.height_eq_primeHeight_of_isPrime] at h1; exact h1)
-      | (rw [← Ideal.primeHeight_eq_height] at h1; exact h1)
-      | (rw [Ideal.IsPrime.height] at h1; exact h1)
-      | (simp only [Ideal.height, Ideal.minimalPrimes_eq_subsingleton_self, Set.mem_singleton_iff,
-          iInf_iInf_eq_left] at h1; exact h1)
+      rw [← PrimeSpectrum.height_eq_orderHeight]
+      exact h1
     have hlt' : (⟨Q, hQprime⟩ : PrimeSpectrum A) < ⟨P, hP⟩ := (PrimeSpectrum.asIdeal_lt_asIdeal _ _).mp hlt
     have hQ1 : Order.height (⟨Q, hQprime⟩ : PrimeSpectrum A) < 1 := by
       rw [← h1']

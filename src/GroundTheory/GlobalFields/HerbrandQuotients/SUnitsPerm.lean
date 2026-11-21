@@ -140,12 +140,13 @@ theorem prod_card_stabilizer_finitePlace (hS : ∀ (g : L ≃ₐ[K] L), ∀ w �
     simp only at h
     set x₁ := Quotient.out ω₁
     set x₂ := Quotient.out ω₂
-    obtain ⟨g, hg⟩ := MulAction.exists_smul_eq (L ≃ₐ[K] L)
-      (⟨x₂.1, inferInstance⟩ : SemiLocal.PlacesOver L (placeBelow (K := K) x₂.1))
-      ⟨x₁.1, by rw [← h]; infer_instance⟩
+    let _ : x₁.1.asIdeal.LiesOver (placeBelow (K := K) x₂.1).asIdeal := by
+      rw [← h]
+      infer_instance
+    obtain ⟨g, hg⟩ := Ideal.exists_smul_eq_of_isGaloisGroup
+      (placeBelow (K := K) x₂.1).asIdeal x₂.1.asIdeal x₁.1.asIdeal (L ≃ₐ[K] L)
     rw [← Quotient.out_eq ω₁, ← Quotient.out_eq ω₂]
-    have hg' : g • x₂.1 = x₁.1 := congrArg Subtype.val hg
-    exact Quotient.sound ⟨g, Subtype.ext hg'⟩
+    exact Quotient.sound ⟨g, Subtype.ext (HeightOneSpectrum.ext hg)⟩
   · rintro v ⟨w, hw, hlies⟩
     refine ⟨Quotient.mk _ ⟨w, hw⟩, Set.mem_univ _, ?_⟩
     obtain ⟨g, hg⟩ : Quotient.out (Quotient.mk (orbitRel (L ≃ₐ[K] L) S) ⟨w, hw⟩) ∈

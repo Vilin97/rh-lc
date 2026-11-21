@@ -324,7 +324,7 @@ lemma psi_le {p q : ι} (hpq : p ≠ q) {k : ℕ} (hk : Fintype.card ι = k + 1)
         | (field_simp; done)
         | (field_simp; ring)
     _ ≤ ∏ i ∈ Finset.univ.erase q, gF p q (s / k) i (x i) := by
-        apply Finset.prod_le_prod
+        apply Finset.prod_le_prod₀
         · intro i _
           exact Real.rpow_nonneg hu.le _
         · intro i hi

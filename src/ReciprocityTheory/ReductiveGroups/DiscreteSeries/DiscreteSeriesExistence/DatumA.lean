@@ -286,10 +286,11 @@ theorem pdA_eab_compact {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : S7.KType
 
 theorem toL2_congr_of_forall_inUJ_eq {ε : Fin n → Bool} {F G : Matrix (Fin n) (Fin n) ℂ → ℂ}
     (h : ∀ g, inUJ ε g → F g = G g) : toL2 ε F = toL2 ε G := by
+  classical
   have hfg : (fun g : Formalism.REAL.UJ ε => F (Formalism.MainNotions.S.umat g)) = fun g => G (Formalism.MainNotions.S.umat g) :=
     funext fun g => h (Formalism.MainNotions.S.umat g) g.2
-  unfold toL2
-  simp only [hfg]
+  exact congrArg (fun f : Formalism.REAL.UJ ε → ℂ =>
+    if hf : MemLp f 2 (Formalism.REAL.muG ε) then hf.toLp f else 0) hfg
 
 theorem toL2_finset_sum_of_memLp {ε : Fin n → Bool} {ι : Type*} (s : Finset ι) (F : ι → Matrix (Fin n) (Fin n) ℂ → ℂ)
     (hF : ∀ i, MemLp (fun g : Formalism.REAL.UJ ε => F i (Formalism.MainNotions.S.umat g)) 2 (Formalism.REAL.muG ε)) :

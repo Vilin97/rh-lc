@@ -523,7 +523,7 @@ theorem splitTorus_rigidity (K : Type u) [Field K] (X : Type u) [AddCommGroup X]
     (f : splitTorus (Spec (.of K)) X ⊗ splitTorus (Spec (.of K)) X ⟶ splitTorus (Spec (.of K)) Y)
     (h1 : lift (𝟙 _) (toUnit _ ≫ η) ≫ f = toUnit _ ≫ η)
     (h2 : lift (toUnit _ ≫ η) (𝟙 _) ≫ f = toUnit _ ≫ η) :
-    f = toUnit _ ≫ η := by
+    f = toUnit _ ≫ η := open Rosenlicht in by
   apply coord_injective
   apply CommRingCat.hom_ext
   apply ringHom_ext_ZU

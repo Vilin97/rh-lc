@@ -239,6 +239,7 @@ lemma hA : φA U ιD e a χ = Sum.elim
     · exact h5
 
 
+include hO in
 lemma hBv : φB U ιG e a χ =
     ![(padd D.toPre.P.A ((U.gt e).pG ≫ ιD.onB.act a) (xc e χ (G := G))).left,
       (xc e χ (G := G)).left, ((U.gt e).pG ≫ ιD.onB.act a).left,

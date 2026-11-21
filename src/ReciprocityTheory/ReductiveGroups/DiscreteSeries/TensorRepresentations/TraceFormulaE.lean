@@ -72,7 +72,7 @@ theorem tf_sqInt_of_hW {lam : Fin n → ℝ} {H : Type*} [NormedAddCommGroup H] 
       rw [norm_mul, Complex.norm_real, Real.norm_of_nonneg (Real.sqrt_nonneg _)]
       exact le_mul_of_one_le_left (norm_nonneg _) h1
   have hall : ∀ x, MemLp (fun g => inner ℂ y0 (ρ g x)) 2 (Formalism.REAL.muG ε) := fun x =>
-    GraphTrick.memLp_of_ne (μ := Formalism.REAL.muG ε) (ρ := ρ) (measurePreserving_mul_right ε) hone hmul hiso hirr
+    GraphTrick.memLp_of_ne (μ := Formalism.REAL.muG ε) (ρ := ρ) hone hmul hiso hirr
       y0 y0 hy0 h0 x
   intro v w
   show MemLp (fun g : Formalism.REAL.UJ ε => inner ℂ w (ρ g v)) 2 (Formalism.REAL.muG ε)
@@ -91,7 +91,7 @@ theorem tf_sqInt_of_hW {lam : Fin n → ℝ} {H : Type*} [NormedAddCommGroup H] 
     simp only [Pi.star_apply, Function.comp_apply, RCLike.star_def, inner_conj_symm]
     rw [← ContinuousLinearMap.adjoint_inner_right, ← ContinuousLinearMap.star_eq_adjoint, hs, inv_inv]
   rw [e2] at hinv
-  exact GraphTrick.memLp_of_ne (μ := Formalism.REAL.muG ε) (ρ := ρ) (measurePreserving_mul_right ε) hone hmul hiso hirr
+  exact GraphTrick.memLp_of_ne (μ := Formalism.REAL.muG ε) (ρ := ρ) hone hmul hiso hirr
     w y0 hy0 hinv v
 
 end ReciprocityTheory.ChartRestriction.DS

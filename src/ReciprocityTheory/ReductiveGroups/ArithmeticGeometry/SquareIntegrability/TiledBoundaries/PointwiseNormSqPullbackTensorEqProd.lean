@@ -108,6 +108,8 @@ theorem l2Inner_smul (X : PT E) (q : ℕ) {n : ℕ} (c c' : ℂ) (F G : (Fin n �
   simp only [MeasureTheory.setAverage_eq]
   rw [mul_smul_comm, ← MeasureTheory.integral_const_mul]
   congr 2
+  funext v
+  simp only [map_mul]
   ring
 
 theorem l2Inner_self (X : PT E) (q : ℕ) {n : ℕ} (F : (Fin n → Vsp X.dim) → ℂ) :

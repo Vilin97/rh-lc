@@ -49,7 +49,7 @@ theorem l2w (n : ℕ) (M : Type*) [MeasurableSpace M] : WeightedL2Properties n M
       exact ENNReal.rpow_lt_top_of_nonneg (by norm_num) hlt.ne
     · rw [hw, Lp.norm_def, ← ENNReal.toReal_rpow, Real.rpow_two]
   · have hmem : MemLp f 2 (wvol n z ψ) := by
-      refine ⟨hf.mono_ac (withDensity_absolutelyContinuous _ _), ?_⟩
+      change eLpNorm f 2 (wvol n z ψ) < ⊤
       rw [eLpNorm_two_weighted_eq n z hψ f]
       exact ENNReal.rpow_lt_top_of_nonneg (by norm_num) hfin.ne
     exact ⟨hmem.toLp f, (ae_weighted_iff_ae n z hψ (fun x => (hmem.toLp f : M → ℂ) x = f x)).mp

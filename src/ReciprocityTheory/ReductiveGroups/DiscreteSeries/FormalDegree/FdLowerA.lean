@@ -46,6 +46,14 @@ theorem fdl_inner_continuous {ε : Fin n → Bool} (lam : Fin n → ℝ) {Λ : F
     (Complex.continuous_ofReal.comp (Real.continuous_exp.comp hPh.neg)).mul
       (((hop.clm_apply continuous_const).inner continuous_const).mul
         (continuous_const.inner (hop.clm_apply continuous_const)))
+  have hpos : 0 < muK ε Set.univ :=
+    isOpen_univ.measure_pos (muK ε) Set.univ_nonempty
+  have hdk : dk ε Set.univ < ⊤ := by
+    rw [dk, smul_apply, smul_eq_mul]
+    exact ENNReal.mul_lt_top (ENNReal.inv_lt_top.2 hpos) (by finiteness)
+  haveI : IsFiniteMeasureOnCompacts (dk ε) :=
+    ⟨fun K hK => (measure_mono (Set.subset_univ K)).trans_lt hdk⟩
+  haveI : IsLocallyFiniteMeasure (dk ε) := inferInstance
   have hI := continuous_parametric_integral_of_continuous (μ := dk ε)
     (f := fun (z : PCoord ε → ℂ) (k : KG ε) =>
       ((Real.exp (-Ph lam (toMK k⁻¹ * pmat z * toMK k)) : ℝ) : ℂ) *

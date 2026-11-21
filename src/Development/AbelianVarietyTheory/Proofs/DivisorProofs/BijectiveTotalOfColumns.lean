@@ -253,7 +253,7 @@ theorem mem_van_iff {p n : ℤ} (α : Cochain K I n) :
     rw [← restr_v ι I c n (n + c) rfl α k t q h (by omega) hq, hα c hc, Cochain.zero_v]
 
 theorem IsColumns.isFilt (hK : IsColumns K Col ι) [I.IsStrictlyGE 0] :
-    IsFilt (dC K I) (fun p => dC (Col p) I) (van ι I) (restr ι I) where
+    IsFilt (dC K I) (fun p => dC (Col p) I) (van ι I) (restr ι I) := {
   dd n m k x := δ_δ _ _ _ _
   dF p n m h α hα := by
     rw [mem_van_iff]
@@ -286,6 +286,7 @@ theorem IsColumns.isFilt (hK : IsColumns K Col ι) [I.IsStrictlyGE 0] :
     · by_cases hk : 0 < k
       · exact (hK.isZero p k (Or.inr hk)).eq_of_src _ _
       · exact (I.isZero_of_isStrictlyGE 0 q (by omega)).eq_of_tgt _ _
+  }
 
 variable (ι) {J : Type*} (Ij : J → CochainComplex C ℤ) (e : J → ℤ)
 
@@ -300,7 +301,7 @@ def restrPi (p n m : ℤ) (h : n + p = m) :
 variable {ι}
 
 theorem IsColumns.isFilt_pi (hK : IsColumns K Col ι) [Finite J] [∀ j, (Ij j).IsStrictlyGE 0] :
-    IsFilt (dPi K Ij e) (fun p => dPi (Col p) Ij e) (vanPi ι Ij e) (restrPi ι Ij e) where
+    IsFilt (dPi K Ij e) (fun p => dPi (Col p) Ij e) (vanPi ι Ij e) (restrPi ι Ij e) := {
   dd n m k x := funext fun _ => δ_δ _ _ _ _
   dF p n m h α hα j hj := (hK.isFilt (Ij j)).dF p _ _ (by omega) _ (hα j hj)
   rd p n m n' m' hn hm h α hα := funext fun j =>
@@ -318,6 +319,7 @@ theorem IsColumns.isFilt_pi (hK : IsColumns K Col ι) [Finite J] [∀ j, (Ij j).
     obtain ⟨M, hM⟩ := (Set.finite_range N).bddBelow
     exact ⟨M, fun α hα => funext fun j =>
       hN j _ ((hK.isFilt (Ij j)).mono _ _ _ (hM ⟨j, rfl⟩) (hα j trivial))⟩
+  }
 
 theorem bijective_of_columns {L T : CochainComplex C ℤ} {CL CT : ℤ → CochainComplex C ℤ}
     {ιL : ∀ p k t, p + k = t → ((CL p).X k ⟶ L.X t)} {ιT : ∀ p k t, p + k = t → ((CT p).X k ⟶ T.X t)}
@@ -348,7 +350,7 @@ theorem bijective_of_columns {L T : CochainComplex C ℤ} {CL CT : ℤ → Cocha
 
 theorem isColumns_total (D : HomologicalComplex₂ C (ComplexShape.up ℤ) (ComplexShape.up ℤ))
     [D.HasTotal (ComplexShape.up ℤ)] (hD : ∀ p k, 0 < p ∨ 0 < k → IsZero ((D.X p).X k)) :
-    IsColumns (D.total (ComplexShape.up ℤ)) D.X (fun p k t h => D.ιTotal (ComplexShape.up ℤ) p k t h) where
+    IsColumns (D.total (ComplexShape.up ℤ)) D.X (fun p k t h => D.ιTotal (ComplexShape.up ℤ) p k t h) := {
   ext t Y f hf := HomologicalComplex₂.total.hom_ext _ fun p k h => by rw [comp_zero]; exact hf p k h
   desc p k t h Y g := by
     refine ⟨D.totalDesc fun c l h' => if hc : c = p then
@@ -367,6 +369,7 @@ theorem isColumns_total (D : HomologicalComplex₂ C (ComplexShape.up ℤ) (Comp
       Category.assoc, Category.assoc, hf (p + 1) k _ (by omega), comp_zero, smul_zero, zero_add]
     rfl
   isZero := hD
+  }
 
 variable [HasZeroObject C]
 
@@ -390,7 +393,7 @@ theorem ιTerm_ne (L : CochainComplex C ℤ) (p k t : ℤ) (h : p + k = t) (hk :
   dite_eq_right hk
 
 theorem isColumns_terms (L : CochainComplex C ℤ) [L.IsStrictlyLE 0] :
-    IsColumns L (fun p => (CochainComplex.singleFunctor C 0).obj (L.X p)) (ιTerm L) where
+    IsColumns L (fun p => (CochainComplex.singleFunctor C 0).obj (L.X p)) (ιTerm L) := {
   ext t Y f hf := by
     have := hf t 0 (add_zero t)
     exact eq_zero_of_ιTerm this
@@ -415,6 +418,7 @@ theorem isColumns_terms (L : CochainComplex C ℤ) [L.IsStrictlyLE 0] :
     · exact (L.isZero_of_isStrictlyLE 0 p (by omega)).of_iso
         (HomologicalComplex.singleObjXIsoOfEq (ComplexShape.up ℤ) 0 (L.X p) k hk)
     · exact HomologicalComplex.isZero_single_obj_X (ComplexShape.up ℤ) 0 (L.X p) k hk
+  }
 
 end Columns
 

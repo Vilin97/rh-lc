@@ -125,7 +125,8 @@ theorem so_iter_eq_zero (c : σ → σ → k) :
     · rw [so_eq_zero_of_le_one c Q h1]
       exact Function.iterate_fixed (so_zero c) i
     · apply so_iter_eq_zero c i
-      have := totalDegree_so_le c Q
+      have hdeg : (secondOrder k c Q).totalDegree ≤ Q.totalDegree - 2 :=
+        totalDegree_so_le c Q
       omega
 
 theorem so_iter_deg_le (c : σ → σ → k) :
@@ -133,9 +134,7 @@ theorem so_iter_deg_le (c : σ → σ → k) :
   | 0, _ => le_rfl
   | i + 1, Q => by
     rw [Function.iterate_succ_apply]
-    refine (so_iter_deg_le c i _).trans ?_
-    have := totalDegree_so_le c Q
-    omega
+    exact (so_iter_deg_le c i _).trans ((totalDegree_so_le c Q).trans (Nat.sub_le _ _))
 
 end General
 

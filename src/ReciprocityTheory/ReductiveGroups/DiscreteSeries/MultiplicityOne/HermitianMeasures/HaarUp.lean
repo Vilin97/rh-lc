@@ -21,9 +21,15 @@ theorem haarUp (hSF : HaarUniqueSF) {k r : ℕ} {U : Set (Mat k r)} {μ₀ μ : 
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · rw [Measure.smul_apply, h₀.conc, smul_zero]
   · intro a ha
-    rw [Measure.map_smul, h₀.left a ha]
+    have hcont : Continuous (lmulM a : Mt k r → Mt k r) := by
+      unfold lmulM
+      exact Continuous.matrix_mul continuous_const continuous_id
+    rw [Measure.map_smul c hcont.measurable.aemeasurable, h₀.left a ha]
   · intro a ha
-    rw [Measure.map_smul, h₀.right a ha]
+    have hcont : Continuous (rmulF a : Mt k r → Mt k r) := by
+      unfold rmulF
+      exact Continuous.matrix_mul continuous_id continuous_const
+    rw [Measure.map_smul c hcont.measurable.aemeasurable, h₀.right a ha]
   · intro K hK
     rw [Measure.smul_apply, ENNReal.smul_def, smul_eq_mul]
     exact ENNReal.mul_lt_top ENNReal.coe_lt_top (h₀.finite_compact K hK)

@@ -87,7 +87,8 @@ theorem isLocallyConstant_coindHomotopyApply {n : ℕ}
   rw [IsLocallyConstant.iff_eventually_eq]
   intro g₀
   filter_upwards [eventually_forall_cons_eq hf g₀] with g hg
-  exact LocallyConstant.ext fun x => by simp [hg x]
+  exact LocallyConstant.ext fun x =>
+    congrArg (fun φ : LocallyConstant G X => φ 1) (hg x)
 
 
 noncomputable def coindHomotopy (n : ℕ) :
@@ -124,8 +125,9 @@ theorem coindHomotopy_identity_apply {n : ℕ}
 
 theorem coindHomotopy_identity (n : ℕ)
     (f : locallyConstantCochains (discreteCoind k G X) (n + 1)) :
-    (dLocallyConstant (discreteCoind k G X) n).hom (coindHomotopy k X n f) +
-      coindHomotopy k X (n + 1) ((dLocallyConstant (discreteCoind k G X) (n + 1)).hom f) = f := by
+    (dLocallyConstant (discreteCoind k G X) n).hom (coindHomotopy (k := k) (X := X) n f) +
+      coindHomotopy (k := k) (X := X) (n + 1)
+        ((dLocallyConstant (discreteCoind k G X) (n + 1)).hom f) = f := by
   apply Subtype.ext
   funext g
   apply LocallyConstant.ext
@@ -144,10 +146,11 @@ theorem isZero_cohomology_discreteCoind (n : ℕ) :
     change ((cochainsComplex (discreteCoind k G X)).d (n + 1) (n + 2)).hom f = 0 at hf
     rw [cochainsComplex_d] at hf
     exact hf
-  refine ⟨coindHomotopy k X n f', ?_⟩
+  refine ⟨coindHomotopy (k := k) (X := X) n f', ?_⟩
   have := coindHomotopy_identity n f'
   rw [hf', map_zero, add_zero] at this
-  change ((cochainsComplex (discreteCoind k G X)).d n (n + 1)).hom (coindHomotopy k X n f') = f
+  change ((cochainsComplex (discreteCoind k G X)).d n (n + 1)).hom
+    (coindHomotopy (k := k) (X := X) n f') = f
   rw [cochainsComplex_d]
   exact this
 

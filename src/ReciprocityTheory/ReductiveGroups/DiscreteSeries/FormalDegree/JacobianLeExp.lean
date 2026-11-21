@@ -87,12 +87,12 @@ theorem jacobian_le_exp {ε : Fin n → Bool} (z : PCoord ε → ℂ) (f : ℝ �
       f (pev z a - pev z b)) := by
   unfold Jac
   rw [Real.exp_sum]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro a _
     exact Finset.prod_nonneg (fun b _ => le_trans zero_le_one (shc_bounds _).1)
   · intro a _
     rw [Real.exp_sum]
-    apply Finset.prod_le_prod
+    apply Finset.prod_le_prod₀
     · intro b _
       exact le_trans zero_le_one (shc_bounds _).1
     · intro b _

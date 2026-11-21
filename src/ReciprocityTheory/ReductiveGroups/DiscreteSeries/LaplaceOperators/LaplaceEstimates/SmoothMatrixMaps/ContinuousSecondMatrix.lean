@@ -241,7 +241,8 @@ theorem aesm_int {ε : Fin (2 * r + k + 1) → Bool} {P : Mat k r} (hP : Formali
   obtain ⟨hz, hT, hc, hπ, hW, hN⟩ := hB
   have hU := hcTypeW_uRep k r z u Vp π hz hT hπ
   have hWc := Formalism.FourierDecayAlt.P.weyl_subgroup_closed k r z
-  rw [← Measure.restrict_eq_self_of_ae_mem (ae_supp hW hN)]
+  have hs : ∀ᵐ p ∂(μW.prod μN), p ∈ suppA k r z := ae_supp hW hN
+  rw [← Measure.restrict_eq_self_of_ae_mem hs]
   refine ContinuousOn.aestronglyMeasurable ?_ suppA_closed.measurableSet
   refine ContinuousOn.smul ?_ ?_
   · refine hG.comp ((cont_gp P x).matrix_mul continuous_const).continuousOn ?_

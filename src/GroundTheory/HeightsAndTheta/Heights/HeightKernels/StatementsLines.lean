@@ -65,16 +65,8 @@ theorem stdSumBasis_elim (K : Type*) [Field K] (m k : ℕ) :
 theorem stdLattice_isLattice_example :
     Submodule.IsLattice ℚ ((stdLattice ℚ 1).restrictScalars ℤ) where
   fg := (Submodule.fg_span (Set.finite_range _)).restrictScalars
-  span_eq_top := by
-    rw [eq_top_iff]
-    intro v _
-    have h1 : (Pi.single 0 1 : Fin 1 → ℚ) ∈
-        Submodule.span ℚ (((stdLattice ℚ 1).restrictScalars ℤ : Submodule ℤ (Fin 1 → ℚ)) :
-          Set (Fin 1 → ℚ)) :=
-      Submodule.subset_span (Submodule.subset_span ⟨0, rfl⟩)
-    have hv : v = v 0 • (Pi.single 0 1 : Fin 1 → ℚ) := by
-      funext i; fin_cases i; simp
-    rw [hv]; exact Submodule.smul_mem _ _ h1
+  linearIndepOn s hs hli :=
+    (LinearIndependent.iff_fractionRing ℤ ℚ).mp hli.linearIndependent
 
 end
 

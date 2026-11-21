@@ -31,46 +31,46 @@ variable {LL : Type} [Field LL] [Algebra Qp LL]
 def mB (b : B) : V ⊗[Qp] B →ₗ[LL] V ⊗[Qp] B :=
   AlgebraTensorModule.map LinearMap.id (LinearMap.mulLeft Qp b)
 
-@[simp] theorem mB_tmul (b b' : B) (v : V) : mB LL b (v ⊗ₜ[Qp] b') = v ⊗ₜ[Qp] (b * b') := by
+@[simp] theorem mB_tmul (b b' : B) (v : V) : mB (LL := LL) b (v ⊗ₜ[Qp] b') = v ⊗ₜ[Qp] (b * b') := by
   simp [mB]
 
 theorem mulVB_eq (c : K₀) (x : V ⊗[Qp] B) :
-    mulVB (K₀ := K₀) (LL := LL) c x = mB LL (algebraMap K₀ B c) x := rfl
+    mulVB (K₀ := K₀) (LL := LL) c x = mB (LL := LL) (algebraMap K₀ B c) x := rfl
 
-theorem mB_mul (b b' : B) (x : V ⊗[Qp] B) : mB LL (b * b') x = mB LL b (mB LL b' x) := by
+theorem mB_mul (b b' : B) (x : V ⊗[Qp] B) : mB (LL := LL) (b * b') x = mB (LL := LL) b (mB (LL := LL) b' x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp [mul_assoc]
   | add a c ha hc => simp only [map_add (f := _), ha, hc]
 
-theorem mB_add (b b' : B) (x : V ⊗[Qp] B) : mB LL (b + b') x = mB LL b x + mB LL b' x := by
+theorem mB_add (b b' : B) (x : V ⊗[Qp] B) : mB (LL := LL) (b + b') x = mB (LL := LL) b x + mB (LL := LL) b' x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp [add_mul, tmul_add]
   | add a c ha hc => simp only [map_add (f := _), ha, hc]; abel
 
-theorem mB_one (x : V ⊗[Qp] B) : mB LL (1 : B) x = x := by
+theorem mB_one (x : V ⊗[Qp] B) : mB (LL := LL) (1 : B) x = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp
   | add a c ha hc => simp only [map_add (f := _), ha, hc]
 
 theorem comm_smulB (b : B) (x : B ⊗[Qp] V) :
-    TensorProduct.comm Qp B V (b • x) = mB LL b (TensorProduct.comm Qp B V x) := by
+    TensorProduct.comm Qp B V (b • x) = mB (LL := LL) b (TensorProduct.comm Qp B V x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul b v => simp [TensorProduct.smul_tmul']
   | add a c ha hc => simp only [smul_add, map_add (f := _), ha, hc]
 
 def mK (ρ : Representation LL G V) (c : K₀) : ↥(Dcris PD ρ) →ₗ[LL] ↥(Dcris PD ρ) :=
-  (mB LL (algebraMap K₀ B c)).restrict (fun x hx => by
+  (mB (LL := LL) (algebraMap K₀ B c)).restrict (fun x hx => by
     rw [CrystallineSubrepresentation.mem_Dcris] at hx ⊢
     intro g
     rw [← mulVB_eq, CrystallineSubrepresentation.actVB_mulVB, hx])
 
 theorem cmp_ind {ρ : Representation LL G V} (h : Function.Bijective (CrystallineSubrepresentation.comparison PD ρ))
     {P : V ⊗[Qp] B → Prop} (h0 : P 0) (hadd : ∀ x y, P x → P y → P (x + y))
-    (hb : ∀ (b : B) (d : ↥(Dcris PD ρ)), P (mB LL b d)) (x : V ⊗[Qp] B) : P x := by
+    (hb : ∀ (b : B) (d : ↥(Dcris PD ρ)), P (mB (LL := LL) b d)) (x : V ⊗[Qp] B) : P x := by
   obtain ⟨u, hu⟩ := h.2 ((TensorProduct.comm Qp B V).symm x)
   have : x = TensorProduct.comm Qp B V (CrystallineSubrepresentation.comparison PD ρ u) := by rw [hu]; simp
   subst this
@@ -93,7 +93,7 @@ theorem exists_retr : ∃ lam : B →ₗ[K₀] K₀, lam 1 = 1 := by
   exact ⟨(f 1)⁻¹ • f, by simp [hf]⟩
 
 theorem prod_mB_left (b : B) (x : V ⊗[Qp] B) (y : V' ⊗[Qp] B) :
-    CrystallineSubrepresentation.prodB (LL := LL) (mB LL b x ⊗ₜ[LL] y) = mB LL b (CrystallineSubrepresentation.prodB (x ⊗ₜ[LL] y)) := by
+    CrystallineSubrepresentation.prodB (LL := LL) (mB (LL := LL) b x ⊗ₜ[LL] y) = mB (LL := LL) b (CrystallineSubrepresentation.prodB (x ⊗ₜ[LL] y)) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | add a c ha hc => simp only [map_add (f := _), add_tmul, ha, hc]
@@ -104,7 +104,7 @@ theorem prod_mB_left (b : B) (x : V ⊗[Qp] B) (y : V' ⊗[Qp] B) :
     | tmul v' c' => simp [CrystallineSubrepresentation.prodB_tmul, mul_assoc]
 
 theorem prod_mB_right (b : B) (x : V ⊗[Qp] B) (y : V' ⊗[Qp] B) :
-    CrystallineSubrepresentation.prodB (LL := LL) (x ⊗ₜ[LL] mB LL b y) = mB LL b (CrystallineSubrepresentation.prodB (x ⊗ₜ[LL] y)) := by
+    CrystallineSubrepresentation.prodB (LL := LL) (x ⊗ₜ[LL] mB (LL := LL) b y) = mB (LL := LL) b (CrystallineSubrepresentation.prodB (x ⊗ₜ[LL] y)) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | add a c ha hc => simp only [map_add (f := _), add_tmul, ha, hc]
@@ -197,7 +197,7 @@ theorem unit_eq : Dcris PD (Representation.trivial LL G LL) =
 
 
 theorem mem_DcrisL (ρ : Representation LL G V) (τ : K₀ →ₐ[Qp] LL) (x : V ⊗[Qp] B) :
-    x ∈ DcrisL PD ρ τ ↔ x ∈ Dcris PD ρ ∧ ∀ c : K₀, mB LL (algebraMap K₀ B c) x = τ c • x := by
+    x ∈ DcrisL PD ρ τ ↔ x ∈ Dcris PD ρ ∧ ∀ c : K₀, mB (LL := LL) (algebraMap K₀ B c) x = τ c • x := by
   simp [DcrisL, Submodule.mem_iInf, sub_eq_zero, mulVB_eq]
 
 end Tools

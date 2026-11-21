@@ -213,11 +213,8 @@ theorem fn_not_ev (hD : A.D0 L w w0 s) (hF : A.Flat w0 s De) {P : Y} (hP : P ∈
       simpa only [div_eq_mul_inv] using h3
     exact contDiffOn_of_differentiableOn n _ U hUo hk
   have hcda : ContDiffAt ℂ ∞ (A.zLoc w0 s i) c := hcd.contDiffAt (hUo.mem_nhds hcU)
-  have hstr : HasStrictFDerivAt (A.zLoc w0 s i) (fderiv ℂ (A.zLoc w0 s i) c) c := by
-    first
-    | exact hcda.hasStrictFDerivAt (by simp)
-    | exact hcda.hasStrictFDerivAt (by norm_num)
-    | exact hcda.hasStrictFDerivAt (by exact_mod_cast le_top)
+  have hstr : HasStrictFDerivAt (A.zLoc w0 s i) (fderiv ℂ (A.zLoc w0 s i) c) c :=
+    hcda.hasStrictFDerivAt_fderiv (by simp)
   have hdet : LinearMap.det (fderiv ℂ (A.zLoc w0 s i) c : V n →ₗ[ℂ] V n) ≠ 0 := hD.coord P hP
   let e : V n ≃L[ℂ] V n :=
     (LinearMap.equivOfDetNeZero (fderiv ℂ (A.zLoc w0 s i) c : V n →ₗ[ℂ] V n) hdet).toContinuousLinearEquiv

@@ -323,7 +323,8 @@ theorem indep_u {K Ω U τ : Type} [Field K] [NumberField K] [Field Ω] [Field U
     push Not at hall
     apply hne
     ext α
-    rw [MvPolynomial.coeff_map, MvPolynomial.coeff_zero, RingHom.comp_apply, residue_eq_zero_iff]
+    rw [MvPolynomial.coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, RingHom.comp_apply,
+      residue_eq_zero_iff]
     exact (mem_max_iff ν _).mpr ((hpos _).mpr (hall α))
   have hw0 : ¬ 0 < w (MvPolynomial.eval₂ ((algebraMap Ω U).comp
       ((algebraMap K Ω).comp (algebraMap (𝓞 K) K))) (fun j => (u j : U)) P') := by

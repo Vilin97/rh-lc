@@ -13,9 +13,9 @@ open Coalgebra
 
 namespace GlobalTheory.HTPair
 
-open GlobalTheory.PDiv
+open _root_.GlobalTheory.PDiv
 
-structure QuotTower {p : ℕ} {O : Type} [CommRing O] (G : PDivGroup p O) : Type 1 where
+structure QuotTower {p : ℕ} {O : Type} [CommRing O] (G : _root_.GlobalTheory.PDivGroup p O) : Type 1 where
 
   B : ℕ → Type
   [commRing : ∀ m, CommRing (B m)]
@@ -40,12 +40,12 @@ structure QuotTower {p : ℕ} {O : Type} [CommRing O] (G : PDivGroup p O) : Type
 
   j_s : ∀ m a, j m (s m a) = G.mulP m a
 
-  tors_le : ∀ m, torsionIdeal O (G.A (m + 1)) p ≤ kerIdeal (j m)
+  tors_le : ∀ m, torsionIdeal (R := O) (A := G.A (m + 1)) p ≤ kerIdeal (j m)
 
 attribute [instance] QuotTower.commRing QuotTower.hopf QuotTower.cocomm QuotTower.finite
   QuotTower.projective
 
-def QuotTower.trivial {p : ℕ} {O : Type} [CommRing O] (G : PDivGroup p O) : QuotTower G where
+def QuotTower.trivial {p : ℕ} {O : Type} [CommRing O] (G : _root_.GlobalTheory.PDivGroup p O) : QuotTower G where
   B m := G.A (m + 1)
   j _ := BialgHom.id O _
   ρ _ := LinearMap.id
@@ -66,7 +66,7 @@ def QuotTower.trivial {p : ℕ} {O : Type} [CommRing O] (G : PDivGroup p O) : Qu
     change counit (R := O) (mulBy O (G.A (m + 1)) p a) = 0
     rw [CoalgHomClass.counit_comp_apply, ha']
 
-theorem exists_retraction_mulP {p : ℕ} {O : Type} [CommRing O] (G : PDivGroup p O) (m : ℕ) :
+theorem exists_retraction_mulP {p : ℕ} {O : Type} [CommRing O] (G : _root_.GlobalTheory.PDivGroup p O) (m : ℕ) :
     ∃ ρ : G.A (m + 1) →ₗ[O] G.A m, ∀ a, ρ (G.mulP m a) = a := by
   let f : G.A m →ₗ[O] G.A (m + 1) := (G.mulP m : G.A m →ₐ[O] G.A (m + 1)).toLinearMap
   have hs : Function.Surjective f.dualMap := fun φ => by
@@ -80,7 +80,7 @@ theorem exists_retraction_mulP {p : ℕ} {O : Type} [CommRing O] (G : PDivGroup 
   ext φ
   exact LinearMap.congr_fun (LinearMap.congr_fun hσ φ) a
 
-def QuotTower.full {p : ℕ} {O : Type} [CommRing O] (G : PDivGroup p O) : QuotTower G where
+def QuotTower.full {p : ℕ} {O : Type} [CommRing O] (G : _root_.GlobalTheory.PDivGroup p O) : QuotTower G where
   B m := G.A m
   j m := G.mulP m
   ρ m := (exists_retraction_mulP G m).choose
@@ -93,7 +93,7 @@ def QuotTower.full {p : ℕ} {O : Type} [CommRing O] (G : PDivGroup p O) : QuotT
   tors_le m := by
     rw [← kerIdeal_comp_of_surjective _ (G.res_surjective m), G.mulP_comp_res]
 
-theorem QuotTower.map_res_kerIdeal {p : ℕ} {O : Type} [CommRing O] {G : PDivGroup p O}
+theorem QuotTower.map_res_kerIdeal {p : ℕ} {O : Type} [CommRing O] {G : _root_.GlobalTheory.PDivGroup p O}
     (T : QuotTower G) (m : ℕ) :
     Ideal.map (G.res (m + 1) : G.A (m + 2) →ₐ[O] G.A (m + 1)) (kerIdeal (T.j (m + 1))) =
       kerIdeal (T.j m) := by

@@ -245,7 +245,7 @@ private lemma continuous_dmin_Gm (τ : X.Ψ) (i : Fin (r + 1)) :
   have hc : ∀ i j, Continuous fun y : Frame X.Ψ r => mat y τ i j := fun i j =>
     (continuous_apply j).comp ((continuous_apply i).comp (continuous_apply τ))
   simp only [FD.gram, FD.hermC, FD.col, Matrix.of_apply]
-  exact continuous_finset_sum _ fun a' _ => continuous_finset_sum _ fun b' _ =>
+  exact continuous_finsetSum _ fun a' _ => continuous_finsetSum _ fun b' _ =>
     ((hc a' a).mul continuous_const).mul (Complex.continuous_conj.comp (hc b' b))
 
 private lemma continuous_cpt' (x0 : Frame X.Ψ r) : Continuous (cpt X x0) := by

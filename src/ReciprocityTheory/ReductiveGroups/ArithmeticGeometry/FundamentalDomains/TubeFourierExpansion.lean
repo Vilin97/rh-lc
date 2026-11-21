@@ -87,7 +87,7 @@ theorem tube_expansion (Ω : Set (Fin n → ℝ)) (h : (Fin n → ℂ) → ℂ) 
     fun b hb k => four_indep n Ω h hΩ hpre hd hp 0 h0 b hb k
   have htube : ∀ x b : Fin n → ℝ, b ∈ Ω → (fun j => (x j : ℂ) + (b j : ℂ) * I) ∈ tube n Ω := by
     intro x b hb
-    simp only [tube, Set.mem_setOf_eq]
+    simp only [tube, Set.mem_ofPred_eq]
     simpa using hb
 
   have hslice : ∀ b ∈ Ω, ∃ C, ∀ x : Fin n → ℝ, ‖h (fun j => (x j : ℂ) + (b j : ℂ) * I)‖ ≤ C := by
@@ -223,8 +223,10 @@ theorem tube_expansion (Ω : Set (Fin n → ℝ)) (h : (Fin n → ℂ) → ℂ) 
   have hmaps : ∀ t ∈ tube n ((fun b => b + y0) ⁻¹' Ω),
       t + (fun j => (y0 j : ℂ) * I) ∈ tube n Ω := by
     intro t ht
-    simp only [tube, Set.mem_setOf_eq, Set.mem_preimage] at ht ⊢
+    simp only [tube, Set.mem_ofPred_eq, Set.mem_preimage] at ht ⊢
     convert ht using 1
+    funext j
+    simp only [Pi.add_apply, Complex.add_im, Complex.mul_I_im, Complex.ofReal_re]
   have hdg : DifferentiableOn ℂ (fun t => h (t + fun j => (y0 j : ℂ) * I))
       (tube n ((fun b => b + y0) ⁻¹' Ω)) :=
     hd.comp (differentiable_id.add_const _).differentiableOn (fun t ht => hmaps t ht)

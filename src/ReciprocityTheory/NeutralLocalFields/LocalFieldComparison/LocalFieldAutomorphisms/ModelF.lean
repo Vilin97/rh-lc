@@ -16,11 +16,11 @@ theorem card_quot_natCast_padicInt (p : ℕ) [Fact p.Prime] {n : ℕ} (hn : n �
   have hp := (Fact.out : p.Prime)
   have hdec : n = p ^ padicValNat p n * (n / p ^ padicValNat p n) := by
     have h1 := Nat.ordProj_mul_ordCompl_eq_self n p
-    rw [Nat.factorization_def n hp] at h1
+    rw [Nat.factorization_def n hp, ← Nat.padicValNat_def] at h1
     exact h1.symm
   have hnd : ¬ p ∣ n / p ^ padicValNat p n := by
     have h1 := Nat.not_dvd_ordCompl hp hn
-    rwa [Nat.factorization_def n hp] at h1
+    rwa [Nat.factorization_def n hp, ← Nat.padicValNat_def] at h1
   have hu : IsUnit (((n / p ^ padicValNat p n : ℕ) : ℤ_[p])) := by
     rw [PadicInt.isUnit_iff]
     by_contra hne

@@ -245,10 +245,12 @@ theorem triMeas_unique (κ : Measure (TriCo N)) (hκ0 : κ (triPos N)ᶜ = 0)
   obtain ⟨b, h2⟩ : ∃ b : NNReal, ((triMeas N).comap Subtype.val : Measure (TG N)) = b • Measure.haar :=
     ⟨_, Measure.isMulLeftInvariant_eq_smul _ _⟩
   set η : Measure (TriCo N) := (Measure.haar : Measure (TG N)).map Subtype.val
+  have hval : AEMeasurable (Subtype.val : TG N → TriCo N) Measure.haar :=
+    measurable_subtype_coe.aemeasurable
   have hk : κ = (a : ENNReal) • η := by
-    rw [← restore κ hκ0, h1, ENNReal.smul_def, Measure.map_smul]
+    rw [← restore κ hκ0, h1, ENNReal.smul_def, Measure.map_smul _ hval]
   have ht : triMeas N = (b : ENNReal) • η := by
-    rw [← restore (triMeas N) triMeas_compl, h2, ENNReal.smul_def, Measure.map_smul]
+    rw [← restore (triMeas N) triMeas_compl, h2, ENNReal.smul_def, Measure.map_smul _ hval]
   have hb : b ≠ 0 := by
     rintro hb0
     apply triMeas_ne_zero (N := N)

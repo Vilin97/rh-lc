@@ -21,10 +21,10 @@ variable {A B : Type} [CommRing A] [CommRing B] [Algebra A B] {r N : ℕ}
 
 theorem secs_props {T : Scheme.{0}} (y : (functor A B r).obj (op T)) (U : T.Opens)
     (hU : IsAffineOpen U) :
-    letI := ((proj y).app U).hom.toAlgebra;
+    (letI := ((proj y).app U).hom.toAlgebra;
     Module.Finite Γ(T, U) Γ(y.2.1.subscheme, proj y ⁻¹ᵁ U) ∧
       Module.Flat Γ(T, U) Γ(y.2.1.subscheme, proj y ⁻¹ᵁ U) ∧
-      ∀ q : PrimeSpectrum Γ(T, U), Module.rankAtStalk Γ(y.2.1.subscheme, proj y ⁻¹ᵁ U) q = r := by
+      ∀ q : PrimeSpectrum Γ(T, U), Module.rankAtStalk Γ(y.2.1.subscheme, proj y ⁻¹ᵁ U) q = r) := by
   obtain ⟨h1, h2, h3⟩ := y.2.2
   have hV : IsAffineOpen ((proj y) ⁻¹ᵁ U) := hU.preimage (proj y)
   have hpb := GlobalTheory.isPullback_fromSpec_app_preimage_of_affine (proj y) hU hV

@@ -43,7 +43,9 @@ theorem levi_pos_compact {n : ℕ} {g : V n → ℂ} {U : Set (V n)} (hU : IsOpe
     unfold leviV
     refine Complex.continuous_re.comp_continuousOn ?_
     refine continuousOn_finsetSum _ fun j _ => continuousOn_finsetSum _ fun k _ => ?_
-    refine (((continuousOn_wd_wdb hU hg j k).comp continuousOn_fst fun q hq => hK0U hq.1).mul
+    have hfst : Set.MapsTo Prod.fst (K0 ×ˢ Metric.sphere (0 : V n) 1) U :=
+      fun _ hq => hK0U hq.1
+    refine (((continuousOn_wd_wdb hU hg j k).comp continuousOn_fst hfst).mul
       ((EuclideanSpace.proj j : V n →L[ℂ] ℂ).continuous.comp continuous_snd).continuousOn).mul
       (Complex.continuous_conj.comp
         ((EuclideanSpace.proj k : V n →L[ℂ] ℂ).continuous.comp continuous_snd)).continuousOn

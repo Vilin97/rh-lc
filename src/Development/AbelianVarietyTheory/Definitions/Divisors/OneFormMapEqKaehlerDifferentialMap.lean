@@ -65,6 +65,7 @@ theorem indDR {P : DR R B → Prop} (h : ∀ b : B, P (algebraMap B _ b)) (hd : 
   | add a b h1 h2 => exact ha _ _ h1 h2
 
 
+variable (R B) in
 def Tw : Type := DR R B × DR R B
 
 namespace Tw
@@ -77,6 +78,13 @@ instance : One (Tw R B) := ⟨(1, 0)⟩
 
 def mk (x y : DR R B) : Tw R B := (x, y)
 
+@[local simp] private theorem mk_1 (x y : DR R B) : (mk x y).1 = x := rfl
+
+@[local simp] private theorem mk_2 (x y : DR R B) : (mk x y).2 = y := rfl
+
+@[local ext] private theorem ext' {a b : Tw R B} (h₁ : a.1 = b.1) (h₂ : a.2 = b.2) :
+    a = b := Prod.ext h₁ h₂
+
 @[simp] theorem mul_1 (a b : Tw R B) : (a * b).1 = a.1 * b.1 := rfl
 
 @[simp] theorem mul_2 (a b : Tw R B) : (a * b).2 = sgn a.1 * b.2 + a.2 * b.1 := rfl
@@ -84,6 +92,14 @@ def mk (x y : DR R B) : Tw R B := (x, y)
 @[simp] theorem add_1 (a b : Tw R B) : (a + b).1 = a.1 + b.1 := rfl
 
 @[simp] theorem add_2 (a b : Tw R B) : (a + b).2 = a.2 + b.2 := rfl
+
+@[local simp] private theorem zero_1 : (0 : Tw R B).1 = 0 := rfl
+
+@[local simp] private theorem zero_2 : (0 : Tw R B).2 = 0 := rfl
+
+@[local simp] private theorem one_1 : (1 : Tw R B).1 = 1 := rfl
+
+@[local simp] private theorem one_2 : (1 : Tw R B).2 = 0 := rfl
 
 instance : Ring (Tw R B) :=
   { (inferInstance : AddCommGroup (Tw R B)), (inferInstance : Mul (Tw R B)),
@@ -106,6 +122,10 @@ def ofFun : B →+* Tw R B where
     · simp
     · simp [← Algebra.smul_def, ← Algebra.commutes b]
 
+@[local simp] private theorem ofFun_1 (b : B) : (ofFun (R := R) b).1 = algebraMap B _ b := rfl
+
+@[local simp] private theorem ofFun_2 (b : B) : (ofFun (R := R) b).2 = ι1 (D R B b) := rfl
+
 instance : Algebra B (Tw R B) := (ofFun (R := R)).toAlgebra' fun b x ↦ by
   ext
   · simp [Algebra.commutes]
@@ -114,6 +134,10 @@ instance : Algebra B (Tw R B) := (ofFun (R := R)).toAlgebra' fun b x ↦ by
 theorem smul_def' (b : B) (x : Tw R B) : b • x = ofFun b * x := rfl
 
 instance : Module R (Tw R B) := inferInstanceAs (Module R (DR R B × DR R B))
+
+@[local simp] private theorem smul_1 (r : R) (a : Tw R B) : (r • a).1 = r • a.1 := rfl
+
+@[local simp] private theorem smul_2 (r : R) (a : Tw R B) : (r • a).2 = r • a.2 := rfl
 
 instance : IsScalarTower R B (Tw R B) := ⟨fun r b x ↦ by
   ext <;> simp [smul_def', ← Algebra.smul_def]⟩
@@ -124,6 +148,8 @@ def der : Derivation R B (Tw R B) :=
       map_add' a b := by ext <;> simp
       map_smul' r b := by ext <;> simp }
     fun a b ↦ by
+      change mk (ι1 (D R B (a * b))) 0 =
+        a • mk (ι1 (D R B b)) 0 + b • mk (ι1 (D R B a)) 0
       ext
       · simp [smul_def', ← Algebra.smul_def]
       · simp [smul_def', ι_mul_ι_swap (D R B a)]
@@ -173,6 +199,7 @@ theorem graph_1 (x : DR R B) : (graph x).1 = x := by
 end Tw
 
 
+variable (R B) in
 def dDR : DR R B →ₗ[R] DR R B where
   toFun x := (Tw.graph x).2
   map_add' x y := by rw [map_add (f := _), Tw.add_2]
@@ -226,7 +253,7 @@ theorem dDR_ι_mem (ω : Ω[B⁄R]) : dDR R B (ι1 ω) ∈ ⋀[B]^2 Ω[B⁄R] :=
 theorem dDR_mem {j : ℕ} {x : DR R B} (hx : x ∈ ⋀[B]^j Ω[B⁄R]) : dDR R B x ∈ ⋀[B]^(j + 1) Ω[B⁄R] := by
   induction hx using Submodule.pow_induction_on_left' with
   | algebraMap b => rw [dDR_algebraMap]; exact ι_mem _
-  | add x y i _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y i _ _ hx hy => rw [map_add (f := dDR R B)]; exact add_mem hx hy
   | mem_mul m hm i x hx ih =>
     obtain ⟨ω, rfl⟩ := hm
     rw [dDR_mul, sgn_ι, neg_mul]
@@ -246,6 +273,7 @@ theorem sgn_of_mem {j : ℕ} {x : DR R B} (hx : x ∈ ⋀[B]^j Ω[B⁄R]) : sgn 
     rcases neg_one_pow_eq_or (DR R B) i with h | h <;> simp [h]
 
 
+variable (R B) in
 def dOm (j : ℕ) : Om R B j →ₗ[R] Om R B (j + 1) where
   toFun x := ⟨dDR R B x, dDR_mem x.2⟩
   map_add' x y := Subtype.ext (map_add _ _ _)
@@ -257,12 +285,14 @@ def dOm (j : ℕ) : Om R B j →ₗ[R] Om R B (j + 1) where
   Subtype.ext (dDR_dDR _)
 
 
+variable (R B) in
 def dOne : Ω[B⁄R] →ₗ[R] Om R B 2 where
   toFun ω := ⟨dDR R B (ι1 ω), dDR_ι_mem ω⟩
   map_add' x y := Subtype.ext (by simp)
   map_smul' r x := Subtype.ext (by simp)
 
 
+variable (R B) in
 def dTwo : Om R B 2 →ₗ[R] Om R B 3 := dOm R B 2
 
 @[simp] theorem coe_dOne (ω : Ω[B⁄R]) : (dOne R B ω : DR R B) = dDR R B (ι1 ω) := rfl
@@ -270,6 +300,7 @@ def dTwo : Om R B 2 →ₗ[R] Om R B 3 := dOm R B 2
 theorem dOne_eq_dOm (ω : Ω[B⁄R]) : dOne R B ω = dOm R B 1 ⟨ι1 ω, ι_mem ω⟩ := rfl
 
 
+variable (R B) in
 def wedge : Ω[B⁄R] →ₗ[B] Ω[B⁄R] →ₗ[B] Om R B 2 :=
   LinearMap.mk₂ B (fun a b ↦ ⟨ι1 a * ι1 b, mul_mem (ι_mem a) (ι_mem b)⟩)
     (fun _ _ _ ↦ Subtype.ext (by simp [add_mul])) (fun _ _ _ ↦ Subtype.ext (by simp))
@@ -305,7 +336,9 @@ theorem dTwo_wedge {a b : Ω[B⁄R]} (ha : dOne R B a = 0) (hb : dOne R B b = 0)
     dTwo R B (wedge R B a b) = 0 := by
   have ha' : dDR R B (ι1 a) = 0 := congrArg Subtype.val ha
   have hb' : dDR R B (ι1 b) = 0 := congrArg Subtype.val hb
-  exact Subtype.ext (by simp [dDR_mul, ha', hb'])
+  apply Subtype.ext
+  change dDR R B (ι1 a * ι1 b) = 0
+  simp [dDR_mul, ha', hb']
 
 end Alg
 
@@ -405,7 +438,7 @@ theorem SemiHom.mDR_mem (h : SemiHom σ α) {j : ℕ} {x : DR R B} (hx : x ∈ �
     rw [h.mDR_algebraMap]
     change _ ∈ LinearMap.range _ ^ 0
     rw [pow_zero]; exact Submodule.algebraMap_mem _
-  | add x y i _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y i _ _ hx hy => rw [map_add (f := h.mDR)]; exact add_mem hx hy
   | mem_mul m hm i x hx ih =>
     obtain ⟨ω, rfl⟩ := hm
     rw [map_mul, h.mDR_ι]

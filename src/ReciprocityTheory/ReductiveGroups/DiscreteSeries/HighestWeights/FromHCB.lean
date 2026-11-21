@@ -138,7 +138,8 @@ lemma fh_conj (g : KG (fun _ : Fin k => true)) {Y : Matrix (Fin k) (Fin k) ℂ}
     ((τ g : unitary (H →L[ℂ] H)) : H →L[ℂ] H) * dτ Y * star ((τ g : unitary (H →L[ℂ] H)) : H →L[ℂ] H) =
       dτ (toMK g * Y * star (toMK g)) := by
   have hJ : Jm (fun _ : Fin k => true) = 1 := fh_Jm_allPos
-  obtain ⟨-, hγ, -⟩ := kcurve_spec (fun _ : Fin k => true) hY
+  have hγ : ∀ t : ℝ, toMK (onepCurve (fun _ : Fin k => true) hY t) =
+      NormedSpace.exp ((t : ℂ) • Y) := toMK_onepCurve _ hY
   have hKs : toMK g ∈ Formalism.REAL.Kset (fun _ : Fin k => true) := g.2
   have hun : star (toMK g) * toMK g = 1 := Matrix.mem_unitaryGroup_iff'.mp hKs.1
   have hinv : toMK g * toMK g⁻¹ = 1 := by exact Units.mul_inv g.1.1
@@ -153,22 +154,22 @@ lemma fh_conj (g : KG (fun _ : Fin k => true)) {Y : Matrix (Fin k) (Fin k) ℂ}
     rw [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_mul, Matrix.conjTranspose_mul,
       Matrix.conjTranspose_conjTranspose, ← Matrix.mul_assoc, ← Matrix.add_mul, ← Matrix.mul_add, h1,
       Matrix.mul_zero, Matrix.zero_mul]
-  have hδ : ∀ t : ℝ, toMK (g * kcurve (fun _ : Fin k => true) Y t * g⁻¹) =
+  have hδ : ∀ t : ℝ, toMK (g * onepCurve (fun _ : Fin k => true) hY t * g⁻¹) =
       NormedSpace.exp ((t : ℂ) • (toMK g * Y * star (toMK g))) := by
     intro t
     have e := Matrix.exp_units_conj g.1.1 ((t : ℂ) • Y)
-    calc toMK (g * kcurve (fun _ : Fin k => true) Y t * g⁻¹)
+    calc toMK (g * onepCurve (fun _ : Fin k => true) hY t * g⁻¹)
         = toMK g * NormedSpace.exp ((t : ℂ) • Y) * toMK g⁻¹ := by rw [← hγ t]; rfl
       _ = NormedSpace.exp ((t : ℂ) • (toMK g * Y * star (toMK g))) := by
         rw [hg, ← Matrix.smul_mul, ← Matrix.mul_smul]
         exact e.symm
   have hU' : ((τ g⁻¹ : unitary (H →L[ℂ] H)) : H →L[ℂ] H) = star ((τ g : unitary (H →L[ℂ] H)) : H →L[ℂ] H) := by
     rw [map_inv, ← Unitary.star_eq_inv, Unitary.coe_star]
-  have hd1 := hder _ hc (fun t => g * kcurve (fun _ : Fin k => true) Y t * g⁻¹) hδ
+  have hd1 := hder _ hc (fun t => g * onepCurve (fun _ : Fin k => true) hY t * g⁻¹) hδ
   have h0 := hder Y hY _ hγ
-  have heq : (fun t => ((τ (g * kcurve (fun _ : Fin k => true) Y t * g⁻¹) : unitary (H →L[ℂ] H)) : H →L[ℂ] H)) =
+  have heq : (fun t => ((τ (g * onepCurve (fun _ : Fin k => true) hY t * g⁻¹) : unitary (H →L[ℂ] H)) : H →L[ℂ] H)) =
       fun t => ((τ g : unitary (H →L[ℂ] H)) : H →L[ℂ] H) *
-        ((τ (kcurve (fun _ : Fin k => true) Y t) : unitary (H →L[ℂ] H)) : H →L[ℂ] H) *
+        ((τ (onepCurve (fun _ : Fin k => true) hY t) : unitary (H →L[ℂ] H)) : H →L[ℂ] H) *
         star ((τ g : unitary (H →L[ℂ] H)) : H →L[ℂ] H) := by
     funext t
     rw [map_mul, map_mul, ← hU']
@@ -197,10 +198,11 @@ lemma fh_dτ_of_wt {μ : Fin k → ℝ} {v : H}
     simp only [inG, hJ, Matrix.mul_one, Matrix.one_mul]
     rw [Matrix.conjTranspose_smul, Matrix.conjTranspose_single, star_one]
     simp [Complex.star_def, Complex.conj_I]
-  obtain ⟨-, hγ, -⟩ := kcurve_spec (fun _ : Fin k => true) hX
+  have hγ : ∀ t : ℝ, toMK (onepCurve (fun _ : Fin k => true) hX t) =
+      NormedSpace.exp ((t : ℂ) • (Complex.I • Matrix.single a a 1)) := toMK_onepCurve _ hX
   have hd1 := hder _ hX _ hγ
   have hd2 : HasDerivAt
-      (fun t => ((τ (kcurve (fun _ : Fin k => true) (Complex.I • Matrix.single a a 1) t) :
+      (fun t => ((τ (onepCurve (fun _ : Fin k => true) hX t) :
         unitary (H →L[ℂ] H)) : H →L[ℂ] H) v) (dτ (Complex.I • Matrix.single a a 1) v) 0 :=
     ((ContinuousLinearMap.apply ℂ H v).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt 0 hd1
   let θ : ℝ → Fin k → ℝ := fun t b => if b = a then t else 0
@@ -219,20 +221,20 @@ lemma fh_dτ_of_wt {μ : Fin k → ℝ} {v : H}
         rintro rfl rfl
         exact absurd rfl hij
     rw [e1, Matrix.exp_diagonal, Pi.exp_def, Complex.exp_eq_exp_ℂ]
-  have hval : ∀ t : ℝ, ((τ (kcurve (fun _ : Fin k => true) (Complex.I • Matrix.single a a 1) t) :
+  have hval : ∀ t : ℝ, ((τ (onepCurve (fun _ : Fin k => true) hX t) :
       unitary (H →L[ℂ] H)) : H →L[ℂ] H) v = Complex.exp (((μ a * t : ℝ) : ℂ) * Complex.I) • v := by
     intro t
     have hm : Matrix.diagonal (fun b => Complex.exp (((θ t b : ℝ) : ℂ) * Complex.I)) ∈
         Formalism.REAL.Kset (fun _ : Fin k => true) := by
       rw [← hdiag t, ← hγ t]
-      exact (kcurve (fun _ : Fin k => true) (Complex.I • Matrix.single a a 1) t).2
+      exact (onepCurve (fun _ : Fin k => true) hX t).2
     rw [← hσ, hγ t, hdiag t, hv (θ t) hm]
     congr 3
     simp [θ]
   have hd3 : HasDerivAt (fun t : ℝ => Complex.exp (((μ a * t : ℝ) : ℂ) * Complex.I) • v)
       ((Complex.exp (((μ a * 0 : ℝ) : ℂ) * Complex.I) * (((μ a * 1 : ℝ) : ℂ) * Complex.I)) • v) 0 :=
     ((((hasDerivAt_id (0 : ℝ)).const_mul (μ a)).ofReal_comp.mul_const Complex.I).cexp).smul_const v
-  have hfun : (fun t => ((τ (kcurve (fun _ : Fin k => true) (Complex.I • Matrix.single a a 1) t) :
+  have hfun : (fun t => ((τ (onepCurve (fun _ : Fin k => true) hX t) :
       unitary (H →L[ℂ] H)) : H →L[ℂ] H) v) =
       fun t : ℝ => Complex.exp (((μ a * t : ℝ) : ℂ) * Complex.I) • v := funext hval
   rw [hfun] at hd2

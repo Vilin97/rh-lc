@@ -182,11 +182,12 @@ theorem norm_eq_places (y : L) (hy : y ≠ 0) {ϖ : O} (hϖ : Irreducible ϖ) :
   intro v
   rw [he v]
   congr 1
-  exact congrArg (fun n : ℕ => (n : ℤ)) (resDeg_addv (F := F) v).symm
+  exact congrArg (fun n : ℕ => (n : ℤ))
+    (ReciprocityTheory.ChartRestriction.G.T0.ValPl.resDeg_addv (F := F) v).symm
 
 
 theorem placesOver_finite : (PlacesOver O L).Finite := by
-  obtain ⟨e, he⟩ := placesOver_bij (O := O) (L := L)
+  obtain ⟨e, he⟩ := placesOver_bij (O := O) (F := F) (L := L)
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible O
   have hinj : Function.Injective (algebraMap O L) := by
     rw [IsScalarTower.algebraMap_eq O F L]

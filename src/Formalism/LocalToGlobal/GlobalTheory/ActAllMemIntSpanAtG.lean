@@ -200,7 +200,7 @@ theorem ten_mem {F : Tau → MvPolynomial (Fin n × Fin n) LL}
   rw [Submodule.prod_span] at h2
   refine (Submodule.span_le.2 ?_ : _ ≤ isO Pl w lam) h2
   intro a ha
-  rw [Set.mem_finset_prod] at ha
+  rw [Set.mem_finsetProd] at ha
   obtain ⟨g, hg, rfl⟩ := ha
   choose h hh hgh using fun τ => hg (Finset.mem_univ τ)
   have e : ∏ τ ∈ Finset.univ, g τ =

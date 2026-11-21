@@ -239,36 +239,36 @@ def ofChars {ι : Type*} [Finite ι] (χ : ι → Weil h →* ℂˣ) (hχ : ∀ 
 
 @[simp] theorem ofChars_ρ {ι : Type*} [Finite ι] (χ : ι → Weil h →* ℂˣ)
     (hχ : ∀ i, IsSmooth (χ i)) (σ : Weil h) :
-    (ofChars h χ hχ).ρ σ = diagEnd fun i => (χ i σ : ℂ) := rfl
+    (ofChars (h := h) χ hχ).ρ σ = diagEnd fun i => (χ i σ : ℂ) := rfl
 
 @[simp] theorem ofChars_N {ι : Type*} [Finite ι] (χ : ι → Weil h →* ℂˣ)
-    (hχ : ∀ i, IsSmooth (χ i)) : (ofChars h χ hχ).N = 0 := rfl
+    (hχ : ∀ i, IsSmooth (χ i)) : (ofChars (h := h) χ hχ).N = 0 := rfl
 
 
 def diag {ι : Type*} [Finite ι] (c : ι → ℂˣ) : WDRep h (ι → ℂ) :=
-  ofChars h (fun i => unrChar h (c i)) fun _ => isSmooth_unrChar h _
+  ofChars (h := h) (fun i => unrChar h (c i)) fun _ => isSmooth_unrChar h _
 
 @[simp] theorem diag_ρ {ι : Type*} [Finite ι] (c : ι → ℂˣ) (σ : Weil h) :
-    (diag h c).ρ σ = diagEnd fun i => (c i : ℂ) ^ deg σ := by
+    (diag (h := h) c).ρ σ = diagEnd fun i => (c i : ℂ) ^ deg σ := by
   simp [diag]
 
-@[simp] theorem diag_N {ι : Type*} [Finite ι] (c : ι → ℂˣ) : (diag h c).N = 0 := rfl
+@[simp] theorem diag_N {ι : Type*} [Finite ι] (c : ι → ℂˣ) : (diag (h := h) c).N = 0 := rfl
 
 
 def spEig (n : ℕ) (i : Fin n) : ℂˣ := qPow w (((i : ℕ) : ℝ) - ((n : ℝ) - 1) / 2)
 
 
 def sp (n : ℕ) : WDRep h (Fin n → ℂ) where
-  ρ := (diag h (spEig w n)).ρ
+  ρ := (diag (h := h) (spEig (w := w) n)).ρ
   N := shiftEnd n
-  smooth := (diag h _).smooth
-  semisimple := (diag h _).semisimple
+  smooth := (diag (h := h) _).smooth
+  semisimple := (diag (h := h) _).semisimple
   nilpotent := isNilpotent_shiftEnd n
   comm σ := LinearMap.ext fun v => funext fun i => by
     simp only [diag_ρ, End.mul_apply, diagEnd_apply, LinearMap.smul_apply, Pi.smul_apply,
       shiftEnd_apply, smul_eq_mul]
     split_ifs with hi
-    · have : (spEig w n i : ℂ) = ((normV w : ℕ) : ℂ) * spEig w n ⟨i - 1, by omega⟩ := by
+    · have : (spEig (w := w) n i : ℂ) = ((normV w : ℕ) : ℂ) * spEig (w := w) n ⟨i - 1, by omega⟩ := by
         rw [← coe_qPow_one, spEig, spEig, ← Units.val_mul, ← qPow_add]
         congr 2
         rw [Nat.cast_sub hi]; push_cast; ring
@@ -276,9 +276,9 @@ def sp (n : ℕ) : WDRep h (Fin n → ℂ) where
     · simp
 
 @[simp] theorem sp_ρ (n : ℕ) (σ : Weil h) :
-    (sp h n).ρ σ = diagEnd fun i => (spEig w n i : ℂ) ^ deg σ := diag_ρ _ _
+    (sp (h := h) n).ρ σ = diagEnd fun i => (spEig (w := w) n i : ℂ) ^ deg σ := diag_ρ _ _
 
-@[simp] theorem sp_N (n : ℕ) : (sp h n).N = shiftEnd n := rfl
+@[simp] theorem sp_N (n : ℕ) : (sp (h := h) n).N = shiftEnd n := rfl
 
 def ofMatrix {ι : Type*} [Fintype ι] [DecidableEq ι] (ρ : Weil h →* GL ι ℂ) (N : Matrix ι ι ℂ)
     (smooth : IsSmooth ρ)
@@ -349,10 +349,10 @@ theorem map_N_eigenspace (a : WDRep h V) {φ : Weil h} (hφ : deg φ = 1) {α : 
   rw [End.mem_eigenspace_iff] at hv ⊢
   rw [a.comm_apply, hv, hφ, zpow_one, map_smul, smul_smul]
 
-theorem unr_diag {ι : Type*} [Finite ι] (c : ι → ℂˣ) : (diag h c).Unr :=
+theorem unr_diag {ι : Type*} [Finite ι] (c : ι → ℂˣ) : (diag (h := h) c).Unr :=
   ⟨rfl, fun σ => LinearMap.ext fun v => funext fun i => by simp⟩
 
-theorem tempered_sp (n : ℕ) : (sp h n).Tempered := fun φ hφ => by
+theorem tempered_sp (n : ℕ) : (sp (h := h) n).Tempered := fun φ hφ => by
   rw [sp_ρ, sp_N, hφ]
   refine isPurePair_diagEnd_shiftEnd (by exact_mod_cast one_lt_normV w) _ fun i => ?_
   rw [zpow_one, spEig, norm_qPow]
@@ -441,11 +441,11 @@ def lpDual (x : WD h) : WD h :=
   sound (iso_std a).dual.symm
 
 
-def lpZero : WD h := mk (WDRep.diag h (ι := Fin 0) fun i => i.elim0)
+def lpZero : WD h := mk (WDRep.diag (h := h) (ι := Fin 0) fun i => i.elim0)
 
 
 def lpOfChar (χ : Weil h →* ℂˣ) (hχ : IsSmooth χ) : WD h :=
-  mk (WDRep.ofChars h (ι := Fin 1) (fun _ => χ) fun _ => hχ)
+  mk (WDRep.ofChars (h := h) (ι := Fin 1) (fun _ => χ) fun _ => hχ)
 
 
 def unitOf (z : ℂ) : ℂˣ := if hz : z = 0 then 1 else Units.mk0 z hz
@@ -453,10 +453,10 @@ def unitOf (z : ℂ) : ℂˣ := if hz : z = 0 then 1 else Units.mk0 z hz
 theorem coe_unitOf {z : ℂ} (hz : z ≠ 0) : (unitOf z : ℂ) = z := by simp [unitOf, hz]
 
 
-def lpUnr (m : Multiset ℂ) : WD h := mk (WDRep.diag h fun i : m.ToType => unitOf (i : ℂ))
+def lpUnr (m : Multiset ℂ) : WD h := mk (WDRep.diag (h := h) fun i : m.ToType => unitOf (i : ℂ))
 
 
-def lpSp (n : ℕ) : WD h := mk (WDRep.sp h n)
+def lpSp (n : ℕ) : WD h := mk (WDRep.sp (h := h) n)
 
 def mono0 (x : WD h) : Prop :=
   Quotient.lift (s := isoSetoid h) (fun a => a.2.Mono0)
@@ -497,15 +497,23 @@ def frobEig (x : WD h) : Multiset ℂ := eig x (frob h)
   eig_mk _ _
 
 
-def inePol (x : WD h) (σ : G E Ω) : ℂ[X] := if hσ : σ ∈ Weil h then charPol x ⟨σ, hσ⟩ else 1
+noncomputable def inePol (x : WD h) (σ : G E Ω) : ℂ[X] := by
+  classical
+  exact if hσ : σ ∈ Weil h then charPol x ⟨σ, hσ⟩ else 1
 
 theorem inePol_of_mem (x : WD h) {σ : G E Ω} (hσ : σ ∈ Weil h) :
-    inePol x σ = charPol x ⟨σ, hσ⟩ := dif_pos hσ
+    inePol x σ = charPol x ⟨σ, hσ⟩ := by
+  classical
+  simp [inePol, hσ]
 
-theorem inePol_of_not_mem (x : WD h) {σ : G E Ω} (hσ : σ ∉ Weil h) : inePol x σ = 1 := dif_neg hσ
+theorem inePol_of_not_mem (x : WD h) {σ : G E Ω} (hσ : σ ∉ Weil h) : inePol x σ = 1 := by
+  classical
+  simp [inePol, hσ]
 
 theorem inePol_of_mem_Ine (x : WD h) {σ : G E Ω} (hσ : σ ∈ Ine (F := E) A) :
-    inePol x σ = charPol x (ineIncl h ⟨σ, hσ⟩) := dif_pos (Ine_le_Weil h hσ)
+    inePol x σ = charPol x (ineIncl h ⟨σ, hσ⟩) := by
+  rw [inePol_of_mem x (Ine_le_Weil h hσ)]
+  congr 1
 
 theorem charPol_monic (x : WD h) (σ : Weil h) : (charPol x σ).Monic := by
   induction x using ind with
@@ -538,17 +546,17 @@ theorem eig_eq_frobEig {x : WD h} (hx : unr x) {φ : Weil h} (hφ : deg φ = 1) 
   rw [frobEig, eig, eig, charPol_eq_of_unr hx (hφ.trans deg_frob.symm)]
 
 theorem frobEig_diag {ι : Type*} [Fintype ι] (c : ι → ℂˣ) :
-    frobEig (mk (WDRep.diag h c)) = Finset.univ.val.map fun i => (c i : ℂ) := by
+    frobEig (mk (WDRep.diag (h := h) c)) = Finset.univ.val.map fun i => (c i : ℂ) := by
   rw [frobEig_mk, WDRep.diag_ρ, charpoly_diagEnd, deg_frob]
   simp only [zpow_one]
   have := roots_multiset_prod_X_sub_C (Finset.univ.val.map fun i => (c i : ℂ))
   rwa [Multiset.map_map] at this
 
-@[simp] theorem lpDim_lpSp (n : ℕ) : lpDim (lpSp h n) = n := by simp [lpSp]
+@[simp] theorem lpDim_lpSp (n : ℕ) : lpDim (lpSp (h := h) n) = n := by simp [lpSp]
 
-theorem tempered_lpSp (n : ℕ) : tempered (lpSp h n) := (tempered_mk _).mpr (WDRep.tempered_sp n)
+theorem tempered_lpSp (n : ℕ) : tempered (lpSp (h := h) n) := (tempered_mk _).mpr (WDRep.tempered_sp (h := h) n)
 
-theorem not_mono0_lpSp {n : ℕ} (hn : 2 ≤ n) : ¬ mono0 (lpSp h n) :=
+theorem not_mono0_lpSp {n : ℕ} (hn : 2 ≤ n) : ¬ mono0 (lpSp (h := h) n) :=
   fun h0 => shiftEnd_ne_zero hn ((monodromyZero_ofWeilDeligneRepClass_iff _).mp h0)
 
 theorem _root_.GlobalTheory.WeilDeligne.WDRep.Tempered.norm_eq_one {a : WDRep h V} (ha : a.Tempered)
@@ -570,19 +578,19 @@ theorem _root_.GlobalTheory.WeilDeligne.WDRep.Tempered.norm_eq_one {a : WDRep h 
     rw [← hu, hN]; simp
 
 theorem tempered_diag_iff {ι : Type*} [Finite ι] (c : ι → ℂˣ) :
-    (WDRep.diag h c).Tempered ↔ ∀ i, ‖(c i : ℂ)‖ = 1 := by
+    (WDRep.diag (h := h) c).Tempered ↔ ∀ i, ‖(c i : ℂ)‖ = 1 := by
   classical
   constructor
   · intro ht i
     have h1 := ht.norm_eq_one rfl deg_frob
-    have h2 : (Pi.single i 1 : ι → ℂ) ∈ absSpace ((WDRep.diag h c).ρ (frob h)) 1 := by
+    have h2 : (Pi.single i 1 : ι → ℂ) ∈ absSpace ((WDRep.diag (h := h) c).ρ (frob h)) 1 := by
       rw [h1]; trivial
     rw [WDRep.diag_ρ, mem_absSpace_diagEnd] at h2
     by_contra hc
     simpa using h2 i (by simpa using hc)
   · intro hc φ hφ
     have hq : (1 : ℝ) < ((normV w : ℕ) : ℝ) := by exact_mod_cast one_lt_normV w
-    have hz : ∀ (s : ℝ), s ≠ 0 → ∀ v ∈ absSpace ((WDRep.diag h c).ρ φ) (((normV w : ℕ) : ℝ) ^ s),
+    have hz : ∀ (s : ℝ), s ≠ 0 → ∀ v ∈ absSpace ((WDRep.diag (h := h) c).ρ φ) (((normV w : ℕ) : ℝ) ^ s),
         v = 0 := by
       intro s hs v hv
       rw [WDRep.diag_ρ, mem_absSpace_diagEnd] at hv

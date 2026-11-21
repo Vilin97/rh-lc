@@ -44,7 +44,7 @@ private theorem injective_and_range {A C M : Type} [CommRing A] [CommRing C] [Al
         | add x y hx hy => simp only [map_add (f := _), hx, hy, add_smul]
         | tmul c m =>
           have h1 : c ⊗ₜ[A] t m = c • ((1 : C) ⊗ₜ[A] t m) := by simp [smul_tmul']
-          simp [h1, ← ht m, mul_smul]
+          simp [GlobalTheory.FlatDescent.canonical, h1, ← ht m, mul_smul]
       have hs : GlobalTheory.FlatDescent.canonical C M s = (1 : C) ⊗ₜ[A] s := by
         apply hinj
         rw [hcan, hb']

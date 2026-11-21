@@ -28,6 +28,16 @@ theorem vc_cone_core (T : Fin n → Fin n → Module.End ℂ U) (hT : IsGlRep T)
     ∀ x₁ x₂ : U, A x₁ = θ j • x₁ → A x₂ = θ j • x₂ →
       (∀ a, T a a x₁ = ((base a : ℝ) : ℂ) • x₁) → (∀ a, T a a x₂ = ((base a : ℝ) : ℂ) • x₂) →
       ∃ c₁ c₂ : ℂ, (c₁ ≠ 0 ∨ c₂ ≠ 0) ∧ c₁ • x₁ + c₂ • x₂ = 0 := by
+  have hiter_maps : ∀ k₀ i x, x ∈ F k₀ → vcIter A θ k₀ i x ∈ F (k₀ + i) := by
+    intro k₀ i
+    induction i with
+    | zero =>
+        intro x hx
+        simpa [vcIter] using hx
+    | succ i ih =>
+        intro x hx
+        have h := hstep (k₀ + i) _ (ih x hx)
+        simpa [vcIter, Module.End.mul_apply, LinearMap.sub_apply, add_assoc] using h
   set post := vcIter A θ (j + 1) (m - j - 1) with hpost
   set c' : ℂ := ∏ i ∈ range (m - j - 1), (θ j - θ (j + 1 + i)) with hc'
   have hc'0 : c' ≠ 0 := by
@@ -39,7 +49,7 @@ theorem vc_cone_core (T : Fin n → Fin n → Module.End ℂ U) (hT : IsGlRep T)
   have hred : ∀ x, A x = θ j • x → ∃ y ∈ Submodule.span ℂ (vcMonAll T v), post y = c' • x := by
     intro x hx
     have hxj : x ∈ F j := by
-      have h1 := vcIter_maps A θ F hstep 0 j x (by rw [h0]; exact Submodule.mem_top)
+      have h1 := hiter_maps 0 j x (by rw [h0]; exact Submodule.mem_top)
       rw [vcIter_eig A θ 0 hx j, Nat.zero_add] at h1
       have hc : (∏ i' ∈ range j, (θ j - θ (0 + i'))) ≠ 0 := by
         rw [Finset.prod_ne_zero_iff]
@@ -54,7 +64,7 @@ theorem vc_cone_core (T : Fin n → Fin n → Module.End ℂ U) (hT : IsGlRep T)
     obtain ⟨y, hy, z, hz, hyz⟩ := Submodule.mem_sup.mp hx2
     refine ⟨y, hy, ?_⟩
     have hpz : post z = 0 := by
-      have := vcIter_maps A θ F hstep (j + 1) (m - j - 1) z hz
+      have := hiter_maps (j + 1) (m - j - 1) z hz
       rw [show j + 1 + (m - j - 1) = m by omega, hm] at this
       exact (Submodule.mem_bot ℂ).mp this
     have hpx : post x = c' • x := vcIter_eig A θ (j + 1) hx _

@@ -22,6 +22,6 @@ theorem _root_.GlobalTheory.T.integralClosureOverGenericFibre_hartogs : ∀ (A R
       (∀ i, y i ∈ GlobalTheory.KeyOriginNoeth.closure A R D) →
       (∀ d : D, ∑ i, x i * algebraMap _ D (τ (y i * d)) =
         GlobalTheory.KeyOriginNoeth.baseHom A R D (algebraMap A R a₀) * d) →
-    letI := GlobalTheory.KeyOriginNoeth.closureAlg A R D
+    letI := GlobalTheory.KeyOriginNoeth.closureAlg A R D;
     GlobalTheory.GoodEtale.Hart A R (GlobalTheory.KeyOriginNoeth.closure A R D) := by
   first | (exact @GlobalTheory.ClosureHartogs.closure_hart) | (exact GlobalTheory.ClosureHartogs.closure_hart) | (intros; apply GlobalTheory.ClosureHartogs.closure_hart  <;> assumption)

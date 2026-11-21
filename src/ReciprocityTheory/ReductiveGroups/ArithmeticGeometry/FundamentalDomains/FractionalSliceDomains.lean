@@ -31,7 +31,7 @@ theorem Om_open_conn (hx : x ∈ X.dom) : IsOpen (Om X ξ x ω) ∧ IsPreconnect
   obtain ⟨ho, hc⟩ := AdmissibleHermitianColumns.admissibleImaginary_open_convex (X := X) (ξ := ξ) x hx
   have hcont : Continuous (fun b : Fin n → ℝ => fun τ : X.Ψ => ∑ j, b j * ω j τ) := by
     refine continuous_pi fun τ => ?_
-    exact continuous_finset_sum _ fun j _ => (continuous_apply j).mul continuous_const
+    fun_prop
   refine ⟨ho.preimage hcont, ?_⟩
   have hconv : Convex ℝ (Om X ξ x ω) := by
     intro a ha b hb s t hs ht hst
@@ -54,6 +54,8 @@ theorem mem_admissibleImaginary_iff (hx : x ∈ X.dom) (hξ : X.IsIso ξ) (y : X
     rw [h1]
     apply iff_of_eq
     congr 1
+    funext τ
+    simp
   have h2 := ((flowDomainCriterion_holds (E := E)) r X (fun τ => Data.emb τ.1 ξ) he x hx
     (fun τ => (y τ : ℂ) * I)).1
   have hfl : X.flow ξ (fun τ => (y τ : ℂ) * I) x =
@@ -135,7 +137,18 @@ theorem slice_fract (P : Frame X.Ψ r → ℂ) (la : Wt X.Ψ r) (hP : X.IsSec la
   have h := hfun_periodic X ω P la hP hx hξ hω _ hmem (fun k => -⌊y k⌋)
   rw [← h]
   congr 1
-  ring
+  funext k
+  have hreal : (y k : ℝ) - (⌊(y k : ℝ)⌋ : ℤ) = Int.fract (y k : ℝ) := Int.self_sub_floor _
+  change ((y k : ℂ) + (b k : ℂ) * I + ((-(⌊(y k : ℝ)⌋ : ℤ) : ℤ) : ℂ)) =
+    ((Int.fract (y k : ℝ) : ℝ) : ℂ) + (b k : ℂ) * I
+  calc
+    ((y k : ℂ) + (b k : ℂ) * I) + (↑(-⌊y k⌋) : ℂ) =
+        (((y k : ℝ) - (⌊(y k : ℝ)⌋ : ℝ) : ℝ) : ℂ) + (b k : ℂ) * I := by
+          push_cast
+          ring
+    _ = ((Int.fract (y k : ℝ) : ℝ) : ℂ) + (b k : ℂ) * I := by
+          exact congrArg (fun z : ℂ => z + (b k : ℂ) * I)
+            (congrArg (fun z : ℝ => (z : ℂ)) hreal)
 
 noncomputable def Bω : ℝ := ∑ τ : X.Ψ, ∑ j, |ω j τ|
 

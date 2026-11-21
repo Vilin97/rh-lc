@@ -72,11 +72,11 @@ theorem isLocalization_away_of_isInvariant (G : Type*) [Group G] [Finite G] {B B
 variable {G : Type v} [Group G] {X Y Z : Scheme.{u}}
 
 theorem IsAffineQuotient.of_forall_exists_isOpenImmersion [Finite G] {ρ : G →* Aut X} {π : X ⟶ Y}
-    (hπ : ∀ g, (ρ g).hom ≫ π = π)
+    (hπ : ∀ g, (ρ g).asIso.hom ≫ π = π)
     (h : ∀ y : Y, ∃ (X' Y' : Scheme.{u}) (ρ' : G →* Aut X') (π' : X' ⟶ Y') (p : X' ⟶ X)
       (j : Y' ⟶ Y) (_ : IsOpenImmersion p) (_ : IsOpenImmersion j), y ∈ j.opensRange ∧
       p ≫ π = π' ≫ j ∧ π ⁻¹ᵁ j.opensRange = p.opensRange ∧
-      (∀ g, (ρ' g).hom ≫ p = p ≫ (ρ g).hom) ∧ IsAffineQuotient ρ' π') :
+      (∀ g, (ρ' g).asIso.hom ≫ p = p ≫ (ρ g).asIso.hom) ∧ IsAffineQuotient ρ' π') :
     IsAffineQuotient ρ π := by
   refine IsAffineQuotient.of_cover hπ fun y ↦ ?_
   obtain ⟨X', Y', ρ', π', p, j, _, _, ⟨y', rfl⟩, hcomm, hpre, hequiv, h'⟩ := h y
@@ -124,8 +124,8 @@ theorem IsAffineQuotient.of_forall_exists_isOpenImmersion [Finite G] {ρ : G →
       obtain ⟨e, he⟩ := hs g
       refine ⟨h'.preimage_le (j ⁻¹ᵁ j ''ᵁ W') g, ?_⟩
       have k2 : p.appLE (π ⁻¹ᵁ j ''ᵁ W') _ hle ≫
-            (ρ' g).hom.appLE _ _ (h'.preimage_le (j ⁻¹ᵁ j ''ᵁ W') g) =
-          (ρ g).hom.appLE _ _ e ≫ p.appLE (π ⁻¹ᵁ j ''ᵁ W') _ hle := by
+            (ρ' g).asIso.hom.appLE _ _ (h'.preimage_le (j ⁻¹ᵁ j ''ᵁ W') g) =
+          (ρ g).asIso.hom.appLE _ _ e ≫ p.appLE (π ⁻¹ᵁ j ''ᵁ W') _ hle := by
         rw [Scheme.Hom.appLE_comp_appLE, Scheme.Hom.appLE_comp_appLE]
         congr 1
         exact hequiv g
@@ -145,35 +145,35 @@ section Diagram
 
 variable (ρ : G →* Aut X)
 
-noncomputable def invariantSections (U : X.Opens) (hU : ∀ g, U ≤ (ρ g).hom ⁻¹ᵁ U) :
+noncomputable def invariantSections (U : X.Opens) (hU : ∀ g, U ≤ (ρ g).asIso.hom ⁻¹ᵁ U) :
     Subring Γ(X, U) :=
   letI := sectionsAction ρ U hU
   FixedPoints.subring Γ(X, U) G
 
 
-theorem mem_invariantSections {U : X.Opens} {hU : ∀ g, U ≤ (ρ g).hom ⁻¹ᵁ U} {s : Γ(X, U)} :
+theorem mem_invariantSections {U : X.Opens} {hU : ∀ g, U ≤ (ρ g).asIso.hom ⁻¹ᵁ U} {s : Γ(X, U)} :
     s ∈ invariantSections ρ U hU ↔ IsInvariantSection ρ U s := by
   constructor
   · intro h g
-    have h' : (ρ g⁻¹⁻¹).hom.appLE U U (hU _) s = s := h g⁻¹
+    have h' : (ρ g⁻¹⁻¹).asIso.hom.appLE U U (hU _) s = s := h g⁻¹
     simp only [inv_inv] at h'
     exact ⟨hU g, h'⟩
   · intro h g
     obtain ⟨_, hg⟩ := h g⁻¹
     exact hg
 
-noncomputable def invariantSectionsRes {U V : X.Opens} (hU : ∀ g, U ≤ (ρ g).hom ⁻¹ᵁ U)
-    (hV : ∀ g, V ≤ (ρ g).hom ⁻¹ᵁ V) (e : U ≤ V) :
+noncomputable def invariantSectionsRes {U V : X.Opens} (hU : ∀ g, U ≤ (ρ g).asIso.hom ⁻¹ᵁ U)
+    (hV : ∀ g, V ≤ (ρ g).asIso.hom ⁻¹ᵁ V) (e : U ≤ V) :
     invariantSections ρ V hV →+* invariantSections ρ U hU :=
   (X.presheaf.map (homOfLE e).op).hom.restrict _ _ fun _ hs ↦
     mem_invariantSections.mpr ((mem_invariantSections.mp hs).res hU e)
 
 @[simp]
-theorem coe_invariantSectionsRes {U V : X.Opens} (hU : ∀ g, U ≤ (ρ g).hom ⁻¹ᵁ U)
-    (hV : ∀ g, V ≤ (ρ g).hom ⁻¹ᵁ V) (e : U ≤ V) (s : invariantSections ρ V hV) :
+theorem coe_invariantSectionsRes {U V : X.Opens} (hU : ∀ g, U ≤ (ρ g).asIso.hom ⁻¹ᵁ U)
+    (hV : ∀ g, V ≤ (ρ g).asIso.hom ⁻¹ᵁ V) (e : U ≤ V) (s : invariantSections ρ V hV) :
     (invariantSectionsRes ρ hU hV e s : Γ(X, U)) = X.presheaf.map (homOfLE e).op s := rfl
 
-private theorem invariantSections_of_stable_open (U : X.Opens) (hU : ∀ g, U ≤ (ρ g).hom ⁻¹ᵁ U) :
+private theorem invariantSections_of_stable_open (U : X.Opens) (hU : ∀ g, U ≤ (ρ g).asIso.hom ⁻¹ᵁ U) :
     letI := sectionsAction ρ U hU
     SMulCommClass G (invariantSections ρ U hU) Γ(X, U) ∧
       FaithfulSMul (invariantSections ρ U hU) Γ(X, U) ∧
@@ -185,7 +185,7 @@ private theorem invariantSections_of_stable_open (U : X.Opens) (hU : ∀ g, U �
   rw [smul_mul', s.2 g]
 
 theorem isLocalization_invariantSections [Finite G] {U V : X.Opens}
-    (hU : ∀ g, U ≤ (ρ g).hom ⁻¹ᵁ U) (hV : ∀ g, V ≤ (ρ g).hom ⁻¹ᵁ V) (e : U ≤ V)
+    (hU : ∀ g, U ≤ (ρ g).asIso.hom ⁻¹ᵁ U) (hV : ∀ g, V ≤ (ρ g).asIso.hom ⁻¹ᵁ V) (e : U ≤ V)
     (hV' : IsAffineOpen V) (r : invariantSections ρ V hV) (hr : X.basicOpen (r : Γ(X, V)) = U) :
     letI := (invariantSectionsRes ρ hU hV e).toAlgebra
     IsLocalization.Away r (invariantSections ρ U hU) := by
@@ -201,8 +201,8 @@ theorem isLocalization_invariantSections [Finite G] {U V : X.Opens}
   have he : ∀ (g : G) (a : Γ(X, V)),
       algebraMap Γ(X, V) Γ(X, U) (g • a) = g • algebraMap Γ(X, V) Γ(X, U) a := by
     intro g a
-    change (X.presheaf.map (homOfLE e).op) ((ρ g⁻¹).hom.appLE V V (hV g⁻¹) a) =
-      (ρ g⁻¹).hom.appLE U U (hU g⁻¹) ((X.presheaf.map (homOfLE e).op) a)
+    change (X.presheaf.map (homOfLE e).op) ((ρ g⁻¹).asIso.hom.appLE V V (hV g⁻¹) a) =
+      (ρ g⁻¹).asIso.hom.appLE U U (hU g⁻¹) ((X.presheaf.map (homOfLE e).op) a)
     rw [← CommRingCat.comp_apply, ← CommRingCat.comp_apply, Scheme.Hom.appLE_map,
       Scheme.Hom.map_appLE]
   have : IsLocalization.Away (algebraMap (invariantSections ρ V hV) Γ(X, V) r) Γ(X, U) := hloc
@@ -216,7 +216,7 @@ structure StableAffineOpens : Type u where
 
   isAffineOpen : IsAffineOpen toOpens
 
-  stable : ∀ g, toOpens ≤ (ρ g).hom ⁻¹ᵁ toOpens
+  stable : ∀ g, toOpens ≤ (ρ g).asIso.hom ⁻¹ᵁ toOpens
 
 instance StableAffineOpens.preorder : Preorder (StableAffineOpens ρ) where
   le U V := ∃ f : Γ(X, V.toOpens), X.basicOpen f = U.toOpens
@@ -457,9 +457,9 @@ theorem π_preimage_opensRange_chart (U : StableAffineOpens ρ) :
     refine ⟨U.toChart x', ?_⟩
     rw [← Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply, fromSpec_π]
 
-theorem comp_π (g : G) : (ρ g).hom ≫ π ρ = π ρ := by
+theorem comp_π (g : G) : (ρ g).asIso.hom ≫ π ρ = π ρ := by
   refine (stableAffineCover ρ).hom_ext _ _ fun U ↦ ?_
-  change U.isAffineOpen.fromSpec ≫ (ρ g).hom ≫ π ρ = U.isAffineOpen.fromSpec ≫ π ρ
+  change U.isAffineOpen.fromSpec ≫ (ρ g).asIso.hom ≫ π ρ = U.isAffineOpen.fromSpec ≫ π ρ
   letI := sectionsAction ρ U.toOpens U.stable
   rw [← Category.assoc, ← specAction_fromSpec ρ U.isAffineOpen U.stable g, Category.assoc,
     fromSpec_π, ← Category.assoc, (U.isAffineQuotient_toChart).comp_eq g]
@@ -475,15 +475,15 @@ theorem isAffineQuotient : IsAffineQuotient ρ (π ρ) := by
 
 instance surjective_π : Surjective (π ρ) := (isAffineQuotient ρ).surjective
 
-noncomputable def desc (f : X ⟶ Z) (hf : ∀ g, (ρ g).hom ≫ f = f) : finiteQuotient ρ ⟶ Z :=
+noncomputable def desc (f : X ⟶ Z) (hf : ∀ g, (ρ g).asIso.hom ≫ f = f) : finiteQuotient ρ ⟶ Z :=
   (isAffineQuotient ρ).desc f hf
 
-theorem π_desc (f : X ⟶ Z) (hf : ∀ g, (ρ g).hom ≫ f = f) : π ρ ≫ desc ρ f hf = f := by exact (isAffineQuotient ρ).comp_desc f hf
+theorem π_desc (f : X ⟶ Z) (hf : ∀ g, (ρ g).asIso.hom ≫ f = f) : π ρ ≫ desc ρ f hf = f := by exact (isAffineQuotient ρ).comp_desc f hf
 
 theorem hom_ext {a b : finiteQuotient ρ ⟶ Z} (e : π ρ ≫ a = π ρ ≫ b) : a = b := by exact (isAffineQuotient ρ).hom_ext e
 
 theorem comp_π_eq_iff {k : Type u} [Field k] (x y : Spec (.of k) ⟶ X) :
-    x ≫ π ρ = y ≫ π ρ ↔ ∃ g, x ≫ (ρ g).hom = y := by exact (isAffineQuotient ρ).comp_eq_comp_iff x y
+    x ≫ π ρ = y ≫ π ρ ↔ ∃ g, x ≫ (ρ g).asIso.hom = y := by exact (isAffineQuotient ρ).comp_eq_comp_iff x y
 
 section Free
 
@@ -499,7 +499,7 @@ end Free
 
 section Base
 
-variable {S S' : Scheme.{u}} (f : X ⟶ S) (hf : ∀ g, (ρ g).hom ≫ f = f)
+variable {S S' : Scheme.{u}} (f : X ⟶ S) (hf : ∀ g, (ρ g).asIso.hom ≫ f = f)
 
 
 instance locallyOfFiniteType_desc [IsLocallyNoetherian S] [LocallyOfFiniteType f] :
@@ -523,14 +523,14 @@ section Functoriality
 
 variable {H : Type w} [Group H] [Finite H] (τ : H →* Aut Y) [OrbitsInAffineOpens τ]
 
-noncomputable def map (p : X ⟶ Y) (hp : ∀ g, ∃ k, (ρ g).hom ≫ p = p ≫ (τ k).hom) :
+noncomputable def map (p : X ⟶ Y) (hp : ∀ g, ∃ k, (ρ g).asIso.hom ≫ p = p ≫ (τ k).asIso.hom) :
     finiteQuotient ρ ⟶ finiteQuotient τ :=
   desc ρ (p ≫ π τ) fun g ↦ by
     obtain ⟨k, hk⟩ := hp g
     rw [reassoc_of% hk, comp_π]
 
 @[reassoc (attr := simp)]
-theorem π_map (p : X ⟶ Y) (hp : ∀ g, ∃ k, (ρ g).hom ≫ p = p ≫ (τ k).hom) :
+theorem π_map (p : X ⟶ Y) (hp : ∀ g, ∃ k, (ρ g).asIso.hom ≫ p = p ≫ (τ k).asIso.hom) :
     π ρ ≫ map ρ τ p hp = p ≫ π τ := by
   unfold map
   exact π_desc ρ _ _
@@ -582,8 +582,8 @@ theorem IsAffineQuotient.isAffineOpen_of_preimage [Finite G] {ρ : G →* Aut X}
   have hxW : hW.fromSpec ⟨Q, hQ⟩ ∈ π ⁻¹ᵁ W := hW.range_fromSpec.le ⟨_, rfl⟩
   obtain ⟨W0, hW0, hyW0, hW0W⟩ := exists_isAffineOpen_mem_and_subset (x := π (hW.fromSpec ⟨Q, hQ⟩))
     (U := W) hxW
-  have hO : ∀ g, (ρ g).hom (hW.fromSpec ⟨Q, hQ⟩) ∈ π ⁻¹ᵁ W0 := fun g ↦ by
-    show π ((ρ g).hom (hW.fromSpec ⟨Q, hQ⟩)) ∈ W0
+  have hO : ∀ g, (ρ g).asIso.hom (hW.fromSpec ⟨Q, hQ⟩) ∈ π ⁻¹ᵁ W0 := fun g ↦ by
+    show π ((ρ g).asIso.hom (hW.fromSpec ⟨Q, hQ⟩)) ∈ W0
     rw [← Scheme.Hom.comp_apply, h.comp_eq g]
     exact hyW0
   obtain ⟨t, ht, hxt, htO⟩ :=
@@ -614,7 +614,7 @@ section Stages
 variable {H : Type w} [Group H] {ρ : G →* Aut X} {φ : H →* G} {π : X ⟶ Y}
 
 theorem IsAffineQuotient.comp (h : IsAffineQuotient (ρ.comp φ) π) {τ : G →* Aut Y}
-    (hτ : ∀ g, π ≫ (τ g).hom = (ρ g).hom ≫ π) {π' : Y ⟶ Z} (h' : IsAffineQuotient τ π') :
+    (hτ : ∀ g, π ≫ (τ g).asIso.hom = (ρ g).asIso.hom ≫ π) {π' : Y ⟶ Z} (h' : IsAffineQuotient τ π') :
     IsAffineQuotient ρ (π ≫ π') where
   comp_eq g := by
     rw [← Category.assoc, ← hτ g, Category.assoc, h'.comp_eq g]
@@ -634,9 +634,9 @@ theorem IsAffineQuotient.comp (h : IsAffineQuotient (ρ.comp φ) π) {τ : G →
       refine ⟨h'.preimage_le W g, ?_⟩
       apply h.app_injective (π' ⁻¹ᵁ W)
       obtain ⟨e, he⟩ := hs g
-      have e' : π ⁻¹ᵁ π' ⁻¹ᵁ W ≤ (ρ g).hom ⁻¹ᵁ π ⁻¹ᵁ π' ⁻¹ᵁ W := e
-      have key : (τ g).hom.appLE (π' ⁻¹ᵁ W) (π' ⁻¹ᵁ W) (h'.preimage_le W g) ≫ π.app (π' ⁻¹ᵁ W) =
-          π.app (π' ⁻¹ᵁ W) ≫ (ρ g).hom.appLE (π ⁻¹ᵁ π' ⁻¹ᵁ W) (π ⁻¹ᵁ π' ⁻¹ᵁ W) e' := by
+      have e' : π ⁻¹ᵁ π' ⁻¹ᵁ W ≤ (ρ g).asIso.hom ⁻¹ᵁ π ⁻¹ᵁ π' ⁻¹ᵁ W := e
+      have key : (τ g).asIso.hom.appLE (π' ⁻¹ᵁ W) (π' ⁻¹ᵁ W) (h'.preimage_le W g) ≫ π.app (π' ⁻¹ᵁ W) =
+          π.app (π' ⁻¹ᵁ W) ≫ (ρ g).asIso.hom.appLE (π ⁻¹ᵁ π' ⁻¹ᵁ W) (π ⁻¹ᵁ π' ⁻¹ᵁ W) e' := by
         rw [Scheme.Hom.app_eq_appLE, Scheme.Hom.appLE_comp_appLE, Scheme.Hom.appLE_comp_appLE]
         congr 1
         exact hτ g

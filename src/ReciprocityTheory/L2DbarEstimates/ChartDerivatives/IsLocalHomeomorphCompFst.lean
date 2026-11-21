@@ -131,7 +131,14 @@ theorem vol_prodFin_eq {M : Type*} [TopologicalSpace M] [SecondCountableTopology
     simp
   rw [MeasureTheory.Measure.coe_finsetSum, Finset.sum_apply]
   conv_lhs => rw [hA']
-  rw [measure_iUnion (fun i j hij => Set.disjoint_left.2 fun q hq1 hq2 => hij (hq1.2.symm.trans hq2.2))
+  rw [measure_iUnion (by
+      intro i j hij
+      apply Set.disjoint_left.mpr
+      intro q hqi hqj
+      rcases q with ⟨x, k⟩
+      change x ∈ (fun x => (x, i)) ⁻¹' A ∧ k ∈ ({i} : Set (Fin p)) at hqi
+      change x ∈ (fun x => (x, j)) ⁻¹' A ∧ k ∈ ({j} : Set (Fin p)) at hqj
+      exact hij ((Set.mem_singleton_iff.mp hqi.2).symm.trans (Set.mem_singleton_iff.mp hqj.2)))
     (fun i => (hS i).prod (measurableSet_singleton i)), tsum_fintype]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Measure.map_apply (f := fun x => (x, i)) (measurable_id.prodMk measurable_const) hA,

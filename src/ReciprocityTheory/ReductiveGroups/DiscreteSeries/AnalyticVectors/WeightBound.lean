@@ -41,7 +41,7 @@ theorem exists_weight_bound (hU : IsInfUnitary ε E) (hVf : FiniteDimensional �
   haveI := hVf
   have hT : ∀ a, {r : ℝ | Module.End.HasEigenvalue ((E a a).restrict (hVK a a rfl)) (r : ℂ)}.Finite := by
     intro a
-    have hf : Set.Finite (Module.End.HasEigenvalue ((E a a).restrict (hVK a a rfl))) := by
+    have hf : {μ : ℂ | Module.End.HasEigenvalue ((E a a).restrict (hVK a a rfl)) μ}.Finite := by
       first
         | exact Module.End.finite_hasEigenvalue _
         | exact (Module.End.finite_spectrum _).subset fun μ h => h.mem_spectrum

@@ -113,7 +113,18 @@ theorem tf_closure_stable (dual : Bool) {lam : Fin n → ℝ} {H : Type*} [Norme
       map_smul' := fun a f => Subtype.ext (vectorL2_ext fun c => by
         refine Eq.trans ?_ (toL2_smul_smooth ε a _)
         refine toL2_congr_of_eq_on_UJset fun g _ => ?_
-        simp [coefMap, tensGrp, mul_sum, mul_left_comm]) }
+        simp only [coefMap]
+        have ht : tensGrp dual σ g (fun i => ((a • f.1 i : D) : H)) =
+            a • tensGrp dual σ g (fun i => ((f.1 i : D) : H)) := by
+          funext i
+          simp [tensGrp, smul_sum, smul_smul, mul_assoc, mul_comm, mul_left_comm]
+        simp only [Pi.smul_apply, Submodule.coe_smul]
+        have ht' := ht
+        simp only [Submodule.coe_smul] at ht'
+        rw [ht']
+        simp only [coefMap, Pi.smul_apply, inner_smul_right]
+        rw [← Finset.mul_sum]
+        rfl) }
   have hΦE : ∀ a b (f : tensSub (n := n) (genSub E V)), smE ε (tfRdiag ε) a b (Φ f) =
       Φ ⟨tensF dual E a b f.1, tensSub_stable dual a b f.1 f.2⟩ := fun a b f =>
     Subtype.ext (vectorL2_ext fun c => by

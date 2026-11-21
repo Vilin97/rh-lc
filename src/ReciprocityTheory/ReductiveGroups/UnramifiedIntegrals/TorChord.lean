@@ -146,9 +146,13 @@ theorem formalGroup_add_estimate [CompleteSpace C] (W : WeierstrassCurve C) (hW 
     (P Q : W.toAffine.Point) (hP : InFormalGroupPoints P) (hQ : InFormalGroupPoints Q) :
     ‖uOf (P + Q) - uOf P - uOf Q‖ ≤ (max ‖uOf P‖ ‖uOf Q‖) ^ 2 := by
   obtain ⟨w, hw, -⟩ := wSeriesUnique.{0} C W
-  obtain ⟨F, hFc, h00, h10, h01, hch⟩ := wChordSeries.{0} C W w hw
-  have hF : Formalism.G.IntegralMv F := fun d => chord_adjoin_le W hW (hFc d)
-  rw [formal_group_points_hom.{0} C W w F hW hw hF h00 hch P Q hP hQ]
-  exact chord_eval_est hF h00 h10 h01 (formalGroup_param_norm_lt_one W hW P hP) (formalGroup_param_norm_lt_one W hW Q hQ)
+  obtain ⟨F, hFc, hch⟩ := wFormalGroup.{0} C W w hw
+  have hF : Formalism.G.IntegralMv F.toPowerSeries := fun d => chord_adjoin_le W hW (hFc d)
+  have hadd : uOf (P + Q) = evalMv2 F.toPowerSeries (uOf P) (uOf Q) :=
+    FormalGroupPointsHom.e1hom_main wSubstUnique wChordSubst formal_group_points_param
+      hW hw F hF hch P Q hP hQ
+  rw [hadd]
+  exact chord_eval_est hF F.zero_constantCoeff F.lin_coeff_X F.lin_coeff_Y
+    (formalGroup_param_norm_lt_one W hW P hP) (formalGroup_param_norm_lt_one W hW Q hQ)
 
 end ReciprocityTheory.ChartRestriction.L1

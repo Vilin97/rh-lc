@@ -11,7 +11,7 @@ noncomputable section
 namespace GlobalTheory.FunObj
 open GlobalTheory.SplitWeil GlobalTheory.SplitFlip GlobalTheory.RootEx
 
-variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {G : Grid k}
+variable {k : Type*} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {G : Grid (k := k)}
 
 theorem isLocallyConstant_of_isTensor {ϖ : kˣ} {e : ℕ} {γ : List Edge} {T : G.Args → ℂ} (hT : G.IsTensor ϖ e γ T) :
     IsLocallyConstant T := by

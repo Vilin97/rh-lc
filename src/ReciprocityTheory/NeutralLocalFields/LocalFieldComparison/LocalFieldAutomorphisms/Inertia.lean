@@ -22,7 +22,7 @@ variable (F) in
 include F in
 theorem exists_integral_approx {A : ValuationSubring Ω} {ι : Ω →+* PadicAlgCl p} (h : Compat p A ι)
     (x : PadicAlgCl p) (hx : ‖x‖ ≤ 1) : ∃ b : Ω, b ∈ A ∧ ‖x - ι b‖ < 1 := by
-  obtain ⟨b, hb⟩ := (Metric.denseRange_iff.mp (denseRange F ι)) x 1 one_pos
+  obtain ⟨b, hb⟩ := (Metric.denseRange_iff.mp (denseRange ι)) x 1 one_pos
   rw [dist_eq_norm] at hb
   refine ⟨b, (h b).2 ?_, hb⟩
   have e : ι b = x - (x - ι b) := by ring

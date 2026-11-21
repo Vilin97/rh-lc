@@ -40,7 +40,7 @@ def ContractMixedFieldStatement : Prop :=
     IsFieldIntersection J' →
     ∀ (κ : K → K') (v : (Σ k, ι k) → (Σ k', ι' k')) (V' : Ideal (MRingOver F ι')) (d₀ d r : ℕ)
       (L : Fin d → K → ℤ) (N : Fin r → K' → ℤ),
-      IsBlockMap κ v → IsProjVarF V' (d + r) → IsProjVarF (imageVar F v V') d₀ → d₀ < d →
+      IsBlockMap κ v → IsProjVarF V' (d + r) → IsProjVarF (imageVar v V') d₀ → d₀ < d →
       J' V' (d + r) (Fin.append (fun j => pullDeg κ (L j)) N) = 0
 
 def PFStatement : Prop :=

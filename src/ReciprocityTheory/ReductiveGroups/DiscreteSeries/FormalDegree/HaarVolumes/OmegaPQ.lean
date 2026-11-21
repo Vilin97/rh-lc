@@ -121,9 +121,11 @@ theorem isOmegaLeb_gToLie (e : Fin P ⊕ Fin Q ≃ Fin n) {ε : Fin n → Bool}
           (ab.2 : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ) ij.1 ij.2) :=
         (hval ij.1 ij.2).comp measurable_snd
       exact h1.add (measurable_const.mul h2)
-    rw [Measure.prod_smul_left, Measure.prod_smul_right, smul_smul, Measure.map_smul,
+    rw [Measure.prod_smul_left, Measure.prod_smul_right, smul_smul,
+      Measure.map_smul _ hFm.aemeasurable,
       Measure.map_prod_map _ _ hG hG, Measure.map_map hFm (hG.prodMap hG), hcomp,
-      ← Measure.map_map R.measurable hPm, ← Measure.volume_eq_prod, OmegaPQAux.map_pairMap, Measure.map_smul,
+      ← Measure.map_map R.measurable hPm, ← Measure.volume_eq_prod, OmegaPQAux.map_pairMap,
+      Measure.map_smul _ R.measurable.aemeasurable,
       (volume_measurePreserving_piCongrLeft (fun _ : (Fin P ⊕ Fin Q) × (Fin P ⊕ Fin Q) => ℂ) E).map_eq,
       smul_smul, hc, ← ENNReal.ofReal_mul (by positivity), ← ENNReal.ofReal_mul (by positivity),
       ← mul_pow]

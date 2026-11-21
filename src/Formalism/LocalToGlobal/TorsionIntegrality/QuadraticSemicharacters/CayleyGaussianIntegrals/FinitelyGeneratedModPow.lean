@@ -119,7 +119,7 @@ theorem KernelRatio_of (hC : UnitaryConstant) : KernelRatio := by
   have hδap : ∀ x, δ x = g₁ (g₀.symm x) := fun x => by rw [hδ]; rfl
   have hδsy : ∀ x, δ.symm x = g₀ (g₁.symm x) := fun x => by rw [hδ]; rfl
   have hδΛ : imgLat (δ : (Fin 4 × n → ℂ) →ₗ[ℂ] (Fin 4 × n → ℂ)) Λa = Λb := by
-    rw [hΛa, ← imgLat_trans, hΛb, hδ]
+    rw [hΛa, ← KR.imgLat_trans, hΛb, hδ]
     congr 2
     ext x
     simp
@@ -128,8 +128,8 @@ theorem KernelRatio_of (hC : UnitaryConstant) : KernelRatio := by
   have ia0 : relIdx Λa Λ₀ ≠ 0 := by rw [hΛ₀, hΛa]; exact D0.idx₂
   have i0b : relIdx Λ₀ Λb ≠ 0 := by rw [hΛ₀, hΛb]; exact D1.idx₁
   have ib0 : relIdx Λb Λ₀ ≠ 0 := by rw [hΛ₀, hΛb]; exact D1.idx₂
-  have iab : relIdx Λa Λb ≠ 0 := relIdx_trans ia0 i0b
-  have iba : relIdx Λb Λa ≠ 0 := relIdx_trans ib0 i0a
+  have iab : relIdx Λa Λb ≠ 0 := KR.relIdx_trans ia0 i0b
+  have iba : relIdx Λb Λa ≠ 0 := KR.relIdx_trans ib0 i0a
 
   have sd0 : IsSelfDual H Λ₀ := by rw [hHdef, hΛ₀]; exact stdSelfDual L _
   have sda : IsSelfDual H Λa := by rw [hHdef, hΛa]; exact D0.selfDual
@@ -139,8 +139,8 @@ theorem KernelRatio_of (hC : UnitaryConstant) : KernelRatio := by
     exact isSemiChar_congr _ _ _ _ D0.betaStd (stdSemiChar L ω₀ (Fin 4 × n) D0.per)
   have sca : IsSemiChar H Λa β := by rw [hHdef, hΛa]; exact D0.betaSemi
   have scb : IsSemiChar H Λb β := by rw [hHdef, hΛb]; exact D1.betaSemi
-  have hLat0 : IsLat Λ₀ := by rw [hΛ₀]; exact isLat_stdLat L _
-  have hLata : IsLat Λa := isLat_of_comm hLat0 ia0 i0a
+  have hLat0 : IsLat Λ₀ := by rw [hΛ₀]; exact KR.isLat_stdLat L _
+  have hLata : IsLat Λa := KR.isLat_of_comm hLat0 ia0 i0a
 
   have hiso : IsIsom H H (δ : (Fin 4 × n → ℂ) →ₗ[ℂ] (Fin 4 × n → ℂ)) := by
     intro x y
@@ -222,7 +222,7 @@ theorem KernelRatio_of (hC : UnitaryConstant) : KernelRatio := by
       i₁₂ := i0a, i₂₁ := ia0, i₁₃ := i0b, i₃₁ := ib0, i₂₃ := iab, i₃₂ := iba }
   obtain ⟨S₂, hS₂⟩ := (repsExist _ _ _ i0a).1
   obtain ⟨S₃, hS₃⟩ := (repsExist _ _ _ iab).1
-  have hμ8 := TripleEighth_proof _ H β Λ₀ Λa Λb hT ⟨F, hFmem.2, hFne⟩ S₂ S₃ hS₂ hS₃
+  have hμ8 := Formalism.L2.Th1.H.TripleEighth_proof _ H β Λ₀ Λa Λb hT ⟨F, hFmem.2, hFne⟩ S₂ S₃ hS₂ hS₃
   have hμ := TripleFormula_proof _ H β Λ₀ Λa Λb hT S₂ S₃ hS₂ hS₃ F hFmem.2
   refine ⟨c * tripleMu H β Λ₀ Λa Λb S₂ S₃, ?_, ?_⟩
   · rw [mul_pow, hμ8, mul_one, hc8, hδ]
@@ -256,7 +256,7 @@ theorem quadraticSemicharacterIdentityReformulated_of_kernelRatio_of_localStanda
   obtain ⟨δ, hδiso, hδfix, j1, jl, j2⟩ := hL a b c d ha hd lam hlam ⟨h4, hodd, h8, hprime⟩ (Fin 4 × n) _ hsda hsta i1 i2
     l Fact.out
   have hκδ := hκl l ι δ hδiso j1 jl j2
-  rw [← imgLat_trans] at j1 jl j2
+  rw [← KR.imgLat_trans] at j1 jl j2
   have hg₁ : IsIsom (matH (blk4 h)) (stdH (cmL a b d ha hd lam hlam) (Fin 4 × n))
       ((g₀.trans δ : (Fin 4 × n → ℂ) ≃ₗ[ℂ] (Fin 4 × n → ℂ)) : (Fin 4 × n → ℂ) →ₗ[ℂ] (Fin 4 × n → ℂ)) := by
     intro x y

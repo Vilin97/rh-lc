@@ -172,13 +172,18 @@ theorem GlobalTheory.CompanionTheory.SW.selfDual_pi_inf : ∀ (F : Type) [Field 
   haveI := hF
   obtain ⟨h1, h2, h3, h4, -⟩ := isLocR_Ainf F hF
   haveI : BorelSpace (Ainf F) := ⟨rfl⟩
-  have he : Continuous (coord F) := (isHomeomorph_coord F).continuous
-  have he' : Continuous (coord F).symm := (coordHomeo F).symm.continuous
+  have he : Continuous (GlobalTheory.CompanionTheory.SW.RealCoord.coord F) :=
+    (GlobalTheory.CompanionTheory.SW.RealCoord.isHomeomorph_coord F).continuous
+  have he' : Continuous (GlobalTheory.CompanionTheory.SW.RealCoord.coord F).symm :=
+    (GlobalTheory.CompanionTheory.SW.RealCoord.coordHomeo F).symm.continuous
   have hpc : Continuous (psiInf F ψ) := hψ.1.comp (continuous_id.prodMk continuous_const)
-  obtain ⟨a, ha, hχ⟩ := exists_form (coord F) he' (psiInf F ψ) hpc (fun _ => hψ.2.1 _)
+  obtain ⟨a, ha, hχ⟩ := GlobalTheory.CompanionTheory.SW.SdPi.exists_form
+    (GlobalTheory.CompanionTheory.SW.RealCoord.coord F) he'
+    (psiInf F ψ) hpc (fun _ => hψ.2.1 _)
     (fun u v => by
       simp only [psiInf, map_add (f := _), ← AddChar.map_add_eq_mul]
       congr 1
       exact Prod.ext rfl (add_zero _).symm)
     (GlobalTheory.T.localComponents_nontrivial_adelic_character F ψ hψ).2.2
-  exact selfDual_pi_of_form (coord F) he he' a ha _ hχ k hk ι
+  exact GlobalTheory.CompanionTheory.SW.SdPi.selfDual_pi_of_form
+    (GlobalTheory.CompanionTheory.SW.RealCoord.coord F) he he' a ha _ hχ k hk ι

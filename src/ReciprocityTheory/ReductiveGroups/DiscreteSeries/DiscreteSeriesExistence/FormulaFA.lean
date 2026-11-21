@@ -139,8 +139,8 @@ theorem ffa_cont_rreg (x : L2 ε) : Continuous fun k : S7.KG ε => rreg ε (S7.t
 
 theorem ffa_intK {E : Type*} [NormedAddCommGroup E] {f : S7.KG ε → E} (hf : Continuous f) :
     Integrable f (dk ε) := by
-  exact hf.integrable_of_hasCompactSupport
-    (isCompact_univ.of_isClosed_subset (isClosed_tsupport f) (Set.subset_univ _))
+  letI := (dk_props ε).1
+  exact integrableOn_univ.mp (hf.continuousOn.integrableOn_compact isCompact_univ)
 
 theorem ffa_inner_int (c : S7.KG ε → ℂ) (hc : Continuous c) (x z : L2 ε) :
     inner ℂ z (∫ k, c k • rreg ε (S7.toMK k) x ∂(dk ε)) =
@@ -155,6 +155,7 @@ theorem ffa_eval {F : Matrix (Fin n) (Fin n) ℂ → ℂ} (hF : ContinuousOn F (
     (c : S7.KG ε → ℂ) (hc : Continuous c) (h0 : ∫ k, c k • rreg ε (S7.toMK k) x ∂(dk ε) = 0) :
     ∫ k, c k * F (S7.toMK k) ∂(dk ε) = 0 := by
   classical
+  letI := (dk_props ε).1
   have hmem : ∀ (g : Formalism.REAL.UJ ε) (k : S7.KG ε), Formalism.MainNotions.S.umat g * S7.toMK k ∈ UJset ε :=
     fun g k => (g * (@id (Formalism.REAL.UJ ε) k.1)).2
   have hcu : Continuous fun g : Formalism.REAL.UJ ε => Formalism.MainNotions.S.umat g :=

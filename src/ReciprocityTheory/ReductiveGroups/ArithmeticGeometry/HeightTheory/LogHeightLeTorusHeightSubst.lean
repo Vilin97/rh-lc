@@ -166,8 +166,7 @@ theorem polyIn_substitution_leading {D N : ℕ} (f : KTp K D N) (a : Fin (D + 1)
   rw [hEG]
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, map_sum]
+  rw [MvPolynomial.aeval_sum, map_sum (MvPolynomial.rename _)]
   refine ⟨Polynomial.natDegree_sum_le_of_forall_le _ _ fun s hs => (hterm s hs).1, ?_⟩
   rw [Polynomial.finsetSum_coeff]
   exact Finset.sum_congr rfl fun s hs => (hterm s hs).2

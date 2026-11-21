@@ -1,9 +1,5 @@
-module
-
-public import ReciprocityTheory.DualLattices.AinfFacts
-public import ReciprocityTheory.DualLattices.ThmAFull
-
-@[expose] public section
+import ReciprocityTheory.DualLattices.AinfFacts
+import ReciprocityTheory.DualLattices.ThmAFull
 
 noncomputable section
 
@@ -126,7 +122,8 @@ lemma R'n_local (n : ℕ) : IsLocalRing (R'n p O ε n) := by
     exact isUnit_of_mul_isUnit_left h2
   refine IsLocalRing.of_isUnit_or_isUnit_one_sub_self (fun a => ?_)
   have h : piRing p O hv ε hε n a + piRing p O hv ε hε n (1 - a) = 1 := by
-    rw [← map_add (f := _), add_sub_cancel, map_one]
+    change (piRing p O hv ε hε n) a + (piRing p O hv ε hε n) (1 - a) = 1
+    rw [← (piRing p O hv ε hε n).map_add, add_sub_cancel, (piRing p O hv ε hε n).map_one]
   rcases IsLocalRing.isUnit_or_isUnit_of_add_one h with h | h
   · exact Or.inl (key a h)
   · exact Or.inr (key _ h)

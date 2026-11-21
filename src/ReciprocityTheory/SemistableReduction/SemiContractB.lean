@@ -88,7 +88,9 @@ theorem sc_gram_lt {K : Type} [Field K] [NumberField K] {r k m : ℕ} (hm : 0 < 
     have hDh : Dh * Dhᴴ = Matrix.diagonal (RCLike.ofReal ∘ hPh.eigenvalues) := by
       rw [hDhdef, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal]
       congr 1
-      rw [Complex.star_def, Complex.conj_ofReal, ← Complex.ofReal_mul, Real.mul_self_sqrt (hP.eigenvalues_pos i).le]
+      funext i
+      simp only [Pi.star_apply, Complex.star_def, Complex.conj_ofReal, ← Complex.ofReal_mul,
+        Real.mul_self_sqrt (hP.eigenvalues_pos i).le, Function.comp_apply]
       rfl
     set T := U * Dh with hTdef
     have hTT : T * Tᴴ = P := by
@@ -145,7 +147,7 @@ theorem sc_gram_lt {K : Type} [Field K] [NumberField K] {r k m : ℕ} (hm : 0 < 
         _ = _ := by rw [hdV, mul_one, Complex.ofReal_prod]
     have hμ : ∀ i, 0 < hFh.eigenvalues i := hF.eigenvalues_pos
     have hprod : 1 < ∏ i, (1 + hFh.eigenvalues i) := by
-      have h := Finset.prod_lt_prod_of_nonempty (s := Finset.univ) (f := fun _ => (1 : ℝ))
+      have h := Finset.prod_lt_prod_of_nonempty₀ (s := Finset.univ) (f := fun _ => (1 : ℝ))
         (g := fun i => 1 + hFh.eigenvalues i) (fun i _ => one_pos) (fun i _ => by linarith [hμ i])
         ⟨⟨0, hm⟩, Finset.mem_univ _⟩
       simpa using h

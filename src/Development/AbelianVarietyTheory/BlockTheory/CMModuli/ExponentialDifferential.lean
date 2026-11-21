@@ -32,7 +32,9 @@ abbrev EpsPt (A : Over (Sp ℂ)) : Type := epsPt (𝟙 (Sp ℂ)) ⟶ A
 abbrev EpsPt.mor {A : Over (Sp ℂ)} (v : EpsPt A) : Sp (DualNumber ℂ) ⟶ A.left := v.left
 
 
-def extZero {V : Type} (s : Set V) (F : ∀ z, z ∈ s → ℂ) : V → ℂ := fun z => if h : z ∈ s then F z h else 0
+open Classical in
+def extZero {V : Type} (s : Set V) (F : ∀ z, z ∈ s → ℂ) : V → ℂ :=
+  fun z => if h : z ∈ s then F z h else 0
 
 section Hol
 

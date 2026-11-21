@@ -69,7 +69,7 @@ private theorem chart_move [CompactSpace X] (A : FinHolAtlas e X) (P : ChartPart
       ((A.chart j).target ∩ (A.chart j).symm ⁻¹' (A.chart k).source) ⊆ (A.chart k).target := by
     rintro _ ⟨y, hy, rfl⟩
     exact (A.chart k).map_source hy.2
-  have e1 := setIntegral_eq_of_subset_of_forall_diff_eq_zero (μ := volume)
+  have e1 := setIntegral_eq_of_subset_of_forall_sdiff_eq_zero (μ := volume)
     (f := fun y => P.χ k ((A.chart k).symm y) * g ((A.chart k).symm y) * locDens A Φ k y)
     (A.chart k).open_target.measurableSet hsub (by
       rintro w ⟨hw, hnot⟩
@@ -84,7 +84,8 @@ private theorem chart_move [CompactSpace X] (A : FinHolAtlas e X) (P : ChartPart
         by_contra h0
         exact hns (hs (subset_tsupport _ (Function.mem_support.2 h0)))
       simp [hg0])
-  have e2 := setIntegral_eq_of_subset_of_forall_diff_eq_zero (μ := volume)
+  have e2 := setIntegral_eq_of_subset_of_forall_sdiff_eq_zero (μ := volume)
+    (s := (A.chart j).target ∩ (A.chart j).symm ⁻¹' (A.chart k).source)
     (f := fun y => P.χ k ((A.chart j).symm y) * g ((A.chart j).symm y) * locDens A Φ j y)
     (A.chart j).open_target.measurableSet Set.inter_subset_left (by
       rintro y ⟨hy, hnot⟩

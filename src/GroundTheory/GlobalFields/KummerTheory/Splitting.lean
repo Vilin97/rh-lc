@@ -93,6 +93,7 @@ theorem splitsCompletely_iff_isFiniteSplit :
       rintro _ ⟨x, rfl⟩
       exact ⟨1 ⊗ₜ x, by simp [f]⟩)
     rw [LinearMap.coe_range] at hclosed
+    change IsClosed (Set.range f) at hclosed
     rw [← Set.range_eq_univ, ← hclosed.closure_eq, hdense'.closure_eq]
   have hdim : finrank (v.adicCompletion K) (v.adicCompletion K ⊗[K] L) =
       finrank (v.adicCompletion K) C := by
@@ -113,11 +114,10 @@ theorem splitsCompletely_iff_isFiniteSplit :
   have e := AlgEquiv.ofBijective f ⟨hi, hf⟩
   exact ⟨fun h ↦ .of_algEquiv e.symm, fun h ↦ .of_algEquiv e⟩
 
-
 variable (L) in
 theorem nonempty_placesOver : Nonempty (PlacesOver (L := L) v) := by
   have := v.isPrime
-  exact (placesOverEquiv (L := L) v).symm.nonempty
+  exact (placesOverEquiv (L := L) v).nonempty
 
 theorem finrank_eq_of_isGalois [IsGalois K L] (w w' : PlacesOver (L := L) v) :
     finrank (v.adicCompletion K) (w.1.adicCompletion L) =
