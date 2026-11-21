@@ -169,6 +169,7 @@ theorem Twist.Good.isHeckeChar {t : Twist D Circle} (h : t.Good) : IsHeckeChar D
 def Twist.resC (t : Twist D Circle) : ResChars D ℂˣ := fun PP => Circle.toUnits.comp (t.res PP)
 
 
+open Classical in
 def Twist.locC (t : Twist D Circle) : ResChars D ℂˣ := fun PP => if PP ∈ t.Q then t.resC PP else 1
 
 structure UnivTwist (D : D7) (C : Type) [AddCommGroup C] where
@@ -186,6 +187,7 @@ def UnivTwist.delQ (u : UnivTwist D C) (Q : Finset (Pl D.host.E)) : (AE D)ˣ →
   map_mul' x y := by ext PP; simp
 
 
+open Classical in
 def UnivTwist.spec (u : UnivTwist D C) (Q : Finset (Pl D.host.E)) (χ : Multiplicative (↥Q → C) →* A) : Twist D A where
   Q := Q
   chi := χ.comp (u.delQ Q)
@@ -274,6 +276,7 @@ namespace Frame
 variable (F : Frame S T) (G : TypeDat D T.rank)
 
 
+open Classical in
 def datumFn (Q : Finset (Pl D.host.E)) (ω : Reds D T.rank S.rank → ℂ) : WO S T → ℂ := fun x =>
   (if IsHalf (halfIdem G.Pg Q) x ∧ IsIntM (frMapAdj S T F.βS F.βT x) then
       omegaG G.levT G.muC (fun PP => redM PP (frMapAdj S T F.βS F.βT x)) else 0) *

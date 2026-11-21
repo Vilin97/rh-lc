@@ -50,6 +50,7 @@ section Block
 variable {ι : Type} [Fintype ι] {n : ℕ}
 
 
+open Classical in
 def bigM (g : ι → Matrix (Fin n) (Fin n) ℂ) : Matrix (ι × Fin n × Fin n) (ι × Fin n × Fin n) ℂ :=
   fun x y => if x.1 = y.1 ∧ x.2.2 = y.2.2 then g x.1 x.2.1 y.2.1 else 0
 

@@ -65,6 +65,7 @@ theorem partitionExtendByZero_antitone {p : ℕ} {f : Fin p → ℕ} (hf : Antit
   · rw [dite_eq_right hk]; exact Nat.zero_le _
 
 
+open Classical in
 def wtA {j : ℕ} (w : WeightFamilies.Wt D j) (x : (D.host.E →+* ℂ) × ℕ) : ℕ :=
   ∑ t : D.what₂.Tau, ((if x.1 = DV.tauEmb D t then ext0 (w.aP t) x.2 else 0) +
     if x.1 = conjEmb (DV.tauEmb D t) then ext0 (w.aM t) x.2 else 0)

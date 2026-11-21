@@ -249,6 +249,7 @@ theorem exists_common_closed {k A B : Type} [Field k] [Field A] [Field B] (i : k
   exact congrArg _ (congrArg _ (Algebra.TensorProduct.includeLeftRingHom_comp_algebraMap (R := k) (A := A) (B := B)))
 
 
+open Classical in
 theorem geom_down (hL : Laws) (hφ : Function.Injective f) (a' : ArcIn Dw l β K (f.comp b)) {D₀ : DegPre R}
     (p : IsPullDeg f D₀ a'.D₀) [Module (𝓞 E) D₀.X] (oa : letI := H.starRing; D₀.OAct (𝓞 E)) (hB : D₀.TauBimult)
     (hx : ∀ (a : 𝓞 E) y, p.xe (a • y) = a • p.xe y)

@@ -62,6 +62,7 @@ def Bw (j y : ℤ) : ℤ :=
   ((X.a' p K (posOf n' y) / p ^ (X.F.dist j y + X.Rj p K j) : ℕ) : ℤ) - ((r + K + r + 1 : ℕ) : ℤ)
 
 
+open Classical in
 def thc (j : ℤ) (b : ℤ → ℕ) (x : ℤ) : ℝ :=
   (2 / 3) * (if X.F.IsW j (X.F.oldest j x) then ((X.Bw p K j (X.F.oldest j x) - (X.m0 K : ℤ) : ℤ) : ℝ)
     else (b (X.F.oldest j x) : ℝ))

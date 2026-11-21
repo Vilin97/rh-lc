@@ -120,6 +120,7 @@ theorem exists_chart_pt' {X : Scheme.{0}} (L : LB X) (hL : L.IsLB) (y : Sp ℂ �
   exact hj
 
 
+open Classical in
 def chi {M : LB A.left} (u : HolUnif A M g) (χ : u.Λ → ℂ) (z : Fin g → ℂ) : ℂ :=
   if h : z ∈ u.Λ then χ ⟨z, h⟩ else 0
 

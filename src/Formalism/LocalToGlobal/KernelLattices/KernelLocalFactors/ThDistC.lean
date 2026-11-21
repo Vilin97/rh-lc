@@ -1582,6 +1582,7 @@ theorem ad_mulLat_le {H : Type} [AddCommGroup H] [Module (𝓞 E) H] (c c' : ℕ
   exact ti_mul_mono (Dvd.intro c' rfl) M hw
 
 
+open Classical in
 theorem ad_ind_sum {H : Type} [AddCommGroup H] [Module (𝓞 E) H] (A B : Submodule (𝓞 E) H) (hBA : B ≤ A) [Fintype (↥A ⧸ B.comap A.subtype)] (w : H) :
     (if w ∈ A then (1 : ℂ) else 0) = ∑ z : ↥A ⧸ B.comap A.subtype,
       if w - ((Function.surjInv (Submodule.Quotient.mk_surjective (B.comap A.subtype)) z : ↥A) : H) ∈ B then (1 : ℂ) else 0 := by

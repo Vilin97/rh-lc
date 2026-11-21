@@ -200,6 +200,7 @@ theorem term_eq (B : Base S T) {ψ : Twist D Circle} (hQ : B.admitted ψ.Q) {g :
   · simp
 
 
+open Classical in
 theorem datum_sum (B : Base S T) {ψ : Twist D Circle} (hQ : B.admitted ψ.Q) {ι : Type} [Fintype ι] (g : ι → GA D S)
     (hk : ∀ i, Lev.finE S (g i) ∈ lev D.sp.cm S.gram B.F.βS (B.levS ψ))
     (inj : ∀ i j, rTup B.F.βS (B.levS ψ) (Lev.finE S (g i)) = rTup B.F.βS (B.levS ψ) (Lev.finE S (g j)) → i = j)

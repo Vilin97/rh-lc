@@ -66,6 +66,7 @@ theorem qf_single (k : Fin P ⊕ Fin Q) : qf (Pi.single k 1 : Sp P Q) = sg k := 
   · simp
 
 
+open Classical in
 def tanMat (k : Fin P ⊕ Fin Q) (y : Sp P Q) : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ :=
   if qf y = sg k ∧ y k ≠ -1 then -qrefl (Formalism.UG.Jpq P Q) (Pi.single k 1) (-y) * flipAt k
   else sectMat (sg k) (Pi.single k 1) y

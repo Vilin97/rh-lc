@@ -257,6 +257,7 @@ def lbProd (L : ι → LB X) (n : ι → ℤ) : LB X where
     ((L i).g (j i) (j' i)) ^ n i
 
 
+open scoped Classical in
 def lbInvProd (L : ι → LB X) (S : Finset ι) : LB X :=
   lbProd L fun i ↦ if i ∈ S then -1 else 0
 

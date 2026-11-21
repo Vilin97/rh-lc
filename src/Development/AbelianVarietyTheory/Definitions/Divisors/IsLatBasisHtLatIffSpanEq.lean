@@ -78,6 +78,7 @@ variable {K : Type} [Field K] [NumberField K] (la : HeightOneSpectrum (𝓞 K)) 
   {C : Type} [Field C] (v : Valuation C ℝ≥0)
 
 
+open Classical in
 def val_vw (x : C) : EReal :=
   if x = 0 then ⊤ else (((vLa la (p : K) : ℝ) * (Real.log (v x) / Real.log (v (p : C))) : ℝ) : EReal)
 

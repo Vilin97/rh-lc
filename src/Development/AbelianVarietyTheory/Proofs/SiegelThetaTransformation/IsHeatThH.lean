@@ -129,10 +129,12 @@ theorem form_apply (x : Matrix (Fin n) (Fin N) E) (p : CF Ψ N N × CF Ψ n N ×
     form Ψ x p = 2 * π * I * expo Ψ x p.1 p.2.1 p.2.2 := rfl
 
 
+open Classical in
 noncomputable def dir {m : ℕ} (τ : Ψ) (k : Fin m) (a : Fin N) : CF Ψ m N :=
   fun σ i j => if σ = τ then if i = k then if j = a then 1 else 0 else 0 else 0
 
 
+open Classical in
 theorem add_smul_dir {m : ℕ} (x : CM Ψ m N) (τ : Ψ) (k : Fin m) (a : Fin N) (s : ℂ) :
     (fun σ => x σ + if σ = τ then Matrix.single k a s else 0 : CM Ψ m N) =
       (HAdd.hAdd (α := CF Ψ m N) (β := CF Ψ m N) x (s • dir Ψ τ k a) : CF Ψ m N) := by

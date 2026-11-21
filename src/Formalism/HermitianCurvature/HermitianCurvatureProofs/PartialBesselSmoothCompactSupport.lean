@@ -211,6 +211,7 @@ variable {k p ρ n : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSp
   [InnerProductSpace ℂ Wq]
 
 
+open Classical in
 def fam (Bj : B.RealPlaceData k ρ Wp Wq) (e : p + ρ = n) (Φt : Mat k n → (Wq →L[ℂ] Wp)) (x : PBQ.XP k p ρ)
     (g : Mat k n) : Wq →L[ℂ] Wp :=
   if PBQ.GoodP Bj x then (Bj.π (Matrix.of x.1.1)).comp (Φt (g * iotL k n (sxF e x))) else 0

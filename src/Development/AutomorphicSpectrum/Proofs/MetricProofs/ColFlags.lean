@@ -38,6 +38,7 @@ instance {K₀ : Type} (J₀ : K₀ → Type) [∀ k, Fintype (J₀ k)] (n : Ψ 
   · exact inferInstanceAs (Fintype (Fin ((t.2 : ℕ) + 1) → Fin (n t.1)))
 
 
+open Classical in
 def blkF (K₀ : Type) (r : Ψ × Fin (p + q)) : Option (K₀ ⊕ StepIx Ψ p q) :=
   if IsProperStep (p + q) p r.2 then some (.inr (stepOf Ψ p q r)) else none
 
@@ -75,6 +76,7 @@ def posOf : ∀ s : Ψ ⊕ Ψ, Fin (rk Ψ p q s) → Fin (p + q)
   | .inr _ => omEmb p q
 
 
+open Classical in
 def aExt (s : Ψ ⊕ Ψ) : Matrix (Fin (n s)) (Fin (p + q)) Ω :=
   fun j a => ∑ l, if posOf p q s l = a then A s j l else 0
 
@@ -87,6 +89,7 @@ def rkW (i : Fin (p + q)) : ℕ := min ((i : ℕ) + 1) p
 def rkO (i : Fin (p + q)) : ℕ := (i : ℕ) + 1 - min ((i : ℕ) + 1) p
 
 
+open Classical in
 def twist (m : Ψ ⊕ Ψ → ℕ) (r : Ψ × Fin (p + q)) : K₀ ⊕ StepIx Ψ p q → ℤ
   | .inl _ => (rkW r.2 * m (.inl r.1) + rkO r.2 * m (.inr r.1) : ℕ)
   | .inr t =>

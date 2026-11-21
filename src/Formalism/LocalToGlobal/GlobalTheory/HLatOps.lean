@@ -51,6 +51,7 @@ def PosAt {V ι : Type} [AddCommGroup V] [Module K V] [Fintype ι] (b : Basis ι
   ∀ v, (gramOf b (H v)).PosDef
 
 
+open Classical in
 def frameOf {ι : Type} [Fintype ι] [DecidableEq ι] (G : Matrix ι ι ℂ) : Matrix ι ι ℂ :=
   if h : ∃ B : Matrix ι ι ℂ, IsUnit B.det ∧ B.conjTranspose * B = G then (Classical.choose h)⁻¹
   else 1
@@ -147,6 +148,7 @@ variable (K' : Type) {K : Type} [Field K] [NumberField K] [StarRing K] [Field K'
   [StarRing K'] [Algebra K K']
 
 
+open Classical in
 def extFrame {ι : Type} (X : InfinitePlace K → Matrix ι ι ℂ) (v' : InfinitePlace K') :
     Matrix ι ι ℂ :=
   if v'.embedding.comp (algebraMap K K') = (v'.comap (algebraMap K K')).embedding then

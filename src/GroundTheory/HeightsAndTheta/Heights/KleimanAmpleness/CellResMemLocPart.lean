@@ -53,6 +53,7 @@ theorem cellRes_mk {M : Type} [AddCommGroup M] [Module (MRingOver S ι) M] {J I 
   rw [dif_pos h, IsLocalizedModule.mk_eq_mk', IsLocalizedModule.liftOfLE_mk', ← IsLocalizedModule.mk_eq_mk']
 
 
+open Classical in
 theorem cechD_apply {M : Type} [AddCommGroup M] [Module (MRingOver S ι) M] (n : ℕ) (f : CechC S ι M n)
     (I : Cell K ι (n + 1)) :
     cechD S ι M n f I = ∑ k, ∑ i ∈ I.1 k,

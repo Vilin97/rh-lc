@@ -360,6 +360,7 @@ theorem isRat_sum {ι : Type} [Fintype ι] {φ : ι → GA D (Wc D j) → ℂ} (
   exact Finset.sum_congr rfl fun a _ => h2 a
 
 
+open Classical in
 theorem isRat_fibre (hRF : GlobalTheory.NT.RayField) (hT : LawsJ T) (hU : C.IsUnif)
     (hray : RayIn D (T.Q.l.M * C.d.pd) C.σ₂.fieldRange) {A : Type} [AddCommGroup A] {u : UnivTwist D A}
     {Q : Finset (Pl D.host.E)} (hu : u.Good Q) (hQ : ∀ PP ∈ Q, ((T.Q.l.M * C.d.pd : ℕ) : 𝓞 D.host.E) ∈ PP.asIdeal)

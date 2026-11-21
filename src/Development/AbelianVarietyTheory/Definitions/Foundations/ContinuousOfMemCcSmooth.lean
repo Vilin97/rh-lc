@@ -94,6 +94,7 @@ variable {G Q W : Type} [Group G] [Group Q] [AddCommGroup W] [Module ℂ W] [Mea
   {K : Subgroup G} (r : K →* Q) (τ : Representation ℂ Q W)
 
 
+open Classical in
 def typeIdem : G → ℂ := fun g =>
   if h : g ∈ K then (Module.finrank ℂ W : ℂ) * (μ.real K : ℂ)⁻¹ * conj (τ.character (r ⟨g, h⟩)) else 0
 

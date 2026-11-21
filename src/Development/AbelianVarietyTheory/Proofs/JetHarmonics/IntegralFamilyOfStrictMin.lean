@@ -31,6 +31,7 @@ namespace FamInt
 variable {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] {ϖ : V}
 
 
+open Classical in
 def ordFn (hϖ : Irreducible ϖ) (c : FractionRing V) : WithTop ℚ :=
   if h : c = 0 then ⊤ else (((hasVal_of_ne_zero hϖ h).choose : ℚ) : WithTop ℚ)
 

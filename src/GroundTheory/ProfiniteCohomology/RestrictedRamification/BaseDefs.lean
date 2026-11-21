@@ -223,6 +223,7 @@ theorem placeInv_inr_apply (v : HeightOneSpectrum (𝓞 K.1)) (y : localGaloisCo
   rfl
 
 
+open Classical in
 def gsLocalEmbeddings : LocalEmbeddings K where
   fin v := if h : v ∈ S then ιs ⟨v, h⟩ else (nonempty_localEmbeddings K).some.fin v
   inf v := (nonempty_localEmbeddings K).some.inf v

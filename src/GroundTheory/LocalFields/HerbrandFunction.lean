@@ -102,6 +102,7 @@ theorem relIndex_mul_card_inf {G : Type*} [Group G] (H K : Subgroup G) :
   exact (Nat.card_congr (Subgroup.subgroupOfEquivOfLe inf_le_right).toEquiv).symm
 
 
+open Classical in
 theorem inv_relIndex_eq_sum (t : ℝ) :
     ((lowerRamificationGroupReal K L t).relIndex (lowerRamificationGroup K L 0) : ℝ)⁻¹ =
       (Nat.card (lowerRamificationGroup K L 0) : ℝ)⁻¹ *
@@ -149,6 +150,7 @@ theorem integral_indicator_Iic {c : ℝ} (hc : 0 ≤ c) (u : ℝ) :
     simp [hu]
 
 
+open Classical in
 theorem integral_indicator_lowerRamificationGroupReal (σ : L ≃ₐ[K] L) (u : ℝ) :
     ∫ t in (0 : ℝ)..u, (if σ ∈ lowerRamificationGroup K L 0 ∧
       σ ∈ lowerRamificationGroupReal K L t then (1 : ℝ) else 0) =
@@ -177,6 +179,7 @@ theorem integral_indicator_lowerRamificationGroupReal (σ : L ≃ₐ[K] L) (u : 
   · simp [h0]
 
 
+open Classical in
 theorem herbrandPhi_eq_sum (u : ℝ) :
     herbrandPhi K L u = (Nat.card (lowerRamificationGroup K L 0) : ℝ)⁻¹ *
       ∑ σ : L ≃ₐ[K] L, if σ ∈ lowerRamificationGroup K L 0 then

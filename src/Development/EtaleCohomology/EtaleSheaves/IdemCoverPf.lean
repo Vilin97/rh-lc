@@ -14,6 +14,7 @@ variable (C : Type) [CommRing C]
 abbrev P := ∀ p : PrimeSpectrum C, C ⧸ p.asIdeal
 
 
+open Classical in
 def e (c : C) : P C := fun p => if c ∈ p.asIdeal then 1 else 0
 
 abbrev D := Algebra.adjoin C (Set.range (e C))

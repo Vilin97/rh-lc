@@ -219,11 +219,13 @@ def infiniteTest (w : InfinitePlace K) (a : w.Completion) : ℂ :=
       (χ.infiniteWeight w).natAbs * ((Real.exp (-(π * w.mult * ‖a‖ ^ 2)) : ℝ) : ℂ)
 
 
+open Classical in
 def infiniteGamma (w : InfinitePlace K) (s : ℂ) : ℂ :=
   if w.IsReal then Gammaℝ (s + χ.infiniteTau w * I + χ.infiniteWeight w)
   else Gammaℂ (s + χ.infiniteTau w * I + ((χ.infiniteWeight w).natAbs : ℂ) / 2)
 
 
+open Classical in
 def infiniteConst (w : InfinitePlace K) : ℂ := if w.IsReal then 1 else π
 
 

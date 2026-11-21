@@ -241,6 +241,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : FamIn
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 
+open Classical in
 def muQ (Q : A3.okI A3.A.μ0) (q : A3.fam3.base3.Ix) (d : List ℤ) : ℂ :=
   if h : ∃ y, Formalism.L2.Col.InertTypeOk D.sp.X'.rank y ∧ d = labIn D.sp.X'.rank y then
     D.what₂.embLL (q.1.2 (Q.1, h.choose)) else 0

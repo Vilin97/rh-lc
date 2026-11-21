@@ -80,6 +80,7 @@ theorem sum_prod_apply {ι P : Type} {X : P → Type} [∀ v, Nonempty (X v)] (s
 variable {F : Type} [Field F] [NumberField F]
 
 
+open Classical in
 def finAd (T : Finset (HeightOneSpectrum (𝓞 F))) (y : ∀ v : HeightOneSpectrum (𝓞 F), v.adicCompletion F) :
     FiniteAdeleRing (𝓞 F) F :=
   ⟨fun v => if v ∈ T then y v else 0, by

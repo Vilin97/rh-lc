@@ -84,6 +84,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarR
   {hc : CMData F E} {S : HSpace E} {gp : Fin 2 → ℕ} {T f : ℕ}
 
 
+open Classical in
 def ulocQ (H0 : Formalism.L2.Herm.StepLevel hc S gp T f) (Q : Finset (HeightOneSpectrum (𝓞 F)))
     (W : ∀ v, v ∈ Q → Subgroup (GL (Fin S.rank) (E ⊗[F] v.adicCompletion F))) (v : HeightOneSpectrum (𝓞 F)) :
     Subgroup (GL (Fin S.rank) (E ⊗[F] v.adicCompletion F)) :=

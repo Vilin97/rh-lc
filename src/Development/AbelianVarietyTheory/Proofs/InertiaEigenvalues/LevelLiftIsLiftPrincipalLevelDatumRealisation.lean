@@ -234,6 +234,7 @@ theorem idem_orth {Pg Q : Finset (Pl D.host.E)} (h : PlacesOK Pg Q) :
   exact Finset.sum_eq_zero fun j hj => key _ h1 _ (h2 hj)
 
 
+open Classical in
 theorem datumFn_eq_tensor {F : Frame S T} (hF : F.Good) {G : TypeDat D T.rank} {Q : Finset (Pl D.host.E)} (h : PlacesOK G.Pg Q)
     {ω : Reds D T.rank S.rank → ℂ} (hω : ∀ y y', (∀ PP ∈ Q, y PP = y' PP) → ω y = ω y') :
     F.datumFn G Q ω = tensorHalf (idem Q) (cA D (idem G.Pg))
@@ -284,6 +285,7 @@ theorem datumFn_eq_tensor {F : Frame S T} (hF : F.Good) {G : TypeDat D T.rank} {
     · rw [if_neg fun h => k2 h.2, zero_mul]
 
 
+open Classical in
 theorem eq_vec_of_two_steps {F : Frame S T} (hF : F.Good) {G : TypeDat D T.rank} {Q : Finset (Pl D.host.E)} (h : PlacesOK G.Pg Q)
     {ω : Reds D T.rank S.rank → ℂ} (hω : ∀ y y', (∀ PP ∈ Q, y PP = y' PP) → ω y = ω y') {fg f : WO S T → ℂ}
     (h1 : IsThetaAt F.ψ (symplO S T) (heisO F.ψ S T) (cA D (idem G.Pg)) F.lat 1 F.f₀

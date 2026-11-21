@@ -84,6 +84,7 @@ theorem det_ne (ε : Bool) (S : HSp D) (τ : D.what₂.Tau) :
   split_ifs <;> norm_num
 
 
+open Classical in
 theorem read_line (θ : InfFam D) (hθ : IsInfFam θ) (ε : Bool) (S X : HSp D) {d : ℕ} (e : Fin X.rank ≃ Fin d)
     (cS : Matrix (Fin S.rank) (Fin d) (AE D) ≃+ WO S X)
     (hcS : ∀ u, cS u = (HMul.hMul (uᵀ.submatrix e id) (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM ((if ε then -1 else 1 : D.host.E) • S.gram)) : Matrix (Fin X.rank) (Fin S.rank) (AE D)))
@@ -145,6 +146,7 @@ theorem submatrix_triple_mul_of_triangular {n d k : ℕ} (e : Fin k ≃ Fin d) (
   ring
 
 
+open Classical in
 theorem at_place (θ : InfFam D) (hθ : IsInfFam θ) (ε : Bool) (S X : HSp D) (A : Fr S) (B : Fr X) {d : ℕ}
     (e : Fin X.rank ≃ Fin d) (cS : Matrix (Fin S.rank) (Fin d) (AE D) ≃+ WO S X)
     (hcS : ∀ u, cS u = (HMul.hMul (uᵀ.submatrix e id) (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM ((if ε then -1 else 1 : D.host.E) • S.gram)) : Matrix (Fin X.rank) (Fin S.rank) (AE D)))

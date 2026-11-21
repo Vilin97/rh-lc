@@ -20,6 +20,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization GlobalTheory.Hec
 namespace GlobalTheory.HeckeTwo.TermHol
 
 
+open Classical in
 theorem wirtWord_eq_sum (F : Type) [Field F] [NumberField F] (b ν : F) (hb : b ≠ 0) (hJ : (∀ (n : ℝ) (k : ℕ) (y : ℝ), y ≠ 0 →
     (∀ σ ∈ halfPlane, HasDerivAt (iteratedDeriv k (hTrans σ n)) (iteratedDeriv (k + 1) (hTrans σ n) y) y) ∧
     DifferentiableOn ℂ (fun σ => iteratedDeriv k (hTrans σ n) y) halfPlane))

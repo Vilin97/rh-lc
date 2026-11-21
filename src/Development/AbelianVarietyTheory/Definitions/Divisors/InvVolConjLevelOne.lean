@@ -86,10 +86,12 @@ section Wt
 variable {ι : Type} [Fintype ι] {n : ℕ} (σ : ι → DomWeight n)
 
 
+open Classical in
 def funOf : VV ℂ σ →ₗ[ℂ] VV ℂ fun τ => (σ τ).dual :=
   if h : ∃ φ : VV ℂ σ →ₗ[ℂ] VV ℂ fun τ => (σ τ).dual, ∀ F, IsFunForm σ F (φ F) then h.choose else 0
 
 
+open Classical in
 def covOf : (VV ℂ fun τ => (σ τ).dual) →ₗ[ℂ] VV ℂ σ :=
   if h : ∃ φ : (VV ℂ fun τ => (σ τ).dual) →ₗ[ℂ] VV ℂ σ, ∀ f, IsFunForm σ (φ f) f then h.choose else 0
 

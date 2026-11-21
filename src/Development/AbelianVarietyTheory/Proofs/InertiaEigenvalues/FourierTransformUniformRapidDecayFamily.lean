@@ -83,6 +83,7 @@ theorem infFourier_fderiv {f : (Fin n → Cinf E) → ℂ} (hf : ContDiff ℝ �
   linear_combination key - e
 
 
+open Classical in
 def dirv (k : Fin n × InfinitePlace E × Bool) : Fin n → Cinf E :=
   Pi.single k.1 (Pi.single k.2.1 (if k.2.2 then I else 1))
 

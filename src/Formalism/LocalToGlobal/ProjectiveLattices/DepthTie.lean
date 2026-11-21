@@ -163,6 +163,7 @@ theorem bar_or_piG_mem (T : Core D) (h : LawsM T) (EX : ErrX D) (i : Fin 2) :
     rwa [algebraMap_toOK] at h3
 
 
+open Classical in
 def piOf (T : Core D) (EX : ErrX D) (i : Fin 2) : 𝓞 D.host.E :=
   if barE D (EX.piG i) ∈ halfI T i then barE D (EX.piG i) else EX.piG i
 

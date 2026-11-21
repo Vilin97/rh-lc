@@ -53,6 +53,7 @@ def secMatInf (ρ : Fin n) (j : InfinitePlace E → Fin n) (v : Fin n → Cinf E
   fun i l w => secMat ρ (j w) (fun l => v l w) i l
 
 
+open Classical in
 def onMatInf (W : GL (Fin n) (Cinf E) → ℂ) (x : Matrix (Fin n) (Fin n) (Cinf E)) : ℂ :=
   if h : IsUnit x then W h.unit else 0
 
@@ -60,6 +61,7 @@ def smoothMatInf (α : (Fin n → Fin n → Cinf E) → ℂ) (W : GL (Fin n) (Ci
   ∫ a : Fin n → Fin n → Cinf E, α a * onMatInf W ((g : Matrix (Fin n) (Fin n) (Cinf E)) * Matrix.of a)
 
 
+open Classical in
 def toGLInf (x : Matrix (Fin n) (Fin n) (Cinf E)) : GL (Fin n) (Cinf E) := if h : IsUnit x then h.unit else 1
 
 theorem val_toGLInf {x : Matrix (Fin n) (Fin n) (Cinf E)} (h : IsUnit x) :

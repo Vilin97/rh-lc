@@ -263,6 +263,7 @@ def Vb (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (p r : �
   Submodule.span (KK O) (L : Set (MvPolynomial (BVar (2 * s + 1) r S.t) (KK O)))
 
 
+open Classical in
 theorem finrank_segLat (p r : ℕ) [NeZero r] (S : SegData s) (aTop : Fin s → ℕ) (aPlus : ℕ) (m : ℝ)
     (hfin : {b : SegBlock s r | Kept p r S aTop b}.Finite) :
     Module.finrank O (segLat O p r S aTop aPlus m) = segRank O p r S aTop aPlus m := by

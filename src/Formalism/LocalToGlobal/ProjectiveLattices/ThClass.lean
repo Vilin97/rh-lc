@@ -61,6 +61,7 @@ def aStep (Dw : Datum H) (a : (E →+* ℂ) × ℕ → ℕ) (σ : E →+* ℂ) (
   a (σ, i) - (if i + 1 < Dw.mult σ then a (σ, i + 1) else 0)
 
 
+open Classical in
 def pG (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) : MvPolynomial (LtN Dw n) c.F :=
   ∏ σ : E →+* ℂ, ∏ i : Fin (Dw.mult σ),
     (if h : i.val + 1 ≤ n then

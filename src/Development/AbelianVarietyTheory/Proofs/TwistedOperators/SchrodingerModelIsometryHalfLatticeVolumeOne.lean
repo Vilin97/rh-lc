@@ -75,6 +75,7 @@ theorem heisO_eigen {l : WO S T} {f : WO S T → ℂ} (h : heisO ψ S T l f = f)
   rw [heisO_comm ψ S T l y, heisO_comm ψ S T l x, h, heisO_smul, smul_smul, AddChar.map_add_eq_mul]
 
 
+open Classical in
 theorem ipO_translates (hψ : IsStdChar D ψ (-1)) (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) {a : AE D}
     (ha : IsSplitIdem D a) {μ : Measure (WO S T)} {𝓕 : Set (WO S T)} (hμ : IsCovolOne (ratL T S) μ 𝓕)
     {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (hl : IsLatVac (heisO ψ S T) (latO S T ΛS ΛT fun _ => True) f)
@@ -126,6 +127,7 @@ theorem halfInd_add {a : AE D} {Λ : AddSubgroup (WO S T)} {l : WO S T} (hl : l 
   simpa using isHalf_sub h hl'
 
 
+open Classical in
 theorem integral_waves (hψ : IsStdChar D ψ (-1)) (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) {a : AE D}
     (ha : IsSplitIdem D a) {G : Type} [AddCommGroup G] [MeasurableSpace G] [MeasurableAdd G] (ν : Measure G)
     [ν.IsAddRightInvariant] {κ : WO S T → G} {σ : G → WO S T} (h1 : ∀ z, IsHalf a (σ z)) (h2 : ∀ z, κ (σ z) = z)

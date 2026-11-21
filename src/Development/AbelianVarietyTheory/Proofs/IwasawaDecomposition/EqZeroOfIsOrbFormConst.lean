@@ -122,6 +122,7 @@ section Fun
 variable (O : Type) [CommRing O] {X₀ : Type} [AddCommGroup X₀] [Module O X₀]
 
 
+open Classical in
 def orbFun (w0 : O) (v : LinearMap.BilinForm ℤ X₀) : InvFun O where
   toFun n B := if v ≠ 0 ∧ ∃ σ : O ≃+* O, σ w0 = w0 ∧ IsOrbForm v σ n B then 1 else 0
   inv n m r hr B := by

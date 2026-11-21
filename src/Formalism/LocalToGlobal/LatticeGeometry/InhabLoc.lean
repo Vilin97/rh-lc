@@ -215,6 +215,7 @@ theorem trZ_zero_rank (a b : Fin 0 → 𝓞 D.host.E) : trZ D 0 a b = 0 := by
   simp [trZ]
 
 
+open Classical in
 def pU (p : ℕ) (c : CF p) : (c.C)ˣ := if h : (p : c.C) = 0 then 1 else Units.mk0 (p : c.C) h
 
 theorem vU_pU_zpow (p : ℕ) (c : CF p) (z : ℤ) (h : 2 ≤ p ∨ z = 0) : BoundaryLocalData.vU p (pU p c ^ z) = z := by

@@ -96,6 +96,7 @@ def GaS : Subgroup (Ga l L n) :=
   ⨅ (w : Plc L) (_ : w.under (𝓞 (Lp L)) ∉ s.St ∧ w.under (𝓞 (Lp L)) ≠ s.v0), (cmp n w).ker
 
 
+open Classical in
 def secS : GS n s →* Ga l L n :=
   if h : Function.Bijective ((toGS n s).comp (GaS n s).subtype) then
     (GaS n s).subtype.comp (MulEquiv.ofBijective _ h).symm.toMonoidHom

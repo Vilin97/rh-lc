@@ -345,6 +345,7 @@ variable {S X : Type} [AddCommGroup S] [Module F S] [Module (𝓞 F) S] [IsScala
   [Module F X] [Module (𝓞 F) X] [IsScalarTower (𝓞 F) F X] (ψ : S →ₗ[F] X) (hψ : Function.Injective ψ) (q : Prop)
 
 
+open Classical in
 def rangeIf : Submodule F X := if q then LinearMap.range ψ else ⊥
 
 

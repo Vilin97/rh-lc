@@ -150,6 +150,7 @@ theorem ordFinsupp_ofFinite_out_injective :
   omega
 
 
+open Classical in
 def zetaTerm (L : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (σ : ℝ) (n : HeightOneSpectrum (𝓞 K) →₀ ℤ) : ℝ :=
   if ∀ v, FractionalIdeal.count K v (L : FractionalIdeal (𝓞 K)⁰ K) ≤ n v then zetaWeight σ n
   else 0
@@ -241,6 +242,7 @@ theorem tsum_ofReal_zetaTerm_lt_top (L : (FractionalIdeal (𝓞 K)⁰ K)ˣ) {σ 
   exact ENNReal.ofReal_lt_top
 
 
+open Classical in
 def finiteZetaBound (L : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (σ : ℝ) (b : (FiniteAdeleRing (𝓞 K) K)ˣ) :
     ℝ :=
   if (b : FiniteAdeleRing (𝓞 K) K) ∈ idealFiniteAdeles L then finiteModule (ofFinite b) ^ σ else 0

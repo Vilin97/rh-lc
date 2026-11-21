@@ -52,6 +52,7 @@ theorem ZeFact.mu0 {D : Rows.Data R} {u : D.Word} {c : ℂ} (h : ZeFact D u D.mu
   exact (mul_eq_right₀ hb).1 e2.symm
 
 
+open Classical in
 def zeVal (u : D.Word) (μ : D.Tup) : D.LLˣ :=
   if μ = D.mu0 then 1 else if h : ∃ z : D.LLˣ, ZeFact D u μ (D.embLL (z : D.LL)) then h.choose else 1
 

@@ -192,6 +192,7 @@ def IsEigOf (P : RowPsi V n) (J : Set (GA D V)) (χ : GA D V → ℂ) (Sb : Fins
   ∀ Pr d, (¬ ∃ R, Mult.Hecke₂ V J χ Sb Pr d R) → c Pr d = 0
 
 
+open Classical in
 def cOfT (P : RowPsi V n) (J : Set (GA D V)) (χ : GA D V → ℂ) (Sb : Finset (HeightOneSpectrum (𝓞 D.host.F)))
     (π : Formalism.L2.NG.FinTyp D.host.E n) : HeightOneSpectrum (𝓞 D.host.E) → List ℤ → ℂ :=
   if h : ∃ c, IsEigOf P J χ Sb π c then h.choose else 0

@@ -118,6 +118,7 @@ def DGood : Prop := ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (
   ∀ (W : List (Pl F)) (n : ℕ) (a : Fin n → GF F), IsReps c W a → (mkDat c χ).Good a ∧ ((∃ w ∈ W, c w ≠ 0) → (mkDat c χ).Reg a)
 
 
+open Classical in
 def nz {l : ℕ} [Fact l.Prime] {ι : Qbar l ≃+* ℂ} (D : LDat F ι) (k₀ : ℕ) (t : InfinitePlace F → ℕ) (w : Pl F) : ℂ :=
   (((normV w : ℝ) ^ ((k₀ : ℝ) / 2 - 1) : ℝ) : ℂ) * ∏ v, if D.pl v = w then (l : ℂ) ^ t v else 1
 
@@ -217,6 +218,7 @@ def DAx : Prop := ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F], 2 
   ∀ χ : Hc c →* ℂˣ, (∃ m, 0 < m ∧ ∀ h, χ h ^ m = 1) → (mkDat c χ).Ax
 
 
+open Classical in
 def HolWC : Prop :=
   ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F], 2 ≤ Module.finrank ℚ F → ∀ (l : ℕ) [Fact l.Prime], l ≠ 2 → ∀ (ι : Qbar l ≃+* ℂ) (D : LDat F ι)
     (k₀ : ℕ), 4 ≤ k₀ → ∀ c : Pl F → ℕ, {w | c w ≠ 0}.Finite → (∀ v, c (D.pl v) = 1) → (∃ u, c u ≠ 0 ∧ normV u = 2) →
@@ -226,6 +228,7 @@ def HolWC : Prop :=
       ∀ w, nu ι ((∏ v, if D.pl v = w ∧ v ∈ S then (l : ℂ) ^ t else 1) * lam' w - lam w) < 1
 
 
+open Classical in
 def PropMV : Prop :=
   ∀ (F Ω : Type) [Field F] [NumberField F] [IsTotallyReal F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime], l ≠ 2 →
     2 ≤ Module.finrank ℚ F → SplitL F l →

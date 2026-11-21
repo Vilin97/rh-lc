@@ -60,6 +60,7 @@ def projectiveLineChartAtZero : OpenPartialHomeomorph (OnePoint ℂ) (Fin 1 → 
   continuousOn_invFun := (OnePoint.continuous_coe.comp (continuous_apply 0)).continuousOn
 
 
+open scoped Classical in
 def projectiveLineChartAtInfinity : OpenPartialHomeomorph (OnePoint ℂ) (Fin 1 → ℂ) where
   toFun x := fun _ => crd1 x
   invFun w := if w 0 = 0 then ∞ else (((w 0)⁻¹ : ℂ) : OnePoint ℂ)

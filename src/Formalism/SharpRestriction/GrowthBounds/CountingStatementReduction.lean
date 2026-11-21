@@ -2283,6 +2283,7 @@ def blockForm (b : SegBlock s r) :
   fun f g => ((specConst p S b : ℕ) : KK O) * fock f g
 
 
+open Classical in
 def segSub (aTop : Fin s → ℕ)
     (L₂ : SegBlock s r → Submodule O (MvPolynomial (BVar (2 * s + 1) r S.t) (KK O))) :
     Submodule O (SegVs O r s S.t) :=
@@ -2293,6 +2294,7 @@ theorem fock_zero_right' {R : Type*} [CommSemiring R] {σ : Type*} (F : MvPolyno
   unfold fock; simp
 
 
+open Classical in
 theorem segSub_good (aTop : Fin s → ℕ) (aPlus : ℕ) (m D : ℝ)
     (L₂ : SegBlock s r → Submodule O (MvPolynomial (BVar (2 * s + 1) r S.t) (KK O)))
     (h : ∀ b, Kept p r S aTop b → GoodSub p (blockForm O p r S b) (blockLat O p r S aTop aPlus m b) (L₂ b) D) :
@@ -2582,6 +2584,7 @@ def segSubMap (aTop : Fin s → ℕ)
   map_smul' := fun c x => by funext b; apply Subtype.ext; rfl
 
 
+open Classical in
 def segSubEquiv (aTop : Fin s → ℕ)
     (L₂ : SegBlock s r → Submodule O (MvPolynomial (BVar (2 * s + 1) r S.t) (KK O))) :
     segSub O p r S aTop L₂ ≃ₗ[O] (∀ b : keptSet p r S aTop, L₂ b.1) :=
@@ -2855,6 +2858,7 @@ theorem segPos_ne_next (TT : Finset (Fin n')) (j : Fin (numSeg TT)) (i : Fin (se
   · omega
 
 
+open Classical in
 def realW (TT : Finset (Fin n')) (j : Fin (numSeg TT)) (a0 : ℕ) (aTop : Fin (segS TT j) → ℕ) (aPlus : ℕ) :
     Fin n' → ℕ :=
   fun s => if h : ∃ i, segPos TT j i = s then aTop h.choose else if s = segNext TT j then aPlus else a0
@@ -2905,10 +2909,12 @@ def mCl (dl : DCl X) (aTop : Fin X.s → ℕ) : ℕ :=
     Formalism.MainNotions.ColumnSystems.symDim (X.L.m + 1) ((X.S C0 CE1 CE2).bPlus : ℤ)
 
 
+open Classical in
 def keptSum (f : SegBlock X.s X.r → ℕ) (aTop : Fin X.s → ℕ) : ℕ :=
   ∑ᶠ b : SegBlock X.s X.r, if Kept X.p X.r (X.S C0 CE1 CE2) aTop b then f b else 0
 
 
+open Classical in
 def clSum (f : SegBlock X.s X.r → ℕ) (aTop : Fin X.s → ℕ) (dl : DCl X) : ℕ :=
   ∑ᶠ b : SegBlock X.s X.r,
     if Kept X.p X.r (X.S C0 CE1 CE2) aTop b ∧ b.rz = dl.1 ∧ b.ry = dl.2 then f b else 0
@@ -3157,6 +3163,7 @@ theorem card_Ev (k n : ℕ) : (Ev k n).card = (k + n - 1).choose n := by
     exact ⟨(mem_Ev e).1 he, Finset.subset_univ _⟩
 
 
+open Classical in
 theorem card_Ev_digits (k a P : ℕ) (hP : 0 < P) :
     (Ev k a).card = ∑ ρ ∈ Fintype.piFinset (fun _ : Fin k => range P),
       if (∑ c, ρ c ≤ a ∧ P ∣ a - ∑ c, ρ c) then (Ev k ((a - ∑ c, ρ c) / P)).card else 0 := by
@@ -3233,6 +3240,7 @@ theorem symDim_choose (r n : ℕ) : Formalism.MainNotions.ColumnSystems.symDim (
   rw [e1, e3]
 
 
+open Classical in
 theorem symDim_digits (r a P : ℕ) (hP : 0 < P) :
     ∑ ρ ∈ Fintype.piFinset (fun _ : Fin (r + 1) => range P),
       (if (∑ c, ρ c ≤ a ∧ P ∣ a - ∑ c, ρ c) then Formalism.MainNotions.ColumnSystems.symDim (r + 1) (((a - ∑ c, ρ c) / P : ℕ) : ℤ) else 0) =
@@ -3289,11 +3297,13 @@ section Flat
 variable (C0 CE1 CE2 : ℝ) (X : flipOneThree.Inst)
 
 
+open Classical in
 def fA (i : Fin X.s) (ρ : Fin (X.r + 1) → ℕ) : ℕ :=
   if (∑ c, ρ c ≤ (X.S C0 CE1 CE2).bTop i ∧ (X.S C0 CE1 CE2).P X.p i ∣ (X.S C0 CE1 CE2).bTop i - ∑ c, ρ c) then
     Formalism.MainNotions.ColumnSystems.symDim (X.r + 1) ((((X.S C0 CE1 CE2).bTop i - ∑ c, ρ c) / (X.S C0 CE1 CE2).P X.p i : ℕ) : ℤ) else 0
 
 
+open Classical in
 def fC (i : Fin X.s) (a : ℕ) (ρ : Fin (X.r + 1) → ℕ) : ℕ :=
   if (∑ c, ρ c ≤ a ∧ (X.S C0 CE1 CE2).P X.p i ∣ a - ∑ c, ρ c) then
     Formalism.MainNotions.ColumnSystems.symDim (X.r + 1) (((a - ∑ c, ρ c) / (X.S C0 CE1 CE2).P X.p i : ℕ) : ℤ) else 0
@@ -3344,6 +3354,7 @@ theorem mCl_factor (rz ry : Fin X.s → Fin (X.r + 1) → ℕ) (hrz : rz ∈ dig
     rw [hz, mul_zero]
 
 
+open Classical in
 theorem MCl_eq (hp : 0 < X.p) (aTop : Fin X.s → ℕ) :
     MCl C0 CE1 CE2 X aTop =
       ((cstM C0 CE1 CE2 X * ∏ i, Formalism.MainNotions.ColumnSystems.symDim (X.r + 1) (aTop i : ℤ) : ℕ) : ℝ) := by

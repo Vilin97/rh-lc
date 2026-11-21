@@ -28,6 +28,7 @@ def isoSetoid (h : V →ₗ⋆[K] V →ₗ[K] K) :
       exact ⟨g' * g, (isom h).mul_mem hg' hg, by rw [gmap_mul, e, e']⟩
 
 
+open Classical in
 def pick (h : V →ₗ⋆[K] V →ₗ[K] K) (s₀ : Finset (Submodule (NumberField.RingOfIntegers K) V))
     (q : Quotient (isoSetoid h)) : Submodule (NumberField.RingOfIntegers K) V :=
   if hq : ∃ N ∈ s₀, Quotient.mk (isoSetoid h) N = q then Classical.choose hq else ⊥

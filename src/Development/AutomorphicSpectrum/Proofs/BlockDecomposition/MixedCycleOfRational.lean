@@ -378,6 +378,7 @@ end Mult
 section Sum
 
 
+open Classical in
 def oS (i : X ⟶ MP ℤ m n) (s : Pol n) (z : X) : ℝ :=
   if Order.coheight z = 1 then (multAt (ptIdeal (i (genericPoint X)) ⊔ Ideal.span {s}) (ptIdeal (i z)) : ℝ) else 0
 

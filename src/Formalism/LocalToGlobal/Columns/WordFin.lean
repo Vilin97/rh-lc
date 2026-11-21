@@ -135,6 +135,7 @@ def repr (u : d.what₂.Word) (i : ℕ) (c : StCl (Pr := d.Pr) d.W d.lev u i) : 
   (stepGSD (Pr := d.Pr) d.W d.lev u i).outSec.rep c
 
 
+open Classical in
 def clsLat (u : d.what₂.Word) (i : ℕ) (c : StCl (Pr := d.Pr) d.W d.lev u i) : Submodule (𝓞 d.host.E) (d.sp.X i).V :=
   if hi : i ≤ d.R.m then
     (d.repr u i c).1.L.map (((d.crd i hi).symm : (Fin (d.R.N i) → d.host.E) →ₗ[d.host.E] (d.sp.X i).V).restrictScalars (𝓞 d.host.E))

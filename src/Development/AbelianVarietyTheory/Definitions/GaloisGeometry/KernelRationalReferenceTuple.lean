@@ -240,6 +240,7 @@ theorem vqTieU_of (t : KerEntTied ex) {lam : ∀ (_ : D.what₂.Word) (i : ℕ),
   fun u μ _ i hi c => h u μ i hi c
 
 
+open Classical in
 theorem kmapRat_of_vqU (t : KerEntTied ex) (lam : ∀ (_ : D.what₂.Word) (i : ℕ), D.what₂.Tau → DomWeight (D.R.N i))
     (sh : D.what₂.Word → ℕ → D.what₂.Tau → ℤ) (n : D.what₂.Word → ℕ → D.what₂.Tau → ℕ)
     (hVQ : VQTieU t lam sh) (hW : t.WtTie lam sh n) (hRK : t.RK) : OrbitPlaces.KmapRat t.ent := by

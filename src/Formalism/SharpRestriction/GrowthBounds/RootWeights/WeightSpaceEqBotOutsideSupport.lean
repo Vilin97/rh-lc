@@ -27,6 +27,7 @@ theorem linearMap_ext_on_weightSpaces {V' : Type} [AddCommGroup V'] [Module K V'
   exact hle this
 
 
+open Classical in
 def lagrangeWeightFactor (E : GLOps n K V) (mu nu : Fin n → ℤ) : Module.End K V :=
   if h : ∃ a, nu a ≠ mu a then
     (((mu h.choose : K) - (nu h.choose : K))⁻¹) • (E h.choose h.choose - (nu h.choose : K) • (1 : Module.End K V))

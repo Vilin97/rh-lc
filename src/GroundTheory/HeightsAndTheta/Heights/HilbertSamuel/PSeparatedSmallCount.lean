@@ -62,6 +62,7 @@ def IsSectionValue (y : (Σ k, ι k) → Ω) (a : K → ℤ) (τ : ℕ) (s : Ω)
     v = eval z (map (Int.castRingHom ℂ) g) / eval z (map (Int.castRingHom ℂ) h)
 
 
+open Classical in
 def sectionValue (y : (Σ k, ι k) → Ω) (a : K → ℤ) (τ : ℕ) (s : Ω) (z : (Σ k, ι k) → ℂ) : ℂ :=
   if h : ∃ v, IsSectionValue y a τ s z v then h.choose else 0
 

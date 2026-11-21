@@ -19,6 +19,7 @@ namespace AdditiveExpand
 variable {G : Type} [Group G] [TopologicalSpace G]
 
 
+open Classical in
 theorem jhMult_rep_rep (c d : IrrCl G) : jhMult c.rep.ρ d.rep.ρ = if c = d then 1 else 0 := by
   split_ifs with h
   · subst h; exact jhMult_self c.rep.irr

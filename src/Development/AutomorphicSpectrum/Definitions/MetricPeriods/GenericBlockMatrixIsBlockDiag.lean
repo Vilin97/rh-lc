@@ -41,6 +41,7 @@ def detFac (j : ℕ) (i : Fin N) (T : Matrix (Fin N) (Fin N) R) : R :=
     if (i : ℕ) + 1 = N then minorIJ T (omIdx N j) (omIdx N j) else 1
 
 
+open Classical in
 def blockPot (j : ℕ) (i : Fin N) (G h : Matrix (Fin N) (Fin N) ℂ) : ℝ :=
   (1 / 2) * Real.log (detFac j i G).re +
     if IsProperStep N j i then (1 / 2) * Real.log (minorIJ (hᴴ * G * h) (stepCols N j i) (stepCols N j i)).re else 0
@@ -443,6 +444,7 @@ def GoodAt (F : FrameData ι Ψ N M.Ω M.blk) (Q : Ideal (MRing (baseIdx ι M.bl
     ∀ p, M.blk p = none → F.υ p ≠ 0 ∧ RegAt M.x Q (F.υ p) ∧ RegAt M.x Q (F.υ p)⁻¹
 
 
+open Classical in
 def dy (p : Ψ × Fin N) : K → ℤ := fun k =>
   if h : ∀ p', M.blk p' ≠ some k then -M.b p ⟨k, h⟩ else if M.blk p = some k then 1 else 0
 

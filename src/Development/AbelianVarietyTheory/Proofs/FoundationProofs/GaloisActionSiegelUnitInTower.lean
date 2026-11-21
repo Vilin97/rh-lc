@@ -74,6 +74,7 @@ theorem eps_eOm {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (�
   exact Function.invFun_eq hex
 
 
+open Classical in
 def lc {R : Type} [Zero R] (M : ℕ) (k : ℤ) (A : ℕ → R) (r : ℚ) : R :=
   if h : ∃ n : ℕ, r = ((k : ℚ) + n) / M then A h.choose else 0
 

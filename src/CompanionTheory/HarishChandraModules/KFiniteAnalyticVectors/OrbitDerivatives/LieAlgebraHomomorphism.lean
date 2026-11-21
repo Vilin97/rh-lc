@@ -21,6 +21,7 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 variable {k r : ℕ}
 
 
+open Classical in
 def ent {X Y : Obj k r} (f : M X →ₗ[ℂ] M Y) (e : Y.1.ι) (c : X.1.ι) (v : X.2.R.H) : Y.2.R.H :=
   if hv : IsSm (GG k r) X.2.R.σ v then (f (Pi.single c ⟨v, hv⟩) e : Y.2.R.H) else 0
 

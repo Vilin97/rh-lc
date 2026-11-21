@@ -19,6 +19,7 @@ open GlobalTheory.Up GlobalTheory.Up.DivMetricPf
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} {X : Data E r}
 
 
+open Classical in
 noncomputable def Wfree (Xa : ArchInM X) (Fl : FlatM X Xa) (G : Wt X.Ψ r) (n : ℕ) (x : Frame X.Ψ r) : ℝ≥0∞ :=
   if x ∈ X.dom then ENNReal.ofReal (Real.exp (-phla X G x)) *
     ENNReal.ofReal (∑ k, ‖Xa.w k x‖ ^ 2) ^ (-(1 / 2 : ℝ)) *

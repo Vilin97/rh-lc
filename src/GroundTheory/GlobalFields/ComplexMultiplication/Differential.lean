@@ -84,6 +84,7 @@ section AtPoint
 variable {F : Type u} [Field F] (E : WeierstrassCurve F) {L : Type v} [Field L] [Algebra F L]
 
 
+open Classical in
 noncomputable def omegaAt : (E.baseChange L).toAffine.Point → Ω[L⁄F]
   | .zero => 0
   | .some x y _ =>

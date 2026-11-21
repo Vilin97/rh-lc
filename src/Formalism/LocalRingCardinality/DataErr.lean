@@ -90,6 +90,7 @@ def EatG {D : D7} (L : SizeData₂ D) (X : ErrX D) (c : ErrC) (i : Fin 2) (u : D
     c.g * (D.R.f : ℝ) * (Nm D ^ 2 + (D.R.m : ℝ) ^ 2 * L.etaSz)
 
 
+open Classical in
 def Wtau (D : D7) (u : D.what₂.Word) (τ : D.what₂.Tau) : ℕ :=
   (Finset.range (D.R.m + 1)).sup fun i => Finset.univ.sup fun a : Fin (D.R.N i) =>
     if a.1 = 0 ∧ τ ∈ topsOf D.host D.eTau then 0
@@ -102,6 +103,7 @@ def EatT (D : D7) (u : D.what₂.Word) (w : D.what₂.places.Pl) : ℝ :=
   else 0
 
 
+open Classical in
 def ctD (D : D7) (u : D.what₂.Word) (j : ℕ) (t : HH D) : ℝ :=
   nuAbs D u j (tauPl D (false, t)) -
     (if t ∈ D.host.TT then DV.nuRow D u j (tauPl D (false, t)) 0 - DV.nuRow D u j (tauPl D (false, t)) 1 else 0) +
@@ -126,6 +128,7 @@ def kindBC (D : D7) (p : ℕ) : Finset (Bool × HH D) := Finset.univ.filter fun 
 def topsBC (D : D7) (p : ℕ) : Finset (Bool × HH D) := (kindBC D p).filter fun z => IsTopPl D z
 
 
+open Classical in
 def EatX {D : D7} (L : SizeData₂ D) (c : ErrC) (j p : ℕ) : ℝ :=
   if IsCs D p then
     ((D.R.k : ℝ) - 1) * (∑ z ∈ kindBC D p, wPl D j z) / (p : ℝ) ^ 3 +
@@ -145,6 +148,7 @@ def EatI {D : D7} (L : SizeData₂ D) (K : Consts) (c : ErrC) (j p : ℕ) : ℝ 
     EatX L c j p
 
 
+open Classical in
 def Eval {D : D7} (L : SizeData₂ D) (X : ErrX D) (K : Consts) (c : ErrC) (u : D.what₂.Word) (j : ℕ)
     (w : D.what₂.places.Pl) : ℝ :=
   let p := D.what₂.places.resChar w

@@ -446,6 +446,7 @@ theorem exists_basis_fin {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuati
   exact ⟨_, h1, h2⟩
 
 
+open Classical in
 def IsChi {V ι A : Type} [Fintype ι] [CommGroup A] {n : ℕ} (P : ι → V) (Q : Finset V) (u : ι → A)
     (χ : Multiplicative (↥Q → ZMod n) →* A) : Prop :=
   ∀ x : ↥Q → ZMod n, χ (Multiplicative.ofAdd x) = ∏ q, if h : P q ∈ Q then u q ^ (x ⟨P q, h⟩).val else 1

@@ -109,6 +109,7 @@ open Formalism.UG GlobalTheory.Hk3.IntWitt
 variable {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))]
 
 
+open Classical in
 noncomputable def redL (x : L) : Res L := if h : x ∈ OV L then IsLocalRing.residue (OV L) ⟨x, h⟩ else 0
 
 theorem redL_coe (x : OV L) : redL (x : L) = IsLocalRing.residue (OV L) x := by

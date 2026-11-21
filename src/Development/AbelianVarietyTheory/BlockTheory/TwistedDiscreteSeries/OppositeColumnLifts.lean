@@ -40,6 +40,7 @@ section Models
 variable (ψ : AddChar (AF D.host.F) ℂ)
 
 
+open Classical in
 def IsDatOwn (ε : Bool) (S T : Node D) (e : AE D) (f₀ : WO S.V T.V → ℂ)
     (φ : Matrix (Fin T.V.rank) (Fin S.V.rank) (Datum.EAf D) → ℂ) (f : WO S.V T.V → ℂ) : Prop :=
   IsSBHalf e (latO (sgn ε S.V) T.V S.Λ T.Λ fun _ => True)

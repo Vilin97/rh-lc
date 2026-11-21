@@ -42,6 +42,7 @@ theorem evH_pull (p : Spec (CommRingCat.of A) ⟶ Y) (q : Y ⟶ X) (V : X.Opens)
   congr 1
 
 
+open Classical in
 def uv (p : Spec (CommRingCat.of A) ⟶ X) (U : X.Opens) : Γ(X, U)ˣ →* Aˣ :=
   if h : ⊤ ≤ p ⁻¹ᵁ U then Units.map (evH p U h : Γ(X, U) →* A) else 1
 

@@ -247,6 +247,7 @@ def ConclusionG6 (i : N.Loc) : Prop :=
     x ∈ ZN N A i ∧ ∀ Sig, HasParamX N A i x Sig → IsCuspIso N A Sig
 
 
+open Classical in
 def ConclusionZ (i : N.Loc) : Prop :=
   HG N A i →
     (∀ x ∈ ZgoodN N A i, ∀ Sig, HasParamX N A i x Sig →

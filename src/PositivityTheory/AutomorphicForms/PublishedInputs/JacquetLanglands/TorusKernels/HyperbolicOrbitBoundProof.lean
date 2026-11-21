@@ -15,6 +15,7 @@ namespace UpperTheory.Esk.ImaginaryUnitActionLemmas
 open UpperTheory.Esk
 
 
+open Classical in
 def Fx {I : Type} (f : X I → ℂ) (w : I → ℂ) : ℂ :=
   if h : ∀ v, (w v).im ≠ 0 then f (fun v => ⟨w v, h v⟩) else 0
 

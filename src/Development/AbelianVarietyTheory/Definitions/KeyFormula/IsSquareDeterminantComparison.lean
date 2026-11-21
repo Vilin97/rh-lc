@@ -48,6 +48,7 @@ def KeyVia {R' : Type} [CommRing R'] (x' : KeyIn R') (x : KeyIn R) (f : R →+* 
     ∀ i, (x'.v i).left ≫ φ = spMap F ≫ (x.v (i.cast hg)).left
 
 
+open Classical in
 def valT {T : Type} [CommRing T] {X : Scheme.{0}} (w : Sp T ⟶ X) (U : X.Opens) (f : Γ(X, U)) : T :=
   if h : ⊤ ≤ w ⁻¹ᵁ U then (Scheme.ΓSpecIso (CommRingCat.of T)).hom.hom ((w.appLE U ⊤ h).hom f) else 0
 

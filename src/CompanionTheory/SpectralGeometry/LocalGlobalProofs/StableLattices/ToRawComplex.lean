@@ -25,6 +25,7 @@ theorem dsigW_zero' (R : Rep k r) (W : List (Matrix (Fin (2 * r + k + 1)) (Fin (
     simp [PI.UpqRep.dsig]
 
 
+open Classical in
 def extZ {R R' : Rep k r} (f : R.smSub →ₗ[ℂ] R'.smSub) (y : R.H) : R'.H :=
   if h : y ∈ R.smSub then (f ⟨y, h⟩ : R'.H) else 0
 

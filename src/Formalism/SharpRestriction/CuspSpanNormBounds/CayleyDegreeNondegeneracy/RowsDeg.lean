@@ -17,6 +17,7 @@ section Deg
 variable {D : D7} {large₂ : SizeData₂ D} {X : TermTie D} {u u' : D.what₂.Word} {C1 : ℝ} (Y : LoopTie D large₂ X u u' C1)
 
 
+open Classical in
 def rows_KZ (D : D7) (u u' : D.what₂.Word) (Z : GramM D) : ℝ :=
   ∏ τ : D.what₂.Tau, if leadMinorE Z D.R.rS = 0 then 1 else
     (1 + ‖embS D τ (leadMinorE Z (D.R.rS + 1) / leadMinorE Z D.R.rS)‖ / Real.sqrt ((Tu D u : ℝ) * (Tu D u' : ℝ))) /

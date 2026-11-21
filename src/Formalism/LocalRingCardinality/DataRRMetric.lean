@@ -38,6 +38,7 @@ def DV.EEcpart (D : D7) {X : DivX D} (E : EigIdx D X) (c : E.Pi) : Submodule ℂ
   Submodule.span ℂ (D.what₂.onb '' {σ | E.cOf (D.what₂.ft σ) = c})
 
 
+open Classical in
 def DV.logLamC {D : D7} {X : DivX D} (E : EigIdx D X) (j : ℕ) (c : E.Pi) (e : D.what₂.LL →+* ℂ) : ℝ :=
   if h : ∃ π, E.cOf π = c ∧ D.what₂.isot j π ≠ ⊥ then X.logLam j h.choose e else 0
 

@@ -20,6 +20,7 @@ open scoped TensorProduct
 namespace GlobalTheory.LabelTransport
 
 
+open Classical in
 theorem coset_transport {G H : Type} [Group G] [Group H] (ψ : G →* H) (T U J : Subgroup G) (K : Set H) (α : H)
     (R : Finset H) (hK : ∀ x, ψ x ∈ K ↔ x ∈ U ∧ x ∈ T) (hKr : ∀ k ∈ K, ∃ x, ψ x = k)
     (hJ : ∀ x ∈ T, x ∈ J ↔ x ∈ U) (pre : H → G) (hpre : ∀ γ ∈ R, ψ (pre γ) = γ ∧ pre γ ∈ T)

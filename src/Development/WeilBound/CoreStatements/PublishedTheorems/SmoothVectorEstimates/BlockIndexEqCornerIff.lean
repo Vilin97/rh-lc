@@ -113,6 +113,7 @@ theorem sM_mul_sI (hm : m + 1 < a) {x : V ι a m} (hx : x ∈ O ι hm) :
     · rfl
 
 
+open Classical in
 def uM (hm : m + 1 < a) (x : V ι a m) : GL (Fin a) (ι → ℂ) :=
   if hx : x ∈ O ι hm then ⟨Matrix.of (sM hm x), Matrix.of (sI hm x), sM_mul_sI hm hx, sI_mul_sM hm hx⟩ else 1
 

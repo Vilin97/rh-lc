@@ -209,6 +209,7 @@ theorem contAction_rhoS (c : Coef l) (n : ℕ) (W : R2 Ω l) (hint : ∀ s i j, 
 variable [IsAlgClosure ℚ Ω]
 
 
+open Classical in
 def Av (A : ValuationSubring Ω) (S : Finset Pl) (v : S) : ValuationSubring Ω :=
   if IsPlaceOver A v.1 then A else placeOf Ω v.1
 
@@ -243,6 +244,7 @@ def ordCond (c : Coef l) (n : ℕ) (W : R2 Ω l) (hint : ∀ s i j, mat W s i j 
     (Submodule.mkQ _)
 
 
+open Classical in
 def Lc (c : Coef l) (n : ℕ) (W : R2 Ω l) (hint : ∀ s i j, mat W s i j ∈ c.O) (S : Finset Pl)
     (hN : ∀ a ∈ NS Ω (S : Set Pl), W a = 1) (A : ValuationSubring Ω) :
     LocCond (rhoS c n W hint S hN) (locFam S (Av A S)) := fun v =>

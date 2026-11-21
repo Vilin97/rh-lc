@@ -24,12 +24,14 @@ def ChainOK {N r : ℕ} [NeZero r] {q : ℕ} (J : Fin q → ℕ) (M : Fin q → 
   ∀ k, ((ka (finPos N (J k)) 0 : ℤ) : WithTop ℤ) ≤ M k
 
 
+open Classical in
 def chainSum {N r : ℕ} [NeZero r] (LL : ChainLetters N) {q : ℕ} (J : Fin q → ℕ) (M : Fin q → WithTop ℤ) : ℚ :=
   ∑ᶠ ka : Fin (N + 1) → Fin r → ℤ, if IsChain LL ka ∧ ChainOK J M ka then wdim (ka (Fin.last N)) else 0
 
 def sdXi (r g : ℕ) : ℕ := Nat.choose (g + r - 1) (r - 1)
 
 
+open Classical in
 def BlockRankAt : Prop :=
   ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (N r : ℕ) [NeZero r] (D : BlockData N),
     Module.finrank (KK O) (Submodule.span (KK O)
@@ -49,6 +51,7 @@ def StWeylAt : Prop :=
     (Nat.card {I : ℤ → Finset (Fin n) // IsSt P.mu I} : ℚ) = wdim (pEnd P.mu)
 
 
+open Classical in
 def NumBranchAt : Prop :=
   ∀ (r : ℕ) (mu : Fin (r + 1) → ℤ), Antitone mu →
     wdim mu = ∑ᶠ lam : Fin r → ℤ, if (∀ i : Fin r, mu i.succ ≤ lam i ∧ lam i ≤ mu i.castSucc) then wdim lam else 0
@@ -58,6 +61,7 @@ def ChainDimAt : Prop :=
     chainSum (r := r) LL (q := 0) Fin.elim0 Fin.elim0 = ∏ i, (sdXi r (LL.deg i) : ℚ)
 
 
+open Classical in
 def chainCount (C0 CE1 CE2 : ℝ) (X : Loc) [NeZero X.m] (j : Fin (numSeg X.TT)) (m : ℝ)
     (rz ry : Fin (segS X.TT j) → Fin (X.m + 1) → ℕ) : ℚ :=
   ∑ᶠ b : SegBlock (segS X.TT j) X.m,

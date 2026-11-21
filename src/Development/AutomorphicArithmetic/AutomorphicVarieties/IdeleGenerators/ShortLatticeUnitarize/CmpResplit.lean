@@ -155,6 +155,7 @@ def R (n : InfinitePlace F → ℕ) (e : InfinitePlace F → ℤ) : Representati
 
 
 
+open Classical in
 def uf (e : InfinitePlace F → ℤ) (w : Pl F) : ℂ :=
   ∏ v, if D.pl v = w then (v.embedding (Formalism.L2.Host.unif w : Fˣ) / (l : ℂ)) ^ e v else 1
 

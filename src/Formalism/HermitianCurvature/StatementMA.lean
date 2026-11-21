@@ -201,6 +201,7 @@ abbrev Qp (r : ℕ) (TT : ℝ) : Type := ↥(Qset r TT)
 def sm : WithTop ℕ∞ := ((⊤ : ℕ∞) : WithTop ℕ∞)
 
 
+open scoped Classical in
 def ext {r : ℕ} {TT : ℝ} (f : Qp r TT → ℂ) : E r → ℂ :=
   fun x => if h : x ∈ Qset r TT then f ⟨x, h⟩ else 0
 
@@ -378,6 +379,7 @@ def wordP (w : List ℝ) : List (Letter ℂ (Fin w.length)) :=
   (wordS (LE.plus w)).map fun lt => ⟨lt.plus, Fin.cast (by simp [LE.plus]) lt.intersection_update_fsHerm_neg_one, lt.pt⟩
 
 
+open scoped Classical in
 def toSm (u : Qp P.r P.TT → ℂ) : SmQ P.r P.TT := if h : u ∈ smSub P.r P.TT then ⟨u, h⟩ else 0
 
 def evQ (f : SmQ P.r P.TT) : Qp P.r P.TT → ℂ := f.1

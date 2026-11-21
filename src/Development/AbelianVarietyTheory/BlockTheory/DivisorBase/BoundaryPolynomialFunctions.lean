@@ -63,6 +63,7 @@ def normSec (L : LocPot X) (s : X → X → ℂ) (y : X) : ℝ :=
   ‖s y y‖ * Real.exp (-L.φ y y)
 
 
+open scoped Classical in
 def absLogNorm (L : LocPot X) (s : X → X → ℂ) (y : X) : ℝ≥0∞ :=
   if s y y = 0 then ∞ else ENNReal.ofReal |logNormSec L s y|
 

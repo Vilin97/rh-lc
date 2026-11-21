@@ -30,6 +30,7 @@ def psiAt (w : HeightOneSpectrum (𝓞 E)) (x : w.adicCompletion E) : ℂ := psi
 def diffExp (w : HeightOneSpectrum (𝓞 E)) : ℕ := multiplicity w.asIdeal (differentIdeal ℤ (𝓞 E))
 
 
+open Classical in
 def gaussTerm (χ : HChar E) (w : HeightOneSpectrum (𝓞 E)) (c : Eˣ) (y : E) : ℂ :=
   if h : y = 0 then 0 else
     (((χ.locK w (Units.mk0 y h))⁻¹ : ℂˣ) : ℂ) * psiAt w (algebraMap E (w.adicCompletion E) (y / c))

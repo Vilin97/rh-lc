@@ -129,6 +129,7 @@ variable {V Ω : Type} [CommRing V] [Field Ω] (β : V →+* Ω) {G : Over (Sp V
   (x : ∀ m, jOG (𝟙 (Sp V)) d m 1 ⟶ G)
 
 
+open Classical in
 def ptOf : PtFam (spMap β) G d := fun A _ _ a =>
   if h : ∃ p : (m : ℕ) × (Jet V (Fin 1 × Fin d) m →+* A), Compat β p.2 ∧ co p.2 = a then
     rho h.choose.2 h.choose_spec.1 ≫ x h.choose.1

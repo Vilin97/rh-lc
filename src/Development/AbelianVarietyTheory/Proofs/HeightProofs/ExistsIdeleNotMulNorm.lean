@@ -40,6 +40,7 @@ theorem exists_infiniteAdele_real_component (F : Type) [Field F] [NumberField F]
   simp
 
 
+open Classical in
 noncomputable def adeleOn (F : Type) [Field F] [NumberField F]
     (S : Finset (HeightOneSpectrum (𝓞 F))) (z : F) : AdeleRing (𝓞 F) F :=
   (algebraMap F (InfiniteAdeleRing F) z,

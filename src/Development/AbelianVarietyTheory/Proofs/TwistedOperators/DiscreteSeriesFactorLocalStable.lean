@@ -40,6 +40,7 @@ section Comb
 variable {α β ι : Type} {Hs : α ⊕ β → Type} {E : ι → Type}
 
 
+open Classical in
 def comb (p : ι → α) (A : ∀ i, E i → Hs (.inl (p i))) (y0 : ∀ v, Hs v) (z : ∀ i, E i) : ∀ v, Hs v
   | .inl a => if h : ∃ i, p i = a then cast (congrArg (fun a => Hs (.inl a)) h.choose_spec) (A h.choose (z h.choose))
       else y0 (.inl a)

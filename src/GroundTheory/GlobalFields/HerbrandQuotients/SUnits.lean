@@ -47,6 +47,7 @@ theorem exact_ofUnits_valuationVector :
   exact h
 
 
+open scoped Classical in
 theorem cycHerbrand_sUnitRep (hS : ∀ (g : L ≃ₐ[K] L), ∀ w ∈ S, g • w ∈ S)
     {σ : L ≃ₐ[K] L} (hσ : ∀ g, g ∈ Subgroup.zpowers σ) :
     cycHerbrand (sUnitRep S hS) σ =

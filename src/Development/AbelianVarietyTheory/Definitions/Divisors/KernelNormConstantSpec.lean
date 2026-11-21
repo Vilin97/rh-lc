@@ -21,6 +21,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 variable {D : D7} {T : Type}
 
 
+open Classical in
 def wtOf (n : ℕ) (E : Finset ℚ) : DomWeight n :=
   if h : E.card = n ∧ InCoset (((n : ℚ) - 1) / 2) E then
     ⟨fun a => ⌊highestWeight E h.1 a⌋, fun _ _ hab => Int.floor_mono (highestWeight_antitone h.1 h.2 hab)⟩

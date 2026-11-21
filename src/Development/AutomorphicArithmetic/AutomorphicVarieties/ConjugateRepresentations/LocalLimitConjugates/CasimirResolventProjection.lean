@@ -42,6 +42,7 @@ def gard (μ : Measure (GA E a)) : Submodule ℂ (Sm E a) :=
   Submodule.span ℂ {φ | ∃ (ψ : Sm E a) (F : HL μ), IsTest ψ ∧ φ.1 = cv ψ.1 F}
 
 
+open Classical in
 def cl (μ : Measure (GA E a)) (φ : Sm E a) : HL μ := if h : InL μ φ then h.toL2 else 0
 
 theorem cl_eq {μ : Measure (GA E a)} {φ : Sm E a} (h : InL μ φ) : cl μ φ = h.toL2 := dif_pos h

@@ -69,6 +69,7 @@ theorem le_of_tdeg_le {c a : K → ℕ} {a₀ : ℕ} (ha : ∀ k, a₀ + tdeg c 
   omega
 
 
+open Classical in
 theorem per_factor {L : ℝ} {m p : ℕ} (hp : p.Prime) {W : Ideal (MRing ι)} [hWp : W.IsPrime]
     (hWm : IsMultiHomogIdeal W) (hpW : (p : MRing ι) ∈ W)
     (hdim : ringKrullDim (MRing ι ⧸ W) = ((m + 1 + Fintype.card K : ℕ) : WithBot ℕ∞))

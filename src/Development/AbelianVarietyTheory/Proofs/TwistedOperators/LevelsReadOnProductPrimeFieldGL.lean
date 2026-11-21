@@ -47,6 +47,7 @@ def EdK (b : Bool) (s k : ℕ) (a c : Fin r) : Prop :=
   else (c : ℕ) = a + 1
 
 
+open Classical in
 def sumK (b : Bool) (s k : ℕ) (u : Fin r → Fin r → κ) : κ := ∑ a, ∑ c, if EdK b s k a c then u a c else 0
 
 theorem memK_map (e : κ ≃+* κ') (b : Bool) (s k : ℕ) (u : Fin r → Fin r → κ) :

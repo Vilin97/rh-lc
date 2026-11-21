@@ -120,6 +120,7 @@ def IsZak (x : Frame C.X.Ψ T.rank) (φ : TF S.rank C.g) (f : WO S T → ℂ) : 
   C.IsTh f ∧ ∀ w, IsRealPt w → f w = thR C.X C.bas C.idx φ x (C.realPt w)
 
 
+open Classical in
 def Th (x : Frame C.X.Ψ T.rank) (φ : TF S.rank C.g) : WO S T → ℂ :=
   if h : ∃ f, C.IsZak x φ f then h.choose else 0
 

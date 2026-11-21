@@ -325,6 +325,7 @@ theorem lowZero_r (h : IsRed φ ψ) (ha : IsIx ea) (hb : IsIx eb) (N : Matrix (F
   · rw [ha.2.2] at hl; omega
 
 
+open Classical in
 theorem parPhi_eq (h : IsRed φ ψ) (ha : IsIx ea) (hb : IsIx eb) {c : κˣ →* ℂˣ} {μ : Kˣ →* ℂˣ} (hc : Compat φ ψ c μ)
     (N : Matrix (Fin b) (Fin a) S) : parPhi μ⁻¹ ((N.map ψ).submatrix eb ea) =
       if H : LowZero r (N.map φ) ∧ IsUnit (topL r (N.map φ)).det then (c H.2.unit : ℂ) else 0 := by
@@ -522,6 +523,7 @@ theorem omegaG_eq_prod {a b r t j : ℕ} (hr : r ≤ a) (Pg Q : Finset (Pl D.hos
       Subgroup.mem_bot.2 (funext fun w => (hg w).2.2)⟩
 
 
+open Classical in
 theorem omegaQ_eq_prod {a b : ℕ} (r : ℕ) (Q : Finset (Pl D.host.E)) (ξ : ∀ w : Pl D.host.E, (kP w)ˣ →* ℂˣ)
     (y : ∀ w : Pl D.host.E, Matrix (Fin b) (Fin a) (kP w)) : omegaQ Q r ξ 1 y =
       ∏ w ∈ Q, if H : LowZero r (y w) ∧ IsUnit (topL r (y w)).det then (ξ w H.2.unit : ℂ) else 0 := by
@@ -552,6 +554,7 @@ theorem compat_chi {μ₀ : T} (hL : L.Is μ₀) (hw : w ∈ L.Pg) {c : ℕ} (hc
   rw [muBase, dif_pos hc, MonoidHom.inv_apply, ← h, MonoidHom.inv_apply, inv_inv]
 
 
+open Classical in
 theorem stepFn_eq_of_mem_Q {μ₀ : T} (hL : L.Is μ₀) (hw : w ∈ L.Q t) {j a b : ℕ} (ha : a = D.R.r + j * D.R.t)
     (hb : b = D.R.r + (j + 1) * D.R.t) (N : Matrix (Fin b) (Fin a) (OA D)) :
     stepFn L t w j ((N.map (cptO w)).submatrix (ixOf G t w hb) (ixOf G t w ha)) =

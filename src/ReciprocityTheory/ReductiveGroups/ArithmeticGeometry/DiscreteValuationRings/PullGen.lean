@@ -319,6 +319,7 @@ lemma pullProd_sameSum (χ : D.toPre.X) (β : D.toPre.X) (hβ : star a • χ = 
   rw [Finset.sum_eq_zero (fun x _ => hz x), add_zero]
 
 
+open scoped Classical in
 def pullSecs (s : Fam D.toPre F k) (β : D.toPre.X) :
     LB.Sec (LB.LinComb D.toPre.P.L (DegPre.famφ D.toPre F β) (DegPre.famε (k * N))) :=
   if h : ∃ χ, star a • χ = β then

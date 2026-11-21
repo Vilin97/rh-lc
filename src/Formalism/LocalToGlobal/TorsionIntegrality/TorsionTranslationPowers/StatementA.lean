@@ -20,6 +20,7 @@ variable (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l])
 def curveL : WeierstrassCurve ℂ_[l] := Formalism.L2.Th1.A.shortW (ι L.g₂) (ι L.g₃)
 
 
+open Classical in
 def ptOf (t : ℂ) : (curveL l L ι).toAffine.Point :=
   if h : t ∉ L.lattice ∧
       (curveL l L ι).toAffine.Nonsingular (ι (L.weierstrassP t)) (ι (L.derivWeierstrassP t) / 2)

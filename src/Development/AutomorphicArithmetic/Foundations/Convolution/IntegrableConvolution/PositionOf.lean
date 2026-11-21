@@ -19,6 +19,7 @@ variable {K : Type} [Field K] [NumberField K] [IsTotallyComplex K]
 private theorem cpx (w : InfinitePlace K) : IsComplex w := IsTotallyComplex.isComplex w
 
 
+open Classical in
 private def co (τ : K →+* ℂ) : mixedSpace K →+* ℂ :=
   if (mk τ).embedding = τ then complexComp ⟨mk τ, cpx _⟩
   else (starRingEnd ℂ).comp (complexComp ⟨mk τ, cpx _⟩)
@@ -72,6 +73,7 @@ private theorem mk_eq_of_co_along {τ τ₀ : K →+* ℂ} {z : ℂ} (h : co τ 
   rcases co_cases τ with h1 | h1 <;> simp [h1, along, hc]
 
 
+open Classical in
 private def cc (w : InfinitePlace K) (τ : K →+* ℂ) : w.Completion →+* ℂ :=
   if w.embedding = τ then Completion.extensionEmbedding w
   else (starRingEnd ℂ).comp (Completion.extensionEmbedding w)

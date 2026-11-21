@@ -55,6 +55,7 @@ theorem _root_.GlobalTheory.Per.Val.mem_OL_iff (LL : _root_.Formalism.BasicNotio
     exact minpoly.aeval ℚ_[l] x
 
 
+open Classical in
 def vf (x : Om l) : WithTop ℚ := if h : x = 0 then ⊤ else ((exists_norm_eq x h).choose : ℚ)
 
 open Polynomial in

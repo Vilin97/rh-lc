@@ -108,6 +108,7 @@ theorem graph_of_scalars (C : ι → Subalgebra ℂ (Module.End ℂ V)) (U₁ U�
     rw [← e1, this, zero_smul]
 
 
+open Classical in
 noncomputable def drop (C : ι → Subalgebra ℂ (Module.End ℂ V)) (v : ι) :
     ι → Subalgebra ℂ (Module.End ℂ V) :=
   fun w => if w = v then ⊥ else C w

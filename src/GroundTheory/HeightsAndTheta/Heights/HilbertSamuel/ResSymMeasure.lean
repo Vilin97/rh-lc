@@ -35,6 +35,7 @@ theorem exists_nzAt (z : J → ℂ) : ∃ k, NZAt z k :=
 def idx (z : J → ℂ) : ℕ := Nat.find (exists_nzAt z)
 
 
+open Classical in
 def normPt (z : J → ℂ) : J → ℂ :=
   if h : idx z < Fintype.card J then (z ((Fintype.equivFin J).symm ⟨idx z, h⟩))⁻¹ • z else z
 

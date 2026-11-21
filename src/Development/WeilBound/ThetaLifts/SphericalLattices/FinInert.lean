@@ -16,6 +16,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {X : Spc F E n} {W : Spc F E d}
 
 
+open scoped Classical in
 def coef {v : Pl F} (ω : UA σ X.J × UA σ W.J → Module.End ℂ (Fn F n d v)) (l : Fn F n d v →ₗ[ℂ] ℂ) :
     Fn F n d v →ₗ[ℂ] (UA σ W.J → ℂ) where
   toFun φ h := if h ∈ UAt σ W (evFin F v) then l (ω (1, h) φ) else 0

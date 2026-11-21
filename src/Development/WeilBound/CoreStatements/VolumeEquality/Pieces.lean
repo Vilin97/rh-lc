@@ -126,6 +126,7 @@ structure Sheets (FF : Fin B.np → Set (Fin Dc.n → ℂ)) (d : Fin B.np → �
   z_over : ∀ m, ∀ t ∈ V m, z m t ≫ Or.𝔐.f = B.pt (pc m) t
 
 
+open Classical in
 def nSheets (U : Y.X.Opens) (k : Fin B.np) : ℕ := if ∃ t ∈ GlobalTheory.CompanionTheory.Ar.Cusp.ballDom (B.F k).q, ⊤ ≤ B.pt k t ⁻¹ᵁ U then Or.deg else 0
 
 set_option maxHeartbeats 1600000 in

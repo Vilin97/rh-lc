@@ -29,6 +29,7 @@ structure HostFactsS (D : ArithData H) (S : Finset ℕ) : Prop where
 def PsiA (A0 : AddSubgroup H) : Finset (AddChar (E0 × H) ℂ) := univ.filter fun ψ => ∀ s ∈ A0, ψ (0, s) = 1
 
 
+open Classical in
 def wtA (c : ℝ) (ψ : AddChar (E0 × H) ℂ) : ℝ := if ∀ h : H, ψ (0, h) = 1 then 1 else c
 
 

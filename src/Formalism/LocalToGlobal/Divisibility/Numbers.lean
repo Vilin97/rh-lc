@@ -119,6 +119,7 @@ def FOrb (j p : ℕ) (z : RPl N.R) : ℝ :=
   lpF p (N.ordP p) (fun s => ((N.R.k : ℝ) - 1) * N.w j (N.pos p z s.val))
 
 
+open Classical in
 def FInert (j p : ℕ) : ℝ :=
   if N.cls p = PrimeClass.inertClass ∧ N.hP p = 0 then
     ∑ z : RPl N.R, ((N.R.k : ℝ) - 1) * N.w j z / ((p : ℝ) ^ 2 - 1)
@@ -145,6 +146,7 @@ def Dminus (j : ℕ) : ℚ := ∑ z : RPl N.R, ∑ c ∈ Finset.range (N.R.sigW 
 def FTypeG (j : ℕ) : ℝ := -(((N.Dplus j + N.Dminus j : ℚ) : ℝ)) / 2
 
 
+open Classical in
 def FjP (j p : ℕ) : ℝ :=
   if p = N.g 0 ∨ p = N.g 1 then N.FTypeG j
   else if N.cls p = PrimeClass.ramD then N.FRamD j
@@ -240,6 +242,7 @@ def topsBC (p : ℕ) : Finset (RPl N.R) := (N.kindBC p).filter fun z => z.1 = fa
 def IsCs (p : ℕ) : Prop := N.cls p = PrimeClass.inertClass ∧ Odd (addOrderOf (N.hP p)) ∧ N.hP p ≠ 0
 
 
+open Classical in
 def EatX (c6 : ℝ) (j p : ℕ) : ℝ :=
   if N.IsCs p then
     ((N.R.k : ℝ) - 1) * (∑ z ∈ N.kindBC p, N.w j z) / (p : ℝ) ^ 3 +

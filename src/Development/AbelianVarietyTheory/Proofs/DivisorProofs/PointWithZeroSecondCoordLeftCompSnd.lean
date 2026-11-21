@@ -196,6 +196,7 @@ theorem alg {D D' : Type} [CommRing D] [Algebra R D] [CommRing D'] [Algebra R D'
   linear_combination (algebraMap R D' t) * hAa
 
 
+open Classical in
 def kFn (m₁ : IsMor (dp0 R) (A.hom ≫ 𝟙 _) (dp0 R) ((A ⊗ B).hom ≫ 𝟙 _) (RingHom.id R) (fst A B).left)
     (m₂ : IsMor (dp0 R) (B.hom ≫ 𝟙 _) (dp0 R) ((A ⊗ B).hom ≫ 𝟙 _) (RingHom.id R) (snd A B).left)
     (v : epsR R ⟶ B) (a : Z1 (O (dp0 R) (A.hom ≫ 𝟙 _))) (β : Form (B.hom ≫ 𝟙 _)) : Fn0 A := fun D _ _ x ↦

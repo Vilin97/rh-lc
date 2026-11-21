@@ -381,6 +381,7 @@ section Hat
 variable [Fact l.Prime] [NormedAlgebra ℚ_[l] K] [NeZero e] [CompleteSpace K]
 
 
+open Classical in
 def hat (f : K⟦X⟧) : AhatE O K l e :=
   if h : f ∈ RpiE O K l e then toHatE O K l e ⟨f, h⟩ else 0
 

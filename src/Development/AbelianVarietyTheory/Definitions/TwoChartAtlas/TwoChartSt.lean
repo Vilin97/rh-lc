@@ -40,6 +40,7 @@ def IsMapOf {G G' : Over (Spec (CommRingCat.of R))} {d : ℕ} (x : Fam G (Fin d)
   (∀ i, constantCoeff (φ i) = 0) ∧ ∀ (n : ℕ) (a : Pt R n d) (y : Fam G (Fin n × Fin d)),
     Rep x a y → Rep x' (comp1 φ a) (fun m => y m ≫ f)
 
+open Classical in
 def fnVal {A : Type} [CommRing A] {X : Scheme.{0}} (p : Spec (CommRingCat.of A) ⟶ X) (U : X.Opens) (f : Γ(X, U)) : A :=
   if h : ⊤ ≤ p ⁻¹ᵁ U then (Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom ((p.appLE U ⊤ h).hom f) else 0
 

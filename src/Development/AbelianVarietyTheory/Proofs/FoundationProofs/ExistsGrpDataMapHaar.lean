@@ -110,6 +110,7 @@ instance measurable_cover : MeasurableSpace (cover p q) := borel _
 instance borel_cover : BorelSpace (cover p q) := ⟨rfl⟩
 
 
+open Classical in
 def expLift (X : Mat p q) : cover p q :=
   if h : X ∈ upq p q then ⟨(expGL X, expHalf X), expGL_mem h, expHalf_sq X⟩ else 1
 

@@ -25,6 +25,7 @@ theorem inv_coord' (z : (Af E)ˣ) (w : HeightOneSpectrum (𝓞 E)) : (↑z⁻¹ 
   rw [Units.val_inv_eq_inv_val, coe_coord]
 
 
+open Classical in
 theorem prod_single_coord (S : Finset (HeightOneSpectrum (𝓞 E)))
     (x : ∀ w : HeightOneSpectrum (𝓞 E), (w.adicCompletion E)ˣ) (w' : HeightOneSpectrum (𝓞 E)) :
     ((∏ w ∈ S, single w (x w) : (Af E)ˣ) : Af E) w' = if w' ∈ S then (x w' : w'.adicCompletion E) else 1 := by

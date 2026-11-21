@@ -26,6 +26,7 @@ section ToTwin
 variable {P : Ideal (MRing ι)} {n nc : ℕ} {Bd : Set ((Σ k, ι k) → ℂ)} {χ : Fin nc → SncChart P n Bd}
 
 
+open Classical in
 def gramMatrixInFamily (hA : HermMetric y W Xo χ) (z : (Σ k, ι k) → ℂ) (b : Fin N → E) :
     Matrix (Fin N) (Fin N) ℂ :=
   if hz : ∃ l, InFrameDomain y (hA.chart l) (hA.fr l) z then

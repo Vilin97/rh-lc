@@ -21,6 +21,7 @@ section General
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
 
+open Classical in
 def cutIdem (T : Finset (HeightOneSpectrum (𝓞 F))) : Af F :=
   ⟨fun v => if v ∈ T then 1 else 0, Eventually.of_forall fun v => by
     by_cases h : v ∈ T

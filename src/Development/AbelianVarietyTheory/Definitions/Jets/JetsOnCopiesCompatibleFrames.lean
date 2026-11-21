@@ -263,6 +263,7 @@ def NabJetSt : Prop := ∀ (R : Type) [CommRing R] (d : ℕ) (O : Type) [CommRin
   ∀ (f : PS k n d) (J : Type) [Fintype J] (c : J → k) (P : J → MvPolynomial Ix k),
     nabValN B k h w0 q f cp u (∑ j, c j • P j) = ∑ j, c j * nabValN B k h w0 q f cp u (P j)
 
+open Classical in
 def MinorSt : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (K : Type) [CommRing K] (typ : (E →+* ℂ) → Prop)
     (m : (E →+* ℂ) → ℕ → ℕ) (n₁ n₂ : ℕ), (∀ τ s, m τ s ≠ 0 → 1 ≤ s ∧ s ≤ Dw.mult τ ∧ s ≤ (if typ τ then n₁ else n₂)) →
   ∃ (rk : (E →+* ℂ) → ℕ) (hrk : ∀ τ, rk τ ≤ Dw.mult τ) (col : ∀ τ, Fin (rk τ) → Fin (n₁ + n₂)) (m' : ∀ τ, Fin (rk τ) → ℕ),

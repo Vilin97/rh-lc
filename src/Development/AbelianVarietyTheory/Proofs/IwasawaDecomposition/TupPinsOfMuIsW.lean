@@ -35,6 +35,7 @@ theorem nonempty_ix (hH : Holds R F) : Nonempty A3.fam3.base3.Ix :=
   GlobalTheory.Div.nonempty_ix_of_pos A3 F.P0 F.ψ0 (R.toCx3 F).zs hH.ok hH.prim.block (hH.prim.pos false)
 
 
+open Classical in
 def labOf (Z : ReadL R F X0 Y) (hH : Holds R F) (σ : D.what₂.FT) : A3.fam3.base3.Ix :=
   if h : ∃ c, Bl.OverIx Z σ c then h.choose else (nonempty_ix hH).some
 
@@ -44,6 +45,7 @@ theorem overIx_labOf (Z : ReadL R F X0 Y) (hH : Holds R F) (σ : D.what₂.FT) (
   exact h.choose_spec
 
 
+open Classical in
 def logLamOf (Z : ReadL R F X0 Y) (hH : Holds R F) (j : ℕ) (σ : D.what₂.FT) (e : D.what₂.LL →+* ℂ) : ℝ :=
   if e = D.what₂.embLL then Real.log (D.what₂.lamP D.what₂.mu0 j σ)
   else if h : j - 1 < D.R.m then

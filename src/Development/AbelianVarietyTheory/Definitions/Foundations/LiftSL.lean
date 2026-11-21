@@ -25,6 +25,7 @@ def liftK (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (n : ℕ)
   Classical.epsilon fun b : X.Khat l => AdicCompletion.eval (idl l) (X.Kl l) n b = a
 
 
+open Classical in
 def clsK (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (n : ℕ) (w : X.K) : X.Khat l :=
   if h : w ≠ 0 then liftK X l n (X.cls l n (Units.mk0 w h)) else 0
 

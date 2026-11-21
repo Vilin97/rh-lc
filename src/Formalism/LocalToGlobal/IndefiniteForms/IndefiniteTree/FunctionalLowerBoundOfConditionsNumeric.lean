@@ -124,6 +124,7 @@ def PPF (C b : ℝ) : ℝ :=
     Real.log (b * O.nr * O.g1 * O.g2 * O.pd * O.pd' * |(O.dE : ℝ)|)
 
 
+open Classical in
 def ee (C b : ℝ) (q : O.Sq) : ℕ :=
   if q = O.sv0 then ⌊O.PPF C b / Real.log (O.qq O.sv0)⌋₊ + 1 else 2
 

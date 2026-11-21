@@ -58,6 +58,7 @@ section Line
 variable (V : HSp D) {n : ℕ} (l : D.what₂.Tau → ℝ) (s : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ)
 
 
+open Classical in
 def dirAt {m : ℕ} (τ : D.what₂.Tau) (X : Matrix (Fin m) (Fin n) ℂ) : D.what₂.Tau → Matrix (Fin m) (Fin n) ℂ :=
   fun τ' => if τ' = τ then X else 0
 

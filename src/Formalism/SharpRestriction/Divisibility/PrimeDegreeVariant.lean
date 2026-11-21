@@ -142,6 +142,7 @@ def eS (T : GoodSet K G) (s : T.S) : MonoidAlgebra K G :=
 def eG (T : GoodSet K G) : MonoidAlgebra K G := ∑ s, eS T s
 
 
+open Classical in
 def eps (P : Pair K G) : MonoidAlgebra K G :=
   ((Nat.card P.H : ℕ) : K)⁻¹ • ∑ x : G, if h : x ∈ P.H then
     (((P.chi ⟨x, h⟩)⁻¹ : Kˣ) : K) • MonoidAlgebra.of K G x else 0
@@ -309,6 +310,7 @@ theorem mapDomain_mulSingle (i : ι) (a : MonoidAlgebra ℂ (G i)) :
 variable {P : ι → Type} [∀ i, Fintype (P i)]
 
 
+open Classical in
 def eGood (E : ∀ i, P i → MonoidAlgebra ℂ (G i)) (good : (∀ i, P i) → Prop) :
     MonoidAlgebra ℂ (∀ i, G i) :=
   ∑ p : ∀ i, P i, if good p then tens (fun i => E i (p i)) else 0

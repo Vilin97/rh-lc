@@ -159,6 +159,7 @@ namespace GlobalTheory.SepPer.AdelicFromReal
 variable {D : D7}
 
 
+open Classical in
 theorem coef_split (θ : InfFam D) {Y V : HSp D} (d : HermitianOrthogonalExtensionData Y V 1 1) {S : D.what₂.Tau → SPar} (M : DSModel V S)
     (K : Subgroup (GL (Fin V.rank) (Lev.EAf D))) (u : ∀ τ, M.H τ) (g : GA D V) (a : GinfC Y) (b : GfC Y) :
     coef θ M K u u (g * stabilizerEmbedding d ((a : GA D Y) * b)) =

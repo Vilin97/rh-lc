@@ -18,6 +18,7 @@ section Blocks
 variable {R : Type} [CommRing R]
 
 
+open Classical in
 def toGL {n : ℕ} (M : Matrix (Fin n) (Fin n) R) : GL (Fin n) R := if h : IsUnit M then h.unit else 1
 
 end Blocks

@@ -200,6 +200,7 @@ def levQTop (c : ℕ) : LevQFam X.E X.K (R.N R.m) (QE sel (mu : Chr X.F X.E X.K)
   levCong (N_m_succ R) Q.1 c (rowTyQ R (mu : Chr X.F X.E X.K) (QE sel (mu : Chr X.F X.E X.K)) Q)
 
 
+open Classical in
 def topLevAt (c : ℕ) : TopLev X Pr R (QE sel (mu : Chr X.F X.E X.K)) where
   levG j := if h : j = R.m then fun w => levDiag (by have := N_succ_of_eq h; omega) (rowTyG Ch P w) else fun _ => ⟨⊤, 1⟩
   levQ j := if h : j = R.m then

@@ -29,6 +29,7 @@ theorem hermLine_ext {A B : HermLine ι} (ha : A.a = B.a) (hh : A.h = B.h) : A =
   rfl
 
 
+open Classical in
 noncomputable def indLine (ι : K → Type) [∀ k, Fintype (ι k)] : HermLine ι where
   a := 0
   h z := if ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0 then 1 else 0

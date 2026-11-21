@@ -31,6 +31,7 @@ def ZeroFreeLevel : Prop := Λ.ZeroFreeAbove (1 / 2)
 def Nt : Finset PChar := Λ.KEPT.erase PChar.one
 
 
+open Classical in
 def wt (ψ : PChar) : ℝ := if Λ.psK = some ψ then 1 else (3 * (Λ.o : ℝ) + 1)⁻¹
 
 def Gm (y : ℝ) : ℝ := Formalism.Gz y + ∑ ψ ∈ Λ.Nt, Λ.wt ψ * (An.gChi ψ.χ y).re
@@ -122,6 +123,7 @@ namespace Frame
 variable (φ : Frame)
 
 
+open Classical in
 def lam (γ : φ.A) : ℝ := (if γ ∈ φ.A0 then 4 else 3) / (3 * (φ.o : ℝ) + 1)
 
 

@@ -49,6 +49,7 @@ structure Recip.Good (a : Recip D Ω) : Prop where
 def Recip.sym (a : Recip D Ω) : (AE D)ˣ →* Gab D.host.E Ω := a.art.comp (Units.map a.κ.toMonoidHom)
 
 
+open Classical in
 def descend (φ : G D.host.E Ω →* A) : Gab D.host.E Ω →* A :=
   if h : (commutator (G D.host.E Ω)).topologicalClosure ≤ φ.ker then QuotientGroup.lift _ φ h else 1
 
@@ -172,6 +173,7 @@ theorem isSplit_of_mem_admissibleConjugatePairPlaces {i : X.Tw} {Q : Finset (Pl 
 variable (Y : NExp D.R D.host D.what₂ D.LL0 N X) (i : X.Tw) (Q : Finset (Pl D.host.E)) (M : ℕ)
 
 
+open Classical in
 def coord (P : Pl D.host.E) : G D.host.E N.Om →* Multiplicative (ZMod (X.l i ^ M)) :=
   if h : P ∈ Q then
     (AddMonoidHom.toMultiplicative (Pi.evalAddMonoidHom (fun _ : ↥Q => ZMod (X.l i ^ M)) ⟨P, h⟩)).comp (Y.delU i Q M)
@@ -186,6 +188,7 @@ def univOf (a : Recip D N.Om) : UnivTwist D (ZMod (X.l i ^ M)) :=
   ⟨fun P => a.pull (coord Y i Q M P), fun P => resOf (a.pull (coord Y i Q M P)) P⟩
 
 
+open Classical in
 def weight (P : ↥Q) (v : Pl D.host.E) : ZMod (X.l i ^ M) :=
   if v = P.1 then 1
   else if h : v ∈ Q ∧ IsConjPl D.host P.1 v then (((Y.delU_conj i Q M P.1 P.2 v h.1 h.2).choose : ℤ) : ZMod (X.l i ^ M)) else 0

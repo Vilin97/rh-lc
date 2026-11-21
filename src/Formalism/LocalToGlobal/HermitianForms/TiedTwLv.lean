@@ -108,6 +108,7 @@ def DnNatTieG (L : LevelCompatibleLattices M T res i hi lat) (eY : C.Y i ≃ Fr 
 variable (M)
 
 
+open Classical in
 def BwTieG (T : ℕ) (res : ∀ v : A.vT, 𝓞 D.host.E →+* A.Fv v) {i : ℕ} {hi : i ≤ D.R.m} (eY : C.Y i ≃ Fr D i hi)
     (lat : C.cls i → Submodule (𝓞 D.host.E) (Fin (D.R.N i) → D.host.E)) : Prop :=
   ∀ w, D.what₂.places.resChar w = T → M.seenP w = true →

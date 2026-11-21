@@ -113,6 +113,7 @@ def Joint.pt (j : ℕ) (hj : j ≤ D.R.m) (La : (sysS H X std).Lt j) : UPts (sig
   Classical.epsilon (J.IsPt std j hj La)
 
 
+open Classical in
 def Joint.xi0 (Xi : AdDatum J.St) (j : ℕ) (La : (sysS H X std).Lt j) (La' : (sysS H X std).Lt (j + 1))
     (z : Formalism.L2.Col.HomE D.host.E (((sysS H X std).Pj j).m + 1) (((sysS H X std).Pj (j + 1)).m + 1)) : ℂ :=
   if h : j + 1 ≤ D.R.m ∧ ((sysS H X std).Pj j).m + 1 = D.R.N j ∧ ((sysS H X std).Pj (j + 1)).m + 1 = D.R.N (j + 1) then

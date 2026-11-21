@@ -72,12 +72,14 @@ namespace Lev
 variable (V : Lev k)
 
 
+open Classical in
 def unitaryDoubleCosetIndicator (d : Fin 3 → kˣ) (g : GL (Fin 3) k) : ℂ := if g * (Phi k)⁻¹ ∈ V.DC d then 1 else 0
 
 def fG (ω : kˣ →* ℂˣ) (Rs Ry : Finset kˣ) (x z : kˣ) (g : GL (Fin 3) k) : ℂ :=
   ∑ e ∈ Rs, ∑ y ∈ Ry, (ω e : ℂ) * V.unitaryDoubleCosetIndicator ![x * e, y, z] g
 
 
+open Classical in
 def fZ (ω : kˣ →* ℂˣ) {n : ℕ} (d : Fin n → kˣ) (g : GL (Fin n) k) : ℂ :=
   if h : ∃ z : kˣ, (GeneralLinearGroup.scalar (Fin n) z)⁻¹ * g ∈ V.DC d then (((ω h.choose)⁻¹ : ℂˣ) : ℂ) else 0
 

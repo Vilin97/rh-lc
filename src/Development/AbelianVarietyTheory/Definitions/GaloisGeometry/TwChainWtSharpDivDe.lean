@@ -98,6 +98,7 @@ theorem locTop_den (hm : R.m = m2 + 2) (hc : cst.Ok) {P : rowSG Pr sel mu} {y : 
     exact (intAt_pow (intAt_nat _) _).mul h3
 
 
+open Classical in
 theorem locTop_add (hm : R.m = m2 + 2) (hc : cst.Ok) {P : rowSG Pr sel mu} (hD : P.1 ∉ Pr.vGs → 2 * cst.M ≤ cst.D P)
     (y : HomE X.E (R.N (m2 + 1)) (R.N R.m)) {z : HomE X.E (R.N (m2 + 1)) (R.N R.m)} {y' : Sp X.E (R.N (m2 + 1))}
     (hz : ∀ s l, IntAt P.1 (((qOf P.1 : X.E) ^ cst.B)⁻¹ * z (Pi.single s 1) l))

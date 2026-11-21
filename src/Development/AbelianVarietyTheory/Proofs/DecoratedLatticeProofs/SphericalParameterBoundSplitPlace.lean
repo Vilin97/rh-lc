@@ -19,6 +19,7 @@ open Formalism.UG GlobalTheory.LFun
 variable {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V] {K : Subgroup G}
 
 
+open Classical in
 def cosetInd (S : Finset (G ⧸ K)) : G → ℂ := fun g => if (g : G ⧸ K) ∈ S then 1 else 0
 
 theorem cosetInd_mem {S : Finset (G ⧸ K)} (hS : ∀ x ∈ K, ∀ c ∈ S, x • c ∈ S) : cosetInd S ∈ Hecke ℂ K := by

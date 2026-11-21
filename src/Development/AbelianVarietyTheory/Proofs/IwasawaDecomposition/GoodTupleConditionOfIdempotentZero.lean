@@ -779,6 +779,7 @@ section Types
 variable {H : Host R} {what₂ : Rows.Data R}
 
 
+open Classical in
 def unipSer (K : Type) [Field K] (r : ℕ) (A : Type) [Ring A] (f : K[X]) : A :=
   if f = (X - 1) ^ r then 1 else 0
 

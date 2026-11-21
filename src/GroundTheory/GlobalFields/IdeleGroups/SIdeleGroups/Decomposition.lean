@@ -96,6 +96,7 @@ def assembleInfinite (p : SIdelesProduct L S) (u : InfinitePlace L) : (u.Complet
   p.1 (u.comap (algebraMap K L)) ⟨u, mem_placesOver_comap u⟩
 
 
+open Classical in
 def assembleFinite (p : SIdelesProduct L S) (u : HeightOneSpectrum (𝓞 L)) :
     (u.adicCompletion L)ˣ :=
   if h : below K u ∈ S then p.2.1 ⟨below K u, h⟩ ⟨u, inferInstance⟩

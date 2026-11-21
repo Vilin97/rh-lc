@@ -166,6 +166,7 @@ def FirstInv {n : ℕ} (x₀ : Fin n → ConjCl D l) : Prop :=
 def RankFull {n : ℕ} (x₀ : Fin n → ConjCl D l) : Prop := SpansAtEvery Set.univ x₀
 
 
+open Classical in
 def Admissible (nV : ℕ) {n : ℕ} (x₀ : Fin n → ConjCl D l) : Prop :=
   if n = nV then RankFull x₀ else FirstInv x₀
 

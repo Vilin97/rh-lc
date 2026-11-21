@@ -21,6 +21,7 @@ theorem QZ.nsmul_mk (j : ℕ) (r : ℚ) : j • QZ.mk r = QZ.mk (j * r) := by
   exact h.symm
 
 
+open Classical in
 def qzDiv (ℓ : ℕ) (q : QZ) : QZ :=
   if q = 0 then 0 else QZ.mk ((QZ.mk_surjective q).choose / ℓ)
 

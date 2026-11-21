@@ -88,6 +88,7 @@ def secZ (a : ExZ E) (n : ℕ) : Submodule c.F (Rul Xo c) :=
 variable {Xo c} {r : ℕ}
 
 
+open Classical in
 def laZ {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (a : ExZ E) (n : ℕ) (k : U.Comp) : Wt (U.X k).Ψ r :=
   fun τ j => if (U.X k).p0 ≤ (j : ℕ) then
       a (Function.invFun (relab c σ) τ.1, (j : ℕ) - (U.X k).p0) + ((n / 2 : ℕ) : ℤ)

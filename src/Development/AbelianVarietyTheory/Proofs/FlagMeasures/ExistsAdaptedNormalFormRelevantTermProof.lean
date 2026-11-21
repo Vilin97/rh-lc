@@ -18,6 +18,7 @@ section Mat
 variable {K : Type} [Field K] [StarRing K]
 
 
+open Classical in
 noncomputable def cb (b : K × ℕ) : Kˣ × ℕ+ :=
   if h : b.1 ≠ 0 ∧ 1 ≤ b.2 then (Units.mk0 (star b.1) (star_ne_zero.2 h.1), ⟨b.2, h.2⟩) else (1, 1)
 

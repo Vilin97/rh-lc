@@ -17,9 +17,11 @@ namespace Dat
 variable {n' r : ℕ} [NeZero n'] (X : Dat n' r) (p K : ℕ)
 
 
+open Classical in
 def restr (j : ℤ) (b : ℤ → ℕ) : ℤ → ℕ := fun x => if x ∈ X.toLate j then b x else 0
 
 
+open Classical in
 def Bdeg (j : ℤ) (b : ℤ → ℕ) (x : ℤ) : ℕ :=
   if X.F.IsW j x then (X.Bw p K j x - (X.m0 K : ℤ)).toNat else b x
 

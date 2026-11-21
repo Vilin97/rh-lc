@@ -31,6 +31,7 @@ variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {R : Type}
   {v : HeightOneSpectrum (𝓞 (maximalRealSubfield L))}
 
 
+open Classical in
 def dU (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L))) (red : v.adicCompletionIntegers (maximalRealSubfield L) →+* R)
     (r : ℕ) (x : Matrix (Fin n) (Fin n) (v.adicCompletion (maximalRealSubfield L))) : Rˣ :=
   if h : IsUnit (red (NX.intLift v (NX.detT r x))) then h.unit else 1

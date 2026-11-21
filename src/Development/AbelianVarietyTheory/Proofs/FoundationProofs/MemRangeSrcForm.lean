@@ -33,6 +33,7 @@ variable {K G M : Type} [Field K] [NumberField K] [Group G] [Fintype G] [AddComm
   (r : Representation K G M) (U : Subgroup G) (ψ : U →* Kˣ)
 
 
+open Classical in
 def invChar (g : G) : K := if hg : g ∈ U then (((ψ ⟨g, hg⟩)⁻¹ : Kˣ) : K) else 0
 
 def trU : M →ₗ[K] M := ∑ g, invChar U ψ g • r g

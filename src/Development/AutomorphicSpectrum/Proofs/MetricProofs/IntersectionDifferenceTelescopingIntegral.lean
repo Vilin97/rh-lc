@@ -20,6 +20,7 @@ namespace GlobalTheory.CompanionTheory.Ar.PB.Tele
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+open Classical in
 def ratioWt (A B : HermLine ι) (z : (Σ k, ι k) → ℂ) : ℝ :=
   if ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0 then Real.log (A.h z) - Real.log (B.h z) else 0
 

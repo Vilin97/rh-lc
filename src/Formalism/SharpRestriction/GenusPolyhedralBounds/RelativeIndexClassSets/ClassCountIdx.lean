@@ -73,6 +73,7 @@ theorem inverse_in_adic_integers (c : 𝓞 F) (w : HeightOneSpectrum (𝓞 F)) [
     rw [h1, inv_one]
 
 
+open Classical in
 def a_u (c : 𝓞 F) : FiniteAdeleRing (𝓞 F) F :=
   ⟨fun w => if Valued.v (algebraMap (𝓞 F) (w.adicCompletion F) c) < 1 then (0 : w.adicCompletion F)
       else (algebraMap (𝓞 F) (w.adicCompletion F) c)⁻¹, Filter.Eventually.of_forall fun w => inverse_in_adic_integers c w⟩

@@ -31,6 +31,7 @@ theorem cyl_self (S : Finset V) (A : ∀ w, Set (Ya w)) :
     ⟨fun h v => (Classical.em (v ∈ S)).elim (h.1 v) (h.2 v), fun h => ⟨fun v _ => h v, fun v _ => h v⟩⟩
 
 
+open Classical in
 theorem cyl_eq_of_subset {S T : Finset V} (h : S ⊆ T) (hK : ∀ v ∉ T, K v = K' v) (A : ∀ w, Set (Ya w))
     (B : ∀ v, Set (Yf v)) : cyl pa pf K' S A B = cyl pa pf K T A fun v => if v ∈ S then B v else K' v := by
   classical

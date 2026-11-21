@@ -129,6 +129,7 @@ structure IsSq {C : Type} [CommRing C] [Algebra O C] [IsCO O C] (μ : ResidueFie
 variable {O}
 
 
+open Classical in
 def evK {C : Type} [CommRing C] [Algebra O C] (K : Ideal C) (u : K →ₗ[O] ResidueField O) (x : C) : ResidueField O :=
   if h : x ∈ K then u ⟨x, h⟩ else 0
 

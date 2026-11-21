@@ -19,6 +19,7 @@ variable {F : Type} [Field F] [NumberField F]
 def conePt {r : ℕ} (y : 𝓞 F) (v : Fin r → 𝓞 F) (m : Fin r → ℕ) : 𝓞 F := y + ∑ i, (m i : 𝓞 F) * v i
 
 
+open Classical in
 def coneWeight {r : ℕ} (l : ℕ) (A : Ideal (𝓞 F)) (y : 𝓞 F) (v : Fin r → 𝓞 F) (m : Fin r → ℕ) : ℚ :=
   if conePt y v m ∈ A then (l : ℚ) - 1 else -1
 

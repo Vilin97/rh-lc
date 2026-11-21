@@ -42,6 +42,7 @@ def VolIs (cm : CMData F E) {I : Type} [Fintype I] (τ : I → (E →+* ℂ)) (c
     μ 𝓕 = ENNReal.ofReal x
 
 
+open Classical in
 def trueVol (cm : CMData F E) {I : Type} [Fintype I] (τ : I → (E →+* ℂ)) (cd : CDHaar) (W : HSpace E) : ℝ :=
   if h : ∃ x : ℝ, 0 < x ∧ VolIs cm τ cd W x then Classical.choose h else 1
 
@@ -68,6 +69,7 @@ def CdScaleIs (cd : CDHaar) (sc : ∀ n : ℕ, (Fin n → Bool) → NNReal) : Pr
         cd.cd P Q {g | ∃ a ∈ A, umat a = Matrix.reindex e e (Formalism.BasicNotions.UpqT.mat g)}
 
 
+open Classical in
 def trueScale (cd : CDHaar) : ∀ n : ℕ, (Fin n → Bool) → NNReal :=
   if h : ∃ sc : ∀ n : ℕ, (Fin n → Bool) → NNReal, (∀ n ε, 0 < sc n ε) ∧ CdScaleIs cd sc then Classical.choose h
   else fun _ _ => 1

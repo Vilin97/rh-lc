@@ -269,6 +269,7 @@ def zeroD (F : Type) (n : ℕ) (Sg : Type) (r s : Sg → ℕ) : LieLatticeData �
   ⟨⊥, fun _ => ⊥, fun _ => ⊥, fun _ => ⊥, fun _ => ⊥, fun _ => ⊥, fun _ => ⊥, fun _ => ⊥⟩
 
 
+open Classical in
 def famD (e : Sg → CMType H ⊕ CMType H) (b : ∀ t, Fin (labelRk D t) → 𝔐.Li)
     (pq : (𝓞 E ⧸ Ideal.span {(p : 𝓞 E)}) →+* F) (sc : F →+ (𝓞 E ⧸ Ideal.span {(p : 𝓞 E)})) (w : O)
     (P : ∀ c' : ∀ k, J k, mseg y c' ≠ 0 → ChartPack G O c')

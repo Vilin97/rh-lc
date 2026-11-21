@@ -43,6 +43,7 @@ theorem isMultiHomog_monomial (e : (Σ k, ι k) →₀ ℕ) (r : ℤ) :
   rw [Finset.mem_singleton.mp (support_monomial_subset hm)]
 
 
+open Classical in
 theorem sum_single_apply (k' : K) (j : ι k') (b : ℕ) (k : K) :
     ∑ i, (Finsupp.single (⟨k', j⟩ : Σ k, ι k) b) ⟨k, i⟩ = if k' = k then b else 0 := by
   classical

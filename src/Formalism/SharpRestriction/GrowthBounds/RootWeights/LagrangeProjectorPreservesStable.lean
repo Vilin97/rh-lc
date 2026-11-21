@@ -33,6 +33,7 @@ theorem weightSpace_disjoint [CharZero K] (E : GLOps n K V) {mu ka : Fin n → �
   · exact h0
 
 
+open Classical in
 def lagrangeFactor (E : GLOps n K V) (mu nu : Fin n → ℤ) : Module.End K V :=
   if h : nu = mu then 1 else
     (((mu (Classical.choose (Function.ne_iff.1 h)) : K) - (nu (Classical.choose (Function.ne_iff.1 h)) : K))⁻¹) •

@@ -32,6 +32,7 @@ def expFr {E : Type} [Field E] {Ψ : Finset (E →+* ℂ)} {r : ℕ} (Z : Frame 
   fun τ => (NormedSpace.exp (mat Z τ) : Matrix (Fin r) (Fin r) ℂ)
 
 
+open Classical in
 def unitFr {E : Type} [Field E] {Ψ : Finset (E →+* ℂ)} {r : ℕ} (τ : Ψ) (c d : Fin r) : Frame Ψ r :=
   fun τ' a b => if τ' = τ ∧ a = c ∧ b = d then 1 else 0
 

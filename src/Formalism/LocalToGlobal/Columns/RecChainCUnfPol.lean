@@ -35,6 +35,7 @@ section RhoPt
 variable {X : Fields} {Pr : Primes X} {R : Ranks}
 
 
+open Classical in
 def rhoPt (Dc : DetChr X R.m) {u : Pr.Word} (i : ℕ) (p : DecoSet X.E (R.N i) (Pr.vT u) Pr.vGs) : X.Kˣ :=
   if hc : Formalism.BasicNotions.CMData X.F X.E then
     letI : NeZero (R.N i) := ⟨(R.N_pos i).ne'⟩
@@ -44,6 +45,7 @@ def rhoPt (Dc : DetChr X R.m) {u : Pr.Word} (i : ℕ) (p : DecoSet X.E (R.N i) (
   else 1
 
 
+open Classical in
 def rhoPt' (Dc : DetChr X R.m) {u : Pr.Word} (i : ℕ) (p : DecoSet X.E (R.N (i + 1)) (Pr.vT u) Pr.vGs) : X.Kˣ :=
   if hc : Formalism.BasicNotions.CMData X.F X.E then
     letI : NeZero (R.N (i + 1)) := ⟨(R.N_pos (i + 1)).ne'⟩

@@ -75,6 +75,7 @@ section Adele
 variable (F : Type) [Field F] [NumberField F] (p : ℕ)
 
 
+open Classical in
 def eP : FiniteAdeleRing (𝓞 F) F :=
   ⟨fun v => if ((p : ℕ) : 𝓞 F) ∈ v.asIdeal then 1 else 0, Filter.Eventually.of_forall fun v => by
     by_cases h : ((p : ℕ) : 𝓞 F) ∈ v.asIdeal

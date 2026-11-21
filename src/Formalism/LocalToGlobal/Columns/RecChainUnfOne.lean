@@ -121,6 +121,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} (W : Wts X Pr.Word R) (Λ : �
   (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu))
 
 
+open Classical in
 def frsD {n : ℕ} {ST : Finset (HeightOneSpectrum (𝓞 X.E))} (p : DecoSet X.E n ST Pr.vGs) : Frs X.E n (rowSG Pr sel mu) := fun P =>
   if h : P.1 ∈ Pr.vGs then p.1.liftFr ⟨P.1, h⟩ else 1
 

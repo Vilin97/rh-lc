@@ -121,6 +121,7 @@ def QExpand : Prop :=
           ((∏ j, P (c j) (a j)) * ∏ j, Q (b j) (d j)) • qminor E c d u
 
 
+open scoped Classical in
 def AlgAA : Prop :=
   ∀ (A : Type) [Ring A] [Algebra ℂ A] (k r m : ℕ) (hm : m ≤ r)
     (E : Fin (2 * r + k + 1) → Fin (2 * r + k + 1) → A) (P Q : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ)
@@ -136,6 +137,7 @@ def AlgAA : Prop :=
         qminor E (xR k r m hm) C u else 0
 
 
+open scoped Classical in
 def AlgAAv : Prop :=
   ∀ (A : Type) [Ring A] [Algebra ℂ A] (k r m : ℕ) (hm : m ≤ r)
     (E : Fin (2 * r + k + 1) → Fin (2 * r + k + 1) → A) (P Q : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ)

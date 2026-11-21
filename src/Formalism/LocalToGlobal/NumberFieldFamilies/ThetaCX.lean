@@ -24,6 +24,7 @@ variable {D : D7}
 def plE (τ : D.what₂.Tau) : InfinitePlace D.host.E := InfinitePlace.mk (tauE D τ)
 
 
+open Classical in
 def embAt (τ : D.what₂.Tau) : (plE τ).Completion →+* ℂ :=
   if (plE τ).embedding = tauE D τ then InfinitePlace.Completion.extensionEmbedding (plE τ)
   else (starRingEnd ℂ).comp (InfinitePlace.Completion.extensionEmbedding (plE τ))

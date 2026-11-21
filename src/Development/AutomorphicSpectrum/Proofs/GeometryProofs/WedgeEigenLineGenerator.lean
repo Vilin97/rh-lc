@@ -264,6 +264,7 @@ def IsGen (Z : CptOver Y U) (τ : E →+* ℂ) (a : ⋀[Z.Ω]^D.p Z.V)
     (∀ j, IsComb (B j) w₀ (w j)) ∧ A.det ≠ 0 ∧ r * A.det = r₀ * B.det
 
 
+open Classical in
 def repFn (Z : CptOver Y U) (τ : E →+* ℂ) (a : ⋀[Z.Ω]^D.p Z.V) (b : ⋀[Z.Ω]^D.q Z.V) : FrameFn Xo c :=
   fun F _ y v w => if h : ∃ r, IsGen Z τ a b y v w r then h.choose else 0
 

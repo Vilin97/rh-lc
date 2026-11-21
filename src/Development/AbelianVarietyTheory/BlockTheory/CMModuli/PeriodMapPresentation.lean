@@ -19,6 +19,7 @@ section Period
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
 
+open Classical in
 def sigMult (D : Datum H) (τ : E →+* ℂ) : ℕ := if τ (H.rt : E) = H.rt0 then D.p else D.q
 
 def IsTypeFn (D : Datum H) {g : ℕ} (ty : Fin g → (E →+* ℂ)) : Prop :=

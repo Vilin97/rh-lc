@@ -137,6 +137,7 @@ def parFam (h : r ≤ n) (t s : ℕ) {SG : Finset (Pl E)} (P : LevFam E K r SG)
   ⟨HPar n (𝓞 E ⧸ w.1.asIdeal) h (List.replicate s t) (P w).H, lamPar h (List.replicate s t) (P w).lam (χ w)⟩
 
 
+open Classical in
 def parDat (h : r ≤ n) (t s : ℕ) {SG : Finset (Pl E)} (P : LevFam E K r SG)
     (χ : ∀ w : SG, ℕ → (𝓞 E ⧸ w.1.asIdeal)ˣ →* Kˣ) : Formalism.L2.DIV.LevDat E K n where
   r := r
@@ -175,6 +176,7 @@ def colLevS (Ch : Chars X Pr R.m) (j : ℕ) : LevFam X.E X.K (R.N j) Pr.vGs := f
 variable (hc : Formalism.BasicNotions.CMData X.F X.E) (Ch : Chars X Pr R.m)
 
 
+open Classical in
 def diaT (u : Pr.Word) : DiaG X.E (Pr.vT u) := fun P =>
   if h : IsUnit (Ideal.Quotient.mk P.1.asIdeal (X.conjO (Pr.piT u))) then h.unit else 1
 

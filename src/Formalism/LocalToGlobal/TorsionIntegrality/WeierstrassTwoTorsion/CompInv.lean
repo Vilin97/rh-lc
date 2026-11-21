@@ -24,6 +24,7 @@ def uPow (n : ℤ) : LaurentSeries R := HahnSeries.single n 1
 def dL : LaurentSeries R →ₗ[R] LaurentSeries R := LaurentSeries.hasseDeriv R 1
 
 
+open Classical in
 def compInv (s : R⟦X⟧) : R⟦X⟧ :=
   if h : ∃ t : R⟦X⟧, constantCoeff t = 0 ∧ s.subst t = X then h.choose else 0
 

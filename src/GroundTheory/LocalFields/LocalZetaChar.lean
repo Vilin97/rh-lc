@@ -161,6 +161,7 @@ section ShellIntegral
 variable [MeasurableSpace K] [BorelSpace K] {χ : Kˣ →* ℂˣ}
 
 
+open scoped Classical in
 theorem setIntegral_ordShell_quasiChar (hχ : Continuous χ) (k : ℤ) :
     ∫ u in ordShell K k, ((χ u : ℂˣ) : ℂ) ∂multHaar K =
       if IsUnramifiedChar χ then ((χ (unifUnit K) : ℂˣ) : ℂ) ^ k else 0 := by

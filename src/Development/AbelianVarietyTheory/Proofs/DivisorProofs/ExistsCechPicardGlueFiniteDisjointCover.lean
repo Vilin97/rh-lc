@@ -37,6 +37,7 @@ def gT (i : κ) (k k' : (L i).ι) : Γ(Y, (f i) ''ᵁ (L i).U k ⊓ (f i) ''ᵁ 
   res (image_inf_le (f i) _ _) (extUnit (f i) _ ((L i).g k k'))
 
 
+open Classical in
 def gS : ∀ p q : (Σ i, (L i).ι),
     Γ(Y, (f p.1) ''ᵁ (L p.1).U p.2 ⊓ (f q.1) ''ᵁ (L q.1).U q.2)ˣ
   | ⟨i, k⟩, ⟨i', k'⟩ => if h : i = i' then by subst h; exact gT f L i k k' else 1

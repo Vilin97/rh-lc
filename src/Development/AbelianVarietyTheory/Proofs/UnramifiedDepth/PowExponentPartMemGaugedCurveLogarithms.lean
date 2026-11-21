@@ -74,6 +74,7 @@ theorem sum_pow_root {ζ : C} {p : ℕ} (hζ : IsPrimitiveRoot ζ p) (m : ℕ) :
     exact (mul_eq_zero.1 this).resolve_right hne
 
 
+open Classical in
 def filt (P : ℕ → Prop) (f : PowerSeries C) : PowerSeries C :=
   PowerSeries.mk fun m => if P m then PowerSeries.coeff m f else 0
 

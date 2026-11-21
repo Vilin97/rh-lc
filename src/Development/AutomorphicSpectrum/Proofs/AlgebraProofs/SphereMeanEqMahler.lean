@@ -25,6 +25,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimension
   [MeasurableSpace E] [BorelSpace E] [Nontrivial E]
 
 
+open Classical in
 def radial (p : sphere (0 : E) 1) (z : E) : sphere (0 : E) 1 :=
   ⟨if z = 0 then (p : E) else ‖z‖⁻¹ • z, by
     split_ifs with h

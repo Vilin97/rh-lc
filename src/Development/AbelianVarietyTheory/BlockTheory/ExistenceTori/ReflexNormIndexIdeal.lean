@@ -67,6 +67,7 @@ theorem isBe_top : IsBe Dw c ⊤ 1 :=
 variable {Dw c}
 
 
+open scoped Classical in
 def beIdeal (hK : ReflexLe Dw c) (𝔞 : Ideal (𝓞 E)) (h𝔞 : 𝔞 ≠ ⊥) : c.F :=
   if 𝔞 = ⊤ then 1 else (hK 𝔞 h𝔞).choose
 

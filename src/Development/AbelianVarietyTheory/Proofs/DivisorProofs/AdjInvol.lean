@@ -40,6 +40,7 @@ def unit (anti : ∀ a b, σ (a * b) = σ b * σ a) (one : σ 1 = 1) (invol : �
     rw [this, invol, mul_adj σ ha]
 
 
+open Classical in
 def sec (anti : ∀ a b, σ (a * b) = σ b * σ a) (one : σ 1 = 1) (invol : ∀ a, σ (σ a) = a) (a : 𝔸) :
     unit σ anti one invol :=
   if h : σ a * a = 1 then ⟨⟨a, σ a, mul_adj σ h, h⟩, h⟩ else 1

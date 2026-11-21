@@ -24,6 +24,7 @@ variable {p : ℕ} {R : Type} [CommRing R] {A : Over (Sp R)} [GrpObj A] {G : PDi
   (t : G.TorsionTower A) (N : ℕ)
 
 
+open Classical in
 def torsVal (b : G.A N) : Fn0 A := fun D _ _ x ↦
   if h : x ^ p ^ N = 1 then t.lift N x h b else 0
 

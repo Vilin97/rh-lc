@@ -29,6 +29,7 @@ theorem baseInc_injective : Function.Injective (baseInc (ι := ι) blk) := by
   rfl
 
 
+open Classical in
 def extDeg (b : NonPluckerBlocks blk → ℕ) : K → ℕ := fun k => if h : ∀ p, blk p ≠ some k then b ⟨k, h⟩ else 0
 
 theorem isMultiHomog_rename_baseInc {β : MRing (baseIdx ι blk)} {b : NonPluckerBlocks blk → ℕ} (hβ : IsMultiHomog β b) :

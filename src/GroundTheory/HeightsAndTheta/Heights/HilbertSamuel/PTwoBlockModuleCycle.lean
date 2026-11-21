@@ -70,6 +70,7 @@ theorem log_charOf_of_horizontal {W : Ideal (MRing ι)} (h : IsHorizontal W) : R
   simp [charOf, hg]
 
 
+open Classical in
 theorem vert_weight_eq (W : Ideal (MRing ι)) (g : ℤ) :
     (if IsHorizontal W then 0 else (g : ℝ) * Real.log (charOf W)) = Real.log (charOf W) * g := by
   split_ifs with h

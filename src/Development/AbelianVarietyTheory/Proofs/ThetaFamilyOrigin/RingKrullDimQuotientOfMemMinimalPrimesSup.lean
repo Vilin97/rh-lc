@@ -22,6 +22,7 @@ theorem gradedQuotPiece_natCast (J : Ideal T) (n : ℕ) :
     gradedQuotPiece 𝒜 J n = (𝒜 n).map (Ideal.Quotient.mkₐ K J).toLinearMap := rfl
 
 
+open Classical in
 noncomputable def gradedQuotHilbertPoly (J : Ideal T) : ℚ[X] :=
   if h : ∃ P, IsHilbertPoly (gradedQuotPiece 𝒜 J) P then h.choose else 0
 

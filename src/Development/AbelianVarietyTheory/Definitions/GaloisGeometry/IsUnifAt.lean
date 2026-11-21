@@ -29,6 +29,7 @@ abbrev A0 (J : Joint t H X) : LocAt D.host.F D.host.E (D.R.N 0) (D.gat u w hg) :
 def Spl (J : Joint t H X) : Prop := SplAlg (A0 J) ∧ ∀ j hj β, SplAlg ((I.at' j hj).st.loc β)
 
 
+open Classical in
 def chiI (J : Joint t H X) (x : (AfE D.host.F D.host.E)ˣ) : ℂ :=
   if h : ∃ y : Formalism.L2.Herm.unitaryOneFiniteAdeles D.sp.cm, Matrix.GeneralLinearGroup.det y.1 = x then ((D.chiD (J.dtU h.choose) : ℂˣ) : ℂ) else 0
 

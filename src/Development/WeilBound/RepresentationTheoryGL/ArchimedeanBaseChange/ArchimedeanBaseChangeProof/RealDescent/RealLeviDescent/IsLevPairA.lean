@@ -62,6 +62,7 @@ def xL (E1 E2 : Fin n → Fin n → Module.End ℂ V) (l : Lt n) : Module.End �
   if l.1 then pA E1 E2 l.2.1.1 l.2.1.2 else kA E1 E2 l.2.1.1 l.2.1.2
 
 
+open Classical in
 def bdL (S : Lt n → Prop) (E1 E2 : Fin n → Fin n → Module.End ℂ V) : Module.End ℂ (Cq n V) :=
   (∑ l : Lt n, if S l then (liftL n (xL E1 E2 l) : Module.End ℂ (Cq n V)) * annL l else 0) +
     ∑ l : Lt n, ∑ m : Lt n, ∑ k : Lt n,

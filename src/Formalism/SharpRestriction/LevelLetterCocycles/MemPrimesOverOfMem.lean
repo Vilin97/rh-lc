@@ -237,6 +237,7 @@ section Bound
 variable (L : SizeData₂ D) (tb : Tab L) (C : ℝ)
 
 
+open Classical in
 def bandI (l : ℕ) : ℝ :=
   if ∃ s : ℝ, L.sc.w'' D.R.n ≤ s ∧ s ≤ wB L ∧
       |(l : ℝ) * s - L.sc.b| ≤ C * (l * eta₃ L + l * L.Sc + L.sc.b / l + s + l * large₂ L) then 1 else 0
@@ -247,6 +248,7 @@ def rowBr (l : ℕ) : ℝ :=
   hB L / ((l : ℝ) - 1) ^ (jA L l + 1) + (GP L + 1) * ((jA L l : ℝ) + 1) + large₂ L
 
 
+open Classical in
 def lenB (l : ℕ) : ℝ :=
   if SplitK D l then (2 * (D.R.f : ℝ) * D.R.m + D.R.f) * eP L C l
   else if (l : ℝ) < lA L ∧ 4 * D.host.Lw < ordH D l then 4 * (D.R.f : ℝ) * (C * D.R.r * rowBr L l)
@@ -256,6 +258,7 @@ def lenB (l : ℕ) : ℝ :=
 def bbB : ℝ := C * D.R.f * D.R.n * (D.R.t : ℝ) ^ 2 * D.R.nV * (large₂ L) ^ 2
 
 
+open Classical in
 def lamB (l : ℕ) : ℝ :=
   if l ∈ D.host.small ∨ l = 3 then C * D.R.f * D.R.m * L.sc.b * Real.log L.sc.x + C * L.sc.x ^ C * (large₂ L) ^ 2
   else if l = D.host.q ∨ l = D.host.d then 2 * C * D.R.f * D.R.m * L.sc.b
@@ -524,6 +527,7 @@ theorem vvTerm_nonneg (D : D7) (l : ℕ) : 0 ≤ vvTerm D l := by
 theorem vhE_nonneg (D : D7) (l : ℕ) : 0 ≤ vhE D l := by unfold vhE; positivity
 
 
+open Classical in
 def lamG (L : SizeData₂ D) (tb : Tab L) (C : ℝ) (l : ℕ) : ℝ :=
   if l ∈ gset D then C * L.sc.x ^ C * L.etaSz else lamB L tb C l
 

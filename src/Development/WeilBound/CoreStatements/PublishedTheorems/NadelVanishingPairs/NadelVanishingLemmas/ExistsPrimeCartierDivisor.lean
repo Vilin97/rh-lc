@@ -49,6 +49,7 @@ theorem ord_eq_zero (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoetherian X] (U :
   GlobalTheory.T.order_off_codim_one_eq_zero X U hU z hz a t h1 hg v hv hvt hvz
 
 
+open Classical in
 theorem exists_local_eqn (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoetherian X]
     (hu : ∀ x : X, UniqueFactorizationMonoid (X.presheaf.stalk x)) (z : X)
     (h1 : Order.coheight z = 1) (x : X) :

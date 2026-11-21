@@ -224,6 +224,7 @@ def IsUnifIdele (P : HeightOneSpectrum (𝓞 E)) (u : (AfE F E)ˣ) : Prop :=
     ∀ P' : HeightOneSpectrum (𝓞 E), P' ≠ P → (⟨(u : AfE F E), hu⟩ : RInt F E) - 1 ∈ P'.asIdeal.map (toRInt F E)
 
 
+open Classical in
 def unifVal (ξ : Chr F E L) (P : HeightOneSpectrum (𝓞 E)) : Lˣ :=
   if h : ∃ u, IsUnifIdele (F := F) P u then ξ h.choose else 1
 

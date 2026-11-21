@@ -86,6 +86,7 @@ def wave (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (Λ : AddSubgroup (WO S 
   fun t => ψ (symplO S T t y) * halfInd e Λ (t + x)
 
 
+open Classical in
 def prodHalf {S T : HSp D} {ι : Type} (s : Finset ι) (a : ι → AE D) (Φ : ι → WO S T → ℂ) : WO S T → ℂ :=
   fun t => if IsHalf (∑ i ∈ s, a i) t then ∏ i ∈ s, Φ i (a i • t) else 0
 

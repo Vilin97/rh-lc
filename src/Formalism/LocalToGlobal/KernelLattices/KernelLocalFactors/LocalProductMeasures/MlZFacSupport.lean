@@ -145,6 +145,7 @@ section Ratio
 variable {X : Fields} {n : ℕ}
 
 
+open Classical in
 def zFac (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) (SB : Finset (HeightOneSpectrum (𝓞 X.E)))
     (mU : HeightOneSpectrum (𝓞 X.E) → X.Kˣ) (z : X.E) (v : HeightOneSpectrum (𝓞 X.F)) : X.K :=
   if ∃ P ∈ SB, P.asIdeal.under (𝓞 X.F) = v.asIdeal then 1 else ((mU (sel v) ^ ordE (sel v) z : X.Kˣ) : X.K)

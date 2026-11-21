@@ -68,6 +68,7 @@ def bMid (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (n m N : ℕ) [NeZero N] (bB
   ∑ y ∈ Finset.univ.filter (fun y => redTop l n m N y = z), bTop X l n m N bB s y
 
 
+open Classical in
 def Fsum [CharZero Ω] (ε : Ω →+* ℂ) (l : ℕ) [Fact l.Prime] (n m N : ℕ) [NeZero N] (x : ZMod N) (c d w : ℕ)
     (gm : (ZMod l)ˣ → SL(2, ℤ)) (R : Finset SL(2, ZMod (topMu l n m N))) (z : (ZMod (l ^ (m + n)))ˣ) (r : ℚ) : Ω :=
   if r.den = 1 then

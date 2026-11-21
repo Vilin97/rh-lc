@@ -22,10 +22,12 @@ abbrev Fl (v : Pl F) (n d : ℕ) : Type := (Fin n × Fin d → Fv F v) → ℂ
 def idem (v : Pl F) : AF F := LinearMap.inr F (Ainf F) (Af F) (singleFin v 1)
 
 
+open Classical in
 def opF {κ : Type} [Fintype κ] (v : Pl F) (T : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ) (φ : (κ → Fv F v) → ℂ) : (κ → Fv F v) → ℂ :=
   if h : ∃ φ₁ ∈ SB (κ → Fv F v), Acts (evFin F v) T φ φ₁ then h.choose else 0
 
 
+open Classical in
 def opI {κ : Type} [Fintype κ] (T : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ) (f : SInf F κ) : SInf F κ :=
   if h : ∃ f₁ : SInf F κ, Acts (evI F) T f f₁ then h.choose else 0
 

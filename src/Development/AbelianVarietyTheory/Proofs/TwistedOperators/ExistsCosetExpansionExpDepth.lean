@@ -107,6 +107,7 @@ theorem eq_sum_halfCoset_indicator {e : AE D} {Λ : AddSubgroup (Mx D m n)} {K :
 end Coset
 
 
+open Classical in
 def cosetDatum {t : T} {p : Pair T} (d : FinDatum G t p) (K : ℕ) (r : WO (G.pS p) (G.pT p)) : FinDatum G t p :=
   if h : 0 < K ∧ IsHalf d.e r ∧ K • r ∈ pairLat G p then
     { d with fn := (halfCoset d.e (pairLat G p) K r).indicator 1, sb := isSBHalf_halfCoset_indicator h.1 h.2.1 h.2.2 }

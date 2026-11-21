@@ -13,6 +13,7 @@ namespace Formalism.MainNotions.G.GLWeightTheory
 open Formalism.MainNotions.G Formalism.MainNotions.CovariantDegrees
 
 
+open Classical in
 def eBeta {R : Type} [CommRing R] {ι : Type} {r : ℕ} (LL : Letters ι) (S : Set ι) {k1 : Type} [CommRing k1]
     (j : R →+* k1) (g0 g0inv : Matrix (Fin r) (Fin r) k1) :
     MvPolynomial (ι × Fin r) R →+* MvPolynomial (ι × Fin r) k1 :=
@@ -23,6 +24,7 @@ def eBeta {R : Type} [CommRing R] {ι : Type} {r : ℕ} (LL : Letters ι) (S : S
     else X v
 
 
+open Classical in
 def eWt {ι : Type} {r : ℕ} [NeZero r] (LL : Letters ι) (S : Set ι) (m : ι × Fin r →₀ ℕ) : ℤ :=
   m.sum fun v k => if v.2 = lastIdx r ∧ v.1 ∈ S then (if LL.vec v.1 then (k : ℤ) else -(k : ℤ)) else 0
 

@@ -81,6 +81,7 @@ def BDom (k r : ℕ) (z z' : Fin (2 * r + k + 1) → ℂ) : Set (Fin (r + 1) →
   {x | x ∈ OmX (r + 1) ∧ Tz k r z * Tz k r z' < Complex.normSq (zOf x)}
 
 
+open Classical in
 def Btr {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] (k r : ℕ) (z z' : Fin (2 * r + k + 1) → ℂ)
     (μsec : ℂ → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) (J : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ → E) :
     (Fin (r + 1) → ℂ) → E := fun x =>

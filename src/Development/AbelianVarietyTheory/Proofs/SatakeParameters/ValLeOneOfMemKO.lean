@@ -45,6 +45,7 @@ def blockGrp (r t : ℕ) : Subgroup (GL (Fin (r + t)) k) where
     exact val_col_lt ((KO k _).inv_mem hh) _ (fun c => h1 c j) a
 
 
+open Classical in
 def blockChar {r t : ℕ} (χ : kˣ →* ℂˣ) (h : GL (Fin (r + t)) k) : ℂ :=
   if hd : (h.val.submatrix (Fin.natAdd r) (Fin.natAdd r)).det = 0 then 0 else (χ (Units.mk0 _ hd) : ℂ)
 

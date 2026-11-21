@@ -20,6 +20,7 @@ noncomputable section
 namespace GlobalTheory.SeeConjScale
 
 
+open Classical in
 noncomputable def forestLift {G : Type} [Group G] {r : ℕ} (Ed : Fin r → Fin r → Prop) (hlt : ∀ i j, Ed i j → i < j)
     (w : Fin r → Fin r → G) (j : Fin r) : G :=
   if h : ∃ i, Ed i j then forestLift Ed hlt w (Classical.choose h) * w (Classical.choose h) j else 1

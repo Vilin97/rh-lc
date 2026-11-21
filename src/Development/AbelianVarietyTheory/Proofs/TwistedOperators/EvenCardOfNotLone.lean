@@ -49,6 +49,7 @@ def Over (S : Finset (HeightOneSpectrum (𝓞 F))) : Place F → Prop
 def Lone (p : Place F) : Prop := ∃ a b : Fˣ, a ∉ nrm p b ∧ ∀ q, q ≠ p → a ∈ nrm q b
 
 
+open Classical in
 def hs (p : Place F) (a b : Fˣ) : ℤˣ := if a ∈ nrm p b then 1 else -1
 
 theorem hs_eq_one_iff {p : Place F} {a b : Fˣ} : hs p a b = 1 ↔ a ∈ nrm p b := by

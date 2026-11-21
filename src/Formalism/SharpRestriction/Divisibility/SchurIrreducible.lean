@@ -383,6 +383,7 @@ def IsUnram (w : HeightOneSpectrum (𝓞 F)) : Prop :=
     Ideal.ramificationIdx P.asIdeal (𝓞 F) = 1
 
 
+open Classical in
 def etaV (w : HeightOneSpectrum (𝓞 F)) : ℂ := if IsSplit (E := E) w then 1 else -1
 
 def dvLoc (n M : ℕ) (w : HeightOneSpectrum (𝓞 F)) (s : ℂ) : ℂ :=

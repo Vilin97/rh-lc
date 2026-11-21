@@ -45,6 +45,7 @@ theorem card_withLat_pos (Q : Pair k n) : 0 < (withLat Q.lat).card :=
   Finset.card_pos.2 ⟨Q, mem_withLat.2 rfl⟩
 
 
+open Classical in
 def pairCount (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (n : Type) [Fintype n] [DecidableEq n] : ℕ :=
   if h : Nonempty (Pair k n) then (withLat h.some.lat).card else 1

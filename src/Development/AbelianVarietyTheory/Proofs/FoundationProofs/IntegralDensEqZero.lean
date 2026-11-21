@@ -134,6 +134,7 @@ theorem inter_mem_fixedBy (hH : IsHerm H) {A₁ A₂ : AddSubgroup V} [Finite (A
 
 local instance (p : Prop) : Decidable p := Classical.propDecidable p
 
+open Classical in
 theorem sum_chi (hH : IsHerm H) {A₁ A₂ : AddSubgroup V} [Fintype (A₁ ⧸ A₂.addSubgroupOf A₁)]
     (hd₁ : IsSelfDual H A₁) (hd₂ : IsSelfDual H A₂) {y : V} (hy : y ∈ A₂) :
     ∑ c : A₁ ⧸ A₂.addSubgroupOf A₁, chi H ((Quotient.out c : A₁) : V) y =

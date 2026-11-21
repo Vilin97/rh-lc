@@ -21,6 +21,7 @@ section Fields
 variable {T : Type} {n : ℕ}
 
 
+open Classical in
 def matDer (τ : T) (X : Matrix (Fin n) (Fin n) ℂ) :
     Derivation ℂ (MvPolynomial (T × Fin n × Fin n) ℂ) (MvPolynomial (T × Fin n × Fin n) ℂ) :=
   MvPolynomial.mkDerivation ℂ fun p =>

@@ -24,6 +24,7 @@ section Grading
 variable {R : Type} [CommRing R]
 
 
+open Classical in
 def blockWt : (Σ k, ι k) → (K → ℕ) := fun q k => if q.1 = k then 1 else 0
 
 theorem weight_blockWt_apply (d : (Σ k, ι k) →₀ ℕ) (k : K) :

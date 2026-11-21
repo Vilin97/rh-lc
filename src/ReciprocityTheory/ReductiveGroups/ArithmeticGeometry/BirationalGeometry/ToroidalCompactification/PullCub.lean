@@ -16,6 +16,7 @@ section Stalk
 variable {X Y Z : Scheme.{0}}
 
 
+open Classical in
 def gm (f : Y ⟶ X) (y : Y) (U : X.Opens) : Γ(X, U)ˣ →* (Y.presheaf.stalk y)ˣ :=
   if h : f y ∈ U then (Units.map (Y.presheaf.germ (f ⁻¹ᵁ U) y h).hom.toMonoidHom).comp (pullU f U) else 1
 

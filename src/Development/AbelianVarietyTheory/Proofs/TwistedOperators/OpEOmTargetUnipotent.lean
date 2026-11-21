@@ -60,6 +60,7 @@ theorem affPt_eq_zero (p : ℕ) (x₀ : Matrix n n' k)
     simp [basePt] <;> omega
 
 
+open Classical in
 def linPart (p : ℕ) (h : Matrix (n ⊕ Fin c) (n ⊕ Fin c) k) :
     Matrix {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs}
       {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs} k :=

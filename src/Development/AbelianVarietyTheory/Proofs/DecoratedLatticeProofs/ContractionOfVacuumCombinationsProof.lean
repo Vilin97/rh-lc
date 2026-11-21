@@ -106,6 +106,7 @@ theorem line_step {ρ σ : ℕ} {B : BesLev D ρ} {B' : BesLev D σ} (ψ : AddCh
   rw [he, hc, smul_smul]
 
 
+open Classical in
 def cstL (ψ : AddChar (AF D.host.F) ℂ) {ρ : ℕ} (B : BesLev D ρ) (S : HSp D) (M : Lat B.V₀) (LS : Lat S) (P : Pl D → Prop)
     (y : WO B.L S) : ℂ :=
   if (B.o.resS S).symm (0, y) ∈ latO B.V₀ S (M : Set _) (LS : Set _) P then

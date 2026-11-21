@@ -22,6 +22,7 @@ def DecoF.repl (p : DecoF E n ST SG Q) (d' : DecoSet E n ST SG) (h : DecoSet.Sam
   ⟨(d', p.1.2), fun P x => by rw [h P.1 P.2]; exact p.2 P x⟩
 
 
+open Classical in
 def DecoF.mv (p : DecoF E n ST SG Q) (d' : DecoSet E n ST SG) : DecoF E n ST SG Q :=
   if h : DecoSet.SameOn Q p.deco d' then p.repl d' h else p
 

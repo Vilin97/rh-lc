@@ -19,6 +19,7 @@ open Formalism.REAL (GlRel)
 variable {n : ℕ}
 
 
+open Classical in
 def trOn {M : Type*} [AddCommGroup M] [Module ℂ M] (S : Submodule ℂ M) (f : M →ₗ[ℂ] M) : ℂ :=
   if h : ∀ x ∈ S, f x ∈ S then LinearMap.trace ℂ S (f.restrict h) else 0
 

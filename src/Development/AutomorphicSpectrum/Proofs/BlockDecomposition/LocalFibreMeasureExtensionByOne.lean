@@ -42,6 +42,7 @@ theorem linearIndependent_of_isUnit_gram {F E : Type} [Field F] [Field E] [Algeb
   exact fun i => congrFun h1 i
 
 
+open Classical in
 theorem isFibreFamily_restrict {V X Y : Type} [TopologicalSpace V] [MeasurableSpace V] [TopologicalSpace X]
     [MeasurableSpace X] (μ : Measure V) (f : V → Y) (ι : X → Y) (U W : Set V) (ν : Measure X)
     (B : Set X) (fib : X → Measure V) (hUW : U ⊆ W) (hU : MeasurableSet U)

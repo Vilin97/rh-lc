@@ -120,6 +120,7 @@ section Lev
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] {i : Fin (r + 1)} {D : Set (Mx k r)}
 
 
+open Classical in
 def cut0 (i : Fin (r + 1)) (D : Set (Mx k r)) : (Mx k r → E) →ₗ[ℂ] (Mx k r → E) where
   toFun := fun f g => if g ∈ Glev k r i ∩ D then f g else 0
   map_add' := fun f f' => by

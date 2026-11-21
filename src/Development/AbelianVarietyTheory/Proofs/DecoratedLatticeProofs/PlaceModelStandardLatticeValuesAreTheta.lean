@@ -131,6 +131,7 @@ theorem half_of_isSB {e : AE D} {S T : HSp D} {Λ : AddSubgroup (WO S T)} {Φ : 
   obtain ⟨hs, k, hk, hi, hl⟩ := h
   exact ⟨hs, k, hk, fun u hu hue t => hi u (AddSubgroup.mem_inf.2 ⟨hu, hue⟩) t, hl⟩
 
+open Classical in
 theorem theta_of_facts (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsStdChar D ψ (-1)) (S T : HSp D)
     (E₂ : AE D) (hE : E₂ * cA D E₂ = 0)
     (hdd : ∀ x : WO S T, IsHalf E₂ x → (∀ y, IsHalf (cA D E₂) y →

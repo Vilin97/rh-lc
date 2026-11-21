@@ -205,6 +205,7 @@ section Cyl
 variable (ψ₀ : ∀ k : Fin 2, AddChar (ZMod (D.host.g k)) ℂ)
 
 
+open Classical in
 theorem sum_cyl (k : Fin 2) (S : Finset (Tup D k)) :
     ∑ a ∈ Finset.univ.filter (fun a : CV D => tupOf a ∈ cyl D k (S : Set (Tup D k))),
         ∏ kv : (Σ k : Fin 2, D.nd.PlG k), Nc ψ₀ kv.1 (Formalism.CyclotomicNorms.monicOf (a kv)) =

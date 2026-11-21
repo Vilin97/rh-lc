@@ -117,6 +117,7 @@ theorem mk_eq_iff (hϖ : IsUnifV E w ϖ) {N : ℕ} (j : ℕ) (γ γ' : GLint (Fi
   rw [e]
 
 
+open Classical in
 def vv (hϖ : IsUnifV E w ϖ) {V : Type} [AddCommGroup V] [Module ℂ V] (N : ℕ)
     (ρ : Representation ℂ (GL (Fin N) (w.adicCompletion E)) V) (x : V) (M : Submodule (Res E w) (Fin N → Res E w)) : V :=
   if h : ∃ γ : GLint (Fin N) (Ov E w), gmap (tjcosets_red (Ov E w) N γ) (Mj (Res E w) N (N - finrank (Res E w) M)) = M

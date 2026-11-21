@@ -157,12 +157,14 @@ theorem half_add {e : AE D} {x y : WO S T} (hy : IsHalf e y) : IsHalf e (x + y) 
   rw [Matrix.add_apply, mul_add, hy i j, add_left_inj]
 
 
+open Classical in
 def ext : SB (Matrix Y Y' k) →ₗ[ℂ] (WO S T → ℂ) where
   toFun Φ t := if IsHalf p.e t then Φ.1 (p.down FS FT t) else 0
   map_add' Φ Ψ := by funext t; simp only [Pi.add_apply, Submodule.coe_add]; split_ifs <;> simp
   map_smul' c Φ := by funext t; simp only [Pi.smul_apply, Submodule.coe_smul, RingHom.id_apply]; split_ifs <;> simp
 
 
+open Classical in
 theorem ext_apply (Φ) (t) : ext p FS FT Φ t = if IsHalf p.e t then Φ.1 (p.down FS FT t) else 0 := rfl
 
 variable {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)}

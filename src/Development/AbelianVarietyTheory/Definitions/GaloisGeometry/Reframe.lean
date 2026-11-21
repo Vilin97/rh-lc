@@ -25,6 +25,7 @@ variable {D : D7}
 def tay {a b : ℕ} (G : TaylorLogMetric.VC D a b → ℂ) : MvPowerSeries (D.what₂.Tau × Fin b × Fin a) ℂ := fun α => TaylorLogMetric.taylor D G α
 
 
+open Classical in
 def pullMat {a b : ℕ} (e : Matrix (Fin a) (Fin a) D.host.E) (e' : Matrix (Fin b) (Fin b) D.host.E)
     (x y : D.what₂.Tau × Fin b × Fin a) : ℂ :=
   if x.1 = y.1 then (starRingEnd ℂ) (TaylorLogMetric.embT D x.1 (e' y.2.1 x.2.1)) * TaylorLogMetric.embT D x.1 (e y.2.2 x.2.2) else 0
@@ -42,6 +43,7 @@ variable {L : SizeData₂ D} {hT : GatTies D} {Gi : G.Inst D L} {Gl : G.LatInst 
   {ex : Extra D L hT Gi Gl Kc Dx cX}
 
 
+open Classical in
 def thCl (t : KerEntTied ex) (u : D.what₂.Word) (μ : D.what₂.Tup) (cls : ∀ j, X.Lv.comp j → (X.Pj j).Tup → (D.chTw u μ).cls j)
     (j : ℕ) (La : X.Lt j) (La' : X.Lt (j + 1)) : TaylorLogMetric.VC D ((X.Pj j).m + 1) ((X.Pj (j + 1)).m + 1) → ℂ :=
   if h : (X.Pj j).m + 1 = D.R.N j ∧ (X.Pj (j + 1)).m + 1 = D.R.N (j + 1) then
@@ -82,6 +84,7 @@ def gMat (j : ℕ) (hj : j ≤ D.R.m) (γ : GL (Fin (D.R.N j)) D.host.E) : Matri
 variable {J std} (d : Dec J std)
 
 
+open Classical in
 def Dec.eM (j : ℕ) (La : (sysS H X std).Lt j) :
     Matrix (Fin (((sysS H X std).Pj j).m + 1)) (Fin (((sysS H X std).Pj j).m + 1)) D.host.E :=
   if h : j ≤ D.R.m ∧ ((sysS H X std).Pj j).m + 1 = D.R.N j then

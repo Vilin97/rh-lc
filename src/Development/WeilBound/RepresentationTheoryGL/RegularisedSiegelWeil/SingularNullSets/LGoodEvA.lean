@@ -49,6 +49,7 @@ theorem ae_ext (z z' : AE D) (hi : ∀ w, compInf D.host.F D.host.E w z = compIn
     exact h1.symm
 
 
+open Classical in
 def indS (S : Finset (Pl D)) : Af D.host.F :=
   ⟨fun v => if v ∈ S then 1 else 0, Filter.Eventually.of_forall fun v => by
     by_cases h : v ∈ S

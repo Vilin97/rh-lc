@@ -222,6 +222,7 @@ theorem ord_finiteComponent_of_toFractionalIdeal_eq {δ : (FiniteAdeleRing (𝓞
   omega
 
 
+open Classical in
 theorem localEpsilon_half_eq {δ : (FiniteAdeleRing (𝓞 K) K)ˣ}
     (hδ : toFractionalIdeal (ofFinite δ) = idealUnit χ.conductor χ.conductor_ne_bot * differentUnit)
     (v : HeightOneSpectrum (𝓞 K)) :
@@ -243,6 +244,7 @@ theorem localEpsilon_half_eq {δ : (FiniteAdeleRing (𝓞 K) K)ˣ}
       mul_one]
 
 
+open Classical in
 theorem finiteFourier_mul_eq_finprod_localEpsilon {δ : (FiniteAdeleRing (𝓞 K) K)ˣ}
     (hδ : toFractionalIdeal (ofFinite δ) = idealUnit χ.conductor χ.conductor_ne_bot * differentUnit) :
     finiteFourier K χ.finiteTestFun ((δ⁻¹ : (FiniteAdeleRing (𝓞 K) K)ˣ) : FiniteAdeleRing (𝓞 K) K) *

@@ -25,6 +25,7 @@ def lowU (ν : Matrix D A k) : GL (A ⊕ D) k where
 theorem val_lowU (ν : Matrix D A k) : (lowU ν).1 = fromBlocks 1 0 ν 1 := rfl
 
 
+open Classical in
 def blockDet (j : GL (A ⊕ D) k) : kˣ :=
   if h : j.1.toBlocks₂₂.det ≠ 0 then Units.mk0 _ h else 1
 

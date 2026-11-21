@@ -26,6 +26,7 @@ def cMin (C : ∀ s, Matrix (Fin (n s)) (Fin (rk Ψ p q s)) Ω) (t : StepIx Ψ p
   if e : I.card = (t.2 : ℕ) + 1 then ((aExt C t.1).submatrix J (I.orderEmbOfFin e)).det else 0
 
 
+open Classical in
 def bExt (B : ∀ s, Matrix (Fin (rk Ψ p q s)) (Fin (n s)) Ω) (s : Ψ ⊕ Ψ) : Matrix (Fin (p + q)) (Fin (n s)) Ω :=
   fun a j => ∑ l, if posOf p q s l = a then B s l j else 0
 
@@ -107,6 +108,7 @@ theorem det_mem_subring {ι : Type} [Fintype ι] [DecidableEq ι] (R : Subring �
   exact R.zsmul_mem (R.prod_mem fun i _ => h _ _) _
 
 
+open Classical in
 def sMin (B : ∀ s, Matrix (Fin (rk Ψ p q s)) (Fin (n s)) Ω) (t : StepIx Ψ p q)
     (I : Finset (Fin (p + q))) (J : Fin ((t.2 : ℕ) + 1) → Fin (n t.1)) : Ω :=
   if StrictMono J then bMin B t I J else 0

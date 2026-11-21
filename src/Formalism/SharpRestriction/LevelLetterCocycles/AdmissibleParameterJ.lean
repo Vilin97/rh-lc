@@ -94,6 +94,7 @@ def rankOneCharacterQbar (i : D.nd.Loc) : GE D.nd →* GL (Fin 1) (Qbar (D.nd.l 
   mapRep (iotaOQ D.nd D.naut i) (PairedCharacterCondition.chiGL i)
 
 
+open Classical in
 def hodgeTateJumpsAtModulesForSign (ep : Bool) : Prop :=
   ∀ (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))), GoodR D.nd i r →
     ∀ (w : HeightOneSpectrum (𝓞 D.host.E)) (hw : w ∈ placesOver D.host.E (D.nd.l i))

@@ -287,6 +287,7 @@ theorem reT_univ' : ReT X Set.univ = X.B.Re :=
     (Formalism.L2.SG.Pf.AllRowsRedKer.redKerP_holds X 1)))) (etInt_holds X)
 
 
+open Classical in
 theorem rowsAdd_of (hFD : FiniteDimensional ℂ (X.B.I.eHom X.B.σs X.B.μf X.B.fund X.B.R X.B.Re)) : RowsAdd X := by
   intro S
   set W := X.B.I.HomS X.B.σs X.B.μf X.B.fund X.B.R

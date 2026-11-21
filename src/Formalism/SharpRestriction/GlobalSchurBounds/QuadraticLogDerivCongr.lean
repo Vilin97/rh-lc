@@ -381,6 +381,7 @@ theorem hAD (u0 : M.e.A) : HEq M.AD (arithOf (Fm.D x (M.pt u0)).host.toHostRaw) 
   arithOf_heq _ _ (M.he u0).symm (Fm.q_eq x _ _) (Fm.d_eq x _ _) (Fm.QS_eq x _ _) (Fm.art_eq x _ _)
 
 
+open Classical in
 def w (u0 : M.e.A) (j : Fin M.m) (g : E0 × M.e.A) : ℝ :=
   if h : ∃ τ : (Fm.D x (M.pt u0)).what₂.Tau,
       gcode _ (((Fm.D x (M.pt u0)).eTau τ : (Fm.D x (M.pt u0)).R.Psi) : (Fm.D x (M.pt u0)).R.GG) = mcode M.e g

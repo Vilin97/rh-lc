@@ -16,6 +16,7 @@ namespace GlobalTheory.LieRead
 variable {D : D7} (O : Setup D) {K : Type} [Field K] [NumberField K] (F : SemiFib K)
 
 
+open Classical in
 def stepVec (τ : D.host.E →+* ℂ) (j : ℕ) : Fin F.P₀.g → K := fun p =>
   if ∃ x : Letter O.S.Dw, x.1 = τ ∧ (x.2 : ℕ) = j ∧ (letters O.S.Dw)[(p : ℕ)]? = some x then 1 else 0
 
@@ -29,6 +30,7 @@ def stepGrSq (h : HermFam K (Fin F.P₀.g → K)) (τ : D.host.E →+* ℂ) (i :
   (h.gram σ fun j : Fin (i + 1) => stepVec O F τ j).det.re / (h.gram σ fun j : Fin i => stepVec O F τ j).det.re
 
 
+open Classical in
 def stepGrDeg (h : HermFam K (Fin F.P₀.g → K)) (τ : D.host.E →+* ℂ) (i : ℕ) : ℝ :=
   if ha : ∃ a ∈ stepIdeal O F τ i, a ≠ 0 then
     (Real.log ((Submodule.span (𝓞 K) {ha.choose}).toAddSubgroup.relIndex (stepIdeal O F τ i).toAddSubgroup : ℝ) -

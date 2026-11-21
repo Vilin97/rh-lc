@@ -112,6 +112,7 @@ theorem FOrb_step (D : D7) (j p : ℕ) (z : Bool × HH D) (e : ℕ) : FOrb D j p
     add_comm]
 
 
+open Classical in
 def FInert (D : D7) (j p : ℕ) : ℝ :=
   if IsResidueClassZero D p ∧ hP D p = 0 then ∑ τ : D.what₂.Tau, ((D.R.k : ℝ) - 1) * wj D j τ / ((p : ℝ) ^ 2 - 1)
   else (∑ z : Bool × HH D, FOrb D j p z) / (nP D p : ℝ)
@@ -125,6 +126,7 @@ def fockDeg (D : D7) (j : ℕ) : ℤ :=
 def FTypeG (D : D7) (j : ℕ) : ℝ := -((fockDeg D j : ℝ)) / 2
 
 
+open Classical in
 def FvalP {D : D7} (L : SizeData₂ D) (j p : ℕ) : ℝ :=
   if p ∈ L.gTypes then FTypeG D j
   else if D.host.cls p = PrimeClass.ramD then FRamD D j

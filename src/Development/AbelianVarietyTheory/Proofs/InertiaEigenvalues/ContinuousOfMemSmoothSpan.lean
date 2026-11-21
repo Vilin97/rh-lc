@@ -35,6 +35,7 @@ theorem isUnit_rowMat_iff {ℓ : Fin a} {y : Fin a → R} : IsUnit (rowMat ℓ y
   rw [isUnit_iff_isUnit_det, det_rowMat]
 
 
+open Classical in
 def rowGL (ℓ : Fin a) (y : Fin a → R) : GL (Fin a) R :=
   if h : IsUnit (y ℓ) then (isUnit_rowMat_iff.2 h).unit else 1
 

@@ -27,6 +27,7 @@ def face0 : Face3 X.toD7 (famR X I hX U Xg tr) where
   Zsc _ := ⟨0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0⟩
 
 
+open Classical in
 def MuOf (T : Top.TwDat X.B) (Wt : Set X.B.places.Pl) {U : Set I.ι} (mu : HeightOneSpectrum (𝓞 X.toD7.what₂.LL) → TupU I U)
     (twPl : Finset (HeightOneSpectrum (𝓞 X.toD7.what₂.LL))) : Prop :=
   ∀ w : X.B.places.Pl, (X.toD7.plEq w ∈ twPl ↔ w ∈ Wt) ∧

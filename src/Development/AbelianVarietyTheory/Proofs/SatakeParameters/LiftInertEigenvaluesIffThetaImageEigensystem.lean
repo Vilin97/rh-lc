@@ -45,6 +45,7 @@ theorem hkF_nonlab (V : HSp D) {W : Type} [AddCommGroup W] [Module ℂ W] (P : P
   simp [hkF, rep, hd]
 
 
+open Classical in
 def tyOf (n : ℕ) (e : List ℤ) : List ℕ :=
   if h : ∃ y, Formalism.L2.Col.InertTypeOk n y ∧ e = GlobalTheory.Hk3.labIn n y then h.choose else []
 
@@ -57,6 +58,7 @@ theorem labIn_tyOf {n : ℕ} {e : List ℤ} (h : ∃ y, Formalism.L2.Col.InertTy
   exact h.choose_spec
 
 
+open Classical in
 def valC (Lb : List ℤ → Prop) (n : ℕ) (a : List ℕ → ℂ) (c : List ℤ →₀ ℂ) : ℂ :=
   ∑ e ∈ c.support, c e * (if Lb e then a (tyOf n e) else 0)
 

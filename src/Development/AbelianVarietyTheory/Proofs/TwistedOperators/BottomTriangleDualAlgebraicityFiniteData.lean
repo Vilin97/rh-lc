@@ -248,6 +248,7 @@ theorem level_right [Finite T] (hX : IsBottomTri W i j X) :
   rw [hm, map_mul, Module.End.mul_apply, hpt, h κ hκf hκ t]
 
 
+open Classical in
 theorem scalar_exists (hX : IsBottomTri W i j X) (t : T) (τ₀ : D.what₂.Tau) :
     ∃ C w : ℂ, (w = Complex.exp Complex.I ∨ w = (Complex.exp Complex.I)⁻¹) ∧
       ∀ (k : FVar D WW.rank A'.rank →₀ ℕ) (h : GA D WW),

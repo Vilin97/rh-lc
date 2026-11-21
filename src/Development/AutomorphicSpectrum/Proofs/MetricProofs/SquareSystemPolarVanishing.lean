@@ -56,6 +56,7 @@ theorem word_map {V W : Type} (f : V → W) (D k i : ℕ) (x y a : V) :
 def i0 (c : σ → ℤ) : Option σ → ℤ := fun o => o.elim 0 c
 
 
+open Classical in
 def i1 (a₀ : σ) (c : σ → ℤ) : Option σ → ℤ :=
   fun o => o.elim (c a₀) fun a => if a = a₀ then 0 else c a
 

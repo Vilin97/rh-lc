@@ -64,6 +64,7 @@ theorem finite_primes_of_mem {n : 𝓞 F} (hn : n ≠ 0) :
     (Ideal.absNorm_dvd_absNorm_of_le ((Ideal.span_singleton_le_iff_mem _).mpr h𝔭))
 
 
+open scoped Classical in
 def valF (n : 𝓞 F) : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal} →₀ ℕ :=
   if hn : n ≠ 0 then
     Finsupp.onFinset (finite_primes_of_mem hn).toFinset (fun 𝔭 => vF 𝔭.1 n) (fun 𝔭 h => by

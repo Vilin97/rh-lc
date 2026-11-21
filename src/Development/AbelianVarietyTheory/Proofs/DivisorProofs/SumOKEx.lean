@@ -316,6 +316,7 @@ variable {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq 
   {B : κ → Type} [∀ i, AddCommGroup (B i)]
 
 
+open Classical in
 theorem sum_reps_eq (SA : ∀ j, A j → Prop) (SB : ∀ i, B i → Prop) (BA : ∀ j, A j → Prop) (BB : ∀ i, B i → Prop)
     (hSA : ∀ j a b, SA j a → SA j b → SA j (a - b)) (hSB : ∀ i a b, SB i a → SB i b → SB i (a - b))
     (R : ∀ j, Finset (A j)) (R' : ∀ i, Finset (B i))

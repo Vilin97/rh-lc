@@ -42,6 +42,7 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 namespace IdeleGroup
 
 
+open scoped Classical in
 theorem finrank_infiniteCompletion_eq_ite [IsGalois K L] (v : InfinitePlace K)
     (w : InfinitePlace L) [w.LiesOver v] :
     (finrank v.Completion w.Completion : ℚ) = if v.IsUnramifiedIn L then 1 else 2 := by

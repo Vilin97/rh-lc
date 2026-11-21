@@ -16,6 +16,7 @@ namespace PositivityTheory.ThKG.Std
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 
+open Classical in
 def dl (ν : kˣ →* ℂˣ) (x : k) : ℂ :=
   if h : x ≠ 0 ∧ valuation k x = 1 then (((ν (Units.mk0 x h.1))⁻¹ : ℂˣ) : ℂ) else 0
 

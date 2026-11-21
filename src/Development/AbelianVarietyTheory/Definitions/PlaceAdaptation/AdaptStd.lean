@@ -21,6 +21,7 @@ namespace GlobalTheory.PlaceInt
 section Formal
 variable {V : Type} [CommRing V]
 
+open Classical in
 def evC {σ τ : Type} (a : σ → MvPowerSeries τ V) (f : MvPowerSeries σ V) : MvPowerSeries τ V :=
   if h : ∃ ψ : MvPowerSeries σ V →ₐ[V] MvPowerSeries τ V, ∀ j, ψ (MvPowerSeries.X j) = a j then h.choose f else 0
 variable {d : ℕ}

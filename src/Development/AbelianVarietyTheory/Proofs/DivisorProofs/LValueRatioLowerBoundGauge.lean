@@ -70,6 +70,7 @@ theorem over_under {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum (
     Over P (P.under (OF E)) := rfl
 
 
+open Classical in
 theorem core (hTD : GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds.ToricDenominator) {D : D7} {T : Type} {Lc : LevCh D T} {sc : Consts} {μ₀ : T}
     (hL : Lc.Is μ₀) (G : GridData Lc sc) (hcm : IsCMField D.host.E) (hab : IsAbelianGalois ℚ D.host.E)
     (hfd : GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds.IsFieldData D.host.d (cmPhi D)) (hbc : IsBaseCond (condF G.pl))

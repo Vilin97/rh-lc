@@ -144,6 +144,7 @@ structure RedB (I : AutInst) (m : ℕ) where
 variable {I} {m : ℕ}
 
 
+open Classical in
 def matB (R : RedB I m) (x : I.Gf) : Matrix (Fin m) (Fin m) (ZMod R.p) :=
   if hx : x ∈ I.Kset then Classical.choose (redMatB_exists I R.w R.hp R.hcard R.hb hx) else 0
 

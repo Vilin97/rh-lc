@@ -213,6 +213,7 @@ section Complex
 variable {S : Type} [CommRing S]
 
 
+open Classical in
 def ext (J : ∀ k, Finset (ι k)) (n : ℕ) (φ : CombC S J n) (T : ∀ k, Finset (ι k)) : S :=
   if h : ((∀ l, (T l).Nonempty) ∧ ∑ l, ((T l).card - 1) = n) ∧ ∀ l, J l ⊆ T l then φ ⟨⟨T, h.1⟩, h.2⟩ else 0
 

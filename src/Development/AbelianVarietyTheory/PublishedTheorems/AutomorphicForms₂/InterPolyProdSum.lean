@@ -23,6 +23,7 @@ namespace GlobalTheory.ProjVar.Var
 variable {F : Type} [Field F] (Y : Var F) {κ : Type} (Δ : κ → Y.Dv)
 
 
+open Classical in
 def interPoly : MvPolynomial κ ℝ →ₗ[ℝ] ℝ :=
   (basisMonomials κ ℝ).constr ℝ fun d =>
     if h : ∃ s : Fin Y.dim → κ, ∑ i, Finsupp.single (s i) 1 = d then (Y.inter (Δ ∘ h.choose) : ℝ) else 0

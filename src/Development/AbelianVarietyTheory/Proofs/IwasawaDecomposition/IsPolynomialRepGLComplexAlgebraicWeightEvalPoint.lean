@@ -30,6 +30,7 @@ theorem tauPt_mul (τ : L →+* ℂ) (A B : GL (Fin n) ℂ) :
   · simp
 
 
+open Classical in
 def tauSubst (τ : L →+* ℂ) : (L →+* ℂ) × Fin n × Fin n →
     MvPolynomial ((Fin n × Fin n) ⊕ (Fin n × Fin n)) ℂ := fun p =>
   if p.1 = τ then MvPolynomial.X (Sum.inl (p.2.1, p.2.2))

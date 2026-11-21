@@ -12,6 +12,7 @@ open scoped ContDiff ENNReal Matrix
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 namespace GlobalTheory.Up
 
+open Classical in
 noncomputable def Wdiv {r : ℕ} (X : Data E r) (Xa : ArchInM X) (Fl : FlatM X Xa) (n : ℕ) (x : Frame X.Ψ r) : ℝ≥0∞ :=
   if x ∈ X.dom then ENNReal.ofReal (Real.exp (-phla X Xa.Fp x)) *
     ENNReal.ofReal (∑ k, ‖Xa.w k x‖ ^ 2) ^ (-(1 / 2 : ℝ)) *

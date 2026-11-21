@@ -17,6 +17,7 @@ def mixWord {n : ℕ} (a a₀ A' : HermLine ι) (k i : ℕ) : Fin n → HermLine
   fun j => if (j : ℕ) < i then a else if (j : ℕ) + 1 < k then a₀ else A'
 
 
+open Classical in
 def logRatio (a a₀ : HermLine ι) (z : (Σ k, ι k) → ℂ) : ℝ :=
   if ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0 then Real.log (a₀.h z) - Real.log (a.h z) else 0
 

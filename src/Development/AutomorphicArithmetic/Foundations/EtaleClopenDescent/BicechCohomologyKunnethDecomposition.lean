@@ -382,6 +382,7 @@ theorem single_mem_coch (F : Finset ι → Submodule k E) {I : Finset ι} (h : I
     · exact zero_mem _
 
 
+open Classical in
 def iL (F : Finset ι → Submodule k E) (I : Finset ι) : F I →ₗ[k] coch F :=
   if h : I.Nonempty then LinearMap.codRestrict (coch F) _ (single_mem_coch F h) else 0
 

@@ -29,6 +29,7 @@ def ratioSec (i j : Fin (d + 1)) : Γ(PSpace ℂ d, chart d i) :=
 variable {d} {Z : Scheme.{0}} [IsIntegral Z]
 
 
+open Classical in
 def rat (φ : Z ⟶ PSpace ℂ d) (i j : Fin (d + 1)) : Z.functionField :=
   if h : genericPoint Z ∈ φ ⁻¹ᵁ chart d i then
     Z.presheaf.germ (φ ⁻¹ᵁ chart d i) (genericPoint Z) h (φ.app (chart d i) (ratioSec d i j))

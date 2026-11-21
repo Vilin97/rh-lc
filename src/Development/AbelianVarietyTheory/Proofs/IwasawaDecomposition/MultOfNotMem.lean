@@ -29,6 +29,7 @@ theorem mult_of_not_mem {H : Host E} (Dw : Datum H) {τ : E →+* ℂ} (h : ¬ �
   simp [Datum.mult, h]
 
 
+open Classical in
 def modelGram (H : Host E) (Dw : Datum H) (z : GlobalTheory.AllWt.Psi H → Matrix (Fin Dw.p) (Fin Dw.q) ℂ) :
     GlobalTheory.FlagBundle.Mat Dw.mult ℂ := fun τ =>
   if h : τ (H.rt : E) = H.rt0 then

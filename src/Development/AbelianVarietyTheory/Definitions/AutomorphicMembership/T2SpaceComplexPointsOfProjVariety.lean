@@ -232,6 +232,7 @@ def HasVal (y : Y.pts σ) (f : Y.FnC σ) (c : ℂ) : Prop :=
 def RegC (y : Y.pts σ) (f : Y.FnC σ) : Prop := ∃ c, HasVal y f c
 
 
+open Classical in
 def val (y : Y.pts σ) (f : Y.FnC σ) : ℂ := if h : RegC y f then h.choose else 0
 
 variable {y : Y.pts σ} {f f' : Y.FnC σ} {c c' : ℂ}

@@ -102,6 +102,7 @@ theorem below_exists (hO : GlobalTheory.ClsVal.Cmp.OverBase d) (hK : KA l ≤ KA
   exact congrArg _ (Subtype.ext rfl)
 
 
+open Classical in
 def pullRule (f : Rul Xo c) : Rul d.Xo₂ d.c₂ := fun p u =>
   letI := algDn d p.R
   if h : ∃ y : FrPt Xo c p.R, FrOver d u y then evR Xo c f h.choose else 0

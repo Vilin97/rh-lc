@@ -96,6 +96,7 @@ def fR (T : ParamsT D L P) (hK : DV.KapDef D) (j : ℕ) : WeightFamilies.Wt D j 
   fWt D (kaR T hK j) (lR T hK j) T.TO T.nP (even_nP T)
 
 
+open Classical in
 def nusOf (B : WeightFamilies.Prov D) {j : ℕ} (wL : WeightFamilies.Wt D j) (nuWW : HeightOneSpectrum (𝓞 B.KO) → ℝ)
     (la : HeightOneSpectrum (𝓞 B.KO)) : ℝ :=
   if h : ∃ i : Fin 2, ((D.host.g i : ℕ) : 𝓞 B.KO) ∈ la.asIdeal then

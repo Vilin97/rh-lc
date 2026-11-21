@@ -79,6 +79,7 @@ theorem linePoly_formPoly {σ : Type} [Fintype σ] (D : ℕ) (b : (Fin D → σ)
   ring
 
 
+open Classical in
 noncomputable def mixPoly {σ : Type} [Fintype σ] (n : ℕ) (a : (Fin n → σ) → ℝ) (k : ℕ) (e : σ → ℝ) (a₀ : σ) :
     MvPolynomial σ ℝ :=
   ∑ w : Fin n → σ, (∏ r : Fin n, if (r : ℕ) < k then C (e (w r)) else if w r = a₀ then 0 else X (w r)) * C (a w)

@@ -353,6 +353,7 @@ theorem Good.map_add {T : X → X} (h : H.Good T) {x y : X} (hx : x ∈ H.G) (hy
 variable (H)
 
 
+open Classical in
 def hat (T : X → X) : Module.End ℂ H.V :=
   if h : H.Good T then
     { toFun := fun x => H.toV (T x) (h.mem _ x.2.1)
@@ -1380,6 +1381,7 @@ section Cut
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] {L : Fin (r + 1)} {Dc : (Fin r → ℂ) → Set (Mx k r)}
 
 
+open Classical in
 def cutP (L : Fin (r + 1)) (Dc : (Fin r → ℂ) → Set (Mx k r)) : Fn k r E →ₗ[ℂ] Fn k r E where
   toFun := fun Φ c g => if c ∈ OmX r ∧ g ∈ Glev k r L ∧ g ∈ Dc c then Φ c g else 0
   map_add' := fun Φ Ψ => by

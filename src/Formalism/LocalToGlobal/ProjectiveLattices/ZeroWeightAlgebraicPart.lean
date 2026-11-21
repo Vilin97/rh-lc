@@ -35,6 +35,7 @@ theorem rdU_one_of (h : LawsP T) {j : ℕ} (hj : InR D j) (k : (T.U j T.σ₀).C
   rfl
 
 
+open Classical in
 def frAt {j : ℕ} {k : (T.U j T.σ₀).Comp} (x₀ x : Frame ((T.U j T.σ₀).X k).Ψ D.R.r) :
     Frame ((T.U j T.σ₀).X k).Ψ D.R.r :=
   if x ∈ ((T.U j T.σ₀).X k).dom then x else x₀

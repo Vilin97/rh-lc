@@ -20,6 +20,7 @@ noncomputable section
 namespace GlobalTheory.TestLat
 
 
+open Classical in
 theorem blockForm_apply {F C I : Type} [CommRing F] [Fintype C] [Fintype I] {N : ℕ} (e : Fin N ≃ C × I)
     (M : Matrix I I F) (x y : Fin N → F) :
     x ⬝ᵥ (Matrix.of fun a b => if (e a).1 = (e b).1 then M (e a).2 (e b).2 else 0) *ᵥ y =
@@ -37,6 +38,7 @@ theorem blockForm_apply {F C I : Type} [CommRing F] [Fintype C] [Fintype I] {N :
   · simp
 
 
+open Classical in
 theorem blockForm_posDef {C I : Type} [Fintype C] [Fintype I] {N : ℕ} (e : Fin N ≃ C × I)
     (M : Matrix I I ℂ) (hM : M.PosDef) :
     (Matrix.of fun a b => if (e a).1 = (e b).1 then M (e a).2 (e b).2 else 0).PosDef := by

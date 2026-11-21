@@ -88,6 +88,7 @@ section Dens
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {ι : Type} [Fintype ι]
 
 
+open Classical in
 def mtwPtOf (emb : ι → L →+* ℂ) (g : ι → GL (Fin n) ℂ) : (L →+* ℂ) × Fin n × Fin n → ℂ := fun p =>
   if h : ∃ τ, emb τ = p.1 then ((g h.choose : GL (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ) p.2.1 p.2.2
   else if h' : ∃ τ, ComplexEmbedding.conjugate (emb τ) = p.1 then

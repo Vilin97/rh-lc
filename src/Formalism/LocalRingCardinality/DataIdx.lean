@@ -92,6 +92,7 @@ def Z0 (μ : D.what₂.Tup) (j : ℕ) : Submodule ℂ (D.what₂.Mt μ j) :=
   (LinearMap.ker (D.what₂.thetaP μ j))ᗮ ⊓ LinearMap.range (D.what₂.eMt μ j)
 
 
+open Classical in
 def hLL (μ : D.what₂.Tup) (j : ℕ) (x y : D.what₂.MtL μ j) : D.what₂.LL :=
   if h : ∃ c : D.what₂.LL, D.what₂.embLL c = inner ℂ (D.what₂.jMt μ j x) (D.what₂.jMt μ j y) then h.choose else 0
 

@@ -23,6 +23,7 @@ def tEval {σ : Type} [Fintype σ] [DecidableEq σ] {S : Type} [CommRing S] [Alg
     (Finsupp.equivFunOnFinite.symm fun i => (e i : ℕ)) f) * ∏ i, a i ^ (e i : ℕ)
 
 
+open Classical in
 def nEval {σ : Type} [Fintype σ] [DecidableEq σ] {S : Type} [CommRing S] [Algebra R₀ S]
     (f : MvPowerSeries σ R₀) (a : σ → S) : S :=
   if h : ∃ N, ∀ i, a i ^ N = 0 then tEval (Nat.find h) f a else 0

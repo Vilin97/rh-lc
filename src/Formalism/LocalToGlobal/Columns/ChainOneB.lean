@@ -16,6 +16,7 @@ open Formalism.BasicNotions Formalism.HermitianLatticesTheory Formalism.L2.DIV
 section Core
 
 
+open Classical in
 def ocbChiV {k : Type} [Field k] (χ : kˣ →* ℂˣ) (x : k) : ℂ := if h : x = 0 then 0 else ((χ (Units.mk0 x h) : ℂˣ) : ℂ)
 
 def ocbEnt {k : Type} [Field k] {A B : ℕ} (k₀ cA nA cB nB : ℕ) (x : (Fin A → k) →ₗ[k] (Fin B → k)) (p p' : ℕ) : k :=
@@ -27,6 +28,7 @@ def ocbAllow (k₀ m t N p p' : ℕ) : Prop :=
   else p < k₀ + m - 1 ∨ (p < N ∧ (p - (k₀ + m - 1)) / t ≤ (p' - (k₀ + m - 1)) / t)
 
 
+open Classical in
 def ocbPhiS {k : Type} [Field k] (ψ₀ : AddChar k ℂ) (χ : ℕ → kˣ →* ℂˣ) (k₀ m t j n' c n : ℕ) : Loc.SF k ℂ (n' + (c + 1)) (n + c) :=
   fun x =>
     let M := ocbEnt k₀ (c + 1) n' c n x
@@ -165,6 +167,7 @@ def ocbXPat (k₀ rS j t : ℕ) (hbar : GL (Fin N) κ) : Prop :=
   (∀ p, p < k₀ + j → ocbM hbar p p = 1) ∧ ∀ p p', p < N → p' < N → p ≠ p' → ocbM hbar p p' ≠ 0 → ocbXAllow k₀ rS j t p p'
 
 
+open Classical in
 def ocbChiK (χ : κˣ →* Kˣ) (x : κ) : K := if h : IsUnit x then ((χ h.unit : Kˣ) : K) else 0
 
 def ocbXLam (ψ₀ : AddChar κ K) (χ : ℕ → κˣ →* Kˣ) (k₀ j t : ℕ) (hbar : GL (Fin N) κ) : K :=

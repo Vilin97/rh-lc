@@ -60,6 +60,7 @@ theorem detL_ne_zero {x : Lie E a} (hx : x ∈ invSet E a) : detL x ≠ 0 := by
   exact zero_ne_one h1
 
 
+open Classical in
 def extZ (α : glG E a → ℂ) (x : Lie E a) : ℂ :=
   if h : IsUnit (Matrix.of x) then ((|detL x|⁻¹ : ℝ) : ℂ) * α ⟨h.unit, Subgroup.mem_top _⟩ else 0
 

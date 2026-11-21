@@ -257,6 +257,7 @@ def InCosetOf (I : Ideal (𝓞 D.host.E)) (c : Coset S T I) (x : WO S.V T.V) : P
     Ideal.Quotient.mk (idS D.host.F I) ⟨_, h⟩ = cmpS D.host.F I (c i j)
 
 
+open Classical in
 def cosetInd (e : AE D) (I : Ideal (𝓞 D.host.E)) (c : Coset S T I) (x : WO S.V T.V) : ℂ :=
   if IsHalf e x ∧ InCosetOf S T I c x then 1 else 0
 

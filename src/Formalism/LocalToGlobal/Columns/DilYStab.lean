@@ -47,6 +47,7 @@ def PtY.repl {b : L.β j} (x : PtY W cst L u m2 j b) (d' : DecoSet X.E (R.N j) (
   ⟨(x.1.1.mv d', x.1.2), by rw [cplAt_ys_mv b x.1.1 h]; exact x.2⟩
 
 
+open Classical in
 def PtY.mv {b : L.β j} (x : PtY W cst L u m2 j b) (d' : DecoSet X.E (R.N j) (Pr.vT u) Pr.vGs) : PtY W cst L u m2 j b :=
   if h : DecoSet.SameOn (rowSG Pr sel mu) x.deco d' then x.repl d' h else x
 

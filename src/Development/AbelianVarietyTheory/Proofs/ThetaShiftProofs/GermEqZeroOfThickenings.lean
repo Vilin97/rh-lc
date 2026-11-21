@@ -201,6 +201,7 @@ def IsTau (J : Ideal S) (x : Sp S ⟶ G.left) (jL : U.LG.L.ι) (jM : D.toPre.P.L
     Ideal.Quotient.mk _ τ * wVal U e xe jL jM = 1
 
 
+open Classical in
 def tau (J : Ideal S) (x : Sp S ⟶ G.left) (jL : U.LG.L.ι) (jM : D.toPre.P.L.ι) : Sˣ :=
   if h : ∃ τ : Sˣ, IsTau U J x jL jM τ then h.choose else 1
 

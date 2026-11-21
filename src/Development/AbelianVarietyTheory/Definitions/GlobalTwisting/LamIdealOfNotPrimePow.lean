@@ -54,12 +54,14 @@ def aChi (n : ℕ) : ℂ := ∑ g, χ g * (𝓕.a g n : ℂ)
 def lamChi (n : ℕ) : ℂ := ∑ g, χ g * (𝓕.lam g n : ℂ)
 
 
+open Classical in
 def res : ℂ := if χ = 1 then ((𝓕.κ * Fintype.card 𝓕.G : ℝ) : ℂ) else 0
 
 def mel (s : ℂ) : ℂ :=
   ∫ x in Set.Ioi (1 : ℝ), ((∑ n ∈ Icc 1 ⌊x⌋₊, 𝓕.aChi χ n) - 𝓕.res χ * x) * (x : ℂ) ^ (-s - 1)
 
 
+open Classical in
 def F (s : ℂ) : ℂ := if χ = 1 then 𝓕.res χ * s + (s - 1) * s * 𝓕.mel χ s else s * 𝓕.mel χ s
 
 def psi (x : ℝ) : ℂ := ∑ n ∈ Icc 1 ⌊x⌋₊, 𝓕.lamChi χ n

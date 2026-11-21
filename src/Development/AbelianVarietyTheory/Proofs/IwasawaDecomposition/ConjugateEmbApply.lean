@@ -97,6 +97,7 @@ theorem sum_emb_bijective : Function.Bijective
       exact ⟨Sum.inl t, ht⟩
 
 
+open Classical in
 def typeExp (p q : ℕ) (σ : H.E →+* ℂ) : ℕ := if ∃ t : Tau R, H.emb t = σ then p else q
 
 theorem typeExp_emb (p q : ℕ) (t : Tau R) : typeExp H p q (H.emb t) = p := if_pos ⟨t, rfl⟩

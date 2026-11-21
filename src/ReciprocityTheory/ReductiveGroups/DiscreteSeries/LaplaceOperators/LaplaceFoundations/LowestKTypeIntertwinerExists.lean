@@ -16,6 +16,7 @@ open ReciprocityTheory.ChartRestriction.DS
 variable {k r : ℕ} {ε : Fin (2 * r + k + 1) → Bool} {Λ : Fin (2 * r + k + 1) → ℝ} (T : S7.KType ε Λ)
 
 
+open Classical in
 def rhoS (h : Matrix (Fin k) (Fin k) ℂ) : spanW (k := k) (r := r) T →L[ℂ] spanW (k := k) (r := r) T :=
   if hh : h ∈ Matrix.unitaryGroup (Fin k) ℂ then
     LinearMap.toContinuousLinearMap ((rhoK (k := k) (r := r) T h : T.V →ₗ[ℂ] T.V).restrict

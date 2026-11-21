@@ -32,6 +32,7 @@ structure AlgRep where
   irred : ∀ W : Submodule ℂ (Fin d → ℂ), (∀ y, ∀ v ∈ W, mat y *ᵥ v ∈ W) → W = ⊥ ∨ W = ⊤
 
 
+open Classical in
 def extGL (f : GL (Fin a) (Cinf E) → ℂ) (x : Lie E a) : ℂ := if h : IsUnit (Matrix.of x) then f h.unit else 0
 
 

@@ -125,6 +125,7 @@ variable {n : ℕ} {b : Fn0 A} {D D₁ : Type} [CommRing D] [Algebra R D] [CommR
   (hψ : (ψ : D →+* D₁).FaithfullyFlat)
 
 
+open Classical in
 def sec : RootFn A D := fun D' _ _ φ z ↦
   if h : z ^ n = spOver φ ≫ x then Classical.choose (exists_isVal hb ψ x z₀ hz₀ a ha hψ φ z h) else 0
 

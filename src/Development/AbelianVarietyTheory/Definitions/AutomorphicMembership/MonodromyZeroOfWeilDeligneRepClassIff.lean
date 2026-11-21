@@ -448,6 +448,7 @@ def lpOfChar (χ : Weil h →* ℂˣ) (hχ : IsSmooth χ) : WD h :=
   mk (WDRep.ofChars (h := h) (ι := Fin 1) (fun _ => χ) fun _ => hχ)
 
 
+open Classical in
 def unitOf (z : ℂ) : ℂˣ := if hz : z = 0 then 1 else Units.mk0 z hz
 
 theorem coe_unitOf {z : ℂ} (hz : z ≠ 0) : (unitOf z : ℂ) = z := by simp [unitOf, hz]

@@ -273,6 +273,7 @@ section Hecke
 variable {K : Type} [Field K] [NumberField K]
 
 
+open Classical in
 def heckeFam (χ : HChar K) : Fam K := fun w => if χ.UnrAt w then {χ.val w} else 0
 
 def heckeL (T : Set (HeightOneSpectrum (𝓞 K))) (χ : HChar K) (s : ℂ) : ℂ := eulerProd T (heckeFam χ) s
@@ -370,12 +371,14 @@ theorem LvTw_inert (c : Fam E) (m : HeightOneSpectrum (𝓞 E) → ℂˣ) {v : H
 open Formalism.MainNotions.SchurIrreducible
 
 
+open Classical in
 def etaU (v : HeightOneSpectrum (𝓞 F)) : ℂˣ := if IsSplit (E := E) v then 1 else -1
 
 theorem etaU_sq (v : HeightOneSpectrum (𝓞 F)) : etaU E v ^ 2 = 1 := by
   unfold etaU; split_ifs <;> simp
 
 
+open Classical in
 def etaFam (k : ℕ) : Fam F := fun v => if IsUnram (E := E) v ∨ Even k then {etaU E v ^ k} else 0
 
 

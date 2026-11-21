@@ -214,6 +214,7 @@ theorem Om_open (z z' : Vc k r) : IsOpen (Om k r z z') := by
   exact isOpen_lt continuous_const Complex.continuous_normSq
 
 
+open Classical in
 def secF (k r : ℕ) (z z' : Vc k r) (μsec : ℂ → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) (ζ : ℂ) :
     Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ := if ζ ∈ Om k r z z' then μsec ζ else 1
 

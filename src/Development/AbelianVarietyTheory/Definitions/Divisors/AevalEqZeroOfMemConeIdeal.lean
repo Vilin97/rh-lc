@@ -206,6 +206,7 @@ theorem IsImageDeg.pos {ev : V →ₗ[K] Ω} {D δ : ℕ} (h : IsImageDeg ev D �
   exact hf.pos
 
 
+open Classical in
 def imageDeg (ev : V →ₗ[K] Ω) (D : ℕ) : ℕ := if h : ∃ δ, IsImageDeg ev D δ then h.choose else 0
 
 theorem IsImageDeg.imageDeg_eq {ev : V →ₗ[K] Ω} {D δ : ℕ} (h : IsImageDeg ev D δ) : imageDeg ev D = δ := by
@@ -242,6 +243,7 @@ def IsImageHeight (Nm : (K →+* ℂ) → V → ℝ) (L : Submodule (𝓞 K) V) 
       ((D : ℝ) + 1) * δ * h = formHeight δ w A f
 
 
+open Classical in
 def imageHeight (Nm : (K →+* ℂ) → V → ℝ) (L : Submodule (𝓞 K) V) (ev : V →ₗ[K] Ω) (D : ℕ) : ℝ :=
   if h : ∃ x, IsImageHeight Nm L ev D x then h.choose else 0
 

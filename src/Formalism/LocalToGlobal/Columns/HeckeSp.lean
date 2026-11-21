@@ -361,6 +361,7 @@ def DecoSet.heckeSet (P : Ideal (𝓞 E)) (i : ℕ) (d : DecoSet E n ST SG) : Se
   {d' | IsHeckeNbr P i d.1.N d'.1.N ∧ d'.1.f = d.1.f ∧ d'.1.be = d.1.be}
 
 
+open Classical in
 def DecoSet.heckeNb (P : Ideal (𝓞 E)) (i : ℕ) (d : DecoSet E n ST SG) : Finset (DecoSet E n ST SG) :=
   if h : (d.heckeSet P i).Finite then h.toFinset else ∅
 

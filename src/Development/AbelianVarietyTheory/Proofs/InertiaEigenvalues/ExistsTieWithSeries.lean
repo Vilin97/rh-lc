@@ -35,6 +35,7 @@ def rdVLin (rdV : RdV D ρ) (i) (j : Fin D.R.m) (b k Q ψ) :
     rfl
 
 
+open Classical in
 def latI (rdV : RdV D ρ) (i) : ∀ n b k Q ψ, Submodule (D.ntw.Ok i k) (D.nexp.MtV i n b k Q ψ)
   | 0, b, k, Q, ψ => D.nexp.MtLat i 0 b k Q ψ
   | n + 1, b, k, Q, ψ => if h : n < D.R.m ∧ TwOK i k Q ψ then

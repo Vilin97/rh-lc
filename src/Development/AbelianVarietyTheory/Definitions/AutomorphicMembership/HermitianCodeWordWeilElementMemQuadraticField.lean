@@ -110,6 +110,7 @@ section Seen
 variable {X : Fields} {Pr : Primes X} (hPr : Pr.Ok) (u : Pr.Word)
 
 
+open Classical in
 def tauAt (w : HeightOneSpectrum (𝓞 X.K)) : Pr.vT u ≃ X.Tau :=
   if h : ∃ e : Pr.vT u ≃ X.Tau, ∀ P, SeesP w (e P) P.1 ∨ SeesPbar w (e P) P.1 then h.choose
   else Fintype.equivOfCardEq (by rw [Fintype.card_coe, hPr.vT_card u]; rfl)
@@ -245,6 +246,7 @@ theorem exists_embQbar : ∃ ρ : TaylorLogMetric.Qbar →ₐ[ℚ] ℂ, ∀ x : 
   exact GlobalTheory.Glob.rhoOf_imEquiv σ₀ s x
 
 
+open Classical in
 def embQbar : TaylorLogMetric.Qbar →ₐ[ℚ] ℂ := if s = σ₀ then TaylorLogMetric.Qbar.val else (exists_embQbar σ₀ s).choose
 
 variable {ι : Type} [Fintype ι] {a b : ℕ}

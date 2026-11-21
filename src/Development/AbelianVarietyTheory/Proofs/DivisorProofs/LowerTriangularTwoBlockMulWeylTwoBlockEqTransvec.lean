@@ -180,6 +180,7 @@ theorem eq_zero_of_field {e : Ix Dw → ℤ} {g : Rul Xo c} (hg : g ∈ secZ Xo 
   exact Ideal.algebraMap_residueField_eq_zero.1 h4
 
 
+open Classical in
 theorem eq_zero_of_lt {e : Ix Dw → ℤ} {f : Rul Xo c} (hf : f ∈ secZ Xo c e) (τ₀ : E →+* ℂ)
     (a b : Fin (Dw.mult τ₀)) (hab : (b : ℕ) = a + 1) (hlt : e (some ⟨τ₀, a⟩) < e (some ⟨τ₀, b⟩)) : f = 0 := by
   have hne : a ≠ b := by intro h; rw [h] at hab; omega

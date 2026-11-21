@@ -91,6 +91,7 @@ def IsTop (b : ι → Fin n → ℕ) (m : ι × Fin N × Fin N →₀ ℕ) : Pro
   (∀ τ s, m (τ, iL hN, iC hN s) = b τ s) ∧ ∀ τ a, m (τ, a, iL hN) = 0
 
 
+open Classical in
 def coefLast (b : ι → Fin n → ℕ) : Pol K ι N →ₗ[K] Pol K ι n :=
   (basisMonomials (ι × Fin N × Fin N) K).constr K fun m =>
     if IsTop hN b m then monomial (m.comapDomain (upVar hN) (upVar_inj hN).injOn) (1 : K) else 0
@@ -635,6 +636,7 @@ def inFr (f : Sp E a ≃ₗ[E] Sp E a) (f' : Sp E b ≃ₗ[E] Sp E b) (x : HomE 
   f'.symm.toLinearMap ∘ₗ x ∘ₗ f.toLinearMap
 
 
+open Classical in
 def phiT (K : Type) [Field K] {ST SG SG' : Finset (HeightOneSpectrum (𝓞 E))} (d : Deco E a ST SG) (d' : Deco E b ST SG')
     (x : HomE E a b) : K :=
   if ∀ P : ST, ∀ y ∈ d.at P.1, x y ∈ d'.at P.1 ∧ d'.f P (x y) = d.f P y then 1 else 0
@@ -656,6 +658,7 @@ variable {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] (P : Heig
 def vP (a : E) : ℤ := Classical.epsilon fun z : ℤ => IsUnit (redP P (a / (q : E) ^ z))
 
 
+open Classical in
 def unitV (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (a : E) : K := if h : IsUnit (redP P a) then ((χ h.unit : Kˣ) : K) else 0
 
 
@@ -695,6 +698,7 @@ def lamQB (kj n : ℕ) {N : ℕ} (h : HomE E N N) : K :=
   (unitV ξ (Matrix.det (Matrix.of fun s t : Fin (n - kj) => atN (h (eN E N (kj + t.1))) (kj + s.1))))⁻¹
 
 
+open Classical in
 def PhiQ (k₀ r c' n' c n : ℕ) : SF E K (n' + c') (n + c) := fun x =>
   if (∀ p p', p < n + c → p' < n' + c' → IntAt P (entB q k₀ c' n' c n 0 0 x p p')) ∧
       (∀ p p', r ≤ p → p < n + c → p' < r → IntAt P (entB q k₀ c' n' c n 0 0 x p p' / (q : E)))
@@ -760,6 +764,7 @@ def lamGB (k₀ r t j n c : ℕ) (h : HomE E (n + c) (n + c)) : K :=
   lamGv ψ₀ χ r t j (entB q k₀ c n c n (fun i => i + 1) (fun i => i + 1) h)
 
 
+open Classical in
 def PhiG (sharp : Bool) (k₀ r t j c' n' c n : ℕ) : SF E K (n' + c') (n + c) := fun x =>
   let M := entB q k₀ c' n' c n (fun i => i + 1) (fun i => i + 1) x
   let a := r + (j - 1) * t
@@ -777,6 +782,7 @@ def lamGBS (k₀ r t j n c : ℕ) (h : HomE E (n + c) (n + c)) : K :=
   lamGvS ψ₀ χ k₀ r t j (entB q k₀ c n c n (fun i => i + 1) (fun i => i + 1) h)
 
 
+open Classical in
 def PhiGS (k₀ rS r t j c' n' c n : ℕ) : SF E K (n' + c') (n + c) := fun x =>
   let M := entB q k₀ c' n' c n (fun i => i + 1) (fun i => i + 1) x
   let a := r + (j - 1) * t
@@ -864,6 +870,7 @@ def IsQValC (ξ : Chr F E L) (P : HeightOneSpectrum (𝓞 E)) (k : Lˣ) : Prop :
     (∀ P' : HeightOneSpectrum (𝓞 E), P' ≠ P → y₀ - 1 ∈ P'.asIdeal.map (toRInt F E)) → ξ y = k
 
 
+open Classical in
 def qValC (ξ : Chr F E L) (P : HeightOneSpectrum (𝓞 E)) : Lˣ := if h : ∃ k, IsQValC ξ P k then h.choose else 1
 
 end XiQ
@@ -872,22 +879,26 @@ variable (Ch : Chars X Pr R.m) (sel : HeightOneSpectrum (𝓞 X.F) → HeightOne
   (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu))
 
 
+open Classical in
 def psi0P (P : HeightOneSpectrum (𝓞 X.E)) : AddChar (𝓞 X.E ⧸ P.asIdeal) X.K :=
   if h : P ∈ Pr.vGs then Ch.psi0 ⟨P, h⟩ else 1
 
 
+open Classical in
 def chiP (P : HeightOneSpectrum (𝓞 X.E)) : ℕ → (𝓞 X.E ⧸ P.asIdeal)ˣ →* X.Kˣ :=
   if h : P ∈ Pr.vGs then chiAt Ch ⟨P, h⟩ else fun _ => 1
 
 abbrev AutY (X : Fields) (R : Ranks) (j : ℕ) : Type := Sp X.E (R.N j + cOf R j) ≃ₗ[X.E] Sp X.E (R.N j + cOf R j)
 
 
+open Classical in
 def Jat (sharp : Bool) (j : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) : Subgroup (AutY X R j) :=
   if P ∈ Pr.vGs then
     (if sharp then LocE.JGsym P (qOf P) R.k R.rS R.r R.t (R.N j) (cOf R j) else LocE.JG P (qOf P) R.k R.r R.t (R.N j) (cOf R j))
   else LocE.JQ P (qOf P) (R.k + j) (R.N j) (cOf R j)
 
 
+open Classical in
 def lamRow (sharp : Bool) (j : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) (h : HomE X.E (R.N j + cOf R j) (R.N j + cOf R j)) : X.K :=
   if P ∈ Pr.vGs then
     (if sharp then LocE.lamGBS (qOf P) (psi0P Ch P) (chiP Ch P) R.k R.r R.t j (R.N j) (cOf R j) h
@@ -895,10 +906,12 @@ def lamRow (sharp : Bool) (j : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) (h : HomE
   else LocE.lamQB (resChar (mu : Chr X.F X.E X.K) P) (R.k + j) (R.N j) h
 
 
+open Classical in
 def lamYat (j : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) : Submodule (𝓞 X.E) (Sp X.E (R.N j + cOf R j)) :=
   LocE.lamY P (qOf P) (R.N j) (cOf R j) (if P ∈ Pr.vGs then fun i => i + 1 else 0)
 
 
+open Classical in
 def PhiAt (sharp : Bool) (i : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) : Loc.SF X.E X.K (R.N i + cOf R i) (R.N (i + 1) + cOf R (i + 1)) :=
   if P ∈ Pr.vGs then
     (if sharp then LocE.PhiGS (qOf P) (psi0P Ch P) (chiP Ch P) R.k R.rS R.r R.t (i + 1) (cOf R i) (R.N i) (cOf R (i + 1)) (R.N (i + 1))
@@ -906,6 +919,7 @@ def PhiAt (sharp : Bool) (i : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) : Loc.SF X
   else LocE.PhiQ (qOf P) (resChar (mu : Chr X.F X.E X.K) P) R.k R.r (cOf R i) (R.N i) (cOf R (i + 1)) (R.N (i + 1))
 
 
+open Classical in
 def muAt (i : ℕ) (P : rowSG Pr sel mu) : X.E → X.K :=
   LocE.locChar (qOf P.1) (cst.muq (i + 1) P)
     (if P.1 ∈ Pr.vGs then chiP Ch P.1 i else (resChar (mu : Chr X.F X.E X.K) P.1)⁻¹)
@@ -1094,6 +1108,7 @@ def locLat {E : Type} [Field E] [NumberField E] {n : ℕ} (SB : Finset (HeightOn
     ((((qOf P.1 : E) ^ e P)⁻¹ • (LinearMap.id : Sp E n →ₗ[E] Sp E n)).restrictScalars (𝓞 E))
 
 
+open Classical in
 def ybSet {n : ℕ} (N : Submodule (𝓞 X.E) (Sp X.E n)) : Set (Set (Sp X.E n)) :=
   {Y | ∃ y ∈ locLat (rowSG Pr sel mu) N (fun P => if P.1 ∈ Pr.vGs then -1 else -(cst.M : ℤ)),
     Y = {z | z - y ∈ locLat (rowSG Pr sel mu) N (fun P => if P.1 ∈ Pr.vGs then 0 else (cst.M : ℤ))}}
@@ -1107,6 +1122,7 @@ def XiCpl1 {u : Pr.Word} (m2 : ℕ) (al : L.β m2) (p₀ : ChPt (R := R) sel mu 
       ((frsF sel mu p P).symm (repY Y))
 
 
+open Classical in
 def PhiTop (sharp : Bool) (m2 : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) : Loc.SF X.E X.K (R.N (m2 + 1) + cOf R (m2 + 1)) ((R.N R.m - 1) + 0) :=
   if P ∈ Pr.vGs then
     (if sharp then LocE.PhiGS (qOf P) (psi0P Ch P) (chiP Ch P) R.k R.rS R.r R.t R.m (cOf R (m2 + 1)) (R.N (m2 + 1)) 0 (R.N R.m - 1)
@@ -1114,6 +1130,7 @@ def PhiTop (sharp : Bool) (m2 : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) : Loc.SF
   else LocE.PhiQ (qOf P) (resChar (mu : Chr X.F X.E X.K) P) R.k R.r (cOf R (m2 + 1)) (R.N (m2 + 1)) 0 (R.N R.m - 1)
 
 
+open Classical in
 def ftY {n : ℕ} (P : rowSG Pr sel mu) (η : Sp X.E n →ₗ[X.E] X.E) (y' : Sp X.E n) : X.K :=
   if P.1 ∈ Pr.vGs then
     (if ∀ i : Fin n, IntAt P.1 (η (Pi.single i 1)) then cst.psi P ((epsSg : X.E) * η y') else 0)
@@ -1209,10 +1226,12 @@ structure ChTh (u : Pr.Word) (m2 : ℕ) where
     (colVal W u R.m (Pr.vT u) (rowSG Pr sel mu)).V
 
 
+open Classical in
 def rhoS (i : ℕ) (P : rowSG Pr sel mu) : X.E → X.K :=
   LocE.unitV (if P.1 ∈ Pr.vGs then chiP Ch P.1 i else (resChar (mu : Chr X.F X.E X.K) P.1)⁻¹)
 
 
+open Classical in
 def rhoT (i : ℕ) (P : rowSG Pr sel mu) : X.E → X.K :=
   LocE.unitV (if P.1 ∈ Pr.vGs then (chiP Ch P.1 i)⁻¹ else resChar (mu : Chr X.F X.E X.K) P.1)
 
@@ -1273,6 +1292,7 @@ def Serv.NP {u : Pr.Word} (Sv : Serv W Ch u) (w : HeightOneSpectrum (𝓞 X.K)) 
     ((MramV W Ch u).subtype.restrictScalars (𝓞 X.K))
 
 
+open Classical in
 def NuAt {u : Pr.Word} (Sv : Serv W Ch u) (w : HeightOneSpectrum (𝓞 X.K)) : Submodule (𝓞 X.K) (MramV W Ch u) :=
   if ((Pr.T u : ℕ) : 𝓞 X.K) ∈ w.asIdeal then NlamG W Ch u w
   else if prW w ∈ Sv.served then Sv.NP w

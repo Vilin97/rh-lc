@@ -185,6 +185,7 @@ theorem pa_lt_bndP {p : ℕ} (h : (p : ℝ) ≤ L.sc.X'' D.R.n) : p < bndP L := 
   omega
 
 
+open Classical in
 theorem pa_entry (H : PtH X K Cr) (w : D.what₂.places.Pl) (hw : w ∈ L.supp) :
     (∑ j ∈ SizeData₂.lifts D, L.gainD j w) - L.tau w =
       (if InertK D (D.what₂.places.resChar w) then

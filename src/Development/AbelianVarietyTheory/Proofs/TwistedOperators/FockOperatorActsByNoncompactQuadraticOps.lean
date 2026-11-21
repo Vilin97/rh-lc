@@ -446,6 +446,7 @@ variable (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ)
 include hψ hθ hS hT bS bT
 
 
+open Classical in
 theorem ccr (k l : FVar D T.rank S.rank) {g : WO S T → ℂ} (hg : IsThetaFunO ψ S T g) :
     annih (heisO ψ S T) θ k.1 (cplxO (sS k.1) (sT k.1)) (unitMap (BS k.1) (BT k.1) k.2.1 k.2.2)
       (aPlusAll (heisO ψ S T) θ (fun τ => cplxO (sS τ) (sT τ)) BS BT l g) =

@@ -98,6 +98,7 @@ private theorem ch_cup {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algeb
     ⟨b, (IsLocallyConstant.iff_continuous _).1 hb1, funext fun p => (hb2 p.1 p.2).symm⟩)
 
 
+open scoped Classical in
 theorem UpperTheory.V.GC.gwTame (P : Hypotheses₂) {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] (l : ℕ)
     [Fact l.Prime] (hl : l ≠ 2) (S S' : Finset (HeightOneSpectrum (𝓞 F))) (hS : ContainsAbove S l) (hS' : ContainsAbove S' l)
     (A : S' → ValuationSubring Ω) (hA : ∀ v, IsPlaceOver (A v) v.1) (K : Subgroup (G F Ω)) [K.Normal]

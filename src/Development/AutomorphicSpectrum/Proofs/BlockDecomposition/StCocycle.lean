@@ -75,6 +75,7 @@ theorem ev_str {W : X.Opens} (T : Thick (LL q)) (h : InU W T) (a : O) :
     (show PtOver X q (Ideal.Quotient.mk (⊥ : Ideal O)) (T.B ⧸ T.J) from T.y).2 h a).trans (T.w a)
 
 
+open Classical in
 def lft (W : X.Opens) (T : Thick (LL q)) (f : Γ(X, W)) : T.B :=
   if h : InU W T then Function.surjInv Ideal.Quotient.mk_surjective (ev T h f) else 0
 

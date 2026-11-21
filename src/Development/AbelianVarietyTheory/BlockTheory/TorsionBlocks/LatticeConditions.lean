@@ -78,6 +78,7 @@ variable {tw} (L : LocTheory) (nbt : Br.NBrTw tw) (i : tw.Tw) (s : tw.Sig i)
   (hf : Function.Injective f) (ψ : GE N →* O'ˣ)
 
 
+open Classical in
 def condL : ∀ v, Submodule O'
     (H1 ((WKG (latTpsi tw i s f ψ)).comp (Dec (F := H.E) (N.plOm.1 v)).subtype)) :=
   fun v => if h : v ∈ placesOver H.E (tw.l i) then

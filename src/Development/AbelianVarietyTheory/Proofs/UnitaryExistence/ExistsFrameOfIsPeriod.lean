@@ -165,6 +165,7 @@ theorem blockOf_apply (t : ι) (z : Fin g → ℂ) (a : Fin r) :
     blockOf idx q t z a = kap q a (z (idx.symm (t, a))) := rfl
 
 
+open Classical in
 def ofBlock (t : ι) (w : Fin r → ℂ) : Fin g → ℂ :=
   fun k => if (idx k).1 = t then kap q (idx k).2 (w (idx k).2) else 0
 

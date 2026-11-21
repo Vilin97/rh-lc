@@ -309,10 +309,12 @@ theorem ciAddChar_one_ne {A : Type} [CommRing A] [Finite A] {p : ℕ} (hp : p.Pr
   rw [h2, AddChar.map_nsmul_eq_pow, h1, one_pow, AddChar.one_apply]
 
 
+open Classical in
 def ciPsi {SB : Finset (HeightOneSpectrum (𝓞 X.E))} (P : SB) (x : X.E) : X.K :=
   if IntAt P.1 ((qOf P.1 : X.E) * x) then psi0P Ch P.1 (redP P.1 ((qOf P.1 : X.E) * x)) else 1
 
 
+open Classical in
 def ciSq (P : HeightOneSpectrum (𝓞 X.E)) : X.K :=
   if h : P ∈ Pr.vGs ∧ Finite (𝓞 X.E ⧸ P.asIdeal) then
     haveI := h.2
@@ -445,6 +447,7 @@ section Lift
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {P : HeightOneSpectrum (𝓞 E)} {q : ℕ}
 
 
+open Classical in
 def ciLift (c : 𝓞 E ⧸ P.asIdeal) : 𝓞 E :=
   if c = 0 then 0 else if c = 1 then 1 else (Ideal.Quotient.mk_surjective c).choose
 
@@ -875,9 +878,11 @@ section Tied
 variable {X : Fields} {Pr : Primes X}
 
 
+open Classical in
 def ciQU (P : HeightOneSpectrum (𝓞 X.E)) : X.Eˣ := if h : (qOf P : X.E) ≠ 0 then Units.mk0 _ h else 1
 
 
+open Classical in
 def ciMuqG {m : ℕ} (G : ChGlob X m) (i : ℕ) (P : HeightOneSpectrum (𝓞 X.E)) : X.K :=
   if h : ∃ (hi : i < m) (y : X.K), G.σ₀ y = ((((G.mu0 ⟨i, hi⟩).locK P (ciQU P)) : ℂˣ) : ℂ)⁻¹ then h.choose_spec.choose else 1
 

@@ -24,6 +24,7 @@ def quot (A : WeightedAtlas n Y ι La) (h β : ι → Y → ℂ) (y : Y) : ℂ :
   h (A.pick y) y / β (A.pick y) y
 
 
+open scoped Classical in
 def ext0 {Y : Type*} (U : Set Y) (f : U → ℂ) (y : Y) : ℂ :=
   if hy : y ∈ U then f ⟨y, hy⟩ else 0
 

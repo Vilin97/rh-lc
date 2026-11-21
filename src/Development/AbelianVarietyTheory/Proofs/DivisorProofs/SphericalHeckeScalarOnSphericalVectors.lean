@@ -231,6 +231,7 @@ theorem pre_psi (Q : principalLevelFrame.RowPsi V n) (h : Formalism.AUTREP.GAf D
   exact Q.inj hx.choose_spec
 
 
+open Classical in
 def ext0 (Q : principalLevelFrame.RowPsi V n) : (Formalism.AUTREP.GAf D.host.E n → ℂ) →ₗ[ℂ] (GA D V → ℂ) where
   toFun x g := if ∃ y, Q.ψ y = g then x (principalLevelFrame.pre Q g) else 0
   map_add' x y := by

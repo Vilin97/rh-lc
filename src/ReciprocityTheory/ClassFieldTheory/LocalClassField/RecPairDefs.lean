@@ -22,6 +22,7 @@ def IsPairClass (a : (kbarT p K).V) (χ : charGrp (GK p K)) (c : Br p K) : Prop 
     c = (kbarT p K).coch.cls 2 z hz
 
 
+open Classical in
 def pairBr (a : Kˣ) (χ : charGrp (GK p K)) : Br p K :=
   if h : ∃ c, IsPairClass p K (ofK p K (Additive.ofMul a)) χ c then h.choose else 0
 

@@ -123,6 +123,7 @@ theorem mem_Hn {δ : ℝ} (hδ : 0 < δ) {Z : CM Ψ N N} (hZ : Z ∈ HnGe Ψ N �
   simpa using (posDef_scalar hδ).add_posSemidef (hZ τ)
 
 
+open Classical in
 theorem theta_bdd (hΨ : IsType Ψ) {R : ℕ} {δ : ℝ} (hR : 0 < R) (hδ : 0 < δ) :
     ∃ C : ℝ, ∀ φ : Matrix (Fin n) (Fin N) E → ℂ, HasLevel R φ → ∀ B : ℝ, (∀ x, ‖φ x‖ ≤ B) →
       ∀ Z ∈ HnGe Ψ N δ, ‖thH Ψ φ Z 0 0‖ ≤ C * B := by

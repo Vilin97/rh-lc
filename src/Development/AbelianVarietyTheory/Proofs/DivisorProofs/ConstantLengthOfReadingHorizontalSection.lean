@@ -26,6 +26,7 @@ section Linear
 variable {E : Type} [Field E] [NumberField E]
 
 
+open Classical in
 theorem char_part {g : ℕ} (ty : Fin g → E →+* ℂ) (t : Fin g → ℂ) (s : E)
     (h : ∀ α : 𝓞 E, (∑ j, ty j α * t j).im = ((Algebra.trace ℚ E (α * s) : ℚ) : ℝ)) (ρ : E →+* ℂ) :
     ∑ j, (if ty j = ρ then t j else 0) - ∑ j, (if conjEmb (ty j) = ρ then conj (t j) else 0) =
@@ -114,6 +115,7 @@ theorem det_sum_elim {p q r : ℕ} (ε : Fin q ⊕ Fin p ≃ Fin r) (Γ : Matrix
 variable [IsCMField E]
 
 
+open Classical in
 theorem flatCoord_eq {p q r g : ℕ} (ε : Fin q ⊕ Fin p ≃ Fin r) (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E)
     (hG : ∀ a b, cc (G a b) = G b a) (ξ : E) (X : Matrix (Fin r) (Fin r) ℂ) (hX : X.det ≠ 0)
     (hΓ : ((gram τ G X).submatrix (ε ∘ Sum.inl) (ε ∘ Sum.inl)).det ≠ 0)
@@ -207,6 +209,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {r : ℕ}
 
 
+open Classical in
 theorem sum_letters (σ : c.F →+* ℂ) {g : ℕ} (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)) (τ : E →+* ℂ) {n : ℕ}
     (hn : n = Dw.mult τ) (F : Fin g → ℂ) :
     ∑ j, (if relab c σ (e j).1 = relab c σ τ then F j else 0) = ∑ b : Fin n, F (e.symm ⟨τ, Fin.cast hn b⟩) := by

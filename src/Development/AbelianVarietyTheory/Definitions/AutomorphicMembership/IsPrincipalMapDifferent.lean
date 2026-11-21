@@ -64,6 +64,7 @@ def IsTr (q q' : LatChart Z L) (e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → �
       valR x _ a = ∏ σ, ∏ i, d σ i ^ e σ i
 
 
+open Classical in
 def tr (q q' : LatChart Z L) (e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ) : Γ(Z.X, q.U ⊓ q'.U)ˣ :=
   if h : ∃ a : Γ(Z.X, q.U ⊓ q'.U)ˣ, q.IsTr q' e a.val then h.choose else 1
 

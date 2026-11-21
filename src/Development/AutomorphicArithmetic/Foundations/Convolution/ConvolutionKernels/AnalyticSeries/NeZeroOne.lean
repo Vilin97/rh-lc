@@ -68,6 +68,7 @@ theorem re_swap (x y : X) (σ : ℝ) :
   ring
 
 
+open Classical in
 theorem exp_re (hS : Sys q X d A) (x y : X) (F : ℂ → ℂ) (σ₀ : ℝ) (hF : ∀ σ : ℝ, 0 < σ → AnalyticAt ℂ F σ)
     (he : ∀ σ : ℝ, σ₀ < σ → F σ = (if x = y then (σ : ℂ) - 1 else 1) * eul q (A x) (A y) σ) (σ : ℝ) (hσ : 1 < σ) :
     ‖F σ‖ = (if x = y then σ - 1 else 1) * Real.exp (∑' p, lterm q (A x) (A y) σ p).re := by
@@ -80,6 +81,7 @@ theorem exp_re (hS : Sys q X d A) (x y : X) (F : ℂ → ℂ) (σ₀ : ℝ) (hF 
   · rw [norm_one]
 
 
+open Classical in
 theorem ne_zero_one (hS : Sys q X d A) (x y : X) (F : ℂ → ℂ) (σ₀ : ℝ) (hF : ∀ σ : ℝ, 0 < σ → AnalyticAt ℂ F σ)
     (he : ∀ σ : ℝ, σ₀ < σ → F σ = (if x = y then (σ : ℂ) - 1 else 1) * eul q (A x) (A y) σ) : F 1 ≠ 0 := by
   intro h0

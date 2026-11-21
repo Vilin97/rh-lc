@@ -62,6 +62,7 @@ variable {X : Fields} {e : X.Tau → (X.E →+* D.what₂.LL)} {Pr : Primes (fie
   (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {Sg : Set ℕ} (Gc : ChGlob (fieldsLL D X e) D.R.m) (m2 : ℕ)
 
 
+open Classical in
 def psiM : ∀ PP : Pl X.E, AddChar (kP PP) D.what₂.LL :=
   fun PP => if h : PP ∈ Pr.vGs then Ch.psi0 ⟨PP, h⟩ else 1
 

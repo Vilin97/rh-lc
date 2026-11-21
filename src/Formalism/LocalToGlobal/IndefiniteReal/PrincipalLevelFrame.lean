@@ -285,6 +285,7 @@ structure RowPsi where
 variable {V n}
 
 
+open Classical in
 def pre (P : RowPsi V n) (γ : GA D V) : Formalism.AUTREP.GAf D.host.E n :=
   if h : ∃ x, P.ψ x = γ then h.choose else 1
 

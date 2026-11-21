@@ -198,6 +198,7 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} {sel : HeightOneSpectrum (𝓞
   {mu : Tup X.F X.E X.K S} {cst : LocCst X (rowSG Pr sel mu)} {u : Pr.Word} {j : ℕ}
 
 
+open Classical in
 theorem cosetIn_of_zero_mem (h : j + 1 = R.m) (p : PtAt R sel mu cst u j) (h0 : (0 : Sp X.E (R.N j)) ∈ p.1.2) :
     cosetIn p = fun P => {z | ((qOf P.1 : X.E) ^ (if P.1 ∈ Pr.vGs then 0 else cst.M))⁻¹ • z ∈ stdAt X.E (R.N j) P.1} := by
   obtain ⟨y0, -, hY⟩ := p.mem_ybSet h

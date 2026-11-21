@@ -965,6 +965,7 @@ theorem eval_qAV (k r m : ℕ) (hm : m ≤ r) (B : Fin m → Fin (2 * r + k + 1)
   simp [eval_linV k r _ _ g hg]
 
 
+open Classical in
 def aaFS (k j ρ m : ℕ) (hm : m ≤ j + ρ) (u : ℂ) (L : FS k (j + ρ)) : FS k (j + ρ) :=
   (Finset.univ : Finset (Fin m → Fin (2 * (j + ρ) + k + 1))).toList.flatMap fun c =>
     if StrictMono c then
@@ -972,6 +973,7 @@ def aaFS (k j ρ m : ℕ) (hm : m ≤ j + ρ) (u : ℂ) (L : FS k (j + ρ)) : FS
     else []
 
 
+open Classical in
 def avFS (k j ρ m : ℕ) (hm : m ≤ j + ρ) (ell : ℂ) (L : FS k (j + ρ)) : FS k (j + ρ) :=
   (Finset.univ : Finset (Fin m → Fin (2 * (j + ρ) + k + 1))).toList.flatMap fun B =>
     if StrictMono (fun l => C3.keyS k (j + ρ) (B l)) then

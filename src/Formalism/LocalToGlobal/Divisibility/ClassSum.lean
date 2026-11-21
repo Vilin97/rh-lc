@@ -71,6 +71,7 @@ def IsRat (f : S.Cl → S.V) : Prop := ∀ c i, S.bV.repr (f c) i ∈ cmMax K
 def HasRatBasis : Prop := ∃ b : Basis (Fin S.dim) K S.Forms, ∀ i, S.IsRat (b i : S.Cl → S.V)
 
 
+open Classical in
 def basis : Basis (Fin S.dim) K S.Forms :=
   if h : S.HasRatBasis then h.choose else finBasis K S.Forms
 

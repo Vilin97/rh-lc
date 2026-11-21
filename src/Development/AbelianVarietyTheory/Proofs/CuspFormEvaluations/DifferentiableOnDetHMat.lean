@@ -22,6 +22,7 @@ noncomputable section
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} (X : Data E r) {g : ℕ}
 
 
+open Classical in
 def borMat (b : Frame X.Ψ r) : Matrix (X.Ψ × Fin r) (X.Ψ × Fin r) ℂ :=
   Matrix.of fun p q => if q.1 = p.1 then
     (if (p.2 : ℕ) < X.p0 then (mat b p.1)ᵀ p.2 q.2 else (mat b p.1)⁻¹ p.2 q.2) else 0

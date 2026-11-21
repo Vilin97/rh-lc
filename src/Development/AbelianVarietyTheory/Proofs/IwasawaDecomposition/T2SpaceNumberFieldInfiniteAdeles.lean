@@ -91,6 +91,7 @@ def Nice (R : Type) [CommRing R] [TopologicalSpace R] : Prop :=
     ∃ U : Set R, IsOpen U ∧ (1 : R) ∈ U ∧ ∃ s : R → R, ContinuousOn s U ∧ s 1 = 1 ∧ ∀ u ∈ U, s u * s u = u
 
 
+open Classical in
 def modu (S : Type) [CommRing S] [TopologicalSpace S] [IsTopologicalRing S] [LocallyCompactSpace S]
     (u : S) : ℝ≥0 :=
   if h : IsUnit u then distribHaarChar S h.unit else 0

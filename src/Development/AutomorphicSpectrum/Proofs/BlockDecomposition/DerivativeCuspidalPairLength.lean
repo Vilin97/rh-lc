@@ -25,6 +25,7 @@ section Ext
 variable {r c : ℕ} {M : Fin c → Type}
 
 
+open Classical in
 def extFam (ι : Fin r → Fin c) (x : ∀ i, M (ι i)) (z : ∀ j, M j) : ∀ j, M j :=
   fun j => if h : ∃ i, ι i = j then h.choose_spec ▸ x h.choose else z j
 

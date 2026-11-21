@@ -147,6 +147,7 @@ theorem ext (h : IsKF g c κ) (h' : IsKF g c κ') (f : NgC g → ℂˣ)
 end IsKF
 
 
+open Classical in
 def cutRule (g : ℕ) (s : ℤˣ) (κ : Rule) : Rule := fun K _ _ x =>
   if x.P.g = g then Units.map (Int.castRingHom K).toMonoidHom s * κ K x else 1
 

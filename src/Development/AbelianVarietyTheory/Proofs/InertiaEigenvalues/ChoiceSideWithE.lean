@@ -105,6 +105,7 @@ theorem choiceSide_withE {cf : CharFrame D} {mt : MtFam D} {exp : NExpTied D} {c
     h.off, h.adm, h.psi, h.eMt_level⟩
 
 
+open Classical in
 def pick (c : NChoice D)
     (G : ∀ w, D.what₂.muAt w ≠ D.what₂.mu0 → ∀ i : Fin D.R.m,
       D.what₂.MtL (D.what₂.muTw w) (i.1 + 1) →ₛₗ[c.embW w] Tgt c w (i.1 + 1)) :

@@ -18,6 +18,7 @@ def qZ (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)) (x : Matrix (Fin n) (Fin n)
   fun i => trace (((Module.finBasis k Z i : Z) : Matrix (Fin n) (Fin n) k) * x)
 
 
+open Classical in
 def piZ (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)) (x : Matrix (Fin n) (Fin n) k) : Matrix (Fin n) (Fin n) k :=
   if h : ∃ c ∈ Z, qZ Z c = qZ Z x then h.choose else 0
 

@@ -19,6 +19,7 @@ open Formalism.MainNotions.S
 namespace GlobalTheory.TrAct
 
 
+open Classical in
 noncomputable def partAt {D : D7} (V : HSp D) (g : GA D V) (s : Finset D.what₂.Tau) : GA D V :=
   ofInf D.sp.cm.sig V.gram (embArchPi D.sp.cm.sig V.gram fun w =>
     if w ∈ s.image (placeOf D) then projArch D.sp.cm.sig V.gram w g else 1)

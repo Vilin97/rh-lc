@@ -161,6 +161,7 @@ def ExplSmul : Prop :=
     Expl ι e A c (fun r s y => (l : Qbar l) ^ m * Z r s y) j s u w α B cc n β t
 
 
+open Classical in
 def RhsEq : Prop := AvgEq → AvgMF →
   ∀ (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (e N : ℕ) [NeZero N] (θ χ : DirichletCharacter ℂ N) (t : ℕ → ℂ) (α : ℂ) (B : ℕ)
     (cc : ℕ → ℂ) (c d : ℕ) (δ : ℕ → Qbar l) (lam : (ℕ → Qbar l) →ₗ[Qbar l] Qbar l) (κ' κ : Qbar l) (v : ℕ → Qbar l),

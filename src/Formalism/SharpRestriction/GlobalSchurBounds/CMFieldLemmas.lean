@@ -30,6 +30,7 @@ def Conclusion1 (D : D7) : Prop :=
   rdF D = D.host.rdE
 
 
+open Classical in
 def Conclusion2 (D : D7) : Prop :=
   (∀ φ : D.host.E →+* ℂ, φ ∈ PhiEmb D ↔ (starRingEnd ℂ).comp φ ∉ PhiEmb D) ∧
   (∀ φ ∈ PhiEmb D, ∀ x : D.host.E, x ∈ D.host.K → φ x = D.host.φ₀ x) ∧
@@ -113,6 +114,7 @@ def bern {α : Type*} [Fintype α] (δ : ℝ) (T : Finset α) : ℝ :=
   δ ^ T.card * (1 - δ) ^ (Fintype.card α - T.card)
 
 
+open Classical in
 def Conclusion6 (D : D7) (sc : Scale) : Prop :=
   ∀ δ : ℝ, 0 < δ → δ ≤ 1 → 16 ≤ δ * D.R.n →
   ∀ β : ℝ, ∀ BAD : HH D → HH D → Finset (HH D) → Prop,

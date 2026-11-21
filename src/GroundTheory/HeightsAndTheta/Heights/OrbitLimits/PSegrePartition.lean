@@ -27,6 +27,7 @@ def bump (z : (Σ k, ι k) → ℂ) (i : (k : K) → ι k) : ℝ :=
   Real.smoothTransition (2 * numIdx ι * (segreSq z i / segreSqSum z) - 1)
 
 
+open Classical in
 def rho (i : (k : K) → ι k) (z : (Σ k, ι k) → ℂ) : ℝ :=
   if 0 < segreSqSum z then bump z i / ∑ j, bump z j else 1 / numIdx ι
 

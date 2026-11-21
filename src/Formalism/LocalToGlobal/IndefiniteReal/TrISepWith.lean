@@ -44,6 +44,7 @@ def TrISepWith {G Pl0 I0 T : Type} [Group G] [Fintype G] (A3 : FamIn3 D.what₂.
       ∃ k : A3.okI A3.A.μ0 × List ℕ, tr j p.2 (k.1.1, k.2) ≠ tr j p'.2 (k.1.1, k.2)
 
 
+open Classical in
 def hkCan {G Pl0 I0 T : Type} [Group G] [Fintype G] (A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T D.R.m) : HkDat3 A3 where
   Hk := A3.fam3.base3.Ix
   ev p q := if p = q then 1 else 0

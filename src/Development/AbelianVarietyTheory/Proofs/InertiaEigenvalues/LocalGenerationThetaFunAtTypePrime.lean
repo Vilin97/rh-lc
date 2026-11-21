@@ -407,6 +407,7 @@ theorem mem_halfPow {N : ℕ} {z : WO (Vc D i) (Wc D i)} :
 end Coord
 
 
+open Classical in
 theorem piece (R : RealDat D A Ks) (hL : R.toLevCh.Is A.μ0) (hω : R.thP_ωP) (hv : R.thP_vP) (i : Fin D.R.m) (t : T)
     {PP : Pl D.host.E} (hP : PP ∈ R.Pg) {v : FinPl D} {φ : SplitProj D v} {e : Formalism.L2.Theta.AE D} (hφ : IsProjAt φ PP)
     (he : IsIdemOf φ e) {ϖ : OI v} (hϖ : Irreducible ϖ) {Sb : Finset (FinPl D)} (hvS : v ∈ Sb)

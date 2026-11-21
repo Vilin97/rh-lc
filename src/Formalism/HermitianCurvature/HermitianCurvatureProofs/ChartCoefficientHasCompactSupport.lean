@@ -23,6 +23,7 @@ variable {k j ρ : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpac
   [InnerProductSpace ℂ Wq]
 
 
+open Classical in
 def chartCoefficient (b b' : RC k j ρ → ℝ) (Φ : (Fin j → Fin j → ℂ) → Mt k ρ → (Wq →L[ℂ] Wp)) (g : B.Mat k (j + ρ)) :
     Wq →L[ℂ] Wp :=
   if DjU k j ρ g ≠ 0 then

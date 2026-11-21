@@ -282,6 +282,7 @@ def pairML (S : GridChoice W U) (t : T) (e : AE D) (x : ∀ j, FinPt G (.top j))
       exact compl₁₂_smul_right _ _ _ _
 
 
+open Classical in
 def gd (S : GridChoice W U) (t : T) (e : AE D) (d : PureDat G t) (k : Fin D.R.m ⊕ Fin D.R.m) : aSub S t e k :=
   if h : (intersection_update_fsHerm_neg_one d k).fn ∈ aSub S t e k then ⟨(intersection_update_fsHerm_neg_one d k).fn, h⟩ else 0
 

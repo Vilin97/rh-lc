@@ -62,6 +62,7 @@ def DecoSet.inertSet (P : Ideal (𝓞 E)) (s : List ℕ) (d : DecoSet E n ST SG)
   {d' | IsInertNbr P s d.1.N d'.1.N ∧ d'.1.f = d.1.f ∧ d'.1.be = d.1.be}
 
 
+open Classical in
 def DecoSet.inertNb (P : Ideal (𝓞 E)) (s : List ℕ) (d : DecoSet E n ST SG) : Finset (DecoSet E n ST SG) :=
   if h : (d.inertSet P s).Finite then h.toFinset else ∅
 

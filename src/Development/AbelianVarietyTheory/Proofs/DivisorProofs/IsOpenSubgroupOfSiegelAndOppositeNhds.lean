@@ -53,6 +53,7 @@ theorem vOf_herm (g : UG c (stdJ ν E)) (hd : IsUnit (mat c g).toBlocks₂₂.de
   rw [Matrix.map_neg _ (map_neg c), transpose_neg, h3]
 
 
+open scoped Classical in
 def nOf (g : UG c (stdJ ν E)) : UG c (stdJ ν E) :=
   if h : IsUnit (mat c g).toBlocks₂₂.det then unip c (-vOf c g) (vOf_herm c g h) else 1
 

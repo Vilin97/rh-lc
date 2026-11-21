@@ -13,6 +13,7 @@ namespace Formalism.MainNotions.G.GLWeightTheory
 open Formalism.MainNotions.G Formalism.MainNotions.CovariantDegrees
 
 
+open Classical in
 def letterPolarizationDerivation (R : Type*) [CommRing R] {ι : Type*} [Fintype ι] {n : ℕ} (LL : Letters ι) (S : Set ι) (a b : Fin n) :
     Derivation R (MvPolynomial (ι × Fin n) R) (MvPolynomial (ι × Fin n) R) :=
   ∑ l : ι,

@@ -83,6 +83,7 @@ def IsDel (M : ℕ) (T : Set (PlE H)) (d : G H.E Ω →* Multiplicative (ZMod (l
     (∀ v, v ∈ T → ∀ A : ValuationSubring Ω, IsPlaceOver A v → ∀ c, ∃ σ ∈ Ine (F := H.E) A, d σ = c)
 
 
+open Classical in
 def delOf (M : ℕ) (T : Set (PlE H)) : G H.E Ω →* Multiplicative (ZMod (l ^ M)) :=
   if h : ∃ d, IsDel H cc l M T d then h.choose else 1
 
@@ -102,6 +103,7 @@ theorem delOf_laws (M : ℕ) (T : Set (PlE H)) :
     refine ⟨by simp, fun _ _ _ => by simp, fun _ _ _ _ _ _ => rfl, fun _ _ _ _ _ _ => rfl⟩
 
 
+open Classical in
 def delCoord (Q : Finset (PlE H)) (M : ℕ) (P : PlE H) : G H.E Ω →* Multiplicative (ZMod (l ^ M)) :=
   if pair H P ⊆ ↑Q then delOf H cc l M (pair H P) else 1
 

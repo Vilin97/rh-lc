@@ -130,6 +130,7 @@ def ActsOnSph (Q : principalLevelFrame.RowPsi V n) (π : Formalism.L2.NG.FinTyp 
   ∀ B, SphOp V P d B → ∀ x, IsSphVec Q π P x → principalLevelFrame.Hecke₃ Q B x = a • x
 
 
+open Classical in
 def sphEig (Q : principalLevelFrame.RowPsi V n) (π : Formalism.L2.NG.FinTyp D.host.E n) (P : HeightOneSpectrum (𝓞 D.host.E)) (d : List ℤ) : ℂ :=
   if h : ∃ a, ActsOnSph Q π P d a then h.choose else 0
 

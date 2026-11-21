@@ -47,6 +47,7 @@ theorem hat_const_mul {n : Type} [Fintype n] (ψ : AddChar k Circle) (ν : Measu
   rw [integral_const_mul]
 
 
+open Classical in
 theorem hat_int {n : Type} [Fintype n] [DecidableEq n] {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {ν : Measure k}
     (hν : IsUnitVol ν) {ε : k} (hε : valuation k ε = 1) (η : n → k) :
     hat ψ ν ε (cosetInd (box n (1 : kˣ)) (Submodule.Quotient.mk 0)) η = if ∀ i, η i ∈ 𝒪[k] then 1 else 0 := by
@@ -108,6 +109,7 @@ section Ones
 variable {a b c : Type} [Fintype a] [DecidableEq a] [Fintype b] [Fintype c]
 
 
+open Classical in
 theorem cosetInd_zero (y : a → k) :
     cosetInd (box a (1 : kˣ)) (Submodule.Quotient.mk 0) y = if ∀ i, y i ∈ 𝒪[k] then 1 else 0 := by
   have hy : (Submodule.Quotient.mk y : (a → k) ⧸ box a (1 : kˣ)) = Submodule.Quotient.mk 0 ↔ ∀ i, y i ∈ 𝒪[k] := by
@@ -145,6 +147,7 @@ theorem intInd_fromCols (q : Matrix a b k) (y : a → k) :
     · rw [Set.indicator_of_notMem (s := {x : Matrix a b k | ∀ r c, x r c ∈ 𝒪[k]}) (a := q) hq, zero_mul]
 
 
+open Classical in
 theorem intInd_rows (q : Matrix (c ⊕ Unit) a k) :
     Set.indicator {x : Matrix (c ⊕ Unit) a k | ∀ r c, x r c ∈ 𝒪[k]} (fun _ => (1 : ℂ)) q =
       Set.indicator {x : Matrix c a k | ∀ r c, x r c ∈ 𝒪[k]} (fun _ => (1 : ℂ)) q.toRows₁ *

@@ -172,6 +172,7 @@ abbrev gradedH (G : GradedMod S N M) (i : ℕ) (c : ℤ) : Type := cechH (graded
 abbrev gradedZ (G : GradedMod S N M) (i : ℕ) (c : ℤ) := cechZ (gradedSys S N M G c) i
 
 
+open Classical in
 def unitCochain (m : M) : ∀ I : Finset (Fin (N + 1)), LocM S N M I :=
   fun I => if I.card = 1 then locFrac S N M I m 0 else 0
 

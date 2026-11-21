@@ -176,6 +176,7 @@ structure VertSub (p : ℕ) (X : Scheme.{0}) (n : ℕ) (z : X) : Type 1 where
   dim : topologicalKrullDim Z = n
 
 
+open Classical in
 def vertNum (p : ℕ) [Fact p.Prime] (V : Cover Y) (n : ℕ) (N : Fin n → HermLB V.p) (z : V.X) : ℝ :=
   if h : Nonempty (VertSub p V.X n z) then
     letI := h.some.alg

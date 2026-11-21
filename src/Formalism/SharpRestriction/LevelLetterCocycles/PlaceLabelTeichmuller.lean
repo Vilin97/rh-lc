@@ -248,6 +248,7 @@ variable {ι : Type} [Fintype ι] [DecidableEq ι] {G : ι → Type} [∀ i, Gro
   {P : ι → Type} [∀ i, Fintype (P i)]
 
 
+open Classical in
 def eGood (E : ∀ i, P i → MonoidAlgebra ℂ (G i)) (good : (∀ i, P i) → Prop) :
     MonoidAlgebra ℂ (∀ i, G i) :=
   ∑ p : ∀ i, P i, if good p then tens (fun i => E i (p i)) else 0
@@ -266,6 +267,7 @@ theorem eGood_central (hcen : ∀ i p a, E i p * a = a * E i p) (x : MonoidAlgeb
 variable {W : Type} [AddCommGroup W] [Module ℂ W]
 
 
+open Classical in
 def onC {A : Type} [Ring A] [Algebra ℂ A] (Φ : Subalgebra.center ℂ A →ₐ[ℂ] Module.End ℂ W) (z : A) :
     Module.End ℂ W :=
   if h : z ∈ Subalgebra.center ℂ A then Φ ⟨z, h⟩ else 0

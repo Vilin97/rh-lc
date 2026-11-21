@@ -279,6 +279,7 @@ variable {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn 
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks}
 
 
+open Classical in
 theorem core_loss (ch : Choice R) {t : T} {w : PlL D} {Φ : ch.G.Datum} (hS : ch.S.SumOK t Φ)
     (hD : ∀ β ∈ ch.S.supp t Φ, ∃ τ, IsCosetExpansion ch.S.toGridChoice t Φ β (expDepth ch.S.toGridChoice t Φ β) τ)
     {aC aD aG aT aR aP aF : ℝ}

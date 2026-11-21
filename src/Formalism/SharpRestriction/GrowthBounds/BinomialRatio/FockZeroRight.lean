@@ -102,6 +102,7 @@ theorem span_single {β E : Type} [DecidableEq β] [AddCommGroup E] [Module O E]
 end Gen
 
 
+open Classical in
 theorem smithData_seg {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (p r : ℕ) [NeZero r] {s : ℕ}
     (S : SegData s) (aTop : Fin s → ℕ) (aPlus : ℕ) (m : ℝ)
     (hFG : ∀ b, Module.Finite O (blockLat O p r S aTop aPlus m b)) :

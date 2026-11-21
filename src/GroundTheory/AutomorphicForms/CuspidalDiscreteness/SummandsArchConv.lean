@@ -126,6 +126,7 @@ theorem integral_map_val {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 section Conversion
 
 
+open scoped Classical in
 def matExt (κ : archGroup K n → ℂ) (M : ArchMatrix K n) : ℂ :=
   if h : IsUnit M then κ ⟨h.unit, Subgroup.mem_top _⟩ else 0
 

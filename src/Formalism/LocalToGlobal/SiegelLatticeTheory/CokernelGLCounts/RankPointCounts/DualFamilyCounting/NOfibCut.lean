@@ -77,6 +77,7 @@ def blkQ (X0 : Matrix (Fin D.R.rS) (Fin D.R.rS) D.host.E) (xs : Fin D.R.rS → (
   | Sum.inr (Sum.inr a) => fun v => (embS D (X.pl v) (M a a)).im
 
 
+open scoped Classical in
 def theta (D : D7) : D.host.E :=
   if h : ∃ t : D.host.E, IsIntegral ℤ t ∧ t + D.host.conj t = 1 then h.choose else 0
 

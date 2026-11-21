@@ -19,6 +19,7 @@ abbrev Ix : Type := Module.Free.ChooseBasisIndex ℤ_[l] c.O
 def bas : Module.Basis (Ix c) ℤ_[l] c.O := Module.Free.chooseBasis ℤ_[l] c.O
 
 
+open Classical in
 def crd (n : ℕ) (i : Ix c) (x : Qbar l) : ZMod (l ^ n) :=
   if h : x ∈ c.O then PadicInt.toZModPow n ((bas c).repr ⟨x, h⟩ i) else 0
 

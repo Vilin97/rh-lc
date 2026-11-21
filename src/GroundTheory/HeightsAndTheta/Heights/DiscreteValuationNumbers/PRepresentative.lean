@@ -22,6 +22,7 @@ variable {K : Type*} [DecidableEq K] {ι : K → Type*} {R : Type*} [CommRing R]
 local instance (p : Prop) : Decidable p := Classical.propDecidable p
 
 
+open Classical in
 theorem weightedHomogeneousComponent_mul_form {x y : MRing ι R} {j : K → ℕ}
     (hy : IsMultiHomog y j) (n : K → ℕ) :
     weightedHomogeneousComponent (blockWeight ι) n (x * y) =

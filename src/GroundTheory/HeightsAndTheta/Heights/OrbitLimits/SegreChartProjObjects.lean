@@ -21,6 +21,7 @@ section Proj
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
 
+open Classical in
 def chartProjMatrix {m d : ℕ} (σ : Fin m ≃ ((k : K) → ι k))
     (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (d + 1) → ℂ)) : Matrix (Fin d) (Fin m) ℂ :=
   fun r a => Ψ (fun i' => if σ a = i' then 1 else 0) r.succ

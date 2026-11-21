@@ -45,6 +45,7 @@ theorem nz_updS (R : RealDat3 D A3 Ks) (F : Face3 D A3) (k l) (F0 : HeightOneSpe
     (complexSide_nonzeroIndexPlaces_iff R F k l R.err0 F.Dc F.Sp F.Zsc { R.num F 0 0 with F0 := F0 } w)
 
 
+open Classical in
 def kapOf (S : RealDat3 D A3 Ks) : ℝ :=
   if h : ∃ κ, Lift.IsKap D.R.m (fun t => S.Th t ∘ₗ LinearMap.adjoint (S.Th t)) S.EEp3 S.lamN κ ∧
       ∃ t p, S.EEp3 p ≠ ⊥ ∧ ∏ j ∈ Finset.Icc 1 D.R.m, S.lamN t j p ≠ 0 then h.choose else S.kap

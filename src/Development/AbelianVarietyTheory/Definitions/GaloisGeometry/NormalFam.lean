@@ -35,6 +35,7 @@ def SphOp (V : HSp D) (P : Pl D.host.E) (d : List ℤ) (R : Finset (GA D V)) : P
 def IsLab (V : HSp D) (P : Pl D.host.E) (d : List ℤ) : Prop := ∃ R, SphOp V P d R
 
 
+open Classical in
 def rep (V : HSp D) (P : Pl D.host.E) (d : List ℤ) : Finset (GA D V) :=
   if h : IsLab V P d then h.choose else ∅
 
@@ -55,6 +56,7 @@ def hkF (V : HSp D) {W : Type} [AddCommGroup W] [Module ℂ W] (P : Pl D.host.E)
 def dualC (c : List ℤ →₀ ℂ) : List ℤ →₀ ℂ := Finsupp.mapDomain dualLab c
 
 
+open Classical in
 def evC (V : HSp D) (P : Pl D.host.E) (a : List ℤ → ℂ) (c : List ℤ →₀ ℂ) : ℂ :=
   c.sum fun d z => if IsLab V P d then z * a d else 0
 

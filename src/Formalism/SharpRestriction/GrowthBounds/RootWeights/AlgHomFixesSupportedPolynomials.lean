@@ -93,6 +93,7 @@ theorem cofactor_last_row_supported (R : Type) [CommRing R] {ι : Type} {r : ℕ
     exact Algebra.subset_adjoin ⟨_, ⟨⟨i, h1, rfl⟩, h3⟩, rfl⟩
 
 
+open Classical in
 theorem adjugate_last_row_ne_zero (R : Type) [CommRing R] [Nontrivial R] {ι : Type} {r : ℕ} [NeZero r] (A : Fin r → ι)
     (hA : Function.Injective A) (a : Fin r) : (matA R A).adjugate a (lastIdx r) ≠ 0 := by
   rw [adjugate_last_row_eq_cofactor_det, cofactor_det_eq_cleared_det]
@@ -128,6 +129,7 @@ theorem adjugate_last_row_ne_zero (R : Type) [CommRing R] [Nontrivial R] {ι : T
   rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with hs | hs <;> simp [hs] at hdet
 
 
+open Classical in
 def lastRowSubstitution (R : Type) [CommRing R] {ι : Type} {r : ℕ} [NeZero r] (A : Fin r → ι) (a : Fin r) :
     MvPolynomial (ι × Fin r) R →ₐ[R] MvPolynomial (ι × Fin r) R :=
   aeval fun v => if v.1 = A (lastIdx r) then (if v.2 = a then 1 else 0) else X v

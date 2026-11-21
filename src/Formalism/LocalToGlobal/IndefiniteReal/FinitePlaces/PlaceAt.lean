@@ -50,6 +50,7 @@ theorem heisO_comm_of {u a : WO S T} (h : symplO S T u a = 0) (f : WO S T → �
   simpa [Module.End.mul_apply, heisL_apply, h] using this
 
 
+open Classical in
 theorem placeModel_core (hψ : IsStdChar D ψ (-1)) (e₁ : AE D) (he : e₁ * cA D e₁ = 0) (Λ : AddSubgroup (WO S T))
     (f₀ : WO S T → ℂ) (hf₀ : IsThetaFunO ψ S T f₀)
     (hLL : ∀ x ∈ Λ, IsHalf e₁ x → ∀ y ∈ Λ, IsHalf (cA D e₁) y → ψ (symplO S T x y) = 1)

@@ -119,6 +119,7 @@ def torVal {d : ℕ} (θ : Tor p d →* Kˣ) : Fbar p → K :=
   Function.extend (fun u : Tor p d => ((u : (Fbar p)ˣ) : Fbar p)) (fun u => ((θ u : Kˣ) : K)) 0
 
 
+open Classical in
 def cuspChar {ι : Type} [Fintype ι] [DecidableEq ι] (θ : Tor p (Fintype.card ι) →* Kˣ) (h : Matrix ι ι (ZMod p)) : K :=
   if ∃ (φ : (ZMod p)[X]) (n : ℕ), Irreducible φ ∧ h.charpoly = φ ^ n then
     (-1) ^ (Fintype.card ι - 1) * ∑ z ∈ (h.charpoly.aroots (Fbar p)).toFinset, torVal θ z *
@@ -160,6 +161,7 @@ def rootChar (s : SSParam p K r) (x : Σ c : Cyc s.1, Fin (cycLen s.1 c)) : Tor 
   cycChar s x.1 ^ (p ^ x.2.val)
 
 
+open Classical in
 def typeChar (s : SSParam p K r) (x : GL (Fin r) (ZMod p)) : K :=
   haveI := Fintype.ofFinite (GL (Fin r) (ZMod p))
   ((Nat.card {y : GL (Fin r) (ZMod p) // (y : Matrix (Fin r) (Fin r) (ZMod p)).BlockTriangular s.1} : ℕ) : K)⁻¹ *

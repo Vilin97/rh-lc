@@ -58,6 +58,7 @@ theorem coeff_eval₂_scale {σ R A : Type} [Fintype σ] [CommRing R] [CommRing 
   · rw [notMem_support_iff.mp hm, map_zero, zero_mul]
 
 
+open Classical in
 def scaleWt (κ : K → K') (A : Type) [CommRing A] (k' : K') : MvPolynomial (FibreBlock κ) A :=
   if h : k' ∈ Set.range κ then 1 else X ⟨k', h⟩
 

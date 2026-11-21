@@ -89,6 +89,7 @@ theorem norm_wt (N : ℕ) (g : Mx n) : ‖(wt N g : ℂ)‖ = wt N g := by
   rw [Complex.norm_real, Real.norm_of_nonneg (wt_pos N g).le]
 
 
+open Classical in
 def rt (ε : Fin n → Bool) (Λ : Type) (N : ℕ) (h : Mx n) : Bd (Λ × UJset ε) →L[ℂ] Bd (Λ × UJset ε) :=
   if hh : h ∈ UJset ε then
     wcomp (fun i => (wt N (i.2.1 * h) : ℂ) / wt N i.2.1) (wt N h) (wt_pos N h).le

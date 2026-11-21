@@ -20,6 +20,7 @@ section Alg
 variable {k K : Type} [CommRing k] [Field K]
 
 
+open Classical in
 def xiZ (ξ : kˣ →* Kˣ) (a : k) : K := if h : IsUnit a then ((ξ h.unit : Kˣ) : K) else 0
 
 theorem xiZ_unit (ξ : kˣ →* Kˣ) (u : kˣ) : xiZ ξ (u : k) = ((ξ u : Kˣ) : K) := by
@@ -66,6 +67,7 @@ theorem tl_mul {r a b c : ℕ} (ha : r ≤ a) (hb : r ≤ b) (hc : r ≤ c) (P :
   rfl
 
 
+open Classical in
 def phiZ (ξ : kˣ →* Kˣ) {r a b : ℕ} (ha : r ≤ a) (hb : r ≤ b) (M : Matrix (Fin a) (Fin b) k) : K :=
   if LLz r M then xiZ ξ (M.submatrix (Fin.castLE ha) (Fin.castLE hb)).det else 0
 
@@ -251,6 +253,7 @@ variable {P} {K : Type} [Field K]
 theorem unitV_eq (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (a : E) : LocE.unitV χ a = xiZ χ (redP P a) := rfl
 
 
+open Classical in
 theorem phiQ_eq {q : ℕ} (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hu : ((q : ℕ) : 𝓞 E) ∉ P.asIdeal ^ 2) (ξ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ)
     (k₀ r n' n : ℕ) (hn' : r ≤ n') (hn : r ≤ n) (x : HomE E (n' + 0) (n + 0)) :
     LocE.PhiQ q ξ k₀ r 0 n' 0 n x = if (∀ s l, IntAt P (x (Pi.single s 1) l)) then phiZ ξ hn hn' (redMQ P x) else 0 := by
@@ -477,6 +480,7 @@ end FtYQ
 section ProdU
 
 
+open Classical in
 theorem prod_uSG_dite {α M : Type} [CommMonoid M] {A B : Finset α} (hd : ∀ P ∈ B, P ∉ A) (f : {w // w ∈ A} → M) (g : {P // P ∈ B} → M) :
     ∏ w : {w // w ∈ A ∪ B}, (if h : w.1 ∈ A then f ⟨w.1, h⟩ else g ⟨w.1, (Finset.mem_union.mp w.2).resolve_left h⟩) =
       (∏ w : {w // w ∈ A}, f w) * ∏ P : {P // P ∈ B}, g P := by

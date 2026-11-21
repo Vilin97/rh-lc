@@ -224,6 +224,7 @@ theorem real_H0_card_eq_fixed (K : FiniteSubfield) (S' : Set (HeightOneSpectrum 
   exact PositivityTheory.Lit1.GEN.W_dictfwd_b.real_H0_card_eq_fixed K S' ιr v
 
 
+open scoped Classical in
 theorem transport_data {l : ℕ} [Fact l.Prime] (S : Finset (HeightOneSpectrum (𝓞 F)))
     (hS : ContainsAbove S l) :
     ∃ (K : FiniteSubfield) (S' : Set (HeightOneSpectrum (𝓞 K.1))) (_ : S'.Finite)

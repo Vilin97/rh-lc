@@ -80,6 +80,7 @@ theorem hsVec_smul (c : ℂ) (A : Wq →L[ℂ] Wp) : hsVec (c • A) = c • hsV
   simp
 
 
+open Classical in
 def mkTerm (k j ρ : ℕ) (e : SC (2 * (j + ρ) + k + 1) × List (Mat k (j + ρ))) : DTerm k (j + ρ) Wp Wq where
   coef g := sv k j ρ e.1 g • ContinuousLinearMap.id ℂ (Wq →L[ℂ] Wp)
   coefAdj g := (starRingEnd ℂ) (sv k j ρ e.1 g) • ContinuousLinearMap.id ℂ (Wq →L[ℂ] Wp)

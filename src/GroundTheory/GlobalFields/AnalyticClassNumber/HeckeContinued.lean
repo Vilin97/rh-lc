@@ -30,6 +30,7 @@ theorem normalizedLFunction_eq {s : ℂ} (hs : 1 < s.re) : χ.normalizedLFunctio
   (χ.LFunction_eq_mul_completedLFunction hs).symm
 
 
+open Classical in
 def continuedLFunction : ℂ → ℂ :=
   if h : ∃ τ : ℝ, ∀ x : IdeleGroup K,
       (χ.toIdele x : ℂ) = ((ideleModule K x : ℝ) : ℂ) ^ ((τ : ℂ) * I) then

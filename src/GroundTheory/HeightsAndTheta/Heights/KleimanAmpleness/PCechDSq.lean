@@ -42,6 +42,7 @@ variable {U : Finset (Fin n)} {R : Type u} [CommRing R] {G : Cell U → Type v}
   [∀ I, AddCommGroup (G I)] [∀ I, Module R (G I)] {ρ : ∀ I J : Cell U, I.1 ⊆ J.1 → G I →ₗ[R] G J}
 
 
+open Classical in
 def restrictTo {i : ℕ} (s : Cech.Cochain G i) (K : Cell U) (A : Finset (Fin n)) : G K :=
   if h : ∃ L : Cech.Idx U i, L.1.1 = A ∧ A ⊆ K.1 then
     ρ h.choose.1 K (by rw [h.choose_spec.1]; exact h.choose_spec.2) (s h.choose)

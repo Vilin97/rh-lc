@@ -22,6 +22,7 @@ theorem zEquiv_val {κ l τ j : ℕ} (a : Ix (Fin κ ⊕ Fin l) (Fin τ) j) : (z
 variable {E K : Type} [Field E] [NumberField E] [Field K] {P : HeightOneSpectrum (𝓞 E)}
 
 
+open Classical in
 def phiM (q : ℕ) (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K) (χ : ℕ → (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) (k₀ rS r t j N : ℕ)
     (M : ℕ → ℕ → E) : K :=
   if (∀ p p', p < N → p' < r + j * t → IntAt P (M p p')) ∧

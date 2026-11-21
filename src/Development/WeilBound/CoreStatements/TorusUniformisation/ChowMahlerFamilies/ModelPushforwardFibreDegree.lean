@@ -1236,6 +1236,7 @@ theorem eq_of_comap_eq (hP' : IsModelOver P' d) (hP : IsModelOver (P'.comap (rr 
   exact lt_irrefl _ (lt_of_le_of_lt h1 h2)
 
 
+open Classical in
 def srd (j : K ↪ K') (W' : Ideal (MRing ι' O)) : ℕ :=
   if h : (specialIdeal W').IsPrime then haveI := h; relDeg j (specialIdeal W') else 0
 

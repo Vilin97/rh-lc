@@ -476,6 +476,7 @@ theorem hasCentralChar_depthZero (ρ : Representation ℂ (GL n 𝓀[k]) W) (ω 
   exact (f.1.1.2 ⟨_, scalar_mem_ZK z⟩ x).trans (extZK_scalar ρ ω h z _)
 
 
+open Classical in
 def canonFun (ρ : Representation ℂ (GL n 𝓀[k]) W) (ω : kˣ →* ℂˣ) (h : ExtendsCentral ω ρ) (w : W) (g : GL n k) : W :=
   if hg : g ∈ ZK k n then extZK ρ ω h ⟨g, hg⟩ w else 0
 

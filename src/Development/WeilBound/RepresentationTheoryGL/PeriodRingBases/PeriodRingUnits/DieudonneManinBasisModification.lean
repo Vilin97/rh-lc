@@ -53,6 +53,7 @@ def Ainf' : Subring (B l) := Subring.closure (Set.range (aB l) ∪ {qB l ((l : �
 def Plus : Subring (BdR l) := (algebraMap (BdRp l) (BdR l)).range
 
 
+open Classical in
 def th (x : BdR l) : ℂ_[l] := if h : x ∈ Plus l then θD l (RingHom.mem_range.1 h).choose else 0
 
 variable {l}

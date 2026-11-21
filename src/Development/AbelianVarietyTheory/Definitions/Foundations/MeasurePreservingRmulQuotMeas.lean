@@ -25,6 +25,7 @@ def IsQuotMeasure (ν : Measure (Quot T)) : Prop :=
   ∀ f : H → ℝ≥0∞, Measurable f → ∫⁻ g, f g ∂dh = ∫⁻ q, ∫⁻ t : T, f (t * q.out) ∂dt ∂ν
 
 
+open Classical in
 def quotMeas : Measure (Quot T) := if h : ∃ ν, IsQuotMeasure T dt dh ν then h.choose else 0
 
 def quotInt (φ : H → ℂ) : ℂ := ∫ q, descend T φ q ∂quotMeas T dt dh

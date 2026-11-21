@@ -106,6 +106,7 @@ def TrivAt (l : ℕ) [Fact l.Prime] (ρ : Representation R (G F Ω) M) (v : Heig
   ∀ A, IsPlaceOver A v → ∀ g ∈ Dec (F := F) A, ρ g = 1 ∧ cycMod F Ω l 1 g = 1
 
 
+open Classical in
 def gysL (S₀ S : Finset (HeightOneSpectrum (𝓞 F))) (ρ : Representation R (GS Ω (S : Set (HeightOneSpectrum (𝓞 F)))) M)
     (Av : S → ValuationSubring Ω) (m0 : M) : LocCond ρ (locFam S Av) := fun v =>
   if v.1 ∈ S₀ then ⊥ else ramLine (ρ.comp (locFam S Av v)) ((Ine (F := F) (Av v)).subgroupOf (Dec (F := F) (Av v))) m0

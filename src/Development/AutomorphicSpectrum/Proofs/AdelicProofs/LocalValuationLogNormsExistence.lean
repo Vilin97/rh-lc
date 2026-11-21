@@ -283,6 +283,7 @@ theorem norm_sep (la : HeightOneSpectrum (𝓞 K)) (hp : ((p : ℕ) : 𝓞 K) �
     norm_mul, norm_absNorm_place la hp, norm_absNorm_coprime J hJ0 hj e, mul_one]
 
 
+open Classical in
 theorem sum_lies (la : HeightOneSpectrum (𝓞 K)) (hp : ((p : ℕ) : 𝓞 K) ∈ la.asIdeal) {π : K}
     (hπ : la.valuation K π = WithZero.exp (-1 : ℤ)) :
     ∑ κ : K →+* ℂ_[p], (if placeOf κ = la then Real.log ‖κ π‖ else 0) =

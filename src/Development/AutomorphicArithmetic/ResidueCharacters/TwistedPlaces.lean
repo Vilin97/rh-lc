@@ -170,6 +170,7 @@ def admB : Prop :=
         (GP L + 1) * ((jA L l : ℝ) + 1) + large₂ L))
 
 
+open Classical in
 def flatCD (i : D.nd.Loc) (lam : HeightOneSpectrum (𝓞 D.host.E)) (l : ℕ) : ℝ :=
   (wP L + eta₃ L) / l + L.Sc + large₂ L + eta₃ L * (if tb.band i lam then 1 else 0)
 

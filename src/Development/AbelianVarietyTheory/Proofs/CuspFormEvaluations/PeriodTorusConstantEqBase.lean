@@ -26,6 +26,7 @@ open ThFr TorusCoord TorusAtAssembly
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} (X : Data E r)
 
 
+open Classical in
 def dimPer (σ : E →+* ℂ) : ℕ := if σ ∈ X.Ψ then r - X.p0 else X.p0
 
 theorem dimPer_mem {σ : E →+* ℂ} (h : σ ∈ X.Ψ) : dimPer X σ = r - X.p0 := by simp [dimPer, h]
@@ -44,6 +45,7 @@ theorem card_idx_dimPer : Fintype.card (Idx (dimPer X)) = X.Ψ.card * r := by
   simp [dimPer_add]
 
 
+open Classical in
 def rowFn (i : Idx (dimPer X)) : X.Ψ × Fin r :=
   if h : i.1 ∈ X.Ψ then (⟨i.1, h⟩, ⟨X.p0 + i.2.1, by
       have := lt_of_lt_of_eq i.2.2 (dimPer_mem X h); omega⟩)

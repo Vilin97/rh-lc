@@ -22,6 +22,7 @@ def blockCGram (d : HSMBlockDatum D K ι Ω) (n : ℕ) {r : ℕ} (b : Fin r → 
   fun k l => ∫ x, pairValH d.A n (b k) (b l) (blockPt d x) ∂d.dV
 
 
+open Classical in
 def blockCChi (d : HSMBlockDatum D K ι Ω) (n : ℕ) : ℝ :=
   if h : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial (Σ k, ι k) ℚ), IsSecBasisM d.y d.k₀ n p.2 then
     -(1 / 2) * Real.log (blockCGram d n h.choose.2).det.re

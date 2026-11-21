@@ -19,6 +19,7 @@ open scoped Real
 namespace ProperSheetedFibreEsymm
 
 
+open Classical in
 noncomputable def fibreEsymm {σ : Type} {d : ℕ} (Y : Set (σ → ℂ)) (A : (σ → ℂ) →L[ℂ] (Fin d → ℂ))
     (l : (σ → ℂ) →L[ℂ] ℂ) (j : ℕ) (t : Fin d → ℂ) : ℂ :=
   if h : {x | x ∈ Y ∧ A x = t}.Finite then (h.toFinset.val.map l).esymm j else 0

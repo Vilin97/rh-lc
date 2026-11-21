@@ -79,6 +79,7 @@ theorem re_mem {z : ℂ} (hz : 0 < z.re) : {s : ℂ | 0 < s.re} ∈ nhds z := op
 theorem re_shift (σ u : ℝ) : ((σ : ℂ) + (u : ℂ) * Complex.I).re = σ := by simp
 
 
+open Classical in
 theorem core (hR : RSPole) {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] (a b : ℕ) (ρ : CuspSub E a)
     (ρ' : CuspSub E b) (u : ℝ) (hb : 1 ≤ b) (hab : b ≤ a) (hn : GlobalTheory.DiscSpec.IsNormalised ρ)
     (hn' : GlobalTheory.DiscSpec.IsNormalised ρ') :

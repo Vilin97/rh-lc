@@ -55,6 +55,7 @@ theorem psi_lin (Fm : FMap G C I D β₁.pull) {M : Model l K} (a : D.Ch M) (hM 
   rw [Fm.lin a hM, iP_apply]
 
 
+open Classical in
 def delta (hF : R.Facts) (hC : C.Facts) (Fm : FMap G C I D β₁.pull) {M : Model l K} (a : D.Ch M) (j : ℕ) :
     (D.A a).N j →+ (Module.Dual C.K₀ (I.D M j) →+ C.C) :=
   if hM : G M then
@@ -165,6 +166,7 @@ theorem cD_tmV {M : Model l K} (hM : G M) (a : D.Ch M) (n : ℕ) (z : ℚ_[l]) (
   exact ExtV.ext_tmul _ z u f
 
 
+open Classical in
 def cC (M : Model l K) (n : ℕ) : M.V n →+ (Module.Dual C.K₀ (I.D M n) →+ C.C) :=
   if hM : G M then cD hF hC Fm E hM (a0 hL M hM) n else 0
 

@@ -236,6 +236,7 @@ abbrev SegVs (O : Type*) [CommRing O] [IsDomain O] (r s t : ℕ) :=
   SegBlock s r → MvPolynomial (BVar (2 * s + 1) r t) (KK O)
 
 
+open Classical in
 def segLat (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (p r : ℕ) [NeZero r]
     (S : SegData s) (aTop : Fin s → ℕ) (aPlus : ℕ) (m : ℝ) : Submodule O (SegVs O r s S.t) :=
   Submodule.pi Set.univ (fun b => if Kept p r S aTop b then blockLat O p r S aTop aPlus m b else ⊥)
@@ -277,6 +278,7 @@ def blockRank (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] 
   Module.finrank (KK O) (Submodule.span (KK O) (L : Set (MvPolynomial (BVar (2 * s + 1) r S.t) (KK O))))
 
 
+open Classical in
 def segRank (O : Type*) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (p r : ℕ) [NeZero r]
     (S : SegData s) (aTop : Fin s → ℕ) (aPlus : ℕ) (m : ℝ) : ℕ :=
   ∑ᶠ b : SegBlock s r, if Kept p r S aTop b then blockRank O p r S aTop aPlus m b else 0

@@ -26,6 +26,7 @@ def IsNormAlong (u : X → G) (j : T → G) (ν : Measure T) (ρ : G → ℝ≥0
   Measurable ρ ∧ ∀ x, ∫⁻ t, ρ (j t * u x) ∂ν = 1
 
 
+open Classical in
 def quotInt (μ : Measure X) (u : X → G) (j : T → G) (ν : Measure T) (Φ : X → ℂ) : ℂ :=
   if h : ∃ ρ, IsNormAlong u j ν ρ then ∫ x, Φ x * ((h.choose (u x)).toReal : ℂ) ∂μ else 0
 end Quot

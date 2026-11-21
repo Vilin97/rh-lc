@@ -49,6 +49,7 @@ def sigTow (D : D7) (t : ℕ) : Tow D t where
       omega) _ _ (fun i => (negTail_false _ _ _ (by have := i.isLt; omega)).symm) x y
 
 
+open Classical in
 def towC (D : D7) (t : ℕ) : Tow D t := if h : t = D.R.t then h ▸ recTow D else sigTow D t
 
 def SpSig (D : D7) : Prop :=
@@ -56,6 +57,7 @@ def SpSig (D : D7) : Prop :=
     ∀ τ, (D.sp.Y j).sig τ = (D.R.r + j * D.R.t - (D.R.m - j) / 2, (D.R.m - j) / 2)
 
 
+open Classical in
 def lowC (V : HSp D) (i : ℕ) : HSp D :=
   if i = 0 then V else if h : ∃ V' : HSp D, IsWittLower V V' i then fixSig h.choose else V
 

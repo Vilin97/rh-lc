@@ -119,6 +119,7 @@ theorem tr_ed_int (c : 𝓞 E) (i : Free.ChooseBasisIndex ℤ (𝓞 E)) :
 
 attribute [local instance] Classical.propDecidable
 
+open scoped Classical in
 theorem ortho (σ τ : E →+* ℂ) :
     ∑ i, σ (ed E i) * τ (integralBasis E i) = if σ = τ then 1 else 0 := by
   classical

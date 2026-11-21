@@ -20,6 +20,7 @@ namespace LocRingPow
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
 
+open Classical in
 def multiDegWeight (ι : K → Type*) : (Σ k, ι k) → (K → ℕ) := fun p k => if p.1 = k then 1 else 0
 
 theorem weight_multiDegWeight (m : (Σ k, ι k) →₀ ℕ) :

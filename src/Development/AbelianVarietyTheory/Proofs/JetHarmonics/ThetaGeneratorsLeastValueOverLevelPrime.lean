@@ -57,6 +57,7 @@ theorem crP_mem_harmK_of_disjoint {T : Type} [Fintype T] [DecidableEq T] {r : T 
   · simp [Matrix.one_apply_ne hb]
 
 
+open Classical in
 theorem exists_minor_harm (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H)
     (c : Coeff l) (typ : (E →+* ℂ) → Prop) (htyp : ∀ τ, typ τ ↔ ¬ typ (ComplexEmbedding.conjugate τ))
     (a : (E →+* ℂ) × ℕ → ℕ) (ha : ∀ τ, Antitone fun i => a (τ, i)) (n₁ n₂ : ℕ)

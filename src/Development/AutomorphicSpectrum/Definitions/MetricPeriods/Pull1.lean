@@ -21,6 +21,7 @@ variable {d : ℕ} {σ : Type} [Fintype σ] {SY : AnSys (d + 1) σ} {a₀ : σ} 
 def pull0 (_Q : AnSq SY a₀ ε) (c : σ → ℝ) : Option σ → ℝ := fun o => o.elim 0 c
 
 
+open Classical in
 def pull1 (_Q : AnSq SY a₀ ε) (c : σ → ℝ) : Option σ → ℝ :=
   fun o => o.elim (c a₀) fun a => if a = a₀ then 0 else c a
 

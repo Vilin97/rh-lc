@@ -209,6 +209,7 @@ theorem cork_one_zero (σ : E →+* E) (h2 : Module.finrank F E = 2) {a : ℕ}
   rfl
 
 
+open scoped Classical in
 def eta₃ (E : Type) [Field E] [NumberField E] [Algebra F E] (v : HeightOneSpectrum (𝓞 F)) : ℝ :=
   if (v.asIdeal.primesOver (𝓞 E)).ncard = 2 then 1 else -1
 

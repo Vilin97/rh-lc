@@ -164,6 +164,7 @@ theorem finite_mulSupport_locInd (d : 𝓞 F) (hd : d ≠ 0) (a z : κ → Af F)
     rw [locInd_eq_stdInd d hd a v h.1.1 h.1.2, stdInd, Set.indicator_of_mem (show (fun i => evalV F v (z i)) ∈ {x : κ → Fv F v | ∀ i, x i ∈ v.adicCompletionIntegers F} from fun i => h.2 i), Pi.one_apply]
 
 
+open Classical in
 theorem ind_eq_finprod (d : 𝓞 F) (hd : d ≠ 0) (a z : κ → Af F) :
     (if z - a ∈ levSub (κ := κ) d then (1 : ℂ) else 0) =
       ∏ᶠ v, locInd d a v fun i => evalV F v (z i) := by
@@ -222,6 +223,7 @@ namespace GlobalTheory.SBRestrProd
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
 
+open Classical in
 theorem exists_sum_coset (f : (κ → Af F) → ℂ) (hf : f ∈ SB (κ → Af F)) :
     ∃ d : 𝓞 F, d ≠ 0 ∧ ∃ s : Finset (κ → Af F), ∀ z,
       f z = ∑ a ∈ s, f a * (if z - a ∈ levSub (κ := κ) d then (1 : ℂ) else 0) := by

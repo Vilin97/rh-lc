@@ -56,6 +56,7 @@ def IsFormOrd (η : RatForms p n) (a : ℤ) : Prop :=
     ∃ f : X.functionFieldˣ, η = (f : X.functionField) • E.toRat n ω ∧ E.ord f = a
 
 
+open Classical in
 def formOrd (η : RatForms p n) : ℤ := if h : ∃ a, E.IsFormOrd η a then h.choose else 0
 
 theorem ord_mul (f g : X.functionFieldˣ) : E.ord (f * g) = E.ord f + E.ord g := by

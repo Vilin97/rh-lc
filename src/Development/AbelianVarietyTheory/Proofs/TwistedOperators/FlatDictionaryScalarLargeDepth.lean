@@ -104,6 +104,7 @@ def grid0 (w : Pl D.host.E) : Grid (Kw w) where
   eta := L.C.eta.loc w
 
 
+open Classical in
 def eps0 (w : Pl D.host.E) : (grid0 G w).VertexGroup :=
   onColumn (G := grid0 G w) fun j => if j ∈ idx D then GlobalTheory.SplitFlip.diagGL fun a =>
     if Odd j ∧ topRank (grid0 G w) j + (D.R.m - 1 - j) / 2 ≤ a.1 then Units.map (Int.castRingHom (Kw w)).toMonoidHom (-1) else 1

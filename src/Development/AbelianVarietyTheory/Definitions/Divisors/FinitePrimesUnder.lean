@@ -183,6 +183,7 @@ def maxWt (C : ℝ) : ℕ :=
 variable {D} {T : Type} {L : LevCh D T} {sc : Consts}
 
 
+open Classical in
 def condExp (P : Places L) (v : HeightOneSpectrum (𝓞 D.host.F)) : ℕ := if v = P.v0 then 1 else 2
 
 def condF (P : Places L) : Ideal (GlobalTheory.CMVal.OF D.host.E) :=

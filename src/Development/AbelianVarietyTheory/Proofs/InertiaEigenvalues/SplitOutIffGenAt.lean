@@ -17,6 +17,7 @@ namespace GlobalTheory.PtExt
 variable {D : D7}
 
 
+open Classical in
 def sys (L : LocAll (lay0 D)) (i : L.X.nd.Loc) (x : L.X.nd.X i) : PlE D.host → ℕ → ℂ := fun v k =>
   if SplitOut L.X.nd i v ∧ 1 ≤ k ∧ k ≤ D.R.nV then
     iotaO L.X.nd L.Y.naut i ((L.X.nd.hT i v k : L.X.nd.X i → L.X.nd.O i) x)

@@ -55,6 +55,7 @@ theorem isConj_comp_iff [IsMulCommutative (L ≃ₐ[K] L)] {φ : L →+* ℂ} {�
     exact h (ν y)
 
 
+open scoped Classical in
 def conjOfEmbedding (φ : L →+* ℂ) : L ≃ₐ[K] L :=
   if h : ∃ σ : L ≃ₐ[K] L, IsConj φ σ then h.choose else 1
 
@@ -151,6 +152,7 @@ variable {K : Type*} [Field K] [NumberField K] (L : Type*) [Field L] [NumberFiel
   [IsGalois K L] [IsMulCommutative (L ≃ₐ[K] L)] (v : InfinitePlace K)
 
 
+open scoped Classical in
 def infiniteLocalSymbol : v.Completionˣ →* (L ≃ₐ[K] L) :=
   if hv : v.IsReal then
     (InfinitePlace.realSignHom (conjAt K ((IdeleNorm.nonempty_infinitePlacesOver L v).some :

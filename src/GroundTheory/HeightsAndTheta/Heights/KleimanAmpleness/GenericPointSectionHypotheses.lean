@@ -153,6 +153,7 @@ def NefProductNonneg.Statement : Prop :=
     (∀ i, Nef (Ms i).toSubSystem) → 0 ≤ interNum pp (fun i => (Ms i).toSubSystem)
 
 
+open Classical in
 def GenericPointSectionInput.Statement : Prop :=
   ∀ (k : Type u) [Field k] (Ω : Type w) [Field Ω] [Algebra k Ω] (N : ℕ) (x : Fin (N + 1) → Ω),
     (∀ (n : ℕ) (pp : Ideal (Poly k N)) (L : Fin n → LineBundle k x), IsSubvar x pp n →

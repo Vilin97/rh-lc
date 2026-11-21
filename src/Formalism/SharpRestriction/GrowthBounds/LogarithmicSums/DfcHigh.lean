@@ -14,6 +14,7 @@ namespace Formalism.MainNotions.AuxBlock8.Pf.G5
 variable {D : D7} {L : SizeData₂ D}
 
 
+open Classical in
 def dropI (X : Inst D L) (K : Consts) (a b : HH D → ℤ) (p : ℕ) : ℝ :=
   if L.sc.x ^ (-L.sc.eps) < Sig X K a b p then 1 else 0
 

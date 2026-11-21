@@ -40,6 +40,7 @@ theorem evalPt_appLE (x : Sp R ⟶ X) (φ : X ⟶ Y) (y : Sp R ⟶ Y) (hy : x �
   rw [← RingHom.comp_apply, ← CommRingCat.hom_comp, Scheme.Hom.appLE_comp_appLE]
 
 
+open Classical in
 def evalPt' (x : Sp R ⟶ X) (U : X.Opens) (f : Γ(X, U)) : R :=
   if h : ⊤ ≤ x ⁻¹ᵁ U then evalPt x U h f else 0
 

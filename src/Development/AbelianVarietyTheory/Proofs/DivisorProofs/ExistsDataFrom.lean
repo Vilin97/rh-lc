@@ -104,6 +104,7 @@ variable {o W V : Type} [CommRing o] [CommRing W] [IsLocalRing W] [CommRing V] [
   (iw : W →+* V)
 
 
+open Classical in
 def Jd {Tt : Over (Sp V)} (z : Tt.left) (J : (Tt.left ⟶ (Bp T iw).left) → PUnit → T.M.L.ι) :
     (Tt.left ⟶ T.B.left) → T.M.L.ι := fun χ =>
   if hχ : χ ≫ T.B.hom = Tt.hom ≫ spMap iw then J ((cart T iw).1.lift χ Tt.hom hχ) PUnit.unit

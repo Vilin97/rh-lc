@@ -128,6 +128,7 @@ theorem rowI_mul_rowM (h : IsUnit (lastEnt r)) : rowM (rowI r) * rowM r = 1 := b
   · exact absurd ⟨⟨k - 1, by have := i.2; omega⟩, by have := i.2; simp; omega⟩ hk
 
 
+open Classical in
 def rowGL (r : Fin k → R) : GL (Fin k) R :=
   if h : IsUnit (lastEnt r) then ⟨rowM r, rowM (rowI r), rowM_mul_rowI h, rowI_mul_rowM h⟩ else 1
 

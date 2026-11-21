@@ -79,6 +79,7 @@ structure LatEmb (F : UnivFam E Ψ j j' n g Λ) where
 def plc (F : UnivFam E Ψ j j' n g Λ) (τ : Ψ) : InfinitePlace E := InfinitePlace.mk (embOf (F.σ τ))
 
 
+open Classical in
 def tauMat (F : UnivFam E Ψ j j' n g Λ) (a : InfinitePlace E → GL (Fin (j + j')) ℂ) (τ : Ψ) :
     Matrix (Fin (j + j')) (Fin (j + j')) ℂ :=
   if (plc F τ).embedding = embOf (F.σ τ) then (a (plc F τ) : Matrix (Fin (j + j')) (Fin (j + j')) ℂ)

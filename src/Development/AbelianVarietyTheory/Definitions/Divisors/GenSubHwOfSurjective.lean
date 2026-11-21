@@ -155,6 +155,7 @@ def liftAt [IsTotallyReal F] (τ : ∀ w : InfinitePlace F, EmbOver E w) (w : In
     (G : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) (AE F E) := 1 + liftM τ ξ (Pi.single w (G - 1))
 
 
+open Classical in
 theorem liftAt_map [IsTotallyReal F] {ξ : E} (hξ : ∀ w, ((τ w).1 ξ).im ≠ 0) (G : Matrix (Fin n) (Fin n) ℂ)
     (w' : InfinitePlace F) : (liftAt τ w ξ G).map (piInf (τ w')) = if w' = w then G else 1 := by
   rw [liftAt, Matrix.map_add _ (map_add _), Matrix.map_one _ (map_zero _) (map_one _), OneParam.liftM_map τ hξ]

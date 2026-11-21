@@ -39,6 +39,7 @@ instance finiteDimensional [∀ k, Fintype (ι k)] (m : K → ℕ) :
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
 
+open Classical in
 theorem component_mul {x : MRing ι F} {e : K → ℕ} (hx : IsMultiHomog x e) (y : MRing ι F)
     (m : K → ℕ) :
     weightedHomogeneousComponent (blockWeight ι) m (x * y) =

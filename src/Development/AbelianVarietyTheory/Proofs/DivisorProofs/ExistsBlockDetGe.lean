@@ -148,6 +148,7 @@ theorem rhX_lower {r : ℕ} (X : Data E r) {x : Frame X.Ψ r} (hx : x ∈ X.dom)
   rwa [rhX_rmul _ _ hb', rhX_rmul _ _ hb'] at this
 
 
+open Classical in
 noncomputable def poleFn {r : ℕ} (X : Data E r) (G : Subgroup (GL (Fin r) E)) (x0 : Frame X.Ψ r) (ρ0 : ℝ)
     (k : ℝ → ℝ) (x : Frame X.Ψ r) : ℝ :=
   if h : ∃ γ, γ ∈ G ∧ rhX X x0 (lact γ x) < ρ0 then k (rhX X x0 (lact h.choose x)) else 0

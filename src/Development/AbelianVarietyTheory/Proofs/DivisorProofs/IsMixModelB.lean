@@ -107,10 +107,12 @@ def linB (w : Pl D.host.E) (y : WO (spW₁ G i j) (spX G i j)) : MatB G t i j w 
     ((frMapAdj (spW₁ G i j) (spX G i j) (B.β i j) (frX B i j) y).map (cpt w))
 
 
+open Classical in
 def prodA (ε : AE D) (Ξ : ∀ w, MatA G t i j w → ℂ) (x : WO (spW G i j) (spX G i j)) : ℂ :=
   if IsHalf ε x then ∏ w ∈ locPl G t, Ξ w (linA B t i j w x) else 0
 
 
+open Classical in
 def prodB (ε : AE D) (Ψ : ∀ w, MatB G t i j w → ℂ) (y : WO (spW₁ G i j) (spX G i j)) : ℂ :=
   if IsHalf (cA D ε) y then ∏ w ∈ locPl G t, Ψ w (linB B t i j w y) else 0
 

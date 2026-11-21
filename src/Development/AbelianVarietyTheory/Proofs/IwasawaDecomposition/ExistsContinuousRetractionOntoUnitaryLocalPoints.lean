@@ -29,6 +29,7 @@ theorem under_conjSrc (v : HeightOneSpectrum (𝓞 E)) :
 variable (w : HeightOneSpectrum (𝓞 E))
 
 
+open Classical in
 def idemF : Af E :=
   ⟨fun v => if v.under (𝓞 (maximalRealSubfield E)) = w.under (𝓞 (maximalRealSubfield E)) then 1 else 0,
     Filter.Eventually.of_forall fun v => by

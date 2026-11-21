@@ -24,6 +24,7 @@ open MvPolynomial
 variable {L : Type} [Field L] {n : ℕ} {K : Type} [Field K]
 
 
+open Classical in
 noncomputable def evS {S : Type} [CommRing S] (c : L →+* L) (τ : L →+* K) (X Y : Matrix (Fin n) (Fin n) S) :
     (L →+* K) × Fin n × Fin n → S := fun p =>
   if p.1 = τ then X p.2.1 p.2.2

@@ -401,6 +401,7 @@ variable {q : Z ⟶ Sp k} {y : CxPts q σ} {f g : Z.functionField}
 abbrev under (y : CxPts q σ) : Z := y.1 (IsLocalRing.closedPoint ℂ)
 
 
+open Classical in
 def ratVal (f : Z.functionField) (y : CxPts q σ) : ℂ :=
   if h : RegAt (under y) f then
     ev q σ h.exists_fnOf.choose h.exists_fnOf.choose_spec.choose_spec.choose y else 0
@@ -467,6 +468,7 @@ theorem fnOf_sec_ne_zero {s : L.Sec} (hs : genericPoint Z ∈ nonzeroLocus s) {i
   ((unitAt_fnOf_iff h h _).2 ((mem_nonzeroLocus_iff s i h).1 hs)).ne_zero
 
 
+open Classical in
 def ratOfSec (s : L.Sec) (hs : genericPoint Z ∈ nonzeroLocus s) (i : L.ι) :
     Z.functionFieldˣ :=
   if h : genericPoint Z ∈ L.U i then Units.mk0 _ (fnOf_sec_ne_zero hs h) else 1
@@ -1318,6 +1320,7 @@ theorem surjective_intCast [IsClosedImmersion i] :
 def trivShift (t : ℝ) : HermLB (𝟙 (Sp ℤ)) := (HermLB.triv _).shift (fun _ => t) fun _ => rfl
 
 
+open Classical in
 theorem isArithHeight_trivShift (t : ℝ) : (trivShift t).IsArithHeight fun x =>
     if x.asIdeal = ⊥ then t else Real.log (Nat.card (ℤ ⧸ x.asIdeal)) where
   vertical Z i _ _ κ _ _ _ d hd := by

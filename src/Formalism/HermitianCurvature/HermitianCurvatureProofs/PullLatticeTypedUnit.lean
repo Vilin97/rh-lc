@@ -143,6 +143,7 @@ private lemma isPSD_comp_of_isPSD_image {X Y : Type} {inst : DecidableEq Y} (F :
   exact hk'
 
 
+open Classical in
 theorem top_unit_heads : Formalism.FourierDecayAlt.J.TopUnitHeads := by
   intro hAg hN0 K _ _ _ R ψ hLD E α _ m σ u τ₀ η F Θ hm hG hτ hA t
   have hψ : ∀ r ∈ R, ψ r = 1 := fun r hr => by

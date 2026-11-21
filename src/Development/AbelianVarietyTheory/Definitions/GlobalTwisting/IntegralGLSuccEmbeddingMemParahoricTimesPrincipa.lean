@@ -396,6 +396,7 @@ def XiTop {u : Pr.Word} (m2 : ℕ) (p : ChPt (R := R) sel mu u (m2 + 1)) (Y : Se
 variable {u : Pr.Word} {m2 : ℕ} (T : ChTh W sel mu u m2)
 
 
+open Classical in
 def topDegreeKTwo (p : ChPt (R := R) sel mu u (m2 + 1)) (Y : Set (Sp X.E (R.N (m2 + 1)))) (p' : TopPt R sel mu u) :
     (colValF W sel mu u (m2 + 1)).V →ₗ[X.K] (colValF W sel mu u R.m).V :=
   if Y ∈ ybSet sel mu cst p.deco.1.N then
@@ -632,6 +633,7 @@ def topCpl (h1 : Cp1Equiv W Ch sel mu cst L T b hY) (h2 : TopEquiv W Ch sel mu c
   CplKer.mk (cp1K W Ch sel mu cst L T al) (topDegreeKTwo W Ch sel mu cst T) (h1 al) h2
 
 
+open Classical in
 def matFam (hM : MatEquiv W Ch sel mu cst L T) : KerFam (chF W sel mu L u) := fun i al be =>
   if h : i < m2 then ClsKer.mk (matK W Ch sel mu cst L T i al be) (hM i h al be) else zeroKer _ _
 

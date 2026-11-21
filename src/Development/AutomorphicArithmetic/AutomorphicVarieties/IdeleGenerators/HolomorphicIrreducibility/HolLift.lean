@@ -46,6 +46,7 @@ private theorem norm_chiI {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (ω :
 private abbrev Idx (F : Type) [Field F] : Type := {𝔪 : Ideal (𝓞 F) // 𝔪 ≠ ⊥}
 
 
+open Classical in
 private def fT {K : Type} [Field K] (w : Pl F) (e : K) : Module.End K (Idx F → K) where
   toFun v 𝔪 := v ⟨w.asIdeal * 𝔪.1, mul_ne_zero w.ne_bot 𝔪.2⟩ +
     e * if h : ∃ 𝔫, 𝔪.1 = w.asIdeal * 𝔫 then

@@ -22,6 +22,7 @@ section Frames
 variable {K : Type} [Field K] [NumberField K] [StarRing K]
 
 
+open Classical in
 def frameOf {ι : Type} [Fintype ι] [DecidableEq ι] (M : Matrix ι ι ℂ) : Matrix ι ι ℂ :=
   if h : ∃ Y : Matrix ι ι ℂ, IsUnit Y.det ∧ (Y⁻¹).conjTranspose * Y⁻¹ = M then h.choose else 1
 

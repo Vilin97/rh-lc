@@ -93,6 +93,7 @@ theorem betaH_sub_right (ξ η η' : (Fin d → k) × (Fin d → k)) : betaH k �
   ring
 
 
+open Classical in
 theorem eigLiftRam_core (hRQ : IsRQ (R := R) k) (B : FB R d O) (h : PS k 2 d) (hc : B.IsCanonGauge k h)
     {L Ty Pl π : Type} [Fintype Ty] (ty : L → Ty) (χ : Ty → O →+* k) (cjT : Ty → Ty)
     (hχsep : ∀ t t', t' ≠ cjT t → ∃ a, χ t a ≠ χ t' (star a)) (hχinj : ∀ t t', t ≠ t' → ∃ a, χ t a ≠ χ t' a)

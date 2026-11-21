@@ -82,6 +82,7 @@ theorem subsingleton_sec_of_not_gen (F : X.Modules) {U : X.Opens} (hU : genericP
   exact Module.subsingleton Γ(X, U) Γ(F, U)
 
 
+open Classical in
 def LatModel.secEquiv' {V : Type} [AddCommGroup V] [Module X.functionField V] {M : X → AddSubgroup V}
     {F F' : X.Modules} (L : LatModel M F) (L' : LatModel M F') (U : X.Opens) :
     Γ(F, U) ≃ₗ[Γ(X, U)] Γ(F', U) :=

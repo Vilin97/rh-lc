@@ -39,6 +39,7 @@ def IsIntM {b a : ℕ} (N : Matrix (Fin b) (Fin a) (EAf D)) : Prop :=
   ∀ i j, N i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E
 
 
+open Classical in
 def redM (PP : Formalism.L2.DIV.Pl D.host.E) {b a : ℕ} (N : Matrix (Fin b) (Fin a) (EAf D)) :
     Matrix (Fin b) (Fin a) (Formalism.L2.DIV.kP PP) :=
   fun i j => if h : N i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E then Formalism.L2.DIV.resS D.host.F PP ⟨N i j, h⟩ else 0
@@ -50,6 +51,7 @@ def LowZero {κ : Type} [Zero κ] {b a : ℕ} (k : ℕ) (y : Matrix (Fin b) (Fin
   ∀ i j, k ≤ i.val → j.val < k → y i j = 0
 
 
+open Classical in
 def omegaG {a b : ℕ} (L : Formalism.L2.DIV.LevDat D.host.E ℂ a) (χj : ∀ PP : Formalism.L2.DIV.Pl D.host.E, (Formalism.L2.DIV.kP PP)ˣ →* ℂˣ)
     (y : ∀ PP : Formalism.L2.DIV.Pl D.host.E, Matrix (Fin b) (Fin a) (Formalism.L2.DIV.kP PP)) : ℂ :=
   if h : (∀ PP ∈ L.Pg, LowZero a (y PP)) ∧
@@ -64,6 +66,7 @@ def omegaG {a b : ℕ} (L : Formalism.L2.DIV.LevDat D.host.E ℂ a) (χj : ∀ P
   else 0
 
 
+open Classical in
 def omegaQ {a b : ℕ} (Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (r : ℕ) (ξ : ∀ PP : Formalism.L2.DIV.Pl D.host.E, (Formalism.L2.DIV.kP PP)ˣ →* ℂˣ)
     (k : ℤ) (y : ∀ PP : Formalism.L2.DIV.Pl D.host.E, Matrix (Fin b) (Fin a) (Formalism.L2.DIV.kP PP)) : ℂ :=
   if h : ∀ PP ∈ Q, LowZero r (y PP) ∧ IsUnit (topL r (y PP)).det then
@@ -71,6 +74,7 @@ def omegaQ {a b : ℕ} (Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (r : ℕ) (ξ
   else 0
 
 
+open Classical in
 def omegaK {a b : ℕ} (Pg : Finset (Formalism.L2.DIV.Pl D.host.E))
     (y : ∀ PP : Formalism.L2.DIV.Pl D.host.E, Matrix (Fin b) (Fin a) (Formalism.L2.DIV.kP PP)) : ℂ :=
   if ∀ PP ∈ Pg, LowZero a (y PP) ∧ topL a (y PP) = 1 then 1 else 0
@@ -80,6 +84,7 @@ def IsIdemSum (e : AE D) (P : Finset (Formalism.L2.DIV.Pl D.host.E)) : Prop :=
     e * cA D e = 0
 
 
+open Classical in
 def IsStepVecOf (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D)
     (sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ) (sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ)
     (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E))
@@ -95,6 +100,7 @@ def IsStepVecOf (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D)
         else 0) f
 
 
+open Classical in
 def IsThPVecOf (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D)
     (sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ) (sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ)
     (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E))

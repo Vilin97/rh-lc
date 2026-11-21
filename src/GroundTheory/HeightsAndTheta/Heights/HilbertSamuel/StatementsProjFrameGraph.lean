@@ -15,6 +15,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.Cha
 noncomputable section
 
 
+open Classical in
 def projMat {κ : Type} {D : ℕ} (e : Fin (D + 1) → Ix κ) : ∀ _ : Unit, Fin (D + 1) → κ → ℤ :=
   fun _ k i => if (e k).2 = i then 1 else 0
 

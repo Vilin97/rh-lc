@@ -50,6 +50,7 @@ def domCell (i : (k : K) → ι k) : Set ((Σ k, ι k) → ℂ) :=
   {z | ∀ i', ‖segre z i'‖ ≤ ‖segre z i‖}
 
 
+open Classical in
 def absLogNorm (A : HermLine ι) (s : MRingOver ℂ ι) (z : (Σ k, ι k) → ℂ) : ℝ :=
   if ∀ k, ∃ j, z ⟨k, j⟩ ≠ 0 then |logNormC A s z| else 0
 

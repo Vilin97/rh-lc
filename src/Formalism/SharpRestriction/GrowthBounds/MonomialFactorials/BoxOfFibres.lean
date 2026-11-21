@@ -15,6 +15,7 @@ section Comb
 variable {s t : ℕ} (u : Fin t → Fin s)
 
 
+open Classical in
 def ovr (a : Fin s → ℕ) (n : Fin t → ℕ) : Fin s → ℕ :=
   fun l => if h : ∃ i, u i = l then n (Classical.choose h) else a l
 

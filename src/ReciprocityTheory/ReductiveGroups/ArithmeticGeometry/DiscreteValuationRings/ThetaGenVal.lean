@@ -26,6 +26,7 @@ lemma hasVal_mul {c d : FractionRing V} {n m : ℤ} (hc : HasVal ϖ c n) (hd : H
   ring
 
 
+open scoped Classical in
 def valE (hϖ : Irreducible ϖ) (c : FractionRing V) : ℤ :=
   if h : c = 0 then 0 else (hasVal_of_ne_zero hϖ h).choose
 

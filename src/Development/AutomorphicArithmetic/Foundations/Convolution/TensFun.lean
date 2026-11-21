@@ -49,6 +49,7 @@ def tensFun (β : TI K n) (e : TF K n) (x : normOneGL (K := K) (n := n)) : ℂ :
   kbar β (infPart K n (x : AdelicGLn.AdelicGL K n)) * e (finPart K n (x : AdelicGLn.AdelicGL K n))
 
 
+open Classical in
 def tens (β : TI K n) (e : TF K n) : TG K n :=
   if h : Continuous (tensFun β e) ∧ HasCompactSupport (tensFun β e) then ⟨⟨tensFun β e, h.1⟩, h.2⟩ else 0
 
@@ -60,6 +61,7 @@ def uAct : UC K n →ₐ[ℂ] Module.End ℂ (archSmooth K n) :=
   Algebra.TensorProduct.lift (Algebra.ofId ℂ _) uAction fun c _ => Algebra.commute_algebraMap_left c _
 
 
+open Classical in
 def lact (u : UC K n) (β : TI K n) : TI K n :=
   if h : ∃ (h : (fun g => β g⁻¹) ∈ (isExpLieAlgebra K n).smoothFuns (F := ℂ)) (γ : TI K n),
       ∀ g, γ g = (rUC u ⟨fun g => β g⁻¹, h⟩ : archGroup K n → ℂ) g⁻¹ then h.choose_spec.choose else 0
@@ -70,6 +72,7 @@ def LeftFin (β : TI K n) : Prop :=
   FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k : archCompact K n => fun g : archGroup K n => β ((k : archGroup K n) * g)))
 
 
+open Classical in
 def along (τ : K →+* ℂ) (z : ℂ) : mixedEmbedding.mixedSpace K :=
   (0, fun w => if w.1 = InfinitePlace.mk τ then (if w.1.embedding = τ then z else starRingEnd ℂ z) else 0)
 

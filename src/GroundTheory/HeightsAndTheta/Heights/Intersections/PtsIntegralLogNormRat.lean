@@ -116,6 +116,7 @@ theorem isPullHerm_tensor {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')}
     rw [hA.2, hB.2]
 
 
+open Classical in
 theorem sum_block (F : (Σ k', ι' k') → ℕ) (k' : K') :
     ∑ i, F ⟨k', i⟩ = ∑ q, if q.1 = k' then F q else 0 := by
   classical

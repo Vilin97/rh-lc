@@ -71,6 +71,7 @@ theorem divCycle_mul' {P : Ideal (MRing ι)} (hP : P.IsPrime) {f g : MRing ι}
       if_neg fun h2 => h (by rw [mul_comm]; exact mem_divSupp_mul_left' hP hf h2)]
 
 
+open Classical in
 def cycWeight (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) {n : ℕ}
     (L : Fin n → HermLine ι) (W : Ideal (MRing ι)) : ℝ :=
   if IsHorizontal W then I W n L else (geoNum n W (fun j => (L j).a) : ℝ) * Real.log (charOf W)

@@ -16,6 +16,7 @@ noncomputable section
 universe u w
 
 
+open Classical in
 def SectionCount.Drop.Filt.Statement : Prop :=
   ∀ (k : Type u) [Field k] (Ω : Type w) [Field Ω] [Algebra k Ω] (N : ℕ) (x : Fin (N + 1) → Ω) (d : ℕ)
     (Nb : LineBundle k x) (b : ℕ), IsSubvar x (primeOf (S := k) x) (d + 1) → 1 ≤ b →

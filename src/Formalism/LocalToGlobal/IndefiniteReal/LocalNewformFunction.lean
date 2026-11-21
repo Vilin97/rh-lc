@@ -98,6 +98,7 @@ def compAt (θ : InfFam D) (τ : D.what₂.Tau) (w : Mx D m n) : Matrix (Fin m) 
   w.map fun a => θ τ (infPart D a)
 
 
+open Classical in
 def IsLineAt (θ : InfFam D) (τ : D.what₂.Tau) (z : Matrix (Fin m) (Fin n) ℂ) (L : ℝ →+ Mx D m n) : Prop :=
   Continuous L ∧ (∀ t, (L t).map (finPart D) = 0) ∧
     ∀ t τ', compAt θ τ' (L t) = if τ' = τ then (t : ℂ) • z else 0
@@ -225,6 +226,7 @@ def IsSBHalf (e : AE D) (Λ : AddSubgroup (Mx D m n)) (Φ : Mx D m n → ℂ) : 
     (∀ u ∈ Λ, IsHalf e u → ∀ t, Φ (t + k • u) = Φ t) ∧ ∀ t, Φ t ≠ 0 → k • t ∈ Λ
 
 
+open Classical in
 def halfInd (e : AE D) (Λ : AddSubgroup (Mx D m n)) (t : Mx D m n) : ℂ :=
   if t ∈ Λ ∧ IsHalf e t then 1 else 0
 
@@ -245,6 +247,7 @@ end Split
 section Local
 
 
+open Classical in
 def localNewformFunction (v : HeightOneSpectrum (𝓞 D.host.F)) {r t : ℕ}
     (P : Subgroup (GL (Fin r) (v.adicCompletionIntegers D.host.F))) (lam : P →* ℂˣ) (mu : (Fv D.host.F v)ˣ →* ℂˣ)
     (x : Matrix (Fin r ⊕ Fin t) (Fin r) (Fv D.host.F v)) : ℂ :=

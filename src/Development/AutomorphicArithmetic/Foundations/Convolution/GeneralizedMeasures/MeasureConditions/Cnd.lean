@@ -21,6 +21,7 @@ def Cnd (S : Finset (Pl F)) (q : Pl F) (κ : Finset (Pl E)) : Set (AdelicGLn.Fin
     cf w x ∈ GLnLocal.integralGL (w.adicCompletion E) n}
 
 
+open Classical in
 def rF (S : Finset (Pl F)) {q : Pl F} (w₀ : PlacesOver E q) (ψ : ∀ v : Pl F, GL (Fin n) (CompletionsOver E v) → ℂ)
     (κ : Finset (Pl E)) (x : AdelicGLn.FiniteAdelicGL E n) : ℂ :=
   (∏ v ∈ S, ψ v (mapGL n (atFin v) (finEmb E n x))) *

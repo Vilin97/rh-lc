@@ -89,6 +89,7 @@ theorem isHk_smul {K : Subgroup (GL ι F)} {e : GL ι F → ℂ} (c : ℂ) (h : 
     simp [h.2.2.2 k₁ hk₁ k₂ hk₂ g]⟩
 
 
+open Classical in
 def unitFn (K : Subgroup (GL ι F)) (g : GL ι F) : ℂ := if g ∈ K then 1 else 0
 
 theorem isHk_unitFn {K : Subgroup (GL ι F)} (hKo : IsOpen (K : Set (GL ι F)))

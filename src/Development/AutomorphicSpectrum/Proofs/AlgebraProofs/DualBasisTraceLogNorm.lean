@@ -17,6 +17,7 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.Ar.RelDual
 
 
+open Classical in
 theorem sum_dual_embeddings {L E Ω : Type} [Field L] [Field E] [Algebra L E] [FiniteDimensional L E]
     [Algebra.IsSeparable L E] [Field Ω] [Algebra L Ω] [IsAlgClosed Ω] {f : ℕ} (b b' : Fin f → E)
     (hcard : Module.finrank L E = f)

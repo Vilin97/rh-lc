@@ -74,10 +74,12 @@ theorem sle_trans {x y z : Fin m → SignType} (h : SLe x y) (h' : SLe y z) : SL
 theorem zero_sle (x : Fin m → SignType) : SLe 0 x := fun _ h => absurd rfl h
 
 
+open Classical in
 noncomputable def lo (S : Finset (Fin m → SignType)) : Fin m → SignType :=
   if h : S.Nonempty then (S.exists_min_image rk h).choose else 0
 
 
+open Classical in
 noncomputable def hi (S : Finset (Fin m → SignType)) : Fin m → SignType :=
   if h : S.Nonempty then (S.exists_max_image rk h).choose else 0
 

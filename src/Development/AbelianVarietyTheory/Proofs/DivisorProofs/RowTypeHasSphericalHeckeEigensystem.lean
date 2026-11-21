@@ -58,6 +58,7 @@ theorem psi_pre (Q : RowPsi V n) {γ : GA D V} (hγ : γ ∈ GfC V) : Q.ψ (pre 
   exact h'.choose_spec
 
 
+open Classical in
 def lift (Q : RowPsi V n) (x : Formalism.AUTREP.GAf D.host.E n → ℂ) : GA D V → ℂ :=
   fun g => if g ∈ GfC V then x (pre Q g) else 0
 

@@ -22,6 +22,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     (W : LocWach PD LL O v n)
 
 
+open Classical in
 def valAt (T : LocLat G Qp LL O) (c : ZMod n) (ζ : LL) (x : W.DD T) : T.V ⊗[Qp] BdR :=
   if h : ∃ k : ℕ, W.Q ^ k • W.φD T x ∈ W.N T then
     ((PowerSeries.coeff 1 (W.lev c ζ W.Q)) ^ Nat.find h)⁻¹ •

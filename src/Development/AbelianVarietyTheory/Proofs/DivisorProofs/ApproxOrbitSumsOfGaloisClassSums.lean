@@ -315,6 +315,7 @@ theorem sum_comp_eq [Module.Free ℤ X] [Module.Finite ℤ X] {ι M : Type} [Add
   exact Finset.sum_nbij _ hmaps hinj hbij.surjOn fun c hc => (hg _ _ (hρ2 _ (hm c hc))).symm
 
 
+open Classical in
 theorem sum_orbit_eq [Module.Free ℤ X] [Module.Finite ℤ X] {m s : ℕ} {K : Type} [CommRing K] {a : Fin m × Fin s → X}
     (C : Finset (Fin m × Fin s → X))
     (hC1 : ∀ c ∈ C, c ∈ orbit O N₁ N LinearMap.id a) (hC2 : ∀ c ∈ C, ∀ c' ∈ C, (∀ i, CongMod N (c i) (c' i)) → c = c')

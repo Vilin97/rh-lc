@@ -33,6 +33,7 @@ def IsEv (U : A.left.Opens) (z : Fin g → ℂ) (E : Ω[Sec (str A) U⁄ℂ] →
   ∀ a b : Sec (str A) U, E (a • D ℂ (Sec (str A) U) b) = val ex U a z • fderiv ℂ (val ex U b) z
 
 
+open Classical in
 def evForm (U : A.left.Opens) (z : Fin g → ℂ) : Ω[Sec (str A) U⁄ℂ] →ₗ[ℂ] ((Fin g → ℂ) →L[ℂ] ℂ) :=
   if h : ∃ E, IsEv ex U z E then h.choose else 0
 

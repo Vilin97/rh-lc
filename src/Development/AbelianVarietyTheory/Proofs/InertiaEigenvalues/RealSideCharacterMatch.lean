@@ -197,6 +197,7 @@ theorem mul_mem_dc (hDC : IsDC J x A) {u : G} (hu : u ∈ J) {a : G} (ha : a ∈
   exact ⟨⟨u, hu⟩ * j₁, j₂, by rw [e]; simp [mul_assoc]⟩
 
 
+open Classical in
 def pick (hDC : IsDC J x A) {u : G} (hu : u ∈ J) (a : G) : G :=
   if ha : a ∈ A then (hDC.2 (u * a) (mul_mem_dc hDC hu ha)).exists.choose else a
 

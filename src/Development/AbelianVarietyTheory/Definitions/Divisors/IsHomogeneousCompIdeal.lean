@@ -204,6 +204,7 @@ def ValFam : Type :=
 def recVals : ValFam Xo c := ⟨valSet Xo c (algCls Xo c), isVal_valSet⟩
 
 
+open Classical in
 def ValFam.patch (S : Set ℕ) (A B : ValFam Xo c) : ValFam Xo c :=
   ⟨fun la => if ∃ p ∈ S, ((p : ℕ) : 𝓞 c.F) ∈ la.asIdeal then A.1 la else B.1 la, fun la v hv => by
     beta_reduce at hv

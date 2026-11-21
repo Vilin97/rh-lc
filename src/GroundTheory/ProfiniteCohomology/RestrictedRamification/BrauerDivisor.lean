@@ -223,11 +223,13 @@ namespace PicInf
 variable {K S ιs}
 
 
+open Classical in
 noncomputable def zuInd (v : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S})
     (U : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)) : galUnramifiedOutside K.1 ℚ̄ S → ℤ :=
   fun g => if ∃ z ∈ (gsDecomp K S ιs v).range, ∃ u ∈ U, g = z * u then 1 else 0
 
 
+open Classical in
 theorem good_single_of_base {ℓ : ℕ} (v : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S})
     (U : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)) [hUn : U.Normal]
     (hU : IsOpen (U : Set (galUnramifiedOutside K.1 ℚ̄ S)))
@@ -432,6 +434,7 @@ namespace PicInf
 variable {K S ιs}
 
 
+open Classical in
 theorem good_base (ℓ : ℕ) (hℓ : ℓ.Prime)
     (hS : ∀ v : HeightOneSpectrum (𝓞 K.1), ((ℓ : ℕ) : 𝓞 K.1) ∈ v.asIdeal → v ∈ S)
     (v : {v : HeightOneSpectrum (𝓞 K.1) // v ∉ S})

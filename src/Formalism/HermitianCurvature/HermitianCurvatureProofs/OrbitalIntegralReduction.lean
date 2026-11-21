@@ -68,6 +68,7 @@ def g1 {m : ℕ} (D' : K) (x : Fin m → K) (y : Pr (m + 1) → K) : K :=
   x0 D' x * ∑ i : Fin m, y (sd i) * Ring.inverse (xt D' x i.castSucc) * Ring.inverse (xt D' x i.succ)
 
 
+open Classical in
 def GG (R : Subring K) (ψ : AddChar K ℂ) (Φ : ∀ n : ℕ, Matrix (Fin n) (Fin n) K → ℂ) {m : ℕ} (D' : K)
     (x : Fin m → K) (y : Pr (m + 1) → K) : ℂ :=
   if ∀ k, IsUnit (x k) then

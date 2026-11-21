@@ -50,6 +50,7 @@ theorem eSum_cons (p : ι → SplitPt D k) (i : ι) (J : List ι) : eSum p (i ::
   simp [eSum]
 
 
+open Classical in
 def datJ (p : ι → SplitPt D k) {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {S T : HSp D}
     (α : ∀ i, Frame (p i) S n') (β : ∀ i, Frame (p i) T n) (Ψ : ι → Matrix n n' k → ℂ) (J : List ι) (t : WO S T) : ℂ :=
   if IsHalf (eSum p J) t then (J.map fun i => Ψ i (rd (α i) (β i) t)).prod else 0

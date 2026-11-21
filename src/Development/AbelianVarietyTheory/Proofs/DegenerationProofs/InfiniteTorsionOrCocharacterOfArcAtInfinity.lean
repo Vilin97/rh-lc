@@ -88,6 +88,7 @@ theorem exists_sig {z : PowerSeries k} (h : PowerSeries.constantCoeff z = 0 ∧ 
   exact ⟨σ, fun x => by rw [hσ, AlgHom.comp_apply, PowerSeries.coe_substAlgHom]⟩
 
 
+open scoped Classical in
 def sig (z : PowerSeries k) : FractionRing (PowerSeries k) →ₐ[k] FractionRing (PowerSeries k) :=
   if h : PowerSeries.constantCoeff z = 0 ∧ z ≠ 0 then (exists_sig h).choose else AlgHom.id k _
 

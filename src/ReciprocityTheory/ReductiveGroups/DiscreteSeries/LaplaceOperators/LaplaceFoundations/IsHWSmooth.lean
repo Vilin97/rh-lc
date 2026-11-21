@@ -32,6 +32,7 @@ def InNP (ε : Fin n → Bool) (d : Fin n → ℝ) (a b : Fin n) : Prop :=
 def InNM (ε : Fin n → Bool) (d : Fin n → ℝ) (a b : Fin n) : Prop := InNP ε d b a
 
 
+open Classical in
 def partNM (ε : Fin n → Bool) (d : Fin n → ℝ) (X : Matrix (Fin n) (Fin n) ℂ) :
     Matrix (Fin n) (Fin n) ℂ :=
   Matrix.of fun a b => if InNM ε d a b then X a b else 0
@@ -62,6 +63,7 @@ def IsHWSmooth (ε : Fin n → Bool) (σ : Matrix (Fin n) (Fin n) ℂ → (H →
     casimir (smE ε σ) (⟨w, hw⟩ : smD ε σ) = ((casVal lam : ℝ) : ℂ) • (⟨w, hw⟩ : smD ε σ)
 
 
+open Classical in
 def phiW (ε : Fin n → Bool) (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) (w : H)
     (X : Matrix (Fin n) (Fin n) ℂ) : H :=
   if hw : w ∈ smD ε σ then ((actM (smE ε σ) X (⟨w, hw⟩ : smD ε σ) : smD ε σ) : H) else 0

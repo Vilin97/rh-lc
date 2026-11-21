@@ -28,6 +28,7 @@ def TTv (D : D7) : Finset ℕ := D.host.TT.image Formalism.HC.Frame.A.val
 def badAt (X : G.Inst D L) (p n : ℕ) : Prop := ¬ G.Good X p (X.bs (G.stepP D p) (D.R.ofNat n))
 
 
+open Classical in
 def clAt (X : G.Inst D L) (K : G.Consts) (p : ℕ) : PClass :=
   if p ∉ L.drop then PClass.served
   else if L.sc.X'' D.R.n < (p : ℝ) then PClass.high
@@ -35,6 +36,7 @@ def clAt (X : G.Inst D L) (K : G.Consts) (p : ℕ) : PClass :=
   else PClass.first
 
 
+open Classical in
 def gainQ (X : G.Inst D L) (K : G.Consts) (j p : ℕ) : ℝ :=
   if p ∈ L.drop then 0 else G.gainP X K (G.aL L) (G.bL L) p j
 

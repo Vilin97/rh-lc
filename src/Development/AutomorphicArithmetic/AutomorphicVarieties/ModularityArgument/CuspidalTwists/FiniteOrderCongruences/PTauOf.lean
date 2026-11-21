@@ -256,6 +256,7 @@ def PP (e : ℤ) (A : ValuationSubring Ω) : Prop :=
   ∀ h : G K' Ω, resQ K' h ∈ Ine (F := ℚ) A → κ h = cycBar K' Ω l h ^ e
 
 
+open Classical in
 def sA (m : ℕ) (A : ValuationSubring Ω) : c.O := if PP K' κ (m : ℤ) A then 1 else -1
 
 end Kap

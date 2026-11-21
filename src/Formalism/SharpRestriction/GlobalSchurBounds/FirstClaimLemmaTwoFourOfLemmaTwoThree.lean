@@ -265,6 +265,7 @@ namespace Formalism.MainNotions.ShortIntervalPrimes
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.GlobalTheoryTheory Filter Topology
 
 
+open Classical in
 def badZero (Q : ℝ) {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) : ℂ :=
   if h : ∃ s : ℂ, 1 - 1 / 400 < s.re ∧ |s.im| ≤ Q ∧ DirichletCharacter.LFunction χ s = 0
   then h.choose else 0

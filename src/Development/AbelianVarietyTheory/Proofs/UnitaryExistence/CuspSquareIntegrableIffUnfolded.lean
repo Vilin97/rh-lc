@@ -32,6 +32,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 variable {D : D7}
 
 
+open Classical in
 def archHom (V : HSp D) (τ : D.host.E →+* ℂ) : GA D V →* Matrix (Fin V.rank) (Fin V.rank) ℂ :=
   if h : ∃ θ : Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ, Formalism.MainNotions.StandardLattice.IsInfEmb τ θ then
     h.choose.mapMatrix.toMonoidHom.comp ((Units.coeHom _).comp (infHom V))

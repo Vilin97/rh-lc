@@ -72,6 +72,7 @@ theorem finrank_eq_sum_index_mackeySubgroup (v : {v : InfinitePlace K.1 // v.IsR
   exact Nat.pow_right_injective le_rfl hM
 
 
+open scoped Classical in
 theorem index_mackeySubgroup_realFamily (v : {v : InfinitePlace K.1 // v.IsReal})
     (d : MackeyDoubleCoset (gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside K.1 ℚ̄ S))
       (gsRealFamily S ιr v).toMonoidHom) :

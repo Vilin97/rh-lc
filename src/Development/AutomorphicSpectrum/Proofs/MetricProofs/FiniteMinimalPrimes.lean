@@ -42,6 +42,7 @@ def ideal (p : (k : K) → ι k) : Ideal (MvPolynomial (Fin (Fintype.card (Σ k,
   (chartIdeal P p).map (renR (Σ k, ι k) : MvPolynomial (Σ k, ι k) ℂ →+* _)
 
 
+open Classical in
 def lift (p : (k : K) → ι k) (q : Σ k, ι k) : MvPolynomial (Fin (Fintype.card (Σ k, ι k))) ℂ :=
   if q.2 = p q.1 then 1 else X (Fintype.equivFin (Σ k, ι k) q)
 

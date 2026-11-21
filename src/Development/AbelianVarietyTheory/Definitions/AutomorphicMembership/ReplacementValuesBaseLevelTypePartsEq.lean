@@ -180,6 +180,7 @@ theorem met0u : ∀ v, v ≠ A.A.v0 → ∀ x y, Formalism.HermitianLatticesTheo
     Formalism.HermitianLatticesTheory.majAt (Pi.basisFun a.D.what₂.LL _) ((cxW R F u).data F.cr false).XE v x y := (by with_unfolding_all exact (Z.met0 :))
 
 
+open Classical in
 theorem etaJu : ∀ (i : Fin a.D.R.m) w, a.D.what₂.etaJ ((i : ℕ) + 1) w =
     if a.D.plEq w ∈ R.twPl then A.A.fam.etaJ F.P0 F.ψ0 (A.fam3.toSub2 (cxW R F u).zs) i (R.mu (a.D.plEq w)) (a.D.plEq w) else 0 :=
   (by with_unfolding_all exact (Z.etaJ :))

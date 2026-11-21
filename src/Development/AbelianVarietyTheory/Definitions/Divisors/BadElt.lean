@@ -28,6 +28,7 @@ theorem mem_eig {K Γ V : Type} [Field K] [Group Γ] [AddCommGroup V] [Module K 
 variable (D : D7)
 
 
+open Classical in
 def badElt (k : Fin 2) (S : Finset (Tup D k)) : MonoidAlgebra ℂ (G0g D.nd) :=
   haveI : ∀ k, NeZero (D.host.g k) := fun k => ⟨(D.host.g_prime k).ne_zero⟩
   MonoidAlgebra.ofCoeff <| Finsupp.equivFunOnFinite.symm fun g : G0g D.nd =>

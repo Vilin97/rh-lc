@@ -27,6 +27,7 @@ abbrev inclAlgebra {E E' : IntermediateField K Ω} (h : E ≤ E') : Algebra E E'
   (IntermediateField.inclusion h).toRingHom.toAlgebra
 
 
+open Classical in
 def relNorm {E E' : IntermediateField K Ω} (h : E ≤ E') (y : Ω) : Ω :=
   if hy : y ∈ E' then ((@Algebra.norm E E' _ _ (inclAlgebra h) ⟨y, hy⟩ : E) : Ω) else 0
 

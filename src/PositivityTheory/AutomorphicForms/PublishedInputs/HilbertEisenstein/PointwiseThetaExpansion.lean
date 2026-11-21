@@ -289,6 +289,7 @@ theorem summable_kern {ω : HChar F} {c : HeightOneSpectrum (𝓞 F) → ℕ} (h
     _ = _ := by ring
 
 
+open Classical in
 def rowEquiv : Fˣ ⊕ (Fˣ × F) ≃ {ξ : Fin 2 → F // ξ ≠ 0} where
   toFun s := match s with
     | Sum.inl b => ⟨![0, (b : F)], fun h => b.ne_zero (by simpa using congrFun h 1)⟩

@@ -40,6 +40,7 @@ def schur (x : Matrix (A ⊕ D) (A ⊕ D') k) : Matrix D D' k := x.toBlocks₂�
 def liftS (ξ : kˣ →* ℂˣ) (ψ : Matrix D D' k → ℂ) (x : Matrix (A ⊕ D) (A ⊕ D') k) : ℂ := datum ξ x * ψ (schur x)
 
 
+open Classical in
 def intInd (y : Matrix D D' k) : ℂ := if ∀ i j, y i j ∈ 𝒪[k] then 1 else 0
 
 def IsRepsK (g₀ : GL D k) (R : Finset (GL D k)) : Prop :=

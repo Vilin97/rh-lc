@@ -121,6 +121,7 @@ theorem cellMon_aevalQ_ne {I : ∀ k, Finset (ι k)} (hI : ∀ k, ∀ i ∈ I k,
   | mul x x' _ _ hx hx' => rw [map_mul]; exact mul_ne_zero hx hx'
 
 
+open Classical in
 def val (T : Submonoid (MRingOver ℚ ι)) (x : LocalizedModule T (MRingOver ℚ ι ⧸ idealOver y ℚ)) : Ω :=
   if hT : ∀ t ∈ T, aeval y t ≠ 0 then
     x.liftOn (fun p => evQ y p.1 / aeval y (p.2 : MRingOver ℚ ι)) (by

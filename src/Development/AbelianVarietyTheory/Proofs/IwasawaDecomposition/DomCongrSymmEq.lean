@@ -51,6 +51,7 @@ theorem domCongr_eq {G H : Type} [Group G] [Group H] (e : G ≃* H) (a : MonoidA
   rw [MonoidAlgebra.coeff_domCongr, ← h, MulEquiv.apply_symm_apply]
 
 
+open Classical in
 theorem tie_tr {G H E : Type} [Group G] [Group H] [AddCommGroup E] [Module ℂ E] (e : G ≃* H)
     (cen : Subalgebra.center ℂ (MonoidAlgebra ℂ G) →ₐ[ℂ] Module.End ℂ E) (a : MonoidAlgebra ℂ G) (b : MonoidAlgebra ℂ H)
     (h : ∀ g, b.coeff (e g) = a.coeff g) :

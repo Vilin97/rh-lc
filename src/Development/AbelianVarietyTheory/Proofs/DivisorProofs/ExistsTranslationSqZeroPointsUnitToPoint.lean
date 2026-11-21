@@ -53,6 +53,7 @@ def eFst (B M : Type) [CommRing B] [Algebra R B] [AddCommGroup M] [Module B M]
   Over.homMk (spMap (TrivSqZeroExt.fstHom B B M).toRingHom) (fst_w B M)
 
 
+open Classical in
 def tau (A : Over (Sp R)) [GrpObj A] (B M : Type) [CommRing B] [Algebra R B] [AddCommGroup M] [Module B M]
     [Module Bᵐᵒᵖ M] [IsCentralScalar B M] (P : Sp B ⟶ A.left) (z : Sp (TrivSqZeroExt B M) ⟶ A.left) :
     Sp (TrivSqZeroExt B M) ⟶ A.left :=

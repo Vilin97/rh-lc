@@ -17,6 +17,7 @@ section Per
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
 
 
+open Classical in
 def bdet (X : Data E r) (b : Frame X.Ψ r) : ℂ :=
   ∏ τ : X.Ψ, ∏ j : Fin r, b τ j j ^ (if X.p0 ≤ (j : ℕ) then (1 : ℤ) else -1)
 

@@ -193,6 +193,7 @@ theorem norm_mov_le_normInf (g : GA D S) (h : GA D T) (u : RW T S) :
     (norm_nonneg _)
 
 
+open Classical in
 def letter (a : D.what₂.Tau × Fin T.rank × Fin S.rank × Bool) : RW T S :=
   fun τ i j => if τ = a.1 then if i = a.2.1 then if j = a.2.2.1 then (if a.2.2.2 then Complex.I else 1) else 0 else 0 else 0
 

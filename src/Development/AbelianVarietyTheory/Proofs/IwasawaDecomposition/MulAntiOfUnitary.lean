@@ -74,6 +74,7 @@ def uGrp (H : IsLieData σ j s) : Subgroup 𝔸ˣ where
     exact unitary_anti H hu
 
 
+open Classical in
 def toU (H : IsLieData σ j s) (a : 𝔸) : uGrp H :=
   if h : σ a * a = 1 then ⟨⟨a, σ a, mul_anti_of_unitary h, h⟩, h⟩ else 1
 

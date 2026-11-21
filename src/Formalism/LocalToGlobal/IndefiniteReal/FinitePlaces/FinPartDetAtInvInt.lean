@@ -277,6 +277,7 @@ theorem mt_mkRes (V : HSp D) (ε : AF D.host.F) (hε : IsIdempotentElem ε) (g :
     mt V (mkRes V ε hε g) = resM (algebraMap (AF D.host.F) (AE D) ε) (mt V g) := rfl
 
 
+open Classical in
 def resG (V : HSp D) (ε : AF D.host.F) (g : GA D V) : GA D V :=
   if hε : IsIdempotentElem ε then mkRes V ε hε g else g
 
@@ -407,6 +408,7 @@ section Det
 variable {D : D7}
 
 
+open Classical in
 def detAt (e : AE D) (V : HSp D) (g : GA D V) : (AE D)ˣ :=
   if he : e * e = e then
     ⟨e * (mt V g).det + (1 - e), e * (mt V g⁻¹).det + (1 - e),

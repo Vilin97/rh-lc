@@ -18,6 +18,7 @@ namespace GlobalTheory.FinPl.LatMem
 variable {D : D7}
 
 
+open Classical in
 def indP (F : Type) [Field F] [NumberField F] (P : HeightOneSpectrum (𝓞 F) → Prop) : Af F :=
   ⟨fun v => if P v then 1 else 0, Filter.Eventually.of_forall fun v => by
     show (if P v then (1 : Fv F v) else 0) ∈ (v.adicCompletionIntegers F : Set (Fv F v))

@@ -53,6 +53,7 @@ theorem prim_pow {ζ : ↥LL.1} (h : ∃ j : ℕ, IsPrimitiveRoot ζ (l ^ j)) (a
 theorem prim_one : ∃ k : ℕ, IsPrimitiveRoot (1 : ↥LL.1) (l ^ k) := prim_of_pow (j := 0) (one_pow _)
 
 
+open Classical in
 def pt (ζ : ↥LL.1) : ↥LL.1 := if ∃ j : ℕ, IsPrimitiveRoot ζ (l ^ j) then ζ else 1
 
 theorem pt_of {ζ : ↥LL.1} (h : ∃ j : ℕ, IsPrimitiveRoot ζ (l ^ j)) : pt ζ = ζ := if_pos h

@@ -43,6 +43,7 @@ def sLOf (h : LocHyp sg L) : PX m n →ₗ[ℂ] (GR n → ℂ) where
     simp [e]
 
 
+open scoped Classical in
 def rhoFun (h : LocHyp sg L) (k : GR n) (P : PX m n) : PX m n :=
   if hk : InK (mR k) then Classical.choose (k_poly h k hk P) else 0
 

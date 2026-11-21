@@ -20,6 +20,7 @@ theorem blkAt_self (N : ℕ) (h : N ≤ N) (g : GL (Fin N) k) : blkAt k N N h g 
   simp [a.2, b.2]
 
 
+open Classical in
 def atom (hUD : UDens k) (hUA : UAtom k) {ψ : AddChar k Circle} (hψc : Continuous ψ) (hψ1 : ψ ≠ 1) {N : ℕ}
     {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V) (hs : IsSmooth π)
     (B : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ) (d : ℕ) : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ :=

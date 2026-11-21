@@ -157,6 +157,7 @@ def wtT (j : ℕ) (α : ChT G δ hδ η A M j) : ℂ :=
   else (idxT G δ hδ η (G.s + 1 + 1) : ℂ)
 
 
+open Classical in
 def epsT (j : ℕ) (α : ChT G δ hδ η A M j) : GA D (c.V j) →₀ ℂ :=
   if j = 0 then Finsupp.single 1 1 else
   if hj : j ≤ G.s then

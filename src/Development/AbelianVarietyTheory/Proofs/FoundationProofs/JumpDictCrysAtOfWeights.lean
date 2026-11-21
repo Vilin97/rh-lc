@@ -263,6 +263,7 @@ theorem inf_block (hB : BlockCharParam D) (i : D.nd.Loc) (k : ℕ) (ρ : D.what�
     ring
 
 
+open Classical in
 def shift (φ : D.host.E →+* ℂ) : ℤ :=
   if ∃ ρ, φ = embOver D ρ false then (D.R.nV / 2 : ℕ) else ((D.R.nV / 2 : ℕ) : ℤ) - 1
 

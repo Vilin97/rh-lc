@@ -142,6 +142,7 @@ def ThmELiftAt (n : ℕ) [NeZero n] (emb : ZMod n → (K₀ →ₐ[Qp] LL))
       F.LiftF PD (ePar PD.p n j (gPar Gp S η) h (Mb₁ + hb₁) (Mb₂ + hb₂) cuts arcLen)
 
 
+open Classical in
 def hCor {n : ℕ} (b w S η : ℕ) (sz : ZMod n → ℕ) : ℕ :=
   if ∃ i, b ≤ sz i ∧ sz i ≤ b + η then b + η + S else w + S + η
 

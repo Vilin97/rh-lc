@@ -307,6 +307,7 @@ def sigMat (p f : ℕ) [Fact p.Prime] (O : Type*) [CommRing O] [IsDomain O] [Alg
 def IsGLW {k : ℕ} (g : Matrix (Fin k) (Fin k) (WF p f)) : Prop := IsUnit g.det
 
 
+open Classical in
 def liftSubst (p f : ℕ) [Fact p.Prime] (O : Type*) [CommRing O] [IsDomain O] [Algebra (WF p f) O]
     (w : O) (r : ℕ) {ι : Type*} {k : ℕ} (LL : LiftLetters ι) (g : Matrix (Fin k) (Fin k) (WF p f)) :
     MvPolynomial (ι × Fin k) (KK O) →ₐ[KK O] MvPolynomial (ι × Fin k) (KK O) :=
@@ -490,6 +491,7 @@ section Lifts
 variable (p f : ℕ) [Fact p.Prime] {O : Type*} [CommRing O] [IsDomain O] [Algebra (WF p f) O] {k : ℕ}
 
 
+open Classical in
 def degUS {ι : Type*} (LL : LiftLetters ι) (r : ℕ) (m : ι × Fin k →₀ ℕ) : ℕ :=
   ∑ v ∈ m.support, if (LL.vec v.1 = true ∧ r ≤ v.2.val) ∨ (LL.vec v.1 = false ∧ v.2.val < r) then m v else 0
 

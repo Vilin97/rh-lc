@@ -50,6 +50,7 @@ def gamOf (W : LocWach PD LL O v n) {s : ℕ} (hs : W.s = s) : WGam PD LL O v n 
     GKs_def := hs ▸ W.GKs_def }
 
 
+open Classical in
 def levOf (W : LocWach PD LL O v n) (i : ZMod n) (ζ : LL) : LetA O n →ₐ[O] PowerSeries LL :=
   if ∃ j : ℕ, IsPrimitiveRoot ζ (PD.p ^ j) then W.lev i ζ else W.lev i 1
 
@@ -98,6 +99,7 @@ def etOf : WEt (ioOf E hs hp hL hI) := { W, E with }
 def clOf : WCl (etOf E hs hp hL hI) := { W, E with }
 
 
+open Classical in
 def nOf (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) : Submodule (LetA O n) (W.DD T) :=
   if IsCrys PD T.ρ then W.N T else ⊥
 

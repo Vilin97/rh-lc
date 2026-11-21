@@ -15,6 +15,7 @@ section
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
 
+open Classical in
 def subT (τ : L →+* ℂ) : Vars L n → MvPolynomial (Bool × Fin n × Fin n) ℂ := fun p =>
   if p.1 = τ then MvPolynomial.X (true, p.2.1, p.2.2)
   else if p.1 = ComplexEmbedding.conjugate τ then MvPolynomial.X (false, p.2.1, p.2.2)

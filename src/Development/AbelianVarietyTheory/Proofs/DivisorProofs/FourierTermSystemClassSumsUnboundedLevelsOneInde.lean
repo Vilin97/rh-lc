@@ -126,6 +126,7 @@ end GlobalTheory.GSep.DeepSums
 namespace GlobalTheory.GSep.DeepSums
 
 
+open Classical in
 theorem classSums_deeper : ∀ (O : Type) [CommRing O] (bar : O → O) (q : ℕ) (W : Matrix (Fin 1) (Fin 1) ℤ) (X₁ : GlobalTheory.GSep.GSet) (z₁ : X₁.M.Z) (act : O → (X₁.ρ.P.A ⟶ X₁.ρ.P.A)), GlobalTheory.GSep.IsAct X₁ act → GlobalTheory.GSep.Deep X₁ act → (∀ m : ℕ, m ≠ 0 → IsUnit (m : X₁.M.Z.presheaf.stalk z₁)) → ∀ (x₀ : X₁.S.Gam) (Φ : VPre bar q W (X₁.M.Z.presheaf.stalk z₁)) (lab : Φ.Q → X₁.S.Gam) [IsDomain (X₁.M.Z.presheaf.stalk z₁)], GlobalTheory.GSep.IsGeo X₁ z₁ act x₀ Φ lab → Φ.ClassSums (X₁.S.r * X₁.S.N) := by
   intro O _ bar q W X₁ z₁ act hact hdeep hunit x₀ Φ lab _ hgeo
   obtain ⟨hdiv, hrange, hmem⟩ := hgeo

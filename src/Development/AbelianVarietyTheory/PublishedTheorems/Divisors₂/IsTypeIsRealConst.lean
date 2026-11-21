@@ -164,6 +164,7 @@ abbrev Pt.crd (x : A.Pt) : V n := x.ch x.pt
 abbrev Fld : Type := A.Pt → Alt n
 
 
+open Classical in
 def loc (α : A.Fld) (i : A.ι) (v : V n) : Alt n :=
   if h : v ∈ (A.e i).target then α ⟨(i, (A.e i).symm v), (A.e i).map_target h⟩ else 0
 

@@ -71,6 +71,7 @@ theorem cstL_supp {S : Lt n → Prop} (hS : IsClosedL S) {i j k : Lt n} (hi : S 
   simp [cp, a1, a2]
 
 
+open Classical in
 theorem sum_sub (S : Lt n → Prop) {M : Type*} [AddCommMonoid M] (f : Lt n → M) :
     ∑ k : {l // S l}, f k.1 = ∑ k, if S k then f k else 0 := by
   rw [← Finset.sum_filter]
@@ -93,15 +94,18 @@ section Ring
 variable {R : Type} [Ring R] [Algebra ℂ R]
 
 
+open Classical in
 def partA (S : Lt n → Prop) (X an : Lt n → R) : R := ∑ l, if S l then X l * an l else 0
 
 
+open Classical in
 def partB (S : Lt n → Prop) (an cr : Lt n → R) : R :=
   ∑ l : Lt n, ∑ m : Lt n, ∑ k : Lt n,
     if S l ∧ S m ∧ l.2.1.2 = m.2.1.1 ∧ k.1 = xor l.1 m.1 ∧ k.2.1.1 = l.2.1.1 ∧ k.2.1.2 = m.2.1.2 then
       cr k * an m * an l else 0
 
 
+open Classical in
 theorem partB_eq {S : Lt n → Prop} (hS : IsClosedL S) (an cr : Lt n → R) (haa : ∀ i j, an i * an j + an j * an i = 0) :
     (1 / 2 : ℂ) • ∑ i : {l // S l}, ∑ j : {l // S l}, ∑ k : {l // S l},
       cstL i.1 j.1 k.1 • (cr k.1 * an j.1 * an i.1) = partB S an cr := by
@@ -145,6 +149,7 @@ theorem partB_eq {S : Lt n → Prop} (hS : IsClosedL S) (an cr : Lt n → R) (ha
     rw [if_neg fun h => hij ⟨h.1, h.2.1⟩]
 
 
+open Classical in
 theorem part_sq {S : Lt n → Prop} (hS : IsClosedL S) (X an cr : Lt n → R)
     (hX : ∀ i j, S i → S j → X i * X j - X j * X i = ∑ k, cstL i j k • X k)
     (h1 : ∀ i j, Commute (X i) (an j)) (h2 : ∀ i j, Commute (X i) (cr j))

@@ -29,6 +29,7 @@ theorem app_res {W W' : Z.Opens} (h : W' ≤ W) (f : Γ(Z, W)) :
   simpa [resG] using this
 
 
+open Classical in
 def push (d : ∀ O : Z'.Opens, Γ(Z', O) → Γ(Z', O)) (O : Z.Opens) (f : Γ(Z, O)) : Γ(Z, O) :=
   if h : O ≤ φ.opensRange then (appEquiv φ O h).symm (d (φ ⁻¹ᵁ O) ((φ.app O).hom f)) else 0
 

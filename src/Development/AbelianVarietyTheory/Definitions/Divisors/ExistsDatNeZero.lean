@@ -75,6 +75,7 @@ def trivMap {D D' : Type} [CommRing D] [Algebra R D] [CommRing D'] [Algebra R D'
 def fv (f : Z1 (O (dp0 R) (X.hom ≫ 𝟙 _))) : Fn1 X := fun _ _ _ _ _ _ φ x ↦ ev f (trivMap φ x)
 
 
+open Classical in
 def evU {Y : Scheme.{0}} {D : Type} [CommRing D] (x : Sp D ⟶ Y) (U : Y.Opens) (a : Γ(Y, U)) : D :=
   if h : ⊤ ≤ x ⁻¹ᵁ U then evalAt x U h a else 0
 

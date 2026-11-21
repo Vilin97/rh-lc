@@ -20,6 +20,7 @@ section Embeddings
 variable {E : Type} [Field E] [NumberField E]
 
 
+open Classical in
 theorem sum_dual_mul (σ τ : E →+* ℂ) :
     ∑ k, σ (HT.dualInt E k) * τ ((RingOfIntegers.basis E k : 𝓞 E) : E) = if τ = σ then 1 else 0 := by
   let ρ : 𝓞 E →+* Module.End ℂ ℂ :=

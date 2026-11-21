@@ -54,6 +54,7 @@ private theorem act_blk (σ : K ≃+* K) {a b : ℕ} (x : AdelicGLn.AdelicGL K a
   · rfl
 
 
+open Classical in
 private noncomputable def rl (w : InfinitePlace K) : ℝ →+* w.Completion :=
   if hw : w.IsReal then ((ringEquivRealOfIsReal hw).symm : ℝ ≃+* w.Completion).toRingHom
   else ((ringEquivComplexOfIsComplex (not_isReal_iff_isComplex.1 hw)).symm : ℂ ≃+* w.Completion).toRingHom.comp

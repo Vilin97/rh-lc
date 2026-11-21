@@ -210,6 +210,7 @@ def torVol (P : PPol σ r) (dt : Measure (Tor P (AF F))) : ENNReal :=
   quotMeasure (ratPts (star' P) (one₁ P)) dt univ
 
 
+open Classical in
 def PhiReal (P : PPol σ r) {w : InfinitePlace F} (τ : EmbOver E w) (lam : Fin r → ℤ)
     (dt : Measure (Tor P w.Completion)) : ℂ :=
   if CompactSpace (Tor P w.Completion) then conj (glChar (hiWt lam) (cxRoots τ.1 P)) / (dt.real univ : ℂ) else 0

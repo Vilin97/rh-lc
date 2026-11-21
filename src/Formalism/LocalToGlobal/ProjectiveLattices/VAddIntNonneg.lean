@@ -95,6 +95,7 @@ theorem cutR_zero {j : ℕ} (h : ¬ InR D j) {w : WeightFamilies.Wt D j} (F : cu
   simpa [cutR_out C h w] using this
 
 
+open Classical in
 def cutN (N : ∀ j, WeightFamilies.Wt D j → (K →+* ℂ) → R j → ℝ) (j : ℕ) (w : WeightFamilies.Wt D j) (σ : K →+* ℂ)
     (F : cutR C j w) : ℝ := if InR D j then N j w σ F else 0
 

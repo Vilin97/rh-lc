@@ -77,6 +77,7 @@ lemma Pn_prob {i : ι} (h : m i (L i) ≠ 0 ∧ m i (L i) ≠ ⊤) : IsProbabili
   exact ENNReal.inv_mul_cancel h.1 h.2
 
 
+open Classical in
 def Qm (S : Finset ι) : Measure (∀ i : {i // i ∉ S}, W i) :=
   if h : ∀ i, i ∉ S → m i (L i) ≠ 0 ∧ m i (L i) ≠ ⊤ then
     haveI : ∀ i : {i // i ∉ S}, IsProbabilityMeasure (Pn m L i.1) := fun i => Pn_prob m L (h i.1 i.2)
@@ -101,6 +102,7 @@ def kap [∀ i, SigmaFinite (m i)] (S : Finset ι) : Measure (∀ i, W i) :=
   ((Rm m L S).prod (Qm m L S)).map (eS S).symm
 
 
+open Classical in
 def mu (S : Finset ι) (i : ι) : Measure (W i) :=
   if i ∈ S then (m i).restrict (L i)ᶜ else (m i).restrict (L i)
 

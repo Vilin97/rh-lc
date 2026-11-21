@@ -20,6 +20,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, Fintype (ι' k)]
 
 
+open Classical in
 def baseSubst (κ : K → K') {v : (Σ k, ι k) → (Σ k', ι' k')} {P' : Ideal (MRing ι')} (G : GenFibre v P') :
     MRing ι' →+* MRingOver G.Φ (fibreIdx ι' κ) :=
   eval₂Hom (algebraMap ℤ _) fun q =>

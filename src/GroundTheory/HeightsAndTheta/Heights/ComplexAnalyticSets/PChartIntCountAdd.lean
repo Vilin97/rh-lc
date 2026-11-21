@@ -39,6 +39,7 @@ theorem hasSum_indicator {E : ℕ → Set (Fin n → ℂ)} (hE : Pairwise (Funct
     exact hasSum_zero
 
 
+open Classical in
 theorem sheetSum_eq_sum {J : Ideal (MvPolynomial (Fin n) ℂ)} {A : Matrix (Fin d) (Fin n) ℂ} {y : Fin d → ℂ}
     (hfin : (fibre J A y).Finite) (F : (Fin n → ℂ) → ((Fin d → ℂ) → Fin n → ℂ) → ℝ) :
     sheetSum J A F y =

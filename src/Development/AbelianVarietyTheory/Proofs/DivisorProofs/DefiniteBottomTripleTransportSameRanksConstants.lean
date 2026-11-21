@@ -156,6 +156,7 @@ def dualM {n m : ℕ} (G : Gm D n) (H : Gm D m) (βS : GL (Fin n) (Lev.EAf D)) (
     βT.val
 
 
+open Classical in
 def fstM {n m : ℕ} (ν : (AE D)ˣ →* Circle) (e : AE D) (I : Ideal (𝓞 D.host.E)) (βA : GL (Fin n) (Lev.EAf D))
     (βW : GL (Fin m) (Lev.EAf D)) (x : Mx D m n) : ℂ :=
   if IsHalf e x ∧ IsIntM (frM βA βW x) ∧ ∀ i j, n ≤ i.1 → InId I (frM βA βW x i j) then
@@ -163,6 +164,7 @@ def fstM {n m : ℕ} (ν : (AE D)ˣ →* Circle) (e : AE D) (I : Ideal (𝓞 D.h
   else 0
 
 
+open Classical in
 def sndM {n m : ℕ} (ν : (AE D)ˣ →* Circle) (e : AE D) (I : Ideal (𝓞 D.host.E)) (a : ℕ) (G : Gm D n) (H : Gm D m)
     (βA : GL (Fin n) (Lev.EAf D)) (βW : GL (Fin m) (Lev.EAf D)) (y : Mx D m n) : ℂ :=
   if IsHalf (cA D e) y ∧ IsIntM (dualM G H βA βW y) ∧ ∀ i j, j.1 < a → InId I (dualM G H βA βW y i j) then

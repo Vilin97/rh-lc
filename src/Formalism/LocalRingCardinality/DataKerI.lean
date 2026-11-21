@@ -71,6 +71,7 @@ def LevFree {D : D7} (Dx : DivX D) (u : D.what₂.Word) (μ : D.what₂.Tup) (w 
     D.what₂.places.resChar w ∉ Dx.Qp μ
 
 
+open Classical in
 def lamV {p : ℕ} [Fact p.Prime] (lam : (algebraicClosure ℚ ℂ) →+* ℂ_[p]) (x : ℂ) : ℂ_[p] :=
   if h : x ∈ algebraicClosure ℚ ℂ then lam ⟨x, h⟩ else 0
 
@@ -159,6 +160,7 @@ def rhoMat {D : D7} {Gt : GatTies D} {c : LatCmp D} {Tw : TwForms D} {u : D.what
       ((((Fl.Pj j).σ ((posJ Gt u w h Fl j).symm τ).1) ^ ((posJ Gt u w h Fl j).symm τ).2.val) y))
 
 
+open Classical in
 def ThAtServed {D : D7} {Dx : DivX D} {Gt : GatTies D} {c : LatCmp D} {Tw : TwForms D} {u : D.what₂.Word}
     {w : D.what₂.places.Pl} {h : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)} {Fl : Fills (D.gat u w h)}
     {Lv : Levels Fl} {Ch : Chain Lv} (Kp : LocalToGlobal₂ D Gt c Tw u w h Ch) (E : KerEnt D Dx Tw) : Prop :=

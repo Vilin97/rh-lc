@@ -25,6 +25,7 @@ def labelChar (ω : Fbar g →*₀ ℂ) (d : ℕ) (x y : Fbar g) : ℂ :=
   ω x ^ sInf {a : ℕ | ω y = rootC (g ^ d - 1) ^ a}
 
 
+open Classical in
 def cuspVal (ω : Fbar g →*₀ ℂ) (x : Fbar g) {ι : Type} [Fintype ι] [DecidableEq ι] (M : Matrix ι ι (ZMod g)) : ℂ :=
   if ∃ (p : (ZMod g)[X]) (k : ℕ), Irreducible p ∧ M.charpoly = p ^ k then
     (-1) ^ (Fintype.card ι - 1) *

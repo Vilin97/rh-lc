@@ -23,6 +23,7 @@ namespace GlobalTheory.NefStep
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
 
 
+open Classical in
 def stepEx (σ : E →+* ℂ) (j : ℕ) : Ix Dw → ℤ :=
   fun ix => ix.elim 0 fun p => if p.1 = σ ∧ (p.2 : ℕ) < j then 1 else 0
 

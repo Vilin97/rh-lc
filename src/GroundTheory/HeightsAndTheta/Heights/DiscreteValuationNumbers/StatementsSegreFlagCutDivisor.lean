@@ -14,6 +14,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
 noncomputable section
 
 
+open Classical in
 def SegreFlagCutDivisor.Statement : Prop :=
   ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
     ∀ (Ω : Type) [Field Ω] [Algebra O Ω]

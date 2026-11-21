@@ -32,6 +32,7 @@ variable {U : Type} [NormedAddCommGroup U] [InnerProductSpace ℂ U] (π : G n �
 def uG (k : Matrix.unitaryGroup (Fin n) ℂ) : G n := Unitary.toUnits k
 
 
+open Classical in
 def piM (g : Mat n) : U →L[ℂ] U := if h : IsUnit g then π h.unit else 0
 
 def IsInvT (E : KMod n) (t : (E.V →L[ℂ] ℂ) →L[ℂ] U) : Prop := ∀ k ξ, t (ξ ∘L E.ρ k⁻¹) = π (uG k) (t ξ)

@@ -12,6 +12,7 @@ open HeckeCharacterZeroLocus.SiegelWeilU NumberField IsDedekindDomain MeasureThe
 open scoped TensorProduct Matrix
 
 
+open Classical in
 theorem setIntegral_char_subgroup {G : Type*} [AddCommGroup G] [MeasurableSpace G] [MeasurableAdd G]
     (ν : Measure G) [ν.IsAddRightInvariant] (Λ : AddSubgroup G) (hΛ : MeasurableSet (Λ : Set G))
     (χ : G → ℂ) (hχ : ∀ x y, χ (x + y) = χ x * χ y) :

@@ -7690,6 +7690,7 @@ theorem frame_memB :
 end Frame
 
 
+open Classical in
 def deB (β : A P (DQ P)) : A P (DQ P) :=
   if h : ∃ β' ∈ BB P L, ∀ y : ℂ, lb L y * β = β * lb L y + β' * la L y then Classical.choose h else 0
 

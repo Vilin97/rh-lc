@@ -55,6 +55,7 @@ theorem segre_scaleBlock [DecidableEq K] (k0 : K) (c : ℂ) (z : (Σ k, ι k) �
   simp
 
 
+open Classical in
 def linForm {m e : ℕ} (σ : Fin m ≃ ((k : K) → ι k))
     (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) : MvPolynomial (Fin m) ℂ :=
   ∑ a, C (Ψ (fun i' => if σ a = i' then (1 : ℂ) else 0) 0) * X a

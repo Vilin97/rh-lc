@@ -113,6 +113,7 @@ theorem σ_or (S : HidaSetting E Wp Wq) (v : Fin S.f) :
   · exact Or.inr h.symm
 
 
+open Classical in
 def cj (S : HidaSetting E Wp Wq) : J.CV E ≃ₗᵢ[ℝ] J.CV E :=
   LinearIsometryEquiv.piLpCongrRight 2 fun w =>
     if S.σ (S.pl.symm w) = w.embedding then LinearIsometryEquiv.refl ℝ ℂ else Complex.conjLIE

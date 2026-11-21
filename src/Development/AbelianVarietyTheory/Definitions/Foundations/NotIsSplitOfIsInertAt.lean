@@ -309,6 +309,7 @@ def UnrOff (S : Set (HeightOneSpectrum (𝓞 F))) : Prop := ∀ w ∉ above E S,
 def val : ℂˣ := locChar χ w (atFin w (unif w))
 
 
+open Classical in
 def charFam : Fam E := fun w => if UnrAt χ w then {val χ w} else 0
 
 def charL (S : Set (HeightOneSpectrum (𝓞 F))) (s : ℂ) : ℂ := LS S (charFam χ) s

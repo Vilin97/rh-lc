@@ -54,6 +54,7 @@ def coefRows {e : ℕ} (h : HermNorm n) (π : Fin (e + 1) → Fin n → ℂ) : F
   fun ij => ((h.mat)⁻¹ *ᵥ π ij.1.succ) ij.2
 
 
+open Classical in
 def logGap (h : HermNorm n) (u : Fin n → ℂ) (y : EuclideanSpace ℂ (Fin n)) : ℝ≥0∞ :=
   if y = 0 then 0
   else if ∑ j, u j * h.pointOf y j = 0 then ⊤

@@ -93,6 +93,7 @@ section Places
 variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
 
 
+open Classical in
 def phi (σ : E →ₐ[F] E) {M d : ℕ} (J : Matrix (Fin M) (Fin M) E) (b : Module.Basis (Fin d) F E)
     (S : Finset (HeightOneSpectrum (𝓞 F)))
     (Ψ : ∀ v : HeightOneSpectrum (𝓞 F), (Fin 1 → Fin (M + 2) → Fv F v ⊗[F] E) → ℝ≥0∞)

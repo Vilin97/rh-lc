@@ -23,6 +23,7 @@ def trS (c c' : Chart M r) : Matrix (Fin r) (Fin r) Γ(X, c.U ⊓ c'.U) :=
   Matrix.of fun a b => (c.isFrame.basis inf_le_left).repr (resM M inf_le_right (c'.e b)) a
 
 
+open Classical in
 def trAt (x : Sp K ⟶ X) (c c' : Chart M r) : Matrix (Fin r) (Fin r) K :=
   if h : ⊤ ≤ x ⁻¹ᵁ (c.U ⊓ c'.U) then (trS c c').map (evalPt x _ h) else 0
 

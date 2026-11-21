@@ -22,6 +22,7 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.w
   {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 
+open Classical in
 def datP (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (e : AE D) : WO (Vc D i) (Wc D i) → ℂ :=
   fun x => if IsHalf (cA D e) x ∧ IsIntM (frMapAdj (Vc D i) (Wc D i) (R.βV i) (R.βW i) x) then
     omegaK R.Pg (fun PP => redM PP (frMapAdj (Vc D i) (Wc D i) (R.βV i) (R.βW i) x)) *

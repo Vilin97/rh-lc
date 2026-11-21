@@ -194,6 +194,7 @@ theorem isDomT_zero : IsDomT H q n (fun _ _ => 0) := by
   exact (hx.ne_zero i (Subsingleton.elim _ _)).elim
 
 
+open Classical in
 def extFun (φ : InvFun (𝓞 E)) : InvFun (𝓞 E) where
   toFun n B := if IsDomT H q n B then φ.toFun n B else (InvFun.minVal (𝓞 E)).toFun n B
   inv n m r hr B := by

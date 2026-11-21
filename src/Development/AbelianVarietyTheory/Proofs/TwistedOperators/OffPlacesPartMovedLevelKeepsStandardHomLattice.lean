@@ -23,6 +23,7 @@ open GlobalTheory.StdFrames
 variable {D : D7}
 
 
+open Classical in
 theorem cpt_idemSum {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) (Q : Pl D.host.E) :
     cpt Q (toEAf D e) = if Q ∈ P then 1 else 0 := by
   classical
@@ -36,6 +37,7 @@ theorem cpt_idemSum {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) (
   rw [Finset.sum_congr rfl h, Finset.sum_ite_eq]
 
 
+open Classical in
 theorem cpt_cA_idemSum (V : HSp D) {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) (Q : Pl D.host.E) :
     cpt Q (toEAf D (cA D e)) = if GlobalTheory.IdemSupport.cP Q ∈ P then 1 else 0 := by
   classical

@@ -21,6 +21,7 @@ section Adele
 variable {F : Type} [Field F] [NumberField F]
 
 
+open Classical in
 def ind (S : Finset (HeightOneSpectrum (𝓞 F))) : Af F :=
   ⟨fun u => if u ∈ S then 1 else 0, Eventually.of_forall fun u => by
     by_cases h : u ∈ S

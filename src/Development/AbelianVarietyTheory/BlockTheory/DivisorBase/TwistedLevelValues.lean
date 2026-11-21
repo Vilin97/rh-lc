@@ -89,6 +89,7 @@ def chrOf (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (L : LevDat D.host.E �
   (Lev.levCharAfE V β L).comp ((finHom V).range.subtype.subgroupComap _)
 
 
+open Classical in
 def IsLevelVec (ψ : AddChar (AF D.host.F) ℂ) (θ : Datum.InfFam D) (S T : HSp D)
     (sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ)
     (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E))

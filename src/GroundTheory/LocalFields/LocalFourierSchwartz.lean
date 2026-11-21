@@ -93,6 +93,7 @@ section Fourier
 variable [MeasurableSpace K] [BorelSpace K] (μ : Measure K) [μ.IsAddHaarMeasure]
 
 
+open scoped Classical in
 theorem integral_valBall_char (χ : AddChar K Circle) (k : ℤ) :
     ∫ x in valBall K k, (χ x : ℂ) ∂μ =
       if IsTrivialOn χ k then (μ.real (valBall K k) : ℂ) else 0 := by

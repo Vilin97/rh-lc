@@ -121,6 +121,7 @@ theorem apply_sqrtNegOne_eq_or (σ : ℚ̄ ≃ₐ[ℚ] ℚ̄) : σ sqrtNegOne = 
   · exact Or.inr (eq_neg_of_add_eq_zero_left h)
 
 
+open Classical in
 def iCharFun (g : Additive K.1.fixingSubgroup) : QZ :=
   if ((Additive.toMul g : K.1.fixingSubgroup) : ℚ̄ ≃ₐ[ℚ] ℚ̄) sqrtNegOne = sqrtNegOne then 0 else QZ.mk (1 / 2)
 
@@ -244,6 +245,7 @@ theorem placeInv_brauerLocal_globalCupClass_iChar_of_isComplex (v : InfinitePlac
   rwa [Units.coe_map, MonoidHom.coe_coe] at h
 
 
+open Classical in
 theorem placeInv_brauerLocal_globalCupClass_iChar (v : InfinitePlace K.1) :
     placeInv (.inl v) (brauerLocal ι (globalCupClass (iChar K) a) (.inl v)) =
       if h : v.IsReal then (if v.embedding_of_isReal h (a : K.1) < 0 then QZ.mk (1 / 2) else 0) else 0 := by

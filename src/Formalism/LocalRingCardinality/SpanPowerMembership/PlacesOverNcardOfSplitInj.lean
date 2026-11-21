@@ -375,6 +375,7 @@ theorem qPow_add (w : PlE H) (s t : ℝ) : qPow H w s * qPow H w t = qPow H w (s
 theorem qPow_zero (w : PlE H) : qPow H w 0 = 1 := by ext; simp [qPow]
 
 
+open Classical in
 def toU (z : ℂ) : ℂˣ := if h : z = 0 then 1 else Units.mk0 z h
 
 theorem toU_val (u : ℂˣ) : toU (u : ℂ) = u := by

@@ -105,6 +105,7 @@ structure GysQ where
     g h h2 (cupV l Z h1 (pb l ι n a) b) = cupV l X h4 a (g h h3 b)
 
 
+open Classical in
 def GysQ.cls (G : GysQ k l) (d e : ℕ) {Z X : Scheme.{0}} (p : X ⟶ S k) (ι : Z ⟶ X) : V l X (2 * d) :=
   if h : IsPair d e p ι then G.g h (zero_add _) (oneV l Z) else 0
 

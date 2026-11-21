@@ -67,6 +67,7 @@ theorem inV_ratPt (γ₀ : GL (Fin n) L) (hg : γ₀ ∈ GQ0 L n) : InV (ratPt (
   exact conj_ratPt γ₀ hg σ i j
 
 
+open Classical in
 def trivAt (τ : L →+* ℂ) (y : Vars L n → ℂ) : Vars L n → ℂ := fun p =>
   if p.1 = τ ∨ p.1 = ComplexEmbedding.conjugate τ then (if p.2.1 = p.2.2 then 1 else 0) else y p
 

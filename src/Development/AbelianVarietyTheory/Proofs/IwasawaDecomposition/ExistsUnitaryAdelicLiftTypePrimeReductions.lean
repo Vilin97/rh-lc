@@ -47,6 +47,7 @@ theorem det_matE {n : ℕ} (M : Matrix (Fin n) (Fin n) (𝓞 E)) : (matE M).det 
   (RingHom.map_det _ _).symm
 
 
+open Classical in
 def frOf {n : ℕ} (M : Matrix (Fin n) (Fin n) (𝓞 E)) : Sp E n ≃ₗ[E] Sp E n :=
   if h : IsUnit (matE M).det then (matE M).toLinearEquiv' (Matrix.invertibleOfIsUnitDet _ h) else LinearEquiv.refl E _
 

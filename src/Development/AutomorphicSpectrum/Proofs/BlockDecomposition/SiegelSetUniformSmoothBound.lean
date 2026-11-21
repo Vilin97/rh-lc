@@ -139,6 +139,7 @@ theorem continuous_pt : Continuous (pt : (∀ w, GArch σ J w) → GAd σ J) := 
   exact (continuous_ofInf σ J).comp (continuous_embArchPi σ J)
 
 
+open Classical in
 theorem telescope {ι : InfinitePlace F → Type} [∀ w, Fintype (ι w)] {b : ∀ w, ι w → ℝ → GAd σ J}
     {K : ∀ w, Set (GArch σ J w)} {C : InfinitePlace F → ℝ} (h1 : ∀ w, 1 ∈ K w) {ψ : GAd σ J → ℂ} (g : GAd σ J)
     {y : ∀ w, GArch σ J w} (hyK : ∀ w, y w ∈ K w) {δ : ℝ} {c : ∀ w, ι w → ℝ}

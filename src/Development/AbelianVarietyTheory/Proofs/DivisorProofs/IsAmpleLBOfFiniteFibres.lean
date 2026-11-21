@@ -56,6 +56,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
   {Z : Scheme.{0}} {π : Z ⟶ Y.X}
 
 
+open Classical in
 def ind (σ : E →+* ℂ) (m : ℕ) : Ix Dw → ℤ :=
   fun ix => ix.elim 0 fun p => if p.1 = σ ∧ (p.2 : ℕ) ≤ m then 1 else 0
 

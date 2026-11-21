@@ -133,6 +133,7 @@ def SerLL (D : D7) : Prop :=
 def CoeffRingsHaveRootsOfUnity (D : D7) : Prop := ∀ i : D.nd.Loc, ∃ ζ : D.nd.O i, IsPrimitiveRoot ζ D.what₂.restRowsFiniteGroupCard
 
 
+open Classical in
 def SerEq (D : D7) (lz : ∀ k : Fin 2, LzData (D.host.g k)) : Prop :=
   ∀ (k : Fin 2) (f : (ZMod (D.host.g k))[X]),
     D.ntypes.eSer k f = ∑ τ : (lz k).Irr D.R.r, if (lz k).lab τ = f then (lz k).idem τ else 0

@@ -49,6 +49,7 @@ theorem evQ_smul (t : MRingOver ℚ ι) (m : MRingOver ℚ ι ⧸ KH.genIdeal y)
     evQ_mk, evQ_mk, map_mul]
 
 
+open Classical in
 def evL (T : Submonoid (MRingOver ℚ ι)) (x : LocalizedModule T (MRingOver ℚ ι ⧸ KH.genIdeal y)) : Ω :=
   if h : ∀ t ∈ T, aeval y t ≠ 0 then
     x.liftOn (fun p => evQ y p.1 / aeval y (p.2 : MRingOver ℚ ι)) (by

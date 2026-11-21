@@ -23,6 +23,7 @@ variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : 
   {x : Fin (N + 1) → Ω}
 
 
+open Classical in
 def supportRes (I J : StdCell N) (_h : I.1 ⊆ J.1) : ConeLaurent S x →ₗ[S] ConeLaurent S x :=
   if J.1 ⊆ support x then LinearMap.id else 0
 

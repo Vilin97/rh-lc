@@ -18,6 +18,7 @@ def condUS (LL : LiftLetters (Fin N)) (i : Fin N) (b : Fin (r + K)) : Prop :=
   (LL.vec i = true ∧ r ≤ b.val) ∨ (LL.vec i = false ∧ b.val < r)
 
 
+open Classical in
 def nomL (R : Type) [CommRing R] (LL : LiftLetters (Fin N)) (mu : Fin (N + 1) → Fin (r + K) → ℤ) (c : ℤ) (i : Fin N) :
     Fin (r + K) → MvPolynomial (Fin N × Fin (r + K)) R :=
   fun b => if (condUS LL i b ↔ IsCostly mu c i) then X (i, b) else 0
@@ -31,6 +32,7 @@ def SgW (R : Type) [CommRing R] (LL : LiftLetters (Fin N)) (mu : Fin (N + 1) →
     else SgW R LL mu c j
 
 
+open Classical in
 def oS (p : ℕ) (pos : Fin N → ℤ) (mu : Fin (N + 1) → Fin (r + K) → ℤ) (c : ℤ) (j : ℕ) (s : ℤ) : ℕ :=
   ∑ i : Fin N, if i.val < j ∧ IsCostly mu c i then p ^ (s - pos i).toNat else 0
 

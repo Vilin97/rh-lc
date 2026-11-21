@@ -193,12 +193,14 @@ def OnComp (k : s.Comp) (z : gen s.T.Z) : Prop :=
 def compPt (y : Pt s) : s.Comp := Classical.epsilon fun k => ∀ pt, OnComp s k (y.y pt)
 
 
+open Classical in
 def lnAt (p : ℕ) (b : Bool) (y : Pt s) (x : DV.Rt D.what₂.Tau N) : ℝ :=
   if h : p.Prime then (haveI := Fact.mk h; y.lnRoot (iotaP p) p b (DV.tauEmb D x.1) x.2) else 0
 
 def phi (p : ℕ) (y : Pt s) (x : DV.Rt D.what₂.Tau N) : ℝ := lnAt s p false y x - lnAt s p true y x
 
 
+open Classical in
 def normDet (p : ℕ) (b : Bool) (τ : D.what₂.Tau) (y : Pt s) (a : Qb) : ℝ :=
   if h : p.Prime then (haveI := Fact.mk h; ‖iotaP p a‖ * Real.exp (∑ i, lnAt s p b y (τ, i))) else 1
 

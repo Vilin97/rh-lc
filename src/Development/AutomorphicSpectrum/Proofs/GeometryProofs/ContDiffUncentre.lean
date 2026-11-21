@@ -31,6 +31,7 @@ variable {D : Datum H} {l : Level H} {Xo : Moduli D l} {c : Coeff l} {O : Type} 
   [∀ k, Fintype (J k)] {y : (Σ k, J k) → Ω}
 
 
+open Classical in
 def gramFn (𝔐 : HodgeCpt Y S y) {r : ℕ} (b : Fin r → 𝔐.Li) (w : (Σ k, J k) → ℂ) : Matrix (Fin r) (Fin r) ℂ :=
   if h : ∃ (Γ : Matrix (Fin r) (Fin r) ℂ) (z : Spec (CommRingCat.of ℂ) ⟶ 𝔐.X),
       CoordsAt 𝔐.ξ y z w ∧ 𝔐.Interior z ∧ 𝔐.M.GramAt 𝔐.t.PP.L z b Γ then h.choose else 0

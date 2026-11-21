@@ -64,6 +64,7 @@ theorem coord_sum {n : ℕ} (D : Fin n → W) (l : Λ) :
   rw [map_zsmul, Finsupp.smul_apply]
 
 
+open Classical in
 def contr {n : ℕ} (C : (Fin (n + 1) → ι) → W) (a : ∀ l, good' l → ι) (i : Fin n → ι) : W :=
   b.repr.symm (Finsupp.onFinset (Finset.univ.biUnion fun a' : ι => (b.repr (C (Fin.cons a' i))).support)
     (fun l => if h : good' l then b.repr (C (Fin.cons (a l h) i)) l else 0) (by

@@ -32,6 +32,7 @@ theorem tl_symDim_nat (m g : ℕ) : symDim (m + 1) (g : ℤ) = sd m g := by
   simp
 
 
+open Classical in
 theorem pair_sum (hCD : ChainDimAt) (hNB : NumBranchAt) {s : ℕ} (r A : ℕ) (Ai Ci : Fin s → ℕ) :
     ∑ x ∈ (pairSet_finite hCD r A Ai Ci).toFinset, wdim x.2 = (dimMM (r + 1) (A : ℤ) Ai Ci : ℚ) := by
   have e0 : ∑ x ∈ (pairSet_finite hCD r A Ai Ci).toFinset, wdim x.2 =
@@ -96,6 +97,7 @@ theorem kept_sum (hCD : ChainDimAt) (p : ℕ) (La : ℝ) {s : ℕ} (r : ℕ) [Ne
     rw [if_neg (fun h => this h.1)]
 
 
+open Classical in
 theorem tail_core (hCD : ChainDimAt) (hNB : NumBranchAt) (p : ℕ) (La : ℝ) {s : ℕ} (r : ℕ) [NeZero r] (A : ℕ)
     (Ai Ci : Fin s → ℕ) (Np W e : ℝ) (hW : 0 ≤ W)
     (hN : ((pairSet r A Ai Ci).ncard : ℝ) ≤ Np)

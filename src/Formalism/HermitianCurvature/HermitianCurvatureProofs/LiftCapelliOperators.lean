@@ -29,6 +29,7 @@ variable {k r : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace �
   [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wq]
 
 
+open Classical in
 def cTerm (c : ℂ) (w : List (B.Mat k r)) : B.DTerm k r Wp Wq where
   coef := fun _ => c • ContinuousLinearMap.id ℂ _
   coefAdj := fun _ => conj c • ContinuousLinearMap.id ℂ _

@@ -25,6 +25,7 @@ theorem mem_holSub_iff {Comp : Type} (X : Comp → Data E r) (la : ∀ k, Wt (X 
   | smul a x _ hx => exact fun k => (siegelSpaceAlgebra_holds (E := E) r (X k) (la k) (la k) 0).1.2.2 a _ (hx k)
 
 
+open Classical in
 theorem rdU_mul {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (f g : Rul Xo c) : rdU U (f * g) = rdU U f * rdU U g := by
   funext k x
   show (if h : x ∈ (U.X k).dom then toC (evR Xo c (f * g) (U.un k ⟨x, h⟩)) else 0) =

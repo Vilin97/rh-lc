@@ -29,6 +29,7 @@ abbrev IsWeilTw (χ : (AE D)ˣ →* Circle) (ω : WeilRep D i) : Prop :=
     (Lift.chrTh (Lift.tup R.mu0 χ) R.eta ((i : ℕ) + 1)).2 ω
 
 
+open Classical in
 def VecOf (Q : Finset (Pl D.host.E)) (Ω : DatFn D i) (φ : WO (Vc D i) (Wc D i) → ℂ) : Prop :=
   IsVacO R.ψ R.θ (Vc D i) (Wc D i) (fun _ => 1) (cart (R.MW i (sg0 D A))) (R.ΛV i) (R.ΛW i) (R.vacP i) ∧
     ∃ e : AE D, IsIdemSum e (R.Pg ∪ Q) ∧
@@ -50,6 +51,7 @@ def ReadsOnly {i : Fin D.R.m} (S : Finset (Pl D.host.E)) (Ω : DatFn D i) : Prop
   ∀ y y', (∀ PP ∈ S, y PP = y' PP) → Ω y = Ω y'
 
 
+open Classical in
 def omegaFree (Q : Finset (Pl D.host.E)) (ξR : ∀ PP : Pl D.host.E, (kP PP)ˣ →* ℂˣ)
     (y₀ : ∀ PP : Pl D.host.E, Matrix (Fin (Vc D i).rank) (Fin (Wc D i).rank) (kP PP)) : DatFn D i := fun y =>
   (if ∀ PP ∈ R.Pg, y PP = y₀ PP then 1 else 0) *

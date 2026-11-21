@@ -138,6 +138,7 @@ def Below (ν μ : Ix p q → ℚ) : Prop :=
   ∀ l : Ix p q → ℚ, (∀ a b, posC a b → l b < l a) → pair l ν < pair l μ
 
 
+open Classical in
 def rho (p q : ℕ) : Ix p q → ℚ :=
   fun x => ∑ c, ((if posC x c then 1 else 0) - (if posC c x then 1 else 0))
 
@@ -151,6 +152,7 @@ lemma rho_lt {a b : Ix p q} (h : posC a b) : rho p q b < rho p q a := by
     simp [h, h1, posC_asymm h]
 
 
+open Classical in
 def casVal (μ : Ix p q → ℚ) : ℚ :=
   ∑ a, ∑ b, ((if a = b then μ a * μ a else 0) + (if posC a b then μ a - μ b else 0))
 

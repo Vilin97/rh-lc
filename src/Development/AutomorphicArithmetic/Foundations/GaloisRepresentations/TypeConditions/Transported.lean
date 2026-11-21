@@ -11,6 +11,7 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions.N
 namespace UpperTheory.GalS
 
 
+open Classical in
 def thr {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ) : ℕ :=
   if ∃ p : ℕ, p.Prime ∧ w ∈ placesOver E p ∧ (placesOver E p).ncard = Module.finrank ℚ E ∧ (n = 1 ∨ 16 * n ^ 2 < p) then 2 else 1
 

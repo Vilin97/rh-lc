@@ -21,6 +21,7 @@ section Eigen
 variable {I LL : Type} [Group I] [Field LL]
 
 
+open Classical in
 theorem exists_separating (S : Finset (I →* LLˣ)) (a : I →* LLˣ) :
     ∃ e : I →₀ LL, ∀ b ∈ S, (e.sum fun g c => c * (b g : LL)) = if b = a then 1 else 0 := by
   have h1 : LinearIndependent LL (fun b : S => fun g : I => ((b.1 g : LLˣ) : LL)) := by

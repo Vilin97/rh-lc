@@ -19,6 +19,7 @@ open Neutral.B1 Formalism.L2.Host
 variable {L : Type} [Field L] [NumberField L]
 
 
+open Classical in
 theorem prod_localIdele_comp (z : ∀ v : HeightOneSpectrum (𝓞 L), (v.adicCompletion L)ˣ)
     (F : Finset (HeightOneSpectrum (𝓞 L))) :
     ((∏ v ∈ F, localIdele L v (z v) : Ideles L) : AdeleRing (𝓞 L) L).1 = 1 ∧

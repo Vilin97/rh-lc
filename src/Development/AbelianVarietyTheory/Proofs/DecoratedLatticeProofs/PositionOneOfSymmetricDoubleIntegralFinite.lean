@@ -116,6 +116,7 @@ theorem om_one_comp {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [
   ring
 
 
+open Classical in
 theorem app_eq_dite {X V : Type} [TopologicalSpace X] [AddCommGroup V] [Module ℂ V] (l : SB X →ₗ[ℂ] V)
     (f : X → ℂ) : app l f = l (if h : f ∈ SB X then ⟨f, h⟩ else 0) := by
   unfold app; split_ifs <;> simp

@@ -26,6 +26,7 @@ def AvgData (ψ : AddChar k Circle) {m N : ℕ} (h : m + 2 ≤ N) {V : Type} [Ad
     (∀ t ∈ p.2, t ∈ A) ∧ ∀ a ∈ A, ∃! t, t ∈ p.2 ∧ a - t ∈ p.1
 
 
+open Classical in
 def avg (ψ : AddChar k Circle) {m N : ℕ} (h : m + 2 ≤ N) {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V) (ξ : Fin (m + 1) → k) (A : AddSubgroup (Fin (m + 1) → k)) (v : V) : V :=
   if hd : ∃ p, AvgData ψ h π ξ A v p then

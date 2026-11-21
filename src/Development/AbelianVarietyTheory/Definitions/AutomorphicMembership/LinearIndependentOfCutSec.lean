@@ -139,6 +139,7 @@ def resAt (f : Y.Fn) (y : GeomPt Y E) (k : Fin n) (g e : Y.Fn) : AlgebraicClosur
   valAt y.1 (f * e * g / w k ^ Y.dim) / dsVal Y E w c y k g
 
 
+open Classical in
 def genIdx (x : Y.X) : Option (Fin n) := if h : ∃ k, GenAt Y w x k then some h.choose else none
 
 def resVal (Δ : Y.Dv) (f : Y.Fn) (y : GeomPt Y E) : AlgebraicClosure E :=
@@ -204,6 +205,7 @@ def IsCutHerm (H : ReciprocityTheory.GeometryOfNumbersTheory.HermFam E (cutSec Y
 
 
 
+open Classical in
 def cutDeg (Λ : Submodule (𝓞 E) (cutSec Y E w c)) : ℝ :=
   if h : ∃ H, IsCutHerm w c A H then ReciprocityTheory.GeometryOfNumbersTheory.deg h.choose Λ else 0
 

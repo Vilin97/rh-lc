@@ -67,6 +67,7 @@ theorem floor_cast {x : ℝ} (hx : 0 ≤ x) : ((⌊x⌋₊ : ℕ) : ℤ) = ⌊x�
   rw [← Int.floor_toNat, Int.toNat_of_nonneg (Int.floor_nonneg.mpr hx)]
 
 
+open Classical in
 theorem kText_cast (K : Cst) (X : Dat) (R : RS X.p X.n') (hbl : 0 ≤ X.bl) (A B : X.TT → ℕ) :
     X.kText K R (fun s => (A s : ℤ)) (fun s => (B s : ℤ)) =
       (if (∀ s, X.a + X.ccl ≤ A s ∧ X.lb + X.ccl ≤ B s) then
@@ -104,6 +105,7 @@ theorem sum_of_meanN {ι : Type} [Fintype ι] [DecidableEq ι] (Sa Sb : Finset �
   rwa [div_le_iff₀ hD] at h
 
 
+open Classical in
 theorem sum_first {ι : Type} [Fintype ι] [DecidableEq ι] (a ua lb ub c : ℕ) (kf : (ι → ℕ) → (ι → ℕ) → ℝ)
     (hkf : ∀ A B, 0 ≤ kf A B) :
     ∑ A ∈ Fintype.piFinset (fun _ : ι => Finset.Icc a ua), ∑ B ∈ Fintype.piFinset (fun _ : ι => Finset.Icc lb ub),

@@ -154,6 +154,7 @@ theorem conductor_inv : χ⁻¹.conductor = χ.conductor := by
   exact le_antisymm (Ideal.le_of_dvd h2) (Ideal.le_of_dvd h1)
 
 
+open Classical in
 theorem infiniteParams_inv (w : InfinitePlace K) :
     (χ⁻¹).infiniteParams w =
       (if w.IsReal then χ.infiniteWeight w else -χ.infiniteWeight w, -χ.infiniteTau w) := by

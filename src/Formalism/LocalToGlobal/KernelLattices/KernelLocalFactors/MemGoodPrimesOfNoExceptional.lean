@@ -133,6 +133,7 @@ theorem ftY_move2 (hcst : cst.Ok) (w : rowSG Pr sel mu) (hw : w.1 ∈ Pr.vGs) {n
   · rw [if_neg (fun h => hη (hcond.1 h)), if_neg hη]
 
 
+open Classical in
 theorem ybSet_props2 {n : ℕ} {N : Submodule (𝓞 X.E) (Sp X.E n)} {Y : Set (Sp X.E n)} (hY : Y ∈ ybSet sel mu cst N)
     (w : rowSG Pr sel mu) (hw : w.1 ∈ Pr.vGs) :
     Y.Nonempty ∧ (∀ a ∈ Y, ∀ a' ∈ Y, a - a' ∈ localization₂ w.1.asIdeal N) ∧

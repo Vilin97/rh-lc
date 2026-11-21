@@ -69,6 +69,7 @@ def lform {ι : Type} {k : ℕ} (D : ι → Fin (M + 1) → S) (ρ : Fin k → �
   fun q => ∏ l, D (ρ l) (plE M k q l)
 
 
+open Classical in
 def LeftInv {ι : Type} (D c : ι → Fin M → S) : Prop := ∀ z z', ∑ r, D z r * c z' r = if z = z' then 1 else 0
 
 def Tri {ι : Type} (c c' : Let m → ι → S) (d : Let m → S) : Prop :=

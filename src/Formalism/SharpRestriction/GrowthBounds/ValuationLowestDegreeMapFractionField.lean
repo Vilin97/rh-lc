@@ -399,6 +399,7 @@ theorem valuation_transport_of_lemma (D : Formalism.BasicNotions.D7) (h : Formal
 section Hom
 
 
+open Classical in
 def suppProj (R : Type) [CommRing R] {σ : Type} (s : Set (σ →₀ ℕ)) : MvPolynomial σ R →ₗ[R] MvPolynomial σ R :=
   (basisMonomials σ R).constr R fun m => if m ∈ s then monomial m 1 else 0
 
@@ -1237,6 +1238,7 @@ def biPol (R : Type) [CommRing R] {N r K : ℕ} (b' b'' : Fin N → ℕ) :
 variable {n' r : ℕ} [NeZero n'] (F : Frames n' r) (j : ℤ)
 
 
+open Classical in
 def segL (m : ℤ → ℤ) (th : ℤ → ℝ) : List (PathInequality (segN F j)) :=
   (List.finRange (segN F j)).flatMap fun i =>
     if F.IsW j (segE F j i) then []
@@ -2050,6 +2052,7 @@ open Formalism.MainNotions.CovariantDegrees
 variable {Fd : Type} [Field Fd] {N m k : ℕ}
 
 
+open Classical in
 def jone_w (LL : Letters (Fin N)) (S : Set (Fin N)) (e : Fin m → Fin k) : Fin N × Fin k → ℤ :=
   fun v => if v.1 ∈ S ∧ v.2 ∈ Set.range e then (if LL.vec v.1 then 1 else -1) else 0
 

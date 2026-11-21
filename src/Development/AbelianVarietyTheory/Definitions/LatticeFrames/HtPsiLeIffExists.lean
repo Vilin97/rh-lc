@@ -21,6 +21,7 @@ def IsPsi (Ψ : (D.div.Nu u).V →ₗ[D.what₂.LL] (Pt D u).V) : Prop :=
 def PsiRat : Prop := ∃ Ψ, IsPsi D u Ψ
 
 
+open Classical in
 def Psi : (D.div.Nu u).V →ₗ[D.what₂.LL] (Pt D u).V := if h : PsiRat D u then h.choose else 0
 
 theorem isPsi_Psi (h : PsiRat D u) : IsPsi D u (Psi D u) := by

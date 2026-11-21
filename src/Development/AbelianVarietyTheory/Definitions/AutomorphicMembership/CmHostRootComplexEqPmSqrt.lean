@@ -135,6 +135,7 @@ def noUnf (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (N : ℕ) : Form
   un := fun k => k.elim
 
 
+open Classical in
 def UnfFam.U (u : UnfFam Xo c N ξ) (σ : c.F →+* ℂ) : Formalism.L2.PjFree.Unf Xo c σ N :=
   if h : Formalism.L2.PjFree.GoodEmb c σ then u.good σ h else noUnf Xo c σ N
 

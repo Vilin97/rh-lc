@@ -222,6 +222,7 @@ def latticeIsog {α : ℂ} (hα : α ∈ latticeHom L₁ L₂) (h0 : α ≠ 0) :
   ⟨isogPt hα h0, (isIsogeny_iff _).2 ⟨isGenPt_isogPt hα h0, respectsAdd_isogPt hα h0⟩⟩
 
 
+open Classical in
 def latticeToHom (α : latticeHom L₁ L₂) : isogHom (weierstrassCurve L₁) (weierstrassCurve L₂) :=
   if h : (α : ℂ) = 0 then 0 else (latticeIsog α.2 h).toHom
 

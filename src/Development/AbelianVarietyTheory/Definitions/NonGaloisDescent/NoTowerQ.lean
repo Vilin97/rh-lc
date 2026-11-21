@@ -13,6 +13,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.Loc ValuativeRel GroundTheory
 namespace GlobalTheory.PMon.Ram
 
 
+open Classical in
 def jumpSum {G : Type} [Group G] (R : ℕ → Subgroup G) (A B : Subgroup G) : ℕ :=
   ∑ᶠ t : ℕ, if A ⊓ R t ≤ B then 0 else Nat.card ↥(A ⊓ R t)
 

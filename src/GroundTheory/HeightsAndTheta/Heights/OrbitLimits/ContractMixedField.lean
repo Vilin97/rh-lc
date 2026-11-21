@@ -88,6 +88,7 @@ theorem component [DecidableEq K'] {κ : K → K'} {v : (Σ k, ι k) → (Σ k',
   rw [hD, Nat.sub_add_cancel hKD]
 
 
+open Classical in
 theorem intNum_eq_zero [DecidableEq K'] {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v) :
     ∀ (n : ℕ) (V' : Ideal (MRingOver F ι')) (d₀ : ℕ) (bs : Fin n → K' → ℤ),
       IsProjVarF V' n → IsProjVarF (imageVar F v V') d₀ →

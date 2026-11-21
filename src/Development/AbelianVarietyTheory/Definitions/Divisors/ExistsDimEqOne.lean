@@ -98,6 +98,7 @@ def origin (A : AbVar K) : A.X.left :=
   (1 : Over.mk (𝟙 (Sp K)) ⟶ A.X).left (IsLocalRing.closedPoint K)
 
 
+open Classical in
 def deg {A B : AbVar K} (f : A ⟶ B) : ℕ := if IsIsogeny f then f.hom.left.finrank B.origin else 0
 
 abbrev End0 (A : AbVar K) : Type := ℚ ⊗[ℤ] End A
@@ -150,6 +151,7 @@ def IsCharpoly {A : AbVar K} (f : End A) (P : Polynomial ℤ) : Prop :=
   P.Monic ∧ P.natDegree = 2 * A.dim ∧ ∀ n : ℤ, P.eval n = (deg (A := A) (B := A) ((n : End A) - f) : ℤ)
 
 
+open Classical in
 def charpoly {A : AbVar K} (f : End A) : Polynomial ℤ := if h : ∃ P, IsCharpoly f P then h.choose else 0
 
 def trace {A : AbVar K} (f : End A) : ℤ := -(charpoly f).nextCoeff

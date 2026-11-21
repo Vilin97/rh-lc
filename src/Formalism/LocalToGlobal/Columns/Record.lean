@@ -166,6 +166,7 @@ def gram : Matrix S.ιV S.ιV ℂ := Matrix.of fun i j => E.ip (E.ev (S.bV i)) (
 def ipB : (E.Y → ℂ) →ₗ[ℂ] (S.ιV → ℂ) := LinearMap.pi fun j => E.ip (E.ev (S.bV j))
 
 
+open Classical in
 def co : (E.Y → ℂ) →ₗ[ℂ] (S.ιV → ℂ) :=
   if IsUnit E.gram.det then Matrix.toLin' E.gram⁻¹ ∘ₗ E.ipB
   else (E.lin.exists_leftInverse_of_injective E.lin_ker).choose
@@ -390,6 +391,7 @@ theorem modP.lift_mk (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E) (S
     (x : ↥M) : modP.lift P M f (modP.mk P M x) = f x := rfl
 
 
+open Classical in
 def modP.ext (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E) (Sp E n)) (g : modP P M → 𝓞 E ⧸ P.asIdeal) (y : Sp E n) :
     𝓞 E ⧸ P.asIdeal :=
   if h : ∃ s : 𝓞 E, s ∉ P.asIdeal ∧ s • y ∈ M then
@@ -471,6 +473,7 @@ theorem first_raising_mem_equivariant (d : DecoSet E n ST SG) (P : ST) : d.e1 P 
 theorem functional_firstBasis_eq_one (d : DecoSet E n ST SG) (P : ST) : d.1.f P (d.e1 P) = 1 := d.2.exists_dualBasis.choose_spec.2.1 P
 
 
+open Classical in
 def te (d : DecoSet E n ST SG) (P : ST) (q : 𝓞 E) : d.lk P :=
   if h : q • d.e1 P ∈ d.1.kerAt P then modP.mk P.1 (d.1.kerAt P) ⟨_, h⟩ else 0
 
@@ -843,6 +846,7 @@ def repPt (hc : Formalism.BasicNotions.CMData X.F X.E) (u : Pr.Word) (j : ℕ) (
   ((ptOf hc (R.N j) (Pr.vT u) Pr.vGs ((stepGSD W Λ u j).outSec.rep c) : GL (Fin (R.N j)) (X.E ⊗[X.F] Formalism.L2.Herm.Af X.F)))
 
 
+open Classical in
 def rhoK (Dc : DetChr X R.m) (u : Pr.Word) (i : ℕ) (c : StCl W Λ u i) : X.Kˣ :=
   if hc : Formalism.BasicNotions.CMData X.F X.E then
     (Formalism.L2.DIV.detTw hc.sig (Dc.muAt i) (repPt W Λ hc u i c))⁻¹ *
@@ -850,6 +854,7 @@ def rhoK (Dc : DetChr X R.m) (u : Pr.Word) (i : ℕ) (c : StCl W Λ u i) : X.Kˣ
   else 1
 
 
+open Classical in
 def rhoK' (Dc : DetChr X R.m) (u : Pr.Word) (i : ℕ) (c : StCl W Λ u (i + 1)) : X.Kˣ :=
   if hc : Formalism.BasicNotions.CMData X.F X.E then
     Formalism.L2.DIV.detTw hc.sig (Dc.muAt i) (repPt W Λ hc u (i + 1) c) *
@@ -1103,6 +1108,7 @@ structure XpArg {hc : X.Tau → HCParam R} (σ₀ : X.K →+* ℂ) (C : ColumnCh
   thFree_nonneg : ∀ i s L L', 0 ≤ thFree i s L L'
 
 
+open Classical in
 def tauOfR (hX : X.Ok) (hPr : Pr.Ok) (u : Pr.Word) (w : HeightOneSpectrum (𝓞 X.K)) : {P // P ∈ Pr.vT u} ≃ X.Tau :=
   haveI := hX.nonempty_Tau
   if hw : (Pr.T u : 𝓞 X.K) ∈ w.asIdeal then Equiv.ofBijective _ (tauOfC_bijective hX hPr u w hw)

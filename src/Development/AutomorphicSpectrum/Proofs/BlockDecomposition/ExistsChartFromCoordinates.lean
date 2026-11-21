@@ -59,6 +59,7 @@ theorem hasDP_of_mem {R : Type} [CommRing R] {I : Ideal R} (γ : DividedPowers I
 variable (J : Ideal B) (h : ∀ x ∈ J, HasDP J x)
 
 
+open Classical in
 def dpOf (n : ℕ) (x : B) : B := if hx : x ∈ J then (h x hx).choose n else 0
 
 variable {J h}

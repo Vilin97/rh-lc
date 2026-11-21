@@ -153,6 +153,7 @@ theorem inId_prod_iff (S : Finset (Pl D.host.E)) (c : Pl D.host.E → ℕ) {z : 
     exact ⟨hz, GlobalTheory.FunObj.Comparison₂.mem_idS_of_v_le (w := fun v => v) (e := c) (S := S) (s := ⟨z, hz⟩) h0 h H⟩
 
 
+open Classical in
 theorem std_eq_prod (ν : (AE D)ˣ →* Circle) {e : AE D} {S : Finset (Pl D.host.E)} (he : IsIdemSum e S)
     (c : Pl D.host.E → ℕ) {a a' : ℕ} (Y : Matrix (Fin a') (Fin (a + a')) (EAf D)) (hY : ∀ i j, toEAf D e * Y i j = Y i j) :
     (if IsIntM Y ∧ ∀ i j, j.1 < a → InId (∏ w ∈ S, w.asIdeal ^ c w) (Y i j) then unitChar ν e (rightBlock a Y) else 0) =
@@ -206,6 +207,7 @@ theorem std_eq_prod (ν : (AE D)ˣ →* Circle) {e : AE D} {S : Finset (Pl D.hos
     · rfl
 
 
+open Classical in
 theorem std_eq_prod' (ν : (AE D)ˣ →* Circle) {e : AE D} {S : Finset (Pl D.host.E)} (he : IsIdemSum e S)
     (c : Pl D.host.E → ℕ) {a a' d : ℕ} (hd : d = a + a') (b b' : Pl D.host.E → ℕ) (hb : ∀ w, a = b w) (hb' : ∀ w, a' = b' w)
     (Y : Matrix (Fin a') (Fin d) (EAf D)) (hY : ∀ i j, toEAf D e * Y i j = Y i j)

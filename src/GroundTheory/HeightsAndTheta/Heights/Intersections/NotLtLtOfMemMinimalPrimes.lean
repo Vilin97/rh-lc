@@ -149,6 +149,7 @@ theorem finsum_divSupp_eq_sum (P : Ideal (MRing ι)) (s : MRing ι) (f : Ideal (
     simp
 
 
+open Classical in
 theorem finsum_hor_eq (P : Ideal (MRing ι)) (s : MRing ι) (g : Ideal (MRing ι) → ℝ) :
     (∑ᶠ (W) (_ : W ∈ divSupp P s ∧ IsHorizontal W), g W) =
       ∑ᶠ W ∈ divSupp P s, (if IsHorizontal W then g W else 0) := by

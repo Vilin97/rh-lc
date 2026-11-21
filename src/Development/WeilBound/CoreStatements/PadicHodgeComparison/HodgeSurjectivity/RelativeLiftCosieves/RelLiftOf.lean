@@ -28,6 +28,7 @@ def liftS {Q : ObjectProperty C} (hQ : Cosieve Q) {n : ℕ} (s : ComposableArrow
   Q.lift s fun k => hQ (s.map (homOfLE (Fin.zero_le _))) hs
 
 
+open Classical in
 def extZ {Q : ObjectProperty C} (hQ : Cosieve Q) {n : ℕ} (b : CH.Cn (Q.ι ⋙ F) n) : CH.Cn F n :=
   fun s => if hs : Q (s.obj 0) then b (liftS hQ s hs) else 0
 

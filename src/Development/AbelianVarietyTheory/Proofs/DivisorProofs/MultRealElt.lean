@@ -18,6 +18,7 @@ variable {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} {θ : Datum.InfFam D}
   {J : Set (GA D V)} {χ : GA D V → ℂ}
 
 
+open Classical in
 theorem list_equiv {U : MMap M} (hU : IsMultMap θ M J χ U)
     (g : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ) (hg : ∀ ρ, g ρ ∈ Formalism.QuantumDeterminants.UH (gramAt D V ρ))
     (v w : M.Vec) (h : ∀ ρ, (w ρ : M.H ρ) = M.rep ρ (g ρ) (v ρ : M.H ρ)) (l : List D.what₂.Tau) (hl : l.Nodup) :

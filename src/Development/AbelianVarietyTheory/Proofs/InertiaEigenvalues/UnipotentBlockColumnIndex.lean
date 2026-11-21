@@ -25,6 +25,7 @@ def IsCoLat (Γ : AddSubgroup G) : Prop :=
 def Per (Γ : AddSubgroup G) (Φ : G → ℂ) : Prop := Continuous Φ ∧ ∀ γ ∈ Γ, ∀ x, Φ (γ + x) = Φ x
 
 
+open Classical in
 def avg (Γ : AddSubgroup G) (Φ : G → ℂ) : ℂ :=
   letI : MeasurableSpace G := borel G
   if h : ∃ p : Measure G × Set G, p.1.IsAddHaarMeasure ∧ IsAddFundamentalDomain Γ p.2 p.1 ∧ p.1 p.2 = 1

@@ -99,6 +99,7 @@ def IsLevelActionImage (V : HSp D) (β : GL (Fin V.rank) (EAf D)) (L : Formalism
   ∀ κ, IsLevelLift V β L g0 κ → ∀ h, F' h = (levChi V β (flagL L) κ)⁻¹ * F (h * κ)
 
 
+open Classical in
 def actG0 (V : HSp D) (β : GL (Fin V.rank) (EAf D)) (L : Formalism.L2.DIV.LevDat D.host.E ℂ V.rank) (g0 : Formalism.L2.DIV.G0 L.Pg L.r)
     (F : GA D V → ℂ) : GA D V → ℂ :=
   if hk : ∃ κ, IsLevelLift V β L g0 κ then

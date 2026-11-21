@@ -72,6 +72,7 @@ theorem stdMat_mem (hp : X.p0 = r - j) {z : Pt Tau j (r - j)} (hz : z ∈ DomI T
   exact (PosDef.submatrix (hz (κ.symm τ)) (finCongr hp).injective).transpose
 
 
+open Classical in
 def stdFrame (hp : X.p0 = r - j) (z : Pt Tau j (r - j)) : X.dom :=
   if h : z ∈ DomI Tau j (r - j) then ⟨stdMat X hj κ z, stdMat_mem X hj κ hp h⟩
   else ⟨stdMat X hj κ 0, stdMat_mem X hj κ hp fun _ => zero_mem_hcDom _ _⟩

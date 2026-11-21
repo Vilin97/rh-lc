@@ -20,6 +20,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 abbrev UU (n : ℕ) : Type := Matrix.unitaryGroup (Fin n) ℂ
 
 
+open Classical in
 def singleN (w : InfinitePlace E) : ℂ →ₙ+* Cinf E where
   toFun x := fun v => if v = w then x else 0
   map_mul' x y := by

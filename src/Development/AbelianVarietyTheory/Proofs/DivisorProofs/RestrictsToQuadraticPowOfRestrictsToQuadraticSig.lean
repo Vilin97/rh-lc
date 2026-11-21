@@ -99,6 +99,7 @@ theorem exists_isEtaF {σ : E →ₐ[F] E} (h : IsCMExt F E σ) :
   exact (h1 hb).symm
 
 
+open Classical in
 theorem resEtaF_of_resEtaPow : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) (B : Base F E),
     B.IsGood σ → ∀ (χ : (AF F ⊗[F] E)ˣ →* Circle) (n : ℕ),

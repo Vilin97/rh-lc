@@ -23,6 +23,7 @@ namespace GlobalTheory.FinPl.KOpen
 variable {D : D7}
 
 
+open Classical in
 def indP (D : D7) (P : Pl D → Prop) : Af D.host.F :=
   ⟨fun v => if P v then 1 else 0, Filter.Eventually.of_forall fun v => by
     by_cases h : P v

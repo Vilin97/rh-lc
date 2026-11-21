@@ -898,6 +898,7 @@ theorem capelli_two_polynomial (hD : IsOpen D) {f : Mx k r → E} (hf : SmoothLe
     exact polyAt_zero _
 
 
+open Classical in
 def coefOf (N : ℕ) (φ : ℂ → E) : ℕ → E := if h : PolyAt N φ then h.choose else 0
 
 theorem coefOf_spec {N : ℕ} {φ : ℂ → E} (h : PolyAt N φ) (Y : ℂ) :

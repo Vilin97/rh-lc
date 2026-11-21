@@ -173,6 +173,7 @@ abbrev Oth : Type := {w : InfinitePlace E // w ≠ v₁ ∧ w ≠ v₂}
 abbrev Rest : Type := (Oth v₁ v₂ → ℂ) × Af E
 
 
+open Classical in
 def glue (a b : ℂ) (c : Oth v₁ v₂ → ℂ) : Cinf E := fun w =>
   if h₁ : w = v₁ then a else if h₂ : w = v₂ then b else c ⟨w, h₁, h₂⟩
 

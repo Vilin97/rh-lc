@@ -441,6 +441,7 @@ theorem smooth_comp (hD : IsOpen D) (hDU : ∀ g ∈ D, zetaL k r z z' i g ∈ U
     hf.comp (zetaL_contDiff k r z z' i).contDiffOn (fun g hg => hDU g hg), fun _ _ _ => rfl⟩
 
 
+open Classical in
 def MF (hD : IsOpen D) (f : ℂ → ℂ) : Module.End ℂ (VS k r i D E) :=
   if h : SmoothLev k r i D (fun g => f (zetaL k r z z' i g)) then Mh hD _ h else 0
 

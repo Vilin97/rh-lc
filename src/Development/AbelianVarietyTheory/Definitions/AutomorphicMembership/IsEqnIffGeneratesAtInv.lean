@@ -603,6 +603,7 @@ theorem Presents.unique (h : Presents D L r) (h' : Presents E L r) : D = E := by
   exact ⟨r i, h.isEqn i x hi, h'.isEqn i x hi⟩
 
 
+open Classical in
 def frameRat (L : LB X) (i₀ : L.ι) (h₀ : genericPoint X ∈ L.U i₀) (i : L.ι) : X.functionFieldˣ :=
   if h : genericPoint X ∈ L.U i then
     Units.map (fnOf (L.U i ⊓ L.U i₀) (memInf h h₀)).toMonoidHom (L.g i i₀) else 1

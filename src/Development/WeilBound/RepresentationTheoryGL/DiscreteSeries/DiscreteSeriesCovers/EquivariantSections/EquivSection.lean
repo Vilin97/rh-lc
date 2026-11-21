@@ -34,6 +34,7 @@ def OmF (n : ℕ) : Submodule ℂ (Matrix (Fin n) (Fin n) ℂ → ℂ) where
   smul_mem' := fun c _ ha => ⟨contDiffOn_const.smul ha.1, fun z hz => by simp [ha.2 z hz]⟩
 
 
+open Classical in
 def lop (Y : Matrix (Fin n) (Fin n) ℂ) (F : Matrix (Fin n) (Fin n) ℂ → ℂ) : Matrix (Fin n) (Fin n) ℂ → ℂ :=
   fun z => if z ∈ OmegaSet n then -(fderiv ℂ F z (Y * z)) else 0
 

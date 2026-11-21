@@ -150,6 +150,7 @@ def kx (A B : X.TT → ℕ) : ℝ :=
 def Inside (aa bb : X.TT → ℤ) : Prop := ∀ s, (X.a : ℤ) ≤ aa s - X.ccl ∧ X.bl ≤ ((bb s - X.ccl : ℤ) : ℝ)
 
 
+open Classical in
 def kText (aa bb : X.TT → ℤ) : ℝ :=
   (if X.Inside aa bb then X.kF K R (fun s => (aa s - X.ccl).toNat) (fun s => (bb s - X.ccl).toNat) else 1) +
     2 * X.kF K R (fun s => (aa s + X.ccl).toNat) (fun s => (bb s + X.ccl).toNat) +

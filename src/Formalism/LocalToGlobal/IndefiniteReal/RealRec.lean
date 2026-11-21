@@ -25,6 +25,7 @@ variable {Rc : Formalism.L2.RecT ex} {P : RowSideFamily ex} {Dcf : ∀ Zs : DefS
   {S : Formalism.L2.SG.SpectralTiesReal.STiesR Rc} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL]
 
 
+open Classical in
 def twPOf (P : RowSideFamily ex) (tupT : D.what₂.Tup → P.T) (tupTie : ∀ μ, Formalism.IndefR.RecTie.Used0 D μ → P.I.tup (tupT μ) = μ)
     (μ : D.what₂.Tup) (i : Fin D.R.m) (x : D.what₂.MtL μ ((i : ℕ) + 1)) :
     P.A3.A.fam.amb.FL i (tupT μ) :=

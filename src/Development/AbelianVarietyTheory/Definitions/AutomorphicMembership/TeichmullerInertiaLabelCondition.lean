@@ -397,6 +397,7 @@ theorem existsUnique_lab (H : TeichmullerInertiaLabelCondition A w τ γ) (x : W
   exact H.2.2.existsUnique_monic (fun z hz => H.2.2.exists_eq h0 hc (hn z hz)) h2
 
 
+open Classical in
 def lab (τ : Fbar g →* ℂ) (γ : G E Ω) (x : WD h) : (ZMod g)[X] :=
   if H : TeichmullerInertiaLabelCondition A w τ γ then (existsUnique_lab H x).choose else 1
 

@@ -53,12 +53,14 @@ theorem inG_JJ : InG (JJ n) := by
   simp [InG, JJ, Matrix.fromBlocks_conjTranspose, Matrix.fromBlocks_multiply, ← Matrix.fromBlocks_one]
 
 
+open scoped Classical in
 def mG (a : Matrix (Fin n) (Fin n) ℂ) : GR n := if h : IsUnit a.det then toGR _ (inG_mLc h) else 1
 
 theorem mR_mG {a : Matrix (Fin n) (Fin n) ℂ} (ha : IsUnit a.det) : mR (mG a) = mLc a := by
   unfold mG; rw [dite_eq_left ha]; rfl
 
 
+open scoped Classical in
 def nG (b : Matrix (Fin n) (Fin n) ℂ) : GR n := if h : bᴴ = b then toGR _ (inG_nU h) else 1
 
 theorem mR_nG {b : Matrix (Fin n) (Fin n) ℂ} (hb : bᴴ = b) : mR (nG b) = nU b := by

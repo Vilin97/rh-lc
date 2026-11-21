@@ -59,6 +59,7 @@ def coefRep : GL (Fin n) E →* Module.End c.F (CoefSp Dw c n ha d) :=
   rhoVr (embPsi c) (lamP Dw n ha d)
 
 
+open Classical in
 def coefAct (γ : Matrix (Fin n) (Fin n) E) : CoefSp Dw c n ha d →ₗ[c.F] CoefSp Dw c n ha d :=
   if h : IsUnit γ then coefRep Dw c n ha d h.unit else 0
 

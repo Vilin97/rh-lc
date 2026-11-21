@@ -23,6 +23,7 @@ def secRow {R : Type*} [CommRing R] (y : Fin a → R) : Matrix (Fin a) (Fin a) R
   Matrix.of fun i j => if (i : ℕ) + 1 = a then y j else (1 : Matrix (Fin a) (Fin a) R) i j
 
 
+open Classical in
 def secInv (y : Fin a → Cinf E) : GL (Fin a) (Cinf E) :=
   if h : IsUnit (secRow y).det then (Matrix.nonsingInvUnit (secRow y) h)⁻¹ else 1
 
@@ -34,6 +35,7 @@ def natLat (N : ℕ) : Set (Af E) :=
   {x | ∃ z : Af E, (∀ v : HeightOneSpectrum (𝓞 E), z v ∈ v.adicCompletionIntegers E) ∧ x = (N : Af E) * z}
 
 
+open Classical in
 def indN (N : ℕ) (y : Fin a → Af E) : ℂ :=
   if ∀ i : Fin a, y i - (if (i : ℕ) + 1 = a then 1 else 0) ∈ natLat E N then 1 else 0
 

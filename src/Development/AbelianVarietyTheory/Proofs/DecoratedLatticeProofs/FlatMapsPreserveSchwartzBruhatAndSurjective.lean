@@ -29,6 +29,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
 
 
+open Classical in
 def freeMat (p : ℕ) (e : {rs : (n ⊕ Fin c) × (n' ⊕ Fin (c + 1)) // Free p rs} → k) :
     Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k :=
   Matrix.of fun r s => if h : Free p (r, s) then e ⟨(r, s), h⟩ else 0

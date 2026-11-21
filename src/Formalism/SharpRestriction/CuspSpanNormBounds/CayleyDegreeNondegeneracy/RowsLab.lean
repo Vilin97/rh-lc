@@ -40,6 +40,7 @@ def wordPairGramGood (X : TermTie D) (u u' : D.what₂.Word) (large₂ : SizeDat
       ∏ τ, max 1 (UnitaryVolumeMass.absMinor D Z I J τ) ≤ HHZ D large₂.sc.b c (termGramMatrix X t)
 
 
+open Classical in
 def termReducedGramMatrix {C' Cl Cg cb Cu cT CT C0 A c : ℝ} (hH : Cnt.Hyp D large₂ u u' C' Cl Cg cb Cu cT CT C0 A)
     (hHH : UnitaryVolumeMass.stHH D large₂ u u' C' Cl Cg cb Cu cT CT C0 A c) (t : D.s.Term u u') : GramM D :=
   if h : D.s.Gterm t ≠ 0 ∧ D.s.relevant t then Classical.choose (rows_reduced_exists Y hH hHH t h.1 h.2) else 0

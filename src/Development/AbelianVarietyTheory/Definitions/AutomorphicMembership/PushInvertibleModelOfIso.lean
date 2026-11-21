@@ -213,6 +213,7 @@ def HasKeyValues {c : ℕ} (val : GlobalTheory.KeyCl.Rule) (s : ct.Sec (ct.keySh
 variable (ct)
 
 
+open Classical in
 def pbKF {g c : ℕ} (kf : KF g c) : ct.Sec (ct.keySh c) :=
   if h : ∃ s : ct.Sec (ct.keySh c), HasKeyValues kf.coef s then h.choose else 0
 

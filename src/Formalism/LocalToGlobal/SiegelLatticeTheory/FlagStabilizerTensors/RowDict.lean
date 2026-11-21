@@ -72,6 +72,7 @@ def GoodAt (x : X.B.I.Gf) (γ : G0g D.nd) : Prop :=
       Matrix (Fin D.R.r) (Fin D.R.r) (ZMod (D.host.g kv.1)))
 
 
+open Classical in
 def eg (x : X.B.I.Gf) : ℂ :=
   if h : x ∈ X.B.I.Kset ∧ ∃ γ : G0g D.nd, GoodAt X x γ then
     D.ntypes.e0.coeff (Classical.choose h.2) / ((X.B.μf (X.B.I.Kg X.B.g)).toReal : ℂ)

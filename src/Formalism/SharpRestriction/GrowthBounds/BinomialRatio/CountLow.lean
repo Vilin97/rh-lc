@@ -46,6 +46,7 @@ def KeptPair (p : ℕ) (La : ℝ) {s r : ℕ} [NeZero r] (Ai Ci : Fin s → ℕ)
       (Ci i : ℝ) * (1 - La / ((r : ℝ) + 1)) ≤ ((pairN (s := s) lam i : ℤ) : ℝ)
 
 
+open Classical in
 def keptPairSum (p : ℕ) (La : ℝ) {s r : ℕ} [NeZero r] (A : ℕ) (Ai Ci : Fin s → ℕ) : ℚ :=
   ∑ᶠ x : (Fin (2 * s + 1 + 1) → Fin (r + 1) → ℤ) × (Fin r → ℤ),
     if IsPair A Ai Ci x.1 x.2 ∧ KeptPair p La Ai Ci x.1 x.2 then wdim x.2 else 0

@@ -53,6 +53,7 @@ theorem isFlow_zero : IsFlow G 0 :=
   ⟨fun _ => ⟨contDiffOn_const, fun p hp t _ => by simpa [flow] using hp⟩, fun _ _ _ _ => by simp, fun _ _ _ _ _ => by simp⟩
 
 
+open Classical in
 def toOm {q : ℕ} (z : S → V → V [⋀^Fin q]→L[ℝ] (Fin d → ℂ)) : G.Om q :=
   if h : ∀ s, ContDiffOn ℝ ∞ (z s) G.Y then
     ⟨fun s => G.Y.indicator (z s), fun s =>

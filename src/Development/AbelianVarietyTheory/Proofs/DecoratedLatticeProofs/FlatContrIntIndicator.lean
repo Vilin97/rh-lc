@@ -160,6 +160,7 @@ open GlobalTheory.RootEx.Unram GlobalTheory.LocFlat
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k]
 
 
+open Classical in
 theorem integral_psi_O {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {ν : Measure k} (hν : IsUnitVol ν) (a : k) :
     ∫ t, (if t ∈ 𝒪[k] then (1 : ℂ) else 0) * (ψ (-1 * (a * t)) : ℂ) ∂ν = if a ∈ 𝒪[k] then 1 else 0 := by
   haveI := hν.1
@@ -202,6 +203,7 @@ theorem integral_psi_O {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {ν : M
 variable {n : Type} [Fintype n] [DecidableEq n]
 
 
+open Classical in
 theorem integral_psi_box {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {ν : Measure k} (hν : IsUnitVol ν) (u : n → k) :
     ∫ y, (if ∀ r, y r ∈ 𝒪[k] then (1 : ℂ) else 0) * (ψ (-1 * (u ⬝ᵥ y)) : ℂ) ∂(Measure.pi fun _ : n => ν) =
       if ∀ r, u r ∈ 𝒪[k] then 1 else 0 := by

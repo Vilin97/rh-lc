@@ -23,6 +23,7 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotions.G.Inst 
   {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y cX}
 
 
+open Classical in
 def nfMat {E : Type} [Field E] (n c : ℕ) (q : E) (nn : Fin c → ℤ) (z : Fin n → E) : Matrix (Fin (n + c)) (Fin (n + c)) E :=
   fun a b =>
     if hb : b.1 < n then (if a = b then 1 else 0)

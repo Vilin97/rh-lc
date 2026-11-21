@@ -83,6 +83,7 @@ def IsPartAt (w : Ideal (𝓞 E)) {d' : ℕ} (G' : LogFGL (vX_vp X) d')
       (primeBelow io X ℓ.1 ≠ w → (I * P).mulVec (lieVec Ch X ℓ) = 0)
 
 
+open Classical in
 def TypedPartAt (τ : E →+* ℂ) : Prop :=
   ∃ h : ℕ, 0 < h ∧ Nat.card (𝓞 E ⧸ primeBelow io X τ) = p ^ h ∧
   ∃ lab : ZMod h → (E →+* ℂ), IsOrbit io X τ lab ∧

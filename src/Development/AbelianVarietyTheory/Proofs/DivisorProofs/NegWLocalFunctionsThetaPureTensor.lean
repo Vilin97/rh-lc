@@ -73,6 +73,7 @@ theorem smul_add_smul (v : Pl D.host.F) {a : AE D}
   rw [← add_smul, hsum, algebraMap_smul, ← h1]
 
 
+open Classical in
 theorem datum_of_placeModel (M : Model D.sp.cm.sig Y Z) {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1))
     (hstd : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsStd ψ) (hG : M.IsGood ψ)
     (hs : ∀ u w, symp (R := AF D.host.F) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (-1) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Y.J)

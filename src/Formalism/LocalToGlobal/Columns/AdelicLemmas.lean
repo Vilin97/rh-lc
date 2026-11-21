@@ -1219,6 +1219,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarR
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E))
 
 
+open Classical in
 theorem decoPtSurj_of (hG : UnimodGenus hc n) (hR : Formalism.L2.DIV.RedSurj) (hT : Formalism.L2.DIV.IsSplitSet (ST ∪ SG))
     (hD : Disjoint ST SG) : DecoPtSurj hc n ST SG := by
   classical

@@ -60,6 +60,7 @@ def planeMat {n n₁ : ℕ} (H : Plane E n n₁) : Matrix (Fin n) (Fin n₁ ⊕ 
   Matrix.of fun i k => Sum.elim (fun j => H.ι i j) (fun t : Fin 2 => if t = 0 then H.x i else H.y i) k
 
 
+open Classical in
 def planeCoef {n n₁ : ℕ} (H : Plane E n n₁) : Matrix (Fin n₁ ⊕ Fin 2) (Fin n) E :=
   if h : n₁ + 2 = n then
     ((planeMat H).submatrix id (finSumFinEquiv.trans (finCongr h)).symm)⁻¹.submatrix

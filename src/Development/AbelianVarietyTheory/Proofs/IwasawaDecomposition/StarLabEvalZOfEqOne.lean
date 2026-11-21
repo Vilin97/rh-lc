@@ -42,6 +42,7 @@ theorem isCentreRay_comp (w : InvFun O) {X X₁ : Type} [AddCommGroup X] [Module
     exact ⟨t, ht, pull r β, by rw [evalZ_pull w hr, hw], fun a b => by simp only [pull_apply, hβ]⟩
 
 
+open Classical in
 def starLab (lab w : InvFun O) : InvFun O where
   toFun n B := if IsCentreRay w (Fin n → O) B then -1 else Real.exp (lab.toFun n B) - 1
   inv n m r hr B := by
@@ -54,6 +55,7 @@ def starLab (lab w : InvFun O) : InvFun O where
     rw [if_neg this, lab.zero, Real.exp_zero, sub_self]
 
 
+open Classical in
 theorem starLab_eval (lab w : InvFun O) {X : Type} [AddCommGroup X] [Module O X] [Module.Finite O X]
     [Module.Projective O X] (B : X → X → ℝ) :
     (starLab lab w).eval X B = if IsCentreRay w X B then -1 else Real.exp (lab.eval X B) - 1 := by

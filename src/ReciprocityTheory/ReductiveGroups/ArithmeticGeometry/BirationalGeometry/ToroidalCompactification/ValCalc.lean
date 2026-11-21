@@ -15,6 +15,7 @@ open ReciprocityTheory.ChartRestriction.G.Semi
 variable {X Y Y' Z : Scheme.{0}}
 
 
+open Classical in
 def gs (f : Y ⟶ X) (y : Y) (U : X.Opens) (a : Γ(X, U)) : Y.presheaf.stalk y :=
   if h : f y ∈ U then (Y.presheaf.germ (f ⁻¹ᵁ U) y h).hom ((f.app U).hom a) else 0
 

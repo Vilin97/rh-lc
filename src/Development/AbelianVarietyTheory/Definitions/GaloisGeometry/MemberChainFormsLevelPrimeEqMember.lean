@@ -248,6 +248,7 @@ structure MemDt (F : FormsTiedSym D u Ch chOf) where
   mid : ∀ i (h1 : 1 ≤ i) (h2 : i + 1 ≤ D.R.m) (β : Ch i), DetTie (F.ch i h1 h2 β).lev
 
 
+open Classical in
 def formsInMem (F : FormsTiedSym D u Ch chOf) (dt : MemDt F) (i : ℕ) (hi : i + 1 ≤ D.R.m) : FormsIn (D.fm u) (i + 1) hi :=
   if h : i + 1 = D.R.m then formsInOne (F.val (i + 1) hi (Or.inr h)) (dt.top (i + 1) hi h)
   else formsInMid F (i + 1) (one_le i) (by omega) (dt.mid (i + 1) (one_le i) (by omega))

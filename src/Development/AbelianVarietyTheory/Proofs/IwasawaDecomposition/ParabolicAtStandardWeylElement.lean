@@ -239,6 +239,7 @@ theorem levTriv_eq {T : Type} {L : LevCh D T} {μ0 : T} (hL : L.Is μ0) (i : Fin
       Subgroup.mem_iInf.1 (Subgroup.mem_iInf.1 ht PP) ((hL.Pg PP).1 hP)
 
 
+open Classical in
 def parOf (W : HSp D) (l : D.what₂.Tau → (D.host.E →+* ℂ)) (ρ : D.what₂.Tau) : SPar :=
   let τ : D.what₂.Tau := if h : ∃ τ, l τ = tauE D ρ ∨ l τ = (starRingEnd ℂ).comp (tauE D ρ) then h.choose else ρ
   if l τ = tauE D ρ then Formalism.L2.NTheta.holPar _ _ (Formalism.L2.NTheta.kapW (D.hc τ) (W.sig (tauE D ρ)).1 (W.sig (tauE D ρ)).2)
@@ -414,6 +415,7 @@ def Bounds (Q : Pre) (f : Fr Q) (S : Finset ℂ) : Prop :=
   (∀ z ∈ S, IsAlgebraic ℚ z) ∧ ∀ (X : Stages) (f' : Fr X.B.toPre), Q = X.B.toPre → HEq f f' → ∀ i, BoundAt (Fr.at X f') i S
 
 
+open Classical in
 def gens (Q : Pre) (f : Fr Q) : Finset ℂ := if h : ∃ S, Bounds Q f S then h.choose else ∅
 
 theorem gens_alg (Q : Pre) (f : Fr Q) : ∀ z ∈ gens Q f, IsAlgebraic ℚ z := by

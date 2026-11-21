@@ -21,6 +21,7 @@ theorem coeff_one_mul_comm (a b : MonoidAlgebra K G) : (a * b).coeff 1 = (b * a)
   exact Fintype.sum_equiv (Equiv.inv G) _ _ (fun s => by simp [mul_comm])
 
 
+open Classical in
 theorem coeff_lvlIdem_eq (P : Subgroup G) (ψ : P →* Kˣ) (t : G) :
     (Formalism.L2.DIV.lvlIdem P ψ).coeff t =
       if h : t ∈ P then (Nat.card P : K)⁻¹ * ((ψ (⟨t, h⟩ : P)⁻¹ : Kˣ) : K) else 0 := by
@@ -77,6 +78,7 @@ abbrev sdg {A : Type} [AddCommMonoid A] {N : ℕ} (M : Matrix (Fin N) (Fin N) A)
   ∑ i ∈ Finset.range (N - 1), entN M i (i + 1)
 
 
+open Classical in
 theorem coeff_eU (g N : ℕ) [NeZero g] (ψ₀ : AddChar (ZMod g) ℂ) (x : GL (Fin N) (ZMod g)) :
     (eU g N ψ₀).coeff x =
       if IsUniUp (x : Matrix (Fin N) (Fin N) (ZMod g)) then
@@ -111,6 +113,7 @@ theorem extAt_restr (k : Fin 2) (y : G0g D.nd) (hy : ∀ kv : (Σ k : Fin 2, D.n
   · rw [extAt_apply_ne D k _ _ h, hy ⟨k', v⟩ h]
 
 
+open Classical in
 theorem sum_trivOff [Fintype (G0g D.nd)] (k : Fin 2) [Fintype (∀ v : D.nd.PlG k, GL (Fin D.R.r) (ZMod (D.host.g k)))]
     (F : (∀ v : D.nd.PlG k, GL (Fin D.R.r) (ZMod (D.host.g k))) → ℂ) :
     ∑ y : G0g D.nd, (if ∀ kv : (Σ k : Fin 2, D.nd.PlG k), kv.1 ≠ k → y kv = 1 then F (fun v => y ⟨k, v⟩) else 0) =
@@ -207,6 +210,7 @@ open Polynomial
 variable (D : D7)
 
 
+open Classical in
 theorem term_eq [Fintype (G0g D.nd)] (P : Subgroup (G0g D.nd)) (lam : P →* ℂˣ)
     (ψ : ∀ kv : (Σ k : Fin 2, D.nd.PlG k), AddChar (ZMod (D.host.g kv.1)) ℂ) (hW : IsWhit D P lam ψ)
     (k : Fin 2) (S : Finset (Tup D k)) (y : G0g D.nd) :

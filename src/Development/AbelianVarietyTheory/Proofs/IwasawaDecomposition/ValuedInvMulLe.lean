@@ -129,6 +129,7 @@ def splice {n : ℕ} (P : HeightOneSpectrum (𝓞 E)) (A B : Matrix (Fin n) (Fin
     (PtExist.idem F P + σ (PtExist.idem F P)) * B i j
 
 
+open Classical in
 theorem map_splice {n : ℕ} {P : HeightOneSpectrum (𝓞 E)} (hP : conjPrime₂ P ≠ P) (A B : Matrix (Fin n) (Fin n) (AfE F E))
     (w : HeightOneSpectrum (𝓞 E)) :
     (splice hc P A B).map (adAt F w) = if w = P ∨ conjPrime₂ w = P then B.map (adAt F w) else A.map (adAt F w) := by

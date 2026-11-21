@@ -51,6 +51,7 @@ section Hyp
 variable {X : Data E r}
 
 
+open Classical in
 def unitVec (e : Ent X) : Fin (nd X) → ℂ := fun k => if (Fintype.equivFin (Ent X)).symm k = e then 1 else 0
 
 open NumberField in

@@ -20,6 +20,7 @@ namespace StackedGraphFibre
 variable {K' : Type} [Fintype K'] {ι : K' → Type} [∀ k, Fintype (ι k)]
 
 
+open Classical in
 def vertWeight {n : ℕ} (L : Fin n → HermLine ι) (W : Ideal (MRing ι)) : ℝ :=
   if IsHorizontal W then 0 else (geoNum n W (fun j => (L j).a) : ℝ) * Real.log (charOf W)
 

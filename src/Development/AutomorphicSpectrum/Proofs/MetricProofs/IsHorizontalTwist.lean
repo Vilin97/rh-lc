@@ -114,6 +114,7 @@ theorem oldPart_ne {u : (Σ o, Tb ι o) → ℂ} (hu : ∀ o, ∃ i, u ⟨o, i�
     ∃ i, basePart₂ u ⟨k, i⟩ ≠ 0 := hu (some k)
 
 
+open Classical in
 def twH (p : ℕ) (A : HermLine ι) (u : (Σ o, Tb ι o) → ℂ) : ℝ :=
   if ∀ o, ∃ i, u ⟨o, i⟩ ≠ 0 then
     Real.exp (chi p u * Real.log (A.h (basePart₂ u)) +

@@ -41,6 +41,7 @@ theorem vAdd_add (w : HeightOneSpectrum (𝓞 K)) {x y : K} (hx : x ≠ 0) (hy :
     exact (min_le_left _ _).trans (by omega)
 
 
+open Classical in
 def valFun (w : HeightOneSpectrum (𝓞 K)) (x : K) : WithTop ℤ :=
   if x = 0 then ⊤ else ((vAdd w x : ℤ) : WithTop ℤ)
 

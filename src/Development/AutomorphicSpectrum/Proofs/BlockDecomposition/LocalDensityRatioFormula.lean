@@ -498,6 +498,7 @@ variable {S : Finset (HeightOneSpectrum (𝓞 F))} {G : Ainf F → ℝ} {g : ∀
   {e : HeightOneSpectrum (𝓞 F) → ℝ}
 
 
+open Classical in
 def wT (e : HeightOneSpectrum (𝓞 F) → ℝ) (S : Finset (HeightOneSpectrum (𝓞 F))) (T : Finset (Off S))
     (v : HeightOneSpectrum (𝓞 F)) : Fv F v → ℝ :=
   if ∃ hv : v ∉ S, (⟨v, hv⟩ : Off S) ∈ T then rv v (e v) else rv v 0

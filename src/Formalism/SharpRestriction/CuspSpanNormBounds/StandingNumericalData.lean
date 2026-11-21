@@ -52,6 +52,7 @@ def tV (u u' : D.what₂.Word) (τ : D.what₂.Tau) : ℝ :=
   Real.sqrt (Tcrit D u τ * Tcrit D u' τ / (Tr D u * Tr D u'))
 
 
+open Classical in
 def aEff (u : D.what₂.Word) (τ : D.what₂.Tau) : ℝ :=
   if IsTop D τ then uOne D u τ 1 * bTop D τ / ((D.R.k : ℝ) * D.s.Del) else uOne D u τ 1 - vOne D τ 1
 
@@ -59,6 +60,7 @@ def gaG : ℝ :=
   ∏ᶠ p ∈ typedPl D, ∏ i ∈ Finset.Icc 1 D.R.k, ((Ideal.absNorm p.asIdeal : ℝ) ^ i - 1)
 
 
+open Classical in
 def genScal (u u' : D.what₂.Word) : ℝ :=
   (∏ᶠ p ∈ typedPl D, (1 + 3 / (Ideal.absNorm p.asIdeal : ℝ))) * gaG D *
     (∑' P : D.s.Pair u u',

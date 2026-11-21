@@ -301,6 +301,7 @@ theorem Lb_sigH (c : Mx D m n) (h : ∀ i j, finPart D (c i j) = 0) : Lb D m n (
   · rw [map_sub, finPart_Lb, h, sub_self]
 
 
+open Classical in
 def sg (τ : D.what₂.Tau) (z : Matrix (Fin m) (Fin n) ℂ) : V D m n := fun ρ i j => if ρ = τ then z i j else 0
 
 theorem line_eq (τ : D.what₂.Tau) (z : Matrix (Fin m) (Fin n) ℂ) (L : ℝ →+ Mx D m n)

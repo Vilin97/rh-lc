@@ -22,6 +22,7 @@ open GlobalTheory.Hk3 (Core Good IsSF SchurAll TwoSided FixAll EEc Wcc eH IsLab 
 namespace GlobalTheory.InertEig
 
 
+open Classical in
 noncomputable def coeff (n : ℕ) (ok : List ℕ → Prop) (lab : ℕ → List ℕ → List ℤ) (b : List ℕ → ℂ) (d : List ℤ) : ℂ :=
   if h : ∃ s, ok s ∧ lab n s = d then b h.choose else 0
 

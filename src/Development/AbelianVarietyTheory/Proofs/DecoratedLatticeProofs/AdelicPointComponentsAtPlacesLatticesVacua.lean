@@ -30,6 +30,7 @@ theorem repr_map {F E A B ι : Type} [Field F] [Field E] [Algebra F E] [CommRing
   | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 
+open Classical in
 def ePl (D : D7) (P : Pl D → Prop) : Af D.host.F :=
   RestrictedProduct.mk (fun v => if P v then 1 else 0)
     (Filter.Eventually.of_forall fun v => by

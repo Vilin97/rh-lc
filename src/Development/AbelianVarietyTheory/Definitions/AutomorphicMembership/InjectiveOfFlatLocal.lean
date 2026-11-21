@@ -249,6 +249,7 @@ theorem nonempty_bdat (hp : p ≠ 0) (hW : (p : ℂ) ∈ W.nonunits) (Z : Mdl Y 
   exact ⟨A⟩
 
 
+open Classical in
 def pick {X : Scheme.{0}} {t₀ : SAB H X} {x : X} (h : Nonempty (BDat t₀ x)) : BDat t₀ x :=
   if h' : ∃ A : BDat t₀ x, A.Exact then h'.choose else h.some
 

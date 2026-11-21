@@ -321,6 +321,7 @@ variable {ψ : AddChar (AF D.host.F) ℂ} {χS χT : (AE D)ˣ →* Circle}
   {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)}
 
 
+open Classical in
 theorem om_pair [Fintype (ResidueField (Ov D v))] (hW : IsWeilDatumO ψ S T χS χT om) (he : IsSplitIdem D e)
     {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f)
     (hfix : ∀ u ∈ latO S T (L0c D S) (L0c D T) (fun _ => True), IsHalf e u ∨ IsHalf (cA D e) u → heisO ψ S T u f = f)

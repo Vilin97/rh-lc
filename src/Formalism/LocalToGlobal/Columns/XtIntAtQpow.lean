@@ -35,6 +35,7 @@ theorem xtIntAt_qpow (q k : ℕ) : IntAt P ((q : E) ^ k) := by
   simp
 
 
+open Classical in
 theorem xtLocal {q : ℕ} (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hu : ((q : ℕ) : 𝓞 E) ∉ P.asIdeal ^ 2) {k₀ c' n' n N : ℕ} (hc' : c' = 0)
     (Φ : Loc.SF E K (n' + c') (n + 0))
     (hcongr : ∀ x x' : HomE E (n' + c') (n + 0), (∀ p p', p < n + 0 → p' < n' → ∃ d, IntAt P d ∧

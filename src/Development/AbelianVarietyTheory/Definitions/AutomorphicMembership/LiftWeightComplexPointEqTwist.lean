@@ -332,6 +332,7 @@ theorem exists_isLevelChar (h : R.grp_levels F) : ∃ χ, IsLevelChar R F χ := 
 variable (R F)
 
 
+open Classical in
 def levelChar : ∀ v : R.Pg, AddChar (Res R v) (𝓞 D.what₂.LL) :=
   if h : ∃ χ, IsLevelChar R F χ then h.choose else 1
 

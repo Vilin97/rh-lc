@@ -17,6 +17,7 @@ namespace GlobalTheory.Ord2.SelLower
 variable {l : ℕ} [Fact l.Prime]
 
 
+open Classical in
 def rv (c : Coef l) (n : ℕ) (v : Fin 2 → Qbar l) : Mn c n :=
   fun i => if h : v i ∈ c.O then red c n ⟨v i, h⟩ else 0
 

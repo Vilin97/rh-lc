@@ -26,6 +26,7 @@ theorem cj_injective : Function.Injective (cj : (E →+* PadicAlgCl l) → (E �
   rw [← cj_cj a, h, cj_cj]
 
 
+open Classical in
 def glue {ι X : Type} [Inhabited X] (inc : ι → (E →+* PadicAlgCl l)) (f g : ι → X) (i : E →+* PadicAlgCl l) : X :=
   if h : ∃ τ, inc τ = i then f h.choose else if h' : ∃ τ, cj (inc τ) = i then g h'.choose else default
 

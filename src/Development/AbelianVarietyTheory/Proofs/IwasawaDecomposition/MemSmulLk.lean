@@ -166,10 +166,12 @@ def toLk (A : AtTTied u) (i : ℕ) (hi : i ≤ D.R.m) (v : (D.mem u).A.vT) (c : 
 variable (A : AtTTied u) (P : ∀ i hi, LvTied u A i hi)
 
 
+open Classical in
 def prH (i : ℕ) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) : Formalism.L2.Herm.Ld D u i c →+ (D.fm u).lv i v c :=
   if hi : i ≤ D.R.m then ((P i hi).pr v c).comp (toLd i hi c) else 0
 
 
+open Classical in
 def prkH (i : ℕ) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls i) :
     Formalism.L2.Herm.Lk D u (A.Pv v) i c →+ (D.fm u).lk i v c :=
   if hi : i ≤ D.R.m then ((P i hi).prk v c).comp (toLk A i hi v c) else 0

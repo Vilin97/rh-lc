@@ -123,6 +123,7 @@ theorem lintegral_lt_top_of_meanC {α : Type} [MeasurableSpace α] (μ : Measure
 variable (I : AutInst) (φ : InfinitePlace I.F → (Fin I.n → ℂ) → ℝ)
 
 
+open Classical in
 def term (x : I.GA) (y : Fin I.n → I.E) : ℝ :=
   if y ∈ lamX I x then ∏ v, φ v (((uMat (x.1 v))⁻¹ * (I.P v)⁻¹) *ᵥ fun i => I.φ v (y i)) else 0
 

@@ -37,6 +37,7 @@ theorem segreCone_smul {P : Ideal (MRing ι)} {d : ℕ} (hP : IsArithVar P d) {m
   exact ⟨z', hz', funext fun b => by simp [hseg]⟩
 
 
+open Classical in
 def psiCoeffs {m e : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) :
     Fin m → ℂ :=
   fun a => Ψ (fun i' => if σ a = i' then (1 : ℂ) else 0) 0

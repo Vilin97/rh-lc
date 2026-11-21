@@ -84,6 +84,7 @@ def hV {M : Model l K} (hM : M.Sm) (a n : ℕ) : M.V n →+ (Module.Dual K (Hdg 
     ℚ_[l] ⊗[ℤ_[l]] M.T n →+ (Module.Dual K (Hdg M.q a n) →+ ℂ_[l]))
 
 
+open Classical in
 def hP (M : Model l K) (a n : ℕ) : M.V n →+ (Module.Dual K (Hdg M.q a n) →+ ℂ_[l]) :=
   if hM : M.Sm then hV h1 h2 hM a n else 0
 

@@ -22,6 +22,7 @@ theorem card_dual (L : Submodule 𝒪[k] (n → k)) [Fintype n] [L.IsLattice k] 
     Red.card_eq]
 
 
+open Classical in
 theorem finsum_char (χ : AddChar 𝓀[k] ℂ) (hχ : χ ≠ 1) (L : Submodule 𝒪[k] (n → k)) [Fintype n] [L.IsLattice k]
     (z : Red L) : ∑ᶠ f : Module.Dual 𝓀[k] (Red L), χ (-f z) =
       if z = 0 then ((resCard k : ℂ) ^ Fintype.card n) else 0 := by
@@ -91,6 +92,7 @@ theorem term_neg (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (P : Pair k n') {L : Su
   rw [term, dif_neg h0]
 
 
+open Classical in
 theorem datum_expand (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (hχ : χ ≠ 1) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k]
     (P : Pair k n') (x₀ : Matrix n n' k) (y : n → k) :
     datum q P L x₀ y = ((resCard k : ℂ) ^ Fintype.card n)⁻¹ *
@@ -178,6 +180,7 @@ theorem glued_sum (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (hχ : χ ≠ 1) (L : 
       if_neg (fun h => h0 fun z hz => h z (P.ker_le hz)), mul_zero]
 
 
+open Classical in
 theorem dualInd_eq (q : Unif k) (L : Submodule 𝒪[k] (n → k)) (η : n → k) :
     dualInd L η = if Lifts L (q.1 • η) 0 then 1 else 0 := by
   refine if_congr ⟨fun h y => ⟨q.1 * ⟨_, h y y.2⟩, ?_, ?_⟩, fun h y hy => ?_⟩ rfl rfl
@@ -192,6 +195,7 @@ theorem dualInd_eq (q : Unif k) (L : Submodule 𝒪[k] (n → k)) (η : n → k)
     exact this ▸ t.2
 
 
+open Classical in
 theorem cosetInd_pair (q : Unif k) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k]
     (f : {f : Module.Dual 𝓀[k] (Red L) // f ≠ 0}) (η : n → k) :
     cosetInd q (ofDual L f).lat (ofDual L f).red η = if Lifts L (q.1 • η) f.1 then 1 else 0 := by
@@ -200,6 +204,7 @@ theorem cosetInd_pair (q : Unif k) (L : Submodule 𝒪[k] (n → k)) [L.IsLattic
   rw [h, cosetInd_eq]
 
 
+open Classical in
 theorem finsum_lifts (q : Unif k) (L : Submodule 𝒪[k] (n → k)) (η : n → k) (A : Module.Dual 𝓀[k] (Red L) → ℂ) :
     ∑ᶠ f : Module.Dual 𝓀[k] (Red L), A f * (if Lifts L (q.1 • η) f then 1 else 0) =
       if h : InDual L (q.1 • η) then A (exists_lifts h).choose else 0 := by
@@ -211,6 +216,7 @@ theorem finsum_lifts (q : Unif k) (L : Submodule 𝒪[k] (n → k)) (η : n → 
       rw [if_neg fun h' => h (inDual_of_lifts h'), mul_zero]
 
 
+open Classical in
 theorem coset_total (q : Unif k) (L : Submodule 𝒪[k] (n → k)) [L.IsLattice k] (η : n → k) :
     (dualInd L + ∑ Q ∈ withLat L, cosetInd q Q.lat Q.red) η = if InDual L (q.1 • η) then 1 else 0 := by
   have hs := finsum_lifts q L η (fun _ => 1)

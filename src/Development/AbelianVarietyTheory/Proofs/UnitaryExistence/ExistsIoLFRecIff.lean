@@ -195,6 +195,7 @@ theorem mult_le (σ : E →+* ℂ) : Dw.mult σ ≤ Dw.p + Dw.q := by
   split_ifs <;> omega
 
 
+open Classical in
 theorem gaStar_pG {a : (E →+* ℂ) × ℕ → ℕ} (ha : IsPartFam Dw a) (hn : Dw.p + Dw.q ≤ n) (u : Fin n → E) :
     gaStar c (Matrix.diagonal u) (pG (Dw := Dw) c a n) =
       (∏ σ : E →+* ℂ, ∏ b : Fin n, embF c σ (u (if InPsi H σ then b else b.rev)) ^ part Dw a σ b) •

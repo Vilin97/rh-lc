@@ -123,6 +123,7 @@ theorem adele_ext {θ : InfFam D} (hθ : IsInfFam θ) {x y : AE D} (h1 : finPart
     rw [RingHom.map_sub, RingHom.map_sub, h2, sub_self]
 
 
+open Classical in
 theorem exists_idele_at {θ : InfFam D} (hθ : IsInfFam θ) (τ : D.what₂.Tau) (w : ℂ) (hw : w ≠ 0) :
     ∃ x : (AE D)ˣ, finPart D (x : AE D) = 1 ∧ ∀ τ', θ τ' (infPart D (x : AE D)) = if τ' = τ then w else 1 := by
   obtain ⟨σ, hσ⟩ := GlobalTheory.FockCompare.exists_chart hθ

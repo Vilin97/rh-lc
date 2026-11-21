@@ -538,6 +538,7 @@ theorem mkAd_apply (f : ∀ v : HeightOneSpectrum (𝓞 F), v.adicCompletion F)
     ((mkAd f h : intAd F) : Af F) v = f v := rfl
 
 
+open Classical in
 def idemAd (P : HeightOneSpectrum (𝓞 F) → Prop) : intAd F :=
   mkAd (fun v => if P v then 1 else 0) (fun v => by
     by_cases h : P v

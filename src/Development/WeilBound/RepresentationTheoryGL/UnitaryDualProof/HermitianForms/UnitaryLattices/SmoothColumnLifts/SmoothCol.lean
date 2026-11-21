@@ -43,6 +43,7 @@ def AD (ψ : AddChar k Circle) {n : ℕ} (col : (Fin n → k) → V →ₗ[ℂ] 
     (∀ t ∈ p.2, t ∈ A) ∧ ∀ a ∈ A, ∃! t, t ∈ p.2 ∧ a - t ∈ p.1
 
 
+open Classical in
 def av (ψ : AddChar k Circle) {n : ℕ} (col : (Fin n → k) → V →ₗ[ℂ] V) (ξ : Fin n → k) (A : AddSubgroup (Fin n → k))
     (v : V) : V :=
   if hd : ∃ p, AD ψ col ξ A v p then

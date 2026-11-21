@@ -32,6 +32,7 @@ theorem rep_rel (Γ : Subgroup SL(2, ℤ)) (a : Hs) : ∃ γ ∈ Γ, mob (ofSL �
   Quotient.mk_out (s := orbSetoid Γ) a
 
 
+open Classical in
 def gel (Γ : Subgroup SL(2, ℤ)) (τ : ℂ) : SL(2, ℤ) :=
   if h : τ ∈ Hs then (rep_rel Γ ⟨τ, h⟩).choose else 1
 

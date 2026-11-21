@@ -66,6 +66,7 @@ section Forget
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum (𝓞 E))}
 
 
+open Classical in
 def frBe (P : HeightOneSpectrum (𝓞 E)) (f : Sp E n ≃ₗ[E] Sp E n) (x : Sp E n) : Fin n → 𝓞 E ⧸ P.asIdeal :=
   if f.symm x ∈ stdAt E n P then redV P (f.symm x) else 0
 
@@ -102,6 +103,7 @@ abbrev inLeft (Q : Finset (HeightOneSpectrum (𝓞 E))) (w : SG) : uSG SG Q := �
 abbrev inRight (SG : Finset (HeightOneSpectrum (𝓞 E))) (P : Q) : uSG SG Q := ⟨P.1, by classical exact Finset.mem_union_right _ P.2⟩
 
 
+open Classical in
 def forgetDeco (p : DecoF E n ST SG Q) : Deco E n ST (uSG SG Q) where
   N := p.deco.1.N
   f := p.deco.1.f
@@ -166,6 +168,7 @@ theorem forgetFr_surjective : Function.Surjective (forgetFr : DecoF E n ST SG Q 
     · exact (forgetDeco_be_of_not _ w h).trans (be_eq_frBe d.2 (liftFr_spec d.2 w)).symm
 
 
+open Classical in
 def redGQ : GLG E n SG × GLQ E n Q →* GLG E n (uSG SG Q) where
   toFun a w := if h : w.1 ∈ SG then a.1 ⟨w.1, h⟩ else redGL n w.1 (a.2 (rightOf w h))
   map_one' := by
@@ -359,6 +362,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {N n : ℕ} (hN : N =
   {ST SG Q : Finset (HeightOneSpectrum (𝓞 E))}
 
 
+open Classical in
 def unitOf (pi : 𝓞 E) : Eˣ := if h : (pi : E) = 0 then 1 else Units.mk0 _ h
 
 
@@ -370,6 +374,7 @@ theorem unitOf_val {pi : 𝓞 E} {P : HeightOneSpectrum (𝓞 E)} (h : pi ∉ P.
   rfl
 
 
+open Classical in
 def tilFr (pi : 𝓞 E) (p : DecoF E n ∅ SG Q) : DecoF E N ST SG Q :=
   if h : ∀ (P : Q) (x : Sp E N),
       sumE hN (p.fr P) (unitOf pi) x ∈ (DecoSet.tilH (ST := ST) hN pi p.deco).1.at P.1 ↔ x ∈ stdAt E N P.1

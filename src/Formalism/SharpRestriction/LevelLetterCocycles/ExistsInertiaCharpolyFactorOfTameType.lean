@@ -1550,6 +1550,7 @@ theorem thetaT_injective (i : N.Loc) (hInt : Rows.IsotInternal what₂) (h42 : A
   · obtain ⟨lam, h0, hl⟩ := (h42 σ h).1.1; exact ⟨(lam : ℂ), by exact_mod_cast h0.ne', hl⟩
 
 
+open Classical in
 theorem multiplicity_sum_eq_dimension (i : N.Loc) (hInt : Rows.IsotInternal what₂) (h42 : At.Conclusion42 N A i)
     (h2 : (goodPartM N A i).map (what₂.thetaT (N.mu i) (N.j i)) = ⨆ x ∈ ZgoodN N A i, eigC N A i x) :
     ∑ x : N.X i, (if x ∈ ZgoodN N A i then N.mult i x else 0) = dM N A i := by

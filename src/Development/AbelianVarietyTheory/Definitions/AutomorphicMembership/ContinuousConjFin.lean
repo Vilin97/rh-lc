@@ -22,6 +22,7 @@ namespace GlobalTheory.CuspRep
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+open Classical in
 def coord (τ : E →+* ℂ) : Cinf E →+* ℂ :=
   if (InfinitePlace.mk τ).embedding = τ then Pi.evalRingHom (fun _ => ℂ) (InfinitePlace.mk τ)
   else (starRingEnd ℂ).comp (Pi.evalRingHom (fun _ => ℂ) (InfinitePlace.mk τ))
@@ -36,6 +37,7 @@ theorem coord_algebraMap (τ : E →+* ℂ) (x : E) : coord τ (pInf E (algebraM
     simp
 
 
+open Classical in
 def atEmb (τ : E →+* ℂ) (z : ℂ) : Cinf E :=
   Pi.single (InfinitePlace.mk τ) (if (InfinitePlace.mk τ).embedding = τ then z else starRingEnd ℂ z)
 

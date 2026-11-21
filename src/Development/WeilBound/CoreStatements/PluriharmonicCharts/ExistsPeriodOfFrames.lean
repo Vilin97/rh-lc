@@ -20,6 +20,7 @@ open GlobalTheory.PeriodChart
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {g : ℕ}
 
 
+open Classical in
 noncomputable def Pr (ty : Fin g → (E →+* ℂ)) (t : E →+* ℂ) : Matrix (Fin g) (Fin g) ℂ :=
   diagonal fun i => if ty i = t then 1 else 0
 

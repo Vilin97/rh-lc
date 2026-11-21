@@ -58,6 +58,7 @@ def bumpInf (f : Lie E n → ℝ) (x : Lie E n) : ℂ :=
   ∫ t : Vp E n, (f (toL (nu t * Matrix.of x)) : ℂ) * psiInf (-sdM (nu t))
 
 
+open Classical in
 def bumpFin (g : GL (Fin n) (Af E)) : ℂ :=
   if h : ∃ u ∈ GlobalTheory.SmGL.unipB (Af E) (Fin n), u⁻¹ * g ∈ GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E n then
     psiFin (GlobalTheory.Whittaker.superDiag h.choose) else 0

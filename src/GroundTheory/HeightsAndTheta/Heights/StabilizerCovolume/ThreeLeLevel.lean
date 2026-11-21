@@ -71,6 +71,7 @@ def HermDatum.gramLie (A : HermDatum Em Ψ N j) (hj : j ≤ N) (P : Matrix (Fin 
   Matrix.of fun a b => ∑ c, starRingEnd ℂ (A.lieComp hj P τ (v a) c) * A.lieComp hj P τ (v b) c
 
 
+open Classical in
 def HermDatum.nz (A : HermDatum Em Ψ N j) (hj : j ≤ N) (per : Ψ → Matrix (Fin N) (Fin N) ℂ)
     (I : Submodule (𝓞 Em) (Fin N → Em)) : ℝ :=
   if h : ∃ ρ v, IsNzFamily I ρ v then

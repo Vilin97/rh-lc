@@ -541,6 +541,7 @@ def HasInfChar (π : CG E a) (τ : E →+* ℂ) (m : Multiset ℂ) : Prop :=
     propext ⟨CuspSub.Iso.hasInfChar h, CuspSub.Iso.hasInfChar (Setoid.symm h)⟩
 
 
+open Classical in
 def infChar (π : CG E a) (τ : E →+* ℂ) : Multiset ℂ :=
   if h : ∃ m, π.HasInfChar τ m then h.choose else Multiset.replicate a 0
 

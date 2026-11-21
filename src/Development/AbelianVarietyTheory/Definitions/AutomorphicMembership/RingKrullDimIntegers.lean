@@ -134,6 +134,7 @@ end CxSt
 abbrev below {K : Type} [Field K] {Z : Scheme.{0}} (y : Sp K ⟶ Z) : Z := y (IsLocalRing.closedPoint K)
 
 
+open Classical in
 def valAt {K : Type} [Field K] {Z : Scheme.{0}} [IsIntegral Z] (y : Sp K ⟶ Z) (f : Z.functionField) : K :=
   if h : RegAt (below y) f then (Scheme.stalkClosedPointTo y).hom h.choose else 0
 
@@ -245,6 +246,7 @@ def arVol : ℝ :=
     ((((Y.dim + 1).factorial : ℝ) / (τ : ℝ) ^ (Y.dim + 1) : ℝ) : EReal)) atTop).toReal / (Module.finrank ℚ F : ℝ)
 
 
+open Classical in
 def ht (x : Y.X) : ℝ :=
   -((∑ σ : F →+* ℂ, ∑ᶠ (z : Pts Y σ) (_ : under z = x),
       (Real.log (C.pn Y σ A.D (A.m σ) (C.cx Y σ ((eqn A.D x)⁻¹ : Y.Fnˣ)) z) / 2 -
@@ -272,6 +274,7 @@ def IsArTop (t : ℝ) : Prop :=
     t = (a / (((k : ℕ) : ℝ) * (A.n : ℕ)) ^ (Y.dim + 1) + ((Y.dim : ℝ) + 1) * A.deg * ∑ᶠ v, cf v) / (Module.finrank ℚ F : ℝ)
 
 
+open Classical in
 def arTop : ℝ := if h : ∃ t, A.IsArTop t then h.choose else 0
 
 def SemiPos : Prop := ∀ σ, C.mSmooth Y σ A.D (A.m σ) ∧ C.mPsh Y σ A.D (A.m σ) 0
@@ -408,6 +411,7 @@ end Adl
 variable [StarRing F]
 
 
+open Classical in
 def frameAt (W : HLat F) (σ : F →+* ℂ) : Matrix W.ι W.ι ℂ :=
   if (InfinitePlace.mk σ).embedding = σ then W.X (InfinitePlace.mk σ) else (W.X (InfinitePlace.mk σ)).map (starRingEnd ℂ)
 

@@ -25,6 +25,7 @@ theorem finiteDimensional_muK_one (l : ℕ) [Fact l.Prime] : FiniteDimensional �
   exact IntermediateField.finiteDimensional_adjoin fun x _ => Algebra.IsIntegral.isIntegral x
 
 
+open Classical in
 def bridgeLow (D : D7) (l : ℕ) [Fact l.Prime] (w : HeightOneSpectrum (𝓞 D.host.E)) : Loc.FinExt l :=
   if hw : w ∈ placesOver D.host.E l then
     (Classical.choose_spec (GlobalTheory.PlaceBridge.exists_locBridge l D.host.E D.nd.Om w (D.nd.plOm.1 w) hw

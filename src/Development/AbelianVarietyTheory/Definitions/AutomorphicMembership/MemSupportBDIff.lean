@@ -99,6 +99,7 @@ variable {T : Type} {N : ℕ}
 def varpi (j : ℕ) (i : Fin N) : ℚ := if (i : ℕ) < j then 0 else -1
 
 
+open Classical in
 def fund (τ : T) (i : Fin N) : T → Fin N → ℝ := fun τ' a => if τ' = τ ∧ a ≤ i then 1 else 0
 
 def coef (u : T → Fin N → ℝ) (τ : T) (i : Fin N) : ℝ := if h : (i : ℕ) + 1 < N then u τ i - u τ ⟨i + 1, h⟩ else u τ i
@@ -129,6 +130,7 @@ abbrev RefMets : Type :=
 def offBd (k : s.Comp) (σ : D.what₂.LL →+* ℂ) : Set (Pts (Φ.C k).Y σ) := {y | (Φ.C k).π (under y) ∉ genBd s.T.Z}
 
 
+open Classical in
 def extBd {k : s.Comp} {σ : D.what₂.LL →+* ℂ} (f : Pts (Φ.C k).Y σ → ℝ) (y : Pts (Φ.C k).Y σ) : ℝ :=
   if y ∈ offBd Φ k σ then f y else limsup f (𝓝[offBd Φ k σ] y)
 
@@ -221,6 +223,7 @@ end PolDat
 variable {hm h0}
 
 
+open Classical in
 def mbarOf (P : PolDat s Φ hm h0) (B : ℝ) (u : D.what₂.Tau → Fin N → ℝ) (r : ℚ) (k : s.Comp) :
     Adl (cxSt D.what₂.LL) (Φ.C k).Y :=
   if (∀ τ i, ∃ q : ℚ, u τ i = q) ∧ 0 < r then P.mbarQ k B (fun τ i => ratOf (u τ i)) r else Adl.triv _ _

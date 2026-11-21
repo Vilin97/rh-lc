@@ -225,6 +225,7 @@ theorem subspaces_of_scalar_update (kap lam) : ((R.upd6 kap lam).toCx F).zs = (R
 end RealDat
 
 
+open Classical in
 theorem scal_exists (R : RealDat D A Ks) : ∃ kap lam, (R.upd6 kap lam).IsScal F := by
   choose l0 h0 h0' using fun i t p => exists_val (p := R.Eig0 i t p) RealDat.base_eigenvalue_unique (Real.exp ((F.Zsc (R.toCx F).zs).l6m i))
   choose l1 h1 h1' using fun i p v => exists_val (p := R.EigOff F i p v) RealDat.eigOff_unique (Real.exp ((F.Zsc (R.toCx F).zs).l6m i))

@@ -41,6 +41,7 @@ theorem one_sub_ne_zero {x : ℂ} (hx : ‖x‖ ≤ 1) {s : ℂ} (hs : 1 < s.re)
   linarith
 
 
+open Classical in
 theorem box_euler (hu : IsUnitary χ) (hr : ∀ w, r w ≤ 1) (hχ : ∀ u ∈ congr r, finPart χ u = 1) {s : ℂ} (hs : 1 < s.re) :
     ∃ Z, QSum (congr r) ((box r).indicator (zterm χ s)) Z ∧
       HasProd (fun w => if r w = 1 then (1 - (val χ w : ℂ) * ((Ideal.absNorm w.asIdeal : ℕ) : ℂ) ^ (-s))⁻¹ else 1) Z := by
@@ -247,6 +248,7 @@ theorem exists_box {N : ℕ} (hN : 0 < N) {a : Af E} (ha : ∀ w, Valued.v (a w)
         simpa using Valuation.map_sub_le _ h2 h1
 
 
+open Classical in
 theorem class_entire (hu : IsUnitary χ) {Λ : ℂ → ℂ} (hΛ : IsHeckeL χ Λ) {N : ℕ} (hN : 0 < N)
     (hχ : ∀ u ∈ congr (radN E N), finPart χ u = 1) {a : Af E} (ha : ∀ w, Valued.v (a w) ≤ 1) :
     ∃ Z : ℂ → ℂ, Differentiable ℂ Z ∧ ∀ s : ℂ, 1 < s.re → QSum (congr (radN E N))
@@ -318,6 +320,7 @@ theorem exists_hchar {c : Ideal (OF E)} (hc : c ≠ ⊥) [Finite (PicO c)] (θ :
     rw [map_one, map_one]
 
 
+open Classical in
 theorem sum_char {G : Type} [CommGroup G] [Finite G] [Fintype (G →* ℂˣ)] (g : G) :
     ∑ θ : G →* ℂˣ, (θ g : ℂ) = if g = 1 then (Fintype.card (G →* ℂˣ) : ℂ) else 0 := by
   split_ifs with h

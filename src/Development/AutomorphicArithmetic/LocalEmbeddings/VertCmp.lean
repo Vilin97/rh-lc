@@ -166,6 +166,7 @@ def IsDeg (N : Fin d → LB X) (z : X) (a : ℤ) : Prop :=
     i (genericPoint Z) = z ∧ topologicalKrullDim Z = d ∧ a = interNum (ZMod p) (structureModule Z) fun j => (N j).pull i
 
 
+open Classical in
 def pdeg (N : Fin d → LB X) (z : X) : ℤ := if h : ∃ a, IsDeg p N z a then h.choose else 0
 
 end Deg

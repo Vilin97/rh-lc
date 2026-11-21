@@ -135,6 +135,7 @@ theorem isUnit_of_UH (hJ : IsUnit J.det) {a : Matrix (Fin n) (Fin n) ℂ} (ha : 
   exact isUnit_of_mul_isUnit_right (this ▸ hJ)
 
 
+open Classical in
 def secM (hJ : IsUnit J.det) (a : MAlg n) : UG J :=
   if h : a.mat ∈ Formalism.QuantumDeterminants.UH J then ⟨(isUnit_of_UH hJ h).unit, h⟩ else 1
 

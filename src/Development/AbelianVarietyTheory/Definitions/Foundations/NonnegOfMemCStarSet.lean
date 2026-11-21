@@ -22,6 +22,7 @@ section Coord
 variable {K V W : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [AddCommGroup W] [Module K W]
 
 
+open Classical in
 def coordOf (N : (K →+* ℂ) → V → ℝ) :
     Σ n : ℕ, (V →ₗ[K] (Fin n → K)) × ((Fin n → K) →ₗ[K] V) × (InfinitePlace K → Matrix (Fin n) (Fin n) ℂ) :=
   if h : HasGram N then ⟨h.some.1, h.some.2.1.1.equivFun, h.some.2.1.1.equivFun.symm, h.some.2.1.2⟩ else ⟨0, 0, 0, 1⟩

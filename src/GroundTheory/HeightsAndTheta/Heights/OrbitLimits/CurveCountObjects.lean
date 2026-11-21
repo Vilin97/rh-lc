@@ -39,6 +39,7 @@ section Lemmas
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω]
 
 
+open Classical in
 theorem sum_single_chart_apply (k' : K) (j : ι k') (b : ℕ) (k : K) :
     ∑ i, (Finsupp.single (⟨k', j⟩ : Σ k, ι k) b) ⟨k, i⟩ = if k' = k then b else 0 := by
   classical

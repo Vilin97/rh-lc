@@ -139,6 +139,7 @@ section On
 variable (cov : ∀ j, WeightFamilies.Wt D j → Prop) (Nn : ∀ j ka, (B.KO →+* ℂ) → B.Cusp j ka → ℝ)
 
 
+open Classical in
 def l2nOn : ∀ j ka, (B.KO →+* ℂ) → B.Cusp j ka → ℝ :=
   fun j ka σ F => if cov j ka then Nn j ka σ F else B.supN j ka σ F
 

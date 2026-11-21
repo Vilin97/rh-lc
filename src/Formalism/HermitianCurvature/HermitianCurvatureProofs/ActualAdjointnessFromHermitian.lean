@@ -111,6 +111,7 @@ theorem slice_diff {Φ : Fn k r (Wq →L[ℂ] Wp)} (hΦ : Φ ∈ RadSp k r z z' 
     exact differentiableAt_const _
 
 
+open Classical in
 def dirD {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] (v : Fin r → ℂ) (Φ : Fn k r E) : Fn k r E :=
   fun c g => if c ∈ OmX r then fderiv ℝ (fun c' => Φ c' g) c v else 0
 

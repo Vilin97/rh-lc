@@ -35,6 +35,7 @@ theorem index_fix [IsAlgClosure F Ω] (Q : QCM F Ω) :
   exact ⟨by rw [← IntermediateField.finrank_eq_fixingSubgroup_index, Q.two], Q.K.fixingSubgroup_isOpen⟩
 
 
+open Classical in
 noncomputable def sign [IsAlgClosure F Ω] (Q : QCM F Ω) : G F Ω →* ℤˣ where
   toFun σ := if σ ∈ Q.K.fixingSubgroup then 1 else -1
   map_one' := by simp [Subgroup.one_mem]

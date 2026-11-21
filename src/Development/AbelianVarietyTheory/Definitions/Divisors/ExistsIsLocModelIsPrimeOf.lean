@@ -46,6 +46,7 @@ def IsFormOrd (η : Forms c n) (a : ℤ) : Prop :=
     ∃ f : Kˣ, η = (f : K) • E.toRat n ω ∧ E.ord f = a
 
 
+open Classical in
 def formOrd (η : Forms c n) : ℤ := if h : ∃ a, E.IsFormOrd η a then h.choose else 0
 
 def ordQ : (K →₀ ℚ) →ₗ[ℚ] ℚ := Finsupp.linearCombination ℚ fun g => (E.ord g : ℚ)

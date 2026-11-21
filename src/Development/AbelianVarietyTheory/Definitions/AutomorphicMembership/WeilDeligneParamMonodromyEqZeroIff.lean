@@ -340,6 +340,7 @@ def IsWDOf (ι : Qbar l ≃+* ℂ) (r : G E Ω →* GL n (Qbar l)) (x : WD h) : 
     ∃ (φ : Weil h) (hφ : deg φ = 1), IsWDOfWith t hφ ι r x
 
 
+open Classical in
 def wdOf (_hl : ((l : ℕ) : 𝓞 E) ∉ w.asIdeal) (ι : Qbar l ≃+* ℂ) (r : G E Ω →* GL n (Qbar l)) :
     WD h :=
   if H : ∃ x : WD h, IsWDOf ι r x then H.choose else WD.mk (WDRep.diag h fun _ : n => 1)

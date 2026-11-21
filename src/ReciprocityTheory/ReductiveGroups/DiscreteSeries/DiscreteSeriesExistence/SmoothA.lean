@@ -198,6 +198,7 @@ def dSlin (hσ : IsURepOn (UJset ε) σ) (X : Matrix (Fin n) (Fin n) ℂ) (hX : 
   map_smul' c v := Subtype.ext (dS_smul_vec (σ := σ) c X (v : H))
 
 
+open Classical in
 def Tm (hσ : IsURepOn (UJset ε) σ) (X : Matrix (Fin n) (Fin n) ℂ) : Module.End ℂ (smSub ε σ) :=
   if h : inG ε X then dSlin hσ X h else 0
 

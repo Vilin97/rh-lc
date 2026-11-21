@@ -49,6 +49,7 @@ theorem finite_setOf_liesOver :
     fun w hw ↦ ⟨⟨w, hw⟩, rfl⟩
 
 
+open Classical in
 def finiteAdeleAboveFun (a : (w : PlacesOver L v) → w.1.adicCompletion L)
     (w : HeightOneSpectrum (𝓞 L)) : w.adicCompletion L :=
   if h : w.asIdeal.LiesOver v.asIdeal then a ⟨w, h⟩ else 1

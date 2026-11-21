@@ -25,6 +25,7 @@ open GlobalTheory.IdemSupport
 variable {D : D7}
 
 
+open Classical in
 def cutPart (a : AE D) (V : HSp D) (g : GA D V) : GA D V :=
   if h : a * a = a ∧ cA D a = a then ⟨piece h.1 g.1, piece_mem _ _ h.1 h.2 g.2⟩ else g
 

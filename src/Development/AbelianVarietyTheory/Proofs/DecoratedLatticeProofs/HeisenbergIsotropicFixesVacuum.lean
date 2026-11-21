@@ -43,6 +43,7 @@ theorem finite_two (P : Pl D → Prop) : {v : Pl D | P v ∧ (2 : 𝓞 D.host.F)
   exact (Ideal.dvd_span_singleton).2 hv.2
 
 
+open Classical in
 def halfOff (P : Pl D → Prop) : Af D.host.F :=
   RestrictedProduct.mk (fun w => if P w ∧ (2 : 𝓞 D.host.F) ∉ w.asIdeal then (2⁻¹ : Fv D.host.F w) else 0)
     (Filter.Eventually.of_forall fun w => by

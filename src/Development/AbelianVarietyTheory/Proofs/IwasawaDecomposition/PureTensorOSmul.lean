@@ -194,6 +194,7 @@ theorem det_pow {m : ℕ} {P : Matrix (Fin m) (Fin m) ℂ} (hP : IsUnit P) (ε :
   cases ε a <;> simp [← Complex.exp_int_mul, mul_assoc]
 
 
+open Classical in
 theorem om_pt {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D} {χS χT : (AE D)ˣ →* Circle}
     {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)} (hW : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam θ)
     (kS : S.SigOK) (kT : T.SigOK) {S' : D.what₂.Tau → SPar} (M : DSModel T S')
@@ -280,6 +281,7 @@ theorem sub_diag {m n : ℕ} (τ : D.what₂.Tau) (l : Fin m → ℂ) :
       (fun h => (h (Finset.mem_univ _)).elim), Matrix.one_apply_eq]
 
 
+open Classical in
 theorem delta_weights {m n : ℕ} (p q : D.what₂.Tau → ℕ) (ap am : D.what₂.Tau → ℕ → ℕ) (τ : D.what₂.Tau) {ε : Fin m → Bool}
     (hε : ∀ a, ε a = decide ((a : ℕ) < p τ)) (χ : Matrix (Fin m) (Fin m) ℂ → ℂ) (κ : Fin m → ℝ)
     (hχ : ∀ t : Fin m → ℝ, χ (diagonal fun a => Complex.exp ((t a : ℂ) * Complex.I)) =

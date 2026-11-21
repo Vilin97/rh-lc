@@ -133,6 +133,7 @@ theorem geoNum_snoc_tensor {n : ℕ} (L : Fin n → HermLine ι) (A C : HermLine
   · simp
 
 
+open Classical in
 theorem RPositionAdd.proof (hFF : FibreFiniteStatement) (hInt : PtsIntegrableStatement) :
     RPositionAdd.Statement := by
   intro K _ ι _ I P n L A C B s hI hP hL hA hC hB hs

@@ -45,6 +45,7 @@ def InInertia (𝔭 : HeightOneSpectrum (𝓞 K)) (σ : L ≃ₐ[K] L) : Prop :=
 def UnramIn (𝔭 : HeightOneSpectrum (𝓞 K)) : Prop := ∀ σ : L ≃ₐ[K] L, InInertia L 𝔭 σ → σ = 1
 
 
+open Classical in
 def heckeVal (χ : (L ≃ₐ[K] L) →* ℂˣ) (𝔭 : HeightOneSpectrum (𝓞 K)) : ℂ :=
   if h : (∀ σ, InInertia L 𝔭 σ → χ σ = 1) ∧ ∃ σ, IsFrob L 𝔭 σ then ((χ h.2.choose : ℂˣ) : ℂ) else 0
 

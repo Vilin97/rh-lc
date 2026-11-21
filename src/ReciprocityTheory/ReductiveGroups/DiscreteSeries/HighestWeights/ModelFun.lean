@@ -22,6 +22,7 @@ def blkMinor (ε : Fin n → Bool) (a : Fin n) (x : Matrix (Fin n) (Fin n) ℂ) 
     (fun b : {b : Fin n // ε b = ε a ∧ b ≤ a} => (b : Fin n))).det
 
 
+open Classical in
 def mexp (ε : Fin n → Bool) (m : Fin n → ℤ) (a : Fin n) : ℤ :=
   if h : (Finset.univ.filter fun b : Fin n => a < b ∧ ε b = ε a).Nonempty then
     m a - m ((Finset.univ.filter fun b : Fin n => a < b ∧ ε b = ε a).min' h)

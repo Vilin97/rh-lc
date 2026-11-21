@@ -18,6 +18,7 @@ def detZ (Dw : Datum H) : MvPolynomial (ArcLt Dw) ℤ :=
   ∏ τ : E →+* ℂ, (Matrix.of fun i l : Fin (Dw.mult τ) => (X (⟨τ, i, l⟩ : ArcLt Dw) : MvPolynomial (ArcLt Dw) ℤ)).det
 
 
+open Classical in
 def subA {K : Type} [Field K] (A : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) K)
     (y x : ArcLt Dw) : K :=
   ∑ k : Fin (Dw.mult y.1), if x = ⟨y.1, y.2.1, k⟩ then A y.1 k y.2.2 else 0

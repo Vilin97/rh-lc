@@ -17,6 +17,7 @@ variable {ι κ : Type} [LinearOrder ι] [LinearOrder κ] {R S : Type} [Ring R] 
   {σ : R →+* S} {τ : κ → ι} {A : Cube.{0} ι R} {B : Cube.{0} κ S} (ψ : Cube.PullHom σ τ A B)
 
 
+open Classical in
 def totalPull (y : ∀ s : Finset ι, A.obj s) (s : Finset κ) : B.obj s :=
   if Set.InjOn τ (s : Set κ) then PD.sortSign τ s • ψ.app s (y (s.image τ)) else 0
 

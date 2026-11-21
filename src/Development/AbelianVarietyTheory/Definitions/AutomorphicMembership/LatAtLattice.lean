@@ -135,6 +135,7 @@ def crd (B : Base) (i : ℕ) (hi : i ≤ B.R.m) :
   (B.sp.X i).frame.equivFun.trans (LinearEquiv.funCongrLeft B.host.E B.host.E (finCongr (B.sp.X_rank i hi)).symm)
 
 
+open Classical in
 def latAt (u : B.Word) (a : I.ι) (i : ℕ) (c : (I.stp u a i).Cl) :
     letI := B.host.cmStar; Submodule (𝓞 B.host.E) (B.sp.X i).V :=
   letI := B.host.cmStar

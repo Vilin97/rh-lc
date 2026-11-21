@@ -88,6 +88,7 @@ theorem IsRealAll.unique (hθ : IsInfFam θ) {M : D.what₂.Tau → Matrix (Fin 
   exact (mul_inv_eq_one.1 e).symm
 
 
+open Classical in
 def realAll (M : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ) : GA D V :=
   if h : ∃ x, IsRealAll θ V M x then h.choose else 1
 
@@ -227,6 +228,7 @@ theorem onbConj_mul {W : G.Weil} {X : Node} (hX : PosOnb W X) (u v : UG D.what�
     _ = _ := by simp only [Matrix.mul_assoc]
 
 
+open Classical in
 def vtxPt (W : G.Weil) (X : Node) : UG D.what₂.Tau (G.V X).rank →* GA D (G.V X) where
   toFun u := if PosOnb W X then realAll W.θ (G.V X) (onbConj W X u) else 1
   map_one' := by

@@ -45,6 +45,7 @@ theorem valR_pullO1_g {L : Type} [Field L] {X : Scheme.{0}} {o : Type} [CommRing
   exact (GlobalTheory.T.homogeneousCoords_in_standardChart_ratio o L r (y0 ≫ π) t _ ht (le_preimage_mono _ inf_le_left h1)).2 _
 
 
+open Classical in
 def unitOf (M : RatModel k Ω) (U : M.Z.Opens) (x : Ω) (hx : ∀ z ∈ U, x ≠ 0 ∧ x ∈ M.O z ∧ x⁻¹ ∈ M.O z) :
     Γ(M.Z, U)ˣ :=
   if hU : (U : Set M.Z).Nonempty then

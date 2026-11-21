@@ -58,6 +58,7 @@ variable {ι : Type} [Fintype ι] {a : ℕ} {X : Type} [NormedAddCommGroup X] [N
   (ρ : GL (Fin a) (ι → ℂ) →* (X →L[ℂ] X))
 
 
+open Classical in
 def opI (M : LieI ι a) : X →L[ℂ] X := if h : IsUnit (Matrix.of M) then ρ h.unit else 0
 
 theorem orb_eq (v : X) (M : LieI ι a) : orb ρ v M = opI ρ M v := by

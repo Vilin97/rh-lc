@@ -219,6 +219,7 @@ theorem exists_divisor {ω : WeilDifferential k K} (hω : ω ≠ 0) :
   exact le_sup_left
 
 
+open Classical in
 noncomputable def divisor (ω : WeilDifferential k K) : Divisor k K :=
   if h : ω = 0 then 0 else Classical.choose (exists_divisor h)
 

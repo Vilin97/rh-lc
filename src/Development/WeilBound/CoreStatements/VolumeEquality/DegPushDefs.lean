@@ -61,6 +61,7 @@ def plPt (u : ∀ s, Matrix (Fin (r s)) (Fin (r s)) Ω) : (Σ b : (Σ s, Fin (r 
   Matrix.det (Matrix.of fun a b : Fin (x.1.2 + 1) => u x.1.1 (x.2 a) (Fin.castLE x.1.2.2 b))
 
 
+open Classical in
 def plDeg (b : Σ s, Fin (r s)) : (Σ s, Fin (r s)) → ℤ := fun b' => if b' = b then -1 else 0
 
 variable {Ψ : Type} {p q : ℕ} {K : Type}

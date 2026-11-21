@@ -162,6 +162,7 @@ def LabQ (a : ℕ) (x : GA g a) (f : (ZMod g)[X]) : Prop :=
     ∀ h : a = r, e f * cast (congrArg (GA g) h) x = cast (congrArg (GA g) h) x
 
 
+open Classical in
 def labF (a : ℕ) (x : GA g a) : (ZMod g)[X] :=
   if h : ∃ f, LabQ g r e a x f then h.choose else (X - C 1) ^ a
 

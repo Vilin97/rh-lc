@@ -20,6 +20,7 @@ namespace PositivityTheory.RgBcC.Bridge
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+open Classical in
 def atW (w : InfinitePlace E) (x : Matrix (Fin a) (Fin a) ℂ) : Lie E a :=
   fun i j v => if v = w then x i j else (1 : Matrix (Fin a) (Fin a) ℂ) i j
 

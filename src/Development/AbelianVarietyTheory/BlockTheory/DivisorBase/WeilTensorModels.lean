@@ -120,6 +120,7 @@ def unifAt (v : Pl F) : (Fv F v)ˣ := (GlobalTheory.SplitFlip.exists_isUnif (k :
 def condExp {v : Pl F} (ν : (Fv F v)ˣ →* ℂˣ) : ℕ := sInf {c | GlobalTheory.SplitFlip.CondLE (unifAt v) c ν}
 
 
+open Classical in
 def gauss (ψ : AddChar (AF F) ℂ) {v : Pl F} (ν : (Fv F v)ˣ →* ℂˣ) : ℂ :=
   ∑ y : (GlobalTheory.SplitFlip.Res (Fv F v) (condExp ν))ˣ,
     if h : ((Quotient.out y.1 : (ValuativeRel.valuation (Fv F v)).integer) : Fv F v) = 0 then 0 else

@@ -58,6 +58,7 @@ theorem isField_sum {Z : Scheme.{0}} {W : Z.Opens} {I : Type} [Fintype I] {d : I
     fun O O' e hO f => by simp only [fun a => (hd a).2.2 O O' e hO, map_sum]⟩
 
 
+open Classical in
 def smulFld {Z : Scheme.{0}} {W : Z.Opens} (c : Γ(Z, W)) (d : Fld Z) : Fld Z :=
   fun O f => if h : O ≤ W then resG Z h c * d O f else 0
 

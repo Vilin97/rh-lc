@@ -53,6 +53,7 @@ theorem LocB_eOf_mem (a : Af I.F) (ha : a ∈ Formalism.UG.intAd I.F) : eOf I a 
   exact Subring.subset_closure (Or.inr ⟨⟨a, ha⟩, rfl⟩)
 
 
+open scoped Classical in
 def locG (a : Af I.F) (x : I.Gf) : I.Gf :=
   if h : a * a = a then
     ⟨locGL (eOf I a) (LocB_eOf_idem I a h) (x : GL (Fin I.n) (I.E ⊗[I.F] Af I.F)), by

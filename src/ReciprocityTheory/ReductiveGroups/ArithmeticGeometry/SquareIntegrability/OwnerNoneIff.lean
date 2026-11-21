@@ -29,6 +29,7 @@ theorem colB_inj (hD : Disj bs) : Function.Injective (colB bs) := by
 variable (bs)
 
 
+open Classical in
 def owner (k : Fin n) : Option (Σ j : Fin nb, Fin (bs j).i) :=
   if h : ∃ p, colB bs p = k then some h.choose else none
 

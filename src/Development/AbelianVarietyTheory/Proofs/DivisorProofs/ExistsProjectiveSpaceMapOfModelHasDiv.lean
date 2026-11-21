@@ -55,6 +55,7 @@ theorem eq_of_valF {V : M.Z.Opens} {f g : Γ(M.Z, V)}
     exact Subsingleton.elim _ _
 
 
+open Classical in
 def fnOf (V : M.Z.Opens) (x : Ω) : Γ(M.Z, V) :=
   if h : ∃ f : Γ(M.Z, V), valF M.pt V f = x then h.choose else 0
 

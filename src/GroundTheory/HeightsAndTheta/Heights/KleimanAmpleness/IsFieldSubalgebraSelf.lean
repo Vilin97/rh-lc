@@ -157,6 +157,7 @@ instance resField.algebraBase (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k)
   inferInstanceAs (Algebra S (FractionRing (chartRingOver S y c ⧸ p)))
 
 
+open Classical in
 def residue (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (p : Ideal (chartRingOver S y c)) [p.IsPrime]
     (u : Ω) : ResField S y c p :=
   if h : u ∈ chartRingOver S y c then

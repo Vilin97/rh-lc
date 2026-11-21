@@ -110,6 +110,7 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {ϖ : 
   {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+open Classical in
 theorem cut_list (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : Irreducible ϖ) {P : Ideal (MRing ι O)}
     {b : K → ℤ} {f g : MRing ι O} (hD : IsVerticalDivisor P ϖ b f g) {c : K → ℕ} {s : MRing ι O}
     (hs : IsMultiHomog s c) (hsP : s ∉ P)

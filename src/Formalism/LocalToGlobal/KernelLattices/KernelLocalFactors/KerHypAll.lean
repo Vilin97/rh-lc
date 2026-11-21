@@ -112,6 +112,7 @@ variable {X : Fields} {Pr : Primes X} (sel : HeightOneSpectrum (𝓞 X.F) → He
   (mu : Tup X.F X.E X.K S)
 
 
+open Classical in
 def locChr {n : ℕ} (Λ : LevFam X.E X.K n Pr.vGs) (Θ : LevQFam X.E X.K n (QE sel (mu : Chr X.F X.E X.K))) (g : FrmG Λ Θ)
     (w : rowSG Pr sel mu) : X.K :=
   if hw : w.1 ∈ Pr.vGs then (((Λ ⟨w.1, hw⟩).lam ⟨(g.2.1 : GLG X.E n Pr.vGs) ⟨w.1, hw⟩, g.2.1.2 _ (Set.mem_univ _)⟩ : X.Kˣ) : X.K)
@@ -180,6 +181,7 @@ theorem entB_frame (q k₀ c' n' c n : ℕ) (h' : k₀ ≤ n') (h : k₀ ≤ n) 
   rfl
 
 
+open Classical in
 theorem phiQ_eqG {q : ℕ} (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hu : ((q : ℕ) : 𝓞 E) ∉ P.asIdeal ^ 2) (ξ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ)
     (k₀ r c' n' c n : ℕ) (h' : k₀ ≤ n') (h : k₀ ≤ n) (hr' : r ≤ n' + c') (hr : r ≤ n + c) (x : HomE E (n' + c') (n + c)) :
     LocE.PhiQ q ξ k₀ r c' n' c n x = if (∀ s l, IntAt P (x (Pi.single s 1) l)) then

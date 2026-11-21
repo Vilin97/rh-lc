@@ -131,6 +131,7 @@ def flatCoord {g p q : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (z : Fin q ⊕ Fin
     Matrix (Fin q ⊕ Fin p) (Fin q ⊕ Fin p) ℂ)
 
 
+open Classical in
 def IsHorizontal (sig : Rule Y Xc τ) : Prop :=
   ∀ (s : c.F →+* ℂ), s (IntermediateField.inclusion c.le (baseKA l).ρ) = H.rt0 →
   ∀ (g : ℕ) (ty : Fin g → (E →+* ℂ)), IsTypeFn H D.p D.q ty →

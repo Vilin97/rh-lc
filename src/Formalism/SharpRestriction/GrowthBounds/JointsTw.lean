@@ -23,6 +23,7 @@ def SysUAt (D : D7) (L : SizeData₂ D) (X : Inst D L) (Y : LatInst D) (u : D.wh
         Fn v j) - ∑ j ∈ Finset.range D.R.m, (dG j : ℝ)
 
 
+open Classical in
 theorem UAt_of (D : D7) (L : SizeData₂ D) (X : Inst D L) (Y : LatInst D) (K : Consts) (low : ℝ)
     (hT : GatTies D) (hLT : LatTied hT X Y) (u : D.what₂.Word) (w : D.what₂.places.Pl)
     (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) (hPuw : SysUAt D L X Y u w hg low)

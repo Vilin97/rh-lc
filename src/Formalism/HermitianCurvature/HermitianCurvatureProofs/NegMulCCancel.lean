@@ -28,6 +28,7 @@ def GoodP (Bj : B.RealPlaceData k ρ Wp Wq) (x : XP k p ρ) : Prop :=
   (Matrix.of x.1.1 : B.Mat k ρ) ∈ UWset k ρ Bj.z ∧ (Matrix.of x.1.2 : B.Mat k ρ) ∈ Nset k ρ
 
 
+open Classical in
 def sP (Bj : B.RealPlaceData k ρ Wp Wq) (x : XP k p ρ) : B.Mat k (p + ρ) :=
   if GoodP Bj x then
     U.Rn k p ρ (-x.2) * U.embG k p ρ ((Matrix.of x.1.1 : B.Mat k ρ)⁻¹ * (Matrix.of x.1.2 : B.Mat k ρ)⁻¹)

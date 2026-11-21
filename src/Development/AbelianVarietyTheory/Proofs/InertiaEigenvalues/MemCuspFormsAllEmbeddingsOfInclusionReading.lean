@@ -334,6 +334,7 @@ theorem dom_add {a a' : (E →+* ℂ) × ℕ → ℕ} {n n' : ℕ} (h : Dom a n)
   ⟨fun τ => (h.1 τ).add (h'.1 τ), h.2.add h'.2⟩
 
 
+open Classical in
 def shift (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (k : ℕ) (a : (E →+* ℂ) × ℕ → ℕ) : (E →+* ℂ) × ℕ → ℕ :=
   fun x => a x - if InPsi H x.1 then 2 * k else 0
 

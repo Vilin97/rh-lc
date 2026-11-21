@@ -509,6 +509,7 @@ section Glob
 variable (D : D7) (T : TwR D.LL0 D.nd)
 
 
+open Classical in
 def psiUnitT (θ : ∀ kk : Fin 2, Multiplicative (ZMod (D.host.g kk)) →* (↥D.LL0)ˣ) (i : T.Tw) (b : Bool) (u : G0g D.nd) :
     (FractionRing (T.O i))ˣ :=
   if h : u ∈ Formalism.IndefR.NX.U D.nd then psiUT D T θ i b ⟨u, h⟩ else 1
@@ -545,6 +546,7 @@ theorem mulSingle_mem_U (kv : Σ kk : Fin 2, D.nd.PlG kk) (M : Matrix (Fin D.R.r
     exact ⟨Matrix.blockTriangular_one, fun a => by simp⟩
 
 
+open Classical in
 def gU (i : T.Tw) (k : ℕ) (b : Bool) (kv : Σ kk : Fin 2, D.nd.PlG kk) (s : SplitPlace D.host.E)
     (red : s.v.adicCompletionIntegers (maximalRealSubfield D.host.E) →+* ZMod (D.host.g kv.1))
     (τ : (ZMod (D.host.g kv.1))ˣ →* (FractionRing (T.O i))ˣ)

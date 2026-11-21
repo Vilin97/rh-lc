@@ -84,6 +84,7 @@ namespace GeoX
 variable {D : D7} {r j p : ℕ} {Lc : ModuliIntegralCharts.Loc D r j p} (G : GeoX Lc)
 
 
+open Classical in
 def typeDeg {y : Lc.Pt Lc.Xm} {La : Lc.Unim} (e : G.Lt y La →₀ ℕ) (σ : ModuliIntegralCharts.PsiT D × Bool) : ℕ :=
   ∑ l ∈ e.support, if G.ltype y La l = σ then e l else 0
 
@@ -100,6 +101,7 @@ def IsV {y : Lc.Pt Lc.Xm} {La : Lc.Unim} (x : D.host.E) (l : G.Lt y La) : Prop :
   ‖G.sgE y (G.ltype y La l) x‖ < 1
 
 
+open Classical in
 def subV {y : Lc.Pt Lc.Xm} {La : Lc.Unim} (x : D.host.E) (yy : G.Lt y La → (Lc.fld y).C)
     (P : MvPolynomial (G.Lt y La) (Lc.fld y).C) : MvPolynomial (G.Lt y La) (Lc.fld y).C :=
   MvPolynomial.bind₁ (fun l => if G.IsV x l then MvPolynomial.C (yy l) else MvPolynomial.X l) P

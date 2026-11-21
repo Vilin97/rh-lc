@@ -19,10 +19,12 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+open Classical in
 def killBlocks (S : Set K) : MRing ι →ₐ[ℤ] MRing ι :=
   aeval fun p => if p.1 ∈ S then 0 else X p
 
 
+open Classical in
 theorem killBlocks_X (S : Set K) (p : Σ k, ι k) :
     killBlocks S (X p : MRing ι) = if p.1 ∈ S then 0 else X p := by
   rw [killBlocks, aeval_X]

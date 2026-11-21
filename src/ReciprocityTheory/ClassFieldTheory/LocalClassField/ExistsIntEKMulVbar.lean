@@ -269,6 +269,7 @@ def layerInfl {L L' : IntermediateField ℚ_[p] (PadicAlgCl p)} (h : L ≤ L') [
     | H σ => rfl
 
 
+open Classical in
 def vLayerMap [(subG p K L).Normal] : (layer p K L).V →+ ℤ :=
   if h : ∃ f : (layer p K L).V →+ ℤ, ∀ x, (f x : ℝ) = eK p L * vbar p x.1 then h.choose else 0
 
@@ -313,6 +314,7 @@ def IsInv (f : (urT p K).H 2 →+ QZ) : Prop :=
     f ((urT p K).coch.cls 2 z hz) = QuotientAddGroup.mk (t (frobLK p K (MaximalUnramifiedExtension p K)))
 
 
+open Classical in
 def invUr : (urT p K).H 2 →+ QZ := if h : ∃ f, IsInv p K f then h.choose else 0
 
 end

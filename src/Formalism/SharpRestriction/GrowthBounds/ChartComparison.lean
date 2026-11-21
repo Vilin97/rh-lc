@@ -108,6 +108,7 @@ theorem CmpJHyp.valInt {I : CmpJIn Tw u μ w h Lv} (H : CmpJHyp c I) (j : ℕ) (
   StepIn.valIntJ_of (S := (I.at' j hj).st) (c.embW u w h) w (H.twUnit j hj) (H.valIntN j hj)
 
 
+open Classical in
 def cmpSJ {I : CmpJIn Tw u μ w h Lv} (H : CmpJHyp c I) (hS : BlockRationalityField) (j : ℕ) :
     ((Tw.fm u μ).lat (j + 1)).V →ₛₗ[c.embW u w h] Lv.Fm (j + 1) :=
   if hj : j + 1 ≤ D.R.m then

@@ -16,6 +16,7 @@ variable {O Γ Hf P : Type} [CommRing O] [Group Γ] [Group Hf] [AddCommGroup P] 
   (ι : Γ →* Hf) (J : Subgroup Hf) (lam : J →* Oˣ) (ρ : Representation O Γ P)
 
 
+open Classical in
 def lamExt (x : Hf) : O := if hx : x ∈ J then (lam ⟨x, hx⟩ : O) else 0
 
 theorem lamExt_coe (k : J) : lamExt J lam (k : Hf) = (lam k : O) := by

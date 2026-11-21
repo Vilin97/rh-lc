@@ -40,6 +40,7 @@ def DualFn (P : HeightOneSpectrum (𝓞 E)) {n : ℕ} (F : (Sp E n →ₗ[E] E) 
   ∀ ξ, F ξ ∈ Zmu K (qOf P)
 
 
+open Classical in
 theorem colFn_indicator (P : HeightOneSpectrum (𝓞 E)) {n : ℕ} (y₀ : Sp E n) (h₀ : (qOf P : E) • y₀ ∈ stdAt E n P) :
     ColFn P (fun y => if y - y₀ ∈ stdAt E n P then (1 : K) else 0) := by
   refine ⟨fun y hy => ?_, fun y z hz => ?_, fun y => ?_⟩

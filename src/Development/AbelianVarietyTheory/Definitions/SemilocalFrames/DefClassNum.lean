@@ -75,6 +75,7 @@ def flagM (ε : Fin n → Bool) {a : ℕ} (W : Fin (a + 1) → Submodule ℂ (Fi
 def maxK (ε : Fin n → Bool) : Set (Formalism.REAL.UJ ε) := {g | (uMat g)ᴴ * uMat g = 1}
 
 
+open Classical in
 def detOn (g : Matrix (Fin n) (Fin n) ℂ) (W : Submodule ℂ (Fin n → ℂ)) : ℝ :=
   if h : ∀ y ∈ W, Matrix.toLin' g y ∈ W then ‖LinearMap.det ((Matrix.toLin' g).restrict h)‖ else 0
 

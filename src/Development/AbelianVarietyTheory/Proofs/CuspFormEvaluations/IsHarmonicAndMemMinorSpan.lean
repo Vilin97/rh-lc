@@ -82,10 +82,12 @@ theorem herm_eq_zero_of_EF {v w : Fin r → E} (h : ∀ α : 𝓞 E, EF X ((α :
   simpa [(c_pos X τ).ne'] using h1
 
 
+open Classical in
 def perLt (x : Frame X.Ψ r) (v : Fin r → E) (τ : X.Ψ) : X.Ψ × Fin r → ℂ := fun p =>
   if p.1 = τ ∧ (p.2 : ℕ) < X.p0 then per X x v p else 0
 
 
+open Classical in
 def perGe (x : Frame X.Ψ r) (v : Fin r → E) (τ : X.Ψ) : X.Ψ × Fin r → ℂ := fun p =>
   if p.1 = τ ∧ X.p0 ≤ (p.2 : ℕ) then per X x v p else 0
 

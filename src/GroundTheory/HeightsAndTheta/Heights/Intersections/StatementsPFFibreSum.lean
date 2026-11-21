@@ -15,6 +15,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.Cha
 noncomputable section
 
 
+open Classical in
 def PFFibreSum.Statement : Prop :=
   ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (K' : Type) [Fintype K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)]

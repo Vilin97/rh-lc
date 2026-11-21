@@ -196,6 +196,7 @@ theorem xtTilH_mem (hN : N = n + 1) (d : DecoSet E n ∅ SG) {pi : 𝓞 E} (hT :
   rfl
 
 
+open Classical in
 theorem xtTilH_be (hN : N = n + 1) (d : DecoSet E n ∅ SG) {pi : 𝓞 E} (hT : ∀ P : ST, cO E pi ∉ P.1.asIdeal) (hG : ∀ w : SG, pi ∉ w.1.asIdeal)
     (w : SG) (v : Sp E N) (hv : v ∈ (DecoSet.tilH (ST := ST) hN pi d).1.at w.1) (i : Fin N) :
     (DecoSet.tilH (ST := ST) hN pi d).1.be w v i =

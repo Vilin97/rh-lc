@@ -78,6 +78,7 @@ theorem sig_ex (V : HSp D) (τ : D.host.E →+* ℂ) : ∃ s : ℕ × ℕ, Forma
   exact ⟨(p, q), h⟩
 
 
+open Classical in
 def fixSig (V : HSp D) : HSp D := { V with sig := if V.SigOK then V.sig else fun τ => (sig_ex V τ).choose }
 
 theorem fixSig_ok (V : HSp D) : (fixSig V).SigOK := by

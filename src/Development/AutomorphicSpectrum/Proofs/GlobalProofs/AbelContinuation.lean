@@ -33,6 +33,7 @@ def ClassParam {F : Type} [Field F] [NumberField F] (𝔣 𝔞 𝔟 : Ideal (�
       ∀ p, (e p).1 * 𝔟 = Ideal.span {y p.1 + ∑ i, (p.2 i : 𝓞 F) * v p.1 i}
 
 
+open Classical in
 def classWeight {F : Type} [Field F] [NumberField F] (l : ℕ) (𝔠 I : Ideal (𝓞 F)) : ℚ := if I ≤ 𝔠 then (l : ℚ) - 1 else -1
 
 def GoodWeight (l : ℕ) {r : ℕ} (w : (Fin r → ℕ) → ℚ) : Prop :=

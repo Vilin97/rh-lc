@@ -38,6 +38,7 @@ theorem KLx_eq (j : ℕ) (x : ((Tw.fm u (D.what₂.muAt w)).lat j).V) (y : ((Tw.
 
 
 
+open Classical in
 def chainFirst (M : CmpMaps c Tw u w h Lv) : Chain Lv where
   Kz j := if hj : j < D.R.m then
       extK (M.cmp j) (M.cmp (j + 1)) ((Tw.fm u (D.what₂.muAt w)).lat j).b (M.li j hj.le) (KLx Tw u w j)

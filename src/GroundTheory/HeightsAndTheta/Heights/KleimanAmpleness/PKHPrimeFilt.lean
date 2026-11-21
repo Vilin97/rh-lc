@@ -183,6 +183,7 @@ theorem exists_prime_colon [IsNoetherianRing S] (hgr : IsMGraded S ι 𝓜)
 variable (ι 𝓜)
 
 
+open Classical in
 def next [IsNoetherianRing S] (A : Submodule (MRingOver S ι) M) : M × (K → ℤ) :=
   if h : IsMGraded S ι 𝓜 ∧ IsGradedSub 𝓜 A ∧ A ≠ ⊤ then
     Classical.choose (exists_prime_colon h.1 h.2.1 h.2.2) else (0, 0)

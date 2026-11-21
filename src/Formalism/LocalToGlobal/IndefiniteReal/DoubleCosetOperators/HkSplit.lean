@@ -346,6 +346,7 @@ theorem embV_comm (V : HSp D) {v v' : HeightOneSpectrum (𝓞 D.host.F)} (h : v 
   exact extM_comm (jv v) (jv v') (jv_orth h) _ _
 
 
+open Classical in
 def embOn (V : HSp D) (T : Set (HeightOneSpectrum (𝓞 D.host.F))) (s : ∀ v ∈ T, SplitD D v)
     (v : HeightOneSpectrum (𝓞 D.host.F)) : GL (Fin V.rank) (v.adicCompletion D.host.F) →* GA D V :=
   if hv : v ∈ T then embV V (s v hv) else 1

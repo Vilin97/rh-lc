@@ -284,6 +284,7 @@ theorem parahoric_lam_eq {δ : Kˣ →* ℂˣ} (hδ : IsTame δ) (h : IsRed φ �
 end Red
 
 
+open Classical in
 theorem stepType_lam {μ₀ : T} (hL : L.Is μ₀) (t : T) {j n : ℕ} (hj : j ≤ D.R.m) (w : Pl D.host.E)
     {ea : Ix (Fin D.R.r) (Fin D.R.t) j ≃ Fin n} (ha : IsIx ea) (N : Matrix (Fin n) (Fin n) (OA D)) (g : GL (Fin n) (kP w))
     (hr : g.val = N.map (resS D.host.F w)) (κ : GL (Ix (Fin D.R.r) (Fin D.R.t) j) (Kw w))
@@ -371,6 +372,7 @@ theorem stepType_lam {μ₀ : T} (hL : L.Is μ₀) (t : T) {j n : ℕ} (hj : j �
       rfl
 
 
+open Classical in
 theorem endLamAt_eq {μ₀ : T} (hL : L.Is μ₀) (G : GridData L sc) (t : T) {j n : ℕ} (hj : j ≤ D.R.m) (w : Pl D.host.E)
     (h : (locGrid G t w).rank (0, j) = n) (β x : GL (Fin n) (Lev.EAf D)) (hx : x ∈ St β)
     (hP : w ∈ L.Pg → redFn β w x ∈ blockTri (blkOf D.R.r D.R.t)) (hQ : w ∈ L.Q t → redFn β w x ∈ blockTri (blk2 D.R.r))

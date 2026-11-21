@@ -79,6 +79,7 @@ variable (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchim
   [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)] (μ : Measure (GL (Fin n) F)) [μ.IsHaarMeasure]
 
 
+open Classical in
 def GammaIntAt : Prop :=
   ∀ g : GL (Fin n) F,
     (Continuous fun θ : Fin n → UnitAddCircle => zonalSpherical μ (pt θ) g) ∧

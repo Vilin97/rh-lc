@@ -291,6 +291,7 @@ theorem sum_val_log_le (n : ℕ) (hn : 0 < n) (P : Finset ℕ) (hP : ∀ p ∈ P
     _ ≤ Real.log (n : ℝ) := Real.log_le_log h3 (by exact_mod_cast h2)
 
 
+open Classical in
 def EatCI (L : SizeData₂ D) (K : Consts) (c : ErrC) (j p : ℕ) : ℝ :=
   if IsResidueClassZero D p ∧ hP D p = 0 then EatC L c j p else EatI L K c j p
 
@@ -307,6 +308,7 @@ def InertPrimeLossBound (D : D7) (L : SizeData₂ D) (K : Consts) (c : ErrC) (C 
     ∑ p ∈ P, 2 * Real.log (p : ℝ) * |EatCI L K c j p| ≤ C * L.B0
 
 
+open Classical in
 def hOff (L : SizeData₂ D) (K : Consts) (c : ErrC) (u : D.what₂.Word) (j p : ℕ) : ℝ :=
   (padicValNat p (D.mem u).C.DGam : ℝ) + (if D.host.cls p = PrimeClass.ramD then |EatD D j| else 0) +
     (if (IsResidueClassZero D p ∨ IsSg D p) ∧ (p : ℝ) ≤ L.sc.X'' D.R.n then |EatCI L K c j p| else 0)

@@ -24,6 +24,7 @@ private theorem comp_eq {K : Type} [Field K] [NumberField K] {n : ℕ} (v : Pl K
   rw [prodEquiv_finEmb]
 
 
+open scoped Classical in
 private theorem levOn_inter {K : Type} [Field K] [NumberField K] {n : ℕ} (P : Finset (Pl K))
     (U : ∀ v : Pl K, Subgroup (Gw n v)) :
     (levOn P (fun v => U v ⊓ GLnLocal.integralGL (v.adicCompletion K) n) :

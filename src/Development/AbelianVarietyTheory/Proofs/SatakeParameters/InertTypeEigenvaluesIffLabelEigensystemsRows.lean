@@ -139,6 +139,7 @@ theorem eq_zero_smul {H : Type} [AddCommGroup H] [Module ℂ H] {x : H} (v : H) 
   rw [hx, zero_smul]
 
 
+open Classical in
 noncomputable def muOf {K : Type} (n : ℕ) (σ : K → ℂ) (a : List ℕ → K) (e : List ℤ) : ℂ :=
   if h : ∃ s, Formalism.L2.Col.InertTypeOk n s ∧ e = GlobalTheory.Hk3.labIn n s then σ (a h.choose) else 0
 

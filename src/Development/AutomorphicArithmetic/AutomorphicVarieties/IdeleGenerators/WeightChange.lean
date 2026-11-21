@@ -17,9 +17,11 @@ namespace UpperTheory.V.Sd
 abbrev Pl (F : Type) [Field F] : Type := HeightOneSpectrum (𝓞 F)
 
 
+open Classical in
 def levL {F : Type} [Field F] (l : ℕ) (c : Pl F → ℕ) (w : Pl F) : ℕ := if ((l : ℕ) : 𝓞 F) ∈ w.asIdeal then 1 else c w
 
 
+open Classical in
 def eisT {F : Type} [Field F] [NumberField F] (l : ℕ) (ω : HChar F) (c : Pl F → ℕ) (P : Set (Pl F)) (w : Pl F) : ℂ :=
   if ((l : ℕ) : 𝓞 F) ∈ w.asIdeal then (if w ∈ P then ((ω.val w : ℂˣ) : ℂ) else 1) else if c w = 0 then 1 + ((ω.val w : ℂˣ) : ℂ) else 1
 

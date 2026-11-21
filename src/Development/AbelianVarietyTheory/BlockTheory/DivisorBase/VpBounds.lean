@@ -37,12 +37,14 @@ def a0 (𝔣 : Ideal (OF E)) (l : ℕ) : ℕ :=
   sSup {n | ∃ v : HeightOneSpectrum (OF E), (l : OF E) ∈ v.asIdeal ∧ expIn 𝔣 v = n}
 
 
+open Classical in
 def c_vp (𝔣 : Ideal (OF E)) (l : ℕ) : ℝ :=
   if ∃ v : HeightOneSpectrum (OF E), (l : OF E) ∈ v.asIdeal ∧ v.asIdeal ∣ 𝔣 then (a0 𝔣 l : ℝ) else delta_vp E l
 
 variable {I : Type} [Fintype I]
 
 
+open Classical in
 def n_vp (d s : ℕ) (κ : I → ℕ) (𝔣 : Ideal (OF E)) (l : ℕ) : ℝ :=
   if c_vp 𝔣 l = 0 then 0
   else Formalism.PairingDivisionLocalBalance.nl ((2 * s * Fintype.card I : ℕ) : ℝ) (Formalism.PairingDivisionLocalBalance.absK κ : ℝ) (c_vp 𝔣 l)

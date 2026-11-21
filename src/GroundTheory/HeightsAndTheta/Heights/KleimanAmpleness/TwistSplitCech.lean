@@ -118,6 +118,7 @@ theorem ιfun_emb' {i : ℕ} (J : Cech.Idx (Finset.univ : Finset (Fin (N + 1))) 
   ιfun_emb η M₀ n c hG hB (downI J h).1 z
 
 
+open Classical in
 def Fmap (i : ℕ) (t : Cech.Cochain (fun K : Chart x => ↥(((G.twist (B.pow n)).twist (twistSys S x c)).sub K)) i) :
     Cech.Cochain (locSys (MvPolynomial (Fin (r + 1)) S) N (TwM η M₀)) i :=
   fun J => if h : J.1.1 ⊆ support x then ιfun η M₀ n c hG hB (downI J h).1 (t (downI J h)) else 0

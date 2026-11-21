@@ -100,6 +100,7 @@ variable {n : ℕ} {Y : Type} [TopologicalSpace Y] [T2Space Y] [SecondCountableT
   [MeasurableSpace Y] [BorelSpace Y] {ι La : Type} [AddCommGroup La]
 
 
+open Classical in
 noncomputable def limSec (F : ℕ → ι → Y → ℂ) : ι → Y → ℂ := fun i y =>
   if ∃ c, Tendsto (fun m => F m i y) atTop (𝓝 c) then limUnder atTop (fun m => F m i y) else 0
 

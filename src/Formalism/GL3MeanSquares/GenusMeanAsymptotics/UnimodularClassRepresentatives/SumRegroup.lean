@@ -20,6 +20,7 @@ variable {h : V →ₗ⋆[K] V →ₗ[K] K} {h' : V' →ₗ⋆[K] V' →ₗ[K] K
 open UnimodularLocalization GoodPrimeTerms GoodGenusOrbits LocalFactorEquality
 
 
+open Classical in
 theorem sum_regroup (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) (hs : h.IsSymm)
     (hd : IsTotPosDef h) (S : VecSplit h h') {L : Submodule (𝓞 K) V}
     (hL : Submodule.IsLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {c : ℝ}

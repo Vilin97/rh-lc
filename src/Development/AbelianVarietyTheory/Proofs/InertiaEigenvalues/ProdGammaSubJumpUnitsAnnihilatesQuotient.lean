@@ -161,6 +161,7 @@ variable {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P} {H : LocHW
   {K : FinExt l} {s : ℕ} {LL : FinExt l}
 
 
+open Classical in
 def Ex (C : LocCmpT l P AI H F) (h : Good K s LL) (T : Lt K LL) (i : Let K) (ζ : ↥LL.1) (y : ℕ)
     (z : (H.W K s LL h).DD T) : ℤ → T.V ⊗[ℚ_[l]] P.R.B :=
   if hz : (H.W K s LL h).Q ^ y • z ∈ (H.W K s LL h).N T then ex C h T i ζ ⟨_, hz⟩ else 0

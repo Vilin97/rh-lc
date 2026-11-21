@@ -45,6 +45,7 @@ theorem natCast_mem_below {E : Type} [Field E] [NumberField E] (P : HeightOneSpe
 variable {D : D7} {T : Type} {L : Formalism.IndefR.Links.LevCh D T}
 
 
+open Classical in
 theorem expIn_condF' (P : Places L) (v : HeightOneSpectrum (𝓞 D.host.F)) :
     expIn (condF P) v = if v ∈ P.S0 then condExp P v else 0 := by
   have key : ∀ S : Finset (HeightOneSpectrum (𝓞 D.host.F)), v ∉ S →

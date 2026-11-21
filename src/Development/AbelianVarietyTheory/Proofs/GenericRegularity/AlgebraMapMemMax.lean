@@ -39,6 +39,7 @@ theorem card_free (j0 : Fin N) : Fintype.card (Fin (D + 1) × Fin N) = Fintype.c
   omega
 
 
+open Classical in
 def subst (x : Fin N → Ω) (j0 : Fin N) (p : Fin (D + 1) × Fin N) : MvPolynomial (Free D N j0) Ω :=
   if h : p.1 = 0 ∨ p.2 ≠ j0 then X ⟨p, h⟩
   else -∑ k : {k : Fin N // k ≠ j0}, C (x k / x j0) * X ⟨(p.1, k), Or.inr k.2⟩

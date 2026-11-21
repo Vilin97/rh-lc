@@ -183,6 +183,7 @@ lemma triv (D : ArithData H) (ell : AddChar (E0 × H) ℂ → ℂ) {x Cd : ℝ} 
   nlinarith
 
 
+open Classical in
 def vv (Kp : Finset (AddChar (E0 × H) ℂ)) (D : ArithData H) (ell : AddChar (E0 × H) ℂ → ℂ) (c x : ℝ)
     (ψ : AddChar (E0 × H) ℂ) : ℝ :=
   if ψ ∈ Kp then wtA c ψ * (GPsi D ell ψ x).re else -‖GPsi D ell ψ x‖

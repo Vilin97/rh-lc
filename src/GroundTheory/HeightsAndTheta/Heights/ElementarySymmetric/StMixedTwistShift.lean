@@ -16,6 +16,7 @@ noncomputable section
 universe u w
 
 
+open Classical in
 def MixedTwistShift.Statement : Prop :=
   ∀ (k : Type u) [Field k] (Ω : Type w) [Field Ω] [Algebra k Ω] (N : ℕ) (x : Fin (N + 1) → Ω)
     (n : ℕ) (qq : Ideal (Poly k N)), qq.IsPrime → (∀ f ∈ qq, ∀ d : ℕ, homogeneousComponent d f ∈ qq) →

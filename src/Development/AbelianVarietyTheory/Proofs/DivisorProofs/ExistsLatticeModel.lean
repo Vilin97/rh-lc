@@ -31,6 +31,7 @@ variable (M : X → AddSubgroup V)
 theorem val_eq_zero {U : X.Opens} (h : genericPoint X ∉ U) (s : secGrp M U) : (s : V) = 0 := s.2.2 h
 
 
+open Classical in
 def resHom {U W : X.Opens} (e : W ≤ U) : secGrp M U →+ secGrp M W where
   toFun s := if h : genericPoint X ∈ W then ⟨(s : V), fun y hy => s.2.1 y (e hy), fun h' => (h' h).elim⟩
     else 0
@@ -118,6 +119,7 @@ variable {M}
 variable (hM : ∀ y (f : X.functionField) (v : V), RegAt y f → v ∈ M y → f • v ∈ M y)
 
 
+open Classical in
 def smulSec (U : X.Opens) (r : Γ(X, U)) (s : secGrp M U) : secGrp M U :=
   if h : genericPoint X ∈ U then
     ⟨fnOf U h r • (s : V), fun y hy => hM y _ _ (regAt_fnOf hy h r) (s.2.1 y hy), fun h' => (h' h).elim⟩

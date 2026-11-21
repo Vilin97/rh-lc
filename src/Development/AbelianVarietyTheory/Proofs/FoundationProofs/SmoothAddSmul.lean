@@ -92,6 +92,7 @@ theorem _root_.GlobalTheory.CapelliCentral.eab_zero (a b : Fin n) (g : Matrix (F
   simp [_root_.Formalism.REAL.EabV, _root_.Formalism.REAL.EcV, _root_.Formalism.REAL.RdV]
 
 
+open Classical in
 def cut (ε : Fin n → Bool) (f : Matrix (Fin n) (Fin n) ℂ → E) : Matrix (Fin n) (Fin n) ℂ → E :=
   fun g => if inUJ ε g then f g else 0
 

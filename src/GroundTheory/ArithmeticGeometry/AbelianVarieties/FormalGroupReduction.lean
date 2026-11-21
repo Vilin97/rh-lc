@@ -697,7 +697,7 @@ theorem add_mem_and_reduce {P Q : (curveK K W).Point} (hP : P ∈ E0Set K W)
       · rw [hS]; exact ⟨mem_E0Set_some_notMem K W h hX, reducePoint_some_notMem K W h hX⟩
       · have hneg := (WeierstrassCurve.Affine.nonsingular_neg _ _).2 h₁
         obtain ⟨x₃, y₃, h₃, e, _, _⟩ := add_of_notMem_range K W hneg hX₁ h
-        rw [← hS, ← WeierstrassCurve.Affine.Point.neg_some, ← add_assoc, neg_add_cancel,
+        rw [← hS, ← WeierstrassCurve.Affine.Point.neg_some h₁, ← add_assoc, neg_add_cancel,
           zero_add, WeierstrassCurve.Affine.Point.some.injEq] at e
         exact False.elim (hX₂ ⟨x₃, e.1.symm⟩)
     · have n₂ := hQ x₂ y₂ h₂ rfl

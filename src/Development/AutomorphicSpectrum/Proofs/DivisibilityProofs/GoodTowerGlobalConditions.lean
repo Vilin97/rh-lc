@@ -70,6 +70,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
   {Xo : Moduli D l} {c : Coeff l} {Y : Model Xo c (algebraMap (𝓞 c.F) c.F)} [DecidableEq (CMType H)]
 
 
+open Classical in
 theorem link_step (hSeg : GroundTheory.Heights₂.Heights.NumbersDVR.NumericalSegre.Statement) (hM3 : HodgeLatticeFlagBound) (hTv : TrivFlagOnHodge)
     (S₀ S : Finset ℕ) (M₀ M₁ Rf : RootModel (CMType H) (D.p + D.q))
     (Sys : PB.AnSys (dimFl (CMType H) (D.p + D.q)) (Option (RootIx D))) (Fx : FixedData Y Sys)

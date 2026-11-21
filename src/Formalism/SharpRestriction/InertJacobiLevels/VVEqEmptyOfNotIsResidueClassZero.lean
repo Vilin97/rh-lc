@@ -177,6 +177,7 @@ theorem ord_nsmul_A (h : φ.A) : φ.ord • h = 0 := by
 end BaseA
 
 
+open Classical in
 def offC (D : D7) (sc : Scale) (_j : ℕ) (z : Bool × G.HH D) : ℝ :=
   if G.IsTopPl D z then sc.b' / sc.x else if G.IsThickPl D z then sc.b else sc.w'' D.R.n
 

@@ -115,6 +115,7 @@ def resGram (d : HSMDatum D Ω κ) (n : ℕ) {r : ℕ} (b : Fin r → MvPolynomi
     (∫ y, pairVal d.m n (b k) (b l) (conjPt (resPt d y)) ∂d.dV).re)
 
 
+open Classical in
 def resChi (d : HSMDatum D Ω κ) (n : ℕ) : ℝ :=
   if h : ∃ p : (Σ r : ℕ, Fin r → MvPolynomial (Ix κ) ℚ), IsSecBasis d.x n p.2 then
     -(1 / 2) * Real.log (resGram d n h.choose.2).det

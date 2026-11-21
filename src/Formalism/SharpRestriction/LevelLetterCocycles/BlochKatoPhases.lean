@@ -166,6 +166,7 @@ def IsConjEmb (i : X.Tw) (v v' : HeightOneSpectrum (𝓞 D.host.E))
     IsFrac bkP i v' hv' (τ' (cE bkP i v' hv' x)) n d ↔ IsFrac bkP i v hv (τ (cE bkP i v hv (D.host.conj x))) n d
 
 
+open Classical in
 def bk (i : X.Tw) (s : X.Sig i) (k : ℕ) (ψ : GE N →* (X.Ok i k)ˣ)
     (v : HeightOneSpectrum (𝓞 D.host.E)) :
     Submodule (X.Ok i k) (H1 ((Trep i s k ψ).comp (DecV N v).subtype)) :=

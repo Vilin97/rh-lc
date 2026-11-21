@@ -218,6 +218,7 @@ abbrev ResidueAt (h : ℂ → ℂ) (s₀ c : ℂ) : Prop := CoeffAt h s₀ (-1) 
 def PoleLE (h : ℂ → ℂ) (s₀ : ℂ) (k : ℕ) : Prop := ∃ H, IsExtAt h s₀ H ∧ ((-k : ℤ) : WithTop ℤ) ≤ meromorphicOrderAt H s₀
 
 
+open Classical in
 def laurent (h : ℂ → ℂ) (s₀ : ℂ) (n : ℤ) : ℂ := if e : ∃ c, CoeffAt h s₀ n c then e.choose else 0
 
 def cont (h : ℂ → ℂ) (s : ℂ) : ℂ := laurent h s 0

@@ -22,6 +22,7 @@ section Infinite
 variable (v : InfinitePlace K)
 
 
+open Classical in
 def infiniteAdeleAboveFun (a : (w : v.placesOver L) → w.1.Completion) (w : InfinitePlace L) :
     w.Completion :=
   if h : w ∈ v.placesOver L then a ⟨w, h⟩ else 1

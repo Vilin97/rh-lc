@@ -145,6 +145,7 @@ theorem IsIsotypic.homIn_ne_bot [Nontrivial K] (h : IsIsotypic π ρ) : homIn π
     rw [e, Submodule.mem_bot] at hT; simp [hT]))
 
 
+open Classical in
 def unitVec : H := if h : ∃ x : H, ‖x‖ = 1 then h.choose else 0
 
 

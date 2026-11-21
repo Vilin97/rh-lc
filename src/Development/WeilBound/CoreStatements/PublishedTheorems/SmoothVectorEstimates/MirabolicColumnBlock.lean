@@ -33,6 +33,7 @@ section Arch
 variable {ι : Type} [Fintype ι] {a : ℕ} {X : Type} [NormedAddCommGroup X] [NormedSpace ℂ X]
 
 
+open Classical in
 def orb (ρ : GL (Fin a) (ι → ℂ) →* (X →L[ℂ] X)) (v : X) (M : LieI ι a) : X :=
   if h : IsUnit (Matrix.of M) then ρ h.unit v else 0
 

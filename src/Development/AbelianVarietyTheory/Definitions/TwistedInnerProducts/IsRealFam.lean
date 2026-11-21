@@ -393,6 +393,7 @@ def OneLoc (t : T) (w : Pl D.host.E) (e : AE D) (r : Pts ch.G)
     (Lev.finE (ch.G.V (.grid D.R.m j)) (r j)) = g j
 
 
+open Classical in
 def PlaceAt (s : ℤˣ) : Prop :=
   ∃ (κ : Pl D.host.E → ℂ) (z : T → Pl D.host.E → ℂˣ), (∀ t w, z t w ∈ xiVals R.toLevCh t) ∧ (∀ w, w ∉ ch.G.pl.W0 → κ w = 1) ∧
     ∀ t, ∀ w ∈ locPl ch.G t, ∀ β : Cosets (G := locGrid ch.G t w) one_le_sLen (givenLevel ch.G t w), ∃ ζ : ℂ,

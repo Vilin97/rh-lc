@@ -204,6 +204,7 @@ theorem chart_local (hth : ThRef M ref P.th) (hL : LogHom D ref.a w) (hP : Chart
   linarith
 
 
+open Classical in
 noncomputable def ph (ref : HermLine J) (w : ((Σ k, J k) → ℂ) → ℝ) (x : M.Xc) : ℝ :=
   if x ∈ Yo M then ph0 M ref w x else limsup (ph0 M ref w) (𝓝[Yo M] x)
 

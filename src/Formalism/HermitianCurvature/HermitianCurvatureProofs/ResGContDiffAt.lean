@@ -23,6 +23,7 @@ variable {k r : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace �
   [InnerProductSpace ℂ Wq] {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V]
 
 
+open Classical in
 def resW (h : Mx k r → V) (g : Mx k r) : (Fin r → ℂ) → V :=
   fun c' => if c' ∈ OmX r then resG k r (Fin.last r) h c' g else 0
 

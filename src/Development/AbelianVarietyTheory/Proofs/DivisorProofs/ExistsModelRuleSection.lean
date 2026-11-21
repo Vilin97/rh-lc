@@ -69,6 +69,7 @@ theorem herm_eq_zero (hP : IsPeriod D ty P) (hE : ∀ x y, (hermForm Hm (P x) (P
   simpa [hermForm, tyAct, dotProduct, Pi.single_apply] using this
 
 
+open Classical in
 theorem flatCoord_ne_zero (hP : IsPeriod D ty P) (hE : ∀ x y, (hermForm Hm (P x) (P y)).im = D.EF x y)
     {ρ : E →+* ℂ} {p q : ℕ} (hr : p + q = D.p + D.q) {x : Fin q ⊕ Fin p → D.La} (hx : LinearIndependent (𝓞 E) x)
     {V : Fin p → Fin g → ℂ} {W : Fin q → Fin g → ℂ} {C : Fin q ⊕ Fin p → Fin p → ℂ}
@@ -292,6 +293,7 @@ theorem isDerivAt0_of_sameVecs {y : Sp ℂ ⟶ Xo.XF c} {g n : ℕ} {e : (Fin g 
   exact h2
 
 
+open Classical in
 theorem exists_reading (hU : IsClosed (U : Set (Xo.XF c))) {σb : RuleY Y} {σ : RuleU Xo c}
     (hres : Restricts Y U τ σb σ) {s : c.F →+* ℂ} {g₀ : ℕ} {ty : Fin g₀ → (E →+* ℂ)}
     {Fu : FamilyUnif Xo (s.comp (IntermediateField.inclusion c.le).toRingHom) ty} {i : Fin Fu.n}

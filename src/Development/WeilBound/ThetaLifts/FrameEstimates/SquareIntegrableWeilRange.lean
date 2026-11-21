@@ -79,6 +79,7 @@ variable {n d : ℕ}
 def sz (τ : ∀ w : InfinitePlace F, EmbOver E w) (z : Ten F E n d) : ℝ := ∑ w, ∑ i, ∑ j, ‖piInf (τ w) (z i j)‖
 
 
+open Classical in
 def maj (τ : ∀ w : InfinitePlace F, EmbOver E w) (C : Set (Ten F E n d)) (N : ℕ) (z : Ten F E n d) : ℝ :=
   if ∃ c ∈ C, At (evI F) (z - c) then ((1 + sz τ z) ^ N)⁻¹ else 0
 

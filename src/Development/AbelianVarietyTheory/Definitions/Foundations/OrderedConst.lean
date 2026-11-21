@@ -43,6 +43,7 @@ def grp (ψ : Fin n → kˣ →* ℂˣ) : Set (GL (Fin n) k) :=
   {g | g ∈ KO k (Fin n) ∧ ∀ i j : Fin n, i < j → Triv (ψ i / ψ j) (g.val i j)}
 
 
+open Classical in
 def ev (χ : kˣ →* ℂˣ) (x : k) : ℂ :=
   if h : valuation k x = 1 then (χ (Units.mk0 x fun h0 => by simp [h0] at h) : ℂ) else 1
 

@@ -24,6 +24,7 @@ def idem (F : Type) [Field F] [NumberField F] [Algebra F E] (P : HeightOneSpectr
   (finAf F E (localIdele E P (atFin P (Units.mk0 2 two_ne_zero))) : AfE F E) - 1
 
 
+open Classical in
 theorem adAt_idem (P w : HeightOneSpectrum (𝓞 E)) : adAt F w (idem F P) = if w = P then 1 else 0 := by
   unfold idem
   rw [map_sub, adAt_finAf, map_one]
@@ -66,6 +67,7 @@ variable [StarRing E] (hc : CMData F E)
 theorem sig_sig (z : AfE F E) : σ (σ z) = z := DetClass.sigR_sigR (fun x => star_star x) z
 
 
+open Classical in
 theorem adAt_sig_idem (P w : HeightOneSpectrum (𝓞 E)) : adAt F w (σ (idem F P)) = if conjPrime₂ w = P then 1 else 0 := by
   split_ifs with h
   · have e := valued_sigR hc w (idem F P - 1)
@@ -86,6 +88,7 @@ theorem sig_glue (z : AfE F E) (a b : HeightOneSpectrum (𝓞 E) → E) : σ (gl
   ring
 
 
+open Classical in
 theorem adAt_glue (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) (z : AfE F E) (a b : HeightOneSpectrum (𝓞 E) → E)
     (w : HeightOneSpectrum (𝓞 E)) : adAt F w (glue hc Q z a b) =
       if w ∈ Q then algebraMap E _ (a w) else if conjPrime₂ w ∈ Q then algebraMap E _ (star (b (conjPrime₂ w))) else adAt F w z := by

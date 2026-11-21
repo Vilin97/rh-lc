@@ -145,11 +145,13 @@ def Corr (Z₁ Z₂ : a.Mdl) : Type := PLift (GlobalTheory.LocM.NatCorr Z₁ Z�
 abbrev diagCl (Z₁ Z₂ : a.Mdl) (_c : a.Corr Z₁ Z₂) : a.Mdl := GlobalTheory.LocM.natDiagCl Z₁ Z₂
 
 
+open Classical in
 def expo (_a : At S κ p) (l : PsiT D → ℕ → ℤ) (σ : D.host.E →+* ℂ) (i : Fin (S.Dw.mult σ)) : ℤ :=
   ∑ t : D.what₂.Tau, ((if σ = DV.tauEmb D t then l (D.eTau t) (i + 1) else 0) +
     if σ = conjEmb (DV.tauEmb D t) then -l (D.eTau t) (N - i) else 0)
 
 
+open Classical in
 def Lb (l : PsiT D → ℕ → ℤ) : a.Sh a.YY :=
   if h : ∃ L, IsGrLB a.YY (a.expo l) L then a.YY.ofMod (GlobalTheory.LB.toMod h.choose) else ⟨0, 0, 0, 0, 0⟩
 

@@ -141,6 +141,7 @@ variable {ψ : AddChar (AF D.host.F) ℂ}
 
 
 
+open Classical in
 def cptC (V : HSp D) (τ : D.what₂.Tau) :
     Matrix (Fin (V.sig (tauE D τ)).1 ⊕ Fin (V.sig (tauE D τ)).2) (Fin V.rank) ℂ :=
   if h : V.SigOK then (cpt_bas_ex V h τ).choose else 0

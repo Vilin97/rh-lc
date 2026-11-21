@@ -33,6 +33,7 @@ section Cl
 variable {X Y Z : Scheme.{0}} {L M : LB X}
 
 
+open Classical in
 def cl (s : L.Sec) (r : Z ⟶ X) (z : Z) : Associates (Z.presheaf.stalk z) :=
   if h : ∃ a, r z ∈ L.U a then Associates.mk (gs r z (L.U h.choose) (s.f h.choose)) else 0
 

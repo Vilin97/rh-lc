@@ -31,6 +31,7 @@ abbrev comp (a : GA D V) (τ : D.what₂.Tau) : Matrix (Fin V.rank) (Fin V.rank)
   infMat D.sp.cm.sig V.gram (Formalism.IndefR.Eqv.thetaC D τ) a
 
 
+open Classical in
 def translS (a : GA D V) (s : Finset D.what₂.Tau) (v : M.Vec) : M.Vec := fun τ =>
   if τ ∈ s then ⟨M.rep τ (comp a τ) (v τ), sm_stable_uh M τ (Formalism.IndefR.Eqv.infMat_unitary' D V a τ) (v τ).2⟩
   else v τ

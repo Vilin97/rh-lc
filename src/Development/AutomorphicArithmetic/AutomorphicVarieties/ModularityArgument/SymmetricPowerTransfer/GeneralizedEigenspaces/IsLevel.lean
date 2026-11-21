@@ -32,6 +32,7 @@ variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 abbrev Kw (w : Plc L) : Type := w.adicCompletion L
 
 
+open Classical in
 def secW (n : ℕ) (w : Plc L) : GL (Fin n) (Kw w) →* UA L n :=
   if h : ∃ j : GL (Fin n) (Kw w) →* UA L n, (∀ g, j g ∈ locU n w) ∧ ∀ g, cLoc w (j g) = g then h.choose else 1
 

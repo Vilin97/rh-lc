@@ -53,6 +53,7 @@ def fullPt {r j : ℕ} (hj : j ≤ r) (p : Point ℂ j) : Point ℂ (r + 1) :=
     · simp [p.2.2]; omega⟩
 
 
+open Classical in
 def orbJ {k r : ℕ} (L : LocBessel k r)
     (F : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ → (L.Wq →L[ℂ] L.Wp)) (γ : Point ℂ (r + 1))
     (g : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) : L.Wq →L[ℂ] L.Wp :=

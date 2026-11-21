@@ -35,10 +35,12 @@ def labEE {D : D7} (e : D.host.E →+* ℂ) (τ : D.what₂.Tau) : D.host.E →+
   e.comp (D.host.sigmaOf (D.eTau τ).1 : D.host.E →+* D.host.E)
 
 
+open Classical in
 def labX {D : D7} (e : D.host.E →+* ℂ) (ρ : D.what₂.Tau) : D.what₂.Tau :=
   if h : ∃ τ, labEE e τ = tauE D ρ ∨ labEE e τ = (starRingEnd ℂ).comp (tauE D ρ) then h.choose else ρ
 
 
+open Classical in
 def parAtE {D : D7} (W : HSp D) (e : D.host.E →+* ℂ) (ρ : D.what₂.Tau) : SPar :=
   if labEE e (labX e ρ) = tauE D ρ then
     Formalism.L2.NTheta.holPar (W.sig (tauE D ρ)).1 (W.sig (tauE D ρ)).2 (Formalism.L2.NTheta.kapW (D.hc (labX e ρ)) _ _)

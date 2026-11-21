@@ -36,6 +36,7 @@ def fibreOver (v : (Σ k, ι k) → (Σ k', ι' k')) (P' : Ideal (MRing ι')) (W
   {W' | IsMultiProjPrime W' ∧ P' ≤ W' ∧ imageZ v W' = W}
 
 
+open Classical in
 theorem rename_isMultiHomog {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     {f : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) :
     IsMultiHomog (rename v f) (Function.extend κ a 0) := by

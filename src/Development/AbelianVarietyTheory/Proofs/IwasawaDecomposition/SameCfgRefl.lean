@@ -16,6 +16,7 @@ noncomputable section
 namespace GlobalTheory.Mem.HFld
 
 
+open Classical in
 def chiC {B : Base} {px : PreX B.toPre} (I : Col2.ColIn B px) :
     Fin B.R.m → IsDedekindDomain.HeightOneSpectrum (𝓞 B.host.E) → 𝓞 B.host.E → ℂ :=
   fun j w y =>
@@ -24,6 +25,7 @@ def chiC {B : Base} {px : PreX B.toPre} (I : Col2.ColIn B px) :
     else 0
 
 
+open Classical in
 def qC {B : Base} {px : PreX B.toPre} (I : Col2.ColIn B px) :
     Formalism.L2.Host.HChar B.host.E → Finset (IsDedekindDomain.HeightOneSpectrum (𝓞 B.host.E)) :=
   fun ξ => if h : ∃ a, I.xi a = ξ then I.Q h.choose else ∅

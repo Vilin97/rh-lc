@@ -67,6 +67,7 @@ abbrev Ga : Type := (away l L n).range
 variable {l L}
 
 
+open Classical in
 def cmp (w : Plc L) : Ga l L n →* GLw n w :=
   if h : ((l : ℕ) : 𝓞 L) ∉ w.asIdeal then
     (Pi.evalMonoidHom (fun w : {w : Plc L // ((l : ℕ) : 𝓞 L) ∉ w.asIdeal} => GLw n w.1) ⟨w, h⟩).comp (away l L n).range.subtype
@@ -87,6 +88,7 @@ def locA (w : Plc L) : Subgroup (Ub n s) :=
   ⨅ (w' : Plc L) (_ : w'.under (𝓞 (Lp L)) ≠ w.under (𝓞 (Lp L))), ((cmp n w').comp (Ub n s).subtype).ker
 
 
+open Classical in
 def sec (w : Plc L) : GLw n w →* Ub n s :=
   if h : Function.Bijective (((cmp n w).comp (Ub n s).subtype).comp (locA n s w).subtype) then
     (locA n s w).subtype.comp (MulEquiv.ofBijective _ h).symm.toMonoidHom

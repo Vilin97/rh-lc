@@ -49,6 +49,7 @@ def ex (ξ : F) (x : UpperTheory.V.TR.Rinf F) : ℂ :=
   Complex.exp (2 * Real.pi * Complex.I * ∑ v, (reAt v ξ : ℂ) * (x v : ℂ))
 
 
+open Classical in
 def kernF (c : HeightOneSpectrum (𝓞 F) → ℕ) (A Z : Ad F) : ℂ :=
   (∏ v, (((UpperTheory.V.TR.pInf F A v : ℂ) + (UpperTheory.V.TR.pInf F Z v : ℂ)) *
       Complex.exp (-(Real.pi : ℂ) * ((UpperTheory.V.TR.pInf F A v : ℂ) ^ 2 + (UpperTheory.V.TR.pInf F Z v : ℂ) ^ 2)))) *

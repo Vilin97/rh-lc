@@ -37,6 +37,7 @@ def idMul {K : Type} [Field K] [NumberField K] {V : Type} [AddCommGroup V] [Modu
   Submodule.span (𝓞 K) {y | ∃ a ∈ I, ∃ z ∈ M, y = a • z}
 
 
+open Classical in
 def detW (D : D7) (τ : D.what₂.Tau) : D.what₂.Tau → Fin D.R.r → ℤ :=
   fun τ' _ => if τ' = τ then -1 else 0
 

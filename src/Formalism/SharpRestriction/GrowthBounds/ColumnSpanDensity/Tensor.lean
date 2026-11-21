@@ -242,6 +242,7 @@ open TensorProduct
 variable {Kf : Type} [Field Kf] {n' m : ℕ} (TT : Finset (Fin n'))
 
 
+open Classical in
 def tnDelta : MvPolynomial (Fin n' × (Fin (m + 1) × Fin (m + 1))) Kf →ₐ[Kf]
     MvPolynomial (Fin n' × (Fin (m + 1) × Fin (m + 1))) Kf ⊗[Kf] MvPolynomial (Fin n' × (Fin (m + 1) × Fin (m + 1))) Kf :=
   aeval fun v => if v.1 ∈ TT then (X v) ⊗ₜ 1 else 1 ⊗ₜ (X v)

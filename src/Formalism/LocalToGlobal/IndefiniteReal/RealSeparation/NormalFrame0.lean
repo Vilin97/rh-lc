@@ -22,6 +22,7 @@ def frame0 (i : ℕ) : Fin (D.sp.Y 0).rank → D.host.E :=
   else 0
 
 
+open Classical in
 def NormalFrame0 (βY0 : GL (Fin (D.sp.Y 0).rank) (EAf D)) (S Pg : Finset (Pl D.host.E)) : Prop :=
   ∀ PP ∈ S, ∀ ei : AE D, Formalism.L2.NTheta.IsIdemAt ei PP →
     (∀ i < D.R.m - 1, ∀ col : Fin (D.sp.Y 0).rank, col.val = D.R.N 0 + i →

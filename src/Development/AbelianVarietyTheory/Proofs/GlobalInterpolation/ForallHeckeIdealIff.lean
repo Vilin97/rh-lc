@@ -76,6 +76,7 @@ theorem extend_primeElt {A : Type*} [CommGroup A] (𝔪 : Ideal (𝓞 K)) (f : H
   rw [FractionalIdeal.count_maximal_coprime K 𝔮 hq.symm, zpow_zero]
 
 
+open Classical in
 def gen (𝔪 : Ideal (𝓞 K)) (𝔭 : HeightOneSpectrum (𝓞 K)) : idealsPrimeTo 𝔪 :=
   if h : ¬ 𝔭.asIdeal ∣ 𝔪 then primeElt 𝔪 𝔭 h else 1
 

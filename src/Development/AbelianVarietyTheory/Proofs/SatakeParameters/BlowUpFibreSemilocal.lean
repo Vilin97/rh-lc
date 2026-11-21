@@ -30,6 +30,7 @@ theorem int_of_mem_inf {lam : DomWeight a} {x : ℂ} (hx : x ∈ infOfWeight lam
   exact ⟨(k : ℤ) - lam.w k, by push_cast; ring⟩
 
 
+open Classical in
 noncomputable def jumpsOf (lam : DomWeight a) : Multiset ℤ :=
   (infOfWeight lam).map fun z => if h : ∃ n : ℤ, ((a : ℂ) - 1) / 2 - z = n then h.choose else 0
 

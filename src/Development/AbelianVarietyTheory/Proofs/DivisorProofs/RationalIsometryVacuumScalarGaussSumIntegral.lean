@@ -174,6 +174,7 @@ theorem gamQ_eq (x y : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
     gamQ ψ S T x y = gamF ψ S T (finX S T x) (finX S T y) := rfl
 
 
+open Classical in
 def gaussQ (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (LS : Set (Fin S.rank → D.host.E))
     (LT : Set (Fin T.rank → D.host.E)) (w : 𝓞 D.host.E) (a : Matrix (Fin S.rank) (Fin S.rank) D.host.E)
     (b : Matrix (Fin T.rank) (Fin T.rank) D.host.E) (y : Matrix (Fin T.rank) (Fin S.rank) D.host.E) : ℂ :=

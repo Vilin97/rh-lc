@@ -30,6 +30,7 @@ theorem gX_spec (β : BMap G D) {M : Model l K} (a : D.Ch M) (hM : G M) (j : ℕ
     β.β a j (gX β a hM j y) = R.t ^ gN β a hM j • y := ((β.surj a hM j).choose_spec y).choose_spec.2
 
 
+open Classical in
 def gamma (hF : R.Facts) (β : BMap G D) (κ : PMap G D) {M : Model l K} (a : D.Ch M) (j : ℕ) :
     (D.A a).N j →+ (Module.Dual K (HdR M.q j) →+ R.B) :=
   if hM : G M then Gam.hom (κ.lin a hM j) hF.t_ne (β.inj a hM j) (gN β a hM j) (gX β a hM j) (gX_spec β a hM j) else 0

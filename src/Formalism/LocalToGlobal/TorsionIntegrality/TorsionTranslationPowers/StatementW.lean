@@ -18,6 +18,7 @@ variable (l : ℕ) [Fact l.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[l]) (W :
 def Unif : Prop := Formalism.L2.Th1.A.g₂ W = ι L.g₂ ∧ Formalism.L2.Th1.A.g₃ W = ι L.g₃
 
 
+open Classical in
 def ptW (t : ℂ) : W.toAffine.Point :=
   if h : t ∉ L.lattice ∧ W.toAffine.Nonsingular (ι (L.weierstrassP t) - W.b₂ / 12)
       ((ι (L.derivWeierstrassP t) - W.a₁ * (ι (L.weierstrassP t) - W.b₂ / 12) - W.a₃) / 2)

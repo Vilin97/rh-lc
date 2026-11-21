@@ -183,6 +183,7 @@ section
 variable {K : Type} [Field K] [CharZero K] {ι : Type} [Fintype ι] {n : ℕ}
 
 
+open Classical in
 def letterPolarization (K : Type) [Field K] {ι : Type} {n : ℕ} (LL : Letters ι) (S : Set ι) (a b : Fin n) (l : ι) :
     Module.End K (MvPolynomial (ι × Fin n) K) :=
   if l ∈ S then (if LL.vec l then polarizationOperator K (l, a) (l, b) else -(polarizationOperator K (l, b) (l, a))) else 0

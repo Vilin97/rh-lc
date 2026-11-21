@@ -74,6 +74,7 @@ instance locArt (S : Finset (HeightOneSpectrum (𝓞 F))) : ∀ c, IsArtinianRin
   · exact IsArtinianRing.of_finite (Fv F v.1) (Fv F v.1 ⊗[F] E)
 
 
+open Classical in
 theorem crit (S : Finset (HeightOneSpectrum (𝓞 F))) (e : AF F ⊗[F] E) (h1 : ∀ w, compInf F E w e = 1)
     (h2 : ∀ v, compFin F E v e = if v ∈ S then 1 else 0) :
     ∃ (m : ℕ) (Ω : Fin m → Type) (_ : ∀ i, Field (Ω i)) (φ : ∀ i, AF F ⊗[F] E →+* Ω i), (∀ i, φ i e = 1) ∧

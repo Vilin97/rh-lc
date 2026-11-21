@@ -79,6 +79,7 @@ end Transport
 section Chain
 
 
+open Classical in
 def chain (hUD : UDens k) {ψ : AddChar k Circle} (hψc : Continuous ψ) (hψ1 : ψ ≠ 1) {N : ℕ} {V : Type}
     [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V) (hs : IsSmooth π)
     (B : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ) : ℕ → (V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ)

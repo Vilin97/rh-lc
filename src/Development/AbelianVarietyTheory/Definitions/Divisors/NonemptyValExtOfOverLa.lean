@@ -159,6 +159,7 @@ theorem sum_gap_tail (g : ℕ → ℕ) (hg : Antitone g) (m i : ℕ) (hi : i < m
   rw [if_pos (show j + 1 < k + 1 by have := Finset.mem_range.1 hj; omega)]
 
 
+open Classical in
 theorem sum_gap_row {a : (E →+* ℂ) × ℕ → ℕ} (ha : ∀ τ, Antitone fun i => a (τ, i)) (τ : E →+* ℂ)
     (i : Fin (Dw.mult τ)) :
     ∑ f ∈ Finset.univ.filter (fun f : Lt1 Dw => f.1 = τ ∧ i.val < rk f), gap Dw a f = a (τ, i) := by

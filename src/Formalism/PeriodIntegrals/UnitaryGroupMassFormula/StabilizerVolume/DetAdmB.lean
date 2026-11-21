@@ -159,6 +159,7 @@ theorem boxes_seq : ∃ bs : ℕ → Set (ι → Af F), (∀ n, bs n ∈ boxes F
   rw [← sUnion_range, hTU, hU]
 
 
+open Classical in
 private theorem exists_restricted_box_subset_of_isOpen {x : Af F} {U : Set (Af F)} (hU : IsOpen U) (hx : x ∈ U) :
     ∃ E : ∀ v : HeightOneSpectrum (𝓞 F), Set (Fv F v),
       (∀ v, IsClopen (E v) ∧ IsCompact (E v)) ∧

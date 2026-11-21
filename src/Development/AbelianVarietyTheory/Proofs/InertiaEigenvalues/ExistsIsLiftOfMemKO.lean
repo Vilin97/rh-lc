@@ -520,6 +520,7 @@ def StdVec {r : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Representa
   ∀ x : GL (Fin r) (ZMod p), StdBlock a x → ρ x v = (θ (GeneralLinearGroup.det x) : ℂ) • v
 
 
+open Classical in
 def stdTrace [Fact p.Prime] {r : ℕ} (a : ℕ) (θ : (ZMod p)ˣ →* ℂˣ) (ψ : GL (Fin r) (ZMod p) → ℂ) : ℂ :=
   ∑ x : GL (Fin r) (ZMod p), if StdBlock a x then (((θ (GeneralLinearGroup.det x))⁻¹ : ℂˣ) : ℂ) * ψ x else 0
 

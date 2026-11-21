@@ -32,6 +32,7 @@ abbrev uSG (SG Q : Finset (HeightOneSpectrum (𝓞 E))) : Finset (HeightOneSpect
 variable {SG Q : Finset (HeightOneSpectrum (𝓞 E))}
 
 
+open Classical in
 def LevFam.glue (A : LevFam E K n SG) (B : LevFam E K n Q) : LevFam E K n (uSG SG Q) := fun w =>
   if h : w.1 ∈ SG then A ⟨w.1, h⟩ else B ⟨w.1, (Finset.mem_union.mp w.2).resolve_left h⟩
 
@@ -44,6 +45,7 @@ theorem LevFam.glue_of_not (A : LevFam E K n SG) (B : LevFam E K n Q) (w : uSG S
     A.glue B w = B ⟨w.1, (Finset.mem_union.mp w.2).resolve_left h⟩ := dif_neg h
 
 
+open Classical in
 def extGLG : GLG E n SG →* GLG E n (uSG SG Q) where
   toFun g w := if h : w.1 ∈ SG then g ⟨w.1, h⟩ else 1
   map_one' := by

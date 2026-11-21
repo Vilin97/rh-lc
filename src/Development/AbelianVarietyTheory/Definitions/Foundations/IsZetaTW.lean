@@ -24,6 +24,7 @@ def rhoK {l : ℕ} [Fact l.Prime] (W : R2 Ω l) (e : ℕ) (ψ : ZMod l → Qbar 
   (thK l e ψ s)⁻¹ • mat W s
 
 
+open Classical in
 def nuD {l : ℕ} [Fact l.Prime] (W : R2 Ω l) (e : ℕ) (ψ : ZMod l → Qbar l) (s : G ℚ Ω) : (Qbar l)ˣ :=
   if h : rhoK W e ψ s 1 1 ≠ 0 then Units.mk0 _ h else 1
 
@@ -116,6 +117,7 @@ def cycT (l r l' : ℕ) [Fact l.Prime] (s : Ω ≃ₐ[ℚ] Ω) : (ZMod l')ˣ × 
   ((cycM l' s)⁻¹, (cycMod (F := ℚ) (Ω := Ω) l r s)⁻¹)
 
 
+open Classical in
 def lsqInv (l l' r : ℕ) : (ZMod l')ˣ :=
   if h : IsUnit ((l : ZMod l') ^ (2 * r)) then h.unit⁻¹ else 1
 

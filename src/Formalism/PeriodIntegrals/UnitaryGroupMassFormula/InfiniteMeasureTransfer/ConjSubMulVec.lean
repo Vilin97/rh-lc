@@ -57,6 +57,7 @@ theorem thV_ext (w w' : Fin I.n → TI I) (h : ∀ v, thV I v w = thV I v w') : 
   exact thI_ext I (w i) (w' i) fun v => congrFun (h v) i
 
 
+open Classical in
 theorem exists_single (v0 : InfinitePlace I.F) (u : Fin I.n → ℂ) :
     ∃ w : Fin I.n → TI I, ∀ v, thV I v w = if v = v0 then u else 0 := by
   choose y hy using fun i => thI_surj I (fun v => if v = v0 then u i else 0)

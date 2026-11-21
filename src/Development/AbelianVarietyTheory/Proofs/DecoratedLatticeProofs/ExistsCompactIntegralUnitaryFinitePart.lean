@@ -17,6 +17,7 @@ namespace GlobalTheory.IntUnitCpt
 open Formalism.MainNotions.LeviCoordinates
 
 
+open Classical in
 def red {E : Type} [Field E] [NumberField E] {n : ℕ} (M : ℕ) (A : Matrix (Fin n) (Fin n) E) :
     Fin n → Fin n → (𝓞 E ⧸ Ideal.span {(M : 𝓞 E)}) := fun i j =>
   if h : IsIntegral ℤ (A i j) then Ideal.Quotient.mk _ ⟨A i j, h⟩ else 0

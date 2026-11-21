@@ -17,6 +17,7 @@ namespace GlobalTheory.FibreProj
 variable {ι : Type} [Fintype ι]
 
 
+open Classical in
 def pol (φ : (ι → ℤ) → ℝ) : ℝ := ∑ S : Finset ι, (-1 : ℝ) ^ S.card * φ fun i => if i ∈ S then -1 else 0
 
 

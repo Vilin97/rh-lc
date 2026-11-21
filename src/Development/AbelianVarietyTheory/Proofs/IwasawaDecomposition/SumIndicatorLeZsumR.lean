@@ -22,6 +22,7 @@ theorem zsumR_eq_sum_toFinset {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ 
   exact finsum_mem_eq_finite_toFinset_sum _ h
 
 
+open Classical in
 theorem sum_indicator_le_zsumR {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (t T : ℝ) (S : Finset ℂ)
     (h : (zerosIn χ t T).Finite) :
     ∑ ρ ∈ S, (zmult χ ρ : ℝ) * (if ρ ∈ zerosIn χ t T then 1 else 0) ≤ zsumR χ t T (fun _ => 1) := by
@@ -36,6 +37,7 @@ theorem sum_indicator_le_zsumR {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ
     exact Nat.cast_nonneg _
 
 
+open Classical in
 theorem recip_le_sum_windows {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (T : ℝ) (ρ : ℂ)
     (hρ : ρ ∈ zerosIn χ 0 T) :
     (if 1 < |ρ.im| then 1 / ‖ρ‖ else 0 : ℝ) ≤

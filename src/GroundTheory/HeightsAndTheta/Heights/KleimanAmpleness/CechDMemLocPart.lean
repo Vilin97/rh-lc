@@ -31,6 +31,7 @@ theorem face_subset (I : ∀ k, Finset (ι k)) (k : K) (i : ι k) (l : K) :
   · rw [Function.update_of_ne hl]
 
 
+open Classical in
 theorem cechD_apply' {M : Type} [AddCommGroup M] [Module (MRingOver S ι) M] (n : ℕ) (f : CechC S ι M n)
     (I : Cell K ι (n + 1)) :
     cechD S ι M n f I = ∑ k, ∑ i ∈ I.1 k,

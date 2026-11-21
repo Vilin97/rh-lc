@@ -122,6 +122,7 @@ theorem exists_Y0_mul_parab (hnd : n ≤ d) {p : GL (Fin d) k}
 
 section Psi
 
+open Classical in
 def psi (f : GL (Fin d) k → ℂ) (Y : Matrix (Fin n) (Fin d) k) : ℂ :=
   if h : ∃ κ ∈ KO k (Fin d), Y = GlobalTheory.FullRankCoinv.Y0 k n d * κ.val then f h.choose else 0
 

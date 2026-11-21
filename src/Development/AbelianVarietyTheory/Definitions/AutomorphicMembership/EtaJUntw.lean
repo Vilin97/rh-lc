@@ -124,6 +124,7 @@ def useReal (R : RealDat D A Ks) : RealDat D (useFam R) Ks where
   err0 := R.err0
 
 
+open Classical in
 def extSub (R : RealDat D A Ks) (F : Face D A) (Zs : DefSub (useFam R).fam.amb) : DefSub A.fam.amb where
   Z t := if h : InUse R t then Zs.Z ⟨t, h⟩ else (R.toCx F).zs.Z t
   Zl i t := if h : InUse R t then Zs.Zl i ⟨t, h⟩ else (R.toCx F).zs.Zl i t

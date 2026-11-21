@@ -84,6 +84,7 @@ theorem dvd_fin {m : Ideal (𝓞 F)} (hm : m ≠ ⊥) : {r : Ideal (𝓞 F) | r 
   exact Set.finite_coe_iff.1 (Finite.of_fintype {r // r ∣ m})
 
 
+open Classical in
 def ext (S : Finset (HeightOneSpectrum (𝓞 F))) (p : S → ℕ) (w : HeightOneSpectrum (𝓞 F)) : ℕ :=
   if h : w ∈ S then p ⟨w, h⟩ else 0
 

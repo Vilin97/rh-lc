@@ -89,6 +89,7 @@ theorem lamUnif_ex [IsCommMonObj A] {L L₁ : LB A.left} (u₁ : HolUnif A L₁ 
     (lamUnif u₁ u hex).ex = (sqUnif A u₁).ex := rfl
 
 
+open Classical in
 def ext (Λ : Submodule ℤ (Fin g → ℂ)) (χ : Λ → ℂ) (w : Fin g → ℂ) : ℂ := if h : w ∈ Λ then χ ⟨w, h⟩ else 0
 
 theorem ext_of_mem (Λ : Submodule ℤ (Fin g → ℂ)) (χ : Λ → ℂ) {w : Fin g → ℂ} (h : w ∈ Λ) : ext Λ χ w = χ ⟨w, h⟩ := by

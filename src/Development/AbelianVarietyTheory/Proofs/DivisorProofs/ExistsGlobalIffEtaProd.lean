@@ -60,6 +60,7 @@ namespace GlobalTheory.QuadRecip
 open GlobalTheory.QuadSymbol
 
 
+open Classical in
 theorem prod_sign_eq {K : Type} [Field K] [NumberField K] (S : Finset {w : InfinitePlace K // w.IsReal})
     (f : InfinitePlace K → ℤˣ)
     (hf : ∀ w, f w = if (∃ hw : w.IsReal, (⟨w, hw⟩ : {w : InfinitePlace K // w.IsReal}) ∈ S) then -1 else 1) :
@@ -82,6 +83,7 @@ theorem prod_sign_eq {K : Type} [Field K] [NumberField K] (S : Finset {w : Infin
   rw [this, Finset.card_map]
 
 
+open Classical in
 theorem exists_signs_iff_even (K L : Type) [Field K] [NumberField K] [Field L] [NumberField L]
     [Algebra K L] [Algebra.IsQuadraticExtension K L] (hL : IsTotallyComplex L)
     (S : Finset {w : InfinitePlace K // w.IsReal}) :

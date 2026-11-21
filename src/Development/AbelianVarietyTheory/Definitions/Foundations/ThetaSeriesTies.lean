@@ -62,6 +62,7 @@ def InCoefLat (h : GA D (Vc D i)) (w : (R.cV i).W) : Prop :=
     ∃ P ∈ nabAtr (labLL D) (lamV D i) (Bridge.hLat (Vc D i) (fin (Vc D i) h)), w = c0L i P
 
 
+open Classical in
 def levelTrace (U : Subgroup G) (ψ : U →* D.what₂.LLˣ) : (GA D (Wc D i) → ℂ) →ₗ[ℂ] (GA D (Wc D i) → ℂ) :=
   gaL (Wc D i) (R.βW i) (R.datWp i R.triv) R.eG fun g =>
     if hg : g ∈ U then D.what₂.embLL (((ψ ⟨g, hg⟩)⁻¹ : D.what₂.LLˣ) : D.what₂.LL) else 0
@@ -391,6 +392,7 @@ theorem OnTie.rho_eq_of_actionPin (t : OnTie h fw hinj EX p ι wL wF nT O v i z 
 end Use
 
 
+open Classical in
 def charInt {K : Type} [Field K] [NumberField K] {P : Type} [Group P] (inc : P →* G) (U : Subgroup G) (ψ : U →* Kˣ) (g : P) :
     𝓞 K :=
   if hg : inc g ∈ U then

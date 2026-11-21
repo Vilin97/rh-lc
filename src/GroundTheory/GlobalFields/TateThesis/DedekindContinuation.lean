@@ -27,6 +27,7 @@ theorem discrNormConductor_one : (1 : HeckeCharacter K).discrNormConductor = |(d
   simp
 
 
+open Classical in
 theorem gammaFactor_one (s : ℂ) :
     (1 : HeckeCharacter K).gammaFactor s =
       Gammaℝ s ^ nrRealPlaces K * Gammaℂ s ^ nrComplexPlaces K := by

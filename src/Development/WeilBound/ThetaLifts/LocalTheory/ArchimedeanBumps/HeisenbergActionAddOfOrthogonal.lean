@@ -120,6 +120,7 @@ theorem pv_opI (hA : ArchOp) {M : Model σ X W} {χX χW om r s r' s'} (hP : IsP
   exact (pv_act hP.good h.choose_spec).symm
 
 
+open Classical in
 def unp (M : Model σ X W) (l : SInf F (Fin n × Fin d) →L[ℂ] ℂ) (Ψ : Fn F n d) : ℂ :=
   if h : ∃ g, Ψ = PV M g then l h.choose else 0
 

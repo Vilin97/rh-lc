@@ -275,6 +275,7 @@ section Split
 variable {κ K : Type} [CommRing κ] [Field K] {n r : ℕ}
 
 
+open Classical in
 def Lev.ev (l : Lev κ K n) (M : GL (Fin n) κ) : Kˣ := if h : M ∈ l.H then l.lam ⟨M, h⟩ else 1
 
 theorem Lev.ev_of_mem (l : Lev κ K n) {M : GL (Fin n) κ} (h : M ∈ l.H) : l.ev M = l.lam ⟨M, h⟩ := dif_pos h
@@ -426,6 +427,7 @@ theorem prod_uSG {M : Type} [CommMonoid M] (f : SG0 → M) :
     rfl
 
 
+open Classical in
 theorem LevFam.glue_split (h : r ≤ n) (TP TK : LevFam X.E X.K n SG0) (P : LevFam X.E X.K r SG0)
     (B : LevFam X.E X.K n Q) (H : ∀ w : SG0, Lev.Split (diagEmb _ h) (TP w) (TK w) (P w)) :
     LevFam.Split ((extGLG Q).comp (diagonalEmbeddingProduct SG0 h)) (TP.glue B) (TK.glue B) P where

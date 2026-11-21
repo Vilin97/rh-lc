@@ -53,6 +53,7 @@ abbrev TrivOnF (χ : HChar E) : Prop := χ.TrivOn (maximalRealSubfield E)
 def hatF : Subring (Af E) := (((maximalRealSubfield E).toSubring).map (algebraMap E (Af E))).topologicalClosure
 
 
+open Classical in
 def eulerFactor (χ : HChar E) (s : ℂ) (v : HeightOneSpectrum (𝓞 E)) : ℂ :=
   if χ.UnrAt v then (1 - (χ.val v : ℂ) * ((Ideal.absNorm v.asIdeal : ℕ) : ℂ) ^ (-s))⁻¹ else 1
 

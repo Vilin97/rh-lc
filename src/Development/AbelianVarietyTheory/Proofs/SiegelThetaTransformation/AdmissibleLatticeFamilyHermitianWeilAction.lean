@@ -124,6 +124,7 @@ theorem colsIn_transfer {s R m : ℕ} (hs : s.Coprime (m * R)) (h1 : ∀ v ∈ �
   rwa [Nat.cast_mul, mul_smul] at hx'
 
 
+open Classical in
 theorem rho_apply (hΛ' : ∀ x, x ∈ Λ' ↔ ∀ y ∈ Λ', IsIntegral ℤ (herm 1 x y)) {s R m : ℕ}
     (hs : s.Coprime (m * (2 * R))) (h1 : ∀ v ∈ Λ, (s : E) • v ∈ Λ')
     (h2 : ∀ v ∈ Λ', (s : E) • v ∈ Λ) {φ : Matrix (Fin n) (Fin N) E → ℂ} (hφ : LevelL Λ R φ)

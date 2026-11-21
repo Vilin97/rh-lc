@@ -15,6 +15,7 @@ noncomputable section
 variable {W : Scheme.{0}}
 
 
+open Classical in
 def ordAlong (G : W.IdealSheafData) (C : Set W) : ℕ :=
   if h : IsIrreducible C then
     (Module.length (W.presheaf.stalk h.genericPoint)

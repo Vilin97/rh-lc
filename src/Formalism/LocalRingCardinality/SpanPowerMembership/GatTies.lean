@@ -22,6 +22,7 @@ abbrev Quo : Type := G ⧸ Subgroup.zpowers g
 def eQuo : Fin (Nat.card (Quo g)) ≃ Quo g := (Finite.equivFin (Quo g)).symm
 
 
+open Classical in
 def secOf (T : Set G) (q : Quo g) : G :=
   if h : ∃ x ∈ T, (QuotientGroup.mk x : Quo g) = q then h.choose else q.out
 

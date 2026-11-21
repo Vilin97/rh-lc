@@ -249,6 +249,7 @@ lemma w_dvd_psi (S : UniformizedDVR p O) (s : ℤ) (x : WF p f) (h : WittVector.
   rw [map_mul, map_natCast, ht, mul_assoc]
 
 
+open Classical in
 def dW {ι : Type} (w : O) (LL : LiftLetters ι) (r : ℕ) (l : ι) (b : Fin k) : O :=
   if (LL.vec l = true ∧ r ≤ b.val) ∨ (LL.vec l = false ∧ b.val < r) then w else 1
 

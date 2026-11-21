@@ -173,6 +173,7 @@ theorem torusChar_mulSingle {n : Type} [Fintype n] [DecidableEq n] (χ : n → k
   · simp
 
 
+open Classical in
 theorem wordMult_detRep (N : ℕ) (ψ : kˣ →* ℂˣ) (w : List ℂˣ) :
     wordMult (detRep (Fin N) ψ) w = if w.length = N ∧ ∀ i < N, unrChar k (w.getD i 1) =
       ψ * absPow k ((i : ℂ) - ((N : ℂ) - 1) / 2) then 1 else 0 := by

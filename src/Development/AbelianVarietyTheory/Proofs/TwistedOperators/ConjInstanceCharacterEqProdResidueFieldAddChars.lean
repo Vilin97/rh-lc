@@ -112,6 +112,7 @@ theorem conjRes_cP (PP : Pl D.host.E) (s : Formalism.L2.Herm.intAf D.host.F D.ho
   rw [resS_cP (GlobalTheory.IdemSupport.cP PP) (sigInt (instOf D) s), sigInt_sigInt]
 
 
+open Classical in
 theorem core (psiEf : (instOf D).E ⊗[(instOf D).F] Formalism.MainNotions.S.Af (instOf D).F → ℂ)
     (hadd : ∀ x y, psiEf (x + y) = psiEf x * psiEf y)
     (hint : ∀ x ∈ IntAf (instOf D).F (instOf D).E, psiEf x = 1)

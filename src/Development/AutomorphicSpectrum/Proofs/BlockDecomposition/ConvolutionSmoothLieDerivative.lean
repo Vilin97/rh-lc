@@ -24,6 +24,7 @@ def wt (U : Subgroup (GL (Fin a) (Af E))) (F : GA E a → ℂ) (g : GA E a) : GA
   Set.indicator {v | GeneralLinearGroup.map (pFin E) v⁻¹ ∈ U} fun v => F (g * v)
 
 
+open Classical in
 theorem wt_apply (U : Subgroup (GL (Fin a) (Af E))) (F : GA E a → ℂ) (g v : GA E a) :
     wt U F g v = if GeneralLinearGroup.map (pFin E) v⁻¹ ∈ U then F (g * v) else 0 := by
   simp only [wt, Set.indicator_apply, Set.mem_setOf_eq]

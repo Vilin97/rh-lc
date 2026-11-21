@@ -24,6 +24,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, Fintype (ι' k)]
 
 
+open Classical in
 theorem exists_normalise {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     {P' : Ideal (MRing ι')} (hP' : IsMultiHomogIdeal P') {j : ∀ k : FibreBlock κ, ι' k.1}
     {z : (Σ k, ι k) → ℂ} {c : K → ℂ} (hc : ∀ k, c k ≠ 0) {z' : (Σ k', ι' k') → ℂ} (hz' : z' ∈ mcPts P')

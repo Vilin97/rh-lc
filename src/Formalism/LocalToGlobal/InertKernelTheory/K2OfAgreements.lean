@@ -82,6 +82,7 @@ def SharpQ (t : KerEntTied ex) (Tw : TwForms D) (u : D.what₂.Word) (μ : D.wha
   (∀ c, Q c ∈ WtPol ℂ (nuT D u i)) ∧ ∀ c, (D.chTw u μ).sharp i ((Tw.fm u μ).emb i x c) = frPoly (t.O u μ) i (Q c)
 
 
+open Classical in
 def qOf (t : KerEntTied ex) (Tw : TwForms D) (u : D.what₂.Word) (μ : D.what₂.Tup) (i : ℕ) (x : ((Tw.fm u μ).lat i).V) :
     (D.chTw u μ).cls i → MvPolynomial (GL3Theta.FrV D (D.R.N i)) ℂ :=
   if h : ∃ Q, SharpQ t Tw u μ i x Q then Classical.choose h else fun _ => 0

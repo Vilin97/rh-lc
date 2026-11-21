@@ -71,6 +71,7 @@ theorem phiT_data_away : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU
   exact ⟨e, fnl_away A dtU a hP hTi j hj β x x₁ p p₁ h h₁ hag P e⟩
 
 
+open Classical in
 theorem ptAway_cpl : UnderTie (fun {D L hT Gi Gl Kc Y cX ex t u μ St} A dtU a => ∀ i hi, i = t.m2 → PtAway A a i hi) := by
   intro D L hT Gi Gl Kc Y cX ex t u μ St A dtU a hP hTi i hi hi2
   subst hi2

@@ -22,6 +22,7 @@ namespace ChangeOfModel
 variable {K : Type} [Fintype K] {ι ι₂ : K → Type} [∀ k, Fintype (ι k)] [∀ k, Fintype (ι₂ k)]
 
 
+open Classical in
 def blockDeg (k₂ : K) : K → ℕ := fun k => if k = k₂ then 1 else 0
 
 

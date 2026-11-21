@@ -36,6 +36,7 @@ def HeckeLift0 (M : MtFam0 H what₂) (Qw : what₂.places.Pl → Finset (Height
 variable (M : MtFam0 H what₂) (Qw : what₂.places.Pl → Finset (HeightOneSpectrum (𝓞 H.E))) (hR : HeckeLift0 M Qw)
 
 
+open Classical in
 def hLC (j : ℕ) (w : what₂.places.Pl) (v : HeightOneSpectrum (𝓞 H.E)) (k : ℕ) :
     Module.End what₂.LL (what₂.MtL (what₂.muTw w) j) :=
   if h : (1 ≤ j ∧ j ≤ R.m) ∧ GenAt0 H (what₂.places.resChar w) (Qw w) v k then (hR j w v k h.1.1 h.1.2 h.2).choose else 0

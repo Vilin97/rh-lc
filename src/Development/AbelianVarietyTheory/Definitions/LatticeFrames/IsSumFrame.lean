@@ -184,6 +184,7 @@ def rd (α : Frame p S n') (β : Frame p T n) (t : WO S T) : Matrix n n' k :=
   β.b' ⬝ Matrix.map t p.pr ⬝ α.b
 
 
+open Classical in
 def extFun (α : Frame p S n') (β : Frame p T n) (Ψ : Matrix n n' k → ℂ) (t : WO S T) : ℂ :=
   if IsHalf p.e t then Ψ (rd α β t) else 0
 
@@ -215,9 +216,11 @@ def tensRow (Ψ : Matrix n n' k → ℂ) (b : (n' → k) → ℂ) (x : Matrix (n
   Ψ (x.submatrix Sum.inl id) * b (x (Sum.inr 0))
 
 
+open Classical in
 def vecInd (Λ : Submodule 𝒪[k] (n → k)) (y : n → k) : ℂ := if y ∈ Λ then 1 else 0
 
 
+open Classical in
 def dualInd (Λ : Submodule 𝒪[k] (n → k)) (η : n → k) : ℂ := if GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData.InDual Λ η then 1 else 0
 
 def charInd (χ : AddChar 𝓀[k] ℂ) (Q : Pair k n) (y : n → k) : ℂ := χ (-Q.ev y) * vecInd Q.lat y

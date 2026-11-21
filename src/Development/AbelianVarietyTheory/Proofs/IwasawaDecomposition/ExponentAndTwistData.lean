@@ -83,6 +83,7 @@ def rhoR (hR : ∀ j, 1 ≤ j → j ≤ D.R.m → RhoStab S j) (j : ℕ) : S.G �
     rw [map_mul]; rfl
 
 
+open Classical in
 def cR (hC : ∀ j, 1 ≤ j → j ≤ D.R.m → ChiInLL0 S j) (j : ℕ) (g : S.G) : ↥D.LL0 :=
   if h : 1 ≤ j ∧ j ≤ D.R.m then chiL S j (hC j h.1 h.2) g else 1
 
@@ -146,12 +147,14 @@ def BT (hR : ∀ j, 1 ≤ j → j ≤ D.R.m → RhoStab S j) (hC : ∀ j, 1 ≤ 
   BsupT D T S i j b ⊓ (V0T D T S hR hC θ i j b).restrictScalars (T.O i)
 
 
+open Classical in
 def cHkT (i : T.Tw) (b : Bool) (P : PlE D.host) : (T.O i)ˣ :=
   if h : ∃ σ : Formalism.ConjugateSelfDual.G D.host.E D.nd.Om, IsFrob (F := D.host.E) (D.nd.plOm.1 P) (normV P) σ then
     Units.map (algebraMap (T.O0 i) (T.O i)).toMonoidHom (if b then T.delta i h.choose else (T.delta i h.choose)⁻¹)
   else 1
 
 
+open Classical in
 def hLr (In : RatIn D S) (j k : ℕ) (P : PlE D.host) : Module.End S.Ks ↥(WKr D S j) :=
   if h : 1 ≤ j ∧ j ≤ D.R.m then
     ((In.hL j k P).restrictScalars S.Ks).restrict (p := WKr D S j) (q := WKr D S j) (fun x hx => by
@@ -181,6 +184,7 @@ def HkStab : Prop :=
   ∀ i j b k P, HkCond D T i j k P → ∀ x ∈ BI D T S In i j b, hkT D T S In i j b k P x ∈ BI D T S In i j b
 
 
+open Classical in
 def hkB (hst : HkStab D T S In) (i : T.Tw) (j : ℕ) (b : Bool) (k : ℕ) (P : PlE D.host) :
     Module.End (T.O i) ↥(BI D T S In i j b) :=
   if h : HkCond D T i j k P then
@@ -325,6 +329,7 @@ structure LevT (i : T.Tw) (k : ℕ) where
     (sp (NX.pG D kv)).v.adicCompletionIntegers (maximalRealSubfield D.host.E) →+* ZMod (D.host.g kv.1)
 
 
+open Classical in
 def MtSubT (wt : WtData D T) (i : T.Tw) (j : ℕ) (b : Bool) (k : ℕ) (Good : LevT D T i k → Prop) :
     Submodule (FractionRing (T.Ok i k)) (GAf D.host.E D.R.nV → WkT D T wt i j b k) :=
   if h : ∃ L : LevT D T i k, Good L ∧
@@ -350,11 +355,13 @@ variable (D : D7) (T : TwR D.LL0 D.nd)
 attribute [local instance] algKkT
 
 
+open Classical in
 def psiUTotT (θ : ∀ kk : Fin 2, Multiplicative (ZMod (D.host.g kk)) →* (↥D.LL0)ˣ) (i : T.Tw) (b : Bool) (u : G0g D.nd) :
     FractionRing (T.O i) :=
   if h : u ∈ Formalism.IndefR.NX.U D.nd then ((psiUT D T θ i b ⟨u, h⟩ : (FractionRing (T.O i))ˣ) : FractionRing (T.O i)) else 1
 
 
+open Classical in
 def gValT (θ : ∀ kk : Fin 2, Multiplicative (ZMod (D.host.g kk)) →* (↥D.LL0)ˣ) (i : T.Tw) (k : ℕ) (b : Bool)
     (kv : Σ k : Fin 2, D.nd.PlG k) (s : SplitPlace D.host.E)
     (red : s.v.adicCompletionIntegers (maximalRealSubfield D.host.E) →+* ZMod (D.host.g kv.1))
@@ -377,6 +384,7 @@ def TauTameT (i : T.Tw) (j : ℕ) (b : Bool) (kv : Σ kk : Fin 2, D.nd.PlG kk) :
     ((τ x : (FractionRing (T.O i))ˣ) : FractionRing (T.O i)) = baseCoeffToFractionRing D T i (NX.tameVal (T.chi1 i j b) (NX.pG D kv) 1 u).1
 
 
+open Classical in
 def tauT (i : T.Tw) (j : ℕ) (b : Bool) (kv : Σ kk : Fin 2, D.nd.PlG kk) :
     (ZMod (D.host.g kv.1))ˣ →* (FractionRing (T.O i))ˣ :=
   if h : TauTameT D T i j b kv then h.choose else 1

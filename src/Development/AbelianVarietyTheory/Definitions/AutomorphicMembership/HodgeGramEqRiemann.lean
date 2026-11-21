@@ -122,6 +122,7 @@ def IsHodgeFrame (y : CxPts (genStr Z) σ) (g : EigFrame Z σ (y.1 ≫ genι Z))
       (cxPt Z ((U σ').un k x)).1 = spMap ψ ≫ y.1 ∧ g.IsMap ψ (cxFrame Z ((U σ').un k x))
 
 
+open Classical in
 def EigMet.hodge (b : ℝ) (hb : 0 < b) (G₀ : EigMet Z σ) : EigMet Z σ where
   gram y g τ := if h : ∃ f, IsHodgeFrame U y f then (b : ℂ) • ((h.choose.co g τ)ᴴ * h.choose.co g τ) else G₀.gram y g τ
   pos y g τ := by

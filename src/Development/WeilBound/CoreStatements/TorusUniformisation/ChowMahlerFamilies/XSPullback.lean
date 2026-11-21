@@ -38,6 +38,7 @@ theorem vNumL_perm (W : Ideal (MRing ι O)) {l₁ l₂ : List (K → ℤ)} (h : 
   rw [h.foldr_eq]
 
 
+open Classical in
 noncomputable def vertEval (ϖ : O) (P : Ideal (MRing ι O)) (f : MRing ι O) (l : List (K → ℤ)) : ℤ :=
   cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then vNumL W l else 0) (divCycle P f)
 

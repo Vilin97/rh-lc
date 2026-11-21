@@ -23,6 +23,7 @@ open Pb
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)} {Y : CB l K}
 
 
+open Classical in
 def coL {m : ℕ} (L : Lv Y m) (M : Model l K) (r j : ℕ) : HG (L.QB M) r j →+ ∀ a, Module.Dual K (Hdg M.q a j) →+ ℂ_[l] :=
   if h : ∃ co, IsCo L.γB M.q (L.QB M) L.θ L.tB_mem r j co then h.choose else 0
 
@@ -85,6 +86,7 @@ theorem down (hC : CoEx l K) (hR : HomRho l K) (hμ : HomMu l K) (hF : KForm) {m
 variable (S : ∀ m, Lv Y (m + 1))
 
 
+open Classical in
 def gam {M : Model l K} {r j : ℕ} (x : Y.Fam M r j) : ∀ a, Module.Dual K (Hdg M.q a j) →+ ℂ_[l] :=
   if h : ∃ w, (S r).Rho x w then coL (S r) M r j h.choose else 0
 

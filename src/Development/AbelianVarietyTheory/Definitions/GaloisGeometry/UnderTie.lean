@@ -48,6 +48,7 @@ def xiPt (i : ℕ) (hi : i + 1 ≤ D.R.m) (β : (St i (Nat.le_of_succ_le hi)).Ch
   else XiTop t.Ch t.sel (t.tup μ) (t.cst μ) i p (cosetOf A i (Nat.le_of_succ_le hi) β p) p' z
 
 
+open Classical in
 def xiAd : AdDatum St := fun i hi β β' x x' z =>
   if h : (∃ p, IsPtAd A a i (Nat.le_of_succ_le hi) β x p) ∧ ∃ p', IsPtAd A a (i + 1) hi β' x' p' then
     t.seam.σ₀ (xiPt A i hi β β' h.1.choose h.2.choose (seamHom t.seam (inFr
@@ -56,6 +57,7 @@ def xiAd : AdDatum St := fun i hi β β' x x' z =>
   else 0
 
 
+open Classical in
 def muOf (j : ℕ) (x : (AfE D.host.F D.host.E)ˣ) : ℂ :=
   if h : ∃ y : Formalism.L2.Herm.unitaryOneFiniteAdeles D.sp.cm, Matrix.GeneralLinearGroup.det y.1 = x then (((t.O u μ).mt j (dtU h.choose) : ℂˣ) : ℂ) else 0
 

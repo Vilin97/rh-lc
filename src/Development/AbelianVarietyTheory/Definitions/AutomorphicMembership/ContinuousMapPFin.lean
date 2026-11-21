@@ -101,6 +101,7 @@ theorem dual_dual (lam : DomWeight n) : lam.dual.dual = lam := by
   simp [DomWeight.dual]
 
 
+open Classical in
 def Wt.at (W : Wt E n) (τ : E →+* ℂ) : DomWeight n :=
   if (InfinitePlace.mk τ).embedding = τ then W (InfinitePlace.mk τ) else (W (InfinitePlace.mk τ)).dual
 

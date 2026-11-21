@@ -157,6 +157,7 @@ theorem exists_appr {x : Fv F v} (hx : x ∈ v.adicCompletionIntegers F) :
   exact Valuation.map_add_lt Valued.v hy' h2
 
 
+open Classical in
 def appr (x : Fv F v) : 𝓞 F :=
   if h : ∃ a : 𝓞 F, Valued.v (x - iO v a) < 1 then h.choose else 0
 

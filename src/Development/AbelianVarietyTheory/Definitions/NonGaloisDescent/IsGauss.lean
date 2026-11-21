@@ -23,6 +23,7 @@ def IsGauss (ρ : ℝ) (N : Formalism.Per.Acris l → ℝ) : Prop :=
     ∀ a : Formalism.Per.Ainf l, N (algebraMap (Formalism.Per.Ainf l) (Formalism.Per.Acris l) a) = gA l ρ a
 
 
+open Classical in
 def gC (ρ : ℝ) (x : Formalism.Per.Acris l) : ℝ :=
   if h : ∃ N, IsGauss l ρ N then Classical.choose h x else 0
 

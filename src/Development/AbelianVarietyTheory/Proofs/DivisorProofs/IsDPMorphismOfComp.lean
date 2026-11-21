@@ -58,6 +58,7 @@ theorem rep {x : S} (hx : x ∈ J.map (algebraMap B S)) :
   exact ⟨u, j, hj, e⟩
 
 
+open Classical in
 def ext (n : ℕ) (x : S) : S :=
   if h : ∃ p : S × B, p.2 ∈ J ∧ x = p.1 * algebraMap B S p.2 then
     h.choose.1 ^ n * algebraMap B S (δ.dpow n h.choose.2) else 0

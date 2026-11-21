@@ -172,6 +172,7 @@ theorem Kp_eq_sum {K : Type} [CommRing K] (R : Subring K) (ψ : AddChar K ℂ) (
       simp [hI.1, hI.2]
 
 
+open Classical in
 theorem BB_eq_sum {K : Type} [CommRing K] [TopologicalSpace K] [IsTopologicalRing K]
     (R : Subring K) (ψ : AddChar K ℂ) (hL : LocalDatum K R ψ) (w : Point K)
     (μ₁ : Measure (lowW K w.1 w.2)) (μ₂ : Measure (upUniG K w.1.sum))

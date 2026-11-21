@@ -162,6 +162,7 @@ theorem double_sum_eq_zero {Ω : Type} [AddCommGroup Ω] (I : ∀ k, Finset (ι 
 variable (S : Type) [CommRing S] [∀ k, Fintype (ι k)] {Ω : Type} [Field Ω] [Algebra S Ω]
 
 
+open Classical in
 def ext (m : ℕ) (t : Cell K ι m → Ω) (J : ∀ k, Finset (ι k)) : Ω :=
   if h : (∀ l, (J l).Nonempty) ∧ ∑ l, ((J l).card - 1) = m then t ⟨J, h⟩ else 0
 

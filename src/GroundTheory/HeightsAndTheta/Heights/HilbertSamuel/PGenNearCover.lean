@@ -45,6 +45,7 @@ theorem isWeightedHomogeneous_iff {f : MRingOver S ι} {a : K → ℕ} :
     exact h m (mem_support_iff.2 hm) k
 
 
+open Classical in
 theorem component_mul {g f : MRingOver S ι} {E : K → ℕ}
     (hf : IsWeightedHomogeneous (blockDeg (ι := ι)) f E) (D : K → ℕ) :
     weightedHomogeneousComponent (blockDeg (ι := ι)) D (g * f) =

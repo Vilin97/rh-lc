@@ -119,6 +119,7 @@ theorem comp_mul (a b : Af F) (v : HeightOneSpectrum (𝓞 F)) : (a * b) v = a v
 theorem comp_add (a b : Af F) (v : HeightOneSpectrum (𝓞 F)) : (a + b) v = a v + b v := rfl
 
 
+open Classical in
 def eT (T : Set (HeightOneSpectrum (𝓞 F))) : Af F :=
   mkI (fun v => if v ∈ T then 1 else 0) (fun v => by split_ifs; exacts [one_mem _, zero_mem _])
 

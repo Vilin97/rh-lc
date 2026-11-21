@@ -44,6 +44,7 @@ def liftCh {W : ObjectProperty C} (hW : Cosieve W) {n : ℕ} (s : ComposableArro
   W.lift s fun i => hW (s.map (homOfLE (Fin.zero_le i))) h
 
 
+open Classical in
 def extZ {W : ObjectProperty C} (hW : Cosieve W) {n : ℕ} (y : CrystallineSemistableComparison.CH.Cn (W.ι ⋙ F) n) : CrystallineSemistableComparison.CH.Cn F n :=
   fun s => if h : W (s.obj 0) then y (liftCh hW s h) else 0
 

@@ -10,6 +10,7 @@ open GlobalTheory.DiscSpec
 namespace GlobalTheory.CompanionTheory.Rigid
 
 
+open Classical in
 theorem card_spehExp_eq (d m : ℕ) (hm : 1 ≤ m) :
     ((Finset.univ : Finset (Fin d)).filter (fun k => ((m : ℝ) - 1) / 2 = spehExp d k)).card =
       if m ≤ d ∧ Even (d - m) then 1 else 0 := by

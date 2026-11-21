@@ -26,6 +26,7 @@ private def step (S : Set (BW.Pl E)) (r : ℕ) (p : ((E →+* ℂ) → Fin r →
     ∀ w ∉ S, t w = ((p.2 w).map fun x : ℂˣ => (x : ℂ) * ((Formalism.UG.qV E w : ℕ) : ℂ) ^ (-c)) + t' w)
 
 
+open Classical in
 private noncomputable def par {r : ℕ} (b : Blo S r) : ((E →+* ℂ) → Fin r → ℂ) × (BW.Pl E → Multiset ℂˣ) :=
   (b.Λ, fun w => if w ∈ S then 0 else b.sat w)
 

@@ -137,6 +137,7 @@ section Cycles
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
+open Classical in
 def cycTerm (I : Ideal (MRing ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) {n : ℕ} (L : Fin n → HermLine ι)
     (W : Ideal (MRing ι)) : ℝ :=
   if IsHorizontal W then I W n L else (geoNum n W (fun j => (L j).a) : ℝ) * Real.log (charOf W)

@@ -1154,6 +1154,7 @@ theorem hypI_69_to_13 (D : D7) (L : SizeData₂ D) (K : Consts) (C₀ CH : ℝ) 
     exact mul_le_mul (mul_le_mul_of_nonneg_right hCHk hA) hBB hB0 (mul_nonneg (hCH0.trans hCHk) hA)
 
 
+open Classical in
 theorem tI_le_tIf (D : D7) (L : SizeData₂ D) (K : Consts) (C : ℝ) (hK : K.Nonneg) (hC0 : 0 ≤ C)
     (hCt1 : 2 * C ≤ K.kappaThresholdOne) (hCt2 : C ≤ K.kappaThresholdTwo) (hc : 0 ≤ cG L) (p n' : ℕ) (TT : Finset (Fin n'))
     (a b : Fin n' → ℤ) (hE : ∃ x ∈ TT, IsTypeV x) (hp1 : (1 : ℝ) < p) (hpb : (p : ℝ) < L.sc.a / L.sc.b')

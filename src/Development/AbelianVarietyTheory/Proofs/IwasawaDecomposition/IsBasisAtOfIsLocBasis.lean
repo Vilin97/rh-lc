@@ -98,6 +98,7 @@ theorem lattice_sup_smul {d : Deco E n ST SG} (hd : d.Ok) (I : Ideal (𝓞 E)) :
   lattice_between hd.L_lattice hd.Lsh_lattice le_sup_left (sup_le hd.L_le_Lsh Submodule.smul_le_right)
 
 
+open Classical in
 theorem mem_localization_ker (emb : ι → E →+* K) (σ : K →+* ℂ) (lam : ι → DomWeight n) (w : HeightOneSpectrum (𝓞 K))
     {T : ℕ} (hT : T.Prime) (hST : ∀ P : ST, (T : 𝓞 E) ∈ P.1.asIdeal) (e : ST ≃ ι) (he : ∀ P, bcBelow (emb (e P)) w = P.1)
     {d : Deco E n ST SG} (hd : d.Ok) {a : 𝓞 E} (ha : SepElt ST a) (P : ST) {B B' : GL (Fin n) E}

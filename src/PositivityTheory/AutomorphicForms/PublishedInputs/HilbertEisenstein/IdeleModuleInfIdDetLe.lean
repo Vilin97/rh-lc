@@ -264,6 +264,7 @@ theorem norm_Eis_le (ω : HChar F) (Ψ : (Fin 2 → Ad F) → ℂ) (h : GA F 2) 
   linarith [h2]
 
 
+open Classical in
 theorem norm_Phi_le (c : HeightOneSpectrum (𝓞 F) → ℕ) (v : Fin 2 → Ad F) :
     ‖Phi c v‖ ≤ ‖arch (UpperTheory.V.TR.pInf F (v 0)) (UpperTheory.V.TR.pInf F (v 1))‖ *
       (if boxP (fun w => (c w : ℤ) + dd w) v then 1 else 0) := by
@@ -292,6 +293,7 @@ theorem norm_Phi_le (c : HeightOneSpectrum (𝓞 F) → ℕ) (v : Fin 2 → Ad F
   · simp
 
 
+open Classical in
 theorem norm_PhiH_le (c : HeightOneSpectrum (𝓞 F) → ℕ) (v : Fin 2 → Ad F) :
     ‖PhiH c v‖ ≤ ‖arch (UpperTheory.V.TR.pInf F (v 0)) (UpperTheory.V.TR.pInf F (v 1))‖ *
       (if boxP (fun w => (c w : ℤ) + dd w) v then 1 else 0) := by

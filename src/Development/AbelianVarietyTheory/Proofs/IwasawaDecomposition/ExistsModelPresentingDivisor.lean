@@ -50,6 +50,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {t : SAB H X} {F : Type} [Field F] [NumberField F] {Y : Var F}
 
 
+open Classical in
 def mixLog (ρ : Y.X ⟶ X) {m : ℕ}
     (f : ∀ y : Y.X, Fin m → (Sp (DualNumber (Y.X.presheaf.stalk y)) ⟶ t.G.left)) (b : ℕ → Bool) (i : Fin m) : PtFn Y :=
   fun v ε y =>
@@ -82,6 +83,7 @@ theorem fr_spec (y : C.Y.X) : (fr C y).Tri (algebraMap (C.Y.X.presheaf.stalk y) 
 
 
 
+open Classical in
 def symLog (b : ℕ → Bool) (st : ((E →+* ℂ) × ℕ) ⊕ ℕ) : PtFn C.Y := fun v ε y =>
   if hp : (resP v).Prime then
     haveI := Fact.mk hp
@@ -92,6 +94,7 @@ def symLog (b : ℕ → Bool) (st : ((E →+* ℂ) × ℕ) ⊕ ℕ) : PtFn C.Y :
   else 0
 
 
+open Classical in
 def lgCopy (w : Sym E →₀ ℤ) (v : HeightOneSpectrum (𝓞 F)) (ε : Ext v) (y : AlgPt C.Y) : ℝ :=
   if hp : (resP v).Prime then
     haveI := Fact.mk hp

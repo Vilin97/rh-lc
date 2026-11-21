@@ -46,6 +46,7 @@ theorem exists_reps_cong {N : ℕ} (hN : 0 < N) : ∃ T, IsClassReps (congSub L 
   exact ⟨t * f, Finset.mem_image₂_of_mem ht hf, γ, f⁻¹ * u, hfu, by group⟩
 
 
+open Classical in
 def reps (N : ℕ) : Finset (GAf L n) :=
   if h : ∃ T, IsClassReps (congSub L n N) T then h.choose else ∅
 
@@ -107,6 +108,7 @@ namespace GlobalTheory.ClassPet
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
 
+open Classical in
 def lev {W : Type} (f : GAf L n → W) : ℕ := if h : ∃ N, 0 < N ∧ InvAt N f then h.choose else 1
 
 theorem lev_spec {W : Type} [AddCommGroup W] [Module ℂ W] {ρ : Representation ℂ (GQ L n) W} {f : GAf L n → W}

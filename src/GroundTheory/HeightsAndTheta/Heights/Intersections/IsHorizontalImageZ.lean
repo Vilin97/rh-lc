@@ -74,6 +74,7 @@ theorem mem_minimalPrimes {J Q : Ideal (MRing ι)} {n : ℕ} (hQ : IsArithVar Q 
   omega
 
 
+open Classical in
 theorem sum_block (F : (Σ k', ι' k') → ℕ) (k' : K') :
     ∑ i, F ⟨k', i⟩ = ∑ q, if q.1 = k' then F q else 0 := by
   classical

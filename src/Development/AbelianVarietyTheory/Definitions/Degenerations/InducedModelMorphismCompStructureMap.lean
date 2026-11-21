@@ -435,6 +435,7 @@ theorem div_mul_iff {J : Type} {t : J → Ω} {i : J} {z : M.Z} {c : Ω} (hc : c
 variable (M)
 
 
+open Classical in
 def val {K : Type} [Field K] (y : Sp K ⟶ M.Z) (x : Ω) : K :=
   if h : ∃ q : (Σ U : M.Z.Opens, Γ(M.Z, U)), Set.range y ⊆ q.1 ∧ valF M.pt q.1 q.2 = x then
     valF y h.choose.1 h.choose.2 else 0

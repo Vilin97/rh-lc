@@ -401,6 +401,7 @@ theorem mu_diff (D : D7) (L : SizeData₂ D) (hdef : DV.NprimeDef D L) (u : D.wh
   ring
 
 
+open Classical in
 theorem round_le (D : D7) (L : SizeData₂ D) (hdef : DV.NprimeDef D L) (u : D.what₂.Word)
     (hX : ∀ v, IsUnit ((D.div.Nu u).X v).det)
     (hfg : (D.div.Nu u).L.FG) (hne : (D.div.Nu u).L ≠ ⊥) :

@@ -84,6 +84,7 @@ theorem inv_mem_intLoc (v : HeightOneSpectrum (𝓞 F)) (n : ℕ) (hn : (n : �
   exact tmul_mem_intLoc (inv_natCast_mem v n hn) y
 
 
+open Classical in
 noncomputable def idemAt (F : Type) [Field F] [NumberField F] (q : ℕ) : AF F :=
   (0, ⟨fun v => if (q : 𝓞 F) ∈ v.asIdeal then 1 else 0, Filter.Eventually.of_forall fun v => by
     dsimp only

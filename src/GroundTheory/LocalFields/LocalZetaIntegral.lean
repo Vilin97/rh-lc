@@ -43,6 +43,7 @@ section LFactor
 variable (χ : Kˣ →* ℂˣ)
 
 
+open Classical in
 def localLFactor (s : ℂ) : ℂ :=
   if IsUnramifiedChar χ then (1 - ((χ (unifUnit K) : ℂˣ) : ℂ) * (residueCard K : ℂ) ^ (-s))⁻¹
   else 1
@@ -163,6 +164,7 @@ theorem integrable_localZeta (hf : f ∈ schwartzBruhat K) (hχ : Continuous χ)
   exact ENNReal.ofReal_lt_top
 
 
+open scoped Classical in
 theorem localZeta_eq_sum (hf : f ∈ schwartzBruhat K) (hχ : Continuous χ) {M N : ℤ} (hMN : M ≤ N)
     (hM : ∀ x, f x ≠ 0 → x ∈ valBall K M) (hN : ∀ x ∈ valBall K N, f x = f 0) {s : ℂ}
     (hs : -quasiCharExponent χ < s.re) :

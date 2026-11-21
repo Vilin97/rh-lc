@@ -93,6 +93,7 @@ theorem exists_iota {φ : K.E ≃+* E} (hs : ∀ y, φ (K.c y) = star (φ y)) {a
   exact ⟨x, by rw [iota_apply, hx, RingEquiv.symm_apply_apply]⟩
 
 
+open Classical in
 def wG (u : B.A) (L : Submodule K.O B.A) : ℂ :=
   if (∀ y ∈ L, B.g * y ∈ L) ∧ u ∈ L ∧ ∀ z ∈ L, Algebra.trace K.E B.A z ∈ (algebraMap K.O K.E).range
   then ((B.sgnLat L : ℚ) : ℂ) else 0
@@ -212,6 +213,7 @@ theorem unit_iff {n : ℕ} {φ : K.E ≃+* E} (hs : ∀ y, φ (K.c y) = star (φ
   exact (Matrix.map_injective φ.injective).eq_iff.symm
 
 
+open Classical in
 def wU (w : B.A) (L : Submodule K.O B.A) : ℂ :=
   if (∀ y ∈ L, B.g * y ∈ L) ∧ w ∈ L then 1 else 0
 

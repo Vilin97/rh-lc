@@ -68,6 +68,7 @@ theorem conj_ne (τ : E →+* ℂ) : ComplexEmbedding.conjugate τ ≠ τ := fun
     (InfinitePlace.isReal_mk_iff.2 (ComplexEmbedding.isReal_iff.2 h))
 
 
+open Classical in
 theorem coord_atEmb' (σ τ : E →+* ℂ) (z : ℂ) : coord σ (atEmb τ z) =
     (if σ = τ then z else 0) + (if σ = ComplexEmbedding.conjugate τ then starRingEnd ℂ z else 0) := by
   by_cases h1 : σ = τ
@@ -105,6 +106,7 @@ theorem chiInf_eq (χ : HChar E) {I : Type} [Fintype I] (φ : I → E →+* ℂ)
     exact e
 
 
+open Classical in
 theorem expo_eq_sum (χ : HChar E) {I : Type} [Fintype I] (φ : I → E →+* ℂ) (f : I → ℂ → ℂ) (a b : I → ℂ)
     (hf : ∀ i z, z ≠ 0 → ContinuousAt (f i) z)
     (he : ∀ i z, f i (Complex.exp z) = Complex.exp (a i * z + b i * starRingEnd ℂ z))

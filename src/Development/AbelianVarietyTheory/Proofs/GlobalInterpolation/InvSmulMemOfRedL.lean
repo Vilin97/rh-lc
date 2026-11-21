@@ -184,6 +184,7 @@ theorem toO_smul (P : HeightOneSpectrum (𝓞 E)) (r : 𝓞 E) (x : Fin n → E)
   algebraMap_smul E r x
 
 
+open Classical in
 def redL (M : Submodule (𝓞 E) (Fin n → E)) (P : HeightOneSpectrum (𝓞 E)) (x : Fin n → E) : TDat.Red M P :=
   if h : ∃ s : 𝓞 E, s ∉ P.asIdeal ∧ s • x ∈ M then
     (Ideal.Quotient.mk P.asIdeal h.choose : Res P)⁻¹ • Submodule.Quotient.mk (⟨_, h.choose_spec.2⟩ : M) else 0

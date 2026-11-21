@@ -45,6 +45,7 @@ theorem finAlg_allSetJ (P : Pre) (J : AmbIn P.host) (χ : HChar P.host.E) {Ξ : 
   exact (Set.finite_univ.prod ((Set.finite_Iio P.R.m).prod (hs.prod hs))).subset fun k hk => ⟨trivial, hk.1⟩
 
 
+open Classical in
 def gensJ (P : Pre) (J : AmbIn P.host) (χ : HChar P.host.E) (Ξ : Set (HChar P.host.E)) : Finset ℂ :=
   if h : FinAlg (allSetJ P J χ Ξ) then h.choose else ∅
 

@@ -17,6 +17,7 @@ section Lift
 variable {R S : Type} [CommRing R] [CommRing S] (π : R →+* S) (hπ : Function.Surjective π)
 
 
+open Classical in
 def lift (s : S) : R := if s = 0 then 0 else if s = 1 then 1 else Function.surjInv hπ s
 
 theorem lift_zero : lift π hπ 0 = 0 := by

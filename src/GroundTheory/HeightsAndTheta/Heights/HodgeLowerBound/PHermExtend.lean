@@ -197,6 +197,7 @@ theorem logRatio_smul
     (Finset.prod_ne_zero_iff.2 fun k _ => zpow_ne_zero _ (norm_ne_zero_iff.2 (hc k)))]
 
 
+open Classical in
 def descend (P : Ideal (MRing ι)) (a : K → ℤ) (F : ((Σ k, ι k) → ℂ) → ℝ) (Q : (Σ k, ι k × ι k) → ℂ) : ℝ :=
   if h : ∃ z ∈ mcPts P, proj z = Q then logRatio a F h.choose else 0
 

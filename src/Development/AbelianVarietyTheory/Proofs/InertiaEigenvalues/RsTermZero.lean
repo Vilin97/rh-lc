@@ -15,6 +15,7 @@ open scoped ComplexConjugate
 namespace GlobalTheory.ZEul
 
 
+open Classical in
 def rsTerm (q : ℕ) {n : ℕ} (α β : Fin n → ℂ) (x : ℝ) (v : Fin n → ℤ) : ℂ :=
   if (∀ i, 0 ≤ v i) ∧ Antitone v then
     schurAt (fun i => (v i).toNat) α * conj (schurAt (fun i => (v i).toNat) β) *

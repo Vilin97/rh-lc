@@ -20,6 +20,7 @@ variable {R : Ranks} {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     [Algebra O Kf] {ι : Qq →+* Kf} {σ : Qq ≃+* Qq} {j : W →+* O} {w : O} {m : ℕ}
 
 
+open Classical in
 def gOf (Lt : Fin nV → Submodule W (Fin (m + 1) → Qq)) : Fin nV → GL (Fin (m + 1)) Qq :=
   if h : ∀ v, IsLattice W (Lt v) then Classical.choose (exists_tupOf W Lt h) else 1
 

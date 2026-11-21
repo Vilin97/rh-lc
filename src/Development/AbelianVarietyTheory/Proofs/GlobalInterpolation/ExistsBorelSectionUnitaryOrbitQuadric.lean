@@ -121,6 +121,7 @@ theorem _root_.GlobalTheory.QuadricSection.measurable_qf {P Q : ℕ} :
   fun_prop
 
 
+open Classical in
 def sectMat {P Q : ℕ} (β : ℝ) (x₀ y : Sp P Q) : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ :=
   if qf y = β then
     (if coef (Formalism.UG.Jpq P Q) x₀ y = 0 then -qrefl (Formalism.UG.Jpq P Q) x₀ (-y)

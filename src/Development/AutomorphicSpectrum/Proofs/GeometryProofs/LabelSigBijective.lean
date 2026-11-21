@@ -76,6 +76,7 @@ def GoodRing (Fr : Small.GenFrame Or) (A : Subring RM.Ω) : Prop :=
       (∀ i, b i = ∑ j, T i j • Or.Fl.b s j) ∧ (∀ i j, T i j ∈ A) ∧ ∀ i, T i i ≠ 0 ∧ (T i i)⁻¹ ∈ A
 
 
+open Classical in
 def absT (p : ℕ) (la : HeightOneSpectrum (𝓞 c.F)) (T : CDVR) (e : ℕ) (x : T.Fr) : ℝ :=
   if x = 0 then 0 else (p : ℝ) ^ (-((vV T.V x : ℝ) / ((e : ℝ) * (ramOverZ la : ℝ))))
 

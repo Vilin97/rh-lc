@@ -23,6 +23,7 @@ abbrev FaceOK (J : ∀ k, Finset (ι k)) (n : ℕ) (G : ∀ k, Finset (ι k)) : 
   ((∀ l, (G l).Nonempty) ∧ ∑ l, ((G l).card - 1) = n) ∧ ∀ l, J l ⊆ G l
 
 
+open Classical in
 theorem combD_apply (J : ∀ k, Finset (ι k)) (n : ℕ) (f : CombC S J n) (I : CombCell ι J (n + 1)) :
     combD S J n f I = ∑ k, ∑ i ∈ I.1.1 k,
       if h : FaceOK J n (Function.update I.1.1 k ((I.1.1 k).erase i)) then
@@ -93,6 +94,7 @@ theorem faceSign_update_one (A : ∀ k, Finset (ι k)) {k l : K} (hl : l ≠ k) 
   rw [Function.update_of_ne hl, hs]
 
 
+open Classical in
 theorem block_pair (J : ∀ k, Finset (ι k)) (n : ℕ) (f : CombC S J n) (I : CombCell ι J (n + 1)) (k : K)
     (hJ : J k = ∅) (h2 : (I.1.1 k).card = 2)
     (hf : ∀ i ∈ I.1.1 k, ∀ j ∈ I.1.1 k,

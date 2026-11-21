@@ -16,6 +16,7 @@ namespace GlobalTheory.CompanionTheory.SmoothRep
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 
+open Classical in
 def ker (U : Subgroup (GL (Fin a) (Af E))) (β : Lie E a → ℂ) (v : GA E a) : ℂ :=
   if GeneralLinearGroup.map (pFin E) v ∈ U then β (toL (GeneralLinearGroup.map (pInf E) v).val) else 0
 

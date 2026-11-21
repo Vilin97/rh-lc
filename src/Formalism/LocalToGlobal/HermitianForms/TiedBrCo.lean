@@ -17,6 +17,7 @@ section Inv
 variable {ι : Type} [Fintype ι] {n : ℕ}
 
 
+open Classical in
 def fnInv (G : ι → Matrix (Fin n) (Fin n) ℂ) (s : ι → ℤ) (M : ι → Matrix (Fin n) (Fin n) ℂ) :
     (Frames G → ℂ) →ₗ[ℂ] MvPolynomial (ι × Fin n × Fin n) ℂ :=
   if h : ∀ τ, IsUnit (M τ).det then

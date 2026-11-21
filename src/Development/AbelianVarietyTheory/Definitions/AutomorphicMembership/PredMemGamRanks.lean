@@ -287,16 +287,19 @@ abbrev lv (P : ST) (c : S.Cl) : Type := Red (A.N c.1 (S.rep c)) P.1
 abbrev lk (P : ST) (c : S.Cl) : Type := Red (A.dnN c.1 (S.rep c) P) P.1
 
 
+open Classical in
 def fv (P : ST) (c : S.Cl) : Module.Dual (Res P.1) (A.lv P c) :=
   if h : ∃ φ : Module.Dual (Res P.1) (A.lv P c), ∀ x : A.N c.1 (S.rep c),
     φ (Submodule.Quotient.mk x) = A.f c.1 (S.rep c) P x then h.choose else 0
 
 
+open Classical in
 def te (T : ℕ) (P : ST) (c : S.Cl) : A.lk P c :=
   if h : ∃ t : A.dnN c.1 (S.rep c) P, ∃ e ∈ A.N c.1 (S.rep c), A.f c.1 (S.rep c) P e = 1 ∧ (t : Fin n → E) = (T : 𝓞 E) • e
   then Submodule.Quotient.mk h.choose else 0
 
 
+open Classical in
 def extF (M : Submodule (𝓞 E) (Fin n → E)) (P : HeightOneSpectrum (𝓞 E)) (g : Module.Dual (Res P) (Red M P))
     (y : Fin n → E) : Res P :=
   if h : ∃ a : Res P, ∃ s : 𝓞 E, s ∉ P.asIdeal ∧ ∃ z : M, (z : Fin n → E) = s • y ∧
@@ -328,6 +331,7 @@ def gamRanks (R : Ranks) : Finset ℕ := (Finset.Icc 1 R.m).image R.N ∪ {R.ran
 def gamOrd (R : Ranks) : Set ℕ := ⋃ n ∈ gamRanks R, autOrd E n
 
 
+open Classical in
 def DGam (R : Ranks) : ℕ := if h : (gamOrd E R).Finite then h.toFinset.lcm id else 0
 
 theorem autO_finite (hE : PosStar E) {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N) : Finite (autO N) :=
@@ -916,6 +920,7 @@ structure TopLev.Ok {X : Fields} {Pr : Primes X} {R : Ranks} {Q : Finset (Height
   pref_top : ∀ u p, Tp.pref u R.m p → ∃ d, p.deco = DecoSet.tilH (N_m_succ R) (Pr.piT u) d
 
 
+open Classical in
 def ysAt (j : ℕ) : Ys X (R.N j) :=
   if j + 1 = R.m then ⟨ybSet sel mu cst, fun N γ Y => ybSet_gmap sel mu cst N γ Y⟩ else Ys.triv X _
 

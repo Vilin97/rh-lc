@@ -25,6 +25,7 @@ namespace GlobalTheory.FlatFrameLaw
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H}
 
 
+open Classical in
 theorem exOf_flatWt_some (τ : Psi H) (σ : E →+* ℂ) (i : Fin (Dw.mult σ)) :
     exOf Dw (flatWt Dw τ) 0 (some ⟨σ, i⟩) =
       if σ = τ.1 then -1 else if σ = conjEmb τ.1 then 1 else 0 := by

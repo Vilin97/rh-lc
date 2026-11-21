@@ -1362,6 +1362,7 @@ theorem rma_resG_add {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] (i :
   simp only [resG, Pi.add_apply, smul_add]
 
 
+open Classical in
 def rma_resFn (J : Mx k r → (Wq →L[ℂ] Wp)) : Fn k r (Wq →L[ℂ] Wp) := fun c g =>
   if (c, g) ∈ DomR k r z z' then resG k r (Fin.last r) J c g else 0
 

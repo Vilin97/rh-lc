@@ -317,6 +317,7 @@ theorem mul_g_tuple {n : ℕ} (a b c : Fin (n + 1)) (i : Fin (n + 1) → ι) (k 
   exact h1
 
 
+open Classical in
 theorem g_self_tuple {n : ℕ} (a : Fin (n + 1)) (i : Fin (n + 1) → ι) (k m : V.κ (i a)) :
     rs (le_inf (capO_le U i a) (capO_le U i a)) (V.g (i a) (i a) k m) = if k = m then 1 else 0 := by
   classical

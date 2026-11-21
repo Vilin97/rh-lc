@@ -130,6 +130,7 @@ open Formalism.L2.Pj hiding kap
 variable {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E}
 
 
+open Classical in
 def toWt (Dw : Datum H) (v : D.what₂.Tau → ℕ → ℤ) : Weight Dw :=
   fun τ i => ∑ t, if τ.1 = DV.tauEmb D t then v t i else 0
 

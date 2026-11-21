@@ -64,6 +64,7 @@ theorem exists_mem_eq {O : Type} [CommRing O] {A K : Type} [CommRing A] [Algebra
   exact sub_eq_zero.1 hx0
 
 
+open Classical in
 theorem exists_idempotent {O : Type} [CommRing O] [IsLocalRing O] {A : Type} [CommRing A]
     [Algebra O A] {a : A} {r : Multiset O} (hr : (r.map fun x => a - algebraMap O A x).prod = 0)
     (ρ : IsLocalRing.ResidueField O) :

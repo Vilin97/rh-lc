@@ -100,6 +100,7 @@ theorem exists_char {A : Type} [Ring A] [Algebra ℂ A] [Module.Finite ℂ A] (z
   exact (congrArg l (Ideal.Quotient.eq_zero_iff_mem.2 (hle (Ideal.mem_span_singleton_self z)))).trans (map_zero l)
 
 
+open Classical in
 theorem good_sum {I : Type} [Fintype I] {Γ : I → Type} [∀ i, Group (Γ i)] [∀ i, Finite (Γ i)]
     {P : I → Type} [∀ i, Finite (P i)] (E : ∀ i, P i → MonoidAlgebra ℂ (Γ i)) (good : (∀ i, P i) → Prop)
     (e : MonoidAlgebra ℂ (∀ i, Γ i))

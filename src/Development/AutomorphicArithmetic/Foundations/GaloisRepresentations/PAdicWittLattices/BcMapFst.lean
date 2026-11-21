@@ -137,6 +137,7 @@ variable {B : Scheme.{0}} {G : Type} [Group G] (X : Tower B G) {R : Type} [Field
 def admitted (i j : X.ι) (h : G) : Prop := h ∈ X.Δ ∧ ∀ u ∈ X.K i, h * u * h⁻¹ ∈ X.K j
 
 
+open Classical in
 def pl (i j : X.ι) (h : G) : T.H (X.q j) →ₗ[R] T.H (X.q i) :=
   if a : X.admitted i j h then T.pull (X.tr i j h a.1 a.2) (X.tr_q ..) else 0
 
@@ -149,6 +150,7 @@ def IsHop (j : X.ι) (f : G → R) (A : Module.End R (T.H (X.q j))) : Prop :=
     ∀ x, X.pl T m j 1 (A x) = ∑ᶠ y : G ⧸ X.K j, f y.out • X.pl T m j y.out⁻¹ x
 
 
+open Classical in
 def hecke (j : X.ι) (f : G → R) : Module.End R (T.H (X.q j)) :=
   if h : ∃ A, X.IsHop T j f A then h.choose else 0
 

@@ -27,6 +27,7 @@ abbrev rkTop (R : Ranks) : ℕ := (R.N R.m - 1) + 0
 
 
 
+open Classical in
 def lamTop (sharp : Bool) (P : HeightOneSpectrum (𝓞 X.E)) (h : HomE X.E (rkTop R) (rkTop R)) : X.K :=
   if P ∈ Pr.vGs then
     (if sharp then LocE.lamGBS (qOf P) (psi0P Ch P) (chiP Ch P) R.k R.r R.t R.m (R.N R.m - 1) 0 h

@@ -52,6 +52,7 @@ theorem isOpenEmbedding_valGL :
     exact isOpen_ne_fun (continuous_id.matrix_det) continuous_const
 
 
+open scoped Classical in
 def extZ (φ : SB (GL (Fin m) k)) : Matrix (Fin m) (Fin m) k → ℂ :=
   fun y => if h : IsUnit y then φ.1 h.unit else 0
 
@@ -84,6 +85,7 @@ theorem extZ_mem (φ : SB (GL (Fin m) k)) : extZ φ ∈ SB (Matrix (Fin m) (Fin 
     rw [hzero y' hy'', hzero y hy']
 
 
+open scoped Classical in
 def cutFun (U : Set k) (ψ : SB (Matrix (Fin m) (Fin m) k)) : GL (Fin m) k → ℂ :=
   fun x => if (x.val).det ∈ U then ψ.1 x.val else 0
 

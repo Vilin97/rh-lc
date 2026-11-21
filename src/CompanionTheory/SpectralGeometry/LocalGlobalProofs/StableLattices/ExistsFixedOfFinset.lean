@@ -187,6 +187,7 @@ theorem inner_pr [CompleteSpace H] [DecidableEq ι] (hw : ∀ i, a i (ξ i) w = 
       ContinuousLinearMap.smul_apply, h2, inner_smul_right, ih, Finset.prod_insert hj, mul_assoc]
 
 
+open Classical in
 def pureVec (ξ : ∀ i, Hs i) (w : H) (y : ∀ i, Hs i) : H :=
   if h : {i | y i ≠ ξ i}.Finite then pr hc h.toFinset y w else 0
 

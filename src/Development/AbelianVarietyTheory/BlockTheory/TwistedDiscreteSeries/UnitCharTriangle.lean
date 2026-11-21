@@ -30,6 +30,7 @@ def IsUnitDet (e : AE D) {k : ℕ} (N : Matrix (Fin k) (Fin k) (Lev.EAf D)) (x :
     toEAf D ((x⁻¹ : (AE D)ˣ) : AE D) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E
 
 
+open Classical in
 def unitChar (ν : (AE D)ˣ →* Circle) (e : AE D) {k : ℕ} (N : Matrix (Fin k) (Fin k) (Lev.EAf D)) : ℂ :=
   if h : ∃ x, IsUnitDet e N x then (((ν h.choose)⁻¹ : Circle) : ℂ) else 0
 
@@ -37,6 +38,7 @@ def rightBlock {κ : Type} [Zero κ] {k d : ℕ} (a : ℕ) (Y : Matrix (Fin k) (
   fun i j => if h : a + j.1 < d then Y i ⟨a + j.1, h⟩ else 0
 
 
+open Classical in
 def stdFst (ν : (AE D)ˣ →* Circle) (e : AE D) (I : Ideal (𝓞 D.host.E)) (A WW : HSp D) (βA : GL (Fin A.rank) (Lev.EAf D))
     (βW : GL (Fin WW.rank) (Lev.EAf D)) (x : WO A WW) : ℂ :=
   if IsHalf e x ∧ IsIntM (frMapO A WW βA βW x) ∧ ∀ i j, A.rank ≤ i.1 → InId I (frMapO A WW βA βW x i j) then
@@ -48,6 +50,7 @@ def dualCoord (A' WW : HSp D) (βA' : GL (Fin A'.rank) (Lev.EAf D)) (βW : GL (F
   eToEAf D D.host.xi0 • frMapAdj A' WW βA' βW y
 
 
+open Classical in
 def stdSnd (ν : (AE D)ˣ →* Circle) (e : AE D) (I : Ideal (𝓞 D.host.E)) (a : ℕ) (A' WW : HSp D)
     (βA' : GL (Fin A'.rank) (Lev.EAf D)) (βW : GL (Fin WW.rank) (Lev.EAf D)) (y : WO A' WW) : ℂ :=
   if IsHalf (cA D e) y ∧ IsIntM (dualCoord A' WW βA' βW y) ∧ ∀ i j, j.1 < a → InId I (dualCoord A' WW βA' βW y i j) then

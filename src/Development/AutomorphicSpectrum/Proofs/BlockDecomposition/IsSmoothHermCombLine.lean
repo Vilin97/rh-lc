@@ -38,6 +38,7 @@ theorem zpow_sum_eq_prod {α : Type} (s : Finset α) {x : ℝ} (hx : x ≠ 0) (f
   | insert a s ha ih => rw [Finset.sum_insert ha, Finset.prod_insert ha, zpow_add₀ hx, ih]
 
 
+open Classical in
 def combLine {κ : Type} [Fintype κ] (A : κ → HermLine ι) (a : κ → ℤ) : HermLine ι where
   a := ∑ o, a o • (A o).a
   h z := if ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0 then ∏ o, (A o).h z ^ a o else 0

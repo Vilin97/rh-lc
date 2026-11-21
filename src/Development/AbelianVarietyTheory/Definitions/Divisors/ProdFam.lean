@@ -21,6 +21,7 @@ variable {k : Type} [Field k] {ι κ : Type} [LinearOrder ι] [LinearOrder κ] {
 def idxSign (τ : κ → ι) (S : Finset κ) : ℤ := (-1) ^ ((S ×ˢ S).filter fun x => x.1 < x.2 ∧ τ x.2 < τ x.1).card
 
 
+open Classical in
 def pullIdx (τ : κ → ι) (a : Finset ι → E) : Finset κ → E := fun S =>
   if Set.InjOn τ (S : Set κ) then idxSign τ S • a (S.image τ) else 0
 

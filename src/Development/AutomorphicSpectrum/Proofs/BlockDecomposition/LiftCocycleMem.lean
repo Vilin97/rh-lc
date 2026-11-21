@@ -120,6 +120,7 @@ theorem ev_str {W : Y.Opens} (T : Thick L) (h : InY 𝔭 W T) (a : b.R) :
   evalAt_base qY (RingHom.id b.R) ((Ideal.Quotient.mk T.J).comp T.i) (𝔭.pt T) (by rw [RingHom.comp_id]; exact 𝔭.str T) h a
 
 
+open Classical in
 def lft (W : Y.Opens) (T : Thick L) (f : Γ(Y, W)) : T.B :=
   if h : InY 𝔭 W T then Function.surjInv Ideal.Quotient.mk_surjective (ev 𝔭 T h f) else 0
 

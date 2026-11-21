@@ -199,6 +199,7 @@ theorem scEI_mem (hκ : 0 < κ) (hτ : 0 < τ) :
   rw [← cj_mem_lieOf_iff hκ hτ, cj_cjI hκ hτ]; exact hX
 
 
+open Classical in
 def deltaN (k r : ℕ) (κ τ : ℝ) : ℝ :=
   if h : ∀ x ∈ lieE (Nset k r), scE k r κ τ x ∈ lieE (Nset k r) then
     |(LinearMap.det ((scE k r κ τ).restrict h))⁻¹|

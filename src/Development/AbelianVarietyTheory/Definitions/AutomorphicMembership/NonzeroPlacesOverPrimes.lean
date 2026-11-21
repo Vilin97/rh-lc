@@ -20,6 +20,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
+open Classical in
 def FK (s : Scale) (D : D7) (j p : ℕ) : ℝ :=
   if ∃ i, p = D.host.g i then FTypeG D j
   else if D.host.cls p = PrimeClass.ramD then FRamD D j

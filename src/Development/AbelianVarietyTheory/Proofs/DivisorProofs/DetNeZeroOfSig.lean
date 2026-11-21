@@ -26,6 +26,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] (σ : E 
   (J : Matrix (Fin n) (Fin n) E)
 
 
+open Classical in
 theorem exists_arch_comp (x : ∀ w : InfinitePlace F, GArch σ J w) :
     ∃ q : GAd σ J, (∀ v, proj σ J v q = 1) ∧ ∀ w, projArch σ J w q = x w := by
   have key : ∀ s : Finset (InfinitePlace F), ∃ q : GAd σ J, (∀ v, proj σ J v q = 1) ∧
@@ -43,6 +44,7 @@ theorem exists_arch_comp (x : ∀ w : InfinitePlace F, GArch σ J w) :
   exact ⟨q, h1, fun w => by rw [h2 w, if_pos (Finset.mem_univ w)]⟩
 
 
+open Classical in
 theorem exists_fin_comp (x : ∀ v : HeightOneSpectrum (𝓞 F), GLoc σ J v) (S : Finset (HeightOneSpectrum (𝓞 F))) :
     ∃ q : GAd σ J, (∀ w, projArch σ J w q = 1) ∧ ∀ v, proj σ J v q = if v ∈ S then x v else 1 := by
   induction S using Finset.induction_on with

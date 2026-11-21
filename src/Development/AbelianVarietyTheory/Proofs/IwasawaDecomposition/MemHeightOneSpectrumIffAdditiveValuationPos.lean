@@ -18,6 +18,7 @@ open Formalism.IndefR.RecTie Formalism.IndefR.Lev Formalism.L2.Rows GlobalTheory
 namespace GlobalTheory.Mem.R3
 
 
+open Classical in
 noncomputable def pickIxTw {B : Base} {px : PreX B.toPre} (I : Col2.ColIn B px) (χ : Formalism.L2.Host.HChar B.host.E) : I.ι :=
   if h : ∃ a, I.xi a = χ then h.choose else I.mu0
 

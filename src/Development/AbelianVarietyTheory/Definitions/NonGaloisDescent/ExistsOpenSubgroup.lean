@@ -148,6 +148,7 @@ theorem exists_order {g : ℕ} [Fact g.Prime] {x : Fbar g} (hx : x ≠ 0) :
   · exact congrArg Subtype.val (FiniteField.pow_card_sub_one_eq_one y hy)
 
 
+open Classical in
 theorem exists_tameOm (γ : Fin 2 → PlE D.host → GE D.nd) (hγ : GenFam D γ) :
     ∃ Ω : TameOm D, ∀ k : Fin 2, ∀ w ∈ placesOver D.host.E (D.host.g k), ∀ x, x ≠ 0 →
       Ω.om k w x (γ k w) = D.ntypes.teichC k x := by

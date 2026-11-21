@@ -21,6 +21,7 @@ namespace GlobalTheory.Mem.Chr.KDVal
 variable {L : Type} [Field L] [NumberField L] (F : Type) [Field F] [NumberField F] [Algebra F L]
 
 
+open Classical in
 theorem valAt_locF (w : HeightOneSpectrum (𝓞 L)) (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ) :
     valAt w (locF (L := L) F v k) =
       if w.under (𝓞 F) = v then WithZero.exp (-ordF w (upF F k)) else 1 := by

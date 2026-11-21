@@ -73,6 +73,7 @@ variable (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) 
   (v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec) (O : ∀ i, OMDat T.toCore R i Unit (fun _ => A.μ0))
 
 
+open Classical in
 def geoRho (i : Fin D.R.m) : G →* ((Fin (nTop T κ i) → D.what₂.LL) →ₗ[D.what₂.LL] (Fin (nTop T κ i) → D.what₂.LL)) :=
   if h : HasB T.Q.c.F (Cu T κ i) (nTop T κ i) ∧ ∃ ρC : G →* (Cu T κ i →ₗ[T.Q.c.F] Cu T κ i),
       ∀ g (f : Cu T κ i), ((ρC g f : Cu T κ i) : T.R ((i : ℕ) + 1)) = actLev T.Q.c (O i).lev2 g (f : T.R ((i : ℕ) + 1))

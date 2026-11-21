@@ -474,6 +474,7 @@ theorem redM_add {a b : ℕ} (PP : Formalism.L2.DIV.Pl D.host.E) (X Y Z : Matrix
   exact (dif_pos hY).trans ((resS_add PP (hX i j) hY (hZ i j) (h i j)).trans e.symm)
 
 
+open Classical in
 theorem isSBHalf_of_red {a b : ℕ} (e : AE D) (Λ : AddSubgroup (WO S T)) (fr : WO S T → Matrix (Fin b) (Fin a) (EAf D))
     (hadd : ∀ (x u : WO S T) (k : ℕ) i j, fr (x + k • u) i j = fr x i j + k * fr u i j)
     (hB : ∃ M : ℕ, 0 < M ∧ ∀ u ∈ Λ, ∀ i j, (M : EAf D) * fr u i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E)
@@ -532,6 +533,7 @@ theorem omegaQ_congr {a b : ℕ} (Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (r 
   · rw [dite_eq_right hy, dite_eq_right fun h' => hy (hiff.2 h')]
 
 
+open Classical in
 def omegaTop {a : ℕ} (L : Formalism.L2.DIV.LevDat D.host.E ℂ a) (χj : ∀ PP : Formalism.L2.DIV.Pl D.host.E, (Formalism.L2.DIV.kP PP)ˣ →* ℂˣ)
     (A : Prop) (z : ∀ PP : ↥L.Pg, Matrix (Fin a) (Fin a) (Formalism.L2.DIV.kP PP.1)) : ℂ :=
   if h : A ∧

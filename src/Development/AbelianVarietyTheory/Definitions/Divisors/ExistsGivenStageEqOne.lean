@@ -115,6 +115,7 @@ theorem isUnif_unifAt (w : Pl D.host.E) : IsUnif (unifAt w) := by
 def locPl (G : GridData L sc) (t : T) : Finset (Pl D.host.E) := G.pl.W0 ∪ L.Q t
 
 
+open Classical in
 def cosExp (G : GridData L sc) (w : Pl D.host.E) : ℕ := if w ∈ G.pl.W0 then G.pl.depth sc (w.under (𝓞 D.host.F)) else 0
 
 def depthAt (G : GridData L sc) (w : Pl D.host.E) : ℕ := max (cosExp G w) 1
@@ -273,12 +274,14 @@ theorem ixFin_val (j : ℕ) : (∀ a, (ixFin G t w j (.inl a)).val = a.val) ∧
     ∀ c b, (ixFin G t w j (.inr (c, b))).val = D.R.r + (b.val + D.R.t * c.val) := ⟨fun _ => rfl, fun _ _ => rfl⟩
 
 
+open Classical in
 def stepGroup (j : ℕ) : Subgroup (GL (Ix (Fin D.R.r) (Fin D.R.t) j) (Kw w)) :=
   if w ∈ L.Pg then
     ((TypeDatum.principal (Kw w) (Fin D.R.r)).iter (Fin D.R.t) (fun c => ((muBase L c).loc w)⁻¹) (isTame_muBase w) j).J
   else if w ∈ L.Q t then (parahoric (k := Kw w) (Fin D.R.r) (Fin j × Fin D.R.t) 1 fun _ _ => rfl).J else KO (Kw w) _
 
 
+open Classical in
 def stepFn (j : ℕ) : Matrix (Ix (Fin D.R.r) (Fin D.R.t) (j + 1)) (Ix (Fin D.R.r) (Fin D.R.t) j) (Kw w) → ℂ :=
   if w ∈ L.Pg then
     (TypeDatum.principal (Kw w) (Fin D.R.r)).iterPhi (Fin D.R.t) (fun c => ((muBase L c).loc w)⁻¹) (isTame_muBase w) j

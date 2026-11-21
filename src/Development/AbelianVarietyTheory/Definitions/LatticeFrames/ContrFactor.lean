@@ -48,6 +48,7 @@ def SupportAt : Prop :=
 variable [MeasurableSpace k] [BorelSpace k] (ν : Measure k)
 
 
+open Classical in
 def PureCol : Prop :=
   ∀ j c (H : j + 1 + c = s) (r : ℕ), c + 1 = 2 * r → ∃ C : ℝ, 0 < C ∧ ∀ x,
     flCol S.ψ ν (r + 1) ((S.T t).Phi j (c + 1) (by omega)) x =
@@ -55,6 +56,7 @@ def PureCol : Prop :=
         (if (fun a => x a (Sum.inr ())) ∈ box (XIx (Fin κ) t (j + 1)) (S.ϖ ^ r)⁻¹ then 1 else 0)
 
 
+open Classical in
 def PureRow : Prop :=
   ∀ j c (H : j + 1 + c = s) (r : ℕ), c = 2 * r → ∃ C : ℝ, 0 < C ∧ ∀ x,
     flRow S.ψ ν (r + 1) ((S.T t).Phi j (c + 1) (by omega)) x =

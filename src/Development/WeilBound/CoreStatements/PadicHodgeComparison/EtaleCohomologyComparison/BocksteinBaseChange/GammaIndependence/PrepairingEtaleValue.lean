@@ -82,6 +82,7 @@ theorem cV_tmV {M : Model l K} (hM : G M) (a : D.Ch M) (n : ℕ) (z : ℚ_[l]) (
 def a0 (M : Model l K) (hM : G M) : D.Ch M := Classical.choice (hL.ch M hM)
 
 
+open Classical in
 def cP (M : Model l K) (n : ℕ) : M.V n →+ (Module.Dual K (HdR M.q n) →+ R.B) :=
   if hM : G M then cV hF E β κ hM (a0 hL M hM) n else 0
 

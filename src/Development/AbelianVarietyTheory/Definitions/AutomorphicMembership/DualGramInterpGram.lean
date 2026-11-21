@@ -175,6 +175,7 @@ def ofForm (h : ∀ y : CxPts (genStr Z) σ, TanM (y.1 ≫ genι Z) Z.t.G →ₗ
 instance : Nonempty (EigMet Z σ) := ⟨ofForm _ fun y => (exists_isBlockMetric Z.t (y.1 ≫ genι Z)).choose_spec⟩
 
 
+open Classical in
 def interp (s : CxPts (genStr Z) σ → ℝ) (hs : ∀ y, s y ∈ Set.Icc (0 : ℝ) 1) (G₀ G : EigMet Z σ) : EigMet Z σ where
   gram y f τ := if τ (H.rt : E) = H.rt0 then mix (s y) (G₀.gram y f τ) (G.gram y f τ)
     else mixDual (s y) (G₀.gram y f τ) (G.gram y f τ)
