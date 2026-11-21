@@ -161,10 +161,11 @@ def levData (E : Type*) [NormedAddCommGroup E] [NormedSpace ℂ E] (i : Fin (r +
   N_idem := fun f => (level_restriction_eq_iff _ _).2 (fun _ hg => level_restriction_apply_on f hg)
 
 theorem good0 (hD : IsOpen D) {T : (Mx k r → E) → Mx k r → E} (h : Qx2.Good k r i D T) :
-    (levData E i hD).Good T where
-  mem := fun f hf => h.sm f hf
-  congr := fun f _ f' _ he => (level_restriction_eq_iff _ _).2 (h.loc f f' ((level_restriction_eq_iff _ _).1 he))
-  lin := fun f hf f' hf' s => by
+    (levData E i hD).Good T := by
+  refine ⟨fun f hf => h.sm f hf, ?_, ?_⟩
+  · intro f _ f' _ he
+    exact (level_restriction_eq_iff _ _).2 (h.loc f f' ((level_restriction_eq_iff _ _).1 he))
+  · intro f hf f' hf' s
     show cut0 i D _ = cut0 i D _ + s • cut0 i D _
     rw [← map_smul, ← map_add (f := _)]
     exact (level_restriction_eq_iff _ _).2 (h.lin f f' s hf hf')
@@ -392,10 +393,11 @@ theorem sf_good_of (ho : IsOpen (UU Dc)) {T : Fn k r E → Fn k r E}
       ∀ c ∈ OmX r, ∀ g ∈ Glev k r L, g ∈ Dc c → T Φ c g = T Ψ c g)
     (h3 : ∀ Φ Ψ, SmoothFam k r L (UU Dc) Φ → SmoothFam k r L (UU Dc) Ψ → ∀ s : ℂ,
       ∀ c ∈ OmX r, ∀ g ∈ Glev k r L, g ∈ Dc c → T (Φ + s • Ψ) c g = T Φ c g + s • T Ψ c g) :
-    (sfData E L ho).Good T where
-  mem := h1
-  congr := fun Φ h Ψ h' he => (cutP_eq_iff _ _).2 (h2 Φ Ψ h h' ((cutP_eq_iff _ _).1 he))
-  lin := fun Φ h Ψ h' s => by
+    (sfData E L ho).Good T := by
+  refine ⟨h1, ?_, ?_⟩
+  · intro Φ h Ψ h' he
+    exact (cutP_eq_iff _ _).2 (h2 Φ Ψ h h' ((cutP_eq_iff _ _).1 he))
+  · intro Φ h Ψ h' s
     show cutP L Dc _ = cutP L Dc _ + s • cutP L Dc _
     rw [← map_smul, ← map_add (f := _)]
     exact (cutP_eq_iff _ _).2 (h3 Φ Ψ h h' s)
@@ -2144,6 +2146,12 @@ section TForm
 variable {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {l : Fin r} {D : Set (Mx k r)}
   (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (Y : ℂ)
 
+local notation "ho" => ho1 l hD
+local notation "tt" => tB E l.succ (ho1 l hD) z z' Y
+local notation "Ci" => mulB E l.succ (ho1 l hD) (aCi k l)
+local notation "Cbi" => mulB E l.succ (ho1 l hD) (aCbi k l)
+local notation "uu" => uC k r l.castSucc Y
+
 theorem signed_sum_mulB_mB_eq_neg_tt_zero_one (A X : Module.End ℂ (sfData E l.succ ho).V) :
     (∑ w : Fin (mdim k r l.succ), ∑ x : Fin (mdim k r l.succ), ((((-1 : ℤ) ^ ((w : ℕ) + (x : ℕ)) : ℤ)) : ℂ) •
       (A * mulB E l.succ ho (aYb z l.succ w) * mB E l.succ ho (skip1 w) (skip1 x) (uu - 2) * X *
@@ -2367,6 +2375,10 @@ section Keys
 variable {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {l : Fin r} {D : Set (Mx k r)}
   (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (Y : ℂ)
 
+local notation "tt" => tB E l.succ (ho1 l hD) z z' Y
+local notation "mm" => mulB E l.succ (ho1 l hD)
+local notation "uu" => uC k r l.castSucc Y
+
 theorem stp_keys :
     mm (aG k l) * capelliDetSecondFactorOrder E l hD z z' uu =
       (bTss E l hD Y * (tt 0 0 * bTee E l hD Y + tt 0 1 * mm (aCi k l)) +
@@ -2423,6 +2435,10 @@ variable {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {z z' : Fin (2 * 
   {J : Mx k r → E} (hs : SmoothLev k r l.castSucc D J) (hl : LeftEq k r z l.castSucc D J)
   (hr : RightEq k r z' l.castSucc D J) (Y : ℂ) {c : Fin r → ℂ} (hc : c ∈ OmX r) {g : Mx k r}
   (hg : g ∈ Glev k r l.succ) (hgD : g ∈ Dc1 l D c)
+
+local notation "mm" => mulB E l.succ (ho1 l (And.left hD))
+local notation "uu" => uC k r l.castSucc Y
+local notation "ev" => evP (ho1 l (And.left hD)) (rho E (Rules.w R) l (And.left hD) (J0 (And.left hD) hs)) c g
 
 include hz hz' hl hr hc hg hgD in
 theorem tL_zero_zero_w1_mul_eq_capelliDet (hB : BorderFull) :

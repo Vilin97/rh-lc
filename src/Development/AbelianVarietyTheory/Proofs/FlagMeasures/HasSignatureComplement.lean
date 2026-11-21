@@ -11,12 +11,16 @@ open MeasureTheory NumberField Matrix Finset Formalism.MainNotions.S GlobalTheor
 namespace GlobalTheory.AdaptedExists
 
 theorem telescope : ∀ (a : ℕ) (j : Fin a → ℕ) (f : Fin (a + 1) → ℕ), (∀ i : Fin a, f i.succ = f i.castSucc + j i) →
-    f (Fin.last a) = f 0 + ∑ i, j i
-  | 0, _, _, _ => by simp
-  | a + 1, j, f, h => by
-    have := telescope a (fun i => j i.castSucc) (fun i => f i.castSucc) fun i => h i.castSucc
-    rw [Fin.sum_univ_castSucc, ← Fin.succ_last, h, this, add_assoc]
-    rfl
+    f (Fin.last a) = f 0 + ∑ i, j i := by
+  intro a
+  induction a with
+  | zero => simp
+  | succ a ih =>
+    intro j f h
+    have hs := ih (fun i => j i.castSucc) (fun i => f i.castSucc) (fun i => by
+      simpa only [Fin.castSucc_succ] using h i.castSucc)
+    change f (Fin.last a).castSucc = f 0 + ∑ i : Fin a, j i.castSucc at hs
+    rw [← Fin.succ_last, h, hs, Fin.sum_univ_castSucc, Nat.add_assoc]
 
 section
 

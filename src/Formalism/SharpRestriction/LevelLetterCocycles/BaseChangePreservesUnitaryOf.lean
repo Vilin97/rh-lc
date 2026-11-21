@@ -42,7 +42,7 @@ theorem lkd_local (P : LocPrime l) (LL : FinExt l) : IsLocalRing ↥(OL LL) := b
   have ha' := lkd_pos P LL a ha
   have hb' := lkd_pos P LL b hb
   have h0 := zl_v_unit P LL hu.unit
-  rw [IsUnit.unit_spec, map_add (f := _)] at h0
+  rw [IsUnit.unit_spec, (algebraMap ↥(OL LL) ↥LL.1).map_add a b] at h0
   have h1 := AddValuation.map_add (P.v LL) (algebraMap ↥(OL LL) ↥LL.1 a)
     (algebraMap ↥(OL LL) ↥LL.1 b)
   rw [h0] at h1
@@ -843,8 +843,9 @@ theorem lifta_core (ℓ : ℕ) [Fact ℓ.Prime] (hℓ : ℓ ≠ 2) (A : Type) [C
   have hu₁c : (u₁ : ℤ_[ℓ]) = (u : ℤ_[ℓ]) ^ (ℓ - 1) := by rw [hu₁, Units.val_pow_eq_pow_val]
   have hγX₁ : B.GammaX (u₁ : ℤ_[ℓ]) := by rw [hu₁c]; exact hγX
   have hv₁ : PadicInt.valuation ((u₁ : ℤ_[ℓ]) - 1) = 1 := by
+    have hndvd : ¬ ℓ ∣ ℓ - 1 := Nat.not_dvd_of_pos_of_lt (by omega) (by omega)
     rw [hu₁c, Formalism.ResultantValuation.powSubOneValuation ℓ hℓ (u : ℤ_[ℓ]) hv (ℓ - 1) (by omega),
-      padicValNat.eq_zero_of_not_dvd (Nat.not_dvd_of_pos_of_lt (by omega) (by omega))]
+      Nat.padicValNat_def, multiplicity_eq_zero_of_not_dvd hndvd]
   set a := M / (ℓ - 1) with ha
   have hMa : M + 1 ≤ (ℓ - 1) * (a + 1) := Nat.lt_mul_div_succ M (by omega)
   have h1 := Formalism.RepresentationBoundsCohomology.N2.phi_map_surjective ℤ_[ℓ] A B M D₀ W₀ I (ℓ - 1) (a + 1) hPhi hMa hQI hφI

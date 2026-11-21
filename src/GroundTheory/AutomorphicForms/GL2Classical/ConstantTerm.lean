@@ -36,7 +36,7 @@ def unipAdele (x : 𝔸[ℚ]) : AdelicGL ℚ 2 := unipGL (n := 2) (r := 1) fun _
 
 def unipReal (t : ℝ) : GL (Fin 2) ℝ := unipGL (n := 2) (r := 1) fun _ => t
 
-def unipFin (y : 𝔸f) : FiniteAdelicGL ℚ 2 := unipGL (n := 2) (r := 1) fun _ => y
+def unipFin (y : 𝔸ᶠ[ℚ]) : FiniteAdelicGL ℚ 2 := unipGL (n := 2) (r := 1) fun _ => y
 
 theorem unipMatrix_apply {R : Type*} [CommRing R] (x : R) (a b : Fin 2) :
     unipMatrix (n := 2) (r := 1) (fun _ => x) a b = if a = 0 ∧ b = 1 then x else if a = b then 1 else 0 := by
@@ -94,16 +94,16 @@ theorem measurableSet_levelDomain : MeasurableSet (levelDomain N) :=
   (measurableSet_Ico.preimage realHomeomorph.continuous.measurable).prod (measurableSet_levelIdeal N)
 
 variable {N} in
-theorem sub_mem_levelIdeal {x y : 𝔸f} (hx : x ∈ levelIdeal N) (hy : y ∈ levelIdeal N) :
+theorem sub_mem_levelIdeal {x y : 𝔸ᶠ[ℚ]} (hx : x ∈ levelIdeal N) (hy : y ∈ levelIdeal N) :
     x - y ∈ levelIdeal N := by
   obtain ⟨s, hs, rfl⟩ := hx
   obtain ⟨t, ht, rfl⟩ := hy
   exact ⟨s - t, sub_mem hs ht, by rw [mul_sub]⟩
 
-theorem natCast_mul_intCast_mem_levelIdeal (m : ℤ) : (N : 𝔸f) * (m : 𝔸f) ∈ levelIdeal N :=
+theorem natCast_mul_intCast_mem_levelIdeal (m : ℤ) : (N : 𝔸ᶠ[ℚ]) * (m : 𝔸ᶠ[ℚ]) ∈ levelIdeal N :=
   ⟨m, intCast_mem_integralFiniteAdeles m, rfl⟩
 
-theorem levelIdeal_subset : levelIdeal N ⊆ (integralFiniteAdeles (𝓞 ℚ) ℚ : Set 𝔸f) := by
+theorem levelIdeal_subset : levelIdeal N ⊆ (integralFiniteAdeles (𝓞 ℚ) ℚ : Set 𝔸ᶠ[ℚ]) := by
   rintro _ ⟨t, ht, rfl⟩
   exact mul_mem (natCast_mem _ N) ht
 
@@ -112,10 +112,10 @@ theorem isAddFundamentalDomain_levelDomain :
   refine IsAddFundamentalDomain.mk' (measurableSet_levelDomain N).nullMeasurableSet fun a => ?_
   have hN : (0 : ℝ) < N := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne N)
 
-  obtain ⟨q₀, hq₀⟩ : ∃ q₀ : ℚ, a.2 + algebraMap ℚ 𝔸f q₀ ∈ levelIdeal N := by
-    have hopen : IsOpen ((fun y : 𝔸f => a.2 + y) ⁻¹' levelIdeal N) :=
+  obtain ⟨q₀, hq₀⟩ : ∃ q₀ : ℚ, a.2 + algebraMap ℚ 𝔸ᶠ[ℚ] q₀ ∈ levelIdeal N := by
+    have hopen : IsOpen ((fun y : 𝔸ᶠ[ℚ] => a.2 + y) ⁻¹' levelIdeal N) :=
       (isOpen_levelIdeal N).preimage (continuous_const.add continuous_id)
-    have hne : ((fun y : 𝔸f => a.2 + y) ⁻¹' levelIdeal N).Nonempty :=
+    have hne : ((fun y : 𝔸ᶠ[ℚ] => a.2 + y) ⁻¹' levelIdeal N).Nonempty :=
       ⟨-a.2, by simpa using zero_mem_levelIdeal N⟩
     obtain ⟨_, hy, q₀, rfl⟩ :=
       (AdelicGLn.denseRange_algebraMap_finiteAdeleRing ℚ).inter_open_nonempty _ hopen hne
@@ -126,7 +126,7 @@ theorem isAddFundamentalDomain_levelDomain :
   set q : ℚ := q₀ - N * m
   have hreal : ∀ q' : ℚ, ((algebraMap ℚ 𝔸[ℚ] q' + a : 𝔸[ℚ]).1) =
       algebraMap ℚ (InfiniteAdeleRing ℚ) q' + a.1 := fun _ => rfl
-  have hfin : ∀ q' : ℚ, ((algebraMap ℚ 𝔸[ℚ] q' + a : 𝔸[ℚ]).2) = algebraMap ℚ 𝔸f q' + a.2 :=
+  have hfin : ∀ q' : ℚ, ((algebraMap ℚ 𝔸[ℚ] q' + a : 𝔸[ℚ]).2) = algebraMap ℚ 𝔸ᶠ[ℚ] q' + a.2 :=
     fun _ => rfl
   refine ⟨⟨algebraMap ℚ 𝔸[ℚ] q, q, rfl⟩, ⟨?_, ?_⟩, ?_⟩
   · change RationalIdeles.realEquiv ((algebraMap ℚ 𝔸[ℚ] q + a : 𝔸[ℚ]).1) ∈ Set.Ico (0 : ℝ) N
@@ -139,7 +139,7 @@ theorem isAddFundamentalDomain_levelDomain :
     constructor <;> nlinarith
   · change (algebraMap ℚ 𝔸[ℚ] q + a : 𝔸[ℚ]).2 ∈ levelIdeal N
     rw [hfin]
-    have : algebraMap ℚ 𝔸f q + a.2 = (a.2 + algebraMap ℚ 𝔸f q₀) - (N : 𝔸f) * (m : 𝔸f) := by
+    have : algebraMap ℚ 𝔸ᶠ[ℚ] q + a.2 = (a.2 + algebraMap ℚ 𝔸ᶠ[ℚ] q₀) - (N : 𝔸ᶠ[ℚ]) * (m : 𝔸ᶠ[ℚ]) := by
       simp only [q, map_sub, map_mul, map_natCast, map_intCast]
       ring
     rw [this]
@@ -155,7 +155,7 @@ theorem isAddFundamentalDomain_levelDomain :
       constructor <;> nlinarith
     have hf : (algebraMap ℚ 𝔸[ℚ] q + a : 𝔸[ℚ]).2 ∈ levelIdeal N := by
       rw [hfin]
-      have : algebraMap ℚ 𝔸f q + a.2 = (a.2 + algebraMap ℚ 𝔸f q₀) - (N : 𝔸f) * (m : 𝔸f) := by
+      have : algebraMap ℚ 𝔸ᶠ[ℚ] q + a.2 = (a.2 + algebraMap ℚ 𝔸ᶠ[ℚ] q₀) - (N : 𝔸ᶠ[ℚ]) * (m : 𝔸ᶠ[ℚ]) := by
         simp only [q, map_sub, map_mul, map_natCast, map_intCast]
         ring
       rw [this]

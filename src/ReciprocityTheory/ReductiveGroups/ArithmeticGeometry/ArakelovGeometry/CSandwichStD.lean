@@ -125,7 +125,7 @@ theorem eq_zero_of_sum_mono {y : Fin (D + 1) → Ω} (hy : coordIdeal ℤ y = �
     rwa [hy, Ideal.mem_bot] at this
   funext i
   have hc := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm (adtEnum D N i))) hp0
-  rw [hp, coeff_sum, coeff_zero] at hc
+  rw [hp, coeff_sum, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at hc
   rw [Finset.sum_eq_single i (fun j _ hji => ?_) (by simp)] at hc
   · simpa using hc
   · rw [coeff_monomial, if_neg]
@@ -250,7 +250,7 @@ theorem crd_span {x : Ix κ → Ω} {n r : ℕ} {b : Fin r → MvPolynomial (Ix 
   rw [hv]
   exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (key _ (hle (hbm j)))
 
-theorem sq_wgt_le_of_le {m : ConeMetric ℂ (Ix κ)} {n : ℕ} {z : Ix κ → ℂ} (hz : z ≠ 0) {a Y : ℝ}
+theorem sq_wgt_le_of_le {m : ConeMetric (C := ℂ) (ι := Ix κ)} {n : ℕ} {z : Ix κ → ℂ} (hz : z ≠ 0) {a Y : ℝ}
     (ha : 0 ≤ a) (h : a ≤ Y * m.ρ z ^ n) : a ^ 2 * wgt m n z ≤ Y ^ 2 := by
   have hρ : 0 < m.ρ z ^ n := pow_pos (m.pos z hz) n
   unfold wgt
@@ -259,7 +259,7 @@ theorem sq_wgt_le_of_le {m : ConeMetric ℂ (Ix κ)} {n : ℕ} {z : Ix κ → �
   calc a ^ 2 ≤ (Y * m.ρ z ^ n) ^ 2 := pow_le_pow_left₀ ha h 2
     _ = Y ^ 2 * (m.ρ z ^ n) ^ 2 := by ring
 
-theorem sqN_comp_eq {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric ℂ (Ix κ)}
+theorem sqN_comp_eq {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {m : ConeMetric (C := ℂ) (ι := Ix κ)}
     (hFS : IsPullFS x e m) {z : Ix κ → ℂ} (hz : z ∈ pts (coordIdeal ℤ x)) :
     sqN (z ∘ e) = m.ρ z ^ 2 := by
   rw [hFS z hz, Real.sq_sqrt (Finset.sum_nonneg fun k _ => by positivity)]

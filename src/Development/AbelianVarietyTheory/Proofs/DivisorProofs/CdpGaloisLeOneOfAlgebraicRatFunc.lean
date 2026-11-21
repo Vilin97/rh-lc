@@ -71,7 +71,7 @@ theorem exists_zmod_cast_eq_of_pow_sub_self {p : ℕ} [hp : Fact p.Prime] {Ω : 
   push_neg at hne
   set f := ZMod.castHom (dvd_refl p) Ω
   set P : Polynomial Ω := X ^ p - X
-  have hP : P ≠ 0 := FiniteField.X_pow_card_sub_X_ne_zero Ω hp.out.one_lt
+  have hP : P ≠ 0 := Polynomial.X_pow_sub_X_ne_zero hp.out.one_lt
   have hroot : ∀ z : Ω, z ^ p - z = 0 → z ∈ P.roots.toFinset := fun z hz => by
     rw [Multiset.mem_toFinset, mem_roots hP]
     simp [P, hz]
@@ -142,13 +142,14 @@ noncomputable def artinSchreierSequence : ShortComplex (Rep (ULift.{0} ℤ) (Ω 
     rw [← map_pow, ZMod.pow_card, sub_self])
 
 theorem artinSchreierSequence_shortExact [IsSepClosed Ω] :
-    (artinSchreierSequence E Ω p).ShortExact where
-  exact := shortComplex_exact_of_forall_exists _ fun y hy => by
+    (artinSchreierSequence E Ω p).ShortExact := by
+  refine ShortComplex.ShortExact.mk' ?_ ?_ ?_
+  · refine shortComplex_exact_of_forall_exists _ fun y hy => ?_
     obtain ⟨a, ha⟩ := exists_zmod_cast_eq_of_pow_sub_self (p := p) (Ω := Ω) y hy
     exact ⟨ULift.up a, ha⟩
-  mono_f := (Rep.mono_iff_injective _).2 fun x y h =>
-    ULift.ext ((ZMod.castHom (dvd_refl p) Ω).injective h)
-  epi_g := (Rep.epi_iff_surjective _).2 fun a => by
+  · exact (Rep.mono_iff_injective _).2 fun x y h =>
+      ULift.ext ((ZMod.castHom (dvd_refl p) Ω).injective h)
+  · refine (Rep.epi_iff_surjective _).2 fun a => ?_
     obtain ⟨x, hx⟩ := exists_pow_sub_self_eq (p := p) (Ω := Ω) a
     exact ⟨x, hx⟩
 

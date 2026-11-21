@@ -202,14 +202,13 @@ structure IsAinf (K : FinExt l) (P : Obj l ↥(OL K)) (e : P.A ≃+* Ainf l) : P
 
 def ainfId (K : FinExt l) : (ainfObj K).A ≃+* Ainf l := RingEquiv.refl (Ainf l)
 
-theorem isAinf_ainfObj (K : FinExt l) : IsAinf K (ainfObj K) (ainfId K) where
-  e_φ _ := rfl
-  e_I _ := Iff.rfl
-  e_str x a h := by
-    have h1 : ainfQuot l (Ideal.Quotient.mk _ a) = ainfQuot l ((ainfQuot l).symm (intToOC K x)) :=
-      congrArg (ainfQuot l) h
-    rw [RingEquiv.apply_symm_apply] at h1
-    exact congrArg Subtype.val h1
+theorem isAinf_ainfObj (K : FinExt l) : IsAinf K (ainfObj K) (ainfId K) := by
+  refine ⟨fun _ => rfl, fun _ => Iff.rfl, ?_⟩
+  intro x a h
+  have h1 : ainfQuot l (Ideal.Quotient.mk _ a) = ainfQuot l ((ainfQuot l).symm (intToOC K x)) :=
+    congrArg (ainfQuot l) h
+  rw [RingEquiv.apply_symm_apply] at h1
+  exact congrArg Subtype.val h1
 
 namespace IsAinf
 
@@ -428,10 +427,9 @@ theorem unitMap_apply {K : FinExt l} (P : Obj l ↥(OL K)) (e : P.A ≃+* Ainf l
     unitMap P e a = inclW l (e a) ⊗ₜ[ℤ_[l]] (1 : ℤ_[l]) := rfl
 
 theorem IsAinf.realises_unit {K : FinExt l} {P : Obj l ↥(OL K)} {e : P.A ≃+* Ainf l} (H : IsAinf K P e) :
-    Realises K (FCrys.unit l ↥(OL K)) P e ℤ_[l] (fun _ => LinearMap.id) (unitMap P e) where
-  ainf := H
-  bc := (semiBC_self _).comp_equiv _
-  j_φ d hd x m k h := by
+    Realises K (FCrys.unit l ↥(OL K)) P e ℤ_[l] (fun _ => LinearMap.id) (unitMap P e) := by
+  refine ⟨H, (semiBC_self _).comp_equiv _, ?_, ?_⟩
+  · intro d hd x m k h
     have : IsDomain P.A := e.toMulEquiv.isDomain
     have key : ∀ x m : P.A, m = (d : P.A) ^ k * P.D.φ x →
         inclW l (e d) ^ k • TensorProduct.map (frobW l).toLinearMap LinearMap.id
@@ -447,8 +445,8 @@ theorem IsAinf.realises_unit {K : FinExt l} {P : Obj l ↥(OL K)} {e : P.A ≃+*
       rw [TensorProduct.map_tmul, TensorProduct.smul_tmul', smul_eq_mul, AlgHom.toLinearMap_apply,
         LinearMap.id_apply]
     exact key x m (eq_of_isFrac hd _ _ k h)
-  j_act g x :=
-    congrArg (fun y : WCb l => y ⊗ₜ[ℤ_[l]] (1 : ℤ_[l]))
+  · intro g x
+    exact congrArg (fun y : WCb l => y ⊗ₜ[ℤ_[l]] (1 : ℤ_[l]))
       ((congrArg (inclW l) (H.e_galHom g x)).trans (galW_inclW _ _).symm)
 
 end GlobalTheory.Prism

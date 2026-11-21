@@ -51,9 +51,9 @@ theorem alpha_unpack {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Hos
     (hαN : letI := H.starRing; α * star α = (N : 𝓞 E)) (F : Type) [Field F] [IsAlgClosed F]
     [Algebra (FractionRing V) F] (p : QkPt P.D.toPre F (1 * N)) (x : TFK (R := V) F ⟶ P.A.A)
     (hx : P.ToA F (1 * N) p x) (hxα : x ≫ P.oA.act α = 1) :
-    letI := H.starRing
+    (letI := H.starRing;
     ∃ (z : P.D.toPre.X) (q : QkPt P.D.toPre F (1 * N)) (h g0 : GtPtF P.D.toPre F),
-      p.y = -(star α • z) ∧ GtAct P.oD α p.g q.g ∧ GtPtF.IsIota z h ∧ q.g.IsAdd h g0 ∧ g0.IsZero := by
+      p.y = -(star α • z) ∧ GtAct P.oD α p.g q.g ∧ GtPtF.IsIota z h ∧ q.g.IsAdd h g0 ∧ g0.IsZero) := by
   letI := H.starRing
   have hαN' : α * star α = (N : 𝓞 E) := hαN
   have hB : P.D.toPre.TauBimult := P.D.tau_bimult

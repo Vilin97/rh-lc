@@ -129,7 +129,7 @@ theorem Ezpow_neg_mul (j : ℤ) : Ezpow (K := K) l e (-j) * Ezpow (K := K) l e j
 variable {l e}
 
 theorem mx_rankOne_eq (j : ZMod a → ℤ) (τ : ZMod a) (i k : Unit) :
-    (rankOne O K l e a j).mx τ i k = Ezpow (K := K) l e (j τ) := by
+    (rankOne O K l e j).mx τ i k = Ezpow (K := K) l e (j τ) := by
   have h : Units.map ((invE l e (A O K)).val : invE l e (A O K) →* K⟦X⟧) (Eunit O K l e) =
       (isUnit_E l e).unit := Units.ext rfl
   rw [Ezpow, ← h, ← map_zpow]
@@ -139,28 +139,28 @@ theorem mx_rankOne_eq (j : ZMod a → ℤ) (τ : ZMod a) (i k : Unit) :
   simp
 
 theorem mxInv_rankOne_eq (j : ZMod a → ℤ) (τ : ZMod a) (i k : Unit) :
-    (rankOne O K l e a j).mxInv τ i k = Ezpow (K := K) l e (-j τ) := by
-  have h := congrFun (congrFun ((rankOne O K l e a j).mxInv_mul_mx τ) ()) ()
+    (rankOne O K l e j).mxInv τ i k = Ezpow (K := K) l e (-j τ) := by
+  have h := congrFun (congrFun ((rankOne O K l e j).mxInv_mul_mx τ) ()) ()
   rw [Matrix.mul_apply, Fintype.sum_unique, mx_rankOne_eq, Matrix.one_apply_eq,
     ← Ezpow_neg_mul l e (j τ)] at h
   exact mul_right_cancel₀ (Units.ne_zero _) h
 
-theorem phi_bas_rankOne (j : ℤ) : (rankOne O K l e a fun _ : ZMod a => j).phi (bas ()) =
+theorem phi_bas_rankOne (j : ℤ) : (rankOne O K l e fun _ : ZMod a => j).phi (bas ()) =
     Ezpow (K := K) l e j • bas () := by
   ext τ i : 2
   simp [PhiMod.phi_bas, mx_rankOne_eq, bas]
 
 theorem mem_ext_rankOne (j : ℤ) {B : Subalgebra O K⟦X⟧} {v : Vec K a Unit} :
-    v ∈ (rankOne O K l e a fun _ : ZMod a => j).ext B ↔ ∀ τ, Ezpow (K := K) l e (-j) * v τ () ∈ B := by
+    v ∈ (rankOne O K l e fun _ : ZMod a => j).ext B ↔ ∀ τ, Ezpow (K := K) l e (-j) * v τ () ∈ B := by
   simp [PhiMod.ext, mem_tot, PhiMod.mem_extc_iff, mem_vecs, Matrix.mulVec, dotProduct,
     mxInv_rankOne_eq]
 
 variable [CompleteSpace K]
 
 theorem exists_nabla_rankOne (j : ℤ) : ∃ γ ∈ S O K e,
-    (rankOne O K l e a fun _ : ZMod a => j).nabla (Ezpow (K := K) l e j • bas ()) =
+    (rankOne O K l e fun _ : ZMod a => j).nabla (Ezpow (K := K) l e j • bas ()) =
       γ • Ezpow (K := K) l e j • bas () := by
-  set P := rankOne O K l e a fun _ : ZMod a => j
+  set P := rankOne O K l e fun _ : ZMod a => j
   obtain ⟨c, hc, hcE⟩ := exists_mul_frob_E (O := O) (K := K) l e
   obtain ⟨m, hm⟩ : ∃ m, l = m + 1 := Nat.exists_eq_succ_of_ne_zero (Fact.out : l.Prime).ne_zero
   obtain ⟨n, hn⟩ : ∃ n, l * e = n + 1 :=

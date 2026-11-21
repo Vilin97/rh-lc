@@ -111,18 +111,17 @@ theorem dsigW_sigma (hR : IsURepOn (GG k r) R.σ) {g : MM k r} (hg : g ∈ GG k 
     rw [ih hW', dsig_sigma hR hg (hW X List.mem_cons_self)]
 
 theorem smMap_sigma (hR : IsURepOn (GG k r) R.σ) {g : MM k r} (hg : g ∈ GG k r) :
-    SmMap R R (fun v => R.σ g v) where
-  mem v hv := sig_sm hR hg hv
-  add v _ w _ := map_add _ _ _
-  smul a v _ := map_smul _ _ _
-  cont W hW := by
-    refine ⟨1, [W.map fun X => g⁻¹ * X * g], ?_, fun v hv => ?_⟩
-    · intro w hw Y hY
-      rw [List.mem_singleton.mp hw] at hY
-      obtain ⟨Z, hZ, rfl⟩ := List.mem_map.mp hY
-      exact GlobalTheory.SmMapAct.inLie_conj hg (hW Z hZ)
-    · simp only [List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, add_zero, one_mul]
-      rw [dsigW_sigma hR hg W hW v, hR.2.1 g hg]
+    SmMap R R (fun v => R.σ g v) := by
+  refine ⟨fun v hv => sig_sm hR hg hv, fun v _ w _ => map_add (R.σ g) v w,
+    fun a v _ => map_smul (R.σ g) a v, ?_⟩
+  intro W hW
+  refine ⟨1, [W.map fun X => g⁻¹ * X * g], ?_, fun v hv => ?_⟩
+  · intro w hw Y hY
+    rw [List.mem_singleton.mp hw] at hY
+    obtain ⟨Z, hZ, rfl⟩ := List.mem_map.mp hY
+    exact GlobalTheory.SmMapAct.inLie_conj hg (hW Z hZ)
+  · simp only [List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, add_zero, one_mul]
+    rw [dsigW_sigma hR hg W hW v, hR.2.1 g hg]
 
 theorem sig_TK (hR : IsURepOn (GG k r) R.σ) {g : MM k r} (hg : g ∈ GG k r) {v : R.H} (hv : v ∈ R.TK) :
     R.σ g v ∈ R.TK := by

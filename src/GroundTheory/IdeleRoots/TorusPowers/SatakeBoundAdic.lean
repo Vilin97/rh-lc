@@ -15,7 +15,7 @@ namespace GroundTheory.BlockD
 
 namespace SatakeBound
 
-open HeckeCharacterZeroLocus.ThmBIn IsDedekindDomain NumberField GroundTheory.Automorphic GroundTheory.Automorphic.Spherical GLnLocal Iwasawa
+open IsDedekindDomain NumberField GroundTheory.Automorphic GroundTheory.Automorphic.Spherical GLnLocal Iwasawa
   Finset Matrix
 open scoped ValuativeRel
 
