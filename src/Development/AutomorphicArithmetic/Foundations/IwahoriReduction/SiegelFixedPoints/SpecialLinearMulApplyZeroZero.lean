@@ -59,7 +59,7 @@ private theorem coe_uel_eq_umat (c d M : ℤ) (hc : c ≠ 0)
   by_cases hpd : (p : ℤ) ∣ d
   · have htM := (dvd_add_right hpd).1 hpe
     rcases hpz.dvd_or_dvd htM with hpt | hpM
-    · obtain ⟨q, hq, hpq⟩ := (Prime.dvd_finset_prod_iff hp.prime _).1 (Int.natCast_dvd_natCast.1 hpt)
+    · obtain ⟨q, hq, hpq⟩ := (Prime.dvd_finsetProd_iff hp.prime _).1 (Int.natCast_dvd_natCast.1 hpt)
       rw [Finset.mem_filter, Nat.mem_primeFactors] at hq
       have hpq' : p = q := (Nat.prime_dvd_prime_iff_eq hp hq.1.1).1 hpq
       subst hpq'

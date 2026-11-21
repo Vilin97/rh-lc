@@ -76,8 +76,8 @@ theorem scaleC : ScaleC := by
     (fun v X => rmul (Fv F v) X (H.map (inclR (F := F) (Fv F v)))) me mi mv
     (fun X => ⟨projInf_rmul X H, fun v => projV_rmul v X H⟩)
     ((LatRat.latV_rational F E σ hcm d b n M).1 H hdetH)
-    (ai / ci) (fun v => a v / c v) hq (by rw [Measure.map_smul, sInf, smul_comm])
-    (fun v => by rw [Measure.map_smul, sV v, smul_comm]) hfin
+    (ai / ci) (fun v => a v / c v) hq (by rw [Measure.map_smul, sInf, smul_comm]; exact mi.aemeasurable)
+    (fun v => by rw [Measure.map_smul, sV v, smul_comm]; exact (mv v).aemeasurable) hfin
     ((isEulerProd_const_iff b _ κ _ _).1 hE)
 
 end PositivityTheory.SiegelWeilFormula.Densx

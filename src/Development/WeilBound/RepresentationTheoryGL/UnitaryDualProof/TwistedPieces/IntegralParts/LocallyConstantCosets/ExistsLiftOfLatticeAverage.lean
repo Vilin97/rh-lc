@@ -98,7 +98,7 @@ theorem coset_ok {M : AddSubgroup (Matrix (Fin n) (Fin n) k)} (hM : IsLat Z M) {
       IsCompact ((fun a => a + c) '' (M : Set (Matrix (Fin n) (Fin n) k))) ∧
       ∀ a ∈ (fun a => a + c) '' (M : Set (Matrix (Fin n) (Fin n) k)), ∃ U : Set (Matrix (Fin n) (Fin n) k),
         IsOpen U ∧ a ∈ U ∧ U ∩ Z ⊆ (fun a => a + c) '' (M : Set (Matrix (Fin n) (Fin n) k)) := by
-  refine ⟨?_, hM.cpt.image (continuous_add_right c), ?_⟩
+  refine ⟨?_, hM.cpt.image (continuous_id.add continuous_const), ?_⟩
   · rintro _ ⟨m, hm, rfl⟩
     exact Z.add_mem (hM.sub hm) hc
   · rintro _ ⟨m, hm, rfl⟩

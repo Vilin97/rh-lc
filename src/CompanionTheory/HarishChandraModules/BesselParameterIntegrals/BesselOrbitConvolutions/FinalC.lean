@@ -73,7 +73,9 @@ theorem isHaarOn_map_cjE {b : Mx k r} (hb : b ∈ UH (Hpk k r)) {N : Set (Mx k r
   refine ⟨(cjE hb).toMeasurableEquiv.sigmaFinite_map, fun h0 => h2 ?_, ?_, fun s hs => ?_⟩
   · rwa [Measure.map_eq_zero_iff hE.measurable.aemeasurable] at h0
   · rw [hE.map_apply]
-    exact measure_mono_null (fun x hx hx' => hx (hN _ hx').1) h3
+    refine measure_mono_null ?_ h3
+    intro x hx hx'
+    exact hx (hN _ hx').1
   · have hl : ∀ a : Mx k r, Measurable (lmulM (k := k) (r := r) a) := fun a =>
       ModEx.measurable_lmulQ a
     have e : lmulM s ∘ cjE hb = cjE hb ∘ lmulM (b⁻¹ * s * b) := by

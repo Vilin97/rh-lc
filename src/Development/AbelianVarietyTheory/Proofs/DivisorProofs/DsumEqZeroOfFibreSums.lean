@@ -198,7 +198,7 @@ theorem dsum_eq_zero_of_fibre_sums : ∀ (H : Type) [Group H] (T P N L U : Subgr
   have hsup : L ⊔ N ≤ P := sup_le hLP hNP
   unfold dsum
   refine finsum_eq_zero_of_fibres (fun D => DoubleCoset.mk T (L ⊔ N) (Quotient.out D)) _ fun D' => ?_
-  obtain ⟨m, rfl⟩ : ∃ m, DoubleCoset.mk T (L ⊔ N) m = D' := ⟨_, DoubleCoset.out_eq' _ _ D'⟩
+  obtain ⟨m, rfl⟩ : ∃ m, DoubleCoset.mk T (L ⊔ N) m = D' := ⟨_, DoubleCoset.out_eq' D'⟩
   by_cases hm : m ∈ P
   swap
   · refine finsum_eq_zero_of_forall_eq_zero fun D => ?_
@@ -217,7 +217,7 @@ theorem dsum_eq_zero_of_fibre_sums : ∀ (H : Type) [Group H] (T P N L U : Subgr
     intro D h
     obtain ⟨t, ht, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h.symm
     have hD : D = DoubleCoset.mk T L (m * k) := by
-      rw [← DoubleCoset.out_eq' T L D, eq_comm, DoubleCoset.eq]
+      rw [← DoubleCoset.out_eq' D, eq_comm, DoubleCoset.eq]
       exact ⟨t, ht, 1, L.one_mem, by rw [e]; group⟩
     have hc := ncard_fibre_eq_relIndex T hLN (m := m) (y := m * k) (by simpa using hk)
     rw [← hD] at hc
@@ -240,7 +240,7 @@ theorem dsum_eq_zero_of_fibre_sums : ∀ (H : Type) [Group H] (T P N L U : Subgr
     rw [Set.eq_empty_iff_forall_notMem]
     rintro q ⟨hq, rfl⟩
     apply h
-    obtain ⟨t, l, ht, hl', e⟩ := DoubleCoset.mk_out_eq_mul T L (m * Quotient.out q)
+    obtain ⟨t, ht, l, hl', e⟩ := DoubleCoset.mk_out_eq_mul T L (m * Quotient.out q)
     rw [e, eq_comm, DoubleCoset.eq]
     exact ⟨t, ht, Quotient.out q * l, Subgroup.mul_mem _ (Subgroup.mem_sup_right hq) (Subgroup.mem_sup_left hl'),
       by group⟩
@@ -251,7 +251,7 @@ theorem dsum_eq_zero_of_fibre_sums : ∀ (H : Type) [Group H] (T P N L U : Subgr
       · exact (hout D h) ▸ Set.finite_empty)
   have hΨ : ∀ x, Ψ (Quotient.out (DoubleCoset.mk T L x)) = Ψ x := by
     intro x
-    obtain ⟨t, l, ht, hl', e⟩ := DoubleCoset.mk_out_eq_mul T L x
+    obtain ⟨t, ht, l, hl', e⟩ := DoubleCoset.mk_out_eq_mul T L x
     rw [e, hr l hl', hl t ht]
   simp only [hΨ, Set.mem_setOf_eq] at hB
   have h0 := hsum m hm

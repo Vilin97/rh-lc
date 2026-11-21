@@ -192,8 +192,8 @@ theorem isPolyDeg_pluecker (κ : ℕ) (hκ : r ≤ κ) (b : Fin r → Fin (2 * r
       herm (Hpk k r) (g *ᵥ bvec (b l)) (bvec (eI k r (Fin.castLE le_rfl a)))).det := by
   refine ⟨(Matrix.of fun a l : Fin r => MvPolynomial.X (Sum.inl (esI k r a, b l))).det, ?_, fun g => ?_⟩
   · rw [Matrix.det_apply]
-    refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun σ _ => ?_)
-    refine (MvPolynomial.totalDegree_smul_le _ _).trans ((MvPolynomial.totalDegree_finset_prod _ _).trans ?_)
+    refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun σ _ => ?_)
+    refine (MvPolynomial.totalDegree_smul_le _ _).trans ((MvPolynomial.totalDegree_finsetProd _ _).trans ?_)
     simpa [MvPolynomial.totalDegree_X] using hκ
   · rw [RingHom.map_det]
     refine congrArg Matrix.det ?_

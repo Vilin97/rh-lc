@@ -28,7 +28,7 @@ theorem chainMap_comp {X Y Z : Scheme.{0}} (t : freeSch R X ⟶ freeSch R Y) (t'
 theorem chainMap_add {X Y : Scheme.{0}} (t t' : freeSch R X ⟶ freeSch R Y) :
     chainMap R (t + t') = chainMap R t + chainMap R t' := by
   have : simpMap R (t + t') = simpMap R t + simpMap R t' := by ext; rfl
-  rw [chainMap, this, Functor.map_add (f := _)]
+  rw [chainMap, this, (AlgebraicTopology.alternatingFaceMapComplex (Shv R)).map_add]
   exact (ComplexShape.embeddingDownNat.extendFunctor (Shv R)).map_add
 
 theorem along_comp {X Y Z : Scheme.{0}} (F : Shv R) (n : ℤ) (t : freeSch R X ⟶ freeSch R Y) (t' : freeSch R Y ⟶ freeSch R Z)

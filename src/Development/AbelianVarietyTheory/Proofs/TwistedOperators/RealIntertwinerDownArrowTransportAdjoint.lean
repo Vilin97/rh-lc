@@ -27,17 +27,26 @@ theorem isIntw_transport {V W : HSp D} {S S' : D.what₂.Tau → SPar} {X Y P P'
     (ω : GA D V × GA D W →* Module.End ℂ (X → ℂ)) (ω₀ : GA D V × GA D W →* Module.End ℂ (Y → ℂ))
     (pt : P → (X → ℂ)) (pt₀ : P' → (Y → ℂ)) (e : P ≃ₗ[ℂ] P') (b : Y → X) (It : P' →ₗ[ℂ] SmT M' →ₗ[ℂ] SmT M)
     (hpt : ∀ φ, pt₀ (e φ) = pt φ ∘ b) (hω : ∀ p F, ω₀ p (F ∘ b) = ω p F ∘ b) (h : IsIntw θ M M' ω₀ pt₀ It) :
-    IsIntw θ M M' ω pt (It ∘ₗ e.toLinearMap) where
-  ne h0 := h.ne (LinearMap.ext fun φ => by
-    have := congrArg (fun L => L (e.symm φ)) h0
-    simpa using this)
-  bdd φ w := h.bdd (e φ) w
-  eqK τ g hg φ φ' hφ v := h.eqK τ g hg (e φ) (e φ') (by rw [hpt, hpt, hφ, hω]) v
-  eqg τ Y hY φ φ' hd v := h.eqg τ Y hY (e φ) (e φ') (fun z => by
-    simp only [hpt, hω, Function.comp_apply]; exact hd (b z)) v
-  invK τ k hk φ φ' v v' hφ hv := h.invK τ k hk (e φ) (e φ') v v' (by rw [hpt, hpt, hφ, hω]) hv
-  invg τ Y hY φ φ' v v' hd hv := h.invg τ Y hY (e φ) (e φ') v v' (fun z => by
-    simp only [hpt, hω, Function.comp_apply]; exact hd (b z)) hv
+    IsIntw θ M M' ω pt (It ∘ₗ e.toLinearMap) := by
+  refine { ne := ?_, bdd := ?_, eqK := ?_, eqg := ?_, invK := ?_, invg := ?_ }
+  · intro h0
+    apply h.ne
+    apply LinearMap.ext
+    intro φ
+    have hφ := congrArg (fun L => L (e.symm φ)) h0
+    simpa using hφ
+  · intro φ w
+    exact h.bdd (e φ) w
+  · intro τ g hg φ φ' hφ v
+    exact h.eqK τ g hg (e φ) (e φ') (by rw [hpt, hpt, hφ, hω]) v
+  · intro τ Y hY φ φ' hd v
+    exact h.eqg τ Y hY (e φ) (e φ') (fun z => by
+      simpa only [hpt, hω, Function.comp_apply] using hd (b z)) v
+  · intro τ k hk φ φ' v v' hφ hv
+    exact h.invK τ k hk (e φ) (e φ') v v' (by rw [hpt, hpt, hφ, hω]) hv
+  · intro τ Y hY φ φ' v v' hd hv
+    exact h.invg τ Y hY (e φ) (e φ') v v' (fun z => by
+      simpa only [hpt, hω, Function.comp_apply] using hd (b z)) hv
 
 
 open GlobalTheory.FockAdjoint in

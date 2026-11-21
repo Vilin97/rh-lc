@@ -73,17 +73,10 @@ theorem locF_inf_locF {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (A B : Su
       exact B.smul_mem _ htx
 
 theorem isLattice_inf {M₁ M₂ : Submodule (𝓞 K) V} (hM₁ : Submodule.IsLattice K M₁)
-    (hM₂ : Submodule.IsLattice K M₂) : Submodule.IsLattice K (M₁ ⊓ M₂) where
-  fg := by
-    have : Module.Finite (𝓞 K) ↥M₁ := Module.Finite.iff_fg.2 hM₁.fg
-    have : IsNoetherian (𝓞 K) ↥M₁ := inferInstance
-    have : IsNoetherian (𝓞 K) ↥(M₁ ⊓ M₂) := isNoetherian_of_le inf_le_left
-    rw [← Module.Finite.iff_fg]
-    infer_instance
-  span_eq_top := by
-    obtain ⟨n, hn, hnx⟩ := LocF.exists_zsmul_le hM₁ hM₂
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    (hM₂ : Submodule.IsLattice K M₂) : Submodule.IsLattice K (M₁ ⊓ M₂) := by
+  have := hM₁
+  exact Submodule.IsLattice.inf_left K M₁ M₂
+
 theorem finite_quot_inf {M₁ M₂ : Submodule (𝓞 K) V} (hM₁ : Submodule.IsLattice K M₁)
     (hM₂ : Submodule.IsLattice K M₂) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (k : ℕ) :
     Finite (↥(locF 𝔭 M₁ ⊓ locF 𝔭 M₂) ⧸

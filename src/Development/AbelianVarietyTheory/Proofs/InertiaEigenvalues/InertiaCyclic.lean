@@ -44,14 +44,16 @@ theorem exists_gen (K : FinExt l) :
       neg_mem' := by
         rintro a ⟨x, hx, hx0, ex⟩
         exact ⟨x⁻¹, inv_mem hx, inv_ne_zero hx0, by rw [norm_inv, inv_pow, ex, zpow_neg]⟩ }
-  obtain ⟨f, hf⟩ := Int.subgroup_cyclic S
-  have hfS : f ∈ S := by rw [hf]; exact AddSubgroup.subset_closure rfl
+  haveI : IsAddCyclic S := AddSubgroup.isAddCyclic S
+  obtain ⟨f, hf⟩ := IsAddCyclic.exists_zsmul_surjective (G := S)
+  have hfS : (f : ℤ) ∈ S := f.property
   obtain ⟨π, hπ, hπ0, eπ⟩ := hfS
   refine ⟨π, hπ, hπ0, fun x hx hx0 => ?_⟩
   obtain ⟨a, ha⟩ := H x hx hx0
   have haS : a ∈ S := ⟨x, hx, hx0, ha⟩
-  rw [hf, AddSubgroup.mem_closure_singleton] at haS
-  obtain ⟨k, rfl⟩ := haS
+  obtain ⟨k, hk⟩ := hf ⟨a, haS⟩
+  have hk' : k • (f : ℤ) = a := congrArg Subtype.val hk
+  subst a
   refine ⟨k, (pow_left_inj₀ (norm_nonneg _) (norm_nonneg _) hd.ne').1 ?_⟩
   rw [ha, norm_zpow, ← zpow_natCast, ← zpow_mul, mul_comm, zpow_mul, zpow_natCast, eπ, ← zpow_mul,
     smul_eq_mul, mul_comm]

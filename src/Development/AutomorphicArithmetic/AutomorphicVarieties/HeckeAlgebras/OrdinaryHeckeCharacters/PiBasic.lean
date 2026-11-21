@@ -67,7 +67,7 @@ private theorem pb_iSup {S S' : ℕ → Submodule A M} (φ : Module.End A M) (h 
 private theorem pb_smul {Y Y' : Submodule A M} (φ : Module.End A M) (h : ∀ x ∈ Y, φ x ∈ Y') (J : Ideal A) :
     ∀ x ∈ J • Y, φ x ∈ J • Y' := fun x hx =>
   Submodule.smul_induction_on hx (fun r hr z hz => by rw [map_smul]; exact Submodule.smul_mem_smul hr (h z hz))
-    fun a b ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+    fun a b ha hb => by rw [map_add]; exact add_mem ha hb
 
 variable [IsLocalRing A]
 

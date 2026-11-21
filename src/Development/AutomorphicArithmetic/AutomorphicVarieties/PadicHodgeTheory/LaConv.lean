@@ -87,7 +87,7 @@ private theorem exists_char (wt : Emb l w → ℤ) : ∃ ξ : (w.adicCompletion 
     simp
   have hαc : Continuous α := by
     rw [show (α : _ → _) = _ from funext hα]
-    exact continuous_finset_prod _ fun τ _ => (Continuous.units_map τ.1.toMonoidHom τ.2).zpow _
+    exact continuous_finsetProd _ fun τ _ => (Continuous.units_map τ.1.toMonoidHom τ.2).zpow _
   refine ⟨α.comp u, hαc.comp huc, fun x => ?_, fun x hx => ?_⟩
   · rw [MonoidHom.comp_apply, hα', norm_prod]
     refine Finset.prod_eq_one fun τ _ => ?_

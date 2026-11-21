@@ -71,7 +71,7 @@ theorem exists_isotypic_uniform : ∀ (D : D7), BiAct D → CenFock D → LiftSu
     funext v; simp [Finset.sum_apply]
   refine ⟨fun u v => ∑ i, e i u * mean k₀'.om ν χ₃ (g i) v, fun b => χ₃ b⁻¹, ⟨?_, fun v => hEv (hl v), fun u => ?_⟩,
     fun a ha hc v => hEe _ _ (h1 a ha hc) _ (hl v), fun b hb hc u => ?_, fun k k' hk hk' hag hag' φ hφ => ?_⟩
-  · exact continuous_finset_sum _ fun i _ => ((hEv (he i)).1.cont.comp continuous_fst).mul
+  · exact continuous_finsetSum _ fun i _ => ((hEv (he i)).1.cont.comp continuous_fst).mul
       ((hg' i).1.cont.comp continuous_snd)
   · rw [hr]
     exact (Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (hg' i) :

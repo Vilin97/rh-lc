@@ -246,7 +246,7 @@ theorem map_haar_eq_smul {π : G → X} (hc : Continuous π) (hs : Function.Surj
   have hsm := isMulLeftInvariant_eq_smul lam μ
   set c : ℝ≥0 := haarScalarFactor lam μ with hcdef
   have hνc : ν = (c : ℝ≥0∞) • ν' := by
-    rw [← hlamπ, hsm, hν'def, Measure.map_smul]
+    rw [← hlamπ, hsm, hν'def, Measure.map_smul _ hm.aemeasurable]
     rfl
   have hc0 : (c : ℝ≥0∞) ≠ 0 := by
     intro h
@@ -465,7 +465,8 @@ theorem map_haar_eq (F : UnivFam E Ψ j j' n g Λ) (Δ : GroupDict F)
   have h1 : μ.map Δ.π = (μ.map π').map Subtype.val := by
     rw [Measure.map_map measurable_subtype_coe hc.measurable]
     rfl
-  rw [h1, h, Measure.map_smul, map_comap_subtype_coe hD.measurableSet, ballMeas_restrict]
+  rw [h1, h, Measure.map_smul _ measurable_subtype_coe.aemeasurable,
+    map_comap_subtype_coe hD.measurableSet, ballMeas_restrict]
   rfl
 
 end Main

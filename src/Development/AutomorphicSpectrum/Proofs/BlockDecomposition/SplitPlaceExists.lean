@@ -49,7 +49,7 @@ theorem congSub_conj (w : Pl E) (n m : ℕ) : ∀ k ∈ GlobalTheory.LFun.KGL w 
     k * k' * k⁻¹ ∈ GlobalTheory.PrincCong.congSub w n m := by
   rintro _ ⟨h, rfl⟩ _ ⟨h', hh', rfl⟩
   refine ⟨h * h' * h⁻¹, ?_, by simp⟩
-  exact Subgroup.Normal.conj_mem inferInstance h' hh' h
+  exact Subgroup.Normal.conj_mem h' hh' h
 
 def lev (w : Pl E) (μ : (w.adicCompletion E)ˣ →* ℂˣ) (m b : ℕ) : Subgroup (GLw b w) :=
   GlobalTheory.PrincCong.congSub w b m ⊓ μ.ker.comap GeneralLinearGroup.det

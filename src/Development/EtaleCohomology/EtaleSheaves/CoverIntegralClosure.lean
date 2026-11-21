@@ -66,6 +66,7 @@ theorem Cover_of : LateralTheory.E.t_E1Cut.Cover := by
       (Ideal.comap π p.asIdeal) (⊥ : Ideal T) (by
         rw [Ideal.under_def, ← RingHom.ker_eq_comap_bot, (RingHom.injective_iff_ker_eq_bot _).1 (inj_P _)]
         exact bot_le)
+    rw [Ideal.under_def] at hQc
     have hIQ : I ≤ Q := by
       apply Ideal.map_le_iff_le_comap.2
       rw [hQc]

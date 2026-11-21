@@ -167,7 +167,8 @@ theorem local_transport (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) {M : ℕ} (J
   · refine fibre_transport e (fun X => gramR_conj R σ J g X) ?_ ha hm
     ext X
     exact li_mulVec_iff _ X
-  · rw [Measure.map_smul, ← hee, Measure.map_map e.continuous.measurable e.symm.continuous.measurable]
+  · rw [Measure.map_smul _ (hee ▸ e.continuous.measurable.aemeasurable), ← hee,
+      Measure.map_map e.continuous.measurable e.symm.continuous.measurable]
     simp
   · rw [Measure.smul_apply]
     have h1 : ((m S).map e.symm) (actTup R (bc (inclR R) g) ⁻¹' A) = m S A := by
@@ -359,7 +360,7 @@ theorem theta_map_frames (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) {M n : ℕ}
     rw [← He.restrict_map, Measure.map_map He.measurable He.symm.measurable]
     simp
   unfold thetaMeas
-  rw [Measure.map_smul, hmass]
+  rw [Measure.map_smul _ hmG.aemeasurable, hmass]
   congr 1
   set_option synthInstance.maxHeartbeats 100000 in
     rw [Measure.map_sum hmG.aemeasurable, ← sum_reindex (framesEquiv σ J g T)]

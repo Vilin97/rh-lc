@@ -147,14 +147,15 @@ end CongBasic
 
 theorem sameCoset_equiv {X : Fields} {Pr : Primes X} (sel : HeightOneSpectrum (𝓞 X.F) → HeightOneSpectrum (𝓞 X.E)) {S : Set ℕ}
     (mu : Tup X.F X.E X.K S) (cst : LocCst X (rowSG Pr sel mu)) {n : ℕ} (P : rowSG Pr sel mu) :
-    Equivalence (fun y y' : Sp X.E n => SameCoset sel mu cst P y y') where
-  refl := fun y l => by
+    Equivalence (fun y y' : Sp X.E n => SameCoset sel mu cst P y y') := by
+  constructor
+  · intro y l
     rw [sub_self, Pi.zero_apply, mul_zero]
     exact ciIntAt_zero
-  symm := fun {y y'} h l => by
+  · intro y y' h l
     have h1 := ciIntAt_neg (h l)
     rwa [← mul_neg, ← Pi.neg_apply, neg_sub] at h1
-  trans := fun {x y z} h h' l => by
+  · intro x y z h h' l
     have h1 := (h l).add (h' l)
     rwa [← mul_add, ← Pi.add_apply, sub_add_sub_cancel] at h1
 

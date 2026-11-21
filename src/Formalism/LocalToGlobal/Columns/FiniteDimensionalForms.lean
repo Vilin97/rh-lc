@@ -36,9 +36,9 @@ def Free : Prop := ∀ b, (F.mem b).Free
 
 @[reducible] def toH (h : F.Ok) (L : Submodule (𝓞 K) F.Forms) : HLat K where
   V := F.Forms
-  ι := Fin (F.hDim h)
-  b := F.hB h
-  X := stdFrame (F.hGram h)
+  ι := Fin (F.toCSD h).dim
+  b := (F.toCSD h).basis.map (F.res h).symm
+  X := stdFrame (F.toCSD h).H
   L := L
 
 

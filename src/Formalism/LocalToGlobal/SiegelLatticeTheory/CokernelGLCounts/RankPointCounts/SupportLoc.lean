@@ -143,7 +143,8 @@ theorem modBlocks_map {A : Type} (f : ℕ → ℕ → A → S) : ∀ (l : List (
   | (t, s) :: l, a, L, h => by
     simp only [modBlocks] at h
     split_ifs at h with hu
-    obtain ⟨L1, hL1, rfl⟩ := Option.map_eq_some_iff.1 h
+    rw [Option.map_eq_some_iff] at h
+    obtain ⟨L1, hL1, rfl⟩ := h
     simp only [List.map_cons, mapBlocks, modBlocks_map f l (a + s) L1 hL1]
     rfl
 

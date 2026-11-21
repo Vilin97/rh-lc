@@ -180,7 +180,7 @@ theorem indEt_inj [IsDomain T] [Algebra.Smooth T B] [Algebra T A] [IsScalarTower
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro t ht
   by_contra h0
-  have hreg : IsSMulRegular A t := Module.Flat.isSMulRegular_of_isRegular (isRegular_of_ne_zero h0)
+  have hreg : IsSMulRegular A t := Module.Flat.isSMulRegular_of_isRegular (IsRegular.of_ne_zero h0)
   have h3 : (1 : A) = 0 := by
     apply hreg
     change t • (1 : A) = t • (0 : A)
@@ -277,7 +277,7 @@ open UpperTheory.Cb.C3 in
 theorem UpperTheory.Cb.etale_cohomology_ind_etale_base_change : GlobalTheory.EtC.C3 := by
   intro q _ T _ _ _ hT hq B _ _ _ _ _ i
   haveI := aic_intClosed T hT
-  haveI : Algebra.FormallySmooth T (Polynomial T) := Algebra.FormallySmooth.of_equiv (MvPolynomial.pUnitAlgEquiv.{0, 0} T)
+  haveI : Algebra.FormallySmooth T (Polynomial T) := Algebra.FormallySmooth.of_equiv (MvPolynomial.uniqueAlgEquiv.{0, 0} T PUnit)
   haveI : Algebra.Smooth T (Polynomial T) := ⟨inferInstance, inferInstance⟩
   haveI : Algebra.Smooth T B := Algebra.Smooth.comp T (Polynomial T) B
   have hqB : IsUnit (q : B) := by simpa using hq.map (algebraMap T B)

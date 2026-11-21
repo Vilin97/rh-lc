@@ -104,8 +104,7 @@ private theorem card_twDual {R Γ Γ' M : Type} [CommRing R] [Group Γ] [Group �
     exact e.symm
   · intro hy g
     obtain ⟨g, rfl⟩ := hπ g
-    refine TDual.ext fun m => ?_
-    simp only [twDual_apply]
+    refine LinearMap.ext fun m => ?_
     have := hy g (ρ (π g)⁻¹ m)
     simp only [MonoidHom.comp_apply] at this
     rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply] at this
@@ -146,7 +145,11 @@ theorem UpperTheory.V.X.ptTail :
   have e3 : ∀ v : S, H2 (ρ.comp (locFam S A v)) ≃ H2 (ρ'.comp (locFam S A v)) := fun v =>
     h2EquivOfRepEq _ _ fun g m => h _ m
   haveI : Finite (H2 ρ) := Finite.of_equiv _ e2.symm
+  haveI : Finite (Sha2 ρ (locFam S A) (continuous_locFam S A)) := Subtype.finite
+  haveI : Module.Finite k (Sha2 ρ (locFam S A) (continuous_locFam S A)) := .of_finite
   haveI : ∀ v : S, Finite (H2 (ρ.comp (locFam S A v))) := fun v => Finite.of_equiv _ (e3 v).symm
+  haveI : Module.Finite k (H2 ρ) := .of_finite
+  haveI : ∀ v : S, Module.Finite k (H2 (ρ.comp (locFam S A v))) := fun _ => .of_finite
   haveI : Finite (Module.Dual k M) := DFunLike.finite _
   haveI : Finite (TDual (ZMod (l ^ 1)) M) := (DFunLike.finite _ : Finite (M →ₗ[ZMod (l ^ 1)] ZMod (l ^ 1)))
   haveI : Finite (H0 (twDual μ ρ')) := Subtype.finite

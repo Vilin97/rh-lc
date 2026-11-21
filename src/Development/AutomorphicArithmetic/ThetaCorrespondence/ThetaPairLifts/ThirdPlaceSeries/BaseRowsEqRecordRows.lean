@@ -13,7 +13,6 @@ section
 noncomputable section
 open Formalism.BasicNotions Formalism.MainNotions NumberField IsDedekindDomain Module
 namespace Formalism.L2.N.ExtNRows3
-open Formalism.L2.N.ExtNRows
 open Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows
 variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotions.G.Inst D L} {Gl : MainNotions.G.LatInst D} {K : MainNotions.G.Consts} {Y : DivX D}
   {cX : ExtraC} {ex : Extra D L hT Gi Gl K Y cX}

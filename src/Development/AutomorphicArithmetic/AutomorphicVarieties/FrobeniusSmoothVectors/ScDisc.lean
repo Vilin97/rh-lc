@@ -20,7 +20,7 @@ theorem UpperTheory.V.Fr.sc_disc :
   obtain ⟨A, hA⟩ := ReciprocityTheory.Gal.exists_isPlaceOver (F := K) Ω w
   have hv : A.valuation (l : Ω) < 1 := by
     have h := (hA (l : 𝓞 K)).2 hw
-    simpa using h
+    simpa only [map_natCast] using h
   have hI := hB A hv
   rw [← UpperTheory.V.CF.ineAbs ℚ K Ω A w hA, Subgroup.eq_bot_iff_forall]
   rintro _ ⟨σ, hσ, rfl⟩

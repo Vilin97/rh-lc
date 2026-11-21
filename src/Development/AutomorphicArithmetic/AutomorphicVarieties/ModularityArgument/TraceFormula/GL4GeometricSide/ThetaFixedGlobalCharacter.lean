@@ -181,7 +181,7 @@ theorem UpperTheory.V.Z.GSp4Splitting.exists_global_hecke_theta_lift :
     · refine Or.inl ((Submodule.eq_bot_iff _).2 fun y hy => ?_)
       obtain ⟨y, rfl⟩ := e.surjective y
       have : (y : D.U) = 0 := (Submodule.eq_bot_iff _).1 h0 _ ⟨y, hy, rfl⟩
-      rw [show y = 0 from Subtype.ext this, map_zero]
+      rw [show y = 0 from Subtype.ext this, e.map_zero]
     · refine Or.inr (Submodule.eq_top_iff'.2 fun y => ?_)
       obtain ⟨y, rfl⟩ := e.surjective y
       obtain ⟨z, hz, hzy⟩ : (y : D.U) ∈ (W.comap e.toLinearMap).map Y.subtype := h1.symm ▸ y.2

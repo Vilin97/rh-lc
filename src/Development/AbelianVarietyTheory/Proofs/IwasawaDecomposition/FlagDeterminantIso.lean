@@ -84,13 +84,13 @@ theorem eigBasis_toMatrix (g g' : EigFrame Z φ x) :
   have hv : ∀ a, g.vec τ a = eigBasis g ⟨τ, a⟩ := fun a => (eigBasis_apply g ⟨τ, a⟩).symm
   rw [Module.Basis.toMatrix_apply, eigBasis_apply, g.vec_eq g' τ i]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [hv, map_sum, map_smul, Module.Basis.repr_self, Finsupp.coe_finset_sum, Finset.sum_apply,
-    Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul]
+    simp only [hv, map_sum, map_smul, Module.Basis.repr_self]
   by_cases h : σ = τ
   · subst h
-    simp [Matrix.blockDiagonal'_apply_eq]
+    simp [Matrix.blockDiagonal'_apply_eq, Finsupp.single_apply]
   · rw [Matrix.blockDiagonal'_apply_ne _ _ _ h]
-    exact Finset.sum_eq_zero fun a _ => by rw [if_neg fun e => h (congrArg Sigma.fst e).symm, MulZeroClass.mul_zero]
+    simp [Finsupp.single_apply, show ∀ a, (⟨τ, a⟩ : Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≠ ⟨σ, b⟩ from
+      fun a e => h (congrArg Sigma.fst e).symm]
 
 open Classical in
 theorem frameDet_change (M : GlobalTheory.Reg.MChart Z) (h : ⊤ ≤ x ⁻¹ᵁ M.U) (g g' : EigFrame Z φ x) :

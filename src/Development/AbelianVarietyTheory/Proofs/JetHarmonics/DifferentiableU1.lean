@@ -50,7 +50,7 @@ theorem norm_sub_one_lt {y : ℂ_[p]} {k : ℕ} (h : y ^ p ^ k = 1) : ‖y - 1�
   rw [norm_pow] at h2
   exact (pow_lt_one_iff_of_nonneg (norm_nonneg _) hne).1 h2
 
-theorem bd_derivative {f : ℂ_[p]⟦X⟧} (hf : Bd 1 f) : Bd 1 (derivative ℂ_[p] f) := by
+theorem bd_derivative {f : ℂ_[p]⟦X⟧} (hf : Bd 1 f) : Bd 1 (PowerSeries.derivative f) := by
   intro n
   rw [coeff_derivative, norm_mul]
   refine mul_le_one₀ (hf _) (norm_nonneg _) ?_

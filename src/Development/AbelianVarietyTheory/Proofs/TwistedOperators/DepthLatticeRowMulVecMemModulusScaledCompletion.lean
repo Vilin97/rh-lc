@@ -39,7 +39,7 @@ theorem tmul_mem_latMul {T : HSp D} {Λ' : Lat T} (𝔪 : Ideal (𝓞 D.host.E))
       latMul T {a | a ∈ ((𝔪 : Ideal (𝓞 D.host.E)) : GlobalTheory.SeeSaw.FI D)} Λ' P := by
   refine Submodule.smul_induction_on hw (fun m hm l hl => ?_) (fun w w' hw hw' => ?_)
   · refine AddSubgroup.subset_closure ⟨γ, hγ, hγP, algebraMap (𝓞 D.host.E) D.host.E m,
-      (FractionalIdeal.mem_coeIdeal _).2 ⟨m, hm, rfl⟩, l, hl, ?_⟩
+      (FractionalIdeal.mem_coeIdeal (𝓞 D.host.E)⁰).2 ⟨m, hm, rfl⟩, l, hl, ?_⟩
     funext r
     simp only [Pi.smul_apply, Algebra.smul_def]
   · have : (fun r => pairA D.host.F 0 γ ⊗ₜ[D.host.F] (w + w') r) =

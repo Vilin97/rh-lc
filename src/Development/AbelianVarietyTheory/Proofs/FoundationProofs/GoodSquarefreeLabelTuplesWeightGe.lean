@@ -84,7 +84,7 @@ theorem tupleMass_single_le (h1 : (mass g N fun _ => True) ≤ 1) (v : ι) (A : 
     · rw [if_neg h, if_neg (mt hiff.mpr h)]
   rw [key, tupleMass_forall, ← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ v), if_pos rfl]
   have hrest : ∏ w ∈ Finset.univ.erase v, mass g N (if w = v then A else fun _ => True) ≤ 1 := by
-    apply Finset.prod_le_one
+    apply Finset.prod_le_one₀
     · exact fun w _ => hm _
     · intro w hw
       rw [if_neg (Finset.ne_of_mem_erase hw)]

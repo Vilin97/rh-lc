@@ -50,7 +50,8 @@ theorem contDiff_qI {ι : Type} [Fintype ι] : ContDiff ℝ (∞) (qI (k := k) (
   unfold qI
   apply ContDiff.sum
   intro i _
-  have hi : ContDiff ℝ (∞) fun u : ι → mixedSpace k => u i := contDiff_apply ℝ (mixedSpace k) i
+  have hi : ContDiff ℝ (∞) fun u : ι → mixedSpace k => u i :=
+    contDiff_apply ℝ (fun _ => mixedSpace k) i
   exact (contDiff_q₀ (k := k)).comp hi
 
 theorem q₀_nonneg (u : mixedSpace k) : 0 ≤ q₀ u := by

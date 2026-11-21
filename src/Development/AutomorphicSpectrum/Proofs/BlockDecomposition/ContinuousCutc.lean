@@ -99,23 +99,27 @@ theorem pch_smul {ψ : AddChar (AF D.host.F) ℂ} {e : AE D} {x : Mx D t t} (hx 
 theorem isOrb_smul {V : HSp D} {b₀ : HermE D r} {e : AE D} {ν : Measure (Mx D V.rank r × Mx D V.rank t)}
     (h : IsOrb V b₀ e ν) (c : ℝ≥0) : IsOrb V b₀ e (c • ν) := by
   have := h.fin
-  have : SecondCountableTopology (Mx D V.rank r) := (lattice_Mx D V.rank r).2.2.1
+  have : SecondCountableTopologyEither (Mx D V.rank r) (Mx D V.rank t) :=
+    ⟨Or.inl (lattice_Mx D V.rank r).2.2.1⟩
   have : BorelSpace (Mx D V.rank r) := ⟨rfl⟩
   have : BorelSpace (Mx D V.rank t) := ⟨rfl⟩
+  have : BorelSpace (Mx D V.rank r × Mx D V.rank t) := Prod.borelSpace
+  have : OpensMeasurableSpace (Mx D V.rank r × Mx D V.rank t) := BorelSpace.opensMeasurable
   refine ⟨inferInstance, ?_, ?_, ?_, ?_⟩
   · rw [smul_apply, h.supp, smul_zero]
   · intro g hg
     rw [Measure.map_smul, h.invU g hg]
-    exact ((continuous_const.matrix_mul continuous_fst).prodMk
-      (continuous_const.matrix_mul continuous_snd)).measurable.aemeasurable
+    apply Continuous.aemeasurable
+    exact (continuous_const.matrix_mul continuous_fst).prodMk
+      (continuous_const.matrix_mul continuous_snd)
   · intro y hy
     rw [Measure.map_smul, h.invS y hy]
-    exact (continuous_fst.prodMk
-      (continuous_snd.add (continuous_fst.matrix_mul continuous_const))).measurable.aemeasurable
+    apply Continuous.aemeasurable
+    exact continuous_fst.prodMk (continuous_snd.add (continuous_fst.matrix_mul continuous_const))
   · intro g hg
     rw [Measure.map_smul, h.cov g hg, smul_comm]
-    exact (continuous_fst.prodMk
-      (continuous_snd.matrix_mul continuous_const)).measurable.aemeasurable
+    apply Continuous.aemeasurable
+    exact continuous_fst.prodMk (continuous_snd.matrix_mul continuous_const)
 
 theorem isOrb_zero {V : HSp D} {b₀ : HermE D r} {e : AE D} : IsOrb (t := t) V b₀ e 0 := by
   refine ⟨inferInstance, ?_, ?_, ?_, ?_⟩ <;> simp

@@ -56,8 +56,8 @@ theorem maj_add_le (θ : InfFam D) (K K₀ : Set (Mx D ρ p)) (N : ℕ) (R : ℝ
 theorem continuous_realSize {θ : InfFam D} (hθ : IsInfFam θ) :
     Continuous (GlobalTheory.Unf.realSize θ : Mx D ρ p → ℝ) := by
   unfold GlobalTheory.Unf.realSize
-  refine continuous_finset_sum _ fun τ _ => continuous_finset_sum _ fun i _ =>
-    continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun τ _ => continuous_finsetSum _ fun i _ =>
+    continuous_finsetSum _ fun j _ => ?_
   exact ((GlobalTheory.RealWeil.continuous_compAt hθ τ ρ p).matrix_elem i j).norm
 
 theorem periodisation_bound : ∀ {D : D7} {ρ p : ℕ} (θ : InfFam D), IsInfFam θ → ∀ φ ∈ schwartzA θ ρ p,

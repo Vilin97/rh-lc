@@ -89,11 +89,9 @@ variable {D : D7}
 theorem finite_over (u : D.what₂.Word) :
     {Q : Pl D.host.E | (((D.mem u).A.T : ℕ) : 𝓞 D.host.E) ∈ Q.asIdeal}.Finite := by
   by_cases hT : (((D.mem u).A.T : ℕ) : 𝓞 D.host.E) = 0
-  · convert Set.finite_empty
-    ext Q
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
-    intro _
-    exact T_notMem_sq u Q (by rw [hT]; exact Ideal.zero_mem _)
+  · refine Set.finite_empty.subset ?_
+    intro Q hQ
+    exact False.elim (T_notMem_sq u Q (by rw [hT]; exact Ideal.zero_mem _))
   · refine (Ideal.finite_factors (I := Ideal.span {(((D.mem u).A.T : ℕ) : 𝓞 D.host.E)}) ?_).subset ?_
     · rwa [Ne, Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot]
     · intro Q hQ

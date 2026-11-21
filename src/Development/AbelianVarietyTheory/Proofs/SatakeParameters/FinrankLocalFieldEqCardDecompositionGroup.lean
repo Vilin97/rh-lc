@@ -55,8 +55,12 @@ theorem norm_int_le (c : E →+* PadicAlgCl l) (x : 𝓞 E) : ‖c (x : E)‖ �
   have heq : y ^ n = -∑ i ∈ Finset.range n, (P.coeff i : PadicAlgCl l) * y ^ i := by
     have h := hP
     rw [hPm.as_sum] at h
-    simp only [Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finset_sum,
-      Polynomial.eval₂_mul, Polynomial.eval₂_C] at h
+    change (Polynomial.eval₂RingHom (algebraMap ℤ (PadicAlgCl l)) y)
+      (X ^ P.natDegree + ∑ i ∈ Finset.range P.natDegree, (P.coeff i : ℤ[X]) * X ^ i) = 0 at h
+    simp only [map_add, map_sum, map_mul, map_pow, Polynomial.coe_eval₂RingHom,
+      Polynomial.eval₂_X] at h
+    simp only [← Polynomial.C_eq_intCast, Polynomial.eval₂_C] at h
+    simp only [map_intCast] at h
     rw [eq_neg_iff_add_eq_zero]
     simpa using h
   have hle : ‖y ^ n‖ ≤ ‖y‖ ^ (n - 1) := by

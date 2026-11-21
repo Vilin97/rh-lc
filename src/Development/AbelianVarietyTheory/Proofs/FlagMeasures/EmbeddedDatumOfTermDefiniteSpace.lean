@@ -86,7 +86,18 @@ theorem isLattice_pre (φ : W ≃ₗ[K] C) {M : Submodule (𝓞 K) C} (h : Submo
   have hs : ((M.map ((φ.symm : C →ₗ[K] W).restrictScalars (𝓞 K)) : Submodule (𝓞 K) W) : Set W) =
       (φ.symm : C →ₗ[K] W) '' (M : Set C) := by
     simp [Submodule.map_coe]
-  rw [hs, Submodule.span_image, h.span_eq_top, Submodule.map_top, LinearEquiv.range]
+  rw [hs]
+  intro s hsM hli
+  have hsub : (φ : W →ₗ[K] C) '' s ⊆ (M : Set C) := by
+    rintro _ ⟨x, hx, rfl⟩
+    obtain ⟨y, hy, hxy⟩ := hsM hx
+    simpa [← hxy] using hy
+  have hli' : LinearIndepOn (𝓞 K) id ((φ : W →ₗ[K] C) '' s) :=
+    (linearIndepOn_id_imageₛ_iff (f := (φ : W →ₗ[K] C).restrictScalars (𝓞 K))
+      φ.injective.injOn).2 hli
+  have hK := h.linearIndepOn _ hsub hli'
+  exact (linearIndepOn_id_imageₛ_iff (f := (φ : W →ₗ[K] C))
+    φ.injective.injOn).1 hK
 
 omit [NumberField K] in
 theorem dual_pre (φ : W ≃ₗ[K] C) {HW : HermSpace K W} {H' : HermSpace K C}

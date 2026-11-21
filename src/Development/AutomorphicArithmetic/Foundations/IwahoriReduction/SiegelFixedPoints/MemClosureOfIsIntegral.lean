@@ -102,9 +102,8 @@ private theorem mem_closure_of_isIntegral (ε : Ω →+* ℂ) (l L : ℕ) [Fact 
   haveI : Algebra.IsAlgebraic ℚ Ω := IsAlgClosure.isAlgebraic
   haveI hcyc : IsCyclotomicExtension {l ^ L} ℚ (IntermediateField.adjoin ℚ {zt ε l L}) :=
     by
-      convert hz.intermediateField_adjoin_isCyclotomicExtension ℚ
-      · rfl
-      · exact Subsingleton.elim _ _
+      convert hz.intermediateField_adjoin_isCyclotomicExtension ℚ using 1 <;>
+        exact Subsingleton.elim _ _
   let zF : IntermediateField.adjoin ℚ {zt ε l L} := ⟨zt ε l L, IntermediateField.mem_adjoin_simple_self ℚ _⟩
   have hzF : IsPrimitiveRoot zF (l ^ L) :=
     IsPrimitiveRoot.of_map_of_injective (f := (IntermediateField.adjoin ℚ {zt ε l L}).toSubfield.subtype) hz

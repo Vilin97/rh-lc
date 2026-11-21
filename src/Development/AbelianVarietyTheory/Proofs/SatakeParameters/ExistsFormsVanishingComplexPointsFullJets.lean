@@ -572,7 +572,7 @@ theorem exists_jet_forms : ∀ (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp ℂ
         calc ((k + 1 : ℕ) : ℕ∞) = (k : ℕ∞) + 1 := by push_cast; ring
           _ ≤ Order.coheight t + 1 := by gcongr
           _ ≤ Order.coheight x := h2
-      · rw [Fin.comp_snoc, linearIndependent_fin_snoc]
+      · rw [Fin.comp_snoc, linearIndependent_finSnoc]
         exact ⟨hli y, hc' (some (Sum.inr y))⟩
   obtain ⟨c, hgen, hZ, hli⟩ := key d le_rfl
   let Z : Set X := ⋂ i, (↑(fOpen ι (c i).1) : Set X)ᶜ

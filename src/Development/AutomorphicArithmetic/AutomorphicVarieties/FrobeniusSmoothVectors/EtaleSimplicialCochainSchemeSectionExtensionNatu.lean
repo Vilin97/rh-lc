@@ -29,7 +29,9 @@ private theorem decomposition_fixes_sqrt {Ω : Type} [Field Ω] [CharZero Ω] (B
     rw [h2, Valuation.map_neg] at h6
     exact absurd hk (not_lt.2 h6)
   have h7 := B.valuation.map_add_lt h4 (h3.2 h4)
-  simp at h7
+  have hy' : y + (1 - y) = 1 := by ring
+  rw [hy', map_one] at h7
+  exact lt_irrefl _ h7
 
 private theorem etaleSimplicialCochain_scheme_section_extension_naturality {Ω : Type} [Field Ω] (B : ValuationSubring Ω) {p n : ℕ} (hp : B.valuation (p : Ω) < 1)
     (h : p.Coprime n) : ¬ B.valuation (n : Ω) < 1 := by

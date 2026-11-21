@@ -133,7 +133,7 @@ theorem exists_fund_skew : ∀ (K : Type) [Field K] [NumberField K] [StarRing K]
     obtain ⟨u, -⟩ := (hσ.2 (Classical.arbitrary _)).exists
     refine absurd h1 (not_le.2 ?_)
     rw [pow_mul, ← Finset.card_univ, ← Finset.prod_const]
-    refine Finset.prod_lt_prod_of_nonempty (fun v _ => pow_pos (norm_pos_iff.2 ((map_ne_zero _).2 ht0)) _)
+    refine Finset.prod_lt_prod_of_nonempty₀ (fun v _ => pow_pos (norm_pos_iff.2 ((map_ne_zero _).2 ht0)) _)
       (fun v _ => pow_lt_pow_left₀ ?_ (norm_nonneg _) two_ne_zero) ⟨u, Finset.mem_univ _⟩
     have := hlt v
     rw [norm_mul, Complex.norm_real, Real.norm_of_nonneg hc0.le] at this

@@ -202,7 +202,7 @@ theorem sepHol {k : InfinitePlace F → ℕ} {c : Pl F → ℕ} {ω : HChar F} {
     · exact continuous_iff_continuousAt.2 fun z =>
         ContinuousAt.comp (f := fun z => TR.toL (A z).val) (TR.contDiffAt_chart φ.2 g (TR.val_mem_invSet (A z))).continuousAt
           continuous_A.continuousAt
-    · exact continuous_finset_prod _ fun u _ => Complex.continuous_ofReal.comp
+    · exact continuous_finsetProd _ fun u _ => Complex.continuous_ofReal.comp
         ((continuous_abs.comp (Complex.continuous_im.comp (continuous_subtype_val.comp (continuous_apply u)))).rpow_const
           fun z => Or.inl (abs_ne_zero.2 (z u).2))
   · intro t0 ht0
@@ -217,7 +217,8 @@ theorem sepHol {k : InfinitePlace F → ℕ} {c : Pl F → ℕ} {ω : HChar F} {
       by_cases hu : u = v
       · subst hu
         fin_cases i <;> fin_cases j <;>
-          simp [B, L0, E, A_val, Matrix.vecHead, Matrix.vecTail, Pi.single_apply, Matrix.single_apply]
+          simp [B, L0, E, A_val, Matrix.vecHead, Matrix.vecTail, Pi.single_apply, Matrix.single_apply] <;>
+          simp only [Function.update_self, pP]
       · fin_cases i <;> fin_cases j <;>
           simp [B, L0, E, A_val, hu, Function.update_of_ne hu, Pi.single_apply, Matrix.vecHead, Matrix.vecTail, Matrix.single_apply]
     have hN : ∀ t (ht : t.im ≠ 0), ∏ u, ((|(Function.update z v (pP t ht) u).1.im| ^ (-(k u : ℝ) / 2) : ℝ) : ℂ) =
@@ -245,9 +246,13 @@ theorem sepHol {k : InfinitePlace F → ℕ} {c : Pl F → ℕ} {ω : HChar F} {
     have hn1 := (hasDerivAt_rpow_abs q ht0').comp_hasFDerivAt t0 him
     have hn2 : HasFDerivAt (fun t : ℂ => ((|t.im| ^ q : ℝ) : ℂ)) _ t0 := Complex.ofRealCLM.hasFDerivAt.comp t0 hn1
     have hn3 := hn2.mul (hasFDerivAt_const C t0)
-    have hGd : HasFDerivAt G _ t0 := (hCd.comp t0 hM).mul hn3
-    have hA00 : A0 0 0 v = t0.im := by simp [hA0, A_val]
-    have hA10 : A0 1 0 = 0 := by simp [hA0, A_val]
+    have hGd := (hCd.comp t0 hM).mul hn3
+    simp only [Function.comp_def, Pi.mul_apply] at hGd
+    change HasFDerivAt G _ t0 at hGd
+    have hA00 : A0 0 0 v = t0.im := by
+      simp [hA0, A_val]
+      rfl
+    have hA10 : A0 1 0 = 0 := by simp [hA0, A_val, pP]
     have hp : TR.chart φ.1 g (B + L0 t0) = φ.1 (g * TR.infGL F 2 A0) := by rw [hx0e, TR.chart_val]
     have hDj : ∀ j : Fin 2, (t0.im : ℂ) * D (E v 0 j) = (TR.Eop v 0 j φ).1 (g * TR.infGL F 2 A0) := by
       intro j

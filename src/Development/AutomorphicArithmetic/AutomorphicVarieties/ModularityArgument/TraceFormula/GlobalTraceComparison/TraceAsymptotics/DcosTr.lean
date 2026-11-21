@@ -214,7 +214,9 @@ private theorem exists_hk_trace {V : Type} [AddCommGroup V] [Module ℂ V] (ρ :
       rw [hmul _ _ (dom_pow hϖ (hsa _ (by omega)).antitone) (dom_pow hϖ hx₀.antitone)]
       congr 2
       congr 1
-      simp only [nsmul_eq_mul]
+      funext i
+      simp only [Pi.mul_apply, Pi.smul_apply, nsmul_eq_mul, ← zpow_add]
+      congr 1
       push_cast
       ring
   obtain ⟨j, hj, hne⟩ := exists_pow_trace T hT

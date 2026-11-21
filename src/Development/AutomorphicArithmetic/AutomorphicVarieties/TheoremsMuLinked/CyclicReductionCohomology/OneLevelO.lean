@@ -108,7 +108,7 @@ theorem UpperTheory.V.Th.oneLevelO :
   haveI : Finite (Bl rep') := Finite.of_surjective _ (LinearMap.surjective_rangeRestrict _)
   refine natL _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ Nat.card_pos Nat.card_pos hgw ?_ ?_ ?_ ?_ ?_
     (hS2.trans ?_) hS3 hc1
-  · refine le_trans (Set.ncard_le_ncard ?_ (hFs'.subset fun y hy => hy.1)) (hc2 hF')
+  · refine le_trans (Set.ncard_le_ncard ?_ (Set.toFinite _)) (hc2 hF')
     exact fun y hy => ⟨hy.1, fun j => hy.2 _ rfl⟩
   · rw [pow_mul, ← Finset.card_univ, ← Finset.prod_const, ← Finset.prod_const, ← Finset.prod_mul_distrib,
       ← Finset.prod_pow_eq_pow_sum, ← Finset.prod_mul_distrib]

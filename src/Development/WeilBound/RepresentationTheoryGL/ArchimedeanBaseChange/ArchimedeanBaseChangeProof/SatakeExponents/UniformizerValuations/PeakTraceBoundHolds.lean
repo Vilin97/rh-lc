@@ -215,8 +215,11 @@ theorem adjoin_comm {A : Type} [CommRing A] [StarRing A] [Algebra ℂ A] [StarMo
     · rw [Set.mem_singleton_iff] at hb; subst hb
       rw [star_mul, star_star]; exact hcomm a ha _ (Or.inr rfl)
   intro x hx y hy
-  letI := StarAlgebra.isMulCommutative_adjoin ℂ hcomm hcs
-  exact congrArg Subtype.val (mul_comm (⟨x, hx⟩ : StarAlgebra.adjoin ℂ _) ⟨y, hy⟩)
+  letI := StarAlgebra.isMulCommutative_adjoin ℂ
+    (fun x hx => ⟨(hcs x hx x hx).symm⟩)
+    (fun x hx y hy _ => hcomm x hx y hy)
+    (fun x hx y hy _ => hcs x hx y hy)
+  exact congrArg Subtype.val (mul_comm' (⟨x, hx⟩ : StarAlgebra.adjoin ℂ _) ⟨y, hy⟩)
 
 theorem peak {A : Type} [CommRing A] [StarRing A] [Algebra ℂ A] [StarModule ℂ A]
     {ι : Type} [Fintype ι] [Nonempty ι] {H : ι → Type} [∀ s, NormedAddCommGroup (H s)]

@@ -96,6 +96,8 @@ theorem diagonal_mem_unitary {n : ℕ} (z : Fin n → ℂ) (hz : ∀ a, ‖z a�
   rw [Matrix.mem_unitaryGroup_iff, Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose,
     Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
   congr 1
+  funext a
+  change z a * (starRingEnd ℂ) (z a) = 1
   rw [Complex.mul_conj, Complex.normSq_eq_norm_sq, hz a]
   simp
 

@@ -117,6 +117,8 @@ theorem gen_mem (G : Tau → Matrix (Fin (P.m + 1)) (Fin (P.m + 1)) ℂ) (M : Ta
   have h1 := Formalism.MainNotions.G.CmpJ.PFormsCl.foValC_tr lam (fun τ => (M τ : Matrix (Fin (P.m + 1)) (Fin (P.m + 1)) ℂ)) hu h0
   rw [hX, hM, key, hK]
   convert h1 using 1
+  funext y
+  simp [fnOf, Formalism.MainNotions.G.CmpJ.PFormsCl.foTr]
 
 end Gen
 
@@ -137,7 +139,7 @@ theorem evC_le (h : P.m + 1 = n) (pos : (Σ v : Fin P.nV, Fin (P.n' v)) ≃ Tau)
     obtain ⟨f, hf, rfl⟩ := hX
     exact gen_mem P pos G M lam hw f hf
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
 
 end Main

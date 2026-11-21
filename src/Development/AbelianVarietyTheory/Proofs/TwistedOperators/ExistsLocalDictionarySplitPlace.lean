@@ -34,8 +34,7 @@ theorem piW_apply {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (z : _root_.Global
 omit [NumberField E] in
 theorem piW_cA {v : Pl (F := F)} (τ : E →ₐ[F] Fv F v) (σ : E →ₐ[F] E) (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) :
     piW τ (cA σ z) = piW (τ.comp σ) z := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul a e => rfl
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
@@ -86,8 +85,16 @@ theorem mem_latAt_iff {d : ℕ} (W : Spc F E d) (v : Pl (F := F)) (z : Fin d →
         funext i; simp
     convert key _ hm using 1
     funext i
-    obtain ⟨y, hy⟩ := (at_iff v (z i)).1 fun u hu => congrFun (hz u hu) i
-    rw [← hy, evT_liftT]
+    have hproj : ∀ x : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E),
+        GlobalTheory.LatVac.liftV v 1 • x = liftT (E := E) v (evT (E := E) v x) := by
+      intro x
+      induction x using TensorProduct.inductionOn with
+      | tmul a e =>
+        rw [TensorProduct.smul_tmul', smul_eq_mul, liftV_one_mul]
+        rfl
+      | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy]
+    have hi := congrFun (hz _ (evFin_one_sub v)) i
+    rwa [Pi.smul_apply, Pi.zero_apply, sub_smul, one_smul, sub_eq_zero, hproj] at hi
 
 theorem mem_of_trace_int {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) {v : Pl (F := F)} (hu : PsiUnr ψ v) (t : F)
     (ht : ∀ a : 𝓞 F, ∃ k : ℤ, Algebra.trace ℚ F ((a : F) * t) = k) :
@@ -238,15 +245,37 @@ theorem exists_split_dictionary : ∀ {F E : Type} [Field F] [NumberField F] [Fi
   obtain ⟨τ⟩ := nonempty_emb h v hv
   obtain ⟨b₁, h₁⟩ := exists_isSplitBasis τ W.L h
   obtain ⟨b₂, h₂⟩ := exists_isSplitBasis (τ.comp σ) W.L h
+  have ev_lift (y : Fv F v ⊗[F] E) : evT (E := E) v (liftT (E := E) v y) = y := by
+    induction y using TensorProduct.inductionOn with
+    | tmul a e =>
+      change evFin F v (GlobalTheory.LatVac.liftV v a) ⊗ₜ[F] e = a ⊗ₜ[F] e
+      rw [GlobalTheory.LatVac.evFin_liftV]
+    | add x y hx hy => rw [map_add, map_add, hx, hy]
   refine ⟨piW τ, piW (τ.comp σ), b₁, b₂, ⟨piW_cA τ σ, fun z => ?_, piW_algebraMap τ, piW_algebraMap _,
     fun z hz e₁ e₂ => ?_, fun x₁ x₂ => ?_, fun z => ?_⟩, ?_⟩
   · rw [piW_cA, comp_conj_conj h]
-  · obtain ⟨y, rfl⟩ := (at_iff v z).1 hz
-    rw [piW_apply, evT_liftT] at e₁ e₂
-    rw [split_ext h τ (y := y) (z := 0) (by rw [e₁, map_zero]) (by rw [e₂, map_zero]), map_zero]
-  · refine ⟨liftT (E := E) v ((splitAlgEquiv h τ).symm (x₁, x₂)), at_liftT v _, ?_, ?_⟩
-    · rw [piW_apply, evT_liftT, splitProj_symm]
-    · rw [piW_apply, evT_liftT, splitProj_comp_symm]
+  · have hproj : ∀ x : AE F E,
+        GlobalTheory.LatVac.liftV v 1 • x = liftT (E := E) v (evT (E := E) v x) := by
+      intro x
+      induction x using TensorProduct.inductionOn with
+      | tmul a e =>
+        rw [TensorProduct.smul_tmul', smul_eq_mul, liftV_one_mul]
+        rfl
+      | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy]
+    have hz' := hz _ (evFin_one_sub v)
+    rw [sub_smul, one_smul, sub_eq_zero, hproj] at hz'
+    rw [piW_apply] at e₁ e₂
+    rw [hz', split_ext h τ (y := evT (E := E) v z) (z := 0) (by rw [e₁, map_zero]) (by rw [e₂, map_zero]), map_zero]
+  · have at_lift (y : Fv F v ⊗[F] E) : At (evFin F v) (liftT (E := E) v y) := by
+      intro u hu
+      induction y using TensorProduct.inductionOn with
+      | tmul a e =>
+        change u • (GlobalTheory.LatVac.liftV v a ⊗ₜ[F] e) = 0
+        rw [TensorProduct.smul_tmul', GlobalTheory.LatVac.at_liftV v a u hu, TensorProduct.zero_tmul]
+      | add x y hx hy => rw [map_add, smul_add, hx, hy, add_zero]
+    refine ⟨liftT (E := E) v ((splitAlgEquiv h τ).symm (x₁, x₂)), at_lift _, ?_, ?_⟩
+    · rw [piW_apply, ev_lift, splitProj_symm]
+    · rw [piW_apply, ev_lift, splitProj_comp_symm]
   · rw [mem_latAt_iff, mem_latLoc_iff_split τ h, h₁.mem_iff, h₂.mem_iff]
     rfl
   · have e : (incM F W.J).map (piW τ) = W.J.map τ := Matrix.ext fun i j => piW_inclR τ (W.J i j)

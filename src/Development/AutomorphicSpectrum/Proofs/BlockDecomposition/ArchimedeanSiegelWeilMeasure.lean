@@ -220,7 +220,7 @@ theorem avgInf_tendsto : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     intro h
     refine continuous_pi fun b => continuous_pi fun i => ?_
     simp only [GlobalTheory.CompanionTheory.SW.rmul]
-    refine continuous_finset_sum _ fun k _ => ?_
+    refine continuous_finsetSum _ fun k _ => ?_
     have h1 : Continuous fun Y : Fin n → Fin M → Ainf F ⊗[F] E => Y k i :=
       (continuous_apply i).comp (continuous_apply k)
     exact h1.mul continuous_const

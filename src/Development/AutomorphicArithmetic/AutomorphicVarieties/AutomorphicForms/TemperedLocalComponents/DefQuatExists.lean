@@ -195,7 +195,8 @@ private theorem arith (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (h 
   have e3 : InfinitePlace.Completion.extensionEmbeddingOfIsReal hw (algebraMap F w.Completion (t⁻¹ : Fˣ)) = τ (t⁻¹ : Fˣ) := by
     have hr : ComplexEmbedding.IsReal (Complex.ofRealHom.comp τ) := by
       rw [ComplexEmbedding.isReal_iff]; ext z; simp
-    refine (InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hw _).trans (Complex.ofReal_injective ?_)
+    rw [AbsoluteValue.Completion.algebraMap_def, InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe]
+    refine Complex.ofReal_injective ?_
     rw [InfinitePlace.embedding_of_isReal_apply, InfinitePlace.embedding_mk_eq_of_isReal hr]
     rfl
   simp only [map_mul, map_neg, map_one, map_add (f := _), map_pow, e3] at e2

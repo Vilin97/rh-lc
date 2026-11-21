@@ -237,6 +237,7 @@ theorem uAt_one : (1 : UA σ W.J) ∈ UAt σ W (evFin F v) := fun u _ => by
   rw [sub_self, smul_zero]
 
 
+variable (v sec) in
 def sA : Fv F v →+ AE F E := AddMonoidHom.mk' (fun x => sgl v x • sec (1, 0)) fun x y => by rw [map_add (f := _), add_smul]
 
 theorem sA_at (x : Fv F v) : At (evFin F v) (sA v sec x) := at_sgl_smul _ _
@@ -451,6 +452,8 @@ theorem wh_sub {u : Matrix (Fin d) (Fin j) E} {χ Λ} (hΛ : IsWh (σ := σ) W u
   have a : IsAut (W := W) (f - f') := by simpa using isAut_sub hf hf' 1
   rw [eq_sub_iff_add_eq, ← hΛ.add _ _ (aut_right a g) (aut_right hf' g)]
   congr 1
+  funext x
+  exact sub_add_cancel _ _
 
 theorem frame_compl {u u' : Matrix (Fin d) (Fin j) E} (hu : IsFrame σ W u u') :
     ∃ (e : Fin j → Fin d) (c : GL (Fin d) E), Function.Injective e ∧ (∀ a i, c.1 a (e i) = u a i) ∧
@@ -461,21 +464,49 @@ section Triple
 
 variable {a a' : ℕ} {B : Base F E} {G : Geo σ a a'} {X : Chars F E} {om : Rep σ G.V G.W} {om' : Rep σ G.V' G.W}
 
-open PositivityTheory.ThKG in
 theorem locV (hB : ThetaBasic) (hK : KDecay) (hA : IAut) (hT : IsTriple B G X om om') {Φ} (hΦ : Φ ∈ PolData B G.M) :
     ∀ᶠ v : Pl F in cofinite, ∀ t : E →ₐ[F] Fv F v, ∃ ι S, G.M.IsLinBar B.ψ t 1 1 ι ∧ ι (G.M.vac v) ∈ SB _ ∧
       IsLoc (W := G.W) t (chrW (X.β / X.α) t * apowH (((a + a' : ℕ) : ℂ) / 2))⁻¹ (chrW X.β t * apowH ((a : ℂ) / 2)) S ∧
-        S (ι (G.M.vac v)) = G.M.I om Φ :=
-  exists_loc hB (pairV hT) (polData_le hT.geo.hM) (fun Φ h => (hK F E σ B a a' G X om om' hT).1 Φ (polData_le hT.geo.hM h))
+        S (ι (G.M.vac v)) = G.M.I om Φ := by
+  have hp : IsPair B G.M X.β (X.β / X.α) om (a - G.p) G.p (a + a' - (G.p + G.q)) (G.p + G.q) := by
+    refine ⟨hT.base, hT.geo.hV, hT.geo.hW, hT.geo.hM, hT.chars.heckeβ, ?_, hT.chars.resβ, ?_, hT.weil⟩
+    · exact ⟨hT.chars.heckeβ.1.div' hT.chars.heckeα.1, fun x => by
+        rw [MonoidHom.div_apply, hT.chars.heckeβ.2 x, hT.chars.heckeα.2 x, div_one]⟩
+    · intro x
+      rw [MonoidHom.div_apply, Circle.coe_div, hT.chars.resβ x, hT.chars.resα x]
+      split_ifs
+      · simp
+      · rcases neg_one_pow_eq_or ℂ a' with e | e <;> simp [pow_add, e, div_neg]
+  have hs : PolData B G.M ≤ schA F _ := by
+    refine Submodule.span_le.2 ?_
+    rintro _ ⟨f, -, φ, h1, h2, rfl⟩
+    have h3 := (h2.and hT.geo.hM.std).mono fun _ h => h.1.trans h.2
+    exact Submodule.subset_span ⟨f, _, ⟨GlobalTheory.WeilM.isLocallyConstant_finprod_evalV φ h1 h3,
+      GlobalTheory.AdelicCoordSupport.hasCompactSupport_finprod φ h1 h3⟩, rfl⟩
+  exact exists_loc hB hp hs (fun Φ h => (hK F E σ B a a' G X om om' hT).1 Φ (hs h))
     (hA F E σ B a a' G X om om' hT).1 (polData_le_placewise hT.geo.hM hΦ)
 
-open PositivityTheory.ThKG in
 theorem locV' (hB : ThetaBasic) (hK : KDecay) (hA : IAut) (hT : IsTriple B G X om om') {Φ}
     (hΦ : Φ ∈ PolData B G.M' ⊓ G.M'.So B.ψ B.τ₁) :
     ∀ᶠ v : Pl F in cofinite, ∀ t : E →ₐ[F] Fv F v, ∃ ι S, G.M'.IsLinBar B.ψ t 1 1 ι ∧ ι (G.M'.vac v) ∈ SB _ ∧
       IsLoc (W := G.W) t (chrW (X.α / X.β) t * apowH (((a + a' : ℕ) : ℂ) / 2))⁻¹ (chrW X.α t * apowH ((a' : ℂ) / 2)) S ∧
-        S (ι (G.M'.vac v)) = G.M'.I om' Φ :=
-  exists_loc hB (pairV' hT) (inf_le_left.trans (polData_le hT.geo.hM')) (fun Φ h => ((hK F E σ B a a' G X om om' hT).2 Φ h.2).2.1)
+        S (ι (G.M'.vac v)) = G.M'.I om' Φ := by
+  have hp : IsPair B G.M' X.α (X.α / X.β) om' G.q (a' - G.q) (a + a' - (G.p + G.q)) (G.p + G.q) := by
+    refine ⟨hT.base, hT.geo.hV', hT.geo.hW, hT.geo.hM', hT.chars.heckeα, ?_, hT.chars.resα, ?_, hT.weil'⟩
+    · exact ⟨hT.chars.heckeα.1.div' hT.chars.heckeβ.1, fun x => by
+        rw [MonoidHom.div_apply, hT.chars.heckeα.2 x, hT.chars.heckeβ.2 x, div_one]⟩
+    · intro x
+      rw [MonoidHom.div_apply, Circle.coe_div, hT.chars.resα x, hT.chars.resβ x, add_comm a a']
+      split_ifs
+      · simp
+      · rcases neg_one_pow_eq_or ℂ a with e | e <;> simp [pow_add, e, div_neg]
+  have hs : PolData B G.M' ≤ schA F _ := by
+    refine Submodule.span_le.2 ?_
+    rintro _ ⟨f, -, φ, h1, h2, rfl⟩
+    have h3 := (h2.and hT.geo.hM'.std).mono fun _ h => h.1.trans h.2
+    exact Submodule.subset_span ⟨f, _, ⟨GlobalTheory.WeilM.isLocallyConstant_finprod_evalV φ h1 h3,
+      GlobalTheory.AdelicCoordSupport.hasCompactSupport_finprod φ h1 h3⟩, rfl⟩
+  exact exists_loc hB hp (inf_le_left.trans hs) (fun Φ h => ((hK F E σ B a a' G X om om' hT).2 Φ h.2).2.1)
     (hA F E σ B a a' G X om om' hT).2 (polData_inf_so_le_placewise hT.geo.hM' hΦ)
 
 end Triple
@@ -501,7 +532,11 @@ theorem keyThree_of_locThree (hB : ThetaBasic) (hK : KDecay) (hA : IAut) (hL : L
   obtain ⟨ι, S, -, a1, a2, a3⟩ := h1 t
   obtain ⟨ι', S', -, b1, b2, b3⟩ := h2 t
   obtain ⟨⟨sec, h⟩, -⟩ := section_statement F E σ hT.base.cm v t
-  have hd := PositivityTheory.ThKF.detW (PositivityTheory.ThKG.pairV hT)
+  have hd : G.W.J.det ≠ 0 := fun h0 => by
+    obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance
+    refine PositivityTheory.ThKF.det_of_sig (hT.geo.hW.sig w) ?_
+    rw [Matrix.det_smul, show G.W.J.map (B.emb w).1 = (RingHom.mapMatrix ((B.emb w).1 : E →+* ℂ)) G.W.J from rfl,
+      ← RingHom.map_det, h0, map_zero, mul_zero]
   have hσ := GlobalTheory.SiegelSet.sigma_sigma hT.base.cm
   rw [← a3, ← b3, wh_sub hΛ (a2.aut _ a1) (b2.aut _ b1), three hL h hd hT.geo.hW.skew hσ hu hχ hΛ a2 a1,
     three hL h hd hT.geo.hW.skew hσ hu hχ hΛ b2 b1, sub_self]
@@ -645,7 +680,11 @@ theorem keyTwo_of_locTwo_vacBar (hB : ThetaBasic) (hK : KDecay) (hA : IAut) (hL 
   obtain ⟨κ, hκ⟩ := v1 t ι a0
   obtain ⟨κ', hκ'⟩ := v2 t ι' b0
   obtain ⟨⟨sec, h⟩, us⟩ := section_statement F E σ hT.base.cm v t
-  have hd := PositivityTheory.ThKF.detW (PositivityTheory.ThKG.pairV hT)
+  have hd : G.W.J.det ≠ 0 := fun h0 => by
+    obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance
+    refine PositivityTheory.ThKF.det_of_sig (hT.geo.hW.sig w) ?_
+    rw [Matrix.det_smul, show G.W.J.map (B.emb w).1 = (RingHom.mapMatrix ((B.emb w).1 : E →+* ℂ)) G.W.J from rfl,
+      ← RingHom.map_det, h0, map_zero, mul_zero]
   have hσ := GlobalTheory.SiegelSet.sigma_sigma hT.base.cm
   obtain ⟨ϖ, hϖ⟩ := exists_isUnif (k := Fv F v)
   obtain ⟨c₀, c1, c2⟩ := exists_cond hϖ (ψ := χ.compAddMonoidHom (sA v sec)) (hχ.1.comp sA_cont) (psi_ne h hχ)
@@ -702,7 +741,6 @@ theorem keyTwo_of_locTwo_vacBar (hB : ThetaBasic) (hK : KDecay) (hA : IAut) (hL 
       (fun i => Units.val_pow_eq_pow_val ϖ i ▸ bT i) hg.1 hg.2
     refine ⟨x - x' * r ^ c₀, fun i => ?_⟩
     rw [← a3, ← b3, wh_sub hΛ (a2.aut _ a1) (b2.aut _ b1), hx, hx', r1, r2, yy_inv _ r0]
-    push_cast
     ring
 
 end PartC

@@ -36,7 +36,9 @@ theorem inv_surj (I : Ideal A) (x : A) (hx : Ideal.Quotient.mk I x = 1) (s : Loc
 theorem inv_univ (I : Ideal A) (i : A) (hi : i ∈ I) : Univ (algebraMap A (Localization.Away (1 + i))) I := by
   intro B _ J hJ ψ hψ
   have hu : IsUnit (ψ (1 + i)) := by
-    have hj : ψ i ∈ Ideal.jacobson ⊥ := hJ.jac (hψ hi)
+    have hj : ψ i ∈ Ideal.jacobson ⊥ := by
+      rw [Ideal.jacobson_bot]
+      exact hJ.jac (hψ hi)
     have := (Ideal.mem_jacobson_bot.1 hj) 1
     rw [mul_one, add_comm] at this
     rwa [map_add, map_one]

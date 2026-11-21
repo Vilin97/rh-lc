@@ -55,7 +55,7 @@ theorem maxOver {A X B Z : CommRingCat.{0}} (x : A ⟶ X) (b : A ⟶ B) (u : X �
   have hX : (M.comap u.hom).IsMaximal := by
     let _ := u.hom.toAlgebra
     have : Algebra.IsIntegral X Z := ⟨hu⟩
-    exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal M
+    exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal u.hom hu M
   have hXe : M.comap u.hom = maximalIdeal X := IsLocalRing.eq_maximalIdeal hX
   have hw : u.hom.comp x.hom = v.hom.comp b.hom := by
     have := congrArg CommRingCat.Hom.hom hp.w; simpa using this
@@ -71,7 +71,7 @@ theorem maxOver {A X B Z : CommRingCat.{0}} (x : A ⟶ X) (b : A ⟶ B) (u : X �
     have hA' : ((M.comap v.hom).comap (algebraMap A B)).IsMaximal := by
       change ((M.comap v.hom).comap b.hom).IsMaximal
       rw [hA]; exact IsLocalRing.maximalIdeal.isMaximal A
-    exact Ideal.isMaximal_of_isIntegral_of_isMaximal_comap _ hA'
+    exact Ideal.isMaximal_of_isIntegral_of_isMaximal_comap b.hom hb (M.comap v.hom) hA'
   exact ⟨hXe.symm.le, (IsLocalRing.eq_maximalIdeal hB).symm.le⟩
 
 open IsLocalRing in
@@ -80,7 +80,7 @@ theorem locHom_of_int {A B : Type} [CommRing A] [CommRing B] [IsLocalRing A] [Is
   have hm : ((maximalIdeal B).comap b).IsMaximal := by
     let _ := b.toAlgebra
     have : Algebra.IsIntegral A B := ⟨hb⟩
-    exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal B)
+    exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal b hb (maximalIdeal B)
   have he := IsLocalRing.eq_maximalIdeal hm
   refine ⟨fun a ha => ?_⟩
   by_contra hna

@@ -36,6 +36,7 @@ theorem exists_gl_rowSpan_int (k : Type) [Field k] [ValuativeRel k] [Topological
     exact Matrix.linearIndependent_rows_of_isUnit ((Matrix.isUnit_iff_isUnit_det S).2 (isUnit_iff_ne_zero.2 hSdet))
   have hSmem : ∀ i, S i ∈ L := fun i => Submodule.subset_span ⟨Sum.inr i, rfl⟩
   have hXmem : ∀ i, X i ∈ L := fun i => Submodule.subset_span ⟨Sum.inl i, rfl⟩
+  set_option synthInstance.maxHeartbeats 200000 in
   have hr : Module.finrank 𝒪[k] L = n := by
     apply le_antisymm
     · have hb := (Module.finBasis 𝒪[k] L).linearIndependent.map' L.subtype (by simp)

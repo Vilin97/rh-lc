@@ -75,7 +75,7 @@ private theorem sect_wn {V : HSp D} {ψ : AddChar (AF D.host.F) ℂ} {χ : (AE D
     sect ω H Φ z (w * nb b) = npow (H (w * nb b)) (z - s0 V n) * Jt ψ V μ Φ.1 b := by
   unfold sect
   congr 1
-  rw [map_mul, Module.End.mul_apply, hω.weyl w hw]
+  rw [map_mul, mul_apply_eq_comp, hω.weyl w hw]
   unfold Jt
   refine integral_congr_ae (Filter.Eventually.of_forall fun y => ?_)
   have h0 : GlobalTheory.StdUnn.inner V (0 : Mx D V.rank n) y = 0 := by

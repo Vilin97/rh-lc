@@ -98,13 +98,13 @@ theorem basis_nhds (hop : IsOpen (Set.range (algebraMap O LL)))
       rw [hy, map_zero] at hxU
       exact hxU h0
     obtain ⟨n, hn⟩ := (hc.diff hU).elim_directed_family_closed (ball ϖ : ℕ → Set LL)
-      (fun n => (isCompact_ball hc ϖ n).isClosed) hint (ball_antitone ϖ).directed_ge
+      (fun n => (isCompact_ball hc ϖ n).isClosed) (Set.disjoint_iff_inter_eq_empty.mpr hint)
+      (ball_antitone ϖ).directed_ge
     refine ⟨n, trivial, fun x hx => hUt ?_⟩
     by_contra hxU
     have : x ∈ (Set.range (algebraMap O LL) \ U) ∩ (ball ϖ n : Set LL) :=
       ⟨⟨ball_subset_range ϖ n hx, hxU⟩, hx⟩
-    rw [hn] at this
-    exact this
+    exact (Set.disjoint_left.mp hn) this.1 this.2
   · rintro ⟨n, -, hn⟩
     exact Filter.mem_of_superset ((isOpen_ball hop hϖ n).mem_nhds (hzero n)) hn
 

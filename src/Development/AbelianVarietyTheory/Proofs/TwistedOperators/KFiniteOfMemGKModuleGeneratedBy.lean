@@ -100,11 +100,14 @@ theorem exists_kStable {x : GA D V → ℂ} (h : GlobalTheory.Doubling.IsKFinite
     simp only [GlobalTheory.KTypeProj.rTrL_apply, rTr, mul_assoc]
   exact hle hf
 
-theorem isGKSub_kfinSm (hθ : IsInfFam θ) : GlobalTheory.CuspGK.IsGKSub θ M (kfinSm θ M hθ) where
-  k τ g hg f hf := ⟨GlobalTheory.Mem.RealTranslate.isAutFunSm_rTr_atTau D θ hθ V f hf.1 τ g hg.1,
-    hf.2.translate (Subgroup.subset_closure ⟨τ, g, hg, rfl⟩)⟩
-  lie τ X hX f hf := ⟨GlobalTheory.CuspLie.isAutFunSm_Rder hθ hX hf.1,
-    GlobalTheory.CuspLie.isKFinite_Rder hθ hX (kGrp_le θ M) hf.1.smooth hf.2⟩
+theorem isGKSub_kfinSm (hθ : IsInfFam θ) : GlobalTheory.CuspGK.IsGKSub θ M (kfinSm θ M hθ) := by
+  constructor
+  · intro τ g hg f hf
+    exact ⟨GlobalTheory.Mem.RealTranslate.isAutFunSm_rTr_atTau D θ hθ V f hf.1 τ g hg.1,
+      hf.2.translate (Subgroup.subset_closure ⟨τ, g, hg, rfl⟩)⟩
+  · intro τ X hX f hf
+    exact ⟨GlobalTheory.CuspLie.isAutFunSm_Rder hθ hX hf.1,
+      GlobalTheory.CuspLie.isKFinite_Rder hθ hX (kGrp_le θ M) hf.1.smooth hf.2⟩
 
 theorem kFinite_of_mem_gkGen : ∀ {D : D7} (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)) {V : HSp D}
     {S : D.what₂.Tau → SPar} (M : Formalism.IndefR.Mult.DSModel V S), IsInfFam (D := D) θ → ∀ ψ : GA D V → ℂ,

@@ -101,3 +101,6 @@ theorem UpperTheory.ConvolutionTheory.R2.G.pgMem :
   obtain ⟨s, hs⟩ := gauss_schwartz δ hδ ht
   have h := schwartzBruhatTensorPi_mem (SchwartzMap.smulLeftCLM ℂ f s) hg
   convert h using 1
+  funext v
+  simp only [schwartzBruhatTensorPi, SchwartzMap.smulLeftCLM_apply_apply hf, smul_eq_mul]
+  rw [hfp v, hs v]

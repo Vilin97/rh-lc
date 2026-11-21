@@ -29,7 +29,7 @@ theorem dotForm_nondegenerate (n : ℕ) : (dotForm n).Nondegenerate := by
     have := hy (Pi.single i 1)
     simpa [dotForm_apply, Pi.single_apply] using this
 
-abbrev intLat (n : ℕ) : Submodule ℤ (Fin n → ℝ) :=
+noncomputable abbrev intLat (n : ℕ) : Submodule ℤ (Fin n → ℝ) :=
   Submodule.span ℤ (Set.range (Pi.basisFun ℝ (Fin n)))
 
 theorem mem_intLat {n : ℕ} (x : Fin n → ℝ) :

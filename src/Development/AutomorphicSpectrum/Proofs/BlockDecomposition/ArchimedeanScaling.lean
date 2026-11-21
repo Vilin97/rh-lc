@@ -37,7 +37,7 @@ theorem scaleInf : PositivityTheory.PfSWUS.SchInf.ScaleInf := by
   have hTc : Continuous fun X : Fin n → Fin M → Ainf F ⊗[F] E => rmul (Ainf F) X g := by
     refine continuous_pi fun a => continuous_pi fun i => ?_
     simp only [rmul]
-    exact continuous_finset_sum _ fun c _ => ((continuous_apply_apply c i).mul continuous_const)
+    exact continuous_finsetSum _ fun c _ => ((continuous_apply_apply c i).mul continuous_const)
   have hTm : Measurable fun X : Fin n → Fin M → Ainf F ⊗[F] E => rmul (Ainf F) X g := hTc.measurable
   let τ₀ : HermR (Ainf F) σ n → HermR (Ainf F) σ n := fun S =>
     ⟨conjT (Ainf F) σ g * (S : Matrix (Fin n) (Fin n) (Ainf F ⊗[F] E)) * g, conj_mem (Ainf F) hs _ S⟩

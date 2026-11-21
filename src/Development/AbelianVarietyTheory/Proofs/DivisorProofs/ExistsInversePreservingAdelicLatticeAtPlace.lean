@@ -29,16 +29,15 @@ theorem at_of_mem {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} {z : Fin d → AE 
   | neg x _ hx => intro u hu; rw [Pi.neg_apply, smul_neg, hx u hu, neg_zero]
 
 theorem liftT_evT_of_at {v : Pl (F := F)} {x : AE F E} (hx : At (evFin F v) x) : liftT (E := E) v (evT (E := E) v x) = x := by
+  have hproj : GlobalTheory.LatVac.liftV v 1 • x = liftT (E := E) v (evT (E := E) v x) := by
+    clear hx
+    induction x using TensorProduct.inductionOn with
+    | tmul a e =>
+      rw [TensorProduct.smul_tmul', smul_eq_mul, liftV_one_mul]
+      rfl
+    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy]
   have h := hx (1 - GlobalTheory.LatVac.liftV v 1) (evFin_one_sub v)
-  rw [sub_smul, one_smul, sub_eq_zero] at h
-  rw [h]
-  clear h hx
-  induction x using TensorProduct.induction_on with
-  | zero => simp
-  | tmul a e =>
-    rw [TensorProduct.smul_tmul', smul_eq_mul, liftV_one_mul]
-    rfl
-  | add x y hx hy => rw [map_add (f := _), map_add (f := _), smul_add, hx, hy]
+  rwa [sub_smul, one_smul, sub_eq_zero, hproj, eq_comm] at h
 
 theorem liftT_smul (v : Pl (F := F)) (t : Fv F v) (y : Fv F v ⊗[F] E) :
     liftT (E := E) v (t • y) = GlobalTheory.LatVac.liftV v t • liftT (E := E) v y := by
@@ -77,12 +76,10 @@ theorem smul_mem {d : ℕ} {W : Spc F E d} {v : Pl (F := F)} {t : Fv F v} (ht : 
 
 theorem mul_liftT (v : Pl (F := F)) (x : AE F E) (y : Fv F v ⊗[F] E) :
     x * liftT (E := E) v y = liftT (E := E) v (evT (E := E) v x * y) := by
-  induction x using TensorProduct.induction_on with
-  | zero => simp
+  induction x using TensorProduct.inductionOn with
   | add x z hx hz => simp only [add_mul, map_add, ← hx, ← hz]
   | tmul a e =>
-    induction y using TensorProduct.induction_on with
-    | zero => simp
+    induction y using TensorProduct.inductionOn with
     | add y z hy hz => simp only [map_add, mul_add, ← hy, ← hz]
     | tmul b f =>
       change (a ⊗ₜ[F] e) * (GlobalTheory.LatVac.liftV v b ⊗ₜ[F] f) =
@@ -270,7 +267,7 @@ theorem latV_fg {d : ℕ} {W : Spc F E d} (hL : W.L.IsFullLattice E) (v : Pl (F 
         change evFin F v (GlobalTheory.LatVac.liftV v a) ⊗ₜ[F] e = a ⊗ₜ[F] e
         rw [GlobalTheory.LatVac.evFin_liftV]
       | add b b' hb hb' => rw [map_add, map_add, hb, hb']
-    exact heval (u i)
+    exact (heval (u i)).symm
 
 end GlobalTheory.InertSph.Invert
 
@@ -339,7 +336,8 @@ theorem mat_ext {d : ℕ} (v : Pl (F := F)) {X Y : Matrix (Fin d) (Fin d) (AE F 
       intro u hu
       rw [smul_smul, ← smul_eq_mul u, GlobalTheory.LatVac.at_liftV v 1 u hu, zero_smul]
     have h := liftT_evT_of_at hz
-    rwa [evT_smul, GlobalTheory.LatVac.evFin_liftV, one_smul] at h
+    rw [evT_smul, GlobalTheory.LatVac.evFin_liftV, one_smul] at h
+    exact h.symm
   calc X i j = (1 - GlobalTheory.LatVac.liftV v 1 : AF F) • X i j + GlobalTheory.LatVac.liftV v 1 • X i j := by
         rw [sub_smul, one_smul, sub_add_cancel]
     _ = (1 - GlobalTheory.LatVac.liftV v 1 : AF F) • Y i j + GlobalTheory.LatVac.liftV v 1 • Y i j := by

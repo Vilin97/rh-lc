@@ -27,8 +27,10 @@ theorem three_le_DF_of_SetC {D : D7} {B : WeightFamilies.Prov D} {P : ModuliInte
     omega
   have hτ : Nonempty D.what₂.Tau := by
     rw [← Fintype.card_pos_iff, D.what₂.card_Tau]
+    have hm := D.R.two_le_m
+    have hf := D.R.m_le_f
     unfold Ranks.f Ranks.n
-    positivity
+    omega
   obtain ⟨τ⟩ := hτ
   set i : Fin (D.R.sigW j).1 := ⟨(D.R.sigW j).1 - 1, by omega⟩ with hi
   have hi1 : i.1 + 1 = (D.R.sigW j).1 := by simp only [hi]; omega

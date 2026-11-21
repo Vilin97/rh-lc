@@ -66,6 +66,7 @@ theorem isHaarOn_smul {k r : ℕ} {S : Set (Mat k r)} {μ : Measure (Mt k r)} (h
   · rw [Measure.smul_apply, h3, smul_zero]
   · intro s hs
     rw [Measure.map_smul, h4 s hs]
+    exact (continuous_const.matrix_mul (continuous_id (X := Mat k r))).measurable.aemeasurable
 
 theorem oneSide_of_bessel {k r : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
     {Wp : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [FiniteDimensional ℂ Wp]

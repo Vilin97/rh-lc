@@ -138,6 +138,9 @@ theorem GlobalTheory.GelfSymm.gelf_symm : ∀ {D : D7} (θ : D.what₂.Tau → (
       rw [List.map_map, List.map_reverse, List.map_reverse, List.map_ofFn, List.map_ofFn]
       congr 1
       congr 1
+      funext a
+      simp only [Function.comp_apply, ← map_neg, neg_neg]
+      simpa only [E, neg_neg] using congrArg (derEnd hθ τ) (hs (idx a) (idx (a + 1)))
     simp only [e, prod_map_neg, List.length_reverse, List.length_ofFn, List.map_ofFn]
     rw [← Finset.smul_sum, h1, smul_smul, ← mul_pow, neg_one_mul, neg_neg, one_pow, one_smul]
     rfl

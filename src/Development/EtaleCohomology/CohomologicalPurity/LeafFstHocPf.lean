@@ -76,7 +76,8 @@ theorem etale_first_hocolim_descent_of_discrete_pullback_sum (hL : LeafLevel) (h
   · intro σ
     show disc.map _ ≫ disc.map _ = disc.map _ ≫ disc.map _
     refine ((disc.map_comp _ _).symm.trans (congrArg disc.map ?_)).trans (disc.map_comp _ _)
-    exact pullback.lift_fst _ _ _
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact pullback.lift_fst _ _ _
   · intro σ
     have h0 := hj (σ.obj 0)
     obtain ⟨e, he⟩ := hP (c (σ.obj 0)) g

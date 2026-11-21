@@ -588,7 +588,11 @@ theorem exists_overLattice (L : ColLevel R F E sp gp C A clsLat)
       L.U ≤ levelAfL sp.cm.sig sp.gram0 N := by
   choose s hs hfac hε hiso hcard f₂ hsur hk hk2 using exists_local L
   have hcount := mem_of_count (finite_dualLb L) A.T_prime.ne_zero
-    (show R.f ≠ 0 by unfold Ranks.f Ranks.n; positivity) (nsmul_mem L) L.Lb_index hpl
+    (show R.f ≠ 0 by
+      unfold Ranks.f Ranks.n
+      have := Nat.one_le_two_pow (n := R.e)
+      have := R.ord_pos
+      omega) (nsmul_mem L) L.Lb_index hpl
     (fun v h => L.fM v h × (intV E v ⧸ primeOf (prPbar (s v h))))
     (fun v h => by rw [Nat.card_prod, L.fM_card, hcard])
     (fun v h => ((L.fT v h).prod (f₂ v h)).toAddMonoidHom) hsur

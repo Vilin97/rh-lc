@@ -226,8 +226,11 @@ theorem exists_hom {σ : E →ₐ[F] E} (hCM : IsCMExt F E σ) (τ : E →+* ℂ
   let ψ : Ainf F →+* ℝ := (InfinitePlace.Completion.extensionEmbeddingOfIsReal hv).comp
     (Pi.evalRingHom (fun w : InfinitePlace F => w.Completion) v)
   have hψ : ∀ x : F, ((ψ (algebraMap F (Ainf F) x) : ℝ) : ℂ) = φ x := fun x => by
-    have h1 : ψ (algebraMap F (Ainf F) x) = InfinitePlace.embedding_of_isReal hv x :=
-      InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hv ((WithAbs.equiv v.1).symm x)
+    have h1 : ψ (algebraMap F (Ainf F) x) = InfinitePlace.embedding_of_isReal hv x := by
+      change InfinitePlace.Completion.extensionEmbeddingOfIsReal hv (algebraMap F v.Completion x) = _
+      rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+        Algebra.algebraMap_self_apply]
+      simpa using InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hv (WithAbs.toAbs v.1 x)
     rw [h1, InfinitePlace.embedding_of_isReal_apply, InfinitePlace.embedding_mk_eq_of_isReal hφ]
   letI : Algebra F ℂ := φ.toAlgebra
   let f : Ainf F →ₐ[F] ℂ := { Complex.ofRealHom.comp ψ with commutes' := hψ }

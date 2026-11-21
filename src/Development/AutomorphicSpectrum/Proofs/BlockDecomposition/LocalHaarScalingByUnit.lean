@@ -26,7 +26,7 @@ theorem nnnorm_eq_distribHaarChar (F : Type) [Field F] [NumberField F]
     unfold PI.LocJacTyp.absV
     rw [dite_eq_right hva, NumberField.FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hva]
     push_cast
-    rfl
+    rw [WithZero.toAdd_unzero_eq_log]
   rw [habs, ← coe_nnnorm, ENNReal.ofReal_coe_nnreal] at h
   exact (ENNReal.coe_injective h).symm
 

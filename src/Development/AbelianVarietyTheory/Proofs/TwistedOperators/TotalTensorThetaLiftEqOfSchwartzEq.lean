@@ -71,13 +71,14 @@ theorem sum_liftP_eq_zero {μ₀ : T} (hL : L.Is μ₀) (M : Vol G) (ρ : RealMa
     rw [← Finset.sum_smul, h0, zero_smul]
   | _, .snoc a p, hg, ι, s, c, φ, d, hv, hsum, P, F, hF => by
     classical
-    obtain ⟨Tm, h1, -, h3⟩ := exists_arrowModel ρ hL he hg.last
+    have hModel := exists_arrowModel (t := t) (e := e) (a := a) ρ hL he (OnGrid.last hg)
+    obtain ⟨Tm, h1, -, h3⟩ := hModel
     have hmem : ∀ k ∈ s, (φ k).2 ∈ LocTensor.sbSpace e (latA G a) := fun k hk => ((h1 _ _).1 (hv k hk).2).1
     have hd2 : ∀ k ∈ s, (d k).2 = Tm (φ k).2 := fun k hk => ((h1 _ _).1 (hv k hk).2).2
     let b := Module.Basis.ofVectorSpace ℂ (LocTensor.sbSpace e (latA G a))
     let v : ι → LocTensor.sbSpace e (latA G a) := fun k => if h : (φ k).2 ∈ LocTensor.sbSpace e (latA G a) then ⟨_, h⟩ else 0
     have hv' : ∀ k ∈ s, ((v k : LocTensor.sbSpace e (latA G a)) : Sch G a) = (φ k).2 := fun k hk => by
-      simp only [v, dif_pos (hmem k hk)]
+      simp only [v, dite_eq_left (hmem k hk)]
     let r : ι → Module.Basis.ofVectorSpaceIndex ℂ (LocTensor.sbSpace e (latA G a)) → ℂ := fun k l => b.repr (v k) l
     let Ls := s.biUnion fun k => (b.repr (v k)).support
     have hexp : ∀ k ∈ s, (φ k).2 = ∑ l ∈ Ls, r k l • ((b l : LocTensor.sbSpace e (latA G a)) : Sch G a) := by
@@ -89,8 +90,20 @@ theorem sum_liftP_eq_zero {μ₀ : T} (hL : L.Is μ₀) (M : Vol G) (ρ : RealMa
           (fun i (x : ℂ) => x • b i) (fun _ _ => zero_smul _ _), Submodule.coe_sum]
       rfl
     let Fk : ι → Fn G a.src := fun k => liftP W M p (Path.Fam.zip (fun a (f : Sch G a) Q => W.fock a.pair f Q) (d k).1 P.1) F
+    have cusp_zip : ∀ {Y : Node} (q : Path T X Y), OnGrid D.R.m t q →
+        ∀ (φq dq : PureT G q), VecAll ρ e q φq dq → ∀ Q : PolT G q,
+          IsCuspListed W.θ Y
+            (liftP W M q (Path.Fam.zip (fun a (f : Sch G a) Q => W.fock a.pair f Q) dq Q) F) := by
+      intro Y q
+      induction q with
+      | nil =>
+        intro _ _ _ _ _
+        exact hF
+      | snoc b q ih =>
+        intro hq φq dq hvq Q
+        exact (hC b hq.last e he φq.2 dq.2 hvq.2 Q.2 _ (ih hq.init φq.1 dq.1 hvq.1 Q.1)).2
     have hFk : ∀ k ∈ s, IsCuspListed W.θ a.src (Fk k) := fun k hk =>
-      (pathConv_zip_fock M ρ t he hC p hg.init (φ k).1 (d k).1 (hv k hk).1 P.1 F hF).2
+      cusp_zip p hg.init (φ k).1 (d k).1 (hv k hk).1 P.1
     let g : Module.Basis.ofVectorSpaceIndex ℂ (LocTensor.sbSpace e (latA G a)) → Sch G a :=
       fun l => W.fock a.pair (Tm (b l)) P.2
     have hconv : ∀ l, ∀ k ∈ s, LiftConv W M a (g l) (Fk k) := fun l k hk =>

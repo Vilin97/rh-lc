@@ -44,7 +44,8 @@ theorem fixH_io (I : IoS AI R) (e : R.EE) : FixH AI K (I.ioE e) :=
 
 theorem fixH_pi (I : IoS AI R) : FixH AI K (piR AI LL s) := by
   have h := fixH_io I (algebraMap (LetA ↥(OL LL) (Module.finrank ℚ_[l] ↥(K0 K))) R.EE letπ)
-  rw [io_pi I] at h
+  set_option synthInstance.maxHeartbeats 400000 in
+    rw [io_pi I] at h
   exact h
 
 theorem exists_pole_RW (AI : LocAinf l P) (LL : FinExt l) (s : ℕ) (x : RW LL) :

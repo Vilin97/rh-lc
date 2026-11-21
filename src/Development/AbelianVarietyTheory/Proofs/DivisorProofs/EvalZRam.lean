@@ -112,8 +112,28 @@ theorem _root_.GlobalTheory.UPoinc.ideal_orders_of_proper_model : ∀ (E : Type)
   obtain ⟨tK₂, m₁, m₂⟩ := T₂.gen
   obtain ⟨a', ha', hid⟩ := hval T₂.V T₂.cdvr T₂.ϖ T₂.irr (spMap f₂ ≫ ξ') T₂.y hcomm trivial T₂.t tK₂ m₁ m₂ T₂.P T₂.be
     T₂.lev T₂.mono
+  have idlAlong_comp_local {X : Scheme.{0}} (J : X.IdealSheafData) {R S : Type} [CommRing R] [IsLocalRing R] [CommRing S]
+      [IsLocalRing S] (χ : Sp R ⟶ X) (f : R →+* S) : idlAlong J (spMap f ≫ χ) = (idlAlong J χ).map f := by
+    have eq_map {A : Type} [CommRing A] [IsLocalRing A] (ψ : Sp A ⟶ X)
+        (U : X.affineOpens) (hle : ⊤ ≤ ψ ⁻¹ᵁ U.1) :
+        idlAlong J ψ = (J.ideal U).map (ψ.appLE U.1 ⊤ hle ≫ (Scheme.ΓSpecIso (.of A)).hom).hom := by
+      have hx : ψ (closedPoint A) ∈ U.1 := hle trivial
+      unfold idlAlong
+      rw [ds_stalkId_eq_map J U _ hx, Ideal.map_map, ← CommRingCat.hom_comp, Scheme.germ_stalkClosedPointTo]
+      congr 2
+    obtain ⟨U, hU, hx, -⟩ := TopologicalSpace.Opens.isBasis_iff_nbhd.1 X.isBasis_affineOpens
+      (show χ (closedPoint R) ∈ (⊤ : X.Opens) from trivial)
+    have hle : ⊤ ≤ χ ⁻¹ᵁ U := (Scheme.preimage_eq_top_of_closedPoint_mem χ hx).ge
+    have hle' : ⊤ ≤ (spMap f ≫ χ) ⁻¹ᵁ U := fun x _ => hle (show spMap f x ∈ (⊤ : (Sp R).Opens) from trivial)
+    rw [eq_map χ ⟨U, hU⟩ hle, eq_map _ ⟨U, hU⟩ hle', Ideal.map_map]
+    congr 1
+    have e : (spMap f ≫ χ).appLE U ⊤ hle' = χ.appLE U ⊤ hle ≫ (spMap f).appTop := by
+      rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
+      exact (Scheme.Hom.appLE_comp_appLE _ _ _ _ _ _ _).symm
+    rw [e, Category.assoc, Scheme.ΓSpecIso_naturality, ← Category.assoc, CommRingCat.hom_comp]
+    rfl
   rw [GlobalTheory.PullAlong.idlAlong_comap_eq, Category.assoc, hξπ, ← Category.assoc, ← spMap_comp,
-    GlobalTheory.TraitOrder.idlAlong_comp] at hid
+    idlAlong_comp_local] at hid
 
   set h := f₂.comp f with hh
   have hinj : Function.Injective h := hf₂i.comp hfi

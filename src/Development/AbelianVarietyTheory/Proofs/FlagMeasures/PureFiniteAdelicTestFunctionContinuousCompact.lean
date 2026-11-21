@@ -91,7 +91,7 @@ theorem continuous_finprod (hSB : ∀ v, IsSB (Φv v))
     rw [h.1, Set.indicator_of_mem hmem]
     rfl
   refine ContinuousAt.congr ?_ hev.symm
-  exact (continuous_finset_prod _ fun v _ =>
+  exact (continuous_finsetProd _ fun v _ =>
     (hSB v).1.continuous.comp (continuous_projV_fin b v)).continuousAt
 
 theorem hasCompactSupport_finprod (hSB : ∀ v, IsSB (Φv v))

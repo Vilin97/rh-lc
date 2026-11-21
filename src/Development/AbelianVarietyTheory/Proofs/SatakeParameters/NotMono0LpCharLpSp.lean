@@ -37,8 +37,8 @@ theorem tmul_ne_zero_of_ne {X Y : Type} [AddCommGroup X] [Module ℂ X] [AddComm
     map_zero] at this
   exact hx ((smul_eq_zero.1 this).resolve_left hφ)
 
-theorem lpChar_lpSp_one' (x : WD h) : x.lpChar (WD.lpSp h 1) = x := by
-  have h1 : WD.lpSp h 1 = WD.lpOfChar h (WeilDeligne.unrChar h (qPow w 0)) (isSmooth_unrChar h _) := by
+theorem lpChar_lpSp_one' (x : WD h) : x.lpChar (WD.lpSp (h := h) 1) = x := by
+  have h1 : WD.lpSp (h := h) 1 = WD.lpOfChar h (WeilDeligne.unrChar h (qPow w 0)) (isSmooth_unrChar h _) := by
     refine WD.sound ⟨.refl _ _, fun σ v => ?_, fun v => ?_⟩
     · funext i
       simp [WDRep.spEig]
@@ -48,7 +48,7 @@ theorem lpChar_lpSp_one' (x : WD h) : x.lpChar (WD.lpSp h 1) = x := by
   exact WD.lpTw_zero x
 
 theorem not_mono0_lpChar_lpSp {x : WD h} (hx : IsIrrWD x) {n : ℕ} (hn : 2 ≤ n) :
-    ¬ (x.lpChar (WD.lpSp h n)).mono0 := by
+    ¬ (x.lpChar (WD.lpSp (h := h) n)).mono0 := by
   have h0 := TemperedRec.monodromy_zero_of_irreducible_weilDeligne E Ω A w h x hx
   obtain ⟨m, b, rfl, hirr⟩ := hx
   have : Nontrivial (Fin m → ℂ) := Model.nontrivial_of_isIrreducible hirr

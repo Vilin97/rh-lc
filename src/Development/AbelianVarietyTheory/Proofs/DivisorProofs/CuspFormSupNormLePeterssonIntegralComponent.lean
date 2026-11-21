@@ -160,11 +160,8 @@ theorem GlobalTheory.supLoc_component : ∀ (E : Type) [Field E] [NumberField E]
       ENNReal.ofReal (X.pnorm la P (cpt X.toData x z) ^ 2) ∂(muF X.toData x) =
       ∫⁻ z in A, Φ (cpt X.toData x z) ∂(muF X.toData x) := by
     have hset : A =ᵐ[muF X.toData x] Metric.ball (0 : V (nd X.toData)) ρ := by
-      have : OmF X.toData x =ᵐ[muF X.toData x] (Set.univ : Set (V (nd X.toData))) :=
-        ae_eq_univ.2 (ae_iff.1 hae)
-      have h2 := (Filter.EventuallyEq.refl _ (Metric.ball (0 : V (nd X.toData)) ρ)).inter this
-      rw [Set.inter_univ] at h2
-      exact h2
+      filter_upwards [hae] with z hz
+      simp [hAdef, hz]
     rw [Measure.restrict_congr_set hset]
     refine setLIntegral_congr_fun_ae measurableSet_ball ?_
     filter_upwards [hae] with z hz

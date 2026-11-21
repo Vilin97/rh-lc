@@ -21,7 +21,7 @@ theorem exists_proj {K M : Type} [Field K] [AddCommGroup M] [Module K M] (U : Su
     ∃ Q : M →ₗ[K] M, (∀ x ∈ U, Q x = 0) ∧ ∀ x, x - Q x ∈ U := by
   obtain ⟨W, hW⟩ := U.exists_isCompl
   refine ⟨LinearMap.id - U.subtype ∘ₗ U.projectionOnto W hW, fun x hx => ?_, fun x => ?_⟩
-  · have := Submodule.linearProjOfIsCompl_apply_left hW ⟨x, hx⟩
+  · have := Submodule.projectionOnto_apply_left hW ⟨x, hx⟩
     simp [this]
   · simp
 

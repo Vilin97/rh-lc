@@ -46,12 +46,10 @@ theorem twist_of_val {T : Over S} {ψ : T ⊗ A ⟶ T ⊗ A} {m : T ⊗ A ⟶ A}
 
 variable [IsCommMonObj A] {L : RigLB A}
 
-theorem isMonHom_mulA (n : ℕ) : IsMonHom (mulA A n) where
-  one_hom := by
-    have e : η[A] = (1 : 𝟙_ (Over S) ⟶ A) := by simp [Hom.one_def]
-    rw [mulA, MonObj.comp_pow, Category.comp_id, e, one_pow]
-  mul_hom := by
-    have e : μ[A] = fst A A * snd A A := by simp [Hom.mul_def]
+theorem isMonHom_mulA (n : ℕ) : IsMonHom (mulA A n) := by
+  constructor
+  · rw [mulA, MonObj.comp_pow, Category.comp_id, MonObj.one_eq_one, one_pow]
+  · have e := MonObj.mul_eq_mul A
     rw [mulA, MonObj.comp_pow, Category.comp_id]
     conv_lhs => rw [e, mul_pow]
     rw [e, MonObj.comp_mul, tensorHom_fst, tensorHom_snd, MonObj.comp_pow, MonObj.comp_pow, Category.comp_id, Category.comp_id]

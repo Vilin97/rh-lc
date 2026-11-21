@@ -27,7 +27,7 @@ private theorem wc_of_basis {W ι : Type} [AddCommGroup W] [Module ℂ W] [Finty
       conv_lhs => rw [← b.sum_repr (f g), map_sum]
     simp only [map_smul, smul_eq_mul, Module.Basis.coord_apply]
   rw [e]
-  exact continuous_finset_sum _ fun i _ => (h i).mul continuous_const
+  exact continuous_finsetSum _ fun i _ => (h i).mul continuous_const
 
 private theorem wc_hom {X Y : Type} [AddCommGroup X] [Module ℂ X] [FiniteDimensional ℂ X] [AddCommGroup Y] [Module ℂ Y]
     [FiniteDimensional ℂ Y] {f : G → (X →ₗ[ℂ] Y)} (h : ∀ x, WC fun g => f g x) : WC f := by
@@ -170,7 +170,7 @@ private theorem wc_flip [FiniteDimensional ℂ V] (σ : Un n →* (V →ₗ[ℂ]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul, inner_sum, inner_smul_right]
   simp_rw [e]
-  exact continuous_finset_sum _ fun j _ => (continuous_const.inner hv).mul (hσ _ _)
+  exact continuous_finsetSum _ fun j _ => (continuous_const.inner hv).mul (hσ _ _)
 
 private theorem fin_case [FiniteDimensional ℂ V] [MeasurableSpace (Un n)] [BorelSpace (Un n)] (ν : Measure (Un n))
     [IsProbabilityMeasure ν] [ν.IsMulLeftInvariant] (σ : Un n →* (V →ₗ[ℂ] V))

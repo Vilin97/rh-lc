@@ -16,8 +16,6 @@ theorem UpperTheory.Gal.W2.Seed.pAtPEx :
   haveI : CharZero (PadicAlgCl p) := charZero_of_injective_algebraMap (algebraMap ℚ_[p] (PadicAlgCl p)).injective
   haveI hAlg : Algebra.IsAlgebraic ℚ (AlgebraicClosure ℚ) := by
     convert (AlgebraicClosure.isAlgebraic ℚ)
-    · rfl
-    · exact Subsingleton.elim _ _
   let iotaA : AlgebraicClosure ℚ →ₐ[ℚ] PadicAlgCl p := (by
     refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
     solve_by_elim* (maxDepth := 2) only [*,

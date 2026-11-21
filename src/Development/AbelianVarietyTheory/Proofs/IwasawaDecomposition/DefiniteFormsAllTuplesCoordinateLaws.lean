@@ -65,24 +65,28 @@ theorem hform_sa {n : ℕ} {H A : Matrix (Fin n) (Fin n) K} (h : Aᴴ * H = H * 
 
 omit [NumberField K] [StarRing K] [Fintype G] in
 theorem zero_laws [NumberField K] [StarRing K] (σ : K →+* ℂ) {e : MonoidAlgebra K G}
-    (hc : e ∈ Subalgebra.center K (MonoidAlgebra K G)) (hi : IsIdempotentElem e) : (Mat1.zero K G).Laws σ e where
-  pos := by
-    show ((0 : Matrix (Fin 0) (Fin 0) K).map σ).PosDef
+    (hc : e ∈ Subalgebra.center K (MonoidAlgebra K G)) (hi : IsIdempotentElem e) : (Mat1.zero K G).Laws σ e := by
+  refine
+    { pos := ?_
+      lat := ?_
+      add := fun _ _ => Subsingleton.elim (α := Matrix (Fin 0) (Fin 0) K) _ _
+      smul := fun _ _ => Subsingleton.elim (α := Matrix (Fin 0) (Fin 0) K) _ _
+      one := Subsingleton.elim (α := Matrix (Fin 0) (Fin 0) K) _ _
+      mul := fun _ _ _ _ => Subsingleton.elim (α := Matrix (Fin 0) (Fin 0) K) _ _
+      E_eq := rfl
+      cen := hc
+      idem := hi
+      sa := ?_ }
+  · show ((0 : Matrix (Fin 0) (Fin 0) K).map σ).PosDef
     rw [Subsingleton.elim ((0 : Matrix (Fin 0) (Fin 0) K).map σ) 1]
     exact Matrix.PosDef.one
-  lat := by
-    show Submodule.IsLattice K (⊤ : Submodule (𝓞 K) (Fin 0 → K))
-    refine ⟨?_, Subsingleton.elim _ _⟩
-    rw [Subsingleton.elim (⊤ : Submodule (𝓞 K) (Fin 0 → K)) ⊥]
-    exact Submodule.fg_bot
-  add _ _ := Subsingleton.elim (α := Matrix (Fin 0) (Fin 0) K) _ _
-  smul _ _ := Subsingleton.elim (α := Matrix (Fin 0) (Fin 0) K) _ _
-  one := Subsingleton.elim (α := Matrix (Fin 0) (Fin 0) K) _ _
-  mul _ _ _ _ := Subsingleton.elim (α := Matrix (Fin 0) (Fin 0) K) _ _
-  E_eq := rfl
-  cen := hc
-  idem := hi
-  sa x y := by
+  · show Submodule.IsLattice K (⊤ : Submodule (𝓞 K) (Fin 0 → K))
+    refine ⟨?_, ?_⟩
+    · rw [Subsingleton.elim (⊤ : Submodule (𝓞 K) (Fin 0 → K)) ⊥]
+      exact Submodule.fg_bot
+    · intro s _ hs
+      simpa only [LinearIndepOn, linearIndependent_subsingleton_iff] using hs
+  · intro x y
     rw [hform_eq_dot, hform_eq_dot]
     rfl
 

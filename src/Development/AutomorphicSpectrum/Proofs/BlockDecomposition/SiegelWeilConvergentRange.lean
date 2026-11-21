@@ -84,6 +84,6 @@ theorem integrable_starN : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     show Φ X * _ = _
     rw [hsum, Finset.sum_mul]
   rw [hdec]
-  exact integrable_finset_sum _ fun i _ => hpure i
+  exact integrable_finsetSum _ fun i _ => hpure i
 
 end GlobalTheory.CompanionTheory.SiegelND.Integ

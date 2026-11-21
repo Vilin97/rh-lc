@@ -147,7 +147,9 @@ theorem map_coordW_unit : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
           rw [Measure.map_map hNm (eW R hK 1 1).symm.measurable, hcomm]
       _ = (π.map (fun t i => (n : R) * t i)).map (eW R hK 1 1).symm := by
           rw [Measure.map_map (eW R hK 1 1).symm.measurable hTm]
-      _ = _ := by rw [hT, Measure.map_smul, ← hνπ]
+      _ = _ := by
+          rw [hT, Measure.map_smul, ← hνπ]
+          exact (eW R hK 1 1).symm.measurable.aemeasurable
   refine map_eq_of_conj (mulT y) (sigT (sigR R σ) hsc hinv) _ c (fun X => ?_) ?_
   · funext a i
     exact hinv _

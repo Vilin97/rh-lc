@@ -30,8 +30,8 @@ theorem rels {l : ℕ} [Fact l.Prime] (F : GFrame l) (O : Type) [CommRing O] [Al
     (hfl : ∀ x v, HasFlag ((ρ x).comp (F.φ v)) fun i => pushCh (f x : R →+* K) (ψ v i)) :
     F.IsPolar O D ∧ (∀ v g, D.Kills (F.oEl v (ψ v) g)) ∧
       ∀ g, (∀ x, ρ x g = 1) → D.Kills (MonoidAlgebra.single g 1 - 1) := by
-  have kt := kerTest (fun _ : X => K) (fun x => (f x : R →+* K)) (fun x => mat (ρ x)) D hsep hD
-  refine ⟨polarInj F O R n D (fun _ : X => K) f hsep fun x => ?_, fun v g => kt _ fun x => ?_, fun g hg => kt _ fun x => ?_⟩
+  have kt := UpperTheory.V.AlgebraTools.Det.kerTest (fun _ : X => K) (fun x => (f x : R →+* K)) (fun x => mat (ρ x)) D hsep hD
+  refine ⟨polarInj F O R n D (fun _ : X => K) f hsep (fun x => ?_), (fun v g => kt _ (fun x => ?_)), (fun g hg => kt _ (fun x => ?_))⟩
   · obtain ⟨P, hP⟩ := hP x
     rw [hD]
     intro B _ _ _ _ y
@@ -87,12 +87,12 @@ theorem red_eq {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [CommRing O] [
     D.map (res O R : R →+* ResidueField O) = r.Dbar := by
   letI : TopologicalSpace (ResidueField O) := ⊥
   haveI : DiscreteTopology (ResidueField O) := ⟨rfl⟩
-  refine extDense _ _ S hS (fun i _ => ?_) (fun i _ => repCont _ ?_ i) fun g hg => ?_
-  · simp only [(mapApi D _).2.2.1]
+  refine extDense _ _ S hS (fun i _ => ?_) (fun i _ => UpperTheory.V.AlgebraTools.Det.repCont _ ?_ i) (fun g hg => ?_)
+  · simp only [(UpperTheory.V.AlgebraTools.Det.mapApi D _).2.2.1]
     exact (res_lc (hD i)).continuous
   · refine Continuous.matrix_diagonal (continuous_pi fun i => IsLocallyConstant.continuous ?_)
     exact (lc_of_open _ (r.chib_open i)).comp Units.val
-  · rw [← h g hg, ← (mapApi D _).1]
+  · rw [← h g hg, ← (UpperTheory.V.AlgebraTools.Det.mapApi D _).1]
     simp
 
 theorem heckePol_map {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (n q : ℕ) (a : ℕ → A) :

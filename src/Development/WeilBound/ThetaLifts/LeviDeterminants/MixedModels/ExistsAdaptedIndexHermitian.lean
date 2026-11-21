@@ -103,11 +103,12 @@ theorem exists_adapted_index_hermitian : ∀ (F E : Type) [Field F] [NumberField
     rw [glue_dot, glue_dot, hpq, hpq, hH', mul_add, map_add (f := _), h1, neg_one_mul, map_neg, map_sub, hTr]
     ring
   have hbij : Function.Bijective Φ := by
-    have := (bijective_of_symp (Φ ∘ₗ c₀.e.symm.toLinearMap) fun u w => by
+    have h := (bijective_of_symp (Φ ∘ₗ c₀.e.symm.toLinearMap) fun u w => by
       have h1 := c₀.form (c₀.e.symm u) (c₀.e.symm w)
       rw [hΦ, LinearEquiv.apply_symm_apply, LinearEquiv.apply_symm_apply] at h1
       exact h1).comp c₀.e.bijective
-    convert this using 1
+    simpa only [LinearMap.coe_comp, Function.comp_def, LinearEquiv.coe_coe,
+      LinearEquiv.symm_apply_apply] using h
   let co : Darboux (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J)) (Fin n × Fin d) :=
     ⟨LinearEquiv.ofBijective Φ hbij, hΦ⟩
   have hco : ∀ z, co.e z = (glue ε (p z) (M₁.co.e (π z)).1, glue ε (q z) (M₁.co.e (π z)).2) := fun z => rfl
@@ -131,18 +132,29 @@ theorem exists_adapted_index_hermitian : ∀ (F E : Type) [Field F] [NumberField
       rw [map_neg, ← GlobalTheory.VacIndic.trace_inclR, map_mul (inclR (F := F) (AF F)), Algebra.TensorProduct.basis_apply]
       rfl
   · have e := mul_iota hA z
-    have h1 : p (incM F H.ι * z) = 0 := funext fun k => by simp [p, b, e]
-    have h2 : q (incM F H.ι * z) = 0 := funext fun k => by simp [q, D, e]
-    have h3 : π (incM F H.ι * z) = z := by simp only [π, e, rows_sub]
+    have h1 : p (incM F H.ι * z) = 0 := funext fun k => by simp [p, b, e, what₂, Sum.elim]
+    have h2 : q (incM F H.ι * z) = 0 := funext fun k => by simp [q, D, e, what₂, Sum.elim]
+    have h3 : π (incM F H.ι * z) = z := by
+      dsimp only [π]
+      rw [e]
+      rfl
     rw [hco, h1, h2, h3, Adapt.extend_eq, Adapt.extend_eq]
   · have e := adapted_frame_mul_vecMulVec hA z
-    have h1 : p (Matrix.vecMulVec (incV F H.x) z) = 0 := funext fun k => by simp [p, b, e]
-    have h3 : π (Matrix.vecMulVec (incV F H.x) z) = 0 := by simp only [π, e, rows_sub]
+    have h1 : p (Matrix.vecMulVec (incV F H.x) z) = 0 := funext fun k => by
+      simp [p, b, e, what₂, Sum.elim]
+    have h3 : π (Matrix.vecMulVec (incV F H.x) z) = 0 := by
+      dsimp only [π]
+      rw [e]
+      rfl
     rw [hco, h1, h3, map_zero]
     exact ⟨glue_zero ε, fun k => glue_inr ε _ _ k⟩
   · have e := mul_y hA z
-    have h1 : q (Matrix.vecMulVec (incV F H.y) z) = 0 := funext fun k => by simp [q, D, e]
-    have h3 : π (Matrix.vecMulVec (incV F H.y) z) = 0 := by simp only [π, e, rows_sub]
+    have h1 : q (Matrix.vecMulVec (incV F H.y) z) = 0 := funext fun k => by
+      simp [q, D, e, what₂, Sum.elim]
+    have h3 : π (Matrix.vecMulVec (incV F H.y) z) = 0 := by
+      dsimp only [π]
+      rw [e]
+      rfl
     rw [hco, h1, h3, map_zero]
     exact ⟨glue_zero ε, fun k => glue_inr ε _ _ k⟩
 

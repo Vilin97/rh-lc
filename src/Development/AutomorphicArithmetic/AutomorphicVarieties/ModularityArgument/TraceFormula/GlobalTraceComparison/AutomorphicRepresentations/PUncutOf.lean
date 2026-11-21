@@ -54,7 +54,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.uncutOf_pf :
   have htr := hT π.V p.B L w e hspan
   refine ⟨?_, ?_⟩
   · rw [hsum]
-    exact integrable_finset_sum _ fun b _ => (hterm b).1
+    exact integrable_finsetSum _ fun b _ => (hterm b).1
   · rw [hsum, integral_finsetSum _ fun b _ => (hterm b).1, htr, Finset.sum_div]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [(hterm b).2]

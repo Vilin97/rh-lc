@@ -191,6 +191,6 @@ theorem lFinOfFact : LFinOfFact := by
 
 theorem LIdemLift_of (h1 : LFact) : LateralTheory.E.LChartPf.LIdemLift := by
   intro A _ I _
-  exact lRed A I (lFinOfFact A I HenselianRing.jac (h1 A I))
+  exact lRed A I (lFinOfFact A I (by simpa only [Ideal.jacobson_bot] using (HenselianRing.jac (R := A) (I := I))) (h1 A I))
 
 end LateralTheory.E.LIdemLiftPf

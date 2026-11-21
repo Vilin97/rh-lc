@@ -144,6 +144,7 @@ theorem unif (k : Type) [Field k] [CharZero k] (F K : Type) [Field F] [Field K] 
       rw [e, mul_add, map_add (f := _), mul_add]
       exact add_mem ha hc
     | smul r a _ ha =>
+      set_option synthInstance.maxHeartbeats 200000 in
       have e : ((r • a : integralClosure (rA k x {i}) K) : K) = algebraMap F K (r : F) * a := by
         rw [SetLike.val_smul, Algebra.smul_def]; rfl
       have e2 : P * Algebra.trace F K (z * algebraMap F K s ^ (∑ g ∈ S, Nf g) * (algebraMap F K (r : F) * a)) =

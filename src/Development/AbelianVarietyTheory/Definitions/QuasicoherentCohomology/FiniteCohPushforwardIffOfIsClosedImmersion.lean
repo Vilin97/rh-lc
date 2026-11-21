@@ -40,8 +40,11 @@ variable {F G : X.Modules}
 theorem chi_def (F : X.Modules) : chi k F = ∑ᶠ n, (-1 : ℤ) ^ n * hdim k F n := rfl
 
 theorem chi_eq_sum_range (N : ℕ) (hN : ∀ n, N ≤ n → Subsingleton (coh F n)) :
-    chi k F = ∑ n ∈ Finset.range N, (-1 : ℤ) ^ n * hdim k F n :=
-  finsum_neg_one_pow_hdim_eq_sum k F N hN
+    chi k F = ∑ n ∈ Finset.range N, (-1 : ℤ) ^ n * hdim k F n := by
+  refine finsum_eq_sum_of_support_subset _ fun n hn ↦ ?_
+  by_contra h
+  have := hN n (by simpa using h)
+  exact hn (by simp [hdim_eq_zero_of_subsingleton])
 
 theorem chi_eq_hdim_zero (h : ∀ n, 0 < n → Subsingleton (coh F n)) : chi k F = hdim k F 0 := by
   rw [chi_eq_sum_range k 1 h]; simp
@@ -70,9 +73,11 @@ namespace FiniteCoh
 theorem of_linearEquiv [Algebra k Γ(Y, ⊤)] {H : Y.Modules} (h : FiniteCoh k F)
     (e : ∀ n, coh F n ≃ₗ[k] coh H n) : FiniteCoh k H where
   finite n := have := h.finite n; Module.Finite.equiv (e n)
-  eventually_zero :=
-    have ⟨N, hN⟩ := h.eventually_zero
-    ⟨N, fun n hn ↦ have := hN n hn; (e n).symm.injective.subsingleton⟩
+  eventually_zero := by
+    obtain ⟨N, hN⟩ := h.eventually_zero
+    refine ⟨N, fun n hn ↦ ?_⟩
+    have := hN n hn
+    exact (e n).symm.injective.subsingleton
 
 theorem of_iso (h : FiniteCoh k F) (e : F ≅ G) : FiniteCoh k G :=
   h.of_linearEquiv fun n ↦ cohOn.mapIso k ⊤ n e
@@ -89,10 +94,11 @@ variable {S : ShortComplex X.Modules}
 theorem of_shortExact₃ (hS : S.ShortExact) (h₁ : FiniteCoh k S.X₁) (h₂ : FiniteCoh k S.X₂) :
     FiniteCoh k S.X₃ where
   finite := cohOn.forall_finite₃ k hS ⊤ h₁.finite h₂.finite
-  eventually_zero :=
-    have ⟨N₁, h₁⟩ := h₁.eventually_zero
-    have ⟨N₂, h₂⟩ := h₂.eventually_zero
-    ⟨max N₁ N₂, fun n hn ↦ cohOn.subsingleton₃ hS ⊤ n (h₂ n (by omega)) (h₁ (n + 1) (by omega))⟩
+  eventually_zero := by
+    obtain ⟨N₁, hN₁⟩ := h₁.eventually_zero
+    obtain ⟨N₂, hN₂⟩ := h₂.eventually_zero
+    exact ⟨max N₁ N₂, fun n hn ↦
+      cohOn.subsingleton₃ hS ⊤ n (hN₂ n (by omega)) (hN₁ (n + 1) (by omega))⟩
 
 end FiniteCoh
 
@@ -610,7 +616,9 @@ theorem interNum_cons (hM : M.IsLB) (hP : ∀ i, (P i).IsLB) :
 theorem interNum_twist_cons (hM : M.IsLB) (hP : ∀ i, (P i).IsLB) :
     interNum k (twist F M) (Fin.cons M P : Fin (d + 1) → LB X) =
       interNum k (twist F M) P - interNum k F P := by
-  rw [interNum_cons k _ hM hP, interNum_congr k (Twist.twistTwistZNegOneIso F hM)]
+  have ⟨e⟩ := nonempty_twist_twist_iso_of_cls_eq F hM (Twist.isLB_lbZPow hM (-1))
+    (LB.isLB_triv X) (by rw [cls_triv, cls_lbZPow hM, neg_one_zsmul, add_neg_cancel])
+  rw [interNum_cons k _ hM hP, interNum_congr k (e ≪≫ (Twist.trivIso F).symm)]
 
 theorem interNum_cons_of_cls_eq_add (hM : M.IsLB) (hA : A.IsLB) (hB : B.IsLB)
     (hP : ∀ i, (P i).IsLB) (h : cls M hM = cls A hA + cls B hB) :

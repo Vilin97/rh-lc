@@ -37,7 +37,8 @@ theorem _root_.GlobalTheory.T.thetaDiagonal_siegelParabolic_rule : ∀ (D : D7) 
           ∀ omp : GlobalTheory.WeilM.UG (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (incM D.host.F ((GlobalTheory.Doubling.dblSp T).gramᵀ)) ×
               GlobalTheory.WeilM.UG (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (incM D.host.F JB) →*
                 Module.End ℂ ((κ → AF D.host.F) → ℂ),
-            GlobalTheory.WeilSchrodinger.IsTransport ψ co ωd omp →
+            GlobalTheory.WeilSchrodinger.IsTransport ψ (S := S) (T := GlobalTheory.Doubling.dblSp T)
+              (ξ := ξ) (JA := (GlobalTheory.Doubling.dblSp T).gramᵀ) (JB := JB) co ωd omp →
           ∀ (p : GlobalTheory.WeilM.UG (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (incM D.host.F ((GlobalTheory.Doubling.dblSp T).gramᵀ)))
             (t : GL (Fin T.rank) (AF D.host.F ⊗[D.host.F] D.host.E)),
             p.1.1 * (GlobalTheory.WeilM.diagCols (Fin T.rank) : Matrix (Fin T.rank ⊕ Fin T.rank) (Fin T.rank) (AE D)).submatrix

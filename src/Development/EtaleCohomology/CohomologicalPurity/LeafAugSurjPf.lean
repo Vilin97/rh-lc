@@ -24,12 +24,14 @@ theorem altSum (m : ℕ) : ∑ i : Fin (m + 2), (-1 : ℤ) ^ (i : ℕ) = if Even
 
 theorem dL {R : Type} [CommRing R] (Y : PSh) (m : ℕ) (T : Scheme.{0}ᵒᵖ) (z : ((((chainsP R).obj (disc.obj Y)).X (m + 1)).obj T)) :
     ((((chainsP R).obj (disc.obj Y)).d (m + 1) m).app T).hom z = (∑ i : Fin (m + 2), (-1 : ℤ) ^ (i : ℕ)) • z := by
+  change (((freeP R).obj Y).obj T) at z
   have e : ∀ i : Fin (m + 2), SimplicialObject.δ (disc.obj Y) i = 𝟙 _ := fun _ => rfl
   simp [chainsP, e]
   erw [LinearMap.sum_apply, Finset.sum_smul]
   refine Finset.sum_congr rfl fun i _ => ?_
-  erw [NatTrans.app_zsmul]
-  rfl
+  simp
+  simpa only [Int.cast_pow, Int.cast_neg, Int.cast_one] using
+    (Module.End.intCast_apply (R := ULift.{1} R) ((-1 : ℤ) ^ (i : ℕ)) z)
 
 section
 variable {R : Type} [CommRing R]

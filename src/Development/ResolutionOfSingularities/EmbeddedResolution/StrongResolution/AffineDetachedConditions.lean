@@ -176,7 +176,7 @@ private theorem exists_mem_list_subset_of_isIrreducible {α : Type*} [Topologica
         obtain ⟨t, ht, hzt⟩ := Set.mem_iUnion₂.mp (hsub hz)
         rcases List.mem_cons.mp ht with rfl | ht'
         · exact Or.inl hzt
-        · exact Or.inr (Set.mem_biUnion ht' hzt)
+        · exact Or.inr (Set.mem_iUnion₂.mpr ⟨t, ht', hzt⟩)
       have hacl : IsClosed (g a) := hcl a (List.mem_cons.mpr (Or.inl rfl))
       have hUcl : IsClosed (⋃ t ∈ L, g t) :=
         Set.Finite.isClosed_biUnion L.finite_toSet
@@ -423,7 +423,7 @@ private theorem detachedClopenInCenter_of_isNoetherian_of_support {k : Type u} [
         mem_support_of_le (weakTransform_le_ambientCenter S i hi) _ h1
       rcases hsupp i hi.le _ h2 with hA | ⟨E, hE, hxE⟩
       · exact Or.inl hA
-      · exact Or.inr (Set.mem_biUnion hE hxE)
+      · exact Or.inr (Set.mem_iUnion₂.mpr ⟨E, hE, hxE⟩)
     have hFsub : closure (⇑((S.ambientCenter i).subschemeι).base '' s)
         ⊆ Set.range ⇑(S.strictTransformι i).base ∪
           ⋃ E ∈ S.boundary i,

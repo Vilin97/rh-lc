@@ -33,27 +33,27 @@ open GlobalTheory.StdRead.CharVal
 
 variable {D : D7}
 
-def invM {a : ℕ} (k : Formalism.MainNotions.StandardLatticesGL3.GA D a) : Matrix (Fin a) (Fin a) (𝔸 D) :=
-  (((k : GL (Fin a) (𝔸 D))⁻¹ : GL (Fin a) (𝔸 D)) : Matrix (Fin a) (Fin a) (𝔸 D))
+def invM {a : ℕ} (k : Formalism.MainNotions.StandardLatticesGL3.GA D a) : Matrix (Fin a) (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D) :=
+  (((k : GL (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D))⁻¹ : GL (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) : Matrix (Fin a) (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D))
 
-def valM {a : ℕ} (k : Formalism.MainNotions.StandardLatticesGL3.GA D a) : Matrix (Fin a) (Fin a) (𝔸 D) :=
-  ((k : GL (Fin a) (𝔸 D)) : Matrix (Fin a) (Fin a) (𝔸 D))
+def valM {a : ℕ} (k : Formalism.MainNotions.StandardLatticesGL3.GA D a) : Matrix (Fin a) (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D) :=
+  ((k : GL (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) : Matrix (Fin a) (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D))
 
 theorem invM_mul {a : ℕ} (k : Formalism.MainNotions.StandardLatticesGL3.GA D a) : invM k * valM k = 1 := Units.inv_mul _
 
 theorem valM_mul {a : ℕ} (k : Formalism.MainNotions.StandardLatticesGL3.GA D a) : valM k * invM k = 1 := Units.mul_inv _
 
-theorem int_of_hat {𝔪 : Ideal (𝓞 D.host.E)} {x : 𝔸 D} (hx : x ∈ hatId D 𝔪) : x ∈ OhE D :=
+theorem int_of_hat {𝔪 : Ideal (𝓞 D.host.E)} {x : Formalism.MainNotions.StandardLatticesGL3.AE D} (hx : x ∈ hatId D 𝔪) : x ∈ OhE D :=
   (toE_int_iff x).1 ((GlobalTheory.T.memIdealIntegral_tensorSwap_iff_mem_idealSubgroup 𝔪 x).2 hx).1
 
-theorem hat_mul_mat {𝔪 : Ideal (𝓞 D.host.E)} {a : ℕ} {A B : Matrix (Fin a) (Fin a) (𝔸 D)} (hA : ∀ i j, A i j ∈ hatId D 𝔪)
+theorem hat_mul_mat {𝔪 : Ideal (𝓞 D.host.E)} {a : ℕ} {A B : Matrix (Fin a) (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)} (hA : ∀ i j, A i j ∈ hatId D 𝔪)
     (hB : ∀ i j, B i j ∈ OhE D) (i j : Fin a) : (A * B) i j ∈ hatId D 𝔪 := by
   rw [Matrix.mul_apply]
   refine sum_mem fun l _ => ?_
   rw [mul_comm]
   exact GlobalTheory.FunObj.StdDatum.mul_mem_hatId (hB l j) (hA i l)
 
-theorem cong_iff {𝔪 : Ideal (𝓞 D.host.E)} {a : ℕ} {N : Matrix (Fin a) (Fin a) (𝔸 D)} {r k : Formalism.MainNotions.StandardLatticesGL3.GA D a}
+theorem cong_iff {𝔪 : Ideal (𝓞 D.host.E)} {a : ℕ} {N : Matrix (Fin a) (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)} {r k : Formalism.MainNotions.StandardLatticesGL3.GA D a}
     (hk : k ∈ intG D a) (h : ∀ i j, (N - invM k) i j ∈ hatId D 𝔪) :
     (∀ i j, (N - invM r) i j ∈ hatId D 𝔪) ↔ CongOne D 𝔪 (r⁻¹ * k) := by
   have hi := (GlobalTheory.NormSum.mem_intG k).1 hk
@@ -71,7 +71,7 @@ theorem cong_iff {𝔪 : Ideal (𝓞 D.host.E)} {a : ℕ} {N : Matrix (Fin a) (F
     exact sub_mem (h i j) (hat_mul_mat h' (fun i j => (hi i j).2) i j)
 
 theorem value {e : AE D} {𝔪 : Ideal (𝓞 D.host.E)} (hG : GoodMod e 𝔪) {ν : (AE D)ˣ →* Circle} (hK : KillsCong ν 𝔪) {a : ℕ}
-    {N : Matrix (Fin a) (Fin a) (𝔸 D)} {r : Formalism.MainNotions.StandardLatticesGL3.GA D a} (hr : r ∈ intG D a)
+    {N : Matrix (Fin a) (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)} {r : Formalism.MainNotions.StandardLatticesGL3.GA D a} (hr : r ∈ intG D a)
     (h : ∀ i j, (N - invM r) i j ∈ hatId D 𝔪) :
     (∃ x, IsUnitDet e (N.map (toE D)) x) ∧ starRingEnd ℂ (unitChar ν e (N.map (toE D))) = unitChar ν e (matE r) := by
   have hi := (GlobalTheory.NormSum.mem_intG r).1 hr
@@ -79,8 +79,12 @@ theorem value {e : AE D} {𝔪 : Ideal (𝓞 D.host.E)} (hG : GoodMod e 𝔪) {�
     rw [← invM_mul r, ← sub_mul]
     exact hat_mul_mat h (fun i j => (hi i j).1) i j
   obtain ⟨S, -, he, -⟩ := hG
-  have h2 := GlobalTheory.T.unitDetCharIndicator_mul_integralFrame ν e (GlobalTheory.PlaceDatum.idemSum_mul_self he) (StandardFirstTheta.GlobalTheory.CompanionTheory.StdFstTheta.toEAf_mem he) (N.map (toE D))
-    (Matrix.GeneralLinearGroup.map (toE D) (r : GL (Fin a) (𝔸 D))) (fun i j => (toE_int_iff _).2 (hi i j).1)
+  have he_mul := GlobalTheory.PlaceDatum.idemSum_mul_self he
+  have he_int : toEAf D e ∈ Formalism.L2.Herm.intAf D.host.F D.host.E :=
+    GlobalTheory.IdemRes.toEAf_mem_of_finPart (GlobalTheory.AdIdem.idempotent_mem_intAE D _
+      (by rw [← map_mul, he_mul]))
+  have h2 := GlobalTheory.T.unitDetCharIndicator_mul_integralFrame ν e he_mul he_int (N.map (toE D))
+    (Matrix.GeneralLinearGroup.map (toE D) (r : GL (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D))) (fun i j => (toE_int_iff _).2 (hi i j).1)
     (fun i j => (toE_int_iff _).2 (hi i j).2)
   rw [Matrix.map_mul] at h1
   have h3 : unitChar ν e (N.map (toE D)) * unitChar ν e (matE r) = 1 := h2.symm.trans h1
@@ -94,8 +98,8 @@ theorem value {e : AE D} {𝔪 : Ideal (𝓞 D.host.E)} (hG : GoodMod e 𝔪) {�
   rw [← Circle.coe_inv_eq_conj, Circle.coe_inv]
   exact inv_eq_of_mul_eq_one_right h3
 
-theorem unitBlock_mul {a d : ℕ} (M : Matrix (Fin a) (Fin a) (𝔸 D)) (i : Fin d) (j : Fin a) :
-    (HMul.hMul ((unitBlock D 0 a d).map (inc D)) M : Matrix (Fin d) (Fin a) (𝔸 D)) i j =
+theorem unitBlock_mul {a d : ℕ} (M : Matrix (Fin a) (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) (i : Fin d) (j : Fin a) :
+    (HMul.hMul ((unitBlock D 0 a d).map (inc D)) M : Matrix (Fin d) (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) i j =
       if h : i.1 < a then M ⟨i.1, h⟩ j else 0 := by
   rw [Matrix.mul_apply]
   split_ifs with h
@@ -107,9 +111,9 @@ theorem unitBlock_mul {a d : ℕ} (M : Matrix (Fin a) (Fin a) (𝔸 D)) (i : Fin
     have : i.1 ≠ l.1 := fun hh => h (hh ▸ l.2)
     simp [unitBlock, this]
 
-theorem coset_iff {ε : 𝔸 D} {𝔪 : Ideal (𝓞 D.host.E)} (hε : 1 - ε ∈ hatId D 𝔪) {a d : ℕ} (had : a ≤ d)
+theorem coset_iff {ε : Formalism.MainNotions.StandardLatticesGL3.AE D} {𝔪 : Ideal (𝓞 D.host.E)} (hε : 1 - ε ∈ hatId D 𝔪) {a d : ℕ} (had : a ≤ d)
     {r : Formalism.MainNotions.StandardLatticesGL3.GA D a} {z : Matrix (Fin d) (Fin a) D.host.E} (hz : IsIntE z) (ha : Approx 𝔪 0 r z)
-    (W : Matrix (Fin d) (Fin a) (𝔸 D)) :
+    (W : Matrix (Fin d) (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) :
     (∀ i j, W i j - ε * inc D (z i j) ∈ hatId D 𝔪) ↔
       (∀ i j, (topL a W - invM r) i j ∈ hatId D 𝔪) ∧ ∀ i j, a ≤ i.1 → W i j ∈ hatId D 𝔪 := by
   have h1 : ∀ i j, (W i j - if h : i.1 < a then invM r ⟨i.1, h⟩ j else 0) - (W i j - ε * inc D (z i j)) ∈ hatId D 𝔪 := by
@@ -144,7 +148,7 @@ theorem coset_iff {ε : 𝔸 D} {𝔪 : Ideal (𝓞 D.host.E)} (hε : 1 - ε ∈
 
 theorem sum_eq {e : AE D} {𝔪 : Ideal (𝓞 D.host.E)} (hG : GoodMod e 𝔪) {ν : (AE D)ˣ →* Circle} (hK : KillsCong ν 𝔪) {a d : ℕ}
     (had : a ≤ d) {R : Finset (Formalism.MainNotions.StandardLatticesGL3.GA D a)} (hR : ∀ r ∈ R, r ∈ intG D a)
-    (hU : ∀ k ∈ intG D a, ∃! r, r ∈ R ∧ CongOne D 𝔪 (r⁻¹ * k)) (W : Matrix (Fin d) (Fin a) (𝔸 D)) :
+    (hU : ∀ k ∈ intG D a, ∃! r, r ∈ R ∧ CongOne D 𝔪 (r⁻¹ * k)) (W : Matrix (Fin d) (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) :
     ∑ r ∈ R, unitChar ν e (matE r) *
         (if (∀ i j, (topL a W - invM r) i j ∈ hatId D 𝔪) ∧ ∀ i j, a ≤ i.1 → W i j ∈ hatId D 𝔪 then 1 else 0) =
       if (∀ i j, W i j ∈ OhE D) ∧ ∀ i j, a ≤ i.1 → W i j ∈ hatId D 𝔪 then
@@ -163,14 +167,14 @@ theorem sum_eq {e : AE D} {𝔪 : Ideal (𝓞 D.host.E)} (hG : GoodMod e 𝔪) {
       linear_combination -hkN i j
     obtain ⟨r, ⟨hr, hrk⟩, hu⟩ := hU k hk
     have h2 := (cong_iff hk h1).2 hrk
-    rw [if_pos hc, Finset.sum_eq_single r (fun s hs hsr => ?_) (fun h => (h hr).elim), if_pos ⟨h2, hc.2⟩, mul_one,
+    rw [ite_eq_left hc, Finset.sum_eq_single r (fun s hs hsr => ?_) (fun h => (h hr).elim), ite_eq_left ⟨h2, hc.2⟩, mul_one,
       (value hG hK (hR r hr) h2).2]
-    rw [if_neg fun h => hsr (hu s ⟨hs, (cong_iff hk h1).1 h.1⟩), mul_zero]
+    rw [ite_eq_right fun h => hsr (hu s ⟨hs, (cong_iff hk h1).1 h.1⟩), mul_zero]
   · rw [Finset.sum_eq_zero fun r hr => ?_]
     · split_ifs with h
       · rw [unitChar, dite_eq_right fun hx => hc ⟨h, hx⟩, map_zero]
       · rfl
-    · rw [if_neg fun h => hc ⟨⟨fun i j => ?_, h.2⟩, (value hG hK (hR r hr) h.1).1⟩, mul_zero]
+    · rw [ite_eq_right fun h => hc ⟨⟨fun i j => ?_, h.2⟩, (value hG hK (hR r hr) h.1).1⟩, mul_zero]
       by_cases hi : i.1 < a
       · have := add_mem (int_of_hat (h.1 ⟨i.1, hi⟩ j)) ((GlobalTheory.NormSum.mem_intG r).1 (hR r hr) ⟨i.1, hi⟩ j).2
         rwa [Matrix.sub_apply, invM, sub_add_cancel, topL, dite_eq_left ⟨i.2, j.2⟩] at this
@@ -186,7 +190,7 @@ theorem conj_stdFst_eq_sum : ∀ {D : D7} (S T : HSp D) {a d : ℕ} (hS : S.rank
   subst hS hT
   funext t
   obtain ⟨SS, -, he, -⟩ := id hG
-  let W : Matrix (Fin T.rank) (Fin S.rank) (𝔸 D) := Matrix.of fun i j => finQ D (t i j)
+  let W : Matrix (Fin T.rank) (Fin S.rank) (Formalism.MainNotions.StandardLatticesGL3.AE D) := Matrix.of fun i j => finQ D (t i j)
   have hW : ∀ i j, toEAf D (t i j) = toE D (W i j) := fun i j => (toE_finQ _).symm
   have hN : topL S.rank (Matrix.of fun i j => toEAf D (t i j)) = (topL S.rank W).map (toE D) := by
     ext i j
@@ -201,12 +205,16 @@ theorem conj_stdFst_eq_sum : ∀ {D : D7} (S T : HSp D) {a d : ℕ} (hS : S.rank
     refine forall₂_congr fun i j => ?_
     rw [← GlobalTheory.T.memIdealIntegral_tensorSwap_iff_mem_idealSubgroup, RingHom.map_sub, RingHom.map_mul, ← hW, toE_finQ, ← finQ_incA, toE_finQ]
     rfl
+  have he_mul := GlobalTheory.PlaceDatum.idemSum_mul_self he
+  have he_int : toEAf D e ∈ Formalism.L2.Herm.intAf D.host.F D.host.E :=
+    GlobalTheory.IdemRes.toEAf_mem_of_finPart (GlobalTheory.AdIdem.idempotent_mem_intAE D _
+      (by rw [← map_mul, he_mul]))
   rw [GlobalTheory.T.standardPairFirstMember_integralFrame_eq S T ν e 𝔪 β hβ hβ' t,
-    GlobalTheory.T.unitDetCharIndicator_mul_integralFrame ν e (GlobalTheory.PlaceDatum.idemSum_mul_self he) (StandardFirstTheta.GlobalTheory.CompanionTheory.StdFstTheta.toEAf_mem he) _ β hβ hβ', hN]
+    GlobalTheory.T.unitDetCharIndicator_mul_integralFrame ν e he_mul he_int _ β hβ hβ', hN]
   simp only [Pi.smul_apply, Finset.sum_apply, smul_eq_mul]
   rw [Finset.sum_congr rfl fun r hr => by rw [hc r hr]]
   by_cases ht : IsHalf e t
-  · simp only [ht, true_and, if_true]
+  · simp only [ht, true_and, ite_true]
     rw [sum_eq hG hK had hR hU W]
     simp only [hW, toE_int_iff, GlobalTheory.T.memIdealIntegral_tensorSwap_iff_mem_idealSubgroup]
     split_ifs

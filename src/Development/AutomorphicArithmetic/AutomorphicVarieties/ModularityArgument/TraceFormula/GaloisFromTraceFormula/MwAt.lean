@@ -27,4 +27,6 @@ theorem UpperTheory.V.Z.Tf.GaloisFromTraceFormula.mwAt :
   · unfold mW PositivityTheory.Rg.BcB.CG.mOf infOfWeight PositivityTheory.RgBcC.infOf
     simp only [hmk, hne, decide_false, Multiset.map_map]
     congr 1
+    funext k
+    simp only [Bool.false_eq_true, ite_false, Function.comp_apply]
     ring

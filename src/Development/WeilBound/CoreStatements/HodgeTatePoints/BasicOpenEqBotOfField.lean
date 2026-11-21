@@ -112,13 +112,16 @@ theorem bijective_of_generic {X S : Scheme.{0}} (π : X ⟶ S) (e : S ⟶ X) (he
   exact this
 
 theorem pow_smooth_conn {S : Scheme.{0}} (G : Over S) [Smooth G.hom] [GeometricallyConnected G.hom] :
-    ∀ n : ℕ, Smooth (Out.powObj G n).hom ∧ GeometricallyConnected (Out.powObj G n).hom
-  | 0 => ⟨inferInstanceAs (Smooth (𝟙 S)), ⟨fun K _ y Z fst snd h => by
+    ∀ n : ℕ, Smooth (Out.powObj G n).hom ∧ GeometricallyConnected (Out.powObj G n).hom := by
+  intro n
+  induction n with
+  | zero =>
+    exact ⟨inferInstanceAs (Smooth (𝟙 S)), ⟨fun K _ y Z fst snd h => by
       have : IsIso snd := h.isIso_snd_of_isIso (f := 𝟙 S)
       have : ConnectedSpace (Spec (CommRingCat.of K)) := inferInstanceAs (ConnectedSpace (PrimeSpectrum K))
       exact snd.homeomorph.connectedSpace_iff.2 this⟩⟩
-  | n + 1 => by
-    obtain ⟨h1, h2⟩ := pow_smooth_conn G n
+  | succ n ih =>
+    obtain ⟨h1, h2⟩ := ih
     rw [show Out.powObj G (n + 1) = G ⊗ Out.powObj G n from rfl, Over.tensorObj_hom, pullback.condition]
     exact ⟨inferInstance, GeometricallyConnected.comp _ _⟩
 

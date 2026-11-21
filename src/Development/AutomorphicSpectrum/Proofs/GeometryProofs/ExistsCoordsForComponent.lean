@@ -296,7 +296,7 @@ theorem exists_eigBase : ReciprocityTheory.ChartRestriction.G.Geo.ResK.ResKState
   obtain ⟨yp, hyp⟩ := GlobalTheory.T.generic_point_factors_open E H D l Xo c Y Ω₀ ξ₀ (GlobalTheory.T.component_generic_is_generic_point E H D l Xo c Y Ω₀ ξ₀ hgen)
   obtain ⟨cst, hcst⟩ := exists_cst Y yp
   obtain ⟨t, ⟨m⟩⟩ : ∃ t : SAB H X₀, Nonempty (SABMap t Y.t f₀) := by
-    obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.proved_CubePullSt f₀ Y.t
+    obtain ⟨_, _, _, _, _, m, -⟩ := sabPull Out.CubePf.cubePull f₀ Y.t
     exact ⟨_, ⟨m⟩⟩
   obtain ⟨Li, _, _, ⟨M⟩⟩ := GlobalTheory.CompanionTheory.Ar.lieModel_exists _ t.G Ω₀ ξ
   obtain ⟨ρ, hact, -⟩ := GlobalTheory.CompanionTheory.Ar.lieModel_exists_unique_act _ t.G Ω₀ ξ Li M (𝓞 E) t.act.act t.act.hom
@@ -353,7 +353,7 @@ theorem exists_eigBase : ReciprocityTheory.ChartRestriction.G.Geo.ResK.ResKState
   obtain ⟨K₁, _, J₁, _, y₁, bk, bx, -, hbk, hy₁, tie₁, -⟩ := GlobalTheory.T.segre_refine_line_bundles ℤ Ω₀ κ' y0 M' K₀ J₀ y₀ Empty Empty.elim
     (hch ()) (fun a => a.elim)
   obtain ⟨t', ⟨m₁⟩⟩ : ∃ t' : SAB H M'.X, Nonempty (SABMap t' t g) := by
-    obtain ⟨_, _, _, _, _, m₁, -⟩ := sabPull Out.proved_CubePullSt g t
+    obtain ⟨_, _, _, _, _, m₁, -⟩ := sabPull Out.CubePf.cubePull g t
     exact ⟨_, ⟨m₁⟩⟩
   obtain ⟨n, hn⟩ := sabComp pullCubComp E H Y.X X₀ M'.X Y.t t t' f₀ g m m₁
   obtain ⟨Ml, hMl, hlat, hactl⟩ := SatModel.exists_lieModel_pull t t' g m₁ M'.ξ M ρ hg hg' hd' hact

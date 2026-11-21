@@ -29,11 +29,11 @@ theorem isPsh_add_zero_add (e : ℕ) (X : Type) [TopologicalSpace X] (A : FinHol
     intro z v
     unfold ReciprocityTheory.AnForm.levi
     have h1 : fderiv ℝ (fun z => (2 : ℝ) • (Θ.φ x ∘ (A.chart j).symm) z) =
-        (2 : ℝ) • fderiv ℝ (Θ.φ x ∘ (A.chart j).symm) := fderiv_const_smul_of_field (2 : ℝ)
+        (2 : ℝ) • fderiv ℝ (Θ.φ x ∘ (A.chart j).symm) := fderiv_const_smul_field (2 : ℝ)
     have h2 : fderiv ℝ ((2 : ℝ) • fderiv ℝ (Θ.φ x ∘ (A.chart j).symm)) =
-        (2 : ℝ) • fderiv ℝ (fderiv ℝ (Θ.φ x ∘ (A.chart j).symm)) := fderiv_const_smul_of_field (2 : ℝ)
+        (2 : ℝ) • fderiv ℝ (fderiv ℝ (Θ.φ x ∘ (A.chart j).symm)) := fderiv_const_smul_field (2 : ℝ)
     rw [h1, h2]
-    simp only [Pi.smul_apply, ContinuousLinearMap.smul_apply, smul_eq_mul]
+    simp only [Pi.smul_apply, smul_apply, smul_eq_mul]
     ring
   rw [hfun, hlevi]
   by_cases hw : w = 0

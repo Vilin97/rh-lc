@@ -65,7 +65,8 @@ theorem UpperTheory.V.Af.Nf.satOfU :
     rw [hU]
     congr 1
     rw [Complex.ofReal_cpow (by positivity)]
-    have : qV F w = normV w := rfl
+    have : qV F w = normV w := by
+      simp [normV, Formalism.UG.qV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
     simp [satEig, Multiset.esymm, Multiset.powersetCard_one, this]
     norm_num [add_comm]
   · set z := GeneralLinearGroup.scalar (Fin 2) (atFin w (unif w))

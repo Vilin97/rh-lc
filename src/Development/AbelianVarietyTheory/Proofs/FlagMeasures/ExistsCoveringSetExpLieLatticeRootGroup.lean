@@ -98,7 +98,7 @@ theorem exists_transversal [MeasurableSpace E] [BorelSpace E] (D : Submodule ℤ
     exact ⟨x + y, D.add_mem hx hy, by rwa [← add_assoc]⟩
   refine ⟨⋃ n, B n \ ⋃ m < n, G m, ?_, ?_, ?_, ?_⟩
   · exact MeasurableSet.iUnion fun n => (hB n).measurableSet.diff
-      (isOpen_biUnion fun m _ => hG m).measurableSet
+      (isOpen_iUnion fun m => isOpen_iUnion fun _ : m < n => hG m).measurableSet
   · intro c hc w hw
     simp only [mem_iUnion, mem_sdiff, not_exists] at hc ⊢
     obtain ⟨n, h1, h2⟩ := hc

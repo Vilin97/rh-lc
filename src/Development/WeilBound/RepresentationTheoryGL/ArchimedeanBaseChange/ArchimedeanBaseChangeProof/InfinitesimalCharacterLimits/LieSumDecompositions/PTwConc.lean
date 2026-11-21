@@ -28,7 +28,18 @@ theorem chiDet_lev {r s : ℕ} (χ : Formalism.L2.Host.HChar E) (m : GA E r × G
       (χ : GlobalTheory.Mem.Chr.Ideles E →* ℂˣ) (Matrix.GeneralLinearGroup.det m.2)
   rw [← map_mul]
   congr 1
-  exact det_emb₂ _ _ m
+  apply Units.ext
+  simp only [Units.val_mul, Matrix.GeneralLinearGroup.val_det_apply]
+  have h : (lev (Ad E) r s m : Matrix (Fin (r + s)) (Fin (r + s)) (Ad E)) =
+      Matrix.reindex (stdSum (rfl : r + s = r + s)) (stdSum (rfl : r + s = r + s))
+        (Matrix.fromBlocks m.1.val 0 0 m.2.val) := by
+    ext i j
+    obtain ⟨i, rfl⟩ := (stdSum (rfl : r + s = r + s)).surjective i
+    obtain ⟨j, rfl⟩ := (stdSum (rfl : r + s = r + s)).surjective j
+    simp only [Matrix.reindex_apply, Matrix.submatrix_apply, Equiv.symm_apply_apply]
+    rcases i with i | i <;> rcases j with j | j <;>
+      simp [lev, emb₂, leviEmb, leviTwo, two, Matrix.blockDiagonal'_apply]
+  rw [h, Matrix.det_reindex_self, Matrix.det_fromBlocks_zero₂₁]
 
 omit [IsCMField E] in
 theorem chiDet_zero (χ : Formalism.L2.Host.HChar E) (g : GA E 0) : chiDet 0 χ g = 1 := by
@@ -84,6 +95,8 @@ theorem tensor_span_mul_det_character {W₁ : Submodule ℂ (Sm E r)} {W₂ : Su
     ring
   | zero =>
     convert zero_mem (tens2 (tw W₁ z) (tw W₂ z)) using 1
+    funext m
+    simp
   | add F G _ _ hF hG =>
     convert add_mem hF hG using 1
     funext m
@@ -100,6 +113,8 @@ theorem memInd2_tw {W₁ : Submodule ℂ (Sm E r)} {W₂ : Submodule ℂ (Sm E s
   · set y := infGL E (r + s) (Unitary.toUnits k) * finGL E (r + s) g
     have h1 := Submodule.smul_mem _ ((chiDet (r + s) (Model.absC E z) y : ℂˣ) : ℂ) (tensor_span_mul_det_character z (hφ.2 k g))
     convert h1 using 1
+    funext m
+    simp only [Pi.smul_apply, smul_eq_mul]
     rw [mulChi_apply, map_mul, chiDet_lev, Units.val_mul, Units.val_mul]
     ring
 

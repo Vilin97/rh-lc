@@ -60,11 +60,8 @@ theorem exists_lattice (N : Submodule (𝓞 E) (Fin R.k → E)) (hfin : Module.F
   let e : (sp.X 0).V ≃ₗ[𝓞 E] (Fin R.k → E) := sp.crd0.restrictScalars (𝓞 E)
   have hmem : ∀ x, x ∈ N.map (e.symm : (Fin R.k → E) →ₗ[𝓞 E] (sp.X 0).V) ↔ sp.crd0 x ∈ N := fun x => by
     rw [Submodule.mem_map_equiv]; rfl
-  refine ⟨N.map (e.symm : (Fin R.k → E) →ₗ[𝓞 E] (sp.X 0).V), ⟨?_, ?_⟩, ?_, ?_⟩
-  · exact (Module.Finite.iff_fg.1 hfin).map _
-  · have : ((N.map (e.symm : (Fin R.k → E) →ₗ[𝓞 E] (sp.X 0).V) : Submodule (𝓞 E) _) : Set (sp.X 0).V) =
-        (sp.crd0.symm : (Fin R.k → E) →ₗ[E] (sp.X 0).V) '' (N : Set _) := rfl
-    rw [this, Submodule.span_image, hspan, Submodule.map_top, LinearEquiv.range]
+  refine ⟨N.map (e.symm : (Fin R.k → E) →ₗ[𝓞 E] (sp.X 0).V), ?_, ?_, ?_⟩
+  · exact Submodule.IsLattice.of_fg E ((Module.Finite.iff_fg.1 hfin).map _)
   · ext x
     rw [hmem, ← SetLike.mem_coe (p := N), ← hdual]
     simp only [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,

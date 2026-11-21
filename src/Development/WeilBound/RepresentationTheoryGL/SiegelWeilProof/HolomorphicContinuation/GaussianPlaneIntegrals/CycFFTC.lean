@@ -94,13 +94,15 @@ theorem indep {J : Type} [Fintype J] (b : J → PV (Rw ε true) (Fin n) (Fin n))
   intro j
   ext μ
   have h3 := congrArg (AddMonoidAlgebra.coeff · μ) h2
-  rw [coeff_sum, coeff_zero] at h3
+  rw [coeff_sum] at h3
+  change _ = 0 at h3
   simp_rw [coeff_C_mul, coeff_map] at h3
   have h4 : ∑ i, (AddMonoidAlgebra.coeff (t i) μ) • b i = 0 := by
     rw [← h3]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [Algebra.smul_def, mul_comm]
   have := Fintype.linearIndependent_iff.1 hb _ h4 j
-  simpa using this
+  change AddMonoidAlgebra.coeff (t j) μ = 0
+  exact this
 
 end PositivityTheory.Rg.Sw.FFTSteps.CycF

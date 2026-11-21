@@ -58,10 +58,15 @@ theorem step {a : Arrow T} {f : Sch G a} (hg : Good W M a f) {F : Fn G a.src} (h
   · simp only [liftA_apply, hr γ hγ]
 
 theorem path {X : Node} {F : Fn G X} (hF : IsInvCont X F) : ∀ {Y : Node} (p : Path T X Y) (d : PureT G p),
-    Path.Fam.All (fun a f => Good W M a f) d → PathConv W M p d F ∧ IsInvCont Y (liftP W M p d F)
-  | _, .nil, _, _ => ⟨trivial, hF⟩
-  | _, .snoc a p, d, h => by
-    obtain ⟨h1, h2⟩ := path hF p d.1 h.1
+    Path.Fam.All (fun a f => Good W M a f) d → PathConv W M p d F ∧ IsInvCont Y (liftP W M p d F) := by
+  intro Y p
+  induction p with
+  | nil =>
+    intro d h
+    exact ⟨trivial, hF⟩
+  | snoc a p ih =>
+    intro d h
+    obtain ⟨h1, h2⟩ := ih d.1 h.1
     obtain ⟨h3, h4⟩ := step W M h.2 h2
     exact ⟨⟨h1, h3⟩, h4⟩
 

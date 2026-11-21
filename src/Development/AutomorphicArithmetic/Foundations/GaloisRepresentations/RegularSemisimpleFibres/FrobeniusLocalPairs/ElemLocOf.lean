@@ -94,7 +94,8 @@ theorem elemLoc_of (hS : SuppE) (hO : OneField) (hR : Reps) (hN : NormOpen) (hD 
         (fun c => by
           rw [Subgroup.mem_centralizer_singleton_iff]
           change _ ↔ c⁻¹ * γ * c = γ
-          rw [mul_assoc, inv_mul_eq_iff_eq_mul, eq_comm]) μγ hμγ
+          rw [mul_assoc, inv_mul_eq_iff_eq_mul, eq_comm]
+          rfl) μγ hμγ
       simp only [hsg] at oE
       have hdiv : ∀ u : Fin n → kˣ, nrmT k d * sgT (RingEquiv.refl k) u / u = nrmT k d := fun u => mul_div_cancel_right _ u
       by_cases hmem : nrmT k d ∈ nrmSet k r t

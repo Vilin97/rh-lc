@@ -139,9 +139,12 @@ private theorem normV_sq (h2 : Module.finrank F E = 2) (w : HeightOneSpectrum (�
   have : w.asIdeal.LiesOver (w.under (𝓞 F)).asIdeal := ⟨rfl⟩
   have := w.isMaximal
   have := (w.under (𝓞 F)).isMaximal
-  have e : normV w = normV (w.under (𝓞 F)) ^ w.asIdeal.inertiaDeg (𝓞 F) :=
-    (Ideal.absNorm_pow_inertiaDeg (w.under (𝓞 F)).asIdeal w.asIdeal).symm
-  have h1 : 1 < normV w := NumberField.HeightOneSpectrum.one_lt_absNorm w
+  have e : normV w = normV (w.under (𝓞 F)) ^ w.asIdeal.inertiaDeg (𝓞 F) := by
+    simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
+      (Ideal.absNorm_pow_inertiaDeg (w.under (𝓞 F)).asIdeal w.asIdeal).symm
+  have h1 : 1 < normV w := by
+    simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
+      NumberField.HeightOneSpectrum.one_lt_absNorm w
   have h3 : w.asIdeal.inertiaDeg (𝓞 F) ≤ 2 := by
     haveI : NoZeroSMulDivisors (𝓞 F) (𝓞 E) := ⟨fun {c x} h => by
       rwa [Algebra.smul_def, mul_eq_zero, map_eq_zero_iff _ (FaithfulSMul.algebraMap_injective _ _)] at h⟩

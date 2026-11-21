@@ -25,7 +25,10 @@ theorem eventually_compFin_mem_intLoc_adele (z : AE F E) :
     ∀ᶠ v : Pl F in cofinite, compFin F E v z ∈ intLoc F E v := by
   induction z using TensorProduct.induction_on with
   | zero => exact Eventually.of_forall fun v => by rw [map_zero]; exact zero_mem _
-  | add y z hy hz => filter_upwards [hy, hz] with v h h' using by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
+  | add y z hy hz =>
+    filter_upwards [hy, hz] with v h h'
+    rw [map_add]
+    exact add_mem h h'
   | tmul a e =>
     filter_upwards [a.2.2, eventually_one_tmul_mem_intLoc (F := F) e] with v h h'
     have := mul_mem (tmul_mem_intLoc (a := evFin F v a) h (1 : 𝓞 E)) h'

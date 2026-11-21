@@ -73,8 +73,7 @@ theorem biLift_mid {A S X : HSp D} {χA χS χS' χX : (AE D)ˣ →* Circle} {om
 open GlobalTheory.BiTransfer in
 theorem biTheta_biComb (hψ : IsStdChar D ψ (-1)) {A S X : HSp D} {C : WO A S → WO S X → ℂ} (hC : IsBiTheta ψ A S X C)
     (c : WO A S →₀ ℂ) (c' : WO S X →₀ ℂ) : IsBiTheta ψ A S X (biComb ψ A S X c c' C) := by
-  open GlobalTheory.BiTransfer in
-  let d := GlobalTheory.BiTransfer.sumDec A (GlobalTheory.ChiGrid.negSp X)
+  let d := sumDec A (GlobalTheory.ChiGrid.negSp X)
   refine isBiTheta_of_join d ?_
   have e : join d S (biComb ψ A S X c c' C) = ∑ x ∈ c.support, ∑ y ∈ c'.support,
       (c x * c' y) • heisO ψ _ S (inlH d S x + inrH d S y) (join d S C) := by

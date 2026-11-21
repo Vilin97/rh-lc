@@ -45,7 +45,7 @@ private theorem dn_three_apply {R G M : Type} [CommRing R] [Group G] [AddCommGro
     funext i; fin_cases i <;> simp [Fin.contractNth] <;> rfl
   simp only [dn, LinearMap.coe_mk, AddHom.coe_mk, Fin.sum_univ_succ, Fin.sum_univ_zero, e0, e1]
   norm_num
-  rw [e2, e3, show (Fin.succ 2 : Fin 4) = 3 from rfl, e4]
+  rw [e2, e3, e4]
   abel
 
 theorem UpperTheory.V.Pa.B2.H2_right_exact_mod_l_of_H3_subsingleton :

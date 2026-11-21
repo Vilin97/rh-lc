@@ -56,7 +56,15 @@ private theorem det_diff_lemma {N : ℕ} {A : ℂ → Matrix (Fin N) (Fin N) ℂ
   simp only [Matrix.det_apply']
   refine Differentiable.fun_sum fun σ _ => ?_
   refine Differentiable.fun_mul (differentiable_const _) ?_
-  exact Differentiable.fun_finset_prod fun i _ => h (σ i) i
+  classical
+  have hp : ∀ s : Finset (Fin N), Differentiable ℂ (fun w => ∏ i ∈ s, A w (σ i) i) := by
+    intro s
+    induction s using Finset.induction_on with
+    | empty => simpa using (differentiable_const (1 : ℂ))
+    | insert a s ha ih =>
+      simp only [Finset.prod_insert ha]
+      exact (h (σ a) a).fun_mul ih
+  exact hp Finset.univ
 
 private theorem adj_diff_lemma_2 {N : ℕ} {A : ℂ → Matrix (Fin N) (Fin N) ℂ}
     (h : ∀ i j, Differentiable ℂ fun w => A w i j) (a b : Fin N) :

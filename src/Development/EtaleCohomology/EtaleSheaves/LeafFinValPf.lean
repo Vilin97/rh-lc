@@ -23,6 +23,8 @@ theorem finVal_dedekind (D L : Type) [CommRing D] [IsDedekindDomain D] [Field L]
   · intro x y
     rw [← ofAdd_add]
     congr 1
+    funext i
+    simp only [Units.val_mul, Pi.add_apply, map_mul]
     exact WithZero.log_mul ((Valuation.ne_zero_iff _).mpr x.ne_zero)
       ((Valuation.ne_zero_iff _).mpr y.ne_zero)
   · intro x hx
@@ -42,7 +44,7 @@ theorem finVal_finite (A D : Type) [CommRing A] [IsLocalRing A] [CommRing D] [Is
     (fun v => ⟨v.asIdeal, v.isPrime, ⟨?_⟩⟩) ?_
   · have := v.isMaximal
     exact (IsLocalRing.eq_maximalIdeal
-      (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := A) v.asIdeal)).symm
+      (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := A) v.asIdeal)).symm
   · intro v w h
     exact HeightOneSpectrum.ext (congrArg Subtype.val h)
 

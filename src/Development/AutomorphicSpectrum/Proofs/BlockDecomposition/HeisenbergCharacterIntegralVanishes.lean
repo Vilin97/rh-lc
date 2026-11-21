@@ -56,8 +56,8 @@ theorem exists_chv_ne_one (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsCharAF D.hos
   refine ⟨adj (Matrix.single j i c), ?_⟩
   have key : Matrix.trace (pr b₀ (adj (Matrix.single j i c)) (rt ζ)) =
       algebraMap (AF D.host.F) (AE D) (algebraMap D.host.F (AF D.host.F) (1 / 2) * t) := by
-    show Matrix.trace (adj (adj (Matrix.single j i c)) ⬝ (b₀.1.map (incA D) ⬝ rt ζ)) = _
-    rw [adj_adj, show b₀.1.map (incA D) ⬝ rt ζ = rat (b₀.1 * ζ) from (rat_mul _ _).symm,
+    show Matrix.trace (adj (adj (Matrix.single j i c)) * (b₀.1.map (incA D) * rt ζ)) = _
+    rw [adj_adj, show b₀.1.map (incA D) * rt ζ = rat (b₀.1 * ζ) from (rat_mul _ _).symm,
       trace_single_mul_eq]
     show c * incA D ((b₀.1 * ζ) i j) = _
     rw [hc, mul_assoc, ← map_mul, inv_mul_cancel₀ hij, map_one, mul_one]

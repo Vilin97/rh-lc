@@ -27,6 +27,8 @@ theorem mul_mem_schwartzA : ∀ (D : D7) (θ : InfFam D) (m n : ℕ) (q : (D.wha
     exact mul_left_comm _ _ _
   | zero =>
     convert (schwartzA θ m n).zero_mem using 1
+    funext x
+    simp
   | add Φ₁ Φ₂ _ _ h₁ h₂ =>
     have := (schwartzA θ m n).add_mem h₁ h₂
     convert this using 1

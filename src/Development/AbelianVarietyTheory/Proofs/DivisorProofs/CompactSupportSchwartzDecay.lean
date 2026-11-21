@@ -66,7 +66,7 @@ theorem integrable_norm_mul_absE_pow : ∀ (F E : Type) [Field F] [NumberField F
   set U : Set (Fin (Module.finrank F E) → Af F) :=
     (fun c : Fin m → Af F => fun j => ∑ i, algebraMap F (Af F) (P j i) * c i) '' K with hUdef
   have hU : IsCompact U := hK.image (continuous_pi fun j =>
-    continuous_finset_sum _ fun i _ => continuous_const.mul (continuous_apply i))
+    continuous_finsetSum _ fun i _ => continuous_const.mul (continuous_apply i))
   have hfin : ∀ x : AE F E, (fun i => ((Algebra.TensorProduct.basis (AF F) b₀).equivFun x i).2) ∈ K →
       (fun j => (GlobalTheory.XTermMaj.crd F E x j).2) ∈ U := by
     intro x hx

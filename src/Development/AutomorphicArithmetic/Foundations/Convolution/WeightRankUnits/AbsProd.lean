@@ -13,7 +13,7 @@ private theorem absHalf_eq_sqrt {E : Type} [Field E] [NumberField E] [IsCMField 
   have hv : Valued.v x ≠ 0 := (Valuation.ne_zero_iff _).2 hx
   unfold absHalf
   rw [FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hv, Formalism.UG.ordL, dite_eq_right hv, neg_neg]
-  simp [Formalism.UG.qV]
+  simp [Formalism.UG.qV, WithZero.toAdd_unzero_eq_log hv]
 
 theorem UpperTheory.ConvolutionTheory.G2.absProd :
     UpperTheory.ConvolutionTheory.G2.AbsProd := by

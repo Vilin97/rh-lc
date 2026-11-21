@@ -43,11 +43,7 @@ theorem card_quot_span (v : HeightOneSpectrum (𝓞 F)) (c : v.adicCompletionInt
     rw [← he, WithZero.exp_log hv]
   rw [(GlobalTheory.CNorm.isAdicComplete_and_card_quotient_adicCompletionIntegers F v).2 c e he',
     FinitePlace.norm_def, WithZeroMulInt.toNNReal_neg_apply _ hv]
-  have : Multiplicative.toAdd (WithZero.unzero hv) = -(e : ℤ) := by
-    rw [← he]
-    conv_rhs => rw [← WithZero.coe_unzero hv]
-    rfl
-  rw [this]
+  rw [he]
   simp
 
 theorem relIndex_colonV_inv (v : HeightOneSpectrum (𝓞 F)) (c : v.adicCompletionIntegers F)
@@ -235,7 +231,7 @@ theorem density_product : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
       inv_eq_of_mul_eq_one_left e1]
   have h1 : HasProd (fun v => dualIndex F ψ v ^ ((1 : ℝ) / 2 - M))
       ((absDiscr F * absInf F a) ^ ((1 : ℝ) / 2 - M)) := by
-    rw [← hSp, ← Real.finset_prod_rpow _ _ (fun v _ => by rw [hn]; positivity)]
+    rw [← hSp, ← Real.finsetProd_rpow _ _ (fun v _ => by rw [hn]; positivity) _]
     exact hasProd_prod_of_ne_finset_one fun v hv => by rw [hS v hv, Real.one_rpow]
   have h2 : HasProd (eulerInv F E M) (Formalism.HermitianLatticesTheory.lValEta E M)⁻¹ := by
     have := Filter.Tendsto.inv₀ hE hL.ne'
