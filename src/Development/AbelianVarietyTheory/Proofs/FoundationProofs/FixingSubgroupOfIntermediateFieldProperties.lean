@@ -5,7 +5,7 @@ public import Development.AbelianVarietyTheory.Definitions.Foundations.IsTopWTop
 
 @[expose] public section
 
-open GlobalTheory.KCoh Polynomial
+open Polynomial
 
 noncomputable section
 

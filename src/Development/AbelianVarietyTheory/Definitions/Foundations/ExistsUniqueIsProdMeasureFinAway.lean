@@ -53,13 +53,14 @@ omit [∀ k, TopologicalSpace (P k)] in
 theorem exists_finset_vol_one (h : ∀ᶠ k in cofinite, μf k (K k) = 1) : ∃ S : Finset κ, ∀ k ∉ S, μf k (K k) = 1 :=
   ⟨(eventually_cofinite.1 h).toFinset, fun k hk => by simpa using hk⟩
 
-theorem IsRestrProd.smul_inf [DecidableEq ι] (h : IsRestrProd p q K μi μf μ) (i : ι) {c : ℝ≥0} (hc : c ≠ 0) :
+theorem IsRestrProd.smul_inf [DecidableEq ι] [MeasurableConstSMul G G]
+    (h : IsRestrProd p q K μi μf μ) (i : ι) [MeasurableConstSMul (H i) (H i)] {c : ℝ≥0} (hc : c ≠ 0) :
     IsRestrProd p q K (Function.update μi i (c • μi i)) μf (c • μ) := by
   have := h.haar
   have := h.haar_inf
   refine ⟨fun j => ?_, h.haar_fin, h.vol_one, .nnreal_smul _ hc, fun S hS A B hA hB => ?_⟩
   · by_cases e : j = i
-    · subst e; rw [Function.update_self]; exact .nnreal_smul _ hc
+    · subst j; rw [Function.update_self]; exact .nnreal_smul _ hc
     · rw [Function.update_of_ne e]; exact h.haar_inf j
   · rw [Measure.smul_apply, h.measure_cyl S hS A B hA hB, ← Finset.mul_prod_erase _ _ (Finset.mem_univ i),
       ← Finset.mul_prod_erase _ (fun j => Function.update μi i (c • μi i) j (A j)) (Finset.mem_univ i),

@@ -18,7 +18,7 @@ section Gen
 variable {E K : Type} [Field E] [NumberField E] [Field K] {P : HeightOneSpectrum (𝓞 E)}
 
 theorem norm_unitV (χ : (𝓞 E ⧸ P.asIdeal)ˣ →* Kˣ) {a : E} (h : IsUnit (redP P a)) (σ : K →+* ℂ) :
-    ‖σ (LocE.unitV χ a)‖ = 1 := by
+    ‖σ (LocE.unitV P χ a)‖ = 1 := by
   unfold LocE.unitV
   rw [dite_eq_left h]
   have : Finite (𝓞 E ⧸ P.asIdeal) := Ideal.finiteQuotientOfFreeOfNeBot _ P.ne_bot

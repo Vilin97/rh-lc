@@ -13,6 +13,8 @@ open scoped Pointwise
 
 noncomputable section
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 namespace FiniteSubfield
 
 variable (P : Ideal (𝓞 ℚ̄)) [P.IsPrime] (hP : P ≠ ⊥)

@@ -57,9 +57,13 @@ section Plus
 
 variable (S₀ : HSp D) {ρ : ℕ}
 
-theorem adj_plus (b : Mx D ρ S₀.rank) : adj (plus S₀ b) = b * giA S₀ := by rw [plus, adj_mul, adj_adj, adj_giA]
+theorem adj_plus (b : Mx D ρ S₀.rank) : adj (plus S₀ b) = b * giA S₀ := by
+  have h : adj (giA S₀ * adj b) = adj (adj b) * adj (giA S₀) :=
+    Formalism.UG.cT_mul (cA D) _ _
+  rw [plus, h, adj_adj, adj_giA]
 
-theorem gA_plus (b : Mx D ρ S₀.rank) : gA S₀ * plus S₀ b = adj b := gA_giA_cancel S₀ _
+theorem gA_plus (b : Mx D ρ S₀.rank) : gA S₀ * plus S₀ b = adj b := by
+  rw [plus, ← Matrix.mul_assoc, gA_mul_giA, Matrix.one_mul]
 
 theorem plus_add (b b' : Mx D ρ S₀.rank) : plus S₀ (b + b') = plus S₀ b + plus S₀ b' := by
   rw [plus, adj_add, Matrix.mul_add]; rfl
@@ -70,16 +74,21 @@ theorem plus_neg (b : Mx D ρ S₀.rank) : plus S₀ (-b) = -plus S₀ b := by
 theorem plus_zero : plus S₀ (0 : Mx D ρ S₀.rank) = 0 := by rw [plus, adj_zero, Matrix.mul_zero]
 
 theorem adj_mul_plus (b b' : Mx D ρ S₀.rank) : adj (b * plus S₀ b') = b' * plus S₀ b := by
-  rw [adj_mul, adj_plus, Matrix.mul_assoc]; rfl
+  have h : adj (b * plus S₀ b') = adj (plus S₀ b') * adj b :=
+    Formalism.UG.cT_mul (cA D) _ _
+  rw [h, adj_plus, Matrix.mul_assoc]; rfl
 
 theorem plus_mul_left (a : Mx D ρ ρ) (b : Mx D ρ S₀.rank) : plus S₀ (a * b) = plus S₀ b * adj a := by
-  rw [plus, adj_mul, ← Matrix.mul_assoc]; rfl
+  have h : adj (a * b) = adj b * adj a := Formalism.UG.cT_mul (cA D) _ _
+  rw [plus, h, ← Matrix.mul_assoc]; rfl
 
 theorem plus_mul_inv (g : GA D S₀) (b : Mx D ρ S₀.rank) : plus S₀ (b * mt S₀ g⁻¹) = mt S₀ g * plus S₀ b := by
   have h := mt_inv S₀ g⁻¹
   rw [inv_inv] at h
-  rw [h, plus, plus, adj_mul]
-  simp only [Matrix.mul_assoc, gA_giA_cancel]
+  have hadj : adj (b * mt S₀ g⁻¹) = adj (mt S₀ g⁻¹) * adj b :=
+    Formalism.UG.cT_mul (cA D) _ _
+  rw [h, plus, plus, hadj, Matrix.mul_assoc, ← Matrix.mul_assoc (gA S₀), gA_mul_giA,
+    Matrix.one_mul]
 
 def cComm (b₁ b₂ : Mx D ρ S₀.rank) : skewA D ρ :=
   ⟨half D • (b₂ * plus S₀ b₁ - b₁ * plus S₀ b₂), by
@@ -89,7 +98,9 @@ end Plus
 
 def skewConj {ρ : ℕ} (a : Mx D ρ ρ) (c : skewA D ρ) : skewA D ρ :=
   ⟨a * c.1 * adj a, by
-    rw [mem_skewA, adj_mul, adj_mul, adj_adj, mem_skewA.1 c.2, Matrix.neg_mul, Matrix.mul_neg, Matrix.mul_assoc]⟩
+    have hadj (x y : Mx D ρ ρ) : adj (x * y) = adj y * adj x :=
+      Formalism.UG.cT_mul (cA D) x y
+    rw [mem_skewA, hadj, hadj, adj_adj, mem_skewA.1 c.2, Matrix.neg_mul, Matrix.mul_neg, Matrix.mul_assoc]⟩
 
 structure HypDec (S S₀ : HSp D) (ρ : ℕ) where
 
@@ -128,29 +139,67 @@ def pY : Mx D ρ S.rank := rat d.qY
 
 def p0 : Mx D S₀.rank S.rank := rat d.q0
 
-theorem pX_eq : d.pX = adj d.jY * gA S := by rw [pX, qX, rat_mul, rat_conjTranspose]; rfl
+theorem pX_eq : d.pX = adj d.jY * gA S := by
+  rw [pX, qX, jY, gA, ← rat_conjTranspose]
+  exact Matrix.map_mul
 
-theorem pY_eq : d.pY = adj d.jX * gA S := by rw [pY, qY, rat_mul, rat_conjTranspose]; rfl
+theorem pY_eq : d.pY = adj d.jX * gA S := by
+  rw [pY, qY, jX, gA, ← rat_conjTranspose]
+  exact Matrix.map_mul
 
-theorem p0_eq : d.p0 = giA S₀ * (adj d.j0 * gA S) := by rw [p0, q0, rat_mul, rat_mul, rat_conjTranspose]; rfl
+theorem p0_eq : d.p0 = giA S₀ * (adj d.j0 * gA S) := by
+  rw [p0, q0, j0, giA, gA, ← rat_conjTranspose]
+  simp only [rat, Matrix.map_mul]
 
-theorem gram_XX : adj d.jX * (gA S * d.jX) = 0 := (gram_rat S d.ee).trans rat_zero
+theorem gram_XX : adj d.jX * (gA S * d.jX) = 0 := by
+  have h := congrArg rat d.ee
+  rw [rat_zero] at h
+  simpa only [jX, gA, ← rat_conjTranspose, rat, Matrix.map_mul, Matrix.mul_assoc] using h
 
-theorem gram_YY : adj d.jY * (gA S * d.jY) = 0 := (gram_rat S d.e'e').trans rat_zero
+theorem gram_YY : adj d.jY * (gA S * d.jY) = 0 := by
+  have h := congrArg rat d.e'e'
+  rw [rat_zero] at h
+  simpa only [jY, gA, ← rat_conjTranspose, rat, Matrix.map_mul, Matrix.mul_assoc] using h
 
-theorem gram_YX : adj d.jY * (gA S * d.jX) = 1 := (gram_rat S d.e'e).trans rat_one
+theorem gram_YX : adj d.jY * (gA S * d.jX) = 1 := by
+  have h := congrArg rat d.e'e
+  rw [rat_one] at h
+  simpa only [jY, jX, gA, ← rat_conjTranspose, rat, Matrix.map_mul, Matrix.mul_assoc] using h
 
-theorem gram_XY : adj d.jX * (gA S * d.jY) = 1 := (gram_swap S d.gram_YX).trans adj_one
+theorem gram_XY : adj d.jX * (gA S * d.jY) = 1 := by
+  have h := congrArg adj d.gram_YX
+  rw [adj_one] at h
+  have hadj {m n k : ℕ} (a : Mx D m n) (b : Mx D n k) : adj (a * b) = adj b * adj a :=
+    Formalism.UG.cT_mul (cA D) a b
+  simpa only [hadj, adj_adj, adj_gA, Matrix.mul_assoc] using h
 
-theorem gram_00 : adj d.j0 * (gA S * d.j0) = gA S₀ := gram_rat S d.iso
+theorem gram_00 : adj d.j0 * (gA S * d.j0) = gA S₀ := by
+  have h := congrArg rat d.iso
+  simpa only [j0, gA, ← rat_conjTranspose, rat, Matrix.map_mul, Matrix.mul_assoc] using h
 
-theorem gram_0X : adj d.j0 * (gA S * d.jX) = 0 := (gram_rat S d.i₀e).trans rat_zero
+theorem gram_0X : adj d.j0 * (gA S * d.jX) = 0 := by
+  have h := congrArg rat d.i₀e
+  rw [rat_zero] at h
+  simpa only [j0, jX, gA, ← rat_conjTranspose, rat, Matrix.map_mul, Matrix.mul_assoc] using h
 
-theorem gram_0Y : adj d.j0 * (gA S * d.jY) = 0 := (gram_rat S d.i₀e').trans rat_zero
+theorem gram_0Y : adj d.j0 * (gA S * d.jY) = 0 := by
+  have h := congrArg rat d.i₀e'
+  rw [rat_zero] at h
+  simpa only [j0, jY, gA, ← rat_conjTranspose, rat, Matrix.map_mul, Matrix.mul_assoc] using h
 
-theorem wittDecomp_gram_X_anisotropic : adj d.jX * (gA S * d.j0) = 0 := (gram_swap S d.gram_0X).trans adj_zero
+theorem wittDecomp_gram_X_anisotropic : adj d.jX * (gA S * d.j0) = 0 := by
+  have h := congrArg adj d.gram_0X
+  rw [adj_zero] at h
+  have hadj {m n k : ℕ} (a : Mx D m n) (b : Mx D n k) : adj (a * b) = adj b * adj a :=
+    Formalism.UG.cT_mul (cA D) a b
+  simpa only [hadj, adj_adj, adj_gA, Matrix.mul_assoc] using h
 
-theorem gramR_Y0_eq_TI : adj d.jY * (gA S * d.j0) = 0 := (gram_swap S d.gram_0Y).trans adj_zero
+theorem gramR_Y0_eq_TI : adj d.jY * (gA S * d.j0) = 0 := by
+  have h := congrArg adj d.gram_0Y
+  rw [adj_zero] at h
+  have hadj {m n k : ℕ} (a : Mx D m n) (b : Mx D n k) : adj (a * b) = adj b * adj a :=
+    Formalism.UG.cT_mul (cA D) a b
+  simpa only [hadj, adj_adj, adj_gA, Matrix.mul_assoc] using h
 
 @[simp] theorem pX_jX : d.pX * d.jX = 1 := by rw [pX_eq, Matrix.mul_assoc, gram_YX]
 
@@ -178,12 +227,12 @@ theorem sum_eq_one : d.jX * d.pX + d.j0 * d.p0 + d.jY * d.pY = 1 := by
     rw [fromRows_mul_fromCols, fromRows_mul_fromCols, fromRows_mul, mul_fromCols, pX_jX, pX_j0, pX_jY, pY_jX, pY_j0,
       pY_jY, p0_jX, p0_j0, p0_jY, fromBlocks_one, fromRows_zero, fromCols_zero, fromBlocks_one]
   rw [← fromCols_mul_fromRows, ← fromCols_mul_fromRows]
-  exact (Matrix.mul_eq_one_comm_of_card_eq (by simp [← d.rank_add]; ring)).1 h
+  exact (Matrix.mul_eq_one_comm_of_card_eq _ _ _ (by simp [← d.rank_add]; ring)).1 h
 
 theorem sum_eq_one_rat : d.e * d.qX + d.i₀ * d.q0 + d.e' * d.qY = 1 := by
   apply rat_injective
-  rw [rat_add, rat_add, rat_mul, rat_mul, rat_mul, rat_one]
-  exact d.sum_eq_one
+  rw [rat_add, rat_add, rat_one]
+  simpa only [jX, j0, jY, pX, p0, pY, rat, Matrix.map_mul] using d.sum_eq_one
 
 theorem mat_ext {k : ℕ} {x y : Mx D k S.rank} (hX : x * d.jX = y * d.jX) (h0 : x * d.j0 = y * d.j0)
     (hY : x * d.jY = y * d.jY) : x = y := by

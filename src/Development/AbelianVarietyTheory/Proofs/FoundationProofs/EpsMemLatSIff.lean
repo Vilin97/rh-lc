@@ -93,7 +93,52 @@ theorem eps_mem_latS_iff : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
       v.adicCompletion F →ₐ[F] E ⊗[F] v.adicCompletion F) p).symm
   rw [eps_mulVec _ _ _ (afsplit_eps_idem v) k X h u, heps]
   let a : intAd F := ⟨afsplitI v p, afsplitI_mem_intAd v _ (natCast_mem _ _)⟩
-  exact mem_iff_one_add _ _ _ (natCast_mem _ _) hm (incInt a)
-    (unit_of_integral _ incInt_integral a (unit_intAd v p hpv a rfl)) X hX _
+  have hcastVal : Valued.v (p : v.adicCompletion F) = v.valuation F (algebraMap (𝓞 F) F p) := by
+    rw [← levelaf_valued_algebraMap, map_natCast (algebraMap (𝓞 F) F), map_natCast (algebraMap F _)]
+  have ha (c : intAd F) : IsUnit (1 + a * c) := by
+    have hval : Valued.v (1 + (p : v.adicCompletion F) * (c : FiniteAdeleRing (𝓞 F) F) v) = 1 := by
+      apply Valuation.map_one_add_of_lt
+      rw [Valuation.map_mul, hcastVal]
+      exact mul_lt_one_of_lt_of_le ((v.valuation_lt_one_iff_mem _).2 hpv)
+        ((HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).1 (c.2 v))
+    have hne : 1 + (p : v.adicCompletion F) * (c : FiniteAdeleRing (𝓞 F) F) v ≠ 0 := fun hzero => by
+      rw [hzero, map_zero] at hval
+      exact zero_ne_one hval
+    refine IsUnit.of_mul_eq_one ⟨1 - afsplitI v 1 +
+      afsplitI v (1 + (p : v.adicCompletion F) * (c : FiniteAdeleRing (𝓞 F) F) v)⁻¹,
+      add_mem (sub_mem (one_mem _) (afsplitI_mem_intAd v _ (one_mem _))) (afsplitI_mem_intAd v _ ?_)⟩ ?_
+    · rw [HeightOneSpectrum.mem_adicCompletionIntegers, map_inv₀, hval, inv_one]
+    · apply Subtype.ext
+      change (1 + afsplitI v p * (c : FiniteAdeleRing (𝓞 F) F)) * _ = 1
+      ext w
+      by_cases hw : w = v
+      · subst w
+        simp only [afsplit_add_apply, afsplit_mul_apply, afsplit_sub_apply, afsplit_one_apply, afsplitI_self,
+          sub_self, zero_add, mul_inv_cancel₀ hne]
+      · simp only [afsplit_add_apply, afsplit_mul_apply, afsplit_sub_apply, afsplit_one_apply, afsplitI_ne v w hw,
+          zero_mul, add_zero, sub_zero, mul_one]
+  let S := tensInt (F := F) (FiniteAdeleRing (𝓞 F) F) (intOE E) (intAd F)
+  let incl : FiniteAdeleRing (𝓞 F) F →ₐ[F] E ⊗[F] FiniteAdeleRing (𝓞 F) F :=
+    Algebra.TensorProduct.includeRight
+  let ι : intAd F →+* S := (incl.toRingHom.comp (intAd F).subtype).codRestrict _
+    fun y => Subring.subset_closure (Or.inr ⟨y, rfl⟩)
+  have hIntegral : ι.IsIntegral := by
+    rintro ⟨x, hx⟩
+    refine Subring.closure_induction
+      (p := fun x hx => ι.IsIntegralElem ⟨x, hx⟩) ?_ ?_ ?_ ?_ ?_ ?_ hx
+    · rintro x (⟨⟨e, ⟨b, rfl⟩⟩, rfl⟩ | ⟨y, rfl⟩)
+      · let ψ : 𝓞 E →+* S :=
+          ((inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)).comp (algebraMap (𝓞 E) E)).codRestrict _
+            fun y => Subring.subset_closure (Or.inl ⟨⟨_, ⟨y, rfl⟩⟩, rfl⟩)
+        have hb : IsIntegral ℤ (ψ b) := map_isIntegral_int ψ (Algebra.IsIntegral.isIntegral b)
+        let := ι.toAlgebra
+        exact hb.tower_top (A := intAd F)
+      · exact RingHom.isIntegralElem_map ι (x := y)
+    · exact RingHom.isIntegralElem_zero _
+    · exact RingHom.isIntegralElem_one _
+    · intro x y _ _ hx hy; exact hx.add _ hy
+    · intro x _ hx; exact hx.neg _
+    · intro x y _ _ hx hy; exact hx.mul _ hy
+  exact mem_iff_one_add _ _ _ (natCast_mem _ _) hm (ι a) (unit_of_integral ι hIntegral a ha) X hX _
 
 end GlobalTheory.GenusCong

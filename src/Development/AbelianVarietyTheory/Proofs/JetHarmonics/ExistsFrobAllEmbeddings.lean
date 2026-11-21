@@ -39,14 +39,12 @@ theorem frobKer_isPrime {R C : Type} [CommRing R] [Field C] (V : VF C) (f : R �
     show ¬ 0 < V.v (f 1)
     rw [map_one, V.v.map_one]
     exact lt_irrefl _
-  mem_or_mem' := fun {a b} h => by
+  mem_or_mem' {a b} h := by
     have h' : 0 < V.v (f (a * b)) := h
     rw [map_mul, V.v.map_mul] at h'
-    by_contra hn
-    push_neg at hn
-    have h1 : V.v (f a) ≤ 0 := not_lt.1 hn.1
-    have h2 : V.v (f b) ≤ 0 := not_lt.1 hn.2
-    exact absurd (add_nonpos h1 h2) (not_le.2 h')
+    change 0 < V.v (f a) ∨ 0 < V.v (f b)
+    by_contra! hn
+    exact (not_le_of_gt h') (add_nonpos hn.1 hn.2)
 
 theorem exists_frob_of_hom {E C : Type} [Field E] [NumberField E] [IsGalois ℚ E] [Field C] (V : VF C)
     (f : 𝓞 E →+* C) (hf : ∀ x, V.Ge 0 (f x)) :

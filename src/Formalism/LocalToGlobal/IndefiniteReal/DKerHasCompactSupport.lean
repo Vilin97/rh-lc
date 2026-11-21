@@ -319,13 +319,18 @@ theorem foldr_gvT (M : DSModel V S) (τ : D.what₂.Tau) :
     ∀ (l : List (Matrix (Fin V.rank) (Fin V.rank) ℂ)), (∀ X ∈ l, X ∈ lieAt V τ) →
       ∀ Φ : Matrix (Fin V.rank) (Fin V.rank) ℂ → ℂ, ContDiff ℝ ∞ Φ → HasCompactSupport Φ →
         ∃ Ψ : Matrix (Fin V.rank) (Fin V.rank) ℂ → ℂ, ContDiff ℝ ∞ Ψ ∧ HasCompactSupport Ψ ∧
-          ∀ w, l.foldr (dRep (M.rep τ)) (gvT M τ Φ w) = gvT M τ Ψ w
-  | [], _, Φ, hΦ, hΦc => ⟨Φ, hΦ, hΦc, fun _ => rfl⟩
-  | X :: l, hl, Φ, hΦ, hΦc => by
-    obtain ⟨Ψ, hΨ, hΨc, e⟩ := foldr_gvT M τ l (fun Y hY => hl Y (List.mem_cons_of_mem _ hY)) Φ hΦ hΦc
+          ∀ w, l.foldr (dRep (M.rep τ)) (gvT M τ Φ w) = gvT M τ Ψ w := by
+  intro l
+  induction l with
+  | nil =>
+    intro _ Φ hΦ hΦc
+    exact ⟨Φ, hΦ, hΦc, fun _ => rfl⟩
+  | cons X l ih =>
+    intro hl Φ hΦ hΦc
+    obtain ⟨Ψ, hΨ, hΨc, e⟩ := ih (fun Y hY => hl Y (List.mem_cons_of_mem X hY)) Φ hΦ hΦc
     refine ⟨dKer (M.fr τ * X * (M.fr τ)⁻¹) Ψ, dKer_contDiff hΨ, dKer_hasCompactSupport hΨc, fun w => ?_⟩
     rw [List.foldr_cons, e w]
-    exact dRep_gvT M τ hΨ hΨc (hl X (by simp)) w
+    exact dRep_gvT M τ hΨ hΨc (hl X List.mem_cons_self) w
 
 theorem foldr_gvT_le (M : DSModel V S) (τ : D.what₂.Tau) {Φ : Matrix (Fin V.rank) (Fin V.rank) ℂ → ℂ}
     (hΦ : ContDiff ℝ ∞ Φ) (hΦc : HasCompactSupport Φ) (l : List (Matrix (Fin V.rank) (Fin V.rank) ℂ))
@@ -337,11 +342,16 @@ theorem foldr_gvT_le (M : DSModel V S) (τ : D.what₂.Tau) {Φ : Matrix (Fin V.
 theorem sum_gvT_le (M : DSModel V S) (τ : D.what₂.Tau) {Φ : Matrix (Fin V.rank) (Fin V.rank) ℂ → ℂ}
     (hΦ : ContDiff ℝ ∞ Φ) (hΦc : HasCompactSupport Φ) :
     ∀ (L : List (List (Matrix (Fin V.rank) (Fin V.rank) ℂ))), (∀ l ∈ L, ∀ X ∈ l, X ∈ lieAt V τ) →
-      ∃ c : ℝ, ∀ w, (L.map fun l => ‖l.foldr (dRep (M.rep τ)) (gvT M τ Φ w)‖).sum ≤ c * ‖w‖
-  | [], _ => ⟨0, fun w => by simp⟩
-  | l :: L, hL => by
-    obtain ⟨c1, h1⟩ := foldr_gvT_le M τ hΦ hΦc l (hL l (by simp))
-    obtain ⟨c2, h2⟩ := sum_gvT_le M τ hΦ hΦc L (fun l' hl' => hL l' (List.mem_cons_of_mem _ hl'))
+      ∃ c : ℝ, ∀ w, (L.map fun l => ‖l.foldr (dRep (M.rep τ)) (gvT M τ Φ w)‖).sum ≤ c * ‖w‖ := by
+  intro L
+  induction L with
+  | nil =>
+    intro _
+    exact ⟨0, fun w => by simp⟩
+  | cons l L ih =>
+    intro hL
+    obtain ⟨c1, h1⟩ := foldr_gvT_le M τ hΦ hΦc l (hL l List.mem_cons_self)
+    obtain ⟨c2, h2⟩ := ih (fun l' hl' => hL l' (List.mem_cons_of_mem l hl'))
     exact ⟨c1 + c2, fun w => by
       rw [List.map_cons, List.sum_cons, add_mul]
       exact add_le_add (h1 w) (h2 w)⟩
