@@ -123,8 +123,8 @@ theorem formOm_induction (hf : f ≫ s = s') {U : X.Opens} (hU : IsAffineOpen U)
   have hb := isBaseChange_formLin k (Sec s U) (Sec s' (f ⁻¹ᵁ U)) j
   obtain ⟨z, rfl⟩ := hb.equiv.surjective y
   induction z using TensorProduct.induction_on with
-  | zero => rw [map_zero]; exact h0
-  | add a b ha' hb' => rw [map_add (f := _)]; exact ha _ _ ha' hb'
+  | zero => rw [hb.equiv.map_zero]; exact h0
+  | add a b ha' hb' => rw [hb.equiv.map_add]; exact ha _ _ ha' hb'
   | tmul b' x => rw [hb.equiv_tmul]; exact hm b' x
 
 theorem formTraceU_res (hf : f ≫ s = s') {U V : X.Opens} (hU : IsAffineOpen U)

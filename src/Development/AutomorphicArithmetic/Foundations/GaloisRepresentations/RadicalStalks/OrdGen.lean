@@ -95,7 +95,9 @@ theorem UpperTheory.Gal.Ord.ordGen :
   obtain ⟨π⟩ := par p D.F w f hwM hpw hf
   obtain ⟨o₀, ⟨a₀⟩⟩ := GlobalTheory.T.exists_harrisTaylorModuliObject_pullback p D R b N M.X (Sp k) M.s (spMap β) y hyβ M.univ
   apply ordPull p D R b N M.X M.s M.univ w k y (spMap β) o₀ a₀
-  rcases point p D R b N hN hNp hm k hk β o₀ i w f hkerw hnorm hf π with hW | hNO
+  have hpnt : IsWOrd o₀ w (𝟙 (Sp k)) ∨ NOo hk o₀ π :=
+    UpperTheory.Gal.Ord.point p D R b N hN hNp hm k hk β o₀ i w f hkerw hnorm hf π
+  rcases hpnt with hW | hNO
   · exact hW
   exfalso
   have hLin := lin p D R b N hN hNp hm k hk β o₀ i w f hkerw hnorm hf π

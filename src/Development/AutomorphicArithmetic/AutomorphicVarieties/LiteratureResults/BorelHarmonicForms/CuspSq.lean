@@ -24,8 +24,8 @@ private theorem isSqInt_of_cusp {E : Type} [Field E] [NumberField E] [_root_.Num
   obtain ⟨μ, hμ⟩ : ∃ μ : Measure (GA E a), μ.IsHaarMeasure := ⟨Measure.haar, inferInstance⟩
   have := (GlobalTheory.CovolGL.finvol E a μ).1
   have hc : Continuous ψ.1 := GlobalTheory.CuspRep.ContAut.continuous_of_isOpen_stab E a ψ hψ.1.level
-  obtain ⟨C, hC⟩ := UpperTheory.V.KernelIndexFullLattice.partC UpperTheory.V.KernelIndexFullLattice.splitEq_holds UpperTheory.V.KernelIndexFullLattice.brCusp_holds E a ψ hψ
-    (fun t g => by rw [hn t g])
+  obtain ⟨C, hC⟩ := (UpperTheory.V.KernelIndexFullLattice.partC UpperTheory.V.KernelIndexFullLattice.splitEq_holds UpperTheory.V.KernelIndexFullLattice.brCusp_holds E a ψ hψ
+    (fun t g => by rw [hn t g]))
   exact (GlobalTheory.CuspRep.CuspidalL2GL.memL2_iff_isSqInt (μ := μ) hc hψ.1.left hn).1
     (GlobalTheory.CuspQuot.memL2_of_bound (μ := μ) hc (GlobalTheory.CuspRep.CuspidalL2GL.leftInv_latticeGL hψ.1.left hn) hC)
 

@@ -104,11 +104,11 @@ theorem connForm_map [Algebra B B'] [IsScalarTower R B B'] (f : Z1 (O (dp0 R) s)
         (IsScalarTower.toAlgHom R B B') e)) := by
   let a := Thick.trivHom (hx := hx) (T := Thick.triv B' x' hx') (IsScalarTower.toAlgHom R B B') e
   let Φ := (diagExt R B).thickHom (diagExt R B') (diagMap R B B') (IsScalarTower.toAlgHom R B B')
-    (fun c ↦ (fst_diagMap R B B' c).symm) hx hx' e
+    (fun c ↦ (fst_diagMap R c).symm) hx hx' e
   have k1 := ev_sq f a ((diagExt R B').secHom hx' (diagExt R B').i fun _ ↦ rfl)
     ((diagExt R B).secHom hx (diagExt R B).i fun _ ↦ rfl) Φ fun c ↦
-      TrivSqZeroExt.ext (fst_diagMap R B B' (TrivSqZeroExt.inl c)).symm
-        ((snd_diagMap R B B' (TrivSqZeroExt.inl c)).trans (map_zero _)).symm
+      TrivSqZeroExt.ext (fst_diagMap R (TrivSqZeroExt.inl c)).symm
+        ((snd_diagMap R (TrivSqZeroExt.inl c)).trans (map_zero _)).symm
   have k2 := ev_sq f a ((diagExt R B').secHom hx' (diagSec R B') (fst_derSec _))
     ((diagExt R B).secHom hx (diagSec R B) (fst_derSec _)) Φ fun c ↦
       by

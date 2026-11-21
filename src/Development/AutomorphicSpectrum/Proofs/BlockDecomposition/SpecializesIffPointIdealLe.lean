@@ -28,7 +28,7 @@ theorem closure_ratio (N : ℕ) (i : Fin (N + 1)) : Subring.closure (Set.range (
   obtain ⟨p, rfl⟩ := aeval_ratio_surjective ℤ N i s
   induction p using MvPolynomial.induction_on with
   | C a => simpa using intCast_mem _ a
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | add p q hp hq => rw [map_add]; exact add_mem hp hq
   | mul_X p j hp =>
     rw [map_mul, aeval_X]
     exact mul_mem hp (Subring.subset_closure ⟨j, rfl⟩)
@@ -99,7 +99,7 @@ theorem range_sup_range_eq_top {X Y : Scheme.{0}} (f : X ⟶ Spec (.of ℤ)) (g 
   obtain ⟨t, rfl⟩ := hsurj s
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y hx hy => rw [map_add]; exact add_mem hx hy
   | tmul u v =>
     have : ψ (u ⊗ₜ v) = a.hom u * b.hom v := by simp [ψ]
     rw [this]
@@ -298,7 +298,8 @@ theorem ptIdeal_le_of_specializes {x y : MP ℤ m n} (h : x ⤳ y) : ptIdeal x �
   rw [mem_ptIdeal_iff _ hy]
   ext a
   have := congrArg (AddMonoidAlgebra.coeff · a) hf
-  rw [coeff_map, coeff_zero] at this
+  rw [coeff_map] at this ⊢
+  change _ = 0 at this ⊢
   exact evaluation_eq_zero_of_specializes h hx hy _ this
 
 def mono (c : ∀ k, Bk n k) (a : Fin (m + 1) → ℕ) : Geo.MRing (Bk n) := ∏ k, X ⟨k, c k⟩ ^ a k

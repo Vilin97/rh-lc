@@ -203,7 +203,7 @@ theorem false_of_shift {h : ℕ} (Δ : Fin h → Segment k) (hun : ∀ i j, ¬ (
   let r : S → S → Prop := fun a b => ∃ n : ℕ, 0 < n ∧ top (Δ a.1) = (top (Δ b.1)).nu (n : ℂ)
   haveI : IsTrans S r := ⟨fun a b c ⟨n, hn, e⟩ ⟨n', hn', e'⟩ =>
     ⟨n' + n, by omega, by rw [e, e', nu_nat_add]⟩⟩
-  haveI : IsIrrefl S r := ⟨fun a ⟨n, hn, e⟩ => by
+  haveI : Std.Irrefl r := ⟨fun a ⟨n, hn, e⟩ => by
     have e' : (top (Δ a.1)).nu ((0 : ℕ) : ℂ) = (top (Δ a.1)).nu (n : ℂ) := by
       rw [← e]
       simp

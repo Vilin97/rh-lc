@@ -39,10 +39,10 @@ theorem ptDer_push {X Y : Scheme.{0}} (y : Sp ℂ ⟶ X) (f : X ⟶ Y) (δ : ∀
   add W hW a b := by
     rw [map_add (f := _)]
     exact h.add (f ⁻¹ᵁ W) hW _ _
-  · intro W hW a b
+  mul W hW a b := by
     rw [map_mul, valAt'_comp_lemma y f W a, valAt'_comp_lemma y f W b]
     exact h.mul (f ⁻¹ᵁ W) hW _ _
-  · intro W W' hle hW a
+  res W W' hle hW a := by
     have hle' : f ⁻¹ᵁ W' ≤ f ⁻¹ᵁ W := fun x hx => hle hx
     have nat : (f.app W').hom (resG Y hle a) = resG X hle' ((f.app W).hom a) :=
       congrArg (fun φ : Γ(Y, W) ⟶ Γ(X, f ⁻¹ᵁ W') => φ.hom a) (f.naturality (homOfLE hle).op)
@@ -54,10 +54,10 @@ theorem ptDer_sub {X : Scheme.{0}} (y : Sp ℂ ⟶ X) (δ δ' : ∀ W : X.Opens,
   add W hW a b := by
     rw [h.add W hW, h'.add W hW]
     ring
-  · intro W hW a b
+  mul W hW a b := by
     rw [h.mul W hW, h'.mul W hW]
     ring
-  · intro W W' hle hW a
+  res W W' hle hW a := by
     rw [h.res W W' hle hW, h'.res W W' hle hW]
 
 theorem app_top_constFn {R : Type} [CommRing R] {X : Scheme.{0}} (p : X ⟶ Sp R) (f : X ⟶ X) (hf : f ≫ p = p) (r : R) :

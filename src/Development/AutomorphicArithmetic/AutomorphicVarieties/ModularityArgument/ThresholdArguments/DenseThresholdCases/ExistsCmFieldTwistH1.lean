@@ -23,7 +23,6 @@ set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 200000
 
 section
-open private factor_abs irr_conj free_up par' from Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.GaloisRepresentationTypes.ExistsPlaceAbovePrime
 open UpperTheory.GalN.V
 attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual Formalism.HC ReciprocityTheory.Gal IsLocalRing Polynomial UpperTheory.V UpperTheory.V.Base UpperTheory.V.Alg UpperTheory.V.HV UpperTheory.V.GradeZeroInterpolatingElement UpperTheory.V.Ws GlobalTheory.GalOfCusp UpperTheory.V.Th
@@ -48,8 +47,24 @@ theorem UpperTheory.V.Z.Win.Dn.exists_cm_field_twist_h1 (hU : _root_.UpperTheory
   obtain ⟨K⟩ := hc₁ c' h hle
   have hKL : T.K ≤ T.L := T.hL ▸ le_sup_right
   have hi : Irr (r.comp T.L.fixingSubgroup.subtype) := by
+    have irr_of_conj {H F : Type} [Group H] [Field F] {s s' : H →* M4 F}
+        (hs : IsConj4 s s') (hirrₛ : Irr s) : Irr s' := by
+      obtain ⟨v, hv⟩ := hs
+      rw [Irr, eq_top_iff]
+      intro X _
+      have hspan (Y : M4 F) (hY : Y ∈ Submodule.span F (Set.range s)) :
+          (v : M4 F) * Y * (v⁻¹ : (M4 F)ˣ) ∈ Submodule.span F (Set.range s') := by
+        induction hY using Submodule.span_induction with
+        | mem x hx =>
+          obtain ⟨g, rfl⟩ := hx
+          exact Submodule.subset_span ⟨g, hv g⟩
+        | zero => simp
+        | add x y _ _ hx hy => rw [mul_add, add_mul]; exact add_mem hx hy
+        | smul a x _ hx => rw [mul_smul_comm, smul_mul_assoc]; exact Submodule.smul_mem _ a hx
+      have hX := hspan ((v⁻¹ : (M4 F)ˣ) * X * v) (hirrₛ ▸ Submodule.mem_top)
+      simpa [mul_assoc] using hX
     obtain ⟨u, hu⟩ := hconj
-    refine irr_conj ⟨u⁻¹, fun g => ?_⟩ hi₁
+    refine irr_of_conj ⟨u⁻¹, fun g => ?_⟩ hi₁
     simp only [MonoidHom.comp_apply, hu, inv_inv, ← mul_assoc, Units.inv_mul, one_mul, Units.inv_mul_cancel_right]
   have hiL : Af.IsIrr (r.toHomUnits.comp (resQ T.L)) :=
     (auIrr _ (r.comp (resQ T.L)) hi fun g => ⟨IntermediateField.fixingSubgroupEquiv T.L g, rfl⟩).1

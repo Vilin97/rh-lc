@@ -26,7 +26,8 @@ private theorem split_of_padic {E : Type} [Field E] [NumberField E] [IsCMField E
   have hq : normV w = g := DiscreteGroups.sglob.DzType.normV_eq_of_padic w g i hi
   refine ⟨hq, GlobalTheory.DenseInvFrob.isSplitAt_of_inertiaDeg_eq_one w ?_ ?_⟩
   · have hp : (Ideal.absNorm w.asIdeal).Prime := by
-      have : Ideal.absNorm w.asIdeal = g := hq
+      have : Ideal.absNorm w.asIdeal = g := by
+        simpa only [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using hq
       rw [this]
       exact Fact.out
     exact ((GlobalTheory.absNorm_prime_iff_inertiaDeg_eq_one_and_finite_ramified E).1 w).1 hp

@@ -124,7 +124,7 @@ private theorem fix_point {O : Type} [CommRing O] [IsLocalRing O] {ι X : Type} 
   have E3 : ∀ a b, Φ.blk b ≠ Φ.σ (Φ.blk a) → E a b = 0 := fun a b e => by
     have : Φ.JR R a b = 0 := by_contra fun n => e (jb a b n)
     rw [hE, Matrix.sub_apply, this, sub_zero]
-    simp only [mul_apply, transpose_apply, Finset.sum_mul]
+    simp only [Matrix.mul_apply, transpose_apply, Finset.sum_mul]
     refine Finset.sum_eq_zero fun c _ => Finset.sum_eq_zero fun d _ => ?_
     by_cases e1 : Φ.blk d = Φ.blk a
     · by_cases e2 : Φ.blk c = Φ.blk b
@@ -136,7 +136,7 @@ private theorem fix_point {O : Type} [CommRing O] [IsLocalRing O] {ι X : Type} 
   have Z1 : Φ.JR R * Z0 = (-u) • E := by rw [hZ0, ← mul_assoc, hK, one_mul]
   have Z2 : ∀ a b, p (Z0 a b) = 0 := fun a b => by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hZ0, mul_apply, map_sum]
+      rw [hZ0, Matrix.mul_apply, map_sum]
     refine Finset.sum_eq_zero fun c _ => ?_
     have : p (E c b) = 0 := congrFun (congrFun E1 c) b
     simp [this]
@@ -147,13 +147,13 @@ private theorem fix_point {O : Type} [CommRing O] [IsLocalRing O] {ι X : Type} 
   have Z4 : Φ.JR R * Z = (-u) • E := by
     ext a b
     by_cases e : Φ.blk b = Φ.σ (Φ.blk a)
-    · rw [← Z1, mul_apply, mul_apply]
+    · rw [← Z1, Matrix.mul_apply, Matrix.mul_apply]
       refine Finset.sum_congr rfl fun c _ => ?_
       by_cases n : Φ.JR R a c = 0
       · simp [n]
       · have : Φ.blk c = Φ.blk b := by rw [e]; exact jb a c n
         simp [Z, this]
-    · rw [Matrix.smul_apply, E3 a b e, smul_zero, mul_apply]
+    · rw [Matrix.smul_apply, E3 a b e, smul_zero, Matrix.mul_apply]
       refine Finset.sum_eq_zero fun c _ => ?_
       by_cases n : Φ.JR R a c = 0
       · simp [n]
@@ -251,7 +251,7 @@ theorem UpperTheory.V.Alg.hh_section :
     fun a b => good_const' _ fun n => by rw [← (inv_supp Φ a b n).2]; abel
   have gE : ∀ a b, Good (maximalIdeal A) W (Φ.c - w a - w b)
       fun s => ((h0 s)ᵀ * Φ.JR A * h0 s - Φ.JR A) a b := fun a b => by
-    simp only [Matrix.sub_apply, mul_apply, transpose_apply]
+    simp only [Matrix.sub_apply, Matrix.mul_apply, transpose_apply]
     refine good_sub (good_sum _ fun c => good_mul (i := Φ.c - w a - w c) (good_sum _ fun d =>
       good_mul (g0 d a) (gJ d c) (by abel)) (g0 c b) (by abel)) (gJ a b)
   have g1 : ∀ a b, Good (maximalIdeal A) W (w a - w b) fun s => (h0 s + Matrix.of fun a b =>
@@ -261,7 +261,7 @@ theorem UpperTheory.V.Alg.hh_section :
     refine good_add (g0 a b) ?_
     by_cases e : Φ.blk a = Φ.blk b
     · simp only [if_pos e, ← map_neg]
-      simp only [mul_apply (M := Φ.J⁻¹.map (algebraMap O A)), Matrix.smul_apply, smul_eq_mul]
+      simp only [Matrix.mul_apply (M := Φ.J⁻¹.map (algebraMap O A)), Matrix.smul_apply, smul_eq_mul]
       exact good_sum _ fun c => good_mul (gK a c) (good_mul (good_const (-u)) (gE c b) (zero_add _)) (by abel)
     · simp only [if_neg e]
       exact good_zero _

@@ -32,9 +32,10 @@ theorem lintegral_productDomain_norm_sq : ∀ (E : Type) [Field E] [NumberField 
     funext fun p => (he p.1 p.2).symm
   rw [hF] at hmap
   rw [hF, ← hmap]
-  refine lintegral_image_prod_Ico_of_invariant e ν
-    (h := fun g => ‖φ g‖ₑ ^ 2) (k := fun x => ‖φ (x : GA E a)‖ₑ ^ 2)
-    (hc.enorm.measurable.pow_const 2) (fun x t => ?_) _
+  set_option synthInstance.maxHeartbeats 200000 in
+    refine lintegral_image_prod_Ico_of_invariant e ν
+      (h := fun g => ‖φ g‖ₑ ^ 2) (k := fun x => ‖φ (x : GA E a)‖ₑ ^ 2)
+      (hc.enorm.measurable.pow_const 2) (fun x t => ?_) _
   simp only [he, hinv]
 
 end GlobalTheory.CompanionTheory.CuspTransfer

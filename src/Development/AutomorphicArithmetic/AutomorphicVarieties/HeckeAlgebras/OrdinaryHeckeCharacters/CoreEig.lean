@@ -158,7 +158,7 @@ private theorem eig_det {n : ℕ} {R Γ : Type} [CommRing R] [Group Γ] [Topolog
   refine AlgebraTools.Det.extDense _ _ S hS (fun i _ => (hD i).congr fun g => ?_)
     (fun i _ => AlgebraTools.Det.repCont _ (Units.continuous_val.comp hr) i) fun g hg => ?_
   · simp [W.GDet.lam, eig_chi_map]
-  · rw [eig_chi_map, (AlgebraTools.Det.repApi _).2.1]
+  · rw [eig_chi_map, (AlgebraTools.Det.repApi (W.mat r)).2.1]
     exact h g hg
 
 private theorem eig_ord (hG : GlobalTheory.Published.GlobalArtinReciprocity) {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω]

@@ -132,6 +132,7 @@ theorem UpperTheory.V.Z.Win.RR.ordAbove_of_alt (hX : ExRS) (hGd : GdOf) :
       obtain ⟨b, hb⟩ := hκ
       have hdet : Matrix.GeneralLinearGroup.det (b * r g * b⁻¹) = Matrix.GeneralLinearGroup.det (r g) := by
         rw [map_mul, map_mul, map_inv, mul_inv_cancel_comm]
+      simp only [MonoidHom.comp_apply, Subgroup.coe_subtype] at hb
       rw [← hdet]
       apply Units.ext
       rw [Matrix.GeneralLinearGroup.val_det_apply, Matrix.det_fin_two, (hb g).2 0, (hb g).2 1,

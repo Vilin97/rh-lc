@@ -63,7 +63,7 @@ theorem homogeneousComponent_mem {F : MvPolynomial σ R} (hF : F ∈ idealOf p M
   · rw [MvPolynomial.homogeneousComponent_eq_zero _ _ he, MvPolynomial.eval₂_zero]
   rw [← MvPolynomial.sum_homogeneousComponent F, MvPolynomial.eval₂_sum] at h3
   have h5 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q e) h3
-  simp only [h4, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq', Finset.mem_range,
+  simp only [h4, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finsupp.single_apply, Finset.sum_ite_eq', Finset.mem_range,
     Polynomial.coeff_zero] at h5
   rwa [if_pos (by omega)] at h5
 

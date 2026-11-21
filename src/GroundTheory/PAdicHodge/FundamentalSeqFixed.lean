@@ -17,6 +17,8 @@ namespace ACris
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
+local notation "𝒪" => normInteger ℂ_[p]
+
 section Residue
 
 theorem prod_range_X_sub_C_zmod :
@@ -255,6 +257,9 @@ theorem theta_mem_range_of_phi_eq {y : ACris ℂ_[p] p} (hy : phi y = y) :
 end Approx
 
 section Plus
+
+local notation "𝔭" => Ideal.span {(p : ACris ℂ_[p] p)}
+local notation "θdR" => IsPerfectoidField.thetaBDeRhamPlusField (K := ℂ_[p]) p
 
 theorem mem_pow_of_p_pow_mul_phi_eq {a : ACris ℂ_[p] p} {m : ℕ} (hm : 1 ≤ m)
     (ha : (p : ACris ℂ_[p] p) ^ m * phi a = a) (j : ℕ) : a ∈ 𝔭 ^ j := by

@@ -132,7 +132,7 @@ theorem hasCLM_n (hU : UnipTau) (hC : Cx D n V ψ χ θ μ ω H l s ν τ ε fr 
   have key : ∀ u : Fin V.rank → Fin n → ℂ, (SchwartzMap.smulLeftCLM ℂ
       (fun u : Fin V.rank → Fin n → ℂ => Complex.exp (Complex.I * (tLoc l τ : ℂ) * (b * gramX ε u).trace)) S) u =
       Complex.exp (Complex.I * (tLoc l τ : ℂ) * (b * gramX ε u).trace) * S u := fun u => by
-    rw [SchwartzMap.smulLeftCLM_apply_apply (OpGenAH.hasTemperateGrowth_phase ε (tLoc l τ) b hb), smul_eq_mul]
+    rw [SchwartzMap.smulLeftCLM_apply_apply (hasTemperateGrowth_phase ε (tLoc l τ) b hb), smul_eq_mul]
   simp only [tens, ContinuousLinearMap.coe_restrictScalars']
   rw [key (fr⁻¹ * compAt θ τ x)]
   ring
@@ -140,7 +140,24 @@ theorem hasCLM_n (hU : UnipTau) (hC : Cx D n V ψ χ θ μ ω H l s ν τ ε fr 
 theorem hasCLM_m (hLv : LeviTau) (hC : Cx D n V ψ χ θ μ ω H l s ν τ ε fr ι) (y : GR n)
     (a : Matrix (Fin n) (Fin n) ℂ) (ha : IsUnit a.det) (hya : mR y = mM a) : HasCLM ω τ fr ι y := by
   obtain ⟨C, Am, hA1, hA2, hA3, hAf⟩ := hLv D n V ψ χ θ μ ω H l s ν τ ε fr ι hC y a ha hya
-  refine ⟨(C • SchwartzMap.compCLMOfContinuousLinearEquiv ℂ (OpGenAH.rmulEquiv (m := V.rank) a ha)).restrictScalars ℝ,
+  let rmulEquiv : (Fin V.rank → Fin n → ℂ) ≃L[ℝ] (Fin V.rank → Fin n → ℂ) :=
+    LinearEquiv.toContinuousLinearEquiv
+      { toFun := fun u => (Matrix.of u * a : Matrix (Fin V.rank) (Fin n) ℂ)
+        invFun := fun u => (Matrix.of u * a⁻¹ : Matrix (Fin V.rank) (Fin n) ℂ)
+        map_add' := fun u v => by
+          show Matrix.of (u + v) * a = Matrix.of u * a + Matrix.of v * a
+          rw [← Matrix.add_mul]; rfl
+        map_smul' := fun c u => by
+          show Matrix.of (c • u) * a = c • (Matrix.of u * a)
+          ext i j
+          simp [Matrix.mul_apply, Finset.smul_sum, mul_assoc]
+        left_inv := fun u => by
+          show Matrix.of u * a * a⁻¹ = u
+          rw [Matrix.mul_assoc, Matrix.mul_nonsing_inv _ ha, Matrix.mul_one]; rfl
+        right_inv := fun u => by
+          show Matrix.of u * a⁻¹ * a = u
+          rw [Matrix.mul_assoc, Matrix.nonsing_inv_mul _ ha, Matrix.mul_one]; rfl }
+  refine ⟨(C • SchwartzMap.compCLMOfContinuousLinearEquiv ℂ (rmulEquiv)).restrictScalars ℝ,
     fun Ψ hΨ S => ?_⟩
   funext x
   rw [hAf]
@@ -157,7 +174,7 @@ theorem hasCLM_m (hLv : LeviTau) (hC : Cx D n V ψ χ θ μ ω H l s ν τ ε fr
     rfl
   have e1 : (⇑S) (fr⁻¹ * (compAt θ τ x * a)) = S (Matrix.of (fr⁻¹ * compAt θ τ x) * a) := congrArg S hm
   rw [e1]
-  change C * (S _ * Ψ x) = (C * S (OpGenAH.rmulEquiv (m := V.rank) a ha (fr⁻¹ * compAt θ τ x))) * Ψ x
+  change C * (S _ * Ψ x) = (C * S (rmulEquiv (fr⁻¹ * compAt θ τ x))) * Ψ x
   rw [mul_assoc]
   rfl
 
@@ -274,10 +291,12 @@ theorem hasCLM_nbar (hU : UnipTau) (hW : WEx) (hS : SchOps) (hF : FTfact) (hl0 :
   have hEm : ∀ S u, Em S u =
       Complex.exp (Complex.I * (tLoc l τ : ℂ) * ((-c) * gramX ε u).trace) * S u := by
     intro S u
-    simp only [Em, SchwartzMap.smulLeftCLM_apply_apply (OpGenAH.hasTemperateGrowth_phase ε _ (-c) hc'), smul_eq_mul]
+    simp only [Em, SchwartzMap.smulLeftCLM_apply_apply (hasTemperateGrowth_phase ε _ (-c) hc'), smul_eq_mul]
   refine ⟨(γ⁻¹ • FT1.comp (Em.comp FT2)).restrictScalars ℝ, fun Ψ hΨ S => ?_⟩
   rw [hform Ψ hΨ (⇑S) ⟨S, rfl⟩]
   congr 1
+  funext u
+  simp only [ContinuousLinearMap.coe_restrictScalars', ContinuousLinearMap.coe_smul', ContinuousLinearMap.coe_comp',
     Function.comp_apply, Pi.smul_apply, SchwartzMap.smul_apply, smul_eq_mul, hFT1]
   congr 3
   funext v

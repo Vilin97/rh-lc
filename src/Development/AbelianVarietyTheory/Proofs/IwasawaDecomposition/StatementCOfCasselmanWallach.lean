@@ -306,21 +306,13 @@ theorem rank_of_levEq {μ : D.what₂.Tup} {j' : ℕ} (m : MtReal D μ j') (X : 
 
 variable {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {P : Pre2 K w}
 
-theorem muIsW (x : St P) : V4.MuIsW (w.st x.o.Z) f T P.Wt w.I.xi where
-  inj := w.ok.xi_inj
-  range := w.xi_range
-  mu0 := w.l.xi0
-  star := by
-    show w.I.xi w.I.muStar = f.del
+theorem muIsW (x : St P) : V4.MuIsW (w.st x.o.Z) f T P.Wt w.I.xi := by
+  refine ⟨w.ok.xi_inj, w.xi_range, w.l.xi0, ?_, ?_, P.q.mu.tw, P.q.mu.on, P.q.mu.off,
+    P.sub, P.supp⟩
+  · show w.I.xi w.I.muStar = f.del
     rw [w.ok.xi_star, w.C_eq]
-  star' := by
-    show w.I.xi w.I.muStar' = f.del'
+  · show w.I.xi w.I.muStar' = f.del'
     rw [w.ok.xi_star', w.C_eq]
-  tw := P.q.mu.tw
-  on := P.q.mu.on
-  off := P.q.mu.off
-  sub := P.sub
-  supp := P.supp
 
 theorem cfOf_eq (x : St P) : cfOf x = Fr.at (w.st x.o.Z) f :=
   congrArg (Fr.at (w.st x.o.Z)) w.C_eq

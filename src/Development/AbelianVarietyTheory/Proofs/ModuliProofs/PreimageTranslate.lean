@@ -96,7 +96,7 @@ theorem preimage_translate {v : epsR K ⟶ G} (hv : IsTangent v) (W : G.left.Ope
   have hs := GlobalTheory.ConstThickening.structure_dualNumber K G.left (epsR K ⊗ G).left G.hom (fst (epsR K) G).left
     (snd (epsR K) G).left J.left hpb
     (by simpa using congrArg (fun f => f.left) hJ2)
-    (by simp [J, e0]; exact pullback.lift_fst _ _ _)
+    (by simp [J, e0])
   have hc : ∀ {X Y Z : Scheme.{0}} (f : X ⟶ Y) (g : Y ⟶ Z) (U : Z.Opens), f ⁻¹ᵁ (g ⁻¹ᵁ U) = (f ≫ g) ⁻¹ᵁ U :=
     fun _ _ _ => rfl
   have h3 : J.left ⁻¹ᵁ (((fst (epsR K) G ≫ v) * snd (epsR K) G).left ⁻¹ᵁ W) =

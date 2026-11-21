@@ -167,7 +167,8 @@ private theorem sat_two {V : Type} [AddCommGroup V] [Module ℂ V] {ρ : Represe
       h.2.2.2 _ (unif_spec w) 1 (by norm_num)]
     congr 1
     rw [Complex.ofReal_cpow (by positivity)]
-    have : qV F w = normV w := rfl
+    have : qV F w = normV w := by
+      simp [qV, normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
     simp [satEig, Multiset.esymm, Multiset.powersetCard_one, this]
     norm_num [add_comm]
   · have h2 := h.2.2.2 _ (unif_spec w) 2 le_rfl
@@ -345,11 +346,15 @@ theorem UpperTheory.V.Sd.holRep_alt :
   set ν := GlobalTheory.HeckeGal.Model.absPow F (1 - (k : ℝ) / 2) with hν
   obtain ⟨hν1, hν2, -⟩ := GlobalTheory.HeckeGal.Model.absPow_isAbsPow F (1 - (k : ℝ) / 2)
   rw [← hν] at hν1 hν2
-  have hq : ∀ w : Pl F, (0 : ℝ) < normV w := fun w =>
-    Nat.cast_pos.2 (zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm w))
+  have hn : ∀ w : Pl F, normV w = Ideal.absNorm w.asIdeal := fun w => by
+    simp [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
+  have hq : ∀ w : Pl F, (0 : ℝ) < normV w := fun w => by
+    rw [hn w]
+    exact Nat.cast_pos.2 (zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm w))
   have hν3 : ∀ w, ((ν.val w : ℂˣ) : ℂ) = (((normV w : ℝ) ^ ((k : ℝ) / 2 - 1) : ℝ) : ℂ) := fun w => by
     rw [hν2, Complex.ofReal_cpow (hq w).le, ← Complex.ofReal_neg, neg_sub]
-    rfl
+    rw [hn w]
+    simp only [Complex.ofReal_natCast]
   set π := π₀.twist ν
   set x₀ : π₀.V := ⟨ψ, hψ⟩
   set T := π₀.toTwist ν
@@ -408,7 +413,10 @@ theorem UpperTheory.V.Sd.holRep_alt :
     fin_cases i <;> fin_cases j <;> simp at e' ⊢ <;> omega
   · obtain ⟨i, -, rfl⟩ := Multiset.mem_map.1 hz
     exact ⟨_, add_comm _ _⟩
-  · simp only [HChar.locInf_mul, hν, sign_abs, mul_one]
+  · have hs : ∀ v, (ω * ν * ν).locInf v (-1) = ω.locInf v (-1) := fun v => by
+      change (ω.locInf v (-1) * ν.locInf v (-1)) * ν.locInf v (-1) = _
+      rw [hν, sign_abs, mul_one, mul_one]
+    rw [hs v, hs v']
     exact Units.ext ((sign_hol hφ.hol hφ.ne v).trans (sign_hol hφ.hol hφ.ne v').symm)
   · obtain ⟨B, hl, hr, hf, hc, hX⟩ := P.gkR F 2 π
     refine TR.CuspSub.isSelfDualBy_of_iso B hl hr hf hc hX (P.smoR F 2 one_le_two _ _ ?_)

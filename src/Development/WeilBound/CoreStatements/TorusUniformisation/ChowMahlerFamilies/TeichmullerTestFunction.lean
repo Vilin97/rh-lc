@@ -266,15 +266,23 @@ theorem part3 [Module.Finite R L] [Module.Projective R L] (hκ : ∀ a, κ a ∈
         simp
       rw [Ideal.toCotangent_eq] at e1
       convert res_sq (RC := RC) (κ := κ) hs0 _ e1 using 1
-      set_option synthInstance.maxHeartbeats 100000 in
-        simp [hf', hαs, map_sum]
+      funext z
+      simp only [Pi.sub_apply, Finset.sum_apply, res_apply, Submodule.coe_sum,
+        Submodule.coe_smul, Subalgebra.coe_smul,
+        Pi.smul_apply, smul_eq_mul, map_mul, hf', hαs, ← ha]
+      simp [Subalgebra.coe_sub, map_sub, map_sum, map_mul, hf', hαs]
     | zero => convert Q.zero_mem using 1; funext z; simp
     | add a b _ _ ha hb =>
       convert Q.add_mem ha hb using 1
+      funext z
+      simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, mul_add, Finset.sum_add_distrib,
+        add_mul]
       ring
     | smul c a _ ha =>
       convert Q.smul_mem c ha using 1
-        Finset.mul_sum, Finset.sum_mul]
+      funext z
+      simp only [Prod.smul_fst, Prod.smul_snd, Pi.smul_apply, Subalgebra.smul_def, smul_eq_mul,
+        Finset.mul_sum, Finset.sum_mul, mul_sub]
       congr 1
       · exact Finset.sum_congr rfl fun _ _ => by ring
       · exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -494,7 +502,7 @@ theorem toLi_comm (a : 𝓞 E) (v : P.L) : P.toLi (P.ρ a v) = 𝔐.ρ a (P.toLi
 
 theorem j_comp (a : 𝓞 E) (u : Module.Dual (CR O y c') P.L) (w : 𝔐.Li) :
     P.j (u ∘ₗ P.ρ a) w = P.j u (𝔐.ρ a w) := by
-  refine P.toLi_bc.inductionOn w (fun w => P.j (u ∘ₗ P.ρ a) w = P.j u (𝔐.ρ a w)) (by simp) (fun v => ?_)
+  refine P.toLi_bc.inductionOn w (fun v => ?_)
     (fun s n hn => ?_) (fun m n hm hn => ?_)
   · rw [← toLi_comm, P.j_apply, P.j_apply]
     rfl

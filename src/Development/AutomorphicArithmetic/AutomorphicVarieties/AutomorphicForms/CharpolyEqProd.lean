@@ -91,7 +91,7 @@ private theorem contProd {K T I : Type} [CommRing K] [TopologicalSpace K] [IsTop
   | empty => simpa using continuous_const
   | insert i s hi ih =>
     simp only [Finset.prod_insert hi, Polynomial.coeff_mul]
-    exact continuous_finset_sum _ fun p _ => (hf i p.1).mul (ih p.2)
+    exact continuous_finsetSum _ fun p _ => (hf i p.1).mul (ih p.2)
 
 theorem charpoly_eq_prod (ι : Qbar l ≃+* ℂ) {I : Type} [Fintype I] {n : ℕ} {a : I → ℕ} (ρ : G E Ω →* GL (Fin n) (Qbar l))
     (r : ∀ i, G E Ω →* GL (Fin (a i)) (Qbar l)) (hρ : Continuous ρ) (hr : ∀ i, Continuous (r i))

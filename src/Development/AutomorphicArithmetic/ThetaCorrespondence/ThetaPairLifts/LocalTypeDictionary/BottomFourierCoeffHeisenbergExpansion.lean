@@ -143,7 +143,7 @@ theorem finite_datum_eq_sum_heisenberg : ∀ {D : D7} {T : Type} [Finite T] {L :
       change infPart D (x a b + y a b) = 0
       rw [RingHom.map_add (f := _), q1, q2, add_zero]
     | zero => rw [map_zero]; exact zero_mem _
-    | add f g _ _ hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
+    | add f g _ _ hf hg => rw [map_add]; exact add_mem hf hg
     | smul c f _ hf =>
       change Tm ((c : ℂ) • f) ∈ V
       rw [map_smul]

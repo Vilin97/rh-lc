@@ -30,8 +30,7 @@ private theorem log_norm_coord (t : (Af E)ˣ) (w : HeightOneSpectrum (𝓞 E)) :
     Real.log ‖(t : Af E) w‖ = -((GlobalTheory.Idele.ord_vw t w : ℝ) * Real.log (Ideal.absNorm w.asIdeal : ℕ)) := by
   have hq : ((Ideal.absNorm w.asIdeal : ℕ) : ℝ) ≠ 0 := by
     simpa [Ideal.absNorm_eq_zero_iff] using w.ne_bot
-  have e : ∀ (n : ℤ) (h : WithZero.exp n ≠ 0), Multiplicative.toAdd (WithZero.unzero h) = n := fun _ _ => rfl
-  rw [FinitePlace.norm_def, GlobalTheory.Idele.valued_idele, WithZeroMulInt.toNNReal_neg_apply _ WithZero.exp_ne_zero, e]
+  rw [FinitePlace.norm_def, GlobalTheory.Idele.valued_idele, WithZeroMulInt.toNNReal_neg_apply _ WithZero.exp_ne_zero, WithZero.log_exp]
   simp [Real.log_zpow]
 
 private theorem logFin_eq (t : (Af E)ˣ) : logFin E t = -∑ᶠ w, Real.log ‖(t : Af E) w‖ := by

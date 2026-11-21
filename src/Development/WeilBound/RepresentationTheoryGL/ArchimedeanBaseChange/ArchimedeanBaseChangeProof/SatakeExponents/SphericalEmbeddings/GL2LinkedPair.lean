@@ -229,7 +229,7 @@ theorem linked (a b : ℂˣ) (hL : unrChar k a = unrChar k b * absPow k 1) :
     have h1 : g' = 0 := by
       have h3 : Ψ.toLinearEquiv g' = 0 := this
       calc g' = Ψ.toLinearEquiv.symm (Ψ.toLinearEquiv g') := (Ψ.toLinearEquiv.symm_apply_apply g').symm
-        _ = 0 := by rw [h3, map_zero]
+        _ = 0 := by rw [h3, Ψ.toLinearEquiv.symm.map_zero]
     have h2 := congrArg (fun f : IndSp (points (Fin 2)) (contra ρ) => ((f.1.1 1 : smoothPart ρ.dual) : Module.Dual ℂ ℂ) 1) h1
     simp [g', constInd_apply, ℓ0] at h2
   have hK : ∀ kk ∈ KO k (Fin 2), ∀ f, l (iP (k := k) ![a, b] kk f) = l f := by

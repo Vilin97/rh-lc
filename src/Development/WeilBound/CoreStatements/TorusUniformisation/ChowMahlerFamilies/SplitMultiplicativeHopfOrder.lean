@@ -545,7 +545,8 @@ theorem mem_iff_span {R A B H K T : Type} [CommRing R] [AddCommGroup A] [Module 
     induction x using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact zero_mem _
     | tmul a b => exact Submodule.subset_span ⟨a, b, funext fun z => he a b z.1 z.2⟩
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y hx hy =>
+      convert add_mem hx hy using 1 <;> ext z <;> simp
   · intro hf
     have key : ∀ F ∈ Submodule.span R {F : H × K → R | ∃ a b, F = fun z => φ a z.1 * ψ b z.2},
         ∃ g ∈ X, F = fun z => g (u z) := by

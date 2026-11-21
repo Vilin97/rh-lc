@@ -84,7 +84,7 @@ private theorem card_bound {C : Type} [CommRing C] (χ : C →+* k) {f j : ℕ}
       rw [Finset.mem_val, Set.Finite.mem_toFinset] at hx
       exact hx
     obtain ⟨c, rfl⟩ := RingHom.mem_range.mp hx'
-    rw [Polynomial.mem_roots (FiniteField.X_pow_card_sub_X_ne_zero k hq)]
+    rw [Polynomial.mem_roots (Polynomial.X_pow_sub_X_ne_zero (R := k) hq)]
     simp [hc c]
   have hle := Polynomial.card_le_degree_of_subset_roots hsub
   rw [Polynomial.natDegree_X_pow_sub_X (R := k) hq, hZ] at hle

@@ -57,7 +57,7 @@ theorem continuous_PB (T : RootTower Ψ N) (II : IntersectionSystem) (B : ℕ) :
     funext lam
     simp only [RootTower.PB, RootTower.PPt, RootTower.PPc, toA_linRoot_pow]
   rw [h]
-  exact continuous_finset_sum _ fun c _ => continuous_lin_zero _ _ (hcont _)
+  exact continuous_finsetSum _ fun c _ => continuous_lin_zero _ _ (hcont _)
 
 theorem one_le_log {B : ℕ} (h : 3 ≤ B) : 1 ≤ Real.log B := by
   have hB : (3 : ℝ) ≤ B := by exact_mod_cast h

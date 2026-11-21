@@ -45,8 +45,8 @@ theorem isClosed_small {Γ : Type} [TopologicalSpace Γ] {f : Γ → Qbar l} (hf
 theorem tr_det (ι : Qbar l ≃+* ℂ) (B : Matrix (Fin 2) (Fin 2) (Qbar l)) {a d : ℂ}
     (h : B.charpoly.map ι.toRingHom = X ^ 2 - C a * X + C d) : B.trace = ι.symm a ∧ B.det = ι.symm d := by
   rw [Matrix.charpoly_fin_two] at h
-  have h0 := congrArg (coeff · 0) h
-  have h1 := congrArg (coeff · 1) h
+  have h0 := congrArg (AddMonoidAlgebra.coeff · 0) h
+  have h1 := congrArg (AddMonoidAlgebra.coeff · 1) h
   simp [coeff_X, coeff_C, coeff_X_pow] at h0 h1
   exact ⟨by rw [← h1]; simp, by rw [← h0]; simp⟩
 
@@ -169,7 +169,7 @@ theorem ordEx (P : HypothesesH) (ι : Qbar l ≃+* ℂ) {k N : ℕ} [NeZero N] (
   have hlN : l * N ≠ 0 := mul_ne_zero hl.out.ne_zero (NeZero.ne N)
   set c : Pl ℚ → ℕ := fun w => N.factorization (normV w) with hc
   have hc0 : ∀ w, c w = 0 ↔ ¬ normV w ∣ N := fun w => by
-    simp [hc, Nat.factorization_eq_zero_iff, normV_prime w, NeZero.ne N]
+    simp [hc, Nat.factorization_eq_zero_iff, normV_prime w, (normV_prime w).ne_one, NeZero.ne N]
   set D : G ℚ Ω →* (Qbar l)ˣ := cycBar ℚ Ω l ^ (k - 1) * ψ with hD
   have hDv : ∀ s, (D s : Qbar l) = (cycBar ℚ Ω l s : Qbar l) ^ (k - 1) * Chr.dirG ℚ Ω (χ.ringHomComp ι.symm.toRingHom) s := fun s => by
     rw [hD, ← hm]; simp

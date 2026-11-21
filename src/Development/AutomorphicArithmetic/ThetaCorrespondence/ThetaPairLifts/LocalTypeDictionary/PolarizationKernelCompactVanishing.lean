@@ -95,8 +95,8 @@ theorem polarization_zero_of_compact : _root_.GlobalTheory.FunPr.ThetaLocalInput
   have hρ : ∀ i, R.p (D (f i)) = ρ (R.p (f i)) := fun i =>
     (induced_map_apply π hπ (D.restrict hDm) ker0 ⟨f i, (hf i).1⟩).symm
   refine ⟨T, hT, m, fun i => D (f i), φ, fun i => ⟨hDm _ (hf i).1, (hf i).2⟩, ?_, ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => hpure i
   · have := congrArg (LinearMap.rTensor _ ρ) hz
     set_option synthInstance.maxHeartbeats 100000 in

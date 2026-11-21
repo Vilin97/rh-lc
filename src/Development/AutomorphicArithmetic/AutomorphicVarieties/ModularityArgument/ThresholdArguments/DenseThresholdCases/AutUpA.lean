@@ -24,18 +24,16 @@ set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 200000
 
 section
-open private tf cyc_conj isIrr_of_matIrr matIrr_tw pair_of cont_hom lc_of_ker ad_down left_conj from Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.GaloisRepresentationTypes.IsIrrOfMatIrr
 open UpperTheory.GalN.V
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal IsLocalRing Polynomial UpperTheory.V UpperTheory.V.HV GlobalTheory.GalOfCusp UpperTheory.V.Th
 namespace UpperTheory.V.Th.End3
 open UpperTheory.V.U3 UpperTheory.V.Base
 attribute [-instance] UpperTheory.V.Pr.IsCD.toIsDomain UpperTheory.V.Pr.IsCD.toIsDiscreteValuationRing
 attribute [local instance 10000] IsDiscreteValuationRing.toIsLocalRing
-attribute [local instance] tf
 open UpperTheory.V.Z.Win
 variable {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [Fact l.Prime] {K L : Type} [Field K] [NumberField K]
   [IsCMField K] [Algebra K Ω] [Field L] [NumberField L] [IsCMField L] [Algebra L Ω] [Algebra K L] [IsScalarTower K L Ω]
-  {σ : G ℚ Ω} {R : G ℚ Ω →* GG 3 (PadicAlgCl l)} {ρ : G K Ω →* GL (Fin 3) (Qbar l)}
+  {σ : G ℚ Ω} {R : G ℚ Ω →* GG (m := 3) (R := PadicAlgCl l)} {ρ : G K Ω →* GL (Fin 3) (Qbar l)}
 theorem isAutCsdA_twist_comp_galEmb_of_repIso_of_flagged (hH : _root_.UpperTheory.V.Af.HypothesesH') (hab : IsAbelianGalois ℚ L) (ι : Qbar l ≃+* ℂ) (hσ : Sd.IsCC σ)
     (hρ : ∀ s, ρ s = (R (galEmb ℚ K Ω s)).left) (hK : ∀ s, (R (galEmb ℚ K Ω s)).right = 1)
     (hc : (R σ).right = -1) (hatc : (R σ).mat = 1) (hρc : Continuous ρ)
@@ -102,7 +100,8 @@ theorem UpperTheory.V.Z.Win.Dn.rigEnd3_alt :
     intro h0
     exact hok.l_odd ((Nat.prime_dvd_prime_iff_eq Fact.out Nat.prime_two).1
       ((CharP.cast_eq_zero_iff (ResidueField c.O) l 2).1 (by exact_mod_cast h0)))
-  obtain ⟨h, -, hr'⟩ := ordPt_renorm hr (lc_of_ker η (hker ▸ (galEmbTop ℚ K Ω).2.1)) h2 hM
+  obtain ⟨h, -, hr'⟩ := _root_.UpperTheory.V.Th.End3.ordPt_renorm hr
+    (lc_of_ker η (hker ▸ (galEmbTop ℚ K Ω).2.1)) h2 hM
   let h' : GL (Fin 3) (Qbar l) := Matrix.GeneralLinearGroup.map (A.val : A →+* PadicAlgCl l) h
   have eR : UnitaryThreeInertia.push A.val (conjBy h r) = conjBy h' (UnitaryThreeInertia.push A.val r) := map_conjBy _ h r
   refine h1fZero_conjBy _ h' ?_

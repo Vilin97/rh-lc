@@ -51,6 +51,10 @@ private theorem exists_rep {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : 
   have h2 : ∀ᵐ y ∂μ.restrict (fundamentalDomain (Gam K n)), (hm.toLp f) (mk (Gam K n) y) = f (mk (Gam K n) y) :=
     ae_of_ae_map (measurable_mk (Gam K n)).aemeasurable h1
   have hF := isFundamentalDomain_fundamentalDomain (Gam K n) μ
+  haveI : SMulInvariantMeasure (G1 K n) (G1 K n) μ :=
+    ⟨fun a s _ => measure_preimage_mul μ a s⟩
+  haveI : SMulInvariantMeasure (Gam K n) (G1 K n) μ :=
+    Subgroup.smulInvariantMeasure _
   have h3 : μ {y | ¬ (hm.toLp f) (mk (Gam K n) y) = f (mk (Gam K n) y)} = 0 := by
     refine hF.measure_zero_of_invariant _ (fun γ => ?_) ?_
     · ext y

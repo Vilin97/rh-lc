@@ -42,7 +42,7 @@ private theorem oe_field {l : ℕ} [Fact l.Prime] {R : Type} [CommRing R] [Algeb
   induction hx using Submodule.span_induction with
   | mem y hy => exact IntermediateField.subset_adjoin _ _ ⟨y, hy, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | smul a b _ hb =>
     rw [map_smul, ← algebraMap_smul ℚ_[l] a]
     exact IntermediateField.smul_mem _ hb
@@ -61,6 +61,7 @@ private theorem oe_res {l : ℕ} [Fact l.Prime] {c c₁ : Coef l} (hle : c.O ≤
       ∀ (a : c.O) (b : c₁.O), a.1 = b.1 → f (residue c.O a) = residue c₁.O b := by
   let i : c.O →+* c₁.O := (Subalgebra.inclusion hle).toRingHom
   have hi : i.IsIntegral := by
+    haveI : Algebra.IsIntegral ℤ_[l] c₁.O := Algebra.IsIntegral.of_finite ℤ_[l] c₁.O
     have e : i.comp (algebraMap ℤ_[l] c.O) = algebraMap ℤ_[l] c₁.O := (Subalgebra.inclusion hle).comp_algebraMap
     refine RingHom.IsIntegral.tower_top (algebraMap ℤ_[l] c.O) i ?_
     rw [e]

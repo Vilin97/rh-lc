@@ -142,7 +142,7 @@ theorem hasSatGL_of_equiv_prodIrr {n h : ℕ} (σ : SmIrr (GL (Fin n) (w.adicCom
     refine (Submodule.ne_bot_iff _).2 ⟨ψ.symm v, GlobalTheory.LGrp.mem_fixed.2 fun g hg => ?_, fun e => hv0 ?_⟩
     · exact (ψ.symm.toIntertwiningMap.isIntertwining _ _ g v).symm.trans
         (congrArg ψ.symm (GlobalTheory.LGrp.mem_fixed.1 hv g hg))
-    · exact ψ.symm.toLinearEquiv.injective (e.trans (map_zero _).symm)
+    · exact ψ.symm.toLinearEquiv.injective (e.trans ψ.symm.toLinearEquiv.map_zero.symm)
   have hS : HasSatake σ.ρ (fun i => ζ i ϖ) := ⟨σ.irred, hsph,
     (IsSubquotient.of_injective ψ.toIntertwiningMap ψ.toLinearEquiv.injective).trans
       (GlobalTheory.GenSph.isSubquotient_prodIrr_uc (fun i => ζ i ϖ) hd')⟩

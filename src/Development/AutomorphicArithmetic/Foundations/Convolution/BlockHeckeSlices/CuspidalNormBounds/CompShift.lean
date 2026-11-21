@@ -97,6 +97,8 @@ private theorem main : ∀ {n : ℕ} (d : Dat S n) (φ : Sm E n) (t : Fin d.len 
       refine h.congr_of_eventuallyEq (Filter.Eventually.of_forall fun x => ?_)
       simp only [Dat.comp_cons, Pi.add_apply, Pi.single_eq_of_ne (Dat.sc_ne b d _).symm, add_zero]
       congr 1
+      ext k
+      simp [Pi.single_apply, Dat.sc_inj]
 
 end UpperTheory.ConvolutionTheory.BW
 

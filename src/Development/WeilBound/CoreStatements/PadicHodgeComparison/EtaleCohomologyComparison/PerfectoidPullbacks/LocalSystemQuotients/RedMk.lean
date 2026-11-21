@@ -33,15 +33,9 @@ private theorem exists_factorial_mul_eq_pow_pow_in_span {n j : ℕ} (hn : n ≠ 
   have hl : l.Prime := Fact.out
   obtain ⟨e, u, hu, hfac⟩ := Nat.exists_eq_pow_mul_and_not_dvd (Nat.factorial_ne_zero j) l hl.one_lt.ne'
   have he : e < j := by
-    have h1 : e ≤ padicValNat l j.factorial :=
-      ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero j)).1 ⟨u, hfac⟩
-    have h2 := sub_one_mul_padicValNat_factorial_lt_of_ne_zero l hj
-    have h3 : 1 ≤ l - 1 := by
-      have := hl.two_le
-      omega
-    have h4 : padicValNat l j.factorial ≤ (l - 1) * padicValNat l j.factorial :=
-      Nat.le_mul_of_pos_left _ h3
-    omega
+    have h1 : e ≤ multiplicity l j.factorial :=
+      (Nat.pow_dvd_iff_le_multiplicity hl.ne_one (Nat.factorial_ne_zero j)).1 ⟨u, hfac⟩
+    exact lt_of_le_of_lt h1 (multiplicity_factorial_lt_of_ne_zero l hj)
   have hunit : IsUnit (u : WittVector l k) := by
     apply WittVector.isUnit_of_coeff_zero_ne_zero
     rw [← WittVector.constantCoeff_apply, map_natCast]

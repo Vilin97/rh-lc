@@ -249,6 +249,8 @@ theorem dg_prod : ∀ {n : ℕ} (z : Fin n → (TP R (DualNumber ℂ) ⟶ G)) (�
 
 end GlobalTheory.TanLinComb
 
+open GlobalTheory.MBLow.GlobalTheory.CompanionTheory.Ar (dualMap)
+
 namespace GlobalTheory.TanLinComb
 
 variable {R : Type} [CommRing R] [IsDomain R] [Algebra (FractionRing R) ℂ]

@@ -57,11 +57,11 @@ theorem UpperTheory.V.AlgebraTools.Det.glueRep :
         exact h1.symm
       refine ⟨(-1) ^ i * p.coeff (n - i), ?_⟩
       show ι ((-1) ^ i * p.coeff (n - i)) = (-1) ^ i * ((GDet.ofRep R).chi (MonoidAlgebra.single g 1)).coeff (n - i)
-      rw [(UpperTheory.V.AlgebraTools.Det.repApi R).2.1, hchar, Polynomial.coeff_map, map_mul, map_pow, map_neg, map_one])
+      rw [(UpperTheory.V.AlgebraTools.Det.repApi R).2.1 g, hchar, Polynomial.coeff_map, map_mul, map_pow, map_neg, map_one])
   refine ⟨D, ?_, hDc⟩
   intro x
   have hfx : f x = (Pi.evalRingHom K x).comp ι := by
     ext a
     rfl
-  rw [hfx, ← (UpperTheory.V.AlgebraTools.Det.mapApi D ι).2.2.2.2.2.2.1, hD, (UpperTheory.V.AlgebraTools.Det.repApi R).2.2.2.2.2.1]
+  rw [hfx, ← (UpperTheory.V.AlgebraTools.Det.mapApi D ι).2.2.2.2.2.2.1 (Pi.evalRingHom K x), hD, (UpperTheory.V.AlgebraTools.Det.repApi R).2.2.2.2.2.1 (Pi.evalRingHom K x)]
   congr 1

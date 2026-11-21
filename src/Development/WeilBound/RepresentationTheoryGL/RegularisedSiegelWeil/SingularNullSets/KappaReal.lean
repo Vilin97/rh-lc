@@ -65,6 +65,8 @@ theorem kappa_real {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ
     have h1 : ∫ h, f h h' ∂ν = (τ h' : ℂ) * ∫ h, A h * ψ (h.1 * (-h').1) ∂ν := by
       rw [← integral_const_mul]
       congr 1
+      funext h
+      dsimp [f]
       ring
     rw [h1, hκ, neg_neg]
     push_cast

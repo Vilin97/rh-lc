@@ -92,6 +92,7 @@ theorem resultant_factors_prod_eq_one {E : Type} [Field E] [NumberField E] [IsCM
         have e1 : ((atFin w (k * kc⁻¹) : (w.adicCompletion E)ˣ) : w.adicCompletion E) =
             algebraMap E (w.adicCompletion E) (R * (c R)⁻¹) := by
           simp [atFin, kc, k, map_inv₀]
+          exact Or.inl rfl
         rw [e1, ← hd1, Units.val_mk0]
         simp [map_mul, map_pow]
       have hchar : ((μ.loc w (Units.mk0 _ hne) : ℂˣ) : ℂ) = ((μ.locK w k : ℂˣ) : ℂ) * ((μ.locK u k : ℂˣ) : ℂ) := by

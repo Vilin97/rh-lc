@@ -230,6 +230,7 @@ theorem UpperTheory.ConvolutionTheory.BW.datBasics :
   · obtain ⟨c, hc⟩ := J_eq d j
     obtain ⟨c', hc'⟩ := J_eq d l
     rw [hc, hc']
+    set_option synthInstance.maxHeartbeats 400000 in
     exact ((Commute.sum_left _ _ _ fun i _ => Commute.sum_right _ _ _ fun k _ => comm_lie i k).smul_left c).smul_right c'
   · obtain ⟨c, hc⟩ := J_eq d j
     obtain ⟨a, ha⟩ : ∃ a : Fin n → (Cinf E)ˣ, d.tr v = infGL E n (diagUnits n a) := ⟨_, diag_eq _⟩

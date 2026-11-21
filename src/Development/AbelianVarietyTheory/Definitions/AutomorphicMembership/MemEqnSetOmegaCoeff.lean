@@ -202,8 +202,8 @@ theorem smoothOn_of_cover {S : Set (Y.pts σ)} (hS : IsOpen S) (h0 : S ⊆ m.pos
     (sub : ∀ i, T i ⊆ eqnSet σ Δ (e i)) (h : ∀ i, (Y.an σ).SmoothOn (S ∩ T i) (m.wt (e i))) :
     m.SmoothOn S := ⟨h0, fun g => AnRead.smoothOn_of_cover hT (fun y _ => hc y) fun i =>
   AnRead.SmoothOn.congr (f := fun y => m.wt (e i) y + Real.log (‖tv (e i) g y‖ ^ 2))
-    (fun c => ((h i).mono (fun _ hz => ⟨hz.1.1, hz.2⟩) c).add
-      (((holoOn_tv Δ (e i) g).mono fun _ hz => ⟨sub i hz.2, hz.1.2⟩).smoothOn_log
+    (fun c => ((h i).mono (fun _ (hz : _ ∈ (S ∩ eqnSet σ Δ g) ∩ T i) => ⟨hz.1.1, hz.2⟩) c).add
+      (((holoOn_tv Δ (e i) g).mono fun _ (hz : _ ∈ (S ∩ eqnSet σ Δ g) ∩ T i) => ⟨sub i hz.2, hz.1.2⟩).smoothOn_log
         ((hS.inter (isOpen_eqnSet Δ g)).inter (hT i))
         (fun _ hz => tv_ne_zero (sub i hz.2) hz.1.2) c))
     fun _ hz => wt_trans (h0 hz.1.1) (sub i hz.2) hz.1.2⟩
@@ -282,7 +282,7 @@ variable {m : Met Y σ Δ} {m' : Met Y σ Δ'}
 
 theorem mAdd_h (hg : y ∈ eqnSet σ Δ g) (hg' : y ∈ eqnSet σ Δ' g') :
     (mAdd Y σ Δ Δ' m m').h (g * g') y = m.h g y * m'.h g' y :=
-  ofCover_h (Δ := Δ + Δ') _ (fun i : Y.Fnˣ × Y.Fnˣ => i.1 * i.2) (fun _ _ h => IsEqn.add h.1 h.2) _ _ _
+  ofCover_h (Δ := Δ + Δ') _ (fun i : Y.Fnˣ × Y.Fnˣ => i.1 * i.2) (fun _ _ (h : _ ∈ eqnSet σ Δ _ ∩ eqnSet σ Δ' _) => IsEqn.add h.1 h.2) _ _ _
     (fun i j y hi hj => by
       rw [m.trans _ _ y hi.1 hj.1, m'.trans _ _ y hi.2 hj.2, tv_mul_mul hi.1 hj.1, norm_mul]; ring)
     (i := (g, g')) ⟨hg, hg'⟩
@@ -368,7 +368,7 @@ theorem smoothOn_fsMet {κ : Type} [Fintype κ] (e : κ → Y.FnC σ) {S : Set (
   AnRead.SmoothOn.congr (f := fun y => Real.log (∑ k, ‖fval g (e k) y‖ ^ 2))
     (fun c => (ContDiffOn.sum (f := fun k v => ‖fval g (e k) (((Y.an σ).chart c).e.symm v)‖ ^ 2)
       fun k _ => (contDiffOn_real (isOpen_over _ (hS.inter (isOpen_eqnSet Δ g)))
-        ((holoOn_fval Δ g (e k)).mono (fun z hz => ⟨he z hz.1 k, hz.2⟩) c)).norm_sq ℂ).log
+        ((holoOn_fval Δ g (e k)).mono (fun z (hz : z ∈ S ∩ eqnSet σ Δ g) => ⟨he z hz.1 k, hz.2⟩) c)).norm_sq ℂ).log
       fun _ hv => by
         have := (mem_posSet_iff hv.2.2).1 (h hv.2.1)
         rw [fsMet_h (he _ hv.2.1), inv_pos] at this

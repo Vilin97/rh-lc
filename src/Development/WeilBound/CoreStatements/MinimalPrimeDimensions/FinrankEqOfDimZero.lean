@@ -243,10 +243,10 @@ theorem dim_add_one_le (h1 : StPts) (hE : Emb p s) :
 
 private theorem algX_strHom_top {κ : Type} [Field κ] {Z : Scheme.{0}} [Algebra κ Γ(Z, ⊤)] :
     algX (strHom κ Z) ⊤ = algebraMap κ Γ(Z, ⊤) := by
-  ext r
-  rw [algebraMap_eq_strHom]
-  simp [algX, Scheme.Hom.appLE, Scheme.Hom.appTop]
-  rfl
+  set_option backward.isDefEq.respectTransparency false in
+    ext r
+    rw [algebraMap_eq_strHom]
+    simp [algX, Scheme.Hom.appLE, Scheme.Hom.appTop, homOfLE_refl]
 
 private theorem evaluation_genericPoint_eq_zero_iff {Z : Scheme.{0}} [IsIntegral Z] {U : Z.Opens}
     (hU : genericPoint Z ∈ U) (a : Γ(Z, U)) :

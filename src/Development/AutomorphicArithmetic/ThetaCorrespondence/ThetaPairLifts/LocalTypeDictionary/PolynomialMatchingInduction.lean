@@ -128,14 +128,14 @@ theorem polynomial_matching_on_succ : _root_.GlobalTheory.FunPr.ThetaLocalInputs
   · simp only [φN', Function.update_of_ne (hvT w hw)]; exact (hφ' j).2.2 w hw
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [hΦ, map_sum]
-    refine Finset.sum_congr rfl fun i _ => ?_
-    exact pure_update v (om (1, h)) (f i) (φ i) (hφ i).2.1 (evc G.M (φ i) (hφ i).2.2 hT.geo.hM)
-      (hloc _ ((hφ i).2.1 v)).2
+      refine Finset.sum_congr rfl fun i _ => ?_
+      exact pure_update v (om (1, h)) (f i) (φ i) (hφ i).2.1 (evc G.M (φ i) (hφ i).2.2 hT.geo.hM)
+        (hloc _ ((hφ i).2.1 v)).2
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [hΦ', map_sum]
-    refine Finset.sum_congr rfl fun j _ => ?_
-    exact pure_update v (om' (1, h)) (f' j) (φ' j) (hφ' j).2.1 (evc G.M' (φ' j) (hφ' j).2.2 hT.geo.hM')
-      (hloc' _ ((hφ' j).2.1 v)).2
+      refine Finset.sum_congr rfl fun j _ => ?_
+      exact pure_update v (om' (1, h)) (f' j) (φ' j) (hφ' j).2.1 (evc G.M' (φ' j) (hφ' j).2.2 hT.geo.hM')
+        (hloc' _ ((hφ' j).2.1 v)).2
   · have key := congrArg (LinearMap.lTensor R.Pi (PiTensorProduct.map
       (Function.update (fun u : T => (LinearMap.id : Rf.Pi u.1 →ₗ[ℂ] Rf.Pi u.1)) ⟨v, hv⟩ A))) hsum
     set_option synthInstance.maxHeartbeats 100000 in

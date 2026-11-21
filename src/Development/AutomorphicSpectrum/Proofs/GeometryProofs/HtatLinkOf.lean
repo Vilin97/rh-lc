@@ -49,7 +49,7 @@ theorem htat_link_of (h758 : type_of% @GlobalTheory.T.HTChartExists_holds) (h576
       ∀ κ : chartRing o (mseg y) s.1, PointHT → IsCp p (κ : Ω) → Dc.HasTestPoints κ := by
     intro s
     obtain ⟨_, _, _, x, hx, hr⟩ := hch s.1 s.2
-    obtain ⟨Dc, h1, h2, h3, h4, h5, h6⟩ := exists_chart Twhopf.sec_inj Twexists.exists_torsion' h758 h576 D 𝔐.t 𝔐.ξ 𝔐.tie.gen 𝔐.all 𝔐.M 𝔐.ρ 𝔐.act
+    obtain ⟨Dc, h1, h2, h3, h4, h5, h6⟩ := GlobalTheory.CompanionTheory.HtLink.exists_chart Twhopf.sec_inj Twexists.exists_torsion' h758 h576 D 𝔐.t 𝔐.ξ 𝔐.tie.gen 𝔐.all 𝔐.M 𝔐.ρ 𝔐.act
       p (𝔐.R p) hev hprop (𝔐.tors p hpS) hrk u hu π e hπ he hsurj hker halt hadj hes hei (chartRing o (mseg y) s.1) x hx
       (fun q hq => chart_le_regAt 𝔐 p o ho s.1 q ((hr q).1 hq).1 ((hr q).1 hq).2)
     exact ⟨Dc, h1, h2, fun w => (h3 w).trans ⟨fun h q a b => h q ((hr q).2 ⟨a, b⟩),

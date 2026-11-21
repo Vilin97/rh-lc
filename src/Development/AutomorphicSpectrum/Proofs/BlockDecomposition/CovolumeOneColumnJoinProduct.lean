@@ -131,7 +131,7 @@ theorem isCovolOne_colJoin : ∀ (D : D7) (m r s : ℕ) (μr : Measure (Mx D m r
         left_inv := fun γ => Subtype.ext (e.apply_symm_apply _)
         right_inv := fun γ => Subtype.ext (e.symm_apply_apply _) }
     refine (isAddFundamentalDomain_prod hFr hFs).image_of_equiv e.toEquiv ?_ g fun γ x => ?_
-    · refine ⟨he'.measurable, ?_⟩
+    · refine ⟨he'.measurable.aemeasurable, ?_⟩
       have : ((μr.prod μs).map e).map e.symm = μr.prod μs := by
         rw [Measure.map_map he'.measurable he.measurable]
         have : (e.symm ∘ e : Mx D m r × Mx D m s → Mx D m r × Mx D m s) = id := funext e.symm_apply_apply

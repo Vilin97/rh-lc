@@ -21,7 +21,7 @@ private theorem rop_single {H V : Type} [Group H] [AddCommGroup V] [Module ℂ V
 private theorem rop_sum {H V Y : Type} [Group H] [AddCommGroup V] [Module ℂ V] (R : Finset Y) (e : Y → H) (Φ : H → V) (g : H) :
     rop (∑ y ∈ R, Finsupp.single (e y) 1) Φ g = ∑ y ∈ R, Φ (g * e y) := by
   unfold rop
-  rw [← Finsupp.sum_finset_sum_index (by simp) (by simp [add_smul])]
+  rw [Finsupp.sum_finsetSum _ _ _ (by simp) (by simp [add_smul])]
   exact Finset.sum_congr rfl fun y _ => by rw [Finsupp.sum_single_index (by simp), one_smul]
 
 private structure HI {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} (U : Submodule ℂ (UA E n → ℂ)) (S : Finset (Plc E)) where
@@ -93,7 +93,7 @@ theorem pFormGU_of (hExt : ExtEig2) (hCl : ClassFin) (hXi : XiZeta) (hKer : KerF
       rintro (y | a) u hu
       · obtain rfl := Finset.mem_singleton.1 (Finsupp.support_single_subset hu)
         rfl
-      · obtain ⟨y, -, hy⟩ := Finsupp.mem_support_finset_sum u hu
+      · obtain ⟨y, -, hy⟩ := Finsupp.mem_support_finsetSum u hu
         obtain rfl := Finset.mem_singleton.1 (Finsupp.support_single_subset hy)
         rfl)
     (by

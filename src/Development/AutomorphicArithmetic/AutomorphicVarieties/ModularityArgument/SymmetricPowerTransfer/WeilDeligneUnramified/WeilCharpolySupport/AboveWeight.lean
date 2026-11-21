@@ -98,7 +98,7 @@ private theorem pot_of_above {L Ω : Type} [Field L] [NumberField L] [Field Ω] 
   intro A hA
   have hAl : A.valuation (l : Ω) < 1 := by
     have h1 := (hA ((l : ℕ) : 𝓞 L)).2 hw
-    simpa using h1
+    simpa only [map_natCast] using h1
   obtain ⟨b, k, κ, hk, hflag, hκ⟩ := H A hAl
   refine ⟨κ, hflag, fun i j c hc h => ?_⟩
   obtain ⟨s, hs, hinf⟩ := cyc_inf_over L Ω l A hAl
@@ -162,7 +162,7 @@ theorem UpperTheory.V.Z.Sym.W.adjoint_lift_transfer_to_unitary_group_two : Upper
       rw [GlobalTheory.EvExtend.mem_placeOf]
       simpa using GlobalTheory.EvExtend.norm_natCast_lt_one (l := l)
     obtain ⟨A, hA⟩ : ∃ A : ValuationSubring Ω, IsPlaceOver A (GlobalTheory.EvExtend.placeOf φ) := exists_isPlaceOver Ω _
-    have hAl : A.valuation (l : Ω) < 1 := by simpa using (hA _).2 hw
+    have hAl : A.valuation (l : Ω) < 1 := by simpa only [map_natCast] using (hA _).2 hw
     obtain ⟨τ, hτ⟩ := hex (GlobalTheory.EvExtend.placeOf φ)
     obtain ⟨-, b, hb⟩ := UpperTheory.V.Z.Sym.W.aboveW PA L Ω l ι hl r hc m hr.gap _ hw HT ((hLG _ _ hτ).2 (hpt _ _ hτ)) A hA
       (hr.above A hAl) τ (hLG _ _ hτ).1 (hpt _ _ hτ)
@@ -210,7 +210,7 @@ theorem UpperTheory.V.Z.Sym.W.adjoint_lift_transfer_to_unitary_group_two : Upper
     obtain ⟨rc, hrc⟩ := exRec' PA.litN hA
     have hl' := mt (hlm w) hw
     have hq := hg w A hA rc hrc τ hτ
-    exact UpperTheory.V.Z.Desc.W.sphT PA.litN L Ω l ι 2 r hc w hl' A hA (hr.unr A fun h => hw ((hA _).1 (by simpa using h))) rc hrc τ hq.1
+    exact UpperTheory.V.Z.Desc.W.sphT PA.litN L Ω l ι 2 r hc w hl' A hA (hr.unr A fun h => hw ((hA _).1 (by simpa only [map_natCast] using h))) rc hrc τ hq.1
       ((((hLG w τ hτ).1 A hA rc hrc).1 hl').isWDOf hq.2)
   obtain ⟨σ, hσ, hunr, hsat⟩ := P.desc L hU.unr l Fact.out _ hfin (fun w hw => hU.split w ((hk M w).2 hw))
     (fun w hw => (hk M w).1 (hlm w hw)) 2 le_rfl (by norm_num) π hreg hrw hd

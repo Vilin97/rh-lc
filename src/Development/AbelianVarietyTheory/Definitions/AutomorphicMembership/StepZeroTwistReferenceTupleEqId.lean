@@ -39,7 +39,7 @@ theorem ptLaw_stepY {X : Fields} {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum 
     refine ⟨(1, 1, ⟨k, fun P _ => h1 P⟩), map_one (ufGL X.E n), ?_, fun p => Subtype.ext (Prod.ext rfl (Set.image_empty _).symm)⟩
     show (Λ b).chr 1 * (Θ b).chr ⟨k, fun P _ => h1 P⟩ = 1
     rw [map_one, one_mul]
-    exact (MonoidHom.finset_prod_apply _ _ _).trans (Finset.prod_eq_one fun P _ => h2 P)
+    exact (MonoidHom.finsetProd_apply _ _ _).trans (Finset.prod_eq_one fun P _ => h2 P)
 
 theorem PtLaw.reRep {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {n : ℕ}
     {ST SG Q : Finset (HeightOneSpectrum (𝓞 E))} {S : GStep E K n} {b : S.β} {pt : DecoF E n ST SG Q → S.D b} {c : ℕ}

@@ -116,7 +116,8 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.mPrime :
     have h1 := M.at0 1 0 0 (f + e) (by rw [map_add (f := _), hf, he, zero_add])
     rw [map_add (f := _), M.at0 1 0 0 e he] at h1
     exact add_eq_right.1 h1
-  exact len_le hM M.π M.surj M.ru M.gen (M.W.origin M.org) hx M.W.part M.hom M.A M.gr (fun _ _ => Iff.rfl)
+  set_option synthInstance.maxHeartbeats 200000 in
+   exact len_le hM M.π M.surj M.ru M.gen (M.W.origin M.org) hx M.W.part M.hom M.A M.gr (fun _ _ => Iff.rfl)
     (fun n f hf => M.aPart_le hf) (fun f hf => origin_part M.W M.org (by decide) hf) M.eqns.F M.eqns.hF
     (fun i => by
       show M.F i ∈ RingHom.ker M.π

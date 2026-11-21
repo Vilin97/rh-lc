@@ -154,6 +154,7 @@ private theorem fr_map {L : LocBase D} {R R' : Type} [CommRing R] [Algebra c.O R
   rw [Lift.map_hom, this]
   rfl
 
+set_option synthInstance.maxHeartbeats 200000 in
 set_option maxHeartbeats 1000000 in
 private theorem main (hD : D.Good) (L : LocBase D) (F : Fr D L) (Q : Type) [CommRing Q] [Algebra c.O Q] [Module c.Oᵐᵒᵖ Q]
     [IsCentralScalar c.O Q] [Module.Finite c.O Q] (z : G ℚ Ω → Q) (lc : IsLocallyConstant z)
@@ -231,9 +232,35 @@ private theorem main (hD : D.Good) (L : LocBase D) (F : Fr D L) (Q : Type) [Comm
     · ext i j : 1
       rw [Matrix.map_apply, AlgHom.comp_apply, y3']
       by_cases h : i = j <;> simp [Matrix.one_apply, h]
+    · apply AlgHom.ext
+      intro x
+      change F.W.origin F.org (F.i x) = (p (yB x)).fst
+      rw [p1, w1, ← F.at0i]
+      rfl
+    · change F.W.origin F.org (F.r.hom g i j) = (r.hom g i j).fst
+      rw [F.at0r, hr, tw_fst]
+  obtain ⟨Db, hDb, eDb⟩ := (der_hom c.O F.U c.O Q (F.W.origin F.org) (fun x => (y x).snd)).2
+    ⟨y, fun x => ⟨DFunLike.congr_fun hfst x, rfl⟩⟩
+  obtain ⟨DB, hDB, eDB⟩ := (der_hom c.O L.B c.O c.O (L.W.origin L.org) (fun x => (yB x).snd)).2
+    ⟨yB, fun x => ⟨w1 x, rfl⟩⟩
+  refine ⟨Db, hDb, DB, hDB, ?_, ?_, ?_, ?_⟩
+  · intro i hi x hx
+    rw [congrFun eDB x]
+    exact w2 i hi x hx
+  · intro x
+    rw [congrFun eDb, congrFun eDB]
+    have e := DFunLike.congr_fun y1 x
+    change y (F.i x) = p (yB x) at e
+    rw [e, p2]
+  · intro g i j
+    rw [congrFun eDb, y2', tw_snd]
+  · intro v i j
+    rw [congrFun eDb, y3']
+    by_cases h : i = j <;> simp [Matrix.one_apply, h]
 
 end SlopeTestRemainingChoices
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem UpperTheory.exists_quotientDerivation_of_shaCocycle :
     ∀ {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [Fact l.Prime] {c : Coef l} (D : Raw Ω c), D.Good → ∀ (L : LocBase D) (F : Fr D L) (a : c.O) (z : G ℚ Ω → c.O ⧸ Ideal.span {a}), D.ShaCoc a z → ∃ Db ∈ QDer (F.W.origin F.org) a, ∃ DB ∈ PtDer (L.W.origin L.org) c.O, HasWt L.W.part (-wPs) DB ∧ (∀ x, Db (F.i x) = Ideal.Quotient.mk _ (DB x)) ∧ (∀ g i j, Db (F.r.hom g i j) = Ideal.Quotient.mk _ ((Xm c.O * D.r0 g) i j) * z g) ∧ ∀ v i j, Db (F.α v i j) = 0 := by
   intro Ω _ _ _ l _ c D hD L F a z hz

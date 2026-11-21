@@ -188,6 +188,8 @@ theorem UpperTheory.ConvolutionTheory.BW.compCap :
         (List.ofFn fun i => F (Fin.castAdd s i)).prod := by
       rw [← List.prod_ofFn, map_list_prod, List.map_ofFn]
       congr 2
+      funext i
+      simp only [Function.comp_apply, hF, idx_cast, rho_zero, J_zero, Dat.lam, Fin.addCases_left]
       rw [map_add (f := _), Polynomial.aeval_X, Polynomial.aeval_C]
       refine (add_comm _ _).trans (congrArg (fun c : ℂ => algebraMap ℂ _ c + j1 E r s) ?_)
       push_cast

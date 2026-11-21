@@ -59,10 +59,35 @@ private theorem full_chars [CharZero k] {n : ℕ} {V : Type} [AddCommGroup V] [M
   let q := multiProdEquiv (stdBlocks (fun i => (y i).1) hd) fun i => equivRep (IrrRep.det (Fin 1) (ξ i) (hξ i))
   have hM : (multiProd (Equiv.sigmaUnique (Fin n) fun _ => Fin 1) fun i => detRep (Fin 1) (ξ i)).IsIrreducible :=
     GlobalTheory.Parabolic.isIrreducible_of_equiv (p.trans q).symm hP
-  haveI := nontrivial_of_irreducible hM
-  haveI := GlobalTheory.TypeTwo.PowIrrProof.nontrivial_of_isSubquotient
-    (GlobalTheory.PermPrin.isSubquotient_multiProd_prinSeries (Equiv.sigmaUnique (Fin n) fun _ => Fin 1) ξ)
-  obtain ⟨e1⟩ := GlobalTheory.TypeTwo.PowIrrProof.equiv_of_isSubquotient (GlobalTheory.PrinProd.isSubquotient_prinSeries_multiProd k n ξ) hM
+  letI := nontrivial_of_irreducible hM
+  have nontriv {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V] [AddCommGroup W]
+      [Module ℂ W] {σ : Representation ℂ G W} {τ : Representation ℂ G V}
+      (h : IsSubquotient σ τ) (hw : Nontrivial W) : Nontrivial V := by
+    letI := hw
+    obtain ⟨S, f, hf⟩ := h
+    have := hf.nontrivial
+    exact Subtype.val_injective.nontrivial (α := S.toSubmodule)
+  haveI := nontriv (GlobalTheory.PermPrin.isSubquotient_multiProd_prinSeries
+      (Equiv.sigmaUnique (Fin n) fun _ => Fin 1) ξ) (nontrivial_of_irreducible hM)
+  have equiv_sub {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V] [AddCommGroup W]
+      [Module ℂ W] {σ : Representation ℂ G W} {τ : Representation ℂ G V}
+      (h : IsSubquotient σ τ) [Nontrivial W] (hτ : τ.IsIrreducible) : Nonempty (τ.Equiv σ) := by
+    obtain ⟨S, f, hf⟩ := h
+    obtain ⟨y, hy⟩ := exists_ne (0 : W)
+    obtain ⟨v, rfl⟩ := hf y
+    haveI : IsSimpleOrder (Subrepresentation τ) := hτ
+    rcases eq_bot_or_eq_top S with rfl | rfl
+    · exact absurd (by rw [show v = 0 from Subtype.ext v.2, map_zero]) hy
+    let F : τ.IntertwiningMap σ := f.comp (topEquiv τ).symm.toIntertwiningMap
+    have hs : Function.Surjective F := hf.comp (topEquiv τ).symm.toLinearEquiv.surjective
+    refine ⟨equivOfBijective F ⟨(injective_iff_map_eq_zero _).2 fun x hx => ?_, hs⟩⟩
+    rcases eq_bot_or_eq_top F.ker with h | h
+    · have : x ∈ F.ker := hx
+      rw [h] at this
+      exact this
+    · have : v.1 ∈ F.ker := by rw [h]; trivial
+      exact absurd this hy
+  obtain ⟨e1⟩ := equiv_sub (GlobalTheory.PrinProd.isSubquotient_prinSeries_multiProd k n ξ) hM
   obtain ⟨e⟩ := hq.nonempty_equiv hρ (GlobalTheory.Parabolic.isIrreducible_of_equiv e1 hM)
   have φ : ρ.Equiv (prodIrr y hd) := (e.symm.trans e1.symm).trans (p.trans q)
   exact ⟨⟨e.symm⟩, n, y, hd, ⟨fun i => Segment.single (y i) (hy i), ⟨Fin.univ_val_map _, fun i j _ hp => hnl i j hp.1⟩,

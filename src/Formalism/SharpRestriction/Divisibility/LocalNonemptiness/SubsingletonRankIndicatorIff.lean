@@ -286,12 +286,12 @@ variable (D : D7) (r j p : ℕ) (M : MP D p)
   secAdd := fun _ => inferInstance
   H0 := fun _ => ⊤
   nrm := fun _ _ _ => 0
-  nrm_nonneg := by exists_prescribed_local_data
-  norm_le_one_of_mem_sections := by exists_prescribed_local_data
+  nrm_nonneg := by intros; exact le_rfl
+  norm_le_one_of_mem_sections := by intros <;> simp_all
   GIso := fun _ _ => Empty
   vrat := fun _ _ => 0
   Lb := fun _ => ()
-  Lb_inv := by exists_prescribed_local_data
+  Lb_inv := by intros <;> simp_all
   nrmRef := fun _ _ _ => 0
   DVP := M.Gn
   dvRho := fun y => rk01 (M.ab y)
@@ -349,7 +349,7 @@ variable (D : D7) (r j p : ℕ) (M : MP D p)
   snAdd := fun _ _ _ => inferInstance
   snMod := fun _ _ _ => inferInstance
   act := fun _ _ _ => 1
-  act_scal := by exists_prescribed_local_data
+  act_scal := by intros <;> simp_all
   vth := fun _ _ _ => 0
   Jet := fun _ _ _ _ => PUnit
   jAdd := fun _ _ _ _ => inferInstance
@@ -422,6 +422,7 @@ variable (D : D7) (r j p : ℕ) (M : MP D p)
   genNe := fun _ => M.ne
   redK := fun _ y => y
   dvRho_pos_iff := fun _ y => by
+    change M.Gn at y
     show 0 < rk01 (M.ab y) ↔ ¬ M.ab y
     by_cases h : M.ab y <;> simp [rk01, h]
   genK := fun η => η
@@ -436,16 +437,17 @@ variable (D : D7) (r j p : ℕ) (M : MP D p)
   chFam := fun _ => ()
   ptK := fun _ y => y
   ptK_good := fun _ y => by
+    change M.Gn at y
     show Subsingleton (Fin (rk01 (M.ab y)) → 𝓞 D.host.E) ↔ rk01 (M.ab y) = 0
     rw [subsingleton_rank_indicator_iff]
     by_cases h : M.ab y <;> simp [rk01, h]
   vpi := fun _ => 1
-  vpi_pos := by exists_prescribed_local_data
+  vpi_pos := by intros; exact zero_lt_one
   ordGe := fun _ _ _ _ => True
   yEta := fun η => η
   yEta_good := fun η => subsingleton_rank_indicator_iff D (M.ab η)
   homSh := fun _ _ => ()
-  homSh_inv := by exists_prescribed_local_data
+  homSh_inv := by intros <;> simp_all
   isoSec := fun _ => 0
   nrm_isoSec := fun φ => Empty.elim φ
   isoSymm := fun φ => Empty.elim φ
@@ -456,20 +458,26 @@ variable (D : D7) (r j p : ℕ) (M : MP D p)
   lieL := fun _ => ⊤
   eig := fun _ _ => ⊤
   Wst := fun _ _ _ => ⊤
-  Wst_le := by exists_prescribed_local_data
+  Wst_le := by intros <;> simp_all
   taut := fun _ _ _ => ⊤
-  taut_eq := by exists_prescribed_local_data
+  taut_eq := by intros <;> simp_all
   nrmIn := fun _ _ _ _ => 0
-  nrmRef_def := by exists_prescribed_local_data
-  nrm_Lb_def := by exists_prescribed_local_data
-  om_smul := by exists_prescribed_local_data
+  nrmRef_def := by intros <;> simp_all
+  nrm_Lb_def := by intros <;> simp_all
+  om_smul := by intros <;> simp_all
   TC := fun _ => PUnit
   tcAdd := fun _ => inferInstance
   tcMod := fun _ => inferInstance
   iT := fun _ => 0
-  iT_span := by exists_prescribed_local_data
+  iT_span := by
+    intros
+    apply le_antisymm le_top
+    intro x hx
+    have : x = 0 := Subsingleton.elim _ _
+    rw [this]
+    exact Submodule.zero_mem _
   htC := fun _ => 0
-  htC_iT := by exists_prescribed_local_data
+  htC_iT := by intros <;> simp_all
   psiC := fun _ => 0
   lieGt1 := fun _ => ⊤
   eT := fun _ _ => 0

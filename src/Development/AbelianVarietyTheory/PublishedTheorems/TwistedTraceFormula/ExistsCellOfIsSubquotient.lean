@@ -245,6 +245,7 @@ theorem JacquetOfInducedFiltration.jhMult_eq (h : JacquetOfInducedFiltration k)
     {Y : Type} [AddCommGroup Y] [Module ℂ Y] {τ : Representation ℂ (Levi k m') Y}
     (hτ : τ.IsIrreducible) :
     jhMult τ (jac e' (parInd e ρ)) = ∑ b, jhMult τ (cellFunctor (f b) (g b) ρ) := by
+  unfold JacquetOfInducedFiltration at h
   obtain ⟨N, b, hb⟩ := h α β n m m' e e'
   obtain ⟨S, h1, h2, h3, h4⟩ := hb W ρ hρ
   exact (jhMult_filtration hτ S h1 h2 h3).trans (Fintype.sum_equiv b _ _ fun t =>
@@ -263,9 +264,11 @@ theorem exists_cell_of_isSubquotient (h : JacquetOfInducedFiltration k) (h' : Ce
         IsSubquotient τ (piTensor fun j => multiProd (g j) fun i => (s i j).ρ) := by
   have := Fintype.ofFinite (SizeMatrix m m')
   have h0 := jhMult_ne_zero_iff.2 hs
-  rw [multiProd, h.jhMult_eq e e' (isSmooth_piTensor hρ) (fun b => b.nonempty_rows.some)
+  change jhMult τ (jac e' (parInd e (piTensor ρ))) ≠ 0 at h0
+  rw [h.jhMult_eq e e' (isSmooth_piTensor hρ) (fun b => b.nonempty_rows.some)
     (fun b => b.nonempty_cols.some) hτ] at h0
   obtain ⟨b, -, hb⟩ := Finset.exists_ne_zero_of_sum_ne_zero h0
+  unfold CellSemisimplification at h'
   obtain ⟨T, -, hT⟩ := h' α β m m' _ b.nonempty_rows.some b.nonempty_cols.some X ρ hρ hl
   rw [hT ⟨Y, τ, hs.isSmooth (isSmooth_jac _ (isSmooth_parInd _ _)), hτ⟩] at hb
   obtain ⟨s, -, hs⟩ := Finset.exists_ne_zero_of_sum_ne_zero hb
@@ -312,9 +315,16 @@ theorem nonempty_jac_det_equiv (e : (Σ _ : Fin l, Fin 1) ≃ n) (χ : kˣ →* 
     induction y using PiTensorProduct.induction_on with
     | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
     | smul_tprod c x =>
-      rw [map_smul, smul_comm, piTensor_tprod, detLevi_apply, Units.coe_prod,
-        ← MultilinearMap.map_smul_univ]
-      congr 2
+      rw [map_smul, piTensor_tprod, detLevi_apply, Units.coe_prod,
+        smul_comm (∏ i, _) c]
+      congr 1
+      have hmap := (PiTensorProduct.tprod ℂ).map_smul_univ
+        (fun i => ((χ * absPow k (((l : ℂ) - 1) / 2) *
+          absPow k (-(modExp (fun _ : Fin l => Fin 1) i : ℂ) / 2))
+            (Matrix.GeneralLinearGroup.det (g i)) : ℂ)) x
+      simp only [RingHom.id_apply] at hmap
+      rw [← hmap]
+      congr 1
       funext i
       rw [modExp_fin _ (fun _ => by simp), mul_assoc, ← absPow_add,
         show ((l : ℂ) - 1) / 2 + -(((l : ℤ) - 1 - 2 * ((i : ℕ) : ℤ) : ℤ) : ℂ) / 2 = ((i : ℕ) : ℂ) by

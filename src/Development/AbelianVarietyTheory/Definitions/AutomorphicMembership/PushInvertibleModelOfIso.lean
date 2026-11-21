@@ -145,7 +145,7 @@ def KeyAt (M : GChart Y) {R : Type} [CommRing R] (z : Sp R ⟶ Y.X) (hz : ⊤ �
       (φ.appLE _ _ h).hom (M.θ (j PUnit.unit)) =
         (show Γ(x.P.A.left, (Y.t.PP.L.pull φ).U j ⊓ x.P.L.U i) from (w.s (j, i)).val) *
           resG _ inf_le_right (x.th.f i)) ∧
-    ∀ i, (x.v i).left ≫ φ = spMap (dualMap (ev z M.U hz)) ≫ M.v₀ (i.cast hg)
+    ∀ i, (x.v i).left ≫ φ = spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap (ev z M.U hz)) ≫ M.v₀ (i.cast hg)
 
 end OneModel
 

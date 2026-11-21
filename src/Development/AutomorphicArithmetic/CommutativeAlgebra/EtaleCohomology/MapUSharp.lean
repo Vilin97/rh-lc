@@ -254,7 +254,7 @@ private theorem wzChart {Y : Scheme.{0}} (hY : AffFin Y) {J : Type} [Finite J] (
   exact this
 
 private theorem wzNat {C : Type 1} [Category.{0} C] {F G : C ⥤ Type} (u : F ⟶ G) {A B : C} (f : A ⟶ B) (y : F.obj A) :
-    u.app B (F.map f y) = G.map f (u.app A y) := FunctorToTypes.naturality u f y
+    u.app B (F.map f y) = G.map f (u.app A y) := u.naturality_apply f y
 
 private theorem wzLocal {O : Type} [CommRing O] (f n : ℕ) {Y : Scheme.{0}} (q : Y ⟶ Spec (CommRingCat.of O)) (hq : Smooth q)
     (ϖ : O) (T : Fin (n + 1) → Corr l Y) (hr : ∀ j, (T j).r ≫ q = (T j).p ≫ q) (κ : O →+* OC l) (g : O →+* Qo l)

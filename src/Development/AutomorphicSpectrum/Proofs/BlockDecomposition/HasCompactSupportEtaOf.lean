@@ -28,7 +28,7 @@ theorem eventually_rowGL [TopologicalSpace R] [IsTopologicalRing R]
     {W : Set (GL (Fin k) R)} (hW : W ∈ 𝓝 (1 : GL (Fin k) R)) :
     ∀ᶠ r in 𝓝 (eRow R k), IsUnit (lastEnt r) ∧ rowGL r ∈ W := by
   have hl : Continuous (lastEnt : (Fin k → R) → R) := by
-    refine continuous_finset_sum _ fun c _ => ?_
+    refine continuous_finsetSum _ fun c _ => ?_
     split_ifs
     · exact continuous_apply c
     · exact continuous_const
@@ -549,7 +549,9 @@ theorem exists_cut : S4 → S8 → PositivityTheory.jumpWindows.G0 → LastRowCu
     have hT' : ∀ᶠ v in 𝓝 (0 : Fin k → w.adicCompletion E),
         IsUnit (lastEnt (v + eRow _ k)) ∧ rowGL (v + eRow _ k) ∈ N w ∩ {u | repW k w u φ = φ} := by
       have hc : Tendsto (fun v : Fin k → w.adicCompletion E => v + eRow _ k) (𝓝 0) (𝓝 (eRow _ k)) := by
-        simpa using (continuous_add_right (eRow (w.adicCompletion E) k)).tendsto 0
+        have hc : Continuous (fun v : Fin k → w.adicCompletion E => v + eRow _ k) :=
+          continuous_id.add continuous_const
+        simpa using hc.tendsto 0
       exact hc.eventually hT
     rw [nhds_pi, Filter.eventually_iff, Filter.mem_pi'] at hT'
     obtain ⟨I, t, ht, hts⟩ := hT'

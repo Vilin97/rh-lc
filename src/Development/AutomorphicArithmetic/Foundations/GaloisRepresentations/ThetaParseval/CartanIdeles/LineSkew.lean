@@ -27,23 +27,7 @@ theorem lineSkew : LineSkew := by
     intro v
     exact absurd v.2 (by simp [hP])
   case lat =>
-    have hl' := hl.lat
-    refine ⟨Submodule.fg_pi (fun _ => hl'.fg), ?_⟩
-    rw [eq_top_iff]
-    intro v _
-    rw [← Finset.univ_sum_single v]
-    refine Submodule.sum_mem _ (fun i _ => ?_)
-    have hv : v i ∈ Submodule.span E (𝔞 : Set E) := by rw [hl'.span_eq_top]; trivial
-    have hm : Pi.single i (v i) ∈ (Submodule.span E (𝔞 : Set E)).map (LinearMap.single E (fun _ : Fin d => E) i) := ⟨v i, hv, rfl⟩
-    rw [Submodule.map_span] at hm
-    refine Submodule.span_mono ?_ hm
-    rintro _ ⟨a, ha, rfl⟩
-    show _ ∈ Submodule.pi Set.univ (fun _ : Fin d => 𝔞)
-    rw [Submodule.mem_pi]
-    intro j _
-    by_cases h : j = i
-    · subst h; simpa using ha
-    · simp [h]
+    exact Submodule.IsLattice.of_fg E (Submodule.fg_pi (fun _ => hl.lat.fg))
   case dual =>
     intro y
     have hform : ∀ x : Fin d → E, form σ (skewSpc F δ 𝔞 d).J y x = ∑ i, y i * (δ * σ (x i)) := by
@@ -103,7 +87,7 @@ theorem lineSkew : LineSkew := by
     refine ⟨by simp, Matrix.of fun (k : Fin d) (p : Fin d ⊕ Fin 0) => Sum.elim (fun i => if k = i then (((Real.sqrt c)⁻¹ : ℝ) : ℂ) else 0) (fun z => z.elim0) p, ?_⟩
     rw [Matrix.mul_smul, Matrix.mul_one, Matrix.smul_mul]
     ext (i | i) (j | j)
-    · simp [Matrix.mul_apply, Matrix.one_apply]
+    · simp [Matrix.mul_apply, Matrix.one_apply, Function.swap_def, Sum.elim]
       split_ifs with h
       · rw [map_inv₀, Complex.conj_ofReal, ← mul_inv]
         have hs : ((√c : ℝ) : ℂ) * (√c : ℂ) = c := by rw [← Complex.ofReal_mul, Real.mul_self_sqrt hc.le]

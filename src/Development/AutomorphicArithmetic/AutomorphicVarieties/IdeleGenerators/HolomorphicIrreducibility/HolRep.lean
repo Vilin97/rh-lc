@@ -185,7 +185,8 @@ private theorem sat_two {V : Type} [AddCommGroup V] [Module ℂ V] {ρ : Represe
       h.2.2.2 _ (unif_spec w) 1 (by norm_num)]
     congr 1
     rw [Complex.ofReal_cpow (by positivity)]
-    have : qV F w = normV w := rfl
+    have : qV F w = normV w := by
+      simp [normV, qV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
     simp [satEig, Multiset.esymm, Multiset.powersetCard_one, this]
     norm_num [add_comm]
   · have h2 := h.2.2.2 _ (unif_spec w) 2 le_rfl
@@ -377,11 +378,14 @@ theorem UpperTheory.V.Sd.holRep :
   set ν := GlobalTheory.HeckeGal.Model.absPow F (1 - (k : ℝ) / 2) with hν
   obtain ⟨hν1, hν2, -⟩ := GlobalTheory.HeckeGal.Model.absPow_isAbsPow F (1 - (k : ℝ) / 2)
   rw [← hν] at hν1 hν2
+  have hnorm : ∀ w : Pl F, normV w = Ideal.absNorm w.asIdeal := fun w => by
+    rw [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
   have hq : ∀ w : Pl F, (0 : ℝ) < normV w := fun w =>
-    Nat.cast_pos.2 (zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm w))
+    Nat.cast_pos.2 (by rw [hnorm]; exact zero_lt_one.trans (NumberField.HeightOneSpectrum.one_lt_absNorm w))
   have hν3 : ∀ w, ((ν.val w : ℂˣ) : ℂ) = (((normV w : ℝ) ^ ((k : ℝ) / 2 - 1) : ℝ) : ℂ) := fun w => by
     rw [hν2, Complex.ofReal_cpow (hq w).le, ← Complex.ofReal_neg, neg_sub]
-    rfl
+    rw [hnorm]
+    norm_cast
   set π := π₀.twist ν
   set x₀ : π₀.V := ⟨ψ, hψ⟩
   set T := π₀.toTwist ν
@@ -440,8 +444,11 @@ theorem UpperTheory.V.Sd.holRep :
     fin_cases i <;> fin_cases j <;> simp at e' ⊢ <;> omega
   · obtain ⟨i, -, rfl⟩ := Multiset.mem_map.1 hz
     exact ⟨_, add_comm _ _⟩
-  · simp only [HChar.locInf_mul, hν, sign_abs, mul_one]
-    exact Units.ext ((sign_hol hφ.hol hφ.ne v).trans (sign_hol hφ.hol hφ.ne v').symm)
+  · apply Units.ext
+    change ((ω.locInf v (-1) * ν.locInf v (-1) * ν.locInf v (-1) : ℂˣ) : ℂ) =
+      ((ω.locInf v' (-1) * ν.locInf v' (-1) * ν.locInf v' (-1) : ℂˣ) : ℂ)
+    simp only [hν, sign_abs, mul_one]
+    exact (sign_hol hφ.hol hφ.ne v).trans (sign_hol hφ.hol hφ.ne v').symm
   · obtain ⟨B, hl, hr, hf, hc, hX⟩ := P.gkR F 2 π
     refine TR.CuspSub.isSelfDualBy_of_iso B hl hr hf hc hX (P.smoR F 2 one_le_two _ _ ?_)
     filter_upwards [GlobalTheory.CuspRep.LocSph.eventually_mem ((π.isSmooth_finPart (T x₀)).mem_nhds

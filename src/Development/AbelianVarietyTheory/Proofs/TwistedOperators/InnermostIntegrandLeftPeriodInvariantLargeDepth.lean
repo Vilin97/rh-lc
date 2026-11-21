@@ -201,15 +201,17 @@ theorem jPer_congr_window (M : GlobalTheory.FunObj.Vol G) (t : T) (C C' : BiFam 
         omega
       exact jPer_congr_window M t C C' F k hk4 hC hpres hwin σ (j + 1 + 1) _ _
         he.add_one.add_one hk hle (hpres j he hlt φ hφ)
-    · have hj2 : j + 2 * (σ + 1) + 2 = D.R.m := by simpa using hj
-      obtain rfl : j = k := by omega
-      rcases σ with _ | σ'
-      · simp only [jPer]
+    · have hkj : k = j := Nat.le_antisymm hge hjk
+      subst k
+      cases σ with
+      | zero =>
+        simp only [jPer]
         rw [hwin φ hφ]
-      simp only [jPer]
-      rw [hwin φ hφ]
-      exact jPer_congr_above W M t C C' F σ' (j + 1 + 1 + 1 + 1) _ _
-        (by obtain ⟨a, ha⟩ := he; exact ⟨a + 2, by omega⟩) fun i hi hji => hC i hi (by omega) (by omega)
+      | succ σ' =>
+        simp only [jPer]
+        rw [hwin φ hφ]
+        exact jPer_congr_above W M t C C' F σ' (j + 1 + 1 + 1 + 1) _ _
+          (by obtain ⟨a, ha⟩ := he; exact ⟨a + 2, by omega⟩) fun i hi hji => hC i hi (by omega) (by omega)
 
 theorem conAt_update (Φ : SchDown G t) (h : Pts G) (j : ℕ) (x : GA D (G.V (.grid D.R.m j))) (i : ℕ) (h0 : i ≠ j)
     (h1 : i + 1 ≠ j) (h2 : i + 1 + 1 ≠ j) : conAt W hM Φ (Function.update h j x) i = conAt W hM Φ h i := by

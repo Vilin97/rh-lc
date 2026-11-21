@@ -90,12 +90,13 @@ def pt (x : κ → mixedEmbedding.mixedSpace F) (y : κ → FiniteAdeleRing (�
 theorem evI_pt (x : κ → mixedEmbedding.mixedSpace F) (y : κ → FiniteAdeleRing (𝓞 F) F) :
     (fun i => evI F (pt x y i)) = x := by
   funext i
-  simp [evI, pt]
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply (x i)
 
 theorem pureA_pt (f : (κ → mixedEmbedding.mixedSpace F) → ℂ) (g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ)
     (x : κ → mixedEmbedding.mixedSpace F) (y : κ → FiniteAdeleRing (𝓞 F) F) :
     pureA F f g (pt x y) = f x * g y := by
-  simp [pureA, pt]
+  change f (fun i => evI F (pt x y i)) * g y = f x * g y
+  rw [evI_pt]
 
 def rOf (g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ) : (κ → AF F) → ℂ := fun x => g fun i => (x i).2
 

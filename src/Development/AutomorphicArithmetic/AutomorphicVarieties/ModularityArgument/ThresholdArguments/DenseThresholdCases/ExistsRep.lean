@@ -41,7 +41,7 @@ theorem exists_rep_alt (P : _root_.UpperTheory.V.Af.Hypotheses') [IsAlgClosure �
     · have h1 := (hw A hA).1 s hs
       have h2 : cycZ ℚ Ω l s = 1 := by
         refine Units.ext (PadicInt.ext_of_toZModPow.mp fun n => ?_)
-        rw [cycZ_toZModPow_eq (v := w) hwl hA (q := 1) (fun x hx => by simpa using hs.2 x hx) n]
+        rw [cycZ_toZModPow_eq (v := w) (σ := s) hwl hA (q := 1) (fun x hx => by simpa only [pow_one] using hs.2 x hx) n]
         simp
       have h3 : (cycBar ℚ Ω l ^ j) s = 1 := by
         rw [MonoidHom.zpow_apply, cycBar, MonoidHom.comp_apply, h2, map_one, one_zpow]

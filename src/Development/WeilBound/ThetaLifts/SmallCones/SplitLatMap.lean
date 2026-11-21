@@ -69,7 +69,11 @@ theorem low_eps {B : Base F E} (hB : B.IsGood σ) {ε : E} {κ : ℂ} (hκ1 : κ
     have e := hH.xy
     rw [h2, form, zero_dotProduct] at e
     exact zero_ne_one e
-  refine ⟨by omega, by omega, fun i j => ?_, fun w => ?_, hL ▸ isLattice_comap n n₁ Y.L H.ι P hPι hY.lat, fun u => ?_,
+  have hlat : (Y.L.comap ((Matrix.mulVecLin H.ι).restrictScalars (𝓞 E))).IsLattice E :=
+    Submodule.IsLattice.of_fg E (fg_comap _ (fun u u' e => by
+      have := congrArg (P *ᵥ ·) (show H.ι *ᵥ u = H.ι *ᵥ u' from e)
+      simpa [Matrix.mulVec_mulVec, hPι] using this) Y.L hY.lat.fg)
+  refine ⟨by omega, by omega, fun i j => ?_, fun w => ?_, hL ▸ hlat, fun u => ?_,
     fun w => ?_, fun v u => ?_⟩
   · rw [← form_single (σ := σ) Y₁.J j i, ← form_single (σ := σ) Y₁.J i j, hform, hform, form_swap hcm hY.herm]
   · rw [← cg]

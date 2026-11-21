@@ -144,7 +144,7 @@ theorem levIs_tr {L : Links.LevCh a.D T} {μ0 : T} (h : L.Is μ0) : (levCh b L).
 theorem isFam_tr (h : R.IsFam) : letI := alg b iK; (real b R).IsFam := by
   letI := alg b iK
   constructor
-  case tie => tr_clause a b h.tie
+  case tie => exact (by with_unfolding_all exact (h.tie :))
   case Sb => exact (by with_unfolding_all exact (h.Sb :))
   case roots => exact (by with_unfolding_all exact (h.roots :))
   case pl_onto => exact (by with_unfolding_all exact (h.pl_onto :))
@@ -163,8 +163,8 @@ theorem isModels_tr (h : R.IsModels) : letI := alg b iK; (real b R).IsModels := 
   case prX => exact (by with_unfolding_all exact (h.prX :))
   case HX => exact (by with_unfolding_all exact (h.HX :))
   case HV => exact (by with_unfolding_all exact (h.HV :))
-  case HE => tr_clause a b h.HE
-  case HW => tr_clause a b h.HW
+  case HE => exact (by with_unfolding_all exact (h.HE :))
+  case HW => exact (by with_unfolding_all exact (h.HW :))
   case gE => exact (by with_unfolding_all exact (h.gE :))
   case gW => exact (by with_unfolding_all exact (h.gW :))
   case jX => exact (by with_unfolding_all exact (h.jX :))
@@ -183,48 +183,48 @@ set_option maxHeartbeats 800000 in
 theorem isChainW_tr (h : R.IsChainW) : letI := alg b iK; (real b R).IsChainW := by
   letI := alg b iK
   constructor
-  case ωY => tr_clause a b h.ωY
-  case ωX => tr_clause a b h.ωX
-  case vY => tr_clause a b h.vY
-  case vX => tr_clause a b h.vX
-  case ptY => tr_clause a b h.ptY
-  case ptX => tr_clause a b h.ptX
-  case ItY => tr_clause a b h.ItY
-  case ItX => tr_clause a b h.ItX
+  case ωY => exact (by with_unfolding_all exact (h.ωY :))
+  case ωX => exact (by with_unfolding_all exact (h.ωX :))
+  case vY => exact (by with_unfolding_all exact (h.vY :))
+  case vX => exact (by with_unfolding_all exact (h.vX :))
+  case ptY => exact (by with_unfolding_all exact (h.ptY :))
+  case ptX => exact (by with_unfolding_all exact (h.ptX :))
+  case ItY => exact (by with_unfolding_all exact (h.ItY :))
+  case ItX => exact (by with_unfolding_all exact (h.ItX :))
   case ioY => exact (by with_unfolding_all exact ((cast (io_congr R (multT_eq b a)
       (fun m y _ => ∀ t k, k + 1 < a.D.R.m → OrZero (pIoYW (@m) R t k) (y t k)) ((R.ioY)) ((R.ioX))) ((h.ioY))) : _))
-  case ioX => kexactB (cast (io_congr R (multT_eq b a)
-      (fun m _ x => ∀ t, OrZero (pIoXW (@m) R t) (x t)) ((by with_unfolding_all exact (R.ioY :))) ((by with_unfolding_all exact (R.ioX :)))) ((by with_unfolding_all exact (h.ioX :))))
-  case Th => tr_via (fun p : type_of% R.PTh => ∀ t, OrZero (p t) (R.Th t)) (pTh_eq b R) h.Th
+  case ioX => exact (by with_unfolding_all exact (cast (io_congr R (multT_eq b a)
+      (fun m _ x => ∀ t, OrZero (pIoXW (@m) R t) (x t)) ((by with_unfolding_all exact (R.ioY :))) ((by with_unfolding_all exact (R.ioX :)))) ((by with_unfolding_all exact (h.ioX :))) :))
+  case Th => exact (by with_unfolding_all exact (cast (congrArg (fun p : type_of% R.PTh => ∀ t, OrZero (p t) (R.Th t)) (pTh_eq b R)) h.Th :))
 
 set_option maxHeartbeats 800000 in
 
 theorem isThPW_tr (h : R.IsThPW) : letI := alg b iK; (real b R).IsThPW := by
   letI := alg b iK
   constructor
-  case ωP => tr_clause a b h.ωP
-  case vP => tr_clause a b h.vP
-  case pt_theta => tr_clause a b h.pt_theta
+  case ωP => exact (by with_unfolding_all exact (h.ωP :))
+  case vP => exact (by with_unfolding_all exact (h.vP :))
+  case pt_theta => exact (by with_unfolding_all exact (h.pt_theta :))
   case ioP => exact (by with_unfolding_all exact (h.ioP :))
-  case thF => tr_via (fun p : type_of% R.PThF => ∀ i t, OrZero (p i t) (R.thF i t)) (pThF_eq b R) h.thF
-  case thG => kexactB h.thG
+  case thF => exact (by with_unfolding_all exact (cast (congrArg (fun p : type_of% R.PThF => ∀ i t, OrZero (p i t) (R.thF i t)) (pThF_eq b R)) h.thF :))
+  case thG => exact (by with_unfolding_all exact (h.thG :))
 
 set_option maxHeartbeats 800000 in
 
 theorem exAt_tr (h : R.ExAt) : letI := alg b iK; (real b R).ExAt := by
   letI := alg b iK
   constructor
-  case ItY => tr_clause a b h.ItY
-  case ItX => tr_clause a b h.ItX
-  case ioY => tr_via (fun m : type_of% (@MultT a.D) => ∀ t k, k + 1 < a.D.R.m → ∃ y, pIoYW (@m) R t k y) (multT_eq b a) h.ioY
-  case ioX => tr_via (fun m : type_of% (@MultT a.D) => ∀ t, ∃ y, pIoXW (@m) R t y) (multT_eq b a) h.ioX
-  case Th => tr_via (fun p : type_of% R.PTh => ∀ t, ∃ y, p t y) (pTh_eq b R) h.Th
+  case ItY => exact (by with_unfolding_all exact (h.ItY :))
+  case ItX => exact (by with_unfolding_all exact (h.ItX :))
+  case ioY => exact (by with_unfolding_all exact (cast (congrArg (fun m : type_of% (@MultT a.D) => ∀ t k, k + 1 < a.D.R.m → ∃ y, pIoYW (@m) R t k y) (multT_eq b a)) h.ioY :))
+  case ioX => exact (by with_unfolding_all exact (cast (congrArg (fun m : type_of% (@MultT a.D) => ∀ t, ∃ y, pIoXW (@m) R t y) (multT_eq b a)) h.ioX :))
+  case Th => exact (by with_unfolding_all exact (cast (congrArg (fun p : type_of% R.PTh => ∀ t, ∃ y, p t y) (pTh_eq b R)) h.Th :))
   case ioP => exact (by with_unfolding_all exact (h.ioP :))
-  case thF => tr_via (fun p : type_of% R.PThF => ∀ i t, ∃ y, p i t y) (pThF_eq b R) h.thF
-  case thG => kexactB h.thG
+  case thF => exact (by with_unfolding_all exact (cast (congrArg (fun p : type_of% R.PThF => ∀ i t, ∃ y, p i t y) (pThF_eq b R)) h.thF :))
+  case thG => exact (by with_unfolding_all exact (h.thG :))
 
 theorem lLevelW_tr (h : R.LLevelW F) : letI := alg b iK; (real b R).LLevelW (face b F) := by
-  tr_via (fun W : type_of% R.Wat => ∀ c i σ, R.WS F c i σ = (W i σ (R.levL F c σ)).comap (R.HW i σ).e) (wat_eq b R) h
+  exact (by with_unfolding_all exact (cast (congrArg (fun W : type_of% R.Wat => ∀ c i σ, R.WS F c i σ = (W i σ (R.levL F c σ)).comap (R.HW i σ).e) (wat_eq b R)) h :))
 
 end Two
 

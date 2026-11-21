@@ -75,9 +75,10 @@ theorem cupList_diff (hF : IsFil Φ Fil) : ∀ {m : ℕ} (ℓ : Fin m → CH.Cn 
       (fun i => hd _) (fun i => hα _)
     have hl' : ℓ (Fin.last m) + CH.d _ 0 (α (Fin.last m)) ∈ FC (Fil ((1 : ℕ) : ℤ)) 1 :=
       add_mem (hℓ _) (d_mem (hα _))
-    have hdl' : CH.d _ 1 (ℓ (Fin.last m) + CH.d _ 0 (α (Fin.last m))) = 0 := by
+    have hdl' : CH.d (CH.modF Φ.A) 1
+        (ℓ (Fin.last m) + CH.d (CH.modF Φ.A) 0 (α (Fin.last m))) = 0 := by
       rw [map_add (f := _), hd, CH.d_d, add_zero]
-    obtain ⟨H₁, hH₁, e₁⟩ := bd_cup (m := m) hF ih hl' hdl'
+    obtain ⟨H₁, hH₁, e₁⟩ := bd_cup (m := m) (Fil := Fil) hF ih hl' hdl'
     obtain ⟨H₂, hH₂, e₂⟩ := cup_d hF (cupList_mem hF (fun i : Fin m => ℓ i.castSucc) fun i => hℓ _)
       (d_cupList Φ.A _ fun i => hd _) (hα (Fin.last m))
     refine ⟨H₁ + H₂, add_mem hH₁ hH₂, ?_⟩
@@ -94,9 +95,9 @@ theorem rep_of_bd : ∀ {m : ℕ} {z z' : CH.Cn (CH.modF Φ.A) m} {c : CH.H (sq 
     rw [e]
     exact h
   | n + 1, z, z', c, hb, h => by
-    have hb' : ∃ H : CH.Cn (CH.modF Φ.A) n,
-        H ∈ FC (Fil ((n + 1 : ℕ) : ℤ)) n ∧ z' - z = CH.d (CH.modF Φ.A) n H := hb
-    obtain ⟨H, hH, e⟩ := hb'
+    change ∃ H : CH.Cn (CH.modF Φ.A) n,
+      H ∈ FC (Fil ((n + 1 : ℕ) : ℤ)) n ∧ z' - z = CH.d (CH.modF Φ.A) n H at hb
+    obtain ⟨H, hH, e⟩ := hb
     have h2 := rep_add h (rep_d (a := Fil ((n + 1 : ℕ) : ℤ)) (b := Fil (((n + 1 : ℕ) : ℤ) + 1)) H (mem_FC.1 hH))
     rw [add_zero] at h2
     have e' : z' = z + CH.d _ n H := by rw [← e]; abel

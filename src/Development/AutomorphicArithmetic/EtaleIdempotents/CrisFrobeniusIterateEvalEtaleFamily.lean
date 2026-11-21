@@ -28,5 +28,5 @@ theorem UpperTheory.crisFrobenius_iterate_evalEtaleFamily :
         (phiH M.P n j)^[N] (evE e M j n v c) = evE e M j n v (fun k => (phiA l)^[N] (c k)) := by
   intro l _ K e he M j n N ι _ v c
   exact iter_gen (phiH M.P n j) (phiA l) (fun c => evE e M j n v c)
-    (fun c => sl_sum (ACris.phi ℂ_[l] l) (M.phiMH n j) c (fun k => e M n j ((v k).lev n))
+    (fun c => sl_sum (ACris.phi (K := ℂ_[l]) (p := l)) (M.phiMH n j) c (fun k => e M n j ((v k).lev n))
       (fun k => he M n j _)) N c

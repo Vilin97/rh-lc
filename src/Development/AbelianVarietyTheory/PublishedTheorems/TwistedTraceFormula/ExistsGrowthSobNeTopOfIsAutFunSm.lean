@@ -65,7 +65,7 @@ theorem growthSize_sum_le {T : (GA D V → ℂ) → GA D V → ℂ} (hT : LinOnS
     have := hT.smul 0 0
     rw [zero_smul, zero_smul] at this
     rw [Finset.sum_empty, Finset.sum_empty, this]
-    exact ((growthSize_const (0 : ℂ)).trans enorm_zero).le
+    exact ((growthSize_const (0 : ℂ)).trans eNorm_zero).le
   | insert a s ha ih =>
     rw [Finset.sum_insert ha, Finset.sum_insert ha, hT.add _ (Submodule.smul_mem _ _ (hf a)) _
       (sum_mem fun b _ => Submodule.smul_mem _ _ (hf b)), hT.smul, ← growthSize_smul]
@@ -88,7 +88,8 @@ theorem exists_growthSize_rWord_le (hθ : IsInfFam θ)
     have e : rWord θ V (p :: l) φ = Rder θ V p.1 p.2 (rWord θ V l φ) := rfl
     rw [e, Rder_eq_sum_glDer hθ hm (hl p List.mem_cons_self)]
     refine (growthSize_sum_le (linOnSm_glWord l') _ _ (fun a => (linOnSm_RderC p.1 _).mem _ hm) N).trans ?_
-    rw [ENNReal.coe_mul, ENNReal.coe_finset_sum, mul_assoc, Finset.sum_mul]
+    push_cast
+    rw [mul_assoc, Finset.sum_mul]
     refine Finset.sum_le_sum fun a _ => mul_le_mul' le_rfl ?_
     have := hc φ hs N d (l' ++ [(p.1, a)])
       (by simp only [List.length_append, List.length_cons, List.length_nil] at hd ⊢; omega)

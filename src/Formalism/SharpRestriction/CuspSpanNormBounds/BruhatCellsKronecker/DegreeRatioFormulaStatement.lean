@@ -407,8 +407,10 @@ theorem level_ratio_bound (D : D7) (C0 C1 : ℝ) (hD : StandingNumericalData D C
     have h2 := D.R.two_le_m
     omega
   have hf1 : 1 ≤ D.R.f := by
-    have : 0 < D.R.n := by unfold Ranks.n; positivity
-    unfold Ranks.f; omega
+    have hm := D.R.two_le_m
+    have hmf := D.R.m_le_f
+    unfold Ranks.f Ranks.n
+    omega
   obtain ⟨_, _, _, _, _, _, _, _, _, hwin, _⟩ := hD
   set x : ℝ := (D.R.f : ℝ) * (2 : ℝ) ^ ((3 : ℝ) - D.R.k) with hx
   set A : D.what₂.Word → ℝ := fun w => ∏ τ, (Tcrit D w τ / Tr D w) ^ D.R.k with hA

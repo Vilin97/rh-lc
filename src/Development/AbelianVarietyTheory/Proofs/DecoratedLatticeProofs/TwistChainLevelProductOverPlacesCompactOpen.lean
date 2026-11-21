@@ -32,9 +32,8 @@ theorem map_ofFn_prod_eq {G M : Type*} [Group G] [Monoid M] (φ : G →* M) :
       have h1 : φ (List.ofFn fun j : Fin r => a j.succ).prod = 1 := by
         rw [φ.map_list_prod, List.map_ofFn]
         refine List.prod_eq_one (l := List.ofFn fun j : Fin r => φ (a j.succ)) ?_
-        intro x hx
-        obtain ⟨j, rfl⟩ := List.mem_ofFn.mp hx
-        exact h _ (Fin.succ_ne_zero j)
+        rw [List.forall_mem_ofFn_iff]
+        exact fun j => h _ (Fin.succ_ne_zero j)
       rw [h1, mul_one]
     | succ i' =>
       rw [h 0 (Fin.succ_ne_zero i').symm, one_mul]

@@ -95,8 +95,8 @@ private theorem rig_avg {K D V : Type} [Field K] [CharZero K] [Group D] [AddComm
 
 private theorem rig_away {O K G' Γ ι : Type} [CommRing O] [IsLocalRing O] [Finite (ResidueField O)] [Field K] [CharZero K]
     [Algebra O K] [Group G'] [TopologicalSpace G'] [IsTopologicalGroup G'] [Group Γ] [TopologicalSpace Γ]
-    (F : Frame O G' Γ ι) (hF : F.Ok) (r : Γ →* GG 3 K) (hm : HasMult F.η r) (y : Γ → Matrix (Fin 3) (Fin 3) K)
-    (r' : Γ →* GG 3 (DualNumber K)) (hy : IsCoc r y)
+    (F : Frame O G' Γ ι) (hF : F.Ok) (r : Γ →* GG (m := 3) (R := K)) (hm : HasMult F.η r) (y : Γ → Matrix (Fin 3) (Fin 3) K)
+    (r' : Γ →* GG (m := 3) (R := DualNumber K)) (hy : IsCoc r y)
     (hd : IsDeform ((GG.map (algebraMap K (DualNumber K))).comp r)
       (fun g => (y g).map (TrivSqZeroExt.inr : K → DualNumber K)) r')
     (hN : ∀ v ∉ F.Tb, ∀ s ∈ F.Nv v, y (F.loc v s) = 0)
@@ -115,8 +115,8 @@ private theorem rig_away {O K G' Γ ι : Type} [CommRing O] [IsLocalRing O] [Fin
     rw [map_mul]
     exact hy _ _
 
-private theorem rig_fst {K D : Type} [Field K] [Group D] (r : D →* GG 3 K) (y : D → Matrix (Fin 3) (Fin 3) K)
-    (r' : D →* GG 3 (DualNumber K))
+private theorem rig_fst {K D : Type} [Field K] [Group D] (r : D →* GG (m := 3) (R := K)) (y : D → Matrix (Fin 3) (Fin 3) K)
+    (r' : D →* GG (m := 3) (R := DualNumber K))
     (hd : IsDeform ((GG.map (algebraMap K (DualNumber K))).comp r)
       (fun g => (y g).map (TrivSqZeroExt.inr : K → DualNumber K)) r') (h : GL (Fin 3) (DualNumber K)) (g : D) (i j : Fin 3) :
     ((conjBy h⁻¹ r' g).mat i j).fst =
@@ -149,9 +149,9 @@ private theorem rig_char {l : ℕ} [Fact l.Prime] (c : Coef l) (u : ℤ_[l]ˣ) (
 private theorem rig_above (hP : UpperTheory.V.Loc.LocalPublishedTheorems) (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [Fact l.Prime]
     (c : Coef l) {N : ℕ} [NeZero N] (e : ℕ) (ψ : DirichletCharacter c.O N) (o₁ : ℕ) (hD : HostData l e ψ o₁)
     (S : Finset Pl) (A : S → ValuationSubring Ω) (F : Frame c.O (Formalism.ConjugateSelfDual.G ℚ Ω) (Gam Ω S) S)
-    (hF : IsHostFrame Ω c e ψ S A F) (g₁ : Gam Ω S) (r : Gam Ω S →* GG 3 (PadicAlgCl l)) (hr : F.IsCharZeroPt g₁ r)
+    (hF : IsHostFrame Ω c e ψ S A F) (g₁ : Gam Ω S) (r : Gam Ω S →* GG (m := 3) (R := PadicAlgCl l)) (hr : F.IsCharZeroPt g₁ r)
     (hm : HasMult F.η r) (hc : Continuous (mats r)) (y : Gam Ω S → Matrix (Fin 3) (Fin 3) (PadicAlgCl l))
-    (r' : Gam Ω S →* GG 3 (DualNumber (PadicAlgCl l))) (hyc : Continuous y) (hy : IsCoc r y)
+    (r' : Gam Ω S →* GG (m := 3) (R := DualNumber (PadicAlgCl l))) (hyc : Continuous y) (hy : IsCoc r y)
     (hd : IsDeform ((GG.map (algebraMap (PadicAlgCl l) (DualNumber (PadicAlgCl l)))).comp r)
       (fun g => (y g).map (TrivSqZeroExt.inr : PadicAlgCl l → DualNumber (PadicAlgCl l))) r')
     (h : GL (Fin 3) (DualNumber (PadicAlgCl l)))
@@ -239,7 +239,7 @@ private theorem tw_iso {Γ k : Type} [Group Γ] [Field k] {n : ℕ} {r r' : Γ �
   rw [Units.val_mul, Units.val_mul, Af.tw_val, Af.tw_val, hg, Units.val_mul, Units.val_mul, Matrix.mul_smul,
     Matrix.smul_mul]
 
-private theorem conj_left {G R : Type} [Group G] [CommRing R] (r : G →* GG 3 R) (h : GL (Fin 3) R) (g : G)
+private theorem conj_left {G R : Type} [Group G] [CommRing R] (r : G →* GG (m := 3) (R := R)) (h : GL (Fin 3) R) (g : G)
     (hg : (r g).right = 1) : (conjBy h r g).left = h * (r g).left * h⁻¹ := by
   have e : conjBy h r g = GG.ofGL h * r g * GG.ofGL h⁻¹ := by
     rw [map_inv]; rfl
@@ -304,20 +304,20 @@ private theorem h1f_equiv_of_intertwiner {F Ω : Type} [Field F] [NumberField F]
       rw [← key, ← map_sub, ← hx g, LinearMap.rTensor_tmul]
       rfl
 
-private theorem h1f_vanishing_conj_invariant {Ω : Type} [Field Ω] [CharZero Ω] {l : ℕ} [Fact l.Prime] (R : G ℚ Ω →* GG 3 (PadicAlgCl l))
+private theorem h1f_vanishing_conj_invariant {Ω : Type} [Field Ω] [CharZero Ω] {l : ℕ} [Fact l.Prime] (R : G ℚ Ω →* GG (m := 3) (R := PadicAlgCl l))
     (h : GL (Fin 3) (PadicAlgCl l)) (H : Af.BlochKatoSelmerVanishes l (adRep (conjBy h R))) : Af.BlochKatoSelmerVanishes l (adRep R) := by
   have e : ∀ g, conjBy h R g = GG.ofGL h * R g * (GG.ofGL h)⁻¹ := fun g => rfl
-  refine h1f_equiv_of_intertwiner _ _ (GG.ad 3 _ (GG.ofGL h)) (GG.ad 3 _ (GG.ofGL h)⁻¹) ?_ (fun x => ?_) (fun g x => ?_) (fun g x => ?_) H
-  · have : ⇑(GG.ad 3 _ (GG.ofGL h)) = fun X => (GG.ofGL h).mat * X *
+  refine h1f_equiv_of_intertwiner _ _ (GG.ad (GG.ofGL h)) (GG.ad (GG.ofGL h)⁻¹) ?_ (fun x => ?_) (fun g x => ?_) (fun g x => ?_) H
+  · have : ⇑(GG.ad (GG.ofGL h)) = fun X => (GG.ofGL h).mat * X *
         (((GG.ofGL h).left⁻¹ : GL (Fin 3) (PadicAlgCl l)) : Matrix (Fin 3) (Fin 3) (PadicAlgCl l)) := by
       funext X
       rw [GG.ad_apply, GG.adFun, if_pos (SemidirectProduct.right_inl _)]
     rw [this]
     exact (continuous_const.matrix_mul continuous_id).matrix_mul continuous_const
   · rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply]
-  · show GG.ad 3 _ _ (GG.ad 3 _ (R g) x) = GG.ad 3 _ (conjBy h R g) _
+  · show GG.ad _ (GG.ad (R g) x) = GG.ad (conjBy h R g) _
     rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul, e, inv_mul_cancel_right]
-  · show GG.ad 3 _ _ (GG.ad 3 _ (conjBy h R g) x) = GG.ad 3 _ (R g) _
+  · show GG.ad _ (GG.ad (conjBy h R g) x) = GG.ad (R g) _
     rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul, e, mul_assoc, inv_mul_cancel_left]
 
 private theorem val_of_even {Ω : Type} [Field Ω] (B : ValuationSubring Ω) {M : ℕ} (hM : Even M)
@@ -349,7 +349,7 @@ private theorem selmer_h1_vanishes_at_rigid_point (hH : Af.HypothesesH) (hL : Th
     (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] (l : ℕ) [hl : Fact l.Prime] (c : Coef l) (N : ℕ) [NeZero N] (e : ℕ)
     (ψ : DirichletCharacter c.O N) (o₁ : ℕ) (hd : UnitaryThreeInertia.HostData l e ψ o₁) (S : Finset UnitaryThreeInertia.Pl) (A : S → ValuationSubring Ω)
     (F : UnitaryThreeInertia.Frame c.O (G ℚ Ω) (UnitaryThreeInertia.Gam Ω S) S) (hF : UnitaryThreeInertia.IsHostFrame Ω c e ψ S A F) (ι : Qbar l ≃+* ℂ)
-    (g₁ : UnitaryThreeInertia.Gam Ω S) (hg : F.Marked g₁) (r : UnitaryThreeInertia.Gam Ω S →* GG 3 (PadicAlgCl l)) (hr : F.IsCharZeroPt g₁ r)
+    (g₁ : UnitaryThreeInertia.Gam Ω S) (hg : F.Marked g₁) (r : UnitaryThreeInertia.Gam Ω S →* GG (m := 3) (R := PadicAlgCl l)) (hr : F.IsCharZeroPt g₁ r)
     (hmu : HasMult F.η r) (hc : Continuous (mats r)) (hB : BPrime K ι fun s => (r (toGS Ω _ s)).mat) :
     Af.BlochKatoSelmerVanishes l (adRep (r.comp F.π)) := by
   have hN := hH.litN

@@ -36,7 +36,7 @@ private theorem normV_under {K K' : Type} [Field K] [NumberField K] [Field K'] [
   have : w.asIdeal.LiesOver (w.under (𝓞 K)).asIdeal := ⟨rfl⟩
   have := w.isMaximal
   have := (w.under (𝓞 K)).isMaximal
-  show Ideal.absNorm w.asIdeal = Ideal.absNorm (w.under (𝓞 K)).asIdeal ^ w.asIdeal.inertiaDeg (𝓞 K)
+  simp only [normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply]
   rw [← Ideal.absNorm_relNorm (𝓞 K) (𝓞 K') w.asIdeal,
     Ideal.relNorm_eq_pow_of_isMaximal w.asIdeal (w.under (𝓞 K)).asIdeal, map_pow]
 
@@ -121,7 +121,8 @@ private theorem up_one (F E Ω : Type) [Field F] [NumberField F] [_root_.NumberF
   filter_upwards [(plMap_injective j).tendsto_cofinite.eventually hat] with w hw
   obtain ⟨B, hB, hF⟩ := hw
   have hu : w.under (𝓞 F) = plMap j w := HeightOneSpectrum.ext (Ideal.ext fun x => Iff.rfl)
-  have hn : normV w = normV (plMap j w) := (absNorm_plMap j w).symm
+  have hn : normV w = normV (plMap j w) := by
+    simpa only [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using (absNorm_plMap j w).symm
   refine ⟨B, UpperTheory.V.FieldIso.hasSat_pullSub j hB, ?_⟩
   have h3 := (UpperTheory.frobenius_power_compatibility F E Ω l ι w 1 (by rw [hu, pow_one, hn])).1 n r _ (hu ▸ hF)
   rw [hn, ← hu]

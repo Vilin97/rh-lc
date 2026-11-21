@@ -26,7 +26,7 @@ variable {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V]
 theorem exists_atom_le {ρ : Representation ℂ G V} (h : HasFiniteLength ρ) {E : Subrepresentation ρ}
     (hE : E ≠ ⊥) : ∃ S : Subrepresentation ρ, IsAtom S ∧ S ≤ E := by
   obtain ⟨-, hw⟩ := (hasFiniteLength_iff_wellFounded ρ).1 h
-  haveI : IsAtomic (Subrepresentation ρ) := isAtomic_of_orderBot_wellFounded_lt hw.wf
+  haveI : IsAtomic (Subrepresentation ρ) := isAtomic_of_orderBot_wellFounded_lt hw
   obtain h' | ⟨S, hS, hle⟩ := eq_bot_or_exists_atom_le E
   · exact absurd h' hE
   · exact ⟨S, hS, hle⟩
@@ -71,6 +71,7 @@ theorem piTensor_apply_of_scalar (ρ : ∀ a, Representation ℂ (Γ a) (X a)) (
       · simp [h0]
       · simp [h1]
     rw [this, MultilinearMap.map_update_smul, Function.update_eq_self]
+    rfl
   | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
 
 def piTensorCongr {ρ : ∀ a, Representation ℂ (Γ a) (X a)} {σ : ∀ a, Representation ℂ (Γ a) (Y a)}

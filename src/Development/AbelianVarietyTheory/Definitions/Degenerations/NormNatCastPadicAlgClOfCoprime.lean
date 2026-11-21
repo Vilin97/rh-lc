@@ -314,8 +314,9 @@ def heisSys : ThetaSys o Ω :=
       rw [(nsmul_eq_zero_iff_castHom _).1 (congrFun ha (.inl 0)), (nsmul_eq_zero_iff_castHom _).1 (congrFun ha (.inr 0))]
       ext i j
       simp [heisMat_zero_apply, Matrix.one_apply, eq_comm]
-    ρ_mul := fun a b => ⟨_, by
-      rw [heisMat_mul _ hh, AddChar.zmodChar_apply, ← pow_mul, Pi.add_apply, Pi.add_apply, map_add (f := _), map_add (f := _)]⟩
+    ρ_mul := fun a b => by
+      rw [heisMat_mul _ hh, AddChar.zmodChar_apply, ← pow_mul, Pi.add_apply, Pi.add_apply, map_add (f := _), map_add (f := _)]
+      exact ⟨_, rfl⟩
     ρ_add := fun a b h => by
       have h2 := (nsmul_eq_zero_iff_castHom _).1 h
       rw [eStd, Fin.sum_univ_one, map_sub, map_mul, map_mul] at h2

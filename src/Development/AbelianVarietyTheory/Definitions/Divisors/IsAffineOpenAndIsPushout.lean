@@ -460,8 +460,7 @@ theorem ofAugCot_bijective : Function.Bijective (c.ofAugCot he) := by
   · obtain ⟨x, rfl⟩ := (RingHom.ker (c.aug he)).toCotangent_surjective x
     rw [key]
     exact hb.lift_eq g _
-  · refine hb.inductionOn y (fun y => c.ofAugCot he (hb.lift g y) = y) (by rw [map_zero, map_zero]; rfl) (fun s => ?_)
-      (fun r y hy => ?_) fun y z hy hz => ?_
+  · refine hb.inductionOn y (fun s => ?_) (fun r y hy => ?_) fun y z hy hz => ?_
     · rw [hb.lift_eq]
       exact key _
     · rw [map_smul, map_smul, hy]

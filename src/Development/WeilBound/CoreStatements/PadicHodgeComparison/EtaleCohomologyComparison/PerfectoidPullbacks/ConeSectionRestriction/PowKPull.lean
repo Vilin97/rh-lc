@@ -29,6 +29,9 @@ theorem powK_pull {K : Type} [CommRing K] {X : Scheme.{0}} (q : X ⟶ Spec (Comm
       funext s
       simp only [CH.d, cupPowC, LinearMap.coe_mk, AddHom.coe_mk, Fin.sum_univ_two]
       simp [CH.modF]
+      change (((thA (smFun X q)).map (g.map (GlobalTheory.CatH.toLast 0 s))).hom 1) +
+        -(((thA (smFun X q)).map (g.map (GlobalTheory.CatH.toLast 1 s))).hom 1) = 0
+      simp only [map_one, add_neg_cancel]
     refine ⟨h0, ?_⟩
     unfold CH.oneH
     exact (CrystallineSemistableComparison.P.mapH_cls (CH.Mor.restrict (O (smFun X q)) g).hom 0

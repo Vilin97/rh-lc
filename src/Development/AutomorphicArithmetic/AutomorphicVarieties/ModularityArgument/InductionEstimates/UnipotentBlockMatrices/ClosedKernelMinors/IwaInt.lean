@@ -23,6 +23,11 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.iwaInt :
   have hK : IsCompact (KG K (2 + 2) : Set (G1 K (2 + 2))) :=
     ((UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.blkLaws (K := K)).2.2.2.2.2.2.2.2.2.2.2 (2 + 2)).1
   have : CompactSpace (KG K (2 + 2)) := isCompact_iff_compactSpace.mp hK
+  have : IsFiniteMeasure κ := CompactSpace.isFiniteMeasure
+  have : SigmaFinite κ := IsFiniteMeasure.toSigmaFinite κ
+  have : SFinite κ := by
+    set_option synthInstance.maxHeartbeats 400000 in
+      infer_instance
   have : μ.IsMulRightInvariant := isMulRightInvariant_normOneGL μ
   have hSK : Function.Surjective (HaarSK.mulMap S (KG K (2 + 2))) := by
     intro g

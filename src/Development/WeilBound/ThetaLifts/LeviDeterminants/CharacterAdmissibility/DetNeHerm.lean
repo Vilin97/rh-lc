@@ -35,7 +35,7 @@ theorem fr_span {R : Type} [CommRing R] {K : Type} [CommRing K] [Algebra R K] {c
     congr 1
     generalize ρ * u = w
     ext i k
-    simp [mul_apply, vecMulVec_apply]
+    simp [Matrix.mul_apply, vecMulVec_apply]
   · have e := congrArg (ρ * ·) hb
     simp only [mul_vecMulVec, Matrix.mul_zero] at e
     have e1 : (ρ *ᵥ y) (.inr ()) = 1 := (congrFun (congrFun h.rz (.inr ())) (.inr ())).trans (by simp)
@@ -127,7 +127,7 @@ theorem mixX_levi (hA : Ax (adeleClass F) B.ψ) (hP : IsPair B M χX χW om r s 
   have : IsTopologicalRing (AE F E) := IsModuleTopology.isTopologicalRing (AF F) _
   obtain ⟨-, ⟨d', hd', hW⟩, -⟩ := hP.weil
   obtain ⟨-, ⟨d₁', hd₁', hW₁⟩, -⟩ := hP₁.weil
-  let t' : GL Unit (AE F E) := ⟨of fun _ _ => t.1, of fun _ _ => (t⁻¹).1, by ext; simp [mul_apply], by ext; simp [mul_apply]⟩
+  let t' : GL Unit (AE F E) := ⟨of fun _ _ => t.1, of fun _ _ => (t⁻¹).1, by ext; simp [Matrix.mul_apply], by ext; simp [Matrix.mul_apply]⟩
   have ht : GeneralLinearGroup.det t' = t := Units.ext (by simp [t'])
   have key := TB hA hS hj hE hF (d := d') (d₁ := d₁') (fun u z => by
       rw [← transpose_transpose u, ← transpose_transpose z, hd', hd₁', hrel]
@@ -140,7 +140,7 @@ theorem mixX_levi (hA : Ax (adeleClass F) B.ψ) (hP : IsPair B M χX χW om r s 
     m g₁ t' hm.2.2 (by
       ext i k
       have := congrFun hm.1 i
-      simp only [mul_apply, replicateCol_apply, Finset.univ_unique, Finset.sum_singleton, t', of_apply]
+      simp only [Matrix.mul_apply, replicateCol_apply, Finset.univ_unique, Finset.sum_singleton, t', of_apply]
       exact this.trans (mul_comm _ _))
   rw [ht, fac, Fintype.card_fin] at key
   rw [absE_eq]

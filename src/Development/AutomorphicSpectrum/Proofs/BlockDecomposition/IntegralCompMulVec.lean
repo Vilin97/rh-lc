@@ -72,6 +72,7 @@ theorem map_mulVec {k : Type} [Field k] [NumberField k] {ι : Type} [Fintype ι]
   rw [hfun, ← Measure.map_map h3.measurable (hP.comp h1.measurable),
     ← Measure.map_map hP h1.measurable, h1.map_eq, map_mulVec_fin P, hdet, Measure.map_smul,
     h3.map_eq]
+  exact h3.measurable.aemeasurable
 
 def mulVecHomeo {k : Type} [Field k] [NumberField k] {ι : Type} [Fintype ι] [DecidableEq ι]
     (A : GL ι 𝔸[k]) : (ι → 𝔸[k]) ≃ₜ (ι → 𝔸[k]) where

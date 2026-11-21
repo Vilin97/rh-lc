@@ -180,6 +180,16 @@ theorem UpperTheory.V.Z.Win.T2.typeData_alt :
     rw [a3 E Ω A w h a ha n χ ho μ hμ G σ hG s]
   obtain ⟨hJK, h1J, hmul, hinv, hne, hKCo, h1KC, hKCJ, hlam1, hst, hfin, hv0m, hv00, hv0e⟩ := cp (w.adicCompletion E) n G
   have hK : KO (w.adicCompletion E) (Fin n) = GlobalTheory.LFun.KGL w (n := n) := SphCompletion.KO_completion w n
+  change ∃ (J : Subgroup ↥(GlobalTheory.LFun.KGL w (n := n))) (lam : ↥J →* ℂˣ) (m : ℕ)
+      (V0 : Representation ℂ ↥(GlobalTheory.LFun.KGL w (n := n)) (Fin m → ℂ))
+      (v0 : Fin m → ℂ), IsOpen (J : Set ↥(GlobalTheory.LFun.KGL w (n := n))) ∧
+      IsOpen (lam.ker : Set ↥J) ∧ GlobalTheory.PRep.IsSmooth V0 ∧
+      v0 ≠ 0 ∧ (∀ j : ↥J, V0 (j : ↥(GlobalTheory.LFun.KGL w (n := n))) v0 = ((lam j : ℂˣ) : ℂ) • v0) ∧
+      (∀ π : SmIrr (GL (Fin n) (w.adicCompletion E)),
+        (∃ x : π.V, x ≠ 0 ∧ ∀ j : ↥J, π.ρ ((j : ↥(GlobalTheory.LFun.KGL w (n := n))) : GL (Fin n) (w.adicCompletion E)) x = ((lam j : ℂˣ) : ℂ) • x) →
+          Cond h rc χ ho π) ∧
+      ∀ π : SmIrr (GL (Fin n) (w.adicCompletion E)), Cond h rc χ ho π →
+        ∃ f : (Fin m → ℂ) →ₗ[ℂ] π.V, Function.Injective f ∧ ∀ k v, f (V0 k v) = π.ρ k (f v)
   rw [← hK]
   let J : Subgroup ↥(KO (w.adicCompletion E) (Fin n)) :=
     { carrier := {j | (j : GL (Fin n) (w.adicCompletion E)) ∈ G.JSet}

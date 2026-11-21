@@ -32,16 +32,16 @@ private theorem cl_proj {S : Type} [Group S] (ρ : Representation ℂ S M) (U : 
   refine ⟨(Fintype.card (S ⧸ U) : ℂ)⁻¹ • ∑ q : S ⧸ U, ρ q.out, fun y hy s => ?_, fun y hy => ?_, fun Y hY y hy => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum]
-    congr 1
-    refine Fintype.sum_equiv (MulAction.toPerm s) _ _ fun q => ?_
-    have h1 : (((s • q : S ⧸ U).out : S) : S ⧸ U) = ((s * q.out : S) : S ⧸ U) := by
-      rw [QuotientGroup.out_eq']
-      conv_lhs => rw [← QuotientGroup.out_eq' q]
-      rfl
-    have h2 := hy _ (QuotientGroup.eq.1 h1)
-    change ρ s (ρ q.out y) = ρ (s • q : S ⧸ U).out y
-    conv_rhs => rw [← h2]
-    rw [← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul, mul_inv_cancel_left]
+      congr 1
+      refine Fintype.sum_equiv (MulAction.toPerm s) _ _ fun q => ?_
+      have h1 : (((s • q : S ⧸ U).out : S) : S ⧸ U) = ((s * q.out : S) : S ⧸ U) := by
+        rw [QuotientGroup.out_eq']
+        conv_lhs => rw [← QuotientGroup.out_eq' q]
+        rfl
+      have h2 := hy _ (QuotientGroup.eq.1 h1)
+      change ρ s (ρ q.out y) = ρ (s • q : S ⧸ U).out y
+      conv_rhs => rw [← h2]
+      rw [← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul, mul_inv_cancel_left]
   · simp only [LinearMap.smul_apply, LinearMap.sum_apply, hy, Finset.sum_const, Finset.card_univ]
     rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hc, one_smul]
   · simp only [LinearMap.smul_apply, LinearMap.sum_apply]
@@ -154,7 +154,7 @@ private theorem cl_iso {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalG
     rw [← hf, hu]
   · exact ⟨fun g => by simp, fun K _ => ⟨⊤, by simp, zero_mem _⟩⟩
   · intro a b ha hb
-    refine ⟨fun g => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha.1 g) (hb.1 g), fun K hK => ?_⟩
+    refine ⟨fun g => by rw [map_add]; exact add_mem (ha.1 g) (hb.1 g), fun K hK => ?_⟩
     obtain ⟨U, hU, h1⟩ := ha.2 K hK
     obtain ⟨U', hU', h2⟩ := hb.2 K hK
     exact ⟨U ⊓ U', Subgroup.relIndex_inf_ne_zero hU hU', add_mem (fun u hu => h1 u hu.1) (fun u hu => h2 u hu.2)⟩

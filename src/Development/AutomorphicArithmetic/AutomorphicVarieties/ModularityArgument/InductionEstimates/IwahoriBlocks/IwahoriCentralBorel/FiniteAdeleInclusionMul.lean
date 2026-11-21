@@ -57,14 +57,14 @@ private theorem reps_comb {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : M
   induction s using Finset.induction_on with
   | empty =>
     refine ⟨0, τ.zero_mem, ?_⟩
-    filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K n) μ))] with y hy
-    simpa using hy
+    filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K n) μ))] with y hy
+    simpa only [Finset.sum_empty, Pi.zero_apply] using hy
   | insert i s hi ih =>
     obtain ⟨v, hv, hr⟩ := ih
     obtain ⟨u, hu, hq⟩ := h i
     refine ⟨c i • u + v, τ.add_mem (τ.smul_mem _ hu) hv, ?_⟩
-    filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_add (c i • u) v),
-      (quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_smul (c i) u), hr, hq] with y e₁ e₂ e₃ e₄
+    filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_add (c i • u) v),
+      MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_smul (c i) u), hr, hq] with y e₁ e₂ e₃ e₄
     rw [e₁, Pi.add_apply, e₂, Pi.smul_apply, e₃, e₄, Finset.sum_insert hi, smul_eq_mul]
 
 private theorem flat_lv {K : Type} [Field K] [NumberField K] (f : G1 K (2 + 2) → ℂ) (a b : G1 K 2) (x : G1 K (2 + 2)) :

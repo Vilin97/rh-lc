@@ -37,7 +37,7 @@ theorem fockFunction_eq_theta_lift : GlobalTheory.Published.HoweDualityReal → 
   refine exists_darbAlg_of_mem_algF ψ θ hθ true W X A B e Bs hM.triple.base h.ψ Γ.V Γ.W _ _ _ _ h.JW h.JX
     hM.triple.geo.hV hM.triple.geo.hW (fun w => ?_) Γ.M hM.triple.geo.hM _ (Submodule.subset_span ⟨g, P, hg, rfl⟩)
   obtain ⟨τ, h1, h2, -, h4⟩ := h.cart w
-  exact ⟨τ, h1, by rw [h2]; simp, h4⟩
+  exact ⟨τ, h1, by simpa using h2, h4⟩
 end GlobalTheory.FockThetaOnto
 end
 end

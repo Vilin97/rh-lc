@@ -336,14 +336,18 @@ theorem exists_coord_eq_sum_coeff_not_mem_of_le {X : Scheme.{u}} {k : Type u} [F
     c'.algebra_formallyEtale hU
   obtain ⟨D, hD1, hD0⟩ : ∃ D : Derivation k Γ(X, U) Γ(X, U),
       D (c'.coord j0) = 1 ∧ ∀ t : Fin m', t ≠ j0 → D (c'.coord t) = 0 := by
-    refine ⟨EtaleCoordinates.partialDeriv k (ULift.{u} (Fin m')) Γ(X, U) (ULift.up j0), ?_, ?_⟩
-    · rw [← c'.etaleCoordinates_coord j0]
-      exact EtaleCoordinates.partialDeriv_coord_self k (ULift.{u} (Fin m')) Γ(X, U)
-        (ULift.up j0)
+    let b := EtaleCoordinates.basisKaehler k (ULift.{u} (Fin m')) Γ(X, U)
+    let D : Derivation k Γ(X, U) Γ(X, U) :=
+      (b.coord (ULift.up j0)).compDer (KaehlerDifferential.D k Γ(X, U))
+    refine ⟨D, ?_, ?_⟩
+    · change b.coord (ULift.up j0) (KaehlerDifferential.D k Γ(X, U) (c'.coord j0)) = 1
+      rw [← c'.etaleCoordinates_coord j0, ← EtaleCoordinates.basisKaehler_apply]
+      rw [Module.Basis.coord_apply, Module.Basis.repr_self, Finsupp.single_eq_same]
     · intro t ht
-      rw [← c'.etaleCoordinates_coord t]
-      exact EtaleCoordinates.partialDeriv_coord_of_ne k (ULift.{u} (Fin m')) Γ(X, U)
-        (ULift.up j0) (ULift.up t) (fun hcon => ht (congrArg ULift.down hcon).symm)
+      change b.coord (ULift.up j0) (KaehlerDifferential.D k Γ(X, U) (c'.coord t)) = 0
+      rw [← c'.etaleCoordinates_coord t, ← EtaleCoordinates.basisKaehler_apply]
+      rw [Module.Basis.coord_apply, Module.Basis.repr_self, Finsupp.single_apply]
+      simp [show ULift.up t ≠ ULift.up j0 from fun h => ht (congrArg ULift.down h)]
   have hZideal : Z.ideal ⟨U, hU⟩ = Ideal.span (c.coord '' (S : Set (Fin m))) :=
     c.ideal_eq_span_coord hU Z S hZU
   have hZP : Z.ideal ⟨U, hU⟩ ≤ (hU.primeIdealOf ⟨x, hx⟩).asIdeal :=
@@ -504,37 +508,41 @@ theorem exists_etaleChart_update_coord {X : Scheme.{u}} {k : Type u} [Field k]
     by_cases hi : i = ULift.up j
     · rw [Function.update_apply, if_pos hi, hi, hvj]
     · rw [Function.update_apply, if_neg hi, hvne i hi, hBcoord i]
+  let D : Derivation k Γ(X, U) Γ(X, U) :=
+    ((EtaleCoordinates.basisKaehler k (ULift.{u} (Fin m)) Γ(X, U)).coord (ULift.up j)).compDer
+      (KaehlerDifferential.D k Γ(X, U))
   have hdeteq : (EtaleCoordinates.basisKaehler k (ULift.{u} (Fin m)) Γ(X, U)).det
         (fun i : ULift.{u} (Fin m) => KaehlerDifferential.D k Γ(X, U) (v i)) =
       D
         (∑ i ∈ S, a i * c.coord i) := by
-    rw [hfam, det_update_eq_repr, EtaleCoordinates.partialDeriv_apply]
-  have hDself : EtaleCoordinates.partialDeriv k (ULift.{u} (Fin m)) Γ(X, U) (ULift.up j)
+    rw [hfam, det_update_eq_repr]
+    rfl
+  have hDself : D
       (c.coord j) = 1 := by
-    rw [← c.etaleCoordinates_coord j]
-    exact EtaleCoordinates.partialDeriv_coord_self k (ULift.{u} (Fin m)) Γ(X, U) (ULift.up j)
+    change (EtaleCoordinates.basisKaehler k (ULift.{u} (Fin m)) Γ(X, U)).coord (ULift.up j)
+      (KaehlerDifferential.D k Γ(X, U) (c.coord j)) = 1
+    rw [← hBcoord (ULift.up j), Module.Basis.coord_apply, Module.Basis.repr_self, Finsupp.single_eq_same]
   have hDne : ∀ i : Fin m, i ≠ j →
       D
         (c.coord i) = 0 := by
     intro i hi
-    rw [← c.etaleCoordinates_coord i]
-    exact EtaleCoordinates.partialDeriv_coord_of_ne k (ULift.{u} (Fin m)) Γ(X, U)
-      (ULift.up j) (ULift.up i) (fun h => hi (congrArg ULift.down h).symm)
-  have hsumeq : EtaleCoordinates.partialDeriv k (ULift.{u} (Fin m)) Γ(X, U) (ULift.up j)
+    change (EtaleCoordinates.basisKaehler k (ULift.{u} (Fin m)) Γ(X, U)).coord (ULift.up j)
+      (KaehlerDifferential.D k Γ(X, U) (c.coord i)) = 0
+    rw [← hBcoord (ULift.up i), Module.Basis.coord_apply, Module.Basis.repr_self, Finsupp.single_apply]
+    simp [show ULift.up i ≠ ULift.up j from fun h => hi (congrArg ULift.down h)]
+  have hsumeq : D
         (∑ i ∈ S, a i * c.coord i) =
       a j + ∑ i ∈ S, c.coord i *
-        EtaleCoordinates.partialDeriv k (ULift.{u} (Fin m)) Γ(X, U) (ULift.up j) (a i) := by
+        D (a i) := by
     have h3 : ∀ i ∈ S, i ≠ j →
-        a i * EtaleCoordinates.partialDeriv k (ULift.{u} (Fin m)) Γ(X, U) (ULift.up j)
+        a i * D
           (c.coord i) = 0 := by
       intro i _ hij
       rw [hDne i hij, mul_zero]
-    have h1 : EtaleCoordinates.partialDeriv k (ULift.{u} (Fin m)) Γ(X, U) (ULift.up j)
+    have h1 : D
           (∑ i ∈ S, a i * c.coord i) =
-        (∑ i ∈ S, a i * EtaleCoordinates.partialDeriv k (ULift.{u} (Fin m)) Γ(X, U)
-          (ULift.up j) (c.coord i)) +
-          ∑ i ∈ S, c.coord i * EtaleCoordinates.partialDeriv k (ULift.{u} (Fin m)) Γ(X, U)
-            (ULift.up j) (a i) := by
+        (∑ i ∈ S, a i * D (c.coord i)) +
+          ∑ i ∈ S, c.coord i * D (a i) := by
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_
@@ -547,10 +555,9 @@ theorem exists_etaleChart_update_coord {X : Scheme.{u}} {k : Type u} [Field k]
     intro hmem
     refine haj ?_
     have hrw : a j =
-        EtaleCoordinates.partialDeriv k (ULift.{u} (Fin m)) Γ(X, U) (ULift.up j)
+        D
           (∑ i ∈ S, a i * c.coord i) -
-          ∑ i ∈ S, c.coord i * EtaleCoordinates.partialDeriv k (ULift.{u} (Fin m)) Γ(X, U)
-            (ULift.up j) (a i) := by
+          ∑ i ∈ S, c.coord i * D (a i) := by
       rw [hsumeq]; ring
     rw [hrw]
     exact Submodule.sub_mem _ hmem
@@ -662,7 +669,7 @@ theorem hasStrictNormalCrossingsWith_cons_of_le {X : Scheme.{u}} {k : Type u} [F
     by_cases hij : i = j
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [Function.update_apply, if_pos hij, hij, hc2j, map_sum]
-      exact Finset.sum_congr rfl fun t _ => map_mul _ _ _
+        exact Finset.sum_congr rfl fun t _ => map_mul _ _ _
     · rw [Function.update_apply, if_neg hij]
       exact hc2ne i hij
   have hupd : Ideal.span (c2.coord '' (S : Set (Fin m)))

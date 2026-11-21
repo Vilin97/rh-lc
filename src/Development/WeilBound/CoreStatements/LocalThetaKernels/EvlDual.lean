@@ -212,7 +212,11 @@ theorem mem_latAtV_of_dual {B : Base F E} {X : Spc F E n} {W : Spc F E d} {r s r
   have h2 := GlobalTheory.LatVac.symp_smul_smul σ (incM F X.J) (incM F W.J) (-1) (GlobalTheory.LatVac.liftV v a) 1
     (incM F (Matrix.vecMulVec (x' i) (y' i))) u
   rw [one_smul, mul_one] at h2
-  rw [h2, GlobalTheory.StdVacuum.psi_eq_psiLoc _ v _ (GlobalTheory.VacAny.at_mul_left _ hat), map_mul, GlobalTheory.LatVac.evFin_liftV, mul_comm] at h1
+  have hat' : At (evFin F v) (GlobalTheory.LatVac.liftV v a *
+      symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J)
+        (incM F (Matrix.vecMulVec (x' i) (y' i))) u) := fun t ht => by
+    rw [smul_eq_mul, mul_left_comm, ← smul_eq_mul t _, hat t ht, mul_zero]
+  rw [h2, GlobalTheory.StdVacuum.psi_eq_psiLoc _ v _ hat', map_mul, GlobalTheory.LatVac.evFin_liftV, mul_comm] at h1
   exact h1
 
 end PositivityTheory.ThKH.Evl

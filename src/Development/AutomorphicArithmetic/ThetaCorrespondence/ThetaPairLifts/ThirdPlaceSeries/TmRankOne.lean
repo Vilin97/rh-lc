@@ -45,12 +45,14 @@ theorem tm_rankOne_alt (hL : _root_.UpperTheory.Zero.LLC.RecTExists) {D : D7} {T
     have u1 := (S.unr_iff π v).1 hv
     have u2 := (unr' v).1 hv
     refine ⟨fun x hx => ?_, ?_⟩
-    · rw [Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_inv, u1 x hx, u2 x hx, inv_one, mul_one]
+    · change χ'.loc v x * (χ.loc v x)⁻¹ = 1
+      rw [u1 x hx, u2 x hx, inv_one, mul_one]
     · have hf := S.frob π v u1
       have hf' : D.naut.frobEig (D.naut.locG π v) = {(((χ'.val v)⁻¹ : ℂˣ) : ℂ)} := by
         rw [T.frobEig _ _ hv, hloc v]; exact _root_.GlobalTheory.RankOneComp.frobEig_locParT_ofChar_of_unrAt hL χ' _ u2
       rw [hf', Multiset.singleton_inj, Units.val_inj, inv_inj] at hf
-      rw [Formalism.L2.Host.HChar.val_mul, Formalism.L2.Host.HChar.val_inv, hf, mul_inv_cancel]
+      change χ'.val v * (χ.val v)⁻¹ = 1
+      rw [hf, mul_inv_cancel]
   rw [tm_iff T, hloc, hchar, _root_.GlobalTheory.CuspRep.ParLaws.local_parameter_of_hecke_character_eq_reciprocity]
   first | (have hOpn := UpperTheory.One.M.opn _ (_root_.GlobalTheory.CuspRep.ParLawsT.isRecT_locRecT hL (D.nd.plOm.2 w)); obtain ⟨a, ha, ε, H⟩ := hOpn) | obtain ⟨a, ha, ε, -, H⟩ := _root_.GlobalTheory.CuspRep.ParLawsT.isRecT_locRecT hL (D.nd.plOm.2 w)
   rw [H.one]

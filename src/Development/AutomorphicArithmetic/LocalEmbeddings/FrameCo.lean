@@ -53,8 +53,9 @@ theorem trAt_apply {x : Sp K ⟶ X} (c c' : Chart M r) {W : X.Opens} (h₁ : W �
   rw [trAt_eq c c' h', map_apply, trS, of_apply, ← evalPt_res x hW h' h, ← c.isFrame.repr_resM, resM_resM]
 
 theorem trAt_self {x : Sp K ⟶ X} (c : Chart M r) (h : ⊤ ≤ x ⁻¹ᵁ c.U) : trAt x c c = 1 := by
-  ext a b
-  rw [trAt_apply c c le_rfl le_rfl h, ← c.isFrame.basis_apply, Module.Basis.repr_self, Finsupp.single_apply, one_apply]
+  apply Matrix.ext
+  intro a b
+  rw [trAt_apply c c le_rfl le_rfl h, ← c.isFrame.basis_apply, Module.Basis.repr_self, Finsupp.single_apply, Matrix.one_apply]
   simp only [eq_comm (a := a)]
   split_ifs <;> simp
 
@@ -64,10 +65,11 @@ theorem trAt_mul {x : Sp K ⟶ X} (c c' c'' : Chart M r) (h : ⊤ ≤ x ⁻¹ᵁ
   have l₁ : c.U ⊓ c'.U ⊓ c''.U ≤ c.U := inf_le_left.trans inf_le_left
   have l₂ : c.U ⊓ c'.U ⊓ c''.U ≤ c'.U := inf_le_left.trans inf_le_right
   have l₃ : c.U ⊓ c'.U ⊓ c''.U ≤ c''.U := inf_le_right
-  ext a b
-  rw [mul_apply, trAt_apply c c'' l₁ l₃ hW, ← (c'.isFrame.basis l₂).sum_repr (resM M l₃ (c''.e b))]
+  apply Matrix.ext
+  intro a b
+  rw [Matrix.mul_apply, trAt_apply c c'' l₁ l₃ hW, ← (c'.isFrame.basis l₂).sum_repr (resM M l₃ (c''.e b))]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul, map_mul,
+    simp only [map_sum, map_smul, Finset.sum_apply', Finsupp.smul_apply, smul_eq_mul, map_mul,
     IsFrame.basis_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [trAt_apply c c' l₁ l₂ hW, trAt_apply c' c'' l₂ l₃ hW, mul_comm]

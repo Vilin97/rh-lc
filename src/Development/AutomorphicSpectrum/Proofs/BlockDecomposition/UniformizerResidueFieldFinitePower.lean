@@ -29,11 +29,15 @@ theorem resfield_of_irreducible : ∀ {l : ℕ} [Fact l.Prime] (K : FinExt l) (�
     rw [IsScalarTower.algebraMap_apply ℤ_[l] ℚ_[l] ↥K.1,
       IsScalarTower.algebraMap_apply ℤ_[l] ℚ_[l] ↥K.1 b] at h1
     exact IsFractionRing.injective ℤ_[l] ℚ_[l] ((algebraMap ℚ_[l] ↥K.1).injective h1)
-  have hi : Algebra.IsIntegral ℤ_[l] ↥(OL K) := integralClosure.AlgebraIsIntegral
+  have hi : Algebra.IsIntegral ℤ_[l] ↥(OL K) := integralClosure.algebraIsIntegral
   have hf : FaithfulSMul ℤ_[l] ↥(OL K) := (faithfulSMul_iff_algebraMap_injective _ _).mpr hinj
   have hl : ¬ IsUnit ((l : ℕ) : ↥(OL K)) := by
     intro hu
     rw [← map_natCast (algebraMap ℤ_[l] ↥(OL K))] at hu
+    letI : Algebra.IsIntegral ℤ_[l] ↥(OL K) := hi
+    letI : FaithfulSMul ℤ_[l] ↥(OL K) := hf
+    letI : IsLocalHom (algebraMap ℤ_[l] ↥(OL K)) :=
+      Algebra.IsIntegral.isLocalHom ℤ_[l] ↥(OL K)
     exact PadicInt.irreducible_p.not_isUnit (isUnit_of_map_unit _ _ hu)
   have hdvd : π ∣ ((l : ℕ) : ↥(OL K)) := by
     have hm : ((l : ℕ) : ↥(OL K)) ∈ IsLocalRing.maximalIdeal ↥(OL K) := hl

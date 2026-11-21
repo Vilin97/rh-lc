@@ -28,7 +28,7 @@ theorem eq_zero_of_orth_SB {Y : Type} [AddCommGroup Y] [TopologicalSpace Y] [IsT
   have hN : {y | ‖f y - f y0‖ < ‖f y0‖ / 2} ∈ 𝓝 y0 :=
     (isOpen_lt (hf.sub continuous_const).norm continuous_const).mem_nhds (by simpa using hpos)
   obtain ⟨C, hCa, hCu, hC⟩ := local_compact_nhds hN
-  obtain ⟨U, hU, hyU, hUC⟩ := (loc_compact_Haus_tot_disc_of_zero_dim (H := Y)).mem_nhds_iff.mp hCa
+  obtain ⟨U, hU, hyU, hUC⟩ := (loc_compact_Haus_tot_disc_of_zero_dim (X := Y)).mem_nhds_iff.mp hCa
   have hUc : IsCompact U := hC.of_isClosed_subset hU.1 hUC
   have hk : U.indicator (1 : Y → ℂ) ∈ GlobalTheory.WeilM.SB Y :=
     ⟨(LocallyConstant.indicator (1 : LocallyConstant _ ℂ) hU).isLocallyConstant,

@@ -120,7 +120,8 @@ theorem twist_isPrime (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (
     simp only [quad, map_add (f := _), map_mul, map_pow] at hq
     have hc : mk' (C (p : ℤ)) = (p : MRing (Tb ι) ⧸ twist p W) := by simp [mk']
     rw [hc] at hq
-    simp only [map_mul, map_neg, map_natCast, map_pow, hσX]
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in
+      simp only [map_mul σ, map_neg σ, map_natCast σ, map_pow σ, hσX]
     linear_combination hq
   have hform : ∀ f : MRing (Tb ι), ∃ a b : Polynomial (MRing ι ⧸ W),
       mk' f = σ a + σ b * mk' xN := by
@@ -132,7 +133,8 @@ theorem twist_isPrime (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (
     | add f g hf hg =>
       obtain ⟨a, b, h1⟩ := hf
       obtain ⟨a', b', h2⟩ := hg
-      exact ⟨a + a', b + b', by rw [map_add (f := _), h1, h2, map_add (f := _), map_add (f := _)]; ring⟩
+      exact ⟨a + a', b + b', by set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in
+        rw [map_add mk', h1, h2, map_add σ, map_add σ]; ring⟩
     | mul_X f q hf =>
       obtain ⟨a, b, h1⟩ := hf
       rw [map_mul, h1]
@@ -184,7 +186,8 @@ theorem twist_isPrime (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (
     change φ' (mk' f) = 0 at hq
     change mk' f = 0
     rw [h1] at hq ⊢
-    rw [map_add (f := _), map_mul, hσ, hσ, hφx] at hq
+    set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in
+      rw [map_add φ', map_mul φ', hσ, hσ, hφx] at hq
     have hcoef : ∀ n, (a.coeff (n + 1) = 0 ∧ b.coeff n = 0) := by
       intro n
       have := congrArg (fun t => _root_.AddMonoidAlgebra.coeff (M := ℕ) t (n + 1)) hq

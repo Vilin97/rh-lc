@@ -214,7 +214,8 @@ theorem ptF_rat {x x' : ∀ n, GfC (V n)} (hx : ∀ j < N, ∃ γ ∈ ratFin (V 
     have hDef : IsDefiniteSpace (V n) := hArrow.1
     have hHaar := exists_haar (V n) hDef
     rcases hHaar with ⟨κ, h1, h2⟩
-    obtain ⟨γ, hγ, e⟩ := hx n hn'
+    have hRat : ∃ γ ∈ ratFin (V n), x' n = γ * x n := hx n hn'
+    rcases hRat with ⟨γ, hγ, e⟩
     funext g
     rw [ptF_succ hArrow κ h1 h2, ptF_succ hArrow κ h1 h2, ptF_rat hx n (by omega), e]
     exact avg_rat _ κ (fun z => ker n z g * ptF comp v ρ Λ x n z) (fun q hq z => by
@@ -249,7 +250,8 @@ theorem liftC_real (μ : ∀ n, Measure (GA D (V n))) (fd : ∀ n, Set (GA D (V 
     have hn' : n < N := Nat.lt_of_succ_le hn
     have hLevel := hK n hn'
     rcases hLevel with ⟨h1, ⟨K₀, h2, h3, h4⟩, h5⟩
-    obtain ⟨-, a2, a3, a4, a5, -, a7, a8⟩ := hc n hn'
+    have hArrow : ArrowOK comp ρ ker Λ n := hc n hn'
+    rcases hArrow with ⟨-, a2, a3, a4, a5, -, a7, a8⟩
     obtain ⟨hfin, κ, hκH, hκP, hU⟩ := GlobalTheory.DefiniteClassReal.integral_eq_finClSum_avg (V n) a2 K₀ (K n) h2 h1 h3 (μ n) (fd n) h4
       (fun g => ker n g h * liftC μ fd ker F n g)
       (fun γ hγ g => by

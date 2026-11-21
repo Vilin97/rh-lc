@@ -147,9 +147,11 @@ theorem isSchwartzBruhat_add {φ φ' : Mx D m n → ℂ} (h : IsSchwartzBruhat �
   level := by
     obtain ⟨U, hU, hφU⟩ := h.level
     obtain ⟨U', hU', hφU'⟩ := h'.level
-    refine ⟨U ⊓ U', by simpa [AddSubgroup.coe_inf] using hU.inter hU', fun u hu hu0 x => ?_⟩
-    have hu' := AddSubgroup.mem_inf.mp hu
-    simp [hφU u hu'.1 hu0 x, hφU' u hu'.2 hu0 x]
+    refine ⟨U ⊓ U', ?_, fun u hu hu0 x => ?_⟩
+    · change IsOpen ((U : Set (Mx D m n)) ∩ (U' : Set (Mx D m n)))
+      exact hU.inter hU'
+    · have hu' := AddSubgroup.mem_inf.mp hu
+      simp [hφU u hu'.1 hu0 x, hφU' u hu'.2 hu0 x]
   supp := by
     obtain ⟨K, hK, hφK⟩ := h.supp
     obtain ⟨K', hK', hφK'⟩ := h'.supp
@@ -158,7 +160,8 @@ theorem isSchwartzBruhat_add {φ φ' : Mx D m n → ℂ} (h : IsSchwartzBruhat �
     · have h2 : φ' x ≠ 0 := by simpa [h1] using hx
       exact Or.inr (hφK' x h2)
     · exact Or.inl (hφK x h1)
-  · intro k L hL hi x
+  schwartz := by
+    intro k L hL hi x
     obtain ⟨g, hg⟩ := h.schwartz k L hL hi x
     obtain ⟨g', hg'⟩ := h'.schwartz k L hL hi x
     exact ⟨g + g', fun t => by simp [hg, hg']⟩
@@ -170,9 +173,11 @@ theorem isSchwartzBruhat_linear_mul {φ : Mx D m n → ℂ} (h : IsSchwartzBruha
     refine ⟨U, hU, fun u hu hu0 x => ?_⟩
     show ℓ (x + u) * φ (x + u) = ℓ x * φ x
     rw [map_add (f := _), h0 u hu0, add_zero, hφU u hu hu0 x]
-  · obtain ⟨K, hK, hφK⟩ := h.supp
+  supp := by
+    obtain ⟨K, hK, hφK⟩ := h.supp
     exact ⟨K, hK, fun x hx => hφK x (right_ne_zero_of_mul hx)⟩
-  · intro k L hL hi x
+  schwartz := by
+    intro k L hL hi x
     obtain ⟨g, hg⟩ := h.schwartz k L hL hi x
 
     let A : (Fin k → ℝ) →L[ℝ] ℂ := (ℓ.comp L).toRealLinearMap (hc.comp hL.1)

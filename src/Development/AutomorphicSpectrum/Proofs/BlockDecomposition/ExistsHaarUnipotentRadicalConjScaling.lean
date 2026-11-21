@@ -134,5 +134,6 @@ theorem exists_radN_measure (D : D7) (B W : HSp D) (t : ℕ) (d : HypDec B W t) 
   change (((κ.map (skewConj a.1)).prod (β.map _)).map Ψ) = _
   rw [hk, hb, Measure.prod_smul_left, Measure.prod_smul_right, Measure.map_smul, Measure.map_smul, smul_smul,
     absDet_eq d m g a hm, pow_add, mul_inv, mul_comm]
+  all_goals exact Ψ.continuous.measurable.aemeasurable
 
 end GlobalTheory.CompanionTheory.QKAvg.RadMeas

@@ -20,7 +20,13 @@ open scoped TensorProduct Classical
 private theorem dS_single {K : Type} [Field K] [NumberField K] {r : ℕ} (w : Fin r → Pl K) (i : Fin r) (p : PW (w i)) :
     dS w (Pi.mulSingle i p) = dl (w i) p := by
   unfold dS
-  rw [MonoidHom.finset_prod_apply, Finset.prod_eq_single i]
+  have heval (s : Finset (Fin r)) :
+      (∏ j ∈ s, (dl (w j)).comp (Pi.evalMonoidHom (fun j => PW (w j)) j)) (Pi.mulSingle i p) =
+        ∏ j ∈ s, (dl (w j)).comp (Pi.evalMonoidHom (fun j => PW (w j)) j) (Pi.mulSingle i p) := by
+    induction s using Finset.induction_on with
+    | empty => simp
+    | insert a s ha ih => simp [ha, ih]
+  rw [heval, Finset.prod_eq_single i]
   · simp
   · intro j _ hj
     simp [Pi.mulSingle_eq_of_ne hj]

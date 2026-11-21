@@ -111,7 +111,7 @@ private def split (Wi : I → Type) [∀ i, AddCommGroup (Wi i)] [∀ i, Module 
         intro _ m i c x
         by_cases h : i = i₀
         · subst h
-          simp only [Function.update_self, res_update_self, TensorProduct.smul_tmul']
+          simp only [Function.update_self, res_update_self, TensorProduct.smul_tmul', RingHom.id_apply]
         · classical
           simp only [Function.update_of_ne (Ne.symm h), res_update i₀ i h,
             MultilinearMap.map_update_smul, TensorProduct.tmul_smul] }

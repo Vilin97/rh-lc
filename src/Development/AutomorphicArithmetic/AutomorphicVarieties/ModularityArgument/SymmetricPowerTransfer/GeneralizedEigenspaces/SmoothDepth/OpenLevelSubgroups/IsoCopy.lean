@@ -99,4 +99,5 @@ theorem UpperTheory.V.Z.Sym.Al.isoCopy :
     obtain ⟨t, ht⟩ := exists_ne (0 : τ.asModule)
     have hG : G t = 0 := LinearMap.congr_fun h0 t
     have : (e1.symm (e2.symm t) : S) = 0 := Subtype.ext hG
-    exact ht (by simpa using this)
+    have hz : e2.symm t = 0 := e1.symm.injective (this.trans e1.symm.map_zero.symm)
+    exact ht (e2.symm.injective (hz.trans e2.symm.map_zero.symm))

@@ -57,7 +57,8 @@ private theorem vlen_le (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ �
       _ < 1 := by rwa [mul_one]
   show Chr.VS l (l * N) e (Chr.dirG ℚ Ω ψ) ≤ Chr.VS l (∏ p ∈ S, p) e (Chr.dirG ℚ Ω ψ)
   unfold Chr.VS
-  refine Module.length_le_of_injective (Submodule.inclusion ?_) (Submodule.inclusion_injective _)
+  set_option synthInstance.maxHeartbeats 200000 in
+   refine Module.length_le_of_injective (Submodule.inclusion ?_) (Submodule.inclusion_injective _)
   intro x hx
   simp only [Base.ShaU, Base.mem_locSel] at hx ⊢
   intro D hD

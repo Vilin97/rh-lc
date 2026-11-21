@@ -31,8 +31,7 @@ theorem be_at (hex : PowerSeries.constantCoeff g.ex = 0)
   have hlg : ∀ {σ' : Type} {c : σ' → MvPowerSeries τ ℂ_[p]}, HasSubst c → ∀ i : σ',
       subst c (C ep * g.lg (X i)) = C ep * g.lg (c i) := by
     intro σ' c hc i
-    have hXi : HasSubst (fun _ : Unit => (X i : MvPowerSeries σ' ℂ_[p])) :=
-by
+    have hXi : HasSubst (fun _ : Unit => (X i : MvPowerSeries σ' ℂ_[p])) := by
       have hz : ∀ _ : Unit, constantCoeff (X i : MvPowerSeries σ' ℂ_[p]) = 0 := fun _ => constantCoeff_X i
       first
         | exact hasSubst_of_constantCoeff_zero hz

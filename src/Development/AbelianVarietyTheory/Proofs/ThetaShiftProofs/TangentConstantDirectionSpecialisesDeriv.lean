@@ -215,6 +215,7 @@ theorem spec_tangent : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [Numb
       rw [Category.assoc] at hk
       have hk' := le_of_isLocalHom _ _ hk
       obtain ⟨u', hu'⟩ := x3 k hk'
+      set_option synthInstance.maxHeartbeats 200000 in
       refine ⟨Units.map (dualMapR (Γ.ev w).toRingHom).toMonoidHom u', fun i => ?_⟩
       have hx : ⊤ ≤ x ⁻¹ᵁ (Out.powOver o.t.G o.t.PP.L C.U 4).U (fun _ => k) :=
         fun z hz => Set.mem_iInter.2 fun _ => hk' hz

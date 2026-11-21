@@ -47,7 +47,7 @@ theorem flatDegree_logOm_re (E : Type) [Field E] [NumberField E] {d : ℕ} [NeZe
       deriv χ.LFunction 1 / χ.LFunction 1) :
     (logOm E χ).re = x - Real.log (rootDiscr E) + Real.log (Real.sqrt d) := by
   have hrd : 0 < rootDiscr E := by
-    unfold NumberField.rootDiscr
+    rw [NumberField.rootDiscr_def]
     apply Real.rpow_pos_of_pos
     exact_mod_cast abs_pos.mpr (NumberField.discr_ne_zero E)
   have hd : 0 < √(d : ℝ) :=

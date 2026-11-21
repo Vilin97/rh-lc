@@ -33,6 +33,8 @@ theorem UpperTheory.V.Cj.harmInj :
     have hM : Moderate (dCo (smLie Ξ) η) := ⟨0, fun X => by
       obtain ⟨C, hC⟩ := hR X 0
       exact ⟨C, fun g => by simpa using hC g⟩⟩
+    set_option synthInstance.maxHeartbeats 400000 in
     have hP := pairFacts E a ha MeasureTheory.Measure.haar _ ho Ξ r χ G n e hd (q + 1)
+    set_option synthInstance.maxHeartbeats 400000 in
     exact hP.2.2.1 _ hL (hP.1 _ _ hL hL hR hM)
       (g1 E a ha MeasureTheory.Measure.haar _ ho hc Ξ r χ G n e hd q _ η hL hη hR hco hM)

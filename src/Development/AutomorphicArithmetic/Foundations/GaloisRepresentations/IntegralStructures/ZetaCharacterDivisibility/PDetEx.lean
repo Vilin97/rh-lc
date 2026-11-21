@@ -70,7 +70,7 @@ theorem UpperTheory.Gal.Int.Div.detEx_of :
         push_cast
         ring
       rw [e2, Complex.cpow_natCast]
-      rfl
+      simp [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
     rw [e, Units.val_mul, hv, h2, algSat_prod_eq a _ B hcard]
   rw [hvalue] at hcl
   exact ⟨_, hcl⟩

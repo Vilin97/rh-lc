@@ -134,7 +134,13 @@ private theorem toFunctionField_mem_divOver_ring {k : Type} [Field k] {X : Schem
   have : toFunctionField p a = Cartier.constFn p a := by
     simp [toFunctionField, Cartier.constFn, Cartier.fnOf, DVR.FlatBC.algX, Scheme.Hom.appLE,
       Scheme.Hom.appTop]
-    rfl
+    change _ = (X.presheaf.germ ⊤ (genericPoint X) trivial).hom
+      ((p.app ⊤ ≫ X.presheaf.map (𝟙 (Opposite.op ⊤))).hom ((Scheme.ΓSpecIso (CommRingCat.of k)).inv.hom a))
+    let f : Γ(Sp k, ⊤) ⟶ Γ(X, ⊤) := p.app ⊤
+    change (f ≫ X.presheaf.germ ⊤ (genericPoint X) trivial).hom _ =
+      (X.presheaf.germ ⊤ (genericPoint X) trivial).hom
+        ((f ≫ X.presheaf.map (𝟙 (Opposite.op ⊤))).hom _)
+    simp
   rw [this]
   exact E.const_mem a
 

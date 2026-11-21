@@ -13,7 +13,7 @@ theorem UpperTheory.V.Lit.Bor.ipDef :
   refine ⟨fun ω η => ?_, fun ω hω => ⟨?_, fun h0 => ?_⟩⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [ip, map_sum]
-    exact Finset.sum_congr rfl fun I _ => hH.herm _ _
+      exact Finset.sum_congr rfl fun I _ => hH.herm _ _
   · simp only [ip, Complex.re_sum]
     exact Finset.sum_nonneg fun I _ => hH.nonneg _ (hω _)
   · have hre : ∑ I : Fin q → Fin n, (H (ω fun i => e (I i)) (ω fun i => e (I i))).re = 0 := by

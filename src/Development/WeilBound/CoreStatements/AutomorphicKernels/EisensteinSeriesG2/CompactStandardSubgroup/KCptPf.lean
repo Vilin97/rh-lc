@@ -24,7 +24,7 @@ theorem isCompact_intHat : IsCompact (intHat F E : Set (AE F E)) := by
   obtain ⟨m, s, hs⟩ := Submodule.fg_iff_exists_fin_generating_family.1 hZ
   have : CompactSpace (GlobalTheory.ThK.Dbl.St.intF F) := isCompact_iff_compactSpace.1 GlobalTheory.ThK.Dbl.St.isCompact_intF
   let f : (Fin m → GlobalTheory.ThK.Dbl.St.intF F) →+ AE F E :=
-    AddMonoidHom.mk' (fun a => ∑ j, (a j : AF F) • inclR (F := F) (AF F) ((s j : 𝓞 E) : E)) fun a b => by
+    AddMonoidHom.mk' (fun (a : Fin m → GlobalTheory.ThK.Dbl.St.intF F) => ∑ j, (a j : AF F) • inclR (F := F) (AF F) ((s j : 𝓞 E) : E)) fun (a b : Fin m → GlobalTheory.ThK.Dbl.St.intF F) => by
       rw [← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun j _ => ?_
       have : ((a + b) j : AF F) = a j + b j := rfl

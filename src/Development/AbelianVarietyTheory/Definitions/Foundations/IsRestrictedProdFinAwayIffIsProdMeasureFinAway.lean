@@ -168,6 +168,7 @@ theorem restrGroup_GAd : RestrMeas.IsRestrGroup (projArch σ J) (proj σ J) (sta
 
 theorem restrGroup_finPts :
     RestrMeas.IsRestrGroup (noArch (finPts σ J)) (fun v => (proj σ J v).comp (finPts σ J).subtype) (stabLoc σ J L) := by
+  set_option synthInstance.maxHeartbeats 200000 in
   have h := (restrGroup_GAd σ J L).subgroup (i := (Empty.elim : Empty → InfinitePlace F)) (j := id)
     (fun a => a.elim) Function.injective_id (finPts σ J) fun x => by simp [mem_finPts_iff_forall]
   exact h.noArch

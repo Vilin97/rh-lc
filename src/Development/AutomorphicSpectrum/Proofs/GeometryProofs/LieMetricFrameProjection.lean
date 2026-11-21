@@ -35,16 +35,16 @@ theorem isTanAt_of_valAt {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Sp Ω ⟶
     {z : Sp R ⟶ X} {e : Li} {w : epsAt z ⟶ G} (h : M.ValAt z e w) : IsTanAt G z w := by
   obtain ⟨hz, v, ⟨hv, -⟩, hw⟩ := h
   have e1 : Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom R R R).toRingHom) ≫
-      Spec.map (CommRingCat.ofHom (dualMap (Scheme.stalkClosedPointTo z).hom)) =
+      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo z).hom)) =
       Spec.map (Scheme.stalkClosedPointTo z) ≫
         Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom (X.presheaf.stalk (centre z)) (X.presheaf.stalk (centre z)) (X.presheaf.stalk (centre z))).toRingHom) := by
-    have a : CommRingCat.ofHom (dualMap (Scheme.stalkClosedPointTo z).hom) ≫
+    have a : CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo z).hom) ≫
         CommRingCat.ofHom (TrivSqZeroExt.fstHom R R R).toRingHom =
         CommRingCat.ofHom (TrivSqZeroExt.fstHom (X.presheaf.stalk (centre z)) (X.presheaf.stalk (centre z)) (X.presheaf.stalk (centre z))).toRingHom ≫
           Scheme.stalkClosedPointTo z := by
       refine CommRingCat.hom_ext (RingHom.ext fun x => ?_)
-      show TrivSqZeroExt.fst (dualMap (Scheme.stalkClosedPointTo z).hom x) = (Scheme.stalkClosedPointTo z).hom (TrivSqZeroExt.fst x)
-      simp [dualMap]
+      show TrivSqZeroExt.fst (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo z).hom x) = (Scheme.stalkClosedPointTo z).hom (TrivSqZeroExt.fst x)
+      simp [GlobalTheory.CompanionTheory.Ar.dualMap]
     exact (Spec.map_comp _ _).symm.trans ((congrArg Spec.map a).trans (Spec.map_comp _ _))
   let f : Over.mk z ⟶ Over.mk (X.fromSpecStalk (centre z)) :=
     Over.homMk (Spec.map (Scheme.stalkClosedPointTo z)) (Scheme.Spec_stalkClosedPointTo_fromSpecStalk z)

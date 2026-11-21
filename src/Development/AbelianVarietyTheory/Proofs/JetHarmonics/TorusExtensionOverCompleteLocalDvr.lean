@@ -87,7 +87,7 @@ def actPull [IsCommMonObj H] {O : Type} [Ring O] (ρ : RingAct H O) : RingAct ((
   map_one := by rw [ρ.map_one, CategoryTheory.Functor.map_id]
   map_mul a b := by rw [ρ.map_mul, CategoryTheory.Functor.map_comp]
   map_add a b := by
-    rw [ρ.map_add (f := _)]
+    rw [ρ.map_add a b]
     exact map_mul (Over.pullback f).homMonoidHom (ρ.act a) (ρ.act b)
 
 end BaseChange

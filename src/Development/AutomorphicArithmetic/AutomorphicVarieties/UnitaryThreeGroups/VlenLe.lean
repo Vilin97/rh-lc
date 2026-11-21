@@ -68,4 +68,5 @@ theorem UpperTheory.V.U3.vlen_le :
   refine vs_le l c.O (l * N) e (Chr.dirG ℚ Ω ψ) _ fun b hb => ?_
   have h := sha_inj D g₁ hg b hb
   refine h.elim fun a h => h.2.elim fun γ hγ => ?_
-  exact model_lower S M h2 hg hM' hG D.Ψ_cont hK a h.1 _ γ hγ.1 hγ.2
+  set_option synthInstance.maxHeartbeats 400000 in
+    exact model_lower S M h2 hg hM' hG D.Ψ_cont hK a h.1 _ γ hγ.1 hγ.2

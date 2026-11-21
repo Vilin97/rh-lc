@@ -80,7 +80,8 @@ theorem containedComponentsIdeal_pullbackAlong_of_isAdmissible_pullbackAlong
   intro T hV Y q h hsm hq E' hBE j hj hjE htake hV'
   have : AlgebraicGeometry.Smooth h := hsm
   have hj' : j < (T.pullbackAlong Y q h).boundary.length := by
-    simpa [MarkedIdealWithBoundary.pullbackAlong_boundary] using hj
+    change j < (T.boundary.map (fun D => D.comap h)).length
+    simpa only [List.length_map] using hj
   have hVal : (T.pullbackAlong Y q h).IsAdmissible := hvbr T Y q h E' hBE hV'
   rw [containedComponentsIdeal_withBoundary T j Y q h E' hjE hj' htake]
   exact hfacts.preIdeal_pullbackAlong T hV Y q h hq hVal j hj hj'

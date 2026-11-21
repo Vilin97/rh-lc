@@ -315,7 +315,8 @@ theorem ses0 {d : ℕ} (Q : Poly Φ) (E : Frame (Φ := Φ) (d + 1)) (hQ : Q.Crit
   · rintro ⟨u, rfl⟩
     change (β₀.app X).hom ((Φ.A.map (Q.j X.T)).hom u) = 0
     have h0 := (b2 X (q (Q.P X.T) ((Φ.A.map (Q.j X.T)).hom u))).2 ⟨q X.T u, hj X u⟩
-    rw [hβ, h0, map_zero]
+    rw [hβ, h0]
+    exact (q (Q.P X.T)).symm.map_zero
   · obtain ⟨z, hz⟩ := b3 X (q (Q.P X.T) y)
     obtain ⟨w, rfl⟩ := (q (Q.P X.T)).surjective z
     exact ⟨w, by rw [hβ, hz, LinearEquiv.symm_apply_apply]⟩

@@ -65,7 +65,8 @@ theorem kStable_of_lie_stable_subspace (hP : _root_.GlobalTheory.FunPr.ThetaLoca
     exact hlie γ hγ _ hy' _ had hy
   have hUT : U T ∈ N' := mem_of_isExp hU N' hstab hfN
   have h1 := hSA T
-  rw [MonoidHom.comp_apply, hγ1] at h1
+  change SA (om (1, γ (Multiplicative.ofAdd 1))) (Φ T) (Φ (U T)) at h1
+  rw [hγ1] at h1
   have hA2 : Acts (evI F) (om (1, k)) (Φ T) (Φ (U T)) :=
     (hAL F (Fin n × Fin d) (Φ T) (Φ (U T)) (Φ (U T))).2.1 _ (map_zero _) h1
   have he : f₁ = Φ (U T) := (hAL F (Fin n × Fin d) (Φ T) f₁ (Φ (U T))).2.2.2.1 _ hact1 hA2

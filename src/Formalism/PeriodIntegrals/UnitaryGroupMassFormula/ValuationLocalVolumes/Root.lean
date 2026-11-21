@@ -85,59 +85,43 @@ theorem exists_integral_root_of_quadratic (β γ ν : Fv F v) (hβ : β ∈ v.ad
       rw [map_pow, map_pow] at this
       exact this.symm
 
-    have isPrecomplete : IsPrecomplete (IsLocalRing.maximalIdeal Ow) Ow := by
-      obtain ⟨π, hπ⟩ := exists_unif 
-      have hπ1 : Valued.v (π : Lw) < 1 := (lt_one_iff_le _).2 hπ.le
-      have hπ0 : (π : Lw) ≠ 0 := by
-        intro h
-        rw [h, map_zero] at hπ
-        exact WithZero.exp_ne_zero hπ.symm
-      refine ⟨fun f hf => ?_⟩
-      simp only [smul_eq_mul, Ideal.mul_top, SModEq.sub_mem, mem_max_pow_iff hπ] at hf ⊢
-      let g : ℕ → Lw := fun n => (f n : Lw)
-      have hc : Cauchy (map g atTop) := by
-        rw [Valued.cauchy_iff]
-        refine ⟨map_neBot, fun γ => ?_⟩
-        obtain ⟨n, hn⟩ := exists_pow_lt₀ hπ1 (Units.map (MonoidWithZeroHom.ValueGroup₀.embedding
-          (f := ↑(Valued.v : Valuation Lw ℤᵐ⁰))).toMonoidHom γ)
-        refine ⟨g '' Set.Ici n, image_mem_map (Ici_mem_atTop n), ?_⟩
-        rintro _ ⟨a, ha, rfl⟩ _ ⟨b, hb, rfl⟩
-        rw [Valuation.restrict_lt_iff_lt_embedding]
-        refine lt_of_le_of_lt ?_ hn
-        have h1 := hf (m := n) (n := a) ha
-        have h2 := hf (m := n) (n := b) hb
-        have e : g b - g a = ((f n - f a : Ow) : Lw) - ((f n - f b : Ow) : Lw) := by
-          simp only [g]; push_cast; ring
-        rw [e]
-        exact Valuation.map_sub_le _ h1 h2
-      obtain ⟨l, hl⟩ := CompleteSpace.complete hc
-      have key : ∀ n, Valued.v (g n - l) ≤ Valued.v (π : Lw) ^ n := by
-        intro n
-        have hU : {y : Lw | (Valued.v : Valuation Lw ℤᵐ⁰).restrict (y - l) <
-            (Valued.v : Valuation Lw ℤᵐ⁰).restrict ((π : Lw) ^ n)} ∈ 𝓝 l := by
-          rw [Valued.mem_nhds]
-          exact ⟨Units.mk0 ((Valued.v : Valuation Lw ℤᵐ⁰).restrict ((π : Lw) ^ n)) (by simp [hπ0]),
-            subset_rfl⟩
-        have hm := hl hU
-        rw [mem_map, mem_atTop_sets] at hm
-        obtain ⟨N, hN⟩ := hm
-        have h1 : (Valued.v : Valuation Lw ℤᵐ⁰).restrict (g (max N n) - l) <
-            (Valued.v : Valuation Lw ℤᵐ⁰).restrict ((π : Lw) ^ n) := hN (max N n) (le_max_left _ _)
-        rw [Valuation.restrict_lt_iff, map_pow] at h1
-        have h2 := hf (m := n) (n := max N n) (le_max_right N n)
-        have e : g n - l = ((f n - f (max N n) : Ow) : Lw) + (g (max N n) - l) := by
-          simp only [g]; push_cast; ring
-        rw [e]
-        exact Valuation.map_add_le _ h2 h1.le
-      have hl1 : l ∈ Ow := by
-        have e : l = g 0 - (g 0 - l) := by ring
-        rw [e]
-        exact sub_mem (f 0).2 ((mem_adicCompletionIntegers R L w).2 (by simpa using key 0))
-      exact ⟨⟨l, hl1⟩, fun n => key n⟩
+    obtain ⟨π, hπ⟩ := exists_unif
+    have hπ1 : ‖(π : Lw)‖ < 1 := by
+      rw [Valued.toNormedField.norm_lt_one_iff]
+      exact (lt_one_iff_le _).2 hπ.le
+    have hπ0 : (π : Lw) ≠ 0 := by
+      intro h
+      rw [h, map_zero] at hπ
+      exact WithZero.exp_ne_zero hπ.symm
+    have hr0 : 0 < ‖(π : Lw)‖ := norm_pos_iff.mpr hπ0
+    have key : ∀ (n : ℕ) (x y : Ow),
+        x ≡ y [SMOD ((IsLocalRing.maximalIdeal Ow) ^ n • ⊤ : Submodule Ow Ow)] ↔
+          ‖(x : Lw) - y‖ ≤ ‖(π : Lw)‖ ^ n := by
+      intro n x y
+      rw [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top, mem_max_pow_iff hπ,
+        ← map_pow, ← Valued.toNormedField.norm_le_iff]
+      simp only [norm_pow]
+      rfl
+    refine { haus' := ?_, prec' := ?_ }
+    · intro x hx
+      have h : ∀ n : ℕ, ‖(x : Lw)‖ ≤ ‖(π : Lw)‖ ^ n := fun n => by
+        simpa using (key n x 0).mp (hx n)
+      have hx0 : ‖(x : Lw)‖ ≤ 0 :=
+        ge_of_tendsto' (tendsto_pow_atTop_nhds_zero_of_lt_one hr0.le hπ1) h
+      exact Subtype.ext (norm_le_zero_iff.mp hx0)
+    · intro f hf
+      have hc : ∀ n : ℕ, dist (f n : Lw) (f (n + 1)) ≤ 1 * ‖(π : Lw)‖ ^ n := fun n => by
+        rw [dist_eq_norm, one_mul]
+        exact (key n _ _).mp (hf n.le_succ)
+      obtain ⟨l, hl⟩ := cauchySeq_tendsto_of_complete (cauchySeq_of_le_geometric _ 1 hπ1 hc)
+      have hl1 : ‖l‖ ≤ 1 := le_of_tendsto' hl.norm (fun n =>
+        Valued.toNormedField.norm_le_one_iff.mpr (f n).2)
+      refine ⟨⟨l, Valued.toNormedField.norm_le_one_iff.mp hl1⟩, fun n => ?_⟩
+      rw [key]
+      have ht : Tendsto (fun m => ‖(f n : Lw) - f m‖) atTop (𝓝 ‖(f n : Lw) - l‖) :=
+        (tendsto_const_nhds.sub hl).norm
+      exact le_of_tendsto ht (eventually_atTop.mpr ⟨n, fun m hm => (key n _ _).mp (hf hm)⟩)
 
-    have isAdicComplete : IsAdicComplete (IsLocalRing.maximalIdeal Ow) Ow :=
-      { toIsHausdorff := inferInstance, toIsPrecomplete := isPrecomplete }
-    exact isAdicComplete
   letI := hcomplete
   haveI : HenselianLocalRing (v.adicCompletionIntegers F) := ⟨fun f hf a h₁ h₂ => HenselianRing.is_henselian f hf a h₁ (h₂.map _)⟩
   obtain ⟨s, hs⟩ := PI.OmVf.quad_root (-(g * (1 - g * b) * m)) (1 - g * b) b
@@ -147,5 +131,4 @@ theorem exists_integral_root_of_quadratic (β γ ν : Fv F v) (hβ : β ∈ v.ad
   simp only [b, g, m] at this
   push_cast at this
   linear_combination this
-
 end PI.OmVf

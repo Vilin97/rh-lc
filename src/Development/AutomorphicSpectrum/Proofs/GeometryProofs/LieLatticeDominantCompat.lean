@@ -18,6 +18,8 @@ noncomputable section
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.CompanionTheory.Ar
 
+open GlobalTheory.CompanionTheory.Ar.GlobalTheory.CompanionTheory.Ar (dualMap)
+
 namespace GlobalTheory.CompanionTheory.Ar.LiePull
 
 section BC
@@ -110,7 +112,10 @@ def extLat (hx : Spec.map (CommRingCat.ofHom g) ≫ x = ξ) (M : LieModel G ξ E
   carrier := {e | ∃ v, Ext g x M e v}
   add_mem' := fun ⟨v, hv⟩ ⟨v', hv'⟩ => ⟨_, hv.mul hx hv'⟩
   zero_mem' := ⟨_, Ext.zero hx⟩
-  neg_mem' := fun {e} ⟨v, hv⟩ => ⟨_, by simpa using hv.smul (-1)⟩
+  neg_mem' := by
+    rintro e ⟨v, hv⟩
+    refine ⟨LieEx.hom x ((-1 : A) • (LinearMap.id : A →ₗ[A] A)) ≫ v, ?_⟩
+    simpa only [map_neg, map_one, neg_smul, one_smul] using hv.smul (-1)
 
 def ExtE (hx : Spec.map (CommRingCat.ofHom g) ≫ x = ξ) (M : LieModel G ξ E) : Type := ↥(extLat hx M)
 

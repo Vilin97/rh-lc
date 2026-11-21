@@ -16,6 +16,7 @@ open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Adel PositivityTheory.Rg
 private theorem memLp_out {K : Type} [Field K] [NumberField K] {n : ℕ} {μ : Measure (G1 K n)} [μ.IsHaarMeasure]
     {v : L2 μ} {φ : G1 K n → ℂ} (hc : Continuous φ) (hr : Reps μ v φ) :
     MemLp (fun m : RightCosetSpace (Gam K n) => φ (Quotient.out m)) 2 (quotientMeasure (Gam K n) μ) := by
+  set_option synthInstance.maxHeartbeats 200000 in
   have hinv : ∀ γ ∈ Gam K n, ∀ y, φ (γ * y) = φ y := fun γ hγ => by
     have h1 : (fun y => φ (γ * y)) =ᵐ[μ] φ := by
       filter_upwards [hr, (measurePreserving_mul_left μ γ).quasiMeasurePreserving.ae hr] with y a b
@@ -23,8 +24,20 @@ private theorem memLp_out {K : Type} [Field K] [NumberField K] {n : ℕ} {μ : M
       congr 1
       exact Quotient.sound ⟨⟨γ, hγ⟩, rfl⟩
     exact congrFun (((hc.comp (continuous_const_mul γ)).ae_eq_iff_eq μ hc).1 h1)
-  have h2 := IsContRep.ae_eq_quotFun (μ := μ) (φ := v) (F := φ) ⟨hc, hinv, hr⟩
-  have h3 : (fun m : RightCosetSpace (Gam K n) => φ (Quotient.out m)) = quotFun φ hinv := by
+  let q : RightCosetSpace (Gam K n) → ℂ := Quotient.lift φ (fun a b hab => by
+    obtain ⟨γ, rfl⟩ := hab
+    exact hinv γ γ.2 b)
+  have hq : Continuous q := (isOpenQuotientMap_mk (Gam K n)).isQuotientMap.continuous_iff.2 hc
+  have h2 : (v : RightCosetSpace (Gam K n) → ℂ) =ᵐ[quotientMeasure (Gam K n) μ] q := by
+    have hm : ∀ᵐ x ∂(Measure.map (mk (Gam K n)) (μ.restrict (fundamentalDomain (Gam K n)))),
+        (v : RightCosetSpace (Gam K n) → ℂ) x = q x := by
+      refine (ae_map_iff (measurable_mk (Gam K n)).aemeasurable
+        (measurableSet_eq_fun (Lp.stronglyMeasurable v).measurable hq.measurable)).2 ?_
+      exact ae_restrict_of_ae (hr.mono fun y hy => by
+        change v (mk (Gam K n) y) = φ y
+        exact hy)
+    rwa [map_restrict_eq_quotientMeasure μ (isFundamentalDomain_fundamentalDomain (Gam K n) μ)] at hm
+  have h3 : (fun m : RightCosetSpace (Gam K n) => φ (Quotient.out m)) = q := by
     funext m
     conv_rhs => rw [← Quotient.out_eq m]
     rfl
@@ -66,12 +79,12 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.ellLin {E : Type} [Fie
     have i₂ := fun i => int_pair b' hb' (hψ i).1 (hψ i).2.choose_spec.2
     refine ⟨fun m₁ => ?_, ?_⟩
     · rw [funext (e m₁)]
-      exact integrable_finset_sum _ fun i _ => (i₂ i).const_mul _
+      exact integrable_finsetSum _ fun i _ => (i₂ i).const_mul _
     · simp only [e]
       have : ∀ m₁ : RightCosetSpace (Gam E 2), _ := fun m₁ => integral_finsetSum (μ := Q) Finset.univ fun i _ =>
         (i₂ i).const_mul (φ i (Quotient.out m₁) * starRingEnd ℂ (b.f.1 ((Quotient.out m₁ : G1 E 2) : GlobalTheory.CuspRep.GA E 2)))
       simp only [this, integral_const_mul]
-      exact integrable_finset_sum _ fun i _ => (i₁ i).mul_const _
+      exact integrable_finsetSum _ fun i _ => (i₁ i).mul_const _
   let l : Eu 𝔵.d' →ₗ[ℂ] ℂ :=
     { toFun := fun v => ∫ m₁, ∫ m₂, F v m₁ m₂ ∂Q ∂Q
       map_add' := fun v w => by

@@ -174,7 +174,7 @@ private theorem cd_tel {M : Type} [CommGroup M] {n : ℕ} (U : Fin n → M) :
 
 private theorem cd_fin {l : ℕ} [Fact l.Prime] (c : Coef l) : Finite (ResidueField c.O) := by
   have h : (maximalIdeal c.O).comap (algebraMap ℤ_[l] c.O) = maximalIdeal ℤ_[l] :=
-    eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _)
+    eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := ℤ_[l]) (maximalIdeal c.O))
   have : IsLocalHom (algebraMap ℤ_[l] c.O) := ((IsLocalRing.local_hom_tfae _).out 5 1).1 h
   exact ResidueField.finite_of_finite (R := ℤ_[l]) inferInstance
 
@@ -243,7 +243,7 @@ private theorem cd_psi (hN : GlobalTheory.Mem.LiteralAutomorphy.LitN) {L Ω : Ty
   obtain ⟨ψ, ⟨hψ, hψa⟩, -⟩ := Loc.charExt hN.aut.art (H.ovr v) (H.art v) (hH.art_spec v) T ξ hξ
   have hl : ((l : ℕ) : T) ∈ maximalIdeal T := by
     have h : (maximalIdeal c.O).comap (algebraMap ℤ_[l] c.O) = maximalIdeal ℤ_[l] :=
-      eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _)
+      eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := ℤ_[l]) (maximalIdeal c.O))
     have h1 : (l : ℤ_[l]) ∈ maximalIdeal ℤ_[l] := by
       rw [PadicInt.maximalIdeal_eq_span_p]; exact Ideal.mem_span_singleton_self _
     rw [← h, Ideal.mem_comap] at h1

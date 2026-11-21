@@ -36,7 +36,7 @@ variable [TopologicalSpace Γ] [IsTopologicalGroup Γ]
 omit [IsTopologicalGroup Γ] in
 private theorem rbar_open (hη : IsLocallyConstant η) (hΨ : IsLocallyConstant (barChar O Ψ)) :
     IsOpen ((rbar O η Ψ).ker : Set Γ) :=
-  ((hη.prodMk hΨ).comp fun p => (⟨tor _ p.2, p.1⟩ : GG 3 (ResidueField O))).isOpen_fiber 1
+  ((hη.prodMk hΨ).comp fun p => (⟨tor _ p.2, p.1⟩ : GG (m := 3) (R := ResidueField O))).isOpen_fiber 1
 
 private theorem adBar_open (hη : IsLocallyConstant η) (hΨ : IsLocallyConstant (barChar O Ψ)) (j : ℤ) :
     IsOpen ((adBar O η Ψ j).ker : Set Γ) :=

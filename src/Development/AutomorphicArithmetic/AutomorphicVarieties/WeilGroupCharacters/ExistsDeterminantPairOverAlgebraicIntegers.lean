@@ -213,12 +213,12 @@ private theorem qb_field {l : ℕ} [Fact l.Prime] (F : GFrame l) {n : ℕ} (ρ :
   obtain ⟨K₃, h₃, hK₃⟩ := qb_fd fun x : F.Vl × Fin n × Fin n => (P x.1).inv x.2.1 x.2.2
   refine ⟨fun v i => ?_, K₁ ⊔ (K₂ ⊔ K₃), inferInstance, fun i g => ?_, fun v i g => ?_⟩
   · simp only [hψ]
-    exact continuous_finset_sum _ fun b _ => (continuous_finset_sum _ fun a _ =>
+    exact continuous_finsetSum _ fun b _ => (continuous_finsetSum _ fun a _ =>
       continuous_const.mul ((hρ a b).comp (F.φ_cont v))).mul continuous_const
   · refine (le_sup_left : K₁ ≤ _) ?_
     let M : Matrix (Fin n) (Fin n) K₁ := Matrix.of fun a b => ⟨_, hK₁ g a b⟩
     have hM : mat ρ g = M.map (algebraMap K₁ (PadicAlgCl l)) := rfl
-    rw [GDet.lam, (UpperTheory.V.AlgebraTools.Det.repApi (mat ρ)).2.1, hM, Matrix.charpoly_map, Polynomial.coeff_map]
+    rw [GDet.lam, (UpperTheory.V.AlgebraTools.Det.repApi (mat ρ)).2.1 g, hM, Matrix.charpoly_map, Polynomial.coeff_map]
     exact mul_mem (pow_mem (neg_mem (one_mem _)) _) (SetLike.coe_mem _)
   · rw [hψ]
     exact sum_mem fun b _ => mul_mem (sum_mem fun a _ => mul_mem
@@ -229,7 +229,7 @@ private theorem qb_tr {n : ℕ} {A L G : Type} [CommRing A] [CommRing L] [Group 
     (hj : Function.Injective j) (D : GDet n A G) (ρ : G →* Matrix (Fin n) (Fin n) L) (hD : D.map j = GDet.ofRep ρ)
     (x y : MonoidAlgebra A G) (hy : GDet.repAlg ρ L (MonoidAlgebra.mapRingHom G j y) = 0) : D.tr (x * y) = 0 := by
   apply hj
-  rw [GDet.tr, ← ((UpperTheory.V.CA.d_gmap D).2.2.1 j _).2, hD, map_zero, ← GDet.tr,
+  rw [GDet.tr, ← ((UpperTheory.V.CA.d_gmap D).2.2.1 j _).2 1, hD, map_zero, ← GDet.tr,
     (UpperTheory.V.AlgebraTools.Det.repApi ρ).2.2.1 hn, map_mul, map_mul, hy, mul_zero, Matrix.trace_zero]
 
 private theorem qb_pair {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [CommRing O] [IsLocalRing O] [Algebra ℤ_[l] O]
@@ -295,7 +295,8 @@ private theorem qb_pair {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [Comm
     congr 1
     simp only [GFrame.oEl, map_list_prod, List.map_ofFn]
     congr 2
-    rfl
+    funext i
+    simp [MonoidAlgebra.mapRingHom_single, hψ']
   · refine qb_tr (hn _ (B.u.I u g hg h)) _ hj D _ hD _ _ ?_
     rw [map_sub, map_sub, map_one, map_one, MonoidAlgebra.mapRingHom_single, map_one, sub_eq_zero]
     simp [GDet.repAlg, mat, h2 u g hg]

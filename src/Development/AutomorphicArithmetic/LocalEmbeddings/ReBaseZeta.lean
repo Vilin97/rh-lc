@@ -129,8 +129,14 @@ theorem linW_change (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (hW : W.IsSkew �
   have act := fun b c u hu hp φ hφ => (GlobalTheory.T.heisenbergOperator_isotropic_translation_char_split hB.cm X W hX.herm hW.skew (GlobalTheory.FinUniq.det_ne_zero_herm hX)
     (GlobalTheory.FinUniq.det_ne_zero_skew hW) M B.ψ hB.std t b c u hu hp φ hφ _ (hsb u φ hφ)
     (GlobalTheory.VacBridge.rho_acts_locCo M.co B.ψ v u hu φ)).1
-  choose zX hzX hzX0 hzXe using fun Z => (GlobalTheory.T.splitPlace_characterAndTranslationCoords_surjective F E σ B hB n d _ _ _ _ X W hX hW v t (b * g) (c * k) Z).1
-  choose zY hzY hzY0 hzYe using fun Z => (GlobalTheory.T.splitPlace_characterAndTranslationCoords_surjective F E σ B hB n d _ _ _ _ X W hX hW v t (b * g) (c * k) Z).2
+  choose zX hzX using fun Z => (GlobalTheory.T.splitPlace_characterAndTranslationCoords_surjective F E σ B hB n d _ _ _ _ X W hX hW v t (b * g) (c * k) Z).1
+  have hzX0 := fun Z => (hzX Z).2.1
+  have hzXe := fun Z => (hzX Z).2.2
+  have hzX := fun Z => (hzX Z).1
+  choose zY hzY using fun Z => (GlobalTheory.T.splitPlace_characterAndTranslationCoords_surjective F E σ B hB n d _ _ _ _ X W hX hW v t (b * g) (c * k) Z).2
+  have hzY0 := fun Z => (hzY Z).2.1
+  have hzYe := fun Z => (hzY Z).2.2
+  have hzY := fun Z => (hzY Z).1
   have y0 : ∀ b c Z, coY σ X W t b c (zX Z) = 0 := fun b c Z => by simp [coY, hzX0]
   have x0 : ∀ b c Z, coX t b c (zY Z) = 0 := fun b c Z => by simp [coX, hzY0]
   have p0 : ∀ Y : Matrix (Fin n) (Fin d) (Fv F v), pairM Y 0 = 0 := fun Y => by simp [pairM]
@@ -163,8 +169,14 @@ theorem linBar_change (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (hW : W.IsSkew
   have act := fun b c u hu hp φ hφ => (GlobalTheory.T.heisenbergOperator_isotropic_translation_char_split hB.cm X W hX.herm hW.skew (GlobalTheory.FinUniq.det_ne_zero_herm hX)
     (GlobalTheory.FinUniq.det_ne_zero_skew hW) M B.ψ hB.std t b c u hu hp φ hφ _ (hsb u φ hφ)
     (GlobalTheory.VacBridge.rho_acts_locCo M.co B.ψ v u hu φ)).2
-  choose zX hzX hzX0 hzXe using fun Z => (GlobalTheory.T.splitPlace_characterAndTranslationCoords_surjective F E σ B hB n d _ _ _ _ X W hX hW v t (b * g) (c * k) Z).1
-  choose zY hzY hzY0 hzYe using fun Z => (GlobalTheory.T.splitPlace_characterAndTranslationCoords_surjective F E σ B hB n d _ _ _ _ X W hX hW v t (b * g) (c * k) Z).2
+  choose zX hzX using fun Z => (GlobalTheory.T.splitPlace_characterAndTranslationCoords_surjective F E σ B hB n d _ _ _ _ X W hX hW v t (b * g) (c * k) Z).1
+  have hzX0 := fun Z => (hzX Z).2.1
+  have hzXe := fun Z => (hzX Z).2.2
+  have hzX := fun Z => (hzX Z).1
+  choose zY hzY using fun Z => (GlobalTheory.T.splitPlace_characterAndTranslationCoords_surjective F E σ B hB n d _ _ _ _ X W hX hW v t (b * g) (c * k) Z).2
+  have hzY0 := fun Z => (hzY Z).2.1
+  have hzYe := fun Z => (hzY Z).2.2
+  have hzY := fun Z => (hzY Z).1
   have y0 : ∀ b c Z, coY σ X W t b c (zX Z) = 0 := fun b c Z => by simp [coY, hzX0]
   have x0 : ∀ b c Z, coX t b c (zY Z) = 0 := fun b c Z => by simp [coX, hzY0]
   have p0 : ∀ Y : Matrix (Fin n) (Fin d) (Fv F v), pairM Y 0 = 0 := fun Y => by simp [pairM]

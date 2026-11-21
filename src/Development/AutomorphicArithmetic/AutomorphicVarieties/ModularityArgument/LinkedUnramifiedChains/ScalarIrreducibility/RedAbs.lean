@@ -17,6 +17,7 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.FrobeniusSm
 open NumberField Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.GalOfCusp IsLocalRing UpperTheory.V UpperTheory.V.HV UpperTheory.V.U3 UpperTheory.V.Base UpperTheory.V.Af UpperTheory.V.Pr UpperTheory.V.Alg UpperTheory.V.J
 
 theorem UpperTheory.V.J.redAbs : UpperTheory.V.J.RedAbs := by
+  set_option synthInstance.maxHeartbeats 200000 in
   intro l _ c _ F C₀ n hF hn S M Gd hAG hDB hTan ξ hξ hTI b hb
   haveI hA : IsNoetherianRing S.A := (Fr.gr_A hF hn S).2.2.2.2.2.1
   haveI hq : (RingHom.ker ξ).IsPrime := RingHom.ker_isPrime _

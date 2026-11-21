@@ -17,9 +17,11 @@ open scoped Classical
 theorem UpperTheory.ConvolutionTheory.R2.aut :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E] (D : Dat F E) (W : Weil D) (M : Meas F) (π : TR.CuspSub F 2), St.Aut W M π := by
   intro F E _ _ _ _ _ _ _ D W M π hr Φ hΦ
-  refine Cm.mem_range_ofAut.1 ((Submodule.span_le.2 ?_ : span W M π ≤ _) hΦ)
-  rintro Ψ ⟨f, hf, φ, hφ, e⟩
-  refine Cm.mem_range_ofAut.2 ⟨fun γ g => ?_, level F E D W M π f hf φ hφ Ψ e, (kFin F E D W M π f hf φ hφ Ψ e).2,
-    zFin F E D W M π hr Ψ (Submodule.subset_span ⟨f, hf, φ, hφ, e⟩), fun g => ?_⟩
-  · rw [e]; exact (equiv F E D W M π f hf φ).1 γ g
-  · rw [e]; exact growth F E D W M π f hf φ hφ g
+  have h : span W M π ≤ (Cm.ofAut E 2).range := by
+    apply Submodule.span_le.2
+    rintro Ψ ⟨f, hf, φ, hφ, e⟩
+    refine Cm.mem_range_ofAut.2 ⟨fun γ g => ?_, level F E D W M π f hf φ hφ Ψ e, (kFin F E D W M π f hf φ hφ Ψ e).2,
+      zFin F E D W M π hr Ψ (Submodule.subset_span ⟨f, hf, φ, hφ, e⟩), fun g => ?_⟩
+    · rw [e]; exact (equiv F E D W M π f hf φ).1 γ g
+    · rw [e]; exact growth F E D W M π f hf φ hφ g
+  exact Cm.mem_range_ofAut.1 (h hΦ)

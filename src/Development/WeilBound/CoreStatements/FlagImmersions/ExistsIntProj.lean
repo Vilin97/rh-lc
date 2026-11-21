@@ -57,12 +57,12 @@ private theorem exists_trace_dual_integral_projector {E : Type} [Field E] [Numbe
       simp only [smul_mul_assoc, map_sum, map_zsmul, hF, smul_eq_mul]
     conv_lhs => rw [← B.sum_repr y]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Finset.mul_sum, mul_smul_comm, map_sum, map_zsmul, Finsupp.coe_finset_sum, Finset.sum_apply,
+      simp only [Finset.mul_sum, mul_smul_comm, map_sum, map_zsmul, Finset.sum_apply',
       Finsupp.smul_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun k _ => ?_
     ring
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [Finset.sum_mul, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_mul, map_sum]
     simp only [_root_.mul_assoc, hF]
     rw [← zsmul_eq_mul, map_zsmul, smul_eq_mul, Algebra.trace_eq_matrix_trace B, Matrix.trace, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
@@ -239,14 +239,14 @@ private theorem mem_lat_of_specializes {X : Scheme.{0}} {G : Over X} [GrpObj G] 
       ∃ v' : epsAt (X.fromSpecStalk q'.1) ⟶ G, M.Extends q' x v' := by
     intro v x hv
     obtain ⟨hv1, hv2⟩ := hv
-    have hφ : Spec.map (CommRingCat.ofHom (dualMap (X.presheaf.stalkSpecializes hs).hom)) ≫
+    have hφ : Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (X.presheaf.stalkSpecializes hs).hom)) ≫
         (epsAt (X.fromSpecStalk q.1)).hom = (epsAt (X.fromSpecStalk q'.1)).hom := by
       simp only [epsAt, Over.mk_hom]
       rw [← hψ, ← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp]
       congr 2
-      ext a <;> simp [dualMap] <;> first | rfl | exact map_zero _
+      ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap] <;> first | rfl | exact map_zero _
     let φ : epsAt (X.fromSpecStalk q'.1) ⟶ epsAt (X.fromSpecStalk q.1) := Over.homMk _ hφ
-    have hφl : φ.left = Spec.map (CommRingCat.ofHom (dualMap (X.presheaf.stalkSpecializes hs).hom)) := rfl
+    have hφl : φ.left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (X.presheaf.stalkSpecializes hs).hom)) := rfl
     refine ⟨φ ≫ v, ?_, ?_⟩
     · unfold IsTanAt at hv1 ⊢
       have key : Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom (X.presheaf.stalk q'.1)
@@ -255,7 +255,7 @@ private theorem mem_lat_of_specializes {X : Scheme.{0}} {G : Over X} [GrpObj G] 
           (X.presheaf.stalk q.1) (X.presheaf.stalk q.1) (X.presheaf.stalk q.1)).toRingHom) := by
         rw [hφl, ← Spec.map_comp, ← Spec.map_comp]
         congr 1
-        ext a <;> simp [dualMap] <;> first | rfl | exact map_zero _
+        ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap] <;> first | rfl | exact map_zero _
       rw [Over.comp_left, ← Category.assoc, key, Category.assoc, hv1]
       let ψ : Over.mk (X.fromSpecStalk q'.1) ⟶ Over.mk (X.fromSpecStalk q.1) := Over.homMk _ hψ
       have h1 : ψ ≫ (1 : Over.mk (X.fromSpecStalk q.1) ⟶ G) = 1 := by
@@ -267,7 +267,7 @@ private theorem mem_lat_of_specializes {X : Scheme.{0}} {G : Over X} [GrpObj G] 
       congr 2
       have hg : ∀ s, genMap ξ q' ((X.presheaf.stalkSpecializes hs).hom s) = genMap ξ q s :=
         fun s => ProjectiveLinePlaces.genMap_specializes hs q'.2 q.2 s
-      ext a <;> simp [dualMap, hg] <;> first | rfl | exact (hg _).symm
+      ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, hg] <;> first | rfl | exact (hg _).symm
   unfold LieModel.lat at he ⊢
   induction he using Submodule.span_induction with
   | mem x hx =>

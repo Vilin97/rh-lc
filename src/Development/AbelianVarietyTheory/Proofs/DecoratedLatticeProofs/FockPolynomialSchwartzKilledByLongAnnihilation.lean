@@ -123,7 +123,7 @@ theorem compAt_add' (τ : D.what₂.Tau) {m : ℕ} (x y : Mx D m n) :
     compAt θ τ (x + y) = compAt θ τ x + compAt θ τ y := by
   ext i j
   simp only [compAt, Matrix.map_apply, Matrix.add_apply]
-  rw [(infPart D).map_add (f := _), (θ τ).map_add (f := _)]
+  rw [map_add (infPart D), map_add (θ τ)]
 
 theorem compAt_add_lineAt (hθ : IsInfFam θ) {m : ℕ} (x : Mx D m n) (τ : D.what₂.Tau) (X : Matrix (Fin m) (Fin n) ℂ) (t : ℝ) :
     (fun τ' => compAt θ τ' (x + lineAt θ τ X t)) = (fun τ' => compAt θ τ' x) + (t : ℂ) • dirAt τ X := by
@@ -137,7 +137,7 @@ theorem finPart_add_lineAt (hθ : IsInfFam θ) {m : ℕ} (x : Mx D m n) (τ : D.
   funext i j
   have h := congrFun (congrFun ((GlobalTheory.OrientedHeis.isLineAt_lineAt hθ τ X).2.1 t) i) j
   simp only [Matrix.map_apply, Matrix.zero_apply] at h
-  rw [Matrix.add_apply, (finPart D).map_add (f := _), h, add_zero]
+  rw [Matrix.add_apply, map_add (finPart D), h, add_zero]
 
 end Line
 

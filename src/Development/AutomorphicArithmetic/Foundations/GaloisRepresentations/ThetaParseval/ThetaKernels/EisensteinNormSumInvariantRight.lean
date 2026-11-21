@@ -239,17 +239,20 @@ theorem heis'_k (h : _root_.PositivityTheory.SiegelWeilFormula.Act.C5.Hyp_k L nb
   · have hl : Continuous (ellA (F := F) (E := E) δ) := IsModuleTopology.continuous_of_linearMap _
     have hc := GlobalTheory.EisBL.DoubledGroupTopology.continuous_cA σ
     show Continuous fun p : (Fin L.n → AE F E) × (Fin L.n → AE F E) => ellA δ (y p.1 p.2)
-    refine hl.comp ((continuous_finset_sum _ fun l _ => ?_).sub (continuous_finset_sum _ fun k _ => ?_))
+    refine hl.comp ((continuous_finsetSum _ fun l _ => ?_).sub (continuous_finsetSum _ fun k _ => ?_))
     · exact ((continuous_apply l).comp continuous_snd).mul (hc.comp ((continuous_apply l).comp continuous_fst))
     · exact ((continuous_apply k).comp continuous_fst).mul
         (continuous_const.mul (hc.comp ((continuous_apply k).comp continuous_snd)))
   · intro u₀ b hu hb
     obtain ⟨x0, rfl⟩ := _root_.PositivityTheory.SiegelWeilFormula.Act.C5.ratV_incl_k hu
     obtain ⟨xb, rfl⟩ := _root_.PositivityTheory.SiegelWeilFormula.Act.C5.ratV_incl_k hb
+    have cA_inclR (x : E) : cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := by
+      show Algebra.TensorProduct.map (AlgHom.id (AF F) (AF F)) σ ((1 : AF F) ⊗ₜ[F] x) = (1 : AF F) ⊗ₜ[F] σ x
+      rw [Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
     have e : y (fun i => inclR (F := F) (AF F) (x0 i)) (fun i => inclR (F := F) (AF F) (xb i)) =
         inclR (F := F) (AF F) (∑ l, xb l * σ (x0 l) - ∑ k, x0 k * (((R.ε : ℤ) : E) * σ (xb k))) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [y, _root_.PositivityTheory.SiegelWeilFormula.Act.C5.eA_k, map_sub, map_sum, map_mul, GlobalTheory.EisBL.DoubledUnipotentRadical.cA_inclR]
+        simp only [y, _root_.PositivityTheory.SiegelWeilFormula.Act.C5.eA_k, map_sub, map_sum, map_mul, cA_inclR]
     show ellA δ (y _ _) ∈ _
     rw [e]
     exact _root_.PositivityTheory.SiegelWeilFormula.Act.C5.ellA_inclR_k h _

@@ -72,7 +72,7 @@ private theorem place (a : 𝓞 L) (ha : a ≠ 0) : ∃ w : InfinitePlace L, 1 �
     rwa [← w.norm_embedding_eq]
   have h2 := InfinitePlace.prod_eq_abs_norm (a : L)
   have h3 : ∏ w : InfinitePlace L, w (a : L) ^ w.mult < ∏ _w : InfinitePlace L, (1 : ℝ) :=
-    Finset.prod_lt_prod_of_nonempty
+    Finset.prod_lt_prod_of_nonempty₀
       (fun w _ => pow_pos (InfinitePlace.pos_iff.2 (RingOfIntegers.coe_ne_zero_iff.2 ha)) _)
       (fun w _ => pow_lt_one₀ (apply_nonneg w _) (h1 w) InfinitePlace.mult_ne_zero) Finset.univ_nonempty
   rw [h2, Finset.prod_const_one, ← Algebra.coe_norm_int] at h3
@@ -246,12 +246,12 @@ theorem pf_GRDual : GRDual := by
     by_cases hfin : (Function.support fun k : ℤ => rho ((4 : ℝ) ^ k * μ h) • term ((4 : ℝ) ^ k) h).Finite
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [finsum_eq_sum _ hfin, map_sum]
-      refine (Finset.sum_le_sum fun k _ => hterm k).trans ?_
-      rw [← Finset.mul_sum]
-      calc _ ≤ 4 * s * (2 * (4 / m)) :=
-            mul_le_mul_of_nonneg_left ((geo _ k0).trans (mul_le_mul_of_nonneg_left hinv (by norm_num)))
-              (mul_nonneg (by norm_num) hs0)
-        _ = _ := by ring
+        refine (Finset.sum_le_sum fun k _ => hterm k).trans ?_
+        rw [← Finset.mul_sum]
+        calc _ ≤ 4 * s * (2 * (4 / m)) :=
+              mul_le_mul_of_nonneg_left ((geo _ k0).trans (mul_le_mul_of_nonneg_left hinv (by norm_num)))
+                (mul_nonneg (by norm_num) hs0)
+          _ = _ := by ring
     · rw [finsum_of_infinite_support hfin, map_zero]; exact div_nonneg (mul_nonneg (by norm_num) hs0) hm0
   have hμm : μ h * m ≤ 12 * C1 * |C2| := by
     have b1 : μ h ≤ |C2| * lamD h := (hcmp h hh).2.trans (mul_le_mul_of_nonneg_right (le_abs_self _) hD.le)

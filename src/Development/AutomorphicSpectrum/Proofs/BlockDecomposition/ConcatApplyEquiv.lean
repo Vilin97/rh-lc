@@ -58,7 +58,7 @@ theorem concat_dec_topCut (Δ : Segment k) {s : ℕ} (c : Fin s → ℕ) (hc : �
     rw [← h]; omega
   rw [key]
   push_cast
-  ring
+  congr 1
 
 theorem concat_injective {s : ℕ} {c : Fin s → ℕ} {x x' : ∀ a, Fin (c a) → IrrGL (k := k)} (h : concat c x = concat c x') :
     x = x' := by

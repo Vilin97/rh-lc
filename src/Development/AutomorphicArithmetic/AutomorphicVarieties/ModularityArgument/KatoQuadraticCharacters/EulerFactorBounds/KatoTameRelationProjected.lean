@@ -128,7 +128,7 @@ theorem UpperTheory.V.Z.Kato.Nb.kato_tame_relation_projected :
   have hcont : ∀ r y i, Continuous fun s => Yt r s y i := by
     intro r y i
     simp only [hYt, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-    exact continuous_finset_sum _ fun x _ => continuous_const.mul (hY'cont x r y i)
+    exact continuous_finsetSum _ fun x _ => continuous_const.mul (hY'cont x r y i)
   have hmem : ∀ r s u i, Yt r s u i ∈ cf.O := by
     intro r s u i
     rw [hYt, Finset.sum_apply]

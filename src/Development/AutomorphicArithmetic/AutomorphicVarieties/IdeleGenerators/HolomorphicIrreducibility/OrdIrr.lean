@@ -316,7 +316,7 @@ theorem UpperTheory.V.Sd.ordIrr :
   have hl : ∀ᶠ v : HeightOneSpectrum (𝓞 F) in Filter.cofinite, ((l : ℕ) : 𝓞 F) ∉ v.asIdeal :=
     (Ideal.finite_factors h0).subset fun v hv => Ideal.dvd_span_singleton.mpr (not_not.1 hv)
   obtain rfl : n = 0 := type_zero χ n hn (by
-    filter_upwards [hl, hr.att.2, (GlobalTheory.Mem.UnrAe.unr_ae_and_level F χ).1] with w hw ⟨B, _, hF⟩ hu
+    filter_upwards [hl, hr.att.2, Filter.eventually_cofinite.2 (GlobalTheory.Mem.UnrAe.unr_ae_and_level F χ).1] with w hw ⟨B, _, hF⟩ hu
     obtain ⟨A, hA⟩ := exists_isPlaceOver Ω w
     obtain ⟨x, hx, ht⟩ := hG.pure w hw A hA
     have e1 := norm_of_pure hw (hF A hA).1 hx ht (b := c₁ (frob hA : G F Ω)⁻¹) (by rw [hch]; simp)

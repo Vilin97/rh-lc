@@ -204,7 +204,8 @@ theorem pack (Q : Poly Φ) {Fil : ℤ → IdF Φ.A} (hF : IsFil Φ Fil) (E : Fra
       rw [LinearEquiv.apply_symm_apply]
     · rintro ⟨a, rfl⟩
       change (e r (n + 1)).symm (fH (n + 1) (δ n (e (r - 1) n a))) = 0
-      rw [(e3 n _).2 ⟨_, rfl⟩, map_zero]
+      rw [(e3 n _).2 ⟨_, rfl⟩]
+      exact (e r (n + 1)).symm.toLinearMap.map_zero
   · intro n a
     constructor
     · intro h
@@ -219,7 +220,8 @@ theorem pack (Q : Poly Φ) {Fil : ℤ → IdF Φ.A} (hF : IsFil Φ Fil) (E : Fra
       exact (e2 n _).2 ⟨_, rfl⟩
   · intro n b
     change (e (r - 1) n).symm (gH n (e r n ((e r n).symm (fH n b)))) = 0
-    rw [LinearEquiv.apply_symm_apply, (e1 n _).2 ⟨b, rfl⟩, map_zero]
+    rw [LinearEquiv.apply_symm_apply, (e1 n _).2 ⟨b, rfl⟩]
+    exact (e (r - 1) n).symm.toLinearMap.map_zero
   · intro j q hr I x hx a b ha hb
     change (e r j).symm (fH j b) = a
     exact (LinearEquiv.symm_apply_eq _).2 (pull_form Q hF E σ hc j q r hr I x hx a b ha hb)

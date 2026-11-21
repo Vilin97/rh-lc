@@ -116,6 +116,7 @@ theorem pair_points_first_vertex_law : _root_.GlobalTheory.FunPr.ThetaLocalInput
         rw [h1, Submodule.coe_smul, coe_toTh ch.W _ (thr d hd _)]
       · simp only [Function.update_of_ne hi0]
     rw [eg, MultilinearMap.map_update_smul, Function.update_eq_self, smul_eq_mul]
+    rfl
   rw [LinearMap.map_smul, smul_eq_mul, lhs, rhs, Finsupp.sum, Finset.mul_sum]
   have step1 : (∑ d ∈ τ.support, χk * (τ d * M (fun j => toTh ch.W _ (ch.S.Z.vec (d.1 j)))
         (fun i => toTh ch.W _ (movedRow ch.S.toGridChoice k (fun i => ch.S.Z.vec (d.2 i)) i)))) =

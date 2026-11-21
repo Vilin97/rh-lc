@@ -16,6 +16,7 @@ open UpperTheory.V.Cj UpperTheory.V.Cj.H
 
 theorem UpperTheory.V.Cj.H.gardSep :
     UpperTheory.V.Cj.H.GardSep := by
+  open scoped Pointwise in
   intro E _ _ _ a μ _ _ W hW h
   rw [Submodule.eq_bot_iff]
   intro F hF

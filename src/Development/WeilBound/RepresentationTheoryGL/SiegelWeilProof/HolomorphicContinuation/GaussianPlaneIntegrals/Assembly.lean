@@ -111,7 +111,8 @@ theorem Tlin_injective (hS : Stable) (hE : Ext) (hA : Avg) (hP : Pos) (d : ℕ) 
       ∑ z ∈ c.support, c z * eval (act 1 (Mk (ι := ι) (A := A) (B := B) k) z) (q : PV ι A B) := by
     intro k
     have h := hc ⟨_, hsubW k⟩
-    simp only [LinearMap.comp_apply, Submodule.subtype_apply, gipL_apply, Finsupp.sum] at h
+    simp only [LinearMap.comp_apply, Submodule.subtype_apply, Finsupp.sum] at h
+    change gip (sub 1 (Mk k) (q : PV ι A B)) (q : PV ι A B) = _ at h
     rw [h]
     simp only [AsmA.eval_sub]
   have hΨc : Continuous fun k => gip (sub 1 (Mk (ι := ι) (A := A) (B := B) k) (q : PV ι A B)) (q : PV ι A B) := by
@@ -125,7 +126,8 @@ theorem Tlin_injective (hS : Stable) (hE : Ext) (hA : Avg) (hP : Pos) (d : ℕ) 
   have hgipT : gip (Tf hA (q : PV ι A B)) (q : PV ι A B) =
       ∫ k, gip (sub 1 (Mk (ι := ι) (A := A) (B := B) k) (q : PV ι A B)) (q : PV ι A B) ∂(Formalism.REAL.muK (fun _ : Fin (NN ι A B) => true)) := by
     have h := hc ⟨_, hTW⟩
-    simp only [LinearMap.comp_apply, Submodule.subtype_apply, gipL_apply, Finsupp.sum] at h
+    simp only [LinearMap.comp_apply, Submodule.subtype_apply, Finsupp.sum] at h
+    change gip (Tf hA (q : PV ι A B)) (q : PV ι A B) = _ at h
     rw [h]
     simp_rw [hΨ]
     rw [integral_finsetSum]

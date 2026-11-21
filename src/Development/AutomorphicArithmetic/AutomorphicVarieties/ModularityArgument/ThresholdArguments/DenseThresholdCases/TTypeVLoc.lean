@@ -69,8 +69,29 @@ private theorem prinSeries_irreducible {n : ℕ} (ω : Fin n → kˣ →* ℂˣ)
       (p.trans (multiProdEquiv (stdBlocks (fun i => (x i).1) hd)
         fun i => equivRep (IrrRep.det (Fin 1) (ω i) (hω i)))).symm hP
   haveI := nontrivial_of_irreducible hM
-  haveI := nontrivial_of_isSubquotient (GlobalTheory.PermPrin.isSubquotient_multiProd_prinSeries e₀ ω)
-  obtain ⟨E⟩ := equiv_of_isSubquotient (GlobalTheory.PrinProd.isSubquotient_prinSeries_multiProd k n ω) hM
+  haveI : Nontrivial (IndSp _ _) := by
+    obtain ⟨S, f, hf⟩ := GlobalTheory.PermPrin.isSubquotient_multiProd_prinSeries e₀ ω
+    have := hf.nontrivial
+    exact Subtype.val_injective.nontrivial (α := S.toSubmodule)
+  have equiv_local {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V] [AddCommGroup W]
+      [Module ℂ W] {σ : Representation ℂ G W} {ρ : Representation ℂ G V} (h : IsSubquotient σ ρ)
+      [Nontrivial W] (hρ : ρ.IsIrreducible) : Nonempty (ρ.Equiv σ) := by
+    obtain ⟨S, f, hf⟩ := h
+    obtain ⟨y, hy⟩ := exists_ne (0 : W)
+    obtain ⟨v, rfl⟩ := hf y
+    haveI : IsSimpleOrder (Subrepresentation ρ) := hρ
+    rcases eq_bot_or_eq_top S with rfl | rfl
+    · exact absurd (by rw [show v = 0 from Subtype.ext v.2, map_zero]) hy
+    let F : ρ.IntertwiningMap σ := f.comp (topEquiv ρ).symm.toIntertwiningMap
+    have hs : Function.Surjective F := hf.comp (topEquiv ρ).symm.toLinearEquiv.surjective
+    refine ⟨equivOfBijective F ⟨(injective_iff_map_eq_zero _).2 fun x hx => ?_, hs⟩⟩
+    rcases eq_bot_or_eq_top F.ker with h | h
+    · have : x ∈ F.ker := hx
+      rw [h] at this
+      exact this
+    · have : v.1 ∈ F.ker := by rw [h]; trivial
+      exact absurd this hy
+  obtain ⟨E⟩ := equiv_local (GlobalTheory.PrinProd.isSubquotient_prinSeries_multiProd k n ω) hM
   exact GlobalTheory.Parabolic.isIrreducible_of_equiv E hM
 end Loc
 section WD
@@ -229,7 +250,7 @@ theorem nonempty_equiv_principal_series_of_char_poly_of_generic (Lc : _root_.Glo
   have hlen : ∀ i, (Δ i).len = 1 := fun i => by
     have hirr : IsIrrWD ((rc (Δ i).first).lpTw ((((Δ i).len : ℝ) - 1) / 2)) := by
       rw [← H.nu_eq]; exact (H.cusp _).1 ((Δ i).isCusp_first.nu _)
-    have hmi : (((rc (Δ i).first).lpTw ((((Δ i).len : ℝ) - 1) / 2)).lpChar (WD.lpSp h (Δ i).len)).mono0 :=
+    have hmi : (((rc (Δ i).first).lpTw ((((Δ i).len : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) (Δ i).len)).mono0 :=
       GlobalTheory.UnlinkedMono.noMonodromy_of_mem_weilDeligneListSum _ hm0 _ (List.mem_map.2 ⟨Δ i, List.mem_ofFn.2 ⟨i, rfl⟩, rfl⟩)
     have hpos := (Δ i).len_pos
     by_contra hne

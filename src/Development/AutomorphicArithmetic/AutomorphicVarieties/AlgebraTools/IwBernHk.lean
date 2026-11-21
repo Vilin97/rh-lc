@@ -22,7 +22,8 @@ private theorem exists_algHom_of_comm {σ A H : Type} [CommRing A] [Ring H] [Alg
   have hc : ∀ a ∈ Set.range y, ∀ b ∈ Set.range y, a * b = b * a := by
     rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩
     exact hy i j
-  have : IsMulCommutative (Algebra.adjoin A (Set.range y)) := Algebra.isMulCommutative_adjoin A hc
+  have : IsMulCommutative (Algebra.adjoin A (Set.range y)) :=
+    Algebra.isMulCommutative_adjoin A (fun a ha b hb _ => hc a ha b hb)
   letI : CommRing (Algebra.adjoin A (Set.range y)) :=
     { (inferInstance : Ring (Algebra.adjoin A (Set.range y))) with mul_comm := fun a b => this.is_comm.comm a b }
   refine ⟨(Algebra.adjoin A (Set.range y)).val.comp

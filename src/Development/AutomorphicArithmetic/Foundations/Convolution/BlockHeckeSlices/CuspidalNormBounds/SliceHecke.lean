@@ -219,7 +219,7 @@ theorem UpperTheory.ConvolutionTheory.BW.sliceHecke :
         starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))) ∂(quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r)) =
       satEig (qV E w) r (b.sat w) p.1 * (qc w ^ ((((p.2 : ℕ) : ℂ) * ((s : ℂ) - (p.2 : ℕ))) / 2) *
         (hk s w p.2 (ψ (t - (p.1 : ℕ) * Real.log (qV E w)))).1 m) := fun p => by
-    rw [integral_finsetSum _ fun i _ => integrable_finset_sum _ fun i' _ => hI _ _]
+    rw [integral_finsetSum _ fun i _ => integrable_finsetSum _ fun i' _ => hI _ _]
     simp only [fun i => integral_finsetSum (Finset.univ : Finset (SatakeIdx w hϖ (n := s) p.2))
       fun i' _ => hI (finGL E r (locGL E r w (satakeB w hϖ hu (j := p.1) i)))
         (m * finGL E s (locGL E s w (satakeB w hϖ hu i')))]
@@ -233,7 +233,7 @@ theorem UpperTheory.ConvolutionTheory.BW.sliceHecke :
   rw [(hkOps E (r + s) w j).1, Submodule.coe_smul, slice]
   simp only [AutomorphicForm.constantTerm_smul, UpperTheory.constantTerm_heckeOperator_eq_sum_satake E r s w _ hϖ hu j hj φ hU (hS w hw), smul_eq_mul, mul_assoc,
     Finset.sum_mul, integral_const_mul]
-  rw [integral_finsetSum _ fun p _ => (integrable_finset_sum _ fun i _ => integrable_finset_sum _ fun i' _ => by
+  rw [integral_finsetSum _ fun p _ => (integrable_finsetSum _ fun i _ => integrable_finsetSum _ fun i' _ => by
     simpa only [mul_assoc] using hI _ _).const_mul _]
   simp only [integral_const_mul, ← mul_assoc (zt E r t), h1]
   rw [Submodule.coe_sum, Finset.sum_apply, Finset.mul_sum]

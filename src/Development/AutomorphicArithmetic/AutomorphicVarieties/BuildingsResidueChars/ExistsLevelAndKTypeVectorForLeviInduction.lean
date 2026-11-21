@@ -146,7 +146,7 @@ private theorem κInv {ι : Type} [Fintype ι] (C : Co K ι) : MeasurePreserving
   rfl
 
 private theorem pCont {ι : Type} [Fintype ι] (C : Co K ι) (n : ι → ℕ) (q : ι → ℤ) : Continuous (C.p n q) :=
-  continuous_finset_prod _ fun i _ =>
+  continuous_finsetProd _ fun i _ =>
     (continuous_const.mul (KT.continuous_conj_psi (n i) (q i) (n i))).comp ((continuous_apply i).comp (C.Φ 2).continuous)
 
 private theorem pStar {ι : Type} [Fintype ι] (C : Co K ι) (n : ι → ℕ) (q : ι → ℤ) (k : archCompact K 2) :

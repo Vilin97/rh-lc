@@ -74,7 +74,7 @@ theorem isConjInv_fam : f.fam.IsConjInv := isConjInv_ofGram _ _ fun σ i j => by
     exact sub_self _
   have h₁ : P.PosSemidef := Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
     ((f.posDef_gram _).1.sub ((f.posDef_gram σ).1.map _ fun _ => rfl)) fun y => (h₀ y).ge
-  have := congrFun ((h₁.dotProduct_mulVec_zero_iff (Pi.single j 1)).1 (h₀ _)) i
+  have := congrFun (h₁.dotProduct_mulVec_zero_iff.1 (h₀ (Pi.single j 1))) i
   simpa [P, sub_eq_zero] using this
 
 

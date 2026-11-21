@@ -321,7 +321,7 @@ theorem sym_grp : (∃ x : S.P.J, ∀ a b z, Ideal.Quotient.mk I z = g.val (e a)
   choose l hl using Ideal.Quotient.mk_surjective (I := I)
   have one : ∀ a b, (1 : Matrix _ _ k) a b = pr ((1 : Matrix _ _ O) a b) ∧
       (1 : Matrix _ _ (O ⧸ I)) (π.symm (e a)) (π.symm (e b)) = Ideal.Quotient.mk I ((1 : Matrix _ _ O) a b) := fun a b => by
-    by_cases h : a = b <;> simp [one_apply, h]
+    by_cases h : a = b <;> simp [Matrix.one_apply, h]
   rw [mem_unipSym]
   constructor
   · rintro ⟨x, hx⟩ i j hij

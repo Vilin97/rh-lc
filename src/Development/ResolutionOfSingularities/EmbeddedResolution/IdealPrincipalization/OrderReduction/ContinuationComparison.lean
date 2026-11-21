@@ -257,6 +257,7 @@ theorem isPullbackBlowupSequence_derivedTriple
     hftT [] 0 hVU'
   have hUb : (MaxContactCoverData.derivedTriple S s hftS [] 0).boundary = s.boundary s.length := by
     simp
+    rfl
   have hjL : j < (s.boundary s.length).length :=
     lt_of_lt_of_le hj (NontrivialBoundary.length_boundary_le_length_lastBoundary S s)
   have hcLT : NontrivialBoundary.survivingBoundaryCount S q j < (s'.boundary s'.length).length :=
@@ -343,13 +344,52 @@ theorem isPullbackBlowupSequence_appendLowerDimReduction
     (NontrivialBoundary.pullbackWithNontrivialBoundary S q) hV' hm hO' s' [] 0 hftT hdimU' hPU' hVU' hjb' (by simp)
   rw [hEq, hEq']
   refine isPullbackBlowupSequence_append_same_field q s _ s' _ hinv Dt ?_
-  exact SequenceOfBlowupsPullback.toBlowupDataOfSeq
-    (IsPullbackBlowupSequence.nonempty_sequenceOfBlowupsPullback
+  let c := (IsPullbackBlowupSequence.nonempty_sequenceOfBlowupsPullback
       (isPullbackBlowupSequence_derivedTriple (P := P) (A := A) (Bl := Bl) (j := j) (S := S) (q := q)
         (s := s) (s' := s') (Dt := Dt) (hftS := hftS) (hftT := hftT) (hstar := hstar)
         (hspec := hspec) (hshift := hshift) (hV := hV) (hV' := hV') (hm := hm) (hO := hO)
         (hO' := hO') (hj := hj) (hlive := hlive) (hPU := hPU) (hVU := hVU) (hPU' := hPU')
         (hVU' := hVU'))).some
+  have trans_eq {W : Scheme.{u}} (t : SequenceOfBlowups W) {i k : ℕ} (h : i ≤ k) :
+      (BlowupSequenceData.ofSequenceOfBlowups t).toSequenceOfBlowups.transitionMap h = t.transitionMap h := by
+    rw [BlowupSequenceData.toSequenceOfBlowups_transitionMap]
+    induction h with
+    | refl =>
+      rw [BlowupSequenceData.transitionMap_refl, SequenceOfBlowups.transitionMap_self_eq_id]
+      rfl
+    | @step m hm ih =>
+      rw [← BlowupSequenceData.transitionMap_comp_transitionMap _ hm (Nat.le_succ m),
+        BlowupSequenceData.transitionMap_succ, BlowupSequenceData.ofSequenceOfBlowups_blowupMorphism, ih,
+        SequenceOfBlowups.blowupMorphism_eq_transitionMap]
+      exact SequenceOfBlowups.transitionMap_trans t hm (Nat.le_succ m)
+  have convertSeq {Y Y' : Scheme.{u}} {f : Y' ⟶ Y} {t' : SequenceOfBlowups Y'}
+      {t : SequenceOfBlowups Y} (c : SequenceOfBlowupsPullback f t' t) :
+      SequenceOfBlowupsPullback f (BlowupSequenceData.ofSequenceOfBlowups t').toSequenceOfBlowups
+        (BlowupSequenceData.ofSequenceOfBlowups t).toSequenceOfBlowups := by
+    refine { idx := c.idx
+             map := fun j hj => c.map j (by
+               exact hj)
+             idx_length := SequenceOfBlowupsPullback.index_ofSequenceOfBlowups_length c
+             idx_lt := SequenceOfBlowupsPullback.index_lt_ofSequenceOfBlowups_length c
+             idx_strictMono := SequenceOfBlowupsPullback.index_lt_index_succ_of_lt_length_ofSequenceOfBlowups c
+             isPullback := ?_
+             step := ?_
+             center_comap := ?_
+             center_ne_top := SequenceOfBlowupsPullback.center_ofSequenceOfBlowups_ne_top c
+             omitted := SequenceOfBlowupsPullback.ofSequenceOfBlowups_ne_of_mem_unmatched_center c }
+    · intro j hj
+      rw [BlowupSequenceData.projectionToBase_toSequenceOfBlowups_ofSequenceOfBlowups,
+        BlowupSequenceData.projectionToBase_toSequenceOfBlowups_ofSequenceOfBlowups]
+      exact c.isPullback j _
+    · intro j hj
+      rw [SequenceOfBlowups.blowupMorphism_eq_transitionMap, trans_eq, trans_eq,
+        ← SequenceOfBlowups.blowupMorphism_eq_transitionMap]
+      exact c.step j (by
+               exact hj)
+    · intro j hj
+      exact c.center_comap j (by
+               exact hj)
+  exact convertSeq c
 
 include Dt in
 def continuationComparison

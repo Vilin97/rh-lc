@@ -73,11 +73,8 @@ theorem selfDualFor_map {ι κ : Type} [Fintype ι] [Fintype κ] [DecidableEq ι
         Matrix.mul_one, Matrix.smul_mulVec, ← Matrix.mulVec_mulVec]
     rw [h1, dotProduct_smul, Matrix.dotProduct_mulVec, ← Matrix.star_mulVec, smul_eq_mul]
   refine ⟨⟨hΛ.1.fg.map _, ?_⟩, ?_⟩
-  · have hsurj : Function.Surjective (Matrix.mulVecLin Q) := fun y =>
-      ⟨P *ᵥ y, by simp only [Matrix.mulVecLin_apply, Matrix.mulVec_mulVec, hQP, Matrix.one_mulVec]⟩
-    have : (Λ.map ((Matrix.mulVecLin Q).restrictScalars (𝓞 D.host.E)) : Set (ι → D.host.E)) = (Matrix.mulVecLin Q) '' Λ := by
-      simp [Submodule.map_coe]
-    rw [this, Submodule.span_image, hΛ.1.span_eq_top, Submodule.map_top, LinearMap.range_eq_top.2 hsurj]
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · intro y
     rw [mem, hΛ.2]
     constructor
@@ -117,7 +114,7 @@ theorem mem_sumLat {ι κ : Type} {ΛA : Submodule (𝓞 D.host.E) (ι → D.hos
 
 theorem split_vec {ι κ : Type} (y : ι ⊕ κ → D.host.E) :
     y = extL (D := D) ι κ (y ∘ Sum.inl) + extR (D := D) ι κ (y ∘ Sum.inr) := by
-  ext (i | i) <;> simp
+  ext (i | i) <;> simp [extL, extR]
 
 theorem form_sum {ι κ : Type} [Fintype ι] [Fintype κ] (GA : Matrix ι ι D.host.E) (GB : Matrix κ κ D.host.E)
     (x y : ι ⊕ κ → D.host.E) :
@@ -140,14 +137,14 @@ theorem selfDualFor_sum {ι κ : Type} [Fintype ι] [Fintype κ] {GA : Matrix ι
     · refine sup_le ?_ ?_
       · rintro _ ⟨x, hx, rfl⟩
         rw [mem_sumLat]
-        refine ⟨by simpa using hx, ?_⟩
-        have : (extL (D := D) ι κ x) ∘ Sum.inr = 0 := by ext i; simp
+        refine ⟨by simpa [extL, extR] using hx, ?_⟩
+        have : (extL (D := D) ι κ x) ∘ Sum.inr = 0 := by ext i; simp [extL, extR]
         simp only [LinearMap.coe_restrictScalars] at this ⊢
         rw [this]; exact ΛB.zero_mem
       · rintro _ ⟨x, hx, rfl⟩
         rw [mem_sumLat]
-        refine ⟨?_, by simpa using hx⟩
-        have : (extR (D := D) ι κ x) ∘ Sum.inl = 0 := by ext i; simp
+        refine ⟨?_, by simpa [extL, extR] using hx⟩
+        have : (extR (D := D) ι κ x) ∘ Sum.inl = 0 := by ext i; simp [extL, extR]
         simp only [LinearMap.coe_restrictScalars] at this ⊢
         rw [this]; exact ΛA.zero_mem
   refine ⟨⟨?_, ?_⟩, ?_⟩
@@ -167,26 +164,26 @@ theorem selfDualFor_sum {ι κ : Type} [Fintype ι] [Fintype κ] {GA : Matrix ι
       · intro x hx
         have hm : extL (D := D) ι κ x ∈ sumLat ΛA ΛB := by
           rw [mem_sumLat]
-          refine ⟨by simpa using hx, ?_⟩
-          have : (extL (D := D) ι κ x) ∘ Sum.inr = 0 := by ext i; simp
+          refine ⟨by simpa [extL, extR] using hx, ?_⟩
+          have : (extL (D := D) ι κ x) ∘ Sum.inr = 0 := by ext i; simp [extL, extR]
           rw [this]; exact ΛB.zero_mem
         obtain ⟨b, hb⟩ := h _ hm
         refine ⟨b, ?_⟩
         rw [hb, form_sum]
-        have e1 : (extL (D := D) ι κ x) ∘ Sum.inl = x := by ext i; simp
-        have e2 : (extL (D := D) ι κ x) ∘ Sum.inr = 0 := by ext i; simp
+        have e1 : (extL (D := D) ι κ x) ∘ Sum.inl = x := by ext i; simp [extL, extR]
+        have e2 : (extL (D := D) ι κ x) ∘ Sum.inr = 0 := by ext i; simp [extL, extR]
         rw [e1, e2]; simp
       · intro x hx
         have hm : extR (D := D) ι κ x ∈ sumLat ΛA ΛB := by
           rw [mem_sumLat]
-          refine ⟨?_, by simpa using hx⟩
-          have : (extR (D := D) ι κ x) ∘ Sum.inl = 0 := by ext i; simp
+          refine ⟨?_, by simpa [extL, extR] using hx⟩
+          have : (extR (D := D) ι κ x) ∘ Sum.inl = 0 := by ext i; simp [extL, extR]
           rw [this]; exact ΛA.zero_mem
         obtain ⟨b, hb⟩ := h _ hm
         refine ⟨b, ?_⟩
         rw [hb, form_sum]
-        have e1 : (extR (D := D) ι κ x) ∘ Sum.inl = 0 := by ext i; simp
-        have e2 : (extR (D := D) ι κ x) ∘ Sum.inr = x := by ext i; simp
+        have e1 : (extR (D := D) ι κ x) ∘ Sum.inl = 0 := by ext i; simp [extL, extR]
+        have e2 : (extR (D := D) ι κ x) ∘ Sum.inr = x := by ext i; simp [extL, extR]
         rw [e1, e2]; simp
 
 theorem line_mat_eq {κ : Type} [Fintype κ] (hk : Fintype.card κ = 1) {M N : Matrix κ κ D.host.E} {ζ : κ → D.host.E}
@@ -222,6 +219,7 @@ theorem exists_prime_not_mem (K : Type) [Field K] [NumberField K] {n : ℕ} (hn 
     rw [Ideal.mem_comap, Ideal.mem_bot] at hx
     have : x = 0 := hinj (by rw [hx, map_zero])
     rw [this]; exact Ideal.zero_mem _)
+  rw [Ideal.under_def] at hcomap
   have hqQ : algebraMap ℤ (𝓞 K) (q : ℤ) ∈ Q := by
     rw [← Ideal.mem_comap, hcomap]; exact Ideal.subset_span rfl
   have hne : Q ≠ ⊥ := by

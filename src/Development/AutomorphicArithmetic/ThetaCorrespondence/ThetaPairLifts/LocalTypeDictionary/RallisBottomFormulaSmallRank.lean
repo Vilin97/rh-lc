@@ -34,8 +34,10 @@ theorem GlobalTheory.BotFormula.rallis_bottom_formula_small_rank : _root_.Global
           ∀ (ea : P'.a = A'.rank) (ed : P'.d = WW.rank) (h : GA D P'.d) (g : GA D WW), GlobalTheory.BotFormula.IsFinPt WW g h →
             ∀ T', X.I' W.ψ W.θ s (GlobalTheory.BotFormula.minorF ea ed T') g = Ω' * u * P'.coord h T' := by
   intro hPr hK hM hI hB
-  obtain ⟨cA, hA⟩ := _root_.GlobalTheory.T.bottom_classSum_smallStage_eq hPr hK hM hI hB
-  obtain ⟨cB, hB'⟩ := _root_.GlobalTheory.T.smallStage_bottomKernel_eq_term hPr hK hM hI hB
+  have hA := _root_.GlobalTheory.T.bottom_classSum_smallStage_eq hPr hK hM hI hB
+  obtain ⟨cA, hA⟩ := hA
+  have hB' := _root_.GlobalTheory.T.smallStage_bottomKernel_eq_term hPr hK hM hI hB
+  obtain ⟨cB, hB'⟩ := hB'
   refine ⟨max cA cB, fun ε CF hCF => ?_⟩
   obtain ⟨CA, xA, hA⟩ := hA ε CF (le_trans (le_max_left _ _) hCF)
   obtain ⟨CB, xB, hB'⟩ := hB' ε CF (le_trans (le_max_right _ _) hCF)

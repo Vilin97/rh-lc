@@ -39,7 +39,7 @@ theorem hermEx_of (h1 : ToFound) (h2 : LieMatch) : HermEx := by
   let j : π.V →ₗ[ℂ] cuspForms F a :=
     ((Sm F a).subtype ∘ₗ π.V.subtype).codRestrict _ fun φ => h1 F a φ.1 (π.cusp _ φ.2)
   have hl : ∀ X φ, (gkModuleCusp F a).ρ (e X) (j φ) = j (π.op (.lie X) φ) := fun X φ => Subtype.ext (he X φ.1 _)
-  have hc : ∀ φ, j φ ∈ centralCuspForms F a := fun φ s x => by
+  have hc : ∀ φ, j φ ∈ centralCuspForms F a := fun φ => mem_centralCuspForms.mpr fun s x => by
     have h3 : lieActionCusp F a (e (oneL F a)) (j φ) = 0 :=
       Subtype.ext ((he _ φ.1 _).trans (congrArg Subtype.val (h0 _ φ.2)))
     have h4 : lieActionCusp F a (centralZ F a) (j φ) = (0 : ℂ) • j φ := by

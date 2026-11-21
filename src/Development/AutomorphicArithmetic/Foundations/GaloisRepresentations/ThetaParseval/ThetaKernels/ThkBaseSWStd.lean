@@ -71,6 +71,7 @@ theorem _root_.GlobalTheory.ThK.Dbl.siegelWeilAniso_of_k (h1 : _root_.GlobalTheo
       (polData_kfin hM (fun g₁ s1 g₂ s2 f₁ p1 f₂ p2 => _root_.GlobalTheory.ThK.Dbl.Box.box_kfin_k hL hB hK (hC F E σ B n Y r' s' hB (.inr hY) K hK)
       h.weil.2.1.toIsSplitting hd (fun N n1 n2 => (sInf_le (a := N) ⟨fun f ⟨ε, hε⟩ => n1 ε f fun u u' hu hu' e => ?_,
         fun u hu f hf f₁ e => ?_⟩ : M.Pol B.ψ B.emb ≤ N)) s1 s2 p1 p2) p1 p2)
+    · exact hε u u' hu hu' e _ _ (actsD_dop M hB.std hu f) (actsD_dop M hB.std hu' f)
     · rw [actsD_unique' M hB.std hu e]; exact n2 u hu f hf
   · intro F E _ _ _ _ _ σ B n d X W M r s r' s' hB hn hd' hX hW h0 hM χ hχ hc dd om S l ⟨d', ht, hd⟩ h K a hK ha μ D hμ hD Φ₁ p1 Φ₂ p2
     have tr : ∀ {p q : ℕ} {u : Matrix (Fin p) (Fin q) (AE F E)}, At (evI F) u → At (evI F) uᵀ := fun hu c hc => by
@@ -79,6 +80,14 @@ theorem _root_.GlobalTheory.ThK.Dbl.siegelWeilAniso_of_k (h1 : _root_.GlobalTheo
       (polData_kfin hM (fun g₁ s1 g₂ s2 f₁ p1 f₂ p2 => _root_.GlobalTheory.ThK.Dbl.Box.box_kfin_k hL hB hK (hC F E σ B n X r s hB (.inl hX) K hK)
       h.weil.2.1.toIsSplitting hd (fun N n1 n2 => (sInf_le (a := N) ⟨fun f ⟨ε, hε⟩ => n1 ε f fun u u' hu hu' e => ?_,
         fun u hu f hf f₁ e => ?_⟩ : M.Pol B.ψ B.emb ≤ N)) s1 s2 p1 p2) p1 p2)
+    · have er : Rel B.emb ε X.θ W.θ uᵀ u'ᵀ := fun w => by
+        simpa [Matrix.transpose_map, Matrix.transpose_smul, Matrix.transpose_mul, Matrix.mul_assoc] using congrArg Matrix.transpose (e w)
+      have he := hε uᵀ u'ᵀ (tr hu) (tr hu') er _ _ (actsD_dop M hB.std (tr hu) f) (actsD_dop M hB.std (tr hu') f)
+      have ht1 : d'.e u = M.co.e uᵀ := by simpa using ht uᵀ
+      have ht2 : d'.e u' = M.co.e u'ᵀ := by simpa using ht u'ᵀ
+      rw [ht1, ht2]
+      change dop (aOf M u'ᵀ) (lOf M u'ᵀ) f = Complex.I • dop (aOf M uᵀ) (lOf M uᵀ) f
+      exact he
     · rw [actsD_unique' M hB.std hu e]
       have := n2 uᵀ (tr hu) f hf
       rwa [ht] at this

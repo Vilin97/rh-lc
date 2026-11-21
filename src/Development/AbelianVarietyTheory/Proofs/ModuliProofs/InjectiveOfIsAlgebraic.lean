@@ -49,7 +49,7 @@ theorem isRatio_ext {p p' : QkPt D F k} {z : F} (h : QkPairing.IsRatio p p' z) :
       gs (σ ≫ extMap f hf).left y ⊤ ((Scheme.ΓSpecIso (CommRingCat.of F)).inv.hom z) := by
     refine Eq.trans (congrArg (gs σ.left y ⊤) ?_) (gs_pull σ.left (spMap f) y ⊤ trivial _)
     exact congrArg (fun g => g.hom z) (Scheme.ΓSpecIso_inv_naturality (CommRingCat.ofHom f))
-  simp only [qkExt, qkMk_y, qkMk_g]
+  dsimp only [qkExt, qkMk]
   rw [v, v, w, gtExt_b, gtExt_b, ← Category.assoc, ← Category.assoc]
   exact e
 

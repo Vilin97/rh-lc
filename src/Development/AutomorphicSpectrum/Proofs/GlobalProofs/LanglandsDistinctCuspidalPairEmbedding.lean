@@ -168,10 +168,11 @@ theorem piTensor_scalar {α : Type} [Fintype α] {Γ X : α → Type} [∀ a, Gr
   induction y using PiTensorProduct.induction_on with
   | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul_tprod r y =>
-    rw [map_smul, smul_comm, piTensor_tprod, ← MultilinearMap.map_smul_univ]
-    congr 2
-    funext a
-    exact h a _
+    rw [map_smul, smul_comm, piTensor_tprod]
+    congr 1
+    calc
+      _ = (PiTensorProduct.tprod ℂ) (fun a => c a • y a) := by congr 1; funext a; exact h a _
+      _ = _ := MultilinearMap.map_smul_univ _ _ _
 
 theorem exists_map_two_step (hBZ : BernsteinZelevinskyFiniteness) {D : ℕ} (hD : 0 < D) (σ : Fin 2 → Irr k D)
     (hc : ∀ i, IsCuspidal (σ i).π) (hne : ¬ Nonempty ((σ 0).π.Equiv (σ 1).π)) {V : Type} [AddCommGroup V] [Module ℂ V]

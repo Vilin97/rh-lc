@@ -201,7 +201,7 @@ theorem tens_step {T : Finset (Pl F)} {P P₁ : Type} [AddCommGroup P] [Module �
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_sum, TensorProduct.map_tmul, PiTensorProduct.map_tprod, Finset.smul_sum] at this
   simp only [← TensorProduct.smul_tmul', this, MultilinearMap.map_smul_univ, TensorProduct.tmul_smul, smul_smul,
-    Finset.prod_coe_sort T w]
+    RingHom.id_apply, Finset.prod_coe_sort T w]
   exact Finset.sum_congr rfl fun j _ => by congr 1; ring
 
 end PositivityTheory.ThKG.Loc

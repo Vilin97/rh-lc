@@ -231,7 +231,9 @@ theorem _root_.GlobalTheory.NL.Model.ex_smul (C : _root_.Formalism.BasicNotions.
     (x : ↥((H.W K s LL h).N T)) :
     _root_.GlobalTheory.NL.ex C h T i ζ (a • x) =
       _root_.GlobalTheory.NL.conv ((H.W K s LL h).lev i ζ a) (_root_.GlobalTheory.NL.ex C h T i ζ x) :=
-  levB_smul_eq_powerSeriesSmul_lemma_2 _ T i ζ a x
+  by
+    set_option synthInstance.maxHeartbeats 400000 in
+      exact levB_smul_eq_powerSeriesSmul_lemma_2 (C.C K s LL h).tie T i ζ a x
 
 
 end Concrete

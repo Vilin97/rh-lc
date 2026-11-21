@@ -44,7 +44,7 @@ private theorem regAt_of_ord_eq_zero_of_normal {X : Scheme.{0}} [IsIntegral X] [
     (isDedekindDomain_iff _ X.functionField).mpr
       ⟨hD, inferInstance, inferInstance, fun hx => (isIntegrallyClosed_iff X.functionField).mp hI hx⟩
   have hTF := IsDiscreteValuationRing.TFAE (X.presheaf.stalk z) hnf
-  have hV : ValuationRing (X.presheaf.stalk z) := (hTF.out 2 1).mp hDD
+  have hV : ValuationRing (X.presheaf.stalk z) := (hTF.out 3 2).mp hDD
   have hord : Ring.ordFrac (X.presheaf.stalk z) f = 1 := by
     have := (Scheme.ord_eq_iff hz hf).1 h0
     simpa [Scheme.ordHom] using this
@@ -55,7 +55,7 @@ private theorem regAt_of_ord_eq_zero_of_normal {X : Scheme.{0}} [IsIntegral X] [
       simp only [map_zero] at hr
       exact hf (inv_eq_zero.mp hr.symm)
     have h2 : Ring.ordMonoidWithZeroHom (X.presheaf.stalk z) r = 1 := by
-      rw [← Ring.ordFrac_eq_ord (K := X.functionField) _ hr0, hr, map_inv₀, hord, inv_one]
+      rw [← Ring.ordFrac_eq_ord (K := X.functionField) _, hr, map_inv₀, hord, inv_one]
     have hmem : r ∈ nonZeroDivisors (X.presheaf.stalk z) := mem_nonZeroDivisors_of_ne_zero hr0
     obtain ⟨n, hn⟩ := ENat.ne_top_iff_exists.mp (Ring.ord_ne_top hmem)
     rw [Ring.ordMonoidWithZeroHom_eq_coe _ hmem hn.symm] at h2

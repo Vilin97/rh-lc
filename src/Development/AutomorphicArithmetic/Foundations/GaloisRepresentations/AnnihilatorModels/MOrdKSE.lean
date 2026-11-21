@@ -30,7 +30,7 @@ private theorem pm_hom {S S' : Scheme.{0}} {A' : Over S'} {A : Over S} (f : S' �
 private theorem pm_pr {S S' : Scheme.{0}} {A' : Over S'} {A : Over S} (f : S' ⟶ S) (φ : A'.left ⟶ A.left)
     (h : φ ≫ A.hom = A'.hom ≫ f) (m : ℕ) (i : Fin m) :
     GlobalTheory.KS.powMap f φ h m ≫ (GlobalTheory.KS.pr A i).left = (GlobalTheory.KS.pr A' i).left ≫ φ := by
-  simp only [GlobalTheory.KS.powMap, GlobalTheory.KS.pr, ← Over.comp_left, Pi.lift_π, Over.homMk_left]
+  simp only [GlobalTheory.KS.powMap, GlobalTheory.KS.pr, ← Over.comp_left, Pi.lift_comp_π, Over.homMk_left]
 
 private theorem ksR_hom (L : TjE E mπ T) (k : ℕ) :
     L.ksR k ≫ (GlobalTheory.KS.pow E.univ.A k).hom = (GlobalTheory.KS.pow L.o.A k).hom ≫ L.t := by

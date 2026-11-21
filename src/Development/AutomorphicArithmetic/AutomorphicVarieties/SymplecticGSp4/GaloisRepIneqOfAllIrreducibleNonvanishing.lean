@@ -130,7 +130,8 @@ private theorem exists_rep_family_from_points (hD : D.Good) (M : Model D) [Grade
         (t : (PadicAlgCl l)ˣ × (PadicAlgCl l)ˣ), ξ.comp M.toSS = x ∧ ∀ g, r g = tconj t (M.rep ξ g) := by
     intro x
     by_cases hx : OnS M.eqns.ideal x
-    · obtain ⟨ξ, hξ⟩ := ptLift D hD M x hx
+    · set_option synthInstance.maxHeartbeats 200000 in
+      obtain ⟨ξ, hξ⟩ := ptLift D hD M x hx
       obtain ⟨t, r, hr, hrt⟩ := ptScale D hD M h0 ξ
       refine ⟨r, fun h2 => ⟨⟨⟨hr, irreducible_torus_conjugate t _ _ hrt (twoIrr D hD M hL hV h0 hNE ξ (by rw [hξ]; exact h2.2))⟩, ?_⟩,
         ξ, t, hξ, hrt⟩⟩
@@ -159,6 +160,7 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.galoisRep_ineq_of_allIrreduc
   intro Ω _ _ _ l hl c D hD M hM hM' hL hV hF h0 hNE hR g hA
   classical
   obtain ⟨inst⟩ := aGraded D hD M
+  set_option synthInstance.maxHeartbeats 200000 in
   obtain ⟨a, ha0, hax, ha⟩ := aElt D hD M g
   obtain ⟨ρ, hρ, horb⟩ := exists_rep_family_from_points hD M hL hV h0 hNE g a ha
   obtain ⟨hT, hfin, hle⟩ := covers_and_cotangent_length_bounds hD M hM hL hV h0 hNE hR a

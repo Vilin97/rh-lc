@@ -871,13 +871,8 @@ theorem tMap_loc (e : V ≃ₗ[K] V') (p : Ideal (𝓞 K)) (M : Submodule (𝓞 
   simp only [hs]
 
 theorem tMap_lattice (e : V ≃ₗ[K] V') (M : Submodule (𝓞 K) V) (hM : Submodule.IsLattice K M) :
-    Submodule.IsLattice K (tMap e M) where
-  fg := hM.fg.map _
-  span_eq_top := by
-    have h1 : ((tMap e M : Submodule (𝓞 K) V') : Set V') = (e : V →ₗ[K] V') '' (M : Set V) := by
-      unfold tMap; rw [Submodule.map_coe]; rfl
-    rw [h1, Submodule.span_image, hM.span_eq_top, Submodule.map_top]
-    exact LinearEquiv.range e
+    Submodule.IsLattice K (tMap e M) :=
+  Submodule.IsLattice.of_fg K (hM.fg.map _)
 
 theorem tMap_genus (e : V ≃ₗ[K] V') (he : ∀ x y, h' (e x) (e y) = h x y) (L M : Submodule (𝓞 K) V)
     (hM : M ∈ genus h L) : tMap e M ∈ genus h' (tMap e L) := by

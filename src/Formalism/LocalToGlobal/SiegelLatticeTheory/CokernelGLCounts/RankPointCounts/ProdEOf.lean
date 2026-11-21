@@ -145,13 +145,15 @@ theorem mem_CZ_glob (hA : ∀ p, Agree δ M p) (L U : Formalism.L2.SG.PairVal.Ma
             simp only [← Matrix.mul_assoc]
             rw [hxi2, Matrix.one_mul, Matrix.mul_assoc, hbi1, Matrix.mul_one]
           rw [e, ZsVolGrp.zhatOM_zhatOM] at h2
-          rw [h2]
+          conv_rhs => rw [h2]
           simp only [← Matrix.mul_assoc]
           rw [hli1, Matrix.one_mul]
           simp only [Matrix.mul_assoc, hρi2, Matrix.mul_one]
     }
-    change a ∈ Subgroup.closure (K : Set _) ↔ a ∈ K
-    rw [Subgroup.closure_eq K]
+    have hK : (K : Set _) = ZsVolCut.stZSet M δ u u' Zh L := rfl
+    change a ∈ Subgroup.closure (ZsVolCut.stZSet M δ u u' Zh L) ↔ _
+    rw [← hK, Subgroup.closure_eq]
+    exact Iff.rfl
   rw [hmem]
   obtain ⟨ha, hb, hW⟩ := bOf_spec w g
   set gm : Formalism.L2.SG.PairVal.MatR D := ((g : Formalism.L2.SG.PairVal.GLR D) : Formalism.L2.SG.PairVal.MatR D) with hgm
@@ -239,6 +241,8 @@ theorem cz_le (L U : Formalism.L2.SG.PairVal.MatR D) (hL : IsLoUni L) (hU : IsUp
   have hLi := ZsVolGrp.isLoUni_inv hL
   have hUi := ZsVolGrp.isUpUni_inv hU
   have hLdet : IsUnit L.det := by rw [ZsVolGrp.det_lo (fun a => (hL a a).2 rfl) (fun a b h => (hL a b).1 h)]; exact isUnit_one
+  change Subgroup.closure (ZsVolCut.stZSet M δ u u' Zh L) ≤ VolPinAsm.StG w
+  rw [Subgroup.closure_le]
   intro a ha
   obtain ⟨a', ha'eq, ha'lo, b', hb'up, hZ', -⟩ := ha
   refine ⟨?_, U * b' * U⁻¹, ZsVolGrp.isUpUni_mul (ZsVolGrp.isUpUni_mul hU hb'up) hUi.1, ?_⟩

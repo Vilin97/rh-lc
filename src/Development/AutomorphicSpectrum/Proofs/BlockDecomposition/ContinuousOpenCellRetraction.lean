@@ -46,6 +46,8 @@ theorem mirProj_eq_one_of_unip (n : ℕ) (u : Mir k n) (v : Multiplicative (Fin 
   show blockMat k n ((u : GL (Fin (n + 1)) k) : Matrix (Fin (n + 1)) (Fin (n + 1)) k) i j = _
   rw [hu]
   simp [blockMat, unip, colMat, Fin.castSucc_ne_last, one_apply]
+  change (if i.castSucc = j.castSucc then (1 : k) else 0) = if i = j then 1 else 0
+  simp
 
 theorem ePG_true_val (i t : ℕ) (b : Fin t) : ((ePG i t ⟨true, b⟩ : Fin (i + t + 1)) : ℕ) = i + b := by
   simp [ePG]

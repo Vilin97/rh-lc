@@ -90,6 +90,7 @@ theorem exists_root {κ : Type} [Fintype κ] [DecidableEq κ] (G : Matrix κ κ 
     rw [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_eq_transpose_of_trivial, Matrix.transpose_transpose]
   rw [Matrix.transpose_mul, hst, Matrix.diagonal_transpose, Matrix.mul_assoc, ← Matrix.mul_assoc (Matrix.diagonal _) (Matrix.diagonal _), Matrix.diagonal_mul_diagonal, Matrix.mul_assoc]
   congr 3
+  funext i
   exact Real.mul_self_sqrt (h.posSemidef.eigenvalues_nonneg i)
 
 section Main

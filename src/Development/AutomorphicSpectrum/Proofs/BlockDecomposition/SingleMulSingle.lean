@@ -356,7 +356,7 @@ def Psi (q : (Idx r → Idx r → ℝ) × GAd σ J) : Matrix (Fin n) (Fin n) (AF
 
 theorem continuous_Psi [IsTotallyReal F] : Continuous (Psi σ J X Y) := by
   have := GlobalTheory.Doubling.isTopologicalRing_tens (F := F) (E := E) (R := AF F)
-  refine continuous_finset_sum _ fun α _ => continuous_finset_sum _ fun β _ => ?_
+  refine continuous_finsetSum _ fun α _ => continuous_finsetSum _ fun β _ => ?_
   have h1 : Continuous fun q : (Idx r → Idx r → ℝ) × GAd σ J => eA F E (q.1 α β) :=
     continuous_eA.comp ((continuous_apply β).comp ((continuous_apply α).comp continuous_fst))
   have h2 : Continuous fun q : (Idx r → Idx r → ℝ) × GAd σ J =>

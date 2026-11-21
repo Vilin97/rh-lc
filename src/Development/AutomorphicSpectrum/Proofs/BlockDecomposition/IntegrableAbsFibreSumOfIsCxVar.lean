@@ -171,7 +171,7 @@ theorem ptsAbsIntegrable : GroundTheory.Heights₂.Heights.Inter.PtsAbsIntegrabl
       (fun z hz => hΨ z (conePts_subset_mcPts_of_minimal hQ hz)) hL hA hAa hsa' fun hmem => hsP ?_
     rw [← hc]
     exact hmem
-  refine (integrable_finset_sum hfin.toFinset fun Q hQ => hcomp Q (hfin.mem_toFinset.1 hQ)).congr ?_
+  refine (integrable_finsetSum hfin.toFinset fun Q hQ => hcomp Q (hfin.mem_toFinset.1 hQ)).congr ?_
   filter_upwards [hae] with y hy
   rw [hy]
   exact (finsum_mem_eq_finite_toFinset_sum _ hfin).symm

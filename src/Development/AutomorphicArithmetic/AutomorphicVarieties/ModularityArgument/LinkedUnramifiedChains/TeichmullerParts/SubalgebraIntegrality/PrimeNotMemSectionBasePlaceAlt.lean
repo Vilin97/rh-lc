@@ -68,7 +68,8 @@ private theorem l_mem (u : Plc L) :
 private theorem SectionSplitPlaces (s : HidaSetting l L Ω) : ((l : ℕ) : 𝓞 (Lp L)) ∉ s.v0.asIdeal := fun h => by
   have hp : ((s.p : ℕ) : 𝓞 (Lp L)) ∈ s.v0.asIdeal := by
     rw [← s.norm_v0_eq_one]
-    exact Ideal.absNorm_mem s.v0.asIdeal
+    simpa only [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
+      Ideal.absNorm_mem s.v0.asIdeal
   obtain ⟨a, b, hab⟩ : IsCoprime (s.p : 𝓞 (Lp L)) (l : 𝓞 (Lp L)) :=
     ((Nat.coprime_primes s.p_prime Fact.out).2 s.p_ne).cast
   exact s.v0.isPrime.ne_top ((Ideal.eq_top_iff_one _).2

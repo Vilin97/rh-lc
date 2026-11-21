@@ -60,8 +60,7 @@ theorem cls_zero_of_null {Q : ObjectProperty C} : ∀ (n : ℕ) (z : Cn F n) (hz
     have h0 : z = 0 := h
     exact ((CrystallineSemistableComparison.P.cls_surj (cx F) 0).2.1 z hz).2 (by rw [h0]; exact zero_mem _)
   | n + 1, z, hz, h => by
-    change ∃ b ∈ relS F Q n, d F n b = z at h
-    obtain ⟨b, -, hb⟩ := h
+    obtain ⟨b, _, hb⟩ : ∃ b ∈ relS F Q n, d F n b = z := h
     exact ((CrystallineSemistableComparison.P.cls_surj (cx F) (n + 1)).2.1 z hz).2
       ((Cx.mem_B_succ (C := cx F)).2 ⟨b, hb⟩)
 

@@ -412,7 +412,6 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.dataEx :
       calc v ^ 2 * 2 ^ (c2 ψ + 1 + h.o.factorization 2) = v ^ 2 * 2 ^ h.o.factorization 2 * 2 ^ (c2 ψ + 1) * 1 := by ring
         _ ≤ (l * h.q) ^ 2 * h.o * 2 ^ (c2 ψ + 6) * l := by
           gcongr
-          · norm_num
           · omega
           · exact hlp.one_le
         _ = _ := by ring

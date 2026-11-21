@@ -109,8 +109,16 @@ def detIdl (SB : Finset (HeightOneSpectrum (𝓞 E))) (N : Submodule (𝓞 E) (S
 
 omit [StarRing E] in
 theorem finite_ordSub {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N) :
-    {w | ordSub w (detSub N) ≠ 0}.Finite :=
-  (ordSub_detSub_lattice E n N hN.fg hN.span_eq_top).1
+    {w | ordSub w (detSub N) ≠ 0}.Finite := by
+  classical
+  by_cases h : ∃ k : Eˣ, (k : E) ∈ detSub N
+  · obtain ⟨k, hk⟩ := h
+    exact DetOrd.ordSub_finite (DetOrd.isFractional_detSub N hN.fg) k hk
+  · have hz : ∀ w, ordSub w (detSub N) = 0 := by
+      intro w
+      have hk : ∀ k : Eˣ, (k : E) ∉ detSub N := fun k hk => h ⟨k, hk⟩
+      simp [ordSub, hk]
+    simp [hz]
 
 
 open Classical in

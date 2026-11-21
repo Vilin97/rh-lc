@@ -97,7 +97,7 @@ theorem tube : VolSt → StabSt → IdxSt → TubeSt := by
   obtain ⟨π, hπc, hπ, hπe⟩ := GlobalTheory.T.exists_continuous_equivariant_detOneFactorProjection D.host.E V.rank D.what₂.Tau _ _ X₀.Ψ X₀.Gm x₀ σ A e a₀ hid
   have hcard : X₀.Ψ.card = D.R.f := by
     rw [← Fintype.card_coe, ← Fintype.card_congr σ, D.what₂.card_Tau]
-  have hf : 1 ≤ D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega
+  have hf : 1 ≤ D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) D.R.ord_pos; omega
   obtain ⟨ρ₀⟩ : Nonempty D.what₂.Tau := by
     rw [← Fintype.card_pos_iff, D.what₂.card_Tau]; omega
   have hΨk : ∀ k, (X k).Ψ = X₀.Ψ := by

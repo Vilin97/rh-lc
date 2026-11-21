@@ -30,7 +30,7 @@ theorem tor_offDiag {N : ℕ} {x : GL (Fin N) k} (hx : x ∈ Tor k N) {i j : Fin
       (stdBlocks (ones N) (sum_ones N) ⟨i, ⟨0, by simp [ones]⟩⟩)
       (stdBlocks (ones N) (sum_ones N) ⟨j, ⟨0, by simp [ones]⟩⟩) = 0 := by
     classical
-    simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hij]
+    simp [leviEmb, Matrix.blockDiagonal'_apply, hij]
   rwa [stdBlocks_ones, stdBlocks_ones] at h
 
 theorem mem_tor_of_offDiag {N : ℕ} (x : GL (Fin N) k)
@@ -67,7 +67,7 @@ theorem mem_tor_of_offDiag {N : ℕ} (x : GL (Fin N) k)
         (stdBlocks (ones N) (sum_ones N) ⟨i, ⟨0, by simp [ones]⟩⟩)
         (stdBlocks (ones N) (sum_ones N) ⟨j, ⟨0, by simp [ones]⟩⟩) = 0 := by
       classical
-      simp [leviEmb, Matrix.blockDiagonal'_apply_ne _ _ _ hij]
+      simp [leviEmb, Matrix.blockDiagonal'_apply, hij]
     rw [stdBlocks_ones, stdBlocks_ones] at h1
     rw [h i j hij]
     exact h1

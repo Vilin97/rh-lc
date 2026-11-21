@@ -24,11 +24,9 @@ theorem mem_span_pow_of_factorial_mul_eq {S : Type} [CommRing S] (hS : R.TF S) {
   haveI := Fact.mk hl
   obtain ⟨v, m, hlm, hm⟩ := Nat.exists_eq_pow_mul_and_not_dvd k.factorial_ne_zero l hl.ne_one
   have hv : v < k := by
-    have h1 : v ≤ padicValNat l k.factorial :=
-      ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) k.factorial_ne_zero).1 ⟨m, hm⟩
-    have h2 := sub_one_mul_padicValNat_factorial_lt_of_ne_zero (p := l) hk
-    have h3 : 1 ≤ l - 1 := Nat.le_sub_of_add_le hl.two_le
-    nlinarith
+    have h1 : v ≤ multiplicity l k.factorial :=
+      (Nat.pow_dvd_iff_le_multiplicity hl.ne_one k.factorial_ne_zero).1 ⟨m, hm⟩
+    exact lt_of_le_of_lt h1 (multiplicity_factorial_lt_of_ne_zero l hk)
   obtain ⟨t, ht⟩ : ∃ t, n * k = n + v + t := by
     obtain ⟨k', rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk
     refine ⟨n * k' - v, ?_⟩

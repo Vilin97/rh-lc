@@ -102,9 +102,11 @@ theorem link_monomial {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [
       conv_rhs => rw [← List.ofFn_get m]
       rw [List.map_ofFn]
       congr 1
-      rcases m.get j with s | s
-      · exact (hiso s).1
-      · exact (hiso s).2.1
+      funext j
+      change (Sum.elim A A' (m.get j)).a = Sum.elim T.x T.x' (m.get j)
+      cases h : m.get j with
+      | inl s => exact (hiso s).1
+      | inr s => exact (hiso s).2.1
     rw [h1, List.append_nil, classList, ← Multiset.coe_eq_coe, Multiset.coe_toList, ← Multiset.map_coe, hm,
       Multiset.coe_toList]
   rw [key, key]

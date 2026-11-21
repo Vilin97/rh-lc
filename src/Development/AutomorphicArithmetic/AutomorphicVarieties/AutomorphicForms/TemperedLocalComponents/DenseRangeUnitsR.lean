@@ -51,8 +51,12 @@ private theorem denseRange_unitsR : DenseRange (Units.map (diagR E).toMonoidHom)
 
 private theorem diagR_mk (φ : E →+* ℂ) (k : E) : ((diagR E k (InfinitePlace.mk φ) : ℝ) : ℂ) = φ k := by
   have hr := IsTotallyReal.isReal (InfinitePlace.mk φ)
-  have e : diagR E k (InfinitePlace.mk φ) = InfinitePlace.embedding_of_isReal hr k :=
-    InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hr (WithAbs.toAbs _ k)
+  have e : diagR E k (InfinitePlace.mk φ) = InfinitePlace.embedding_of_isReal hr k := by
+    change InfinitePlace.Completion.ringEquivRealOfIsReal hr
+      (algebraMap E (InfinitePlace.mk φ).Completion k) = _
+    rw [InfinitePlace.Completion.ringEquivRealOfIsReal_apply,
+      AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply]
+    simp
   rw [e, InfinitePlace.embedding_of_isReal_apply,
     InfinitePlace.embedding_mk_eq_of_isReal (InfinitePlace.isReal_mk_iff.1 hr)]
 

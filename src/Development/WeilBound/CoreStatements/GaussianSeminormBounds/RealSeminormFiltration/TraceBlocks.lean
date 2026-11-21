@@ -120,7 +120,7 @@ theorem fock_data (h : IsCMExt F E σ) (hfr : Framed τ JA JB a b A C) {Φ : Ten
   choose C' h1 h2 using fun w => frame_inv (hfr.2.2 w)
   choose A' a1 a2 using fun w => frame_inv (hfr.2.1 w)
   have hg : ∀ (t : ℝ) w, ((γ (Multiplicative.ofAdd t)).1 : Matrix β β (AE F E)).map (piInf (τ w)) =
-      C w * NormedSpace.exp (t • Y w) * C' w := fun t w => by rw [← hY, Matrix.mul_assoc, h1, Matrix.mul_one]
+      C w * NormedSpace.exp (t • Y w) * C' w := fun t w => by rw [← hY, Matrix.mul_assoc, h1, Matrix.mul_one]; rfl
   have hu : ∀ w, Y w ∈ upq R S := fun w => lie_of_exp _ _ fun t => (frame_iff_smul (hfr.2.2 w) (hY t w)).1 (by
     have := congrArg (fun X : Matrix β β (AE F E) => X.map (piInf (τ w))) (γ (Multiplicative.ofAdd t)).2
     simp only [map_form h] at this
@@ -160,8 +160,8 @@ theorem fock_data (h : IsCMExt F E σ) (hfr : Framed τ JA JB a b A C) {Φ : Ten
       ← Matrix.sum_mul, ← Matrix.mul_sum, ← expand, hc]
     simp only [Matrix.transpose_mul, Matrix.mul_assoc]
     rw [← Matrix.mul_assoc (C w)ᵀ, ← Matrix.transpose_mul, h2, Matrix.transpose_one, Matrix.one_mul]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [hU, ← map_add (f := _), ← map_sum, ← map_smul]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hU, ← map_add (f := _), ← map_sum, ← map_smul]
     congr 1
     rw [Fintype.sum_prod_type, sumPl, LinearMap.sum_apply, Finset.smul_sum]
     refine Finset.sum_congr rfl fun w _ => ?_
@@ -202,7 +202,8 @@ theorem exists_dbl {γ γ' : Multiplicative ℝ →* UG (cA σ) JB} (h : γ ∈ 
     have e1 := h.2 t u hu
     have e2 := h'.2 t u hu
     rw [smul_sub, sub_eq_zero] at e1 e2 ⊢
-    rw [← Matrix.fromBlocks_one, Matrix.fromBlocks_smul, Matrix.fromBlocks_smul, e1, e2]
+    rw [← Matrix.fromBlocks_one, Matrix.fromBlocks_smul, Matrix.fromBlocks_smul]
+    exact congrArg₂ (fun a b => Matrix.fromBlocks a (u • 0) (u • 0) b) e1 e2
 
 theorem at_det {g : Matrix β β (AE F E)} (hg : At (evI F) (g - 1)) : At (evI F) (g.det - 1) := fun u hu => by
   let J : Ideal (AE F E) := LinearMap.ker (LinearMap.mul (AE F E) (AE F E) (algebraMap (AF F) (AE F E) u))

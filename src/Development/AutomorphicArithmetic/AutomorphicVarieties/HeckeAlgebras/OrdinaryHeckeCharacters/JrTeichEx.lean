@@ -117,7 +117,8 @@ private theorem jr_abs {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [CommR
         unfold GFrame.oEl
         rw [map_list_prod, List.map_ofFn]
         congr 2
-        rfl
+        funext j
+        simp [pushCh]
       rw [h1]
       exact UpperTheory.V.AlgebraTools.Det.oElRep F O K n (ρ i) v _ (hflag i v) g
     exact ⟨hk, UpperTheory.V.AlgebraTools.Det.killsStar F O _ n _ hP _ hk⟩

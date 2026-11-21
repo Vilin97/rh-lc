@@ -89,12 +89,22 @@ private theorem int_pair {E : Type} [Field E] [NumberField E] [_root_.NumberFiel
         filter_upwards [hr, (measurePreserving_mul_left (BW.mu1 E 2) γ).quasiMeasurePreserving.ae hr] with y a b
         rw [← a, ← b, mk_mul_of_mem hγ]
       exact congrFun (((hc.comp (continuous_const_mul γ)).ae_eq_iff_eq _ hc).1 h1)
-    have h3 : (fun x : RightCosetSpace (Gam E 2) => ψ (Quotient.out x)) = quotFun ψ hinv := by
-      funext x
-      conv_rhs => rw [← Quotient.out_eq x]
+    let q : RightCosetSpace (Gam E 2) → ℂ := Quotient.lift ψ (fun a b hab => by
+      obtain ⟨γ, rfl⟩ := hab
+      exact hinv γ γ.2 b)
+    have hq : Continuous q := (isOpenQuotientMap_mk (Gam E 2)).isQuotientMap.continuous_iff.2 hc
+    set_option synthInstance.maxHeartbeats 200000 in
+    have he : (w : RightCosetSpace (Gam E 2) → ℂ) =ᵐ[quotientMeasure (Gam E 2) (BW.mu1 E 2)] q := by
+      have hm : ∀ᵐ x ∂(Measure.map (mk (Gam E 2)) ((BW.mu1 E 2).restrict (fundamentalDomain (Gam E 2)))), w x = q x := by
+        refine (ae_map_iff (measurable_mk (Gam E 2)).aemeasurable
+          (measurableSet_eq_fun (Lp.stronglyMeasurable w).measurable hq.measurable)).2 ?_
+        exact ae_restrict_of_ae hr
+      rwa [map_restrict_eq_quotientMeasure (BW.mu1 E 2) (isFundamentalDomain_fundamentalDomain (Gam E 2) (BW.mu1 E 2))] at hm
+    apply (Lp.memLp w).ae_eq (he.trans ?_)
+    exact Eventually.of_forall fun x => by
+      change q x = ψ (Quotient.out x)
+      conv_lhs => rw [← Quotient.out_eq x]
       rfl
-    rw [h3]
-    exact (Lp.memLp w).ae_eq (IsContRep.ae_eq_quotFun (μ := BW.mu1 E 2) (φ := w) (F := ψ) ⟨hc, hinv, hr⟩)
   obtain ⟨w, -, hw⟩ := hb.mem
   have hf : Continuous b.f.1 := ((BW.umgOps E 2).2 b.f (BW.cuspUmg E 2 b.f b.cusp).1).1
   exact (key hc hr).integrable_mul (key (hf.comp continuous_subtype_val) hw).star
@@ -120,12 +130,12 @@ private theorem ell_swap {E : Type} [Field E] [NumberField E] [_root_.NumberFiel
   have i₂ := fun i => int_pair b' hb' (hψ i).1 (hψ i).2.choose_spec.2
   refine ⟨fun m₂ => ?_, ?_⟩
   · simp only [e, Finset.sum_mul]
-    refine integrable_finset_sum _ fun i _ => ?_
+    refine integrable_finsetSum _ fun i _ => ?_
     simpa only [mul_right_comm] using (i₁ i).mul_const (ψ i m₂)
   · simp only [← integral_mul_const]
     refine integral_integral_swap ?_
     simp only [Function.uncurry_def, e, Finset.sum_mul]
-    refine integrable_finset_sum _ fun i _ => ((i₁ i).mul_prod (i₂ i)).congr (Eventually.of_forall fun p => ?_)
+    refine integrable_finsetSum _ fun i _ => ((i₁ i).mul_prod (i₂ i)).congr (Eventually.of_forall fun p => ?_)
     ring
 
 private theorem rep_eq {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {n : ℕ} {μ : Measure (normOneGL (K := E) (n := n))}
@@ -133,7 +143,7 @@ private theorem rep_eq {E : Type} [Field E] [NumberField E] [_root_.NumberField.
     (hr : Reps μ v Φ) (g : G1 E n) : φ.1 (g : GlobalTheory.CuspRep.GA E n) = Φ g := by
   have h1 : Continuous fun g : G1 E n => φ.1 (g : GlobalTheory.CuspRep.GA E n) := ((BW.umgOps E n).2 φ h.umg).1.comp continuous_subtype_val
   refine congrFun ((h1.ae_eq_iff_eq μ hc).1 ?_) g
-  filter_upwards [hr, (quasiMeasurePreserving_mk (Gam E n) μ).ae h.ae] with y a b
+  filter_upwards [hr, MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam E n) μ) h.ae] with y a b
   rw [← a, b]
   obtain ⟨⟨γ, δ, hδ⟩, hγ⟩ := mk_eq_mk_iff.1 (Quotient.out_eq (mk (Gam E n) y))
   rw [← hγ]
@@ -174,8 +184,8 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.compLine :
     refine integral_congr_ae (Eventually.of_forall fun X => ?_)
     have hz : ∀ g : AdelicGLn.AdelicGL E (2 + 2), g * BW.zt E (2 + 2) (a + a') = BW.zt E (2 + 2) (a + a') * g := fun g =>
       (centralSection_mul_comm _ g).symm
-    change φ.1 (_ * (k : GlobalTheory.CuspRep.GA E (2 + 2))) = th F (unipOne E (2 + 2) 2 X * (lv y₁ y₂ ((a - a') / 2) * k))
-    rw [← hth, ← hφ.cen (a + a') ((unipOne E (2 + 2) 2 X * (lv y₁ y₂ ((a - a') / 2) * k) : G1 E (2 + 2)) : GlobalTheory.CuspRep.GA E (2 + 2))]
+    change φ.1 (_ * (k : GlobalTheory.CuspRep.GA E (2 + 2))) = th F (unipOne (K := E) (n := 2 + 2) 2 X * (lv y₁ y₂ ((a - a') / 2) * k))
+    rw [← hth, ← hφ.cen (a + a') ((unipOne (K := E) (n := 2 + 2) 2 X * (lv y₁ y₂ ((a - a') / 2) * k) : G1 E (2 + 2)) : GlobalTheory.CuspRep.GA E (2 + 2))]
     congr 1
     rw [Subgroup.coe_mul, Subgroup.coe_mul, coe_unipOne, ← mul_assoc (unipGL X), hz, mul_assoc, mul_assoc]
   have hbU := (BW.cuspUmg E 2 b.f b.cusp).1

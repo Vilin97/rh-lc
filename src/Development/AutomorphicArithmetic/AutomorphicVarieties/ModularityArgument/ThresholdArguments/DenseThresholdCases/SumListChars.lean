@@ -305,7 +305,7 @@ private theorem type_conj (γ : ℂ ≃+* ℂ) (b : WDRep h (Fin n → ℂ)) (B 
       map_add' := fun u v => funext fun i => by
         have : (fun j => γ.symm ((u + v) j)) = (fun j => γ.symm (u j)) + fun j => γ.symm (v j) :=
           funext fun j => map_add _ _ _
-        rw [this, LinearEquiv.map_add (f := _)]
+        rw [this, LinearEquiv.map_add (e := _)]
         exact map_add γ _ _
       map_smul' := fun c v => funext fun i => by
         have : (fun j => γ.symm ((c • v) j)) = γ.symm c • fun j => γ.symm (v j) := funext fun j => map_mul _ _ _

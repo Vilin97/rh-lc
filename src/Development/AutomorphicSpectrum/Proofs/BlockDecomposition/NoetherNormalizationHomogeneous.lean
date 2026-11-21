@@ -117,9 +117,11 @@ theorem isIntegral_trans_subalgebra {K S : Type*} [Field K] [CommRing S] [Algebr
       map_mul' := fun _ _ => rfl
       map_zero' := rfl
       map_add' := fun _ _ => rfl }
-  have h1 : IsIntegral (integralClosure R S) s :=
-    IsIntegral.map_of_comp_eq φ (RingHom.id S) (by ext; rfl) hs
-  exact isIntegral_trans s h1
+  have h1 : IsIntegral (integralClosure R S) s := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact IsIntegral.map_of_comp_eq φ (RingHom.id S) (by ext; rfl) hs
+  set_option synthInstance.maxHeartbeats 200000 in
+    exact isIntegral_trans s h1
 
 theorem exists_linear_of_integral {K σ : Type} [Field K] [Infinite K]
     (I : Ideal (MvPolynomial σ K)) (hI : ∀ f ∈ I, ∀ n : ℕ, homogeneousComponent n f ∈ I)
@@ -184,14 +186,15 @@ theorem exists_linear_of_integral {K σ : Type} [Field K] [Infinite K]
     have hmem : ∀ i, Ideal.Quotient.mk I (v i) ∈ R := fun i => by
       by_cases h : i = j
       · subst h
-        rw [hvj, map_zero]
+        set_option synthInstance.maxHeartbeats 200000 in
+          rw [hvj, map_zero]
         exact zero_mem _
       · exact Algebra.subset_adjoin ⟨⟨i, h⟩, rfl⟩
     have hdec : ∀ i, Ideal.Quotient.mk I (v i) +
         algebraMap K (MvPolynomial σ K ⧸ I) (a i) * Ideal.Quotient.mk I u =
         Ideal.Quotient.mk I (l i) := fun i => by
       have : algebraMap K (MvPolynomial σ K ⧸ I) (a i) = Ideal.Quotient.mk I (C (a i)) := rfl
-      rw [this, ← map_mul, ← map_add (f := _)]
+      rw [this, ← (Ideal.Quotient.mk I).map_mul, ← (Ideal.Quotient.mk I).map_add]
       simp only [v, sub_add_cancel]
     have hu : IsIntegral R (Ideal.Quotient.mk I u) := by
       refine isIntegral_of_homogeneous_relation (X j * F) hGd a ha
@@ -236,7 +239,7 @@ theorem main : ∀ (K : Type) [Field K] [Infinite K] (N : ℕ)
     obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective s
     induction f using MvPolynomial.induction_on with
     | C a => exact Subalgebra.algebraMap_mem _ a
-    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk I)]; exact add_mem hp hq
     | mul_X p i hp => rw [map_mul]; exact mul_mem hp (Algebra.subset_adjoin ⟨i, rfl⟩)
   obtain ⟨m, y, hy, hind, hint⟩ := exists_linear_of_integral I hI hne _ (Fin (N + 1)) X rfl
     (fun i => isHomogeneous_X K i)

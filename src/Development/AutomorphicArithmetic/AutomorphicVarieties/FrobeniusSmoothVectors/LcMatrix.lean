@@ -90,11 +90,11 @@ end LC
 theorem UpperTheory.V.Fr.pr_omk :
     ∀ {l : ℕ} [Fact l.Prime] {k : Type} [Field k] [CharP k l] {F : Frame l k} {C₀ n : ℕ}, F.Ok C₀ → ∀ (O : Type) [CommRing O] [IsLocalRing O], ∀ (C' : Type) [CommRing C'] [Algebra O C'] [IsCO O C'] (C : Type) [CommRing C] [Algebra O C] [IsCO O C] (p : C' →ₐ[O] C) (B : Box F n C) (D : SetLift p B), maximalIdeal C' * RingHom.ker p = ⊥ → (∀ x i j, D.om x i j ∈ RingHom.ker p) ∧ (∀ v s i j, D.a v s i j ∈ RingHom.ker p) ∧ IsLocallyConstant D.om ∧ ∀ v, IsLocallyConstant (D.a v) := by
   intro l _ k _ _ F C₀ n hF O _ _ C' _ _ _ C _ _ _ p B D hker
-  have hgrp : ∀ s t, (B.r (s * t)).left = (B.r s).left * sgnAct (F.del s) (B.r t).left := by
+  have hgrp : ∀ s t, (B.r (s * t)).left = (B.r s).left * sgnAct n C (F.del s) (B.r t).left := by
     intro s t
     rw [map_mul, SemidirectProduct.mul_left, B.nu]
   have hom1 : ∀ x : F.Γ × F.Γ, GeneralLinearGroup.map (p : C' →+* C)
-      (D.r x.1 * sgnAct (F.del x.1) (D.r x.2) * (D.r (x.1 * x.2))⁻¹) = 1 := by
+      (D.r x.1 * sgnAct n C' (F.del x.1) (D.r x.2) * (D.r (x.1 * x.2))⁻¹) = 1 := by
     intro x
     rw [map_mul, map_mul, map_inv, map_sgn, D.r_map, D.r_map, D.r_map, hgrp, mul_inv_cancel]
   have ha1 : ∀ v s, GeneralLinearGroup.map (p : C' →+* C)
@@ -109,7 +109,7 @@ theorem UpperTheory.V.Fr.pr_omk :
   have hdel : IsLocallyConstant F.del := lc_hom F.del hF.del_open
   refine ⟨fun x i j => mem_ker _ (hom1 x) i j, fun v s i j => mem_ker _ (ha1 v s) i j, ?_, ?_⟩
   · have := lc_ker hker
-      (f := fun x : F.Γ × F.Γ => D.r x.1 * sgnAct (F.del x.1) (D.r x.2) * (D.r (x.1 * x.2))⁻¹)
+      (f := fun x : F.Γ × F.Γ => D.r x.1 * sgnAct n C' (F.del x.1) (D.r x.2) * (D.r (x.1 * x.2))⁻¹)
       (fun x a b => mem_ker _ (hom1 x) a b) (by
         intro N
         have e1 := (hrc N).comp_continuous (continuous_fst (X := F.Γ) (Y := F.Γ))
@@ -118,7 +118,7 @@ theorem UpperTheory.V.Fr.pr_omk :
         have e4 := hdel.comp_continuous (continuous_fst (X := F.Γ) (Y := F.Γ))
         have := IsLocallyConstant.comp₂
           (IsLocallyConstant.comp₂ e1 (IsLocallyConstant.comp₂ e4 e2
-            fun s g => sgnAct s g) (· * ·)) e3 (fun a b => a * b⁻¹)
+            fun s g => sgnAct n _ s g) (· * ·)) e3 (fun a b => a * b⁻¹)
         convert this using 1
         funext x
         simp [Function.comp, map_sgn])

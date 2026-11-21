@@ -31,7 +31,7 @@ theorem co_mul [DecidableEq σ] (τ : A →+* MvPowerSeries σ A) (β : σ →�
 
 def dv (τ : A →+* MvPowerSeries σ A) (p : σ) : A →+ A := co τ (Finsupp.single p 1)
 
-theorem dv_eq (τ : A →+* MvPowerSeries σ A) (p : σ) (x : A) : dv τ p x = constantCoeff (pderiv A p (τ x)) := by
+theorem dv_eq (τ : A →+* MvPowerSeries σ A) (p : σ) (x : A) : dv τ p x = constantCoeff (pderiv p (τ x)) := by
   rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, MvPowerSeries.coeff_pderiv]
   simp [dv, co_apply]
 

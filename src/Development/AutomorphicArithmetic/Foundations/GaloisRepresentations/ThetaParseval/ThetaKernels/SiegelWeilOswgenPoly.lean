@@ -74,13 +74,16 @@ theorem mul_coord_mem_k (R : _root_.PositivityTheory.SiegelWeilFormula.RD_k d) (
     ring
   | zero =>
     convert Submodule.zero_mem _ using 1
+    ext X
+    simp
   | add h₁ h₂ _ _ i₁ i₂ =>
     convert Submodule.add_mem _ i₁ i₂ using 1
     funext X
     simp [mul_add]
   | smul a h _ i₁ =>
     convert Submodule.smul_mem _ a i₁ using 1
-    ring
+    ext X
+    simp [smul_eq_mul, mul_comm, mul_assoc]
 theorem poly_mem_k (R : _root_.PositivityTheory.SiegelWeilFormula.RD_k d) (Q : MvPolynomial (_root_.PositivityTheory.SiegelWeilFormula.KFP.Iw_k d) ℂ) {g : _root_.PositivityTheory.SiegelWeilFormula.KFP.Yf_k d → ℂ} (hg : g ∈ SB (_root_.PositivityTheory.SiegelWeilFormula.KFP.Yf_k d)) :
     (fun X => MvPolynomial.eval (fun i => ((_root_.PositivityTheory.SiegelWeilFormula.KFP.arc_k R X i : ℝ) : ℂ)) Q * (Real.exp (-(2 * Real.pi * ‖_root_.PositivityTheory.SiegelWeilFormula.KFP.arc_k R X‖ ^ 2)) : ℂ) *
       g (_root_.PositivityTheory.SiegelWeilFormula.KFP.fin_k d X)) ∈ R.fock := by
@@ -95,12 +98,16 @@ theorem poly_mem_k (R : _root_.PositivityTheory.SiegelWeilFormula.RD_k d) (Q : M
   induction Q using MvPolynomial.induction_on with
   | C a =>
     convert Submodule.smul_mem _ a base using 1
-    ring
+    ext X
+    simp [smul_eq_mul, mul_assoc]
   | add p q hp hq =>
     convert Submodule.add_mem _ hp hq using 1
-    ring
+    ext X
+    simp [add_mul]
   | mul_X p i hp =>
     convert _root_.PositivityTheory.SiegelWeilFormula.KFP.OswGen.mul_coord_mem_k R i hp using 1
+    ext X
+    simp only [map_mul, MvPolynomial.eval_X]
     ring
 end PositivityTheory.SiegelWeilFormula.KFP.OswGen
 end

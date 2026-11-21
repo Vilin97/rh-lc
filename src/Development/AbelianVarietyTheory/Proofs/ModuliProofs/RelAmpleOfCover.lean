@@ -39,6 +39,11 @@ theorem relAmple_of_cover : ∀ (S : Scheme.{0}) (I : Type) (U : I → S.Opens) 
     LBIso.chartPull (chartPullSame L (fun _ : PUnit => (A.hom ⁻¹ᵁ V).ι) (fun _ => ψ i) (fun _ => 1) φ fun _ => hφ.symm)
       (chartPullPull (M i) φ φ rfl) (hiso i).symm
   refine relAmple_pull (A' := Over.mk (A.hom ∣_ V)) H (hM i) (pull_isLB hL _) ((isGen_iff w).1 hw) ((U i).ι ⁻¹ᵁ V)
-    (hV.preimage_of_isOpenImmersion _ (by simpa using hle')) (fun y => ?_) (hamp i)
+    (hV.preimage_of_isOpenImmersion _ (by simpa using hle')) (fun y => by
+      have hy := congrArg (fun f : V.toScheme ⟶ S => f y) hf
+      change ((S.homOfLE hle') y).val = y.val at hy
+      change ((S.homOfLE hle') y).val ∈ V
+      rw [hy]
+      exact y.property) (hamp i)
 
 end GlobalTheory.CoverGlue

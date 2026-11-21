@@ -287,7 +287,7 @@ theorem pts_eq (hE : ResExistsStatement) (a₀ : σ) (A : HermLine ι) (w : Fin 
     ptsIntegral_eq_mInt' hE resBridge Re.R Re.arith (fun j => Re.line_smooth (w j) t h0 h1)
       (isSmoothHerm_inv (isSmoothHerm_tensor hA (isSmoothHerm_inv (Re.line_smooth a₀ t h0 h1))))
       (isSectionOn_inv_one Re.arith.2.1.1 hdeg),
-    ← (degreeFormulaInt S.A Re.R.A Re.π Re.holo Re.deg Re.br Re.degree _ hΦ _
+    ← (degreeFormulaInt S.A Re.R.A Re.π Re.holo Re.deg Re.br Re.degree (fun i => S.potT (w i) t) hΦ (fun y => S.ph a₀ y - S.phT a₀ t y)
       (defect_integrable S a₀ h0 h1 _ hΦ)).2]
   refine (mInt_congr_samePot D Re.R.X Re.R.A (Re.π ⁻¹' S.open') _ _ _ _ (preimage_null Re)
     (fun i x _ => line_samePot Re (w i) h0 h1 x (Set.mem_univ x))

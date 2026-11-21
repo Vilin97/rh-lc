@@ -91,13 +91,13 @@ theorem exists_form (ι : Type) [Fintype ι] (D : ℕ) (F : (Fin (D + 1) → ι)
   refine ⟨form F, fun n => ?_, fun P d hd hP => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [lin_pow, map_sum]
-    exact Finset.sum_congr rfl fun f _ => by rw [form_monomial, coef_cnt F hF]
+      exact Finset.sum_congr rfl fun f _ => by rw [form_monomial, coef_cnt F hF]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [P.as_sum, map_sum]
-    refine Finset.sum_eq_zero fun k hk => ?_
-    have hdeg : k.degree = d := by
-      have := hP (mem_support_iff.1 hk)
-      rw [Finsupp.degree_eq_weight_one]; exact this
-    rw [form_monomial, coef_of_degree_ne F (by rw [hdeg]; exact hd), mul_zero]
+      refine Finset.sum_eq_zero fun k hk => ?_
+      have hdeg : k.degree = d := by
+        have := hP (mem_support_iff.1 hk)
+        rw [Finsupp.degree_eq_weight_one]; exact this
+      rw [form_monomial, coef_of_degree_ne F (by rw [hdeg]; exact hd), mul_zero]
 
 end GlobalTheory.CompanionTheory.Polarisation

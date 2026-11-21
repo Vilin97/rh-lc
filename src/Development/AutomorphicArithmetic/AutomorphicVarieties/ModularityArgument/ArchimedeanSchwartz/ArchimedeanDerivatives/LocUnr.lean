@@ -148,6 +148,8 @@ private theorem evalAt_flip (z : Fin n → ℂˣ) (h : SphericalHecke μ (F := F
     monomialChar (iwasawaExponent F n g) (((z⁻¹) ∘ (Fin.revPerm : Equiv.Perm (Fin n))) * halfPoint F n) with hφ
   rw [← integral_mul_left_eq_self φ (wl F n), ← integral_comp_transposeInv μ fun g => φ (wl F n * g)]
   congr 1
+  funext g
+  dsimp only [φ]
   rw [exponent_conj, monomial_conj, flip_apply, (HeckeAlgebraLevel.val_mem _ _ h _ wl_mem _).1]
 
 private theorem exists_pair {V : Type} [AddCommGroup V] [Module ℂ V] {π : Representation ℂ (GL (Fin n) F) V}

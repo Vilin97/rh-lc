@@ -114,7 +114,8 @@ lemma exists_tor (ε : Fin n → Bool) (θ : Fin n → ℝ) : ∃ k : KG ε, toM
     unfold tor
     rw [Matrix.diagonal_conjTranspose]
     congr 1
-    simp
+    funext a
+    simp [Pi.star_apply, ← Complex.exp_conj]
   have hm : ∀ θ : Fin n → ℝ, tor θ * tor (-θ) = 1 := by
     intro θ
     unfold tor
