@@ -75,15 +75,15 @@ theorem flat_nil : IsNilpotent (Perfection.coeff (ModP (OC l) l) l 0 bk.flat) :=
 theorem flat_haus (x : OCb l) (hx : ∀ n, bk.flat ^ n ∣ x) : x = 0 :=
   GlobalTheory.Per.AinfComplete.perfection_haus (flat_nil bk) x hx
 
-theorem complete : IsAdicComplete (Ideal.span {bk.flat}) (OCb l) where
+theorem complete : IsAdicComplete (Ideal.span {bk.flat}) (OCb l) := {
   haus' x hx := by
     refine flat_haus bk x fun n => ?_
     have := hx n
     simp only [Ideal.span_singleton_pow, smul_eq_mul, Ideal.mul_top, SModEq.zero] at this
-    exact Ideal.mem_span_singleton.1 this
+    exact Ideal.mem_span_singleton.1 this,
   prec' := (GlobalTheory.Per.AinfComplete.precomplete_of_summ
     (GlobalTheory.Per.AinfComplete.summ_of_tails
-      (GlobalTheory.Per.AinfComplete.perfection_tails (flat_nil bk)))).prec'
+      (GlobalTheory.Per.AinfComplete.perfection_tails (flat_nil bk)))).prec' }
 
 theorem dvd_of_dvd_X_mul (y : Ainf l) (h : ((l : ℕ) : Ainf l) ∣ bk.ev X * y) : ((l : ℕ) : Ainf l) ∣ y := by
   rw [dvd_iff] at h ⊢

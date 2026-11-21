@@ -37,13 +37,13 @@ theorem dual_dvd_iff {O : Type} [CommRing O] (p n : ℕ) (x : DualNumber O) :
 
 theorem isAdicComplete_dualNumber {O : Type} [CommRing O] (p : ℕ)
     [h : IsAdicComplete (Ideal.span {(p : O)}) O] :
-    IsAdicComplete (Ideal.span {(p : DualNumber O)}) (DualNumber O) where
+    IsAdicComplete (Ideal.span {(p : DualNumber O)}) (DualNumber O) := {
   toIsHausdorff := ⟨fun x hx => by
     simp only [SModEq.zero, mem_pow_iff, dual_dvd_iff] at hx
     refine TrivSqZeroExt.ext (h.toIsHausdorff.haus x.fst fun n => ?_)
       (h.toIsHausdorff.haus x.snd fun n => ?_)
     · rw [SModEq.zero, mem_pow_iff]; exact (hx n).1
-    · rw [SModEq.zero, mem_pow_iff]; exact (hx n).2⟩
+    · rw [SModEq.zero, mem_pow_iff]; exact (hx n).2⟩,
   toIsPrecomplete := ⟨fun f hf => by
     simp only [SModEq.sub_mem, mem_pow_iff, dual_dvd_iff] at hf ⊢
     obtain ⟨a, ha⟩ := h.toIsPrecomplete.prec (f := fun n => (f n).fst) fun {m n} hmn => by
@@ -51,7 +51,7 @@ theorem isAdicComplete_dualNumber {O : Type} [CommRing O] (p : ℕ)
     obtain ⟨b, hb⟩ := h.toIsPrecomplete.prec (f := fun n => (f n).snd) fun {m n} hmn => by
       rw [SModEq.sub_mem, mem_pow_iff]; exact (hf hmn).2
     simp only [SModEq.sub_mem, mem_pow_iff] at ha hb
-    exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, fun n => ⟨by simpa using ha n, by simpa using hb n⟩⟩⟩
+    exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, fun n => ⟨by simpa using ha n, by simpa using hb n⟩⟩⟩ }
 
 theorem exists_param {O : Type} [CommRing O] [IsLocalRing O] (H : Over (Sp O)) [GrpObj H] {n : ℕ}
     (hH : SmoothOfRelativeDimension n H.hom) :

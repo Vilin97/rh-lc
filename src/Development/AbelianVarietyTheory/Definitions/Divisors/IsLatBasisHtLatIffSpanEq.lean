@@ -205,13 +205,13 @@ private theorem comp_dual_dvd_iff {O : Type} [CommRing O] (p n : ℕ) (x : DualN
 
 private theorem comp_isAdicComplete_dualNumber {O : Type} [CommRing O] (p : ℕ)
     [h : IsAdicComplete (Ideal.span {(p : O)}) O] :
-    IsAdicComplete (Ideal.span {(p : DualNumber O)}) (DualNumber O) where
+    IsAdicComplete (Ideal.span {(p : DualNumber O)}) (DualNumber O) := {
   haus' x hx := by
     simp only [SModEq.zero, comp_mem_pow_iff, comp_dual_dvd_iff] at hx
     refine TrivSqZeroExt.ext (h.toIsHausdorff.haus x.fst fun n => ?_)
       (h.toIsHausdorff.haus x.snd fun n => ?_)
     · rw [SModEq.zero, comp_mem_pow_iff]; exact (hx n).1
-    · rw [SModEq.zero, comp_mem_pow_iff]; exact (hx n).2
+    · rw [SModEq.zero, comp_mem_pow_iff]; exact (hx n).2,
   prec' f hf := by
     simp only [SModEq.sub_mem, comp_mem_pow_iff, comp_dual_dvd_iff] at hf ⊢
     obtain ⟨a, ha⟩ := h.toIsPrecomplete.prec (f := fun n => (f n).fst) fun {m n} hmn => by
@@ -219,7 +219,7 @@ private theorem comp_isAdicComplete_dualNumber {O : Type} [CommRing O] (p : ℕ)
     obtain ⟨b, hb⟩ := h.toIsPrecomplete.prec (f := fun n => (f n).snd) fun {m n} hmn => by
       rw [SModEq.sub_mem, comp_mem_pow_iff]; exact (hf hmn).2
     simp only [SModEq.sub_mem, comp_mem_pow_iff] at ha hb
-    exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, fun n => ⟨by simpa using ha n, by simpa using hb n⟩⟩
+    exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, fun n => ⟨by simpa using ha n, by simpa using hb n⟩⟩ }
 
 section Comparison₂
 
