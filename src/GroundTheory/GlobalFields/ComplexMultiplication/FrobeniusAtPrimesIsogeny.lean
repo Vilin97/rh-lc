@@ -2,6 +2,18 @@ import Mathlib
 import GroundTheory.GlobalFields.ComplexMultiplication.AlgebraicityGalois
 import GroundTheory.GlobalFields.ComplexMultiplication.DualDescent
 
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
+private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+    (σ : K →+* ℂ) : Subring ℂ :=
+  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
+
 namespace GroundTheory.Global
 namespace Elliptic
 
@@ -90,14 +102,14 @@ section Lattice
 
 variable {K : Type*} [Field K] [NumberField K] (σ₀ : K →+* ℂ)
 
-theorem idealLattice_one_mul_lattice (L : PeriodPair) (hL : latticeEnd L = cmRing σ₀) :
+theorem idealLattice_one_mul_lattice (L : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ₀) :
     idealLattice σ₀ 1 * L.lattice = L.lattice := by
   apply le_antisymm
   · rw [Submodule.mul_le]
     intro m hm l hl
     obtain ⟨x, hx, rfl⟩ := (mem_idealLattice σ₀).1 hm
     obtain ⟨a, rfl⟩ := (FractionalIdeal.mem_one_iff _).1 hx
-    have ha : σ₀ (algebraMap (𝓞 K) K a) ∈ latticeEnd L := hL ▸ (mem_cmRing σ₀).2 ⟨a, rfl⟩
+    have ha : σ₀ (algebraMap (𝓞 K) K a) ∈ periodLatticeEnd L := hL ▸ (mem_cmRing σ₀).2 ⟨a, rfl⟩
     exact ha l hl
   · intro l hl
     have h1 : (1 : ℂ) ∈ idealLattice σ₀ 1 :=

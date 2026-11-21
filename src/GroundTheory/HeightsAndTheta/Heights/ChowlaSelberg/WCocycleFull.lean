@@ -1,6 +1,18 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ChowlaSelberg.Statements
 import GroundTheory.HeightsAndTheta.Heights.ChowlaSelberg.PeriodLatticeIdeal
+
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
+private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+    (σ : K →+* ℂ) : Subring ℂ :=
+  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.ChowlaSelberg
@@ -44,7 +56,7 @@ theorem mul_scaleLattice (c : ℂ) (M N : Submodule ℤ ℂ) :
     exact Submodule.mul_mem_mul hm (Submodule.mem_map.2 ⟨y, hy, rfl⟩)
 
 theorem latticeDiscr_idealLattice_mul_ne_zero (S : PrimeDiscriminant K) (σ : K →+* ℂ)
-    (L : PeriodPair) (hL : latticeEnd L = cmRing σ) (𝔟 : (FractionalIdeal (𝓞 K)⁰ K)ˣ) :
+    (L : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ) (𝔟 : (FractionalIdeal (𝓞 K)⁰ K)ˣ) :
     latticeDiscr (idealLattice σ ↑𝔟 * L.lattice) ≠ 0 := by
   have := S.isTotallyComplex
   have hK := Algebra.IsQuadraticExtension.finrank_eq_two ℚ K

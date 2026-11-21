@@ -1,6 +1,14 @@
 import Mathlib
 import GroundTheory.GlobalFields.ComplexMultiplication.ClassGroupActionIso
 
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
 open NumberField Module
 open scoped nonZeroDivisors
 
@@ -172,7 +180,7 @@ theorem lattice_idealPeriodPair (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ) :
     simp [Fin.sum_univ_two, idealPeriodPair, zsmul_eq_mul]
 
 theorem latticeEnd_idealPeriodPair (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ) :
-    latticeEnd (idealPeriodPair σ hK I) = cmRing σ := by
+    periodLatticeEnd (idealPeriodPair σ hK I) = cmRing σ := by
   ext α
   show (∀ l ∈ (idealPeriodPair σ hK I).lattice, α * l ∈ (idealPeriodPair σ hK I).lattice) ↔ _
   rw [lattice_idealPeriodPair]
@@ -211,12 +219,12 @@ theorem latticeEnd_idealPeriodPair (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ) :
     rw [RingHom.comp_apply, ← map_mul, ← Algebra.smul_def]
     exact map_mem_idealLattice σ (Submodule.smul_mem _ a hx)
 
-theorem exists_idealLattice_of_latticeEnd_eq (L : PeriodPair) (hL : latticeEnd L = cmRing σ) :
+theorem exists_idealLattice_of_latticeEnd_eq (L : PeriodPair) (hL : periodLatticeEnd L = cmRing σ) :
     ∃ (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (c : ℂ), c ≠ 0 ∧
       (L.lattice : Set ℂ) = (c * ·) '' idealLattice σ I := by
   have hω : L.ω₁ ≠ 0 := by simpa using L.indep.ne_zero 0
   obtain ⟨θ, hθ⟩ := exists_ringOfIntegers_not_rat hK (K := K)
-  have hθL : σ (algebraMap (𝓞 K) K θ) ∈ latticeEnd L := by rw [hL]; exact ⟨θ, rfl⟩
+  have hθL : σ (algebraMap (𝓞 K) K θ) ∈ periodLatticeEnd L := by rw [hL]; exact ⟨θ, rfl⟩
   obtain ⟨m, n, hmn⟩ := PeriodPair.mem_lattice.1 (hθL _ L.ω₁_mem_lattice)
   have hn : n ≠ 0 := by
     rintro rfl
@@ -244,7 +252,7 @@ theorem exists_idealLattice_of_latticeEnd_eq (L : PeriodPair) (hL : latticeEnd L
       smul_mem' := fun a x hx ↦ by
         simp only [Set.mem_setOf_eq] at *
         rw [Algebra.smul_def, map_mul, mul_assoc]
-        have ha : σ (algebraMap (𝓞 K) K a) ∈ latticeEnd L := by rw [hL]; exact ⟨a, rfl⟩
+        have ha : σ (algebraMap (𝓞 K) K a) ∈ periodLatticeEnd L := by rw [hL]; exact ⟨a, rfl⟩
         exact ha _ hx }
   have hmem : ∀ x : K, x ∈ M ↔ σ x * L.ω₁ ∈ L.lattice := fun _ ↦ Iff.rfl
   have h1 : (1 : K) ∈ M := by rw [hmem, map_one, one_mul]; exact L.ω₁_mem_lattice
@@ -298,10 +306,10 @@ theorem exists_idealLattice_of_latticeEnd_eq (L : PeriodPair) (hL : latticeEnd L
     rw [mul_comm]
     exact (hmem x).1 hx
 
-theorem latticeEnd_eq_cmRing_of_ringEquiv (L : PeriodPair) (e : latticeEnd L ≃+* 𝓞 K) :
-    latticeEnd L = cmRing σ := by
+theorem latticeEnd_eq_cmRing_of_ringEquiv (L : PeriodPair) (e : periodLatticeEnd L ≃+* 𝓞 K) :
+    periodLatticeEnd L = cmRing σ := by
   have : Algebra.IsQuadraticExtension ℚ K := { finrank_eq_two' := hK }
-  let g : 𝓞 K →+* ℂ := (latticeEnd L).subtype.comp e.symm.toRingHom
+  let g : 𝓞 K →+* ℂ := (periodLatticeEnd L).subtype.comp e.symm.toRingHom
   have hg : Function.Injective g := Subtype.val_injective.comp e.symm.injective
   let τ : K →+* ℂ := IsFractionRing.lift hg
   have hτ : ∀ a : 𝓞 K, τ (algebraMap (𝓞 K) K a) = g a := IsFractionRing.lift_algebraMap hg

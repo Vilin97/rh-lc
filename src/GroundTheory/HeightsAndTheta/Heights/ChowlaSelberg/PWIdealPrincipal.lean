@@ -1,5 +1,17 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ChowlaSelberg.Statements
+
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
+private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+    (σ : K →+* ℂ) : Subring ℂ :=
+  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.ChowlaSelberg
@@ -25,7 +37,7 @@ theorem latticeDiscr_scale_of_ne_zero (Λ : Submodule ℤ ℂ) {c : ℂ} (hc : c
 
 variable {K : Type} [Field K] [NumberField K]
 
-theorem idealLattice_spanSingleton_mul (σ : K →+* ℂ) (L : PeriodPair) (hL : latticeEnd L = cmRing σ)
+theorem idealLattice_spanSingleton_mul (σ : K →+* ℂ) (L : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ)
     (x : K) :
     idealLattice σ (FractionalIdeal.spanSingleton (𝓞 K)⁰ x) * L.lattice =
       scaleLattice (σ x) L.lattice := by
@@ -34,7 +46,7 @@ theorem idealLattice_spanSingleton_mul (σ : K →+* ℂ) (L : PeriodPair) (hL :
     intro m hm l hl
     obtain ⟨y, hy, rfl⟩ := (mem_idealLattice σ).1 hm
     obtain ⟨b, rfl⟩ := (FractionalIdeal.mem_spanSingleton _).1 hy
-    have hb : σ (algebraMap (𝓞 K) K b) ∈ latticeEnd L := by
+    have hb : σ (algebraMap (𝓞 K) K b) ∈ periodLatticeEnd L := by
       rw [hL]
       exact (mem_cmRing σ).2 ⟨b, rfl⟩
     refine Submodule.mem_map.2 ⟨σ (algebraMap (𝓞 K) K b) * l, hb l hl, ?_⟩
@@ -50,7 +62,7 @@ def spanNZ (a : 𝓞 K) (ha : a ≠ 0) : (Ideal (𝓞 K))⁰ :=
   ⟨Ideal.span {a}, mem_nonZeroDivisors_of_ne_zero (by rwa [ne_eq, Ideal.zero_eq_bot,
     Ideal.span_singleton_eq_bot])⟩
 
-theorem discrRatio_span_singleton (σ : K →+* ℂ) (L : PeriodPair) (hL : latticeEnd L = cmRing σ)
+theorem discrRatio_span_singleton (σ : K →+* ℂ) (L : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ)
     (a : 𝓞 K) (ha : a ≠ 0) :
     discrRatio σ L.lattice (FractionalIdeal.mk0 K (spanNZ a ha)) = σ (algebraMap (𝓞 K) K a) ^ 12 := by
   have haK : algebraMap (𝓞 K) K a ≠ 0 :=

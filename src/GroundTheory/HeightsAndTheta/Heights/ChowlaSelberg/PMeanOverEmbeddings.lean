@@ -2,6 +2,18 @@ import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ChowlaSelberg.Statements
 import GroundTheory.HeightsAndTheta.Heights.ChowlaSelberg.StatementsMean
 import GroundTheory.HeightsAndTheta.Heights.ChowlaSelberg.PPeriodLatticeCM
+
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
+private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+    (σ : K →+* ℂ) : Subring ℂ :=
+  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.ChowlaSelberg
@@ -64,7 +76,7 @@ theorem exists_eq_spanSingleton_mul_inv (𝔟 : (FractionalIdeal (𝓞 K)⁰ K)�
   rw [h1, hI, mul_inv, FractionalIdeal.spanSingleton_inv, inv_inv]
 
 theorem logPeriod_idealInv_mul {S : PrimeDiscriminant K} (hArea : IdealInvArea.Statement S)
-    (σ : K →+* ℂ) (L : PeriodPair) (hL : latticeEnd L = cmRing σ) (𝔞 : (Ideal (𝓞 K))⁰)
+    (σ : K →+* ℂ) (L : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ) (𝔞 : (Ideal (𝓞 K))⁰)
     (hw : discrRatio σ L.lattice (FractionalIdeal.mk0 K 𝔞) ≠ 0) :
     logPeriod (idealLattice σ ↑(FractionalIdeal.mk0 K 𝔞)⁻¹ * L.lattice) =
       logPeriod L.lattice - Real.log (Ideal.absNorm (𝔞 : Ideal (𝓞 K)) : ℝ) +

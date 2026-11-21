@@ -1,6 +1,18 @@
 import Mathlib
 import GroundTheory.GlobalFields.ComplexMultiplication.Algebraicity
 
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
+private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+    (σ : K →+* ℂ) : Subring ℂ :=
+  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
+
 open NumberField Module WeierstrassCurve GroundTheory.Arith.Abelian
 open scoped nonZeroDivisors
 
@@ -42,7 +54,7 @@ theorem image_idealLattice (σ : ℂ ≃+* ℂ) (hσ : ∀ k : K, σ (σ₀ k) =
 variable (hK : finrank ℚ K = 2) [IsTotallyComplex K]
 include hK
 
-theorem latticeHom_eq_idealLattice (L L' : PeriodPair) (hL : latticeEnd L = cmRing σ₀)
+theorem latticeHom_eq_idealLattice (L L' : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ₀)
     (𝔟 : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (h : L'.lattice = idealLattice σ₀ ↑𝔟 * L.lattice) :
     (latticeHom L L' : Set ℂ) = idealLattice σ₀ ↑𝔟 := by
   obtain ⟨I, c, hc, hI⟩ := exists_idealLattice_of_latticeEnd_eq σ₀ hK L hL

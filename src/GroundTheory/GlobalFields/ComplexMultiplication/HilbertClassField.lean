@@ -1,5 +1,17 @@
 import Mathlib
 import GroundTheory.GlobalFields.ComplexMultiplication.HilbertClassFieldArtin
+
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
+private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+    (σ : K →+* ℂ) : Subring ℂ :=
+  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global
@@ -87,18 +99,18 @@ theorem hilbertClassFieldArtinEquiv_apply_j (a : ClassGroup (𝓞 K)) (y : ELL K
 include hK in
 
 theorem j_weierstrassCurve_mem_hilbertClassField (Λ : PeriodPair)
-    (hΛ : latticeEnd Λ = cmRing (algebraMap K ℂ)) :
+    (hΛ : periodLatticeEnd Λ = cmRingOfEmbedding (algebraMap K ℂ)) :
     (weierstrassCurve Λ).j ∈ hilbertClassField K ℂ :=
   j_mem_hilbertClassField hK (ellOf (algebraMap K ℂ) Λ hΛ)
 
 theorem hilbertClassFieldArtinEquiv_apply_j_weierstrassCurve (Λ Λ' : PeriodPair)
-    (hΛ : latticeEnd Λ = cmRing (algebraMap K ℂ)) (𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ)
+    (hΛ : periodLatticeEnd Λ = cmRingOfEmbedding (algebraMap K ℂ)) (𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ)
     (h : Λ'.lattice = idealLattice (algebraMap K ℂ) ↑𝔞⁻¹ * Λ.lattice) :
     ((hilbertClassFieldArtinEquiv K ℂ (ClassGroup.mk K 𝔞)
         ⟨(weierstrassCurve Λ).j, j_weierstrassCurve_mem_hilbertClassField hK Λ hΛ⟩ :
         hilbertClassField K ℂ) : ℂ) = (weierstrassCurve Λ').j := by
   obtain ⟨L'', hL''lat, hL''⟩ := exists_lattice_mul (algebraMap K ℂ) hK Λ hΛ 𝔞
-  have hΛ' : latticeEnd Λ' = cmRing (algebraMap K ℂ) := by
+  have hΛ' : periodLatticeEnd Λ' = cmRingOfEmbedding (algebraMap K ℂ) := by
     rw [← hL'']
     ext α
     show (∀ l ∈ Λ'.lattice, α * l ∈ Λ'.lattice) ↔ ∀ l ∈ L''.lattice, α * l ∈ L''.lattice

@@ -2,6 +2,18 @@ import Mathlib
 import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimes
 import GroundTheory.GlobalFields.ComplexMultiplication.DegreeOneAutomorphismPoints
 import GroundTheory.ArithmeticGeometry.AbelianVarieties.TateCharpoly
+
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
+private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+    (σ : K →+* ℂ) : Subring ℂ :=
+  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global
@@ -55,7 +67,7 @@ variable {K : Type*} [Field K] [NumberField K] (σ₀ : K →+* ℂ) (hK : finra
   [IsTotallyComplex K]
 
 theorem latticeEnd_eq_of_lattice_eq {L L' : PeriodPair} (h : L.lattice = L'.lattice) :
-    latticeEnd L = latticeEnd L' := by
+    periodLatticeEnd L = periodLatticeEnd L' := by
   ext α
   show (∀ l ∈ L.lattice, α * l ∈ L.lattice) ↔ (∀ l ∈ L'.lattice, α * l ∈ L'.lattice)
   rw [h]
@@ -63,7 +75,7 @@ theorem latticeEnd_eq_of_lattice_eq {L L' : PeriodPair} (h : L.lattice = L'.latt
 include hK in
 
 theorem latticeEnd_eq_cmRing_of_lattice_eq {L : PeriodPair} {𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ}
-    (h : L.lattice = idealLattice σ₀ 𝔞) : latticeEnd L = cmRing σ₀ := by
+    (h : L.lattice = idealLattice σ₀ 𝔞) : periodLatticeEnd L = cmRingOfEmbedding σ₀ := by
   rw [latticeEnd_eq_of_lattice_eq (L' := idealPeriodPair σ₀ hK 𝔞)
     (h.trans (lattice_idealPeriodPair σ₀ hK 𝔞).symm), latticeEnd_idealPeriodPair]
 
@@ -85,7 +97,7 @@ theorem exists_unit_of_forall_mem_iff (J : (FractionalIdeal (𝓞 K)⁰ K)ˣ) {c
   have hc0 : c ≠ 0 := by
     rintro rfl
     exact hz₀ ((hc z₀).2 (by rw [zero_mul]; exact zero_mem _))
-  have mult : ∀ d : ℂ, (∀ l ∈ idealLattice σ₀ J, d * l ∈ idealLattice σ₀ J) → d ∈ cmRing σ₀ := by
+  have mult : ∀ d : ℂ, (∀ l ∈ idealLattice σ₀ J, d * l ∈ idealLattice σ₀ J) → d ∈ cmRingOfEmbedding σ₀ := by
     intro d hd
     rw [← hPend]
     intro l hl

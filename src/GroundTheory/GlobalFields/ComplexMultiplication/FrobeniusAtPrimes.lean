@@ -4,6 +4,18 @@ import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimesLocal
 import GroundTheory.GlobalFields.ComplexMultiplication.BadPrimesFinite
 import GroundTheory.GlobalFields.ComplexMultiplication.AlgebraicityDescent
 
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
+private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+    (σ : K →+* ℂ) : Subring ℂ :=
+  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
+
 namespace GroundTheory.Global
 namespace Elliptic
 
@@ -146,7 +158,7 @@ variable {K : Type*} [Field K] [NumberField K] (σ₀ : K →+* ℂ) (hK : finra
 
 include hK in
 
-theorem exists_unit_of_homConstSet_eq (L L' : PeriodPair) (hL : latticeEnd L = cmRing σ₀)
+theorem exists_unit_of_homConstSet_eq (L L' : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ₀)
     (𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (hL' : L'.lattice = idealLattice σ₀ ↑𝔞⁻¹ * L.lattice)
     (φ : Isogeny (weierstrassCurve L) (weierstrassCurve L'))
     (hφ : (homConstSet (weierstrassCurve L) (weierstrassCurve L') : Set ℂ) =
@@ -161,9 +173,9 @@ theorem exists_unit_of_homConstSet_eq (L L' : PeriodPair) (hL : latticeEnd L = c
   have hM' := eq_image_mul_inv hc hM
   have hP : (idealPeriodPair σ₀ hK 𝔞⁻¹).lattice = idealLattice σ₀ ↑𝔞⁻¹ :=
     lattice_idealPeriodPair σ₀ hK _
-  have hPend : latticeEnd (idealPeriodPair σ₀ hK 𝔞⁻¹) = cmRing σ₀ := latticeEnd_idealPeriodPair σ₀ hK _
+  have hPend : periodLatticeEnd (idealPeriodPair σ₀ hK 𝔞⁻¹) = cmRingOfEmbedding σ₀ := latticeEnd_idealPeriodPair σ₀ hK _
   have mult : ∀ d : ℂ, (idealLattice σ₀ ↑𝔞⁻¹ : Set ℂ) = (d * ·) '' idealLattice σ₀ ↑𝔞⁻¹ →
-      d ∈ cmRing σ₀ := by
+      d ∈ cmRingOfEmbedding σ₀ := by
     intro d hd
     rw [← hPend]
     intro l hl
@@ -222,9 +234,9 @@ theorem exists_isogBaseChange_eq_of_isogeny {A A' : WeierstrassCurve L} [A.IsEll
   intro g
   set D := dualOver (isogBaseChange (F' := ℂ) φ)
   obtain ⟨Λ, C, hC⟩ := exists_variableChange_eq_weierstrassCurve (A.baseChange ℂ)
-  have hΛ : latticeEnd Λ = cmRing (algebraMap K ℂ) := latticeEnd_eq_cmRing_of_ringEquiv
+  have hΛ : periodLatticeEnd Λ = cmRingOfEmbedding (algebraMap K ℂ) := latticeEnd_eq_cmRing_of_ringEquiv
     (algebraMap K ℂ) hK Λ ((latticeEndEquiv Λ).trans ((vcEndEquiv C hC).symm.trans hA.some))
-  have hmem : endConst (A.baseChange ℂ) (D.comp ψ).toHom ∈ cmRing (algebraMap K ℂ) := by
+  have hmem : endConst (A.baseChange ℂ) (D.comp ψ).toHom ∈ cmRingOfEmbedding (algebraMap K ℂ) := by
     rw [← hΛ, ← range_endConst hC]
     exact ⟨_, rfl⟩
   obtain ⟨a, ha⟩ := (mem_cmRing (algebraMap K ℂ)).1 hmem

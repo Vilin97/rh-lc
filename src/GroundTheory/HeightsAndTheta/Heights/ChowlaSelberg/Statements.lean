@@ -3,6 +3,18 @@ import GroundTheory.GlobalFields.ComplexMultiplication.ClassGroupAction
 import GroundTheory.GlobalFields.ComplexMultiplication.JInvariant
 import GroundTheory.GlobalFields.ComplexMultiplication.DifferentialConstantField
 import GroundTheory.GlobalFields.AnalyticClassNumber.Quadratic
+
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
+private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+    (σ : K →+* ℂ) : Subring ℂ :=
+  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.ChowlaSelberg
@@ -141,16 +153,16 @@ def ClassMean.Statement (S : PrimeDiscriminant K) : Prop :=
         DirichletCharacter.LFunction (Quadratic.kronecker K) 1
 
 def WCocycle.Statement (_S : PrimeDiscriminant K) : Prop :=
-  ∀ (σ : K →+* ℂ) (L : PeriodPair), latticeEnd L = cmRing σ →
+  ∀ (σ : K →+* ℂ) (L : PeriodPair), periodLatticeEnd L = cmRingOfEmbedding σ →
     ∀ 𝔞 𝔭 : (FractionalIdeal (𝓞 K)⁰ K)ˣ,
       discrRatio σ L.lattice (𝔞 * 𝔭) =
         discrRatio σ L.lattice 𝔞 * discrRatio σ (idealLattice σ ↑𝔞⁻¹ * L.lattice) 𝔭
 
 def JIntegral.Statement (_S : PrimeDiscriminant K) : Prop :=
-  ∀ (σ : K →+* ℂ) (L : PeriodPair), latticeEnd L = cmRing σ → IsIntegral ℤ (weierstrassCurve L).j
+  ∀ (σ : K →+* ℂ) (L : PeriodPair), periodLatticeEnd L = cmRingOfEmbedding σ → IsIntegral ℤ (weierstrassCurve L).j
 
 def WUnitOffPrime.Statement (_S : PrimeDiscriminant K) : Prop :=
-  ∀ (σ : K →+* ℂ) (L : PeriodPair), latticeEnd L = cmRing σ →
+  ∀ (σ : K →+* ℂ) (L : PeriodPair), periodLatticeEnd L = cmRingOfEmbedding σ →
     ∀ 𝔭 : (Ideal (𝓞 K))⁰, (𝔭 : Ideal (𝓞 K)).IsPrime → (Ideal.absNorm (𝔭 : Ideal (𝓞 K))).Prime →
       IsAlgebraic ℚ (discrRatio σ L.lattice (FractionalIdeal.mk0 K 𝔭)) ∧
       ∀ (F : Type) [Field F] [NumberField F] (ι : K →+* F) (τ : F →+* ℂ), τ.comp ι = σ →
@@ -160,7 +172,7 @@ def WUnitOffPrime.Statement (_S : PrimeDiscriminant K) : Prop :=
               ¬ Ideal.map (RingOfIntegers.mapRingHom ι) (𝔭 : Ideal (𝓞 K)) ≤ Q → w ∉ Q
 
 def WIdeal.Statement (_S : PrimeDiscriminant K) : Prop :=
-  ∀ (σ : K →+* ℂ) (L : PeriodPair), latticeEnd L = cmRing σ →
+  ∀ (σ : K →+* ℂ) (L : PeriodPair), periodLatticeEnd L = cmRingOfEmbedding σ →
     ∀ 𝔞 : (Ideal (𝓞 K))⁰,
       IsAlgebraic ℚ (discrRatio σ L.lattice (FractionalIdeal.mk0 K 𝔞)) ∧
       ∀ (F : Type) [Field F] [NumberField F] (ι : K →+* F) (τ : F →+* ℂ), τ.comp ι = σ →

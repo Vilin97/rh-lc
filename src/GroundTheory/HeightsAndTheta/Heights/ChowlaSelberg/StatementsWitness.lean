@@ -3,6 +3,18 @@ import GroundTheory.HeightsAndTheta.Heights.ChowlaSelberg.Statements
 import GroundTheory.GlobalFields.ComplexMultiplication.AlgebraicityGalois
 import GroundTheory.GlobalFields.ComplexMultiplication.AlgebraicityDescent
 import GroundTheory.GlobalFields.ComplexMultiplication.JInvariantSurjective
+
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
+private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+    (σ : K →+* ℂ) : Subring ℂ :=
+  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.ChowlaSelberg
@@ -157,7 +169,7 @@ theorem DeltaRatioIntegral.witness :
 
 def cmLatticeCyclo3 : PeriodPair := idealPeriodPair cyclo3Embedding finrank_cyclo3 1
 
-theorem latticeEnd_cmLatticeCyclo3 : latticeEnd cmLatticeCyclo3 = cmRing cyclo3Embedding :=
+theorem latticeEnd_cmLatticeCyclo3 : periodLatticeEnd cmLatticeCyclo3 = cmRingOfEmbedding cyclo3Embedding :=
   latticeEnd_idealPeriodPair cyclo3Embedding finrank_cyclo3 1
 
 theorem zeta_three_isPrimitiveRoot : IsPrimitiveRoot (IsCyclotomicExtension.zeta 3 ℚ cyclo3) (3 ^ (0 + 1)) := by
@@ -179,7 +191,7 @@ theorem primeCyclo3_mem : primeCyclo3 ∈ (Ideal (𝓞 cyclo3))⁰ :=
 
 theorem WUnitOffPrime.witness :
     ∃ (σ : cyclo3 →+* ℂ) (L : PeriodPair) (𝔭 : (Ideal (𝓞 cyclo3))⁰),
-      latticeEnd L = cmRing σ ∧ (𝔭 : Ideal (𝓞 cyclo3)).IsPrime ∧
+      periodLatticeEnd L = cmRingOfEmbedding σ ∧ (𝔭 : Ideal (𝓞 cyclo3)).IsPrime ∧
         (Ideal.absNorm (𝔭 : Ideal (𝓞 cyclo3))).Prime :=
   ⟨cyclo3Embedding, cmLatticeCyclo3, ⟨primeCyclo3, primeCyclo3_mem⟩, latticeEnd_cmLatticeCyclo3,
     Ideal.isPrime_of_irreducible_absNorm (by rw [absNorm_primeCyclo3]; exact Nat.prime_three),
@@ -187,7 +199,7 @@ theorem WUnitOffPrime.witness :
 
 theorem WIdeal.witness :
     ∃ (_ : PrimeDiscriminant cyclo3) (σ : cyclo3 →+* ℂ) (L : PeriodPair) (_ : (Ideal (𝓞 cyclo3))⁰),
-      latticeEnd L = cmRing σ :=
+      periodLatticeEnd L = cmRingOfEmbedding σ :=
   ⟨primeDiscriminantCyclo3, cyclo3Embedding, cmLatticeCyclo3, ⟨primeCyclo3, primeCyclo3_mem⟩,
     latticeEnd_cmLatticeCyclo3⟩
 

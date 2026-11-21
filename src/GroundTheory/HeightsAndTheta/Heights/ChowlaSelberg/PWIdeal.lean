@@ -3,6 +3,18 @@ import GroundTheory.HeightsAndTheta.Heights.ChowlaSelberg.Statements
 import GroundTheory.HeightsAndTheta.Heights.ChowlaSelberg.PWIdealField
 import GroundTheory.HeightsAndTheta.Heights.ChowlaSelberg.PWIdealPrimes
 import GroundTheory.HeightsAndTheta.Heights.ChowlaSelberg.PWIdealPrincipal
+
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
+private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+    (σ : K →+* ℂ) : Subring ℂ :=
+  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.ChowlaSelberg
@@ -34,7 +46,7 @@ theorem map_ne_bot {F : Type} [Field F] [NumberField F] (ι : K →+* F) (𝔞 :
   rw [← Ideal.zero_eq_bot] at h0 ⊢
   exact pow_ne_zero n h0
 
-theorem wIdealAt_span (σ : K →+* ℂ) (L : PeriodPair) (hL : latticeEnd L = cmRing σ) (a : 𝓞 K)
+theorem wIdealAt_span (σ : K →+* ℂ) (L : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ) (a : 𝓞 K)
     (ha : a ≠ 0) : WIdealAt σ L (spanNZ a ha) := by
   rw [WIdealAt, discrRatio_span_singleton σ L hL a ha]
   refine ⟨?_, fun F _ _ ι τ hτ _ ↦ ?_⟩
@@ -51,7 +63,7 @@ theorem wIdealAt_span (σ : K →+* ℂ) (L : PeriodPair) (hL : latticeEnd L = c
       rw [Ideal.map_span, Set.image_singleton]
 
 theorem wIdealAt_mul [Algebra.IsQuadraticExtension ℚ K] {S : PrimeDiscriminant K}
-    (hC : WCocycle.Statement S) (σ : K →+* ℂ) (L : PeriodPair) (hL : latticeEnd L = cmRing σ)
+    (hC : WCocycle.Statement S) (σ : K →+* ℂ) (L : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ)
     (𝔞 𝔭 : (Ideal (𝓞 K))⁰) (L' : PeriodPair)
     (hL' : L'.lattice = idealLattice σ ↑(FractionalIdeal.mk0 K 𝔞)⁻¹ * L.lattice)
     (h₁ : WIdealAt σ L 𝔞) (h₂ : WIdealAt σ L' 𝔭) : WIdealAt σ L (𝔞 * 𝔭) := by
@@ -88,7 +100,7 @@ theorem wIdealAt_mul [Algebra.IsQuadraticExtension ℚ K] {S : PrimeDiscriminant
 
 theorem wIdealAt_split [Algebra.IsQuadraticExtension ℚ K] {S : PrimeDiscriminant K}
     [IsTotallyComplex K] (hC : WCocycle.Statement S) (hU : WUnitOffPrime.Statement S)
-    (σ : K →+* ℂ) (L : PeriodPair) (hL : latticeEnd L = cmRing σ) (p : ℕ) (hp : p.Prime)
+    (σ : K →+* ℂ) (L : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ) (p : ℕ) (hp : p.Prime)
     (𝔭 𝔮 : (Ideal (𝓞 K))⁰) (h𝔭 : (𝔭 : Ideal (𝓞 K)).IsPrime) (h𝔮 : (𝔮 : Ideal (𝓞 K)).IsPrime)
     (hN𝔭 : Ideal.absNorm (𝔭 : Ideal (𝓞 K)) = p) (hN𝔮 : Ideal.absNorm (𝔮 : Ideal (𝓞 K)) = p)
     (hpq : (𝔭 : Ideal (𝓞 K)) * 𝔮 = Ideal.span {(p : 𝓞 K)})
@@ -170,7 +182,7 @@ theorem wIdealAt_split [Algebra.IsQuadraticExtension ℚ K] {S : PrimeDiscrimina
 
 theorem wIdealAt_prime [Algebra.IsQuadraticExtension ℚ K] {S : PrimeDiscriminant K}
     [IsTotallyComplex K] (hC : WCocycle.Statement S) (hU : WUnitOffPrime.Statement S)
-    (σ : K →+* ℂ) (L : PeriodPair) (hL : latticeEnd L = cmRing σ) (𝔭 : (Ideal (𝓞 K))⁰)
+    (σ : K →+* ℂ) (L : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ) (𝔭 : (Ideal (𝓞 K))⁰)
     (h𝔭 : (𝔭 : Ideal (𝓞 K)).IsPrime) : WIdealAt σ L 𝔭 := by
   have h𝔭0 : (𝔭 : Ideal (𝓞 K)) ≠ ⊥ := by rw [← Ideal.zero_eq_bot]; exact nonZeroDivisors.coe_ne_zero 𝔭
   rcases prime_cases S.prime S.discr_eq (𝔭 : Ideal (𝓞 K)) h𝔭0 with ⟨a, ha⟩ | ⟨p, hp, hN𝔭, 𝔮, h𝔮, hN𝔮, hpq, hne⟩
@@ -196,7 +208,7 @@ theorem WIdeal.proof [Algebra.IsQuadraticExtension ℚ K] (S : PrimeDiscriminant
       exact neg_neg_of_pos (by exact_mod_cast S.prime.pos)
     exact nrRealPlaces_eq_zero_iff.1 (Quadratic.places_of_discr_neg K hd).1
   intro σ L hL 𝔞
-  suffices H : ∀ I : Ideal (𝓞 K), ∀ hI : I ≠ 0, ∀ L : PeriodPair, latticeEnd L = cmRing σ →
+  suffices H : ∀ I : Ideal (𝓞 K), ∀ hI : I ≠ 0, ∀ L : PeriodPair, periodLatticeEnd L = cmRingOfEmbedding σ →
       WIdealAt σ L ⟨I, mem_nonZeroDivisors_of_ne_zero hI⟩ from
     H 𝔞 (nonZeroDivisors.coe_ne_zero 𝔞) L hL
   intro I

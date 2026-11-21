@@ -1,5 +1,17 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ChowlaSelberg.Statements
+
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
+private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+    (σ : K →+* ℂ) : Subring ℂ :=
+  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.ChowlaSelberg
@@ -42,7 +54,7 @@ theorem image_idealLattice_spanSingleton_mul (c : ℂ) (b : K) (M : Ideal (𝓞 
 variable (hK : finrank ℚ K = 2) [IsTotallyComplex K]
 include hK
 
-theorem le_and_relIndex (L : PeriodPair) (hL : latticeEnd L = cmRing σ) (𝔭 : (Ideal (𝓞 K))⁰)
+theorem le_and_relIndex (L : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ) (𝔭 : (Ideal (𝓞 K))⁰)
     (L' : PeriodPair)
     (hL' : L'.lattice = idealLattice σ ↑(FractionalIdeal.mk0 K 𝔭)⁻¹ * L.lattice) :
     L.lattice ≤ L'.lattice ∧
@@ -97,7 +109,7 @@ theorem le_and_relIndex (L : PeriodPair) (hL : latticeEnd L = cmRing σ) (𝔭 :
     have hn : Ideal.absNorm J₀ ≠ 0 := by rwa [Ne, Ideal.absNorm_eq_zero_iff]
     exact mul_right_cancel₀ hn key
 
-theorem discrRatio_spanSingleton (L : PeriodPair) (hL : latticeEnd L = cmRing σ) (π : K)
+theorem discrRatio_spanSingleton (L : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ) (π : K)
     (hπ : π ≠ 0) (U : (FractionalIdeal (𝓞 K)⁰ K)ˣ)
     (hU : (U : FractionalIdeal (𝓞 K)⁰ K) = spanSingleton (𝓞 K)⁰ π) :
     discrRatio σ L.lattice U = σ π ^ 12 := by
@@ -125,8 +137,8 @@ theorem discrRatio_spanSingleton (L : PeriodPair) (hL : latticeEnd L = cmRing σ
     mul_div_assoc, div_self (discr_ne_zero L), mul_one]
 
 theorem isIntegral_discrRatio (hΔ : DeltaRatioIntegral.Statement)
-    (hj : ∀ L : PeriodPair, latticeEnd L = cmRing σ → IsIntegral ℤ (weierstrassCurve L).j)
-    (L : PeriodPair) (hL : latticeEnd L = cmRing σ) (𝔭 : (Ideal (𝓞 K))⁰)
+    (hj : ∀ L : PeriodPair, periodLatticeEnd L = cmRingOfEmbedding σ → IsIntegral ℤ (weierstrassCurve L).j)
+    (L : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ) (𝔭 : (Ideal (𝓞 K))⁰)
     (hp : (Ideal.absNorm (𝔭 : Ideal (𝓞 K))).Prime) :
     IsIntegral ℤ (discrRatio σ L.lattice (FractionalIdeal.mk0 K 𝔭)) := by
   obtain ⟨L', hL', -⟩ := exists_lattice_mul σ hK L hL (FractionalIdeal.mk0 K 𝔭)
@@ -140,7 +152,7 @@ theorem isIntegral_discrRatio (hΔ : DeltaRatioIntegral.Statement)
 variable [Algebra.IsQuadraticExtension ℚ K] (S : PrimeDiscriminant K)
 
 theorem exists_discrRatio_pow (hW : WCocycle.Statement S) (hΔ : DeltaRatioIntegral.Statement)
-    (hj : JIntegral.Statement S) (L : PeriodPair) (hL : latticeEnd L = cmRing σ)
+    (hj : JIntegral.Statement S) (L : PeriodPair) (hL : periodLatticeEnd L = cmRingOfEmbedding σ)
     (𝔭 : (Ideal (𝓞 K))⁰) (hp : (Ideal.absNorm (𝔭 : Ideal (𝓞 K))).Prime) (n : ℕ) :
     ∃ c : ℂ, IsIntegral ℤ c ∧ discrRatio σ L.lattice (FractionalIdeal.mk0 K 𝔭 ^ (n + 1)) =
       discrRatio σ L.lattice (FractionalIdeal.mk0 K 𝔭) * c := by

@@ -1,6 +1,18 @@
 import Mathlib
 import GroundTheory.HeightsAndTheta.Heights.ChowlaSelberg.Statements
 import GroundTheory.GlobalFields.ComplexMultiplication.AlgebraicityHom
+
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
+private abbrev cmRingOfEmbedding {K : Type*} [Field K] [NumberField K]
+    (σ : K →+* ℂ) : Subring ℂ :=
+  (σ.comp (algebraMap (NumberField.RingOfIntegers K) K)).range
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.ChowlaSelberg
@@ -59,12 +71,12 @@ theorem idealLattice_conjugate (σ : K →+* ℂ) (I : FractionalIdeal (𝓞 K)�
 omit [Algebra.IsQuadraticExtension ℚ K] in
 
 theorem exists_idealLattice_of_cmRing_le (hK : finrank ℚ K = 2) [IsTotallyComplex K]
-    (σ : K →+* ℂ) (L : PeriodPair) (hL : cmRing σ ≤ latticeEnd L) :
+    (σ : K →+* ℂ) (L : PeriodPair) (hL : cmRingOfEmbedding σ ≤ periodLatticeEnd L) :
     ∃ (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (c : ℂ), c ≠ 0 ∧
       (L.lattice : Set ℂ) = (c * ·) '' idealLattice σ I := by
   have hω : L.ω₁ ≠ 0 := by simpa using L.indep.ne_zero 0
   obtain ⟨θ, hθ⟩ := exists_ringOfIntegers_not_rat hK (K := K)
-  have hθL : σ (algebraMap (𝓞 K) K θ) ∈ latticeEnd L := hL ⟨θ, rfl⟩
+  have hθL : σ (algebraMap (𝓞 K) K θ) ∈ periodLatticeEnd L := hL ⟨θ, rfl⟩
   obtain ⟨m, n, hmn⟩ := PeriodPair.mem_lattice.1 (hθL _ L.ω₁_mem_lattice)
   have hn : n ≠ 0 := by
     rintro rfl
@@ -91,7 +103,7 @@ theorem exists_idealLattice_of_cmRing_le (hK : finrank ℚ K = 2) [IsTotallyComp
       smul_mem' := fun a x hx ↦ by
         simp only [Set.mem_ofPred_eq] at *
         rw [Algebra.smul_def, map_mul, mul_assoc]
-        exact (hL ⟨a, rfl⟩ : σ (algebraMap (𝓞 K) K a) ∈ latticeEnd L) _ hx }
+        exact (hL ⟨a, rfl⟩ : σ (algebraMap (𝓞 K) K a) ∈ periodLatticeEnd L) _ hx }
   have hmem : ∀ x : K, x ∈ M ↔ σ x * L.ω₁ ∈ L.lattice := fun _ ↦ Iff.rfl
   have h1 : (1 : K) ∈ M := by rw [hmem, map_one, one_mul]; exact L.ω₁_mem_lattice
   have hyM : y ∈ M := by rw [hmem, hy]; exact L.ω₂_mem_lattice
@@ -151,12 +163,12 @@ theorem CMFamily.exists_periodLattice_eq (S : PrimeDiscriminant K) (F : CMFamily
   classical
   have := S.isTotallyComplex
   obtain ⟨L, C, hC, hΛ⟩ := F.isPeriodLattice s
-  have hle : cmRing (F.restrict s) ≤ latticeEnd L := by
+  have hle : cmRingOfEmbedding (F.restrict s) ≤ periodLatticeEnd L := by
     rintro z ⟨a, rfl⟩
     by_cases ha : a = 0
     · subst ha
       simp only [map_zero]
-      exact (latticeEnd L).zero_mem
+      exact (periodLatticeEnd L).zero_mem
     obtain ⟨φ, hφ⟩ := F.normalised a ha
     rw [← range_endConst (inv_smul_eq_of_smul_eq C hC)]
     refine ⟨((φ.map s).toHom : isogEnd (F.E.map s)), ?_⟩

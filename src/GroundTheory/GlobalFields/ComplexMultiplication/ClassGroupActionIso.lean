@@ -3,6 +3,14 @@ import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticAlgebraic
 import GroundTheory.ArithmeticGeometry.AbelianVarieties.KodairaNeron
 import GroundTheory.GlobalFields.ComplexMultiplication.JInvariantSurjective
 
+private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
+  carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}
+  zero_mem' z _ := by rw [zero_mul]; exact zero_mem _
+  one_mem' z hz := by simpa only [one_mul] using hz
+  add_mem' ha hb z hz := by rw [add_mul]; exact add_mem (ha z hz) (hb z hz)
+  neg_mem' ha z hz := by rw [neg_mul]; exact neg_mem (ha z hz)
+  mul_mem' ha hb z hz := by rw [mul_assoc]; exact ha _ (hb z hz)
+
 open WeierstrassCurve WeierstrassCurve.Affine GroundTheory.Arith.Abelian
 
 noncomputable section
@@ -185,12 +193,12 @@ section Complex
 
 variable {E : WeierstrassCurve ℂ} [E.IsElliptic]
 
-theorem endConst_latticeEndEquiv (L : PeriodPair) (α : latticeEnd L) :
+theorem endConst_latticeEndEquiv (L : PeriodPair) (α : periodLatticeEnd L) :
     endConst (weierstrassCurve L) (latticeEndEquiv L α) = α :=
   homConst_latticeEndEquiv L α
 
 theorem range_endConst_weierstrassCurve (L : PeriodPair) :
-    (endConst (weierstrassCurve L)).range = latticeEnd L := by
+    (endConst (weierstrassCurve L)).range = periodLatticeEnd L := by
   ext z
   constructor
   · rintro ⟨f, rfl⟩
@@ -212,7 +220,7 @@ theorem endConst_injective : Function.Injective (endConst E) := by
   rw [← hf, ← hg, hfg]
 
 theorem range_endConst {L : PeriodPair} {C : VariableChange ℂ} (hC : C • E = weierstrassCurve L) :
-    (endConst E).range = latticeEnd L := by
+    (endConst E).range = periodLatticeEnd L := by
   rw [← range_endConst_weierstrassCurve]
   ext z
   constructor
