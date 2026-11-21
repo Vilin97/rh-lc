@@ -64,17 +64,17 @@ structure CarT {D : D7} (H : Formalism.L2.Herm.HermColsCh D) (F : ∀ u, FormsTi
 
 variable {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : Later B (I.cols l))
 
-def StdLvPr (u : B.Word) {Ch : ℕ → Type} {chOf : ∀ i, ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).C.cls i → Ch i}
-    (F : FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u Ch chOf) : Prop := ∀ i h1 h2,
+def StdLvPr (u : B.Word) {Ch : ℕ → Type} {chOf : ∀ i, ((I.rec7 l Z).mem u).C.cls i → Ch i}
+    (F : FormsTiedSym (I.rec7 l Z) u Ch chOf) : Prop := ∀ i h1 h2,
   (∀ v c z (h : z.1 ∈ ((I.stp u I.mu0 i).rep c).1.1.deco.1.N), (F.lvC i h1 h2).pr v c z = Submodule.Quotient.mk ⟨z.1, h⟩) ∧
     ∀ v c z (h : z.1 ∈ ((I.stp u I.mu0 i).rep c).1.1.deco.1.dnN v), (F.lvC i h1 h2).prk v c z = Submodule.Quotient.mk ⟨z.1, h⟩
 
-def StdLvC (u : B.Word) {Ch : ℕ → Type} {chOf : ∀ i, ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).C.cls i → Ch i}
-    (F : FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u Ch chOf) : Prop :=
+def StdLvC (u : B.Word) {Ch : ℕ → Type} {chOf : ∀ i, ((I.rec7 l Z).mem u).C.cls i → Ch i}
+    (F : FormsTiedSym (I.rec7 l Z) u Ch chOf) : Prop :=
   I.StdLvPr l Z u F ∧ ∀ j v h, F.glevJ.fr j v h = 1
 
-def StdDt (dt : Formalism.L2.Herm.unitaryOneFiniteAdeles (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.cm →* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).Dt) : Prop :=
-  ∀ (x : Formalism.L2.Herm.unitaryOneFiniteAdeles (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.cm) (a : GlobalTheory.Mem.Chr.Ideles B.host.E), IsDetLift B.sp.cm x.1 a →
+def StdDt (dt : Formalism.L2.Herm.unitaryOneFiniteAdeles (I.rec7 l Z).sp.cm →* (I.rec7 l Z).Dt) : Prop :=
+  ∀ (x : Formalism.L2.Herm.unitaryOneFiniteAdeles (I.rec7 l Z).sp.cm) (a : GlobalTheory.Mem.Chr.Ideles B.host.E), IsDetLift B.sp.cm x.1 a →
     dt x = (QuotientGroup.mk a : DtQ B.host I.SQ)
 
 def z0 (X : PreX B.toPre) (u : B.Word) : Fin (B.R.N B.R.m) → B.host.E :=
@@ -83,15 +83,15 @@ def z0 (X : PreX B.toPre) (u : B.Word) : Fin (B.R.N B.R.m) → B.host.E :=
 def TopBase (u : B.Word) (a : I.ι) (U : Subgroup (GA B (B.R.N B.R.m))) (y : (I.stp u a B.R.m).Cl → GA B (B.R.N B.R.m)) : Prop :=
   ∀ c (d : XPt (B.primes X) B.R I.sel (I.tup a)) (g' : GA B (B.R.N B.R.m - 1)) (g : GA B (B.R.N B.R.m)),
     ((I.stp u a B.R.m).rep c).1.1 = tilF I.sel (I.tup a) u d → PtOf g' d →
-    IsExt (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (z0 X u) (inclE (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)) g'.1 g.1 → g⁻¹ * y c ∈ U
+    IsExt (I.rec7 l Z) (z0 X u) (inclE (F := (I.rec7 l Z).host.F) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F)) g'.1 g.1 → g⁻¹ * y c ∈ U
 
 section Tw
 
-variable (l0 : I.Law0 l) {inQ : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tup → HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) → Prop}
-  {T : Formalism.L2.Herm.TwChTied (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) inQ} {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {J : Formalism.L2.Herm.TwChJointS T H}
-  {F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)}
+variable (l0 : I.Law0 l) {inQ : (I.rec7 l Z).what₂.Tup → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) → Prop}
+  {T : Formalism.L2.Herm.TwChTied (I.rec7 l Z) inQ} {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)} {J : Formalism.L2.Herm.TwChJointS T H}
+  {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)}
 
-structure StdW (W : TwFormsTiedS (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (I.tw l l0 Z) T J F) : Prop where
+structure StdW (W : TwFormsTiedS (I.rec7 l Z) (I.tw l l0 Z) T J F) : Prop where
   eCls0 : ∀ u a, T.eCls0 u a = I.eCls0 l u a
   eY : ∀ u a i hi, T.eY u a i hi = Equiv.refl _
   lat : ∀ u a i, T.lat u a i = I.latAt u a i
@@ -108,12 +108,12 @@ structure StdW (W : TwFormsTiedS (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z
     (fun c => ((W.ch u a ha B.R.m h1 le_rfl (T.chOf u a B.R.m c)).y ⟨c, rfl⟩).1)
     (fun c s => ((W.ch u a ha B.R.m h1 le_rfl (T.chOf u a B.R.m c)).stabI ⟨c, rfl⟩ s).1) k ∧
       ∀ β (d : XPt (B.primes X) B.R I.sel (I.tup a)) (g' : GA B (B.R.N B.R.m - 1)) (g : GA B (B.R.N B.R.m)), PtOf g' d →
-        IsExt (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (z0 X u) (inclE (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)) g'.1 g.1 →
+        IsExt (I.rec7 l Z) (z0 X u) (inclE (F := (I.rec7 l Z).host.F) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F)) g'.1 g.1 →
         PtOf (g * k β) (tilF I.sel (I.tup a) u d)
 
   killed : ∀ u a ha i h1 hm β, FunKilled (W.ch u a ha i h1 hm β).lev (X.piT u)
 
-def StdLv {W : TwFormsTiedS (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (I.tw l l0 Z) T J F} (Lv : SymmetricTwistedLevelData W) : Prop := ∀ u a ha i h1 hm,
+def StdLv {W : TwFormsTiedS (I.rec7 l Z) (I.tw l l0 Z) T J F} (Lv : SymmetricTwistedLevelData W) : Prop := ∀ u a ha i h1 hm,
   (∀ v c z (h : z.1 ∈ ((I.stp u a i).rep c).1.1.deco.1.N), (Lv.lv u a ha i h1 hm).pr v c z = Submodule.Quotient.mk ⟨z.1, h⟩) ∧
     ∀ v c z (h : z.1 ∈ ((I.stp u a i).rep c).1.1.deco.1.dnN v), (Lv.lv u a ha i h1 hm).prk v c z = Submodule.Quotient.mk ⟨z.1, h⟩
 
@@ -126,14 +126,14 @@ def jStd (u : B.Word) (a : I.ι) (G : (I.per l u a).Mt) : (I.per l u a).Wrow :=
 
 def ipMt (u : B.Word) (a : I.ι) (G G' : (I.per l u a).Mt) : ℂ := (I.fm l u a).ipP (I.jStd l u a G') (I.jStd l u a G)
 
-def cf : Formalism.L2.Host.CharFrame (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) :=
+def cf : Formalism.L2.Host.CharFrame (I.rec7 l Z) :=
   ⟨I.C.P, I.C.W, I.C.mu0, I.C.eta, I.C.chiPsi, I.C.del, I.C.del', I.C.isMu0, I.C.isEta, I.C.isChi, I.C.isDel, I.C.isDel'⟩
 
 def QpIs (Qp : I.ι → Finset ℕ) : Prop := ∀ a (p : ℕ), p ∈ Qp a ↔ p.Prime ∧ ∃ P ∈ I.Q a, (p : 𝓞 B.fields.E) ∈ P.asIdeal
 
-structure StdO (Qp : I.ι → Finset ℕ) (O : ∀ u a, GL3Theta.LiftObj (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u a)) : Prop where
+structure StdO (Qp : I.ι → Finset ℕ) (O : ∀ u a, GL3Theta.LiftObj (I.rec7 l Z) ((I.rec7 l Z).chTw u a)) : Prop where
   mt : ∀ u a, (O u a).mt = fun j => if 1 ≤ j ∧ j ≤ B.R.m then
-    (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).muTil j * (show (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).Dt →* ℂˣ from tildeQ B.host I.SQ (I.xi a)) else (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).muTil j
+    (I.rec7 l Z).muTil j * (show (I.rec7 l Z).Dt →* ℂˣ from tildeQ B.host I.SQ (I.xi a)) else (I.rec7 l Z).muTil j
   lat : ∀ u a i c, ((O u a).lat i c).1 = ((I.stp u a i).rep c).1.1.deco.1.N
   dt : ∀ u a i c, (O u a).dt i c = detPt B.host I.SQ ((I.stp u a i).rep c).1.1
   frm : ∀ u a i y, (O u a).frm i y = y.1
@@ -141,8 +141,8 @@ structure StdO (Qp : I.ι → Finset ℕ) (O : ∀ u a, GL3Theta.LiftObj (_root_
   S : ∀ u a, (O u a).S = insert (B.T u) ({B.host.g 0, B.host.g 1} ∪ Qp a)
   Th : ∀ u a i c c', (O u a).Th i c c' = I.th u a i c.1 c'.1 ((I.stp u a i).rep c) ((I.stp u a (i + 1)).rep c')
 
-structure StdKer {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-    {K : G.Consts} {Y : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl K Y cX} (t : KerEntTied ex) : Prop where
+structure StdKer {L : SizeData₂ (I.rec7 l Z)} {hT : GatTies (I.rec7 l Z)} {Gi : G.Inst (I.rec7 l Z) L} {Gl : G.LatInst (I.rec7 l Z)}
+    {K : G.Consts} {Y : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl K Y cX} (t : KerEntTied ex) : Prop where
   X_eq : t.X = B.fields
   seam : HEq t.seam (seamOf B (I.cols l) Z.W Z.V Z.S Z.N Z.G)
   Pr : HEq t.Pr (B.primes X)

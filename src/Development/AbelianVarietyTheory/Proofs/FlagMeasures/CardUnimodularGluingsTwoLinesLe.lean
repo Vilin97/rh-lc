@@ -233,7 +233,7 @@ theorem _root_.GlobalTheory.GlueLines.card_gluings_le : ∀ (E : Type) [Field E]
   classical
   have hne : ∀ {N : Submodule (𝓞 E) E}, Submodule.IsLattice E N → N ≠ ⊥ := by
     intro N hN h
-    have := hN.span_eq_top
+    have := Submodule.IsLattice.span_eq_top (self := hN)
     rw [h, Submodule.bot_coe, Submodule.span_zero_singleton] at this
     exact bot_ne_top this
   have hNN : ∀ x ∈ N₁, ∀ y ∈ N₁, star x * β₁ * y ∈ (algebraMap (𝓞 E) E).range := by

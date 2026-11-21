@@ -193,15 +193,11 @@ theorem modPieceCard_chain (a : K → ℕ) (J₁ : Ideal (MRing ι)) :
       (∀ j, IsMultiHomog (f j) (c j) ∧ F j.succ = F j.castSucc ⊔ Ideal.span {f j} ∧
         ∀ g, g ∈ q j ↔ g * f j ∈ F j.castSucc) →
       (∀ j k, c j k ≤ a k) →
-      modPieceCard J₁ (F 0) a = ∏ j, Nat.card (mPiece (q j) (a - c j)) := by
-  intro N
-  induction N with
-  | zero =>
-    intro F f c q _ hl _ _
+      modPieceCard J₁ (F 0) a = ∏ j, Nat.card (mPiece (q j) (a - c j))
+  | 0, F, f, c, q, _, hl, _, _ => by
     have : F 0 = J₁ := hl
     rw [Finset.univ_eq_empty, Finset.prod_empty, this, modPieceCard_self]
-  | succ N ih =>
-    intro F f c q h0 hl hs ha
+  | N + 1, F, f, c, q, h0, hl, hs, ha => by
     obtain ⟨hf0, hF1, hq0⟩ := hs 0
     rw [Fin.castSucc_zero] at hF1 hq0
     have h0' : IsMultiHomogIdeal (F (Fin.succ 0)) := by
@@ -210,7 +206,7 @@ theorem modPieceCard_chain (a : K → ℕ) (J₁ : Ideal (MRing ι)) :
     have hs' : ∀ j : Fin N, IsMultiHomog (f j.succ) (c j.succ) ∧
         F j.succ.succ = F j.succ.castSucc ⊔ Ideal.span {f j.succ} ∧
         ∀ g, g ∈ q j.succ ↔ g * f j.succ ∈ F j.succ.castSucc := fun j => hs j.succ
-    have htail := ih (fun i => F i.succ) (fun j => f j.succ) (fun j => c j.succ)
+    have ih := modPieceCard_chain a J₁ N (fun i => F i.succ) (fun j => f j.succ) (fun j => c j.succ)
       (fun j => q j.succ) h0' (by simp only [Fin.succ_last]; exact hl)
       (fun j => by
         obtain ⟨x1, x2, x3⟩ := hs' j
@@ -232,7 +228,7 @@ theorem modPieceCard_chain (a : K → ℕ) (J₁ : Ideal (MRing ι)) :
     have key := AddSubgroup.relIndex_mul_relIndex _ _ _ hA hB
     have step := relIndex_piece_step h0 hf0 hq0 (ha 0)
     rw [← hF1] at step
-    rw [Fin.prod_univ_succ, ← htail, ← step, modPieceCard, modPieceCard]
+    rw [Fin.prod_univ_succ, ← ih, ← step, modPieceCard, modPieceCard]
     exact key.symm
 
 end Pieces
@@ -248,22 +244,18 @@ theorem length_loc_rel (P : Ideal R) [P.IsPrime] : ∀ (N : ℕ) (F : Fin (N + 1
     (∀ j, q j ≤ P → q j = P) →
     Module.length (Localization.AtPrime P) (LocalizedModule P.primeCompl (R ⧸ F 0)) =
       Module.length (Localization.AtPrime P) (LocalizedModule P.primeCompl (R ⧸ F (Fin.last N))) +
-        ((∑ j : Fin N, if q j = P then 1 else 0 : ℕ) : ℕ∞) := by
-  intro N
-  induction N with
-  | zero =>
-    intro F f q _ _
+        ((∑ j : Fin N, if q j = P then 1 else 0 : ℕ) : ℕ∞)
+  | 0, F, f, q, _, _ => by
     simp
-  | succ N ih =>
-    intro F f q hj hmin
-    have htail := ih (fun j => F j.succ) (fun j => f j.succ) (fun j => q j.succ)
+  | N + 1, F, f, q, hj, hmin => by
+    have ih := length_loc_rel P N (fun j => F j.succ) (fun j => f j.succ) (fun j => q j.succ)
       (fun j => by
         have h := hj j.succ
         rwa [← Fin.succ_castSucc] at h)
       (fun j => hmin j.succ)
     obtain ⟨h1, _, h3⟩ := hj 0
     rw [Fin.castSucc_zero] at h1 h3
-    rw [length_loc_step (F 0) (q 0) (f 0) h3 P, ← h1, htail, Fin.sum_univ_succ]
+    rw [length_loc_step (F 0) (q 0) (f 0) h3 P, ← h1, ih, Fin.sum_univ_succ]
     simp only [Fin.succ_last]
     by_cases hq : q 0 = P
     · rw [ite_eq_left hq, hq, length_loc_quot_self]

@@ -36,7 +36,11 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.lineVal :
     intro a b k; simp only [Co.p, ContinuousMulEquiv.apply_symm_apply]
   have ha : ∀ a b : ι → U4, arc1 ((C.Φ (2 + 2)).symm (a * b)) =
       arc1 ((C.Φ (2 + 2)).symm a) * arc1 ((C.Φ (2 + 2)).symm b) := by
-    intro a b; simp [arc1, map_mul]
+    intro a b
+    change arc1 ((C.Φ (2 + 2)).symm.toMulEquiv (a * b)) =
+      arc1 ((C.Φ (2 + 2)).symm.toMulEquiv a) * arc1 ((C.Φ (2 + 2)).symm.toMulEquiv b)
+    rw [(C.Φ (2 + 2)).symm.toMulEquiv.map_mul]
+    simp [arc1]
   have h1 : (arc1 ((C.Φ 2).symm (1 : ι → U2)) : G1 K 2) = 1 := by simp [arc1, map_one]
   refine ⟨⟨hκ₄ μ h4, ?_, ?_, ?_⟩, ?_⟩
   · exact hE.idem.cont.comp (C.Φ (2 + 2)).continuous

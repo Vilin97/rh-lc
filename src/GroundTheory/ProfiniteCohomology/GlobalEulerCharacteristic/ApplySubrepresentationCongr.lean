@@ -38,7 +38,8 @@ theorem rangeStep (hχ : IsMultiplicativeOn P χ) (hPdvd : ∀ m n, m ∣ n → 
         χ (Rep.subrepresentation A _ (map_le_comap T hT D hD)) := by
   have hdvd : Nat.card D ∣ Nat.card A :=
     AddSubgroup.card_addSubgroup_dvd_card D.toAddSubgroup
-  exact hχ.shortExact (rangeStepComplex_shortExact T hT D hD) (hPdvd _ _ hdvd hA)
+  exact hχ.shortExact (S := rangeStepComplex T hT D hD)
+    (rangeStepComplex_shortExact T hT D hD) (hPdvd _ _ hdvd hA)
 
 variable [IsTopologicalGroup G] [CompactSpace G]
 

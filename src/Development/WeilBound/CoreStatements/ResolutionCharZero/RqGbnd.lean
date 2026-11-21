@@ -693,7 +693,9 @@ theorem exists_labels {X : Scheme.{0}} {k : Type} [Field k] [CharZero k] {p : X 
     ext w
     rw [Set.mem_preimage]
     change w ∈ ((c.restrict hWV).coordIdeal {t}).support ↔ w.1 ∈ (C : Set X)
-    rw [mem_support_coordIdeal_singleton, EtaleChart.coord_restrict, Scheme.basicOpen_res]
+    rw [mem_support_coordIdeal_singleton]
+    change w.1 ∉ X.basicOpen ((c.restrictCompat hWV).coord t) ↔ _
+    rw [EtaleChart.coord_restrict, Scheme.basicOpen_res]
     have hw : w.1 ∈ (C : Set X) ↔ w.1 ∈ Z t ∩ W := by
       rw [← e]; exact ⟨fun h => ⟨h, w.2⟩, fun h => h.1⟩
     rw [hw]

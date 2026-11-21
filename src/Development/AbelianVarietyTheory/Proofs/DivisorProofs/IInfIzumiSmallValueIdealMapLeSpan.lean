@@ -99,7 +99,10 @@ theorem norm_le_of_mem_iInf_map_smallIdeal : ∀ (o Ω : Type) [CommRing o] [Fie
       · refine le_max_of_le_right (hle.trans ?_)
         exact pow_le_pow_left₀ (norm_nonneg _) (hρ _ (hnu h hh hh.1)) N
     | zero => rw [map_zero, norm_zero]; exact le_max_of_le_right (pow_nonneg hρ0 N)
-    | add a b _ _ ha hb => rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
+    | add a b _ _ ha hb =>
+      set_option synthInstance.maxHeartbeats 200000 in
+        rw [map_add ψ]
+      exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
     | smul c a _ ha =>
       rw [smul_eq_mul, map_mul, norm_mul]
       exact (mul_le_of_le_one_left (norm_nonneg _) (hψ1 c)).trans ha

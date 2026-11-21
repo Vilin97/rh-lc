@@ -152,7 +152,7 @@ theorem dGT_spec {D : D7} {c : LatCmp D} {Tw : TwForms D} {u : D.what₂.Word} {
   by_cases h0 : j = 0
   · subst h0
     rw [KA.stab_zero a L hL]
-    simp [dGT]
+    simp [dGT, Nat.padicValNat_def]
   · have hm : j ≤ D.R.m := by rw [← KA.fl_m]; exact hj
     obtain ⟨_, hdvd⟩ := KA.stab_dvd j hm a L hL
     simp only [dGT, if_neg h0]

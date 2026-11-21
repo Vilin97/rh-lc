@@ -43,22 +43,13 @@ theorem extend_torus_hom_dvr : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscr
   have : IsProper ((Over.pullback (spMap α)).obj T.B).hom :=
     inferInstanceAs (IsProper (pullback.snd _ _))
   have hiq : i ≫ q' = toUnit _ ≫ η[(Over.pullback (spMap α)).obj T.B] :=
-    splitTorus_hom_proper_trivial_local Ω X ((Over.pullback (spMap α)).obj T.B) (i ≫ q') inferInstance
+    splitTorus_hom_proper_trivial_local Ω X _ (i ≫ q') inferInstance
   have : Mono (pullTorus h₂ T.i) := ⟨fun x y e => hk.hom_ext e (toUnit_unique _ _)⟩
   let u' := hk.lift i (toUnit _) hiq
   have hu' : u' ≫ pullTorus h₂ T.i = i := hk.lift_fst _ _ _
-  have hm : ∀ (S : Over (Sp Ω)) (x y : S ⟶ splitTorus (Sp Ω) X),
-      (x * y) ≫ u' = (x ≫ u') * (y ≫ u') := by
-    intro S x y
+  have : IsMonHom u' := Serre.isMonHom_of_mul_comp u' fun S x y => by
     rw [← cancel_mono (pullTorus h₂ T.i), MonObj.mul_comp (x ≫ u'), Category.assoc, Category.assoc,
       Category.assoc, hu', MonObj.mul_comp]
-  have : IsMonHom u' := by
-    constructor
-    ·
-      rw [MonObj.one_eq_one, MonObj.one_eq_one]
-      exact map_one (MonoidHom.mk' (fun x : 𝟙_ (Over (Sp Ω)) ⟶ splitTorus (Sp Ω) X ↦ x ≫ u') (hm _))
-    · rw [MonObj.mul_eq_mul, hm, MonObj.mul_eq_mul, MonObj.comp_mul]
-      simp
   haveI : ConnectedSpace (Sp Ω) := SplitTorus.connectedSpace_of_isLocalRing Ω
   obtain ⟨u, hu⟩ := SplitTorus.exists_eq_torusMap u'
 

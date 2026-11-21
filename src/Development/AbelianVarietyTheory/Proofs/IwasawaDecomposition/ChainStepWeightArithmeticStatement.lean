@@ -22,7 +22,7 @@ open GlobalTheory.IntegralityCompare
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.chainStep_weight_arithmetic : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l))
     (u : B.Word) (μ : I.ι) (i : ℕ), i < B.R.m →
-    ∃ k : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tau → ℕ,
-      (∀ τ, (k τ : ℤ) = shiftOf (lamTG (I.fm l u μ) i) τ + ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u μ).sSharp i τ) ∧
-      ∀ τ r, nuT (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i τ r = ((I.fm l u μ).lam i τ).natW r + k τ := by
+    ∃ k : (I.rec7 l Z).what₂.Tau → ℕ,
+      (∀ τ, (k τ : ℤ) = shiftOf (lamTG (I.fm l u μ) i) τ + ((I.rec7 l Z).chTw u μ).sSharp i τ) ∧
+      ∀ τ r, nuT (I.rec7 l Z) u i τ r = ((I.fm l u μ).lam i τ).natW r + k τ := by
   exact @GlobalTheory.IntegralityCompare.weight_arith_step

@@ -47,8 +47,7 @@ theorem isHermRep_combLine_unit {M : HermLB (mpStr ℤ m n)} {A : HermLine (Bk n
     exact h₃ i c y z hu hy
 
 theorem existsRead : ExistsRead := by
-  intro m n M h
-  obtain ⟨c, t, e⟩ := h
+  rintro m n M ⟨c, t, e⟩
   obtain ⟨A, hA, -⟩ := GlobalTheory.T.hermRep_twisted_bundle_exists m n M c t e
   have hs : IsSmoothHerm A := GlobalTheory.CompanionTheory.MPDict.SmoothRep.isSmoothHerm_of_isHermRep m n M A hA
   exact ⟨combLine (fun _ : Unit => A) 1, isSmoothHerm_combLine (fun _ => hs) 1, isHermRep_combLine_unit hA,

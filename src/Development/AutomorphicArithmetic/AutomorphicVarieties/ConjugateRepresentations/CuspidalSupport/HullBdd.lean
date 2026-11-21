@@ -69,7 +69,9 @@ theorem UpperTheory.V.Cj.S.hullBdd :
     have h0 : φ ∈ LinearMap.ker (Polynomial.aeval (Cm.uTC E a z) p) := by
       refine hull_le (fun T hT ψ hψ => ?_) hφ.1
       have h1 := hm _ ⟨ψ, hψ, rfl⟩
-      rw [Submodule.mem_bot, LinearEquiv.coe_coe, smEq_aeval, LinearEquiv.map_eq_zero_iff] at h1
+      rw [Submodule.mem_bot, LinearEquiv.coe_coe, smEq_aeval] at h1
+      have h1 : Polynomial.aeval (Cm.uTC E a z) p ψ = 0 :=
+        (Cm.smEq E a).injective (h1.trans (Cm.smEq E a).map_zero.symm)
       rw [LinearMap.mem_ker, ← Module.End.mul_apply, ← (commute_aeval (hT.2.1 z hz) p).eq, Module.End.mul_apply, h1,
         map_zero]
-    rw [Submodule.mem_bot, LinearEquiv.coe_coe, smEq_aeval, LinearMap.mem_ker.1 h0, map_zero]
+    rw [Submodule.mem_bot, LinearEquiv.coe_coe, smEq_aeval, LinearMap.mem_ker.1 h0, (Cm.smEq E a).map_zero]

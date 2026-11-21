@@ -265,7 +265,7 @@ theorem exists_eigenbasis_pullback {V V' : Type} [CommRing V] [IsLocalRing V] [I
       (∀ w : epsOver V' V' ⟶ (Over.pullback (fB V V')).obj G, IsTan w →
         (∀ a, (w ≫ (Over.pullback (fB V V')).map (act a)).left = spMap (epsMul (algebraMap V V' (χ a))) ≫ w.left) →
         ∃! c : Fin m → V', IsComb u' c w) ∧
-      ∀ i, (u' i).left ≫ pullback.fst G.hom (fB V V') = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V V')) ≫ (u i).left := by
+      ∀ i, (u' i).left ≫ pullback.fst G.hom (fB V V') = spMap (dualMap (algebraMap V V')) ≫ (u i).left := by
   have isTan_iff : ∀ {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] (w : epsOver R R ⟶ G),
       ReciprocityTheory.ChartRestriction.G.Chart.IsTan w ↔ IsTan w := by
     intro R _ G _ w
@@ -527,23 +527,23 @@ theorem integral_of_frMap (T T' : CDVR) (io : c.F →+* T.Fr) (iT : T.Fr →+* T
       rw [hz']
       exact he a))
   choose ub' htan' heig' hbas' hpr' using hLie
-  have hpr'' : ∀ τ i, (ub' τ i).left ≫ pullback.fst G.G.hom (spMap φ) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (ub τ i).left :=
+  have hpr'' : ∀ τ i, (ub' τ i).left ≫ pullback.fst G.G.hom (spMap φ) = spMap (dualMap φ) ≫ (ub τ i).left :=
     hpr'
   have hmono : Mono (spMap (algebraMap T.V T.Fr)) := by
     haveI : Epi (CommRingCat.ofHom (algebraMap T.V T.Fr)) := IsLocalization.epi (nonZeroDivisors T.V) T.Fr
     exact Scheme.Spec.map_mono (CommRingCat.ofHom (algebraMap T.V T.Fr)).op
   have hlift' : ∀ τ i, ∃ u'' : Sp (DualNumber T'.Fr) ⟶ t''.G.left, u'' ≫ m1'.φ = y'.u τ i ∧
-      u'' ≫ m2'.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T'.V T'.Fr)) ≫ (ub' τ i).left := by
+      u'' ≫ m2'.φ = spMap (dualMap (algebraMap T'.V T'.Fr)) ≫ (ub' τ i).left := by
     intro τ i
     obtain ⟨u0, hu1, hu2⟩ := hlift τ i
-    have hw : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T'.V T'.Fr)) ≫ (ub' τ i).left) ≫ G'.G.hom =
+    have hw : (spMap (dualMap (algebraMap T'.V T'.Fr)) ≫ (ub' τ i).left) ≫ G'.G.hom =
         spMap (algebraMap T'.Fr (DualNumber T'.Fr)) ≫ spMap (algebraMap T'.V T'.Fr) := by
       rw [Category.assoc, Over.w (ub' τ i), GlobalTheory.Reg.ChartInhab.eps_hom, GlobalTheory.ArcQ.FrBC.dual_alg]
     have hb0 : u0 ≫ t'.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr)) := by
       apply (cancel_mono (spMap (algebraMap T.V T.Fr))).1
       rw [Category.assoc, ← m2.cart.1.w, ← Category.assoc, hu2, Category.assoc, Over.w (ub τ i),
         GlobalTheory.Reg.ChartInhab.eps_hom, GlobalTheory.ArcQ.FrBC.dual_alg]
-    have hkey : m2'.cart.1.lift _ _ hw ≫ n.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap iT) ≫ u0 := by
+    have hkey : m2'.cart.1.lift _ _ hw ≫ n.φ = spMap (dualMap iT) ≫ u0 := by
       apply m2.cart.1.hom_ext
       · rw [Category.assoc, ← hn, hk', hk, ← Category.assoc, m2'.cart.1.lift_fst, Category.assoc, hn2,
           hpr'' τ i, Category.assoc, hu2, ← Category.assoc, ← Category.assoc, ← GlobalTheory.ArcQ.FrBC.dual_comp,

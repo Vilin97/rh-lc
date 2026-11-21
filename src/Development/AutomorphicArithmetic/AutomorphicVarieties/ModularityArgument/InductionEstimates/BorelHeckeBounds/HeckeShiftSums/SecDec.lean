@@ -95,6 +95,8 @@ private theorem sd_lv (s : ℝ) : ∃ a : Fin (2 + 2) → GroundTheory.Global.Id
   change Matrix.reindex finSumFinEquiv finSumFinEquiv (Matrix.fromBlocks (Matrix.diagonal _) 0 0 (Matrix.diagonal _)) = _
   rw [Matrix.fromBlocks_diagonal, Matrix.reindex_apply, Matrix.submatrix_diagonal_equiv, coe_diagUnits]
   congr 1
+  funext i
+  dsimp only [Function.comp_apply]
   rcases finSumFinEquiv.symm i with i | i <;> rfl
 
 private theorem sd_key (δ : GL (Fin (2 + 2)) K) (b : AdelicGLn.AdelicGL K (2 + 2)) (hb : b ∈ adelicBorel)
@@ -120,15 +122,18 @@ private theorem sd_key (δ : GL (Fin (2 + 2)) K) (b : AdelicGLn.AdelicGL K (2 + 
     field_simp
   · obtain ⟨β, hβ⟩ := isUnit_apply_self_of_mem_adelicBorel (inv_mem hb) 3
     have h1 := sd_row δ⁻¹ _ (inv_mem hT) ((r 3)⁻¹ * (β * (a 3)⁻¹)) (by
-      rw [mul_inv_rev, mul_inv_rev, ← map_inv, ← map_inv]
+      rw [show (diagUnits (2 + 2) a * b * diagUnits (2 + 2) r)⁻¹ =
+        (diagUnits (2 + 2) r)⁻¹ * (b⁻¹ * (diagUnits (2 + 2) a)⁻¹) by group, ← map_inv, ← map_inv]
       simp only [Units.val_mul, coe_diagUnits, Matrix.mul_diagonal, Matrix.diagonal_mul, hβ, Pi.inv_apply])
     have h2 := sd_ent b 3 3 β⁻¹ (by
       have := upper_triangular_mul_last_row b.val (b⁻¹ : AdelicGLn.AdelicGL K (2 + 2)).val (inv_mem hb : b⁻¹ ∈ adelicBorel) 3
       rw [Units.inv_mul, Matrix.one_apply_eq, ← hβ] at this
       exact Units.inv_eq_of_mul_eq_one_right this.symm)
     rw [map_inv, Positive.coe_inv] at h2
-    rw [map_inv (AdelicGLn.diagonal K (2 + 2)), ← mul_inv_rev, height_inv, map_mul, map_mul, map_inv, map_inv, Positive.val_mul,
-      Positive.val_mul, Positive.coe_inv, Positive.coe_inv] at h1
+    rw [map_inv (AdelicGLn.diagonal K (2 + 2)) δ] at h1
+    rw [← mul_inv_rev (AdelicGLn.diagonal K (2 + 2) δ) (diagUnits (2 + 2) a * b * diagUnits (2 + 2) r)] at h1
+    rw [height_inv] at h1
+    rw [map_mul, map_mul, map_inv, map_inv, Positive.val_mul, Positive.val_mul, Positive.coe_inv, Positive.coe_inv] at h1
     have hp := (GroundTheory.Global.IdeleGroup.ideleModule K β).2
     have hp1 := (GroundTheory.Global.IdeleGroup.ideleModule K (a 3)).2
     have hp2 := (GroundTheory.Global.IdeleGroup.ideleModule K (r 3)).2

@@ -15,8 +15,8 @@ open IsDedekindDomain NumberField GroundTheory.Global GroundTheory.Global.SemiLo
 noncomputable section
 
 variable {K : FiniteSubfield} {v : HeightOneSpectrum (𝓞 K.1)}
-variable (ι : AlgHom K.1 (AlgebraicClosure ℚ) (AlgebraicClosure (v.adicCompletion K.1)))
-variable {F E : FiniteSubfield} [Fact (K ≤ F)] [Fact (K ≤ E)] [Fact (F ≤ E)]
+  (ι : ℚ̄ →ₐ[K.1] AlgebraicClosure (v.adicCompletion K.1))
+  {F E : FiniteSubfield} [Fact (K ≤ F)] [Fact (K ≤ E)] [Fact (F ≤ E)]
 
 instance isScalarTower_finiteSubfield_of_fact : IsScalarTower K.1 F.1 E.1 :=
   IsScalarTower.of_algebraMap_eq fun _ ↦ rfl

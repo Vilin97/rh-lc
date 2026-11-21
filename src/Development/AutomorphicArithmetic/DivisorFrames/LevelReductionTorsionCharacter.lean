@@ -165,7 +165,7 @@ private theorem generalized_bernoulli_change_level {E : Type} [Field E] [NumberF
     exact Ideal.mem_span_singleton_self _
   obtain ⟨xG, hC, hxG⟩ := hI
   have hv0 : IsTanAtG t (spMap ((Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n})).comp x0) ≫ ξ)
-      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) ≫ e k) := by
+      (spMap (dualMap (Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) ≫ e k) := by
     rw [← GlobalTheory.HTMap.spc_assoc]
     exact GlobalTheory.FactorDepth.isTanAtG_map t _ (he k)
   have hq : ((p ^ n : ℕ) : 𝓞_ℂ_[p] ⧸ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}) = 0 := GlobalTheory.HTMap.cast_quot _ p n

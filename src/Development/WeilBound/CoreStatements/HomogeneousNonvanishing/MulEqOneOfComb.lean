@@ -21,8 +21,11 @@ theorem mul_eq_one_of_comb {K V : Type} [Field K] [AddCommGroup V] [Module K V] 
   ext i j
   have e := congrArg (fun v => b.repr v i) (h j)
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [Finsupp.single_apply, eq_comm] at e
-  simpa [Matrix.mul_apply, Matrix.one_apply, mul_comm] using e.symm
+    simp only [map_sum, map_smul, Module.Basis.repr_self, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.coe_smul,
+    Pi.smul_apply, Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
+    Finset.mem_univ, if_true] at e
+  rw [Matrix.mul_apply, Matrix.one_apply]
+  simp only [mul_comm (g i _), ← e, eq_comm]
 
 theorem sum_eq {K : Type} [Field K] (σ : K →+* ℂ) {N n : ℕ} {g : Matrix (Fin N) (Fin n) K}
     {c : Matrix (Fin n) (Fin N) K} (h : g * c = 1) (A : Matrix (Fin N) (Fin N) ℂ) (x : Fin N → ℂ) (a : Fin N) :

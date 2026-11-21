@@ -82,6 +82,8 @@ theorem globalFormAt_frameLat_nc : GlobalTheory.Published.WeilRepresentationUnit
       simp only [GlobalTheory.Eis.petCoef, rcoef, petersson, pet, rTr, GlobalTheory.AutomorphicL2Unitary.descend]
       rw [← integral_conj]
       congr 1
+      funext x
+      simp
     rw [integrand, ← e1, ← e2]
     rfl
   have hZ : ∀ s : ℂ, (A.rank : ℝ) / 2 < s.re →

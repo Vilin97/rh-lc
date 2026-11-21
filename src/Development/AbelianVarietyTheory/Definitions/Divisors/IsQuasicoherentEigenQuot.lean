@@ -103,7 +103,7 @@ def dualAct : O →+* End (dual F) where
     apply End.ext
     simpa only [act, map_add] using! (dualMap_add (act ρ a) (act ρ b))
 
-@[simp] theorem act_dualAct (a : O) : act (dualAct ρ) a = GlobalTheory.CompanionTheory.Ar.dualMap (act ρ a) := rfl
+@[simp] theorem act_dualAct (a : O) : act (dualAct ρ) a = dualMap (act ρ a) := rfl
 
 
 variable {ρ σ} in

@@ -163,7 +163,7 @@ structure Geo (ν : NumOf D ℂ N) (d : AB N.toNumB g) where
 def KeyOK (κ : Rule) (ν : NumOf D ℂ N) (d : AB N.toNumB D.P.g) : Prop :=
   ∀ (vB : Fin D.P.g → (epsR R ⟶ D.P.A)) (b : Fin D.P.g → (TE R ℂ ⟶ D.P.A)) (MB : Matrix (Fin D.P.g) (Fin D.P.g) ℂ) (k₀ : ℂ),
     IsLieBasis vB → (∀ i, (b i).left =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((algebraMap (FractionRing R) ℂ).comp (algebraMap R (FractionRing R)))) ≫ (vB i).left) →
+      spMap (dualMap ((algebraMap (FractionRing R) ℂ).comp (algebraMap R (FractionRing R)))) ≫ (vB i).left) →
     (∀ i, IsD ν d ((2 * Real.pi * Complex.I : ℂ)⁻¹ • MB i) (b i)) → BKey κ ν vB k₀ → MB.det ≠ 0 ∧ k₀ * d.c ^ 8 = MB.det ^ 4
 
 end Geo

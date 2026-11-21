@@ -162,7 +162,7 @@ theorem fullLat_of [Algebra (𝓞 K) R] [IsScalarTower (𝓞 K) K R] (C : Submod
     (N : (K →+* ℂ) → R → ℝ) (hN : ∀ σ, IsNormOn C σ (N σ)) (B : ℝ)
     (hB : ∀ F ∈ C, (∀ la, ∀ v ∈ Vs la, 0 ≤ v F) → F ≠ 0 → -B ≤ ∑ σ : K →+* ℂ, Real.log (N σ F))
     (h : ∀ f ∈ C, Den Vs (fun _ => True) f) : Formalism.IndefR.FWT.FullLat C Vs hV :=
-  ⟨GlobalTheory.IntCuspLat.fg_latOf_of_lowerBound C Vs hV N hN B hB, span_latOf_eq_top hV C h⟩
+  Submodule.IsLattice.of_fg K (GlobalTheory.IntCuspLat.fg_latOf_of_lowerBound C Vs hV N hN B hB)
 
 omit hV in
 theorem exists_prime_mem (la : HeightOneSpectrum (𝓞 K)) {N : ℕ} (h0 : N ≠ 0) (h : (N : 𝓞 K) ∈ la.asIdeal) :
@@ -317,7 +317,7 @@ theorem den_of_large (D : D7) (T : CoreJ D) (h : LawsJ T) (j : ℕ) (hj : InR D 
     have hind := (GlobalTheory.reading_linearIndependent_and_injective GlobalTheory.lawsFieldsSeparately.2.1 _ _ _ _ (T.Q.Xo j) T.Q.c
       T.toCore.σ₀ D.R.r (Formalism.L2.PjFree.Unf.ofPj (T.U j T.toCore.σ₀)) hU a n).1
     refine mem_span_of_map_mem_span_image (Formalism.L2.PjFree.rdU (Formalism.L2.PjFree.Unf.ofPj (T.U j T.toCore.σ₀)))
-      (sec (T.Q.Xo j) T.Q.c a n) hind _ (fun g hg => hg.1) hf'.1 (hsp ?_)
+      (sec (T.Q.Xo j) T.Q.c a n) hind (shortGen (T.Q.Xo j) T.Q.c nab bad 0 a n d) (fun g hg => hg.1) hf'.1 (hsp ?_)
     exact ⟨hf'.2 _ T.toCore.good_σ₀, fun k x hx => dif_neg hx⟩
   obtain ⟨st, hnab⟩ := hnab
   have hV : ∀ la, ∀ v ∈ T.toCore.Vs j la, IsVal la v := fun la => isVal_valSet la
@@ -380,7 +380,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem latFull_of_tieIn : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : FamIn D.what₂.LL G Pl0 T0 D.R.m) (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) (κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)) (v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec), R.toLevCh.Is A.μ0 → R.IsModels → TieIn T R κ v₀ → T.pb = R.C.P.pb → LatFull T κ := by
   intro D G _ _ Pl0 T0 A T _ R κ v₀ _ _ ht _ i
   obtain ⟨τ⟩ : Nonempty D.what₂.Tau := Fintype.card_pos_iff.1 (by
-    rw [D.what₂.card_Tau]; unfold Ranks.f Ranks.n; positivity)
+    rw [D.what₂.card_Tau]; unfold Ranks.f Ranks.n; have := D.R.ord_pos; omega)
   refine isLattice_latOf D T ht.laws _ (inR i) (κ i) ?_
   rw [(ht.kap i τ).2.2]
   have := D.R.rank_add_five_le

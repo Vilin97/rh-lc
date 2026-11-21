@@ -153,7 +153,7 @@ variable {A : Type} [CommRing A] [IsDedekindDomain A] [Module.Finite ℤ A]
 theorem finite_primes_containing {a : A} (ha : a ≠ 0) :
     Finite {n : Ideal A // n.IsPrime ∧ a ∈ n} := by
   have hfin := Ideal.finite_minimalPrimes_of_isNoetherianRing A (Ideal.span {a})
-  refine Set.Finite.to_subtype (s := {n : Ideal A | n.IsPrime ∧ a ∈ n}) (hfin.subset ?_)
+  refine Set.Finite.to_subtype (hfin.subset ?_)
   rintro n ⟨hn, han⟩
   have hn0 : n ≠ ⊥ := fun h => ha (by simpa [h] using han)
   have hmax := Ring.DimensionLEOne.maximalOfPrime hn0 hn

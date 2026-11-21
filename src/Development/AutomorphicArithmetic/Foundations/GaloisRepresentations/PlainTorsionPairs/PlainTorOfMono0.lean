@@ -108,12 +108,12 @@ theorem UpperTheory.Gal.projectedFormsSystemPart.plainTor_of_mono0 : ∀ (Ω : T
   obtain ⟨j, hj⟩ := mem z1 hz1
   have key : (Δ i).first = (Δ j).first.nu 1 := by
     rw [hi, hj, hyz, IrrGL.nu_nu, IrrGL.nu_nu, add_comm]
-  have hne := ne_nu_one L (Δ j).isCusp_first
+  have hne := Pm.ne_nu_one L (Δ j).isCusp_first
   by_cases hij : i = j
   · subst hij; exact hne key
   · refine hun j i (Ne.symm hij) ?_
-    rw [eq_single_of_len (hlen j), eq_single_of_len (hlen i)]
-    exact linked_single _ _ hne key
+    rw [Pm.eq_single_of_len (hlen j), Pm.eq_single_of_len (hlen i)]
+    exact Pm.linked_single _ _ hne key
 
 theorem UpperTheory.Gal.projectedFormsSystemPart.typePlain : UpperTheory.Gal.projectedFormsSystemPart.TypePlain := by
   intro E Ω _ _ _ _ _ _ n hn π w A h σ hσ rc hrc χ ⟨b, hb, hN, hχ⟩

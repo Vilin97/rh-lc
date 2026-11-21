@@ -509,7 +509,10 @@ theorem _root_.UpperTheory.Gal.Int.Inp.ex_all_of_good : UpperTheory.Gal.Int.Inp.
   obtain ⟨v0⟩ : Nonempty (HeightOneSpectrum (𝓞 E)) := by
     obtain ⟨m, hm⟩ := Ideal.exists_maximal (𝓞 E)
     exact ⟨⟨m, hm.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hm (RingOfIntegers.not_isField E)⟩⟩
-  have hS : S.Infinite := (fam v0).mono fun Q hQ => famS Q hQ.2.2.1 hQ.2.2.2
+  have hS : S.Infinite := by
+    refine (fam v0).mono ?_
+    intro Q hQ
+    exact famS Q hQ.2.2.1 hQ.2.2.2
   choose P hP using fun Q : ↥S => Q.2
   have key : ∀ Q : ↥S, ∃ (χ' : HChar (maximalRealSubfield ↥Q.1.K)) (r : G ↥Q.1.K Ω →* GL (Fin a) (Qbar l)),
       InScope .good l (P Q) χ' ∧ Weak (P Q) ι r := fun Q => by

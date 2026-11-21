@@ -26,10 +26,10 @@ open MonObj in
 theorem comb_map {S S' : Type} [CommRing S] [CommRing S'] (φ : S →+* S') {x : Sp S ⟶ X} {m : ℕ}
     {v : Fin m → (Sp (DualNumber S) ⟶ t.G.left)} {cf : Fin m → S} {w : Sp (DualNumber S) ⟶ t.G.left}
     (h : IsCombAtG t x v cf w) :
-    IsCombAtG t (spMap φ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v i) (fun i => φ (cf i)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w) := by
+    IsCombAtG t (spMap φ ≫ x) (fun i => spMap (dualMap φ) ≫ v i) (fun i => φ (cf i)) (spMap (dualMap φ) ≫ w) := by
   obtain ⟨u, hu, rfl⟩ := h
-  let δ : tEpsG (spMap φ ≫ x) ⟶ tEpsG x := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ)) (by
-    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) ≫ x =
+  let δ : tEpsG (spMap φ ≫ x) ⟶ tEpsG x := Over.homMk (spMap (dualMap φ)) (by
+    show spMap (dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) ≫ x =
       spMap (algebraMap S' (DualNumber S')) ≫ spMap φ ≫ x
     rw [← Category.assoc, ← Category.assoc, spMap_comp', spMap_comp', dualMap_comp_alg])
   refine ⟨fun i => δ ≫ u i, fun i => ?_, ?_⟩
@@ -59,8 +59,8 @@ theorem spMap_comp2 {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : 
     spMap (ψ.comp φ) = spMap ψ ≫ spMap φ := (spMap_comp' _ _).symm
 
 theorem dualMap_comp2 {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S →+* T) (ψ : T →+* U) :
-    GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) = (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) :=
-  RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    dualMap (ψ.comp φ) = (dualMap ψ).comp (dualMap φ) :=
+  RingHom.ext fun x => by ext <;> simp [dualMap]
 
 end GlobalTheory.ShFam.CoordComp
 
@@ -70,8 +70,8 @@ theorem GlobalTheory.ShFam.CoordComp.coord_comp : ∀ (E : Type) [Field E] [Numb
   intro E _ _ _ H Dw l Xo c O _ β Z R _ φ x f R' _ φ' x' g R'' _ φ'' x'' h ψ ψ' A A' hl ⟨a1, a2, a3⟩ ⟨b1, b2, b3⟩
   subst a1 a2 b1 b2
   refine ⟨by rw [spMap_comp2, Category.assoc], rfl, fun τ i => ?_⟩
-  have e : (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ'.comp ψ)) ≫ f.v τ k) =
-      fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ') ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ k :=
+  have e : (fun k => spMap (dualMap (ψ'.comp ψ)) ≫ f.v τ k) =
+      fun k => spMap (dualMap ψ') ≫ spMap (dualMap ψ) ≫ f.v τ k :=
     funext fun k => by rw [dualMap_comp2, spMap_comp2, Category.assoc]
   rw [e]
   exact comb_comb Z.t

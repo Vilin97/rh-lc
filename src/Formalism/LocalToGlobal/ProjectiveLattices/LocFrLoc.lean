@@ -100,7 +100,7 @@ theorem gsv_bc [IsLocalRing L] {L' : Type} [CommRing L'] [Algebra L L'] (hx : Is
     ∃ (xc' : ∀ m : ℕ, ReciprocityTheory.ChartRestriction.G.Chart.sp (R₀ := L') (JetR L' (Fin n) m) ⟶
         (Over.pullback (spMap (algebraMap L L') ≫ x)).obj Xo.univ.t.G) (hx' : IsUnivChart _ n xc'),
       (∀ cc : Fin n → L, gsvVec (spMap (algebraMap L L') ≫ x) xc' (algebraMap L L' ∘ cc) =
-        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap L L')) ≫ gsvVec x xc cc) ∧
+        spMap (dualMap (algebraMap L L')) ≫ gsvVec x xc cc) ∧
       ∀ (a : 𝓞 E) (cc : Fin n → L),
         tmap hx' ((Over.pullback (spMap (algebraMap L L') ≫ x)).map (Xo.univ.t.act.act a)) (algebraMap L L' ∘ cc) =
           algebraMap L L' ∘ tmap hx ((Over.pullback x).map (Xo.univ.t.act.act a)) cc := by
@@ -111,7 +111,7 @@ theorem gsv_bc [IsLocalRing L] {L' : Type} [CommRing L'] [Algebra L L'] (hx : Is
   obtain ⟨e, he, hφ⟩ := grpPullback_iso h₁
     (isGrpPullback_pullback Xo.univ.t.G (ReciprocityTheory.ChartRestriction.G.Chart.fB L L' ≫ x))
   have hv : ∀ cc : Fin n → L, gsvVec (spMap (algebraMap L L') ≫ x) (fun m => x₁ m ≫ e.hom) (algebraMap L L' ∘ cc) =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap L L')) ≫ gsvVec x xc cc := by
+      spMap (dualMap (algebraMap L L')) ≫ gsvVec x xc cc := by
     intro cc
     have key : (tvec (x := fun m => x₁ m ≫ e.hom) (algebraMap L L' ∘ cc)).left =
         (tvec (x := x₁) (algebraMap L L' ∘ cc)).left ≫ e.hom.left := by

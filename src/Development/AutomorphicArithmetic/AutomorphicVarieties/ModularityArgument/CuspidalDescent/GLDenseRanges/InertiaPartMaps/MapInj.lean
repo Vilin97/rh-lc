@@ -142,7 +142,7 @@ theorem eOp : EOp := by
   refine ⟨ψ, ∑ x, Finsupp.single (iA k n (s x)) (c x), j,
     Finset.univ.map ⟨lift, hinj⟩, hψ, ⟨?_, ?_, ?_⟩, ?_, ?_, ?_⟩
   · intro g hg
-    obtain ⟨x, -, hx⟩ := Finsupp.mem_support_finsetSum g hg
+    obtain ⟨x, -, hx⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hg)
     have : g = iA k n (s x) := by
       have := Finsupp.support_single_subset hx
       simpa using this

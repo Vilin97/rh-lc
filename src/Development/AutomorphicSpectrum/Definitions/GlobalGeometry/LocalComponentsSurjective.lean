@@ -26,7 +26,7 @@ variable {C : ACurve K} {ζ : Spec (CommRingCat.of K) ⟶ X}
 def CurveIn.lieLat (Y : CurveIn C ζ) {G : Over X} [GrpObj G] {V : Type} [AddCommGroup V] [Module K V]
     (M : LieModel G ζ V) : C.I → AddSubgroup V := fun i =>
   AddSubgroup.closure {e | ∃ v : epsAt (Y.x i) ⟶ G, IsTanAt G (Y.x i) v ∧
-    (M.pt e).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (C.v i).valuationSubring.subtype)) ≫ v.left}
+    (M.pt e).left = Spec.map (CommRingCat.ofHom (dualMap (C.v i).valuationSubring.subtype)) ≫ v.left}
 
 def CurveIn.IsDeg (Y : CurveIn C ζ) {Ω : Type} [Field Ω] {ξ : Spec (CommRingCat.of Ω) ⟶ X} (Λ : Lat ξ Ω)
     (n : ℤ) : Prop :=

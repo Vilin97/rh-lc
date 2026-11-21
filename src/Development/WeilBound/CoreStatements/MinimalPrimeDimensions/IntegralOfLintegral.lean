@@ -174,7 +174,7 @@ theorem stArch (h1 : StPts) (h2 : StCharts) : StArch := by
   have hℓm : Measurable fun y : EuclideanSpace ℂ (Fin m) => fsLog h (fun k => σ (u k)) (h.pointOf y) := by
     simp only [GroundTheory.Heights₂.Heights.ConeFsLog.fsLog_pointOf]
     have hc : Continuous fun y : EuclideanSpace ℂ (Fin m) => ∑ j : Fin m, σ (u j) * h.pointOf y j :=
-      continuous_finsetSum _ fun j _ => continuous_const.mul ((continuous_apply j).comp hpc)
+      continuous_finset_sum _ fun j _ => continuous_const.mul ((continuous_apply j).comp hpc)
     exact Real.measurable_log.comp (hc.norm.measurable.div measurable_norm)
   have hgm : Measurable fun y : CxPts p (σ.comp (algebraMap (𝓞 K) K)) =>
       fsLog h (fun k => σ (u k)) (coords p (σ.comp (algebraMap (𝓞 K) K)) hE.isLB s y) := by

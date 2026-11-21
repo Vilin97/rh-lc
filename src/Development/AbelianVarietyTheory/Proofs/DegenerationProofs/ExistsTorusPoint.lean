@@ -51,9 +51,9 @@ theorem exists_torus_point : LL → UTorsSt → ∀ (o Ω : Type) [CommRing o] [
   have hωv : (ω : PadicAlgCl p) = y₀ (algebraMap o S.R (S.ζ ^ (S.r * S.N))) := rfl
   have hω : IsPrimitiveRoot ω (S.r * S.N) := by
     have : NeZero ((S.r * S.N : ℕ) : PadicAlgCl p) := ⟨Nat.cast_ne_zero.2 hn.ne⟩
-    rw [← IsPrimitiveRoot.coe_units_iff (ζ := ω), ← Polynomial.isRoot_cyclotomic_iff (R := PadicAlgCl p),
+    rw [← IsPrimitiveRoot.coe_units_iff, ← Polynomial.isRoot_cyclotomic_iff,
       ← Polynomial.map_cyclotomic _ (y₀.comp (algebraMap o S.R))]
-    exact (hζ.isRoot_cyclotomic hn.pos).map (y₀.comp (algebraMap o S.R))
+    exact (hζ.isRoot_cyclotomic hn.pos).map
 
   let pt : Multiplicative S.Gam →* (TFK (R := u.V) (PadicAlgCl p) ⟶ u.A.A) :=
     MonoidHom.mk' (fun a => g.pt a.toAdd) fun _ _ => g.pt_add _ _

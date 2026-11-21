@@ -71,8 +71,7 @@ theorem unitFiltration_sub_one_mem_valBall {j : ℕ} {v : Kˣ} (hv : v ∈ unitF
   · exact (mem_unitFiltrationUnits_iff_valBall hj).mp hv
 
 open Classical in
-def quasiCharExt (χ : Kˣ →* ℂˣ) (x : K) : ℂ :=
-  if h : x = 0 then 0 else ((χ (Units.mk0 x h) : ℂˣ) : ℂ)
+def quasiCharExt (x : K) : ℂ := if h : x = 0 then 0 else ((χ (Units.mk0 x h) : ℂˣ) : ℂ)
 
 omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 theorem quasiCharExt_units (u : Kˣ) : quasiCharExt χ (u : K) = ((χ u : ℂˣ) : ℂ) := by
@@ -247,11 +246,7 @@ theorem oneAddValBallIndicator_mem_schwartzBruhat {c : ℤ} (hc : 0 ≤ c) :
     rw [oneAddValBallIndicator_apply, if_neg]
     intro h1
     have h0 : (1 : K) ∈ valBall K 0 := by rw [mem_valBall_iff_le_ord one_ne_zero, ord_one]
-    have hx0 : x - 1 ∈ valBall K 0 := by
-      change normalizedValuation K (x - 1) ≤ WithZero.exp (-c) at h1
-      change normalizedValuation K (x - 1) ≤ WithZero.exp (-(0 : ℤ))
-      exact h1.trans (WithZero.exp_le_exp.mpr (by omega))
-    exact hx (by simpa using add_mem hx0 h0)
+    exact hx (by simpa using add_mem (valBall_antitone hc h1) h0)
 
 theorem localFourier_oneAddValBallIndicator (μ : Measure K) [μ.IsAddHaarMeasure]
     {ψ : AddChar K Circle} (hψ : Continuous ψ) (hψ1 : ψ ≠ 1) (c : ℤ) (y : K) :
@@ -393,12 +388,8 @@ theorem localZeta_fourier_oneAddValBallIndicator (hr : ¬ IsUnramifiedChar χ) {
     rw [hg y, Set.indicator_of_notMem (show y ∉ (valBall K m : Set K) from h)] at hy
     simp at hy
   have hN : ∀ y ∈ valBall K n, g y = g 0 := fun y hy => by
-    have hym : y ∈ valBall K m := by
-      change normalizedValuation K y ≤ WithZero.exp (-n) at hy
-      change normalizedValuation K y ≤ WithZero.exp (-m)
-      exact hy.trans (WithZero.exp_le_exp.mpr (by omega))
     rw [hg y, hg 0, isTrivialOn_addCharConductor hψ hψ1 y hy, AddChar.map_zero_eq_one,
-      Set.indicator_of_mem (show y ∈ (valBall K m : Set K) from hym),
+      Set.indicator_of_mem (show y ∈ (valBall K m : Set K) from valBall_antitone hmn hy),
       Set.indicator_of_mem (show (0 : K) ∈ (valBall K m : Set K) from zero_mem _)]
 
   obtain ⟨v, hv, hv1⟩ := exists_apply_ne_one_of_not_isUnramified hχ hr
@@ -420,11 +411,9 @@ theorem localZeta_fourier_oneAddValBallIndicator (hr : ¬ IsUnramifiedChar χ) {
     have huk : ord (u : K) = k := mem_ordShell.mp hu
     have hvu : ((v * u : Kˣ) : K) - (u : K) ∈ valBall K n := by
       rw [Units.val_mul, show (v : K) * u - u = ((v : K) - 1) * u by ring]
-      by_cases hv0 : (v : K) - 1 = 0
-      · rw [hv0, zero_mul]
-        exact zero_mem _
-      have hvle := (mem_valBall_iff_le_ord hv0).mp hvm
-      rw [mem_valBall_iff_le_ord (mul_ne_zero hv0 hu0), ord_mul hv0 hu0, huk]
+      have := mul_mem_valBall hvm ((mem_valBall_iff_le_ord hu0).mpr le_rfl)
+      refine valBall_antitone ?_ this
+      rw [huk]
       omega
     have hψvu : (ψ ((v * u : Kˣ) : K) : ℂ) = (ψ (u : K) : ℂ) := by
       have := isTrivialOn_addCharConductor hψ hψ1 _ hvu

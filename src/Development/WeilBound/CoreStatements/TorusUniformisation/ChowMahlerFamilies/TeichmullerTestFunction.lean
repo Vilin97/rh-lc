@@ -267,22 +267,17 @@ theorem part3 [Module.Finite R L] [Module.Projective R L] (hκ : ∀ a, κ a ∈
       rw [Ideal.toCotangent_eq] at e1
       convert res_sq (RC := RC) (κ := κ) hs0 _ e1 using 1
       set_option synthInstance.maxHeartbeats 100000 in
-        funext z
-        simp [res, hf', hαs, ← ha, map_sum]
+        simp [hf', hαs, map_sum]
     | zero => convert Q.zero_mem using 1; funext z; simp
     | add a b _ _ ha hb =>
       convert Q.add_mem ha hb using 1
-      funext z
-      simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, mul_add, Finset.sum_add_distrib, add_mul]
       ring
     | smul c a _ ha =>
       convert Q.smul_mem c ha using 1
-      funext z
-      simp only [Prod.fst_smul, Prod.snd_smul, Pi.smul_apply, Subalgebra.smul_def, smul_eq_mul,
-        mul_sub, Finset.mul_sum, Finset.sum_mul]
+        Finset.mul_sum, Finset.sum_mul]
       congr 1
-      · exact Finset.sum_congr rfl fun _ _ => by simp [Pi.smul_apply, smul_eq_mul]; ring
-      · exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by simp [Pi.smul_apply, smul_eq_mul]; ring
+      · exact Finset.sum_congr rfl fun _ _ => by ring
+      · exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   convert Q.smul_mem c (key _ h) using 1
   funext z
   have hc' : (c : C) * ∑ k, κ (y k) * (x k : C) = 1 := by
@@ -499,7 +494,7 @@ theorem toLi_comm (a : 𝓞 E) (v : P.L) : P.toLi (P.ρ a v) = 𝔐.ρ a (P.toLi
 
 theorem j_comp (a : 𝓞 E) (u : Module.Dual (CR O y c') P.L) (w : 𝔐.Li) :
     P.j (u ∘ₗ P.ρ a) w = P.j u (𝔐.ρ a w) := by
-  refine P.toLi_bc.inductionOn (motive := fun w => P.j (u ∘ₗ P.ρ a) w = P.j u (𝔐.ρ a w)) w (fun v => ?_)
+  refine P.toLi_bc.inductionOn w (fun w => P.j (u ∘ₗ P.ρ a) w = P.j u (𝔐.ρ a w)) (by simp) (fun v => ?_)
     (fun s n hn => ?_) (fun m n hm hn => ?_)
   · rw [← toLi_comm, P.j_apply, P.j_apply]
     rfl

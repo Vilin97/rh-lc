@@ -31,7 +31,7 @@ variable {K : Type} [Field K] [NumberField K] {n : ℕ}
 private theorem rep_zero (μ : Measure (G1 K n)) [μ.IsHaarMeasure] (τ : Submodule ℂ (L2 μ)) :
     ∃ v ∈ τ, Reps μ v fun _ => 0 := by
   refine ⟨0, τ.zero_mem, ?_⟩
-  filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae_eq_comp
+  filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ)
     (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K n) μ))] with y hy
   exact hy
 
@@ -40,7 +40,7 @@ private theorem rep_add (μ : Measure (G1 K n)) [μ.IsHaarMeasure] (τ : Submodu
   obtain ⟨v, hv, h₁⟩ := h₁
   obtain ⟨w, hw, h₂⟩ := h₂
   refine ⟨v + w, τ.add_mem hv hw, ?_⟩
-  filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae_eq_comp (Lp.coeFn_add v w), h₁, h₂] with y hy a b
+  filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_add v w), h₁, h₂] with y hy a b
   rw [← a, ← b]
   exact hy
 
@@ -48,7 +48,7 @@ private theorem rep_smul (μ : Measure (G1 K n)) [μ.IsHaarMeasure] (τ : Submod
     (h₁ : ∃ v ∈ τ, Reps μ v φ) : ∃ v ∈ τ, Reps μ v fun y => c * φ y := by
   obtain ⟨v, hv, h₁⟩ := h₁
   refine ⟨c • v, τ.smul_mem c hv, ?_⟩
-  filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae_eq_comp (Lp.coeFn_smul c v), h₁] with y hy a
+  filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_smul c v), h₁] with y hy a
   rw [← a]
   exact hy
 

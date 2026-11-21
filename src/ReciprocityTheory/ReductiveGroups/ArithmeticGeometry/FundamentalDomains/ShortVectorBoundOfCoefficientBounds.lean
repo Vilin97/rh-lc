@@ -158,7 +158,12 @@ theorem shortVectorBound_of_coefficient_bounds (h3 : FourierCoefficientPropertie
       exact ⟨fun h => ⟨j.2, h⟩, fun h => h.2⟩
     rw [hpre]
     refine ⟨hfin.preimage Subtype.val_injective.injOn, ?_⟩
-    rw [Set.ncard_preimage_of_injective_subset_range Subtype.val_injective
+    rw [Set.ncard_preimage_of_injective_subset_range
+      (f := (Subtype.val : ↥{χ : X.Ψ → Fin 2 → Fin 2 → ℂ | ∃ y ∈ X.dom,
+        X.fz ![ξ, (X.NC : E) • x'] X.g χ (X.fj la ξ ν P) y ≠ 0} → _))
+      (s := {χ : X.Ψ → Fin 2 → Fin 2 → ℂ | (∃ y ∈ X.dom,
+        X.fz ![ξ, (X.NC : E) • x'] X.g χ (X.fj la ξ ν P) y ≠ 0) ∧
+        2 * ∑ τ, (X.chiAt χ a τ).re ≤ t0}) Subtype.val_injective
       (fun χ hχ => ⟨⟨χ, hχ.1⟩, rfl⟩), Real.rpow_natCast]
     exact hcard
   have hw0 : 0 ≤ w := le_trans zero_le_one hw1

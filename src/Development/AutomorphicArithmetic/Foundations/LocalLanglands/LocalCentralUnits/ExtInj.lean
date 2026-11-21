@@ -25,8 +25,8 @@ theorem UpperTheory.Zero.LLC.extInj :
   rw [hL _ x hlx, hL _ y hly] at e
   let f : Segment (HeightOneSpectrum.adicCompletion E w) → WD h × ℕ :=
     fun Δ => ((r Δ.first).lpTw ((↑Δ.len - 1) / 2), Δ.len - 1)
-  have hcomp : (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp h (p.2 + 1))) ∘ f =
-      fun Δ => ((r Δ.first).lpTw ((↑Δ.len - 1) / 2)).lpChar (WD.lpSp h Δ.len) := by
+  have hcomp : (fun p : WD h × ℕ => p.1.lpChar (WD.lpSp (h := h) (p.2 + 1))) ∘ f =
+      fun Δ => ((r Δ.first).lpTw ((↑Δ.len - 1) / 2)).lpChar (WD.lpSp (h := h) Δ.len) := by
     funext Δ
     simp only [Function.comp, f, Nat.sub_add_cancel Δ.len_pos]
   have hirr : ∀ l : List (Segment (HeightOneSpectrum.adicCompletion E w)), ∀ p ∈ l.map f, IsIrrWD p.1 := by

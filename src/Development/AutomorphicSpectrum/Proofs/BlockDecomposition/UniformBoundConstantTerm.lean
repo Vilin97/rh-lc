@@ -31,22 +31,6 @@ theorem ubnd_ctn {K : Type} [Field K] [NumberField K] {n : ℕ} {ι : Type}
     exact mul_mem (unipGL_mem_adelicBorel r X) (hωB hb)
   obtain ⟨C, hC⟩ := h ω' hω' hω'B t₀ Q hQ
   refine ⟨max C 0, fun i b hb x hx q hq => ?_⟩
-  have norm_ctn_le {r : ℕ} (φ : AdelicGLn.AdelicGL K n → ℂ) {D : Set (UPos n r → NumberField.AdeleRing (𝓞 K) K)}
-      (hD : IsCompact D) (hFD : unipFundamentalDomain K n r ⊆ D) (g : AdelicGLn.AdelicGL K n)
-      {M : ℝ} (hM : 0 ≤ M) (h : ∀ X ∈ D, ‖φ (unipGL X * g)‖ ≤ M) : ‖ctn r φ g‖ ≤ M := by
-    unfold ctn
-    have hfin : unipMeasure K n r (unipFundamentalDomain K n r) < ⊤ :=
-      (measure_mono hFD).trans_lt hD.measure_lt_top
-    have hI : ‖constantTerm r φ g‖ ≤ M * (unipMeasure K n r).real (unipFundamentalDomain K n r) :=
-      norm_setIntegral_le_of_norm_le_const hfin (fun X hX => h X (hFD hX))
-    set v := (unipMeasure K n r).real (unipFundamentalDomain K n r) with hv'
-    have hv : 0 ≤ v := measureReal_nonneg
-    rw [norm_mul, norm_inv, Complex.norm_real, Real.norm_of_nonneg hv]
-    rcases hv.eq_or_lt with h0 | h0
-    · rw [← h0]; simp [hM]
-    · calc v⁻¹ * ‖constantTerm r φ g‖ ≤ v⁻¹ * (M * v) := by gcongr
-        _ = M := by field_simp
-  
   refine norm_ctn_le (f i) hD hFD _ (by positivity) fun X hX => ?_
   have := hC i (unipGL X * b) ⟨(X, b), ⟨hX, hb⟩, rfl⟩ x hx q hq
   rw [← mul_assoc, ← mul_assoc]
@@ -91,24 +75,6 @@ theorem ubnd_ctn_step : ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (ι :
     congr 4
     push_cast; ring
 
-  have ctn_unipGL_mul {r : ℕ} {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ : IsLeftInvariant φ)
-      (X : UPos n r → NumberField.AdeleRing (𝓞 K) K) (g : AdelicGLn.AdelicGL K n) :
-      ctn r φ (unipGL X * g) = ctn r φ g := by
-    unfold ctn
-    congr 1
-    have hFD := isAddFundamentalDomain_unipFundamentalDomain (K := K) (n := n) (r := r)
-    have hFD' := hFD.vadd_of_comm X
-    rw [constantTerm_eq_setIntegral hφ hFD' g]
-    simp only [constantTerm, ← mul_assoc, ← unipGL_add]
-    open scoped Pointwise in
-    rw [show X +ᵥ unipFundamentalDomain K n r = (fun Z => X + Z) '' unipFundamentalDomain K n r from
-        Set.image_vadd.symm,
-      (measurePreserving_add_left (unipMeasure K n r) X).setIntegral_image_emb
-        (measurableEmbedding_addLeft X)]
-    congr 1
-    ext Z
-    rw [add_comm]
-  
   have hmove : ∀ (t : ℝ) (h : AdelicGLn.AdelicGL K n), ctn r φ (aR K n r t * (b * h)) = ctn r φ (b * (aR K n r t * h)) := by
     intro t h
     obtain ⟨X, hX⟩ := borel_aR (r := r) (hωB hb) t

@@ -59,7 +59,7 @@ theorem lb_generic_spreads_out : ∀ (R K : Type) [CommRing R] [IsDomain R] [IsN
     (IsLocalization.Away.algebraMap_isUnit f)
   let ψa : Algebra.adjoin R (s.unop : Set K) →ₐ[R] Localization.Away f :=
     { ψ with commutes' := fun r => RingHom.congr_fun hψ r }
-  refine ⟨f, hf0, M₀.pull (Spread.bcMap pB ψa), LB.isLB_pull hM₀ _, fun jm hjm => ?_⟩
+  refine ⟨f, hf0, M₀.pull (Spread.bcMap pB ψa), pull_isLB hM₀ _, fun jm hjm => ?_⟩
   have hfK : IsUnit (algebraMap R K f) :=
     isUnit_iff_ne_zero.mpr (IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors
       (mem_nonZeroDivisors_of_ne_zero hf0))

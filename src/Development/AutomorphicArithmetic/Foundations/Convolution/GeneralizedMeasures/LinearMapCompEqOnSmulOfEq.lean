@@ -95,10 +95,10 @@ private theorem linearMap_comp_eq_on_smul_of_eq {V : Type*} [NormedAddCommGroup 
     A ∘L ((∑ i ∈ s, c i • P i) ∘L B) ∘L G = ∑ i ∈ s, c i • (A ∘L (P i ∘L B) ∘L G) := by
   ext v
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [ContinuousLinearMap.sum_apply, map_sum]
+    simp [map_sum]
 
 private theorem self_over (F : Type) [Field F] [NumberField F] (q : Pl F) : q.asIdeal.LiesOver q.asIdeal :=
-  ⟨by ext x; simp [Ideal.under_def, Ideal.mem_comap]⟩
+  ⟨by ext x; simp [Ideal.under_def]⟩
 
 private theorem split_self (F : Type) [Field F] [NumberField F] (q : Pl F) : Split F q := by
   rintro ⟨w, hw⟩
@@ -181,7 +181,7 @@ theorem UpperTheory.ConvolutionTheory.GM.gm_of_unit :
       have hdeg : i.1.degree ≤ D := (degree_le_totalDegree_of_mem_support h1).trans hRd
       have hβB : i.1 ∈ B := by
         refine Finset.mem_filter.2 ⟨Finset.mem_finsupp_iff.2 ⟨fun x hx => ?_, fun x _ => ?_⟩, hdeg⟩
-        · exact Finset.mem_product.2 ⟨hRv x (mem_vars x |>.2 ⟨_, h1, hx⟩), Finset.mem_univ _⟩
+        · exact Finset.mem_product.2 ⟨hRv x (mem_vars_iff_mem_support x |>.2 ⟨_, h1, hx⟩), Finset.mem_univ _⟩
         · exact Finset.mem_range.2 (Nat.lt_succ_of_le ((Finsupp.le_degree x i.1).trans hdeg))
       obtain ⟨wd, hwd, hlen⟩ := exists_word_monomial i.2
       have hm : wd.length ≤ j / (pE * pF) := by

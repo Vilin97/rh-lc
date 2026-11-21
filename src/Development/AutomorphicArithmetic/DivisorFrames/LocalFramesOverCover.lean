@@ -19,10 +19,10 @@ private theorem sp_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (�
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 private theorem sp_dual_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S →+* T) (ψ : T →+* U) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) := by
+    spMap (dualMap (ψ.comp φ)) = spMap (dualMap ψ) ≫ spMap (dualMap φ) := by
   rw [← sp_comp]
   congr 1
-  exact RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  exact RingHom.ext fun x => by ext <;> simp [dualMap]
 
 private theorem sp_inj {S T : Type} [CommRing S] [CommRing T] {φ ψ : S →+* T} (h : spMap φ = spMap ψ) : φ = ψ :=
   congrArg CommRingCat.Hom.hom (Spec.map_injective h)
@@ -41,11 +41,11 @@ private theorem core {X : Scheme.{0}} {t : SAB H X} {R S K B L : Type} [CommRing
     {e : Fin g → (Sp (DualNumber R) ⟶ t.G.left)} (he : IsTanBasis t x e)
     {f : Fin m → (Sp (DualNumber B) ⟶ t.G.left)} (hf : ∀ i, IsTanAtG t y (f i))
     {u : Fin m → (Sp (DualNumber L) ⟶ t.G.left)} (T : Matrix (Fin m) (Fin m) L)
-    (hu : ∀ i, IsCombAtG t (spMap κ ≫ y) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap κ) ≫ f k) (fun k => T k i) (u i)) :
+    (hu : ∀ i, IsCombAtG t (spMap κ ≫ y) (fun k => spMap (dualMap κ) ≫ f k) (fun k => T k i) (u i)) :
     ∃ a : Fin m → Fin g → S,
-      (∀ i, IsCombAtG t (spMap α ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ e k) (a i) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap s) ≫ f i)) ∧
-      ∀ i, IsCombAtG t (spMap (io.comp α) ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (io.comp α)) ≫ e k)
-        (fun k => ∑ l, io (a l k) * φ (T l i)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ u i) := by
+      (∀ i, IsCombAtG t (spMap α ≫ x) (fun k => spMap (dualMap α) ≫ e k) (a i) (spMap (dualMap s) ≫ f i)) ∧
+      ∀ i, IsCombAtG t (spMap (io.comp α) ≫ x) (fun k => spMap (dualMap (io.comp α)) ≫ e k)
+        (fun k => ∑ l, io (a l k) * φ (T l i)) (spMap (dualMap φ) ≫ u i) := by
   choose a ha using fun i => (he.2 S α _ (GlobalTheory.LieMet.isTan_map s hy (hf i))).exists
   refine ⟨a, ha, fun i => ?_⟩
   have h1 := fun l => GlobalTheory.LatDRFree.comb_map t io (ha l)

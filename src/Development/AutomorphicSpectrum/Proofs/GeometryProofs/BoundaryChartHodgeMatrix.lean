@@ -63,7 +63,7 @@ theorem deriv_of_open {A T : Scheme.{0}} (φ : A ⟶ T) [IsOpenImmersion φ] {g 
 theorem isDerivAt0_frame {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G] {g n : ℕ}
     {M : LieModel G (𝟙 (Sp R)) (Fin g → R)} {B : Set (Fin n → ℂ)} {ψ : (Fin n → ℂ) → (R →+* ℂ)}
     (e : FamExp G M B ψ) {b : Fin n → ℂ} (hb : b ∈ B) (u : Fin g → R) :
-    IsDerivAt0 (fun z => (e.ex b z).left) (fun c => ψ b (u c)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ b)) ≫ (M.pt u).left) :=
+    IsDerivAt0 (fun z => (e.ex b z).left) (fun c => ψ b (u c)) (spMap (dualMap (ψ b)) ≫ (M.pt u).left) :=
   GlobalTheory.T.family_exp_derivative_lie R G g n M B ψ e b hb u
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Level H}
@@ -108,17 +108,17 @@ theorem exists_fibre_equiv {S₁ S₂ V : Scheme.{0}} {t₁ : SAB H S₁} {t₂ 
 
 theorem isRiemannMatrix_unique {Xo : Moduli D l} {σ : KA l →+* ℂ} {n a : ℕ} (C : BdryChart Xo σ n a) (z : Fin n → ℂ)
     {A B : Matrix (Fin C.g) (Fin C.g) ℂ} (hA : C.IsRiem z A) (hB : C.IsRiem z B) : A = B := by
-  have hsq : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ spMap (algebraMap C.R (DualNumber C.R)) =
+  have hsq : spMap (dualMap (C.ψ z)) ≫ spMap (algebraMap C.R (DualNumber C.R)) =
       spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap (C.ψ z) := by
     simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
     congr 2
     refine RingHom.ext fun r => ?_
-    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   have hT : ∀ u : Fin C.g → C.R, ∃ v : epsAt (spMap (C.ψ z)) ⟶ C.t.G,
-      v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt u).left := fun u =>
-    ⟨Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt u).left) (by
+      v.left = spMap (dualMap (C.ψ z)) ≫ (C.M.pt u).left := fun u =>
+    ⟨Over.homMk (spMap (dualMap (C.ψ z)) ≫ (C.M.pt u).left) (by
       have hw := Over.w (C.M.pt u)
-      show (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt u).left) ≫ C.t.G.hom =
+      show (spMap (dualMap (C.ψ z)) ≫ (C.M.pt u).left) ≫ C.t.G.hom =
         spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap (C.ψ z)
       rw [Category.assoc, hw, ← hsq]
       simp), rfl⟩

@@ -82,6 +82,9 @@ theorem actD_single {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist
 theorem jB_smul {l : ℕ} [Fact l.Prime] {LL : FinExt l} {T : QLat LL} {ι : Type} [Fintype ι]
     (jB : (ι → OB l ↥(OL LL)) ≃ₗ[OB l ↥(OL LL)] TW (OB l ↥(OL LL)) T) (o : ↥(OL LL))
     (v : ι → OB l ↥(OL LL)) : jB (o • v) = o • jB v := by
+  haveI : IsScalarTower ↥(OL LL) (OB l ↥(OL LL)) (TW (OB l ↥(OL LL)) T) :=
+    TensorProduct.isScalarTower_left (R := ↥(OL LL)) (M := OB l ↥(OL LL)) (N := ↥T.L.T)
+      (R' := OB l ↥(OL LL)) (R'₂ := ↥(OL LL))
   rw [← algebraMap_smul (OB l ↥(OL LL)) o v, map_smul, algebraMap_smul]
 
 theorem smul_eq_algebraMap_smul {l : ℕ} [Fact l.Prime] {LL : FinExt l} (T : QLat LL) (Pl : LocPrime l)

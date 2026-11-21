@@ -131,15 +131,19 @@ theorem data_k (C : _root_.PositivityTheory.ThKW.Ctx_k σ B JS JT ξ₀ θ ι) (
     obtain ⟨s, hs⟩ := fg
     choose k hk hk' using full
     refine ⟨∏ y ∈ s, k (sandw b a y), Finset.prod_ne_zero_iff.2 fun y _ => (hk _).ne', fun x hx => ?_⟩
-    rw [← hs] at hx
-    induction hx using AddSubgroup.closure_induction with
-    | mem x hx =>
-      obtain ⟨m, hm⟩ := Finset.dvd_prod_of_mem (fun y => k (sandw b a y)) hx
+    suffices h : ∀ z : A, (∏ y ∈ s, k (sandw b a y)) • sandw b a z.1 ∈ A by
+      exact h ⟨x, hx⟩
+    intro z
+    have hz : z ∈ AddSubsemigroup.closure (s : Set A) := by rw [hs]; trivial
+    induction hz using AddSubsemigroup.closure_induction with
+    | mem z hz =>
+      obtain ⟨m, hm⟩ := Finset.dvd_prod_of_mem (fun y : A => k (sandw b a y)) (show z ∈ s from hz)
       rw [hm, mul_comm, mul_smul]
       exact nsmul_mem (hk' _) m
-    | zero => rw [map_zero, smul_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact add_mem hx hy
-    | neg x _ hx => rw [map_neg, smul_neg]; exact neg_mem hx
+    | add x y _ _ hx hy =>
+      change (∏ y ∈ s, k (sandw b a y)) • sandw b a (x.1 + y.1) ∈ A
+      rw [map_add, smul_add]
+      exact add_mem hx hy
   have i1 := GlobalTheory.T.relIndex_map_nsmul_comap_eq_abs_norm_pow_mul_det _ _ A fg full (sandw b a - 1) N hN hd fun x hx => by
     rw [LinearMap.sub_apply, smul_sub]
     exact sub_mem (hNA x hx) (nsmul_mem hx N)

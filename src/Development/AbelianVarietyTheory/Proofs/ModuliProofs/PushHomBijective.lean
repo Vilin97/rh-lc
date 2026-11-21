@@ -100,18 +100,9 @@ theorem field_torsion (hL : Out.Laws) {O : Type} [CommRing O] (A : Over (Sp O)) 
     (hx : Triv (Out.translDiff A M x)) : ∃ m : ℕ, 1 ≤ m ∧ x ^ m = 1 := by
   subst hs
   have h := PullbackComparison.isGrpPullback f A
-  have hM' := LB.isLB_pull hM (PullbackComparison.pφ f A)
+  have hM' := pull_isLB hM (PullbackComparison.pφ f A)
   have e : LBIso (M.pull (PullbackComparison.pφ f A)) (M.pull (PullbackComparison.pφ f A)) := PolBaseChange.lbIso_refl hM'
-  have hA' : IsAbelianScheme ((Over.pullback f).obj A) := {
-    comm := by
-      rw [isCommMonObj_iff_isMulCommutative]
-      intro T
-      refine ⟨⟨fun x y => Over.OverMorphism.ext (h.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
-      rw [← h.2 T x y (pushPt h.1.w x) (pushPt h.1.w y) rfl rfl,
-        ← h.2 T y x (pushPt h.1.w y) (pushPt h.1.w x) rfl rfl, _root_.mul_comm]
-    smooth := MorphismProperty.of_isPullback (P := @Smooth) h.1 hA.smooth
-    proper := MorphismProperty.of_isPullback (P := @IsProper) h.1 hA.proper
-    geomConnected := MorphismProperty.of_isPullback (P := @GeometricallyConnected) h.1 hA.geomConnected }
+  have hA' := PolPull.isAbelianScheme_of_isGrpPullback hA h
   have := hA'.comm
   obtain ⟨y, rfl⟩ := (pushHom_bijective h (Out.baseOver (Sp k))).2 x
   have hy := triv_pull h hM hM' e y hx
@@ -176,21 +167,7 @@ theorem kTriv_of_generic : Out.Laws → ∀ (O K : Type) [CommRing O] [IsDomain 
   intro hL O K _ _ _ _ _ _ _ hi hq A _ hA g hg M hM hrig hamp P φ h e
   have := hA.comm
   obtain ⟨d, -, m, s, hs⟩ := (Unif.relAmple_iff_veryAmpleBy O A M hM).1 hamp
-  have hMd : (pw M d).IsLB := {
-    cover := hM.cover
-    g_self := fun i => by
-      change M.ι at i
-      dsimp [AbLaw.pw]
-      have h := congrArg (· ^ (d : ℤ)) (hM.g_self i)
-      with_reducible simp only [one_zpow, ← map_zpow] at h
-      exact h
-    cocycle := fun i j k => by
-      change M.ι at i j k
-      dsimp [AbLaw.pw]
-      have h := congrArg (· ^ (d : ℤ)) (hM.cocycle i j k)
-      with_reducible simp only [mul_zpow, ← map_zpow] at h
-      exact h }
-  have hproj : IsProjBy A.hom := ⟨_, hMd, m, s, hs⟩
+  have hproj : IsProjBy A.hom := ⟨_, isLB_pw hM d, m, s, hs⟩
   obtain ⟨L, rfl, ⟨c⟩⟩ := Moduli.cubicalStr_of_triv_theta hL _ A hA M hM hrig (GlobalTheory.T.theorem_of_cube_projective_abelianScheme_affineBase hL O A hA hproj M hM)
   have := smoothOfRelativeDimension_isStableUnderBaseChange.{0} g
   have hgP : P.g = g := H1.dim_unique P.A.hom P.smoothDim

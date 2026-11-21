@@ -22,19 +22,19 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 theorem exists_bc {A B : Type} [CommRing A] [CommRing B] {φ : c.F →+* A} {x : Sp A ⟶ Z.X} (fr : EigFrame Z φ x)
     (ρ : A →+* B) {x' : Sp B ⟶ Z.X} (hx : spMap ρ ≫ x = x') :
-    ∃ g : EigFrame Z (ρ.comp φ) x', ∀ τ i, g.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ fr.v τ i := by
+    ∃ g : EigFrame Z (ρ.comp φ) x', ∀ τ i, g.v τ i = spMap (dualMap ρ) ≫ fr.v τ i := by
   subst hx
   exact EigFrame.exists_baseChange E H Dw l Xo c O β Z A B φ x fr ρ
 
 theorem spMap_dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (ρ : A →+* B) (χ : B →+* C) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (χ.comp ρ)) := by
+    spMap (dualMap χ) ≫ spMap (dualMap ρ) = spMap (dualMap (χ.comp ρ)) := by
   rw [sp_comp]
   congr 1
-  ext z <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  ext z <;> simp [dualMap]
 
 theorem tri_bc {A B C : Type} [CommRing A] [CommRing B] [CommRing C] {φ : c.F →+* A} {x : Sp A ⟶ Z.X}
     {fr : EigFrame Z φ x} {ρ : A →+* B} {x₀ : Sp B ⟶ Z.X} (hx₀ : spMap ρ ≫ x = x₀) {g₀ : EigFrame Z (ρ.comp φ) x₀}
-    (hg : ∀ τ i, g₀.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ fr.v τ i) {χ : B →+* C} {φ' : c.F →+* C} {x' : Sp C ⟶ Z.X}
+    (hg : ∀ τ i, g₀.v τ i = spMap (dualMap ρ) ≫ fr.v τ i) {χ : B →+* C} {φ' : c.F →+* C} {x' : Sp C ⟶ Z.X}
     {g : EigFrame Z φ' x'} {t : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Cˣ} (h : fr.Tri (χ.comp ρ) g t) : g₀.Tri χ g t := by
   obtain ⟨h1, h2, h3⟩ := h
   refine ⟨?_, ?_, fun τ i => ?_⟩
@@ -42,7 +42,7 @@ theorem tri_bc {A B C : Type} [CommRing A] [CommRing B] [CommRing C] {φ : c.F �
   · rw [h2]; rfl
   · obtain ⟨cf, c1, c2, c3⟩ := h3 τ i
     refine ⟨cf, c1, c2, ?_⟩
-    have e : (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ g₀.v τ k) = fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (χ.comp ρ)) ≫ fr.v τ k :=
+    have e : (fun k => spMap (dualMap χ) ≫ g₀.v τ k) = fun k => spMap (dualMap (χ.comp ρ)) ≫ fr.v τ k :=
       funext fun k => by rw [hg, ← Category.assoc, spMap_dualMap_comp]
     rw [e]
     exact c3

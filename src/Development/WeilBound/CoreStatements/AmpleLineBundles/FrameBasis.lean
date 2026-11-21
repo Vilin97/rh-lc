@@ -189,8 +189,8 @@ theorem co_eq (M : LieModel G ξ Li) (B : Fin r → Li) (z : Sp ℂ ⟶ X) {V : 
   exact (co_iff M B z Mz β hβ u _).1 h.choose_spec
 
 theorem dual_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (φ : R →+* R') (ψ : R' →+* R'') :
-    GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) = (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) :=
-  RingHom.ext fun a => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap]) (by simp [GlobalTheory.CompanionTheory.Ar.dualMap])
+    dualMap (ψ.comp φ) = (dualMap ψ).comp (dualMap φ) :=
+  RingHom.ext fun a => TrivSqZeroExt.ext (by simp [dualMap]) (by simp [dualMap])
 
 theorem extends_map (τ : ℂ →+* ℂ) (M : LieModel G ξ Li) {x x' : X} (hx : x = x') (h : genPt ξ ⤳ x)
     (h' : genPt ξ ⤳ x') (e : Li)
@@ -198,15 +198,15 @@ theorem extends_map (τ : ℂ →+* ℂ) (M : LieModel G ξ Li) {x x' : X} (hx :
     (φ : X.presheaf.stalk x ⟶ CommRingCat.of ℂ) (φ' : X.presheaf.stalk x' ⟶ CommRingCat.of ℂ)
     (H : Spec.map φ' ≫ X.fromSpecStalk x' = spMap τ ≫ Spec.map φ ≫ X.fromSpecStalk x) :
     ∃ v' : epsAt (X.fromSpecStalk x') ⟶ G, M.Extends ⟨x', h'⟩ e v' ∧
-      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ'.hom)) ≫ v'.left =
-        spMap (GlobalTheory.CompanionTheory.Ar.dualMap τ) ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ.hom)) ≫ v.left := by
+      Spec.map (CommRingCat.ofHom (dualMap φ'.hom)) ≫ v'.left =
+        spMap (dualMap τ) ≫ Spec.map (CommRingCat.ofHom (dualMap φ.hom)) ≫ v.left := by
   subst hx
   refine ⟨v, hv, ?_⟩
   have h1 : Spec.map φ' = Spec.map (φ ≫ CommRingCat.ofHom τ) := by
     rw [← cancel_mono (X.fromSpecStalk x), H, Spec.map_comp, Category.assoc]
   have h2 : φ' = φ ≫ CommRingCat.ofHom τ := Spec.map_injective h1
   subst h2
-  have h3 : GlobalTheory.CompanionTheory.Ar.dualMap (φ ≫ CommRingCat.ofHom τ).hom = (GlobalTheory.CompanionTheory.Ar.dualMap τ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ.hom) := dual_comp _ _
+  have h3 : dualMap (φ ≫ CommRingCat.ofHom τ).hom = (dualMap τ).comp (dualMap φ.hom) := dual_comp _ _
   rw [h3, CommRingCat.ofHom_comp, Spec.map_comp]
   exact Category.assoc _ _ _
 
@@ -216,7 +216,7 @@ theorem centre_map (τ : ℂ →+* ℂ) (z : Sp ℂ ⟶ X) : centre (spMap τ �
   exact congrArg (fun p => z p) h
 
 theorem valAt_map (τ : ℂ →+* ℂ) (M : LieModel G ξ Li) {z z' : Sp ℂ ⟶ X} (hz : spMap τ ≫ z = z') (e : Li)
-    (w : epsAt z ⟶ G) (w' : epsAt z' ⟶ G) (hw' : w'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap τ) ≫ w.left)
+    (w : epsAt z ⟶ G) (w' : epsAt z' ⟶ G) (hw' : w'.left = spMap (dualMap τ) ≫ w.left)
     (hw : M.ValAt z e w) : M.ValAt z' e w' := by
   subst hz
   obtain ⟨h, v, hv, hl⟩ := hw
@@ -231,7 +231,7 @@ theorem valAt_map (τ : ℂ →+* ℂ) (M : LieModel G ξ Li) {z z' : Sp ℂ ⟶
   exact hl'.symm
 
 theorem co_map [IsCommMonObj G] (τ : ℂ →+* ℂ) (M : LieModel G ξ Li) (B : Fin r → Li) {z z' : Sp ℂ ⟶ X}
-    (hz : spMap τ ≫ z = z') (v : epsAt z ⟶ G) (v' : epsAt z' ⟶ G) (hv' : v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap τ) ≫ v.left)
+    (hz : spMap τ ≫ z = z') (v : epsAt z ⟶ G) (v' : epsAt z' ⟶ G) (hv' : v'.left = spMap (dualMap τ) ≫ v.left)
     {c : Fin r → ℂ} (h : Co M B z v c) : Co M B z' v' fun i => τ (c i) := by
   obtain ⟨V, _, _, Mz, b, hb, hv⟩ := h
   have exists_base {S : Scheme.{0}} {G : Over S} [GrpObj G] {A R : Type} [CommRing A] [CommRing R] (φ : A →+* R)
@@ -269,7 +269,7 @@ theorem co_unique [IsCommMonObj G] [Smooth G.hom] (hξ : IsCptGen ξ) (M : LieMo
 theorem co_conj [IsCommMonObj G] [Smooth G.hom] (hξ : IsCptGen ξ) (M : LieModel G ξ Li)
     (B : Module.Basis (Fin r) Ω Li) (z : Sp ℂ ⟶ X) (h : genPt ξ ⤳ centre (spMap (starRingEnd ℂ) ≫ z))
     (hB : M.lat.IsFrameAt B ⟨_, h⟩) (v : epsAt z ⟶ G) (v' : epsAt (spMap (starRingEnd ℂ) ≫ z) ⟶ G)
-    (hv' : v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v.left) (i : Fin r) :
+    (hv' : v'.left = spMap (dualMap (starRingEnd ℂ)) ≫ v.left) (i : Fin r) :
     co M B _ v' i = starRingEnd ℂ (co M B z v i) := by
   by_cases hc : ∃ c, Co M B z v c
   · have h1 := co_map (starRingEnd ℂ) M B rfl v v' hv' hc.choose_spec
@@ -279,9 +279,9 @@ theorem co_conj [IsCommMonObj G] [Smooth G.hom] (hξ : IsCptGen ξ) (M : LieMode
     have hz : spMap (starRingEnd ℂ) ≫ spMap (starRingEnd ℂ) ≫ z = z := by
       rw [← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp, hcc, CommRingCat.ofHom_id, Spec.map_id,
         Category.id_comp]
-    have hd : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id ℂ) = RingHom.id _ :=
-      RingHom.ext fun a => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap]) (by simp [GlobalTheory.CompanionTheory.Ar.dualMap])
-    have hv : v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v'.left := by
+    have hd : dualMap (RingHom.id ℂ) = RingHom.id _ :=
+      RingHom.ext fun a => TrivSqZeroExt.ext (by simp [dualMap]) (by simp [dualMap])
+    have hv : v.left = spMap (dualMap (starRingEnd ℂ)) ≫ v'.left := by
       rw [hv', ← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← dual_comp, hcc, hd,
         CommRingCat.ofHom_id, Spec.map_id, Category.id_comp]
     have hc' : ¬ ∃ c, Co M B _ v' c := fun ⟨c, h⟩ => hc ⟨_, co_map (starRingEnd ℂ) M B hz v' v hv h⟩

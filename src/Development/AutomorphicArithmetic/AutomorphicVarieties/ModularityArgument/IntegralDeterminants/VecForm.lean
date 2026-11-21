@@ -77,7 +77,7 @@ theorem UpperTheory.V.Z.Int.vecForm :
   haveI : Nontrivial N := ⟨⟨⟨φ₀, (hmemN _).2 ⟨hφ₀, hfix⟩⟩, 0, fun h => hne (congrArg Subtype.val h)⟩⟩
   obtain ⟨F, hF0, hF⟩ := GlobalTheory.T.exists_multilinearMap_of_isotypic_commuting_subgroups (InfinitePlace E) (infU E n) N (fun v => embU n (φ v))
     (fun v => nablaSq ℂ n (lam v)) ρ s σ inferInstance hirr hcomm hspan
-  let f : MultilinearMap ℂ (fun v => nablaSq ℂ n (lam v)) (UA E n → ℂ) := N.subtype.compMultilinearMap F
+  let f : MultilinearMap (RingHom.id ℂ) (fun v => nablaSq ℂ n (lam v)) (UA E n → ℂ) := N.subtype.compMultilinearMap F
   have hfN : ∀ x, f x ∈ N := fun x => (F x).2
   have hfne : f ≠ 0 := fun h => hF0 (MultilinearMap.ext fun x => Subtype.ext (congrArg (fun m => m x) h))
   have hfF : ∀ v (h : embU n (φ v)) (x : ∀ u, nablaSq ℂ n (lam u)),
@@ -124,8 +124,9 @@ theorem UpperTheory.V.Z.Int.vecForm :
     rw [h2] at h1
     rw [h1]
     congr 1
+    funext v
     rw [hcg v]
-    rfl
+    simp [σ]
   let Kint : Subgroup (finU (E := E) (n := n)) :=
     (GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E n).comap (GlobalTheory.BCT.GlobLev.finPart E n)
   let Kst : Subgroup (finU (E := E) (n := n)) :=

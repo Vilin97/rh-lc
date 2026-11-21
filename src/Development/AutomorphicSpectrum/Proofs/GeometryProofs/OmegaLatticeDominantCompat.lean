@@ -37,18 +37,18 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 namespace GlobalTheory.CompanionTheory.Ar.HTPull
 
 theorem dual_sq {A B : Type} [CommRing A] [CommRing B] (c : A →+* B) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap c).comp (algebraMap A (DualNumber A)) = (algebraMap B (DualNumber B)).comp c := by
-  ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    (dualMap c).comp (algebraMap A (DualNumber A)) = (algebraMap B (DualNumber B)).comp c := by
+  ext r <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (c : A →+* B) (d : B →+* C) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap d).comp (GlobalTheory.CompanionTheory.Ar.dualMap c) = GlobalTheory.CompanionTheory.Ar.dualMap (d.comp c) := by
-  ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    (dualMap d).comp (dualMap c) = dualMap (d.comp c) := by
+  ext r <;> simp [dualMap]
 
 theorem lieBC {S : Scheme.{0}} {G : Over S} [GrpObj G] {A B : Type} [CommRing A] [CommRing B] (c : A →+* B)
     (x : Sp A ⟶ S) (y : Sp B ⟶ S) (hy : y = Spec.map (CommRingCat.ofHom c) ≫ x) (hsm : Smooth G.hom)
     {E E' : Type} [AddCommGroup E] [Module A E] [AddCommGroup E'] [Module B E']
     (M : LieModel G x E) (M' : LieModel G y E') :
-    ∃ j : E →+ E', (∀ e, (M'.pt (j e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap c)) ≫ (M.pt e).left) ∧
+    ∃ j : E →+ E', (∀ e, (M'.pt (j e)).left = Spec.map (CommRingCat.ofHom (dualMap c)) ≫ (M.pt e).left) ∧
       (∀ (a : A) e, j (a • e) = c a • j e) ∧ Submodule.span B (Set.range j) = ⊤ ∧
       ∀ l : Module.Dual A E, ∃ l' : Module.Dual B E', ∀ e, l' (j e) = c (l e) := by
   subst hy
@@ -126,7 +126,7 @@ theorem core {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDomain R']
     {L L' : Type} [AddCommGroup L] [Module R L] [AddCommGroup L'] [Module R' L']
     (M₀ : LieModel G x L) (M₀' : LieModel G' x' L') :
     ∃ (Γ' : BT.QFGroup R' T) (i' : Γ'.G.left ⟶ G'.left) (β : L →+ L'), Γ'.IsTorsionAlong G' x' N i' ∧
-      (∀ e, (M₀'.pt (β e)).left ≫ φ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R'))) ≫ (M₀.pt e).left) ∧
+      (∀ e, (M₀'.pt (β e)).left ≫ φ = Spec.map (CommRingCat.ofHom (dualMap (algebraMap R R'))) ≫ (M₀.pt e).left) ∧
       Submodule.span R' (Set.range β) = ⊤ ∧
       (∀ l : Module.Dual R L, ∃ l' : Module.Dual R' L', ∀ e, l' (β e) = algebraMap R R' (l e)) ∧
       ∀ (χ : T →* Rˣ) (w₀ : Module.Dual R L) (w₀' : Module.Dual R' L'), (∀ e, w₀' (β e) = algebraMap R R' (w₀ e)) →
@@ -162,9 +162,9 @@ theorem j_comm (hφ : IsGrpPullback G' G f φ) (hk : ∀ r, k' (algebraMap R R' 
     (hj : ∀ e, (M'.pt (j e)).left ≫ φ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap i)) ≫ (M.pt e).left)
     {L L' : Type} [AddCommGroup L] [Module R L] [AddCommGroup L'] [Module R' L']
     {M₀ : LieModel G x L} {M₀' : LieModel G' x' L'} {β : L →+ L'}
-    (hβ : ∀ e, (M₀'.pt (β e)).left ≫ φ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R'))) ≫ (M₀.pt e).left)
-    {j₀ : L → V} (hj₀ : ∀ e, (M.pt (j₀ e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap k)) ≫ (M₀.pt e).left)
-    {j' : L' → V'} (hj' : ∀ e, (M'.pt (j' e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap k')) ≫ (M₀'.pt e).left)
+    (hβ : ∀ e, (M₀'.pt (β e)).left ≫ φ = Spec.map (CommRingCat.ofHom (dualMap (algebraMap R R'))) ≫ (M₀.pt e).left)
+    {j₀ : L → V} (hj₀ : ∀ e, (M.pt (j₀ e)).left = Spec.map (CommRingCat.ofHom (dualMap k)) ≫ (M₀.pt e).left)
+    {j' : L' → V'} (hj' : ∀ e, (M'.pt (j' e)).left = Spec.map (CommRingCat.ofHom (dualMap k')) ≫ (M₀'.pt e).left)
     (l : L) : j' (β l) = j (j₀ l) := by
   refine tan_eq (M' := M') hφ ?_
   rw [hj, hj₀, hj', Category.assoc, hβ, ← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp,
@@ -229,7 +229,7 @@ theorem backward [IsIntegrallyClosed R] [IsNoetherianRing R] (hs : Function.Inje
     {w' : Module.Dual Ω' V'} (H : M'.IsHTFormOver N x' k' w') :
     ∃ w, M.IsHTFormOver N x k w ∧ ∃ u' : Module.Dual Ω' V', w' = jd w + N • u' ∧
       ∀ (e : V') (v : epsAt x' ⟶ G'), IsTanAt G' x' v →
-        (M'.pt e).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap k')) ≫ v.left → u' e ∈ k'.range := by
+        (M'.pt e).left = Spec.map (CommRingCat.ofHom (dualMap k')) ≫ v.left → u' e ∈ k'.range := by
   have hsm' : Smooth G'.hom := MorphismProperty.of_isPullback hφ.1 hsm
   obtain ⟨_, T, _, Γ, i₀, L, _, _, M₀, -, -, -, tor, -, -, -⟩ := h0
   haveI := GlobalTheory.T.quasi_finite_group_finite R T Γ
@@ -278,9 +278,9 @@ theorem om_decomp {R : Type} [CommRing R] [IsLocalRing R] {X : Scheme.{0}} {x : 
     (jd : Module.Dual Ω V →+ Module.Dual Ω' V') (hjd : ∀ w e, jd w (j e) = i (w e)) :
     ∃ (n : ℕ) (δ : Fin n → Module.Dual Ω V) (b : Fin n → V),
       (∀ a, ∃ v : epsAt x ⟶ G, IsTanAt G x v ∧
-        (M.pt (b a)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap k)) ≫ v.left) ∧
+        (M.pt (b a)).left = Spec.map (CommRingCat.ofHom (dualMap k)) ≫ v.left) ∧
       (∀ a e (v : epsAt x ⟶ G), IsTanAt G x v →
-        (M.pt e).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap k)) ≫ v.left → δ a e ∈ k.range) ∧
+        (M.pt e).left = Spec.map (CommRingCat.ofHom (dualMap k)) ≫ v.left → δ a e ∈ k.range) ∧
       ∀ u' : Module.Dual Ω' V', u' = ∑ a, u' (j (b a)) • jd (δ a) := by
   obtain ⟨L, _, _, ⟨M₀⟩⟩ := lieModel_exists X G R x
   haveI : Smooth G.hom := hsm
@@ -330,7 +330,7 @@ theorem om_decomp {R : Type} [CommRing R] [IsLocalRing R] {X : Scheme.{0}} {x : 
 
 end GlobalTheory.CompanionTheory.Ar.HTPull
 
-theorem GlobalTheory.CompanionTheory.Ar.HTPull.main : ∀ (X X' : Scheme.{0}) (Ω Ω' : Type) [Field Ω] [Field Ω'] (ξ : Sp Ω ⟶ X) (ξ' : Sp Ω' ⟶ X') (f : X' ⟶ X) (i : Ω →+* Ω') (G : Over X) (G' : Over X') [GrpObj G] [IsCommMonObj G] [GrpObj G'] [IsCommMonObj G'] (φ : G'.left ⟶ G.left) (V V' : Type) [AddCommGroup V] [Module Ω V] [AddCommGroup V'] [Module Ω' V'] (M : LieModel G ξ V) (M' : LieModel G' ξ' V') (j : V →+ V'), IsCptGen ξ → IsCptGen ξ' → GlobalTheory.CompanionTheory.Ar.Dominates ξ' ξ f i → IsGrpPullback G' G f φ → Smooth G.hom → (∀ e, (M'.pt (j e)).left ≫ φ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap i)) ≫ (M.pt e).left) → ∀ (jd : Module.Dual Ω V →+ Module.Dual Ω' V'), (∀ w e, jd w (j e) = i (w e)) → ∀ (N : ℕ), 0 < N → ∀ (p' : Cpt ξ') (h : genPt ξ ⤳ f p'.1), IsIntegrallyClosed (X.presheaf.stalk (f p'.1)) → IsNoetherianRing (X.presheaf.stalk (f p'.1)) → (∃ ζ : Ω, IsPrimitiveRoot ζ N) → M.IsHTFormAt N ⟨f p'.1, h⟩ 0 → M'.htLat N p' = (M.htLat N).pull ξ' f jd p' := by
+theorem GlobalTheory.CompanionTheory.Ar.HTPull.main : ∀ (X X' : Scheme.{0}) (Ω Ω' : Type) [Field Ω] [Field Ω'] (ξ : Sp Ω ⟶ X) (ξ' : Sp Ω' ⟶ X') (f : X' ⟶ X) (i : Ω →+* Ω') (G : Over X) (G' : Over X') [GrpObj G] [IsCommMonObj G] [GrpObj G'] [IsCommMonObj G'] (φ : G'.left ⟶ G.left) (V V' : Type) [AddCommGroup V] [Module Ω V] [AddCommGroup V'] [Module Ω' V'] (M : LieModel G ξ V) (M' : LieModel G' ξ' V') (j : V →+ V'), IsCptGen ξ → IsCptGen ξ' → GlobalTheory.CompanionTheory.Ar.Dominates ξ' ξ f i → IsGrpPullback G' G f φ → Smooth G.hom → (∀ e, (M'.pt (j e)).left ≫ φ = Spec.map (CommRingCat.ofHom (dualMap i)) ≫ (M.pt e).left) → ∀ (jd : Module.Dual Ω V →+ Module.Dual Ω' V'), (∀ w e, jd w (j e) = i (w e)) → ∀ (N : ℕ), 0 < N → ∀ (p' : Cpt ξ') (h : genPt ξ ⤳ f p'.1), IsIntegrallyClosed (X.presheaf.stalk (f p'.1)) → IsNoetherianRing (X.presheaf.stalk (f p'.1)) → (∃ ζ : Ω, IsPrimitiveRoot ζ N) → M.IsHTFormAt N ⟨f p'.1, h⟩ 0 → M'.htLat N p' = (M.htLat N).pull ξ' f jd p' := by
   intro X X' Ω Ω' _ _ ξ ξ' f i G G' _ _ _ _ φ V V' _ _ _ _ M M' j gen gen' dom hφ hsm hj jd hjd N hN p' h hic hnoe
     hroot h0
   obtain ⟨ζ, hζ⟩ := hroot

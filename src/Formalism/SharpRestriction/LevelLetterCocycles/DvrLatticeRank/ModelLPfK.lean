@@ -55,7 +55,7 @@ theorem lev_Eat_simple (D : D7) (HW : HWOf D.loc) (l : ℕ) [Fact l.Prime] (hl :
   obtain ⟨F1, hF1⟩ : PowerSeries.X ∣ F - 1 := by
     rw [PowerSeries.X_dvd_iff, map_sub, hF0, map_one, sub_self]
   have hF1c : PowerSeries.constantCoeff F1 = 1 := by
-    have hd := congrArg (fun f => PowerSeries.constantCoeff (PowerSeries.derivative ↥LL.1 f)) hF1
+    have hd := congrArg (fun f : PowerSeries ↥LL.1 => PowerSeries.constantCoeff (PowerSeries.derivative f)) hF1
     simp only [map_sub, Derivation.map_one_eq_zero, sub_zero, hFd, hF0, Derivation.leibniz,
       PowerSeries.derivative_X, smul_eq_mul, map_add, map_mul, map_one, PowerSeries.constantCoeff_X,
       zero_mul, zero_add, mul_one] at hd
@@ -68,8 +68,7 @@ theorem lev_Eat_simple (D : D7) (HW : HWOf D.loc) (l : ℕ) [Fact l.Prime] (hl :
   have hl1 : W.lev c ζ 1 = 1 := map_one (W.lev c ζ)
   have hadd : W.lev c ζ (1 + letπ) = 1 + W.lev c ζ letπ := by
     rw [← hl1]
-    exact map_add (M := LetA ↥(OL LL) (finrank ℚ_[l] ↥(K0 K))) (N := PowerSeries ↥LL.1)
-      (W.lev c ζ) 1 letπ
+    exact (W.lev c ζ).map_add 1 letπ
   have hlq := congrArg (W.lev c ζ) hq
   rw [map_mul (W.lev c ζ), map_sub (W.lev c ζ), map_pow (W.lev c ζ), hadd, hl1, hFπ, (D.loc l).PD_p K, mul_pow, ← map_pow PowerSeries.C ζ l, hζl,
     map_one PowerSeries.C, one_mul, ← mul_geom_sum, hF1, hw, map_mul (W.lev c ζ)] at hlq

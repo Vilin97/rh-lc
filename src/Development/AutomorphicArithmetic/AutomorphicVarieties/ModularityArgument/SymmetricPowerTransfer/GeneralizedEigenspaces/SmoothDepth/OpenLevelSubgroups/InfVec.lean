@@ -160,7 +160,6 @@ private theorem cv_eq (x : InfinitePlace L × Fin 2 → ℂ) :
     rw [MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun κ _ => ?_
   rw [MultilinearMap.map_smul_univ, eval_A]
-  simp only [RingHom.id_apply]
 
 omit [DecidableEq (InfinitePlace L)] in
 private theorem cv_ne : ∃ x, cv lam hj x ≠ 0 := by
@@ -221,7 +220,7 @@ theorem UpperTheory.V.Z.Sym.Al.infVec :
         rw [wInf_cv]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
       | zero => simp
-      | add p q _ _ hp hq => rw [map_add]; exact add_mem hp hq
+      | add p q _ _ hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
       | smul s p _ hp => rw [map_smul]; exact Submodule.smul_mem _ s hp
     rcases hirr _ hst with h | h
     · obtain ⟨x, hx⟩ := cv_ne lam hj

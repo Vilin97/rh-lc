@@ -55,16 +55,10 @@ theorem exists_polAV {Z : Scheme.{0}} (G : Over Z) [GrpObj G] [IsCommMonObj G] (
   have hamp : RelAmple ((Over.pullback x).obj G) (L.L.pull (pullback.fst G.hom x)) :=
     relAmple_pull h₃.1 hL₀ hL ((isGen_iff w).1 hw) V hV
       (fun y => by rwa [Subsingleton.elim (α := PrimeSpectrum K) y (IsLocalRing.closedPoint K)]) ha
-  have hA : IsAbelianScheme ((Over.pullback x).obj G) := by
-    refine { comm := ?_, smooth := ?_, proper := projProper _ _ _ (ProjSpace.isProjOver_of_relAmple hamp), geomConnected := ?_ }
-    · have := hG.comm
-      infer_instance
-    · have := hG.smooth
-      change Smooth (pullback.snd G.hom x)
-      infer_instance
-    · have := hG.geomConnected
-      change GeometricallyConnected (pullback.snd G.hom x)
-      infer_instance
+  have hsa := IsSemiAbelian.pullback x G hG
+  have hA : IsAbelianScheme ((Over.pullback x).obj G) :=
+    { comm := hsa.comm, smooth := hsa.smooth, proper := projProper _ _ _ (ProjSpace.isProjOver_of_relAmple hamp)
+      geomConnected := hsa.geomConnected }
   exact ⟨{ A := (Over.pullback x).obj G
            isAb := hA
            g := g

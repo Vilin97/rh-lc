@@ -56,8 +56,8 @@ theorem latO_move : ∀ (D : D7) (S T : HSp D) (a b : ℕ) (hS : S.rank = a) (hT
   obtain rfl := eq_lat_of_moves T (s' * h) N₁' hN₁'
   exact GlobalTheory.AdelicLatMove.mem_latO_iff_exists_actO D S T s s' _ _ _ _ (finGL S g) (finGL S (s * g)) (finGL T h)
     (finGL T (s' * h)) (GlobalTheory.StdFrames.isFrame_lat _) (GlobalTheory.StdFrames.isFrame_lat _) (GlobalTheory.StdFrames.isFrame_lat _)
-    (GlobalTheory.StdFrames.isFrame_lat _) (GlobalTheory.NormSum.AdLattice.lat_isLattice _) (GlobalTheory.NormSum.AdLattice.lat_isLattice _)
-    (GlobalTheory.NormSum.AdLattice.lat_isLattice _) (GlobalTheory.NormSum.AdLattice.lat_isLattice _) (finGL_mul S s g)
+    (GlobalTheory.StdFrames.isFrame_lat _) (GlobalTheory.NormSum.AdLattice.lat_isLattice _).toIsLattice (GlobalTheory.NormSum.AdLattice.lat_isLattice _).toIsLattice
+    (GlobalTheory.NormSum.AdLattice.lat_isLattice _).toIsLattice (GlobalTheory.NormSum.AdLattice.lat_isLattice _).toIsLattice (finGL_mul S s g)
     (finGL_mul T s' h) u
 
 end GlobalTheory.LatPairMove

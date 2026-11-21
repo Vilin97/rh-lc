@@ -27,8 +27,8 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 
 namespace GlobalTheory.IntModelExists
 
-theorem dualMap_id (R : Type) [CommRing R] : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id _ :=
-  RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+theorem dualMap_id (R : Type) [CommRing R] : dualMap (RingHom.id R) = RingHom.id _ :=
+  RingHom.ext fun x => by ext <;> simp [dualMap]
 
 theorem maps_self {X Y : Scheme.{0}} {L : LB X} {F : X ⟶ X} (hF : F = 𝟙 X) {w : LB.Iso L (L.pull F)}
     (hw : w = isoPullId (idIso L) hF) {h : Y ⟶ Y} (hh : h = 𝟙 Y) {K I : Type} [Fintype K] (φ : I → K → (Y ⟶ X))
@@ -81,7 +81,7 @@ theorem exists_self {R : Type} [CommRing R] [IsDomain R] (D : Out.DegPre R) (h :
   subst h₁
   have hx : ∀ y, p.xe y = y := fun y => by rw [h₃]; rfl
   have hp : prj p = 𝟙 _ := hF'
-  have hs : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
+  have hs : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by
     rw [dualMap_id]; exact Spec.map_id (CommRingCat.of (DualNumber R))
   refine ⟨p, fun q => by rw [hp, Category.comp_id, Category.id_comp], hx, fun ν => ⟨?_, fun χ => ?_⟩⟩
   · exact ((congrArg (_ ≫ ·) hF').trans (Category.comp_id _)).trans

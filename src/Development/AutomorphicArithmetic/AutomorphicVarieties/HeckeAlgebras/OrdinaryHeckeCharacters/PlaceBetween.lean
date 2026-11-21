@@ -92,7 +92,10 @@ private theorem mem_inf_of {x : UA L n} (h : ∀ u, cLoc u x = 1) : x ∈ infU L
     have := congrArg (fun g : GL (Fin n) (u.adicCompletion L) => g.val i j) (h u)
     simp only [Units.val_one, Matrix.one_apply] at this
     refine this.trans ?_
-    by_cases hij : i = j <;> simp [hij])
+    by_cases hij : i = j
+    · simp [hij]
+    · simp [hij]
+      rfl)
 
 private theorem cLoc_inf {x : UA L n} (h : x ∈ infU L n) (u : Plc L) : cLoc u x = 1 := by
   have h1 : Matrix.GeneralLinearGroup.map (pFin L) x.1 = 1 := h
@@ -148,7 +151,7 @@ private theorem cEmb_rat {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (w : P
 end Grp
 
 private theorem cont_multi {ι X : Type} [Finite ι] [TopologicalSpace X] {M : ι → Type} [∀ i, AddCommGroup (M i)]
-    [∀ i, Module ℂ (M i)] [∀ i, FiniteDimensional ℂ (M i)] (m : MultilinearMap ℂ M ℂ) (y : ∀ i, X → M i)
+    [∀ i, Module ℂ (M i)] [∀ i, FiniteDimensional ℂ (M i)] (m : MultilinearMap (RingHom.id ℂ) M ℂ) (y : ∀ i, X → M i)
     (hy : ∀ i (ℓ : Module.Dual ℂ (M i)), Continuous fun x => ℓ (y i x)) : Continuous fun x => m fun i => y i x := by
   classical
   haveI := Fintype.ofFinite ι
@@ -162,7 +165,7 @@ private theorem cont_multi {ι X : Type} [Finite ι] [TopologicalSpace X] {M : �
       rw [h1, m.map_sum]
     exact Finset.sum_congr rfl fun r _ => m.map_smul_univ _ _
   rw [e]
-  exact continuous_finset_sum _ fun r _ => (continuous_finset_prod _ fun i _ => hy i _).smul continuous_const
+  exact continuous_finsetSum _ fun r _ => (continuous_finsetProd _ fun i _ => hy i _).smul continuous_const
 
 private theorem cont_sq (n : ℕ) (mu : DomWeight n) (f : nablaSq ℂ n mu) (ℓ : Module.Dual ℂ (nablaSq ℂ n mu)) :
     Continuous fun g : GL (Fin n) ℂ => ℓ (GlobalTheory.Branching.sqRep ℂ n mu g f) := by

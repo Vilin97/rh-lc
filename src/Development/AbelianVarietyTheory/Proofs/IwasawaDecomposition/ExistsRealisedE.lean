@@ -271,7 +271,7 @@ def recBE : BesselTied D (recXE hP hT hB hL hE hθ hψ Wf hW Tw Rc) (recTE hP hT
     · obtain ⟨u, hu⟩ := hp
       exact absurd hu (inr_ne A B ι x _)
 
-theorem realisesE : RealisesE (θ := θ) (recBE hP hT hB hL hE hθ hψ Wf hW Tw Rc) Wf Tw Rc := {
+theorem realisesE : RealisesE (θ := θ) (recBE hP hT hB hL hE hθ hψ Wf hW Tw Rc) Wf Tw Rc where
   inf := hθ
   eqRank := hW
   forms V := Set.ext fun φ => ⟨fun ⟨x, hx⟩ => hx ▸ aut hθ x, fun h => ⟨⟨φ, Submodule.subset_span h⟩, rfl⟩⟩
@@ -311,7 +311,6 @@ theorem realisesE : RealisesE (θ := θ) (recBE hP hT hB hL hE hθ hψ Wf hW Tw 
     rcases p with f | x
     · exact Or.inl (besGlobE_inl hP hT hB hL hE hθ hψ Wf hW Tw Rc ho hA hι f)
     · exact Or.inr ⟨x.1, inr_eq A A' ι x⟩
-}
 
 end Record
 

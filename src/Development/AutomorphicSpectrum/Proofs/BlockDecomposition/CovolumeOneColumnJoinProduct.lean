@@ -20,15 +20,17 @@ open scoped Pointwise
 theorem isAddFundamentalDomain_prod {A B : Type*} [AddGroup A] [AddGroup B] [MeasurableSpace A]
     [MeasurableSpace B] {Γ : AddSubgroup A} {Δ : AddSubgroup B} {μ : Measure A} {ν : Measure B} [SFinite μ]
     [SFinite ν] {s : Set A} {t : Set B} (hs : IsAddFundamentalDomain Γ s μ) (ht : IsAddFundamentalDomain Δ t ν) :
-    IsAddFundamentalDomain (Γ.prod Δ) (s ×ˢ t) (μ.prod ν) := by
-  refine ⟨hs.nullMeasurableSet.prod ht.nullMeasurableSet, ?_, ?_⟩
-  · have h1 := (Measure.quasiMeasurePreserving_fst (μ := μ) (ν := ν)).ae hs.ae_covers
+    IsAddFundamentalDomain (Γ.prod Δ) (s ×ˢ t) (μ.prod ν) where
+  nullMeasurableSet := hs.nullMeasurableSet.prod ht.nullMeasurableSet
+  ae_covers := by
+    have h1 := (Measure.quasiMeasurePreserving_fst (μ := μ) (ν := ν)).ae hs.ae_covers
     have h2 := (Measure.quasiMeasurePreserving_snd (μ := μ) (ν := ν)).ae ht.ae_covers
     filter_upwards [h1, h2] with p hp hq
     obtain ⟨g, hg⟩ := hp
     obtain ⟨h, hh⟩ := hq
     exact ⟨⟨((g : A), (h : B)), AddSubgroup.mem_prod.2 ⟨g.2, h.2⟩⟩, hg, hh⟩
-  · intro g h hgh
+  aedisjoint := by
+    intro g h hgh
     change μ.prod ν ((g +ᵥ s ×ˢ t) ∩ (h +ᵥ s ×ˢ t)) = 0
     let g1 : Γ := ⟨(g : A × B).1, (AddSubgroup.mem_prod.1 g.2).1⟩
     let h1 : Γ := ⟨(h : A × B).1, (AddSubgroup.mem_prod.1 h.2).1⟩
@@ -129,7 +131,7 @@ theorem isCovolOne_colJoin : ∀ (D : D7) (m r s : ℕ) (μr : Measure (Mx D m r
         left_inv := fun γ => Subtype.ext (e.apply_symm_apply _)
         right_inv := fun γ => Subtype.ext (e.symm_apply_apply _) }
     refine (isAddFundamentalDomain_prod hFr hFs).image_of_equiv e.toEquiv ?_ g fun γ x => ?_
-    · refine ⟨he'.measurable.aemeasurable, ?_⟩
+    · refine ⟨he'.measurable, ?_⟩
       have : ((μr.prod μs).map e).map e.symm = μr.prod μs := by
         rw [Measure.map_map he'.measurable he.measurable]
         have : (e.symm ∘ e : Mx D m r × Mx D m s → Mx D m r × Mx D m s) = id := funext e.symm_apply_apply

@@ -98,10 +98,10 @@ theorem tri_of_co_eq_one {R R' : Type} [CommRing R] [CommRing R'] {φ : c.F →+
 
 theorem isMap_id {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Z.X} (f : EigFrame Z φ x) :
     (fun mapψ dstFrame => ∀ embτ basisIdx, _root_.GlobalTheory.ShFam.EigFrame.v dstFrame embτ basisIdx = _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (_root_.Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap mapψ) ≫ _root_.GlobalTheory.ShFam.EigFrame.v f embτ basisIdx) (RingHom.id R) f := fun τ i => by
-  have h1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
+  have h1 : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    ext r <;> simp [dualMap]
   rw [h1, Category.id_comp]
 
 theorem spMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :

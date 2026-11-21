@@ -223,6 +223,7 @@ theorem dblLin : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F]
         star (B.ψ (symp (_root_.Algebra.TensorProduct.map (_root_.AlgHom.id (AF F) (AF F)) σ) (-1) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) X.J) ((_root_.Matrix.map · (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) (AF F))) W.J) x.toCols₂ u.toCols₂)) := by
       rw [GlobalTheory.DblVacLine.star_eq_neg B.ψ hψ1, ← AddChar.map_add_eq_mul, ← sub_eq_add_neg, ← hs]
     rw [hz, star_mul]
+    dsimp only [cA, incM]
     ring
 
 end GlobalTheory.DblLin

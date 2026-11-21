@@ -138,6 +138,8 @@ theorem rcoef_rTr {u₁ u₂ : GA D V → ℂ} (h₁ : AutomorphicL2Unitary.Left
   have h₃ : AutomorphicL2Unitary.LeftInv (GQ V) (rTr V (k * y * k⁻¹) u₁) := h₁.mul_right _
   rw [← petersson_rTr m h₃ h₂ k⁻¹]
   congr 1
+  funext x
+  change u₁ ((x * y) * k⁻¹) = u₁ ((x * k⁻¹) * (k * y * k⁻¹))
   congr 1
   group
 

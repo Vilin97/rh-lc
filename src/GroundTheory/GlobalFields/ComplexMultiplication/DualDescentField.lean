@@ -64,7 +64,7 @@ theorem coordinateRing_eq_zero_of_sum {ι : Type*} (s : Finset ι) {ω : ι → 
       ∀ i ∈ s, t i = 0 := by
     intro t ht i hi
     ext n
-    have hn := congrArg (coeff · n) ht
+    have hn := congrArg (fun p : Polynomial Ω => p.coeff n) ht
     simp only [finsetSum_coeff, coeff_C_mul, coeff_map, coeff_zero] at hn
     have hn' : ∑ j ∈ s, (t j).coeff n • ω j = 0 := by
       rw [← hn]
@@ -149,12 +149,15 @@ variable {F Ω : Type u} [Field F] [Field Ω] [Algebra F Ω]
 
 theorem comap_isogBaseChange_bcEmb (φ : Isogeny E E') (g : E'.toAffine.FunctionField) :
     (isogBaseChange (F' := Ω) φ).comap (bcEmb (F' := Ω) E' g) = bcEmb (F' := Ω) E (φ.comap g) := by
+  classical
   obtain ⟨⟨x, y, h, he, -⟩, -⟩ := φ.2
   have hx : (isogBaseChange (F' := Ω) φ).x = bcEmb (F' := Ω) E φ.x := by
-    simp only [Isogeny.x, isogBaseChange_val, he]
+    change xOf _ (isogBaseChange (F' := Ω) φ).1 = _
+    rw [isogBaseChange_val, he, Point.map_some, Isogeny.x, he]
     rfl
   have hy : (isogBaseChange (F' := Ω) φ).y = bcEmb (F' := Ω) E φ.y := by
-    simp only [Isogeny.y, isogBaseChange_val, he]
+    change yOf _ (isogBaseChange (F' := Ω) φ).1 = _
+    rw [isogBaseChange_val, he, Point.map_some, Isogeny.y, he]
     rfl
   have : ((isogBaseChange (F' := Ω) φ).comap.restrictScalars F).comp (bcEmb (F' := Ω) E') =
       (bcEmb (F' := Ω) E).comp φ.comap := by

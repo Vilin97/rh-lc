@@ -26,7 +26,7 @@ namespace GlobalTheory.CompanionTheory.Ar.JetMain
 
 open Filter
 
-theorem L_an : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj G] (A : Over (Sp ℂ)) [GrpObj A] (z : Sp ℂ ⟶ Sp R) (φ : A.left ⟶ G.left) (_ : IsGrpPullback A G z φ) (g : ℕ) (Lb : LB A.left) (u : HolUnif A Lb g) (v₀ : epsAt (𝟙 (Sp R)) ⟶ G) (hv₀ : IsTanAt G (𝟙 (Sp R)) v₀) (c : Fin g → ℂ) (v' : epsR ℂ ⟶ A), v'.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (bmap z)) ≫ v₀.left → u.IsDiff c v' → ∀ (V : G.left.Opens) (hV : IsAffineOpen V) (f : Γ(G.left, V)), ⊤ ≤ ((u.ex 0).left ≫ φ) ⁻¹ᵁ V → AnalyticAt ℂ (fun τ : ℂ => valAt' ((u.ex (τ • c)).left ≫ φ) V f) 0 ∧ ∀ k : ℕ, iteratedDeriv k (fun τ : ℂ => valAt' ((u.ex (τ • c)).left ≫ φ) V f) 0 = valAt' ((u.ex 0).left ≫ φ) V ((der v₀ hv₀ hV)^[k] f) := by
+theorem L_an : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj G] (A : Over (Sp ℂ)) [GrpObj A] (z : Sp ℂ ⟶ Sp R) (φ : A.left ⟶ G.left) (_ : IsGrpPullback A G z φ) (g : ℕ) (Lb : LB A.left) (u : HolUnif A Lb g) (v₀ : epsAt (𝟙 (Sp R)) ⟶ G) (hv₀ : IsTanAt G (𝟙 (Sp R)) v₀) (c : Fin g → ℂ) (v' : epsR ℂ ⟶ A), v'.left ≫ φ = spMap (dualMap (bmap z)) ≫ v₀.left → u.IsDiff c v' → ∀ (V : G.left.Opens) (hV : IsAffineOpen V) (f : Γ(G.left, V)), ⊤ ≤ ((u.ex 0).left ≫ φ) ⁻¹ᵁ V → AnalyticAt ℂ (fun τ : ℂ => valAt' ((u.ex (τ • c)).left ≫ φ) V f) 0 ∧ ∀ k : ℕ, iteratedDeriv k (fun τ : ℂ => valAt' ((u.ex (τ • c)).left ≫ φ) V f) 0 = valAt' ((u.ex 0).left ≫ φ) V ((der v₀ hv₀ hV)^[k] f) := by
   intro R _ G _ A _ z φ cart g Lb u v₀ hv₀ c v' hl hd V hV f h0
   let Z : Set (Fin g → ℂ) := {x | ⊤ ≤ ((u.ex x).left ≫ φ) ⁻¹ᵁ V}
   have hopen : IsOpen Z := (u.hol (φ ⁻¹ᵁ V) (φ.app V f)).1
@@ -282,7 +282,7 @@ theorem jets : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host 
     exact b.2
   · intro σ a f v hf hvec i c
     obtain ⟨vv, hlift, v', hv'1, hv'2⟩ := hvec
-    have hl : v'.left ≫ a.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (bmap (emb σ))) ≫ (D.MB.pt x).left := by
+    have hl : v'.left ≫ a.φ = spMap (dualMap (bmap (emb σ))) ≫ (D.MB.pt x).left := by
       have h1 : vv.left ≫ 𝟙 D.t.G.left = _ := hlift
       rw [Category.comp_id] at h1
       rw [hv'1, h1, bmap_spMap]

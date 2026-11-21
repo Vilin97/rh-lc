@@ -61,10 +61,10 @@ theorem flagSpaceComponent_stalkPoint_over_coefficientField {Y : Model Xo c (Rin
   simp only [Category.assoc] at h1
   exact h1.symm
 
-theorem spMap_dualMap_id (R : Type) [CommRing R] : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
+theorem spMap_dualMap_id (R : Type) [CommRing R] : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by
   rw [← Spec.map_id]
   congr 1
-  ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  ext r <;> simp [dualMap]
 
 theorem isFrameAt_map {Y : Model Xo c (RingHom.id c.F)} {Z : Scheme.{0}} {π : Z ⟶ Y.X} (F : Frames Y π)
     {R R' : Type} [CommRing R] [CommRing R'] {φ : c.F →+* R} {z : Sp R ⟶ Z} {k : F.J} {hz : ⊤ ≤ z ⁻¹ᵁ F.U k}

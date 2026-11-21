@@ -17,7 +17,6 @@ open UpperTheory.V.Cj UpperTheory.V.Cj.H
 theorem UpperTheory.V.Cj.H.gardSep :
     UpperTheory.V.Cj.H.GardSep := by
   intro E _ _ _ a μ _ _ W hW h
-  letI : Inv (Set (GA E a)) := Set.inv
   rw [Submodule.eq_bot_iff]
   intro F hF
   refine approx (GA E a) (latticeGL E a) μ F fun U hU => ?_

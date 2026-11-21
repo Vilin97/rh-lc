@@ -25,7 +25,7 @@ theorem loc_of_charts {R : Type} [CommRing R] (x : Sp R ⟶ S) {J : Type} [Finit
     (M : LieModel G x E) (i : J) {F : Type} [AddCommGroup F] [Module R F] [Module (Localization.Away (f i)) F]
     [IsScalarTower R (Localization.Away (f i)) F] (y : Sp (Localization.Away (f i)) ⟶ S) (hy : y = ptAt x (f i))
     (Mi : LieModel G y F) (r : E →ₗ[R] F)
-    (hr : ∀ e, (Mi.pt (r e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (Localization.Away (f i)))) ≫ (M.pt e).left) :
+    (hr : ∀ e, (Mi.pt (r e)).left = spMap (dualMap (algebraMap R (Localization.Away (f i)))) ≫ (M.pt e).left) :
     IsLocalizedModule (Submonoid.powers (f i)) r := by
   subst hy
   choose P iA iM iL ist ifin iproj m nat using hch
@@ -34,7 +34,7 @@ theorem loc_of_charts {R : Type} [CommRing R] (x : Sp R ⟶ S) {J : Type} [Finit
   have hqc : ∀ (g g' : Idx f) (h : g.1 ∣ g'.1) (t : R), g'.1 = g.1 * t →
       ∀ r : (P (ix g) →ₗ[R] Localization.Away g.1) →ₗ[R] (P (ix g') →ₗ[R] Localization.Away g'.1),
       (∀ y, ((m (ix g') _ (unit_of_dvd (hix g'))).pt (r y)).left =
-        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (cmap h).toRingHom) ≫ ((m (ix g) _ (unit_of_dvd (hix g))).pt y).left) →
+        spMap (dualMap (cmap h).toRingHom) ≫ ((m (ix g) _ (unit_of_dvd (hix g))).pt y).left) →
       IsLocalizedModule (Submonoid.powers t) r := by
     intro g g' h t ht r hr
     have hu' : IsUnit (algebraMap R (Localization.Away g'.1) (f (ix g))) :=
@@ -110,7 +110,7 @@ theorem exists_cover [Smooth G.hom] {R : Type} [CommRing R] (x : Sp R ⟶ S) :
 theorem isBaseChange_lie [Smooth G.hom] {R : Type} [CommRing R] (x : Sp R ⟶ S) {L : Type} [AddCommGroup L]
     [Module R L] (M : LieModel G x L) (R' : Type) [CommRing R'] [Algebra R R'] (L' : Type) [AddCommGroup L']
     [Module R' L'] [Module R L'] [IsScalarTower R R' L'] (M' : LieModel G (spMap (algebraMap R R') ≫ x) L')
-    (β : L →ₗ[R] L') (hβ : ∀ e, (M'.pt (β e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R')) ≫ (M.pt e).left) :
+    (β : L →ₗ[R] L') (hβ : ∀ e, (M'.pt (β e)).left = spMap (dualMap (algebraMap R R')) ≫ (M.pt e).left) :
     IsBaseChange R' β := by
   obtain ⟨J, _, f, hf, hch⟩ := exists_cover (G := G) x
   have hf' : Ideal.span (Set.range fun i => algebraMap R R' (f i)) = ⊤ := by
@@ -168,7 +168,7 @@ end Lie
 
 open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct in
 open GlobalTheory.CompanionTheory.Ar in
-theorem lie_proj : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [Smooth G.hom] (R : Type) [CommRing R] (x : Spec (CommRingCat.of R) ⟶ S) (L : Type) [AddCommGroup L] [Module R L] (M : LieModel G x L), Module.Finite R L ∧ Module.Projective R L ∧ ∀ (R' : Type) [CommRing R'] [Algebra R R'] (L' : Type) [AddCommGroup L'] [Module R' L'] [Module R L'] [IsScalarTower R R' L'] (M' : LieModel G (Spec.map (CommRingCat.ofHom (algebraMap R R')) ≫ x) L') (β : L →ₗ[R] L'), (∀ e, (M'.pt (β e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R'))) ≫ (M.pt e).left) → IsBaseChange R' β := by
+theorem lie_proj : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [Smooth G.hom] (R : Type) [CommRing R] (x : Spec (CommRingCat.of R) ⟶ S) (L : Type) [AddCommGroup L] [Module R L] (M : LieModel G x L), Module.Finite R L ∧ Module.Projective R L ∧ ∀ (R' : Type) [CommRing R'] [Algebra R R'] (L' : Type) [AddCommGroup L'] [Module R' L'] [Module R L'] [IsScalarTower R R' L'] (M' : LieModel G (Spec.map (CommRingCat.ofHom (algebraMap R R')) ≫ x) L') (β : L →ₗ[R] L'), (∀ e, (M'.pt (β e)).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap R R'))) ≫ (M.pt e).left) → IsBaseChange R' β := by
   intro S G _ _ R _ x L _ _ M
   obtain ⟨J, _, f, hf, hch⟩ := Lie.exists_cover (G := G) x
   obtain ⟨h1, h2⟩ := lieModel_finite_projective S G R x J f hf (fun i => (hch i).lieChart) L M

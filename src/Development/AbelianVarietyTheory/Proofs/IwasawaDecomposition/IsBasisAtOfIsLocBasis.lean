@@ -181,7 +181,7 @@ open GlobalTheory.Mem.Col2.BwLat GlobalTheory.LvT.Built.ValLat Formalism.Hermiti
 
 
 set_option maxHeartbeats 1000000 in
-theorem bw_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (eY : (I.chain l u a).Y i ≃ Formalism.L2.Forms.Fr (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi), I.IdY l Z u a i hi eY → BwTieG (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (I.fm l u a) (B.T u) (I.resT l u a) eY (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c)) := by
+theorem bw_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (eY : (I.chain l u a).Y i ≃ Formalism.L2.Forms.Fr (I.rec7 l Z) i hi), I.IdY l Z u a i hi eY → BwTieG (D := (I.rec7 l Z)) (I.fm l u a) (B.T u) (I.resT l u a) eY (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c)) := by
   intro B X I hI hP l Z u a i hi eY hY w hw hs v x
   revert hw hs
   change HeightOneSpectrum (𝓞 B.fields.K) at w
@@ -192,16 +192,16 @@ theorem bw_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pin
   have hs' : seenC (B.primes X) u w := @of_decide_eq_true _ (Classical.propDecidable _) hs
   have hT : (B.T u).Prime := l.pr.T_prime u
   haveI : Fact (B.T u).Prime := ⟨hT⟩
-  have hd : ∀ c, LdG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c)) = ((I.stp u a i).rep c).1.1.deco.1.Lsh := by
+  have hd : ∀ c, LdG (I.rec7 l Z) i hi (latCrd (I.rec7 l Z) i hi (I.latAt u a i c)) = ((I.stp u a i).rep c).1.1.deco.1.Lsh := by
     intro c
-    have h1 := dualL_std (E := B.host.E) (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)).toRingHom (fun x => rfl) ((I.stp u a i).rep c).1.1.deco.1.L
+    have h1 := dualL_std (E := B.host.E) (sigD (I.rec7 l Z)).toRingHom (fun x => rfl) ((I.stp u a i).rep c).1.1.deco.1.L
     exact (congrArg₂ (dualL _) hG (hL c)).trans h1
-  have hk : ∀ c, LkG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (PvG (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (I.resT l u a) v) (latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c)) =
+  have hk : ∀ c, LkG (I.rec7 l Z) i hi (PvG (D := I.rec7 l Z) (I.resT l u a) v) (latCrd (I.rec7 l Z) i hi (I.latAt u a i c)) =
       ((I.stp u a i).rep c).1.1.deco.1.L ⊔ v.1.asIdeal • ((I.stp u a i).rep c).1.1.deco.1.Lsh := by
     intro c
-    have e : PvG (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (I.resT l u a) v = v.1.asIdeal := Ideal.mk_ker (I := (v.1.asIdeal : Ideal (𝓞 B.host.E)))
+    have e : PvG (D := I.rec7 l Z) (I.resT l u a) v = v.1.asIdeal := Ideal.mk_ker (I := (v.1.asIdeal : Ideal (𝓞 B.host.E)))
     exact congrArg₂ (· ⊔ ·) (hL c) (congrArg₂ (· • ·) e (hd c))
-  have hlam : lamTG (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (I.fm l u a) i = GlobalTheory.Mem.Col2.lamT (B.hcW u) i := by
+  have hlam : lamTG (D := I.rec7 l Z) (I.fm l u a) i = GlobalTheory.Mem.Col2.lamT (B.hcW u) i := by
     funext τ
     show Formalism.L2.Forms.shW (Examples₂.lamOf (B.hcW u τ) i) ((i * (B.R.t + 1) / 2 : ℕ) : ℤ) =
       GlobalTheory.Mem.Col2.shW (Examples₂.lamOf (B.hcW u τ) i) (-((i : ℤ) * (((B.R.t + 1) / 2 : ℕ) : ℤ)))
@@ -213,17 +213,17 @@ theorem bw_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pin
     congr 1
     funext j
     rw [e1, e2, Nat.cast_mul, sub_eq_add_neg]
-  have hemb : Formalism.L2.Forms.embT (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) = embAt B.embLL B.fields.emb := by
+  have hemb : Formalism.L2.Forms.embT (I.rec7 l Z) = embAt B.embLL B.fields.emb := by
     funext τ
     ext y
     show B.host.φ₀ _ = _
     rw [← B.embE_φ₀]
     rfl
-  have hint : ∀ P, P ∈ IntSpan (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) w ((I.fm l u a).lam i) ↔
+  have hint : ∀ P, P ∈ IntSpan (I.rec7 l Z) w ((I.fm l u a).lam i) ↔
       ∃ z₀ ∈ localization₂ w.asIdeal (delStd B.LL (GlobalTheory.Mem.Col2.lamT (B.hcW u) i)), P = MvPolynomial.map B.embLL z₀ := by
     intro P
-    have h := mem_closure_iff (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.embLL ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).plEq w) (intW (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.places w)
-      ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).val_nonneg_iff w) (lamTG (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (I.fm l u a) i) P
+    have h := mem_closure_iff (I.rec7 l Z).what₂.embLL ((I.rec7 l Z).plEq w) (intW (I.rec7 l Z).what₂.places w)
+      ((I.rec7 l Z).val_nonneg_iff w) (lamTG (D := I.rec7 l Z) (I.fm l u a) i) P
     simp only [lamTG, delSq_shW] at h
     rw [← hlam]
     exact h
@@ -232,7 +232,7 @@ theorem bw_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pin
     exact Finite.instSigma
   have h1 : x ∈ (I.fm l u a).Bw i w v ↔ ∀ c, x.1 c ∈ localization₂ w.asIdeal
       (delAtr B.fields.emb (GlobalTheory.Mem.Col2.lamT (B.hcW u) i) (((I.stp u a i).rep c).1.1.deco.1.LshKer v)) :=
-    ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem_locW_iff w _ x).trans
+    ((I.rec7 l Z).mem_locW_iff w _ x).trans
       (mem_localization_latticeOf (I.stp u a i) B.fields.emb (GlobalTheory.Mem.Col2.lamT (B.hcW u) i) ((l.fmL u a).fam i) _ w x)
   refine h1.trans (forall_congr' fun c => ?_)
   have key : ∀ Bm Bm' : GL (Fin (B.R.N i)) B.host.E,
@@ -241,11 +241,11 @@ theorem bw_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pin
         Submodule (𝓞 B.host.E) _) : Set _) Bm' →
       (x.1 c ∈ localization₂ w.asIdeal
         (delAtr B.fields.emb (GlobalTheory.Mem.Col2.lamT (B.hcW u) i) (((I.stp u a i).rep c).1.1.deco.1.LshKer v)) ↔
-      ∃ P ∈ IntSpan (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) w ((I.fm l u a).lam i), ∀ z, (I.fm l u a).emb i x c z =
-        fnOf _ (shiftOf (lamTG (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (I.fm l u a) i))
+      ∃ P ∈ IntSpan (I.rec7 l Z) w ((I.fm l u a).lam i), ∀ z, (I.fm l u a).emb i x c z =
+        fnOf _ (shiftOf (lamTG (D := I.rec7 l Z) (I.fm l u a) i))
           (fun τ => @ite _ (τ = (I.fm l u a).tauOf w v) (Classical.propDecidable _)
-            (atInf (Formalism.L2.Forms.embT (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (Bm'⁻¹ : GL (Fin (B.R.N i)) B.host.E).1 τ)
-            (atInf (Formalism.L2.Forms.embT (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (Bm⁻¹ : GL (Fin (B.R.N i)) B.host.E).1 τ)) P (eY z)) := by
+            (atInf (Formalism.L2.Forms.embT (I.rec7 l Z)) (Bm'⁻¹ : GL (Fin (B.R.N i)) B.host.E).1 τ)
+            (atInf (Formalism.L2.Forms.embT (I.rec7 l Z)) (Bm⁻¹ : GL (Fin (B.R.N i)) B.host.E).1 τ)) P (eY z)) := by
     intro Bm Bm' hB hB'
     refine (mem_localization_ker B.fields.emb B.embLL (GlobalTheory.Mem.Col2.lamT (B.hcW u) i) w hT (T_mem_vT l.pr u) (tauAt l.pr u w)
       (fun P => seesP_tauAt l.pr u hX hs' P) ((I.stp u a i).rep c).1.1.deco.2 (sepElt_of_ok l.pr u) v hB hB' (x.1 c)).trans ?_

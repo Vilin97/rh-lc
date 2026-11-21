@@ -55,10 +55,10 @@ theorem UpperTheory.level_unfolding_metric :
     rw [hg, show g'.v τ = _ from funext (hg' τ), hx]
     simpa only [Category.assoc] using h4
   choose cf h0 h1 h2 using key
-  have e1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id k)) = 𝟙 _ := by
+  have e1 : spMap (dualMap (RingHom.id k)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    ext r <;> simp [dualMap]
   have e2 : spMap (RingHom.id k) = 𝟙 _ := Spec.map_id _
   have hcg : (Φ.C c').Carries q' g := (hiff φ _ g).2 ⟨fun τ i => Units.mk0 _ (h0 τ i),
     by rw [e2, Category.id_comp, hx], rfl, fun τ i => ⟨cf τ i, rfl, h1 τ i, by

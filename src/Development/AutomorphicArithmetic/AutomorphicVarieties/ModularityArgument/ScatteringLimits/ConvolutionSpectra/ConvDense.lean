@@ -51,7 +51,7 @@ theorem UpperTheory.V.Z.IntegralApplyAeEq.convDense :
       rw [← LinearMap.det_toMatrix b, Matrix.det_apply']
       simp [LinearMap.toMatrix_apply]
     rw [e]
-    refine Differentiable.fun_sum fun s _ => (differentiable_const _).mul (Differentiable.fun_finsetProd fun i _ => ?_)
+    refine Differentiable.fun_sum fun s _ => (differentiable_const _).mul (Differentiable.fun_finset_prod fun i _ => ?_)
     exact (ContinuousLinearMap.differentiable _).comp ((symb_diff _ k1).clm_apply (differentiable_const _))
   have h0 : D 0 ≠ 0 := by
     have : IsUnit (symb (sharp β) 0) := by

@@ -113,7 +113,8 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.ctKv :
     fun γ hγ x => rconv_mul_left (Gam K (2 + 2)) μ a φ hγ x
   refine ⟨continuous_rconv (Gam K (2 + 2)) μ a φ, ?_, hinv, fun γ hγ z => ?_, fun X z => ct_unip hinv X z⟩
   · have := Reduction.isFiniteMeasure_quotientMeasure (K := K) (n := 2 + 2) μ
-    filter_upwards [(quasiMeasurePreserving_mk (Gam K (2 + 2)) μ).ae
+    set_option synthInstance.maxHeartbeats 200000 in
+    filter_upwards [QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K (2 + 2)) μ)
       (integrated_ae_eq_rconvQ (Gam K (2 + 2)) μ a φ)] with y hy
     exact hy
   · obtain ⟨ξ, γ₁, γ₂, rfl⟩ := (pkLaws (K := K)).2.1 γ |>.1 hγ

@@ -56,7 +56,7 @@ theorem stageX_is_at_m (W : _root_.GlobalTheory.MiS.RealPackAlt ex) (_ : _root_.
     exact P.isPrime.ne_top ((Ideal.eq_top_iff_one _).2 hN)
   · show Lev.datY _ _ _ _ _ _ ((_root_.GlobalTheory.Fam.pk_z W).Q W.P.A3.A.μ0) _ _ _ _ = _
     rw [_root_.GlobalTheory.BaseChain.Q_base_eq_empty W]; rfl
-  · exact @MeasureTheory.Measure.IsHaarMeasure.smul _ _ _ _ _ hM.1.1 _ (_root_.GlobalTheory.BaseChain.cH_ne_zero_alt W) (_root_.GlobalTheory.BaseChain.inverse_level_cardinality_ne_infinity W)
+  · exact @MeasureTheory.Measure.IsHaarMeasure.smul _ _ _ _ _ hM.1.1 _ _ (_root_.GlobalTheory.BaseChain.cH_ne_zero_alt W) (_root_.GlobalTheory.BaseChain.inverse_level_cardinality_ne_infinity W)
   · exact hM.2.mono (MeasureTheory.Measure.smul_absolutelyContinuous)
 end GlobalTheory.BaseChain
 end

@@ -90,7 +90,7 @@ theorem GlobalTheory.GaussManinTaylor.taylor_period_eq_period_over_thickening : 
   have hcst : ∀ k f, ρ k (K.cst (ka k) f) = θ.toRingHom f ⊗ₜ[ℂ] 1 := fun k f ↦ by
     rw [GlobalTheory.T.isParameterTaylorExpansionHom_apply_of_param_only N' t' _ _ (hmem0 k) (ρ k) (hρ k) _ f.fn (fun q hq ↦ Charts.fn_cst _ _ _ hq)]
     exact congrArg (· ⊗ₜ[ℂ] (1 : Hol (K₀.W k))) (hθ f).symm
-  have hdw : ∀ k a h, ρ k (dw a h) = LinearMap.lTensor R (dw a).toLinearMap (ρ k h) := fun k a h ↦
+  have hdw : ∀ k (a : Fin g) (h : Hol (K.W (ka k))), ρ k (dw a h) = LinearMap.lTensor R (dw (W := K₀.W k) a).toLinearMap (ρ k h) := fun k a h ↦
     GlobalTheory.T.isParameterTaylorExpansionHom_fibreDerivation N' t' _ _ (hmem0 k) (ρ k) (hρ k) a h
   have hclose : ∀ l k' k (h : K₀.le l k' k), Close (M.map (Algebra.TensorProduct.includeLeft : R →ₐ[ℂ] R ⊗[ℂ] Hol (K₀.W k'))) ((ρ k').comp (Charts.sh (hka' h))) ((Algebra.TensorProduct.map (AlgHom.id ℂ R) (Charts.shA h)).toRingHom.comp (ρ k)) := by
     intro l k' k h

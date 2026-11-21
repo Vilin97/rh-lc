@@ -97,7 +97,7 @@ def lieStep (σ : D.host.E →+* ℂ) (r : ℕ) :
   letI := A.H.starRing
   Submodule.span ↥y.C.S {w | ∃ (x : LieG (ct.htPt y).Gt) (u : Vecs S.Dw (ct.Y Z.i).t ↥y.C.S) (i : Fin (S.Dw.mult σ)),
     Z.FlagAt y.gen u ∧ (i : ℕ) < r ∧
-    u σ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ↥y.C.S).subtype) ≫ ((ct.htPt y).lieCmp x).1.left ≫ htToModel (ct.dat y) ∧
+    u σ i = spMap (dualMap (intO ↥y.C.S).subtype) ≫ ((ct.htPt y).lieCmp x).1.left ≫ htToModel (ct.dat y) ∧
     w = (ct.htPt y).bLie x}
 
 def htStep (τ : PsiT D) (i : ℕ) :

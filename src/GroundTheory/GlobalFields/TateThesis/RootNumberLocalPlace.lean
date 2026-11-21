@@ -143,7 +143,7 @@ theorem quasiCharConductor_localChar :
 theorem isUnramifiedChar_localChar_iff :
     IsUnramifiedChar (localChar χ v) ↔ ¬ v.asIdeal ∣ χ.conductor := by
   rw [IsUnramifiedChar, χ.unitFiltrationUnits_le_ker_localChar_iff v 0, Nat.le_zero,
-    multiplicity_eq_zero]
+    multiplicity_eq_zero (Ideal.finiteMultiplicity v.isPrime.ne_top χ.conductor_ne_bot)]
 
 theorem isLocallyConstant_finiteTest : IsLocallyConstant (χ.finiteTest v) := by
   refine (IsLocallyConstant.iff_eventually_eq _).2 fun x₀ ↦ ?_

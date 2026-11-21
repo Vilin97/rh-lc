@@ -201,6 +201,7 @@ theorem nuQOK_sc (s : X.B.I.Ginf → NNReal) (hs1 : ∀ γ, Formalism.L2.SG.Real
   · simp [hcpl]
   · intro g hg
     rw [Measure.map_smul, hinv g hg]
+    exact (measurable_const_mul g).aemeasurable
   · intro f hf
     show _ = ∫⁻ x, (∫⁻ a, f (a * x) ∂((s γ)⁻¹ • μR)) ∂(((s γ : NNReal) : ENNReal) • ν γ)
     rw [hQ f hf, lintegral_smul_measure]

@@ -70,12 +70,12 @@ theorem blk_mul {m n k : ℕ} (a b : L) (A : Matrix (Fin m) (Fin n) L) (B : Matr
     blk a A * blk b B = blk (a * b) (A * B) := by
   ext i j
   refine Fin.cases ?_ (fun i => ?_) i <;> refine Fin.cases ?_ (fun j => ?_) j <;>
-    simp [blk, Matrix.mul_apply, Fin.sum_univ_succ]
+    simp [Matrix.mul_apply, Fin.sum_univ_succ]
 
 theorem blk_one {m : ℕ} : blk (1 : L) (1 : Matrix (Fin m) (Fin m) L) = 1 := by
   ext i j
   refine Fin.cases ?_ (fun i => ?_) i <;> refine Fin.cases ?_ (fun j => ?_) j <;>
-    simp [blk, Matrix.one_apply, Fin.succ_ne_zero, (Fin.succ_ne_zero _).symm]
+    simp [Matrix.one_apply, Fin.succ_ne_zero, (Fin.succ_ne_zero _).symm]
 
 theorem isUnimod_blk {m : ℕ} {P : Matrix (Fin m) (Fin m) L} (hP : IsUnimod P) : IsUnimod (blk (1 : L) P) := by
   obtain ⟨hP1, P', hP', hPP⟩ := hP
@@ -83,7 +83,7 @@ theorem isUnimod_blk {m : ℕ} {P : Matrix (Fin m) (Fin m) L} (hP : IsUnimod P) 
       ∀ i j, blk (1 : L) A i j ∈ Formalism.UG.intL L := by
     intro A hA i j
     refine Fin.cases ?_ (fun i => ?_) i <;> refine Fin.cases ?_ (fun j => ?_) j <;>
-      simp [blk, Subring.one_mem, Subring.zero_mem, hA]
+      simp [Subring.one_mem, Subring.zero_mem, hA]
   exact ⟨hint hP1, blk 1 P', hint hP', by rw [blk_mul, hPP, one_mul, blk_one]⟩
 
 def IsDiagF {m n : ℕ} (z : Matrix (Fin m) (Fin n) L) : Prop :=
@@ -143,9 +143,9 @@ theorem clear {m n : ℕ} (x : Matrix (Fin (m+1)) (Fin (n+1)) L) (hp : x 0 0 ≠
   refine ⟨1 - A, 1 - B, nilp_unimod A hAi hAA, nilp_unimod B hBi hBB, ?_⟩
   ext i j
   refine Fin.cases ?_ (fun i => ?_) i <;> refine Fin.cases ?_ (fun j => ?_) j
-  · rw [hz, hy]; simp [blk, p]
-  · rw [hz, hy, hy]; simp [blk, Fin.succ_ne_zero, p]; rw [mul_div_cancel₀ _ (show x 0 0 ≠ 0 from hp), sub_self]
-  · rw [hz, hy]; simp [blk, Fin.succ_ne_zero, p]; rw [div_mul_cancel₀ _ (show x 0 0 ≠ 0 from hp), sub_self]
+  · rw [hz, hy]; simp [p]
+  · rw [hz, hy, hy]; simp [Fin.succ_ne_zero, p]; rw [mul_div_cancel₀ _ (show x 0 0 ≠ 0 from hp), sub_self]
+  · rw [hz, hy]; simp [Fin.succ_ne_zero, p]; rw [div_mul_cancel₀ _ (show x 0 0 ≠ 0 from hp), sub_self]
   · simp
 
 theorem exists_diag : ∀ (m n : ℕ) (x : Matrix (Fin m) (Fin n) L),
@@ -197,8 +197,8 @@ theorem exists_diag : ∀ (m n : ℕ) (x : Matrix (Fin m) (Fin n) L),
       intro i j
       refine Fin.cases ?_ (fun i => ?_) i <;> refine Fin.cases ?_ (fun j => ?_) j <;> intro hij
       · exact absurd rfl hij
-      · simp [blk]
-      · simp [blk]
+      · simp
+      · simp
       · simp only [blk_succ_succ]
         exact hD i j (by simpa [Fin.val_succ] using hij)
 

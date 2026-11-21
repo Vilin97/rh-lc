@@ -101,8 +101,7 @@ theorem stepBound (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (
       rw [hx'def, EmbeddingHermitianPairs.flow_flow X hξ.2.1]
       congr 1
       congr 1
-      funext τ
-      exact Complex.ext (by simp) (by simpa only [Complex.ofReal_im] using hs τ)
+      exact Complex.ext (by simp) (by rw [hs]; simp)
     rw [he]
     exact h
   have key := half_plane_bound (g := fun z => P (X.flow ξ (fun τ => z * -b τ) x'))

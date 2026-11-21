@@ -67,11 +67,11 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 theorem dual_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (φ : R →+* S) (ψ : S →+* T) {Z : Scheme.{0}}
     (v : Sp (DualNumber R) ⟶ Z) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ)) ≫ v := by
+    spMap (dualMap ψ) ≫ spMap (dualMap φ) ≫ v = spMap (dualMap (ψ.comp φ)) ≫ v := by
   rw [← Category.assoc, spMap_comp']
   congr 2
   refine RingHom.ext fun z => ?_
-  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  ext <;> simp [dualMap]
 
 variable {R : Type} [CommRing R] {x : Sp R ⟶ X} {m g : ℕ}
 
@@ -123,9 +123,9 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 theorem coord_map {R S : Type} [CommRing R] [CommRing S] (α : A →+* R) (ψ : R →+* S) {a : Fin g → R}
     {w : Sp (DualNumber R) ⟶ t.G.left}
-    (h : IsCombAtG t (spMap α ≫ x₀) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ e i) a w) :
-    IsCombAtG t (spMap (ψ.comp α) ≫ x₀) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp α)) ≫ e i) (fun i => ψ (a i))
-      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w) := by
+    (h : IsCombAtG t (spMap α ≫ x₀) (fun i => spMap (dualMap α) ≫ e i) a w) :
+    IsCombAtG t (spMap (ψ.comp α) ≫ x₀) (fun i => spMap (dualMap (ψ.comp α)) ≫ e i) (fun i => ψ (a i))
+      (spMap (dualMap ψ) ≫ w) := by
   have := GlobalTheory.LatDRFree.comb_map t ψ h
   simp only [dual_comp] at this
   rwa [← Category.assoc, spMap_comp'] at this

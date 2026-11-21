@@ -164,8 +164,8 @@ theorem list_prod_map_eq {ι G : Type} [Monoid G] (f : ι → G) (a : ι) :
     · subst hb
       have hprod : (l.map f).prod = 1 := by
         apply List.prod_eq_one
-        rw [List.forall_mem_map]
-        intro c hc
+        intro y hy
+        obtain ⟨c, hc, rfl⟩ := List.mem_map.1 hy
         exact h1 c (List.mem_cons_of_mem _ hc) (fun e => (List.nodup_cons.1 hnd).1 (e ▸ hc))
       rw [hprod, mul_one]
     · rw [h1 b (by simp) hb, one_mul]

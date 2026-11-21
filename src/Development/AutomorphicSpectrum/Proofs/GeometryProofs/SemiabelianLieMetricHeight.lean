@@ -106,9 +106,9 @@ theorem isGrpPullback_comp {S S' S'' : Scheme.{0}} {G : Over S} {G' : Over S'} {
   exact key _ (Category.assoc _ _ _) x₀ y₀ hx hy
 
 theorem dual_inl {A B : Type} [CommRing A] [CommRing B] (σ : A →+* B) (a : A) :
-    GlobalTheory.CompanionTheory.Ar.dualMap σ (algebraMap A (DualNumber A) a) = algebraMap B (DualNumber B) (σ a) := by
-  show GlobalTheory.CompanionTheory.Ar.dualMap σ (TrivSqZeroExt.inl a) = TrivSqZeroExt.inl (σ a)
-  apply TrivSqZeroExt.ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    dualMap σ (algebraMap A (DualNumber A) a) = algebraMap B (DualNumber B) (σ a) := by
+  show dualMap σ (TrivSqZeroExt.inl a) = TrivSqZeroExt.inl (σ a)
+  apply TrivSqZeroExt.ext <;> simp [dualMap]
 
 def dualEquiv {A B : Type} [AddCommGroup A] [AddCommGroup B] (e : A ≃+ B) : (B →+ ℤ) ≃ₗ[ℤ] (A →+ ℤ) :=
   AddEquiv.toIntLinearEquiv
@@ -272,7 +272,7 @@ theorem stratum_good : GlobalTheory.Published.SemiAbelianHomExtension → ∀ (X
     intro a
     set δ' : τ.X →+ L := (Int.castAddHom L).comp ((β.map (dualEquiv e)) a) with hδ'
     let a0 : Sp (DualNumber L) ⟶ Sp L := (epsAt (𝟙 (Sp L))).hom
-    let g1 : DualNumber L →+* DualNumber ℂ := GlobalTheory.CompanionTheory.Ar.dualMap σ
+    let g1 : DualNumber L →+* DualNumber ℂ := dualMap σ
     let t' : Over.mk (spMap g1 ≫ a0) ⟶ splitTorus (Sp L) τ.X :=
       Over.homMk (spMap g1 ≫ (MT.pt δ').left) (by
         have := Over.w (MT.pt δ')
@@ -284,7 +284,7 @@ theorem stratum_good : GlobalTheory.Published.SemiAbelianHomExtension → ∀ (X
       have e1 := (GlobalTheory.T.charVal_multiplicative (Sp L) τ.X (DualNumber L) a0).2.2.2.2.2 (DualNumber ℂ) g1 (MT.pt δ') t' rfl χ
       rw [e1, hMT, hMz]
       simp only [g1, hδ']
-      ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, dualEquiv]
+      ext <;> simp [dualMap, dualEquiv]
     have e2 := he (DualNumber ℂ) ((algebraMap ℂ (DualNumber ℂ)).comp σ') (epsAt zc).hom (by
         show _ = Spec.map _ ≫ spMap σ' ≫ x
         rw [← CategoryTheory.Category.assoc, LieTangent.spec_comp]) (spMap g1 ≫ a0) (by
@@ -292,17 +292,17 @@ theorem stratum_good : GlobalTheory.Published.SemiAbelianHomExtension → ∀ (X
         rw [CategoryTheory.Category.comp_id, LieTangent.spec_comp]
         have e0 : ((algebraMap ℂ (DualNumber ℂ)).comp σ').comp (algebraMap L Lb) = g1.comp (algebraMap L (DualNumber L)) := by
           refine RingHom.ext fun a => ?_
-          show algebraMap ℂ (DualNumber ℂ) (σ' (algebraMap L Lb a)) = GlobalTheory.CompanionTheory.Ar.dualMap σ (algebraMap L (DualNumber L) a)
+          show algebraMap ℂ (DualNumber ℂ) (σ' (algebraMap L Lb a)) = dualMap σ (algebraMap L (DualNumber L) a)
           rw [dual_inl]
           exact congrArg (algebraMap ℂ (DualNumber ℂ)) (congrArg (fun q => q a) hσ')
         rw [e0]) (Mz.pt ((Int.castAddHom ℂ).comp (β a))) t' hchar
     refine Eq.trans ?_ e2.symm
     have e3 := hε a
     unfold LieModel.Lifts at e3
-    have e4 : (v a).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ (MB.pt (ε a)).left :=
+    have e4 : (v a).left = spMap (dualMap c) ≫ (MB.pt (ε a)).left :=
       (LieTangent.left_eq_iff _ _ _ _).2 rfl
     rw [e4]
-    have e5 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) = spMap g1 ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) := by
+    have e5 : spMap (dualMap c) = spMap g1 ≫ spMap (dualMap (algebraMap (𝓞 L) L)) := by
       rw [LieTangent.spec_comp, ← RootHt.dualMap_comp]
     rw [e5, CategoryTheory.Category.assoc, ← e3, Over.comp_left]
     show _ = ((spMap g1 ≫ (MT.pt δ').left) ≫ τ.i.left) ≫ φ

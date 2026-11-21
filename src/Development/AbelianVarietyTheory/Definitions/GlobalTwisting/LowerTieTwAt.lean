@@ -79,8 +79,8 @@ def RowVal (u : B.Word) (a : I.ι) (G : (I.per l u a).Mt) : Prop :=
     (I.perIn u a).rd B.fields.emb B.embLL G c = MvPolynomial.map B.embLL y.1
 
 structure RowInt (Z : TC.Later B (I.cols l)) : Prop where
-  ref : ∀ u, ∀ F ∈ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Mtilde (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0).carrier, RowVal I l u I.mu0 (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).eMt u).symm F)
-  tw : ∀ u (a : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tup), ∀ F ∈ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Mtilde a).carrier, RowVal I l u a (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).eMtTw u a).symm F)
+  ref : ∀ u, ∀ F ∈ ((I.rec7 l Z).what₂.Mtilde (I.rec7 l Z).what₂.mu0).carrier, RowVal I l u I.mu0 (((I.rec7 l Z).eMt u).symm F)
+  tw : ∀ u (a : (I.rec7 l Z).what₂.Tup), ∀ F ∈ ((I.rec7 l Z).what₂.Mtilde a).carrier, RowVal I l u a (((I.rec7 l Z).eMtTw u a).symm F)
 
 end Rows
 

@@ -52,9 +52,8 @@ theorem polMatch_iso {R R₃ : RealMaps F a a'} {Rf Rf₃ : FinMaps F a a'} {ψ�
       intro j
       have e : (fun v : T => Rf₃.p' v (φ' j v)) = fun v : T => l v • ψ v (Rf.p' v (φ' j v)) :=
         funext fun v => hRf' v _ ((hf' j).2.1 v)
-      rw [e, MultilinearMap.map_smul_univ, hR' _ (hf' j).1, ← TensorProduct.smul_tmul', TensorProduct.tmul_smul, smul_smul]
-      simp only [RingHom.id_apply]
-      rw [Finset.prod_coe_sort, hΛT]
+      rw [e, MultilinearMap.map_smul_univ, hR' _ (hf' j).1, ← TensorProduct.smul_tmul', TensorProduct.tmul_smul, smul_smul,
+        Finset.prod_coe_sort, hΛT]
     simp only [lhs, rhs, ← Finset.smul_sum, h1]
 
 

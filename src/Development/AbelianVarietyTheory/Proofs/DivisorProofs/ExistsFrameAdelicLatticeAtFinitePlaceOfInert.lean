@@ -95,7 +95,7 @@ section Adelic
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-variable (F E) in
+
 def genAt (v : Pl (F := F)) : Set (AE F E) := {z : AE F E | ∃ a : AF F, At (evFin F v) a ∧
   evFin F v a ∈ v.adicCompletionIntegers F ∧ ∃ o : 𝓞 E, z = a • inclR (F := F) (AF F) (o : E)}
 
@@ -162,7 +162,7 @@ theorem mul_latAt {n : ℕ} (X : Spc F E n) {v : Pl (F := F)} {s : AE F E}
 end Adelic
 
 theorem exists_basis_at_inert : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (v : Pl (F := F)) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w →
-    ∀ (n : ℕ) (X : Spc F E n), X.L.IsFullLattice E →
+    ∀ (n : ℕ) (X : Spc F E n), X.L.IsLattice E →
     ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] (ι : L →+ AE F E),
       Function.Injective ι → (∀ z : AE F E, At (evFin F v) z ↔ ∃ x, ι x = z) → (∀ x y, ι (x * y) = ι x * ι y) →
       (∀ x, x ∈ Formalism.UG.intL L ↔ ι x ∈ AddSubgroup.closure {z : AE F E | ∃ a : AF F, At (evFin F v) a ∧
@@ -181,7 +181,7 @@ theorem exists_basis_at_inert : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
   have h1mem : ι 1 ∈ AddSubgroup.closure (genAt F E v) := (hint' 1).1 (Formalism.UG.intL L).one_mem
   have hκR : ∀ o : 𝓞 E, κ (o : E) ∈ Formalism.UG.intL L := fun o =>
     (hint' _).2 (by rw [hκ]; exact mul_incl_mem h1mem o)
-  obtain ⟨s, hs⟩ := Submodule.IsLattice.fg E X.L
+  obtain ⟨s, hs⟩ := (Submodule.IsLattice.fg : X.L.FG)
   let M : Submodule (Formalism.UG.intL L) (Fin n → L) :=
     Submodule.span (Formalism.UG.intL L) ((fun t : Fin n → E => fun i => κ (t i)) '' (s : Set (Fin n → E)))
   have key1 : ∀ t ∈ X.L, ∃ y ∈ M, ∀ i, ι (y i) = ι 1 * inclR (F := F) (AF F) (t i) := by
@@ -259,7 +259,7 @@ theorem exists_basis_at_inert : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
   have hQ : ∀ t : Fin n → E, (fun i => κ (t i)) ∈ Submodule.span L (M : Set (Fin n → L)) := by
     intro t
     have ht : t ∈ Submodule.span E (X.L : Set (Fin n → E)) := by
-      rw [hlat.span_eq_top]; trivial
+      rw [Submodule.IsLattice.span_eq_top]; trivial
     induction ht using Submodule.span_induction with
     | mem t ht => exact Submodule.subset_span (hκmem t ht)
     | zero => convert (Submodule.span L (M : Set (Fin n → L))).zero_mem using 1; funext i; simp [hκ0]
@@ -268,19 +268,8 @@ theorem exists_basis_at_inert : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
       convert Submodule.smul_mem _ (κ c) h using 1
       funext i; simp [hκmul]
   have hsp : Submodule.span L (M : Set (Fin n → L)) = ⊤ := by
-    apply top_unique
-    rw [← (Pi.basisFun L (Fin n)).span_eq]
-    refine Submodule.span_le.2 ?_
-    rintro _ ⟨i, rfl⟩
-    rw [Pi.basisFun_apply]
-    have hsingle : (fun j => κ ((Pi.single i (1 : E) : Fin n → E) j)) = Pi.single i (1 : L) := by
-      funext j
-      by_cases h : j = i
-      · subst j
-        simp [hκ1]
-      · simp [Pi.single_eq_of_ne h, hκ0]
-    rw [← hsingle]
-    exact hQ _
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have hfg : M.FG := Submodule.fg_span ((s.finite_toSet).image _)
   obtain ⟨P, hP⟩ := exists_basis_of_fg M hfg hsp
   exact ⟨P, fun x => (hP x).trans (hMem _)⟩

@@ -138,7 +138,43 @@ theorem mjH_succ_noEta (i : Fin D.R.m) : mjH_noEta Z ((i : ℕ) + 1) = HLat.ofCo
 
 theorem mjH_good_noEta (hH : Holds R F) (j : ℕ) : (mjH_noEta Z j).Good :=
   mapSeq_ind_all _ _ D.what₂.Mj Z.jW (fun _ A _ => A.Good)
-    (fun i => ofCoord_good (hH.prim.mLat i) fun v => frame_gram_unit _ (RealDat3.kForm_of (F := F) hH.prim.unif false i v).1)
+    (fun i => by
+      refine ofCoord_good (L := (s0Of R F).M i)
+        (Submodule.IsFullLattice.mk (toIsLattice := hH.prim.mLat i) ?_) fun v =>
+        frame_gram_unit _ (RealDat3.kForm_of (F := F) hH.prim.unif false i v).1
+      let A := R.FW i
+      let b := R.toRealDat.bL F.lv2 false i
+      let S : Set (Fin (R.nW i) → D.what₂.LL) := A.MK
+      have hS : Submodule.span D.what₂.LL S = ⊤ := by
+        obtain ⟨_, _, -, -, hspanKs, -, hspanLL⟩ := (hH.aux.integral i).1
+        have hMK : Submodule.span Ks S = A.WK := (hH.aux.integral i).2.1.2
+        rw [← Submodule.span_span_of_tower Ks D.what₂.LL S, hMK]
+        change Submodule.span D.what₂.LL ((R.FW i).WK : Set (Fin (R.nW i) → D.what₂.LL)) = ⊤
+        rw [← hspanKs, Submodule.span_span_of_tower, hspanLL]
+      apply top_unique
+      intro c _
+      change Fin (Module.finrank D.what₂.LL (R.toRealDat.WL F.lv2 false i)) → D.what₂.LL at c
+      let f := Fintype.linearCombination D.what₂.LL b
+      have hf : f c ∈ R.toRealDat.WL F.lv2 false i := by
+        change Fintype.linearCombination D.what₂.LL b c ∈ _
+        rw [Fintype.linearCombination_apply]
+        exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Module.finBasis _ _ k).2
+      have hfc : f c ∈ Submodule.span D.what₂.LL S := hS.symm ▸ Submodule.mem_top
+      obtain ⟨a, ha⟩ := multiple_mem_span_of_mem_localization_span
+        (nonZeroDivisors (𝓞 D.what₂.LL)) D.what₂.LL S (f c) hfc
+      let t : D.what₂.LL := (a : 𝓞 D.what₂.LL)
+      have hac : t • c ∈ (s0Of R F).M i := by
+        change f (t • c) ∈ A.Mj _ _ _
+        rw [map_smul]
+        have hg := (R.toRealDat.WL F.lv2 false i).smul_mem t hf
+        change (a : 𝓞 D.what₂.LL) • f c ∈ Submodule.span (𝓞 D.what₂.LL) S at ha
+        rw [← algebraMap_smul D.what₂.LL] at ha
+        exact ⟨⟨ha, hg.1⟩, hg.2⟩
+      have ht : t ≠ 0 := RingOfIntegers.coe_ne_zero_iff.mpr (nonZeroDivisors.coe_ne_zero a)
+      let S₀ : Set (Fin ((s0Of R F).dW i) → D.what₂.LL) := (s0Of R F).M i
+      have htc : t • c ∈ Submodule.span D.what₂.LL S₀ :=
+        Submodule.subset_span (s := S₀) hac
+      exact inv_smul_smul₀ ht c ▸ (Submodule.span D.what₂.LL S₀).smul_mem t⁻¹ htc)
     (fun _ => unitLat_good _) j
 
 theorem jM_basis_noEta (hH : Holds R F) (j : ℕ) : LinearIndependent ℂ (fun k => jM_noEta Z j ((mjH_noEta Z j).b k)) ∧
@@ -168,9 +204,12 @@ def mjIds_noEta (Xd : DivX D) (h : Xd.MjH = mjH_noEta Z) : MjHIds D A3.A Xd (A3.
   eW i := castV ((mjH_succ_noEta Z i).symm.trans (congrFun h _).symm)
 
 theorem mjHTie_of_eq_noEta (Xd : DivX D) (h : Xd.MjH = mjH_noEta Z) (hj : HEq Xd.jM (jM_noEta Z)) :
-    MjHTie D A3.A Xd (A3.indefDown (s0Of R F)) Z.jW (mjIds_noEta Z Xd h) where
-  j_eq i x := map_castV _ _ D.what₂.Mj Z.jW h hj i _ x
-  hlat i := hLatTie_castV ((mjH_succ_noEta Z i).symm.trans (congrFun h _).symm)
+    MjHTie D A3.A Xd (A3.indefDown (s0Of R F)) Z.jW (mjIds_noEta Z Xd h) := by
+  constructor
+  · intro i x
+    exact map_castV _ _ D.what₂.Mj Z.jW h hj i _ x
+  · intro i
+    exact hLatTie_castV ((mjH_succ_noEta Z i).symm.trans (congrFun h _).symm)
 
 end GlobalTheory.Mem.R3
 
@@ -448,8 +487,63 @@ theorem ij_jw_of_read_noEta : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0
     exact ijIdx_eq D A3.A F.P0 F.ψ0 (A3.fam3.toSub2 (zsOf R F)) Y.tup Y.eMt (A3.indefDown (s0Of R F)) Xd Z.jW i t (JM.eW i)
       (hOP i t) (hθ i t) (hM.j_eq i) (hM.hlat i).lat (hT i t) w
   · rw [hI.jw_def _ _ _ (by omega) (by omega)]
-    exact GlobalTheory.T.lattice_jw_index_eq_concrete_lift_index D A3.A F.P0 F.ψ0 (A3.fam3.toSub2 (zsOf R F)) Y.tup Y.eMt i t (hOP i t) (Y.formsL i t)
-      (BlockDat.lf_lE_form (hB i t)) (BlockDat.lf_Tl_isLattice (hB i t)).span_eq_top (hT i t) w
+    refine GlobalTheory.T.lattice_jw_index_eq_concrete_lift_index D A3.A F.P0 F.ψ0 (A3.fam3.toSub2 (zsOf R F)) Y.tup Y.eMt i t (hOP i t) (Y.formsL i t)
+      (BlockDat.lf_lE_form (hB i t)) ?_ (hT i t) w
+    classical
+    let K := D.what₂.LL
+    let B := A3.A.fam.L i t
+    let S := B.S
+    let ℓ := A3.A.fam.lvlA F.P0 F.ψ0
+    let Zl := (A3.fam3.toSub2 (zsOf R F)).Zl i t
+    have hGood := (hB i t).ok.good
+    change Submodule.span K (↑(B.Tl ℓ Zl) : Set (Fin (B.dZ ℓ Zl) → K)) = ⊤
+    apply top_unique
+    intro z _
+    let x := (B.fE ℓ Zl).mulVec z
+    have hdenom (c : S.Cl) : ∃ d : 𝓞 K, d ≠ 0 ∧ d • S.I x c ∈ S.Nab c := by
+      obtain ⟨g, hg⟩ := (hGood.nab_lat c).fg
+      obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 K)) g
+        (fun y => S.pair y (S.I x c))
+      refine ⟨d, nonZeroDivisors.coe_ne_zero d, ?_⟩
+      have hdual : (d : 𝓞 K) • S.I x c ∈ Formalism.HermitianLatticesTheory.dual S.pair (S.Nab c) := by
+        rw [Formalism.HermitianLatticesTheory.dualBasic_mem_dual]
+        intro y hy
+        refine Submodule.span_induction
+          (p := fun y _ => S.pair y ((d : 𝓞 K) • S.I x c) ∈ (1 : Submodule (𝓞 K) K))
+          ?_ ?_ ?_ ?_ (hg.symm ▸ hy)
+        · intro y hy
+          rw [LinearMap.map_smul_of_tower, Submodule.mem_one]
+          exact hd y hy
+        · simp
+        · intro y y' _ _ hy hy'
+          rw [map_add, LinearMap.add_apply]
+          exact add_mem hy hy'
+        · intro a y _ hy
+          obtain ⟨a', ha'⟩ := Formalism.DivisionValues.exponent_index_lattice.hstar (K := K) a
+          rw [← algebraMap_smul K a y, LinearMap.map_smulₛₗ, LinearMap.smul_apply]
+          change star (algebraMap (𝓞 K) K a) • _ ∈ (1 : Submodule (𝓞 K) K)
+          rw [← ha', algebraMap_smul]
+          exact Submodule.smul_mem _ _ hy
+      exact hGood.del_le c (by simpa using hGood.dual_le c _ hdual)
+    choose d hd0 hd using hdenom
+    let a := ∏ c, d c
+    have ha : a ≠ 0 := Finset.prod_ne_zero_iff.mpr fun c _ => hd0 c
+    have hax : a • x ∈ S.nabLat := by
+      apply (Formalism.DivisionValues.ValuationLatticeField.mem_valLatF S.I S.Nab _).2
+      intro c
+      rw [LinearMap.map_smul_of_tower, Pi.smul_apply]
+      obtain ⟨b, hb⟩ := Finset.dvd_prod_of_mem d (Finset.mem_univ c)
+      rw [show a = d c * b from hb, mul_comm, mul_smul]
+      exact (S.Nab c).smul_mem b (hd c)
+    have haz : a • z ∈ B.Tl ℓ Zl := by
+      apply BlockDat.lf_cutZ_le (hB i t)
+      change (B.fE ℓ Zl).mulVec (a • z) ∈ S.nabLat
+      rwa [Matrix.mulVec_smul]
+    have haK : (a : K) ≠ 0 := RingOfIntegers.coe_ne_zero_iff.mpr ha
+    have hmem : (a : K) • z ∈ Submodule.span K (↑(B.Tl ℓ Zl) : Set _) := by
+      rw [algebraMap_smul K a z]
+      exact Submodule.subset_span haz
+    exact inv_smul_smul₀ haK z ▸ (Submodule.span K _).smul_mem (a : K)⁻¹ hmem
 
 end GlobalTheory.Mem.ReadIndexNumerics
 

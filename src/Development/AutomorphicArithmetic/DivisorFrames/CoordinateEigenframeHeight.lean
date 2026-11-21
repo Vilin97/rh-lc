@@ -79,9 +79,9 @@ private theorem core {Z : Model Xo c (algebraMap (𝓞 c.F) c.F)} {R k C : Type}
     (b₂ : f₂.Tri ψ g s) (J : k →+* C) (χ : R →+* C) (hχ : χ = J.comp ψ) (p : ℕ) (w : Pad.Sym E →₀ ℤ)
     (hw : ∀ a ∈ w.support, a.1 p = false) {r : k} (hr : r ≠ 0) :
     Real.log ‖J r‖ + (w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap χ ≫ x₀)
-        (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ f₂.v τ i) p (a.1 p) a.2.2) =
+        (fun τ i => spMap (dualMap χ) ≫ f₂.v τ i) p (a.1 p) a.2.2) =
       Real.log ‖J (r * ((∏ z : Letter Dw, s z.1 z.2 ^ (-expo Dw w z) : kˣ) : k))‖ +
-        w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap J ≫ x) (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap J) ≫ g.v τ i) p false a.2.2 := by
+        w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap J ≫ x) (fun τ i => spMap (dualMap J) ≫ g.v τ i) p false a.2.2 := by
   subst hχ
   have hx : spMap J ≫ x = spMap (J.comp ψ) ≫ x₀ := by
     rw [b₂.1, ← Category.assoc, sp_comp]
@@ -95,9 +95,9 @@ private theorem core {Z : Model Xo c (algebraMap (𝓞 c.F) c.F)} {R k C : Type}
       simp only [GlobalTheory.GradedPieces.dual_comp] at this
       rw [hg' τ i, funext (hf' τ)]
       exact this)
-  have ef : (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (J.comp ψ)) ≫ f₂.v τ i) = f'.v :=
+  have ef : (fun τ i => spMap (dualMap (J.comp ψ)) ≫ f₂.v τ i) = f'.v :=
     funext fun τ => funext fun i => (hf' τ i).symm
-  have eg : (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap J) ≫ g.v τ i) = g'.v :=
+  have eg : (fun τ i => spMap (dualMap J) ≫ g.v τ i) = g'.v :=
     funext fun τ => funext fun i => (hg' τ i).symm
   rw [← hx, ef, eg, Finsupp.sum, Finsupp.sum, Finset.sum_congr rfl fun a ha => by rw [hw a ha]]
   simp only [key, mul_add, Finset.sum_add_distrib, sum_letters]
@@ -116,7 +116,7 @@ private theorem lg_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
         (eqn (divOf Y (expo Dw w)) (below y.1))⁻¹ : Y.Y.Fnˣ) : Y.Y.Fn))) +
       (-Real.log (ε.w (resP v)) / Real.log (resP v)) *
         w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom) ≫ stalkPt Y.Y (below y.1) ≫ Y.π ≫ genι Z)
-          (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom)) ≫ (Y.gr_spec (below y.1)).choose_spec.choose.v τ i) (resP v) (a.1 (resP v)) a.2.2 := dif_pos hp.out
+          (fun τ i => spMap (dualMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom)) ≫ (Y.gr_spec (below y.1)).choose_spec.choose.v τ i) (resP v) (a.1 (resP v)) a.2.2 := dif_pos hp.out
 
 private theorem pullback_fin_relation {A A' B d lr lb S S' : ℝ} (h0 : A = A') (h1 : A' = d * lr) (h2 : B = d * lb)
     (h3 : lr + S = lb + S') : A + d * S = B + d * S' := by

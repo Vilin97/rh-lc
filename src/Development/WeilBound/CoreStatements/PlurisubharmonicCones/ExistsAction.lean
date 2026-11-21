@@ -53,7 +53,7 @@ theorem exists_action (h : 𝔐.IsLinPtOf z P MV A) :
     refine TrivSqZeroExt.ext (hL ?_) (hL ?_)
     · simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using congrArg TrivSqZeroExt.fst huv
     · simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using congrArg TrivSqZeroExt.snd huv
-  refine MB.inj (Over.OverMorphism.ext (LieHomOk.ext_of_spMap_injective (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L))
+  refine MB.inj (Over.OverMorphism.ext (LieHomOk.ext_of_spMap_injective (dualMap (algebraMap (𝓞 L) L))
     hinj t'.G.hom _ _
     ((Over.w (MB.pt _)).trans (Over.w (MB.pt _)).symm) ?_))
   have h1 : (MV.pt (A.ρ a x) ≫ P.τ.q ≫ P.e.hom).left ≫ m'.φ = _ := hl ⟨A.ρ a x, A.stable a x x.2⟩
@@ -65,7 +65,7 @@ theorem exists_action (h : 𝔐.IsLinPtOf z P MV A) :
   generalize MV.pt x ≫ P.τ.q ≫ P.e.hom = w at h2
   have h4 : (P.tB.act.act a).left ≫ m'.φ = m'.φ ≫ (t'.act.act a).left := m'.act a
   change (w.left ≫ (P.tB.act.act a).left) ≫ m'.φ =
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (MB.pt (A.f x)).left ≫ (t'.act.act a).left
+    spMap (dualMap (algebraMap (𝓞 L) L)) ≫ (MB.pt (A.f x)).left ≫ (t'.act.act a).left
   rw [Category.assoc, h4]
   exact (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ (t'.act.act a).left) h2).trans (Category.assoc _ _ _))
 

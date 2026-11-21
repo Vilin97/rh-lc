@@ -98,7 +98,7 @@ theorem UpperTheory.Gal.KunnethLefschetz.pnCls_holds :
           iso_sub eU0 (l ^ j) _ (hA j (d + 1) _ (by push_cast; omega)))
         apply hinj
         rw [h0, map_zero]
-      · have hinj : Function.Injective ι.base := (IsClosedImmersion.base_closed ι).injective
+      · have hinj : Function.Injective ι.base := ι.isClosedEmbedding.injective
         have hVU : ι ⁻¹ᵁ U' = U := by
           apply TopologicalSpace.Opens.ext
           rw [hU]

@@ -60,7 +60,7 @@ theorem cancel_frac {A : Type} [CommRing A] (K : Type) [Field K] [NumberField K]
   exact congrFun (congrArg DFunLike.coe (IsLocalization.ringHom_ext (nonZeroDivisors (𝓞 K)) hc)) x
 
 theorem wB_left (b : Bool) (a : PureType.lat hP (sgnRt H b)) :
-    (wB X b a).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 X.K) X.K)) ≫ (X.C b).v.left ≫ (X.ψ b a).left := by
+    (wB X b a).left = spMap (dualMap (algebraMap (𝓞 X.K) X.K)) ≫ (X.C b).v.left ≫ (X.ψ b a).left := by
   unfold wB; rw [Over.comp_left, Over.comp_left, bK_left]
 
 theorem imageIff : ImageIff X := by
@@ -80,10 +80,10 @@ theorem imageIff : ImageIff X := by
 
 omit [NumberField E] [IsCMField E] in
 theorem bc_epsx {R V : Type} [CommRing R] [CommRing V] (f : R →+* V) (x : R) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (GlobalTheory.CompanionTheory.Ar.epsMul x) = spMap (GlobalTheory.CompanionTheory.Ar.epsMul (f x)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
+    spMap (dualMap f) ≫ spMap (GlobalTheory.CompanionTheory.Ar.epsMul x) = spMap (GlobalTheory.CompanionTheory.Ar.epsMul (f x)) ≫ spMap (dualMap f) := by
   rw [isogeny_decomposition_product.spMap_comp, isogeny_decomposition_product.spMap_comp]
   congr 1
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, GlobalTheory.CompanionTheory.Ar.epsMul, TrivSqZeroExt.algebraMap_eq_inl, mul_comm]
+  ext a <;> simp [dualMap, GlobalTheory.CompanionTheory.Ar.epsMul, TrivSqZeroExt.algebraMap_eq_inl, mul_comm]
 
 theorem lam_smul_w0 (b : Bool) (a : PureType.lat hP (sgnRt H b)) :
     lam X b (H.w0 • a) = algebraMap (𝓞 X.K) X.K (X.ω b) • lam X b a := by

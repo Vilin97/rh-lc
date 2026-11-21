@@ -21,8 +21,9 @@ theorem const_mem_of_stable {R κ : Type} [CommRing R] (hR : ∀ n : ℕ, IsUnit
     | zero =>
       refine ⟨fun k => PowerSeries.mk fun n => coeff (n + 1) (v k), ?_⟩
       convert hv using 1
+      funext k
       rw [add_comm]
-      exact (PowerSeries.eq_X_mul_shift_add_const (v k)).symm
+      simpa [c, Pi.add_apply, Pi.smul_apply, smul_eq_mul] using (PowerSeries.eq_X_mul_shift_add_const (v k)).symm
     | succ m ih =>
       obtain ⟨h, hh⟩ := ih
       obtain ⟨u, hu⟩ := (hR m).exists_left_inv
@@ -141,8 +142,8 @@ theorem stable_EN {κ : Type} [Fintype κ] (Ξ : κ → ι → AhatE O K l e) (�
     linear_combination (-(s * Γ j i)) * hx' j
   refine ⟨Ehat O K l e * (uhat O K l e * dHat O K l e (x i)) + ((p : Ahat O K l e) - N) * ν * x i +
     ∑ j, x j * γ j i, ?_⟩
-  rw [h1, map_mul, map_pow, map_pow, map_add (f := _), map_add (f := _), map_mul, map_mul, map_mul φ _ (x i), map_mul φ _ ν, map_sub, map_natCast,
-    map_natCast, ← hs]
+  rw [h1, map_mul, map_pow, map_pow, φ.map_add, φ.map_add, map_mul, map_mul, map_mul φ _ (x i), map_mul φ _ ν, φ.map_sub, map_natCast φ p,
+    map_natCast φ N, ← hs]
   rw [map_mul] at h3
   linear_combination h3 - h6 - φ (x i) * h4 + w i * h5 - N * φ ν * hx' i
 
@@ -183,7 +184,8 @@ theorem grading [NeZero a] (P : PhiMod O K l e a ι) (hP : ∀ m ∈ P.M, P.EN m
         obtain ⟨x, hx⟩ := hv i
         obtain ⟨x', hx'⟩ := hv' i
         refine ⟨x + x', ?_⟩
-        simp only [mul_add, map_add (f := _), hx, hx', Pi.add_apply, add_mul, Finset.sum_add_distrib]
+        simp only [mul_add, φ.map_add, hx, hx', Pi.add_apply]
+        simp only [map_add ψ, φ.map_add, add_mul, Finset.sum_add_distrib, mul_add]
       zero_mem' := fun i => ⟨0, by simp⟩
       smul_mem' := fun c v hv i => by
         obtain ⟨x, hx⟩ := hv i
@@ -317,7 +319,7 @@ theorem not_next [NeZero a] (P : PhiMod O K l e a ι) (i : ℤ) {y : Vec K a ι}
         ∑ j', hat O l e (P.mx τ j j') * φ (toHat O K l e ⟨m k τ j', hm k τ j'⟩) := by
       rw [← hat_mulVec (hX τ) (hm k τ), ← hv]
       rfl
-    conv_lhs => rw [hr k τ, map_add (f := _), add_mul]
+    conv_lhs => rw [hr k τ, φ.map_add, add_mul]
     congr 1
     rw [h4, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j' _ => ?_
@@ -332,10 +334,10 @@ theorem not_next [NeZero a] (P : PhiMod O K l e a ι) (i : ℤ) {y : Vec K a ι}
       (hμ (τ, j, j')).trans (by rw [map_pow])
     have h7 : ∑ k, r k τ * toHat O K l e ⟨m k τ j', hm k τ j'⟩ =
       ofAl O K l e (ρ τ j') + Ehat O K l e ^ (α + p) * s τ j' := hρ τ j'
-    rw [h7, map_add (f := _), map_mul, map_mul, map_pow, h6]
+    rw [h7, φ.map_add, map_mul, map_mul, map_pow, h6]
     ring
   have h8 := hx τ j
-  rw [h1, h3, h5, mul_add, map_add (f := _), h8]
+  rw [h1, h3, h5, mul_add, φ.map_add, h8]
   simp only [map_mul, map_pow]
   ring
 

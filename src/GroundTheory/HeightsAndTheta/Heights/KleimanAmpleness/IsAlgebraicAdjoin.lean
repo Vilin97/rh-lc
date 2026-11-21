@@ -163,7 +163,8 @@ theorem isAlgebraic_adjoin [W.IsPrime] (j : Fin m)
         rw [phi_apply, Ne, map_eq_zero_iff]
         exact hg
       have hrel := (map_eq_zero_iff W _).2 hfg
-      simp only [map_sub, map_mul] at hrel
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_mul] at hrel
       have e : algebraMap R L (Ideal.Quotient.mk W (X ⟨Sum.inr (), i⟩)) = phi W f * eta W j / phi W g := by
         rw [eq_div_iff hg0, phi_apply, phi_apply]
         linear_combination hrel
@@ -177,7 +178,10 @@ theorem isAlgebraic_adjoin [W.IsPrime] (j : Fin m)
       refine hT _ ?_
       have := hA (C c)
       rwa [phi_apply, baseRen_C] at this
-    | add f g hf hg => rw [map_add (f := _), map_add (f := _)]; exact hf.add hg
+    | add f g hf hg =>
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add (f := _), map_add (f := _)]
+      exact hf.add hg
     | mul_X f v hf => rw [map_mul, map_mul]; exact hf.mul (hvar v)
   refine ⟨fun x => ?_⟩
   obtain ⟨a, d, -, rfl⟩ := IsFractionRing.div_surjective (A := R) x

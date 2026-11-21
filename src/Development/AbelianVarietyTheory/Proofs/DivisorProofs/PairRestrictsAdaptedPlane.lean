@@ -65,6 +65,7 @@ theorem avg_conv : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field 
   have hψ : IsStd B.ψ := hpair.base.std
   haveI : Nontrivial (AF F) := (inferInstance : Nontrivial (InfiniteAdeleRing F × FiniteAdeleRing (𝓞 F) F))
   obtain ⟨D, hDinj, hD⟩ := GlobalTheory.T.darboux_model_coordinates F E σ B n d X W M χX χW om r s r' s' hpair d' hd' dd hdd
+  change ∀ u, dd.e (incM F u) = GlobalTheory.SiegelConv.ratP (D u) at hD
   obtain ⟨hPinj, hPy⟩ := GlobalTheory.T.pair_adapted_model_restriction F E σ B n d X W M χX χW om r s r' s' hpair d₁ W₁ H' i₀ i₁ M₁ om₁ r₁ s₁ hH hpair₁
   let κ := (Fin n × Fin d) ⊕ (Fin n × Fin d)
   let P := GlobalTheory.SiegelConv.lagP n H'.ι H'.x
@@ -81,6 +82,8 @@ theorem avg_conv : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field 
       ext i j; simp [Matrix.vecMulVec_apply]
     have h0' : incM F H'.ι * ((0 : Matrix (Fin d₁) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ) = 0 := by
       rw [Matrix.zero_mul, Matrix.mul_zero]
+    change symp (cA σ) (-1) (incM F W.J) (dbl (incM F X.J))
+      (incM F H'.ι * (Z * _) + _) (incM F H'.ι * (0 * _) + _) = 0 at hiso
     rw [h0, h0', add_zero, zero_add] at hiso
     have hform := dd.form (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)))ᵀ)) (Matrix.vecMulVec (incV F H'.x) Y)
     rw [hiso] at hform
@@ -100,6 +103,8 @@ theorem avg_conv : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field 
     simp only [one_smul] at hp hq
     have hiso := GlobalTheory.T.pair_adapted_matrix_phase_identity F E σ B n d X W M χX χW om r s r' s' hpair d₁ W₁ H' i₀ i₁ hH (incM F p.1) (incM F q.1)
       (fun i => inclR (F := F) (AF F) (p.2 i)) (fun i => inclR (F := F) (AF F) (q.2 i))
+    change symp (cA σ) (-1) (incM F W.J) (dbl (incM F X.J))
+      (incM F H'.ι * (incM F p.1 * _) + _) (incM F H'.ι * (incM F q.1 * _) + _) = 0 at hiso
     rw [← hp, ← hq] at hiso
     have hform := dd.form (incM F (P p)) (incM F (P q))
     rw [hiso, hD, hD] at hform
@@ -122,7 +127,9 @@ theorem avg_conv : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field 
     ring
   have hL_inv : ∀ (t : AF F), ∀ w ∈ L, ∀ φ ∈ schA F κ, l (schr B.ψ (t • GlobalTheory.SiegelConv.ratP w) φ) = l φ := by
     rintro t _ ⟨_, ⟨p, rfl⟩, rfl⟩ φ hφ
-    have e : t • GlobalTheory.SiegelConv.ratP (D (P p)) = dd.e (t • incM F (P p)) := by rw [map_smul, hD]
+    have e : t • GlobalTheory.SiegelConv.ratP (D (P p)) = dd.e (t • incM F (P p)) := by
+      rw [map_smul]
+      exact congrArg (t • ·) (hD (P p)).symm
     rw [e, GlobalTheory.SiegelConv.smul_incM_lagP]
     exact hinvZ _ _ φ hφ
   let A := D ∘ₗ GlobalTheory.SiegelConv.vvMap F (n := n) H'.y

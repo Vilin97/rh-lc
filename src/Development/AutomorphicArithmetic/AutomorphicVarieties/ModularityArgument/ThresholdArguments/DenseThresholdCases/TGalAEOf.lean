@@ -80,7 +80,7 @@ private theorem rc_chars (hE : GlobalTheory.Published.LanglandsExhaustionGL) (hZ
       induction L with
       | nil =>
         intro _
-        show (WD.lpZero h).mono0
+        show (WD.lpZero : WD h).mono0
         exact (WD.monodromyZero_ofWeilDeligneRepClass_iff _).2 rfl
       | cons Δ L ih =>
         intro hL'

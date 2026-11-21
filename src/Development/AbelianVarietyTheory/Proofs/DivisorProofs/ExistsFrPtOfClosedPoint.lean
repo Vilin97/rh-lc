@@ -242,17 +242,17 @@ theorem exists_change {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
   choose w hw1 hw2 hw3 using (fun i => h.1 i)
   choose w' hw1' hw2' hw3' using (fun i => h'.1 i)
   have hbt := (isTanBasis_bc he (ι.toRingHom.comp φ)).1
-  have hq2 : ∀ j, (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι.toRingHom) ≫ w j) ≫ Y.oF.t.G.hom =
+  have hq2 : ∀ j, (spMap (dualMap ι.toRingHom) ≫ w j) ≫ Y.oF.t.G.hom =
       spMap (algebraMap k (DualNumber k)) ≫ GlobalTheory.AllWt.ptF z := fun j => by
     rw [Category.assoc, hw1, hpt, ← Category.assoc, ← Category.assoc]
     congr 1
     simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
     congr 2
-    ext s <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-  have hq1 : (fun j => (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι.toRingHom) ≫ w j) ≫ Y.m0.toSABMap.φ) = y'.u σ := funext fun j => by
+    ext s <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  have hq1 : (fun j => (spMap (dualMap ι.toRingHom) ≫ w j) ≫ Y.m0.toSABMap.φ) = y'.u σ := funext fun j => by
     rw [Category.assoc, hw2, hm.2.1]
   have hq3 : ∀ j, IsCombAtG Y.t (spMap (ι.toRingHom.comp φ) ≫ ξ) (bcV Y.t (ι.toRingHom.comp φ) e) (M.map ι j)
-      ((spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι.toRingHom) ≫ w j) ≫ Y.m.φ) := fun j => by
+      ((spMap (dualMap ι.toRingHom) ≫ w j) ≫ Y.m.φ) := fun j => by
     have := GlobalTheory.LocM.Cht.FlagBase.isCombAtG_bc Y.t ι.toRingHom (hw3 j)
     rw [sp_sp] at this
     rw [← bcV_bcV, Category.assoc]
@@ -260,7 +260,7 @@ theorem exists_change {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
   have hM : M' = Matrix.of a * M.map ι := by
     ext1 i
     refine funext_iff.1 ?_
-    have h1 : IsCombAtG Y.oF.t (GlobalTheory.AllWt.ptF z) (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι.toRingHom) ≫ w j) (a i) (w' i) :=
+    have h1 : IsCombAtG Y.oF.t (GlobalTheory.AllWt.ptF z) (fun j => spMap (dualMap ι.toRingHom) ≫ w j) (a i) (w' i) :=
       (comb_push Y.m0.toSABMap hq2 (a i) (hw1' i)).2 (by rw [hq1, hw2', hx]; exact ha i)
     have h2 := comb_vecMul hbt hq3 (hz' ▸ (comb_push Y.m hq2 (a i) (hw1' i)).1 h1)
     exact (he.2 k _ _ (tan_of_comb hbt h2)).unique (hw3' i) h2
@@ -328,7 +328,7 @@ theorem images_eigenBasis {E : Type} [Field E] [NumberField E] [IsCMField E] {H 
         ∃ cf : Fin (Dw.mult σ) → T.V, IsCombAtG Y.t xV v cf u) ∧
       ∀ (cf : Fin (Dw.mult σ) → T.V) (u : Sp (DualNumber T.V) ⟶ Y.t.G.left)
         (w : Sp (DualNumber T.Fr) ⟶ Y.oF.t.G.left), IsCombAtG Y.t xV v cf u →
-        w ≫ Y.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ u →
+        w ≫ Y.m.φ = spMap (dualMap (algebraMap T.V T.Fr)) ≫ u →
         (letI := io.toAlgebra; IsCombAt y₀.1.x (y₀.1.u σ) (fun j => algebraMap T.V T.Fr (cf j))
           (w ≫ Y.m0.toSABMap.φ)) := by
   let _ := io.toAlgebra
@@ -367,7 +367,7 @@ theorem images_eigenBasis {E : Type} [Field E] [NumberField E] [IsCMField E] {H 
     have hov' : ∀ j, (u' j ≫ k.φ) ≫ t₂.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr)) ≫ 𝟙 _ := by
       intro j
       rw [Category.assoc, k.cart.1.w, ← Category.assoc, hov]
-    have hvec : ∀ j, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ (B (ub σ j)).left = (u' j ≫ k.φ) ≫ q.φ := by
+    have hvec : ∀ j, spMap (dualMap (algebraMap T.V T.Fr)) ≫ (B (ub σ j)).left = (u' j ≫ k.φ) ≫ q.φ := by
       intro j
       rw [hB, hq₀, hq, ← Category.assoc, ← hu2, Category.assoc, ← Category.assoc m2.φ, hk2]
       simp only [Category.assoc, h2]
@@ -391,7 +391,7 @@ theorem images_eigenBasis {E : Type} [Field E] [NumberField E] [IsCMField E] {H 
           rw [← hh]; exact Over.w _
         rw [Category.assoc, m'.cart.1.w, ← Category.assoc, e2, Category.comp_id]
         apply hmono.right_cancellation
-        have e3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ spMap (algebraMap T.V (DualNumber T.V)) ≫ xV =
+        have e3 : spMap (dualMap (algebraMap T.V T.Fr)) ≫ spMap (algebraMap T.V (DualNumber T.V)) ≫ xV =
             spMap (algebraMap T.Fr (DualNumber T.Fr)) ≫ yy ≫ Y.j := by
           rw [← Category.assoc, spMap_comp', dualMap_comp_alg, ← spMap_comp', Category.assoc, hxV]
         show (spMap _ ≫ yy) ≫ Y.j = w ≫ Y.oF.t.G.hom ≫ Y.jQ ≫ pullback.fst _ _

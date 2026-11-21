@@ -92,7 +92,7 @@ theorem isUnit_of_span {r : ℕ} (e : Module.Basis (Fin r) R M) (x : Fin r → M
   ext i k
   have := congrArg (fun y => e.repr y i) (hc k)
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+    simp only [map_sum, map_smul, Finset.sum_apply', Finsupp.smul_apply,
     smul_eq_mul, e.repr_self, Finsupp.single_apply] at this
   simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.one_apply, mul_comm (e.repr _ _), this, eq_comm]
 
@@ -259,7 +259,7 @@ theorem exists_et (I : WIo R RA RW inclR φR gR πA)
       have h := repr_semi (e T) (TWmap φR T) φR (phi_smul _ T) (x j) i
       rw [hφx] at h
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+        simp only [map_sum, map_smul, Finset.sum_apply', Finsupp.smul_apply,
         smul_eq_mul] at h
       simp only [Matrix.mul_apply, Matrix.map_apply, Matrix.of_apply, hA]
       rw [← h]

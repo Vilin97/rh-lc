@@ -357,7 +357,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.intertw :
         (fun y => by
           obtain ⟨v, hv, hr⟩ := (hsl y).2 m₂
           refine ⟨w (HH y) • v, τ₂.smul_mem _ hv, ?_⟩
-          filter_upwards [(quasiMeasurePreserving_mk (Gam K 2) μ₂).ae (Lp.coeFn_smul (w (HH y)) v), hr] with m e1 e2
+          filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K 2) μ₂) (Lp.coeFn_smul (w (HH y)) v), hr] with m e1 e2
           rw [e1, Pi.smul_apply, e2, hbf, hh_lv, zero_add, smul_eq_mul])
         (T g)
       simpa only [key] using this
@@ -370,7 +370,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.intertw :
         (fun y => by
           obtain ⟨v, hv, hr⟩ := (hsl y).1 m₁
           refine ⟨w (HH y) • v, τ₁.smul_mem _ hv, ?_⟩
-          filter_upwards [(quasiMeasurePreserving_mk (Gam K 2) μ₂).ae (Lp.coeFn_smul (w (HH y)) v), hr] with m e1 e2
+          filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K 2) μ₂) (Lp.coeFn_smul (w (HH y)) v), hr] with m e1 e2
           rw [e1, Pi.smul_apply, e2, hbf, hh_lv, zero_add, smul_eq_mul])
         (T g)
       simpa only [key] using this

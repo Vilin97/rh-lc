@@ -16,12 +16,12 @@ open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestrictio
 namespace CoverDenseAlt
 
 theorem dualMap_comp_dualMap' {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (f : R →+* R')
-    (g : R' →+* R'') : (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) := by
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    (g : R' →+* R'') : (dualMap g).comp (dualMap f) = dualMap (g.comp f) := by
+  ext a <;> simp [dualMap]
 
 theorem dualMap_comp_epsMul_ample_line_bundles {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') (s : R) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap f).comp (GlobalTheory.CompanionTheory.Ar.epsMul s) = (GlobalTheory.CompanionTheory.Ar.epsMul (f s)).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, GlobalTheory.CompanionTheory.Ar.epsMul, TrivSqZeroExt.algebraMap_eq_inl]
+    (dualMap f).comp (GlobalTheory.CompanionTheory.Ar.epsMul s) = (GlobalTheory.CompanionTheory.Ar.epsMul (f s)).comp (dualMap f) := by
+  ext a <;> simp [dualMap, GlobalTheory.CompanionTheory.Ar.epsMul, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem spMap_comp_spMap_ample_line_bundles {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (f : R →+* R')
     (g : R' →+* R'') : spMap g ≫ spMap f = spMap (g.comp f) := by
@@ -91,12 +91,12 @@ theorem tangent_vector_extends_over_integers : ∀ (O K : Type) [CommRing O] [Is
     have h1 := hjK e
     have h2 := hjP e
     simp only [LieModel.Lifts, Category.comp_id] at h1 h2
-    have h3 : (MK.pt (jK e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ (MP.pt (jP e)).left := by
+    have h3 : (MK.pt (jK e)).left = spMap (dualMap c) ≫ (MP.pt (jP e)).left := by
       rw [h1, h2, ← Category.assoc, spMap_comp_spMap_ample_line_bundles, dualMap_comp_dualMap', hc]
     rw [h3, hes', MP.smul, MK.smul, hvw, ← Category.assoc, ← Category.assoc]
     congr 1
-    have h4 := spMap_comp_spMap_ample_line_bundles (GlobalTheory.CompanionTheory.Ar.epsMul (algebraMap O (Localization.AtPrime P) (s : O))) (GlobalTheory.CompanionTheory.Ar.dualMap c)
-    have h5 := spMap_comp_spMap_ample_line_bundles (GlobalTheory.CompanionTheory.Ar.dualMap c) (GlobalTheory.CompanionTheory.Ar.epsMul (c (algebraMap O (Localization.AtPrime P) (s : O))))
+    have h4 := spMap_comp_spMap_ample_line_bundles (GlobalTheory.CompanionTheory.Ar.epsMul (algebraMap O (Localization.AtPrime P) (s : O))) (dualMap c)
+    have h5 := spMap_comp_spMap_ample_line_bundles (dualMap c) (GlobalTheory.CompanionTheory.Ar.epsMul (c (algebraMap O (Localization.AtPrime P) (s : O))))
     rw [← RingHom.comp_apply c, hc] at h5
     simp only [spMap] at h4 h5 ⊢
     rw [h4, dualMap_comp_epsMul_ample_line_bundles, h5]

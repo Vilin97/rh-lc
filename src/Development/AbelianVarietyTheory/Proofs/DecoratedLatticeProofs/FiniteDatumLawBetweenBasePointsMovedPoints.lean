@@ -133,8 +133,8 @@ variable {l : I.Laws} {Z : TC.Later B (I.cols l)} {u : B.Word} {a : I.ι} {Ch : 
 
 set_option maxHeartbeats 1000000 in
 theorem exists_move (hI : I.Ok) (hA : A.Is) (j : ℕ) (hj : j ≤ B.R.m) (β : Ch j) (κ : A.U j β)
-    (hr : ∀ P ∈ I.Q a, ∃ M : Matrix (Fin (B.R.N j)) (Fin (B.R.N j)) B.host.E, ∀ r s, adAt B.host.F P ((finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) κ.1 : Matrix (Fin (B.R.N j)) (Fin (B.R.N j)) (Formalism.L2.DIV.AfE B.host.F B.host.E)) r s) = algebraMap B.host.E _ (M r s))
-    (κ₀ : TC.GA B (B.R.N j)) (h0 : finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) κ.1 = κ₀.1) :
+    (hr : ∀ P ∈ I.Q a, ∃ M : Matrix (Fin (B.R.N j)) (Fin (B.R.N j)) B.host.E, ∀ r s, adAt B.host.F P ((finM _ (rankN (I.rec7 l Z) j hj) κ.1 : Matrix (Fin (B.R.N j)) (Fin (B.R.N j)) (Formalism.L2.DIV.AfE B.host.F B.host.E)) r s) = algebraMap B.host.E _ (M r s))
+    (κ₀ : TC.GA B (B.R.N j)) (h0 : finM _ (rankN (I.rec7 l Z) j hj) κ.1 = κ₀.1) :
     ∃ g : (I.stp u a j).G (A.b0 j β), (I.stp u a j).gam (A.b0 j β) g = 1 ∧
       TC.PtOf (κ₀ * A.kb j β) ((I.stp u a j).act (A.b0 j β) g (A.p0 j β)).1.1 ∧
       cosetIn ((I.stp u a j).act (A.b0 j β) g (A.p0 j β)) = cosetIn (A.p0 j β) ∧
@@ -145,8 +145,8 @@ theorem exists_move (hI : I.Ok) (hA : A.Is) (j : ℕ) (hj : j ≤ B.R.m) (β : C
   obtain ⟨x, hx⟩ := ((hA.U j hj _ κ.1).1 κ.2).2
   obtain rfl : κ₀ = x.1 := Units.ext (h0.symm.trans hx.symm)
   obtain ⟨hb, hc⟩ := hA.rep j hj c
-  have hV : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).gram = 1 := hI.gram_X j
-  have hJ : gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj = 1 := by
+  have hV : ((I.rec7 l Z).sp.X j).gram = 1 := hI.gram_X j
+  have hJ : gramN (I.rec7 l Z) j hj = 1 := by
     unfold gramN
     rw [hV]
     simp
@@ -164,8 +164,8 @@ theorem exists_move (hI : I.Ok) (hA : A.Is) (j : ℕ) (hj : j ≤ B.R.m) (β : C
 
 
 set_option maxHeartbeats 1000000 in
-theorem chr_root_eq (hI : I.Ok) (hA : A.Is) (j : Fin B.R.m) (k : ℕ) (hk : k ≤ B.R.m) (g : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X k))
-    (hg : g ∈ GfC _) (y : TC.GA B (B.R.N k)) (hy : finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) k hk) g = y.1) (x : (AE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))ˣ)
+theorem chr_root_eq (hI : I.Ok) (hA : A.Is) (j : Fin B.R.m) (k : ℕ) (hk : k ≤ B.R.m) (g : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X k))
+    (hg : g ∈ GfC _) (y : TC.GA B (B.R.N k)) (hy : finM _ (rankN (I.rec7 l Z) k hk) g = y.1) (x : (AE (I.rec7 l Z))ˣ)
     (hx : IsDetRoot _ g x) (p : ChPt (Pr := B.primes X) (R := B.R) I.sel (I.tup a) u k) (hp : TC.PtOf y p) :
     (A.chr ((j : ℕ) + 1) x : ℂ)⁻¹ =
       B.embLL (muInvDet (X := B.fields) I.sel (rowSG (B.primes X) I.sel (I.tup a)) (mUof (R := B.R) I.Ch (I.tup a) j.1)
@@ -175,7 +175,7 @@ theorem chr_root_eq (hI : I.Ok) (hA : A.Is) (j : Fin B.R.m) (k : ℕ) (hk : k �
   have hd : Disjoint (B.primes X).vGs (I.Q a) := Finset.disjoint_of_subset_right hQ hlev.2.1
   obtain ⟨a', ha'⟩ := GlobalTheory.Mem.DetLift.exists_isDetLift B.R B.host (B.R.N k) _ hp.uni
   have htw := (GlobalTheory.Mem.ReadTwist.isTwist_of_reads B.R B.host _ B.embLL I.S (I.tup a) (I.xi a) (hI.xi_reads a)).1
-  have key := GlobalTheory.DetRootRead.chr_at_detRoot (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (A.chr ((j : ℕ) + 1)) (I.C.mu0 j * I.xi a) (hA.chr j)
+  have key := GlobalTheory.DetRootRead.chr_at_detRoot (I.rec7 l Z) (A.chr ((j : ℕ) + 1)) (I.C.mu0 j * I.xi a) (hA.chr j)
     (Formalism.L2.Host.HChar.TrivOn.mul (I.C.isMu0 j).triv htw.2.1) _ _ _ _ hg hy _ hx a' ha'
   have hfac : KDq B.host (I.Q a) ≤ ((I.C.mu0 j * I.xi a).1.comp (Chr.finPartI B.host.E)).ker := fun b hb => by
     have e : (I.C.mu0 j).1 (Chr.finPartI B.host.E b) = 1 := reference_characters_factor_tame (I.Q a) I.C j hb
@@ -193,7 +193,7 @@ theorem chr_root_eq (hI : I.Ok) (hA : A.Is) (j : Fin B.R.m) (k : ℕ) (hk : k �
 
 set_option maxHeartbeats 1000000 in
 theorem chr_root_eq_prod (hI : I.Ok) (hA : A.Is) (j : Fin B.R.m) (k : ℕ) (hk : k ≤ B.R.m) (β : Ch k) (κ : A.U k β)
-    (κ₀ : TC.GA B (B.R.N k)) (h0 : finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) k hk) κ.1 = κ₀.1) (x : (AE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))ˣ) (hx : IsDetRoot _ κ.1 x)
+    (κ₀ : TC.GA B (B.R.N k)) (h0 : finM _ (rankN (I.rec7 l Z) k hk) κ.1 = κ₀.1) (x : (AE (I.rec7 l Z))ˣ) (hx : IsDetRoot _ κ.1 x)
     (g : (I.stp u a k).G (A.b0 k β)) (hg : (I.stp u a k).gam (A.b0 k β) g = 1)
     (hq : TC.PtOf (κ₀ * A.kb k β) ((I.stp u a k).act (A.b0 k β) g (A.p0 k β)).1.1)
     (t : GLQ B.fields.E (B.R.N k) (rowSG (B.primes X) I.sel (I.tup a)))
@@ -205,7 +205,7 @@ theorem chr_root_eq_prod (hI : I.Ok) (hA : A.Is) (j : Fin B.R.m) (k : ℕ) (hk :
     Finset.disjoint_of_subset_right (ColIn.Q_subset_SQ I a) (GlobalTheory.Mem.LevTwist.levOk_twists B X I hI).2.1
   obtain ⟨hkA, hkAm, hxr⟩ := hA.kA k hk β
   have hκ := ((hA.U k hk β κ.1).1 κ.2).1
-  have hfin : finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) k hk) (κ.1 * A.kA k β) = (κ₀ * A.kb k β).1 := by
+  have hfin : finM _ (rankN (I.rec7 l Z) k hk) (κ.1 * A.kA k β) = (κ₀ * A.kb k β).1 := by
     rw [GlobalTheory.RepLattice.finM_mul', h0, hkAm, Units.val_mul]
     rfl
   have e1 := chr_root_eq hI hA j k hk _ (mul_mem hκ hkA) _ hfin _ (GlobalTheory.TwistFinPart.isDetRoot_mul' _ _ _ _ _ hx hxr) _ hq
@@ -229,7 +229,7 @@ end Main
 
 
 set_option maxHeartbeats 2000000 in
-theorem moved_law : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (Ch : ℕ → Type) (A : TwDat I l Z u a Ch), A.Is → ∀ (i : ℕ) (hi : i + 1 ≤ B.R.m) α γ (κ : A.U i α) (κ' : A.U (i + 1) γ), (∀ P ∈ I.Q a, ∃ M : Matrix (Fin (B.R.N i)) (Fin (B.R.N i)) B.host.E, ∀ r s, adAt B.host.F P ((finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i (Nat.le_of_succ_le hi)) κ.1 : Matrix (Fin (B.R.N i)) (Fin (B.R.N i)) (Formalism.L2.DIV.AfE B.host.F B.host.E)) r s) = algebraMap B.host.E _ (M r s)) → (∀ P ∈ I.Q a, ∃ M : Matrix (Fin (B.R.N (i + 1))) (Fin (B.R.N (i + 1))) B.host.E, ∀ r s, adAt B.host.F P ((finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (i + 1) hi) κ'.1 : Matrix (Fin (B.R.N (i + 1))) (Fin (B.R.N (i + 1))) (Formalism.L2.DIV.AfE B.host.F B.host.E)) r s) = algebraMap B.host.E _ (M r s)) → ∀ x y, IsDetRoot _ κ.1 x → IsDetRoot _ κ'.1 y → ∀ (κ₀ : TC.GA B (B.R.N i)) (κ₀' : TC.GA B (B.R.N (i + 1))), finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i (Nat.le_of_succ_le hi)) κ.1 = κ₀.1 → finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (i + 1) hi) κ'.1 = κ₀'.1 → ∃ (q : PtAt B.R I.sel (I.tup a) (I.cst a) u i) (q' : PtAt B.R I.sel (I.tup a) (I.cst a) u (i + 1)), TC.PtOf (κ₀ * A.kb i α) q.1.1 ∧ TC.PtOf (κ₀' * A.kb (i + 1) γ) q'.1.1 ∧ cosetIn q = cosetIn (A.p0 i α) ∧ cosetIn q' = cosetIn (A.p0 (i + 1) γ) ∧ ∀ w : Formalism.L2.Col.HomE B.fields.E (B.R.N i) (B.R.N (i + 1)), (A.chr (i + 1) x : ℂ)⁻¹ * (A.chr (i + 1) y : ℂ) * B.embLL (xiAt I.Ch I.sel (I.tup a) (I.cst a) (I.idx a) u i (A.b0 i α) (A.b0 (i + 1) γ) q q' w) = ((A.chi i α κ : ℂˣ) : ℂ)⁻¹ * ((A.chi (i + 1) γ κ' : ℂˣ) : ℂ) * B.embLL (xiAt I.Ch I.sel (I.tup a) (I.cst a) (I.idx a) u i (A.b0 i α) (A.b0 (i + 1) γ) (A.p0 i α) (A.p0 (i + 1) γ) w) := by
+theorem moved_law : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (Ch : ℕ → Type) (A : TwDat I l Z u a Ch), A.Is → ∀ (i : ℕ) (hi : i + 1 ≤ B.R.m) α γ (κ : A.U i α) (κ' : A.U (i + 1) γ), (∀ P ∈ I.Q a, ∃ M : Matrix (Fin (B.R.N i)) (Fin (B.R.N i)) B.host.E, ∀ r s, adAt B.host.F P ((finM _ (rankN (I.rec7 l Z) i (Nat.le_of_succ_le hi)) κ.1 : Matrix (Fin (B.R.N i)) (Fin (B.R.N i)) (Formalism.L2.DIV.AfE B.host.F B.host.E)) r s) = algebraMap B.host.E _ (M r s)) → (∀ P ∈ I.Q a, ∃ M : Matrix (Fin (B.R.N (i + 1))) (Fin (B.R.N (i + 1))) B.host.E, ∀ r s, adAt B.host.F P ((finM _ (rankN (I.rec7 l Z) (i + 1) hi) κ'.1 : Matrix (Fin (B.R.N (i + 1))) (Fin (B.R.N (i + 1))) (Formalism.L2.DIV.AfE B.host.F B.host.E)) r s) = algebraMap B.host.E _ (M r s)) → ∀ x y, IsDetRoot _ κ.1 x → IsDetRoot _ κ'.1 y → ∀ (κ₀ : TC.GA B (B.R.N i)) (κ₀' : TC.GA B (B.R.N (i + 1))), finM _ (rankN (I.rec7 l Z) i (Nat.le_of_succ_le hi)) κ.1 = κ₀.1 → finM _ (rankN (I.rec7 l Z) (i + 1) hi) κ'.1 = κ₀'.1 → ∃ (q : PtAt B.R I.sel (I.tup a) (I.cst a) u i) (q' : PtAt B.R I.sel (I.tup a) (I.cst a) u (i + 1)), TC.PtOf (κ₀ * A.kb i α) q.1.1 ∧ TC.PtOf (κ₀' * A.kb (i + 1) γ) q'.1.1 ∧ cosetIn q = cosetIn (A.p0 i α) ∧ cosetIn q' = cosetIn (A.p0 (i + 1) γ) ∧ ∀ w : Formalism.L2.Col.HomE B.fields.E (B.R.N i) (B.R.N (i + 1)), (A.chr (i + 1) x : ℂ)⁻¹ * (A.chr (i + 1) y : ℂ) * B.embLL (xiAt I.Ch I.sel (I.tup a) (I.cst a) (I.idx a) u i (A.b0 i α) (A.b0 (i + 1) γ) q q' w) = ((A.chi i α κ : ℂˣ) : ℂ)⁻¹ * ((A.chi (i + 1) γ κ' : ℂˣ) : ℂ) * B.embLL (xiAt I.Ch I.sel (I.tup a) (I.cst a) (I.idx a) u i (A.b0 i α) (A.b0 (i + 1) γ) (A.p0 i α) (A.p0 (i + 1) γ) w) := by
   intro B X I hI _ l Z u a Ch A hA i hi α γ κ κ' hr hr' x y hx hy κ₀ κ₀' h0 h0'
   have hi0 := Nat.le_of_succ_le hi
   obtain ⟨g, g1, g2, g3, g4⟩ := exists_move hI hA i hi0 α κ hr κ₀ h0

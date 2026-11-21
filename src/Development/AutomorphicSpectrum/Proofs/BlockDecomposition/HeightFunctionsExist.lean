@@ -59,10 +59,10 @@ theorem absA_pos (u : (AE D)ˣ) : 0 < absA D u := by
 
 theorem delta_eq {p : G D n} (hp : p ∈ P D n) {a : GL (Fin n) (AE D)} (ha : blkA (mat p) = a.1) :
     delta (⟨p, hp⟩ : P D n) = absA D (Matrix.GeneralLinearGroup.det a) := by
-  have hl : HeightExists.leviBlock (D := D) (n := n) (⟨p, hp⟩ : P D n) = a := by
+  have hl : HeightExists.leviBlock (⟨p, hp⟩ : P D n) = a := by
     ext1
     exact ha
-  show absA D (Matrix.GeneralLinearGroup.det (HeightExists.leviBlock (D := D) (n := n) (⟨p, hp⟩ : P D n))) = _
+  show absA D (Matrix.GeneralLinearGroup.det (HeightExists.leviBlock (⟨p, hp⟩ : P D n))) = _
   rw [hl]
 
 theorem height_eq {H : G D n → ℝ≥0} (hH : IsHeight H) (p : P D n) {k : G D n} (hk : k ∈ K D n) :

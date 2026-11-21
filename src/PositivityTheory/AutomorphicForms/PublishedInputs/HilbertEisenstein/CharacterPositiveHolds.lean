@@ -66,6 +66,8 @@ theorem character_positive_holds : OmegaPos := by
     unfold reAt at h2
     rw [← InfinitePlace.embedding_of_isReal_apply (IsTotallyReal.isReal w), Complex.ofReal_re] at h2
     convert h2 using 1
-    exact InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe (IsTotallyReal.isReal w) _
+    simpa [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply] using
+      InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe (IsTotallyReal.isReal w)
+        (WithAbs.toAbs w.1 (ξ : F))
 
 end UpperTheory.HilbertEisensteinWeightOne.FourierExpansionEisenstein

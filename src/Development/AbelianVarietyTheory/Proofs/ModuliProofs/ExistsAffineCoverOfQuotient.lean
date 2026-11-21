@@ -125,6 +125,6 @@ theorem exists_affine_cover_of_quotient :
   rw [hσ']
   refine h.isAffineOpen_of_preimage ?_
   rw [hV]
-  exact IsAffineOpen.iInf fun g => (haff i).preimage (ρ g).asIso.hom
+  exact IsAffineOpen.iInf fun g => (haff i).preimage (show X ≅ X from ρ g).hom
 
 end GlobalTheory.QuotientNorm

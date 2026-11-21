@@ -63,9 +63,7 @@ theorem change_basis (e : Module.Basis (Fin r) R M) (σ : R →+* R) (Φ : M →
     have hm := congrFun (congrFun h m) j
     simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.map_apply] at hm
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hL, map_sum, hΦ, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
-      smul_eq_mul, Module.Basis.repr_self, Finsupp.single_apply, mul_ite, mul_one, mul_zero,
-      Finset.sum_ite_eq', Finset.mem_univ, if_true]
+      simp [hL, map_sum, hΦ, map_smul, smul_eq_mul, Finsupp.single_apply]
     simpa only [mul_comm] using hm
   rw [key, Module.Basis.repr_sum_self]
 
@@ -128,8 +126,8 @@ theorem descend {r : ℕ} {ι : Type} (φ : R →ₐ[O] R) (g : ι → (R →ₐ
     exact h1.symm)
   obtain ⟨e', h1, h2⟩ := change_basis e φ Φ hΦ V F₁ hV hE
   refine ⟨e', fun s j => ?_, fun i j => ?_⟩
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [h1, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul_semi, hVg, he]
   · have := hS i j
     rw [← h2] at this

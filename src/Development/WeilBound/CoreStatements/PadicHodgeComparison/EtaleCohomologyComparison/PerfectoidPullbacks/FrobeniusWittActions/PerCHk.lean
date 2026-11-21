@@ -33,18 +33,7 @@ theorem w_fix (r : Res l K) [FiniteDimensional ℚ_[l] K] (g : K.fixingSubgroup)
 theorem perC_hσk (r : Res l K) [FiniteDimensional ℚ_[l] K] (g : K.fixingSubgroup) (x : Wc.K₀ l r.k) :
     r.perC.σ g (r.perC.k x) = r.perC.k x := G3.perC_hσk r g x
 
-theorem w_phi (r : Res l K) (w : WittVector l r.k) :
-    ACris.phi (K := ℂ_[l]) (p := l) (r.w w) = r.w (WittVector.frobenius w) := by
-  have map_frob : WittVector.map r.s (WittVector.frobenius w) =
-      WittVector.frobenius (WittVector.map r.s w) := by
-    rw [WittVector.frobenius_eq_map_frobenius, WittVector.frobenius_eq_map_frobenius]
-    ext n
-    simp only [WittVector.map_coeff, frobenius_def, map_pow]
-  show ACris.phi (K := ℂ_[l]) (p := l)
-      (algebraMap (Ainf l) (Acris l) (WittVector.map r.s w)) =
-    algebraMap (Ainf l) (Acris l) (WittVector.map r.s (WittVector.frobenius w))
-  rw [ACris.phi_algebraMap, map_frob]
-  rfl
+theorem w_phi (r : Res l K) (w : WittVector l r.k) : ACris.phi ℂ_[l] l (r.w w) = r.w (WittVector.frobenius w) := G3.w_phi r w
 
 theorem teich (r : Res l K) [FiniteDimensional ℚ_[l] K] : ∃ N : ℕ, Mid.TeichmullerCongruence r N := G3.teich r
 

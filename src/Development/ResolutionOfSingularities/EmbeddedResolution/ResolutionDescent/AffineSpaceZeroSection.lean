@@ -156,15 +156,14 @@ private theorem pullbackCoord_affineSpaceIsoOfEquiv_hom (k : Type u) [Field k] {
     (e : n ≃ m) (i : m) :
     pullbackCoord (affineSpaceIsoOfEquiv e (Spec (CommRingCat.of k))).hom i =
       AffineSpace.coord (Spec (CommRingCat.of k)) (e.symm i) := by
-  simp [pullbackCoord, affineSpaceIsoOfEquiv, AffineSpace.reindex_appTop_coord]
+  simp [pullbackCoord]
 
 theorem affineSpaceOrigin_comp_affineSpaceInl_affineSpaceIsoOfEquiv (k : Type u) [Field k] (c p : ℕ) :
     affineSpaceOrigin k c ≫ affineSpaceInl k c p ≫
         (affineSpaceIsoOfEquiv (uliftFinSumEquiv.{u} c p) (Spec (CommRingCat.of k))).hom =
       affineSpaceOrigin k (c + p) := by
   refine eq_affineSpaceOrigin_of_pullbackCoord_eq_zero k (c + p) _ ?_ ?_
-  · rw [Category.assoc, Category.assoc, affineSpaceIsoOfEquiv_hom_comp_toSpec,
-      affineSpaceInl_comp_affineSpaceIndexedByToSpec, affineSpaceOrigin_comp_toSpec]
+  · simp
   · intro i
     obtain ⟨j, rfl⟩ : ∃ j, i = uliftFinSumEquiv.{u} c p j :=
       ⟨(uliftFinSumEquiv.{u} c p).symm i, ((uliftFinSumEquiv.{u} c p).apply_symm_apply i).symm⟩

@@ -20,7 +20,7 @@ def unitOf {A : Type} [CommRing A] (ζ : Prim q A) : Aˣ :=
   (IsUnit.of_pow_eq_one (prim_pow q ζ) (NeZero.ne q)).unit
 
 theorem unitOf_pow {A : Type} [CommRing A] (ζ : Prim q A) : unitOf q ζ ^ q = 1 :=
-  Units.ext (by simp [prim_pow])
+  Units.ext (by simpa [unitOf] using prim_pow q ζ)
 
 def gOf {A : Type} [CommRing A] (ζ : Prim q A) : ZMod q →+ Additive Aˣ :=
   ZMod.lift q ⟨zmultiplesHom _ (Additive.ofMul (unitOf q ζ)), by
@@ -63,7 +63,7 @@ theorem nuA_rel (A : Type) [CommRing A] : ∀ x ∈ twRel q 1 A, nuA q A x = 0 :
     have ha : ((a : ZMod q)) = (((a : ZMod q).val : ℤ) : ZMod q) := by simp
     rw [ha, gOf_int, gOf_one, sub_eq_zero, natCast_zsmul, ← ofMul_pow]
     congr 1
-    exact Units.ext (by simp [h])
+    exact Units.ext (by simpa [unitOf] using h)
   | zero => simp
   | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | smul c x _ hx =>

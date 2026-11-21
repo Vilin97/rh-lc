@@ -28,11 +28,11 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 def FrameBC (Z : Model Xo c β) : Prop :=
   ∀ (R R' : Type) [CommRing R] [IsLocalRing R] [CommRing R'] [IsLocalRing R'] (φ : c.F →+* R) (x : Sp R ⟶ Z.X)
     (f : EigFrame Z φ x) (ψ : R →+* R'), ∃ g : EigFrame Z (ψ.comp φ) (spMap ψ ≫ x),
-      ∀ τ i, g.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ i
+      ∀ τ i, g.v τ i = spMap (dualMap ψ) ≫ f.v τ i
 
 theorem FrameBC.at (hbc : FrameBC Z) {R R' : Type} [CommRing R] [IsLocalRing R] [CommRing R'] [IsLocalRing R']
     {φ : c.F →+* R} {x : Sp R ⟶ Z.X} (f : EigFrame Z φ x) (ψ : R →+* R') {x' : Sp R' ⟶ Z.X}
-    (hx : x' = spMap ψ ≫ x) : ∃ g : EigFrame Z (ψ.comp φ) x', ∀ τ i, g.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ i := by
+    (hx : x' = spMap ψ ≫ x) : ∃ g : EigFrame Z (ψ.comp φ) x', ∀ τ i, g.v τ i = spMap (dualMap ψ) ≫ f.v τ i := by
   subst hx
   exact hbc R R' φ x f ψ
 

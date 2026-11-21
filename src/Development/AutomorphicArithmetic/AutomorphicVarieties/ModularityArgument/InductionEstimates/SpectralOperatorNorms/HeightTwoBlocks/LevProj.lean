@@ -39,7 +39,6 @@ private theorem ret_zt {K : Type} [Field K] [NumberField K] (m : G1 K 2) (t : �
   rw [coe_retractOne, h]
   exact mul_inv_cancel_right _ _
 
-attribute [-instance] Units.instCommGroupUnits in
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.KX.levProj :
     ∀ {K : Type} [Field K] [NumberField K], ∃ (S : Subgroup (G1 K (2 + 2))) (π : S →* G1 K 2 × G1 K 2), IsClosed (S : Set (G1 K (2 + 2))) ∧ Continuous π ∧
       (∀ g, g ∈ S ↔ ∃ X m₁ m₂ t, g = nn X * lv m₁ m₂ t) ∧ ∀ X m₁ m₂ t (p : S), (p : G1 K (2 + 2)) = nn X * lv m₁ m₂ t → π p = (m₁, m₂) := by

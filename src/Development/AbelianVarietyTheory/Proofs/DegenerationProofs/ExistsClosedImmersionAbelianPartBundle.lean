@@ -20,8 +20,7 @@ theorem immBy_pull {p : X ⟶ Sp k} {q : Y ⟶ Sp k} (ψ : Y ⟶ X) [IsIso ψ] (
     (hs : ImmBy p L s J₀) : ∃ t : J → M.Sec, ImmBy q M t J₀ := by
   obtain ⟨W, hW⟩ := H
   obtain ⟨hcov, hs⟩ := hs
-  let s' : J → M.Sec := fun i => Classical.choose (sec_pull_down ((isGen_iff W).1 hW) hL hM (s i))
-  have hs' (i : J) := Classical.choose_spec (sec_pull_down ((isGen_iff W).1 hW) hL hM (s i))
+  choose s' hs' using fun i => sec_pull_down ((isGen_iff W).1 hW) hL hM (s i)
   have loc : ∀ i, Out.nonzeroLocus (s' i) = ψ ⁻¹ᵁ Out.nonzeroLocus (s i) := fun i => by
     ext y
     refine (mem_nonzeroLocus _ y).trans (Iff.trans ⟨fun ⟨k, hk, u⟩ => ?_, fun ⟨j, hj, u⟩ => ?_⟩

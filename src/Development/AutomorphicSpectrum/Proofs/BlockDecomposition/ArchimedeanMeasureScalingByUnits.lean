@@ -23,8 +23,9 @@ theorem pi_smul_nnreal {ι : Type} [Fintype ι] {X : ι → Type} [∀ i, Measur
   classical
   refine Measure.pi_eq (μ := fun i => c i • μ i) fun s hs => ?_
   rw [Measure.smul_apply, Measure.pi_pi]
-  simp only [Measure.smul_apply, ENNReal.smul_def, smul_eq_mul, ENNReal.coe_finset_prod,
+  simp only [Measure.smul_apply, ENNReal.smul_def, smul_eq_mul,
     Finset.prod_mul_distrib]
+  norm_cast
 
 theorem coordW_map_units : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n M d : ℕ) (b : Module.Basis (Fin d) F E) (lam : Measure (Ainf F)), lam.IsAddHaarMeasure → ∀ e : Ainf F ≃+* (NumberField.InfinitePlace F → ℝ), IsHomeomorph e → ∀ t : Fin n → Ainf F, (∀ a, IsUnit (t a)) → (GlobalTheory.CompanionTheory.SW.coordW (Ainf F) b lam n M).map (fun X a i => algebraMap (Ainf F) (Ainf F ⊗[F] E) (t a) * X a i) = (∏ a, ((∏ w, ‖e (t a) w‖₊)⁻¹) ^ (d * M)) • GlobalTheory.CompanionTheory.SW.coordW (Ainf F) b lam n M := by
   intro F E _ _ _ _ _ σ hσ n M d b lam hlam e he t ht

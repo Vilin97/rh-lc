@@ -38,6 +38,7 @@ theorem isArithVar (k : Type) [CommRing k] [IsDomain k] [CharZero k] [Module.Fin
 theorem injective_ringHom {k : Type} [CommRing k] [IsDomain k] [CharZero k] [Module.Finite ℤ k]
     (ψ : k →+* ℂ) : Function.Injective ψ := by
   refine (RingHom.injective_iff_ker_eq_bot ψ).2 (Ideal.eq_bot_of_comap_eq_bot (R := ℤ) ?_)
+  change Ideal.comap (algebraMap ℤ k) (RingHom.ker ψ) = ⊥
   rw [RingHom.comap_ker]
   exact (RingHom.injective_iff_ker_eq_bot _).1 (RingHom.injective_int _)
 
@@ -116,7 +117,7 @@ theorem exists_stdChart (k : Type) [CommRing k] (σ : k →+* ℂ) (N : ℕ) :
     simp only [Fin.succAbove_zero] at h₃
     simp only [h₃, norm_one, one_pow]
   rw [← key]
-  simp [Matrix.one_apply, ev]
+  simp [Matrix.one_apply, ev, ProjSpace.O1]
 
 theorem chern_mass_hermitian_O_one_projective (k : Type) [CommRing k] [IsDomain k] [CharZero k] [Module.Finite ℤ k]
     (N : ℕ) (σ : k →+* ℂ) :

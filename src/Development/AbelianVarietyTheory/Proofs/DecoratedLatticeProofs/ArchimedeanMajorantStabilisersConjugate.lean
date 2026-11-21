@@ -35,7 +35,7 @@ theorem card_neg_le {n : ℕ} (ε ε' : Fin n → Bool) (M : Matrix (Fin n) (Fin
     rw [← h, Matrix.star_mulVec, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec,
       Matrix.mul_assoc]
   let T := (LinearMap.funLeft ℂ ℂ (Subtype.val : {i // ε i = false} → Fin n)) ∘ₗ M.mulVecLin ∘ₗ
-    (Function.ExtendByZero.linearMap ℂ (Subtype.val : {i // ε' i = false} → Fin n))
+    (Function.ExtendByZero.linearMap ℂ ℂ (Subtype.val : {i // ε' i = false} → Fin n))
   have hT : Function.Injective T := by
     rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
     intro y hy

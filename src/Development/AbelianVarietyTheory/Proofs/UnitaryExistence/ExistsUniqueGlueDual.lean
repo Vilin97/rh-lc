@@ -16,11 +16,11 @@ noncomputable section
 namespace GlobalTheory.Frames
 
 theorem spMap_dualMap_left {R T T' : Type} [CommRing R] [CommRing T] [CommRing T'] [Algebra R T] [Algebra R T']
-    (ρ : T →ₐ[R] T') : (Chart.spMap (SqZero.dualMap ρ)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ρ : T →+* T')) := by
+    (ρ : T →ₐ[R] T') : (Chart.spMap (SqZero.dualMap ρ)).left = spMap (dualMap (ρ : T →+* T')) := by
   rw [Chart.spMap_left]
   congr 2
   refine RingHom.ext fun a => ?_
-  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  ext <;> simp [dualMap]
 
 theorem existsUnique_glue_dual_of_isTerminal {R : Type} [CommRing R] (hR : IsTerminal (Sp R)) {S : Type} [CommRing S]
     [Algebra R S] (Y : Scheme.{0}) {κ : Type} (h : κ → S) (hs : Ideal.span (Set.range h) = ⊤)
@@ -29,8 +29,8 @@ theorem existsUnique_glue_dual_of_isTerminal {R : Type} [CommRing R] (hR : IsTer
       (β : Localization.Away (h j) →+* Localization.Away (h i * h j)),
       α.comp (algebraMap S (Localization.Away (h i))) = (algebraMap S (Localization.Away (h i * h j))) →
       β.comp (algebraMap S (Localization.Away (h j))) = (algebraMap S (Localization.Away (h i * h j))) →
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ w i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap β) ≫ w j) :
-    ∃! w₀ : Sp (DualNumber S) ⟶ Y, ∀ i, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S (Localization.Away (h i)))) ≫ w₀ = w i := by
+      spMap (dualMap α) ≫ w i = spMap (dualMap β) ≫ w j) :
+    ∃! w₀ : Sp (DualNumber S) ⟶ Y, ∀ i, spMap (dualMap (algebraMap S (Localization.Away (h i)))) ≫ w₀ = w i := by
   let X : Over (Spec (CommRingCat.of R)) := Over.mk (hR.from Y)
   let w' : ∀ i, Chart.sp (R₀ := R) (DualNumber (Localization.Away (h i))) ⟶ X := fun i =>
     Over.homMk (w i) (hR.hom_ext _ _)
@@ -52,7 +52,7 @@ theorem existsUnique_glue_dual_of_isTerminal {R : Type} [CommRing R] (hR : IsTer
           rw [Over.comp_left, Over.comp_left, spMap_dualMap_left, spMap_dualMap_left]
           exact hw k l _ _ (RingHom.ext fun x => AlgHom.congr_fun (ha k l) x)
             (RingHom.ext fun x => AlgHom.congr_fun (hb k l) x))))
-  have hz' : ∀ i, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S (Localization.Away (h i)))) ≫ z.left = w i := fun i => by
+  have hz' : ∀ i, spMap (dualMap (algebraMap S (Localization.Away (h i)))) ≫ z.left = w i := fun i => by
     have : (Chart.spMap (SqZero.dualMap (q i))).left ≫ z.left = w i := congrArg CommaMorphism.left (hz i)
     rw [spMap_dualMap_left] at this
     exact this
@@ -64,7 +64,7 @@ theorem existsUnique_glue_dual_of_isTerminal {R : Type} [CommRing R] (hR : IsTer
       exact (hy k).trans (hz' k).symm)
   exact congrArg CommaMorphism.left this
 
-theorem existsUnique_glue_dual : ∀ (S : Type) [CommRing S] (Y : Scheme.{0}) (n : ℕ) (h : Fin n → S), Ideal.span (Set.range h) = ⊤ → ∀ w : ∀ i, Sp (DualNumber (Localization.Away (h i))) ⟶ Y, (∀ i j (α : Localization.Away (h i) →+* Localization.Away (h i * h j)) (β : Localization.Away (h j) →+* Localization.Away (h i * h j)), α.comp (algebraMap S (Localization.Away (h i))) = (algebraMap S (Localization.Away (h i * h j))) → β.comp (algebraMap S (Localization.Away (h j))) = (algebraMap S (Localization.Away (h i * h j))) → spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ w i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap β) ≫ w j) → ∃! w₀ : Sp (DualNumber S) ⟶ Y, ∀ i, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S (Localization.Away (h i)))) ≫ w₀ = w i :=
+theorem existsUnique_glue_dual : ∀ (S : Type) [CommRing S] (Y : Scheme.{0}) (n : ℕ) (h : Fin n → S), Ideal.span (Set.range h) = ⊤ → ∀ w : ∀ i, Sp (DualNumber (Localization.Away (h i))) ⟶ Y, (∀ i j (α : Localization.Away (h i) →+* Localization.Away (h i * h j)) (β : Localization.Away (h j) →+* Localization.Away (h i * h j)), α.comp (algebraMap S (Localization.Away (h i))) = (algebraMap S (Localization.Away (h i * h j))) → β.comp (algebraMap S (Localization.Away (h j))) = (algebraMap S (Localization.Away (h i * h j))) → spMap (dualMap α) ≫ w i = spMap (dualMap β) ≫ w j) → ∃! w₀ : Sp (DualNumber S) ⟶ Y, ∀ i, spMap (dualMap (algebraMap S (Localization.Away (h i)))) ≫ w₀ = w i :=
   fun _ _ Y _ h hs w hw => existsUnique_glue_dual_of_isTerminal specZIsTerminal Y h hs w hw
 
 end GlobalTheory.Frames

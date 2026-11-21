@@ -62,7 +62,7 @@ theorem UpperTheory.V.CF.kwRay :
     rw [Ne, Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot]
     exact_mod_cast hN0
   refine @UpperTheory.V.CF.bauer ℚ Ω _ _ _ _ (𝔪.rayClassField Ω) ℚ⟮ζ⟯ _ _ _
-    (by convert hgal; exact Subsingleton.elim _ _) _ hfin ?_
+    (by convert hgal) _ hfin ?_
   intro v hv hsplit
   simp only [Set.mem_union, Set.mem_setOf_eq, not_or] at hv
   obtain ⟨_, hv2⟩ := hv

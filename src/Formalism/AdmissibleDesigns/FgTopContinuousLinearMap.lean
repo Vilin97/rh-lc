@@ -374,18 +374,15 @@ theorem latT_open (hF : FracTop O) :
 theorem realLat_datStd (ℓ : ℕ) (hO : PadicCoeff ℓ O) (hF : FracTop O) (hK : ContinuousMul (FractionRing O))
     (ε : Γ →* Oˣ) (M : Γ →* Matrix n n O) (hε : Continuous fun g => ((ε g : Oˣ) : O))
     (hM : ∀ a b, Continuous fun g => M g⁻¹ b a) (hM' : ∀ a b, Continuous fun g => M g a b) :
-    RealLat (datStd hK ε M hε hM) := by
-  letI := t2Space_fractionRing_of_padicCoeff ℓ hO hF
-  letI := hK
-  exact
-    { lat := ⟨latT_fg, latT_span⟩
-      perf := perf_pairStd
-      contT := contAction_repV M hM'
-      openT := latT_open hF
-      t2 := inferInstance
-      t2' := inferInstance
-      cs := inferInstance
-      cs' := inferInstance }
+    RealLat (datStd hK ε M hε hM) where
+  lat := ⟨latT_fg, latT_span⟩
+  perf := perf_pairStd
+  contT := contAction_repV M hM'
+  openT := latT_open hF
+  t2 := by haveI := t2Space_fractionRing_of_padicCoeff ℓ hO hF; infer_instance
+  t2' := by haveI := t2Space_fractionRing_of_padicCoeff ℓ hO hF; infer_instance
+  cs := by haveI := hK; infer_instance
+  cs' := by haveI := hK; infer_instance
 
 end RL
 
@@ -639,7 +636,6 @@ theorem block_zero_continuous {ℓ : ℕ} (hO : PadicCoeff ℓ O) (hR : IsFGTop 
     { toFun := fun x => ρk 0 x a b
       map_add' := fun x y => by simp
       map_smul' := fun c x => by simp }
-  have : ContinuousAdd R' := IsTopologicalAddGroup.toContinuousAdd
   have hf : Continuous f := fgTop_continuous_linearMap hR hO f
   exact hf.comp hu
 

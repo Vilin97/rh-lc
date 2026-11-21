@@ -70,8 +70,7 @@ theorem UpperTheory.theta_satake_parameters_inverse :
   have hq : Formalism.UG.qV E w = Formalism.UG.qV E (cPl w) := by
     change Ideal.absNorm w.asIdeal = Ideal.absNorm (conjSrc (IsCMField.complexConj E).toRingEquiv w).asIdeal
     rw [(GlobalTheory.Mem.Chr.conjPl_iff_comap _ _ _).1 (conjPl_conjSrc (IsCMField.complexConj E).toRingEquiv w)]
-    rw [Ideal.absNorm_eq_natCard, Ideal.absNorm_eq_natCard]
-    exact (Nat.card_congr (Ideal.quotientEquiv (w.asIdeal.comap (RingOfIntegers.mapRingEquiv (IsCMField.complexConj E).toRingEquiv)) w.asIdeal (RingOfIntegers.mapRingEquiv (IsCMField.complexConj E).toRingEquiv)
+    exact (Nat.card_congr (Ideal.quotientEquiv _ _ (RingOfIntegers.mapRingEquiv _)
       (Ideal.map_comap_of_surjective _ (RingEquiv.surjective _) _).symm).toEquiv).symm
   let ρ' := (GlobalTheory.ThetaPull.thetaSub P).locRep w
   let T₀ : P.V ≃ₗ[ℂ] (GlobalTheory.ThetaPull.thetaSub P).V := (GlobalTheory.ThetaPull.pull E n).submoduleMap P.V

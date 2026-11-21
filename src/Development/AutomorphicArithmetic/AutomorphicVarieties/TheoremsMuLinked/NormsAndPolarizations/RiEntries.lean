@@ -68,7 +68,7 @@ theorem UpperTheory.V.Th.Nm.repIn :
   obtain ⟨d, hd⟩ := UpperTheory.V.X.So.coefOf l E
   obtain ⟨c', h1, h2⟩ := (UpperTheory.V.HV.coefSup l).1 c d
   have hn : Continuous fun g => ∑ i, ∑ j, ‖z g i j‖ :=
-    continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => (hz.matrix_elem i j).norm
+    continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => (hz.matrix_elem i j).norm
   obtain ⟨C, hC⟩ := (isCompact_range hn).bddAbove
   obtain ⟨N, hN⟩ := ri_small (l := l) C
   refine ⟨c', (l : PadicAlgCl l) ^ N, h1, pow_ne_zero _ (Nat.cast_ne_zero.2 hl.out.ne_zero),

@@ -154,7 +154,7 @@ theorem hhFl_labelInv : ∀ II : IntersectionSystem, IsFullIntersectionSystem II
     · obtain ⟨w, rfl⟩ := RootFieldNumerics.HH.exists_word _ m hm
       have hmap : (∑ k, Finsupp.single (w k) (1 : ℕ)).mapDomain (fun x : Ψ × Fin N => (σ x.1, x.2)) =
           ∑ k, Finsupp.single (σ (w k).1, (w k).2) 1 := by
-        rw [Finsupp.mapDomain_finsetSum]
+        rw [Finsupp.mapDomain_finset_sum]
         simp only [Finsupp.mapDomain_single]
       have hwd := RootFieldNumerics.HH.hhFl_word II hII.1 hP (fun k => (σ (w k).1, (w k).2)) c
       rw [hmap, hwd, RootFieldNumerics.HH.hhFl_word II hII.1 hP w c, key w]

@@ -21,13 +21,14 @@ theorem lie_algebra_acts_by_scalar : _root_.GlobalTheory.FunPr.ThetaLocalInputs 
   obtain ⟨ω₀, c₀, hH, hc, hact⟩ := _root_.GlobalTheory.T.isGeneric_localComponent hP hD hV F E σ α β κ P Q R S ψ τ JA JB d a b A C Φ hCM hψ hFr hΦ
   obtain ⟨ν, hν, hmul, hνc, hν0⟩ := _root_.GlobalTheory.T.metaplectic_splitting_unique_up_to_character hP F E σ α β κ ψ JA JB d om ω₀ hψ hom hH hc
   obtain ⟨k, hk⟩ := _root_.GlobalTheory.T.realLift_characterTrace_hasDerivAt hP F E σ β R S τ JB b C hCM hFr.2.2 ν hmul hνc hν0
+  unfold cA at *
   refine ⟨fun w => c₀ w + k w, ?_⟩
   intro γ hγ Y hY T g hg l hl
   have hH1 : ∀ t : ℝ, At (evI F) (((γ (Multiplicative.ofAdd t)).1 : Matrix β β (AE F E)) - 1) := fun t => hγ.2 _
   have hpm : ∀ f : SInf F κ, pureA F f g ∈ schA F κ := fun f => Submodule.subset_span ⟨f, g, hg, rfl⟩
   have e1 : (fun t : ℝ => l (om (γ (Multiplicative.ofAdd t)) (pureA F (Φ T) g))) =
       fun t => ν (γ (Multiplicative.ofAdd t)) * l (ω₀ (γ (Multiplicative.ofAdd t)) (pureA F (Φ T) g)) := by
-    funext t; rw [hν _ (hH1 t) _ (hpm _), map_smul, smul_eq_mul]
+    funext t; rw [hν _ (hH1 t) (pureA F (Φ T) g) (hpm (Φ T)), map_smul, smul_eq_mul]
   show HasDerivAt (fun t : ℝ => l (om (γ (Multiplicative.ofAdd t)) (pureA F (Φ T) g))) _ 0
   rw [e1]
   have h3 := (hk γ hγ Y hY).mul (hact γ hγ Y hY T g hg l hl)
@@ -38,7 +39,7 @@ theorem lie_algebra_acts_by_scalar : _root_.GlobalTheory.FunPr.ThetaLocalInputs 
     rw [mul_one] at this
     exact (mul_eq_left₀ (hν0 1 h1m)).mp this.symm
   beta_reduce at h3
-  rw [hγ0, hν1, map_one, Module.End.one_apply, one_mul] at h3
+  simp only [hγ0, hν1, map_one, Module.End.one_apply, one_mul] at h3
   refine h3.congr_deriv ?_
   have e2 : sumPl (fun w => fockAct2 P Q R S (Y w) + (((fun w => c₀ w + k w) w) * (Y w).trace) • (1 : Module.End ℂ _)) =
       sumPl (fun w => fockAct2 P Q R S (Y w) + (c₀ w * (Y w).trace) • (1 : Module.End ℂ _)) +

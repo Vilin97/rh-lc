@@ -22,9 +22,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL] [CommRing O] [Algebra O LL]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} (W : LocWach PD LL O v n)
 
-local notation "ιE" => algebraMap (LetA O n) W.EE
-local notation "aev" => Polynomial.aeval (AlgHom.toLinearMap (W.γE W.gam) : Module.End O W.EE)
-
 theorem numI_upd (H : ℕ → ℕ) (e s : ℕ) (hs : s < e) (x : ℤ) :
     numI W e (Function.update (fun t => -((H t : ℕ) : ℤ)) s x) = ps W s ^ x.toNat := by
   unfold numI
@@ -49,7 +46,7 @@ theorem aev_fixed (P : Polynomial O) : ∀ z : W.EE, W.γE W.gam z = z → aev P
       Polynomial.eval_add, add_smul]
   | monomial k c ih =>
     intro z hz
-    rw [pow_succ, ← mul_assoc, Polynomial.aeval_mul, mul_apply_eq_comp, Polynomial.aeval_X,
+    rw [pow_succ, ← mul_assoc, Polynomial.aeval_mul, Module.End.mul_apply, Polynomial.aeval_X,
       AlgHom.toLinearMap_apply, hz, ih z hz]
     simp
 
@@ -134,7 +131,7 @@ theorem lev_const (hKL : KillerLevCore W) (hS : PsStable W)
   rw [hupd1] at h₂
   have hγG : W.γE W.gam Gg - Gg = aev (Polynomial.X ^ (PD.p ^ ell) - 1 : Polynomial O) y₂ := by
     rw [← mul_geom_sum, aeval_mul_apply, ← hSg, ← hGg, map_sub, LinearMap.sub_apply,
-      Polynomial.aeval_X, map_one, AlgHom.toLinearMap_apply, one_apply_eq_self]
+      Polynomial.aeval_X, map_one, AlgHom.toLinearMap_apply, Module.End.one_apply]
   rw [← hγG] at h₂
 
   have hT : s ∉ (Finset.range ell).erase s := by simp

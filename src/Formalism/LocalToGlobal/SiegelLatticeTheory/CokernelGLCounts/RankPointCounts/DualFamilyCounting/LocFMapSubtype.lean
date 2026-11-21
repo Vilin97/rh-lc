@@ -76,8 +76,9 @@ theorem exists_basis_in {X : Submodule K V} {L : Submodule (𝓞 K) V} (hL : Cnt
       ((L.comap (X.subtype.restrictScalars (𝓞 K)) : Submodule (𝓞 K) X) : Set X) = ⊤ := by
     apply Submodule.map_injective_of_injective X.injective_subtype
     rw [Submodule.map_span, himg, hspan, Submodule.map_top, Submodule.range_subtype]
-  have hNlat : Submodule.IsLattice K (L.comap (X.subtype.restrictScalars (𝓞 K))) :=
-    ⟨hfgN, hspanN⟩
+  have hNlat : Submodule.IsFullLattice K (L.comap (X.subtype.restrictScalars (𝓞 K))) :=
+    { toIsLattice := Submodule.IsLattice.of_fg K hfgN
+      span_eq_top := hspanN }
   obtain ⟨b, hbN, hbloc⟩ := Formalism.HermitianLattices.Ext.L3.LocalSpans.exists_basis_locF hNlat h𝔭
   refine ⟨fun i => (b i : V), fun i => hbN i, ?_, ?_, ?_⟩
   · exact b.linearIndependent.map' X.subtype X.ker_subtype

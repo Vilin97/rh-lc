@@ -25,6 +25,7 @@ private def tm {S X : Scheme.{0}} (r : X ⟶ S) {Z Z' : Over S} (g : Z ⟶ Z') :
 private theorem tm_fst {S X : Scheme.{0}} (r : X ⟶ S) {Z Z' : Over S} (g : Z ⟶ Z') :
     tm r g ≫ pullback.fst Z'.hom r = pullback.fst Z.hom r ≫ g.left := by
   simp only [tm, TF, Functor.comp_map, Over.forget_map]
+  exact pullback.lift_fst _ _ _
 
 private theorem tm_snd {S X : Scheme.{0}} (r : X ⟶ S) {Z Z' : Over S} (g : Z ⟶ Z') :
     tm r g ≫ pullback.snd Z'.hom r = pullback.snd Z.hom r := by

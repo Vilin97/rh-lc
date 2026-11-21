@@ -69,7 +69,7 @@ theorem der_compare {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDom
     {F : Γ'.G.left ⟶ Γ.G.left} (hF : Γ'.IsBaseChange Γ (algebraMap R R') F)
     (hi' : Γ'.IsTorsionAlong G x' N (F ≫ i)) {L L' : Type} [AddCommGroup L] [Module R L] [AddCommGroup L']
     [Module R' L'] (M : LieModel G x L) (M' : LieModel G x' L') (β : L → L')
-    (hβ : ∀ e, (M'.pt (β e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R'))) ≫ (M.pt e).left)
+    (hβ : ∀ e, (M'.pt (β e)).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap R R'))) ≫ (M.pt e).left)
     {f : T → R} {f' : T → R'} {w : Module.Dual R L} {w' : Module.Dual R' L'} (hf : ∀ t, f' t = algebraMap R R' (f t))
     (h : Γ.IsDerAtOne i M N f w) (h' : Γ'.IsDerAtOne (F ≫ i) M' N f' w') (e : L) :
     ∃ r : R', w' (β e) = algebraMap R R' (w e) + (N : R') * r := by
@@ -90,7 +90,7 @@ theorem der_compare {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDom
   have hss : s' = F.appTop.hom s := sub_eq_zero.1 hz
   obtain ⟨v, hv1, hv2, hv3⟩ := hv e
   obtain ⟨v', hv'1, hv'2, hv'3⟩ := hv' (β e)
-  have hc : (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (HTBaseChange.qmap (R := R) (R' := R') N))) ≫ v) ≫ Γ.G.hom =
+  have hc : (Spec.map (CommRingCat.ofHom (dualMap (HTBaseChange.qmap (R := R) (R' := R') N))) ≫ v) ≫ Γ.G.hom =
       Spec.map (CommRingCat.ofHom ((algebraMap (R' ⧸ Ideal.span {(N : R')})
         (DualNumber (R' ⧸ Ideal.span {(N : R')}))).comp (Ideal.Quotient.mk _))) ≫
         Spec.map (CommRingCat.ofHom (algebraMap R R')) := by
@@ -102,7 +102,7 @@ theorem der_compare {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDom
   have h1 := hF.cart.lift_fst _ _ hc
   have h2 := hF.cart.lift_snd _ _ hc
   rw [← hv''] at h1 h2
-  have h3 : v'' ≫ F ≫ i = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(N : R')})))) ≫
+  have h3 : v'' ≫ F ≫ i = Spec.map (CommRingCat.ofHom (dualMap (Ideal.Quotient.mk (Ideal.span {(N : R')})))) ≫
       (M'.pt (β e)).left := by
     rw [← Category.assoc, h1, Category.assoc, hv2, hβ e, ← Category.assoc, ← Category.assoc, ← Spec.map_comp,
       ← Spec.map_comp]
@@ -112,7 +112,7 @@ theorem der_compare {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDom
   have huniq := (GlobalTheory.T.existsUnique_tangent_dual_number R' T Γ' S G _ N (F ≫ i) hi' L' M' (β e)).unique ⟨h2, h3⟩ ⟨hv'1, hv'2⟩
   rw [← huniq, hss, ← HTBaseChange.valAt_comp_top, h1, HTBaseChange.valAt_spec_map, hv3] at hv'3
   have h5 := congrArg TrivSqZeroExt.snd hv'3
-  simp only [GlobalTheory.CompanionTheory.Ar.dualMap, HTBaseChange.qmap, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, TrivSqZeroExt.snd_add,
+  simp only [dualMap, HTBaseChange.qmap, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, TrivSqZeroExt.snd_add,
     TrivSqZeroExt.snd_inl, TrivSqZeroExt.snd_inr, TrivSqZeroExt.fst_add, TrivSqZeroExt.fst_inl,
     TrivSqZeroExt.fst_inr, zero_add, add_zero, Ideal.quotientMap_mk] at h5
   have h6 := (Ideal.Quotient.eq (I := Ideal.span {(N : R')})).1 h5.symm
@@ -176,8 +176,8 @@ theorem der_overlap {R₁ R₂ R' : Type} [CommRing R₁] [IsDomain R₁] [CommR
     {L₁ L₂ L' : Type} [AddCommGroup L₁] [Module R₁ L₁] [AddCommGroup L₂] [Module R₂ L₂] [AddCommGroup L'] [Module R' L']
     (M₁ : LieModel G x₁ L₁) (M₂ : LieModel G x₂ L₂) (M' : LieModel G x' L') (β₁ : L₁ → L')
     (β₂ : L₂ →ₛₗ[algebraMap R₂ R'] L')
-    (hβ₁ : ∀ e, (M'.pt (β₁ e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R₁ R'))) ≫ (M₁.pt e).left)
-    (hβ₂ : ∀ e, (M'.pt (β₂ e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R₂ R'))) ≫ (M₂.pt e).left)
+    (hβ₁ : ∀ e, (M'.pt (β₁ e)).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap R₁ R'))) ≫ (M₁.pt e).left)
+    (hβ₂ : ∀ e, (M'.pt (β₂ e)).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap R₂ R'))) ≫ (M₂.pt e).left)
     (hspan : Submodule.span R' (Set.range β₁) = ⊤) (hfin : Module.Finite R₂ L₂)
     {f₁ : T → R₁} (hf₁ : f₁ ∈ Γ₁.btOrder ⊤) (h1 : f₁ 1 = 0) {u₁ : Module.Dual R₁ L₁}
     (hu : Γ₁.IsDerAtOne i₁ M₁ N f₁ u₁) (v' : Module.Dual R' L') (hv' : ∀ e, v' (β₁ e) = algebraMap R₁ R' (u₁ e)) :
@@ -570,8 +570,8 @@ theorem tr_toLi (P : ChartPack G O s) (R' : Subalgebra O Ω) [Algebra (CR O y s)
     (hal : ∀ r : CR O y s, ((algebraMap (CR O y s) R' r : R') : Ω) = r)
     {x' : Spec (CommRingCat.of R') ⟶ 𝔐.X} {L' : Type} [AddCommGroup L'] [Module R' L'] (M' : LieModel 𝔐.t.G x' L')
     (β₁ : P.L → L')
-    (hβ : ∀ e, (M'.pt (β₁ e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (CR O y s) R')) ≫ (P.M.pt e).left)
-    (τ : L' → 𝔐.Li) (hτ : ∀ e, (𝔐.M.pt (τ e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R' Ω)) ≫ (M'.pt e).left) (e : P.L) :
+    (hβ : ∀ e, (M'.pt (β₁ e)).left = spMap (dualMap (algebraMap (CR O y s) R')) ≫ (P.M.pt e).left)
+    (τ : L' → 𝔐.Li) (hτ : ∀ e, (𝔐.M.pt (τ e)).left = spMap (dualMap (algebraMap R' Ω)) ≫ (M'.pt e).left) (e : P.L) :
     τ (β₁ e) = P.toLi e := by
   have e1 : (algebraMap R' Ω).comp (algebraMap (CR O y s) R') = algebraMap (CR O y s) Ω :=
     RingHom.ext fun r => hal r
@@ -614,55 +614,8 @@ theorem form_overlap (hp : p.Prime) (hpS : p ∈ S) (hs : mseg y s ≠ 0) (ht : 
   obtain ⟨β₁, hβ₁⟩ := LieFin.exists_tr _ _ (algebraMap (CR O y s) (ovl O y s t)) rfl P₁.M M'
   obtain ⟨β₂, hβ₂⟩ := LieFin.exists_tr _ _ (algebraMap (CR O y t) (ovl O y s t)) hz P₂.M M'
   obtain ⟨τ, hτ⟩ := LieFin.exists_tr _ _ (algebraMap (ovl O y s t) Ω) hx M' 𝔐.M
-  have hspan : Submodule.span (ovl O y s t) (Set.range β₁) = ⊤ := by
-    let c := algebraMap (CR O y s) (ovl O y s t)
-    letI : Algebra (CR O y s) (ovl O y s t) := c.toAlgebra
-    letI : Module (CR O y s) L' := Module.compHom L' c
-    haveI : IsScalarTower (CR O y s) (ovl O y s t) L' :=
-      ⟨fun r r' e => by
-        show (c r * r') • e = c r • (r' • e)
-        exact mul_smul _ _ _⟩
-    let h : epsAt (spMap c ≫ P₁.x) ⟶ epsAt P₁.x :=
-      Over.homMk (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap c))) (by
-        show Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap c)) ≫
-            Spec.map (CommRingCat.ofHom (algebraMap _ (DualNumber _))) ≫ P₁.x =
-          Spec.map (CommRingCat.ofHom (algebraMap _ (DualNumber _))) ≫
-            Spec.map (CommRingCat.ofHom c) ≫ P₁.x
-        rw [← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp]
-        congr 2
-        ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl, CommRingCat.hom_comp,
-          CommRingCat.hom_ofHom])
-    have hl : h.left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap c)) := rfl
-    have hpt : ∀ e, M'.pt (β₁ e) = h ≫ P₁.M.pt e := fun e =>
-      Over.OverMorphism.ext (by rw [Over.comp_left, hl]; exact hβ₁ e)
-    have hadd : ∀ a b, β₁ (a + b) = β₁ a + β₁ b := by
-      intro a b
-      apply M'.inj
-      rw [M'.add, hpt, hpt, hpt, P₁.M.add, MonObj.comp_mul]
-    have hsmul : ∀ (r : CR O y s) (e : P₁.L), β₁ (r • e) = c r • β₁ e := by
-      intro r e
-      apply M'.inj
-      apply Over.OverMorphism.ext
-      rw [M'.smul, hpt, hpt, Over.comp_left, Over.comp_left, P₁.M.smul, hl,
-        ← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp]
-      congr 2
-      ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, smul_eq_mul, TrivSqZeroExt.algebraMap_eq_inl,
-        CommRingCat.hom_comp, CommRingCat.hom_ofHom]
-    let β : P₁.L →ₗ[CR O y s] L' :=
-      { toFun := β₁, map_add' := hadd, map_smul' := fun r e => hsmul r e }
-    obtain ⟨-, -, hbc⟩ := LieProj.lie_finite_projective_baseChange 𝔐.X 𝔐.t.G (CR O y s) P₁.x P₁.L P₁.M
-    have hb : IsBaseChange (ovl O y s t) β := hbc (ovl O y s t) L' M' β (fun e => hβ₁ e)
-    rw [eq_top_iff]
-    rintro z -
-    obtain ⟨v, rfl⟩ := hb.equiv.surjective z
-    induction v using TensorProduct.induction_on with
-    | zero => simp
-    | tmul a e =>
-      rw [hb.equiv_tmul]
-      exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨e, rfl⟩)
-    | add a b ha hb' =>
-      rw [map_add (f := _)]
-      exact Submodule.add_mem _ ha hb'
+  have hspan : Submodule.span (ovl O y s t) (Set.range β₁) = ⊤ :=
+    GlobalTheory.T.lie_model_base_change_span 𝔐.X 𝔐.t.G (CR O y s) (ovl O y s t) _ P₁.x P₁.L L' P₁.M M' β₁ hβ₁
   have c₁ := tr_toLi P₁ (ovl O y s t) algL_coe M' β₁ hβ₁ τ hτ
   have c₂ := tr_toLi P₂ (ovl O y s t) algR_coe M' β₂ hβ₂ τ hτ
   have hmem : ∀ e', P₁.j u (τ e') ∈ ovl O y s t := by
@@ -699,7 +652,7 @@ theorem form_overlap (hp : p.Prime) (hpS : p ∈ S) (hs : mseg y s ≠ 0) (ht : 
   · have := congrArg Subtype.val (e1 a)
     simpa [algL_coe, algR_coe] using this
   · refine LinearMap.ext fun w => ?_
-    refine P₂.toLi_bc.inductionOn (motive := fun w => P₂.j u₂ w = ((mseg y s / mseg y t) ^ m • P₁.j u) w) w ?_ ?_ ?_
+    refine P₂.toLi_bc.inductionOn w (fun w => P₂.j u₂ w = ((mseg y s / mseg y t) ^ m • P₁.j u) w) (by simp) ?_ ?_ ?_
     · intro e
       rw [P₂.j_apply]
       have := congrArg Subtype.val (e3 e)

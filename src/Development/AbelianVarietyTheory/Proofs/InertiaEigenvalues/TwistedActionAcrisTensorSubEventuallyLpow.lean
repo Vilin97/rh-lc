@@ -17,7 +17,6 @@ noncomputable section
 namespace GlobalTheory.OCrCont
 
 open Filter Topology
-open GlobalTheory.BKReal (OCr galOCr)
 
 theorem galOCr_sub_smul_eventually {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [Algebra ℤ_[l] O]
     (r : OCr l O) (m : ℕ) :

@@ -107,8 +107,8 @@ private lemma lin_subst_lemma_3 {σ τ : Type} [Fintype σ] {a : σ → MvPowerS
   have ha : HasSubst a := ⟨fun s => by rw [ha0 s]; exact IsNilpotent.zero, fun _ => Set.toFinite _⟩
   have hR : Low 2 (f - ∑ s, coeff (Finsupp.single s 1) f • X s) := by
     apply low_two_of_lemma
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [← coeff_zero_eq_constantCoeff_apply, map_sub, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [← coeff_zero_eq_constantCoeff_apply, map_sub, map_sum]
       simp only [map_smul, coeff_zero_X, smul_zero, Finset.sum_const_zero, sub_zero]
       rw [coeff_zero_eq_constantCoeff_apply]
       exact hf0
@@ -142,7 +142,7 @@ theorem dLin_logOf (G : FGLaw S d) : ReciprocityTheory.ChartRestriction.G.TB.dLi
       rintro ⟨a, j⟩
       fin_cases a <;> simp [ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ.pt]
     change constantCoeff (subst (fun p : Fin 2 × Fin d => (![pt S d 0, 0] : Fin 2 → Pt S 1 d) p.1 p.2)
-      (pderiv S ((1 : Fin 2), b) (G.F i))) = _
+      (pderiv ((1 : Fin 2), b) (G.F i))) = _
     rw [← coeff_zero_eq_constantCoeff_apply, cc_subst_lemma_2 ha0, coeff_pderiv, zero_add, hlin i b]
     by_cases h : i = b
     · subst h
@@ -318,8 +318,8 @@ theorem psTrunc_two_twist (G : FGLaw S d) (c : Fin d → Fin d → S) :
   · rw [if_pos hd, ← MvPolynomial.coeff_coe]
     have h := hdiff e (by omega)
     rwa [map_sub, sub_eq_zero] at h
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [if_neg hd, ← MvPolynomial.coeff_coe, hcoe, map_add (f := _), map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [if_neg hd, ← MvPolynomial.coeff_coe, hcoe, map_add (f := _), map_sum]
     have h2 : 2 < e.degree := by omega
     have hz : ∀ a b : Fin 2 × Fin d, coeff e (X a * X b : MvPowerSeries (Fin 2 × Fin d) S) = 0 :=
       fun a b => hXX a b e h2

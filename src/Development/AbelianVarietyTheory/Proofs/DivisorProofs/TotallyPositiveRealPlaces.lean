@@ -110,6 +110,9 @@ theorem exists_mul_self_of_pos {K : Type} [Field K] [NumberField K] (w : Infinit
   obtain ⟨a, ha⟩ := key
   refine ⟨a, (extensionEmbedding w).injective ?_⟩
   rw [map_mul, ha, ← Complex.ofReal_mul, Real.mul_self_sqrt h1.le, ← hre]
+  rw [NumberField.InfinitePlace.Completion.algebraMap_apply]
+  change w.embedding t = extensionEmbedding w ((WithAbs.toAbs w.1 t : WithAbs w.1) : w.Completion)
+  rw [extensionEmbedding_coe]
   simp
 
 theorem exists_norm_at_infinite : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ)

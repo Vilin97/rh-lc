@@ -132,7 +132,7 @@ theorem gsTateCompactCohomology_rootsOfUnity_two_eq_zero {r : ℕ} (hr : 4 ≤ r
     rw [pow_one, ← kummerG_apply]
     exact kummerG_kummerF S ιr ιs (n + 1) x
   obtain ⟨y, rfl⟩ := exists_kummerδ_eq S ιr ιs h2S n x hf
-  obtain ⟨y', rfl⟩ := exists_two_nsmul_unitsTateCohomology S ιr ιs h2S (by omega) y
+  obtain ⟨y', rfl⟩ := exists_two_nsmul_unitsTateCohomology S ιr ιs h2S (r := n) (by omega) y
   rw [← kummerG_apply]
   exact kummerδ_kummerG S ιr ιs h2S n y'
 

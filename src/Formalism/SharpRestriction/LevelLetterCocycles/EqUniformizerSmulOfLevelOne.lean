@@ -289,9 +289,9 @@ theorem zb [NeZero n] [IsDomain O] (hR : Formalism.MainNotions.LiftingTheory.lif
       (Submodule.subset_span ⟨c y, ⟨(hc.2.1 y).2, (hc.2.1 y).1⟩, rfl⟩), ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum]
-    refine Finset.sum_congr rfl fun y _ => ?_
-    rw [Formalism.MainNotions.LiftingTheory.frame_γD_smul, hsA y δ hδ,
-      Formalism.MainNotions.UnusedSlot80.PhiPowers.φD_pow_Δ W T (hcN y).1.2 j δ hδ]
+      refine Finset.sum_congr rfl fun y _ => ?_
+      rw [Formalism.MainNotions.LiftingTheory.frame_γD_smul, hsA y δ hδ,
+        Formalism.MainNotions.UnusedSlot80.PhiPowers.φD_pow_Δ W T (hcN y).1.2 j δ hδ]
   obtain ⟨z', hz', hζ⟩ := eq_uniformizer_smul_of_level_one W T i hD h1
   set K0 := max M X + 1
   obtain ⟨t0, a, ha, haΔ, hae⟩ := hc.2.2 K0

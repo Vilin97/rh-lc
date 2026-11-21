@@ -108,7 +108,7 @@ theorem low : VolSt → StabSt → NumSt → LowSt := by
   have hfin : Module.finrank ℚ D.host.E = 2 * D.R.f := by
     rw [show Module.finrank ℚ D.host.E = 4 * D.R.ord from D.host.finrank_cmField]
     unfold Ranks.f Ranks.n; ring
-  have hf : 1 ≤ D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) D.R.ord_pos; omega
+  have hf : 1 ≤ D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega
   have hmass : ((3 : ℝ) ^ (2 * D.R.f * D.R.r ^ 2))⁻¹ ≤ Formalism.MainNotions.StandardLattice.massI D D.R.r := by
     have := GlobalTheory.StdMassLower.main D.host.E (fun _ => rfl) D.R.r
     rw [hfin] at this

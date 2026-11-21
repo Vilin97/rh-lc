@@ -40,8 +40,8 @@ theorem wtf_ppx_le {S T : Type} [CommRing S] [CommRing T] {x : Sp S ⟶ Xo.X} {x
   exact hp' k
 
 theorem wtf_dualMap_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (f : S →+* T) (g : R →+* S) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap f).comp (GlobalTheory.CompanionTheory.Ar.dualMap g) = GlobalTheory.CompanionTheory.Ar.dualMap (f.comp g) :=
-  RingHom.ext fun s => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap]) (by simp [GlobalTheory.CompanionTheory.Ar.dualMap])
+    (dualMap f).comp (dualMap g) = dualMap (f.comp g) :=
+  RingHom.ext fun s => TrivSqZeroExt.ext (by simp [dualMap]) (by simp [dualMap])
 
 section Bor
 
@@ -126,8 +126,8 @@ theorem wtf_frMap (hA : TanAddSt Xo) {S : Type} [CommRing S] [Algebra c.F S] {p 
   have hxy : spMap χ.toRingHom ≫ z.x = y.x := hxz.trans hxb
   refine ⟨hxz.symm, fun τ i => ?_, wtfA_bcPmE χ.toRingHom z.x y'.x hxz, wtfA_bcPmE_snd _ _ _ _,
     wtfA_bcPmE_fst _ _ _ _, fun i h => ?_⟩
-  · let D : tEps y.x ⟶ tEps z.x := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ.toRingHom)) (by
-      show spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ.toRingHom) ≫ spMap (algebraMap R (DualNumber R)) ≫ z.x =
+  · let D : tEps y.x ⟶ tEps z.x := Over.homMk (spMap (dualMap χ.toRingHom)) (by
+      show spMap (dualMap χ.toRingHom) ≫ spMap (algebraMap R (DualNumber R)) ≫ z.x =
         spMap (algebraMap S (DualNumber S)) ≫ y.x
       rw [← Category.assoc, spMap_comp_spMap, dualMap_comp_alg, ← spMap_comp_spMap, Category.assoc, hxy])
     have hM' : ∀ τ i j, χ.toRingHom (M τ i j) = cf τ i j := hM
@@ -136,9 +136,9 @@ theorem wtf_frMap (hA : TanAddSt Xo) {S : Type} [CommRing S] [Algebra c.F S] {p 
       unfold wtfA_comb
       rw [wtfA_pre_prod]
       refine Finset.prod_congr rfl fun j _ => Over.OverMorphism.ext ?_
-      show spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ.toRingHom) ≫ spMap (epsMul (M τ i j)) ≫ z.u τ j = spMap (epsMul (cf τ i j)) ≫ y.u τ j
+      show spMap (dualMap χ.toRingHom) ≫ spMap (epsMul (M τ i j)) ≫ z.u τ j = spMap (epsMul (cf τ i j)) ≫ y.u τ j
       rw [hu2 τ j, hu1 τ j, ← Category.assoc, spMap_comp_spMap, dualMap_comp_epsMul, ← spMap_comp_spMap, hM',
-        Category.assoc, ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ.toRingHom)), spMap_comp_spMap, wtf_dualMap_comp, ← hφ]
+        Category.assoc, ← Category.assoc (spMap (dualMap χ.toRingHom)), spMap_comp_spMap, wtf_dualMap_comp, ← hφ]
     rw [← (wtfA_isComb_iff y.x (y.u τ) (y.tan τ) (cf τ i) (y'.u τ i)).1 (hcf τ i), ← hD]
     rfl
   · have hpm : wtfA_bcPmE χ.toRingHom z.x y'.x hxz ≫ pmz = pmb ≫ pma := by

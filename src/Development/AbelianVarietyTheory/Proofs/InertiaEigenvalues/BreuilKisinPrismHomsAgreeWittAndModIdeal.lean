@@ -55,22 +55,21 @@ theorem eq_of_pow_eq_self {A : Type} [CommRing A] {J : Ideal A} (hJ : J ≤ (⊥
 variable {l : ℕ} [hl : Fact l.Prime]
 
 theorem sub_mem_I {K : FinExt l} (bk : BK K) {B : Obj l ↥(OL K)} (f g : Hom bk.prism B) (x : bk.S) :
-    BK.hf (bk := bk) f x - BK.hf (bk := bk) g x ∈ B.I := by
+    BK.hf f x - BK.hf g x ∈ B.I := by
   have h : Ideal.Quotient.mk bk.prism.I x = bk.prism.str (bk.str.symm (Ideal.Quotient.mk _ x)) :=
     (bk.str.apply_symm_apply _).symm
   rw [← Ideal.Quotient.eq]
   exact (f.f_str _ x h).trans (g.f_str _ x h).symm
 
 theorem main : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (B : Obj l ↥(OL K)) (f g : Hom bk.prism B),
-    (∀ w, BK.hf (bk := bk) f (PowerSeries.C w) = BK.hf (bk := bk) g (PowerSeries.C w)) ∧
-      BK.hf (bk := bk) f X - BK.hf (bk := bk) g X ∈ B.I ∧
-      B.I = Ideal.span {BK.hf (bk := bk) f bk.E} := by
+    (∀ w, BK.hf f (PowerSeries.C w) = BK.hf g (PowerSeries.C w)) ∧ BK.hf f X - BK.hf g X ∈ B.I ∧
+      B.I = Ideal.span {BK.hf f bk.E} := by
   intro l _ K bk B f g
   haveI := B.complete
   have hlJ : (l : B.A) ∈ Ideal.span {(l : B.A)} ⊔ B.I := Ideal.mem_sup_left (Ideal.mem_span_singleton_self _)
   refine ⟨fun w => ?_, sub_mem_I bk f g X, ?_⟩
-  · let φ1 : Wq l bk.a →+* B.A := (BK.hf (bk := bk) f).comp C
-    let φ2 : Wq l bk.a →+* B.A := (BK.hf (bk := bk) g).comp C
+  · let φ1 : Wq l bk.a →+* B.A := (BK.hf f).comp C
+    let φ2 : Wq l bk.a →+* B.A := (BK.hf g).comp C
     have hz := padicInt_ringHom_ext hlJ (φ1.comp (algebraMap ℤ_[l] (Wq l bk.a)))
       (φ2.comp (algebraMap ℤ_[l] (Wq l bk.a)))
     have ht : ∀ z : Fq l bk.a, φ1 (WittVector.teichmuller l z) = φ2 (WittVector.teichmuller l z) := by

@@ -25,7 +25,7 @@ theorem contDiff_lead (j : ℕ) : ContDiff ℂ ⊤ (lead j : Matrix (Fin n) (Fin
     refine ContDiff.sum fun σ _ => ?_
     refine ContDiff.const_smul _ ?_
     refine contDiff_prod fun i _ => ?_
-    exact contDiff_apply_apply ℂ _ _
+    exact contDiff_apply_apply ℂ ℂ _ _
   · have : (lead j : Matrix (Fin n) (Fin n) ℂ → ℂ) = fun _ => 0 := by
       funext z; simp [lead, h]
     rw [this]

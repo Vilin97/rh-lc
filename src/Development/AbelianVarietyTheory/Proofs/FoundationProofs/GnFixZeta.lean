@@ -113,10 +113,9 @@ theorem ev_fix {T : Tower p Ω} {L : ℕ} {ψ : O0 p →+* Ω} (hψ : IsReb T L 
   have hq : g (T.qq L) = T.qq L := ((Basic.mem_gn T L g).1 hg2).2
   obtain ⟨d, e, a, he, -, rfl, rfl⟩ := h
   set_option synthInstance.maxHeartbeats 100000 in
-    constructor <;> (
-      rw [map_sum]
-      refine Finset.sum_congr rfl fun t _ => ?_
-      rw [map_mul, hg1 _ (he t).2, reb_fix hψ hq])
+    · rw [map_sum]
+    refine Finset.sum_congr rfl fun t _ => ?_
+    rw [map_mul, hg1 _ (he t).2, reb_fix hψ hq]
 
 theorem conj_mem {T : Tower p Ω} {L : ℕ} {σ g : Gal p Ω} (hσ : σ ∈ Gn T L) (hg : g ∈ Ggeo p Ω ⊓ Gn T L) :
     σ * g * σ⁻¹ ∈ Ggeo p Ω ⊓ Gn T L := by
@@ -140,7 +139,7 @@ theorem kum_rel (T : Tower p Ω) {n : ℕ} {H : Subgroup (Gal p Ω)} {θ ρ ra r
     {e ka kb : Gal p Ω → ZMod (p ^ n)}
     (hθ : IsKum T n H θ e) (ha : IsKum T n H ra ka) (hb : IsKum T n H rb kb)
     (hρ : ∀ g ∈ H, g ρ = ρ) (hrel : θ * rb = ρ * ra) (hne : θ * rb ≠ 0) {g : Gal p Ω} (hg : g ∈ H) :
-    Cong (p := p) n (((e g).val : Ω) + ((kb g).val : Ω)) ((ka g).val : Ω) := by
+    Cong p n (((e g).val : Ω) + ((kb g).val : Ω)) ((ka g).val : Ω) := by
   have h1 := congrArg g hrel
   rw [map_mul, map_mul, hθ g hg, hb g hg, hρ g hg, ha g hg] at h1
   have h2 : T.ζ n ^ ((e g).val + (kb g).val) * (θ * rb) = T.ζ n ^ (ka g).val * (θ * rb) := by
@@ -164,12 +163,12 @@ theorem edge_dlog : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∃ c : ℕ, ∀ (
   ∃ o : Ω, IsInt (p := p) o ∧ (∀ g ∈ (Ggeo p Ω ⊓ Gn T L), g o = o) ∧ ∀ σ ∈ Gn T L, ∀ (θ κ a a' b b' : Ω) (ca cb : ℤ → Ω),
     IsKum T n (Ggeo p Ω ⊓ Gn T L) θ (fun h => η (σ * h * σ⁻¹) - η h - x h * y σ + x σ * y h) →
     κ ≠ 0 → IsAlgZp p κ → θ ^ (p ^ n) * b = κ * a → Ev ψ ca a a' → Ev ψ cb b b' → a ≠ 0 → IsInt (p := p) a⁻¹ → b ≠ 0 → IsInt (p := p) b⁻¹ →
-    Cong (p := p) n ((p : Ω) ^ c * (a' / a - b' / b)) (σ⁻¹ o - o - (p : Ω) ^ c * ι (α * β' - β * α') * ((lz σ).val : Ω)) := by
+    Cong p n ((p : Ω) ^ c * (a' / a - b' / b)) (σ⁻¹ o - o - (p : Ω) ^ c * ι (α * β' - β * α') * ((lz σ).val : Ω)) := by
   intro p _ hp2
   obtain ⟨c₁, h53⟩ := GlobalTheory.T.cup_kummer_dlog_mod_primePow_levelL p hp2
   obtain ⟨c₂, hed⟩ := GlobalTheory.T.edge_class_cup_product_geometric p hp2 c₁
   obtain ⟨c₃, hgeo⟩ := GlobalTheory.T.kummerCocycle_value_expansion_eq_logDeriv_smul p hp2
-  obtain ⟨c₄, h71⟩ := GlobalTheory.K5.Reb.h1_geometric_level_coboundary p hp2
+  obtain ⟨c₄, h71⟩ := GlobalTheory.T.geometric_level_h1_coboundary p hp2
   refine ⟨c₂ + c₃ + c₄, ?_⟩
   intro Ω _ _ hΩ T L n hnL hn1 ψ hψ ι hι u v α β α' β' hu hv r s hr hs x y lz η hx hy hlz hcup hloc
   haveI := hΩ.clo

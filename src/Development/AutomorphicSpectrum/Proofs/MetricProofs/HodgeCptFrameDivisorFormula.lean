@@ -113,8 +113,8 @@ theorem gen_of_mat (F₀ Ω G : Type) [Field F₀] [Field Ω] [Field G] [Algebra
     rfl
 
 theorem spMap_dual_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (a : R →+* R') (b : R' →+* R'') :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (b.comp a)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap b) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap a) := by
-  have e : GlobalTheory.CompanionTheory.Ar.dualMap (b.comp a) = (GlobalTheory.CompanionTheory.Ar.dualMap b).comp (GlobalTheory.CompanionTheory.Ar.dualMap a) := RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    spMap (dualMap (b.comp a)) = spMap (dualMap b) ≫ spMap (dualMap a) := by
+  have e : dualMap (b.comp a) = (dualMap b).comp (dualMap a) := RingHom.ext fun x => by ext <;> simp [dualMap]
   rw [e]
   simp only [spMap]
   rw [CommRingCat.ofHom_comp, Spec.map_comp]
@@ -278,7 +278,7 @@ theorem exists_colFlags : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
       exact hW τ
     · rw [show b (.inr τ) = _ from funext (hbO τ)]
       exact hO' τ
-  have hjpt : ∀ e, (𝔐'.M.pt ((j.comp j₁) e)).left ≫ 𝔐'.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap 𝔐'.fn) ≫ (M₀.pt e).left := by
+  have hjpt : ∀ e, (𝔐'.M.pt ((j.comp j₁) e)).left ≫ 𝔐'.m.φ = spMap (dualMap 𝔐'.fn) ≫ (M₀.pt e).left := by
     intro e
     show (𝔐'.M.pt (j (j₁ e))).left ≫ _ = _
     rw [hpt, hpt₁ e, ← hι, spMap_dual_comp ι (algebraMap Ω (GenField Ω (rk (CMType H) D.p D.q))), Category.assoc]

@@ -39,12 +39,12 @@ open Formalism.L2.Col Formalism.L2.Ker Formalism.UG GlobalTheory.Mem.Chr GlobalT
 variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X)
 end Std
 section Main
-variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} {W : _root_.GlobalTheory.MiS.RealPackAlt ex} {u : B.Word} {a : _root_.GlobalTheory.Fam.GeometricFamily W u}
+variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (I.rec7 l Z)} {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} {W : _root_.GlobalTheory.MiS.RealPackAlt ex} {u : B.Word} {a : _root_.GlobalTheory.Fam.GeometricFamily W u}
 set_option maxHeartbeats 2000000 in
 theorem mem_U_iff_mem_levU_of_grpAt (hW : _root_.GlobalTheory.Fam.AllFamilyConditions W) (ha : a.Is) (hTr : a.True) (j : ℕ) (hj : j + 2 ≤ B.R.m) [NeZero (B.R.N j)] {t : W.P.T} (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t)
-    (hJ : J.Reads) (β : J.Ch₀ j) {P : GlobalTheory.FinPl.Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) → Prop} (hP : ∀ v, P v → ¬ _root_.GlobalTheory.LevProd.quadraticTwistAtPlace J v)
-    {g : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j)} (hg : g ∈ GlobalTheory.FinPl.grpAt _ P) (x : TC.GA B (B.R.N j))
-    (hxU : x ∈ Formalism.L2.Col.UAd B.sp.cm (B.R.N j)) (hx : x.1 = finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j (show j ≤ B.R.m by omega)) g) :
+    (hJ : J.Reads) (β : J.Ch₀ j) {P : GlobalTheory.FinPl.Pl (I.rec7 l Z) → Prop} (hP : ∀ v, P v → ¬ _root_.GlobalTheory.LevProd.quadraticTwistAtPlace J v)
+    {g : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j)} (hg : g ∈ GlobalTheory.FinPl.grpAt _ P) (x : TC.GA B (B.R.N j))
+    (hxU : x ∈ Formalism.L2.Col.UAd B.sp.cm (B.R.N j)) (hx : x.1 = finM _ (rankN (I.rec7 l Z) j (show j ≤ B.R.m by omega)) g) :
     g ∈ J.A.U j β ↔ x ∈ Formalism.L2.Col.levU (F := B.host.F) B.sp.cm (B.R.N j) ((B.primes X).vT u) (B.primes X).vGs
       (Formalism.L2.Col.colLevSym I.Ch j).grp := by
   have hj' : j ≤ B.R.m := by omega
@@ -60,28 +60,28 @@ theorem mem_U_iff_mem_levU_of_grpAt (hW : _root_.GlobalTheory.Fam.AllFamilyCondi
     exact ⟨i, ((_root_.GlobalTheory.Fam.QJPlaces.places_under_alt W hW u a ha hTr t J hJ).2 i).trans (congrArg _ hi)⟩
 set_option maxHeartbeats 2000000 in
 theorem mem_U_of_mem_U_away_from_twisted (hW : _root_.GlobalTheory.Fam.AllFamilyConditions W) (ha : a.Is) (hTr : a.True) (j : ℕ) (hj : j + 2 ≤ B.R.m) {t t' : W.P.T} (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t)
-    (hJ : J.Reads) (β : J.Ch₀ j) (J' : _root_.GlobalTheory.Fam.QuadraticExtensionData a t') (hJ' : J'.Reads) (β' : J'.Ch₀ j) {P : GlobalTheory.FinPl.Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) → Prop}
+    (hJ : J.Reads) (β : J.Ch₀ j) (J' : _root_.GlobalTheory.Fam.QuadraticExtensionData a t') (hJ' : J'.Reads) (β' : J'.Ch₀ j) {P : GlobalTheory.FinPl.Pl (I.rec7 l Z) → Prop}
     (hP : ∀ v, P v → ¬ _root_.GlobalTheory.LevProd.quadraticTwistAtPlace J v) (hP' : ∀ v, P v → ¬ _root_.GlobalTheory.LevProd.quadraticTwistAtPlace J' v)
-    {g : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j)} (hg : g ∈ GlobalTheory.FinPl.grpAt _ P) (h : g ∈ J.A.U j β) : g ∈ J'.A.U j β' := by
+    {g : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j)} (hg : g ∈ GlobalTheory.FinPl.grpAt _ P) (h : g ∈ J.A.U j β) : g ∈ J'.A.U j β' := by
   have hj' : j ≤ B.R.m := by omega
   haveI : NeZero (B.R.N j) := ⟨(B.R.N_pos j).ne'⟩
   obtain ⟨hPins⟩ := hW.tr.pins
-  have hg1 : gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj' = 1 := ((GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hW.tr.ok hPins l Z).2.2.2 j hj').1
-  have eU : Formalism.UG.UPts (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj') (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) =
+  have hg1 : gramN (I.rec7 l Z) j hj' = 1 := ((GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hW.tr.ok hPins l Z).2.2.2 j hj').1
+  have eU : Formalism.UG.UPts (sigD (I.rec7 l Z)) (gramN (I.rec7 l Z) j hj') (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F) =
       Formalism.L2.Col.UAd B.sp.cm (B.R.N j) := by rw [hg1]; rfl
-  obtain ⟨x, hx⟩ := GlobalTheory.AdForm.RdVal.finM_mem ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj') (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj') rfl g
+  obtain ⟨x, hx⟩ := GlobalTheory.AdForm.RdVal.finM_mem ((I.rec7 l Z).sp.X j) (rankN (I.rec7 l Z) j hj') (gramN (I.rec7 l Z) j hj') rfl g
   have hxU : x.1 ∈ Formalism.L2.Col.UAd B.sp.cm (B.R.N j) := eU ▸ x.2
   exact (_root_.GlobalTheory.LevProd.Supp.mem_U_iff_mem_levU_of_grpAt hW ha hTr j hj J' hJ' β' hP' hg x.1 hxU hx).2 ((_root_.GlobalTheory.LevProd.Supp.mem_U_iff_mem_levU_of_grpAt hW ha hTr j hj J hJ β hP hg x.1 hxU hx).1 h)
 set_option maxHeartbeats 2000000 in
 theorem cutAt_mem_U_of_mem_relax_not_twAt (hW : _root_.GlobalTheory.Fam.AllFamilyConditions W) (ha : a.Is) (hTr : a.True) (j : ℕ) (hj : j + 2 ≤ B.R.m) {t t' : W.P.T} (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t)
     (hJ : J.Reads) (α : J.Ch j) (J' : _root_.GlobalTheory.Fam.QuadraticExtensionData a t') (hJ' : J'.Reads) (α' : J'.Ch j)
-    {g : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j)} (hg : g ∈ _root_.GlobalTheory.LevProd.relaxedLevelSubgroup J j hj α) (v : GlobalTheory.FinPl.Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (hv' : ¬ _root_.GlobalTheory.LevProd.quadraticTwistAtPlace J' v) :
+    {g : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j)} (hg : g ∈ _root_.GlobalTheory.LevProd.relaxedLevelSubgroup J j hj α) (v : GlobalTheory.FinPl.Pl (I.rec7 l Z)) (hv' : ¬ _root_.GlobalTheory.LevProd.quadraticTwistAtPlace J' v) :
     cutAt _ v g ∈ J'.A.U j (J'.ι j α') := by
   obtain ⟨⟨hsup, hgf⟩, hphi⟩ := Subgroup.mem_inf.1 hg |>.imp_left Subgroup.mem_inf.1
   by_cases hv : _root_.GlobalTheory.LevProd.quadraticTwistAtPlace J v
   · obtain ⟨i, rfl⟩ := hv
-    obtain ⟨gl, -, h1, h2⟩ := GlobalTheory.LocEmb.exists_gl _ _ (J.G i).q ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j)
-      (XIx (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.k) (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t) j) ((J.G i).FX j (Nat.le_succ_of_le (_root_.GlobalTheory.LevProd.step_index_le_s_alt J i hj)))
+    obtain ⟨gl, -, h1, h2⟩ := GlobalTheory.LocEmb.exists_gl _ _ (J.G i).q ((I.rec7 l Z).sp.X j)
+      (XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) j) ((J.G i).FX j (Nat.le_succ_of_le (_root_.GlobalTheory.LevProd.step_index_le_s_alt J i hj)))
     have hy : _root_.GlobalTheory.LevProd.localHomProduct J j hj g i ∈ KO (J.G i).k _ := (Subgroup.mem_pi _).1 (Subgroup.mem_comap.1 hphi) i (Set.mem_univ _)
     rw [h2 (cutAt _ (J.G i).q.v g) (_root_.GlobalTheory.LevProd.localHomProduct J j hj g i) (suppAt_cutAt _ _ g)
       ((GlobalTheory.LevIdx.eq_locHom_iff _ _ _ _ _).2 (locHom_cutAt _ _ _ hgf).symm)]
@@ -94,10 +94,10 @@ theorem cutAt_mem_U_of_mem_relax_not_twAt (hW : _root_.GlobalTheory.Fam.AllFamil
       (fun w hw h => hv (Finset.mem_singleton.1 hw ▸ h)) (fun w hw h => hv' (Finset.mem_singleton.1 hw ▸ h)) (cutAt_mem _ v g) (hle hsup)
 end Main
 set_option maxHeartbeats 2000000 in
-theorem relax_mem_sup_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → ∀ j (hj : j + 2 ≤ B.R.m), ∀ t (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t), J.Reads → ∀ (α : J.Ch j) t' (J' : _root_.GlobalTheory.Fam.QuadraticExtensionData a t'), J'.Reads → ∀ (α' : J'.Ch j), ∀ g ∈ _root_.GlobalTheory.LevProd.relaxedLevelSubgroup J j hj α, g ∈ J'.A.U j (J'.ι j α') ⊔ GlobalTheory.FinPl.grpAt _ (_root_.GlobalTheory.LevProd.quadraticTwistAtPlace J') := by
+theorem relax_mem_sup_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (I.rec7 l Z)} {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → ∀ j (hj : j + 2 ≤ B.R.m), ∀ t (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t), J.Reads → ∀ (α : J.Ch j) t' (J' : _root_.GlobalTheory.Fam.QuadraticExtensionData a t'), J'.Reads → ∀ (α' : J'.Ch j), ∀ g ∈ _root_.GlobalTheory.LevProd.relaxedLevelSubgroup J j hj α, g ∈ J'.A.U j (J'.ι j α') ⊔ GlobalTheory.FinPl.grpAt _ (_root_.GlobalTheory.LevProd.quadraticTwistAtPlace J') := by
   intro B X I l Z L hT Gi Gl Kc Yd cX ex W hW u a ha hTr j hj t J hJ α t' J' hJ' α' g hg
   have hgf : g ∈ GfC _ := (Subgroup.mem_inf.1 (Subgroup.mem_inf.1 hg).1).2
-  let Q : Finset (GlobalTheory.FinPl.Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) := Finset.univ.image fun i => (J'.G i).q.v
+  let Q : Finset (GlobalTheory.FinPl.Pl (I.rec7 l Z)) := Finset.univ.image fun i => (J'.G i).q.v
   have hQ : ∀ v, v ∈ Q ↔ _root_.GlobalTheory.LevProd.quadraticTwistAtPlace J' v := fun v => by
     simp only [Q, Finset.mem_image, Finset.mem_univ, true_and]
     rfl

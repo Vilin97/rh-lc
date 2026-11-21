@@ -82,18 +82,13 @@ theorem ofNat_succ (n : ℕ) [NeZero n] (k : ℕ) : Fin.ofNat n (k + 1) = Fin.of
   simp [Fin.ofNat, Fin.val_add, Nat.add_mod]
 
 theorem jj_add {n : ℕ} [NeZero n] (jj : ZMod d ≃ Fin n) (h : ∀ a, jj (a + 1) = jj a + 1) (a : ZMod d) :
-    ∀ k : ℕ, jj (a + (k : ZMod d)) = jj a + Fin.ofNat n k := by
-  intro k
-  induction k with
-  | zero =>
-    have hzero : Fin.ofNat n 0 = 0 := by
-      apply Fin.ext
-      simp [Fin.ofNat]
-    simp only [Nat.cast_zero, hzero, add_zero]
-  | succ k ih =>
-    have e : a + (k.succ : ZMod d) = (a + (k : ZMod d)) + 1 := by
-      simp only [Nat.cast_succ, add_assoc]
-    rw [e, h, ih, ofNat_succ, add_assoc]
+    ∀ k : ℕ, jj (a + (k : ZMod d)) = jj a + Fin.ofNat n k
+  | 0 => by
+    have : Fin.ofNat n 0 = 0 := by apply Fin.ext; simp [Fin.ofNat]
+    simp [this]
+  | k + 1 => by
+    have e : a + ((k + 1 : ℕ) : ZMod d) = (a + (k : ZMod d)) + 1 := by push_cast; ring
+    rw [e, h, jj_add jj h a k, ofNat_succ, add_assoc]
 
 end Inst
 

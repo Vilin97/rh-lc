@@ -157,34 +157,26 @@ private theorem conj_push (f : A →ₐ[O] B) (r : D →* GG (m := 3) (R := A)) 
   rfl
 
 private theorem triIn_push {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D} (f : A →ₐ[O] B) {r : D →* GG (m := 3) (R := A)}
-    {h : GL (Fin 3) A} (H : TriIn η Ψ I r h) : TriIn η Ψ I (push f r) (GeneralLinearGroup.map (f : A →+* B) h) := by
-  refine ⟨?_, ?_⟩
-  · intro g hg a b hab
-    rw [conj_push, H.tri g hg a b hab, map_zero]
-  · intro s hs h1 a
-    rw [conj_push, H.ine s hs h1 a, AlgHom.commutes]
+    {h : GL (Fin 3) A} (H : TriIn η Ψ I r h) : TriIn η Ψ I (push f r) (GeneralLinearGroup.map (f : A →+* B) h) where
+  tri g hg a b hab := by rw [conj_push, H.tri g hg a b hab, map_zero]
+  ine s hs h1 a := by rw [conj_push, H.ine s hs h1 a, AlgHom.commutes]
 
 private theorem diagIn_push {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D} (f : A →ₐ[O] B) {r : D →* GG (m := 3) (R := A)}
-    {h : GL (Fin 3) A} (H : DiagIn η Ψ I r h) : DiagIn η Ψ I (push f r) (GeneralLinearGroup.map (f : A →+* B) h) := by
-  refine ⟨triIn_push f H.toTriIn, ?_⟩
-  intro g hg a b hab
-  rw [conj_push, H.low g hg a b hab, map_zero]
+    {h : GL (Fin 3) A} (H : DiagIn η Ψ I r h) : DiagIn η Ψ I (push f r) (GeneralLinearGroup.map (f : A →+* B) h) where
+  toTriIn := triIn_push f H.toTriIn
+  low g hg a b hab := by rw [conj_push, H.low g hg a b hab, map_zero]
 
 private theorem triIn_pull {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D} (f : A →ₐ[O] B) (hf : Function.Injective f)
     {r : D →* GG (m := 3) (R := A)} {h : GL (Fin 3) A} (H : TriIn η Ψ I (push f r) (GeneralLinearGroup.map (f : A →+* B) h)) :
-    TriIn η Ψ I r h := by
-  refine ⟨?_, ?_⟩
-  · intro g hg a b hab
-    exact hf (by rw [← conj_push, H.tri g hg a b hab, map_zero])
-  · intro s hs h1 a
-    exact hf (by rw [← conj_push, H.ine s hs h1 a, AlgHom.commutes])
+    TriIn η Ψ I r h where
+  tri g hg a b hab := hf (by rw [← conj_push, H.tri g hg a b hab, map_zero])
+  ine s hs h1 a := hf (by rw [← conj_push, H.ine s hs h1 a, AlgHom.commutes])
 
 private theorem diagIn_pull {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D} (f : A →ₐ[O] B) (hf : Function.Injective f)
     {r : D →* GG (m := 3) (R := A)} {h : GL (Fin 3) A} (H : DiagIn η Ψ I (push f r) (GeneralLinearGroup.map (f : A →+* B) h)) :
-    DiagIn η Ψ I r h := by
-  refine ⟨triIn_pull f hf H.toTriIn, ?_⟩
-  intro g hg a b hab
-  exact hf (by rw [← conj_push, H.low g hg a b hab, map_zero])
+    DiagIn η Ψ I r h where
+  toTriIn := triIn_pull f hf H.toTriIn
+  low g hg a b hab := hf (by rw [← conj_push, H.low g hg a b hab, map_zero])
 
 omit [IsLocalRing O] in
 private theorem exists_gl (S : Subalgebra O A) (h : GL (Fin 3) A) (h1 : ∀ a b, h.val a b ∈ S)
@@ -277,60 +269,14 @@ theorem UpperTheory.V.UnitaryThreeInertia.tangent_eq_orbit :
       {G Γ ι : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
       [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ] [T2Space Γ] [TotallyDisconnectedSpace Γ] [Finite ι] (F : Frame O G Γ ι), F.Ok →
     ∀ (g₁ : Γ), F.Marked g₁ → ∀ {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (u : Γ →* GG (m := 3) (R := R)), F.IsUniv g₁ u →
-    Module.Finite O (wpart O u 0) → ∀ (ξ : Sring (O := O) u →ₐ[O] (PadicAlgCl l)) (r : Γ →* GG (m := 3) (R := PadicAlgCl l)), IsPtHom u ξ r → F.Rigid r → ∀ D ∈ PtDer ξ (PadicAlgCl l), ∃ a : (PadicAlgCl l), ∀ (j : ℤ) x (hx : x ∈ wpart O u j), D ⟨x, mem_Sring u hx⟩ = a * j * ξ ⟨x, mem_Sring u hx⟩ := by
+    Module.Finite O (wpart O u 0) → ∀ (ξ : Sring O u →ₐ[O] (PadicAlgCl l)) (r : Γ →* GG (m := 3) (R := PadicAlgCl l)), IsPtHom u ξ r → F.Rigid r → ∀ D ∈ PtDer ξ (PadicAlgCl l), ∃ a : (PadicAlgCl l), ∀ (j : ℤ) x (hx : x ∈ wpart O u j), D ⟨x, mem_Sring u hx⟩ = a * j * ξ ⟨x, mem_Sring u hx⟩ := by
   intro l _ O _ _ _ _ _ _ _ _ _ _ _ G Γ ι _ _ _ _ _ _ _ _ _ _ _ _ _ F hF g₁ hg R _ _ _ u hu hfin ξ r hr hrig D hD
   obtain ⟨hadj, hfinj⟩ := sring_eq_adjoin F hF g₁ hg u hu hfin
   obtain ⟨W, hW, -⟩ := exists_adapted F hF g₁ hg u hu
-  have hLift : ∃ v, IsPtHom u (AlgHom.id O (Sring (O := O) u)) v := by
-    let S := Sring (O := O) u
-    let f : S →+* R := S.val
-    have hdet (g : Γ) : (u g).mat.det ∈ wpart O u 0 := by
-      intro R' _ _ _ α β t h
-      have htor (s : ℤˣ) : sgnAct (m := 3) (R := R') s (tor R' t) = tor R' t := by
-        rcases Int.units_eq_one_or s with rfl | rfl <;> simp [theta_tor]
-      have he := congrArg (fun v => (v g).mat.det) h
-      have hconj : (conjBy (tor R' t) (push α u) g).left =
-          tor R' t * (push α u g).left * tor R' t⁻¹ := by
-        simp [conjBy, MulAut.conj_apply, SemidirectProduct.mul_left, SemidirectProduct.inv_left, htor, map_inv]
-      change (push β u g).mat.det = (conjBy (tor R' t) (push α u) g).left.val.det at he
-      rw [hconj, Units.val_mul, Units.val_mul, Matrix.det_mul, Matrix.det_mul, mul_right_comm,
-        ← Matrix.det_mul, ← Units.val_mul, ← map_mul, mul_inv_cancel, map_one, Units.val_one,
-        Matrix.det_one, one_mul] at he
-      change ((β : R →+* R').mapMatrix (u g).mat).det =
-        ((α : R →+* R').mapMatrix (u g).mat).det at he
-      simpa only [← RingHom.map_det, AlgHom.coe_toRingHom, zpow_zero, Units.val_one, one_mul] using he
-    have hentries (g : Γ) : ∀ a b, (u g).left.val a b ∈ S :=
-      fun a b => mem_Sring u (entry_mem u g a b)
-    have hinv (g : Γ) : ∀ a b, ((u g).left⁻¹).val a b ∈ S := by
-      let M : Matrix (Fin 3) (Fin 3) S := fun a b => ⟨_, hentries g a b⟩
-      have hM : f.mapMatrix M = (u g).mat := rfl
-      have hunit : IsUnit (u g).mat.det := (Matrix.isUnit_iff_isUnit_det _).1 (u g).left.isUnit
-      obtain ⟨d, hd⟩ := hunit
-      have hd' : (u g).mat.det * (↑d⁻¹ : R) = 1 := by rw [← hd, ← Units.val_mul, mul_inv_cancel, Units.val_one]
-      have hm : (↑d⁻¹ : R) ∈ S := mem_Sring u (inv_wpart u (hdet g) hd')
-      intro a b
-      rw [Matrix.coe_units_inv, Matrix.inv_def]
-      change (Ring.inverse (u g).mat.det • (u g).mat.adjugate) a b ∈ S
-      rw [← hd, Ring.inverse_unit, ← hM, ← RingHom.map_adjugate, Matrix.smul_apply, smul_eq_mul]
-      exact S.mul_mem hm (M.adjugate a b).2
-    choose k hk using fun g => exists_gl S (u g).left (hentries g) (hinv g)
-    let v : Γ → GG (m := 3) (R := S) := fun g => ⟨k g, (u g).right⟩
-    have hv (g : Γ) : GG.map f (v g) = u g := SemidirectProduct.ext (hk g) rfl
-    have hf : Function.Injective (GG.map (m := 3) f) := by
-      intro x y h
-      apply gg_ext
-      · exact congrArg (fun z : GG (m := 3) (R := R) => z.right) h
-      · exact Matrix.ext fun a b => Subtype.val_injective (congrArg (fun z => z.mat a b) h)
-    refine ⟨{ toFun := v
-              map_one' := hf (by rw [hv, map_one, map_one])
-              map_mul' := fun g h => hf (by rw [map_mul, hv, hv, hv, map_mul]) }, ?_⟩
-    intro g
-    refine ⟨rfl, Matrix.ext fun a b => Subtype.ext ?_⟩
-    exact congrArg (fun z => z.mat a b) (hv g)
-  obtain ⟨uS, huS⟩ := hLift
+  obtain ⟨uS, huS, -⟩ := existsUnique_isPtHom u (AlgHom.id O (Sring O u))
   have hent : ∀ g a b, (uS g).mat a b = ⟨_, mem_Sring u (entry_mem u g a b)⟩ := fun g a b => by
     rw [(huS g).2]; rfl
-  have hval : push (Sring (O := O) u).val uS = u :=
+  have hval : push (Sring O u).val uS = u :=
     MonoidHom.ext fun g => gg_ext (huS g).1 (Matrix.ext fun a b => congrArg Subtype.val (hent g a b))
   have hrm : ∀ g a b, (r g).mat a b = ξ ((uS g).mat a b) := fun g a b => by
     rw [(hr g).2, hent]; rfl
@@ -362,11 +308,11 @@ theorem UpperTheory.V.UnitaryThreeInertia.tangent_eq_orbit :
     refine Matrix.ext fun a b => ?_
     rw [Matrix.map_apply, Matrix.one_apply]
     split_ifs <;> simp [hD1]
-  have hcont : ∀ φ : Sring (O := O) u →ₗ[O] PadicAlgCl l, Continuous fun g => (uS g).mat.map φ := fun φ => by
+  have hcont : ∀ φ : Sring O u →ₗ[O] PadicAlgCl l, Continuous fun g => (uS g).mat.map φ := fun φ => by
     refine continuous_matrix fun a b => ?_
     haveI := hfinj (wt a b)
     have := cont_sub (wpart O u (wt a b))
-      (φ ∘ₗ Submodule.inclusion (p' := Subalgebra.toSubmodule (Sring (O := O) u)) fun x hx => mem_Sring u hx)
+      (φ ∘ₗ Submodule.inclusion (p' := Subalgebra.toSubmodule (Sring O u)) fun x hx => mem_Sring u hx)
       (fun g => ⟨_, entry_mem u g a b⟩) fun n => (hu.pt.cont n).comp fun X => X a b
     simp only [Matrix.map_apply, hent]
     exact this
@@ -380,12 +326,12 @@ theorem UpperTheory.V.UnitaryThreeInertia.tangent_eq_orbit :
       rw [← hyD', ← Ring.inverse_eq_inv, ← Matrix.inv_def, Matrix.mul_nonsing_inv_cancel_right _ _ (hdet g)]
     rw [this]
     exact (hcont D).matrix_mul ((hrc.matrix_det.inv₀ fun g => (hdet g).ne_zero).smul hrc.matrix_adjugate)
-  have hbas : ∀ v ∈ F.Tb, ∃ h : GL (Fin 3) (Sring (O := O) u),
+  have hbas : ∀ v ∈ F.Tb, ∃ h : GL (Fin 3) (Sring O u),
       (v = F.vl → TriIn (F.ηv v) (F.Ψv v) (F.Iv v) (uS.comp (F.loc v)) h) ∧
       (v ∈ F.Sb → DiagIn (F.ηv v) (F.Ψv v) (F.Iv v) (uS.comp (F.loc v)) h) := fun v hv => by
     obtain ⟨h, -, h1, h2, h3, h4⟩ := exists_graded_basis F hF g₁ hg u hu v hv
-    obtain ⟨k, rfl⟩ := exists_gl (Sring (O := O) u) h (fun a b => mem_Sring u (h1 a b)) fun a b => mem_Sring u (h2 a b)
-    have e : u.comp (F.loc v) = push (Sring (O := O) u).val (uS.comp (F.loc v)) := by
+    obtain ⟨k, rfl⟩ := exists_gl (Sring O u) h (fun a b => mem_Sring u (h1 a b)) fun a b => mem_Sring u (h2 a b)
+    have e : u.comp (F.loc v) = push (Sring O u).val (uS.comp (F.loc v)) := by
       conv_lhs => rw [← hval]
       rfl
     rw [e] at h3 h4
@@ -433,12 +379,12 @@ theorem UpperTheory.V.UnitaryThreeInertia.tangent_eq_orbit :
   rw [hy'] at hnc
   obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.1
     ((normCoc_cob_iff r F.c g₁ X (isUnit_iff_ne_zero.2 two_ne_zero) ((hrr _).trans hF.ηc) ((hrr _).trans hg.1) hn hzu).1 hnc)
-  letI : SetLike.GradedMonoid fun j => (wpart O u j).comap (Sring (O := O) u).val.toLinearMap :=
+  letI : SetLike.GradedMonoid fun j => (wpart O u j).comap (Sring O u).val.toLinearMap :=
     { one_mem := (SetLike.GradedOne.one_mem : (1 : R) ∈ wpart O u 0)
       mul_mem := fun _ _ _ _ ha hb => (SetLike.GradedMul.mul_mem ha hb : _ ∈ wpart O u _) }
-  refine ⟨a, fun j x hx => euler (fun j => (wpart O u j).comap (Sring (O := O) u).val.toLinearMap)
+  refine ⟨a, fun j x hx => euler (fun j => (wpart O u j).comap (Sring O u).val.toLinearMap)
     (internal_of W _ (funext hW.part)) ξ D hD a {x | ∃ g a b, F.η g = 1 ∧ x = (uS g).mat a b} ?_ ?_ j _ hx⟩
-  · refine Subalgebra.map_injective (f := (Sring (O := O) u).val) Subtype.val_injective ?_
+  · refine Subalgebra.map_injective (f := (Sring O u).val) Subtype.val_injective ?_
     rw [AlgHom.map_adjoin, Algebra.map_top, Subalgebra.range_val]
     refine Eq.trans ?_ hadj.symm
     congr 1

@@ -17,8 +17,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.Loc ReciprocityTheory.Gal Mod
 namespace GlobalTheory.CrFrac
 
 theorem push_comp {O R A B' Γ : Type} [CommRing O] [CommRing R] [CommRing A] [CommRing B'] [Algebra O R]
-    [Algebra O A] [Algebra O B'] [Group Γ] (g : A →ₐ[O] B') (F : R →ₐ[O] A)
-    (r : Γ →* GG (m := 3) (R := R)) :
+    [Algebra O A] [Algebra O B'] [Group Γ] (g : A →ₐ[O] B') (F : R →ₐ[O] A) (r : Γ →* GG 3 R) :
     push (g.comp F) r = (GG.map (g : A →+* B')).comp (push F r) := rfl
 
 theorem core (hL : LocalPublishedTheorems) {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
@@ -39,7 +38,7 @@ theorem core (hL : LocalPublishedTheorems) {l : ℕ} [Fact l.Prime] {O : Type} [
     (hπC : ∀ a, πC a = 0 → IsNilpotent a) (hπT : ∀ a, π (p₁ a) = 0 → IsNilpotent a)
     (hcomp : π.comp p₁ = πC.comp p₂) (hsurj : ∀ b c, π b = πC c → ∃ s, p₁ s = b ∧ p₂ s = c) (k : ℕ)
     (hcanc : ∀ (P y : T) (j : ℕ) (v : Cˣ), j ≤ 2 * k → p₂ P = t ^ j * v → P * y = 0 → p₁ y = 0)
-    (a : U.R) (ha : D.del U.r.hom ^ k * a ∈ D.ordIdeal U.r.hom) : f a = 0 := by
+    (a : U.R) (ha : GlobalTheory.OrdLoc.del D U.r.hom ^ k * a ∈ GlobalTheory.OrdLoc.ordIdeal D U.r.hom) : f a = 0 := by
   obtain ⟨u, hu1, hu2, hu3, j, v, hj, hdel⟩ := GlobalTheory.T.saturatingElement_unramified_twist_eq_pow_mul_unit D E C t ht
   have hr₂ := GlobalTheory.T.crystalline_twist_by_unramified_character D E C πC hπC u hu1 hu2 hu3
   obtain ⟨r, hr, hr1, hr2⟩ := GlobalTheory.T.crystallineDeformation_amalgamate_over_fibre_product_cover hL D E B π hπ C πC hπC T (π.comp p₁) hπT p₁ p₂ rfl hcomp.symm hsurj
@@ -56,7 +55,7 @@ theorem core (hL : LocalPublishedTheorems) {l : ℕ} [Fact l.Prime] {O : Type} [
     exact hr1
   have h0 := GlobalTheory.T.ordIdeal_eq_bot_of_crystalline_deformation hL D E T (π.comp p₁) hπT r hr
   obtain ⟨hmap, -, hdelF⟩ := GlobalTheory.T.ordinaryIdeal_saturators_map_algHom D F U.r.hom
-  have h1 : F (D.del U.r.hom ^ k * a) = 0 := by
+  have h1 : F (GlobalTheory.OrdLoc.del D U.r.hom ^ k * a) = 0 := by
     have h := Ideal.mem_map_of_mem (F : U.R →+* T) ha
     rw [hmap, hF, h0] at h
     exact (Submodule.mem_bot _).1 h
@@ -64,8 +63,8 @@ theorem core (hL : LocalPublishedTheorems) {l : ℕ} [Fact l.Prime] {O : Type} [
   obtain ⟨-, -, hdel2⟩ := GlobalTheory.T.ordinaryIdeal_saturators_map_algHom D (p₂.restrictScalars O) r
   have hpush : push (p₂.restrictScalars O) r = r0 D.η ((Units.map (algebraMap O C : O →* C)).comp D.Ψ * u) := hr2
   rw [hpush, hdel] at hdel2
-  have hP : p₂ (D.del r ^ k) = t ^ (j * k) * ((v ^ k : Cˣ) : C) := by
-    rw [map_pow, show p₂ (D.del r) = t ^ j * v from hdel2, mul_pow, ← pow_mul, Units.val_pow_eq_pow_val]
+  have hP : p₂ (GlobalTheory.OrdLoc.del D r ^ k) = t ^ (j * k) * ((v ^ k : Cˣ) : C) := by
+    rw [map_pow, show p₂ (GlobalTheory.OrdLoc.del D r) = t ^ j * v from hdel2, mul_pow, ← pow_mul, Units.val_pow_eq_pow_val]
   have h2 := hcanc _ (F a) (j * k) (v ^ k) (by nlinarith) hP h1
   rw [← hF1]
   exact h2
@@ -77,7 +76,7 @@ theorem main (hL : LocalPublishedTheorems) {l : ℕ} [Fact l.Prime] {O : Type} [
     (B : Type) [CommRing B] [Algebra ℚ_[l] B] [Module.Finite ℚ_[l] B] [Algebra O B] [Algebra ℤ_[l] B]
     [IsScalarTower ℤ_[l] O B] [IsScalarTower ℤ_[l] ℚ_[l] B] [Algebra E B] [IsScalarTower O E B]
     [IsScalarTower ℚ_[l] E B] (π : B →ₐ[E] E) (hπ : ∀ a, π a = 0 → IsNilpotent a) (f : U.R →ₐ[O] B)
-    (hf : D.InDcr (π : B →+* E) (push f U.r.hom)) : D.IY U ≤ RingHom.ker f := by
+    (hf : D.InDcr (π : B →+* E) (push f U.r.hom)) : GlobalTheory.OrdLoc.IY D U ≤ RingHom.ker f := by
   rintro a ⟨k, hk⟩
   haveI : Module.Finite E B := Module.Finite.of_restrictScalars_finite ℚ_[l] E B
   obtain ⟨C, _, _, _, T, _, _, _, πC, p₁, p₂, t, ht, hπC, hπT, hcomp, hsurj, hcanc⟩ := GlobalTheory.T.exists_truncated_polynomial_thickening_fibre_square π hπ (2 * k)

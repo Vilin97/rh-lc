@@ -77,8 +77,8 @@ theorem lbIso_cube_pull (h : IsGrpPullback G' G f φ) (hL : L.IsLB) (hL' : L'.Is
     {T' : Over S'} {T : Over S} {n : ℕ} (x' : Fin n → (T' ⟶ G')) (x : Fin n → (T ⟶ G))
     (U : Over.mk (T'.hom ≫ f) ⟶ T) (hx : ∀ i, pushPt h.1.w (x' i) = U ≫ x i) :
     LBIso (cubeLB G' x' L') ((cubeLB G x L).pull (Y := T'.left) U.left) :=
-  LBIso.trans (DVR.linComb_isLB L' hL' _ _) (DVR.linComb_isLB _ (LB.isLB_pull hL φ) _ _)
-    (LB.isLB_pull (DVR.linComb_isLB L hL _ _) _) (GlobalTheory.PowPrimitive.lbIso_linComb hb _ _)
+  LBIso.trans (DVR.linComb_isLB L' hL' _ _) (DVR.linComb_isLB _ (pull_isLB hL φ) _ _)
+    (pull_isLB (DVR.linComb_isLB L hL _ _) _) (GlobalTheory.PowPrimitive.lbIso_linComb hb _ _)
     (LBIso.chartPull (chartPullLinComb L _ _ _ _ U.left fun I => psum_push h _ _ U hx I.down)
       (ReciprocityTheory.ChartRestriction.G.Geo.Tor.chartPullPull _ _ _ rfl) (PolBaseChange.lbIso_refl (DVR.linComb_isLB L hL _ _)))
 
@@ -97,7 +97,7 @@ theorem adj_iff (h : IsGrpPullback G' G f φ) (hL : L.IsLB) (hL' : L'.IsLB) (hb 
     · exact (pushPt_comp h hv _).trans (by simp [sqMap])
   have i' : ∀ x : Fin 2 → (G' ⊗ G' ⟶ G'), (cubeLB G' x L').IsLB := fun x => DVR.linComb_isLB L' hL' _ _
   have i : ∀ x : Fin 2 → (G ⊗ G ⟶ G), ((cubeLB G x L).pull (Y := (G' ⊗ G').left) (sqMap h).left).IsLB :=
-    fun x => LB.isLB_pull (DVR.linComb_isLB L hL _ _) _
+    fun x => pull_isLB (DVR.linComb_isLB L hL _ _) _
   exact ⟨fun H => LBIso.trans (i _) (i' _) (i _) a.symm (LBIso.trans (i' _) (i' _) (i _) H b),
     fun H => LBIso.trans (i' _) (i _) (i' _) a (LBIso.trans (i _) (i _) (i' _) H b.symm)⟩
 
@@ -111,8 +111,8 @@ theorem prim_iff (h : IsGrpPullback G' G f φ) (hL : L.IsLB) (hL' : L'.IsLB) (hb
   have e : (pushPt h.1.w (𝟙 G')).left = φ := Category.id_comp _
   rw [e] at a
   have i' : (cubeLB G' ![𝟙 G', w'] L').IsLB := DVR.linComb_isLB L' hL' _ _
-  have i : ((cubeLB G ![𝟙 G, w] L).pull φ).IsLB := LB.isLB_pull (DVR.linComb_isLB L hL _ _) _
-  have j := LB.isLB_pull hL φ
+  have i : ((cubeLB G ![𝟙 G, w] L).pull φ).IsLB := pull_isLB (DVR.linComb_isLB L hL _ _) _
+  have j := pull_isLB hL φ
   exact ⟨fun H => LBIso.trans j hL' i hb.symm (LBIso.trans hL' i' i H a),
     fun H => LBIso.trans hL' j i' hb (LBIso.trans j i i' H a.symm)⟩
 

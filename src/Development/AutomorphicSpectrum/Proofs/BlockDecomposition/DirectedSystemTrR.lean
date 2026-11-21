@@ -75,17 +75,16 @@ theorem ι_trA (i j : ℕ) (h : i ≤ j) (x : G i) : ι f j (trA f i j h x) = ι
 theorem ι_tr (n k : ℕ) (x : G n) : ι f (n + k) (tr f n k x) = ι f n x := by
   rw [tr_eq_trA, ι_trA]
 
-theorem isColim : IsColim f (ι f) := by
-  refine ⟨?_, ?_, ?_⟩
-  · intro n x
+theorem isColim : IsColim f (ι f) where
+  comm n x := by
     have := ι_tr f n 1 x
     simpa [tr] using this
-  · intro m x
+  surj m x := by
     choose n y hy using fun i => Ring.DirectLimit.exists_of (x i)
     refine ⟨Finset.univ.sup n, fun i => trA f (n i) _ (Finset.le_sup (Finset.mem_univ i)) (y i),
       fun i => ?_⟩
     rw [ι_trA, ι_apply, hy]
-  · intro n m y hy
+  ker n m y hy := by
     have h0 : ∀ i, ∃ j, ∃ hij : n ≤ j, trR f n j hij (y i) = 0 := fun i =>
       Ring.DirectLimit.of.zero_exact (f' := fun i j h => trR f i j h) (hy i)
     choose j hj hz using h0

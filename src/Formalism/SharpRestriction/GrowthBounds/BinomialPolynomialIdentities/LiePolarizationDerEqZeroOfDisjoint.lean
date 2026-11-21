@@ -272,8 +272,16 @@ theorem isotypicProj_commute_prefix (D : Formalism.BasicNotions.D7) (i j : Fin (
     (he : IsIsoProj (glOps F n LL {l | l.val < i.val}) lam e)
     (he' : IsIsoProj (glOps F n LL {l | l.val < j.val}) lam' e') : e * e' = e' * e := by
   rcases le_total i j with hij | hij
-  · exact isotypicProj_commute_of_subset LL D _ _ (fun l (hl : l.val < i.val) => lt_of_lt_of_le hl hij) lam lam' e e' he he'
-  · exact (isotypicProj_commute_of_subset LL D _ _ (fun l (hl : l.val < j.val) => lt_of_lt_of_le hl hij) lam' lam e' e he' he).symm
+  · exact isotypicProj_commute_of_subset LL D _ _ (by
+      intro l hl
+      change l.val < i.val at hl
+      change l.val < j.val
+      exact lt_of_lt_of_le hl hij) lam lam' e e' he he'
+  · exact (isotypicProj_commute_of_subset LL D _ _ (by
+      intro l hl
+      change l.val < j.val at hl
+      change l.val < i.val
+      exact lt_of_lt_of_le hl hij) lam' lam e' e he' he).symm
 
 end comm
 

@@ -20,7 +20,7 @@ private theorem wdAt_of_model {l : ℕ} [Fact l.Prime] (P : LocPrime l) (ι : Om
     (r : ↥(Dec (F := E) A) →* GL (Fin a) (Om l)) (L₂ : FinExt l) (r₂ : ↥(Dec (F := E) A) →* GL (Fin a) ↥L₂.1)
     (hm₂ : IsModel B r L₂ r₂) (hV₂ : IsPst P (B.repE L₂ r₂)) :
     wdAt P ι B h hj r = wdPst P ι B h hj (B.repE L₂ r₂) := by
-  obtain ⟨L₁, r₁, hm₁, hV₁, e₁⟩ := wdAt_of_isPstAt (P := P) ι B h hj (r := r) ⟨L₂, r₂, hm₂, hV₂⟩
+  obtain ⟨L₁, r₁, hm₁, hV₁, e₁⟩ := wdAt_of_isPstAt ι B h hj (r := r) ⟨L₂, r₂, hm₂, hV₂⟩
   have h₁ : L₁.1 ≤ (supExt L₁ L₂).1 := le_sup_left
   have h₂ : L₂.1 ≤ (supExt L₁ L₂).1 := le_sup_right
   have e : mapRep (IntermediateField.inclusion h₁).toRingHom r₁ =
@@ -95,7 +95,7 @@ theorem UpperTheory.V.Af.Cq.wdRelRes :
     rw [alpha, alpha, ← (hc σ σ').1 hσ, hdeg, resDeg, resDeg, hq]
   have h4 : weilD Bw h (Loc.PP l) ρ σ = weilD Bw' h' (Loc.PP l) ρ σ' :=
     (weilD_apply Bw h (Loc.PP l) ρ σ).trans ((congrArg₂ (fun (g : ↥(GK Bw.Kw)) (m : ℤ) => actD (Loc.PP l) ρ g *
-      (Units.val (phiU (Loc.PP l) ρ ^ (-m))))
+      ((phiU (Loc.PP l) ρ ^ (-m) : (Module.End ↥L.1 ↥(Dpst (Loc.PP l) ρ))ˣ) : Module.End ↥L.1 ↥(Dpst (Loc.PP l) ρ)))
       h1 h3).trans (weilD_apply Bw' h' (Loc.PP l) ρ σ').symm)
   refine wd_ext _ ι ρ fun x => ?_
   exact (wdRho_mk (Loc.PP l) ι Bw h hj ρ σ x).trans

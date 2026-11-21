@@ -160,17 +160,6 @@ end GlobalTheory.Degen.FormOnto
 open GlobalTheory.Degen.FormOnto in
 theorem GlobalTheory.Degen.sections_pw_are_forms_of_closed_fibre : ∀ (A : Type) [CommRing A] [IsLocalRing A] [IsNoetherianRing A] (X : Scheme.{0}) (f : X ⟶ Spec (CommRingCat.of A)), Flat f → ∀ (H : LB X) (n : ℕ) (s : Fin (n + 1) → LB.Sec H), H.IsLB → VeryAmpleBy f H s → ∀ (K : Type) [Field K] (g₀ : A →+* K), Function.Surjective g₀ → ∀ (X₀ : Scheme.{0}) (π : X₀ ⟶ X) (f₀ : X₀ ⟶ Spec (CommRingCat.of K)), IsPullback π f₀ f (Spec.map (CommRingCat.ofHom g₀)) → ∀ (H₀ : LB X₀) (w₀ : LB.Iso H₀ (H.pull π)) (s₀ : Fin (n + 1) → LB.Sec H₀), H₀.IsLB → w₀.IsGen → (∀ j, (∀ z (k : (H).ι) (k' : (H₀).ι), (π) z ∈ (H).U k → z ∈ (H₀).U k' → gs (π) z _ ((s j).f k) = (Geo.Tor.gw (w₀) (𝟙 _) z k k').val * gs (𝟙 _) z _ ((s₀ j).f k'))) → ∀ t : ℕ, FirstCohomologyVanishes (pw H₀ t) → (∀ σ : LB.Sec (pw H₀ t), ∃ P : MvPolynomial (Fin (n + 1)) K, P.IsHomogeneous t ∧ ∀ k : H₀.ι, σ.f k = MvPolynomial.eval₂Hom (cst (f₀) ((H₀).U k)) (fun j => (s₀ j).f k) (P)) → ∀ σ : LB.Sec (pw H t), ∃ P : MvPolynomial (Fin (n + 1)) A, P.IsHomogeneous t ∧ ∀ k : H.ι, σ.f k = MvPolynomial.eval₂Hom (cst (f) ((H).U k)) (fun j => (s j).f k) (P) := by
   intro A _ _ _ X f hf H n s hH hva K _ g₀ hg₀ X₀ π f₀ hπ H₀ w₀ s₀ hH₀ hw₀ hs t h1 hF σ
-  have isLB_pw {Y : Scheme.{0}} {L : LB Y} (hL : L.IsLB) (d : ℤ) :
-      (pw L d).IsLB := by
-    refine ⟨hL.cover, ?_, ?_⟩
-    · intro i
-      have h := congrArg (· ^ d) (hL.g_self i)
-      simp only [one_zpow, ← map_zpow] at h
-      exact h
-    · intro i j k
-      have h := congrArg (· ^ d) (hL.cocycle i j k)
-      simp only [mul_zpow, ← map_zpow] at h
-      exact h
   have hM := isLB_pw hH (t : ℤ)
   have hM₀ := isLB_pw hH₀ (t : ℤ)
   have hw : (pwIso w₀ t).IsGen := (isGen_iff _).2 (pgen_pwIso ((isGen_iff _).1 hw₀) t)

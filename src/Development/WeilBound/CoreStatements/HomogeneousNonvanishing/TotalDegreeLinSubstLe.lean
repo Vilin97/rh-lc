@@ -41,12 +41,9 @@ private theorem linSubst_linSubst' {K : Type} [Field K] {B N n m : ℕ} (M : Mat
   rw [← AlgHom.comp_apply, comp_aeval]
   congr 1
   congr 1
-  funext i
-  simp only [map_sum, map_mul, aeval_C, aeval_X, Matrix.mul_apply, map_sum, Finset.mul_sum,
     Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun k _ => ?_
-  rw [algebraMap_eq]
   ring
 
 private theorem linSubst_one' {K : Type} [Field K] {B N : ℕ} (f : MvPolynomial (Fin B × Fin N) K) :

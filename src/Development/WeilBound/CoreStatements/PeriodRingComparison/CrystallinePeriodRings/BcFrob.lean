@@ -40,8 +40,8 @@ theorem cBc_frob_of
       (Formalism.Per6.φB l).comp (cBc l).toRingHom :=
     bcris_hom_ext_acris l fun x => by
       change cBc l (Reformulated.AutPerF.Bcris.frob l (OC l) _) = Formalism.Per6.φB l (cBc l _)
-      rw [Reformulated.AutPerF.Bcris.frob_algebraMap_acris, cBc_algebraMap, cBc_algebraMap, hφ,
-        PositivityTheory.LocInh.φB_cB]
+      rw [Reformulated.AutPerF.Bcris.frob_algebraMap_acris, cBc_algebraMap, cBc_algebraMap, hφ]
+      exact (PositivityTheory.LocInh.φB_cB (cA l x)).symm
   exact RingHom.congr_fun h b
 
 theorem cBc_aB (a : Reformulated.AutPerF.Ainf l (OC l)) :

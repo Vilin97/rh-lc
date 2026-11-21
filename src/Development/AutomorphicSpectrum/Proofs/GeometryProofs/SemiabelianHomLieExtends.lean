@@ -98,7 +98,7 @@ theorem exists_tangent_dvr_semiabelian {O T K : Type} [CommRing O] [CommRing T] 
     (t : epsAt x ⟶ G) (ht : IsTanAt G _ t) (v : epsAt (𝟙 (Sp K)) ⟶ GK)
     (hv : v.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T K)) ≫ t.left) :
     ∃ w : epsAt x ⟶ G', IsTanAt G' _ w ∧
-      (v ≫ q).left ≫ φ' = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T K)) ≫ w.left := by
+      (v ≫ q).left ≫ φ' = spMap (dualMap (algebraMap T K)) ≫ w.left := by
   subst hx
   let y : Sp T ⟶ Sp O := spMap a
   let g : Sp K ⟶ Sp T := spMap (algebraMap T K)
@@ -131,7 +131,7 @@ theorem exists_tangent_dvr_semiabelian {O T K : Type} [CommRing O] [CommRing T] 
   have hαi : α.inv.left ≫ pullback.fst H.hom g ≫ pullback.fst G.hom y = φ := by
     rw [← hα, ← Category.assoc, ← Over.comp_left, α.inv_hom_id, Over.id_left, Category.id_comp]
   have hz : v.left ≫ α.inv.left ≫ pullback.fst H.hom g =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T K)) ≫ w₀.left := by
+      spMap (dualMap (algebraMap T K)) ≫ w₀.left := by
     apply pullback.hom_ext
     · simp only [Category.assoc]
       rw [hαi, hv, hw₀]
@@ -166,21 +166,21 @@ theorem exists_tangent_dvr {O T K : Type} [CommRing O] [CommRing T] [IsDomain T]
     (t : epsAt (spMap a ≫ 𝟙 _) ⟶ G) (ht : IsTanAt G _ t) (v : epsAt (𝟙 (Sp K)) ⟶ GK)
     (hv : v.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T K)) ≫ t.left) :
     ∃ w : epsAt (spMap a ≫ 𝟙 _) ⟶ G', IsTanAt G' _ w ∧
-      (v ≫ q).left ≫ φ' = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T K)) ≫ w.left :=
+      (v ≫ q).left ≫ φ' = spMap (dualMap (algebraMap T K)) ≫ w.left :=
   exists_tangent_dvr_semiabelian a G G' GK GK' φ φ' hG hG' h h' q _ (by simp) t ht v hv
 
 theorem lifts_id {S : Scheme.{0}} {G : Over S} [GrpObj G] {R R' : Type} [CommRing R] [CommRing R'] {x : Sp R ⟶ S}
     {E : Type} [AddCommGroup E] [Module R E] (M : LieModel G x E) (c : R →+* R') (e : E)
     (v : epsAt (spMap c ≫ x) ⟶ G) (h : (v.left ≫ (𝟙 G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ (M.pt e).left)) :
-    v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ (M.pt e).left :=
+    v.left = spMap (dualMap c) ≫ (M.pt e).left :=
   (Category.comp_id _).symm.trans h
 
 theorem dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (d : A →+* B) (d' : B →+* C) :
-    GlobalTheory.CompanionTheory.Ar.dualMap (d'.comp d) = (GlobalTheory.CompanionTheory.Ar.dualMap d').comp (GlobalTheory.CompanionTheory.Ar.dualMap d) := by
-  ext x <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    dualMap (d'.comp d) = (dualMap d').comp (dualMap d) := by
+  ext x <;> simp [dualMap]
 
 theorem spMap_dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (d : A →+* B) (d' : B →+* C) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (d'.comp d)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap d') ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap d) := by
+    spMap (dualMap (d'.comp d)) = spMap (dualMap d') ≫ spMap (dualMap d) := by
   rw [dualMap_comp]
   simp only [spMap, CommRingCat.ofHom_comp, Spec.map_comp]
 
@@ -194,11 +194,11 @@ theorem exists_local {O K : Type} [CommRing O] [IsDedekindDomain O] [Field K] [A
     (hc : c.comp (algebraMap O _) = algebraMap O K)
     (t : epsAt (spMap (algebraMap O (Localization.AtPrime P)) ≫ 𝟙 _) ⟶ G)
     (ht : IsTanAt G _ t) (v : epsAt (𝟙 (Sp K)) ⟶ GK)
-    (hv : v.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ t.left)
+    (hv : v.left ≫ φ = spMap (dualMap c) ≫ t.left)
     (u : epsAt (spMap (algebraMap O K) ≫ 𝟙 _) ⟶ G') (hu : IsTanAt G' _ u)
     (huv : u.left = (v ≫ q).left ≫ φ') :
     ∃ w : epsAt (spMap (algebraMap O (Localization.AtPrime P)) ≫ 𝟙 _) ⟶ G', IsTanAt G' _ w ∧
-      u.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ w.left := by
+      u.left = spMap (dualMap c) ≫ w.left := by
   letI : Algebra (Localization.AtPrime P) K := c.toAlgebra
   have hcK : algebraMap (Localization.AtPrime P) K = c := rfl
   haveI : IsScalarTower O (Localization.AtPrime P) K := IsScalarTower.of_algebraMap_eq' hc.symm
@@ -221,9 +221,9 @@ theorem exists_local {O K : Type} [CommRing O] [IsDedekindDomain O] [Field K] [A
         spMap (algebraMap O (Localization.AtPrime P)) ≫ 𝟙 _ := by
       rw [← Category.assoc, LieTangent.spec_comp, h3]
     refine ⟨LieTangent.epsBase c' hbase ≫ u, LieTangent.isTanAt_base c' hbase hu, ?_⟩
-    show u.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap c') ≫ u.left
-    have h4 : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id K) = RingHom.id _ := by
-      ext x <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    show u.left = spMap (dualMap c) ≫ spMap (dualMap c') ≫ u.left
+    have h4 : dualMap (RingHom.id K) = RingHom.id _ := by
+      ext x <;> simp [dualMap]
     rw [← Category.assoc, ← spMap_dualMap_comp, h2, h4]
     simp [spMap]
   · have hP : P ≠ ⊥ := Ring.ne_bot_of_isMaximal_of_not_isField ‹_› hO
@@ -244,19 +244,19 @@ theorem hom_maps_lie : ∀ (O K : Type) [CommRing O] [IsDedekindDomain O] [Field
   obtain ⟨EK', i1', i2', MK', N', j', hMK', hj'⟩ := exists_generic_model (algebraMap O K) G' GK' φ' h' M'
   obtain ⟨D, hD, -⟩ := lieModel_exists_unique_diff (Sp K) GK GK' K (𝟙 _) EK EK' MK MK' q
   have hc : Function.Injective (algebraMap O K) := IsFractionRing.injective O K
-  have hj'' : ∀ a, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O K)) ≫ (M'.pt a).left = (N'.pt (j' a)).left :=
+  have hj'' : ∀ a, spMap (dualMap (algebraMap O K)) ≫ (M'.pt a).left = (N'.pt (j' a)).left :=
     fun a => (lifts_id _ _ _ _ (hj' a)).symm
-  have hjj : ∀ a, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O K)) ≫ (M.pt a).left = (N.pt (j a)).left :=
+  have hjj : ∀ a, spMap (dualMap (algebraMap O K)) ≫ (M.pt a).left = (N.pt (j a)).left :=
     fun a => (lifts_id _ _ _ _ (hj a)).symm
   have hinj : Function.Injective j' := fun a b hab => M'.inj (Over.OverMorphism.ext
-    (ext_of_spMap_injective (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O K)) (LieTangent.dualMap_injective hc) G'.hom _ _
+    (ext_of_spMap_injective (dualMap (algebraMap O K)) (LieTangent.dualMap_injective hc) G'.hom _ _
       ((Over.w (M'.pt a)).trans (Over.w (M'.pt b)).symm) (by rw [hj'', hj'', hab])))
   have key : ∀ e, ∃ e', j' e' = D (j e) := by
     intro e
     have hloc : ∀ (P : Ideal O) [P.IsMaximal] (c : Localization.AtPrime P →+* K),
         c.comp (algebraMap O _) = algebraMap O K →
         ∃ w : epsAt (spMap (algebraMap O (Localization.AtPrime P)) ≫ 𝟙 _) ⟶ G', IsTanAt G' _ w ∧
-          (N'.pt (D (j e))).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ w.left := by
+          (N'.pt (D (j e))).left = spMap (dualMap c) ≫ w.left := by
       intro P _ c hcP
       obtain ⟨ET, t1, t2, ⟨L⟩⟩ := lieModel_exists (Sp O) G (Localization.AtPrime P)
         (spMap (algebraMap O (Localization.AtPrime P)) ≫ 𝟙 _)
@@ -285,7 +285,7 @@ theorem hom_maps_lie : ∀ (O K : Type) [CommRing O] [IsDedekindDomain O] [Field
         rw [hv, hMK, ← hjj]
       · exact (Over.w v).trans (Over.w (MK.pt (j e))).symm
     have e1 : v ≫ q = MK'.pt (j' (f e)) := by rw [hvj, ← hD, hf]
-    show (v ≫ q).left ≫ φ' = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O K)) ≫ (M'.pt (f e)).left
+    show (v ≫ q).left ≫ φ' = spMap (dualMap (algebraMap O K)) ≫ (M'.pt (f e)).left
     rw [e1, hMK', hj'']
 
 end GlobalTheory.CompanionTheory.Ar.LieHomOk

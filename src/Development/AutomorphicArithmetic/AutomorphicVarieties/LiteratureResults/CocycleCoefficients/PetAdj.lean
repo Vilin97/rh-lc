@@ -156,7 +156,7 @@ private theorem quotInt_petersson_eq_add_of_hecke_sum [H.FiniteIndex] [H.Normal]
   have hb := fun u : ℕ => hF.pbd (hB.slashSL (ModularGroup.T ^ (u : ℤ)))
   choose C hC using hb
   obtain ⟨D, hD⟩ := hF.pbd (hA.smul c)
-  rw [e1, quotInt_add H (hF.cont (hA.smul c)) hD (continuous_finsetSum _ fun u _ => hc u)
+  rw [e1, quotInt_add H (hF.cont (hA.smul c)) hD (continuous_finset_sum _ fun u _ => hc u)
     (C' := ∑ u ∈ Finset.range p, C u) fun z => (norm_sum_le _ _).trans (Finset.sum_le_sum fun u _ => hC u z),
     quotInt_sum H _ hc fun u => ⟨_, hC u⟩, B_smul_right]
   congr 1

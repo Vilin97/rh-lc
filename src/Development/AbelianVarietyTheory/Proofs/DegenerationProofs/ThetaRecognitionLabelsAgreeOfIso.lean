@@ -117,14 +117,14 @@ theorem exists_norm (hB : μ.B J.e) (j : ℕ) (p : N.QT (n ^ j)) :
     ∃ p', μ.r (n ^ j) p p' ∧ p'.1.1.toAdd = J.e p.1.1.toAdd := by
   obtain ⟨p', hp'⟩ := μ.tot j p
   obtain ⟨z, hz⟩ := hB j p p' hp'
-  refine ⟨p' * N'.qTriv _ (-z), (μ.eqv _ p p p' _ hp' (by exact ⟨0, by simp, by simp⟩)).2
+  refine ⟨p' * N'.qTriv _ (-z), (μ.eqv _ p p p' _ hp' ((N.qEq_equivalence _).refl p)).2
     ((N'.qEq_iff _ _).2 ⟨-z, rfl⟩), ?_⟩
   change p'.1.1.toAdd + n ^ j • (-z) = _
   rw [hz, smul_neg, add_neg_cancel_right]
 
 theorem r_unique {k : ℕ} (hk : k ≠ 0) {p : N.QT k} {a b : N'.QT k} (ha : μ.r k p a) (hb : μ.r k p b)
     (hy : a.1.1 = b.1.1) : a = b :=
-  eq_of_qEq hk ((μ.eqv _ p p a b ha (by exact ⟨0, by simp, by simp⟩)).1 hb) hy
+  eq_of_qEq hk ((μ.eqv _ p p a b ha ((N.qEq_equivalence _).refl p)).1 hb) hy
 
 theorem r_of_tr_zero (hB : μ.B J.e) (hG : μ.OnG J) {j : ℕ} {p : N.QT (n ^ j)} {a : N'.QT (n ^ j)}
     (hp : p.1.1 = 1) (ha : TR J p a) : μ.r (n ^ j) p a := by
@@ -140,7 +140,7 @@ theorem exists_pre_zero (hA : μ.A) (hG : μ.OnG J) {j : ℕ} {a : N'.QT (n ^ j)
   obtain ⟨p₀, h₀⟩ := μ.cotot j a
   obtain ⟨z, hz⟩ := (hA.2 j p₀ a h₀).1.2 ⟨0, by rw [ha]; simp⟩
   have h1 : μ.r (n ^ j) (p₀ * N.qTriv _ (-z)) a :=
-    (μ.eqv _ p₀ _ a a h₀ ((N.qEq_iff _ _).2 ⟨-z, rfl⟩)).2 (by exact ⟨0, by simp, by simp⟩)
+    (μ.eqv _ p₀ _ a a h₀ ((N.qEq_iff _ _).2 ⟨-z, rfl⟩)).2 ((N'.qEq_equivalence _).refl a)
   have h2 : (p₀ * N.qTriv _ (-z)).1.1 = 1 := by
     change p₀.1.1.toAdd + n ^ j • (-z) = 0
     rw [hz, smul_neg, add_neg_cancel]

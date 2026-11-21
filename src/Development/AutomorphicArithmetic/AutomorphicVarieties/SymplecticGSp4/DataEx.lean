@@ -411,8 +411,10 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.dataEx :
       refine le_trans ?_ b2
       calc v ^ 2 * 2 ^ (c2 ψ + 1 + h.o.factorization 2) = v ^ 2 * 2 ^ h.o.factorization 2 * 2 ^ (c2 ψ + 1) * 1 := by ring
         _ ≤ (l * h.q) ^ 2 * h.o * 2 ^ (c2 ψ + 6) * l := by
-          have hl : 1 ≤ l := hlp.one_le
-          gcongr <;> norm_num <;> omega
+          gcongr
+          · norm_num
+          · omega
+          · exact hlp.one_le
         _ = _ := by ring
   · obtain ⟨c1, c2', c3, c4⟩ := hc
     obtain ⟨-, -, -, -, hb⟩ := bchiFacts h t hB

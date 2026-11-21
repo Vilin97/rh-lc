@@ -18,8 +18,8 @@ open GlobalTheory.CompanionTheory.Ar.RootHt.PullVal
 variable {X : Scheme.{0}} {Ω : Type} [Field Ω]
 
 theorem dualMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (g : B →+* C) (f : A →+* B) :
-    GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) = (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
-  refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    dualMap (g.comp f) = (dualMap g).comp (dualMap f) := by
+  refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;> simp [dualMap]
 
 theorem stalk_key {K K' : Type} [Field K] [Field K'] (w : Spec (CommRingCat.of K) ⟶ X)
     (w' : Spec (CommRingCat.of K') ⟶ X) (f : K →+* K') (e : Spec.map (CommRingCat.ofHom f) ≫ w = w') :
@@ -51,8 +51,8 @@ theorem extends_of_eq (M : LieModel G ξ E) {c c' : X} (hc : c' = c) (h : genPt 
     {K : Type} [CommRing K] (φ : X.presheaf.stalk c' ⟶ CommRingCat.of K) :
     ∃ (h' : genPt ξ ⤳ c') (v' : epsAt (R := X.presheaf.stalk c') (X.fromSpecStalk c') ⟶ G),
       M.Extends ⟨c', h'⟩ a v' ∧
-      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ.hom)) ≫ v'.left =
-        Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (X.presheaf.stalkSpecializes (specializes_of_eq hc) ≫ φ).hom)) ≫
+      Spec.map (CommRingCat.ofHom (dualMap φ.hom)) ≫ v'.left =
+        Spec.map (CommRingCat.ofHom (dualMap (X.presheaf.stalkSpecializes (specializes_of_eq hc) ≫ φ).hom)) ≫
           v.left := by
   subst hc
   refine ⟨h, v, hv, ?_⟩
@@ -67,8 +67,8 @@ theorem valAt_field_map : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Sp �
   refine Eq.trans ?_ hl'.symm
   rw [key, Over.comp_left, hl]
   simp only [GlobalTheory.CompanionTheory.Ar.LieSigma.pullEps, Over.homMk_left]
-  have e1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo w).hom)) =
-      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo w ≫ CommRingCat.ofHom f).hom)) := by
+  have e1 : spMap (dualMap f) ≫ Spec.map (CommRingCat.ofHom (dualMap (Scheme.stalkClosedPointTo w).hom)) =
+      Spec.map (CommRingCat.ofHom (dualMap (Scheme.stalkClosedPointTo w ≫ CommRingCat.ofHom f).hom)) := by
     unfold spMap
     rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, ← dualMap_comp']
   exact (Category.assoc _ _ _).symm.trans (congrArg (fun t => t ≫ v₀.left) e1)

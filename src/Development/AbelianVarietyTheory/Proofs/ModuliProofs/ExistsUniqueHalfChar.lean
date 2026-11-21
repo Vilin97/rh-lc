@@ -93,8 +93,7 @@ theorem isHolTo_fibre {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] {S X
     induction hg using Subring.closure_induction with
     | mem x hx =>
       rcases hx with ⟨t, rfl⟩ | ⟨t, rfl⟩
-      · refine ((ha U₁ t).2.mono fun w (hw : w ∈ {b ∈ Set.univ | ⊤ ≤ c b ⁻¹ᵁ W}) =>
-          ⟨hw.1, (hiff w).1 hw.2⟩).congr fun w hw => ?_
+      · refine ((ha U₁ t).2.mono fun w hw => ⟨hw.1, (hiff w).1 hw.2⟩).congr fun w hw => ?_
         exact valAt'_appLE (c w) p U₁ W _ t hw.2
       · refine (differentiableOn_const (valAt' (𝟙 (Sp ℂ)) ⊤ t)).congr fun w hw => ?_
         exact (valAt'_appLE (c w) q ⊤ W _ t hw.2).trans (by rw [hq])

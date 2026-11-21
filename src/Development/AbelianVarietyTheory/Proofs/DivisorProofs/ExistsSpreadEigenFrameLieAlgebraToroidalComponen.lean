@@ -145,18 +145,18 @@ end GlobalTheory.LogKSDiv.SpreadFrame
 namespace GlobalTheory.LogKSDiv.SpreadFrame
 
 theorem eps_dual {R S : Type} [CommRing R] [CommRing S] (θ : R →+* S) (c : R) :
-    spMap (epsMul (θ c)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap θ) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap θ) ≫ spMap (epsMul c) := by
+    spMap (epsMul (θ c)) ≫ spMap (dualMap θ) = spMap (dualMap θ) ≫ spMap (epsMul c) := by
   rw [ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap, ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap]
   congr 1
   refine RingHom.ext fun z => ?_
-  ext <;> simp [epsMul, GlobalTheory.CompanionTheory.Ar.dualMap, mul_comm]
+  ext <;> simp [epsMul, dualMap, mul_comm]
 
 theorem dual_dual {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (θ : S →+* T) (l : R →+* S) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap θ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap l) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (θ.comp l)) := by
+    spMap (dualMap θ) ≫ spMap (dualMap l) = spMap (dualMap (θ.comp l)) := by
   rw [ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap]
   congr 1
   refine RingHom.ext fun z => ?_
-  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  ext <;> simp [dualMap]
 
 theorem cancel_eps {R : Type} [CommRing R] {T : Scheme.{0}} {a b : Sp (DualNumber R) ⟶ T} {u : R} (hu : IsUnit u)
     (h : spMap (epsMul u) ≫ a = spMap (epsMul u) ≫ b) : a = b := by
@@ -179,7 +179,7 @@ open MonoidalCategory CartesianMonoidalCategory MonObj
 open scoped CategoryTheory.Obj
 
 
-theorem GlobalTheory.LogKSDiv.exists_spread_eigFrame : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (TF : TorFlag Xo c) (Z : Comp Xo c), ∀ [IsIntegral (X₀ TF.Y Z)], ∀ (x : X₀ TF.Y Z) (φ : c.F →+* (X₀ TF.Y Z).presheaf.stalk x) (f : GlobalTheory.ShFam.EigFrame TF.Y φ ((show Sp ((X₀ TF.Y Z).presheaf.stalk x) ⟶ X₀ TF.Y Z from (X₀ TF.Y Z).fromSpecStalk x) ≫ (barComp TF.Y Z).ι)), (show Sp ((X₀ TF.Y Z).presheaf.stalk x) ⟶ X₀ TF.Y Z from (X₀ TF.Y Z).fromSpecStalk x) ≫ s₀ TF.Y Z = spMap φ → ∃ (U : TF.Y.X.affineOpens) (_ : U.1 ≤ barComp TF.Y Z) (_ : (barComp TF.Y Z).ι x ∈ U.1) (ρ : Γ(TF.Y.X, U.1) →+* (X₀ TF.Y Z).functionField) (n : ℕ) (e : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≃ Fin n) (v : Fin n → (Sp (DualNumber Γ(TF.Y.X, U.1)) ⟶ TF.Y.t.G.left)) (φU : c.F →+* Γ(TF.Y.X, U.1)), spMap ρ ≫ LogKS.chart U = GlobalTheory.LogKSDiv.genPt TF Z ≫ (barComp TF.Y Z).ι ∧ (∀ i, IsTanAtG TF.Y.t (LogKS.chart U) (v i)) ∧ (∀ w', IsTanAtG TF.Y.t (LogKS.chart U) w' → ∃! cf : Fin n → Γ(TF.Y.X, U.1), IsCombAtG TF.Y.t (LogKS.chart U) v cf w') ∧ (∀ (a : 𝓞 E) (τ : E →+* ℂ) (i : Fin (Dw.mult τ)), IsCombAtG TF.Y.t (LogKS.chart U) v (Pi.single (e ⟨τ, i⟩) (φU (embK c τ a))) (v (e ⟨τ, i⟩) ≫ (TF.Y.t.act.act a).left)) ∧ (∀ (τ : E →+* ℂ) (i : Fin (Dw.mult τ)), spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap ((X₀ TF.Y Z).presheaf.stalk x) (X₀ TF.Y Z).functionField)) ≫ f.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ v (e ⟨τ, i⟩)) := by
+theorem GlobalTheory.LogKSDiv.exists_spread_eigFrame : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (TF : TorFlag Xo c) (Z : Comp Xo c), ∀ [IsIntegral (X₀ TF.Y Z)], ∀ (x : X₀ TF.Y Z) (φ : c.F →+* (X₀ TF.Y Z).presheaf.stalk x) (f : GlobalTheory.ShFam.EigFrame TF.Y φ ((show Sp ((X₀ TF.Y Z).presheaf.stalk x) ⟶ X₀ TF.Y Z from (X₀ TF.Y Z).fromSpecStalk x) ≫ (barComp TF.Y Z).ι)), (show Sp ((X₀ TF.Y Z).presheaf.stalk x) ⟶ X₀ TF.Y Z from (X₀ TF.Y Z).fromSpecStalk x) ≫ s₀ TF.Y Z = spMap φ → ∃ (U : TF.Y.X.affineOpens) (_ : U.1 ≤ barComp TF.Y Z) (_ : (barComp TF.Y Z).ι x ∈ U.1) (ρ : Γ(TF.Y.X, U.1) →+* (X₀ TF.Y Z).functionField) (n : ℕ) (e : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≃ Fin n) (v : Fin n → (Sp (DualNumber Γ(TF.Y.X, U.1)) ⟶ TF.Y.t.G.left)) (φU : c.F →+* Γ(TF.Y.X, U.1)), spMap ρ ≫ LogKS.chart U = GlobalTheory.LogKSDiv.genPt TF Z ≫ (barComp TF.Y Z).ι ∧ (∀ i, IsTanAtG TF.Y.t (LogKS.chart U) (v i)) ∧ (∀ w', IsTanAtG TF.Y.t (LogKS.chart U) w' → ∃! cf : Fin n → Γ(TF.Y.X, U.1), IsCombAtG TF.Y.t (LogKS.chart U) v cf w') ∧ (∀ (a : 𝓞 E) (τ : E →+* ℂ) (i : Fin (Dw.mult τ)), IsCombAtG TF.Y.t (LogKS.chart U) v (Pi.single (e ⟨τ, i⟩) (φU (embK c τ a))) (v (e ⟨τ, i⟩) ≫ (TF.Y.t.act.act a).left)) ∧ (∀ (τ : E →+* ℂ) (i : Fin (Dw.mult τ)), spMap (dualMap (algebraMap ((X₀ TF.Y Z).presheaf.stalk x) (X₀ TF.Y Z).functionField)) ≫ f.v τ i = spMap (dualMap ρ) ≫ v (e ⟨τ, i⟩)) := by
   intro E _ _ _ H Dw l Xo c TF Z _ x φ f hφ
   classical
   let y : TF.Y.X := (barComp TF.Y Z).ι x
@@ -317,7 +317,7 @@ theorem GlobalTheory.LogKSDiv.exists_spread_eigFrame : ∀ (E : Type) [Field E] 
       show B (e.symm (e ⟨τ, i⟩)).1 (e.symm (e ⟨τ, i⟩)).2 = B τ i
       rw [Equiv.symm_apply_apply]
     have eL : spMap (epsMul (lam s)) ≫ f.v τ i =
-        spMap (GlobalTheory.CompanionTheory.Ar.dualMap lam) ≫ vec TF.Y.t x₀ xc (B₀ (e ⟨τ, i⟩)) := by
+        spMap (dualMap lam) ≫ vec TF.Y.t x₀ xc (B₀ (e ⟨τ, i⟩)) := by
       rw [hB, ← vec_smul hxL, ← hvL]
       congr 1
       funext k
@@ -325,15 +325,15 @@ theorem GlobalTheory.LogKSDiv.exists_spread_eigFrame : ∀ (E : Type) [Field E] 
       rw [hBj] at this
       exact this.symm
     have eU : spMap (epsMul (ψ s)) ≫ vec TF.Y.t (LogKS.chart U) xU (cv (e ⟨τ, i⟩)) =
-        spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ vec TF.Y.t x₀ xc (B₀ (e ⟨τ, i⟩)) := by
+        spMap (dualMap ψ) ≫ vec TF.Y.t x₀ xc (B₀ (e ⟨τ, i⟩)) := by
       rw [← vec_smul hxU, ← hvU]
       congr 1
       simp only [cv, w, smul_smul, IsUnit.mul_val_inv, one_smul]
     have hθ : θ (lam s) = ρ (ψ s) := by
       show (θ.comp lam) s = (ρ.comp ψ) s
       rw [hρψ]
-    have L1 : spMap (epsMul (θ (lam s))) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap θ) ≫ f.v τ i =
-        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (θ.comp lam)) ≫ vec TF.Y.t x₀ xc (B₀ (e ⟨τ, i⟩)) := by
+    have L1 : spMap (epsMul (θ (lam s))) ≫ spMap (dualMap θ) ≫ f.v τ i =
+        spMap (dualMap (θ.comp lam)) ≫ vec TF.Y.t x₀ xc (B₀ (e ⟨τ, i⟩)) := by
       rw [← Category.assoc, SpreadFrame.eps_dual, Category.assoc, eL, ← Category.assoc, SpreadFrame.dual_dual]
     refine SpreadFrame.cancel_eps (hls.map θ) (L1.trans ?_)
     rw [hθ, ← Category.assoc, SpreadFrame.eps_dual, Category.assoc, eU, ← Category.assoc, SpreadFrame.dual_dual, hρψ]

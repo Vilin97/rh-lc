@@ -52,18 +52,18 @@ theorem piT_coe_ne_zero {B : GlobalTheory.Mem.Base} (X : PreX B.toPre) (u : B.Wo
   have h3 := h2.trans h1
   exact (Nat.not_lt_zero _) (by exact_mod_cast h3)
 
-theorem isBlock_infM_emb : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (θ : InfFam (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)), IsInfFam θ → ∀ (emb : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X' →* GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X B.R.m)) (hN : B.R.N B.R.m = (B.R.N B.R.m - 1) + 1), IsEmbTop (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (TC.z0 X u) emb → ∀ (k : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X') (τ : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tau), GlobalTheory.BranchFormula.IsBlock hN (infM θ _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m le_rfl) (emb k) τ) (infM θ _ (rankP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) k τ) 1 := by
+theorem isBlock_infM_emb : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (θ : InfFam (I.rec7 l Z)), IsInfFam θ → ∀ (emb : GA (I.rec7 l Z) (I.rec7 l Z).sp.X' →* GA (I.rec7 l Z) ((I.rec7 l Z).sp.X B.R.m)) (hN : B.R.N B.R.m = (B.R.N B.R.m - 1) + 1), IsEmbTop (D := I.rec7 l Z) (TC.z0 X u) emb → ∀ (k : GA (I.rec7 l Z) (I.rec7 l Z).sp.X') (τ : (I.rec7 l Z).what₂.Tau), GlobalTheory.BranchFormula.IsBlock hN (infM θ _ (rankN (I.rec7 l Z) B.R.m le_rfl) (emb k) τ) (infM θ _ (rankP (I.rec7 l Z)) k τ) 1 := by
   intro B X I _hOk hP l Z u θ _hθ emb hN hemb k τ
   obtain ⟨h1, h2⟩ := hemb k
-  let q : AE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) →+* ℂ := (θ τ).comp (infPart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))
-  let p : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* ℂ := q.comp (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))
-  let G : Matrix (Fin (B.R.N B.R.m)) (Fin (B.R.N B.R.m)) ℂ := infM θ _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m le_rfl) (emb k) τ
-  let G' : Matrix (Fin (B.R.N B.R.m - 1)) (Fin (B.R.N B.R.m - 1)) ℂ := infM θ _ (rankP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) k τ
-  let J : Matrix (Fin (B.R.N B.R.m)) (Fin (B.R.N B.R.m - 1)) ℂ := (iXm (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)).map p
+  let q : AE (I.rec7 l Z) →+* ℂ := (θ τ).comp (infPart (I.rec7 l Z))
+  let p : (I.rec7 l Z).host.E →+* ℂ := q.comp (incA (I.rec7 l Z))
+  let G : Matrix (Fin (B.R.N B.R.m)) (Fin (B.R.N B.R.m)) ℂ := infM θ _ (rankN (I.rec7 l Z) B.R.m le_rfl) (emb k) τ
+  let G' : Matrix (Fin (B.R.N B.R.m - 1)) (Fin (B.R.N B.R.m - 1)) ℂ := infM θ _ (rankP (I.rec7 l Z)) k τ
+  let J : Matrix (Fin (B.R.N B.R.m)) (Fin (B.R.N B.R.m - 1)) ℂ := (iXm (I.rec7 l Z)).map p
   have hF : J = Matrix.of (fun (i : Fin (B.R.N B.R.m)) (a : Fin (B.R.N B.R.m - 1)) => if (i : ℕ) = a then (1 : ℂ) else 0) := by
     ext i a
-    show p (iXm (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i a) = if (i : ℕ) = a then (1 : ℂ) else 0
-    rw [iXm_entry (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) hP.iX i a]
+    show p (iXm (I.rec7 l Z) i a) = if (i : ℕ) = a then (1 : ℂ) else 0
+    rw [iXm_entry (D := I.rec7 l Z) hP.iX i a]
     split_ifs <;> simp
   have e1 : G * J = J * G' := by
     have := congrArg (fun M => Matrix.map M q) h1

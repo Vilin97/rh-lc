@@ -586,7 +586,7 @@ theorem exists_glev' (hI : I.Ok) {u : B.Word} {T f : ℕ} {bad : Set (HeightOneS
   subst hJ
   exact exists_glev I S hR G hI hG hψ
 
-theorem glev_zero : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (G : GLoc (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.g) (K : ClsTied (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) u 0 (Nat.zero_le _)), I.IdG l Z G → (∃ k, I.Reads u I.mu0 0 (fun _ => ()) (fun _ => K.lev.Lb) (fun _ => K.lev.U) (fun _ => K.lev.chi) (fun c => (K.y c).1) (fun c s => (K.stabI c s).1) k) → ∃ V : GLev K.lev G B.R.k B.R.t 0 B.R.k (B.R.N 0) false, ∀ j v h, V.fr j v h = 1 := by
+theorem glev_zero : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (G : GLoc (I.rec7 l Z).host.F (I.rec7 l Z).host.E (sigD (I.rec7 l Z)) (I.rec7 l Z).host.g) (K : ClsTied (D := (I.rec7 l Z)) u 0 (Nat.zero_le _)), I.IdG l Z G → (∃ k, I.Reads u I.mu0 0 (fun _ => ()) (fun _ => K.lev.Lb) (fun _ => K.lev.U) (fun _ => K.lev.chi) (fun c => (K.y c).1) (fun c s => (K.stabI c s).1) k) → ∃ V : GLev K.lev G B.R.k B.R.t 0 B.R.k (B.R.N 0) false, ∀ j v h, V.fr j v h = 1 := by
   intro B X I hI hP l Z u G K hG ⟨k, hR⟩
   exact exists_glev' I hI ((GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hI hP l Z).2.2.2 0 (Nat.zero_le _)).1 K.lev hR G hG.piG hG.psi
 

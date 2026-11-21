@@ -136,14 +136,15 @@ theorem Frobenius_divisibility_unique_solution [IsDomain O] (hR : RingA W) (hs :
     (∀ w : W.DD T, (∃ y ∈ W.NΔ T, w = W.π₀ ^ M • y) →
       ∃! z : W.DD T, (∃ y ∈ W.NΔ T, z = W.π₀ ^ M • y) ∧ W.φD T z - z = w) := by
   let I : BaseId W := baseIdOf hR
+  have hℓ : I.Bs.ℓ = PD.p := rfl
   have hInj : I.Inj := baseIdOf_inj hR
   have hFull : I.Full := baseIdOf_full hR
   have hE3 : I.Bs.E3 := frobenius_uniformizer_identity hR
   have hfree : ∀ i, (latD I T).Free i := latD_free I T hInj hFull hmod
   have hA := Formalism.ExponentWindows.E.lattice_filtration_first_form O I.Bs n M (DV I T) (latD I T) (fun _ => hh) hE3
-    (fun i => latD_p5M I T hs hR h5 i hh le_rfl) (fun _ => by exact hM)
+    (fun i => latD_p5M I T hs hR h5 i hh le_rfl) (fun _ => by simpa [hℓ] using hM)
   have hq : (latD I T).FrobeniusMapsXPow M := hA.1
-  have hC : (latD I T).Complete := Formalism.ExponentWindows.E.completion_holds O I.Bs n (DV I T) (latD I T) hcomp hfree
+  have hC : (latD I T).Complete := Formalism.ExponentWindows.E.completion_holds O I.Bs n (DV I T) (latD I T) (by simpa [hℓ] using hcomp) hfree
   have hX : (latD I T).XReg := Formalism.ExponentWindows.E.X_regular_on_lattice O I.Bs n (DV I T) (latD I T) hfree
   have hdX : I.d (PowerSeries.X ^ M) = W.π₀ ^ M := by rw [map_pow, I.d_X]
   have hdXq : I.d (PowerSeries.X ^ M * I.Bs.q) = W.π₀ ^ M * Formalism.MainNotions.WachCoordinates.qP W := by
@@ -177,8 +178,8 @@ theorem Frobenius_divisibility_unique_solution [IsDomain O] (hR : RingA W) (hs :
       simpa [Formalism.ExponentWindows.E.Lat.dφ, t] using this
     refine ⟨∑ i, (z i).d, ⟨?_, ?_⟩, ?_⟩
     · exact mul_mem_sum T _ _ hzd
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_sum, ← sum_shift (fun i => W.φD T (z i).d), ← Finset.sum_sub_distrib]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← sum_shift (fun i => W.φD T (z i).d), ← Finset.sum_sub_distrib]
       rw [Finset.sum_congr rfl fun i _ => hdzi i, sum_letE_smul]
     · rintro Z ⟨⟨yZ, hyZ, rfl⟩, hZ⟩
       let z' : ZMod n → DV I T := fun i => toDV I ((letE i : LetA O n) • (W.π₀ ^ M • yZ))

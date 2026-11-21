@@ -84,6 +84,7 @@ theorem GlobalTheory.StdUnn.sch_dRho_dualHalf : ∀ (D : D7) (ψ : AddChar (AF D
     funext p
     simp only [hline']
     rfl
+  change HasDerivAt (fun t : ℝ => ψ (symplO (dblSp A) B (d.extX B x) (d.extY B (lineAt θ τ Y t))) * d.mixS B ψ v.μ v.𝓕 f x 0) (d.mixS B ψ v.μ v.𝓕 (fun p => deriv (fun t : ℝ => heisO ψ (dblSp A) B (d.extY B (lineAt θ τ Y t)) f p) 0) x 0) 0 at hder
   rw [hfun] at hder
   have hphase : ∀ t : ℝ, ψ (symplO (dblSp A) B (d.extX B x) (d.extY B (lineAt θ τ Y t))) =
       Complex.exp ((2 * Real.pi * Complex.I *

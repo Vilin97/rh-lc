@@ -35,9 +35,8 @@ private theorem valAt'_comp_lemma {Y Z : Scheme.{0}} (x : Sp ℂ ⟶ Y) (φ : Y 
     rw [dite_eq_right h, dite_eq_right h']
 
 theorem ptDer_push {X Y : Scheme.{0}} (y : Sp ℂ ⟶ X) (f : X ⟶ Y) (δ : ∀ W : X.Opens, Γ(X, W) → ℂ) (h : PtDer y δ) :
-    PtDer (y ≫ f) (fun W a => δ (f ⁻¹ᵁ W) ((f.app W).hom a)) := by
-  refine ⟨?_, ?_, ?_⟩
-  · intro W hW a b
+    PtDer (y ≫ f) (fun W a => δ (f ⁻¹ᵁ W) ((f.app W).hom a)) where
+  add W hW a b := by
     rw [map_add (f := _)]
     exact h.add (f ⁻¹ᵁ W) hW _ _
   · intro W hW a b
@@ -51,9 +50,8 @@ theorem ptDer_push {X Y : Scheme.{0}} (y : Sp ℂ ⟶ X) (f : X ⟶ Y) (δ : ∀
     exact h.res (f ⁻¹ᵁ W) (f ⁻¹ᵁ W') hle' hW _
 
 theorem ptDer_sub {X : Scheme.{0}} (y : Sp ℂ ⟶ X) (δ δ' : ∀ W : X.Opens, Γ(X, W) → ℂ) (h : PtDer y δ) (h' : PtDer y δ') :
-    PtDer y (fun W a => δ W a - δ' W a) := by
-  refine ⟨?_, ?_, ?_⟩
-  · intro W hW a b
+    PtDer y (fun W a => δ W a - δ' W a) where
+  add W hW a b := by
     rw [h.add W hW, h'.add W hW]
     ring
   · intro W hW a b

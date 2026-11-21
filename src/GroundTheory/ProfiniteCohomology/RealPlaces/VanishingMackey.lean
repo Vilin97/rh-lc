@@ -145,7 +145,16 @@ theorem subsingleton_cohomology_of_subsingleton_group [Subsingleton H] (A : Rep.
   suffices h : ∀ x : cohomology A n, x = 0 from ⟨fun x y => (h x).trans (h y).symm⟩
   intro x
   obtain ⟨U, hU⟩ := exists_card_smul_eq_zero A (by omega) x
-  have : Nat.card (H ⧸ (U : Subgroup H)) = 1 := Nat.card_unique
+  have htop : (U : Subgroup H) = ⊤ := by
+    ext g
+    simp only [Subgroup.mem_top, iff_true]
+    have : g = 1 := Subsingleton.elim _ _
+    rw [this]
+    exact Subgroup.one_mem _
+  have : Nat.card (H ⧸ (U : Subgroup H)) = 1 := by
+    rw [htop]
+    letI := QuotientGroup.subsingleton_quotient_top (G := H)
+    exact Nat.card_unique
   rwa [this, one_smul] at hU
 
 end Trivial

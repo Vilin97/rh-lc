@@ -247,7 +247,7 @@ private theorem mem_latDR_iff_span {E : Type} [Field E] [NumberField E] [IsCMFie
     (F : SemiFib K) (j : K →+* C) (yO : Sp (𝓞 K) ⟶ X) (ψ : F.G.left ⟶ t.G.left) (hψ : IsGrpPullback F.G t.G yO ψ)
     (c : Fin F.P₀.g → C) (w : Sp (DualNumber C) ⟶ t.G.left)
     (hw : IsCombAtG t (spMap j ≫ spMap (algebraMap (𝓞 K) K) ≫ yO)
-      (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap j) ≫ (F.v k).left ≫ F.φ ≫ ψ) c w) :
+      (fun k => spMap (dualMap j) ≫ (F.v k).left ≫ F.φ ≫ ψ) c w) :
     w ∈ latDR t (spMap j ≫ spMap (algebraMap (𝓞 K) K) ≫ yO) ↔
       ∃ (n : ℕ) (a : Fin n → C) (v : Fin n → Fin F.P₀.g → K), (∀ m, ‖a m‖ ≤ 1) ∧ (∀ m, v m ∈ F.lieLat) ∧
         c = ∑ m, a m • fun i => j (v m i) := by
@@ -294,21 +294,21 @@ private theorem mem_latDR_iff_span {E : Type} [Field E] [NumberField E] [IsCMFie
   have hx : spMap (intO C).subtype ≫ spMap ρ ≫ spMap f ≫ yO = spMap j ≫ spMap (algebraMap (𝓞 K) K) ≫ yO := by
     rw [← Category.assoc, spMap_comp_spMap, hρ, ← hg, ← spMap_comp_spMap, ← spMap_comp_spMap]
     simp only [Category.assoc]
-  have hv : ∀ k, spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO C).subtype.comp ρ)) ≫ (e k).left ≫ π ≫ ψ =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap j) ≫ (e₀ k).left ≫ F.φ ≫ ψ := fun k => by
+  have hv : ∀ k, spMap (dualMap ((intO C).subtype.comp ρ)) ≫ (e k).left ≫ π ≫ ψ =
+      spMap (dualMap j) ≫ (e₀ k).left ≫ F.φ ≫ ψ := fun k => by
     rw [hρ, ← GlobalTheory.HTPres.bc_bc, ← Category.assoc (e₀ k).left, (hM k).1]
     simp only [Category.assoc]
     rfl
   have key := GlobalTheory.HTPres.mem_latDR_iff t hX _ hE C ρ
   simp only [hx, hv] at key
   have hA : ∀ k, IsCombAtG t (spMap j ≫ spMap (algebraMap (𝓞 K) K) ≫ yO)
-      (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap j) ≫ (F.v k).left ≫ F.φ ≫ ψ) (fun i => j (M k i))
-      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap j) ≫ (e₀ k).left ≫ F.φ ≫ ψ) := fun k =>
+      (fun k => spMap (dualMap j) ≫ (F.v k).left ≫ F.φ ≫ ψ) (fun i => j (M k i))
+      (spMap (dualMap j) ≫ (e₀ k).left ≫ F.φ ≫ ψ) := fun k =>
     GlobalTheory.LatDRFree.comb_map t j (comb_push t _ _ _ hpK (hM k).2)
   have lin : ∀ cf w', IsCombAtG t (spMap j ≫ spMap (algebraMap (𝓞 K) K) ≫ yO)
-      (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap j) ≫ (e₀ k).left ≫ F.φ ≫ ψ) cf w' →
+      (fun k => spMap (dualMap j) ≫ (e₀ k).left ≫ F.φ ≫ ψ) cf w' →
       IsCombAtG t (spMap j ≫ spMap (algebraMap (𝓞 K) K) ≫ yO)
-        (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap j) ≫ (F.v k).left ≫ F.φ ≫ ψ) (fun i => ∑ k, cf k * j (M k i)) w' := fun cf w' h => by
+        (fun k => spMap (dualMap j) ≫ (F.v k).left ≫ F.φ ≫ ψ) (fun i => ∑ k, cf k * j (M k i)) w' := fun cf w' h => by
     have h' := tanLinG _ bC _ (Matrix.of fun i k => j (M k i)) cf w' hA h
     have e' : (Matrix.of fun i k => j (M k i)).mulVec cf = fun i => ∑ k, cf k * j (M k i) := by
       funext i
@@ -356,7 +356,7 @@ end Cover
 open CategoryTheory AlgebraicGeometry NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj ReciprocityTheory.GeometryOfNumbersTheory GlobalTheory.Toroidal GlobalTheory.Cartier GlobalTheory.ProjVar GlobalTheory.TrueGeo GlobalTheory.CxPts GlobalTheory.Mean4O GlobalTheory.LieHt GlobalTheory.ShFam GlobalTheory.ShFam.Pad GlobalTheory.LieRead
 
 theorem UpperTheory.dual_number_tangent_coordinates :
-    ∀ (D : D7) (O : Setup D) (y : Pt O.s) (K : Type) [Field K] [NumberField K] (F : SemiFib K) (ι : K →+* Qb), FibTie O y F ι → ∀ (p : ℕ) [Fact p.Prime] (io : Qb →+* ℂ_[p]) (U : Fin F.P₀.g → (Sp (DualNumber ℂ_[p]) ⟶ O.s.T.Z.t.G.left)), (∀ (k : Fin F.P₀.g) (x : Letter O.S.Dw), (letters O.S.Dw)[(k : ℕ)]? = some x → U k = spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ y.u x.1 x.2) → ∀ (c : Fin F.P₀.g → ℂ_[p]) (w : Sp (DualNumber ℂ_[p]) ⟶ O.s.T.Z.t.G.left), IsCombAtG O.s.T.Z.t (spMap io ≫ y.y ≫ genι O.s.T.Z) U c w → (w ∈ latDR O.s.T.Z.t (spMap io ≫ y.y ≫ genι O.s.T.Z) ↔ ∃ (n : ℕ) (a : Fin n → ℂ_[p]) (v : Fin n → Fin F.P₀.g → K), (∀ m, ‖a m‖ ≤ 1) ∧ (∀ m, v m ∈ F.lieLat) ∧ c = ∑ m, a m • fun i => io (ι (v m i))) := by
+    ∀ (D : D7) (O : Setup D) (y : Pt O.s) (K : Type) [Field K] [NumberField K] (F : SemiFib K) (ι : K →+* Qb), FibTie O y F ι → ∀ (p : ℕ) [Fact p.Prime] (io : Qb →+* ℂ_[p]) (U : Fin F.P₀.g → (Sp (DualNumber ℂ_[p]) ⟶ O.s.T.Z.t.G.left)), (∀ (k : Fin F.P₀.g) (x : Letter O.S.Dw), (letters O.S.Dw)[(k : ℕ)]? = some x → U k = spMap (dualMap io) ≫ y.u x.1 x.2) → ∀ (c : Fin F.P₀.g → ℂ_[p]) (w : Sp (DualNumber ℂ_[p]) ⟶ O.s.T.Z.t.G.left), IsCombAtG O.s.T.Z.t (spMap io ≫ y.y ≫ genι O.s.T.Z) U c w → (w ∈ latDR O.s.T.Z.t (spMap io ≫ y.y ≫ genι O.s.T.Z) ↔ ∃ (n : ℕ) (a : Fin n → ℂ_[p]) (v : Fin n → Fin F.P₀.g → K), (∀ m, ‖a m‖ ≤ 1) ∧ (∀ m, v m ∈ F.lieLat) ∧ c = ∑ m, a m • fun i => io (ι (v m i))) := by
   intro D O y K _ _ F ι hT p _ io U hU c w hw
   obtain ⟨jF, yO, ψ, -, hy, hψ, -, hg, hu⟩ := hT
   have hX : O.s.T.Z.X.IsSeparated := by
@@ -365,7 +365,7 @@ theorem UpperTheory.dual_number_tangent_coordinates :
   have hx : spMap io ≫ y.y ≫ genι O.s.T.Z = spMap (io.comp ι) ≫ spMap (algebraMap (𝓞 K) K) ≫ yO := by
     rw [← hy, ← ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap, ← ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap]
     simp only [Category.assoc]
-  have hU' : U = fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (io.comp ι)) ≫ (F.v k).left ≫ F.φ ≫ ψ := by
+  have hU' : U = fun k => spMap (dualMap (io.comp ι)) ≫ (F.v k).left ≫ F.φ ≫ ψ := by
     funext k
     have hk : (k : ℕ) < (letters O.S.Dw).length := hg ▸ k.2
     have hx := List.getElem?_eq_getElem hk

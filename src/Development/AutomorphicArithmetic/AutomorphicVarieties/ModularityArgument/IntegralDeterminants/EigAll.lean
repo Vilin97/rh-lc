@@ -231,13 +231,10 @@ theorem UpperTheory.V.Z.Int.eigAll :
       (fun g => tj_one _) (Formalism.UG.P.finite_support_cosets hcm hT')
     let lift : GL (Fin n) (w.adicCompletion E) → UA E n := fun g => ((e.symm g : locU n w) : UA E n)
     have hinj : Function.Injective lift := fun a b h => e.symm.injective (Subtype.ext h)
-    have hqeq : Formalism.UG.qV E w = normV w := by
-      simp [normV, Formalism.UG.qV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
-    have hq : (normV w : ℂ) ≠ 0 := Nat.cast_ne_zero.2 (hqeq ▸ GlobalTheory.LFun.qV_ne_zero w)
+    have hq : (normV w : ℂ) ≠ 0 := Nat.cast_ne_zero.2 (GlobalTheory.LFun.qV_ne_zero w)
     have hsc : ∀ B' : Multiset ℂˣ, (normV w : ℂ) ^ j.choose 2 * GlobalTheory.LFun.satEig (Formalism.UG.qV E w) n B' j =
         (algSat n (normV w) B').esymm j := fun B' => by
       rw [satEig_eq_algSat (GlobalTheory.LFun.qV_ne_zero w)]
-      rw [hqeq]
       exact mul_inv_cancel_left₀ (pow_ne_zero _ hq) _
     refine ⟨R.image lift, R'.image lift, fun x hx => ?_, fun x hx => ?_, fun f hf hK => ?_⟩
     · obtain ⟨g, hg, rfl⟩ := Finset.mem_image.1 hx

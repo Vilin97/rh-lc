@@ -25,7 +25,7 @@ private theorem reps_smul {n : ℕ} (μ : Measure (G1 K n)) [μ.IsHaarMeasure]
     (h : ∃ v ∈ τ, Reps μ v φ) : ∃ v ∈ τ, Reps μ v (fun y => c * φ y) := by
   obtain ⟨w, hw, hq⟩ := h
   refine ⟨c • w, τ.smul_mem _ hw, ?_⟩
-  filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_smul c w), hq] with y e2 e4
+  filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_smul c w), hq] with y e2 e4
   rw [e2, Pi.smul_apply, e4, smul_eq_mul]
 
 private theorem zt_zero' : zt K 0 = 1 := by

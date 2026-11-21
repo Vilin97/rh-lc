@@ -10,8 +10,6 @@ open NumberField IsDedekindDomain CategoryTheory GroundTheory.ProfCoh GroundTheo
 
 namespace PositivityTheory.Lit1.GEN.X
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 theorem invariants_eq_of_pointwise {k V Γ₁ Γ₂ H : Type*} [CommRing k] [AddCommGroup V] [Module k V]
     [Group Γ₁] [Group Γ₂] [Group H] (ρ₁ : Representation k Γ₁ V) (ρ₂ : Representation k Γ₂ V)
     (f₁ : H →* Γ₁) (f₂ : H →* Γ₂) (h₁ : Function.Surjective f₁) (h₂ : Function.Surjective f₂)

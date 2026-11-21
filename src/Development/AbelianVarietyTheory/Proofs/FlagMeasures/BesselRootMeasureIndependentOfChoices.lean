@@ -30,15 +30,9 @@ theorem ptEntry_symm : ∀ (bs : List (ℂ × ℕ)) (i j : ℕ), ptEntry bs i j 
 
 theorem ptEntry_row : ∀ (bs : List (ℂ × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 ∧ 1 ≤ b.2) → ∀ i, i < (bs.map Prod.snd).sum →
     ∃ j, j < (bs.map Prod.snd).sum ∧ blockIdx bs j = blockIdx bs i ∧ ptEntry bs i j ≠ 0 ∧
-      ∀ j', j' ≠ j → ptEntry bs i j' = 0 := by
-  intro bs
-  induction bs with
-  | nil =>
-    intro _ i hi
-    simp at hi
-  | cons b bs ih =>
-    rcases b with ⟨t, s⟩
-    intro h i hi
+      ∀ j', j' ≠ j → ptEntry bs i j' = 0
+  | [], _, i, hi => by simp at hi
+  | (t, s) :: bs, h, i, hi => by
     have ht : t ≠ 0 := (h (t, s) (by simp)).1
     simp only [List.map_cons, List.sum_cons] at hi ⊢
     by_cases his : i < s
@@ -54,7 +48,7 @@ theorem ptEntry_row : ∀ (bs : List (ℂ × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 ∧
     · have hbs (b : ℂ × ℕ) (hb : b ∈ bs) : b.1 ≠ 0 ∧ 1 ≤ b.2 :=
         h b (List.mem_cons_of_mem _ hb)
       have hi' : i - s < (bs.map Prod.snd).sum := by omega
-      obtain ⟨j, h1, h2, h3, h4⟩ := ih hbs (i - s) hi'
+      obtain ⟨j, h1, h2, h3, h4⟩ := ptEntry_row bs hbs (i - s) hi'
       refine ⟨j + s, by omega, ?_, ?_, ?_⟩
       · simp only [blockIdx]
         rw [if_neg (by omega), if_neg his, Nat.add_sub_cancel, h2]

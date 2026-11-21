@@ -242,7 +242,7 @@ theorem intO_translate {i t : ℕ} {τ : MRep k (i + 1)} {σ : GRep k (t + 1)} (
     infer_instance
   obtain ⟨hl, hc⟩ := GlobalTheory.T.locally_constant_compact_support_unipotent k i t τ σ f y
   let φ : (Fin (t + 1) → k) → τ.V ⊗[ℂ] σ.V := fun d => evX f (dEmb k i t d * y)
-  have hl' : IsLocallyConstant (φ ∘ (· + d')) := hl.comp_continuous (continuous_add_right d')
+  have hl' : IsLocallyConstant (φ ∘ (· + d')) := hl.comp_continuous (Homeomorph.addRight d').continuous
   have hc' : HasCompactSupport (φ ∘ (· + d')) := hc.comp_homeomorph (Homeomorph.addRight d')
   have e : F = T ∘ (φ ∘ (· + d')) := funext hF
   have h2 : GlobalTheory.CompanionTheory.Rodier.smInt (muD k (t + 1)) (φ ∘ (· + d')) = GlobalTheory.CompanionTheory.Rodier.smInt (muD k (t + 1)) φ :=

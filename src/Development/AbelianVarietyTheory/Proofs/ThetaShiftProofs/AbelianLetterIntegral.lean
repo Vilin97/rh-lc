@@ -30,16 +30,16 @@ theorem sc_mul {S : Type} [CommRing S] (s t : S) : sc s ≫ sc t = sc (s * t) :=
   ext <;> simp [epsScaleR, _root_.mul_assoc]
 
 theorem dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) := by
+    spMap (dualMap g) ≫ spMap (dualMap f) = spMap (dualMap (g.comp f)) := by
   refine (spMap_comp_spMap _ _).trans ?_
   congr 1
   refine RingHom.ext fun x => ?_
-  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  ext <;> simp [dualMap]
 
 theorem sc_over {A B : Type} [CommRing A] [CommRing B] {f : A →+* B} {G : Over (Sp A)} {G' : Over (Sp B)}
-    {φ : G'.left ⟶ G.left} {v : epsR A ⟶ G} {v' : epsR B ⟶ G'} (h : v'.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ v.left) (a : A) :
-    (sc (f a) ≫ v').left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (sc a ≫ v).left := by
-  show (spMap (epsScaleR (f a)) ≫ v'.left) ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (epsScaleR a) ≫ v.left
+    {φ : G'.left ⟶ G.left} {v : epsR A ⟶ G} {v' : epsR B ⟶ G'} (h : v'.left ≫ φ = spMap (dualMap f) ≫ v.left) (a : A) :
+    (sc (f a) ≫ v').left ≫ φ = spMap (dualMap f) ≫ (sc a ≫ v).left := by
+  show (spMap (epsScaleR (f a)) ≫ v'.left) ≫ φ = spMap (dualMap f) ≫ spMap (epsScaleR a) ≫ v.left
   rw [Category.assoc, h, ← Category.assoc, ← Category.assoc]
   exact congrArg (· ≫ v.left) (LieCombBaseChange.dualMap_epsScale f a).symm
 
@@ -79,8 +79,8 @@ theorem lift_through_split (hK : Known) {K V F : Type} [CommRing K] [IsDomain K]
     (pK : Out.IsPullDeg io DK DF) (pw : Out.IsPullDeg j DV DF) {n : ℕ} (hn : 0 < n) (hc : ∀ y, DV.c y ^ n = 1)
     {sB : ∀ T : Over (Sp K), (T ⟶ DK.P.A) → Out.GtPt DK T} (hs : IsSplit DK n sB) {u : epsR K ⟶ DK.P.A} {a : K}
     {e : Out.GtPt DK (epsR K)} (he : Out.GtPt.IsPull (spMap (epsScaleR a)) (sB _ u) e) {v : epsR V ⟶ DV.P.A}
-    (hv : IsTangent v) {u₁ : epsR F ⟶ DF.P.A} (hu₁ : u₁.left ≫ prj pK = spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ u.left) (x : F)
-    (h : (sc (x * io a) ≫ u₁).left ≫ prj pw = spMap (GlobalTheory.CompanionTheory.Ar.dualMap j) ≫ v.left) :
+    (hv : IsTangent v) {u₁ : epsR F ⟶ DF.P.A} (hu₁ : u₁.left ≫ prj pK = spMap (dualMap io) ≫ u.left) (x : F)
+    (h : (sc (x * io a) ≫ u₁).left ≫ prj pw = spMap (dualMap j) ≫ v.left) :
     ∃ (ν : Out.GtPt DV (epsR V)) (ν₁ e₂ : Out.GtPt DF (epsR F)),
       GtTanR ν ∧ LetBC pw ν ν₁ ∧ LetBC pK e e₂ ∧ GtComb ![x] ![e₂] ν₁ := by
   have letBC_split {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDomain R']
@@ -172,7 +172,7 @@ theorem letter_integral {E : Type} [Field E] [NumberField E] [IsCMField E] [Star
     (ho : LamObjGood o f La) {L : LamLetters o} (hL : L.IsGood) (p : HeightOneSpectrum (𝓞 o.K₁)) {k : Fin o.xB.P.g}
     {cl : o.K₁} (hcl : IsLocGen p cl (L.ℓ k).I) {u : epsR o.K₁ ⟶ o.xB.P.A} (hu : L.IsLetter k u) :
     ∃ (s : 𝓞 o.K₁) (t : epsR (𝓞 o.K₁) ⟶ o.B.A), s ∉ p.asIdeal ∧ IsTangent t ∧
-      (sc ((s : o.K₁) * cl) ≫ u).left ≫ o.φB = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 o.K₁) o.K₁)) ≫ t.left := by
+      (sc ((s : o.K₁) * cl) ≫ u).left ≫ o.φB = spMap (dualMap (algebraMap (𝓞 o.K₁) o.K₁)) ≫ t.left := by
   have hB := ho.2.2.2.1
   obtain ⟨M, hM, -⟩ := ho.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2 p
   have hf := (isFibreOf_iff_isPolFibre _ _ (algebraMap (𝓞 o.K₁) o.K₁) o.B o.xB o.φB).1 hB
@@ -205,19 +205,19 @@ theorem abelian_letter_integral : Known → ∀ (E : Type) [Field E] [NumberFiel
   obtain ⟨v, hv, -⟩ := existsUnique_isVecOver hψ.2.1.1 t
   obtain ⟨u₁, hu₁, -⟩ := existsUnique_isVecOver (pull_grp M.pK).1 u
   obtain ⟨v₁, hv₁, -⟩ := existsUnique_isVecOver (pull_grp M.pw).1 v
-  have hu₁' : u₁.left ≫ prj M.pK = spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ u.left := hu₁
-  have hv₁' : v₁.left ≫ prj M.pw = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap Tv.V Tv.Fr)) ≫ v.left := hv₁
-  have hv' : v.left ≫ ψ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ t.left := hv
-  have hrt' : (sc ((r : K₁) * cl) ≫ u).left ≫ s.φB = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 K₁) K₁)) ≫ t.left := hrt
+  have hu₁' : u₁.left ≫ prj M.pK = spMap (dualMap io) ≫ u.left := hu₁
+  have hv₁' : v₁.left ≫ prj M.pw = spMap (dualMap (algebraMap Tv.V Tv.Fr)) ≫ v.left := hv₁
+  have hv' : v.left ≫ ψ = spMap (dualMap ρ) ≫ t.left := hv
+  have hrt' : (sc ((r : K₁) * cl) ≫ u).left ≫ s.φB = spMap (dualMap (algebraMap (𝓞 K₁) K₁)) ≫ t.left := hrt
   have hring : (algebraMap Tv.V Tv.Fr).comp ρ = io.comp (algebraMap (𝓞 K₁) K₁) := RingHom.ext hρ
   have e₁ : v₁ = sc (io ((r : K₁) * cl)) ≫ u₁ := by
     refine Over.OverMorphism.ext (((pull_grp M.pw).1.paste_horiz hψ.2.1.1).hom_ext ?_
       ((Over.w _).trans (Over.w _).symm))
     show v₁.left ≫ prj M.pw ≫ ψ = (sc (io ((r : K₁) * cl)) ≫ u₁).left ≫ prj M.pw ≫ ψ
-    have a₁ : v₁.left ≫ prj M.pw ≫ ψ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((algebraMap Tv.V Tv.Fr).comp ρ)) ≫ t.left := by
+    have a₁ : v₁.left ≫ prj M.pw ≫ ψ = spMap (dualMap ((algebraMap Tv.V Tv.Fr).comp ρ)) ≫ t.left := by
       rw [← Category.assoc, hv₁', Category.assoc, hv', ← Category.assoc, dual_comp]
     have a₂ : (sc (io ((r : K₁) * cl)) ≫ u₁).left ≫ prj M.pK ≫ s.φB =
-        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (io.comp (algebraMap (𝓞 K₁) K₁))) ≫ t.left := by
+        spMap (dualMap (io.comp (algebraMap (𝓞 K₁) K₁))) ≫ t.left := by
       rw [← Category.assoc, sc_over hu₁', Category.assoc, hrt', ← Category.assoc, dual_comp]
     rw [a₁, hsq, a₂, hring]
   have hn : (n' : K₁) ≠ 0 := Nat.cast_ne_zero.2 s.n_pos.ne'

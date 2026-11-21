@@ -55,9 +55,8 @@ theorem diagM_ss : ∀ {t : ℕ} (χ : Fin t → Γ →* kˣ), IsSSRep (diagM χ
       ext i <;> simp [diagM, Matrix.mulVec_diagonal, LinearMap.funLeft]
     · funext c
       obtain rfl : c = 0 := Subsingleton.elim _ _
-      have hlast : Fin.natAdd t (0 : Fin 1) = Fin.last t := Fin.ext (Nat.add_zero t)
-      rw [MonoidHom.coe_toHomUnits]
-      simp [diagM, Matrix.mulVec_diagonal, hlast, Pi.smul_apply, smul_eq_mul]
+      simp [diagM, Matrix.mulVec_diagonal]
+      exact Or.inl rfl
 
 end Rep
 

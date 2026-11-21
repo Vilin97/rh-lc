@@ -155,7 +155,7 @@ theorem coreG {l : ℕ} [Fact l.Prime] {a e : ℕ} [NeZero a] [NeZero e] {O K : 
       have h3 : ∀ j, (fun τ => c τ j) = ∑ i, (fun τ => x τ i) * (fun τ => y τ j i) := by
         intro j; funext τ; simp only [c, Finset.sum_apply, Pi.mul_apply, mul_comm]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [h3, map_sum, AddMonoidHom.finset_sum_apply, map_mul, amul]
+        simp only [h3, map_sum, AddMonoidHom.finsetSum_apply, map_mul, amul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => ?_
       set_option synthInstance.maxHeartbeats 100000 in

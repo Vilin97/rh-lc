@@ -37,7 +37,7 @@ variable (g₀ : GenFrame e ρ) (τ : E →+* ℂ)
 def Fits (y : Y.X) (φ : c.F →+* Y.X.presheaf.stalk y) (f : StalkFrame ρ y φ)
     (P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn) : Prop :=
   constF e Y = (toFn y).comp φ ∧ ∀ i, IsCombAtG Z.t (genericPt Y ≫ ρ ≫ genι Z) (g₀.v τ) (fun a => P a i)
-    (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toFn y)) ≫ f.v τ i)
+    (spMap (dualMap (toFn y)) ≫ f.v τ i)
 
 variable {X : Scheme.{0}} (j : Y.X ⟶ X)
 
@@ -52,7 +52,7 @@ def LatOn (U : X.Opens) (P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn) 
     spMap ε.O.subtype ≫ yt = y.1 ≫ j → ⊤ ≤ yt ⁻¹ᵁ U → ∀ φ f, Fits g₀ τ (below y.1) φ f P →
     ∀ (a : Fin (Dw.mult τ) → ℂ_[resP v]) (w : Sp (DualNumber ℂ_[resP v]) ⟶ Z.t.G.left),
       IsCombAtG Z.t (spMap (valP ε y) ≫ stalkPt Y (below y.1) ≫ ρ ≫ genι Z)
-        (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (valP ε y)) ≫ f.v τ i) a w →
+        (fun i => spMap (dualMap (valP ε y)) ≫ f.v τ i) a w →
       (w ∈ latDR Z.t (spMap (valP ε y) ≫ stalkPt Y (below y.1) ≫ ρ ≫ genι Z) ↔ ∀ i, ‖a i‖ ≤ 1)
 
 variable {M : X.Modules} (dual : Bool) (A : Chart M (Dw.mult τ) → Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn)
@@ -118,7 +118,7 @@ theorem Fits.eq_mul {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f f' : Stal
     P' = P * (f.co f' τ).map (toFn y) := by
   obtain ⟨k, hk⟩ := exists_isMap_toFn (e := e) f h.1
   obtain ⟨k', hk'⟩ := exists_isMap_toFn (e := e) f' h.1
-  rw [← (fits_iff h.1 hk).1 h, ← (fits_iff h.1 hk').1 h', ← hk.co τ hk' (by rw [← spMap_toFn y, Category.assoc]),
+  rw [← (fits_iff h.1 hk).1 h, ← (fits_iff h.1 hk').1 h', ← EigFrame.IsMap.co τ (show f.IsMap (toFn y) k from hk) (show f'.IsMap (toFn y) k' from hk') (by rw [← spMap_toFn y, Category.assoc]),
     EigFrame.co_mul]
 
 
@@ -144,7 +144,7 @@ theorem exists_co_eq {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Z.
     fun τ => EigFrame.co_eq fun i => (GlobalTheory.LieMet.isComb_iff ((f τ).vec τ) _ _).2 rfl⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [map_sum, map_smul, EigFrame.act_vec, Finset.smul_sum]
-    exact Finset.sum_congr rfl fun k _ => smul_comm _ _ _
+      exact Finset.sum_congr rfl fun k _ => smul_comm _ _ _
   · obtain ⟨b, hb, hu⟩ := (f τ).existsUnique_sum τ w hw
     refine ⟨(T τ)⁻¹ *ᵥ b, by
       beta_reduce
@@ -238,7 +238,7 @@ theorem Fits.pull (h : IsOver e ρB ρ f φ) {g : GenFrame e ρB} {g' : GenFrame
   have hm : k'.IsMap φ k₁' := fun τ i => by
     rw [hk₁', hk₁, hk', GlobalTheory.GradedPieces.dual_comp, GlobalTheory.GradedPieces.dual_comp, h.toFn_comp]
   refine ⟨k₁, hk₁, (fits_iff hφ hk₁').2 ?_⟩
-  rw [← g₁.co_mul g', hg.co τ hm (by rw [← h.1, Category.assoc, ← Category.assoc, h.2.2.1, Category.assoc]),
+  rw [← g₁.co_mul g', EigFrame.IsMap.co τ (show g.IsMap φ g' from hg) hm (by rw [← h.1, Category.assoc, ← Category.assoc, h.2.2.1, Category.assoc]),
     (fits_iff hk.1 hk').1 hk]
 
 

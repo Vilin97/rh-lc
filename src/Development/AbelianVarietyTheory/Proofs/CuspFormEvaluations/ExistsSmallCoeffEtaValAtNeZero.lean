@@ -23,9 +23,9 @@ private theorem frMap_id_self {E : Type} [Field E] [NumberField E] [IsCMField E]
     {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt Xo c S) :
     FrMap (AlgHom.id c.F S) y y := by
   have eid : spMap (AlgHom.id c.F S).toRingHom = 𝟙 (Sp S) := Spec.map_id _
-  have did : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (AlgHom.id c.F S).toRingHom) = 𝟙 _ := by
-    have : GlobalTheory.CompanionTheory.Ar.dualMap (AlgHom.id c.F S).toRingHom = RingHom.id _ :=
-      RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  have did : spMap (dualMap (AlgHom.id c.F S).toRingHom) = 𝟙 _ := by
+    have : dualMap (AlgHom.id c.F S).toRingHom = RingHom.id _ :=
+      RingHom.ext fun x => by ext <;> simp [dualMap]
     rw [this]
     exact Spec.map_id _
   refine ⟨by rw [eid, Category.id_comp], fun τ i => by rw [did, Category.id_comp], 𝟙 _, by simp,

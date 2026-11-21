@@ -425,8 +425,8 @@ theorem class_scalar_value_ofCore : ∀ (D : D7) (G : Type) [Group G] [Fintype G
         · exact hQ (hbad Q (Or.inr a))
         · rw [(GlobalTheory.IdemSupport.isConjPl_iff _ _).1 a', GlobalTheory.IdemSupport.mem_cP, map_natCast] at hQ
           exact hQ (hbad Q' (Or.inr a))
-      rw [Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_inv, a1 x hx, a2 x hx,
-        R.C.isEta.unr Q x hx, inv_one, one_mul, one_mul])
+      change (R.C.mu0 i).loc Q x * (R.xiH (tup t)).loc Q x * (R.C.eta.loc Q x)⁻¹ = 1
+      rw [a1 x hx, a2 x hx, R.C.isEta.unr Q x hx, inv_one, one_mul, one_mul])
     (fun Q hQ x => by
       rw [Formalism.L2.Host.HChar.resFin_mul, Formalism.L2.Host.HChar.resFin_mul, Formalism.L2.Host.HChar.resFin_inv,
         (R.C.isMu0 i).triv.1, (hL.xi_triv (tup t)).1, R.C.isEta.res.1, Formalism.L2.Host.etaFin, above_eq,
@@ -1019,7 +1019,9 @@ theorem io_eq_phase_smul_ofCore : ∀ (D : D7) (G : Type) [Group G] [Fintype G] 
     obtain ⟨B₀, hB₀⟩ := exists_ext O.c0' n4
       { toFun := fun v => toF O.c' lt (O.io v)
         map_add' := fun v w => by rw [map_add (f := _), map_add (f := _)]
-        map_smul' := fun a v => by rw [map_smul, hsm]; rfl }
+        map_smul' := fun a v => by
+          set_option synthInstance.maxHeartbeats 400000 in
+            rw [map_smul, hsm]; rfl }
     replace hB₀ : ∀ v, B₀ (O.c0' v) = toF O.c' lt (O.io v) := hB₀
     have hpG : toF O.c' lt (O.io O.hw) = RealDat.Delta i := by
       rw [i4]

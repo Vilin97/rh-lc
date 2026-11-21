@@ -194,7 +194,7 @@ theorem exists_expCoord_of_base : ∀ (E : Type) [Field E] [NumberField E] [IsCM
   · exact (hW ⟨τ, k⟩).comp L.differentiableOn fun b hb =>
       ⟨by simpa [hB₁] using hb.1, hRV b hb⟩
   · have hd := hWd ⟨τ, k⟩ (L b) (by simpa [hB₁] using hb) (ch.e.symm b) hy (by rw [hpq b hb q hq, ← hq]; rfl)
-    have hfv : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (evHom hy)) ≫ F.v τ k = w ≫ Z.m.φ := by rw [hw2, hf τ k]
+    have hfv : spMap (dualMap (evHom hy)) ≫ F.v τ k = w ≫ Z.m.φ := by rw [hw2, hf τ k]
     rw [hfv] at hd
     have hbase : w ≫ Z.oF.t.G.hom = spMap (algebraMap ℂ (DualNumber ℂ)) ≫ p (L b) := by
       rw [hpq b hb q hq]

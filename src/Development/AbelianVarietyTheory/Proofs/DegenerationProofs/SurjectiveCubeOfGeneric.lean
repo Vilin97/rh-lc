@@ -217,7 +217,7 @@ theorem compat_of_surjective (h3 : Function.Surjective (G3 G).hom.appTop.hom) (P
           refine Eq.trans ?_ (val_cub P.c (lift (1 : 𝟙_ (Over S) ⟶ G) 1) hI (pzero G _) (x2 G 0) (x2 G 1)).symm
           congr 1 <;> simp [x2, pzero, Hom.one_def]
         simp only [MonObj.comp_mul, ← Category.assoc, r₀, r₁, r₂, MonObj.one_comp, _root_.mul_one,
-          face, h1 _ y I hI]) (lift x (lift y v)) hJ
+          (isCub_cubV P.c hI).face, h1 _ y I hI]) (lift x (lift y v)) hJ
     simpa only [MonObj.comp_mul, ← Category.assoc, r₀, r₁, r₂, id] using e
   · intro x
     have e := rep_unique P.L.isLB h3 (lift 1 (lift 1 1))
@@ -232,7 +232,7 @@ theorem compat_of_surjective (h3 : Function.Surjective (G3 G).hom.appTop.hom) (P
           refine Eq.trans ?_ (val_cub P.c (lift (1 : 𝟙_ (Over S) ⟶ G) 1) hI (pzero G _) (x2 G 0) (x2 G 1)).symm
           congr 1 <;> simp [x2, pzero, Hom.one_def]
         simp only [GrpObj.comp_inv, ← Category.assoc, r₀, MonObj.one_comp, _root_.mul_one, inv_one,
-          face, h1 _ y I hI, P.val_sym_one hI]) (lift x (lift 1 1)) hJ
+          (isCub_cubV P.c hI).face, h1 _ y I hI, P.val_sym_one hI]) (lift x (lift 1 1)) hJ
     simpa only [GrpObj.comp_inv, ← Category.assoc, r₀, id] using e
 
 end Rigid

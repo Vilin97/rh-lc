@@ -61,7 +61,7 @@ theorem UpperTheory.V.Z.ImaginaryQuadraticEtaCharacter.gamLocX :
     UpperTheory.V.Z.ImaginaryQuadraticEtaCharacter.GamLocX := by
   intro K _ _ n hn v V _ _ π s hs
   haveI := hs.isIrreducible
-  obtain ⟨β, W, _, _, σ, hirr, hsm, hcusp, hadm, Φ, hinj⟩ := exists_embedding_parabolicInd (π := π) hs.isSmooth
+  obtain ⟨β, W, _, _, σ, hirr, hsm, hcusp, hadm, Φ, hinj⟩ := exists_embedding_parabolicInd hs.isSmooth
   letI : MeasurableSpace (levi (HeightOneSpectrum.adicCompletion K v) n β) := borel _
   haveI : BorelSpace (levi (HeightOneSpectrum.adicCompletion K v) n β) := ⟨rfl⟩
   haveI := hirr

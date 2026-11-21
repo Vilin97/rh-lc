@@ -234,41 +234,7 @@ def IsAdmFam (u : UnivTwist D C) (Q : Finset (Pl D.host.E))
 omit [Fintype C] in
 theorem isAdmFam_univFam (u : UnivTwist D C) (Q : Finset (Pl D.host.E))
     (β : ∀ PP : Pl D.host.E, DetBases (kP PP) T.rank S.rank) : IsAdmFam u Q (univFam u β) :=
-  fun PP _ => by
-    let k := kP PP
-    let r := T.rank
-    let n := S.rank
-    let β := β PP
-    let κ := u.kap PP
-    change IsAdmissible κ (univCoef β κ)
-    refine {
-    den c y := by
-      have hq : (Nat.card k : ℚ) ≠ 0 := Nat.cast_ne_zero.2 Nat.card_pos.ne'
-      refine ⟨r * (n - r), Nat.card {U : Planes k r n // ∃ u : kˣ, (u : k) = dU β U y ∧ Multiplicative.toAdd (κ u) = c}, ?_⟩
-      rw [univCoef_eq, mul_comm, mul_inv_cancel_left₀ (pow_ne_zero _ hq)]
-      rfl
-    equiv g c y := by
-      rw [univCoef_eq, univCoef_eq]
-      congr 2
-      apply Nat.card_congr
-      apply Equiv.subtypeEquivRight
-      intro U
-      set a := GeneralLinearGroup.det g
-      have hd : dU β U (((g⁻¹ : GL (Fin r) k) : Matrix (Fin r) (Fin r) k) * y) = ((a⁻¹ : kˣ) : k) * dU β U y := by
-        rw [dU_mul]
-        congr 1
-      rw [hd]
-      constructor
-      · rintro ⟨u, hu, hc⟩
-        refine ⟨a * u, ?_, ?_⟩
-        · rw [Units.val_mul, hu, ← mul_assoc, ← Units.val_mul, mul_inv_cancel, Units.val_one, one_mul]
-        · rw [map_mul, toAdd_mul, hc, add_comm]
-      · rintro ⟨u, hu, hc⟩
-        refine ⟨a⁻¹ * u, ?_, ?_⟩
-        · rw [Units.val_mul, hu]
-        · rw [map_mul, toAdd_mul, hc, map_inv, toAdd_inv]
-          abel
-    }
+  fun PP _ => isAdmissible_univCoef (β PP) (u.kap PP)
 
 end Univ
 

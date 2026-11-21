@@ -103,5 +103,7 @@ theorem GlobalTheory.DictLatPin.lat_of_frAt : ∀ (D : D7) (G : Type) [Group G] 
   · rintro ⟨w, hw, rfl⟩
     have hw' : w ∈ latG (Wc D i) (γ' * g) := hw
     convert hw' using 1
+    funext m
+    simp
   · intro hv
     exact ⟨_, hv, funext fun m => by simp⟩

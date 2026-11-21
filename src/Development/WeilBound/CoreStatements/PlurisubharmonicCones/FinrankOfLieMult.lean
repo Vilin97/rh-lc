@@ -85,24 +85,24 @@ theorem spMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A 
   rfl
 
 theorem spDual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
+    spMap (dualMap (g.comp f)) = spMap (dualMap g) ≫ spMap (dualMap f) := by
   rw [← spMap_comp]
   congr 1
-  exact RingHom.ext fun a => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap]) (by simp [GlobalTheory.CompanionTheory.Ar.dualMap])
+  exact RingHom.ext fun a => TrivSqZeroExt.ext (by simp [dualMap]) (by simp [dualMap])
 
 theorem spDual_alg {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (algebraMap A (DualNumber A)) = spMap (algebraMap B (DualNumber B)) ≫ spMap f := by
+    spMap (dualMap f) ≫ spMap (algebraMap A (DualNumber A)) = spMap (algebraMap B (DualNumber B)) ≫ spMap f := by
   rw [← spMap_comp, ← spMap_comp]
   congr 1
-  exact RingHom.ext fun a => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl])
-    (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl])
+  exact RingHom.ext fun a => TrivSqZeroExt.ext (by simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl])
+    (by simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl])
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
 theorem left_eq_of_cart {S S' : Scheme.{0}} {t : SAB H S} {t' : SAB H S'} {f : S' ⟶ S} (m : SABMap t' t f)
     {A B : Type} [CommRing A] [CommRing B] (g : A →+* B) {x : Sp A ⟶ S'} {x' : Sp B ⟶ S'} (hx : x' = spMap g ≫ x)
-    (v : epsAt x ⟶ t'.G) (v' : epsAt x' ⟶ t'.G) (h : v'.left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ v.left ≫ m.φ) :
-    v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ v.left := by
+    (v : epsAt x ⟶ t'.G) (v' : epsAt x' ⟶ t'.G) (h : v'.left ≫ m.φ = spMap (dualMap g) ≫ v.left ≫ m.φ) :
+    v'.left = spMap (dualMap g) ≫ v.left := by
   refine m.cart.1.hom_ext (h.trans (Category.assoc _ _ _).symm) ?_
   have h1 : v'.left ≫ t'.G.hom = spMap (algebraMap B (DualNumber B)) ≫ x' := Over.w v'
   have h2 : v.left ≫ t'.G.hom = spMap (algebraMap A (DualNumber A)) ≫ x := Over.w v
@@ -125,7 +125,7 @@ theorem exists_model (hρ : MB.IsActOf t'.act.act ρM) {S : Scheme.{0}} {t : SAB
     (x : Sp R ⟶ S) (hx : x ≫ f = spMap g) :
     ∃ (W : Type) (_ : AddCommGroup W) (_ : Module R W) (MW : LieModel t.G x W) (ρW : 𝓞 E →+* Module.End R W)
       (j : M →+ W), MW.IsActOf t.act.act ρW ∧
-      (∀ z, (MW.pt (j z)).left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ (MB.pt z).left) ∧ (∀ a z, j (a • z) = g a • j z) ∧
+      (∀ z, (MW.pt (j z)).left ≫ m.φ = spMap (dualMap g) ≫ (MB.pt z).left) ∧ (∀ a z, j (a • z) = g a • j z) ∧
       ∀ (s : 𝓞 E →+* 𝓞 L) (n : ℕ) (y : Fin n → M), (∀ k, y k ∈ eigSp ρM s) → LinearIndependent (𝓞 L) y →
         (∀ z ∈ eigSp ρM s, ∃ u, IsUnit (g u) ∧ u • z ∈ Submodule.span (𝓞 L) (Set.range y)) →
         LinearIndependent R (fun k => j (y k)) ∧
@@ -145,7 +145,7 @@ theorem exists_model (hρ : MB.IsActOf t'.act.act ρM) {S : Scheme.{0}} {t : SAB
     rintro _ M₀ rfl
     exact (GlobalTheory.T.lie_model_pullback_equivalence _ S t'.G t.G f m.φ m.cart R x W).1 M₀
   obtain ⟨MW, hMW⟩ := key _ M₁ (by rw [hx, Category.comp_id])
-  have hl : ∀ z, (MW.pt (j z)).left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ (MB.pt z).left := fun z =>
+  have hl : ∀ z, (MW.pt (j z)).left ≫ m.φ = spMap (dualMap g) ≫ (MB.pt z).left := fun z =>
     (hMW _).trans ((Category.comp_id _).symm.trans (hj₀ z))
   obtain ⟨ρW, hρW, -⟩ := lieModel_exists_unique_act S t.G R x W MW _ t.act.act t.act.hom t.act.one t.act.mul t.act.add
   have heq : ∀ a z, ρW a (j z) = j (ρM a z) := by

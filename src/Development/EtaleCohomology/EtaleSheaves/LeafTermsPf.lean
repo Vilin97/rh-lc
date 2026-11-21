@@ -91,6 +91,7 @@ theorem ofPb_toPb (n : ℕ) : ofPb f n ≫ toPb f n = 𝟙 _ := by
   · apply WidePullback.hom_ext
     · intro j
       simp only [Category.assoc, Category.id_comp]
+      rw [toPb, pullback.lift_fst_assoc, WidePullback.lift_π, ofPb, WidePullback.lift_π]
       simp only [Fin.cases_succ]
     · simp only [Category.assoc, Category.id_comp]
       rw [toPb, pullback.lift_fst_assoc, WidePullback.lift_base, ofPb, WidePullback.lift_base, pullback.condition]

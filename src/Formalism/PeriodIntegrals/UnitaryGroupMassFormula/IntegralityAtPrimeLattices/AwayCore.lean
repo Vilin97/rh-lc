@@ -114,8 +114,6 @@ theorem away_core (Λ : Submodule (𝓞 E) (Fin n → E)) (hΛ : Formalism.L2.Gl
       Subring.subset_closure (Or.inl ⟨⟨a, ⟨algebraMap (𝓞 F) (𝓞 E) s, hcoe⟩⟩, rfl⟩)
     have := Submodule.smul_mem (Formalism.L2.Geo.Def.PC.latV q Λ) (⟨_, hmem⟩ : Formalism.L2.Geo.Def.PC.SV E q) (hst q hq _ hz)
     convert this using 1
-    funext i
-    rw [Pi.smul_apply, Subring.smul_def, smul_eq_mul]
 
 end Gen
 

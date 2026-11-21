@@ -281,7 +281,8 @@ theorem datumCoef_ckOn {Bg : ℝ} (hD : SSn.IsDatum S T v Bg a a' ι) (Ψ : FMap
     ⟨⟨⟨h1, h2⟩, h3⟩, hg₀.2⟩, ?_, ?_⟩
   · have hp : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun g => (f1 g, f2 g, f3 g))
         (U1 ∩ U2 ∩ U3 ∩ {g | 0 < Formalism.QuantumDeterminants.Gf S.G.k S.G.r (T v).base.z (T v).base.z' g}) :=
-      (hf1.mono fun g hg => hg.1.1.1).prodMk ((hf2.mono fun g hg => hg.1.1.2).prodMk (hf3.mono fun g hg => hg.1.2))
+      (hf1.mono (show U1 ∩ U2 ∩ U3 ∩ {g | 0 < Formalism.QuantumDeterminants.Gf S.G.k S.G.r (T v).base.z (T v).base.z' g} ⊆ U1 from fun _ hg => hg.1.1.1)).prodMk
+        ((hf2.mono (show U1 ∩ U2 ∩ U3 ∩ {g | 0 < Formalism.QuantumDeterminants.Gf S.G.k S.G.r (T v).base.z (T v).base.z' g} ⊆ U2 from fun _ hg => hg.1.1.2)).prodMk (hf3.mono fun g hg => hg.1.2))
     exact hΨ.comp_contDiffOn hp
   · intro g hg hgv
     rw [datumCoef_pos S T v a a' ι Ψ ⟨hgv, hg.2⟩, e1 g hg.1.1.1 hgv, e2 g hg.1.1.2 hgv, e3 g hg.1.2 hgv]

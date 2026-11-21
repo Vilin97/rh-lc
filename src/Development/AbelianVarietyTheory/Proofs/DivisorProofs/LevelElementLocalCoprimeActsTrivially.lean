@@ -44,7 +44,7 @@ theorem map_eq_one_of_isLocEnv {D : D7} (V : Formalism.BasicNotions.TH.HSp D) {P
     rw [← hf, hS a c, Matrix.sub_apply, sub_add_cancel]
   refine (congrArg ev (hmat a c)).trans ?_
   show ψ _ = _
-  rw [hsplit, ψ.map_add (f := _), ψ.map_mul, hψ, zero_mul, zero_add, Matrix.one_apply, Matrix.one_apply]
+  rw [hsplit, map_add ψ, ψ.map_mul, hψ, zero_mul, zero_add, Matrix.one_apply, Matrix.one_apply]
   split_ifs
   · exact ψ.map_one
   · exact ψ.map_zero

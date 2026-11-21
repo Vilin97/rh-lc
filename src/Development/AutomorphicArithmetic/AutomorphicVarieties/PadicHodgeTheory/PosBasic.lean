@@ -24,7 +24,7 @@ private theorem filT_le_spanT : FilT (l := l) E V 0 ≤ spanT l (⊤ : Submodule
   rintro _ ⟨z, rfl⟩
   induction z with
   | tmul v b => exact Submodule.subset_span ⟨v, trivial, b.1, b.2, by simp⟩
-  | add x y hx hy => simpa only [map_add] using add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 private theorem spanT_le_filT (W : Submodule E V) : spanT l W ≤ FilT (l := l) E V 0 := by
   refine Submodule.span_le.2 ?_

@@ -41,8 +41,6 @@ theorem inter_add_nsmul_polynomial :
   rw [hpw, Finset.prod_const, smul_eq_mul] at key
   rw [key]
   push_cast
-  simp only [id_eq]
-  push_cast
   ring
 
 end GlobalTheory.CompanionTheory.ChernPoly

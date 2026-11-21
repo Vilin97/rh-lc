@@ -118,9 +118,12 @@ theorem chart_image_null {k : Type} [CommRing k] {Y : Scheme.{0}} {p : Y ⟶ Sp 
     ext y; constructor
     · rintro ⟨_, ⟨h1, w, hw, rfl⟩, rfl⟩; exact ⟨w, ⟨hw, h1⟩, rfl⟩
     · rintro ⟨w, ⟨hw, h1⟩, rfl⟩; exact ⟨ψ w, ⟨h1, w, hw, rfl⟩, rfl⟩
-  have hd : DifferentiableOn ℂ (c.e ∘ ψ) t :=
-    differentiableOn_euclidean.2 fun a => ((hψ a).mono fun w hw => ⟨hw.1, c.source_subset hw.2⟩).congr
-      fun w hw => c.apply_eq _ hw.2 a
+  have hd : DifferentiableOn ℂ (c.e ∘ ψ) t := by
+    apply differentiableOn_euclidean.2
+    intro a
+    have hsub : t ⊆ s ∩ ψ ⁻¹' ptsIn p σ c.U :=
+      fun _ hw => ⟨hw.1, c.source_subset hw.2⟩
+    exact ((hψ a).mono hsub).congr fun w hw => c.apply_eq _ hw.2 a
   have hfin : Module.finrank ℝ (ι → ℂ) = Module.finrank ℝ (ReciprocityTheory.L2DbarEstimates.V D) := by
     rw [← Module.finrank_mul_finrank ℝ ℂ (ι → ℂ), ← Module.finrank_mul_finrank ℝ ℂ (ReciprocityTheory.L2DbarEstimates.V D)]
     simp [hD]

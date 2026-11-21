@@ -197,7 +197,7 @@ private theorem orderAtLeastLocus_derivedTriple_ideal_length_eq_empty (hstar : M
     LowerDimReductionPullback.isBalanced_derivedTriple hstar S hSV hmS hSO s hft [Hc] keep hVc
   have hj : 0 < (MaxContactCoverData.derivedTriple S s hft [Hc] keep).boundary.length := by
     rw [MaxContactCoverData.derivedTriple_boundary]
-    simp
+    exact Nat.zero_lt_succ _
   obtain ⟨Dv, bv, _, hDvEq, _, hBoundaryOfMem, hBoundaryOfLt, hBoundaryEq, _⟩ :=
     (hspec 0).shape (MaxContactCoverData.derivedTriple S s hft [Hc] keep) hVc hPdim hOB hbalanced hj
   have htuned : @IsMaxContactHypersurface S.base _ (s.obj s.length)

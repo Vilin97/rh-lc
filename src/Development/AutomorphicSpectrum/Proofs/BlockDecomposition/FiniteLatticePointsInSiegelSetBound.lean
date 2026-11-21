@@ -61,7 +61,7 @@ theorem exists_cone_lower (r : ℕ) {c : ℝ} (hc : 0 < c) :
 
 theorem le_prod_max {r : ℕ} (t : Fin r → ℝ) (i : Fin r) : max (t i) 1 ≤ ∏ k, max (t k) 1 := by
   rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ i)]
-  exact le_mul_of_one_le_right (by positivity) (Finset.one_le_prod₀ fun v _ => le_max_right _ _)
+  exact le_mul_of_one_le_right (by positivity) (Finset.one_le_prod fun v _ => le_max_right _ _)
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {σ : E →ₐ[F] E} {n r : ℕ} {J : Matrix (Fin n) (Fin n) E}
@@ -198,7 +198,7 @@ theorem torus_count : ∀ (D : D7) (V : HSp D) (r : ℕ) (X Y : Matrix (Fin V.ra
   have hL1 : 1 ≤ L := le_max_left _ _
   refine ⟨N, |C₀| * (K * L) ^ N, fun t ht a ha => ?_⟩
   set T : ℝ := ∏ i, max (t i) 1 with hT
-  have hT1 : 1 ≤ T := Finset.one_le_prod₀ fun v _ => le_max_right _ _
+  have hT1 : 1 ≤ T := Finset.one_le_prod fun v _ => le_max_right _ _
   have hS1 : 1 ≤ L * T := one_le_mul_of_one_le_of_one_le hL1 hT1
   have hs1 : ∀ k, t k ≤ L * T := fun k =>
     ((le_max_left _ _).trans (le_prod_max t k)).trans (le_mul_of_one_le_left (by linarith) hL1)

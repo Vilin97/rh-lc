@@ -169,9 +169,14 @@ theorem col_ind {ch : Choice R} (hW : ch.W.Over R) (hch : R.IsChain) (hmod : R.I
       HEq fj (R.vY t j) ∧ g j = ch.W.fock (.mu t 0 j) fj (q j)) →
     ∀ (F : Fn ch.G (.grid 0 n)) (F₀ : R.CC t n) (v : SmT (R.MY n)), HEq F (F₀.1 v) →
     PathConv ch.W M (downPath t 0 n) (downFam t 0 n g) F ∧
-      HEq (liftP ch.W M (downPath t 0 n) (downFam t 0 n g) F) (ch.cv.dnFun t n (F₀.1 v))
-  | 0, _, _, _, _, _, _, hF => ⟨trivial, hF⟩
-  | n + 1, hn, g, hg, F, F₀, v, hF => by
+      HEq (liftP ch.W M (downPath t 0 n) (downFam t 0 n g) F) (ch.cv.dnFun t n (F₀.1 v)) := by
+  intro n
+  induction n with
+  | zero =>
+    intro _ _ _ _ _ _ hF
+    exact ⟨trivial, hF⟩
+  | succ n ih =>
+    intro hn g hg F F₀ v hF
     obtain ⟨fj, hfj, hgj⟩ := hg (Fin.last n)
     have hgj' : g (Fin.last n) = ch.W.fock (.mu t 0 n) fj (q n) := hgj
     have hio := hch.ioY t n (by omega)
@@ -180,13 +185,13 @@ theorem col_ind {ch : Choice R} (hW : ch.W.Over R) (hch : R.IsChain) (hmod : R.I
     have e1 : Lift.liftInt (R.νY t (n + 1)) (R.fdY t (n + 1)) (thetaKO (R.ωY t n)) (R.ptY t n (ch.cv.polY n)) (F₀.1 v) =
         (R.ioY t n F₀).1 (R.ItY n (ch.cv.polY n) v) := funext fun g' => hio.eq F₀ _ v g'
     rw [e1] at hst
-    have ih := col_ind hW hch hmod hq hM n (by omega) (fun j => g j.castSucc) (fun j => hg j.castSucc) _ (R.ioY t n F₀)
+    have hprev := ih (by omega) (fun j => g j.castSucc) (fun j => hg j.castSucc) _ (R.ioY t n F₀)
       (R.ItY n (ch.cv.polY n) v) hst.2
     refine ⟨(pathConv_comp ch.W M (Path.one (.down t 0 n)) ((), g (Fin.last n)) F (downPath t 0 n)
-      (downFam t 0 n fun j => g j.castSucc)).2 ⟨⟨trivial, hst.1⟩, ih.1⟩, ?_⟩
+      (downFam t 0 n fun j => g j.castSucc)).2 ⟨⟨trivial, hst.1⟩, hprev.1⟩, ?_⟩
     refine HEq.trans (heq_of_eq (pathLift_comp ch.W M (Path.one (.down t 0 n)) ((), g (Fin.last n)) F (downPath t 0 n)
       (downFam t 0 n fun j => g j.castSucc))) ?_
-    refine ih.2.trans (heq_of_eq ?_)
+    refine hprev.2.trans (heq_of_eq ?_)
     show _ = ch.cv.dnFun t n _
     rw [e1]
 
@@ -219,9 +224,15 @@ theorem col_top {ch : Choice R} (hW : ch.W.Over R) (hch : R.IsChain) (hmod : R.I
         HEq fj (R.vX t) ∧ g j = ch.W.fock (.mu t 0 j) fj (q j))) →
     ∀ F : Fn ch.G (.grid 0 N), HEq F (ch.cv.formX t y) →
     PathConv ch.W M (downPath t 0 N) (downFam t 0 N g) F ∧
-      HEq (liftP ch.W M (downPath t 0 N) (downFam t 0 N g) F) (ch.cv.lift t y)
-  | 0, h, _, _, _, _ => absurd h (by have := D.R.two_le_m; omega)
-  | k + 1, hk, g, hg, F, hF => by
+      HEq (liftP ch.W M (downPath t 0 N) (downFam t 0 N g) F) (ch.cv.lift t y) := by
+  intro N
+  cases N with
+  | zero =>
+    intro h
+    have := D.R.two_le_m
+    omega
+  | succ k =>
+    intro hk g hg F hF
     obtain ⟨fj, hfj, hgj⟩ := (hg (Fin.last k)).2 (by simp only [Fin.val_last]; omega)
     have hgj' : g (Fin.last k) = ch.W.fock (.mu t 0 k) fj (q k) := hgj
     have hio := hch.ioX t

@@ -53,7 +53,7 @@ theorem xSpan (hS : XShape) (hBrS : XBrS) (hInj : XInj) (hSp : XSpanN) (j : ℕ)
   by_contra hne
   obtain ⟨l, hl1, hl2⟩ := Submodule.exists_le_ker_of_notMem hne
   have h0 := phi_mem X Kc hS hBrS hInj j L g hg ⊥ (fun o a ha => by
-    rw [AddSubgroup.mem_bot] at ha ⊢; rw [ha, mul_zero]) (PhiX X Kc j l 1 f) 0 (fun m => by rw [coeff_zero]; exact AddSubgroup.zero_mem _)
+    rw [AddSubgroup.mem_bot] at ha ⊢; rw [ha, mul_zero]) (PhiX X Kc j l 1 f) 0 (fun m => by simp only [AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply, AddSubgroup.zero_mem])
     (fun x => by
       obtain ⟨a, x'', hx⟩ := prod_rowAct X j g x
       rw [hx, map_zero, PhiX_apply, one_mul, map_smul, map_smul, LinearMap.smul_apply, LinearMap.smul_apply]

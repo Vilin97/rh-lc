@@ -54,9 +54,9 @@ theorem spMap_comp' (β : R →+* C) (κ : C →+* D) : spMap (κ.comp β) = spM
   show Spec.map _ = Spec.map _ ≫ Spec.map _
   rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
-theorem dualMap_comp (β : R →+* C) (κ : C →+* D) : GlobalTheory.CompanionTheory.Ar.dualMap (κ.comp β) = (GlobalTheory.CompanionTheory.Ar.dualMap κ).comp (GlobalTheory.CompanionTheory.Ar.dualMap β) := by
+theorem dualMap_comp (β : R →+* C) (κ : C →+* D) : dualMap (κ.comp β) = (dualMap κ).comp (dualMap β) := by
   refine RingHom.ext fun x => ?_
-  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  ext <;> simp [dualMap]
 
 variable (G : Over (Sp R)) [GrpObj G]
 
@@ -65,7 +65,7 @@ abbrev ptU (β : R →+* C) : Sp C ⟶ G.left := spMap β ≫ (1 : Over.mk (𝟙
 variable {G} {E : Type} [AddCommGroup E] [Module R E]
 
 abbrev ptV (M : LieModel G (𝟙 (Sp R)) E) (β : R →+* C) (w : E) : Sp (DualNumber C) ⟶ G.left :=
-  spMap (GlobalTheory.CompanionTheory.Ar.dualMap β) ≫ (M.pt w).left
+  spMap (dualMap β) ≫ (M.pt w).left
 
 theorem ptU_over (β : R →+* C) : ptU G β ≫ G.hom = spMap β := by
   have e : (1 : Over.mk (𝟙 (Sp R)) ⟶ G).left ≫ G.hom = 𝟙 (Sp R) := Over.w _
@@ -77,7 +77,7 @@ theorem ptV_over (M : LieModel G (𝟙 (Sp R)) E) (β : R →+* C) (w : E) :
   rw [Category.assoc, e, Category.comp_id, ← spMap_comp']
   congr 1
   refine RingHom.ext fun x => ?_
-  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl']
+  ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl']
 
 theorem ptV_fst (M : LieModel G (𝟙 (Sp R)) E) (β : R →+* C) (w : E) :
     spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ ptV M β w = ptU G β := by
@@ -87,8 +87,8 @@ theorem ptV_fst (M : LieModel G (𝟙 (Sp R)) E) (β : R →+* C) (w : E) :
   rw [← spMap_comp', ← spMap_comp']
   congr 1
   refine RingHom.ext fun x => ?_
-  show TrivSqZeroExt.fst (GlobalTheory.CompanionTheory.Ar.dualMap β x) = β (TrivSqZeroExt.fst x)
-  simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  show TrivSqZeroExt.fst (dualMap β x) = β (TrivSqZeroExt.fst x)
+  simp [dualMap]
 
 theorem one_left_comp (β : R →+* C) (θ : C →+* ℂ) :
     (1 : Over.mk (spMap (θ.comp β)) ⟶ G).left = spMap θ ≫ ptU G β := by
@@ -105,10 +105,10 @@ theorem val_one_left (β : R →+* C) (θ : C →+* ℂ) {V : G.left.Opens} (h :
 
 theorem snd_val_comp (M : LieModel G (𝟙 (Sp R)) E) (β : R →+* C) (θ : C →+* ℂ) (w : E) {V : G.left.Opens}
     (h : ⊤ ≤ ptV M β w ⁻¹ᵁ V) (f : Γ(G.left, V)) :
-    TrivSqZeroExt.snd (valR (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (θ.comp β)) ≫ (M.pt w).left) V f) =
+    TrivSqZeroExt.snd (valR (spMap (dualMap (θ.comp β)) ≫ (M.pt w).left) V f) =
       θ (TrivSqZeroExt.snd (valR (ptV M β w) V f)) := by
   rw [dualMap_comp, spMap_comp', Category.assoc, valR_spMap _ _ _ h]
-  simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  simp [dualMap]
 
 theorem fst_val (M : LieModel G (𝟙 (Sp R)) E) (β : R →+* C) (w : E) {V : G.left.Opens}
     (h : ⊤ ≤ ptV M β w ⁻¹ᵁ V) (f : Γ(G.left, V)) :
@@ -145,7 +145,7 @@ open GlobalTheory.HolHom GlobalTheory.CompanionTheory.Ar.Flat.ExpChart
 theorem exists_coords : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj G] (g : ℕ) (M : LieModel G (𝟙 (Sp R)) (Fin g → R)) (φ : R →+* ℂ), Smooth G.hom →
   ∃ (V : G.left.Opens) (t : Fin g → Γ(G.left, V)) (ρ : R), IsAffineOpen V ∧ φ ρ ≠ 0 ∧ (GlobalTheory.CompanionTheory.Ar.Flat.ExpChart.cst G.hom V).IsStandardSmooth ∧
     (∀ θ : R →+* ℂ, θ ρ ≠ 0 → ⊤ ≤ (1 : Over.mk (spMap θ) ⟶ G).left ⁻¹ᵁ V ∧ (∀ c, valAt' (1 : Over.mk (spMap θ) ⟶ G).left V (t c) = 0) ∧
-      ∀ a c, TrivSqZeroExt.snd (valR (spMap (GlobalTheory.CompanionTheory.Ar.dualMap θ) ≫ (M.pt (Pi.single a 1)).left) V (t c)) = if a = c then 1 else 0) ∧
+      ∀ a c, TrivSqZeroExt.snd (valR (spMap (dualMap θ) ≫ (M.pt (Pi.single a 1)).left) V (t c)) = if a = c then 1 else 0) ∧
     ∀ f : Γ(G.left, V), ∃ (u : R) (k : ℕ), ∀ θ : R →+* ℂ, θ ρ ≠ 0 → valAt' (1 : Over.mk (spMap θ) ⟶ G).left V f * θ ρ ^ k = θ u := by
   intro R _ G _ g M φ hs
   obtain ⟨V₁, r, hV₁, hφr, hss, hle⟩ := GlobalTheory.CompanionTheory.Ar.Flat.ExpChart.exists_chart R G φ hs
@@ -239,10 +239,10 @@ theorem exists_coords : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj G]
       rw [hmul, hval, hE, map_zero, zero_mul]
     · beta_reduce
       obtain ⟨D, hD, hL⟩ := tan_der (tan_base M (θ'.comp β) (Pi.single a 1)) hx
-      have hy : ⊤ ≤ (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (θ'.comp β)) ≫ (M.pt (Pi.single a 1)).left) ⁻¹ᵁ G.left.basicOpen s :=
+      have hy : ⊤ ≤ (spMap (dualMap (θ'.comp β)) ≫ (M.pt (Pi.single a 1)).left) ⁻¹ᵁ G.left.basicOpen s :=
         (le_preimage_dual_iff (tan_base M (θ'.comp β) (Pi.single a 1)) _).2 hx
-      have e : valR (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (θ'.comp β)) ≫ (M.pt (Pi.single a 1)).left) (G.left.basicOpen s) (res (t' c)) =
-          valR (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (θ'.comp β)) ≫ (M.pt (Pi.single a 1)).left) V₁ (t' c) := valR_res _ hVle _ hy
+      have e : valR (spMap (dualMap (θ'.comp β)) ≫ (M.pt (Pi.single a 1)).left) (G.left.basicOpen s) (res (t' c)) =
+          valR (spMap (dualMap (θ'.comp β)) ≫ (M.pt (Pi.single a 1)).left) V₁ (t' c) := valR_res _ hVle _ hy
       have e' : D (res (t' c)) = θ' (TrivSqZeroExt.snd (v a (t' c))) := by
         rw [hD, e, snd_val_comp M β θ' _ (hv a), hvv]
       rw [← hD, hL, hval, hE, map_zero, zero_mul, zero_add, e', hvt]

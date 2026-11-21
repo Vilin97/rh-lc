@@ -127,8 +127,8 @@ theorem vecAll_unique {W : G.Weil} (ρ : RealMatch W) {μ₀ : T} (hL : L.Is μ�
     have ha : IsGridArrow D.R.m t a := OnGrid.last hg
     have hModel := exists_arrowModel ρ hL he ha
     rcases hModel with ⟨Tm, h1, h2, -⟩
-    obtain ⟨a1, a2⟩ := (h1 _ _).1 h.2
-    obtain ⟨b1, b2⟩ := (h1 _ _).1 h'.2
+    obtain ⟨a1, a2⟩ := (h1 φ.2 d.2).1 h.2
+    obtain ⟨b1, b2⟩ := (h1 φ'.2 d.2).1 h'.2
     refine Prod.ext (vecAll_unique ρ hL he p hg.init φ.1 φ'.1 d.1 h.1 h'.1) (sub_eq_zero.1 (h2 _ ?_ ?_))
     · exact (LocTensor.sbSpace e (latA G a)).sub_mem a1 b1
     · rw [map_sub, ← a2, ← b2, sub_self]
@@ -192,7 +192,9 @@ theorem edges_bound {m : ℕ} {t : T} {i j : ℕ} : ∀ {Y : Node} (p : Path T (
         · have := h5 b hb; omega
         · obtain rfl := List.mem_singleton.1 hb
           simp only [edgeOf]; omega
-    · obtain ⟨rfl, rfl⟩ : k = i' ∧ l + 1 = j' := Node.grid.inj h1
+    · have hsrc : Node.grid k (l + 1) = Node.grid i' j' := h1
+      obtain ⟨hk, hl⟩ := Node.grid.inj hsrc
+      subst i' j'
       refine ⟨k, l, rfl, h2, by omega, List.nodup_append.2 ⟨h4, List.nodup_singleton _, fun b hb c hc e => ?_⟩, fun b hb => ?_⟩
       · obtain rfl := List.mem_singleton.1 hc
         subst e

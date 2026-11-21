@@ -160,16 +160,7 @@ theorem kTriv_of_primes (hG : GlobalFnsSt) (R : Type) [CommRing R] (B : Over (Sp
       p ∈ Set.range (PrimeSpectrum.comap ψ) ∧ TrivAlong B N (spMap ψ)) : KTriv B N := by
   obtain ⟨d, -, n, s, hs⟩ := (GlobalTheory.Unif.relAmple_iff_veryAmpleBy R B N hN).1 ha
   obtain ⟨hO, -, hK⟩ := GlobalTheory.UU.TrivTwist.inK_iff_trivial_twist _ B N hN
-  obtain ⟨H, k, hk, hH⟩ := GlobalTheory.UU.TwistKer.exists_closed_twist_kernel hG R B hB ⟨_, (by
-    exact { cover := hN.cover
-            g_self := fun i => by
-              have h := congrArg (· ^ (d : ℤ)) (hN.g_self i)
-              simp only [one_zpow, ← map_zpow] at h
-              exact h
-            cocycle := fun i j k => by
-              have h := congrArg (· ^ (d : ℤ)) (hN.cocycle i j k)
-              simp only [mul_zpow, ← map_zpow] at h
-              exact h }), n, s, hs⟩ N (pw N 0) hN hO
+  obtain ⟨H, k, hk, hH⟩ := GlobalTheory.UU.TwistKer.exists_closed_twist_kernel hG R B hB ⟨_, isLB_pw hN _, n, s, hs⟩ N (pw N 0) hN hO
   have hfin : IsFinite H.hom := GlobalTheory.AmpleStabFinite.isFinite_of_relAmple hG R B hB N (pw N 0) hN hO ha H k hk hH
   have hrep : ∀ (T : Over (Spec (CommRingCat.of R))) (x : T ⟶ B), InK B N x ↔ ∃ y : T ⟶ H, y ≫ k = x :=
     fun T x => (hK _ rfl T x).trans (hH T x)
@@ -200,7 +191,7 @@ variable [IsCommMonObj A] {R : Type} [CommRing R]
 omit [IsCommMonObj A] in
 theorem relAmple_chart (j : Sp R ⟶ S) [IsOpenImmersion j] (g : S' ⟶ Sp R) (hL : L.IsLB) (hA : RelAmple A L) :
     RelAmple ((Over.pullback (g ≫ j)).obj A) (L.pull (pullback.fst A.hom (g ≫ j))) := by
-  have hL' := LB.isLB_pull hL (pullback.fst A.hom (g ≫ j))
+  have hL' := pull_isLB hL (pullback.fst A.hom (g ≫ j))
   obtain ⟨w, hw⟩ := PolBaseChange.lbIso_refl hL'
   exact relAmple_pull (A' := (Over.pullback (g ≫ j)).obj A) (IsPullback.of_hasPullback _ _) hL hL'
     ((isGen_iff w).1 hw) j.opensRange (isAffineOpen_opensRange j) (fun y => ⟨g y, rfl⟩) hA
@@ -272,7 +263,7 @@ theorem trivAlong_chart (hG : GlobalFnsSt) (j : Sp R ⟶ S) [IsOpenImmersion j] 
   have ha' := relAmple_chart j (𝟙 _) hL ha
   rw [Category.id_comp j] at ha'
   have hp := isGrpPullback_pullback A j
-  refine trivAlong_of_kTriv hp hL (kTriv_of_primes hG R _ (TLinPf.isAb_pullback j A hA) _ (LB.isLB_pull hL _) ha'
+  refine trivAlong_of_kTriv hp hL (kTriv_of_primes hG R _ (TLinPf.isAb_pullback j A hA) _ (pull_isLB hL _) ha'
     fun p => ?_)
   obtain ⟨V, _, ψ, hψ, hV⟩ := h p
   exact ⟨V, inferInstance, ψ, hψ, hV.pull hp hL⟩

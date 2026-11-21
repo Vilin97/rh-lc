@@ -29,7 +29,7 @@ variable {D : D7}
 theorem cA_cA' (z : Formalism.L2.Theta.AE D) : cA D (cA D z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => rw [(cA D).map_zero, (cA D).map_zero]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [(cA D).map_add (f := _), (cA D).map_add (f := _), hx, hy]
   | tmul a x => exact congrArg (fun t => a ⊗ₜ[D.host.F] t) (star_star x)
 
 theorem cO_eq (x : 𝓞 D.host.E) : Formalism.DivisionValues.cO D.host.E x = GlobalTheory.IdemSupport.cO D x := RingOfIntegers.ext rfl

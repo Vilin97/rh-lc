@@ -57,7 +57,7 @@ theorem pchern_of (hsep : ∀ {R : Type} [CommRing R] (A : Over (Sp R)) [GrpObj 
   let pr : primDR A → (u.Λ →+ Hol (fibFam u).V) := fun c ↦
     { toFun x := algebraMap ℂ (Hol (fibFam u).V) (P x c)
       map_zero' := by rw [map_zero, LinearMap.zero_apply, map_zero]
-      map_add' x y := by rw [map_add (f := _), LinearMap.add_apply, map_add (f := _)] }
+      map_add' x y := by rw [map_add (f := _), LinearMap.add_apply, (algebraMap ℂ (Hol (fibFam u).V)).map_add] }
   have hpr : ∀ c : primDR A, r.coef.pull1 c.1 = K.perCl (pr c) := fun c ↦ hP c K r hF
   obtain ⟨c', hc'⟩ := hcup K (fun k ↦ pr (a k)) (fun k ↦ pr (b k)) ℓ c
     (fun l m ↦ algebraMap ℂ (Hol (fibFam u).V) (β l m)) (by
@@ -74,10 +74,10 @@ theorem pchern_of (hsep : ∀ {R : Type} [CommRing R] (A : Over (Sp R)) [GrpObj 
       mul_add, Finset.sum_add_distrib]
     ring
   let β' : u.Λ →+ u.Λ →+ Hol (fibFam u).V := AddMonoidHom.mk'
-    (fun l ↦ AddMonoidHom.mk' (fun m ↦ algebraMap ℂ (Hol (fibFam u).V) (δ l m)) fun m m' ↦ by rw [d2, map_add (f := _)])
+    (fun l ↦ AddMonoidHom.mk' (fun m ↦ algebraMap ℂ (Hol (fibFam u).V) (δ l m)) fun m m' ↦ by rw [d2, (algebraMap ℂ (Hol (fibFam u).V)).map_add])
     fun l l' ↦ AddMonoidHom.ext fun m ↦ by
       change algebraMap ℂ (Hol (fibFam u).V) (δ (l + l') m) = algebraMap ℂ (Hol (fibFam u).V) (δ l m) + algebraMap ℂ (Hol (fibFam u).V) (δ l' m)
-      rw [d1, map_add (f := _)]
+      rw [d1, (algebraMap ℂ (Hol (fibFam u).V)).map_add]
   have hs := hsym K (fun c hc ↦ h1 K hR hB c hc) (fun G hG ↦ h0 K hR G fun T T' φ h ↦ (hG T T' φ h).symm) hS hR β' c'
     (fun T T' T'' φ ψ ↦ by
       rw [hc']

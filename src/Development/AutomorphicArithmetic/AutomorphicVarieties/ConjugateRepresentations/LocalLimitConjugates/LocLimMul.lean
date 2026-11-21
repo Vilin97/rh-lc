@@ -20,13 +20,12 @@ private theorem mul_cj (χ : HChar E) (T : Module.End ℂ (Sm E a)) (φ : Sm E a
     mulChi a χ (cj χ T φ) = T (mulChi a χ φ) := (mulChi a χ).apply_symm_apply _
 
 private theorem isOp_cj {r : ℝ} {χ : HChar E} (hχ : IsTw (a := a) r χ) {N : Submodule ℂ (Sm E a)}
-    {T : Module.End ℂ (Sm E a)} (hT : IsOp N T) : IsOp (N.comap (mulChi a χ).toLinearMap) (cj χ T) := by
-  constructor
-  · intro φ hφ
+    {T : Module.End ℂ (Sm E a)} (hT : IsOp N T) : IsOp (N.comap (mulChi a χ).toLinearMap) (cj χ T) where
+  maps φ hφ := by
     change mulChi a χ (cj χ T φ) ∈ N
     rw [mul_cj]
     exact hT.maps _ hφ
-  · intro X φ hφ
+  lie X φ hφ := by
     apply (mulChi a χ).injective
     have h1 := hT.lie X _ hφ
     have h2 := hχ.2 X (cj χ T φ)
@@ -34,7 +33,7 @@ private theorem isOp_cj {r : ℝ} {χ : HChar E} (hχ : IsTw (a := a) r χ) {N :
     rw [mul_cj, h1, hχ.2, map_add (f := _), map_add (f := _), map_add (f := _), map_smul, map_smul, map_smul, mul_cj] at h2
     rw [mul_cj]
     exact (add_right_cancel h2).symm
-  · intro g φ hφ
+  rt g φ hφ := by
     apply (mulChi a χ).injective
     have h1 := hT.rt g _ hφ
     have h2 := rt_mulChi χ g (cj χ T φ)

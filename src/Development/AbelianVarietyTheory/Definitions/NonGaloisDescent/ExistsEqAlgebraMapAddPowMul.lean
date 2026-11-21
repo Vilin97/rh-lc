@@ -319,7 +319,8 @@ theorem exists_sub_hatTot_mem_Mhat (η : ℕ) {w : ZMod a → ι → AhatE O K l
     have h2 : algebraMap _ _ (x τ i) = algebraMap _ _ (Ehat O K l e ^ η) * w τ i :=
       (hx τ i).trans (Algebra.smul_def (Ehat O K l e ^ η) (w τ i))
     have h3 : x τ i = ofAl O K l e (g τ i) + Ehat O K l e ^ η * x' τ i := hg τ i
-    rw [h3, map_add (f := _), map_mul, h1, add_comm, ← eq_sub_iff_add_eq, ← mul_sub, map_pow] at h2
+    set_option synthInstance.maxHeartbeats 200000 in
+      rw [h3, map_add (f := algebraMap (Ahat O K l e) (AhatE O K l e)), map_mul, h1, add_comm, ← eq_sub_iff_add_eq, ← mul_sub, map_pow] at h2
     exact ((IsLocalization.Away.algebraMap_isUnit (Ehat O K l e)).pow η).mul_left_cancel h2
 
 def connHat (w : ZMod a → ι → AhatE O K l e) : ZMod a → ι → AhatE O K l e :=

@@ -21,7 +21,7 @@ private theorem sp_sp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f :
 
 private theorem dual_eps {K K' : Type} [CommRing K] [CommRing K'] (ψ : K →+* K') (a : K) {Y : Scheme.{0}}
     (v : Sp (DualNumber K) ⟶ Y) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (epsMul a) ≫ v = spMap (epsMul (ψ a)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ v := by
+    spMap (dualMap ψ) ≫ spMap (epsMul a) ≫ v = spMap (epsMul (ψ a)) ≫ spMap (dualMap ψ) ≫ v := by
   rw [← Category.assoc, ← Category.assoc, sp_sp, sp_sp]
   congr 2
   refine RingHom.ext fun z => ?_

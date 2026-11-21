@@ -91,7 +91,7 @@ theorem DeLeSemiPos.proof (hPL1 : ArithmeticPoincareLelongFormula) (hSt : Stokes
   have ht' : ∃ b : K → ℕ, (∀ k, A'.a k = b k) ∧ IsMultiHomog s' b := ⟨a', haA', hsa'⟩
   obtain ⟨C, hC⟩ := hCurv K ι A' s' ht' hA'
   have hT := isSmoothHerm_ofMetrics_fs (ι := ι) (fun _ => (C : ℤ))
-  generalize HermLine.ofMetrics (fun k => fsMetric (ι k)) (fun _ => (C : ℤ)) = T at hC hT
+  generalize HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) (fun _ => (C : ℤ)) = T at hC hT
   have hfin : ∀ t : MRing ι, {W | W ∈ divSupp P t ∧ IsHorizontal W}.Finite :=
     fun t => (divSupp_finite P t).subset fun W h => h.1
 

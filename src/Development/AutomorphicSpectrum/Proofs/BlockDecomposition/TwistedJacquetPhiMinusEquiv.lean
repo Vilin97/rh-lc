@@ -83,11 +83,11 @@ theorem mem_colFix_iff {N n : ℕ} (g : GL (Fin N) k) :
   · intro h i j hj
     have := congrFun (h j hj) i
     rw [mulVec_single_one] at this
-    simpa [one_apply, Pi.single_apply, Matrix.col_apply] using this
+    simpa [Matrix.one_apply, Pi.single_apply, Matrix.col_apply] using this
   · intro h j hj
     rw [mulVec_single_one]
     funext i
-    simpa [one_apply, Pi.single_apply, Matrix.col_apply] using h i j hj
+    simpa [Matrix.one_apply, Pi.single_apply, Matrix.col_apply] using h i j hj
 
 theorem glEmbMat_castSucc_castSucc (N : ℕ) (A : Matrix (Fin N) (Fin N) k) (i j : Fin N) :
     glEmbMat k N A (Fin.castSucc i) (Fin.castSucc j) = A i j := by
@@ -142,7 +142,7 @@ theorem MirUin_step (ψ : AddChar k Circle) {m n : ℕ} (hnm : n ≤ m) (u : Mir
     have h12 : p.1 ≠ p.2 := fun e => by rw [e] at hc; omega
     have h2 : p.2 ≠ Fin.last (m + 1) := fun e => hne (Prod.ext (Fin.ext (by
       rw [e] at hc; simp at hc ⊢; omega)) e)
-    simp [unip, colMat, one_apply, h12, h2]
+    simp [unip, colMat, Matrix.one_apply, h12, h2]
   · intro h
     exact absurd (Finset.mem_filter.2 ⟨Finset.mem_univ _, by simp, by simpa using hnm⟩) h
 
@@ -186,10 +186,10 @@ theorem levi_step (ψ : AddChar k Circle) {m n : ℕ} (hnm : n ≤ m) (a : derUn
     | last => simp at hj; omega
     | cast j =>
       induction i using Fin.lastCases with
-      | last => rw [glEmbMat_last_castSucc]; simp [one_apply, (Fin.castSucc_ne_last j).symm]
+      | last => rw [glEmbMat_last_castSucc]; simp [Matrix.one_apply, (Fin.castSucc_ne_last j).symm]
       | cast i =>
         rw [glEmbMat_castSucc_castSucc, hC i j (by simpa using hj)]
-        simp [one_apply]
+        simp [Matrix.one_apply]
   · rw [derCharM_apply, derCharM_apply]
     congr 2
     rw [hval]
@@ -260,7 +260,7 @@ theorem derUnipM_decomp {m n : ℕ} (hnm : n ≤ m) (u : derUnipM k (m + 1) n) :
     · rw [hval]
       show X (Fin.castSucc i) (Fin.castSucc j) = _
       rw [hC _ _ (by simpa using hj)]
-      simp [one_apply]
+      simp [Matrix.one_apply]
   let c : Multiplicative (Fin (m + 1) → k) := Multiplicative.ofAdd fun i => X (Fin.castSucc i) (Fin.last (m + 1))
   refine ⟨⟨⟨unip k (m + 1) c, MirU_le_Mir k (m + 1) ⟨c, rfl⟩⟩, Subgroup.mem_subgroupOf.2 ⟨c, rfl⟩⟩,
     ⟨⟨a₀, ha₀M⟩, Subgroup.mem_subgroupOf.2 ha₀D⟩, ?_⟩

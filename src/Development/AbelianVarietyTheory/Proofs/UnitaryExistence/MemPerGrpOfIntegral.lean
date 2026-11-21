@@ -363,7 +363,14 @@ theorem exists_jet_ne_zero (hs : IsSympl X bas) (hd : x ∈ X.dom) {L : Lt E r} 
     have hb : ∀ b, Differentiable ℂ fun z : Fin n → Fin g → ℂ =>
         fock X bas idx x 1 (pv X idx x (Y b)) θ (z b) := fun b =>
       (hdiff hθ.1 (pv X idx x (Y b))).comp (f := fun z : Fin n → Fin g → ℂ => z b) (differentiable_apply b)
-    exact fun z => (HasFDerivAt.finset_prod (u := Finset.univ) fun b _ => (hb b z).hasFDerivAt).differentiableAt
+    have hprod : ∀ s : Finset (Fin n), Differentiable ℂ (fun z : Fin n → Fin g → ℂ =>
+        ∏ b ∈ s, fock X bas idx x 1 (pv X idx x (Y b)) θ (z b)) := by
+      intro s
+      induction s using Finset.induction_on with
+      | empty => simpa using (differentiable_const (c := (1 : ℂ)))
+      | @insert b s hbs ih =>
+        convert (hb b).mul ih using 1 <;> funext z <;> simp [Finset.prod_insert, hbs]
+    simpa using hprod Finset.univ
   simp only [hc, Finset.prod_mul_distrib] at hne
   rw [polyDeriv_const_mul _ _ _ hent] at hne
   exact right_ne_zero_of_mul hne
@@ -476,7 +483,14 @@ theorem exists_thGen_ne_zero (hC : Formalism.MainNotions.ModuliIntegralCharts.H1
     have hb : ∀ b, Differentiable ℂ fun z : Fin n → Fin W.g → ℂ =>
         fock (U.X k) Dc.bas Dc.idx x.1 1 (pv (U.X k) Dc.idx x.1 (Y b)) θ (z b) := fun b =>
       (hdiff hθ.1 _).comp (f := fun z : Fin n → Fin W.g → ℂ => z b) (differentiable_apply b)
-    exact fun z => (HasFDerivAt.finset_prod (u := Finset.univ) fun b _ => (hb b z).hasFDerivAt).differentiableAt
+    have hprod : ∀ s : Finset (Fin n), Differentiable ℂ (fun z : Fin n → Fin W.g → ℂ =>
+        ∏ b ∈ s, fock (U.X k) Dc.bas Dc.idx x.1 1 (pv (U.X k) Dc.idx x.1 (Y b)) θ (z b)) := by
+      intro s
+      induction s using Finset.induction_on with
+      | empty => simpa using (differentiable_const (c := (1 : ℂ)))
+      | @insert b s hbs ih =>
+        convert (hb b).mul ih using 1 <;> funext z <;> simp [Finset.prod_insert, hbs]
+    simpa using hprod Finset.univ
   refine hjet Y hYu ?_
   rw [thP, ← polyDeriv_const_mul' _ _ _ (hfun ▸ hent), ← hfun] at hval
   have e1 := polyDeriv_rename hent 0 Dc.eL Dc.eL.injective (MvPolynomial.map σ P) (letterDir (U.X k) Dc.hr Dc.idx)

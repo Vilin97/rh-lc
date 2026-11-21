@@ -149,8 +149,8 @@ def chiC (i : ℕ) (P : HeightOneSpectrum (𝓞 B.fields.E)) : (𝓞 B.fields.E 
 
 theorem chiC_apply (i P x) : ((chiC I i P x : ℂˣ) : ℂ) = B.embLL ((Formalism.L2.Col.chiP I.Ch P i x : B.LLˣ) : B.LL) := rfl
 
-structure IsComOf (c : GlobalTheory.ChainOnto.Com (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) : Prop where
-  std : IsStdChar (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) c.ψ (-1)
+structure IsComOf (c : GlobalTheory.ChainOnto.Com (I.rec7 l Z)) : Prop where
+  std : IsStdChar (I.rec7 l Z) c.ψ (-1)
   inf : IsInfFam c.θ
   places : c.Pg = (B.primes X).vGs
   mu : ∀ j : Fin B.R.m, ChrEq (c.μ ((j : ℕ) + 1)) (I.C.mu0 j)
@@ -169,15 +169,15 @@ def BaseCoset : Prop :=
 
 def BaseOne (i : ℕ) (hi : i ≤ B.R.m) : Prop :=
   ∀ P : Formalism.L2.Col.rowSG (B.primes X) I.sel (I.tup I.mu0), P.1 ∈ (B.primes X).vGs → ∀ r c,
-    HeightOneSpectrum.valuation (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E (show HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) from P.1)
+    HeightOneSpectrum.valuation (I.rec7 l Z).host.E (show HeightOneSpectrum (𝓞 (I.rec7 l Z).host.E) from P.1)
       (baseFr A i hi P r c - if r.val = c.val then 1 else 0) < 1
 
 def BaseEnds : Prop := BaseOne A 0 (Nat.zero_le _) ∧ BaseOne A B.R.m le_rfl
 
 
-variable {a : XPart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) v}
+variable {a : XPart (I.rec7 l Z) v}
 
-structure TiedX {ζ₀ : Fin a.Lz.rank → (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E} {PP : Formalism.L2.DIV.Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E} (G : GX a ζ₀ PP)
+structure TiedX {ζ₀ : Fin a.Lz.rank → (I.rec7 l Z).host.E} {PP : Formalism.L2.DIV.Pl (I.rec7 l Z).host.E} (G : GX a ζ₀ PP)
     (P : Formalism.L2.Col.rowSG (B.primes X) I.sel (I.tup I.mu0)) : Prop where
   eq : P.1 = PP
   type : letI := G.fld; letI := G.val; letI := G.top; letI := G.loc
@@ -190,7 +190,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 open GlobalTheory.FinPl in
 structure OffsetCompatibility (o : OffX a k ((B.primes X).vT v)) : Prop where
   idem : ∀ i, Formalism.L2.NTheta.IsIdemAt (o.p i).e i.1
-  under : ∀ i, (o.p i).v = HeightOneSpectrum.under (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (show Formalism.L2.DIV.Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E from i.1)
+  under : ∀ i, (o.p i).v = HeightOneSpectrum.under (𝓞 (I.rec7 l Z).host.F) (show Formalism.L2.DIV.Pl (I.rec7 l Z).host.E from i.1)
   nodup : o.I.Nodup
   all : ∀ i, i ∈ o.I
   unif : ((o.q.1 : 𝒪[k]) : k) = (B.T v : ℕ)
@@ -201,8 +201,8 @@ structure OffsetCompatibility (o : OffX a k ((B.primes X).vT v)) : Prop where
   fn : ∀ j (hj : j ≤ B.R.m) i (x : Fin (B.R.N j) → 𝓞 B.fields.E) (z : 𝓞 B.fields.E),
     Ideal.Quotient.mk i.1.asIdeal z =
       (letI := GlobalTheory.Mem.Col2.starE B; (A.p0 j).1.1.deco.1.f i fun r => (x r : B.fields.E)) →
-    ∃ s : 𝒪[k], (s : k) = (o.p i).pr (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (z : B.fields.E)) ∧
-      (o.Q j i).HasVal (fun r => (o.p i).pr (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (x (finCongr (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) r) : B.fields.E)))
+    ∃ s : 𝒪[k], (s : k) = (o.p i).pr (incA (I.rec7 l Z) (z : B.fields.E)) ∧
+      (o.Q j i).HasVal (fun r => (o.p i).pr (incA (I.rec7 l Z) (x (finCongr (rankN (I.rec7 l Z) j hj) r) : B.fields.E)))
         (residue 𝒪[k] s)
   supp : ∀ j, j < B.R.m → CombAt o.atT (o.cT j)
   rep : ∀ j, j < B.R.m → ∀ f, Vac a.c.ψ _ _ (a.x j).L (a.x (j + 1)).L o.atT f →
@@ -213,21 +213,21 @@ structure OffsetCompatibility (o : OffX a k ((B.primes X).vT v)) : Prop where
 
 
 variable (a) in
-structure StdCol {chOf : ∀ i, ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem v).C.cls i → Ch i} (F : FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) v Ch chOf) : Prop where
+structure StdCol {chOf : ∀ i, ((I.rec7 l Z).mem v).C.cls i → Ch i} (F : FormsTiedSym (I.rec7 l Z) v Ch chOf) : Prop where
   is : A.Is F a.c.ψ a.c.θ
   keeps : A.Keeps F
   coset : BaseCoset A
   ends : BaseEnds A
   chr : ∀ j, j < B.R.m → A.chr (j + 1) = a.c.μ (j + 1)
   rd : ∀ j (hj : j ≤ B.R.m), a.rd j = A.rd F a.c.θ j hj
-  ram : ∀ j (hj : j ≤ B.R.m) φ, φ ∈ a.Ram j ↔ A.IsForm F j hj φ ∧ GlobalTheory.AdForm.RamAt (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) v j φ
+  ram : ∀ j (hj : j ≤ B.R.m) φ, φ ∈ a.Ram j ↔ A.IsForm F j hj φ ∧ GlobalTheory.AdForm.RamAt (D := I.rec7 l Z) v j φ
   om : ∀ j, j < B.R.m → (a.k j).om = A.om j
   vac : ∀ j, j < B.R.m → (a.k j).vac = A.vac j
   vol : ∀ j, j ≤ B.R.m → (a.x j).vol.μ = A.μ j ∧ (a.x j).vol.𝓕 = A.fd j
   top : TopForm F a.top.M fun G y => (a.eT G).1 y
   onto : Function.Surjective a.eT
 
-variable (w : World I l Z) (a : XPart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) v) (o : OffX a k ((B.primes X).vT v)) (G : ∀ PP : a.c.Pg, GX a o.ζ₀ PP.1)
+variable (w : World I l Z) (a : XPart (I.rec7 l Z) v) (o : OffX a k ((B.primes X).vT v)) (G : ∀ PP : a.c.Pg, GX a o.ζ₀ PP.1)
 
 structure XStdBy (A : ColDat I l Z v (w.C.herm.base.Ch v)) : Prop where
   com : IsComOf I l Z a.c

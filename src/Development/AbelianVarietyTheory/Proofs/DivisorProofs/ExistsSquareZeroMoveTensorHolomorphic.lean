@@ -57,10 +57,7 @@ theorem lTensor_one {R S : Type} [CommRing R] [Algebra ℂ R] [CommRing S] [Alge
   rw [Algebra.TensorProduct.one_def, LinearMap.lTensor_tmul, Derivation.coeFn_coe, Derivation.map_one_eq_zero,
     TensorProduct.tmul_zero]
 
-theorem sqZeroMove : ∀ {g : ℕ} {W₀ : Opens (Tot Empty g)} {R : Type} [CommRing R] [Algebra ℂ R]
-    {C : Type} [CommRing C] (ψ : R ⊗[ℂ] Hol W₀ →+* C) (n : Fin g → C),
-    (∀ a b, n a * n b = 0) → ∃ ψ' : R ⊗[ℂ] Hol W₀ →+* C,
-      ∀ x, ψ' x = ψ x + ∑ a, ψ (LinearMap.lTensor R (dw (W := W₀) a).toLinearMap x) * n a := by
+theorem sqZeroMove : ∀ {g : ℕ} {W₀ : Opens (Tot Empty g)} {R : Type} [CommRing R] [Algebra ℂ R] {C : Type} [CommRing C] (ψ : R ⊗[ℂ] Hol W₀ →+* C) (n : Fin g → C), (∀ a b, n a * n b = 0) → ∃ ψ' : R ⊗[ℂ] Hol W₀ →+* C, ∀ x, ψ' x = ψ x + ∑ a, ψ (LinearMap.lTensor R (dw a).toLinearMap x) * n a := by
   intro g W₀ R _ _ C _ ψ n hn
   exact gen_hom ψ (fun a => (LinearMap.lTensor R (dw (W := W₀) a).toLinearMap).toAddMonoidHom)
     (fun a => lTensor_one _) (fun a x y => lTensor_leibniz _ x y) n hn

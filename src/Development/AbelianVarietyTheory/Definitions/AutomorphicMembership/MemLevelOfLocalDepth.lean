@@ -52,7 +52,7 @@ variable {B : Base} {px : PreX B.toPre} (I : ColIn B px)
 theorem mem_vGs_iff (h : I.Ok) (P : HeightOneSpectrum (𝓞 B.fields.E)) : P ∈ (B.primes px).vGs ↔ ∃ k, I.C.P.Div k P := by
   classical
   unfold Formalism.L2.Col.Primes.vGs
-  rw [Finset.mem_union, h.pibar 0 P, h.pibar 1 P, Fin.exists_fin_two]
+  rw [Finset.mem_union, h.pibar, h.pibar, Fin.exists_fin_two]
 
 theorem exists_under_of_selHalf (h : SelHalf I) (p : ℕ) (hp : p.Prime) :
     ∃ 𝔭 : HeightOneSpectrum (𝓞 B.host.K), ∀ a, ∀ P : HeightOneSpectrum (𝓞 B.host.E), P ∈ I.Q a →

@@ -17,14 +17,14 @@ open PowerSeries
 variable {LL : Type} [Field LL]
 
 theorem framepf_exp_pow_sub_one (E : PowerSeries LL) (h0 : constantCoeff E = 1)
-    (hd : PowerSeries.derivative E = E) (p : ℕ) :
+    (hd : PowerSeries.derivative LL E = E) (p : ℕ) :
     ∃ w : PowerSeries LL, E ^ p - 1 = X * w ∧ constantCoeff w = (p : LL) := by
   have hX1 : X ∣ E - 1 := by
     rw [PowerSeries.X_dvd_iff]
     simp [h0]
   obtain ⟨w1, hw1⟩ := hX1
   have hc1 : constantCoeff w1 = 1 := by
-    have h2 : coeff 0 (PowerSeries.derivative E) = coeff 1 E := by
+    have h2 : coeff 0 (PowerSeries.derivative LL E) = coeff 1 E := by
       rw [PowerSeries.coeff_derivative]
       simp
     rw [hd] at h2

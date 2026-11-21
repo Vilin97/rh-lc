@@ -79,7 +79,8 @@ theorem serF_eq_k (C : _root_.PositivityTheory.ThKW.Ctx_k σ B JS JT ξ₀ θ ι
           (jV s (infRatF (tauB B) y + (a + piWF θ x))) : ℝ)) := by
   unfold serF GlobalTheory.HeisenbergGaussianSeries.series
   rw [← (_root_.PositivityTheory.ThKW.Trc.ratEquivF_k C).tsum_eq]
-  simp only [_root_.PositivityTheory.ThKW.Trc.coe_ratEquivF_k, piWA_apply, iotaA_apply, _root_.PositivityTheory.ThKW.piWF_ratWF_k C]
+  have hc (y : Matrix (Fin nT) (Fin nS) E) : ((ratEquivF_k C y : ratLF F E nS nT) : WOF F E nS nT) = ratWF y := rfl
+  simp only [hc, piWA_apply, iotaA_apply, _root_.PositivityTheory.ThKW.piWF_ratWF_k C]
 section Act
 variable {g : GAF σ JS} {h : GAF σ JT} {a : Matrix (Fin nS) (Fin nS) E} {b : Matrix (Fin nT) (Fin nT) E}
 theorem act_iota_k (C : _root_.PositivityTheory.ThKW.Ctx_k σ B JS JT ξ₀ θ ι) (v : IxF F nS nT → ℂ) :
@@ -250,7 +251,8 @@ theorem summable_coefQF_k (C : _root_.PositivityTheory.ThKW.Ctx_k σ B JS JT ξ�
   rw [← (_root_.PositivityTheory.ThKW.Trc.ratEquivF_k C).summable_iff] at h
   refine h.congr fun y => ?_
   have e : ‖phaseF σ JS JT ξ₀ B.ψ w u‖ = 1 := hψ.2.1 _
-  simp only [Function.comp_apply, _root_.PositivityTheory.ThKW.Trc.coe_ratEquivF_k, piWA_apply, _root_.PositivityTheory.ThKW.piWF_ratWF_k C, add_zero, zero_mul, Real.exp_zero,
+  have hc (y : Matrix (Fin nT) (Fin nS) E) : ((ratEquivF_k C y : ratLF F E nS nT) : WOF F E nS nT) = ratWF y := rfl
+  simp only [Function.comp_apply, hc, piWA_apply, _root_.PositivityTheory.ThKW.piWF_ratWF_k C, add_zero, zero_mul, Real.exp_zero,
     mul_one]
   rw [coefQF, norm_mul (phaseF σ JS JT ξ₀ B.ψ w u), e, one_mul]
 theorem gauss_mul_integral_A_k (C : _root_.PositivityTheory.ThKW.Ctx_k σ B JS JT ξ₀ θ ι) (hG : GoodLat Λ) (hR : RatSD σ JS JT ξ₀ Λ)

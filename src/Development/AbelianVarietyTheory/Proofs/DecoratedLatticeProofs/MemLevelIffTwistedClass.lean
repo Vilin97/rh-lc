@@ -119,20 +119,20 @@ theorem under_inj {B : Base} {X : PreX B.toPre} (I : TC B X) (hOk : I.Ok) (a : I
 
 set_option maxHeartbeats 2000000 in
 theorem mem_levS_of_reads {B : Base} {X : PreX B.toPre} (I : TC B X) (hOk : I.Ok) (hPins : TC.Pins B X) (l : I.Laws)
-    (Z : TC.Later B (I.cols l)) (a : I.ι) {bad : Set (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))}
-    (S : StepLevel (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) 1 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.f bad)
+    (Z : TC.Later B (I.cols l)) (a : I.ι) {bad : Set (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))}
+    (S : StepLevel (I.rec7 l Z).host.F (I.rec7 l Z).host.E (sigD (I.rec7 l Z)) (gramP (I.rec7 l Z)) 1 (I.rec7 l Z).R.f bad)
     {y lat st} (hK : I.ReadsP a S.Lb S.U S.chi y lat st)
-    (β : GL (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X'.rank) (Lev.EAf (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) (hβ : β = 1)
-    (Pg Q : Finset (Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)) (hPg : Pg = (B.primes X).vGs) (hQ : Q = I.Q a)
+    (β : GL (Fin (I.rec7 l Z).sp.X'.rank) (Lev.EAf (I.rec7 l Z))) (hβ : β = 1)
+    (Pg Q : Finset (Pl (I.rec7 l Z).host.E)) (hPg : Pg = (B.primes X).vGs) (hQ : Q = I.Q a)
     (P' : LevelP Pg B.R.r ℂ) (hH : ∀ g, g ∈ P'.H ↔ ∀ PP (h : PP ∈ (B.primes X).vGs) (h' : PP ∈ Pg), g ⟨PP, h'⟩ ∈ (I.Ps ⟨PP, h⟩).H)
-    (cg : ℕ → ∀ PP : Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E, (kP PP)ˣ →* ℂˣ) (ξ : ∀ PP : Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E, (kP PP)ˣ →* ℂˣ)
-    (hr : B.R.r ≤ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X'.rank) (g : Formalism.L2.Theta.GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X') :
-    g ∈ levS _ β (Lev.datY (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X'.rank B.R.r B.R.t B.R.m hr Pg Q P' cg ξ Lev.Frm.B) ↔
+    (cg : ℕ → ∀ PP : Pl (I.rec7 l Z).host.E, (kP PP)ˣ →* ℂˣ) (ξ : ∀ PP : Pl (I.rec7 l Z).host.E, (kP PP)ˣ →* ℂˣ)
+    (hr : B.R.r ≤ (I.rec7 l Z).sp.X'.rank) (g : Formalism.L2.Theta.GA (I.rec7 l Z) (I.rec7 l Z).sp.X') :
+    g ∈ levS _ β (Lev.datY (I.rec7 l Z).sp.X'.rank B.R.r B.R.t B.R.m hr Pg Q P' cg ξ Lev.Frm.B) ↔
       ∃ κ : S.U, GlobalTheory.Core.Rk.Top.HasMat g κ.1 := by
   subst hβ hPg hQ
   obtain ⟨-, gP, -, -⟩ := GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hOk hPins l Z
-  have gX : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X'.gram = 1 := by
-    have := congrArg (Matrix.reindex (finCongr (rankP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) (finCongr (rankP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)))).symm gP
+  have gX : (I.rec7 l Z).sp.X'.gram = 1 := by
+    have := congrArg (Matrix.reindex (finCongr (rankP (I.rec7 l Z))) (finCongr (rankP (I.rec7 l Z)))).symm gP
     rw [gramP, Equiv.symm_apply_apply] at this
     rw [this, Matrix.reindex_symm, Matrix.reindex_apply, Matrix.submatrix_one_equiv]
   haveI : NeZero (B.R.N B.R.m - 1) := ⟨by
@@ -148,11 +148,11 @@ theorem mem_levS_of_reads {B : Base} {X : PreX B.toPre} (I : TC B X) (hOk : I.Ok
   have hR := set_univ (Q := I.Q a) B.sp.cm gP S (rowTyG I.Ch I.Ps) B.embLL _ _ (GlobalTheory.Mem.Col2.ChEx.q_conj I hOk a)
     (under_inj I hOk a) hR0
   have key := @lev_set B.fields.F B.fields.E B.fields.K _ _ _ _ (GlobalTheory.Mem.Col2.starE B) _ _ B.sp.cm (B.R.N B.R.m - 1) _
-    (rankP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) _ _ _ gX gP _ _ _ S hLb B.R.r B.R.t B.R.m (Formalism.L2.Col.r_le_X' B.R) hr
+    (rankP (I.rec7 l Z)) _ _ _ gX gP _ _ _ S hLb B.R.r B.R.t B.R.m (Formalism.L2.Col.r_le_X' B.R) hr
     (Formalism.L2.Col.t_pos B.R) (Formalism.L2.Col.rank_X'_eq B.R) (B.primes X).vGs (I.Q a) I.Ps (Formalism.L2.Col.chiAt I.Ch) hR
     P' cg (fun PP => (ξ PP)⁻¹) (fun x => (hH x).trans ⟨fun h w => h w.1 w.2 w.2, fun h PP h1 _ => h ⟨PP, h1⟩⟩)
   refine ⟨fun hh => ?_, fun ⟨κ, h1, h2⟩ => ⟨h1, (key _ κ.1 h2).2 κ.2⟩⟩
-  obtain ⟨y, hy⟩ := exists_copy (rankP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (Lev.finE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X' g)
+  obtain ⟨y, hy⟩ := exists_copy (rankP (I.rec7 l Z)) (Lev.finE (I.rec7 l Z).sp.X' g)
   exact ⟨⟨y, (key _ y hy).1 hh.2⟩, hh.1, hy⟩
 
 end Gen

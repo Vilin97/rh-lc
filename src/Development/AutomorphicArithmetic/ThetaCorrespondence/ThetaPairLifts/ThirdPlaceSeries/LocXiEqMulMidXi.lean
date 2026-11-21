@@ -47,13 +47,13 @@ theorem exists_sameData_atType (hW : _root_.GlobalTheory.Fam.AllFamilyConditions
       valuation (a.G n).k (((a.G n).S.ϖ : (a.G n).kˣ) : (a.G n).k)) :
     ∃ S' : SymData (a.G n).k (a.G n).s B.R.k, SameData S' (a.G n).S B.R.t (a.G n).ν ∧
       ∀ (b : I.ι) (P : BadPr I b), P.1 = (a.pl n).1 →
-        AtType I.Ch I.sel (I.tup b) (I.cst b) B.embLL P ((a.G n).q.pr.comp (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) S' := by
+        AtType I.Ch I.sel (I.tup b) (I.cst b) B.embLL P ((a.G n).q.pr.comp (incA (I.rec7 l Z))) S' := by
   have hs : (a.G n).s + 1 + 1 = B.R.m := (a.G n).hs
   obtain ⟨hid, hv⟩ := hR.idem n
   obtain ⟨hi, hd⟩ := SymChainAt.place_facts (a.G n).q hid
   have hPm : (a.pl n).1 ∈ (B.primes X).vGs := (hW.lev.2.1 _).1 (a.pl n).2
   obtain ⟨i, g1, g2, -, g4, -⟩ := LevelData.type_prime hPm
-  obtain ⟨ϖ, hϖq, -⟩ := LevelData.exists_unif (ι := (a.G n).q.pr.comp (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) hi hd (g1 ▸ g4)
+  obtain ⟨ϖ, hϖq, -⟩ := LevelData.exists_unif (ι := (a.G n).q.pr.comp (incA (I.rec7 l Z))) hi hd (g1 ▸ g4)
   obtain ⟨S', e1, e2, e3, e4, e5⟩ := exists_normal (a.G n).S ϖ
     (by rw [hϖq, map_natCast, Valuation.map_sub_swap]; exact hϖ) B.R.t (a.G n).ν
   refine ⟨S', e5, fun b P hP => ?_⟩
@@ -83,9 +83,9 @@ theorem exists_sameData_atType (hW : _root_.GlobalTheory.Fam.AllFamilyConditions
           have hy' : y ∉ (a.pl n).1.asIdeal := fun h => by
             haveI := (a.pl n).1.isPrime
             exact c.ne_zero (hy.trans (Ideal.Quotient.eq_zero_iff_mem.2 h))
-          change Valued.v (((x : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)) : (a.pl n).1.adicCompletion (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) = 1
+          change Valued.v (((x : (I.rec7 l Z).host.E)) : (a.pl n).1.adicCompletion (I.rec7 l Z).host.E) = 1
           rw [HeightOneSpectrum.valuedAdicCompletion_eq_valuation', hx]
-          exact ((a.pl n).1.valuation_eq_one_iff_notMem (K := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)).2 hy')).symm)
+          exact ((a.pl n).1.valuation_eq_one_iff_notMem (K := (I.rec7 l Z).host.E)).2 hy')).symm)
         _ (hR.mu n (j + 1) (by omega) hj) x v h2.unit h1 rfl h3
       rw [key]
       rfl
@@ -97,17 +97,17 @@ variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws
   {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts}
   {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} {W : _root_.GlobalTheory.MiS.RealPackAlt ex} {u : B.Word}
 def intermediateXiValue (a : _root_.GlobalTheory.Fam.GeometricFamily W u) (n : Fin a.n) (j c : ℕ) (H : j + 1 + c = (a.G n).s)
-    (z : Matrix (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X (j + 1)).rank) (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) : ℂ :=
+    (z : Matrix (Fin ((I.rec7 l Z).sp.X (j + 1)).rank) (Fin ((I.rec7 l Z).sp.X j).rank) (I.rec7 l Z).host.E) : ℂ :=
   ((a.G n).S.T (Fin B.R.t)).entry (a.G n).S.ψ (a.G n).ν j c H 1 1
     (((a.G n).FX (j + 1) (by omega)).γ * z.map (ofSplit (a.G n).q).pr * ((a.G n).FX j (by omega)).β)
 theorem midXi_isLocFac' {a : _root_.GlobalTheory.Fam.GeometricFamily W u} (ha : a.Is) (hat : a.True) {row col} (hR : _root_.GlobalTheory.Fam.LocalGroupReading (a.fam row col) a.G a.pl) (n : Fin a.n)
     (j c : ℕ) (H : j + 1 + c = (a.G n).s) :
-    IsLocFac (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (_root_.GlobalTheory.Fam.pk_z W).ψ _ _ (a.pl n).1 ((a.G n).cg j) (_root_.GlobalTheory.Fam.MidLoc.intermediateXiValue a n j c H) := by
+    IsLocFac (I.rec7 l Z) (_root_.GlobalTheory.Fam.pk_z W).ψ _ _ (a.pl n).1 ((a.G n).cg j) (_root_.GlobalTheory.Fam.MidLoc.intermediateXiValue a n j c H) := by
   have hs : (a.G n).s + 1 + 1 = B.R.m := (a.G n).hs
   have hid := (hR.idem n).1
   have hpf := SymChainAt.place_facts (a.G n).q hid
   have hL : ∀ j, j ≤ B.R.m → IsSelfDualC _ (a.g.x j).L ∧
-      ((a.g.x j).L : Set (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank → (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)) = intVec _ _ :=
+      ((a.g.x j).L : Set (Fin ((I.rec7 l Z).sp.X j).rank → (I.rec7 l Z).host.E)) = intVec _ _ :=
     fun j hj => ⟨(ha.x j hj).sd, Set.ext (hat.pinX.xs j hj).2.2⟩
   exact ⟨(a.G n).k, _, _, _, _, ofSplit (a.G n).q, _, _, _, _, _, _, _, _, _, hpf.2, hid,
     StdMatch.int_iff_up_mem (a.G n).q (a.G n).unit _ _ (hL _ (by omega)).1 (hL _ (by omega)).1 (hL _ (by omega)).2
@@ -129,8 +129,8 @@ theorem locXi_eq_mul_midXi_alt (hW : _root_.GlobalTheory.Fam.AllFamilyConditions
   obtain ⟨S', hS, hA⟩ := _root_.GlobalTheory.Fam.MidLoc.exists_sameData_atType hW a hR n hϖ
   obtain ⟨e', he', hF'⟩ := (ha.stdG n).1 j (by omega)
   obtain ⟨e, he, hF⟩ := (ha.stdG n).1 (j + 1) (by omega)
-  have hr' := rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j (Nat.le_of_succ_le hj)
-  have hr := rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (j + 1) hj
+  have hr' := rankN (I.rec7 l Z) j (Nat.le_of_succ_le hj)
+  have hr := rankN (I.rec7 l Z) (j + 1) hj
   obtain ⟨C, hC0, hC⟩ := GlobalTheory.EntryBridge.entry_agree _ _ _ _ _ _ _ _ _ _ _ _ _ _ (a.G n).ν (a.G n).unitVol (hA b₀ P₀ hP₀) j c H
     (e'.trans (finCongr hr')) (e.trans (finCongr hr)) he' he
   refine ⟨C⁻¹, inv_ne_zero hC0, fun t J hJ α γ P hP z => ?_⟩
@@ -141,7 +141,7 @@ theorem locXi_eq_mul_midXi_alt (hW : _root_.GlobalTheory.Fam.AllFamilyConditions
   have hlt := LevelData.val_lt_one_iff (hA _ P hP).tie.compl.int
   have hfr : ∀ i, i + 1 < B.R.m → ∀ β r s, _ := fun i hi β r s => (hlt _).2 (frame_cong hW.tr.ok (J.A.p0 i β).1.1
     (hJ.std i hi β ▸ (hJ.is.base i (by omega) β).1) P hPv r s)
-  obtain ⟨g, hg, g', hg', hz⟩ := toLoc_inFr ((a.G n).q.pr.comp (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) hr' hr _ _ e' e hF' hF _ _
+  obtain ⟨g, hg, g', hg', hz⟩ := toLoc_inFr ((a.G n).q.pr.comp (incA (I.rec7 l Z))) hr' hr _ _ e' e hF' hF _ _
     (hfr j (by omega) (J.ι j α)) (hfr (j + 1) (by omega) (J.ι (j + 1) γ))
   have key := (congrArg _ (hz z)).symm.trans (hC _)
   rw [hS.1, hW.tr.tw.cst_eq, xiAt_tw_eq _ _ _ _ _ P₀ P (hP₀.trans hP.symm) (hA _ P₀ hP₀).mem] at key

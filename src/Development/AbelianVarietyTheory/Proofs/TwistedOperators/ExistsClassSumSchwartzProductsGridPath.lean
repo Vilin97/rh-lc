@@ -29,13 +29,13 @@ theorem locArg_eq_locM (B : Frames G) {t : T} {a : Arrow T} (ha : IsGridArrow D.
   · refine ⟨B.β i j, B.β (i + 1) j, fun w => ⟨Fin.cast (rank_vertex G t w (X := (i + 1, j)) ⟨hi, hj⟩),
       Fin.cast (rank_vertex G t w (X := (i, j)) ⟨hi.le, hj⟩), sur _, sur _, fun x r c => ?_⟩⟩
     have e : locArg B t w (.right i j) x = B.coord t w (X := (i, j)) (Y := (i + 1, j)) ⟨hi.le, hj⟩ ⟨hi, hj⟩
-        (x.map fun c => cpt w (toEAf D c)) := dif_pos ⟨hi, hj⟩
+        (x.map fun c => cpt w (toEAf D c)) := dite_eq_left ⟨hi, hj⟩
     rw [e]
     rfl
   · refine ⟨B.β i (j + 1), B.β i j, fun w => ⟨Fin.cast (rank_vertex G t w (X := (i, j)) ⟨hi, hj.le⟩),
       Fin.cast (rank_vertex G t w (X := (i, j + 1)) ⟨hi, hj⟩), sur _, sur _, fun x r c => ?_⟩⟩
     have e : locArg B t w (.down t i j) x = B.coord t w (X := (i, j + 1)) (Y := (i, j)) ⟨hi, hj⟩ ⟨hi, hj.le⟩
-        (x.map fun c => cpt w (toEAf D c)) := dif_pos ⟨hi, hj⟩
+        (x.map fun c => cpt w (toEAf D c)) := dite_eq_left ⟨hi, hj⟩
     rw [e]
     rfl
 
@@ -82,10 +82,10 @@ theorem exists_classSum_schwartzProducts_pathInduction {μ₀ : T} (hL : L.Is μ
       rw [Finset.sum_singleton]
       exact (one_mul _).symm⟩
   | _, .snoc a p, hg, hnd, U, K, hK1, hK2 => by
-    have ⟨hnot, hnd1⟩ : edgeOf a ∉ edges p ∧ (edges p).Nodup := by
-      simpa only [edges_snoc, ← List.concat_eq_append, List.nodup_concat] using hnd
+    rw [edges_snoc, ← List.concat_eq_append] at hnd
+    obtain ⟨hnot, hnd1⟩ := (List.nodup_concat (edges p) (edgeOf a)).1 hnd
     have ha : IsGridArrow D.R.m t a := hg.last
-    have hArrow := arrow_sb B ρ hL (t := t) he n (a := a) ha (Y := ArgT G p × U)
+    obtain ⟨ι₁, s₁, φa, r₁, hφa, hexp⟩ := arrow_sb B ρ hL (t := t) he n (a := a) ha (Y := ArgT G p × U)
       (fun x (z : ArgT G p × U) => K (fun w => Function.update (pathArgs B t w p z.1) (edgeOf a) (locArg B t w a x)) z.2)
       (fun x u (z : ArgT G p × U) hu => by
         have e1 : (fun w => Function.update (pathArgs B t w p z.1) (edgeOf a) (locArg B t w a (x + u))) =
@@ -107,7 +107,6 @@ theorem exists_classSum_schwartzProducts_pathInduction {μ₀ : T} (hL : L.Is μ
         have h := hK2 _ z.2 h0 w hw (edgeOf a) (by rw [edges_snoc]; exact List.mem_append_right _ (List.mem_singleton_self _))
         rw [Function.update_self] at h
         exact GlobalTheory.SplitFlip.mem_matLat_stdLat.1 h r c)
-    obtain ⟨ι₁, s₁, φa, r₁, hφa, hexp⟩ := hArrow
     obtain ⟨ι₂, s₂, φ₂, d₂, r₂, hv, hexp₂⟩ := exists_classSum_schwartzProducts_pathInduction hL B ρ t he n p hg.init hnd1 (U := ι₁ × U)
       (fun Xa (z : ι₁ × U) => K (fun w => Function.update (Xa w) (edgeOf a) (locArg B t w a (r₁ z.1))) z.2)
       (fun x z y hz => by

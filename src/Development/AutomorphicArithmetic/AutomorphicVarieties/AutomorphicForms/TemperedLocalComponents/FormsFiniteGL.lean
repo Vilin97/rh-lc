@@ -14,7 +14,6 @@ theorem UpperTheory.V.Af.formsFiniteGL :
     (fun E _ _ _ a z hz => ⟨Cm.uTC E a z, ?_, fun _ _ => rfl⟩)
   · obtain ⟨k, rfl⟩ := (Cm.cptEq E a).surjective k
     rw [MulEquiv.symm_apply_apply, Cm.infEmb_cptEq]
-    rfl
   · have h := Cm.uTC_mem_Zalg hz
     rw [Cm.Zalg_eq_map, Cm.center_UC, AlgHom.map_adjoin] at h
     refine Algebra.adjoin_mono ?_ h

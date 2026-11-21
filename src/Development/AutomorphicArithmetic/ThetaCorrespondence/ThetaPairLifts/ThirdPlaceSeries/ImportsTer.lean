@@ -53,7 +53,7 @@ open scoped TensorProduct Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.TopVol GlobalTheory.FinPl
 noncomputable section
-theorem GlobalTheory.TopVol.main_alt_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → ∃ VT : ℂ, VT ≠ 0 ∧ ∀ t (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t), J.Reads → J.VolT VT := by
+theorem GlobalTheory.TopVol.main_alt_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (I.rec7 l Z)} {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → ∃ VT : ℂ, VT ≠ 0 ∧ ∀ t (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t), J.Reads → J.VolT VT := by
   intro B X I l Z L hT Gi Gl Kc Yd cX ex W hW u a ha haT
   obtain ⟨hle, hc, ho⟩ := _root_.GlobalTheory.T.true_geometry_level_spherical_alt W hW u a ha haT
   have hv := _root_.GlobalTheory.T.true_geometry_subspace_property_alt W hW u a ha haT _ hle hc ho
@@ -62,11 +62,11 @@ theorem GlobalTheory.TopVol.main_alt_alt : ∀ {B : GlobalTheory.Mem.Base} {X : 
   have hK := _root_.GlobalTheory.T.mem_levSph_of_inK_of_quadraticExtensionData W hW u a ha haT t J hJ
   have hM := _root_.GlobalTheory.T.true_geometry_twist_chain_relation_alt W hW u a ha haT t J hJ
   have hinj := _root_.GlobalTheory.T.injective_q_v_of_reads W hW u a ha haT t J hJ
-  set S := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X'
+  set S := (I.rec7 l Z).sp.X'
   set U := _root_.GlobalTheory.TopVol.sphericalLevelSubgroup W a.g.bT
   set U' := _root_.GlobalTheory.TopVol.twistedLevelSubgroup W a.g.bT t
   let Jf : (i : Fin J.r) → Subgroup (GL _ (J.G i).k) := fun i => ((J.G i).T (J.E i).δ (J.E i).tame (J.E i).η).levTop.J
-  let φ : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) S →* ((i : Fin J.r) → GL _ (J.G i).k) :=
+  let φ : GA (I.rec7 l Z) S →* ((i : Fin J.r) → GL _ (J.G i).k) :=
     MonoidHom.pi fun i => GlobalTheory.LevIdx.locHom (J.G i).q S (J.G i).FT
   have hφi : ∀ g i, φ g i = GlobalTheory.LevIdx.locHom (J.G i).q S (J.G i).FT g := fun _ _ => rfl
   have hU'' : ∀ g, g ∈ U' ↔ g ∈ U ∧ ∀ i, φ g i ∈ Jf i := by
@@ -97,7 +97,7 @@ theorem GlobalTheory.TopVol.main_alt_alt : ∀ {B : GlobalTheory.Mem.Base} {X : 
     rw [e]
     exact ho.inter (isOpen_iInter_of_finite fun i =>
       ((J.E i).openT).preimage ((GlobalTheory.LevIdx.continuous_locHom (J.G i).q S (J.G i).FT).comp continuous_subtype_val))
-  have hvol := GlobalTheory.T.archimedeanLevelVolume_mul_relIndex (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) S a.g.volT U' U hle' hle hc hU'o
+  have hvol := GlobalTheory.T.archimedeanLevelVolume_mul_relIndex (I.rec7 l Z) S a.g.volT U' U hle' hle hc hU'o
   refine ⟨U', fun h => _root_.GlobalTheory.TopVol.mem_level_twist_iff_conj_mem_levS_datXP h, fun β => ?_⟩
   have hw : ∀ i, (J.E i).wt B.R.m (β i) = (((Jf i).relIndex (GlobalTheory.SplitWeil.KO (J.G i).k _) : ℕ) : ℂ) := by
     intro i

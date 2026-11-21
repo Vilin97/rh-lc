@@ -84,10 +84,44 @@ theorem chosen_lift_killed_level : LiftKill := by
   obtain ⟨-, -, -, hAU, -, -⟩ := hLa
   have hNfg : N.FG := by
     haveI := hN.1
-    exact Submodule.IsLattice.fg (A := X.E)
+    exact Submodule.IsLattice.fg X.E N
   have hN'sp : Submodule.span X.E (N' : Set (Sp X.E b)) = ⊤ := by
-    haveI := hN'.1
-    exact Submodule.IsLattice.span_eq_top
+    apply Submodule.dualAnnihilator_eq_bot_iff.mp
+    apply le_antisymm ?_ bot_le
+    intro f hf
+    let v : Sp X.E b := fun i => star (f (Pi.single i 1))
+    have hpair : Formalism.L2.Col.hStd X.E b v = f := by
+      apply (Pi.basisFun X.E (Fin b)).ext
+      intro i
+      rw [Pi.basisFun_apply, Formalism.L2.Col.hStd_apply, Finset.sum_eq_single i]
+      · simp [v]
+      · intro j _ hj
+        simp [hj]
+      · simp
+    have hline (r : X.E) : r • v ∈ N' := by
+      rw [← show Formalism.HermitianLatticesTheory.dual (Formalism.L2.Col.hStd X.E b) N' = N' from hN'.2,
+        Formalism.HermitianLatticesTheory.dualBasic_mem_dual]
+      intro y hy
+      have hy0 : Formalism.L2.Col.hStd X.E b v y = 0 := by
+        rw [hpair]
+        exact (Submodule.mem_dualAnnihilator f).mp hf y (Submodule.subset_span hy)
+      have hz : Formalism.L2.Col.hStd X.E b y v = 0 := by
+        simpa [hy0] using ((Formalism.L2.Col.hStd_isSymm (E := X.E) (n := b)).eq v y).symm
+      simp [hz]
+    have hv : v = 0 := by
+      funext i
+      change v i = 0
+      by_contra hi
+      let coord := (LinearMap.proj i : Sp X.E b →ₗ[X.E] X.E).restrictScalars (𝓞 X.E)
+      have htop : N'.map coord = ⊤ := by
+        rw [eq_top_iff]
+        intro x _
+        exact ⟨(x / v i) • v, hline _, div_mul_cancel₀ _ hi⟩
+      have : Module.Finite (𝓞 X.E) X.E := Module.finite_def.mpr (htop ▸ hN'.1.fg.map coord)
+      exact RingOfIntegers.not_isField X.E
+        (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 X.E) X.E) (Field.toIsField X.E))
+    rw [Submodule.mem_bot]
+    simpa [hv] using hpair.symm
   have hx0 : (c' : 𝓞 X.E) • x ∈ homAt S N N' := hx
   have hxc : x ∈ divLat c (homAt S N N') := by
     obtain ⟨k, rfl⟩ := hdvd

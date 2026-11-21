@@ -224,8 +224,7 @@ theorem absE_inclR (x : Eˣ) : absE F E (Units.map (inclR (F := F) (AF F)).toMon
   · refine Finset.prod_congr rfl fun w _ => ?_
     rw [NNReal.coe_pow, coe_nnnorm]
     congr 1
-    simpa [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply] using
-      (InfinitePlace.Completion.norm_coe w ((WithAbs.equiv w.1).symm (Algebra.norm F x.1)))
+    exact InfinitePlace.Completion.norm_coe w _
   · exact NNReal.toRealHom.toMonoidHom.map_finprod hf
 
 theorem continuous_unitFin (v : HeightOneSpectrum (𝓞 F)) : Continuous (unitFin F E v) :=
@@ -244,7 +243,7 @@ theorem continuous_absE : Continuous (absE F E) := by
       Valued.isOpen_valuationSubring (v.adicCompletion F)).preimage continuous_snd
   have h1 := (ho.preimage ((continuous_norm_tens (F := F) (E := E)).comp Units.continuous_val)).inter
     (ho.preimage ((continuous_norm_tens (F := F) (E := E)).comp Units.continuous_coe_inv))
-  refine (continuous_finsetProd Finset.univ fun w _ =>
+  refine (continuous_finset_prod Finset.univ fun w _ =>
     (continuous_absEw w).comp (continuous_unitInf (E := E) w)).continuousAt.congr ?_
   filter_upwards [h1.mem_nhds (x := 1) ⟨fun v => by simp, fun v => by simp⟩] with x hx
   rw [absE_apply, finprod_eq_one_of_forall_eq_one fun v => absEv_unitFin_eq_one (hx.1 v) (hx.2 v), mul_one]

@@ -251,14 +251,14 @@ theorem exists_isCompact_unitary_set (hH : IsUnit H.det)
     set D := (unitaryCoords H 𝔸[K] b) ⁻¹' (F '' (Units.val '' C₃)) with hD
     have hDc : IsCompact D := (isClosedEmbedding_unitaryCoords H 𝔸[K] b hH).isCompact_preimage
       ((hC₃.image Units.continuous_val).image hFc)
-    have hsub : Ω ⊆ D⁻¹ := by
+    have hsub : Ω ⊆ Inv.inv '' D := by
       intro v hv
-      show v⁻¹ ∈ D
+      refine ⟨v⁻¹, ?_, inv_inv v⟩
       refine ⟨_, ⟨_, hv, rfl⟩, ?_⟩
       funext p
       simp only [F, trHom_val, readoff_resHom, transpose_transpose]
       rfl
-    exact hDc.inv.of_isClosed_subset hΩcl hsub
+    exact (hDc.image continuous_inv).of_isClosed_subset hΩcl hsub
   · intro u huY
     obtain ⟨M, hM⟩ := hred u huY
     obtain ⟨δ, hδT, hηδ, -⟩ := hT u u.2 (diagGL α M) ⟨M, rfl⟩

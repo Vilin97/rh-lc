@@ -105,12 +105,16 @@ theorem ker_reciprocity_le_commutator :
   have := Fact.mk hp
   let P : Sylow p ((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K) := Classical.arbitrary _
   obtain ⟨-, hk⟩ := reciprocity_fixedOpen_sylow (D := D) hLK hax P
-  have hinj := Abelianization.lift_injective_of_ker_le _ hk
   have hv := D.reciprocity_verlagerung hax (le_fixedOpen hLK (P : Subgroup ((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K)))
     (fixedOpen_le hLK (P : Subgroup ((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K))) σ
   rw [hσ, map_one] at hv
   have hv1 : verlagerung (L := L) (fixedOpen_le hLK (P : Subgroup ((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K))) σ = 1 :=
-    hinj (by rw [hv, map_one])
+    by
+      obtain ⟨q, hq⟩ := Group.Abelianization.surjective_of _
+        (verlagerung (L := L) (fixedOpen_le hLK (P : Subgroup ((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K))) σ)
+      rw [← hq, Group.Abelianization.lift_apply_of] at hv
+      rw [← hq, ← MonoidHom.mem_ker, Group.Abelianization.ker_of]
+      exact hk hv
   have hmap := map_verlagerung (fixedOpen_le hLK (P : Subgroup ((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K))) σ
   rw [hv1, map_one, range_galRestrict_fixedOpen] at hmap
   exact Sylow.not_dvd_index P (hpd.trans (orderOf_dvd_of_pow_eq_one hmap.symm))

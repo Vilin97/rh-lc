@@ -123,7 +123,7 @@ theorem expand_surjective : Function.Surjective A.expand := by
   | add x y _ _ hx hy =>
     obtain ⟨c, h⟩ := hx
     obtain ⟨c', h'⟩ := hy
-    exact ⟨c + c', by rw [expand_add, h, h']; exact ((A.mkAcr 1).map_add x y).symm⟩
+    exact ⟨c + c', by rw [expand_add, h, h', map_add (f := _)]⟩
   | smul w x _ hx =>
     obtain ⟨c, h⟩ := hx
     refine ⟨w.coeff 0 • c, ?_⟩

@@ -64,7 +64,7 @@ noncomputable section
 
 namespace GlobalTheory.PreLiftData
 
-open GlobalTheory.ArcPull GlobalTheory.ArcQ GlobalTheory.PreLift
+open GlobalTheory.ArcPull GlobalTheory.ArcQ
 
 variable {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDomain R']
 

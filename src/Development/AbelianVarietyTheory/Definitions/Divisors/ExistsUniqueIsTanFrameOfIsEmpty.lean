@@ -516,8 +516,6 @@ theorem IsWedgeVal.reorder {o : ι ≃ TIx Dw Φ} {φ : K₀ →ₐ[c.F] K} {y :
   refine ⟨h0, v, hv, ?_⟩
   rw [← wedge_perm]
   congr 1
-  funext i
-  simp [Function.comp_apply]
 
 end Wedge
 

@@ -108,7 +108,7 @@ theorem of_diag {n : ℕ} {P : Fin n → Fin n → Prop} (H : ∀ i, P i i) (i i
 
 set_option maxHeartbeats 4000000 in
 theorem res_ext (z : Dat (w.st Z) w.I hX T Wt) (e : z.R.toRealDat.ExAt) {Wt' : Set B.places.Pl} (h : Wt' ⊆ Wt)
-    (hc : ConjStable (w.st Z) Wt') : Ext z (res z e Wt' h hc) where
+    (hc : ConjStable (w.st Z) Wt') : Ext z (res z e Wt' h hc) := {
   H := HEq.rfl
   l := HEq.rfl
   c := HEq.rfl
@@ -187,6 +187,7 @@ theorem res_ext (z : Dat (w.st Z) w.I hX T Wt) (e : z.R.toRealDat.ExAt) {Wt' : S
       (MvPolynomial.map_injective _ (RingHom.injective _) (eq_of_heq (hφ d d HEq.rfl))))
     subst h2
     exact (by with_unfolding_all exact (HEq.refl (z.R.B.jL i (mu0F (X := B.fields) (tuOf w.I (usedOf w.I T Wt))) ((by with_unfolding_all exact ((Formalism.L2.Col.mtKGSD (Pr := B.primes w.px) B.wts w.I.Ch w.I.sel (mu0F (X := B.fields) (tuOf w.I (usedOf w.I T Wt))).1 ((i : ℕ) + 1)).res ok (cast hT φ') :)))) :))
+}
 
 end GlobalTheory.Mem.R3.ResStd
 

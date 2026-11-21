@@ -146,6 +146,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.kernX :
       ⟪UpperTheory.ConvolutionTheory.K.kv μ a (Quotient.out y), M (UpperTheory.ConvolutionTheory.K.kv μ (CuspidalProjection.ccStar g) (θ.e (Quotient.out y)))⟫_ℂ := by
     funext y
     rw [twKQ, twK, kerId K (2 + 2) μ f a g M hf]
+  set_option synthInstance.maxHeartbeats 400000 in
   have est := intEst' (quotientMeasure (Gam K (2 + 2)) μ) _ (twKQ θ f) _ w
     (C1 * C0 ^ N1 * Real.exp ((N0 * N1 : ℕ) * T) * ‖M ∘L (1 - Pc μ - P)‖) ((C2 + C3) * Real.exp (-(N' * T)) * ‖M‖)
     (omMeas (K := K) T).2.2 hi hw (by rw [hk]; exact (ker_cont μ θ a _ M).aestronglyMeasurable) (by positivity) (by positivity)

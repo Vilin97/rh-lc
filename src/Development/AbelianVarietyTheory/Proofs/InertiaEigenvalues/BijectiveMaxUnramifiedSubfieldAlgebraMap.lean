@@ -52,8 +52,6 @@ theorem finrank_tw [CompactSpace G] (hO : GoodO (Qp := Qp) LL O) (Γ : GalData G
 
 end General
 
-attribute [local instance high] Submodule.module
-
 variable {l : ℕ} [Fact l.Prime] {P : LocPrime l} (S : TopSit P)
 
 theorem cont_inv (hC : S.CrysCalc) : Continuous fun g => algebraMap S.O ↥S.LL.1 (S.Γ.χ₁⁻¹ g) := by

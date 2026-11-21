@@ -23,13 +23,13 @@ variable {X : Scheme.{0}} {Ω : Type} [Field Ω] {G : Over X} [GrpObj G] {ξ : S
   {E : Type} [AddCommGroup E] [Module Ω E]
 
 theorem dualMap_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (φ : R →+* R') (ψ : R' →+* R'') :
-    GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) = (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) :=
-  RingHom.ext fun a => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap]) (by simp [GlobalTheory.CompanionTheory.Ar.dualMap])
+    dualMap (ψ.comp φ) = (dualMap ψ).comp (dualMap φ) :=
+  RingHom.ext fun a => TrivSqZeroExt.ext (by simp [dualMap]) (by simp [dualMap])
 
 theorem dualMap_algebraMap {R R' : Type} [CommRing R] [CommRing R'] (φ : R →+* R') (a : R) :
-    GlobalTheory.CompanionTheory.Ar.dualMap φ (algebraMap R (DualNumber R) a) = algebraMap R' (DualNumber R') (φ a) := by
-  change GlobalTheory.CompanionTheory.Ar.dualMap φ (TrivSqZeroExt.inl a) = TrivSqZeroExt.inl (φ a)
-  exact TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap]) (by simp [GlobalTheory.CompanionTheory.Ar.dualMap])
+    dualMap φ (algebraMap R (DualNumber R) a) = algebraMap R' (DualNumber R') (φ a) := by
+  change dualMap φ (TrivSqZeroExt.inl a) = TrivSqZeroExt.inl (φ a)
+  exact TrivSqZeroExt.ext (by simp [dualMap]) (by simp [dualMap])
 
 theorem centre_conj (z : Spec (CommRingCat.of ℂ) ⟶ X) : centre (spMap (starRingEnd ℂ) ≫ z) = centre z := by
   have h : (spMap (starRingEnd ℂ)) (IsLocalRing.closedPoint ℂ) = IsLocalRing.closedPoint ℂ :=
@@ -44,29 +44,29 @@ theorem extends_conj (M : LieModel G ξ E) {x x' : X} (hx : x = x') (h : genPt �
     (φ : X.presheaf.stalk x ⟶ CommRingCat.of ℂ) (φ' : X.presheaf.stalk x' ⟶ CommRingCat.of ℂ)
     (H : Spec.map φ' ≫ X.fromSpecStalk x' = spMap (starRingEnd ℂ) ≫ Spec.map φ ≫ X.fromSpecStalk x) :
     ∃ v' : epsAt (X.fromSpecStalk x') ⟶ G, M.Extends ⟨x', h'⟩ e v' ∧
-      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ'.hom)) ≫ v'.left =
-        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ.hom)) ≫ v.left := by
+      Spec.map (CommRingCat.ofHom (dualMap φ'.hom)) ≫ v'.left =
+        spMap (dualMap (starRingEnd ℂ)) ≫ Spec.map (CommRingCat.ofHom (dualMap φ.hom)) ≫ v.left := by
   subst hx
   refine ⟨v, hv, ?_⟩
   have h1 : Spec.map φ' = Spec.map (φ ≫ CommRingCat.ofHom (starRingEnd ℂ)) := by
     rw [← cancel_mono (X.fromSpecStalk x), H, Spec.map_comp, Category.assoc]
   have h2 : φ' = φ ≫ CommRingCat.ofHom (starRingEnd ℂ) := Spec.map_injective h1
   subst h2
-  have h3 : GlobalTheory.CompanionTheory.Ar.dualMap (φ ≫ CommRingCat.ofHom (starRingEnd ℂ)).hom =
-      (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ.hom) := dualMap_comp _ _
+  have h3 : dualMap (φ ≫ CommRingCat.ofHom (starRingEnd ℂ)).hom =
+      (dualMap (starRingEnd ℂ)).comp (dualMap φ.hom) := dualMap_comp _ _
   rw [h3, CommRingCat.ofHom_comp, Spec.map_comp]
   exact Category.assoc _ _ _
 
-theorem eps_sq : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ spMap (algebraMap ℂ (DualNumber ℂ)) =
+theorem eps_sq : spMap (dualMap (starRingEnd ℂ)) ≫ spMap (algebraMap ℂ (DualNumber ℂ)) =
     spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap (starRingEnd ℂ) := by
-  have h2 : CommRingCat.ofHom (algebraMap ℂ (DualNumber ℂ)) ≫ CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) =
+  have h2 : CommRingCat.ofHom (algebraMap ℂ (DualNumber ℂ)) ≫ CommRingCat.ofHom (dualMap (starRingEnd ℂ)) =
       CommRingCat.ofHom (starRingEnd ℂ) ≫ CommRingCat.ofHom (algebraMap ℂ (DualNumber ℂ)) :=
     CommRingCat.hom_ext (RingHom.ext fun a => dualMap_algebraMap (starRingEnd ℂ) a)
   have h3 := congrArg Spec.map h2
   simpa only [Spec.map_comp] using h3
 
 def cjVec (z : Spec (CommRingCat.of ℂ) ⟶ X) (w : epsAt z ⟶ G) : epsAt (spMap (starRingEnd ℂ) ≫ z) ⟶ G :=
-  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ w.left) (by
+  Over.homMk (spMap (dualMap (starRingEnd ℂ)) ≫ w.left) (by
     have h1 : w.left ≫ G.hom = Spec.map (CommRingCat.ofHom (algebraMap ℂ (DualNumber ℂ))) ≫ z := Over.w w
     simp only [Over.mk_hom, Category.assoc, h1]
     rw [← Category.assoc, eps_sq, Category.assoc])
@@ -81,7 +81,7 @@ theorem valAt_conj (M : LieModel G ξ E) (z : Spec (CommRingCat.of ℂ) ⟶ X) (
       refine (Scheme.Spec_stalkClosedPointTo_fromSpecStalk (spMap (starRingEnd ℂ) ≫ z)).trans ?_
       exact congrArg (spMap (starRingEnd ℂ) ≫ ·) (Scheme.Spec_stalkClosedPointTo_fromSpecStalk z).symm)
   refine ⟨h', v', hv', ?_⟩
-  have : (cjVec z w).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ w.left := rfl
+  have : (cjVec z w).left = spMap (dualMap (starRingEnd ℂ)) ≫ w.left := rfl
   rw [this, hl]
   exact hl'.symm
 
@@ -129,12 +129,12 @@ theorem fibreLatVec_conj {X : Scheme.{0}} (t : SAB H X) (z : Sp ℂ ⟶ X) (R R'
     · rintro ⟨x, rfl⟩
       exact ⟨x, by rw [hP, star_star]⟩
   · obtain ⟨v', e, hd⟩ := hvec i
-    have sq : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v'.left) ≫ A.hom = (epsR ℂ).hom ≫ spMap (starRingEnd ℂ) := by
+    have sq : (spMap (dualMap (starRingEnd ℂ)) ≫ v'.left) ≫ A.hom = (epsR ℂ).hom ≫ spMap (starRingEnd ℂ) := by
       rw [Category.assoc, Over.w]
       exact eps_sq
     let t'' : epsR ℂ ⟶ (Over.pullback (spMap (starRingEnd ℂ))).obj A :=
       Over.homMk (h.1.lift _ _ sq) (h.1.lift_snd _ _ _)
-    have e' : t''.left ≫ pullback.fst _ _ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v'.left := h.1.lift_fst _ _ _
+    have e' : t''.left ≫ pullback.fst _ _ = spMap (dualMap (starRingEnd ℂ)) ≫ v'.left := h.1.lift_fst _ _ _
     refine ⟨t'', ?_, GlobalTheory.ArchMetricCompare.cj_isDiff h u (isTangent_of_fibre hpb (htan i) e) e' hd⟩
     rw [← Category.assoc, e', Category.assoc, e]
     rfl

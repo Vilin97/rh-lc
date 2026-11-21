@@ -33,8 +33,8 @@ theorem spMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A
   simp [spMap, CommRingCat.ofHom_comp, Spec.map_comp]
 
 theorem dualMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) = (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
-  ext x <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    dualMap (g.comp f) = (dualMap g).comp (dualMap f) := by
+  ext x <;> simp [dualMap]
 
 theorem chart_res {X : Scheme.{0}} (U W : X.affineOpens) (h : W.1 ≤ U.1) :
     spMap (X.presheaf.map (homOfLE h).op).hom ≫ GlobalTheory.LogKS.chart U = GlobalTheory.LogKS.chart W := by
@@ -179,8 +179,8 @@ theorem genKS_change : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
   simp only [RingHom.mapMatrix_apply, map_symPair] at hKS0 hKS0'
   generalize (TF.Y.X.presheaf.map (homOfLE hWU).op).hom = resU at hfacU hcr hfu hfloc hDlWc hKS0
   generalize (TF.Y.X.presheaf.map (homOfLE hWU').op).hom = resU' at hfacU' hcr' hfu' hfloc' hv'WB hDl'Wc hKS0'
-  let vW : Fin n → (Sp (DualNumber Γ(TF.Y.X, W.1)) ⟶ TF.Y.t.G.left) := fun a => spMap (GlobalTheory.CompanionTheory.Ar.dualMap resU) ≫ v a
-  let v'W : Fin n' → (Sp (DualNumber Γ(TF.Y.X, W.1)) ⟶ TF.Y.t.G.left) := fun c => spMap (GlobalTheory.CompanionTheory.Ar.dualMap resU') ≫ v' c
+  let vW : Fin n → (Sp (DualNumber Γ(TF.Y.X, W.1)) ⟶ TF.Y.t.G.left) := fun a => spMap (dualMap resU) ≫ v a
+  let v'W : Fin n' → (Sp (DualNumber Γ(TF.Y.X, W.1)) ⟶ TF.Y.t.G.left) := fun c => spMap (dualMap resU') ≫ v' c
   have hbc := GlobalTheory.T.tangent_combination_preserved_by_baseChange E H TF.Y.X TF.Y.t _ _ resU (GlobalTheory.LogKS.chart U) (GlobalTheory.LogKS.chart W) hcr
   have hbc' := GlobalTheory.T.tangent_combination_preserved_by_baseChange E H TF.Y.X TF.Y.t _ _ resU' (GlobalTheory.LogKS.chart U') (GlobalTheory.LogKS.chart W) hcr'
   have hvWT : ∀ a, IsTanAtG TF.Y.t (GlobalTheory.LogKS.chart W) (vW a) := fun a => hbc.1 _ (hvT a)
@@ -197,9 +197,9 @@ theorem genKS_change : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
     intro τ i
     have h1 := (GlobalTheory.T.tangent_combination_preserved_by_baseChange E H TF.Y.X TF.Y.t _ _ ρW (GlobalTheory.LogKS.chart W) (spMap ρW ≫ GlobalTheory.LogKS.chart W) rfl).2 _ v'W
       (B (e ⟨τ, i⟩)) (vW (e ⟨τ, i⟩)) (hB (e ⟨τ, i⟩))
-    have hvw : spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρW) ≫ vW (e ⟨τ, i⟩) = w τ i := by
+    have hvw : spMap (dualMap ρW) ≫ vW (e ⟨τ, i⟩) = w τ i := by
       rw [hw, hfacU, dualMap_comp', spMap_comp', Category.assoc]
-    have hv'w : (fun c => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρW) ≫ v'W c) = fun c => w' (e'.symm c).1 (e'.symm c).2 := by
+    have hv'w : (fun c => spMap (dualMap ρW) ≫ v'W c) = fun c => w' (e'.symm c).1 (e'.symm c).2 := by
       funext c
       rw [hw', Sigma.eta, Equiv.apply_symm_apply, hfacU', dualMap_comp', spMap_comp', Category.assoc]
     rw [hvw, hv'w] at h1

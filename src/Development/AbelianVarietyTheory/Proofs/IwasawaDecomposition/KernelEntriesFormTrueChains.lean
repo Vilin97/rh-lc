@@ -141,7 +141,7 @@ theorem mtType_std (hok : ColIn.Ok I) (hp : TC.Pins B X) (l : TC.Laws I) (Z : TC
     · exact Or.inr ⟨_, hmem, (isConjPl_iff B.host _ _).2 e⟩
   refine mtType_of_hecke T (I.xi a) hn ((hok.xi_reads a).orderDvd hpow) _ (fun j x hx => ?_) u
   have hm : 1 ≤ j.1 + 1 ∧ j.1 + 1 ≤ B.R.m := ⟨by omega, j.2⟩
-  have e1 : (O u a).mt (j.1 + 1) = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).muTil (j.1 + 1) * (show (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).Dt →* ℂˣ from tildeQ B.host I.SQ (I.xi a)) := by
+  have e1 : (O u a).mt (j.1 + 1) = (I.rec7 l Z).muTil (j.1 + 1) * (show (I.rec7 l Z).Dt →* ℂˣ from tildeQ B.host I.SQ (I.xi a)) := by
     rw [hO.mt u a]
     exact if_pos hm
   rw [e1, MonoidHom.mul_apply, T.muTil_eq j x hx, hT x]
@@ -152,7 +152,7 @@ theorem mtType_std (hok : ColIn.Ok I) (hp : TC.Pins B X) (l : TC.Laws I) (Z : TC
 theorem rhoAlg_std (hok : ColIn.Ok I) (hp : TC.Pins B X) (l : TC.Laws I) (Z : TC.Later B (TC.cols I l)) {Qp : I.ι → Finset ℕ}
     {O : ∀ u a, GL3Theta.LiftObj (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u a)} (hO : TC.StdO I l Z Qp O) (u : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Word) (a : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tup) :
     GL3Columns.RhoAlg (O u a) := by
-  have h3 := GlobalTheory.KerJ.RhoThree.rhoThreeOf_of_mtType _ u ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u a) (O u a).mt (mtType_std I hok hp l Z hO u a)
+  have h3 := GlobalTheory.KerJ.RhoThree.rhoThreeOf_of_mtType _ u ((I.rec7 l Z).chTw u a) (O u a).mt (mtType_std I hok hp l Z hO u a)
   have hq := powRatAll_true I l Z
   intro i hi
   refine ⟨fun c => ?_, fun c' => ?_⟩
@@ -261,7 +261,7 @@ open GlobalTheory.KForm.EntTrue Formalism.MainNotions.TaylorLogMetric Formalism.
 theorem GlobalTheory.Mem.Col2.TC.kerEnt_kform_true : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), ColIn.Ok I → TC.Pins B X → ∀ (l : TC.Laws I) (Z : TC.Later B (TC.cols I l)), ∀ (l0 : TC.Law0 I l) (Y : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (O : ∀ u a, GL3Theta.LiftObj (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u a)) (Pl : Examples₂.EntPl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (Bs : PlaceMatrixFamily (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)), TC.QpIs I Y.Qp → TC.StdO I l Z Y.Qp O → BasOk Pl O Bs → (∀ u a w, LevFree Y u a w → ∀ i, i ≤ B.R.m → ∀ c τ j k, ∃ x : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.LL, Bs u a w i c τ j k = Pl.iL w x) → (∀ u a i, i < B.R.m → UnfIsAll (O u a) i) → ColIn.JetsIn I → ∀ u μ w, LevFree Y u μ w → ∀ i, i < (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m → ∀ (c : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u μ).cls i) (c' : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u μ).cls (i + 1)) (v : ValQ O u μ i) (v' : ValQ O u μ (i + 1)), evC O u μ (i + 1) v' = ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u μ).Kmap i c c' (evC O u μ i v) → ∀ J, prTC Pl O Bs u μ w i c' v' J = unC Pl O Bs u μ w i c c' * prSC Pl O Bs u μ w i c v (KM.applyAt0 ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N (i + 1)) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.places.resChar w) (thAtW Pl O Bs u μ w i c c') (KM.Gxz ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N (i + 1)) (nuD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i) J)) := by
   intro B X I hok hp l Z l0 Y O Pl Bs hq hs hB hent hU hJ u μ w hw i hi c c' v v' hK J
   have hR := GlobalTheory.KForm.EntTrue.rhoAlg_std I hok hp l Z hs u μ
-  have hCo := GlobalTheory.T.toy_entPl_canOnto (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Pl
+  have hCo := GlobalTheory.T.toy_entPl_canOnto (I.rec7 l Z) Pl
   have hS := canS_of Pl Bs hCo
   have hT := canT_of Pl Bs hCo
   have hdg : ∀ τ, (O u μ).dgen τ ∈ Qbar := by
@@ -271,74 +271,74 @@ theorem GlobalTheory.Mem.Col2.TC.kerEnt_kform_true : ∀ {B : Base} {X : PreX B.
     rw [← hs1]
     exact GlobalTheory.KForm.qbar_of_numberField M s
   have hdet : ∀ τ, (Bs u μ w i c τ).det ≠ 0 := fun τ => (hB u μ w i hi.le c τ).1
-  change tgtPh Pl O Bs u μ w i c' v' (MvPolynomial.map (Int.castRingHom _) (KM.nablaX _ (nuD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i) J)) = _
-  refine GlobalTheory.T.minorProductPairing_determined_by_canonicalMap (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ _ (N_le_succ _ i) (nuD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i) (fun z => nuD_rows _ u i z)
+  change tgtPh Pl O Bs u μ w i c' v' (MvPolynomial.map (Int.castRingHom _) (KM.nablaX _ (nuD (I.rec7 l Z) u i) J)) = _
+  refine GlobalTheory.T.minorProductPairing_determined_by_canonicalMap (I.rec7 l Z) _ _ (N_le_succ _ i) (nuD (I.rec7 l Z) u i) (fun z => nuD_rows _ u i z)
     (thAtW Pl O Bs u μ w i c c') (prSC Pl O Bs u μ w i c v) (tgtPh Pl O Bs u μ w i c' v') (unC Pl O Bs u μ w i c c')
-    (MvPolynomial.C (∏ τ, (Bs u μ w i c τ).det ^ (-((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u μ).sSharp i τ)) *
-      MvPolynomial.aeval (fun k : GL3Theta.FrV (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i) => ∑ a : Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i),
+    (MvPolynomial.C (∏ τ, (Bs u μ w i c τ).det ^ (-((I.rec7 l Z).chTw u μ).sSharp i τ)) *
+      MvPolynomial.aeval (fun k : GL3Theta.FrV (I.rec7 l Z) ((I.rec7 l Z).R.N i) => ∑ a : Fin ((I.rec7 l Z).R.N i),
           MvPolynomial.C (Bs u μ w i c k.1 k.2.1 a) * MvPolynomial.X ((GlobalTheory.KForm.tauE _).symm k.1, a, (k.2.2 : ℕ)))
-        (MvPolynomial.map (Pl.iL w) (srcPol u μ i (secC O u μ i v : MvPolynomial (GL3Theta.FrV (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i)) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.LL))))
+        (MvPolynomial.map (Pl.iL w) (srcPol u μ i (secC O u μ i v : MvPolynomial (GL3Theta.FrV (I.rec7 l Z) ((I.rec7 l Z).R.N i)) (I.rec7 l Z).what₂.LL))))
     ?_ ?_ J
   · intro y
-    rw [GlobalTheory.KForm.deX_cols (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ (nuD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i) (fun z => nuD_rows _ u i z) y]
-    have h1 := congrFun (canInv_spec (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) w _ (nuD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i) _ (hS u μ w i hi c (secC O u μ i v)))
-      (fun τ => Matrix.of fun a (b : Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i)) => y ((GlobalTheory.KForm.tauE _).symm τ) a b)
+    rw [GlobalTheory.KForm.deX_cols (I.rec7 l Z) _ (nuD (I.rec7 l Z) u i) (fun z => nuD_rows _ u i z) y]
+    have h1 := congrFun (canInv_spec (I.rec7 l Z) w _ (nuD (I.rec7 l Z) u i) _ (hS u μ w i hi c (secC O u μ i v)))
+      (fun τ => Matrix.of fun a (b : Fin ((I.rec7 l Z).R.N i)) => y ((GlobalTheory.KForm.tauE _).symm τ) a b)
     refine Eq.trans ?_ h1.symm
     rw [map_mul, MvPolynomial.eval_C, GlobalTheory.KForm.eval_aeval']
-    show _ = (∏ τ, (Bs u μ w i c τ).det ^ (-((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u μ).sSharp i τ)) *
-      MvPolynomial.eval (fun k : GL3Theta.FrV (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i) =>
-          (Bs u μ w i c k.1 * (fun τ => Matrix.of fun a (b : Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i)) => y ((GlobalTheory.KForm.tauE _).symm τ) a b) k.1) k.2.1 k.2.2)
-        (MvPolynomial.map (Pl.iL w) (srcPol u μ i (secC O u μ i v : MvPolynomial (GL3Theta.FrV (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i)) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.LL)))
+    show _ = (∏ τ, (Bs u μ w i c τ).det ^ (-((I.rec7 l Z).chTw u μ).sSharp i τ)) *
+      MvPolynomial.eval (fun k : GL3Theta.FrV (I.rec7 l Z) ((I.rec7 l Z).R.N i) =>
+          (Bs u μ w i c k.1 * (fun τ => Matrix.of fun a (b : Fin ((I.rec7 l Z).R.N i)) => y ((GlobalTheory.KForm.tauE _).symm τ) a b) k.1) k.2.1 k.2.2)
+        (MvPolynomial.map (Pl.iL w) (srcPol u μ i (secC O u μ i v : MvPolynomial (GL3Theta.FrV (I.rec7 l Z) ((I.rec7 l Z).R.N i)) (I.rec7 l Z).what₂.LL)))
     congr 2
     exact congrArg MvPolynomial.eval (funext fun k => by simp [Matrix.mul_apply, MvPolynomial.eval_X])
   · intro y'
-    have h1 := congrFun (canInv_spec (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) w _ (nuD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i) _ (hT u μ w i hi c' (secC O u μ (i + 1) v'))) y'
+    have h1 := congrFun (canInv_spec (I.rec7 l Z) w _ (nuD (I.rec7 l Z) u i) _ (hT u μ w i hi c' (secC O u μ (i + 1) v'))) y'
     refine h1.trans ?_
-    have hmap : ∀ {N : ℕ} (Q : MvPolynomial (GL3Theta.FrV (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) N) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.LL),
+    have hmap : ∀ {N : ℕ} (Q : MvPolynomial (GL3Theta.FrV (I.rec7 l Z) N) (I.rec7 l Z).what₂.LL),
         MvPolynomial.map (Pl.iL w) Q = MvPolynomial.map (Pl.lam w) (MvPolynomial.map (jL w) Q) := by
       intro N Q
       rw [MvPolynomial.map_map, lam_jL]
-    have hρ : ((GL3Theta.rhoOf (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (O u μ).mt i ((O u μ).dt i c) : ℂˣ) : ℂ) *
-        ((GL3Theta.rhoOf' (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (O u μ).mt i ((O u μ).dt (i + 1) c') : ℂˣ) : ℂ) ∈ Qbar :=
+    have hρ : ((GL3Theta.rhoOf (I.rec7 l Z) (O u μ).mt i ((O u μ).dt i c) : ℂˣ) : ℂ) *
+        ((GL3Theta.rhoOf' (I.rec7 l Z) (O u μ).mt i ((O u μ).dt (i + 1) c') : ℂˣ) : ℂ) ∈ Qbar :=
       mul_mem ((hR i hi).1 c) ((hR i hi).2 c')
-    have htr := GlobalTheory.T.jetMap_identity_transport_complex_to_padic (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (Pl.lam w) (jetC (O u μ).dgen ((O u μ).Th i c c'))
-      (fun m => (m.prod fun k n => lamC (Pl.lam w) ((O u μ).dgen k.1) ^ n) * (m.prod fun _ n => (n.factorial : ℂ_[(_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.places.resChar w])) *
-        MvPowerSeries.coeff m (pSer (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (Pl.lam w) ((O u μ).Th i c c')))
-      (fun τ => ∑ r, nuT (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i τ r) ⟨_, hρ⟩
-      (MvPolynomial.map (jL w) (secC O u μ (i + 1) v' : MvPolynomial (GL3Theta.FrV (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N (i + 1))) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.LL))
-      (MvPolynomial.map (jL w) (srcPol u μ i (secC O u μ i v : MvPolynomial (GL3Theta.FrV (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i)) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.LL)))
+    have htr := GlobalTheory.T.jetMap_identity_transport_complex_to_padic (I.rec7 l Z) (Pl.lam w) (jetC (O u μ).dgen ((O u μ).Th i c c'))
+      (fun m => (m.prod fun k n => lamC (Pl.lam w) ((O u μ).dgen k.1) ^ n) * (m.prod fun _ n => (n.factorial : ℂ_[(I.rec7 l Z).what₂.places.resChar w])) *
+        MvPowerSeries.coeff m (pSer (I.rec7 l Z) (Pl.lam w) ((O u μ).Th i c c')))
+      (fun τ => ∑ r, nuT (I.rec7 l Z) u i τ r) ⟨_, hρ⟩
+      (MvPolynomial.map (jL w) (secC O u μ (i + 1) v' : MvPolynomial (GL3Theta.FrV (I.rec7 l Z) ((I.rec7 l Z).R.N (i + 1))) (I.rec7 l Z).what₂.LL))
+      (MvPolynomial.map (jL w) (srcPol u μ i (secC O u μ i v : MvPolynomial (GL3Theta.FrV (I.rec7 l Z) ((I.rec7 l Z).R.N i)) (I.rec7 l Z).what₂.LL)))
       (fun m hm => ⟨⟨_, GlobalTheory.T.trueKernelJets_liftDegrees_algebraic I hok hp l Z Y.Qp O hs hJ u μ i hi c c' m hm⟩, rfl,
         (GlobalTheory.KForm.lamC_coe _ _).symm.trans
-          (GlobalTheory.KForm.lamC_jetC (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (Pl.lam w) _ hdg _ m (GlobalTheory.T.trueKernelJets_liftDegrees_algebraic I hok hp l Z Y.Qp O hs hJ u μ i hi c c' m hm))⟩)
-      (fun e he τ => GlobalTheory.T.support_degree_eq_of_mem_weightPolynomials (nuT (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i) _ (srcPol_mem u μ i hi _) e (MvPolynomial.support_map_subset _ _ he) τ)
+          (GlobalTheory.KForm.lamC_jetC (I.rec7 l Z) (Pl.lam w) _ hdg _ m (GlobalTheory.T.trueKernelJets_liftDegrees_algebraic I hok hp l Z Y.Qp O hs hJ u μ i hi c c' m hm))⟩)
+      (fun e he τ => GlobalTheory.T.support_degree_eq_of_mem_weightPolynomials (nuT (I.rec7 l Z) u i) _ (srcPol_mem u μ i hi _) e (MvPolynomial.support_map_subset _ _ he) τ)
       (by
         rw [MvPolynomial.map_map, MvPolynomial.map_map, alg_jL]
-        exact GlobalTheory.T.kernelForm_complex_polynomial_identity (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) O u μ i hi (hU u μ i hi) c c' v v' hK)
-    have hd0 : (∏ τ, (Bs u μ w i c τ).det ^ (-((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u μ).sSharp i τ)) ≠ 0 :=
+        exact GlobalTheory.T.kernelForm_complex_polynomial_identity (I.rec7 l Z) O u μ i hi (hU u μ i hi) c c' v v' hK)
+    have hd0 : (∏ τ, (Bs u μ w i c τ).det ^ (-((I.rec7 l Z).chTw u μ).sSharp i τ)) ≠ 0 :=
       Finset.prod_ne_zero_iff.2 fun τ _ => zpow_ne_zero _ (hdet τ)
-    show (∏ τ, (Bs u μ w (i + 1) c' τ).det ^ (-((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u μ).sDiv i τ)) *
-      MvPolynomial.eval (fun k : GL3Theta.FrV (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N (i + 1)) => (Bs u μ w (i + 1) c' k.1 * y' k.1) k.2.1 k.2.2)
-        (MvPolynomial.map (Pl.iL w) (secC O u μ (i + 1) v' : MvPolynomial (GL3Theta.FrV (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N (i + 1))) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.LL)) = _
+    show (∏ τ, (Bs u μ w (i + 1) c' τ).det ^ (-((I.rec7 l Z).chTw u μ).sDiv i τ)) *
+      MvPolynomial.eval (fun k : GL3Theta.FrV (I.rec7 l Z) ((I.rec7 l Z).R.N (i + 1)) => (Bs u μ w (i + 1) c' k.1 * y' k.1) k.2.1 k.2.2)
+        (MvPolynomial.map (Pl.iL w) (secC O u μ (i + 1) v' : MvPolynomial (GL3Theta.FrV (I.rec7 l Z) ((I.rec7 l Z).R.N (i + 1))) (I.rec7 l Z).what₂.LL)) = _
     rw [hmap, htr, map_mul, MvPolynomial.eval_C, ← hmap,
-      GlobalTheory.T.jetMap_frame_eq_applyQ_adapted_coordinates (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ _ (N_le_succ _ i) (pSer (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (Pl.lam w) ((O u μ).Th i c c'))
+      GlobalTheory.T.jetMap_frame_eq_applyQ_adapted_coordinates (I.rec7 l Z) _ _ (N_le_succ _ i) (pSer (I.rec7 l Z) (Pl.lam w) ((O u μ).Th i c c'))
         (fun τ => lamC (Pl.lam w) ((O u μ).dgen τ)) (Bs u μ w i c) (Bs u μ w (i + 1) c') hdet, GlobalTheory.KForm.applyQ_C_mul _ _ _ _ _ hd0]
-    have hl : (Pl.lam w) ⟨_, hρ⟩ = lamC (Pl.lam w) ((GL3Theta.rhoOf (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (O u μ).mt i ((O u μ).dt i c) : ℂˣ) : ℂ) *
-        lamC (Pl.lam w) ((GL3Theta.rhoOf' (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (O u μ).mt i ((O u μ).dt (i + 1) c') : ℂˣ) : ℂ) := by
+    have hl : (Pl.lam w) ⟨_, hρ⟩ = lamC (Pl.lam w) ((GL3Theta.rhoOf (I.rec7 l Z) (O u μ).mt i ((O u μ).dt i c) : ℂˣ) : ℂ) *
+        lamC (Pl.lam w) ((GL3Theta.rhoOf' (I.rec7 l Z) (O u μ).mt i ((O u μ).dt (i + 1) c') : ℂˣ) : ℂ) := by
       rw [show (⟨_, hρ⟩ : Qbar) = ⟨_, (hR i hi).1 c⟩ * ⟨_, (hR i hi).2 c'⟩ from rfl, map_mul, ← GlobalTheory.KForm.lamC_coe, ← GlobalTheory.KForm.lamC_coe]
-    have hp : (∏ τ, (Bs u μ w i c τ).det ^ (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u μ).sSharp i τ)) *
-        (∏ τ, (Bs u μ w i c τ).det ^ (-((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u μ).sSharp i τ)) = 1 := by
+    have hp : (∏ τ, (Bs u μ w i c τ).det ^ (((I.rec7 l Z).chTw u μ).sSharp i τ)) *
+        (∏ τ, (Bs u μ w i c τ).det ^ (-((I.rec7 l Z).chTw u μ).sSharp i τ)) = 1 := by
       rw [← Finset.prod_mul_distrib]
       exact Finset.prod_eq_one fun τ _ => by rw [← zpow_add₀ (hdet τ), add_neg_cancel, zpow_zero]
     have hun : unC Pl O Bs u μ w i c c' = unF Pl O Bs u μ w i c c' := by
       unfold unC
       rw [if_neg (unF_ne Pl O Bs hB u μ hR w i hi c c')]
-    have key : ∀ A : ℂ_[(_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.places.resChar w],
-        (∏ τ, (Bs u μ w (i + 1) c' τ).det ^ (-((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u μ).sDiv i τ)) * ((Pl.lam w) ⟨_, hρ⟩ * A) =
-          unC Pl O Bs u μ w i c c' * ((∏ τ, (Bs u μ w i c τ).det ^ (-((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u μ).sSharp i τ)) * A) := by
+    have key : ∀ A : ℂ_[(I.rec7 l Z).what₂.places.resChar w],
+        (∏ τ, (Bs u μ w (i + 1) c' τ).det ^ (-((I.rec7 l Z).chTw u μ).sDiv i τ)) * ((Pl.lam w) ⟨_, hρ⟩ * A) =
+          unC Pl O Bs u μ w i c c' * ((∏ τ, (Bs u μ w i c τ).det ^ (-((I.rec7 l Z).chTw u μ).sSharp i τ)) * A) := by
       intro A
       rw [hun, hl]
       unfold unF
-      linear_combination (-(lamC (Pl.lam w) ((GL3Theta.rhoOf (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (O u μ).mt i ((O u μ).dt i c) : ℂˣ) : ℂ) *
-        lamC (Pl.lam w) ((GL3Theta.rhoOf' (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (O u μ).mt i ((O u μ).dt (i + 1) c') : ℂˣ) : ℂ) *
-        (∏ τ, (Bs u μ w (i + 1) c' τ).det ^ (-((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u μ).sDiv i τ)) * A)) * hp
+      linear_combination (-(lamC (Pl.lam w) ((GL3Theta.rhoOf (I.rec7 l Z) (O u μ).mt i ((O u μ).dt i c) : ℂˣ) : ℂ) *
+        lamC (Pl.lam w) ((GL3Theta.rhoOf' (I.rec7 l Z) (O u μ).mt i ((O u μ).dt (i + 1) c') : ℂˣ) : ℂ) *
+        (∏ τ, (Bs u μ w (i + 1) c' τ).det ^ (-((I.rec7 l Z).chTw u μ).sDiv i τ)) * A)) * hp
     exact key _

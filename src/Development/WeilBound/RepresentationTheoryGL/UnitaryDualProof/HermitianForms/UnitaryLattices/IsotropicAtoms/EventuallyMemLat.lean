@@ -69,8 +69,6 @@ theorem glInv (hB : MirEq π (m + 1) h s B) (g : GL (Fin (m + 1)) k) (v w : V) :
   rw [det_glEmb, blkAt_glEmb] at this
   exact this
 
-local notation "P" => avg (1 : AddChar k Circle) h π 0
-
 theorem one_zero_dot (a : Fin (m + 1) → k) : (1 : AddChar k Circle) ((0 : Fin (m + 1) → k) ⬝ᵥ a) = 1 := by
   simp
 

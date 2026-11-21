@@ -17,23 +17,23 @@ open AlgebraicGeometry
 variable {A : Type} [CommRing A]
 
 theorem dualMap_fst {B : Type} [CommRing B] (f : A →+* B) (x : DualNumber A) :
-    (Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap f x).fst = f x.fst := by
-  simp [Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap]
+    (Formalism.L2.Pj.dualMap f x).fst = f x.fst := by
+  simp [Formalism.L2.Pj.dualMap]
 
 theorem dualMap_snd {B : Type} [CommRing B] (f : A →+* B) (x : DualNumber A) :
-    (Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap f x).snd = f x.snd := by
-  simp [Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap]
+    (Formalism.L2.Pj.dualMap f x).snd = f x.snd := by
+  simp [Formalism.L2.Pj.dualMap]
 
 variable (σ : A →+* DualNumber A) (hσ : ∀ a, (σ a).fst = a) (S : Submonoid A)
 
 def liftLoc : LocalizedModule S A →+* DualNumber (LocalizedModule S A) :=
-  IsLocalization.lift (M := S) (g := (Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A (LocalizedModule S A))).comp σ)
+  IsLocalization.lift (M := S) (g := (Formalism.L2.Pj.dualMap (algebraMap A (LocalizedModule S A))).comp σ)
     (fun y => by
       rw [TrivSqZeroExt.isUnit_iff_isUnit_fst, RingHom.comp_apply, dualMap_fst, hσ]
       exact IsLocalization.map_units _ y)
 
 theorem liftLoc_algebraMap (a : A) :
-    liftLoc σ hσ S (algebraMap A _ a) = Formalism.L2.Pj.GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A (LocalizedModule S A)) (σ a) :=
+    liftLoc σ hσ S (algebraMap A _ a) = Formalism.L2.Pj.dualMap (algebraMap A (LocalizedModule S A)) (σ a) :=
   IsLocalization.lift_eq _ _
 
 theorem liftLoc_fst (b : LocalizedModule S A) : (liftLoc σ hσ S b).fst = b := by

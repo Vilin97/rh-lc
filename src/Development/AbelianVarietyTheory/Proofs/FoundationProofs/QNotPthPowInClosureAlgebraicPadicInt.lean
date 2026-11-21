@@ -26,20 +26,16 @@ theorem derExt (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) �
 
 theorem derAlg (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω] (h : IsClo p Ω)
     (E : Derivation ℤ Ω Ω) (hE : ∀ r : ℤ_[p], E (algebraMap (O0 p) Ω (algebraMap ℤ_[p] (O0 p) r)) = 0) :
-    ∀ x : Ω, IsAlgZp (p := p) x → E x = 0 := by
-  have hzero := DerAlg.der_algZp p Ω h E hE
-  exact hzero
+    ∀ x : Ω, IsAlgZp p x → E x = 0 := GlobalTheory.T.derivation_eq_zero_of_isAlgebraicOverPadicIntegers p Ω h E hE
 
 theorem repr (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω] (h : IsClo p Ω) :
-    ∀ b ∈ Subfield.closure (Set.range (algebraMap (O0 p) Ω) ∪ {x | IsAlgZp (p := p) x}),
-    ∃ (n : ℕ) (a : Fin n → Ω) (f : Fin n → O0 p) (g : O0 p), (∀ i, IsAlgZp (p := p) (a i)) ∧
+    ∀ b ∈ Subfield.closure (Set.range (algebraMap (O0 p) Ω) ∪ {x | IsAlgZp p x}),
+    ∃ (n : ℕ) (a : Fin n → Ω) (f : Fin n → O0 p) (g : O0 p), (∀ i, IsAlgZp p (a i)) ∧
       LinearIndependent (O0 p) a ∧ g ≠ 0 ∧
       algebraMap (O0 p) Ω g * b = ∑ i, algebraMap (O0 p) Ω (f i) * a i := by
   intro b hb
-  have hspan := ReprSpan.exists_mul_mem_span p Ω h b hb
-  obtain ⟨g₁, hg₁, hy⟩ := hspan
-  have hrepr := algSpan_reprInd p Ω h _ hy
-  obtain ⟨n, a, f, g₂, ha, hli, hg₂, he⟩ := hrepr
+  obtain ⟨g₁, hg₁, hy⟩ := GlobalTheory.T.exists_mul_mem_span_algebraicOverPadicIntegers p Ω h b hb
+  obtain ⟨n, a, f, g₂, ha, hli, hg₂, he⟩ := GlobalTheory.T.exists_mul_linearIndependent_algebraicOverPadicIntegers p Ω h _ hy
   refine ⟨n, a, f, g₂ * g₁, ha, hli, mul_ne_zero hg₂ hg₁, ?_⟩
   rw [map_mul, mul_assoc, he]
 
@@ -72,7 +68,7 @@ theorem not_eigen (p : ℕ) [Fact p.Prime] (D : Derivation ℤ (O0 p) (O0 p)) (f
   · exact hf0 h
 
 theorem q_not_pow : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω →
-    ∀ b ∈ Subfield.closure (Set.range (algebraMap (O0 p) Ω) ∪ {x | IsAlgZp (p := p) x}),
+    ∀ b ∈ Subfield.closure (Set.range (algebraMap (O0 p) Ω) ∪ {x | IsAlgZp p x}),
       b ^ p ≠ algebraMap (O0 p) Ω (qO p) := by
   intro p _ Ω _ _ h b hb hbp
   have hp : p.Prime := Fact.out

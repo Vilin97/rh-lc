@@ -31,9 +31,9 @@ theorem sp_comp_assoc {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f :
   rw [← Category.assoc, sp_comp]
 
 theorem dual_alg {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap f).comp (algebraMap A (DualNumber A)) = (algebraMap B (DualNumber B)).comp f := by
+    (dualMap f).comp (algebraMap A (DualNumber A)) = (algebraMap B (DualNumber B)).comp f := by
   refine RingHom.ext fun z => ?_
-  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem eps_alg {A : Type} [CommRing A] (a : A) :
     (epsMul a).comp (algebraMap A (DualNumber A)) = algebraMap A (DualNumber A) :=
@@ -44,9 +44,9 @@ theorem eps_eps {A : Type} [CommRing A] (a b : A) : (epsMul a).comp (epsMul b) =
   ext <;> simp [epsMul, _root_.mul_assoc]
 
 theorem eps_dual {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (a : A) :
-    (epsMul (f a)).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = (GlobalTheory.CompanionTheory.Ar.dualMap f).comp (epsMul a) := by
+    (epsMul (f a)).comp (dualMap f) = (dualMap f).comp (epsMul a) := by
   refine RingHom.ext fun z => ?_
-  ext <;> simp [epsMul, GlobalTheory.CompanionTheory.Ar.dualMap, _root_.mul_comm]
+  ext <;> simp [epsMul, dualMap, _root_.mul_comm]
 
 section Divide
 
@@ -69,8 +69,8 @@ theorem eps_cancel {q : O} (hq : q ≠ 0) {Y : Scheme.{0}} {v w : Sp (DualNumber
     exact TrivSqZeroExt.ext h₃ ((mul_eq_zero.1 h₄).resolve_left hq)
 
 theorem exists_div [IsLocalRing O] {q : O} (hq : q ≠ 0) (a : O) {Y : Scheme.{0}} (v : Sp (DualNumber O) ⟶ Y)
-    (h : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {q}))) ≫ spMap (epsMul a) ≫ v =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {q}))) ≫ spMap (epsMul 0) ≫ v) :
+    (h : spMap (dualMap (Ideal.Quotient.mk (Ideal.span {q}))) ≫ spMap (epsMul a) ≫ v =
+      spMap (dualMap (Ideal.Quotient.mk (Ideal.span {q}))) ≫ spMap (epsMul 0) ≫ v) :
     ∃ w : Sp (DualNumber O) ⟶ Y, spMap (epsMul q) ≫ w = spMap (epsMul a) ≫ v := by
   haveI : IsLocalRing (DualNumber O) := IsLocalRing.of_isUnit_or_isUnit_one_sub_self fun d => by
     simpa [TrivSqZeroExt.isUnit_iff_isUnit_fst] using IsLocalRing.isUnit_or_isUnit_one_sub_self d.fst
@@ -84,7 +84,7 @@ theorem exists_div [IsLocalRing O] {q : O} (hq : q ≠ 0) (a : O) {Y : Scheme.{0
   have h2 : ∀ r, q ∣ a * (ψ r).snd := fun r => by
     have := congrArg TrivSqZeroExt.snd (RingHom.congr_fun h1 r)
     rw [← Ideal.mem_span_singleton, ← Ideal.Quotient.eq_zero_iff_mem]
-    simpa [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul] using this
+    simpa [dualMap, epsMul] using this
   choose b hb using h2
   have hinj : Function.Injective (epsMul q) := (injective_iff_map_eq_zero _).2 fun d h₁ => by
     have h₃ : d.fst = 0 := by simpa [epsMul] using congrArg TrivSqZeroExt.fst h₁
@@ -354,7 +354,7 @@ theorem htBound : HTBoundSt := by
   have h0 : ((p : intO C ⧸ I)) ^ m = 0 := by
     rw [← map_natCast (Ideal.Quotient.mk I), ← map_pow, Ideal.Quotient.eq_zero_iff_mem]
     exact Ideal.mem_span_singleton_self _
-  let g : overAt x (DualNumber (intO C ⧸ I)) ⟶ t.G := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I)) ≫ vO) (by
+  let g : overAt x (DualNumber (intO C ⧸ I)) ⟶ t.G := Over.homMk (spMap (dualMap (Ideal.Quotient.mk I)) ≫ vO) (by
     rw [Category.assoc, htan.1, sp_comp_assoc, dual_alg]
     rfl)
   have hg1 : homAt x (TrivSqZeroExt.fstHom (intO C) (intO C ⧸ I) (intO C ⧸ I)) ≫ g = 1 := by
@@ -364,7 +364,7 @@ theorem htBound : HTBoundSt := by
     rw [← htan.2, sp_comp_assoc, sp_comp_assoc]
     congr 2
     refine RingHom.ext fun z => ?_
-    simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    simp [dualMap]
   obtain ⟨φ, hφ, -⟩ := h.2 _ g (pow_eq_one hg1 (by rw [Nat.cast_pow, h0]))
   have hfst : ∀ z, (φ z).fst = Ideal.Quotient.mk I (h.counit z) := fun z =>
     AlgHom.congr_fun (h.ext (φ := (TrivSqZeroExt.fstHom (intO C) _ _).comp φ)
@@ -396,8 +396,8 @@ theorem htBound : HTBoundSt := by
     rw [map_mul, hD] at this
     ext <;> simp [this]
   obtain ⟨w, hw⟩ := exists_div hq a vO (by
-    have e : spMap (epsMul (Ideal.Quotient.mk I a)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I)) ≫ vO =
-      spMap (epsMul (Ideal.Quotient.mk I 0)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I)) ≫ vO := congrArg Over.Hom.left hs
+    have e : spMap (epsMul (Ideal.Quotient.mk I a)) ≫ spMap (dualMap (Ideal.Quotient.mk I)) ≫ vO =
+      spMap (epsMul (Ideal.Quotient.mk I 0)) ≫ spMap (dualMap (Ideal.Quotient.mk I)) ≫ vO := congrArg Over.Hom.left hs
     simpa only [sp_comp_assoc, eps_dual] using e)
   refine ⟨x, hx, w, ⟨eps_cancel hq ?_, ?_⟩, eps_cancel hpC ?_⟩
   · rw [← Category.assoc, hw, Category.assoc, htan.1, sp_comp_assoc, sp_comp_assoc, eps_alg, eps_alg]

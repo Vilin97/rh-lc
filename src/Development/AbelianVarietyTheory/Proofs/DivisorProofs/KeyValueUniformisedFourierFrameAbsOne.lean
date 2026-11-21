@@ -82,9 +82,9 @@ theorem fst_indep : ∀ (K C : Type) [Field K] [Field C] [Algebra K C] (P : PolA
     ∀ (v w : epsR K ⟶ P.A), IsTangent v → IsTangent w →
     ∀ (yv yw : Sp (DualNumber C) ⟶ (Over.mk (spMap (algebraMap K C)) ⊗ P.A).left),
       yv ≫ (fst (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (algebraMap C (DualNumber C)) →
-      yv ≫ (snd (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K C)) ≫ v.left →
+      yv ≫ (snd (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (dualMap (algebraMap K C)) ≫ v.left →
       yw ≫ (fst (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (algebraMap C (DualNumber C)) →
-      yw ≫ (snd (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K C)) ≫ w.left →
+      yw ≫ (snd (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (dualMap (algebraMap K C)) ≫ w.left →
     ∀ (a b a' b' : C),
       valR yv ((LPow P.A P.L (k : ℤ) (Over.mk (spMap (algebraMap K C)))).U fun _ => i₀) (t.f fun _ => i₀) =
         TrivSqZeroExt.inl (valR (spMap (algebraMap K C)) ((P.L.pull (eSec P.A)).U fun _ => i₀) (ρ.s fun _ => i₀).val ^ k) *
@@ -137,7 +137,7 @@ theorem kapF_of_rule4 : ∀ κ : Rule, Rule4 κ → KapF κ := by
   choose yA hyA _ using fun j => (hvec j).1
   choose v' hv'o _ using fun j => (hvec j).2.1
   have hyAs : ∀ j, yA j ≫ (snd (TFK (R := V) C) x.P.A).left =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (FractionRing V) C)) ≫ (v' j).left := fun j => (hvec j).2.2 (v' j) (yA j) (hv'o j) (hyA j)
+      spMap (dualMap (algebraMap (FractionRing V) C)) ≫ (v' j).left := fun j => (hvec j).2.2 (v' j) (yA j) (hv'o j) (hyA j)
   obtain ⟨-, -, -, hgp, -⟩ := GlobalTheory.T.uniformisation_generic_fibre_cartesian_to_model_bundleIso V _ D x.P G U.toUnifPre
   obtain ⟨hv', u, hu⟩ := GlobalTheory.T.thetaKeyRule_lieBasisChange_unit_factor κ hHom V (FractionRing V) (algebraMap V (FractionRing V)) x G _ hgp y y' v' hy hy' hyv hv'o
   set x' : KeyIn (FractionRing V) := ⟨x.P, x.g_pos, x.rig, x.rig_gen, x.th, x.th_ne, v', hv'⟩ with hx'

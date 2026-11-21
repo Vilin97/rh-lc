@@ -27,11 +27,11 @@ theorem isLocalRing_dualNumber (R : Type) [CommRing R] [IsLocalRing R] : IsLocal
     simpa using IsLocalRing.isUnit_or_isUnit_one_sub_self x.fst
 
 theorem dualMap_over {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (epsR R).hom = spMap (algebraMap R' (DualNumber R')) ≫ spMap f := by
+    spMap (dualMap f) ≫ (epsR R).hom = spMap (algebraMap R' (DualNumber R')) ≫ spMap f := by
   show spMap _ ≫ spMap _ = _
   rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp]
   congr 2
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem redE_over (R : Type) [CommRing R] : redE R ≫ (epsR R).hom = 𝟙 _ := by
   show spMap _ ≫ spMap _ = _
@@ -53,7 +53,7 @@ theorem exists_tan (U : UnifPre I D A G) (y : epsR R ⟶ G) (hy : IsTangent y) :
   have hb : redE R ≫ g.b.left = η[D.toPre.P.A].left := hom_ext_of_isHausdorff I fun e =>
     (Category.assoc _ _ _).symm.trans ((hz e).1.symm.trans (UnitValue.eSec_pGl U e))
   refine ⟨g, fun e => ?_, ?_, hb⟩
-  · have w : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ y.left) ≫ G.hom =
+  · have w : (spMap (dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ y.left) ≫ G.hom =
         spMap (algebraMap _ (DualNumber (R ⧸ I ^ (e + 1)))) ≫ thick R I e := by
       rw [Category.assoc, Over.w y]; exact dualMap_over _
     have h₁ : pullback.lift _ _ w ≫ (fstG I e G).left = _ := pullback.lift_fst _ _ _

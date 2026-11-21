@@ -29,7 +29,7 @@ theorem eq_zero_of_commute_of_separable {V : Type*} [AddCommGroup V] [Module ℂ
       intro m
       induction m with
       | zero => simp
-      | succ m ih => rw [pow_succ', mul_apply_eq_comp, ih, map_smul, hNv, smul_smul, ← pow_succ]
+      | succ m ih => rw [pow_succ', Module.End.mul_apply, ih, map_smul, hNv, smul_smul, ← pow_succ]
     have h0 : N (v₀ : V) = 0 := by
       have hz := hpow k
       rw [hk, LinearMap.zero_apply] at hz
@@ -45,8 +45,10 @@ theorem eq_zero_of_commute_of_separable {V : Type*} [AddCommGroup V] [Module ℂ
   exact Submodule.iSup_induction _ (motive := fun v => N v = 0) hv hline (map_zero N)
     (fun x y hx hy => by rw [map_add (f := _), hx, hy, add_zero])
 
-theorem WD.noMonodromy_of_inertia_separable_charpoly (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (x : WD h) :
-    ∀ σ ∈ Ine (F := E) A, (WD.inePol x σ).Separable → WD.mono0 x := by
+end GlobalTheory.WeilDeligne
+
+theorem GlobalTheory.WeilDeligne.WD.noMonodromy_of_inertia_separable_charpoly (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (x : GlobalTheory.WeilDeligne.WD h) :
+    ∀ σ ∈ Ine (F := E) A, (x.inePol σ).Separable → x.mono0 := by
   intro σ hσ
   induction x using Quotient.inductionOn with
   | h a =>
@@ -57,7 +59,7 @@ theorem WD.noMonodromy_of_inertia_separable_charpoly (E Ω : Type) [Field E] [Nu
       have hc := a.comm ⟨σ, hw⟩
       rw [deg_eq_zero_iff.mpr hσ, zpow_zero, one_smul] at hc
       exact hc
-    simp only [WD.mono0, WD.inePol, WD.charPol, dite_eq_left hw, Quotient.lift_mk, WDRep.Mono0]
+    simp only [WD.mono0, WD.inePol, WD.charPol, dif_pos hw, Quotient.lift_mk, WDRep.Mono0]
     intro hs
     exact eq_zero_of_commute_of_separable hs hcomm a.nilpotent
 

@@ -285,10 +285,8 @@ theorem exists_grpPullback {S S' : Scheme.{0}} (G : Over S) [GrpObj G] (f : S' �
       Limits.pullback.fst _ f = (lift x₀ y₀).left := by
     apply Limits.pullback.hom_ext
     · simp
-      erw [Limits.pullback.lift_fst_assoc, Limits.pullback.lift_fst]
       exact hx.symm
     · simp
-      erw [Limits.pullback.lift_snd_assoc, Limits.pullback.lift_snd]
       exact hy.symm
   rw [← key]
   simp only [Category.assoc]

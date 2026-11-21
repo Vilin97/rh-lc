@@ -17,7 +17,6 @@ theorem chains_d (E : Spc) (p : ℕ) :
   unfold chainsXIso
   congr 2
   simp [chainsN]
-  rfl
 
 theorem freeGen_nat {P Q : PSh} (f : P ⟶ Q) (U : Scheme.{0}) (x : P.obj (op U)) :
     (((free R).map f).hom.app (op U)).hom (freeGen R P U x) = freeGen R Q U (f.app (op U) x) := by

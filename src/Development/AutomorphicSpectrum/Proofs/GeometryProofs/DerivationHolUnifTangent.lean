@@ -37,7 +37,7 @@ theorem valAt'_pull {Y Y' : Scheme.{0}} (x : Sp ℂ ⟶ Y) (ψ : Y ⟶ Y') (U : 
 theorem tr_eq_pull {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] {A : Over (Sp ℂ)} [GrpObj A]
     {z : Sp ℂ ⟶ Sp R} {φ : A.left ⟶ G.left} (h : IsGrpPullback A G z φ) (v₀ : epsAt (𝟙 (Sp R)) ⟶ G)
     (a : 𝟙_ (Over (Sp ℂ)) ⟶ A) (v' : epsR ℂ ⟶ A)
-    (hv : v'.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (bmap z)) ≫ v₀.left) :
+    (hv : v'.left ≫ φ = spMap (dualMap (bmap z)) ≫ v₀.left) :
     tr v₀ (a.left ≫ φ) = ((toUnit (epsR ℂ) ≫ a) * v').left ≫ φ := by
   have hb : (a.left ≫ φ) ≫ G.hom = z := by
     rw [Category.assoc, h.1.w, ← Category.assoc, Over.w a]
@@ -58,13 +58,13 @@ theorem tr_eq_pull {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] {A : Ove
     show 𝟙 _ ≫ spMap (algebraMap ℂ (DualNumber ℂ)) ≫ a.left ≫ φ = (toUnit (epsR ℂ) ≫ a).left ≫ φ
     rw [Over.comp_left, hu, Category.id_comp, Category.assoc]
     rfl
-  · show 𝟙 _ ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (bmap ((a.left ≫ φ) ≫ G.hom))) ≫ v₀.left = v'.left ≫ φ
+  · show 𝟙 _ ≫ spMap (dualMap (bmap ((a.left ≫ φ) ≫ G.hom))) ≫ v₀.left = v'.left ≫ φ
     rw [hb, Category.id_comp, hv]
 
 theorem fderiv_valAt_eq_der (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj G] (A : Over (Sp ℂ)) [GrpObj A]
     (z : Sp ℂ ⟶ Sp R) (φ : A.left ⟶ G.left) (h : IsGrpPullback A G z φ) (g : ℕ) (Lb : LB A.left)
     (u : HolUnif A Lb g) (v₀ : epsAt (𝟙 (Sp R)) ⟶ G) (hv₀ : IsTanAt G (𝟙 (Sp R)) v₀) (c : Fin g → ℂ)
-    (v' : epsR ℂ ⟶ A) (hv : v'.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (bmap z)) ≫ v₀.left) (hd : u.IsDiff c v')
+    (v' : epsR ℂ ⟶ A) (hv : v'.left ≫ φ = spMap (dualMap (bmap z)) ≫ v₀.left) (hd : u.IsDiff c v')
     (V : G.left.Opens) (hV : IsAffineOpen V) (f : Γ(G.left, V)) (w : Fin g → ℂ)
     (hw : ⊤ ≤ ((u.ex w).left ≫ φ) ⁻¹ᵁ V) :
     fderiv ℂ (fun x => valAt' ((u.ex x).left ≫ φ) V f) w c =

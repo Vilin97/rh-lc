@@ -296,7 +296,11 @@ theorem countable_LFlag {r : ℕ} {T : D.host.E} : Countable (Lat.LFlag (VS D) r
 theorem countable_Term (u u' : D.what₂.Word) (F0 : FlagG (VS D) D.R.rS ((Lat.Tu D u : ℕ) : D.host.E))
     (what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V)) : Countable (TermDef.Term D u u' F0 what₂) := by
   have : ∀ Λ : Submodule (𝓞 D.host.E) (VS D).V, Countable (TermDef.TermsOf D u' F0 Λ) := fun Λ => by
-    have := countable_LFlag (D := D) (r := D.R.rS) (T := ((Lat.Tu D u' : ℕ) : D.host.E))
+    letI : Countable (Lat.LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)) :=
+      countable_LFlag (D := D)
+    letI : Countable (TermDef.Carrier (TermDef.PD D Λ (lf D F0) u')) := by
+      unfold TermDef.Carrier
+      exact Subtype.val_injective.countable
     unfold TermDef.TermsOf TermDef.TermQ
     infer_instance
   refine Function.Injective.countable

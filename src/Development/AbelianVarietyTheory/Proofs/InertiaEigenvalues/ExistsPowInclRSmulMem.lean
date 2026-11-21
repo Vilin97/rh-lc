@@ -50,9 +50,7 @@ theorem exists_pow_wittCoords_inclR_smul_mem_nhds {l : ℕ} [Fact l.Prime] {P : 
     {K LL : FinExt l} {m : ℕ} (bO : Module.Basis (Fin m) ℤ_[l] ↥(OL LL)) {T : Lt K LL} {d : ℕ}
     (b : LatB T d) (y : TW (RW LL) T) (V : Set (Fin d → WCb l))
     (hV : letI := wTop l; V ∈ 𝓝 (0 : Fin d → WCb l)) :
-    ∃ k : ℕ, ∀ z : RA LL,
-      letI := zlMod T
-      haveI := zlTower T
+    ∃ k : ℕ, ∀ z : RA LL, letI := zlMod T; haveI := zlTower T;
       GlobalTheory.WeakTop.coords (WCb l) ↥(OL LL) b (inclR LL ((((1 : ↥(OL LL)) ⊗ₜ[ℤ_[l]]
         (WittVector.teichmuller l (AI.εroot s) - 1)) : RA LL) ^ k * z) • y) ∈ V := by
   letI := zlMod T
@@ -82,13 +80,7 @@ theorem exists_pow_wittCoords_inclR_smul_mem_nhds {l : ℕ} [Fact l.Prime] {P : 
   rw [key]
   exact hIt fun α _ => Set.mem_iInter.1 (hk _) α
 
-theorem exists_pow_inclR_smul_mem :
-    ∀ {l : ℕ} [Fact l.Prime] {P : LocPrime l} (AI : LocAinf l P) (s : ℕ)
-      {K LL : FinExt l} (T : Lt K LL) {d : ℕ} (b : LatB T d) (y : TW (RW LL) T),
-      letI := twTop T b
-      ∀ U ∈ 𝓝 (0 : TW (RW LL) T), ∃ k : ℕ, ∀ z : RA LL,
-        inclR LL ((((1 : ↥(OL LL)) ⊗ₜ[ℤ_[l]]
-          (WittVector.teichmuller l (AI.εroot s) - 1)) : RA LL) ^ k * z) • y ∈ U := by
+theorem exists_pow_inclR_smul_mem : ∀ {l : ℕ} [Fact l.Prime] {P : LocPrime l} (AI : LocAinf l P) (s : ℕ) {K LL : FinExt l} (T : Lt K LL) {d : ℕ} (b : LatB T d) (y : TW (RW LL) T), letI := twTop T b; ∀ U ∈ 𝓝 (0 : TW (RW LL) T), ∃ k : ℕ, ∀ z : RA LL, inclR LL ((((1 : ↥(OL LL)) ⊗ₜ[ℤ_[l]] (WittVector.teichmuller l (AI.εroot s) - 1)) : RA LL) ^ k * z) • y ∈ U := by
   intro l _ P AI s K LL T d b y
   letI := zlMod T
   haveI := zlTower T

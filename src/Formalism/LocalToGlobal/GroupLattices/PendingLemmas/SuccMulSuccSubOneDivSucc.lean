@@ -140,7 +140,7 @@ theorem ap_sub (P : MvPolynomial σ S) : ∀ F : MvPolynomial σ S, ap P (aeval 
   induction P using MvPolynomial.induction_on with
   | C a =>
     intro F
-    rw [aeval_C, algebraMap_eq, ap_C, ap_C, ← constantCoeff_eq, constantCoeff_aeval_linP]
+    rw [aeval_C, algebraMap_eq, ap_C, ap_C, ← constantCoeff_eq, constantCoeff_aeval_linP, constantCoeff_eq]
   | add p q hp hq =>
     intro F
     rw [map_add (f := _), ap_add_left, ap_add_left, hp, hq]
@@ -208,7 +208,7 @@ theorem coeff_prod_linS (m n : σ →₀ ℕ) :
     refine Finset.prod_congr rfl fun s _ => ?_
     rw [map_pow, coeToMvPowerSeries.ringHom_apply, linS_eq]
   rw [h1, coeff_coe, ← coeff_map, aeval_monomial, map_one, one_mul, Finsupp.prod, Finsupp.prod, map_prod]
-  congr 1
+  apply congrArg (fun P : MvPolynomial σ S => AddMonoidAlgebra.coeff P n)
   refine Finset.prod_congr rfl fun s _ => ?_
   rw [map_pow, map_linP]
 

@@ -32,6 +32,7 @@ theorem piTensor_mulSingle {α : Type} [DecidableEq α] {Γ X : α → Type} [�
         simp [h]
       · simp [Pi.mulSingle_eq_of_ne hb, Function.update_of_ne hb]
     rw [h1, MultilinearMap.map_update_smul, Function.update_eq_self]
+    simp
 
 theorem nontrivial_piTensor {α : Type} [Fintype α] (X : α → Type) [∀ a, AddCommGroup (X a)]
     [∀ a, Module ℂ (X a)] (h : ∀ a, Nontrivial (X a)) : Nontrivial (⨂[ℂ] a, X a) := by

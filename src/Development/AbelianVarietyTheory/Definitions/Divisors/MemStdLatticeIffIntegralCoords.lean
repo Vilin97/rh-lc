@@ -30,7 +30,7 @@ theorem sw_sig (y : ReciprocityTheory.Aut.AL D.host.E) :
   induction y using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingEquiv.map_zero, RingHom.map_zero]
   | tmul x a => rfl
-  | add x y hx hy => rw [RingHom.map_add (f := _), RingEquiv.map_add (e := _), RingEquiv.map_add (e := _), RingHom.map_add (f := _), hx, hy]
+  | add x y hx hy => rw [RingHom.map_add (f := _), RingEquiv.map_add (f := _), RingEquiv.map_add (f := _), RingHom.map_add (f := _), hx, hy]
 
 theorem mem_GA_iff {V : HSp D} (hg : V.gram = 1) (κ : GL (Fin V.rank) (ReciprocityTheory.Aut.AL D.host.E)) :
     κ ∈ ReciprocityTheory.Aut.GA D.host.E V.rank ↔
@@ -99,7 +99,7 @@ theorem int_of_mem {V : HSp D} (h : OrthFrame V) {y : Fin V.rank → Af D.host.F
     rw [show (o : D.host.E) = x i from ho] at this
     exact this
   | zero => rw [Pi.zero_apply, RingEquiv.map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [Pi.add_apply, RingEquiv.map_add (e := _)]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [Pi.add_apply, RingEquiv.map_add (f := _)]; exact add_mem hy hz
   | neg y _ hy => rw [Pi.neg_apply, RingEquiv.map_neg]; exact neg_mem hy
 
 theorem smul_gen {M : ℕ} (L : Set (Fin M → D.host.E)) (c : Af D.host.F ⊗[D.host.F] D.host.E)

@@ -106,7 +106,8 @@ theorem absNorm_ccK_not_mem {P : Pl D.host.E} (h : FractionalIdeal.count D.host.
   have e : D.host.ccE * (D.host.conj • D.host.ccE) = Ideal.span {((Ideal.absNorm D.host.ccK : ℕ) : 𝓞 D.host.E)} := by
     apply FractionalIdeal.coeIdeal_injective (K := D.host.E)
     beta_reduce
-    rw [FractionalIdeal.coeIdeal_mul, Formalism.IndefR.Fin.ccNorm D.R D.host, FractionalIdeal.coeIdeal_span_singleton, map_natCast]
+    rw [FractionalIdeal.coeIdeal_mul, Formalism.IndefR.Fin.ccNorm D.R D.host, FractionalIdeal.coeIdeal_span_singleton]
+    simp only [map_natCast]
   have hd : P.asIdeal ∣ D.host.ccE * (D.host.conj • D.host.ccE) := by rw [e, Ideal.dvd_span_singleton]; exact hm
   rcases P.prime.dvd_or_dvd hd with h3 | h3
   · exact h1 h3

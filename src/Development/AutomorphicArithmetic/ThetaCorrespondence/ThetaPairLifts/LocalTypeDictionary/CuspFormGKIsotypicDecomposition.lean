@@ -144,7 +144,7 @@ theorem cuspForm_local_sum_generates : _root_.GlobalTheory.FunPr.ThetaLocalInput
     rw [this, hTL]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [hsum, ← hTtot p, hpq, map_sum]
-    rfl
+      rfl
 end GlobalTheory.CuspGKId
 noncomputable section
 namespace GlobalTheory.CuspGKId

@@ -27,13 +27,13 @@ theorem jX_dblDec_mulVec (V : HSp D) (y : Fin V.rank → AE D) :
   funext k
   obtain ⟨i | i, rfl⟩ := finSumFinEquiv.surjective k
   · rw [pairVec_inl]
-    simp only [mulVec, HypDec.jX, dblDec, GlobalTheory.Core.Rk.SWLaw.stackRows]
-    congr 1
-      fromRows_apply_inl, fromRows_apply_inr]
+    simp only [mulVec, HypDec.jX, dblDec, GlobalTheory.Core.Rk.SWLaw.stackRows,
+      GlobalTheory.MixModel.giA, GlobalTheory.MixModel.rat, Matrix.map_apply,
+      Matrix.submatrix_apply, id, Equiv.symm_apply_apply, fromRows_apply_inl, fromRows_apply_inr]
   · rw [pairVec_inr]
-    simp only [mulVec, HypDec.jX, dblDec, GlobalTheory.Core.Rk.SWLaw.stackRows]
-    congr 1
-      fromRows_apply_inl, fromRows_apply_inr]
+    simp only [mulVec, HypDec.jX, dblDec, GlobalTheory.Core.Rk.SWLaw.stackRows,
+      GlobalTheory.MixModel.giA, GlobalTheory.MixModel.rat, Matrix.map_apply,
+      Matrix.submatrix_apply, id, Equiv.symm_apply_apply, fromRows_apply_inl, fromRows_apply_inr]
 
 theorem mem_siegel_of_mem_stab (V : HSp D) {p : GA D (dblSp V)} (h : p ∈ stab (dblDec V)) : p ∈ siegel V := by
   obtain ⟨α, hα⟩ := h

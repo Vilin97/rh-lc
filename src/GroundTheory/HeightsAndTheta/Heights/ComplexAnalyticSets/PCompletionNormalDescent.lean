@@ -26,7 +26,7 @@ theorem CompletionNormalDescent.algebraMap_injective (hJ : J ≤ (⊥ : Ideal R)
     Function.Injective (algebraMap R (AdicCompletion J R)) := by
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
-  have H : IsHausdorff J R := IsHausdorff.of_le_jacobson J R hJ
+  have H : IsHausdorff J R := IsHausdorff.of_le_jacobson J R (by simpa only [Ideal.jacobson_bot] using hJ)
   refine H.haus a fun n => ?_
   rw [SModEq.zero, smul_eq_mul, Ideal.mul_top]
   have := CompletionNormalDescent.evalₐ_algebraMap J n a
@@ -36,7 +36,7 @@ theorem CompletionNormalDescent.algebraMap_injective (hJ : J ≤ (⊥ : Ideal R)
 theorem CompletionNormalDescent.dvd_of_dvd_completion (hJ : J ≤ (⊥ : Ideal R).jacobson) (a b : R)
     (x : AdicCompletion J R)
     (h : algebraMap R (AdicCompletion J R) a = algebraMap R (AdicCompletion J R) b * x) : b ∣ a := by
-  have H : IsHausdorff J (R ⧸ Ideal.span {b}) := IsHausdorff.of_le_jacobson J _ hJ
+  have H : IsHausdorff J (R ⧸ Ideal.span {b}) := IsHausdorff.of_le_jacobson J _ (by simpa only [Ideal.jacobson_bot] using hJ)
   rw [← Ideal.mem_span_singleton, ← Ideal.Quotient.eq_zero_iff_mem]
   refine H.haus _ fun n => ?_
   rw [SModEq.zero]

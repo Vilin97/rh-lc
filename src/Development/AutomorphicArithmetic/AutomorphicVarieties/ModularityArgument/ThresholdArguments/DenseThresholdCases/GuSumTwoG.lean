@@ -26,7 +26,7 @@ private theorem tensV_section (p : V₁ →ₗ[↥LL.1] V₂) (s : V₂ →ₗ[�
     (x : V₂ ⊗[ℚ_[l]] Bst P) : tensV P p (tensV P s x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | tmul v b => simp [hps]
+  | tmul v b => simp [tensV, hps]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 variable [FiniteDimensional ↥LL.1 V₀] [FiniteDimensional ↥LL.1 V₁] [FiniteDimensional ↥LL.1 V₂]
 private theorem isPst_split {AI : LocAinf l P} (T : LocTied l P AI) {i : V₀ →ₗ[↥LL.1] V₁} {p : V₁ →ₗ[↥LL.1] V₂}

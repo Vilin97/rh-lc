@@ -18,11 +18,11 @@ abbrev D2 : Type := DualNumber (DualNumber ℂ)
 
 def i1 : DualNumber ℂ →+* D2 := algebraMap (DualNumber ℂ) D2
 
-def i2 : DualNumber ℂ →+* D2 := GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap ℂ (DualNumber ℂ))
+def i2 : DualNumber ℂ →+* D2 := dualMap (algebraMap ℂ (DualNumber ℂ))
 
 def r1 : D2 →+* DualNumber ℂ := (TrivSqZeroExt.fstHom (DualNumber ℂ) (DualNumber ℂ) (DualNumber ℂ)).toRingHom
 
-def r2 : D2 →+* DualNumber ℂ := GlobalTheory.CompanionTheory.Ar.dualMap (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom
+def r2 : D2 →+* DualNumber ℂ := dualMap (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom
 
 def q : D2 →+* DualNumber ℂ where
   toFun x := x.fst + TrivSqZeroExt.inr x.snd.fst
@@ -35,30 +35,30 @@ def q : D2 →+* DualNumber ℂ where
 theorem algebraMap_doubleDual_apply (a : ℂ) : algebraMap ℂ D2 a = TrivSqZeroExt.inl (TrivSqZeroExt.inl a) := rfl
 
 theorem q_snd (a : D2) : (q a).snd = (r1 a).snd + (r2 a).snd := by
-  simp [q, r1, r2, GlobalTheory.CompanionTheory.Ar.dualMap]
+  simp [q, r1, r2, dualMap]
 
 theorem quotient_inclusion_one : q.comp i1 = RingHom.id _ := by
   ext a <;> simp [q, i1, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 theorem quotient_inclusion_two : q.comp i2 = RingHom.id _ := by
-  ext a <;> simp [q, i2, GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
+  ext a <;> simp [q, i2, dualMap, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 theorem retraction_one_inclusion_one : r1.comp i1 = RingHom.id _ := by
   ext a <;> simp [r1, i1, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 theorem retraction_one_inclusion_two : r1.comp i2 = GlobalTheory.CompanionTheory.Ar.epsMul 0 := by
-  ext a <;> simp [r1, i2, GlobalTheory.CompanionTheory.Ar.dualMap, GlobalTheory.CompanionTheory.Ar.epsMul, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
+  ext a <;> simp [r1, i2, dualMap, GlobalTheory.CompanionTheory.Ar.epsMul, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 theorem retraction_two_inclusion_one : r2.comp i1 = GlobalTheory.CompanionTheory.Ar.epsMul 0 := by
-  ext a <;> simp [r2, i1, GlobalTheory.CompanionTheory.Ar.dualMap, GlobalTheory.CompanionTheory.Ar.epsMul, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
+  ext a <;> simp [r2, i1, dualMap, GlobalTheory.CompanionTheory.Ar.epsMul, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 theorem retraction_two_inclusion_two : r2.comp i2 = RingHom.id _ := by
-  ext a <;> simp [r2, i2, GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
+  ext a <;> simp [r2, i2, dualMap, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 theorem inclusion_one_algebraMap : i1.comp (algebraMap ℂ (DualNumber ℂ)) = algebraMap ℂ D2 := by
   ext a <;> simp [i1, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 theorem inclusion_two_algebraMap : i2.comp (algebraMap ℂ (DualNumber ℂ)) = algebraMap ℂ D2 := by
-  ext a <;> simp [i2, GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
+  ext a <;> simp [i2, dualMap, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 theorem q_alg : q.comp (algebraMap ℂ D2) = algebraMap ℂ (DualNumber ℂ) := by
   ext a <;> simp [q, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 theorem retraction_one_algebraMap : r1.comp (algebraMap ℂ D2) = algebraMap ℂ (DualNumber ℂ) := by
   ext a <;> simp [r1, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 theorem retraction_two_algebraMap : r2.comp (algebraMap ℂ D2) = algebraMap ℂ (DualNumber ℂ) := by
-  ext a <;> simp [r2, GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
+  ext a <;> simp [r2, dualMap, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 
 instance : IsLocalRing (DualNumber ℂ) := LieTangent.isLocalRing_dual
 instance : IsLocalRing D2 := LieTangent.isLocalRing_dual

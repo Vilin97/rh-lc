@@ -61,7 +61,9 @@ theorem chartDens_indicator_image {n d : ℕ} (J : Ideal (MvPolynomial (Fin n) �
       exact ⟨⟨t, ⟨ht, hx.2⟩, rfl⟩, hTx⟩
     · rintro ⟨⟨t, ⟨ht, hty⟩, rfl⟩, hTx⟩
       exact ⟨⟨γ.mapsTo ht, hty⟩, hTx⟩
-  rw [h1, h2, finsum_mem_image (γ.injOn.mono fun t ht => ht.1)]
+  have hinj : Set.InjOn γ.toFun {t | t ∈ Metric.ball (0 : Fin d → ℂ) γ.radius ∧ A *ᵥ γ.toFun t = y} :=
+    γ.injOn.mono (by intro t ht; exact ht.1)
+  rw [h1, h2, finsum_mem_image hinj]
   refine finsum_mem_congr rfl fun t ht => ?_
   have hti : γ.toFun t ∈ γ.image := ⟨t, ht.1, rfl⟩
   simp only [hT, Set.indicator_of_mem hti, ht.2]

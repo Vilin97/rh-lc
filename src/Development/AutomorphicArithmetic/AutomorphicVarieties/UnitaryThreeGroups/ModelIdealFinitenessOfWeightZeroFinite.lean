@@ -103,7 +103,6 @@ private theorem natCast_not_isUnit {l : ℕ} [Fact l.Prime] (c : Coef l) : ¬ Is
   have hinv : (l : ℝ)⁻¹ < 1 := inv_lt_one_of_one_lt₀ (by linarith)
   linarith
 
-set_option synthInstance.maxHeartbeats 100000 in
 theorem UpperTheory.V.U3.modelIdeal_finiteness_of_weightZero_finite :
     ∀ {l : ℕ} [Fact l.Prime] {c : Coef l} {Γ H : Type} [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [Group H] [TopologicalSpace H] [IsTopologicalGroup H]
       {η : Γ →* ℤˣ} {Ψ : Γ →* (c.O)ˣ} {N : Set Γ} {ι : H →* Γ} {hι : Continuous ι}

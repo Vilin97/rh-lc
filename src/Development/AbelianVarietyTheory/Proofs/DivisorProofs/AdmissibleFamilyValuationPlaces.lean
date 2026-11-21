@@ -219,8 +219,6 @@ open GlobalTheory.Cartier GlobalTheory.ArInt GlobalTheory.ProjVar GlobalTheory.T
 open GlobalTheory.PairTerm
 open Classical
 
-open private place from Development.AutomorphicArithmetic.LocalEmbeddings.PairMain
-
 private theorem vertNum_eq {F : Type} [Field F] [NumberField F] {Y : Var F} (p : ℕ) [Fact p.Prime] (V : Cover Y) (n : ℕ)
     (N : Fin n → HermLB V.p) (z : V.X) : vertNum p V n N z = (VertCmp.pdeg p (fun j => (N j).B) z : ℝ) := by
   rw [vertNum]

@@ -119,7 +119,7 @@ theorem HodgeFlagNeZero.proof : HodgeFlagNeZero.Statement := by
   have hcoeff : AddMonoidAlgebra.coeff P (μ c0) = g c0 := by
     simp only [P, coeff_sum, coeff_monomial]
     rw [Finset.sum_eq_single c0 (fun c _ hc => if_neg fun h => hc (hμ c h)) (by simp), if_pos rfl, hz, one_mul]
-  have hPne : P ≠ 0 := fun h => hm0 (by rw [h, coeff_zero] at hcoeff; exact hcoeff.symm)
+  have hPne : P ≠ 0 := fun h => hm0 (by simpa [h, g, c0, w] using hcoeff.symm)
   rw [hP]
   exact fun h => hPne (IsFractionRing.injective (MvPolynomial (Ψ × Fin D.N × Fin D.N) Ω) Pl.ΩY
     (by rw [h, map_zero]))

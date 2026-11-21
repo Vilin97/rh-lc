@@ -61,6 +61,6 @@ theorem ncard_cxPts_over_closed : ∀ (Y : Var ℂ) (Z : Set Y.X), (∀ x ∈ Z,
       obtain ⟨y, rfl⟩ := exists_cxPts_pt_eq Y.str (hZ x hx)
       exact ⟨y, hx, rfl⟩
   conv_rhs => rw [← him]
-  exact (Set.InjOn.ncard_image fun _ _ _ _ h => cxPts_eq_of_pt_eq h).symm
+  exact (Set.ncard_image_of_injOn fun _ _ _ _ h => cxPts_eq_of_pt_eq h).symm
 
 end GlobalTheory.CompanionTheory.KoszulCount

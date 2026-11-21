@@ -16,8 +16,7 @@ namespace GlobalTheory.DefLift
 
 theorem AllPlus.finite_smooth_irreducible : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S), AllPlus M → ∀ τ, FiniteDimensional ℂ (M.H τ) ∧ M.sm τ = ⊤ ∧ ∀ U : Submodule ℂ (M.H τ), (∀ u : Matrix.unitaryGroup (Fin V.rank) ℂ, ∀ x ∈ U, M.σ τ u x ∈ U) → U = ⊥ ∨ U = ⊤ := by
   intro D V S M h τ
-  obtain ⟨h1, h2, -, hK⟩ := GlobalTheory.CompactModel.model_allPos D V S M τ (funext fun a => h τ a)
-  obtain ⟨-, -, h3, -⟩ := hK
+  obtain ⟨h1, h2, -, -, -, h3, -⟩ := GlobalTheory.CompactModel.model_allPos D V S M τ (funext fun a => h τ a)
   exact ⟨h1, h2, fun U hU => h3 U le_top fun g hg => hU ⟨g, hg.1⟩⟩
 
 end GlobalTheory.DefLift

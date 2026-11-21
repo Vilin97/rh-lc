@@ -28,13 +28,12 @@ theorem sum_padicVal_log {n : ℕ} (hn : n ≠ 0) {S : Finset ℕ} (hS : ∀ p �
     refine Finset.sum_subset hsub fun p hpS hp => ?_
     have hpp := hS p hpS
     have hnd : ¬ p ∣ n := fun hd => hp (Nat.mem_primeFactors.2 ⟨hpp, hd, hn⟩)
-    simp [Nat.padicValNat_def, multiplicity_eq_zero_of_not_dvd hnd]
+    simp [padicValNat.eq_zero_of_not_dvd hnd]
   rw [← h1]
   conv_rhs => rw [← Nat.prod_factorization_pow_eq_self hn]
   rw [Finsupp.prod, Nat.support_factorization, Nat.cast_prod, Real.log_prod]
   · refine Finset.sum_congr rfl fun p hp => ?_
-    rw [Nat.cast_pow, Real.log_pow, Nat.factorization_def n (Nat.prime_of_mem_primeFactors hp),
-      Nat.padicValNat_def]
+    rw [Nat.cast_pow, Real.log_pow, Nat.factorization_def n (Nat.prime_of_mem_primeFactors hp)]
   · intro p hp
     have := (Nat.prime_of_mem_primeFactors hp).pos
     positivity

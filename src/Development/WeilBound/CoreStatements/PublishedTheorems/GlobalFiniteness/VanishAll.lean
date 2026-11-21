@@ -44,10 +44,10 @@ theorem cdp_gal_le_two_gen (F Ω : Type) [Field F] [NumberField F] [Field Ω] [A
   obtain ⟨K, S', hS', ⟨ψ⟩, ⟨e⟩⟩ := exists_gs_transport_field F Ω l S hS
   rw [GlobalTheory.T.cohomological_dimension_topological_iso _ _ l e]
   refine cdp_galUnramifiedOutside_le_two K (S' : Set (HeightOneSpectrum (𝓞 K.1))) Fact.out
-    (fun v hv => hS' v hv) (hK.imp id fun h => ?_)
-  have : IsTotallyComplex F := h
-  let _ : Algebra F K.1 := ψ.toRingHom.toAlgebra
-  exact isTotallyComplex_of_algebra F K.1
+    (fun v hv => hS' v hv) (hK.imp id fun h => by
+      let _ : IsTotallyComplex F := h
+      let _ : Algebra F K.1 := ψ.toRingHom.toAlgebra
+      exact isTotallyComplex_of_algebra F K.1)
 
 theorem subsingleton_hn_gen (F Ω : Type) [Field F] [NumberField F] [Field Ω] [Algebra F Ω]
     [IsAlgClosure F Ω] (l : ℕ) [Fact l.Prime] (r : ℕ) (S : Finset (HeightOneSpectrum (𝓞 F)))

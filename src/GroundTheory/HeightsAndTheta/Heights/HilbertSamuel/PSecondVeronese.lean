@@ -87,7 +87,7 @@ theorem isConjInvariant_metric (D : ℕ) : IsConjInvariant (metric D) := by
   have h : scale D (fun q => conj (z q)) = fun q => conj (scale D z q) := by
     funext q
     simp [scale, map_mul, Complex.conj_ofReal]
-  show (fsMetric (Ix (Idx D))).ρ (scale D _) = (fsMetric (Ix (Idx D))).ρ (scale D z)
+  show (fsMetric (ι := Ix (Idx D))).ρ (scale D _) = (fsMetric (ι := Ix (Idx D))).ρ (scale D z)
   rw [h]
   exact ProjLine.isConjInvariant_fs (scale D z)
 

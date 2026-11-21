@@ -115,11 +115,11 @@ theorem exists_isometry_comp_eq_of_nondegenerate (h2 : (2 : E) ≠ 0) {B : V →
     [FiniteDimensional E W] {g f : W →ₗ[E] V} (hgf : ∀ a b, B (f a) (f b) = B (g a) (g b))
     (hW : ∀ a, (∀ b, B (g b) (g a) = 0) → a = 0) :
     ∃ γ : V ≃ₗ[E] V, (∀ z w, B (γ z) (γ w) = B z w) ∧ ∀ a, γ (g a) = f a := by
-  obtain ⟨v, hv⟩ := exists_orthogonal_basis (n := Fin (finrank E W)) h2
-    (B := LinearMap.mk₂'ₛₗ (RingHom.id E) c (fun a b => B (g a) (g b))
+  obtain ⟨v, hv⟩ := exists_orthogonal_basis_fin h2 (finrank E W)
+    (LinearMap.mk₂'ₛₗ (RingHom.id E) c (fun a b => B (g a) (g b))
       (fun _ _ _ => by simp) (fun _ _ _ => by simp) (fun _ _ _ => by simp)
       (fun _ _ _ => by simp))
-    (fun a b => hB _ _) (by simp)
+    (fun a b => hB _ _) rfl
   replace hv : ∀ i j, i ≠ j → B (g (v i)) (g (v j)) = 0 := hv
   obtain ⟨γ, hγ, e⟩ := exists_isometry_of_orthogonal h2 hB (x := fun i => g (v i))
     (y := fun i => f (v i)) hv (fun i j hij => by rw [hgf]; exact hv i j hij)
@@ -138,7 +138,7 @@ theorem exists_isometry_comp_eq_of_nondegenerate (h2 : (2 : E) ≠ 0) {B : V →
 theorem exists_flip_eq [FiniteDimensional E V] (h2 : (2 : E) ≠ 0) (hc : ∀ t, c (c t) = t)
     {B : V →ₗ[E] V →ₛₗ[c] E} (hB : ∀ x y, c (B x y) = B y x)
     (hV : ∀ x, (∀ y, B y x = 0) → x = 0) (ψ : V →ₗ[E] E) : ∃ w, ∀ z, B z w = ψ z := by
-  obtain ⟨v, hv⟩ := exists_orthogonal_basis (n := Fin (finrank E V)) h2 (B := B) hB (by simp)
+  obtain ⟨v, hv⟩ := exists_orthogonal_basis_fin h2 (finrank E V) B hB rfl
   have hne : ∀ i, B (v i) (v i) ≠ 0 := fun i hi => v.ne_zero i (hV _ fun b => by
     have : B.flip (v i) = 0 := v.ext fun j => by
       by_cases hij : j = i

@@ -26,7 +26,7 @@ structure LieMetric (M : LieModel G ξ Li) {K : Type} {J : K → Type} (y : (Σ 
   herm : ∀ (z : Sp ℂ ⟶ X) (V : Type) [AddCommGroup V] [Module ℂ V] (Mz : LieModel G z V),
     ∃ core : InnerProductSpace.Core ℂ V, ∀ a b, core.inner a b = ip z (Mz.pt a) (Mz.pt b)
   conj : ∀ (z : Sp ℂ ⟶ X) (v w : epsAt z ⟶ G) (v' w' : epsAt (spMap (starRingEnd ℂ) ≫ z) ⟶ G),
-    v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v.left → w'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ w.left →
+    v'.left = spMap (dualMap (starRingEnd ℂ)) ≫ v.left → w'.left = spMap (dualMap (starRingEnd ℂ)) ≫ w.left →
       ip _ v' w' = starRingEnd ℂ (ip z v w)
   cont : ∀ a b : Li, ∃ F : ((Σ k, J k) → ℂ) → ℂ,
     ContinuousOn F {w | ∃ (z : Sp ℂ ⟶ X) (va vb : epsAt z ⟶ G), CoordsAt ξ y z w ∧ M.ValAt z a va ∧ M.ValAt z b vb} ∧

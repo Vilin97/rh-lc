@@ -88,8 +88,12 @@ theorem top_of_bumps (H : Subgroup G) (ρ : Representation ℂ H W)
       rw [this, e]; group
   obtain ⟨K₂, h₂O, hK₂o, -, b, hbS, hbb⟩ := hb v K₁ hK₁o
   have hB'S := GlobalTheory.T.bump_translate_mem_submodule H ρ K₁ K₂ h₂O hK₁c hK₂o v hv S hS b hbb hbS _ hB'
-  have := hS c⁻¹ _ hB'S
-  rwa [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply] at this
+  have hcancel : cInd H ρ c⁻¹ (cInd H ρ c B) = B := by
+    change ((cInd H ρ c⁻¹) * (cInd H ρ c)) B = B
+    set_option synthInstance.maxHeartbeats 200000 in
+      rw [← map_mul, inv_mul_cancel, map_one]
+    rfl
+  simpa only [hcancel] using hS c⁻¹ _ hB'S
 
 end Abs
 end GlobalTheory.CompanionTheory.BZPhiPG.OntoO

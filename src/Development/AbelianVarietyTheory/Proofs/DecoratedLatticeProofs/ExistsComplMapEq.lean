@@ -176,8 +176,67 @@ open GlobalTheory.Core.Rk.SWQ.LatHalf in
 theorem GlobalTheory.Core.Rk.SWQ.LatHalf.mem_latO_iff_intM : ∀ (D : D7) (q : FinPl D) (w : HeightOneSpectrum (𝓞 D.host.E)) (h : w.under (𝓞 D.host.F) = q), Formalism.MainNotions.SchurIrreducible.IsSplit (E := D.host.E) q → ∀ (S T : HSp D) (LS : Lat S) (LT : Lat T), IsSelfDualC S LS → IsSelfDualC T LT → ∀ a : GL (Fin S.rank) (w.adicCompletion D.host.E), GlobalTheory.LFun.IsFrameAt w LS a → ∃ b : GL (Fin T.rank) (w.adicCompletion D.host.E), ∀ u : WO S T, offM q u = 0 → (∀ i j, cw h (cA D (u i j)) = 0) → (u ∈ latO S T (LS : Set (Fin S.rank → D.host.E)) (LT : Set (Fin T.rank → D.host.E)) (fun v => v = q) ↔ IntM ((b⁻¹).1 * u.map (cw h) * a.1)) := by
   intro D q w h hs S T LS LT hS hT a ha
   obtain ⟨ι, -, h1, -, -, h4, h5, -, -⟩ := GlobalTheory.Core.Rk.SplitIota.exists_iota D q w h hs
+  have hfull : ∀ (V : HSp D) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)),
+      IsSelfDualC V Λ → Submodule.IsFullLattice D.host.E Λ := by
+    intro V Λ hΛ
+    haveI : Submodule.IsLattice D.host.E Λ := hΛ.1
+    refine ⟨?_⟩
+    obtain ⟨s, hs⟩ := hΛ.1.fg
+    apply eq_top_iff.mpr
+    intro y _
+    let f : (Fin V.rank → D.host.E) → D.host.E := fun x =>
+      ∑ i, ∑ j, star (x i) * V.gram i j * y j
+    obtain ⟨a, ha⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors (𝓞 D.host.E)) s f
+    have ha0 : (algebraMap (𝓞 D.host.E) D.host.E a) ≠ 0 := by
+      exact (FaithfulSMul.algebraMap_injective _ _).ne (mem_nonZeroDivisors_iff_ne_zero.mp a.2)
+    let P : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E) := {
+      carrier := {x | ∃ b : 𝓞 D.host.E, (b : D.host.E) = (algebraMap (𝓞 D.host.E) D.host.E a) * f x}
+      zero_mem' := by refine ⟨0, ?_⟩; simp [f]
+      add_mem' := by
+        rintro x z ⟨b, hb⟩ ⟨c, hc⟩
+        refine ⟨b + c, ?_⟩
+        change (b : D.host.E) + c = _
+        rw [hb, hc]
+        simp [f, map_add, add_mul, Finset.sum_add_distrib, mul_add]
+      smul_mem' := by
+        rintro c x ⟨b, hb⟩
+        refine ⟨RingOfIntegers.mapRingHom (starRingEnd D.host.E) c * b, ?_⟩
+        simp only [map_mul, hb, f, Pi.smul_apply, Algebra.smul_def, map_mul, RingOfIntegers.mapRingHom_apply, star_mul]
+        simp only [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro i _
+        apply Finset.sum_congr rfl
+        intro j _
+        change star (c : D.host.E) * _ = _
+        ring }
+    have hsP : (s : Set (Fin V.rank → D.host.E)) ⊆ P := by
+      intro x hx
+      obtain ⟨b, hb⟩ := ha x hx
+      exact ⟨b, by simpa [Algebra.smul_def] using hb⟩
+    have hy : (algebraMap (𝓞 D.host.E) D.host.E a) • y ∈ Λ := by
+      apply (hΛ.2 _).2
+      intro x hx
+      have hxP : x ∈ P := (hs ▸ Submodule.span_le.mpr hsP) hx
+      obtain ⟨b, hb⟩ := hxP
+      refine ⟨b, ?_⟩
+      rw [hb]
+      dsimp only [f, Pi.smul_apply]
+      simp only [smul_eq_mul, Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro i _
+      apply Finset.sum_congr rfl
+      intro j _
+      ring
+    have hy' : (algebraMap (𝓞 D.host.E) D.host.E a) • y ∈ Submodule.span D.host.E (Λ : Set (Fin V.rank → D.host.E)) :=
+      Submodule.subset_span hy
+    have := (Submodule.span D.host.E (Λ : Set (Fin V.rank → D.host.E))).smul_mem
+      (algebraMap (𝓞 D.host.E) D.host.E a)⁻¹ hy' 
+    change (algebraMap (𝓞 D.host.E) D.host.E a)⁻¹ •
+      ((algebraMap (𝓞 D.host.E) D.host.E a) • y) ∈ _ at this
+    rw [← smul_assoc, smul_eq_mul, inv_mul_cancel₀ ha0, one_smul] at this
+    exact this
   obtain ⟨e, ⟨⟨b₀, hb₀, -⟩, -⟩, -, -⟩ := GlobalTheory.LFun.SplitChart.exists_isSplitChart (isCMExt_host D)
-    (GlobalTheory.Doubling.isHermND_gram T) hT.1.fg hT.1.span_eq_top h hs
+    (GlobalTheory.Doubling.isHermND_gram T) hT.1.fg (hfull T LT hT).span_eq_top h hs
     (GlobalTheory.Core.Rk.IwSplit.isSelfDualAt_of_isSelfDualC hT q)
   clear e
   obtain ⟨a₀, ha₀, h0, hgen⟩ := exists_gen w D.host.AA (GlobalTheory.ModelLatticeCheck.AA_ne_zero D)

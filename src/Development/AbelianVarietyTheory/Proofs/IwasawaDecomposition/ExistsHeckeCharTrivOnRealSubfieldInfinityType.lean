@@ -218,17 +218,15 @@ theorem exists_hecke_trivOn : ∀ (F L : Type) [Field F] [NumberField F] [Field 
     obtain ⟨w', hw', -⟩ := existsUnique_conjPl c.toRingEquiv w
     obtain ⟨x', e1, e2, -⟩ := conj_loc hC hw' x
     rw [hloc w w' x x' e1 hx (e2.trans hx), hψS w hwS, hψN w' (hS w hwS w' hw'), div_one]
-  letI : IsOneApply (Fˣ →* ℂˣ) := ⟨fun _ => rfl⟩
-  letI : IsMulApply (Fˣ →* ℂˣ) := ⟨fun _ _ _ => rfl⟩
   refine ⟨χ, hχu, ⟨fun v k => ?_, fun w k => ?_⟩, ?_, fun v x hx hx1 => ?_, fun v hv hv' x hx => ?_,
     fun w hwS k y b hk hb => ?_, fun w hwS n => ⟨⟨fun H => ?_, fun H x hx => ?_⟩,
       fun w' hw' => ⟨fun H => ?_, fun H x hx => ?_⟩⟩⟩
   · rw [← hfix _ (conj_locF h hC v k)]
     unfold HChar.resFin locF
-    rw [prod_apply, map_prod]
+    rw [MonoidHom.finset_prod_apply, map_prod]
     rfl
   · unfold HChar.resInf
-    rw [prod_apply]
+    rw [MonoidHom.finset_prod_apply]
     refine Finset.prod_eq_one fun w' _ => hfix (infIdele L w' (atInf w' (upF F k))) ?_
     rw [conj_inf h hC, conj_upF]
   · refine (GlobalTheory.InfTypeLocal.infType_iff_local L I φ h.bij χ.1 χ.2.1 _).2 fun i k => ?_

@@ -47,11 +47,7 @@ theorem szRow_TO_lower : SzRow (fun C D L => ((C.T.CP * zBase L ^ C.T.eP) ^ 4 * 
   obtain ⟨-, -, hr, hkr, -, -, hL1, -, hZ, hD, hkf, -⟩ := hx1 L.sc D.R hLe hxa V.ranks
   have hxx := L.sc.one_lt_alt
   have hn : (0 : ℝ) < D.R.n := by
-    have : 0 < D.R.n := by
-      unfold Ranks.n
-      have := D.R.two_le_m
-      have := D.R.m_le_f
-      omega
+    have : 0 < D.R.n := by unfold Ranks.n; positivity
     exact_mod_cast this
   have hd : L.sc.x ^ (-L.sc.eps) ≤ L.de2 := by
     rw [L.typeDensity_eq_card_div, le_div_iff₀ hn]

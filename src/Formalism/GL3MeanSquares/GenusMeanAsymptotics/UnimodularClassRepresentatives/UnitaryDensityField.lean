@@ -121,8 +121,8 @@ theorem exists_tr_one (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
     rw [← hc]
     exact Ideal.mem_map_of_mem _ h
   obtain ⟨u, hu⟩ := MeanA.exists_mul_sub_one_mem_pow h𝔭 hc𝔭 N
-  refine ⟨ι u * b, ?_⟩
-  have e : conjO K a * (ι u * b) + conjO K (ι u * b) * a - 1 = ι (u * c - 1) := by
+  refine ⟨(algebraMap (𝓞 F) (𝓞 K)) u * b, ?_⟩
+  have e : conjO K a * ((algebraMap (𝓞 F) (𝓞 K)) u * b) + conjO K ((algebraMap (𝓞 F) (𝓞 K)) u * b) * a - 1 = (algebraMap (𝓞 F) (𝓞 K)) (u * c - 1) := by
     rw [map_mul (conjO K), idealPowerSpanBounds.conjO_map hF, map_sub, map_mul, map_one, hc]
     ring
   rw [e, idealPowerSpanBounds.mem_pow_iff]

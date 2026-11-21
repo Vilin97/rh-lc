@@ -17,18 +17,18 @@ variable (Xo : Moduli Dw l) (c : Coeff l)
 
 theorem tan_coef {V K : Type} [CommRing V] [CommRing K] [Algebra V K] {d : ℕ} (j : Fin d) :
     (jetTan ((0 : Fin 1), j) : Jet K (Fin 1 × Fin d) (0 + 1) →ₐ[K] DualNumber K).toRingHom.comp
-      (jetCoef (algebraMap V K) (Fin 1 × Fin d) 1) = (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)).comp
+      (jetCoef (algebraMap V K) (Fin 1 × Fin d) 1) = (dualMap (algebraMap V K)).comp
       (jetTan ((0 : Fin 1), j) : Jet V (Fin 1 × Fin d) (0 + 1) →ₐ[V] DualNumber V).toRingHom := by
   apply Ideal.Quotient.ringHom_ext
   apply MvPolynomial.ringHom_ext
   · intro r
-    show MvPolynomial.aeval _ (MvPolynomial.map _ (MvPolynomial.C r)) = GlobalTheory.CompanionTheory.Ar.dualMap _ (MvPolynomial.aeval _ (MvPolynomial.C r))
+    show MvPolynomial.aeval _ (MvPolynomial.map _ (MvPolynomial.C r)) = dualMap _ (MvPolynomial.aeval _ (MvPolynomial.C r))
     rw [MvPolynomial.map_C, MvPolynomial.aeval_C, MvPolynomial.aeval_C]
-    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   · intro s
-    show MvPolynomial.aeval _ (MvPolynomial.map _ (MvPolynomial.X s)) = GlobalTheory.CompanionTheory.Ar.dualMap _ (MvPolynomial.aeval _ (MvPolynomial.X s))
+    show MvPolynomial.aeval _ (MvPolynomial.map _ (MvPolynomial.X s)) = dualMap _ (MvPolynomial.aeval _ (MvPolynomial.X s))
     rw [MvPolynomial.map_X, MvPolynomial.aeval_X, MvPolynomial.aeval_X]
-    split_ifs <;> ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    split_ifs <;> ext <;> simp [dualMap]
 
 set_option maxHeartbeats 1000000 in
 theorem chartJetTan_holds : ChartJetTanSt Xo c := by

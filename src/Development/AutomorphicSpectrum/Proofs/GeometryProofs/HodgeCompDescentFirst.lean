@@ -86,7 +86,7 @@ theorem exists_value_up {t : SAB H X₀} {t' : SAB H X} {f : X ⟶ X₀} (m : SA
     {ξ : Spec (CommRingCat.of Ω) ⟶ X} {ξ₀ : Spec (CommRingCat.of Ω₀) ⟶ X₀} {i : Ω₀ →+* Ω}
     (hall : ∀ q : X, genPt ξ ⤳ q) (hd : GlobalTheory.CompanionTheory.Ar.Dominates ξ ξ₀ f i) {V V' : Type} [AddCommGroup V] [Module Ω₀ V]
     [AddCommGroup V'] [Module Ω V'] {M : LieModel t.G ξ₀ V} {M' : LieModel t'.G ξ V'} {j : V →+ V'}
-    (hj : ∀ e, (M'.pt (j e)).left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (M.pt e).left)
+    (hj : ∀ e, (M'.pt (j e)).left ≫ m.φ = spMap (dualMap i) ≫ (M.pt e).left)
     (z : Spec (CommRingCat.of ℂ) ⟶ X) {e : V} {v₀ : epsAt (z ≫ f) ⟶ t.G} (hv : M.ValAt (z ≫ f) e v₀) :
     ∃ v : epsAt z ⟶ t'.G, M'.ValAt z (j e) v ∧ v₀.left = v.left ≫ m.φ := by
   obtain ⟨h₀, w, hw, hwz⟩ := hv
@@ -104,20 +104,20 @@ theorem exists_value_up {t : SAB H X₀} {t' : SAB H X} {f : X ⟶ X₀} (m : SA
     Scheme.Spec_stalkClosedPointTo_fromSpecStalk z
   refine ⟨LieCarrier.epsHom _ _ z hc ≫ u, ⟨hall _, u, hu, rfl⟩, ?_⟩
   have e1 : (LieCarrier.epsHom _ _ z hc ≫ u).left =
-      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo z).hom)) ≫ u.left := rfl
+      Spec.map (CommRingCat.ofHom (dualMap (Scheme.stalkClosedPointTo z).hom)) ≫ u.left := rfl
   have e2 : (Scheme.stalkClosedPointTo (z ≫ f)).hom =
       (Scheme.stalkClosedPointTo z).hom.comp (f.stalkMap (centre z)).hom := by
     rw [Scheme.stalkClosedPointTo_comp]
     rfl
-  have e4 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo (z ≫ f)).hom) =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo z).hom) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (f.stalkMap (centre z)).hom) := by
+  have e4 : spMap (dualMap (Scheme.stalkClosedPointTo (z ≫ f)).hom) =
+      spMap (dualMap (Scheme.stalkClosedPointTo z).hom) ≫ spMap (dualMap (f.stalkMap (centre z)).hom) := by
     rw [e2]
     exact (congrArg spMap (LiePull.dualMap_comp (f.stalkMap (centre z)).hom (Scheme.stalkClosedPointTo z).hom).symm).trans
       (spMap_comp' _ _)
-  have e3 : (LieCarrier.epsHom _ _ z hc ≫ u).left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo z).hom) ≫
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (f.stalkMap (centre z)).hom) ≫ w.left :=
+  have e3 : (LieCarrier.epsHom _ _ z hc ≫ u).left ≫ m.φ = spMap (dualMap (Scheme.stalkClosedPointTo z).hom) ≫
+      spMap (dualMap (f.stalkMap (centre z)).hom) ≫ w.left :=
     (congrArg (· ≫ m.φ) e1).trans ((Category.assoc _ _ _).trans
-      (congrArg (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo z).hom) ≫ ·) huφ))
+      (congrArg (spMap (dualMap (Scheme.stalkClosedPointTo z).hom) ≫ ·) huφ))
   exact hwz.trans (((congrArg (· ≫ w.left) e4).trans (Category.assoc _ _ _)).trans e3.symm)
 
 end Points
@@ -141,7 +141,7 @@ theorem lie_of_cover : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
     refine (Category.assoc _ _ _).symm.trans ?_
     refine (congrArg (· ≫ (𝔐₀.t.act.act a).left) (hpt e)).trans ?_
     refine (Category.assoc _ _ _).trans ?_
-    exact congrArg (spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ ·) e2.symm)
+    exact congrArg (spMap (dualMap i) ≫ ·) e2.symm)
   have hemb : ∀ s, 𝔐.emb s = i.comp (𝔐₀.emb s) := fun s => by
     simp only [HodgeCpt.emb, hcst, RingHom.comp_assoc]
   have heig : ∀ s e, e ∈ 𝔐₀.Vgen s → j e ∈ 𝔐.Vgen s := fun s e he => by
@@ -151,7 +151,7 @@ theorem lie_of_cover : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
   refine ⟨j, hsemi, hind, fun s a => ?_, fun q hq s => ?_, fun z r b Γ hΓ => ?_⟩
   · refine pt_inj_of_pull 𝔐.m.cart 𝔐.M ?_
     have e1 : (𝔐.M.pt (j (Fl₀.b s a))).left ≫ 𝔐.m.φ =
-        spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (𝔐₀.M.pt (Fl₀.b s a)).left ≫ 𝔐₀.m.φ := by
+        spMap (dualMap i) ≫ (𝔐₀.M.pt (Fl₀.b s a)).left ≫ 𝔐₀.m.φ := by
       rw [hφ, ← Category.assoc, hpt, Category.assoc]
     exact e1.trans (hfl s a).symm
   · have hq₀ : ∀ r : ℕ, r.Prime → ¬ InFibre 𝔐₀.ξ r (pushCpt hd q) :=

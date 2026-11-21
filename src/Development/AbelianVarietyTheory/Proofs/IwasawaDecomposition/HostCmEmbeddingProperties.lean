@@ -39,7 +39,7 @@ theorem valuation_eq_of_unram (K : Type) [Field K] [NumberField K] [IsCMField K]
     rw [key x, key y]
   rw [h1, Ideal.ramificationIdxIn_eq_ramificationIdx _ P.asIdeal (K ≃ₐ[maximalRealSubfield K] K)] at hcard
   rw [← HeightOneSpectrum.valuation_liesOver K (P.under (𝓞 (maximalRealSubfield K))) P x,
-    ← hcard, pow_one]
+    Ideal.ramificationIdx'_eq_ramificationIdx _ _ (P.under (𝓞 (maximalRealSubfield K))).ne_bot, ← hcard, pow_one]
 
 
 open Classical in

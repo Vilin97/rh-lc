@@ -88,8 +88,6 @@ private theorem jetCopy_eq_lemma {R : Type} [CommRing R] {d n : ℕ} (m : ℕ) (
       jetSubstP m (fun p : Fin 1 × Fin d => (MvPolynomial.X (i, p.2) : MvPolynomial (Fin n × Fin d) R)) := by
   unfold jetCopy jetSubstP
   congr 1
-  funext p
-  simp only [MvPolynomial.constantCoeff_X, map_zero, sub_zero]
 
 theorem sq_copy {n : ℕ} (m : ℕ) (i : Fin n) :
     homAt (spMap ψ ≫ x0) (jetCopy d m i) ≫ rjBC ψ x0 d m 1 = rjBC ψ x0 d m n ≫ homAt x0 (jetCopy d m i) := by

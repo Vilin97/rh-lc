@@ -36,9 +36,7 @@ def labLL0 (D : D7) (τ : D.what₂.Tau) : D.host.E →+* ↥D.LL0 :=
   (Links.labLL D τ).codRestrict D.LL0 fun _ => D.hostField_le_fixedField _
 
 theorem embLL0_labLL0 (τ : D.what₂.Tau) : (embLL0 D).comp (labLL0 D τ) = tauE D τ :=
-  by
-    ext x
-    exact RingHom.congr_fun D.embE_φ₀ ((D.host.sigmaOf (D.eTau τ).1 : D.host.E →+* D.host.E) x)
+  FWT.embV_spec (RingHom.id _) D.what₂.embLL (RingHom.comp_id _) τ
 
 structure Setup (X : NTw D.R D.host D.what₂ D.LL0 N) : Type 1 where
 
@@ -136,10 +134,7 @@ structure Good : Prop where
     IsClassSystem (Vc D j) ((ρ.B i j b).levJ t) (ρ.rep i j b t)
 
 theorem Good.weil_base {ρ : Setup X} (h : ρ.Good) (i : X.Tw) (j : Fin D.R.m) (b : Bool) :
-    (ρ.B i j b).IsWeil 1 (ρ.om i j b 1) := by
-  apply h.weil i j b (Twist.triv Circle ∅)
-  exact ⟨by simp [Twist.triv], fun _ => rfl, fun _ => rfl, splitSet_empty,
-    fun _ _ _ _ _ => rfl, fun _ _ _ _ _ _ _ => rfl⟩
+    (ρ.B i j b).IsWeil 1 (ρ.om i j b 1) := h.weil i j b (Twist.triv Circle ∅) (Twist.triv_good splitSet_empty)
 
 theorem eO_injective : Function.Injective (ρ.eO i b) := (ρ.e i b).injective.comp (IsFractionRing.injective _ _)
 
@@ -210,7 +205,8 @@ def rdK (hρ : ρ.Good) (k : ℕ) : X.Ok i k ⊗[X.O i] Y.Fm i ((j : ℕ) + 1) b
   { toFun := φ
     map_add' := φ.map_add
     map_smul' := fun c x => by
-      induction x using TensorProduct.inductionOn with
+      induction x using TensorProduct.induction_on with
+      | zero => rw [smul_zero, map_zero, smul_zero]
       | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
       | tmul a f =>
         change ρ.eOk i b k (c • a) • rd f = ρ.eOk i b k c • ρ.eOk i b k a • rd f

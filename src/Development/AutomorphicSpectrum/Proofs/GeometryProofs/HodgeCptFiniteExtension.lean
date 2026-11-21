@@ -130,7 +130,7 @@ variable {X X' : Scheme.{0}} {Ω Ω' : Type} [Field Ω] [Field Ω'] {ξ : Sp Ω 
   {M : LieModel G ξ V} {M' : LieModel G' ξ' V'} {j : V →+ V'}
 
 theorem value_pull (hd : GlobalTheory.CompanionTheory.Ar.Dominates ξ' ξ f i) (hG : IsGrpPullback G' G f φ)
-    (hj : ∀ e, (M'.pt (j e)).left ≫ φ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap i)) ≫ (M.pt e).left)
+    (hj : ∀ e, (M'.pt (j e)).left ≫ φ = Spec.map (CommRingCat.ofHom (dualMap i)) ≫ (M.pt e).left)
     {z : Sp ℂ ⟶ X'} (hq : genPt ξ' ⤳ centre z) (hp : genPt ξ ⤳ f (centre z)) {e : V}
     (he : e ∈ M.lat ⟨f (centre z), hp⟩) :
     ∃ (w : epsAt (z ≫ f) ⟶ G) (w' : epsAt z ⟶ G'), M.ValAt (z ≫ f) e w ∧ M'.ValAt z (j e) w' ∧
@@ -151,14 +151,14 @@ theorem value_pull (hd : GlobalTheory.CompanionTheory.Ar.Dominates ξ' ξ f i) (
   have e0 : (Scheme.stalkClosedPointTo (z ≫ f)).hom =
       (Scheme.stalkClosedPointTo z).hom.comp (f.stalkMap (centre z)).hom :=
     congrArg (fun t => t.hom) (Scheme.stalkClosedPointTo_comp z f)
-  show (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo z).hom)) ≫ v'.left) ≫ φ =
-    Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo (z ≫ f)).hom)) ≫ v.left
+  show (Spec.map (CommRingCat.ofHom (dualMap (Scheme.stalkClosedPointTo z).hom)) ≫ v'.left) ≫ φ =
+    Spec.map (CommRingCat.ofHom (dualMap (Scheme.stalkClosedPointTo (z ≫ f)).hom)) ≫ v.left
   refine (Category.assoc _ _ _).trans ?_
-  refine (congrArg (fun t => Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo z).hom)) ≫ t) hφ).trans ?_
+  refine (congrArg (fun t => Spec.map (CommRingCat.ofHom (dualMap (Scheme.stalkClosedPointTo z).hom)) ≫ t) hφ).trans ?_
   refine (Category.assoc _ _ _).symm.trans ?_
   refine congrArg (fun t => t ≫ v.left) ?_
-  have e1 : GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo (z ≫ f)).hom =
-      (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo z).hom).comp (GlobalTheory.CompanionTheory.Ar.dualMap (f.stalkMap (centre z)).hom) := by
+  have e1 : dualMap (Scheme.stalkClosedPointTo (z ≫ f)).hom =
+      (dualMap (Scheme.stalkClosedPointTo z).hom).comp (dualMap (f.stalkMap (centre z)).hom) := by
     rw [e0]
     exact (LiePull.dualMap_comp _ _).symm
   have e2 := congrArg (fun t => Spec.map (CommRingCat.ofHom t)) e1
@@ -302,7 +302,7 @@ theorem hodgeInnerProduct_unique (m : SABMap t' t f) {z : Sp ℂ ⟶ X'} (v w : 
 
 theorem grNorm_down (m : SABMap t' t f) (hξ' : IsCptGen ξ') (hd : GlobalTheory.CompanionTheory.Ar.Dominates ξ' ξ f i)
     (M : LieModel t.G ξ Li) (M' : LieModel t'.G ξ' Li') (j : Li →+ Li') (hj : IsExtOver i j)
-    (hpt : ∀ e, (M'.pt (j e)).left ≫ m.φ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap i)) ≫ (M.pt e).left)
+    (hpt : ∀ e, (M'.pt (j e)).left ≫ m.φ = Spec.map (CommRingCat.ofHom (dualMap i)) ≫ (M.pt e).left)
     (Vl : Lat ξ Li) {r : ℕ} (b₀ : Fin r → Li) (hb₀ : LinearIndependent Ω b₀) (idx : Fin r) (z : Sp ℂ ⟶ X')
     (hq : genPt ξ' ⤳ centre z) (hp : genPt ξ ⤳ f (centre z)) (b : Fin r → Li)
     (hbf : ∀ s, flagStep Ω b s = flagStep Ω b₀ s) (hbV : Vl.IsFrameAt b ⟨f (centre z), hp⟩)
@@ -426,7 +426,7 @@ theorem secNorm_pull (hd : GlobalTheory.CompanionTheory.Ar.Dominates ξ' ξ f i)
 
 end Sec
 
-theorem hodgeLine_pull : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (S : Finset ℕ) (Ω Ω' : Type) [Field Ω] [Field Ω'] (i : Ω →+* Ω') (K K' : Type) [Fintype K] [Fintype K'] (J : K → Type) (J' : K' → Type) [∀ k, Fintype (J k)] [∀ k, Fintype (J' k)] (y : (Σ k, J k) → Ω) (y' : (Σ k, J' k) → Ω') (A : HodgeCpt Y S y) (A' : HodgeCpt Y S y') (h : A'.X ⟶ A.X) (j : A.Li →+ A'.Li) (m : SABMap A'.t A.t h) (κ : K → K') (v : (Σ k, J k) → (Σ k, J' k)) (Fl : A.Flag), AI.I1.IsBlockMap κ v → (∀ q, y' (v q) = i (y q)) → GlobalTheory.CompanionTheory.Ar.Dominates A'.ξ A.ξ h i → A'.f = h ≫ A.f → A'.m.φ = m.φ ≫ A.m.φ → A'.cst = i.comp A.cst → IsExtOver i j → (∀ w, (A'.M.pt (j w)).left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (A.M.pt w).left) → (∀ s, A'.V s = (A.V s).pull A'.ξ h j) → ∀ Fl' : A'.Flag, (∀ s k, Fl'.b s k = j (Fl.b s k)) → ∀ r (e₀ : Ω) (L : HermLine J) (L' : HermLine J'), Fl.IsHodgeLine r e₀ L → AI.I4.IsPullHerm κ v L L' → Fl'.IsHodgeLine r (i e₀) L' := by
+theorem hodgeLine_pull : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (S : Finset ℕ) (Ω Ω' : Type) [Field Ω] [Field Ω'] (i : Ω →+* Ω') (K K' : Type) [Fintype K] [Fintype K'] (J : K → Type) (J' : K' → Type) [∀ k, Fintype (J k)] [∀ k, Fintype (J' k)] (y : (Σ k, J k) → Ω) (y' : (Σ k, J' k) → Ω') (A : HodgeCpt Y S y) (A' : HodgeCpt Y S y') (h : A'.X ⟶ A.X) (j : A.Li →+ A'.Li) (m : SABMap A'.t A.t h) (κ : K → K') (v : (Σ k, J k) → (Σ k, J' k)) (Fl : A.Flag), AI.I1.IsBlockMap κ v → (∀ q, y' (v q) = i (y q)) → GlobalTheory.CompanionTheory.Ar.Dominates A'.ξ A.ξ h i → A'.f = h ≫ A.f → A'.m.φ = m.φ ≫ A.m.φ → A'.cst = i.comp A.cst → IsExtOver i j → (∀ w, (A'.M.pt (j w)).left ≫ m.φ = spMap (dualMap i) ≫ (A.M.pt w).left) → (∀ s, A'.V s = (A.V s).pull A'.ξ h j) → ∀ Fl' : A'.Flag, (∀ s k, Fl'.b s k = j (Fl.b s k)) → ∀ r (e₀ : Ω) (L : HermLine J) (L' : HermLine J'), Fl.IsHodgeLine r e₀ L → AI.I4.IsPullHerm κ v L L' → Fl'.IsHodgeLine r (i e₀) L' := by
   intro E _ _ _ H D l Xo c O _ β Y S Ω Ω' _ _ i K K' _ _ J J' _ _ y y' A A' g j m κ v Fl hv hy hdom _ _ _ hext hpt hV
     Fl' hb r e₀ L L' hL hP z w hco hint t₁ ν₁ hn
   have hq : genPt A'.ξ ⤳ centre z := A'.all _

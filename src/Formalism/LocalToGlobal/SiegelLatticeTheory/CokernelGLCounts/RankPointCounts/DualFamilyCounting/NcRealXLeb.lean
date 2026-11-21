@@ -170,7 +170,7 @@ theorem Kc_cont (T : ℝ) : Continuous (Kc (k := k) (r := r) T) := by
   have hM : ∀ a b, Continuous fun m : Mt k r => WlocSk.NB.mof m a b := by
     intro a b
     simp only [WlocSk.NB.mof, WlocSk.NB.bF, WlocSk.NB.bC, Matrix.mul_apply, Matrix.conjTranspose_apply]
-    exact continuous_finset_sum _ fun c _ => ((hE _ _).star).mul (hE _ _)
+    exact continuous_finsetSum _ fun c _ => ((hE _ _).star).mul (hE _ _)
   rcases i with ((⟨p, u⟩ | ⟨a, u⟩) | (⟨a, j, u⟩ | (⟨p, u⟩ | a)))
   · exact (reim_cont u).comp (hE _ _)
   · exact (reim_cont u).comp (continuous_const.mul (hE _ _))
@@ -443,6 +443,7 @@ theorem lebLoc {n r k : ℕ} (hn : n = 2 * r + k + 1) (ε : Fin n → Bool) (e f
     ← Measure.map_map (LyM (k := k) (r := r) T).continuous_of_finiteDimensional.measurable Rc_cont.measurable,
     map_Rc, Measure.map_linearMap_addHaar_eq_smul_addHaar _ hdet, ← hc, smul_smul, ENNReal.inv_mul_cancel hc0 hcT,
     one_smul]
+  exact hmeasK
 
 theorem map_uncurry_volume {ι κ : Type*} [Fintype ι] [Fintype κ] :
     (Measure.pi fun _ : ι => (volume : Measure (κ → ℝ))).map

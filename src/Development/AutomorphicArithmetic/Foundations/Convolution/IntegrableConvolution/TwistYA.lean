@@ -83,7 +83,7 @@ variable {Γ : Type*} [Group Γ] [TopologicalSpace Γ]
 theorem lift_int {X : Type*} (π : UnitaryRep Γ H) (A : H → H) (f f' : X → Γ) (h : ∀ x v, A (π (f x) v) = π (f' x) (A v))
     (g : FreeGroup X) : ∀ v, A (π (FreeGroup.lift f g) v) = π (FreeGroup.lift f' g) (A v) := by
   induction g using FreeGroup.induction_on with
-  | C1 => intro v; simp only [map_one, UnitaryRep.map_one_apply]
+  | one => intro v; simp only [map_one, UnitaryRep.map_one_apply]
   | of x => simpa using h x
   | inv_of x ih =>
     intro v
@@ -104,10 +104,10 @@ end Hil
 theorem lift_commute {X Γ : Type*} [Group Γ] (f f' : X → Γ) (h : ∀ x y, Commute (f x) (f' y)) (a b : FreeGroup X) :
     Commute (FreeGroup.lift f a) (FreeGroup.lift f' b) := by
   induction a using FreeGroup.induction_on with
-  | C1 => simp
+  | one => simp
   | of x =>
     induction b using FreeGroup.induction_on with
-    | C1 => simp
+    | one => simp
     | of y => simpa using h x y
     | inv_of y ih => rw [map_inv]; exact ih.inv_right
     | mul c d ihc ihd => rw [map_mul]; exact ihc.mul_right ihd

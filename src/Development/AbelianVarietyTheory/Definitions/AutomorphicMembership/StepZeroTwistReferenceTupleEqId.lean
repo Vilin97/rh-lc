@@ -39,7 +39,7 @@ theorem ptLaw_stepY {X : Fields} {n : ℕ} {ST SG Q : Finset (HeightOneSpectrum 
     refine ⟨(1, 1, ⟨k, fun P _ => h1 P⟩), map_one (ufGL X.E n), ?_, fun p => Subtype.ext (Prod.ext rfl (Set.image_empty _).symm)⟩
     show (Λ b).chr 1 * (Θ b).chr ⟨k, fun P _ => h1 P⟩ = 1
     rw [map_one, one_mul]
-    exact (MonoidHom.finsetProd_apply _ _ _).trans (Finset.prod_eq_one fun P _ => h2 P)
+    exact (MonoidHom.finset_prod_apply _ _ _).trans (Finset.prod_eq_one fun P _ => h2 P)
 
 theorem PtLaw.reRep {E K : Type} [Field E] [NumberField E] [StarRing E] [Field K] {n : ℕ}
     {ST SG Q : Finset (HeightOneSpectrum (𝓞 E))} {S : GStep E K n} {b : S.β} {pt : DecoF E n ST SG Q → S.D b} {c : ℕ}
@@ -235,18 +235,18 @@ def funTop (u : B.Word) (a : I.ι) (w : Pol ℂ (Tau B.R) (B.R.N B.R.m - 1)) :
 
 variable {I}
 
-variable (h : I.Ok) (l : I.Laws) (Z : Later B (I.cols l)) {θ : InfF (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} (hθ : IsInfFam θ)
+variable (h : I.Ok) (l : I.Laws) (Z : Later B (I.cols l)) {θ : InfF (I.rec7 l Z)} (hθ : IsInfFam θ)
 
-def eT : Tau B.R ≃ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tau := Equiv.refl _
+def eT : Tau B.R ≃ (I.rec7 l Z).what₂.Tau := Equiv.refl _
 
-theorem embAt_eq (τ : Tau B.R) : embAt B.embLL B.fields.emb τ = tauE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (eT l Z τ) := B.fields_embC τ
+theorem embAt_eq (τ : Tau B.R) : embAt B.embLL B.fields.emb τ = tauE (I.rec7 l Z) (eT l Z τ) := B.fields_embC τ
 
-def finX {j : ℕ} (hj : j ≤ B.R.m) : Formalism.L2.Theta.GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) →* GL (Fin (B.R.N j)) (AfE B.host.F B.host.E) :=
-  finN (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ (B.sp.X_rank j hj)
+def finX {j : ℕ} (hj : j ≤ B.R.m) : Formalism.L2.Theta.GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j) →* GL (Fin (B.R.N j)) (AfE B.host.F B.host.E) :=
+  finN (D := I.rec7 l Z) _ (B.sp.X_rank j hj)
 
 
 variable (θ) in
-def infX {j : ℕ} (hj : j ≤ B.R.m) : Formalism.L2.Theta.GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) →* (Tau B.R → GL (Fin (B.R.N j)) ℂ) :=
+def infX {j : ℕ} (hj : j ≤ B.R.m) : Formalism.L2.Theta.GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j) →* (Tau B.R → GL (Fin (B.R.N j)) ℂ) :=
   infN θ _ (B.sp.X_rank j hj) (eT l Z)
 
 def src (u : B.Word) : Z.W.Mu u →ₗ[ℂ] ((I.stp u I.mu0 0).Cl → Fr B.fields.emb B.embLL (B.R.N 0) → ℂ) :=
@@ -258,46 +258,46 @@ theorem src_mem (u : B.Word) (φ : Z.W.Mu u) :
 def topF (u : B.Word) (a : I.ι) : Z.W.Mu u →ₗ[ℂ] ((I.stp u a B.R.m).Cl → Fr B.fields.emb B.embLL (B.R.N B.R.m) → ℂ) :=
   colLin (I.chain l u a) ∘ₗ ((I.cols l).e0Tw u a).toLinearMap ∘ₗ src l Z u
 
-def colZero (u : B.Word) : Z.W.Mu u →ₗ[ℂ] CuspS θ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X 0) :=
-  adForm (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) θ (B.sp.X_rank 0 (Nat.zero_le _)) (eT l Z) B.fields.emb B.embLL
+def colZero (u : B.Word) : Z.W.Mu u →ₗ[ℂ] CuspS θ ((I.rec7 l Z).sp.X 0) :=
+  adForm (D := I.rec7 l Z) θ (B.sp.X_rank 0 (Nat.zero_le _)) (eT l Z) B.fields.emb B.embLL
     (LinearMap.proj (fr0 B.fields.emb B.embLL (B.R.N 0))) (lamT (B.hcW u) 0) hθ (h.gram_X 0) (B.sp.X_sig 0)
     (B.sp.X_def 0 (Nat.zero_le _)) (embAt_eq l Z) (one_mem _) (I.ptLaw_zero u (l.idx0 I.mu0).some 0) ∘ₗ src l Z u
 
 def colTop (u : B.Word) (a : I.ι) (w : Pol ℂ (Tau B.R) (B.R.N B.R.m - 1)) :
-    Z.W.Mu u →ₗ[ℂ] CuspS θ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X B.R.m) :=
-  adForm (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) θ (B.sp.X_rank B.R.m le_rfl) (eT l Z) B.fields.emb B.embLL (I.funTop u a w) (lamT (B.hcW u) B.R.m) hθ
+    Z.W.Mu u →ₗ[ℂ] CuspS θ ((I.rec7 l Z).sp.X B.R.m) :=
+  adForm (D := I.rec7 l Z) θ (B.sp.X_rank B.R.m le_rfl) (eT l Z) B.fields.emb B.embLL (I.funTop u a w) (lamT (B.hcW u) B.R.m) hθ
     (h.gram_X _) (B.sp.X_sig _) (B.sp.X_def _ le_rfl) (embAt_eq l Z) (h.xTop_spec u a).uni (I.ptLaw_top u a) ∘ₗ topF l Z u a
 
-def colAFw (w : Pol ℂ (Tau B.R) (B.R.N B.R.m - 1)) (u : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Word) (μ : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tup) (j : ℕ) :
-    (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Mu u →ₗ[ℂ] CuspS θ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) :=
+def colAFw (w : Pol ℂ (Tau B.R) (B.R.N B.R.m - 1)) (u : (I.rec7 l Z).what₂.Word) (μ : (I.rec7 l Z).what₂.Tup) (j : ℕ) :
+    (I.rec7 l Z).what₂.Mu u →ₗ[ℂ] CuspS θ ((I.rec7 l Z).sp.X j) :=
   if h0 : j = 0 then h0 ▸ colZero h l Z hθ u else if hm : j = B.R.m then hm ▸ colTop h l Z hθ u μ w else 0
 
-def colAF (u : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Word) (μ : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tup) (j : ℕ) :
-    (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Mu u →ₗ[ℂ] CuspS θ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) :=
+def colAF (u : (I.rec7 l Z).what₂.Word) (μ : (I.rec7 l Z).what₂.Tup) (j : ℕ) :
+    (I.rec7 l Z).what₂.Mu u →ₗ[ℂ] CuspS θ ((I.rec7 l Z).sp.X j) :=
   colAFw h l Z hθ (topVec B.wts.sgTrue) u μ j
 
-theorem colZero_apply (u : B.Word) (φ : Z.W.Mu u) (g : Formalism.L2.Theta.GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X 0))
+theorem colZero_apply (u : B.Word) (φ : Z.W.Mu u) (g : Formalism.L2.Theta.GA (I.rec7 l Z) ((I.rec7 l Z).sp.X 0))
     (p : ChPt (Pr := B.primes X) (R := B.R) I.sel (I.tup I.mu0) u 0)
     (hp : Near 0 (finX l Z (Nat.zero_le _) g) p) :
     (colZero h l Z hθ u φ).1 g =
       valL (I.stp u I.mu0 0) B.fields.emb B.embLL _ (I.ptAt u I.mu0 (zero_succ_ne B.R) (l.idx0 I.mu0).some p) (src l Z u φ)
         (frL _ (infX l Z θ (Nat.zero_le _) g) (fr0 B.fields.emb B.embLL (B.R.N 0))) :=
-  (congrFun (adForm_val (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) θ _ _ _ hθ (h.gram_X 0) (B.sp.X_sig 0) (B.sp.X_def 0 (Nat.zero_le _)) (embAt_eq l Z) (one_mem _) (I.ptLaw_zero u _ 0)
+  (congrFun (adForm_val (D := I.rec7 l Z) θ _ _ _ hθ (h.gram_X 0) (B.sp.X_sig 0) (B.sp.X_def 0 (Nat.zero_le _)) (embAt_eq l Z) (one_mem _) (I.ptLaw_zero u _ 0)
     (src_mem l Z u φ)) g).trans
-    (adFun_eq (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) θ _ _ _ (h.gram_X 0) (one_mem _) (I.ptLaw_zero u _ 0) (src_mem l Z u φ) ((mul_one (finX l Z (Nat.zero_le _) g)).symm ▸ hp :
+    (adFun_eq (D := I.rec7 l Z) θ _ _ _ (h.gram_X 0) (one_mem _) (I.ptLaw_zero u _ 0) (src_mem l Z u φ) ((mul_one (finX l Z (Nat.zero_le _) g)).symm ▸ hp :
       Near 0 (finX l Z (Nat.zero_le _) g * 1) p))
 
 theorem colTop_apply (u : B.Word) (a : I.ι) (w) (φ : Z.W.Mu u)
     (hφ : topF l Z u a φ ∈ (I.stp u a B.R.m).Fi B.fields.emb B.embLL (lamT (B.hcW u) B.R.m))
-    (g : Formalism.L2.Theta.GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X B.R.m))
+    (g : Formalism.L2.Theta.GA (I.rec7 l Z) ((I.rec7 l Z).sp.X B.R.m))
     {x₀ : GL (Fin (B.R.N B.R.m)) (AfE B.host.F B.host.E)} (hx : x₀ ∈ UAd B.sp.cm _)
     (h₀ : Near (I.depTop a) x₀ (I.baseTop u a)) (p : ChPt (Pr := B.primes X) (R := B.R) I.sel (I.tup a) u B.R.m)
     (hp : Near (I.depTop a) (finX l Z le_rfl g * x₀) p) :
     (colTop h l Z hθ u a w φ).1 g = I.funTop u a w (lT _ (infX l Z θ le_rfl g)
       (valL (I.stp u a B.R.m) B.fields.emb B.embLL (idxTop I.sel (I.tup a) (I.idx a)) (topPt I.sel (I.tup a) (I.cst a) u p) (topF l Z u a φ))) :=
-  (congrFun (adForm_val (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) θ _ _ _ hθ (h.gram_X _) (B.sp.X_sig _) (B.sp.X_def _ le_rfl) (embAt_eq l Z) (h.xTop_spec u a).uni (I.ptLaw_top u a)
+  (congrFun (adForm_val (D := I.rec7 l Z) θ _ _ _ hθ (h.gram_X _) (B.sp.X_sig _) (B.sp.X_def _ le_rfl) (embAt_eq l Z) (h.xTop_spec u a).uni (I.ptLaw_top u a)
     hφ) g).trans
-    (adFun_eq (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) θ _ _ _ (h.gram_X _) (h.xTop_spec u a).uni (I.ptLaw_top u a) hφ
+    (adFun_eq (D := I.rec7 l Z) θ _ _ _ (h.gram_X _) (h.xTop_spec u a).uni (I.ptLaw_top u a) hφ
       (Near.change B.sp.cm hx (h.xTop_spec u a).uni h₀ (near_of_isPtOf (h.xTop_spec u a) _) hp))
 
 
@@ -322,7 +322,7 @@ theorem stepZeroTwist_reference_tuple_eq_id (u : B.Word) (φ : (I.stp u I.mu0 0)
   exact congrArg φ ((Equiv.symm_apply_eq _).2 (key c).symm)
 
 theorem perCol_eq (u : B.Word) (a : (I.cols l).Tup) (ha : a ≠ I.mu0) (φ : Z.W.Mu u) (F : Z.W.Amb a) :
-    (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.perCol u a φ F = (I.per l u a).Ptil (topF l Z u a φ) ((Z.W.eMtTw u a).symm F) := Z.W.perCol_tie u a ha φ F
+    (I.rec7 l Z).what₂.perCol u a φ F = (I.per l u a).Ptil (topF l Z u a φ) ((Z.W.eMtTw u a).symm F) := Z.W.perCol_tie u a ha φ F
 
 end GlobalTheory.Mem.Col2.TC
 

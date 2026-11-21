@@ -140,16 +140,9 @@ def splits {α : Type*} : List α → List (List α × List α)
   | X :: w => (splits w).map (fun uv => (X :: uv.1, uv.2)) ++ (splits w).map (fun uv => (uv.1, X :: uv.2))
 
 theorem splits_mem {α : Type*} : ∀ (w : List α), ∀ uv ∈ splits w,
-    (∀ X ∈ uv.1, X ∈ w) ∧ (∀ X ∈ uv.2, X ∈ w) ∧ uv.2.length ≤ w.length := by
-  intro w
-  induction w with
-  | nil =>
-    intro uv h
-    simp [splits] at h
-    subst h
-    simp
-  | cons X w ih =>
-    intro uv h
+    (∀ X ∈ uv.1, X ∈ w) ∧ (∀ X ∈ uv.2, X ∈ w) ∧ uv.2.length ≤ w.length
+  | [], uv, h => by simp [splits] at h; subst h; simp
+  | X :: w, uv, h => by
     simp only [splits, List.mem_append, List.mem_map] at h
     rcases h with ⟨uv', h', rfl⟩ | ⟨uv', h', rfl⟩
     · obtain ⟨a, b, c⟩ := ih uv' h'

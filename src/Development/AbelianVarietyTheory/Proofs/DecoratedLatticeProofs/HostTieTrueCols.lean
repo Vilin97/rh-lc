@@ -13,7 +13,7 @@ attribute [local instance] GlobalTheory.Mem.Col2.starE
 
 namespace GlobalTheory.CoreHt
 
-theorem host_tie_trueCols : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X) (h : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l)) (L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)), GlobalTheory.IndefiniteRowSideFullHecke.PlaceLogThetaBounds.HostTie (numDatumOfParameters (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L) (seamOf B (I.cols l) Z.W Z.V Z.S Z.N Z.G) (B.primes X) := by
+theorem host_tie_trueCols : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X) (h : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l)) (L : SizeData₂ (I.rec7 l Z)), GlobalTheory.IndefiniteRowSideFullHecke.PlaceLogThetaBounds.HostTie (numDatumOfParameters (I.rec7 l Z) L) (seamOf B (I.cols l) Z.W Z.V Z.S Z.N Z.G) (B.primes X) := by
   intro B X I h l Z L
   have hX : B.fields.Ok := (GlobalTheory.Mem.FieldsLaws.fields_satisfy_definite_laws B).1.1
   obtain ⟨h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, _⟩ := host_fields_primes_ties I h hX l Z

@@ -81,7 +81,8 @@ theorem polynomial_vector_kFinite (fockFirst : _root_.GlobalTheory.FunPr.ThetaLo
     exact Submodule.sum_mem _ fun w _ => GlobalTheory.RealLift.atPl_mem_range_map Lw Nw hN w y hy
   refine ⟨Φ (U T'), ⟨U T', exp_stable hexp _ hLst T' hT', rfl⟩, ?_⟩
   have h1 := hSA T'
-  rw [MonoidHom.comp_apply, hγ1] at h1
+  change GlobalTheory.RealLift.SA (om (γ (Multiplicative.ofAdd 1), 1)) (Φ T') (Φ (U T')) at h1
+  rw [hγ1] at h1
   exact (GlobalTheory.RealLift.actsLaws F _ (Φ T') (Φ (U T')) (Φ (U T'))).2.1 _ (map_zero _) h1
 theorem derivation_algebra_kFinite : _root_.GlobalTheory.FunPr.ThetaLocalInputs → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) (Bs : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base F E) (a a' : ℕ) (Γ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Geo σ a a')

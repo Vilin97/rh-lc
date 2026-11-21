@@ -167,7 +167,7 @@ theorem l2_word_tendsto (hom : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam �
       simp only [hzx, inv_one, GlobalTheory.WeilVacMove.mt_one, GlobalTheory.WeilVacMove.compAt_one, Matrix.one_mul, Matrix.mul_one]
     set c : GA D S → ℝ := fun x => ∑ i, ∑ j, (|((zx x - z) i j).re| + |((zx x - z) i j).im|) with hc
     have hcc : Continuous c := by
-      refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+      refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
       have h3 : Continuous fun x => (zx x - z) i j := (hzc.sub continuous_const).matrix_elem i j
       exact (continuous_abs.comp (Complex.continuous_re.comp h3)).add (continuous_abs.comp (Complex.continuous_im.comp h3))
     have hc1 : c 1 = 0 := by simp [hc, hz1]

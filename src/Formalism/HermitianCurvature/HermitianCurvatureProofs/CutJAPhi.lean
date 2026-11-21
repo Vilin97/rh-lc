@@ -81,7 +81,7 @@ theorem phi_operator_transfer_holds : JAPhiOp := by
     have h := (Formalism.FourierDecayAlt.P.BigCellHermitian.gqDom (T v).base hq).2
     exact ⟨h.2, fun a => h.1 _ (by simp)⟩
   have hJ' : J ∈ Q.FFl S.G.k S.G.r (T v).base.z (T v).base.z' (T v).base.π (T v).base.π' 0 (OmP S T v) := hJ
-  refine ⟨phi_mem_FFl (T v).base hφ (fun g hg => hg.1) hJ', ?_⟩
+  refine ⟨phi_mem_FFl (T v).base hφ (fun g (hg : g ∈ OmP S T v) => hg.1) hJ', ?_⟩
   funext ρ
   set u : MA.Qp (D.parOf S v).r (D.parOf S v).TT → ℂ := fun q =>
     ((Real.sqrt (MA.wq S.G.k q.1 (D.parOf S v).TT) : ℝ) : ℂ) *
@@ -130,7 +130,8 @@ theorem phi_operator_transfer_holds : JAPhiOp := by
   have hL : trJ S T v e (mulG S T v φ J) ρ = MA.toSm (D.parOf S v) (fun q => p q * u q) := by
     unfold trJ
     congr 1
-    rw [Formalism.FourierDecayAlt.P.JCTx2.hsVec_smul', inner_smul_right,
+    funext q
+    rw [mulG, Formalism.FourierDecayAlt.P.JCTx2.hsVec_smul', inner_smul_right, GfP,
       cutTr_Gf_gq (T v).base q.2.1 (hTT ▸ q.2.2)]
     simp only [hu_def, hp_def, MA.Gq, hTT]
     ring

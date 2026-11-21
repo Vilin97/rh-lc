@@ -138,7 +138,7 @@ private theorem exists_uniform_neighborhood {d : ℕ} (S : Eu d →ₗ[ℂ] (G �
       conv_lhs => rw [← (EuclideanSpace.basisFun (Fin d) ℂ).sum_repr p.1]
       simp
     rw [this]
-    refine continuous_finset_sum _ fun i _ => Continuous.mul (by fun_prop) ((hS _).comp continuous_snd)
+    refine continuous_finsetSum _ fun i _ => Continuous.mul (by fun_prop) ((hS _).comp continuous_snd)
   refine (isCompact_sphere (0 : Eu d) 1).induction_on (p := fun s => ∃ O ∈ 𝓝 (1 : G), ∀ v ∈ s, ∃ x, ∃ ε, 0 ≤ ε ∧
     ε < ‖H x * S v x‖ ∧ ∀ k ∈ U, ∀ h ∈ O,
       ‖e k‖ * ‖H (x * k * h) * S v (x * k * h) - H (x * k) * S v (x * k)‖ ≤ ε) ⟨univ, univ_mem, by simp⟩ ?_ ?_ ?_

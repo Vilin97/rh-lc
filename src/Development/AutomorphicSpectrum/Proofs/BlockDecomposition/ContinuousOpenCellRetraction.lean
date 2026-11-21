@@ -45,7 +45,7 @@ theorem mirProj_eq_one_of_unip (n : ℕ) (u : Mir k n) (v : Multiplicative (Fin 
   ext i j
   show blockMat k n ((u : GL (Fin (n + 1)) k) : Matrix (Fin (n + 1)) (Fin (n + 1)) k) i j = _
   rw [hu]
-  simp [blockMat, unip, colMat, Fin.castSucc_ne_last, Matrix.one_apply]
+  simp [blockMat, unip, colMat, Fin.castSucc_ne_last, one_apply]
 
 theorem ePG_true_val (i t : ℕ) (b : Fin t) : ((ePG i t ⟨true, b⟩ : Fin (i + t + 1)) : ℕ) = i + b := by
   simp [ePG]
@@ -78,14 +78,9 @@ theorem proj_eq (i t : ℕ) (h : Mir k ((i + 1) + t + 1)) (d : Fin (t + 1) → k
   have e1 := congrArg (mirabolicProjection k ((i + 1) + t + 1)) e
   rw [map_mul, map_mul, map_mul, map_mul] at e1
   have h1 : mirabolicProjection k ((i + 1) + t + 1) (dEmb k i t d) = 1 := mirProj_eq_one_of_unip k _ _ _ rfl
-  have hlevi (n : ℕ) (g : GL (Fin n) k) : mirabolicProjection k n (levi k n g) = g := by
-    apply Units.ext
-    ext i j
-    change blockMat k n (glEmbMat k n (g : Matrix (Fin n) (Fin n) k)) i j = _
-    simp [blockMat, glEmbMat]
-  have h2 : mirabolicProjection k ((i + 1) + t + 1) (wEl k i t) = wGL k i t := hlevi _ _
+  have h2 : mirabolicProjection k ((i + 1) + t + 1) (wEl k i t) = wGL k i t := GlobalTheory.CompanionTheory.BZMirAdj.mirProj_levi k _ _
   have h3 : mirabolicProjection k ((i + 1) + t + 1) (sEmb k _ M) = (M : GL (Fin ((i + 1) + t + 1)) k) :=
-    hlevi _ _
+    GlobalTheory.CompanionTheory.BZMirAdj.mirProj_levi k _ _
   rw [h1, h2, h3, one_mul] at e1
   rw [mul_assoc, mul_assoc, eq_inv_mul_iff_mul_eq, e1, mul_assoc]
 
@@ -97,23 +92,8 @@ theorem exists_parab_mul : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologica
       ∃ p ∈ parab k (ePG i (t + 1)), (m : GL (Fin (i + (t + 1) + 1)) k) = p * Θ x := by
   intro k _ _ _ _ i t
   have hn : (i + 1) + t + 1 = i + (t + 1) + 1 := by omega
-  have hc (n : ℕ) : Continuous (mirabolicProjection k n) := by
-    have hval : Continuous fun g : Mir k n =>
-        ((g : GL (Fin (n + 1)) k) : Matrix (Fin (n + 1)) (Fin (n + 1)) k) :=
-      Units.continuous_val.comp continuous_subtype_val
-    have hblock : Continuous fun g : Mir k n =>
-        ((mirabolicProjection k n g : GL (Fin n) k) : Matrix (Fin n) (Fin n) k) := by
-      refine continuous_pi fun i => continuous_pi fun j => ?_
-      exact (continuous_apply (Fin.castSucc j)).comp ((continuous_apply (Fin.castSucc i)).comp hval)
-    refine Units.continuous_iff.2 ⟨hblock, ?_⟩
-    have heq : (fun g : Mir k n => (((mirabolicProjection k n g)⁻¹ : GL (Fin n) k) : Matrix (Fin n) (Fin n) k)) =
-        fun g => ((mirabolicProjection k n g⁻¹ : GL (Fin n) k) : Matrix (Fin n) (Fin n) k) := by
-      funext g
-      rw [map_inv]
-    rw [heq]
-    exact hblock.comp continuous_inv
   refine ⟨fun x => rGL k hn (mirabolicProjection k _ x),
-    (continuous_rGL k hn).comp (hc _), by simp, ?_⟩
+    (continuous_rGL k hn).comp (GlobalTheory.CompanionTheory.BZMirFun.continuous_mirProj k _), by simp, ?_⟩
   intro h hh d m x e
   have e2 := proj_eq k i t h d (castM k (by omega) m) x e
   rw [castM_val k _ hn.symm] at e2

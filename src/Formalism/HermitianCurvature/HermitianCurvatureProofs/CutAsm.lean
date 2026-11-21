@@ -60,6 +60,8 @@ theorem trJ_smul (S : C.HidaSetting E Wp Wq) (T : ∀ v : Fin S.f, D.LevTower S.
   simp only [trJ, Pi.smul_apply, hsVec_smul, inner_smul_right]
   rw [← toSm_smul]
   congr 1
+  funext q
+  simp only [Pi.smul_apply, smul_eq_mul]
   ring
 
 theorem trJ_congr (S : C.HidaSetting E Wp Wq) (T : ∀ v : Fin S.f, D.LevTower S.G.k S.G.r (Wp (S.pl v)) (Wq (S.pl v)))

@@ -19,13 +19,12 @@ section Hom
 variable {G H : Over S} [GrpObj G] [GrpObj H]
 
 theorem isMonHom_of_mulComp (f : G ⟶ H)
-    (h : ∀ (T : Over S) (x y : T ⟶ G), (x * y) ≫ f = (x ≫ f) * (y ≫ f)) : IsMonHom f where
-  one_hom := by
-    rw [MonObj.one_eq_one, MonObj.one_eq_one]
+    (h : ∀ (T : Over S) (x y : T ⟶ G), (x * y) ≫ f = (x ≫ f) * (y ≫ f)) : IsMonHom f := by
+  refine ⟨?_, ?_⟩
+  · rw [MonObj.one_eq_one, MonObj.one_eq_one]
     exact map_one (MonoidHom.mk' (fun x : 𝟙_ (Over S) ⟶ G ↦ x ≫ f) (h _))
-  mul_hom := by
-    rw [MonObj.mul_eq_mul, h, MonObj.mul_eq_mul, MonObj.comp_mul]
-    simp
+  · simpa only [MonObj.mul_eq_mul, MonObj.comp_mul, tensorHom_fst, tensorHom_snd] using
+      h (G ⊗ G) (fst G G) (snd G G)
 
 theorem isMonHom_mul [IsCommMonObj H] (f g : G ⟶ H) [IsMonHom f] [IsMonHom g] : IsMonHom (f * g) :=
   isMonHom_of_mulComp _ fun T x y ↦ by

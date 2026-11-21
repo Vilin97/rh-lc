@@ -52,8 +52,7 @@ private theorem exists_rep {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : 
     ae_of_ae_map (measurable_mk (Gam K n)).aemeasurable h1
   have hF := isFundamentalDomain_fundamentalDomain (Gam K n) μ
   have h3 : μ {y | ¬ (hm.toLp f) (mk (Gam K n) y) = f (mk (Gam K n) y)} = 0 := by
-    set_option synthInstance.maxHeartbeats 200000 in
-      refine hF.measure_zero_of_invariant _ (fun γ => ?_) ?_
+    refine hF.measure_zero_of_invariant _ (fun γ => ?_) ?_
     · ext y
       simp [Set.mem_smul_set_iff_inv_smul_mem]
     · rw [ae_restrict_iff' (measurableSet_fundamentalDomain (Gam K n)), ae_iff] at h2

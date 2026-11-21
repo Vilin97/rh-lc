@@ -89,8 +89,7 @@ theorem exists_cechZero_cechFam_nsmul_add : ∀ (k : Type) [Field k] (X : Scheme
       𝒜.affine 𝒜.gen 𝒜.cover b hb
     refine hc.2 ?_
     haveI hs : Subsingleton (coh (twist F (lbZPow (toLB H) (q : ℤ))) b) := hq₀ q hq b hb
-    obtain ⟨e⟩ := nonempty_twist_iso_of_cls_eq F (M := toLB (q • H))
-      (N := lbZPow (toLB H) (q : ℤ)) (isLB_toLB (q • H)) (isLB_lbZPow (isLB_toLB H) q)
+    obtain ⟨e⟩ := nonempty_twist_iso_of_cls_eq F (isLB_toLB (q • H)) (isLB_lbZPow (isLB_toLB H) q)
       (by rw [cls_lbZPow (isLB_toLB H), ← toPic_apply, ← toPic_apply, map_nsmul, natCast_zsmul])
     exact (cohOn.mapIso k ⊤ b e).injective.subsingleton
   choose q₁ hq₁ using key

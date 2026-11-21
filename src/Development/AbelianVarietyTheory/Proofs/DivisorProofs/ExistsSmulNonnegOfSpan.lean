@@ -127,7 +127,7 @@ theorem fullLat_of (hV : ∀ la, ∀ v ∈ Vs la, IsVal la v) (C : Submodule K R
     (N : (K →+* ℂ) → R → ℝ) (hN : ∀ σ, IsNormOn C σ (N σ)) (B : ℝ)
     (hB : ∀ F ∈ C, (∀ la, ∀ v ∈ Vs la, 0 ≤ v F) → F ≠ 0 → -B ≤ ∑ σ : K →+* ℂ, Real.log (N σ F))
     (h : ∀ f ∈ C, ∃ s : 𝓞 K, s ≠ 0 ∧ ∀ la, ∀ v ∈ Vs la, 0 ≤ v (s • f)) : Formalism.IndefR.FWT.FullLat C Vs hV :=
-  ⟨fg_latOf_of_lowerBound C Vs hV N hN B hB, span_latOf_eq_top hV C h⟩
+  Submodule.IsLattice.of_fg K (fg_latOf_of_lowerBound C Vs hV N hN B hB)
 
 end Abstract
 
@@ -229,7 +229,8 @@ theorem exists_smul_nonneg_large (D : D7) (T : Core D) (h : LawsM T) (j : ℕ) (
     have hsp := GlobalTheory.Dict.holSub0_le_span_shortGen hC _ _ _ _ (T.Q.Xo j) T.Q.c n d T.σ₀ D.R.r _ T.good_σ₀ hU hr hA hG hP
       hlev hnab hunit h3 (fun _ => ⟨ph, 1, x₀, hpin⟩) nab b 0 a hb hdom hn hχ htot
     refine GlobalTheory.mem_span_of_map_mem_span_image (Formalism.L2.PjFree.rdU (Formalism.L2.PjFree.Unf.ofPj (T.U j T.σ₀)))
-      (sec (T.Q.Xo j) T.Q.c a n) hind _ (fun g hg => hg.1) hf'.1 (hsp ?_)
+      (sec (T.Q.Xo j) T.Q.c a n) hind (shortGen (T.Q.Xo j) T.Q.c nab b 0 a n d)
+      (fun g hg => hg.1) hf'.1 (hsp ?_)
     exact ⟨hf'.2 _ T.good_σ₀, fun k x hx => dif_neg hx⟩
   · obtain ⟨hsec, Λ, N, x0, P, hUn, hTb, hTM, hN, -, hPl, hR⟩ := hg
     obtain ⟨inst, hnab⟩ := hnab
@@ -257,6 +258,7 @@ theorem exists_smul_nonneg (D : D7) (T : Core D) (h : LawsM T) (j : ℕ) (hj : I
     (Nat.le_mul_of_pos_right _ (Nat.pos_of_ne_zero hn)) _ (hpow _)
   exact ⟨s, hs, fun la v hv => nonneg_of_pow (fun la => isVal_valSet la) hv s f _ (h1 la v hv)⟩
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem fullLat_of_lawsM (D : D7) (T : Core D) (h : LawsM T) (j : ℕ) (hj : InR D j)
     (hG : ∀ k k', ((T.U j T.σ₀).X k).Gm = ((T.U j T.σ₀).X k').Gm ∧ ((T.U j T.σ₀).X k).ξ0 = ((T.U j T.σ₀).X k').ξ0)
     (w : WeightFamilies.Wt D j) (hn : w.n ≠ 0) :

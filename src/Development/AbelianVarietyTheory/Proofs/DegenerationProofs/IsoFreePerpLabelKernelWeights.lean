@@ -169,7 +169,7 @@ theorem isoFree_perp_and_weights : Laws → Laws2 → UTorsSt → ∀ (o Ω : Ty
     have : NeZero ((S.r * S.N : ℕ) : PadicAlgCl p) := ⟨Nat.cast_ne_zero.2 hn.ne⟩
     rw [← IsPrimitiveRoot.coe_units_iff, ← Polynomial.isRoot_cyclotomic_iff,
       ← Polynomial.map_cyclotomic _ (y₀.comp (algebraMap o S.R))]
-    exact (hζ.isRoot_cyclotomic hn.pos).map (y₀.comp (algebraMap o S.R))
+    exact (hζ.isRoot_cyclotomic hn.pos).map
 
   have hy : (TFK (R := u.V) (PadicAlgCl p)).hom ≫ spMap u.yK = spMap y₀ :=
     (Spec.map_comp _ _).symm.trans (congrArg spMap u.fac)

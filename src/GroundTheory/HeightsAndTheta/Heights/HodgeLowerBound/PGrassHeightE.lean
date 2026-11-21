@@ -46,7 +46,7 @@ theorem RootLogNormBoundE.full : RootLogNormBoundE.Statement := by
   intro f j m e ζ he hζ z hz
   have h₁ := RootAnchorNonzero.proof
   have hpos : ∀ τ : Fin f, 0 < ‖WithLp.toLp 2 (fun I : PlIdx j m => z ⟨τ, I⟩)‖ := fun τ =>
-    (fsMetric (PlIdx j m)).pos _ fun h0 => by
+    (fsMetric (ι := PlIdx j m)).pos _ fun h0 => by
       obtain ⟨i, hi⟩ := hz.1 τ
       exact hi (congrFun h0 i)
   have key : ∀ τ : Fin f, -e ≤

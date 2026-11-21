@@ -68,7 +68,8 @@ theorem avgVanish_conj (H : Subgroup G) (σ : Representation ℂ H Z) (U : Subgr
   have hconj : ∀ (n : G) (w : cIndSpace H σ), cInd H σ y⁻¹ (cInd H σ n w) =
       cInd H σ (y⁻¹ * n * y) (cInd H σ y⁻¹ w) := by
     intro n w
-    rw [← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul]
+    set_option synthInstance.maxHeartbeats 200000 in
+      rw [← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul]
     congr 2
     group
   refine ⟨L, hL, hc.image hcc, cInd H σ y⁻¹ g', ?_, ?_, ?_⟩

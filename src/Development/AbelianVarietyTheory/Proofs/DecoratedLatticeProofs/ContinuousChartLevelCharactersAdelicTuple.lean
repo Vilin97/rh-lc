@@ -32,7 +32,7 @@ set_option maxHeartbeats 2000000 in
 theorem chi_continuous : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (Ch : ℕ → Type) (A : TwDat I l Z u a Ch), A.Is → ∀ (i : ℕ) (hi : i ≤ B.R.m) β, Continuous fun κ => ((A.chi i β κ : ℂˣ) : ℂ) := by
   intro B X I hI hP l Z u a Ch A hA i hi β
   obtain ⟨n, hn, hfin⟩ := hA.fin i hi β
-  let Vs : Set (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)) :=
+  let Vs : Set (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F)) :=
     {v | ∃ P : SBof I a, Formalism.L2.Col.IsOver v (GlobalTheory.TwU.seamP (sm I l Z) P.1)}
   have hVs : Vs.Finite := by
     have e : Vs = ⋃ P : SBof I a, {v | Formalism.L2.Col.IsOver v (GlobalTheory.TwU.seamP (sm I l Z) P.1)} := by
@@ -42,18 +42,18 @@ theorem chi_continuous : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok �
     intro v hv w hw
     exact HeightOneSpectrum.ext (hv.trans hw.symm)
   have hbad : ∀ v ∈ A.bad i, v ∈ Vs := fun v hv => GlobalTheory.T.exists_badPrime_over_chart_bad_place I hI hP l Z a v (hA.bad_le i hi v hv)
-  have hker := GlobalTheory.T.levelCharacter_trivial_near_one_of_local_bad_places (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi)
-    (B.T u) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.f (A.bad i) (A.K i hi β).lev Vs hVs hbad (by
+  have hker := GlobalTheory.T.levelCharacter_trivial_near_one_of_local_bad_places (F := (I.rec7 l Z).host.F) (E := (I.rec7 l Z).host.E) (sigD (I.rec7 l Z)) (gramN (I.rec7 l Z) i hi)
+    (B.T u) (I.rec7 l Z).R.f (A.bad i) (A.K i hi β).lev Vs hVs hbad (by
     rintro v ⟨P, hv⟩
     obtain ⟨N, hN⟩ := GlobalTheory.T.levelCharacter_eq_one_of_deep_at_splitBadPlace I hI hP l Z a (B.T u) i hi (A.bad i) (A.K i hi β).lev n hn hfin P v hv
-    have h2 := GlobalTheory.T.eventually_nhds_one_adelicMatrixCongruentOneAtPrime (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i) N
+    have h2 := GlobalTheory.T.eventually_nhds_one_adelicMatrixCongruentOneAtPrime (F := (I.rec7 l Z).host.F) (E := (I.rec7 l Z).host.E) ((I.rec7 l Z).R.N i) N
       (GlobalTheory.TwU.seamP (sm I l Z) P.1)
     exact h2.mono fun w hw x hx hxw => hN x hx w hw hxw)
 
-  letI := tensTopL (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)
-  haveI : IsTopologicalGroup (GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i)) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.topGroupHA _ _
-  let Φ : A.U i β →* GL (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i)) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E ⊗[(_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F] FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) :=
-    (GlobalTheory.ClassSumLevel.finGLHom ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i) (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi)).comp (A.U i β).subtype
+  letI := tensTopL (F := (I.rec7 l Z).host.F) (E := (I.rec7 l Z).host.E) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F)
+  haveI : IsTopologicalGroup (GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i)) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.topGroupHA _ _
+  let Φ : A.U i β →* GL (Fin ((I.rec7 l Z).R.N i)) ((I.rec7 l Z).host.E ⊗[(I.rec7 l Z).host.F] FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F) :=
+    (GlobalTheory.ClassSumLevel.finGLHom ((I.rec7 l Z).sp.X i) (rankN (I.rec7 l Z) i hi)).comp (A.U i β).subtype
   have hΦc : Continuous Φ := (GlobalTheory.ClassSumLevel.continuous_finGLHom _ _).comp continuous_subtype_val
   have ht : Tendsto Φ (nhds 1) (nhds 1) := by
     have := hΦc.tendsto 1

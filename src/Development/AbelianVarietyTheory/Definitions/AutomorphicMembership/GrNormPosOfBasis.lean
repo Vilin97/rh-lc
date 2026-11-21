@@ -87,13 +87,13 @@ theorem exists_left_inv {K : Type} [Field K] {n m : ℕ} (A : Matrix (Fin n) (Fi
 
 theorem Indep.map {K K' : Type} [Field K] [Field K'] (io : K →+* K') {x : Sp K ⟶ X} {m : ℕ}
     {u : Fin m → (Sp (DualNumber K) ⟶ t.G.left)} (hu : ∀ k, IsTanAtG t x (u k)) (h : Indep t x u) :
-    Indep t (spMap io ≫ x) fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ u k := by
+    Indep t (spMap io ≫ x) fun k => spMap (dualMap io) ≫ u k := by
   obtain ⟨n, v, hv, hb⟩ := GlobalTheory.LieLocBasis.exists_lie_basis_stable E H X t K x
   have h1 : spMap (RingHom.id K) = 𝟙 _ := Spec.map_id _
-  have h3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id K)) = 𝟙 _ := by
+  have h3 : spMap (dualMap (RingHom.id K)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    ext r <;> simp [dualMap]
   have hb0 := hb K (RingHom.id K)
   simp only [h1, h3, Category.id_comp] at hb0
   choose a ha using fun i => (hb0 _ (hu i)).exists
@@ -310,7 +310,7 @@ theorem grNorm_latHT_pos (hB : HTBoundSt) (p : ℕ) [hp : Fact p.Prime] (x : Sp 
 theorem grNorm_lat_pos {Ω : Type} [Field Ω] (y : FlagPt Z Ω) (p : ℕ) [Fact p.Prime] (io : Ω →+* ℂ_[p]) (b : Bool)
     (hB : b = true → HTBoundSt) (τ : E →+* ℂ) (i : Fin (Dw.mult τ)) :
     0 < grNorm Z.t (spMap io ≫ y.y ≫ genι Z) (lat Z.t p (spMap io ≫ y.y ≫ genι Z) b)
-      (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ y.u τ k) i := by
+      (fun k => spMap (dualMap io) ≫ y.u τ k) i := by
   have hu := fun k => GlobalTheory.FactorDepth.isTanAtG_map _ io (y.tan τ k)
   have hi := (indep_u y τ).map io (y.tan τ)
   cases b

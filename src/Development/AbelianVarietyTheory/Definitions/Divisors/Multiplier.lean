@@ -47,7 +47,6 @@ def Proport : Prop :=
 
 def EqVolume : Prop := ∀ Z Z' : Comp Xo c, vZero U Z = vZero U Z'
 
-set_option synthInstance.maxHeartbeats 100000 in
 def RatioOn (Z : Comp Xo c) (G : WTZ E) : Prop :=
   ∀ (τ : ℕ), ∀ t ∈ cuspOn U Z (τ • G), IsRatio (genPoint Z (cuspOn U Z G)) τ (genVal Z t)
 

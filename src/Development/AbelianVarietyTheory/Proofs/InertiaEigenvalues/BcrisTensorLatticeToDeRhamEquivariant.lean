@@ -30,10 +30,12 @@ theorem X_equivariant (l : ℕ) [Fact l.Prime] (Pl : LocPrime l) (AI : LocAinf l
       X ((o ⊗ₜ[ℤ_[l]] b) ⊗ₜ[↥(OL LL)] x) = ((o : ↥LL.1) • (x : T.V)) ⊗ₜ[ℚ_[l]] GlobalTheory.BKGal.JumpDR.cB Td b)
     (g : Gl l) (b : TW (OB l ↥(OL LL)) T) :
     X (actB (sQ l) T g b) = actVdR (Pl.PD (Formalism.MainNotions.ElementDenominator.qlExt l)) T.ρ g (X b) := by
-  induction b using TensorProduct.inductionOn with
+  induction b using TensorProduct.induction_on with
+  | zero => simp only [map_zero]
   | add u v hu hv => simp only [map_add (f := _), hu, hv]
   | tmul u x =>
-    induction u using TensorProduct.inductionOn with
+    induction u using TensorProduct.induction_on with
+    | zero => simp only [TensorProduct.zero_tmul, map_zero]
     | add u v hu hv => simp only [TensorProduct.add_tmul, map_add (f := _), hu, hv]
     | tmul o b =>
       have e1 : actB (sQ l) T g ((o ⊗ₜ[ℤ_[l]] b) ⊗ₜ[↥(OL LL)] x) =

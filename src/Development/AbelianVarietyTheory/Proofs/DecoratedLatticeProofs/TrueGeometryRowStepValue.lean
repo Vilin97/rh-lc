@@ -136,9 +136,9 @@ variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws
 
 
 set_option maxHeartbeats 1000000 in
-theorem mem_U_iff (hA : A.Is) (j : ℕ) (hj : j ≤ B.R.m) (β : Ch j) (g : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j)) :
+theorem mem_U_iff (hA : A.Is) (j : ℕ) (hj : j ≤ B.R.m) (β : Ch j) (g : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j)) :
     g ∈ A.U j β ↔ g ∈ GfC _ ∧ ∀ v, cutAt _ v g ∈ A.U j β := by
-  have ex := GlobalTheory.AdForm.RdVal.finM_mem ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) rfl
+  have ex := GlobalTheory.AdForm.RdVal.finM_mem ((I.rec7 l Z).sp.X j) (rankN (I.rec7 l Z) j hj) (gramN (I.rec7 l Z) j hj) rfl
   constructor
   · intro hg
     obtain ⟨hC, κ, hκ⟩ := (hA.U j hj β g).1 hg
@@ -162,8 +162,8 @@ theorem mem_U_iff (hA : A.Is) (j : ℕ) (hj : j ≤ B.R.m) (β : Ch j) (g : GA (
 
 set_option maxHeartbeats 1000000 in
 theorem mem_of_uloc_le {a' : I.ι} {Ch' : ℕ → Type} {A' : TwDat I l Z u a' Ch'} (hA : A.Is) (hA' : A'.Is) (j : ℕ) (hj : j ≤ B.R.m) (β : Ch j)
-    (β' : Ch' j) (v : GlobalTheory.FinPl.Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (hle : (A.K j hj β).lev.Uloc v ≤ (A'.K j hj β').lev.Uloc v)
-    {g : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j)} (hv : g ∈ GlobalTheory.FinPl.grpAt _ (· ∈ ({v} : Finset _))) (hg : g ∈ A.U j β) :
+    (β' : Ch' j) (v : GlobalTheory.FinPl.Pl (I.rec7 l Z)) (hle : (A.K j hj β).lev.Uloc v ≤ (A'.K j hj β').lev.Uloc v)
+    {g : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j)} (hv : g ∈ GlobalTheory.FinPl.grpAt _ (· ∈ ({v} : Finset _))) (hg : g ∈ A.U j β) :
     g ∈ A'.U j β' := by
   obtain ⟨hC, κ, hκ⟩ := (hA.U j hj β g).1 hg
   refine (hA'.U j hj β' g).2 ⟨hC, ⟨κ.1, ((A'.K j hj β').lev.U_eq _).2 ⟨(((A.K j hj β).lev.U_eq _).1 κ.2).1, fun w => ?_⟩⟩, hκ⟩

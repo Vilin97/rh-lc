@@ -69,14 +69,16 @@ private theorem convPt {V W : Type} [NormedAddCommGroup V] [InnerProductSpace �
     (Lp.aestronglyMeasurable u).comp_measurePreserving hmp
   have hn : eLpNorm (fun t => u (x + t)) 2 volume = eLpNorm u 2 volume :=
     eLpNorm_comp_measurePreserving (Lp.aestronglyMeasurable u) hmp
-  have h1 := eLpNorm_le_eLpNorm_mul_eLpNorm_of_nnnorm (p := 2) (q := 2) (r := 1) hr.1 hg
-    (fun (A : V →L[ℂ] W) (v : V) => A v) 1 (Eventually.of_forall fun t => by
+  have hc : Continuous (Function.uncurry fun (A : V →L[ℂ] W) (v : V) => A v) := by fun_prop
+  have hm := hc.comp_aestronglyMeasurable₂ hr.aestronglyMeasurable hg
+  have h1 := eLpNorm_le_eLpNorm_mul_eLpNorm (p := 2) (q := 2) (r := 1)
+    (fun (A : V →L[ℂ] W) (v : V) => A v) 1 hc hr.aestronglyMeasurable hg (Eventually.of_forall fun t => by
       rw [one_mul]
       exact (κ t).le_opNNNorm _)
-  rw [eLpNorm_one_eq_lintegral_enorm, hn, ENNReal.coe_one, one_mul] at h1
+  rw [eLpNorm_one_eq_lintegral_eNorm hm, hn, ENNReal.coe_one, one_mul] at h1
   have h2 := (enorm_integral_le_lintegral_enorm (fun t => κ t (u (x + t)))).trans h1
   rw [← toReal_enorm, Lp.norm_def, ← ENNReal.toReal_mul]
-  exact ENNReal.toReal_mono (ENNReal.mul_ne_top hr.2.ne (Lp.memLp u).2.ne) h2
+  exact ENNReal.toReal_mono (ENNReal.mul_ne_top hr.ne (Lp.memLp u).ne) h2
 
 private theorem inv_map {G : Type} [Group G] [MeasurableSpace G] [MeasurableMul₂ G] [MeasurableInv G]
     (ν : Measure G) [IsProbabilityMeasure ν] (U : Subgroup G) (hs : ∀ᵐ k ∂ν, k ∈ U)
@@ -479,7 +481,8 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.ctRep :
       funext i
       exact (hv s (p i)).symm
     rw [e]
-    exact T.continuous_of_finiteDimensional.comp (continuous_pi fun i => hf.comp (continuous_levi_unipotent_path K (p i) _))
+    set_option synthInstance.maxHeartbeats 100000 in
+      exact T.continuous_of_finiteDimensional.comp (continuous_pi fun i => hf.comp (continuous_levi_unipotent_path K (p i) _))
   have hex : Continuous fun s : ℝ => Complex.exp (-2 * (s : ℂ)) := by fun_prop
   have hUc : Continuous fun s : ℝ => Complex.exp (-2 * (s : ℂ)) • v s := hex.smul hcv.fst
   have hUc' : Continuous fun s : ℝ => Complex.exp (-2 * (s : ℂ)) • v' s := hex.smul hcv.snd

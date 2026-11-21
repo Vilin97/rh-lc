@@ -32,7 +32,7 @@ theorem exists_eigenbasis {V O : Type} [CommRing V] [IsLocalRing V] [IsNoetheria
     {G' : Over (Sp O)} [GrpObj G'] {π : G'.left ⟶ G.left} (hπ : IsGrpPullback G' G (spMap (algebraMap V O)) π)
     (act' : Λ → (G' ⟶ G')) (ha : ∀ a, (act' a).left ≫ π = π ≫ (act a).left) :
     ∃ u' : Fin m → (specO O (DualNumber O) ⟶ G'),
-      (∀ i, (u' i).left ≫ π = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V O)) ≫ (u i).left) ∧
+      (∀ i, (u' i).left ≫ π = spMap (dualMap (algebraMap V O)) ≫ (u i).left) ∧
       ∀ w : LieG G', (∀ a, w.1 ≫ act' a = ptMap (dualScale (algebraMap V O (χ a))) ≫ w.1) →
         ∃ c : Fin m → O, w.1 = (List.ofFn fun i => ptMap (dualScale (c i)) ≫ u' i).prod := by
   obtain ⟨u', -, -, h3, h4⟩ := PlaceInt.Ext.exists_eigenbasis_pullback (V' := O) G act χ u ht he hb
@@ -97,21 +97,21 @@ theorem exists_map_to_model {V F : Type} [CommRing V] [IsDomain V] [IsDiscreteVa
   · rw [Category.assoc, ha']
 
 theorem dualMap_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (f : R' →+* R'') (g : R →+* R') :
-    (GlobalTheory.CompanionTheory.Ar.dualMap f).comp (GlobalTheory.CompanionTheory.Ar.dualMap g) = GlobalTheory.CompanionTheory.Ar.dualMap (f.comp g) := by
-  ext s <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    (dualMap f).comp (dualMap g) = dualMap (f.comp g) := by
+  ext s <;> simp [dualMap]
 
 theorem dualMap_alg {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (algebraMap R (DualNumber R)) = spMap (algebraMap R' (DualNumber R')) ≫ spMap f := by
+    spMap (dualMap f) ≫ spMap (algebraMap R (DualNumber R)) = spMap (algebraMap R' (DualNumber R')) ≫ spMap f := by
   rw [spMap_spMap, spMap_spMap]
   congr 1
-  ext s <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext s <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem ext_generic {y y' : specO O (DualNumber O) ⟶ P.G}
-    (h : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O C)) ≫ y.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O C)) ≫ y'.left) : y = y' := by
-  haveI : IsSchemeTheoreticallyDominant (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O C))) :=
+    (h : spMap (dualMap (algebraMap O C)) ≫ y.left = spMap (dualMap (algebraMap O C)) ≫ y'.left) : y = y' := by
+  haveI : IsSchemeTheoreticallyDominant (spMap (dualMap (algebraMap O C))) :=
     (schemeDominant_specMap_iff _).2 fun a b hab => TrivSqZeroExt.ext
-      (P.integers.hom_inj (by simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using congrArg TrivSqZeroExt.fst hab))
-      (P.integers.hom_inj (by simpa [GlobalTheory.CompanionTheory.Ar.dualMap, Algebra.algebraMap_eq_smul_one] using congrArg TrivSqZeroExt.snd hab))
+      (P.integers.hom_inj (by simpa [dualMap] using congrArg TrivSqZeroExt.fst hab))
+      (P.integers.hom_inj (by simpa [dualMap, Algebra.algebraMap_eq_smul_one] using congrArg TrivSqZeroExt.snd hab))
   haveI := P.semi.separated
   exact Over.OverMorphism.ext (ext_of_schDom P.G.hom ((Over.w y).trans (Over.w y').symm) _ h)
 
@@ -150,7 +150,7 @@ theorem span_bLie_eq_wRec : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
       have k : (ub τ j).left ≫ G.G.hom = spMap (algebraMap T.V (DualNumber T.V)) := Over.w (ub τ j)
       rw [Category.assoc, ← n₂.cart.1.w, ← Category.assoc, r₂]
       exact (Category.assoc _ _ _).trans ((congrArg (_ ≫ ·) k).trans (dualMap_alg _))
-    have e₁ : s.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap k.toRingHom) ≫ r := n₁.cart.1.hom_ext
+    have e₁ : s.left ≫ φ = spMap (dualMap k.toRingHom) ≫ r := n₁.cart.1.hom_ext
       (by rw [Category.assoc, Category.assoc, r₁, h5, s₂, hz.2.1])
       (by rw [Category.assoc, Category.assoc, r₃, h3, dualMap_alg, ← Category.assoc, Over.w s]; rfl)
     have e₂ : xG.1 = u' j := ext_generic (h1.1.hom_ext ?_ (by

@@ -25,16 +25,7 @@ theorem hY_ent [_root_.NumberField.IsTotallyComplex E] (τ τ' : E →+* ℂ) (h
     coord τ' ((hY τ j i (1 / 2)).1 j' i') - Complex.I * coord τ' ((hY τ j i (Complex.I / 2)).1 j' i') =
       if τ' = τ ∧ j' = j ∧ i' = i then 1 else 0 := by
   have hc : ∀ z, coord τ' (atEmb τ z) = if τ' = τ then z else 0 := fun z => by
-    by_cases h1 : τ' = τ
-    · subst τ'
-      rw [if_pos rfl, coord_atEmb]
-    · have hw : InfinitePlace.mk τ' ≠ InfinitePlace.mk τ := fun hw => by
-        rcases InfinitePlace.mk_eq_iff.1 hw with he | he
-        · exact h1 he
-        · exact h (by rw [← he]; ext; simp [barE])
-      rw [if_neg h1]
-      unfold coord atEmb
-      split_ifs <;> simp [hw]
+    rw [GlobalTheory.CuspRep.InfType.coord_atEmb', if_neg h, add_zero]
   have he : ∀ z, coord τ' ((hY τ j i z).1 j' i') =
       (if j = j' ∧ i = i' then coord τ' (atEmb τ z) else 0) +
         (if j = i' ∧ i = j' then star (coord τ' (atEmb τ z)) else 0) := by

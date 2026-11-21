@@ -197,7 +197,7 @@ attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Ho
 
 theorem exists_gLoc_idG_chiTied : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X →
     ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)),
-    ∃ (G : GLoc (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.g),
+    ∃ (G : GLoc (I.rec7 l Z).host.F (I.rec7 l Z).host.E (sigD (I.rec7 l Z)) (I.rec7 l Z).host.g),
       I.IdG l Z G ∧ CharacterCompatible G B.R.m := by
   intro B X I hI _ l Z
   have hf : 0 < B.fields.f := by
@@ -211,7 +211,7 @@ theorem exists_gLoc_idG_chiTied : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X)
     unfold Ranks.f Ranks.n at h1
     have := B.R.ord_pos
     omega
-  obtain ⟨G, h1, h2, h3, h4⟩ := exists_gLoc I.Ch hf l.pr hI.ch_ok B.sp.cm B.embLL (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).nd.g_split
+  obtain ⟨G, h1, h2, h3, h4⟩ := exists_gLoc I.Ch hf l.pr hI.ch_ok B.sp.cm B.embLL (I.rec7 l Z).nd.g_split
   exact ⟨G, ⟨h1, h2, h3⟩, h4⟩
 
 end GlobalTheory.Mem.TypePrimes

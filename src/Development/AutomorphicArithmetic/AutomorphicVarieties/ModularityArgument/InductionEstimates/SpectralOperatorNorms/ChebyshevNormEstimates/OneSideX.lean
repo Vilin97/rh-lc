@@ -155,7 +155,7 @@ private theorem act_pow {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ
 
 end SlopeTestRemainingChoices
 
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 4000000 in
 private theorem fam_part (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsTotallyComplex K] (μ : Measure (normOneGL (K := K) (n := (2 + 2))))
     [μ.IsHaarMeasure] (θ : Twist μ)
     (𝔰 : Side θ 2) (𝔵 : Fam 𝔰) (ev : PR K (2 + 2) →+* (LL μ →L[ℂ] LL μ)) (evz : ℂ → PR K (2 + 2) →+* (Eu 𝔵.d' →L[ℂ] Eu 𝔵.d'))
@@ -274,7 +274,7 @@ private theorem final_arith (C C₁ B e u q r k zN zN' w x y p : ℝ) (hB : 0 �
   have h6 : 0 ≤ |C| * e * u * w := by positivity
   nlinarith
 
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 4000000 in
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.oneSideX :
     KernX → EvEx → OneSideX := by
   intro hK hEv K _ _ _ μ _ θ 𝔰 𝔵 ev evz Nn C₀ hev hin hz hF sp hsp

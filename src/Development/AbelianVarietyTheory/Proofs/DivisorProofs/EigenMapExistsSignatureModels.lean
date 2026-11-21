@@ -51,10 +51,10 @@ theorem GlobalTheory.ThK.EvOnto.main : GlobalTheory.ThK.KP → ∀ (F E : Type) 
   · refine GlobalTheory.TensUniq.pure_mem_schA (f' i) (φ' i) (hSB' i) ?_
     filter_upwards [hcof' i, hM.std] with v h1 h2
     rw [h1, h2]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
-    refine Finset.sum_congr rfl fun i _ => ?_
-    rw [hl (f' i) (φ' i) (hSB' i) (hcof' i), hf' i]
-    congr 1
-    funext v
-    exact hpreEv v _ _
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [hl (f' i) (φ' i) (hSB' i) (hcof' i), hf' i]
+      congr 1
+      funext v
+      exact hpreEv v _ _

@@ -82,11 +82,13 @@ theorem mem_CZ_glob (hA : ∀ p, Agree δ M p) (L U : Formalism.L2.SG.PairVal.Ma
   have hUi := ZsVolGrp.isUpUni_inv hU
   have hLdet : IsUnit L.det := by rw [ZsVolGrp.det_lo (fun a => (hL a a).2 rfl) (fun a b h => (hL a b).1 h)]; exact isUnit_one
   have hmem (a : Formalism.L2.SG.PairVal.GLR D) : a ∈ ZsVolCut.CZ M δ u u' Zh L ↔ a ∈ ZsVolCut.stZSet M δ u u' Zh L := by
-    have hone : (1 : Formalism.L2.SG.PairVal.GLR D) ∈ ZsVolCut.stZSet M δ u u' Zh L := by
+    let K : Subgroup (Formalism.L2.SG.PairVal.GLR D) := {
+      carrier := ZsVolCut.stZSet M δ u u' Zh L
+      one_mem' := by
         refine ⟨1, ?_, ZsVolGrp.isLoUni_one, 1, ZsVolGrp.isUpUni_one, by simp, fun p => ⟨1, 1, ZsVolGrp.intLow_one _, ZsVolGrp.intUp_one _, fun Zh' => ?_⟩⟩
         · simp [Matrix.nonsing_inv_mul L hLdet]
         · simp [ZsVolGrp.zhatOM_zhatOM]
-    have hmul : ∀ x y : Formalism.L2.SG.PairVal.GLR D, x ∈ ZsVolCut.stZSet M δ u u' Zh L → y ∈ ZsVolCut.stZSet M δ u u' Zh L → x * y ∈ ZsVolCut.stZSet M δ u u' Zh L := by
+      mul_mem' := by
         rintro x y ⟨x', hx, hxl, bx, hbx, hxZ, hxp⟩ ⟨y', hy, hyl, by', hby, hyZ, hyp⟩
         refine ⟨x' * y', ?_, ?_, by' * bx, ZsVolGrp.isUpUni_mul hby hbx, ?_, fun p => ?_⟩
         · rw [Units.val_mul, hx, hy, Units.val_mul]
@@ -111,7 +113,7 @@ theorem mem_CZ_glob (hA : ∀ p, Agree δ M p) (L U : Formalism.L2.SG.PairVal.Ma
             simp only [Matrix.mul_assoc]
           rw [e, h1, h2]
           simp only [Matrix.mul_assoc]
-    have hinv : ∀ x : Formalism.L2.SG.PairVal.GLR D, x ∈ ZsVolCut.stZSet M δ u u' Zh L → x⁻¹ ∈ ZsVolCut.stZSet M δ u u' Zh L := by
+      inv_mem' := by
         rintro x ⟨x', hx, hxl, bx, hbx, hxZ, hxp⟩
         obtain ⟨hxi, hxi1, hxi2⟩ := ZsVolGrp.isLoUni_inv hxl
         obtain ⟨hbi, hbi1, hbi2⟩ := ZsVolGrp.isUpUni_inv hbx
@@ -147,22 +149,9 @@ theorem mem_CZ_glob (hA : ∀ p, Agree δ M p) (L U : Formalism.L2.SG.PairVal.Ma
           simp only [← Matrix.mul_assoc]
           rw [hli1, Matrix.one_mul]
           simp only [Matrix.mul_assoc, hρi2, Matrix.mul_one]
-    let K : Subgroup (Formalism.L2.SG.PairVal.GLR D) := {
-      carrier := ZsVolCut.stZSet M δ u u' Zh L
-      one_mem' := hone
-      mul_mem' := fun {x y} => hmul x y
-      inv_mem' := fun {x} => hinv x
     }
-    constructor
-    · intro ha
-      have hle : ZsVolCut.CZ M δ u u' Zh L ≤ K := by
-        change Subgroup.closure (ZsVolCut.stZSet M δ u u' Zh L) ≤ K
-        rw [Subgroup.closure_le]
-        intro x hx
-        exact hx
-      exact hle ha
-    · intro ha
-      exact Subgroup.subset_closure ha
+    change a ∈ Subgroup.closure (K : Set _) ↔ a ∈ K
+    rw [Subgroup.closure_eq K]
   rw [hmem]
   obtain ⟨ha, hb, hW⟩ := bOf_spec w g
   set gm : Formalism.L2.SG.PairVal.MatR D := ((g : Formalism.L2.SG.PairVal.GLR D) : Formalism.L2.SG.PairVal.MatR D) with hgm
@@ -249,8 +238,7 @@ theorem cz_le (L U : Formalism.L2.SG.PairVal.MatR D) (hL : IsLoUni L) (hU : IsUp
     Formalism.L2.SG.Pf.ZsVolCut.CZ M δ u u' Zh L ≤ VolPinAsm.StG w := by
   have hLi := ZsVolGrp.isLoUni_inv hL
   have hUi := ZsVolGrp.isUpUni_inv hU
-  change Subgroup.closure (ZsVolCut.stZSet M δ u u' Zh L) ≤ VolPinAsm.StG w
-  rw [Subgroup.closure_le]
+  have hLdet : IsUnit L.det := by rw [ZsVolGrp.det_lo (fun a => (hL a a).2 rfl) (fun a b h => (hL a b).1 h)]; exact isUnit_one
   intro a ha
   obtain ⟨a', ha'eq, ha'lo, b', hb'up, hZ', -⟩ := ha
   refine ⟨?_, U * b' * U⁻¹, ZsVolGrp.isUpUni_mul (ZsVolGrp.isUpUni_mul hU hb'up) hUi.1, ?_⟩

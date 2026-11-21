@@ -47,12 +47,12 @@ theorem IsKSR.baseChange (P : AbelianDeRham) {Φ : Finset (E →+* ℂ)} {S S' :
   obtain ⟨A, _, A', _, π, π', i, hi, b, ub, hb, hπ, hπ', e, hpol, hu, hl, hM⟩ := hM
   letI : Algebra S S' := ψ.toRingHom.toAlgebra
   obtain ⟨B, _, φ, hφ⟩ := exists_isGrpPullback A (spMap (algebraMap S S'))
-  obtain ⟨B', _, φ', hφ'⟩ := exists_isGrpPullback A' (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S S')))
-  have e₀ : spMap (algebraMap S S') ≫ epsRed S = epsRed S' ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S S')) := by
+  obtain ⟨B', _, φ', hφ'⟩ := exists_isGrpPullback A' (spMap (dualMap (algebraMap S S')))
+  have e₀ : spMap (algebraMap S S') ≫ epsRed S = epsRed S' ≫ spMap (dualMap (algebraMap S S')) := by
     rw [← Cris.spMap_comp, ← Cris.spMap_comp]
     congr 1
-    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-  have w : (φ ≫ i) ≫ A'.hom = (B.hom ≫ epsRed S') ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S S')) := by
+    ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  have w : (φ ≫ i) ≫ A'.hom = (B.hom ≫ epsRed S') ≫ spMap (dualMap (algebraMap S S')) := by
     rw [(hφ.comp hi).1.w, e₀, Category.assoc]
   have sq : hφ'.1.lift _ _ w ≫ φ' = φ ≫ i := hφ'.1.lift_fst _ _ _
   have hj : IsGrpPullback B B' (epsRed S') (hφ'.1.lift _ _ w) :=

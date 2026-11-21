@@ -79,12 +79,12 @@ end BO
 
 def StepCh {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (i : ℕ) : Prop :=
   ∃ (C : Type) (_ : Fintype C) (bad : Set (HeightOneSpectrum (𝓞 B.host.F))) (chOf : (I.stp u a i).Cl → C)
-    (K : ∀ (hi : i ≤ B.R.m) (β : C), LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1)
-      (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c.1))) (k : C → TC.GA B (B.R.N i)),
+    (K : ∀ (hi : i ≤ B.R.m) (β : C), LevelChart (I.rec7 l Z) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1)
+      (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c.1))) (k : C → TC.GA B (B.R.N i)),
     (∀ hi : i ≤ B.R.m, I.Reads u a i chOf (fun β => (K hi β).lev.Lb) (fun β => (K hi β).lev.U) (fun β => (K hi β).lev.chi)
       (fun c => ((K hi (chOf c)).y ⟨c, rfl⟩).1) (fun c s => ((K hi (chOf c)).stabI ⟨c, rfl⟩ s).1) k) ∧
     (∀ hi : i ≤ B.R.m, ∀ β, ∃ n : ℕ, 0 < n ∧ ∀ κ, (K hi β).lev.chi κ ^ n = 1) ∧ (i ≤ B.R.m → ∀ β, BaseOk I u a i (k β)) ∧
-    (i ≤ B.R.m → ∀ v ∈ bad, v ∈ Formalism.L2.Forms.badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ∨ I.UnderQ a v) ∧
+    (i ≤ B.R.m → ∀ v ∈ bad, v ∈ Formalism.L2.Forms.badG (I.rec7 l Z) ∨ I.UnderQ a v) ∧
     (i = B.R.m → Nonempty (Unique C)) ∧ (∀ h : i = B.R.m, ∀ β, I.TopPt l Z u a (h ▸ k β)) ∧ (i < B.R.m → ∀ β, k β = TC.kStd X u (B.R.N i))
 
 section S0
@@ -108,8 +108,8 @@ theorem stepCh_zero {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP :
     (basePi_of_ok hX hPr u) (hPr.piT_norm u) (rls_vT_iff hX hPr u)
     (fun P hP => by simpa only [Ideal.absNorm_eq_natCard] using hPr.vT_norm u P hP) (rls_T_notUnder hPr u)
     (hf ▸ colBase_index (X := B.fields) B.sp.cm (B.R.N 0) hPr u) ((Units.map B.embLL.toMonoidHom).comp (colLev I.Ch 0).chr)
-    (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) 0 hi) hg (badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (Set.ext fun v => (plUnder_vGs (X := B.fields) B.sp.cm hPr v).symm)
-    (fun c : {c // chOf c = ()} => (I.stp u a 0).Stab c.1) (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) 0 hi (I.latAt u a 0 c.1))
+    (gramN (I.rec7 l Z) 0 hi) hg (badG (I.rec7 l Z)) (Set.ext fun v => (plUnder_vGs (X := B.fields) B.sp.cm hPr v).symm)
+    (fun c : {c // chOf c = ()} => (I.stp u a 0).Stab c.1) (fun c => latCrd (I.rec7 l Z) 0 hi (I.latAt u a 0 c.1))
     (diaT (Pr := B.primes X) u) (fun c => ((I.stp u a 0).rep c.1).1.1.deco) (fun c => yT I u a c.1)
     (fun c => (dia_of_pt hPr u (yT_spec I hI u a c.1)).1) (fun c => (dia_of_pt hPr u (yT_spec I hI u a c.1)).2)
     ((stepZero_classes_bijective_decoratedLattice I hI u a).comp (Equiv.subtypeUnivEquiv fun _ => rfl).bijective) (fun c => (hl u a).1 c.1)
@@ -119,7 +119,7 @@ theorem stepCh_zero {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP :
   letI := StepZero.idxUnique hL
   obtain ⟨q₀, -⟩ := exists_ptAt (R := B.R) I.sel (I.tup a) (I.cst a) (u := u) (j := 0) (DecoF.base _ _ _ _ _)
   have hm := B.R.two_le_m
-  refine ⟨Unit, inferInstance, badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G), chOf, fun _ _ => ⟨lev, Y, h1, h2, SI, h3, h4⟩, fun _ => kStd X u (B.R.N 0),
+  refine ⟨Unit, inferInstance, badG (I.rec7 l Z), chOf, fun _ _ => ⟨lev, Y, h1, h2, SI, h3, h4⟩, fun _ => kStd X u (B.R.N 0),
     fun _ => ⟨fun c c' => ⟨fun _ => ⟨Subsingleton.elim _ _, cos0 I _ _⟩, fun _ => rfl⟩,
       fun _ => ⟨(I.stp u a 0).cl default q₀, rfl⟩, fun β x => ?_, fun _ => k1, fun _ v hv _ _ => k2 v hv, fun _ => k3,
       fun c => ?_, fun c x q h => ?_, fun c x κ hκ h => ?_, fun c s => h9 _ _⟩, fun _ _ => ?_,
@@ -178,7 +178,7 @@ theorem stepCh_mid {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : 
     ⟨fun _ => k1, fun _ v hv _ _ => k2 v hv, fun _ => k3⟩
   obtain ⟨K, hK, hfin⟩ := GlobalTheory.Mem.Col2.ChExM.exists_charts I hI hP l Z u a Q i h2.le h1 h2 hQ _ hk
   haveI := GlobalTheory.Mem.Col2.TC.ChTw.finite_chart I l u a i
-  exact ⟨GlobalTheory.Mem.Col2.TC.ChTw.Chart I u a i, Fintype.ofFinite _, badQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q, GlobalTheory.Mem.Col2.TC.ChTw.chartOf I u a i,
+  exact ⟨GlobalTheory.Mem.Col2.TC.ChTw.Chart I u a i, Fintype.ofFinite _, badQ (I.rec7 l Z) Q, GlobalTheory.Mem.Col2.TC.ChTw.chartOf I u a i,
     fun _ => K, fun _ => kStd X u (B.R.N i), fun _ => hK, fun _ => hfin,
     fun _ _ => ⟨kStd_pt I hI u a i, fun P hP _ => kStd_at_SQ I hI u _ P hP⟩,
     fun _ v hv => hv.imp id (hQ v).1, fun h => absurd h (by omega), fun h => absurd h (by omega), fun _ _ => rfl⟩
@@ -196,7 +196,7 @@ theorem stepCh_top {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : 
   obtain ⟨K1, ⟨k, hk, htop⟩, -, -, hfin, -⟩ := GlobalTheory.Mem.Col2.TC.chart_twm I hI hP l Z u a Q
     (GlobalTheory.Mem.FormSym.clsOfChart β0 hβ0 (K0 β0)) hQ (GlobalTheory.Mem.FormSym.readsK_one I l Z h1 β0 hβ0)
   have hm := B.R.two_le_m
-  exact ⟨Unit, inferInstance, badQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q, fun _ => (), fun _ => K1, k, fun _ => hk, fun _ _ => hfin,
+  exact ⟨Unit, inferInstance, badQ (I.rec7 l Z) Q, fun _ => (), fun _ => K1, k, fun _ => hk, fun _ _ => hfin,
     fun _ β => topBaseOk I hI hP l Z u a _ _ _ _ _ _ k hk htop β,
     fun _ v hv => hv.imp id (hQ v).1, fun _ => ⟨inferInstance⟩,
     fun h β => by
@@ -226,16 +226,16 @@ end SMid
 theorem liftKA {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l))
     (i : ℕ) (hi : i ≤ B.R.m) (k : TC.GA B (B.R.N i))
     (hk : ∃ p : Formalism.L2.Col.DecoF B.fields.E (B.R.N i) ∅ ∅ ∅, TC.PtOf k p ∧ p.deco.1.N = Formalism.L2.Col.stdLat B.fields.E (B.R.N i)) :
-    ∃ kA : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i), kA ∈ GfC _ ∧ finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) kA = k.1 :=
+    ∃ kA : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i), kA ∈ GfC _ ∧ finM _ (rankN (I.rec7 l Z) i hi) kA = k.1 :=
   GlobalTheory.T.exists_adelicUnitaryLift_of_chartBasePoint I hI hP l Z i hi k hk
 
 theorem levData {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (i : ℕ) (hi : i ≤ B.R.m)
     {T : ℕ} {bad : Set (HeightOneSpectrum (𝓞 B.host.F))} {cl : Type} {stab : cl → Type} [∀ c, Group (stab c)]
-    {lat : cl → Submodule (𝓞 B.host.E) (Fin (B.R.N i) → B.host.E)} (K : LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) T bad i hi stab lat) :
-    ∃ (U : Subgroup (GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i))) (chi : U →* ℂˣ) (h : cl → GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i)),
-      (∀ g, g ∈ U ↔ g ∈ GfC _ ∧ ∃ κ : K.lev.U, κ.1.1 = finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) g) ∧
-      (∀ (g : U) (κ : K.lev.U), κ.1.1 = finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) g.1 → chi g = K.lev.chi κ) ∧
-      (∀ c, h c ∈ GfC _ ∧ finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (h c) = (K.y c).1.1) :=
+    {lat : cl → Submodule (𝓞 B.host.E) (Fin (B.R.N i) → B.host.E)} (K : LevelChart (I.rec7 l Z) T bad i hi stab lat) :
+    ∃ (U : Subgroup (GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i))) (chi : U →* ℂˣ) (h : cl → GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i)),
+      (∀ g, g ∈ U ↔ g ∈ GfC _ ∧ ∃ κ : K.lev.U, κ.1.1 = finM _ (rankN (I.rec7 l Z) i hi) g) ∧
+      (∀ (g : U) (κ : K.lev.U), κ.1.1 = finM _ (rankN (I.rec7 l Z) i hi) g.1 → chi g = K.lev.chi κ) ∧
+      (∀ c, h c ∈ GfC _ ∧ finM _ (rankN (I.rec7 l Z) i hi) (h c) = (K.y c).1.1) :=
   GlobalTheory.T.chartLevelCharacterReps_on_adelicUnitaryPoints I l Z i hi K
 
 theorem pointOf {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (u : B.Word) (a : I.ι) (i : ℕ)
@@ -252,21 +252,21 @@ theorem pointOf {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : TC.
 set_option maxHeartbeats 2000000 in
 theorem comp {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l))
     (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) {C : Type} {bad : Set (HeightOneSpectrum (𝓞 B.host.F))} (chOf : (I.stp u a i).Cl → C)
-    (K : ∀ β : C, LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1)
-      (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c.1))) (k : C → TC.GA B (B.R.N i))
+    (K : ∀ β : C, LevelChart (I.rec7 l Z) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1)
+      (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c.1))) (k : C → TC.GA B (B.R.N i))
     (hR : I.Reads u a i chOf (fun β => (K β).lev.Lb) (fun β => (K β).lev.U) (fun β => (K β).lev.chi)
       (fun c => ((K (chOf c)).y ⟨c, rfl⟩).1) (fun c s => ((K (chOf c)).stabI ⟨c, rfl⟩ s).1) k) (hb : ∀ β, BaseOk I u a i (k β)) :
-    ∃ (kA : C → GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i)) (xr : C → (AE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))ˣ) (b0 : C → Idx I.sel (I.tup a) (I.idx a) i)
-      (p0 : C → PtAt B.R I.sel (I.tup a) (I.cst a) u i) (U : C → Subgroup (GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i)))
-      (chi : ∀ β, U β →* ℂˣ) (h : ∀ β : C, {c // chOf c = β} → GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i)),
-      (∀ β, kA β ∈ GfC _ ∧ finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (kA β) = (k β).1 ∧ IsDetRoot _ (kA β) (xr β)) ∧
+    ∃ (kA : C → GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i)) (xr : C → (AE (I.rec7 l Z))ˣ) (b0 : C → Idx I.sel (I.tup a) (I.idx a) i)
+      (p0 : C → PtAt B.R I.sel (I.tup a) (I.cst a) u i) (U : C → Subgroup (GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i)))
+      (chi : ∀ β, U β →* ℂˣ) (h : ∀ β : C, {c // chOf c = β} → GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i)),
+      (∀ β, kA β ∈ GfC _ ∧ finM _ (rankN (I.rec7 l Z) i hi) (kA β) = (k β).1 ∧ IsDetRoot _ (kA β) (xr β)) ∧
       (∀ β, TC.PtOf (k β) (extTo I.SQ (p0 β).1.1) ∧ (p0 β).1.1.deco.1.N = Formalism.L2.Col.stdLat B.fields.E (B.R.N i)) ∧
       (∀ c, c.1 = b0 (chOf c) ∧ cosetIn ((I.stp u a i).rep c) = cosetIn (p0 (chOf c))) ∧
-      (∀ β g, g ∈ U β ↔ g ∈ GfC _ ∧ ∃ κ : (K β).lev.U, κ.1.1 = finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) g) ∧
-      (∀ β (g : U β) (κ : (K β).lev.U), κ.1.1 = finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) g.1 → chi β g = (K β).lev.chi κ) ∧
-      (∀ β c, h β c ∈ GfC _ ∧ finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (h β c) = ((K β).y c).1.1) := by
+      (∀ β g, g ∈ U β ↔ g ∈ GfC _ ∧ ∃ κ : (K β).lev.U, κ.1.1 = finM _ (rankN (I.rec7 l Z) i hi) g) ∧
+      (∀ β (g : U β) (κ : (K β).lev.U), κ.1.1 = finM _ (rankN (I.rec7 l Z) i hi) g.1 → chi β g = (K β).lev.chi κ) ∧
+      (∀ β c, h β c ∈ GfC _ ∧ finM _ (rankN (I.rec7 l Z) i hi) (h β c) = ((K β).y c).1.1) := by
   choose kA hkA using fun β => liftKA I hI hP l Z i hi (k β) (hR.k_std β)
-  choose xr hxr using fun β => GlobalTheory.RecDict.exists_isDetRoot (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ (kA β)
+  choose xr hxr using fun β => GlobalTheory.RecDict.exists_isDetRoot (I.rec7 l Z) _ (kA β)
   choose b0 p0 hp1 hp2 hp3 using fun β => pointOf I hI hP l u a i hi chOf _ _ _ _ _ k hR β (hb β)
   choose U chi h hU hchi hh using fun β => levData I l Z i hi (K β)
   exact ⟨kA, xr, b0, p0, U, chi, h, fun β => ⟨(hkA β).1, (hkA β).2, hxr β⟩, fun β => ⟨hp1 β, hp2 β⟩,
@@ -274,20 +274,20 @@ theorem comp {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : TC.Pin
 
 def FullStep {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (i : ℕ) : Prop :=
   ∃ (C : Type) (_ : Fintype C) (bad : Set (HeightOneSpectrum (𝓞 B.host.F))) (chOf : (I.stp u a i).Cl → C)
-    (K : ∀ (hi : i ≤ B.R.m) (β : C), LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1)
-      (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c.1))) (k : C → TC.GA B (B.R.N i))
-    (kA : C → GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i)) (xr : C → (AE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))ˣ) (b0 : C → Idx I.sel (I.tup a) (I.idx a) i)
-    (p0 : C → PtAt B.R I.sel (I.tup a) (I.cst a) u i) (U : C → Subgroup (GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i)))
-    (chi : ∀ β, U β →* ℂˣ) (h : ∀ β : C, {c // chOf c = β} → GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i)),
+    (K : ∀ (hi : i ≤ B.R.m) (β : C), LevelChart (I.rec7 l Z) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1)
+      (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c.1))) (k : C → TC.GA B (B.R.N i))
+    (kA : C → GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i)) (xr : C → (AE (I.rec7 l Z))ˣ) (b0 : C → Idx I.sel (I.tup a) (I.idx a) i)
+    (p0 : C → PtAt B.R I.sel (I.tup a) (I.cst a) u i) (U : C → Subgroup (GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i)))
+    (chi : ∀ β, U β →* ℂˣ) (h : ∀ β : C, {c // chOf c = β} → GA (I.rec7 l Z) ((I.rec7 l Z).sp.X i)),
     (∀ hi : i ≤ B.R.m, I.Reads u a i chOf (fun β => (K hi β).lev.Lb) (fun β => (K hi β).lev.U) (fun β => (K hi β).lev.chi)
       (fun c => ((K hi (chOf c)).y ⟨c, rfl⟩).1) (fun c s => ((K hi (chOf c)).stabI ⟨c, rfl⟩ s).1) k ∧
-      (∀ β, kA β ∈ GfC _ ∧ finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (kA β) = (k β).1 ∧ IsDetRoot _ (kA β) (xr β)) ∧
+      (∀ β, kA β ∈ GfC _ ∧ finM _ (rankN (I.rec7 l Z) i hi) (kA β) = (k β).1 ∧ IsDetRoot _ (kA β) (xr β)) ∧
       (∀ β, TC.PtOf (k β) (extTo I.SQ (p0 β).1.1) ∧ (p0 β).1.1.deco.1.N = Formalism.L2.Col.stdLat B.fields.E (B.R.N i)) ∧
       (∀ c, c.1 = b0 (chOf c) ∧ cosetIn ((I.stp u a i).rep c) = cosetIn (p0 (chOf c))) ∧
-      (∀ β g, g ∈ U β ↔ g ∈ GfC _ ∧ ∃ κ : (K hi β).lev.U, κ.1.1 = finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) g) ∧
-      (∀ β (g : U β) (κ : (K hi β).lev.U), κ.1.1 = finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) g.1 → chi β g = (K hi β).lev.chi κ) ∧
-      (∀ β c, h β c ∈ GfC _ ∧ finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (h β c) = ((K hi β).y c).1.1) ∧
-      (∀ β, ∃ n : ℕ, 0 < n ∧ ∀ κ, (K hi β).lev.chi κ ^ n = 1) ∧ (∀ v ∈ bad, v ∈ Formalism.L2.Forms.badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ∨ I.UnderQ a v)) ∧
+      (∀ β g, g ∈ U β ↔ g ∈ GfC _ ∧ ∃ κ : (K hi β).lev.U, κ.1.1 = finM _ (rankN (I.rec7 l Z) i hi) g) ∧
+      (∀ β (g : U β) (κ : (K hi β).lev.U), κ.1.1 = finM _ (rankN (I.rec7 l Z) i hi) g.1 → chi β g = (K hi β).lev.chi κ) ∧
+      (∀ β c, h β c ∈ GfC _ ∧ finM _ (rankN (I.rec7 l Z) i hi) (h β c) = ((K hi β).y c).1.1) ∧
+      (∀ β, ∃ n : ℕ, 0 < n ∧ ∀ κ, (K hi β).lev.chi κ ^ n = 1) ∧ (∀ v ∈ bad, v ∈ Formalism.L2.Forms.badG (I.rec7 l Z) ∨ I.UnderQ a v)) ∧
     (i = B.R.m → Nonempty (Unique C)) ∧ (∀ e : i = B.R.m, ∀ β, I.TopPt l Z u a (e ▸ k β)) ∧ (i < B.R.m → ∀ β, k β = TC.kStd X u (B.R.N i))
 
 theorem fullStep {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l))
@@ -304,11 +304,11 @@ theorem fullStep {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : TC
       fun h' => absurd h' (by omega), fun h' => absurd h' (by omega)⟩
 
 theorem exists_chr {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l)) (a : I.ι) :
-    ∃ chr : ℕ → ((AE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))ˣ →* Circle), ∀ j : Fin B.R.m, ChrEq (chr ((j : ℕ) + 1)) (I.C.mu0 j * I.xi a) := by
-  have hc : ∀ j : ℕ, ∃ c : (AE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))ˣ →* Circle, ∀ h : j - 1 < B.R.m, 1 ≤ j → ChrEq c (I.C.mu0 ⟨j - 1, h⟩ * I.xi a) := by
+    ∃ chr : ℕ → ((AE (I.rec7 l Z))ˣ →* Circle), ∀ j : Fin B.R.m, ChrEq (chr ((j : ℕ) + 1)) (I.C.mu0 j * I.xi a) := by
+  have hc : ∀ j : ℕ, ∃ c : (AE (I.rec7 l Z))ˣ →* Circle, ∀ h : j - 1 < B.R.m, 1 ≤ j → ChrEq c (I.C.mu0 ⟨j - 1, h⟩ * I.xi a) := by
     intro j
     by_cases h : j - 1 < B.R.m
-    · obtain ⟨c, hc⟩ := GlobalTheory.CharTransport.exists_chrEq (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (I.C.mu0 ⟨j - 1, h⟩ * I.xi a)
+    · obtain ⟨c, hc⟩ := GlobalTheory.CharTransport.exists_chrEq (I.rec7 l Z) (I.C.mu0 ⟨j - 1, h⟩ * I.xi a)
         ((I.C.isMu0 _).unitary.mul (GlobalTheory.Mem.Col2.ColIn.Ok.xi_unitary hI a))
       exact ⟨c, fun _ _ => hc⟩
     · exact ⟨1, fun h' => absurd h' h⟩
@@ -316,14 +316,14 @@ theorem exists_chr {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (l : I
   exact ⟨chr, fun j => hchr ((j : ℕ) + 1) (by simp) (by omega)⟩
 
 theorem exists_idem {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) :
-    ∃ e : AE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G), IsIdemSum e (Formalism.L2.Col.Sall (Pr := B.primes X) I.sel (I.tup a) u) := by
+    ∃ e : AE (I.rec7 l Z), IsIdemSum e (Formalism.L2.Col.Sall (Pr := B.primes X) I.sel (I.tup a) u) := by
   obtain ⟨hX, hPr, -⟩ := GlobalTheory.Mem.Col2.base_fields_primes_ok B X
   have bad := GlobalTheory.ThetaMove.BadPrimes.bad_primes B.fields (B.primes X) I.sel I.S (I.tup a) u hX hPr hI.sel_ok
     (hI.T_mem u) hI.g_mem
   refine GlobalTheory.MuLift.exists_idemSum _ fun Q hQ Q' hQ' hc => ?_
   have h1 : Q' = Formalism.DivisionValues.conjPl Q := GlobalTheory.GoodPrimes.isConjPl_iff.1 hc
   have h2 := (bad Q hQ).1
-  have h3 : Formalism.L2.Col.conjPrime₂ Q = Q' := (GlobalTheory.PlaceDict.conjP_eq_conjPl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q).trans h1.symm
+  have h3 : Formalism.L2.Col.conjPrime₂ Q = Q' := (GlobalTheory.PlaceDict.conjP_eq_conjPl (I.rec7 l Z) Q).trans h1.symm
   have h4 : @Formalism.L2.Col.conjPrime₂ B.fields.E B.fields.fieldE _ B.fields.starE Q = Q' := h3
   exact h2 (h4 ▸ hQ')
 

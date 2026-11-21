@@ -161,7 +161,10 @@ theorem loc_pow (χ : HChar D.host.E) (n : ℕ) (v : Pl D.host.E) (x : (v.adicCo
     (χ ^ n).loc v x = χ.loc v x ^ n := by
   induction n with
   | zero => rw [pow_zero, pow_zero]; rfl
-  | succ n ih => rw [pow_succ, pow_succ, Formalism.L2.Host.HChar.loc_mul, ih]
+  | succ n ih =>
+    rw [pow_succ, pow_succ]
+    change (χ ^ n).loc v x * χ.loc v x = _
+    rw [ih]
 
 theorem chrEq_pow {c : (AE D)ˣ →* Circle} {χ : HChar D.host.E} (h : ChrEq c χ) (n : ℕ) :
     ChrEq (c ^ (n + 1)) (χ ^ (n + 1)) := by
@@ -184,7 +187,8 @@ theorem not_unr (hδ : IsDelta q δ) (hψ : IsPsi l Q ψ) (hl : l.Prime) (a : �
       rw [← loc_pow, show ψ ^ (l ^ n) = 1 from hn]
       rfl
     have h4 := hu x hx
-    rw [Formalism.L2.Host.HChar.loc_mul, loc_pow] at h4
+    change δ.loc v x * (ψ ^ a).loc v x = 1 at h4
+    rw [loc_pow] at h4
     rw [eq_inv_of_mul_eq_one_left h4, inv_pow, ← pow_mul, mul_comm, pow_mul, h3, one_pow, inv_one]
   have h3 := (Nat.prime_dvd_prime_iff_eq Nat.prime_three hl).1 (Nat.prime_three.dvd_of_dvd_pow (dvd_trans (by norm_num) h15))
   have h5 := (Nat.prime_dvd_prime_iff_eq Nat.prime_five hl).1 (Nat.prime_five.dvd_of_dvd_pow (dvd_trans (by norm_num) h15))
@@ -201,7 +205,8 @@ theorem unr_iff (hδ : IsDelta q δ) (hψ : IsPsi l Q ψ) (hl : l.Prime) {a : �
     have h3 : ψ.loc v x ^ (l ^ n) = 1 := by
       rw [← loc_pow, show ψ ^ (l ^ n) = 1 from hn]
       rfl
-    rw [Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_mul, hδ.unr v hv x hx, one_mul, one_mul, loc_pow]
+    change δ.loc v x * (ψ ^ a).loc v x = 1 ↔ δ.loc v x * ψ.loc v x = 1
+    rw [hδ.unr v hv x hx, one_mul, one_mul, loc_pow]
     refine ⟨fun h => ?_, fun h => by rw [h, one_pow]⟩
     have := pow_gcd_eq_one.2 ⟨h, h3⟩
     rwa [Nat.Coprime.gcd_eq_one (ha.pow_right n), pow_one] at this
@@ -215,7 +220,8 @@ theorem fin_mul (hδ : IsDelta q δ) (hψ : IsPsi l Q ψ) (hl : l.Prime) (a : �
     show ψ ^ (l ^ n) = 1 from hn, one_pow]
 
 theorem tame_mul (hδ : IsDelta q δ) (hψ : IsPsi l Q ψ) (a : ℕ) (v : Pl D.host.E) : (δ * ψ ^ a).TameAt v := fun x hx h1 => by
-  rw [Formalism.L2.Host.HChar.loc_mul, loc_pow, hδ.tame v x hx h1, hψ.tame v x hx h1, one_pow, one_mul]
+  change δ.loc v x * (ψ ^ a).loc v x = 1
+  rw [loc_pow, hδ.tame v x hx h1, hψ.tame v x hx h1, one_pow, one_mul]
 
 theorem exists_over {q : ℕ} (hq : q.Prime) : ∃ v : Pl D.host.E, (q : 𝓞 D.host.E) ∈ v.asIdeal := by
   have hu : ¬ IsUnit (q : 𝓞 D.host.E) := fun h => by

@@ -83,13 +83,11 @@ theorem dual_zero {K V : Type _} [Field K] [AddCommGroup V] [Module K V] (h : Su
 
 theorem pure_pow (P : HTPre l K) (E : EtSide (Model.Sm (l := l) (K := K))) (hF : KForm) {M : Model l K} (hM : M.Sm)
     (o : M.T 0) (ho : ∀ k, o.lev k = GlobalTheory.EtC.one (l ^ k) M.spc) {v : M.T 2} {c : Hdg M.q 1 2} (hv : Pure P M 1 2 v c) :
-    ∀ k : ℕ, ∃ w : M.T (2 * k), Pure P M k (2 * k) w (powH M.q c k) := by
-  intro k
-  induction k with
-  | zero => exact ⟨o, P.one M hM o ho, fun a ha φ => by
+    ∀ k : ℕ, ∃ w : M.T (2 * k), Pure P M k (2 * k) w (powH M.q c k)
+  | 0 => ⟨o, P.one M hM o ho, fun a ha φ => by
       rw [dual_zero ((P.fin M hM a 0).2 (Nat.pos_of_ne_zero ha)) φ, map_zero]⟩
-  | succ k ih =>
-    obtain ⟨w, hw⟩ := ih
+  | k + 1 => by
+    obtain ⟨w, hw⟩ := pure_pow P E hF hM o ho hv k
     obtain ⟨z, hz⟩ := E.cup_ex M w v
     exact ⟨z, pure_cup P hF hM hz hw hv⟩
 

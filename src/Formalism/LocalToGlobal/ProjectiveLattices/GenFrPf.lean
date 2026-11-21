@@ -100,7 +100,7 @@ theorem gfp_frPt_gen (hT : ReciprocityTheory.ChartRestriction.G.Out.SecTwistSt)
     (x : Sp L ⟶ Xo.X) (hx0 : x ≫ Xo.s = sOf c L) (M : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Fin (Dw.mult τ) → L')
     (hdiag : ∀ τ i, M τ i i = 1) (hlow : ∀ τ i j, j < i → M τ i j = 0) :
     ∃ (y₀ : FrPt Xo c L) (y : FrPt Xo c L'), y₀.x = x ∧ y.x = spMap (algebraMap L L') ≫ x ∧
-      ∀ τ i, IsCombAt y.x (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap L L')) ≫ y₀.u τ j) (M τ i) (y.u τ i) := by
+      ∀ τ i, IsCombAt y.x (fun j => spMap (dualMap (algebraMap L L')) ≫ y₀.u τ j) (M τ i) (y.u τ i) := by
   classical
   obtain ⟨n, xc, hx⟩ := ReciprocityTheory.ChartRestriction.G.Chart.univChartLoc ((Over.pullback x).obj Xo.univ.t.G)
   obtain ⟨xc', hx', hvec, htmap⟩ := gfp_bc (L' := L') hx
@@ -136,7 +136,7 @@ theorem gfp_frPt_gen (hT : ReciprocityTheory.ChartRestriction.G.Out.SecTwistSt)
       fun τ i => (gfp_eig_iff hx' τ _).2 (heW τ i),
       fun τ w hw hE => gfp_basis hx0' hx' τ (e τ) (he τ) (heW τ) w hw hE,
       (gfp_gen hT _).choose, (gfp_gen hT _).choose_spec⟩, rfl, rfl, fun τ i => ?_⟩
-  have hfun : (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap L L')) ≫ gfpVec x xc (d τ j)) =
+  have hfun : (fun j => spMap (dualMap (algebraMap L L')) ≫ gfpVec x xc (d τ j)) =
       fun j => gfpVec (spMap (algebraMap L L') ≫ x) xc' (d' τ j) := funext fun j => (hvec _).symm
   have key := (gfp_comb_iff hx' (d' τ) (M τ i) (e τ i)).2 rfl
   rw [← hfun] at key

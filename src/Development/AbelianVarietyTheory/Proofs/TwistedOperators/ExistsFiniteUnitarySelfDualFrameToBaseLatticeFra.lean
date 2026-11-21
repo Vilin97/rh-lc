@@ -36,12 +36,10 @@ theorem exists_gfc (V : HSp D) (γ : GL (Fin V.rank) (Ef D)) (hγ : Unimod (OA D
     (f := (crd V : V.V →ₗ[D.host.E] (Fin V.rank → D.host.E)).restrictScalars (𝓞 D.host.E)) (crd V).surjective _
   have hm : ∀ x, x ∈ L ↔ crd V x ∈ lat γ := fun _ => Iff.rfl
   have h1 : Submodule.IsLattice D.host.E L := by
-    refine ⟨Submodule.fg_of_fg_map_injective
+    apply Submodule.IsLattice.of_fg D.host.E
+    exact Submodule.fg_of_fg_map_injective
       ((crd V : V.V →ₗ[D.host.E] (Fin V.rank → D.host.E)).restrictScalars (𝓞 D.host.E)) (crd V).injective
-      (hL ▸ (lat_isLattice γ).fg : (crdLat V L).FG), ?_⟩
-    apply Submodule.map_injective_of_injective (f := (crd V).toLinearMap) (crd V).injective
-    rw [Submodule.map_span, Submodule.map_top, LinearEquiv.range, ← (lat_isLattice γ).span_eq_top, ← hL]
-    rfl
+      (hL ▸ (lat_isLattice γ).fg : (crdLat V L).FG)
   have h2 : Formalism.HermitianLatticesTheory.IsUnimodular V.hT L := by
     ext x
     simp only [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap, LinearMap.restrictScalars_apply,

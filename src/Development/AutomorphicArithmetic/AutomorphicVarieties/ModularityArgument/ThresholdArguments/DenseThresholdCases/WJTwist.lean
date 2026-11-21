@@ -33,8 +33,6 @@ open scoped TensorProduct
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 set_option synthInstance.maxHeartbeats 200000
 open UpperTheory.GalN.V UpperTheory.V.Z.Win UpperTheory.V.Z.Desc.W UpperTheory.Zero.LLC
-open private au_isTeich au_open from Development.AutomorphicArithmetic.AutomorphicVarieties.HeckeAlgebras.OrdinaryHeckeCharacters.AuTeichEx
-attribute [-instance] UpperTheory.V.GradeZeroInterpolatingElement.instIsLocalRingSubtypePadicAlgClMemSubalgebraPadicIntO
 private theorem twRep_one {H M : Type} [Group H] [AddCommGroup M] [Module ℂ M] (ρ : Representation ℂ H M) :
     twRep ρ 1 = ρ := by
   ext g v
@@ -182,11 +180,37 @@ private theorem autP (hP : _root_.UpperTheory.V.Af.HypothesesH') (hn : 1 ≤ n) 
     _root_.UpperTheory.V.Z.Ord.AutYAlt (hset Q τ₀) ι (_root_.UpperTheory.V.Z.Desc.W.PartOfAlt Q τ₀ ι) := by
   intro lam _ d ξ hξ F hF hK hI
   obtain ⟨e, he⟩ := hξ
-  obtain ⟨t, ht⟩ := au_isTeich c r
-  have hop : IsOpen (τ₀.ker : Set (KT n (wt s))) :=
-    au_open _ (ι.injective.comp Subtype.val_injective) τ₀ (hτ t ht).1
+  have hTeich : ∃ t, r.IsTeich t := by
+    obtain ⟨hcomplete, hfinite, hmem, -⟩ := UpperTheory.V.abelian₂.dvr_finite l c.O
+    have : IsAdicComplete (maximalIdeal c.O) c.O := hcomplete
+    have : Finite (ResidueField c.O) := hfinite
+    have : CharP (ResidueField c.O) l := by
+      refine (CharP.charP_iff_prime_eq_zero (Fact.out : l.Prime)).2 ?_
+      rw [← map_natCast (residue c.O), residue_eq_zero_iff]
+      exact hmem
+    have : CharP (c.O ⧸ maximalIdeal c.O) l := inferInstanceAs (CharP (ResidueField c.O) l)
+    have : PerfectRing (ResidueField c.O) l := inferInstance
+    let lift := Perfection.lift l (ResidueField c.O) (c.O ⧸ maximalIdeal c.O)
+    let j := lift (RingHom.id (ResidueField c.O))
+    let τ := (Perfection.teichmuller l (maximalIdeal c.O)).comp j.toMonoidHom
+    have hres (x : ResidueField c.O) : residue c.O (τ x) = x :=
+      (Perfection.mk_teichmuller (j x)).trans
+        (RingHom.congr_fun (lift.symm_apply_apply (RingHom.id (ResidueField c.O))) x)
+    refine ⟨fun i => (Units.map τ).comp (r.chib i), fun i g => ⟨hres _, ?_⟩⟩
+    rw [MonoidHom.comp_apply, ← map_pow, ← Nat.card_units, pow_card_eq_one', map_one]
+  obtain ⟨t, ht⟩ := hTeich
+  have hop : IsOpen (τ₀.ker : Set (KT n (wt s))) := by
+    let f := ι.toRingHom.comp (algebraMap c.O (Qbar l))
+    have hf : Function.Injective f := ι.injective.comp Subtype.val_injective
+    have hker : ((Matrix.GeneralLinearGroup.map f).comp τ₀).ker = τ₀.ker := by
+      refine MonoidHom.ker_comp_of_injective _ _ fun a b hab => ?_
+      apply Units.ext
+      apply Matrix.ext
+      intro i j
+      exact hf (congrArg (fun x : GL (Fin m) ℂ => (x : Matrix (Fin m) (Fin m) ℂ) i j) hab)
+    exact hker ▸ (hτ t ht).1
   have h1 := decompU l L Ω s n hn V Q c m τ₀ ι hop lam d e ξ he F hF hK hI
-  refine SetLike.le_def.1 (iSup_le fun σ => ?_) h1
+  refine IsConcreteLE.le_iff.1 (iSup_le fun σ => ?_) h1
   by_cases h0 : YOf Q ι τ₀ e ξ σ.1 = ⊥
   · rw [h0]; exact bot_le
   · obtain ⟨Y, hY, -, hcomp, hLG⟩ := _root_.UpperTheory.V.Z.Desc.P.partU_alt hP l L Ω s n hn V Q c r ι m τ₀ hτ lam d e ξ he σ.1 σ.2 h0
@@ -269,7 +293,25 @@ theorem UpperTheory.V.Z.Desc.W.jTwist_of_alt : TypeGd → _root_.UpperTheory.V.Z
   · have hsp : ∀ u : s.St, IsSplitAt (s.w u) := fun u =>
       UpperTheory.isSplitAt_of_decomposition_le_restriction_range L Ω _ _ (s.hA u) (s.split _ (Or.inr (Or.inl u.2))) _ (Up.under_w _)
     obtain ⟨τ, h1, h2⟩ := t5 _ (hsp u) τ' hτ'
-    obtain ⟨t, ht⟩ := au_isTeich c r
+    have hTeich : ∃ t, r.IsTeich t := by
+      obtain ⟨hcomplete, hfinite, hmem, -⟩ := UpperTheory.V.abelian₂.dvr_finite l c.O
+      have : IsAdicComplete (maximalIdeal c.O) c.O := hcomplete
+      have : Finite (ResidueField c.O) := hfinite
+      have : CharP (ResidueField c.O) l := by
+        refine (CharP.charP_iff_prime_eq_zero (Fact.out : l.Prime)).2 ?_
+        rw [← map_natCast (residue c.O), residue_eq_zero_iff]
+        exact hmem
+      have : CharP (c.O ⧸ maximalIdeal c.O) l := inferInstanceAs (CharP (ResidueField c.O) l)
+      have : PerfectRing (ResidueField c.O) l := inferInstance
+      let lift := Perfection.lift l (ResidueField c.O) (c.O ⧸ maximalIdeal c.O)
+      let j := lift (RingHom.id (ResidueField c.O))
+      let τ := (Perfection.teichmuller l (maximalIdeal c.O)).comp j.toMonoidHom
+      have hres (x : ResidueField c.O) : residue c.O (τ x) = x :=
+        (Perfection.mk_teichmuller (j x)).trans
+          (RingHom.congr_fun (lift.symm_apply_apply (RingHom.id (ResidueField c.O))) x)
+      refine ⟨fun i => (Units.map τ).comp (r.chib i), fun i g => ⟨hres _, ?_⟩⟩
+      rw [MonoidHom.comp_apply, ← map_pow, ← Nat.card_units, pow_card_eq_one', map_one]
+    obtain ⟨t, ht⟩ := hTeich
     choose loc hloc using fun u : s.St => Up.comp_ex hσ (hsp u)
     classical
     have hT := _root_.UpperTheory.V.Hi.partUR2Type_alt l L Ω s n hn V Q c ι R.m R.τ₀ lam d e ξ hb σ hσ hY _ (R.type t ht) (Function.update loc u τ) (fun u' => by

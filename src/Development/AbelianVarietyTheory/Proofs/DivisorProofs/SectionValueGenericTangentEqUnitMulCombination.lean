@@ -43,8 +43,8 @@ theorem sp_comp {A B B' : Type} [CommRing A] [CommRing B] [CommRing B'] (a : A �
   simp only [spMap, ← Spec.map_comp]; rfl
 
 theorem fst_dualMap {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) :
-    (TrivSqZeroExt.fstHom B B B).toRingHom.comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = f.comp (TrivSqZeroExt.fstHom A A A).toRingHom :=
-  RingHom.ext fun z => by simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    (TrivSqZeroExt.fstHom B B B).toRingHom.comp (dualMap f) = f.comp (TrivSqZeroExt.fstHom A A A).toRingHom :=
+  RingHom.ext fun z => by simp [dualMap]
 
 theorem fst_alg (C : Type) [Field C] :
     (TrivSqZeroExt.fstHom C C C).toRingHom.comp (algebraMap C (DualNumber C)) = RingHom.id C :=
@@ -87,7 +87,7 @@ theorem gs_to_valR {B : Type} [CommRing B] [IsLocalRing B] {X : Scheme.{0}} (x :
   (GlobalTheory.ZH.ThetaData.valR_eq_gs x V (h trivial) f).symm
 
 
-theorem value_tangent : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (D : DegData R I) (A : PolAV (Sp (FractionRing R))) (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (U : UnifPre I D A G) (C : Type) [Field C] [Algebra (FractionRing R) C] (w₀ : GlobalTheory.UT.W0 U) (ρ : LB.Gen (A.L.pull (eSec A.A))), GlobalTheory.UT.NormW U w₀ ρ → ∀ (y : epsR R ⟶ G) (yA : Sp (DualNumber C) ⟶ (TFK (R := R) C ⊗ A.A).left), IsTangent y → VecAt U C y yA → ∀ (k : ℕ) (i₀ : A.L.ι) (jG : U.LG.L.ι), ⊤ ≤ (jFK (R := R) C ≫ eSec A.A) ⁻¹ᵁ A.L.U i₀ → ⊤ ≤ y.left ⁻¹ᵁ U.LG.L.U jG → ∃ Θ : (DualNumber C)ˣ, (Θ : DualNumber C).fst * toF R C (GlobalTheory.MBLow.TanExp.rigVal U.LG jG) ^ k = valR (jFK (R := R) C) ((A.L.pull (eSec A.A)).U fun _ => i₀) (ρ.s fun _ => i₀).val ^ k ∧ ∀ (t : GlobalTheory.UT.SecA A C k) (σ' : U.SecGF C k), GeneratorPullback.IsoRelM A.L U.LG.L U.gen.hom.left (pullback.fst G.hom (jK R)) w₀ (snd (TFK (R := R) C) ((Over.pullback (jK R)).obj G)).left k (snd (TFK (R := R) C) A.A).left (U.genF C).left t (UnifPre.gFK (G := G) C) (𝟙 _) σ' → ∀ (n : ℕ) (c : Fin n → C) (σ : Fin n → H0 U.LG.L k), GeneratorPullback.SecLin U.LG.L (fun _ : Fin 1 => UnifPre.gFK (G := G) C) (fun _ => (k : ℤ)) σ' (fun _ : Fin 1 => 𝟙 G.left) (fun _ => (k : ℤ)) σ (UnifPre.gFK (G := G) C) (fun i => scal (fst (TFK (R := R) C) ((Over.pullback (jK R)).obj G)).left (c i)) → valR yA ((LPow A.A A.L (k : ℤ) (TFK (R := R) C)).U fun _ => i₀) (t.f fun _ => i₀) = (Θ : DualNumber C) * ∑ i, TrivSqZeroExt.inl (c i) * GlobalTheory.CompanionTheory.Ar.dualMap (toF R C) (valR y.left (LB.wchart U.LG.L (fun _ : Fin 1 => 𝟙 G.left) fun _ => jG) ((σ i).f fun _ => jG)) := by
+theorem value_tangent : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (D : DegData R I) (A : PolAV (Sp (FractionRing R))) (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (U : UnifPre I D A G) (C : Type) [Field C] [Algebra (FractionRing R) C] (w₀ : GlobalTheory.UT.W0 U) (ρ : LB.Gen (A.L.pull (eSec A.A))), GlobalTheory.UT.NormW U w₀ ρ → ∀ (y : epsR R ⟶ G) (yA : Sp (DualNumber C) ⟶ (TFK (R := R) C ⊗ A.A).left), IsTangent y → VecAt U C y yA → ∀ (k : ℕ) (i₀ : A.L.ι) (jG : U.LG.L.ι), ⊤ ≤ (jFK (R := R) C ≫ eSec A.A) ⁻¹ᵁ A.L.U i₀ → ⊤ ≤ y.left ⁻¹ᵁ U.LG.L.U jG → ∃ Θ : (DualNumber C)ˣ, (Θ : DualNumber C).fst * toF R C (GlobalTheory.MBLow.TanExp.rigVal U.LG jG) ^ k = valR (jFK (R := R) C) ((A.L.pull (eSec A.A)).U fun _ => i₀) (ρ.s fun _ => i₀).val ^ k ∧ ∀ (t : GlobalTheory.UT.SecA A C k) (σ' : U.SecGF C k), GeneratorPullback.IsoRelM A.L U.LG.L U.gen.hom.left (pullback.fst G.hom (jK R)) w₀ (snd (TFK (R := R) C) ((Over.pullback (jK R)).obj G)).left k (snd (TFK (R := R) C) A.A).left (U.genF C).left t (UnifPre.gFK (G := G) C) (𝟙 _) σ' → ∀ (n : ℕ) (c : Fin n → C) (σ : Fin n → H0 U.LG.L k), GeneratorPullback.SecLin U.LG.L (fun _ : Fin 1 => UnifPre.gFK (G := G) C) (fun _ => (k : ℤ)) σ' (fun _ : Fin 1 => 𝟙 G.left) (fun _ => (k : ℤ)) σ (UnifPre.gFK (G := G) C) (fun i => scal (fst (TFK (R := R) C) ((Over.pullback (jK R)).obj G)).left (c i)) → valR yA ((LPow A.A A.L (k : ℤ) (TFK (R := R) C)).U fun _ => i₀) (t.f fun _ => i₀) = (Θ : DualNumber C) * ∑ i, TrivSqZeroExt.inl (c i) * dualMap (toF R C) (valR y.left (LB.wchart U.LG.L (fun _ : Fin 1 => 𝟙 G.left) fun _ => jG) ((σ i).f fun _ => jG)) := by
   intro R _ _ I D A G _ _ U C _ _ w₀ ρ hN y yA hy hV k i₀ jG hi hj
   haveI := subsingleton_dual C
   obtain ⟨yG, e₁⟩ := exists_ptG U C yA
@@ -99,7 +99,7 @@ theorem value_tangent : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (
   have e₂' : yG ≫ (snd (TFK (R := R) C) ((Over.pullback (jK R)).obj G)).left =
       yA ≫ (snd (TFK (R := R) C) A.A).left ≫ U.gen.inv.left := by
     rw [← reassoc_of% e₂, ← Over.comp_left, Iso.hom_inv_id, Over.id_left, Category.comp_id]
-  have e₄ : yG ≫ UnifPre.gFK (G := G) C = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF R C)) ≫ y.left := by
+  have e₄ : yG ≫ UnifPre.gFK (G := G) C = spMap (dualMap (toF R C)) ≫ y.left := by
     rw [UnifPre.gFK, ← Category.assoc, e₂']
     simp only [Category.assoc]
     exact hV.2
@@ -111,7 +111,7 @@ theorem value_tangent : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (
     apply pullback.hom_ext
     · have l : (spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ yG ≫
           (snd (TFK (R := R) C) ((Over.pullback (jK R)).obj G)).left) ≫ pullback.fst G.hom (jK R) =
-          spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF R C)) ≫ y.left := by
+          spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ spMap (dualMap (toF R C)) ≫ y.left := by
         rw [← e₄]; simp only [UnifPre.gFK, Category.assoc]
       rw [l, ← Category.assoc, sp_comp, fst_dualMap, ← sp_comp, Category.assoc, hfR, Category.assoc,
         GlobalTheory.UT.EvalZero.eK_fst, ← Category.assoc, hjj]
@@ -133,7 +133,7 @@ theorem value_tangent : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (
     have h := hi (show IsLocalRing.closedPoint C ∈ (⊤ : (Sp C).Opens) from trivial)
     rw [← hx₁] at h
     exact h
-  have m₂ : ⊤ ≤ (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF R C)) ≫ y.left) ⁻¹ᵁ U.LG.L.U jG := GlobalTheory.FormalValue.top_le_comp hj _
+  have m₂ : ⊤ ≤ (spMap (dualMap (toF R C)) ≫ y.left) ⁻¹ᵁ U.LG.L.U jG := GlobalTheory.FormalValue.top_le_comp hj _
   have hG₀ : (jFK (R := R) C ≫ jK R) ≫ eSec G =
       (spMap (toF R C) ≫ spMap (TrivSqZeroExt.fstHom R R R).toRingHom) ≫ y.left := by
     rw [hjj, Category.assoc, hfR]
@@ -149,7 +149,7 @@ theorem value_tangent : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (
   obtain ⟨JA, hJA, cJA⟩ := exists_good (Z := Sp (DualNumber C)) A.L A.isLB (IsLocalRing.closedPoint (DualNumber C))
     (fun _ : Unit => yA ≫ (snd (TFK (R := R) C) A.A).left) (fun _ => i₀) (fun _ _ _ => rfl) (fun _ => m₁ trivial)
   obtain ⟨JG, hJG, cJG⟩ := exists_good (Z := Sp (DualNumber C)) U.LG.L U.LG.isLB (IsLocalRing.closedPoint (DualNumber C))
-    (fun _ : Unit => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF R C)) ≫ y.left) (fun _ => jG) (fun _ _ _ => rfl) (fun _ => m₂ trivial)
+    (fun _ : Unit => spMap (dualMap (toF R C)) ≫ y.left) (fun _ => jG) (fun _ _ _ => rfl) (fun _ => m₂ trivial)
   obtain ⟨JA', hJA', cJA'⟩ := exists_good (Z := Sp C) A.L A.isLB (IsLocalRing.closedPoint C)
     (fun _ : Unit => jFK (R := R) C ≫ eSec A.A) (fun _ => i₀) (fun _ _ _ => rfl) (fun _ => hi trivial)
   obtain ⟨JG', hJG', cJG'⟩ := exists_good (Z := Sp C) U.LG.L U.LG.isLB (IsLocalRing.closedPoint C)
@@ -221,10 +221,10 @@ theorem value_tangent : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (
     rfl
   intro t σ' hR n c σ hσ
   have cA : JA (yA ≫ (snd (TFK (R := R) C) A.A).left) = i₀ := cJA ()
-  have cG : JG (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF R C)) ≫ y.left) = jG := cJG ()
+  have cG : JG (spMap (dualMap (toF R C)) ≫ y.left) = jG := cJG ()
   have a₁ := GlobalTheory.BoxExpansion.isoRel_val hR yG (IsLocalRing.closedPoint (DualNumber C)) hJA hJG
   have e₄' : yG ≫ (snd (TFK (R := R) C) ((Over.pullback (jK R)).obj G)).left ≫ pullback.fst G.hom (jK R) =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF R C)) ≫ y.left := e₄
+      spMap (dualMap (toF R C)) ≫ y.left := e₄
   rw [Category.comp_id, e₁, Category.assoc, e₂, cA, Category.assoc, e₄', cG] at a₁
   have a₂ := GlobalTheory.BoxExpansion.secLin_val hσ yG (IsLocalRing.closedPoint (DualNumber C)) hJG
   have st := sval_of t yA (IsLocalRing.closedPoint (DualNumber C)) JA (fun _ => i₀) (fun _ => cA)
@@ -251,7 +251,7 @@ theorem value_tangent : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (
     (congrArg _ st).trans (gs_to_valR _ _ mt _)
   have hσv : ∀ i, (stalkClosedPointIso (CommRingCat.of (DualNumber C))).hom.hom
       (sval (σ i) (yG ≫ UnifPre.gFK (G := G) C) (IsLocalRing.closedPoint (DualNumber C)) JG) =
-      GlobalTheory.CompanionTheory.Ar.dualMap (toF R C) (valR y.left (LB.wchart U.LG.L (fun _ : Fin 1 => 𝟙 G.left) fun _ => jG) ((σ i).f fun _ => jG)) :=
+      dualMap (toF R C) (valR y.left (LB.wchart U.LG.L (fun _ : Fin 1 => 𝟙 G.left) fun _ => jG) ((σ i).f fun _ => jG)) :=
     fun i => (congrArg _ (sσ i)).trans ((gs_to_valR _ _ mσ' _).trans (by
       rw [e₄]; exact GlobalTheory.FormalValue.valR_spMap _ _ _ mσ _))
   have hc : ∀ i, (stalkClosedPointIso (CommRingCat.of (DualNumber C))).hom.hom

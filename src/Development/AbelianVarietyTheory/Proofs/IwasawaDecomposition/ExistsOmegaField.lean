@@ -94,7 +94,7 @@ theorem residue_rowPairing_eq_zero (W : HSp D) (β : GL (Fin W.rank) (EAf D)) (e
       refine Subtype.ext ?_
       change rowP W β e (ι (x + y)) a = rowP W β e (ι x) a + rowP W β e (ι y) a
       rw [map_add (f := _), rowPairing_add]
-    rw [this, map_add (f := _), hx, hy, add_zero]
+    rw [this, (resS D.host.F PP).map_add, hx, hy, add_zero]
 
 theorem redM_uMat (V W : HSp D) (hV : V.gram = 1) (βV : GL (Fin V.rank) (EAf D)) (hβ : IsIntM (βV⁻¹).val)
     (β : GL (Fin W.rank) (EAf D)) (e : AE D) (X : Fin V.rank → Fin W.rank → D.host.E)

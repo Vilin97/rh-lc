@@ -120,7 +120,9 @@ theorem kill_and_weight : ∀ (D : D7) (θ : InfFam D) (V : HSp D) (S : D.what�
       show (u : M.H ρ) + Complex.I • (u' : M.H ρ) = 0
       rw [hu, hu', ← key, ← dRep_conj hP, ← dRep_conj hP]
       rfl
-    rw [eu, eu', ← T.map_update_smul, ← T.map_update_add, h0, T.map_update_zero]
+    have hsmul : T (Function.update v ρ (Complex.I • u')) = Complex.I • T (Function.update v ρ u') := by
+      simpa only [RingHom.id_apply] using T.map_update_smul v ρ Complex.I u'
+    rw [eu, eu', ← hsmul, ← T.map_update_add, h0, T.map_update_zero]
   · have hK := Formalism.IndefR.FWT.diag_mem (ε := M.ε ρ) t
     have hg := GlobalTheory.HolDict.ModelRep.conj_mem_inv hP hG (kset_uj hK)
     have h := hT.equiv ρ _ hg v (Complex.exp (((∑ a, extWt M ρ a * t a : ℝ) : ℂ) * Complex.I) • v ρ) (by

@@ -232,7 +232,7 @@ theorem slice_bound (Ξ1 Ξ2 : RadSp k r z z' π π') (h1 : Ξ1 ∈ lcSub k r z 
   set C : Set (Mt k r) := (fun g : Mx k r => (Matrix.of.symm g : Mt k r)) '' (K ∩ Glev k r (Fin.last r)) with hCdef
   have hCmem : ∀ g : Mt k r, g ∈ C ↔ Matrix.of g ∈ K ∧ Matrix.of g ∈ Glev k r (Fin.last r) := by
     intro g; constructor
-    · rintro ⟨g', hg', rfl⟩; simpa using hg'
+    · rintro ⟨g', hg', rfl⟩; simpa only [Equiv.apply_symm_apply, Set.mem_inter_iff] using hg'
     · intro hg; exact ⟨Matrix.of g, hg, rfl⟩
   have hCc : IsCompact C := (hKc.inter_right (P.Qx5.Glev_closed _)).image continuous_id
   have hmap : Continuous (fun p : ℂ × Mt k r => (Function.update y l p.1, (Matrix.of p.2 : Mx k r))) :=

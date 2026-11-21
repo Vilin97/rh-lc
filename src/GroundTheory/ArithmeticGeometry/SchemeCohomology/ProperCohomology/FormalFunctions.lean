@@ -78,10 +78,10 @@ lemma cechK_succ_le {ι : Type u} (𝔘 : ι → X.Opens) (p n : ℕ) :
 lemma towerComp_formalτQ_val (q n : ℕ) : ∀ (c : ℕ) (y : formalQ I F q (n + c)),
     ((towerComp (E := fun m => formalQ I F q m) (formalτQ I F q) n c y : formalQ I F q n) :
       Sheaf.H.{u} (modulesAb (idealPow I F (n + 1))) (q + 1)) =
-      H.linearMapV436 A (transMap I F n c) (q + 1) y
+      H.linearMap A (transMap I F n c) (q + 1) y
   | 0, y => by
     change (y : Sheaf.H.{u} (modulesAb (idealPow I F (n + 1))) (q + 1)) =
-      H.linearMapV436 A (𝟙 _) (q + 1) y
+      H.linearMap A (𝟙 _) (q + 1) y
     rw [H.linearMap_id]
     rfl
   | c + 1, y => by

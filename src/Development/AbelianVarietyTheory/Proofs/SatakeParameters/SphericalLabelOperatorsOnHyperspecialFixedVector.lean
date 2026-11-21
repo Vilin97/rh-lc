@@ -179,8 +179,6 @@ theorem exists_basis (V : HSp D) (he : e * e = e) (h : Comparison₂ P e) :
   · have := sum_mem (S := LamHat V) (t := Finset.univ) fun i _ =>
       GlobalTheory.LatDual.smul_mem_lamHat V _ (hz i) _ (idem_mul_span_mem V he h (hb i))
     convert this using 1
-    funext a
-    simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, Finset.mul_sum, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun i _ => by ring
   · rw [GlobalTheory.LatDual.lamHat_eq_hat] at hy
     induction hy using AddSubgroup.closure_induction with
@@ -475,8 +473,8 @@ theorem label_operators : ∀ {D : D7} (V : HSp D) (P : Pl D.host.E), (∀ d R, 
     simp only [one_mul]
   have dual : ∀ d, IsLab V P d → IsLab V P (dualLab d) := fun d ⟨R, hR⟩ => (exists_dual hR).imp fun _ h => h.1
   refine ⟨c1, fun c M _ _ π u hu k hk => ?_, ?_, fun d => ?_, fun e f g h hg => ?_⟩
-  · set_option synthInstance.maxHeartbeats 100000 in
-      simp only [opOf, Finsupp.sum, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [opOf, Finsupp.sum, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
     refine Finset.sum_congr rfl fun d _ => congrArg _ ?_
     by_cases hd : IsLab V P d
     · obtain ⟨g, r1, -⟩ := exists_reps hK (sphOp_rep hd)

@@ -67,7 +67,7 @@ private noncomputable abbrev bpt (A : Type) [CommRing A] [IsLocalRing A] :
 private theorem henselianRing_of_le_nilradical {B : Type} [CommRing B] (J : Ideal B) (hJ : J ≤ nilradical B) :
     HenselianRing B J := by
   have hjac : J ≤ Ideal.jacobson ⊥ := hJ.trans Ideal.radical_le_jacobson
-  refine ⟨hjac, ?_⟩
+  refine ⟨by simpa only [Ideal.jacobson_bot] using hjac, ?_⟩
   intro f _ a₀ h₁ h₂
   have hloc := isLocalHom_of_le_jacobson_bot J hjac
   have hunit : ∀ c : B, c - a₀ ∈ J → IsUnit (f.derivative.eval c) := by
@@ -217,7 +217,7 @@ theorem UpperTheory.cech_descent_twist_of_proper_surjective_strictly_henselian :
   have hqk : IsUnit (q : Γ(Spec (CommRingCat.of k), ⊤)) := unit_map q r hqA
   haveI : IsIntegralHom u := IsIntegralHom.SpecMap_iff.mpr (fun x => Algebra.IsIntegral.isIntegral x)
   haveI : UniversallyInjective u := by
-    refine ((tfae_universallyInjective u).out 0 1).mpr ?_
+    refine ((tfae_universallyInjective u).out 1 2).mpr ?_
     intro L _ g₁ g₂ hg
     simp only at hg
     rw [← Spec.map_preimage g₁, ← Spec.map_preimage g₂] at hg ⊢

@@ -268,8 +268,6 @@ open GlobalTheory.Mem.Chr
 
 variable (K : Type) [Field K] [NumberField K] [IsCMField K]
 
-local notation3 "K⁺" => maximalRealSubfield K
-
 theorem val_under (w : HeightOneSpectrum (𝓞 K)) (v : HeightOneSpectrum (𝓞 K⁺))
     (hwv : w.under (𝓞 K⁺) = v)
     (h : (Ideal.primesOver v.asIdeal (𝓞 K)).ncard = 2 ∨

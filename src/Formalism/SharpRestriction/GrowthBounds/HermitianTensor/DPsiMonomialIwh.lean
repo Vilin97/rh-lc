@@ -23,12 +23,12 @@ theorem qt_cnt (m : ℕ) (i a' : Fin (m + 1)) :
   simp only [Pi.single_apply]
   split_ifs with h
   · subst h
-    exact Finset.sum_eq_zero fun p _ => ite_eq_right (Fin.succAbove_ne a' p).symm
+    exact Finset.sum_eq_zero fun p _ => if_neg (Fin.succAbove_ne a' p).symm
   · obtain ⟨q, rfl⟩ := Fin.exists_succAbove_eq h
     rw [Finset.sum_eq_single q]
-    · rw [ite_eq_left rfl]
+    · rw [if_pos rfl]
     · intro p _ hp
-      exact ite_eq_right fun e => hp (Fin.succAbove_right_injective e).symm
+      exact if_neg fun e => hp (Fin.succAbove_right_injective e).symm
     · intro hq
       exact absurd (Finset.mem_univ q) hq
 

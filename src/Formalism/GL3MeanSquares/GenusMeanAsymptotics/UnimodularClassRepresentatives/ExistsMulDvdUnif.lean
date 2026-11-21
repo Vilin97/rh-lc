@@ -14,8 +14,6 @@ variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberFi
 variable {V : Type} [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V]
   [IsScalarTower (𝓞 K) K V]
 
-local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
-
 theorem mem_pK {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {k : ℕ} {a : K} :
     a ∈ pK K 𝔭 k ↔ ∃ t : 𝓞 F, t ∉ 𝔭 ∧ ∃ z ∈ extP K 𝔭 ^ k,
       algebraMap (𝓞 K) K z = algebraMap F K (t : F) * a := by
@@ -175,10 +173,7 @@ theorem mem_smul_iff_unif {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {π :
       obtain ⟨y', hy', rfl⟩ := hy
       exact ⟨x' + y', (locF 𝔭 A₀).add_mem hx' hy', (smul_add _ _ _).symm⟩
   · rintro ⟨y, hy, rfl⟩
-    have hπk : ι (π ^ k) ∈ extP K 𝔭 ^ k := by
-      rw [extP, ← Ideal.map_pow]
-      exact Ideal.mem_map_of_mem ι (Ideal.pow_mem_pow hπ k)
-    have := Submodule.smul_mem_smul hπk hy
+    have := Submodule.smul_mem_smul (localizedQuotients.ι_mem_pow (K := K) (Ideal.pow_mem_pow hπ k)) hy
     rwa [← algebraMap_smul K (ι (π ^ k)), MeanB.algebraMap_comp,
       show ((π ^ k : 𝓞 F) : F) = (π : F) ^ k from rfl, map_pow] at this
 
@@ -220,12 +215,8 @@ theorem form_mem_pK (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} {A₀ :
   have h0 : h x' y' ∈ pK K 𝔭 0 := by
     obtain ⟨w, hw⟩ := hA₀i _ hx'' _ hy''
     refine (mem_pK h𝔭).2 ⟨t * s, fun h => (h𝔭.isPrime.mem_or_mem h).elim ht hs, w, by simp, ?_⟩
-    have hform : h (ι t • x') (ι s • y') = algebraMap F K ((t * s : 𝓞 F) : F) * h x' y' := by
-      rw [← algebraMap_smul K (ι t), ← algebraMap_smul K (ι s), MeanB.algebraMap_comp,
-        MeanB.algebraMap_comp, map_smul, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
-        smul_eq_mul, starRingEnd_apply, MeanB.star_algebraMap hF]
-      rw [show ((t * s : 𝓞 F) : F) = (t : F) * (s : F) from rfl, map_mul, mul_assoc, mul_left_comm]
-    rw [← hform, ← hw]
+    rw [localizedQuotients.form_smul hF, MeanB.algebraMap_comp] at hw
+    rw [← hw]
     simp [Algebra.algebraMap_eq_smul_one]
   rw [map_smul, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, smul_eq_mul, starRingEnd_apply,
     star_pow, MeanB.star_algebraMap hF, ← mul_assoc, ← pow_add, add_comm j i]

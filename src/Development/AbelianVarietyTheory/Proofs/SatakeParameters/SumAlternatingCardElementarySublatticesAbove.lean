@@ -109,7 +109,7 @@ theorem sum_alt_card_subElem_ge : ∀ (O K : Type) [CommRing O] [IsDomain O] [Is
         change ((Wk.restrictScalars O).comap P.mkQ).map L.1.subtype = M'.1
         rw [hWr, Submodule.comap_map_mkQ, sup_eq_right.2 hPC', Submodule.map_comap_subtype,
           inf_eq_right.2 hle]
-      refine ⟨Wk, ?_, Subtype.ext heq⟩
+      refine ⟨Wk, ?_, Lat.ext heq⟩
       have h := hidx Wk
       rw [heq, hi] at h
       exact (Nat.pow_right_injective hq2 h).symm

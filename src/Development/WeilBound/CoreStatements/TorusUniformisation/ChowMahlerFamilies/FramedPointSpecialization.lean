@@ -110,7 +110,7 @@ theorem frame_up_down {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] 
     [Field F'] (f : F →+* F') (x : Sp F ⟶ S) (x' : Sp F' ⟶ S) (hx : x' = spMap f ≫ x) {P : Type} [CommRing P]
     (act : OAct P G) (σ : P →+* F) (n : ℕ) :
     (∀ v : Fin n → (epsAt x ⟶ G), IsEigFrame act x σ v → ∃ v' : Fin n → (epsAt x' ⟶ G),
-      IsEigFrame act x' (f.comp σ) v' ∧ ∀ i, (v' i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (v i).left) ∧
+      IsEigFrame act x' (f.comp σ) v' ∧ ∀ i, (v' i).left = spMap (dualMap f) ≫ (v i).left) ∧
     ∀ v' : Fin n → (epsAt x' ⟶ G), IsEigFrame act x' (f.comp σ) v' →
       ∃ v : Fin n → (epsAt x ⟶ G), IsEigFrame act x σ v := by
   letI := f.toAlgebra
@@ -119,7 +119,7 @@ theorem frame_up_down {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] 
   obtain ⟨T, _, _, _, _, M', j, hl, hj⟩ := GlobalTheory.T.exists_lie_model_base_change S G F F' x V M
   obtain ⟨ρ, hρ, -⟩ := lieModel_exists_unique_act S G F x V M P act.act act.hom act.one act.mul act.add
   obtain ⟨ρ', hρ', -⟩ := lieModel_exists_unique_act S G F' _ T M' P act.act act.hom act.one act.mul act.add
-  have hl' : ∀ e, (M'.pt (j e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap F F')) ≫ (M.pt e).left := fun e => by
+  have hl' : ∀ e, (M'.pt (j e)).left = spMap (dualMap (algebraMap F F')) ≫ (M.pt e).left := fun e => by
     have := hl e
     simpa using this
   have hact : ∀ a e, ρ' a (j e) = j (ρ a e) := fun a e => M'.inj (Over.OverMorphism.ext (by
@@ -153,7 +153,7 @@ theorem frame_up_down {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] 
 end PositivityTheory.Xgn.FramedPointSpecialization
 
 open PositivityTheory.Xgn.FramedPointSpecialization in
-theorem PositivityTheory.Xgn.framed_point_specialization : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (U : Set (Xo.XF c)) (τ : E →+* ℂ) (F : Type) [Field F] (β : c.F →+* F) (y : Sp F ⟶ Xo.XF c) (v : Vecs y D.p) (w : Vecs y D.q), IsFramed U τ β y v w → ∃ (k : Type) (_ : Field k) (β₀ : c.F →+* k) (y₀ : Sp k ⟶ Xo.XF c) (v₀ : Vecs y₀ D.p) (w₀ : Vecs y₀ D.q) (f : k →+* F) (j : k →+* ℂ), IsFramed U τ β₀ y₀ v₀ w₀ ∧ f.comp β₀ = β ∧ j.comp β₀ = algebraMap c.F ℂ ∧ y = spMap f ≫ y₀ ∧ ∀ (F' : Type) [Field F'] (f' : k →+* F'), ∃ (v' : Vecs (spMap f' ≫ y₀) D.p) (w' : Vecs (spMap f' ≫ y₀) D.q), IsFramed U τ (f'.comp β₀) (spMap f' ≫ y₀) v' w' ∧ (∀ a, (v' a).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f') ≫ (v₀ a).left) ∧ ∀ b, (w' b).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f') ≫ (w₀ b).left := by
+theorem PositivityTheory.Xgn.framed_point_specialization : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (U : Set (Xo.XF c)) (τ : E →+* ℂ) (F : Type) [Field F] (β : c.F →+* F) (y : Sp F ⟶ Xo.XF c) (v : Vecs y D.p) (w : Vecs y D.q), IsFramed U τ β y v w → ∃ (k : Type) (_ : Field k) (β₀ : c.F →+* k) (y₀ : Sp k ⟶ Xo.XF c) (v₀ : Vecs y₀ D.p) (w₀ : Vecs y₀ D.q) (f : k →+* F) (j : k →+* ℂ), IsFramed U τ β₀ y₀ v₀ w₀ ∧ f.comp β₀ = β ∧ j.comp β₀ = algebraMap c.F ℂ ∧ y = spMap f ≫ y₀ ∧ ∀ (F' : Type) [Field F'] (f' : k →+* F'), ∃ (v' : Vecs (spMap f' ≫ y₀) D.p) (w' : Vecs (spMap f' ≫ y₀) D.q), IsFramed U τ (f'.comp β₀) (spMap f' ≫ y₀) v' w' ∧ (∀ a, (v' a).left = spMap (dualMap f') ≫ (v₀ a).left) ∧ ∀ b, (w' b).left = spMap (dualMap f') ≫ (w₀ b).left := by
   intro E _ _ _ H D l Xo c U τ F _ β y v w h
   obtain ⟨hβ, hU, hv, hw⟩ := h
   haveI := c.fin

@@ -69,10 +69,10 @@ section Im
 
 variable (ρ : O →+* End F) (σ : O →+* Γ(X, ⊤))
 
-def eigenEval : F ⟶ dual (eigen (dualAct ρ) σ) := cartierDualToBidual F ≫ GlobalTheory.CompanionTheory.Ar.dualMap (eigenι (dualAct ρ) σ)
+def eigenEval : F ⟶ dual (eigen (dualAct ρ) σ) := cartierDualToBidual F ≫ dualMap (eigenι (dualAct ρ) σ)
 
 theorem eigenEval_eq : eigenEval ρ σ =
-    eigenπ ρ σ ≫ cartierDualToBidual _ ≫ GlobalTheory.CompanionTheory.Ar.dualMap (dualQuotIso ρ σ).inv := by
+    eigenπ ρ σ ≫ cartierDualToBidual _ ≫ dualMap (dualQuotIso ρ σ).inv := by
   rw [toBidual_naturality_dualSheafTranspose_assoc, ← dualMap_comp, ← dualQuotIso_hom_ι, Iso.inv_hom_id_assoc,
     eigenEval]
 
@@ -101,7 +101,7 @@ variable {ρ σ}
 
 theorem comp_eq_zero_of_comp_eigenImπ [Mono (cartierDualToBidual G)] {φ : F ⟶ G}
     (h : ∀ a, act ρ a ≫ φ = σ a • φ) {k : H ⟶ F} (hk : k ≫ eigenImπ ρ σ = 0) : k ≫ φ = 0 := by
-  have h' (a : O) : GlobalTheory.CompanionTheory.Ar.dualMap φ ≫ act (dualAct ρ) a = σ a • GlobalTheory.CompanionTheory.Ar.dualMap φ := by
+  have h' (a : O) : dualMap φ ≫ act (dualAct ρ) a = σ a • dualMap φ := by
     rw [act_dualAct, ← dualMap_comp, h, dualMap_smul]
   have hfac : eigenImπ ρ σ ≫ eigenImι ρ σ = eigenEval ρ σ := image.fac _
   rw [← cancel_mono (cartierDualToBidual G), Category.assoc, toBidual_naturality_dualSheafTranspose, ← eigenLift_ι _ _ _ h',
@@ -175,7 +175,7 @@ theorem dual : IsEigenProj (dualAct ρ) σ (GlobalTheory.CompanionTheory.Ar.dual
   · intro a
     rw [act_dualAct, ← dualMap_comp, h.comp_act, dualMap_smul]
   · obtain ⟨n, c, b, rfl, e⟩ := h.exists_sum
-    refine ⟨n, c, b, (map_sum (AddMonoidHom.mk' (fun φ : F ⟶ F => GlobalTheory.CompanionTheory.Ar.dualMap φ) dualMap_add) _ _).trans
+    refine ⟨n, c, b, (map_sum (AddMonoidHom.mk' (fun φ : F ⟶ F => dualMap φ) dualMap_add) _ _).trans
       (Finset.sum_congr rfl fun i _ => dualMap_smul _ _), e⟩
 
 theorem pullback (f : Y ⟶ X) : IsEigenProj (pullAct ρ f) (f.appTop.hom.comp σ)

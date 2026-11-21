@@ -27,7 +27,7 @@ theorem lbIso_pullback {L M : LB X} (h : LBIso L M) (j : Y ⟶ X) : LBIso (L.pul
 
 theorem lbIso_pull_pull {L : LB X} (hL : L.IsLB) {a : Y ⟶ X} (j : W ⟶ Y) {a' : W ⟶ X} (ha : a' = j ≫ a) :
     LBIso (L.pull a') ((L.pull a).pull j) :=
-  LBIso.chartPull (chartPullSame L _ _ _ j fun _ => ha) (GlobalTheory.chartPullPull _ j) (lbIso_refl (LB.isLB_pull hL a))
+  LBIso.chartPull (chartPullSame L _ _ _ j fun _ => ha) (GlobalTheory.chartPullPull _ j) (lbIso_refl (pull_isLB hL a))
 
 theorem lbIso_pull_comp {Z : Scheme.{0}} {L : LB X} {M : LB Z} {a : Y ⟶ X} {b : Y ⟶ Z} (j : W ⟶ Y) {a' : W ⟶ X}
     {b' : W ⟶ Z} (ha : a' = j ≫ a) (hb : b' = j ≫ b) (h : LBIso (L.pull a) (M.pull b)) :
@@ -108,14 +108,14 @@ theorem exists_lbIso {Y Y₀ : Scheme.{0}} (p : Y ⟶ Sp R) [QuasiCompact p] [Qu
   let ι₀ : (StalkLimit.diagram _ p).obj V₀ ⟶ Y := pullback.fst p V₀.1.ι
   have e₀ : φ = (StalkLimit.cone h₁).π.app V₀ ≫ ι₀ := (StalkLimit.cone_π_fst h₁ V₀).symm
   obtain ⟨V, i, HV⟩ := exists_lbIso_of_isLimit (StalkLimit.diagram _ p) (fun V => (StalkLimit.cone h₁).π.app V)
-    (fun i => (StalkLimit.cone h₁).w i) hc (M.pull ι₀) (N.pull ι₀) (LB.isLB_pull hM _) (LB.isLB_pull hN _)
-    (LBIso.trans (LB.isLB_pull (LB.isLB_pull hM _) _) (LB.isLB_pull hM _) (LB.isLB_pull (LB.isLB_pull hN _) _)
+    (fun i => (StalkLimit.cone h₁).w i) hc (M.pull ι₀) (N.pull ι₀) (pull_isLB hM _) (pull_isLB hN _)
+    (LBIso.trans (pull_isLB (pull_isLB hM _) _) (pull_isLB hM _) (pull_isLB (pull_isLB hN _) _)
       (lbIso_pull_pull hM _ e₀).symm
-      (LBIso.trans (LB.isLB_pull hM _) (LB.isLB_pull hN _) (LB.isLB_pull (LB.isLB_pull hN _) _) H (lbIso_pull_pull hN _ e₀)))
+      (LBIso.trans (pull_isLB hM _) (pull_isLB hN _) (pull_isLB (pull_isLB hN _) _) H (lbIso_pull_pull hN _ e₀)))
   have e₁ : pullback.fst p V.1.ι = (StalkLimit.diagram _ p).map i ≫ ι₀ := (StalkLimit.diagram_map_fst _ p i).symm
   have HV' : LBIso (M.pull (pullback.fst p V.1.ι)) (N.pull (pullback.fst p V.1.ι)) :=
-    LBIso.trans (LB.isLB_pull hM _) (LB.isLB_pull (LB.isLB_pull hM _) _) (LB.isLB_pull hN _) (lbIso_pull_pull hM _ e₁)
-      (LBIso.trans (LB.isLB_pull (LB.isLB_pull hM _) _) (LB.isLB_pull (LB.isLB_pull hN _) _) (LB.isLB_pull hN _) HV
+    LBIso.trans (pull_isLB hM _) (pull_isLB (pull_isLB hM _) _) (pull_isLB hN _) (lbIso_pull_pull hM _ e₁)
+      (LBIso.trans (pull_isLB (pull_isLB hM _) _) (pull_isLB (pull_isLB hN _) _) (pull_isLB hN _) HV
         (lbIso_pull_pull hN _ e₁).symm)
   obtain ⟨a, ha, Ha⟩ := exists_forall_mem V.2.1
   refine ⟨a, ha, fun R' _ g hg Y' π p' e => ?_⟩
@@ -140,14 +140,14 @@ theorem exists_projective_model {X₀ : Scheme.{0}} (f₀ : X₀ ⟶ Sp K) [IsPr
   have hp := isPullback_toImage_of_isClosedImmersion (c ≫ u) c u rfl
   have := isProper_str R M
   refine ⟨(c ≫ u).image, (c ≫ u).imageι ≫ PSpace.str R M, (c ≫ u).toImage,
-    (ProjSpace.O1 R M).pull (c ≫ u).imageι, N, inferInstance, ?_, LB.isLB_pull (ProjSpace.O1_isLB R M) _,
+    (ProjSpace.O1 R M).pull (c ≫ u).imageι, N, inferInstance, ?_, pull_isLB (ProjSpace.O1_isLB R M) _,
     (isAmple_projective_O_one R M).pull_of_isClosedImmersion _, hN, ?_⟩
   · have := hp.flip.paste_vert hu
     rwa [ProjSpace.toProj_str] at this
-  · have h1 {Y : Scheme.{0}} (F : Y ⟶ PSpace R M) := LB.isLB_pull (ProjSpace.O1_isLB R M) F
-    refine LBIso.trans (isLB_lbPow hL' _) (LB.isLB_pull (ProjSpace.O1_isLB K M) c) (LB.isLB_pull (h1 _) _)
+  · have h1 {Y : Scheme.{0}} (F : Y ⟶ PSpace R M) := pull_isLB (ProjSpace.O1_isLB R M) F
+    refine LBIso.trans (isLB_lbPow hL' _) (pull_isLB (ProjSpace.O1_isLB K M) c) (pull_isLB (h1 _) _)
       (ProjSpace.lbIso_pullback_O1_toProj f₀ s hs).symm ?_
-    refine LBIso.trans (LB.isLB_pull (ProjSpace.O1_isLB K M) c) (h1 (c ≫ u)) (LB.isLB_pull (h1 _) _)
+    refine LBIso.trans (pull_isLB (ProjSpace.O1_isLB K M) c) (h1 (c ≫ u)) (pull_isLB (h1 _) _)
       (lbIso_pull_of_lbIso (ProjSpace.lbIso_pull_O1 M (algebraMap R K)).symm c rfl) ?_
     exact lbIso_pull_pull (ProjSpace.O1_isLB R M) _ (Scheme.Hom.toImage_imageι _).symm
 
@@ -159,14 +159,14 @@ theorem exists_isAmpleLB {X X₀ : Scheme.{0}} (f : X ⟶ Sp R) [QuasiCompact f]
       ∀ (X' : Scheme.{0}) (π : X' ⟶ X) (f' : X' ⟶ Sp R'), IsPullback π f' f (spMap g) →
         IsAmpleLB (L.pull π) := by
   obtain ⟨a, ha, Ha⟩ := exists_lbIso f h (isLB_lbPow hL N) hH
-    (LBIso.trans (LB.isLB_pull (isLB_lbPow hL N) _) (isLB_lbPow (LB.isLB_pull hL _) N) (LB.isLB_pull hH _)
+    (LBIso.trans (pull_isLB (isLB_lbPow hL N) _) (isLB_lbPow (pull_isLB hL _) N) (pull_isLB hH _)
       (lbIso_lbPow_pull hL φ N).symm
-      (LBIso.trans (isLB_lbPow (LB.isLB_pull hL _) N) (isLB_lbPow hL₀ N) (LB.isLB_pull hH _) (lbIso_lbPow e N).symm e'))
+      (LBIso.trans (isLB_lbPow (pull_isLB hL _) N) (isLB_lbPow hL₀ N) (pull_isLB hH _) (lbIso_lbPow e N).symm e'))
   refine ⟨a, ha, fun R' _ g hg X' π f' hp => ?_⟩
   have : IsAffineHom π := MorphismProperty.of_isPullback (P := @IsAffineHom) hp.flip inferInstance
-  refine (isAmpleLB_pow_iff (LB.isLB_pull hL π) hN).1 ((hA.pull_of_isAffineHom π).of_lbIso
-    (isLB_lbPow (LB.isLB_pull hL _) N) ?_)
-  exact LBIso.trans (isLB_lbPow (LB.isLB_pull hL _) N) (LB.isLB_pull (isLB_lbPow hL N) _) (LB.isLB_pull hH _)
+  refine (isAmpleLB_pow_iff (pull_isLB hL π) hN).1 ((hA.pull_of_isAffineHom π).of_lbIso
+    (isLB_lbPow (pull_isLB hL _) N) ?_)
+  exact LBIso.trans (isLB_lbPow (pull_isLB hL _) N) (pull_isLB (isLB_lbPow hL N) _) (pull_isLB hH _)
     (lbIso_lbPow_pull hL π N) (Ha R' g hg X' π f' hp.w)
 
 end GlobalTheory.GenSpread

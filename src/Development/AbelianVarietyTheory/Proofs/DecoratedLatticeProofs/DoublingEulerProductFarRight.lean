@@ -62,7 +62,7 @@ theorem bounded_of_isParamFun (hP : GlobalTheory.Published.CuspRapidDecay) {D : 
         (by rw [(RingHom.injective_iff_ker_eq_bot (algebraMap (𝓞 D.host.F) (𝓞 D.host.E))).1
           (FaithfulSMul.algebraMap_injective _ _)]; exact bot_le)
       refine ⟨⟨Q, hQ.isPrime, fun hb => v.ne_bot ?_⟩, HeightOneSpectrum.ext e⟩
-      rw [← e, hb, Ideal.comap_bot_of_injective (algebraMap (𝓞 D.host.F) (𝓞 D.host.E)) (FaithfulSMul.algebraMap_injective _ _)]
+      rw [← e, hb, Ideal.under_bot]
     exact (congrFun ((hpar v hv w' hw').mem_fixed ⟨k, hk⟩) g).trans (by simp)
   have hc := GlobalTheory.T.petersson_coefficient_bounded_spherical_unramified hP D θ A cA L hθ m hm Sf u hu u hu par hpar hs _ hv 1 (map_one _)
   have h1 : MemL2Quotient (GQ A) m u := memL2_of_cusp_form hP hθ (mem_cuspForms.1 hu).1

@@ -109,7 +109,7 @@ theorem spMap_algHom_id (K : Type) [Field K] (T : Type) [CommRing T] [Algebra K 
   rw [h, Spec.map_id]
   try rfl
 
-theorem dualMap_id (T : Type) [CommRing T] : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id T) = RingHom.id _ := by
+theorem dualMap_id (T : Type) [CommRing T] : dualMap (RingHom.id T) = RingHom.id _ := by
   refine RingHom.ext fun x => ?_
   exact TrivSqZeroExt.inl_fst_add_inr_snd_eq x
 
@@ -119,8 +119,8 @@ theorem frMap_trans_id {c : Coeff l} :
   obtain ⟨hx1, hu1, pm1, hs1, hf1, hsec1⟩ := hyz
   obtain ⟨hx2, hu2, pm2, hs2, hf2, hsec2⟩ := hzw
   have e1 : spMap (AlgHom.id c.F T).toRingHom = 𝟙 _ := spMap_algHom_id c.F T
-  have e2 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (AlgHom.id c.F T).toRingHom) = 𝟙 _ := by
-    have hd : GlobalTheory.CompanionTheory.Ar.dualMap (AlgHom.id c.F T).toRingHom = RingHom.id _ := dualMap_id T
+  have e2 : spMap (dualMap (AlgHom.id c.F T).toRingHom) = 𝟙 _ := by
+    have hd : dualMap (AlgHom.id c.F T).toRingHom = RingHom.id _ := dualMap_id T
     rw [hd]
     unfold spMap
     have h0 : CommRingCat.ofHom (RingHom.id (TrivSqZeroExt T T)) = 𝟙 (CommRingCat.of (TrivSqZeroExt T T)) := rfl

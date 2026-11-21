@@ -106,8 +106,7 @@ theorem moved_per {ϖ : kˣ} {e : ℕ}
     have h1 : T (G.moveArgs .one (dg G ϖ e) z + d) = T (G.moveArgs .one (dg G ϖ e) z) := by
       apply hT.2.2
       intro b
-      rw [SplitFlip.stdLat, smul_diagLat, mem_matLat]
-      simp only [mem_diagLat, Pi.one_apply, mul_one, Matrix.row_apply]
+      rw [FourierDepth.mem_matLat_smul_stdLat]
       intro r s
       by_cases hb : b ∈ oppositePath G.m
       · simp only [d, if_pos hb, Matrix.sub_apply, moveArgs_apply]

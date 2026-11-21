@@ -24,49 +24,7 @@ theorem pmaps_of_genRelR {A : Type} [CommRing A] [IsLocalRing A] {B B₀ : Schem
     {ε : K → ℤ} {pt : K → (Sp A ⟶ B)} {pt₀ : K → (Sp A ⟶ B₀)} {t : LB.Gen (LB.LinComb M pt ε)}
     {t₀ : LB.Gen (LB.LinComb M₀ pt₀ ε)} (ht : t.IsGen) (ht₀ : t₀.IsGen) (h : GenRelR w t t₀) :
     PMaps w pt pt₀ ε t t₀ (𝟙 _) := by
-  have toStkA_valR_local {X : Scheme.{0}} (x : Sp A ⟶ X) (U : X.Opens) (z : Sp A) (ht : ⊤ ≤ x ⁻¹ᵁ U) (a : Γ(X, U)ˣ) :
-      toStkA z (valR x U a.val) = (gm x z U a).val := by
-    have hz : x z ∈ U := ht (show z ∈ (⊤ : (Sp A).Opens) from trivial)
-    have e1 : ∀ c, (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom c) = c :=
-      fun c => congrArg (fun f => CommRingCat.Hom.hom f c) (Iso.hom_inv_id (Scheme.ΓSpecIso (CommRingCat.of A)))
-    rw [valR, dif_pos ht, gm, dif_pos hz]
-    show ((Sp A).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom
-        ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom ((x.appLE U ⊤ ht).hom a.val))) =
-      ((Sp A).presheaf.germ (x ⁻¹ᵁ U) z hz).hom ((x.app U).hom a.val)
-    rw [e1]
-    exact TopCat.Presheaf.germ_res_apply (Sp A).presheaf (homOfLE ht) z trivial ((x.app U).hom a.val)
-
-  have genRelR_iff_local : GenRelR w t t₀ ↔ (∀ k, pt k ≫ φ = pt₀ k) ∧ ∀ (j : K → M.ι) (j₀ : K → M₀.ι),
-      (∀ k, φ (pt k (cpt A)) ∈ M₀.U (j₀ k)) → (∀ k, pt k (cpt A) ∈ M.U (j k)) →
-      ((∏ k, gw w (pt k) (cpt A) (j₀ k) (j k) ^ ε k) * gm (𝟙 _) (cpt A) (LB.wchart M pt j) (t.s j)).val =
-        (gm (𝟙 _) (cpt A) (LB.wchart M₀ pt₀ j₀) (t₀.s j₀)).val := by
-    unfold GenRelR
-    refine and_congr_right fun hpt => forall_congr' fun j => forall_congr' fun j₀ => ?_
-    have hP_iff : (∀ k, ⊤ ≤ pt k ⁻¹ᵁ (LB.div (M₀.pull φ) M).U (fun _ => j₀ k, j k)) ↔
-        (∀ k, φ (pt k (cpt A)) ∈ M₀.U (j₀ k)) ∧ (∀ k, pt k (cpt A) ∈ M.U (j k)) := by
-      simp only [top_le_iff_cpt]
-      exact ⟨fun h => ⟨fun k => Set.mem_iInter.1 (h k).1 PUnit.unit, fun k => (h k).2⟩,
-        fun h k => ⟨Set.mem_iInter.2 fun _ => h.1 k, h.2 k⟩⟩
-    rw [hP_iff, and_imp]
-    refine forall_congr' fun h1 => forall_congr' fun h2 => ?_
-    have hP : ∀ k, ⊤ ≤ pt k ⁻¹ᵁ (LB.div (M₀.pull φ) M).U (fun _ => j₀ k, j k) := hP_iff.2 ⟨h1, h2⟩
-    have hT : ⊤ ≤ (𝟙 (Sp A)) ⁻¹ᵁ (LB.LinComb M pt ε).U j :=
-      (top_le_iff_cpt _ _).2 (Set.mem_iInter.2 fun k => h2 k)
-    have hT₀ : ⊤ ≤ (𝟙 (Sp A)) ⁻¹ᵁ (LB.LinComb M₀ pt₀ ε).U j₀ := by
-      refine (top_le_iff_cpt _ _).2 (Set.mem_iInter.2 fun k => ?_)
-      show pt₀ k ((𝟙 (Sp A)) (cpt A)) ∈ M₀.U (j₀ k)
-      rw [← hpt k]
-      exact h1 k
-    have hW : ∀ k (u : Γ(B, (LB.div (M₀.pull φ) M).U (fun _ => j₀ k, j k))ˣ),
-        toStkA (cpt A) (valR (pt k) _ u.val) = (gm (pt k) (cpt A) _ u).val :=
-      fun k u => toStkA_valR_local _ _ _ (hP k) u
-    rw [← (toStkA_injective (A := A)).eq_iff, map_mul, map_prod, toStkA_valR_local _ _ _ hT, toStkA_valR_local _ _ _ hT₀]
-    simp only [hW, map_zpow]
-    rw [← Units.coe_prod, ← Units.val_mul, Units.val_inj, Units.val_inj]
-    simp only [zpow_neg, Finset.prod_inv_distrib]
-    exact eq_inv_mul_iff_mul_eq
-
-  obtain ⟨hp, hv⟩ := genRelR_iff_local.1 h
+  obtain ⟨hp, hv⟩ := (genRelR_iff w t t₀).1 h
   have hc : ∀ k, pt k ≫ φ = 𝟙 _ ≫ pt₀ k := fun k => (hp k).trans (Category.id_comp _).symm
   obtain ⟨a, ha, H⟩ := CubTransport.exists_pmaps hw hM₀ hM (𝟙 _) hc t₀ ht₀
   obtain ⟨ρ, hρ⟩ := TLinPf.ratio_glue _ (TLinPf.linComb_cover M hM pt ε) a t ha ht
@@ -83,13 +41,13 @@ theorem pmaps_of_genRelR {A : Type} [CommRing A] [IsLocalRing A] {B B₀ : Schem
     rw [← e₂] at e₁
     exact (mul_eq_right.1 (mul_left_cancel e₁).symm)
   have h2 : ρ = 1 := by
-    have e₁ := toStkA_valR_local (𝟙 (Sp A)) ⊤ (cpt A) le_rfl ρ
-    have e₂ := toStkA_valR_local (𝟙 (Sp A)) ⊤ (cpt A) le_rfl 1
+    have e₁ := toStkA_valR (𝟙 (Sp A)) ⊤ (cpt A) le_rfl ρ
+    have e₂ := toStkA_valR (𝟙 (Sp A)) ⊤ (cpt A) le_rfl 1
     rw [h1] at e₁
     rw [map_one] at e₂
     have e₃ := toStkA_injective (e₁.trans e₂.symm)
     refine unit_ext fun z _ => Units.ext ?_
-    rw [← toStkA_valR_local (𝟙 (Sp A)) ⊤ z le_rfl, ← toStkA_valR_local (𝟙 (Sp A)) ⊤ z le_rfl, e₃]
+    rw [← toStkA_valR (𝟙 (Sp A)) ⊤ z le_rfl, ← toStkA_valR (𝟙 (Sp A)) ⊤ z le_rfl, e₃]
   intro Z r z p q hp hq
   rw [H Z r z p q hp hq, hr Z r z q (Set.mem_iInter.2 hq), h2, map_one, _root_.one_mul]
 
@@ -124,14 +82,6 @@ theorem cubV_push (hG : GlobalFnsSt) (hA : IsAbelianScheme G') {L : RigLB G} {L'
       rw [comp_lift, comp_lift, map_push, map_push, map_push]
       simp [x3]
     exact congrArg (fun q => q.left) e
-  have face_local {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] {L : RigLB G}
-      (c : CubicalStr G L) {T : Over S} {z : T.left} {J : (T.left ⟶ G.left) → L.L.ι}
-      (hJ : Good L.L z J) (x y : T ⟶ G) : cubV c z J 1 x y = 1 := by
-    have h := val_corr hJ (c.face 0) (lift x y).left
-    rw [val_one] at h
-    refine Eq.trans ?_ h
-    refine Eq.trans ?_ (val_cub c (lift x y) hJ (pzero G _) (x2 G 0) (x2 G 1)).symm
-    congr 1 <;> simp [x2, pzero, Hom.one_def]
   let o : 𝟙_ (Over S') ⟶ G' := 1
   have H : PMaps w (thφ G' (x3 G')) (thφ G (x3 G)) thε c'.t c.t (cubeMapOf gp).F3 :=
     EvenPull.pmaps_of_section hw L.isLB L'.isLB _ hψ _ c'.isGen _ c.isGen
@@ -142,9 +92,9 @@ theorem cubV_push (hG : GlobalFnsSt) (hA : IsAbelianScheme G') {L : RigLB G} {L'
         have e₁ : cubV c (T := Over.mk ((𝟙_ (Over S')).hom ≫ f)) y J (pushHom gp _ o) (pushHom gp _ o)
             (pushHom gp _ o) = 1 := by
           rw [map_one]
-          exact face_local c hJ _ _
+          exact (isCub_cubV c (T := Over.mk ((𝟙_ (Over S')).hom ≫ f)) hJ).face _ _
         have e₂ := prod_cub o o o (fun q => gw w q y (J (q ≫ F)) (J' q))
-        have e₃ : cubV c' y J' o o o = 1 := face_local c' hJ' _ _
+        have e₃ : cubV c' y J' o o o = 1 := (isCub_cubV c' hJ').face _ _
         refine e₁.trans (Eq.trans ?_ (congrArg₂ (· * ·) e₂ e₃).symm)
         simp [o]
   have e := CubTransport.val_pmaps hψ H (lift x (lift x' y)).left hJ hJ'

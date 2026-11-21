@@ -17,7 +17,7 @@ namespace GlobalTheory.CoverGalois
 
 theorem fieldRange_of_normal (L : IntermediateField ℚ ℂ) [hN : Normal ℚ L] (f : L →+* ℂ) :
     f.toRatAlgHom.fieldRange = L :=
-  @AlgHom.fieldRange_of_normal ℚ ℂ _ _ _ L (by convert hN; exact Subsingleton.elim _ _) f.toRatAlgHom
+  @AlgHom.fieldRange_of_normal ℚ ℂ _ _ _ L (by convert hN) f.toRatAlgHom
 
 theorem exists_goodCover_galois (D : D7) {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type}
     {A : FamIn D.what₂.LL G Pl0 T0 D.R.m} (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F)

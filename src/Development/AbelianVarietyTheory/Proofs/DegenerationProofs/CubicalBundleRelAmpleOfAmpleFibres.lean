@@ -159,17 +159,6 @@ theorem relAmple_of_fibres : Laws → Laws2 → ∀ (A : Type) [CommRing A] [IsD
   have := hB.geomConnected
   have : CompactSpace B.left := QuasiCompact.compactSpace_of_compactSpace B.hom
   have : QuasiSeparatedSpace B.left := quasiSeparatedSpace_of_quasiSeparated B.hom
-  have isLB_pw {Y : Scheme.{0}} {H : LB Y} (hH : H.IsLB) (t : ℤ) :
-      (pw H t).IsLB := by
-    refine ⟨hH.cover, ?_, ?_⟩
-    · intro i
-      have h := congrArg (· ^ t) (hH.g_self i)
-      simp only [one_zpow, ← map_zpow] at h
-      exact h
-    · intro i j k
-      have h := congrArg (· ^ t) (hH.cocycle i j k)
-      simp only [mul_zpow, ← map_zpow] at h
-      exact h
   have hL := M.L.isLB
   obtain ⟨d, hd, n, s, hs⟩ := (GlobalTheory.Unif.relAmple_iff_veryAmpleBy _ _ _ (LB.isLB_pull hL _)).1 (h _ (jK A))
   have hH := isLB_pw hL d
@@ -204,7 +193,7 @@ theorem relAmple_of_fibres : Laws → Laws2 → ∀ (A : Type) [CommRing A] [IsD
     have : Module.FaithfullyFlat A O := Module.FaithfullyFlat.of_flat_of_isLocalHom
     exact PrimeSpectrum.comap_surjective_of_faithfullyFlat (A := A) (B := O)
   have hB' := CubeGen.isAb_baseChange hB t
-  obtain ⟨_, _, c, -⟩ := exists_isCPMap M (toBase_mul_pullback B t) _ (LB.isLB_pull hL π) _ (pullIso_isGen hL π)
+  obtain ⟨_, _, c, -⟩ := exists_isCPMap M (toBase_mul_pullback B t) _ (pull_isLB hL π) _ (pullIso_isGen hL π)
   have cube : Triv (Theta ((Over.pullback t).obj B) ((pw M.L.L d).pull π)) := by
     rw [GlobalTheory.TrivLocus.pull_pw]
     exact triv_linComb_pw ⟨c.t, c.isGen⟩ d

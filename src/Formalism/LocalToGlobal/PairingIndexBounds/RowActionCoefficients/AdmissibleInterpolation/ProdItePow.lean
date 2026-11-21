@@ -523,7 +523,7 @@ theorem xMid_of (hS : XShape) (hA : XA) (hB : XB) (hB2 : TransposedFrameImageBlo
   rw [hsrc, map_smul, LinearMap.smul_apply, delF_apply, hA p X Kc j, map_tgt, ← algebraMap_smul Kc, fockR_smul_left]
   rw [pair_of_hyp X Kc hB hG j La La' φ _ f _
     (∏ b : BX X, (ε b * (if IsOddPos b.2 then
-        ((mF X (j + 1) b (φ.g' b.1)).map (algebraMap X.G.Kf Kc) * DgX X Kc j i0 b.1).det ^ (cX X j b)
+        ((mF X (j + 1) b (φ.g' b.1).val).map (algebraMap X.G.Kf Kc) * DgX X Kc j i0 b.1).det ^ (cX X j b)
       else (p : Kc) ^ (-((∑ k : Fin (cX X j b), min (X.colHt b.1 (j + 1) b.2 k.val) (i0 b.1) : ℕ) : ℤ))) *
         cN Kc (nuT X j b))) (IstOf X j J) i0 (fun t => algebraMap X.G.Kf Kc (x t))]
   · rw [← mul_assoc]
@@ -531,7 +531,7 @@ theorem xMid_of (hS : XShape) (hA : XA) (hB : XB) (hB2 : TransposedFrameImageBlo
     unfold numericalIdentityScalar
     rw [map_prod, ← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
     refine Finset.prod_congr rfl fun b _ => ?_
-    have hs := scal X Kc j b (mF X j b (φ.g b.1)) (mF X j b ((φ.g b.1)⁻¹ : GL _ _)) (mF X (j + 1) b (φ.g' b.1))
+    have hs := scal X Kc j b (mF X j b (φ.g b.1)) (mF X j b ((φ.g b.1)⁻¹ : GL _ _)) (mF X (j + 1) b (φ.g' b.1).val)
       (mF_inv X j b (φ.g b.1)) i0
       ((p : Kc) ^ (-((∑ k : Fin (cX X j b), min (X.colHt b.1 (j + 1) b.2 k.val) (i0 b.1) : ℕ) : ℤ)))
     linear_combination (ε b * cN Kc (nuT X j b)) * hs
@@ -542,8 +542,8 @@ theorem xMid_of (hS : XShape) (hA : XA) (hB : XB) (hB2 : TransposedFrameImageBlo
     rw [hB2 p X Kc j La La' φ d0 b, map_xT]
     have h := hblk b ((mF X j b (φ.g b.1)).map (algebraMap X.G.Kf Kc))
       ((mF X j b ((φ.g b.1)⁻¹ : GL _ _)).map (algebraMap X.G.Kf Kc))
-      ((mF X (j + 1) b (φ.g' b.1)).map (algebraMap X.G.Kf Kc))
-      ((mF X (j + 1) b ((φ.g' b.1)⁻¹ : GL _ _)).map (algebraMap X.G.Kf Kc))
+      ((mF X (j + 1) b (φ.g' b.1).val).map (algebraMap X.G.Kf Kc))
+      ((mF X (j + 1) b ((φ.g' b.1)⁻¹).val).map (algebraMap X.G.Kf Kc))
       (by rw [← Matrix.map_mul, mF_inv, Matrix.map_one _ (map_zero _) (map_one _)])
       (by rw [← Matrix.map_mul, mF_inv, Matrix.map_one _ (map_zero _) (map_one _)])
       (dM X Kc j b d0) (fun a i => algebraMap X.G.Kf Kc (xB X j x b a i))

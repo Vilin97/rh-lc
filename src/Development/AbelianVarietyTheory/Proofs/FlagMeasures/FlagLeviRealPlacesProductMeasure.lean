@@ -210,7 +210,7 @@ theorem levi_product : ∀ (I I₀ : AutInst) (e : I₀.E ≃+* I.E) (xf : I.Gf)
     congr 1
     simp only [fun v => ((hθ v).2.2.2.1 (R z v) (hdet z hz v)).1 i]
     have hj' : (j i : ℝ) ≠ 0 := by have := hj i; positivity
-    rw [detNorm, ← Real.finset_prod_rpow _ _ (fun w _ => by positivity)]
+    rw [detNorm, ← Real.finsetProd_rpow _ _ (fun w _ => by positivity)]
     refine Fintype.prod_equiv β _ _ fun v => ?_
     rw [← Real.rpow_natCast, ← Real.rpow_mul (norm_nonneg _)]
     congr 1

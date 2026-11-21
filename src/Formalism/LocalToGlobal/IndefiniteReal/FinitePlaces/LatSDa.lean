@@ -126,10 +126,13 @@ theorem lsd_mem (hΛS : IsSelfDualC S ΛS) (hΛT : IsSelfDualC T ΛT) :
         latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) (fun _ => True) := by
   classical
   obtain ⟨c, hc, hc0⟩ := lsd_AA_ne (D := D)
-  have hT := hΛT.1.span_eq_top
-  have hS := hΛS.1.span_eq_top
-  choose dT hdT htT using fun i : Fin T.rank => lsd_spanDen ΛT hT (Pi.single i 1)
-  choose dS hdS hsS using fun j : Fin S.rank => lsd_spanDen ΛS hS (fun k => star (S.gram⁻¹ j k))
+  have hden : ∀ {n : ℕ} (L : Submodule (𝓞 D.host.E) (Fin n → D.host.E)),
+      Submodule.IsLattice D.host.E L → ∀ x : Fin n → D.host.E, ∃ d : 𝓞 D.host.E, d ≠ 0 ∧ (d : D.host.E) • x ∈ L := by
+    intro n L hL x
+    obtain ⟨N, hN, hNx⟩ := PDB.exists_nat_smul_mem hL x
+    exact ⟨N, Nat.cast_ne_zero.mpr hN.ne', by simpa using hNx⟩
+  choose dT hdT htT using fun i : Fin T.rank => hden ΛT hΛT.1 (Pi.single i 1)
+  choose dS hdS hsS using fun j : Fin S.rank => hden ΛS hΛS.1 (fun k => star (S.gram⁻¹ j k))
   have hdT' : ∀ i, (dT i : D.host.E) ≠ 0 := fun i h => hdT i (FaithfulSMul.algebraMap_injective (𝓞 D.host.E) D.host.E
     (by rw [map_zero]; exact h))
   have hdS' : ∀ j, (dS j : D.host.E) ≠ 0 := fun j h => hdS j (FaithfulSMul.algebraMap_injective (𝓞 D.host.E) D.host.E
@@ -186,18 +189,14 @@ theorem lsd_mem (hΛS : IsSelfDualC S ΛS) (hΛT : IsSelfDualC T ΛT) :
 open Formalism.IndefR.PHeisFC in
 theorem lsd_finPart_expand (z : AE D) :
     finPart D z = ∑ k, sndA D.host.F (cE D.host.F D.host.E z k) ⊗ₜ[D.host.F] Module.finBasis D.host.F D.host.E k := by
-  conv_lhs => rw [VacEx.expand_cE z]
-  set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum]
-  rfl
+  have h := congrArg (finPart D) (VacEx.expand_cE z)
+  simpa only [map_sum, Fock.DRho.finPart_tmul] using h
 
 open Formalism.IndefR.PHeisFC in
 theorem lsd_infPart_expand (z : AE D) :
     infPart D z = ∑ k, fstA D.host.F (cE D.host.F D.host.E z k) ⊗ₜ[D.host.F] Module.finBasis D.host.F D.host.E k := by
-  conv_lhs => rw [VacEx.expand_cE z]
-  set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum]
-  rfl
+  have h := congrArg (infPart D) (VacEx.expand_cE z)
+  simpa only [map_sum, Fock.DRho.infPart_tmul] using h
 
 theorem lsdE_finPart (i : Fin T.rank) (j : Fin S.rank) (β : Af D.host.F) (e : D.host.E) (i' : Fin T.rank)
     (j' : Fin S.rank) :
@@ -239,10 +238,8 @@ theorem latO_isOpen (hΛS : IsSelfDualC S ΛS) (hΛT : IsSelfDualC T ΛT) :
     (Module.finBasis D.host.F D.host.E k), ?_, fun i j => ?_⟩
   · exact AddSubgroup.sum_mem _ fun i _ => AddSubgroup.sum_mem _ fun j _ => AddSubgroup.sum_mem _ fun k _ =>
       hmem i j k _ (hw i j k)
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [Matrix.sub_apply, map_sub, lsd_finPart_expand, Matrix.sum_apply, map_sum]
-    set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Matrix.sum_apply, map_sum, lsdE_finPart]
+  · rw [Matrix.sub_apply, map_sub, lsd_finPart_expand, Matrix.sum_apply, map_sum]
+    simp only [Matrix.sum_apply, map_sum, lsdE_finPart]
     rw [Finset.sum_eq_single i (fun b _ hb => by simp [Ne.symm hb]) (by simp),
       Finset.sum_eq_single j (fun b _ hb => by simp [Ne.symm hb]) (by simp)]
     simp only [and_self, if_true]
@@ -279,7 +276,7 @@ theorem lsd_fst (z : AE D) (k : Fin (Module.finrank D.host.F D.host.E)) :
   | add x y hx hy =>
     have h1 : cE D.host.F D.host.E (x + y) k = cE D.host.F D.host.E x k + cE D.host.F D.host.E y k := by
       rw [map_add (f := _)]; rfl
-    rw [h1, map_add (f := _), hx, hy, ← Finsupp.add_apply, ← LinearEquiv.map_add (f := _), ← RingHom.map_add (f := _)]
+    rw [h1, map_add (f := _), hx, hy, ← Finsupp.add_apply, ← LinearEquiv.map_add (e := _), ← RingHom.map_add (f := _)]
 
 set_option maxHeartbeats 800000 in
 open Formalism.IndefR.PHeisFC in
@@ -294,7 +291,7 @@ theorem lsd_snd (z : AE D) (k : Fin (Module.finrank D.host.F D.host.E)) :
   | add x y hx hy =>
     have h1 : cE D.host.F D.host.E (x + y) k = cE D.host.F D.host.E x k + cE D.host.F D.host.E y k := by
       rw [map_add (f := _)]; rfl
-    rw [h1, map_add (f := _), hx, hy, ← Finsupp.add_apply, ← LinearEquiv.map_add (f := _), ← RingHom.map_add (f := _)]
+    rw [h1, map_add (f := _), hx, hy, ← Finsupp.add_apply, ← LinearEquiv.map_add (e := _), ← RingHom.map_add (f := _)]
 
 theorem lsd_alg_int (y : 𝓞 D.host.F) : algebraMap D.host.F (Af D.host.F) (y : D.host.F) ∈ intAf D.host.F := by
   intro v
@@ -318,7 +315,7 @@ theorem lsd_int_coord : ∃ r : 𝓞 D.host.F, r ≠ 0 ∧ ∀ w ∈ intAE D, �
   | zero => simp only [map_zero, Finsupp.zero_apply, mul_zero]; exact fun v => zero_mem _
   | add x y _ _ hx hy =>
     rw [map_add (f := _), Finsupp.add_apply, mul_add]
-    exact fun v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx v) (hy v)
+    exact fun v => by rw [map_add]; exact add_mem (hx v) (hy v)
   | neg x _ hx =>
     rw [map_neg, Finsupp.neg_apply, mul_neg]
     exact fun v => by rw [map_neg]; exact neg_mem (hx v)
@@ -342,8 +339,9 @@ theorem lsd_decomp (Y : WO S T) (hY : ∀ i j, infPart D (Y i j) = 0) :
   rw [Finset.sum_eq_single i (fun b _ hb => by simp [Ne.symm hb]) (by simp),
     Finset.sum_eq_single j (fun b _ hb => by simp [Ne.symm hb]) (by simp)]
   simp only [and_self, if_true]
-  conv_lhs => rw [VacEx.expand_cE (Y i j)]
-  exact Finset.sum_congr rfl fun k _ => by rw [← lsd_cE_of_inf _ (hY i j) k]
+  calc
+    _ = ∑ k, cE D.host.F D.host.E (Y i j) k ⊗ₜ[D.host.F] Module.finBasis D.host.F D.host.E k := VacEx.expand_cE _
+    _ = _ := Finset.sum_congr rfl fun k _ => by rw [← lsd_cE_of_inf _ (hY i j) k]
 
 theorem lsdE_nsmul (N : ℕ) (i : Fin T.rank) (j : Fin S.rank) (β : Af D.host.F) (e : D.host.E) :
     N • lsdE S T i j β e = lsdE S T i j (algebraMap D.host.F (Af D.host.F) (N : D.host.F) * β) e := by

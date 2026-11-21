@@ -54,17 +54,17 @@ private theorem ampRep_rep {f : TG E n} {v : LL μ} {φ : Sm E n}
     (hφ : φ.1 = liftOne (rconv (rationalGLOne (K := E) (n := n)) μ f v)) (hl : IsOpen {k | GlobalTheory.CuspRep.finRep E n k φ = φ})
     (hg : ∃ N : ℕ, ∀ u : Cm.UC E n, ∃ B : ℝ, ∀ g, ‖(Cm.uC E n u φ).1 g‖ ≤ B * AutomorphicForm.height g ^ N) :
     Rep μ (RR μ f v) φ := by
-  have hc := isContRep_rconv μ f v
   refine ⟨⟨fun γ g => ?_, hl, hg⟩, fun t g => ?_, ?_⟩
   · rw [hφ]
     have hγ1 : AdelicGLn.diagonal E n γ ∈ normOneGL (K := E) (n := n) := rationalGL_le_normOneGL ⟨γ, rfl⟩
     have hγΓ : (⟨AdelicGLn.diagonal E n γ, hγ1⟩ : normOneGL (K := E) (n := n)) ∈ rationalGLOne (K := E) (n := n) := ⟨γ, rfl⟩
-    exact (congrArg (rconv (rationalGLOne (K := E) (n := n)) μ f v) (retractOne_coe_mul ⟨_, hγ1⟩ g)).trans (hc.2.1 _ hγΓ _)
+    exact (congrArg (rconv (rationalGLOne (K := E) (n := n)) μ f v) (retractOne_coe_mul ⟨_, hγ1⟩ g)).trans (rconv_mul_left _ μ f v hγΓ _)
   · rw [hφ]
     exact liftOne_centralSection_mul _ _ g
-  · filter_upwards [hc.ae_eq_quotFun] with y hy
+  · have := isFiniteMeasure_quotientMeasure (K := E) (n := n) μ
+    filter_upwards [integrated_ae_eq_rconvQ (rationalGLOne (K := E) (n := n)) μ f v] with y hy
     exact hy.trans (((congrFun hφ _).trans (liftOne_coe _ _)).trans
-      ((quotFun_mk _ hc.2.1 _).symm.trans (congrArg (quotFun _ hc.2.1) (Quotient.out_eq y)))).symm
+      ((rconvQ_mk _ μ f v _).symm.trans (congrArg (rconvQ _ μ f v) (Quotient.out_eq y)))).symm
 
 private theorem ampRep_killed {f : TG E n} {v : LL μ} {d : ℕ} {ρ : KA E n → Matrix (Fin d) (Fin d) ℂ}
     (h : ∀ x : KA E n →₀ ℂ, (x.sum fun k c => c • ρ k) = 0 →

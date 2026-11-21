@@ -90,24 +90,24 @@ end Coord
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
 theorem dual_over {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) = spMap (algebraMap T (DualNumber T)) ≫ spMap φ := by
+    spMap (dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) = spMap (algebraMap T (DualNumber T)) ≫ spMap φ := by
   rw [← spMap_comp, ← spMap_comp]
   congr 1
-  exact RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  exact RingHom.ext fun a => by ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 section Descent
 
 variable {R S : Type} [CommRing R] [CommRing S] {io : R →+* S} {t : SAB H (Sp R)} {t' : SAB H (Sp S)}
   (m : SABMap t' t (spMap io))
 
-theorem exists_bc (v : epsR R ⟶ t.G) : ∃ q : epsR S ⟶ t'.G, q.left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ v.left := by
+theorem exists_bc (v : epsR R ⟶ t.G) : ∃ q : epsR S ⟶ t'.G, q.left ≫ m.φ = spMap (dualMap io) ≫ v.left := by
   have hv : v.left ≫ t.G.hom = spMap (algebraMap R (DualNumber R)) := Over.w v
-  have cond : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ v.left) ≫ t.G.hom = spMap (algebraMap S (DualNumber S)) ≫ spMap io := by
+  have cond : (spMap (dualMap io) ≫ v.left) ≫ t.G.hom = spMap (algebraMap S (DualNumber S)) ≫ spMap io := by
     rw [Category.assoc, hv, dual_over]
   exact ⟨Over.homMk (m.cart.1.lift _ _ cond) (m.cart.1.lift_snd _ _ _), m.cart.1.lift_fst _ _ _⟩
 
 theorem tangent_of_bc [IsDomain R] (hio : Function.Injective io) {v : epsR R ⟶ t.G} {q : epsR S ⟶ t'.G}
-    (h : q.left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ v.left) (hq : IsTangent q) : IsTangent v := by
+    (h : q.left ≫ m.φ = spMap (dualMap io) ≫ v.left) (hq : IsTangent q) : IsTangent v := by
   have hv : v.left ≫ t.G.hom = spMap (algebraMap R (DualNumber R)) := Over.w v
   have := t.semi.separated
   have : IsDominant (spMap io) := ⟨by
@@ -123,10 +123,10 @@ theorem tangent_of_bc [IsDomain R] (hio : Function.Injective io) {v : epsR R ⟶
   · have e := m.cm.e_comm
     rw [m.base] at e
     have sq : spMap io ≫ spMap (TrivSqZeroExt.fstHom R R R).toRingHom =
-        spMap (TrivSqZeroExt.fstHom S S S).toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) := by
+        spMap (TrivSqZeroExt.fstHom S S S).toRingHom ≫ spMap (dualMap io) := by
       rw [← spMap_comp, ← spMap_comp]
       congr 1
-      exact RingHom.ext fun a => by simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+      exact RingHom.ext fun a => by simp [dualMap]
     rw [← Category.assoc, sq, Category.assoc, ← h, ← Category.assoc]
     exact (congrArg (· ≫ m.φ) hq).trans e
 
@@ -138,7 +138,7 @@ theorem eigBasis_descent {K S : Type} [Field K] [CommRing S] [Nontrivial S] {io 
     (hM : ∀ x i, IsLieComb (fun k => PowerSeries.C (R := K) (M x i k)) B (B i ≫ t.act.act x))
     {n : ℕ} {U : Fin n → Fin g → K} {v : Fin n → (epsR (PowerSeries K) ⟶ t.G)}
     (hU : ∀ k, IsLieComb (fun i => PowerSeries.C (R := K) (U k i)) B (v k)) {q : Fin n → (epsR S ⟶ t'.G)}
-    (hq : ∀ k, (q k).left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ (v k).left) (ρ : 𝓞 E → K)
+    (hq : ∀ k, (q k).left ≫ m.φ = spMap (dualMap io) ≫ (v k).left) (ρ : 𝓞 E → K)
     (he : ∀ k x, (q k ≫ t'.act.act x).left = spMap (epsScaleR (io (PowerSeries.C (R := K) (ρ x)))) ≫ (q k).left)
     (hb : ∀ w : epsR S ⟶ t'.G, IsTangent w →
       (∀ x, (w ≫ t'.act.act x).left = spMap (epsScaleR (io (PowerSeries.C (R := K) (ρ x)))) ≫ w.left) →
@@ -218,7 +218,7 @@ theorem GlobalTheory.ArcQ.arcDatum_arcLieBasis : Out.Laws → Out.Laws2 → ∀ 
   choose v p hv hp1 hp2 hp3 using h
   let q : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (epsR (ArcS Dw K₁) ⟶ G.G) := fun τ k => Over.homMk (p τ k) (hp3 τ k)
   have hq1 : ∀ τ k, (q τ k).left ≫ m1.φ = y.u τ k := hp1
-  have hq2 : ∀ τ k, (q τ k).left ≫ m2.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (arcι Dw K₁)) ≫ (v τ k).left := hp2
+  have hq2 : ∀ τ k, (q τ k).left ≫ m2.φ = spMap (dualMap (arcι Dw K₁)) ≫ (v τ k).left := hp2
   have hι : Function.Injective (arcι Dw K₁) := (GlobalTheory.ArcConst.algebraMap_injective Dw K₁).comp
     ((MvPolynomial.C_injective _ _).comp HahnSeries.ofPowerSeries_injective)
   have := GlobalTheory.ArcConst.isDomain Dw K₁

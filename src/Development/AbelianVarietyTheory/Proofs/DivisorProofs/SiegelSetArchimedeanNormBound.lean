@@ -9,7 +9,7 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsS
 
 open scoped TensorProduct NNReal Matrix
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
-open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK
+open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.ThKSoDecay
 
 noncomputable section
 
@@ -22,7 +22,7 @@ theorem opNorm_le_of_shape {n q : ℕ} (X Y' : Matrix (Fin n) (Fin q) ℂ) (Y X'
     (opNorm (1 + X * Matrix.diagonal d * Y + Y' * Matrix.diagonal d' * X') : ℝ) ≤
       1 + (‖X‖ * ‖Y‖ + ‖Y'‖ * ‖X'‖) * s := by
   have e : ∀ M : Matrix (Fin n) (Fin n) ℂ, (opNorm M : ℝ) = ‖M‖ := fun M => by
-    rw [opNorm, coe_nnNorm]; exact (Matrix.l2_opNorm_def M).symm
+    rw [opNorm, coe_nnnorm]; exact (Matrix.l2_opNorm_def M).symm
   rw [e]
   have h1 : ‖(1 : Matrix (Fin n) (Fin n) ℂ)‖ ≤ 1 := by
     rw [← Matrix.diagonal_one, Matrix.l2_opNorm_diagonal]

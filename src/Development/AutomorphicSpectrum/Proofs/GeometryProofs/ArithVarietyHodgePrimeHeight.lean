@@ -28,7 +28,7 @@ theorem lie_pack (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCommMonObj G] [Smoo
     ∃ (L : Type) (_ : AddCommGroup L) (_ : Module R L) (M : LieModel G x L) (ρ : B →+* Module.End R L)
       (toLi : L →ₗ[R] Li) (j : Module.Dual R L →ₗ[R] Module.Dual Ω Li),
       Module.Finite R L ∧ Module.Projective R L ∧ M.IsActOf act.act ρ ∧ IsBaseChange Ω toLi ∧
-      (∀ v, (M₀.pt (toLi v)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R Ω)) ≫ (M.pt v).left) ∧
+      (∀ v, (M₀.pt (toLi v)).left = spMap (dualMap (algebraMap R Ω)) ≫ (M.pt v).left) ∧
       IsBaseChange Ω j ∧ (∀ u v, j u (toLi v) = algebraMap R Ω (u v)) ∧
       ∀ a v, toLi (ρ a v) = ρ₀ a (toLi v) := by
   obtain ⟨L, i1, i2, M, ρ, toLi, hf, hp, ha, hb, hpt, hρ⟩ := GlobalTheory.T.lie_model_action_subalgebra X G Ω ξ Li M₀ B act ρ₀ h₀ O R x hx
@@ -137,7 +137,7 @@ theorem chartPack_exists : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   have hform : ∀ (b : 𝓞 E) (w : Module.Dual (CR O y c') L), j (w ∘ₗ ρ b) = j w ∘ₗ 𝔐.ρ b := by
     intro b w
     ext e
-    refine hbc.inductionOn e ?_ ?_ ?_
+    refine hbc.inductionOn e (fun e => j (w ∘ₗ ρ b) e = (j w ∘ₗ 𝔐.ρ b) e) (by simp) ?_ ?_ ?_
     · intro v
       simp only [LinearMap.comp_apply]
       rw [hj, ← hρ, hj]
@@ -148,7 +148,7 @@ theorem chartPack_exists : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
       simp only [map_add (f := _), h₁, h₂]
   have hact' : ∀ (a : 𝓞 E) (u : Module.Dual Ω 𝔐.Li), Dh.ρΩ a u = u ∘ₗ 𝔐.ρ (H.bar a) := by
     intro a u
-    refine hjbc.inductionOn u ?_ ?_ ?_
+    refine hjbc.inductionOn u (fun u => Dh.ρΩ a u = u ∘ₗ 𝔐.ρ (H.bar a)) (by simp) ?_ ?_ ?_
     · intro w
       rw [hHT.2.1, hbar, hform]
     · intro s n hn

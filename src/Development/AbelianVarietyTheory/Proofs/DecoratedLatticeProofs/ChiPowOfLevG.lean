@@ -291,9 +291,9 @@ theorem extM_map {A A' : Type} [CommRing A] [CommRing A'] {N n : ℕ} (hN : N = 
   split_ifs <;> simp
 
 theorem isExt_iff (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) {R' : Type} [CommRing R']
-    (φ : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* R') (g' : Matrix (Fin (B.R.N B.R.m - 1)) (Fin (B.R.N B.R.m - 1)) R')
+    (φ : (I.rec7 l Z).host.E →+* R') (g' : Matrix (Fin (B.R.N B.R.m - 1)) (Fin (B.R.N B.R.m - 1)) R')
     (g : Matrix (Fin (B.R.N B.R.m)) (Fin (B.R.N B.R.m)) R') :
-    IsExt (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (z0 X u) φ g' g ↔ g = extM (N_m_succ B.R) g' := by
+    IsExt (I.rec7 l Z) (z0 X u) φ g' g ↔ g = extM (N_m_succ B.R) g' := by
   obtain ⟨-, -, hiX, -⟩ := spaces_in_coordinates I hI hP l Z
   have hN := N_m_succ B.R
   have hPr := (base_fields_primes_ok B X).2.1
@@ -324,10 +324,10 @@ theorem isExt_iff (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I
       exact φ.map_zero
 
 theorem deep_twist (hI : I.Ok) (l : I.Laws) (Z : TC.Later B (I.cols l)) (a : I.ι) {n T f : ℕ}
-    {J : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E} (hJ : J = 1) {bad : Set (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))}
-    (S : StepLevel (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) J T f bad) :
+    {J : Matrix (Fin n) (Fin n) (I.rec7 l Z).host.E} (hJ : J = 1) {bad : Set (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))}
+    (S : StepLevel (I.rec7 l Z).host.F (I.rec7 l Z).host.E (sigD (I.rec7 l Z)) J T f bad) :
     ∀ P ∈ I.Q a, ∃ N : ℕ, ∀ w ∈ UAd B.sp.cm n, Deep (F := B.host.F) P N w → w ∈ S.U := fun P hP =>
-  exists_deep (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.cm hJ S P (AdelicValuationDictionary.main I hI l Z a n 0 ⟨P, mem_sb I hP⟩ 1).2.1
+  exists_deep (I.rec7 l Z).sp.cm hJ S P (AdelicValuationDictionary.main I hI l Z a n 0 ⟨P, mem_sb I hP⟩ 1).2.1
     ((under_eq_iff B.host P _).2 (Or.inr rfl))
 
 end Mat
@@ -352,7 +352,7 @@ theorem finM_of_hasMat {D : D7} {h : GA D D.sp.X'} {y} (hy : GlobalTheory.Core.R
 
 
 set_option maxHeartbeats 2000000 in
-theorem emb_mem_chi : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (Ch₀ : ℕ → Type) (A : TwDat I l Z u a Ch₀), A.Is → ∀ emb : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X' →* GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X B.R.m), IsEmbTop (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (TC.z0 X u) emb → ∀ (bad : Set (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (K : ClassesAtPrimes (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (u := u) (I.fm l u a) bad), I.ReadsP a K.lev.Lb K.lev.U K.lev.chi (fun c => (K.y c).1) K.lat (fun c s => (K.stabI c s).1) → (∃ n : ℕ, 0 < n ∧ ∀ κ, K.lev.chi κ ^ n = 1) → ∀ β h (κ : K.lev.U), GlobalTheory.Core.Rk.Top.HasMat h κ.1 → ∃ hU : emb h ∈ A.U B.R.m β, A.chi B.R.m β ⟨emb h, hU⟩ = K.lev.chi κ ∧ ‖((K.lev.chi κ : ℂˣ) : ℂ)‖ = 1 := by
+theorem emb_mem_chi : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (Ch₀ : ℕ → Type) (A : TwDat I l Z u a Ch₀), A.Is → ∀ emb : GA (I.rec7 l Z) (I.rec7 l Z).sp.X' →* GA (I.rec7 l Z) ((I.rec7 l Z).sp.X B.R.m), IsEmbTop (D := (I.rec7 l Z)) (TC.z0 X u) emb → ∀ (bad : Set (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (K : ClassesAtPrimes (D := (I.rec7 l Z)) (u := u) (I.fm l u a) bad), I.ReadsP a K.lev.Lb K.lev.U K.lev.chi (fun c => (K.y c).1) K.lat (fun c s => (K.stabI c s).1) → (∃ n : ℕ, 0 < n ∧ ∀ κ, K.lev.chi κ ^ n = 1) → ∀ β h (κ : K.lev.U), GlobalTheory.Core.Rk.Top.HasMat h κ.1 → ∃ hU : emb h ∈ A.U B.R.m β, A.chi B.R.m β ⟨emb h, hU⟩ = K.lev.chi κ ∧ ‖((K.lev.chi κ : ℂˣ) : ℂ)‖ = 1 := by
   intro B X I hI hP l Z u a Ch₀ A hA emb hemb bad K hK hfin β h κ hh
   obtain ⟨-, gP, -, hsp⟩ := TC.spaces_in_coordinates I hI hP l Z
   have gN := (hsp B.R.m le_rfl).1
@@ -366,11 +366,11 @@ theorem emb_mem_chi : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC
     (deep_twist I hI l Z a gN (A.K B.R.m le_rfl β).lev) (deep_twist I hI l Z a gP K.lev) (hA.fin B.R.m le_rfl β) hfin κ
   have he := (isExt_iff I hI hP l Z u _ _ _).1 (hemb h)
   have hG : emb h ∈ GfC _ := by
-    refine (mem_GfC_iff _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m le_rfl) _).2 ?_
-    refine (congrArg (fun M => Matrix.map M (infPart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) he).trans ((extM_map _ _ _).trans ?_)
-    exact (congrArg (TilX.extM _) ((mem_GfC_iff _ (rankP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) _).1 hh.1)).trans (TilX.extM_one _)
-  have hF : (TilX.extGL (Formalism.L2.Col.N_m_succ B.R) κ.1).1 = finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m le_rfl) (emb h) := by
-    refine Eq.symm ((congrArg (fun M => Matrix.map M (toEAf (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) he).trans ((extM_map _ _ _).trans ?_))
+    refine (mem_GfC_iff _ (rankN (I.rec7 l Z) B.R.m le_rfl) _).2 ?_
+    refine (congrArg (fun M => Matrix.map M (infPart (I.rec7 l Z))) he).trans ((extM_map _ _ _).trans ?_)
+    exact (congrArg (TilX.extM _) ((mem_GfC_iff _ (rankP (I.rec7 l Z)) _).1 hh.1)).trans (TilX.extM_one _)
+  have hF : (TilX.extGL (Formalism.L2.Col.N_m_succ B.R) κ.1).1 = finM _ (rankN (I.rec7 l Z) B.R.m le_rfl) (emb h) := by
+    refine Eq.symm ((congrArg (fun M => Matrix.map M (toEAf (I.rec7 l Z))) he).trans ((extM_map _ _ _).trans ?_))
     exact congrArg (TilX.extM _) (finM_of_hasMat hh)
   have hU : emb h ∈ A.U B.R.m β := (hA.U B.R.m le_rfl β _).2 ⟨hG, ⟨_, hm⟩, hF⟩
   have e : A.chi B.R.m β ⟨emb h, hU⟩ = K.lev.chi κ := (hA.chi B.R.m le_rfl β ⟨emb h, hU⟩ ⟨_, hm⟩ hF).trans hc

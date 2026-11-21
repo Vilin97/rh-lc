@@ -27,6 +27,7 @@ theorem sumPl_add_smul {ι : Type} [Fintype ι] [DecidableEq ι] {V : ι → Typ
     simp only [PiTensorProduct.mapMultilinear_apply, Function.update_eq_self, PiTensorProduct.map_id] at e e2
     simp only [atPl]
     rw [Module.End.one_eq_id, Module.End.one_eq_id, e, e2]
+    rfl
   simp only [sumPl, h, Finset.sum_add_distrib, Finset.sum_smul]
 
 
@@ -36,6 +37,7 @@ theorem lieScalar : GlobalTheory.FunPr.Hypotheses₂ → DerEx → VacLine → L
   obtain ⟨ω₀, c₀, hH, hc, hact⟩ := GlobalTheory.T.darboux_schrodinger_compatibility hP hD hV F E σ α β κ P Q R S ψ τ JA JB d a b A C Φ hCM hψ hFr hΦ
   obtain ⟨ν, hν, hmul, hνc, hν0⟩ := GlobalTheory.T.weil_representation_unitary_standard_character hP F E σ α β κ ψ JA JB d om ω₀ hψ hom hH hc
   obtain ⟨k, hk⟩ := GlobalTheory.T.archimedean_frame_character_factorization hP F E σ β R S τ JB b C hCM hFr.2.2 ν hmul hνc hν0
+  unfold cA at *
   refine ⟨fun w => c₀ w + k w, ?_⟩
   intro γ hγ Y hY T g hg l hl
   have hH1 : ∀ t : ℝ, At (evI F) (((γ (Multiplicative.ofAdd t)).1 : Matrix β β (AE F E)) - 1) := fun t => hγ.2 _

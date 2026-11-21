@@ -76,12 +76,14 @@ theorem abstractSymbol_mk (x : IdeleGroup K.1) :
         rintro _ ⟨a, rfl⟩
         change abstractSymbol K L (IdeleClassGroup.mk K.1 (finiteEmbedding v a)) =
           Group.Abelianization.of (ideleSymbol K.1 L.1 (finiteEmbedding v a))
-        rw [abstractSymbol_mk_finiteEmbedding, ideleSymbol_finiteEmbedding])
+        rw [abstractSymbol_mk_finiteEmbedding, ideleSymbol_finiteEmbedding]
+        rfl)
       (iSup_le fun w ↦ by
         rintro _ ⟨a, rfl⟩
         change abstractSymbol K L (IdeleClassGroup.mk K.1 (infiniteEmbedding w a)) =
           Group.Abelianization.of (ideleSymbol K.1 L.1 (infiniteEmbedding w a))
-        rw [abstractSymbol_mk_infiniteEmbedding, ideleSymbol_infiniteEmbedding])
+        rw [abstractSymbol_mk_infiniteEmbedding, ideleSymbol_infiniteEmbedding]
+        rfl)
   have hfN : ∀ y : IdeleGroup L.1, f (ideleNorm K.1 L.1 y) = 1 := fun y ↦
     abstractSymbol_ideleClassNorm_eq_one K L (IdeleClassGroup.mk L.1 y)
   have hgN : ∀ y : IdeleGroup L.1, g (ideleNorm K.1 L.1 y) = 1 := fun y ↦ by
@@ -122,7 +124,7 @@ theorem ker_abstractSymbol :
   constructor
   · intro h
     change (QuotientGroup.mk (fixedEquiv K c) : GroundTheory.LocalField.Abstract.tateZero IdeleClassLimit
-      (K.openSubgroup : Subgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄)) L.openSubgroup) = 1 at h
+      (K.openSubgroup : Subgroup (AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ)) L.openSubgroup) = 1 at h
     rw [QuotientGroup.eq_one_iff] at h
     obtain ⟨b, hb⟩ := h
     obtain ⟨d, rfl⟩ := (fixedEquiv L).surjective b

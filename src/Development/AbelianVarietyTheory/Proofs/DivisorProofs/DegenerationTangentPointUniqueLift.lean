@@ -25,20 +25,20 @@ variable {R : Type} [CommRing R] (I : Ideal R)
 
 theorem dualMap_mk_struct (e : ℕ) :
     spMap (algebraMap (R ⧸ I ^ (e + 1)) (DualNumber (R ⧸ I ^ (e + 1)))) ≫ thick R I e =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ (epsR R).hom := by
+      spMap (dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ (epsR R).hom := by
   show Spec.map _ ≫ Spec.map _ = Spec.map _ ≫ Spec.map _
   rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp]
   refine congrArg (fun q => Spec.map (CommRingCat.ofHom q)) (RingHom.ext fun r => ?_)
-  refine TrivSqZeroExt.ext ?_ ?_ <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  refine TrivSqZeroExt.ext ?_ ?_ <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem exists_factor_dualMap (e : ℕ) :
-    ∃ l, l ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) =
+    ∃ l, l ≫ spMap (dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) =
       adicLevelι (I.map (algebraMap R (DualNumber R))) (e + 1) := by
-  have hs : Function.Surjective (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) := fun x => by
+  have hs : Function.Surjective (dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) := fun x => by
     obtain ⟨a, ha⟩ := Ideal.Quotient.mk_surjective x.fst
     obtain ⟨b, hb⟩ := Ideal.Quotient.mk_surjective x.snd
-    refine ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, TrivSqZeroExt.ext ?_ ?_⟩ <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, ha, hb]
-  have hk : RingHom.ker (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≤
+    refine ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, TrivSqZeroExt.ext ?_ ?_⟩ <;> simp [dualMap, ha, hb]
+  have hk : RingHom.ker (dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≤
       RingHom.ker (Ideal.Quotient.mk ((I.map (algebraMap R (DualNumber R))) ^ (e + 1))) := fun x hx => by
     rw [RingHom.mem_ker] at hx
     have h1 : x.fst ∈ I ^ (e + 1) := by

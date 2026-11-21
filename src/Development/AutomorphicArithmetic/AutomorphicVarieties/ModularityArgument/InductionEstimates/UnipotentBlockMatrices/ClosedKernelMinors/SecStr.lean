@@ -76,31 +76,32 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.secStr :
       ∃ E₁ E₂ : Submodule ℂ (G1 K 2 → ℂ), FiniteDimensional ℂ E₁ ∧ FiniteDimensional ℂ E₂ ∧ (∀ φ ∈ E₁, Rd τ₁ φ) ∧ (∀ φ ∈ E₂, Rd τ₂ φ) ∧
         ∀ f : G1 K (2 + 2) → ℂ, Continuous f → D.Fix f → Slices τ₁ τ₂ f → ∀ k ∈ KG K (2 + 2),
           (∀ m₂, (fun m₁ => f (lv m₁ m₂ 0 * k)) ∈ E₁) ∧ ∀ m₁, (fun m₂ => f (lv m₁ m₂ 0 * k)) ∈ E₂ := by
-  intro K _ _ _ μ₂ _ τ₁ τ₂ D h₁ h₂
-  obtain ⟨-, hmul, -, hcont, -, -, -, -, -, -, hK, hcpt⟩ := @blkLaws K _ _
-  obtain ⟨ι₁, d₁⟩ : ∃ ι : G1 K 2 →* G1 K (2 + 2), ∀ m, ι m = lv m 1 0 :=
-    ⟨MonoidHom.mk' (fun m => lv m 1 0) fun a b => by rw [hmul, mul_one, add_zero], fun _ => rfl⟩
-  obtain ⟨ι₂, d₂⟩ : ∃ ι : G1 K 2 →* G1 K (2 + 2), ∀ m, ι m = lv 1 m 0 :=
-    ⟨MonoidHom.mk' (fun m => lv 1 m 0) fun a b => by rw [hmul, mul_one, add_zero], fun _ => rfl⟩
-  have c₁ : Continuous ι₁ := by
-    have h : Continuous fun m : G1 K 2 => ((m, 1, 0) : G1 K 2 × G1 K 2 × ℝ) := continuous_id.prodMk continuous_const
-    exact (hcont.comp' h).congr fun m => (d₁ m).symm
-  have c₂ : Continuous ι₂ := by
-    have h : Continuous fun m : G1 K 2 => ((1, m, 0) : G1 K 2 × G1 K 2 × ℝ) :=
-      continuous_const.prodMk (continuous_id.prodMk continuous_const)
-    exact (hcont.comp' h).congr fun m => (d₂ m).symm
-  have e₁ : ∀ m₁ m₂, lv m₁ m₂ 0 = lv 1 m₂ 0 * ι₁ m₁ := fun m₁ m₂ => by
-    rw [d₁, hmul, mul_one, one_mul, add_zero]
-  have e₂ : ∀ m₁ m₂, lv m₁ m₂ 0 = lv m₁ 1 0 * ι₂ m₂ := fun m₁ m₂ => by
-    rw [d₂, hmul, mul_one, one_mul, add_zero]
-  obtain ⟨E₁, f₁, r₁, p₁⟩ := secStr_side μ₂ τ₁ D h₁ ι₁ c₁ (fun x hx => by rw [d₁]; exact hK x hx 1 (one_mem _)) (hcpt _).1
-  obtain ⟨E₂, f₂, r₂, p₂⟩ := secStr_side μ₂ τ₂ D h₂ ι₂ c₂ (fun x hx => by rw [d₂]; exact hK 1 (one_mem _) x hx) (hcpt _).1
-  refine ⟨E₁, E₂, f₁, f₂, r₁, r₂, fun f hf hD hS k hk => ⟨fun m₂ => ?_, fun m₁ => ?_⟩⟩
-  · have h := (hS k).1 m₂
-    have e : (fun m₁ => f (lv m₁ m₂ 0 * k)) = fun m₁ => f (lv 1 m₂ 0 * ι₁ m₁ * k) := funext fun m₁ => by rw [← e₁]
-    rw [e] at h ⊢
-    exact p₁ f hf hD _ k hk h
-  · have h := (hS k).2 m₁
-    have e : (fun m₂ => f (lv m₁ m₂ 0 * k)) = fun m₂ => f (lv m₁ 1 0 * ι₂ m₂ * k) := funext fun m₂ => by rw [← e₂]
-    rw [e] at h ⊢
-    exact p₂ f hf hD _ k hk h
+  set_option synthInstance.maxHeartbeats 200000 in
+    intro K _ _ _ μ₂ _ τ₁ τ₂ D h₁ h₂
+    obtain ⟨-, hmul, -, hcont, -, -, -, -, -, -, hK, hcpt⟩ := @blkLaws K _ _
+    obtain ⟨ι₁, d₁⟩ : ∃ ι : G1 K 2 →* G1 K (2 + 2), ∀ m, ι m = lv m 1 0 :=
+      ⟨MonoidHom.mk' (fun m => lv m 1 0) fun a b => by rw [hmul, mul_one, add_zero], fun _ => rfl⟩
+    obtain ⟨ι₂, d₂⟩ : ∃ ι : G1 K 2 →* G1 K (2 + 2), ∀ m, ι m = lv 1 m 0 :=
+      ⟨MonoidHom.mk' (fun m => lv 1 m 0) fun a b => by rw [hmul, mul_one, add_zero], fun _ => rfl⟩
+    have c₁ : Continuous ι₁ := by
+      have h : Continuous fun m : G1 K 2 => ((m, 1, 0) : G1 K 2 × G1 K 2 × ℝ) := continuous_id.prodMk continuous_const
+      exact (hcont.comp' h).congr fun m => (d₁ m).symm
+    have c₂ : Continuous ι₂ := by
+      have h : Continuous fun m : G1 K 2 => ((1, m, 0) : G1 K 2 × G1 K 2 × ℝ) :=
+        continuous_const.prodMk (continuous_id.prodMk continuous_const)
+      exact (hcont.comp' h).congr fun m => (d₂ m).symm
+    have e₁ : ∀ m₁ m₂, lv m₁ m₂ 0 = lv 1 m₂ 0 * ι₁ m₁ := fun m₁ m₂ => by
+      rw [d₁, hmul, mul_one, one_mul, add_zero]
+    have e₂ : ∀ m₁ m₂, lv m₁ m₂ 0 = lv m₁ 1 0 * ι₂ m₂ := fun m₁ m₂ => by
+      rw [d₂, hmul, mul_one, one_mul, add_zero]
+    obtain ⟨E₁, f₁, r₁, p₁⟩ := secStr_side μ₂ τ₁ D h₁ ι₁ c₁ (fun x hx => by rw [d₁]; exact hK x hx 1 (one_mem _)) (hcpt _).1
+    obtain ⟨E₂, f₂, r₂, p₂⟩ := secStr_side μ₂ τ₂ D h₂ ι₂ c₂ (fun x hx => by rw [d₂]; exact hK 1 (one_mem _) x hx) (hcpt _).1
+    refine ⟨E₁, E₂, f₁, f₂, r₁, r₂, fun f hf hD hS k hk => ⟨fun m₂ => ?_, fun m₁ => ?_⟩⟩
+    · have h := (hS k).1 m₂
+      have e : (fun m₁ => f (lv m₁ m₂ 0 * k)) = fun m₁ => f (lv 1 m₂ 0 * ι₁ m₁ * k) := funext fun m₁ => by rw [← e₁]
+      rw [e] at h ⊢
+      exact p₁ f hf hD _ k hk h
+    · have h := (hS k).2 m₁
+      have e : (fun m₂ => f (lv m₁ m₂ 0 * k)) = fun m₂ => f (lv m₁ 1 0 * ι₂ m₂ * k) := funext fun m₂ => by rw [← e₂]
+      rw [e] at h ⊢
+      exact p₂ f hf hD _ k hk h

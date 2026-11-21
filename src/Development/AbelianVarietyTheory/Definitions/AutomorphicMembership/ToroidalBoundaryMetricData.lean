@@ -237,8 +237,8 @@ structure OddPrimesWithRootsOfUnity : Type where
   met_smooth : ∀ σ, IsLieMetric Z.t (genι Z) (manifold Z σ) (met σ)
   met_conj : ∀ σ σ' (y : CxPts (genStr Z) σ) (y' : CxPts (genStr Z) σ') (v w : TanM (y.1 ≫ genι Z) Z.t.G)
     (v' w' : TanM (y'.1 ≫ genι Z) Z.t.G), y'.1 = spMap (starRingEnd ℂ) ≫ y.1 →
-    (tv v').left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (tv v).left →
-    (tv w').left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (tv w).left →
+    (tv v').left = spMap (dualMap (starRingEnd ℂ)) ≫ (tv v).left →
+    (tv w').left = spMap (dualMap (starRingEnd ℂ)) ≫ (tv w).left →
     met σ' y' v' w' = starRingEnd ℂ (met σ y v w)
 
 namespace OddPrimesWithRootsOfUnity

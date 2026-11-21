@@ -27,7 +27,7 @@ def eY (d : ℕ) : ((Fin d → ℂ) × ℂ) ≃ᵐ (Fin (d + 1) → ℂ) :=
   MeasurableEquiv.prodComm.trans (MeasurableEquiv.piFinSuccAbove (fun _ => ℂ) 0).symm
 
 theorem eY_apply {d : ℕ} (x : (Fin d → ℂ) × ℂ) : eY d x = Fin.cons x.2 x.1 := by
-  first | rfl | (simp [eY, MeasurableEquiv.piFinSuccAbove, Fin.consEquiv]; done) | (simp [eY, MeasurableEquiv.piFinSuccAbove]; rfl)
+  first | rfl | (simp [eY, MeasurableEquiv.prodComm, MeasurableEquiv.piFinSuccAbove, Fin.consEquiv]; done) | (simp [eY, MeasurableEquiv.piFinSuccAbove]; rfl)
 
 theorem eY_measurePreserving (d : ℕ) : MeasurePreserving (eY d) volume volume :=
   (Measure.measurePreserving_swap).trans
@@ -41,7 +41,7 @@ def eW (d : ℕ) : ((Fin d → ℂ) × (ℂ × ℂ)) ≃ᵐ (Fin (d + 2) → ℂ
 
 theorem eW_apply {d : ℕ} (x : (Fin d → ℂ) × (ℂ × ℂ)) :
     eW d x = Fin.cons x.2.1 (Fin.cons x.2.2 x.1) := by
-  first | rfl | (simp [eW, MeasurableEquiv.piFinSuccAbove, Fin.consEquiv]; done) | (simp [eW, MeasurableEquiv.piFinSuccAbove]; rfl)
+  first | rfl | (simp [eW, MeasurableEquiv.prodComm, MeasurableEquiv.prodAssoc, MeasurableEquiv.prodCongr, MeasurableEquiv.piFinSuccAbove, Fin.consEquiv]; done) | (simp [eW, MeasurableEquiv.piFinSuccAbove]; rfl)
 
 theorem eW_measurePreserving (d : ℕ) : MeasurePreserving (eW d) volume volume :=
   ((Measure.measurePreserving_swap).trans (measurePreserving_prodAssoc volume volume volume)).trans

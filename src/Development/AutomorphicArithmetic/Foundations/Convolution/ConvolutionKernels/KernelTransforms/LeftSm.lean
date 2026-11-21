@@ -40,6 +40,7 @@ private theorem UpperTheory.ConvolutionTheory.Tf.leftSm_avg {S : Type*} [Topolog
   have e : (fun Y : 𝔤 => ∫ s, β (g * h.expG Y * y * z s) ∂ρ) = fun Y => ∫ s, F Y s ∂ρ := by
     funext Y
     congr 1
+    simp only [hFdef, hψdef, mul_assoc]
   show ContDiff ℝ ∞ (fun Y : 𝔤 => ∫ s, β (g * h.expG Y * y * z s) ∂ρ)
   rw [e]
   refine contDiff_integral_of_iteratedFDeriv F (fun s => ?_) (fun k => ?_) (fun Y₀ => ?_)

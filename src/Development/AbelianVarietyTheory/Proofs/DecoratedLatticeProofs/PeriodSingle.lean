@@ -66,14 +66,14 @@ def pairVal (B : GlobalTheory.Mem.Base) (z : (GlobalTheory.Mem.Col2.Fr B.fields.
 
 variable {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)}
 
-def RecVal (u : B.Word) (a : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tup) (φ : Frm I a) (G : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Amb a) : Prop :=
-  (∀ h : a = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.mu0, HasVal (a := I.mu0) l u (Eq.rec (motive := fun (ν : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tup) _ => Frm I ν) φ h)
-    (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).eMt u).symm (Eq.rec (motive := fun ν _ => (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Amb ν) G h))) ∧
-  HasVal l u φ (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).eMtTw u a).symm G)
+def RecVal (u : B.Word) (a : (I.rec7 l Z).what₂.Tup) (φ : Frm I a) (G : (I.rec7 l Z).what₂.Amb a) : Prop :=
+  (∀ h : a = (I.rec7 l Z).what₂.mu0, HasVal (a := I.mu0) l u (Eq.rec (motive := fun (ν : (I.rec7 l Z).what₂.Tup) _ => Frm I ν) φ h)
+    (((I.rec7 l Z).eMt u).symm (Eq.rec (motive := fun ν _ => (I.rec7 l Z).what₂.Amb ν) G h))) ∧
+  HasVal l u φ (((I.rec7 l Z).eMtTw u a).symm G)
 
-variable {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-  {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts}
-  {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} (W : RealPack ex)
+variable {L : SizeData₂ (I.rec7 l Z)}
+  {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts}
+  {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} (W : RealPack ex)
 
 end GlobalTheory.TopVal
 
@@ -118,9 +118,9 @@ theorem period_single (l : I.Laws) (u : B.Word) (a : I.ι) (φ : Frm I a) (G : (
   · intro h
     exact absurd (Finset.mem_univ _) h
 
-variable {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-  {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts}
-  {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} (W : RealPack ex)
+variable {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (I.rec7 l Z)}
+  {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts}
+  {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} (W : RealPack ex)
 
 
 end GlobalTheory.TopVal

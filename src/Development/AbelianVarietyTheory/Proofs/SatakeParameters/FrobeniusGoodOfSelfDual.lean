@@ -60,8 +60,8 @@ theorem satWD_map_mul (h : Formalism.ConjugateSelfDual.IsPlaceOver A w) (a : ℕ
   have h0 : (0 : ℂ) ∉ B.map fun b => ((b⁻¹ : ℂˣ) : ℂ) := by
     simp
   obtain ⟨hu0, hf0, -⟩ := WD.lpUnr_spec (h := h) _ h0
-  have hU : WD.lpUnr h ((B.map (· * c)).map fun b => ((b⁻¹ : ℂˣ) : ℂ)) =
-      (WD.lpUnr h (B.map fun b => ((b⁻¹ : ℂˣ) : ℂ))).lpChar (WD.mk (WDRep.diag h fun _ : Fin 1 => c⁻¹)) := by
+  have hU : WD.lpUnr (h := h) ((B.map (· * c)).map fun b => ((b⁻¹ : ℂˣ) : ℂ)) =
+      (WD.lpUnr (h := h) (B.map fun b => ((b⁻¹ : ℂˣ) : ℂ))).lpChar (WD.mk (WDRep.diag h fun _ : Fin 1 => c⁻¹)) := by
     have hu1 := WD.unr_lpChar _ _ hu0 hMu
     rw [WD.unr_eq_lpUnr _ hu1, WD.frobEig_char _ _ _ hu0 hMu hMf, hf0, Multiset.map_map, Multiset.map_map]
     congr 1

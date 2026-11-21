@@ -112,8 +112,6 @@ theorem rowDegree_le_of_rowAdd_eq {R : Type*} [CommRing R] [IsDomain R] [CharZer
     Polynomial.coeff_zero_eq_eval_zero, hev] at this
   rw [map_zero, ← this]
   congr 2
-  funext v
-  simp [f]
   split_ifs <;> simp
 
 end General

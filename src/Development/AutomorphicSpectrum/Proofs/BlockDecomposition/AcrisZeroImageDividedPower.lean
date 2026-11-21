@@ -36,7 +36,8 @@ theorem cris_logTerm (A : PAlg l) (n k : ℕ) {x : Ainf l} (hx : x ∈ RingHom.k
       (-1) ^ k * (k.factorial : A.Acr n) * A.mkAcr n (A.cris0 (ACris.dpowZero hx (k + 1))) := by
   rw [ACris.logTerm, AdicCompletion.algebraMap_apply, Algebra.algebraMap_self, RingHom.id_apply,
     PAlg.cris_of, ACris.logTermZero]
-  simp only [map_mul, map_pow, map_neg, map_one, map_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_pow, map_neg, map_one, map_natCast]
 
 theorem acrisZero_image_divided_power (A : PAlg l) (k : ℕ) {x : Ainf l} (hx : x ∈ RingHom.ker (theta0 l)) :
     (A.cris0 (ACris.dpowZero hx k)).1 = dpw k (WittVector.map A.s x) :=

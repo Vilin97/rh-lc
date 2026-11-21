@@ -128,11 +128,13 @@ theorem given_law_at (hL : L.Is μ₀) (B : Frames G) (Φ : G.Datum) (hw : w ∈
     ∀ (m : ℕ), m ≠ 0 → ∀ (κ : GL (Fin ((locGrid G t w).rank (0, m))) (Kw w)), κ ∈ givenLevel G t w (0, m) →
     (locGrid G t w).pathAct .one (SplitFlip.givenPath m) (Pi.mulSingle (0, m) κ)
         ((locGrid G t w).lines₂ (SplitFlip.givenPath m) (givenDatum t w B Φ)) =
-      endLamAt G t w m κ • (locGrid G t w).lines₂ (SplitFlip.givenPath m) (givenDatum t w B Φ)
-  | 0, h => absurd rfl h
-  | n + 1, _ => fun κ hκ => by
-    have hlaws := stepType_laws (L := L) (G := G) (t := t) (w := w) hL hw n
-    obtain ⟨hJ, ν, hν, H⟩ := hlaws
+      endLamAt G t w m κ • (locGrid G t w).lines₂ (SplitFlip.givenPath m) (givenDatum t w B Φ) := by
+  intro m
+  cases m with
+  | zero => exact fun h => absurd rfl h
+  | succ n =>
+    intro _ κ hκ
+    obtain ⟨hJ, ν, hν, H⟩ := stepType_laws (L := L) (G := G) (t := t) (w := w) hL hw n
     have hKO : ∀ Y, (Pi.mulSingle (0, n + 1) κ : (locGrid G t w).VertexGroup) Y ∈ KO (Kw w) _ := fun Y => by
       by_cases hY : Y = (0, n + 1)
       · subst hY; simpa using (givenLevel_open hL hw (0, n + 1)).2 hκ

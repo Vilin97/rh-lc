@@ -32,7 +32,7 @@ def archSlice (φ : AdelicGLn.AdelicGL K n → ℂ) (g : AdelicGLn.AdelicGL K n)
 theorem archSlice_mul (φ : AdelicGLn.AdelicGL K n → ℂ) (g : AdelicGLn.AdelicGL K n)
     (x : archGroup K n) : archSlice φ (g * infEmb K n x) = leftTranslate x (archSlice φ g) := by
   funext y
-  simp [mul_assoc]
+  simp [leftTranslate, mul_assoc]
 
 def IsArchSmooth (φ : AdelicGLn.AdelicGL K n → ℂ) : Prop :=
   ∀ g, (isExpLieAlgebra K n).IsSmoothFun (archSlice φ g)

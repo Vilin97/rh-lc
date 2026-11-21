@@ -201,7 +201,7 @@ private theorem comm_ev (𝔞 : Amp μ) {ev : PR K n →+* (LL μ →L[ℂ] LL �
 
 end Aux2
 
-set_option maxHeartbeats 1000000 in
+set_option maxHeartbeats 4000000 in
 theorem UpperTheory.ConvolutionTheory.GM.repOne :
     RepOne := by
   intro K _ _ _ n hn μ _ 𝔞 ev hev w₀ hw₀ ν hν T hT p h hsph r hr₀ hrT hU j wd e₀ e₁ h₀ h₁

@@ -191,55 +191,55 @@ theorem finM_inv {D : D7} (V : HSp D) {n : ℕ} (hn : V.rank = n) (κ : GA D V) 
 
 set_option maxHeartbeats 2000000 in
 theorem col_mem_level {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws)
-    (Z : TC.Later B (I.cols l)) (u : B.Word) {Ch : ℕ → Type} {chOf : ∀ i, ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).C.cls i → Ch i}
-    (F : Formalism.L2.Forms.FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u Ch chOf) (hF : I.StdF l Z u F) (i : ℕ) (hi : i ≤ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m)
-    (S : Formalism.L2.Forms.StepLevel (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E (Formalism.L2.Forms.sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))
-      (Formalism.L2.Forms.gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).A.T (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.f (Formalism.L2.Forms.badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)))
-    (hLb : ∀ x, x ∈ S.Lb ↔ x ∈ TC.baseL B ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i) (X.piT u))
-    (v : HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)) (hv : ((((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).A.T : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∈ v.asIdeal)
-    (x : GL (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i)) (GlobalTheory.AdForm.EF (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) (hx : x ∈ S.U) (s : Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i)) :
-    (fun r => Formalism.UG.prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v (x.1 r s) -
-      (1 : Matrix (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i)) (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i))
-        ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E ⊗[(_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F] v.adicCompletion (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)) r s) ∈
-      Formalism.UG.latS (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (v.adicCompletion (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (intV (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E v) S.Lb := by
-  have hgram : Formalism.L2.Forms.gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi = 1 := ((GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hI hP l Z).2.2.2 i hi).1
-  haveI : NeZero ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i) := ⟨by
-    have := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m_add_three_le_k
+    (Z : TC.Later B (I.cols l)) (u : B.Word) {Ch : ℕ → Type} {chOf : ∀ i, ((I.rec7 l Z).mem u).C.cls i → Ch i}
+    (F : Formalism.L2.Forms.FormsTiedSym (I.rec7 l Z) u Ch chOf) (hF : I.StdF l Z u F) (i : ℕ) (hi : i ≤ (I.rec7 l Z).R.m)
+    (S : Formalism.L2.Forms.StepLevel (I.rec7 l Z).host.F (I.rec7 l Z).host.E (Formalism.L2.Forms.sigD (I.rec7 l Z))
+      (Formalism.L2.Forms.gramN (I.rec7 l Z) i hi) ((I.rec7 l Z).mem u).A.T (I.rec7 l Z).R.f (Formalism.L2.Forms.badG (I.rec7 l Z)))
+    (hLb : ∀ x, x ∈ S.Lb ↔ x ∈ TC.baseL B ((I.rec7 l Z).R.N i) (X.piT u))
+    (v : HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F)) (hv : ((((I.rec7 l Z).mem u).A.T : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∈ v.asIdeal)
+    (x : GL (Fin ((I.rec7 l Z).R.N i)) (GlobalTheory.AdForm.EF (I.rec7 l Z))) (hx : x ∈ S.U) (s : Fin ((I.rec7 l Z).R.N i)) :
+    (fun r => Formalism.UG.prV (E := (I.rec7 l Z).host.E) v (x.1 r s) -
+      (1 : Matrix (Fin ((I.rec7 l Z).R.N i)) (Fin ((I.rec7 l Z).R.N i))
+        ((I.rec7 l Z).host.E ⊗[(I.rec7 l Z).host.F] v.adicCompletion (I.rec7 l Z).host.F)) r s) ∈
+      Formalism.UG.latS (F := (I.rec7 l Z).host.F) (v.adicCompletion (I.rec7 l Z).host.F) (intV (I.rec7 l Z).host.E v) S.Lb := by
+  have hgram : Formalism.L2.Forms.gramN (I.rec7 l Z) i hi = 1 := ((GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hI hP l Z).2.2.2 i hi).1
+  haveI : NeZero ((I.rec7 l Z).R.N i) := ⟨by
+    have := (I.rec7 l Z).R.m_add_three_le_k
     simp only [Ranks.N]; omega⟩
-  let c : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E :=
-    RingOfIntegers.mapRingHom (Formalism.L2.Forms.sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)
-  have hsc : ∀ x, (c x : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.conj (x : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) :=
+  let c : 𝓞 (I.rec7 l Z).host.E →+* 𝓞 (I.rec7 l Z).host.E :=
+    RingOfIntegers.mapRingHom (Formalism.L2.Forms.sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E)
+  have hsc : ∀ x, (c x : (I.rec7 l Z).host.E) = (I.rec7 l Z).host.conj (x : (I.rec7 l Z).host.E) :=
     fun x => Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.forms_involution_eq_host_conj _
-  have hpq : ((F.atT.piU : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) * (c F.atT.piU : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) =
-      (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).A.T : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) := by
+  have hpq : ((F.atT.piU : 𝓞 (I.rec7 l Z).host.E) : (I.rec7 l Z).host.E) * (c F.atT.piU : (I.rec7 l Z).host.E) =
+      (((I.rec7 l Z).mem u).A.T : (I.rec7 l Z).host.E) := by
     rw [hsc]; exact F.atT.piU_norm
-  have hTp := ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).A.T_prime
-  have hp0 : ((F.atT.piU : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) ≠ 0 :=
+  have hTp := ((I.rec7 l Z).mem u).A.T_prime
+  have hp0 : ((F.atT.piU : 𝓞 (I.rec7 l Z).host.E) : (I.rec7 l Z).host.E) ≠ 0 :=
     fun h => (Nat.cast_ne_zero.2 hTp.ne_zero) (by rw [← hpq, h, zero_mul])
-  have hL : S.Lb = Formalism.L2.Col.rll_dLat ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i) (((F.atT.piU : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)⁻¹) := by
+  have hL : S.Lb = Formalism.L2.Col.rll_dLat ((I.rec7 l Z).R.N i) (((F.atT.piU : 𝓞 (I.rec7 l Z).host.E) : (I.rec7 l Z).host.E)⁻¹) := by
     refine GlobalTheory.Mem.Col2.Lv.baseL_eq B _ F.atT.piU hp0 S.Lb ?_
     rw [hF.piU]; exact hLb
-  have h1 := (GlobalTheory.Mem.Col2.Lv.uloc_T_iff (Formalism.L2.Forms.sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.cm.deg2 (fun x => star_star x)
-    (fun x hx => ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.cm.fixed x).1 hx) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.cm.cmUnram.2.2 hgram S F.atT.piU (c F.atT.piU) rfl hpq hTp hL
-    v hv (GlobalTheory.T.levelPrime_dvd_of_adicValuation_lt_one (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u F.atT v hv) _).1 (((S.U_eq x).1 hx).2 v)
+  have h1 := (GlobalTheory.Mem.Col2.Lv.uloc_T_iff (Formalism.L2.Forms.sigD (I.rec7 l Z)) (I.rec7 l Z).sp.cm.deg2 (fun x => star_star x)
+    (fun x hx => ((I.rec7 l Z).sp.cm.fixed x).1 hx) (I.rec7 l Z).sp.cm.cmUnram.2.2 hgram S F.atT.piU (c F.atT.piU) rfl hpq hTp hL
+    v hv (GlobalTheory.T.levelPrime_dvd_of_adicValuation_lt_one (I.rec7 l Z) u F.atT v hv) _).1 (((S.U_eq x).1 hx).2 v)
   exact col_mem _ hgram S.Lb (fun z hz j => let ⟨r, hr, _⟩ := (hLb z).1 hz j; ⟨r, hr⟩) v _ h1.2 s
 
 
 set_option maxHeartbeats 4000000 in
 theorem stdPair_fixed {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws)
-    (Z : TC.Later B (I.cols l)) (u : B.Word) {Ch : ℕ → Type} {chOf : ∀ i, ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).C.cls i → Ch i}
-    (F : Formalism.L2.Forms.FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u Ch chOf) (hF : I.StdF l Z u F) (j : ℕ) (hj : j ≤ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m)
-    (S : Formalism.L2.Forms.StepLevel (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E (Formalism.L2.Forms.sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))
-      (Formalism.L2.Forms.gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).A.T (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.f (Formalism.L2.Forms.badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)))
-    (hLb : ∀ x, x ∈ S.Lb ↔ x ∈ TC.baseL B ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N j) (X.piT u))
+    (Z : TC.Later B (I.cols l)) (u : B.Word) {Ch : ℕ → Type} {chOf : ∀ i, ((I.rec7 l Z).mem u).C.cls i → Ch i}
+    (F : Formalism.L2.Forms.FormsTiedSym (I.rec7 l Z) u Ch chOf) (hF : I.StdF l Z u F) (j : ℕ) (hj : j ≤ (I.rec7 l Z).R.m)
+    (S : Formalism.L2.Forms.StepLevel (I.rec7 l Z).host.F (I.rec7 l Z).host.E (Formalism.L2.Forms.sigD (I.rec7 l Z))
+      (Formalism.L2.Forms.gramN (I.rec7 l Z) j hj) ((I.rec7 l Z).mem u).A.T (I.rec7 l Z).R.f (Formalism.L2.Forms.badG (I.rec7 l Z)))
+    (hLb : ∀ x, x ∈ S.Lb ↔ x ∈ TC.baseL B ((I.rec7 l Z).R.N j) (X.piT u))
     (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ι : Type)
-    (p : ι → GlobalTheory.FinPl.SplitPt (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) k)
-    (β : ∀ j i, GlobalTheory.FinPl.Frame (p i) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank))
-    (Q : ∀ j, ι → GlobalTheory.LatPair.Pair k (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank)) (L : ∀ j, GlobalTheory.FinPl.Lat ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j))
-    (hS : GlobalTheory.AdForm.StdT I l Z u p β Q L) (κ : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j))
-    (y : GL (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N j)) (GlobalTheory.AdForm.EF (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)))
-    (hy : GlobalTheory.AdForm.finM _ (Formalism.L2.Forms.rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) κ = y.1) (hU : y ∈ S.U) (i : ι)
-    (g : GL (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank) k) (hg : (mt _ κ).map (p i).pr = (β j i).b * g.val * (β j i).b') :
+    (p : ι → GlobalTheory.FinPl.SplitPt (I.rec7 l Z) k)
+    (β : ∀ j i, GlobalTheory.FinPl.Frame (p i) ((I.rec7 l Z).sp.X j) (Fin ((I.rec7 l Z).sp.X j).rank))
+    (Q : ∀ j, ι → GlobalTheory.LatPair.Pair k (Fin ((I.rec7 l Z).sp.X j).rank)) (L : ∀ j, GlobalTheory.FinPl.Lat ((I.rec7 l Z).sp.X j))
+    (hS : GlobalTheory.AdForm.StdT I l Z u p β Q L) (κ : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j))
+    (y : GL (Fin ((I.rec7 l Z).R.N j)) (GlobalTheory.AdForm.EF (I.rec7 l Z)))
+    (hy : GlobalTheory.AdForm.finM _ (Formalism.L2.Forms.rankN (I.rec7 l Z) j hj) κ = y.1) (hU : y ∈ S.U) (i : ι)
+    (g : GL (Fin ((I.rec7 l Z).sp.X j).rank) k) (hg : (mt _ κ).map (p i).pr = (β j i).b * g.val * (β j i).b') :
     g • Q j i = Q j i := by
   have hv := GlobalTheory.AdForm.stdT_levelPrime_mem_v I hI hP l Z u k ι p β Q L hS i
   obtain ⟨e, he⟩ := hS.1
@@ -251,19 +251,19 @@ theorem stdPair_fixed {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.t
       rw [h0, map_zero, isCoprime_zero_left] at hcop
       exact not_isUnit_zero hcop
     exact (Formalism.L2.Col.mem_divs hne _).1 (e i).2
-  have key := fun (κ₀ : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j)) (x : GL (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N j)) (GlobalTheory.AdForm.EF (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)))
-      (h : GlobalTheory.AdForm.finM _ (Formalism.L2.Forms.rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) κ₀ = x.1) (hx : x ∈ S.U) =>
-    mat_int (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) k (p i) (e i).1 (he i) _ (Formalism.L2.Forms.rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj)
+  have key := fun (κ₀ : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j)) (x : GL (Fin ((I.rec7 l Z).R.N j)) (GlobalTheory.AdForm.EF (I.rec7 l Z)))
+      (h : GlobalTheory.AdForm.finM _ (Formalism.L2.Forms.rankN (I.rec7 l Z) j hj) κ₀ = x.1) (hx : x ∈ S.U) =>
+    mat_int (I.rec7 l Z) k (p i) (e i).1 (he i) _ (Formalism.L2.Forms.rankN (I.rec7 l Z) j hj)
       (X.piT u) hpi _ hLb κ₀ (fun s' => by
         rw [h]
         exact col_mem_level I hI hP l Z u F hF j hj S hLb _ hv x hx s')
   have k1 := key κ y hy hU
   have k2 := key κ⁻¹ y⁻¹ (finM_inv _ _ κ y hy) (inv_mem hU)
-  rcases Nat.eq_zero_or_pos ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank with h0 | hpos
+  rcases Nat.eq_zero_or_pos ((I.rec7 l Z).sp.X j).rank with h0 | hpos
   · have : g = 1 := Units.ext (Matrix.ext fun b _ => absurd b.2 (by omega))
     rw [this, one_smul]
-  let r₀ : Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank := ⟨((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank - 1, by omega⟩
-  have hr₀ : r₀.1 + 1 = ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank := by simp only [r₀]; omega
+  let r₀ : Fin ((I.rec7 l Z).sp.X j).rank := ⟨((I.rec7 l Z).sp.X j).rank - 1, by omega⟩
+  have hr₀ : r₀.1 + 1 = ((I.rec7 l Z).sp.X j).rank := by simp only [r₀]; omega
   refine smul_pair_eq _ _ _ _ ((mt _ κ⁻¹).map (p i).pr) (β j i).b'b _ r₀
     (GlobalTheory.T.standardPair_frameCoordinates_integral_and_functional I l Z u k ι p β Q L hS j hj i r₀ hr₀) g hg ?_ (fun r s => (k1 r s).1) (fun r s => (k2 r s).1)
     (fun s => (k2 r₀ s).2 hr₀)

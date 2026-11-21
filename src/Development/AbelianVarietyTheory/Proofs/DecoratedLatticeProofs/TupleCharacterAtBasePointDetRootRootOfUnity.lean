@@ -112,7 +112,7 @@ theorem GlobalTheory.CharRoot.chr_xr_pow_eq_one : ∀ {B : GlobalTheory.Mem.Base
     | succ k ih =>
       rw [pow_succ (A.chr (j + 1)) (k + 1), pow_succ _ (k + 1)]
       exact GlobalTheory.AdelicLiftCompare.chrEq_mul ih hc
-  have hbase : ∀ t, A.chr (j + 1) (idF (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) t) ^ n = 1 := by
+  have hbase : ∀ t, A.chr (j + 1) (idF (I.rec7 l Z) t) ^ n = 1 := by
     intro t
     obtain ⟨k, rfl⟩ : ∃ k, n = k + 1 := ⟨n - 1, by omega⟩
     have h1 := hpow k
@@ -125,5 +125,5 @@ theorem GlobalTheory.CharRoot.chr_xr_pow_eq_one : ∀ {B : GlobalTheory.Mem.Base
     have h := h1.lat
     erw [h2] at h
     exact h
-  obtain ⟨d, hd, hfu⟩ := GlobalTheory.CharRoot.finUnit_det_of_carries (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ _ _ (A.kA i β) (A.kb i β) hG hF hcar
-  exact GlobalTheory.CharRoot.pow_eq_one_of_isDetRoot (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ (A.kA i β) (A.xr i β) (A.chr (j + 1)) n hn hbase hc.1.1 hR d hd hfu
+  obtain ⟨d, hd, hfu⟩ := GlobalTheory.CharRoot.finUnit_det_of_carries (I.rec7 l Z) _ _ _ (A.kA i β) (A.kb i β) hG hF hcar
+  exact GlobalTheory.CharRoot.pow_eq_one_of_isDetRoot (I.rec7 l Z) _ (A.kA i β) (A.xr i β) (A.chr (j + 1)) n hn hbase hc.1.1 hR d hd hfu

@@ -16,7 +16,7 @@ namespace GlobalTheory.CompanionTheory.Ar.Flat.ConjExp
 open Filter Topology GlobalTheory.CompanionTheory.Ar.Flat.Conj
 
 local notation "κ" => spMap (starRingEnd ℂ)
-local notation "δ" => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ))
+local notation "δ" => spMap (dualMap (starRingEnd ℂ))
 
 section Points
 
@@ -34,8 +34,8 @@ theorem conj_conj_point : κ ≫ κ = 𝟙 (Sp ℂ) := by
   exact Spec.map_id _
 
 theorem conj_conj_dual : δ ≫ δ = 𝟙 (Sp (DualNumber ℂ)) := by
-  have h : (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)).comp (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) = RingHom.id (DualNumber ℂ) := by
-    ext c <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  have h : (dualMap (starRingEnd ℂ)).comp (dualMap (starRingEnd ℂ)) = RingHom.id (DualNumber ℂ) := by
+    ext c <;> simp [dualMap]
   rw [← spMap_comp_ring, h]
   exact Spec.map_id _
 
@@ -43,16 +43,16 @@ theorem conj_conj_apply {X : Scheme.{0}} (y : Sp ℂ ⟶ X) : κ ≫ κ ≫ y = 
   rw [← Category.assoc, conj_conj_point, Category.id_comp]
 
 theorem spMap_dualMap_comp (f : A →+* ℂ) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((starRingEnd ℂ).comp f)) = δ ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
-  have h : GlobalTheory.CompanionTheory.Ar.dualMap ((starRingEnd ℂ).comp f) = (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
-    ext c <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    spMap (dualMap ((starRingEnd ℂ).comp f)) = δ ≫ spMap (dualMap f) := by
+  have h : dualMap ((starRingEnd ℂ).comp f) = (dualMap (starRingEnd ℂ)).comp (dualMap f) := by
+    ext c <;> simp [dualMap]
   rw [h, spMap_comp_ring]
 
 theorem fst_conj :
     spMap (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom ≫ δ = κ ≫ spMap (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom := by
-  have h : (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom.comp (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) =
+  have h : (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom.comp (dualMap (starRingEnd ℂ)) =
       (starRingEnd ℂ).comp (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom := by
-    ext c <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext c <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   rw [← spMap_comp_ring, ← spMap_comp_ring, h]
 
 theorem top_le_comp {T T' X : Scheme.{0}} (a : T' ⟶ T) (x : T ⟶ X) {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) :
@@ -116,7 +116,7 @@ theorem isDerivAt0_conj {g : ℕ} {X : Scheme.{0}} (e : (Fin g → ℂ) → (Sp 
       rw [hv']
       exact top_le_comp _ _ h
     have e1 : (Scheme.ΓSpecIso (CommRingCat.of (DualNumber ℂ))).hom.hom ((v.appLE U ⊤ h).hom f) =
-        GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ) ((Scheme.ΓSpecIso (CommRingCat.of (DualNumber ℂ))).hom.hom ((v'.appLE U ⊤ h').hom f)) := by
+        dualMap (starRingEnd ℂ) ((Scheme.ΓSpecIso (CommRingCat.of (DualNumber ℂ))).hom.hom ((v'.appLE U ⊤ h').hom f)) := by
       subst hv
       exact eval_spMap _ v' U h' h f
     have e2 : (fun z => valAt' (κ ≫ e (star z)) U f) = star ∘ (fun z => valAt' (e z) U f) ∘ star :=
@@ -125,7 +125,7 @@ theorem isDerivAt0_conj {g : ℕ} {X : Scheme.{0}} (e : (Fin g → ℂ) → (Sp 
     rw [hw] at e3
     show TrivSqZeroExt.snd ((Scheme.ΓSpecIso (CommRingCat.of (DualNumber ℂ))).hom.hom ((v.appLE U ⊤ h).hom f)) = _
     rw [e1, e2, e3, ← hd U h' f]
-    simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    simp [dualMap]
 
 theorem differentiableOn_conj_preimage {F : Type} [NormedAddCommGroup F] [NormedSpace ℂ F] [StarAddMonoid F]
     [StarModule ℂ F] [ContinuousStar F] {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] [StarAddMonoid V]
@@ -200,7 +200,7 @@ theorem exOf_hol : IsHolTo (Metric.ball (0 : Fin n → ℂ) ρ ×ˢ (Set.univ : 
 
 theorem exOf_diff {b : Fin n → ℂ} (hb : b ∈ Metric.ball (0 : Fin n → ℂ) ρ) (a : Fin g) :
     IsDerivAt0 (fun z => (exOf e' b z).left) (Pi.single a 1)
-      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ b)) ≫ (M.pt (Pi.single a 1)).left) := by
+      (spMap (dualMap (ψ b)) ≫ (M.pt (Pi.single a 1)).left) := by
   have h := e'.diff (star b) (star_mem_ball.2 hb) a
   have hw : star (Pi.single a 1 : Fin g → ℂ) = Pi.single a 1 := by
     ext k

@@ -548,8 +548,7 @@ private theorem hasSmoothCoordCodim_comp_sliceAtLastCoord (hsm : AffineSpaceIsSm
   have h1 : HasSmoothCoordCodim (affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin M ⊕ Fin 1)))
       (σ ≫ affineSpaceInl k M 1) (c + 1) := HasSmoothCoordCodim.comp_affineSpaceInl hsm k σ 1 hσ
   have h2 := h1.comp_iso_hom (translateLastCoordIso k M a)
-      (affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin M ⊕ Fin 1)))
-      (translateLastCoord_comp_affineSpaceIndexedByToSpec k M a)
+      (affineSpaceIndexedByToSpec k (ULift.{u, 0} (Fin M ⊕ Fin 1))) (by simp)
   rw [sliceAtLastCoord_eq_affineSpaceInl_comp_translateLastCoord, ← Category.assoc]
   exact h2
 

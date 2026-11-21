@@ -101,7 +101,7 @@ theorem gramPl_eq [StarRing E] {n j : ℕ} (X : InfinitePlace E → Matrix (Fin 
     Formalism.HN.gramPl (Pi.basisFun E (Fin n)) X w e = (cm w.embedding (X w) e)ᴴ * cm w.embedding (X w) e := by
   ext a c
   simp [Formalism.HN.gramPl, Formalism.HermitianLatticesTheory.majAt, Formalism.HermitianLatticesTheory.fcoord, Formalism.HermitianLatticesTheory.vecAt, cm, Matrix.mul_apply, Matrix.mulVec,
-    dotProduct, mul_comm]
+    dotProduct, mul_comm, Function.swap]
 
 theorem unit_X {ι : Type} {n : ℕ} {φ : ι → E →+* ℂ} {P : ι → Matrix (Fin n) (Fin n) ℂ}
     {X : InfinitePlace E → Matrix (Fin n) (Fin n) ℂ} (h : PlaceMatch φ P X) (hP : ∀ v, IsUnit (P v)) (w) :
@@ -177,9 +177,14 @@ theorem covStd_index [_root_.NumberField.IsTotallyComplex E] {ι : Type} [Fintyp
   have hd1 : detNorm E j (fun _ a b => if a = b then 1 else 0) = 1 := by
     simp only [detNorm, h1]; simp
   have hlat : ∀ g : Fin j → Fin j → E, Submodule.span E (Set.range g) = ⊤ →
-      Submodule.IsLattice E (Submodule.span (𝓞 E) (Set.range g)) := fun g hsp =>
-    Submodule.IsLattice.of_fg _ (Submodule.fg_span (Set.finite_range g))
-  obtain ⟨κ, -, hκ⟩ := hall Λ hΛ
+      Submodule.IsFullLattice E (Submodule.span (𝓞 E) (Set.range g)) := fun g hsp => by
+    letI : Submodule.IsLattice E (Submodule.span (𝓞 E) (Set.range g)) :=
+      Submodule.IsLattice.of_fg E (Submodule.fg_span (Set.finite_range g))
+    exact ⟨by rw [Submodule.span_span_of_tower (𝓞 E), hsp]⟩
+  have hfull : Submodule.IsFullLattice E Λ := by
+    letI := hΛ
+    exact ⟨eq_top_iff.mpr (by rw [← hsp]; exact Submodule.span_mono (Set.range_subset_iff.mpr hle))⟩
+  obtain ⟨κ, -, hκ⟩ := hall Λ hfull
   obtain ⟨⟨i1, i2⟩, -⟩ := hκ _ (hd1 ▸ one_pos)
   obtain ⟨κ', -, hκ'⟩ := hall _ (hlat g hsp)
   obtain ⟨⟨i3, i4⟩, -⟩ := hκ' _ (hd1 ▸ one_pos)
@@ -237,7 +242,7 @@ theorem cm_mulVec {n : ℕ} {κ : Type} [Fintype κ] (φ : E →+* ℂ) (P : Mat
   rw [cm, ← Matrix.mulVec_mulVec]
   congr 1
   funext l
-  simp [Matrix.mulVec, dotProduct, mul_comm]
+  simp [Matrix.mulVec, dotProduct, mul_comm, Function.swap]
 
 theorem col_mem {n : ℕ} {κ : Type} (φ : E →+* ℂ) (P : Matrix (Fin n) (Fin n) ℂ)
     (F : ℕ → Submodule (𝓞 E) (Fin n → E)) (k : ℕ) (e : κ → Fin n → E) (a : κ) (ha : e a ∈ F k) :

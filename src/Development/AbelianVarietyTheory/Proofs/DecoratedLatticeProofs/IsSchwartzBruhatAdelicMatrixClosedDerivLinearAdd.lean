@@ -143,16 +143,15 @@ open GlobalTheory.IndefiniteRowSideFullHecke.SchwartzBruhatMixedFamilies
 variable {D : D7} {m n : ℕ}
 
 theorem isSchwartzBruhat_add {φ φ' : Mx D m n → ℂ} (h : IsSchwartzBruhat φ) (h' : IsSchwartzBruhat φ') :
-    IsSchwartzBruhat (φ + φ') := by
-  refine { level := ?_, supp := ?_, schwartz := ?_ }
-  · obtain ⟨U, hU, hφU⟩ := h.level
+    IsSchwartzBruhat (φ + φ') where
+  level := by
+    obtain ⟨U, hU, hφU⟩ := h.level
     obtain ⟨U', hU', hφU'⟩ := h'.level
-    refine ⟨U ⊓ U', ?_, fun u hu hu0 x => ?_⟩
-    · rw [AddSubgroup.coe_inf]
-      exact hU.inter hU'
-    · have hu' := AddSubgroup.mem_inf.mp hu
-      simp [hφU u hu'.1 hu0 x, hφU' u hu'.2 hu0 x]
-  · obtain ⟨K, hK, hφK⟩ := h.supp
+    refine ⟨U ⊓ U', by simpa [AddSubgroup.coe_inf] using hU.inter hU', fun u hu hu0 x => ?_⟩
+    have hu' := AddSubgroup.mem_inf.mp hu
+    simp [hφU u hu'.1 hu0 x, hφU' u hu'.2 hu0 x]
+  supp := by
+    obtain ⟨K, hK, hφK⟩ := h.supp
     obtain ⟨K', hK', hφK'⟩ := h'.supp
     refine ⟨K ∪ K', hK.union hK', fun x hx => ?_⟩
     by_cases h1 : φ x = 0
@@ -165,9 +164,9 @@ theorem isSchwartzBruhat_add {φ φ' : Mx D m n → ℂ} (h : IsSchwartzBruhat �
     exact ⟨g + g', fun t => by simp [hg, hg']⟩
 
 theorem isSchwartzBruhat_linear_mul {φ : Mx D m n → ℂ} (h : IsSchwartzBruhat φ) (ℓ : Mx D m n →+ ℂ) (hc : Continuous ℓ)
-    (h0 : ∀ u : Mx D m n, u.map (infPart D) = 0 → ℓ u = 0) : IsSchwartzBruhat fun x => ℓ x * φ x := by
-  refine { level := ?_, supp := ?_, schwartz := ?_ }
-  · obtain ⟨U, hU, hφU⟩ := h.level
+    (h0 : ∀ u : Mx D m n, u.map (infPart D) = 0 → ℓ u = 0) : IsSchwartzBruhat fun x => ℓ x * φ x where
+  level := by
+    obtain ⟨U, hU, hφU⟩ := h.level
     refine ⟨U, hU, fun u hu hu0 x => ?_⟩
     show ℓ (x + u) * φ (x + u) = ℓ x * φ x
     rw [map_add (f := _), h0 u hu0, add_zero, hφU u hu hu0 x]

@@ -37,7 +37,7 @@ theorem completionCongr_algebraMap {u u' : InfinitePlace M} (h : u = u') (x : M)
 theorem continuous_infiniteCompletionMap {M' : Type} [Field M'] [NumberField M] [NumberField M']
     (τ : M ≃+* M') (w' : InfinitePlace M') : Continuous (infiniteCompletionMap τ w') := by
   let _ : Algebra M M' := (τ : M →+* M').toAlgebra
-  exact NumberField.LiesOver.continuous_completionMap
+  exact continuous_algebraMap (w'.comap (algebraMap M M')).Completion w'.Completion
 
 end Maps
 
@@ -180,6 +180,10 @@ theorem infiniteCompletionMap_eq_decomposition (σ : MulAction.stabilizer Gal(L/
     ((continuous_infiniteCompletionMap _ _).comp (continuous_completionCongr h))
     (continuous_completionRingHomOf σ.2) fun y => by
       rw [completionRingHomOf_coe]
+      have hy (y : WithAbs w.1.1) : (y : w.1.Completion) = algebraMap L w.1.Completion y.ofAbs := by
+        rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply]
+        rfl
+      rw [hy y, hy (withAbsMapOf w.1 (σ : Gal(L/K)) y)]
       change infiniteCompletionMap _ w.1 (completionCongr h (algebraMap L w.1.Completion y.ofAbs)) =
         algebraMap L w.1.Completion (withAbsMapOf w.1 (σ : Gal(L/K)) y).ofAbs
       rw [completionCongr_algebraMap, infiniteCompletionMap_algebraMap, ofAbs_withAbsMapOf]

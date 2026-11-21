@@ -46,7 +46,7 @@ theorem evIA_add (a b : AF F) : evI F (a + b) = evI F a + evI F b :=
 theorem evIA_zero : evI F 0 = 0 := map_zero (InfiniteAdeleRing.ringEquiv_mixedSpace F)
 
 theorem evIA_liftA (ξ : mixedEmbedding.mixedSpace F) : evI F (liftA F ξ) = ξ := by
-  simp [evI, liftA]
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply ξ
 
 theorem atA_liftA (ξ : mixedEmbedding.mixedSpace F) (u : AF F) (hu : evI F u = 0) : u * liftA F ξ = 0 := by
   have h1 : u.1 = 0 := (InfiniteAdeleRing.ringEquiv_mixedSpace F).injective (by rw [map_zero]; exact hu)
@@ -90,7 +90,7 @@ theorem GlobalTheory.ArchSchA.lagSetA_submodule : ∀ {F E : Type} [Field F] [Nu
             incM F H.ι * z' * (incM F H'.ι)ᵀ) := by
         rw [Matrix.add_vecMulVec, Matrix.mulVec_add, Matrix.vecMulVec_add, Matrix.mul_add, Matrix.add_mul]; abel
       rw [this]
-      ext : 1 <;> simp only [Prod.fst_add, Prod.snd_add, LinearEquiv.map_add (f := _), lagL_arch_add] <;> abel
+      ext : 1 <;> simp only [Prod.fst_add, Prod.snd_add, LinearEquiv.map_add, lagL_arch_add] <;> abel
   · rintro t l ⟨y, c, z, hy, hc, hz, hz1, rfl⟩
     refine ⟨realAd F t • y, realAd F t • c, realAd F t • z, lagL_at_smul _ hy, lagL_at_smul _ hc, lagL_at_smul _ hz,
       ?_, ?_⟩

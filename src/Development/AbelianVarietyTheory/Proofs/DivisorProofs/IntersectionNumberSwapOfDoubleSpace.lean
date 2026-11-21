@@ -27,7 +27,7 @@ theorem interPoly_rename_swap : ∀ (F : Type) [Field F] (Y : Var F) (W : Dbl Y)
   let φ : (CartierDiv W.Z ⧸ N) →+ Pic W.Z := QuotientAddGroup.kerLift toPic
   have hφ : Function.Injective φ := QuotientAddGroup.kerLift_injective _
   have hπ (D : CartierDiv W.Z) : φ (π D) = toPic D := rfl
-  let T' : MultilinearMap ℤ (fun _ : Fin (Y.dim + 1) => CartierDiv W.Z ⧸ N) ℤ :=
+  let T' : MultilinearMap (RingHom.id ℤ) (fun _ : Fin (Y.dim + 1) => CartierDiv W.Z ⧸ N) ℤ :=
     T.compLinearMap fun _ => φ.toIntLinearMap
   have hT' (y : Fin (Y.dim + 1) → CartierDiv W.Z) : T' (fun i => π (y i)) = W.num y := hT y
   refine GlobalTheory.T.linearForm_antisymm_of_doublePoint_symmMultilinear κ a b hab (CartierDiv W.Z ⧸ N) Y.dim T' (fun σ y => hTs σ fun i => φ (y i))

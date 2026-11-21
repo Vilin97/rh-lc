@@ -84,7 +84,8 @@ theorem map_emb (x : Mx D t n) (a : Mx D T'.rank n) :
     (fun i j => φ ((d.jX ⬝ x + d.j0 ⬝ a : Mx D T.rank n) i j)) =
       lmul n (d.jX.map φ) (fun i j => φ (x i j)) + lmul n (d.j0.map φ) (fun i j => φ (a i j)) := by
   show (d.jX ⬝ x + d.j0 ⬝ a : Mx D T.rank n).map φ = d.jX.map φ ⬝ x.map φ + d.j0.map φ ⬝ a.map φ
-  rw [Matrix.map_add _ φ.map_add (f := _), Matrix.map_mul, Matrix.map_mul]
+  ext i j
+  simp [Matrix.mul_apply, map_sum]
 
 theorem pX_emb (x : Fin t → Fin n → R) (a : Fin T'.rank → Fin n → R) :
     lmul n (d.pX.map φ) (lmul n (d.jX.map φ) x + lmul n (d.j0.map φ) a) = x := by

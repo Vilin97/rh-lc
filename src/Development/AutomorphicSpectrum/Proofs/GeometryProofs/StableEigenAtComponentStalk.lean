@@ -26,8 +26,8 @@ theorem mem_eigSp_iff_forall {R V O : Type} [CommRing R] [AddCommGroup V] [Modul
   simp only [eigSp, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.smul_apply,
     LinearMap.id_apply, sub_eq_zero]
 
-theorem spMap_dualMap_id {A : Type} [CommRing A] : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id A)) = 𝟙 _ := by
-  have h : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id A) = RingHom.id _ := RingHom.ext fun a => by
+theorem spMap_dualMap_id {A : Type} [CommRing A] : spMap (dualMap (RingHom.id A)) = 𝟙 _ := by
+  have h : dualMap (RingHom.id A) = RingHom.id _ := RingHom.ext fun a => by
     show TrivSqZeroExt.inl (TrivSqZeroExt.fst a) + TrivSqZeroExt.inr (TrivSqZeroExt.snd a) = a
     exact TrivSqZeroExt.inl_fst_add_inr_snd_eq a
   rw [h, spMap, CommRingCat.ofHom_id, Spec.map_id]
@@ -48,7 +48,7 @@ theorem frame_of_stableEig : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     (((RingHom.id _).comp κ).comp (tauIn c σ)) hρA).2 r f
   rw [hfe] at hfr
   obtain ⟨-, hfs⟩ := hfr.1 h0
-  have hb : ∀ i, (Z.M.pt (j (f i))).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (genMap (Z.ξ₀ ≫ Y.j) p)) ≫ (e i).left :=
+  have hb : ∀ i, (Z.M.pt (j (f i))).left = spMap (dualMap (genMap (Z.ξ₀ ≫ Y.j) p)) ≫ (e i).left :=
     fun i => by rw [hj, hf]
   have hext : ∀ i, Z.M.Extends p (j (f i)) (e i) := fun i => ⟨(h0.1 i).1, hb i⟩
   have h1 : IsEigFrame Y.t.act (Z.ξ₀ ≫ Y.j) (((genMap (Z.ξ₀ ≫ Y.j) p).comp κ).comp (tauIn c σ))

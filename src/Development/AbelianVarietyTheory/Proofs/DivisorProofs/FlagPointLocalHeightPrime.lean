@@ -81,13 +81,13 @@ private theorem core {R k C : Type} [CommRing R] [Field k]
     {φ : c.F →+* k} {x : Sp k ⟶ Z.X} (g : EigFrame Z φ x) {ψ : R →+* k} {s : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → kˣ}
     (b₂ : f₂.Tri ψ g s) (J : k →+* C) (p : ℕ) (w : Pad.Sym E →₀ ℤ)
     (hw : ∀ a ∈ w.support, a.1 p = false)
-    (hn : ∀ a ∈ w.support, stepNorm Z.t (spMap J ≫ x) (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap J) ≫ g.v τ i) a.2.2 ≠ 0)
+    (hn : ∀ a ∈ w.support, stepNorm Z.t (spMap J ≫ x) (fun τ i => spMap (dualMap J) ≫ g.v τ i) a.2.2 ≠ 0)
     {r : k} (hr : r ≠ 0) :
     Real.log ‖J r‖ + (w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap (J.comp ψ) ≫ x₀)
-        (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (J.comp ψ)) ≫ f₂.v τ i) p (a.1 p) a.2.2) =
+        (fun τ i => spMap (dualMap (J.comp ψ)) ≫ f₂.v τ i) p (a.1 p) a.2.2) =
       Real.log ‖J (r * ((∏ z : Pad.Letter Dw, s z.1 z.2 ^ (-expo Dw w z) : kˣ) : k))‖ +
         w.sum fun a n => (n : ℝ) *
-          Real.log (stepNorm Z.t (spMap J ≫ x) (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap J) ≫ g.v τ i) a.2.2) := by
+          Real.log (stepNorm Z.t (spMap J ≫ x) (fun τ i => spMap (dualMap J) ≫ g.v τ i) a.2.2) := by
   have hx : spMap J ≫ x = spMap (J.comp ψ) ≫ x₀ := by
     rw [b₂.1, ← Category.assoc, sp_comp']
   obtain ⟨f', hf'⟩ := f₂.exists_isMap (J.comp ψ) (φ' := J.comp φ) (by rw [b₂.2.1, RingHom.comp_assoc]) hx
@@ -100,9 +100,9 @@ private theorem core {R k C : Type} [CommRing R] [Field k]
       simp only [GlobalTheory.GradedPieces.dual_comp] at this
       rw [hg' τ i, funext (hf' τ)]
       exact this)
-  have ef : (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (J.comp ψ)) ≫ f₂.v τ i) = f'.v :=
+  have ef : (fun τ i => spMap (dualMap (J.comp ψ)) ≫ f₂.v τ i) = f'.v :=
     funext fun τ => funext fun i => (hf' τ i).symm
-  have eg : (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap J) ≫ g.v τ i) = g'.v :=
+  have eg : (fun τ i => spMap (dualMap J) ≫ g.v τ i) = g'.v :=
     funext fun τ => funext fun i => (hg' τ i).symm
   rw [eg] at hn
   rw [← hx, ef, eg, Finsupp.sum, Finsupp.sum, Finset.sum_congr rfl fun a ha => by rw [hw a ha, lnStep_false],

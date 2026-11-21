@@ -32,7 +32,7 @@ theorem UpperTheory.V.Z.Sym.Dict.Br.evenVal :
     exact FaithfulSMul.algebraMap_injective _ _
   let w : HeightOneSpectrum (𝓞 L) := ⟨Q, hQm.isPrime, hQ0⟩
   haveI : w.asIdeal.LiesOver v.asIdeal := hQl
-  have hr : w.asIdeal.ramificationIdx (𝓞 (Lp L)) = 1 := by
+  have hr : v.asIdeal.ramificationIdx' w.asIdeal = 1 := by
     haveI := hU w
     haveI : w.asIdeal.IsPrime := w.isPrime
     exact Ideal.ramificationIdx_eq_one_of_isUnramifiedAt

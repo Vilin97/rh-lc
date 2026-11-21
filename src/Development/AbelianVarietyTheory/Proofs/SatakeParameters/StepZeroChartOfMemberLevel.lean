@@ -55,15 +55,15 @@ open scoped TensorProduct
 
 
 set_option maxHeartbeats 4000000 in
-theorem chart_of_member : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (Q : Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (K : ClsTied (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) u 0 (Nat.zero_le _)) (κ : (I.stp u I.mu0 0).Cl → K.lev.U), (∀ c s, (K.stabI c s).1 = (I.stp u I.mu0 0).gam c.1 s.1) → ∃ K0 : Fam I l Z u a 0 (Nat.zero_le _) (badQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q) (fun _ => ()), (K0 ()).lev.Lb = K.lev.Lb ∧ (K0 ()).lev.Uloc = K.lev.Uloc ∧ (K0 ()).lev.U = K.lev.U ∧ (∀ (x : (K0 ()).lev.U) (x' : K.lev.U), x.1 = x'.1 → (K0 ()).lev.chi x = K.lev.chi x') ∧ (∀ c, ((K0 ()).y ⟨I.eCls0 l u a c, rfl⟩).1 = (K.y c).1 * (κ c).1) ∧ ∀ c s, ((K0 ()).stabI c s).1 = (I.stp u a 0).gam c.1.1 s.1 := by
+theorem chart_of_member : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (K : ClsTied (D := (I.rec7 l Z)) u 0 (Nat.zero_le _)) (κ : (I.stp u I.mu0 0).Cl → K.lev.U), (∀ c s, (K.stabI c s).1 = (I.stp u I.mu0 0).gam c.1 s.1) → ∃ K0 : Fam I l Z u a 0 (Nat.zero_le _) (badQ (I.rec7 l Z) Q) (fun _ => ()), (K0 ()).lev.Lb = K.lev.Lb ∧ (K0 ()).lev.Uloc = K.lev.Uloc ∧ (K0 ()).lev.U = K.lev.U ∧ (∀ (x : (K0 ()).lev.U) (x' : K.lev.U), x.1 = x'.1 → (K0 ()).lev.chi x = K.lev.chi x') ∧ (∀ c, ((K0 ()).y ⟨I.eCls0 l u a c, rfl⟩).1 = (K.y c).1 * (κ c).1) ∧ ∀ c s, ((K0 ()).stabI c s).1 = (I.stp u a 0).gam c.1.1 s.1 := by
   intro B X I hI hP l Z u a Q K κ hK
   have hi : 0 ≤ B.R.m := Nat.zero_le _
   let e := I.eCls0 l u a
-  have hU : ∀ c, (κ c).1 ∈ UPts (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) 0 hi) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) :=
+  have hU : ∀ c, (κ c).1 ∈ UPts (sigD (I.rec7 l Z)) (gramN (I.rec7 l Z) 0 hi) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F) :=
     fun c => ((K.lev.U_eq _).1 (κ c).2).1
-  let κU : ∀ c, UPts (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) 0 hi) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) :=
+  let κU : ∀ c, UPts (sigD (I.rec7 l Z)) (gramN (I.rec7 l Z) 0 hi) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F) :=
     fun c => ⟨(κ c).1, hU c⟩
-  have hL : ∀ c, (κ c).1 ∈ levelAfL (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) 0 hi) K.lev.Lb := fun c =>
+  have hL : ∀ c, (κ c).1 ∈ levelAfL (sigD (I.rec7 l Z)) (gramN (I.rec7 l Z) 0 hi) K.lev.Lb := fun c =>
     (GlobalTheory.LatticeStabLocal.mem_levelAfL_iff _ _ _ _ _ _ K.lev.Lb_fin _).2
       ⟨hU c, fun v => K.lev.Uloc_lev v (((K.lev.U_eq _).1 (κ c).2).2 v)⟩
   have hlat : ∀ c'', I.latAt u a 0 c'' = I.latAt u I.mu0 0 (e.symm c'') := by
@@ -80,11 +80,11 @@ theorem chart_of_member : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok �
     exact range_eCls0 I hI l u a c γ
   have hmem : ∀ c'' (s : (I.stp u a 0).Stab c''),
       MemChart.stM (Chart0.lvG I a) (Chart0.lvQ I a) ((I.Tp a).pref u 0) (I.pref u a 0) c'' s ∈
-        UJ (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) 0 hi) := by
+        UJ (sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E) (gramN (I.rec7 l Z) 0 hi) := by
     intro c'' s
     obtain ⟨t, ht⟩ := (hrng c'' _).1 ⟨s, rfl⟩
     rw [← ht]
-    exact (congrArg (fun g => g ∈ UJ (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) 0 hi))
+    exact (congrArg (fun g => g ∈ UJ (sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E) (gramN (I.rec7 l Z) 0 hi))
       (hK (e.symm c'') t)).mp (K.stabI (e.symm c'') t).2
   have hcls : ∀ c, (Quotient.mk'' (K.y c * κU c) : Cls K.lev) = Quotient.mk'' (K.y c) := fun c => by
     refine (@DoubleCoset.eq _ _ _ _ _ _).2 ⟨1, one_mem _, (κU c)⁻¹, ?_, by group⟩

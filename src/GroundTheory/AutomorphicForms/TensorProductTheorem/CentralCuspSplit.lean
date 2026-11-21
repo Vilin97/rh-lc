@@ -139,17 +139,17 @@ theorem exists_average {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ
   refine ⟨(O.card : ℂ)⁻¹ • ∑ v ∈ O, v, U.smul_mem _ (U.sum_mem hOU), fun h hh => ?_, fun w hw hwf => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_smul, map_sum]
-    congr 1
-    conv_rhs => rw [← hperm h hh]
-    rw [Finset.sum_image fun a _ b _ hab => hinj h hab]
+      congr 1
+      conv_rhs => rw [← hperm h hh]
+      rw [Finset.sum_image fun a _ b _ hab => hinj h hab]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_smul, map_sum, inner_smul_left, sum_inner, map_inv₀, Complex.conj_natCast]
-    have hterm : ∀ v ∈ O, inner ℂ (ι v) (ι w) = inner ℂ (ι u) (ι w) := by
-      intro v hv
-      obtain ⟨g, hg, rfl⟩ := (hmemO v).1 hv
-      calc inner ℂ (ι (R g u)) (ι w) = inner ℂ (ι (R g u)) (ι (R g w)) := by rw [hwf g hg]
-        _ = inner ℂ (ι u) (ι w) := hι g u (hU hu) w hw
-    rw [Finset.sum_congr rfl hterm, Finset.sum_const, nsmul_eq_mul, ← mul_assoc, inv_mul_cancel₀ hN, one_mul]
+      have hterm : ∀ v ∈ O, inner ℂ (ι v) (ι w) = inner ℂ (ι u) (ι w) := by
+        intro v hv
+        obtain ⟨g, hg, rfl⟩ := (hmemO v).1 hv
+        calc inner ℂ (ι (R g u)) (ι w) = inner ℂ (ι (R g u)) (ι (R g w)) := by rw [hwf g hg]
+          _ = inner ℂ (ι u) (ι w) := hι g u (hU hu) w hw
+      rw [Finset.sum_congr rfl hterm, Finset.sum_const, nsmul_eq_mul, ← mul_assoc, inv_mul_cancel₀ hN, one_mul]
 
 section Relative
 

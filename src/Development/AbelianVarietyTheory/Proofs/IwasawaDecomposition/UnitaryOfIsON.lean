@@ -199,10 +199,10 @@ attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Ho
 
 
 set_option maxHeartbeats 1000000 in
-theorem GlobalTheory.Mem.Col2.MetricTie.ipV_norm_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (eY : (I.chain l u a).Y i ≃ Formalism.L2.Forms.Fr (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi), I.IdY l Z u a i hi eY → IpVTieG (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (I.fm l u a) eY ∧ NormTieG (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (I.fm l u a) eY := by
+theorem GlobalTheory.Mem.Col2.MetricTie.ipV_norm_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (eY : (I.chain l u a).Y i ≃ Formalism.L2.Forms.Fr (I.rec7 l Z) i hi), I.IdY l Z u a i hi eY → IpVTieG (D := (I.rec7 l Z)) (I.fm l u a) eY ∧ NormTieG (D := (I.rec7 l Z)) (I.fm l u a) eY := by
   intro B X I hI hp l Z u a i hi eY hY
-  have hg : gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi = 1 := ((GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hI hp l Z).2.2.2 i hi).1
-  have hG : ∀ (e : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Tau → (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* ℂ) τ, gramC (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) e τ = 1 := fun e τ => by
+  have hg : gramN (I.rec7 l Z) i hi = 1 := ((GlobalTheory.Mem.Col2.TC.spaces_in_coordinates I hI hp l Z).2.2.2 i hi).1
+  have hG : ∀ (e : (I.rec7 l Z).what₂.Tau → (I.rec7 l Z).host.E →+* ℂ) τ, gramC (gramN (I.rec7 l Z) i hi) e τ = 1 := fun e τ => by
     rw [hg, gramC_one]
   refine ⟨fun c o ho P _ Q _ => ?_, fun s x Pc hP o ho => ?_⟩
   · exact MetricTie.ipVal_step B.fields.emb B.embLL (GlobalTheory.Mem.Col2.lamT (B.hcW u) i) (MetricTie.nfAll_lamT _ _)

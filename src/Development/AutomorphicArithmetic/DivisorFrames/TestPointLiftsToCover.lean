@@ -33,12 +33,12 @@ private theorem chart' {E : Type} [Field E] [NumberField E] [IsCMField E] {H : R
     (e : Fin g → (Sp (DualNumber Γ(S, U)) ⟶ t.G.left)) (α : Γ(S, U) →+* G.presheaf.stalk (below z))
     (hα : spMap α ≫ hU.fromSpec = G.fromSpecStalk (below z) ≫ j) (a : Fin m → Fin g → G.presheaf.stalk (below z))
     (w : Fin m → (Sp (DualNumber (G.presheaf.stalk (below z))) ⟶ t.G.left))
-    (ha : ∀ l, IsCombAtG t (spMap α ≫ hU.fromSpec ≫ ρ') (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ e i) (a l) (w l))
+    (ha : ∀ l, IsCombAtG t (spMap α ≫ hU.fromSpec ≫ ρ') (fun i => spMap (dualMap α) ≫ e i) (a l) (w l))
     (ψ : G.presheaf.stalk (below z) →+* C) (hψ : ψ = io.comp (Scheme.stalkClosedPointTo z).hom) :
     (∀ r, ψ (α r) = ioO.comp β r) ∧
       ∀ l, IsCombAtG t (spMap (intO C).subtype ≫ (spMap ioO ≫ yt) ≫ ρ')
-        (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ioO.comp β)) ≫ e i) (fun i => ψ (a l i))
-        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w l) := by
+        (fun i => spMap (dualMap (intO C).subtype) ≫ spMap (dualMap (ioO.comp β)) ≫ e i) (fun i => ψ (a l i))
+        (spMap (dualMap ψ) ≫ w l) := by
   obtain ⟨σ, hσ₀⟩ : ∃ σ : G.presheaf.stalk (below z) →+* K, σ = (Scheme.stalkClosedPointTo z).hom := ⟨_, rfl⟩
   have hσ : σ.comp α = O.subtype.comp β := ringHom_ext hU (by
     rw [← spMap_comp', ← spMap_comp', Category.assoc, Category.assoc, hα, hβ, hyt, ← Category.assoc, hσ₀]

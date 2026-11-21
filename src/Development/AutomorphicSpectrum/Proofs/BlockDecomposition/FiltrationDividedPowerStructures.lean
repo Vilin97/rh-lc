@@ -49,7 +49,6 @@ theorem exists_l_pow {k : ℕ} (hk : k ≠ 0) :
     have h2 : 1 ≤ l - 1 := Nat.le_sub_of_add_le (Fact.out : l.Prime).two_le
     have h3 : padicValNat l k.factorial ≤ (l - 1) * padicValNat l k.factorial :=
       Nat.le_mul_of_pos_left _ h2
-    rw [Nat.padicValNat_def] at h3
     omega
   obtain ⟨w, hw⟩ := exists_natCast_mul_eq_l_pow A k.factorial_ne_zero hv
   refine ⟨(l : A.Acr0) * w, Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _), ?_⟩

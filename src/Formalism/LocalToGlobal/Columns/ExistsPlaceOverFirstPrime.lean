@@ -102,7 +102,9 @@ theorem th_resMap_bij (P : {P // P ∈ Pr.vT u}) : Function.Bijective (th_resMap
   · intro b
     haveI : Fact (Pr.T u).Prime := ⟨hPr.T_prime u⟩
     haveI : Nontrivial (𝓞 X.E ⧸ P.1.asIdeal) := Ideal.Quotient.nontrivial_iff.2 P.1.isPrime.ne_top
-    have hcard : Nat.card (𝓞 X.E ⧸ P.1.asIdeal) = Pr.T u := hPr.vT_norm u P.1 P.2
+    have hcard : Nat.card (𝓞 X.E ⧸ P.1.asIdeal) = Pr.T u := by
+      rw [← Ideal.absNorm_eq_natCard]
+      exact hPr.vT_norm u P.1 P.2
     obtain ⟨k, hk⟩ := mem_zmultiples_of_prime_card hcard (g := (1 : 𝓞 X.E ⧸ P.1.asIdeal)) (g' := b) one_ne_zero
     refine ⟨(k : 𝓞 X.F ⧸ (underPl X.F P.1).asIdeal), ?_⟩
     rw [map_intCast, ← hk]

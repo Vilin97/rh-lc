@@ -52,9 +52,9 @@ theorem exists_basis_isKS_symbol : ∀ (E : Type) [Field E] [NumberField E] [IsC
     rw [Category.comp_id, chart, IsAffineOpen.fromSpec_top, Scheme.isoSpec_Spec_inv]
     rfl
   obtain ⟨b', hb'⟩ := GlobalTheory.TotalFrame.exists_basis_map b _ hx
-  have ev : (fun a => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).inv.hom) ≫ (tv (v' a)).left) =
+  have ev : (fun a => spMap (dualMap (Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).inv.hom) ≫ (tv (v' a)).left) =
       fun a => (tv (b' a)).left := funext fun a => by rw [hb', hbv]
-  refine ⟨fun a => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).inv.hom) ≫ (tv (v' a)).left,
+  refine ⟨fun a => spMap (dualMap (Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).inv.hom) ≫ (tv (v' a)).left,
     fun a => GlobalTheory.ChartKSBracket.isTanAtG_tv E H _ t (v' a), fun w hw => ?_, ?_⟩
   · rw [ev]
     refine ⟨b'.repr (GlobalTheory.LieMet.tanOf hw), (GlobalTheory.LieMet.isComb_iff _ _ (GlobalTheory.LieMet.tanOf hw)).2 (b'.sum_repr _).symm,

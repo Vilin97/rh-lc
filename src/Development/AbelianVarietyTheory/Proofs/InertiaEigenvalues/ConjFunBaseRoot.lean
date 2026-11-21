@@ -109,9 +109,9 @@ theorem conjFun_base_root : Formalism.MainNotions.ModuliIntegralCharts.H1.ChartI
   convert hL using 2 with g g
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [map_sum, map_smul, MultilinearMap.sum_apply, MultilinearMap.smul_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
-    refine Finset.sum_congr rfl fun k _ => by ring
+      refine Finset.sum_congr rfl fun k _ => by ring
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [map_sum, map_smul, MultilinearMap.sum_apply, MultilinearMap.smul_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
-    refine Finset.sum_congr rfl fun k _ => by ring
+      refine Finset.sum_congr rfl fun k _ => by ring
 
 end GlobalTheory.ConjRefTup

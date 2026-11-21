@@ -56,8 +56,13 @@ theorem gal_smul_periodT (σ : Gal(PadicAlgCl p/K)) {ε : PreTilt (normInteger �
     (hε : PreTilt.untilt ε = 1) :
     σ • periodT hε = chiCris σ * periodT hε := by
   apply iota_injective (K := ℂ_[p]) (p := p)
-  rw [iota_gal_smul, iota_periodT, map_mul, iota_periodT, chiCris, iota_padicInt,
-    gal_smul_fontaineT]
+  calc
+    iota ℂ_[p] p (σ • periodT hε) = σ • fontaineT ε hε := by
+      rw [iota_gal_smul σ, iota_periodT hε]
+    _ = algebraMap ℚ_[p] _ ((cycloChar K σ : ℤ_[p]) : ℚ_[p]) * fontaineT ε hε :=
+      gal_smul_fontaineT σ hε
+    _ = iota ℂ_[p] p (chiCris σ * periodT hε) := by
+      rw [map_mul, chiCris, iota_padicInt, iota_periodT hε]
 
 variable {ε : PreTilt (normInteger ℂ_[p]) p} (hε : PreTilt.untilt ε = 1)
 

@@ -48,7 +48,7 @@ private theorem lp_homog_mul {O σ X κ : Type} [CommRing O] [AddCommGroup X] [F
     refine Ideal.sum_mem _ fun u _ => ?_
     rw [← mul_assoc, lp_wcomp_mul wt (hf u)]
     exact Ideal.mul_mem_mul (hI _ (I.mul_mem_right _ ha) _) (Ideal.subset_span ⟨u, rfl⟩)
-  · rw [map_add (f := _)]; exact add_mem ha hb
+  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
 
 private theorem lp_homog_sup {O σ X : Type} [CommRing O] [AddCommGroup X] (wt : σ → X)
     (I J : Ideal (MvPowerSeries σ O)) (hI : IsHomog O wt I) (hJ : IsHomog O wt J) : IsHomog O wt (I ⊔ J) := by

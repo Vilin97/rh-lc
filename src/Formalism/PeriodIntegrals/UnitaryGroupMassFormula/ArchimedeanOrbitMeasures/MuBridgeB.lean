@@ -171,6 +171,7 @@ theorem muBridge_holds : MuBridge := by
   have ha : |(MuB.Bq X).det| ≠ 0 := abs_ne_zero.2 hB0
   rw [abs_inv]
   field_simp
+  all_goals first | exact hUm.aemeasurable | exact hfKm.aemeasurable
 
 theorem betaIso_holds : BetaIso := by
   intro D X

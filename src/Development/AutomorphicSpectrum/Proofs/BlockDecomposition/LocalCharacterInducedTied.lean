@@ -28,31 +28,30 @@ theorem char_mul {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (T
     (m₁ : ∀ τ a, multV (P.PD K) ν₁ τ a = if a = J₁ τ then 1 else 0)
     (m₂ : ∀ τ a, multV (P.PD K) ν₂ τ a = if a = J₂ τ then 1 else 0) :
     IsDR (P.PD K) ν₃ ∧ ∀ τ a, multV (P.PD K) ν₃ τ a = if a = J₁ τ + J₂ τ then 1 else 0 := by
-  set_option synthInstance.maxHeartbeats 200000 in
-    have hm : ∀ τ a, multV (P.PD K) ν₃ τ a = if a = J₁ τ + J₂ τ then 1 else 0 := by
-      intro τ a
-      have := GlobalTheory.TwistJump.multV_twist_char l P AI T K LL (Fin 1 → ↥LL.1) ν₁ ν₃ ν₂ χ₂ h₂
-        (fun g x => by rw [h₃, h₁, smul_smul, mul_comm]) d₂ τ (J₂ τ) (m₂ τ) (a - J₂ τ)
-      rw [sub_add_cancel] at this
-      rw [this, m₁]
-      simp only [sub_eq_iff_eq_add]
-    refine ⟨?_, hm⟩
-    haveI := K.2
-    haveI := (GlobalTheory.Per.TiedDdR.ddR_finrank_le l P AI T K LL _ ν₃).1
-    have hc : Fintype.card (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) = finrank ℚ_[l] ↥K.1 := by
-      rw [← hcard, Nat.card_eq_fintype_card]
-    have hone : ∀ τ, finrank ↥LL.1 ↥(DdRE (P.PD K) ν₃ τ) = 1 := by
-      intro τ
-      obtain ⟨hf, hle, -⟩ := (GlobalTheory.Per.Components.components_finrank l P AI T K LL _ ν₃).1 τ
-      have hm1 := hm τ (J₁ τ + J₂ τ)
-      rw [if_pos rfl, multV] at hm1
-      have hfil : finrank ↥LL.1 ↥(FildR (P.PD K) ν₃ τ (J₁ τ + J₂ τ)) ≤ finrank ↥LL.1 ↥(DdRE (P.PD K) ν₃ τ) :=
-        Submodule.finrank_mono (inf_le_left : FildR (P.PD K) ν₃ τ _ ≤ DdRE (P.PD K) ν₃ τ)
-      simp only [finrank_fin_fun, finrank_self, Module.finrank_pi, Fintype.card_fin] at hle
-      omega
-    obtain ⟨e1, -⟩ := GlobalTheory.DeRhamSplit.finrank_DdR (P.PD K) ν₃ hc 0
-    rw [IsDR, e1, Finset.sum_congr rfl fun τ _ => hone τ]
-    simp [hc]
+  have hm : ∀ τ a, multV (P.PD K) ν₃ τ a = if a = J₁ τ + J₂ τ then 1 else 0 := by
+    intro τ a
+    have := GlobalTheory.TwistJump.multV_twist_char l P AI T K LL (Fin 1 → ↥LL.1) ν₁ ν₃ ν₂ χ₂ h₂
+      (fun g x => by rw [h₃, h₁, smul_smul, mul_comm]) d₂ τ (J₂ τ) (m₂ τ) (a - J₂ τ)
+    rw [sub_add_cancel] at this
+    rw [this, m₁]
+    simp only [sub_eq_iff_eq_add]
+  refine ⟨?_, hm⟩
+  haveI := K.2
+  haveI := (GlobalTheory.Per.TiedDdR.ddR_finrank_le l P AI T K LL _ ν₃).1
+  have hc : Fintype.card (↥K.1 →ₐ[ℚ_[l]] ↥LL.1) = finrank ℚ_[l] ↥K.1 := by
+    rw [← hcard, Nat.card_eq_fintype_card]
+  have hone : ∀ τ, finrank ↥LL.1 ↥(DdRE (P.PD K) ν₃ τ) = 1 := by
+    intro τ
+    obtain ⟨hf, hle, -⟩ := (GlobalTheory.Per.Components.components_finrank l P AI T K LL _ ν₃).1 τ
+    have hm1 := hm τ (J₁ τ + J₂ τ)
+    rw [if_pos rfl, multV] at hm1
+    have hfil : finrank ↥LL.1 ↥(FildR (P.PD K) ν₃ τ (J₁ τ + J₂ τ)) ≤ finrank ↥LL.1 ↥(DdRE (P.PD K) ν₃ τ) :=
+      Submodule.finrank_mono (inf_le_left : FildR (P.PD K) ν₃ τ _ ≤ DdRE (P.PD K) ν₃ τ)
+    simp only [finrank_fin_fun, finrank_self, Module.finrank_pi, Fintype.card_fin] at hle
+    omega
+  obtain ⟨e1, -⟩ := GlobalTheory.DeRhamSplit.finrank_DdR (P.PD K) ν₃ hc 0
+  rw [IsDR, e1, Finset.sum_congr rfl fun τ _ => hone τ]
+  simp [hc]
 
 theorem repE_apply {l : ℕ} [Fact l.Prime] {E Ω : Type} [Field E] [Field Ω] [Algebra E Ω]
     {Gw : Subgroup (Ω ≃ₐ[E] Ω)} {O : Type} [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O]

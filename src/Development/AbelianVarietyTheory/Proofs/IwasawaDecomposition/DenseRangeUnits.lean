@@ -61,16 +61,10 @@ def proj (S : Finset (HeightOneSpectrum (𝓞 E))) : AdeleRing (𝓞 E) E →* L
 theorem denseRange_inf (w : InfinitePlace E) : DenseRange (algebraMap E w.Completion) := by
   refine Dense.mono ?_ (InfinitePlace.Completion.denseRange_coe w)
   rintro _ ⟨a, rfl⟩
-  refine ⟨WithAbs.equiv w.1 a, ?_⟩
-  rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
-    Algebra.algebraMap_self_apply]
-  simp
+  exact ⟨WithAbs.equiv w.1 a, rfl⟩
 
-theorem norm_inf (w : InfinitePlace E) (x : E) : ‖algebraMap E w.Completion x‖ = w x := by
-  rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
-    Algebra.algebraMap_self_apply, AbsoluteValue.Completion.norm_coe]
-  change w.1 x = w.1 x
-  rfl
+theorem norm_inf (w : InfinitePlace E) (x : E) : ‖algebraMap E w.Completion x‖ = w x :=
+  InfinitePlace.Completion.norm_coe w ((WithAbs.equiv w.1).symm x)
 
 theorem denseRange_proj (S : Finset (HeightOneSpectrum (𝓞 E))) :
     DenseRange fun x : E => proj S (algebraMap E (AdeleRing (𝓞 E) E) x) := by

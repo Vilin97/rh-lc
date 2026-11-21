@@ -183,10 +183,8 @@ theorem assoc1 {A B' C : Hf E a b → ℂ} (hA : Continuous A ∧ HasCompactSupp
       (hC.1.comp (continuous_fst.inv.mul continuous_const))
   have hK : IsCompact ((tsupport A * tsupport B') ×ˢ tsupport A) :=
     (hA.2.isCompact.mul hB.2.isCompact).prod hA.2.isCompact
-  set_option synthInstance.maxHeartbeats 200000 in
-    refine integral_integral_swap (f := fun h k => A k * B' (k⁻¹ * h) * C (h⁻¹ * g)) ?_
-  set_option synthInstance.maxHeartbeats 200000 in
-    refine hcont.integrable_of_hasCompactSupport (HasCompactSupport.intro hK fun p hp => ?_)
+  refine integral_integral_swap (f := fun h k => A k * B' (k⁻¹ * h) * C (h⁻¹ * g)) ?_
+  refine hcont.integrable_of_hasCompactSupport (HasCompactSupport.intro hK fun p hp => ?_)
   by_contra hne
   have h1 : A p.2 ≠ 0 := left_ne_zero_of_mul (left_ne_zero_of_mul hne)
   have h2 : B' (p.2⁻¹ * p.1) ≠ 0 := right_ne_zero_of_mul (left_ne_zero_of_mul hne)

@@ -22,27 +22,20 @@ theorem cechHEquiv_pull {X Y : TopCat.{0}} (f : X ⟶ Y) {BY : Opens Y → Prop}
     (hτ : ∀ i, U i ≤ (Opens.map f).obj (V (τ i))) : ∀ (n : ℕ) {G : AbSheaf Y} {G' : AbSheaf X}
     (hG : GoodAcyclic BY GoodY G) (hG' : GoodAcyclic BX GoodX G') (φ : G ⟶ (push f).obj G') (x : GroundTheory.Arith.SchemeCoh.cechH G.obj V n),
     (cechHEquiv hCX U hU hUB n G' hG' : GroundTheory.Arith.SchemeCoh.cechH G'.obj U n ≃+ Sheaf.H.{0} G' n) (cechPullH f φ.hom V U τ hτ n x) =
-      hPull f φ n ((cechHEquiv hCY V hV hVB n G hG : GroundTheory.Arith.SchemeCoh.cechH G.obj V n ≃+ Sheaf.H.{0} G n) x) := by
-  intro n
-  induction n using Nat.twoStepInduction with
-  | zero =>
-      intro G G' _ _ φ x
-      exact GlobalTheory.T.cech_h0_pull_compat f V hV U hU τ hτ φ x
-  | one =>
-      intro G G' hG hG' φ x
+      hPull f φ n ((cechHEquiv hCY V hV hVB n G hG : GroundTheory.Arith.SchemeCoh.cechH G.obj V n ≃+ Sheaf.H.{0} G n) x)
+  | 0, G, G', _, _, φ, x => GlobalTheory.T.cech_h0_pull_compat f V hV U hU τ hτ φ x
+  | 1, G, G', hG, hG', φ, x => by
       obtain ⟨α, rfl⟩ := GlobalTheory.CompanionTheory.CechLift.exists_injectiveSequence_lift f φ
       exact GlobalTheory.T.cech_connecting_pull_natural f V hV U hU τ hτ (S := injectiveSequence G) (S' := injectiveSequence G')
         (injectiveSequence_shortExact G) (injectiveSequence_isCechShortExact hCY V hVB G hG)
         (injectiveSequence_cechAcyclic G V) (injectiveSequence_shortExact G')
         (injectiveSequence_isCechShortExact hCX U hUB G' hG') (injectiveSequence_cechAcyclic G' U) α x
-  | more m _ ih =>
-      intro G G' hG hG' φ x
+  | m + 2, G, G', hG, hG', φ, x => by
       obtain ⟨α, rfl⟩ := GlobalTheory.CompanionTheory.CechLift.exists_injectiveSequence_lift f φ
       exact GlobalTheory.T.cech_sheaf_cohomology_pull_compat f V U τ hτ (S := injectiveSequence G) (S' := injectiveSequence G')
         (injectiveSequence_shortExact G) (injectiveSequence_isCechShortExact hCY V hVB G hG)
         (injectiveSequence_cechAcyclic G V) (injectiveSequence_shortExact G')
         (injectiveSequence_isCechShortExact hCX U hUB G' hG') (injectiveSequence_cechAcyclic G' U) α m _ _
-        (fun y => ih (injectiveSequence_goodAcyclic hCY G hG)
-          (injectiveSequence_goodAcyclic hCX G' hG') α.τ₃ y) x
+        (fun y => cechHEquiv_pull f hCY hCX V hV hVB U hU hUB τ hτ (m + 1) _ _ α.τ₃ y) x
 
 end GlobalTheory.CompanionTheory.CechLerayPull

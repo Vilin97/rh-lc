@@ -112,33 +112,31 @@ theorem stepY_fin_orb (hX : X.Ok) (hI : ∀ b P, (Θ b P).H.FiniteIndex)
 
 theorem stepY_ok (hX : X.Ok) (hI : ∀ b P, (Θ b P).H.FiniteIndex)
     (hr : ∀ b P g, ∃ m : ℕ, 0 < m ∧ (Θ b P).lam g ^ m = 1)
-    (hy : ∀ N, Submodule.IsLattice X.E N → (y.ys N).Finite) : (stepY ST y β Λ Θ pref).Ok := by
-  exact {
-    fin_orb := stepY_fin_orb y β Λ Θ pref hX hI hy
-    fin_stab b p :=
-      haveI := autO_finite (posStar_of_ok hX) p.1.1.deco.2.lat
-      Finite.of_injective _ (stabAut_inj y β Λ Θ pref b p)
-    unit b g := by
-      have h : Formalism.UG.cT (starRingEnd X.E) (toGLm X.E n g.1.1 : Matrix (Fin n) (Fin n) X.E) * (1 : Matrix (Fin n) (Fin n) X.E) *
-        (toGLm X.E n g.1.1 : Matrix (Fin n) (Fin n) X.E) = 1 := toGLm_mem_UJ g.1
-      rw [Matrix.mul_one] at h
-      exact h
-    root b g := by
-      have h1 : IsOfFinOrder ((Λ b).chr g.2.1) := MonoidHom.isOfFinOrder _ (isOfFinOrder_of_finite _)
-      have h2 : IsOfFinOrder ((Θ b).chr g.2.2) := by
-        rw [show (Θ b).chr g.2.2 = ∏ P, (Θ b P).lam (piProj (fun P => (Θ b P).H) P g.2.2) from
-          piChar_apply (fun P => (Θ b P).H) (fun P => (Θ b P).lam) g.2.2]
-        exact Finset.prod_induction _ IsOfFinOrder (fun _ _ => IsOfFinOrder.mul) IsOfFinOrder.one
-          fun P _ => isOfFinOrder_iff_pow_eq_one.2 (hr b P _)
-      exact isOfFinOrder_iff_pow_eq_one.1 (h1.mul h2)
-    lsh_smul b g p x := by
-      rw [stepY_gam]
-      show _ ∈ (p.1.1.deco.1.act g.1.1 g.2.1.1).Lsh ↔ _
-      rw [Deco.Lsh_act _ g.1.2, mem_gmap, LinearEquiv.symm_apply_apply]
-    lsh_lat b p := p.1.1.deco.2.Lsh_lattice
-    stab_inj b g p h h1 := stepY_eq_one y β Λ Θ pref b g p h
-      (Subtype.ext ((toGLm X.E n).injective (h1.trans (map_one _).symm)))
-  }
+    (hy : ∀ N, Submodule.IsLattice X.E N → (y.ys N).Finite) : (stepY ST y β Λ Θ pref).Ok where
+  fin_orb := stepY_fin_orb y β Λ Θ pref hX hI hy
+  fin_stab b p :=
+    haveI := autO_finite (posStar_of_ok hX) p.1.1.deco.2.lat
+    Finite.of_injective _ (stabAut_inj y β Λ Θ pref b p)
+  unit b g := by
+    have h : Formalism.UG.cT (starRingEnd X.E) (toGLm X.E n g.1.1 : Matrix (Fin n) (Fin n) X.E) * (1 : Matrix (Fin n) (Fin n) X.E) *
+      (toGLm X.E n g.1.1 : Matrix (Fin n) (Fin n) X.E) = 1 := toGLm_mem_UJ g.1
+    rw [Matrix.mul_one] at h
+    exact h
+  root b g := by
+    have h1 : IsOfFinOrder ((Λ b).chr g.2.1) := MonoidHom.isOfFinOrder _ (isOfFinOrder_of_finite _)
+    have h2 : IsOfFinOrder ((Θ b).chr g.2.2) := by
+      rw [show (Θ b).chr g.2.2 = ∏ P, (Θ b P).lam (piProj (fun P => (Θ b P).H) P g.2.2) from
+        piChar_apply (fun P => (Θ b P).H) (fun P => (Θ b P).lam) g.2.2]
+      exact Finset.prod_induction _ IsOfFinOrder (fun _ _ => IsOfFinOrder.mul) IsOfFinOrder.one
+        fun P _ => isOfFinOrder_iff_pow_eq_one.2 (hr b P _)
+    exact isOfFinOrder_iff_pow_eq_one.1 (h1.mul h2)
+  lsh_smul b g p x := by
+    rw [stepY_gam]
+    show _ ∈ (p.1.1.deco.1.act g.1.1 g.2.1.1).Lsh ↔ _
+    rw [Deco.Lsh_act _ g.1.2, mem_gmap, LinearEquiv.symm_apply_apply]
+  lsh_lat b p := p.1.1.deco.2.Lsh_lattice
+  stab_inj b g p h h1 := stepY_eq_one y β Λ Θ pref b g p h
+    (Subtype.ext ((toGLm X.E n).injective (h1.trans (map_one _).symm)))
 
 end StepOk
 
@@ -165,81 +163,79 @@ theorem PtY.mv_dia {y : Ys X n} (p : PtY ST SG Q y) (P : ST) (a : (Res P.1)ˣ) :
   dite_eq_left ⟨p.1.1.2, p.2⟩
 
 theorem tdatY_ok (hP : ∀ P : ST, conjPrime₂ P.1 ≠ P.1) (hT : ∀ P : ST, (T : 𝓞 X.E) ∈ P.1.asIdeal ∧ (T : 𝓞 X.E) ∉ P.1.asIdeal ^ 2) :
-    (tdatY ST T y β Λ Θ pref).Ok T := by
-  exact {
-    N_lat _ p := p.1.1.deco.2.lat
-    dnN_lat _ p P := (p.1.1.deco.2.dnN_spec P (hP P)).1
-    ker_lat _ p P := by
-      have hd := p.1.1.deco.2
-      obtain ⟨r, hr, hr0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot
-      refine lattice_of_smul hd.lat hd.Lsh_lattice (Submodule.span_le.2 fun x hx => hx.1) hr0 fun x hx => ?_
-      exact Submodule.subset_span ⟨Submodule.smul_mem _ r (hd.N_le_Lsh hx), ((hd.mem_kerAt P _).1 (hd.smul_mem_kerAt P hr hx)).2⟩
-    f_add _ p P x hx z hz := p.1.1.deco.2.f_add P x (le_locP _ _ hx) z (le_locP _ _ hz)
-    f_smul _ p P a x hx := p.1.1.deco.2.f_smul P a x (le_locP _ _ hx)
-    f_ne _ p P := p.1.1.deco.2.f_ne P
-    N_act b g p x := by
-      rw [stepY_gam]
-      show _ ∈ Formalism.HermitianLatticesTheory.gmap g.1.1 p.1.1.deco.1.N ↔ _
-      rw [mem_gmap, LinearEquiv.symm_apply_apply]
-      rfl
-    f_act b g p P x := by
-      rw [stepY_gam]
-      show p.1.1.deco.1.f P (g.1.1.symm _) = _
-      rw [LinearEquiv.symm_apply_apply]
-      rfl
-    te_mem _ p P e he h1 := by
-      have hd := p.1.1.deco.2
-      have he' : e ∈ p.1.1.deco.1.N := he
-      have h1' : p.1.1.deco.1.f P e = 1 := h1
-      refine ⟨(le_sup_left : p.1.1.deco.1.kerAt P ≤ p.1.1.deco.1.dnN P) (hd.smul_mem_kerAt P (hT P).1 he'), fun hm => ?_⟩
-      obtain ⟨a, ha, r, hr, har⟩ := exists_inv_unif P.1 (hT P).1 (hT P).2
-      obtain ⟨c, hc, hcP⟩ := exists_mem_notMem (hP P)
-      have h2 : a • ((T : 𝓞 X.E) • e) ∈ p.1.1.deco.1.dnN P := inv_smul_mem ha hm
-      have h3 := ((hd.mem_kerAt P _).1 (hd.conj_smul_dnN_mem P hc h2)).2
-      have e1 : c • a • ((T : 𝓞 X.E) • e) = (c * r) • e := by
-        rw [← algebraMap_smul X.E (T : 𝓞 X.E) e, smul_smul a, mul_comm a, har, algebraMap_smul, mul_smul]
-      rw [e1, hd.f_smul P _ e (le_locP _ _ he'), h1', mul_one, Ideal.Quotient.eq_zero_iff_mem] at h3
-      exact (P.1.isPrime.mem_or_mem h3).elim hcP hr
-    dia_one b P p := by
-      classical
-      refine (PtY.mv_dia p P 1).trans (PtY.ext' ?_ rfl rfl)
-      show DecoSet.dia (Pi.mulSingle P 1) p.1.1.deco = p.1.1.deco
-      rw [Pi.mulSingle_one, DecoSet.dia_one]
-    dia_mul b P a a' p := by
-      classical
-      show p.mv (DecoSet.dia1 P (a * a') p.1.1.deco) =
-        (p.mv (DecoSet.dia1 P a' p.1.1.deco)).mv (DecoSet.dia1 P a (p.mv (DecoSet.dia1 P a' p.1.1.deco)).1.1.deco)
-      rw [PtY.mv_dia, PtY.mv_dia, PtY.mv_dia]
-      refine PtY.ext' ?_ rfl rfl
-      show DecoSet.dia1 P (a * a') p.1.1.deco = DecoSet.dia1 P a (DecoSet.dia1 P a' p.1.1.deco)
-      unfold DecoSet.dia1
-      rw [Pi.mulSingle_mul, DecoSet.dia_mul]
-    dia_act b P a g p := by
-      refine (PtY.mv_dia (g • p) P a).trans ?_
-      show _ = g • (p.mv (DecoSet.dia1 P a p.1.1.deco) : (stepY ST y β Λ Θ pref).D b)
-      rw [PtY.mv_dia]
-      rfl
-    dia_N b P a p := by
-      show (p.mv (DecoSet.dia1 P a p.1.1.deco)).1.1.deco.1.N = _
-      rw [PtY.mv_dia]
-      rfl
-    dia_Lsh b P a p := by
-      classical
-      show (p.mv (DecoSet.dia1 P a p.1.1.deco)).1.1.deco.1.Lsh = p.1.1.deco.1.Lsh
-      rw [PtY.mv_dia]
-      show (p.1.1.deco.1.dia _).Lsh = _
-      unfold Deco.Lsh Deco.L
-      congr 2
-      ext x
-      simp [Deco.dia]
-    dia_f b P a p x := by
-      classical
-      show (p.mv (DecoSet.dia1 P a p.1.1.deco)).1.1.deco.1.f P x = _
-      rw [PtY.mv_dia]
-      show ((Pi.mulSingle P a : DiaG (E := X.E) (ST := ST)) P).1 * _ = _
-      rw [Pi.mulSingle_eq_same]
-      rfl
-  }
+    (tdatY ST T y β Λ Θ pref).Ok T where
+  N_lat _ p := p.1.1.deco.2.lat
+  dnN_lat _ p P := (p.1.1.deco.2.dnN_spec P (hP P)).1
+  ker_lat _ p P := by
+    have hd := p.1.1.deco.2
+    obtain ⟨r, hr, hr0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot
+    refine lattice_of_smul hd.lat hd.Lsh_lattice (Submodule.span_le.2 fun x hx => hx.1) hr0 fun x hx => ?_
+    exact Submodule.subset_span ⟨Submodule.smul_mem _ r (hd.N_le_Lsh hx), ((hd.mem_kerAt P _).1 (hd.smul_mem_kerAt P hr hx)).2⟩
+  f_add _ p P x hx z hz := p.1.1.deco.2.f_add P x (le_locP _ _ hx) z (le_locP _ _ hz)
+  f_smul _ p P a x hx := p.1.1.deco.2.f_smul P a x (le_locP _ _ hx)
+  f_ne _ p P := p.1.1.deco.2.f_ne P
+  N_act b g p x := by
+    rw [stepY_gam]
+    show _ ∈ Formalism.HermitianLatticesTheory.gmap g.1.1 p.1.1.deco.1.N ↔ _
+    rw [mem_gmap, LinearEquiv.symm_apply_apply]
+    rfl
+  f_act b g p P x := by
+    rw [stepY_gam]
+    show p.1.1.deco.1.f P (g.1.1.symm _) = _
+    rw [LinearEquiv.symm_apply_apply]
+    rfl
+  te_mem _ p P e he h1 := by
+    have hd := p.1.1.deco.2
+    have he' : e ∈ p.1.1.deco.1.N := he
+    have h1' : p.1.1.deco.1.f P e = 1 := h1
+    refine ⟨(le_sup_left : p.1.1.deco.1.kerAt P ≤ p.1.1.deco.1.dnN P) (hd.smul_mem_kerAt P (hT P).1 he'), fun hm => ?_⟩
+    obtain ⟨a, ha, r, hr, har⟩ := exists_inv_unif P.1 (hT P).1 (hT P).2
+    obtain ⟨c, hc, hcP⟩ := exists_mem_notMem (hP P)
+    have h2 : a • ((T : 𝓞 X.E) • e) ∈ p.1.1.deco.1.dnN P := inv_smul_mem ha hm
+    have h3 := ((hd.mem_kerAt P _).1 (hd.conj_smul_dnN_mem P hc h2)).2
+    have e1 : c • a • ((T : 𝓞 X.E) • e) = (c * r) • e := by
+      rw [← algebraMap_smul X.E (T : 𝓞 X.E) e, smul_smul a, mul_comm a, har, algebraMap_smul, mul_smul]
+    rw [e1, hd.f_smul P _ e (le_locP _ _ he'), h1', mul_one, Ideal.Quotient.eq_zero_iff_mem] at h3
+    exact (P.1.isPrime.mem_or_mem h3).elim hcP hr
+  dia_one b P p := by
+    classical
+    refine (PtY.mv_dia p P 1).trans (PtY.ext' ?_ rfl rfl)
+    show DecoSet.dia (Pi.mulSingle P 1) p.1.1.deco = p.1.1.deco
+    rw [Pi.mulSingle_one, DecoSet.dia_one]
+  dia_mul b P a a' p := by
+    classical
+    show p.mv (DecoSet.dia1 P (a * a') p.1.1.deco) =
+      (p.mv (DecoSet.dia1 P a' p.1.1.deco)).mv (DecoSet.dia1 P a (p.mv (DecoSet.dia1 P a' p.1.1.deco)).1.1.deco)
+    rw [PtY.mv_dia, PtY.mv_dia, PtY.mv_dia]
+    refine PtY.ext' ?_ rfl rfl
+    show DecoSet.dia1 P (a * a') p.1.1.deco = DecoSet.dia1 P a (DecoSet.dia1 P a' p.1.1.deco)
+    unfold DecoSet.dia1
+    rw [Pi.mulSingle_mul, DecoSet.dia_mul]
+  dia_act b P a g p := by
+    refine (PtY.mv_dia (g • p) P a).trans ?_
+    show _ = g • (p.mv (DecoSet.dia1 P a p.1.1.deco) : (stepY ST y β Λ Θ pref).D b)
+    rw [PtY.mv_dia]
+    rfl
+  dia_N b P a p := by
+    show (p.mv (DecoSet.dia1 P a p.1.1.deco)).1.1.deco.1.N = _
+    rw [PtY.mv_dia]
+    rfl
+  dia_Lsh b P a p := by
+    classical
+    show (p.mv (DecoSet.dia1 P a p.1.1.deco)).1.1.deco.1.Lsh = p.1.1.deco.1.Lsh
+    rw [PtY.mv_dia]
+    show (p.1.1.deco.1.dia _).Lsh = _
+    unfold Deco.Lsh Deco.L
+    congr 2
+    ext x
+    simp [Deco.dia]
+  dia_f b P a p x := by
+    classical
+    show (p.mv (DecoSet.dia1 P a p.1.1.deco)).1.1.deco.1.f P x = _
+    rw [PtY.mv_dia]
+    show ((Pi.mulSingle P a : DiaG (E := X.E) (ST := ST)) P).1 * _ = _
+    rw [Pi.mulSingle_eq_same]
+    rfl
 
 theorem tdatY_deco (b : β) (p : PtY ST SG Q y) :
     (tdatY ST T y β Λ Θ pref).deco b p = p.1.1.deco.1.res (Finset.empty_subset _) :=
@@ -281,67 +277,65 @@ theorem mv_dn (p : PtY ST SG Q y) (P : ST) (hP : MoveHyp ST SG P) (hQ : ∀ w : 
 theorem tdatY_tied (hP : ∀ P : ST, MoveHyp ST SG P)
     (hT : ∀ P : ST, (T : 𝓞 X.E) ∈ P.1.asIdeal ∧ (T : 𝓞 X.E) ∉ P.1.asIdeal ^ 2)
     (hQ : ∀ (P : ST) (w : Q), w.1 ≠ P.1 ∧ w.1 ≠ conjPrime₂ P.1) (hy : ∀ P : ST, y.Off P.1) :
-    (tdatY ST T y β Λ Θ pref).Tied T := by
-  exact {
-    ok b p := by
-      rw [tdatY_deco]
-      have hd := p.1.1.deco.2
-      refine ⟨hd.lat, hd.uni, hd.f_add, hd.f_smul, hd.f_off, hd.f_ne, ?_, ?_, ?_, ?_, ?_⟩
-      all_goals
-        intro w
-        exact (Finset.notMem_empty _ w.2).elim
-    Lsh_eq _ _ := rfl
-    dnN_eq _ _ _ := rfl
-    ker_eq _ _ _ := rfl
-    up_deco b p P x hx hf := by
-      rw [tdatY_deco, tdatY_deco]
-      exact congrArg (Deco.res (Finset.empty_subset _)) (mv_up T p P (hP P) (hT P) (hQ P) (hy P) hx hf).1
-    dn_deco b p P g hg := by
-      rw [tdatY_deco] at hg
-      rw [tdatY_deco, tdatY_deco]
-      exact congrArg (Deco.res (Finset.empty_subset _))
-        (mv_dn p P (hP P) (hQ P) (hy P) (dn_ok_of_res p.1.1.deco.2 P (hP P) hg)).1
-    up_act b γ p P x hx hf := by
-      rw [stepY_gam]
-      have h1 := mv_up T p P (hP P) (hT P) (hQ P) (hy P) hx hf
-      have h2 := mv_up T (γ • p) P (hP P) (hT P) (hQ P) (hy P) (x := γ.1.1 x)
-        ((mem_gmap γ.1.1 p.1.1.deco.1.N _).2 (by rw [LinearEquiv.symm_apply_apply]; exact hx))
-        (by show p.1.1.deco.1.f P (γ.1.1.symm _) = 1; rw [LinearEquiv.symm_apply_apply]; exact hf)
-      refine PtY.ext' (Subtype.ext (h2.1.trans ?_)) (h2.2.1.trans ?_) (h2.2.2.trans ?_)
-      · exact (Deco.up_act _ γ.1.2 _ P _ x).trans (congrArg (Deco.act γ.1.1 γ.2.1.1) h1.1.symm)
-      · exact congrArg (fun fr : ∀ _ : Q, Sp X.E n ≃ₗ[X.E] Sp X.E n => fun w => γ.1.1 * fr w * ((γ.2.2.1 w)⁻¹).1) h1.2.1.symm
-      · exact congrArg (fun Y : Set (Sp X.E n) => (fun v => γ.1.1 v) '' Y) h1.2.2.symm
-    dn_act b γ p P g hg := by
-      rw [tdatY_deco] at hg
-      have hg' := dn_ok_of_res p.1.1.deco.2 P (hP P) hg
-      have e : (fun z => g (((stepY ST y β Λ Θ pref).gam b γ⁻¹ : Matrix (Fin n) (Fin n) X.E) *ᵥ z)) = fun z => g (γ.1.1.symm z) :=
-        funext fun z => congrArg g (stepY_gam y β Λ Θ pref b γ⁻¹ z)
-      rw [e]
-      have e2 := Deco.dn_act p.1.1.deco.1 γ.1.2 γ.2.1.1 P g
-      have h1 := mv_dn p P (hP P) (hQ P) (hy P) hg'
-      have h2 := mv_dn (γ • p) P (hP P) (hQ P) (hy P) (g := fun z => g (γ.1.1.symm z)) (e2 ▸ hg'.act γ.1.2 γ.2.1.1)
-      refine PtY.ext' (Subtype.ext (h2.1.trans ?_)) (h2.2.1.trans ?_) (h2.2.2.trans ?_)
-      · exact e2.trans (congrArg (Deco.act γ.1.1 γ.2.1.1) h1.1.symm)
-      · exact congrArg (fun fr : ∀ _ : Q, Sp X.E n ≃ₗ[X.E] Sp X.E n => fun w => γ.1.1 * fr w * ((γ.2.2.1 w)⁻¹).1) h1.2.1.symm
-      · exact congrArg (fun Y : Set (Sp X.E n) => (fun v => γ.1.1 v) '' Y) h1.2.2.symm
-    up_congr b p P x x' h := by
-      show p.mv (p.1.1.deco.up P (T : 𝓞 X.E) x) = p.mv (p.1.1.deco.up P (T : 𝓞 X.E) x')
-      have e := p.1.1.deco.1.up_congr P (T : 𝓞 X.E) h
-      congr 1
-      unfold DecoSet.up
-      generalize p.1.1.deco.1.up P (T : 𝓞 X.E) x = d at e
-      subst e
-      rfl
-    dn_up b p P x hx hf := by
-      classical
-      have h1 := mv_up T p P (hP P) (hT P) (hQ P) (hy P) hx hf
-      have e : (p.1.1.deco.1.up P (T : 𝓞 X.E) x).dn P (p.1.1.deco.1.f P) = p.1.1.deco.1 := by
-        refine Deco.ext (p.1.1.deco.2.dnN_up P (hP P) (hT P).1 (hT P).2 hx hf) ?_ rfl
-        simp only [Deco.dn, Deco.up, Function.update_idem, Function.update_eq_self]
-      have h2 := mv_dn (p.mv (p.1.1.deco.up P (T : 𝓞 X.E) x)) P (hP P) (hQ P) (hy P) (g := p.1.1.deco.1.f P)
-        (by rw [h1.1, e]; exact p.1.1.deco.2)
-      exact PtY.ext' (Subtype.ext (h2.1.trans (by rw [h1.1, e]))) (h2.2.1.trans h1.2.1) (h2.2.2.trans h1.2.2)
-  }
+    (tdatY ST T y β Λ Θ pref).Tied T where
+  ok b p := by
+    rw [tdatY_deco]
+    have hd := p.1.1.deco.2
+    refine ⟨hd.lat, hd.uni, hd.f_add, hd.f_smul, hd.f_off, hd.f_ne, ?_, ?_, ?_, ?_, ?_⟩
+    all_goals
+      intro w
+      exact (Finset.notMem_empty _ w.2).elim
+  Lsh_eq _ _ := rfl
+  dnN_eq _ _ _ := rfl
+  ker_eq _ _ _ := rfl
+  up_deco b p P x hx hf := by
+    rw [tdatY_deco, tdatY_deco]
+    exact congrArg (Deco.res (Finset.empty_subset _)) (mv_up T p P (hP P) (hT P) (hQ P) (hy P) hx hf).1
+  dn_deco b p P g hg := by
+    rw [tdatY_deco] at hg
+    rw [tdatY_deco, tdatY_deco]
+    exact congrArg (Deco.res (Finset.empty_subset _))
+      (mv_dn p P (hP P) (hQ P) (hy P) (dn_ok_of_res p.1.1.deco.2 P (hP P) hg)).1
+  up_act b γ p P x hx hf := by
+    rw [stepY_gam]
+    have h1 := mv_up T p P (hP P) (hT P) (hQ P) (hy P) hx hf
+    have h2 := mv_up T (γ • p) P (hP P) (hT P) (hQ P) (hy P) (x := γ.1.1 x)
+      ((mem_gmap γ.1.1 p.1.1.deco.1.N _).2 (by rw [LinearEquiv.symm_apply_apply]; exact hx))
+      (by show p.1.1.deco.1.f P (γ.1.1.symm _) = 1; rw [LinearEquiv.symm_apply_apply]; exact hf)
+    refine PtY.ext' (Subtype.ext (h2.1.trans ?_)) (h2.2.1.trans ?_) (h2.2.2.trans ?_)
+    · exact (Deco.up_act _ γ.1.2 _ P _ x).trans (congrArg (Deco.act γ.1.1 γ.2.1.1) h1.1.symm)
+    · exact congrArg (fun fr : ∀ _ : Q, Sp X.E n ≃ₗ[X.E] Sp X.E n => fun w => γ.1.1 * fr w * ((γ.2.2.1 w)⁻¹).1) h1.2.1.symm
+    · exact congrArg (fun Y : Set (Sp X.E n) => (fun v => γ.1.1 v) '' Y) h1.2.2.symm
+  dn_act b γ p P g hg := by
+    rw [tdatY_deco] at hg
+    have hg' := dn_ok_of_res p.1.1.deco.2 P (hP P) hg
+    have e : (fun z => g (((stepY ST y β Λ Θ pref).gam b γ⁻¹ : Matrix (Fin n) (Fin n) X.E) *ᵥ z)) = fun z => g (γ.1.1.symm z) :=
+      funext fun z => congrArg g (stepY_gam y β Λ Θ pref b γ⁻¹ z)
+    rw [e]
+    have e2 := Deco.dn_act p.1.1.deco.1 γ.1.2 γ.2.1.1 P g
+    have h1 := mv_dn p P (hP P) (hQ P) (hy P) hg'
+    have h2 := mv_dn (γ • p) P (hP P) (hQ P) (hy P) (g := fun z => g (γ.1.1.symm z)) (e2 ▸ hg'.act γ.1.2 γ.2.1.1)
+    refine PtY.ext' (Subtype.ext (h2.1.trans ?_)) (h2.2.1.trans ?_) (h2.2.2.trans ?_)
+    · exact e2.trans (congrArg (Deco.act γ.1.1 γ.2.1.1) h1.1.symm)
+    · exact congrArg (fun fr : ∀ _ : Q, Sp X.E n ≃ₗ[X.E] Sp X.E n => fun w => γ.1.1 * fr w * ((γ.2.2.1 w)⁻¹).1) h1.2.1.symm
+    · exact congrArg (fun Y : Set (Sp X.E n) => (fun v => γ.1.1 v) '' Y) h1.2.2.symm
+  up_congr b p P x x' h := by
+    show p.mv (p.1.1.deco.up P (T : 𝓞 X.E) x) = p.mv (p.1.1.deco.up P (T : 𝓞 X.E) x')
+    have e := p.1.1.deco.1.up_congr P (T : 𝓞 X.E) h
+    congr 1
+    unfold DecoSet.up
+    generalize p.1.1.deco.1.up P (T : 𝓞 X.E) x = d at e
+    subst e
+    rfl
+  dn_up b p P x hx hf := by
+    classical
+    have h1 := mv_up T p P (hP P) (hT P) (hQ P) (hy P) hx hf
+    have e : (p.1.1.deco.1.up P (T : 𝓞 X.E) x).dn P (p.1.1.deco.1.f P) = p.1.1.deco.1 := by
+      refine Deco.ext (p.1.1.deco.2.dnN_up P (hP P) (hT P).1 (hT P).2 hx hf) ?_ rfl
+      simp only [Deco.dn, Deco.up, Function.update_idem, Function.update_eq_self]
+    have h2 := mv_dn (p.mv (p.1.1.deco.up P (T : 𝓞 X.E) x)) P (hP P) (hQ P) (hy P) (g := p.1.1.deco.1.f P)
+      (by rw [h1.1, e]; exact p.1.1.deco.2)
+    exact PtY.ext' (Subtype.ext (h2.1.trans (by rw [h1.1, e]))) (h2.2.1.trans h1.2.1) (h2.2.2.trans h1.2.2)
 
 end TOk
 

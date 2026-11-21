@@ -52,8 +52,8 @@ theorem gaussManinPeriods_of_parts : ∀ ε : ℤˣ, GlobalTheory.PeriodFamily.F
   let F : Fam I g u₀.Λ :=
     { V := V
       τ := { toFun x z := (τ z x : Fin g → ℂ)
-             map_zero' := funext fun z ↦ by simp
-             map_add' a b := funext fun z ↦ by simp }
+             map_zero' := funext fun z ↦ congrArg Subtype.val ((τ z).map_zero)
+             map_add' a b := funext fun z ↦ congrArg Subtype.val ((τ z).map_add a b) }
       hol x := GlobalTheory.SCV.analyticOnNhd_of_differentiableOn Metric.isOpen_ball (c3 x) }
   have ya : ∀ b, AnalyticOnNhd ℂ (fun z ↦ y z b) V := fun b ↦
     GlobalTheory.SCV.analyticOnNhd_of_differentiableOn Metric.isOpen_ball ((hy b).mono hrU)

@@ -55,7 +55,7 @@ theorem mem_tensInt_iff {F E : Type} [Field F] [NumberField F] [Field E] [Number
         rw [e1]
         exact mul_mem (Subring.subset_closure (Or.inl ⟨⟨(z : E), z, rfl⟩, rfl⟩))
           (Subring.subset_closure (Or.inr ⟨⟨a, ha⟩, rfl⟩)))
-      (by simp) (fun y z hy hz => by rw [map_add]; exact add_mem hy hz)
+      (by simp) (fun y z hy hz => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz)
       (fun y hy => by rw [map_neg]; exact neg_mem hy) hx
     simpa using h
 

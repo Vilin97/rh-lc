@@ -413,7 +413,7 @@ theorem cont_of_inj {LL : Type} [Field LL] [TopologicalSpace LL] [IsTopologicalR
   have hψc : Continuous ψ := IsModuleTopology.continuous_of_linearMap ψ
   refine hψc.comp (continuous_pi fun a => continuous_pi fun i => ?_)
   simp only [Matrix.mulVec, dotProduct]
-  exact continuous_finset_sum _ fun j _ => ((hMs (xs a)).matrix_elem i j).mul continuous_const
+  exact continuous_finsetSum _ fun j _ => ((hMs (xs a)).matrix_elem i j).mul continuous_const
 
 end Emb
 

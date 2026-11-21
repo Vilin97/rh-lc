@@ -113,7 +113,7 @@ theorem isLocalHom_of_finite (O S : Type) [CommRing O] [IsLocalRing O] [CommRing
   intro a ha
   by_contra hna
   have hm : (IsLocalRing.maximalIdeal S).comap (algebraMap O S) = IsLocalRing.maximalIdeal O :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (IsLocalRing.maximalIdeal S))
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (algebraMap _ _) (RingHom.Finite.to_isIntegral (RingHom.finite_algebraMap.mpr inferInstance)) (maximalIdeal S))
   have hmem : a ∈ (IsLocalRing.maximalIdeal S).comap (algebraMap O S) := by
     rw [hm]
     exact hna
@@ -226,10 +226,9 @@ theorem htd_tie : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed
       have hc : (IsLocalRing.maximalIdeal S.carrier).comap (f : A.carrier →+* S.carrier) =
           IsLocalRing.maximalIdeal A.carrier := by
         apply IsLocalRing.eq_maximalIdeal
-        apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (algebraMap (Tw.O : Type) A.carrier)
-        · exact fun x => IsIntegral.of_finite _ x
-        · rw [Ideal.comap_comap, AlgHom.comp_algebraMap, IsLocalRing.maximalIdeal_comap]
-          exact IsLocalRing.maximalIdeal.isMaximal _
+        apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := (Tw.O : Type))
+        rw [Ideal.comap_comap, AlgHom.comp_algebraMap, IsLocalRing.maximalIdeal_comap]
+        exact IsLocalRing.maximalIdeal.isMaximal _
       constructor
       intro a ha
       by_contra hna
@@ -338,7 +337,7 @@ theorem htd_tie : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed
         obtain ⟨u, hu'⟩ := hu.exists_right_inv
         obtain ⟨y, rfl⟩ := hsurj i u
         have h1 : x * y - 1 ∈ RingHom.ker (χ i) := by
-          rw [RingHom.mem_ker, map_sub, map_mul, hu', map_one, sub_self]
+          rw [RingHom.mem_ker, RingHom.map_sub, map_mul, hu', map_one, sub_self]
         have h2 : (1 : T.A) ∈ M := by
           have h3 := M.sub_mem (M.mul_mem_right y hx) (hK h1)
           simpa using h3

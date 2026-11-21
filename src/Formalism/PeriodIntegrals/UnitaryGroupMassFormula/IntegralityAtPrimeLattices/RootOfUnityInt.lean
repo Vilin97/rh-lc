@@ -56,7 +56,25 @@ theorem bases0 (T : Forms0 D u) (c : (D.mem u).C.cls 0) :
     refine (Submodule.smul_le_right.trans hLd).trans ?_
     rw [mul_comm]
     exact bnd_mono d d0
-  · exact eq_top_iff.2 (hL.span_eq_top ▸ Submodule.span_mono (SetLike.coe_subset_coe.2 le_sup_left))
+  · apply eq_top_iff.2
+    rw [← hLd_sp]
+    apply Submodule.span_le.2
+    intro z hz
+    have ht : (((D.mem u).A.T : ℕ) : D.host.E) ≠ 0 := by
+      exact_mod_cast (D.mem u).A.T_prime.ne_zero
+    have hm := bwA_T_smul_Ld_mem_Lk D u T.atT 0 (Nat.zero_le _) v c z hz
+    have hm' : (((D.mem u).A.T : ℕ) : D.host.E) • z ∈
+        Submodule.span D.host.E (Lk T.atT 0 (Nat.zero_le _) v c : Set _) := by
+      apply Submodule.subset_span
+      change (((D.mem u).A.T : ℕ) : D.host.E) • z ∈ Lk T.atT 0 (Nat.zero_le _) v c
+      simpa only [Nat.cast_smul_eq_nsmul] using hm
+    have hm'' : ((((D.mem u).A.T : ℕ) : D.host.E)⁻¹) •
+        ((((D.mem u).A.T : ℕ) : D.host.E) • z) ∈
+        Submodule.span D.host.E (Lk T.atT 0 (Nat.zero_le _) v c : Set _) :=
+      by
+        apply Submodule.smul_mem
+        exact hm'
+    simpa [smul_smul, ht] using hm''
 
 theorem rootOfUnity_int (w : D.what₂.places.Pl) (r : D.what₂.LL) {n : ℕ} (hn : 0 < n) (hr : r ^ n = 1) :
     r ∈ intW D.what₂.places w := by

@@ -36,33 +36,33 @@ variable {A A' : Over (Sp ℂ)} [GrpObj A] [GrpObj A'] {ψ : A'.left ⟶ A.left}
 variable {X : Scheme.{0}} {L : LB X} {φ : A.left ⟶ X} {g : ℕ} (u : HolUnif A (L.pull φ) g)
 
 theorem cj_isDiff' {t : epsR ℂ ⟶ A} {t' : epsR ℂ ⟶ A'}
-    (e : t'.left ≫ ψ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ t.left) {w : Fin g → ℂ} (hd : u.IsDiff w t) :
+    (e : t'.left ≫ ψ = spMap (dualMap (starRingEnd ℂ)) ≫ t.left) {w : Fin g → ℂ} (hd : u.IsDiff w t) :
     (cjUnif h u).IsDiff (star w) t' := by
   haveI := isIso_of_cj h
   intro U hU f
-  have e2 : t'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (show Sp (DualNumber ℂ) ⟶ _ from t.left) ≫ inv ψ := by
+  have e2 : t'.left = spMap (dualMap (starRingEnd ℂ)) ≫ (show Sp (DualNumber ℂ) ⟶ _ from t.left) ≫ inv ψ := by
     rw [← Category.assoc]
     exact (IsIso.eq_comp_inv ψ).2 e
   have h2 : ⊤ ≤ t.left ⁻¹ᵁ (inv ψ ⁻¹ᵁ U) := fun q _ => by
     have := subsingleton_dual ℂ
     have hq := hU (show q ∈ (⊤ : (Sp (DualNumber ℂ)).Opens) from trivial)
     rw [e2] at hq
-    rw [Subsingleton.elim (α := PrimeSpectrum (DualNumber ℂ)) q (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) q)]
+    rw [Subsingleton.elim (α := PrimeSpectrum (DualNumber ℂ)) q (spMap (dualMap (starRingEnd ℂ)) q)]
     exact hq
   have e1 : (fun z => valAt' ((cjUnif h u).ex z).left U f) =
       star ∘ (fun z => valAt' (u.ex z).left (inv ψ ⁻¹ᵁ U) (((inv ψ).app U).hom f)) ∘ star :=
     funext fun z => cj_val h _ U f
   rw [e1, fderiv_star_star_zero]
   have k : ∀ (y : Sp (DualNumber ℂ) ⟶ A'.left) (hy : ⊤ ≤ y ⁻¹ᵁ U),
-      y = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (show Sp (DualNumber ℂ) ⟶ _ from t.left) ≫ inv ψ →
-      TangentOrigin.evalPt y U hy f = GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)
+      y = spMap (dualMap (starRingEnd ℂ)) ≫ (show Sp (DualNumber ℂ) ⟶ _ from t.left) ≫ inv ψ →
+      TangentOrigin.evalPt y U hy f = dualMap (starRingEnd ℂ)
         (TangentOrigin.evalPt (R := DualNumber ℂ) t.left _ h2 (((inv ψ).app U).hom f)) := by
     rintro _ hy rfl
     rw [TangentOrigin.evalPt_spMap_comp _ _ U h2]
     congr 1
   refine (congrArg TrivSqZeroExt.snd (k _ hU e2)).trans ?_
   have e3 := hd _ h2 (((inv ψ).app U).hom f)
-  simp only [GlobalTheory.CompanionTheory.Ar.dualMap, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_inl,
+  simp only [dualMap, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_inl,
     TrivSqZeroExt.snd_inr, zero_add]
   exact congrArg (starRingEnd ℂ) e3
 
@@ -72,24 +72,24 @@ theorem isLieNormAt_conjugate {K : Type} [Field K] {P : Out.PolAV (Sp K)} {σ : 
   have hg := g_eq h
   obtain ⟨A', _, ψ, hc⟩ : ∃ (A' : Over (Sp ℂ)) (_ : GrpObj A') (ψ : A'.left ⟶ P'.A.left),
       IsGrpPullback A' P'.A cj ψ := ⟨_, _, _, isGrpPullback_pullback P'.A cj⟩
-  have sq : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ t'.left) ≫ P'.A.hom = (epsR ℂ).hom ≫ cj := by
+  have sq : (spMap (dualMap (starRingEnd ℂ)) ≫ t'.left) ≫ P'.A.hom = (epsR ℂ).hom ≫ cj := by
     rw [Category.assoc, Over.w]
     change Spec.map _ ≫ Spec.map _ = Spec.map _ ≫ Spec.map _
     rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp]
     congr 2
-    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   let t'' : epsR ℂ ⟶ A' := Over.homMk (hc.1.lift _ _ sq) (hc.1.lift_snd _ _ _)
-  have e' : t''.left ≫ ψ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ t'.left := hc.1.lift_fst _ _ _
+  have e' : t''.left ≫ ψ = spMap (dualMap (starRingEnd ℂ)) ≫ t'.left := hc.1.lift_fst _ _ _
   have h' : IsGrpPullback A' P.A (spMap (ComplexEmbedding.conjugate σ)) (ψ ≫ φ) :=
     (hc.comp h).congr (spMap_conjugate σ) rfl
-  have e'' : t''.left ≫ ψ ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ComplexEmbedding.conjugate σ)) ≫ t.left := by
+  have e'' : t''.left ≫ ψ ≫ φ = spMap (dualMap (ComplexEmbedding.conjugate σ)) ≫ t.left := by
     rw [← Category.assoc, e', Category.assoc]
     refine (congrArg _ e).trans ?_
     rw [← Category.assoc]
     congr 1
     rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
     congr 2
-    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    ext a <;> simp [dualMap]
   have hM := pull_isLB P.isLB φ
   have hAH' := cj_isAH hc (carry u P'.isLB hM hw) (carry_isAH _ _ hw hAH)
   have hd' := cj_isDiff' hc (carry u P'.isLB hM hw) e' (w := z) hd

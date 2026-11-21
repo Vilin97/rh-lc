@@ -77,7 +77,6 @@ end GlobalTheory.Mem.Chr.IdlFact
 
 open Classical in
 theorem GlobalTheory.Mem.Chr.exists_prod_unif_mul_unitIdl : ∀ (L : Type) [Field L] [NumberField L] (a : Ideles L), ∃ (S : Finset (HeightOneSpectrum (𝓞 L))) (n : HeightOneSpectrum (𝓞 L) → ℤ) (u : Ideles L), u ∈ unitIdl L ∧ a = (∏ v ∈ S, localIdele L v (atFin v (unif v)) ^ n v) * u ∧ ∀ v, Valued.v ((a : AdeleRing (𝓞 L) L).2 v) = WithZero.exp (-(if v ∈ S then n v else 0)) := by
-  open GlobalTheory.Mem.Chr.IdlFact in
   intro L _ _ a
   let S := (finite_valAt_ne_one a).toFinset
   let n : HeightOneSpectrum (𝓞 L) → ℤ := fun v => -WithZero.log (valAt v a)

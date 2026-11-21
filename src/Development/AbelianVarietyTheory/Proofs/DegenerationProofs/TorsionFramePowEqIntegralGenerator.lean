@@ -80,7 +80,7 @@ theorem exists_move (hL : L.IsLB) (hM : M.IsLB) {f : Y ⟶ H} {ψ : Y ⟶ X} (w 
     ∃ a : LB.Gen (LB.LinComb M (fun k => f ≫ φH k) ε), a.IsGen ∧
       ∀ (Z : Scheme.{0}) (r : Z ⟶ Y) (z : Z) J J', Good L z J → Good M z J' →
         val α (r ≫ ψ) z J = (∏ k, wv w (r ≫ φY k) z J J' ^ ε k) * val a r z J' := by
-  obtain ⟨b, hb, H⟩ := H1.exists_gen_move hL (LB.isLB_pull hM f) w ((isGen_iff w).1 hw) φX φY ε ψ h₁ α hα
+  obtain ⟨b, hb, H⟩ := H1.exists_gen_move hL (pull_isLB hM f) w ((isGen_iff w).1 hw) φX φY ε ψ h₁ α hα
   have le : ∀ j : K → M.ι, LB.wchart M (fun k => f ≫ φH k) j ≤ LB.wchart (M.pull f) φY (fun k _ => j k) :=
     fun j y hy => Set.mem_iInter.2 fun k => mem_pull.2 (by
       have : (f ≫ φH k) y ∈ M.U (j k) := Set.mem_iInter.1 hy k
@@ -154,7 +154,7 @@ theorem exists_unit_gm {A C : Type} [CommRing A] [CommRing C] (σ : A →+* C) (
     rw [GlobalTheory.Points.valR_eq g _ ht]; exact (Units.isUnit _).map _
   refine ⟨hu.unit, ?_⟩
   rw [IsUnit.unit_spec, ← GlobalTheory.Points.valR_spMap_comp σ g U ht a.val]
-  exact toStkA_valR' (spMap σ ≫ g) U z (fun y _ => ht (show spMap σ y ∈ (⊤ : (Sp A).Opens) from trivial)) a
+  exact toStkA_valR (spMap σ ≫ g) U z (fun y _ => ht (show spMap σ y ∈ (⊤ : (Sp A).Opens) from trivial)) a
 
 theorem mem_intU {V : Type} [CommRing V] [IsDomain V] {u} : u ∈ intU V ↔
     ∃ v : Vˣ, toStkA (cpt (FractionRing V)) (algebraMap V (FractionRing V) v.val) = u.val :=
@@ -381,21 +381,8 @@ theorem torsFrame_pow_eq : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteV
     fun y hy => ⟨mem_pull.2 (hk hy), mem_pull.2 (by
       have : (jK V ≫ h.left) y ∈ M.L.U i := hi (show jK V y ∈ (⊤ : (Sp V).Opens) from trivial)
       rw [← x₁] at this; exact this)⟩
-  have toStkA_valR' : ∀ {R : Type} [CommRing R] {T : Scheme.{0}} (f : Sp R ⟶ T)
-      (U : T.Opens) (z : Sp R) (ht : ⊤ ≤ f ⁻¹ᵁ U) (a : Γ(T, U)ˣ),
-      toStkA z (valR f U a.val) = (gm f z U a).val := by
-    intro R _ T f U z ht a
-    have hz : f z ∈ U := ht trivial
-    have e1 : ∀ c, (Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of R)).hom.hom c) = c :=
-      fun c => congrArg (fun f => CommRingCat.Hom.hom f c) (Iso.hom_inv_id (Scheme.ΓSpecIso (CommRingCat.of R)))
-    rw [valR, dif_pos ht, gm, dif_pos hz]
-    show ((Sp R).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom
-        ((Scheme.ΓSpecIso (CommRingCat.of R)).hom.hom ((f.appLE U ⊤ ht).hom a.val))) =
-      ((Sp R).presheaf.germ (f ⁻¹ᵁ U) z hz).hom ((f.app U).hom a.val)
-    rw [e1]
-    exact TopCat.Presheaf.germ_res_apply (Sp R).presheaf (homOfLE ht) z trivial ((f.app U).hom a.val)
-  have s₁ := toStkA_valR' t _ (cpt _) m₁ (τ.s fun _ => k)
-  have s₂ := toStkA_valR' x _ (cpt _) m₂ (w.s (fun _ => k, fun _ => i))
+  have s₁ := toStkA_valR t _ (cpt _) m₁ (τ.s fun _ => k)
+  have s₂ := toStkA_valR x _ (cpt _) m₂ (w.s (fun _ => k, fun _ => i))
   rw [val_of τ t _ J (fun _ => k) (fun _ => by rw [← e₀, x₃]), e₀, ← Nat.cast_pow, zpow_natCast, zpow_natCast] at e
   rw [map_mul, map_pow, map_pow, map_mul, hv]
   refine (congrArg (· ^ (n ^ 2)) s₁).trans ((congrArg Units.val e).trans ?_)

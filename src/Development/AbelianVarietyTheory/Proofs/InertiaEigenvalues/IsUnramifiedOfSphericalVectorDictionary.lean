@@ -25,8 +25,7 @@ namespace GlobalTheory.UnramDict
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
 theorem kappa_tmul (F : FinIso L n) (x : L) (a : AFplus L) :
-    F.κ.toRingHom (x ⊗ₜ[maximalRealSubfield L] a) =
-      algebraMap L _ x * GlobalTheory.AdeleBaseChange.adMap (maximalRealSubfield L) L a := by
+    F.κ.toRingHom (x ⊗ₜ[L⁺] a) = algebraMap L _ x * GlobalTheory.AdeleBaseChange.adMap L⁺ L a := by
   rw [Model.kappa_eq F (Model.finIso L n)]
   exact (Model.kappa_tmul L x a).trans (mul_comm _ _)
 
@@ -37,9 +36,8 @@ theorem mem_ALint (F : FinIso L n) (z : AL L) (hz : ∀ u, F.κ z u ∈ u.adicCo
   · exact Subring.subset_closure (Or.inl ⟨a, rfl⟩)
   · exact Subring.subset_closure (Or.inr ⟨y, hy, rfl⟩)
 
-theorem compAt_eq_zero (F : FinIso L n) (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L))) (z : AL L)
-    (hz : ∀ u : HeightOneSpectrum (𝓞 L), u.under (𝓞 (maximalRealSubfield L)) = v → F.κ z u = 0) :
-    compAt L v z = 0 :=
+theorem compAt_eq_zero (F : FinIso L n) (v : HeightOneSpectrum (𝓞 L⁺)) (z : AL L)
+    (hz : ∀ u : HeightOneSpectrum (𝓞 L), u.under (𝓞 L⁺) = v → F.κ z u = 0) : compAt L v z = 0 :=
   (GlobalTheory.AdeleBaseChange.prV_eq_zero_iff (ι := F.κ.toRingHom) (kappa_tmul F) v z).2 hz
 
 
@@ -50,7 +48,7 @@ theorem entry_mem {w : HeightOneSpectrum (𝓞 L)} {g : GL (Fin n) (w.adicComple
 
 theorem cLoc_entry_mem {w : HeightOneSpectrum (𝓞 L)} {x : UA L n} (hx : x ∈ locU n w) (hK : cLoc w x ∈ GlobalTheory.LFun.KGL w (n := n))
     (u : HeightOneSpectrum (𝓞 L)) (i j : Fin n) : (cLoc u x).val i j ∈ u.adicCompletionIntegers L := by
-  by_cases hu : u.under (𝓞 (maximalRealSubfield L)) = w.under (𝓞 (maximalRealSubfield L))
+  by_cases hu : u.under (𝓞 L⁺) = w.under (𝓞 L⁺)
   · rcases (GlobalTheory.Mem.Chr.under_eq_iff_conjPl (IsCMField.complexConj L)
       (Algebra.IsQuadraticExtension.finrank_eq_two _ _) (IsCMField.complexConj_ne_one L) w u).1 hu with rfl | h
     · exact entry_mem hK i j
@@ -69,7 +67,7 @@ theorem cLoc_entry_mem {w : HeightOneSpectrum (𝓞 L)} {x : UA L n} (hx : x ∈
     · exact zero_mem _
 
 theorem trivOutside (F : FinIso L n) {w : HeightOneSpectrum (𝓞 L)} {y : GAf L n} (hy : F.j y ∈ locU n w) :
-    TrivOutside {w.under (𝓞 (maximalRealSubfield L))} y := by
+    TrivOutside {w.under (𝓞 L⁺)} y := by
   intro v hv
   refine Matrix.ext fun i j => ?_
   have h0 := compAt_eq_zero F v (y.1.val i j - (1 : Matrix (Fin n) (Fin n) (AL L)) i j) fun u hu => by
@@ -82,7 +80,6 @@ theorem trivOutside (F : FinIso L n) {w : HeightOneSpectrum (𝓞 L)} {y : GAf L
     rw [← h1]
     simp only [Units.val_one, Matrix.one_apply]
     split_ifs <;> simp
-    rfl
   rw [map_sub, sub_eq_zero] at h0
   rw [Matrix.map_apply, h0]
   simp only [Matrix.one_apply]

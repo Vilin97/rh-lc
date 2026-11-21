@@ -17,7 +17,7 @@ theorem length_self_eq_of_ringEquiv {A C : Type*} [CommRing A] [CommRing C] (e :
     Module.length A A = Module.length C C := by
   have : RingHomSurjective (e : A →+* C) := ⟨e.surjective⟩
   let f : A →ₛₗ[(e : A →+* C)] C :=
-    { toFun := e, map_add' := e.map_add (f := _), map_smul' := fun a b => by simp }
+    { toFun := e, map_add' := e.map_add, map_smul' := fun a b => by simp }
   rw [Module.length, Module.length, WithBot.unbot_inj,
     Order.krullDim_eq_of_orderIso (Submodule.orderIsoMapComapOfBijective f e.bijective)]
 

@@ -170,6 +170,8 @@ private theorem ap_psi {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω
 theorem UpperTheory.V.J.xiArith :
     GlobalTheory.Published.GlobalArtinReciprocity → UpperTheory.V.J.XiArith := by
   intro hG Ω _ _ _ l _ ι c _ N _ e ψ η σ g₁ B M H L _ _ _ _ _ Φ k c₁ _ f R hka φ hφ ξ r hr hirr hψ
+  letI : CommRing R.S.B := Subalgebra.toCommRing R.S.B
+  letI : Algebra c₁.O R.S.B := Subalgebra.algebra R.S.B
   obtain ⟨hD1, hP1⟩ := hφ
   have hD0 : R.B₀.u.D.map ((R.S.B.val.comp φ : R.B₀.B →ₐ[c₁.O] R.S.R) : R.B₀.B →+* R.S.R) =
       W.GDet.ofRep (R.K.tw R.S.ρ) := hD1

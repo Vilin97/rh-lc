@@ -32,7 +32,7 @@ theorem sb_step {Y : Type} [AddCommGroup Y] (Λ : AddSubgroup Y) (hf : Y → Pro
 
 
 set_option maxHeartbeats 1000000 in
-theorem levDat_law : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (Ch : ℕ → Type) (A : TwDat I l Z u a Ch), A.Is → ∀ (i : ℕ) (hi : i + 1 ≤ B.R.m) α γ, ∀ Φ : WO ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X (i + 1)) → ℂ, IsSBHalf A.e (stdHom _ _) Φ → ∀ p : ℂ, (∀ z, Φ (z.map fun r => A.e * incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) r) = p * A.xi i hi α γ z) → ∀ (κ : A.U i α) (κ' : A.U (i + 1) γ) x y, IsDetRoot _ κ.1 x → IsDetRoot _ κ'.1 y → ∀ z, IsHalf A.e z → (A.chr (i + 1) x : ℂ)⁻¹ * (A.chr (i + 1) y : ℂ) * Φ (actO _ _ κ.1⁻¹ κ'.1⁻¹ z) = ((A.chi i α κ : ℂˣ) : ℂ)⁻¹ * ((A.chi (i + 1) γ κ' : ℂˣ) : ℂ) * Φ z := by
+theorem levDat_law : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (Ch : ℕ → Type) (A : TwDat I l Z u a Ch), A.Is → ∀ (i : ℕ) (hi : i + 1 ≤ B.R.m) α γ, ∀ Φ : WO ((I.rec7 l Z).sp.X i) ((I.rec7 l Z).sp.X (i + 1)) → ℂ, IsSBHalf A.e (stdHom _ _) Φ → ∀ p : ℂ, (∀ z, Φ (z.map fun r => A.e * incA (I.rec7 l Z) r) = p * A.xi i hi α γ z) → ∀ (κ : A.U i α) (κ' : A.U (i + 1) γ) x y, IsDetRoot _ κ.1 x → IsDetRoot _ κ'.1 y → ∀ z, IsHalf A.e z → (A.chr (i + 1) x : ℂ)⁻¹ * (A.chr (i + 1) y : ℂ) * Φ (actO _ _ κ.1⁻¹ κ'.1⁻¹ z) = ((A.chi i α κ : ℂˣ) : ℂ)⁻¹ * ((A.chi (i + 1) γ κ' : ℂˣ) : ℂ) * Φ z := by
   intro B X I hI hP l Z u a Ch A hA i hi α γ Φ hΦ p hp κ κ' x y hx hy z hz
   obtain ⟨hs1, k1, hk1, hinv1, hsup1⟩ := GlobalTheory.T.schwartzBruhatHalf_adelicHomPairAction_levels I hI hP l Z u a Ch A hA i hi α γ Φ hΦ κ κ'
   have hΦ' := hΦ
@@ -40,8 +40,8 @@ theorem levDat_law : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC
   obtain ⟨w, v, hv, hvh, hzw⟩ := GlobalTheory.T.idempotentHalf_eq_rational_add_nsmul_standardHom _ _ A.e _ hA.idem (k1 * k2) (Nat.mul_pos hk1 hk2) z hz
   subst hzw
   have e1 := sb_step _ (IsHalf A.e) (fun z => Φ (actO _ _ κ.1⁻¹ κ'.1⁻¹ z)) k1 hinv1 k2 v hv
-    (half_nsmul _ _ hvh _) (w.map fun r => A.e * incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) r)
-  have e2 := sb_step _ (IsHalf A.e) Φ k2 hinv2 k1 v hv (half_nsmul _ _ hvh _) (w.map fun r => A.e * incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) r)
+    (half_nsmul _ _ hvh _) (w.map fun r => A.e * incA (I.rec7 l Z) r)
+  have e2 := sb_step _ (IsHalf A.e) Φ k2 hinv2 k1 v hv (half_nsmul _ _ hvh _) (w.map fun r => A.e * incA (I.rec7 l Z) r)
   rw [mul_comm k2 k1] at e2
   beta_reduce at e1
   rw [e1, e2]

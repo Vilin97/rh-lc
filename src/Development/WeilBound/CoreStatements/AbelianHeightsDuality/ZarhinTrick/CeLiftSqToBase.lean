@@ -304,7 +304,7 @@ private theorem ceZc_alg_lemma {GA GB Q : Type*} [AddCommGroup GA] [AddCommGroup
     intro j k hne
     simpa [Matrix.one_apply, hne] using hjk j k
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sub, map_sum, map_zsmul, map_nsmul, AddMonoidHom.sub_apply, 
+    simp only [map_sub, map_sum, map_zsmul, map_nsmul, AddMonoidHom.sub_apply, AddMonoidHom.finset_sum_apply,
     AddMonoidHom.smul_apply, hml, hs, Fin.sum_univ_four, map_add, AddMonoidHom.add_apply]
   linear_combination (norm := module)
       ((-2 : ℤ) * (m : ℤ)) • ((hd 0) • E (mu (z' 0)) (z 0)) +

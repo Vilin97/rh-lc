@@ -86,16 +86,16 @@ theorem spMap_comp' {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (io : 
   rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 theorem dual_alg {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) = spMap (algebraMap T (DualNumber T)) ≫ spMap φ := by
+    spMap (dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) = spMap (algebraMap T (DualNumber T)) ≫ spMap φ := by
   rw [← spMap_comp', ← spMap_comp']
   congr 1
-  exact RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  exact RingHom.ext fun a => by ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem dual_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (io : R →+* S) (φ : S →+* T) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (φ.comp io)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) := by
+    spMap (dualMap (φ.comp io)) = spMap (dualMap φ) ≫ spMap (dualMap io) := by
   rw [← spMap_comp']
   congr 1
-  exact RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  exact RingHom.ext fun a => by ext <;> simp [dualMap]
 
 end GlobalTheory.ArcQ.FrBC
 
@@ -147,11 +147,11 @@ theorem isArcFr_witBC : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [Num
         refine (congrArg _ φ2.symm).trans (Eq.trans ?_ (congrArg _ φ2))
         rw [← Category.assoc, qφ, Category.assoc]
       · rw [Category.assoc, Category.assoc, m2.cart.1.w, ← Category.assoc, ← Category.assoc, qb, pb]
-    have cond : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (PowerSeries.map f)) ≫ v.left) ≫ W.t.G.hom =
+    have cond : (spMap (dualMap (PowerSeries.map f)) ≫ v.left) ≫ W.t.G.hom =
         spMap (algebraMap (PowerSeries A') (DualNumber (PowerSeries A'))) ≫ spMap (PowerSeries.map f) := by
       rw [Category.assoc, vb, dual_alg]
     let v' : epsR (PowerSeries A') ⟶ W'.t.G := Over.homMk (m.cart.1.lift _ _ cond) (m.cart.1.lift_snd _ _ cond)
-    have hv : v'.left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (PowerSeries.map f)) ≫ v.left := m.cart.1.lift_fst _ _ cond
+    have hv : v'.left ≫ m.φ = spMap (dualMap (PowerSeries.map f)) ≫ v.left := m.cart.1.lift_fst _ _ cond
     have vb' : v'.left ≫ W'.t.G.hom = spMap (algebraMap _ (DualNumber (PowerSeries A'))) := Over.w v'
     refine ⟨v', q, hlie _ _ v v' (he τ k) h1 hv, hq, ?_, qb⟩
     apply m.cart.1.hom_ext

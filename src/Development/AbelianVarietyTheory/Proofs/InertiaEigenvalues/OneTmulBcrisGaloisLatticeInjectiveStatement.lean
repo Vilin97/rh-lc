@@ -12,6 +12,5 @@ public import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.Conduc
 open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations TensorProduct PowerSeries GlobalTheory.Prism GlobalTheory.BK GlobalTheory.BKReal GlobalTheory.BKGal GlobalTheory.Per Matrix
 open scoped Formalism.Per
 set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 theorem _root_.GlobalTheory.T.one_tmul_bcris_galoisLattice_injective : ∀ (l : ℕ) [Fact l.Prime] (LL : FinExt l) (T : QLat LL), Function.Injective (fun x : ↥T.L.T => (1 : OB l ↥(OL LL)) ⊗ₜ[↥(OL LL)] x) := by
   first | exact @GlobalTheory.TContInj.main | exact GlobalTheory.TContInj.main | (intros; apply GlobalTheory.TContInj.main <;> assumption)

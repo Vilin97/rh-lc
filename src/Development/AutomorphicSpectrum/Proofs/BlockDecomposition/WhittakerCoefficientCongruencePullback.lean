@@ -31,7 +31,7 @@ theorem measurePreserving_of_covol {G : Type*} [AddCommGroup G] [TopologicalSpac
   have hpos := Measure.addHaarScalarFactor_pos_of_isAddHaarMeasure (μ.map e) μ
   set c := Measure.addHaarScalarFactor (μ.map e) μ with hcdef
   have hq : Measure.QuasiMeasurePreserving e μ μ := by
-    refine ⟨e.measurable, ?_⟩
+    refine ⟨e.measurable.aemeasurable, ?_⟩
     rw [hs]
     exact Measure.smul_absolutelyContinuous
   let σ : Γ → Γ := fun g => ⟨T.symm g, hT' g g.2⟩

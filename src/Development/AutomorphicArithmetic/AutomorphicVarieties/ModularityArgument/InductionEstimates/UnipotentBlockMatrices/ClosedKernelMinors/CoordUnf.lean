@@ -104,6 +104,7 @@ private theorem sum_one (E : Set (G1 K (2 + 2))) (hE : ∀ x : G1 K (2 + 2), ∃
     tsum_eq_single ξ₀ fun ξ hξ => key _ _ _ fun h => hξ h.2.2, ← h0, inv_inv]
   exact (indicator_of_mem hδ _).trans (hΨ _ δ.2 _)
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.coordUnf :
     ∀ {K : Type} [Field K] [NumberField K] (μ₂ : Measure (G1 K 2)) [μ₂.IsHaarMeasure] (κ : Measure (KG K (2 + 2))) [κ.IsHaarMeasure] (E : Set (G1 K (2 + 2))), MeasurableSet E → (∀ x : G1 K (2 + 2), ∃! γ : PK K, γ • x ∈ E) →
       ∀ Ψ : G1 K (2 + 2) → ℝ≥0∞, Measurable Ψ → (∀ γ ∈ PK K, ∀ g, Ψ (γ * g) = Ψ g) →

@@ -19,9 +19,6 @@ open Formalism.UG Formalism.UG.P
 
 variable {E : Type} [Field E] [NumberField E]
 
-local notation "𝔸" => FiniteAdeleRing (𝓞 ℚ) ℚ
-local notation "𝒮" => tensInt (F := ℚ) 𝔸 (intOE E) (intAd ℚ)
-
 def ratBasis (E : Type) [Field E] [NumberField E] :
     Module.Basis (Fin (Module.finrank ℤ (𝓞 E))) ℚ E :=
   (Module.finBasis ℤ (𝓞 E)).localizationLocalization ℚ (nonZeroDivisors ℤ) E
@@ -47,7 +44,7 @@ theorem coord_comb (r : Fin (Module.finrank ℤ (𝓞 E)) → 𝔸) (i : Fin (Mo
     simp [coord]
   · intro j _ hj
     rw [← ratBasis_apply]
-    simp [coord, hj]
+    simp [coord, Finsupp.single_apply, hj]
   · simp
 
 theorem comb_mem (r : Fin (Module.finrank ℤ (𝓞 E)) → 𝔸) (hr : ∀ j, r j ∈ intAd ℚ) :

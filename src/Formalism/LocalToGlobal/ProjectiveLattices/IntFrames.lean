@@ -47,7 +47,7 @@ def LieFreeSt : Prop :=
         (∀ τ (w : epsOver T.V T.V ⟶ G.G), IsTan w → IsEigV c io G τ w →
           ∃! a : Fin (Dw.mult τ) → T.V, IsComb (ub τ) a w) ∧
         ∀ τ i, ∃ u' : Sp (DualNumber T.Fr) ⟶ t'.G.left, u' ≫ m1.φ = u τ i ∧
-          u' ≫ m2.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ (ub τ i).left) ∧
+          u' ≫ m2.φ = spMap (dualMap (algebraMap T.V T.Fr)) ≫ (ub τ i).left) ∧
       (∀ τ i, IsTanAt x (u τ i)) ∧ (∀ τ i, IsEigAt c τ (u τ i)) ∧
       (∀ τ w, IsTanAt x w → IsEigAt c τ w → ∃! a : Fin (Dw.mult τ) → T.Fr, IsCombAt x (u τ) a w) ∧
       ∀ τ i, ∃ cf : Fin (Dw.mult τ) → T.Fr, IsUnit (cf i) ∧ (∀ j, i < j → cf j = 0) ∧ IsCombAt x (u₀ τ) cf (u τ i)

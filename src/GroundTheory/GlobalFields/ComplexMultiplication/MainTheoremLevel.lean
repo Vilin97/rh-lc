@@ -223,7 +223,8 @@ theorem exists_uniformization_level (σ : ℂ ≃ₐ[K] ℂ) (s : IdeleGroup K)
     show _ = ((shortModel (⟨ELL.j ((ellMulAction (algebraMap K ℂ) hK).smul (primeClass 𝔭) x₀), hL _⟩ : L)).map (algebraMap L ℂ)).j
     rw [map_j, shortModel_j]
     show _ = ELL.j ((ellMulAction (algebraMap K ℂ) hK).smul (primeClass 𝔭) x₀)
-    rw [hyL₂, ellOf, ELL.j_toEll]
+    set_option backward.isDefEq.respectTransparency false in
+      rw [hyL₂, ellOf, ELL.j_toEll]
     exact j_congr rfl
   obtain ⟨V', hV'⟩ := exists_variableChange_of_j_eq _ _ hjV'
   exact exists_uniformization_of_data hK σ s 𝔞 hf (σ.restrictNormal L) hτσ V₀ hV₀ htors 𝔭 x

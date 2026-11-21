@@ -43,12 +43,12 @@ variable {A : Type u} [CommRing A] [IsNoetherianRing A] (I : Ideal A) {X : Schem
 
 lemma formalτ_mem_formalQ (n : ℕ) (y : Sheaf.H.{u} (modulesAb (idealPow I F (n + 2))) (q + 1))
     (hy : y ∈ formalQ I F q (n + 1)) :
-    H.linearMapV436 A (idealPowSucc I F (n + 1)) (q + 1) y ∈ formalQ I F q n := by
+    H.linearMap A (idealPowSucc I F (n + 1)) (q + 1) y ∈ formalQ I F q n := by
   obtain ⟨x, rfl⟩ := hy
   exact ⟨formalτE I F q n x, formalδ_naturality I F q n x⟩
 
 def formalτQ (n : ℕ) : formalQ I F q (n + 1) →ₗ[A] formalQ I F q n :=
-  (H.linearMapV436 A (idealPowSucc I F (n + 1)) (q + 1)).restrict (formalτ_mem_formalQ I F q n)
+  (H.linearMap A (idealPowSucc I F (n + 1)) (q + 1)).restrict (formalτ_mem_formalQ I F q n)
 
 abbrev formalτP : ∀ n, (Sheaf.H.{u} (modulesAb F) q ⧸ formalK I F q (n + 1)) →ₗ[A]
     (Sheaf.H.{u} (modulesAb F) q ⧸ formalK I F q n) :=
@@ -75,8 +75,8 @@ theorem mem_range_formalβ_of_mem_towerLimit {c : ℕ}
     {x : ∀ n, Sheaf.H.{u} (modulesAb (quotPow I F n)) q} (hx : x ∈ towerLimit (E := fun m => Sheaf.H.{u} (modulesAb (quotPow I F m)) q) (formalτE I F q))
     (n : ℕ) : x n ∈ LinearMap.range (formalβ I F q n) := by
   obtain ⟨p, hp⟩ := (bijective_towerLimitMap (formalτP I F q) (formalτE I F q) (formalτQ I F q)
-    (formalι I F q) (formalπ I F q) (formalι_comm I F q) (formalπ_comm I F q)
-    (formalι_injective I F q) (range_formalι I F q) hQ).2 ⟨x, hx⟩
+    (formalι I F q) (formalπ I F q) (formalι_comm I F q)
+    (formalι_injective I F q) (range_formalι I F q) (formalπ_comm I F q) hQ).2 ⟨x, hx⟩
   obtain ⟨h, hh⟩ := Submodule.Quotient.mk_surjective _ (p.1 n)
   refine ⟨h, ?_⟩
   have := congrArg (fun y => y.1 n) hp

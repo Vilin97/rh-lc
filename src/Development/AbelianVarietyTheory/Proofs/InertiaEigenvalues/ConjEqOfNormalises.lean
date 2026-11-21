@@ -442,12 +442,12 @@ theorem triv_cast {F₁ : Subfield L} (h : F₁ = maximalRealSubfield L) (s : Sp
   refine forall_congr' fun u => imp_congr (by simp) ?_
   let c := (Algebra.TensorProduct.comm (maximalRealSubfield L) L (u.adicCompletion (maximalRealSubfield L))).toRingEquiv
   have e : ∀ y : AL L, Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV (maximalRealSubfield L) u) (AlgHom.id _ L)
-      ((tensCastR rfl).symm y) = c (compAt L u y) := fun y => by
+      ((tensCastR (F1 := maximalRealSubfield L) (E := L) rfl).symm y) = c (compAt L u y) := fun y => by
     induction y using TensorProduct.induction_on with
     | zero => simp
     | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul x a => rfl
-  have e' : (x.1.1.map (tensCastR rfl).symm).map (Algebra.TensorProduct.map
+  have e' : (x.1.1.map (tensCastR (F1 := maximalRealSubfield L) (E := L) rfl).symm).map (Algebra.TensorProduct.map
       (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV (maximalRealSubfield L) u) (AlgHom.id _ L)) = (x.1.1.map (compAt L u)).map c :=
     Matrix.ext fun a b => e _
   rw [e']

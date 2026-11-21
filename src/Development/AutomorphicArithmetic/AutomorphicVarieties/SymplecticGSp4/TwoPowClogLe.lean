@@ -14,7 +14,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.
 private theorem two_pow_clog_le (m : ℕ) (hm : 1 ≤ m) : 2 ^ Nat.clog 2 m ≤ 2 * m := by
   rcases Nat.lt_or_ge 1 m with h1 | h1
   · have hk : 0 < Nat.clog 2 m := Nat.clog_pos (by norm_num) h1
-    have hlt := Nat.pow_pred_clog_lt_self 2 h1
+    have hlt := Nat.pow_pred_clog_lt_self (by norm_num : 1 < 2) h1
     obtain ⟨k, hk'⟩ : ∃ k, Nat.clog 2 m = k + 1 := ⟨Nat.clog 2 m - 1, by omega⟩
     rw [hk'] at hlt ⊢
     simp only [Nat.pred_eq_sub_one, Nat.add_sub_cancel] at hlt

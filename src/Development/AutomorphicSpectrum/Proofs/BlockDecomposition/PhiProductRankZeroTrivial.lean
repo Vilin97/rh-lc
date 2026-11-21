@@ -31,7 +31,7 @@ theorem mirProj_of_mem (n : ℕ) (u : Mir k n) (hu : u ∈ MirUin k n) : mirabol
   ext a b
   show ((u : GL (Fin (n + 1)) k) : Matrix _ _ k) (Fin.castSucc a) (Fin.castSucc b) = _
   rw [GlobalTheory.CompanionTheory.GpUnip.mirUin_entry k n u hu _ _ (Fin.castSucc_ne_last b)]
-  simp [one_apply]
+  simp [Matrix.one_apply, Fin.castSucc_inj]
 
 theorem conj_mem (n : ℕ) (g u : Mir k n) (hu : u ∈ MirUin k n) : g * u * g⁻¹ ∈ MirUin k n := by
   apply GlobalTheory.CompanionTheory.BZMirAdj.mem_of_mirProj_eq_one

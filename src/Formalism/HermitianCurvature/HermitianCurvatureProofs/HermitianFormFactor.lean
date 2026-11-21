@@ -353,13 +353,15 @@ theorem card_sub (F : Frame H Ep Em) : (Fintype.card P : ℂ) - Fintype.card Q =
 
 theorem reindex {P' Q' : Type} [Fintype P'] [DecidableEq P'] [Fintype Q'] [DecidableEq Q']
     (F : Frame H Ep Em) (eP : P' ≃ P) (eQ : Q' ≃ Q) :
-    Frame H (Ep.submatrix id eP) (Em.submatrix id eQ) := by
-  constructor
-  · rw [Matrix.conjTranspose_submatrix, ← Matrix.submatrix_mul _ _ _ id _ Function.bijective_id, F.pp]
+    Frame H (Ep.submatrix id eP) (Em.submatrix id eQ) where
+  pp := by
+    rw [Matrix.conjTranspose_submatrix, ← Matrix.submatrix_mul _ _ _ id _ Function.bijective_id, F.pp]
     exact Matrix.submatrix_one_equiv eP
-  · rw [Matrix.conjTranspose_submatrix, ← Matrix.submatrix_mul _ _ _ id _ Function.bijective_id, F.mm]
+  mm := by
+    rw [Matrix.conjTranspose_submatrix, ← Matrix.submatrix_mul _ _ _ id _ Function.bijective_id, F.mm]
     exact Matrix.submatrix_one_equiv eQ
-  · rw [Matrix.conjTranspose_submatrix, ← Matrix.submatrix_mul _ _ _ id _ Function.bijective_id, F.pm]
+  pm := by
+    rw [Matrix.conjTranspose_submatrix, ← Matrix.submatrix_mul _ _ _ id _ Function.bijective_id, F.pm]
     rfl
   · rw [Matrix.conjTranspose_submatrix, Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv,
       Matrix.submatrix_mul_equiv]

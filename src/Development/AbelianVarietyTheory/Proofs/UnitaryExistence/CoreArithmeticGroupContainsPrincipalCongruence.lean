@@ -176,7 +176,40 @@ theorem root_eq_one {D : D7} (V : HSp D) {r : ℕ} (hr : V.rank = r) (hr0 : 0 < 
       exact ⟨a, ha, x, hx, rfl⟩
   have hspan : Submodule.span D.host.E (V.L0.map f : Set (Fin V.rank → D.host.E)) = ⊤ := by
     have : (V.L0.map f : Set (Fin V.rank → D.host.E)) = V.frame.equivFun.toLinearMap '' (V.L0 : Set V.V) := rfl
-    rw [this, ← Submodule.map_span, V.standardTuple_isLattice.span_eq_top, Submodule.map_top, LinearEquiv.range]
+    have hspan : Submodule.span D.host.E (V.L0 : Set V.V) = ⊤ := by
+      let W := Submodule.span D.host.E (V.L0 : Set V.V)
+      change W = ⊤
+      by_contra h
+      let e : V.V ≃ₗ⋆[D.host.E] V.V :=
+        (V.frame.equivFun.trans (starLinearEquiv D.host.E)).trans V.frame.equivFun.symm
+      let g : V.V →ₗ[D.host.E] Module.Dual D.host.E W :=
+        (LinearMap.domRestrict' W).comp (V.hT.comp e.toLinearMap)
+      have hdim : Module.finrank D.host.E (Module.Dual D.host.E W) <
+          Module.finrank D.host.E V.V := by
+        rw [Subspace.dual_finrank_eq]
+        exact Submodule.finrank_lt h
+      obtain ⟨z, hz, hz₀⟩ :=
+        Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+      have hsmul (a : D.host.E) : a • e z ∈ V.L0 := by
+        rw [← V.baseLattice_isUnimodular]
+        simp only [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual,
+          Submodule.mem_iInf, Submodule.mem_comap, LinearMap.restrictScalars_apply]
+        intro y hy
+        have hzy : V.hT (e z) y = 0 :=
+          congrArg (fun f : Module.Dual D.host.E W => f ⟨y, Submodule.subset_span hy⟩)
+            (LinearMap.mem_ker.mp hz)
+        have hyz : V.hT y (e z) = 0 := by
+          have hh := V.herm.eq (e z) y
+          simpa [hzy] using hh.symm
+        simp [hyz]
+      let i : D.host.E →ₗ[𝓞 D.host.E] V.L0 :=
+        ((LinearMap.toSpanSingleton D.host.E _ (e z)).restrictScalars (𝓞 D.host.E)).codRestrict V.L0 hsmul
+      let : Module.Finite (𝓞 D.host.E) V.L0 := Module.Finite.iff_fg.mpr V.standardTuple_isLattice.fg
+      let : Module.Finite (𝓞 D.host.E) D.host.E := Module.Finite.of_injective i fun a b hab =>
+        smul_left_injective D.host.E (fun hzero => hz₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+      exact RingOfIntegers.not_isField D.host.E
+        (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 D.host.E) D.host.E) (Field.toIsField D.host.E))
+    rw [this, ← Submodule.map_span, hspan, Submodule.map_top, LinearEquiv.range]
   rw [hhat] at hκ2
   obtain ⟨Λ', g1, g2, g3⟩ := exists_lattice_congr D.host.F D.host.E V.rank M (by omega) (V.L0.map f)
     (V.standardTuple_isLattice.fg.map f) hspan (finHom V g) (finHom V κ⁻¹).1 δ.1 hκ2 (by

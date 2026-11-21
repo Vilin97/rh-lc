@@ -632,7 +632,8 @@ theorem coarse_le_c_w_holds : CoarseLeCW := by
   have t5 : ((W.iW P l τ : ℝ) / (l : ℝ)) * (1 + Real.posLog ((h0 P : ℝ) / (l : ℝ))) ≤
       (dep / (l : ℝ)) * (1 + max 0 (Real.log (P.h / (l : ℝ)))) := by
     have hp : Real.posLog ((h0 P : ℝ) / (l : ℝ)) ≤ max 0 (Real.log (P.h / (l : ℝ))) :=
-      Real.posLog_le_posLog (div_nonneg (Nat.cast_nonneg _) hl0) (div_le_div_of_nonneg_right hh0 hl0)
+      Real.posLog_le_posLog (by have := div_nonneg (Nat.cast_nonneg (h0 P)) hl0; linarith)
+        (div_le_div_of_nonneg_right hh0 hl0)
     exact mul_le_mul (div_le_div_of_nonneg_right hdep hl0) (by linarith)
       (add_nonneg zero_le_one Real.posLog_nonneg) (div_nonneg hdep0 hl0)
   by_cases hc : ((d0 l (W.xm τ - W.top P τ) : ℕ) : ℤ) < W.xm τ - W.top P τ

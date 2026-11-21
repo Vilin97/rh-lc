@@ -39,9 +39,10 @@ private theorem types (hn : 1 ≤ n) (x : B.Pt) {σ : Submodule ℂ (UA L n → 
         ((t i).comp (V.pr.comp (Ine (F := L) (s.A u)).subtype))) (rc (algNorm τ)) := by
   have hw : IsSplitAt (s.w u) := split_w (Or.inr (Or.inl u.2))
   have hu : ((l : ℕ) : 𝓞 L) ∉ (s.w u).asIdeal := fun h => s.St_l u u.2 (by
-    rw [← under_w (s := s) u]
-    change algebraMap _ (𝓞 L) _ ∈ (s.w u).asIdeal
-    rwa [map_natCast])
+    have hh : ((l : ℕ) : 𝓞 (Lp L)) ∈ ((s.w u).under (𝓞 (Lp L))).asIdeal := by
+      change algebraMap (𝓞 (Lp L)) (𝓞 L) _ ∈ (s.w u).asIdeal
+      simpa only [map_natCast] using h
+    simpa only [under_w] using hh)
   obtain ⟨τ, hτ⟩ := comp_ex hσ hw
   obtain ⟨P, hP⟩ := diag_pt x V.pr ρ hx hn hs t ht u (Ine (F := L) (s.A u)) fun g hg => ⟨g, hg, rfl⟩
   refine ⟨τ, hτ, fun rc hrc => wd_type hu _ (fun i => ?_) P hP ((hl _ hw τ hτ _ _ rc hrc).1 hu)⟩

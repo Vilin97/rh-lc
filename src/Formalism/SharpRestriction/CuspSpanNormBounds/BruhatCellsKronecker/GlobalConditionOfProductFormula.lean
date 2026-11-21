@@ -430,7 +430,7 @@ theorem dual_of_agree (δ : ∀ p, (D.s.atP p).Fp) (M : ∀ p : PlF D, Loc.Model
   rw [hpsi, e, AddChar.map_neg_eq_inv, inv_eq_one]
 
 theorem diffHyp_of (δ : ∀ p, (D.s.atP p).Fp) (M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep)
-    (hA : ∀ p, Agree δ M p) (h6 : adm6 D) (h7 : adm7 D) : DiffHyp (fun p : PlF D => D.s.atP p) δ := {
+    (hA : ∀ p, Agree δ M p) (h6 : adm6 D) (h7 : adm7 D) : DiffHyp (fun p : PlF D => D.s.atP p) δ where
   hinv := conjF_inv
   hfix := conjF_fix
   hδ := fun p => (hA p).2.1
@@ -449,7 +449,7 @@ theorem diffHyp_of (δ : ∀ p, (D.s.atP p).Fp) (M : ∀ p : PlF D, Loc.Model (D
     have := ((M p).L.cj_fix x).1 (by rw [(hA p).2.2.1]; exact hx)
     exact this
   sa := h6
-  pf := h7.2 }
+  pf := h7.2
 
 theorem isDiffGen_of_agree (δ : ∀ p, (D.s.atP p).Fp) (M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep)
     (hA : ∀ p, Agree δ M p) (h6 : adm6 D) (h7 : adm7 D) (p : PlF D) : IsDiffGen δ p :=

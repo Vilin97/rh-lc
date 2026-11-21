@@ -212,40 +212,40 @@ open GlobalTheory.Mem.Col2.RowTie
 
 set_option maxHeartbeats 1000000 in
 theorem clsP_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)),
-    ∀ u : B.Word, ∃ (KP : ClsPTied (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) u) (W : ValPTied u KP),
+    ∀ u : B.Word, ∃ (KP : ClsPTied (D := (I.rec7 l Z)) u) (W : ValPTied u KP),
       I.ReadsP I.mu0 KP.lev.Lb KP.lev.U KP.lev.chi (fun c => (KP.y c).1) KP.lat (fun c s => (KP.stabI c s).1) ∧
-      NormPTie W ∧ ∀ z c (s : FrP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) s', s'.1 = s.1 → W.eW z c s = z c s' := by
+      NormPTie W ∧ ∀ z c (s : FrP (I.rec7 l Z)) s', s'.1 = s.1 → W.eW z c s = z c s' := by
   intro B X I hI hP l Z u
-  have hgP : gramP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) = 1 := (spaces_in_coordinates I hI hP l Z).2.1
+  have hgP : gramP (I.rec7 l Z) = 1 := (spaces_in_coordinates I hI hP l Z).2.1
   have hQ : I.Q I.mu0 = ∅ := by
     show QE I.sel ((I.tup I.mu0 : Tup B.fields.F B.fields.E B.fields.K I.S) : Chr B.fields.F B.fields.E B.fields.K) = ∅
     rw [I.trueColumn_tuple_trivial_eq_one]
     exact ciQE_one I.sel
-  have hbad : badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) = plUnder B.host.F (B.primes X).vGs := by
+  have hbad : badG (I.rec7 l Z) = plUnder B.host.F (B.primes X).vGs := by
     ext v
     exact (plUnder_vGs B.sp.cm (BasePrimes.primes_ok B X).1 v).symm
   obtain ⟨L, R, hLb, hpt, hlev, hchr, hst, hstc⟩ := exists_cls (X := B.fields) B.sp.cm (rowTyG I.Ch I.Ps)
-    (levQX B.R I.sel (I.tup I.mu0)) (fun _ => True) B.embLL hQ (levOk_base B X).split B.R.f (gramP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) hgP
-    (badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) hbad
-  let KP : ClsPTied (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u :=
+    (levQX B.R I.sel (I.tup I.mu0)) (fun _ => True) B.embLL hQ (levOk_base B X).split B.R.f (gramP (I.rec7 l Z)) hgP
+    (badG (I.rec7 l Z)) hbad
+  let KP : ClsPTied (D := I.rec7 l Z) u :=
     { lev := L
       y := R.y
       y_bij := R.y_bij
       lat := fun c => ((I.stX I.mu0).rep c).1.1.deco.1.N
       y_lat := R.y_lat
-      lat_fin := fun c => (Module.Finite.iff_fg (R := 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)
-        (M := Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m - 1) → (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)).2 ((I.stX I.mu0).rep c).1.1.deco.2.lat.fg
+      lat_fin := fun c => (Module.Finite.iff_fg (R := 𝓞 (I.rec7 l Z).host.E)
+        (M := Fin ((I.rec7 l Z).R.N (I.rec7 l Z).R.m - 1) → (I.rec7 l Z).host.E)).2 ((I.stX I.mu0).rep c).1.1.deco.2.lat.fg
       stabI := R.stabI
       stabI_inj := R.stabI_inj
       stabI_range := fun c γ => R.stabI_range c γ.1 γ.2 }
 
-  have hemb : Formalism.L2.Forms.embT (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) = embAt B.embLL B.fields.emb := by
+  have hemb : Formalism.L2.Forms.embT (I.rec7 l Z) = embAt B.embLL B.fields.emb := by
     funext τ
     ext y
     show B.host.φ₀ _ = _
     rw [← B.embE_φ₀]
     rfl
-  have hsg : (I.perIn u I.mu0).sgT = Formalism.L2.Forms.sgT (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u := by
+  have hsg : (I.perIn u I.mu0).sgT = Formalism.L2.Forms.sgT (D := I.rec7 l Z) u := by
     funext τ
     obtain ⟨a, ha⟩ := B.R.t_odd
     have e1 : B.R.m * (B.R.t + 1) / 2 = B.R.m * (a + 1) := by
@@ -258,13 +258,13 @@ theorem clsP_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.P
     congr 1
   have hF : FOk B.fields.emb B.embLL := (base_fields_primes_ok B X).2.2.2.1
   have hS : (I.stX I.mu0).Ok := (l.per u I.mu0).step
-  have hsh : shiftOf (Formalism.L2.Forms.sgT (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u) = shiftOf (I.perIn u I.mu0).sgT := congrArg shiftOf hsg.symm
+  have hsh : shiftOf (Formalism.L2.Forms.sgT (D := I.rec7 l Z) u) = shiftOf (I.perIn u I.mu0).sgT := congrArg shiftOf hsg.symm
   have hnf : nfAll (I.perIn u I.mu0).sgT = nfAll B.wts.sgW := MetricTie.nfAll_shift _ _ _ fun _ _ => rfl
-  have hG : ∀ (e : Tau B.R → B.host.E →+* ℂ) τ, gramC (gramP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) e τ = 1 := fun e τ => by
+  have hG : ∀ (e : Tau B.R → B.host.E →+* ℂ) τ, gramC (gramP (I.rec7 l Z)) e τ = 1 := fun e τ => by
     rw [hgP]
     exact Matrix.map_one _ (map_zero _) (map_one _)
   letI : Fintype (I.stX I.mu0).Cl := (I.perIn u I.mu0).clFin (l.per u I.mu0)
-  let W : ValPTied (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u KP :=
+  let W : ValPTied (D := I.rec7 l Z) u KP :=
     { sg := fun τ i => by
         have h2 := (sgHC_eq (B.hcW u τ) i).trans (congrArg (fun P => RowPar.sgHC P i) (rowPar_eq B u τ))
         exact (RowPar.sg_eq (B.hc τ) i).trans (congrArg (· - _) h2.symm)
@@ -280,11 +280,11 @@ theorem clsP_tie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.P
       rat := fun z => rat_iff (I.stX I.mu0) B.fields.emb B.embLL (I.perIn u I.mu0).sgT (l.fmL u I.mu0).famP
         (VV_shW B.wts.sgW _) hsh z
       lat := fun x => lat_iff (I.stX I.mu0) B.fields.emb B.embLL (I.perIn u I.mu0).sgT (l.fmL u I.mu0).famP hS hsh hemb
-        (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).plEq (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.places.resChar (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.places.resChar_prime
-        (GlobalTheory.LvT.Inh.resChar_mem_plEq (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (fun w => IntSpan (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) w B.wts.sgW)
+        (I.rec7 l Z).plEq (I.rec7 l Z).what₂.places.resChar (I.rec7 l Z).what₂.places.resChar_prime
+        (GlobalTheory.LvT.Inh.resChar_mem_plEq (I.rec7 l Z)) (fun w => IntSpan (I.rec7 l Z) w B.wts.sgW)
         (fun w Q => by
-          have h := GlobalTheory.LvT.Built.ValLat.mem_closure_iff B.embLL ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).plEq w) (intW (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.places w)
-            ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).val_nonneg_iff w) B.wts.sgW Q
+          have h := GlobalTheory.LvT.Built.ValLat.mem_closure_iff B.embLL ((I.rec7 l Z).plEq w) (intW (I.rec7 l Z).what₂.places w)
+            ((I.rec7 l Z).val_nonneg_iff w) B.wts.sgW Q
           rw [← delStd_shW B.wts.sgW (-((B.R.m : ℤ) * (((B.R.t + 1) / 2 : ℕ) : ℤ)))] at h
           exact h)
         _ (fun c => RowTie.Lsh_empty _) x }

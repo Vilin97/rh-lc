@@ -122,7 +122,7 @@ theorem aeval_extRep' [TopologicalSpace G] [TopologicalSpace V] [ContinuousAdd V
       refine ⟨a • mulVB (LL := LL) k y, (GlobalTheory.CrysSub.mem_Dcris _ _ _).2 fun h => ?_, ?_, ?_⟩
       · rw [map_smul, actVB_comp' ι PD PD' hι, actVB_mulVB' PD _ _ k (hkF h k), hyfix]
       · rw [map_smul, hsm, hpy]
-        simp [mulVB, smul_tmul']
+        simp [mulVB, smul_tmul', GlobalTheory.CrysExt.incl, AlgebraTensorModule.map_tmul]
       · rw [map_smul, actVB_mulVB' PD _ _ k (hg k), hyfix]
     | add u v hu hv =>
       obtain ⟨x₁, h1, h2, h3⟩ := hu

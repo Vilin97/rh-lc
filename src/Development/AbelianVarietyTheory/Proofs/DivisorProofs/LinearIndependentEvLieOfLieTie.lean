@@ -31,9 +31,9 @@ theorem lieTie_add {S : Scheme.{0}} {G : Over S} [GrpObj G] {y : Sp C ⟶ S} {ψ
   obtain ⟨xG', w', h1', h2', h3'⟩ := h'
   refine ⟨lieAdd xG xG', w * w', h1.mul h1', (hψ.2 _ w w' u u' h2.symm h2'.symm).symm, ?_⟩
   let d : Over.mk ((specO C (DualNumber C)).hom ≫ spMap (algebraMap O C)) ⟶ specO O (DualNumber O) :=
-    Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O C))) (by
+    Over.homMk (spMap (dualMap (algebraMap O C))) (by
       refine (spMap_spMap _ _).trans (Eq.trans (congrArg _ ?_) (spMap_spMap _ _).symm)
-      ext s <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl])
+      ext s <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl])
   refine (P.gen_pull.2 _ w w' (d ≫ xG.1) (d ≫ xG'.1) h3.symm h3'.symm).symm.trans ?_
   rw [← MonObj.comp_mul]
   rfl

@@ -109,9 +109,7 @@ theorem szRow_lStar : SzRow (fun _ D L => (L.sc.b' + L.Sc + L.etaSz + L.sc.b / l
   have hm1 : (1 : ℝ) ≤ D.R.m := by
     have := D.R.two_le_m
     exact_mod_cast (by omega : 1 ≤ D.R.m)
-  have hn0 : (0 : ℝ) < D.R.n := by
-    have h : 0 < D.R.n := by unfold Ranks.n; exact D.R.ord_pos
-    exact_mod_cast h
+  have hn0 : (0 : ℝ) < D.R.n := by unfold Ranks.n; positivity
   have ht0 : (0 : ℝ) < D.R.t := by
     have := D.R.three_m_lt_t
     exact_mod_cast (by omega : 0 < D.R.t)

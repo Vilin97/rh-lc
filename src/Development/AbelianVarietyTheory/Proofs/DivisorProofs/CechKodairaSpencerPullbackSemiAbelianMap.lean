@@ -33,24 +33,24 @@ noncomputable section
 
 namespace GlobalTheory.KSBaseChange
 
-theorem isTranslate_baseChange : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (X : Scheme.{0}) (t : SAB H X) (R S S' : Type) [CommRing R] [CommRing S] [CommRing S'] (φ : R →+* S) (ψ : S →+* S') (g₀ : Sp S ⟶ t.G.left) (v : Sp (DualNumber R) ⟶ t.G.left) (w : Sp (DualNumber S) ⟶ t.G.left), IsTranslate t φ g₀ v w → IsTranslate t (ψ.comp φ) (spMap ψ ≫ g₀) v (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w) := by
+theorem isTranslate_baseChange : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (X : Scheme.{0}) (t : SAB H X) (R S S' : Type) [CommRing R] [CommRing S] [CommRing S'] (φ : R →+* S) (ψ : S →+* S') (g₀ : Sp S ⟶ t.G.left) (v : Sp (DualNumber R) ⟶ t.G.left) (w : Sp (DualNumber S) ⟶ t.G.left), IsTranslate t φ g₀ v w → IsTranslate t (ψ.comp φ) (spMap ψ ≫ g₀) v (spMap (dualMap ψ) ≫ w) := by
   intro E _ _ _ H X t R S S' _ _ _ φ ψ g₀ v w ⟨g', v', h₁, h₂, h₃⟩
-  have e1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (algebraMap S (DualNumber S)) =
+  have e1 : spMap (dualMap ψ) ≫ spMap (algebraMap S (DualNumber S)) =
       spMap (algebraMap S' (DualNumber S')) ≫ spMap ψ := by
     rw [GlobalTheory.LogKSLoc.spMap_comp', GlobalTheory.LogKSLoc.spMap_comp']
     congr 1
     refine RingHom.ext fun a => ?_
-    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-  let h : tEpsG ((spMap ψ ≫ g₀) ≫ t.G.hom) ⟶ tEpsG (g₀ ≫ t.G.hom) := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ)) (by
-    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (algebraMap S (DualNumber S)) ≫ g₀ ≫ t.G.hom =
+    ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  let h : tEpsG ((spMap ψ ≫ g₀) ≫ t.G.hom) ⟶ tEpsG (g₀ ≫ t.G.hom) := Over.homMk (spMap (dualMap ψ)) (by
+    show spMap (dualMap ψ) ≫ spMap (algebraMap S (DualNumber S)) ≫ g₀ ≫ t.G.hom =
       spMap (algebraMap S' (DualNumber S')) ≫ (spMap ψ ≫ g₀) ≫ t.G.hom
     rw [← Category.assoc, e1]; simp only [Category.assoc])
   refine ⟨h ≫ g', h ≫ v', ?_, ?_, ?_⟩
   · rw [Over.comp_left, h₁]
-    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (algebraMap S (DualNumber S)) ≫ g₀ = _
+    show spMap (dualMap ψ) ≫ spMap (algebraMap S (DualNumber S)) ≫ g₀ = _
     rw [← Category.assoc, e1, Category.assoc]
   · rw [Over.comp_left, h₂]
-    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v = _
+    show spMap (dualMap ψ) ≫ spMap (dualMap φ) ≫ v = _
     rw [← Category.assoc, GlobalTheory.LogKSLoc.spMap_comp', GlobalTheory.LogKSLoc.dualMap_comp']
   · rw [← MonObj.comp_mul, Over.comp_left, h₃]
     rfl
@@ -60,7 +60,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 theorem isTranslate_push {X X' : Scheme.{0}} {t : SAB H X} {t' : SAB H X'} {g : X' ⟶ X} (mu : SABMap t' t g)
     (U : X.affineOpens) (U' : X'.affineOpens) (hU : U'.1 ≤ g ⁻¹ᵁ U.1) {vb : Sp (DualNumber Γ(X, U.1)) ⟶ t.G.left}
     {vb' : Sp (DualNumber Γ(X', U'.1)) ⟶ t'.G.left} (hvb : IsTanAtG t (chart U) vb) (hvb' : IsTanAtG t' (chart U') vb')
-    (hvv : vb' ≫ mu.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.appLE U.1 U'.1 hU).hom) ≫ vb) {S : Type} [CommRing S]
+    (hvv : vb' ≫ mu.φ = spMap (dualMap (g.appLE U.1 U'.1 hU).hom) ≫ vb) {S : Type} [CommRing S]
     (φS : Γ(X', U'.1) →+* S) (g₀ : Sp S ⟶ t'.G.left) (hg₀ : g₀ ≫ t'.G.hom = spMap φS ≫ chart U')
     (w' : Sp (DualNumber S) ⟶ t'.G.left) (hw' : IsTranslate t' φS g₀ vb' w') :
     IsTranslate t (φS.comp (g.appLE U.1 U'.1 hU).hom) (g₀ ≫ mu.φ) vb (w' ≫ mu.φ) := by
@@ -105,14 +105,14 @@ theorem fst_valR_of_red {Y : Scheme.{0}} {S : Type} [CommRing S] {g₀ : Sp S �
   rfl
 
 theorem snd_dualMap {S S' : Type} [CommRing S] [CommRing S'] (σ : S →+* S') (y : DualNumber S) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap σ y).snd = σ y.snd := by
-  simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    (dualMap σ y).snd = σ y.snd := by
+  simp [dualMap]
 
 theorem rel_pair {X X' : Scheme.{0}} {t : SAB H X} {t' : SAB H X'} {g : X' ⟶ X} (mu : SABMap t' t g)
     (U : X.affineOpens) (U' : X'.affineOpens) (hU : U'.1 ≤ g ⁻¹ᵁ U.1) {n : ℕ}
     {v : Fin n → (Sp (DualNumber Γ(X, U.1)) ⟶ t.G.left)} {v' : Fin n → (Sp (DualNumber Γ(X', U'.1)) ⟶ t'.G.left)}
     (hv : ∀ i, IsTanAtG t (chart U) (v i)) (hv' : ∀ i, IsTanAtG t' (chart U') (v' i))
-    (hvv : ∀ i, v' i ≫ mu.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.appLE U.1 U'.1 hU).hom) ≫ v i) (Θ : Matrix (Fin n) (Fin n) Γ(X, U.1))
+    (hvv : ∀ i, v' i ≫ mu.φ = spMap (dualMap (g.appLE U.1 U'.1 hU).hom) ≫ v i) (Θ : Matrix (Fin n) (Fin n) Γ(X, U.1))
     {j₁ j₂ : t.PP.L.ι} {W₁ W₂ : t.G.left.Opens} (hW₁ : W₁ ≤ t.G.hom ⁻¹ᵁ U.1)
     (d₁ d₂ : ∀ O : t.G.left.Opens, Γ(t.G.left, O) → Γ(t.G.left, O))
     (hrel : ∀ (O : t.G.left.Opens), O ≤ W₁ ⊓ W₂ → ∀ (f : Γ(t.G.left, O)) (S : Type) [CommRing S]
@@ -158,7 +158,7 @@ theorem rel_pair {X X' : Scheme.{0}} {t : SAB H X} {t' : SAB H X'} {g : X' ⟶ X
       (fun P _ => Algebra.linearMap S _) _ _ fun P _ => ?_
     simp only [Algebra.linearMap_apply]
     set σ := algebraMap S (Localization.AtPrime P) with hσ
-    have k := key (Localization.AtPrime P) (σ.comp φS) (spMap σ ≫ g₀) (fun b => spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ w b)
+    have k := key (Localization.AtPrime P) (σ.comp φS) (spMap σ ≫ g₀) (fun b => spMap (dualMap σ) ≫ w b)
       (by rw [Category.assoc, hg₀, ← Category.assoc, GlobalTheory.LogKSLoc.spMap_comp'])
       (fun p _ => hO₀ (Set.mem_univ ((spMap σ).base p)))
       (fun b => isTranslate_baseChange E H X' t' _ _ _ φS σ g₀ (v' b) (w b) (hw b))
@@ -262,7 +262,7 @@ end GlobalTheory.KSBaseChange
 
 namespace GlobalTheory.KSBaseChange
 
-theorem isKS_pull : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (X X' : Scheme.{0}) (t : SAB H X) (t' : SAB H X') (g : X' ⟶ X) (mu : SABMap t' t g) (V : X.Opens) (V' : X'.Opens) (U : X.affineOpens) (U' : X'.affineOpens) (hU : U'.1 ≤ g ⁻¹ᵁ U.1), U'.1 ⊓ V' ≤ g ⁻¹ᵁ V → ∀ (n : ℕ) (v : Fin n → (Sp (DualNumber Γ(X, U.1)) ⟶ t.G.left)) (v' : Fin n → (Sp (DualNumber Γ(X', U'.1)) ⟶ t'.G.left)), (∀ i, IsTanAtG t (chart U) (v i)) → (∀ i, IsTanAtG t' (chart U') (v' i)) → (∀ i, v' i ≫ mu.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.appLE U.1 U'.1 hU).hom) ≫ v i) → ∀ (D : Derivation ℤ Γ(X, U.1) Γ(X, U.1)) (D' : Derivation ℤ Γ(X', U'.1) Γ(X', U'.1)), (∀ r, D' ((g.appLE U.1 U'.1 hU).hom r) = (g.appLE U.1 U'.1 hU).hom (D r)) → ∀ Θ : Matrix (Fin n) (Fin n) Γ(X, U.1), IsKS t V U v D Θ → IsKS t' V' U' v' D' ((g.appLE U.1 U'.1 hU).hom.mapMatrix Θ) := by
+theorem isKS_pull : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (X X' : Scheme.{0}) (t : SAB H X) (t' : SAB H X') (g : X' ⟶ X) (mu : SABMap t' t g) (V : X.Opens) (V' : X'.Opens) (U : X.affineOpens) (U' : X'.affineOpens) (hU : U'.1 ≤ g ⁻¹ᵁ U.1), U'.1 ⊓ V' ≤ g ⁻¹ᵁ V → ∀ (n : ℕ) (v : Fin n → (Sp (DualNumber Γ(X, U.1)) ⟶ t.G.left)) (v' : Fin n → (Sp (DualNumber Γ(X', U'.1)) ⟶ t'.G.left)), (∀ i, IsTanAtG t (chart U) (v i)) → (∀ i, IsTanAtG t' (chart U') (v' i)) → (∀ i, v' i ≫ mu.φ = spMap (dualMap (g.appLE U.1 U'.1 hU).hom) ≫ v i) → ∀ (D : Derivation ℤ Γ(X, U.1) Γ(X, U.1)) (D' : Derivation ℤ Γ(X', U'.1) Γ(X', U'.1)), (∀ r, D' ((g.appLE U.1 U'.1 hU).hom r) = (g.appLE U.1 U'.1 hU).hom (D r)) → ∀ Θ : Matrix (Fin n) (Fin n) Γ(X, U.1), IsKS t V U v D Θ → IsKS t' V' U' v' D' ((g.appLE U.1 U'.1 hU).hom.mapMatrix Θ) := by
   intro E _ _ _ H X X' t t' g mu V V' U U' hU hUV n v v' hv hv' hvv D D' hD Θ hKS
   obtain ⟨J, W, j, d, hcov, hWj, hfld, hlift, hrel⟩ := hKS
   have hWU : ∀ i, W i ≤ t.G.hom ⁻¹ᵁ U.1 := fun i =>

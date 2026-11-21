@@ -16,8 +16,6 @@ open CategoryTheory NumberField IntermediateField GroundTheory.Global FiniteSubf
 
 open scoped NumberField.LiesOver NumberField.AdeleRing
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield}

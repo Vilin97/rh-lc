@@ -59,12 +59,8 @@ theorem szRow_rbS : SzRow (fun C D L => ((D.R.r : ℝ) * (L.sc.b' + L.Sc) * Real
   have hone : 1 ≤ L.sc.x := by linarith
   have hP : 1 ≤ L.sc.x ^ cD := Real.one_le_rpow hone hcD
   have hn : (0 : ℝ) < D.R.n := by
-    have hn' : 0 < D.R.n := by
-      have := D.R.two_le_m
-      have := D.R.m_le_f
-      unfold Ranks.n
-      omega
-    exact_mod_cast hn'
+    unfold Ranks.n
+    positivity
   beta_reduce
   unfold lA Scale.b' Scale.a
   rw [L.Sc_eq, V.Del_eq]

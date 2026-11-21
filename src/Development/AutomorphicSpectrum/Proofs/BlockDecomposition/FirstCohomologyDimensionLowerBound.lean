@@ -24,7 +24,7 @@ theorem dim_le (R : Type) [CommRing R] [IsLocalRing R] [IsNoetherianRing R] (g n
   have hm : IsLocalRing.maximalIdeal R ∈ I.minimalPrimes := by
     obtain ⟨p, hp⟩ := Ideal.nonempty_minimalPrimes hne
     rwa [← hI p hp.1.1 hp.1.2]
-  have h1 := Ideal.height_le_spanRank_toENat_of_mem_minimal_primes I _ hm
+  have h1 := Ideal.height_le_spanRank_toENat_of_mem_minimalPrimes I _ hm
   have h2 : Submodule.spanRank I ≤ n := by
     rw [← hf]
     refine (Submodule.spanRank_span_le_card (R := R) (Set.range f)).trans (Cardinal.mk_range_le.trans ?_)

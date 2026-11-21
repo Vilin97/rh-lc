@@ -18,7 +18,7 @@ open PositivityTheory.Rg.Tf.Core PositivityTheory.Rg.Tf.Adel PositivityTheory.Rg
 
 private theorem reps_const {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (G1 K n)) [μ.IsHaarMeasure]
     {v : L2 μ} {φ : G1 K n → ℂ} (c : ℂ) (h : Reps μ v φ) : Reps μ (c • v) (fun y => c * φ y) := by
-  filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_smul c v), h] with y e1 e2
+  filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_smul c v), h] with y e1 e2
   rw [e1, Pi.smul_apply, e2, smul_eq_mul]
 
 private theorem reps_finsum {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (G1 K n)) [μ.IsHaarMeasure]
@@ -27,11 +27,12 @@ private theorem reps_finsum {K : Type} [Field K] [NumberField K] {n : ℕ} (μ :
   classical
   induction s using Finset.induction_on with
   | empty =>
-    filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K n) μ))] with y e
-    simpa using e
+    filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K n) μ))] with y e
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa using e
   | insert i s hi ih =>
     rw [Finset.sum_insert hi]
-    filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_add (v i) (∑ j ∈ s, v j)), ih, h i] with y e1 e2 e3
+    filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_add (v i) (∑ j ∈ s, v j)), ih, h i] with y e1 e2 e3
     rw [e1, Pi.add_apply, e2, e3, Finset.sum_insert hi]
 
 private theorem coe_lsum {d : ℕ} {ι : Type} (s : Finset ι) (W : ι → L (Eu d)) :
@@ -86,7 +87,7 @@ theorem UpperTheory.pseudoEisenstein_section_pfun_inBand_slices_reps :
   have hB := fun i => bfFun (A.sec (e i)) (β i) (hS _) (hβc i) (hβs i)
   refine ⟨⟨?_, ?_, ?_, ?_, ?_, ?_⟩, ?_, ?_, ?_⟩
   · rw [show F = fun g => ∑ i, bf (β i) (A.sec (e i)) g from funext hFs]
-    exact continuous_finset_sum _ fun i _ => (hB i).1.cont
+    exact continuous_finsetSum _ fun i _ => (hB i).1.cont
   · choose C hC using fun i => (hB i).1.bdd
     refine ⟨∑ i, C i, fun g => ?_⟩
     rw [hFs]

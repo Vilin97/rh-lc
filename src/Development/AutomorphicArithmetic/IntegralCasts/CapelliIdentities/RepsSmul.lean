@@ -22,9 +22,7 @@ private theorem UpperTheory.Reformulated.B.Glb3.ae_pull {G : Type} [Group G] (Γ
   have : Countable Γ := TopologicalSpace.separableSpace_iff_countable.mp inferInstance
   refine UpperTheory.ae_fundamental_domain Γ μ (RightCosetSpace.fundamentalDomain Γ) (RightCosetSpace.mk Γ)
     measurable_quotient_mk'' (fun γ g => Quotient.sound ⟨γ, rfl⟩) (fun g => ?_) p hp
-  unfold RightCosetSpace.fundamentalDomain
-  generalize_proofs h
-  exact (h.choose_spec.2 g).exists
+  exact (RightCosetSpace.existsUnique_smul_mem_fundamentalDomain Γ g).exists
 
 private theorem UpperTheory.Reformulated.B.Glb3.reps_smul {K : Type} [Field K] [NumberField K] {n : ℕ}
     (μ : Measure (PositivityTheory.Rg.Tf.Core.G1 K n)) [μ.IsHaarMeasure] (v : PositivityTheory.Rg.Tf.Core.L2 μ)

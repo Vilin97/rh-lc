@@ -87,7 +87,7 @@ private theorem one_copy (hS : Step) (π : Representation ℂ G W) (τ : Represe
     refine rank_le_of _ hi _ fun z => ?_
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | tmul a b =>
       refine ⟨(f _).2, fun u hu => ?_⟩
       exact (key u a b).symm.trans (congrArg (fun m => (f (m ⊗ₜ b) : W)) (a.2 u hu))

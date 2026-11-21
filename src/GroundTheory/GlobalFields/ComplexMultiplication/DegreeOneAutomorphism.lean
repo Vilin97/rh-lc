@@ -86,12 +86,12 @@ theorem exists_coeffs_of_degree_eq_one_of_isAlgClosed (ψ : Isogeny A B) (h : ψ
       map_ofNat]
     linear_combination eB - ι γ ^ 2 * eA
   obtain ⟨hP0, hQ0⟩ := eq_zero_of_algebraMap_add_mul_genY A key
-  have c3 := congrArg (Polynomial.coeff · 3) hP0
-  have c2 := congrArg (Polynomial.coeff · 2) hP0
-  have c1 := congrArg (Polynomial.coeff · 1) hP0
-  have c0 := congrArg (Polynomial.coeff · 0) hP0
-  have d1 := congrArg (Polynomial.coeff · 1) hQ0
-  have d0 := congrArg (Polynomial.coeff · 0) hQ0
+  have c3 := congrArg (AddMonoidAlgebra.coeff · 3) hP0
+  have c2 := congrArg (AddMonoidAlgebra.coeff · 2) hP0
+  have c1 := congrArg (AddMonoidAlgebra.coeff · 1) hP0
+  have c0 := congrArg (AddMonoidAlgebra.coeff · 0) hP0
+  have d1 := congrArg (AddMonoidAlgebra.coeff · 1) hQ0
+  have d0 := congrArg (AddMonoidAlgebra.coeff · 0) hQ0
   simp only [hP, hQ, coeff_add, coeff_C_mul, coeff_X_pow, coeff_X, coeff_C, coeff_zero] at c3 c2 c1 c0 d1 d0
   norm_num at c3 c2 c1 c0 d1 d0
   refine ⟨α, β, γ, δ, ε, hα, hγ, hx, hy, by linear_combination c3, by linear_combination c2,

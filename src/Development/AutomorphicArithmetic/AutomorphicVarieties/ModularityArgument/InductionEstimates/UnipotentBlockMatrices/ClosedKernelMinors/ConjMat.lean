@@ -177,8 +177,9 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.dies :
     congr 1
     funext y
     obtain ⟨Z, hZ⟩ := fromMat γ (unipOne r fun p => y * algebraMap K 𝔸[K] (X₀ p)) 1
-      ((μ : G1 K 2)⁻¹ * unipOne 1 (fun _ => y) * μ) (y • C.map (algebraMap K 𝔸[K])) (by
-        rw [← hg, coe_unipOne, conjMat g X₀ _ _ _ hC, conjU m μ hμ]
+      ((μ : G1 K 2)⁻¹ * unipOne 1 (fun _ => y) * (μ : G1 K 2)) (y • C.map (algebraMap K 𝔸[K])) (by
+        rw [← hg, coe_unipOne, conjMat g X₀ _ _ _ hC]
+        rw [conjU m μ hμ]
         simp)
     rw [hZ, mul_assoc, hF.unip, ← hF.rat _ (hP 1 μ)]
     simp only [← mul_assoc, hmul, OneMemClass.coe_one, mul_inv_cancel, one_mul, add_zero]
@@ -186,8 +187,9 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.dies :
     congr 1
     funext y
     obtain ⟨Z, hZ⟩ := fromMat γ (unipOne r fun p => y * algebraMap K 𝔸[K] (X₀ p))
-      ((μ : G1 K 2)⁻¹ * unipOne 1 (fun _ => y) * μ) 1 (y • C.map (algebraMap K 𝔸[K])) (by
-        rw [← hg, coe_unipOne, conjMat g X₀ _ _ _ hC, conjU m μ hμ]
+      ((μ : G1 K 2)⁻¹ * unipOne 1 (fun _ => y) * (μ : G1 K 2)) 1 (y • C.map (algebraMap K 𝔸[K])) (by
+        rw [← hg, coe_unipOne, conjMat g X₀ _ _ _ hC]
+        rw [conjU m μ hμ]
         simp)
     rw [hZ, mul_assoc, hF.unip, ← hF.rat _ (hP μ 1)]
     simp only [← mul_assoc, hmul, OneMemClass.coe_one, mul_inv_cancel, one_mul, add_zero]

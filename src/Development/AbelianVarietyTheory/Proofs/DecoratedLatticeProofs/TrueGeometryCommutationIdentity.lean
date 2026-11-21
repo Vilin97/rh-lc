@@ -137,8 +137,8 @@ end Restr
 section Place
 variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {u : B.Word} {a : I.ι}
   {Ch₀ : ℕ → Type} (A : TwDat I l Z u a Ch₀)
-  {c : Comm (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {v : VCom c} {Bs : GlobalTheory.Fam.Base c} {PP : Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E} {G : QGeo v Bs PP}
-  {χ : ℕ → (AE (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))ˣ →* Circle} (E : QExt G χ)
+  {c : Comm (I.rec7 l Z)} {v : VCom c} {Bs : GlobalTheory.Fam.Base c} {PP : Pl (I.rec7 l Z).host.E} {G : QGeo v Bs PP}
+  {χ : ℕ → (AE (I.rec7 l Z))ˣ →* Circle} (E : QExt G χ)
 
 abbrev Orb := SameOrb ((G.T E.δ E.tame E.η).lev (G.s + 1) 0 rfl).J (box (XIx (Fin B.R.k) (Fin B.R.t) (G.s + 1)) (G.ϖ ^ E.M))
 

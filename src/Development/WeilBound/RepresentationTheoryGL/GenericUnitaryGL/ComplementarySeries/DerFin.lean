@@ -178,7 +178,7 @@ theorem base (hc : Continuous ψ) (h1 : ψ ≠ 1) (Y : Representation ℂ (GL (F
     induction z using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero]; exact Submodule.zero_mem _
     | tmul a b => rw [LinearMap.lTensor_tmul]; exact hgen a b b.2
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
 
   have hrk : Module.rank ℂ (B ⧸ K) ≤ 1 :=
     PositivityTheory.rg.gu.whit.whitRankIrr k ψ hc h1 t B β (σ 1).rep.smooth (σ 1).rep.irr

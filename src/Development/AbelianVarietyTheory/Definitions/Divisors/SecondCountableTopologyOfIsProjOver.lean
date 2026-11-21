@@ -140,7 +140,8 @@ variable {R : AnRead p σ D} {A B : LB Y} {S : Set (CxPts p σ)}
 theorem holoOn_of_chart (c : AlgChart p σ D) {f : CxPts p σ → ℂ}
     (h : DifferentiableOn ℂ (f ∘ c.e.symm) (c.e.target ∩ c.e.symm ⁻¹' S)) :
     R.HoloOn (c.e.source ∩ S) f := fun i =>
-  (h.comp (((R.chart i).holo_trans c).mono fun _ hv => ⟨hv.1, hv.2.1⟩)
+  (h.comp (s := (R.chart i).e.target ∩ (R.chart i).e.symm ⁻¹' (c.e.source ∩ S))
+    (((R.chart i).holo_trans c).mono fun _ hv => ⟨hv.1, hv.2.1⟩)
     fun _ hv => mem_over _ hv.2.1 hv.2.2).congr fun _ hv => congrArg f (c.e.left_inv hv.2.1).symm
 
 theorem holoOn_of_cover {ι : Type*} {T : ι → Set (CxPts p σ)} (hT : ∀ j, IsOpen (T j))

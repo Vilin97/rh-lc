@@ -145,22 +145,22 @@ theorem isHolTo_spMap {A : Type} [CommRing A] {ψ : ℂ → (A →+* ℂ)} {r : 
   exact (h.2 _).differentiableAt (Metric.isOpen_ball.mem_nhds hz)
 
 theorem continuousAt_snd {A : Type} [CommRing A] {ψ : ℂ → (A →+* ℂ)} {z : ℂ} (h : ∀ a, ContinuousAt (fun u => ψ u a) z)
-    {X : Scheme.{0}} (V : Sp (DualNumber A) ⟶ X) (U : X.Opens) (hU : ⊤ ≤ (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ z)) ≫ V) ⁻¹ᵁ U)
-    (f : Γ(X, U)) : ContinuousAt (fun u => TrivSqZeroExt.snd (valR (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ u)) ≫ V) U f)) z := by
-  obtain ⟨s, a, hs, H⟩ := exists_frac V U f (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ z)) (IsLocalRing.closedPoint (DualNumber ℂ)))
+    {X : Scheme.{0}} (V : Sp (DualNumber A) ⟶ X) (U : X.Opens) (hU : ⊤ ≤ (spMap (dualMap (ψ z)) ≫ V) ⁻¹ᵁ U)
+    (f : Γ(X, U)) : ContinuousAt (fun u => TrivSqZeroExt.snd (valR (spMap (dualMap (ψ u)) ≫ V) U f)) z := by
+  obtain ⟨s, a, hs, H⟩ := exists_frac V U f (spMap (dualMap (ψ z)) (IsLocalRing.closedPoint (DualNumber ℂ)))
     (hU (x := IsLocalRing.closedPoint (DualNumber ℂ)) trivial)
   have h0 : ψ z s.fst ≠ 0 := fun h0 => hs (by
-    change GlobalTheory.CompanionTheory.Ar.dualMap (ψ z) s ∈ IsLocalRing.maximalIdeal (DualNumber ℂ)
+    change dualMap (ψ z) s ∈ IsLocalRing.maximalIdeal (DualNumber ℂ)
     rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff, TrivSqZeroExt.isUnit_iff_isUnit_fst]
-    simp [GlobalTheory.CompanionTheory.Ar.dualMap, h0])
-  have key : ∀ᶠ u in 𝓝 z, TrivSqZeroExt.snd (valR (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ u)) ≫ V) U f) =
+    simp [dualMap, h0])
+  have key : ∀ᶠ u in 𝓝 z, TrivSqZeroExt.snd (valR (spMap (dualMap (ψ u)) ≫ V) U f) =
       (ψ u a.snd - ψ u a.fst / ψ u s.fst * ψ u s.snd) / ψ u s.fst := by
     filter_upwards [(h s.fst).eventually_ne h0] with u hu
-    have := H _ (GlobalTheory.CompanionTheory.Ar.dualMap (ψ u)) (TrivSqZeroExt.isUnit_iff_isUnit_fst.2 (by simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using hu))
-    generalize valR (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ u)) ≫ V) U f = q at this ⊢
+    have := H _ (dualMap (ψ u)) (TrivSqZeroExt.isUnit_iff_isUnit_fst.2 (by simpa [dualMap] using hu))
+    generalize valR (spMap (dualMap (ψ u)) ≫ V) U f = q at this ⊢
     have h1 := congrArg TrivSqZeroExt.fst this
     have h2 := congrArg TrivSqZeroExt.snd this
-    simp [GlobalTheory.CompanionTheory.Ar.dualMap] at h1 h2
+    simp [dualMap] at h1 h2
     rw [← h1, ← h2]
     field_simp
     ring
@@ -230,7 +230,7 @@ end GlobalTheory.ShFam.BdArc.LatSec
 namespace GlobalTheory.ShFam.BdArc
 
 
-theorem exists_lattice_sections : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : Model Xo c β) (σ : c.F →+* ℂ) (A : Type) [CommRing A] (φ : c.F →+* A) (x : Sp A ⟶ gen Z) (fr : EigFrame Z φ (x ≫ genι Z)) (ψ : ℂ → (A →+* ℂ)) (r : ℝ) (g : ℕ) (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)), IsArc Z σ φ x ψ r → ∃ (ρ : ℝ) (n : ℕ) (lam : Fin n → ℂ → (Fin g → ℂ)), 0 < ρ ∧ ρ ≤ r ∧ (∀ j, ContinuousOn (lam j) (Metric.ball 0 ρ)) ∧ Submodule.span ℂ (Set.range fun j => lam j 0) = ⊤ ∧ ∀ u ∈ Metric.ball (0 : ℂ) ρ, ∀ ex : (Fin g → ℂ) → (Over.mk (spMap (ψ u) ≫ x ≫ genι Z) ⟶ Z.t.G), (∀ z w, ex (z + w) = ex z * ex w) → IsHolTo Set.univ (fun z => (show Sp ℂ ⟶ Z.t.G.left from (ex z).left)) → (∀ j, IsDerivAt0 (fun z => (ex z).left) (Pi.single j 1) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ u)) ≫ fr.v (e j).1 (e j).2)) → ∀ j, ex (lam j u) = 1 := by
+theorem exists_lattice_sections : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : Model Xo c β) (σ : c.F →+* ℂ) (A : Type) [CommRing A] (φ : c.F →+* A) (x : Sp A ⟶ gen Z) (fr : EigFrame Z φ (x ≫ genι Z)) (ψ : ℂ → (A →+* ℂ)) (r : ℝ) (g : ℕ) (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)), IsArc Z σ φ x ψ r → ∃ (ρ : ℝ) (n : ℕ) (lam : Fin n → ℂ → (Fin g → ℂ)), 0 < ρ ∧ ρ ≤ r ∧ (∀ j, ContinuousOn (lam j) (Metric.ball 0 ρ)) ∧ Submodule.span ℂ (Set.range fun j => lam j 0) = ⊤ ∧ ∀ u ∈ Metric.ball (0 : ℂ) ρ, ∀ ex : (Fin g → ℂ) → (Over.mk (spMap (ψ u) ≫ x ≫ genι Z) ⟶ Z.t.G), (∀ z w, ex (z + w) = ex z * ex w) → IsHolTo Set.univ (fun z => (show Sp ℂ ⟶ Z.t.G.left from (ex z).left)) → (∀ j, IsDerivAt0 (fun z => (ex z).left) (Pi.single j 1) (spMap (dualMap (ψ u)) ≫ fr.v (e j).1 (e j).2)) → ∀ j, ex (lam j u) = 1 := by
   intro E _ _ _ H Dw l Xo c O _ β Z σ A _ φ x fr ψ r g e harc
   obtain ⟨g', ρ, e', hρ, hρr, hol, hexp, hdef⟩ := GlobalTheory.T.exists_semi_abelian_exponential_along_disc Z.X Z.t.G (fun u => spMap (ψ u) ≫ x ≫ genι Z) r
     Z.t.semi harc.1.1 (LatSec.isHolTo_spMap harc.1 _)
@@ -238,7 +238,7 @@ theorem exists_lattice_sections : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     holAt_of_isHolTo (hexp u hu).2.2.1 trivial
   have hh : ∀ u, ∃ h : (Fin g → ℂ) →L[ℂ] (Fin g' → ℂ), u ∈ Metric.ball (0 : ℂ) ρ → h.IsInvertible ∧
       ∀ j, IsDerivAt (fun z => (e' u z).left) 0 (h (Pi.single j 1))
-        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ u)) ≫ fr.v (e j).1 (e j).2) := fun u => by
+        (spMap (dualMap (ψ u)) ≫ fr.v (e j).1 (e j).2) := fun u => by
     by_cases hu : u ∈ Metric.ball (0 : ℂ) ρ
     · obtain ⟨D, hD⟩ := LatSec.exists_lieEquiv Z.t (hexp u hu).1 (hA u hu) (hexp u hu).2.2.2.2
       obtain ⟨f, hf⟩ := GlobalTheory.ShFam.EigFrame.exists_baseChange E H Dw l Xo c O β Z A ℂ φ _ fr (ψ u)

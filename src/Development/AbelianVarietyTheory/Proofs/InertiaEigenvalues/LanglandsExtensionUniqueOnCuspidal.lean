@@ -36,14 +36,14 @@ end GlobalTheory.LocLanglands.LangExt
 
 theorem GlobalTheory.LocLanglands.exists_isLExt : LanglandsExhaustionGL → LanglandsMultisegments → ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (r : IrrGL (k := w.adicCompletion E) → WD h), (∃ rc, IsLExt r rc) ∧ ∀ rc, IsLExt r rc → ∀ x : IrrGL (k := w.adicCompletion E), x.IsCusp → rc x = r x := by
   intro hX hM E Ω _ _ _ _ _ A w h r
-  haveI : CharZero (w.adicCompletion E) := charZero_adicCompletion
+  haveI : CharZero (w.adicCompletion E) := LangExt.charZero_adicCompletion
   refine ⟨⟨fun x => segSum r (Classical.choose (hX (w.adicCompletion E) x)).toList, ?_⟩, ?_⟩
   · intro l x hl
     have hm := Classical.choose_spec (hX (w.adicCompletion E) x)
     have he := (hM (w.adicCompletion E)).1 _ _ x hm hl
     show segSum r (Classical.choose (hX (w.adicCompletion E) x)).toList = segSum r l
     unfold segSum
-    apply sumList_perm
+    apply LangExt.sumList_perm
     apply List.Perm.map
     apply Multiset.coe_eq_coe.1
     rw [Multiset.coe_toList]
@@ -51,7 +51,7 @@ theorem GlobalTheory.LocLanglands.exists_isLExt : LanglandsExhaustionGL → Lang
   · intro rc hrc x hx
     have h1 := hrc [.single x hx] x (single_spec hx).2.2.2
     rw [h1]
-    change (((r x).lpTw ((((1 : ℕ) : ℝ) - 1) / 2)).lpChar (WD.lpSp h 1)).lpSum (WD.lpZero h) = r x
+    change (((r x).lpTw ((((1 : ℕ) : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) 1)).lpSum (WD.lpZero (h := h)) = r x
     rw [WD.lpSum_zero]
     have h2 := (GlobalTheory.WeilDeligne.charPol_lpTw_lpChar_lpSp E Ω A w h (r x)).1
     have h3 : ((((1 : ℕ) : ℝ) - 1) / 2) = 0 := by norm_num

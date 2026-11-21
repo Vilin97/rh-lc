@@ -388,23 +388,7 @@ theorem exists_split : Out.Laws → Out.Laws2 → ∀ (k : Type) [Field k] [IsAl
     ext n'
     simp [f, Pi.single_apply, Finsupp.single_apply, eq_comm]
   have := Φ.D.i_hom
-  have : IsMonHom (SplitTorusPow.torusMap (Sp k) f.toAddMonoidHom) := by
-    constructor
-    ·
-      have h : (1 : 𝟙_ (Over (Sp k)) ⟶ splitTorus (Sp k) _) ≫
-          SplitTorusPow.torusMap (Sp k) f.toAddMonoidHom = 1 := by
-        apply (splitTorusPointsEquiv (Sp k) _ _).injective
-        rw [SplitTorusPow.points_comp_torusMap, map_one, map_one, MonoidHom.one_comp]
-      simpa [Hom.one_def] using h
-    · have h : ((fst _ _) * (snd _ _)) ≫ SplitTorusPow.torusMap (Sp k) f.toAddMonoidHom =
-          (fst _ _ ≫ SplitTorusPow.torusMap (Sp k) f.toAddMonoidHom) *
-          (snd _ _ ≫ SplitTorusPow.torusMap (Sp k) f.toAddMonoidHom) := by
-        apply (splitTorusPointsEquiv (Sp k) _ _).injective
-        rw [map_mul, SplitTorusPow.points_comp_torusMap, SplitTorusPow.points_comp_torusMap,
-          SplitTorusPow.points_comp_torusMap, map_mul, MonoidHom.mul_comp]
-      rw [Hom.mul_def, Hom.mul_def, lift_fst_snd, Category.id_comp] at h
-      rw [h]
-      congr 1
+  have := SplitTorusPow.isMonHom_torusMap (S := Sp k) f.toAddMonoidHom
   refine ⟨fun n => cl (b n), (isSemiAbelian_of_isGt _ Φ.E Φ.G ⟨Φ.D⟩).geomConnected,
     SplitTorusPow.torusMap (Sp k) f.toAddMonoidHom ≫ Φ.D.i, inferInstance, fun a => ?_, fun a j hj => ?_,
     fun a j n hj => ?_, fun n x => ?_, fun a u hu => ?_⟩

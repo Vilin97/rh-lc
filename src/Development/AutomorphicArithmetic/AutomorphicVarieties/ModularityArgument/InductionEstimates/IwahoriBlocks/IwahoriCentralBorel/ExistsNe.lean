@@ -194,6 +194,9 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.xOcc :
       ∃ (σ : SmIrr (Gw 2 (w i))) (f : σ.V →ₗ[ℂ] (G1 K 2 → ℂ)), Occurs μ τ (w i) σ ∧ f ≠ 0 ∧ (∀ v, f v ∈ Xs μ τ κ p (im w)) ∧
         ∀ g v, f (σ.ρ g v) = rS ι (Pi.mulSingle i g) (f v) := by
   intro K _ _ _ μ _ τ κ p hτ hp r w ι hw hι hX i
+  haveI : T2Space (G1 K 2) := by
+    set_option synthInstance.maxHeartbeats 100000 in
+      infer_instance
   obtain ⟨hmem, hmem2⟩ := xMem μ τ κ p hp
   have hstab := hmem2 hτ w ι hw hι
   obtain ⟨J, hJi, hJ1, hJ2, hJ3⟩ := exists_injection_into_l2_cusp μ τ κ p hτ hp (im w)

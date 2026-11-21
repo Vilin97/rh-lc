@@ -76,8 +76,8 @@ abbrev Pt.ext (P : Pt s) : Thick (dp0 R) s := (SqExt.ofModule R P.B P.B).thick P
 
 def dualAlg {B B' : Type} [CommRing B] [Algebra R B] [CommRing B'] [Algebra R B'] (ρ : B →ₐ[R] B') :
     DualNumber B →ₐ[R] DualNumber B' :=
-  { GlobalTheory.CompanionTheory.Ar.dualMap (ρ : B →+* B') with
-    commutes' := fun r ↦ by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl'] }
+  { dualMap (ρ : B →+* B') with
+    commutes' := fun r ↦ by ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl'] }
 
 @[simp] theorem fst_dualAlg {B B' : Type} [CommRing B] [Algebra R B] [CommRing B'] [Algebra R B'] (ρ : B →ₐ[R] B')
     (c : DualNumber B) : (dualAlg ρ c).fst = ρ c.fst := by
@@ -161,18 +161,18 @@ section Transl
 variable {K : Type} [Field K] {A : Over (Sp K)} [GrpObj A]
 
 theorem dualMap_comp_algebraMap {B B' : Type} [CommRing B] [CommRing B'] (φ : B →+* B') :
-    (GlobalTheory.CompanionTheory.Ar.dualMap φ).comp (algebraMap B (DualNumber B)) = (algebraMap B' (DualNumber B')).comp φ := by
-  ext b <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl']
+    (dualMap φ).comp (algebraMap B (DualNumber B)) = (algebraMap B' (DualNumber B')).comp φ := by
+  ext b <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl']
 
 theorem dualMap_comp_dualMap {B B' B'' : Type} [CommRing B] [CommRing B'] [CommRing B''] (φ : B →+* B')
-    (ψ : B' →+* B'') : (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) = GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) := by
-  ext c <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    (ψ : B' →+* B'') : (dualMap ψ).comp (dualMap φ) = dualMap (ψ.comp φ) := by
+  ext c <;> simp [dualMap]
 
 theorem exists_isTransl {B : Type} [CommRing B] (φ : K →+* B) (x : Sp B ⟶ A.left) (hx : x ≫ A.hom = spMap φ)
     (v : epsR K ⟶ A) : ∃ w, IsTransl φ x v w := by
   have e1 : (spMap (algebraMap B (DualNumber B)) ≫ x) ≫ A.hom = spMap ((algebraMap B (DualNumber B)).comp φ) := by
     rw [Category.assoc, hx, ← Cris.spMap_comp]
-  have e2 : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v.left) ≫ A.hom = spMap ((algebraMap B (DualNumber B)).comp φ) := by
+  have e2 : (spMap (dualMap φ) ≫ v.left) ≫ A.hom = spMap ((algebraMap B (DualNumber B)).comp φ) := by
     rw [Category.assoc, Over.w v, ← dualMap_comp_algebraMap, Cris.spMap_comp] <;> rfl
   exact ⟨_, Over.homMk _ e1, Over.homMk _ e2, rfl, rfl, rfl⟩
 
@@ -192,19 +192,19 @@ theorem IsTransl.w {B : Type} [CommRing B] {φ : K →+* B} {x : Sp B ⟶ A.left
 
 theorem IsTransl.map {B B' : Type} [CommRing B] [CommRing B'] {φ : K →+* B} {x : Sp B ⟶ A.left} {v : epsR K ⟶ A}
     {w : Sp (DualNumber B) ⟶ A.left} (h : IsTransl φ x v w) (ρ : B →+* B') :
-    IsTransl (ρ.comp φ) (spMap ρ ≫ x) v (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ w) := by
+    IsTransl (ρ.comp φ) (spMap ρ ≫ x) v (spMap (dualMap ρ) ≫ w) := by
   obtain ⟨x', v', hx', hv', rfl⟩ := h
-  have eg : spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ spMap ((algebraMap B (DualNumber B)).comp φ) =
+  have eg : spMap (dualMap ρ) ≫ spMap ((algebraMap B (DualNumber B)).comp φ) =
       spMap ((algebraMap B' (DualNumber B')).comp (ρ.comp φ)) := by
     rw [← Cris.spMap_comp]
     congr 1
-    ext b <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl']
+    ext b <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl']
   let g : Over.mk (spMap ((algebraMap B' (DualNumber B')).comp (ρ.comp φ))) ⟶
-      Over.mk (spMap ((algebraMap B (DualNumber B)).comp φ)) := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ)) eg
+      Over.mk (spMap ((algebraMap B (DualNumber B)).comp φ)) := Over.homMk (spMap (dualMap ρ)) eg
   refine ⟨g ≫ x', g ≫ v', ?_, ?_, ?_⟩
-  · change spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ x'.left = _
+  · change spMap (dualMap ρ) ≫ x'.left = _
     rw [hx', ← Category.assoc, ← Category.assoc, ← Cris.spMap_comp, ← Cris.spMap_comp, dualMap_comp_algebraMap]
-  · change spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ v'.left = _
+  · change spMap (dualMap ρ) ≫ v'.left = _
     rw [hv', ← Category.assoc, ← Cris.spMap_comp, dualMap_comp_dualMap]
   · have e : g ≫ x' * g ≫ v' = g ≫ (x' * v') := by
       first
@@ -228,9 +228,9 @@ theorem IsTransl.red {B : Type} [CommRing B] {φ : K →+* B} {x : Sp B ⟶ A.le
     apply Over.OverMorphism.ext
     change spMap (TrivSqZeroExt.fstHom B B B).toRingHom ≫ v'.left = (toUnit (Over.mk (spMap φ)) ≫ η).left
     rw [Over.comp_left, hv', ← Category.assoc, ← Cris.spMap_comp]
-    have e3 : (TrivSqZeroExt.fstHom B B B).toRingHom.comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) =
+    have e3 : (TrivSqZeroExt.fstHom B B B).toRingHom.comp (dualMap φ) =
         φ.comp (TrivSqZeroExt.fstHom K K K).toRingHom := by
-      exact RingHom.ext fun c ↦ by simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+      exact RingHom.ext fun c ↦ by simp [dualMap]
     rw [e3, Cris.spMap_comp, Category.assoc, hv]
     congr 1
     all_goals first
@@ -351,14 +351,14 @@ theorem fibMor (h : IsGrpPullback A A' (DeRham.epsRed K) i) : GrpMor (dp0 (DualN
 omit [GrpObj A] in
 @[reducible] def Pt.eps (P : GPt A) : Thick (epsDP K) (A.hom ≫ DeRham.epsRed K) where
   B := DualNumber P.B
-  alg := (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K P.B)).toAlgebra
+  alg := (dualMap (algebraMap K P.B)).toAlgebra
   J := RingHom.ker (TrivSqZeroExt.fstHom K P.B P.B : DualNumber P.B →+* P.B)
   δ := divided₂ (SqExt.ofModule K P.B P.B).sq
   nil := isDPNilpotent_squareZero _
   dp := isDPMorphism_sqDP (SqExt.dual K).sq (SqExt.ofModule K P.B P.B).sq _ fun a ha ↦ by
     have ha' : a.fst = 0 := ha
-    change (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K P.B) a).fst = 0
-    simp [GlobalTheory.CompanionTheory.Ar.dualMap, ha']
+    change (dualMap (algebraMap K P.B) a).fst = 0
+    simp [dualMap, ha']
   B₀ := P.B
   π := (TrivSqZeroExt.fstHom K P.B P.B : DualNumber P.B →+* P.B)
   surj := fun b ↦ ⟨TrivSqZeroExt.inl b, rfl⟩
@@ -371,7 +371,7 @@ omit [GrpObj A] in
     exact congrArg spMap (RingHom.ext fun c ↦ (add_zero _).symm)
 
 def IsLift (i : A.left ⟶ A'.left) (P : GPt A) (y : Sp (DualNumber P.B) ⟶ A'.left) : Prop :=
-  y ≫ A'.hom ≫ 𝟙 _ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K P.B)) ∧
+  y ≫ A'.hom ≫ 𝟙 _ = spMap (dualMap (algebraMap K P.B)) ∧
     spMap (TrivSqZeroExt.fstHom K P.B P.B : DualNumber P.B →+* P.B) ≫ y = P.x ≫ i
 
 def liftVal (h : IsGrpPullback A A' (DeRham.epsRed K) i) (f : Z1 (O (dp0 (DualNumber K)) (A'.hom ≫ 𝟙 _))) {P : GPt A}

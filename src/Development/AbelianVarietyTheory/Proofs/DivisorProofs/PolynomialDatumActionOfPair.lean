@@ -99,8 +99,12 @@ theorem isFockMap_flip {σ : E →ₐ[F] E} {α β κ : Type} [Fintype α] [Deci
   have hr : ∀ t : ℝ, d'.rho ψ (realAd F t • u) = d.rho ψ (realAd F t • uᵀ) := fun t => by
     show schr ψ (d'.e _) = schr ψ (d.e _)
     rw [← hdd, Matrix.transpose_smul, Matrix.transpose_transpose]
-  simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, hr]
-  rwa [flipT_sumPl (fun w => heisOp (c w)) (fun w => heisOp (c w)ᵀ) (fun w f => flipE_heisOp (c w) f)]
+  simp only [LinearMap.comp_apply, LinearEquiv.coe_coe]
+  rw [flipT_sumPl (fun w => heisOp (c w)) (fun w => heisOp (c w)ᵀ) (fun w f => flipE_heisOp (c w) f)]
+  set_option backward.isDefEq.respectTransparency false in
+   rw [show (fun t : ℝ => d'.rho ψ (realAd F t • u)) =
+    (fun t : ℝ => d.rho ψ (realAd F t • uᵀ)) from funext hr]
+  exact key
 
 theorem incM_map_real {n m : Type} (J : Matrix n m E) {w : InfinitePlace F} (τ : EmbOver E w) :
     (incM F J).map (piInf τ) = J.map τ.1 := by
@@ -163,7 +167,8 @@ theorem member (hP : GlobalTheory.FunPr.Hypotheses₂) {σ : E →ₐ[F] E} {α 
     have hloc := locFin_sumPl _ _ _ (fun w => locFin_compact P Q R S (Y w) (hKC w) (c w * (Y w).trace))
     obtain ⟨U, -, hSA⟩ := GlobalTheory.ExpAct.expAct_fock F κ _ Φ _ (om.comp γ) hloc
       (fun t l hl => hs.adm _ l hl) (fun T => hact γ hγ Y hY T)
-    rw [MonoidHom.comp_apply, hγ1] at hSA
+    change ∀ T, SA (om (γ (Multiplicative.ofAdd 1))) (Φ T) (Φ (U T)) at hSA
+    rw [hγ1] at hSA
     exact opOn_of_sa hΦ.1 U _ (map_zero _) hSA
 
 theorem polActs_of_isPair : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]

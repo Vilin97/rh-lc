@@ -64,21 +64,21 @@ theorem exists_tan {T : Type} [CommGroup T] (Γ : QFGroup R T) {N : ℕ} {i : Γ
     ∃ v : Spec (CommRingCat.of (DualNumber (R ⧸ Ideal.span {(N : R)}))) ⟶ Γ.G.left,
       v ≫ Γ.G.hom = Spec.map (CommRingCat.ofHom ((algebraMap (R ⧸ Ideal.span {(N : R)})
         (DualNumber (R ⧸ Ideal.span {(N : R)}))).comp (Ideal.Quotient.mk _))) ∧
-      v ≫ i = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(N : R)})))) ≫ (M.pt e).left := by
+      v ≫ i = Spec.map (CommRingCat.ofHom (dualMap (Ideal.Quotient.mk (Ideal.span {(N : R)})))) ≫ (M.pt e).left := by
   let Q := R ⧸ Ideal.span {(N : R)}
   let q : R →+* Q := Ideal.Quotient.mk _
   let c : R →+* DualNumber Q := (algebraMap Q (DualNumber Q)).comp q
   let Y : Over (Spec (CommRingCat.of R)) := Over.mk (Spec.map (CommRingCat.ofHom c))
-  have hc : (GlobalTheory.CompanionTheory.Ar.dualMap q).comp (algebraMap R (DualNumber R)) = c := by
-    ext r <;> simp [c, GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-  let k : Over.mk (Y.hom ≫ x) ⟶ epsAt x := Over.homMk (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap q))) (by
+  have hc : (dualMap q).comp (algebraMap R (DualNumber R)) = c := by
+    ext r <;> simp [c, dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  let k : Over.mk (Y.hom ≫ x) ⟶ epsAt x := Over.homMk (Spec.map (CommRingCat.ofHom (dualMap q))) (by
     change Spec.map _ ≫ Spec.map _ ≫ x = Spec.map _ ≫ x
     rw [← Spec.map_comp_assoc, ← CommRingCat.ofHom_comp, hc])
   let k₀ : Over.mk (Y.hom ≫ x) ⟶ Over.mk x := Over.homMk Y.hom rfl
   have hN : q (N : R) = 0 := Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.mem_span_singleton_self _)
-  have hc' : (GlobalTheory.CompanionTheory.Ar.dualMap q).comp (epsMul (N : R)) = c.comp (TrivSqZeroExt.fstHom R R R).toRingHom := by
+  have hc' : (dualMap q).comp (epsMul (N : R)) = c.comp (TrivSqZeroExt.fstHom R R R).toRingHom := by
     refine RingHom.ext fun r => ?_
-    ext <;> simp [c, GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, TrivSqZeroExt.algebraMap_eq_inl, -map_natCast, hN]
+    ext <;> simp [c, dualMap, epsMul, TrivSqZeroExt.algebraMap_eq_inl, -map_natCast, hN]
   have hg : (k ≫ M.pt e) ^ N = 1 := by
     rw [← MonObj.comp_pow, ← pt_nsmul, ← MonObj.comp_one k₀]
     ext1
@@ -137,19 +137,19 @@ theorem isDer_res (n : ℕ) (f : LevGrp La p (n + 1) → O) (g : LevGrp La p n �
     have hle : Ideal.span {((p ^ (n + 1) : ℕ) : O)} ≤ Ideal.span {((p ^ n : ℕ) : O)} :=
       Ideal.span_singleton_le_span_singleton.2 (Nat.cast_dvd_cast (pow_dvd_pow p n.le_succ))
     let π := Ideal.Quotient.factor hle
-    have : v' ≫ j.left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap π)) ≫ v := by
+    have : v' ≫ j.left = Spec.map (CommRingCat.ofHom (dualMap π)) ≫ v := by
       refine left_ext _ (X.tors (n + 1)) _ _ ?_ ?_
       · rw [Category.assoc, Category.assoc, Over.w, h1, hv1, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
         congr 2
         refine RingHom.ext fun r => ?_
-        ext <;> simp [π, GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+        ext <;> simp [π, dualMap, TrivSqZeroExt.algebraMap_eq_inl]
       · rw [Category.assoc, Category.assoc, hj, h2, hv2, ← Spec.map_comp_assoc, ← CommRingCat.ofHom_comp]
         congr 3
         refine RingHom.ext fun r => ?_
-        ext <;> simp [π, GlobalTheory.CompanionTheory.Ar.dualMap]
+        ext <;> simp [π, dualMap]
     have h0 : g 1 = f 1 := by simpa [lev_zero] using hg 0
     rw [valAt_comp, this, valAt_specMap, hv3, h0]
-    ext <;> simp [π, GlobalTheory.CompanionTheory.Ar.dualMap]
+    ext <;> simp [π, dualMap]
 
 theorem exists_endo (u : G ⟶ G) [IsMonHom u] (φ : La →+ La) (hu : X.Induces u φ) (n : ℕ) :
     ∃ a : (X.Γ n).G ⟶ (X.Γ n).G, a.left ≫ X.i n = X.i n ≫ u.left ∧

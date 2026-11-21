@@ -55,9 +55,9 @@ private theorem positionOne_invariantIntegral_exchange_step {K : Type} [Field K]
     simp only [Fin.snoc_castSucc, Fin.snoc_last, hx0, mul_zero, zero_mul, Finset.sum_const_zero, zero_add,
       Fin.succAbove_last, map_mul, map_pow, AbsoluteValue.map_neg, map_one, one_pow, _root_.one_mul]
     rw [← hσ]
-  obtain ⟨i, -, hi⟩ := IsNonarchimedean.finset_image_add_of_nonempty hw
+  obtain ⟨i, -, hi⟩ := IsNonarchimedean.finset_image_add_of_nonempty
     (fun i : Fin (k + 1) => (-1) ^ ((i : ℕ) + k) * x (τ i) *
-        (M.submatrix (fun a => τ (i.succAbove a)) Fin.castSucc).det) (Finset.univ_nonempty)
+        (M.submatrix (fun a => τ (i.succAbove a)) Fin.castSucc).det) hw (Finset.univ_nonempty)
   refine ⟨τ i, ?_⟩
   rw [hsn, hexp]
   refine hi.trans ?_

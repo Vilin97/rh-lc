@@ -31,7 +31,7 @@ def extT {T A L : HSp D} (o : OrthDec T A L) (S : HSp D) (c : WO S A →₀ ℂ)
   c.mapDomain fun u => (o.resT S).symm (u, 0)
 
 def kap {L L'' : HSp D} (τ : Matrix (Fin L.rank) (Fin L''.rank) D.host.E) (S : HSp D) (w : WO S L'') : WO L S :=
-  GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.ofAdj L S ((rat τ : Mx D L.rank L''.rank) * w)
+  GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.ofAdj L S ((rat τ : Mx D L.rank L''.rank) ⬝ w)
 
 def lastBi {V₀ A L S X T L'' : HSp D} (o : OrthDec V₀ A L) (o'' : OrthDec X T L'')
     (τ : Matrix (Fin L.rank) (Fin L''.rank) D.host.E) (Ξ : WO V₀ S → ℂ) (Φ₂ : WO S T → ℂ) : WO A S → WO S X → ℂ :=
@@ -160,7 +160,7 @@ structure PinOff : Prop where
 
   line : IsLineVec d.Lz o.ζ₀
 
-  tau : ∀ j h, (o.τ j h)ᴴ * ((d.bes j 0 h).L.gram * o.τ j h) = (-(D.host.xi0 * star D.host.xi0)) • d.Lz.gram ∧
+  tau : ∀ j h, (o.τ j h)ᴴ ⬝ ((d.bes j 0 h).L.gram ⬝ o.τ j h) = (-(D.host.xi0 * star D.host.xi0)) • d.Lz.gram ∧
     ∃ lam : D.host.E, o.τ j h *ᵥ o.ζ₀ = lam • (d.bes j 0 h).ζ ∧ ∀ i, valuation k ((o.p i).pr (incA D lam)) = 1
 
   top : ∀ j (h : j + 2 * 0 + 2 = D.R.m) v, offS d v → ¬ o.atT v → ∃ (LL : Lat (d.bes j 0 h).L) (LZ : Lat d.Lz),

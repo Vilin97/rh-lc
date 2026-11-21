@@ -267,7 +267,10 @@ theorem hasSum_recon (hψ : IsStdChar D ψ (-1)) (v : GlobalTheory.Unf.VolM D T.
   have hH := (GlobalTheory.HeisThetaLaws.heis_theta_laws D ψ hψ S T).1
   have h5 := (GlobalTheory.HeisMixSource.heis_mixS D ψ hψ S (zeroSp D) T ρ e v _
     (hH (e.extX T x) _ (hH (e.extY T y) _ hf))).2.2.2.2 0
+  change HasSum (fun η => e.mixS T ψ v.μ v.𝓕 (heisO ψ S T (e.extX T x) (heisO ψ S T (e.extY T y) f)) (rat η) 0) _ at h5
   simp only [Check.mixS_heis_extX, Check.mixS_heis_extY e v.covol hf] at h5
+  change HasSum (fun η : Matrix (Fin T.rank) (Fin ρ) D.host.E =>
+    ψ (symplO S T (e.extX T (rat η + x)) (e.extY T y)) * e.mixS T ψ v.μ v.𝓕 f (rat η + x) 0) _
   simpa only [heisO, map_zero, symplOH_zero_left, AddChar.map_zero_eq_one, one_mul, zero_add] using h5
 
 theorem symplO_add_right (x y y' : WO S T) : symplO S T x (y + y') = symplO S T x y + symplO S T x y' := by
@@ -358,6 +361,7 @@ theorem at_zero (hψ : IsStdChar D ψ (-1)) (v : GlobalTheory.Unf.VolM D T.rank 
     hf.cont.comp ((continuous_const.matrix_mul continuous_snd).add
       (continuous_const.matrix_mul (continuous_fst.matrix_mul continuous_const)))
   have hm := continuous_mean (ν.restrict 𝓨) _ hc C fun _ => hC _
+  change e.mixS T' ψ ν 𝓨 (ikeda ψ d μ₁ 𝓕₁ f) 0 0 = _
   simp only [Check.mixS_eq e ν, map_zero, symplOH_zero_right, AddChar.map_zero_eq_one, one_mul, add_zero, ikeda_apply,
     HypDec.extY_apply]
   rw [integral_integral_swap (f := fun (b : Mx D T'.rank ρ) (ξ : Mx D t S.rank) => f (d.jX ⬝ ξ + d.j0 ⬝ (b ⬝ e.pY)))
@@ -379,8 +383,13 @@ theorem sch_ikeda : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D �
   have h := at_zero (dblDec A) d hψ ⟨ν, 𝓨, hν⟩ hF h₁ h₂ hν'
   have e1 : (dblDec A).extX T (d.j0 ⬝ a) = d.inc0 (dblSp A) ((dblDec A).extX T' a) := by
     rw [HypDec.extX_apply, HypDec.extX_apply, HypDec.wittDecomp_inclAnisotropicHom_apply, Matrix.mul_assoc]
-  simp only [Check.mixS_heis_extX] at h
-  rw [e1, ikeda, Check.mixedModelTarget_heisenberg_anisotropic_part, Check.mixS_heis_extX, zero_add] at h
+  change (dblDec A).mixS T' ψ ν' 𝓨' (d.mixT (dblSp A) ψ μ₁ 𝓕₁ (heisO ψ (dblSp A) T ((dblDec A).extX T (d.j0 ⬝ a)) φ) 0) 0 0 =
+    ∫ x : Mx D t A.rank, (dblDec A).mixS T ψ ν 𝓨 (heisO ψ (dblSp A) T ((dblDec A).extX T (d.j0 ⬝ a)) φ) (d.jX ⬝ x) 0 ∂μ₂ at h
+  rw [e1, Check.mixedModelTarget_heisenberg_anisotropic_part] at h
+  rw [← e1] at h
+  simp only [Check.mixS_heis_extX, zero_add] at h
+  change (dblDec A).mixS T' ψ ν' 𝓨' (d.mixT (dblSp A) ψ μ₁ 𝓕₁ φ 0) a 0 =
+    ∫ x : Mx D t A.rank, (dblDec A).mixS T ψ ν 𝓨 φ (d.jX ⬝ x + d.j0 ⬝ a) 0 ∂μ₂
   exact h
 
 end GlobalTheory.IkedaSch

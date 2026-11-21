@@ -90,7 +90,7 @@ theorem L_ramInt (χ : HChar E) (hu : IsUnitary χ) (v : HeightOneSpectrum (𝓞
 theorem L_locUnr (χ : HChar E) (hu : IsUnitary χ) (v : HeightOneSpectrum (𝓞 E)) (h : ExpAt χ v 0) :
     localEpsilon (localChar (toHecke χ hu) v) (localAdelicChar E v) (1 / 2) = locEps χ v 0 (1 / 2) := by
   have hv : ¬ v.asIdeal ∣ (toHecke χ hu).conductor := fun hd =>
-    (multiplicity_pos_of_dvd hd).ne' (L_cond χ hu v 0 h)
+    (multiplicity_pos_of_dvd hd (Ideal.finiteMultiplicity v.isPrime.ne_top (toHecke χ hu).conductor_ne_bot)).ne' (L_cond χ hu v 0 h)
   have hN : ((Ideal.absNorm v.asIdeal : ℕ) : ℂ) ≠ 0 := by
     rw [Nat.cast_ne_zero, Ne, Ideal.absNorm_eq_zero_iff]
     exact v.ne_bot
@@ -221,7 +221,7 @@ theorem absNorm_conductor_toHecke (hu : IsUnitary χ) {a : HeightOneSpectrum (�
     rw [HeckeCharacter.mem_conductorPrimes, Finsupp.mem_support_iff, ← hm v]
     constructor
     · intro h
-      exact (multiplicity_pos_of_dvd h).ne'
+      exact (multiplicity_pos_of_dvd h (Ideal.finiteMultiplicity v.isPrime.ne_top (toHecke χ hu).conductor_ne_bot)).ne'
     · intro h
       by_contra h'
       exact h (multiplicity_eq_zero_of_not_dvd h')

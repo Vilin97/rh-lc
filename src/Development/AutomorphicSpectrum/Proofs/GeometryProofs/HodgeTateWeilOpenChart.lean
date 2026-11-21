@@ -76,8 +76,8 @@ theorem stalk_loc {X : Scheme.{0}} {R : Type} [CommRing R] (x : Spec (CommRingCa
   exact Category.id_comp _
 
 theorem dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) :=
-  RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    (dualMap g).comp (dualMap f) = dualMap (g.comp f) :=
+  RingHom.ext fun a => by ext <;> simp [dualMap]
 
 theorem exists_denom {X : Scheme.{0}} (G : Over X) [GrpObj G] [IsCommMonObj G] [Smooth G.hom]
     {R O : Type} [CommRing R] [CommRing O] [Algebra R O] (S : Submonoid R) [IsLocalization S O]
@@ -85,20 +85,20 @@ theorem exists_denom {X : Scheme.{0}} (G : Over X) [GrpObj G] [IsCommMonObj G] [
     {z : Spec (CommRingCat.of O) ⟶ X} (hz : Spec.map (CommRingCat.ofHom (algebraMap R O)) ≫ x = z)
     (v : epsAt z ⟶ G) (hv : IsTanAt G z v) :
     ∃ u ∈ S, ∃ b : L₀, Spec.map (CommRingCat.ofHom (epsMul (algebraMap R O u))) ≫ v.left =
-      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R O))) ≫ (M₀.pt b).left := by
+      Spec.map (CommRingCat.ofHom (dualMap (algebraMap R O))) ≫ (M₀.pt b).left := by
   subst hz
   obtain ⟨L', _, _, ⟨M'⟩⟩ := lieModel_exists X G O (Spec.map (CommRingCat.ofHom (algebraMap R O)) ≫ x)
   letI : Module R L' := Module.compHom L' (algebraMap R O)
   have hsm : ∀ (r : R) (l : L'), r • l = algebraMap R O r • l := fun _ _ => rfl
   haveI : IsScalarTower R O L' := ⟨fun r a l => by
     rw [Algebra.smul_def, mul_smul, hsm]⟩
-  have hψ : Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R O))) ≫ (epsAt x).hom =
+  have hψ : Spec.map (CommRingCat.ofHom (dualMap (algebraMap R O))) ≫ (epsAt x).hom =
       (epsAt (Spec.map (CommRingCat.ofHom (algebraMap R O)) ≫ x)).hom := by
     simp only [epsAt, Over.mk_hom]
     rw [← Category.assoc, ← Category.assoc, ← spec_comp, ← spec_comp, dual_alg]
   let ψ : epsAt (Spec.map (CommRingCat.ofHom (algebraMap R O)) ≫ x) ⟶ epsAt x := Over.homMk _ hψ
   have hleft : ∀ l, (ψ ≫ M₀.pt l).left =
-      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R O))) ≫ (M₀.pt l).left := fun l => rfl
+      Spec.map (CommRingCat.ofHom (dualMap (algebraMap R O))) ≫ (M₀.pt l).left := fun l => rfl
   have htan : ∀ l, IsTanAt G (Spec.map (CommRingCat.ofHom (algebraMap R O)) ≫ x) (ψ ≫ M₀.pt l) := by
     intro l
     have t : _ ≫ (M₀.pt l).left = _ := M₀.tan l
@@ -108,7 +108,7 @@ theorem exists_denom {X : Scheme.{0}} (G : Over X) [GrpObj G] [IsCommMonObj G] [
     simp
   choose j hj using fun l => M'.onto _ (htan l)
   have hjl : ∀ l, (M'.pt (j l)).left =
-      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R O))) ≫ (M₀.pt l).left := fun l => by
+      Spec.map (CommRingCat.ofHom (dualMap (algebraMap R O))) ≫ (M₀.pt l).left := fun l => by
     rw [hj, hleft]
   have jadd : ∀ a b, j (a + b) = j a + j b := fun a b => M'.inj (by
     rw [hj, M'.add, M₀.add, hj, hj, comp_mul])
@@ -139,17 +139,17 @@ theorem core_tan {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Spec (CommRingCat
     (hz : Spec.map (CommRingCat.ofHom (algebraMap R O)) ≫ x = z)
     (g : O →+* Ω) (k₀ : R →+* Ω) (hk₀ : g.comp (algebraMap R O) = k₀)
     {L₀ : Type} [AddCommGroup L₀] [Module R L₀] (M₀ : LieModel G x L₀) (j : L₀ → E)
-    (hj : ∀ v, (M.pt (j v)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap k₀)) ≫ (M₀.pt v).left)
+    (hj : ∀ v, (M.pt (j v)).left = Spec.map (CommRingCat.ofHom (dualMap k₀)) ≫ (M₀.pt v).left)
     (n : ℕ) (w₀ : Module.Dual R L₀) (w : Module.Dual Ω E) (hwj : ∀ v, w (j v) = k₀ (w₀ v))
     (s : Γ(Γ.G.left, ⊤))
     (hs : ∀ e : L₀, ∃ v : Spec (CommRingCat.of (DualNumber (R ⧸ Ideal.span {(n : R)}))) ⟶ Γ.G.left,
-      v ≫ i = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(n : R)})))) ≫ (M₀.pt e).left ∧
+      v ≫ i = Spec.map (CommRingCat.ofHom (dualMap (Ideal.Quotient.mk (Ideal.span {(n : R)})))) ≫ (M₀.pt e).left ∧
       valAt v ⊤ le_top s = TrivSqZeroExt.inl 1 + TrivSqZeroExt.inr (Ideal.Quotient.mk (Ideal.span {(n : R)}) (w₀ e)))
     (W : G.left.Opens) (f : Γ(G.left, W))
     (hval : ∀ {B : Type} [CommRing B] (y : Spec (CommRingCat.of B) ⟶ Γ.G.left) (h : ⊤ ≤ (y ≫ i) ⁻¹ᵁ W),
       valAt (y ≫ i) W h f = valAt y ⊤ le_top s)
     (e : E) (v : epsAt z ⟶ G) (hv : IsTanAt G z v)
-    (he : (M.pt e).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap g)) ≫ v.left) :
+    (he : (M.pt e).left = Spec.map (CommRingCat.ofHom (dualMap g)) ≫ v.left) :
     ∃ c : O, w e = g c ∧ ∀ h : ⊤ ≤ v.left ⁻¹ᵁ W, ∃ r : O, c = (valAt v.left W h f).snd + n * r := by
   subst hk₀
   obtain ⟨u, hu, b, hub⟩ := exists_denom G S x M₀ hz v hv
@@ -174,12 +174,12 @@ theorem core_tan {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Spec (CommRingCat
       Ideal.quotientMap (Ideal.span {(n : O)}) (algebraMap R O) hIJ
     have hφ : φb.comp (Ideal.Quotient.mk (Ideal.span {(n : R)})) =
         (Ideal.Quotient.mk (Ideal.span {(n : O)})).comp (algebraMap R O) := Ideal.quotientMap_comp_mk hIJ
-    obtain ⟨vv, hvvd⟩ : ∃ vv, vv = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φb)) ≫ v₀ := ⟨_, rfl⟩
+    obtain ⟨vv, hvvd⟩ : ∃ vv, vv = Spec.map (CommRingCat.ofHom (dualMap φb)) ≫ v₀ := ⟨_, rfl⟩
     obtain ⟨y', hy'd⟩ : ∃ y', y' = Spec.map (CommRingCat.ofHom (epsMul (algebraMap R O u))) ≫ v.left := ⟨_, rfl⟩
     have hy' : ⊤ ≤ y' ⁻¹ᵁ W := by
       rw [hy'd]
       exact fun t _ => h (by trivial)
-    have hvv : vv ≫ i = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(n : O)})))) ≫ y' := by
+    have hvv : vv ≫ i = Spec.map (CommRingCat.ofHom (dualMap (Ideal.Quotient.mk (Ideal.span {(n : O)})))) ≫ y' := by
       rw [hvvd, hy'd, hub, Category.assoc, h2, ← Category.assoc, ← Category.assoc, ← spec_comp, ← spec_comp,
         dual_comp, dual_comp, hφ]
     have h2' : ⊤ ≤ (vv ≫ i) ⁻¹ᵁ W := by
@@ -187,14 +187,14 @@ theorem core_tan {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Spec (CommRingCat
       exact fun t _ => hy' (by trivial)
     have e3 := valAt_mod y' n hvv W hy' h2' f
     rw [hval] at e3
-    have e4 : valAt vv ⊤ le_top s = GlobalTheory.CompanionTheory.Ar.dualMap φb (valAt v₀ ⊤ le_top s) := by
+    have e4 : valAt vv ⊤ le_top s = dualMap φb (valAt v₀ ⊤ le_top s) := by
       subst hvvd
-      exact valAt_spec (GlobalTheory.CompanionTheory.Ar.dualMap φb) v₀ ⊤ le_top le_top s
-    have e5 : GlobalTheory.CompanionTheory.Ar.dualMap φb (TrivSqZeroExt.inl 1 + TrivSqZeroExt.inr (Ideal.Quotient.mk (Ideal.span {(n : R)}) (w₀ b))) =
+      exact valAt_spec (dualMap φb) v₀ ⊤ le_top le_top s
+    have e5 : dualMap φb (TrivSqZeroExt.inl 1 + TrivSqZeroExt.inr (Ideal.Quotient.mk (Ideal.span {(n : R)}) (w₀ b))) =
         TrivSqZeroExt.inl 1 + TrivSqZeroExt.inr (Ideal.Quotient.mk (Ideal.span {(n : O)}) (algebraMap R O (w₀ b))) := by
       have := RingHom.congr_fun hφ (w₀ b)
       simp only [RingHom.comp_apply] at this
-      ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, this]
+      ext <;> simp [dualMap, this]
     rw [e4, h3, e5] at e3
     obtain ⟨r, hr⟩ := snd_of_mod n _ _ e3
     have e6 : valAt y' W hy' f = epsMul (algebraMap R O u) (valAt v.left W h f) := by
@@ -204,7 +204,7 @@ theorem core_tan {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Spec (CommRingCat
     rw [hr, e6, snd_epsMul]
     linear_combination (valAt v.left W h f).snd * hU
 
-theorem isHTAt_of_isHT : ∀ (X : Scheme.{0}) [IsLocallyNoetherian X] (Ω : Type) [Field Ω] [CharZero Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X), IsCptGen ξ → Flat.NormalCpt ξ → ∀ (G : Over X) [GrpObj G], IsSemiAbelian G → ∀ (L : LB G.left) (n : ℕ), 1 ≤ n → FullTorsion G ξ n → ∀ e, GenWeil G L ξ n e → ∀ (E : Type) [AddCommGroup E] [Module Ω E] (M : LieModel G ξ E) (R : Type) [CommRing R] [IsDomain R] (x : Spec (CommRingCat.of R) ⟶ X) [IsOpenImmersion x] (κ : FractionRing R ≃+* Ω), spMap (κ.toRingHom.comp (algebraMap R _)) ≫ x = ξ → ∀ (T : Type) [CommGroup T] [Finite T] (Γ : BT.QFGroup R T) (i : Γ.G.left ⟶ G.left), Γ.IsTorsionAlong G x n i → ∀ (L₀ : Type) [AddCommGroup L₀] [Module R L₀] (M₀ : LieModel G x L₀) (j : L₀ → E), (∀ v, (M.pt (j v)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (κ.toRingHom.comp (algebraMap R _))) ≫ (M₀.pt v).left) → ∀ (y : Over.mk ξ ⟶ G) (χ : T →* Rˣ) (w₀ : Module.Dual R L₀) (w : Module.Dual Ω E), y ^ n = 1 → (∀ (t : T) (g : Over.mk ξ ⟶ G), spMap κ.toRingHom ≫ (Γ.pt t).left ≫ i = g.left → κ (algebraMap R _ (χ t : R)) = e y g) → Γ.IsHT i M₀ n χ w₀ → (∀ v, w (j v) = κ (algebraMap R _ (w₀ v))) → ∀ q : Cpt ξ, q.1 ∈ Set.range x → M.IsHTAt L n y q w := by
+theorem isHTAt_of_isHT : ∀ (X : Scheme.{0}) [IsLocallyNoetherian X] (Ω : Type) [Field Ω] [CharZero Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X), IsCptGen ξ → Flat.NormalCpt ξ → ∀ (G : Over X) [GrpObj G], IsSemiAbelian G → ∀ (L : LB G.left) (n : ℕ), 1 ≤ n → FullTorsion G ξ n → ∀ e, GenWeil G L ξ n e → ∀ (E : Type) [AddCommGroup E] [Module Ω E] (M : LieModel G ξ E) (R : Type) [CommRing R] [IsDomain R] (x : Spec (CommRingCat.of R) ⟶ X) [IsOpenImmersion x] (κ : FractionRing R ≃+* Ω), spMap (κ.toRingHom.comp (algebraMap R _)) ≫ x = ξ → ∀ (T : Type) [CommGroup T] [Finite T] (Γ : BT.QFGroup R T) (i : Γ.G.left ⟶ G.left), Γ.IsTorsionAlong G x n i → ∀ (L₀ : Type) [AddCommGroup L₀] [Module R L₀] (M₀ : LieModel G x L₀) (j : L₀ → E), (∀ v, (M.pt (j v)).left = spMap (dualMap (κ.toRingHom.comp (algebraMap R _))) ≫ (M₀.pt v).left) → ∀ (y : Over.mk ξ ⟶ G) (χ : T →* Rˣ) (w₀ : Module.Dual R L₀) (w : Module.Dual Ω E), y ^ n = 1 → (∀ (t : T) (g : Over.mk ξ ⟶ G), spMap κ.toRingHom ≫ (Γ.pt t).left ≫ i = g.left → κ (algebraMap R _ (χ t : R)) = e y g) → Γ.IsHT i M₀ n χ w₀ → (∀ v, w (j v) = κ (algebraMap R _ (w₀ v))) → ∀ q : Cpt ξ, q.1 ∈ Set.range x → M.IsHTAt L n y q w := by
   intro X _ Ω _ _ ξ hξ _ G _ hG L n _ hfull e hw E _ _ M R _ _ x _ κ hx T _ _ Γ i htor L₀ _ _ M₀ j hj y χ w₀ w hy hχ
     hHT hwj q hq
   haveI := hG.comm
@@ -244,7 +244,7 @@ theorem isHTAt_of_isHT : ∀ (X : Scheme.{0}) [IsLocallyNoetherian X] (Ω : Type
     rw [valAt_comp, hf]
     exact valAt_res y (i ⁻¹ᵁ W) ⊤ le_top h le_top s
   have hcore := fun (e' : E) (v : epsAt (X.fromSpecStalk q.1) ⟶ G) (hv' : IsTanAt G _ v)
-      (he : (M.pt e').left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (genMap ξ q))) ≫ v.left) =>
+      (he : (M.pt e').left = Spec.map (CommRingCat.ofHom (dualMap (genMap ξ q))) ≫ v.left) =>
     core_tan M S Γ i x hzs (genMap ξ q) _ hg M₀ j hj n w₀ w hwj s
       (fun b => by
         obtain ⟨v', -, a, c⟩ := hv b

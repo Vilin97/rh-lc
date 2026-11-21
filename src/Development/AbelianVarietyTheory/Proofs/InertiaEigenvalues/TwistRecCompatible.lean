@@ -37,7 +37,7 @@ theorem segSum_append_lpSum (rc : IrrGL (k := w.adicCompletion E) → WD h) (l l
   | nil => exact ((WD.lpSum_comm _ _).trans (WD.lpSum_zero _)).symm
   | cons a l ih =>
     have key : ∀ m : List (Segment (w.adicCompletion E)), segSum rc (a :: m) =
-        (((rc a.first).lpTw (((a.len : ℝ) - 1) / 2)).lpChar (WD.lpSp h a.len)).lpSum (segSum rc m) := fun _ => rfl
+        (((rc a.first).lpTw (((a.len : ℝ) - 1) / 2)).lpChar (WD.lpSp (h := h) a.len)).lpSum (segSum rc m) := fun _ => rfl
     rw [List.cons_append, key, key, ih, WD.lpSum_assoc]
 
 end Sums

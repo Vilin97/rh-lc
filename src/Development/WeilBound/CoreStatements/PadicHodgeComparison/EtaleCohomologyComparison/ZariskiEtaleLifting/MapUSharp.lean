@@ -49,7 +49,8 @@ theorem μ_mem (k : Bool) (A : PAlg l) (n : ℕ) : A.cris n ε.μ ∈ JJ k A n :
   have h := uJ_th k A n (WittVector.teichmuller l (A.s (ε.e 0)))
   have h' : A.th (WittVector.teichmuller l (A.s (ε.e 0))) = 1 := ε.sharp_e A
   rw [h', map_one] at h
-  rw [μ, map_sub, map_one, cris_qk]
+  change A.cris n (ε.qk 0 - 1) ∈ JJ k A n
+  rw [(A.cris n).map_sub, (A.cris n).map_one, cris_qk]
   exact Ideal.Quotient.eq.1 h.symm
 
 def qU (n : ℕ) : ((base l).Acr n)ˣ :=
@@ -59,7 +60,8 @@ theorem qU_val (n : ℕ) : (ε.qU n : (base l).Acr n) = (base l).cris n (ε.qk 0
 
 theorem qU_mem (k : Bool) (n : ℕ) : (ε.qU n : (bs l k n).R) - 1 ∈ (bs l k n).I := by
   have := ε.μ_mem k (base l) n
-  rwa [μ, map_sub, map_one, ← qU_val] at this
+  change (base l).cris n (ε.qk 0 - 1) ∈ JJ k (base l) n at this
+  rwa [((base l).cris n).map_sub, ((base l).cris n).map_one, ← qU_val] at this
 
 end Eps
 

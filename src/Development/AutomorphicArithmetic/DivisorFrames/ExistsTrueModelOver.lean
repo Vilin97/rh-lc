@@ -44,7 +44,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 private theorem isTanBasis_map {X : Scheme.{0}} {t : SAB H X} {R S : Type} [CommRing R] [CommRing S] {x : Sp R ⟶ X}
     {g : ℕ} {b : Fin g → (Sp (DualNumber R) ⟶ t.G.left)} (h : IsTanBasis t x b) (β : R →+* S) :
-    IsTanBasis t (spMap β ≫ x) fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap β) ≫ b i := by
+    IsTanBasis t (spMap β ≫ x) fun i => spMap (dualMap β) ≫ b i := by
   refine ⟨fun i => GlobalTheory.LieMet.isTan_map _ rfl (h.1 i), fun T _ φ w hw => ?_⟩
   rw [← Category.assoc, spMap_comp'] at hw ⊢
   simp only [GlobalTheory.LineNorm.Chart.dual_comp]

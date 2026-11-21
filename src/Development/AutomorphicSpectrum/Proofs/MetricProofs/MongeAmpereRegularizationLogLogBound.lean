@@ -157,25 +157,8 @@ theorem abs_mInt_le_of_lintegral [CompactSpace X] [T2Space X] [MeasurableSpace X
     (A : FinHolAtlas e X) (F : Fin e → LocPot X) (hp : ∀ i, IsPotential A (F i)) (hpsh : ∀ i, IsPsh A (F i))
     (g : X → ℝ) (hg : Continuous g) (B : ℝ) (hB : 0 ≤ B)
     (h : ∫⁻ y, ENNReal.ofReal |g y| ∂maMeasure A F ≤ ENNReal.ofReal B) : |mInt A F g| ≤ B := by
-  have hne : Nonempty (ChartPartition A) := existsPartition A
-  have heq : mInt A F g = ∫ x, g x ∂maMeasure A F := by
-    have hc := fun j => chartMeasure_integrable_integral A hne.some F hp hpsh j
-      hg.measurable (mIntegrableCont A F hp g hg)
-    have hm : maMeasure A F = ∑ j, chartMeasure A hne.some F j := by
-      unfold maMeasure
-      rw [dite_eq_left hne]
-      rfl
-    have hi : mInt A F g = integralWith A hne.some F g := by
-      unfold mInt
-      rw [dite_eq_left hne]
-    rw [hi, hm, MeasureTheory.integral_finsetSum_measure (fun j _ => (hc j).1)]
-    unfold integralWith
-    refine Finset.sum_congr rfl fun j _ => ?_
-    rw [(hc j).2]
-    congr 1
-    ext y
-    ring
-  rw [heq]
+  obtain ⟨-, hm⟩ := maMeasure_thm A F hp hpsh
+  rw [(hm g hg.measurable).2 (mIntegrableCont A F hp g hg)]
   refine (norm_integral_le_lintegral_norm g).trans ?_
   simp only [Real.norm_eq_abs]
   exact ENNReal.toReal_le_of_le_ofReal hB h

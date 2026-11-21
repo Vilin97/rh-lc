@@ -40,7 +40,7 @@ theorem exists_eq_pow_mul_of_mem {c₁ c₂ : ACrisZero K p} {N : ℕ}
     (h : algebraMap _ (ACris K p) c₁ - algebraMap _ (ACris K p) c₂ ∈
       Ideal.span {(p : ACris K p) ^ N}) :
     ∃ z : ACrisZero K p, c₁ - c₂ = (p : ACrisZero K p) ^ N * z := by
-  rw [← Ideal.span_singleton_pow, ← span_p_pow_map, ← map_sub,
+  rw [← Ideal.span_singleton_pow, ← span_p_pow_map, ← RingHom.map_sub (algebraMap (ACrisZero K p) (ACris K p)),
     ← ker_adicCompletion_evalₐ (Submodule.fg_span_singleton _), RingHom.mem_ker] at h
   have h2 : Ideal.Quotient.mk (Ideal.span {(p : ACrisZero K p)} ^ N) (c₁ - c₂) = 0 := by
     rw [← _root_.AdicCompletion.evalₐ_of]
@@ -183,7 +183,7 @@ theorem exists_lower_bound {a : ACris K p} (ha : a ≠ 0) :
   have hiota : iotaQ K p (m + 1) a = Ideal.Quotient.mk (kerAway K p ^ (m + 1)) (c : 𝔸) +
       (p : Q) ^ N * iotaQ K p (m + 1) α := by
     have := congrArg (iotaQ K p (m + 1)) hα
-    rw [map_mul, map_pow, map_natCast, map_sub,
+    rw [map_mul, map_pow, map_natCast, RingHom.map_sub (iotaQ K p (m + 1)),
       show algebraMap (ACrisZero K p) (ACris K p) c = _root_.AdicCompletion.of _ _ c from rfl,
       iotaQ_of] at this
     linear_combination -this

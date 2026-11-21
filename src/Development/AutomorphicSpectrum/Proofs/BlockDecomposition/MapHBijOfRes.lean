@@ -307,11 +307,7 @@ theorem ses0 {d : ℕ} (Q : Poly Φ) (E : Frame (Φ := Φ) (d + 1)) (hQ : Q.Crit
     apply b1 X
     rw [hj, hj]
     exact congrArg (q (Q.P X.T)) h
-  · have hy' : (β.app X).hom (q (Q.P X.T) y) = 0 := by
-      apply (q (Q.P X.T)).symm.injective
-      change (q (Q.P X.T)).symm.toLinearMap _ = (q (Q.P X.T)).symm.toLinearMap 0
-      rw [LinearMap.map_zero]
-      exact (hβ X y).symm.trans hy
+  · have hy' : (β.app X).hom (q (Q.P X.T) y) = 0 := (LinearEquiv.map_eq_zero_iff (q (Q.P X.T)).symm).1 ((hβ X y).symm.trans hy)
     obtain ⟨u, hu⟩ := (b2 X (q (Q.P X.T) y)).1 hy'
     obtain ⟨w, rfl⟩ := (q X.T).surjective u
     rw [hj] at hu
@@ -319,8 +315,7 @@ theorem ses0 {d : ℕ} (Q : Poly Φ) (E : Frame (Φ := Φ) (d + 1)) (hQ : Q.Crit
   · rintro ⟨u, rfl⟩
     change (β₀.app X).hom ((Φ.A.map (Q.j X.T)).hom u) = 0
     have h0 := (b2 X (q (Q.P X.T) ((Φ.A.map (Q.j X.T)).hom u))).2 ⟨q X.T u, hj X u⟩
-    rw [hβ, h0]
-    exact (q (Q.P X.T)).symm.toLinearMap.map_zero
+    rw [hβ, h0, map_zero]
   · obtain ⟨z, hz⟩ := b3 X (q (Q.P X.T) y)
     obtain ⟨w, rfl⟩ := (q (Q.P X.T)).surjective z
     exact ⟨w, by rw [hβ, hz, LinearEquiv.symm_apply_apply]⟩

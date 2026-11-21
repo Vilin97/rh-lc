@@ -374,7 +374,7 @@ variable {V : G.left.Opens} {t : Fin g → Γ(G.left, V)} {N : ℕ} {f : Fin N �
 theorem famExp_of_inverse (M : LieModel G (𝟙 (Sp R)) (Fin g → R)) (hρ : 0 < ρ) (hρε : ρ ≤ ε) (hρδ : ρ ≤ δ)
     (hΨ : IsHolTo (ball b₀ ε ×ˢ ball (0 : Fin g → ℂ) ε) (fun bz : (Fin n → ℂ) × (Fin g → ℂ) => (Ψ bz.1 bz.2).left))
     (hder : ∀ b ∈ ball b₀ ε, ∀ a : Fin g, IsDerivAt0 (fun z => (Ψ b z).left) (Pi.single a 1)
-      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ b)) ≫ (M.pt (Pi.single a 1)).left))
+      (spMap (dualMap (ψ b)) ≫ (M.pt (Pi.single a 1)).left))
     (hV : ∀ b ∈ ball b₀ ε, ∀ z ∈ ball (0 : Fin g → ℂ) ε, ⊤ ≤ (Ψ b z).left ⁻¹ᵁ V)
     (ht : ∀ b ∈ ball b₀ ε, ∀ z ∈ ball (0 : Fin g → ℂ) ε, coord V t (Ψ b z) = z)
     (hret : ∀ b ∈ ball b₀ δ, ∀ x : Over.mk (spMap (ψ b)) ⟶ G, ⊤ ≤ x.left ⁻¹ᵁ V →

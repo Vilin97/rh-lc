@@ -27,7 +27,7 @@ namespace GlobalTheory.CompanionTheory.Ar.Giv
 noncomputable section
 
 def fsOfDegree {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] (A : HermLine ι) : HermLine ι :=
-  HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) A.a
+  HermLine.ofMetrics (fun k => fsMetric (ι k)) A.a
 
 theorem fsOfDegree_a {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] (A : HermLine ι) :
     (fsOfDegree A).a = A.a := rfl

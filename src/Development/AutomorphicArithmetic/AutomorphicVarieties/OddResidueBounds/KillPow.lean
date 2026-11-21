@@ -21,7 +21,7 @@ private theorem nat_dvd_pow (l : ℕ) [hl : Fact l.Prime] (X : ℕ) (h0 : X ≠ 
   have hm0 : ¬ l ∣ m := by
     rintro ⟨k, rfl⟩
     apply pow_succ_padicValNat_not_dvd (p := l) h0
-    exact ⟨k, by rw [pow_succ, mul_assoc]; simpa [Nat.padicValNat_def] using hm⟩
+    exact ⟨k, by rw [pow_succ, mul_assoc]; exact hm⟩
   have hu : IsUnit (m : ℤ_[l]) := by
     rw [PadicInt.isUnit_iff]
     exact le_antisymm (PadicInt.norm_le_one _) (not_lt.mp fun h => hm0 (by simpa using h))

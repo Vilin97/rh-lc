@@ -310,7 +310,7 @@ variable {K : Type} [Field K] {σ : K →+* ℂ} {G : Over (Sp K)} [GrpObj G] {�
 omit u
 
 theorem isTangent_of_pull (h : IsGrpPullback A G (spMap σ) φ) (ht : IsTangent t)
-    (e : t'.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ t.left) : IsTangent t' := by
+    (e : t'.left ≫ φ = spMap (dualMap σ) ≫ t.left) : IsTangent t' := by
   refine h.1.hom_ext ?_ ?_
   · rw [Category.assoc, e]
     refine Eq.trans ?_ (PolBaseChange.eSec_comm h).symm
@@ -321,7 +321,7 @@ theorem isTangent_of_pull (h : IsGrpPullback A G (spMap σ) φ) (ht : IsTangent 
     congr 1
     rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp]
     congr 2
-    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   · have z := congrArg (· ≫ A.hom) (isTangent_zero A)
     rw [← z, Category.assoc, Category.assoc, Over.w, Over.w]
 
@@ -597,7 +597,7 @@ theorem cj_domain {Fd : Set (Fin g → ℂ)} (hF : IsAddFundamentalDomain u.Λ F
     rw [star_add, star_star]
 
 theorem cj_isDiff {t : epsR ℂ ⟶ A} {t' : epsR ℂ ⟶ A'} (ht : IsTangent t)
-    (e : t'.left ≫ ψ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ t.left) {w : Fin g → ℂ} (hd : u.IsDiff w t) :
+    (e : t'.left ≫ ψ = spMap (dualMap (starRingEnd ℂ)) ≫ t.left) {w : Fin g → ℂ} (hd : u.IsDiff w t) :
     (cjUnif h u).IsDiff (star w) t' := by
   haveI := isIso_of_cj h
   intro U hU f
@@ -612,19 +612,19 @@ theorem cj_isDiff {t : epsR ℂ ⟶ A} {t' : epsR ℂ ⟶ A'} (ht : IsTangent t)
       star ∘ (fun z => valAt' (u.ex z).left (inv ψ ⁻¹ᵁ U) (((inv ψ).app U).hom f)) ∘ star :=
     funext fun z => cj_val h _ U f
   rw [e1, d.fderiv]
-  have e2 : t'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (show Sp (DualNumber ℂ) ⟶ _ from t.left) ≫ inv ψ := by
+  have e2 : t'.left = spMap (dualMap (starRingEnd ℂ)) ≫ (show Sp (DualNumber ℂ) ⟶ _ from t.left) ≫ inv ψ := by
     rw [← Category.assoc]
     exact (IsIso.eq_comp_inv ψ).2 e
   have k : ∀ (y : Sp (DualNumber ℂ) ⟶ A'.left) (hy : ⊤ ≤ y ⁻¹ᵁ U),
-      y = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (show Sp (DualNumber ℂ) ⟶ _ from t.left) ≫ inv ψ →
-      TangentOrigin.evalPt y U hy f = GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)
+      y = spMap (dualMap (starRingEnd ℂ)) ≫ (show Sp (DualNumber ℂ) ⟶ _ from t.left) ≫ inv ψ →
+      TangentOrigin.evalPt y U hy f = dualMap (starRingEnd ℂ)
         (TangentOrigin.evalPt (R := DualNumber ℂ) t.left _ h2 (((inv ψ).app U).hom f)) := by
     rintro _ hy rfl
     rw [TangentOrigin.evalPt_spMap_comp _ _ U h2]
     congr 1
   refine (congrArg TrivSqZeroExt.snd (k _ hU e2)).trans ?_
   have e3 := hd _ h2 (((inv ψ).app U).hom f)
-  simp only [GlobalTheory.CompanionTheory.Ar.dualMap, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_inl,
+  simp only [dualMap, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_inl,
     TrivSqZeroExt.snd_inr, zero_add]
   refine (congrArg (starRingEnd ℂ) e3).trans ?_
   simp

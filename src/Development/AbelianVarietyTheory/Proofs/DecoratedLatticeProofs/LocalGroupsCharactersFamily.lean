@@ -50,7 +50,7 @@ theorem unitsHom_int (q : GlobalTheory.FinPl.SplitPt D k) (y : kˣ) (hy : valuat
     finPart D ((GlobalTheory.LocChar.unitsHom (ofSplit q) y : (AE D)ˣ) : AE D) ∈ intAE D := by
   have he1 : q.e * q.e = q.e := q.split.1
   show finPart D (q.sec y + (1 - q.e)) ∈ intAE D
-  rw [(finPart D).map_add (f := _), (finPart D).map_sub, (finPart D).map_one]
+  rw [(finPart D).map_add, (finPart D).map_sub, (finPart D).map_one]
   exact add_mem ((q.int_iff _).1 ((Valuation.mem_integer_iff _ _).2 hy.le))
     (sub_mem (GlobalTheory.AdIdem.idempotent_mem_intAE D 1 (mul_one 1))
       (GlobalTheory.AdIdem.idempotent_mem_intAE D _ (by rw [← (finPart D).map_mul, he1])))
@@ -73,8 +73,8 @@ theorem unit_trivial (q : GlobalTheory.FinPl.SplitPt D k) {χ : (AE D)ˣ →* Ci
     show q.sec x + (1 - q.e) = _
     ring
   refine h _ ?_ (fun w hw => ?_) (unitsHom_int q x hx) ?_
-  · rw [hU, (infPart D).map_add (f := _), (infPart D).map_one, hi, add_zero]
-  · rw [hU, (finPart D).map_add (f := _), (finPart D).map_one, RingHom.map_add (f := _), RingHom.map_one, hf w hw, add_zero]
+  · rw [hU, (infPart D).map_add, (infPart D).map_one, hi, add_zero]
+  · rw [hU, (finPart D).map_add, (finPart D).map_one, RingHom.map_add, RingHom.map_one, hf w hw, add_zero]
   · rw [← map_inv]
     exact unitsHom_int q x⁻¹ (by rw [Units.val_inv_eq_inv_val, map_inv₀, hx, inv_one])
 

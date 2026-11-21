@@ -18,16 +18,16 @@ theorem kernels_keep_ramL : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (
   intro B X I hOk hP l Z u a Ch₀ Ch A ι hIs hLive i hi φ hφ
   refine ⟨GlobalTheory.T.chainStepKernel_preserves_levelRamifiedForms I hOk hP l Z u a i hi φ hφ.1, ?_⟩
   intro c' hc'
-  have hSB : IsSBHalf A.e (stdHom ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X (i + 1))) (0 : WO ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X (i + 1)) → ℂ) :=
+  have hSB : IsSBHalf A.e (stdHom ((I.rec7 l Z).sp.X i) ((I.rec7 l Z).sp.X (i + 1))) (0 : WO ((I.rec7 l Z).sp.X i) ((I.rec7 l Z).sp.X (i + 1)) → ℂ) :=
     ⟨fun t h => absurd rfl h, 1, one_pos, fun _ _ _ _ => rfl, fun t h => absurd rfl h⟩
-  have key := fun (c : (I.chain l u a).cls i) (z : Matrix (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X (i + 1)).rank) (Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i).rank) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) =>
+  have key := fun (c : (I.chain l u a).cls i) (z : Matrix (Fin ((I.rec7 l Z).sp.X (i + 1)).rank) (Fin ((I.rec7 l Z).sp.X i).rank) (I.rec7 l Z).host.E) =>
     (GlobalTheory.T.movedDatum_eq_finiteDatum_representativePair I hOk hP l Z u a Ch₀ A hIs i hi (A.chOf i c) (A.chOf (i+1) c') 0 hSB 1
       (fun z => by simp [hLive.dead i hi _ hc']) ⟨c, rfl⟩ ⟨c', rfl⟩).2.2 z
   have hxi : ∀ c : (I.chain l u a).cls i, xiAt I.Ch I.sel (I.tup a) (I.cst a) (I.idx a) u i c.1 c'.1 ((I.stp u a i).rep c) ((I.stp u a (i + 1)).rep c') = 0 := by
     intro c
     funext x
-    obtain ⟨γ, rfl⟩ : ∃ γ, toHom _ _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i (Nat.le_of_succ_le hi)) (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (i + 1) hi) γ = x := by
-      refine ⟨(LinearMap.toMatrix' x).submatrix (finCongr (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (i + 1) hi)) (finCongr (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i (Nat.le_of_succ_le hi))), ?_⟩
+    obtain ⟨γ, rfl⟩ : ∃ γ, toHom _ _ (rankN (I.rec7 l Z) i (Nat.le_of_succ_le hi)) (rankN (I.rec7 l Z) (i + 1) hi) γ = x := by
+      refine ⟨(LinearMap.toMatrix' x).submatrix (finCongr (rankN (I.rec7 l Z) (i + 1) hi)) (finCongr (rankN (I.rec7 l Z) i (Nat.le_of_succ_le hi))), ?_⟩
       show Matrix.toLin' _ = x
       conv_rhs => rw [← Matrix.toLin'_toMatrix' x]
       rfl

@@ -19,11 +19,6 @@ namespace ACris
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
-local notation "𝒪" => normInteger ℂ_[p]
-local notation "𝒪♭" => PreTilt 𝒪 p
-local notation "𝔹" => BDeRhamPlus 𝒪 p
-local notation "φW" => WittVector.frobeniusEquiv p 𝒪♭
-
 section Teichmuller
 
 omit hp in
@@ -141,8 +136,7 @@ theorem iotaPlus_algebraMap_padic (q : ℚ_[p]) :
     refine IsLocalization.ringHom_ext (nonZeroDivisors ℤ_[p]) (RingHom.ext fun x => ?_)
     simp only [RingHom.comp_apply, padicToBCrisPlus, IsLocalization.lift_eq, padicIntToBCrisPlus,
       iotaPlus_algebraMap]
-    change _ = algebraMap ℚ_[p] 𝔹 (x : ℚ_[p])
-    rw [iota_algebraMap, IsPerfectoidField.algebraMap_padic_coe]
+    exact iota_padicInt x
   exact RingHom.congr_fun h q
 
 def iotaPlusAlg : BCrisPlus ℂ_[p] p →ₐ[ℚ_[p]] 𝔹 :=
@@ -210,7 +204,7 @@ theorem algebraMap_aCris_injective :
 set_option maxHeartbeats 1600000 in
 theorem phiPlus_iterate_algebraMap (n : ℕ) (a : ACris ℂ_[p] p) :
     (phiPlus ℂ_[p] p)^[n] (algebraMap (ACris ℂ_[p] p) (BCrisPlus ℂ_[p] p) a) =
-      algebraMap (ACris ℂ_[p] p) (BCrisPlus ℂ_[p] p) ((phi (K := ℂ_[p]) (p := p))^[n] a) := by
+      algebraMap (ACris ℂ_[p] p) (BCrisPlus ℂ_[p] p) ((phi ℂ_[p] p)^[n] a) := by
   induction n with
   | zero => rfl
   | succ n ih => rw [Function.iterate_succ_apply', ih, phiPlus_algebraMap,
@@ -285,13 +279,13 @@ theorem mem_unramifiedClosure_of_iotaPlus_eq {x : BCrisPlus ℂ_[p] p} {β : Pad
     induction n with
     | zero => rfl
     | succ n ih => rw [Function.iterate_succ_apply', ih, map_pow, map_natCast]
-  have ha : (phi (K := ℂ_[p]) (p := p))^[N] a = a := by
+  have ha : (phi ℂ_[p] p)^[N] a = a := by
     apply algebraMap_aCris_injective
     rw [← phiPlus_iterate_algebraMap, ← hs, hsk, ← RingHom.coe_pow, map_mul, RingHom.coe_pow,
       hfix, hphik]
   obtain ⟨u₀, -⟩ := exists_theta_approx_of_phi_iterate hN ha 0
 
-  have hθa : ((theta a : 𝒪) : ℂ_[p]) = ((r n₁ * (p : PadicAlgCl p) ^ k : PadicAlgCl p) : ℂ_[p]) := by
+  have hθa : ((theta ℂ_[p] p a : 𝒪) : ℂ_[p]) = ((r n₁ * (p : PadicAlgCl p) ^ k : PadicAlgCl p) : ℂ_[p]) := by
     have h1 : iota ℂ_[p] p a = algClToBdR p (r n₁ * (p : PadicAlgCl p) ^ k) := by
       rw [← iotaPlus_algebraMap, ← hs, map_mul, hsk, map_pow, map_natCast, hrx, map_mul, map_pow,
         map_natCast]
@@ -343,44 +337,9 @@ variable [FiniteDimensional ℚ_[p] K]
 
 theorem bCrisPlus_fixed (x : BCrisPlus ℂ_[p] p) (hx : ∀ σ : Gal(PadicAlgCl p/K), σ • x = x) :
     ∃ k ∈ maxUnramified p K, iotaPlus ℂ_[p] p x = algClToBdR p k := by
-  let b := iotaPlus ℂ_[p] p x
-  have hb (σ : Gal(PadicAlgCl p/K)) : σ • b = b := by
-    dsimp only [b]
+  obtain ⟨k, hk⟩ := bDeRhamPlus_fixed K (iotaPlus ℂ_[p] p x) fun σ => by
     rw [← iotaPlus_gal_smul, hx σ]
-  obtain ⟨k, hk⟩ := exists_eq_coe_of_forall_smul_eq (K := K) (x := thetaAlgHom p b) fun σ => by
-    rw [thetaAlgHom_apply, ← thetaBDeRhamPlusField_gal_smul, hb σ]
-  have hbk : b = algClToBdR p k := by
-    let y := b - algClToBdR p k
-    let y' := algebraMap 𝔹 (BDeRham 𝒪 p) y
-    have hy' (σ : Gal(PadicAlgCl p/K)) : σ • y' = y' := by
-      have hkfix : σ (k : PadicAlgCl p) = k := σ.commutes k
-      dsimp only [y', y]
-      rw [gal_smul_algebraMap_bDeRham, smul_sub, hb σ, gal_smul_algClToBdR, hkfix]
-    have hmem : ∀ n : ℕ, y' ∈ IsPerfectoidField.fil ℂ_[p] p (n + 1 : ℤ) := by
-      intro n
-      induction n with
-      | zero =>
-        change algebraMap 𝔹 (BDeRham 𝒪 p) y ∈ IsPerfectoidField.fil ℂ_[p] p (↑(1 : ℕ))
-        rw [IsPerfectoidField.algebraMap_mem_fil_iff, pow_one,
-          IsPerfectoidField.maximalIdeal_bDeRhamPlus, RingHom.mem_ker]
-        rw [← thetaAlgHom_apply, map_sub, thetaAlgHom_algClToBdR, hk, sub_self]
-      | succ n ih =>
-        let z : IsPerfectoidField.fil ℂ_[p] p (n + 1 : ℤ) := ⟨y', ih⟩
-        have hgr : IsPerfectoidField.grMap maximalIdeal_eq_span_tBdR (n + 1 : ℤ) z = 0 := by
-          refine eq_zero_of_forall_twistScalar_mul_smul_eq K (j := (n : ℤ) + 1) (by omega) fun σ => ?_
-          rw [← cpTwistRep_apply, ← grMap_tBdR_gal_smul σ z]
-          congr 1
-          exact Subtype.ext (hy' σ)
-        simpa only [Nat.cast_succ] using
-          (IsPerfectoidField.grMap_eq_zero_iff maximalIdeal_eq_span_tBdR z).1 hgr
-    apply sub_eq_zero.1
-    refine IsPerfectoidField.eq_zero_of_forall_mem_maximalIdeal_pow fun n => ?_
-    cases n with
-    | zero => rw [pow_zero, Ideal.one_eq_top]; exact Submodule.mem_top
-    | succ n =>
-      apply (IsPerfectoidField.algebraMap_mem_fil_iff y n.succ).1
-      simpa only [Nat.cast_succ] using hmem n
-  exact ⟨k, ⟨k.2, mem_unramifiedClosure_of_iotaPlus_eq hbk⟩, hbk⟩
+  exact ⟨k, ⟨k.2, mem_unramifiedClosure_of_iotaPlus_eq hk.symm⟩, hk.symm⟩
 
 
 omit [FiniteDimensional ℚ_[p] K] in

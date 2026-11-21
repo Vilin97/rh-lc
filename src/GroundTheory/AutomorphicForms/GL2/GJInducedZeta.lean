@@ -305,7 +305,7 @@ theorem lintegral_inducedIntegrand_mul (μ𝔪 : Measure (LeviIndex n β → F))
   have hcont := continuous_inducedIntegrand hΦ hφ.2 ℓ s
   have hmeas : Measurable fun p : blockUpper F n β =>
       ‖inducedIntegrand Φ φ ℓ s ((p : GL (Fin n) F) * y)‖ₑ :=
-    (hcont.comp (continuous_subtype_val.mul continuous_const)).eNorm.measurable
+    (hcont.comp (continuous_subtype_val.mul continuous_const)).enorm.measurable
   rw [lintegral_haarParabolic μ𝔪 μ𝔫 hmeas]
   refine lintegral_congr fun m => ?_
   have hΦy := hΦ.comp_mulRight y
@@ -314,16 +314,16 @@ theorem lintegral_inducedIntegrand_mul (μ𝔪 : Measure (LeviIndex n β → F))
   have hmu : Measurable fun u : UnipotentIndex n β → F =>
       ‖Φ ((((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) + unipMatrix F u) *
         (y : Matrix (Fin n) (Fin n) F))‖ₑ :=
-    (hΦy.1.continuous.comp (continuous_const.add continuous_unipMatrix)).eNorm.measurable
-  simp_rw [inducedIntegrand_parabolicMk_mul hφ ℓ s hy m, eNorm_mul]
-  rw [lintegral_mul_const _ hmu, ← ofReal_integral_norm_eq_lintegral_eNorm hint]
+    (hΦy.1.continuous.comp (continuous_const.add continuous_unipMatrix)).enorm.measurable
+  simp_rw [inducedIntegrand_parabolicMk_mul hφ ℓ s hy m, enorm_mul]
+  rw [lintegral_mul_const _ hmu, ← ofReal_integral_norm_eq_lintegral_enorm hint]
   have hI : 0 ≤ ∫ u, ‖Φ ((((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) + unipMatrix F u) *
       (y : Matrix (Fin n) (Fin n) F))‖ ∂μ𝔫 := integral_nonneg fun _ => norm_nonneg _
   have hI' : (∫ u, ((‖Φ ((((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) + unipMatrix F u) *
       (y : Matrix (Fin n) (Fin n) F))‖ : ℝ) : ℂ) ∂μ𝔫) =
       ((∫ u, ‖Φ ((((m : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) + unipMatrix F u) *
       (y : Matrix (Fin n) (Fin n) F))‖ ∂μ𝔫 : ℝ) : ℂ) := integral_complex_ofReal
-  simp only [leviIntegrand, eNorm_mul, MonoidHom.mul_apply]
+  simp only [leviIntegrand, enorm_mul, MonoidHom.mul_apply]
   rw [hI', enorm_ofReal_complex hI, enorm_coe_nnreal, ← coe_leviSqrtModular, enorm_coe_nnreal,
     ENNReal.coe_mul]
   ring
@@ -530,7 +530,7 @@ theorem exists_inducedZeta (hσ : IsSmooth σ) [σ.IsIrreducible] (hc : IsCuspid
     intro s hs
     refine ⟨(hcont s).aestronglyMeasurable, ?_⟩
     have hC := lintegral_eq_sum_parabolic (β := β) μG (haarParabolic (parabolicMeasure β μ𝔪 μ𝔫))
-      μK (hcont s).eNorm.measurable (fun g k hk => by rw [hinv s g k hk])
+      μK (hcont s).enorm.measurable (fun g k hk => by rw [hinv s g k hk])
     have hlt : μG (integralGL F n) * (μK ((congruenceSubgroup F n (max r₁ r₂)).subgroupOf
         (integralGL F n)) * ∑ q : Q, ∫⁻ p, ‖inducedIntegrand Φ φ ℓ s
           ((p : GL (Fin n) F) * y q)‖ₑ ∂(haarParabolic (parabolicMeasure β μ𝔪 μ𝔫))) < ⊤ :=

@@ -89,12 +89,12 @@ theorem isGrpPullback_self {S : Scheme.{0}} (G : Over S) [GrpObj G] : IsGrpPullb
   exact (mul_left_congr (G := G) (Category.comp_id T.hom) x₀ y₀ x y (hx.trans (Category.comp_id _))
     (hy.trans (Category.comp_id _))).trans (Category.comp_id _).symm
 
-theorem dualMap_id (R : Type) [CommRing R] : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id (DualNumber R) := by
+theorem dualMap_id (R : Type) [CommRing R] : dualMap (RingHom.id R) = RingHom.id (DualNumber R) := by
   apply RingHom.ext
   intro x
-  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  ext <;> simp [dualMap]
 
-theorem spMap_dualMap_id (R : Type) [CommRing R] : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
+theorem spMap_dualMap_id (R : Type) [CommRing R] : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by
   rw [dualMap_id]; exact Spec.map_id _
 
 theorem spMap_comp_two {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
@@ -123,16 +123,16 @@ theorem generic_coords_in_span : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
   have hw'' : u'' ≫ t'.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr)) := by
     apply spMap_frac_cancel (V := T.V)
     rw [Category.assoc, ← m2'.cart.1.w, ← Category.assoc, hu'', Category.assoc, Over.w ub]
-    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ spMap (algebraMap T.V (DualNumber T.V)) = _
+    show spMap (dualMap (algebraMap T.V T.Fr)) ≫ spMap (algebraMap T.V (DualNumber T.V)) = _
     exact (spMap_comp_two _ _).trans ((congrArg spMap (dualMap_alg _)).trans (spMap_comp_two _ _).symm)
 
-  have hsq : ∀ k, (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ (vV k).left) ≫ G.t.G.hom =
+  have hsq : ∀ k, (spMap (dualMap (algebraMap T.V T.Fr)) ≫ (vV k).left) ≫ G.t.G.hom =
       spMap (algebraMap T.Fr (DualNumber T.Fr)) ≫ spMap (algebraMap T.V T.Fr) := fun k => by
     rw [Category.assoc, Over.w (vV k)]
     exact (spMap_comp_two _ _).trans ((congrArg spMap (dualMap_alg _)).trans (spMap_comp_two _ _).symm)
   let g : Fin F.P₀.g → (epsR T.Fr ⟶ t'.G) := fun k =>
     Over.homMk (m2'.cart.1.lift _ _ (hsq k)) (m2'.cart.1.lift_snd _ _ _)
-  have hg1 : ∀ k, (g k).left ≫ m2'.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ (vV k).left :=
+  have hg1 : ∀ k, (g k).left ≫ m2'.φ = spMap (dualMap (algebraMap T.V T.Fr)) ≫ (vV k).left :=
     fun k => m2'.cart.1.lift_fst _ _ _
   have hB : IsGrpPullback t'.G B.t.G (spMap iK ≫ spMap (algebraMap (𝓞 K) K)) (n'.φ ≫ m2.φ) :=
     n'.cart.comp m2.cart

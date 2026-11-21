@@ -197,6 +197,13 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.parHaar :
       simp [Real.exp_pos]))
   haveI : (unipMeasure K (2 + 2) 2).IsAddHaarMeasure := inferInstance
   let ρ := μ₂.prod (μ₂.prod (w.prod (unipMeasure K (2 + 2) 2)))
+  haveI : SFinite (w.prod (unipMeasure K (2 + 2) 2)) := inferInstance
+  haveI : SFinite (μ₂.prod (w.prod (unipMeasure K (2 + 2) 2))) := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact inferInstance
+  haveI : (w.prod (unipMeasure K (2 + 2) 2)).IsOpenPosMeasure := inferInstance
+  haveI : (μ₂.prod (w.prod (unipMeasure K (2 + 2) 2))).IsOpenPosMeasure := inferInstance
+  haveI : ρ.IsOpenPosMeasure := inferInstance
   have form : ∀ f : S → ℝ≥0∞, Measurable f → ∫⁻ s, f s ∂ρ.map φ = ∫⁻ m₁, ∫⁻ m₂, ∫⁻ t : ℝ, ∫⁻ X,
       f (φ (m₁, m₂, t, X)) * ENNReal.ofReal (Real.exp (-4 * t)) ∂unipMeasure K (2 + 2) 2 ∂volume ∂μ₂ ∂μ₂ := by
     intro f hf

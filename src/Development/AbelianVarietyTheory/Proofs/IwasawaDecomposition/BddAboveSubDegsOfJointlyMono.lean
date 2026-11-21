@@ -68,8 +68,8 @@ theorem IsProjCurve.bddAbove_subDegs_of_jointly_mono (hC : IsProjCurve k C) {D :
     exact (cancel_mono (kernel.ι (ψ 0))).1 (h0.trans (zero_comp).symm)
 
 theorem dualMap_sum {F G : C.Modules} {ι : Type} (s : Finset ι) (f : ι → (F ⟶ G)) :
-    GlobalTheory.CompanionTheory.Ar.dualMap (∑ j ∈ s, f j) = ∑ j ∈ s, GlobalTheory.CompanionTheory.Ar.dualMap (f j) :=
-  map_sum (AddMonoidHom.mk' (GlobalTheory.CompanionTheory.Ar.dualMap (F := F) (G := G)) dualMap_add) f s
+    dualMap (∑ j ∈ s, f j) = ∑ j ∈ s, dualMap (f j) :=
+  map_sum (AddMonoidHom.mk' (dualMap (F := F) (G := G)) dualMap_add) f s
 
 theorem bddAbove_subDegs_of_isVB : ∀ (k : Type) [Field k] (C : Scheme.{0}) [Algebra k Γ(C, ⊤)]
     [IsIntegral C], IsProjCurve k C → ∀ (F : C.Modules) (r : ℕ), IsVB F r →
@@ -89,16 +89,16 @@ theorem bddAbove_subDegs_of_isVB : ∀ (k : Type) [Field k] (C : Scheme.{0}) [Al
   have hφ' : Epi φ' := inferInstance
   have hb := hF.isIso_toBidual_of_local_frames
   refine hC.bddAbove_subDegs_of_jointly_mono (hC.isMaxSubDeg_of_rank_one hD).bddAbove n F
-    (fun j => cartierDualToBidual F ≫ GlobalTheory.CompanionTheory.Ar.dualMap (biproduct.ι (fun _ : Fin n => T) j ≫ φ')) fun W g hg => ?_
-  have h0 : (g ≫ cartierDualToBidual F) ≫ GlobalTheory.CompanionTheory.Ar.dualMap φ' = 0 := by
-    rw [← Category.comp_id ((g ≫ cartierDualToBidual F) ≫ GlobalTheory.CompanionTheory.Ar.dualMap φ'), ← dualMap_id,
+    (fun j => cartierDualToBidual F ≫ dualMap (biproduct.ι (fun _ : Fin n => T) j ≫ φ')) fun W g hg => ?_
+  have h0 : (g ≫ cartierDualToBidual F) ≫ dualMap φ' = 0 := by
+    rw [← Category.comp_id ((g ≫ cartierDualToBidual F) ≫ dualMap φ'), ← dualMap_id,
       ← biproduct.total, dualMap_sum, Preadditive.comp_sum]
     refine Finset.sum_eq_zero fun j _ => ?_
     have := hg j
     rw [dualMap_comp, dualMap_comp] at *
     simp only [Category.assoc] at *
     rw [reassoc_of% this, zero_comp]
-  have h1 : g ≫ cartierDualToBidual F = 0 := (cancel_mono (GlobalTheory.CompanionTheory.Ar.dualMap φ')).1 (h0.trans zero_comp.symm)
+  have h1 : g ≫ cartierDualToBidual F = 0 := (cancel_mono (dualMap φ')).1 (h0.trans zero_comp.symm)
   exact (cancel_mono (cartierDualToBidual F)).1 (h1.trans zero_comp.symm)
 
 end GlobalTheory.VB

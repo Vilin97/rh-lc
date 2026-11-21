@@ -121,8 +121,7 @@ theorem acts_ext [DecidableEq T] {ψ : AddChar (AF F) ℂ} (hM : M.IsGood ψ) (f
   refine GlobalTheory.ThK.LocalOps.acts_pure v.1 Op f (ext M T φ) _
     (GlobalTheory.TensUniq.pure_mem_schA f _ (ext_mem_SB M T hM φ) (ext_std M T hM φ))
     (GlobalTheory.PureFactor.mulSupport_finite _ (ext_std M T hM φ)) ?_
-  rw [ext_of_mem]
-  exact h
+  simpa only [ext_of_mem] using h
 
 theorem pure_mem_algD {ψ : AddChar (AF F) ℂ} (emb : ∀ w : InfinitePlace F, EmbOver E w) (hM : M.IsGood ψ)
     (f : SInf F (Fin n × Fin d)) (hf : f ∈ M.Pol ψ emb) (φ : ∀ v : T, ↥(SB (Fin n × Fin d → Fv F v.1))) :

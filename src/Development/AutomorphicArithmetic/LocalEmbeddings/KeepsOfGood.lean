@@ -212,7 +212,8 @@ theorem rep_data {T : CoreJ D} (hT : LawsJ T) {j : ℕ} (hj : InR D j) (Y : Deep
           cuspW (T.Q.Xo j) T.Q.c (T.U j) (wtZ a n), τ γ (π v) = π ⟨_, hv⟩) ∧
       (∀ v, (∀ γ, θ γ = 1 → τ γ v = v) → v ∈ Submodule.span Y.d.c₂.F (Set.range π)) := by
   have hpq : 1 ≤ (T.Q.Dw j).p + (T.Q.Dw j).q := by
-    obtain ⟨hp, hq, -⟩ := (GlobalTheory.LevGeo.laws_of_coreJ D T j hT hj).1.dat
+    have hL := (GlobalTheory.LevGeo.laws_of_coreJ D T j hT hj).1
+    obtain ⟨hp, hq, -⟩ := hL.dat
     obtain ⟨h1, h2⟩ := hj
     have hk := D.R.m_add_three_le_k
     rw [hp, hq]

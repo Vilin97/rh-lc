@@ -105,5 +105,6 @@ theorem UpperTheory.Gal.KunnethLefschetz.Di.untw_holds :
       exact ⟨a, funext ha⟩
   have hc := (hT n 0).comp hΦ
   convert hc using 1
+  funext a
   refine Finset.sum_congr rfl fun j _ => ?_
   exact term hI hR hP r ζ x n j (a j)

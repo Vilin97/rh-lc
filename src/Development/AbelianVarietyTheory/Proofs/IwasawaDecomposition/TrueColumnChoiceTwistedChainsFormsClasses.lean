@@ -34,24 +34,24 @@ variable {B : Base} {X : PreX B.toPre} (I : TC B X) (l : I.Laws) (Z : Later B (I
 
 
 set_option maxHeartbeats 4000000 in
-structure TwStep (H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u))
-    (Q : Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (u : B.Word) (a : I.ι) (i : ℕ) where
+structure TwStep (H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)) (F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u))
+    (Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (u : B.Word) (a : I.ι) (i : ℕ) where
   Ch : Type
   fin : Finite Ch
   chOf : (I.stp u a i).Cl → Ch
   gOf : Ch → H.Ch u i
-  K : ∀ (_ : 1 ≤ i) (hm : i ≤ B.R.m) (β : Ch), LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) (badQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q) i hm
-    (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1) (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hm (I.latAt u a i c.1))
+  K : ∀ (_ : 1 ≤ i) (hm : i ≤ B.R.m) (β : Ch), LevelChart (I.rec7 l Z) (B.T u) (badQ (I.rec7 l Z) Q) i hm
+    (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1) (fun c => latCrd (I.rec7 l Z) i hm (I.latAt u a i c.1))
   reads : ∀ h1 hm, I.ReadsK l Z u a i hm chOf (K h1 hm)
   readsQ : ∀ h1 hm, i + 1 ≤ B.R.m → ∃ k : Ch → GA B (B.R.N i), I.Reads u a i chOf (fun β => (K h1 hm β).lev.Lb) (fun β => (K h1 hm β).lev.U)
     (fun β => (K h1 hm β).lev.chi) (fun c => ((K h1 hm (chOf c)).y ⟨c, rfl⟩).1) (fun c s => ((K h1 hm (chOf c)).stabI ⟨c, rfl⟩ s).1) k ∧
       ∀ β (v : HeightOneSpectrum (𝓞 B.host.F)), I.UnderQ a v → bc (prV (E := B.host.E) v) (k β) = 1
   fk : ∀ h1 hm β, FunKilled (K h1 hm β).lev (X.piT u)
   lev : ∀ (_ : 1 ≤ i) (_ : i ≤ B.R.m) (_ : Ch),
-    Formalism.L2.Herm.StepLevelQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.cm ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.g (B.T u) B.R.f Q
-  cls : ∀ h1 hm β, Formalism.L2.Herm.ClassTie (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.cm ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X i) (lev h1 hm β).Lb (lev h1 hm β).U
+    Formalism.L2.Herm.StepLevelQ (I.rec7 l Z).sp.cm ((I.rec7 l Z).sp.X i) (I.rec7 l Z).host.g (B.T u) B.R.f Q
+  cls : ∀ h1 hm β, Formalism.L2.Herm.ClassTie (I.rec7 l Z).sp.cm ((I.rec7 l Z).sp.X i) (lev h1 hm β).Lb (lev h1 hm β).U
     (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1) (fun c => I.latAt u a i c.1)
-  car : ∀ h1 hm β, SameCar (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hm) (lev h1 hm β).Lb (K h1 hm β).lev.Lb (lev h1 hm β).Uloc (K h1 hm β).lev.Uloc
+  car : ∀ h1 hm β, SameCar (rankN (I.rec7 l Z) i hm) (lev h1 hm β).Lb (K h1 hm β).lev.Lb (lev h1 hm β).Uloc (K h1 hm β).lev.Uloc
     (lev h1 hm β).U (K h1 hm β).lev.U (fun c => ((cls h1 hm β).y c).1) (fun c => ((K h1 hm β).y c).1)
     (fun c s => ((cls h1 hm β).stabI c s).1) (fun c s => ((K h1 hm β).stabI c s).1)
   offU : ∀ h1 hm β v, v ∉ Q → (lev h1 hm β).Uloc v = (H.lev u i h1 hm (gOf β)).Uloc v
@@ -60,12 +60,12 @@ structure TwStep (H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.asse
   uniq : i = B.R.m → Nonempty (Unique Ch)
   chiFin : a ≠ I.mu0 → ∀ h1 hm β, ∃ n : ℕ, 0 < n ∧ ∀ κ, (K h1 hm β).lev.chi κ ^ n = 1
   chiC : ∀ h1 (h2 : i + 1 ≤ B.R.m) β (κ : (K h1 (le_of_succ_m h2) β).lev.U) (κ' : ((F u).ch i h1 h2 (gOf β)).lev.U), κ.1 = κ'.1 →
-    (∀ v ∈ Q, bc (prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v) κ.1 = 1) → (K h1 (le_of_succ_m h2) β).lev.chi κ = ((F u).ch i h1 h2 (gOf β)).lev.chi κ'
+    (∀ v ∈ Q, bc (prV (E := (I.rec7 l Z).host.E) v) κ.1 = 1) → (K h1 (le_of_succ_m h2) β).lev.chi κ = ((F u).ch i h1 h2 (gOf β)).lev.chi κ'
 
 variable {I l Z}
 
-theorem twStep_out {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)}
-    {Q : Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))} (u : B.Word) (a : I.ι) (i : ℕ) (hout : ¬ (1 ≤ i ∧ i ≤ B.R.m))
+theorem twStep_out {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)} {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)}
+    {Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))} (u : B.Word) (a : I.ι) (i : ℕ) (hout : ¬ (1 ≤ i ∧ i ≤ B.R.m))
     (f : (I.stp u a i).Cl → H.Ch u i) : Nonempty (TwStep I l Z H F Q u a i) :=
   ⟨{ Ch := H.Ch u i
      fin := H.ChFin u i
@@ -109,27 +109,27 @@ def killK (hok : I.Ok) (pins : TC.Pins B X) (u : B.Word) (a : I.ι) (i : ℕ) (h
     (K : ∀ β : Ch, LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1)
       (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c.1)))
     (hK : I.ReadsK l Z u a i hi chOf K) (β : Ch) :
-    LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1)
-      (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c.1)) :=
+    LevelChart (I.rec7 l Z) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1)
+      (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c.1)) :=
   { K β with lev := GlobalTheory.Mem.Col2.Reside.swap (K β).lev _ (swap_ex hok pins u a i hi K hK β).choose_spec.choose }
 
-def twStep_mk (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)}
-    {Q : Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))} (u : B.Word) (a : I.ι) (i : ℕ) (h1i : 1 ≤ i) (hmi : i ≤ B.R.m)
-    (hQ : ∀ v ∈ Q, ((B.T u : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal ∧ ∀ j, (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.g j : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal)
+def twStep_mk (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)} {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)}
+    {Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))} (u : B.Word) (a : I.ι) (i : ℕ) (h1i : 1 ≤ i) (hmi : i ≤ B.R.m)
+    (hQ : ∀ v ∈ Q, ((B.T u : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∉ v.asIdeal ∧ ∀ j, (((I.rec7 l Z).host.g j : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∉ v.asIdeal)
     (Ch : Type) (fin : Finite Ch) (chOf : (I.stp u a i).Cl → Ch) (g : Ch → H.Ch u i)
-    (K : ∀ β : Ch, LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) (badQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q) i hmi
-      (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1) (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hmi (I.latAt u a i c.1)))
+    (K : ∀ β : Ch, LevelChart (I.rec7 l Z) (B.T u) (badQ (I.rec7 l Z) Q) i hmi
+      (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1) (fun c => latCrd (I.rec7 l Z) i hmi (I.latAt u a i c.1)))
     (hr : I.ReadsK l Z u a i hmi chOf K)
     (hrQ : i + 1 ≤ B.R.m → ∃ k : Ch → GA B (B.R.N i), I.Reads u a i chOf (fun β => (K β).lev.Lb) (fun β => (K β).lev.U)
     (fun β => (K β).lev.chi) (fun c => ((K (chOf c)).y ⟨c, rfl⟩).1) (fun c s => ((K (chOf c)).stabI ⟨c, rfl⟩ s).1) k ∧
       ∀ β (v : HeightOneSpectrum (𝓞 B.host.F)), I.UnderQ a v → bc (prV (E := B.host.E) v) (k β) = 1)
-    (hLb : ∀ β, (K β).lev.Lb = reL (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hmi) (H.lev u i h1i hmi (g β)).Lb)
-    (hU : ∀ β v, v ∉ Q → (K β).lev.Uloc v = ((H.lev u i h1i hmi (g β)).Uloc v).map (reGL (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hmi) _).toMonoidHom)
+    (hLb : ∀ β, (K β).lev.Lb = reL (rankN (I.rec7 l Z) i hmi) (H.lev u i h1i hmi (g β)).Lb)
+    (hU : ∀ β v, v ∉ Q → (K β).lev.Uloc v = ((H.lev u i h1i hmi (g β)).Uloc v).map (reGL (rankN (I.rec7 l Z) i hmi) _).toMonoidHom)
     (hK : ∀ h1 (h2 : i + 1 ≤ B.R.m) β v, v ∉ Q → (K β).lev.Uloc v = ((F u).ch i h1 h2 (g β)).lev.Uloc v)
     (hu : i = B.R.m → Nonempty (Unique Ch))
     (hF : a ≠ I.mu0 → ∀ β, ∃ n : ℕ, 0 < n ∧ ∀ κ, (K β).lev.chi κ ^ n = 1)
     (hC : ∀ h1 (h2 : i + 1 ≤ B.R.m) β (κ : (K β).lev.U) (κ' : ((F u).ch i h1 h2 (g β)).lev.U), κ.1 = κ'.1 →
-      (∀ v ∈ Q, bc (prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v) κ.1 = 1) → (K β).lev.chi κ = ((F u).ch i h1 h2 (g β)).lev.chi κ') :
+      (∀ v ∈ Q, bc (prV (E := (I.rec7 l Z).host.E) v) κ.1 = 1) → (K β).lev.chi κ = ((F u).ch i h1 h2 (g β)).lev.chi κ') :
     TwStep I l Z H F Q u a i :=
   have hx := fun β => GlobalTheory.ChartQ.chartTie_toQ Q hmi _ _ (killK hok pins u a i hmi K hr β) (H.lev u i h1i hmi (g β)) hQ (hLb β) (hU β)
   { Ch := Ch, fin := fin, chOf := chOf, gOf := g, K := fun _ _ => killK hok pins u a i hmi K hr, reads := fun _ _ => hr, readsQ := fun _ _ => hrQ,
@@ -138,16 +138,16 @@ def twStep_mk (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.HermColsC
     offU := fun _ _ β v hv => by
       have h1 : (K β).lev.Uloc v = _ := (hx β).choose_spec.choose_spec.2.Uloc_eq v
       rw [hU β v hv] at h1
-      exact Subgroup.map_injective (reGL (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hmi) _).injective h1.symm,
+      exact Subgroup.map_injective (reGL (rankN (I.rec7 l Z) i hmi) _).injective h1.symm,
     offL := fun _ _ β => (hx β).choose_spec.choose_spec.1, offK := hK, uniq := hu,
     chiFin := fun h _ _ => hF h, chiC := hC }
 
 theorem reads_lb_eq {u : B.Word} {a a' : I.ι} {i : ℕ} {hi : i ≤ B.R.m} {bad bad' : Set (HeightOneSpectrum (𝓞 B.host.F))} {Ch Ch' : Type}
     {chOf : (I.stp u a i).Cl → Ch} {chOf' : (I.stp u a' i).Cl → Ch'}
-    {K : ∀ β : Ch, LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1)
-      (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c.1))}
-    {K' : ∀ β : Ch', LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) bad' i hi (fun c : {c // chOf' c = β} => (I.chain l u a').stab i c.1)
-      (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a' i c.1))}
+    {K : ∀ β : Ch, LevelChart (I.rec7 l Z) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1)
+      (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c.1))}
+    {K' : ∀ β : Ch', LevelChart (I.rec7 l Z) (B.T u) bad' i hi (fun c : {c // chOf' c = β} => (I.chain l u a').stab i c.1)
+      (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a' i c.1))}
     (h : I.ReadsK l Z u a i hi chOf K) (h' : I.ReadsK l Z u a' i hi chOf' K') (β : Ch) (β' : Ch') :
     (K β).lev.Lb = (K' β').lev.Lb := by
   obtain ⟨k, R⟩ := h
@@ -155,9 +155,9 @@ theorem reads_lb_eq {u : B.Word} {a a' : I.ι} {i : ℕ} {hi : i ≤ B.R.m} {bad
   ext x
   exact (R.lb β x).trans (R'.lb β' x).symm
 
-theorem twStep_mid (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-    {F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)}
-    {Q : Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))} (u : B.Word) (a : I.ι) (i : ℕ) (h1 : 1 ≤ i) (h2 : i + 1 ≤ B.R.m)
+theorem twStep_mid (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)}
+    {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)}
+    {Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))} (u : B.Word) (a : I.ι) (i : ℕ) (h1 : 1 ≤ i) (h2 : i + 1 ≤ B.R.m)
     (hQ : ∀ v, v ∈ Q ↔ I.UnderQ a v)
     (hF : ∀ u, I.StdF l Z u (F u)) (hC : CarH H F) : Nonempty (TwStep I l Z H F Q u a i) := by
   have hoff : ∀ v ∈ Q, ((B.T u : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal ∧ ∀ j, (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.g j : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal :=
@@ -166,8 +166,8 @@ theorem twStep_mid (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.Herm
   by_cases ha : a = I.mu0
   · subst ha
     have hr0 := (hF u).mid i h1 h2
-    let K : ∀ β : H.Ch u i, LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) (badQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q) i hi
-        (fun c : {c // H.chOf u i c = β} => (I.chain l u I.mu0).stab i c.1) (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u I.mu0 i c.1)) :=
+    let K : ∀ β : H.Ch u i, LevelChart (I.rec7 l Z) (B.T u) (badQ (I.rec7 l Z) Q) i hi
+        (fun c : {c // H.chOf u i c = β} => (I.chain l u I.mu0).stab i c.1) (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u I.mu0 i c.1)) :=
       fun β => chartWiden Set.subset_union_left ((F u).ch i h1 h2 β)
     refine ⟨twStep_mk hok pins u I.mu0 i h1 hi hoff (H.Ch u i) (H.ChFin u i) (H.chOf u i) id K hr0
       (fun _ => hr0.elim fun k hk => ⟨k, hk, fun _ v hv => absurd hv (GlobalTheory.T.not_twistPlace_referenceTuple I hok v)⟩) (fun β => ?_) (fun β v _ => ?_) (fun _ _ β v _ => rfl)
@@ -188,21 +188,21 @@ theorem twStep_mid (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.Herm
     · rw [hoU β v hv]
       exact (hC.carC u i h1 h2 (g β)).Uloc_eq v
 
-structure TopP {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)}
-    {Q : Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))} {u : B.Word} {a : I.ι} (S : TwStep I l Z H F Q u a B.R.m) : Prop where
+structure TopP {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)} {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)}
+    {Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))} {u : B.Word} {a : I.ι} (S : TwStep I l Z H F Q u a B.R.m) : Prop where
   chiM : ∀ h1 β (κ : (S.K h1 le_rfl β).lev.U) (κ' : ((F u).cls B.R.m le_rfl (Or.inr rfl)).lev.U), κ.1 = κ'.1 →
-    (∀ v ∈ Q, bc (prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v) κ.1 = 1) → (S.K h1 le_rfl β).lev.chi κ = ((F u).cls B.R.m le_rfl (Or.inr rfl)).lev.chi κ'
+    (∀ v ∈ Q, bc (prV (E := (I.rec7 l Z).host.E) v) κ.1 = 1) → (S.K h1 le_rfl β).lev.chi κ = ((F u).cls B.R.m le_rfl (Or.inr rfl)).lev.chi κ'
   top : a ≠ I.mu0 → ∀ h1 β, I.TopBase l Z u a (S.K h1 le_rfl β).lev.U fun c => ((S.K h1 le_rfl (S.chOf c)).y ⟨c, rfl⟩).1
   topk : a ≠ I.mu0 → ∀ h1, ∃ k, I.Reads u a B.R.m S.chOf (fun β => (S.K h1 le_rfl β).lev.Lb) (fun β => (S.K h1 le_rfl β).lev.U)
     (fun β => (S.K h1 le_rfl β).lev.chi) (fun c => ((S.K h1 le_rfl (S.chOf c)).y ⟨c, rfl⟩).1)
     (fun c s => ((S.K h1 le_rfl (S.chOf c)).stabI ⟨c, rfl⟩ s).1) k ∧
       ∀ β (d : XPt (B.primes X) B.R I.sel (I.tup a)) (g' : GA B (B.R.N B.R.m - 1)) (g : GA B (B.R.N B.R.m)), PtOf g' d →
-        IsExt (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (z0 X u) (inclE (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)) g'.1 g.1 →
+        IsExt (I.rec7 l Z) (z0 X u) (inclE (F := (I.rec7 l Z).host.F) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F)) g'.1 g.1 →
         PtOf (g * k β) (tilF I.sel (I.tup a) u d)
 
-theorem twStep_top (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-    {F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)}
-    {Q : Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))} (u : B.Word) (a : I.ι)
+theorem twStep_top (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)}
+    {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)}
+    {Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))} (u : B.Word) (a : I.ι)
     (hQ : ∀ v, v ∈ Q ↔ I.UnderQ a v)
     (hF : ∀ u, I.StdF l Z u (F u)) (hC : CarH H F) : ∃ S : TwStep I l Z H F Q u a B.R.m, TopP S := by
   have hoff : ∀ v ∈ Q, ((B.T u : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal ∧ ∀ j, (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.g j : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal :=
@@ -212,9 +212,9 @@ theorem twStep_top (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.Herm
   have hno : ∀ h2 : B.R.m + 1 ≤ B.R.m, False := fun h2 => by omega
   by_cases ha : a = I.mu0
   · subst ha
-    let K : ∀ β : Unit, LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) (badQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q) B.R.m le_rfl
+    let K : ∀ β : Unit, LevelChart (I.rec7 l Z) (B.T u) (badQ (I.rec7 l Z) Q) B.R.m le_rfl
         (fun c : {c // (fun _ : (I.stp u I.mu0 B.R.m).Cl => ()) c = β} => (I.chain l u I.mu0).stab B.R.m c.1)
-        (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) B.R.m le_rfl (I.latAt u I.mu0 B.R.m c.1)) :=
+        (fun c => latCrd (I.rec7 l Z) B.R.m le_rfl (I.latAt u I.mu0 B.R.m c.1)) :=
       chartAll (chartWiden Set.subset_union_left ((F u).cls B.R.m le_rfl (Or.inr rfl)).toChart)
     have hr : I.ReadsK l Z u I.mu0 B.R.m le_rfl (fun _ => ()) K := hr0
     refine ⟨twStep_mk hok pins u I.mu0 B.R.m h1m le_rfl hoff Unit inferInstance (fun _ => ()) (fun _ => chM H u) K hr (fun h2 => (hno h2).elim) (fun β => ?_) (fun β v _ => ?_)
@@ -251,13 +251,13 @@ theorem twStep_top (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.Herm
 
 
 set_option maxHeartbeats 8000000 in
-structure TwPack (H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u))
-    (Q : Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (u : B.Word) (a : I.ι) where
+structure TwPack (H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)) (F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u))
+    (Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (u : B.Word) (a : I.ι) where
   St : ∀ i, TwStep I l Z H F Q u a i
   top : TopP (St B.R.m)
   J : TwLevJ I l Z F Q u a (St (B.R.m - 1)).chOf (fun β => (St (B.R.m - 1)).K (by have := B.R.two_le_m; omega) (Nat.sub_le _ _) β)
-  off : ∀ (κ : J.levJ.U) (κ' : (F u).levJ.U), κ'.1 = reGL (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.R.m - 1) (Nat.sub_le _ _)) _ κ.1 →
-    (∀ v ∈ Q, bc (prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v) κ.1 = 1) → J.chiJ κ = (F u).levJ.chi κ'
+  off : ∀ (κ : J.levJ.U) (κ' : (F u).levJ.U), κ'.1 = reGL (rankN (I.rec7 l Z) (B.R.m - 1) (Nat.sub_le _ _)) _ κ.1 →
+    (∀ v ∈ Q, bc (prV (E := (I.rec7 l Z).host.E) v) κ.1 = 1) → J.chiJ κ = (F u).levJ.chi κ'
 
 theorem twBefore_cl_nonempty (hOk : I.Ok) (u : B.Word) (a : I.ι) : Nonempty (I.stp u a (B.R.m - 1)).Cl := by
   classical
@@ -274,9 +274,9 @@ theorem twBefore_cl_nonempty (hOk : I.Ok) (u : B.Word) (a : I.ι) : Nonempty (I.
   exact ⟨(I.stp u a (B.R.m - 1)).cl b0 q0⟩
 
 set_option maxHeartbeats 8000000 in
-theorem twPack_ex (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-    {F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)}
-    {Q : Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))} (u : B.Word) (a : I.ι)
+theorem twPack_ex (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)}
+    {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)}
+    {Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))} (u : B.Word) (a : I.ι)
     (hQ : ∀ v, v ∈ Q ↔ I.UnderQ a v) (hF : ∀ u, I.StdF l Z u (F u)) (hJ : ∀ u j v h, (F u).glevJ.fr j v h = 1) (hC : CarH H F) :
     Nonempty (TwPack (I := I) (l := l) (Z := Z) H F Q u a) := by
   have ex : ∀ i, Nonempty (TwStep I l Z H F Q u a i) := fun i => by
@@ -308,7 +308,7 @@ theorem twPack_ex (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.HermC
   obtain ⟨J⟩ := GlobalTheory.T.exists_penultimateLevel_couplingCosets I hok pins l Z H.Ch H.chOf F u a Q h1 (St (B.R.m - 1)).Ch (St (B.R.m - 1)).fin (St (B.R.m - 1)).chOf
     (fun β => (St (B.R.m - 1)).K h1 (Nat.sub_le _ _) β) (St (B.R.m - 1)).gOf hQ hF hJ ((St (B.R.m - 1)).readsQ h1 (Nat.sub_le _ _) h2) hfin
     (fun β v hv => (St (B.R.m - 1)).offK h1 h2 β v hv) (fun β κ κ' e hv => (St (B.R.m - 1)).chiC h1 h2 β κ κ' e hv)
-  have hLb : (F u).levJ.Lb = reL (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.R.m - 1) (Nat.sub_le _ _)) J.levJ.Lb := by
+  have hLb : (F u).levJ.Lb = reL (rankN (I.rec7 l Z) (B.R.m - 1) (Nat.sub_le _ _)) J.levJ.Lb := by
     obtain ⟨c⟩ := twBefore_cl_nonempty hok u a
     rw [← J.lb ((St (B.R.m - 1)).chOf c), ← (F u).levJ_Lb h1 ((St (B.R.m - 1)).gOf ((St (B.R.m - 1)).chOf c))]
     exact (reads_lb_eq ((St (B.R.m - 1)).reads h1 (Nat.sub_le _ _)) ((hF u).mid (B.R.m - 1) h1 h2) _ _).symm
@@ -316,9 +316,9 @@ theorem twPack_ex (hok : I.Ok) (pins : TC.Pins B X) {H : Formalism.L2.Herm.HermC
     (fun β => (St (B.R.m - 1)).K h1 (Nat.sub_le _ _) β) (St (B.R.m - 1)).gOf hQ hF hJ ((St (B.R.m - 1)).reads h1 (Nat.sub_le _ _))
     (fun β v hv => (St (B.R.m - 1)).offK h1 h2 β v hv) (fun β κ κ' e hv => (St (B.R.m - 1)).chiC h1 h2 β κ κ' e hv) J
   have fin : (∃ χ : J.levJ.U →* ℂˣ, (∀ β (κ : J.levJ.U) (κ' : ((St (B.R.m - 1)).K h1 (Nat.sub_le _ _) β).lev.U),
-      κ'.1 = reGL (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.R.m - 1) (Nat.sub_le _ _)) _ κ.1 → ((St (B.R.m - 1)).K h1 (Nat.sub_le _ _) β).lev.chi κ' = χ κ) ∧
-      ∀ (κ : J.levJ.U) (κ' : (F u).levJ.U), κ'.1 = reGL (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.R.m - 1) (Nat.sub_le _ _)) _ κ.1 →
-        (∀ v ∈ Q, bc (prV (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) v) κ.1 = 1) → χ κ = (F u).levJ.chi κ') := by
+      κ'.1 = reGL (rankN (I.rec7 l Z) (B.R.m - 1) (Nat.sub_le _ _)) _ κ.1 → ((St (B.R.m - 1)).K h1 (Nat.sub_le _ _) β).lev.chi κ' = χ κ) ∧
+      ∀ (κ : J.levJ.U) (κ' : (F u).levJ.U), κ'.1 = reGL (rankN (I.rec7 l Z) (B.R.m - 1) (Nat.sub_le _ _)) _ κ.1 →
+        (∀ v ∈ Q, bc (prV (E := (I.rec7 l Z).host.E) v) κ.1 = 1) → χ κ = (F u).levJ.chi κ') := by
     first | exact hoffx hLb | exact hoffx
   obtain ⟨χ, hχ, hχ'⟩ := fin
   exact ⟨⟨St, hSt ▸ hSm, { J with chiJ := χ, chiJ_eq := hχ }, hχ'⟩⟩
@@ -340,10 +340,10 @@ def stab0Equiv (u : B.Word) (a : I.ι) (c : (I.stp u I.mu0 0).Cl) (c' : (I.stp u
 
 
 set_option maxHeartbeats 4000000 in
-def twT {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)}
-    {inQ : I.ι → HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) → Prop}
-    (Q : I.ι → Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (hQ : ∀ a v, v ∈ Q a ↔ inQ a v)
-    (p : ∀ u a, TwPack (I := I) (l := l) (Z := Z) H F (Q a) u a) : Formalism.L2.Herm.TwChTied (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) inQ where
+def twT {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)} {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)}
+    {inQ : I.ι → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) → Prop}
+    (Q : I.ι → Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (hQ : ∀ a v, v ∈ Q a ↔ inQ a v)
+    (p : ∀ u a, TwPack (I := I) (l := l) (Z := Z) H F (Q a) u a) : Formalism.L2.Herm.TwChTied (I.rec7 l Z) inQ where
   eCls0 u μ := I.eCls0 l u μ
   eStab0 u μ c := stab0Equiv (l := l) u μ c _
   eY _ _ _ _ := Equiv.refl _
@@ -375,22 +375,22 @@ def twT {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ 
     have e1 := (((p u μ).St (B.R.m - 1)).car h (Nat.sub_le _ _) β).U_eq
     have e2 := (p u μ).J.le β
     rw [e1] at e2
-    exact (Subgroup.map_le_map_iff_of_injective (reGL (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.R.m - 1) (Nat.sub_le _ _)) _).injective).1 e2
+    exact (Subgroup.map_le_map_iff_of_injective (reGL (rankN (I.rec7 l Z) (B.R.m - 1) (Nat.sub_le _ _)) _).injective).1 e2
   levJ_stab u μ h β κ := by
     have e1 := (((p u μ).St (B.R.m - 1)).car h (Nat.sub_le _ _) β).U_eq
     have e2 := (p u μ).J.stab β κ
     rw [e1] at e2
-    exact (Subgroup.mem_map_iff_mem (f := (reGL (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.R.m - 1) (Nat.sub_le _ _)) _).toMonoidHom)
-      (reGL (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.R.m - 1) (Nat.sub_le _ _)) _).injective).symm.trans e2
+    exact (Subgroup.mem_map_iff_mem (f := (reGL (rankN (I.rec7 l Z) (B.R.m - 1) (Nat.sub_le _ _)) _).toMonoidHom)
+      (reGL (rankN (I.rec7 l Z) (B.R.m - 1) (Nat.sub_le _ _)) _).injective).symm.trans e2
   DGam_one _ _ := rfl
 
 
 set_option maxHeartbeats 4000000 in
-def twJ {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)}
-    {inQ : I.ι → HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) → Prop}
-    (Q : I.ι → Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (hQ : ∀ a v, v ∈ Q a ↔ inQ a v)
+def twJ {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)} {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)}
+    {inQ : I.ι → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) → Prop}
+    (Q : I.ι → Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (hQ : ∀ a v, v ∈ Q a ↔ inQ a v)
     (p : ∀ u a, TwPack (I := I) (l := l) (Z := Z) H F (Q a) u a)
-    (hoff : ∀ (u : B.Word) a, ∀ v ∈ Q a, ((B.T u : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal ∧ ∀ j, (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.g j : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal) :
+    (hoff : ∀ (u : B.Word) a, ∀ v ∈ Q a, ((B.T u : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∉ v.asIdeal ∧ ∀ j, (((I.rec7 l Z).host.g j : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∉ v.asIdeal) :
     Formalism.L2.Herm.TwChJointS (twT Q hQ p) H where
   gOf u μ i := ((p u μ).St i).gOf
   Uloc_off := by
@@ -400,13 +400,13 @@ def twJ {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ 
   Lb_off u μ i h1 hm β v hv := congrArg _ (((p u μ).St i).offL h1 hm β)
   Q_off u μ := hoff u μ
 
-theorem idY_twYS {inQ : I.ι → HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) → Prop} {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-    {F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)} (hF : ∀ u, I.StdF l Z u (F u))
-    (Q : I.ι → Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (hQ : ∀ a v, v ∈ Q a ↔ inQ a v)
+theorem idY_twYS {inQ : I.ι → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) → Prop} {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)}
+    {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)} (hF : ∀ u, I.StdF l Z u (F u))
+    (Q : I.ι → Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (hQ : ∀ a v, v ∈ Q a ↔ inQ a v)
     (p : ∀ u a, TwPack (I := I) (l := l) (Z := Z) H F (Q a) u a) (u : B.Word) (μ : I.ι) (i : ℕ)
     (hi : i ≤ B.R.m) : I.IdY l Z u μ i hi (twYS (twT Q hQ p) F u μ i hi) := by
   intro y
-  have e : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m = B.R.m := rfl
+  have e : (I.rec7 l Z).R.m = B.R.m := rfl
   show (eYS (F u) i hi y).1 = y.1
   unfold eYS
   split_ifs with h
@@ -415,14 +415,14 @@ theorem idY_twYS {inQ : I.ι → HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Me
 
 
 set_option maxHeartbeats 8000000 in
-def twW (hok : I.Ok) (pins : TC.Pins B X) (l0 : I.Law0 l) {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-    {F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)} (hF : ∀ u, I.StdF l Z u (F u))
-    {inQ : I.ι → HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) → Prop}
-    (Q : I.ι → Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (hQ : ∀ a v, v ∈ Q a ↔ inQ a v)
+def twW (hok : I.Ok) (pins : TC.Pins B X) (l0 : I.Law0 l) {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)}
+    {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)} (hF : ∀ u, I.StdF l Z u (F u))
+    {inQ : I.ι → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) → Prop}
+    (Q : I.ι → Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (hQ : ∀ a v, v ∈ Q a ↔ inQ a v)
     (p : ∀ u a, TwPack (I := I) (l := l) (Z := Z) H F (Q a) u a)
-    (hoff : ∀ (u : B.Word) a, ∀ v ∈ Q a, ((B.T u : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal ∧ ∀ j, (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.g j : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal)
+    (hoff : ∀ (u : B.Word) a, ∀ v ∈ Q a, ((B.T u : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∉ v.asIdeal ∧ ∀ j, (((I.rec7 l Z).host.g j : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∉ v.asIdeal)
     (A : ∀ u a, TwAtT (I.tw l l0 Z) u a) (hA : ∀ u a, (A u a).eVT = Equiv.refl _) :
-    TwFormsTiedS (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (I.tw l l0 Z) (twT Q hQ p) (twJ Q hQ p hoff) F := by
+    TwFormsTiedS (I.rec7 l Z) (I.tw l l0 Z) (twT Q hQ p) (twJ Q hQ p hoff) F := by
   refine'
     { atT := A
       ch u μ _ i h1 hm β := ((p u μ).St i).K h1 hm β
@@ -449,9 +449,9 @@ def twW (hok : I.Ok) (pins : TC.Pins B X) (l0 : I.Law0 l) {H : Formalism.L2.Herm
     intro u μ h κ κ' e hv
     exact (p u μ).off κ κ' e hv
 
-def twJS {H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)}
-    {inQ : I.ι → HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) → Prop}
-    (Q : I.ι → Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (hQ : ∀ a v, v ∈ Q a ↔ inQ a v)
+def twJS {H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)} {F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)}
+    {inQ : I.ι → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) → Prop}
+    (Q : I.ι → Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (hQ : ∀ a v, v ∈ Q a ↔ inQ a v)
     (p : ∀ u a, TwPack (I := I) (l := l) (Z := Z) H F (Q a) u a) : SymmetricTwistedJointForms (twT Q hQ p) F where
   J_g u μ _ j v hv x hx := (p u μ).J.J_g j v hv x hx
   J_off u μ _ v hv hb := (p u μ).J.J_off v hv hb
@@ -466,18 +466,18 @@ end
 
 
 set_option maxHeartbeats 8000000 in
-theorem tw_chains : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (l0 : I.Law0 l) (inQ : I.ι → HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) → Prop) (H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)), (∀ a v, inQ a v ↔ I.UnderQ a v) → (∀ u, I.StdF l Z u (F u) ∧ I.StdLvC l Z u (F u)) → CarH H F → (∀ u j v h, (F u).glevJ.fr j v h = 1) → ∃ (T : Formalism.L2.Herm.TwChTied (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) inQ) (J : Formalism.L2.Herm.TwChJointS T H) (W : TwFormsTiedS (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (I.tw l l0 Z) T J F), Formalism.L2.Herm.TwChMu0 T ∧ I.StdW l Z l0 W ∧ Nonempty (SymmetricTwistedJointForms T F) := by
+theorem tw_chains : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (l0 : I.Law0 l) (inQ : I.ι → HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) → Prop) (H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)) (F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)), (∀ a v, inQ a v ↔ I.UnderQ a v) → (∀ u, I.StdF l Z u (F u) ∧ I.StdLvC l Z u (F u)) → CarH H F → (∀ u j v h, (F u).glevJ.fr j v h = 1) → ∃ (T : Formalism.L2.Herm.TwChTied (I.rec7 l Z) inQ) (J : Formalism.L2.Herm.TwChJointS T H) (W : TwFormsTiedS (I.rec7 l Z) (I.tw l l0 Z) T J F), Formalism.L2.Herm.TwChMu0 T ∧ I.StdW l Z l0 W ∧ Nonempty (SymmetricTwistedJointForms T F) := by
   intro B X I hok pins l Z l0 inQ H F hin hF hC hJ
   have hF' : ∀ u, I.StdF l Z u (F u) := fun u => (hF u).1
   classical
-  have hQex : ∀ a, ∃ Q : Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)), ∀ v, v ∈ Q ↔ I.UnderQ a v :=
+  have hQex : ∀ a, ∃ Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F)), ∀ v, v ∈ Q ↔ I.UnderQ a v :=
     fun a => ⟨(I.Q a).image (fun P => P.under (𝓞 B.host.F)), fun v => Finset.mem_image⟩
   choose Q hQ using hQex
   have hQ' : ∀ a v, v ∈ Q a ↔ inQ a v := fun a v => (hQ a v).trans (hin a v).symm
   have P : ∀ u a, Nonempty (TwPack (I := I) (l := l) (Z := Z) H F (Q a) u a) := fun u a => twPack_ex hok pins u a (hQ a) hF' hJ hC
   let p := fun u a => (P u a).some
   choose A hA hA' using fun u a => GlobalTheory.Mem.Col2.TwAtStd.twAtT_exists I hok pins l Z l0 u a
-  have hoff : ∀ (u : B.Word) a, ∀ v ∈ Q a, ((B.T u : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal ∧ ∀ j, (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.g j : ℕ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ v.asIdeal :=
+  have hoff : ∀ (u : B.Word) a, ∀ v ∈ Q a, ((B.T u : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∉ v.asIdeal ∧ ∀ j, (((I.rec7 l Z).host.g j : ℕ) : 𝓞 (I.rec7 l Z).host.F) ∉ v.asIdeal :=
     fun u a v hv => GlobalTheory.T.twistPlaces_prime_to_levelAndTypePrimes I hok l u a v ((hQ a v).1 hv)
   refine ⟨twT Q hQ' p, twJ Q hQ' p hoff, twW hok pins l0 hF' Q hQ' p hoff A hA, ⟨fun u i hi => Equiv.ext fun y => rfl,
     fun u => Equiv.ext fun c => GlobalTheory.T.eCls0_mu0_eq_self I hok l u c⟩, ⟨fun _ _ => rfl, fun _ _ _ _ => rfl, fun _ _ _ => rfl, hA, ?_,

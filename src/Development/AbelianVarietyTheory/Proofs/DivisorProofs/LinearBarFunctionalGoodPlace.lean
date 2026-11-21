@@ -82,8 +82,8 @@ theorem local_weil_operator_second_space : GlobalTheory.FunPr.Hypotheses₂ → 
     have hb1 := GlobalTheory.T.adelicHeisenberg_acts_by_local_schrodinger G.M'.co B.ψ v γ hγ φ r hr
     have hRw : Rest (evFin F v) (GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo G.M'.co v γ) φ) r :=
       ⟨hr.1, by rw [← hb1]; exact GlobalTheory.T.weil_representation_preserves_schwartz G.M' B.ψ hT.base.std γ _ hr.2⟩
-    rw [← (hS _ hw).2 r hRw, ← hb1, hSplit.impl _ _ _ hr.2, (hS φ hφ).2 r hr,
-      GlobalTheory.T.adelicHeisenberg_acts_by_local_schrodinger G.M'.co B.ψ v _ (atAct γ hγ) (S φ) r (restS φ r hφ hr)]
+    rw [← (hS _ hw).2 r hRw, ← hb1, hSplit.impl _ _ _ hr.2, (hS φ hφ).2 r hr]
+    exact GlobalTheory.T.adelicHeisenberg_acts_by_local_schrodinger G.M'.co B.ψ v _ (atAct γ hγ) (S φ) r (restS φ r hφ hr)
   · intro φ hφ h0
     apply eqR φ 0
     have e1 : om' (1, h⁻¹) (om' (1, h) (tens (evFin F v) φ R)) = tens (evFin F v) φ R := by
@@ -169,8 +169,9 @@ theorem linBar_right_mul : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     intro x u hx hx0 hu1
     unfold symp
     rw [GlobalTheory.T.adelicTrace_supportedAtSplitPlace hcm v t _ (atHTens _ _ x u hx)]
-    rw [map_mul, map_mul, map_neg, map_neg, map_one, map_one, neg_one_mul, neg_one_mul, ← neg_add,
-      GlobalTheory.T.hermitianTensor_skewHermitian_split_symplectic_pair hcm t G.V'.J G.W.J hT.geo.hV'.herm hT.geo.hW.skew x u hx0 hu1]
+    have hp := GlobalTheory.T.hermitianTensor_skewHermitian_split_symplectic_pair hcm t G.V'.J G.W.J hT.geo.hV'.herm hT.geo.hW.skew x u hx0 hu1
+    dsimp only [cA, incM] at hp
+    rw [map_mul, map_mul, map_neg, map_neg, map_one, map_one, neg_one_mul, neg_one_mul, ← neg_add, hp]
     rfl
 
   have hL := hι
@@ -203,7 +204,9 @@ theorem linBar_right_mul : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     have hm := hmu (U (-Lm l) 0) (hUat (-Lm l) 0) (hU1 (-Lm l) 0) φ hφ _ (hsb _ φ hφ) (hbr _ (hUat (-Lm l) 0) φ)
       (U 0 (Pm Y)) (hUat 0 (Pm Y)) (hU0 0 (Pm Y))
     rw [hcoP] at hm
-    rw [hm, hsymp _ _ (hUat 0 (Pm Y)) (hU0 0 (Pm Y)) (hU1 (-Lm l) 0), hcoP, hU0, sumLinForm l Y]
+    rw [hm]
+    dsimp only [cA, incM]
+    rw [hsymp _ _ (hUat 0 (Pm Y)) (hU0 0 (Pm Y)) (hU1 (-Lm l) 0), hcoP, hU0, sumLinForm l Y]
     congr 2
     simp [Lm, Finset.sum_neg_distrib]
   have c3 : ∀ C, ∀ φ ∈ SB (Fin a' × Fin (a + a') → Fv F v),
@@ -231,7 +234,9 @@ theorem linBar_right_mul : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     have h1 : (U (-Lm l) 0 * (mat h)ᵀ).map (piW (t.comp σ)) = 0 := by rw [hmap, hU1, Matrix.zero_mul]
     have hm := hmu _ hat' h1 _ (hSB φ hφ) _ (hsb _ _ (hSB φ hφ)) (hbr _ hat' _) (U 0 (Pm Y)) (hUat 0 (Pm Y)) (hU0 0 (Pm Y))
     rw [hcoP] at hm
-    rw [hm, hsymp _ _ (hUat 0 (Pm Y)) (hU0 0 (Pm Y)) h1, hcoP, hmap, ht, hU0, sumLinForm l]
+    rw [hm]
+    dsimp only [cA, incM]
+    rw [hsymp _ _ (hUat 0 (Pm Y)) (hU0 0 (Pm Y)) h1, hcoP, hmap, ht, hU0, sumLinForm l]
     congr 2
     rw [show (∑ k, ∑ j, (Y * g.val) k j * l (Matrix.single k j 1)) =
       ∑ k, ∑ j, (Y * g.val) k j * Lm l k j from rfl, sumMulRight]

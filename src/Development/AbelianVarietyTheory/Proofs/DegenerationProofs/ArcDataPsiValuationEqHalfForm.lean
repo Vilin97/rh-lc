@@ -67,7 +67,7 @@ theorem value_of_qVal {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationR
   have hz : Out.jFK (R := R) F z ∈ LB.wchart P.P.L (K := PUnit) (fun _ => Out.ptK (P.c χ)) (fun _ => j) :=
     Set.mem_iInter.2 fun k => by
       rw [QForm.ptK_eq]; exact Set.mem_iInter.1 hz' k
-  obtain ⟨v, hv⟩ := exists_unit_gm_spMap g (𝟙 _) _ ht (e.s (fun _ => j)) z
+  obtain ⟨v, hv⟩ := GlobalTheory.ThetaShiftProofs.exists_unit_gm_spMap g (𝟙 _) _ ht (e.s (fun _ => j)) z
   rw [Category.comp_id, hg] at hv
   refine ⟨_, hasVal_mul_unit hc v, ?_⟩
   have h2 := congrArg (gm (spMap (algebraMap (FractionRing R) F)) z
@@ -133,11 +133,9 @@ theorem psi_value (a : ArcIn D l β O' b) {R : Type} [CommRing R] [IsDomain R] [
     exact ht (show spMap g z ∈ (⊤ : (Sp R).Opens) from trivial)
   have hz₀ := mem_pull.1 hz.1
   have H1 := hv (fun _ => j) (fun _ => j₀) (fun _ => hz₀) (fun _ => hz.2)
-  rw [gm_pullGen P.P.L (fun _ : PUnit => Out.ptK (P.c χ)) _ (P.psi χ) (Out.jFK (R := R) F) (𝟙 _) z (fun _ => j) (Set.mem_iInter.2 fun _ => hz.2),
-    gm_pullGen a.D₀.P.L (fun _ : PUnit => Out.ptK (a.D₀.c y)) _ (a.D₀.psi y) (Out.jFK (R := O') F) (𝟙 _) z (fun _ => j₀) (Set.mem_iInter.2 fun _ => by rw [← hp PUnit.unit]; exact hz₀),
-    Category.id_comp, Category.id_comp, Fintype.prod_unique, zpow_neg_one,
+  rw [gm_pullGen', gm_pullGen', Category.id_comp, Category.id_comp, Fintype.prod_unique, zpow_neg_one,
     Units.val_mul, Units.inv_mul_eq_iff_eq_mul] at H1
-  obtain ⟨u₁, hu₁⟩ := exists_unit_gm_spMap g x _ ht (w.s (fun _ => j₀, j)) z
+  obtain ⟨u₁, hu₁⟩ := GlobalTheory.ThetaShiftProofs.exists_unit_gm_spMap g x _ ht (w.s (fun _ => j₀, j)) z
   have hpt : spMap f (cpt R) ∈ (a.D₀.c y).left ⁻¹ᵁ a.D₀.P.L.U j₀ := by
     have h1 : (x ≫ φ) (cpt R) ∈ a.D₀.P.L.U j₀ := hj₀
     rw [hc] at h1
@@ -148,7 +146,7 @@ theorem psi_value (a : ArcIn D l β O' b) {R : Type} [CommRing R] [IsDomain R] [
     fun q hq => Set.mem_iInter.2 fun _ => hVle hq
   obtain ⟨r, ⟨r, rfl⟩, hr⟩ := a.gen y (fun _ => j₀) V hV (Set.subset_univ _) hVle hle
   have htV : ⊤ ≤ spMap f ⁻¹ᵁ V := (top_le_iff_cpt _ _).2 hpV
-  obtain ⟨u₀, hu₀⟩ := exists_unit_gm_spMap g (spMap f) V htV r z
+  obtain ⟨u₀, hu₀⟩ := GlobalTheory.ThetaShiftProofs.exists_unit_gm_spMap g (spMap f) V htV r z
   have hcomp : Out.jFK (R := O') F ≫ Out.jK O' = spMap g ≫ spMap f := by
     simp only [← Spec.map_comp, ← CommRingCat.ofHom_comp]
     congr 2

@@ -121,7 +121,7 @@ theorem eq_zero_of_fockS_self {σ : Type} (F : MvPolynomial σ ℂ) (h : fockS F
   have hall := (Finset.sum_eq_zero_iff_of_nonneg
     (fun m _ => mul_nonneg (Complex.normSq_nonneg _) (Nat.cast_nonneg _))).1 hsum
   ext m
-  rw [coeff_zero]
+  change F.coeff m = 0
   by_contra hne
   have hm : m ∈ F.support := mem_support_iff.mpr hne
   have hfac : (mfact m : ℝ) ≠ 0 := by

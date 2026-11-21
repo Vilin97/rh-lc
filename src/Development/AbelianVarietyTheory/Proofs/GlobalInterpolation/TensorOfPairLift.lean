@@ -613,31 +613,34 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G Formal
 theorem tools : ExtremalProjectorTools where
   extremalProjectorAlt := ExtremalProjector.extremal_projector_statement
 
-theorem inputs : Loc8All where
-  p13B := flipOneThree.Pf.theorem_I_closed_form_holds
-  p13A := GramWindowAlt.theorem_A_closed_form_holds
-  p15 := tensor_closed
-  windowClauseTwo := Model.gl_branching_dimension
-  windowClauseThree := Model.weyl_dual_weight_admissible
-  lWeylV := Model.weylV_proved
-  lWitt := WittPI.wittIdentity_holds
-  tFlatTop := Model.flatTop
-  tFlatHH := Model.flatHH
-  hyperLatticeBasis := Model.dualHeightBasis
-  hyperDualInclusion := Model.dualInclusionLattices
-  tBePerfect := Model.bePerfect
-  tHLSpans := Model.hlSpans
-  tTestSide := Model.testSide
-  tLPOneEvery := Model.lPOneEvery
-  tCartanDomain := Model.cartanDomain_proved
-  tCartanOnto := Model.cartanOnto_proved
-  tKP1 := CountingStatementReduction.key_positivity_condition
-  tKP2 := Joints.saturated_restriction_holds
-  tKP3 := Joints.restriction_dimension_holds
-  tRES := CountingStatementReduction.residue_division_transfer
-  thresholdClauseOne := CountingStatementReduction.positivity_condition_eventually
-  thresholdClauseThree := CountingStatementReduction.exponent_bound_eventually
-  instanceClauseEight := fun D X => PolBridge.combined_weight_of_nested_sets D X (GLWeightTheory.weight_condition_from_integral_form D) (ColumnFamilies.Top.b15 D)
+theorem inputs : Loc8All := by
+  exact
+    { p13B := flipOneThree.Pf.theorem_I_closed_form_holds
+      p13A := GramWindowAlt.theorem_A_closed_form_holds
+      p15 := tensor_closed
+      windowClauseTwo := Model.gl_branching_dimension
+      windowClauseThree := Model.weyl_dual_weight_admissible
+      lWeylV := Model.weylV_proved
+      lWitt := WittPI.wittIdentity_holds
+      tFlatTop := Model.flatTop
+      tFlatHH := Model.flatHH
+      hyperLatticeBasis := Model.dualHeightBasis
+      hyperDualInclusion := Model.dualInclusionLattices
+      tBePerfect := Model.bePerfect
+      tHLSpans := Model.hlSpans
+      tTestSide := Model.testSide
+      tLPOneEvery := Model.lPOneEvery
+      tCartanDomain := Model.cartanDomain_proved
+      tCartanOnto := Model.cartanOnto_proved
+      tKP1 := CountingStatementReduction.key_positivity_condition
+      tKP2 := Joints.saturated_restriction_holds
+      tKP3 := Joints.restriction_dimension_holds
+      tRES := CountingStatementReduction.residue_division_transfer
+      thresholdClauseOne := CountingStatementReduction.positivity_condition_eventually
+      thresholdClauseThree := CountingStatementReduction.exponent_bound_eventually
+      instanceClauseEight := fun D X =>
+        PolBridge.combined_weight_of_nested_sets D X (GLWeightTheory.weight_condition_from_integral_form D)
+          (ColumnFamilies.Top.b15 D) }
 
 theorem rangeOne_abs :
     ∃ (T0 : ℝ) (T2 C : ℝ → ℝ), 0 < T0 ∧ ∀ C₀ : ℝ, T0 ≤ C₀ → 0 < T2 C₀ ∧ 0 < C C₀ ∧ ∀ CH : ℝ, T2 C₀ ≤ CH →

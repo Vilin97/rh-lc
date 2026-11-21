@@ -109,7 +109,7 @@ theorem MixedSectionStep.proof (hS : SmallSectionMixed.Statement) (hR : GroundTh
       else (geoNum n W (fun j => (L j).a) : ℝ) * Real.log (charOf W)) := by
     intro W hW
     obtain ⟨hH, hV⟩ := divSuppArith K ι P n
-      (HermLine.ofMetrics (fun k => fsMetric (ι k)) (fun k => (α k : ℤ))) f W hP ⟨α, fun _ => rfl, hfα, hfP⟩ hW
+      (HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) (fun k => (α k : ℤ))) f W hP ⟨α, fun _ => rfl, hfα, hfP⟩ hW
     have hPW : P ≤ W := le_trans le_sup_left hW.1.1.2
     split_ifs with hWh
     ·

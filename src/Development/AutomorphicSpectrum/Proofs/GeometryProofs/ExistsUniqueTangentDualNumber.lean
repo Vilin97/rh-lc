@@ -42,23 +42,23 @@ theorem pt_nsmul (M : LieModel G x L) (e : L) (n : ℕ) : M.pt (n • e) = M.pt 
   | succ n ih => rw [succ_nsmul, M.5, ih, pow_succ]
 
 theorem dualMap_epsMul (I : Ideal R) (c : R) (hc : Ideal.Quotient.mk I c = 0) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I)).comp (epsMul c) =
+    (dualMap (Ideal.Quotient.mk I)).comp (epsMul c) =
       ((algebraMap (R ⧸ I) (DualNumber (R ⧸ I))).comp (Ideal.Quotient.mk I)).comp
         (TrivSqZeroExt.fstHom R R R).toRingHom := by
   refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_
-  · simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, TrivSqZeroExt.algebraMap_eq_inl]
-  · simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, TrivSqZeroExt.algebraMap_eq_inl, hc]
+  · simp [dualMap, epsMul, TrivSqZeroExt.algebraMap_eq_inl]
+  · simp [dualMap, epsMul, TrivSqZeroExt.algebraMap_eq_inl, hc]
 
 theorem dualMap_algebraMap (I : Ideal R) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I)).comp (algebraMap R (DualNumber R)) =
+    (dualMap (Ideal.Quotient.mk I)).comp (algebraMap R (DualNumber R)) =
       (algebraMap (R ⧸ I) (DualNumber (R ⧸ I))).comp (Ideal.Quotient.mk I) := by
   refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_
-  · simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-  · simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  · simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  · simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 end
 
-theorem tangent_mod_torsion : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGroup T] [Finite T] (Γ : QFGroup R T) (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G] (x : Spec (CommRingCat.of R) ⟶ S) (N : ℕ) (i : Γ.G.left ⟶ G.left), Γ.IsTorsionAlong G x N i → ∀ (L : Type) [AddCommGroup L] [Module R L] (M : LieModel G x L) (e : L), ∃! (v : Spec (CommRingCat.of (DualNumber (R ⧸ Ideal.span {(N : R)}))) ⟶ Γ.G.left), v ≫ Γ.G.hom = Spec.map (CommRingCat.ofHom ((algebraMap (R ⧸ Ideal.span {(N : R)}) (DualNumber (R ⧸ Ideal.span {(N : R)}))).comp (Ideal.Quotient.mk _))) ∧ v ≫ i = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(N : R)})))) ≫ (M.pt e).left := by
+theorem tangent_mod_torsion : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGroup T] [Finite T] (Γ : QFGroup R T) (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G] (x : Spec (CommRingCat.of R) ⟶ S) (N : ℕ) (i : Γ.G.left ⟶ G.left), Γ.IsTorsionAlong G x N i → ∀ (L : Type) [AddCommGroup L] [Module R L] (M : LieModel G x L) (e : L), ∃! (v : Spec (CommRingCat.of (DualNumber (R ⧸ Ideal.span {(N : R)}))) ⟶ Γ.G.left), v ≫ Γ.G.hom = Spec.map (CommRingCat.ofHom ((algebraMap (R ⧸ Ideal.span {(N : R)}) (DualNumber (R ⧸ Ideal.span {(N : R)}))).comp (Ideal.Quotient.mk _))) ∧ v ≫ i = Spec.map (CommRingCat.ofHom (dualMap (Ideal.Quotient.mk (Ideal.span {(N : R)})))) ≫ (M.pt e).left := by
   intro R _ _ T _ _ Γ S G _ _ x N i hi L _ _ M e
   obtain ⟨-, -, hinj, htors⟩ := hi
   let Y : Over (Spec (CommRingCat.of R)) := Over.mk (Spec.map (CommRingCat.ofHom

@@ -65,7 +65,7 @@ theorem entry_rankOne {m n k l : ℕ} (q : Matrix (Fin k) (Fin m) D.host.E) (e :
 
 theorem rat_tmul_entry {m n k l : ℕ} (q : Matrix (Fin k) (Fin m) D.host.E) (C : Matrix (Fin m) (Fin n) D.host.E)
     (e : Matrix (Fin n) (Fin l) D.host.E) (X : AF D.host.F) (p : Fin k) (p' : Fin l) :
-    (rat q * (Matrix.of fun i j => X ⊗ₜ[D.host.F] C i j : Mx D m n) * rat e) p p' = X ⊗ₜ[D.host.F] (q * C * e) p p' := by
+    (rat q ⬝ (Matrix.of fun i j => X ⊗ₜ[D.host.F] C i j : Mx D m n) ⬝ rat e) p p' = X ⊗ₜ[D.host.F] (q * C * e) p p' := by
   have hinc : ∀ x, incA D x = (1 : AF D.host.F) ⊗ₜ[D.host.F] x := fun _ => rfl
   simp only [Matrix.mul_apply, rat, Matrix.map_apply, Matrix.of_apply, hinc, Algebra.TensorProduct.tmul_mul_tmul, one_mul,
     mul_one, ← TensorProduct.tmul_sum]
@@ -90,7 +90,7 @@ set_option maxHeartbeats 1000000 in
 theorem diag_mem_complId : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {F : Frames G}, Std F →
     ∀ (ρ : ℕ) (h : 2 * ρ + 2 ≤ D.R.m) (u : WO (negSp (G.V (.grid (2 * ρ + 2) 0))) (G.V (.grid (2 * ρ + 1) 0))),
     u ∈ latO _ _ (G.Λ (.grid (2 * ρ + 2) 0) : Set _) (G.Λ (.grid (2 * ρ + 1) 0) : Set _) (fun _ => True) →
-    ∀ p : Fin ρ, ((F.dJ ρ h).pY * u * (F.dB ρ h).jY) p p ∈ complId (D.host.AA * G.pl.stAbar sc) := by
+    ∀ p : Fin ρ, ((F.dJ ρ h).pY ⬝ u ⬝ (F.dB ρ h).jY) p p ∈ complId (D.host.AA * G.pl.stAbar sc) := by
   intro D T L sc G F hF ρ h u hu p
   obtain ⟨hcJ, heJ, -⟩ := hF.hJ ρ h
   obtain ⟨hcB, heB, sB, he'B⟩ := hF.hB ρ h
@@ -165,8 +165,8 @@ theorem diag_mem_complId : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts}
   induction hu using AddSubgroup.closure_induction with
   | mem w hw =>
     obtain ⟨α, hα, -, a, ha, s, hs, t, ht, rfl⟩ := hw
-    have key : ((F.dJ ρ h).pY * (Matrix.of fun i j => (pairA D.host.F 0 α) ⊗ₜ[D.host.F]
-        (a * t i * ∑ k, star (s k) * (negSp (G.V (.grid (2 * ρ + 2) 0))).gram k j)) * (F.dB ρ h).jY) p p =
+    have key : ((F.dJ ρ h).pY ⬝ (Matrix.of fun i j => (pairA D.host.F 0 α) ⊗ₜ[D.host.F]
+        (a * t i * ∑ k, star (s k) * (negSp (G.V (.grid (2 * ρ + 2) 0))).gram k j)) ⬝ (F.dB ρ h).jY) p p =
         (pairA D.host.F 0 α) ⊗ₜ[D.host.F] ((F.dJ ρ h).qY * Matrix.of (fun i j => a * t i * ∑ k, star (s k) *
           (negSp (G.V (.grid (2 * ρ + 2) 0))).gram k j) * (F.dB ρ h).e') p p :=
       rat_tmul_entry _ _ _ _ _ _

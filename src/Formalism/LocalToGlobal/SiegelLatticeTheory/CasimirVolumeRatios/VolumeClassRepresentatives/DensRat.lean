@@ -28,7 +28,7 @@ namespace Formalism.L2.S.S7.DensRat
 
 open NumberField
 open scoped Matrix
-open Formalism.MainNotions.S
+open Formalism.MainNotions.S Formalism.L2.S.S7.DensDefs
 
 def ratReal (I : AutInst) (γ : GL (Fin I.n) I.E) (hγ : γ ∈ Formalism.UG.UJ (starRingEnd I.E) I.J)
     (v : InfinitePlace I.F) : Formalism.REAL.UJ (I.ε v) :=

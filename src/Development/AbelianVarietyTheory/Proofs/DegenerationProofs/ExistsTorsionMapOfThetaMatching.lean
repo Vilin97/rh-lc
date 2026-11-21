@@ -30,7 +30,7 @@ theorem exists_partner (hA : mt.A) (i K : ℕ) (hK : K = n ^ i) (p : N.QT K) (hp
   subst hK
   obtain ⟨p', h⟩ := mt.tot i p
   obtain ⟨z, hz⟩ := (hA.2 i p p' h).1.1 ⟨0, by rw [hp, smul_zero, toAdd_one]⟩
-  refine ⟨p' * N'.qTriv _ (-z), (mt.eqv _ p p p' _ h (show N.QEq p p from ⟨0, by simp, by simp⟩)).2
+  refine ⟨p' * N'.qTriv _ (-z), (mt.eqv _ p p p' _ h ((N.qEq_equivalence _).refl p)).2
     ((N'.qEq_iff _ _).2 ⟨-z, rfl⟩), ?_⟩
   change p'.1.1.toAdd + n ^ i • (-z) = 0
   rw [hz, smul_neg, add_neg_cancel]
@@ -40,15 +40,15 @@ theorem partner_b (hn : n ≠ 0) (hA : mt.A) (i K : ℕ) (hK : K = n ^ i) {p q :
     (hb : p.1.2.b = q.1.2.b) : p'.1.2.b = q'.1.2.b := by
   subst hK
   obtain ⟨t, ht⟩ := mt.tot i (p⁻¹ * q)
-  have hT : N.InT (p⁻¹ * q) := ⟨p⁻¹ * q, ⟨0, by simp, by simp⟩, by
+  have hT : N.InT (p⁻¹ * q) := ⟨_, (N.qEq_equivalence _).refl _, by
       change p.1.1⁻¹ * q.1.1 = 1
       rw [hp, hq, inv_mul_cancel], by
       change p.1.2.b⁻¹ * q.1.2.b = 1
       rw [hb, inv_mul_cancel]⟩
   obtain ⟨t', e, t1, t2⟩ := (hA.2 i _ _ ht).2.1 hT
-  have r1 := mt.mul _ _ _ _ _ h ((mt.eqv _ (p⁻¹ * q) (p⁻¹ * q) _ _ ht (⟨0, by simp, by simp⟩)).2 e)
+  have r1 := mt.mul _ _ _ _ _ h ((mt.eqv _ _ _ _ _ ht ((N.qEq_equivalence _).refl _)).2 e)
   rw [mul_inv_cancel_left] at r1
-  obtain ⟨z, z1, z2⟩ := (mt.eqv _ q q _ _ r1 (⟨0, by simp, by simp⟩)).1 h'
+  obtain ⟨z, z1, z2⟩ := (mt.eqv _ _ _ _ _ r1 ((N.qEq_equivalence _).refl _)).1 h'
   change _ = p'.1.1.toAdd + t'.1.1.toAdd + _ at z1
   rw [hq', hp', t1, toAdd_one, add_zero, zero_add, ← natCast_zsmul] at z1
   have hz : z = 0 := (smul_eq_zero_iff_right (Int.natCast_ne_zero.2 (pow_ne_zero i hn))).1 z1.symm

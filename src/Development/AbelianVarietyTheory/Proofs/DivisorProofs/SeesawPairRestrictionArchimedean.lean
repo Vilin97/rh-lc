@@ -128,8 +128,10 @@ theorem avg_exists : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fiel
     simp only [LinearMap.comp_apply, GlobalTheory.SiegelAvg.starFam_apply]
     rw [← actB_vecMulVec_diag p t hpt (incV F H'.y) y, ← hS.impl p _ Φ hΦ]
     exact hk _ (GlobalTheory.SchrKeepsSchA.schr_mem_schA F B.ψ hψ _ _ Φ hΦ)
-  simp_rw [hpw]
-  rw [integral_const_mul, GlobalTheory.T.integral_comp_gl_inv_haar F E n μ hμ t _ (hconv _ hΦ)]
+  set_option backward.isDefEq.respectTransparency false in
+    simp_rw [hpw]
+  set_option backward.isDefEq.respectTransparency false in
+    rw [integral_const_mul, GlobalTheory.T.integral_comp_gl_inv_haar F E n μ hμ t _ (hconv _ hΦ)]
   ring
 
 theorem siegel_scalar_eq_one : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d)

@@ -61,7 +61,7 @@ theorem UpperTheory.V.Loc.rtChart :
     exact this)
   obtain ⟨φ, hφ, hz⟩ := chartChange 12 (D.It U) x φ₀ (fun i => e (u i)) h₀ (fun i => by simp [e]) hu
   have hxe : ∀ g a b, x ((U.r.hom g).mat a b) = (r0 D.η D.Ψ g).mat a b := fun g a b =>
-    congrArg (fun r : GQ l →* GG 3 O => (r g).mat a b) hx
+    congrArg (fun r : GQ l →* GG (m := 3) (R := O) => (r g).mat a b) hx
   let w : Fin 12 → ℤ := fun i => wt (u i).2.1 (u i).2.2
   have hgr := chartGraded 12 (D.It U) x φ (fun i => e (u i)) w θ t hφ hz hθx hθI ht (fun i => by
     simp only [e, w, map_sub, AlgHom.commutes, hθ, mul_sub]

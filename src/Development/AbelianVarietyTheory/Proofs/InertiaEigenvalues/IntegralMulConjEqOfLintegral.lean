@@ -25,7 +25,8 @@ variable {X Y : Type*} [MeasurableSpace X] [MeasurableSpace Y]
 
 theorem memLp_two_of_lintegral {μ : Measure X} {f : X → ℂ} (hf : AEStronglyMeasurable f μ)
     (h : ∫⁻ x, ‖f x‖ₑ ^ 2 ∂μ ≠ ⊤) : MemLp f 2 μ := by
-  rw [memLp_iff, eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top two_ne_zero ENNReal.ofNat_ne_top hf]
+  refine ⟨hf, ?_⟩
+  rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top two_ne_zero ENNReal.ofNat_ne_top]
   simpa using h.lt_top
 
 theorem integral_mul_conj_eq {μ : Measure X} {f f' : X → ℂ} (hf : MemLp f 2 μ) (hf' : MemLp f' 2 μ) :
@@ -35,11 +36,11 @@ theorem integral_mul_conj_eq {μ : Measure X} {f f' : X → ℂ} (hf : MemLp f 2
           (∫⁻ x, ‖f x + (-Complex.I) * f' x‖ₑ ^ 2 ∂μ).toReal)) / 4 := by
   have hm : ∀ c : ℂ, MemLp (fun x => f x + c * f' x) 2 μ := fun c => hf.add (hf'.const_mul c)
   have hi : ∀ c : ℂ, Integrable (fun x => ((‖f x + c * f' x‖ ^ 2 : ℝ) : ℂ)) μ := fun c =>
-    ((memLp_two_iff_integrable_sq_norm (hm c).aestronglyMeasurable).1 (hm c)).ofReal
+    ((memLp_two_iff_integrable_sq_norm (hm c).1).1 (hm c)).ofReal
   have he : ∀ c : ℂ, ((∫⁻ x, ‖f x + c * f' x‖ₑ ^ 2 ∂μ).toReal : ℂ) = ∫ x, ((‖f x + c * f' x‖ ^ 2 : ℝ) : ℂ) ∂μ := by
     intro c
     rw [integral_complex_ofReal, integral_eq_lintegral_of_nonneg_ae (f := fun x => ‖f x + c * f' x‖ ^ 2)
-      (Filter.Eventually.of_forall fun w => by positivity) ((hm c).aestronglyMeasurable.norm.pow 2)]
+      (Filter.Eventually.of_forall fun w => by positivity) ((hm c).1.norm.pow 2)]
     simp only [ENNReal.ofReal_pow (norm_nonneg _), ofReal_norm]
   have hp : (fun x => f x * conj (f' x)) = fun x =>
       (((‖f x + 1 * f' x‖ ^ 2 : ℝ) : ℂ) - (‖f x + (-1) * f' x‖ ^ 2 : ℝ) +
@@ -116,14 +117,11 @@ theorem good_left_mirU (hψ : StdPsi ψ) {m : ℕ} {f : GA E a → ℂ} (hf : Go
   · exact hg₀ i k (by omega) (by change (k : ℕ) ≤ i; omega)
 
 theorem good_comb {m : ℕ} {f f' : GA E a → ℂ} (hf : Good ψ m f) (hf' : Good ψ m f') (c d : ℂ) :
-    Good ψ m (fun g => c * f g + d * f' g) := by
-  refine ⟨(continuous_const.mul hf.cont).add (continuous_const.mul hf'.cont), ?_, ?_, ?_⟩
-  · intro γ hγ g
-    rw [hf.left γ hγ, hf'.left γ hγ]
-  · intro k hk y g
-    rw [hf.law k hk, hf'.law k hk]
-    ring
-  · intro r h0 hr g
+    Good ψ m (fun g => c * f g + d * f' g) where
+  cont := (continuous_const.mul hf.cont).add (continuous_const.mul hf'.cont)
+  left γ hγ g := by rw [hf.left γ hγ, hf'.left γ hγ]
+  law k hk y g := by rw [hf.law k hk, hf'.law k hk]; ring
+  van r h0 hr g := by
     have p1 := per_blk (r := r) (m := m) (f := fun g => c * f g) (continuous_const.mul hf.cont)
       (fun x g => by rw [hf.left _ (isMir_blkU x)]) g
     have p2 := per_blk (r := r) (m := m) (f := fun g => d * f' g) (continuous_const.mul hf'.cont)
@@ -201,8 +199,6 @@ theorem lintegral_step (hψ : StdPsi ψ) {m : ℕ} (hm : m + 1 < a) {𝓕 𝓕' 
     (hwU : ∀ k, m < k → ∀ (y : UnipotentBlockColumnIndex a k k → Ad E) g, w (blkU y * g) = w g)
     {f : GA E a → ℂ} (hf : Good ψ (m + 1) f) :
     ∫⁻ g in 𝓕, ‖f g‖ₑ ^ 2 * w g ∂μ = ∫⁻ g in 𝓕', ‖colT ψ (m + 1) f g‖ₑ ^ 2 * w g ∂μ := by
-  haveI : T2Space (Ad E) := inferInstance
-  haveI : T2Space (GA E a) := Units.isEmbedding_embedProduct.t2Space
   haveI : LocallyCompactSpace (Matrix (Fin a) (Fin a) (Ad E)) := inferInstanceAs (LocallyCompactSpace (Fin a → Fin a → Ad E))
   haveI : LocallyCompactSpace (GA E a) := Units.isClosedEmbedding_embedProduct.locallyCompactSpace
   haveI := secondCountable_GA (E := E) (a := a)
@@ -214,15 +210,7 @@ theorem lintegral_step (hψ : StdPsi ψ) {m : ℕ} (hm : m + 1 < a) {𝓕 𝓕' 
   haveI := hL.1
   haveI : Countable (ratV E (UnipotentBlockColumnIndex a (m + 1) (m + 1))) := GlobalTheory.countable_of_discrete_addSubgroup _
   obtain ⟨ν, D, hν, hD, hνD⟩ := exists_fundamentalDomain_mass_one _ _ hL
-  have hT : Good ψ m (colT ψ (m + 1) f) := by
-    refine ⟨GlobalTheory.T.continuous_unipotentColumnWhittakerTransform E a ψ hψ m f hf,
-      GlobalTheory.T.unipotentColumnWhittakerTransform_mirabolic_invariant E a ψ hψ m f hm hf,
-      ?_, GlobalTheory.T.quotientAverage_unipotentBlock_columnTransform_eq_zero E a ψ hψ m f hm hf⟩
-    intro k hk y g
-    rcases Nat.lt_or_ge (m + 1) k with hlt | hle
-    · exact GlobalTheory.T.columnWhittakerTransform_keeps_later_law E a ψ m f hf k hlt y g
-    · obtain rfl : k = m + 1 := by omega
-      exact GlobalTheory.T.unipotentColumnWhittakerTransform_column_law E a ψ hψ m f hf y g
+  have hT := GlobalTheory.CuspRep.Generic.good_colT hψ hm hf
   have hnorm : ∀ k, m + 1 < k → ∀ (y : UnipotentBlockColumnIndex a k k → Ad E) g, ‖f (blkU y * g)‖ₑ = ‖f g‖ₑ := fun k hk y g => by
     rw [hf.law k hk, enorm_mul, ← ofReal_norm (ψ _), hψ.norm, ENNReal.ofReal_one, one_mul]
   have havg := GlobalTheory.T.setLIntegral_average_abelian_quotient_alt (GA E a) (UnipotentBlockColumnIndex a (m + 1) (m + 1) → Ad E) μ (ratMirU E a (m + 1)) (lateU (Ad E) a (m + 1))
@@ -284,18 +272,10 @@ theorem lintegral_tower (hψ : StdPsi ψ) {m : ℕ} (hm : m < a ∨ m = 0) {𝓕
     rw [good_left_mirU hψ hf hγ, hwΓ γ hγ]
   | succ m ih =>
     have h1 : m + 1 < a := by omega
-    have hT : Good ψ m (colT ψ (m + 1) f) := by
-      refine ⟨GlobalTheory.T.continuous_unipotentColumnWhittakerTransform E a ψ hψ m f hf,
-        GlobalTheory.T.unipotentColumnWhittakerTransform_mirabolic_invariant E a ψ hψ m f h1 hf,
-        ?_, GlobalTheory.T.quotientAverage_unipotentBlock_columnTransform_eq_zero E a ψ hψ m f h1 hf⟩
-      intro k hk y g
-      rcases Nat.lt_or_ge (m + 1) k with hlt | hle
-      · exact GlobalTheory.T.columnWhittakerTransform_keeps_later_law E a ψ m f hf k hlt y g
-      · obtain rfl : k = m + 1 := by omega
-        exact GlobalTheory.T.unipotentColumnWhittakerTransform_column_law E a ψ hψ m f hf y g
     obtain ⟨D, -, -, hD⟩ := GlobalTheory.exists_isFundamentalDomain_subgroup (ratMirU E a m)
     rw [lintegral_step μ hψ h1 h𝓕 (hD μ) w hw hwΓ (fun k hk => hwU k (by omega)) hf, whit_succ]
-    exact ih (Or.inl (by omega)) (hD μ) (fun γ hγ => hwΓ γ (mirU_mono (Nat.le_succ m) hγ)) hT
+    exact ih (Or.inl (by omega)) (hD μ) (fun γ hγ => hwΓ γ (mirU_mono (Nat.le_succ m) hγ))
+      (GlobalTheory.CuspRep.Generic.good_colT hψ h1 hf)
 
 theorem integral_tower (hψ : StdPsi ψ) {m : ℕ} (hm : m < a ∨ m = 0) {𝓕 𝓕' : Set (GA E a)}
     (h𝓕 : IsFundamentalDomain (ratMirU E a m) 𝓕 μ) (h𝓕' : IsFundamentalDomain (ratMirU E a 0) 𝓕' μ)

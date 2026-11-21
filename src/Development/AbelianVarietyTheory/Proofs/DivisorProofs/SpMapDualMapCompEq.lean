@@ -30,24 +30,24 @@ theorem spMap_resV (R : Type) [CommRing R] (c : R) : spMap (resV R c) = chart (b
 
 theorem exists_isTr {R : Type} [CommRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] {S : Type} [CommRing S]
     (φ : R →+* S) (g : Sp S ⟶ G.left) (hg : g ≫ G.hom = spMap φ) (v : TanM (𝟙 (Sp R)) G) : ∃ w, IsTr G φ g v w := by
-  have e : (GlobalTheory.CompanionTheory.Ar.dualMap φ).comp (algebraMap R (DualNumber R)) = (algebraMap S (DualNumber S)).comp φ := by
-    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  have e : (dualMap φ).comp (algebraMap R (DualNumber R)) = (algebraMap S (DualNumber S)).comp φ := by
+    ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   have h1 : (tv v).left ≫ G.hom = spMap (algebraMap R (DualNumber R)) := (Over.w (tv v)).trans (Category.comp_id _)
-  have h2 : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (tv v).left) ≫ G.hom = (tEpsG (g ≫ G.hom)).hom := by
+  have h2 : (spMap (dualMap φ) ≫ (tv v).left) ≫ G.hom = (tEpsG (g ≫ G.hom)).hom := by
     show _ = spMap (algebraMap S (DualNumber S)) ≫ g ≫ G.hom
     rw [Category.assoc, h1, hg, ← Spec.map_comp, ← Spec.map_comp,
       ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, e]
   exact ⟨_, Over.homMk (spMap (algebraMap S (DualNumber S)) ≫ g) (Category.assoc _ _ _),
-    Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (tv v).left) h2, rfl, rfl, rfl⟩
+    Over.homMk (spMap (dualMap φ) ≫ (tv v).left) h2, rfl, rfl, rfl⟩
 
 theorem spMap_dualMap_comp_eq {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
+    spMap (dualMap (g.comp f)) = spMap (dualMap g) ≫ spMap (dualMap f) := by
   rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
   refine RingHom.ext fun a => ?_
-  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  ext <;> simp [dualMap]
 
-theorem ksRel_operators : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] [IsNoetherianRing R] [IsAdicComplete (maximalIdeal R) R] [Algebra ℚ R] (t : SAB H (Sp R)) (P : PELUnif (maximalIdeal R) t) (m : ℕ) (tt : Fin m → R), (∀ i, tt i ≠ 0) → (∀ p : Sp R, p ∈ abLocus t.G ↔ ∏ i, tt i ∉ p.asIdeal) → ∀ (c : R), c = ∏ i, tt i → ∀ (n : ℕ) (v' : Module.Basis (Fin n) R (TanM (𝟙 (Sp R)) t.G)) (dd' : Fin n → Fld t.G.left), (∀ a, IsInv t.G (v' a) (dd' a)) → ∀ (DV : Γ(Sp R, (GlobalTheory.HeatV.bo R c).1) → Γ(Sp R, (GlobalTheory.HeatV.bo R c).1)) (Θ₁ : Matrix (Fin n) (Fin n) Γ(Sp R, (GlobalTheory.HeatV.bo R c).1)), IsKS t (GlobalTheory.HeatV.bo R c).1 (GlobalTheory.HeatV.bo R c) (fun a => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (GlobalTheory.HeatV.resV R c)) ≫ (tv (v' a)).left) DV Θ₁ → ∃ (J : Type) (W : J → t.G.left.Opens) (j : J → t.PP.L.ι) (d : J → Fld t.G.left) (hW : ∀ i, W i ≤ t.G.hom ⁻¹ᵁ (GlobalTheory.HeatV.bo R c).1), ⨆ i, W i = t.G.hom ⁻¹ᵁ (GlobalTheory.HeatV.bo R c).1 ∧ (∀ i, W i ≤ t.PP.L.U (j i)) ∧ (∀ i, IsField (W i) (d i)) ∧ (∀ i O (h : O ≤ W i) (a : Γ(Sp R, (GlobalTheory.HeatV.bo R c).1)), d i O (GlobalTheory.HeatV.cst t.G.hom _ (h.trans (hW i)) a) = GlobalTheory.HeatV.cst t.G.hom _ (h.trans (hW i)) (DV a)) ∧ (∀ i i' O (h : O ≤ W i ⊓ W i') (f : Γ(t.G.left, O)), d i O f - d i' O f = ∑ a, ∑ b, GlobalTheory.HeatV.cst t.G.hom (GlobalTheory.HeatV.bo R c).1 (h.trans (inf_le_left.trans (hW i))) (Θ₁ a b) * (dd' b O (rsT (t.PP.L.g (j i) (j i')).val O) * rsT (t.PP.L.g (j i) (j i'))⁻¹.val O) * dd' a O f) := by
+theorem ksRel_operators : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] [IsNoetherianRing R] [IsAdicComplete (maximalIdeal R) R] [Algebra ℚ R] (t : SAB H (Sp R)) (P : PELUnif (maximalIdeal R) t) (m : ℕ) (tt : Fin m → R), (∀ i, tt i ≠ 0) → (∀ p : Sp R, p ∈ abLocus t.G ↔ ∏ i, tt i ∉ p.asIdeal) → ∀ (c : R), c = ∏ i, tt i → ∀ (n : ℕ) (v' : Module.Basis (Fin n) R (TanM (𝟙 (Sp R)) t.G)) (dd' : Fin n → Fld t.G.left), (∀ a, IsInv t.G (v' a) (dd' a)) → ∀ (DV : Γ(Sp R, (GlobalTheory.HeatV.bo R c).1) → Γ(Sp R, (GlobalTheory.HeatV.bo R c).1)) (Θ₁ : Matrix (Fin n) (Fin n) Γ(Sp R, (GlobalTheory.HeatV.bo R c).1)), IsKS t (GlobalTheory.HeatV.bo R c).1 (GlobalTheory.HeatV.bo R c) (fun a => spMap (dualMap (GlobalTheory.HeatV.resV R c)) ≫ (tv (v' a)).left) DV Θ₁ → ∃ (J : Type) (W : J → t.G.left.Opens) (j : J → t.PP.L.ι) (d : J → Fld t.G.left) (hW : ∀ i, W i ≤ t.G.hom ⁻¹ᵁ (GlobalTheory.HeatV.bo R c).1), ⨆ i, W i = t.G.hom ⁻¹ᵁ (GlobalTheory.HeatV.bo R c).1 ∧ (∀ i, W i ≤ t.PP.L.U (j i)) ∧ (∀ i, IsField (W i) (d i)) ∧ (∀ i O (h : O ≤ W i) (a : Γ(Sp R, (GlobalTheory.HeatV.bo R c).1)), d i O (GlobalTheory.HeatV.cst t.G.hom _ (h.trans (hW i)) a) = GlobalTheory.HeatV.cst t.G.hom _ (h.trans (hW i)) (DV a)) ∧ (∀ i i' O (h : O ≤ W i ⊓ W i') (f : Γ(t.G.left, O)), d i O f - d i' O f = ∑ a, ∑ b, GlobalTheory.HeatV.cst t.G.hom (GlobalTheory.HeatV.bo R c).1 (h.trans (inf_le_left.trans (hW i))) (Θ₁ a b) * (dd' b O (rsT (t.PP.L.g (j i) (j i')).val O) * rsT (t.PP.L.g (j i) (j i'))⁻¹.val O) * dd' a O f) := by
   intro E _ _ _ H R _ _ _ _ _ _ t P m tt _ _ c _ n v' dd' hdd DV Θ₁ hKS
   obtain ⟨J, W, j, d, hcov, hWj, hfld, hlift, hdiff⟩ := hKS
   rw [inf_idem] at hcov

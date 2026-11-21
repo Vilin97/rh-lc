@@ -68,7 +68,7 @@ theorem approx {k : ℕ} (hk : 0 < k) {z : Af F ⊗[F] E} (hz : z ∈ hatO (F :=
   | add x x' _ _ h h' =>
     obtain ⟨r, s, h1, h2, rfl⟩ := h
     obtain ⟨r', s', h1', h2', rfl⟩ := h'
-    refine ⟨r + r', s + s', by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h1',
+    refine ⟨r + r', s + s', by rw [map_add (f := _)]; exact add_mem h1 h1',
       by rw [map_add (f := _), map_add (f := _)]; exact add_mem h2 h2', ?_⟩
     rw [← map_add (f := _)]
     congr 1

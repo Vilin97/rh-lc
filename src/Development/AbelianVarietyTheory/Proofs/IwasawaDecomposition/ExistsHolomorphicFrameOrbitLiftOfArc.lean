@@ -102,7 +102,7 @@ theorem exists_adp_local {R : Type} [CommRing R] (xR : Sp R ⟶ Xo.X)
     (ev : (Fin m → ℂ) → (R →+* ℂ)) {B : Set (Fin m → ℂ)} (y : (Fin m → ℂ) → FrPt Xo c (CAt σ)) (hB : IsOpen B)
     (hφ : ∀ t, DifferentiableOn ℂ (fun u => ev u t) B)
     (hy : ∀ u ∈ B, (y u).x = spMap (show R →+* CAt σ from ev u) ≫ xR ∧
-      ∀ τ i, (y u).u τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (show R →+* CAt σ from ev u)) ≫ vR τ i) {b₀ : Fin m → ℂ} (hb₀ : b₀ ∈ B) :
+      ∀ τ i, (y u).u τ i = spMap (dualMap (show R →+* CAt σ from ev u)) ≫ vR τ i) {b₀ : Fin m → ℂ} (hb₀ : b₀ ∈ B) :
     ∃ (B' : Set (Fin m → ℂ)) (k : Fin F.n) (P : (Fin m → ℂ) → ((F.Di k).La →+ (Fin g → ℂ))), IsOpen B' ∧ b₀ ∈ B' ∧
       (∀ a, DifferentiableOn ℂ (fun b => P b a) B') ∧ ∀ b ∈ B', Adp F (y b) k (P b) := by
   have h₁ : IsHolTo B (fun b => spMap (ev b)) := ThetaValueCont.isHolTo_spMap hB ev hφ

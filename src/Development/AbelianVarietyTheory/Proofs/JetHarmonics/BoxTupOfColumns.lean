@@ -60,8 +60,10 @@ theorem boxTup_of_columns : Laws → Laws2 → Laws4 → TwistBaseChangeStatemen
     exact (h i).2.2.2.2.2.2.1
   · exact hΦ s₂ t₀ _ _ (fun i => (h i).2.2.2.2.2.2.2.1) ((hbx _ _).2 rfl) ((hbx _ _).2 rfl)
   · refine (isSmul_iff _ _ _).2 ?_
-    rw [← MultilinearMap.map_smul_univ]
-    exact congrArg bx (funext fun i => (isSmul_iff _ _ _).1 (h i).2.2.2.2.2.2.2.2.1)
+    calc
+      bx t = bx (fun i => ζ i • t₀ i) :=
+        congrArg bx (funext fun i => (isSmul_iff _ _ _).1 (h i).2.2.2.2.2.2.2.2.1)
+      _ = (∏ i, ζ i) • bx t₀ := by simpa using bx.map_smul_univ ζ t₀
   · exact GlobalTheory.T.germ_boxProduct_eq_prod_germs hL hL2 hL4 hT E H T.V C.I.G P (chD C.ch) C.FT C.actT C.ph1T C.ph2T C.syT C.adT C.tgT C.xT C.eT C.wPT
       C.chartT C.frameT C.primT τ hτ hEL n D' A' G' pD pA pG U' PU F (g' * g) hk σ t f σ' (bx t)
       (fun i => (h i).2.2.2.2.2.2.2.2.2) ((hbx _ _).2 rfl) hσ'

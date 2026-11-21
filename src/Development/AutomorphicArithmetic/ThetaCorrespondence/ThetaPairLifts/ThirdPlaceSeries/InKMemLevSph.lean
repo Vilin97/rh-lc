@@ -26,7 +26,7 @@ namespace GlobalTheory.TopVol.InKConj
 variable {D : D7}
 end GlobalTheory.TopVol.InKConj
 namespace GlobalTheory.TopVol.InKConj
-theorem inK_mem_levSph_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → ∀ (t : W.P.T) (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t), J.Reads → ∀ κ, InK (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X' a.v.NT (fun p => ∃ i, (J.G i).q.v = p) κ → κ ∈ _root_.GlobalTheory.TopVol.sphericalLevelSubgroup W a.g.bT := by
+theorem inK_mem_levSph_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (I.rec7 l Z)} {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → ∀ (t : W.P.T) (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t), J.Reads → ∀ κ, InK (I.rec7 l Z).sp.X' a.v.NT (fun p => ∃ i, (J.G i).q.v = p) κ → κ ∈ _root_.GlobalTheory.TopVol.sphericalLevelSubgroup W a.g.bT := by
   intro B X I l Z L hT Gi Gl Kc Yd cX ex W hW u a ha hat t J hJ κ hκ
   have hsd := W.Q.charW.base.lev.βX
   let row : ∀ t, RowCh (_root_.GlobalTheory.Fam.pk_z W) (_root_.GlobalTheory.Fam.complexLevelStructure W) u a.g t := fun t =>
@@ -34,7 +34,7 @@ theorem inK_mem_levSph_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} 
       sBF := fun j ρ h => (GlobalTheory.Unf.Inhab.nonempty_stepBF W.Q.stdChar _ _).some
       sFB := fun j σ h => (GlobalTheory.Unf.Inhab.nonempty_stepFB W.Q.stdChar _ _).some
       io := fun _ => 0, ioT := fun _ _ => 0 }
-  let col := fun t : W.P.T => (GlobalTheory.Fam.Check.colCh_nonempty (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (u := u) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).chTw u (W.P.I.tup t))).choose
+  let col := fun t : W.P.T => (GlobalTheory.Fam.Check.colCh_nonempty (D := I.rec7 l Z) (u := u) ((I.rec7 l Z).chTw u (W.P.I.tup t))).choose
   have tie := (ha.tie row col).1
   have hNT : a.v.NT = a.g.LT := tie.bT.2
   have hm : ∀ v, (fun p => ∃ i, (J.G i).q.v = p) v → Moves _ a.g.bT (_root_.GlobalTheory.Fam.pk_z W).ΛX a.v.NT (· = v) := fun v _ => by

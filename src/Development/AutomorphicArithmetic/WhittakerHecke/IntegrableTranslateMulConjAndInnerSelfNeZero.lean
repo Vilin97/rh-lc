@@ -22,6 +22,9 @@ theorem UpperTheory.integrable_translate_mul_conj_and_inner_self_ne_zero :
       (∀ g : GA E r, Integrable (fun y : RightCosetSpace (rationalGLOne (K := E) (n := r)) => b.f.1 (((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * g) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r))) (quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r))) ∧
       ∫ y : RightCosetSpace (rationalGLOne (K := E) (n := r)), b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r) * starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL (K := E) (n := r)) : GA E r)) ∂(quotientMeasure (rationalGLOne (K := E) (n := r)) (mu1 E r)) ≠ 0 := by
   intro E _ _ _ S r b
+  have : OpensMeasurableSpace (RightCosetSpace (rationalGLOne (K := E) (n := r))) := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      infer_instance
   have hfin := Reduction.isFiniteMeasure_quotientMeasure (K := E) (n := r) (mu1 E r)
   have hcont : Continuous b.f.1 := b.cusp.1.continuous
   have hL : AutomorphicForm.IsLeftInvariant b.f.1 := b.cusp.1.isLeftInvariant
@@ -68,7 +71,8 @@ theorem UpperTheory.integrable_translate_mul_conj_and_inner_self_ne_zero :
         rw [norm_pow, norm_norm]
         exact pow_le_pow_left₀ (norm_nonneg _) (hbq _ hL hb q) 2)
     have h2 := (integral_eq_zero_iff_of_nonneg (fun q => sq_nonneg _) hi).1 h1
-    have h3 := (RightCosetSpace.quasiMeasurePreserving_mk (rationalGLOne (K := E) (n := r)) (mu1 E r)).ae_eq h2
+    have h3 := MeasureTheory.QuasiMeasurePreserving.ae_eq_comp
+      (RightCosetSpace.quasiMeasurePreserving_mk (rationalGLOne (K := E) (n := r)) (mu1 E r)) h2
     have h4 := (Continuous.ae_eq_iff_eq (mu1 E r) (f := fun y : normOneGL (K := E) (n := r) => ‖b.f.1 (y : AdelicGLn.AdelicGL E r)‖ ^ 2)
       ((hcont.comp continuous_subtype_val).norm.pow 2) continuous_const).1 h3
     apply b.ne

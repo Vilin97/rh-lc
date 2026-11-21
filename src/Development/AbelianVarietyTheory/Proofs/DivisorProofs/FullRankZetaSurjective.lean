@@ -16,8 +16,6 @@ namespace GlobalTheory.FullRankOnto
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {n d : ℕ}
 
-local notation "Yo" => GlobalTheory.FullRankCoinv.Y0 k n d
-
 theorem Y0_mul_apply (hnd : n ≤ d) {β : Type*} (M : Matrix (Fin d) β k) (i : Fin n) (j : β) :
     (Yo * M) i j = M ⟨d - n + i, by omega⟩ j := by
   have e : ∀ l : Fin d, ((l : ℕ) = d - n + i) ↔ l = ⟨d - n + i, by omega⟩ := fun l => by rw [Fin.ext_iff]
@@ -249,9 +247,9 @@ theorem isLocallyConstant_psi (hnd : n ≤ d) (hf : f ∈ GlobalTheory.FullRankC
   by_cases hY : ∃ κ ∈ KO k (Fin d), Y = Yo * κ.val
   · obtain ⟨κ, hκ, rfl⟩ := hY
     obtain ⟨U, hU, hfU⟩ := hf.1
-    set V : Set (GL (Fin d) k) := (KO k (Fin d) : Set (GL (Fin d) k)) ∩ (fun u => κ⁻¹ * u * κ) ⁻¹' U
+    set V : Set (GL (Fin d) k) := {u | u ∈ KO k (Fin d) ∧ κ⁻¹ * u * κ ∈ U}
     have hV : V ∈ 𝓝 1 := by
-      refine Filter.inter_mem ((isOpen_KO (k := k) (n := Fin d)).mem_nhds (one_mem _)) ?_
+      refine Filter.inter_mem (isOpen_KO.mem_nhds (one_mem _)) ?_
       have hc : Continuous fun u : GL (Fin d) k => κ⁻¹ * u * κ := (continuous_const.mul continuous_id).mul continuous_const
       have := hc.tendsto 1
       simp only [mul_one, inv_mul_cancel] at this

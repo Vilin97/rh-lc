@@ -84,8 +84,8 @@ theorem basis_combination_mem_invariants (i : ZMod n) (d : Fin r → W.EE) (hd :
   · rw [Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← smul_assoc, (hd j).1]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [W.γD_smul, hB j δ hδ, (hd j).2 δ hδ]
 

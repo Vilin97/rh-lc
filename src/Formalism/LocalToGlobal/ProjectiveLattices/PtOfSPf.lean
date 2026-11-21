@@ -64,8 +64,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
   {Xo : Moduli Dw l} {c : Coeff l}
 
 theorem pos_dualMap_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (f : R →+* S) (g : S →+* T) :
-    GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) = (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) :=
-  RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    dualMap (g.comp f) = (dualMap g).comp (dualMap f) :=
+  RingHom.ext fun x => by ext <;> simp [dualMap]
 
 theorem pos_frMap_trans {S T U : Type} [CommRing S] [Algebra c.F S] [CommRing T] [Algebra c.F T] [CommRing U]
     [Algebra c.F U] {φ : S →ₐ[c.F] T} {ψ : T →ₐ[c.F] U} {y : FrPt Xo c S} {z : FrPt Xo c T} {w : FrPt Xo c U}
@@ -80,7 +80,7 @@ theorem pos_frMap_trans {S T U : Type} [CommRing S] [Algebra c.F S] [CommRing T]
   · intro τ i
     rw [hu2 τ i, hu1 τ i, ← CategoryTheory.Category.assoc]
     congr 1
-    show _ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.toRingHom.comp φ.toRingHom)))
+    show _ = Spec.map (CommRingCat.ofHom (dualMap (ψ.toRingHom.comp φ.toRingHom)))
     rw [pos_dualMap_comp, CommRingCat.ofHom_comp, Spec.map_comp]
   · rw [CategoryTheory.Category.assoc, hs1, hs2]
   · rw [CategoryTheory.Category.assoc, hf1, ← CategoryTheory.Category.assoc, hf2, esp, CategoryTheory.Category.assoc]

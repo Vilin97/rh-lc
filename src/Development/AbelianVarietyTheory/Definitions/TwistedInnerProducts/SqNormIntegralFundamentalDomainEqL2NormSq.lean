@@ -338,7 +338,7 @@ theorem l2O_smul (c : ℂ) (f : WO V W → ℂ) : l2O μ 𝓕 (c • f) = ‖c�
 theorem l2O_add_le_of_continuous {f f' : WO V W → ℂ} (h : Continuous f) (h' : Continuous f') :
     l2O μ 𝓕 (f + f') ≤ l2O μ 𝓕 f + l2O μ 𝓕 f' :=
   have : BorelSpace (WO V W) := ⟨rfl⟩
-  eLpNorm_add_le one_le_two
+  eLpNorm_add_le h.measurable.aestronglyMeasurable h'.measurable.aestronglyMeasurable one_le_two
 
 theorem ipO_conj (f f' : WO V W → ℂ) : conj (ipO μ 𝓕 f f') = ipO μ 𝓕 f' f := by
   simp only [ipO, ← integral_conj, map_mul, Complex.conj_conj, mul_comm]
@@ -391,7 +391,7 @@ theorem memLp_theta (hψ : IsStdChar D ψ (-1)) (hμ : μ.IsAddHaarMeasure) (h�
   exact .of_bound h.cont.measurable.aestronglyMeasurable C (.of_forall hC)
 
 theorem l2NormOnFundamentalDomain_thetaFunction_ne_top (hψ : IsStdChar D ψ (-1)) (hμ : μ.IsAddHaarMeasure) (h𝓕 : IsAddFundamentalDomain (ratL W V) 𝓕 μ)
-    (h : IsThetaFunO ψ V W f) : l2O μ 𝓕 f ≠ ∞ := (memLp_theta hψ hμ h𝓕 h).ne
+    (h : IsThetaFunO ψ V W f) : l2O μ 𝓕 f ≠ ∞ := (memLp_theta hψ hμ h𝓕 h).2.ne
 
 theorem integrableOn_mul_conj (hψ : IsStdChar D ψ (-1)) (hμ : μ.IsAddHaarMeasure)
     (h𝓕 : IsAddFundamentalDomain (ratL W V) 𝓕 μ) (h : IsThetaFunO ψ V W f) (h' : IsThetaFunO ψ V W f') :

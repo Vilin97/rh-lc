@@ -61,7 +61,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.unf :
     haveI : OpensMeasurableSpace (G1 K 2 × ℝ) := inferInstance
     haveI : OpensMeasurableSpace (G1 K 2 × G1 K 2 × ℝ) := inferInstance
     have h1 := ((blkLaws (K := K)).2.2.2.1).measurable
-    have h2 : Measurable (unipOne K (2 + 2) 2) := (continuous_unipOne 2).measurable
+    have h2 : Measurable (unipOne (K := K) (n := 2 + 2) 2) := (continuous_unipOne 2).measurable
     have h3 : Measurable fun p : Par K => (p.1, p.2.1, p.2.2.1) :=
       measurable_fst.prodMk (measurable_snd.fst.prodMk measurable_snd.snd.fst)
     exact ((h2.comp measurable_snd.snd.snd.snd).mul (h1.comp h3)).mul

@@ -314,7 +314,7 @@ theorem ptF_fock (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (A : Fr S) (B :
         omega
   obtain ⟨Q, hQ, hQc⟩ := key l
   have hQ0 : Q = 0 := MvPolynomial.ext _ _ fun m => by
-    rw [hQc m (by omega), MvPolynomial.coeff_zero]
+    simpa using hQc m (by omega)
   rw [hpt, hQ, hQ0, map_zero]
 
 end Fock

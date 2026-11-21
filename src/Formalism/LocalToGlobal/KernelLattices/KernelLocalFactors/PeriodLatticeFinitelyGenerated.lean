@@ -1419,7 +1419,7 @@ theorem map_mem_VV {K L : Type} [Field K] [Field L] {ι : Type} [Fintype ι] {n 
     refine Finset.prod_congr rfl fun τ _ => ?_
     rw [Formalism.GradedWeylDivisibility.blockEmb, Formalism.GradedWeylDivisibility.blockEmb, MvPolynomial.map_rename]
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul c x _ hx =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hx
@@ -1710,7 +1710,16 @@ theorem perO_fg {E : Type} [Field E] [NumberField E] [StarRing E] {a b : ℕ} (A
   have sa := stdLat_lattice (E := E) (n := a)
   have sb := stdLat_lattice (E := E) (n := b)
   obtain ⟨νa₁, ha₁0, ha₁⟩ := exists_smul_le (stdLat E a) N sa.fg hsN
-  obtain ⟨νb₁, hb₁0, hb₁⟩ := exists_smul_le N' (stdLat E b) hN' sb.span_eq_top
+  have hstd : Submodule.span E (stdLat E b : Set (Sp E b)) = ⊤ := by
+    apply Submodule.eq_top_iff'.2
+    intro x
+    have hx : x = ∑ i, x i • (Pi.single i (1 : E) : Sp E b) := by
+      funext j
+      simp [Pi.single_apply, Finset.sum_ite_eq']
+    rw [hx]
+    exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _
+      (Submodule.subset_span (single_mem_stdLat (E := E) i 1))
+  obtain ⟨νb₁, hb₁0, hb₁⟩ := exists_smul_le N' (stdLat E b) hN' hstd
   have h1 := perO_scale AA0 N (stdLat E a) N' (stdLat E b) νa₁ νb₁ ha₁ hb₁
   have hone : Submodule.span E (((1 : Submodule (𝓞 E) E) : Submodule (𝓞 E) E) : Set E) = ⊤ := by
     rw [eq_top_iff]
@@ -1740,11 +1749,14 @@ theorem period_lattice_finitely_generated : LamFG := by
   have h2 : Module.Finite ℤ (perO AA0 N N') := Module.Finite.trans (𝓞 E) _
   have h3 : AddGroup.FG (perO AA0 N N') := Module.Finite.iff_addGroup_fg.1 h2
   have h4 : (perO AA0 N N').toAddSubgroup.FG := (AddGroup.fg_iff_addSubgroup_fg _).1 h3
-  obtain ⟨S, hS⟩ := h4
-  classical
-  refine ⟨S.image (embH emb δ), ?_⟩
-  rw [Finset.coe_image, ← AddMonoidHom.map_closure, hS]
-  rfl
+  letI := h4
+  let f : (perO AA0 N N').toAddSubgroup →+ LamC emb δ AA0 N N' :=
+    (embH emb δ).comp (perO AA0 N N').toAddSubgroup.subtype |>.codRestrict _ (by
+      intro x
+      exact ⟨x, x.2, rfl⟩)
+  exact IsAddFG.of_surjective f (by
+    rintro ⟨y, x, hx, rfl⟩
+    exact ⟨⟨x, hx⟩, rfl⟩)
 
 end LamFGS
 
@@ -1809,8 +1821,45 @@ theorem hypotheses_of_base_hypotheses : HypOfHyp0 := by
   obtain ⟨a1, a2⟩ := ambient_of_hypotheses D t.X t.seam t.cc t.δ t.B t.χ t.cD
   refine ⟨a1, h1, fun c c' => ?_⟩
   obtain ⟨s1, s2, hx⟩ := h2 c c'
+  have hspan {n : ℕ} {L : Submodule (𝓞 t.X.E) (Formalism.L2.Col.Sp t.X.E n)} (hL : Formalism.L2.Col.IsSdLat L) :
+      Submodule.span t.X.E (L : Set (Formalism.L2.Col.Sp t.X.E n)) = ⊤ := by
+    apply Submodule.dualAnnihilator_eq_bot_iff.mp
+    apply le_antisymm ?_ bot_le
+    intro f hf
+    let v : Formalism.L2.Col.Sp t.X.E n := fun i => star (f (Pi.single i 1))
+    have hpair : Formalism.L2.Col.hStd t.X.E n v = f := by
+      apply (Pi.basisFun t.X.E (Fin n)).ext
+      intro i
+      rw [Pi.basisFun_apply, Formalism.L2.Col.hStd_apply, Finset.sum_eq_single i]
+      · simp [v]
+      · intro j _ hj
+        simp [hj]
+      · simp
+    have hline (r : t.X.E) : r • v ∈ L := by
+      rw [← show Formalism.HermitianLatticesTheory.dual (Formalism.L2.Col.hStd t.X.E n) L = L from hL.2, Formalism.HermitianLatticesTheory.dualBasic_mem_dual]
+      intro y hy
+      have hy0 : Formalism.L2.Col.hStd t.X.E n v y = 0 := by
+        rw [hpair]
+        exact (Submodule.mem_dualAnnihilator f).mp hf y (Submodule.subset_span hy)
+      have hz : Formalism.L2.Col.hStd t.X.E n y v = 0 := by
+        simpa [hy0] using ((Formalism.L2.Col.hStd_isSymm (E := t.X.E) (n := n)).eq v y).symm
+      simp [hz]
+    have hv : v = 0 := by
+      funext i
+      change v i = 0
+      by_contra hi
+      let coord := (LinearMap.proj i : Formalism.L2.Col.Sp t.X.E n →ₗ[t.X.E] t.X.E).restrictScalars (𝓞 t.X.E)
+      have htop : L.map coord = ⊤ := by
+        rw [eq_top_iff]
+        intro x _
+        exact ⟨(x / v i) • v, hline _, div_mul_cancel₀ _ hi⟩
+      have : Module.Finite (𝓞 t.X.E) t.X.E := Module.finite_def.mpr (htop ▸ hL.1.fg.map coord)
+      exact RingOfIntegers.not_isField t.X.E
+        (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 t.X.E) t.X.E) (Field.toIsField t.X.E))
+    rw [Submodule.mem_bot]
+    simpa [hv] using hpair.symm
   obtain ⟨i1, i2, i3⟩ := finite_index_of_fg _ _ _ _ (t.X.embC t.amb.σ₀) t.amb.δ t.amb.AA (t.rd u μ).SS ((t.rd u μ).N i c) ((t.rd u μ).N (i + 1) c')
-    (t.rd u μ).lev h1.1 (period_lattice_finitely_generated _ _ _ _ _ _ _ _ _ s2.1.fg s1.1.span_eq_top hAA)
+    (t.rd u μ).lev h1.1 (period_lattice_finitely_generated _ _ _ _ _ _ _ _ _ s2.1.fg (hspan s1) hAA)
   have hA : TaylorLogMetric.admitted D _ _ (t.seam.lat ((t.rd u μ).N i c)) (t.seam.lat ((t.rd u μ).N (i + 1) c')) := by
     rw [← t.O_lat, ← t.O_lat]
     exact ⟨factNEven _ _, factNEven _ _, ((t.O u μ).lat i c).2, ((t.O u μ).lat (i + 1) c').2⟩

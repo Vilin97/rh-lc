@@ -141,7 +141,8 @@ theorem newLevel : Af.Hypotheses₂ → Published.CuspSemisimpleReal → ∀ (k 
     ⟨hcusp.1, fun q u hu => hfix _ (kLocal _ hN q u hu), hc, hwt, hlo⟩
   refine hf0 (g.new _ hNM hNne f χ hf ?_)
   refine Filter.eventually_cofinite.2 ((Set.finite_le_nat g.M).subset fun q hq => ?_)
-  simp only [Set.mem_setOf_eq, _root_.not_imp] at hq
+  simp only [Set.mem_setOf_eq] at hq
+  push_neg at hq
   obtain ⟨hqp, hqe⟩ := hq
   by_contra hqM
   have hqd : ¬ q ∣ g.M := fun h => hqM (Nat.le_of_dvd hM h)

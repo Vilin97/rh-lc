@@ -416,7 +416,10 @@ theorem _root_.GlobalTheory.T.pureTensorCountBound_of_cosetDepthBound : GlobalTh
     obtain ⟨Q, hQ1, hQ2⟩ := Ideal.exists_ideal_over_prime_of_isIntegral_of_isDomain (S := 𝓞 D.what₂.LL) (Ideal.span {(l : ℤ)})
       (by rw [(RingHom.injective_iff_ker_eq_bot _).1 (algebraMap ℤ (𝓞 D.what₂.LL)).injective_int]; exact bot_le)
     have hm : (l : 𝓞 D.what₂.LL) ∈ Q := by
-      have : (l : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 D.what₂.LL)) := by rw [hQ2]; exact Ideal.mem_span_singleton_self _
+      have : (l : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 D.what₂.LL)) := by
+        change (l : ℤ) ∈ Q.under ℤ
+        rw [hQ2]
+        exact Ideal.mem_span_singleton_self _
       simpa using this
     refine hd ⟨Q, hQ1, fun z => ?_⟩ l hl hm fun PP hP => ?_
     · rw [z, Ideal.mem_bot] at hm

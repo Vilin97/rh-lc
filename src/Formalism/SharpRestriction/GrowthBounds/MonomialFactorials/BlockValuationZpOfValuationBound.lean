@@ -147,6 +147,12 @@ theorem hypTie_proved (hB : G.BlockOK) : Formalism.InvariantFactorPaths.KP.LL.Hy
         (if ((x : ℕ) = G.T.pos i ∨ (x : ℕ) = G.T.pos i + 1) then 1 else 0) := by
     intro x
     simp only [M.BlockData.lettersAt]
+    change G.LL.deg x - (∑ k : Fin G.T.t, if (x : ℕ) = G.T.pos k ∨
+      (x : ℕ) = G.T.pos k + 1 then Function.update j i (j i + 1) k else 0) -
+      (if x = G.uPos then jp else 0) =
+      (G.LL.deg x - (∑ k : Fin G.T.t, if (x : ℕ) = G.T.pos k ∨
+        (x : ℕ) = G.T.pos k + 1 then j k else 0) -
+        (if x = G.uPos then jp else 0)) - _
     rw [sum_update_ite]
     omega
   have htie : ∀ x : MvPolynomial (Fin N × Fin r) ℚ_[p],

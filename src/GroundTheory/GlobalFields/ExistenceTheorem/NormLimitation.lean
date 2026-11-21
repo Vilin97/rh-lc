@@ -61,7 +61,7 @@ theorem ker_abstractSymbol_le :
   rw [← map_one (Group.Abelianization.map (quotientGaloisEquiv K L).toMonoidHom), hinj.eq_iff,
     ← map_one (reciprocityEquiv K L).symm, (reciprocityEquiv K L).symm.injective.eq_iff] at hc
   change (QuotientGroup.mk (fixedEquiv K c) : tateZero IdeleClassLimit
-    (K.openSubgroup : Subgroup (ℚ̄ ≃ₐ[ℚ] ℚ̄)) L.openSubgroup) = 1 at hc
+    (K.openSubgroup : Subgroup (AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ)) L.openSubgroup) = 1 at hc
   rw [QuotientGroup.eq_one_iff] at hc
   obtain ⟨b, hb⟩ := hc
   obtain ⟨d, rfl⟩ := (fixedEquiv L).surjective b

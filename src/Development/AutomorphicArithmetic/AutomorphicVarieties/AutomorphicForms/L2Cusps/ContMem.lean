@@ -35,6 +35,17 @@ theorem UpperTheory.V.KernelIndexFullLattice.contMem_holds :
     rw [constantTermL2, hy]
     exact hcusp r h0 h1 y
   refine ⟨⟨hm.toLp _, hv⟩, l2DiscreteQuotient_ext_iff_lift_ae_eq.2 ?_⟩
-  have h2 := UpperTheory.V.KernelIndexFullLattice.liftCmp_holds E a μ μ₁ hp ⟨hm.toLp _, hv⟩ (cuspQuot hL) (MemLp.coeFn_toLp hm)
+  have h2 : lift (latticeGL E a) (UpperTheory.V.KernelIndexFullLattice.cmp hp ⟨hm.toLp _, hv⟩) =ᵐ[μ]
+      fun g => cuspQuot hL (RightCosetSpace.mk (UpperTheory.V.KernelIndexFullLattice.Γ1 E a) (retractOne g)) := by
+    have h1 := Lp.coeFn_compMeasurePreserving (hm.toLp _) hp
+    have h2 := hp.quasiMeasurePreserving.ae (MemLp.coeFn_toLp hm)
+    have h3 : ∀ᵐ q ∂(quotMeasure (latticeGL E a) μ),
+        (UpperTheory.V.KernelIndexFullLattice.cmp hp ⟨hm.toLp _, hv⟩ : Quot (latticeGL E a) → ℂ) q =
+          cuspQuot hL (UpperTheory.V.KernelIndexFullLattice.quotMap E a q) := by
+      filter_upwards [h1, h2] with q hq1 hq2
+      exact hq1.trans hq2
+    filter_upwards [ae_quotMeasure_iff.1 h3] with g hg
+    rw [← UpperTheory.V.KernelIndexFullLattice.quotMk_holds E a g]
+    exact hg
   refine h2.trans (Filter.EventuallyEq.trans (Filter.Eventually.of_forall fun g => ?_) h.lift_toL2_ae_eq.symm)
   exact hr g

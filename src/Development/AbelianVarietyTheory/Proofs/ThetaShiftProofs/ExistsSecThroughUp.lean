@@ -80,20 +80,8 @@ theorem div_iff {j : L.ι} {k : L'.ι} : ⊤ ≤ x ⁻¹ᵁ (LB.div (L.pull F) L
   (top_le_iff_cpt x _).trans (and_congr_left' mem_pull)
 
 theorem toStkA_wv {j : L.ι} {k : L'.ι} (hj : F (x (cpt R)) ∈ L.U j) (hk : x (cpt R) ∈ L'.U k) :
-    toStkA (cpt R) (wv w x j k) = (gw w x (cpt R) j k).val := by
-  have toStkA_valR {A : Type} [CommRing A] {T : Scheme.{0}} (f : Sp A ⟶ T) (U : T.Opens)
-      (z : Sp A) (ht : ⊤ ≤ f ⁻¹ᵁ U) (a : Γ(T, U)ˣ) :
-      toStkA z (valR f U a.val) = (gm f z U a).val := by
-    have hz : f z ∈ U := ht (show z ∈ (⊤ : (Sp A).Opens) from trivial)
-    have e1 : ∀ c, (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom c) = c :=
-      fun c => congrArg (fun g => CommRingCat.Hom.hom g c) (Iso.hom_inv_id (Scheme.ΓSpecIso (CommRingCat.of A)))
-    rw [valR, dif_pos ht, gm, dif_pos hz]
-    show ((Sp A).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom
-        ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom ((f.appLE U ⊤ ht).hom a.val))) =
-      ((Sp A).presheaf.germ (f ⁻¹ᵁ U) z hz).hom ((f.app U).hom a.val)
-    rw [e1]
-    exact TopCat.Presheaf.germ_res_apply (Sp A).presheaf (homOfLE ht) z trivial ((f.app U).hom a.val)
-  exact toStkA_valR x _ _ (div_iff.2 ⟨hj, hk⟩) _
+    toStkA (cpt R) (wv w x j k) = (gw w x (cpt R) j k).val :=
+  toStkA_valR x _ _ (div_iff.2 ⟨hj, hk⟩) _
 
 theorem isUnit_wv {j : L.ι} {k : L'.ι} (hj : F (x (cpt R)) ∈ L.U j) (hk : x (cpt R) ∈ L'.U k) :
     IsUnit (wv w x j k) := isUnit_valR x _ (div_iff.2 ⟨hj, hk⟩) _
@@ -216,18 +204,6 @@ theorem rig_iff (hL : L.IsLB) (hL' : L'.IsLB) {e' : Y' ⟶ X'} {e : Y ⟶ X} {g 
   have := agree_iff hL hL' (n := 1) (r := 1)
     (a := fun j => valR (y ≫ g) ((L.pull e).U (fun _ => j)) (t.s (fun _ => j)).val)
     (a' := fun k => valR y ((L'.pull e').U (fun _ => k)) (a.s (fun _ => k)).val) hτ fun j k hj hk => by
-      have toStkA_valR {A : Type} [CommRing A] {T : Scheme.{0}} (f : Sp A ⟶ T) (U : T.Opens)
-          (z : Sp A) (ht : ⊤ ≤ f ⁻¹ᵁ U) (a : Γ(T, U)ˣ) :
-          toStkA z (valR f U a.val) = (gm f z U a).val := by
-        have hz : f z ∈ U := ht (show z ∈ (⊤ : (Sp A).Opens) from trivial)
-        have e1 : ∀ c, (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom c) = c :=
-          fun c => congrArg (fun g => CommRingCat.Hom.hom g c) (Iso.hom_inv_id (Scheme.ΓSpecIso (CommRingCat.of A)))
-        rw [valR, dif_pos ht, gm, dif_pos hz]
-        show ((Sp A).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom
-            ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom ((f.appLE U ⊤ ht).hom a.val))) =
-          ((Sp A).presheaf.germ (f ⁻¹ᵁ U) z hz).hom ((f.app U).hom a.val)
-        rw [e1]
-        exact TopCat.Presheaf.germ_res_apply (Sp A).presheaf (homOfLE ht) z trivial ((f.app U).hom a.val)
       apply toStkA_injective
       have hj' : ⊤ ≤ (y ≫ g) ⁻¹ᵁ (L.pull e).U (fun _ => j) :=
         (top_le_iff_cpt _ _).2 (mem_pull.2 (by

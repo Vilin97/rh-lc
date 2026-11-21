@@ -134,7 +134,7 @@ def valV (hv : IsEigBasis TF U e v) {S : Type} [CommRing S] (x : Sp S ⟶ TF.Y.X
     TanM x TF.Y.t.G := GlobalTheory.LieMet.tanOf (GlobalTheory.LieMet.isTan_map _ (spMap_ev x U.2 hU) (hv.1 m))
 
 theorem valV_left (hv : IsEigBasis TF U e v) {S : Type} [CommRing S] (x : Sp S ⟶ TF.Y.X) (hU : ⊤ ≤ x ⁻¹ᵁ U.1)
-    (m : Fin n) : (tv (valV TF hv x hU m)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev x U.1 hU)) ≫ v m := rfl
+    (m : Fin n) : (tv (valV TF hv x hU m)).left = spMap (dualMap (ev x U.1 hU)) ≫ v m := rfl
 
 theorem tanPull_valV (hv : IsEigBasis TF U e v) {S S' : Type} [CommRing S] [CommRing S'] (φ : S →+* S')
     {x : Sp S ⟶ TF.Y.X} {x' : Sp S' ⟶ TF.Y.X} (h : spMap φ ≫ x = x') (hU : ⊤ ≤ x ⁻¹ᵁ U.1) (hU' : ⊤ ≤ x' ⁻¹ᵁ U.1)
@@ -172,7 +172,7 @@ theorem valV_block (hv : IsEigBasis TF U e v) {S : Type} [CommRing S] [Algebra c
       · subst hi; simp [hφψ]
       · simp [hi]
     rw [e1] at h
-    have e2 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev x U.1 hU)) ≫ v (e ⟨τ, j⟩) ≫ (TF.Y.t.act.act a).left =
+    have e2 : spMap (dualMap (ev x U.1 hU)) ≫ v (e ⟨τ, j⟩) ≫ (TF.Y.t.act.act a).left =
         (tv (actR TF.Y.t.act a (V (e ⟨τ, j⟩)))).left := by
       rw [← Category.assoc]; rfl
     rw [e2] at h

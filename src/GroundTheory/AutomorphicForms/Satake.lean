@@ -122,6 +122,7 @@ theorem exists_satakeParameter {V : Type*} [AddCommGroup V] [Module ℂ V]
     rw [Ideal.isMaximal_def]
     exact isSimpleModule_iff_isCoatom.1
       (IsSimpleModule.congr (LinearMap.quotKerEquivOfSurjective _ hsurj))
+  letI := hI
   obtain ⟨w, hw⟩ := exists_ker_sphericalCharacter_eq (μ := μ) I
   refine ⟨w * (halfPoint F n)⁻¹, fun h v hv => ?_⟩
   rw [← sphericalCharacter_unramifiedChar_eq]

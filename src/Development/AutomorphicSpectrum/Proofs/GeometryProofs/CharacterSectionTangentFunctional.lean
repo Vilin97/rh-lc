@@ -69,24 +69,24 @@ abbrev qMap : Spec (CommRingCat.of (DualNumber A)) ⟶ Spec (CommRingCat.of R) :
   Spec.map (CommRingCat.ofHom ((algebraMap A (DualNumber A)).comp π))
 
 abbrev dMap : Spec (CommRingCat.of (DualNumber A)) ⟶ Spec (CommRingCat.of (DualNumber R)) :=
-  Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap π))
+  Spec.map (CommRingCat.ofHom (dualMap π))
 
 theorem dMap_over : dMap π ≫ Spec.map (CommRingCat.ofHom (algebraMap R (DualNumber R))) = qMap π := by
   rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
-  refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem dualMap_epsMul (c : R) :
-    (epsMul (π c)).comp (GlobalTheory.CompanionTheory.Ar.dualMap π) = (GlobalTheory.CompanionTheory.Ar.dualMap π).comp (epsMul c) := by
-  refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, mul_comm]
+    (epsMul (π c)).comp (dualMap π) = (dualMap π).comp (epsMul c) := by
+  refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;> simp [dualMap, epsMul, mul_comm]
 
 theorem epsMul_algebraMap (c : A) : (epsMul c).comp (algebraMap A (DualNumber A)) = algebraMap A (DualNumber A) := by
   refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;> simp [epsMul, TrivSqZeroExt.algebraMap_eq_inl]
 
-theorem fst_dualMap : ((TrivSqZeroExt.fstHom A A A).toRingHom).comp (GlobalTheory.CompanionTheory.Ar.dualMap π) =
+theorem fst_dualMap : ((TrivSqZeroExt.fstHom A A A).toRingHom).comp (dualMap π) =
     π.comp (TrivSqZeroExt.fstHom R R R).toRingHom := by
   refine RingHom.ext fun a => ?_
-  simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  simp [dualMap]
 
 theorem fst_q : ((TrivSqZeroExt.fstHom A A A).toRingHom).comp ((algebraMap A (DualNumber A)).comp π) = π := by
   refine RingHom.ext fun a => ?_

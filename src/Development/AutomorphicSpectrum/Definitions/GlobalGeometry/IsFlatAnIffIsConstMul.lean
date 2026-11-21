@@ -51,8 +51,8 @@ structure IsUnitAn (τ : E →+* ℂ) (σ : c.F →+* ℂ) (Φ : CFn Xo c) : Pro
     (v : ∀ b, Vecs (spMap (ψ b) ≫ x) D.p) (w : ∀ b, Vecs (spMap (ψ b) ≫ x) D.q), IsOpen B →
     (∀ r, DifferentiableOn ℂ (fun b => ψ b r) B) →
     (∀ b ∈ B, IsFramed Set.univ τ σ (spMap (ψ b) ≫ x) (v b) (w b) ∧
-      (∀ a, (v b a).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ b)) ≫ (vR a).left) ∧
-      ∀ j, (w b j).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ b)) ≫ (wR j).left) →
+      (∀ a, (v b a).left = spMap (dualMap (ψ b)) ≫ (vR a).left) ∧
+      ∀ j, (w b j).left = spMap (dualMap (ψ b)) ≫ (wR j).left) →
     DifferentiableOn ℂ (fun b => Φ (spMap (ψ b) ≫ x) (v b) (w b)) B
 
 def ExtendsUnitAt {K Ω : Type} [Field K] [Field Ω] {X : Scheme.{0}} (s : X ⟶ Sp K) (σ : K →+* ℂ) (ξ : Sp Ω ⟶ X)

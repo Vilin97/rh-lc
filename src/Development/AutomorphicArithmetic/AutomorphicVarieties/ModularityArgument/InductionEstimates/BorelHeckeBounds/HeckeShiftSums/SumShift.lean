@@ -67,7 +67,8 @@ private theorem desc_sm {Y : Type*} [TopologicalSpace Y] [TopologicalSpace.Pseud
   haveI : SecondCountableTopology (RightCosetSpace (Gam K (2 + 2))) :=
     (isOpenQuotientMap_mk (Gam K (2 + 2))).isQuotientMap.secondCountableTopology
       (isOpenQuotientMap_mk (Gam K (2 + 2))).isOpenMap
-  exact (desc_cont f hc hi).stronglyMeasurable
+  set_option synthInstance.maxHeartbeats 200000 in
+    exact (desc_cont f hc hi).stronglyMeasurable
 
 private noncomputable def ramp (T : ℝ) (n : ℕ) (h : ℝ) : ℝ := max 0 (min 1 (((n : ℝ) + 1) * (h - T)))
 

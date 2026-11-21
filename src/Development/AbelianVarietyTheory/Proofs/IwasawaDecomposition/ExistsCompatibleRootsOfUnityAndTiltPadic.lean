@@ -70,7 +70,6 @@ theorem exists_zeta_eps (l : ℕ) [hl : Fact l.Prime] :
       rw [← map_pow, this, map_one]
     have h2 : Valued.v (algebraMap (Om l) ℂ_[l] (ζ m)) ^ l ^ m ≤ 1 := by
       rw [← map_pow, h, map_one]
-    change (PadicComplex.valued l).v (algebraMap (Om l) ℂ_[l] (ζ m)) ≤ 1
     exact (pow_le_one_iff_of_nonneg zero_le (pow_ne_zero _ hl.out.ne_zero)).1 h2
   obtain ⟨e, he⟩ := zeta_exists_tilt (p := l) (O := Per.OC l)
     (fun m => ⟨algebraMap (Om l) ℂ_[l] (ζ m), hmem m⟩) (fun m => Subtype.ext (by

@@ -141,7 +141,7 @@ theorem principal_count {θ : InfFam D} {V : HSp D} {S : D.what₂.Tau → SPar}
   haveI : ∀ τ, FiniteDimensional ℂ (M.H τ) := fun τ => (hfin τ).1
   obtain ⟨c, pr, hc, hpr, hsurj⟩ := GlobalTheory.T.exists_coefficientSpace_dual_discreteSeriesModel_posDef D θ V S M hθ hM
   obtain ⟨a1, -, -, -, a5⟩ := GlobalTheory.T.unitaryGroup_adelicClasses_via_finiteAdelicPart D V
-  obtain ⟨h1, h2, h3⟩ := GlobalTheory.T.finrank_eq_card_mul_and_trace_eq_zero_of_free_values_alt (GA D V) _ (MMap M) _ (clsA V (lev D.sp.cm V.gram β (flag1L L))) (evAt M)
+  obtain ⟨h1, h2, h3⟩ := GlobalTheory.T.finrank_eq_card_mul_and_trace_eq_zero_of_free_values_alt (GA D V) _ (MMap M) (MultilinearMap (RingHom.id ℂ) (fun τ : D.what₂.Tau => M.sm τ) ℂ) (clsA V (lev D.sp.cm V.gram β (flag1L L))) (evAt M)
     (Mult θ M (levS V β (flag1L L)) (levChi V β (flag1L L)))
     (fun c => by
       obtain ⟨h, -, e⟩ := a1 (rep c)

@@ -66,10 +66,10 @@ theorem ker_dehomFrac
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [RingHom.mem_ker, ← sum_weightedHomogeneousComponent (w := coordDeg n) f,
         finsum_eq_sum _ (weightedHomogeneousComponent_finsupp f), map_sum]
-      refine Finset.sum_eq_zero fun b _ ↦ ?_
-      rw [dehomFrac_of_isWeightedHomogeneous c _ b
-          (weightedHomogeneousComponent_isWeightedHomogeneous b f),
-        (classFrac_eq_zero_iff V _).mpr (hVh f hf b), zero_mul]
+        refine Finset.sum_eq_zero fun b _ ↦ ?_
+        rw [dehomFrac_of_isWeightedHomogeneous c _ b
+            (weightedHomogeneousComponent_isWeightedHomogeneous b f),
+          (classFrac_eq_zero_iff V _).mpr (hVh f hf b), zero_mul]
     · rintro _ ⟨k, rfl⟩
       rw [SetLike.mem_coe, RingHom.mem_ker, map_sub, map_one, dehomFrac, aeval_X]
       exact sub_eq_zero.mpr (div_self (hz k))

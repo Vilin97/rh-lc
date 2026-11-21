@@ -180,6 +180,6 @@ theorem tower_hom : ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] {F : Fn
       exact hg
     rw [CommRingCat.ofHom_comp, F.Pt.map_comp] at h2
     exact h2
-  refine ⟨⟨φ, hpt⟩, hφk, fun φ' hk => Subtype.ext (hφu φ'.1 (hall φ') hk)⟩
+  refine ⟨⟨φ, hpt⟩, hφk, fun φ' hk => CategoryTheory.Functor.Elements.Hom.ext (hφu φ'.1 (hall φ') hk)⟩
 
 end GlobalTheory.CompanionTheory.TowerHom

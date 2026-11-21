@@ -10,7 +10,8 @@ public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsPla
 
 open scoped TensorProduct NNReal Matrix
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
-open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.ThK.LiftConst
+open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.ThK
+open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels (AE cA)
 
 noncomputable section
 
@@ -20,23 +21,23 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 
 variable (F E) in
-def N1 (σ : E →ₐ[F] E) : Subgroup (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ where
-  carrier := {z | (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * cA σ (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = 1}
+def N1 (σ : E →ₐ[F] E) : Subgroup (AE F E)ˣ where
+  carrier := {z | (z : AE F E) * cA σ (z : AE F E) = 1}
   one_mem' := by simp
   mul_mem' {a b} ha hb := by
-    simp only [Set.mem_setOf_eq, Units.val_mul, map_mul] at *
-    calc (a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * b * (cA σ a * cA σ b) = (a * cA σ a) * (b * cA σ b) := by ring
+    simp only [Set.mem_ofPred_eq, Units.val_mul, map_mul] at *
+    calc (a : AE F E) * b * (cA σ a * cA σ b) = (a * cA σ a) * (b * cA σ b) := by ring
       _ = 1 := by rw [ha, hb, one_mul]
   inv_mem' {a} ha := by
-    simp only [Set.mem_setOf_eq] at *
-    have h1 : cA σ ((a⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * cA σ (a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = 1 := by
+    simp only [Set.mem_ofPred_eq] at *
+    have h1 : cA σ ((a⁻¹ : (AE F E)ˣ) : AE F E) * cA σ (a : AE F E) = 1 := by
       rw [← map_mul, Units.inv_mul, map_one]
-    calc ((a⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * cA σ ((a⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))
-        = ((a⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * cA σ ((a⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * ((a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * cA σ (a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) := by
+    calc ((a⁻¹ : (AE F E)ˣ) : AE F E) * cA σ ((a⁻¹ : (AE F E)ˣ) : AE F E)
+        = ((a⁻¹ : (AE F E)ˣ) : AE F E) * cA σ ((a⁻¹ : (AE F E)ˣ) : AE F E) * ((a : AE F E) * cA σ (a : AE F E)) := by
           rw [ha, mul_one]
-      _ = (((a⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * a) * (cA σ ((a⁻¹ : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ) : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * cA σ (a : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) := by ring
+      _ = (((a⁻¹ : (AE F E)ˣ) : AE F E) * a) * (cA σ ((a⁻¹ : (AE F E)ˣ) : AE F E) * cA σ (a : AE F E)) := by ring
       _ = 1 := by rw [h1, Units.inv_mul, one_mul]
 
-theorem mem_normOneIdeles {σ : E →ₐ[F] E} {z : (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))ˣ} : z ∈ N1 F E σ ↔ (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) * cA σ (z : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) = 1 := Iff.rfl
+theorem mem_normOneIdeles {σ : E →ₐ[F] E} {z : (AE F E)ˣ} : z ∈ N1 F E σ ↔ (z : AE F E) * cA σ (z : AE F E) = 1 := Iff.rfl
 
 end GlobalTheory.NormOneIdele

@@ -88,8 +88,8 @@ theorem archBetween_mono {Ψ : Type} [Fintype Ψ] {N : ℕ} {M R : Top.RootModel
   fun z hz val hv => Set.Icc_subset_Icc hl hh (h z hz val hv)
 
 theorem dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) = (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
-  ext x <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    dualMap (g.comp f) = (dualMap g).comp (dualMap f) := by
+  ext x <;> simp [dualMap]
 
 theorem spMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
     spMap (g.comp f) = spMap g ≫ spMap f := by

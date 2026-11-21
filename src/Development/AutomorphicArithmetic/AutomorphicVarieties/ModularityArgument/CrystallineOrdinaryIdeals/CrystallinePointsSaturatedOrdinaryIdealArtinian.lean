@@ -126,7 +126,7 @@ theorem GlobalTheory.OrdLoc.crPts_IY : LocalPublishedTheorems → ∀ {l : ℕ} 
     by_contra h
     have hp : (Ideal.comap (algebraMap ℤ_[l] O) ⊥).IsPrime := inferInstance
     have hm : (Ideal.comap (algebraMap ℤ_[l] O) ⊥).IsMaximal := hp.isMaximal h
-    have h2 : (⊥ : Ideal O).IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := ℤ_[l]) _ hm
+    have h2 : (⊥ : Ideal O).IsMaximal := Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := ℤ_[l]) ⊥ hm
     exact IsDiscreteValuationRing.not_a_field O (IsLocalRing.eq_maximalIdeal h2).symm
   haveI : FaithfulSMul ℤ_[l] O := (faithfulSMul_iff_algebraMap_injective _ _).2 hi
   have hi2 : Function.Injective (algebraMap ℤ_[l] (FractionRing O)) := by
@@ -141,6 +141,7 @@ theorem GlobalTheory.OrdLoc.crPts_IY : LocalPublishedTheorems → ∀ {l : ℕ} 
   have hOE : Function.Injective (algebraMap O E) := by
     rw [RingHom.injective_iff_ker_eq_bot]
     refine Ideal.eq_bot_of_comap_eq_bot (R := ℤ_[l]) ?_
+    change Ideal.comap (algebraMap ℤ_[l] O) (RingHom.ker (algebraMap O E)) = ⊥
     rw [RingHom.comap_ker, ← IsScalarTower.algebraMap_eq, ← RingHom.injective_iff_ker_eq_bot,
       IsScalarTower.algebraMap_eq ℤ_[l] ℚ_[l] E]
     exact (algebraMap ℚ_[l] E).injective.comp (IsFractionRing.injective ℤ_[l] ℚ_[l])

@@ -11,14 +11,9 @@ open CategoryTheory CrystallineSemistableComparison CrystallineSemistableCompari
 namespace GlobalTheory.CompanionTheory.FramedSite
 
 theorem cohomology_subsingleton_of_frame_zero {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {Φ : PDF R C}
-    (E : Frame (Φ := Φ) 0) (F : C ⥤ ModuleCat.{0} R) (hD : Subsingleton (F.obj E.D)) (n : ℕ) :
+    (E : Frame Φ 0) (F : C ⥤ ModuleCat.{0} R) (hD : Subsingleton (F.obj E.D)) (n : ℕ) :
     Subsingleton (CH.H F n) := by
-  have hInitial : Limits.IsInitial E.D := by
-    refine Limits.IsInitial.ofUniqueHom (fun T => Classical.choice (E.ne T)) ?_
-    intro T f
-    obtain ⟨g, -, hg⟩ := E.bij f (fun _ => 0) (fun i => i.elim0)
-    exact (hg _ (fun i => i.elim0)).trans (hg _ (fun i => i.elim0)).symm
-  obtain ⟨-, -, hex0, hex⟩ := CrystallineSemistableComparison.P.initial F E.D hInitial
+  obtain ⟨-, -, hex0, hex⟩ := CrystallineSemistableComparison.P.initial F E.D (Frame.initial E)
   have key : ∀ x : CH.H F n, x = 0 := by
     intro x
     obtain ⟨a, ha, rfl⟩ := (CrystallineSemistableComparison.P.cls_surj (CH.cx F) n).1 x

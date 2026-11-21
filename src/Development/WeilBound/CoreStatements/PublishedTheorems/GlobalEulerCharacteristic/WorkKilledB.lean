@@ -288,7 +288,9 @@ theorem ratio_coind_cyclic (ℓ : ℕ) [Fact ℓ.Prime] (K : FiniteSubfield) (S 
   have : Finite (Rep.coind (gsOpenSubgroup S hL' : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).subtype (Rep.res (gsOpenSubgroup S hL' : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).subtype M)) :=
     Nat.finite_of_card_ne_zero (by rw [hcc']; exact pow_ne_zero _ hp.ne_zero)
   have hpos : 0 < gsEulerRatio S (Rep.coind (gsOpenSubgroup S hL' : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).subtype (Rep.res (gsOpenSubgroup S hL' : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).subtype M)) ιr := by
-    refine gsEulerRatio_pos S _ ιr fun v hv => hSℓ v ?_
+    apply gsEulerRatio_pos S _ ιr
+    intro v hv
+    apply hSℓ v
     rw [hcc', Nat.cast_pow] at hv
     exact v.isPrime.mem_of_pow_mem _ hv
   exact (pow_eq_one_iff_of_nonneg hpos.le (pow_ne_zero _ hp.ne_zero)).1 he

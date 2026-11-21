@@ -76,11 +76,11 @@ theorem exists_pull (hC : ChartIndepSt2) [StarRing (𝓞 E)] (nab : NabV Xo c) (
     unfold KilledBy at hj ⊢
     intro x hx
     rw [Category.assoc, hj x hx, MonObj.comp_one]
-  · set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sum]
-      refine Finset.sum_congr rfl fun i _ => ?_
-      exact GlobalTheory.T.harmonicValue_baseChange_alt hC E H Dw l Xo c nab hnab S T ψ y w hm h hh a n P hP N (F q i)
-        (fun b => GlobalTheory.VVRank.pullS Xo.univ.t.G ((N : ℤ) ^ 2) h (F q i b)) (hpull q i)
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    exact GlobalTheory.T.harmonicValue_baseChange_alt hC E H Dw l Xo c nab hnab S T ψ y w hm h hh a n P hP N (F q i)
+      (fun b => GlobalTheory.VVRank.pullS Xo.univ.t.G ((N : ℤ) ^ 2) h (F q i b)) (hpull q i)
 
 theorem eq_of_local {K T : Type} [Field K] [CommRing T] [Algebra K T] (u v : T)
     (h : ∀ (U : Type) [CommRing U] [IsLocalRing U] [Algebra K U] (κ : T →ₐ[K] U), κ u = κ v) : u = v := by

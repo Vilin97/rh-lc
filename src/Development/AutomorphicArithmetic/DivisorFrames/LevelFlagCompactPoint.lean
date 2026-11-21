@@ -16,7 +16,7 @@ open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestrictio
 open GlobalTheory GlobalTheory.CechPic GlobalTheory.Cartier GlobalTheory.ConsGeo
 
 private theorem spMap_dualMap_comp_spMap_dualMap {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) := by
+    spMap (dualMap g) ≫ spMap (dualMap f) = spMap (dualMap (g.comp f)) := by
   rw [ModelRelProbe.spMap_comp]
   congr 1
   ext s <;> simp [Formalism.L2.Pj.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
@@ -32,8 +32,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 private theorem combination_base_change {X : Scheme.{0}} {t : SAB H X} {R k k' : Type} [CommRing R] [CommRing k] [CommRing k']
     (χ : R →+* k) (ψ : k →+* k') {x : Sp k ⟶ X} {x' : Sp k' ⟶ X} (hx : spMap ψ ≫ x = x') {m : ℕ}
     {v : Fin m → (Sp (DualNumber R) ⟶ t.G.left)} {cf : Fin m → k} {w : Sp (DualNumber k) ⟶ t.G.left}
-    (h : IsCombAtG t x (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ v i) cf w) :
-    IsCombAtG t x' (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp χ)) ≫ v i) (fun i => ψ (cf i)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w) := by
+    (h : IsCombAtG t x (fun i => spMap (dualMap χ) ≫ v i) cf w) :
+    IsCombAtG t x' (fun i => spMap (dualMap (ψ.comp χ)) ≫ v i) (fun i => ψ (cf i)) (spMap (dualMap ψ) ≫ w) := by
   have := (GlobalTheory.TanBaseChange.tan_comb_baseChange E H X t k k' ψ x x' hx).2 m _ cf w h
   simpa only [← Category.assoc, spMap_dualMap_comp_spMap_dualMap] using this
 
@@ -52,7 +52,7 @@ private theorem carries_base_change {l : Level H} {Xo : Moduli Dw l} {c : Coeff 
     {T : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β} {F : Type} [Field F] {e : F ≃+* c.F} (C : FlagCpt T e)
     {k k' : Type} [Field k] [Field k'] (ψ : k →+* k') {φ : c.F →+* k} {x : Sp k ⟶ T.X} {x' : Sp k' ⟶ T.X}
     (hx : spMap ψ ≫ x = x') {q : Sp k ⟶ C.Y.X} {g : EigFrame T φ x} (h : C.Carries q g) :
-    ∃ g' : EigFrame T (ψ.comp φ) x', C.Carries (spMap ψ ≫ q) g' ∧ ∀ τ i, g'.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ g.v τ i := by
+    ∃ g' : EigFrame T (ψ.comp φ) x', C.Carries (spMap ψ ≫ q) g' ∧ ∀ τ i, g'.v τ i = spMap (dualMap ψ) ≫ g.v τ i := by
   have hF : GlobalTheory.LocM.IsFrame T.t (ψ.comp φ) x' (Vecs.bc (Dw := Dw) ψ g.v) := hx ▸
     GlobalTheory.LocM.isFrame_bc E H Dw l c T.X T.t _ _ φ ψ x g.v ⟨fun τ i => ⟨g.tan τ i, g.eig τ i⟩, g.basis⟩
   refine ⟨⟨Vecs.bc (Dw := Dw) ψ g.v, fun τ i => (hF.1 τ i).1, fun τ i => (hF.1 τ i).2, hF.2⟩, ?_, fun _ _ => rfl⟩

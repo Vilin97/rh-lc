@@ -651,12 +651,12 @@ variable (G)
 theorem parPi_zero : G.parPi 0 = G.lam := by
   have h : ∀ l, (G.m ≤ l ∨ Even (G.m - l)) ↔ Even (G.m - l) := fun l =>
     ⟨fun h => h.elim (fun h => by simp [Nat.sub_eq_zero_of_le h]) id, Or.inr⟩
-  simp [parPi, lam, h, plus]
+  simp [parPi, lam, h]
 
 theorem parD_zero_zero : G.parD 0 0 = G.parD0 := by
   have h : ∀ l, (l ≤ 1 ∨ Even (l - 1)) ↔ Even (l - 1) := fun l =>
     ⟨fun h => h.elim (fun h => by simp [Nat.sub_eq_zero_of_le h]) id, Or.inr⟩
-  simp [parD, parD0, h, plus]
+  simp [parD, parD0, h]
 
 theorem parPi_m : G.parPi G.m = G.parX 0 := by
   simp only [parPi, parX, weightX, entries_lam, plus_union, Nat.sub_self, zero_le, true_or, decide_true, zero_add]

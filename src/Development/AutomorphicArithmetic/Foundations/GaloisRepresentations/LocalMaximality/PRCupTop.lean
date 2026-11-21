@@ -27,7 +27,9 @@ private theorem card_filters {n : ℕ} (i : Fin n) :
   have h1 : (Finset.univ.filter (· ≤ i)) ∪ (Finset.univ.filter (i ≤ ·)) = Finset.univ := by
     ext j; simp [le_total]
   have h2 : (Finset.univ.filter (· ≤ i)) ∩ (Finset.univ.filter (i ≤ ·)) = {i} := by
-    ext j; simp [le_antisymm_iff]
+    ext j
+    simp only [Finset.mem_inter, Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_singleton]
+    exact (le_antisymm_iff : j = i ↔ j ≤ i ∧ i ≤ j).symm
   have := Finset.card_union_add_card_inter (Finset.univ.filter (· ≤ i)) (Finset.univ.filter (i ≤ ·))
   rw [h1, h2] at this
   simp at this

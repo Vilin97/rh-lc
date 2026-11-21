@@ -51,8 +51,8 @@ variable (v : InfinitePlace K.1) (hv : v.IsReal)
 include hv in
 theorem card_gal_infAlgClosure_of_isReal :
     Fintype.card Gal(AlgebraicClosure v.Completion/v.Completion) = 2 := by
-  obtain ⟨s, hs⟩ := IsAlgClosed.exists_eq_mul_self (-1 : AlgebraicClosure v.Completion)
-  obtain ⟨σ, hσ⟩ := exists_gal_ne_of_sq_eq_neg_one v hv (s := s) (by rw [sq, ← hs])
+  obtain ⟨s, hs⟩ := IsAlgClosed.exists_pow_nat_eq (-1 : AlgebraicClosure v.Completion) (n := 2) (by decide)
+  obtain ⟨σ, hσ⟩ := exists_gal_ne_of_sq_eq_neg_one v hv (s := s) hs
   have h1 : 1 < Fintype.card Gal(AlgebraicClosure v.Completion/v.Completion) :=
     Fintype.one_lt_card_iff.2 ⟨σ, 1, fun h => hσ (by rw [h]; rfl)⟩
   have h2 := card_gal_le_two v.Completion (AlgebraicClosure v.Completion) (infAlgClosure_finrank_le_two v)

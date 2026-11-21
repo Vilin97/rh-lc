@@ -31,7 +31,7 @@ theorem natCast_prime_mem_valBall : (p : K) ∈ valBall K (absRamificationIndex 
 theorem div_natCast_prime_mem_valBall {a : ℤ} {x : K}
     (hx : x ∈ valBall K (a + absRamificationIndex K)) : x / p ∈ valBall K a := by
   have h := div_natCast_mem_valBall p hx hp.out.ne_zero
-  rw [padicValNat_self, Nat.cast_one, mul_one, add_sub_cancel_right] at h
+  rw [Nat.padicValNat_def, Nat.Prime.multiplicity_self, Nat.cast_one, mul_one, add_sub_cancel_right] at h
   exact h
 
 theorem map_pow_unitFiltrationUnits {n : ℕ}
@@ -79,7 +79,7 @@ theorem map_pow_unitFiltrationUnits {n : ℕ}
       exact logSeries_mem_valBall p ((mem_unitFiltrationUnits_iff_valBall (by omega)).1 hw) hn'
     have hz : logSeries (((w : Kˣ) : K) - 1) / p ∈ valBall K n := div_natCast_prime_mem_valBall p hy
     set u := expUnit p n hn ⟨_, hz⟩
-    refine ⟨(u : Kˣ), u.2, ?_⟩
+    refine ⟨(u : Kˣ), u.property, ?_⟩
     have hinj := logValBallHom_injective p n hn
     have key : logValBallHom p n hn (Additive.ofMul (u ^ p)) =
         logValBallHom p n hn (Additive.ofMul W) := by
@@ -165,8 +165,8 @@ theorem nrm_natCast_prime_eq :
     intro a b hab
     have h1 : a ≤ᵥ b := (Valuation.vle_iff_le (valuation K)).2 (normalizedValuation_le_iff.1 hab.le)
     have h2 : b ≤ᵥ a := (Valuation.vle_iff_le (valuation K)).2 (normalizedValuation_le_iff.1 hab.ge)
-    exact le_antisymm ((nrm_le_nrm_iff _ _).2 ((ValuativeExtension.vle_iff_vle _ _).2 h1))
-      ((nrm_le_nrm_iff _ _).2 ((ValuativeExtension.vle_iff_vle _ _).2 h2))
+    exact le_antisymm ((nrm_le_nrm_iff _ _).2 ((ValuativeExtension.vle_iff_vle).2 h1))
+      ((nrm_le_nrm_iff _ _).2 ((ValuativeExtension.vle_iff_vle).2 h2))
   have h := key _ _ hv
   rw [map_natCast] at h
   rw [h, map_pow, nrm_pow]

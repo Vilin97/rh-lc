@@ -44,7 +44,7 @@ theorem exists_block {r : ℕ} (q : ℕ) (K : Matrix (Fin r) (Fin r) ℂ) (hK : 
   · have e1 : K₂ *ᵥ Pi.single a 1 = Pi.single a 1 := by
       ext b
       by_cases hb : (b : ℕ) < q
-      · simp [K₂, hb, Matrix.one_apply, Pi.single_apply]
+      · simp [K₂, hb, one_apply, Pi.single_apply]
       · have : b ≠ a := fun h => hb (h ▸ ha)
         simp [K₂, hb, h0 b a (by simp [ha, hb]), this]
     have e2 : K₂⁻¹ *ᵥ Pi.single a 1 = Pi.single a 1 := by
@@ -62,7 +62,7 @@ theorem exists_block {r : ℕ} (q : ℕ) (K : Matrix (Fin r) (Fin r) ℂ) (hK : 
         by_cases hd : (d : ℕ) < q
         · rw [h0 a d (by simp [ha, hd]), mul_zero]
         · simp only [K₁, of_apply, if_pos hb, h0 b d (by simp [hb, hd]), zero_mul]
-      · simp [K₁, mulVec, dotProduct, hb, Matrix.one_apply]
+      · simp [K₁, mulVec, dotProduct, hb, one_apply]
     have e2 : K a ᵥ* K₁ᵀ⁻¹ = K a := by
       conv_lhs => rw [← e1]
       rw [vecMul_vecMul, mul_nonsing_inv _ u1, vecMul_one]
@@ -208,7 +208,7 @@ theorem exists_frame_mulVec (X : Data E r) {p : ℕ} (hr : r = p + X.p0) (ρ : (
   split_ifs with ha
   · have : FD.col (mat x τ * b τ) a = ∑ c, K τ a c • FD.col (mat x τ) c := by
       ext i
-      simp [FD.col, Matrix.mul_apply, hb1 τ a _ ha, mul_comm]
+      simp [FD.col, mul_apply, hb1 τ a _ ha, mul_comm]
     rw [this, hermC_sum_left, mulVec, dotProduct]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [hermC_smul_left]

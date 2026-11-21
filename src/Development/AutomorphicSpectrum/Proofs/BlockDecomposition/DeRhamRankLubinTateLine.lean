@@ -53,47 +53,21 @@ theorem act_mem (P : LocPrime l) (K : FinExt l) (a : ℤ) (g : GQ l) {b : P.R.Bd
 theorem inv_fil {P : LocPrime l} {AI : LocAinf l P} (T : LocTied6 l P AI) (K : FinExt l) (d : ℤ)
     {y u : P.R.BdR} (hy : y ∈ (P.PD K).Fil d) (hy' : y ∉ (P.PD K).Fil (d + 1)) (hu : y * u = 1) :
     u ∈ (P.PD K).Fil (-d) ∧ u ∉ (P.PD K).Fil (-d + 1) := by
-  let t := GlobalTheory.DeRhamSymbol.tU P
-  have ht : (t : P.R.BdR) ∈ (P.PD K).Fil 1 := by
-    have h := (P.PD K).mem_filtration_one
-    rwa [P.PD_ι, P.period_datum_t_eq] at h
-  have ht_inv : (↑t⁻¹ : P.R.BdR) ∈ (P.PD K).Fil (-1) := by
-    have h : (1 : P.R.BdR) ∈ (P.PD K).Fil (-1 + 1) := by
-      simpa using (P.PD K).one_mem
-    rw [T.fil, PositivityTheory.LocInh.filD_succ_iff
-      (PositivityTheory.LocInh.maximalIdeal_eq_span_t AI), ← PositivityTheory.LocInh.tie_t T] at h
-    obtain ⟨v, hv, he⟩ := h
-    have e : (t : P.R.BdR) * T.eD.symm v = 1 := by
-      apply T.eD.injective
-      rw [map_mul, RingEquiv.apply_symm_apply]
-      exact he.symm
-    rw [Units.inv_eq_of_mul_eq_one_right e]
-    exact (T.fil K _ _).2 (by simpa only [RingEquiv.apply_symm_apply] using hv)
-  have hpow (n : ℤ) : (↑(t ^ n) : P.R.BdR) ∈ (P.PD K).Fil n := by
-    induction n using Int.induction_on with
-    | zero => simpa using (P.PD K).one_mem
-    | succ n ih =>
-      rw [zpow_add_one, Units.val_mul]
-      exact (P.PD K).Fil_mul _ _ _ _ ih ht
-    | pred n ih =>
-      rw [zpow_sub_one, Units.val_mul, sub_eq_add_neg]
-      exact (P.PD K).Fil_mul _ _ _ _ ih ht_inv
-  set τ : P.R.BdR := ↑(t ^ (-d)) with hτ
+  have J := PositivityTheory.LocInh.thetaL T
+  have tr := fun (b : ℤ) (w : P.R.BdR) => GlobalTheory.DeRhamSymbol.mem_iff (P := P) K b w
+  set τ : P.R.BdR := ((GlobalTheory.DeRhamSymbol.tU P ^ (-d) : P.R.BdRˣ) : P.R.BdR) with hτ
   have h0 : τ * y ∈ (P.PD K).Fil 0 := by
-    have h := (P.PD K).Fil_mul _ _ _ _ (hpow (-d)) hy
-    rwa [neg_add_cancel] at h
+    rw [tr, hτ, GlobalTheory.DeRhamSymbol.shift_iff J, add_zero, ← tr]
+    exact hy
   have h1 : τ * y ∉ (P.PD K).Fil 1 := by
-    intro h
-    apply hy'
-    have h' := (P.PD K).Fil_mul _ _ _ _ (hpow d) h
-    rwa [hτ, ← mul_assoc, ← Units.val_mul, ← zpow_add, add_neg_cancel, zpow_zero,
-      Units.val_one, one_mul] at h'
+    rw [tr, hτ, GlobalTheory.DeRhamSymbol.shift_iff J, ← tr]
+    exact hy'
   obtain ⟨w, hw, hyw⟩ := (PositivityTheory.LocInh.tied_field l P AI T).2.2.2.2 K _ h0 h1
   have e : u = τ * w := by
     calc u = (τ * y * w) * u := by rw [hyw, one_mul]
       _ = (y * u) * (τ * w) := by ring
       _ = τ * w := by rw [hu, one_mul]
-  have hτm : τ ∈ (P.PD K).Fil (-d) := hpow (-d)
+  have hτm : τ ∈ (P.PD K).Fil (-d) := (tr _ _).2 (GlobalTheory.DeRhamSymbol.zpow_mem J (-d))
   constructor
   · rw [e]
     have := (P.PD K).Fil_mul _ _ _ _ hτm hw
@@ -355,7 +329,6 @@ end Line
 
 
 set_option maxHeartbeats 1600000 in
-set_option synthInstance.maxHeartbeats 100000 in
 theorem jumps_of_periods : ∀ {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P), Nonempty (LocTied6 l P AI) →
     ∀ (K LL : FinExt l), (∀ (μ : ↥K.1 →ₐ[ℚ_[l]] Om l) (x : ↥K.1), μ x ∈ LL.1) →
     ∀ (χ : ↥(GK K) →* (↥K.1)ˣ), HasPeriods P K χ → ∀ τ : ↥K.1 →ₐ[ℚ_[l]] ↥LL.1,

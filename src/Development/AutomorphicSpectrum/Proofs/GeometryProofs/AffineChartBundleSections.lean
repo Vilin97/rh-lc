@@ -180,7 +180,7 @@ theorem exists_coord {S : Scheme.{0}} {A R L : Type} [CommRing A] [CommRing R] [
     {G : Over S} [GrpObj G] {G' : Over (Sp R)} [GrpObj G'] (xA : Sp A ⟶ S) (fR : A →+* R) (f : Sp R ⟶ S)
     (hf : spMap fR ≫ xA = f) (φ : G'.left ⟶ G.left) (h : IsGrpPullback G' G f φ) (M : LieModel G' (𝟙 (Sp R)) L)
     (v : epsAt xA ⟶ G) (hv : IsTanAt G xA v) :
-    ∃ u : L, (M.pt u).left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap fR) ≫ v.left := by
+    ∃ u : L, (M.pt u).left ≫ φ = spMap (dualMap fR) ≫ v.left := by
   have hx : Spec.map (CommRingCat.ofHom fR) ≫ xA = 𝟙 _ ≫ f := by rw [Category.id_comp]; exact hf
   have t := LiePull.tan_pull fR xA _ hx v hv
   obtain ⟨u, hu⟩ := M.onto (LieMove.liftEps h (LieCarrier.epsHom fR xA _ hx ≫ v))
@@ -191,7 +191,7 @@ theorem indep_of_frame {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G]
     [CommRing R] (ψ : R →+* ℂ) (xR : Sp R ⟶ S) (y : Sp ℂ ⟶ S) (hy : spMap ψ ≫ xR = y) {g n : ℕ}
     (M : LieModel G xR (Fin g → R)) (u : Fin n → Fin g → R) {O : Type} [CommRing O] (act : OAct O G) (τ : O →+* ℂ)
     (v : Fin n → (epsAt y ⟶ G)) (hv : IsEigFrame act y τ v)
-    (hu : ∀ i, (v i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ (M.pt (u i)).left) :
+    (hu : ∀ i, (v i).left = spMap (dualMap ψ) ≫ (M.pt (u i)).left) :
     LinearIndependent ℂ (fun i b => ψ (u i b)) := by
   classical
   subst hy
@@ -234,15 +234,15 @@ theorem exists_vec (Y : Model Xo c β) {σ' : KA l →+* ℂ} {n a : ℕ} (C : B
     (p : Sp ℂ ⟶ C.V) (ψz : C.R →+* ℂ) (hp : p ≫ C.j = spMap ψz) (u : Fin C.g → C.R) :
     ∃ (v : epsAt (under (p ≫ k')) ⟶ Xo.univ.t.G) (v₀ : epsAt ((p ≫ k') ≫ Y.j) ⟶ Y.t.G)
       (uu : Sp (DualNumber ℂ) ⟶ C.tV.G.left), SameVec Y (p ≫ k') v v₀ ∧ uu ≫ C.m₂.φ = v.left ∧
-      uu ≫ C.m₁.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψz) ≫ (C.M.pt u).left ∧
-      v₀.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψz) ≫ (C.M.pt u).left ≫ mR.φ := by
+      uu ≫ C.m₁.φ = spMap (dualMap ψz) ≫ (C.M.pt u).left ∧
+      v₀.left = spMap (dualMap ψz) ≫ (C.M.pt u).left ≫ mR.φ := by
   have hq : IsPullback C.m₁.φ C.tV.G.hom C.t.G.hom C.j := C.m₁.cart.1
-  have hsq : spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψz) ≫ spMap (algebraMap C.R (DualNumber C.R)) =
+  have hsq : spMap (dualMap ψz) ≫ spMap (algebraMap C.R (DualNumber C.R)) =
       spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap ψz := by
     rw [← spMap_comp', ← spMap_comp']
     congr 1
-    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-  have w : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψz) ≫ (C.M.pt u).left) ≫ C.t.G.hom =
+    ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  have w : (spMap (dualMap ψz) ≫ (C.M.pt u).left) ≫ C.t.G.hom =
       (spMap (algebraMap ℂ (DualNumber ℂ)) ≫ p) ≫ C.j := by
     have w₀ : (C.M.pt u).left ≫ C.t.G.hom = spMap (algebraMap C.R (DualNumber C.R)) ≫ 𝟙 _ := Over.w (C.M.pt u)
     rw [Category.assoc, w₀, Category.comp_id, hsq, Category.assoc, hp]
@@ -268,7 +268,7 @@ theorem exists_vec (Y : Model Xo c β) {σ' : KA l →+* ℂ} {n a : ℕ} (C : B
     rw [h₃, ← Category.assoc, l₁, Category.assoc]
 
 theorem spMap_dual {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
+    spMap (dualMap (g.comp f)) = spMap (dualMap g) ≫ spMap (dualMap f) := by
   rw [← LiePull.dualMap_comp, spMap_comp']
 
 theorem chart_unit (Y : Model Xo c β) (τ : E →+* ℂ) (σ : c.F →+* ℂ) (Φ : CFn Xo c) (A : Y.X.Opens) (hA : IsAffineOpen A)
@@ -283,8 +283,8 @@ theorem chart_unit (Y : Model Xo c β) (τ : E →+* ℂ) (σ : c.F →+* ℂ) (
     (hsnd : ∀ z ∈ punct d a 1, (C.pt z ≫ k') ≫ pullback.snd _ _ = spMap σ)
     (hframe : ∀ (f : Γ(Y.X, A) →+* ℂ) (y : Sp ℂ ⟶ Y.X) (v : Fin D.p → (epsAt y ⟶ Y.t.G))
       (w : Fin D.q → (epsAt y ⟶ Y.t.G)), y = spMap f ≫ hA.fromSpec → y ≫ Y.s = spMap (σ.comp β) →
-      (∀ i, (v i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (MB.pt (e₁ i)).left) →
-      (∀ j, (w j).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (MB.pt (e₂ j)).left) →
+      (∀ i, (v i).left = spMap (dualMap f) ≫ (MB.pt (e₁ i)).left) →
+      (∀ j, (w j).left = spMap (dualMap f) ≫ (MB.pt (e₂ j)).left) →
       IsEigFrame Y.t.act y (σ.comp (tauIn c τ)) v ∧
         IsEigFrame Y.t.act y (σ.comp (tauIn c (ComplexEmbedding.conjugate τ))) w) :
     ∃ (ρ' : ℝ) (h₀ : (Fin d → ℂ) → ℂ), 0 < ρ' ∧ ρ' ≤ 1 ∧ DifferentiableOn ℂ h₀ (ball 0 ρ') ∧
@@ -292,8 +292,8 @@ theorem chart_unit (Y : Model Xo c β) (τ : E →+* ℂ) (σ : c.F →+* ℂ) (
         (w : Vecs (C.pt z ≫ k') D.q) (v₀ : Fin D.p → (epsAt ((C.pt z ≫ k') ≫ Y.j) ⟶ Y.t.G))
         (w₀ : Fin D.q → (epsAt ((C.pt z ≫ k') ≫ Y.j) ⟶ Y.t.G)),
         (∀ i, SameVec Y (C.pt z ≫ k') (v i) (v₀ i)) → (∀ j, SameVec Y (C.pt z ≫ k') (w j) (w₀ j)) →
-        (∀ i, (v₀ i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₁ i)).left) →
-        (∀ j, (w₀ j).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₂ j)).left) →
+        (∀ i, (v₀ i).left = spMap (dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₁ i)).left) →
+        (∀ j, (w₀ j).left = spMap (dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₂ j)).left) →
         h₀ z = Φ (C.pt z ≫ k') v w := by
   classical
   have hs : Smooth Y.t.G.hom := Y.t.semi.smooth
@@ -307,43 +307,43 @@ theorem chart_unit (Y : Model Xo c β) (τ : E →+* ℂ) (σ : c.F →+* ℂ) (
     (hover 0 (mem_ball_self one_pos)) (fun _ => rfl) (fun _ => rfl)
   have ind₁ := indep_of_frame hs (C.ψ 0) (𝟙 _ ≫ f) _ hy0 (LieMove.pushModel mR.cart C.M) u₁ Y.t.act _ _ hfr0.1
     (fun i => by
-      show spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((C.ψ 0).comp fR)) ≫ (MB.pt (e₁ i)).left =
-        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ 0)) ≫ (C.M.pt (u₁ i)).left ≫ mR.φ
+      show spMap (dualMap ((C.ψ 0).comp fR)) ≫ (MB.pt (e₁ i)).left =
+        spMap (dualMap (C.ψ 0)) ≫ (C.M.pt (u₁ i)).left ≫ mR.φ
       rw [hu₁, spMap_dual, Category.assoc])
   have ind₂ := indep_of_frame hs (C.ψ 0) (𝟙 _ ≫ f) _ hy0 (LieMove.pushModel mR.cart C.M) u₂ Y.t.act _ _ hfr0.2
     (fun j => by
-      show spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((C.ψ 0).comp fR)) ≫ (MB.pt (e₂ j)).left =
-        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ 0)) ≫ (C.M.pt (u₂ j)).left ≫ mR.φ
+      show spMap (dualMap ((C.ψ 0).comp fR)) ≫ (MB.pt (e₂ j)).left =
+        spMap (dualMap (C.ψ 0)) ≫ (C.M.pt (u₂ j)).left ≫ mR.φ
       rw [hu₂, spMap_dual, Category.assoc])
   have key : ∀ z ∈ punct d a 1, ∃ (v : Vecs (C.pt z ≫ k') D.p) (w : Vecs (C.pt z ≫ k') D.q)
       (v₀ : Fin D.p → (epsAt ((C.pt z ≫ k') ≫ Y.j) ⟶ Y.t.G))
       (w₀ : Fin D.q → (epsAt ((C.pt z ≫ k') ≫ Y.j) ⟶ Y.t.G)),
       IsFramed Set.univ τ σ (C.pt z ≫ k') v w ∧ (∀ i, SameVec Y (C.pt z ≫ k') (v i) (v₀ i)) ∧
       (∀ j, SameVec Y (C.pt z ≫ k') (w j) (w₀ j)) ∧
-      (∀ i, (v₀ i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₁ i)).left) ∧
-      (∀ j, (w₀ j).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₂ j)).left) ∧
+      (∀ i, (v₀ i).left = spMap (dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₁ i)).left) ∧
+      (∀ j, (w₀ j).left = spMap (dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₂ j)).left) ∧
       (∀ i, ∃ uu : Sp (DualNumber ℂ) ⟶ C.tV.G.left, uu ≫ C.m₂.φ = (v i).left ∧
-        uu ≫ C.m₁.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt (u₁ i)).left) ∧
+        uu ≫ C.m₁.φ = spMap (dualMap (C.ψ z)) ≫ (C.M.pt (u₁ i)).left) ∧
       (∀ j, ∃ uu : Sp (DualNumber ℂ) ⟶ C.tV.G.left, uu ≫ C.m₂.φ = (w j).left ∧
-        uu ≫ C.m₁.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt (u₂ j)).left) := by
+        uu ≫ C.m₁.φ = spMap (dualMap (C.ψ z)) ≫ (C.M.pt (u₂ j)).left) := by
     intro z hz
     have hp := (C.pt_eq z hz).1
     choose v v₀ uu a1 a2 a3 a4 using fun i =>
       exists_vec Y C k' φ₀ mR hk h₁ h₂ h₃ (C.pt z) (C.ψ z) hp (u₁ i)
     choose w w₀ uw b1 b2 b3 b4 using fun j =>
       exists_vec Y C k' φ₀ mR hk h₁ h₂ h₃ (C.pt z) (C.ψ z) hp (u₂ j)
-    have c1 : ∀ i, (v₀ i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₁ i)).left := fun i => by
+    have c1 : ∀ i, (v₀ i).left = spMap (dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₁ i)).left := fun i => by
       have e₁' := a4 i
       rw [hu₁ i] at e₁'
-      have q : spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₁ i)).left =
-          spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap fR) ≫ (MB.pt (e₁ i)).left := by
+      have q : spMap (dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₁ i)).left =
+          spMap (dualMap (C.ψ z)) ≫ spMap (dualMap fR) ≫ (MB.pt (e₁ i)).left := by
         rw [spMap_dual, Category.assoc]
       exact e₁'.trans q.symm
-    have c2 : ∀ j, (w₀ j).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₂ j)).left := fun j => by
+    have c2 : ∀ j, (w₀ j).left = spMap (dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₂ j)).left := fun j => by
       have e₂' := b4 j
       rw [hu₂ j] at e₂'
-      have q : spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₂ j)).left =
-          spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap fR) ≫ (MB.pt (e₂ j)).left := by
+      have q : spMap (dualMap ((C.ψ z).comp fR)) ≫ (MB.pt (e₂ j)).left =
+          spMap (dualMap (C.ψ z)) ≫ spMap (dualMap fR) ≫ (MB.pt (e₂ j)).left := by
         rw [spMap_dual, Category.assoc]
       exact e₂'.trans q.symm
     have hy : (C.pt z ≫ k') ≫ Y.j = spMap ((C.ψ z).comp fR) ≫ hA.fromSpec := by
@@ -367,7 +367,7 @@ theorem chart_unit (Y : Model Xo c β) (τ : E →+* ℂ) (σ : c.F →+* ℂ) (
 
 end GlobalTheory.CompanionTheory.Ar.Flat.ChartFamily
 
-theorem GlobalTheory.CompanionTheory.Ar.Flat.flat_unit_along_families : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (τ : E →+* ℂ) (σ : c.F →+* ℂ) (Φ : CFn Xo c) (X' : Scheme.{0}) (π : X' ⟶ Y.X) (s' : X' ⟶ Sp c.F) (d : ℕ) (W' : X'.Opens) (jW : W'.toScheme ⟶ Xo.XF c) (A : Y.X.Opens) (hA : IsAffineOpen A) (EB : Type) [AddCommGroup EB] [Module Γ(Y.X, A) EB] (MB : LieModel Y.t.G hA.fromSpec EB) (e₁ : Fin D.p → EB) (e₂ : Fin D.q → EB) (x : Sp ℂ ⟶ X'), 1 ≤ D.p + D.q → τ (H.rt : E) = H.rt0 → σ (tauIn c τ H.rt) = H.rt0 → IsUnitAn τ σ Φ → π ≫ Y.s = s' ≫ spMap β → SmoothOfRelativeDimension d s' → Geo.ResK.HasSncCoords s' d (W' : Set X')ᶜ → jW ≫ Y.j = W'.ι ≫ π → jW ≫ pullback.snd _ _ = W'.ι ≫ s' → x ≫ s' = spMap σ → ⊤ ≤ x ⁻¹ᵁ (π ⁻¹ᵁ A) → (∀ (f : Γ(Y.X, A) →+* ℂ) (y : Sp ℂ ⟶ Y.X) (v : Fin D.p → (epsAt y ⟶ Y.t.G)) (w : Fin D.q → (epsAt y ⟶ Y.t.G)), y = spMap f ≫ hA.fromSpec → y ≫ Y.s = spMap (σ.comp β) → (∀ i, (v i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (MB.pt (e₁ i)).left) → (∀ j, (w j).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (MB.pt (e₂ j)).left) → IsEigFrame Y.t.act y (σ.comp (tauIn c τ)) v ∧ IsEigFrame Y.t.act y (σ.comp (tauIn c (ComplexEmbedding.conjugate τ))) w) → ∀ (m : ℕ) (B : Set (Fin m → ℂ)) (y : (Fin m → ℂ) → (Sp ℂ ⟶ X')), IsOpen B → IsHolTo B y → (∀ b ∈ B, y b ≫ s' = spMap σ) → ∀ b₀ ∈ B, y b₀ = x → ∃ (ε : ℝ) (h : (Fin m → ℂ) → ℂ), 0 < ε ∧ DifferentiableOn ℂ h (Metric.ball b₀ ε) ∧ h b₀ ≠ 0 ∧ ∀ b ∈ B ∩ Metric.ball b₀ ε, ∃ f : Γ(Y.X, A) →+* ℂ, spMap f ≫ hA.fromSpec = y b ≫ π ∧ (⊤ ≤ y b ⁻¹ᵁ W' → ∀ (yy : Sp ℂ ⟶ Xo.XF c) (v : Vecs yy D.p) (w : Vecs yy D.q) (v₀ : Fin D.p → (epsAt (yy ≫ Y.j) ⟶ Y.t.G)) (w₀ : Fin D.q → (epsAt (yy ≫ Y.j) ⟶ Y.t.G)), yy ≫ Y.j = y b ≫ π → yy ≫ pullback.snd _ _ = spMap σ → (∀ i, SameVec Y yy (v i) (v₀ i)) → (∀ j, SameVec Y yy (w j) (w₀ j)) → (∀ i, (v₀ i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (MB.pt (e₁ i)).left) → (∀ j, (w₀ j).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (MB.pt (e₂ j)).left) → h b = Φ yy v w) := by
+theorem GlobalTheory.CompanionTheory.Ar.Flat.flat_unit_along_families : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (τ : E →+* ℂ) (σ : c.F →+* ℂ) (Φ : CFn Xo c) (X' : Scheme.{0}) (π : X' ⟶ Y.X) (s' : X' ⟶ Sp c.F) (d : ℕ) (W' : X'.Opens) (jW : W'.toScheme ⟶ Xo.XF c) (A : Y.X.Opens) (hA : IsAffineOpen A) (EB : Type) [AddCommGroup EB] [Module Γ(Y.X, A) EB] (MB : LieModel Y.t.G hA.fromSpec EB) (e₁ : Fin D.p → EB) (e₂ : Fin D.q → EB) (x : Sp ℂ ⟶ X'), 1 ≤ D.p + D.q → τ (H.rt : E) = H.rt0 → σ (tauIn c τ H.rt) = H.rt0 → IsUnitAn τ σ Φ → π ≫ Y.s = s' ≫ spMap β → SmoothOfRelativeDimension d s' → Geo.ResK.HasSncCoords s' d (W' : Set X')ᶜ → jW ≫ Y.j = W'.ι ≫ π → jW ≫ pullback.snd _ _ = W'.ι ≫ s' → x ≫ s' = spMap σ → ⊤ ≤ x ⁻¹ᵁ (π ⁻¹ᵁ A) → (∀ (f : Γ(Y.X, A) →+* ℂ) (y : Sp ℂ ⟶ Y.X) (v : Fin D.p → (epsAt y ⟶ Y.t.G)) (w : Fin D.q → (epsAt y ⟶ Y.t.G)), y = spMap f ≫ hA.fromSpec → y ≫ Y.s = spMap (σ.comp β) → (∀ i, (v i).left = spMap (dualMap f) ≫ (MB.pt (e₁ i)).left) → (∀ j, (w j).left = spMap (dualMap f) ≫ (MB.pt (e₂ j)).left) → IsEigFrame Y.t.act y (σ.comp (tauIn c τ)) v ∧ IsEigFrame Y.t.act y (σ.comp (tauIn c (ComplexEmbedding.conjugate τ))) w) → ∀ (m : ℕ) (B : Set (Fin m → ℂ)) (y : (Fin m → ℂ) → (Sp ℂ ⟶ X')), IsOpen B → IsHolTo B y → (∀ b ∈ B, y b ≫ s' = spMap σ) → ∀ b₀ ∈ B, y b₀ = x → ∃ (ε : ℝ) (h : (Fin m → ℂ) → ℂ), 0 < ε ∧ DifferentiableOn ℂ h (Metric.ball b₀ ε) ∧ h b₀ ≠ 0 ∧ ∀ b ∈ B ∩ Metric.ball b₀ ε, ∃ f : Γ(Y.X, A) →+* ℂ, spMap f ≫ hA.fromSpec = y b ≫ π ∧ (⊤ ≤ y b ⁻¹ᵁ W' → ∀ (yy : Sp ℂ ⟶ Xo.XF c) (v : Vecs yy D.p) (w : Vecs yy D.q) (v₀ : Fin D.p → (epsAt (yy ≫ Y.j) ⟶ Y.t.G)) (w₀ : Fin D.q → (epsAt (yy ≫ Y.j) ⟶ Y.t.G)), yy ≫ Y.j = y b ≫ π → yy ≫ pullback.snd _ _ = spMap σ → (∀ i, SameVec Y yy (v i) (v₀ i)) → (∀ j, SameVec Y yy (w j) (w₀ j)) → (∀ i, (v₀ i).left = spMap (dualMap f) ≫ (MB.pt (e₁ i)).left) → (∀ j, (w₀ j).left = spMap (dualMap f) ≫ (MB.pt (e₂ j)).left) → h b = Φ yy v w) := by
   intro E _ _ _ H D l Xo c O _ β Y τ σ Φ X' π s' d W' jW A hA EB _ _ MB e₁ e₂ x h1 hr1 hr2 hU hπ hsm hsnc hj1 hj2 hxs hxA
     hframe m B y hB hy hyσ b₀ hb₀ hyb
   obtain ⟨V, hV, a, ψ, hVA, ha, hol, h0, -, hpts, hfam⟩ :=

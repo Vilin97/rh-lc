@@ -41,7 +41,7 @@ private theorem pushT (m : A × B →* G) (hm : Continuous m) (κ : Measure A) [
     ∃ ν : Measure G, IsProbabilityMeasure ν ∧ (∀ᵐ k ∂ν, k ∈ m.range) ∧ (∀ k ∈ m.range, MeasurePreserving (k * ·) ν ν) ∧
       ∀ (F : G → ℂ) (f : A → ℂ), Continuous F → (∀ p, F (m p) = f p.1) → ∫ k, F k ∂ν = ∫ a, f a ∂κ := by
   have hmm : Measurable m := hm.measurable
-  refine ⟨(κ.prod l).map m, Measure.isProbabilityMeasure_map hmm.aemeasurable, ?_, ?_, fun F f hF h => ?_⟩
+  refine ⟨(κ.prod l).map m, inferInstance, ?_, ?_, fun F f hF h => ?_⟩
   · refine (ae_map_iff hmm.aemeasurable ?_).2 (Eventually.of_forall fun p => ⟨p, rfl⟩)
     exact (isCompact_range hm).isClosed.measurableSet
   · rintro _ ⟨p, rfl⟩

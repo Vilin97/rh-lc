@@ -242,7 +242,32 @@ end CrystallineSemistableComparison.Onto.RCupLaws
 open CrystallineSemistableComparison.Onto.RCupLaws in
 theorem CrystallineSemistableComparison.Onto.cupLaws_pf : CrystallineSemistableComparison.Onto.CupLaws := by
   intro K _ X q
-  have F := CrystallineSemistableComparison.HT.kForm
+  have F : CrystallineSemistableComparison.HT.KForm := by
+    open CrystallineSemistableComparison.HT in
+    exact {
+        bilin q _ _ _ _ _ _ ha h := CrystallineSemistableComparison.P.cup_bilin (grOk (smFun _ q) ha).pair h
+        pull_id q u hu e a n x := by subst e; exact pull_id' q hu a n x
+        pull_comp u hu v hv h a n x := pull_comp' u hu v hv h a n x
+        pull_cup u hu _ _ _ _ _ _ ha h x y := pull_cup' u hu ha h x y
+        pull_one u hu := rfl
+        one_cup {K _ X} q a n x := by
+          obtain ⟨h0, e⟩ := oneH_eq q
+          rw [e]
+          refine ⟨gen_left (grOk (smFun X q) (Nat.zero_add a)).pair (oneSec q) (oneSec_map q) (fun T x => ?_) h0 n x,
+            gen_right (grOk (smFun X q) (Nat.add_zero a)).pair (oneSec q) (oneSec_map q) (fun T x => ?_) h0 n x⟩
+          · obtain ⟨x, hx, rfl⟩ := sq_surj _ _ x
+            exact (pair_mk _ _ _ _ _).trans (mk_congr _ _ (one_mul _) _ _)
+          · obtain ⟨x, hx, rfl⟩ := sq_surj _ _ x
+            exact (pair_mk _ _ _ _ _).trans (mk_congr _ _ (mul_one _) _ _)
+        assoc {K _ X} q _ _ _ _ _ _ _ _ _ _ _ _ h₁ h₂ h₃ h₄ e₁ e₂ e₃ e₄ x y z :=
+          gen_assoc (grOk (smFun X q) h₁).pair (grOk (smFun X q) h₂).pair (grOk (smFun X q) h₃).pair (grOk (smFun X q) h₄).pair
+            (fun T x y z => by
+              obtain ⟨x, hx, rfl⟩ := sq_surj _ _ x
+              obtain ⟨y, hy, rfl⟩ := sq_surj _ _ y
+              obtain ⟨z, hz, rfl⟩ := sq_surj _ _ z
+              rw [pair_mk, pair_mk, pair_mk, pair_mk]
+              exact mk_congr _ _ (mul_assoc _ _ _) _ _) e₁ e₂ e₃ e₄ x y z
+    }
   refine ⟨fun ha h => F.bilin q ha h, fun h₁ h₂ h₃ h₄ g₁ g₂ g₃ g₄ x y z => F.assoc q h₁ h₂ h₃ h₄ g₁ g₂ g₃ g₄ x y z,
     fun ha ha' h h' x y => hdg_comm q ha ha' h h' x y, fun x => (F.one_cup q _ _ x).1,
     fun Y p u hu _ _ _ _ _ _ ha h x y => F.pull_cup u hu ha h x y, fun a n x => F.pull_id q (𝟙 X) _ rfl a n x,

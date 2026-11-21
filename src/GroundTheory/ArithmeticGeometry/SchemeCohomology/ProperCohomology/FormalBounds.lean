@@ -74,12 +74,12 @@ lemma smul_cechK_le (n : ℕ) : I • cechK I 𝔘 p (F := F) n ≤ cechK I 𝔘
   refine ⟨cechH.linearMap 𝔘 A (idealPowMul I F a ha1) p z, ?_⟩
   have h := congrArg (fun f => f.hom) (show modulesAbMap (idealPowMul I F a ha1) ≫
       modulesAbMap (idealPowι I F (n + 1)) =
-      modulesAbMap (idealPowι I F n) ≫ smulAbRingHom F (algebraMap A Γ(X, ⊤) a) by
+      modulesAbMap (idealPowι I F n) ≫ (smulAbRingHom F (algebraMap A Γ(X, ⊤) a)).asHom by
     rw [← modulesAbMap_comp, idealPowMul_ι, modulesAbMap_comp]
     rfl)
   change cechHMap 𝔘 (modulesAbMap (idealPowι I F (n + 1))).hom p
       (cechHMap 𝔘 (modulesAbMap (idealPowMul I F a ha1)).hom p z) =
-    cechHMap 𝔘 (smulAbRingHom F (algebraMap A Γ(X, ⊤) a)).hom p
+    cechHMap 𝔘 (smulAbRingHom F (algebraMap A Γ(X, ⊤) a)).asHom.hom p
       (cechHMap 𝔘 (modulesAbMap (idealPowι I F n)).hom p z)
   rw [← cechHMap_comp, ← cechHMap_comp]
   exact congrArg (fun f => cechHMap 𝔘 f p z) h

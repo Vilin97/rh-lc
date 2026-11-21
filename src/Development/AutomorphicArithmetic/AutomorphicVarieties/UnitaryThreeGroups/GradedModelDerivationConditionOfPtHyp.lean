@@ -156,7 +156,7 @@ theorem UpperTheory.V.U3.gradedModel_derivationCondition_of_ptHyp :
     · intro h j hj y hy
       rw [act_tz M.𝒜 t ξ hy, h j hj y hy, mul_zero]
   have hsg := model_signs S M hl hm f hf
-  have htwo : TwoPt η S.r.hom f :=
+  have htwo : TwoPt (η := η) S.r.hom f :=
     ⟨hf, fun h => hsign.1 (hneg.1 (hsg.1.2 h)), fun h => hsign.2 (hpos.1 (hsg.2.1.2 h))⟩
   have hrig := hpt.rigid f htwo
   obtain ⟨X, hX⟩ := hrig F hF

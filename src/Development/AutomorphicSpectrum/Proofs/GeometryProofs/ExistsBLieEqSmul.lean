@@ -366,7 +366,7 @@ theorem exists_diff [IsGalois ℚ E] {T : CDVR} {io : c.F →+* T.Fr} {la : Heig
     rw [hψp, ho.2]
     exact mul_pos (by exact_mod_cast ho.1) (ReciprocityTheory.ChartRestriction.G.PullbackSections.Pf.ERam.vLa_pos la p hp.ne_zero hpl)
   have hdisc : (discr E).natAbs = p ^ padicValNat p (discr E).natAbs * ((discr E).natAbs / p ^ (discr E).natAbs.factorization p) := by
-    rw [← Nat.factorization_def _ hp]
+    rw [Nat.padicValNat_def, ← Nat.factorization_def _ hp]
     exact (Nat.ordProj_mul_ordCompl_eq_self _ p).symm
   obtain ⟨δ, hδ, h0, hval⟩ := ReciprocityTheory.ChartRestriction.G.PullbackSections.Pf.ERam.exists_delta_val (V := T.V) p _ _ hp
     (Nat.not_dvd_ordCompl hp hn) hdisc ψ ψ.injective hpos

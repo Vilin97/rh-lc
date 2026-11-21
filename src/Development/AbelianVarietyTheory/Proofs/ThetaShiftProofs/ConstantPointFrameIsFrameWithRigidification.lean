@@ -42,52 +42,6 @@ theorem valR_rig {A A₀ : Type} [CommRing A] [IsLocalRing A] [CommRing A₀] {B
     f (valR (𝟙 (Sp A₀)) ((M₀.pull (eSec B₀)).U (fun _ => j₀)) (r₀.s (fun _ => j₀)).val) =
       valR (A := A) (eSec B) _ (w.s (fun _ => j₀, j)).val *
         valR (𝟙 (Sp A)) ((M.pull (eSec B)).U (fun _ => j)) (r.s (fun _ => j)).val := by
-  have toStkA_valR {X : Scheme.{0}} (x : Sp A ⟶ X) (U : X.Opens) (z : Sp A) (ht : ⊤ ≤ x ⁻¹ᵁ U) (a : Γ(X, U)ˣ) :
-      toStkA z (valR x U a.val) = (gm x z U a).val := by
-    have hz : x z ∈ U := ht (show z ∈ (⊤ : (Sp A).Opens) from trivial)
-    have e1 : ∀ c, (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom c) = c :=
-      fun c => congrArg (fun f => CommRingCat.Hom.hom f c) (Iso.hom_inv_id (Scheme.ΓSpecIso (CommRingCat.of A)))
-    rw [valR, dif_pos ht, gm, dif_pos hz]
-    show ((Sp A).presheaf.germ ⊤ z trivial).hom ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom
-        ((Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom ((x.appLE U ⊤ ht).hom a.val))) =
-      ((Sp A).presheaf.germ (x ⁻¹ᵁ U) z hz).hom ((x.app U).hom a.val)
-    rw [e1]
-    exact TopCat.Presheaf.germ_res_apply (Sp A).presheaf (homOfLE ht) z trivial ((x.app U).hom a.val)
-  have gm_pullU_eq_gm_comp {X Y Z : Scheme.{0}} (φ : Y ⟶ X) (r : Z ⟶ Y) (z : Z) {U : X.Opens}
-      (h : φ (r z) ∈ U) (x : Γ(X, U)ˣ) :
-      gm r z (φ ⁻¹ᵁ U) (pullU φ U x) = gm (r ≫ φ) z U x := by
-    have h₁ : r z ∈ φ ⁻¹ᵁ U := h
-    have h₂ : (r ≫ φ) z ∈ U := h
-    simp only [gm, dif_pos h₁, dif_pos h₂, MonoidHom.comp_apply]
-    ext
-    simp only [Units.coe_map, pullU, MonoidHom.coe_coe]
-    first
-      | rfl
-      | (rw [Scheme.comp_app]; rfl)
-
-  have gm_maps_pt {X : Scheme.{0}} {L' L : LB X} {w : LB.Iso L' L} {Y : Scheme.{0}} {φ : Y ⟶ X} {a : LB.Gen (L'.pull φ)}
-      {b : LB.Gen (L.pull φ)} (h : LB.Gen.Maps (LB.linCombIso w (K := PUnit) (fun _ => φ) (fun _ => 1)) a b)
-      {Z : Scheme.{0}} (r : Z ⟶ Y) (z : Z) (p : L.ι) (q : L'.ι) (hp : φ (r z) ∈ L.U p) (hq : φ (r z) ∈ L'.U q) :
-      gm r z _ (b.s (fun _ => p)) = gm (r ≫ φ) z _ (w.s (p, q)) * gm r z _ (a.s (fun _ => q)) := by
-    have hV : r z ∈ LB.wchart L (fun _ => φ) (fun _ => p) ⊓ LB.wchart L' (fun _ => φ) (fun _ => q) :=
-      ⟨mem_pull.2 hp, mem_pull.2 hq⟩
-    have h' : res (U := LB.wchart L (fun _ => φ) (fun _ => p))
-          (V := LB.wchart L (fun _ => φ) (fun _ => p) ⊓ LB.wchart L' (fun _ => φ) (fun _ => q)) inf_le_left
-          (b.s (fun _ => p)) =
-        (∏ _k : PUnit, (res (U := φ ⁻¹ᵁ (L.U p ⊓ L'.U q))
-            (V := LB.wchart L (fun _ => φ) (fun _ => p) ⊓ LB.wchart L' (fun _ => φ) (fun _ => q))
-            (le_inf (inf_le_left.trans (LB.wchart_le L (fun _ => φ) (fun _ => p) PUnit.unit))
-              (inf_le_right.trans (LB.wchart_le L' (fun _ => φ) (fun _ => q) PUnit.unit)))
-            (pullU φ (L.U p ⊓ L'.U q) (w.s (p, q)))) ^ (1 : ℤ)) *
-        res (U := LB.wchart L' (fun _ => φ) (fun _ => q))
-          (V := LB.wchart L (fun _ => φ) (fun _ => p) ⊓ LB.wchart L' (fun _ => φ) (fun _ => q)) inf_le_right
-          (a.s (fun _ => q)) :=
-      h (fun _ => p, fun _ => q)
-    rw [Fintype.prod_unique, zpow_one] at h'
-    have key := congrArg (gm r z (LB.wchart L (fun _ => φ) (fun _ => p) ⊓ LB.wchart L' (fun _ => φ) (fun _ => q))) h'
-    rw [map_mul, gm_res r z (U := LB.wchart L (fun _ => φ) (fun _ => p)) _ hV (b.s (fun _ => p))] at key
-    refine key.trans (congrArg₂ (· * ·) ((gm_res r z _ hV _).trans
-      (gm_pullU_eq_gm_comp φ r z (U := L.U p ⊓ L'.U q) ⟨hp, hq⟩ (w.s (p, q)))) (gm_res r z _ hV _))
   have hc := hj (show cpt A ∈ (⊤ : (Sp A).Opens) from trivial)
   have e := gm_maps_pt h (𝟙 (Sp A)) (cpt A) (fun _ => j₀) j hc.1 hc.2
   have hr : ⊤ ≤ (𝟙 (Sp A)) ⁻¹ᵁ (M.pull (eSec B)).U (fun _ => j) := fun z hz => mem_pull.2 (hj hz).2
@@ -101,7 +55,7 @@ theorem valR_rig {A A₀ : Type} [CommRing A] [IsLocalRing A] [CommRing A₀] {B
     refine Eq.trans ?_ ((gm_res (𝟙 (Sp A)) _ _ hm _).trans (gm_pull (𝟙 (Sp A)) (spMap f) _ _ (hj₀ trivial) _)).symm
     rw [Category.id_comp, Category.comp_id]
   · refine Eq.trans ?_ (map_mul _ _ _).symm
-    exact (Units.val_mul _ _).trans (congrArg₂ (· * ·) (toStkA_valR (eSec B) _ _ hj _).symm
+    exact (Units.val_mul _ _).trans (congrArg₂ (· * ·) (toStkA_valR (A := A) (eSec B) _ _ hj _).symm
       (toStkA_valR _ _ _ hr _).symm)
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} [StarRing (𝓞 E)]

@@ -187,8 +187,8 @@ theorem exists_affineOpen_derivIdealSheafIterate_le_biSup_logDerivIdealSheafIter
       rw [B.chart.ideal_eq_span_coord hBaff _ {s} (B.restrictIdeal_exceptionalIdeal Z hs hZU')]
       simp
     have hL' : ∀ i ≤ m,
-        Ideal.span {(EtaleCoordinates.coord k (ULift.{u, 0} (Fin mm)) Γ(X₁, B.domain)
-            (⟨s⟩ : ULift.{u, 0} (Fin mm))) ^ (m - i)} * (L i).ideal ⟨B.domain, hBaff⟩ =
+        Ideal.span {EtaleCoordinates.coord k (ULift.{u, 0} (Fin mm)) Γ(X₁, B.domain)
+            (⟨s⟩ : ULift.{u, 0} (Fin mm)) ^ (m - i)} * (L i).ideal ⟨B.domain, hBaff⟩ =
           Ideal.map φ (derivIdealIterate k i (A.ideal ⟨U', hU'aff⟩)) := by
       intro i hi
       have hmul : (Blowup.exceptionalIdeal π Z ^ (m - i) * L i).ideal ⟨B.domain, hBaff⟩ =
@@ -202,8 +202,8 @@ theorem exists_affineOpen_derivIdealSheafIterate_le_biSup_logDerivIdealSheafIter
       rfl
     have key : derivIdealIterate k n ((L 0).ideal ⟨B.domain, hBaff⟩) ≤
         ⨆ i, ⨆ _ : i ≤ n, logDerivIdealIterate k
-          (Ideal.span {(EtaleCoordinates.coord k (ULift.{u, 0} (Fin mm)) Γ(X₁, B.domain)
-            (⟨t⟩ : ULift.{u, 0} (Fin mm)))}) (n - i) ((L i).ideal ⟨B.domain, hBaff⟩) :=
+          (Ideal.span {EtaleCoordinates.coord k (ULift.{u, 0} (Fin mm)) Γ(X₁, B.domain)
+            (⟨t⟩ : ULift.{u, 0} (Fin mm))}) (n - i) ((L i).ideal ⟨B.domain, hBaff⟩) :=
       EtaleCoordinates.derivIdealIterate_le_iSup_logDerivIdealIterate_controlledTransform
         k (ULift.{u, 0} (Fin mm)) Γ(X, U') Γ(X₁, B.domain) φ T ⟨s⟩ ⟨t⟩
         hsT hin hsc hout hnzd hhT hhs (A.ideal ⟨U', hU'aff⟩)

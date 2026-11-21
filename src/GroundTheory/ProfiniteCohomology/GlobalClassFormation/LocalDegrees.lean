@@ -137,8 +137,9 @@ theorem exists_dvd_finrank_cyclotomicLayer (K : FiniteSubfield) (S : Finset (Hei
     {m : ℕ} (hm : m ≠ 0) :
     ∃ r : ℕ+, ∀ v ∈ S, ∀ w : SemiLocal.PlacesOver (cyclotomicLayer K r).1 v,
       m ∣ Module.finrank (v.adicCompletion K.1) (w.1.adicCompletion (cyclotomicLayer K r).1) := by
-  choose n hn using fun (v : HeightOneSpectrum (𝓞 K.1)) (q : Nat.Primes) =>
+  have h (v : HeightOneSpectrum (𝓞 K.1)) (q : Nat.Primes) :=
     exists_mem_stabilizer_toZModPow_degreeComponent_ne_zero (K := K) v q
+  choose n hn using h
   let N : ℕ := S.sup fun v =>
     m.primeFactors.attach.sup fun q => n v ⟨q.1, Nat.prime_of_mem_primeFactors q.2⟩
   obtain ⟨r, hr⟩ : ∃ r : ℕ+, (r : ℕ) = m ^ (N + 1) :=

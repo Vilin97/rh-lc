@@ -163,18 +163,11 @@ theorem restrGroup_GAd : RestrMeas.IsRestrGroup (projArch σ J) (proj σ J) (sta
       simp [mem_levelOpen]
     rw [e]
     exact isOpen_levelOpen σ J L
-  · have hc := (isCompact_univ_pi hC).prod (isCompact_levelOffFin σ J L ∅)
-    have hi := hc.image (archFinEquiv σ J).symm.continuous
-    change IsCompact ((archFinEquiv σ J).toEquiv.symm '' (Set.univ.pi C ×ˢ (levelOffFin σ J L ∅ : Set (GFin σ J)))) at hi
-    rw [(archFinEquiv σ J).toEquiv.image_symm_eq_preimage] at hi
-    refine isCompact_of_ext hi fun x => ?_
-    change ((∀ w, projArch σ J w x ∈ C w) ∧ ∀ v, proj σ J v x ∈ stabLoc σ J L v) ↔
-      ((fun w => projArch σ J w x), projFin σ J x) ∈ Set.univ.pi C ×ˢ (levelOffFin σ J L ∅ : Set (GFin σ J))
-    simp [mem_levelOffFin, projFinLoc_projFin]
+  · exact isCompact_of_ext ((isRestrGroup_GAd σ J L).isCompact_cyl ∅ C (fun _ => ∅) hC (by simp))
+      fun x => by simp [GlobalTheory.AdelicU.cyl]
 
 theorem restrGroup_finPts :
     RestrMeas.IsRestrGroup (noArch (finPts σ J)) (fun v => (proj σ J v).comp (finPts σ J).subtype) (stabLoc σ J L) := by
-  set_option synthInstance.maxHeartbeats 200000 in
   have h := (restrGroup_GAd σ J L).subgroup (i := (Empty.elim : Empty → InfinitePlace F)) (j := id)
     (fun a => a.elim) Function.injective_id (finPts σ J) fun x => by simp [mem_finPts_iff_forall]
   exact h.noArch

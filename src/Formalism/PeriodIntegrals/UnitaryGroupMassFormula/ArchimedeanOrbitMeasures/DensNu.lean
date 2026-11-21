@@ -22,7 +22,7 @@ def matCoord : (Fin (D.R.rS + 1 + D.R.rS) → Fin (D.R.rS + 1 + D.R.rS) → Ainf
   have hReal : ∀ v : InfinitePlace X.B.I.F, v.IsReal := X.B.I.cm.totReal.isReal
   (Homeomorph.piCongrRight fun _ => Homeomorph.piCongrRight fun _ =>
     (tensCoord (F := X.B.I.F) (E := X.B.I.E) (Ainf X.B.I.F)).trans
-      (Homeomorph.piCongrRight fun _ => ainfReal hReal)).trans (flat4 _ _ _ _)
+      (Homeomorph.piCongrRight fun _ => ainfReal (totReal_of X))).trans (flat4 _ _ _ _)
 
 theorem matCoord_add (x y : (Fin (D.R.rS + 1 + D.R.rS) → Fin (D.R.rS + 1 + D.R.rS) → Ainf X.B.I.F ⊗[X.B.I.F] X.B.I.E)) : matCoord X (x + y) = matCoord X x + matCoord X y := by
   haveI : FiniteDimensional X.B.I.F X.B.I.E := fd_of X
@@ -32,12 +32,9 @@ theorem matCoord_add (x y : (Fin (D.R.rS + 1 + D.R.rS) → Fin (D.R.rS + 1 + D.R
   funext a i k
   simp only [Homeomorph.piCongrRight_apply, Homeomorph.trans_apply, Pi.add_apply]
   rw [tensCoord_add]
-  have hReal : ∀ v : InfinitePlace X.B.I.F, v.IsReal := X.B.I.cm.totReal.isReal
-  exact ainfReal_add hReal _ _
+  exact ainfReal_add (totReal_of X) _ _
 
-def scalI (t : ℝ) : Ainf X.B.I.F :=
-  have hReal : ∀ v : InfinitePlace X.B.I.F, v.IsReal := X.B.I.cm.totReal.isReal
-  (ainfReal hReal).symm fun _ => t
+def scalI (t : ℝ) : Ainf X.B.I.F := (ainfReal (totReal_of X)).symm fun _ => t
 
 theorem matCoord_scal (t : ℝ) (S : (Fin (D.R.rS + 1 + D.R.rS) → Fin (D.R.rS + 1 + D.R.rS) → Ainf X.B.I.F ⊗[X.B.I.F] X.B.I.E)) :
     matCoord X (fun a b => algebraMap (Ainf X.B.I.F) (Ainf X.B.I.F ⊗[X.B.I.F] X.B.I.E) (scalI X t) * S a b) =
@@ -59,14 +56,13 @@ theorem matCoord_scal (t : ℝ) (S : (Fin (D.R.rS + 1 + D.R.rS) → Fin (D.R.rS 
       scalI X t • tensCoord (F := X.B.I.F) (E := X.B.I.E) (Ainf X.B.I.F) (S a i) :=
     map_smul (Module.Free.chooseBasis (Ainf X.B.I.F) (Ainf X.B.I.F ⊗[X.B.I.F] X.B.I.E)).equivFun _ _
   rw [h1]
-  have hReal : ∀ v : InfinitePlace X.B.I.F, v.IsReal := X.B.I.cm.totReal.isReal
-  show complReal v (hReal v) ((scalI X t) v * _) = t * _
-  rw [show complReal v (hReal v) ((scalI X t) v * tensCoord (F := X.B.I.F) (E := X.B.I.E) (Ainf X.B.I.F) (S a i) k v) =
-      complReal v (hReal v) ((scalI X t) v) *
-        complReal v (hReal v) (tensCoord (F := X.B.I.F) (E := X.B.I.E) (Ainf X.B.I.F) (S a i) k v) from
-    map_mul (InfinitePlace.Completion.ringEquivRealOfIsReal (hReal v)) _ _]
+  show complReal v ((totReal_of X) v) ((scalI X t) v * _) = t * _
+  rw [show complReal v ((totReal_of X) v) ((scalI X t) v * tensCoord (F := X.B.I.F) (E := X.B.I.E) (Ainf X.B.I.F) (S a i) k v) =
+      complReal v ((totReal_of X) v) ((scalI X t) v) *
+        complReal v ((totReal_of X) v) (tensCoord (F := X.B.I.F) (E := X.B.I.E) (Ainf X.B.I.F) (S a i) k v) from
+    map_mul (InfinitePlace.Completion.ringEquivRealOfIsReal ((totReal_of X) v)) _ _]
   congr 1
-  show ainfReal hReal (scalI X t) v = t
+  show ainfReal (totReal_of X) (scalI X t) v = t
   simp [scalI]
 
 theorem herm_scal (t : ℝ) (S : HermR (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS + 1 + D.R.rS)) :
@@ -117,10 +113,7 @@ theorem hermCoord_mem (S : HermR (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS + 1 + D.R.r
 def hermCoord : HermR (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS + 1 + D.R.rS) ≃ₜ Wh X where
   toFun S := ⟨matCoord X (Matrix.of.symm (S : Matrix (Fin (D.R.rS + 1 + D.R.rS)) (Fin (D.R.rS + 1 + D.R.rS)) (Ainf X.B.I.F ⊗[X.B.I.F] X.B.I.E))), hermCoord_mem X S⟩
   invFun w := ⟨Matrix.of ((matCoord X).symm w), w.2⟩
-  left_inv S := by
-    apply Subtype.ext
-    change Matrix.of ((matCoord X).symm (matCoord X (Matrix.of.symm S.val))) = S.val
-    rw [Homeomorph.symm_apply_apply, Equiv.apply_symm_apply]
+  left_inv S := by apply Subtype.ext; simp
   right_inv w := by apply Subtype.ext; simp
   continuous_toFun := ((matCoord X).continuous.comp continuous_subtype_val).subtype_mk _
   continuous_invFun := ((matCoord X).symm.continuous.comp continuous_subtype_val).subtype_mk _
@@ -131,9 +124,7 @@ theorem hermCoord_add (S T : HermR (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS + 1 + D.R
 
 theorem hermCoord_symm_add (x y : Wh X) :
     (hermCoord X).symm (x + y) = (hermCoord X).symm x + (hermCoord X).symm y := by
-  apply (hermCoord X).injective
-  rw [hermCoord_add]
-  simp only [Homeomorph.apply_symm_apply]
+  apply (hermCoord X).injective; rw [hermCoord_add]; simp
 
 end Coord
 
@@ -164,9 +155,7 @@ theorem continuous_pairHerm_leftP (T : HermR (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS
   show Continuous fun S : HermR (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS + 1 + D.R.rS) => algebraMap X.B.I.F (Ainf X.B.I.F) (1 / 2) *
     Algebra.trace (Ainf X.B.I.F) (Ainf X.B.I.F ⊗[X.B.I.F] X.B.I.E)
       (∑ a, ∑ b, (S : Matrix (Fin (D.R.rS + 1 + D.R.rS)) (Fin (D.R.rS + 1 + D.R.rS)) (Ainf X.B.I.F ⊗[X.B.I.F] X.B.I.E)) a b * (T : Matrix (Fin (D.R.rS + 1 + D.R.rS)) (Fin (D.R.rS + 1 + D.R.rS)) (Ainf X.B.I.F ⊗[X.B.I.F] X.B.I.E)) b a)
-  have hTrace : Continuous (Algebra.trace (Ainf X.B.I.F) (Ainf X.B.I.F ⊗[X.B.I.F] X.B.I.E)) :=
-    IsModuleTopology.continuous_of_linearMap _
-  refine continuous_const.mul (hTrace.comp ?_)
+  refine continuous_const.mul ((continuous_traceP X).comp ?_)
   refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ => ?_
   exact (Continuous.matrix_elem continuous_subtype_val a b).mul continuous_const
 

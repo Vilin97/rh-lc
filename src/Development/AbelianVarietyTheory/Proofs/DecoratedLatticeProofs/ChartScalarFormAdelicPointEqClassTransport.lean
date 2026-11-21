@@ -97,8 +97,8 @@ end GlobalTheory.AdForm.RdTrans
 
 set_option maxHeartbeats 4000000 in
 theorem GlobalTheory.AdForm.rd_trTo : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (Ch : ℕ → Type) (A : TwDat I l Z u a Ch), A.Is → ∀ θ, IsInfFam θ → ∀ j (hj : j ≤ B.R.m), ∀ φ ∈ (I.fm l u a).Fi j, ∀ b (c : (I.chain l u a).cls j) (d : (I.stp u a j).D c.1)
-    (x : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j)) (z : TC.GA B (B.R.N j)), x ∈ GfC _ →
-    z.1 = finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) x → TC.PtOf (z * A.kb j b) (extTo I.SQ d.1.1) →
+    (x : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j)) (z : TC.GA B (B.R.N j)), x ∈ GfC _ →
+    z.1 = finM _ (rankN (I.rec7 l Z) j hj) x → TC.PtOf (z * A.kb j b) (extTo I.SQ d.1.1) →
     A.chOf j ((I.stp u a j).cl c.1 d) = b →
     cosetIn d = cosetIn ((I.stp u a j).rep ((I.stp u a j).cl c.1 d)) → ∀ y,
       A.rd θ j hj b φ y x = (I.stp u a j).trTo B.fields.emb B.embLL c.1 d (φ ((I.stp u a j).cl c.1 d)) y := by
@@ -109,17 +109,17 @@ theorem GlobalTheory.AdForm.rd_trTo : ∀ {B : Base} {X : PreX B.toPre} (I : TC 
   obtain ⟨x₀, hz, hchi⟩ := GlobalTheory.AdForm.RdTrans.exists_level I l u a j (hA.reads j hj) c.1 d hco z hw
   have hg1 := ((GlobalTheory.T.trueColumn_spaces_standard_in_frameCoords I hI hP l Z).2.2.2 j hj).1
   unfold Formalism.L2.Forms.gramN at hg1
-  have hγ : (I.stp u a j).gam c.1 ((I.stp u a j).mv c.1 d) ∈ UJ (Formalism.L2.Forms.sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)
-      (Matrix.reindex (finCongr (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj)) (finCongr (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj)) (HSpace.gram ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j))) := by
+  have hγ : (I.stp u a j).gam c.1 ((I.stp u a j).mv c.1 d) ∈ UJ (Formalism.L2.Forms.sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E)
+      (Matrix.reindex (finCongr (rankN (I.rec7 l Z) j hj)) (finCongr (rankN (I.rec7 l Z) j hj)) (HSpace.gram ((I.rec7 l Z).sp.X j))) := by
     rw [hg1]
     show cT _ _ * 1 * _ = 1
     rw [Matrix.mul_one]
     exact GlobalTheory.Mem.Col2.StepOk.ufGL_conjTranspose_mul _
-  obtain ⟨α, hαQ, hαf, hαi⟩ := GlobalTheory.Core.Mi.exists_GQ_of_unitary θ hθ _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) _ hγ
-  obtain ⟨ai, hai, af, haf, hα⟩ := (GlobalTheory.UnitarySplit.real_finite_split _ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j)).1 α
-  have hcomm := (GlobalTheory.UnitarySplit.real_finite_split _ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j)).2.1
+  obtain ⟨α, hαQ, hαf, hαi⟩ := GlobalTheory.Core.Mi.exists_GQ_of_unitary θ hθ _ (rankN (I.rec7 l Z) j hj) _ hγ
+  obtain ⟨ai, hai, af, haf, hα⟩ := (GlobalTheory.UnitarySplit.real_finite_split _ ((I.rec7 l Z).sp.X j)).1 α
+  have hcomm := (GlobalTheory.UnitarySplit.real_finite_split _ ((I.rec7 l Z).sp.X j)).2.1
   have hh := hA.h j hj (A.chOf j ((I.stp u a j).cl c.1 d)) ⟨(I.stp u a j).cl c.1 d, rfl⟩
-  let F : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) →* TC.GA B (B.R.N j) := GlobalTheory.ClassSumLevel.finGLHom _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj)
+  let F : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j) →* TC.GA B (B.R.N j) := GlobalTheory.ClassSumLevel.finGLHom _ (rankN (I.rec7 l Z) j hj)
   have hFx : F x = z := Units.ext hzx.symm
   have hFh : F (A.h j (A.chOf j ((I.stp u a j).cl c.1 d)) ⟨(I.stp u a j).cl c.1 d, rfl⟩) =
       ((A.K j hj (A.chOf j ((I.stp u a j).cl c.1 d))).y ⟨(I.stp u a j).cl c.1 d, rfl⟩).1 := Units.ext hh.2
@@ -150,23 +150,23 @@ theorem GlobalTheory.AdForm.rd_trTo : ∀ {B : Base} {X : PreX B.toPre} (I : TC 
         _ = p * (q * p⁻¹) * q⁻¹ * t := by rw [h]
         _ = p * q * (p⁻¹ * r) * (r⁻¹ * q⁻¹ * t) := by group
     exact key _ _ _ _ e2.symm
-  have hinf : ∀ τ, infM θ _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) ai⁻¹ τ =
-      atInf (Formalism.L2.Forms.embT (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (((I.stp u a j).gam c.1 ((I.stp u a j).mv c.1 d))⁻¹ : GL _ _).val τ := by
+  have hinf : ∀ τ, infM θ _ (rankN (I.rec7 l Z) j hj) ai⁻¹ τ =
+      atInf (Formalism.L2.Forms.embT (I.rec7 l Z)) (((I.stp u a j).gam c.1 ((I.stp u a j).mv c.1 d))⁻¹ : GL _ _).val τ := by
     intro τ
-    have e1 : infM θ _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) α τ = infM θ _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) ai τ := by
+    have e1 : infM θ _ (rankN (I.rec7 l Z) j hj) α τ = infM θ _ (rankN (I.rec7 l Z) j hj) ai τ := by
       rw [hα, GlobalTheory.AdForm.Model.infM_mul, GlobalTheory.AdForm.RdTrans.infM_fin'' θ _ _ af haf, Matrix.mul_one]
-    have e2 : infM θ _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) ai⁻¹ τ * infM θ _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) ai τ = 1 := by
+    have e2 : infM θ _ (rankN (I.rec7 l Z) j hj) ai⁻¹ τ * infM θ _ (rankN (I.rec7 l Z) j hj) ai τ = 1 := by
       rw [← GlobalTheory.AdForm.Model.infM_mul, inv_mul_cancel, GlobalTheory.AdForm.Model.infM_one]
     exact GlobalTheory.AdForm.RdTrans.eq_of_mul_eq_one _ _ _ _ e2
-      (GlobalTheory.AdForm.RdTrans.atInf_mul_inv (Formalism.L2.Forms.embT (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) ((I.stp u a j).gam c.1 ((I.stp u a j).mv c.1 d)) τ)
+      (GlobalTheory.AdForm.RdTrans.atInf_mul_inv (Formalism.L2.Forms.embT (I.rec7 l Z)) ((I.stp u a j).gam c.1 ((I.stp u a j).mv c.1 d)) τ)
       (e1.symm.trans (hαi τ))
   let y' : (I.chain l u a).Y j :=
     ⟨(frMul B.fields.emb B.embLL ((I.stp u a j).gam c.1 ((I.stp u a j).mv c.1 d))⁻¹ ⟨y.1, y.2⟩).1,
       (frMul B.fields.emb B.embLL ((I.stp u a j).gam c.1 ((I.stp u a j).mv c.1 d))⁻¹ ⟨y.1, y.2⟩).2⟩
-  have hTr : IsTr (G := fun _ => 1) (infM θ _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hj) ai⁻¹) ⟨y.1, y.2⟩ ⟨y'.1, y'.2⟩ := by
+  have hTr : IsTr (G := fun _ => 1) (infM θ _ (rankN (I.rec7 l Z) j hj) ai⁻¹) ⟨y.1, y.2⟩ ⟨y'.1, y'.2⟩ := by
     intro τ
     rw [hinf τ]
-    have he : Formalism.L2.Col.embAt B.embLL B.fields.emb τ = Formalism.L2.Forms.embT (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) τ := by
+    have he : Formalism.L2.Col.embAt B.embLL B.fields.emb τ = Formalism.L2.Forms.embT (I.rec7 l Z) τ := by
       unfold Formalism.L2.Col.embAt Formalism.L2.Forms.embT
       exact FieldsLaws.embLL_comp_emb B τ
     unfold atInf

@@ -113,9 +113,10 @@ theorem contOn : ContinuousOn (aT k r) (Metric.sphere (0 : ℂ) 1) := by
 theorem circle_compact : IsCompact (aT k r '' Metric.sphere (0 : ℂ) 1) :=
   (isCompact_sphere _ _).image_of_continuousOn contOn
 
-theorem circle_subgroup : B2.IsClosedSubgroup (aT k r '' Metric.sphere (0 : ℂ) 1) := by
-  refine ⟨⟨1, by simp, aT_one⟩, ?_, ?_, ?_, circle_compact.isClosed⟩
-  · rintro _ ⟨a, ha, rfl⟩ _ ⟨b, hb, rfl⟩
+theorem circle_subgroup : B2.IsClosedSubgroup (aT k r '' Metric.sphere (0 : ℂ) 1) where
+  one_mem := ⟨1, by simp, aT_one⟩
+  mul_mem := by
+    rintro _ ⟨a, ha, rfl⟩ _ ⟨b, hb, rfl⟩
     refine ⟨a * b, ?_, (aT_mul a b).symm⟩
     simp only [mem_sphere_zero_iff_norm] at *
     rw [norm_mul, ha, hb, mul_one]

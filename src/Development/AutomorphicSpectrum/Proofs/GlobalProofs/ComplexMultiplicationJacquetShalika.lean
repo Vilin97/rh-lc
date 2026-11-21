@@ -79,7 +79,7 @@ theorem lattice_eq_idealLattice {𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ} {L : 
 
 theorem latticeEnd_eq_cmRing [_root_.NumberField.IsTotallyComplex K] (hK : Module.finrank ℚ K = 2)
     {𝔞 : (FractionalIdeal (𝓞 K)⁰ K)ˣ} {L : PeriodPair} (h : GlobalTheory.Published.IsIdealLattice 𝔞 L) :
-    GroundTheory.Global.Elliptic.periodLatticeEnd L = cmRingOfEmbedding (algebraMap K ℂ) := by
+    periodLatticeEnd L = cmRingOfEmbedding (algebraMap K ℂ) := by
   rw [← latticeEnd_ideal (algebraMap K ℂ) hK 𝔞]
   ext α
   show (∀ l ∈ L.lattice, α * l ∈ L.lattice) ↔

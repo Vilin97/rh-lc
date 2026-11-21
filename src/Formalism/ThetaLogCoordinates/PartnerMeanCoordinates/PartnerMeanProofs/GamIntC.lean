@@ -40,7 +40,7 @@ theorem term_valE (LL : Letters (N + 1)) (hr : 1 ≤ r) (B : ℕ)
     intro ι s f hf
     classical
     refine Finset.induction_on s ?_ ?_
-    · simp
+    · simp [Nat.padicValNat_def]
     · intro x s hx ih
       rw [Finset.prod_insert hx, Finset.sum_insert hx,
         hmul _ _ (hf x) (Finset.prod_ne_zero_iff.2 (fun i _ => hf i)), ih]
@@ -48,7 +48,7 @@ theorem term_valE (LL : Letters (N + 1)) (hr : 1 ≤ r) (B : ℕ)
     fun m hm => (Nat.log_mono_right hm).trans hB
   have hch : ∀ n k : ℕ, n ≤ LL.total + LL.deg (Fin.last N) + r → padicValNat p (n.choose k) ≤ B := by
     intro n k hn
-    rw [← Nat.factorization_def _ hpp]
+    rw [Nat.padicValNat_def, ← Nat.factorization_def _ hpp]
     exact Nat.factorization_choose_le_log.trans (hlog n hn)
   have hsplit : ∀ n k : ℕ, k ≤ n → padicValNat p n.factorial =
       padicValNat p (n.choose k) + padicValNat p k.factorial + padicValNat p (n - k).factorial := by
@@ -61,7 +61,7 @@ theorem term_valE (LL : Letters (N + 1)) (hr : 1 ≤ r) (B : ℕ)
       padicValNat p (∑ i ∈ s, x i).factorial ≤ ∑ i ∈ s, padicValNat p (x i).factorial + s.card * B := by
     intro s x
     refine Finset.induction_on s ?_ ?_
-    · intro _; simp
+    · intro _; simp [Nat.padicValNat_def]
     · intro y s hy ih hle
       rw [Finset.sum_insert hy] at hle
       rw [Finset.sum_insert hy, Finset.sum_insert hy, Finset.card_insert_of_notMem hy]

@@ -86,6 +86,7 @@ theorem ideleModule_ideleEmbedding (x : IdeleGroup K) :
   have h1 : ν.map (fun y ↦ X • y) = c ^ n • ν := by
     rw [hν, Measure.map_map hsmL hms, hcomp, ← Measure.map_map hms hsmK, hμ, map_smul_pi,
       Measure.map_smul]
+    exact hms.aemeasurable
   have hc := isAddLeftInvariant_eq_smul ν (adeleMeasure L)
   set C := ν.addHaarScalarFactor (adeleMeasure L)
   have hC0 : (C : ℝ≥0∞) ≠ 0 := by
@@ -96,6 +97,8 @@ theorem ideleModule_ideleEmbedding (x : IdeleGroup K) :
   have hpos : adeleMeasure L S ≠ 0 := (measure_pos_of_mem_nhds _ hS0).ne'
   have htop : adeleMeasure L S ≠ ⊤ := hS.measure_lt_top.ne
   rw [hc, Measure.map_smul, map_smul_adeleMeasure] at h1
+  swap
+  · exact hsmL.aemeasurable
   have h2 := congrArg (fun m : Measure 𝔸[L] ↦ m S) h1
   simp only [Measure.smul_apply, ENNReal.smul_def, smul_eq_mul] at h2
   rw [mul_left_comm] at h2

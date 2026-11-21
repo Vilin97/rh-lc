@@ -45,8 +45,8 @@ variable {R S : Type} [CommRing R] [CommRing S]
 
 abbrev inc (S : Type) [CommRing S] : S →+* DualNumber S := algebraMap S (DualNumber S)
 
-theorem dualMap_comp_inc (φ : R →+* S) : (GlobalTheory.CompanionTheory.Ar.dualMap φ).comp (inc R) = (inc S).comp φ := by
-  refine RingHom.ext fun x => ?_; ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+theorem dualMap_comp_inc (φ : R →+* S) : (dualMap φ).comp (inc R) = (inc S).comp φ := by
+  refine RingHom.ext fun x => ?_; ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem fst_comp_inc : (fstH S).comp (inc S) = RingHom.id S := by
   refine RingHom.ext fun x => ?_; simp [TrivSqZeroExt.algebraMap_eq_inl]
@@ -55,14 +55,14 @@ theorem swap_inc_inc_comp (φ : R →+* S) : (swap S).comp ((inc (DualNumber S))
     (inc (DualNumber S)).comp ((inc S).comp φ) := by
   refine RingHom.ext fun x => ?_; ext <;> simp [swap, TrivSqZeroExt.algebraMap_eq_inl]
 
-theorem swap_inc_dualMap (φ : R →+* S) : (swap S).comp ((inc (DualNumber S)).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ)) = GlobalTheory.CompanionTheory.Ar.dualMap ((inc S).comp φ) := by
-  refine RingHom.ext fun x => ?_; ext <;> simp [swap, GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+theorem swap_inc_dualMap (φ : R →+* S) : (swap S).comp ((inc (DualNumber S)).comp (dualMap φ)) = dualMap ((inc S).comp φ) := by
+  refine RingHom.ext fun x => ?_; ext <;> simp [swap, dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
-theorem swap_dualMap_inc (φ : R →+* S) : (swap S).comp (GlobalTheory.CompanionTheory.Ar.dualMap ((inc S).comp φ)) = (inc (DualNumber S)).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) := by
-  refine RingHom.ext fun x => ?_; ext <;> simp [swap, GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+theorem swap_dualMap_inc (φ : R →+* S) : (swap S).comp (dualMap ((inc S).comp φ)) = (inc (DualNumber S)).comp (dualMap φ) := by
+  refine RingHom.ext fun x => ?_; ext <;> simp [swap, dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
-theorem fst_comp_dualMap (φ : R →+* S) : (fstH S).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) = φ.comp (fstH R) := by
-  refine RingHom.ext fun x => ?_; simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+theorem fst_comp_dualMap (φ : R →+* S) : (fstH S).comp (dualMap φ) = φ.comp (fstH R) := by
+  refine RingHom.ext fun x => ?_; simp [dualMap]
 
 end Rings2
 
@@ -169,7 +169,7 @@ def gW (g : Sp S ⟶ G.left) : tEpsG (g ≫ G.hom) ⟶ G :=
 
 def vW (φ : R →+* S) (g : Sp S ⟶ G.left) (hg : g ≫ G.hom = spMap φ) (v : TanM (𝟙 (Sp R)) G) :
     tEpsG (g ≫ G.hom) ⟶ G :=
-  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (tv v).left) (by
+  Over.homMk (spMap (dualMap φ) ≫ (tv v).left) (by
     simp only [tEpsG, Over.mk_hom, Category.assoc, tv_hom, hg, spMap_comp, dualMap_comp_inc])
 
 def trP (φ : R →+* S) (g : Sp S ⟶ G.left) (hg : g ≫ G.hom = spMap φ) (v : TanM (𝟙 (Sp R)) G) :
@@ -249,14 +249,14 @@ theorem swap_trP (φ : R →+* S) (g : Sp S ⟶ G.left) (hg : g ≫ G.hom = spMa
     rw [swap_inc_inc]
   have hb : Q ≫ P ≫ vW G φ g hg v' = vW G ((inc S).comp φ) (trP G φ g hg v) hu v' := by
     ext
-    show spMap (swap S) ≫ spMap (inc (DualNumber S)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (tv v').left =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((inc S).comp φ)) ≫ (tv v').left
+    show spMap (swap S) ≫ spMap (inc (DualNumber S)) ≫ spMap (dualMap φ) ≫ (tv v').left =
+      spMap (dualMap ((inc S).comp φ)) ≫ (tv v').left
     simp only [← Category.assoc, spMap_comp]
     rw [swap_inc_dualMap]
   have hc : Q ≫ vW G ((inc S).comp φ) (trP G φ g hg v') hw v = P' ≫ vW G φ g hg v := by
     ext
-    show spMap (swap S) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((inc S).comp φ)) ≫ (tv v).left =
-      spMap (inc (DualNumber S)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (tv v).left
+    show spMap (swap S) ≫ spMap (dualMap ((inc S).comp φ)) ≫ (tv v).left =
+      spMap (inc (DualNumber S)) ≫ spMap (dualMap φ) ≫ (tv v).left
     simp only [← Category.assoc, spMap_comp]
     rw [swap_dualMap_inc]
   have key : gW G (trP G φ g hg v) * vW G ((inc S).comp φ) (trP G φ g hg v) hu v' =

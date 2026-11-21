@@ -62,19 +62,19 @@ private lemma mem_of_closure (π : UnitaryRep G H) (L : Subgroup G) (M E : Submo
   refine ⟨O.centerMass (fun _ => (1 : ℝ)) id, ⟨haM, hE _ haM fun u hu => ?_⟩, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [Finset.centerMass, ContinuousLinearMap.map_smul_of_tower, map_sum]
-    congr 1
-    simp only [one_smul, id]
-    refine Finset.sum_nbij' (fun x => π u x) (fun x => π u⁻¹ x) ?_ ?_ ?_ ?_ (fun _ _ => rfl)
-    · intro x hx
-      obtain ⟨a, ha, rfl⟩ := (hmem x).1 hx
-      exact (hmem _).2 ⟨u * a, L.mul_mem hu ha, UnitaryRep.map_mul_apply _ _ _ _⟩
-    · intro x hx
-      obtain ⟨a, ha, rfl⟩ := (hmem x).1 hx
-      exact (hmem _).2 ⟨u⁻¹ * a, L.mul_mem (L.inv_mem hu) ha, UnitaryRep.map_mul_apply _ _ _ _⟩
-    · intro x _
-      simp [← UnitaryRep.map_mul_apply]
-    · intro x _
-      simp [← UnitaryRep.map_mul_apply]
+      congr 1
+      simp only [one_smul, id]
+      refine Finset.sum_nbij' (fun x => π u x) (fun x => π u⁻¹ x) ?_ ?_ ?_ ?_ (fun _ _ => rfl)
+      · intro x hx
+        obtain ⟨a, ha, rfl⟩ := (hmem x).1 hx
+        exact (hmem _).2 ⟨u * a, L.mul_mem hu ha, UnitaryRep.map_mul_apply _ _ _ _⟩
+      · intro x hx
+        obtain ⟨a, ha, rfl⟩ := (hmem x).1 hx
+        exact (hmem _).2 ⟨u⁻¹ * a, L.mul_mem (L.inv_mem hu) ha, UnitaryRep.map_mul_apply _ _ _ _⟩
+      · intro x _
+        simp [← UnitaryRep.map_mul_apply]
+      · intro x _
+        simp [← UnitaryRep.map_mul_apply]
   · rw [dist_comm, ← Metric.mem_ball]
     refine (convex_ball v ε).centerMass_mem (fun _ _ => zero_le_one) (by simpa using hcard) fun x hx => ?_
     obtain ⟨a, ha, rfl⟩ := (hmem x).1 hx

@@ -25,7 +25,7 @@ def IsKRel (ε : Fin n → Bool) (A : Fin n → Fin n → Module.End ℂ X) : Pr
     (if b = c then A a d else 0) - (if d = a then A c b else 0)
 
 theorem word_isWeightVector (hA : IsKRel ε A) {ν : Fin n → ℝ} {u : X} (hu : ∀ a, A a a u = (ν a : ℂ) • u) :
-    ∀ l : List (Fin n × Fin n), KirrLow ε l → ∀ a, A a a (kirrWord A u l) = (kirrWt ν l a : ℂ) • kirrWord A u l
+    ∀ l, KirrLow ε l → ∀ a, A a a (kirrWord A u l) = (kirrWt ν l a : ℂ) • kirrWord A u l
   | [], _, a => by simpa [kirrWord, kirrWt] using hu a
   | (b, c) :: l, hl, a => by
     have hbc := (hl (b, c) List.mem_cons_self).2
@@ -88,7 +88,7 @@ theorem wordSpan_isKStable (hA : IsKRel ε A) {ν : Fin n → ℝ} {u : X} (hu :
   | smul c x _ hx => simpa using Submodule.smul_mem _ c hx
 
 theorem commute_aeval_of_commute_alt {B : Module.End ℂ X} (hB : ∀ a b, ε a = ε b → Commute (A a b) B) (u : X) :
-    ∀ l : List (Fin n × Fin n), KirrLow ε l → kirrWord A (B u) l = B (kirrWord A u l)
+    ∀ l, KirrLow ε l → kirrWord A (B u) l = B (kirrWord A u l)
   | [], _ => rfl
   | p :: l, hl => by
     simp only [kirrWord]
@@ -119,7 +119,7 @@ theorem partialSum_finset_sum (a b : Fin n) : root b a = -root a b := by
   unfold root; abel
 
 theorem weight_sub_mem_rootCone {ε : Fin n → Bool} (ν : Fin n → ℝ) :
-    ∀ l : List (Fin n × Fin n), KirrLow ε l → InRootCone (ν - kirrWt ν l)
+    ∀ l, KirrLow ε l → InRootCone (ν - kirrWt ν l)
   | [], _ => by simpa [kirrWt] using (vc_inRootCone_zero' : InRootCone (0 : Fin n → ℝ))
   | p :: l, hl => by
     have ih := weight_sub_mem_rootCone ν l (fun q hq => hl q (List.mem_cons_of_mem _ hq))
@@ -157,7 +157,7 @@ theorem partialSum_nonneg_of_rootCone {β : Fin n → ℝ} (hβ : InRootCone β)
   · simp [kirrPs]
 
 theorem not_rootCone_of_ne {ε : Fin n → Bool} (ν : Fin n → ℝ) :
-    ∀ l : List (Fin n × Fin n), KirrLow ε l → l ≠ [] → ¬ InRootCone (kirrWt ν l - ν)
+    ∀ l, KirrLow ε l → l ≠ [] → ¬ InRootCone (kirrWt ν l - ν)
   | [], _, h => (h rfl).elim
   | p :: l, hl, _ => by
     intro hc

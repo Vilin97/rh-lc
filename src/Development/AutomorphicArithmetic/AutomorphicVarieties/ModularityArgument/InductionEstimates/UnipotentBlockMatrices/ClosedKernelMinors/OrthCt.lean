@@ -50,6 +50,9 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.orthCt :
   intro K _ _ μ _ F hFc hFP hFB hFD hFN v w hv hw
   obtain ⟨-, -, -, hlv, -, -, -, -, -, -, -, hcpt⟩ := blkLaws (K := K)
   haveI : CompactSpace (KG K (2 + 2)) := isCompact_iff_compactSpace.mp (hcpt (2 + 2)).1
+  haveI : LocallyCompactSpace (KG K (2 + 2)) := by
+    set_option synthInstance.maxHeartbeats 400000 in
+      infer_instance
   let μ₂ : Measure (G1 K 2) := Measure.haar
   let κ : Measure (KG K (2 + 2)) := Measure.haar
   haveI : SecondCountableTopology (G1 K 2) := inferInstance
@@ -60,8 +63,12 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.orthCt :
   haveI : BorelSpace (ℝ × KG K (2 + 2)) := Prod.borelSpace
   haveI : BorelSpace (G1 K 2 × ℝ × KG K (2 + 2)) := Prod.borelSpace
   haveI : BorelSpace (G1 K 2 × G1 K 2 × ℝ × KG K (2 + 2)) := Prod.borelSpace
-  haveI : SFinite μ₂ := inferInstance
-  haveI : SFinite κ := inferInstance
+  haveI : SFinite μ₂ := by
+    set_option synthInstance.maxHeartbeats 400000 in
+      infer_instance
+  haveI : SFinite κ := by
+    set_option synthInstance.maxHeartbeats 400000 in
+      infer_instance
   haveI : SFinite (fd μ₂) := inferInstance
   haveI : SFinite ((unipMeasure K (2 + 2) 2).restrict (unipFundamentalDomain K (2 + 2) 2)) := inferInstance
   haveI : SFinite (κ.prod ((unipMeasure K (2 + 2) 2).restrict (unipFundamentalDomain K (2 + 2) 2))) :=

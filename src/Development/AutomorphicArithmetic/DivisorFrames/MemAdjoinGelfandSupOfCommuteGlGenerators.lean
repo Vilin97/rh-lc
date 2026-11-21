@@ -8,7 +8,7 @@ public import Development.AbelianVarietyTheory.Proofs.HeightProofs.PolarConjTran
 
 @[expose] public section
 
-open Matrix Formalism.REAL
+open Matrix Formalism.REAL GlobalTheory.TorFin
 
 namespace UpperTheory.AdjointWordCommutation
 open GlobalTheory.SmoothForms

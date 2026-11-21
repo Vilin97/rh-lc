@@ -146,7 +146,7 @@ private theorem sep_dual_pk (v : HeightOneSpectrum (𝓞 F)) {κ : Type} [Fintyp
     have e : w = t⁻¹ • (t • w) := by rw [smul_smul, inv_mul_cancel₀ ht0, one_smul]
     rw [e]
     exact Submodule.smul_mem _ _ (Submodule.subset_span hw)
-  haveI : L'.IsLattice (Fv F v) := Submodule.IsLattice.of_fg (Fv F v) hfg
+  haveI : L'.IsLattice (Fv F v) := ⟨hfg, hspan⟩
   let ψ' : AddChar (Fv F v) ℂ := ψ₀.compAddMonoidHom (AddMonoidHom.mulLeft c)
   have hψ' : ∀ x, ψ' x = ψ₀ (c * x) := fun _ => rfl
   have hsep : ∀ x, (∀ y : O, ψ' (x * algebraMap O (Fv F v) y) = 1) ↔ x ∈ (algebraMap O (Fv F v)).range := by

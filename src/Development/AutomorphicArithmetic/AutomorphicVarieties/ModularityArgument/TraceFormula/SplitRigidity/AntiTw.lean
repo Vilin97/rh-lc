@@ -36,19 +36,7 @@ theorem UpperTheory.V.Z.Tf.SR.antiTw :
     AntiTw := by
   intro E _ _ _ hU
   obtain ⟨μ, e, hμ⟩ := PositivityTheory.Rg.BcB.F.Fok.Mu3.muExists E hU
-  have hv : ∀ w : Pl E, ¬ IsSplitAt w → μ.val w = -1 := by
-    intro w hw
-    show μ.loc w (GlobalTheory.Mem.Chr.atFin w (GlobalTheory.Mem.Chr.unif w)) = -1
-    rw [hμ.2.2.1 w hw, GlobalTheory.SmGL.unrChar_apply,
-      GlobalTheory.SmGL.ord_eq_one (GlobalTheory.MuInert.valuation_eq_uniformizer w (GlobalTheory.Mem.Chr.unif_spec w)), zpow_one]
-  have hinf : ∀ (N k : ℕ) (P : CG E N) (v : InfinitePlace E),
-      (P.twist (μ ^ k)).infChar v.embedding =
-        (P.infChar v.embedding).map (· + (k : ℂ) * (e v : ℂ) / 2) := by
-    intro N k P v
-    rw [((ParLaws.hasInfChar_infChar P v.embedding).twist (μ ^ k)).infChar_eq]
-    refine Multiset.map_congr rfl fun z _ => ?_
-    rw [GlobalTheory.BCT.TwistDisc.expo_pow, GlobalTheory.BCT.MuProps.expo_emb hμ]
-    ring
+  obtain ⟨hv, hinf⟩ := UpperTheory.V.Z.Tf.GaloisFromTraceFormula.muInf E μ e hμ
   have hu : (μ ^ 2).IsUnitary := unitary_pow μ hμ.1 2
   refine ⟨μ ^ 2, ?_, fun n π hn hπ => ⟨fun i => unitary_twist hπ (unitary_pow _ hu i), fun i j hij => ?_⟩⟩
   · filter_upwards [GlobalTheory.HeckeSplit.eventually_unrAt (μ ^ 2).1 (μ ^ 2).2.1] with w hw
@@ -59,7 +47,7 @@ theorem UpperTheory.V.Z.Tf.SR.antiTw :
       simpa only [pow_mul] using hij
     let v : InfinitePlace E := Classical.arbitrary _
     have h := congrArg (fun P : CG E n => (P.infChar v.embedding).sum) hij'
-    simp only [hinf n _ π v, Multiset.sum_map_add, Multiset.map_const', Multiset.sum_replicate,
+    simp only [(hinf n _ π v).1, Multiset.sum_map_add, Multiset.map_const', Multiset.sum_replicate,
       Multiset.map_id', Multiset.card_map, CG.card_infChar, nsmul_eq_mul] at h
     have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast (by omega : n ≠ 0)
     have he0 : (e v : ℂ) ≠ 0 := by

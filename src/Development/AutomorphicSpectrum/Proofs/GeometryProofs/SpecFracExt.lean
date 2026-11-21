@@ -52,7 +52,7 @@ theorem base_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Reciproc
     (G : SAB H (Spec (CommRingCat.of T.V))) (t' : SAB H (Spec (CommRingCat.of T.Fr)))
     (m2 : SABMap t' G (Spec.map (CommRingCat.ofHom (algebraMap T.V T.Fr)))) (v : epsOver T.V T.V ⟶ G.G)
     (u' : Spec (CommRingCat.of (DualNumber T.Fr)) ⟶ t'.G.left)
-    (h : u' ≫ m2.φ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr))) ≫ v.left) :
+    (h : u' ≫ m2.φ = Spec.map (CommRingCat.ofHom (dualMap (algebraMap T.V T.Fr))) ≫ v.left) :
     u' ≫ t'.G.hom = Spec.map (CommRingCat.ofHom (algebraMap T.Fr (DualNumber T.Fr))) := by
   apply spec_frac_ext T
   have e1 := m2.cart.1.w
@@ -60,6 +60,6 @@ theorem base_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Reciproc
   change Spec.map _ ≫ Spec.map _ = _
   rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp]
   congr 2
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 end GlobalTheory.CompanionTheory.Ar.Rec.FinRd.Roots.LieBasis

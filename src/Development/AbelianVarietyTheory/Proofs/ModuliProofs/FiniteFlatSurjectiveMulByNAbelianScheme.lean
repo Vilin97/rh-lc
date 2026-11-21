@@ -222,17 +222,6 @@ theorem finite_flat_surjective_pow :
     Out.Laws → ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] [IsCommMonObj A], IsAbelianScheme A → ∀ M : LB A.left, M.IsLB → Out.RelAmple A M → ∀ n : ℕ, 1 ≤ n → IsFinite ((𝟙 A) ^ n : A ⟶ A).left ∧ Flat ((𝟙 A) ^ n : A ⟶ A).left ∧ Surjective ((𝟙 A) ^ n : A ⟶ A).left := by
   intro hl R _ A _ _ hA M hM hamp n hn
   obtain ⟨d, -, m, s, hs⟩ := (GlobalTheory.Unif.relAmple_iff_veryAmpleBy R A M hM).1 hamp
-  have isLB_pw {Y : Scheme.{0}} {H : LB Y} (hH : H.IsLB) (t : ℤ) :
-      (pw H t).IsLB := by
-    refine ⟨hH.cover, ?_, ?_⟩
-    · intro i
-      have h := congrArg (· ^ t) (hH.g_self i)
-      simp only [one_zpow, ← map_zpow] at h
-      exact h
-    · intro i j k
-      have h := congrArg (· ^ t) (hH.cocycle i j k)
-      simp only [mul_zpow, ← map_zpow] at h
-      exact h
   have hH := isLB_pw hM d
   have := hA.proper
   have := hA.smooth

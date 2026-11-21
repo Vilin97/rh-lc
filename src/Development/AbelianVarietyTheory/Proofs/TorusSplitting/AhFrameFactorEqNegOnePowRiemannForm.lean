@@ -41,7 +41,7 @@ theorem prod_factor_eq_one {g : ℕ} {Ix K : Type} [Fintype K] {S : Set (Fin g �
     (LinearMap.toContinuousLinearMap (lam k)).differentiable
   let D : (K → Ix) → Set (Fin g → ℂ) := fun j => {z | ∀ k, lam k z ∈ W (j k)}
   have hDo : ∀ j, IsOpen (D j) := fun j => by
-    simp only [D, Set.ofPred_forall]
+    simp only [D, Set.setOf_forall]
     exact isOpen_iInter_of_finite fun k => (hWo (j k)).preimage (hld k).continuous
   have hcov : ∀ z, ∃ j, z ∈ D j := fun z => by
     choose a ha using hWc
@@ -96,7 +96,7 @@ theorem prod_factor_eq_one {g : ℕ} {Ix K : Type} [Fintype K] {S : Set (Fin g �
     exact key _ _ _ _ (hF0 j z hj) (hF0 j _ hj') c1
   obtain ⟨h1, h2⟩ := form_eq_zero_and_const hS ψ hψ hψ0
     (fun z w => ∑ k, (ε k : ℂ) * hermForm Hm (lam k z) (lam k w))
-    (continuous_finsetSum _ fun k _ => continuous_const.mul
+    (continuous_finset_sum _ fun k _ => continuous_const.mul
       ((continuous_hermForm_self Hm).comp (hld k).continuous))
     (fun z z' w => by simp only [map_add (f := _), hermForm_add_left, mul_add, Finset.sum_add_distrib])
     (fun c z w => by

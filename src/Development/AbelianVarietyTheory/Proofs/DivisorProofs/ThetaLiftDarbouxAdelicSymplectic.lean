@@ -61,7 +61,7 @@ theorem continuous_sch {G : Type} [Group G] [TopologicalSpace G] {pr : G →* Ma
       simpa only [h4, ContinuousLinearMap.one_apply, schwartzToL2_apply] using h2 (f.toLp 2 volume)
     · intro A w ih f
       simp only [toLp_dRho_omS h3 h4]
-      refine continuous_finset_sum _ fun a _ => Continuous.smul (Complex.continuous_ofReal.comp ?_) (ih _)
+      refine continuous_finsetSum _ fun a _ => Continuous.smul (Complex.continuous_ofReal.comp ?_) (ih _)
       exact (continuous_apply a).comp
         (((continuous_const.matrix_mul hm.matrix_transpose).matrix_mul continuous_const).neg.matrix_mulVec continuous_const)
     · intro f
@@ -266,7 +266,11 @@ theorem archRep : GlobalTheory.FunPr.Hypotheses₂ → DerEx → VacLine →
     have e1 : ⇑f₁ = schrF (trP F κ) (locV (d.e u).1, locV (d.e u).2) ⇑f := by
       funext y
       have := congrFun ((GlobalTheory.T.heisenbergOp_archimedean_vector_acts_by_schrodinger_trace F E σ α β κ ψ JA JB d hψ u hu f fun _ => 1).symm.trans (hf fun _ => 1)) (liftV y)
-      simpa [pureA, liftV] using this.symm
+      simp only [pureA, mul_one] at this
+      change schrF (trP F κ) (locV (d.e u).1, locV (d.e u).2) ⇑f (fun i => evI F (liftV y i)) = f₁ (fun i => evI F (liftV y i)) at this
+      have hy : (fun i => evI F (liftV y i)) = y := funext (GlobalTheory.ArchHeis.evI_liftV y)
+      rw [hy] at this
+      exact this.symm
     have e2 : ⇑(toE f₁) = rhoFun (φ c) ⇑(toE f) := by
       have := hS (locV (d.e u).1, locV (d.e u).2) ⇑(toE f)
       rw [← htoV, hVE, ← e1, ← hφu u c hu hc] at this
@@ -301,9 +305,9 @@ theorem archRep : GlobalTheory.FunPr.Hypotheses₂ → DerEx → VacLine →
     have hsZ : ∀ t : ℝ, (s (γ (Multiplicative.ofAdd t)) : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℝ) =
         NormedSpace.exp (t • Z) := fun t => Matrix.toLin'.injective (LinearMap.ext fun v => by
       obtain ⟨c, rfl⟩ := φ.surjective v
-      rw [Matrix.toLin'_apply, Matrix.toLin'_apply, hsφ, hZe]
-      simp only [hkY])
-    have hd := hρd (fun t => γ (Multiplicative.ofAdd t)) (hγ.1.comp continuous_ofAdd) (by simp) Z hZ hsZ _
+      simp only [Matrix.toLin'_apply]
+      exact (hsφ _ c).trans (by rw [hZe]; simp only [hkY]))
+    have hd := hρd (fun t => γ (Multiplicative.ofAdd t)) (hγ.1.comp continuous_ofAdd) (by exact γ.map_one) Z hZ hsZ _
       (hkk γ hγ Y hY) (L ∘L toV) (toE (Φ T))
     obtain ⟨D, hD⟩ := hDer F E σ α β κ ψ JA JB d hψ
     have hΨ : ∀ c T, (toE.toLinearMap ∘ₗ Φ) (sumPl (fun w => heisOp (c w)) T) = dRho (φ c) ((toE.toLinearMap ∘ₗ Φ) T) := by
@@ -320,7 +324,8 @@ theorem archRep : GlobalTheory.FunPr.Hypotheses₂ → DerEx → VacLine →
       exact (hD u hu (Φ T)).2 y
     have e3 := GlobalTheory.T.fockToSchwartz_intertwines_metaplecticQuadratic GlobalTheory.T.metaplecticQuadraticOperator_eq_sum_symplectic_dual GlobalTheory.T.fockAct2_eq_symmetrised_heisenbergQuadratic _ _ P Q R S φ hφ _ hΨ Y hYu Z hZφ T
     simp only [LinearMap.comp_apply, ContinuousLinearMap.coe_coe] at e3
-    simp only [hρ']
+    set_option backward.isDefEq.respectTransparency false in
+      simp_rw [hρ']
     refine hd.congr_deriv ?_
     rw [e3, sumPl_add_smul]
     simp only [ContinuousLinearMap.comp_apply, hVE, LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply,

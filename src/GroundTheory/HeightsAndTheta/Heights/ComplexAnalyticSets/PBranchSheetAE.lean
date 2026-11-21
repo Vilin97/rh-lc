@@ -75,7 +75,7 @@ theorem BranchSheetAE.proof (h₁ : IndefiniteRowSideFullHecke.ComplexSets.RankD
       (SheetOnlyNull.injective_iff_det_ne_zero _).1 hinj
         (by rw [← ReciprocityTheory.AnForm.A.det_jacC]; exact hall v hv)
     have hinf : (γ.toFun '' {t | t ∈ Δ ∧ τ t = y}).Infinite :=
-      (Set.infinite_image_iff (γ.injOn.mono fun t ht => ht.1)).2 hy
+      (Set.infinite_image_iff (γ.injOn.mono fun t (ht : t ∈ {t | t ∈ Δ ∧ τ t = y}) => ht.1)).2 hy
     refine hinf ((h₂ n d J A hJ hdim hA y).2.1.subset ?_)
     rintro _ ⟨t, ⟨htΔ, hty⟩, rfl⟩
     exact ⟨γ.mapsTo htΔ, hty⟩

@@ -92,7 +92,7 @@ theorem holInt (ν : Measure (GR n)) [ν.IsHaarMeasure] {C : Set (GR n)} (hC : I
       exact (integral_restrict_of_zero ν hCm (fun u hu => hF0 u hu _)).symm
     refine (hasFPowerSeriesOn_cauchy_integral hci hR).congr ?_
     intro w hw
-    rw [Metric.eball_coe] at hw
+    rw [Metric.emetric_ball_nnreal] at hw
     have hk : Continuous (fun θ => (circleMap z R θ - w)⁻¹) :=
       ((continuous_circleMap z R).sub continuous_const).inv₀
         (fun θ => sub_ne_zero.mpr (circleMap_ne_mem_ball hw θ))

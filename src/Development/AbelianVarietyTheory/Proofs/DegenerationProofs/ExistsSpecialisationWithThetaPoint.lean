@@ -60,7 +60,7 @@ theorem exists_pat (h₁ : Laws) (h₂ : Laws2) {C : Type} [NormedField C] (o : 
     obtain ⟨-, w, hw, -⟩ := M.t.sym
     exact fun _ => ⟨⊤, trivial, gen_of_iso ((isGen_iff w).1 hw) _⟩
   refine ⟨⟨M.t, hA, g, hg, hs, ha, hk⟩, M.φ ≫ ψ, M.cart.comp hψ, ?_, fun a => ?_⟩
-  · exact M.lb.trans o.P.isLB (LB.isLB_pull M.P.A.isLB _) (LB.isLB_pull M.t.PP.isLB _)
+  · exact M.lb.trans o.P.isLB (pull_isLB M.P.A.isLB _) (pull_isLB M.t.PP.isLB _)
       (LBIso.chartPull (Geo.Tor.chartPullPull _ _ _ rfl) (chartPullSame _ _ _ _ _ fun _ => rfl) hL)
   · have e : M.P.oA.act a ≫ M.P.U.gen.inv = M.P.U.gen.inv ≫ (Over.pullback (jK M.W)).map (M.t.act.act a) := by
       rw [Iso.comp_inv_eq, Category.assoc]

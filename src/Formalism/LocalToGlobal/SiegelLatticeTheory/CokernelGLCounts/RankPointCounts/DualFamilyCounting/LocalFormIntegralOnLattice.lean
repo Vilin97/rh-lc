@@ -77,6 +77,45 @@ theorem local_self_dual_holds : LocSelfDual := by
   obtain ⟨-, -, hcj, hO, -⟩ := hAp
   have hLat := (VS D).standardTuple_isLattice
   have hU := (VS D).baseLattice_isUnimodular
+  have hspan : Submodule.span D.host.E ((VS D).L0 : Set (VS D).V) = ⊤ := by
+    by_contra hspan
+    obtain ⟨φ, hφ₀, hφ⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.mpr hspan)
+    obtain ⟨μ, hμ⟩ := LocFacts.lf_riesz φ
+    have hμ₀ : μ ≠ 0 := by
+      intro h
+      apply hφ₀
+      ext y
+      simpa [h] using (hμ y).symm
+    have hline (a : D.host.E) : a • μ ∈ (VS D).L0 := by
+      rw [← hU]
+      change a • μ ∈ Formalism.E.hdual (VS D).hT (VS D).L0
+      rw [LocFacts.lf_mem_hdual]
+      intro y hy
+      have hy₀ := LinearMap.mem_ker.mp (hφ (Submodule.subset_span hy))
+      simp [← (VS D).herm.eq (a • μ) y, LinearMap.map_smulₛₗ, hμ, hy₀]
+    obtain ⟨ψ, hψ, -⟩ := Submodule.exists_le_ker_of_notMem
+      (show μ ∉ (⊥ : Submodule D.host.E (VS D).V) by simpa using hμ₀)
+    let f := ψ.restrictScalars (𝓞 D.host.E)
+    have hmap (x : D.host.E) : x ∈ (VS D).L0.map f := by
+      refine ⟨(x / ψ μ) • μ, hline _, ?_⟩
+      change ψ ((x / ψ μ) • μ) = x
+      rw [map_smul, smul_eq_mul, div_mul_cancel₀ _ hψ]
+    obtain ⟨d, hd₀, hd⟩ := FractionalIdeal.isFractional_of_fg
+      (S := nonZeroDivisors (𝓞 D.host.E)) (hLat.fg.map f)
+    have hinj := IsFractionRing.injective (𝓞 D.host.E) D.host.E
+    have hne {a : 𝓞 D.host.E} (ha : a ≠ 0) : algebraMap (𝓞 D.host.E) D.host.E a ≠ 0 :=
+      fun h => ha (hinj (h.trans (map_zero _).symm))
+    have hinteger (x : D.host.E) : IsLocalization.IsInteger (𝓞 D.host.E) x := by
+      have hx := hd _ (hmap ((algebraMap (𝓞 D.host.E) D.host.E d)⁻¹ * x))
+      rwa [Algebra.smul_def, ← mul_assoc, mul_inv_cancel₀ (hne (nonZeroDivisors.ne_zero hd₀)),
+        one_mul] at hx
+    apply RingOfIntegers.not_isField D.host.E
+    refine ⟨⟨0, 1, zero_ne_one⟩, mul_comm, ?_⟩
+    intro a ha
+    obtain ⟨b, hb⟩ := hinteger ((algebraMap (𝓞 D.host.E) D.host.E a)⁻¹)
+    refine ⟨b, hinj ?_⟩
+    rw [map_mul, hb, map_one, mul_inv_cancel₀ (hne ha)]
+
 
   have hform : ∀ a b : (VS D).V, (L.H p).h (L.bc p a) (L.bc p b) = (D.s.atP p).ιE ((VS D).hT b a) := by
     intro a b; rw [L.bc_form p]; rfl
@@ -113,11 +152,11 @@ theorem local_self_dual_holds : LocSelfDual := by
   ·
     rw [eq_top_iff, ← L.bc_span p, Submodule.span_le]
     rintro _ ⟨v, rfl⟩
-    have hv : v ∈ Submodule.span D.host.E ((VS D).L0 : Set (VS D).V) := by rw [hLat.span_eq_top]; trivial
+    have hv : v ∈ Submodule.span D.host.E ((VS D).L0 : Set (VS D).V) := by rw [hspan]; trivial
     induction hv using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span (Submodule.subset_span ⟨y, hy, rfl⟩)
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact add_mem hy hz
     | smul a y _ hy => rw [L.bc_smul p]; exact Submodule.smul_mem _ _ hy
   ·
     exact local_form_integral_on_lattice L p _ hcjO hint hx hy
@@ -130,7 +169,7 @@ theorem local_self_dual_holds : LocSelfDual := by
       have hL2 : ∀ v, L2 v = ∑ i, (VS D).hT (μ i) v • ((g i : (VS D).L0) : (VS D).V) := by
         intro v; simp [L2]
       have heq : LinearMap.id = L2 := by
-        apply LinearMap.ext_on hLat.span_eq_top
+        apply LinearMap.ext_on hspan
         intro y hy
         have e1 := congrArg (fun z : (VS D).L0 => (z : (VS D).V)) (hgf ⟨y, hy⟩)
         rw [LinearMap.id_apply, hL2]

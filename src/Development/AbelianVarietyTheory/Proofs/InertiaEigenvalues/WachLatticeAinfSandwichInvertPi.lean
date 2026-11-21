@@ -113,9 +113,7 @@ theorem sand_of {E : WEt I} (Mo : WN E zl)
   have hsp : ⊤ ≤ Submodule.span RW (Set.range fun i => E.jD T (b i : E.DD T)) := by
     rw [← E.jD_span T, Submodule.span_le]
     rintro _ ⟨y, rfl⟩
-    refine (Mo.N_base T hT).inductionOn y
-      (fun y => E.jD T y ∈ Submodule.span RW (Set.range fun i => E.jD T (b i : E.DD T))) ?_ ?_ ?_ ?_
-    · rw [map_zero]; exact Submodule.zero_mem _
+    refine (Mo.N_base T hT).inductionOn y ?_ ?_ ?_
     · intro z
       obtain ⟨c, hc⟩ := hexp z.1 z.2
       change E.jD T z.1 ∈ _

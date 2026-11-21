@@ -142,8 +142,6 @@ theorem matStep : MatStep := by
   have hSH : Sᴴ = S := by
     rw [hSd, diagonal_conjTranspose]
     congr 1
-    funext a
-    simp [sigForm]
   rw [hPQ] at h
   obtain ⟨b1, b2, b3⟩ := blocks hCu hS h
   have hqN : q ≤ p + q := by omega
@@ -291,7 +289,7 @@ theorem matStep : MatStep := by
       have e1 : (M * g) a b = (M * g.submatrix id fr) a ⟨b - q, by omega⟩ := by
         conv_lhs => rw [e0]
         rfl
-      rw [e1, gr, hL, Matrix.one_apply]
+      rw [e1, gr, hL, one_apply]
       simp only [Fin.ext_iff]
       congr 1
       apply propext

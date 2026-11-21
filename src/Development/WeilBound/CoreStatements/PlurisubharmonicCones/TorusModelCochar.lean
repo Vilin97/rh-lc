@@ -56,7 +56,7 @@ theorem exists_generic {X : Scheme.{0}} (G : Over X) [GrpObj G] [IsCommMonObj G]
     {V₀ : Type} [AddCommGroup V₀] [Module (𝓞 L) V₀] (M₀ : LieModel G z V₀) :
     ∃ (V : Type) (_ : AddCommGroup V) (_ : Module L V) (_ : Module (𝓞 L) V) (_ : IsScalarTower (𝓞 L) L V)
       (Mz : LieModel G (spMap (algebraMap (𝓞 L) L) ≫ z) V) (j : V₀ →ₗ[𝓞 L] V),
-      (∀ e, (Mz.pt (j e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (M₀.pt e).left) ∧ Function.Injective j ∧
+      (∀ e, (Mz.pt (j e)).left = spMap (dualMap (algebraMap (𝓞 L) L)) ≫ (M₀.pt e).left) ∧ Function.Injective j ∧
         Submodule.span L (Set.range j) = ⊤ ∧ Module.Finite (𝓞 L) V₀ ∧ Module.Finite L V := by
   obtain ⟨V, _, _, ⟨Mz⟩⟩ := lieModel_exists X G L (spMap (algebraMap (𝓞 L) L) ≫ z)
   letI : Module (𝓞 L) V := Module.compHom V (algebraMap (𝓞 L) L)
@@ -68,7 +68,7 @@ theorem exists_generic {X : Scheme.{0}} (G : Over X) [GrpObj G] [IsCommMonObj G]
     { toFun := j₀
       map_add' := j₀.map_add
       map_smul' := fun a x => j₀.map_smulₛₗ a x }
-  have hj : ∀ e, (Mz.pt (j e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (M₀.pt e).left := fun e =>
+  have hj : ∀ e, (Mz.pt (j e)).left = spMap (dualMap (algebraMap (𝓞 L) L)) ≫ (M₀.pt e).left := fun e =>
     (Category.comp_id _).symm.trans (hj₀ e)
   obtain ⟨hf, hp, hb⟩ := GlobalTheory.T.lie_model_finite_base_change X G (𝓞 L) z V₀ M₀
   have hbc : IsBaseChange L j := hb L V Mz j hj
@@ -86,8 +86,8 @@ theorem exists_generic {X : Scheme.{0}} (G : Over X) [GrpObj G] [IsCommMonObj G]
 
 theorem generic_inj {X : Scheme.{0}} (G : Over X) [GrpObj G] [IsCommMonObj G] [Smooth G.hom] (z : Sp (𝓞 L) ⟶ X)
     {V₀ : Type} [AddCommGroup V₀] [Module (𝓞 L) V₀] (M₀ : LieModel G z V₀) {e e' : V₀}
-    (h : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (M₀.pt e).left =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (M₀.pt e').left) : e = e' := by
+    (h : spMap (dualMap (algebraMap (𝓞 L) L)) ≫ (M₀.pt e).left =
+      spMap (dualMap (algebraMap (𝓞 L) L)) ≫ (M₀.pt e').left) : e = e' := by
   obtain ⟨V, _, _, _, _, Mz, j, hj, hi, -⟩ := exists_generic G z M₀
   exact hi (Mz.inj (Over.OverMorphism.ext ((hj e).trans (h.trans (hj e').symm))))
 
@@ -173,7 +173,7 @@ theorem exists_lin {Ψ : Type} {X : Scheme.{0}} (t : SAB H X) (z : Sp (𝓞 L) �
     ∃ (V : Type) (_ : AddCommGroup V) (_ : Module L V) (_ : Module (𝓞 L) V) (_ : IsScalarTower (𝓞 L) L V)
       (MV : LieModel P.tK.G (𝟙 (Sp L)) V) (A : LinPt E L Ψ V), A.σ = σ ∧ MV.IsActOf P.tK.act.act A.ρ ∧
       (∀ x, x ∈ A.Λ ↔ ∃ v : epsAt z ⟶ t.G, IsTanAt t.G z v ∧
-        (MV.pt x).left ≫ P.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ v.left) ∧
+        (MV.pt x).left ≫ P.m.φ = spMap (dualMap (algebraMap (𝓞 L) L)) ≫ v.left) ∧
       P.IsCochars MV A.I ∧
       (∃ (MB : LieModel t'.G (𝟙 _) A.Bq.carrier), IsFibre (HodgeIP t'.G t'.PP.L) (𝟙 _) A.Bq MB ∧
         ∀ x : A.Λ, ((MV.pt x ≫ P.τ.q ≫ P.e.hom).left ≫ m'.φ = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (MB.pt (A.f x)).left)) ∧
@@ -191,7 +191,7 @@ theorem exists_lin {Ψ : Type} {X : Scheme.{0}} (t : SAB H X) (z : Sp (𝓞 L) �
   obtain ⟨V₀, _, _, ⟨M₀⟩⟩ := lieModel_exists X t.G (𝓞 L) z
   obtain ⟨V, _, _, _, _, Mz, j, hj, hinj, hspan, hfin₀, hfin⟩ := exists_generic t.G z M₀
   obtain ⟨MV, hMV⟩ := (GlobalTheory.T.lie_model_pullback_correspondence L X _ t.G P.tK.G P.m.φ V P.m.cart).1 Mz
-  have hj' : ∀ e, (MV.pt (j e)).left ≫ P.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (M₀.pt e).left :=
+  have hj' : ∀ e, (MV.pt (j e)).left ≫ P.m.φ = spMap (dualMap (algebraMap (𝓞 L) L)) ≫ (M₀.pt e).left :=
     fun e => (hMV _).trans (hj e)
   obtain ⟨ρ, hρ, -⟩ := lieModel_exists_unique_act _ _ L (𝟙 _) _ MV (𝓞 E) P.tK.act.act P.tK.act.hom
     P.tK.act.one P.tK.act.mul P.tK.act.add
@@ -223,7 +223,7 @@ theorem exists_lin {Ψ : Type} {X : Scheme.{0}} (t : SAB H X) (z : Sp (𝓞 L) �
     rw [hj', hκ]
     exact (hε i).symm))
   have hfl : ∀ e, (MV.pt (j e) ≫ P.τ.q ≫ P.e.hom).left ≫ m'.φ =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (MB.pt (f e)).left := fun e => by
+      spMap (dualMap (algebraMap (𝓞 L) L)) ≫ (MB.pt (f e)).left := fun e => by
     refine Eq.trans ?_ (hf e _ (hj' e))
     simp only [Over.comp_left, Category.assoc]
   let Q : Pre E L Ψ V V₀ B :=

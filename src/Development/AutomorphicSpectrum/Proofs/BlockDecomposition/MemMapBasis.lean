@@ -223,14 +223,16 @@ theorem tw_facts (ε : Eps l) (k : Bool) (n : ℕ) (hn : IsNilpotent (l : (base 
     GlobalTheory.CompanionTheory.ThickHom.isNilpotent_of_mem (DD k (base l) n) hl hn hx
   have h0 : IsNilpotent ((base l).cris n (ε.qk 0) - 1) := by
     have := hI _ (ε.μ_mem k (base l) n)
-    rwa [Eps.μ, map_sub, map_one] at this
+    set_option synthInstance.maxHeartbeats 200000 in
+      rwa [Eps.μ, map_sub, map_one] at this
   obtain ⟨w, hw⟩ := GlobalTheory.CompanionTheory.RootsDivide.sub_one_dvd l Fact.out (fun j => (base l).cris n (ε.qk j)) hn
     (fun j => by rw [← map_pow, hq]) h0 m c hc
   set ξ := (base l).cris n (∑ i ∈ Finset.range l, ε.qk 1 ^ i) with hξd
   have hξI : ξ ∈ JJ k (base l) n := fil_le k (base l) n (hξ (base l) n)
   refine ⟨w, ξ, ?_, hI _ hξI, fun r => ?_⟩
   · have : (base l).cris n ε.μ = ((base l).cris n (ε.qk 1) - 1) * ξ := by
-      rw [hμ, map_mul, map_sub, map_one]
+      set_option synthInstance.maxHeartbeats 200000 in
+        rw [hμ, map_mul, map_sub, map_one]
     rw [this, map_pow]
     have hw' : (base l).cris n (ε.qk 1) - 1 = ((base l).cris n (ε.qk m) ^ c - 1) * w := hw
     rw [hw']
@@ -284,7 +286,8 @@ theorem main : ∀ {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] {F : Fn O} {
     exact hfil k r
   · intro k' z
     have hq : 𝓛.i (ε.qU n) - 1 = 𝓛.i ((base l).cris n ε.μ) := by
-      rw [Eps.μ, map_sub, map_sub, map_one, map_one, ← Eps.qU_val]
+      set_option synthInstance.maxHeartbeats 200000 in
+        rw [Eps.μ, map_sub, map_sub, map_one, map_one, ← Eps.qU_val]
     let φ : 𝓛.D →+* 𝓛.D :=
       Thick.Hom.φ (γ (gen k')).asHom
     refine (GlobalTheory.CompanionTheory.LiftFlat.lift_flat 𝓛.i 𝓛.t 𝓛.et).2 ((bs l k n).I.map 𝓛.i) (𝓛.i ((base l).cris n ε.μ)) φ

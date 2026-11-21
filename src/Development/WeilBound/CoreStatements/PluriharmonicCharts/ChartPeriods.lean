@@ -50,8 +50,8 @@ theorem chart_periods {Xo : Moduli D l} {σ : KA l →+* ℂ} {n : ℕ} (C : Bdr
           ∀ x y, (hermForm (G u) (P u x) (P u y)).im = (FU.Di i).EF x y) ∧
         (∃ Hm, C.IsRiem u Hm ∧ ∀ a b, hermForm Hm (fun e => C.ψ u (x a e)) (fun e => C.ψ u (x b e)) =
           hermForm (G u) (W a u) (W b u)) ∧
-        ∀ a (t : 𝓞 E) (cc : ℂ), (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ u)) ≫ (C.M.pt (x a)).left) ≫ (C.t.act.act t).left =
-          spMap (Tor.epsMul cc) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ u)) ≫ (C.M.pt (x a)).left →
+        ∀ a (t : 𝓞 E) (cc : ℂ), (spMap (dualMap (C.ψ u)) ≫ (C.M.pt (x a)).left) ≫ (C.t.act.act t).left =
+          spMap (Tor.epsMul cc) ≫ spMap (dualMap (C.ψ u)) ≫ (C.M.pt (x a)).left →
           ∀ j, ty j (t : E) * W a u j = cc * W a u j := by
   classical
   have hpu : ∀ ρ : ℝ, punct n 0 ρ = Metric.ball 0 ρ := fun ρ => by ext z; simp [punct]
@@ -105,7 +105,7 @@ theorem chart_periods {Xo : Moduli D l} {σ : KA l →+* ℂ} {n : ℕ} (C : Bdr
     rw [← hf, ← hW z hz, ← hW z hz]
     rfl
   · obtain ⟨-, -, -, hWz, -⟩ := hr z hz
-    have hD : IsDerivAt0 (fun x => (r z x).left) (W a z) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt (x a)).left) := by
+    have hD : IsDerivAt0 (fun x => (r z x).left) (W a z) (spMap (dualMap (C.ψ z)) ≫ (C.M.pt (x a)).left) := by
       rw [(hl2 z hz).2.2, hW z hz]
       exact Marking.isDerivAt0_frame e (hsubB hz) (x a)
     haveI := C.j_open

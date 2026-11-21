@@ -137,7 +137,6 @@ variable {M M'} {hMM'}
 omit [FiniteDimensional ℚ_[p] K] in
 theorem finiteDimensional_extendScalars_of_le :
     FiniteDimensional M (IntermediateField.extendScalars hMM') := by
-  have := Module.Free.of_divisionRing (K := M) (V := IntermediateField.extendScalars hMM')
   apply Module.finite_of_finrank_pos
   have h : 0 < Module.finrank K M' := Module.finrank_pos
   rw [finrank_eq_mul_finrank_extendScalars hMM'] at h
@@ -182,23 +181,17 @@ theorem sum_range_pow_apply_eq (τ : Gal(PadicAlgCl p/K)) (n : ℕ) (y : PadicAl
     | zero => intro z; rfl
     | succ j ih =>
       intro z
-      rw [pow_succ, mul_apply_eq_comp, pow_succ, AlgEquiv.mul_apply, ih]
+      rw [pow_succ, Module.End.mul_apply, pow_succ, AlgEquiv.mul_apply, ih]
       rfl
   have key := congrArg (fun P => (Polynomial.aeval D P) y) (sum_range_X_add_one_pow n)
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_sum, map_pow, map_add (f := _), aeval_X, map_one, map_mul, map_natCast] at key
   rw [LinearMap.sum_apply, LinearMap.sum_apply] at key
-  simp only [mul_apply_eq_comp, natCast_apply_eq_smul, nsmul_eq_mul] at key
+  simp only [Module.End.mul_apply, Module.End.natCast_apply, nsmul_eq_mul] at key
   rw [sub_add_cancel] at key
   rw [← key]
   exact Finset.sum_congr rfl fun j _ => (hT j y).symm
 
-
-local instance stepPadicAlgClValuativeExtension : ValuativeExtension ℚ_[p] (PadicAlgCl p) := by
-  refine ⟨fun {a b} ↦ ?_⟩
-  rw [vle_iff_norm_le, PadicAlgCl.norm_extends, PadicAlgCl.norm_extends,
-    Valuation.Compatible.vle_iff_le (v := Padic.mulValuation),
-    GroundTheory.LocalField.Padic.mulValuation_le_iff_norm_le]
 
 omit [FiniteDimensional K M'] in
 theorem nrm_pow_sub_one_apply_le (τ : Gal(PadicAlgCl p/K)) (hτM' : ∀ z ∈ M', τ z ∈ M') {ρ : ℝ}
@@ -210,7 +203,7 @@ theorem nrm_pow_sub_one_apply_le (τ : Gal(PadicAlgCl p/K)) (hτM' : ∀ z ∈ M
   | succ i ih =>
     set D : Module.End K (PadicAlgCl p) := τ.toLinearMap - 1
     have e : (D ^ (i + 1)) y = τ ((D ^ i) y) - (D ^ i) y := by
-      rw [pow_succ', mul_apply_eq_comp]
+      rw [pow_succ', Module.End.mul_apply]
       rfl
     rw [e]
     refine ⟨sub_mem (hτM' _ ih.1) ih.1, ?_⟩

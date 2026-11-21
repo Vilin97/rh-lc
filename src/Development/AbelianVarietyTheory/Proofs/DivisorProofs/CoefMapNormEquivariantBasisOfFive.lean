@@ -822,6 +822,7 @@ namespace GlobalTheory.GalOne.PhaseAt
 open GlobalTheory.AdTh GlobalTheory.AdTh.PhaseMap
 
 
+set_option synthInstance.maxHeartbeats 200000 in
 set_option maxHeartbeats 3200000 in
 theorem io_eq_phase_smul_at_ofFive : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m} (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (R : RealDat D A T.Q.c.F) (F : Face D A) (κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)) (v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec), GlobalTheory.Core5 R F → FWTie T R κ v₀ → ∀ (i : Fin D.R.m) (O : OM T R i), Pinned κ v₀ O → ∀ (σ : D.what₂.LL →+* ℂ) (σ' : O.c'.F →+* ℂ), σ'.comp O.jL = σ → ∀ (μ' η' : (AE D)ˣ →* Circle) (ω : GA D (Vc D i) × GA D (Wc D i) →* Module.End ℂ (WO (Vc D i) (Wc D i) → ℂ)) (f₀ f : WO (Vc D i) (Wc D i) → ℂ), ConjW R i σ μ' η' ω f₀ f → ∀ (c : CoefA (Vc D i)) (c₁ : VsV D i D.what₂.LL →ₛₗ[σ] c.W), CoefAt i σ c c₁ → ∀ (Λ : c.W →ₗ[ℂ] PolF D (Wc D i).rank (Vc D i).rank), (∀ u ∈ GinfC (Vc D i), ∀ w, ω (u, 1) (ptAt R i σ (onb (R.MW i σ)) f (Λ w)) = ptAt R i σ (onb (R.MW i σ)) f (Λ (c.ρ u w))) → (∃ w : c.W, ‖w‖ = 1 ∧ Λ w = deltaConj i σ) → ∃ ka : ℂ, ‖ka‖ = 1 ∧ ∀ lt, IsLtAt O σ' lt → ∀ x x', IsUp O x x' → ptAt R i σ (onb (R.MW i σ)) f (Λ (c₁ x)) = ka • pureTensorO R.ψ R.θ (Vc D i) (Wc D i) (fun _ => 1) (cart (R.MW i σ)) (fun _ => 1) (onb (R.MW i σ)) f (MvPolynomial.rename lt (MvPolynomial.map σ' (O.io x'))) := by
   intro D G _ _ Pl0 T0 A T _ R F κ v₀ hR hT i O hO σ σ' hσ μ' η' ω f₀ f hW c c₁ hc₁ Λ hio hex₀
@@ -1137,6 +1138,8 @@ theorem ioAt_of_conj_ofFive : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0
     rw [map_smul, ← MvPolynomial.C_mul', ← mul_assoc, ← MvPolynomial.C_mul, inv_mul_cancel₀ hka0, MvPolynomial.C_1, one_mul,
       toP, MvPolynomial.aeval_rename, lieFac_eq_pow _ hx, Complex.ofReal_pow, ← aeval_scale _ _ hhom]
     congr 2
+    funext ℓ
+    simp only [Function.comp_apply, lt', heL, GlobalTheory.OneMapRef.IoCmp.two_div_fockScale]
 
 end GlobalTheory.GalOne.IoCmp
 
@@ -1313,8 +1316,8 @@ theorem eqAt_of_frAtEmb_ofFive : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {
     mul_right_cancel₀ h0 (by rw [hm] at e5 ⊢; linear_combination e5)
   have e6 := z1 _ _ f hs
   rw [f4] at e6
-  show cc (dictS hV h).1 * rdU _ _ (dictS hV h).1 (dictS hV h).2 =
-    cc (dictS hV (h * k)).1 * rdU _ _ (dictS hV (h * k)).1 (dictS hV (h * k)).2
+  show cc (dictS hV h).1 * rdU (T.U ((i : ℕ) + 1) (sOf O σ')) (actG O g f) (dictS hV h).1 (dictS hV h).2 =
+    cc (dictS hV (h * k)).1 * rdU (T.U ((i : ℕ) + 1) (sOf O σ')) f (dictS hV (h * k)).1 (dictS hV (h * k)).2
   rw [rdU_eq _ _ _ hx, rdU_eq _ _ _ hx', e6, e7, mul_assoc]
   exact congrArg _ (congrArg _ hev)
 
@@ -2107,7 +2110,8 @@ theorem class_scalar_value_ofFive' : ∀ (D : D7) (G : Type) [Group G] [Fintype 
         · exact hQ (hbad Q (Or.inr a))
         · rw [(GlobalTheory.IdemSupport.isConjPl_iff _ _).1 a', GlobalTheory.IdemSupport.mem_cP, map_natCast] at hQ
           exact hQ (hbad Q' (Or.inr a))
-      rw [Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_inv, a1 x hx, a2 x hx,
+      change (R.C.mu0 i).loc Q x * (R.xiH _).loc Q x * ((R.C.eta).loc Q x)⁻¹ = 1
+      rw [a1 x hx, a2 x hx,
         R.C.isEta.unr Q x hx, inv_one, one_mul, one_mul])
     (fun Q hQ x => by
       rw [Formalism.L2.Host.HChar.resFin_mul, Formalism.L2.Host.HChar.resFin_mul, Formalism.L2.Host.HChar.resFin_inv,
@@ -2231,7 +2235,8 @@ theorem class_scalar_conj_ofFive : ∀ {D : D7} {G : Type} [Group G] [Fintype G]
         · exact hQ (hbad Q (Or.inr a))
         · rw [(GlobalTheory.IdemSupport.isConjPl_iff _ _).1 a', GlobalTheory.IdemSupport.mem_cP, map_natCast] at hQ
           exact hQ (hbad Q' (Or.inr a))
-      rw [Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_inv, a1 x hx, a2 x hx,
+      change (R.C.mu0 i).loc Q x * (R.xiH _).loc Q x * ((R.C.eta).loc Q x)⁻¹ = 1
+      rw [a1 x hx, a2 x hx,
         R.C.isEta.unr Q x hx, inv_one, one_mul, one_mul])
     (fun Q hQ x => by
       rw [Formalism.L2.Host.HChar.resFin_mul, Formalism.L2.Host.HChar.resFin_mul, Formalism.L2.Host.HChar.resFin_inv,

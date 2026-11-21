@@ -103,7 +103,7 @@ private theorem tens_simple (θ₁ : H₁ →* A) (θ₂ : H₂ →* B) (X₁ : 
   have law : ∀ g y, (e (E g y)).1 = tr (θ₁ g.1) (θ₂ g.2) (e y).1 := by
     intro g y
     induction y using TensorProduct.induction_on with
-    | zero => simp only [map_zero]; rfl
+    | zero => rw [(E g).map_zero, e.map_zero]; rfl
     | tmul φ ψ =>
       rw [hE, extTensor_tmul]
       funext x
@@ -130,7 +130,8 @@ private theorem tens_simple (θ₁ : H₁ →* A) (θ₂ : H₂ →* B) (X₁ : 
     rw [h] at h1
     have h2 : e.symm ⟨F, hQ hF⟩ = 0 := (Submodule.mem_bot ℂ).1 h1
     have h3 := congrArg Subtype.val (e.symm_apply_eq.1 h2)
-    simpa using h3
+    rw [e.map_zero] at h3
+    exact h3
   · right
     refine le_antisymm hQ fun F hF => (hmem F hF).2 ?_
     rw [h]

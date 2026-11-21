@@ -195,7 +195,7 @@ variable {p : ℕ} [Fact p.Prime] {C : Type} [Field C] {v : Valuation C ℝ≥0}
 
 def LieTie {Y : Scheme.{0}} (ψ : P.A.A.left ⟶ Y) (x : LieG P.Gt) (u : Sp (DualNumber C) ⟶ Y) : Prop :=
   ∃ (xG : LieG P.G) (u' : specO C (DualNumber C) ⟶ P.A.A), Corr P x.1 xG.1 ∧ u'.left ≫ ψ = u ∧
-    u'.left ≫ P.gen = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O C)) ≫ xG.1.left
+    u'.left ≫ P.gen = spMap (dualMap (algebraMap O C)) ≫ xG.1.left
 
 variable {P}
 
@@ -215,7 +215,7 @@ theorem LieTie.scale {Y : Scheme.{0}} {ψ : P.A.A.left ⟶ Y} {x : LieG P.Gt} {u
   · change (spMap (epsMul (algebraMap O C a)) ≫ u'.left) ≫ P.gen = _ ≫ spMap (epsMul a) ≫ xG.1.left
     rw [Category.assoc, h3, ← Category.assoc, ← Category.assoc, spMap_spMap, spMap_spMap]
     congr 2
-    ext s <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, TrivSqZeroExt.algebraMap_eq_inl]
+    ext s <;> simp [dualMap, epsMul, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem LieTie.act {Y : Scheme.{0}} {ψ : P.A.A.left ⟶ Y} {x : LieG P.Gt} {u : Sp (DualNumber C) ⟶ Y}
     (h : LieTie P ψ x u) (a : Λ) {f : Y ⟶ Y} (hf : (P.oA.act a).left ≫ ψ = ψ ≫ f) :
@@ -234,10 +234,10 @@ theorem LieTie.unique {Y S : Scheme.{0}} {ψ : P.A.A.left ⟶ Y} {s : Y ⟶ S} {
   obtain ⟨xG, w, h1, h2, h3⟩ := h
   obtain ⟨xG', w', h1', h2', h3'⟩ := h'
   have e1 : w.left = w'.left := hψ.hom_ext (h2.trans h2'.symm) ((Over.w w).trans (Over.w w').symm)
-  haveI : IsSchemeTheoreticallyDominant (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O C))) :=
+  haveI : IsSchemeTheoreticallyDominant (spMap (dualMap (algebraMap O C))) :=
     (schemeDominant_specMap_iff _).2 fun a b hab => TrivSqZeroExt.ext
-      (P.integers.hom_inj (by simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using congrArg TrivSqZeroExt.fst hab))
-      (P.integers.hom_inj (by simpa [GlobalTheory.CompanionTheory.Ar.dualMap, Algebra.algebraMap_eq_smul_one] using congrArg TrivSqZeroExt.snd hab))
+      (P.integers.hom_inj (by simpa [dualMap] using congrArg TrivSqZeroExt.fst hab))
+      (P.integers.hom_inj (by simpa [dualMap, Algebra.algebraMap_eq_smul_one] using congrArg TrivSqZeroExt.snd hab))
   haveI := P.semi.separated
   have e2 : xG.1 = xG'.1 := Over.OverMorphism.ext (ext_of_schDom P.G.hom
     ((Over.w xG.1).trans (Over.w xG'.1).symm) _ (by rw [← h3, ← h3', e1]))
@@ -245,41 +245,7 @@ theorem LieTie.unique {Y S : Scheme.{0}} {ψ : P.A.A.left ⟶ Y} {s : Y ⟶ S} {
   haveI := HodgeTateCompare.isLocalRing_dualNumber (O := O)
   have hp : ¬ IsUnit (p : DualNumber O) := fun h => (Fact.out : ¬ IsUnit (p : O)) (by
     simpa using h.map (TrivSqZeroExt.fstHom O O O))
-  have mem_pow (a : O) (n : ℕ) (x : O) :
-      x ∈ (Ideal.span {a} ^ n • ⊤ : Submodule O O) ↔ a ^ n ∣ x := by
-    rw [Ideal.span_singleton_pow, smul_eq_mul, Ideal.mul_top, Ideal.mem_span_singleton]
-  have dual_mem_pow (n : ℕ) (x : DualNumber O) :
-      x ∈ (Ideal.span {(p : DualNumber O)} ^ n • ⊤ : Submodule (DualNumber O) (DualNumber O)) ↔
-        (p : O) ^ n ∣ x.fst ∧ (p : O) ^ n ∣ x.snd := by
-    rw [Ideal.span_singleton_pow, smul_eq_mul, Ideal.mul_top, Ideal.mem_span_singleton]
-    have e : (p : DualNumber O) ^ n = TrivSqZeroExt.inl ((p : O) ^ n) := by
-      rw [← TrivSqZeroExt.inl_pow, TrivSqZeroExt.inl_natCast]
-    rw [e]
-    constructor
-    · rintro ⟨y, rfl⟩
-      exact ⟨⟨y.fst, by simp⟩, ⟨y.snd, by simp⟩⟩
-    · rintro ⟨⟨a, ha⟩, b, hb⟩
-      exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, by ext <;> simp [ha, hb]⟩
-  have hc : IsAdicComplete (Ideal.span {(p : DualNumber O)}) (DualNumber O) := by
-    have hbase : IsAdicComplete (Ideal.span {(p : O)}) O := inferInstance
-    refine { haus' := ?_, toIsPrecomplete := ?_ }
-    · intro x hx
-      simp only [SModEq.zero, dual_mem_pow] at hx
-      refine TrivSqZeroExt.ext (hbase.toIsHausdorff.haus' x.fst fun n => ?_)
-        (hbase.toIsHausdorff.haus' x.snd fun n => ?_)
-      · rw [SModEq.zero, mem_pow]; exact (hx n).1
-      · rw [SModEq.zero, mem_pow]; exact (hx n).2
-    ·
-      constructor
-      intro f hf
-      simp only [SModEq.sub_mem, dual_mem_pow] at hf ⊢
-      obtain ⟨a, ha⟩ := hbase.toIsPrecomplete.prec' (fun n => (f n).fst) fun {m n} hmn => by
-        rw [SModEq.sub_mem, mem_pow]; exact (hf hmn).1
-      obtain ⟨b, hb⟩ := hbase.toIsPrecomplete.prec' (fun n => (f n).snd) fun {m n} hmn => by
-        rw [SModEq.sub_mem, mem_pow]; exact (hf hmn).2
-      simp only [SModEq.sub_mem, mem_pow] at ha hb
-      exact ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, fun n => ⟨by simpa using ha n, by simpa using hb n⟩⟩
-  exact Subtype.ext ((existsUnique_left hp hc xG.1).unique h1 (e2 ▸ h1'))
+  exact Subtype.ext ((existsUnique_left hp (isAdicComplete_dualNumber p) xG.1).unique h1 (e2 ▸ h1'))
 
 
 

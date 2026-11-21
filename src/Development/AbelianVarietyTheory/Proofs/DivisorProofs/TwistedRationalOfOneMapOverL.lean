@@ -105,13 +105,13 @@ theorem evaluates (fw : FWTie T R κ v₀) (hU : R.LUnif) : fw.Evaluates := by
   have h1 : f = 0 := by
     by_contra hf
     have h2 : ((fw.e i f : (R.FW i).WK) : Fin (R.nW i) → D.what₂.LL) ≠ 0 := fun h =>
-      hf ((fw.e i).injective ((Subtype.ext h).trans (map_zero _).symm))
+      hf ((fw.e i).injective ((Subtype.ext h).trans (fw.e i).map_zero.symm))
     exact ((hU i σ).1 1 _ (linearIndependent_unique_iff.2 h2 : LinearIndependent _ fun _ : Fin 1 => _)).ne_zero 0
       (by rw [h0]; rfl)
   have key : ∀ (σ' : T.Q.c.F →+* ℂ) (W : HSp D) (hV : T.V ((i : ℕ) + 1) σ' = W),
       phiC T hV (wtA (κ i)) (0 : T.R ((i : ℕ) + 1)) = 0 := by
     rintro σ' W rfl
-    show (_ : ℂ) • adel _ _ _ (rdU _ 0) = 0
+    show (_ : ℂ) • adel _ _ _ (rdU (T.U ((i : ℕ) + 1) σ') (0 : T.R ((i : ℕ) + 1))) = 0
     rw [map_zero, map_zero, smul_zero]
   subst h1
   refine Eq.trans ?_ (key _ _ hV).symm

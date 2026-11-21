@@ -185,7 +185,7 @@ theorem graphIdeal_eq {K σ₁ σ₂ : Type} [CommRing K] (s : Y ⟶ Sp K) (h₁
     let φ := algebraMap R (Localization.AtPrime J)
     obtain ⟨v₁, e₁⟩ := exists_secCoord_local h₁ th₁ ((spMap φ ≫ y) ≫ a₁)
     obtain ⟨v₂, e₂⟩ := exists_secCoord_local h₂ th₂ ((spMap φ ≫ y) ≫ a₂)
-    obtain ⟨u, hu⟩ := Coord.unique (isLB_tens (LB.isLB_pull h₁ a₁) (LB.isLB_pull h₂ a₂)) (secCoord_prod a₁ a₂ e₁ e₂)
+    obtain ⟨u, hu⟩ := Coord.unique (isLB_tens (pull_isLB h₁ a₁) (pull_isLB h₂ a₂)) (secCoord_prod a₁ a₂ e₁ e₂)
       (Coord.baseChange hv φ)
     have := h _ _ (φ.comp β) (spMap φ ≫ y) _ v₂ ⟨by rw [Category.assoc, hy, ← spMap_comp], Coord.scale e₁ u, e₂⟩
     refine Eq.trans ?_ this
@@ -220,7 +220,7 @@ theorem vAmp_prod {K σ₁ σ₂ : Type} [Field K] {p₁ : X₁ ⟶ Sp K} {p₂ 
   have hW : IsAffineOpen (a₁ ⁻¹ᵁ Out.nonzeroLocus (th₁ i)) := (f₁ i).preimage a₁
   have hV : IsAffineOpen (Out.nonzeroLocus (prodSec a₁ a₂ (th₁ i) (th₂ i'))) := by
     rw [eV, inf_comm, ← nonzeroLocus_pull M₂]
-    exact isAffineOpen_nonzeroLocus_inf (LB.isLB_pull h₂ a₂) _ hW
+    exact isAffineOpen_nonzeroLocus_inf (pull_isLB h₂ a₂) _ hW
   have l₁ := eV.le.trans inf_le_left
   have l₂ := eV.le.trans inf_le_right
   let r : σ₁ × σ₂ → Γ(Y, Out.nonzeroLocus (prodSec a₁ a₂ (th₁ i) (th₂ i'))) := fun j =>
@@ -267,8 +267,8 @@ end Product
 
 theorem exists_product_system : ∀ (K σ₁ σ₂ : Type) [Field K] [Finite σ₁] [Finite σ₂] (Y X₁ X₂ : Scheme.{0}) (s : Y ⟶ Sp K) (p₁ : X₁ ⟶ Sp K) (p₂ : X₂ ⟶ Sp K) (M₁ : LB X₁) (M₂ : LB X₂) (th₁ : σ₁ → M₁.Sec) (th₂ : σ₂ → M₂.Sec) (a₁ : Y ⟶ X₁) (a₂ : Y ⟶ X₂), M₁.IsLB → M₂.IsLB → VAmp p₁ M₁ th₁ → VAmp p₂ M₂ th₂ → IsClosedImmersion a₁ → a₁ ≫ p₁ = s → a₂ ≫ p₂ = s → ∃ (M : LB Y) (th : σ₁ × σ₂ → M.Sec), M.IsLB ∧ VAmp s M th ∧ LBIso (LB.div M (M₁.pull a₁)) (M₂.pull a₂) ∧ graphIdeal s M₁ th₁ a₁ M₂ th₂ a₂ = idealOf s M th (𝟙 Y) ∧ (∀ (R : Type) [CommRing R] (y : Sp R ⟶ Y) v₁ v₂, SecCoord M₁ th₁ (y ≫ a₁) v₁ → SecCoord M₂ th₂ (y ≫ a₂) v₂ → SecCoord M th y (fun i => v₁ i.1 * v₂ i.2)) ∧ ∀ i i' : σ₁ × σ₂, (∀ j, (th₁ i.1).f j = (th₁ i'.1).f j) → (∀ j, (th₂ i.2).f j = (th₂ i'.2).f j) → ∀ j, (th i).f j = (th i').f j := by
   intro K σ₁ σ₂ _ _ _ Y X₁ X₂ s p₁ p₂ M₁ M₂ th₁ th₂ a₁ a₂ h₁ h₂ V₁ V₂ _ e₁ _
-  have k₁ := LB.isLB_pull h₁ a₁
-  have k₂ := LB.isLB_pull h₂ a₂
+  have k₁ := pull_isLB h₁ a₁
+  have k₂ := pull_isLB h₂ a₂
   have k := isLB_tens k₁ k₂
   refine ⟨_, fun i => prodSec a₁ a₂ (th₁ i.1) (th₂ i.2), k, e₁ ▸ vAmp_prod a₁ a₂ h₁ h₂ V₁ V₂, ?_,
     graphIdeal_eq a₁ a₂ s h₁ h₂ th₁ th₂, fun R _ y v₁ v₂ => secCoord_prod a₁ a₂, fun i i' u₁ u₂ j => ?_⟩

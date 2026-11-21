@@ -47,8 +47,10 @@ private theorem denseRange_unitsR : DenseRange (Units.map (diagR E).toMonoidHom)
   exact ⟨v, hv, Units.mk0 k h0, Units.ext hk.symm⟩
 private theorem diagR_mk (φ : E →+* ℂ) (k : E) : ((diagR E k (InfinitePlace.mk φ) : ℝ) : ℂ) = φ k := by
   have hr := IsTotallyReal.isReal (InfinitePlace.mk φ)
-  have e : diagR E k (InfinitePlace.mk φ) = InfinitePlace.embedding_of_isReal hr k :=
-    InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hr (WithAbs.toAbs _ k)
+  have e : diagR E k (InfinitePlace.mk φ) = InfinitePlace.embedding_of_isReal hr k := by
+    change InfinitePlace.Completion.extensionEmbeddingOfIsReal hr (algebraMap E (InfinitePlace.mk φ).Completion k) = _
+    rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply, Algebra.algebraMap_self_apply]
+    simpa using InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hr (WithAbs.toAbs _ k)
   rw [e, InfinitePlace.embedding_of_isReal_apply,
     InfinitePlace.embedding_mk_eq_of_isReal (InfinitePlace.isReal_mk_iff.1 hr)]
 private theorem chiInf_pos {χ : HChar E} {n : (E →+* ℂ) → ℤ} (h : IsAlgPos χ n) (u : (TR.Rinf E)ˣ)

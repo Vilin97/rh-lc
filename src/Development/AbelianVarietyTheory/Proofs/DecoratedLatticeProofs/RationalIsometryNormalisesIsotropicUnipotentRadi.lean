@@ -65,14 +65,14 @@ theorem norm : ∀ (D : D7) (V : HSp D) (r : ℕ) (C : Matrix (Fin V.rank) (Fin 
 
   have hΔ : mt V δ = δ₀.map (incA D) := hδ₀
   have hΔi : mt V δ⁻¹ = δi.map (incA D) := by rw [hδi]; exact e2
-  have hΓiL : mt V δ⁻¹ ⋆ₘ C.map (incA D) = C.map (incA D) ⋆ₘ (G⁻¹).map (incA D) := by
+  have hΓiL : mt V δ⁻¹ * C.map (incA D) = C.map (incA D) * (G⁻¹).map (incA D) := by
     rw [hΔi, ← Matrix.map_mul, hiC, Matrix.map_mul]
-  have hPΓ : P.map (incA D) ⋆ₘ mt V δ = (Formalism.UG.cT σ G⁻¹).map (incA D) ⋆ₘ P.map (incA D) := by
+  have hPΓ : P.map (incA D) * mt V δ = (Formalism.UG.cT σ G⁻¹).map (incA D) * P.map (incA D) := by
     rw [hΔ, ← Matrix.map_mul, hPδ, Matrix.map_mul]
   have key : NI V C ≤ (NI V C).comap (MulAut.conj δ).toMonoidHom := by
     refine (Subgroup.closure_le _).2 fun m hm => ?_
-    have h1 : (mt V m - 1) ⋆ₘ C.map (incA D) = 0 := hm.1
-    have h2 : P.map (incA D) ⋆ₘ (mt V m - 1) = 0 := by
+    have h1 : (mt V m - 1) * C.map (incA D) = 0 := hm.1
+    have h2 : P.map (incA D) * (mt V m - 1) = 0 := by
       have := hm.2.1
       rw [hP, hσ, hJ]; exact this
     have h3 : ∀ x : Fin V.rank → D.host.E, P *ᵥ x = 0 → ∃ a : Fin r → AE D,
@@ -80,11 +80,11 @@ theorem norm : ∀ (D : D7) (V : HSp D) (r : ℕ) (C : Matrix (Fin V.rank) (Fin 
       rw [hP, hσ, hJ]; exact hm.2.2
     rw [SetLike.mem_coe, Subgroup.mem_comap, MulEquiv.coe_toMonoidHom, MulAut.conj_apply]
     refine Subgroup.subset_closure ⟨?_, ?_, ?_⟩
-    · show (mt V (δ * m * δ⁻¹) - 1) ⋆ₘ C.map (incA D) = 0
+    · show (mt V (δ * m * δ⁻¹) - 1) * C.map (incA D) = 0
       rw [GlobalTheory.FrameStab.mt_conj_sub_one]
       simp only [Matrix.mul_assoc]
       rw [hΓiL, ← Matrix.mul_assoc (mt V m - 1), h1, Matrix.zero_mul, Matrix.mul_zero]
-    · have c2 : P.map (incA D) ⋆ₘ (mt V (δ * m * δ⁻¹) - 1) = 0 := by
+    · have c2 : P.map (incA D) * (mt V (δ * m * δ⁻¹) - 1) = 0 := by
         rw [GlobalTheory.FrameStab.mt_conj_sub_one]
         simp only [← Matrix.mul_assoc]
         rw [hPΓ]

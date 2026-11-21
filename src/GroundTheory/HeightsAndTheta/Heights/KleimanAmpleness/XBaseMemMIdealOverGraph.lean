@@ -28,6 +28,7 @@ theorem X_base_mem_mIdealOver_graph (s : Fin m → Ω) {i : Fin (N + 1)} (hi : x
     (X ⟨baseBlock, i⟩ : NumbersDVR.MRing (graphIdx N m) S) ∈ mIdealOver S (graphVec x s) := by
   change mConeMapOver S (graphVec x s) (X _) = 0
   simp [mConeMapOver, hi]
+  exact hi
 
 end Zero
 

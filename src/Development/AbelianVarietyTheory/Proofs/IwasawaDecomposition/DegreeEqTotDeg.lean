@@ -108,8 +108,9 @@ theorem finite_mem {E : Type} [Field E] [NumberField E] {a : 𝓞 E} (ha : a ≠
   simpa only [Ideal.dvd_span_singleton] using Ideal.finite_factors (I := Ideal.span {a}) (by simpa using ha)
 
 theorem badPrimes_finite₂ (P : Pre) {Ξ : Set (HChar P.host.E)} (h : Ξ.Finite) : (badP P Ξ).Finite := by
+  have hfin : {ξ ∈ Ξ | (ramSet P.host ξ).Finite}.Finite := h.subset fun _ hξ => hξ.1
   refine ((Set.finite_iUnion fun u => finite_mem ?_).union (Set.finite_iUnion fun i => finite_mem ?_)).union
-    ((h.subset fun _ hξ => hξ.1).biUnion fun ξ hξ => Set.Finite.biUnion hξ.2 fun v _ => ?_)
+    (hfin.biUnion fun ξ hξ => Set.Finite.biUnion hξ.2 fun v _ => ?_)
   · exact Nat.cast_ne_zero.2 (P.T_prime u).ne_zero
   · exact Nat.cast_ne_zero.2 (P.host.g_prime i).ne_zero
   · obtain ⟨a, ha, h0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot v.ne_bot

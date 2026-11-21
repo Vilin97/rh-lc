@@ -52,7 +52,7 @@ theorem top_le_transl {K : Type} [Field K] {A : Over (Sp K)} [GrpObj A] {B : Typ
 
 theorem transl_spMap {K : Type} [Field K] {A : Over (Sp K)} [GrpObj A] {B B' : Type} [CommRing B] [CommRing B']
     (φ : K →+* B) (σ : B →+* B') (x : Sp B ⟶ A.left) (hx : x ≫ A.hom = spMap φ) (v : epsR K ⟶ A) :
-    transl (σ.comp φ) (spMap σ ≫ x) v = spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ transl φ x v := by
+    transl (σ.comp φ) (spMap σ ≫ x) v = spMap (dualMap σ) ≫ transl φ x v := by
   have hx' : (spMap σ ≫ x) ≫ A.hom = spMap (σ.comp φ) := by
     rw [Category.assoc, hx, Cris.spMap_comp]
   exact (isTransl_transl _ _ hx' v).unique ((isTransl_transl φ x hx v).map σ)
@@ -63,8 +63,8 @@ theorem baseMap_eq {K : Type} [Field K] {B B' : Type} [CommRing B] [Algebra (Dua
   RingHom.ext fun k ↦ by simp [baseMap]
 
 theorem dualMap_snd {B B' : Type} [CommRing B] [CommRing B'] (σ : B →+* B') (c : DualNumber B) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap σ c).snd = σ c.snd := by
-  simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    (dualMap σ c).snd = σ c.snd := by
+  simp [dualMap]
 
 section Map
 
@@ -91,7 +91,7 @@ theorem chartVal_spMap {Z : Scheme.{0}} (m : A.left ⟶ Z) (Ω : Z.Opens) (δ : 
   have hd : ∀ b, dlogAt (baseMap K B') (spMap (ρ : B →+* B') ≫ x) (u b) Wo g =
       ρ (dlogAt (baseMap K B) x (u b) Wo g) := fun b ↦ dlogAt_spMap ρ hx (hut b) g hxWo
   have htr : ∀ a, transl (baseMap K B') (spMap (ρ : B →+* B') ≫ x) (u a) =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ρ : B →+* B')) ≫ transl (baseMap K B) x (u a) := fun a ↦ by
+      spMap (dualMap (ρ : B →+* B')) ≫ transl (baseMap K B) x (u a) := fun a ↦ by
     rw [baseMap_eq ρ]; exact transl_spMap _ _ x hx (u a)
   simp only [chartVal, hd, htr, Category.assoc]
   set_option synthInstance.maxHeartbeats 100000 in

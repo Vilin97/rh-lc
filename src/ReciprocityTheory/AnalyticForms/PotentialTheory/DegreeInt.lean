@@ -58,6 +58,8 @@ theorem integralWith_localize_support [CompactSpace X] [T2Space X] (A : FinHolAt
   rw [Finset.sum_congr rfl (fun j _ => h2 j),
     ← MeasureTheory.integral_finsetSum Finset.univ (fun j _ => hk j)]
   congr 1
+  funext y
+  rw [← Finset.sum_mul, ← Finset.sum_mul, P.sum_eq_one, one_mul]
 
 theorem exists_sheet_partition [CompactSpace Y] [T2Space Y] [CompactSpace X] [T2Space X]
     {A : FinHolAtlas e X} {B : FinHolAtlas e Y} {h : Y → X} (hh : HoloMap B A h) {d : ℕ}

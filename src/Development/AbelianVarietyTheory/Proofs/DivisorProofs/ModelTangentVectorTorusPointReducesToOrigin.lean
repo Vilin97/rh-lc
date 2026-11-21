@@ -25,15 +25,15 @@ variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R}
   {D : DegData R I} {A : PolAV (Sp (FractionRing R))} {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G]
 
 theorem redE_dualMap (e : ℕ) :
-    redE (R ⧸ I ^ (e + 1)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) = thick R I e ≫ redE R := by
+    redE (R ⧸ I ^ (e + 1)) ≫ spMap (dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) = thick R I e ≫ redE R := by
   show spMap _ ≫ spMap _ = Spec.map _ ≫ spMap _
   rw [← Spec.map_comp, ← Spec.map_comp]
   congr 1
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem red_lift_eq_eSec (y : epsR R ⟶ G) (hy : IsTangent y) (e : ℕ)
     (ye : Sp (DualNumber (R ⧸ I ^ (e + 1))) ⟶ (thickObj R I e G).left)
-    (h1 : ye ≫ (fstG I e G).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ y.left) :
+    (h1 : ye ≫ (fstG I e G).left = spMap (dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ y.left) :
     redE (R ⧸ I ^ (e + 1)) ≫ ye = eSec (thickObj R I e G) := by
   rw [← cancel_mono (fstG I e G).left, Category.assoc, h1, ← Category.assoc, redE_dualMap, Category.assoc]
   have hy' : redE R ≫ y.left = η[G].left := hy

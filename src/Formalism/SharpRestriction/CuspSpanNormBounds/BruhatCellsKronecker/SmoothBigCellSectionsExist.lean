@@ -63,15 +63,9 @@ end RowsAbstract
 
 theorem ptEntry_col {K : Type} [Zero K] : ∀ (bs : List (K × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 ∧ 1 ≤ b.2) →
     ∀ j, j < (bs.map Prod.snd).sum → ∃ i, i < (bs.map Prod.snd).sum ∧ ∃ t : K, t ≠ 0 ∧
-      ∀ j', ptEntry bs i j' = if j' = j then t else 0 := by
-  intro bs
-  induction bs with
-  | nil =>
-    intro _ j hj
-    simp at hj
-  | cons block rest ih =>
-    obtain ⟨t, s⟩ := block
-    intro h j hj
+      ∀ j', ptEntry bs i j' = if j' = j then t else 0
+  | [], _, j, hj => absurd hj (by simp)
+  | (t, s) :: rest, h, j, hj => by
     simp only [List.map_cons, List.sum_cons] at hj ⊢
     by_cases hjs : j < s
     · refine ⟨s - 1 - j, by omega, t, (h (t, s) (by simp)).1, fun j' => ?_⟩
@@ -83,7 +77,7 @@ theorem ptEntry_col {K : Type} [Zero K] : ∀ (bs : List (K × ℕ)), (∀ b ∈
         by_cases h2 : j' < s
         · rw [if_pos ⟨by omega, h2⟩, if_neg (by omega)]
         · rw [if_neg (fun hh => h2 hh.2), if_neg (fun hh => by omega)]
-    · obtain ⟨i0, hi0, t0, ht0, h0⟩ := ih (fun b hb => h b (List.mem_cons_of_mem _ hb)) (j - s) (by omega)
+    · obtain ⟨i0, hi0, t0, ht0, h0⟩ := ptEntry_col rest (fun b hb => h b (by simp [hb])) (j - s) (by omega)
       refine ⟨i0 + s, by omega, t0, ht0, fun j' => ?_⟩
       simp only [ptEntry]
       rw [if_neg (fun hh => by omega)]

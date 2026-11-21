@@ -29,10 +29,10 @@ theorem tri_of_isFrameAt {Y : Model Xo c (RingHom.id c.F)} {Z : Scheme.{0}} {π 
     (hz' : ⊤ ≤ z ⁻¹ᵁ F.U k') (g g' : EigFrame Y φ (z ≫ π)) (hg : IsFrameAt F z k hz g)
     (hg' : IsFrameAt F z k' hz' g') : ∃ d, g.Tri (RingHom.id S) g' d := by
   have hh := GlobalTheory.FlagMod.le_preimage_inf hz hz'
-  have h1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id S)) = 𝟙 _ := by
+  have h1 : spMap (dualMap (RingHom.id S)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    ext r <;> simp [dualMap]
   have h2 : spMap (RingHom.id S) = 𝟙 _ := Spec.map_id _
   refine ⟨fun τ i => F.TAt k k' z hh (some ⟨τ, i⟩), by rw [h2, Category.id_comp], rfl, fun τ i =>
     ⟨fun j => (F.B k k' τ).map (GlobalTheory.FlagMod.ev z _ hh) j i, rfl, fun j hj => F.B_map_tri k k' τ _ hj, ?_⟩⟩

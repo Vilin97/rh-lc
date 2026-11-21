@@ -55,7 +55,7 @@ theorem facts : PeriodRingFacts := fun l _ K =>
     thetaSetup_structureMap_comp := fun z => by
       show algebraMap (BdRp l) (BdR l) (ACris.iota ℂ_[l] l (algebraMap (AInf ℂ_[l] l) (ACris.ACris ℂ_[l] l)
         (IsPerfectoidField.padicIntToWitt l z))) = algebraMap (BdRp l) (BdR l) (algebraMap ℚ_[l] (BdRp l) (z : ℚ_[l]))
-      rw [ACris.iota_padicInt]
+      exact congrArg _ (ACris.iota_padicInt z)
     frobenius_period := ACris.phi_periodT_eq_mul (untilt_epsilon (p := l))
     t_ne := DeRhamTwist.Twist.tQ_ne
     t_mem := ⟨ACris.iota ℂ_[l] l (tA l), rfl⟩

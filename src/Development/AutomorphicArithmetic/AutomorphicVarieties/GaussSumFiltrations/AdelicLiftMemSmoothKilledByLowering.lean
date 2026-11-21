@@ -93,7 +93,7 @@ theorem GlobalTheory.HilbertThetaSeries.lift_smooth_lowering : ∀ (F : Type) [F
         show ((u⁻¹ : GL (Fin 2) (InfinitePlace F → ℝ)) : Matrix _ _ _) * u.val = 1
         simp
       rw [this]; simp
-    · refine (hA2.comp_inter L.contDiff.contDiffOn).congr ?_
+    · refine (hA2.comp L.contDiff.contDiffOn fun y hy => hy.2).congr ?_
       intro y hy
       have hy1 : IsUnit (Matrix.of y) := hy.1
       obtain ⟨w, hw⟩ := hy1

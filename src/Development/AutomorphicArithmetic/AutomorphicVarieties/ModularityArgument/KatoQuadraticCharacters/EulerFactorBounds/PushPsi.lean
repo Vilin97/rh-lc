@@ -70,7 +70,7 @@ theorem UpperTheory.V.Z.Kato.Nb.sPushPsi :
     · exact hc r s s' _
     · simp
   · simp only [Finset.sum_apply]
-    refine continuous_finsetSum _ fun t _ => ?_
+    refine continuous_finset_sum _ fun t _ => ?_
     split_ifs
     · exact hcont r _ i
     · exact continuous_const

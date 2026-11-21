@@ -112,7 +112,7 @@ theorem dim_eq : dimFlag (dat p i) = D.R.f * D.R.r.choose 2 := by
 
 theorem cols_eq : (p.κ i).n = D.R.nV := by
   have hne : Nonempty D.what₂.Tau := Fintype.card_pos_iff.1 (by
-    rw [D.what₂.card_Tau]; unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega)
+    rw [D.what₂.card_Tau]; unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) D.R.ord_pos; omega)
   obtain ⟨t⟩ := hne
   exact (p.fw.kap i t).2.2
 

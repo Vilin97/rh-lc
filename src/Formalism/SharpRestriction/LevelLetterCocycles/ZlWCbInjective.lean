@@ -42,7 +42,8 @@ theorem oneT_inj_gen {G : Type} [Group G] [TopologicalSpace G] (LL : FinExt l)
     (Algebra.linearMap ↥(OL LL) (RW LL)) (O_RW_injective LL)
   have h2 := h1.comp (TensorProduct.lid ↥(OL LL) ↥T.L.T).symm.injective
   convert h2 using 1
-  rw [Algebra.TensorProduct.one_def]
+  funext t
+  simp [Algebra.TensorProduct.one_def]
 
 theorem oneInj_sit (LT : LocTheory) (HW : HWOf LT) (AI : LocAinf l (LT l)) (K : FinExt l) (s : ℕ)
     (LL : FinExt l) (h : Good K s LL) : OneInj (sit LT HW l AI K s LL h) :=

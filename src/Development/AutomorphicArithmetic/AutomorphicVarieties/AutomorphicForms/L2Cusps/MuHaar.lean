@@ -51,7 +51,7 @@ private theorem band_mul_left (x : G1 E a) (g : GA E a) : (x : GA E a) * g ∈ b
   simp only [band, Set.mem_setOf_eq, map_mul, (mem_normOneGL_iff_detModule).1 x.2, one_mul]
 
 private theorem isCompact_posIcc (s t : {r : ℝ // 0 < r}) : IsCompact (Set.Icc s t) := by
-  refine (Topology.IsInducing.subtypeVal (t := {r : ℝ | 0 < r})).isCompact_iff.2 ?_
+  refine Topology.IsInducing.subtypeVal.isCompact_iff.2 ?_
   convert isCompact_Icc (a := (s : ℝ)) (b := (t : ℝ)) using 1
   ext x
   constructor

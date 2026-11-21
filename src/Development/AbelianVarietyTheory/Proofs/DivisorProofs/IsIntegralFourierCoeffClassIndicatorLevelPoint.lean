@@ -43,7 +43,7 @@ theorem sum_padicValNat_mul_le (v : ℕ → ℤ) (hv : ∀ a b, a ≠ 0 → b �
     intro N
     induction N using Nat.recOnMul with
     | zero => exact fun h => absurd rfl h
-    | one => intro _; simp [h1]
+    | one => intro _; simp [Nat.padicValNat_def, h1]
     | prime l hl =>
       intro _
       have : ∀ p ∈ s, (padicValNat p l : ℤ) * v p = if p = l then v l else 0 := by
@@ -51,8 +51,8 @@ theorem sum_padicValNat_mul_le (v : ℕ → ℤ) (hv : ∀ a b, a ≠ 0 → b �
         haveI := Fact.mk (hs p hp)
         haveI := Fact.mk hl
         split_ifs with h
-        · subst h; simp
-        · rw [padicValNat_primes h]; simp
+        · subst h; simp [Nat.padicValNat_def, Nat.Prime.multiplicity_self]
+        · simp [Nat.padicValNat_def, multiplicity_primes h]
       rw [Finset.sum_congr rfl this, Finset.sum_ite_eq']
       split_ifs
       exacts [le_rfl, h0 _]

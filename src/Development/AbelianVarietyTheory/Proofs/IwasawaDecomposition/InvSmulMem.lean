@@ -264,16 +264,16 @@ theorem isPt_up (hI : I.Ok) (l : I.Laws) (u : B.Word) (a : I.ι) (i : ℕ) {Ch :
 
 set_option maxHeartbeats 1000000 in
 theorem sub_mem (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m)
-    (L : LevelCompatibleLattices (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (I.fm l u a) (B.T u) (I.resT l u a) i hi fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c))
+    (L : LevelCompatibleLattices (D := (I.rec7 l Z)) (I.fm l u a) (B.T u) (I.resT l u a) i hi fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c))
     (hL : I.IdL l Z u a i hi L) (v : (I.atT l u a).vT) (c : (I.stp u a i).Cl)
-    (z : LdG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c)))
+    (z : LdG (I.rec7 l Z) i hi (latCrd (I.rec7 l Z) i hi (I.latAt u a i c)))
     (x : ((I.atIn u a).A i).N c.1 ((I.stp u a i).rep c)) (hx : Submodule.Quotient.mk x = L.pr v c z) :
     @HSub.hSub (Sp B.fields.E (B.R.N i)) (Sp B.fields.E (B.R.N i)) _ _ z.1 x.1 ∈ v.1.asIdeal • Formalism.HermitianLatticesTheory.dual (hStd B.host.E (B.R.N i)) ((I.stp u a i).rep c).1.1.deco.1.L := by
-  have e : LdG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c)) =
+  have e : LdG (I.rec7 l Z) i hi (latCrd (I.rec7 l Z) i hi (I.latAt u a i c)) =
       Formalism.HermitianLatticesTheory.dual (hStd B.host.E (B.R.N i)) ((I.stp u a i).rep c).1.1.deco.1.L :=
     (_root_.GlobalTheory.Mem.Col2.TC.ldG_eq_dual_hStd I hI hP l Z u a i hi _).trans
       (congrArg _ ((((spaces_in_coordinates I hI hP l Z).2.2.2 i hi).2.2 u a).1 c))
-  have hm : x.1 ∈ LdG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c)) :=
+  have hm : x.1 ∈ LdG (I.rec7 l Z) i hi (latCrd (I.rec7 l Z) i hi (I.latAt u a i c)) :=
     e.ge (((I.stp u a i).rep c).1.1.deco.2.N_le_Lsh x.2)
   have h1 : L.pr v c ⟨x.1, hm⟩ = L.pr v c z := (hL.1 v c ⟨x.1, hm⟩ x.2).trans hx
   have h2 := (L.pr_ker v c (z - ⟨x.1, hm⟩)).1 (by rw [map_sub, h1, sub_self])
@@ -282,14 +282,14 @@ theorem sub_mem (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.c
 
 
 set_option maxHeartbeats 4000000 in
-theorem upNatTie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (bad : Set (HeightOneSpectrum (𝓞 B.host.F))) (Ch : Type) (chOf : (I.stp u a i).Cl → Ch) (K : ∀ β : Ch, LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1) (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c.1))) (eY : (I.chain l u a).Y i ≃ Formalism.L2.Forms.Fr (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (eV : (I.atT l u a).vT ≃ {v : HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) // (B.T u : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∈ v.asIdeal}) (L : LevelCompatibleLattices (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (I.fm l u a) (B.T u) (I.resT l u a) i hi fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c)), I.ReadsK l Z u a i hi chOf K → I.IdY l Z u a i hi eY → I.IdV l u a eV → I.IdL l Z u a i hi L → UpNatTieG L eY eV K := by
+theorem upNatTie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (bad : Set (HeightOneSpectrum (𝓞 B.host.F))) (Ch : Type) (chOf : (I.stp u a i).Cl → Ch) (K : ∀ β : Ch, LevelChart (I.rec7 l Z) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1) (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c.1))) (eY : (I.chain l u a).Y i ≃ Formalism.L2.Forms.Fr (I.rec7 l Z) i hi) (eV : (I.atT l u a).vT ≃ {v : HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) // (B.T u : 𝓞 (I.rec7 l Z).host.F) ∈ v.asIdeal}) (L : LevelCompatibleLattices (D := (I.rec7 l Z)) (I.fm l u a) (B.T u) (I.resT l u a) i hi fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c)), I.ReadsK l Z u a i hi chOf K → I.IdY l Z u a i hi eY → I.IdV l u a eV → I.IdL l Z u a i hi L → UpNatTieG L eY eV K := by
   intro B X I hI hP l Z u a i hi bad Ch chOf K eY eV L hK hY hV hL
   rintro v _ ⟨c, rfl⟩ z hz
   have hch := _root_.GlobalTheory.Mem.Col2.TC.up_keeps_chart I hI hP l Z u a i hi chOf K hK v c _ hz
   obtain ⟨k, hR⟩ := hK
   have hJ := ((spaces_in_coordinates I hI hP l Z).2.2.2 i hi).1
   have hlat := (((spaces_in_coordinates I hI hP l Z).2.2.2 i hi).2.2 u a).1
-  have hD : ∀ c, LdG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c)) =
+  have hD : ∀ c, LdG (I.rec7 l Z) i hi (latCrd (I.rec7 l Z) i hi (I.latAt u a i c)) =
       Formalism.HermitianLatticesTheory.dual (hStd B.host.E (B.R.N i)) ((I.stp u a i).rep c).1.1.deco.1.L := fun c =>
     (_root_.GlobalTheory.Mem.Col2.TC.ldG_eq_dual_hStd I hI hP l Z u a i hi _).trans (congrArg _ (hlat c))
   have hy : ∀ β (c : {c // chOf c = β}), ((K β).y c).1 = ((K (chOf c.1)).y ⟨c.1, rfl⟩).1 := by
@@ -298,7 +298,7 @@ theorem upNatTie : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.P
   have e2 : PvG (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (I.resT l u a) v = v.1.asIdeal := Ideal.mk_ker (R := 𝓞 B.fields.E) (I := v.1.asIdeal)
   obtain ⟨δ, hδ, hδ1, hδ2⟩ := isPt_up I hI l u a i hR v c (L.pr v c z) hz
   obtain ⟨κ, hκ1, hκ2⟩ := exists_level I hI l u a i hR v c (L.pr v c z) hz hch δ hδ2 (chOf c) hch
-  have hδ' : δ ∈ UPts (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) := by
+  have hδ' : δ ∈ UPts (sigD (I.rec7 l Z)) (gramN (I.rec7 l Z) i hi) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F) := by
     rw [hJ]
     exact hδ
   have hg := (I.stp u a i).mv_smul c.1 (upperParabolic I u a i v c (L.pr v c z))

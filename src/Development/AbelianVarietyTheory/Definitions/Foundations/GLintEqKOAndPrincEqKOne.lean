@@ -758,7 +758,7 @@ theorem not_isUnit_of_one_lt {x : 𝓞 E} (hx : ∀ w : InfinitePlace E, 1 < w x
   have h2 := isUnit_iff_norm.1 hu
   rw [RingOfIntegers.coe_norm] at h2
   rw [h2, Rat.cast_one, ← Finset.prod_const_one (s := (Finset.univ : Finset (InfinitePlace E)))] at h1
-  exact (Finset.prod_lt_prod_of_nonempty₀ (fun _ _ => one_pos)
+  exact (Finset.prod_lt_prod_of_nonempty (fun _ _ => one_pos)
     (fun w _ => one_lt_pow₀ (hx w) InfinitePlace.mult_pos.ne') Finset.univ_nonempty).ne' h1
 
 theorem exists_split_place (h : IsCMExt F E σ) : ∃ v : HeightOneSpectrum (𝓞 F), Nonempty (E →ₐ[F] Fv F v) := by

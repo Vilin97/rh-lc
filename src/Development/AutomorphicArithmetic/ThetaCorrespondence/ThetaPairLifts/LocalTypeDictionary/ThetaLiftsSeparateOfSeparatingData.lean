@@ -74,13 +74,13 @@ theorem theta_lifts_separate_of_separating_data : _root_.GlobalTheory.FunPr.Thet
     intro y y'; rw [MultilinearMap.map_update_add, map_add (f := _)]
   have hEs : ∀ (a : ℂ) (y : Wt τ), e (PiTensorProduct.tprod ℂ (Function.update x τ (a • y))) =
       a • e (PiTensorProduct.tprod ℂ (Function.update x τ y)) := by
-    intro a y; rw [MultilinearMap.map_update_smul, map_smul]
+    intro a y; rw [MultilinearMap.map_update_smul, map_smul]; simp
   have hV : ∀ (u u' : MB.sm τ), F' (PiTensorProduct.tprod ℂ (Function.update v τ (u + u'))) =
       F' (PiTensorProduct.tprod ℂ (Function.update v τ u)) + F' (PiTensorProduct.tprod ℂ (Function.update v τ u')) := by
     intro u u'; rw [MultilinearMap.map_update_add, map_add (f := _)]
   have hVs : ∀ (a : ℂ) (u : MB.sm τ), F' (PiTensorProduct.tprod ℂ (Function.update v τ (a • u))) =
       a • F' (PiTensorProduct.tprod ℂ (Function.update v τ u)) := by
-    intro a u; rw [MultilinearMap.map_update_smul, map_smul]
+    intro a u; rw [MultilinearMap.map_update_smul, map_smul]; simp
   have hF1 : ∀ (g : Matrix (Fin (G.V (.grid D.R.m 0)).rank) (Fin (G.V (.grid D.R.m 0)).rank) ℂ),
       g ∈ Formalism.QuantumDeterminants.UH (gramAt D (G.V (.grid D.R.m 0)) τ) → ∀ (x₁ y₁ : MB.sm τ), (y₁ : MB.H τ) = MB.rep τ g x₁ →
       F' (PiTensorProduct.tprod ℂ (Function.update v τ y₁)) =

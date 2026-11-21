@@ -97,7 +97,41 @@ theorem mj_full (hK : A.IsKsForm) (hM : A.MKFull) (J0 : Subgroup G0) (lam0 : J0 
   refine ⟨e ▸ h.fg.map _, ?_⟩
   rw [e]
   show Submodule.span LL ((A.Wgood J0 lam0 eC).subtype '' _) = _
-  rw [Submodule.span_image, h.span_eq_top, Submodule.map_subtype_top]
+  rw [Submodule.span_image]
+  have hspan : Submodule.span LL (Submodule.span (𝓞 LL) (A.MK : Set WL) : Set WL) = ⊤ := by
+    obtain ⟨n, b, hb, -, -, -, hbt⟩ := hK
+    apply top_unique
+    rw [← hbt]
+    apply Submodule.span_le.mpr
+    rintro x ⟨i, rfl⟩
+    have hx : b i ∈ Submodule.span Ks (A.MK : Set WL) := hM.2 ▸ hb i
+    have hs : Submodule.span Ks (A.MK : Set WL) ≤
+        (Submodule.span LL (Submodule.span (𝓞 LL) (A.MK : Set WL) : Set WL)).restrictScalars Ks := by
+      apply Submodule.span_le.mpr
+      intro x hx
+      exact Submodule.subset_span (Submodule.subset_span hx)
+    exact hs hx
+  have htop : Submodule.span LL
+      (((Submodule.span (𝓞 LL) (A.MK : Set WL)).comap
+        ((A.Wgood J0 lam0 eC).subtype.restrictScalars (𝓞 LL))) : Set (A.Wgood J0 lam0 eC)) = ⊤ := by
+    apply top_unique
+    intro x _
+    obtain ⟨a, ha, hax⟩ := exists_smul_mem (Submodule.span (𝓞 LL) (A.MK : Set WL))
+      (show (x : WL) ∈ Submodule.span LL (Submodule.span (𝓞 LL) (A.MK : Set WL) : Set WL) by rw [hspan]; trivial)
+    have ha' : algebraMap (𝓞 LL) LL a ≠ 0 := by
+      intro hz
+      apply ha
+      apply FaithfulSMul.algebraMap_injective (𝓞 LL) LL
+      simpa using hz
+    have hx : a • x ∈ ((Submodule.span (𝓞 LL) (A.MK : Set WL)).comap
+        ((A.Wgood J0 lam0 eC).subtype.restrictScalars (𝓞 LL))) := hax
+    have hx' := Submodule.smul_mem (Submodule.span LL
+      (((Submodule.span (𝓞 LL) (A.MK : Set WL)).comap
+        ((A.Wgood J0 lam0 eC).subtype.restrictScalars (𝓞 LL))) : Set (A.Wgood J0 lam0 eC)))
+      (algebraMap (𝓞 LL) LL a)⁻¹ (Submodule.subset_span hx)
+    rw [← algebraMap_smul LL a x, smul_smul, inv_mul_cancel₀ ha', one_smul] at hx'
+    exact hx'
+  rw [htop, Submodule.map_subtype_top]
 
 end Forms
 

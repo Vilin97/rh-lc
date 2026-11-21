@@ -118,7 +118,7 @@ private theorem isCompact_cgrp [T2Space K] (n : ℕ) :
 
 private theorem lgrp_sl [T2Space K] : Lgrp (Matrix.SpecialLinearGroup (Fin 2) K) := by
   intro N hN
-  obtain ⟨W, hW', hWN⟩ := (mem_nhds_subtype _ _ _).1 hN
+  obtain ⟨W, hW', hWN⟩ := (mem_nhds_subtype {A : Matrix (Fin 2) (Fin 2) K | A.det = 1} (1 : Matrix.SpecialLinearGroup (Fin 2) K) N).1 hN
   have hW : W ∈ 𝓝 (1 : Matrix (Fin 2) (Fin 2) K) := hW'
   have hS : (fun m : Matrix (Fin 2) (Fin 2) K => m + 1) ⁻¹' W ∈ 𝓝 (0 : Matrix (Fin 2) (Fin 2) K) := by
     have hc : Continuous fun m : Matrix (Fin 2) (Fin 2) K => m + 1 :=

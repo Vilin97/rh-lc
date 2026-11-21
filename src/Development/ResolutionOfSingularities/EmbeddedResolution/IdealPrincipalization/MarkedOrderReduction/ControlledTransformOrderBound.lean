@@ -84,8 +84,10 @@ structure StrictTransformAndMonomialCaseHypotheses : Prop where
   monomial : MonomialCaseHypotheses.{u}
 
 theorem OrderReductionHypotheses.of_strictTransformHypotheses (h : StrictTransformAndMonomialCaseHypotheses.{u}) :
-    OrderReductionHypotheses.{u} :=
-  ⟨orderAt_controlledTransform_le_of_orderAt_eq_on_center, h.strictTransform_components, h.monomial⟩
+    OrderReductionHypotheses.{u} where
+  controlledTransform_orderAt_le := orderAt_controlledTransform_le_of_orderAt_eq_on_center
+  strictTransform_components := h.strictTransform_components
+  monomial := h.monomial
 
 end FunctorialResolution.EmbeddedResolution
 

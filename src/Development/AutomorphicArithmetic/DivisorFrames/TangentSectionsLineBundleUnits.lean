@@ -42,8 +42,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 private theorem tri_comb {S K : Type} [CommRing S] [Field K] {y : Sp S ⟶ X} (φ : S →+* K) (hφ : Function.Injective φ)
     {u : Fin n → (Sp (DualNumber K) ⟶ t.G.left)} (hu : ∀ m, IsTanAtG t (spMap φ ≫ y) (u m))
     (hi : IsIndep t (spMap φ ≫ y) u) {w w' : Fin n → (Sp (DualNumber S) ⟶ t.G.left)} {d d' : Fin n → K}
-    (hd : ∀ l, d l ≠ 0) (h : GlobalTheory.TriFlag.IsTriOf t (spMap φ ≫ y) u d fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w l)
-    (h' : GlobalTheory.TriFlag.IsTriOf t (spMap φ ≫ y) u d' fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w' l) {m : Fin n} {C : Fin n → S}
+    (hd : ∀ l, d l ≠ 0) (h : GlobalTheory.TriFlag.IsTriOf t (spMap φ ≫ y) u d fun l => spMap (dualMap φ) ≫ w l)
+    (h' : GlobalTheory.TriFlag.IsTriOf t (spMap φ ≫ y) u d' fun l => spMap (dualMap φ) ≫ w' l) {m : Fin n} {C : Fin n → S}
     (hC : IsCombAtG t y w C (w' m)) {g : S} (hg : φ g * d m = d' m) : C m = g ∧ ∀ l, m < l → C l = 0 := by
   choose T hT1 hT2 hT3 using h
   obtain ⟨v, hv1, hv2, hv3⟩ := h' m

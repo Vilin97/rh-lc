@@ -39,9 +39,11 @@ theorem norm_value_pos {r : ℕ} (Q : SelfRecip E r) (ρ : Fld Q →+* ℂ) (hn 
   have hw : w.IsReal := IsTotallyReal.isReal w
   letI : Algebra (maximalRealSubfield E) ℂ := ρF.toAlgebra
   let g : w.Completion →ₐ[maximalRealSubfield E] ℂ :=
-    ⟨InfinitePlace.Completion.extensionEmbedding w, fun a =>
-      (InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ a)).trans
-        (DFunLike.congr_fun (InfinitePlace.embedding_mk_eq_of_isReal (InfinitePlace.isReal_mk_iff.1 hw)) a)⟩
+    ⟨InfinitePlace.Completion.extensionEmbedding w, fun a => by
+      change InfinitePlace.Completion.extensionEmbedding w (algebraMap (maximalRealSubfield E) w.Completion a) = ρF a
+      simpa only [InfinitePlace.Completion.algebraMap_apply] using
+        (InfinitePlace.Completion.extensionEmbedding_coe w (WithAbs.toAbs _ a)).trans
+          (DFunLike.congr_fun (InfinitePlace.embedding_mk_eq_of_isReal (InfinitePlace.isReal_mk_iff.1 hw)) a)⟩
   have hg : ∀ a, conj (g a) = g a := fun a => by
     have : g a = (InfinitePlace.Completion.extensionEmbeddingOfIsReal hw a : ℂ) :=
       (InfinitePlace.Completion.extensionEmbeddingOfIsReal_apply hw a).symm

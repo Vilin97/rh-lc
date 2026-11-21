@@ -33,18 +33,18 @@ namespace GlobalTheory.FamPlaced
 section Prim
 open GlobalTheory.FinPl
 end Prim
-theorem placedP_of_allTrue : ∀ {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → ∀ row col, (a.fam row col).c.Is → _root_.GlobalTheory.MiTop.PlacedConditions (a.fam row col) a.d.B := by
+theorem placedP_of_allTrue : ∀ {B : GlobalTheory.Mem.Base} {X : GlobalTheory.Mem.PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (I.rec7 l Z)} {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → ∀ row col, (a.fam row col).c.Is → _root_.GlobalTheory.MiTop.PlacedConditions (a.fam row col) a.d.B := by
   intro B X I l Z L hT Gi Gl Kc Yd cX ex W hA u a ha hT' row col hc
   refine ⟨a.k, a.fld, a.val, a.top, a.loc, a.ι, a.v, a.o, a.n, a.G, a.pl, hc, ha.vis, (ha.tie row col).1, ha.shape, ha.gpin,
     (ha.tie row col).2, ?_, ?_⟩
   swap
   · intro p hp b hb
     have hx := (hT'.pinX.xs B.R.m le_rfl).2.2
-    have hTp : (((B.T u : ℕ) : ℤ) : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∉ p.asIdeal := by
+    have hTp : (((B.T u : ℕ) : ℤ) : 𝓞 (I.rec7 l Z).host.F) ∉ p.asIdeal := by
       intro h; apply hp; rw [(ha.tie row col).1.tP p]; exact_mod_cast h
     have hpos : 0 < B.R.N B.R.m := B.R.N_pos _
     refine prim_std _ _ hx p _ (fun i => ?_)
-      (Fin.cast (Formalism.L2.Forms.rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ le_rfl).symm ⟨B.R.N B.R.m - 1, Nat.sub_lt hpos one_pos⟩)
+      (Fin.cast (Formalism.L2.Forms.rankN (I.rec7 l Z) _ le_rfl).symm ⟨B.R.N B.R.m - 1, Nat.sub_lt hpos one_pos⟩)
       (B.host.conj (X.piT u : B.host.E)) (map_isIntegral_int (B.host.conj : B.host.E →+* B.host.E) (X.piT u).2)
       ((B.T u : ℕ) : ℤ) ?_ hTp b hb
     · refine (hT'.z0 i).symm ▸ ?_
@@ -55,7 +55,7 @@ theorem placedP_of_allTrue : ∀ {B : GlobalTheory.Mem.Base} {X : GlobalTheory.M
       · exact isIntegral_zero
     · have h0 : TC.z0 X u ⟨B.R.N B.R.m - 1, Nat.sub_lt hpos one_pos⟩ = (X.piT u : B.host.E) :=
         if_pos (Nat.sub_add_cancel hpos)
-      have h1 := (hT'.z0 (Fin.cast (Formalism.L2.Forms.rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ le_rfl).symm
+      have h1 := (hT'.z0 (Fin.cast (Formalism.L2.Forms.rankN (I.rec7 l Z) _ le_rfl).symm
         ⟨B.R.N B.R.m - 1, Nat.sub_lt hpos one_pos⟩)).trans h0
       have h2 : (X.piT u : B.host.E) * B.host.conj (X.piT u : B.host.E) = (((B.T u : ℕ) : ℤ) : B.host.E) := by
         rw [Int.cast_natCast]; exact X.piT_norm u
@@ -67,7 +67,7 @@ theorem placedP_of_allTrue : ∀ {B : GlobalTheory.Mem.Base} {X : GlobalTheory.M
   constructor
   · exact ha.bot.1
   · exact ha.bot.2.2.1
-  · refine ⟨1, -(_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.xi0 ^ ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m / 2), by simp, ?_, ?_⟩
+  · refine ⟨1, -(I.rec7 l Z).host.xi0 ^ ((I.rec7 l Z).R.m / 2), by simp, ?_, ?_⟩
     · intro r; rw [one_mul]; exact ha.bot.2.2.2 r
     · exact ha.norm.2
   · exact fun i => (ha.stdG i).2.2

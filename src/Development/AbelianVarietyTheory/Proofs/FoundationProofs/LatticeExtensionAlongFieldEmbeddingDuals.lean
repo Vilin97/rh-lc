@@ -37,21 +37,22 @@ theorem smul_mem_of_integral {K : Type} [Field K] {n : ℕ} (M : Submodule (𝓞
   M.smul_mem (⟨c, hc⟩ : 𝓞 K) hv
 
 theorem isLocalizedModule_subtype {E : Type} [Field E] [NumberField E] {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E))
-    (hL : Submodule.IsFullLattice E L) : IsLocalizedModule (nonZeroDivisors (𝓞 E)) L.subtype := by
-  refine ⟨(isLocalizedModule_id (nonZeroDivisors (𝓞 E)) (Fin n → E) E).map_units, ?_, ?_⟩
-  · intro y
+    (hL : Submodule.IsLattice E L) : IsLocalizedModule (nonZeroDivisors (𝓞 E)) L.subtype where
+  map_units s := by
+    have := isLocalizedModule_id (nonZeroDivisors (𝓞 E)) (Fin n → E) E
+    exact IsLocalizedModule.map_units (S := nonZeroDivisors (𝓞 E))
+      (LinearMap.id : (Fin n → E) →ₗ[𝓞 E] (Fin n → E)) s
+  surj y := by
     have hy : y ∈ Submodule.span E (L : Set (Fin n → E)) := by rw [hL.span_eq_top]; trivial
     obtain ⟨s, hs⟩ := multiple_mem_span_of_mem_localization_span (nonZeroDivisors (𝓞 E)) E (L : Set (Fin n → E)) y hy
     rw [Submodule.span_eq] at hs
     exact ⟨(⟨_, hs⟩, s), rfl⟩
-  · intro x₁ x₂ h
-    exact ⟨1, by rw [Subtype.ext h]⟩
+  exists_of_eq h := ⟨1, by rw [Subtype.ext h]⟩
 
 theorem exists_dual_family {E : Type} [Field E] [NumberField E] {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E))
-    (hL : Submodule.IsFullLattice E L) :
+    (hL : Submodule.IsLattice E L) :
     ∃ (m : ℕ) (x φ : Fin m → Fin n → E), (∀ i, x i ∈ L) ∧ (∀ i, ∀ y ∈ L, IsIntegral ℤ (φ i ⬝ᵥ y)) ∧
       ∀ a b, ∑ i, x i a * φ i b = if a = b then 1 else 0 := by
-  have := Submodule.IsLattice.finite E L
   have : Module.FinitePresentation (𝓞 E) L := Module.finitePresentation_of_finite _ _
   have : Module.Projective (𝓞 E) L := Module.Flat.projective_of_finitePresentation
   have := isLocalizedModule_subtype L hL
@@ -131,74 +132,31 @@ theorem hform_eq {E : Type} [Field E] {n : ℕ} (c : E →+* E) (J : Matrix (Fin
     Formalism.UG.hform c J x y = (fun a => c (x a)) ⬝ᵥ (J *ᵥ y) := by
   simp [Formalism.UG.hform, dotProduct, Matrix.mulVec, Finset.mul_sum, mul_assoc]
 
-private def mapCoordinates {E K : Type} [Field E] [Field K] {n : ℕ} (f : E →+* K) :
-    (Fin n → E) →ₛₗ[RingOfIntegers.mapRingHom f] (Fin n → K) where
-  toFun x a := f (x a)
-  map_add' x y := funext fun a => map_add f (x a) (y a)
-  map_smul' c x := funext fun a => map_mul f (c : E) (x a)
-
-private theorem exists_full_lattice_for_pairing {E K : Type} [Field E] [NumberField E]
-    [Field K] [NumberField K] {n : ℕ} (f : E →+* K) (w : Fin n → K)
-    (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.IsLattice E L)
-    (h : ∀ y ∈ L, IsIntegral ℤ ((fun a => f (y a)) ⬝ᵥ w)) :
-    ∃ M : Submodule (𝓞 E) (Fin n → E), L ≤ M ∧ Submodule.IsFullLattice E M ∧
-      ∀ y ∈ M, IsIntegral ℤ ((fun a => f (y a)) ⬝ᵥ w) := by
-  classical
-  -- Adjoin a scaled coordinate basis whose pairings with `w` are integral.
-  have := IsLocalization.isAlgebraic ℚ (nonZeroDivisors ℤ)
-  have : Algebra.IsAlgebraic ℤ K :=
-    ⟨fun z => (NumberField.isAlgebraic K).isAlgebraic z |>.restrictScalars ℤ⟩
-  obtain ⟨d, hd, hdw⟩ := Algebra.IsAlgebraic.exists_integral_multiples ℤ (Finset.univ.image w)
-  let e : Fin n → Fin n → E := fun i => Pi.single i (d : E)
-  let N := Submodule.span (𝓞 E) (Set.range e)
-  have hfull : Submodule.IsFullLattice E (L ⊔ N) := by
-    have : Submodule.IsLattice E (L ⊔ N) :=
-      Submodule.IsLattice.of_fg E (hL.fg.sup (Submodule.fg_span (Set.finite_range e)))
-    constructor
-    rw [eq_top_iff]
-    intro y _
-    rw [pi_eq_sum_univ' y]
-    apply Submodule.sum_mem
-    intro i _
-    have he : e i ∈ Submodule.span E (↑(L ⊔ N) : Set (Fin n → E)) :=
-      Submodule.subset_span (Submodule.mem_sup_right (Submodule.subset_span (Set.mem_range_self i)))
-    have hdE : (d : E) ≠ 0 := by exact_mod_cast hd
-    refine (Submodule.span E _).smul_mem (y i) ?_
-    convert (Submodule.span E _).smul_mem (d : E)⁻¹ he using 1
-    ext a
-    by_cases ha : i = a <;> simp [e, ha, hdE]
-  let pairing := ((dotProductBilin (𝓞 K) (𝓞 K)).flip w).comp (mapCoordinates f)
-  let P := (1 : Submodule (𝓞 K) K).comap pairing
-  have hLP : L ≤ P := by
-    intro y hy
-    exact (mem_one_iff _).mpr (h y hy)
-  have hNP : N ≤ P := by
-    refine Submodule.span_le.mpr ?_
-    rintro _ ⟨i, rfl⟩
-    apply (mem_one_iff _).mpr
-    change IsIntegral ℤ ((fun a => f (e i a)) ⬝ᵥ w)
-    have he : (fun a => f (e i a)) = Pi.single i (d : K) := by
-      ext a
-      by_cases ha : i = a <;> simp [e, ha]
-    rw [he, single_dotProduct, ← zsmul_eq_mul]
-    exact hdw _ (Finset.mem_image_of_mem w (Finset.mem_univ i))
-  exact ⟨L ⊔ N, le_sup_left, hfull, fun y hy => (mem_one_iff _).mp (sup_le hLP hNP hy)⟩
-
 theorem tauLatLattice : TauLatLattice := by
   classical
   intro E K _ _ _ _ ι n emb τ L hL
-  apply Submodule.IsLattice.of_fg K
-  obtain ⟨s, rfl⟩ := hL.fg
-  let f := mapCoordinates (n := n) (emb τ)
-  refine ⟨s.image f, ?_⟩
-  rw [Finset.coe_image]
-  apply le_antisymm (Submodule.span_mono (Set.image_mono Submodule.subset_span))
-  refine Submodule.span_le.mpr ?_
-  rintro _ ⟨x, hx, rfl⟩
-  have hspan : Submodule.span (𝓞 E) (↑s : Set (Fin n → E)) ≤
-      (Submodule.span (𝓞 K) (f '' ↑s)).comap f :=
-    Submodule.span_le.mpr fun y hy => Submodule.subset_span ⟨y, hy, rfl⟩
-  exact hspan hx
+  obtain ⟨m, x, φ, hx, hφ, h⟩ := exists_dual_family L hL
+  have hmem : ∀ i, (fun a => emb τ (x i a)) ∈ tauLat emb τ L := fun i => Submodule.subset_span ⟨x i, hx i, rfl⟩
+  constructor
+  · refine ⟨(Finset.univ.image fun i => fun a => emb τ (x i a)), le_antisymm ?_ ?_⟩
+    · rw [Submodule.span_le]
+      intro v hv
+      simp only [Finset.coe_image, Set.mem_image] at hv
+      obtain ⟨i, -, rfl⟩ := hv
+      exact hmem i
+    · unfold tauLat
+      rw [Submodule.span_le]
+      rintro _ ⟨y, hy, rfl⟩
+      beta_reduce
+      rw [SetLike.mem_coe, expand_right (emb τ) h (fun a => emb τ (y a))]
+      refine Submodule.sum_mem _ fun i _ => smul_mem_of_integral _ ?_ (Submodule.subset_span ?_)
+      · rw [← map_dot]
+        exact integral_map _ (hφ i y hy)
+      · simp
+  · rw [eq_top_iff]
+    intro v _
+    rw [expand_right (emb τ) h v]
+    exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span (hmem i))
 
 theorem tauLatDual : TauLatDual := by
   intro E K _ _ _ _ _ ι n emb cE τ hc J L L' hJ hL hL'
@@ -206,12 +164,10 @@ theorem tauLatDual : TauLatDual := by
     intro y; funext a; exact hc _
   apply le_antisymm
   · intro v hv
-    have hv' : ∀ y ∈ L, IsIntegral ℤ ((fun a => emb τ (cE (y a))) ⬝ᵥ (J.map (emb τ) *ᵥ v)) := by
-      intro y hy
+    have hv' : ∀ i, IsIntegral ℤ ((fun a => emb τ (cE (x i a))) ⬝ᵥ (J.map (emb τ) *ᵥ v)) := by
+      intro i
       rw [← mem_one_iff, ← hstar]
-      exact hv _ (Submodule.subset_span ⟨y, hy, rfl⟩)
-    obtain ⟨M, hLM, hM, hvM⟩ := exists_full_lattice_for_pairing ((emb τ).comp cE) (J.map (emb τ) *ᵥ v) L hL hv'
-    obtain ⟨m, x, φ, hx, hφ, h⟩ := exists_dual_family M hM
+      exact hv _ (Submodule.subset_span ⟨x i, hx i, rfl⟩)
     have e1 := expand_left ((emb τ).comp cE) h (J.map (emb τ) *ᵥ v)
     have e2 : v = (J⁻¹).map (emb τ) *ᵥ (J.map (emb τ) *ᵥ v) := by
       rw [Matrix.mulVec_mulVec, ← Matrix.map_mul, Matrix.nonsing_inv_mul _ hJ]
@@ -219,7 +175,7 @@ theorem tauLatDual : TauLatDual := by
     rw [e2, e1, Matrix.mulVec_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [Matrix.mulVec_smul]
-    refine smul_mem_of_integral _ (hvM _ (hx i)) ?_
+    refine smul_mem_of_integral _ (hv' i) ?_
     unfold tauLat
     refine Submodule.subset_span ⟨J⁻¹ *ᵥ fun a => cE (φ i a), ?_, ?_⟩
     · rw [SetLike.mem_coe, hL']
@@ -265,24 +221,20 @@ theorem roundLat : RoundLat := by
   have hJt : IsUnit Jᵀ.det := by rwa [Matrix.det_transpose]
   apply le_antisymm
   · intro v hv
-    have hv' : ∀ y ∈ L, IsIntegral ℤ ((fun a => emb τ (y a)) ⬝ᵥ v) := by
-      intro y hy
-      rw [dotProduct_comm, ← mem_one_iff]
-      exact hv _ (Submodule.subset_span ⟨y, hy, rfl⟩)
-    obtain ⟨M, hLM, hM, hvM⟩ := exists_full_lattice_for_pairing (emb τ) v L hL hv'
-    obtain ⟨m, x, φ, hx, hφ, h⟩ := exists_dual_family M hM
     rw [expand_left (emb τ) h v]
-    refine Submodule.sum_mem _ fun i _ => smul_mem_of_integral _ (hvM _ (hx i)) ?_
-    unfold gLat tauLat
-    refine Submodule.mem_map.2 ⟨_, Submodule.subset_span ⟨fun a => cE ((Jᵀ⁻¹ *ᵥ φ i) a), ?_, rfl⟩, ?_⟩
-    · rw [SetLike.mem_coe, hL']
-      intro y hy
-      rw [mem_range_iff, hform']
-      simp only [hc]
-      rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hJt, Matrix.one_mulVec]
-      exact integral_map _ (hφ i y (hLM hy))
-    · simp only [LinearMap.restrictScalars_apply, Matrix.mulVecLin_apply, RingHom.comp_apply, hc, hg]
-      rw [← map_mulVec, Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hJt, Matrix.one_mulVec]
+    refine Submodule.sum_mem _ fun i _ => smul_mem_of_integral _ ?_ ?_
+    · rw [dotProduct_comm, ← mem_one_iff]
+      exact hv _ (Submodule.subset_span ⟨x i, hx i, rfl⟩)
+    · unfold gLat tauLat
+      refine Submodule.mem_map.2 ⟨_, Submodule.subset_span ⟨fun a => cE ((Jᵀ⁻¹ *ᵥ φ i) a), ?_, rfl⟩, ?_⟩
+      · rw [SetLike.mem_coe, hL']
+        intro y hy
+        rw [mem_range_iff, hform']
+        simp only [hc]
+        rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hJt, Matrix.one_mulVec]
+        exact integral_map _ (hφ i y hy)
+      · simp only [LinearMap.restrictScalars_apply, Matrix.mulVecLin_apply, RingHom.comp_apply, hc, hg]
+        rw [← map_mulVec, Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hJt, Matrix.one_mulVec]
   · unfold gLat
     rw [Submodule.map_le_iff_le_comap]
     unfold tauLat

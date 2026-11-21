@@ -91,10 +91,7 @@ theorem j_mem_locU (F : FinIso L n) (s : SplitPlace L) (y : GAf L n) (hy : TrivO
   rw [sub_eq_zero] at h3
   rw [h3]
   simp only [Units.val_one, Matrix.one_apply]
-  split_ifs
-  · simp
-  · simp
-    rfl
+  split_ifs <;> simp
 end GlobalTheory.SplitDict
 
 namespace GlobalTheory.SplitDict
@@ -118,7 +115,8 @@ theorem kappa_split (F : FinIso L n) (s : SplitPlace L) (i : s.v.adicCompletion 
   have heq : ∀ a : s.v.adicCompletion L⁺, i' a = i a := fun a =>
     (HeightOneSpectrum.denseRange_algebraMap L⁺ s.v).induction_on (p := fun a => i' a = i a) a
       (isClosed_eq hic' hic) fun k => by rw [hL, hR]
-  induction z using TensorProduct.inductionOn with
+  induction z using TensorProduct.induction_on with
+  | zero => simp
   | add x y hx hy =>
     rw [map_add (f := _), map_add (f := _), map_add (f := _)]
     change F.κ x s.w + F.κ y s.w = _

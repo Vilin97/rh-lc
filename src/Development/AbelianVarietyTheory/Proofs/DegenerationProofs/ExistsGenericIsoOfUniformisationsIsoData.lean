@@ -50,7 +50,7 @@ theorem exists_square (hL : L.IsLB) (hL' : L'.IsLB) (hM : M.IsLB) (hM' : M'.IsLB
         q (P (f z)) ∈ M.U j → q' (f z) ∈ M'.U j' → Φ (f z) ∈ L.U i → c₁ (f z) ∈ L'.U i' →
         isoVal w (f ≫ P) z j i * isoVal v f z i i' = isoVal wM f z j j' * isoVal w' f z j' i' := by
   obtain ⟨u, hu, e⟩ := exists_pull_id hw'
-  obtain ⟨v, hv, h⟩ := exists_side hL hL' hM (LB.isLB_pull hM' q') hw n hn hu hwM Φ
+  obtain ⟨v, hv, h⟩ := exists_side hL hL' hM (pull_isLB hM' q') hw n hn hu hwM Φ
     (by rw [← Category.assoc, hΦ, Category.id_comp])
   refine ⟨v, hv, fun Z f z j j' i i' a b c d => ?_⟩
   have := h Z f z j (fun _ => j') i i' a (mem_pull.2 b) c d

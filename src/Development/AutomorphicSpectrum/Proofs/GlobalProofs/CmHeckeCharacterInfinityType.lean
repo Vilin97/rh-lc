@@ -103,10 +103,8 @@ theorem params (χ : HChar E) (hu : IsUnitary χ) {I : Type} [Fintype I] {φ : I
     ring
   have h2 : ∃ s : ℤ, s.natAbs = (n i).natAbs ∧ ∀ z : ℂˣ, (ψ z : ℂ) = ((z : ℂ) / (‖(z : ℂ)‖ : ℂ)) ^ (s, (0 : ℝ)).1 *
       ((‖(z : ℂ)‖ : ℝ) : ℂ) ^ ((((s, (0 : ℝ)).2 : ℝ) : ℂ) * Complex.I) := by
-    have h0 : ∀ k : E, extensionEmbedding w (algebraMap E _ k) = w.embedding k := fun k => by
-      rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
-        Algebra.algebraMap_self_apply, extensionEmbedding_coe]
-      simp
+    have h0 : ∀ k : E, extensionEmbedding w (algebraMap E _ k) = w.embedding k := fun k =>
+      extensionEmbedding_coe w (WithAbs.toAbs _ k)
     have hcont := (isometry_extensionEmbedding w).continuous
     rcases InfinitePlace.embedding_mk_eq (φ i) with h | h
     · refine ⟨n i, rfl, fun z => ?_⟩

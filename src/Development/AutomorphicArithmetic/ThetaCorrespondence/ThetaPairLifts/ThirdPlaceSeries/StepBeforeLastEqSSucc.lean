@@ -29,21 +29,21 @@ variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws
   {a : _root_.GlobalTheory.Fam.GeometricFamily W u} {t : W.P.T}
 theorem eq_s_succ_of_succ_eq_m (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t) {j : ℕ} (hj : j + 1 = B.R.m) (i : Fin J.r) : j = (J.G i).s + 1 := by
   have h1 := (J.G i).hs
-  have h2 : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m = B.R.m := rfl
+  have h2 : (I.rec7 l Z).R.m = B.R.m := rfl
   omega
 def frameAtLevel (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t) (j : ℕ) (i : Fin J.r) (e : j = (J.G i).s + 1) :
-    Frame (J.G i).k ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j).rank (XIx (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.k) (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t) ((J.G i).s + 1)) := by
+    Frame (J.G i).k ((I.rec7 l Z).sp.X j).rank (XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) ((J.G i).s + 1)) := by
   subst e
   exact (J.G i).FX _ le_rfl
 def reductionHomAtLevel (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t) (j : ℕ) (i : Fin J.r) (e : j = (J.G i).s + 1) :
-    GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) →*
-      GL (XIx (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.k) (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t) ((J.G i).s + 1) ⊕ Fin 0) (J.G i).k :=
+    GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j) →*
+      GL (XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) ((J.G i).s + 1) ⊕ Fin 0) (J.G i).k :=
   (toSum0 (J.G i).k _).toMonoidHom.comp (GlobalTheory.LevIdx.locHom (J.G i).q _ (_root_.GlobalTheory.PenBridge.frameAtLevel J j i e))
 def reductionHomAtLastLevel (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t) (j : ℕ) (hj : j + 1 = B.R.m) :
-    GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) →*
-      ((i : Fin J.r) → GL (XIx (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.k) (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t) ((J.G i).s + 1) ⊕ Fin 0) (J.G i).k) :=
+    GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j) →*
+      ((i : Fin J.r) → GL (XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) ((J.G i).s + 1) ⊕ Fin 0) (J.G i).k) :=
   MonoidHom.pi fun i => _root_.GlobalTheory.PenBridge.reductionHomAtLevel J j i (_root_.GlobalTheory.PenBridge.eq_s_succ_of_succ_eq_m J hj i)
-def finitePlaceCondition (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t) (p : GlobalTheory.FinPl.Pl (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) : Prop := ∃ i, (J.G i).q.v = p
+def finitePlaceCondition (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t) (p : GlobalTheory.FinPl.Pl (I.rec7 l Z)) : Prop := ∃ i, (J.G i).q.v = p
 end GlobalTheory.PenBridge
 end
 namespace GlobalTheory.PenBridge
@@ -55,10 +55,10 @@ variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws
   {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} {W : _root_.GlobalTheory.MiS.RealPackAlt ex} {u : B.Word}
   {a : _root_.GlobalTheory.Fam.GeometricFamily W u} {t : W.P.T}
 theorem int_in_frame_at_level (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t) (j : ℕ) (i : Fin J.r) (e : j = (J.G i).s + 1) :
-    IntIn (J.G i).q ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j) (_root_.GlobalTheory.PenBridge.frameAtLevel J j i e) (a.g.x j).L := by
+    IntIn (J.G i).q ((I.rec7 l Z).sp.X j) (_root_.GlobalTheory.PenBridge.frameAtLevel J j i e) (a.g.x j).L := by
   subst e
   exact fun y => (J.G i).latX _ le_rfl y
-theorem rd_at_apply (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t) (j : ℕ) (i : Fin J.r) (e : j = (J.G i).s + 1) (g : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j)) :
+theorem rd_at_apply (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t) (j : ℕ) (i : Fin J.r) (e : j = (J.G i).s + 1) (g : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j)) :
     _root_.GlobalTheory.PenBridge.reductionHomAtLevel J j i e g = toSum0 (J.G i).k _ (GlobalTheory.LevIdx.locHom (J.G i).q _ (_root_.GlobalTheory.PenBridge.frameAtLevel J j i e) g) := rfl
 end GlobalTheory.PenBridge
 end

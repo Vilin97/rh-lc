@@ -192,7 +192,7 @@ variable {G H K : Over S} [GrpObj G] [GrpObj H] [GrpObj K]
 
 def omegaMap (φ : G ⟶ H) [IsMonHom φ] : omega H ⟶ omega G := cotMap φ (IsMonHom.one_hom φ)
 
-def lieMap (φ : G ⟶ H) [IsMonHom φ] : Lie G ⟶ Lie H := GlobalTheory.CompanionTheory.Ar.dualMap (omegaMap φ)
+def lieMap (φ : G ⟶ H) [IsMonHom φ] : Lie G ⟶ Lie H := dualMap (omegaMap φ)
 
 theorem omegaMap_dUnit (φ : G ⟶ H) [IsMonHom φ] {V : S.Opens} {W : H.left.Opens}
     {W' : G.left.Opens} (h : V ≤ unitSec H ⁻¹ᵁ W) (h' : V ≤ unitSec G ⁻¹ᵁ W')
@@ -264,7 +264,7 @@ theorem omegaBase_naturality (h : IsGrpPullback G' G f φ) (h' : IsGrpPullback H
 variable [QuasiSeparated G.hom] [QuasiSeparated H.hom]
 
 def lieBase (h : IsGrpPullback G' G f φ) : (Scheme.Modules.pullback f).obj (Lie G) ⟶ Lie G' :=
-  theta f (omega G) ≫ GlobalTheory.CompanionTheory.Ar.dualMap (inv (omegaBase h))
+  theta f (omega G) ≫ dualMap (inv (omegaBase h))
 
 theorem isIso_lieBase (h : IsGrpPullback G' G f φ) {g : ℕ} (hg : IsVB (omega G) g) :
     IsIso (lieBase h) :=

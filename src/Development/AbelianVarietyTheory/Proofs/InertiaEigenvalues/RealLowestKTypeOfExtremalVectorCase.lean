@@ -49,7 +49,6 @@ theorem thetaInner_add_right (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T')
   unfold thetaIP
   rw [← integral_add (integrable_star_mul hψ h1 hf hg) (integrable_star_mul hψ h1 hf hh)]
   congr 1
-  simp only [Pi.add_apply, mul_add]
 
 theorem thetaInner_add_left (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T')} {𝓕 : Set (WO S T')} (h1 : μ 𝓕 = 1)
     {f g h : WO S T' → ℂ} (hf : IsThetaFunO ψ S T' f) (hg : IsThetaFunO ψ S T' g) (hh : IsThetaFunO ψ S T' h) :
@@ -57,7 +56,6 @@ theorem thetaInner_add_left (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T')}
   unfold thetaIP
   rw [← integral_add (integrable_star_mul hψ h1 hf hh) (integrable_star_mul hψ h1 hg hh)]
   congr 1
-  simp only [Pi.add_apply, star_add, add_mul]
 
 end GlobalTheory.RawLift.RealLowRed
 
@@ -119,8 +117,8 @@ def thR (hω : IsWeilDatumO ψ V W χV χW ω) (h1 : μ 𝓕 = 1) {M : DSModel W
     exact thetaInner_add_right hω.std h1 hf (hω.om_pres _ _ (hJ _)) (hω.om_pres _ _ (hJ _))
   map_update_smul' m ρ a x := by
     funext g
-    simp only [RingHom.id_apply, Pi.smul_apply, smul_eq_mul]
-    rw [J.map_update_smul, RingHom.id_apply, map_smul]
+    simp only [Pi.smul_apply, smul_eq_mul]
+    rw [J.map_update_smul, map_smul]
     exact thetaInner_smul_right _ _ _ _ _
 
 theorem thR_apply (hω : IsWeilDatumO ψ V W χV χW ω) (h1 : μ 𝓕 = 1) {M : DSModel W S'}
@@ -138,8 +136,8 @@ def thL (hω : IsWeilDatumO ψ V W χV χW ω) (h1 : μ 𝓕 = 1) {M : DSModel W
     rw [J.map_update_add, thetaInner_add_left hω.std h1 (hJ _) (hJ _) (hω.om_pres _ _ hf), star_add]
   map_update_smul' m ρ a x := by
     funext g
-    simp only [RingHom.id_apply, Pi.smul_apply, smul_eq_mul]
-    rw [J.map_update_smul, RingHom.id_apply, thetaInner_smul_left, star_mul', star_star]
+    simp only [Pi.smul_apply, smul_eq_mul]
+    rw [J.map_update_smul, thetaInner_smul_left, star_mul', star_star]
 
 theorem thL_apply (hω : IsWeilDatumO ψ V W χV χW ω) (h1 : μ 𝓕 = 1) {M : DSModel W S'}
     (J : (∀ ρ, lowT M ρ) →ₘₗ[ℂ] (WO V W → ℂ)) (hJ : ∀ v, IsThetaFunO ψ V W (J v))

@@ -25,13 +25,8 @@ local notation "pE" => algebraMap (𝓞 E) E π
 section Fun
 
 theorem rll_baseLb_le_Ker : baseLb E n ST ≤ baseKer E n ST := by
-  refine le_inf ?_ (le_iInf fun P => le_iInf fun _ => le_locP _ _)
-  intro x hx
-  have hstd : x ∈ Formalism.HermitianLatticesTheory.dual (hStd E n) (stdLat E n) := by
-    rw [show Formalism.HermitianLatticesTheory.dual (hStd E n) (stdLat E n) = stdLat E n
-      from stdLat_unimodular]
-    exact rll_baseLb_le n ST hx
-  exact (mem_dual _ _).2 fun y hy => (mem_dual _ _).1 hstd y (rll_baseLb_le n ST hy)
+  refine le_inf (Deco.base_ok (E := E) (n := n) (ST := ST) (SG := ∅)).L_le_Lsh ?_
+  exact le_iInf fun P => le_iInf fun _ => le_locP _ _
 
 theorem rll_fLoc_eq_zero (x : baseDualV hc n ST v) :
     fLoc hc n ST v x = 0 ↔ x.1 ∈ Formalism.L2.Herm.locL v (baseKer E n ST) :=
@@ -57,11 +52,8 @@ theorem fLoc_natCast_smul_eq_zero_of_dvd (T : ℕ) (hT : π ∣ (T : 𝓞 E)) (x
     rfl
   refine ⟨fun i hi => mul_mem (T : Formalism.BasicNotions.intV E v).2 (hx.1 i hi), ?_⟩
   show ιv (star pE / pE) * ((((T : Formalism.BasicNotions.intV E v)) : Rv) * x.1 (lastIdx n)) ∈ 𝒪v
-  rw [htv, mul_assoc, ← mul_assoc (ιv (star pE / pE)), ← map_mul,
-    div_mul_cancel₀ _ h.coe_ne_zero, mul_left_comm]
-  have hqv : ιv (algebraMap (𝓞 E) E q) ∈ 𝒪v :=
-    Subring.subset_closure (Or.inl ⟨⟨_, ⟨q, rfl⟩⟩, rfl⟩)
-  exact mul_mem hqv hx.2
+  rw [htv, mul_assoc, rll_cp_mul v h, mul_left_comm]
+  exact mul_mem (rll_incl_int v q) hx.2
 
 theorem rll_coprime_v : ∃ a b : 𝓞 E,
     ιv (algebraMap (𝓞 E) E a) * ιv pE + ιv (algebraMap (𝓞 E) E b) * ιv (star pE) = 1 := by
@@ -71,11 +63,7 @@ theorem rll_coprime_v : ∃ a b : 𝓞 E,
 
 theorem rll_pv_not_unit {P : Pl E} (hP : P ∈ ST) (hov : IsOver v P) (s : Rv) (hs : s ∈ 𝒪v) : ιv pE * s ≠ 1 := by
   intro e
-  have hmul (x : Rv) : afsplitIE v (ιv pE * x) = inclE (F := F) (Formalism.L2.Herm.Af F) pE * afsplitIE v x := by
-    induction x using TensorProduct.inductionOn with
-    | tmul a b => simp [inclE, Algebra.TensorProduct.tmul_mul_tmul, afsplitIE_tmul]
-    | add x y hx hy => simp only [mul_add, map_add (f := _), hx, hy]
-  have e1 := hmul s
+  have e1 := rll_IE_incl_mul v pE s
   rw [e] at e1
   have e2 : Formalism.L2.DIV.lc_eps E v =
       Formalism.L2.DIV.oToS F E π * (⟨afsplitIE v s, afsplit_IE_int v _ hs⟩ : Formalism.L2.Herm.intAf F E) := Subtype.ext e1
@@ -89,10 +77,7 @@ theorem fLoc_ne (hv : v ∈ plUnder F ST) : fLoc hc n ST v ≠ 0 := by
   obtain ⟨P, hP, hov⟩ := hv
   have hdual := congrArg (fun L => Formalism.L2.Herm.locL v L) (rll_baseDual_eq hc n h)
   have hm : (Pi.single (lastIdx n) 1 : Fin n → Rv) ∈ baseDualV hc n ST v := by
-    rw [show baseDualV hc n ST v = _ from hdual, rll_mem_loc_dLat n v _ h.star_ne_zero]
-    refine ⟨fun i hi => by rw [Pi.single_eq_of_ne hi]; exact zero_mem _, ?_⟩
-    rw [Pi.single_eq_same, mul_one, ← algebraMap_cO]
-    exact Subring.subset_closure (Or.inl ⟨⟨_, ⟨cO E π, rfl⟩⟩, rfl⟩)
+    rw [rll_dualV_eq hc n v h]; exact rll_single_mem_Sh n v h _
   have h1 : fLoc hc n ST v ⟨_, hm⟩ = 0 := by rw [h0]; rfl
   rw [rll_fLoc_eq_zero, rll_baseKer_eq n h, rll_mem_loc_dLat n v _ (div_ne_zero h.star_ne_zero h.coe_ne_zero)] at h1
   have h2 : ιv (star pE / pE) * (Pi.single (lastIdx n) 1 : Fin n → Rv) (lastIdx n) ∈ 𝒪v := h1.2
@@ -100,10 +85,8 @@ theorem fLoc_ne (hv : v ∈ plUnder F ST) : fLoc hc n ST v ≠ 0 := by
   obtain ⟨a, b, hab⟩ := rll_coprime_v v h
   have e1 : ιv (star pE) = ιv pE * ιv (star pE / pE) := by
     rw [← map_mul, mul_div_cancel₀ _ h.coe_ne_zero]
-  have hint (r : 𝓞 E) : ιv (algebraMap (𝓞 E) E r) ∈ 𝒪v :=
-    Subring.subset_closure (Or.inl ⟨⟨_, ⟨r, rfl⟩⟩, rfl⟩)
   refine rll_pv_not_unit v h hP hov (ιv (algebraMap (𝓞 E) E a) + ιv (algebraMap (𝓞 E) E b) * ιv (star pE / pE))
-    (add_mem (hint a) (mul_mem (hint b) h2)) ?_
+    (add_mem (rll_incl_int v a) (mul_mem (rll_incl_int v b) h2)) ?_
   rw [← hab]
   conv_rhs => rw [e1]
   ring
@@ -127,13 +110,8 @@ def rll_rho (P : Pl E) : 𝒪v →+ kP P where
 theorem rll_rho_incl_mul (P : Pl E) (r : 𝓞 E) (s : 𝒪v) (hm : ιv (algebraMap (𝓞 E) E r) * s.1 ∈ 𝒪v) :
     rll_rho v P ⟨_, hm⟩ = Ideal.Quotient.mk P.asIdeal r * rll_rho v P s := by
   show resS F P ⟨afsplitIE v (ιv (algebraMap (𝓞 E) E r) * s.1), _⟩ = _
-  have hmul (x : Rv) : afsplitIE v (ιv (algebraMap (𝓞 E) E r) * x) =
-      inclE (F := F) (Formalism.L2.Herm.Af F) (algebraMap (𝓞 E) E r) * afsplitIE v x := by
-    induction x using TensorProduct.inductionOn with
-    | tmul a b => simp [inclE, Algebra.TensorProduct.tmul_mul_tmul, afsplitIE_tmul]
-    | add x y hx hy => simp only [mul_add, map_add (f := _), hx, hy]
   have : (⟨afsplitIE v (ιv (algebraMap (𝓞 E) E r) * s.1), afsplit_IE_int v _ hm⟩ : Formalism.L2.Herm.intAf F E) =
-      Formalism.L2.DIV.oToS F E r * ⟨afsplitIE v s.1, afsplit_IE_int v _ s.2⟩ := Subtype.ext (hmul s.1)
+      Formalism.L2.DIV.oToS F E r * ⟨afsplitIE v s.1, afsplit_IE_int v _ s.2⟩ := Subtype.ext (rll_IE_incl_mul v _ _)
   rw [this, map_mul, Formalism.L2.DIV.resS_oToS]
   rfl
 
@@ -179,17 +157,14 @@ theorem rll_psi_surj {P : Pl E} (hov : IsOver v P) : Function.Surjective (rll_ps
   have e0 : ιv (star pE) * ιv ((star pE)⁻¹ * algebraMap (𝓞 E) E r) = ιv (algebraMap (𝓞 E) E r) * ((1 : 𝒪v) : Rv) := by
     rw [← map_mul, mul_inv_cancel_left₀ h.star_ne_zero]
     exact (mul_one _).symm
-  have hdual := congrArg (fun L => Formalism.L2.Herm.locL v L) (rll_baseDual_eq hc n h)
-  have hr : ιv (algebraMap (𝓞 E) E r) ∈ 𝒪v :=
-    Subring.subset_closure (Or.inl ⟨⟨_, ⟨r, rfl⟩⟩, rfl⟩)
   have hm : (Pi.single (lastIdx n) (ιv ((star pE)⁻¹ * algebraMap (𝓞 E) E r)) : Fin n → Rv) ∈ baseDualV hc n ST v := by
-    rw [show baseDualV hc n ST v = _ from hdual, rll_mem_loc_dLat n v _ h.star_ne_zero]
+    rw [rll_dualV_eq hc n v h, rll_mem_loc_dLat n v _ h.star_ne_zero]
     refine ⟨fun i hi => by rw [Pi.single_eq_of_ne hi]; exact zero_mem _, ?_⟩
     rw [Pi.single_eq_same, e0]
-    exact mul_mem hr (one_mem _)
+    exact mul_mem (rll_incl_int v r) (one_mem _)
   refine ⟨⟨_, hm⟩, ?_⟩
   have e1 : (⟨_, rll_last_mem hc n v h ⟨_, hm⟩⟩ : 𝒪v) =
-      ⟨ιv (algebraMap (𝓞 E) E r) * ((1 : 𝒪v) : Rv), mul_mem hr (one_mem _)⟩ := by
+      ⟨ιv (algebraMap (𝓞 E) E r) * ((1 : 𝒪v) : Rv), mul_mem (rll_incl_int v r) (one_mem _)⟩ := by
     apply Subtype.ext
     show ιv (star pE) * (Pi.single (lastIdx n) (ιv ((star pE)⁻¹ * algebraMap (𝓞 E) E r)) : Fin n → Rv) (lastIdx n) = _
     rw [Pi.single_eq_same, e0]
@@ -210,15 +185,14 @@ theorem rll_psi_ker {P : Pl E} (hP : P ∈ ST) (huniq : ∀ Q ∈ ST, IsOver v Q
     obtain ⟨w, hw, e⟩ := rll_rho_eq_zero v h huniq _ h0
     refine ⟨hx.1, ?_⟩
     have e' : ιv (star pE) * x.1 (lastIdx n) = ιv pE * w := e
-    rw [e0, e', ← mul_assoc, ← map_mul, inv_mul_cancel₀ h.coe_ne_zero, map_one, one_mul]
+    rw [e0, e', rll_pinv_mul v h]
     exact hw
   · rintro ⟨_, h2⟩
-    have hint : ιv pE ∈ 𝒪v := Subring.subset_closure (Or.inl ⟨⟨_, ⟨π, rfl⟩⟩, rfl⟩)
     have e1 : (⟨_, rll_last_mem hc n v h x⟩ : 𝒪v) =
-        ⟨ιv pE * ((⟨_, h2⟩ : 𝒪v) : Rv), mul_mem hint h2⟩ := by
+        ⟨ιv pE * ((⟨_, h2⟩ : 𝒪v) : Rv), mul_mem (rll_incl_int v π) h2⟩ := by
       apply Subtype.ext
       show ιv (star pE) * x.1 (lastIdx n) = ιv pE * (ιv (star pE / pE) * x.1 (lastIdx n))
-      rw [e0, ← mul_assoc (ιv pE), ← map_mul, mul_inv_cancel₀ h.coe_ne_zero, map_one, one_mul]
+      rw [e0, rll_p_mul_pinv v h]
     show rll_rho v P _ = 0
     rw [e1, rll_rho_incl_mul, Ideal.Quotient.eq_zero_iff_mem.2 (h.mem hP), zero_mul]
 

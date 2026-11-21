@@ -41,6 +41,7 @@ private theorem UpperTheory.ConvolutionTheory.Dp.infZc_coeff {M : Type*} [AddCom
   rw [Finset.sum_eq_single i] at this
   · simpa using this
   · intro j _ hj
+    simp only [Finsupp.single_apply]
     rw [if_neg]
     intro e
     apply hj

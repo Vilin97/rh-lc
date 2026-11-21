@@ -682,8 +682,8 @@ theorem class_scalar_value_ofPre : ∀ (D : D7) (G : Type) [Group G] [Fintype G]
         · exact hQ (hbad Q (Or.inr a))
         · rw [(GlobalTheory.IdemSupport.isConjPl_iff _ _).1 a', GlobalTheory.IdemSupport.mem_cP, map_natCast] at hQ
           exact hQ (hbad Q' (Or.inr a))
-      rw [Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_mul, Formalism.L2.Host.HChar.loc_inv, a1 x hx, a2 x hx,
-        R.C.isEta.unr Q x hx, inv_one, one_mul, one_mul])
+      simpa [Formalism.L2.Host.HChar.loc] using congrArg (fun z : ℂˣ => z) (show (R.C.mu0 i).loc Q x * (R.xiH (tup t)).loc Q x * ((R.C.eta).loc Q x)⁻¹ = 1 by
+        rw [a1 x hx, a2 x hx, R.C.isEta.unr Q x hx, inv_one, one_mul, one_mul]))
     (fun Q hQ x => by
       rw [Formalism.L2.Host.HChar.resFin_mul, Formalism.L2.Host.HChar.resFin_mul, Formalism.L2.Host.HChar.resFin_inv,
         (R.C.isMu0 i).triv.1, (hL.xi_triv (tup t)).1, R.C.isEta.res.1, Formalism.L2.Host.etaFin, above_eq,
@@ -790,6 +790,7 @@ theorem io_eq_phase_smul_ofPre : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (
     rw [norm_eq_sqrt_re_inner (𝕜 := ℂ), hc.2.1, ← norm_eq_sqrt_re_inner, norm_smul, hχ, hw₀, mul_one]
   haveI := hc.2.2.2.1
   haveI : FiniteDimensional O.c'.F (VsV D i O.c'.F) := Module.Finite.of_basis (Formalism.L2.DIV.bVV O.c'.F (lamV D i))
+  set_option synthInstance.maxHeartbeats 200000 in
   have main : ∀ lt : LtN (T.Q.Dw ((i : ℕ) + 1)) (Vc D i).rank → FVar D (Wc D i).rank (Vc D i).rank, IsLt lt →
       ∃ a : ℂ, a • (R.cV i).ρ g⁻¹ (χ • w₀) = O.c0' O.hw ∧ ∀ t v, R.ptP i t (R.ioP i (PiTensorProduct.tprod ℂ u₀) (O.c0' v)) =
         a • PT t (toF O.c' lt (O.io v)) := fun lt hl => by

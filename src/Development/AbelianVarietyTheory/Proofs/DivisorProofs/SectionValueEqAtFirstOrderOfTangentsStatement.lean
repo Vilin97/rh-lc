@@ -22,9 +22,9 @@ theorem _root_.GlobalTheory.T.section_value_eq_at_first_order_of_tangents : ∀ 
     ∀ (v w : epsR K ⟶ P.A), IsTangent v → IsTangent w →
     ∀ (yv yw : Sp (DualNumber C) ⟶ (Over.mk (spMap (algebraMap K C)) ⊗ P.A).left),
       yv ≫ (fst (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (algebraMap C (DualNumber C)) →
-      yv ≫ (snd (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K C)) ≫ v.left →
+      yv ≫ (snd (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (dualMap (algebraMap K C)) ≫ v.left →
       yw ≫ (fst (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (algebraMap C (DualNumber C)) →
-      yw ≫ (snd (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K C)) ≫ w.left →
+      yw ≫ (snd (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (dualMap (algebraMap K C)) ≫ w.left →
     ∀ (a b a' b' : C),
       valR yv ((LPow P.A P.L (k : ℤ) (Over.mk (spMap (algebraMap K C)))).U fun _ => i₀) (t.f fun _ => i₀) =
         TrivSqZeroExt.inl (valR (spMap (algebraMap K C)) ((P.L.pull (eSec P.A)).U fun _ => i₀) (ρ.s fun _ => i₀).val ^ k) *

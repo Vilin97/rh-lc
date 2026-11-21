@@ -21,7 +21,7 @@ def eulerPoly (B : Multiset ℂˣ) (x : ℂ) : ℂ := (B.map fun b : ℂˣ => 1 
 
 def eulerFac (B : Multiset ℂˣ) (x : ℂ) : ℂ := (eulerPoly B x)⁻¹
 
-@[simp] theorem eulerFac_zero (x : ℂ) : eulerFac 0 x = 1 := by simp [eulerFac, eulerPoly]
+@[simp] theorem eulerFac_zero (x : ℂ) : eulerFac 0 x = 1 := by simp [eulerFac]
 
 theorem eulerPoly_cons (b : ℂˣ) (B : Multiset ℂˣ) (x : ℂ) :
     eulerPoly (b ::ₘ B) x = (1 - (b : ℂ) * x) * eulerPoly B x := by simp [eulerPoly]
@@ -220,7 +220,7 @@ theorem Bounded.norm_eulerPoly_le {r : ℕ} {κ σ : ℝ} (h : Bounded T c r κ)
 
 theorem summable_rpow (T : Set (HeightOneSpectrum (𝓞 K))) {σ : ℝ} (hσ : 1 < σ) :
     Summable fun w : {w // w ∉ T} => ((Ideal.absNorm w.1.asIdeal : ℕ) : ℝ) ^ (-σ) :=
-  ((GlobalTheory.countable_ideal_and_summable_absNorm_rpow K).2 σ hσ).2.subtype (fun w => w ∉ T)
+  ((GlobalTheory.countable_ideal_and_summable_absNorm_rpow K).2 σ hσ).2.subtype {w | w ∉ T}
 
 theorem Bounded.converges {r : ℕ} {κ : ℝ} (h : Bounded T c r κ) (hs : κ + 1 < s.re) : Converges T c s :=
   ⟨fun w hw => eulerPoly_ne_zero fun _ hb => (h.norm_le le_rfl hw hb).trans_lt

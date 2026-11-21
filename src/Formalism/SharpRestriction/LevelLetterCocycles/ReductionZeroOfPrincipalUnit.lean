@@ -216,7 +216,8 @@ theorem invCutPf_orderOf (hl2 : l ≠ 2) (s : ℕ) (u : ℤ_[l]ˣ)
       intro j
       have := padicValNat.pow_sub_pow hodd hm1 hdvd1 hndvd (pow_ne_zero j hl.ne_zero)
       rw [one_pow] at this
-      rw [this, hv1, padicValNat.prime_pow]
+      rw [Nat.padicValNat_def] at hv1 ⊢
+      rw [this, hv1, Nat.multiplicity_prime_pow]
     have hne : ∀ j : ℕ, m ^ (l ^ j) - 1 ≠ 0 := by
       intro j
       have := Nat.one_lt_pow (pow_ne_zero j hl.ne_zero) hm1

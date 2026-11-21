@@ -466,31 +466,31 @@ variable {S : Scheme.{0}} {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing
 
 theorem alg_eq (a : R) : algebraMap R (DualNumber R) a = TrivSqZeroExt.inl a := rfl
 
-theorem dualMap_comp (f : R →+* R') (g : R' →+* R'') : GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) = (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+theorem dualMap_comp (f : R →+* R') (g : R' →+* R'') : dualMap (g.comp f) = (dualMap g).comp (dualMap f) := by
+  ext a <;> simp [dualMap]
 
 theorem dualMap_algebraMap (f : R →+* R') :
-    (GlobalTheory.CompanionTheory.Ar.dualMap f).comp (algebraMap R (DualNumber R)) = (algebraMap R' (DualNumber R')).comp f := by
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, alg_eq]
+    (dualMap f).comp (algebraMap R (DualNumber R)) = (algebraMap R' (DualNumber R')).comp f := by
+  ext a <;> simp [dualMap, alg_eq]
 
 theorem dualMap_fst (f : R →+* R') :
-    (TrivSqZeroExt.fstHom R' R' R').toRingHom.comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = f.comp (TrivSqZeroExt.fstHom R R R).toRingHom := by
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, alg_eq]
+    (TrivSqZeroExt.fstHom R' R' R').toRingHom.comp (dualMap f) = f.comp (TrivSqZeroExt.fstHom R R R).toRingHom := by
+  ext a <;> simp [dualMap, alg_eq]
 
 theorem dualMap_epsMul (ψ : R ≃+* R') (c : R') :
-    (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom).comp (epsMul (ψ.symm c)) = (epsMul c).comp (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) := by
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, alg_eq]
+    (dualMap ψ.toRingHom).comp (epsMul (ψ.symm c)) = (epsMul c).comp (dualMap ψ.toRingHom) := by
+  ext a <;> simp [dualMap, epsMul, alg_eq]
 
 def epsMap (ψ : R ≃+* R') {x : Spec (CommRingCat.of R) ⟶ S} {x' : Spec (CommRingCat.of R') ⟶ S}
     (hx : spMap ψ.toRingHom ≫ x = x') : epsAt x' ⟶ epsAt x :=
-  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom)) (by
+  Over.homMk (spMap (dualMap ψ.toRingHom)) (by
     subst hx
-    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ spMap (algebraMap R (DualNumber R)) ≫ x =
+    show spMap (dualMap ψ.toRingHom) ≫ spMap (algebraMap R (DualNumber R)) ≫ x =
       spMap (algebraMap R' (DualNumber R')) ≫ spMap ψ.toRingHom ≫ x
     rw [← Category.assoc, ← Category.assoc, ← spMap_comp, ← spMap_comp, dualMap_algebraMap])
 
 theorem epsMap_left (ψ : R ≃+* R') {x : Spec (CommRingCat.of R) ⟶ S} {x' : Spec (CommRingCat.of R') ⟶ S}
-    (hx : spMap ψ.toRingHom ≫ x = x') : (epsMap ψ hx).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) := rfl
+    (hx : spMap ψ.toRingHom ≫ x = x') : (epsMap ψ hx).left = spMap (dualMap ψ.toRingHom) := rfl
 
 theorem symm_eq (ψ : R ≃+* R') {x : Spec (CommRingCat.of R) ⟶ S} {x' : Spec (CommRingCat.of R') ⟶ S}
     (hx : spMap ψ.toRingHom ≫ x = x') : spMap ψ.symm.toRingHom ≫ x' = x := by
@@ -503,9 +503,9 @@ theorem epsMap_inv (ψ : R ≃+* R') {x : Spec (CommRingCat.of R) ⟶ S} {x' : S
     (hx : spMap ψ.toRingHom ≫ x = x') (hx' : spMap ψ.symm.toRingHom ≫ x' = x) :
     epsMap ψ.symm hx' ≫ epsMap ψ hx = 𝟙 _ := by
   have h : ψ.symm.toRingHom.comp ψ.toRingHom = RingHom.id R := by ext; simp
-  have h2 : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id _ := by ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  have h2 : dualMap (RingHom.id R) = RingHom.id _ := by ext a <;> simp [dualMap]
   apply Over.OverMorphism.ext
-  show spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.symm.toRingHom) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) = 𝟙 _
+  show spMap (dualMap ψ.symm.toRingHom) ≫ spMap (dualMap ψ.toRingHom) = 𝟙 _
   rw [← spMap_comp, ← dualMap_comp, h, h2]
   simp [spMap]
 
@@ -513,9 +513,9 @@ theorem epsMap_inv' (ψ : R ≃+* R') {x : Spec (CommRingCat.of R) ⟶ S} {x' : 
     (hx : spMap ψ.toRingHom ≫ x = x') (hx' : spMap ψ.symm.toRingHom ≫ x' = x) :
     epsMap ψ hx ≫ epsMap ψ.symm hx' = 𝟙 _ := by
   have h : ψ.toRingHom.comp ψ.symm.toRingHom = RingHom.id R' := by ext; simp
-  have h2 : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R') = RingHom.id _ := by ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  have h2 : dualMap (RingHom.id R') = RingHom.id _ := by ext a <;> simp [dualMap]
   apply Over.OverMorphism.ext
-  show spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.symm.toRingHom) = 𝟙 _
+  show spMap (dualMap ψ.toRingHom) ≫ spMap (dualMap ψ.symm.toRingHom) = 𝟙 _
   rw [← spMap_comp, ← dualMap_comp, h, h2]
   simp [spMap]
 
@@ -530,7 +530,7 @@ theorem tan_comp (ψ : R ≃+* R') {x : Spec (CommRingCat.of R) ⟶ S} {x' : Spe
     congrArg (fun t => Over.Hom.left t) h1
   unfold IsTanAt at *
   rw [h2, ← hv]
-  show spMap (TrivSqZeroExt.fstHom R' R' R').toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ v.left =
+  show spMap (TrivSqZeroExt.fstHom R' R' R').toRingHom ≫ spMap (dualMap ψ.toRingHom) ≫ v.left =
     spMap ψ.toRingHom ≫ spMap (TrivSqZeroExt.fstHom R R R).toRingHom ≫ v.left
   rw [← Category.assoc, ← Category.assoc, ← spMap_comp, ← spMap_comp, dualMap_fst]
 
@@ -550,7 +550,7 @@ def transport (ψ : R ≃+* R') {x : Spec (CommRingCat.of R) ⟶ S} {x' : Spec (
     have h1 : c • e = ψ.symm c • e := by rw [← hs, ψ.apply_symm_apply]
     rw [h1, Over.comp_left, Over.comp_left, M.smul, epsMap_left, ← Category.assoc, ← Category.assoc]
     congr 1
-    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ spMap (epsMul (ψ.symm c)) = spMap (epsMul c) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom)
+    show spMap (dualMap ψ.toRingHom) ≫ spMap (epsMul (ψ.symm c)) = spMap (epsMul c) ≫ spMap (dualMap ψ.toRingHom)
     rw [← spMap_comp, ← spMap_comp, dualMap_epsMul]
 
 end Transport
@@ -584,7 +584,7 @@ theorem mem_eigSp_iff {i : Ω →+* Ω'} {j : E →+ F} (hj : IsExtOver i j) (ρ
 
 end Eig
 
-theorem flag_pull : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (S : Finset ℕ) (Ω Ω' : Type) [Field Ω] [Field Ω'] (i : Ω →+* Ω') (K K' : Type) [Fintype K] [Fintype K'] (J : K → Type) (J' : K' → Type) [∀ k, Fintype (J k)] [∀ k, Fintype (J' k)] (y : (Σ k, J k) → Ω) (y' : (Σ k, J' k) → Ω') (A : HodgeCpt Y S y) (A' : HodgeCpt Y S y') (h : A'.X ⟶ A.X) (j : A.Li →+ A'.Li) (m : SABMap A'.t A.t h) (κ : K → K') (v : (Σ k, J k) → (Σ k, J' k)) (Fl : A.Flag), AI.I1.IsBlockMap κ v → (∀ q, y' (v q) = i (y q)) → GlobalTheory.CompanionTheory.Ar.Dominates A'.ξ A.ξ h i → A'.f = h ≫ A.f → A'.m.φ = m.φ ≫ A.m.φ → A'.cst = i.comp A.cst → IsExtOver i j → (∀ w, (A'.M.pt (j w)).left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (A.M.pt w).left) → (∀ s, A'.V s = (A.V s).pull A'.ξ h j) → FiniteDimensional i.fieldRange Ω' → ∃ Fl' : A'.Flag, (∀ s k, Fl'.b s k = j (Fl.b s k)) ∧ Fl'.deg = Module.finrank i.fieldRange Ω' * Fl.deg ∧ (∃ (ψ : A.Ω₀ ≃+* A'.Ω₀) (θ : Fl.Li₀ ≃+ Fl'.Li₀), A'.fn.comp ψ.toRingHom = i.comp A.fn ∧ spMap ψ.toRingHom ≫ A.ξ₀ = A'.ξ₀ ∧ (∀ e, (Fl'.M₀.pt (θ e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ (Fl.M₀.pt e).left) ∧ ∀ e, Fl'.j (θ e) = j (Fl.j e)) ∧ ∀ xdeg e, Fl.RootLines xdeg e → Fl'.RootLines (fun r => AI.I1.pullDeg κ (xdeg r)) (fun r => i (e r)) := by
+theorem flag_pull : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (S : Finset ℕ) (Ω Ω' : Type) [Field Ω] [Field Ω'] (i : Ω →+* Ω') (K K' : Type) [Fintype K] [Fintype K'] (J : K → Type) (J' : K' → Type) [∀ k, Fintype (J k)] [∀ k, Fintype (J' k)] (y : (Σ k, J k) → Ω) (y' : (Σ k, J' k) → Ω') (A : HodgeCpt Y S y) (A' : HodgeCpt Y S y') (h : A'.X ⟶ A.X) (j : A.Li →+ A'.Li) (m : SABMap A'.t A.t h) (κ : K → K') (v : (Σ k, J k) → (Σ k, J' k)) (Fl : A.Flag), AI.I1.IsBlockMap κ v → (∀ q, y' (v q) = i (y q)) → GlobalTheory.CompanionTheory.Ar.Dominates A'.ξ A.ξ h i → A'.f = h ≫ A.f → A'.m.φ = m.φ ≫ A.m.φ → A'.cst = i.comp A.cst → IsExtOver i j → (∀ w, (A'.M.pt (j w)).left ≫ m.φ = spMap (dualMap i) ≫ (A.M.pt w).left) → (∀ s, A'.V s = (A.V s).pull A'.ξ h j) → FiniteDimensional i.fieldRange Ω' → ∃ Fl' : A'.Flag, (∀ s k, Fl'.b s k = j (Fl.b s k)) ∧ Fl'.deg = Module.finrank i.fieldRange Ω' * Fl.deg ∧ (∃ (ψ : A.Ω₀ ≃+* A'.Ω₀) (θ : Fl.Li₀ ≃+ Fl'.Li₀), A'.fn.comp ψ.toRingHom = i.comp A.fn ∧ spMap ψ.toRingHom ≫ A.ξ₀ = A'.ξ₀ ∧ (∀ e, (Fl'.M₀.pt (θ e)).left = spMap (dualMap ψ.toRingHom) ≫ (Fl.M₀.pt e).left) ∧ ∀ e, Fl'.j (θ e) = j (Fl.j e)) ∧ ∀ xdeg e, Fl.RootLines xdeg e → Fl'.RootLines (fun r => AI.I1.pullDeg κ (xdeg r)) (fun r => i (e r)) := by
   intro E _ _ _ H D l Xo c O _ β Y S Ω Ω' _ _ i K K' _ _ J J' _ _ y y' A A' h j m κ v Fl hv hy hd hf hφ hcst hj hpt hV hfin
   haveI := hfin
   have hgen : genPt A.ξ₀ = genPt A'.ξ₀ := by
@@ -614,8 +614,8 @@ theorem flag_pull : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
     apply hom_ext_of_pullback m.cart.1
     have a1 : A.M.pt (A.ρ a w) = A.M.pt w ≫ A.t.act.act a := A.act a w
     have a2 : A'.M.pt (A'.ρ a (j w)) = A'.M.pt (j w) ≫ A'.t.act.act a := A'.act a (j w)
-    calc (A'.M.pt (j (A.ρ a w))).left ≫ m.cm.F = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (A.M.pt (A.ρ a w)).left := hpt _
-      _ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (A.M.pt w).left ≫ (A.t.act.act a).left := by rw [a1]; rfl
+    calc (A'.M.pt (j (A.ρ a w))).left ≫ m.cm.F = spMap (dualMap i) ≫ (A.M.pt (A.ρ a w)).left := hpt _
+      _ = spMap (dualMap i) ≫ (A.M.pt w).left ≫ (A.t.act.act a).left := by rw [a1]; rfl
       _ = ((A'.M.pt (j w)).left ≫ m.cm.F) ≫ (A.t.act.act a).left := by
           rw [show (A'.M.pt (j w)).left ≫ m.cm.F = _ from hpt w, Category.assoc]
       _ = (A'.M.pt (j w)).left ≫ (A'.t.act.act a).left ≫ m.cm.F := by rw [m.act, Category.assoc]
@@ -637,7 +637,7 @@ theorem flag_pull : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
       add_mem' := fun ha hb => (Fl.V₀ s).add_mem ha hb
       zero_mem' := (Fl.V₀ s).zero_mem
       smul_mem' := fun c x hx => (Fl.V₀ s).smul_mem (ψ.symm c) hx }
-  have hsq : spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap A.fn) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap A'.fn) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) := by
+  have hsq : spMap (dualMap i) ≫ spMap (dualMap A.fn) = spMap (dualMap A'.fn) ≫ spMap (dualMap ψ.toRingHom) := by
     rw [← spMap_comp, ← spMap_comp, ← dualMap_comp, ← dualMap_comp, hfn]
   let Fl' : A'.Flag :=
     { b := fun s k => j (Fl.b s k)
@@ -651,7 +651,7 @@ theorem flag_pull : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
       j := j.comp Fl.j
       j_pt := fun e => by
         show (A'.M.pt (j (Fl.j e))).left ≫ A'.m.φ =
-          spMap (GlobalTheory.CompanionTheory.Ar.dualMap A'.fn) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ (Fl.M₀.pt e).left
+          spMap (dualMap A'.fn) ≫ spMap (dualMap ψ.toRingHom) ≫ (Fl.M₀.pt e).left
         rw [hφ, ← Category.assoc, hpt, Category.assoc, Fl.j_pt, ← Category.assoc, hsq, Category.assoc]
       V₀ := V₀'
       V₀_mem := fun s e => (Fl.V₀_mem s e).trans (hVgen s _).symm

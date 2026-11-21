@@ -41,9 +41,9 @@ variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws
 section Tw
 variable {u : B.Word} {a : I.ι} {Ch₀ : ℕ → Type} {A : TwDat I l Z u a Ch₀}
 end Tw
-variable {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-  {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts}
-  {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} {W : _root_.GlobalTheory.MiS.RealPackAlt ex} {u : B.Word}
+variable {L : SizeData₂ (I.rec7 l Z)}
+  {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts}
+  {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} {W : _root_.GlobalTheory.MiS.RealPackAlt ex} {u : B.Word}
 set_option maxHeartbeats 1000000 in
 theorem valuation_frs_sub_kronecker_lt_one (hW : _root_.GlobalTheory.Fam.AllFamilyConditions W) {a : _root_.GlobalTheory.Fam.GeometricFamily W u} {t : W.P.T} {J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t} (hJ : J.Reads) (P : BadPr I (W.P.I.tup t))
     (hP : P.1 ∈ (B.primes X).vGs) {j : ℕ} (hj : j + 1 = B.R.m) (β : J.Ch₀ j) (r c) :
@@ -59,7 +59,7 @@ theorem valuation_frs_sub_kronecker_lt_one (hW : _root_.GlobalTheory.Fam.AllFami
     rcases (under_eq_iff B.host (J.pl i) P.1).1 hi.symm with h6 | h6
     · exact h5.2.1 (h6 ▸ hP)
     · exact h5.2.2.2.1 (h6 ▸ hP)
-  have h5 := finM_map_prV _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hm) h3 h4
+  have h5 := finM_map_prV _ (rankN (I.rec7 l Z) j hm) h3 h4
   have h6 := (TrueColsTest.kStd_spec X u (B.R.N j)).2.1 (P.1.under (𝓞 B.host.F))
     fun hT => Formalism.L2.Col.rls_T_notUnder l.pr u _ hT ⟨P.1, hP, rfl⟩
   have hk : Formalism.UG.bc (Formalism.UG.prV (E := B.host.E) (P.1.under (𝓞 B.host.F))) (J.A.kb j β) = 1 := by
@@ -83,10 +83,10 @@ theorem fm_beta_eq {a : _root_.GlobalTheory.Fam.GeometricFamily W u} (hIs : a.Is
     (n : Fin a.n) (r) : (∀ c, (a.G n).FM.β r (Sum.inl c) = if r.val = GlobalTheory.SymBridge.zPos c then 1 else 0) ∧
       (a.G n).FM.β r (Sum.inr ()) = _root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n (if r.val + 1 = B.R.N B.R.m then ((X.piT u : 𝓞 B.host.E) : B.host.E) else 0) := by
   letI := a.fld; letI := a.val; letI := a.top; letI := a.loc
-  have hA' : ∀ j (h : j = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m) r s, (a.g.oT j h).iA r s = if r.val = s.val then 1 else 0 := by
+  have hA' : ∀ j (h : j = (I.rec7 l Z).R.m) r s, (a.g.oT j h).iA r s = if r.val = s.val then 1 else 0 := by
     rintro _ rfl
     exact hA
-  have hB' : ∀ j (h : j = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m) r, ((a.g.oT j h).iB *ᵥ a.o.ζ₀) r =
+  have hB' : ∀ j (h : j = (I.rec7 l Z).R.m) r, ((a.g.oT j h).iB *ᵥ a.o.ζ₀) r =
       if r.val + 1 = B.R.N B.R.m then ((X.piT u : 𝓞 B.host.E) : B.host.E) else 0 := by
     rintro _ rfl r
     exact hTr.z0 r
@@ -107,7 +107,7 @@ theorem fm_beta_eq {a : _root_.GlobalTheory.Fam.GeometricFamily W u} (hIs : a.Is
     show ∑ b, _root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n ((a.g.oT _ (a.G n).hs).iB r b) * _root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n (a.o.ζ₀ b) = _
     exact Finset.sum_congr rfl fun b _ => (map_mul (_root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n) _ _).symm
 set_option maxHeartbeats 2000000 in
-theorem xiStd_eq_const_mul_locXi_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → (∀ r s, (a.g.oT B.R.m rfl).iA r s = if r.val = s.val then 1 else 0) → ∀ (n : Fin a.n) (t : W.P.T) (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t), J.Reads → ∀ (α : J.Ch ((a.G n).s + 1)) (γ : J.Ch ((a.G n).s + 1 + 1)) (P : GlobalTheory.QTw.BadPr I (W.P.I.tup t)), P.1 = (a.pl n).1 → ∀ C : ℂ,
+theorem xiStd_eq_const_mul_locXi_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (I.rec7 l Z)} {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → (∀ r s, (a.g.oT B.R.m rfl).iA r s = if r.val = s.val then 1 else 0) → ∀ (n : Fin a.n) (t : W.P.T) (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t), J.Reads → ∀ (α : J.Ch ((a.G n).s + 1)) (γ : J.Ch ((a.G n).s + 1 + 1)) (P : GlobalTheory.QTw.BadPr I (W.P.I.tup t)), P.1 = (a.pl n).1 → ∀ C : ℂ,
   (∀ (e' : GlobalTheory.StepData.XIx (Fin B.R.k) (Fin B.R.t) ((a.G n).s + 1) ≃ Fin (B.R.N ((a.G n).s + 1))) (e : GlobalTheory.StepData.Ix (Fin B.R.k ⊕ Fin ((a.G n).s + 1)) (Fin B.R.t) ((a.G n).s + 2) ⊕ Unit ≃ Fin (B.R.N B.R.m)),
      GlobalTheory.SymBridge.IsOrd GlobalTheory.SymBridge.xPos e' → GlobalTheory.SymBridge.IsOrd (Sum.elim GlobalTheory.SymBridge.zPos fun _ => B.R.N B.R.m - 1) e →
      ∀ (y : Formalism.L2.Col.HomE B.fields.E (B.R.N ((a.G n).s + 1)) (B.R.N B.R.m)) (y' : Formalism.L2.Col.Sp B.fields.E (B.R.N ((a.G n).s + 1))),
@@ -162,20 +162,20 @@ theorem xiStd_eq_const_mul_locXi_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX
     rwa [sub_sub_sub_cancel_left] at h3
   refine Eq.trans ?_ (hC e' (e.trans (finCongr (congrArg B.R.N hs))) he' (fun r => he r) _ _ hq)
   refine Eq.trans ?_ (congrArg (fun w => ((a.G n).S.T (Fin B.R.t)).xiTop (box _ (1 : (a.G n).kˣ)) (a.G n).S.ψ (a.G n).ν (-1) w _) hy)
-  have e1 := GlobalTheory.SeeSaw.StdMatch.mul_toLoc (_root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n) (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ hm) (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ hj) f f' e' e
-    (Matrix.of fun r c => _root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n (f (Pi.single (e' c) 1) (finCongr (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ hm) r)))
-    (Matrix.of fun r c => _root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n (f' (Pi.single (e c) 1) (finCongr (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ hj) r)))
+  have e1 := GlobalTheory.SeeSaw.StdMatch.mul_toLoc (_root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n) (rankN (I.rec7 l Z) _ hm) (rankN (I.rec7 l Z) _ hj) f f' e' e
+    (Matrix.of fun r c => _root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n (f (Pi.single (e' c) 1) (finCongr (rankN (I.rec7 l Z) _ hm) r)))
+    (Matrix.of fun r c => _root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n (f' (Pi.single (e c) 1) (finCongr (rankN (I.rec7 l Z) _ hj) r)))
     (fun _ _ => rfl) (fun _ _ => rfl) z
   refine xiTop_frames (a.G n).unitVol (a.G n).S (Fin B.R.t) ((a.G n).FX _ le_rfl) (a.G n).FM
     (GlobalTheory.SeeSaw.StdMatch.gamma_int (a.G n).q _ (Set.ext (hTr.pinX.xs _ hm).2.2) ((a.G n).latX _ le_rfl))
     (GlobalTheory.SeeSaw.StdMatch.gamma_int (a.G n).q _ (Set.ext (hTr.pinX.xs _ hj).2.2) (a.G n).latM) (fun r c => ?_) (fun r c => ?_) _ e1
   · obtain ⟨e₁, h1, h2⟩ := (hIs.stdG n).1 ((a.G n).s + 1) le_rfl
-    have h3 := (hlt _).2 (hF (finCongr (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ hm) r) (e' c))
+    have h3 := (hlt _).2 (hF (finCongr (rankN (I.rec7 l Z) _ hm) r) (e' c))
     rw [map_sub, apply_ite (_root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n), map_one, map_zero, (he' c).trans (h1 c).symm] at h3
     have h4 : ((a.G n).FX ((a.G n).s + 1) le_rfl).β r c = if r.val = (e₁ c).val then 1 else 0 :=
       (congrFun (congrFun h2 r) c).trans (Matrix.one_apply.trans (if_congr Fin.ext_iff rfl rfl))
     exact (congrArg (fun w => valuation (a.G n).k (_ - w)) h4).trans_lt h3
-  · have h3 := (hlt _).2 (hF' (finCongr (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ hj) r) (e c))
+  · have h3 := (hlt _).2 (hF' (finCongr (rankN (I.rec7 l Z) _ hj) r) (e c))
     rw [map_sub, apply_ite (_root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n), map_one, map_zero, he c] at h3
     obtain ⟨h1, h2⟩ := _root_.GlobalTheory.Fam.TopFrames.fm_beta_eq hIs hTr hA n r
     show valuation (a.G n).k (_ - (a.G n).FM.β r c) < 1
@@ -186,18 +186,18 @@ theorem xiStd_eq_const_mul_locXi_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX
       have h5 : _root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n ((X.piT u - 1 : 𝓞 B.host.E) : B.host.E) = _root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n ((X.piT u : 𝓞 B.host.E) : B.host.E) - 1 :=
         ((_root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n).map_sub ((X.piT u : 𝓞 B.host.E) : B.host.E) 1).trans (congrArg _ (_root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n).map_one)
       rw [h5] at h4
-      replace h3 : valuation (a.G n).k (_root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n (f' (Pi.single (e (Sum.inr c)) 1) (finCongr (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ hj) r)) -
-          if (finCongr (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ hj) r).val = B.R.N B.R.m - 1 then 1 else 0) < 1 := h3
+      replace h3 : valuation (a.G n).k (_root_.GlobalTheory.Fam.TopLoc.embeddingAtLocalFactor a n (f' (Pi.single (e (Sum.inr c)) 1) (finCongr (rankN (I.rec7 l Z) _ hj) r)) -
+          if (finCongr (rankN (I.rec7 l Z) _ hj) r).val = B.R.N B.R.m - 1 then 1 else 0) < 1 := h3
       have h6 : 0 < B.R.N B.R.m := by
         have := (e (Sum.inr c)).2
         rw [← hs]
         omega
       by_cases hr : r.val + 1 = B.R.N B.R.m
-      · rw [if_pos (show (finCongr (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ hj) r).val = B.R.N B.R.m - 1 from Nat.eq_sub_of_add_eq hr)] at h3
+      · rw [if_pos (show (finCongr (rankN (I.rec7 l Z) _ hj) r).val = B.R.N B.R.m - 1 from Nat.eq_sub_of_add_eq hr)] at h3
         rw [if_pos hr]
         have h7 := Valuation.map_sub_lt _ h3 h4
         rwa [sub_sub_sub_cancel_right] at h7
-      · rw [if_neg (show ¬ (finCongr (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ hj) r).val = B.R.N B.R.m - 1 from fun h => hr (by
+      · rw [if_neg (show ¬ (finCongr (rankN (I.rec7 l Z) _ hj) r).val = B.R.N B.R.m - 1 from fun h => hr (by
           have h8 : r.val = B.R.N B.R.m - 1 := h
           omega))] at h3
         rw [if_neg hr, map_zero]

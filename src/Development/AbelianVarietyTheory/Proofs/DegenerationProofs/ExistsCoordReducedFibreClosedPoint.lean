@@ -225,7 +225,7 @@ theorem exists_chart_ring {G Z H : Scheme.{0}} (f : G ⟶ Z) {R S K : Type} [Com
     obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective b
     induction b using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact zero_mem _
-    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk I')]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | tmul a s =>
       have : Ideal.Quotient.mk I' (a ⊗ₜ s) = a • Ideal.Quotient.mk I' (1 ⊗ₜ s) := by
         rw [← Ideal.Quotient.mkₐ_eq_mk K, ← map_smul, TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]

@@ -239,8 +239,7 @@ end Calculus
 section Analysis
 
 open PositivityTheory.RgTw (Mat)
-open PositivityTheory.RgBcC (GLs Rd Eu GelN)
-open GlobalTheory.CompanionTheory.RCalc (Sm DA Tc Tc_apply Tc_bracket DA_bracket res res_apply gel_eq)
+open PositivityTheory.RgBcC
 
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
@@ -354,7 +353,7 @@ theorem Rd_levi (blk : Fin n → ℕ) {x : Mat n → V} (hx : ContDiffOn ℝ ∞
     simp [hb a b hab, hgX]
   exact fderiv_of_line (RCalc.differentiableAt_of_smooth hx hg) (g * X) hev
 
-def nilF (V : Type) [NormedAddCommGroup V] [NormedSpace ℂ V] (blk : Fin n → ℕ) : AddSubgroup (Sm n V) where
+def nilF (V : Type) [NormedAddCommGroup V] [NormedSpace ℂ V] (blk : Fin n → ℕ) : AddSubgroup (RCalc.Sm n V) where
   carrier := {x | ∀ u : Mat n, (∀ a b, ¬ blk a < blk b → (u - 1) a b = 0) → ∀ g ∈ GLs n, x.1 (u * g) = x.1 g}
   add_mem' := fun {x y} hx hy u hu g hg => by
     show x.1 (u * g) + y.1 (u * g) = x.1 g + y.1 g
@@ -364,7 +363,7 @@ def nilF (V : Type) [NormedAddCommGroup V] [NormedSpace ℂ V] (blk : Fin n → 
     show -x.1 (u * g) = -x.1 g
     rw [hx u hu g hg]
 
-def levZ (V : Type) [NormedAddCommGroup V] [NormedSpace ℂ V] (blk : Fin n → ℕ) : AddSubgroup (Sm n V) where
+def levZ (V : Type) [NormedAddCommGroup V] [NormedSpace ℂ V] (blk : Fin n → ℕ) : AddSubgroup (RCalc.Sm n V) where
   carrier := {x | ∀ g ∈ GLs n, (∀ a b, blk a ≠ blk b → g a b = 0) → x.1 g = 0}
   add_mem' := fun {x y} hx hy g hg hb => by
     show x.1 g + y.1 g = 0
@@ -379,15 +378,15 @@ theorem Eu_eq_zero {f : Mat n → V} {g : Mat n} (s : Bool) (a b : Fin n) (h1 : 
   simp only [Eu, Pi.smul_apply, Pi.add_apply, h1, h2, smul_zero, add_zero]
 
 theorem Tc_stab (blk : Fin n → ℕ) (s : Bool) (a b : Fin n) :
-    ∀ x ∈ nilF V blk, Tc (DA n V) s a b x ∈ nilF V blk := by
+    ∀ x ∈ nilF V blk, RCalc.Tc (RCalc.DA n V) s a b x ∈ nilF V blk := by
   intro x hx u hu g hg
   have hu' := nil_mem_GLs blk hu
-  rw [Tc_apply s a b x (RCalc.mul_mem_GLs hu' hg), Tc_apply s a b x hg]
+  rw [RCalc.Tc_apply _ _ _ _ (RCalc.mul_mem_GLs hu' hg), RCalc.Tc_apply _ _ _ _ hg]
   simp only [Eu, Pi.smul_apply, Pi.add_apply]
   rw [Rd_left x.2.1 hu' (hx u hu) _ hg, Rd_left x.2.1 hu' (hx u hu) _ hg]
 
 theorem Tc_pos (blk : Fin n → ℕ) (s : Bool) (a b : Fin n) (hab : blk a < blk b) :
-    ∀ x ∈ nilF V blk, Tc (DA n V) s a b x ∈ levZ V blk := by
+    ∀ x ∈ nilF V blk, RCalc.Tc (RCalc.DA n V) s a b x ∈ levZ V blk := by
   intro x hx g hg hb
   rw [Tc_apply s a b x hg]
   have hs : ∀ z : ℂ, ∀ c d, ¬ blk c < blk d → (Matrix.single a b z : Mat n) c d = 0 := by
@@ -398,7 +397,7 @@ theorem Tc_pos (blk : Fin n → ℕ) (s : Bool) (a b : Fin n) (hab : blk a < blk
   exact Eu_eq_zero s a b (Rd_nil blk x.2.1 hx hg hb (hs _)) (Rd_nil blk x.2.1 hx hg hb (hs _))
 
 theorem Tc_lev (blk : Fin n → ℕ) (s : Bool) (a b : Fin n) (hab : blk a = blk b) :
-    ∀ x ∈ levZ V blk, Tc (DA n V) s a b x ∈ levZ V blk := by
+    ∀ x ∈ levZ V blk, RCalc.Tc (RCalc.DA n V) s a b x ∈ levZ V blk := by
   intro x hx g hg hb
   rw [Tc_apply s a b x hg]
   have hs : ∀ z : ℂ, ∀ c d, blk c ≠ blk d → (Matrix.single a b z : Mat n) c d = 0 := by
@@ -410,18 +409,18 @@ theorem Tc_lev (blk : Fin n → ℕ) (s : Bool) (a b : Fin n) (hab : blk a = blk
 
 theorem gelN : GelN := by
   intro n V _ _ blk f hf hinv hvan s m g hg hb
-  have hF : res hf ∈ nilF V blk := by
+  have hF : RCalc.res hf ∈ nilF V blk := by
     intro u hu y hy
-    rw [res_apply hf (RCalc.mul_mem_GLs (nil_mem_GLs blk hu) hy), res_apply hf hy]
+    rw [RCalc.res_apply hf (RCalc.mul_mem_GLs (nil_mem_GLs blk hu) hy), RCalc.res_apply hf hy]
     exact hinv u hu y hy
-  have hZ : res hf ∈ levZ V blk := by
+  have hZ : RCalc.res hf ∈ levZ V blk := by
     intro y hy hyb
-    rw [res_apply hf hy]
+    rw [RCalc.res_apply hf hy]
     exact hvan y hy hyb
-  have key := trace_Pw_mem (Tc (DA n V) s) blk (nilF V blk) (levZ V blk)
-    (Tc_bracket DA_bracket s) (Tc_stab blk s) (fun a b h => Tc_pos blk s a b h)
+  have key := trace_Pw_mem (RCalc.Tc (RCalc.DA n V) s) blk (nilF V blk) (levZ V blk)
+    (RCalc.Tc_bracket RCalc.DA_bracket s) (Tc_stab blk s) (fun a b h => Tc_pos blk s a b h)
     (fun a b h => Tc_lev blk s a b h) hF hZ m
-  rw [gel_eq s m hf hg]
+  rw [RCalc.gel_eq s m hf hg]
   exact key g hg hb
 
 end Analysis

@@ -92,7 +92,7 @@ theorem logSeries_expSeries_sub_one {a : ℤ} {x : K} (hx : x ∈ valBall (K := 
     (by positivity)
   have hdiv := div_natCast_mem_valBall p hmem hm0
   refine valBall_antitone ?_ hdiv
-  rw [padicValNat.prime_pow]
+  rw [Nat.padicValNat_def, Nat.multiplicity_prime_pow]
   have h2 : N ≤ (N.toNat : ℤ) := Int.self_le_toNat N
   have h3 : (N.toNat : ℤ) ≤ k := by exact_mod_cast hk
   have he' : (1 : ℤ) ≤ e := by exact_mod_cast he

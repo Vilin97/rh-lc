@@ -125,8 +125,14 @@ theorem Chase_of : DiagramChase₂ := by
       (pull _ (sch.map (pullback.fst _ _)) _ _ a2 - pull _ (sch.map (pullback.snd _ _)) _ _ b2) := ⟨_, rfl⟩
   have hd : pull _ (sch.map (rL D c j0 (e.hom ⁻¹ᵁ (U ⊓ V)) (g1 ≫ f1))) (tw q i) (m + 1) dC = 0 := by
     rw [hdC, map_sub, map_sub,
-      pp3' (f' := (psi _ _ _ (hinf (c.π.app j0))).inv) (g' := pullback.fst _ _) (k' := rL D c j0 (e.hom ⁻¹ᵁ U) (g1 ≫ f1)) (by meq),
-      pp3' (f' := (psi _ _ _ (hinf (c.π.app j0))).inv) (g' := pullback.snd _ _) (k' := rL D c j0 (e.hom ⁻¹ᵁ V) (g1 ≫ f1)) (by meq),
+      pp3' (f' := (psi _ _ _ (hinf (c.π.app j0))).inv) (g' := pullback.fst _ _) (k' := rL D c j0 (e.hom ⁻¹ᵁ U) (g1 ≫ f1)) (by
+        apply (cancel_mono (Scheme.Opens.ι _)).1
+        simp [Category.assoc, rL, rT, Scheme.Hom.resLE_comp_ι_assoc, psi_inv_fst, (reassoc_of% psi_inv_fst), psi_inv_snd, pullback.condition_assoc, Cone.w]
+        all_goals simp [← Category.assoc, psi_inv_fst, pullback.condition]),
+      pp3' (f' := (psi _ _ _ (hinf (c.π.app j0))).inv) (g' := pullback.snd _ _) (k' := rL D c j0 (e.hom ⁻¹ᵁ V) (g1 ≫ f1)) (by
+        apply (cancel_mono (Scheme.Opens.ι _)).1
+        simp [Category.assoc, rL, rT, Scheme.Hom.resLE_comp_ι_assoc, psi_inv_fst, (reassoc_of% psi_inv_fst), psi_inv_snd, pullback.condition_assoc, Cone.w]
+        all_goals simp [← Category.assoc, psi_inv_fst, pullback.condition]),
       ha2, hb2, pp3 (psi_inv_fst _ _ _ _), pp3 (psi_inv_snd _ _ _ _), sub_self]
   obtain ⟨k4, g4, hk4⟩ := (pW (m + 1) i).2 k3 (g1 ≫ f1) dC hd
 
@@ -142,10 +148,14 @@ theorem Chase_of : DiagramChase₂ := by
           (pull _ (sch.map (rT D j0 (e.hom ⁻¹ᵁ (U ⊓ V)) g4 (g1 ≫ f1) (g4 ≫ g1 ≫ f1) rfl)) _ _ dC) := by
       have E3 : (pullback.fst (D.map (g4 ≫ g1 ≫ f1) ⁻¹ᵁ (e.hom ⁻¹ᵁ U)).ι (D.map (g4 ≫ g1 ≫ f1) ⁻¹ᵁ (e.hom ⁻¹ᵁ V)).ι ≫ rT D j0 (e.hom ⁻¹ᵁ U) g4 (g1 ≫ f1) (g4 ≫ g1 ≫ f1) rfl =
         (psi _ _ _ (hinf (D.map (g4 ≫ g1 ≫ f1)))).hom ≫ rT D j0 (e.hom ⁻¹ᵁ (U ⊓ V)) g4 (g1 ≫ f1) (g4 ≫ g1 ≫ f1) rfl ≫
-          (psi _ _ _ (hinf (D.map (g1 ≫ f1)))).inv ≫ pullback.fst (D.map (g1 ≫ f1) ⁻¹ᵁ (e.hom ⁻¹ᵁ U)).ι (D.map (g1 ≫ f1) ⁻¹ᵁ (e.hom ⁻¹ᵁ V)).ι) := by meq
+          (psi _ _ _ (hinf (D.map (g1 ≫ f1)))).inv ≫ pullback.fst (D.map (g1 ≫ f1) ⁻¹ᵁ (e.hom ⁻¹ᵁ U)).ι (D.map (g1 ≫ f1) ⁻¹ᵁ (e.hom ⁻¹ᵁ V)).ι) := by
+        apply (cancel_mono (Scheme.Opens.ι _)).1
+        simp [Category.assoc, rL, rT, Scheme.Hom.resLE_comp_ι_assoc, psi_inv_fst, (reassoc_of% psi_inv_fst), psi_inv_snd, pullback.condition_assoc, Cone.w]
       have E4 : (pullback.snd (D.map (g4 ≫ g1 ≫ f1) ⁻¹ᵁ (e.hom ⁻¹ᵁ U)).ι (D.map (g4 ≫ g1 ≫ f1) ⁻¹ᵁ (e.hom ⁻¹ᵁ V)).ι ≫ rT D j0 (e.hom ⁻¹ᵁ V) g4 (g1 ≫ f1) (g4 ≫ g1 ≫ f1) rfl =
         (psi _ _ _ (hinf (D.map (g4 ≫ g1 ≫ f1)))).hom ≫ rT D j0 (e.hom ⁻¹ᵁ (U ⊓ V)) g4 (g1 ≫ f1) (g4 ≫ g1 ≫ f1) rfl ≫
-          (psi _ _ _ (hinf (D.map (g1 ≫ f1)))).inv ≫ pullback.snd (D.map (g1 ≫ f1) ⁻¹ᵁ (e.hom ⁻¹ᵁ U)).ι (D.map (g1 ≫ f1) ⁻¹ᵁ (e.hom ⁻¹ᵁ V)).ι) := by meq
+          (psi _ _ _ (hinf (D.map (g1 ≫ f1)))).inv ≫ pullback.snd (D.map (g1 ≫ f1) ⁻¹ᵁ (e.hom ⁻¹ᵁ U)).ι (D.map (g1 ≫ f1) ⁻¹ᵁ (e.hom ⁻¹ᵁ V)).ι) := by
+        apply (cancel_mono (Scheme.Opens.ι _)).1
+        simp [Category.assoc, rL, rT, Scheme.Hom.resLE_comp_ι_assoc, psi_inv_fst, (reassoc_of% psi_inv_fst), psi_inv_snd, pullback.condition_assoc, Cone.w]
       rw [hdC, ha3d, hb3d]; simp only [map_sub]; rw [pp24 E3, pp24 E4]
     rw [hk4, map_zero] at key
     exact sub_eq_zero.mp key

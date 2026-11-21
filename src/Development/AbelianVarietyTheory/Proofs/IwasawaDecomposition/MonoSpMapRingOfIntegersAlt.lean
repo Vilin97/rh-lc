@@ -58,7 +58,7 @@ def Matches {Z : Model Xo c β} {σ : c.F →+* ℂ} {A : Type} [CommRing A] {φ
   GlobalTheory.AllWt.ptF y ≫ Z.jQ = spMap (show A →+* CAt σ from ψ) ≫ x ∧
     ∀ τ i, ∃ w : Sp (DualNumber (CAt σ)) ⟶ Z.oF.t.G.left,
       w ≫ Z.oF.t.G.hom = spMap (algebraMap (CAt σ) (DualNumber (CAt σ))) ≫ GlobalTheory.AllWt.ptF y ∧
-        w ≫ Z.m0.toSABMap.φ = y.u τ i ∧ w ≫ Z.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (show A →+* CAt σ from ψ)) ≫ fr.v τ i
+        w ≫ Z.m0.toSABMap.φ = y.u τ i ∧ w ≫ Z.m.φ = spMap (dualMap (show A →+* CAt σ from ψ)) ≫ fr.v τ i
 
 def SameLie {S : Type} [CommRing S] [Algebra c.F S] (y y' : FrPt Xo c S) : Prop :=
   y.x = y'.x ∧ ∀ τ i, y.u τ i = y'.u τ i

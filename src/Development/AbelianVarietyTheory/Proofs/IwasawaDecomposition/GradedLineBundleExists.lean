@@ -102,17 +102,17 @@ theorem comb_iff {v : Fin m → (Sp (DualNumber S) ⟶ t.G.left)} (hv : ∀ i, I
 theorem comb_map (φ : S →+* T) {x' : Sp T ⟶ X} (hx : spMap φ ≫ x = x')
     {v : Fin m → (Sp (DualNumber S) ⟶ t.G.left)} {cf : Fin m → S} {w : Sp (DualNumber S) ⟶ t.G.left}
     (h : IsCombAtG t x v cf w) :
-    IsCombAtG t x' (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v i) (fun i => φ (cf i)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w) := by
+    IsCombAtG t x' (fun i => spMap (dualMap φ) ≫ v i) (fun i => φ (cf i)) (spMap (dualMap φ) ≫ w) := by
   subst hx
   obtain ⟨u, hu, rfl⟩ := h
-  let δ : tEpsG (spMap φ ≫ x) ⟶ tEpsG x := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ)) (by
-    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) ≫ x =
+  let δ : tEpsG (spMap φ ≫ x) ⟶ tEpsG x := Over.homMk (spMap (dualMap φ)) (by
+    show spMap (dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) ≫ x =
       spMap (algebraMap T (DualNumber T)) ≫ spMap φ ≫ x
     rw [← Category.assoc, ← Category.assoc, spMap_comp_spMap, spMap_comp_spMap, Formalism.L2.Pj.dualMap_comp_alg])
-  have e : ∀ a : S, spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (epsMul a) = spMap (epsMul (φ a)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) := fun a => by
+  have e : ∀ a : S, spMap (dualMap φ) ≫ spMap (epsMul a) = spMap (epsMul (φ a)) ≫ spMap (dualMap φ) := fun a => by
     rw [spMap_comp_spMap, spMap_comp_spMap]
     congr 1
-    refine RingHom.ext fun z => TrivSqZeroExt.ext ?_ ?_ <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, mul_comm]
+    refine RingHom.ext fun z => TrivSqZeroExt.ext ?_ ?_ <;> simp [dualMap, epsMul, mul_comm]
   refine ⟨fun i => δ ≫ u i, fun i => ?_, ?_⟩
   · simp only [Over.comp_left, δ, Over.homMk_left]
     rw [hu i, ← Category.assoc, e, Category.assoc]
@@ -137,7 +137,7 @@ theorem basis_iff {G' : Over (Sp S)} [GrpObj G'] [IsCommMonObj G'] {Φ : G'.left
 
 theorem basis_map (ψ : S →+* T) {x' : Sp T ⟶ X} (hx : spMap ψ ≫ x = x') {v : Fin m → (Sp (DualNumber S) ⟶ t.G.left)}
     (hv : ∀ i, IsTanAtG t x (v i)) (hb : ∀ w, IsTanAtG t x w → ∃! cf, IsCombAtG t x v cf w) :
-    ∀ w, IsTanAtG t x' w → ∃! cf, IsCombAtG t x' (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ v i) cf w := by
+    ∀ w, IsTanAtG t x' w → ∃! cf, IsCombAtG t x' (fun i => spMap (dualMap ψ) ≫ v i) cf w := by
   subst hx
   have h₀ := isGrpPullback_pullback t.G x
   have h := isGrpPullback_pullback t.G (spMap ψ ≫ x)
@@ -160,10 +160,10 @@ theorem basis_map (ψ : S →+* T) {x' : Sp T ⟶ X} (hx : spMap ψ ≫ x = x') 
     exact (spMap_comp_spMap _ _).trans ((congrArg spMap (Formalism.L2.Pj.dualMap_comp_alg _).symm).trans (spMap_comp_spMap _ _).symm)
 
 theorem dual_comp {R : Type} [CommRing R] (ρ : R →+* S) (ψ : S →+* T) {Y : Scheme.{0}} (v : Sp (DualNumber R) ⟶ Y) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ v = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp ρ)) ≫ v := by
+    spMap (dualMap ψ) ≫ spMap (dualMap ρ) ≫ v = spMap (dualMap (ψ.comp ρ)) ≫ v := by
   rw [← Category.assoc, spMap_comp_spMap]
   congr 2
-  refine RingHom.ext fun z => TrivSqZeroExt.ext ?_ ?_ <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  refine RingHom.ext fun z => TrivSqZeroExt.ext ?_ ?_ <;> simp [dualMap]
 
 variable {k : Type} [Field k] {y : Sp k ⟶ X}
 
@@ -235,7 +235,7 @@ theorem linInd_bc {U : Z.X.Opens} {hU : IsAffineOpen U} {w : Vecs Dw (Y Z.i).t �
   have hx' : spMap φ ≫ hU.fromSpec ≫ Z.π = x ≫ Z.π := by rw [← hx, Category.assoc]
   have li := (linInd_of_basis (fun i => isTan_map φ hx' (hv i)) (basis_map φ hx' hv hb)).comp e e.injective
   convert li using 2 with i
-  exact tan_ext (congrArg (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ ·) (he i).symm)
+  exact tan_ext (congrArg (spMap (dualMap φ) ≫ ·) (he i).symm)
 
 variable (Z)
 

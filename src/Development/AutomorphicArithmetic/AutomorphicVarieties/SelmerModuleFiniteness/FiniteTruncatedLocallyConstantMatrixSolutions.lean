@@ -111,14 +111,13 @@ private theorem fc_memC (m : ℕ) (x : fcC K n φ) :
       · simp [Nat.sub_add_cancel hk]
       · exact (h y i j k (not_le.1 hk)).symm
 
-private theorem fc_complete : IsAdicComplete (Ideal.span {(X : K⟦X⟧)}) (fcC K n φ) := by
-  refine { toIsHausdorff := ⟨?_⟩, toIsPrecomplete := ⟨?_⟩ }
-  · intro x hx
+private theorem fc_complete : IsAdicComplete (Ideal.span {(X : K⟦X⟧)}) (fcC K n φ) where
+  haus' x hx := by
     ext y i j k
     have := hx (k + 1)
     rw [SModEq.sub_mem, Ideal.span_singleton_pow, sub_zero, fc_memC] at this
     simpa using this y i j k (Nat.lt_succ_self k)
-  · intro f hf
+  prec' f hf := by
     refine ⟨⟨fun y i j => mk fun k => coeff k ((f (k + 1)).1 y i j), fun i j k => ?_⟩, fun m => ?_⟩
     · simpa using (f (k + 1)).2 i j k
     · rw [SModEq.sub_mem, Ideal.span_singleton_pow, fc_memC]

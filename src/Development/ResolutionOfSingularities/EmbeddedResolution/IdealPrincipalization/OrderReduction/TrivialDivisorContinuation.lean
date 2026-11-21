@@ -117,7 +117,6 @@ theorem nonempty_pullback_appendLowerDimReduction_of_comap_eq_top
   have hb : (FunctorialResolution.EmbeddedResolution.MaxContactCoverData.derivedTriple S s hft [] 0).boundary = s.boundary s.length := by
     rw [FunctorialResolution.EmbeddedResolution.MaxContactCoverData.derivedTriple_boundary]
     simp
-    rfl
   have hj' : j₁ < (FunctorialResolution.EmbeddedResolution.MaxContactCoverData.derivedTriple S s hft [] 0).boundary.length := by
     rw [hb]; exact hj
   have hget : (FunctorialResolution.EmbeddedResolution.MaxContactCoverData.derivedTriple S s hft [] 0).boundary.get ⟨j₁, hj'⟩ = Dj := by

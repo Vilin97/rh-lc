@@ -140,7 +140,7 @@ private theorem boundary_derivedTriple_emptyMarkedBlowupSequenceData (S : Marked
   have hdrop : List.drop S.boundary.length
       ((emptyMarkedBlowupSequenceData S.structMap S.ideal S.mult S.boundary).boundary
         (emptyMarkedBlowupSequenceData S.structMap S.ideal S.mult S.boundary).length) = [] := by
-    change List.drop S.boundary.length S.boundary = []
+    rw [hB]
     simp
   rw [MaxContactCoverData.derivedTriple_boundary, hdrop]
   exact List.append_nil extra

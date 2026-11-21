@@ -232,7 +232,7 @@ theorem heisMat_mul {h : ZMod N} (hh : 2 * h = 1) (u v u' v' : ZMod N) :
     heisMat ψ h u v * heisMat ψ h u' v' = ψ (h * (u * v' - v * u')) • heisMat ψ h (u + u') (v + v') := by
   ext i k
   rw [Matrix.mul_apply, Finset.sum_eq_single (i + u) (fun j _ hj => by simp [heisMat, hj]) (by simp)]
-  simp only [heisMat, Matrix.of_apply, ite_true, Matrix.smul_apply, smul_eq_mul, add_assoc]
+  simp only [heisMat, Matrix.of_apply, if_true, Matrix.smul_apply, smul_eq_mul, add_assoc]
   split_ifs
   · rw [← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul]
     congr 1
@@ -314,12 +314,8 @@ def heisSys : ThetaSys o Ω :=
       rw [(nsmul_eq_zero_iff_castHom _).1 (congrFun ha (.inl 0)), (nsmul_eq_zero_iff_castHom _).1 (congrFun ha (.inr 0))]
       ext i j
       simp [heisMat_zero_apply, Matrix.one_apply, eq_comm]
-    ρ_mul := fun a b => by
-      let f := ZMod.castHom (dvd_mul_left N r) (ZMod N)
-      refine ⟨(r ^ 2 * N) * (((N / 2 + 1 : ℕ) : ZMod N) *
-        (f (a (.inl 0)) * f (b (.inr 0)) - f (a (.inr 0)) * f (b (.inl 0)))).val, ?_⟩
-      rw [heisMat_mul _ hh, AddChar.zmodChar_apply, ← pow_mul]
-      simp only [f, Pi.add_apply, map_add]
+    ρ_mul := fun a b => ⟨_, by
+      rw [heisMat_mul _ hh, AddChar.zmodChar_apply, ← pow_mul, Pi.add_apply, Pi.add_apply, map_add (f := _), map_add (f := _)]⟩
     ρ_add := fun a b h => by
       have h2 := (nsmul_eq_zero_iff_castHom _).1 h
       rw [eStd, Fin.sum_univ_one, map_sub, map_mul, map_mul] at h2

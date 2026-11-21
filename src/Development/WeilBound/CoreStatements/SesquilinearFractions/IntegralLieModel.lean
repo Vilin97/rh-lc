@@ -36,13 +36,13 @@ theorem hM2 : ∀ e, ((curveLieModel X).pt e).left ≫ X.m'.φ = ((integralLieMo
   (models X).choose_spec.choose_spec.2.choose_spec.choose_spec.2
 
 def bK : epsAt (pK X) ⟶ epsR (𝓞 X.K) :=
-  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 X.K) X.K))) (by
+  Over.homMk (spMap (dualMap (algebraMap (𝓞 X.K) X.K))) (by
     simp only [Over.mk_hom, Category.id_comp]
     rw [isogeny_decomposition_product.spMap_comp, isogeny_decomposition_product.spMap_comp]
     congr 1
-    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl])
+    ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl])
 
-theorem bK_left : (bK X).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 X.K) X.K)) := rfl
+theorem bK_left : (bK X).left = spMap (dualMap (algebraMap (𝓞 X.K) X.K)) := rfl
 
 def wB (b : Bool) (a : PureType.lat hP (sgnRt H b)) : epsAt (pK X) ⟶ X.B.t.G := bK X ≫ (X.C b).v ≫ X.ψ b a
 
@@ -54,12 +54,12 @@ theorem wB_tan (b : Bool) (a : PureType.lat hP (sgnRt H b)) : IsTanAt X.B.t.G (p
   unfold IsTangent at hv
   rw [Over.comp_left, Over.comp_left, bK_left, ← Category.assoc, ← Category.assoc]
   have e1 : Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom X.K X.K X.K).toRingHom) ≫
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 X.K) X.K)) =
+      spMap (dualMap (algebraMap (𝓞 X.K) X.K)) =
       spMap (algebraMap (𝓞 X.K) X.K) ≫ spMap (TrivSqZeroExt.fstHom (𝓞 X.K) (𝓞 X.K) (𝓞 X.K)).toRingHom := by
     rw [show Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom X.K X.K X.K).toRingHom) =
       spMap (TrivSqZeroExt.fstHom X.K X.K X.K).toRingHom from rfl, isogeny_decomposition_product.spMap_comp, isogeny_decomposition_product.spMap_comp]
     congr 1
-    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   rw [e1]
   simp only [Category.assoc]
   rw [← Category.assoc (spMap (TrivSqZeroExt.fstHom (𝓞 X.K) (𝓞 X.K) (𝓞 X.K)).toRingHom) (X.C b).v.left (X.ψ b a).left, hv,

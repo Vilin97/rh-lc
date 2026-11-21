@@ -44,15 +44,19 @@ lemma niter_sub (p : ι → Prop) [DecidablePred p] {R : ∀ i, Subgroup (H i)} 
     (μ : ∀ i, Measure (H i)) (f : (∀ i, H i) → ℂ) (h₀ : ∀ i, H i) :
     ∀ (l : List (Subtype p)) (g : ∀ j : Subtype p, H j.1) (z : ℂ),
       NIter (R := fun j : Subtype p => R j.1) (fun j => ρ j.1) (fun j => μ j.1) (fun g => f (extPt p h₀ g)) l g z →
-      NIter ρ μ f (l.map Subtype.val) (extPt p h₀ g) z
-  | [], g, z, hz => by simpa [NIter] using hz
-  | j :: l, g, z, hz => by
-    rw [NIter.eq_2] at hz
-    rw [List.map_cons, NIter.eq_2]
+      NIter ρ μ f (l.map Subtype.val) (extPt p h₀ g) z := by
+  intro l
+  induction l with
+  | nil =>
+    intro g z hz
+    simpa [NIter] using hz
+  | cons j l ih =>
+    intro g z hz
+    simp only [List.map_cons, NIter.eq_2] at hz ⊢
     obtain ⟨F, hF, hF'⟩ := hz
     refine ⟨F, hF, fun x => ?_⟩
     rw [← extPt_update]
-    exact niter_sub p ρ μ f h₀ l _ _ (hF' x)
+    exact ih _ _ (hF' x)
 
 end GlobalTheory.CellVanishing
 

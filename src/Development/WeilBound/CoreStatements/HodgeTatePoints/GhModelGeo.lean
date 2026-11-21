@@ -17,15 +17,15 @@ open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalC
 open GlobalTheory.CompanionTheory.Ar.LieTangent
 
 theorem dualMap_comp {A B D : Type} [CommRing A] [CommRing B] [CommRing D] (f : A →+* B) (g : B →+* D) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) := by
+    (dualMap g).comp (dualMap f) = dualMap (g.comp f) := by
   refine RingHom.ext fun a => ?_
-  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  ext <;> simp [dualMap]
 
 theorem exists_base {S : Scheme.{0}} {G : Over S} [GrpObj G] [Smooth G.hom] {A R : Type} [CommRing A] [CommRing R]
     (φ : A →+* R) (x : Spec (CommRingCat.of A) ⟶ S) (z : Spec (CommRingCat.of R) ⟶ S)
     (hz : Spec.map (CommRingCat.ofHom φ) ≫ x = z) {E F : Type} [AddCommGroup E] [Module A E] [AddCommGroup F]
     [Module R F] (M : LieModel G x E) (N : LieModel G z F) :
-    ∃ j : E →+ F, (∀ e, (N.pt (j e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) ≫ (M.pt e).left) ∧
+    ∃ j : E →+ F, (∀ e, (N.pt (j e)).left = Spec.map (CommRingCat.ofHom (dualMap φ)) ≫ (M.pt e).left) ∧
       (∀ (a : A) e, j (a • e) = φ a • j e) ∧
       ∀ (n : ℕ) (b : Module.Basis (Fin n) A E), ∃ b' : Module.Basis (Fin n) R F, ∀ i, b' i = j (b i) := by
   have h_alg : Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) ≫ Spec.map (CommRingCat.ofHom (algebraMap A (DualNumber A))) =
@@ -60,7 +60,7 @@ theorem exists_base {S : Scheme.{0}} {G : Over S} [GrpObj G] [Smooth G.hom] {A R
     rw [hj, N.add, hj, hj, M.add, MonObj.comp_mul])
   have hsm : ∀ (a : A) e, j (a • e) = φ a • j e := fun a e => N.inj (by
     rw [hj, N.pt_smul, M.pt_smul, hj, ← Category.assoc, hbase, Category.assoc])
-  have hl : ∀ e, (N.pt (j e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) ≫ (M.pt e).left :=
+  have hl : ∀ e, (N.pt (j e)).left = Spec.map (CommRingCat.ofHom (dualMap φ)) ≫ (M.pt e).left :=
     fun e => congrArg CommaMorphism.left (hj e)
   refine ⟨AddMonoidHom.mk' j hadd, hl, hsm, fun n b => ?_⟩
   subst hz

@@ -235,7 +235,32 @@ theorem baseLb_lattice : Submodule.IsLattice E (baseLb E n ST) :=
 
 theorem baseLb_fin : Module.Finite (𝓞 E) (baseLb E n ST) := Module.Finite.iff_fg.2 (baseLb_lattice n ST).fg
 
-theorem baseLb_span : Submodule.span E (baseLb E n ST : Set (Fin n → E)) = ⊤ := (baseLb_lattice n ST).span_eq_top
+theorem baseLb_span : Submodule.span E (baseLb E n ST : Set (Fin n → E)) = ⊤ := by
+  classical
+  have hex : ∀ P : ST, ∃ p ∈ P.1.asIdeal, p ≠ 0 := fun P =>
+    Submodule.exists_mem_ne_zero_of_ne_bot P.1.ne_bot
+  choose g hg hg0 using hex
+  let a : 𝓞 E := ∏ P, g P
+  have ha : a ≠ 0 := Finset.prod_ne_zero_iff.mpr fun P _ => hg0 P
+  have haE : algebraMap (𝓞 E) E a ≠ 0 := by
+    intro h
+    apply ha
+    exact (FaithfulSMul.algebraMap_injective (𝓞 E) E) (by simpa using h)
+  have hmem : ∀ P : ST, a ∈ P.1.asIdeal := by
+    intro P
+    change (∏ P : ST, g P) ∈ P.1.asIdeal
+    rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ P)]
+    exact Ideal.mul_mem_right _ _ (hg P)
+  apply top_unique
+  rw [← (Pi.basisFun E (Fin n)).span_eq]
+  apply Submodule.span_le.mpr
+  rintro _ ⟨i, rfl⟩
+  have h := (Deco.base_ok (E := E) (n := n) (ST := ST) (SG := ∅)).smul_N_mem_L hmem (single_mem_stdLat (E := E) (n := n) i 1)
+  have hs : (algebraMap (𝓞 E) E a) • Pi.single i (1 : E) ∈ Submodule.span E (baseLb E n ST : Set (Fin n → E)) :=
+    Submodule.subset_span h
+  have := (Submodule.span E (baseLb E n ST : Set (Fin n → E))).smul_mem (algebraMap (𝓞 E) E a)⁻¹ hs
+  rw [smul_smul, inv_mul_cancel₀ haE, one_smul] at this
+  simpa using this
 
 theorem baseLb_int : ∀ x ∈ baseLb E n ST,
     x ∈ Formalism.BasicNotions.dualSet (hc.sig : E →+* E) (1 : Matrix (Fin n) (Fin n) E) (baseLb E n ST) := by

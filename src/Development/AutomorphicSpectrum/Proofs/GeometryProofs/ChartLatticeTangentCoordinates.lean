@@ -28,15 +28,15 @@ theorem hodgeForm_of_isHodgeGram {S : Scheme.{0}} {G : Over S} [GrpObj G] {L : L
 
 theorem isTanAt_value {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] {Ei : Type} [AddCommGroup Ei] [Module R Ei]
     (M : LieModel G (𝟙 (Sp R)) Ei) (f : R →+* ℂ) (e : Ei) (v : epsAt (spMap f) ⟶ G)
-    (hv : v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (M.pt e).left) : IsTanAt G (spMap f) v := by
+    (hv : v.left = spMap (dualMap f) ≫ (M.pt e).left) : IsTanAt G (spMap f) v := by
   have ht := M.tan e
   unfold IsTanAt at ht ⊢
-  have hsq : Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) =
+  have hsq : Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom) ≫ spMap (dualMap f) =
       spMap f ≫ Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom R R R).toRingHom) := by
     simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
     congr 2
     refine RingHom.ext fun r => ?_
-    simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    simp [dualMap]
   rw [hv, ← Category.assoc, hsq, Category.assoc, ht]
   let F : Over.mk (spMap f) ⟶ Over.mk (𝟙 (Sp R)) := Over.homMk (spMap f) (by simp)
   have h1 : F ≫ (1 : Over.mk (𝟙 (Sp R)) ⟶ G) = 1 := MonObj.comp_one _
@@ -44,20 +44,20 @@ theorem isTanAt_value {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] {Ei :
 
 theorem exists_value {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] {Ei : Type} [AddCommGroup Ei] [Module R Ei]
     (M : LieModel G (𝟙 (Sp R)) Ei) (f : R →+* ℂ) (e : Ei) :
-    ∃ v : epsAt (spMap f) ⟶ G, v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (M.pt e).left := by
-  have hsq : spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (algebraMap R (DualNumber R)) =
+    ∃ v : epsAt (spMap f) ⟶ G, v.left = spMap (dualMap f) ≫ (M.pt e).left := by
+  have hsq : spMap (dualMap f) ≫ spMap (algebraMap R (DualNumber R)) =
       spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap f := by
     simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
     congr 2
     refine RingHom.ext fun r => ?_
-    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-  refine ⟨Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (M.pt e).left) ?_, rfl⟩
+    ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  refine ⟨Over.homMk (spMap (dualMap f) ≫ (M.pt e).left) ?_, rfl⟩
   have hw := Over.w (M.pt e)
-  show (spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (M.pt e).left) ≫ G.hom = spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap f
+  show (spMap (dualMap f) ≫ (M.pt e).left) ≫ G.hom = spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap f
   rw [Category.assoc, hw, ← hsq]
   simp
 
-theorem gramAt_of_isRiem : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (σ : KA l →+* ℂ) (n a : ℕ) (C : Flat.BdryChart Xo σ n a) (X : Scheme.{0}) (t : SAB H X) (h : Sp C.R ⟶ X) (m : SABMap C.t t h) (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X) (Li : Type) [AddCommGroup Li] [Module Ω Li] (M : LieModel t.G ξ Li) (N : ℕ) (b : Fin N → Li) (x : Fin N → Fin C.g → C.R) (z : Fin n → ℂ) (Hm : Matrix (Fin C.g) (Fin C.g) ℂ) (w : Fin N → (epsAt (spMap (C.ψ z) ≫ h) ⟶ t.G)), C.IsRiem z Hm → (∀ k, M.ValAt _ (b k) (w k)) → (∀ k, (w k).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt (x k)).left ≫ m.φ) → M.GramAt t.PP.L (spMap (C.ψ z) ≫ h) b (Matrix.of fun i j => (Real.pi : ℂ) * ((fun e => C.ψ z (x j e)) ⬝ᵥ Hm *ᵥ star (fun e => C.ψ z (x i e)))) := by
+theorem gramAt_of_isRiem : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (σ : KA l →+* ℂ) (n a : ℕ) (C : Flat.BdryChart Xo σ n a) (X : Scheme.{0}) (t : SAB H X) (h : Sp C.R ⟶ X) (m : SABMap C.t t h) (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X) (Li : Type) [AddCommGroup Li] [Module Ω Li] (M : LieModel t.G ξ Li) (N : ℕ) (b : Fin N → Li) (x : Fin N → Fin C.g → C.R) (z : Fin n → ℂ) (Hm : Matrix (Fin C.g) (Fin C.g) ℂ) (w : Fin N → (epsAt (spMap (C.ψ z) ≫ h) ⟶ t.G)), C.IsRiem z Hm → (∀ k, M.ValAt _ (b k) (w k)) → (∀ k, (w k).left = spMap (dualMap (C.ψ z)) ≫ (C.M.pt (x k)).left ≫ m.φ) → M.GramAt t.PP.L (spMap (C.ψ z) ≫ h) b (Matrix.of fun i j => (Real.pi : ℂ) * ((fun e => C.ψ z (x j e)) ⬝ᵥ Hm *ᵥ star (fun e => C.ψ z (x i e)))) := by
   intro E _ _ _ H D l Xo σ n a C X t h m Ω _ ξ Li _ _ M N b x z Hm w hR hval hw
   choose v hv using fun k => exists_value C.M (C.ψ z) (x k)
   have hG := (hR N x v (Matrix.of fun i j => (Real.pi : ℂ) * hermForm Hm (fun e => C.ψ z (x i e))

@@ -118,8 +118,9 @@ theorem loc_of_isAbsPow {ν : HChar E} {s : ℝ} (hν : ν.IsAbsPow s) (w : Heig
     ← Complex.ofReal_neg, ← Complex.ofReal_natCast, ← Complex.ofReal_cpow (by positivity), ← Complex.ofReal_zpow,
     ← Real.rpow_intCast, ← Real.rpow_mul (by positivity)]
   congr 2
-  push_cast
-  ring
+  · simp [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
+  · push_cast
+    ring
 
 variable [_root_.NumberField.IsTotallyComplex E] (hL : GlobalTheory.Published.LocalLanglandsGL) (hF : GlobalTheory.Published.AutomorphicFormsFiniteGL)
 
@@ -225,7 +226,6 @@ theorem isPolarized_twist_absPow {π : CuspSub E a} (h : π.IsCsd) (s : ℝ) :
   rw [ht, ← Complex.ofReal_mul, ← Complex.ofReal_exp] at e
   have h3 : Real.exp (s * t) = -1 := by exact_mod_cast e
   linarith [Real.exp_pos (s * t)]
-
 
 end Polar
 

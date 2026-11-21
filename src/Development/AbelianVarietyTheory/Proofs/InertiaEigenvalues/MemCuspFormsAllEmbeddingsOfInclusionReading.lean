@@ -571,6 +571,7 @@ theorem mem_cuspA_of_rdU_mem_holSub0 : ∀ (D : D7) (T : CoreJ D), LawsJ T → �
   refine mem_cusp_of_span (by omega) (T.U j) (h.unf j hj) (h.chiTriv j hj)
     (GlobalTheory.rdIndep_of_lawsM D T.toCore h.toLawsM j hj T.σ₀ T.toCore.good_σ₀) (4 * (Module.finrank ℚ D.host.E * D.R.r) + 4)
     (fun a n hd hl hn => ?_) (dom_wtA w) (GlobalTheory.lastPos_wtA_of_pins D T.Q h.pins j hj w hw) hf hfh
+  set_option synthInstance.maxHeartbeats 200000 in
   set S := T.cuspA j a n with hS
   haveI : FiniteDimensional T.Q.c.F S := h.toLawsM.cuspFD j hj a n hd
   haveI : Module.Free T.Q.c.F S := Module.Free.of_divisionRing _ _

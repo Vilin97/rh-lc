@@ -83,12 +83,12 @@ theorem std_eq_span (Y : Type) [Fintype Y] [DecidableEq Y] :
     · exact one_mem _
     · exact zero_mem _
 
-theorem isLattice_std (Y : Type) [Fintype Y] [DecidableEq Y] : Submodule.IsFullLattice k (stdLat k Y) where
-  toIsLattice := Submodule.IsLattice.of_fg k (by
+theorem isLattice_std (Y : Type) [Fintype Y] [DecidableEq Y] : Submodule.IsFullLattice k (stdLat k Y) := by
+  refine { toIsLattice := ?_, span_eq_top := ?_ }
+  · apply Submodule.IsLattice.of_fg k
     rw [std_eq_span]
-    exact Submodule.fg_span (Set.finite_range _))
-  span_eq_top := by
-    apply eq_top_iff.mpr
+    exact Submodule.fg_span (Set.finite_range _)
+  · apply eq_top_iff.mpr
     rw [← (Pi.basisFun k Y).span_eq, Submodule.span_le]
     rintro _ ⟨i, rfl⟩
     apply Submodule.subset_span

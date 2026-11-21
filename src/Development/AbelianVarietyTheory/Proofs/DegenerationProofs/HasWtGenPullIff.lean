@@ -204,7 +204,7 @@ theorem exists_rep (hP : PicardZeroDegenerationCondition) {R A : Type} [CommRing
     (Q : TQ G X) {f : Spec (CommRingCat.of A) ⟶ Spec (CommRingCat.of R)} {b : Q.B.left ⟶ B.left}
     (pb : IsGrpPullback Q.B B f b) (χ : X) : ∃ x, x ≫ B.hom = f ∧ Rep Q M.L.L b x χ := by
   have hL := M.L.isLB
-  have hL' := LB.isLB_pull hL b
+  have hL' := pull_isLB hL b
   have hw := (isGen_iff _).1 (pullIso_isGen hL b)
   obtain ⟨g, hg⟩ := AbelianDim.exists_relDim A Q.B Q.isAb
   have hs : Sym B M.L.L := fun _ => ⟨⊤, trivial, by

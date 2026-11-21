@@ -203,8 +203,7 @@ private theorem hasDerivAt_integral_second_derivative {G : Type} [MeasurableSpac
   have h1 : ‖∫ u in (0 : ℝ)..t, F'' u g‖ ≤ ∫ u, ‖F'' u g‖ ∂ν := by
     refine intervalIntegral.norm_integral_le_integral_norm_uIoc.trans ?_
     refine setIntegral_mono_set ((hc g).norm.integrableOn_Icc) (.of_forall fun u => norm_nonneg _) ?_
-    refine HasSubset.Subset.eventuallyLE (Set.uIoc_subset_uIcc.trans ?_)
-    exact Set.uIcc_subset_Icc ⟨by norm_num, by norm_num⟩ ht
+    exact .of_forall (Set.uIoc_subset_uIcc.trans (Set.uIcc_subset_Icc ⟨by norm_num, by norm_num⟩ ht))
   have e2 : F' t g = F' 0 g + ∫ u in (0 : ℝ)..t, F'' u g := by rw [e]; ring
   rw [e2]
   exact (norm_add_le _ _).trans (by gcongr)

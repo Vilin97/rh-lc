@@ -63,6 +63,7 @@ theorem rderC_value (T : MMap M)
   rw [T.map_update_add, T.map_update_smul, RderC,
     hT (Function.update y τ w) τ _ h1 ⟨_, hsm τ _ h1 w⟩ (by simp),
     hT (Function.update y τ w) τ _ h2 ⟨_, hsm τ _ h2 w⟩ (by simp), Function.update_idem, Function.update_idem]
+  simp only [RingHom.id_apply]
 
 theorem wordC_value (T : MMap M)
     (hsm : ∀ τ, ∀ X ∈ lieAt V τ, ∀ w : M.sm τ, dRep (M.rep τ) X (w : M.H τ) ∈ M.sm τ)
@@ -94,7 +95,9 @@ theorem gelf_value (T : MMap M)
     apply Subtype.ext
     rw [Submodule.coe_sum, Submodule.coe_smul, ← hc, gelfRep]
     exact Finset.sum_congr rfl fun idx _ => h1 idx
-  rw [← T.map_update_smul, ← e, T.map_update_sum, gelf]
+  have hs := T.map_update_smul y τ c w
+  simp only [RingHom.id_apply] at hs
+  rw [← hs, ← e, T.map_update_sum, gelf]
   exact Finset.sum_congr rfl fun idx _ => h2 idx
 
 theorem zfin_value (T : MMap M)
@@ -107,7 +110,9 @@ theorem zfin_value (T : MMap M)
   refine ⟨Submodule.span ℂ {T y}, inferInstance, Submodule.mem_span_singleton_self _, fun τ k f hf => ?_⟩
   obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.1 hf
   obtain ⟨c, hc⟩ := hc τ k
-  have e : a • T y = T (Function.update y τ (a • y τ)) := by rw [T.map_update_smul, Function.update_eq_self]
+  have e : a • T y = T (Function.update y τ (a • y τ)) := by
+    rw [T.map_update_smul, Function.update_eq_self]
+    simp only [RingHom.id_apply]
   have := gelf_value T hsm hT y τ k c (a • y τ) (hc _)
   rw [← e] at this
   rw [this]

@@ -38,7 +38,7 @@ theorem trdeg_of_arithVar {K : Type} [Fintype K] {J : K → Type} [∀ k, Fintyp
     exact_mod_cast hdim
   have h3 : Cardinal.toENat (Algebra.trdeg ℤ (MRing J ⧸ P)) = ((n + Fintype.card K : ℕ) : ℕ∞) :=
     WithTop.add_right_cancel ENat.one_ne_top h4
-  exact Cardinal.toENat_eq_natCast.1 h3
+  exact Cardinal.toENat_eq_nat.1 h3
 
 theorem chartMeets : ChartMeets := by
   intro X Ω _ _ ξ K _ J _ y n Bd χ U htie hspec harith hU

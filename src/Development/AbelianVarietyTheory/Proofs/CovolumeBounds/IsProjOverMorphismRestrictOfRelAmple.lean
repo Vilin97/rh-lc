@@ -372,14 +372,7 @@ theorem isProjBy_iff_isProjOver (f : Y ⟶ Sp R) : IsProjBy f ↔ IsProjOver f :
   · rintro ⟨_, _, _, _, h⟩
     exact isProjOver_of_veryAmpleBy h
   · rintro ⟨N, φ, _, rfl⟩
-    have hO : (O1 R N).IsLB := by
-      refine ⟨iSup_chart R N, ?_, ?_⟩
-      · intro i
-        exact Units.ext (ratioOn_self (hi := le_rfl))
-      · intro i j k
-        exact Units.ext (ratioOn_mul_ratioOn (hi := inf_le_left.trans inf_le_left)
-          (hj := inf_le_left.trans inf_le_right))
-    exact ⟨_, LB.isLB_pull hO φ, N, _, veryAmpleBy_secPull_coord φ⟩
+    exact ⟨_, LB.isLB_pull (O1_isLB R N) φ, N, _, veryAmpleBy_secPull_coord φ⟩
 
 theorem veryAmpleBy_comp_iff {T : Scheme.{0}} (q : Y ⟶ T) (e : T ⟶ Sp R) [IsIso e] (s : Fin (M + 1) → L.Sec) :
     VeryAmpleBy (q ≫ e) L s ↔

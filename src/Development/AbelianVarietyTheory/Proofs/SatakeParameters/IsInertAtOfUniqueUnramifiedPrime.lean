@@ -50,8 +50,7 @@ theorem _root_.GlobalTheory.SelfDualGenus.isInertAt_of_unique_unramified (E : Ty
   obtain ⟨P0, hP0, hP0c⟩ := Ideal.exists_ideal_over_maximal_of_isIntegral v.asIdeal hker
   have hP0P : P0 = P.asIdeal := hP0.eq_of_le P.isPrime.ne_top (key P0 hP0 hP0c)
   have hcP : Ideal.comap (algebraMap (𝓞 (maximalRealSubfield E)) (𝓞 E)) P.asIdeal = v.asIdeal := by
-    rw [← hP0P]
-    exact hP0c
+    rw [← hP0P, hP0c]
   have hQP : Ideal.map (algebraMap (𝓞 (maximalRealSubfield E)) (𝓞 E)) v.asIdeal ≤ P.asIdeal := by
     rw [Ideal.map_le_iff_le_comap, hcP]
   obtain ⟨x, y, hyx, hyP, hyP2⟩ := hx

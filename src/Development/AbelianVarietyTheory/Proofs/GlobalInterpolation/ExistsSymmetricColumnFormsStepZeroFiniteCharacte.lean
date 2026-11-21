@@ -13,11 +13,11 @@ attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Ho
 
 namespace GlobalTheory.Mem.Col2.TC
 
-theorem colsTiedSym_chiFin0 : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∃ C : ColsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G), ∀ u, Formalism.MainNotions.RT.ChiFin0 (C.forms u) := by
+theorem colsTiedSym_chiFin0 : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∃ C : ColsTiedSym (I.rec7 l Z), ∀ u, Formalism.MainNotions.RT.ChiFin0 (C.forms u) := by
   intro B X I hI hP l Z
   obtain ⟨C, -, -⟩ := GlobalTheory.T.exists_standardColumnComparisons_trueColumns I hI hP l Z
   refine ⟨C, fun u => ?_⟩
-  exact GlobalTheory.formsTiedSym_chi_zero_finite (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u _ _ (C.forms u)
+  exact GlobalTheory.formsTiedSym_chi_zero_finite (I.rec7 l Z) u _ _ (C.forms u)
     (fun i => GlobalTheory.T.exists_primitiveRoots_coeffField_trueColumns I hI l Z i)
 
 end GlobalTheory.Mem.Col2.TC

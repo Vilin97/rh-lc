@@ -116,7 +116,7 @@ theorem exists_differentiableOn_transfer {V Λ : Type} [NormedAddCommGroup V] [N
       ((hM Q hQ).mono Set.inter_subset_left b hb)
   have hd2 : DifferentiableOn ℂ (fun bz : V × (Fin g → ℂ) => (M Q' bz.1 * Ring.inverse (M Q bz.1)) bz.2)
       ((B ∩ M Q ⁻¹' {x | IsUnit x}) ×ˢ Set.univ) :=
-    (hd.comp differentiableOn_fst fun bz (hbz : bz ∈ (B ∩ M Q ⁻¹' {x | IsUnit x}) ×ˢ Set.univ) => hbz.1).clm_apply differentiableOn_snd
+    (hd.comp differentiableOn_fst fun bz hbz => hbz.1).clm_apply differentiableOn_snd
   refine hd2.congr fun bz hbz => ?_
   rw [ContinuousLinearMap.mul_apply, ← hkM _ hbz.1.1, ← ContinuousLinearMap.mul_apply,
     Ring.mul_inverse_cancel _ hbz.1.2, ContinuousLinearMap.one_apply]

@@ -35,8 +35,7 @@ theorem mem_of_forall_mem_sup_pow (T : Subring S) [IsNoetherianRing T]
       rw [← hpure (Ideal.span {y * z + 1}), Ideal.map_span, Set.image_singleton,
         Ideal.span_singleton_eq_top.mpr hunit, Ideal.comap_top]
     exact Ideal.span_singleton_eq_top.mp h2
-  have hK := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := T ⧸ A) m
-    (by simpa only [Ideal.jacobson_bot] using hjac)
+  have hK := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := T ⧸ A) m hjac
   have hxn : ∀ n : ℕ, x ∈ A ⊔ m ^ n := by
     intro n
     have h := hx n

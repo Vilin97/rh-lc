@@ -44,7 +44,7 @@ private theorem nu_pres {K : Type} [Field K] [NumberField K] {n : ℕ} (D : Type
   have := D.prob
   have hm : Measurable e := e.continuous.measurable
   have hemb : MeasurableEmbedding e := e.toHomeomorph.measurableEmbedding
-  have : IsProbabilityMeasure (D.ν.map e) := Measure.isProbabilityMeasure_map hm.aemeasurable
+  have : IsProbabilityMeasure (D.ν.map e) := inferInstance
   have hp : MeasurePreserving e D.ν (D.ν.map e) := ⟨hm, rfl⟩
   have hs : ∀ᵐ k ∂(D.ν.map e), k ∈ D.U := by
     rw [hemb.ae_map_iff]
@@ -56,6 +56,8 @@ private theorem nu_pres {K : Type} [Field K] [NumberField K] {n : ℕ} (D : Type
     rw [Measure.map_map (measurable_const_mul k) hm]
     conv_rhs => rw [← (D.inv _ hk').map_eq, Measure.map_map hm (measurable_const_mul _)]
     congr 1
+    funext x
+    simp
   refine ⟨hm, Measure.ext_of_lintegral _ fun F hF => ?_⟩
   rw [lintegral_inv_unique_haar D.U D.ν _ D.supp hs D.inv hi F hF, lintegral_inv_unique_haar D.U D.ν _ D.supp D.supp D.inv D.inv F hF]
 
@@ -82,7 +84,7 @@ private theorem reps_tw {K : Type} [Field K] [NumberField K] {n : ℕ} {μ : Mea
     (θ : Twist μ) {v : L2 μ} {φ : G1 K n → ℂ} (hv : Reps μ v φ) : Reps μ (θ.U v) fun x => φ (θ.e.symm x) := by
   have hp : MeasurePreserving θ.e.symm μ μ := θ.pres.symm θ.e.toHomeomorph.toMeasurableEquiv
   have h1 := hp.quasiMeasurePreserving.ae hv
-  have h2 := (quasiMeasurePreserving_mk (Gam K n) μ).ae (θ.U_spec v)
+  have h2 := QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (θ.U_spec v)
   filter_upwards [h1, h2] with y a b
   rw [b, ← a]
   congr 1

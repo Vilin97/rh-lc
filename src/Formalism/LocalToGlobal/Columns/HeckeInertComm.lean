@@ -165,8 +165,36 @@ theorem hi_exchange {I J : Ideal (𝓞 E)} (hIJ : I ⊔ J = ⊤) (hJc : HiConj J
   set C := hiCorner α β f.1.N d.1.N with hC
   obtain ⟨i, hi, hi0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hI0
   obtain ⟨j, hj, hj0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hJ0
+  have hfull : Submodule.IsFullLattice E f.1.N := by
+    let := f.2.lat
+    refine { span_eq_top := ?_ }
+    let W := Submodule.span E (f.1.N : Set (Sp E n))
+    change W = ⊤
+    by_contra h
+    let e : Sp E n ≃ₗ⋆[E] Sp E n := starLinearEquiv E
+    let g : Sp E n →ₗ[E] Module.Dual E W :=
+      (LinearMap.domRestrict' W).comp ((hStd E n).comp e.toLinearMap)
+    have hdim : finrank E (Module.Dual E W) < finrank E (Sp E n) := by
+      rw [Subspace.dual_finrank_eq]
+      exact Submodule.finrank_lt h
+    obtain ⟨x, hx, hx₀⟩ :=
+      Submodule.exists_mem_ne_zero_of_ne_bot (LinearMap.ker_ne_bot_of_finrank_lt (f := g) hdim)
+    have hsmul (a : E) : a • e x ∈ f.1.N := by
+      rw [← f.2.uni, dualBasic_mem_dual]
+      intro y hy
+      apply hStd_mem_one_symm
+      have hxy : hStd E n (e x) y = 0 :=
+        congrArg (fun k : Module.Dual E W => k ⟨y, Submodule.subset_span hy⟩) (LinearMap.mem_ker.mp hx)
+      simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hxy]
+    let i : E →ₗ[𝓞 E] f.1.N :=
+      ((LinearMap.toSpanSingleton E _ (e x)).restrictScalars (𝓞 E)).codRestrict f.1.N hsmul
+    let : Module.Finite (𝓞 E) f.1.N := Module.Finite.iff_fg.mpr f.2.lat.fg
+    let : Module.Finite (𝓞 E) E := Module.Finite.of_injective i fun a b hab =>
+      smul_left_injective E (fun hzero => hx₀ (e.map_eq_zero_iff.mp hzero)) (congrArg Subtype.val hab)
+    exact RingOfIntegers.not_isField E
+      (isField_of_isIntegral_of_isField (IsFractionRing.injective (𝓞 E) E) (Field.toIsField E))
   have hl : Submodule.IsLattice E C :=
-    hiCorner_lattice hab d.2.lat f.2.lat hi0 hj0 (fun x hx' => (hx _ _ h1).1 (Submodule.smul_mem_smul hi hx'))
+    hiCorner_lattice hab d.2.lat hfull hi0 hj0 (fun x hx' => (hx _ _ h1).1 (Submodule.smul_mem_smul hi hx'))
       (fun y hy' => (hy _ _ h2).1 (Submodule.smul_mem_smul hj hy'))
   have hu : IsUnimodular (hStd E n) C := hiCorner_unimodular hab hαc hβc d.2.uni f.2.uni rNe reM
   have hba : β + α = 1 := by rw [add_comm]; exact hab

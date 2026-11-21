@@ -26,7 +26,7 @@ open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalC
 theorem lemmaBT_holds : LemmaBT := by
   unfold GlobalTheory.CompanionTheory.Ar.BT.LemmaBT
   intro R _ _ _ _ T _ _ Γ S G _ _ x N i hi hG
-  refine ⟨GlobalTheory.CompanionTheory.Relay.btOrder_isHopfOrder_noetherian R T Γ, ?_,
+  refine ⟨GlobalTheory.T.btOrder_isHopfOrder_noetherian R T Γ, ?_,
     fun hN => GlobalTheory.T.btOrder_eq_top_of_etale R T Γ
       (GlobalTheory.T.torsion_group_etale_of_unit R T Γ S G x N i hi hG hN), ?_, ?_,
     fun L _ _ M => GlobalTheory.T.exists_dual_to_invariant_differentials R T Γ S G x N i hi hG L M⟩
@@ -43,9 +43,9 @@ theorem lemmaBT_holds : LemmaBT := by
     rw [Over.comp_left, Category.assoc, ha', hα t]
   · intro R' _ _ _ Γ' F hF
     obtain ⟨hd, hΓ'⟩ :=
-      GlobalTheory.CompanionTheory.Ar.BT.btOrder_baseChange R T Γ R' Γ' F hF
+      GlobalTheory.T.btOrder_base_change_generic R T Γ R' Γ' F hF
     obtain ⟨-, e, he⟩ := GlobalTheory.T.hopf_order_scalar_extension R T R' _
-      (GlobalTheory.CompanionTheory.Relay.btOrder_isHopfOrder_noetherian R T Γ) hd
+      (GlobalTheory.T.btOrder_isHopfOrder_noetherian R T Γ) hd
     rw [hΓ']
     exact ⟨e, he⟩
 

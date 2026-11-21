@@ -132,22 +132,7 @@ theorem iotaM_descent (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
   let φ : O → Q k (m + j) := fun κ => ⟨d κ * κ.1, hQ κ⟩
   have hφc : Continuous φ := Continuous.subtype_mk (hdc.mul continuous_subtype_val) _
   let ψ : O → Mir k (m + j) := fun κ => qProj k (m + j) (φ κ)
-  have hcproj : Continuous (mirabolicProjection k (m + j + 1)) := by
-    have hval : Continuous fun g : Mir k (m + j + 1) =>
-        ((g : GL (Fin (m + j + 2)) k) : Matrix (Fin (m + j + 2)) (Fin (m + j + 2)) k) :=
-      Units.continuous_val.comp continuous_subtype_val
-    have hblock : Continuous fun g : Mir k (m + j + 1) =>
-        ((mirabolicProjection k (m + j + 1) g : GL (Fin (m + j + 1)) k) : Matrix (Fin (m + j + 1)) (Fin (m + j + 1)) k) := by
-      refine continuous_pi fun i => continuous_pi fun j => ?_
-      exact (continuous_apply (Fin.castSucc j)).comp ((continuous_apply (Fin.castSucc i)).comp hval)
-    refine Units.continuous_iff.2 ⟨hblock, ?_⟩
-    have he : (fun g : Mir k (m + j + 1) => (((mirabolicProjection k (m + j + 1) g)⁻¹ : GL (Fin (m + j + 1)) k) : Matrix (Fin (m + j + 1)) (Fin (m + j + 1)) k)) =
-        fun g => ((mirabolicProjection k (m + j + 1) g⁻¹ : GL (Fin (m + j + 1)) k) : Matrix (Fin (m + j + 1)) (Fin (m + j + 1)) k) := by
-      funext g
-      rw [map_inv]
-    rw [he]
-    exact hblock.comp continuous_inv
-  have hψc : Continuous ψ := (Continuous.subtype_mk (hcproj.comp continuous_subtype_val) _).comp hφc
+  have hψc : Continuous ψ := (GlobalTheory.CompanionTheory.BZMirOnto.continuous_qProj k (m + j)).comp hφc
   have hd1 : d ⟨1, h1O⟩ = 1 := Subtype.ext (Units.ext hm1)
   have hψ1 : ψ ⟨1, h1O⟩ = 1 := by
     have : φ ⟨1, h1O⟩ = 1 := Subtype.ext (by
@@ -165,18 +150,7 @@ theorem iotaM_descent (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
   have hrow : r κ.1 = rowQ k (m + j) h := by
     show rowQ k (m + j) (κ.1)⁻¹ = _
     rw [hκinv]
-    have hq := iotaM_mem_Q (m + j) x⁻¹
-    have hb : (blockMat k (m + j + 1) (((embedding₂ k (m + j) x⁻¹ : Mir k (m + j + 1)) : GL (Fin (m + j + 2)) k) : Matrix (Fin (m + j + 2)) (Fin (m + j + 2)) k)) (Fin.last (m + j)) = eLast k (m + j) := by
-      exact (mem_Mir_iff k (mirabolicProjection k (m + j + 1) (embedding₂ k (m + j) x⁻¹))).1 hq
-    have hg : ∀ l : Fin (m + j + 1), ((h : GL (Fin (m + j + 2)) k) : Matrix (Fin (m + j + 2)) (Fin (m + j + 2)) k) (Fin.last (m + j + 1)) (Fin.castSucc l) = 0 := by
-      intro l
-      let g : Mir k (m + j + 1) := h
-      have hh' := congrFun ((mem_Mir_iff k (g : GL (Fin (m + j + 2)) k)).1 g.2) (Fin.castSucc l)
-      simpa only [eLast, Pi.single_apply, if_neg (Fin.castSucc_ne_last _)] using hh'
-    funext l
-    have hb' : ∀ t : Fin (m + j + 1), (((embedding₂ k (m + j) x⁻¹ : Mir k (m + j + 1)) : GL (Fin (m + j + 2)) k) : Matrix (Fin (m + j + 2)) (Fin (m + j + 2)) k) (Fin.castSucc (Fin.last (m + j))) (Fin.castSucc t) = eLast k (m + j) t := fun t => congrFun hb t
-    simp only [rowQ, Subgroup.coe_mul, Units.val_mul, Matrix.mul_apply, Fin.sum_univ_castSucc (n := m + j + 1), hg, hb', mul_zero, add_zero]
-    simp [eLast, Pi.single_apply]
+    exact rowQ_mul_of_mem_Q k (m + j) _ h (iotaM_mem_Q (m + j) x⁻¹)
   have hdH : d κ ∈ MirabolicParabolic k m (j + 1) :=
     rowEl_mem_HGP m j (r κ.1) κ.2 fun i hi => by
       rw [hrow]

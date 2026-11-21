@@ -67,7 +67,7 @@ theorem holTan_of_affine {U : T.Opens} (hU : IsAffineOpen U) (hB : IsOpen B) {z 
 
 theorem holTan_dualMap {A : Type} [CommRing A] (hB : IsOpen B) (v : Sp (DualNumber A) ⟶ T) (ψ : ∀ b ∈ B, A →+* ℂ)
     (hψ : ∀ a, ∃ g : V → ℂ, DifferentiableOn ℂ g B ∧ ∀ b hb, ψ b hb a = g b) {w : V → (Sp (DualNumber ℂ) ⟶ T)}
-    (hw : ∀ b hb, w b = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ b hb)) ≫ v) : HolTan B w := by
+    (hw : ∀ b hb, w b = spMap (dualMap (ψ b hb)) ≫ v) : HolTan B w := by
   classical
   by_cases hne : B.Nonempty
   swap
@@ -79,15 +79,15 @@ theorem holTan_dualMap {A : Type} [CommRing A] (hB : IsOpen B) (v : Sp (DualNumb
   have hd : ∀ a, DifferentiableOn ℂ (fun b => ψ' b a) B := fun a =>
     have ⟨g, hg, hg'⟩ := hψ a
     hg.congr fun b hb => by rw [e b hb, hg']
-  have hv : ∀ b (a : DualNumber A), valR (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ' b))) ⊤
-      ((Scheme.ΓSpecIso (.of (DualNumber A))).inv.hom a) = GlobalTheory.CompanionTheory.Ar.dualMap (ψ' b) a := fun b a =>
-    valR_specMap (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (ψ' b))) a
+  have hv : ∀ b (a : DualNumber A), valR (spMap (dualMap (ψ' b))) ⊤
+      ((Scheme.ΓSpecIso (.of (DualNumber A))).inv.hom a) = dualMap (ψ' b) a := fun b a =>
+    valR_specMap (CommRingCat.ofHom (dualMap (ψ' b))) a
   have hs : ∀ s : Γ(Sp (DualNumber A), ⊤), ∃ a, (Scheme.ΓSpecIso (.of (DualNumber A))).inv.hom a = s := fun s =>
     ⟨(Scheme.ΓSpecIso (.of (DualNumber A))).hom.hom s, by simp⟩
-  have h0 : HolTan B fun b => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ' b)) :=
+  have h0 : HolTan B fun b => spMap (dualMap (ψ' b)) :=
     holTan_of_affine (isAffineOpen_top _) hB (fun b _ => le_preimage_top _)
-      (fun s => by obtain ⟨a, rfl⟩ := hs s; simp only [hv]; simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using hd a.fst)
-      (fun s => by obtain ⟨a, rfl⟩ := hs s; simp only [hv]; simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using hd a.snd)
+      (fun s => by obtain ⟨a, rfl⟩ := hs s; simp only [hv]; simpa [dualMap] using hd a.fst)
+      (fun s => by obtain ⟨a, rfl⟩ := hs s; simp only [hv]; simpa [dualMap] using hd a.snd)
   intro U f
   refine ((h0 (v ⁻¹ᵁ U) ((v.app U).hom f)).mono (s := {b ∈ B | ⊤ ≤ w b ⁻¹ᵁ U}) fun b hb => ⟨hb.1, ?_⟩).congr fun b hb => ?_
   · have := hb.2
@@ -118,7 +118,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 theorem exists_bc {A B : Type} [CommRing A] [CommRing B] {φ : c.F →+* A} {x : Sp A ⟶ Z.X} (fr : EigFrame Z φ x)
     (ψ : A →+* B) {φ' : c.F →+* B} {x' : Sp B ⟶ Z.X} (hφ : φ' = ψ.comp φ) (hx : x' = spMap ψ ≫ x) :
-    ∃ g : EigFrame Z φ' x', ∀ τ i, g.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ fr.v τ i := by
+    ∃ g : EigFrame Z φ' x', ∀ τ i, g.v τ i = spMap (dualMap ψ) ≫ fr.v τ i := by
   subst hφ hx
   exact GlobalTheory.ShFam.EigFrame.exists_baseChange E H Dw l Xo c O β Z A B φ x fr ψ
 

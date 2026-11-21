@@ -44,7 +44,8 @@ theorem map_mul_scale {A : Type} [CommRing A] [TopologicalSpace A] [IsTopologica
   have e : (fun y => u * v * y) = (fun y => u * y) ∘ (fun y => v * y) := by
     funext y
     simp [mul_assoc]
-  rw [e, ← Measure.map_map (hm u) (hm v), hv, Measure.map_smul, hu, smul_smul, mul_comm]
+  rw [e, ← Measure.map_map (hm u) (hm v), hv,
+    Measure.map_smul c' (hm u).aemeasurable, hu, smul_smul, mul_comm]
 
 def mulU (A : Type) [CommRing A] [TopologicalSpace A] [IsTopologicalRing A]
     [MeasurableSpace A] [BorelSpace A] (u : Aˣ) : A ≃ᵐ A :=

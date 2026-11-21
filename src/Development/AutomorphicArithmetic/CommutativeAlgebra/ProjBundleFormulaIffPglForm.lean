@@ -137,7 +137,7 @@ private instance isIso_u (S : Spc) (M : ℕ) : IsIso (uMap S M) := by
 private theorem tau_line (M : ℕ) : tauS M ≫ PGL.line M = lineOf (chiX M) := rfl
 
 private theorem u_line (S : Spc) (M : ℕ) :
-    uMap S M ≫ pullback.snd _ _ ≫ PGL.line M = Sp.line S (chiX M) := by
+    uMap S M ≫ pullback.snd (triv S M) (PGL.pr M) ≫ PGL.line M = Sp.line S (chiX M) := by
   rw [← Category.assoc, uMap, pullback.lift_snd, Category.assoc, tau_line]
 
 end UpperTheory.PullPf
@@ -146,7 +146,8 @@ open UpperTheory.PullPf in
 theorem UpperTheory.projBundleFormula_iff_pglForm :
     ∀ (q : ℕ) [NeZero q] (S : Spc) (M : ℕ), Inv q S → (PBF q S M ↔ Pbf q S M) := by
   intro q _ S M hS
-  have hP : Inv q (pullback (triv S M) (PGL.pr M)) := fun U ⟨x⟩ => hS U ⟨Sx.map (pullback.fst _ _) x⟩
+  have hP : Inv q (pullback (triv S M) (PGL.pr M)) :=
+    fun U ⟨x⟩ => hS U ⟨Sx.map (pullback.fst (triv S M) (PGL.pr M)) x⟩
   have hX : Inv q (Sp S (XC M)) := fun U ⟨x⟩ => hS U ⟨x.1⟩
   have hf : uMap S M ≫ pullback.fst _ _ = Sp.fst S (XC M) := pullback.lift_fst _ _ _
   constructor

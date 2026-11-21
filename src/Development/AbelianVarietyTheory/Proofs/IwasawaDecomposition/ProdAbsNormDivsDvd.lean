@@ -49,7 +49,7 @@ theorem absNorm_eq_of_split {p : ℕ} (hp : p.Prime) (h : (divs (p : 𝓞 E)).ca
   by_contra hne
   have hlt : p < Ideal.absNorm P.asIdeal := lt_of_le_of_ne (le_absNorm_of_mem hp P hP) (Ne.symm hne)
   have h3 : ∏ _Q ∈ divs (p : 𝓞 E), p < ∏ Q ∈ divs (p : 𝓞 E), Ideal.absNorm Q.asIdeal :=
-    Finset.prod_lt_prod₀ (fun _ _ => hp.pos) (fun Q hQ => le_absNorm_of_mem hp Q ((mem_divs hp0 Q).1 hQ))
+    Finset.prod_lt_prod (fun _ _ => hp.pos) (fun Q hQ => le_absNorm_of_mem hp Q ((mem_divs hp0 Q).1 hQ))
       ⟨P, (mem_divs hp0 P).2 hP, hlt⟩
   rw [Finset.prod_const] at h3
   omega

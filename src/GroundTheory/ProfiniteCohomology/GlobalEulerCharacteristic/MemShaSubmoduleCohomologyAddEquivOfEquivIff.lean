@@ -124,34 +124,21 @@ section GS
 
 attribute [local instance 2000] Rep.hV2
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 variable {K L : FiniteSubfield} [Fact (K ≤ L)] (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (ℓ : ℕ) [Fact ℓ.Prime]
 
 abbrev gsRootsZMod : Rep.{0} (ZMod ℓ) (galUnramifiedOutside K.1 ℚ̄ S) :=
   zmodRepOfTorsion ℓ (gsRoots S ℓ) (nsmul_galRootsOfUnity_eq_zero ℓ)
 
-theorem finrank_gsRootsZMod {S : Set (HeightOneSpectrum (𝓞 K.1))}
-    (hℓS : ∀ v ∉ S, ((ℓ : ℕ) : 𝓞 K.1) ∉ v.asIdeal) :
+theorem finrank_gsRootsZMod {S} (hℓS : ∀ v ∉ S, ((ℓ : ℕ) : 𝓞 K.1) ∉ v.asIdeal) :
     Module.finrank (ZMod ℓ) (gsRootsZMod S ℓ) = 1 := by
   have hℓ : ℓ.Prime := Fact.out
   have : NeZero ℓ := ⟨hℓ.ne_zero⟩
   have hcard : Nat.card (gsRootsZMod S ℓ) = ℓ ^ 1 := by
     rw [pow_one]
-    change Nat.card (rootsOfUnity ℓ (maxUnramifiedOutside K.1 ℚ̄ S)) = ℓ
-    obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot ℚ̄ ℓ
-    have hmem := mem_maxUnramifiedOutside_of_pow_eq_one S hℓ.ne_zero hℓS hζ.pow_eq_one
-    have hζ' : IsPrimitiveRoot (⟨ζ, hmem⟩ : maxUnramifiedOutside K.1 ℚ̄ S) ℓ :=
-      IsPrimitiveRoot.of_map_of_injective (f := (maxUnramifiedOutside K.1 ℚ̄ S).val) hζ
-        Subtype.val_injective
-    exact hζ'.card_rootsOfUnity
+    exact (Nat.card_congr f.toEquiv).trans (Nat.card_zmod ℓ)
   have : Finite (gsRootsZMod S ℓ) := Nat.finite_of_card_ne_zero (by rw [hcard]; exact pow_ne_zero _ hℓ.ne_zero)
   exact finrank_eq_of_natCard_zmod ℓ hcard
-
-local instance shaSubmoduleScalarTower {K L : FiniteSubfield} [Fact (K ≤ L)] :
-    IsScalarTower K.1 L.1 ℚ̄ :=
-  IsScalarTower.of_algebraMap_eq fun _ => rfl
 
 variable {S} (hL : ∀ x : L.1, algebraMap L.1 ℚ̄ x ∈ maxUnramifiedOutside K.1 ℚ̄ S)
   (ιs : ∀ v : S, ℚ̄ →ₐ[K.1] AlgebraicClosure ((v : HeightOneSpectrum (𝓞 K.1)).adicCompletion K.1))
@@ -181,7 +168,6 @@ theorem finrank_shaSubmodule_two_eq_finrank_invariants (hℓS : ∀ v ∉ S, ((�
           (homRep_ρ_of_mem (gsOpenSubgroup S hL) (gsRootsZMod S ℓ) M hT hM))).invariants := by
   have hℓ : ℓ.Prime := Fact.out
   have : NeZero ℓ := ⟨hℓ.ne_zero⟩
-  have hsha := mem_ptSha_mackey_iff_exists_kummerModN hL ιs hℓ hℓS hK
   have hP : (((gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside K.1 ℚ̄ S)).index : ℕ) : ZMod ℓ) ≠ 0 := by
     rw [Ne, ZMod.natCast_eq_zero_iff]
     exact (Nat.Prime.coprime_iff_not_dvd hℓ).1 hcop.symm
@@ -191,7 +177,8 @@ theorem finrank_shaSubmodule_two_eq_finrank_invariants (hℓS : ∀ v ∉ S, ((�
     (isIntertwiningMap_kummerModNZMod _ (gsKummer_shortExact S ℓ hℓS) (nsmul_galRootsOfUnity_eq_zero ℓ) 1)
     (kummerModNZMod_injective _ (gsKummer_shortExact S ℓ hℓS) (nsmul_galRootsOfUnity_eq_zero ℓ) 1)
     (mem_shaSubmodule_iff_mem_range_kummerModNZMod _ (gsKummer_shortExact S ℓ hℓS) (nsmul_galRootsOfUnity_eq_zero ℓ)
-      (mackeyFamily (gsOpenSubgroup S hL) (gsFinFamily S ιs)) 1 hsha)
+      (mackeyFamily (gsOpenSubgroup S hL) (gsFinFamily S ιs)) 1
+      (mem_ptSha_mackey_iff_exists_kummerModN hL ιs hℓ hℓS hK))
 
 end GS
 

@@ -220,25 +220,25 @@ end Steps
 
 
 set_option maxHeartbeats 4000000 in
-theorem diamond_on_hermitian_side : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (H : Formalism.L2.Herm.HermColsCh (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (F : ∀ u, FormsTiedSym (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u (H.Ch u) (H.chOf u)), (∀ u, I.StdF l Z u (F u) ∧ I.StdLvC l Z u (F u)) → CarH H F → ∀ u i v (a : (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).A.Fv v)ˣ) (c : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).C.cls i), ∃ γ, i ≤ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m → DilCl (F u).atT (F u).lv i v a c γ ∧ AdOf H u i c (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).dil i v a c) γ v := by
+theorem diamond_on_hermitian_side : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (H : Formalism.L2.Herm.HermColsCh (I.rec7 l Z)) (F : ∀ u, FormsTiedSym (I.rec7 l Z) u (H.Ch u) (H.chOf u)), (∀ u, I.StdF l Z u (F u) ∧ I.StdLvC l Z u (F u)) → CarH H F → ∀ u i v (a : (((I.rec7 l Z).mem u).A.Fv v)ˣ) (c : ((I.rec7 l Z).mem u).C.cls i), ∃ γ, i ≤ (I.rec7 l Z).R.m → DilCl (F u).atT (F u).lv i v a c γ ∧ AdOf H u i c (((I.rec7 l Z).fm u).dil i v a c) γ v := by
   intro B X I hOk hP l Z H F hF hC u i v a c
-  by_cases hi : i ≤ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m
+  by_cases hi : i ≤ (I.rec7 l Z).R.m
   swap
   · exact ⟨1, fun h => absurd h hi⟩
   obtain ⟨k, hk, hE, hM⟩ := GlobalTheory.T.exists_diamond_elements_step_levels I hOk hP l Z H F hF hC u i hi v a
-  have core : ∃ γ : UJ (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi),
-      AdC (F u) i hi c (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).dil i v a c) γ.1 ((F u).atT.eV v).1 ∧
-      Formalism.L2.Forms.mulLat γ.1.1 (clsCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i hi (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).dil i v a c)) =
-        clsCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i hi c ∧
-      ∀ (z : Formalism.L2.Forms.Ld (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i hi (((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).dil i v a c))
-        (z' : Formalism.L2.Forms.Ld (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) u i hi c), z'.1 = γ.1.1 *ᵥ z.1 →
-        ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).fv i v _ (((F u).lv i hi).pr v _ z) =
-          (a : ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).mem u).A.Fv v) * ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).fm u).fv i v c (((F u).lv i hi).pr v c z') := by
-    by_cases h : i = 0 ∨ i = (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m
+  have core : ∃ γ : UJ (sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E) (gramN (I.rec7 l Z) i hi),
+      AdC (F u) i hi c (((I.rec7 l Z).fm u).dil i v a c) γ.1 ((F u).atT.eV v).1 ∧
+      Formalism.L2.Forms.mulLat γ.1.1 (clsCrd (I.rec7 l Z) u i hi (((I.rec7 l Z).fm u).dil i v a c)) =
+        clsCrd (I.rec7 l Z) u i hi c ∧
+      ∀ (z : Formalism.L2.Forms.Ld (I.rec7 l Z) u i hi (((I.rec7 l Z).fm u).dil i v a c))
+        (z' : Formalism.L2.Forms.Ld (I.rec7 l Z) u i hi c), z'.1 = γ.1.1 *ᵥ z.1 →
+        ((I.rec7 l Z).fm u).fv i v _ (((F u).lv i hi).pr v _ z) =
+          (a : ((I.rec7 l Z).mem u).A.Fv v) * ((I.rec7 l Z).fm u).fv i v c (((F u).lv i hi).pr v c z') := by
+    by_cases h : i = 0 ∨ i = (I.rec7 l Z).R.m
     · obtain ⟨δ, hδ⟩ := hE h
       exact move_end (F u) i hi h v a c k hk δ hδ
     · have h1 : 1 ≤ i := by omega
-      have h2 : i + 1 ≤ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.m := by omega
+      have h2 : i + 1 ≤ (I.rec7 l Z).R.m := by omega
       obtain ⟨δ, hδ⟩ := hM h1 h2 (H.chOf u i c)
       obtain ⟨γ, g1, g2, g3⟩ := move_mid (F u) i h1 h2 v a c k hk δ hδ
       refine ⟨γ, g1, g2, fun z z' e => ?_⟩

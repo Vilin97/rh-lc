@@ -171,7 +171,10 @@ private theorem exists_off_open (U : Subgroup (AdelicGLn.integralFiniteGL K n))
       IsOpen (GLnLocal.integralGL (v.adicCompletion K) n : Set (GL (Fin n) (v.adicCompletion K)))) :=
     ⟨hopen⟩
   have hV : Φ.symm ⁻¹' U' ∈ 𝓝 (1 : AdelicGLn.FiniteRestrictedGL K n) :=
-    Φ.symm.continuous.continuousAt.preimage_mem_nhds (by simpa using h1U)
+    Φ.symm.continuous.continuousAt.preimage_mem_nhds (by
+      change U' ∈ 𝓝 (Φ.symm 1)
+      rw [map_one]
+      exact h1U)
   have h1 : (1 : AdelicGLn.FiniteRestrictedGL K n) =
       RestrictedProduct.structureMap _ (fun v : Pl K => (GLnLocal.integralGL (v.adicCompletion K) n :
         Set (GL (Fin n) (v.adicCompletion K)))) cofinite 1 := rfl

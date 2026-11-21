@@ -23,17 +23,17 @@ variable {R : Type*} [CommRing R] [TopologicalSpace R] [DiscreteTopology R]
 theorem twDual_comp_apply (h : χ.comp φ = χ') (g : D) (y : TDual R M) :
     ((twDual χ ρ).comp φ) g y = ((twDual χ' (ρ.comp φ)).comp (MonoidHom.id D)) g y := by
   subst h
-  refine DFunLike.ext _ _ fun m => ?_
+  ext m
   simp only [MonoidHom.comp_apply, MonoidHom.id_apply, twDual_apply, map_inv]
 
-def GlobalTheory.CompanionTheory.Ar.dualMap (h : χ.comp φ = χ') :
+def dualMap (h : χ.comp φ = χ') :
     H1 ((twDual χ ρ).comp φ) →ₗ[R] H1 ((twDual χ' (ρ.comp φ)).comp (MonoidHom.id D)) :=
   mapH1 _ _ LinearMap.id continuous_id (twDual_comp_apply χ ρ φ χ' h)
 
 def coefMap : H1 (ρ.comp φ) →ₗ[R] H1 ((ρ.comp φ).comp (MonoidHom.id D)) :=
   mapH1 _ _ LinearMap.id continuous_id (fun _ _ => rfl)
 
-theorem dualMap_bijective (h : χ.comp φ = χ') : Function.Bijective (GlobalTheory.CompanionTheory.Ar.dualMap χ ρ φ χ' h) := by
+theorem dualMap_bijective (h : χ.comp φ = χ') : Function.Bijective (dualMap χ ρ φ χ' h) := by
   refine Function.bijective_iff_has_inverse.2 ⟨mapH1 _ _ LinearMap.id continuous_id
     (fun g y => (twDual_comp_apply χ ρ φ χ' h g y).symm), fun x => ?_, fun x => ?_⟩
   · induction x using Submodule.Quotient.induction_on with
@@ -55,7 +55,7 @@ theorem mapH2_cup_product_naturality (h : χ.comp φ = χ') (hc : ContAction (ρ
     (y : H1 ((twDual χ ρ).comp φ)) (x : H1 (ρ.comp φ)) :
     mapH2 ((charRep χ).comp φ) (charRep χ') LinearMap.id continuous_id hq
         (cupH1H1TwistedDual χ ρ φ hc y x) =
-      cupH1H1TwistedDual χ' (ρ.comp φ) (MonoidHom.id D) hc' (GlobalTheory.CompanionTheory.Ar.dualMap χ ρ φ χ' h y) (coefMap ρ φ x) := by
+      cupH1H1TwistedDual χ' (ρ.comp φ) (MonoidHom.id D) hc' (dualMap χ ρ φ χ' h y) (coefMap ρ φ x) := by
   induction y using Submodule.Quotient.induction_on with
   | H y =>
     induction x using Submodule.Quotient.induction_on with
@@ -75,8 +75,8 @@ theorem injective_compr₂ (h : χ.comp φ = χ') (hc : ContAction (ρ.comp φ))
         (cupH1H1TwistedDual χ ρ φ hc y x)) =
       P (mapH2 ((charRep χ).comp φ) (charRep χ') LinearMap.id continuous_id hq
         (cupH1H1TwistedDual χ ρ φ hc y' x')) →
-      cupH1H1TwistedDual χ' (ρ.comp φ) (MonoidHom.id D) hc' (GlobalTheory.CompanionTheory.Ar.dualMap χ ρ φ χ' h y) (coefMap ρ φ x) =
-      cupH1H1TwistedDual χ' (ρ.comp φ) (MonoidHom.id D) hc' (GlobalTheory.CompanionTheory.Ar.dualMap χ ρ φ χ' h y') (coefMap ρ φ x') := by
+      cupH1H1TwistedDual χ' (ρ.comp φ) (MonoidHom.id D) hc' (dualMap χ ρ φ χ' h y) (coefMap ρ φ x) =
+      cupH1H1TwistedDual χ' (ρ.comp φ) (MonoidHom.id D) hc' (dualMap χ ρ φ χ' h y') (coefMap ρ φ x') := by
     intro y x y' x' e
     have := hP e
     rwa [mapH2_cup_product_naturality χ ρ φ χ' h hc hc' hq, mapH2_cup_product_naturality χ ρ φ χ' h hc hc' hq] at this

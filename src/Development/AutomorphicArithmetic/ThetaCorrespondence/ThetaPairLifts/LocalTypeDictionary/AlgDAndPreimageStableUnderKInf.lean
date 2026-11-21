@@ -135,7 +135,8 @@ theorem kStable_subspace_sums : _root_.GlobalTheory.FunPr.ThetaLocalInputs → �
   have hk1 : ∀ i, om (1, k) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (Φ (T i)) (φ i)) = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (Φ (U (T i))) (φ i) := by
     intro i
     have h1 := hSA (T i)
-    rw [MonoidHom.comp_apply, hγ1] at h1
+    change SA (om (1, γ (Multiplicative.ofAdd 1))) (Φ (T i)) (Φ (U (T i))) at h1
+    rw [hγ1] at h1
     have hg := GlobalTheory.AdelicCoordSB.finprod_mem_SB F (Fin n × Fin d) (φ i) (hφ i).1
       (((hφ i).2.and hM.std).mono fun v hv => hv.1.trans hv.2)
     exact h1 _ hg

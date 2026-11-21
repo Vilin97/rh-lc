@@ -52,8 +52,8 @@ theorem rule_tied_eq : ∀ κ : GlobalTheory.KeyCl.Rule, GlobalTheory.KeyCl.Homo
   obtain ⟨h1', hg', hv'⟩ := hT'
   subst hg hg'
   have hid : y.x = spMap (RingHom.id K) ≫ y.x := by rw [GlobalTheory.Frames.SecCalc.spMap_id', Category.id_comp]
-  have did : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id K)) = 𝟙 _ := by
-    have hd : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id K) = RingHom.id _ := RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  have did : spMap (dualMap (RingHom.id K)) = 𝟙 _ := by
+    have hd : dualMap (RingHom.id K) = RingHom.id _ := RingHom.ext fun x => by ext <;> simp [dualMap]
     rw [hd]
     exact Spec.map_id _
   have hss : GlobalTheory.Frames.SecBC (RingHom.id K) 1 y.x y.x y.s y.s :=

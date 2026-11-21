@@ -81,7 +81,6 @@ theorem finiteType_int_mvPolynomial (A σ : Type) [CommRing A] [Algebra.FiniteTy
   have h : Algebra.FiniteType ℤ (MvPolynomial σ A) := Algebra.FiniteType.trans (S := A) inferInstance inferInstance
   convert h
   · rfl
-  · exact Subsingleton.elim _ _
 
 theorem ringKrullDim_quotient_ker_le {A B K : Type} [CommRing A] [CommRing B] [Field K]
     [Algebra.FiniteType ℤ A] [Algebra.FiniteType ℤ B] (a : A →+* K) (ha : a.QuasiFinite) (b : B →+* K) :

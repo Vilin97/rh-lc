@@ -147,6 +147,7 @@ theorem shape_right : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fie
     intro x u hx hx0 hu1
     have key := GlobalTheory.T.hermitianTensor_skewHermitian_split_symplectic_pair hcm (t.comp σ) X.J W.J hp.herm.herm hp.skew.skew x u hx0 (by rw [hts]; exact hu1)
     rw [hts] at key
+    dsimp only [cA, incM] at key
     unfold symp
     rw [GlobalTheory.T.adelicTrace_supportedAtSplitPlace hcm v t _ (at_hTens _ _ x u hx)]
     rw [map_mul, map_mul, map_neg, map_neg, map_one, map_one, neg_one_mul, neg_one_mul, ← neg_add, add_comm, key]
@@ -263,6 +264,7 @@ theorem shape_right : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fie
         rw [hm1, Matrix.one_mul, Matrix.one_mul, Matrix.mul_assoc, hinv, Matrix.mul_one] at hs
         have hx0 : (xY (Y * (locMat t c h).valᵀ) * (mat h⁻¹)ᵀ).map (piW (t.comp σ)) = 0 := by
           rw [Matrix.map_mul]; simp only [xY, hU1, Matrix.zero_mul]
+        dsimp only [uM, cA, incM] at hs
         rw [← hs, hMu l _ (hatR _ _ hZ) hx0, hcoH, hcoY, Matrix.mul_assoc, hh', Matrix.mul_one]
 
     exact GlobalTheory.T.eq_smul_of_commute_heisenberg_linearModel_schwartzBruhat (SB (Fin n × Fin d → Fv F v)) (GlobalTheory.LatVac.psiAt B.ψ v) hψc hψ1 ι

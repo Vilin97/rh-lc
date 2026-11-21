@@ -88,6 +88,7 @@ private theorem pE_of_snd {n : ℕ} {g : AdelicGLn.AdelicGL E n} (h : (AdelicGLn
   by_cases hab : a = b
   · subst hab; simp
   · simp [Matrix.one_apply_ne hab]
+    rfl
 
 private theorem pE_infEmb {n : ℕ} (a : archGroup E n) (v : Pl F) : UpperTheory.ConvolutionTheory.T4.pE E n v (infEmb E n a) = 1 :=
   pE_of_snd (congrArg Prod.snd (prodEquiv_infEmb a)) v

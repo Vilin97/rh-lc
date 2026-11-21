@@ -15,7 +15,7 @@ theorem linkEtaTw_of_plain {eps : ℝ} (Fm : Formalism.MainNotions.FamP eps) (hP
     LocsCoverTwF Fm := by
   obtain ⟨x0, hx⟩ := h
   refine locsCoverTwF_of Fm ⟨x0, fun x hx' i => ?_⟩
-  obtain ⟨M, T, HT, hex⟩ := hx x hx' i
+  rcases hx x hx' i with ⟨M, T, HT, hex⟩
   exact ⟨M, T, heckeStd_of_plain T hP HT hex (genOutBad_of T)⟩
 
 end Formalism.L2

@@ -23,16 +23,16 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 noncomputable section
 namespace GlobalTheory.Fam.Rebase
 open ValuativeRel
-variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-  {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts}
-  {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} {W : _root_.GlobalTheory.MiS.RealPackAlt ex} {u : B.Word}
+variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (I.rec7 l Z)}
+  {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts}
+  {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} {W : _root_.GlobalTheory.MiS.RealPackAlt ex} {u : B.Word}
   {a : _root_.GlobalTheory.Fam.GeometricFamily W u} {t : W.P.T}
 open Formalism.L2.Col GlobalTheory.StepData GlobalTheory.SymBridge
 def QuadraticExtensionCarry (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t) (i : Fin J.r) (β : J.Ch₀ ((J.G i).s + 1))
     (r : Sp B.fields.E (B.R.N ((J.G i).s + 1)) ≃ₗ[B.fields.E] Sp B.fields.E (B.R.N ((J.G i).s + 1))) : Prop :=
   ∀ e : XIx (Fin B.R.k) (Fin B.R.t) ((J.G i).s + 1) ≃ Fin (B.R.N ((J.G i).s + 1)), IsOrd xPos e →
     ∃ g ∈ (((J.G i).T (J.E i).δ (J.E i).tame (J.E i).η).lev ((J.G i).s + 1) 0 rfl).J,
-      g.val.toBlocks₁₁ = toLoc ((J.G i).q.pr.comp (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) e e r.toLinearMap ∧
+      g.val.toBlocks₁₁ = toLoc ((J.G i).q.pr.comp (incA (I.rec7 l Z))) e e r.toLinearMap ∧
       ∀ y : Sp B.fields.E (B.R.N ((J.G i).s + 1)),
         ((qOf (J.P i).1 : B.fields.E) ^ (J.E i).M)⁻¹ • (r.symm y - repY (J.A.p0 ((J.G i).s + 1) β).1.2) ∈
           stdAt B.fields.E (B.R.N ((J.G i).s + 1)) (J.P i).1 →
@@ -42,7 +42,7 @@ theorem exists_GLint_carry {J : _root_.GlobalTheory.Fam.QuadraticExtensionData a
     ∃ r ∈ GLint B.fields.E (B.R.N ((J.G i).s + 1)) (J.P i).1, _root_.GlobalTheory.Fam.Rebase.QuadraticExtensionCarry J i β r := by
   obtain ⟨e, he⟩ := GlobalTheory.QTw.exists_xOrd B.R ((J.G i).s + 1)
   obtain ⟨r, hr, g, hg, h1, h2⟩ := GlobalTheory.QPl.RatOrb.exists_rat_of_sameOrb (E := B.fields.E) (J.P i).1
-    ((J.G i).q.pr.comp (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) (J.G i).ϖ (hJ.tw i).compl e _ ((J.E i).reg.2.2 ((J.G i).s + 1) 0 rfl).1
+    ((J.G i).q.pr.comp (incA (I.rec7 l Z))) (J.G i).ϖ (hJ.tw i).compl e _ ((J.E i).reg.2.2 ((J.G i).s + 1) 0 rfl).1
     ((J.E i).le ((J.G i).s + 1) 0 rfl) (J.E i).M _ (repY (J.A.p0 ((J.G i).s + 1) β).1.2) (hJ.orb i β e he)
   refine ⟨r, hr, fun e' he' => ?_⟩
   obtain rfl : e = e' := Equiv.ext fun y => Fin.ext ((he y).trans (he' y).symm)
@@ -126,8 +126,8 @@ theorem pr_repY_sub_mem_integers (hW : _root_.GlobalTheory.Fam.AllFamilyConditio
   have h3 := (isFr_ptFr p.1.1 P.1 _).2 h1
   rw [← frsF_eq_ptFr, LinearEquiv.apply_symm_apply, hN] at h3
   have h4 := (mem_localization_standardLattice P.1 _).1 h3 x
-  have h5 := pr_mem_of_intAt (D := _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (a.G n).q (_root_.GlobalTheory.Fam.TopLoc.LocalIdempotentDensity.isIdemAt_G_pl hW a ha n) h4
-  have h6 := map_sub ((a.G n).q.pr.comp (incA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G))) (repY p'.1.2 x) (repY p.1.2 x)
+  have h5 := pr_mem_of_intAt (D := I.rec7 l Z) (a.G n).q (_root_.GlobalTheory.Fam.TopLoc.LocalIdempotentDensity.isIdemAt_G_pl hW a ha n) h4
+  have h6 := map_sub ((a.G n).q.pr.comp (incA (I.rec7 l Z))) (repY p'.1.2 x) (repY p.1.2 x)
   exact h6 ▸ h5
 set_option maxHeartbeats 2000000 in
 theorem pen_moved_of_readsStd_at_last (hW : _root_.GlobalTheory.Fam.AllFamilyConditions W) (ha : a.Is) {J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t} (hJ : J.ReadsStd) (j : ℕ) (hj : j + 1 = B.R.m) (β : J.Ch₀ j)
@@ -135,25 +135,25 @@ theorem pen_moved_of_readsStd_at_last (hW : _root_.GlobalTheory.Fam.AllFamilyCon
     (hoff : ∀ v, ¬ I.UnderQ (W.P.I.tup t) v → Formalism.UG.bc (Formalism.UG.prV (E := B.host.E) v) κ = 1)
     (hpt : TC.PtOf (J.A.kb j β * κ) (extTo I.SQ q))
     (hc : ∀ i β' r', HEq β' β → HEq r' (q.fr ⟨(J.P i).1, _root_.GlobalTheory.Fam.Rebase.P_mem_Q_of_readsStd hJ i⟩) → _root_.GlobalTheory.Fam.Rebase.QuadraticExtensionCarry J i β' r')
-    (kA : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j)) (h1 : kA ∈ GfC _)
-    (h2 : finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j (show j ≤ B.R.m by omega)) kA = (J.A.kb j β * κ).1) :
-    ∃ k₀ h : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X j),
-      k₀ ∈ GfC _ ∧ finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j (show j ≤ B.R.m by omega)) k₀ = (TC.kStd X u (B.R.N j)).1 ∧ kA = k₀ * h ∧
+    (kA : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j)) (h1 : kA ∈ GfC _)
+    (h2 : finM _ (rankN (I.rec7 l Z) j (show j ≤ B.R.m by omega)) kA = (J.A.kb j β * κ).1) :
+    ∃ k₀ h : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j),
+      k₀ ∈ GfC _ ∧ finM _ (rankN (I.rec7 l Z) j (show j ≤ B.R.m by omega)) k₀ = (TC.kStd X u (B.R.N j)).1 ∧ kA = k₀ * h ∧
       h ∈ GlobalTheory.FinPl.grpAt _ (fun p => ∃ i, (J.G i).q.v = p) ∧
       ∀ i (e : (J.G i).s + 1 = j), ∃ g ∈ (((J.G i).T (J.E i).δ (J.E i).tame (J.E i).η).lev ((J.G i).s + 1) 0 rfl).J,
-        (mt _ (e ▸ h : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X ((J.G i).s + 1)))).map (J.G i).q.pr =
+        (mt _ (e ▸ h : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X ((J.G i).s + 1)))).map (J.G i).q.pr =
           ((J.G i).FX ((J.G i).s + 1) le_rfl).β * g.val.toBlocks₁₁ * ((J.G i).FX ((J.G i).s + 1) le_rfl).γ := by
   have hI := hW.tr.ok
   have hle : j ≤ B.R.m := by omega
   obtain ⟨k1, k2, -⟩ := hJ.is.kA j hle β
   have hstd := hJ.std j (by omega) β
   have hidem : ∀ i, Formalism.L2.NTheta.IsIdemAt (J.G i).q.e (J.P i).1 := fun i => by rw [hJ.eq i]; exact (J.G i).idem
-  have hfin : finM _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hle) ((J.A.kA j β)⁻¹ * kA) = κ.1 := by
-    have e1 := GlobalTheory.AdForm.StabMove.finM_mul _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hle) (J.A.kA j β) ((J.A.kA j β)⁻¹ * kA)
+  have hfin : finM _ (rankN (I.rec7 l Z) j hle) ((J.A.kA j β)⁻¹ * kA) = κ.1 := by
+    have e1 := GlobalTheory.AdForm.StabMove.finM_mul _ (rankN (I.rec7 l Z) j hle) (J.A.kA j β) ((J.A.kA j β)⁻¹ * kA)
     rw [mul_inv_cancel_left, h2, k2] at e1
     exact ((Units.mul_right_inj (J.A.kb j β)).1 e1).symm
   refine ⟨J.A.kA j β, (J.A.kA j β)⁻¹ * kA, k1, by rw [← hstd]; exact k2, (mul_inv_cancel_left _ _).symm,
-    mem_grpAt_of_bc _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) j hle) _ _ (mul_mem (inv_mem k1) h1) κ hfin fun v hv => hoff v ?_, fun i e => ?_⟩
+    mem_grpAt_of_bc _ (rankN (I.rec7 l Z) j hle) _ _ (mul_mem (inv_mem k1) h1) κ hfin fun v hv => hoff v ?_, fun i e => ?_⟩
   · rintro ⟨P, hP, rfl⟩
     obtain ⟨i, rfl⟩ := _root_.GlobalTheory.Fam.Rebase.exists_index_place_eq_of_readsStd_of_mem hW hJ hP
     exact hv ⟨i, GlobalTheory.LocMod.LevelPlaces.splitPt_v_eq_under _ (hidem i)⟩
@@ -162,7 +162,7 @@ theorem pen_moved_of_readsStd_at_last (hW : _root_.GlobalTheory.Fam.AllFamilyCon
     obtain ⟨g, hg, hgm, -⟩ := hc i β _ HEq.rfl HEq.rfl e he
     refine ⟨g, hg, ?_⟩
     rw [hgm]
-    refine map_pr_eq (J.G i).q (hidem i) _ (rankN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) _ hle) _ _ (fun r s => ?_) xPos _
+    refine map_pr_eq (J.G i).q (hidem i) _ (rankN (I.rec7 l Z) _ hle) _ _ (fun r s => ?_) xPos _
       ((ha.stdQ (J.pl i) ⟨t, J.mem i⟩).1 _ le_rfl) e he
     have hSQ : (J.P i).1 ∈ I.SQ := I.Q_subset_SQ _ (_root_.GlobalTheory.Fam.Rebase.P_mem_Q_of_readsStd hJ i)
     have hTn := GlobalTheory.Mem.LevTwist.T_notMem_under_uSG B X I hI u (J.P i).1 (Finset.mem_union_right _ hSQ)
@@ -179,7 +179,7 @@ end GlobalTheory.Fam.Rebase
 namespace GlobalTheory.Fam
 open GlobalTheory.Fam.Rebase
 set_option maxHeartbeats 2000000 in
-theorem readsOfStd_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → (commOf (_root_.GlobalTheory.Fam.pk_z W) u a.g).Is → ∀ t (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t), J.ReadsStd → ∃ J' : _root_.GlobalTheory.Fam.QuadraticExtensionData a t, J'.Reads := by
+theorem readsOfStd_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (I.rec7 l Z)} {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → (commOf (_root_.GlobalTheory.Fam.pk_z W) u a.g).Is → ∀ t (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t), J.ReadsStd → ∃ J' : _root_.GlobalTheory.Fam.QuadraticExtensionData a t, J'.Reads := by
   intro B X I l Z L hT Gi Gl Kc Yd cX ex W hW u a ha _ _ t J hJ
   choose q κ hq using fun j β => _root_.GlobalTheory.Fam.Rebase.exists_chPt_moves_of_readsStd hW hJ j β
   obtain ⟨A', hA', hchr, hb0, hne, heq⟩ := GlobalTheory.AdForm.Rebase.exists_moved hW.tr.ok hW.tr.pins.some J.A hJ.is q κ

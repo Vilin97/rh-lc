@@ -53,9 +53,8 @@ theorem isCompatibleWithOpenImmersions_affineResolutionRuleOfPrincipalization_of
     (isIndependentOfPresentedEmbedding_embeddedResolutionRule A hAlg hw hsm hcmp)
     (embeddedResolutionRule_isCompatibleWithSmoothAmbientMaps A hAlg hw)
     (hasProperCenters_embeddedResolutionRuleOfPrincipalization A hw) hS hsm nilIsStrictNormalCrossingsOfSmooth
-  change IsCompatibleWithOpenImmersions ((embeddedResolutionRuleOfPrincipalization A hw).toAffineResolutionRule
-    (affineSpaceEmbeddingChoice hemb hsncE hsm)) at key
-  rw [toAffineResolutionRule_embeddedResolutionRuleOfPrincipalization A hw hemb hsncE hsm hex] at key
+  rw [affineSpacePresentedSelection_selection,
+    toAffineResolutionRule_embeddedResolutionRuleOfPrincipalization A hw hemb hsncE hsm hex] at key
   exact key
 
 theorem isCompatibleWithEtaleCovers_affineResolutionRuleOfPrincipalization_of_smoothPullbackHasLocalAmbientEmbedding
@@ -82,9 +81,8 @@ theorem isCompatibleWithEtaleCovers_affineResolutionRuleOfPrincipalization_of_sm
     (isIndependentOfPresentedEmbedding_embeddedResolutionRule A hAlg hw hsm hcmp)
     (embeddedResolutionRule_isCompatibleWithSmoothAmbientMaps A hAlg hw)
     (hasProperCenters_embeddedResolutionRuleOfPrincipalization A hw) hS hsm nilIsStrictNormalCrossingsOfSmooth
-  change IsCompatibleWithEtaleCovers ((embeddedResolutionRuleOfPrincipalization A hw).toAffineResolutionRule
-    (affineSpaceEmbeddingChoice hemb hsncE hsm)) at key
-  rw [toAffineResolutionRule_embeddedResolutionRuleOfPrincipalization A hw hemb hsncE hsm hex] at key
+  rw [affineSpacePresentedSelection_selection,
+    toAffineResolutionRule_embeddedResolutionRuleOfPrincipalization A hw hemb hsncE hsm hex] at key
   exact key
 
 theorem isCompatibleWithOpenImmersions_affineResolutionRuleOfPrincipalization (A : PrincipalizationAlgorithm.{u})
@@ -127,9 +125,8 @@ theorem isCompatibleWithFieldBaseChange_affineResolutionRuleOfPrincipalization (
              (hA.isoIsPullback _ _ hB) (hA.isoIsPullback_hom_snd _ _ hB) } : PresentedSelection)
     (isIndependentOfPresentedEmbedding_embeddedResolutionRule A hAlg hw hsm hcmp)
     (embeddedResolutionRule_isCompatibleWithFieldBaseChange A hAlg hw) nilIsStrictNormalCrossingsOfSmooth
-  change IsCompatibleWithFieldBaseChange ((embeddedResolutionRuleOfPrincipalization A hw).toAffineResolutionRule
-    (affineSpaceEmbeddingChoice hemb hsncE hsm)) at key
-  rw [toAffineResolutionRule_embeddedResolutionRuleOfPrincipalization A hw hemb hsncE hsm hex] at key
+  rw [affineSpacePresentedSelection_selection,
+    toAffineResolutionRule_embeddedResolutionRuleOfPrincipalization A hw hemb hsncE hsm hex] at key
   exact key
 
 theorem isPullbackBlowupSequence_affineResolutionRuleOfPrincipalization_of_smooth (A : PrincipalizationAlgorithm.{u})

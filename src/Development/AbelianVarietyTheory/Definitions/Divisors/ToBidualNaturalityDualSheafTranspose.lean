@@ -252,30 +252,30 @@ theorem dualApp_sum {κ : Type*} (t : Finset κ) (l : κ → Γ(dual F, V)) (h :
 @[simp] theorem dualApp_res (l : Γ(dual F, V)) (h : W ≤ V) {T : X.Opens} (h' : T ≤ W) :
     dualApp (resM (dual F) h l) h' = dualApp l (h'.trans h) := rfl
 
-def GlobalTheory.CompanionTheory.Ar.dualMap (φ : F ⟶ G) : dual G ⟶ dual F := homMap φ (𝟙 _)
+def dualMap (φ : F ⟶ G) : dual G ⟶ dual F := homMap φ (𝟙 _)
 
 @[simp] theorem dualApp_dualMap (φ : F ⟶ G) (l : Γ(dual G, V)) (h : W ≤ V) (s : Γ(F, W)) :
-    dualApp ((GlobalTheory.CompanionTheory.Ar.dualMap φ).app V l) h s = dualApp l h (φ.app W s) := rfl
+    dualApp ((dualMap φ).app V l) h s = dualApp l h (φ.app W s) := rfl
 
-@[simp] theorem dualMap_id : GlobalTheory.CompanionTheory.Ar.dualMap (𝟙 F) = 𝟙 (dual F) := rfl
+@[simp] theorem dualMap_id : dualMap (𝟙 F) = 𝟙 (dual F) := rfl
 
-theorem dualMap_comp (φ : F ⟶ G) (ψ : G ⟶ H) : GlobalTheory.CompanionTheory.Ar.dualMap (φ ≫ ψ) = GlobalTheory.CompanionTheory.Ar.dualMap ψ ≫ GlobalTheory.CompanionTheory.Ar.dualMap φ := rfl
+theorem dualMap_comp (φ : F ⟶ G) (ψ : G ⟶ H) : dualMap (φ ≫ ψ) = dualMap ψ ≫ dualMap φ := rfl
 
-theorem dualMap_add (φ ψ : F ⟶ G) : GlobalTheory.CompanionTheory.Ar.dualMap (φ + ψ) = GlobalTheory.CompanionTheory.Ar.dualMap φ + GlobalTheory.CompanionTheory.Ar.dualMap ψ := by
+theorem dualMap_add (φ ψ : F ⟶ G) : dualMap (φ + ψ) = dualMap φ + dualMap ψ := by
   refine Scheme.Modules.hom_ext _ _ fun V => ?_
   ext l W h s
   first
   | simp [dualApp_dualMap]
   | (rw [dualApp_dualMap]; simp)
 
-@[simp] theorem dualMap_zero : GlobalTheory.CompanionTheory.Ar.dualMap (0 : F ⟶ G) = 0 := by
+@[simp] theorem dualMap_zero : dualMap (0 : F ⟶ G) = 0 := by
   refine Scheme.Modules.hom_ext _ _ fun V => ?_
   ext l W h s
   first
   | simp [dualApp_dualMap]
   | (rw [dualApp_dualMap]; simp)
 
-@[simp] theorem dualMap_smulHom (a : Γ(X, ⊤)) : GlobalTheory.CompanionTheory.Ar.dualMap (smulHom F a) = smulHom (dual F) a := by
+@[simp] theorem dualMap_smulHom (a : Γ(X, ⊤)) : dualMap (smulHom F a) = smulHom (dual F) a := by
   have key : ∀ (M : X.Modules) (T : X.Opens) (x : Γ(M, T)),
       (smulHom M a).app T x = restrictGlobal X T a • x := fun M T x => rfl
   have key2 : ∀ T : X.Opens, restrictGlobal X T a = resG X le_top a := fun T => by
@@ -288,12 +288,12 @@ theorem dualMap_add (φ ψ : F ⟶ G) : GlobalTheory.CompanionTheory.Ar.dualMap 
   rw [dualApp_dualMap, key, key, dualApp_smul, map_smul, LinearMap.smul_apply, key2, key2, resG_resG]
 
 @[simps] def dualIso (φ : F ≅ G) : dual G ≅ dual F where
-  hom := GlobalTheory.CompanionTheory.Ar.dualMap φ.hom
-  inv := GlobalTheory.CompanionTheory.Ar.dualMap φ.inv
+  hom := dualMap φ.hom
+  inv := dualMap φ.inv
   hom_inv_id := by rw [← dualMap_comp, φ.inv_hom_id, dualMap_id]
   inv_hom_id := by rw [← dualMap_comp, φ.hom_inv_id, dualMap_id]
 
-instance mono_dualMap (φ : F ⟶ G) [Epi φ] : Mono (GlobalTheory.CompanionTheory.Ar.dualMap φ) := by
+instance mono_dualMap (φ : F ⟶ G) [Epi φ] : Mono (dualMap φ) := by
   refine QCoh.mono_of_locally_app_injective _ fun V _ hx => ⟨V, hx, le_rfl,
     (injective_iff_map_eq_zero _).2 fun l hl => dual_ext fun W h s => ?_⟩
   have H (x : W) : ∃ (T : X.Opens) (h' : T ≤ W), x.1 ∈ T ∧ ∃ t, φ.app T t = resM G h' s := by
@@ -332,7 +332,7 @@ def cartierDualToBidual : F ⟶ dual (dual F) :=
     dualApp ((cartierDualToBidual F).app V s) h l = dualApp l le_rfl (resM F h s) := rfl
 
 @[reassoc] theorem toBidual_naturality_dualSheafTranspose (φ : F ⟶ G) :
-    φ ≫ cartierDualToBidual G = cartierDualToBidual F ≫ GlobalTheory.CompanionTheory.Ar.dualMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) := by
+    φ ≫ cartierDualToBidual G = cartierDualToBidual F ≫ dualMap (dualMap φ) := by
   refine Scheme.Modules.hom_ext _ _ fun V => ?_
   ext s W h l
   first

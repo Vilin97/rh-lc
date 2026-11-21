@@ -73,17 +73,17 @@ theorem mv_tan (h : IsGrpPullback G' G f φ) {R : Type} [CommRing R] {x' : Sp R 
   exact mv_one h hx
 
 private theorem dualMap_lemma {R R' : Type} [CommRing R] [CommRing R'] (σ : R →+* R') (a : DualNumber R) :
-    GlobalTheory.CompanionTheory.Ar.dualMap σ a = TrivSqZeroExt.inl (σ a.fst) + TrivSqZeroExt.inr (σ a.snd) := rfl
+    dualMap σ a = TrivSqZeroExt.inl (σ a.fst) + TrivSqZeroExt.inr (σ a.snd) := rfl
 
 theorem mv_dual_alg {R R' : Type} [CommRing R] [CommRing R'] (σ : R →+* R') :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ spMap (algebraMap R (DualNumber R)) = spMap (algebraMap R' (DualNumber R')) ≫ spMap σ := by
+    spMap (dualMap σ) ≫ spMap (algebraMap R (DualNumber R)) = spMap (algebraMap R' (DualNumber R')) ≫ spMap σ := by
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
   refine RingHom.ext fun r => ?_
   ext <;> simp [dualMap_lemma, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem mv_dual_fst {R R' : Type} [CommRing R] [CommRing R'] (σ : R →+* R') :
-    spMap (TrivSqZeroExt.fstHom R' R' R').toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) =
+    spMap (TrivSqZeroExt.fstHom R' R' R').toRingHom ≫ spMap (dualMap σ) =
       spMap σ ≫ spMap (TrivSqZeroExt.fstHom R R R).toRingHom := by
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
@@ -91,7 +91,7 @@ theorem mv_dual_fst {R R' : Type} [CommRing R] [CommRing R'] (σ : R →+* R') :
   simp [dualMap_lemma]
 
 theorem mv_dual_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (σ : R →+* R') (τ : R' →+* R'') :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap τ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (τ.comp σ)) := by
+    spMap (dualMap τ) ≫ spMap (dualMap σ) = spMap (dualMap (τ.comp σ)) := by
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
   refine RingHom.ext fun a => ?_
@@ -99,8 +99,8 @@ theorem mv_dual_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R'']
 
 theorem mv_bc {R R' : Type} [CommRing R] [CommRing R'] (σ : R →+* R') {x : Sp R ⟶ X} {x' : Sp R' ⟶ X}
     (hx : spMap σ ≫ x = x') (v : epsAt x ⟶ G) :
-    ∃ v' : epsAt x' ⟶ G, v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ v.left ∧ (IsTanAt G x v → IsTanAt G x' v') := by
-  refine ⟨Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ v.left) ?_, rfl, ?_⟩
+    ∃ v' : epsAt x' ⟶ G, v'.left = spMap (dualMap σ) ≫ v.left ∧ (IsTanAt G x v → IsTanAt G x' v') := by
+  refine ⟨Over.homMk (spMap (dualMap σ) ≫ v.left) ?_, rfl, ?_⟩
   · have hw := Over.w v
     simp only [epsAt, Over.mk_hom] at hw ⊢
     rw [Category.assoc, hw, ← Category.assoc, mv_dual_alg, Category.assoc, hx]

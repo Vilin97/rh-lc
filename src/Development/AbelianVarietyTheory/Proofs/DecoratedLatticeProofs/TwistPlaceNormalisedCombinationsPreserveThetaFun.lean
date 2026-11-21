@@ -46,11 +46,13 @@ theorem aconv_support {G : Type} [AddMonoid G] (P : AddSubmonoid G) :
         (fun x => ((aconv l).sum fun y b => Finsupp.single (x + y) (e x * b)).support) :=
       Finsupp.support_sum (f := e)
         (g := fun x a => (aconv l).sum fun y b => Finsupp.single (x + y) (a * b)) hg
-    obtain ⟨x, hx, hg⟩ := Finset.mem_biUnion.mp houter
+    rw [Finset.mem_biUnion] at houter
+    obtain ⟨x, hx, hg⟩ := houter
     have hinner : g ∈ (aconv l).support.biUnion
         (fun y => (Finsupp.single (x + y) (e x * aconv l y)).support) :=
       Finsupp.support_sum (f := aconv l) (g := fun y b => Finsupp.single (x + y) (e x * b)) hg
-    obtain ⟨y, hy, hg⟩ := Finset.mem_biUnion.mp hinner
+    rw [Finset.mem_biUnion] at hinner
+    obtain ⟨y, hy, hg⟩ := hinner
     rw [Finset.mem_singleton.1 (Finsupp.support_single_subset hg)]
     exact P.add_mem (he x hx) (ih y hy)
 

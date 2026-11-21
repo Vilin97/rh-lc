@@ -44,10 +44,10 @@ theorem cmpC_mem_funMod (tE : Tau → E →+* LL) (htE : ∀ τ x, embLL (tE τ 
   intro i
   refine ⟨fun L hL => ?_, fun L hL => ?_, fun γ L => ?_⟩
   · unfold cmpC
-    rw [ite_eq_left hL]
+    rw [if_pos hL]
     exact hval i L hL
   · unfold cmpC
-    rw [ite_eq_right hL]
+    rw [if_neg hL]
   · exact cmpC_equiv tE htE hc hBs hA hex hpos hchi hi hp hU haw x i γ L
 
 end Formalism.L2.G.Cmp

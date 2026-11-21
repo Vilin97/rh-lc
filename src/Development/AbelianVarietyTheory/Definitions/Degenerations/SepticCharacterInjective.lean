@@ -302,11 +302,13 @@ theorem qEq_iff {k : ℕ} (p p' : N.QT k) : N.QEq p p' ↔ ∃ z, p' = p * N.qTr
   exists_congr fun _ => ⟨fun h => Subtype.ext (Prod.ext h.1 h.2),
     fun h => ⟨congrArg (fun q : N.QT k => q.1.1.toAdd) h, congrArg (fun q : N.QT k => q.1.2) h⟩⟩
 
-theorem qEq_equivalence (k : ℕ) : Equivalence (N.QEq (k := k)) := by
-  refine ⟨fun p => ⟨0, by simp, by simp⟩, ?_, ?_⟩
-  · rintro p p' ⟨z, h, h'⟩
+theorem qEq_equivalence (k : ℕ) : Equivalence (N.QEq (k := k)) where
+  refl p := ⟨0, by simp, by simp⟩
+  symm := by
+    rintro p p' ⟨z, h, h'⟩
     exact ⟨-z, by rw [h, smul_neg, add_neg_cancel_right], by rw [h', N.io_neg, mul_inv_cancel_right]⟩
-  · rintro p p' p'' ⟨z, h, h'⟩ ⟨w, e, e'⟩
+  trans := by
+    rintro p p' p'' ⟨z, h, h'⟩ ⟨w, e, e'⟩
     exact ⟨z + w, by rw [e, h, smul_add, add_assoc], by rw [e', h', N.io_add, mul_assoc]⟩
 
 def tk {k : ℕ} (p p' : N.QT k) : Oˣ := p.1.2.s p'.1.1.toAdd * cubN N.θ k 1 p'.1.2.b p.1.2.b

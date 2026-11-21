@@ -68,7 +68,7 @@ theorem exists_vec (hρ : MB.IsActOf t'.act.act ρM) {S S₀ : Scheme.{0}} {tK :
     (n : SABMap tK t' f) {t₀ : SAB H S₀} {f₀ : S ⟶ S₀} (mf : SABMap tK t₀ f₀) {K : Type} [Field K] (g : 𝓞 L →+* K)
     (hg : Function.Injective g) (x : Sp K ⟶ S) (hx : x ≫ f = spMap g) (x₀ : Sp K ⟶ S₀) (hx₀ : x₀ = x ≫ f₀) :
     ∃ (vK : B.carrier → (epsAt x ⟶ tK.G)) (vec : B.carrier → (epsAt x₀ ⟶ t₀.G)),
-      (∀ z, (vK z).left ≫ n.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ (MB.pt z).left) ∧ (∀ z, (vK z).left ≫ mf.φ = (vec z).left) ∧
+      (∀ z, (vK z).left ≫ n.φ = spMap (dualMap g) ≫ (MB.pt z).left) ∧ (∀ z, (vK z).left ≫ mf.φ = (vec z).left) ∧
       (∀ z, IsTanAt t₀.G x₀ (vec z)) ∧
       (∀ (s : 𝓞 E →+* 𝓞 L) (r : ℕ) (y : Fin r → B.carrier), (∀ k, y k ∈ eigSp ρM s) → LinearIndependent (𝓞 L) y →
         (∀ z ∈ eigSp ρM s, ∃ u : 𝓞 L, u ≠ 0 ∧ u • z ∈ Submodule.span (𝓞 L) (Set.range y)) →
@@ -126,7 +126,7 @@ theorem inf_norm (hρ : MB.IsActOf t'.act.act ρM) (hfib : IsFibre (HodgeIP t'.G
       exact k4 s₁ _ x₁ hx₁.1 hx₁.2.1 hx₁.2.2
     · rw [RingHom.comp_assoc, hs₂]
       exact k4 s₂ _ x₂ hx₂.1 hx₂.2.1 hx₂.2.2
-  have hbc : ∀ z, (wec z).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap s) ≫ (vec z).left := fun z => by
+  have hbc : ∀ z, (wec z).left = spMap (dualMap s) ≫ (vec z).left := fun z => by
     have h3 := left_eq_of_cart n s (Category.comp_id _).symm (vK z) (wK z) (by
       rw [k1, h1, ← Category.assoc, ← spDual_comp, RingHom.comp_assoc])
     rw [← k2, ← h2, h3, Category.assoc]

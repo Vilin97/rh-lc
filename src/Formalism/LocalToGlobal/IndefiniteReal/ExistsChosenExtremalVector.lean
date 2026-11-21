@@ -140,7 +140,7 @@ def pM (π : Equiv.Perm (Fin n)) : Matrix (Fin n) (Fin n) ℂ := (1 : Matrix (Fi
 
 theorem diag_pM (π : Equiv.Perm (Fin n)) (t : Fin n → ℂ) : diagonal (fun a => t (π a)) * pM π = pM π * diagonal t := by
   ext a b
-  simp only [diagonal_mul, mul_diagonal, pM, submatrix_apply, id, one_apply]
+  simp only [pM, diagonal_mul, mul_diagonal, submatrix_apply, id, Matrix.one_apply]
   split_ifs with h
   · rw [h, mul_comm]
   · simp
@@ -164,6 +164,8 @@ theorem diag_mem (θ : Fin n → ℝ) : diagonal (fun a => Complex.exp ((θ a : 
   refine ⟨?_, ?_⟩
   · rw [Matrix.mem_unitaryGroup_iff, star_eq_conjTranspose, diagonal_conjTranspose, diagonal_mul_diagonal, ← diagonal_one]
     congr 1
+    funext i
+    change Complex.exp ((θ i : ℂ) * Complex.I) * (starRingEnd ℂ) (Complex.exp ((θ i : ℂ) * Complex.I)) = 1
     rw [Complex.mul_conj, Complex.normSq_eq_norm_sq, Complex.norm_exp_ofReal_mul_I]
     simp
   · unfold Formalism.REAL.Jm

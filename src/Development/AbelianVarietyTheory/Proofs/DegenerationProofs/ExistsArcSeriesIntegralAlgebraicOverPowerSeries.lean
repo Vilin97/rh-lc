@@ -144,7 +144,7 @@ theorem exists_series : HV → Laws6 → GlobalTheory.LN.UDvrSt → GlobalTheory
       (fun x => by
         obtain ⟨i, e, he⟩ := ht x
         exact hp (some i) _ (((GlobalTheory.T.labelledTorsionValues_additive_kernel_surjective gt E H D O' F A₀.arc _ hm2).2.1 _ _).2 ⟨e, he⟩))
-      (hp none _ (⟨0, by simp [p], by simp [p]⟩))
+      (hp none _ ((A₀.N.qEq_equivalence _).refl _))
     exact ⟨R₁, v, w, fun _ _ => h⟩
   choose R₁ v w hlev using level
   have ext : ∀ (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] [IsAlgClosed C]
@@ -159,7 +159,7 @@ theorem exists_series : HV → Laws6 → GlobalTheory.LN.UDvrSt → GlobalTheory
       (IsLocalization.ringHom_ext (nonZeroDivisors O') (RingHom.ext fun x => (congrArg gam (hK x)).trans (h1 x).symm))
       S (fun x => (hS _).2 (by rw [h1]; exact h2 _)) A
     refine ⟨A', ⟨S, hS, hA'⟩, ⟨I₁, r₁, z₁, fun s y => A'.ν.eX.injective ?_, fun n x _ =>
-      ⟨A'.q n x, (q₁ n x).1, (q₁ n x).2, (by change A'.N.QEq (A'.q n x) (A'.q n x); exact ⟨0, by simp, by simp⟩)⟩⟩, homComp I₀ I₁ _ fun _ => rfl, ?_, fun y z => ?_,
+      ⟨A'.q n x, (q₁ n x).1, (q₁ n x).2, (A'.N.qEq_equivalence _).refl _⟩⟩, homComp I₀ I₁ _ fun _ => rfl, ?_, fun y z => ?_,
       fun n x => ⟨(q₁ n x).1.trans (congrArg I₁.e (q₀ n x).1), homComp_rel _ _ _ _ (q₀ n x).2 (q₁ n x).2⟩⟩
     · change A'.ν.eX (I₁.e (A.ν.eX.symm (s • A.ν.eX y))) = A'.ν.eX (A'.ν.eX.symm (s • A'.ν.eX (I₁.e y)))
       exact ((x₁ _).trans (A.ν.eX.apply_symm_apply _)).trans

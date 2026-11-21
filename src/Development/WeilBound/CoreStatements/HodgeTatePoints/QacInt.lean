@@ -138,8 +138,8 @@ theorem key_isIntegral : ∀ κ : GlobalTheory.KeyCl.Rule, GlobalTheory.KeyCl.Ho
     · simpa only [GlobalTheory.KeyCl.Homog, _root_.mul_one] using k₁
     · simpa only [GlobalTheory.KeyCl.ArchNorm, _root_.mul_one] using k₅
   have hx : GlobalTheory.IndefiniteRowSideFullHecke.FibreFramesOnModels.IsFibreOf x t.G t.PP.L t.PP.rig th v (algebraMap (𝓞 L) L) :=
-    ⟨φ, he, w, rfl, GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L), h1, h2, h3, h4,
-      fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl], by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap], h5⟩
+    ⟨φ, he, w, rfl, dualMap (algebraMap (𝓞 L) L), h1, h2, h3, h4,
+      fun a => by ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl], by ext <;> simp [dualMap], h5⟩
   refine isIntegral_of_forall_mem _ fun p => ?_
   obtain ⟨V, hV⟩ : ∃ V : Subalgebra (𝓞 L) L,
       V = Localization.subalgebra.ofField L _ p.asIdeal.primeCompl_le_nonZeroDivisors := ⟨_, rfl⟩

@@ -50,7 +50,10 @@ theorem local_of (hD : D.Out l) : Local l := by
   have hq : (ε.qU n : (bs l k n).R) = (base l).cris n (ε.qk 1) ^ (bs l k n).p :=
     (ε.qU_val n).trans ((congrArg ((base l).cris n) (hε.2.1 0).symm).trans (map_pow _ _ _))
   have hμ : (base l).cris n ε.μ = (ε.qU n : (bs l k n).R) - 1 := by
-    rw [Eps.μ, map_sub, map_one, ε.qU_val]
+    change (base l).cris n (ε.qk 0 - 1) = (ε.qU n : (bs l k n).R) - 1
+    calc
+      _ = (base l).cris n (ε.qk 0) - (base l).cris n 1 := ((base l).cris n).map_sub _ _
+      _ = _ := congrArg₂ (· - ·) (ε.qU_val n).symm ((base l).cris n).map_one
   have hξ : (∑ i ∈ Finset.range (bs l k n).p, (base l).cris n (ε.qk 1) ^ i) ∈ (bs l k n).I := by
     have := fil_le k (base l) n (hε.2.2.1 (base l) n)
     set_option synthInstance.maxHeartbeats 100000 in

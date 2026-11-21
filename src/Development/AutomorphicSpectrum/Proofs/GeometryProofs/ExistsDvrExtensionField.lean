@@ -43,9 +43,7 @@ theorem exists_dvr_in_finite_ext (O : Type) [CommRing O] [IsDomain O] [IsDiscret
       exact Ideal.zero_mem _)
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible O
   have hϖP : algebraMap O (integralClosure O L) ϖ ∈ P := by
-    rw [← Ideal.mem_comap]
-    change ϖ ∈ Ideal.under O P
-    rw [hPover, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+    rw [← Ideal.mem_comap, hPover, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
     exact hϖ.not_isUnit
   have hP0 : P ≠ ⊥ := by
     intro h

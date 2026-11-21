@@ -235,7 +235,7 @@ theorem BlockImageDatum.proof (hA : BlockImageArith.Statement) (hI : BlockImageI
         obtain ⟨p, hp⟩ := Function.ne_iff.mp hz
         exact ⟨p.2, by cases k; exact hp⟩
       conjInv := fun u => by
-        change (fsMetric (ι d.k₀)).ρ _ = (fsMetric (ι d.k₀)).ρ _
+        change (fsMetric (ι := ι d.k₀)).ρ _ = (fsMetric (ι := ι d.k₀)).ρ _
         rw [← ProjLine.isConjInvariant_fs (fun i => ∑ j, (N i j : ℂ) * u j)]
         congr 1
         funext i
@@ -247,7 +247,7 @@ theorem BlockImageDatum.proof (hA : BlockImageArith.Statement) (hI : BlockImageI
   let d₀ : HSMBlockDatum D K ι Ω :=
     { y := d.y
       k₀ := d.k₀
-      A := HermLine.ofMetrics (fun k => fsMetric (ι k)) (unitDeg d.k₀)
+      A := HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) (unitDeg d.k₀)
       P0 := ⊥
       J := d.J
       R := d.R
@@ -266,8 +266,8 @@ theorem BlockImageDatum.proof (hA : BlockImageArith.Statement) (hI : BlockImageI
       vol := d.vol }
   have hh : ∀ z ∈ mcPts (mCoordIdeal d.y), d₀.A.h z = d'.m.ρ (blockMapC d.k₀ M z) := by
     intro z hz
-    change ∏ k, (fsMetric (ι k)).ρ (fun i => z ⟨k, i⟩) ^ (unitDeg d.k₀ k) =
-      (fsMetric (ι d.k₀)).ρ (fun i => ∑ j, (N i j : ℂ) * blockMapC d.k₀ M z j)
+    change ∏ k, (fsMetric (ι := ι k)).ρ (fun i => z ⟨k, i⟩) ^ (unitDeg d.k₀ k) =
+      (fsMetric (ι := ι d.k₀)).ρ (fun i => ∑ j, (N i j : ℂ) * blockMapC d.k₀ M z j)
     rw [Finset.prod_eq_single d.k₀ (fun k _ hk => by simp [unitDeg, hk]) (by simp)]
     simp only [unitDeg, if_true, zpow_one]
     congr 1

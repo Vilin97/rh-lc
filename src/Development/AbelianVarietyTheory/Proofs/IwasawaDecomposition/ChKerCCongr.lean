@@ -72,7 +72,7 @@ open GlobalTheory.Core.Ht2 GlobalTheory.Mem.Col2.KerRat
 
 variable {B : Base} {X : PreX B.toPre} {I : TC B X} (h : I.Ok) (hp : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l))
   (ht : I.IsTw) (hJ : ColIn.JetsIn I)
-  (χ : Submodule (𝓞 B.host.E) B.host.E → ℂ) (hχ : ∀ 𝔞, TaylorLogMetric.N1 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) 𝔞 → χ 𝔞 = I.chi 𝔞) (hX : B.fields.Ok)
+  (χ : Submodule (𝓞 B.host.E) B.host.E → ℂ) (hχ : ∀ 𝔞, TaylorLogMetric.N1 (I.rec7 l Z) 𝔞 → χ 𝔞 = I.chi 𝔞) (hX : B.fields.Ok)
 
 
 include hχ in

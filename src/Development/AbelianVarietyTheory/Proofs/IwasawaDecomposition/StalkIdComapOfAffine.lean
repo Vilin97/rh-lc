@@ -77,7 +77,7 @@ theorem stalkId_comap_of_affine {T : Scheme.{0}} [IsAffine T] (J : X.IdealSheafD
 theorem map_le_stalkId_comap (π : X' ⟶ X) (J : X.IdealSheafData) (x' : X') :
     (stalkId J (π x')).map (π.stalkMap x').hom ≤ stalkId (J.comap π) x' := by
   by_cases hx : x' ∈ (J.comap π).support
-  · obtain ⟨z, rfl⟩ := GlobalTheory.Vanishing.exists_ι_eq (I := J.comap π) hx
+  · obtain ⟨z, rfl⟩ := GlobalTheory.Vanishing.exists_ι_eq hx
     have h : stalkId J (π ((J.comap π).subschemeι z)) ≤ RingHom.ker
         (((J.comap π).subschemeι.stalkMap z).hom.comp (π.stalkMap ((J.comap π).subschemeι z)).hom) := by
       have h0 := (GlobalTheory.Vanishing.le_ker_iff_stalk ((J.comap π).subschemeι ≫ π)).1

@@ -128,27 +128,22 @@ theorem val_cub {T T' : Over S} (ρ : T' ⟶ T) {z : T'.left} {J : (T'.left ⟶ 
   refine (val_pull hJ _ _ _).trans ?_
   rw [← Over.comp_left, comp_lift, comp_lift]; rfl
 
-theorem isCub_cubV {T : Over S} {z : T.left} {J : (T.left ⟶ G.left) → L.L.ι} (hJ : Good L.L z J) : IsCub (cubV c z J) := by
-  constructor
-  case face =>
-    intro x y
+theorem isCub_cubV {T : Over S} {z : T.left} {J : (T.left ⟶ G.left) → L.L.ι} (hJ : Good L.L z J) : IsCub (cubV c z J) where
+  face x y := by
     have := val_corr hJ (c.face 0) (lift x y).left
     rw [val_one] at this
     refine Eq.trans ?_ this
     refine Eq.trans ?_ (val_cub c (lift x y) hJ (pzero G _) (x2 G 0) (x2 G 1)).symm
     congr 1 <;> simp [x2, pzero, Hom.one_def]
-  case s01 =>
-    intro x y w
+  s01 x y w := by
     have := (val_corr hJ c.cubeSymmetric_swap_first (lift x (lift y w)).left).trans (val_cub c (lift x (lift y w)) hJ _ _ _)
     refine Eq.trans this ?_
     congr 1 <;> simp [x3]
-  case s12 =>
-    intro x y w
+  s12 x y w := by
     have := (val_corr hJ c.cubeSymmetric_swap_last (lift x (lift y w)).left).trans (val_cub c (lift x (lift y w)) hJ _ _ _)
     refine Eq.trans this ?_
     congr 1 <;> simp [x3]
-  case coc =>
-    intro x x' x'' y
+  coc x x' x'' y := by
     have := val_corr hJ c.cocycle (lift x (lift x' (lift x'' y))).left
     have e := ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·) (val_cub c _ hJ _ _ _) (val_cub c _ hJ _ _ _))).symm.trans
       (this.trans ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·) (val_cub c _ hJ _ _ _) (val_cub c _ hJ _ _ _))))

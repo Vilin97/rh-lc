@@ -19,8 +19,8 @@ open UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial
 private theorem reps_right {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (G1 K n)) [μ.IsHaarMeasure]
     {v : L2 μ} {φ : G1 K n → ℂ} (h : Reps μ v φ) (g : G1 K n) :
     Reps μ (rightRegularRep (Gam K n) μ g v) (fun y => φ (y * g)) := by
-  have h1 := (quasiMeasurePreserving_mk (Gam K n) μ).ae (coeFn_rightRegularRep (Gam K n) μ g v)
-  have h2 := (measurePreserving_mul_right μ g).quasiMeasurePreserving.ae h
+  have h1 := MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (coeFn_rightRegularRep (Gam K n) μ g v)
+  have h2 := MeasureTheory.QuasiMeasurePreserving.ae (measurePreserving_mul_right μ g).quasiMeasurePreserving h
   filter_upwards [h1, h2] with y e1 e2
   rw [e1]
   exact e2
@@ -32,14 +32,14 @@ private theorem reps_sum {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Me
   induction s using Finset.induction_on with
   | empty =>
     refine ⟨0, τ.zero_mem, ?_⟩
-    filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K n) μ))] with y e
-    simpa using e
+    filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K n) μ))] with y e
+    simpa only [Finset.sum_empty, Pi.zero_apply] using e
   | insert i s hi ih =>
     obtain ⟨v, hv, hr⟩ := ih
     obtain ⟨w, hw, hq⟩ := h i
     refine ⟨c i • w + v, τ.add_mem (τ.smul_mem _ hw) hv, ?_⟩
-    filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_add (c i • w) v),
-      (quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_smul (c i) w), hr, hq] with y e1 e2 e3 e4
+    filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_add (c i • w) v),
+      MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_smul (c i) w), hr, hq] with y e1 e2 e3 e4
     rw [e1, Pi.add_apply, e2, Pi.smul_apply, e3, e4, Finset.sum_insert hi, smul_eq_mul]
 
 private theorem zt_zero {K : Type} [Field K] [NumberField K] : zt K 0 = 1 := by

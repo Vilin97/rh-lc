@@ -302,7 +302,7 @@ variable {B : Base} {X : PreX B.toPre} (I : TC B X)
 
 set_option maxHeartbeats 2000000 in
 theorem chart_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι)
-    (Q' : Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (i : ℕ) (hi : i ≤ B.R.m) (hm : i < B.R.m)
+    (Q' : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (i : ℕ) (hi : i ≤ B.R.m) (hm : i < B.R.m)
     (hQ' : ∀ v, v ∈ Q' ↔ I.UnderQ a v) (k : GA B (B.R.N i))
     (k1 : ∃ p : DecoF B.fields.E (B.R.N i) ∅ ∅ ∅, PtOf k p ∧ p.deco.1.N = stdLat B.fields.E (B.R.N i))
     (k2 : ∀ v : HeightOneSpectrum (𝓞 B.host.F), (B.T u : 𝓞 B.host.F) ∉ v.asIdeal → ¬ I.UnderQ a v →
@@ -313,8 +313,8 @@ theorem chart_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.
     (g : (I.stp u a i).Cl → GA B (B.R.N i)) (hg : ∀ c, PtOf (g c) (extTo I.SQ ((I.stp u a i).rep c).1.1))
     (c₀ : (I.stp u a i).Cl) (p : (I.stp u a i).Cl → Prop)
     (hp : ∀ c, p c ↔ c.1 = c₀.1 ∧ bar (rpT I u a i c) = bar (rpT I u a i c₀) ∧ cqOf (rpT I u a i c) = cqOf (rpT I u a i c₀)) :
-    ∃ (K : LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) (badQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q') i hi (fun c : {c // p c} => (I.chain l u a).stab i c.1)
-        (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c.1)))
+    ∃ (K : LevelChart (I.rec7 l Z) (B.T u) (badQ (I.rec7 l Z) Q') i hi (fun c : {c // p c} => (I.chain l u a).stab i c.1)
+        (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c.1)))
       (q : QLoc B.sp.cm (B.R.N i) (I.Q a) (cutQ (lvQ I a i c₀.1) (cqOf (rpT I u a i c₀)))),
       K.lev.Lb = baseLb B.fields.E (B.R.N i) ((B.primes X).vT u) ∧
       (id K.lev.U : Subgroup (GA B (B.R.N i))) =
@@ -353,7 +353,7 @@ theorem chart_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.
     rw [e]
     exact k3 P r j hr
   obtain ⟨hkU, hkV, hkL, hkT⟩ := k_facts (F := B.host.F) (E := B.host.E) B.sp.cm (B.R.N i) (basePi_of_ok hX hPr u) k (diaT (Pr := B.primes X) u) k1 k3'
-  have hbad : badQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q' = badQ' (F := B.host.F) (B.primes X).vGs (I.Q a) := by
+  have hbad : badQ (I.rec7 l Z) Q' = badQ' (F := B.host.F) (B.primes X).vGs (I.Q a) := by
     refine Set.ext fun v => or_congr (plUnder_vGs (X := B.fields) B.sp.cm hPr v).symm ?_
     refine (hQ' v).trans ⟨?_, ?_⟩
     · rintro ⟨P, hP, rfl⟩
@@ -375,8 +375,8 @@ theorem chart_of (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.
     (fun P hP => (hPr.vT_norm u P hP : Ideal.absNorm P.asIdeal = B.T u)) (rls_T_notUnder hPr u)
     (hf ▸ colBase_index (X := B.fields) B.sp.cm (B.R.N i) hPr u) (chLam (X := B.fields) B.embLL (lvG I a i c₀.1) (bar (rpT I u a i c₀)))
     q (qbOpen _ _ hcj hO) (trace_not_mem_twistPrime_under I hI hPr u a) B.embLL k hkU hkV hkL hkT hkO
-    (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) hg1 (badQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q') hbad
-    (fun c : {c // p c} => (I.stp u a i).Stab c.1) (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c.1))
+    (gramN (I.rec7 l Z) i hi) hg1 (badQ (I.rec7 l Z) Q') hbad
+    (fun c : {c // p c} => (I.stp u a i).Stab c.1) (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c.1))
     (fun c => (rpT I u a i c.1).1.1) (fun c => g c.1) (fun c => (hpt c.1).1) (fun c => (hpt c.1).2.over)
     (cls_bijQ (lvG I a i) (lvQ I a i) _ _ _ hact hdet (exists_pt_inv hd) (inv_norm I hI hPr u a i) c₀ p hp)
     (fun c => (hl u a).1 c.1)
@@ -437,7 +437,7 @@ theorem chr_at {u : B.Word} {a : I.ι} {i : ℕ} (c : (I.stp u a i).Cl) (b : (I.
 
 
 set_option maxHeartbeats 2000000 in
-theorem exists_charts : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (Q : Finset (HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))) (i : ℕ) (hi : i ≤ B.R.m), 1 ≤ i → i < B.R.m → (∀ v, v ∈ Q ↔ I.UnderQ a v) → ∀ k : GlobalTheory.Mem.Col2.TC.ChTw.Chart I u a i → GA B (B.R.N i), GlobalTheory.Mem.Col2.TC.ChTw.AdmK I u a i k → ∃ K : ∀ β : GlobalTheory.Mem.Col2.TC.ChTw.Chart I u a i, LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) (badQ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) Q) i hi (fun c : {c // GlobalTheory.Mem.Col2.TC.ChTw.chartOf I u a i c = β} => (I.chain l u a).stab i c.1) (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c.1)), I.Reads u a i (GlobalTheory.Mem.Col2.TC.ChTw.chartOf I u a i) (fun β => (K β).lev.Lb) (fun β => (K β).lev.U) (fun β => (K β).lev.chi) (fun c => ((K (GlobalTheory.Mem.Col2.TC.ChTw.chartOf I u a i c)).y ⟨c, rfl⟩).1) (fun c s => ((K (GlobalTheory.Mem.Col2.TC.ChTw.chartOf I u a i c)).stabI ⟨c, rfl⟩ s).1) k ∧ ∀ β, ∃ n : ℕ, 0 < n ∧ ∀ κ, (K β).lev.chi κ ^ n = 1 := by
+theorem exists_charts : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) (Q : Finset (HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F))) (i : ℕ) (hi : i ≤ B.R.m), 1 ≤ i → i < B.R.m → (∀ v, v ∈ Q ↔ I.UnderQ a v) → ∀ k : GlobalTheory.Mem.Col2.TC.ChTw.Chart I u a i → GA B (B.R.N i), GlobalTheory.Mem.Col2.TC.ChTw.AdmK I u a i k → ∃ K : ∀ β : GlobalTheory.Mem.Col2.TC.ChTw.Chart I u a i, LevelChart (I.rec7 l Z) (B.T u) (badQ (I.rec7 l Z) Q) i hi (fun c : {c // GlobalTheory.Mem.Col2.TC.ChTw.chartOf I u a i c = β} => (I.chain l u a).stab i c.1) (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c.1)), I.Reads u a i (GlobalTheory.Mem.Col2.TC.ChTw.chartOf I u a i) (fun β => (K β).lev.Lb) (fun β => (K β).lev.U) (fun β => (K β).lev.chi) (fun c => ((K (GlobalTheory.Mem.Col2.TC.ChTw.chartOf I u a i c)).y ⟨c, rfl⟩).1) (fun c s => ((K (GlobalTheory.Mem.Col2.TC.ChTw.chartOf I u a i c)).stabI ⟨c, rfl⟩ s).1) k ∧ ∀ β, ∃ n : ℕ, 0 < n ∧ ∀ κ, (K β).lev.chi κ ^ n = 1 := by
   intro B X I hI hP l Z u a Q i hi _ hm hQ k hk
   have hPr := l.pr
   have hd := q_disj I hI a

@@ -387,9 +387,11 @@ theorem bij_of_upTo {A : Type} [CommRing A] {M : Type*} {N : Type*} [AddCommGrou
     exact ⟨x, by simpa using hx⟩
 
 theorem onto_incl {Q Q' : ObjectProperty (Thick (nlFun γ p X q κ))} (h : Q' ≤ Q) :
-    CrystallineSemistableComparison.B.Onto (ObjectProperty.ιOfLE h) (fun T : Q.FullSubcategory => Q' T.obj) :=
-  ⟨ObjectProperty.full_ιOfLE h, ObjectProperty.faithful_ιOfLE h,
-    fun T => T.property, fun T hT => ⟨⟨T.obj, hT⟩, ⟨Iso.refl _⟩⟩⟩
+    CrystallineSemistableComparison.B.Onto (ObjectProperty.ιOfLE h) (fun T : Q.FullSubcategory => Q' T.obj) where
+  full := inferInstance
+  faithful := inferInstance
+  mem T := T.property
+  ess T hT := ⟨⟨T.obj, hT⟩, ⟨Iso.refl _⟩⟩
 
 theorem sq_eq_restrict {Q Q' : ObjectProperty (Thick (nlFun γ p X q κ))} (h : Q' ≤ Q) (a b : IdF (sP Q).A)
     (ha : (incl h).Le a (a.res (ObjectProperty.ιOfLE h) : IdF (sP Q').A))

@@ -177,22 +177,16 @@ theorem killed {q : Λ →+ R} (s : ∀ S : K₀.DObj et M, S.T.C)
   have e2 : ψ (s S) = TrivSqZeroExt.inl (s S) := sub_right_injective (e1.trans e0.symm)
   exact eq_zero_of_inl_inr _ _ ((hψ _).symm.trans e2)
 
-theorem coboundary_on_charts : ∀ {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F₀ : Fam Empty g Λ} (K₀ : Charts F₀) {R : Type} [CommRing R] [Algebra ℂ R] (et : Hol F₀.V →+* R) (M : Ideal R), IsNilpotent M → (∀ (f : Hol F₀.V), ∀ z ∈ F₀.V, et f = algebraMap ℂ R (f.fn z)) → ∀ (q : Λ →+ R), K₀.perClD et M q = 0 → ∃ G : ∀ k, R ⊗[ℂ] Hol (K₀.W k), (∀ k a, LinearMap.lTensor R (dw (W := K₀.W k) a).toLinearMap (G k) = 0) ∧ ∀ l k k' (h : K₀.le l k' k), G k' - Algebra.TensorProduct.map (AlgHom.id ℂ R) (Charts.shA h) (G k) = q l ⊗ₜ[ℂ] 1 := by
+theorem coboundary_on_charts : ∀ {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F₀ : Fam Empty g Λ} (K₀ : Charts F₀) {R : Type} [CommRing R] [Algebra ℂ R] (et : Hol F₀.V →+* R) (M : Ideal R), IsNilpotent M → (∀ (f : Hol F₀.V), ∀ z ∈ F₀.V, et f = algebraMap ℂ R (f.fn z)) → ∀ (q : Λ →+ R), K₀.perClD et M q = 0 → ∃ G : ∀ k, R ⊗[ℂ] Hol (K₀.W k), (∀ k a, LinearMap.lTensor R (dw a).toLinearMap (G k) = 0) ∧ ∀ l k k' (h : K₀.le l k' k), G k' - Algebra.TensorProduct.map (AlgHom.id ℂ R) (Charts.shA h) (G k) = q l ⊗ₜ[ℂ] 1 := by
   intro g Λ _ F₀ K₀ R _ _ et M hM hev q hq
   obtain ⟨s, hs⟩ := CatCoh.H1.mk_eq_zero.1 hq
   have key : ∀ {S S' : K₀.DObj et M} (f : S ⟶ S'),
       @HSub.hSub S'.T.C S'.T.C S'.T.C _ (s S') (f.1.φ (s S)) = algebraMap R S'.T.C (q f.1.deg) :=
     fun f ↦ congrFun (congrFun (congrFun hs _) _) f
   refine ⟨fun k ↦ s (objS K₀ hM hev k), fun k a ↦ ?_, fun l k k' h ↦ key (homS K₀ hM hev h)⟩
-  let D (a : Fin g) := LinearMap.lTensor R (dw (W := K₀.W k) a).toLinearMap
-  have hmove := GlobalTheory.SqZeroMove.gen_hom
-    (TrivSqZeroExt.inlHom (R ⊗[ℂ] Hol (K₀.W k)) (Fin g → R ⊗[ℂ] Hol (K₀.W k)))
-    (fun a ↦ (D a).toAddMonoidHom)
-    (fun a ↦ GlobalTheory.SqZeroMove.lTensor_one (R := R) (dw (W := K₀.W k) a))
-    (fun a x y ↦ GlobalTheory.SqZeroMove.lTensor_leibniz (dw (W := K₀.W k) a) x y)
+  obtain ⟨ψ, hψ⟩ := GlobalTheory.SqZeroMove.sqZeroMove (TrivSqZeroExt.inlHom (R ⊗[ℂ] Hol (K₀.W k)) (Fin g → R ⊗[ℂ] Hol (K₀.W k)))
     (fun a ↦ TrivSqZeroExt.inr (Pi.single a 1)) (fun a b ↦ TrivSqZeroExt.inr_mul_inr _ _ _)
-  obtain ⟨ψ, hψ⟩ := hmove
-  exact congrFun (killed s key (objS K₀ hM hev k) ψ (fun x a ↦ D a x)
+  exact congrFun (killed s key (objS K₀ hM hev k) ψ (fun x a ↦ LinearMap.lTensor R (dw a).toLinearMap x)
     (fun x ↦ (hψ x).trans (tsze_expand _ _).symm) (fun r a ↦ lTensor_alg _ r) (fun h a ↦ lTensor_right _ h)) a
 
 end GlobalTheory.ChartCobd

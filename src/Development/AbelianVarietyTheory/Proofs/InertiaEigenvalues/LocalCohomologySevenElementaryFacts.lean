@@ -155,8 +155,13 @@ theorem isOpen_integers {l : ℕ} [Fact l.Prime] (LL : Formalism.BasicNotions.Lo
     IsOpen (Set.range (algebraMap ↥(Formalism.BasicNotions.Loc.OL LL) ↥LL.1)) :=
   (GlobalTheory.LitGood.litGoodO l LL).2.2.2.2
 
-theorem elem : ReciprocityTheory.ChartRestriction.T2.Elem :=
-  ⟨@padicInt_coeff, @mulSub_open, @contAction_quotient, @pr_eq_zero_of_coboundary,
-    @quotShape_of_equiv, @mem_integers_iff_norm_le_one, @isOpen_integers⟩
+theorem elem : ReciprocityTheory.ChartRestriction.T2.Elem where
+  padicInt := @padicInt_coeff
+  mulSub := @mulSub_open
+  contQuot := @contAction_quotient
+  swapCob := @pr_eq_zero_of_coboundary
+  shapeEquiv := @quotShape_of_equiv
+  memOL := @mem_integers_iff_norm_le_one
+  openOL := @isOpen_integers
 
 end GlobalTheory.LocElem

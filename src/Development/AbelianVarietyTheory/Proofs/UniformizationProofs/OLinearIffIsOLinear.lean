@@ -20,7 +20,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 namespace GlobalTheory.OLinearCompare
 
-open GlobalTheory.TorusCoord
+open GlobalTheory.IndefiniteRowSideFullHecke.OLinearMaps GlobalTheory.TorusCoord
 
 theorem oneGen_isGen {X Y : Scheme.{0}} (L : LB X) : (LB.oneGen L (Y := Y)).IsGen :=
   isGen_of_gm _ fun _ _ _ _ _ =>

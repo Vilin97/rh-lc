@@ -197,8 +197,7 @@ theorem jPer_congr_window (M : GlobalTheory.FunObj.Vol G) (t : T) (C C' : BiFam 
       simp only [jPer]
       rw [← hCj]
       have hle : j + 1 + 1 ≤ k := by
-        obtain ⟨a, ha⟩ := he
-        obtain ⟨b, hb⟩ := hk
+        rw [Nat.even_iff] at he hk
         omega
       exact jPer_congr_window M t C C' F k hk4 hC hpres hwin σ (j + 1 + 1) _ _
         he.add_one.add_one hk hle (hpres j he hlt φ hφ)

@@ -236,7 +236,7 @@ theorem lamC_span (hf : PartnerOK D F0 f) (M : Submodule (𝓞 D.host.E) (WbQ D 
 
 theorem lattice_integral : LamLattice := by
   intro D u F0 f M hf hM
-  exact ⟨lamC_fg D F0 f hf M hM.1.fg, lamC_span D F0 f hf M hM.1.span_eq_top⟩
+  exact Submodule.IsLattice.of_fg D.host.E (lamC_fg D F0 f hf M hM.1.fg)
 
 end Lat
 

@@ -17,7 +17,7 @@ noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory.EndLoc
+open GlobalTheory.EndLoc GlobalTheory.EndLoc.HomFixGlue
 open scoped CategoryTheory.Obj
 open ReciprocityTheory.ChartRestriction.G.Out
 open Opposite

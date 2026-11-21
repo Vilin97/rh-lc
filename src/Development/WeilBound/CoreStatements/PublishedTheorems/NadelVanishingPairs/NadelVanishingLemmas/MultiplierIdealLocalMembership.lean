@@ -68,9 +68,7 @@ theorem GlobalTheory.Discrepancy.inMultAt_iff_regularAt_logRes : ∀ (k : Type) 
   have hdisc : ∀ (E' : DivOver (s ≫ p)) (E : DivOver p), DivOver.Over s E' E →
       ∀ g : X.functionFieldˣ, discrep E' η' m (fnPull s g) = discrep E η m g := by
     intro E' E hO g
-    have hform := GlobalTheory.T.form_order_birational_pullback k X Y p s hres.bir E' E hO n η hη
-    change E'.formOrd (EtaleKlt.ratPull p s n η) = E.formOrd η at hform
-    simp only [discrep, hη'def, hform,
+    simp only [discrep, hη'def, GlobalTheory.T.form_order_birational_pullback k X Y p s hres.bir E' E hO n η hη,
       GlobalTheory.T.ord_functionField_pullback_primeDivisor_over k X Y p s hres.bir E' E hO g]
   have hmq : (0 : ℚ) < m := by exact_mod_cast hm
   have hmz : (0 : ℤ) < m := by exact_mod_cast hm

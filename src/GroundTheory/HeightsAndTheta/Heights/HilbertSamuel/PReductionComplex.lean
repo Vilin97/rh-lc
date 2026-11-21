@@ -151,8 +151,8 @@ theorem redRing_mem_quotPart (c : K → ℤ) {m : MRingOver ℤ ι ⧸ GenOnFibr
     rw [redRing_mk]
     exact Submodule.subset_span ⟨_, ⟨hc, GenOnFibres.homog_map _ hF⟩, rfl⟩
   · rw [map_zero]; exact zero_mem _
-  · intro x x' hx hx'; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hx'
-  · intro x hx; rw [map_neg]; exact neg_mem hx
+  · intro x x' hx hx'; rw [(redRing y p).map_add x x']; exact add_mem hx hx'
+  · intro x hx; rw [(redRing y p).map_neg x]; exact neg_mem hx
 
 theorem redLoc_mem_locPart (I : ∀ k, Finset (ι k)) (a : K → ℤ)
     {x : LocalizedModule (KH.cellMon ℤ I) (MRingOver ℤ ι ⧸ GenOnFibres.idealOver y ℤ)}
@@ -165,7 +165,7 @@ theorem redLoc_mem_locPart (I : ∀ k, Finset (ι k)) (a : K → ℤ)
     rw [redLoc_mk]
     exact Submodule.subset_span ⟨_, _, e, GenOnFibres.homog_map _ ht, redRing_mem_quotPart y p _ hm, rfl⟩
   · rw [map_zero]; exact zero_mem _
-  · intro x x' hx hx'; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hx'
+  · intro x x' hx hx'; rw [map_add (redLoc y p I)]; exact add_mem hx hx'
   · intro x hx; rw [map_neg]; exact neg_mem hx
 
 theorem exists_lift_quotPart [Fact p.Prime] (c : K → ℤ)
@@ -182,11 +182,13 @@ theorem exists_lift_quotPart [Fact p.Prime] (c : K → ℤ)
   | add x x' _ _ hx hx' =>
     obtain ⟨m, hm, rfl⟩ := hx
     obtain ⟨m', hm', rfl⟩ := hx'
-    exact ⟨m + m', add_mem hm hm', map_add _ _ _⟩
+    exact ⟨m + m', add_mem hm hm', (redRing y p).map_add _ _⟩
   | smul r x _ hx =>
     obtain ⟨m, hm, rfl⟩ := hx
     refine ⟨r.val • m, nsmul_mem hm _, ?_⟩
+    change (redRing y p).toAddMonoidHom (r.val • m) = r • redRing y p m
     rw [map_nsmul, ← Nat.cast_smul_eq_nsmul (ZMod p), ZMod.natCast_zmod_val]
+    rfl
 
 theorem exists_lift_locPart [Fact p.Prime] (I : ∀ k, Finset (ι k)) (a : K → ℤ)
     {x : LocalizedModule (KH.cellMon (ZMod p) I) (MRingOver (ZMod p) ι ⧸ GenOnFibres.idealOver y (ZMod p))}

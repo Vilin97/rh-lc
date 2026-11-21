@@ -40,8 +40,7 @@ def mat (a : Gt G) : Matrix (Fin m) (Fin m) ℂ := Matrix.of a.1
 theorem mat_mem (a : Gt G) : mat G a ∈ G := by
   exact a.2
 
-def mk (M : Matrix (Fin m) (Fin m) ℂ) (h : M ∈ G) : Gt G :=
-  ⟨Matrix.of.symm M, by rwa [Equiv.apply_symm_apply]⟩
+def mk (M : Matrix (Fin m) (Fin m) ℂ) (h : M ∈ G) : Gt G := ⟨Matrix.of.symm M, by simpa using h⟩
 
 @[simp] theorem mat_mk (M : Matrix (Fin m) (Fin m) ℂ) (h : M ∈ G) : mat G (mk G M h) = M := by
   rfl

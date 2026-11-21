@@ -36,7 +36,6 @@ private theorem vlen_le (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ �
     (N : ℕ) [NeZero N] (e : ℕ) (he : e ≠ 0) (ψ : DirichletCharacter c.O N) (S : Finset ℕ) (hS : ∀ p ∈ S, p.Prime) :
     Vlen Ω c e ψ ≤ Chr.VS l (∏ p ∈ S, p) e (Chr.dirG ℚ Ω ψ) := by
   classical
-  set_option synthInstance.maxHeartbeats 200000 in
   haveI := c.dvr
   haveI := c.fin
   have hcls := Chr.clsFacts ℚ Ω N

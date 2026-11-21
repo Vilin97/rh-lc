@@ -24,7 +24,7 @@ theorem jc_bound_k (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing
     (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] [IsAlgClosed C] [CharZero C] [Algebra (FractionRing V) C]
     (hC : CExt V (IsLocalRing.maximalIdeal V) C) (N : NumD C) (ν : NumOf D.toPre C N) (hν : ν.IntN)
     (q : QuadraticMap ℤ N.X ℝ) (hq : N.Int q) (k : ℕ) (hk1 : 1 ≤ k) (s : Fam D.toPre C k) (gm₀ : GtPt D.toPre (epsR V))
-    (gm : GtPt D.toPre (TE V C)) (htan : GtTan gm₀) (hpull : GtPt.IsPull (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF V C))) gm₀ gm) :
+    (gm : GtPt D.toPre (TE V C)) (htan : GtTan gm₀) (hpull : GtPt.IsPull (spMap (dualMap (toF V C))) gm₀ gm) :
     ∃ b : ℝ, ∀ α, ‖(jc ν s gm α).fst / ν.rg ^ k‖ ≤ b * Real.exp (-(q α / (k : ℝ))) ∧
       ‖(jc ν s gm α).snd / ν.rg ^ k‖ ≤ b * Real.exp (-(q α / (k : ℝ))) := by
   have H1 := GlobalTheory.T.familyTerm_translate_bound_functionalEquation V D C hC N ν hν q hq k hk1 s gm₀ gm htan hpull
@@ -97,7 +97,7 @@ theorem jc_bound_k (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing
   · rw [norm_div, div_eq_mul_inv, mul_comm, _root_.mul_assoc]
     exact mul_le_mul_of_nonneg_left (key _ (h2.trans (mul_le_mul_of_nonneg_left (max_le h3 h4) hE0.le))) hr0
 
-theorem jc_bound : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] (D : DegData V (IsLocalRing.maximalIdeal V)) (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] [IsAlgClosed C] [CharZero C] [Algebra (FractionRing V) C], CExt V (IsLocalRing.maximalIdeal V) C → ∀ (N : NumD C) (ν : NumOf D.toPre C N), ν.IntN → ∀ q, N.Int q → ∀ (m : ℕ), Odd m → ∀ (p : N.QT (m ^ 2)) (s : Fam D.toPre C (m ^ 2)) (f : N.X → N.A → C), ν.FamV s f → IsEvFam N m p f → ∀ (gm₀ : GtPt D.toPre (epsR V)) (gm : GtPt D.toPre (TE V C)), GtTan gm₀ → GtPt.IsPull (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF V C))) gm₀ gm → ∃ b : ℝ, ∀ α, ‖(jc ν s gm α).fst / ν.rg ^ (m ^ 2)‖ ≤ b * Real.exp (-(q α / (m : ℝ) ^ 2)) ∧ ‖(jc ν s gm α).snd / ν.rg ^ (m ^ 2)‖ ≤ b * Real.exp (-(q α / (m : ℝ) ^ 2)) := by
+theorem jc_bound : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] (D : DegData V (IsLocalRing.maximalIdeal V)) (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] [IsAlgClosed C] [CharZero C] [Algebra (FractionRing V) C], CExt V (IsLocalRing.maximalIdeal V) C → ∀ (N : NumD C) (ν : NumOf D.toPre C N), ν.IntN → ∀ q, N.Int q → ∀ (m : ℕ), Odd m → ∀ (p : N.QT (m ^ 2)) (s : Fam D.toPre C (m ^ 2)) (f : N.X → N.A → C), ν.FamV s f → IsEvFam N m p f → ∀ (gm₀ : GtPt D.toPre (epsR V)) (gm : GtPt D.toPre (TE V C)), GtTan gm₀ → GtPt.IsPull (spMap (dualMap (toF V C))) gm₀ gm → ∃ b : ℝ, ∀ α, ‖(jc ν s gm α).fst / ν.rg ^ (m ^ 2)‖ ≤ b * Real.exp (-(q α / (m : ℝ) ^ 2)) ∧ ‖(jc ν s gm α).snd / ν.rg ^ (m ^ 2)‖ ≤ b * Real.exp (-(q α / (m : ℝ) ^ 2)) := by
   intro V _ _ _ D C _ _ _ _ _ hC N ν hν q hq m hm p s f hf hev gm₀ gm htan hpull
   have hk1 : 1 ≤ m ^ 2 := Nat.one_le_pow _ _ hm.pos
   obtain ⟨b, hb⟩ := jc_bound_k V D C hC N ν hν q hq (m ^ 2) hk1 s gm₀ gm htan hpull

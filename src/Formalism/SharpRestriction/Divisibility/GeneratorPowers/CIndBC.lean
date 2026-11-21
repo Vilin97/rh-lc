@@ -71,7 +71,7 @@ def RawBCSt : Prop :=
       B'.ph1 = MvPowerSeries.map (ψ : S →+* S') C.B.ph1 ∧ B'.ph2 = MvPowerSeries.map (ψ : S →+* S') C.B.ph2 ∧
       B'.sy = MvPowerSeries.map (ψ : S →+* S') C.B.sy ∧
       (∀ a, B'.ad a = MvPowerSeries.map (ψ : S →+* S') (C.B.ad a)) ∧
-      RIsChart (spMap (ψ : S →+* S') ≫ x0) (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ : S →+* S')) ≫ u τ i) C.d B'.G.F B'.A.act
+      RIsChart (spMap (ψ : S →+* S') ≫ x0) (fun τ i => spMap (dualMap (ψ : S →+* S')) ≫ u τ i) C.d B'.G.F B'.A.act
         (fun ℓ j => ψ (C.uvec ℓ j)) x' ∧
       RIsFrame (spMap (ψ : S →+* S') ≫ x0) C.d x' B'.G.F B'.A.act B'.ph1 B'.ph2 B'.sy B'.ad e' ∧
       B'.IsCanonGauge S' (MvPowerSeries.map (ψ : S →+* S') C.h) ∧

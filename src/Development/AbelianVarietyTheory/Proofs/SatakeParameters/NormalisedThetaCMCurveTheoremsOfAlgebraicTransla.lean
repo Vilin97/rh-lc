@@ -19,16 +19,14 @@ open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Ker
 
 namespace GlobalTheory.ThLoc
 
-theorem inputs_of_algT (hT : Formalism.L2.KerInert.AlgTAll) : Inputs := by
-  exact {
-    jInt := cm1
-    modelTwo := goodOrdinaryModelAtTwo_cmLattice_seven_mod_eight
-    jetsOdd := locJets_all.1
-    jetsTwo := locJets_all.2.1
-    jetsThree := thetaZJetsThree
-    shape := locJets_all.2.2
-    algT := hT
-    lamExt := place_extends_to_iso
-  }
+theorem inputs_of_algT (hT : Formalism.L2.KerInert.AlgTAll) : Inputs where
+  jInt := cm1
+  modelTwo := goodOrdinaryModelAtTwo_cmLattice_seven_mod_eight
+  jetsOdd := locJets_all.1
+  jetsTwo := locJets_all.2.1
+  jetsThree := thetaZJetsThree
+  shape := locJets_all.2.2
+  algT := hT
+  lamExt := place_extends_to_iso
 
 end GlobalTheory.ThLoc

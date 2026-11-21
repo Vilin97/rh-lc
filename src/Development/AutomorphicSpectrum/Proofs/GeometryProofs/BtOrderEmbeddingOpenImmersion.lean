@@ -99,7 +99,7 @@ theorem btEmb_localData (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed
     refine IsPullback.of_bot ?_ hw hsq
     rw [hj'.isOver, hj.isOver]
     exact hbc.cart
-  obtain ⟨ho, hTC⟩ := GlobalTheory.CompanionTheory.Ar.BT.EmbSub.openImmersion_translatesCover R' T Γ' U hU j' hj'
+  obtain ⟨ho, hTC⟩ := GlobalTheory.T.btOrder_embedding_open_cover R' T Γ' U hU j' hj'
   refine ⟨Γ', F, j', ψ, U, hψ, hsq, hsq2, ho, hTC, fun x hx => hUcl x ?_⟩
   rw [← hj'.isOver]
   simpa using hx

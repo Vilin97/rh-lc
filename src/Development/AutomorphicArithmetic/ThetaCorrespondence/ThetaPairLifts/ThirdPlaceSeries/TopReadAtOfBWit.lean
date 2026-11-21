@@ -36,10 +36,10 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 namespace GlobalTheory.TopVal
 section True
 open GlobalTheory.Mem.Col2 GlobalTheory.Core.Rk.Top
-variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-  {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts}
-  {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex)
-theorem to_map_pr_x_eq_pk_at (t : W.P.T) (x : W.P.A3.A.fam.amb.FR t) (g : GA (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X') (hg : g ∈ GfC (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).sp.X')
+variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (I.rec7 l Z)}
+  {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts}
+  {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex)
+theorem to_map_pr_x_eq_pk_at (t : W.P.T) (x : W.P.A3.A.fam.amb.FR t) (g : GA (I.rec7 l Z) (I.rec7 l Z).sp.X') (hg : g ∈ GfC (I.rec7 l Z).sp.X')
     (v : SmT (_root_.GlobalTheory.Fam.pk_z W).MX) :
     (_root_.GlobalTheory.Fam.pk_z W).cX.toMap (_root_.GlobalTheory.Fam.pk_z W).prX (((_root_.GlobalTheory.Fam.pk_z W).HX t).e ((_root_.GlobalTheory.Fam.pk_z W).jX t x)) v g = (_root_.GlobalTheory.Fam.pk_z W).prX (_root_.GlobalTheory.TopVal.packageAtPoint W t x g) v := by
   have h1 : (_root_.GlobalTheory.Fam.pk_z W).cX.ρ g⁻¹ = 1 := W.Q.charW.base.models.cX.1 _ (inv_mem hg)
@@ -47,7 +47,7 @@ theorem to_map_pr_x_eq_pk_at (t : W.P.T) (x : W.P.A3.A.fam.amb.FR t) (g : GA (_r
   rw [h1]
   rfl
 set_option maxHeartbeats 1000000 in
-theorem exists_is_j_pair_val_of_vanishing (hg : Formalism.L2.Forms.gramP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) = 1) (u : B.Word) (cv : Val B →ₛₗ[B.embLL] (_root_.GlobalTheory.Fam.pk_z W).cX.W) (hE : _root_.GlobalTheory.TopVal.ValEqvAlt W cv)
+theorem exists_is_j_pair_val_of_vanishing (hg : Formalism.L2.Forms.gramP (I.rec7 l Z) = 1) (u : B.Word) (cv : Val B →ₛₗ[B.embLL] (_root_.GlobalTheory.Fam.pk_z W).cX.W) (hE : _root_.GlobalTheory.TopVal.ValEqvAlt W cv)
     (hP : _root_.GlobalTheory.TopVal.PackageValuation W cv)
     (hi : ∀ (t : W.P.T) (φ : Frm I (W.P.I.tup t)) (x : W.P.A3.A.fam.amb.FR t), IsRes φ x →
       (∀ g y, HasMat g y → IsUni B y → _root_.GlobalTheory.TopVal.packageAtPoint W t x g = 0) → ∀ d, val φ d = 0) :
@@ -64,10 +64,10 @@ theorem exists_is_j_pair_val_of_vanishing (hg : Formalism.L2.Forms.gramP (_root_
     exact ⟨a • j₀, isJ_smul hj₀ ha, fun t φ x _ d v => hJ _ v⟩
 set_option maxHeartbeats 1000000 in
 theorem reads_pk_alt (hOk : I.Ok) (hC : I.StdC l Z W.R.T.cols) (hW : _root_.GlobalTheory.AdForm.TwStdAlt W) (u : B.Word)
-    (cv : Val B →ₛₗ[B.embLL] (_root_.GlobalTheory.Fam.pk_z W).cX.W) (hP : _root_.GlobalTheory.TopVal.PackageValuation W cv) (j : SmT (_root_.GlobalTheory.Fam.pk_z W).MX →ₗ[ℂ] (Formalism.L2.Forms.FrP (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) → ℂ))
+    (cv : Val B →ₛₗ[B.embLL] (_root_.GlobalTheory.Fam.pk_z W).cX.W) (hP : _root_.GlobalTheory.TopVal.PackageValuation W cv) (j : SmT (_root_.GlobalTheory.Fam.pk_z W).MX →ₗ[ℂ] (Formalism.L2.Forms.FrP (I.rec7 l Z) → ℂ))
     (t : W.P.T) (φ : Frm I (W.P.I.tup t)) (x : W.P.A3.A.fam.amb.FR t) (hx : IsRes φ x)
     (hV : ∀ d v, (_root_.GlobalTheory.Fam.pk_z W).prX (cv (val φ d)) v = pairVal B (j v) (val φ d))
-    (G : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).what₂.Amb (W.P.I.tup t)) (hG : RecVal u (W.P.I.tup t) φ G) :
+    (G : (I.rec7 l Z).what₂.Amb (W.P.I.tup t)) (hG : RecVal u (W.P.I.tup t) φ G) :
     _root_.GlobalTheory.Fam.ReadsCoefficients W u j 1 (W.P.I.tup t) G ((_root_.GlobalTheory.Fam.pk_z W).cX.toMap (_root_.GlobalTheory.Fam.pk_z W).prX (((_root_.GlobalTheory.Fam.pk_z W).HX t).e ((_root_.GlobalTheory.Fam.pk_z W).jX t x))) := by
   refine _root_.GlobalTheory.TopVal.reads_of_pairVal W hC hW u j _ φ G hG _ fun g y pt v hy hp => ?_
   refine (_root_.GlobalTheory.TopVal.to_map_pr_x_eq_pk_at W t x g hy.1 v).trans ?_

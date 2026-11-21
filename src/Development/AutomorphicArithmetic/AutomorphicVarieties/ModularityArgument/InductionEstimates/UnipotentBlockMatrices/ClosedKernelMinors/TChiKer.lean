@@ -104,7 +104,7 @@ private theorem assemble0 {d : ℕ} (γ : Fin d → ℝ → Eu d →L[ℂ] ℂ) 
   refine ⟨fun s => ∑ i, (γ i s).smulRight (EuclideanSpace.single i (1 : ℂ)), ⟨continuous_clm_apply.2 fun v => ?_, ?_⟩,
     fun s v i => ?_⟩
   · simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smulRight_apply]
-    refine continuous_finset_sum _ fun i _ => ?_
+    refine continuous_finsetSum _ fun i _ => ?_
     have : Continuous fun s => γ i s v := (hγ i).clm_apply continuous_const
     fun_prop
   · refine HasCompactSupport.intro (isCompact_iUnion fun i => (hγc i).isCompact) fun s hs => ?_
@@ -129,7 +129,7 @@ private theorem assemble {X : Type*} {d : ℕ} (S : Eu d →ₗ[ℂ] (X → ℂ)
       (∀ x, S w x = ∫ s, χ s * κ x s v) → w = ∫ s, χ s • β s v := by
   obtain ⟨c, hc⟩ := coords S hS
   obtain ⟨β, hβ, hβv⟩ := assemble0 (fun i s => ∑ x ∈ (c i).support, c i x • κ x s)
-    (fun i => continuous_finset_sum _ fun x _ => by have := hκ x; fun_prop) fun i => by
+    (fun i => continuous_finsetSum _ fun x _ => by have := hκ x; fun_prop) fun i => by
       refine HasCompactSupport.intro ((c i).support.isCompact_biUnion fun x _ => (hκc x).isCompact) fun s hs => ?_
       refine Finset.sum_eq_zero fun x hx => ?_
       have : κ x s = 0 := by_contra fun h => hs (mem_iUnion₂.2 ⟨x, hx, subset_tsupport _ h⟩)

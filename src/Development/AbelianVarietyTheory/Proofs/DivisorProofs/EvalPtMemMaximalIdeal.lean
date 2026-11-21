@@ -169,23 +169,23 @@ theorem evR_mem_maximalIdeal : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
     obtain ⟨u, u₁, u₂, u₃⟩ := (GlobalTheory.FlagMod.toModel_eq_iff (GlobalTheory.FlagMod.frX Q) (GlobalTheory.FlagMod.frX_fst Q) hQx (Q.tan τ i) _).1 rfl
     exact ⟨u, u₁, u₂, u₃⟩⟩
   have hT1 := Comparison₂.tri_of_bm hTQ hTy (BM.of_frBor ht)
-  have hd1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (AlgHom.id c.F K).toRingHom) = 𝟙 _ := by
+  have hd1 : spMap (dualMap (AlgHom.id c.F K).toRingHom) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    ext r <;> simp [dualMap]
   have hF : fC.Tri (algebraMap V K) gk fun τ i => t (some ⟨τ, i⟩) := by
     refine ⟨rfl, rfl, fun τ i => ?_⟩
     obtain ⟨cf, c1, c2, c3⟩ := hT1.2.2 τ i
     refine ⟨cf, c1, c2, ?_⟩
-    have e : (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ fC.v τ j) =
-        fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (AlgHom.id c.F K).toRingHom) ≫ fK.v τ j := by
+    have e : (fun j => spMap (dualMap (algebraMap V K)) ≫ fC.v τ j) =
+        fun j => spMap (dualMap (AlgHom.id c.F K).toRingHom) ≫ fK.v τ j := by
       funext j
       rw [hd1, Category.id_comp, hfK]
     rw [e]
     exact c3
   have hG : g'.Tri (algebraMap V K) gk 1 := by
     refine ⟨rfl, rfl, fun τ i => ⟨Pi.single i 1, by simp, fun j hj => Pi.single_eq_of_ne hj.ne' _, ?_⟩⟩
-    have e : (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ g'.v τ j) = gk.v τ := funext fun j => (hgk τ j).symm
+    have e : (fun j => spMap (dualMap (algebraMap V K)) ≫ g'.v τ j) = gk.v τ := funext fun j => (hgk τ j).symm
     rw [e]
     exact isCombAtG_single Y.t _ (gk.tan τ) i
   obtain ⟨uu, huu⟩ := CoordUniq.exists_unit_ratio fC g' hinj hF hG

@@ -40,7 +40,7 @@ theorem eq_zero_of_rip_self {v : Fin g → ℂ} (h : rip v v = 0) : v = 0 := by
 
 theorem continuous_rip : Continuous fun q : (Fin g → ℂ) × (Fin g → ℂ) => rip q.1 q.2 := by
   simp only [rip_apply]
-  refine continuous_finsetSum _ fun k _ => Complex.continuous_re.comp ?_
+  refine continuous_finset_sum _ fun k _ => Complex.continuous_re.comp ?_
   exact ((continuous_apply k).comp continuous_snd).mul
     (Complex.continuous_conj.comp ((continuous_apply k).comp continuous_fst))
 
@@ -192,7 +192,7 @@ theorem continuous_of_act {T : Type*} [TopologicalSpace T] {l y : T → Fin r �
   exact ((IsLocallyConstant.desc M GLZ.mat hlc GLZ.mat_injective)).continuous
 
 theorem continuous_act (m : Matrix (Fin r) (Fin r) ℤ) : Continuous (act m : (Fin r → Fin g → ℂ) → _) :=
-  continuous_pi fun j => continuous_finsetSum _ fun i _ => (continuous_apply i).const_smul (m j i)
+  continuous_pi fun j => continuous_finset_sum _ fun i _ => (continuous_apply i).const_smul (m j i)
 
 variable {n : ℕ}
 

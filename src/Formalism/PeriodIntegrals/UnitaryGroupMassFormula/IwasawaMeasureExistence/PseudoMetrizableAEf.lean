@@ -83,7 +83,9 @@ theorem char_pi {ι : Type} [Fintype ι] [DecidableEq ι] (φ : ι → A ≃ₜ+
     refine (Measure.pi_eq (μ := fun i => d i • μ) (μ' := (∏ i, d i) • Measure.pi (fun _ : ι => μ)) fun s hs => ?_)
     rw [Measure.smul_apply, Measure.pi_pi]
     simp only [Measure.smul_apply, ENNReal.smul_def, smul_eq_mul]
-    rw [Finset.prod_mul_distrib, ENNReal.coe_finset_prod]
+    rw [Finset.prod_mul_distrib]
+    push_cast
+    rfl
   have hpm : (Measure.pi (fun _ : ι => μ)).map (piE φ) = (∏ i, (c i)⁻¹) • Measure.pi (fun _ : ι => μ) := by
     have h2 : ⇑(piE φ) = fun x i => φ i (x i) := rfl
     rw [h2, Measure.pi_map_pi (f := fun i => (φ i : A → A)) (fun i => (φ i).continuous.measurable.aemeasurable)]

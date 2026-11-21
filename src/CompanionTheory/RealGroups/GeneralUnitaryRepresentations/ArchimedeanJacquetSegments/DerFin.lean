@@ -170,7 +170,7 @@ theorem base (hc : Continuous ψ) (h1 : ψ ≠ 1) (Y : Representation ℂ (GL (F
       refine Submodule.subset_span ⟨⟨_, hu⟩, Ψ.symm (a ⊗ₜ y), ?_⟩
       apply Ψ.injective
       rw [LinearEquiv.apply_symm_apply, map_sub, map_smul, hΨ, LinearEquiv.apply_symm_apply,
-        TensorProduct.map_tmul, TensorProduct.tmul_sub, TensorProduct.tmul_smul, map_one, Module.End.one_apply]
+        TensorProduct.map_tmul, TensorProduct.tmul_sub, TensorProduct.tmul_smul, map_one, one_apply_eq_self]
       rfl
     | zero => rw [TensorProduct.tmul_zero, map_zero]; exact Submodule.zero_mem _
     | add x y _ _ hx hy => rw [TensorProduct.tmul_add, map_add (f := _)]; exact Submodule.add_mem _ hx hy
@@ -181,7 +181,7 @@ theorem base (hc : Continuous ψ) (h1 : ψ ≠ 1) (Y : Representation ℂ (GL (F
     induction z using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero]; exact Submodule.zero_mem _
     | tmul a b => rw [LinearMap.lTensor_tmul]; exact hgen a b b.2
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ hx hy
 
   have hrk : Module.rank ℂ (B ⧸ K) ≤ 1 :=
     CompanionTheory.rg.gu.whit.whitRankIrr k ψ hc h1 t B β (σ 1).rep.smooth (σ 1).rep.irr
@@ -246,7 +246,7 @@ theorem base (hc : Continuous ψ) (h1 : ψ ≠ 1) (Y : Representation ℂ (GL (F
       induction Ψ v using TensorProduct.induction_on with
       | zero => simp
       | tmul x y =>
-        rw [TensorProduct.map_tmul, he'_tmul, he'_tmul, map_one, Module.End.one_apply, smul_smul]
+        rw [TensorProduct.map_tmul, he'_tmul, he'_tmul, map_one, one_apply_eq_self, smul_smul]
         congr 1
         have hm : β u y - (whitChar ψ t ⟨u, hu2⟩ : ℂ) • y ∈ K := Submodule.subset_span ⟨⟨u, hu2⟩, y, rfl⟩
         have := hℓK _ hm
@@ -277,7 +277,7 @@ theorem base (hc : Continuous ψ) (h1 : ψ ≠ 1) (Y : Representation ℂ (GL (F
         rw [hFmk, hFmk, hΨ]
         induction Ψ v using TensorProduct.induction_on with
         | zero => simp
-        | tmul x y => rw [TensorProduct.map_tmul, he'_tmul, he'_tmul, map_one, Module.End.one_apply, map_smul]
+        | tmul x y => rw [TensorProduct.map_tmul, he'_tmul, he'_tmul, map_one, one_apply_eq_self, map_smul]
         | add x y hx hy => simp only [map_add (f := _), hx, hy])⟩
     exact GlobalTheory.ProdLength.hasFiniteLength_of_injective Fi hFinj
       (GlobalTheory.SmGL.hasFiniteLength_of_isIrreducible (σ 0).rep.irr)

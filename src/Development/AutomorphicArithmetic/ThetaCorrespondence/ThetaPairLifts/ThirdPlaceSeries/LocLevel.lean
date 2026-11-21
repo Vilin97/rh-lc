@@ -39,7 +39,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.StepData GlobalTheory.SplitWeil
 noncomputable section
 namespace GlobalTheory.LevProd
-theorem loc_level_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → ∀ j (hj : j + 2 ≤ B.R.m), ∀ t (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t), J.Reads → ∀ (α : J.Ch j) i, _root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i ≤ KO (J.G i).k _ ∧ MeasurableSet (_root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i : Set (GL (XIx (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.k) (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t) j) (J.G i).k)) ∧ (_root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i).relIndex (KO (J.G i).k _) ≠ 0 := by
+theorem loc_level_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (I.rec7 l Z)} {hT : GatTies (I.rec7 l Z)} {Gi : Formalism.MainNotions.G.Inst (I.rec7 l Z) L} {Gl : Formalism.MainNotions.G.LatInst (I.rec7 l Z)} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX (I.rec7 l Z)} {cX : ExtraC} {ex : Extra (I.rec7 l Z) L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.AllFamilyConditions W → ∀ (u : B.Word) (a : _root_.GlobalTheory.Fam.GeometricFamily W u), a.Is → a.True → ∀ j (hj : j + 2 ≤ B.R.m), ∀ t (J : _root_.GlobalTheory.Fam.QuadraticExtensionData a t), J.Reads → ∀ (α : J.Ch j) i, _root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i ≤ KO (J.G i).k _ ∧ MeasurableSet (_root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i : Set (GL (XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) j) (J.G i).k)) ∧ (_root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i).relIndex (KO (J.G i).k _) ≠ 0 := by
   intro B X I l Z L hT Gi Gl Kc Yd cX ex W hW u a ha hat j hj t J hJ α i
   have hs := _root_.GlobalTheory.LevProd.step_index_le_s_alt J i hj
   have hjm : j < B.R.m := by omega
@@ -51,23 +51,23 @@ theorem loc_level_alt : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : 
       (J.G i).ν (J.G i).unitVol hL.cst_ok (hJ.tw i) j ((J.G i).s - j) (by omega) _ _ hrep (hL.int _ _ _)
   have hreg := (J.E i).reg
   have hJo : IsOpen ((((J.G i).T (J.E i).δ (J.E i).tame (J.E i).η).lev j ((J.G i).s - j + 1)
-      (by have := _root_.GlobalTheory.LevProd.step_index_le_s_alt J i hj; omega)).J : Set (GL (XIx (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.k) (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t) j ⊕ Fin ((J.G i).s - j + 1)) (J.G i).k)) :=
+      (by have := _root_.GlobalTheory.LevProd.step_index_le_s_alt J i hj; omega)).J : Set (GL (XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) j ⊕ Fin ((J.G i).s - j + 1)) (J.G i).k)) :=
     (hreg.2.2 _ _ _).1
   set g₀ := (J.E i).rep j ((J.G i).s - j) (Nat.add_sub_cancel' hs) (α i) with hg₀
-  have hOo : IsOpen {w : GL (XIx (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.k) (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t) j ⊕ Fin ((J.G i).s - j + 1)) (J.G i).k |
+  have hOo : IsOpen {w : GL (XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) j ⊕ Fin ((J.G i).s - j + 1)) (J.G i).k |
       g₀⁻¹ * w * g₀ ∈ (((J.G i).T (J.E i).δ (J.E i).tame (J.E i).η).lev j ((J.G i).s - j + 1)
         (by have := _root_.GlobalTheory.LevProd.step_index_le_s_alt J i hj; omega)).J} :=
     hJo.preimage (by fun_prop)
-  have hpo : IsOpen (_root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i : Set (GL (XIx (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.k) (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t) j) (J.G i).k)) := by
+  have hpo : IsOpen (_root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i : Set (GL (XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) j) (J.G i).k)) := by
     refine GlobalTheory.OpenPr.isOpen_prX _ _ hOo (by simp [one_mem]) ?_
     intro z hz hzO
     exact GlobalTheory.StepData.mem_Cgrp.2 ⟨hz, hzO⟩
   refine ⟨hle, hpo.measurableSet, ?_⟩
-  have hc := GlobalTheory.SplitFlip.isCompact_KO (k := (J.G i).k) (n := XIx (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.k) (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t) j)
-  haveI : CompactSpace (KO (J.G i).k (XIx (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.k) (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t) j)) := isCompact_iff_compactSpace.1 hc
-  have ho' : IsOpen (((_root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i).subgroupOf (KO (J.G i).k _) : Subgroup _) : Set (KO (J.G i).k (XIx (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.k) (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t) j))) :=
+  have hc := GlobalTheory.SplitFlip.isCompact_KO (k := (J.G i).k) (n := XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) j)
+  haveI : CompactSpace (KO (J.G i).k (XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) j)) := isCompact_iff_compactSpace.1 hc
+  have ho' : IsOpen (((_root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i).subgroupOf (KO (J.G i).k _) : Subgroup _) : Set (KO (J.G i).k (XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) j))) :=
     hpo.preimage continuous_subtype_val
-  haveI : Finite (KO (J.G i).k (XIx (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.k) (Fin (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.t) j) ⧸ (_root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i).subgroupOf (KO (J.G i).k _)) :=
+  haveI : Finite (KO (J.G i).k (XIx (Fin (I.rec7 l Z).R.k) (Fin (I.rec7 l Z).R.t) j) ⧸ (_root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i).subgroupOf (KO (J.G i).k _)) :=
     ((_root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i).subgroupOf (KO (J.G i).k _)).quotient_finite_of_isOpen ho'
   haveI : ((_root_.GlobalTheory.LevProd.levelSubgroupAtPlace J j hj α i).subgroupOf (KO (J.G i).k _)).FiniteIndex := Subgroup.finiteIndex_of_finite_quotient
   exact Subgroup.FiniteIndex.index_ne_zero

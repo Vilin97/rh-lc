@@ -112,7 +112,7 @@ structure ChartPack {𝔐 : HodgeCpt Y S y} {p : ℕ} (G : GenTors 𝔐 p) (O : 
 
   toLi : L →ₗ[CR O y c] 𝔐.Li
   toLi_bc : IsBaseChange Ω toLi
-  toLi_pt : ∀ v, (𝔐.M.pt (toLi v)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (CR O y c) Ω)) ≫ (M.pt v).left
+  toLi_pt : ∀ v, (𝔐.M.pt (toLi v)).left = spMap (dualMap (algebraMap (CR O y c) Ω)) ≫ (M.pt v).left
 
   j : Module.Dual (CR O y c) L →ₗ[CR O y c] Module.Dual Ω 𝔐.Li
   j_bc : IsBaseChange Ω j

@@ -123,7 +123,9 @@ theorem R_smul {b : LetA O n} (hb : b ∈ W.AΔ) {r : LA W T π' c}
     congr 2
     simp only [Subalgebra.coe_mul]
     ring
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
+  | add x y hx hy =>
+    simp only [map_add] at ⊢
+    exact add_mem hx hy
 
 theorem R_smul_letE (p : LetA O n) {r : LA W T π' c} (hr : r ∈ LinearMap.range (toLA W T π' c S)) :
     smulLA W T π' c p r = smulLA W T π' c ((letE c : LetA O n) * p) r := by

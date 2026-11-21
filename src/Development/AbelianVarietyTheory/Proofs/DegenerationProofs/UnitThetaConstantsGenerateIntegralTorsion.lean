@@ -56,7 +56,7 @@ theorem grpPullback (u : ρ.UTest p y₀) : IsGrpPullback ((Over.pullback (jK u.
 
 theorem lbIso (u : ρ.UTest p y₀) : LBIso (u.U.LG.L.pull (pullback.fst u.G.hom (jK u.V)))
     (ρ.P.L.pull (u.U.gen.hom.left ≫ u.φ)) :=
-  LBIso.trans (LB.isLB_pull u.U.LG.isLB _) (LB.isLB_pull u.A.isLB _) (LB.isLB_pull ρ.P.isLB _) (LBIso.symm u.U.ext)
+  LBIso.trans (pull_isLB u.U.LG.isLB _) (pull_isLB u.A.isLB _) (pull_isLB ρ.P.isLB _) (LBIso.symm u.U.ext)
     (u.lb.chartPull (Geo.Tor.chartPullPull u.A.L _ _ rfl)
       (chartPullSame ρ.P.L (K := PUnit) (fun _ => u.U.gen.hom.left ≫ u.φ) (fun _ => u.φ) (fun _ => 1) _ fun _ => rfl))
 

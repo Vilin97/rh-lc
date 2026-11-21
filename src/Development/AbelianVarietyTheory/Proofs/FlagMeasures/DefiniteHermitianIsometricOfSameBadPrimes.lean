@@ -204,71 +204,8 @@ theorem exists_basis [FiniteDimensional K V] (hK : IsCMUnram K) {h : V →ₗ⋆
     (hs : h.IsSymm) (hp : PD h) : ∃ b : Module.Basis (Fin (Module.finrank K V)) K V,
       star (Matrix.of fun i l => h (b i) (b l)).det = (Matrix.of fun i l => h (b i) (b l)).det ∧
       ∀ τ : K →+* ℂ, 0 < (τ (Matrix.of fun i l => h (b i) (b l)).det).re := by
-  have orth : ∀ (d : ℕ) {W : Type} [AddCommGroup W] [Module K W] [FiniteDimensional K W]
-      (B : W →ₗ[K] W →ₛₗ[starRingEnd K] K),
-      (∀ x y, starRingEnd K (B x y) = B y x) → Module.finrank K W = d →
-      ∃ v : Module.Basis (Fin d) K W, ∀ i j, i ≠ j → B (v i) (v j) = 0 := by
-    intro d
-    induction d with
-    | zero =>
-      intro W _ _ _ B hB hd
-      exact ⟨basisOfFinrankZero hd, fun i => i.elim0⟩
-    | succ d ih =>
-      intro W _ _ _ B hB hd
-      obtain rfl | hne := eq_or_ne B 0
-      · exact ⟨Module.finBasisOfFinrankEq K W hd, fun _ _ _ => rfl⟩
-      have hex : ∃ x, B x x ≠ 0 := by
-        by_contra hn
-        push Not at hn
-        apply hne
-        ext x y
-        by_contra hxy
-        have hxy' : B x y ≠ 0 := by simpa using hxy
-        have h1 : B ((B x y)⁻¹ • x) y = 1 := by
-          rw [LinearMap.map_smul, LinearMap.smul_apply, smul_eq_mul, inv_mul_cancel₀ hxy']
-        have h1' : B y ((B x y)⁻¹ • x) = 1 := by rw [← hB, h1, map_one]
-        have h3 := hn ((B x y)⁻¹ • x + y)
-        rw [map_add (f := _), LinearMap.map_add₂, LinearMap.map_add₂, hn, hn, h1, h1'] at h3
-        have h2 : (2 : K) ≠ 0 := two_ne_zero
-        apply h2
-        linear_combination h3
-      obtain ⟨x, hx⟩ := hex
-      have hr : LinearMap.range (B.flip x) = ⊤ := by
-        rw [LinearMap.range_eq_top]
-        intro t
-        refine ⟨(t / B x x) • x, ?_⟩
-        simp [div_mul_cancel₀ _ hx]
-      have hkdim : Module.finrank K (LinearMap.ker (B.flip x)) + 1 = Module.finrank K W := by
-        have hh := LinearMap.finrank_range_add_finrank_ker (B.flip x)
-        rw [hr, finrank_top, Module.finrank_self] at hh
-        omega
-      obtain ⟨v', hv'⟩ := ih
-        (B.domRestrict₁₂ (LinearMap.ker (B.flip x)) (LinearMap.ker (B.flip x)))
-        (fun y z => hB y z) (by omega)
-      let b : Module.Basis (Fin (d + 1)) K W :=
-        Module.Basis.mkFinCons x v'
-          (by
-            intro t y hy hc
-            have hy' : B y x = 0 := by simpa using hy
-            have h3 : B (t • x + y) x = 0 := by rw [hc]; simp
-            rw [LinearMap.map_add (f := _), LinearMap.add_apply, hy', add_zero, LinearMap.map_smul,
-              LinearMap.smul_apply, smul_eq_mul] at h3
-            exact (mul_eq_zero.1 h3).resolve_right hx)
-          (by
-            intro y
-            refine ⟨-B y x / B x x, ?_⟩
-            simp [div_mul_cancel₀ _ hx])
-      have hk : ∀ i, B (v' i) x = 0 := fun i => (v' i).prop
-      refine ⟨b, ?_⟩
-      simp only [b, Module.Basis.coe_mkFinCons]
-      intro i j
-      refine Fin.cases ?_ (fun i => ?_) i <;> refine Fin.cases ?_ (fun j => ?_) j <;> intro hij <;>
-        simp only [Fin.cons_zero, Fin.cons_succ, Function.comp_apply]
-      · exact (hij rfl).elim
-      · rw [← hB, hk, map_zero]
-      · exact hk i
-      · exact hv' i j (ne_of_apply_ne _ hij)
-  obtain ⟨b, hb⟩ := orth _ h.flip (fun x y => hs.eq y x) rfl
+  obtain ⟨b, hb⟩ := GlobalTheory.HermDiag.exists_orthogonal_basis_fin (c := starRingEnd K) two_ne_zero _
+    h.flip (fun x y => hs.eq y x) rfl
   have e : (Matrix.of fun i l => h (b i) (b l)) = Matrix.diagonal fun i => h (b i) (b i) := by
     ext i l
     by_cases hil : i = l

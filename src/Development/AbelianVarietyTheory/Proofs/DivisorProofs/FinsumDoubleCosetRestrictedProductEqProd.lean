@@ -35,7 +35,7 @@ theorem finsum_doubleCoset_restr {X V : Type} {Y : V → Type} [Group X] [Topolo
     obtain ⟨t, ht, k, hk, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h
     rw [e, hinv v t ht z₁ k hk]
   have L0' : ∀ v (z : Y v), Fv v (Quotient.out (DoubleCoset.mk (Tv v) (K v) z)) = Fv v z := fun v z =>
-    L0 v _ _ (DoubleCoset.out_eq' _ _ _)
+    L0 v _ _ (DoubleCoset.out_eq' _)
 
   have L1 : ∀ x y, DoubleCoset.mk T Kg x = DoubleCoset.mk T Kg y → ∀ v,
       DoubleCoset.mk (Tv v) (K v) (pf v x) = DoubleCoset.mk (Tv v) (K v) (pf v y) := fun x y h v => by
@@ -88,7 +88,7 @@ theorem finsum_doubleCoset_restr {X V : Type} {Y : V → Type} [Group X] [Topolo
     intro q hq
     by_contra h0
     apply hq
-    rw [← DoubleCoset.out_eq' _ _ q]
+    rw [← DoubleCoset.out_eq' q]
     exact (KernelIndexFullLattice v hv _ h0).1
   rw [finprod_eq_prod_of_mulSupport_subset _ (s := S0) fun v hv => by_contra fun h => hv (L3 v h),
     ← Finset.prod_coe_sort S0]
@@ -105,7 +105,7 @@ theorem finsum_doubleCoset_restr {X V : Type} {Y : V → Type} [Group X] [Topolo
     refine ⟨fun q hq => ?_, fun q₁ h₁ q₂ h₂ e => ?_, fun b hb => ?_⟩
     · show H (Φ q) ≠ 0
       rw [← hval q hq]; exact hq
-    · rw [← DoubleCoset.out_eq' _ _ q₁, ← DoubleCoset.out_eq' _ _ q₂]
+    · rw [← DoubleCoset.out_eq' q₁, ← DoubleCoset.out_eq' q₂]
       refine L1' _ _ fun v => ?_
       by_cases hv : v ∈ S0
       · exact congrFun e ⟨v, hv⟩
@@ -114,10 +114,10 @@ theorem finsum_doubleCoset_restr {X V : Type} {Y : V → Type} [Group X] [Topolo
       let y : ∀ v, Y v := fun v => if h : v ∈ S0 then Quotient.out (b ⟨v, h⟩) else 1
       obtain ⟨x, -, hx⟩ := hX.exists_eq isEmptyElim y
         (eventually_of_finset S0 fun v hv => by simp only [y, dif_neg hv]; exact one_mem _)
-      have hq := L1 _ _ (DoubleCoset.out_eq' T Kg (DoubleCoset.mk T Kg x))
+      have hq := L1 _ _ (DoubleCoset.out_eq' (DoubleCoset.mk T Kg x))
       have hxS : ∀ v : S0, DoubleCoset.mk (Tv v.1) (K v.1) (pf v.1 x) = b v := fun v => by
         rw [hx, show y v.1 = Quotient.out (b v) by simp [y, v.2]]
-        exact DoubleCoset.out_eq' _ _ _
+        exact DoubleCoset.out_eq' _
       have hΦ : Φ (DoubleCoset.mk T Kg x) = b := funext fun v => (hq v.1).trans (hxS v)
       refine ⟨DoubleCoset.mk T Kg x, ?_, hΦ⟩
       show F _ ≠ 0

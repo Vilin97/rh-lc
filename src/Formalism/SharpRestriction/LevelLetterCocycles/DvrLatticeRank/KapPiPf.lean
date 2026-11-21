@@ -28,7 +28,7 @@ theorem kapPiPf_sum_biUnion_le {ι : Type*} [DecidableEq ι] (s : Finset ι) (t 
 private lemma sum_padicValNat_eq_padicValNat_descFactorial (p : ℕ) [Fact p.Prime] (m S : ℕ) :
     ∑ j ∈ Finset.range S, padicValNat p (m + 1 + j) = padicValNat p ((m + S).descFactorial S) := by
   induction S with
-  | zero => simp
+  | zero => simp [Nat.padicValNat_def]
   | succ S ih =>
     rw [Finset.sum_range_succ, ih, show m + (S + 1) = (m + S) + 1 by omega,
       Nat.succ_descFactorial_succ,
@@ -41,7 +41,7 @@ private lemma padicValNat_descFactorial_le_factorial_add_log (p : ℕ) [hp : Fac
   rw [Nat.descFactorial_eq_factorial_mul_choose,
     (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.factorial_ne_zero S) (Nat.choose_pos (by omega)).ne']
   have h := Nat.factorization_choose_le_log (p := p) (n := m + S) (k := S)
-  rw [Nat.factorization_def _ hp.out] at h
+  rw [Nat.factorization_def _ hp.out, ← Nat.padicValNat_def] at h
   omega
 
 private lemma sum_one_add_padicValNat_image_le (p : ℕ) [Fact p.Prime] (S h' m : ℕ) (e : ℕ → ℤ)

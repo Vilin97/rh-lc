@@ -58,6 +58,9 @@ theorem core {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw
   have hfin : FiniteDimensional c.F K0 := IntermediateField.finiteDimensional_adjoin (fun x hx => by
     obtain ⟨s, rfl⟩ := hx
     exact (mem_algebraicClosure_iff.1 (d s).2).isIntegral)
+  letI : Module.Free c.F K0 := by
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact inferInstance
   let bs := Module.finBasis c.F K0
   let m := Module.finrank c.F K0
   let e : Fin m → PAt φ := fun t => (bs t : PAt φ)

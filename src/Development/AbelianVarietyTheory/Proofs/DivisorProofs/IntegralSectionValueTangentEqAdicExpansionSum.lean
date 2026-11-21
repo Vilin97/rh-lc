@@ -46,7 +46,7 @@ theorem pow_map_le_ker (V : Type) [CommRing V] (m : Ideal V) (e : ℕ) :
   exact ha
 
 theorem ker_dualMap_le (V : Type) [CommRing V] (m : Ideal V) (e : ℕ) :
-    RingHom.ker (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (m ^ (e + 1)))) ≤ (m.map (algebraMap V (DualNumber V))) ^ (e + 1) := by
+    RingHom.ker (dualMap (Ideal.Quotient.mk (m ^ (e + 1)))) ≤ (m.map (algebraMap V (DualNumber V))) ^ (e + 1) := by
   intro z hz
   rw [RingHom.mem_ker] at hz
   have h₁ : Ideal.Quotient.mk (m ^ (e + 1)) z.fst = 0 := by
@@ -63,12 +63,12 @@ theorem ker_dualMap_le (V : Type) [CommRing V] (m : Ideal V) (e : ℕ) :
   exact Ideal.add_mem _ (Ideal.mem_map_of_mem _ h₁) (Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ h₂))
 
 theorem dualMap_surjective {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (hf : Function.Surjective f) :
-    Function.Surjective (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
+    Function.Surjective (dualMap f) := by
   intro w
   obtain ⟨a, ha⟩ := hf w.fst
   obtain ⟨b, hb⟩ := hf w.snd
   refine ⟨TrivSqZeroExt.inl a + TrivSqZeroExt.inr b, ?_⟩
-  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, ha, hb]
+  ext <;> simp [dualMap, ha, hb]
 
 theorem value_mul_sumI : AllV fun {V} _ _ _ {D} {A} {G} _ _ U => ∀ (y : epsR V ⟶ G) (gm₀ : GtPt D.toPre (epsR V)), IsTangent y → TanRel U.toUnifPre y gm₀ → ∀ (k : ℕ) (jG : U.LG.L.ι) (J : (Sp (DualNumber V) ⟶ D.toPre.P.A.left) → D.toPre.P.L.ι), ⊤ ≤ y.left ⁻¹ᵁ U.LG.L.U jG → (∀ ψ, ⊤ ≤ ψ ⁻¹ᵁ D.toPre.P.L.U (J ψ)) → ∃ W : (DualNumber V)ˣ, (W : DualNumber V).fst * GlobalTheory.MBLow.TanExp.rigVal U.LG jG = GlobalTheory.MBLow.TanExp.rigValD D.toPre (J gm₀.b.left) ∧ ∀ (σ : H0 U.LG.L k) (f : ∀ α : D.toPre.X, D.toPre.SecB k α), (∀ e, U.toUnifPre.ExpandsAt e k σ f) → GlobalTheory.UT.SumI (IsLocalRing.maximalIdeal V) (fun α => GlobalTheory.MBLow.TanExp.termV J gm₀ (f α)) ((W : DualNumber V) ^ k * valR y.left (LB.wchart U.LG.L (fun _ : Fin 1 => 𝟙 G.left) fun _ => jG) (σ.f fun _ => jG)) := by
   intro V _ _ _ _ hV D A G _ _ _ U y gm₀ hy hT k jG J hjG hJ
@@ -80,7 +80,7 @@ theorem value_mul_sumI : AllV fun {V} _ _ _ {D} {A} {G} _ _ U => ∀ (y : epsR V
   have hx : IsFormalPt U.toUnifPre ((maximalIdeal V).map (algebraMap V (DualNumber V))) gm₀ y.left :=
     isFormalPt_of_surjective _ fun e => by
       obtain ⟨ye, h₁, h₂, h₃⟩ := hT e
-      exact ⟨DualNumber (V ⧸ maximalIdeal V ^ (e + 1)), inferInstance, GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk _), ye,
+      exact ⟨DualNumber (V ⧸ maximalIdeal V ^ (e + 1)), inferInstance, dualMap (Ideal.Quotient.mk _), ye,
         dualMap_surjective _ Ideal.Quotient.mk_surjective, ker_dualMap_le V _ e, h₁, h₂, h₃⟩
   have hL : ⊤ ≤ y.left ⁻¹ᵁ U.LG.L.U jG := hjG
   have hM : ⊤ ≤ basePt gm₀ ⁻¹ᵁ D.toPre.P.L.U (J gm₀.b.left) := hJ _

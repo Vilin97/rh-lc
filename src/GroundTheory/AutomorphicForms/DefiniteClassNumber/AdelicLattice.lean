@@ -82,8 +82,10 @@ theorem toFinAdele_apply (x : ι → K ⊗[K] E) (i : ι) :
 omit [Algebra.IsQuadraticExtension K E] [Fintype ι] [DecidableEq ι] [Fintype κ] in
 theorem vecCoords_toFinAdele (x : ι → K ⊗[K] E) (a : ι × κ) :
     vecCoords (FinAdele K) b (toFinAdele K E ι x) a = algebraMap K (FinAdele K) (vecCoords K b x a) := by
-  simp only [vecCoords, toFinAdele_apply, repr_tensorMap]
-  rfl
+  simp only [vecCoords, toFinAdele_apply]
+  induction x a.1 using TensorProduct.inductionOn with
+  | tmul r e => simp [Algebra.TensorProduct.basis_repr_tmul, Finsupp.mapRange_apply, Algebra.smul_def]
+  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
 
 omit [Algebra.IsQuadraticExtension K E] [Fintype ι] [DecidableEq ι] in
 theorem toFinAdele_smul (k : K) (x : ι → K ⊗[K] E) :

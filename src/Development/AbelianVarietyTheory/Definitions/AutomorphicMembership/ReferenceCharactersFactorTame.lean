@@ -110,19 +110,7 @@ def detIdl (SB : Finset (HeightOneSpectrum (𝓞 E))) (N : Submodule (𝓞 E) (S
 omit [StarRing E] in
 theorem finite_ordSub {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N) :
     {w | ordSub w (detSub N) ≠ 0}.Finite :=
-  by
-    by_cases h : ∃ k : Eˣ, (k : E) ∈ detSub N
-    · obtain ⟨k, hk⟩ := h
-      exact DetOrd.ordSub_finite (DetOrd.isFractional_detSub N hN.fg) k hk
-    · have he : ∀ w : HeightOneSpectrum (𝓞 E), ordSub w (detSub N) = 0 := by
-        intro w
-        have : {m : ℤ | ∃ k : Eˣ, (k : E) ∈ detSub N ∧ ordF w k = m} = ∅ := by
-          ext m
-          simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
-          rintro ⟨k, hk, _⟩
-          exact h ⟨k, hk⟩
-        simp [ordSub, this]
-      simp [he]
+  (ordSub_detSub_lattice E n N hN.fg hN.span_eq_top).1
 
 
 open Classical in
@@ -190,7 +178,7 @@ theorem ordSub_detSub_eq {P : HeightOneSpectrum (𝓞 E)} {N : Submodule (𝓞 E
       simp
   have hg := CharValCompare.gen_detI hf
   rw [← e] at hg
-  have hl := (ordSub_detSub_lattice E n N hN.fg (Submodule.IsLattice.span_eq_top (self := hN))).2.1 P
+  have hl := (ordSub_detSub_lattice E n N hN.fg hN.span_eq_top).2.1 P
   have h0 : P.valuation E (CharValCompare.dt f) ≠ 0 := (Valuation.ne_zero_iff _).2 hg.1
   apply le_antisymm
   · obtain ⟨s, hs, hx⟩ := (mem_locP _ _ _).1 ((hg.2 _).2 le_rfl)

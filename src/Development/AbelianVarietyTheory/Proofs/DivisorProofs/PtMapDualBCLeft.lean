@@ -129,15 +129,15 @@ end GlobalTheory.FinPartAt
 namespace GlobalTheory.FinPartAt
 
 theorem dualBC_eq {O : Type} [CommRing O] (I : Ideal O) :
-    (dualBC (Algebra.ofId O (O ⧸ I))).toRingHom = GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I) := by
+    (dualBC (Algebra.ofId O (O ⧸ I))).toRingHom = dualMap (Ideal.Quotient.mk I) := by
   refine RingHom.ext fun z => ?_
   conv_lhs => rw [← TrivSqZeroExt.inl_fst_add_inr_snd_eq z]
   simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_add (f := _), dualBC, TrivSqZeroExt.lift_apply_inl,
     TrivSqZeroExt.lift_apply_inr]
-  refine TrivSqZeroExt.ext ?_ ?_ <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap] <;> rfl
+  refine TrivSqZeroExt.ext ?_ ?_ <;> simp [dualMap] <;> rfl
 
 theorem ptMap_dualBC_left {O : Type} [CommRing O] (I : Ideal O) :
-    (ptMap (dualBC (Algebra.ofId O (O ⧸ I)))).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I)) := by
+    (ptMap (dualBC (Algebra.ofId O (O ⧸ I)))).left = spMap (dualMap (Ideal.Quotient.mk I)) := by
   change Spec.map (CommRingCat.ofHom (dualBC (Algebra.ofId O (O ⧸ I))).toRingHom) = _
   rw [dualBC_eq]
 

@@ -54,6 +54,8 @@ theorem li_one_tmul_of_li {O K' M : Type} [CommRing O] [IsDomain O] [Field K'] [
   have : (F ∘ fun a => ((1 : K') ⊗ₜ[O] m a : K' ⊗[O] M)) = fun a => Pi.single a (1 : K') := funext hF
   rw [this]
   convert (Pi.basisFun K' (Fin n)).linearIndependent using 1
+  funext a
+  exact (Pi.basisFun_apply K' (Fin n) a).symm
 
 theorem embW_tmul_eq {D : D7} (S : NX.RatDat D.ntw) (c : NChoice D) (hc : NChTie D c) (w : D.what₂.places.Pl) {M : Type}
     [AddCommGroup M] [Module (FractionRing (D.ntw.O (c.twI w))) M] [Module (D.ntw.O (c.twI w)) M]

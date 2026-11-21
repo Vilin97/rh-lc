@@ -67,7 +67,7 @@ theorem complete_max {l : ℕ} [Fact l.Prime] (LL : FinExt l) :
   haveI hmax : (IsLocalRing.maximalIdeal ↥(OL LL)).IsMaximal := IsLocalRing.maximalIdeal.isMaximal _
   have hcomap : (IsLocalRing.maximalIdeal ↥(OL LL)).comap (algebraMap ℤ_[l] ↥(OL LL)) =
       IsLocalRing.maximalIdeal ℤ_[l] :=
-    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _)
+    IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := ℤ_[l]) _)
   have hl : ((l : ℤ_[l])) ∈ IsLocalRing.maximalIdeal ℤ_[l] :=
     by
     first

@@ -21,6 +21,7 @@ private theorem sDegs_eq_support_mul_Phi_twistSub {R : Type*} [CommRing R] {ι :
   · rintro ⟨m, -, hk⟩ h0
     apply hk
     rw [← mul_Phi_coeff, h0, MvPolynomial.coeff_zero]
+    rfl
   · intro hk
     obtain ⟨m, hm⟩ := MvPolynomial.ne_zero_iff.mp hk
     rw [mul_Phi_coeff] at hm

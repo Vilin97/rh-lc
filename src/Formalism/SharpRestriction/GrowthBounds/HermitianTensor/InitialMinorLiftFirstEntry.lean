@@ -33,7 +33,7 @@ theorem qc_rowA_smul {K : Type} [CommRing K] {k n : ℕ} (a : Fin k) (c : K) (f 
 theorem qc_rowA_zero {K : Type} [CommRing K] {k n : ℕ} (a : Fin k) (d : ℕ) :
     RowA a (0 : MvPolynomial (Fin k × Fin n) K) d := by
   intro u hu
-  exact absurd (coeff_zero u) hu
+  simp at hu
 
 theorem qc_rowA_one {K : Type} [CommRing K] {k n : ℕ} (a : Fin k) : RowA a (1 : MvPolynomial (Fin k × Fin n) K) 0 := by
   classical
@@ -268,7 +268,8 @@ theorem qc_pad (A : Type) [CommRing A] (r : ℕ) : ∀ e : ℕ,
   refine ⟨(initMinor A (qcLiftI (Fin.elim0 : Fin 0 → Fin r)) hs') ^ e, ?_, ?_, ?_, ?_⟩
   · have := qc_pow_mem A (r + 1 + 1) (r + 1 + 1) _ _ hmem e
     convert this using 2
-    unfold shapeC
+    funext t
+    simp only [shapeC, Pi.smul_apply, nsmul_eq_mul]
     split_ifs
     · simp
     · cases midOf t <;> simp

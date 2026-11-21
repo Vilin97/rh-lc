@@ -18,7 +18,7 @@ namespace Rr
 
 variable {K : Type u} [Field K] [CharZero K] (W : WeierstrassCurve K)
 
-theorem wpPrimeInZ : expSer W ^ 3 * (-2 + X ^ 3 * derivative (wpReg W))
+theorem wpPrimeInZ : expSer W ^ 3 * (-2 + X ^ 3 * derivative K (wpReg W))
     = X ^ 3 * (-2 * (xS W).subst (expSer W) + C W.a₁ * expSer W * (xS W).subst (expSer W)
         + C W.a₃ * expSer W ^ 3) := by
   have h1 := (wpODE K W).1
@@ -31,7 +31,7 @@ theorem wpPrimeInZ : expSer W ^ 3 * (-2 + X ^ 3 * derivative (wpReg W))
   apply toL_injective
   simp only [map_mul, map_add (f := _), map_neg, map_pow, map_ofNat, toL_C] at h1 ⊢
   generalize toL ((xS W).subst (expSer W)) = xs at h1 ⊢
-  generalize toL (derivative (wpReg W)) = P at h1 ⊢
+  generalize toL (derivative K (wpReg W)) = P at h1 ⊢
   generalize (toL (expSer W))⁻¹ = q at h1 hq ⊢
   generalize toL (expSer W) = E at hq ⊢
   generalize (uPow (-1) : LaurentSeries K) = zi at h1 hz
@@ -60,11 +60,8 @@ theorem three_curves_relation : BridgeCurve3 := by
     cube_mem' K W (Formalism.G.unitBall K) hW.1 hW.2.1 hW.2.2.1 hW.2.2.2.1 hW.2.2.2.2
   refine ⟨e, Bridge.integral_of_mvCoeff he, he0, ?_⟩
   have hy : ∀ i : Fin 3, (yS W).subst (MvPowerSeries.X i : MvPowerSeries (Fin 3) K)
-      = -(xS W).subst (MvPowerSeries.X i : MvPowerSeries (Fin 3) K) := by
-    intro i
-    have hs : HasSubst (MvPowerSeries.X i : MvPowerSeries (Fin 3) K) :=
-      HasSubst.of_constantCoeff_zero (MvPowerSeries.constantCoeff_X i)
-    rw [yS, ← coe_substAlgHom hs, map_neg]
+      = -(xS W).subst (MvPowerSeries.X i : MvPowerSeries (Fin 3) K) := fun i =>
+    CubeR.yS_subst W (MvPowerSeries.constantCoeff_X i)
   simp only [hy] at hdet
   unfold Formalism.L2.Th1.B.F3 Formalism.InvariantFactorPaths.G7.in3 Formalism.InvariantFactorPaths.G7.at1
   exact hdet

@@ -193,6 +193,7 @@ theorem rdsag_tvGrp {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace �
       have hP1 : P ∈ TorV hD (r - (m + 1)) := TorV_mono hD (by omega) hP
       have hP0 : P ∈ TorV hD (r - m) := TorV_mono hD (by omega) hP
       set ρ : ℂ := star (c ⟨r - m - 1, by omega⟩) / star (c ⟨r - m - 2, by omega⟩) with hρ
+      set_option synthInstance.maxHeartbeats 200000 in
       set LaP : SA E hD →ₗ[ℂ] E := (La hD v₀ (wCell k r (Fin.last r) c * g₀)).comp (LinearMap.mulRight ℂ P) with hLaP
       have hLaP_apply : ∀ x, LaP x = La hD v₀ (wCell k r (Fin.last r) c * g₀) (x * P) := fun x => rfl
       have hnot : ∀ a : Fin r, r - m - 2 ≤ a.val → ∀ l' : Fin r, l'.val < r - (m + 2) → esI k r a ≠ esI k r l' :=

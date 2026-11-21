@@ -9,16 +9,15 @@ open Formalism.BasicNotions Formalism.BasicNotions.Loc ValuativeRel GroundTheory
 
 namespace GlobalTheory.PMon.Ram
 
-open Classical in
 theorem jumpSum_support_subset {G : Type} [Group G] (R : ℕ → Subgroup G) (A B : Subgroup G) (hR : Antitone R)
     (m : ℕ) (hm : R m = ⊥) :
-    Function.support (fun t : ℕ => if A ⊓ R t ≤ B then 0 else Nat.card ↥(A ⊓ R t)) ⊆
+    Function.support (fun t : ℕ => by classical exact if A ⊓ R t ≤ B then 0 else Nat.card ↥(A ⊓ R t)) ⊆
       ↑(Finset.range m) := by
   classical
   intro t ht
   simp only [Finset.coe_range, Set.mem_Iio]
   by_contra h
-  push Not at h
+  push_neg at h
   apply ht
   have h1 : R t = ⊥ := le_bot_iff.mp (hm ▸ hR h)
   simp [h1]
@@ -39,7 +38,8 @@ theorem jumpSum_le_add : ∀ (G : Type) [Group G] (R : ℕ → Subgroup G) (A B 
   · by_cases hB : A ⊓ R t ≤ B
     · have heq : B ⊓ R t = A ⊓ R t :=
         le_antisymm (inf_le_inf_right _ hBA) (le_inf hB inf_le_right)
-      simp [hC, heq]
+      have hC' : ¬ B ⊓ R t ≤ C := by rw [heq]; exact hC
+      simp [hC, hC', heq]
     · simp [hC, hB]
 
 end GlobalTheory.PMon.Ram

@@ -95,8 +95,6 @@ theorem hermForm_eq_of_orth {i : Fin W.F.n} {P : (W.F.Di i).La →+ (Fin W.g →
   rw [of_apply, ← key, ← UnitDet.hermForm_mulVec, hcol, hcol]
   have hi : ∀ j j' : Fin (Dw.mult τ), W.e.symm ⟨τ, j⟩ = W.e.symm ⟨τ, j'⟩ ↔ j = j' := fun j j' => by simp
   simp [hermForm, smul_mulVec, sum_dotProduct, dotProduct_sum, star_sum, Pi.single_apply, hi, mul_apply, mul_comm]
-  left
-  simp [Matrix.mul_apply, Matrix.conjTranspose_apply, mul_comm]
 
 end Riemann
 
@@ -140,10 +138,10 @@ def EigMet.hodge (b : ℝ) (hb : 0 < b) (G₀ : EigMet Z σ) : EigMet Z σ where
 
 variable {U} {y : CxPts (genStr Z) σ} {f g : EigFrame Z σ (y.1 ≫ genι Z)}
 
-theorem spMap_dualMap_id (R : Type) [CommRing R] : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
+theorem spMap_dualMap_id (R : Type) [CommRing R] : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by
   rw [← Spec.map_id]
   congr 1
-  ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  ext r <;> simp [dualMap]
 
 theorem isHodgeFrame_cxFrame (hσ : Formalism.L2.PjFree.GoodEmb c σ) {k : (U σ).Comp} {x : ((U σ).X k).dom}
     (hx : IsOrth ((U σ).X k) x.1) : IsHodgeFrame U (cxPt Z ((U σ).un k x)) (cxFrame Z ((U σ).un k x)) :=
@@ -241,9 +239,7 @@ theorem IsHodgeFrame.unitary (hf : IsHodgeFrame U y f) (hg : IsHodgeFrame U y g)
   rw [h6.co τ hg' hx] at key
   have k2 : ((f.co g τ).map ψ)ᴴ * (f.co g τ).map ψ = 1 := smul_right_injective _ h7 (key.symm.trans (by
     ext b b'
-    simp [hermForm, smul_mulVec, Pi.single_apply, one_apply, eq_comm]
-    left
-    simp [Matrix.one_apply, eq_comm]))
+    simp [hermForm, smul_mulVec, Pi.single_apply, one_apply, eq_comm]))
   rcases h1 with rfl | rfl
   · exact k2
   · have := congrArg (fun M => M.map (starRingEnd ℂ)) k2

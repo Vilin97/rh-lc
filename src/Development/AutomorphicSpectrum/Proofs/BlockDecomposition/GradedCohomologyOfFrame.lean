@@ -41,8 +41,7 @@ theorem H_zero_subsingleton {R : Type} [CommRing R] {C : Type 1} [Category.{0} C
   rfl
 
 theorem gr_zero : ∀ {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {Φ : PDF R C} {Fil : ℤ → IdF Φ.A}
-    (hF : IsFil Φ Fil) (E : CrystallineSemistableComparison.Pb.Frame (Φ := Φ) 0)
-    (σ : ∀ T : C, E.D ⟶ T) (r : ℤ) (j : ℕ),
+    (hF : IsFil Φ Fil) (E : Frame Φ 0) (σ : ∀ T : C, E.D ⟶ T) (r : ℤ) (j : ℕ),
     (r < j → Subsingleton (CH.H (gr Fil r) j)) ∧
     ∀ q : ℕ, r = j + q →
       (∀ c : CH.H (gr Fil r) j, ∃ x : Idx j 0 → Φ.A.obj E.D, (∀ I, x I ∈ (Fil q).S E.D) ∧
@@ -50,9 +49,7 @@ theorem gr_zero : ∀ {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {Φ 
       ∀ x : Idx j 0 → Φ.A.obj E.D, (∀ I, x I ∈ (Fil q).S E.D) →
         Rep (Fil r) (Fil (r + 1)) (fun s => ∑ I : Idx j 0, E.form σ I.1 (x I) s) 0 → ∀ I, x I ∈ (Fil ((q : ℤ) + 1)).S E.D := by
   intro R _ C _ Φ Fil hF E σ r j
-  have hI : Limits.IsInitial E.D := Limits.IsInitial.ofUniqueHom σ fun _ f =>
-    (E.bij f (fun _ => 0) (fun _ => Ideal.zero_mem _)).unique
-      (fun i => i.elim0) (fun i => i.elim0)
+  have hI : Limits.IsInitial E.D := E.initial
   refine ⟨fun hr => ?_, fun q hq => ?_⟩
   · cases j with
     | zero => exact H_zero_subsingleton hF (by simpa using hr)

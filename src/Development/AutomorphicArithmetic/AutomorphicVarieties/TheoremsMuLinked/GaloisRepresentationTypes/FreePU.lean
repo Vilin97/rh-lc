@@ -42,7 +42,7 @@ private theorem place_under {F Ω : Type} [Field F] [NumberField F] [Field Ω] [
   let f : 𝓞 F →+* A := ((algebraMap F Ω).comp (algebraMap (𝓞 F) F)).codRestrict A hA
   have hf : ∀ x : 𝓞 F, A.valuation (algebraMap F Ω (x : F)) < 1 ↔ x ∈ (IsLocalRing.maximalIdeal A).comap f := fun x =>
     (A.valuation_lt_one_iff (f x)).symm
-  have hm : (p : 𝓞 F) ∈ (IsLocalRing.maximalIdeal A).comap f := (hf _).1 (by simpa only [map_natCast] using hp)
+  have hm : (p : 𝓞 F) ∈ (IsLocalRing.maximalIdeal A).comap f := (hf _).1 (by simpa using hp)
   refine ⟨⟨(IsLocalRing.maximalIdeal A).comap f, inferInstance, fun h => ?_⟩, hf, hm⟩
   rw [h, Ideal.mem_bot] at hm
   exact hp0 (Nat.cast_eq_zero.1 hm)

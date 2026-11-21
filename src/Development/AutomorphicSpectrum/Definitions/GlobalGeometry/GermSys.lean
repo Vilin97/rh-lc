@@ -38,7 +38,7 @@ structure GermSys (t : SAB H X) (ξ : Spec (CommRingCat.of Ω) ⟶ X) {d : ℕ} 
   lam : Cpt ξ → Germ.PS Ω 2 d
   iso : ∀ p, IsIso g₀.B (BK p) (φ p) (ψ p) (lam p)
   dir : ∀ p l, (M.pt ((lin (φ p) 1).mulVec (Pi.single l 1))).left =
-    Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (genMap ξ p))) ≫ (g p).tg l
+    Spec.map (CommRingCat.ofHom (dualMap (genMap ξ p))) ≫ (g p).tg l
   gen : ∀ (p q : Cpt ξ) (h : q.1 ⤳ p.1), ∃ (B' : Germ.FB (X.presheaf.stalk q.1) d (𝓞 E))
     (φ' ψ' : Germ.Pt (X.presheaf.stalk q.1) 1 d) (lam' : Germ.PS (X.presheaf.stalk q.1) 2 d),
     IsMapOf (X.presheaf.stalkSpecializes h).hom (g p).B B' ∧ IsIso (g q).B B' φ' ψ' lam' ∧

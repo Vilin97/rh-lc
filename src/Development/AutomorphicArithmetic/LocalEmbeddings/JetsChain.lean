@@ -201,7 +201,8 @@ theorem ptF_left (x : ∀ n, GfC (V n)) : ∀ n ≤ N, ∀ γ ∈ GQ (V n), ∀ 
   | n + 1, hn, γ, hγ, g => by
     have hArrow : ArrowOK comp ρ ker Λ n := hc n (Nat.lt_of_succ_le hn)
     have hDef : IsDefiniteSpace (V n) := hArrow.1
-    obtain ⟨κ, h1, h2⟩ := exists_haar (V n) hDef
+    have hHaar := exists_haar (V n) hDef
+    rcases hHaar with ⟨κ, h1, h2⟩
     simp only [ptF_succ hArrow κ h1 h2, hArrow.2.2.2.2.2.1 γ hγ]
 
 theorem ptF_rat {x x' : ∀ n, GfC (V n)} (hx : ∀ j < N, ∃ γ ∈ ratFin (V j), x' j = γ * x j) :
@@ -211,7 +212,8 @@ theorem ptF_rat {x x' : ∀ n, GfC (V n)} (hx : ∀ j < N, ∃ γ ∈ ratFin (V 
     have hn' : n < N := Nat.lt_of_succ_le hn
     have hArrow : ArrowOK comp ρ ker Λ n := hc n hn'
     have hDef : IsDefiniteSpace (V n) := hArrow.1
-    obtain ⟨κ, h1, h2⟩ := exists_haar (V n) hDef
+    have hHaar := exists_haar (V n) hDef
+    rcases hHaar with ⟨κ, h1, h2⟩
     obtain ⟨γ, hγ, e⟩ := hx n hn'
     funext g
     rw [ptF_succ hArrow κ h1 h2, ptF_succ hArrow κ h1 h2, ptF_rat hx n (by omega), e]
@@ -245,7 +247,8 @@ theorem liftC_real (μ : ∀ n, Measure (GA D (V n))) (fd : ∀ n, Set (GA D (V 
     intro h
     have ih := liftC_real μ fd K hK n (by omega)
     have hn' : n < N := Nat.lt_of_succ_le hn
-    obtain ⟨h1, ⟨K₀, h2, h3, h4⟩, h5⟩ := hK n hn'
+    have hLevel := hK n hn'
+    rcases hLevel with ⟨h1, ⟨K₀, h2, h3, h4⟩, h5⟩
     obtain ⟨-, a2, a3, a4, a5, -, a7, a8⟩ := hc n hn'
     obtain ⟨hfin, κ, hκH, hκP, hU⟩ := GlobalTheory.DefiniteClassReal.integral_eq_finClSum_avg (V n) a2 K₀ (K n) h2 h1 h3 (μ n) (fd n) h4
       (fun g => ker n g h * liftC μ fd ker F n g)

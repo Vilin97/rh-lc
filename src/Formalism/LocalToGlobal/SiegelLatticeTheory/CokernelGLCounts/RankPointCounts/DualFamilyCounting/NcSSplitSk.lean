@@ -142,12 +142,7 @@ theorem SplitSk_ident (MG : MeasG σ J r) (MW : MeasW σ J P) (νH : Measure (Fi
     (Λ : Set (Fin n → E)) (hsplit : Measurable (splitA σ J))
     (hsurj : ∀ (g₁ : HA (Ainf F) σ J) (g₂ : HA (Af F) σ J), ∃ g, splitA σ J g = (g₁, g₂))
     (hproj : ∀ (g : HA (AF F) σ J) (X : Fin (r + 1 + r) → Fin n → AF F ⊗[F] E),
-      projInf (HSMul.hSMul (self := @instHSMul _ _ (instMulActionTup (AF F) σ J _).toSMul) g X) =
-        HSMul.hSMul (self := @instHSMul _ _ (instMulActionTup (Ainf F) σ J _).toSMul)
-          (splitA σ J g).1 (projInf X) ∧
-      projFin (HSMul.hSMul (self := @instHSMul _ _ (instMulActionTup (AF F) σ J _).toSMul) g X) =
-        HSMul.hSMul (self := @instHSMul _ _ (instMulActionTup (Af F) σ J _).toSMul)
-          (splitA σ J g).2 (projFin X))
+      projInf (g • X) = (splitA σ J g).1 • projInf X ∧ projFin (g • X) = (splitA σ J g).2 • projFin X)
     (hrat : projInf (ratTup (F := F) (AF F) (tupH P)) = ratTup (Ainf F) (tupH P) ∧
       projFin (ratTup (F := F) (AF F) (tupH P)) = ratTup (Af F) (tupH P))
     (hinj : ∀ X Y : Fin (r + 1 + r) → Fin n → AF F ⊗[F] E, projInf X = projInf Y → projFin X = projFin Y → X = Y)

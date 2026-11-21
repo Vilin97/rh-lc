@@ -42,7 +42,7 @@ private theorem exists_valuationSubring_isPlaceOver (K Ω : Type) [Field K] [Num
   exact lt_irrefl _ h3
 
 private theorem finite_above_of_ne_zero (K : Type) [Field K] [NumberField K] (N : ℕ) (hN : N ≠ 0) :
-    (Above (F := K) N).Finite := by
+    (Above K N).Finite := by
   have h0 : Ideal.span {((N : ℕ) : 𝓞 K)} ≠ 0 := by
     rw [Ne, Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot]
     exact_mod_cast hN
@@ -70,7 +70,7 @@ theorem UpperTheory.V.Kum.finChar :
       rw [this, one_pow]
   have key : ∀ φ ∈ {φ : G K Ω → ZMod n | IsLocallyConstant φ ∧ (∀ a b, φ (a * b) = φ a + φ b) ∧
       ∀ A : ValuationSubring Ω, ¬ A.valuation (N : Ω) < 1 → ∀ g ∈ Ine (F := K) A, φ g = 0},
-      ∃ β : Ω, ∃ a : Kˣ, a ∈ SelK (Above (F := K) N) n ∧ β ^ n = algebraMap K Ω a ∧
+      ∃ β : Ω, ∃ a : Kˣ, a ∈ SelK (Above K N) n ∧ β ^ n = algebraMap K Ω a ∧
         ∀ g : G K Ω, g β = ζΩ ^ (φ g).val * β := by
     rintro φ ⟨hlc, hadd, hine⟩
     obtain ⟨β, a, hβ, hg⟩ := radExists K Ω n ζΩ (fun _ => 1) φ hζΩ hη hlc
@@ -78,131 +78,20 @@ theorem UpperTheory.V.Kum.finChar :
     refine ⟨β, a, ?_, hβ, hg⟩
     intro v hv
     obtain ⟨A, hA⟩ := exists_valuationSubring_isPlaceOver K Ω v
-    have hnot : ¬ A.valuation (N : Ω) < 1 := by
-      intro h
-      have hcast : algebraMap K Ω ((N : 𝓞 K) : K) = (N : Ω) := by simp
-      rw [← hcast] at h
-      exact hv ((hA (N : 𝓞 K)).1 h)
+    have hnot : ¬ A.valuation (N : Ω) < 1 := fun h => hv (((placeDict K Ω).2.2.2 A v N hA).1 h)
     exact dvdOfIne K Ω n A v β a hA hβ
       (fun g hg' => by rw [hg, hine A hnot g hg', ZMod.val_zero, pow_zero, one_mul])
   choose! β a ha hβ hg using key
-  let S := Above (F := K) N
-  have : Finite S := finite_above_of_ne_zero K N hN
-  have : Finite (SelK S n ⧸ (powK (K := K) n).subgroupOf (SelK S n)) := by
-    let P := powK (K := K) n
-    let U := S.unit K
-    let f : SelK S n →* ClS S := MonoidHom.mk'
-      (fun a => QuotientGroup.mk (radCl n a.1))
-      (fun a b => (radClMul K S n hn).1 a.1 a.2 b.1 b.2)
-    have mem_unit_iff (u : Kˣ) : u ∈ U ↔ ∀ v ∉ S, ordv v u = 0 := by
-      change (∀ v ∉ S, v.valuation K (u : K) = 1) ↔ _
-      refine forall₂_congr fun v _ => ?_
-      rw [← HeightOneSpectrum.valuationOfNeZero_eq, ← WithZero.coe_one, WithZero.coe_inj,
-        ordv, neg_eq_zero, toAdd_eq_zero]
-    have hU : U ≤ SelK S n := by
-      intro a ha v hv
-      rw [(mem_unit_iff a).1 ha v hv]
-      exact dvd_zero _
-    have hP : P ≤ SelK S n := by
-      rintro _ ⟨b, rfl⟩ v _
-      simp [ordv]
-    have hker : f.ker ≤ (U ⊔ P).subgroupOf (SelK S n) := by
-      intro a ha
-      rw [MonoidHom.mem_ker] at ha
-      change (QuotientGroup.mk (radCl n a.1) : ClS S) = 1 at ha
-      rw [QuotientGroup.eq_one_iff] at ha
-      classical
-      have finite_add {d e : HeightOneSpectrum (𝓞 K) → ℤ}
-          (hd : {v | d v ≠ 0}.Finite) (he : {v | e v ≠ 0}.Finite) :
-          {v | d v + e v ≠ 0}.Finite := by
-        refine (hd.union he).subset ?_
-        intro v hv
-        by_contra h
-        simp only [Set.mem_union, Set.mem_ofPred_eq, not_or, not_not] at h
-        exact hv (by rw [h.1, h.2, add_zero])
-      have prod_add {d e : HeightOneSpectrum (𝓞 K) → ℤ}
-          (hd : {v | d v ≠ 0}.Finite) (he : {v | e v ≠ 0}.Finite) :
-          ∏ᶠ v, primeCl v ^ (d v + e v) = (∏ᶠ v, primeCl v ^ d v) * ∏ᶠ v, primeCl v ^ e v := by
-        rw [← finprod_mul_distrib]
-        · exact finprod_congr fun v => zpow_add _ _ _
-        · exact hd.subset fun v hv h => hv (by simp [h])
-        · exact he.subset fun v hv h => hv (by simp [h])
-      have supported {c : ClassGroup (𝓞 K)} (hc : c ∈ clSub S) :
-          ∃ g : HeightOneSpectrum (𝓞 K) → ℤ, {v | g v ≠ 0}.Finite ∧ (∀ v ∉ S, g v = 0) ∧
-            c = ∏ᶠ v, primeCl v ^ g v := by
-        induction hc using Subgroup.closure_induction with
-        | mem x hx =>
-          obtain ⟨w, hw, rfl⟩ := hx
-          refine ⟨fun v => if v = w then 1 else 0, (Set.finite_singleton w).subset ?_,
-            fun v hv => ite_eq_right fun (h : v = w) => hv (h ▸ hw), ?_⟩
-          · intro v hv
-            by_contra h
-            exact hv (ite_eq_right h)
-          · rw [finprod_eq_single _ w fun v hv => by simp [hv]]
-            simp
-        | one => exact ⟨fun _ => 0, by simp, by simp, by simp⟩
-        | mul x y _ _ hx hy =>
-          obtain ⟨d, hd, hdS, rfl⟩ := hx
-          obtain ⟨e, he, heS, rfl⟩ := hy
-          exact ⟨fun v => d v + e v, finite_add hd he, fun v hv => by simp [hdS v hv, heS v hv],
-            (prod_add hd he).symm⟩
-        | inv x _ hx =>
-          obtain ⟨d, hd, hdS, rfl⟩ := hx
-          refine ⟨fun v => -d v, by simpa using hd, fun v hv => by simp [hdS v hv], ?_⟩
-          rw [← finprod_inv_distrib]
-          exact finprod_congr fun v => (zpow_neg _ _).symm
-      obtain ⟨g, hg, hgS, hclass⟩ := supported (inv_mem ha)
-      obtain ⟨mk_eq_prod, count_eq_ordv, finite_ordv, _⟩ := clProd K
-      have hdiv : {v | ordv v a.1 / (n : ℤ) ≠ 0}.Finite :=
-        (finite_ordv a.1).subset fun v hv h => hv (by simp [h])
-      let d (v : HeightOneSpectrum (𝓞 K)) : ℤ := ordv v a.1 / n + g v
-      have hd : {v | d v ≠ 0}.Finite := finite_add hdiv hg
-      have hdClass : ∏ᶠ v, primeCl v ^ d v = 1 := by
-        change (∏ᶠ v, primeCl v ^ (ordv v a.1 / (n : ℤ) + g v)) = 1
-        rw [prod_add hdiv hg, ← hclass]
-        exact mul_inv_cancel _
-      let I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K :=
-        ∏ᶠ v : HeightOneSpectrum (𝓞 K), (v.asIdeal : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) ^ d v
-      have hI0 : I ≠ 0 := by
-        refine finprod_induction (fun J => J ≠ 0) one_ne_zero (fun _ _ => mul_ne_zero) fun v => ?_
-        exact zpow_ne_zero _ (FractionalIdeal.coeIdeal_ne_zero.2 v.ne_bot)
-      have hcount (v : HeightOneSpectrum (𝓞 K)) : FractionalIdeal.count K v I = d v :=
-        FractionalIdeal.count_finprod K v d (by simpa [Filter.eventually_cofinite] using hd)
-      have hIClass : ClassGroup.mk K (Units.mk0 I hI0) = 1 := by
-        rw [mk_eq_prod, ← hdClass]
-        exact finprod_congr fun v => by rw [Units.val_mk0, hcount]
-      obtain ⟨b, hb⟩ := (FractionalIdeal.isPrincipal_iff _).1 (ClassGroup.mk_eq_one_iff.1 hIClass)
-      rw [Units.val_mk0] at hb
-      have hb0 : b ≠ 0 := by
-        rintro rfl
-        exact hI0 (by rw [hb, map_zero])
-      let u := Units.mk0 b hb0
-      have hu (v : HeightOneSpectrum (𝓞 K)) : ordv v u = d v := by
-        rw [← count_eq_ordv, show (u : K) = b from rfl, ← hb, hcount]
-      refine Subgroup.mem_sup.2 ⟨a.1 * (u ^ n)⁻¹, (mem_unit_iff _).2 fun v hv => ?_,
-        u ^ n, ⟨u, rfl⟩, by simp⟩
-      have hpow_v : ordv v (u ^ n) = n * ordv v u := by simp [ordv]
-      rw [ordv_mul, ordv_inv, hpow_v, hu, show d v = ordv v a.1 / n + g v from rfl,
-        hgS v hv, add_zero, Int.mul_ediv_cancel' (a.2 v hv), add_neg_cancel]
-    have : HasEnoughRootsOfUnity K n := ⟨⟨ζ, hζ⟩, inferInstance⟩
-    have : (powMonoidHom n : U →* U).range.FiniteIndex := by
-      refine ⟨?_⟩
-      rw [GroundTheory.Global.SUnit.index_range_powMonoidHom S n]
-      exact pow_ne_zero _ hn
-    have : (P.subgroupOf U).FiniteIndex := Subgroup.finiteIndex_of_le
-      (show (powMonoidHom n : U →* U).range ≤ P.subgroupOf U from by
-        rintro _ ⟨u, rfl⟩
-        exact ⟨u.1, rfl⟩)
-    have : ((U ⊔ P).subgroupOf (SelK S n)).FiniteIndex := Subgroup.finiteIndex_of_le hker
-    apply Subgroup.index_ne_zero_iff_finite.1
-    have hUP : U ⊔ P ≤ SelK S n := sup_le hU hP
-    have hle : P.subgroupOf (SelK S n) ≤ (U ⊔ P).subgroupOf (SelK S n) :=
-      fun _ ha => (le_sup_right : P ≤ U ⊔ P) ha
-    rw [← Subgroup.relIndex_mul_index hle, Subgroup.relIndex_subgroupOf hUP,
-      Subgroup.relIndex_sup_right]
-    exact mul_ne_zero Subgroup.FiniteIndex.index_ne_zero Subgroup.FiniteIndex.index_ne_zero
+  haveI hQ : Finite (↥(SelK (Above K N) n) ⧸ (powK K n).subgroupOf (SelK (Above K N) n)) := by
+    apply Nat.finite_of_card_ne_zero
+    rw [cardSel K _ n hn, cardSUnit K _ n (finite_above_of_ne_zero K N hN)]
+    have h1 : Nat.card ↥(rootsOfUnity n K) ≠ 0 := Nat.card_pos.ne'
+    have h2 : Nat.card {c : ClS (Above K N) // c ^ n = 1} ≠ 0 := by
+      haveI : Nonempty {c : ClS (Above K N) // c ^ n = 1} := ⟨⟨1, one_pow _⟩⟩
+      exact Nat.card_pos.ne'
+    exact mul_ne_zero (mul_ne_zero (pow_ne_zero _ hn) h1) h2
   rw [← Set.finite_coe_iff]
-  refine Finite.of_injective (β := SelK S n ⧸ (powK (K := K) n).subgroupOf (SelK S n))
+  refine Finite.of_injective (β := ↥(SelK (Above K N) n) ⧸ (powK K n).subgroupOf (SelK (Above K N) n))
     (fun φ => QuotientGroup.mk ⟨a φ.1, ha φ.1 φ.2⟩) ?_
   rintro ⟨φ, hφ⟩ ⟨ψ, hψ⟩ h
   simp only at h

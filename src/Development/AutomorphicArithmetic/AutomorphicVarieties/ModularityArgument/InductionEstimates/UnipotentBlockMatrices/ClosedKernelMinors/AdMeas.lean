@@ -46,6 +46,7 @@ private theorem adMeas_pi {K : Type} [Field K] [NumberField K] {ι : Type} [Fint
   have hm := GJGlobal.Modulus.measurable_vecMul' g
   rw [hfun, ← Measure.map_map E.symm.measurable (hm.comp E.measurable),
     ← Measure.map_map hm E.measurable, hE.map_eq, h, Measure.map_smul, hE.symm.map_eq]
+  exact E.symm.measurable.aemeasurable
 
 private def adMeas_tau : Fin 2 × Fin 2 ≃ UPos (2 + 2) 2 where
   toFun p := ⟨(Fin.castAdd 2 p.1, Fin.natAdd 2 p.2), p.1.2, Nat.le_add_right _ _⟩

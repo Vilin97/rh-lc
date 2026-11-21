@@ -29,18 +29,7 @@ theorem clauseB_of_lifts [_root_.NumberField.IsTotallyComplex K] {Df' : DefSide 
     (O : FunData K Df) {C b : ℝ} (hC : 0 ≤ C) (hb : 1 ≤ b) (hl : LevelLink S S') (h6 : S'.L6 N)
     (hm : Fintype.card Bs.J ≤ O.m) (hN : ∀ j, -(3 * C * O.f * (O.N : ℝ) ^ 2 * Real.log b) ≤ N.l6 j) :
     ClauseB S O C b := by
-  have hconst (c : ℝ) : meanInf K (fun _ => c) = c := by
-    have hn : (nPl K : ℝ) ≠ 0 := by
-      have he := Formalism.HN.twist_finrank_eq K
-      have h0 : (0 : ℝ) < Module.finrank ℚ K := by exact_mod_cast Module.finrank_pos
-      intro h
-      rw [h] at he
-      linarith
-    unfold meanInf
-    rw [Formalism.HN.twist_finrank_eq K, Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
-    change 2 / (2 * (nPl K : ℝ)) * ((nPl K : ℝ) * c) = c
-    field_simp
-  refine ⟨fun _ => _, fun v p _ => ?_, (hconst _).ge⟩
+  refine ⟨fun _ => _, fun v p _ => ?_, (GlobalTheory.Proof.DualMatrixMetricMeans.meanInf_const _).ge⟩
   have h1 := Real.log_nonneg hb
   have h2 : ∑ _j : Bs.J, -(3 * C * O.f * (O.N : ℝ) ^ 2 * Real.log b) ≤ ∑ j, Real.log (S.lam j Bs.μ0 p v) :=
     Finset.sum_le_sum fun j _ => (hN j).trans (by rw [hl.2.2]; exact h6 j p v)

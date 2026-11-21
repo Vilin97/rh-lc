@@ -27,7 +27,7 @@ theorem exists_model (h : IsCptGen ξ) (G : Over X) [GrpObj G] [IsCommMonObj G] 
     [AddCommGroup E] [Module Ω E] (M : LieModel G ξ E) (p : Cpt ξ) :
     ∃ (Ep : Type) (_ : AddCommGroup Ep) (_ : Module (regAt ξ p) Ep) (Mp : LieModel G (regPt h p) Ep)
       (j : Ep →ₗ[regAt ξ p] E), IsBaseChange Ω j ∧
-        ∀ e, (M.pt (j e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (regAt ξ p) Ω)) ≫ (Mp.pt e).left := by
+        ∀ e, (M.pt (j e)).left = spMap (dualMap (algebraMap (regAt ξ p) Ω)) ≫ (Mp.pt e).left := by
   obtain ⟨Ep, i1, i2, Mp, j, hb, hj⟩ := GlobalTheory.T.lie_model_descends_base_change X G (regAt ξ p) Ω (regPt h p) E
     (castPt (spMap_algebraMap_regPt h p).symm M)
   exact ⟨Ep, i1, i2, Mp, j, hb, fun e =>
@@ -59,8 +59,8 @@ theorem lat_fin (h : IsCptGen ξ) (G : Over X) [GrpObj G] [IsCommMonObj G] [Smoo
   exact Submodule.subset_span (by rw [hr]; exact ⟨m, rfl⟩)
 
 theorem dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) := by
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    (dualMap g).comp (dualMap f) = dualMap (g.comp f) := by
+  ext a <;> simp [dualMap]
 
 theorem lat_gen (h : IsCptGen ξ) (G : Over X) [GrpObj G] [IsCommMonObj G] [Smooth G.hom] {E : Type}
     [AddCommGroup E] [Module Ω E] (M : LieModel G ξ E) {p q : Cpt ξ} (hs : q.1 ⤳ p.1) :
@@ -81,12 +81,12 @@ theorem lat_gen (h : IsCptGen ξ) (G : Over X) [GrpObj G] [IsCommMonObj G] [Smoo
         change jq (regIncl hs c • j e) = _
         rw [map_smul]
         rfl }
-  have hjp : ∀ e, (M.pt (jp e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (regAt ξ p) Ω)) ≫ (Mp.pt e).left := by
+  have hjp : ∀ e, (M.pt (jp e)).left = spMap (dualMap (algebraMap (regAt ξ p) Ω)) ≫ (Mp.pt e).left := by
     intro e
     have h1 := hjq (j e)
     have h2 := (castPt_pt_left (spMap_regIncl_regPt h hs).symm Mq (j e)).symm.trans (hj e)
-    have h3 : (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (regAt ξ q) Ω)).comp (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (regAt ξ p) (regAt ξ q))) =
-        GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (regAt ξ p) Ω) := dualMap_comp _ _
+    have h3 : (dualMap (algebraMap (regAt ξ q) Ω)).comp (dualMap (algebraMap (regAt ξ p) (regAt ξ q))) =
+        dualMap (algebraMap (regAt ξ p) Ω) := dualMap_comp _ _
     refine h1.trans ?_
     rw [h2, ← h3]
     simp only [spMap, CommRingCat.ofHom_comp, Spec.map_comp, Category.assoc]

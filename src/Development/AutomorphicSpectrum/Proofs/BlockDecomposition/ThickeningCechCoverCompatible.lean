@@ -62,9 +62,9 @@ theorem congr_secMulOn {X X' : Scheme.{0}} {π : X ⟶ X'} {N : LB X} {N' : LB X
     obtain ⟨p, hp⟩ := h1
     obtain ⟨q, hq⟩ := h2
     exact ⟨(p, q), ⟨⟨hz, hp⟩, hq⟩⟩
-  apply SecOn.ext_of_cover
+  refine SecOn.ext_of_cover
     (fun a' : ((pw N' (a + b)).pull π).ι × N.ι => V ⊓ ((pw N' (a + b)).pull π).U a'.1 ⊓ N.U a'.2)
-    (fun a' => inf_le_left.trans inf_le_left) hcov
+    (fun a' => inf_le_left.trans inf_le_left) hcov ?_
   intro a'
   apply (SecOn.chart hMc a'.1 (inf_le_left.trans inf_le_right)).injective
   rw [SecOn.chart_apply, SecOn.chart_apply, SecOn.coord_restrict, SecOn.coord_restrict, rs_rs', rs_rs']

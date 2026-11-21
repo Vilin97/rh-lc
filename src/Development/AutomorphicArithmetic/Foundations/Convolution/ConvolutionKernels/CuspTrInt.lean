@@ -27,6 +27,10 @@ theorem UpperTheory.ConvolutionTheory.K.cuspTrInt :
         ⟪Pc μ (kv μ a (Quotient.out y)), M (Pc μ (kv μ (ccStar g) (θ.e (Quotient.out y))))⟫_ℂ ∂quotientMeasure (Gam K n) μ := by
   intro K _ _ n μ _ θ f a g M ha hg hM hf
   haveI := Reduction.isFiniteMeasure_quotientMeasure (K := K) (n := n) μ
+  haveI : SigmaFinite (quotientMeasure (Gam K n) μ) := IsFiniteMeasure.toSigmaFinite _
+  haveI : SFinite (quotientMeasure (Gam K n) μ) := by
+    set_option synthInstance.maxHeartbeats 400000 in
+      exact inferInstance
   haveI : Fact ((2 : ENNReal) ≠ ⊤) := ⟨by simp⟩
   haveI : SecondCountableTopology (RightCosetSpace (Gam K n)) :=
     (isOpenQuotientMap_mk (Gam K n)).isQuotientMap.secondCountableTopology (isOpenQuotientMap_mk (Gam K n)).isOpenMap
@@ -82,7 +86,7 @@ theorem UpperTheory.ConvolutionTheory.K.cuspTrInt :
     rwa [ContinuousLinearMap.adjoint_adjoint] at this
   refine ⟨?_, ?_⟩
   · have m3 := M.comp_memLp' m2
-    refine (m1.norm.integrable_mul m3.norm).mono' (m1.1.inner m3.1) (Filter.Eventually.of_forall fun y => ?_)
+    refine (m1.norm.integrable_mul m3.norm).mono' (m1.aestronglyMeasurable.inner m3.aestronglyMeasurable) (Filter.Eventually.of_forall fun y => ?_)
     exact norm_inner_le_norm _ _
   · rw [← traceKer _ _ M _ _ _ m1 m2 sA sB (hker a) hBk, cuspTr]
     congr 1

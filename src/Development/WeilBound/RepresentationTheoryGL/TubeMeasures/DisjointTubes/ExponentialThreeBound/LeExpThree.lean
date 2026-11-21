@@ -148,7 +148,7 @@ theorem up_core (hV : VolSt) (hS : StabSt) (hN : NumSt) (D : D7) (Tu : Type) (C 
     have hnR : (D.R.r : ℝ) ≤ D.R.nV := by exact_mod_cast hnV
     rw [sq, ← mul_assoc]; gcongr
   have hL1 : 1 ≤ L := by
-    have hf : 2 ≤ D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) D.R.ord_pos; omega
+    have hf : 2 ≤ D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega
     have hfR : (2 : ℝ) ≤ D.R.f := by exact_mod_cast hf
     have hrR : (2 : ℝ) ≤ D.R.r := by exact_mod_cast hr
     have : Real.exp 1 ≤ Real.exp L := by

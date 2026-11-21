@@ -21,7 +21,7 @@ def IdE {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) : Prop := ∀ x
 open GlobalTheory.Mem GlobalTheory.Mem.Col2 in
 def TrueE (D : D7) : Prop :=
   ∃ (B : Base) (X : PreX B.toPre) (I : TC B X) (l : I.Laws) (Z : TC.Later B (I.cols l)),
-    D = _root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G ∧ ∃ w : World I l Z, IdE w.S.X
+    D = I.rec7 l Z ∧ ∃ w : World I l Z, IdE w.S.X
 
 theorem TrueE.trueD {D : D7} (h : TrueE D) : TrueD D :=
   let ⟨B, X, I, l, Z, e, w, _⟩ := h; ⟨B, X, I, l, Z, e, ⟨w⟩⟩

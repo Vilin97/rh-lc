@@ -48,7 +48,7 @@ theorem restrictAb_localArtinMap_lubinTate {n : ℕ} (hn : 0 < n) (E : Intermedi
       (classFieldAxiom_units K Ω)).symm
         ((baseUnitsEquiv.symm (unitUniformizerPow hπ u k) : fixedModule Ωˣ
           ((⊤ : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω))) : tateZero Ωˣ _ _) =
-      Abelianization.of (QuotientGroup.mk
+      Group.Abelianization.of (QuotientGroup.mk
         (⟨τ, by simp⟩ : ((⊤ : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω)))) := by
     rw [MulEquiv.symm_apply_eq, ClassFieldData.reciprocityAbEquiv_of]
     exact hrec.symm

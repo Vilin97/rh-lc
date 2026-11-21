@@ -87,7 +87,7 @@ theorem crofton : ∀ (Y : Var ℂ) (Δ : Y.Dv) (L : LB Y.X) (r : L.ι → Y.Fn�
     rw [← encard_iUnion_fin]
     · congr 2
       ext y
-      simp only [Set.mem_iUnion, P, Z, Set.mem_ofPred_eq]
+      simp only [Set.mem_iUnion, P, Z, Set.mem_setOf_eq]
       constructor
       · intro h
         obtain ⟨t, ht⟩ := Set.mem_iUnion.1 (hun ▸ Set.mem_univ y)
@@ -109,7 +109,7 @@ theorem crofton : ∀ (Y : Var ℂ) (Δ : Y.Dv) (L : LB Y.X) (r : L.ι → Y.Fn�
   have hsum : ∫⁻ C, gW Y.dim (Fin n) C * (((Z C).encard : ℕ∞) : ℝ≥0∞) =
       G * φ.chernPart Y.dim 1 Set.univ := by
     simp only [hZ, Finset.mul_sum]
-    rw [lintegral_finsetSum Finset.univ (f := fun t C => gW Y.dim (Fin n) C *
+    rw [lintegral_finset_sum Finset.univ (f := fun t C => gW Y.dim (Fin n) C *
       (((P t C).encard : ℕ∞) : ℝ≥0∞)) fun t _ => hgm.mul (hpiece t).1, hmass, Finset.mul_sum]
     exact Finset.sum_congr rfl fun t _ => (hpiece t).2
   let μ : Measure (Fin Y.dim → Fin n → ℂ) := G⁻¹ • volume.withDensity (gW Y.dim (Fin n))

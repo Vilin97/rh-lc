@@ -250,7 +250,7 @@ theorem cone_eq_zero_iff {P : Ideal (Pol n)} (hh : IsMultiHomogIdeal P)
     rw [hsum]
     refine Ideal.sum_mem _ fun e he => (hP _ e (hcomp e)).2 ?_
     have := coeff_sum_C_mul_prod_X_pow S (fun e => ε (weightedHomogeneousComponent (coordDeg n) e F)) he
-    rw [← hcone, h0] at this
+    rw [← hcone, h0, coeff_zero] at this
     exact this.symm
   · intro hF
     rw [hcone]

@@ -177,7 +177,7 @@ theorem isPt_dia (hI : I.Ok) (l : I.Laws) (u : B.Word) (a : I.ι) (i : ℕ) {Ch 
 
 
 set_option maxHeartbeats 4000000 in
-theorem dilTied : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (bad : Set (HeightOneSpectrum (𝓞 B.host.F))) (Ch : Type) (chOf : (I.stp u a i).Cl → Ch) (K : ∀ β : Ch, LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1) (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c.1))) (eY : (I.chain l u a).Y i ≃ Formalism.L2.Forms.Fr (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (eV : (I.atT l u a).vT ≃ {v : HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) // (B.T u : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∈ v.asIdeal}), I.ReadsK l Z u a i hi chOf K → (∀ β, FunKilled (K β).lev (X.piT u)) → I.IdY l Z u a i hi eY → I.IdV l u a eV → DilationCompatibleChart (D := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (I.fm l u a) eY eV chOf (lat := fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u a i c)) K := by
+theorem dilTied : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (u : B.Word) (a : I.ι) (i : ℕ) (hi : i ≤ B.R.m) (bad : Set (HeightOneSpectrum (𝓞 B.host.F))) (Ch : Type) (chOf : (I.stp u a i).Cl → Ch) (K : ∀ β : Ch, LevelChart (I.rec7 l Z) (B.T u) bad i hi (fun c : {c // chOf c = β} => (I.chain l u a).stab i c.1) (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c.1))) (eY : (I.chain l u a).Y i ≃ Formalism.L2.Forms.Fr (I.rec7 l Z) i hi) (eV : (I.atT l u a).vT ≃ {v : HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F) // (B.T u : 𝓞 (I.rec7 l Z).host.F) ∈ v.asIdeal}), I.ReadsK l Z u a i hi chOf K → (∀ β, FunKilled (K β).lev (X.piT u)) → I.IdY l Z u a i hi eY → I.IdV l u a eV → DilationCompatibleChart (D := (I.rec7 l Z)) (I.fm l u a) eY eV chOf (lat := fun c => latCrd (I.rec7 l Z) i hi (I.latAt u a i c)) K := by
   intro B X I hI hPins l Z u a i hi bad Ch chOf K eY eV hR hs hY hV
   obtain ⟨k, hR⟩ := hR
   have hJ := ((GlobalTheory.T.trueColumn_spaces_standard_in_frameCoords I hI hPins l Z).2.2.2 i hi).1
@@ -188,8 +188,8 @@ theorem dilTied : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pi
     rfl
   have key : ∀ v (s : ((I.atT l u a).Fv v)ˣ) (z : ℤ), (z : (I.atT l u a).Fv v) = s → ∀ β (c : {c // chOf c = β}) δ,
       IsDia (K β).lev (eV v).1 (eV v).2 z δ → ∃ x : (K β).lev.U,
-        ((K β).y c * δ).1 = bc (n := Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i)) (inclE (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)
-          (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))
+        ((K β).y c * δ).1 = bc (n := Fin ((I.rec7 l Z).R.N i)) (inclE (F := (I.rec7 l Z).host.F) (E := (I.rec7 l Z).host.E)
+          (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F))
           ((I.stp u a i).gam c.1.1 ((I.stp u a i).mv c.1.1 (dp I u a i v s c.1))) *
             ((K β).y ⟨(I.fm l u a).dil i v s c.1, (hch v s c.1).trans c.2⟩).1 * x.1 ∧
         (((K β).lev.chi x : ℂˣ) : ℂ) =
@@ -201,7 +201,7 @@ theorem dilTied : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pi
     rw [hy (chOf c) ⟨(I.fm l u a).dil i v s c, _⟩]
     exact hx1
   have hU : ∀ b (g : (I.stp u a i).G b), (I.stp u a i).gam b g ∈
-      UJ (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) : (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E →+* (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) := fun b g => by
+      UJ (sigD (I.rec7 l Z) : (I.rec7 l Z).host.E →+* (I.rec7 l Z).host.E) (gramN (I.rec7 l Z) i hi) := fun b g => by
     rw [hJ]
     show cT _ _ * 1 * _ = 1
     rw [mul_one]
@@ -211,10 +211,10 @@ theorem dilTied : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pi
     refine (@DoubleCoset.eq _ _ _ _ _ _).2 ?_
     have hγ := hU c.1.1 ((I.stp u a i).mv c.1.1 (dp I u a i v s c.1))
     have hxU := (((K β).lev.U_eq x.1).1 x.2).1
-    have hγ' : bc (n := Fin ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).R.N i)) (inclE (F := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (E := (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E)
-        (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F))
+    have hγ' : bc (n := Fin ((I.rec7 l Z).R.N i)) (inclE (F := (I.rec7 l Z).host.F) (E := (I.rec7 l Z).host.E)
+        (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F))
         ((I.stp u a i).gam c.1.1 ((I.stp u a i).mv c.1.1 (dp I u a i v s c.1))) ∈
-          UPts (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (gramN (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi) (FiniteAdeleRing (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) := by
+          UPts (sigD (I.rec7 l Z)) (gramN (I.rec7 l Z) i hi) (FiniteAdeleRing (𝓞 (I.rec7 l Z).host.F) (I.rec7 l Z).host.F) := by
       have := mul_mem (mul_mem ((K β).y c * δ).2 (inv_mem hxU))
         (inv_mem ((K β).y ⟨(I.fm l u a).dil i v s c.1, (hch v s c.1).trans c.2⟩).2)
       rwa [hx, mul_inv_cancel_right, mul_inv_cancel_right] at this
@@ -227,7 +227,7 @@ theorem dilTied : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pi
         have e := congrArg (fun q => q.1 τ) ((frEquiv B.fields.emb B.embLL
           ((I.stp u a i).gam c.1.1 ((I.stp u a i).mv c.1.1 (dp I u a i v s c.1)))).apply_symm_apply t)
         refine e.symm.trans ?_
-        have e2 : embAt B.embLL B.fields.emb τ = Formalism.L2.Forms.embT (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) τ := FieldsLaws.embLL_comp_emb B τ
+        have e2 : embAt B.embLL B.fields.emb τ = Formalism.L2.Forms.embT (I.rec7 l Z) τ := FieldsLaws.embLL_comp_emb B τ
         unfold Formalism.L2.Forms.atInf
         rw [← e2]
         rfl)

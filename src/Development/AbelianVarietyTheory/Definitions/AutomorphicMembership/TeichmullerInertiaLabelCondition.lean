@@ -492,7 +492,7 @@ theorem lab_of_lpDim_eq_zero (τ : Fbar g →* ℂ) (γ : G E Ω) {x : WD h} (hx
     lab τ γ x = 1 :=
   (lab_monic τ γ x).natDegree_eq_zero.mp (Nat.le_zero.mp (hx ▸ natDegree_lab_le τ γ x))
 
-@[simp] theorem lab_lpZero (τ : Fbar g →* ℂ) (γ : G E Ω) : lab τ γ (lpZero (h := h)) = 1 :=
+@[simp] theorem lab_lpZero (τ : Fbar g →* ℂ) (γ : G E Ω) : lab τ γ (lpZero h) = 1 :=
   lab_of_lpDim_eq_zero τ γ (by simp [lpZero])
 
 theorem lab_lpSum (τ : Fbar g →* ℂ) (γ : G E Ω) (x y : WD h) :
@@ -540,8 +540,7 @@ theorem lab_mk_of_trivial (H : TeichmullerInertiaLabelCondition A w τ γ) (a : 
     roots_pow, roots_X_sub_C]
   exact ⟨(monic_X_sub_C _).pow _, by simp [Multiset.map_nsmul]⟩
 
-theorem lab_lpSp (H : TeichmullerInertiaLabelCondition A w τ γ) (n : ℕ) :
-    lab τ γ (lpSp (h := h) n) = (X - 1) ^ n := by
+theorem lab_lpSp (H : TeichmullerInertiaLabelCondition A w τ γ) (n : ℕ) : lab τ γ (lpSp h n) = (X - 1) ^ n := by
   rw [lpSp, lab_mk_of_trivial H (WDRep.sp h n) (WDRep.unr_diag (WDRep.spEig w n)).2]
   simp
 

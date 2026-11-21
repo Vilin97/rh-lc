@@ -62,7 +62,7 @@ def TypesPair : Prop :=
       (PlIn nbr i false w hw ∧ PlIn nbr i true w' hw')) ∧
   ∀ s : Bool,
     (∀ w ∈ placesOver H.E (N.l i), ∀ w', IsConjPl H w w' →
-      Xor (w ∈ columns nbr i s) (w' ∈ columns nbr i s)) ∧
+      Xor' (w ∈ columns nbr i s) (w' ∈ columns nbr i s)) ∧
     (columns nbr i s).Finite ∧
     ∀ w ∈ placesOver H.E (N.l i), locDeg H.E w * (columns nbr i s).ncard = R.f
 

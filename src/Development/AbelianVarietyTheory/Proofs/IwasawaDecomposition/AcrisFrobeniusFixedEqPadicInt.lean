@@ -77,10 +77,10 @@ theorem exists_pow_pred_div_factorial (n : ℕ) :
   have hv : ((((n + 1).factorial : ℕ) : ℤ_[l])).valuation ≤ n := by
     have h := PadicInt.valuation_coe (((n + 1).factorial : ℕ) : ℤ_[l])
     rw [PadicInt.coe_natCast, Padic.valuation_natCast] at h
-    have h' : multiplicity l (n + 1).factorial = ((((n + 1).factorial : ℕ) : ℤ_[l])).valuation := by
+    have h' : padicValNat l (n + 1).factorial = ((((n + 1).factorial : ℕ) : ℤ_[l])).valuation := by
       exact_mod_cast h
     rw [← h']
-    exact Nat.lt_succ_iff.1 (multiplicity_factorial_lt_of_ne_zero l n.succ_ne_zero)
+    exact Nat.lt_succ_iff.1 (padicValNat_factorial_lt_of_ne_zero l n.succ_ne_zero)
   have hs := PadicInt.unitCoeff_spec h0
   have : (((n + 1).factorial : ℕ) : ℤ_[l]) ∣ (l : ℤ_[l]) ^ n := by
     rw [hs, Units.mul_left_dvd]
@@ -150,7 +150,7 @@ theorem thetaP_mem (s : Per.AinfP l) (hs : s ∈ Per.Acris0 l) : Per.θP l s ∈
       rw [this]
       exact zero_mem _
   | algebraMap r => rw [SecEx.fontaineTheta_algebraMap₂]; exact (Per.θ l r).2
-  | add x y _ _ a b => rw [RingHom.map_add (Per.θP l)]; exact add_mem a b
+  | add x y _ _ a b => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem a b
   | mul x y _ _ a b => rw [map_mul]; exact mul_mem a b
 
 theorem exists_int_nilpotent (t : Per.OC l) (ht : (l : Per.OC l) ∣ t ^ l - t) :
@@ -225,7 +225,7 @@ theorem fixed_mod (x : Per.Acris l) (hx : phiA l x = x) : ∃ c : ℤ, (l : Per.
   have h1 : x = algebraMap (Per.Ainf l) (Per.Acris l) a + (l : Per.Acris l) *
       (algebraMap (Per.Acris0 l) (Per.Acris l) ⟨t, ht⟩ + phiA l z) := by
     have h := congrArg (phiA l) hs
-    rw [hx, map_add (f := _), acrisFrobeniusRingHom_algebraMap_envelope, e0, RingHom.map_add (algebraMap (Per.Acris0 l) (Per.Acris l)), ← alg_eq, pow_one, map_mul, map_mul, map_natCast,
+    rw [hx, map_add (f := _), acrisFrobeniusRingHom_algebraMap_envelope, e0, map_add (f := _), ← alg_eq, pow_one, map_mul, map_mul, map_natCast,
       map_natCast] at h
     linear_combination h
   generalize algebraMap (Per.Acris0 l) (Per.Acris l) ⟨t, ht⟩ + phiA l z = w at h1

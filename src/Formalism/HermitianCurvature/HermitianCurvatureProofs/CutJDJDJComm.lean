@@ -107,19 +107,16 @@ variable {k r : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace �
   [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq] [FiniteDimensional ℂ Wq]
 
 theorem jdc_ckOn_opApply {UU : Set (B.Mat k r)} {J : B.Mat k r → (Wq →L[ℂ] Wp)} (hJ : B.CkOn ⊤ UU J) :
-    ∀ Θ : B.DiffOp k r Wp Wq, (∀ T ∈ Θ, B.CkOn ⊤ UU T.coef) → B.CkOn ⊤ UU (B.opApply Θ J) := by
-  intro Θ
-  induction Θ with
-  | nil =>
-    intro _
-    change B.CkOn ⊤ UU (fun _ => (0 : Wq →L[ℂ] Wp))
-    exact Formalism.FourierDecayAlt.P.BetaSesquilinearity.CkOn_zero
-  | cons T Θ ih =>
-    intro h
-    change B.CkOn ⊤ UU (fun g => T.coef g (B.Rw T.word J g) + B.opApply Θ J g)
-    exact Formalism.FourierDecayAlt.P.BetaSesquilinearity.CkOn_add
-      (jdc_ckOn_ap (h T List.mem_cons_self) (jdc_ckOn_Rw T.word_lie hJ))
-      (ih (fun T' hT' => h T' (List.mem_cons_of_mem T hT')))
+    ∀ Θ : B.DiffOp k r Wp Wq, (∀ T ∈ Θ, B.CkOn ⊤ UU T.coef) → B.CkOn ⊤ UU (B.opApply Θ J)
+  | [], _ => by
+    have e : B.opApply ([] : B.DiffOp k r Wp Wq) J = fun _ => 0 := by funext g; simp [B.opApply]
+    rw [e]; exact Formalism.FourierDecayAlt.P.BetaSesquilinearity.CkOn_zero
+  | T :: Θ, h => by
+    have e : B.opApply (T :: Θ) J = fun g => T.coef g (B.Rw T.word J g) + B.opApply Θ J g := by
+      funext g; simp [B.opApply]
+    rw [e]
+    exact Formalism.FourierDecayAlt.P.BetaSesquilinearity.CkOn_add (jdc_ckOn_ap (h T (by simp)) (jdc_ckOn_Rw T.word_lie hJ))
+      (jdc_ckOn_opApply hJ Θ (fun T' hT' => h T' (by simp [hT'])))
 
 theorem jdc_ckOn_om (z z' : Fin (2 * r + k + 1) → ℂ) {J : B.Mat k r → (Wq →L[ℂ] Wp)}
     (hJ : Q.SmoothLev k r 0 {g | 0 < Formalism.QuantumDeterminants.Gf k r z z' g ∧

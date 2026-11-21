@@ -150,6 +150,7 @@ private theorem fin_dec {r : ℕ} (w : Fin r → Pl K) (ι₂ : GS 2 w →* FA K
         exact par_low _ _ i j
       · rw [d₄' _ _ hv]
         simp [Matrix.one_apply]
+        rfl
 
 private theorem mod_S {n r : ℕ} (w : Fin r → Pl K) (ι : GS n w →* FA K n) (hw : Function.Injective w) (hι : IsEmb w ι) (g : GS n w) :
     (detModule K n (finEmb K n (ι g)) : ℝ) =
@@ -248,7 +249,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.parLaw :
     rw [← Real.exp_add, add_neg_cancel, Real.exp_zero])
   have hdet : detModule K (2 + 2) (finEmb K (2 + 2) (ι₄ (piIncl (fun i => PW (w i)) p))) = s * s := by
     have hu : detModule K (2 + 2) (unipGL X) = 1 := by
-      have := mem_normOneGL_iff_detModule.1 (unipOne K (2 + 2) 2 X).2
+      have := mem_normOneGL_iff_detModule.1 (unipOne (K := K) (n := 2 + 2) 2 X).2
       rwa [coe_unipOne] at this
     have hbl := (blkLaws (K := K)).2.2.2.2.1 A D
     rw [hX, map_mul, hu, one_mul, hbl, ← hα, ← hδ, hse, hse']
@@ -270,7 +271,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.parLaw :
       hz α s e hse.symm, hz δ s e' hse'.symm, ← map_inv, mul_inv, cen_blk, mul_assoc,
       (blkLaws (K := K)).2.2.2.2.2.1]
   · have hd : ((dS w p : ℂˣ) : ℂ) = ((α.1 / δ.1 : ℝ) : ℂ) := by
-      rw [dS, MonoidHom.finset_prod_apply, Units.coe_prod]
+      rw [dS, MonoidHom.finsetProd_apply, Units.coe_prod]
       simp only [MonoidHom.comp_apply, Pi.evalMonoidHom_apply, dl_val]
       rw [← Complex.ofReal_prod, Finset.prod_div_distrib, ← hmA, ← hmD]
     rw [hd, ← Complex.ofReal_ofNat, ← Complex.ofReal_mul, ← Complex.ofReal_exp]

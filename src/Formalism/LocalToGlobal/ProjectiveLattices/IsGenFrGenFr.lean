@@ -43,7 +43,7 @@ def genCoef (Z : Comp Xo c) (τ : E →+* ℂ) (i j : Fin (Dw.mult τ)) : Om Z :
 def IsGenFr (Z : Comp Xo c) (y : FrPt Xo c (Om Z)) : Prop :=
   y.x = spMap (algebraMap (kap Z) (Om Z)) ≫ xGen Z ∧
     ∃ y₀ : FrPt Xo c (kap Z), y₀.x = xGen Z ∧
-      ∀ τ i, IsCombAt y.x (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (kap Z) (Om Z))) ≫ y₀.u τ j)
+      ∀ τ i, IsCombAt y.x (fun j => spMap (dualMap (algebraMap (kap Z) (Om Z))) ≫ y₀.u τ j)
         (genCoef Z τ i) (y.u τ i)
 
 

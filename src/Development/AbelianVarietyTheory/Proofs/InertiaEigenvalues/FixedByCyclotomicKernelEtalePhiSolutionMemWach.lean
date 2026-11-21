@@ -254,8 +254,9 @@ theorem tilt_mem (I : IoS AI R) (hW : IoW I) (c : Om l) (hc : c ∈ K0 K) (m : �
 
 theorem eroot_mem (I : IoS AI R) (j : ℕ) : ∃ e,
     (φRW LL)^[j] (fW LL (WittVector.teichmuller l (AI.εroot j))) = I.ioE e ^ l ^ s := by
-  obtain ⟨e, he⟩ : ∃ e, I.ioE e = piR AI LL s + 1 := exists_succ I
-  exact ⟨e, by rw [he, phi_iter_eroot (s := s)]⟩
+  obtain ⟨e, he⟩ := exists_succ I
+  have h1 : I.ioE e = piR AI LL s + 1 := he
+  exact ⟨e, by rw [h1, phi_iter_eroot (s := s)]⟩
 
 theorem mem_perf {R E : Type} [CommRing R] [CommRing E] {j : E →+* R} {φ : R →+* R}
     {hφ : ∀ e, ∃ e', φ (j e) = j e'} {p : ℕ} {x : R} (n k : ℕ) (e : E) (h : φ^[n] x = j e ^ k) :
@@ -266,7 +267,7 @@ set_option maxHeartbeats 1000000 in
 theorem approx (hG : Good K s LL) (I : IoS AI R) (hW : IoW I) (y : RW LL) (hy : FixH AI K y) (m : ℕ) :
     ∃ (n : ℕ) (y0 : RW LL) (e : R.EE) (r : RW LL),
       (φRW LL)^[n] y0 = I.ioE e + (l : RW LL) * r ∧ NearPi AI LL s m (y - y0) := by
-  obtain ⟨t, ht⟩ : ∃ t, piR AI LL s * I.ioE t = 1 := exists_inv I
+  obtain ⟨t, ht⟩ := exists_inv I
   obtain ⟨y0, ⟨n, e, r, h1⟩, h2⟩ := approx_subring hG
     (perf (I.ioE : R.EE →+* RW LL) (φRW LL : RW LL →+* RW LL) (fun e => ⟨_, (I.ioE_φ e).symm⟩) l)
     (fun o => mem_perf 0 1 (algebraMap ↥(OL LL) R.EE o) ((I.ioE.commutes o).symm.trans (pow_one _).symm))
@@ -308,15 +309,7 @@ theorem vec (hG : Good K s LL) (I : IoS AI R) (hW : IoW I) (d : ℕ) (Pm : Matri
     (padic_closed (I.ioE : R.EE →+* RW LL) l1 l2 hs (complete R (P.PD_p K))) d Pm).2 z
     (fun i => (mem_fixSub_iff _).2 (hz i)) h
 
-theorem main : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (K : FinExt l)
-    (s : ℕ) (LL : FinExt l), Good K s LL →
-    ∀ (Γ : GamS P K s LL) (R : WSer Γ) (I : IoS AI R), IoW I →
-    ∀ (p q : ℕ) (A : Matrix (Fin p) (Fin p) R.EE) (A' : Matrix (Fin q) (Fin q) R.EE)
-      (Y : Matrix (Fin p) (Fin q) R.EE) (U : Matrix (Fin p) (Fin q) (RW LL)),
-      IsUnit A → IsUnit A' → (∀ i j, FixH AI K (U i j)) →
-      HMul.hMul (A.map I.ioE) (U.map (φRW LL)) =
-        HMul.hMul U (A'.map I.ioE) + Y.map I.ioE →
-      ∀ i j, U i j ∈ Set.range I.ioE := by
+theorem main : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (K : FinExt l) (s : ℕ) (LL : FinExt l), Good K s LL → ∀ (Γ : GamS P K s LL) (R : WSer Γ) (I : IoS AI R), IoW I → ∀ (p q : ℕ) (A : Matrix (Fin p) (Fin p) R.EE) (A' : Matrix (Fin q) (Fin q) R.EE) (Y : Matrix (Fin p) (Fin q) R.EE) (U : Matrix (Fin p) (Fin q) (RW LL)), IsUnit A → IsUnit A' → (∀ i j, FixH AI K (U i j)) → A.map I.ioE * U.map (φRW LL) = U * A'.map I.ioE + Y.map I.ioE → ∀ i j, U i j ∈ Set.range I.ioE := by
   intro l _ P AI K s LL hG Γ R I hW p q A A' Y U _ hA' hU h i j
   obtain ⟨C, hC⟩ := hA'.exists_right_inv
   let σ := (finProdFinEquiv : Fin p × Fin q ≃ Fin (p * q)).symm

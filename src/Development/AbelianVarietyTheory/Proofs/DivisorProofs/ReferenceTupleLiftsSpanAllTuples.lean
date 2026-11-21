@@ -73,7 +73,9 @@ theorem clsEx_of_core : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : 
       (hL.xiR _) (fun P hP => (hd.2.2.2.1.le.trans Ideal.mul_le_right).trans (hQ P hP)) (fun P => (hL.Q_ram _ P).1) _ hdet _ hres
     exact (hψ k s u _ hk hlift hdet _ hres).trans (hval.symm.trans (hxi u z hz).symm)
   have hτ : Nonempty D.what₂.Tau := Fintype.card_pos_iff.1 (by
-    rw [D.what₂.card_Tau]; unfold Ranks.f Ranks.n; positivity)
+    rw [D.what₂.card_Tau]; unfold Ranks.f Ranks.n
+    have := And.intro (Nat.one_le_two_pow (n := D.R.e)) D.R.ord_pos
+    omega)
   obtain ⟨τ₀⟩ := hτ
   have hnV : (κ i).n = (Vc D i).rank := (tie.kap i τ₀).2.2.trans (D.sp.V_rank _ hj.1 hj.2).symm
   have hlast : (κ i).LastPos := fun τ k hk => by

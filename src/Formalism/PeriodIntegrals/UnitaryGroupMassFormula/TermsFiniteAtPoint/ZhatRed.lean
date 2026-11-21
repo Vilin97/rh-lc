@@ -132,15 +132,17 @@ theorem zhatReduce_of (hC : CellReduce) (hF : FrameOp) (hR : CarrierRow) (hI : Z
       rw [← hiso0 (frame (lf D F0) a) (n0⁻¹ (m (frame x.1 b)))]
       congr 1
       exact n0.apply_symm_apply _
-    rw [h1, hn0act a, hmact b]
+    set_option backward.isDefEq.respectTransparency false in
+      rw [h1, hn0act a, hmact b]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
-      Matrix.mul_apply, Matrix.map_apply, Finset.sum_mul, ← key]
+      Matrix.mul_apply, Matrix.map_apply, Finset.sum_mul]
     refine Finset.sum_congr rfl fun d _ => ?_
     simp only [RingHom.id_apply, Finset.mul_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
-    rw [hst, starRingEnd_apply, star_star]
-    ring
+    rw [hst, starRingEnd_apply, star_star, key]
+    set_option backward.isDefEq.respectTransparency false in
+      ring
   have hBo' : (Bo.map fun x => (x : D.host.E)) = Sg * (B.map fun x => (x : D.host.E)) * Sg := by
     ext i j
     simp only [Bo, Sg, Matrix.map_apply, sgn_conj_entry]

@@ -481,13 +481,13 @@ theorem reads_gLevH {B : Base} {X : PreX B.toPre} (I : TC B X) (hPr : (B.primes 
 
 set_option maxHeartbeats 1000000 in
 theorem chart_gLevH {B : Base} {X : PreX B.toPre} (I : TC B X) (hI : I.Ok) (hP : TC.Pins B X) (l : I.Laws) (Z : TC.Later B (I.cols l))
-    (u : B.Word) (G : GLoc (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.E (sigD (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.g) (i : ℕ) (hi : i ≤ B.R.m)
+    (u : B.Word) (G : GLoc (I.rec7 l Z).host.F (I.rec7 l Z).host.E (sigD (I.rec7 l Z)) (I.rec7 l Z).host.g) (i : ℕ) (hi : i ≤ B.R.m)
     (Ch : Type) (chOf : (I.stp u I.mu0 i).Cl → Ch)
-    (K : ∀ β : Ch, LevelChart (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) (B.T u) (badG (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)) i hi
-      (fun c : {c // chOf c = β} => (I.chain l u I.mu0).stab i c.1) (fun c => latCrd (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) i hi (I.latAt u I.mu0 i c.1)))
+    (K : ∀ β : Ch, LevelChart (I.rec7 l Z) (B.T u) (badG (I.rec7 l Z)) i hi
+      (fun c : {c // chOf c = β} => (I.chain l u I.mu0).stab i c.1) (fun c => latCrd (I.rec7 l Z) i hi (I.latAt u I.mu0 i c.1)))
     (_hG : I.IdG l Z G) (hR : I.ReadsK l Z u I.mu0 i hi chOf K) (β : Ch) :
-    ∃ (H : ∀ (j : Fin 2) (v : HeightOneSpectrum (𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F)), ((_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.g j : 𝓞 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F) ∈ v.asIdeal →
-      Subgroup (GL (Fin (B.R.N i)) (kv (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G).host.F v))) (lam : ∀ j v h, H j v h →* ℂˣ), Nonempty (GLevH (K β).lev G H lam) := by
+    ∃ (H : ∀ (j : Fin 2) (v : HeightOneSpectrum (𝓞 (I.rec7 l Z).host.F)), ((I.rec7 l Z).host.g j : 𝓞 (I.rec7 l Z).host.F) ∈ v.asIdeal →
+      Subgroup (GL (Fin (B.R.N i)) (kv (I.rec7 l Z).host.F v))) (lam : ∀ j v h, H j v h →* ℂˣ), Nonempty (GLevH (K β).lev G H lam) := by
   obtain ⟨k, hR⟩ := hR
   exact reads_gLevH I l.pr u G i chOf ((spaces_in_coordinates I hI hP l Z).2.2.2 i hi).1 (fun v hv => hv) (fun β => (K β).lev) hR β
 

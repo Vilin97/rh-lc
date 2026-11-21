@@ -153,8 +153,8 @@ theorem exists_factor (ξ₀ : Spec (CommRingCat.of K) ⟶ X) (h₀ : IsCptGen �
   exact congrArg (Spec.map (Scheme.stalkClosedPointTo z) ≫ ·) (e₂.symm.trans
     (congrArg (Spec.map (X.presheaf.stalkSpecializes h) ≫ ·) e₁.symm))
 
-theorem dualMap_id (R : Type) [CommRing R] : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id _ := by
-  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+theorem dualMap_id (R : Type) [CommRing R] : dualMap (RingHom.id R) = RingHom.id _ := by
+  ext a <;> simp [dualMap]
 
 theorem lat_stable {G : Over X} [GrpObj G] {ξ : Spec (CommRingCat.of Ω) ⟶ X} {E : Type} [AddCommGroup E] [Module Ω E]
     (M : LieModel G ξ E) (a : G ⟶ G) [IsMonHom a] (A : E →ₗ[Ω] E) (h : M.IsDiffOf a A) (p : Cpt ξ) :

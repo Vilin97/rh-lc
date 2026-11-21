@@ -59,10 +59,7 @@ theorem tPar_k : _root_.PositivityTheory.SiegelWeilFormula.TPar_k := by
       rw [Matrix.mul_assoc, ← Matrix.transpose_mul, h2.2]
       simp [Matrix.transpose_mul, Matrix.transpose_add, Matrix.mul_add, Matrix.mul_assoc, Matrix.transpose_neg]
     simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.T, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, _root_.PositivityTheory.SiegelWeilFormula.SD_k.gram]
-    rw [l_rho_om h x (X * (incM F d.b.1.toCols₂)ᵀ) hΦ, l_om_par h hpar (mem _), key, l_shift h hψ _ _ hΦ]
-    have hn := symp_N X β (incM F t0.1) (incM F d.b.1.toCols₂) (incM F d.A.J) (dbl (incM F d.Y.J)) hf
-    simp only [incM, cA] at hn ⊢
-    rw [hn]
+    rw [l_rho_om h x _ hΦ, l_om_par h hpar (mem _), key, l_shift h hψ _ _ hΦ, symp_N _ _ _ _ _ _ hf]
     simp
   · have h1 := inFrame_mul hx
     have h2 := inv_mul_frame h1 (N' := Matrix.fromBlocks (t⁻¹ : GL (Fin d.n) (AE F E)).1 0 0 (u⁻¹ : GL (Fin d.n) (AE F E)).1)
@@ -91,9 +88,9 @@ theorem tPar_k : _root_.PositivityTheory.SiegelWeilFormula.TPar_k := by
       rw [Matrix.mul_assoc, ← Matrix.transpose_mul, h2.2]
       simp [Matrix.transpose_mul, Matrix.mul_assoc]
     simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.T]
-    rw [l_rho_om h x (X * (incM F d.b.1.toCols₂)ᵀ) hΦ, l_om_par h hpar (mem _), hdet, key]
+    rw [l_rho_om h x _ hΦ, l_om_par h hpar (mem _), hdet, key]
   · simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.T]
-    rw [l_rho_S h hψ g (X * (incM F d.b.1.toCols₂)ᵀ) hΦ, Matrix.mul_assoc]
+    rw [l_rho_S h hψ g _ hΦ, Matrix.mul_assoc]
 def TThetaSum_k : Prop := ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
   (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ), ∀ Φ ∈ d.sch, HasSum (fun X : Matrix (Fin d.m) (Fin d.n) E => d.T Φ (incM F X)) (thetaSum F Φ)
 set_option backward.isDefEq.respectTransparency false in
@@ -143,11 +140,8 @@ theorem tThetaSum_k : _root_.PositivityTheory.SiegelWeilFormula.Tpar.TThetaSum_k
     have ec : incM F (y * M.toRows₂ᵀ * d.b.1.toCols₂ᵀ) = incM F (y * M.toRows₂ᵀ) * (incM F d.b.1.toCols₂)ᵀ := by
       simp only [incM_mul, incM_transpose]
     have hr := psi_rat h hψ (y * M.toRows₁ᵀ * t0.1ᵀ * (diagCols (Fin d.n) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n) E)ᵀ) (y * M.toRows₂ᵀ * d.b.1.toCols₂ᵀ)
-    change d.B.ψ (-(⅟(2 : AF F) * symp (Algebra.TensorProduct.map (AlgHom.id (AF F) (AF F)) σ) (-1) (incM F d.A.J) (dbl (incM F d.Y.J)) (incM F (y * M.toRows₁ᵀ * t0.1ᵀ * (diagCols (Fin d.n) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n) E)ᵀ)) (incM F (y * M.toRows₂ᵀ * d.b.1.toCols₂ᵀ)))) = 1 at hr
     rw [ea, ec] at hr
-    rw [hy, incM_add, ea, ec, l_shift h hψ _ _ hΦ]
-    simp only [incM] at hr ⊢
-    rw [hr, one_mul]
+    rw [hy, incM_add, ea, ec, l_shift h hψ _ _ hΦ, hr, one_mul]
     rfl
   have hs := h.theta Φ hΦ
   rw [show (fun y : Matrix (Fin d.m) (Fin d.n) E => d.l (d.dd.rho d.B.ψ (incM F (Matrix.fromCols y (-y))) Φ)) =

@@ -30,7 +30,7 @@ theorem dualRep_ρ_apply (D M : Rep.{u} k G) (σ : G) (f : M →ₗ[k] D) (m : M
     ((dualRep D M).ρ σ f : M →ₗ[k] D) m = D.ρ σ (f (M.ρ σ⁻¹ m)) :=
   rfl
 
-def GlobalTheory.CompanionTheory.Ar.dualMap (D : Rep.{u} k G) {A B : Rep.{u} k G} (φ : A ⟶ B) : dualRep D B ⟶ dualRep D A :=
+def dualMap (D : Rep.{u} k G) {A B : Rep.{u} k G} (φ : A ⟶ B) : dualRep D B ⟶ dualRep D A :=
   Rep.ofHom ⟨{ toFun := fun f => f ∘ₗ φ.hom.toLinearMap
                map_add' := fun f g => rfl
                map_smul' := fun r f => rfl }, fun σ => by
@@ -42,7 +42,7 @@ theorem dualMap_id (D A : Rep.{u} k G) : dualMap D (𝟙 A) = 𝟙 (dualRep D A)
   rfl
 
 theorem dualMap_comp (D : Rep.{u} k G) {A B C : Rep.{u} k G} (φ : A ⟶ B) (ψ : B ⟶ C) :
-    GlobalTheory.CompanionTheory.Ar.dualMap D (φ ≫ ψ) = GlobalTheory.CompanionTheory.Ar.dualMap D ψ ≫ GlobalTheory.CompanionTheory.Ar.dualMap D φ :=
+    dualMap D (φ ≫ ψ) = dualMap D ψ ≫ dualMap D φ :=
   rfl
 
 def dualEvalBilin (D M : Rep.{u} k G) : M →ₗ[k] (M →ₗ[k] D) →ₗ[k] D where
@@ -64,7 +64,7 @@ theorem evalPairing_tmul (D M : Rep.{u} k G) (m : M) (f : M →ₗ[k] D) :
   pairingHom_tmul (A := M) (B := dualRep D M) (dualEvalBilin D M) _ m f
 
 theorem tensorHom_evalPairing (D : Rep.{u} k G) {A B : Rep.{u} k G} (φ : A ⟶ B) :
-    (φ ⊗ₘ 𝟙 (dualRep D B)) ≫ evalPairing D B = (𝟙 A ⊗ₘ GlobalTheory.CompanionTheory.Ar.dualMap D φ) ≫ evalPairing D A := by
+    (φ ⊗ₘ 𝟙 (dualRep D B)) ≫ evalPairing D B = (𝟙 A ⊗ₘ dualMap D φ) ≫ evalPairing D A := by
   ext x
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]

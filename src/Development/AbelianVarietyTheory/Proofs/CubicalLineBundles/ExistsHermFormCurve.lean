@@ -145,6 +145,7 @@ theorem exists_isExp (T : PAT H (Sp ℂ)) (D : Datum H) (u : HolUnif T.t.G T.t.P
     exact hW k a b c hk hc
 
 
+set_option synthInstance.maxHeartbeats 200000 in
 set_option maxHeartbeats 400000 in
 theorem exists_isExp_of_isTen : ThetaUnifAV → Out.Laws → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (ω : ℂ) (C : Ell H ℂ ω) (u₀ : HolUnif C.P.A C.P.L C.P.g) (c : ℂ) (D : Datum H) (ε : ℤˣ) (h : D.La → D.La → OK H) (T : PAT H (Sp ℂ)) (t : IsTen C D h T), c ≠ 0 → PureType.IsQuadLattice u₀.Λ H.d c → 0 < ((ε : ℤ) : ℝ) * ω.im → IsKForm D ε h → (D.q = 0 ∧ 2 * ω - 1 = H.rt0) ∨ (D.p = 0 ∧ 2 * ω - 1 = -H.rt0) →
   ∃ (g : ℕ) (ty : Fin g → (E →+* ℂ)) (Pe : D.La →+ (Fin g → ℂ)) (e : (Fin g → ℂ) → (Over.mk (spMap (RingHom.id ℂ)) ⟶ T.t.G)), IsTypeFn H D.p D.q ty ∧ IsExp T (RingHom.id ℂ) D ty Pe e ∧ (∀ a (z : ℂ), (e (z • Pe a)).left = (u₀.ex (fun _ => c * z) ≫ t.ten.tmul a).left) ∧

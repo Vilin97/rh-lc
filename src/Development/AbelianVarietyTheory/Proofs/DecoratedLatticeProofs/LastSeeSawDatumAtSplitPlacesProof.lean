@@ -45,7 +45,7 @@ theorem vac_sum {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {LS : Lat S} {LT 
 theorem vac_zero {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {LS : Lat S} {LT : Lat T} {P : Pl D → Prop} :
     Vac ψ S T LS LT P 0 := by
   have h := vac_sum (ψ := ψ) (LS := LS) (LT := LT) (P := P) (∅ : Finset Unit) (fun _ => 0) (fun _ => 0) (by simp)
-  convert h using 1
+  convert h using 1 <;> funext w <;> simp
 
 theorem vac_mono {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {LS : Lat S} {LT : Lat T} {P Q : Pl D → Prop}
     (h : ∀ x, Q x → P x) {f : WO S T → ℂ} (hf : Vac ψ S T LS LT P f) : Vac ψ S T LS LT Q f := by

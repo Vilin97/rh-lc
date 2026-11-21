@@ -27,8 +27,8 @@ theorem spMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A
   rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 theorem dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) :=
-  RingHom.ext fun z => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap]) (by simp [GlobalTheory.CompanionTheory.Ar.dualMap])
+    (dualMap g).comp (dualMap f) = dualMap (g.comp f) :=
+  RingHom.ext fun z => TrivSqZeroExt.ext (by simp [dualMap]) (by simp [dualMap])
 
 variable {R : Type} [CommRing R] [IsDomain R] {F F' : Type} [Field F] [Field F'] [Algebra (FractionRing R) F]
   [Algebra (FractionRing R) F'] (e : F ≃+* F')
@@ -41,15 +41,15 @@ theorem toF_comp : (e : F →+* F').comp (toF R F) = toF R F' :=
 
 include he in
 def rhoE : TE R F' ⟶ TE R F :=
-  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F'))) (by
-    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F')) ≫ spMap (algebraMap F (DualNumber F)) ≫
+  Over.homMk (spMap (dualMap (e : F →+* F'))) (by
+    show spMap (dualMap (e : F →+* F')) ≫ spMap (algebraMap F (DualNumber F)) ≫
         spMap (algebraMap (FractionRing R) F) ≫ spMap (algebraMap R (FractionRing R)) =
       spMap (algebraMap F' (DualNumber F')) ≫ spMap (algebraMap (FractionRing R) F') ≫
         spMap (algebraMap R (FractionRing R))
     simp only [← spMap_comp']
     congr 1
-    exact RingHom.ext fun r => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, he, TrivSqZeroExt.algebraMap_eq_inl])
-      (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]))
+    exact RingHom.ext fun r => TrivSqZeroExt.ext (by simp [dualMap, he, TrivSqZeroExt.algebraMap_eq_inl])
+      (by simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]))
 
 
 include he in
@@ -61,7 +61,7 @@ def sigE : TF (R := R) F' ⟶ TF (R := R) F :=
     congr 1
     exact RingHom.ext fun r => by simp [he])
 
-theorem rhoE_left : (rhoE e he).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F')) := rfl
+theorem rhoE_left : (rhoE e he).left = spMap (dualMap (e : F →+* F')) := rfl
 
 theorem sigE_left : (sigE e he).left = spMap (e : F →+* F') := rfl
 
@@ -70,7 +70,7 @@ theorem red_comm : (sigE e he).left ≫ redE F = redE F' ≫ (rhoE e he).left :=
   show spMap _ ≫ spMap _ = spMap _ ≫ spMap _
   rw [← spMap_comp', ← spMap_comp']
   congr 1
-  exact RingHom.ext fun z => by simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  exact RingHom.ext fun z => by simp [dualMap]
 
 include he in
 theorem bKey_map (κ : Rule) (hκ : Funct κ) [CharZero F] [CharZero F'] (D : DegPre R) {N : NumD F} (ν : NumOf D F N)
@@ -97,11 +97,11 @@ theorem bKey_map (κ : Rule) (hκ : Funct κ) [CharZero F] [CharZero F'] (D : De
 include he in
 theorem adapted_map [CharZero F] [CharZero F'] (D : DegPre R) {N : NumD F} (ν : NumOf D F N)
     {N' : NumD F'} (ν' : NumOf D F' N') (I : NumD.Hom (e : F →+* F') N N') (heX : ∀ χ, ν'.eX (I.e χ) = ν.eX χ)
-    (hpull : ∀ (gm : GtPt D (TE R F)) (gm' : GtPt D (TE R F')), GtPt.IsPull (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F'))) gm gm' →
-      ∀ χ, vE (gm'.s χ) (𝟙 _) ν'.J = GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F') (vE (gm.s χ) (𝟙 _) ν.J))
+    (hpull : ∀ (gm : GtPt D (TE R F)) (gm' : GtPt D (TE R F')), GtPt.IsPull (spMap (dualMap (e : F →+* F'))) gm gm' →
+      ∀ χ, vE (gm'.s χ) (𝟙 _) ν'.J = dualMap (e : F →+* F') (vE (gm.s χ) (𝟙 _) ν.J))
     (vB : Fin D.P.g → (epsR R ⟶ D.P.A)) (r g : ℕ) (bX : Module.Basis (Fin r) ℤ N.X) (σ : Fin g ≃ Fin D.P.g ⊕ Fin r)
     (gm : Fin g → GtPt D (TE R F)) (had : Adapted ν vB bX σ gm) :
-    ∃ gm' : Fin g → GtPt D (TE R F'), (∀ j, GtPt.IsPull (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F'))) (gm j) (gm' j)) ∧
+    ∃ gm' : Fin g → GtPt D (TE R F'), (∀ j, GtPt.IsPull (spMap (dualMap (e : F →+* F'))) (gm j) (gm' j)) ∧
       Adapted ν' vB (bX.map I.e.toIntLinearEquiv) σ gm' := by
   obtain ⟨hv, hz, hb, ht⟩ := had
   choose gm' hgm' using fun j => GlobalTheory.ConstLie.exists_isPullGt (rhoE e he) (gm j)
@@ -132,11 +132,11 @@ theorem adapted_map [CharZero F] [CharZero F'] (D : DegPre R) {N : NumD F} (ν :
       (congrArg Over.Hom.left hzT)))
   · obtain ⟨χ₀, rfl⟩ := I.e.surjective χ
     rw [heX, hpull _ _ (hgm' _), (ht l).2 χ₀, Module.Basis.map_repr]
-    simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    simp [dualMap]
 
 end GlobalTheory.MBLow.TrAdapt
 
-theorem GlobalTheory.MBLow.bKey_adapted_map : ∀ κ : Rule, Funct κ → ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPre R) (F F' : Type) [Field F] [Field F'] [CharZero F] [CharZero F'] [Algebra (FractionRing R) F] [Algebra (FractionRing R) F'] (e : F ≃+* F'), (∀ x, e (algebraMap (FractionRing R) F x) = algebraMap (FractionRing R) F' x) → ∀ (N : NumD F) (ν : NumOf D F N) (N' : NumD F') (ν' : NumOf D F' N') (I : NumD.Hom (e : F →+* F') N N'), (∀ x, I.h x = 1) → I.lam = 1 → (∀ χ, ν'.eX (I.e χ) = ν.eX χ) → ν'.th = ν.th → (∀ (gm : GtPt D (TE R F)) (gm' : GtPt D (TE R F')), GtPt.IsPull (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F'))) gm gm' → ∀ χ, vE (gm'.s χ) (𝟙 _) ν'.J = GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F') (vE (gm.s χ) (𝟙 _) ν.J)) → ∀ (vB : Fin D.P.g → (epsR R ⟶ D.P.A)), (∀ k, BKey κ ν vB k → BKey κ ν' vB (e k)) ∧ ∀ (r g : ℕ) (bX : Module.Basis (Fin r) ℤ N.X) (σ : Fin g ≃ Fin D.P.g ⊕ Fin r) (gm : Fin g → GtPt D (TE R F)), Adapted ν vB bX σ gm → ∃ gm' : Fin g → GtPt D (TE R F'), (∀ j, GtPt.IsPull (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F'))) (gm j) (gm' j)) ∧ Adapted ν' vB (bX.map I.e.toIntLinearEquiv) σ gm' := by
+theorem GlobalTheory.MBLow.bKey_adapted_map : ∀ κ : Rule, Funct κ → ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPre R) (F F' : Type) [Field F] [Field F'] [CharZero F] [CharZero F'] [Algebra (FractionRing R) F] [Algebra (FractionRing R) F'] (e : F ≃+* F'), (∀ x, e (algebraMap (FractionRing R) F x) = algebraMap (FractionRing R) F' x) → ∀ (N : NumD F) (ν : NumOf D F N) (N' : NumD F') (ν' : NumOf D F' N') (I : NumD.Hom (e : F →+* F') N N'), (∀ x, I.h x = 1) → I.lam = 1 → (∀ χ, ν'.eX (I.e χ) = ν.eX χ) → ν'.th = ν.th → (∀ (gm : GtPt D (TE R F)) (gm' : GtPt D (TE R F')), GtPt.IsPull (spMap (dualMap (e : F →+* F'))) gm gm' → ∀ χ, vE (gm'.s χ) (𝟙 _) ν'.J = dualMap (e : F →+* F') (vE (gm.s χ) (𝟙 _) ν.J)) → ∀ (vB : Fin D.P.g → (epsR R ⟶ D.P.A)), (∀ k, BKey κ ν vB k → BKey κ ν' vB (e k)) ∧ ∀ (r g : ℕ) (bX : Module.Basis (Fin r) ℤ N.X) (σ : Fin g ≃ Fin D.P.g ⊕ Fin r) (gm : Fin g → GtPt D (TE R F)), Adapted ν vB bX σ gm → ∃ gm' : Fin g → GtPt D (TE R F'), (∀ j, GtPt.IsPull (spMap (dualMap (e : F →+* F'))) (gm j) (gm' j)) ∧ Adapted ν' vB (bX.map I.e.toIntLinearEquiv) σ gm' := by
   intro κ hκ R _ _ D F F' _ _ _ _ _ _ e he N ν N' ν' I hh hl heX hth hpull vB
   exact ⟨fun k hk => GlobalTheory.MBLow.TrAdapt.bKey_map e he κ hκ D ν ν' I hh hl hth vB k hk,
     fun r g bX σ gm had => GlobalTheory.MBLow.TrAdapt.adapted_map e he D ν ν' I heX hpull vB r g bX σ gm had⟩

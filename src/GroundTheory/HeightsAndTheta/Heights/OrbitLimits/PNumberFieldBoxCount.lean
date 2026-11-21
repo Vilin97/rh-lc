@@ -32,10 +32,10 @@ theorem inf_full {F : Type*} [Field F] {L B : AddSubgroup F}
     simpa [mul_comm] using h
 
 theorem fg_of_le {G : Type*} [AddCommGroup G] {H K : AddSubgroup G} (hK : K.FG) (hHK : H ≤ K) : H.FG := by
-  obtain ⟨S, hS⟩ := hK
-  have hK' : (AddSubgroup.toIntSubmodule K).FG := ⟨S, by rw [← AddSubgroup.toIntSubmodule_closure, hS]⟩
-  obtain ⟨T, hT⟩ := hK'.of_le (S := AddSubgroup.toIntSubmodule H) hHK
-  exact ⟨T, AddSubgroup.toIntSubmodule.injective (by rw [AddSubgroup.toIntSubmodule_closure, hT])⟩
+  have hK' : (AddSubgroup.toIntSubmodule K).FG := by
+    rwa [Submodule.fg_iff_addSubgroup_fg, AddSubgroup.toIntSubmodule_toAddSubgroup]
+  have hH' := hK'.of_le (S := AddSubgroup.toIntSubmodule H) hHK
+  rwa [Submodule.fg_iff_addSubgroup_fg, AddSubgroup.toIntSubmodule_toAddSubgroup] at hH'
 
 theorem forall_le_iff {F : Type*} [Field F] [NumberField F] (ρ : (F →+* ℂ) → ℝ)
     (hρc : ∀ σ, ρ (ComplexEmbedding.conjugate σ) = ρ σ) (x : F) :

@@ -307,7 +307,7 @@ theorem twLat_le (hU : p.R.toRealDat.LUnif) (hW : p.R.toRealDat.models_HW) (hv :
     | add P₁ P₂ _ _ h1 h2 =>
       obtain ⟨g1, e1, m1⟩ := h1
       obtain ⟨g2, e2, m2⟩ := h2
-      exact ⟨g1 + g2, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), e1, e2], by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem m1 m2⟩
+      exact ⟨g1 + g2, by rw [map_add (f := _), map_add (f := _), e1, e2], by rw [map_add (f := _)]; exact add_mem m1 m2⟩
     | smul a P₁ _ h1 =>
       obtain ⟨g1, e1, m1⟩ := h1
       obtain ⟨o, ho⟩ := a.2

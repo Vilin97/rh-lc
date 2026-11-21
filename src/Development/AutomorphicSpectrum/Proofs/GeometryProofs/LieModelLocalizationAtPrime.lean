@@ -26,11 +26,11 @@ open LieTangent
 section SlopeTestRemainingChoices
 
 theorem dualMap_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (φ : R →+* R') (ψ : R' →+* R'') :
-    (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) = GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) := by
+    (dualMap ψ).comp (dualMap φ) = dualMap (ψ.comp φ) := by
   refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem spec_dualMap {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (φ : R →+* R') (ψ : R' →+* R'') :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ)) := by
+    spMap (dualMap ψ) ≫ spMap (dualMap φ) = spMap (dualMap (ψ.comp φ)) := by
   rw [← dualMap_comp]
   exact spec_comp _ _
 
@@ -39,7 +39,7 @@ variable {X : Scheme.{0}} {Ω : Type} [Field Ω] {G : Over X} [GrpObj G] {ξ : S
 
 theorem lieValAt_base (M : LieModel G ξ E) (hξ : IsCptGen ξ) {R R' : Type} [CommRing R] [IsLocalRing R] [CommRing R']
     [IsLocalRing R'] (φ : R →+* R') {z : Sp R ⟶ X} {z' : Sp R' ⟶ X} (hz : spMap φ ≫ z = z') {e : E}
-    {w : epsAt z ⟶ G} {w' : epsAt z' ⟶ G} (h : M.ValAt z e w) (hw : w'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w.left) :
+    {w : epsAt z ⟶ G} {w' : epsAt z' ⟶ G} (h : M.ValAt z e w) (hw : w'.left = spMap (dualMap φ) ≫ w.left) :
     M.ValAt z' e w' := by
   subst hz
   obtain ⟨h1, v, hv, hw0⟩ := h

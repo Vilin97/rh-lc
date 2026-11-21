@@ -65,11 +65,11 @@ private theorem exists_sec (M : LineModel Z k st x) {X : Scheme.{0}} [IsIntegral
 
 private theorem bc_comp {X : Scheme.{0}} {t : SAB H X} {A B C : Type} [CommRing A] [CommRing B] [CommRing C]
     (χ : B →+* C) (ρ : A →+* B) (u : Vecs Dw t A) :
-    (fun σ m => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (χ.comp ρ)) ≫ u σ m) = Vecs.bc χ (Vecs.bc ρ u) := by
+    (fun σ m => spMap (dualMap (χ.comp ρ)) ≫ u σ m) = Vecs.bc χ (Vecs.bc ρ u) := by
   funext σ m
   rw [Vecs.bc, Vecs.bc, ← Category.assoc, ModelRelProbe.spMap_comp]
   congr 2
-  ext w <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  ext w <;> simp [dualMap]
 
 private theorem succ_mul_succ_sub_one_div_succ {K : Type} [Field K] {c u r r' t t' : K} (hc : c ≠ 0) (ht : t' ≠ 0) (e₁ : u * r = r')
     (e₂ : t * r = c) (e₃ : t' * r' = c) : u = t / t' := by

@@ -129,7 +129,7 @@ theorem atPl_add (w : ι) (L L' : Module.End ℂ (V w)) : atPl w (L + L') = atPl
   simp only [atPl_eq, MultilinearMap.map_update_add]
 
 theorem atPl_smul (w : ι) (c : ℂ) (L : Module.End ℂ (V w)) : atPl w (c • L) = c • atPl w L := by
-  simp only [atPl_eq, MultilinearMap.map_update_smul]
+  simp only [atPl_eq, MultilinearMap.map_update_smul, RingHom.id_apply]
 
 theorem atPl_one (w : ι) : atPl w (1 : Module.End ℂ (V w)) = 1 := by
   rw [atPl_eq, show Function.update (fun i => (LinearMap.id : V i →ₗ[ℂ] V i)) w 1 = fun i => LinearMap.id by

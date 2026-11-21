@@ -41,11 +41,11 @@ theorem exists_isTransl_snd {A : Over (Sp K)} [GrpObj A] [IsCommMonObj A] {u : e
       rw [← Spec.map_comp]; rfl)
   let v' : ReciprocityTheory.ChartRestriction.G.Chart.sp (R₀ := K) (DualNumber S) ⟶ A :=
     ReciprocityTheory.ChartRestriction.G.Chart.spMap (GlobalTheory.SqZero.epsTo K (DualNumber.eps : DualNumber S) (by simp)) ≫ u
-  have hv' : v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ u.left := by
+  have hv' : v'.left = spMap (dualMap ψ) ≫ u.left := by
     show Spec.map _ ≫ u.left = _
     congr 2
     refine CommRingCat.hom_ext (RingHom.ext fun a => ?_)
-    ext <;> simp [GlobalTheory.SqZero.epsTo, GlobalTheory.SqZero.dualTo_apply, GlobalTheory.CompanionTheory.Ar.dualMap, Algebra.ofId_apply,
+    ext <;> simp [GlobalTheory.SqZero.epsTo, GlobalTheory.SqZero.dualTo_apply, dualMap, Algebra.ofId_apply,
       RingHom.algebraMap_toAlgebra, TrivSqZeroExt.algebraMap_eq_inl]
   refine ⟨(v' * z).left, ⟨z, v', rfl, hv', by rw [mul_comm]⟩, fun O h f => ?_⟩
   have hz : ⊤ ≤ z.left ⁻¹ᵁ O := fun p _ => h (Set.mem_univ _)
@@ -110,7 +110,7 @@ theorem pull_diff (t : SAB H X) (V : X.Opens) (U : X.affineOpens) {n : ℕ}
           (valR (w a) O f).snd)
     (x0 : Sp K ⟶ X) (hU : ⊤ ≤ x0 ⁻¹ᵁ U.1) (A : Over (Sp K)) [GrpObj A] [IsCommMonObj A] (m : A.left ⟶ t.G.left)
     (hm : IsGrpPullback A t.G x0 m) (u : Fin n → (epsR K ⟶ A))
-    (hu : ∀ a, (u a).left ≫ m = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (GlobalTheory.FlagMod.ev x0 U.1 hU)) ≫ v a)
+    (hu : ∀ a, (u a).left ≫ m = spMap (dualMap (GlobalTheory.FlagMod.ev x0 U.1 hU)) ≫ v a)
     (dd : Fin n → ∀ O : A.left.Opens, Γ(A.left, O) → Γ(A.left, O)) (hdd : ∀ a, IsInvDer (u a) (dd a))
     (φ : Fin n → C1 (fun i => m ⁻¹ᵁ t.PP.L.U i)) (hφ : IsDlog m t.PP.L dd φ)
     (i i' : J) (O : t.G.left.Opens) (hO : O ≤ W i ⊓ W i') (f : Γ(t.G.left, O)) :

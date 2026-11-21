@@ -167,6 +167,7 @@ theorem UpperTheory.integrable_constantTerm_leviEmbedding_mul_conj_cuspForm :
     rw [show RightCosetSpace.mk (rationalGLOne (K := E) (n := r)) (Quotient.out y) = y from Quotient.out_eq y] at h
     exact h.symm
   rw [he]
+  set_option synthInstance.maxHeartbeats 200000 in
   refine Integrable.of_bound (CuspidalSpectrum.continuous_cuspQuot hHl hHc).aestronglyMeasurable
     (|C| * (2 * AutomorphicForm.heightConst E (r + s) * L) ^ N * D) (Filter.Eventually.of_forall fun q => ?_)
   obtain ⟨y, rfl⟩ := mk_surjective (rationalGLOne (K := E) (n := r)) q

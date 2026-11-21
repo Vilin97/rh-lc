@@ -63,34 +63,7 @@ theorem frame_at : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : H
   have hrk : labelRk D (Or.bg τ) + labelRk D (Or.sm τ) = Dc.N := by
     rw [Or.rk_bg, Or.rk_sm]
     exact Nat.add_sub_cancel' Dc.j_le_N
-  have hsum : (Lat.comap (fun p => Or.𝔐.V (Or.bg τ) p ⊔ Or.𝔐.V (Or.sm τ) p)
-      (Or.𝔐.Vgen (Or.bg τ) ⊔ Or.𝔐.Vgen (Or.sm τ)).subtype).IsVB
-      (labelRk D (Or.bg τ) + labelRk D (Or.sm τ)) ⊤ := by
-    have hβ : Function.Injective (algebraMap (𝓞 c.F) c.F) := RingOfIntegers.coe_injective
-    obtain ⟨-, -, -, -, -, -, hind, -⟩ :=
-      GlobalTheory.T.hodge_cpt_interior_generic E H D l Xo c (𝓞 c.F) (algebraMap (𝓞 c.F) c.F) Y S₀ Ω K J Dc.y Or.𝔐 hβ
-    have hdisj : Disjoint (Or.𝔐.Vgen (Or.bg τ)) (Or.𝔐.Vgen (Or.sm τ)) := hind.pairwiseDisjoint (Or.bg_ne_sm τ τ)
-    intro p _
-    obtain ⟨Ua, hpa, f, hfs, hff⟩ := Or.𝔐.vb (Or.bg τ) p (Set.mem_univ _)
-    obtain ⟨Ub, hpb, g, hgs, hgf⟩ := Or.𝔐.vb (Or.sm τ) p (Set.mem_univ _)
-    have hfs' : Submodule.span Ω (Set.range f) = Or.𝔐.Vgen (Or.bg τ) := hfs
-    have hgs' : Submodule.span Ω (Set.range g) = Or.𝔐.Vgen (Or.sm τ) := hgs
-    have hspan : Submodule.span Ω (Set.range (Fin.append f g)) = Or.𝔐.Vgen (Or.bg τ) ⊔ Or.𝔐.Vgen (Or.sm τ) := by
-      rw [GlobalTheory.CompanionTheory.Ar.HodgeSum.range_append, Submodule.span_union, hfs', hgs']
-    have hmem : ∀ k, Fin.append f g k ∈ Or.𝔐.Vgen (Or.bg τ) ⊔ Or.𝔐.Vgen (Or.sm τ) := fun k => by
-      rw [← hspan]
-      exact Submodule.subset_span (Set.mem_range_self k)
-    have hli : LinearIndependent Ω (Fin.append f g) :=
-      GlobalTheory.CompanionTheory.Ar.HodgeSum.linearIndependent_append (hff p (Set.mem_univ _) hpa).1 (hgf p (Set.mem_univ _) hpb).1
-        (by rw [hfs', hgs']; exact hdisj)
-    refine ⟨Ua ⊓ Ub, ⟨hpa, hpb⟩, fun k => ⟨Fin.append f g k, hmem k⟩,
-      GlobalTheory.CompanionTheory.Ar.HodgeSum.span_lift_eq_top (fun _ => rfl) hspan, fun q _ hq => ⟨?_, ?_⟩⟩
-    · exact LinearIndependent.of_comp (Or.𝔐.Vgen (Or.bg τ) ⊔ Or.𝔐.Vgen (Or.sm τ)).subtype hli
-    · have h1 : Or.𝔐.V (Or.bg τ) q = Submodule.span (regAt Or.𝔐.ξ q) (Set.range f) := (hff q (Set.mem_univ _) hq.1).2
-      have h2 : Or.𝔐.V (Or.sm τ) q = Submodule.span (regAt Or.𝔐.ξ q) (Set.range g) := (hgf q (Set.mem_univ _) hq.2).2
-      show (Or.𝔐.V (Or.bg τ) q ⊔ Or.𝔐.V (Or.sm τ) q).comap ((Or.𝔐.Vgen (Or.bg τ) ⊔ Or.𝔐.Vgen (Or.sm τ)).subtype.restrictScalars (regAt Or.𝔐.ξ q)) = _
-      rw [h1, h2]
-      exact GlobalTheory.CompanionTheory.Ar.HodgeSum.comap_sup_span (regAt Or.𝔐.ξ q) fun _ => rfl
+  have hsum := GlobalTheory.T.pair_lattice_sum_comap E H D l Xo c Y S₀ Ω K J Dc.y Or.𝔐 (Or.bg τ) (Or.sm τ) (Or.bg_ne_sm τ τ)
   rw [hrk] at hsum
   have hvb : (Lat.comap (fun p => Or.𝔐.V (Or.bg τ) p ⊔ Or.𝔐.V (Or.sm τ) p) (Or.i τ)).IsVB Dc.N ⊤ :=
     isVB_comap_of_range _ _ (Or.i τ) (Or.i_inj τ) (Or.i_range τ) hsum

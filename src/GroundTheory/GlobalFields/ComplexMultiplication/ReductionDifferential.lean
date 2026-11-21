@@ -66,7 +66,7 @@ section Dual
 
 open TrivSqZeroExt
 
-def GlobalTheory.CompanionTheory.Ar.dualMap {R S : Type*} [CommRing R] [CommRing S] (f : R →+* S) :
+def dualMap {R S : Type*} [CommRing R] [CommRing S] (f : R →+* S) :
     TrivSqZeroExt R R →+* TrivSqZeroExt S S where
   toFun z := inl (f z.fst) + inr (f z.snd)
   map_one' := by ext <;> simp
@@ -76,10 +76,10 @@ def GlobalTheory.CompanionTheory.Ar.dualMap {R S : Type*} [CommRing R] [CommRing
   map_add' a b := by ext <;> simp
 
 theorem dualMap_fst {R S : Type*} [CommRing R] [CommRing S] (f : R →+* S)
-    (z : TrivSqZeroExt R R) : (GlobalTheory.CompanionTheory.Ar.dualMap f z).fst = f z.fst := by simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    (z : TrivSqZeroExt R R) : (dualMap f z).fst = f z.fst := by simp [dualMap]
 
 theorem dualMap_snd {R S : Type*} [CommRing R] [CommRing S] (f : R →+* S)
-    (z : TrivSqZeroExt R R) : (GlobalTheory.CompanionTheory.Ar.dualMap f z).snd = f z.snd := by simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    (z : TrivSqZeroExt R R) : (dualMap f z).snd = f z.snd := by simp [dualMap]
 
 variable {F : Type u} [Field F] (E : WeierstrassCurve F) [E.IsElliptic]
 
@@ -229,7 +229,7 @@ theorem algebraMap_gauss_const (c : 𝒪) :
 theorem algebraMap_gaussDeriv (g : gaussRing W) :
     algebraMap (gaussRing W) (W.baseChange K).toAffine.FunctionField (gaussDeriv K W g) =
       invDeriv (W.baseChange K) (algebraMap (gaussRing W) _ g) := by
-  have key : (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (gaussRing W) (W.baseChange K).toAffine.FunctionField)).comp
+  have key : (dualMap (algebraMap (gaussRing W) (W.baseChange K).toAffine.FunctionField)).comp
       (gaussDual K W) = (invDerivHom (W.baseChange K)).comp (algebraMap (gaussRing W) _) := by
     apply IsLocalization.ringHom_ext (gaussPrime W).primeCompl
     apply coordinateRing_ringHom_ext
@@ -269,7 +269,7 @@ theorem algebraMap_gaussDeriv (g : gaussRing W) :
 theorem gaussResidue_gaussDeriv (g : gaussRing W) :
     gaussResidue W (residue _ (gaussDeriv K W g)) =
       invDeriv (W.map (residue 𝒪)) (gaussResidue W (residue _ g)) := by
-  have key : (GlobalTheory.CompanionTheory.Ar.dualMap ((gaussResidue W).comp (residue (gaussRing W)))).comp (gaussDual K W) =
+  have key : (dualMap ((gaussResidue W).comp (residue (gaussRing W)))).comp (gaussDual K W) =
       (invDerivHom (W.map (residue 𝒪))).comp ((gaussResidue W).comp (residue (gaussRing W))) := by
     apply IsLocalization.ringHom_ext (gaussPrime W).primeCompl
     apply coordinateRing_ringHom_ext

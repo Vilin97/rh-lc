@@ -149,7 +149,7 @@ theorem IntE.mul {b : Module.Basis (Fin d) F E} {v : HeightOneSpectrum (𝓞 F)}
     simp only [hc, Algebra.TensorProduct.basis_apply, smul_mul_smul_comm, Algebra.TensorProduct.tmul_mul_tmul, one_mul]
   rw [e]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, Finset.sum_apply', Finsupp.smul_apply, smul_eq_mul]
+    simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
   refine sum_mem fun k _ => sum_mem fun l _ => mul_mem (mul_mem (hy k) (hz l)) ?_
   rw [hc, repr_one_tmul]
   exact hv k l m

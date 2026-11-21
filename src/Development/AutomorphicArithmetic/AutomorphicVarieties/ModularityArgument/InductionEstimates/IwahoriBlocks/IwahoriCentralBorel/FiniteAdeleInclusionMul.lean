@@ -39,7 +39,7 @@ private theorem hh0 {K : Type} [Field K] [NumberField K] (a b : G1 K 2) (x : G1 
     HH (lv a b 0 * x) = HH x := by
   have h := (hpSpec (K := K)).1 0 a b 0 x
   have h0 : (nn 0 : G1 K (2 + 2)) = 1 := unipOne_zero 2
-  simpa only [h0, one_mul, zero_add] using h
+  rwa [h0, one_mul, zero_add] at h
 
 private theorem sec_ray {K : Type} [Field K] [NumberField K] {μ₂ : Measure (G1 K 2)} {τ₁ τ₂ : Submodule ℂ (L2 μ₂)}
     {f : G1 K (2 + 2) → ℂ} (hs : IsSec τ₁ τ₂ f) (t : ℝ) (g : G1 K (2 + 2)) : f (lv 1 1 t * g) = f g := by
@@ -49,23 +49,22 @@ private theorem sec_ray {K : Type} [Field K] [NumberField K] {μ₂ : Measure (G
     change Real.exp (-t) = (Real.exp t)⁻¹
     rw [Real.exp_neg]
   rw [Subgroup.coe_mul, blkLaws.1, zt, zt, h]
-  simp only [Subgroup.coe_one, one_mul]
+  simp
 
 private theorem reps_comb {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (G1 K n)) [μ.IsHaarMeasure]
     (τ : Submodule ℂ (L2 μ)) {ι : Type} (s : Finset ι) (φ : ι → G1 K n → ℂ) (c : ι → ℂ)
     (h : ∀ i, ∃ v ∈ τ, Reps μ v (φ i)) : ∃ v ∈ τ, Reps μ v (fun y => ∑ i ∈ s, c i * φ i y) := by
-  set_option synthInstance.maxHeartbeats 200000 in
   induction s using Finset.induction_on with
   | empty =>
     refine ⟨0, τ.zero_mem, ?_⟩
-    filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K n) μ))] with y hy
+    filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_zero ℂ 2 (quotientMeasure (Gam K n) μ))] with y hy
     simpa using hy
   | insert i s hi ih =>
     obtain ⟨v, hv, hr⟩ := ih
     obtain ⟨u, hu, hq⟩ := h i
     refine ⟨c i • u + v, τ.add_mem (τ.smul_mem _ hu) hv, ?_⟩
-    filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_add (c i • u) v),
-      MeasureTheory.QuasiMeasurePreserving.ae (quasiMeasurePreserving_mk (Gam K n) μ) (Lp.coeFn_smul (c i) u), hr, hq] with y e₁ e₂ e₃ e₄
+    filter_upwards [(quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_add (c i • u) v),
+      (quasiMeasurePreserving_mk (Gam K n) μ).ae (Lp.coeFn_smul (c i) u), hr, hq] with y e₁ e₂ e₃ e₄
     rw [e₁, Pi.add_apply, e₂, Pi.smul_apply, e₃, e₄, Finset.sum_insert hi, smul_eq_mul]
 
 private theorem flat_lv {K : Type} [Field K] [NumberField K] (f : G1 K (2 + 2) → ℂ) (a b : G1 K 2) (x : G1 K (2 + 2)) :

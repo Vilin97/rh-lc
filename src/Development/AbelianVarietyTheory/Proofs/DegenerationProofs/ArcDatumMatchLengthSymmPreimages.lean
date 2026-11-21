@@ -40,24 +40,6 @@ theorem psi_value_of_match (a : ArcIn D l β O' b) {R : Type} [CommRing R] [IsDo
         ((P.psi χ).s (fun _ => j))).val =
       toStk z ((algebraMap (FractionRing R) F (algebraMap R _ u)) ^ (a.be y y / 2) *
         algebraMap (FractionRing R) F (algebraMap R _ v.val)) := by
-  have exists_unit_gm_spMap {A F : Type} [CommRing A] [Field F] {X : Scheme.{0}}
-      (f : A →+* F) (x : Sp A ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U)
-      (a : Γ(X, U)ˣ) (z : Sp F) :
-      ∃ u : Aˣ, (gm (spMap f ≫ x) z U a).val = toStk z (f u) := by
-    let g : Γ(X, U) →+* A := (Scheme.ΓSpecIso (CommRingCat.of A)).hom.hom.comp (x.appLE U ⊤ h).hom
-    refine ⟨Units.map g.toMonoidHom a, ?_⟩
-    have hz : (spMap f ≫ x) z ∈ U := h (show spMap f z ∈ (⊤ : (Sp A).Opens) from trivial)
-    rw [← toStk_valF _ U z hz]
-    congr 1
-    have ht := (top_le_iff_mem (spMap f ≫ x) U z).2 hz
-    rw [valF, dite_eq_left ht]
-    have e1 : (spMap f ≫ x).appLE U ⊤ ht = x.appLE U ⊤ h ≫ (spMap f).appTop := by
-      rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
-      exact (Scheme.Hom.appLE_comp_appLE _ _ _ _ _ _ _).symm
-    have e2 := Scheme.ΓSpecIso_naturality (CommRingCat.ofHom f)
-    have e3 := congrArg (fun q => q.hom ((x.appLE U ⊤ h).hom a.val)) e2
-    rw [e1]
-    exact e3
   subst hχ
   obtain ⟨-, -, -, -, -, hG⟩ := hW
   have hG' := (genRel_iff w _ _ _ z).1 (hG F _ hF rfl y)
@@ -78,19 +60,15 @@ theorem psi_value_of_match (a : ArcIn D l β O' b) {R : Type} [CommRing R] [IsDo
     exact ht (show spMap g z ∈ (⊤ : (Sp R).Opens) from trivial)
   have hz₀ := mem_pull.1 hz.1
   have H1 := hv (fun _ => j) (fun _ => j₀) (fun _ => hz₀) (fun _ => hz.2)
-  have hm₁ := gm_pullGen P.P.L (fun _ : PUnit => Out.ptK (P.c (e y))) _ (P.psi (e y))
-    (Out.jFK (R := R) F) (𝟙 _) z (fun _ => j) (Set.mem_iInter.2 fun _ => hz.2)
-  have hm₂ := gm_pullGen a.D₀.P.L (fun _ : PUnit => Out.ptK (a.D₀.c y)) _ (a.D₀.psi y)
-    (Out.jFK (R := O') F) (𝟙 _) z (fun _ => j₀) (Set.mem_iInter.2 fun _ => by rw [← hp PUnit.unit]; exact hz₀)
-  rw [hm₁, hm₂, Category.id_comp, Category.id_comp, Fintype.prod_unique, zpow_neg_one,
+  rw [gm_pullGen', gm_pullGen', Category.id_comp, Category.id_comp, Fintype.prod_unique, zpow_neg_one,
     Units.val_mul, Units.inv_mul_eq_iff_eq_mul] at H1
-  obtain ⟨u₁, hu₁⟩ := exists_unit_gm_spMap g x _ ht (w.s (fun _ => j₀, j)) z
+  obtain ⟨u₁, hu₁⟩ := GlobalTheory.ThetaShiftProofs.exists_unit_gm_spMap g x _ ht (w.s (fun _ => j₀, j)) z
   have hz₁ : (Out.jFK (R := O') F ≫ Out.ptK (a.D₀.c y)) z ∈ a.D₀.P.L.U j₀ := by
     rw [← hp PUnit.unit]; exact hz₀
   have ht₀ : ⊤ ≤ (𝟙 (Sp (FractionRing O'))) ⁻¹ᵁ
       (LB.wchart a.D₀.P.L (K := PUnit) (fun _ => Out.ptK (a.D₀.c y)) (fun _ => j₀)) :=
     (top_le_iff_mem _ _ (Out.jFK (R := O') F z)).2 (Set.mem_iInter.2 fun _ => hz₁)
-  obtain ⟨u₀, hu₀⟩ := exists_unit_gm_spMap (algebraMap (FractionRing O') F) (𝟙 _) _ ht₀
+  obtain ⟨u₀, hu₀⟩ := GlobalTheory.ThetaShiftProofs.exists_unit_gm_spMap (algebraMap (FractionRing O') F) (𝟙 _) _ ht₀
     ((a.D₀.psi y).s (fun _ => j₀)) z
   obtain ⟨r, s, hs, hr⟩ := IsFractionRing.div_surjective (A := O') u₀.val
   have hs0 : s ≠ 0 := nonZeroDivisors.ne_zero hs

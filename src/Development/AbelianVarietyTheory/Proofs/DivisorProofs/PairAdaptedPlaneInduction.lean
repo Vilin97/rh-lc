@@ -72,6 +72,7 @@ theorem avgForm_mem_adm : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) 
     rwa [rho_diagCols' hdd₁, LinearEquiv.apply_symm_apply] at this
   obtain ⟨c₁, hc₁⟩ := GlobalTheory.T.heisenbergInvariant_admissibleForm_eq_mul_diagonalIntegral F B.ψ hψ _ l₁ hl₁ hl₁' (Measure.addHaar) inferInstance
   intro g hg
+  letI : MeasurableSpace (Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := borel _
   obtain ⟨T, hT⟩ := GlobalTheory.T.pair_adapted_plane_lift hPr F E σ B n d X W M χX χW om r s r' s' hP d₁ W₁ H' i₀ i₁ M₁ om₁ r₁ s₁ hH hP₁ d' hd' d₁' hd₁'
     dd hdd dd₁ hdd₁ ed hmap hheis hinv hadm hnz Measure.addHaar inferInstance μ hμ g hg
   refine ⟨c₁ • T, fun f => ?_⟩
@@ -82,15 +83,15 @@ theorem avgForm_mem_adm : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) 
     rw [LinearMap.comp_apply]
     exact hc₁ _ (hmap _ (GlobalTheory.SchrKeepsSchA.schr_mem_schA F B.ψ hψ _
       (dd.e (Matrix.vecMulVec (incV F H'.y) (Sum.elim y y))) _ hΦ))
-  letI : MeasurableSpace (Fin n → _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) := borel _
   have hconv : GlobalTheory.SiegelAvg.Conv μ (l₁ ∘ₗ ed) (GlobalTheory.SiegelAvg.starFam dd B.ψ (incV F H'.y)) (pureA F f g) := by
     show Integrable _ μ
     simp_rw [hpt]
     exact hi.const_mul c₁
   rw [GlobalTheory.SiegelAvg.avgForm_apply _ _ _ hconv]
   simp_rw [hpt]
-  rw [integral_const_mul, he]
-  rfl
+  rw [integral_const_mul]
+  convert congrArg (fun z : ℂ => c₁ * z) he using 1
+  congr 1
 
 end GlobalTheory.SiegelAvgAdm
 end

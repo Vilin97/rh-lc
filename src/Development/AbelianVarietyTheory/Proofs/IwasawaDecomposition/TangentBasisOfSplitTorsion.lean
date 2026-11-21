@@ -29,12 +29,12 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 theorem bc_bc {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (φ : R →+* R') (ψ : R' →+* R'')
     (w : Sp (DualNumber R) ⟶ t.G.left) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ)) ≫ w := by
+    spMap (dualMap ψ) ≫ spMap (dualMap φ) ≫ w = spMap (dualMap (ψ.comp φ)) ≫ w := by
   rw [← Category.assoc, ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap, ← Formalism.L2.Pj.dualMap_comp]
 
 theorem isTanBasis_map {R S : Type} [CommRing R] [CommRing S] {x : Sp R ⟶ X} {g : ℕ}
     {e : Fin g → (Sp (DualNumber R) ⟶ t.G.left)} (h : GlobalTheory.LineNorm.IsTanBasis t x e) (φ : R →+* S) :
-    GlobalTheory.LineNorm.IsTanBasis t (spMap φ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ e i) := by
+    GlobalTheory.LineNorm.IsTanBasis t (spMap φ ≫ x) (fun i => spMap (dualMap φ) ≫ e i) := by
   refine ⟨fun i => GlobalTheory.FactorDepth.isTanAtG_map t φ (h.1 i), fun T _ ψ w hw => ?_⟩
   simp only [bc_bc]
   rw [← Category.assoc, ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap] at hw ⊢
@@ -51,11 +51,11 @@ theorem mem_latDR_iff (hX : X.IsSeparated) {R : Type} [CommRing R] (x : Sp R ⟶
     [NontriviallyNormedField C] [IsUltrametricDist C] (φ : R →+* ↥(intO C)) (cf : Fin g → C)
     (w : Sp (DualNumber C) ⟶ t.G.left)
     (hw : IsCombAtG t (spMap (intO C).subtype ≫ spMap φ ≫ x)
-      (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO C).subtype.comp φ)) ≫ e i) cf w) :
+      (fun i => spMap (dualMap ((intO C).subtype.comp φ)) ≫ e i) cf w) :
     w ∈ latDR t (spMap (intO C).subtype ≫ spMap φ ≫ x) ↔ ∀ i, ‖cf i‖ ≤ 1 := by
   have hb := isTanBasis_map t he φ
   have hv : ∀ i, IsTanAtG t (spMap (intO C).subtype ≫ spMap φ ≫ x)
-      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO C).subtype.comp φ)) ≫ e i) := fun i => by
+      (spMap (dualMap ((intO C).subtype.comp φ)) ≫ e i) := fun i => by
     rw [← bc_bc]; exact GlobalTheory.FactorDepth.isTanAtG_map t (intO C).subtype (hb.1 i)
   have hxC : spMap (intO C).subtype ≫ spMap φ ≫ x = spMap ((intO C).subtype.comp φ) ≫ x := by
     rw [← Category.assoc, ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap]

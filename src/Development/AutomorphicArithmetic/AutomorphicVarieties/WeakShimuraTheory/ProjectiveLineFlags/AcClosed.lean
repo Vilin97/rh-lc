@@ -25,8 +25,6 @@ private theorem ac_map {Γ O R : Type} [TopologicalSpace Γ] [CommRing O] [CommR
   have := (hf N).comp (Ideal.Quotient.lift (J ^ N) ((Ideal.Quotient.mk (I ^ N)).comp φ)
     (fun a ha => Ideal.Quotient.eq_zero_iff_mem.mpr (hN ha)))
   convert this using 1
-  funext g
-  simp
 
 private theorem ac_closed {Γ R : Type} [TopologicalSpace Γ] [CommRing R] {I : Ideal R} [IsHausdorff I R] {f : Γ → R}
     (hf : AdicCont I f) (y : R) : IsClosed {x | f x = y} := by

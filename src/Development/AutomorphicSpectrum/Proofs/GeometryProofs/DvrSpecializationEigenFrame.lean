@@ -53,7 +53,7 @@ theorem span_eq_eigSub : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   have hepi : Epi (CommRingCat.ofHom (algebraMap V K)) := IsLocalization.epi (nonZeroDivisors V) K
   have hmono : Mono (spMap (algebraMap V K)) := by
     exact Functor.map_mono Scheme.Spec (CommRingCat.ofHom (algebraMap V K)).op
-  have hb : ∀ i, (ML.pt (b i)).left ≫ m'.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ (vV i).left := by
+  have hb : ∀ i, (ML.pt (b i)).left ≫ m'.φ = spMap (dualMap (algebraMap V K)) ≫ (vV i).left := by
     intro i
     obtain ⟨u, hu1, hu2⟩ := hu i
     have hw : u ≫ tK.G.hom = (ML.pt (b i)).left ≫ tK.G.hom := by
@@ -74,7 +74,7 @@ theorem span_eq_eigSub : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     have : Spec.map (CommRingCat.ofHom (algebraMap V K)) ≫ z = y ≫ Y.j := hz
     rw [this]; exact h₁
   have hL : ∀ w, w ∈ stdLat V K g ↔ ∃ a : epsAt (𝟙 (Sp V)) ⟶ T.G, IsTanAt T.G (𝟙 _) a ∧
-      (ML.pt w).left ≫ m'.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ a.left := by
+      (ML.pt w).left ≫ m'.φ = spMap (dualMap (algebraMap V K)) ≫ a.left := by
     intro w
     have hA := GlobalTheory.T.semiabelian_extension_over_dvr V K Y.X Y.t.G T.G tK.G z m'.φ φ₁ Y.t.semi T.semi m'.cart (by rw [hz]; exact hφ₁) (ML.pt w) (ML.tan w)
     have hF := GlobalTheory.T.lie_lattice_eval_fraction_field Y.X Y.t.G Z.Ω (Z.ξ₀ ≫ Y.j) Z.V Z.M V z K (Fin g → K) MC Z.gen hsm h₂ h₁' w

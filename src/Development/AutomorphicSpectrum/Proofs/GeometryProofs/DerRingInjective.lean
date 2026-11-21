@@ -126,8 +126,8 @@ theorem kap_algebraMap (r : R) : kap I (algebraMap R _ r) = algebraMap (R ⧸ I)
   refine TrivSqZeroExt.ext ?_ ?_ <;> simp [kap, TrivSqZeroExt.algebraMap_eq_inl']
 
 theorem kap_map (a : DualNumber R) : kap I (TrivSqZeroExt.map (Ideal.Quotient.mkₐ R I).toLinearMap a) =
-    GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I) a := by
-  refine TrivSqZeroExt.ext ?_ ?_ <;> simp [kap, GlobalTheory.CompanionTheory.Ar.dualMap]
+    dualMap (Ideal.Quotient.mk I) a := by
+  refine TrivSqZeroExt.ext ?_ ?_ <;> simp [kap, dualMap]
 end Red
 
 section Rel

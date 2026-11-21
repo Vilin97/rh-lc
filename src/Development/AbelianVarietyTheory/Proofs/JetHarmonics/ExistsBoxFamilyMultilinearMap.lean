@@ -103,11 +103,7 @@ end GlobalTheory.BoxLinear
 
 namespace GlobalTheory
 
-theorem exists_boxFam_multilinear : GlobalFnsSt →
-    ∀ (R : Type) [CommRing R] [IsDomain R] (j : ℕ) (D D' : DegPre R)
-      (pD : IsPowDeg D' D j) (F : Type) [Field F] [Algebra (FractionRing R) F] (k : ℕ),
-      ∃ bx : (Fin j → Fam D F k) →ₘₗ[F] Fam D' F k,
-        ∀ (s : Fin j → Fam D F k) (S : Fam D' F k), IsBoxFam pD F k S s ↔ S = bx s := by
+theorem exists_boxFam_multilinear : GlobalFnsSt → ∀ (R : Type) [CommRing R] [IsDomain R] (j : ℕ) (D D' : DegPre R) (pD : IsPowDeg D' D j) (F : Type) [Field F] [Algebra (FractionRing R) F] (k : ℕ), ∃ bx : MultilinearMap F (fun _ : Fin j => Fam D F k) (Fam D' F k), ∀ (s : Fin j → Fam D F k) (S : Fam D' F k), IsBoxFam pD F k S s ↔ S = bx s := by
   intro hG R _ _ j D D' pD F _ _ k
   choose bx hbx using BoxFamily.exists_isBoxFam hG R j D D' pD F k
   refine ⟨⟨bx, fun s i a b => BoxLinear.box_add pD (hbx _) (hbx _) (hbx _),

@@ -127,7 +127,7 @@ private theorem gen_int (μ : Measure (normOneGL (K := E) (n := n))) [μ.IsHaarM
 end UpperTheory.ConvolutionTheory.L1.TY
 
 open UpperTheory.ConvolutionTheory.L1 UpperTheory.ConvolutionTheory.L1.TY in
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 6400000 in
 theorem UpperTheory.ConvolutionTheory.L1.twistY :
     UpperTheory.ConvolutionTheory.L1.TwistY := by
   intro F E _ _ _ _ _ _ σ hσ m n hm hn μ _ θ hθ D s hs hposition νE _ νF _ b a aE aF hA q w₀ hq T V hV hVU hrk
@@ -273,7 +273,7 @@ theorem UpperTheory.ConvolutionTheory.L1.twistY :
           · obtain ⟨e1, e2⟩ := T.off u hS fun h => hu (h ▸ Finset.mem_insert_self _ _ : _ ∈ P)
             rw [e1, e2]
             exact sphRank E n μ V hV u) h' fun u hu => h1 u (hfin.mem_toFinset.2 hu)
-        refine ⟨g, _, c, ?_, fun v hv => hc _ ⟨GA_mem μ hV _ hv, prj_mem (GA_closed μ _) v⟩⟩
+        refine ⟨g, _, c, ?_, fun v hv => hc _ ⟨GA_mem μ hV _ hv, prj_mem (GA_closed μ (J := T.J) (χ := T.χ) Onᶜ) v⟩⟩
         rw [← hg, e, mul_assoc]
         rfl
       E_sa := (prj_star _).isSelfAdjoint

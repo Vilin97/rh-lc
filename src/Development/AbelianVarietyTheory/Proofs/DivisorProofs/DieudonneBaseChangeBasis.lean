@@ -24,26 +24,26 @@ theorem exists_mem_span_red_eq (p : ℕ) [Fact p.Prime] (P : ∀ (k : Type) [Com
       B.red _ hG' n = z := by
   obtain ⟨x, rfl⟩ := G.liftSemi_rig_bijective k' (CharP.cast_eq_zero k p) (.inl inferInstance) |>.2 z
   induction x with
-  | zero =>
-    refine ⟨0, zero_mem _, ?_⟩
-    rw [LinearMap.map_zero, LinearMap.map_zero]
   | add x y hx hy =>
     obtain ⟨n, hn, h1⟩ := hx
     obtain ⟨n', hn', h2⟩ := hy
     refine ⟨n + n', add_mem hn hn', ?_⟩
     rw [LinearMap.map_add (B.red _ hG') n n', h1, h2, LinearMap.map_add (f := _)]
+    rfl
   | tmul r y =>
     obtain ⟨m, rfl⟩ := B.red_surjective G hG y
     obtain ⟨R, rfl⟩ := (WittVector.constantCoeff_surjective p : Function.Surjective
       (WittVector.constantCoeff : WittVector p k' →+* k')) r
     refine ⟨R • B.smap hG' hG (G.toBase k') m, Submodule.smul_mem _ _ ?_, ?_⟩
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [← b.linearCombination_repr m, Finsupp.linearCombination_apply, Finsupp.sum, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.linearCombination_repr m, Finsupp.linearCombination_apply, Finsupp.sum, map_sum]
       exact Submodule.sum_mem _ fun i _ => by
         rw [B.smap_smul]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
-    · rw [LinearMap.map_smulₛₗ (B.red _ hG') R, B.red_smap, liftSemi_tmul]
+    · set_option backward.isDefEq.respectTransparency false in
+      rw [liftSemi_tmul, LinearMap.map_smulₛₗ (B.red _ hG') R, B.red_smap]
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem smap_toBase_basis (p : ℕ) [Fact p.Prime] (P : ∀ (k : Type) [CommRing k], PDivGroup p k → Prop)
     (B : Base p P) (k k' : Type) [Field k] [CharP k p] [PerfectRing k p] [Field k'] [CharP k' p]
     [PerfectRing k' p] [Algebra k k'] (G : PDivGroup p k) (hG : P k G) (hG' : P k' (G.baseChange k'))
@@ -60,6 +60,8 @@ theorem smap_toBase_basis (p : ℕ) [Fact p.Prime] (P : ∀ (k : Type) [CommRing
     (B.red G hG) (B.red_surjective G hG) fun m h => (B.red_eq_zero G hG m).1 h
   obtain ⟨-, hr'⟩ := finrank_eq_of_semilinear_surjective (WittVector.constantCoeff_surjective p) hp'
     (B.red _ hG') (B.red_surjective _ hG') fun m h => (B.red_eq_zero _ hG' m).1 h
+  change Module.finrank k G.RigExt = _ at hr
+  change Module.finrank k' (G.baseChange k').RigExt = _ at hr'
   have hrank : Module.finrank k' (G.baseChange k').RigExt = Module.finrank k G.RigExt := by
     rw [← (LinearEquiv.ofBijective _ (G.liftSemi_rig_bijective k' hp (.inl inferInstance))).finrank_eq,
       Module.finrank_baseChange]

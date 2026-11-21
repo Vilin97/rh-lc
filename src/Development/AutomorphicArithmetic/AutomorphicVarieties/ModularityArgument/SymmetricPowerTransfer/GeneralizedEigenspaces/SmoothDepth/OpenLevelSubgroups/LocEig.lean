@@ -209,8 +209,6 @@ private theorem uOp_upow {T : Type} [AddCommGroup T] [Module ℂ T] (τ : Repres
         have h1 : upow k n (0 : Fin n → ℤ) = 1 := by
           rw [upow, ← (diagT k (Fin n)).map_one]
           congr 1
-          funext i
-          simp
         rw [h1, E_zero, (mulOp 1 1 (one_mem _) (one_mem _)).2.2.1]
         simp }
   have hfund : ∀ j ≤ n, fund n j ∈ M := by

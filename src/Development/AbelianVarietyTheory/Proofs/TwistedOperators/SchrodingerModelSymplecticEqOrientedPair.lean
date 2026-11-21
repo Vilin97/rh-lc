@@ -60,7 +60,7 @@ theorem GlobalTheory.SquareAgree.SympForm.symp_model_eq_symplO : ∀ (D : D7) (�
   have hs : (sgn ε S).gram = G := by
     rw [← hGdef]
     cases ε
-    · ext i j; simp [sgn, HSpace.gram]
+    · simp [sgn]
     · ext i j; simp [HSpace.gram]
   have hVJ : Vs.J = -G := by
     rw [hJ, ← hGdef]; cases ε <;> simp

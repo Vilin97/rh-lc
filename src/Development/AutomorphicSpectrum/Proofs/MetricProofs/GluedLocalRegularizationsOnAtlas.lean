@@ -240,7 +240,7 @@ theorem polyMaxOff_charts_compare {e : ℕ} {X : Type} [TopologicalSpace X] [Com
       intro z hz
 
       exact ((smoothOn_of_compatible hAB (th.isOpen_U (x p.2)) (hW.1.1 (x p.2)) p.1).mono
-        fun z (hz : z ∈ (B.chart p.1).target ∩ (B.chart p.1).symm ⁻¹' (B.chart p.2).source) => ⟨hz.1, hU p.2 hz.2⟩) z hz
+        fun z hz => ⟨hz.1, hU p.2 hz.2⟩) z hz
     exact h1.of_le (by norm_cast)
   have hpair := fun p : Fin B.n × Fin B.n =>
     Compare.overlap_pair B p.1 p.2 h2 _ (hg p)

@@ -27,7 +27,7 @@ def trT (ρ : Representation ℂ G V) (W : Type) [AddCommGroup W] [Module ℂ W]
 
 theorem twist_trT (ρ : Representation ℂ G V) (χ : G →* ℂˣ) : twist (trT ρ W) χ = trT (twist ρ χ) W := by
   ext g v w
-  simp [TensorProduct.smul_tmul']
+  simp [trT, LinearMap.rTensor_tmul, TensorProduct.smul_tmul']
 
 theorem twKer_trT (ρ : Representation ℂ G V) (N : Subgroup G) (θ : N →* ℂˣ) :
     twKer (trT ρ W) N θ = LinearMap.range (TensorProduct.map (twKer ρ N θ).subtype (LinearMap.id : W →ₗ[ℂ] W)) := by
@@ -44,17 +44,17 @@ theorem twKer_trT (ρ : Representation ℂ G V) (N : Subgroup G) (θ : N →* �
       exact add_mem hx hy
     | tmul v w =>
       refine ⟨(⟨ρ (n : G) v - ((θ n : ℂˣ) : ℂ) • v, Submodule.subset_span ⟨n, v, rfl⟩⟩ : twKer ρ N θ) ⊗ₜ[ℂ] w, ?_⟩
-      simp [TensorProduct.sub_tmul, TensorProduct.smul_tmul']
+      simp [trT, LinearMap.rTensor_tmul, TensorProduct.sub_tmul, TensorProduct.smul_tmul']
   · rintro _ ⟨y, rfl⟩
     induction y with
-    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+    | add x y hx hy => rw [map_add]; exact add_mem hx hy
     | tmul a w =>
       obtain ⟨a, ha⟩ := a
       simp only [TensorProduct.map_tmul, Submodule.subtype_apply, LinearMap.id_apply]
       induction ha using Submodule.span_induction with
       | mem x hx =>
         obtain ⟨n, v, rfl⟩ := hx
-        exact Submodule.subset_span ⟨n, v ⊗ₜ[ℂ] w, by simp [TensorProduct.sub_tmul, TensorProduct.smul_tmul']⟩
+        exact Submodule.subset_span ⟨n, v ⊗ₜ[ℂ] w, by simp [trT, LinearMap.rTensor_tmul, TensorProduct.sub_tmul, TensorProduct.smul_tmul']⟩
       | zero => simp
       | add x y _ _ hx hy => rw [TensorProduct.add_tmul]; exact add_mem hx hy
       | smul c x _ hx => rw [← TensorProduct.smul_tmul']; exact Submodule.smul_mem _ _ hx
@@ -137,7 +137,7 @@ theorem isSmooth_trT [TopologicalSpace G] [IsTopologicalGroup G] {ρ : Represent
   | tmul v w =>
     refine mem_smoothPart_of_nhds (Filter.mem_of_superset ((hρ v).mem_nhds (by simp)) fun g hg => ?_)
     have h1 : ρ g v = v := hg
-    simp [h1]
+    simp [trT, LinearMap.rTensor_tmul, h1]
 
 end general
 

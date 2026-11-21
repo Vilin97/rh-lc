@@ -84,7 +84,8 @@ private theorem normV_under {K K' : Type} [Field K] [NumberField K] [Field K'] [
   have : w.asIdeal.LiesOver (w.under (𝓞 K)).asIdeal := ⟨rfl⟩
   have := w.isMaximal
   have := (w.under (𝓞 K)).isMaximal
-  show Ideal.absNorm w.asIdeal = Ideal.absNorm (w.under (𝓞 K)).asIdeal ^ w.asIdeal.inertiaDeg (𝓞 K)
+  change Nat.card (𝓞 K' ⧸ w.asIdeal) = Nat.card (𝓞 K ⧸ (w.under (𝓞 K)).asIdeal) ^ w.asIdeal.inertiaDeg (𝓞 K)
+  rw [← Ideal.absNorm_eq_natCard, ← Ideal.absNorm_eq_natCard]
   rw [← Ideal.absNorm_relNorm (𝓞 K) (𝓞 K') w.asIdeal,
     Ideal.relNorm_eq_pow_of_isMaximal w.asIdeal (w.under (𝓞 K)).asIdeal, map_pow]
 
@@ -142,7 +143,8 @@ private theorem exists_sign {K : Type} [Field K] [NumberField K] [IsCMField K] (
     ∃ k : ℕ, ∀ v, (χ * quadChar K ^ k).locInf v (-1) = (-1) ^ b := by
   obtain ⟨v₀⟩ : Nonempty (InfinitePlace (maximalRealSubfield K)) := inferInstance
   have hval : ∀ (k : ℕ) v, (χ * quadChar K ^ k).locInf v (-1) = χ.locInf v₀ (-1) * (-1) ^ k := fun k v => by
-    rw [HChar.locInf_mul, locInf_pow, quadChar_locInf, h v v₀]
+    change χ.locInf v (-1) * (quadChar K ^ k).locInf v (-1) = _
+    rw [locInf_pow, quadChar_locInf, h v v₀]
   have h2 : χ.locInf v₀ (-1) ^ 2 = 1 := by rw [← map_pow, neg_one_sq, map_one]
   have h3 : ((χ.locInf v₀ (-1) : ℂˣ) : ℂ) ^ 2 = 1 := by rw [← Units.val_pow_eq_pow_val, h2, Units.val_one]
   simp only [hval, Units.ext_iff, Units.val_mul, Units.val_pow_eq_pow_val, Units.val_zpow_eq_zpow_val, Units.val_neg,

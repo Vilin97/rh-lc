@@ -143,7 +143,7 @@ theorem UpperTheory.V.U3.isPt_push :
     rw [hm, h1, ← f.commutes, ← map_sub]
     refine hf _ ((res_eq_zero_iff c.O S.R _).1 ?_)
     have h2 : res c.O S.R ((S.r.hom g).mat a b) = (rbar c.O D.η D.Ψ g).mat a b :=
-      congrArg (fun x : GG 3 (ResidueField c.O) => x.mat a b) (S.r.red g)
+      congrArg (fun x : GG (m := 3) (R := ResidueField c.O) => x.mat a b) (S.r.red g)
     have h3 : (rbar c.O D.η D.Ψ g).mat a b = residue c.O ((r0 D.η D.Ψ g).mat a b) := diagonal_rep_map_entries _ _ _ _ _ _
     rw [map_sub, AlgHom.commutes, h2, h3]
     exact sub_self _

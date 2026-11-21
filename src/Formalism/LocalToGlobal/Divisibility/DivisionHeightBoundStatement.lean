@@ -283,7 +283,24 @@ theorem ChainTie.chain (T : ChainTie ch Q) (x : Fin (ch.c 0) → K) :
   have e : (chainMat ch.Kj ⟨Q.n + 1, by have := T.hmm; omega⟩).mulVec x =
       (ch.Kj ⟨Q.n, by have := T.hmm; omega⟩).mulVec ((chainMat ch.Kj ⟨Q.n, by have := T.hmm; omega⟩).mulVec x) :=
     (Matrix.mulVec_mulVec _ _ _).symm
-  rw [e, T.kerC, T.chain_le Q.n le_rfl x]
+  have aux : ∀ i (h : i ≤ Q.n), T.coF i h
+      ((chainMat ch.Kj ⟨i, by have := T.hmm; omega⟩).mulVec x) =
+      Q.kk.colTo Q.hF i (T.coF 0 (Nat.zero_le _) x) := by
+    intro i
+    induction i with
+    | zero =>
+      intro h
+      simp [chainMat, Formalism.L2.Col.KerFam.colTo]
+    | succ i ih =>
+      intro h
+      have hi : i < Q.n := by omega
+      have ee : (chainMat ch.Kj ⟨i + 1, by have := T.hmm; omega⟩).mulVec x =
+          (ch.Kj ⟨i, by have := T.hmm; omega⟩).mulVec
+            ((chainMat ch.Kj ⟨i, by have := T.hmm; omega⟩).mulVec x) :=
+        (Matrix.mulVec_mulVec _ _ _).symm
+      rw [ee, T.kerF i hi, ih hi.le]
+      rfl
+  rw [e, T.kerC, aux Q.n le_rfl]
   rfl
 
 theorem ChainTie.step_norm (T : ChainTie ch Q) (j : ℕ) (h : j < Q.n) (v : InfinitePlace K) (x : Fin (ch.c ⟨j, by have := T.hmm; omega⟩) → K) :

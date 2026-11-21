@@ -93,19 +93,20 @@ theorem dim_zeroScheme_le [IsIntegral X] [IsLocallyNoetherian X] {L : LB X} (hL 
 theorem globalSections_dim_le_div_add_restriction [IsIntegral X] (hp : IsProjOver (strHom k (X := X))) {L B : LB X} (hL : L.IsLB) (hB : B.IsLB) {t : L.Sec}
     (ht : t ≠ 0) : letI := algebraΓAlong k (secIdeal hL t).subschemeι
     lbH0 k B ≤ lbH0 k (LB.div B L) + lbH0 k (B.pull (secIdeal hL t).subschemeι) := by
-  letI := algebraΓAlong k (secIdeal hL t).subschemeι
-  have := isNoetherian_of_isProjOver hp
-  have := (mono_cutHom_structureModule_iff hL t).2 ((sec_ne_zero_iff t).1 ht)
-  have hF := finiteCohTwists_of_isProjOver (algebraMap_eq_strHom k X) (structureModule X) hp
-  have h := hdim₂_le k (Twist.shortExact_map hB (shortExact_cutComplex (structureModule X) hL t)) 0
-    ((hF.twist (Twist.isLB_lbZPow hL (-1)) _ hB).finite 0) ((hF.cut hL t _ hB).finite 0)
-  obtain ⟨e₁⟩ := nonempty_twist_twist_iso_of_cls_eq (structureModule X) (Twist.isLB_lbZPow hL (-1)) hB
-    (LB.isLB_div hB hL) (by rw [cls_div hB hL, cls_lbZPow hL]; abel)
-  obtain ⟨e₂, -⟩ := exists_cut_structureModule_iso hL t
-  have := Twist.isQuasicoherent_twist (F := structureModule _) (LB.isLB_pull hB (secIdeal hL t).subschemeι)
-  refine h.trans_eq (congrArg₂ (· + ·) (hdim_congr k 0 e₁) ((hdim_congr k 0 ((twistFunctor B).mapIso e₂)).trans
-    ((hdim_congr k 0 (Twist.projIso B _ _)).symm.trans ?_)))
-  exact hdim_pushforward k (appTop_algebraMap_along k _) _ 0
+  set_option maxHeartbeats 16000000 in
+    letI := algebraΓAlong k (secIdeal hL t).subschemeι
+    have := isNoetherian_of_isProjOver hp
+    have := (mono_cutHom_structureModule_iff hL t).2 ((sec_ne_zero_iff t).1 ht)
+    have hF := finiteCohTwists_of_isProjOver (algebraMap_eq_strHom k X) (structureModule X) hp
+    have h := hdim₂_le k (Twist.shortExact_map hB (shortExact_cutComplex (structureModule X) hL t)) 0
+      ((hF.twist (Twist.isLB_lbZPow hL (-1)) _ hB).finite 0) ((hF.cut hL t _ hB).finite 0)
+    obtain ⟨e₁⟩ := nonempty_twist_twist_iso_of_cls_eq (structureModule X) (Twist.isLB_lbZPow hL (-1)) hB
+      (LB.isLB_div hB hL) (by rw [cls_div hB hL, cls_lbZPow hL]; abel)
+    obtain ⟨e₂, -⟩ := exists_cut_structureModule_iso hL t
+    have := Twist.isQuasicoherent_twist (F := structureModule _) (LB.isLB_pull hB (secIdeal hL t).subschemeι)
+    refine h.trans_eq (congrArg₂ (· + ·) (hdim_congr k 0 e₁) ((hdim_congr k 0 ((twistFunctor B).mapIso e₂)).trans
+      ((hdim_congr k 0 (Twist.projIso B _ _)).symm.trans ?_)))
+    exact hdim_pushforward k (appTop_algebraMap_along k _) _ 0
 
 theorem interNum_nonneg (hN : GlobalTheory.Published.NefNumerics) (hp : IsProjOver (strHom k (X := X))) {d : ℕ}
     (hd : topologicalKrullDim X ≤ d) {P : Fin d → LB X} (hP : ∀ i, IsNef k (P i)) :

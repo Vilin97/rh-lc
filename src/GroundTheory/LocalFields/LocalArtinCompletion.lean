@@ -75,7 +75,7 @@ theorem artinCoord_localArtinMap (H : openFiniteIndex Kˣ) (x : Kˣ) :
 theorem continuous_artinCoord (H : openFiniteIndex Kˣ) : Continuous (artinCoord K Ω H) := by
   have := (classField K Ω H).2.1
   have := (classField K Ω H).2.2
-  change Continuous ((fun ρ => (QuotientGroup.quotientMulEquivOfEq (range_normUnits_classField H))
+  change Continuous ((fun ρ => (QuotientGroup.quotientMulEquivOfEq (range_normUnits_classField (Ω := Ω) H)).toFun
     (localReciprocityAbelian (classField K Ω H : IntermediateField K Ω) ρ)) ∘
       restrictAb _ (le_maximalAbelianExtension _))
   exact continuous_of_discreteTopology.comp (continuous_restrictAb _ _)

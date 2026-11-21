@@ -72,7 +72,7 @@ private theorem height_blk {K : Type} [Field K] [NumberField K] (a b : AdelicGLn
     exact pow_le_pow_left₀ (locHeight_pos _).le (locHeight_blk _ _) _
   have fa := finite_mulSupport_locHeight_finAt a
   have fb := finite_mulSupport_locHeight_finAt b
-  have h2 := finprod_le_finprod₀ (finite_mulSupport_locHeight_finAt g) (fun v => (locHeight_pos _).le)
+  have h2 := finprod_le_finprod (finite_mulSupport_locHeight_finAt g) (fun v => (locHeight_pos _).le)
     ((fa.union fb).subset (Function.mulSupport_mul _ _)) fun v => by
       rw [ef]; exact locHeight_blk _ _
   rw [finprod_mul_distrib fa fb] at h2
@@ -174,13 +174,13 @@ private theorem ht_bound {K : Type} [Field K] [NumberField K] (R : ℝ) : ∃ M 
 
 private theorem cusp_sum {K : Type} [Field K] [NumberField K] {μ₂ : Measure (G1 K 2)} {τ : Submodule ℂ (L2 μ₂)} {a b : ℕ}
     (φ : Fin a → G1 K 2 → ℂ) (hφ : ∀ i, Rd τ (φ i)) (c : Fin b → Fin a → ℂ) (m : G1 K 2) :
-    ∫ Y in unipFundamentalDomain K 2 1, ∑ j, ∑ i, c j i * φ i (unipOne 1 Y * m) ∂unipMeasure K 2 1 = 0 := by
+    ∫ Y in unipFundamentalDomain K 2 1, ∑ j, ∑ i, c j i * φ i (unipOne K 2 1 Y * m) ∂unipMeasure K 2 1 = 0 := by
   obtain ⟨D, hD, hsub⟩ := exists_isCompact_superset_unipFundamentalDomain (K := K) (n := 2) (r := 1)
-  have hi : ∀ j i, Integrable (fun Y => c j i * φ i (unipOne 1 Y * m))
+  have hi : ∀ j i, Integrable (fun Y => c j i * φ i (unipOne K 2 1 Y * m))
       ((unipMeasure K 2 1).restrict (unipFundamentalDomain K 2 1)) := fun j i =>
     ((continuous_const.mul ((hφ i).cont.comp ((continuous_unipOne 1).mul continuous_const))).continuousOn.integrableOn_compact
       hD).mono_set hsub
-  rw [integral_finsetSum _ fun j _ => integrable_finsetSum _ fun i _ => hi j i]
+  rw [integral_finsetSum _ fun j _ => integrable_finset_sum _ fun i _ => hi j i]
   refine Finset.sum_eq_zero fun j _ => ?_
   rw [integral_finsetSum _ fun i _ => hi j i]
   refine Finset.sum_eq_zero fun i _ => ?_

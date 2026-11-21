@@ -22,7 +22,7 @@ open GlobalTheory.SS.AmpSub
 theorem ampleCub_pull {S : Scheme.{0}} {N G : Over S} [GrpObj N] [GrpObj G] (ν : N ⟶ G) [IsMonHom ν]
     [IsAffineHom ν.left] {L : LB G.left} (h : AmpleCub G L) : AmpleCub N (L.pull ν.left) := by
   obtain ⟨hL, ⟨c, hc⟩, ⟨s, hs⟩, n, hn, ha⟩ := h
-  refine ⟨LB.isLB_pull hL _, ?_, ?_, n, hn, fun x => ?_⟩
+  refine ⟨pull_isLB hL _, ?_, ?_, n, hn, fun x => ?_⟩
   · refine gen_chartPull (chartPullLinComb L ν.left _ _ _ (ν ⊗ₘ ν ⊗ₘ ν).left fun I => ?_) c hc
     refine congrArg (fun z => z.left) (psum_comp ν (x3 N) (x3 G) (ν ⊗ₘ ν ⊗ₘ ν) (fun k => ?_) I.down)
     fin_cases k <;> simp [x3]

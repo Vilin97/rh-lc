@@ -76,7 +76,7 @@ theorem muF_fundSet_le (X : Data E r) {x0 x1 : Frame X.Ψ r} (ho : IsOrth X x0) 
   have hset : (FF ∩ {z | ∃ y ∈ CechHodgeFiltration, ∃ γ ∈ X.Γ, ∃ b ∈ Bor X.Ψ r,
       cpt X x0 z = lact γ (rmul (cpt X x1 y) b)} : Set (V (nd X))) =ᵐ[muF X x0] FF := by
     filter_upwards [h1] with z hz
-    refine ⟨fun h => h.1, fun h => ⟨h, ?_⟩⟩
+    refine propext ⟨fun h => h.1, fun h => ⟨h, ?_⟩⟩
     have hb : cpt X x0 z ∉ Bad := fun hb => by simp [Set.indicator_of_mem hb] at hz
     simp only [hBaddef, Set.mem_iInter, not_forall, Set.mem_compl_iff, not_not, Set.mem_preimage] at hb
     obtain ⟨γ, ⟨y, b⟩, ⟨hy, hb⟩, e⟩ := hb
@@ -124,8 +124,8 @@ omit [NumberField E] [IsCMField E] in
 theorem gram_eq_mul (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (x : Matrix (Fin r) (Fin r) ℂ) :
     (gram τ G x)ᵀ = xᴴ * (G.map τ)ᵀ * x := by
   ext a b
-  simp only [ReciprocityTheory.ChartRestriction.G.FD.gram, hermC, ReciprocityTheory.ChartRestriction.G.FD.col, transpose_apply, of_apply]
-  simp only [Matrix.mul_apply, conjTranspose_apply, transpose_apply, map_apply, Finset.sum_mul, starRingEnd_apply]
+  simp only [ReciprocityTheory.ChartRestriction.G.FD.gram, hermC, ReciprocityTheory.ChartRestriction.G.FD.col, transpose_apply, of_apply, mul_apply, conjTranspose_apply, map_apply,
+    Finset.sum_mul, RCLike.star_def]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 
 variable (X : Data E r) {j : ℕ} (hj : j ≤ r) {Tau : Type} (ι : Tau → X.Ψ)

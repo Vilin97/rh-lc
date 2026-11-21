@@ -43,33 +43,13 @@ theorem one_left_over {S : Scheme.{0}} {X M : Over S} [GrpObj M] : (1 : X ⟶ M)
 
 theorem isVec_existsUnique : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (L : Type) [Field L] [NumberField L] (D : PPData H L) (σ : L →+* ℂ) (a : D.Frame σ), (∀ v, IsTangent v → ∃! w, a.u.IsDiff w v) → (∀ w, ∃! v, IsTangent v ∧ a.u.IsDiff w v) → ∀ x : D.B.carrier, ∃! c, D.IsVec a x c := by
   intro E _ _ _ H L _ _ D σ a h1 h2 x
-  let φ := σ.comp (algebraMap (𝓞 L) L)
-  have hmap : (GlobalTheory.CompanionTheory.Ar.dualMap φ).comp (algebraMap (𝓞 L) (DualNumber (𝓞 L))) =
-      (algebraMap ℂ (DualNumber ℂ)).comp φ := by
-    ext t <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-  let pullEps : epsAt (spMap φ ≫ 𝟙 _) ⟶ epsAt (𝟙 _) :=
-    Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ)) (by
-      simp only [Over.mk_hom, epsAt]
-      rw [← Spec.map_comp_assoc, ← Spec.map_comp_assoc, ← CommRingCat.ofHom_comp,
-        ← CommRingCat.ofHom_comp, hmap])
-  have hpull : spMap (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom ≫ (pullEps ≫ D.MB.pt x).left =
-      (1 : Over.mk (spMap φ ≫ 𝟙 _) ⟶ D.t.G).left := by
-    have key : spMap (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) =
-        spMap φ ≫ spMap (TrivSqZeroExt.fstHom (𝓞 L) (𝓞 L) (𝓞 L)).toRingHom := by
-      simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
-      congr 1
-      ext t <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-    have ht := D.MB.tan x
-    unfold IsTanAt at ht
-    simp only [Over.comp_left, pullEps, Over.homMk_left]
-    rw [reassoc_of% key, ht, one_left_over, one_left_over]
-    simp
-  have hw : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (D.MB.pt x).left) ≫ D.t.G.hom
+  have hpull := isTanAt_pull D.t.G (σ.comp (algebraMap (𝓞 L) L)) (𝟙 _) (D.MB.pt x) (D.MB.tan x)
+  have hw : (spMap (dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (D.MB.pt x).left) ≫ D.t.G.hom
       = (epsAt (emb σ)).hom := by
-    have := Over.w (pullEps ≫ D.MB.pt x)
+    have := Over.w (pullEps (σ.comp (algebraMap (𝓞 L) L)) (𝟙 _) ≫ D.MB.pt x)
     simpa [pullEps] using this
   let v : epsAt (emb σ) ⟶ D.t.G := Over.homMk _ hw
-  have hvl : v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (D.MB.pt x).left := rfl
+  have hvl : v.left = spMap (dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (D.MB.pt x).left := rfl
   have hlift : (v.left ≫ (𝟙 D.t.G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (D.MB.pt x).left) := by
     show v.left ≫ 𝟙 _ = _
     rw [Category.comp_id]

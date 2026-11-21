@@ -30,25 +30,25 @@ theorem spMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A
   rw [CommRingCat.ofHom_comp, Spec.map_comp]
 
 theorem dualMap_conj_over :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ spMap (algebraMap ℂ (DualNumber ℂ)) =
+    spMap (dualMap (starRingEnd ℂ)) ≫ spMap (algebraMap ℂ (DualNumber ℂ)) =
       spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap (starRingEnd ℂ) := by
-  have h : (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)).comp (algebraMap ℂ (DualNumber ℂ)) =
+  have h : (dualMap (starRingEnd ℂ)).comp (algebraMap ℂ (DualNumber ℂ)) =
       (algebraMap ℂ (DualNumber ℂ)).comp (starRingEnd ℂ) := by
     ext c
-    · simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-    · simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    · simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    · simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   rw [← spMap_comp', ← spMap_comp', h]
 
 theorem dualMap_comp_ring {R : Type} [CommRing R] (f : R →+* ℂ) :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((starRingEnd ℂ).comp f)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
-  have h : GlobalTheory.CompanionTheory.Ar.dualMap ((starRingEnd ℂ).comp f) = (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
-    ext c <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    spMap (dualMap ((starRingEnd ℂ).comp f)) = spMap (dualMap (starRingEnd ℂ)) ≫ spMap (dualMap f) := by
+  have h : dualMap ((starRingEnd ℂ).comp f) = (dualMap (starRingEnd ℂ)).comp (dualMap f) := by
+    ext c <;> simp [dualMap]
   rw [h, spMap_comp']
 
 theorem spMap_dualMap_conj_conj :
-    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) = 𝟙 _ := by
-  have h : (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)).comp (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) = RingHom.id (DualNumber ℂ) := by
-    ext c <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    spMap (dualMap (starRingEnd ℂ)) ≫ spMap (dualMap (starRingEnd ℂ)) = 𝟙 _ := by
+  have h : (dualMap (starRingEnd ℂ)).comp (dualMap (starRingEnd ℂ)) = RingHom.id (DualNumber ℂ) := by
+    ext c <;> simp [dualMap]
   rw [← spMap_comp', h]
   exact Spec.map_id _
 
@@ -61,7 +61,7 @@ theorem spMap_conj_conj : spMap (starRingEnd ℂ) ≫ spMap (starRingEnd ℂ) = 
 
 def conjTan {S : Scheme.{0}} {G : Over S} {x x' : Sp ℂ ⟶ S} (h : x' = spMap (starRingEnd ℂ) ≫ x)
     (v : epsAt x ⟶ G) : epsAt x' ⟶ G :=
-  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v.left) (by
+  Over.homMk (spMap (dualMap (starRingEnd ℂ)) ≫ v.left) (by
     subst h
     have hv := Over.w v
     simp only [Over.mk_hom] at hv ⊢
@@ -89,10 +89,10 @@ theorem isRiem_of_chart {Xo : Moduli D l} {σ : KA l →+* ℂ} {n a : ℕ} (C :
   let v' : Fin m → (epsAt (spMap (conjPts C.ψ (star z))) ⟶ C.t.G) := fun i => conjTan hx (v i)
   have hv' : (chart C).IsVal (star z) u v' := by
     intro i
-    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (v i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (conjPts C.ψ (star z))) ≫ (C.M.pt (u i)).left
+    show spMap (dualMap (starRingEnd ℂ)) ≫ (v i).left = spMap (dualMap (conjPts C.ψ (star z))) ≫ (C.M.pt (u i)).left
     rw [hv i, hψ, dualMap_comp_ring, Category.assoc]
-  have hback : ∀ i, (v i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (v' i).left := fun i => by
-    show (v i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (v i).left
+  have hback : ∀ i, (v i).left = spMap (dualMap (starRingEnd ℂ)) ≫ (v' i).left := fun i => by
+    show (v i).left = spMap (dualMap (starRingEnd ℂ)) ≫ spMap (dualMap (starRingEnd ℂ)) ≫ (v i).left
     rw [← Category.assoc, spMap_dualMap_conj_conj, Category.id_comp]
   have hform : ∀ i j, hermForm Hm (fun b => conjPts C.ψ (star z) (u i b)) (fun b => conjPts C.ψ (star z) (u j b)) =
       (starRingEnd ℂ) (hermForm (Hm.map (starRingEnd ℂ)) (fun b => C.ψ z (u i b)) (fun b => C.ψ z (u j b))) := by

@@ -161,7 +161,7 @@ theorem exists_subspace_isometric : Out.Laws → Out.Laws2 → ∀ (E : Type) [F
   refine ⟨hzV, ?_⟩
   rintro w Hm x hw hR ⟨P', φ, wL, η', hφ, hwL, hη, uu, Hm', χ', z', hAH, hD, rfl⟩
   have hη' : η'.left ≫ φ = v.left := by
-    have e : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id ℂ) = RingHom.id _ := RingHom.ext fun z => TrivSqZeroExt.inl_fst_add_inr_snd_eq z
+    have e : dualMap (RingHom.id ℂ) = RingHom.id _ := RingHom.ext fun z => TrivSqZeroExt.inl_fst_add_inr_snd_eq z
     rw [hη, e]
     exact (congrArg (· ≫ v.left) (Spec.map_id _)).trans (Category.id_comp _)
   have hid : (fun z => 𝟙 (Sp ℂ) ≫ (show Sp ℂ ⟶ _ from (Ha.ex₀ z).b.left)) = fun z => (show Sp ℂ ⟶ _ from (Ha.ex₀ z).b.left) :=

@@ -51,7 +51,7 @@ theorem lifts_cochar {S S' : Scheme.{0}} {X : Type} [AddCommGroup X] (f : S' ⟶
     have h2 := hMT δ
     unfold charVal at h1 h2
     show _ ≫ pullback.fst _ _ = _ ≫ _ ≫ pullback.fst _ _
-    refine hp.symm.trans (Eq.trans ?_ (congrArg (fun z => spMap (GlobalTheory.CompanionTheory.Ar.dualMap d) ≫ z) hq))
+    refine hp.symm.trans (Eq.trans ?_ (congrArg (fun z => spMap (dualMap d) ≫ z) hq))
     rw [spMap, ← Spec.map_comp]
     congr 1
     refine CommRingCat.hom_ext (ringHom_ext_ZU fun χ => ?_)
@@ -64,7 +64,7 @@ theorem lifts_cochar {S S' : Scheme.{0}} {X : Type} [AddCommGroup X] (f : S' ⟶
     simp only [Over.mk_hom, Category.assoc]
     rw [hx, Over.w]
     simp only [Over.mk_hom]
-    rw [← Category.assoc, ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap d))]
+    rw [← Category.assoc, ← Category.assoc (spMap (dualMap d))]
     exact congrArg (· ≫ x) this.symm
 
 theorem dvd_of_forall_maximal {O : Type} [CommRing O] (a b : O)
@@ -169,14 +169,14 @@ theorem exists_local_quot {O T K : Type} [CommRing O] [CommRing T] [IsDomain T] 
   obtain ⟨hinj, hsat⟩ := GlobalTheory.T.torus_embedding_lie_injective T K (Sp T) (𝟙 _) H X F hgen MTT hMTT ET MH A hAd
   let δa : X →+ T := a.toAddMonoidHom.comp δ
   let v := MT.pt (((algebraMap T K).comp a).toAddMonoidHom.comp δ)
-  have e₁ : v.left ≫ φT = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T K)) ≫ (MTT.pt δa).left :=
+  have e₁ : v.left ≫ φT = spMap (dualMap (algebraMap T K)) ≫ (MTT.pt δa).left :=
     lifts_cochar g (algebraMap T K) (𝟙 _) (𝟙 _) (by simp [g]) MTT hMTT MT hMT δa
-  have hright : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T K)) ≫ (MTT.pt δa ≫ F).left ≫ pullback.fst G.hom y₀ =
+  have hright : spMap (dualMap (algebraMap T K)) ≫ (MTT.pt δa ≫ F).left ≫ pullback.fst G.hom y₀ =
       (v ≫ i).left ≫ φ := by
     rw [Over.comp_left, Category.assoc, ← Category.assoc (spMap _), ← e₁, Over.comp_left]
     simp only [Category.assoc]
     rw [reassoc_of% hC, hφH]
-  have hleft : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T K)) ≫ (MH.pt (jT e)).left ≫ pullback.fst G.hom y₀ =
+  have hleft : spMap (dualMap (algebraMap T K)) ≫ (MH.pt (jT e)).left ≫ pullback.fst G.hom y₀ =
       (v ≫ i).left ≫ φ := by
     rw [hMH, hL', LieHomOk.lifts_id _ _ _ _ (hjT e), ← Category.assoc,
       ← LieHomOk.spMap_dualMap_comp]
@@ -189,7 +189,7 @@ theorem exists_local_quot {O T K : Type} [CommRing O] [CommRing T] [IsDomain T] 
     rw [hAd]
     apply Over.OverMorphism.ext
     apply hH.1.hom_ext
-    · exact LieHomOk.ext_of_spMap_injective (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T K))
+    · exact LieHomOk.ext_of_spMap_injective (dualMap (algebraMap T K))
         (LieTangent.dualMap_injective (IsFractionRing.injective T K)) G.hom _ _
         ((hw _).trans (hw _).symm) (hleft.trans hright.symm)
     · exact (Over.w _).trans (Over.w _).symm
@@ -264,10 +264,10 @@ theorem saturated : ∀ (O K : Type) [CommRing O] [IsDedekindDomain O] [Field K]
     ext χ
     exact hcinj (DFunLike.congr_fun e₂ χ)
   obtain ⟨EK, i1, i2, MK, N, j, -, hj⟩ := LieHomOk.exists_generic_model (algebraMap O K) G GK φ h M
-  have hjj : ∀ a, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O K)) ≫ (M.pt a).left = (N.pt (j a)).left :=
+  have hjj : ∀ a, spMap (dualMap (algebraMap O K)) ≫ (M.pt a).left = (N.pt (j a)).left :=
     fun a => (LieHomOk.lifts_id _ _ _ _ (hj a)).symm
   have hjinj : Function.Injective j := fun a b hab => M.inj (Over.OverMorphism.ext
-    (LieHomOk.ext_of_spMap_injective (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O K)) (LieTangent.dualMap_injective hcinj) G.hom _ _
+    (LieHomOk.ext_of_spMap_injective (dualMap (algebraMap O K)) (LieTangent.dualMap_injective hcinj) G.hom _ _
       ((Over.w (M.pt a)).trans (Over.w (M.pt b)).symm) (by rw [hjj, hjj, hab])))
   have htf : ∀ (a : O) (z : E), a ≠ 0 → a • z = 0 → z = 0 := by
     intro a z ha hz

@@ -77,7 +77,7 @@ theorem exists_semilin {S : Scheme.{0}} {G : Over S} [GrpObj G] {R R' : Type} [C
     {x : Spec (CommRingCat.of R) ⟶ S} {x' : Spec (CommRingCat.of R') ⟶ S} (φ : R →+* R')
     (hφ : Spec.map (CommRingCat.ofHom φ) ≫ x = x') {E E' : Type} [AddCommGroup E] [Module R E]
     [AddCommGroup E'] [Module R' E'] (M : LieModel G x E) (M' : LieModel G x' E') :
-    ∃ L : E →+ E', (∀ e, (M'.pt (L e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) ≫ (M.pt e).left) ∧
+    ∃ L : E →+ E', (∀ e, (M'.pt (L e)).left = Spec.map (CommRingCat.ofHom (dualMap φ)) ≫ (M.pt e).left) ∧
       ∀ (a : R) (e : E), L (a • e) = φ a • L e := by
   have hL : ∀ e, ∃ e', M'.pt e' = LieTangent.epsBase φ hφ ≫ M.pt e :=
     fun e => M'.onto _ (LieTangent.isTanAt_base φ hφ (M.tan e))
@@ -102,8 +102,8 @@ theorem side {S X : Scheme.{0}} {G : Over S} [GrpObj G] {Gx : Over X} [GrpObj Gx
     {xF : Spec (CommRingCat.of F) ⟶ S} {V : Type} [AddCommGroup V] [Module F V] (MV : LieModel G xF V)
     (io : ER → V) (Lm : Li → V)
     (hio : ∀ x, (MV.pt (io x)).left =
-      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap A.subtype)) ≫ (MR.pt x).left ≫ φ)
-    (hL : ∀ e, (MV.pt (Lm e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap θ)) ≫ (M.pt e).left ≫ φ)
+      Spec.map (CommRingCat.ofHom (dualMap A.subtype)) ≫ (MR.pt x).left ≫ φ)
+    (hL : ∀ e, (MV.pt (Lm e)).left = Spec.map (CommRingCat.ofHom (dualMap θ)) ≫ (M.pt e).left ≫ φ)
     {r : ℕ} (b : Fin r → Li) (π : Fin r → Module.Dual Ω₁ Li) (m : ℕ)
     (hm : ∀ i, (m : Ω₁) • b i ∈ M.lat ⟨centre z, h⟩) (hπ : ∀ i j, π i (b j) = if i = j then 1 else 0)
     (hreg : ∀ i, ∀ e ∈ M.lat ⟨centre z, h⟩, (m : Ω₁) * π i e ∈ regAt ξ ⟨centre z, h⟩) :
@@ -223,9 +223,9 @@ theorem flag_scale {Ω V : Type} [Field Ω] [AddCommGroup V] [Module Ω V] {r : 
     rw [SetLike.mem_coe, this]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, hk, rfl⟩)
 
-theorem dualMap_id (R : Type) [CommRing R] : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id (DualNumber R) := by
+theorem dualMap_id (R : Type) [CommRing R] : dualMap (RingHom.id R) = RingHom.id (DualNumber R) := by
   refine RingHom.ext fun a => ?_
-  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  ext <;> simp [dualMap]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Level H}
   {Xo : Moduli D l} {c : Coeff l} {Y : Model Xo c (algebraMap (𝓞 c.F) c.F)} {S S₀ : Finset ℕ}
@@ -235,7 +235,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
 theorem core (𝔐 : HodgeCpt Y S y) (𝔐₀ : HodgeCpt Y S₀ y₀) (Fl : 𝔐.Flag) (Fl₀ : 𝔐₀.Flag) (i : Ω₀ →+* Ω)
     (h1 : 𝔐.ξ ≫ 𝔐.f = spMap i ≫ 𝔐₀.ξ ≫ 𝔐₀.f)
     (h2 : ∀ s k, (𝔐.M.pt (Fl.b s k)).left ≫ 𝔐.m.φ =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (𝔐₀.M.pt (Fl₀.b s k)).left ≫ 𝔐₀.m.φ)
+      spMap (dualMap i) ≫ (𝔐₀.M.pt (Fl₀.b s k)).left ≫ 𝔐₀.m.φ)
     (A : Subring Ω) [IsLocalRing A] (hfrac : ∀ a : Ω, ∃ d ∈ A, d ≠ 0 ∧ d * a ∈ A)
     (hnat : ∀ n : ℕ, n ≠ 0 → (n : Ω) ≠ 0 ∧ (n : Ω)⁻¹ ∈ A)
     (z : Spec (CommRingCat.of A) ⟶ 𝔐.X) (z₀ : Spec (CommRingCat.of A) ⟶ 𝔐₀.X)
@@ -372,7 +372,7 @@ theorem reg_mem {X : Scheme.{0}} {Ω F : Type} [Field Ω] [Field F] {ξ : Spec (
   rw [← hs]
   exact ((Scheme.stalkClosedPointTo z).hom s).2
 
-theorem genUnit_join : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (S S₀ : Finset ℕ) [Fintype (CMType H)] (M R : Top.RootModel (CMType H) (D.p + D.q)) (𝔐 : HodgeCpt Y S M.y) (𝔐₀ : HodgeCpt Y S₀ R.y) (Fl : 𝔐.Flag) (Fl₀ : 𝔐₀.Flag) (i : R.Ω →+* M.Ω) (e : CMType H × Fin (D.p + D.q) → M.Ω) (e₀ : CMType H × Fin (D.p + D.q) → R.Ω), 𝔐.ξ ≫ 𝔐.f = spMap i ≫ 𝔐₀.ξ ≫ 𝔐₀.f → (∀ s k, (𝔐.M.pt (Fl.b s k)).left ≫ 𝔐.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (𝔐₀.M.pt (Fl₀.b s k)).left ≫ 𝔐₀.m.φ) → Fl.RootLines M.xdeg e → Fl₀.RootLines R.xdeg e₀ → ∀ r, Ht.GenUnit (Ht.joinOf M R i) (Ht.joinDeg M R (some r)) (i (e₀ r) / e r) := by
+theorem genUnit_join : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (S S₀ : Finset ℕ) [Fintype (CMType H)] (M R : Top.RootModel (CMType H) (D.p + D.q)) (𝔐 : HodgeCpt Y S M.y) (𝔐₀ : HodgeCpt Y S₀ R.y) (Fl : 𝔐.Flag) (Fl₀ : 𝔐₀.Flag) (i : R.Ω →+* M.Ω) (e : CMType H × Fin (D.p + D.q) → M.Ω) (e₀ : CMType H × Fin (D.p + D.q) → R.Ω), 𝔐.ξ ≫ 𝔐.f = spMap i ≫ 𝔐₀.ξ ≫ 𝔐₀.f → (∀ s k, (𝔐.M.pt (Fl.b s k)).left ≫ 𝔐.m.φ = spMap (dualMap i) ≫ (𝔐₀.M.pt (Fl₀.b s k)).left ≫ 𝔐₀.m.φ) → Fl.RootLines M.xdeg e → Fl₀.RootLines R.xdeg e₀ → ∀ r, Ht.GenUnit (Ht.joinOf M R i) (Ht.joinDeg M R (some r)) (i (e₀ r) / e r) := by
   intro E _ _ _ H D l Xo c Y S S₀ _ M R 𝔐 𝔐₀ Fl Fl₀ i e e₀ h1 h2 hr hr₀ r L _ _ z hz
   classical
   choose cj hcj using hz.1

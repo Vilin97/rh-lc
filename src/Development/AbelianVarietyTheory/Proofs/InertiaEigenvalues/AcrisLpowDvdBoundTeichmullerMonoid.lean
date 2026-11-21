@@ -49,11 +49,7 @@ end GlobalTheory.AcrisMonBound
 
 namespace GlobalTheory.AcrisMonBound
 
-open GlobalTheory.AcrisMuBound in
-theorem main : ∀ (l : ℕ) [Fact l.Prime] (y : Ainf l), WittVector.constantCoeff y ≠ 0 →
-    ∃ C : ℕ, ∀ (z : ℤ_[l]) (N : ℕ), z ≠ 0 →
-      (l : Per.Acris l) ^ N ∣ algebraMap (Ainf l) (Per.Acris l) y *
-        algebraMap ℤ_[l] (Per.Acris l) z → N ≤ z.valuation + C := by
+theorem main : ∀ (l : ℕ) [Fact l.Prime] (y : Ainf l), WittVector.constantCoeff y ≠ 0 → ∃ C : ℕ, ∀ (z : ℤ_[l]) (N : ℕ), z ≠ 0 → (l : Per.Acris l) ^ N ∣ ainfToAcris l y * algebraMap ℤ_[l] (Per.Acris l) z → N ≤ z.valuation + C := by
   intro l hl y hy
   have hl2 : 2 ≤ l := hl.out.two_le
   obtain ⟨ϖ, hϖ⟩ := GlobalTheory.MemLoc.FundOnto.untilt_surjective l (l : Per.OC l)
@@ -69,66 +65,20 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (y : Ainf l), WittVector.constantCoe
       (l : Per.Acris l) ^ v * algebraMap ℤ_[l] (Per.Acris l) (u : ℤ_[l]) := by
     conv_lhs => rw [PadicInt.unitCoeff_spec hz]
     rw [map_mul, map_pow, map_natCast, mul_comm]
-  have hy' : algebraMap (Ainf l) (Per.Acris l) y' =
-      algebraMap (Ainf l) (Per.Acris l) y * algebraMap ℤ_[l] (Per.Acris l) (u : ℤ_[l]) := by
+  have hy' : ainfToAcris l y' = ainfToAcris l y * algebraMap ℤ_[l] (Per.Acris l) (u : ℤ_[l]) := by
     simp only [y', map_mul]
     congr 1
-  have h2 : (l : Per.Acris l) ^ n' ∣ algebraMap (Ainf l) (Per.Acris l) y' := by
+  have h2 : (l : Per.Acris l) ^ n' ∣ ainfToAcris l y' := by
     obtain ⟨w, hw⟩ := h
     refine ⟨w, ?_⟩
-    have h3 : ((l ^ v : ℕ) : Per.Acris l) *
-        (algebraMap (Ainf l) (Per.Acris l) y' - (l : Per.Acris l) ^ n' * w) = 0 := by
+    have h3 : ((l ^ v : ℕ) : Per.Acris l) * (ainfToAcris l y' - (l : Per.Acris l) ^ n' * w) = 0 := by
       rw [hza] at hw
       rw [hy']
       push_cast
       rw [mul_sub]
       linear_combination hw
     exact sub_eq_zero.1 (acris_nat_cancel (pow_ne_zero _ hl.out.ne_zero) h3)
-  have h4 : ϖ ^ ((l - 1) * n') ∣ WittVector.constantCoeff y' := by
-    have exists_divisor : ∃ b ∈ Per.Acris0 l,
-        (l : Per.AinfP l) ^ n' * b = algebraMap (Per.Ainf l) (Per.AinfP l) y' := by
-      obtain ⟨w, hw⟩ := h2
-      obtain ⟨e, he⟩ := GlobalTheory.AdicMaps.exists_acris_completion l
-      let I : Ideal (Per.Acris0 l) := Ideal.span {(l : Per.Acris0 l)}
-      let f := (AdicCompletion.evalₐ I n').toRingHom.comp e.toRingHom
-      have hp : f (l : Per.Acris l) ^ n' = 0 := by
-        rw [map_natCast, ← map_natCast (Ideal.Quotient.mk (I ^ n')), ← map_pow,
-          Ideal.Quotient.eq_zero_iff_mem]
-        exact Ideal.pow_mem_pow (Ideal.mem_span_singleton_self _) _
-      have hm := congrArg f hw
-      simp only [map_mul f, map_pow f, hp, zero_mul] at hm
-      have hmem : algebraMap (Per.Ainf l) (Per.Acris0 l) y' ∈ I ^ n' := by
-        rw [GlobalTheory.RingIface.tower l y'] at hm
-        change AdicCompletion.evalₐ I n' (e (algebraMap (Per.Acris0 l) (Per.Acris l)
-          (algebraMap (Per.Ainf l) (Per.Acris0 l) y'))) = 0 at hm
-        rw [he, AlgHom.commutes] at hm
-        exact Ideal.Quotient.eq_zero_iff_mem.1 hm
-      change _ ∈ Ideal.span {(l : Per.Acris0 l)} ^ n' at hmem
-      rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton] at hmem
-      obtain ⟨b, hb⟩ := hmem
-      exact ⟨b, b.2, by simpa using (congrArg Subtype.val hb).symm⟩
-    obtain ⟨b, hb, hby⟩ := exists_divisor
-    obtain ⟨m, a, ha, hba⟩ := acris0_le hl2 hϖ hb
-    have hinj : Function.Injective (algebraMap (Per.Ainf l) (Per.AinfP l)) :=
-      IsLocalization.injective (Per.AinfP l)
-        (powers_le_nonZeroDivisors_of_noZeroDivisors l_ne_zero_ainf)
-    have heq : (l : Ainf l) ^ m * y' = (l : Ainf l) ^ n' * a := by
-      apply hinj
-      simp only [map_mul, map_pow, map_natCast]
-      rw [← hby, ← hba]
-      ring
-    have hy_mem : y' ∈ Iw ϖ ^ n' := by
-      refine mem_of_l_pow_mul (ne_zero_of_untilt hϖ) m n' ?_
-      rw [heq, pow_add]
-      exact Ideal.mul_mem_mul (Ideal.pow_mem_pow (l_mem_Iw ϖ) n') ha
-    have himage := Ideal.mem_map_of_mem (WittVector.constantCoeff (p := l) (R := OCb l)) hy_mem
-    have hspan : Ideal.map (WittVector.constantCoeff (p := l) (R := OCb l)) (Iw ϖ) ≤
-        Ideal.span {ϖ ^ (l - 1)} := by
-      rw [Ideal.map_sup, Ideal.map_span, Ideal.map_span, Set.image_singleton, Set.image_singleton,
-        cc_natCast_l, map_pow, cc_teich, Ideal.span_singleton_eq_bot.2 rfl, bot_sup_eq]
-    rw [Ideal.map_pow] at himage
-    have hpow := Ideal.pow_right_mono hspan n' himage
-    rwa [Ideal.span_singleton_pow, Ideal.mem_span_singleton, ← pow_mul] at hpow
+  have h4 := GlobalTheory.AcrisMuBound.pow_dvd_cc hl2 hϖ h2
   have hu : IsUnit (WittVector.constantCoeff (algebraMap ℤ_[l] (Ainf l) (u : ℤ_[l]))) :=
     (u.isUnit.map _).map _
   rw [show y' = y * algebraMap ℤ_[l] (Ainf l) (u : ℤ_[l]) from rfl, map_mul, hu.dvd_mul_right] at h4

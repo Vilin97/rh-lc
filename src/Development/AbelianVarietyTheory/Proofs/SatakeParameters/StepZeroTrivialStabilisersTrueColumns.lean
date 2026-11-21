@@ -92,7 +92,7 @@ namespace GlobalTheory.Pdv
 open GlobalTheory.Pdv.StabZero
 
 theorem stepZero_trivial_stabilisers_trueColumns : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)),
-    LevelData (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) → OrbitPlaces.Stab0 (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) := by
+    LevelData (I.rec7 l Z) → OrbitPlaces.Stab0 (I.rec7 l Z) := by
   intro B X I h _ l Z lev
   exact ⟨Formalism.L2.G.StabilizerCardinality.card_stab0_mem _ lev,
     fun u μ _ c => card_stab_zero h l u μ (fun c' => Formalism.L2.G.StabilizerCardinality.card_stab0_mem _ lev u c') c⟩

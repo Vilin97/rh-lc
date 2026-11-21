@@ -121,8 +121,7 @@ theorem delta_par_k (h : _root_.PositivityTheory.SiegelWeilFormula.Act.C6.Hyp_k 
   rw [_root_.PositivityTheory.SiegelWeilFormula.Act.C6.cM_frame_k h] at hp
   simp [_root_.PositivityTheory.SiegelWeilFormula.Act.C5.aB_k, _root_.PositivityTheory.SiegelWeilFormula.Act.C5.uA_k, Matrix.single_apply, _root_.PositivityTheory.SiegelWeilFormula.Act.C4.em_ne_k L, Ne.symm (_root_.PositivityTheory.SiegelWeilFormula.Act.C4.em_ne_k L _)] at hp
   apply kfour.inclR_injective (F := F)
-  have hc : cA σ (inclR (F := F) (AF F) δ) = inclR (F := F) (AF F) (σ δ) := rfl
-  rw [← hc, map_neg, map_mul, map_intCast]
+  rw [← GlobalTheory.EisBL.DoubledUnipotentRadical.cA_inclR, map_neg, map_mul, map_intCast]
   simpa using hp
 open B in
 theorem row_sC_k (h : _root_.PositivityTheory.SiegelWeilFormula.Act.C6.Hyp_k L nb uM nb' w₁ cM δ) (e : AE F E) (b u : Fin L.n → AE F E) (a : AF F) :

@@ -69,8 +69,8 @@ theorem eqv_left {c : Coef S v} (he : EqvC S T v c) {g : B.Mat S.G.k S.G.r} (hg 
     {n : B.Mat S.G.k S.G.r} (hn : n ∈ Nset S.G.k S.G.r) (X : Wq (S.pl v) →L[ℂ] Wp (S.pl v)) :
     c (n * g) X = c g X := by
   have hp : (T v).base.inSS ((Matrix.of.symm 1, Matrix.of.symm n⁻¹), (Matrix.of.symm 1, Matrix.of.symm 1)) :=
-    ⟨by simpa using P.BigCellZetaMinors.one_uw (T v).base.z, by simpa using WeylGroupFacts.mem_n_inv hn,
-      by simpa using P.BigCellZetaMinors.one_uw (T v).base.z', by simpa using WeylGroupFacts.mem_n_one⟩
+    ⟨by simpa only [Equiv.apply_symm_apply] using P.BigCellZetaMinors.one_uw (T v).base.z, by simpa only [Equiv.apply_symm_apply] using WeylGroupFacts.mem_n_inv hn,
+      by simpa only [Equiv.apply_symm_apply] using P.BigCellZetaMinors.one_uw (T v).base.z', by simpa only [Equiv.apply_symm_apply] using WeylGroupFacts.mem_n_one⟩
   have h := he _ hp g hg X
   have hu : IsUnit n.det := WeylGroupFacts.isUnit_of_uh hn.1
   simp only [Equiv.apply_symm_apply, inv_one, (T v).base.π_rep.1, (T v).base.π'_rep.1, B.sgs,
@@ -81,8 +81,8 @@ theorem eqv_right {c : Coef S v} (he : EqvC S T v c) {g : B.Mat S.G.k S.G.r} (hg
     {n : B.Mat S.G.k S.G.r} (hn : n ∈ Nset S.G.k S.G.r) (X : Wq (S.pl v) →L[ℂ] Wp (S.pl v)) :
     c (g * n) X = c g X := by
   have hp : (T v).base.inSS ((Matrix.of.symm 1, Matrix.of.symm 1), (Matrix.of.symm 1, Matrix.of.symm n)) :=
-    ⟨by simpa using P.BigCellZetaMinors.one_uw (T v).base.z, by simpa using WeylGroupFacts.mem_n_one,
-      by simpa using P.BigCellZetaMinors.one_uw (T v).base.z', by simpa using hn⟩
+    ⟨by simpa only [Equiv.apply_symm_apply] using P.BigCellZetaMinors.one_uw (T v).base.z, by simpa only [Equiv.apply_symm_apply] using WeylGroupFacts.mem_n_one,
+      by simpa only [Equiv.apply_symm_apply] using P.BigCellZetaMinors.one_uw (T v).base.z', by simpa only [Equiv.apply_symm_apply] using hn⟩
   have h := he _ hp g hg X
   simp only [Equiv.apply_symm_apply, inv_one, (T v).base.π_rep.1, (T v).base.π'_rep.1, B.sgs,
     Matrix.one_mul, Matrix.mul_one] at h
@@ -94,8 +94,8 @@ theorem eqv_uw {c : Coef S v} (he : EqvC S T v c) {g : B.Mat S.G.k S.G.r} (hg : 
     c (h * g * h') (((T v).base.π h).comp (X.comp ((T v).base.π' h'))) =
       ((T v).base.π h).comp ((c g X).comp ((T v).base.π' h')) := by
   have hp : (T v).base.inSS ((Matrix.of.symm h, Matrix.of.symm 1), (Matrix.of.symm h'⁻¹, Matrix.of.symm 1)) :=
-    ⟨by simpa using hh, by simpa using WeylGroupFacts.mem_n_one,
-      by simpa using P.BigCellInversePair.uw_inv hh', by simpa using WeylGroupFacts.mem_n_one⟩
+    ⟨by simpa only [Equiv.apply_symm_apply] using hh, by simpa only [Equiv.apply_symm_apply] using WeylGroupFacts.mem_n_one,
+      by simpa only [Equiv.apply_symm_apply] using P.BigCellInversePair.uw_inv hh', by simpa only [Equiv.apply_symm_apply] using WeylGroupFacts.mem_n_one⟩
   have hg' : h * g * h' ∈ B.GV S.G.k S.G.r := WeylGroupFacts.uh_mul (WeylGroupFacts.uh_mul hh.1 hg) hh'.1
   have e := he _ hp (h * g * h') hg' X
   have hu' : IsUnit h'.det := WeylGroupFacts.isUnit_of_uh hh'.1

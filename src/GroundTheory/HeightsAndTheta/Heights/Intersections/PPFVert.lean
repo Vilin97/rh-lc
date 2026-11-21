@@ -79,8 +79,8 @@ theorem PFVert.proof
   intro K _ ι _ K' _ ι' _ κ v P' d r L L' N s a W hv hP' hP hL hs hsP hW hh
   classical
   have hsec : IsSectionOn P' (HermLine.sqMetric (ι := ι') a) s := ⟨a, fun _ => rfl, hs, hsP⟩
-  obtain ⟨-, hvert⟩ := divSuppArith K' ι' P' (d + r) _ _ W hP' hsec hW
-  obtain ⟨hWm, hpr, hWd⟩ := hvert hh
+  obtain ⟨hWm, hpr, hWd⟩ :=
+    (divSuppArith K' ι' P' (d + r) (HermLine.sqMetric (ι := ι') a) s W hP' hsec hW).2 hh
   have hPW : P' ≤ W := le_sup_left.trans hW.1.1.2
   have e : (fun j => (Fin.append L' N j).a) =
       Fin.append (fun j => pullDeg κ (L j).a) (fun j => (N j).a) := by

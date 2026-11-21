@@ -46,5 +46,4 @@ theorem UpperTheory.Gal.TP.Sub.upOf_holds :
     have h1 := hLS E n (n + t) (by omega) Bs χX χW mX mW _ U U' hU hL v hv hX hW B hB
     rw [Nat.add_sub_cancel_left] at h1
     refine ⟨_, h1, ?_⟩
-    simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using
-      hS E v n t B _ _ _ (fun i => (((ψ i).val v : ℂˣ) : ℂ)) hk hc
+    exact hS E v n t B _ _ _ (fun i => (((ψ i).val v : ℂˣ) : ℂ)) hk hc

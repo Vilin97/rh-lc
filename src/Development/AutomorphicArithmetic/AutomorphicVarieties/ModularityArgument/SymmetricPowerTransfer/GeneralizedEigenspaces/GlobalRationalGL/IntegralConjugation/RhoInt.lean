@@ -91,4 +91,4 @@ theorem UpperTheory.V.Z.Sym.Dict.Br.rhoInt :
     have e1 : algebraMap (Ov v) (Lsq (Kv v) (cv v P.Δ)) t = ⟨2 * x.re, 0⟩ := rfl
     have e2 : algebraMap (Ov v) (Lsq (Kv v) (cv v P.Δ)) (-n) = ⟨-(x.re * x.re - cv v P.Δ * (x.im * x.im)), 0⟩ := rfl
     simp only [Polynomial.eval₂_sub, Polynomial.eval₂_add, Polynomial.eval₂_mul, Polynomial.eval₂_pow, Polynomial.eval₂_X, Polynomial.eval₂_C, e1, e2]
-    apply QuadraticAlgebra.ext <;> simp [pow_two, QuadraticAlgebra.re_ofNat, QuadraticAlgebra.im_ofNat] <;> ring
+    apply QuadraticAlgebra.ext <;> simp [pow_two] <;> ring

@@ -33,7 +33,7 @@ private theorem normV_under' {K K' : Type} [Field K] [NumberField K] [Field K'] 
   have : w.asIdeal.LiesOver (w.under (𝓞 K)).asIdeal := ⟨rfl⟩
   have := w.isMaximal
   have := (w.under (𝓞 K)).isMaximal
-  simp only [normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply]
+  show Ideal.absNorm w.asIdeal = Ideal.absNorm (w.under (𝓞 K)).asIdeal ^ w.asIdeal.inertiaDeg (𝓞 K)
   rw [← Ideal.absNorm_relNorm (𝓞 K) (𝓞 K') w.asIdeal,
     Ideal.relNorm_eq_pow_of_isMaximal w.asIdeal (w.under (𝓞 K)).asIdeal, map_pow]
 
@@ -46,7 +46,7 @@ private theorem normV_le {K : Type} [Field K] [NumberField K] (w : HeightOneSpec
   have e : normV w = Fintype.card (𝓞 K ⧸ w.asIdeal) := Nat.card_eq_fintype_card
   rw [e]
   by_contra hlt
-  refine Polynomial.X_pow_sub_X_ne_zero (R := 𝓞 K ⧸ w.asIdeal) hq
+  refine FiniteField.X_pow_card_sub_X_ne_zero (𝓞 K ⧸ w.asIdeal) hq
     (Polynomial.eq_zero_of_natDegree_lt_card_of_eval_eq_zero' _ Finset.univ (fun y _ => ?_) ?_)
   · obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective y
     have := Ideal.Quotient.eq.2 (h x)
@@ -80,9 +80,7 @@ theorem UpperTheory.V.Af.Tw.frobSplit :
   intro F L Ω _ _ _ _ _ _ _ _ _ _ _ h2 v A hur hA s hs
   classical
   obtain ⟨w, hwv, hw⟩ := exists_above (L := L) hA
-  have hq : 1 < normV v := by
-    rw [normV, ← Submodule.cardQuot_apply, ← Ideal.absNorm_apply]
-    exact NumberField.HeightOneSpectrum.one_lt_absNorm v
+  have hq : 1 < normV v := NumberField.HeightOneSpectrum.one_lt_absNorm v
   have hle : normV w ≤ normV v := by
     refine normV_le w hq fun x => ?_
     rw [← hw]

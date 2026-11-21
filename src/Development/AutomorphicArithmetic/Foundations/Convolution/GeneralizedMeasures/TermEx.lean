@@ -56,7 +56,7 @@ private theorem prodFn_test {F E : Type} [Field F] [NumberField F] [Field E] [Nu
   haveI : Fintype (PlacesOver E v) := Fintype.ofFinite _
   have e : prodFn h = fun g => ∏ w, h w (cmp w g) := funext fun g => finprod_eq_prod_of_fintype _
   rw [e]
-  refine ⟨continuous_finset_prod _ fun w _ => (hc w).1.comp (cmp_cont w), ?_⟩
+  refine ⟨continuous_finsetProd _ fun w _ => (hc w).1.comp (cmp_cont w), ?_⟩
   haveI : T2Space (CompletionsOver E v) := Pi.t2Space
   haveI : T2Space (GL (Fin n) (CompletionsOver E v)) := Units.instT2Space
   haveI : R1Space (GL (Fin n) (CompletionsOver E v)) := T2Space.r1Space
@@ -102,7 +102,7 @@ private theorem mono_split {E : Type} [Field E] [NumberField E] {n : ℕ} (κ : 
     (hβ : ∀ x ∈ β.support, x.1 ∈ κ) : ∃ p : Pl E → MvPolynomial (Fin n) ℂ, (∀ w ∈ κ, (p w).totalDegree ≤ β.degree) ∧
       ∏ w ∈ κ, atPl w (p w) = monomial β 1 := by
   refine ⟨fun w => ∏ i, X i ^ β (w, i), fun w _ => ?_, ?_⟩
-  · refine (totalDegree_finset_prod _ _).trans ?_
+  · refine (totalDegree_finsetProd _ _).trans ?_
     simp only [totalDegree_X_pow]
     have h1 : ∑ i, β (w, i) = ∑ x ∈ Finset.univ.image (fun i : Fin n => (w, i)), β x := by
       rw [Finset.sum_image]; intro a _ b _ h; exact (Prod.ext_iff.1 h).2

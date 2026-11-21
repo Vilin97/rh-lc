@@ -44,7 +44,7 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 theorem contDiff_entry {k r : ℕ} (i j : Fin (2 * r + k + 1)) :
     ContDiff ℝ (⊤ : ℕ∞) (fun g : B.Mat k r => g i j) := by
-  exact contDiff_apply_apply ℝ ℂ i j
+  exact contDiff_apply_apply ℝ i j
 
 theorem contDiff_det {n : Type} [Fintype n] [DecidableEq n] {k r : ℕ} (M : B.Mat k r → Matrix n n ℂ)
     (hM : ∀ a b, ContDiff ℝ (⊤ : ℕ∞) (fun g => M g a b)) : ContDiff ℝ (⊤ : ℕ∞) (fun g => (M g).det) := by

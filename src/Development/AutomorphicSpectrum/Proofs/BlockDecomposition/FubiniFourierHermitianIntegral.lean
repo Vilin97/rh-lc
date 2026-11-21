@@ -70,7 +70,7 @@ theorem continuous_pairHerm (R : Type) [CommRing R] [Algebra F R] [TopologicalSp
   haveI : IsTopologicalRing (R ⊗[F] E) := GlobalTheory.CompanionTheory.SW.TopK.isTopRing R
   unfold pairHerm
   refine continuous_const.mul ((GlobalTheory.CompanionTheory.SW.TopK.continuous_trace R).comp ?_)
-  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ => ?_
+  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ => ?_
   exact ((continuous_subtype_val.comp continuous_fst).matrix_elem a b).mul
     ((continuous_subtype_val.comp continuous_snd).matrix_elem b a)
 

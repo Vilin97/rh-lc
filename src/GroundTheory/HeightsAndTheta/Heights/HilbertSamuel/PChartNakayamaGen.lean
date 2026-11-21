@@ -133,6 +133,8 @@ theorem genNear_of_chart [Nontrivial S] {M : Type} [AddCommGroup M] [Module (MRi
         (isMultiHomog_chartMon c (fun _ => 1))) (isMultiHomog_chartMon c (fun k => E - a₁ k)))
         (isMultiHomog_chartMon c (fun _ => e))) (isMultiHomog_chartMon c a)) (hp j)
     convert h using 1
+    funext k
+    simp only [Pi.add_apply, Pi.mul_apply, Pi.natCast_apply, Pi.one_apply, nsmul_eq_mul]
     have := haE k
     zify [this] at *
     ring

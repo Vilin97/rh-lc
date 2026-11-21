@@ -18,9 +18,6 @@ open GlobalTheory.PRep
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
-open private rel_of_chars chi_unit from Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AdmissibleResidues.LLocData
-open private charpoly_smul_prod absPow_neg_nat from Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.NilpotentLevelLowering.NuChar
-
 namespace UpperTheory.V.Z.Win.LocalCharacterData
 
 section Loc
@@ -48,7 +45,12 @@ private theorem psi_val (ψ : Fin n → kˣ →* ℂˣ) (χ : (Fin n → kˣ) �
     rw [modExp_fin _ (fun _ => by simp)]
     push_cast
     ring
-  have h4 := absPow_neg_nat k (i : ℕ) x
+  have h4 : (absPow k (-((i : ℕ) : ℂ)) x : ℂ) = (resCard k : ℂ) ^ (((i : ℕ) : ℤ) * ord k x) := by
+    rw [val_absPow, GlobalTheory.LGrp.nabs_eq_zpow, Complex.cpow_neg, Complex.cpow_natCast]
+    push_cast
+    rw [← zpow_natCast, ← zpow_mul, ← zpow_neg]
+    congr 1
+    ring
   rw [← h1, hχ]
   simp only [MonoidHom.mul_apply, MonoidHom.comp_apply, Units.val_mul]
   erw [h2]
@@ -137,8 +139,26 @@ private theorem nuCharV (L : LawsV a ha ε rc) (σ : SmIrr (GL (Fin n) (w.adicCo
   generalize rc (IrrGL.of σ.ρ σ.smooth σ.irred) = x at H ⊢
   obtain ⟨m, b, rfl⟩ := x.exists_rep
   rw [WD.charPol_mk] at H
-  rw [WD.lpTw_mk, WD.charPol_mk, WDRep.tw_ρ, ← GlobalTheory.SatChar.absPow_art ha ((1 - (n : ℝ)) / 2) g,
-    charpoly_smul_prod _ _ (Units.ne_zero _) _ H]
+  rw [WD.lpTw_mk, WD.charPol_mk, WDRep.tw_ρ, ← GlobalTheory.SatChar.absPow_art ha ((1 - (n : ℝ)) / 2) g]
+  let u : ℂ := absPow (w.adicCompletion E) (((1 - (n : ℝ)) / 2 : ℝ) : ℂ) (a g)
+  have hu : u ≠ 0 := Units.ne_zero _
+  have hscale : (u • b.ρ g).charpoly = (b.ρ g).charpoly.scaleRoots u := by
+    apply Polynomial.funext
+    intro x
+    have hx : x = u * (u⁻¹ * x) := by rw [← mul_assoc, mul_inv_cancel₀ hu, one_mul]
+    rw [hx, scaleRoots_eval_mul, LinearMap.charpoly_natDegree, LinearMap.eval_charpoly,
+      LinearMap.eval_charpoly, ← LinearMap.det_smul, smul_sub, Module.algebraMap_end_eq_smul_id,
+      Module.algebraMap_end_eq_smul_id, smul_smul]
+  let scale : ℂ[X] →* ℂ[X] := {
+    toFun := fun p => p.scaleRoots u
+    map_one' := one_scaleRoots u
+    map_mul' := fun p q => mul_scaleRoots_of_noZeroDivisors p q u }
+  have hprod : (u • b.ρ g).charpoly = ∏ i, (X - C ((ψ i (a g) : ℂ) * u)) := by
+    rw [hscale, H]
+    change scale (∏ i, (X - C (ψ i (a g) : ℂ))) = _
+    rw [map_prod]
+    exact Finset.prod_congr rfl fun i _ => X_sub_C_scaleRoots _ _
+  rw [hprod]
   refine Finset.prod_congr rfl fun i _ => ?_
   congr 2
   have e1 : ((n : ℂ) - 1) / 2 + (((1 - (n : ℝ)) / 2 : ℝ) : ℂ) = 0 := by

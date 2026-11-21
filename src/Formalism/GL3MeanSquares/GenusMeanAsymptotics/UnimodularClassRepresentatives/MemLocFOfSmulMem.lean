@@ -134,8 +134,8 @@ theorem exists_lift {A₀ : Submodule (𝓞 K) V} (hA₀ : Submodule.IsLattice K
     | add y z _ _ h1 h2 =>
       obtain ⟨hy, hDy, e1⟩ := h1
       obtain ⟨hz, hDz, e2⟩ := h2
-      refine ⟨add_mem hy hz, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hDy hDz, ?_⟩
-      have e3 : (⟨D (y + z), by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hDy hDz⟩ : ↥(locF 𝔭 A₀)) =
+      refine ⟨add_mem hy hz, by rw [map_add]; exact add_mem hDy hDz, ?_⟩
+      have e3 : (⟨D (y + z), by rw [map_add]; exact add_mem hDy hDz⟩ : ↥(locF 𝔭 A₀)) =
           ⟨D y, hDy⟩ + ⟨D z, hDz⟩ := Subtype.ext (map_add D y z)
       have e4 : (⟨y + z, add_mem hy hz⟩ : ↥(locF 𝔭 A₀)) = ⟨y, hy⟩ + ⟨z, hz⟩ := rfl
       rw [e3, e4, Submodule.Quotient.mk_add, Submodule.Quotient.mk_add, map_add (f := _), e1, e2]

@@ -48,7 +48,7 @@ theorem pushForward_null' [CompactSpace X] [T2Space X] (A : FinHolAtlas e X)
     apply setIntegral_congr_set
     rw [ae_eq_set]
     refine ⟨measure_mono_null (target_diff_goodT_subset A q S hq j) (hS j), ?_⟩
-    rw [diff_eq_empty.2 (fun u hu => hu.1)]
+    rw [diff_eq_empty.2 (show goodT A q j ⊆ (A.chart j).target from fun u hu => hu.1)]
     exact measure_empty
   have hj : ∀ j y, y ∉ (q ∘ (A.chart j).symm) '' (goodT A q j ∩ (A.chart j).symm ⁻¹' S) →
       fibSum (goodT A q j) (q ∘ (A.chart j).symm) (fun u => Pt.χ j ((A.chart j).symm u) * g ((A.chart j).symm u) * locDens A Φ j u) y =

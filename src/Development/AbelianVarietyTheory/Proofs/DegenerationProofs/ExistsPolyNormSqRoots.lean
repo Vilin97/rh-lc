@@ -67,8 +67,8 @@ theorem aeval_intertwine {M N : Type} [AddCommGroup M] [AddCommGroup N] (π : M 
   | add p q hp hq => intro x; simp [hp, hq]
   | monomial n a ih =>
     intro x
-    rw [pow_succ, ← _root_.mul_assoc, map_mul, map_mul (aeval _) _ X, aeval_X, aeval_X,
-      mul_apply_eq_comp, mul_apply_eq_comp, h, ih]
+    rw [pow_succ, ← _root_.mul_assoc, map_mul, map_mul (aeval _) _ X, aeval_X, aeval_X, Module.End.mul_apply,
+      Module.End.mul_apply, h, ih]
 
 theorem exists_monic_of_surj {N : Type} [AddCommGroup N] (c : ℕ) (π : (Fin c → ℤ) →ₗ[ℤ] N)
     (hπ : Function.Surjective π) (T : Module.End ℤ N) :
@@ -114,9 +114,9 @@ noncomputable def ptEnd (F : End B) (hF : IsMonHom F.asHom) (Z : Over S) :
 theorem ptEnd_pow (F : End B) (hF : IsMonHom F.asHom) {Z : Over S} (x : Z ⟶ B) (n : ℕ) :
     (ptEnd F hF Z ^ n) (Additive.ofMul x) = Additive.ofMul (x ≫ (F ^ n).asHom) := by
   induction n with
-  | zero => simp only [pow_zero, one_apply_eq_self, End.one_asHom, Category.comp_id]
+  | zero => simp only [pow_zero, Module.End.one_apply, End.one_asHom, Category.comp_id]
   | succ n ih =>
-    rw [pow_succ', pow_succ', mul_apply_eq_comp, ih, End.mul_asHom]
+    rw [pow_succ', pow_succ', Module.End.mul_apply, ih, End.mul_asHom]
     exact congrArg Additive.ofMul (Category.assoc x (F ^ n).asHom F.asHom)
 
 theorem aeval_ptEnd (F : End B) (hF : IsMonHom F.asHom) {Z : Over S} (x : Z ⟶ B) (P : ℤ[X]) :

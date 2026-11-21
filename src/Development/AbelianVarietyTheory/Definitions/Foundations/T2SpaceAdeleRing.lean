@@ -195,41 +195,12 @@ theorem hgtArch_mul (hc : IsCMExt F E σ) {w : InfinitePlace F} {b : GL (Fin n) 
 
 variable [Submodule.IsLattice E L]
 
-theorem isCompact_KFin (v : HeightOneSpectrum (𝓞 F)) : IsCompact (KFin σ Q L v : Set (GLoc σ Q v)) := by
-  let φ : ((Fin n → E) × (Fin n → E)) ≃ₗ[E] (Fin (n + n) → E) :=
-    (LinearEquiv.sumArrowLequivProdArrow _ _ E E).symm.trans (LinearEquiv.funCongrLeft E E finSumFinEquiv.symm)
-  have e : sumLat finSumFinEquiv L L = (L.prod L).map (φ.toLinearMap.restrictScalars (𝓞 E)) := by
-    ext w
-    refine ⟨fun hw => ⟨(_, _), hw, pairVec_eta _ w⟩, ?_⟩
-    rintro ⟨x, hx, rfl⟩
-    exact (pairVec_mem_sumLat _).2 hx
-  letI : Submodule.IsLattice E (sumLat finSumFinEquiv L L) :=
-    Submodule.IsLattice.of_fg E (e ▸ ((Submodule.IsLattice.fg E L).prod (Submodule.IsLattice.fg E L)).map _)
-  exact isCompact_stabLoc σ Q _ v
+theorem isCompact_KFin (v : HeightOneSpectrum (𝓞 F)) : IsCompact (KFin σ Q L v : Set (GLoc σ Q v)) :=
+  isCompact_stabLoc σ Q _ v
 
-theorem isOpen_KFin (v : HeightOneSpectrum (𝓞 F)) : IsOpen (KFin σ Q L v : Set (GLoc σ Q v)) := by
-  let φ : ((Fin n → E) × (Fin n → E)) ≃ₗ[E] (Fin (n + n) → E) :=
-    (LinearEquiv.sumArrowLequivProdArrow _ _ E E).symm.trans (LinearEquiv.funCongrLeft E E finSumFinEquiv.symm)
-  have e : sumLat finSumFinEquiv L L = (L.prod L).map (φ.toLinearMap.restrictScalars (𝓞 E)) := by
-    ext w
-    refine ⟨fun hw => ⟨(_, _), hw, pairVec_eta _ w⟩, ?_⟩
-    rintro ⟨x, hx, rfl⟩
-    exact (pairVec_mem_sumLat _).2 hx
-  letI : Submodule.IsLattice E (sumLat finSumFinEquiv L L) :=
-    Submodule.IsLattice.of_fg E (e ▸ ((Submodule.IsLattice.fg E L).prod (Submodule.IsLattice.fg E L)).map _)
-  exact isOpen_stabLoc σ Q _ v
+theorem isOpen_KFin (v : HeightOneSpectrum (𝓞 F)) : IsOpen (KFin σ Q L v : Set (GLoc σ Q v)) := isOpen_stabLoc σ Q _ v
 
-theorem isCompact_KAd (hc : IsCMExt F E σ) : IsCompact (KAd σ Q L a : Set (GAd σ Q)) := by
-  let φ : ((Fin n → E) × (Fin n → E)) ≃ₗ[E] (Fin (n + n) → E) :=
-    (LinearEquiv.sumArrowLequivProdArrow _ _ E E).symm.trans (LinearEquiv.funCongrLeft E E finSumFinEquiv.symm)
-  have e : sumLat finSumFinEquiv L L = (L.prod L).map (φ.toLinearMap.restrictScalars (𝓞 E)) := by
-    ext w
-    refine ⟨fun hw => ⟨(_, _), hw, pairVec_eta _ w⟩, ?_⟩
-    rintro ⟨x, hx, rfl⟩
-    exact (pairVec_mem_sumLat _).2 hx
-  letI : Submodule.IsLattice E (sumLat finSumFinEquiv L L) :=
-    Submodule.IsLattice.of_fg E (e ▸ ((Submodule.IsLattice.fg E L).prod (Submodule.IsLattice.fg E L)).map _)
-  exact isCompact_levelAll hc Q _ _
+theorem isCompact_KAd (hc : IsCMExt F E σ) : IsCompact (KAd σ Q L a : Set (GAd σ Q)) := isCompact_levelAll hc Q _ _
 
 theorem t2Space_adeleRing' : T2Space (AF F) :=
   haveI := GlobalTheory.AdelicUnitaryTop.t2Space_infiniteAdeleRing_of_numberField_field F

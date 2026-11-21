@@ -101,8 +101,8 @@ theorem spMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (d : A 
   rfl
 
 theorem dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (d : A →+* B) (c : B →+* C) :
-    (GlobalTheory.CompanionTheory.Ar.dualMap c).comp (GlobalTheory.CompanionTheory.Ar.dualMap d) = GlobalTheory.CompanionTheory.Ar.dualMap (c.comp d) := by
-  ext x <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    (dualMap c).comp (dualMap d) = dualMap (c.comp d) := by
+  ext x <;> simp [dualMap]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
@@ -146,9 +146,9 @@ theorem ext_props (D : PPData H L) (D' : PPData H L') (m : D.Ext D') :
     (show 𝟙 _ ≫ spMap (algebraMap (𝓞 L) (𝓞 L')) = spMap (algebraMap (𝓞 L) (𝓞 L')) ≫ 𝟙 _ by simp) Mp
   obtain ⟨j, hj, -⟩ := LieBaseChange.existsUnique_semilinear_lifts _ D.t.G _ _ (algebraMap (𝓞 L) (𝓞 L')) (𝟙 _) _ _ D.MB Mq
   have hj' : ∀ e, (D'.MB.pt (j e)).left ≫ m.φ =
-      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) (𝓞 L'))) ≫ (D.MB.pt e).left := by
+      spMap (dualMap (algebraMap (𝓞 L) (𝓞 L'))) ≫ (D.MB.pt e).left := by
     intro e
-    have h1 : lf (Mq.pt (j e)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) (𝓞 L'))) ≫ (D.MB.pt e).left :=
+    have h1 : lf (Mq.pt (j e)) = spMap (dualMap (algebraMap (𝓞 L) (𝓞 L'))) ≫ (D.MB.pt e).left :=
       (Category.comp_id _).symm.trans (hj e)
     rw [hMp, ← h1]
     exact (hMq _).symm
@@ -182,10 +182,10 @@ theorem ext_props (D : PPData H L) (D' : PPData H L') (m : D.Ext D') :
         (M₃.pt ((1 : ComplexAt _) ⊗ₜ[𝓞 L] e)).left := by
       intro e
       have c₁ : lf (M₂.pt ((1 : ComplexAt σ') ⊗ₜ[𝓞 L'] j e)) =
-          spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ'.comp (algebraMap (𝓞 L') L'))) ≫ (D'.MB.pt (j e)).left :=
+          spMap (dualMap (σ'.comp (algebraMap (𝓞 L') L'))) ≫ (D'.MB.pt (j e)).left :=
         (Category.comp_id _).symm.trans (h₂ (j e))
       have c₂ : lf (M₁.pt ((1 : ComplexAt _) ⊗ₜ[𝓞 L] e)) =
-          spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((σ'.comp (algebraMap L L')).comp (algebraMap (𝓞 L) L))) ≫ (D.MB.pt e).left :=
+          spMap (dualMap ((σ'.comp (algebraMap L L')).comp (algebraMap (𝓞 L) L))) ≫ (D.MB.pt e).left :=
         (Category.comp_id _).symm.trans (h₁ e)
       change lf _ ≫ m.φ = lf _
       rw [h₃, c₁, c₂, Category.assoc, hj', ← Category.assoc, spMap_comp, dualMap_comp, hring]

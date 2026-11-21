@@ -24,7 +24,7 @@ theorem isHTAt_iff (h455 : type_of% @GlobalTheory.T.lie_model_finite_base_change
     {T : Type} [CommGroup T] [Finite T] (Γ : QFGroup R T) (i : Γ.G.left ⟶ G.left) (htor : Γ.IsTorsionAlong G x n i)
     {L₀ : Type} [AddCommGroup L₀] [Module R L₀] (M₀ : LieModel G x L₀) (j : L₀ → E)
     (hj : ∀ v, (M.pt (j v)).left =
-      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (κ.toRingHom.comp (algebraMap R (FractionRing R))))) ≫ (M₀.pt v).left)
+      Spec.map (CommRingCat.ofHom (dualMap (κ.toRingHom.comp (algebraMap R (FractionRing R))))) ≫ (M₀.pt v).left)
     (y : Over.mk ξ ⟶ G) (χ : T →* Rˣ) (w₀ : Module.Dual R L₀) (w : Module.Dual Ω E)
     (hW : ∀ (t : T) (k : Type) [Field k] [IsAlgClosed k] (a : Ω →+* k) (xk gk : Over.mk (spMap a ≫ ξ) ⟶ G) (c : kˣ),
       xk.left = spMap a ≫ y.left → gk.left = spMap a ≫ ptG κ.toRingHom i t →
