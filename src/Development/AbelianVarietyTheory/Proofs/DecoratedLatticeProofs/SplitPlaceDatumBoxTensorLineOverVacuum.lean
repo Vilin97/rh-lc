@@ -41,7 +41,7 @@ theorem exists_nsmul_mulVec {m m' : ℕ} (M : Matrix (Fin m') (Fin m) D.host.E)
 theorem exists_nsmul_rat_mul (S : HSp D) {T T' : HSp D} (M : Matrix (Fin T'.rank) (Fin T.rank) D.host.E)
     (LS : Set (Fin S.rank → D.host.E)) {L : Lat T} {L' : Lat T'} (hL : L.FG)
     (hL' : Submodule.IsLattice D.host.E L') (P : Pl D → Prop) :
-    ∃ N : ℕ, 0 < N ∧ ∀ u ∈ latO S T LS (L : Set _) P, N • (rat M ⬝ u : WO S T') ∈ latO S T' LS (L' : Set _) P := by
+    ∃ N : ℕ, 0 < N ∧ ∀ u ∈ latO S T LS (L : Set _) P, N • (rat M * u : WO S T') ∈ latO S T' LS (L' : Set _) P := by
   obtain ⟨N, hN, h⟩ := exists_nsmul_mulVec M hL hL'
   refine ⟨N, hN, fun u hu => ?_⟩
   induction hu using AddSubgroup.closure_induction with
@@ -73,7 +73,7 @@ theorem isLattice_span {L : HSp D} {ζ : Fin L.rank → D.host.E} (h : IsLineVec
   have hr : Module.finrank D.host.E (Fin L.rank → D.host.E) = 1 := by simp [h.1]
   exact (finrank_eq_one_iff_of_nonzero ζ h0).1 hr
 
-theorem isHalf_mul {l m n : ℕ} {e : AE D} (M : Mx D l m) {u : Mx D m n} (hu : IsHalf e u) : IsHalf e (M ⬝ u : Mx D l n) :=
+theorem isHalf_mul {l m n : ℕ} {e : AE D} (M : Mx D l m) {u : Mx D m n} (hu : IsHalf e u) : IsHalf e (M * u : Mx D l n) :=
   fun i j => by
     rw [Matrix.mul_apply, Finset.mul_sum]
     exact Finset.sum_congr rfl fun a _ => by rw [mul_left_comm, hu a j]
