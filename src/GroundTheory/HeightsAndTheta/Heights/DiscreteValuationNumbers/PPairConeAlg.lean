@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsPairConeAlg
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PGenericProjClosureDim
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -100,7 +99,7 @@ theorem PairConeAlg.proof : PairConeAlg.Statement := by
 
   have hϖ0 : algebraMap O Ω ϖ ≠ 0 := by
     intro h0
-    have hmem : ϖ ∈ (pointIdeal O y).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := by
+    have hmem : ϖ ∈ (pointIdeal O y).comap (C : O →+* MRing ι O) := by
       rw [Ideal.mem_comap, pointIdeal, RingHom.mem_ker, pointConeMap, aeval_C, MvPolynomial.algebraMap_apply, h0,
         map_zero]
     rw [hV.noTorsion] at hmem

@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.IsMultiHomogOfIsChowForm
 public import ReciprocityTheory.AnalyticForms.RegularLocalRings.IntToRat
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -16,7 +15,7 @@ namespace GroundTheory.Heights₂.Heights
 namespace ObjectsChow
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar)
 
 namespace GenericFibreDim
 

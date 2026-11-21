@@ -6,20 +6,19 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Stat
 public import Development.WeilBound.CoreStatements.IdealCycleValues.IntNumLCons
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.WithBotLtOfAddOneLe
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.VerticalNumberZeroOfHorizontalStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
 open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.CompanionTheory.Ar.Num
 
-theorem BaseChangeColon.cycList_additive_first_class : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ), IsModelOver P d → ∀ (a : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog f a → f ∉ P → ∀ (b b' : K → ℤ) (l : List (K → ℤ)), l.length + 1 = d → cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ))) ((b + b') :: l) = cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ))) (b :: l) + cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ))) (b' :: l) := by
+theorem BaseChangeColon.cycList_additive_first_class : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P d → ∀ (a : K → ℕ) (f : MRing ι O), IsMultiHomog f a → f ∉ P → ∀ (b b' : K → ℤ) (l : List (K → ℤ)), l.length + 1 = d → cycList (divCycle P f) ((b + b') :: l) = cycList (divCycle P f) (b :: l) + cycList (divCycle P f) (b' :: l) := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP a f hf hfP b b' l hl
   have hPp : P.IsPrime := hP.multiProj.isPrime
   unfold cycList
   refine AdditivityInDivisor.cycEval_add_fn (DivCycleFiniteSupport.full O K ι P f) fun W hW => ?_
-  by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W
+  by_cases hϖW : (C ϖ : MRing ι O) ∈ W
   · have hWmin : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes := by
-      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
+      unfold divCycle at hW
       split_ifs at hW with h
       · exact h.1
       · exact absurd rfl hW
@@ -29,7 +28,7 @@ theorem BaseChangeColon.cycList_additive_first_class : ∀ (O : Type) [CommRing 
       (SupSpanMultiHomog.full O K ι P f a hP.multiProj.multiHomog hf) hWmin
     have hfW : f ∈ W := hWmin.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self f))
     have hlt : P < W := lt_of_le_of_ne hPW fun h => hfP (h ▸ hfW)
-    have hdim := DimStrictDrop.full (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P W hlt
+    have hdim := DimStrictDrop.full (MRing ι O) P W hlt
     rw [hP.dim, ← SpecialQuotDim.full O ϖ hϖ K ι W hϖW,
       show d + 1 + Fintype.card K = l.length + 2 + Fintype.card K by omega] at hdim
     have key := IntNumAddFirst.full _ K ι l.length (specialIdeal W)

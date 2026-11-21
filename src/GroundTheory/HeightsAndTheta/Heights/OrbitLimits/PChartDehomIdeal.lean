@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDehomIdeal
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreChartZeroSet
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -14,7 +13,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights.Targets
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver mcPts IsMultiHomogIdeal segre)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsMultiHomogIdeal mcPts segre)
 open GroundTheory.Heights₂.Heights (segreChartIdeal segreChartSet chartLift segre_chartLift chartLift_segre_apply)
 
 theorem ChartDehomIdeal.proof : ChartDehomIdeal.Statement := by

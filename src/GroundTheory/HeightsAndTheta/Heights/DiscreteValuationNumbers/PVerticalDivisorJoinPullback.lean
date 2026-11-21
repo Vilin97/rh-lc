@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsVerticalDivisorJoinPullback
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Cartier
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -23,7 +22,7 @@ theorem joinCoords_inl {Ω : Type*} [Field Ω] (y : (Σ k, ι k) → Ω) (y' : (
     (i : ι k) : joinCoords y y' ⟨Sum.inl k, i⟩ = y ⟨k, i⟩ := rfl
 
 theorem pointConeMap_joinCoords_joinForm {Ω : Type*} [Field Ω] (R : Type*) [CommRing R]
-    [Algebra R Ω] (y : (Σ k, ι k) → Ω) (y' : (Σ k, ι' k) → Ω) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+    [Algebra R Ω] (y : (Σ k, ι k) → Ω) (y' : (Σ k, ι' k) → Ω) (f : MRing ι R) :
     pointConeMap R (joinCoords y y') (joinForm f) =
       rename (Sum.inl : K → K ⊕ K') (pointConeMap R y f) := by
   simp only [pointConeMap, joinForm, aeval_rename]
@@ -35,13 +34,13 @@ theorem pointConeMap_joinCoords_joinForm {Ω : Type*} [Field Ω] (R : Type*) [Co
     simp [hp, joinCoords_inl]
 
 theorem joinForm_mem_pointIdeal_iff {Ω : Type*} [Field Ω] (R : Type*) [CommRing R] [Algebra R Ω]
-    (y : (Σ k, ι k) → Ω) (y' : (Σ k, ι' k) → Ω) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+    (y : (Σ k, ι k) → Ω) (y' : (Σ k, ι' k) → Ω) (f : MRing ι R) :
     joinForm f ∈ pointIdeal R (joinCoords y y') ↔ f ∈ pointIdeal R y := by
   simp only [pointIdeal, RingHom.mem_ker, pointConeMap_joinCoords_joinForm]
   exact map_eq_zero_iff _ (rename_injective _ Sum.inl_injective)
 
 theorem isMultiHomog_joinForm [DecidableEq K] [DecidableEq K'] {R : Type*} [CommRing R]
-    {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {bf : K → ℕ} (hf : IsMultiHomog f bf) :
+    {f : MRing ι R} {bf : K → ℕ} (hf : IsMultiHomog f bf) :
     IsMultiHomog (joinForm (ι' := ι') f) (Sum.elim bf 0) := by
   unfold IsMultiHomog at hf ⊢
   induction hf using IsWeightedHomogeneous.induction_on with
@@ -73,7 +72,7 @@ theorem VerticalDivisorJoinPullback.proof : VerticalDivisorJoinPullback.Statemen
   · rw [joinForm_mem_pointIdeal_iff]; exact hD.num_not_mem
   · rw [joinForm_mem_pointIdeal_iff]; exact hD.den_not_mem
   · intro W hW hPW hrel hϖ
-    let φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →ₐ[O] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ι') :=
+    let φ : MRing ι O →ₐ[O] MRing (Sum.elim ι ι') O :=
       rename (fun p : (Σ k, ι k) => (⟨Sum.inl p.1, p.2⟩ : Σ s : K ⊕ K', Sum.elim ι ι' s))
     have hφ : ∀ h, joinForm (ι' := ι') h = φ h := fun _ => rfl
     have hle : pointIdeal O y ≤ W.comap φ := by
@@ -84,7 +83,7 @@ theorem VerticalDivisorJoinPullback.proof : VerticalDivisorJoinPullback.Statemen
       intro k
       obtain ⟨i, hi⟩ := hrel (Sum.inl k)
       exact ⟨i, by rw [Ideal.mem_comap]; simpa [φ, rename_X] using hi⟩
-    have hϖ' : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W.comap φ := by
+    have hϖ' : (C ϖ : MRing ι O) ∉ W.comap φ := by
       rw [Ideal.mem_comap]; simpa [φ, rename_C] using hϖ
     obtain ⟨u, v, hu, hv, huv⟩ :=
       hD.unit_off_special (W.comap φ) (Ideal.comap_isPrime φ W) hle hrel' hϖ'

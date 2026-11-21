@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -19,7 +18,7 @@ theorem RelevantDimGe.proof (h1 : BlockAdjoinPrime.Statement.{u}) : RelevantDimG
   classical
   let e : K ≃ Fin (Fintype.card K) := Fintype.equivFin K
   let B : ℕ → Set K := fun j => {k | (e k : ℕ) < j}
-  let J : ℕ → Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) := fun j =>
+  let J : ℕ → Ideal (MRing ι R) := fun j =>
     Q ⊔ Ideal.span {p | ∃ v : Σ k, ι k, v.1 ∈ B j ∧ p = X v}
   have hJ : ∀ j, (J j).IsPrime ∧ ∀ v : Σ k, ι k, v.1 ∉ B j → (X v ∈ J j ↔ X v ∈ Q) :=
     fun j => h1 R K ι Q (B j) hQ.isPrime hQ.multiHomog
@@ -33,11 +32,11 @@ theorem RelevantDimGe.proof (h1 : BlockAdjoinPrime.Statement.{u}) : RelevantDimG
     refine lt_of_le_of_ne (hmono j) ?_
     obtain ⟨i, hi⟩ := hQ.relevant (e.symm ⟨j, hj⟩)
     intro heq
-    have hmem : (X ⟨e.symm ⟨j, hj⟩, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ∈ J (j + 1) :=
+    have hmem : (X ⟨e.symm ⟨j, hj⟩, i⟩ : MRing ι R) ∈ J (j + 1) :=
       Ideal.mem_sup_right (Ideal.subset_span ⟨⟨e.symm ⟨j, hj⟩, i⟩, by simp [B], rfl⟩)
     rw [← heq] at hmem
     exact hi (((hJ j).2 ⟨e.symm ⟨j, hj⟩, i⟩ (by simp [B])).1 hmem)
-  let f : Fin (Fintype.card K + 1) → PrimeSpectrum.zeroLocus (R := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (Q : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :=
+  let f : Fin (Fintype.card K + 1) → PrimeSpectrum.zeroLocus (R := MRing ι R) (Q : Set (MRing ι R)) :=
     fun j => ⟨⟨J j, (hJ j).1⟩, hle j⟩
   have hf : StrictMono f := by
     refine Fin.strictMono_iff_lt_succ.2 fun j => ?_

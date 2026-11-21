@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -31,8 +30,8 @@ theorem finite_setOf_weight_blockWeight_eq {K : Type} [Fintype K] [DecidableEq K
   · simp [Finsupp.notMem_support_iff.mp hv]
 
 theorem mem_of_C_pow_mul_mem {O : Type u} [CommRing O] {K : Type} {ι : K → Type}
-    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {ϖ : O} (hP : ∀ x, C ϖ * x ∈ P → x ∈ P) :
-    ∀ (n : ℕ) (y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), C (ϖ ^ n) * y ∈ P → y ∈ P := by
+    {P : Ideal (MRing ι O)} {ϖ : O} (hP : ∀ x, C ϖ * x ∈ P → x ∈ P) :
+    ∀ (n : ℕ) (y : MRing ι O), C (ϖ ^ n) * y ∈ P → y ∈ P := by
   intro n
   induction n with
   | zero => intro y hy; simpa using hy
@@ -55,8 +54,8 @@ theorem GradedPieceFree.proof : GradedPieceFree.Statement := by
     · exact Or.inl hc
     right
     obtain ⟨n, w, rfl⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hc hϖ
-    obtain ⟨y, hy⟩ := Ideal.Quotient.mk_surjective (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)
-    have h1 : ((↑w * ϖ ^ n) • (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) = 0 := congrArg Subtype.val hcx
+    obtain ⟨y, hy⟩ := Ideal.Quotient.mk_surjective (x : MRing ι O ⧸ P)
+    have h1 : ((↑w * ϖ ^ n) • (x : MRing ι O ⧸ P)) = 0 := congrArg Subtype.val hcx
     rw [← hy, ← Ideal.Quotient.mkₐ_eq_mk O, ← map_smul, Ideal.Quotient.mkₐ_eq_mk,
       Ideal.Quotient.eq_zero_iff_mem, smul_eq_C_mul] at h1
     have h2 : C (ϖ ^ n) * y ∈ P := by

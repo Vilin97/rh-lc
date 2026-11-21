@@ -5,7 +5,6 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeo
 public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StatementsCurrent
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.SegreChartObjects
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreCoordGoodProj
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -16,7 +15,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open Filter Topology
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSmoothHerm HermLine IsArithVar IsGoodProj ptsIntegralAt pot segre PBlk oneLine
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar IsGoodProj ptsIntegralAt pot segre PBlk oneLine
   isSmoothHerm_oneLine)
 
 def PtsIntegralSegreChartProj.Statement : Prop :=

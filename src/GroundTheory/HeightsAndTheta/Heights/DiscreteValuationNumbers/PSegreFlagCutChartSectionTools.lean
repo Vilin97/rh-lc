@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagCutChartSection
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagCutForms
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -34,13 +33,13 @@ theorem coneMap_monomial_isWeightedHomogeneous (z : (Σ k, ι k) → Φ) (d : (�
   refine IsWeightedHomogeneous.prod _ _ _ fun p _ => ?_
   exact ((isWeightedHomogeneous_X (R := Φ) (coneWeight K) p.1).C_mul (z p)).pow (d p)
 
-theorem coneMap_component (z : (Σ k, ι k) → Φ) (b : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :
+theorem coneMap_component (z : (Σ k, ι k) → Φ) (b : K → ℕ) (f : MRing ι O) :
     weightedHomogeneousComponent (coneWeight K) b (pointConeMap O z f) =
       pointConeMap O z (weightedHomogeneousComponent (blockWeight ι) b f) := by
   induction f using MvPolynomial.induction_on' with
   | monomial d a =>
     have h1 := coneMap_monomial_isWeightedHomogeneous (K := K) (O := O) z d a
-    have h2 : IsWeightedHomogeneous (blockWeight ι) (monomial d a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
+    have h2 : IsWeightedHomogeneous (blockWeight ι) (monomial d a : MRing ι O)
         (Finsupp.weight (blockWeight ι) d) := isWeightedHomogeneous_monomial _ _ _ rfl
     by_cases h : b = Finsupp.weight (blockWeight ι) d
     · subst h
@@ -62,8 +61,8 @@ section Subst
 variable {K₁ K₂ : Type} [DecidableEq K₁] [DecidableEq K₂] {ι₁ : K₁ → Type} {ι₂ : K₂ → Type}
   {O : Type} [CommRing O]
 
-theorem bind₁_isMultiHomog_of (Λ : (K₁ → ℕ) →+ (K₂ → ℕ)) (g : (Σ k, ι₁ k) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂)
-    (hg : ∀ v, IsWeightedHomogeneous (blockWeight ι₂) (g v) (Λ (blockWeight ι₁ v))) {q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁}
+theorem bind₁_isMultiHomog_of (Λ : (K₁ → ℕ) →+ (K₂ → ℕ)) (g : (Σ k, ι₁ k) → MRing ι₂ O)
+    (hg : ∀ v, IsWeightedHomogeneous (blockWeight ι₂) (g v) (Λ (blockWeight ι₁ v))) {q : MRing ι₁ O}
     {d : K₁ → ℕ} (hq : IsMultiHomog q d) : IsMultiHomog (bind₁ g q) (Λ d) := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← q.support_sum_monomial_coeff, map_sum]
@@ -81,7 +80,7 @@ theorem bind₁_isMultiHomog_of (Λ : (K₁ → ℕ) →+ (K₂ → ℕ)) (g : (
   rw [hΛ]
   exact this
 
-theorem bind₁_scale_of (o₀ : K₁) (u : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂) (h : (Σ k, ι₁ k) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂) {q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁}
+theorem bind₁_scale_of (o₀ : K₁) (u : MRing ι₂ O) (h : (Σ k, ι₁ k) → MRing ι₂ O) {q : MRing ι₁ O}
     {d : K₁ → ℕ} (hq : IsMultiHomog q d) :
     bind₁ (fun v => u ^ blockWeight ι₁ v o₀ * h v) q = u ^ d o₀ * bind₁ h q := by
   conv_lhs => rw [← q.support_sum_monomial_coeff]
@@ -127,12 +126,12 @@ section Saturate
 variable {K₁ K₂ : Type} [Fintype K₁] [DecidableEq K₁] [Fintype K₂] [DecidableEq K₂] {ι₂ : K₂ → Type}
   [∀ k, Fintype (ι₂ k)] {O : Type} [CommRing O] {Φ : Type} [Field Φ] [Algebra O Φ]
 
-theorem saturate (j : K₁ ↪ K₂) (o₀ : K₁) (pt : (Σ k, ι₂ k) → Φ) (lam u D : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂) (nD : ℕ)
-    (hD : u ∣ D ^ nD) (e : K₂ → ℕ) (g : (Σ k, ι₂ (j k)) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂)
+theorem saturate (j : K₁ ↪ K₂) (o₀ : K₁) (pt : (Σ k, ι₂ k) → Φ) (lam u D : MRing ι₂ O) (nD : ℕ)
+    (hD : u ∣ D ^ nD) (e : K₂ → ℕ) (g : (Σ k, ι₂ (j k)) → MRing ι₂ O)
     (hg₁ : ∀ p, p.1 ≠ o₀ → g p = X (FieldNumbers.blockIncl j ι₂ p))
     (hg₂ : ∀ p, p.1 = o₀ → IsWeightedHomogeneous (blockWeight ι₂) (g p) e ∧
       u * X (FieldNumbers.blockIncl j ι₂ p) - g p ∈ Ideal.span {lam})
-    (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (fun k => ι₂ (j k)))) (hI : IsMultiHomogIdeal I)
+    (I : Ideal (MRing (fun k => ι₂ (j k)) O)) (hI : IsMultiHomogIdeal I)
     (hvan : ∀ q ∈ I, aeval (fun p => aeval pt (g p)) q = 0) :
     ∀ q ∈ I, ∃ n : ℕ, D ^ n * rename (FieldNumbers.blockIncl j ι₂) q ∈ pointIdeal O pt ⊔ Ideal.span {lam} := by
   classical
@@ -158,7 +157,7 @@ theorem saturate (j : K₁ ↪ K₂) (o₀ : K₁) (pt : (Σ k, ι₂ k) → Φ)
     · simp only [Λ₁, if_neg hv]
       rw [hg₁ v hv]
       exact isWeightedHomogeneous_X O (blockWeight ι₂) (FieldNumbers.blockIncl j ι₂ v)
-  have hform : ∀ (d : K₁ → ℕ) (q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (fun k => ι₂ (j k))), IsMultiHomog q d → q ∈ I →
+  have hform : ∀ (d : K₁ → ℕ) (q : MRing (fun k => ι₂ (j k)) O), IsMultiHomog q d → q ∈ I →
       u ^ d o₀ * rename (FieldNumbers.blockIncl j ι₂) q ∈ pointIdeal O pt ⊔ Ideal.span {lam} := by
     intro d q hqd hqI
     have h1 : bind₁ g q ∈ pointIdeal O pt := by

@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartZeroSet
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterGood
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -14,7 +13,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver mcPts IsMultiHomogIdeal segre scaleBlock scaleBlock_mem_zeroLocus)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsMultiHomogIdeal mcPts segre scaleBlock scaleBlock_mem_zeroLocus)
 open ComplexSets
 
 namespace SegreChartZeroSet

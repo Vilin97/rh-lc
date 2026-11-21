@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StatementsCurrent
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StokesObjects
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.NoCommonComponentCoordinatesPlane
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -14,7 +13,7 @@ noncomputable section
 
 namespace GroundTheory.Heights₂.Heights
 
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSmoothHerm HermLine IsArithVar ptsIntegral pot segre PBlk oneLine
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar ptsIntegral pot segre PBlk oneLine
   isSmoothHerm_oneLine)
 
 def SegreChart.Statement : Prop :=

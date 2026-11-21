@@ -13,7 +13,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpe
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PIntNumSymm
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PExistsForm
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PDivCycleSupport
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -31,7 +30,7 @@ namespace VerticalDivisorsCommuting
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem intNum_snoc {F : Type u} [Field F] (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {n : ℕ} (L : Fin n → K → ℤ)
+theorem intNum_snoc {F : Type u} [Field F] (V : Ideal (MRing ι F)) {n : ℕ} (L : Fin n → K → ℤ)
     (b : K → ℤ) :
     intNum F V (Fin.snoc (α := fun _ => K → ℤ) L b) = intNum F V (Matrix.vecCons b L) := by
   rw [← CutByFormField.vecCons_comp_finRotate]

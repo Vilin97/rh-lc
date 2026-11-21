@@ -7,7 +7,6 @@ public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CycNumIn
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CycleNumberMulExpandStatement
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CycleNumberRenameStatement
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.FibreComponentDivisorPropertiesStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -30,15 +29,15 @@ theorem sum_X_inr_pow_eq {σ : Type} {r : ℕ} (e : Fin r → σ) (k : ℕ) :
   set_option synthInstance.maxHeartbeats 100000 in
     simp [psum, map_sum, map_pow, rename_X]
 
-theorem val_psum_mul_eq_zero : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ), IsModelOver P d → ∀ (σ : Type) [Fintype σ] (T : LocPair ι O σ), T.IsVert P ϖ → ∀ (r : ℕ) (e : Fin r → σ), PowerSumsVanish P d (T.x' ∘ e) → ∀ k m : ℕ, 1 ≤ k → k + m = d → ∀ Gs : σ → MvPolynomial (σ ⊕ σ) ℝ, (∀ i, (Gs i).IsHomogeneous m) → T.val P (fun i => (∑ a, X (Sum.inr (e a)) ^ k) * Gs i) = 0 := by
+theorem val_psum_mul_eq_zero : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P d → ∀ (σ : Type) [Fintype σ] (T : LocPair ι O σ), T.IsVert P ϖ → ∀ (r : ℕ) (e : Fin r → σ), PowerSumsVanish P d (T.x' ∘ e) → ∀ k m : ℕ, 1 ≤ k → k + m = d → ∀ Gs : σ → MvPolynomial (σ ⊕ σ) ℝ, (∀ i, (Gs i).IsHomogeneous m) → T.val P (fun i => (∑ a, X (Sum.inr (e a)) ^ k) * Gs i) = 0 := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP σ _ T hT r e hv k m hk hkm Gs hGs
   have hfib := (GlobalTheory.T.fibre_component_divisor_properties O ϖ hϖ K ι P d hP).2.2
   unfold LocPair.val
   refine Finset.sum_eq_zero fun i _ => ?_
   have hZc : ∀ W, ratDiv P (T.f i) (T.g i) W ≠ 0 → IsFibreComp P W := hfib _ _ _ (hT i)
   have hfin : (Function.support (ratDiv P (T.f i) (T.g i))).Finite := by
-    refine (Ideal.finite_minimalPrimes_of_isNoetherianRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
-      (P ⊔ (IsLocalRing.maximalIdeal O).map (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι))).subset ?_
+    refine (Ideal.finite_minimalPrimes_of_isNoetherianRing (MRing ι O)
+      (P ⊔ (IsLocalRing.maximalIdeal O).map (C : O →+* MRing ι O))).subset ?_
     intro W hW
     exact (hZc W hW).1
   rw [GlobalTheory.T.cycle_number_mul_expand O K ι (σ ⊕ σ) (ratDiv P (T.f i) (T.g i)) (Sum.elim T.x T.x') _ (Gs i) []]

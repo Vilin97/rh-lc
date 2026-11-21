@@ -18,6 +18,6 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk ptsIntegral ptsIntegralAt pot)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar ptsIntegral ptsIntegralAt pot)
 
 end GroundTheory.Heights₂.Heights

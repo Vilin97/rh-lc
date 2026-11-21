@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsGenericDimGe
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -134,19 +133,19 @@ theorem proof : Statement.{u} := by
   intro O _ _ _ K _ _ ι _ P hP hPC
   classical
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible O
-  let M : Submonoid (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := (nonZeroDivisors O).map (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
+  let M : Submonoid (MRing ι O) := (nonZeroDivisors O).map (C : O →+* MRing ι O)
   have : IsLocalization M (MRing ι (FractionRing O)) :=
     MvPolynomial.isLocalization (nonZeroDivisors O) (FractionRing O)
   rw [ringKrullDim_quotient, ringKrullDim_quotient]
-  let Z := PrimeSpectrum.zeroLocus (R := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (P : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι))
+  let Z := PrimeSpectrum.zeroLocus (R := MRing ι O) (P : Set (MRing ι O))
   let Z' := PrimeSpectrum.zeroLocus (R := MRing ι (FractionRing O))
     (genFib P : Set (MRing ι (FractionRing O)))
-  let U := {q : Z // q.1.asIdeal.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = ⊥}
+  let U := {q : Z // q.1.asIdeal.comap (C : O →+* MRing ι O) = ⊥}
   have ltZ : ∀ a b : Z, a < b ↔ a.1.asIdeal < b.1.asIdeal := fun a b =>
     Subtype.coe_lt_coe.symm.trans (PrimeSpectrum.asIdeal_lt_asIdeal _ _).symm
   have ltU : ∀ a b : U, a < b ↔ a.1.1.asIdeal < b.1.1.asIdeal := fun a b =>
     Subtype.coe_lt_coe.symm.trans (ltZ _ _)
-  have memZ : ∀ x : PrimeSpectrum (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), x ∈ Z ↔ P ≤ x.asIdeal := fun x =>
+  have memZ : ∀ x : PrimeSpectrum (MRing ι O), x ∈ Z ↔ P ≤ x.asIdeal := fun x =>
     PrimeSpectrum.mem_zeroLocus _ _
   let P0 : Z := ⟨⟨P, hP⟩, (memZ _).2 le_rfl⟩
   let PU : U := ⟨P0, hPC⟩
@@ -163,8 +162,8 @@ theorem proof : Statement.{u} := by
       intro r hr
       obtain ⟨r', hr'r, hr'⟩ := exists_lt_of_le_height hr
       obtain ⟨q, hqr', hq⟩ := ih r' hr'
-      have hx : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ q.1.1.asIdeal := fun h => hϖ.ne_zero (by
-        have : ϖ ∈ q.1.1.asIdeal.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
+      have hx : (C ϖ : MRing ι O) ∉ q.1.1.asIdeal := fun h => hϖ.ne_zero (by
+        have : ϖ ∈ q.1.1.asIdeal.comap (C : O →+* MRing ι O) := h
         rw [q.2] at this
         exact (Submodule.mem_bot _).1 this)
       obtain ⟨q', hq'p, hqq', hq'r, hq'x⟩ :=
@@ -186,15 +185,15 @@ theorem proof : Statement.{u} := by
       push_cast
       exact add_le_add (hq.trans (le_iSup (fun q : U => Order.height q) q)) le_rfl
 
-  have hdisj : ∀ q : U, Disjoint (M : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (q.1.1.asIdeal : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) := by
+  have hdisj : ∀ q : U, Disjoint (M : Set (MRing ι O)) (q.1.1.asIdeal : Set (MRing ι O)) := by
     intro q
     refine Set.disjoint_left.2 ?_
     rintro _ ⟨a, ha, rfl⟩ hmem
-    have : a ∈ q.1.1.asIdeal.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := hmem
+    have : a ∈ q.1.1.asIdeal.comap (C : O →+* MRing ι O) := hmem
     rw [q.2] at this
     exact nonZeroDivisors.ne_zero ha ((Submodule.mem_bot _).1 this)
   let Φ : U → Z' := fun q =>
-    ⟨⟨q.1.1.asIdeal.map (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (MRing ι (FractionRing O))),
+    ⟨⟨q.1.1.asIdeal.map (algebraMap (MRing ι O) (MRing ι (FractionRing O))),
       IsLocalization.isPrime_of_isPrime_disjoint M _ _ q.1.1.2 (hdisj q)⟩, by
       rw [PrimeSpectrum.mem_zeroLocus]
       exact Ideal.map_mono ((memZ _).1 q.1.2)⟩

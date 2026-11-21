@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -50,7 +49,7 @@ theorem IntNumAddFirst.proof (h1 : FieldNumbers.IntNumAdd.Statement.{u})
       have hc : ((n + 1 : ℕ) : WithBot (WithTop ℤ)) = (((n + 1 : ℕ) : ℤ) : WithTop ℤ) := by
         rfl
       unfold relDim
-      generalize ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ G) = x at hdim ⊢
+      generalize ringKrullDim (MRing ι F ⧸ G) = x at hdim ⊢
       induction x using WithBot.recBotCoe with
       | bot => exact Or.inr (WithBot.bot_lt_coe _)
       | coe d =>

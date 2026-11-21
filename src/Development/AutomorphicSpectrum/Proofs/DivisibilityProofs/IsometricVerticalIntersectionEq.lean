@@ -8,7 +8,6 @@ public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomog
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRedF
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.LogIntegralCongrSmulStatement
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.FiniteVerticalRecursionStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,22 +16,22 @@ open ReciprocityTheory.ChartRestriction.G.Geo (HermLine IsSmoothHerm IsArithVar 
 
 namespace GlobalTheory.CompanionTheory.Ar.Num.Link
 
-theorem divCycle_eq_off {K : Type} {ι : K → Type} {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι} {S : Finset Nat.Primes}
+theorem divCycle_eq_off {K : Type} {ι : K → Type} {P : Ideal (MRing ι ℤ)} {f g : MRing ι ℤ} {S : Finset Nat.Primes}
     (h : ∀ W : Ideal (MvPolynomial (Σ k, ι k) ℤ), W.IsPrime → P ≤ W → IsRelevant W →
       (∀ p ∈ S, (C ((p : ℕ) : ℤ) : MvPolynomial (Σ k, ι k) ℤ) ∉ W) →
       ∃ u v : MvPolynomial (Σ k, ι k) ℤ, u ∉ W ∧ v ∉ W ∧ u * f - v * g ∈ P)
-    {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)}
+    {W : Ideal (MRing ι ℤ)}
     (hW : W.IsPrime → ∀ p ∈ S, (C ((p : ℕ) : ℤ) : MvPolynomial (Σ k, ι k) ℤ) ∉ W) :
-    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) := by
+    divCycle P f W = divCycle P g W := by
   by_cases hc : W.IsPrime ∧ P ≤ W ∧ IsRelevant W
   · obtain ⟨u, v, hu, hv, huv⟩ := h W hc.1 hc.2.1 hc.2.2 (hW hc.1)
     exact divCycle_eq_of_mul_sub_mem hu hv huv
-  · have h0 : ∀ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = 0 := fun s => by
+  · have h0 : ∀ s : MRing ι ℤ, divCycle P s W = 0 := fun s => by
       by_contra hne
       exact hc (le_and_isRelevant_of_divCycle_ne_zero hne)
     rw [h0, h0]
 
-theorem not_mem_of_mem {K : Type} {ι : K → Type} {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)} (hW : W.IsPrime) {p q : Nat.Primes}
+theorem not_mem_of_mem {K : Type} {ι : K → Type} {W : Ideal (MRing ι ℤ)} (hW : W.IsPrime) {p q : Nat.Primes}
     (hpq : p ≠ q) (hp : (C ((p : ℕ) : ℤ) : MvPolynomial (Σ k, ι k) ℤ) ∈ W) :
     (C ((q : ℕ) : ℤ) : MvPolynomial (Σ k, ι k) ℤ) ∉ W := by
   intro hq
@@ -48,14 +47,14 @@ theorem not_mem_of_mem {K : Type} {ι : K → Type} {W : Ideal (ReciprocityTheor
   rw [e]
   exact W.add_mem (W.mul_mem_left _ hp) (W.mul_mem_left _ hq)
 
-theorem not_mem_of_horizontal {K : Type} {ι : K → Type} {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)} (hW : IsHorizontal W)
+theorem not_mem_of_horizontal {K : Type} {ι : K → Type} {W : Ideal (MRing ι ℤ)} (hW : IsHorizontal W)
     (p : Nat.Primes) : (C ((p : ℕ) : ℤ) : MvPolynomial (Σ k, ι k) ℤ) ∉ W := by
   intro hp
   have h1 : ((p : ℕ) : ℤ) ∈ W.comap (C : ℤ →+* MvPolynomial (Σ k, ι k) ℤ) := hp
   rw [show W.comap (C : ℤ →+* MvPolynomial (Σ k, ι k) ℤ) = ⊥ from hW, Ideal.mem_bot] at h1
   exact p.2.ne_zero (by exact_mod_cast h1)
 
-theorem change_line : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) (D : ℕ), IsArithVar P (D + 1) → ∀ (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ), IsIntersectionFamily I → ∀ (S : Finset Nat.Primes) (T : LocPair ι ℤ Unit), T.IsVertOff P S → ∀ A A' : HermLine ι, IsSmoothHerm A → IsSmoothHerm A' → T.IsIsometric P (fun _ => A) (fun _ => A') → ∀ L : Fin D → HermLine ι, (∀ j, IsSmoothHerm (L j)) → I P (D + 1) (Fin.snoc L A) - I P (D + 1) (Fin.snoc L A') = ∑ p ∈ S, Real.log (p : ℕ) * ((vertAt p P (T.f ()) (List.ofFn fun j => (L j).a) : ℝ) - (vertAt p P (T.g ()) (List.ofFn fun j => (L j).a) : ℝ)) := by
+theorem change_line : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι ℤ)) (D : ℕ), IsArithVar P (D + 1) → ∀ (I : Ideal (MRing ι ℤ) → (n : ℕ) → (Fin n → HermLine ι) → ℝ), IsIntersectionFamily I → ∀ (S : Finset Nat.Primes) (T : LocPair ι ℤ Unit), T.IsVertOff P S → ∀ A A' : HermLine ι, IsSmoothHerm A → IsSmoothHerm A' → T.IsIsometric P (fun _ => A) (fun _ => A') → ∀ L : Fin D → HermLine ι, (∀ j, IsSmoothHerm (L j)) → I P (D + 1) (Fin.snoc L A) - I P (D + 1) (Fin.snoc L A') = ∑ p ∈ S, Real.log (p : ℕ) * ((vertAt p P (T.f ()) (List.ofFn fun j => (L j).a) : ℝ) - (vertAt p P (T.g ()) (List.ofFn fun j => (L j).a) : ℝ)) := by
   intro K _ _ ι _ P D hP I hI S T hT A A' hA hA' hiso L hL
   obtain ⟨⟨bf, bg, hf, hg, hdeg⟩, hfP, hgP, hunit⟩ := hT ()
   obtain ⟨hAa, hA'a, hnorm⟩ := hiso ()
@@ -83,8 +82,8 @@ theorem change_line : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Typ
     ((GroundTheory.Heights₂.Heights.Bridge.isMultiHomog_iff _ _).1 hg) hgP
   obtain ⟨fin1, s1⟩ := GlobalTheory.T.finite_vertical_recursion K ι P D hP I bf (T.f ()) hf hfP L (A.tensor B)
   obtain ⟨fin2, s2⟩ := GlobalTheory.T.finite_vertical_recursion K ι P D hP I bg (T.g ()) hg hgP L (A'.tensor B)
-  have hor : (∑ᶠ W, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (T.f ())) W : ℤ) : ℝ) * Set.indicator {W | IsHorizontal W} (fun W => I W D L) W) =
-      ∑ᶠ W, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (T.g ())) W : ℤ) : ℝ) * Set.indicator {W | IsHorizontal W} (fun W => I W D L) W := by
+  have hor : (∑ᶠ W, (divCycle P (T.f ()) W : ℝ) * Set.indicator {W | IsHorizontal W} (fun W => I W D L) W) =
+      ∑ᶠ W, (divCycle P (T.g ()) W : ℝ) * Set.indicator {W | IsHorizontal W} (fun W => I W D L) W := by
     refine finsum_congr fun W => ?_
     by_cases hW : IsHorizontal W
     · rw [divCycle_eq_off hunit (fun _ p _ => not_mem_of_horizontal hW p)]

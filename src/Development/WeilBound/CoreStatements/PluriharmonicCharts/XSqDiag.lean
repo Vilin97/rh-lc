@@ -6,7 +6,6 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticInt
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsFibreLocal
 public import Development.AutomorphicSpectrum.Statements.MetricStatements.AgreementIffGuarded
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.PDiagPull
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -84,7 +83,7 @@ theorem multAt_eq_locLen' {K' : Type} [Fintype K'] {ι' : K' → Type} [∀ k, F
   simp [multAt, hW, locLen]
 
 theorem divCycle_eq (n : ℕ) (i : ι k₀) :
-    (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q.Δ ((X (Q.v 0 ⟨k₀, i⟩) : MRing Q.ιW) ^ n)) W : ℤ)) = (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q.Δ ((X (Q.v 1 ⟨k₀, i⟩) : MRing Q.ιW) ^ n)) W : ℤ)) := by
+    divCycle Q.Δ ((X (Q.v 0 ⟨k₀, i⟩) : MRing Q.ιW) ^ n) = divCycle Q.Δ ((X (Q.v 1 ⟨k₀, i⟩) : MRing Q.ιW) ^ n) := by
   classical
   have hV : Q.Δ.IsPrime := Q.arithΔ.2.1.1
   have hc : ∀ j : ι k₀, (X (Q.v 0 ⟨k₀, i⟩) : MRing Q.ιW) ^ n * X (Q.v 1 ⟨k₀, j⟩) ^ n -

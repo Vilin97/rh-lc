@@ -23,8 +23,8 @@ def ChartLengthAlgClosed.Statement : Prop :=
         Module.length (Localization.AtPrime p) (ChartLoc I t e p ⧸ LinearMap.range
             (LinearMap.mulLeft (Localization.AtPrime p)
               (algebraMap (ChartInc I t e) (ChartLoc I t e p) (chartLin I t e u)))) =
-          ∑ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support with Ideal.span {q} = incIdeal W e,
-            ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ) : ℕ) : ℕ∞)
+          ∑ W ∈ (divCycle I u).support with Ideal.span {q} = incIdeal W e,
+            ((divCycle I u W : ℕ) : ℕ∞)
 
 end
 

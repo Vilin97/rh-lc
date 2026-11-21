@@ -12,7 +12,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpe
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialIdealMultiHomog
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDimStrictDrop
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PVerticalDivisorsCommute
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -210,7 +209,7 @@ section CycleSums
 
 variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 
-theorem cycEval_add_cycle {n Z₁ Z₂ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ} (h₁ : (Function.support Z₁).Finite)
+theorem cycEval_add_cycle {n Z₁ Z₂ : Ideal (MRing ι R) → ℤ} (h₁ : (Function.support Z₁).Finite)
     (h₂ : (Function.support Z₂).Finite) :
     cycEval n (Z₁ + Z₂) = cycEval n Z₁ + cycEval n Z₂ := by
   unfold cycEval
@@ -218,21 +217,21 @@ theorem cycEval_add_cycle {n Z₁ Z₂ : Ideal (ReciprocityTheory.ChartRestricti
   exact finsum_add_distrib (h₁.subset (Function.support_mul_subset_left _ _))
     (h₂.subset (Function.support_mul_subset_left _ _))
 
-theorem cycEval_fun_sub {n₁ n₂ Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ} (hZ : (Function.support Z).Finite) :
+theorem cycEval_fun_sub {n₁ n₂ Z : Ideal (MRing ι R) → ℤ} (hZ : (Function.support Z).Finite) :
     cycEval (fun W => n₁ W - n₂ W) Z = cycEval n₁ Z - cycEval n₂ Z := by
   unfold cycEval
   simp only [mul_sub]
   exact finsum_sub_distrib (hZ.subset (Function.support_mul_subset_left _ _))
     (hZ.subset (Function.support_mul_subset_left _ _))
 
-theorem cycEval_fun_add {n₁ n₂ Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ} (hZ : (Function.support Z).Finite) :
+theorem cycEval_fun_add {n₁ n₂ Z : Ideal (MRing ι R) → ℤ} (hZ : (Function.support Z).Finite) :
     cycEval (fun W => n₁ W + n₂ W) Z = cycEval n₁ Z + cycEval n₂ Z := by
   unfold cycEval
   simp only [mul_add]
   exact finsum_add_distrib (hZ.subset (Function.support_mul_subset_left _ _))
     (hZ.subset (Function.support_mul_subset_left _ _))
 
-theorem cycEval_congr {n₁ n₂ Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ} (h : ∀ W, Z W ≠ 0 → n₁ W = n₂ W) :
+theorem cycEval_congr {n₁ n₂ Z : Ideal (MRing ι R) → ℤ} (h : ∀ W, Z W ≠ 0 → n₁ W = n₂ W) :
     cycEval n₁ Z = cycEval n₂ Z := by
   unfold cycEval
   refine finsum_congr fun W => ?_
@@ -240,15 +239,15 @@ theorem cycEval_congr {n₁ n₂ Z : Ideal (ReciprocityTheory.ChartRestriction.G
   · simp [hW]
   · rw [h W hW]
 
-theorem cycEval_eq_sum_finite {n Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ} (hZ : (Function.support Z).Finite) :
+theorem cycEval_eq_sum_finite {n Z : Ideal (MRing ι R) → ℤ} (hZ : (Function.support Z).Finite) :
     cycEval n Z = ∑ W ∈ hZ.toFinset, Z W * n W := by
   unfold cycEval
   refine finsum_eq_sum_of_support_subset _ fun W hW => ?_
   rw [Set.Finite.coe_toFinset]
   exact Function.support_mul_subset_left _ _ hW
 
-theorem cycEval_polyVal {σ : Type*} {Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ} (hZ : (Function.support Z).Finite)
-    (F : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → List (K → ℤ) → ℤ) (cls : σ → K → ℤ) (H : MvPolynomial σ ℤ) :
+theorem cycEval_polyVal {σ : Type*} {Z : Ideal (MRing ι R) → ℤ} (hZ : (Function.support Z).Finite)
+    (F : Ideal (MRing ι R) → List (K → ℤ) → ℤ) (cls : σ → K → ℤ) (H : MvPolynomial σ ℤ) :
     cycEval (fun W => polyVal (F W) cls H) Z = polyVal (fun l => cycEval (fun W => F W l) Z) cls H := by
   simp only [cycEval_eq_sum_finite hZ]
   unfold polyVal
@@ -257,8 +256,8 @@ theorem cycEval_polyVal {σ : Type*} {Z : Ideal (ReciprocityTheory.ChartRestrict
   refine Finset.sum_congr rfl fun μ _ => Finset.sum_congr rfl fun W _ => ?_
   ring
 
-theorem cycEval_geoVal_cocycle {A : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → List (K → ℤ) → ℤ}
-    {Z Z' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ} (hZ : (Function.support Z).Finite)
+theorem cycEval_geoVal_cocycle {A : Ideal (MRing ι R) → List (K → ℤ) → ℤ}
+    {Z Z' : Ideal (MRing ι R) → ℤ} (hZ : (Function.support Z).Finite)
     (hZ' : (Function.support Z').Finite) (hp : ∀ W, PermInv (A W))
     (ha : ∀ W, Z W ≠ 0 → HeadAdd (A W)) (ha' : ∀ W, Z' W ≠ 0 → HeadAdd (A W)) (k : ℕ)
     (a b c : K → ℤ)
@@ -298,7 +297,7 @@ theorem divCycleFiniteSupport : DivCycleFiniteSupport.Statement.{u} := by
   refine (Ideal.finite_minimalPrimes_of_isNoetherianRing _ (P ⊔ Ideal.span {f})).subset ?_
   intro W hW
   rw [Function.mem_support] at hW
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
+  unfold divCycle at hW
   split_ifs at hW with h
   · exact h.1
   · exact absurd rfl hW
@@ -315,23 +314,23 @@ theorem diffStep_swap (b b' : K → ℤ) (h : (K → ℤ) → ℤ) :
 
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-theorem vNumL_eq_of_perm (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) {l l' : List (K → ℤ)} (h : l.Perm l') :
+theorem vNumL_eq_of_perm (W : Ideal (MRing ι O)) {l l' : List (K → ℤ)} (h : l.Perm l') :
     vNumL W l = vNumL W l' := by
   unfold vNumL vNum intNum mixedDiff
   rw [List.ofFn_get, List.ofFn_get]
   congr 1
   exact h.foldr_eq' (fun x _ y _ z => diffStep_swap y x z) _
 
-theorem vNumL_cons (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (u : K → ℤ) (l : List (K → ℤ)) :
+theorem vNumL_cons (W : Ideal (MRing ι O)) (u : K → ℤ) (l : List (K → ℤ)) :
     vNumL W (u :: l) = vNum W (Matrix.vecCons u l.get) := by
   unfold vNumL vNum intNum mixedDiff
   rw [List.ofFn_get, List.ofFn_succ]
   simp only [Matrix.cons_val_zero, Matrix.cons_val_succ, List.ofFn_get]
 
-def listNum (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (Q : List (K → ℤ)) (d : ℕ) (l : List (K → ℤ)) : ℤ :=
+def listNum (W : Ideal (MRing ι O)) (Q : List (K → ℤ)) (d : ℕ) (l : List (K → ℤ)) : ℤ :=
   if l.length + Q.length = d then vNumL W (l ++ Q) else 0
 
-theorem listNum_perm (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (Q : List (K → ℤ)) (d : ℕ) :
+theorem listNum_perm (W : Ideal (MRing ι O)) (Q : List (K → ℤ)) (d : ℕ) :
     PermInv (listNum W Q d) := by
   intro l l' h
   unfold listNum
@@ -347,23 +346,23 @@ theorem vNumL_add_head (h3 : IntNumAddFirst.Statement.{0}) {ϖ : O} (hϖ : Irred
   obtain ⟨bf, bg, hbf, hbg, -⟩ := hD.degrees
   have hPmh : IsMultiHomogIdeal P := hP.multiProj.multiHomog
   have : P.IsPrime := hP.multiProj.isPrime
-  have hmh : ∀ (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (e : K → ℕ), IsMultiHomog h e → ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P h) W : ℤ) ≠ 0 →
+  have hmh : ∀ (h : MRing ι O) (e : K → ℕ), IsMultiHomog h e → divCycle P h W ≠ 0 →
       IsMultiHomogIdeal W ∧ W ∈ (P ⊔ Ideal.span {h}).minimalPrimes := by
     intro h e he hW'
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW'
+    unfold divCycle at hW'
     split_ifs at hW' with hW''
     · exact ⟨MinimalPrimeMultiHomog.proof O K ι _ W
         (SupSpanMultiHomog.proof O K ι P h e hPmh he) hW''.1, hW''.1⟩
     · exact absurd rfl hW'
-  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
+  have hϖP : (C ϖ : MRing ι O) ∉ P := by
     intro h
-    have h' : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
+    have h' : ϖ ∈ P.comap (C : O →+* MRing ι O) := h
     rw [hP.noTorsion, Ideal.mem_bot] at h'
     exact hϖ.ne_zero h'
-  have hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W := hD.vertical W hW
+  have hϖW : (C ϖ : MRing ι O) ∈ W := hD.vertical W hW
   have hWdata : IsMultiHomogIdeal W ∧ W.IsPrime ∧ P ≤ W := by
-    by_cases hWf : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = 0
-    · have hWg : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) ≠ 0 := by
+    by_cases hWf : divCycle P f W = 0
+    · have hWg : divCycle P g W ≠ 0 := by
         intro hWg; apply hW; simp [ratDiv, hWf, hWg]
       obtain ⟨hm, hmin⟩ := hmh g bg hbg hWg
       exact ⟨hm, hmin.1.1, le_sup_left.trans hmin.1.2⟩
@@ -372,7 +371,7 @@ theorem vNumL_add_head (h3 : IntNumAddFirst.Statement.{0}) {ϖ : O} (hϖ : Irred
   obtain ⟨hWm, hWp, hPW⟩ := hWdata
   have := hWp
   have hlt : P < W := lt_of_le_of_ne hPW (fun e => hϖP (e ▸ hϖW))
-  have hdrop := DimStrictDrop.proof (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P W hlt
+  have hdrop := DimStrictDrop.proof (MRing ι O) P W hlt
   rw [hP.dim] at hdrop
   have hdim : ringKrullDim (MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal W) <
       ((l.length + 2 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
@@ -398,7 +397,7 @@ theorem listNum_headAdd (h3 : IntNumAddFirst.Statement.{0}) {ϖ : O} (hϖ : Irre
   · simp
 
 theorem listNum_commute (hC2 : VerticalDivisorsCommute.Statement.{0}) {ϖ : O} (hϖ : Irreducible ϖ)
-    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {d : ℕ} (hP : IsModelOver P d) {b b' : K → ℤ} {f g f' g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
+    {P : Ideal (MRing ι O)} {d : ℕ} (hP : IsModelOver P d) {b b' : K → ℤ} {f g f' g' : MRing ι O}
     (hD : IsVerticalDivisor P ϖ b f g) (hD' : IsVerticalDivisor P ϖ b' f' g')
     (Q l : List (K → ℤ)) :
     cycEval (fun W => listNum W Q d (b' :: l)) (ratDiv P f g) =
@@ -413,7 +412,7 @@ theorem listNum_commute (hC2 : VerticalDivisorsCommute.Statement.{0}) {ϖ : O} (
   · simp [if_neg h, cycEval]
 
 
-theorem ratDiv_mul {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} [P.IsPrime] {f g f' g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hf : f ∉ P)
+theorem ratDiv_mul {P : Ideal (MRing ι O)} [P.IsPrime] {f g f' g' : MRing ι O} (hf : f ∉ P)
     (hg : g ∉ P) (hf' : f' ∉ P) (hg' : g' ∉ P) :
     ratDiv P (f * f') (g * g') = ratDiv P f g + ratDiv P f' g' := by
   funext W
@@ -422,8 +421,8 @@ theorem ratDiv_mul {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOve
   simp only [Pi.add_apply]
   ring
 
-theorem isVerticalDivisor_mul {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} [P.IsPrime] {ϖ : O} {b b' : K → ℤ}
-    {f g f' g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hD : IsVerticalDivisor P ϖ b f g)
+theorem isVerticalDivisor_mul {P : Ideal (MRing ι O)} [P.IsPrime] {ϖ : O} {b b' : K → ℤ}
+    {f g f' g' : MRing ι O} (hD : IsVerticalDivisor P ϖ b f g)
     (hD' : IsVerticalDivisor P ϖ b' f' g') :
     IsVerticalDivisor P ϖ (b + b') (f * f') (g * g') where
   degrees := by
@@ -492,7 +491,7 @@ theorem repr_chain (w w' : Module.Basis (Fin N) Ω E) (v : E) (j : Fin N) :
 
 theorem isFlagPair_comp {ϖ : O} {y : (Σ k, ι k) → Ω} [(pointIdeal O y).IsPrime]
     {B B' B'' : ChartBundle O (segreVec y) N E} {w w' w'' : Module.Basis (Fin N) Ω E}
-    {x x' x'' : Fin N → K → ℤ} {f g f' g' : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
+    {x x' x'' : Fin N → K → ℤ} {f g f' g' : Fin N → MRing ι O}
     (hp₁ : IsFlagPair ϖ y B B' w w' x x' f g) (hp₂ : IsFlagPair ϖ y B' B'' w' w'' x' x'' f' g') :
     IsFlagPair ϖ y B B'' w w'' x x'' (fun i => f i * f' i) (fun i => g i * g' i) where
   flag := hp₁.flag
@@ -533,7 +532,7 @@ theorem isFlagPair_refl {ϖ : O} {y : (Σ k, ι k) → Ω} [(pointIdeal O y).IsP
   generic := fun i => by simp [Module.Basis.repr_self]
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
-theorem pairNum_one (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (x : Fin N → K → ℤ)
+theorem pairNum_one (P : Ideal (MRing ι O)) (x : Fin N → K → ℤ)
     (Gs : Fin N → MvPolynomial (Fin N ⊕ Fin N) ℤ) (Q : List (K → ℤ)) :
     pairNum P x x (fun _ => 1) (fun _ => 1) Gs Q = 0 := by
   simp [pairNum, cycEval, ratDiv, divCycle_one]
@@ -541,7 +540,7 @@ theorem pairNum_one (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOv
 
 theorem classNum_eq_polyVal {σ : Type*} (cls : σ → K → ℤ) {H : MvPolynomial σ ℤ} {n : ℕ}
     (hH : H.IsHomogeneous n) {Q : List (K → ℤ)} {d : ℕ} (hn : n + Q.length = d)
-    (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) : classNum cls H Q W = polyVal (listNum W Q d) cls H := by
+    (W : Ideal (MRing ι O)) : classNum cls H Q W = polyVal (listNum W Q d) cls H := by
   unfold classNum polyVal listNum
   refine Finset.sum_congr rfl fun μ hμ => ?_
   rw [if_pos]
@@ -554,7 +553,7 @@ theorem classNum_eq_polyVal {σ : Type*} (cls : σ → K → ℤ) {H : MvPolynom
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem classNum_psumExpansion (u v : Fin N → K → ℤ) (k : ℕ) (i : Fin N) {Q : List (K → ℤ)}
-    {d : ℕ} (hQ : Q.length + k = d + 1) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    {d : ℕ} (hQ : Q.length + k = d + 1) (W : Ideal (MRing ι O)) :
     classNum (Sum.elim u v) (psumExpansion N k i) Q W = geoVal (listNum W Q d) k (u i) (v i) := by
   cases k with
   | zero => simp [classNum, psumExpansion, geoVal, geoSum, polyVal]
@@ -578,7 +577,7 @@ theorem pairNum_cocycle (hFI : FlagIndependence.Statement)
     {N : ℕ} {E : Type} [AddCommGroup E] [Module Ω E] {B B' B'' : ChartBundle O (segreVec y) N E}
     (hS : SameGenericFibre ϖ B B') (hS' : SameGenericFibre ϖ B' B'')
     {w w' w'' : Module.Basis (Fin N) Ω E} {x x' x'' : Fin N → K → ℤ}
-    {f g f' g' f'' g'' : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
+    {f g f' g' f'' g'' : Fin N → MRing ι O}
     (hp₁ : IsFlagPair ϖ y B B' w w' x x' f g) (hp₂ : IsFlagPair ϖ y B' B'' w' w'' x' x'' f' g')
     (hp₃ : IsFlagPair ϖ y B B'' w w'' x x'' f'' g'')
     {k : ℕ} {Gs Gs' Gs'' : Fin N → MvPolynomial (Fin N ⊕ Fin N) ℤ}

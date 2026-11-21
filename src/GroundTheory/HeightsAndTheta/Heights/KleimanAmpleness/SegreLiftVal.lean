@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SegreJoin
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -23,31 +22,31 @@ abbrev segreIdx : Unit ⊕ K → Type := Sum.elim (fun _ : Unit => ∀ k, ι k) 
 
 variable (R : Type*) [CommRing R]
 
-def segreIncl : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →ₐ[R] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι) :=
+def segreIncl : MRing ι R →ₐ[R] MRing (segreIdx ι) R :=
   rename fun v => (⟨Sum.inr v.1, v.2⟩ : Σ k, segreIdx ι k)
 
 variable {ι R}
 
-def segreY (c : ∀ k, ι k) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι) :=
+def segreY (c : ∀ k, ι k) : MRing (segreIdx ι) R :=
   X (⟨Sum.inl (), c⟩ : Σ k, segreIdx ι k)
 
-def segreMon (c : ∀ k, ι k) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι) :=
+def segreMon (c : ∀ k, ι k) : MRing (segreIdx ι) R :=
   ∏ k, X (⟨Sum.inr k, c k⟩ : Σ k, segreIdx ι k)
 
 variable (ι R)
 
-def segreRels : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι)) :=
+def segreRels : Set (MRing (segreIdx ι) R) :=
   {g | ∃ c d : ∀ k, ι k, g = segreY c * segreMon d - segreY d * segreMon c}
 
-def segreLiftVal (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) : (Σ k, segreIdx ι k) → Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ W)
+def segreLiftVal (W : Ideal (MRing ι R)) : (Σ k, segreIdx ι k) → Polynomial (MRing ι R ⧸ W)
   | ⟨Sum.inl _, c⟩ => Polynomial.X * Polynomial.C (Ideal.Quotient.mk W (∏ k, X ⟨k, c k⟩))
   | ⟨Sum.inr k, i⟩ => Polynomial.C (Ideal.Quotient.mk W (X ⟨k, i⟩))
 
-def segreLiftMap (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
-    ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι) →ₐ[R] Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ W) :=
+def segreLiftMap (W : Ideal (MRing ι R)) :
+    MRing (segreIdx ι) R →ₐ[R] Polynomial (MRing ι R ⧸ W) :=
   aeval (segreLiftVal ι R W)
 
-def segreLift (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι)) :=
+def segreLift (W : Ideal (MRing ι R)) : Ideal (MRing (segreIdx ι) R) :=
   RingHom.ker (segreLiftMap ι R W)
 
 end Objects

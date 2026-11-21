@@ -11,7 +11,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Clas
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsFieldIntersectionExample
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyBridgeFull
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -35,7 +34,7 @@ theorem fieldNum_spec (F : Type) [Field F] {K' : Type} [Fintype K'] (κ : K' →
     ReciprocityTheory.ChartRestriction.G.AI.I1.IsFieldIntersection I) ⟨_, IntNumIsFieldIntersection.full F K' κ⟩
 
 theorem redIdeal_map_liftVar {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
-    (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (W : Ideal (MRing ι O)) :
     IndefiniteRowSideFullHecke.NumbersDVR.Bundles.redIdeal O (W.map (rename (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.liftVar (ι := ι) ptIdx))) =
       (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.redIdeal O W).map
         (rename (R := IsLocalRing.ResidueField O) (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.liftVar (ι := ι) ptIdx)) := by
@@ -56,7 +55,7 @@ theorem monoList_pullDeg {r : ℕ} (deg : Fin r → K → ℤ) (μ : Fin r →�
   simp [IndefiniteRowSideFullHecke.NumbersDVR.Bundles.monoList, List.map_flatMap, List.map_replicate]
 
 theorem polyNum_join (hV : JoinVariety.Statement) (hN : JoinIntNum.Statement) (F : Type) [Field F]
-    (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (d : ℕ) (hVd : ReciprocityTheory.ChartRestriction.G.AI.I1.IsProjVarF V d) {r : ℕ}
+    (V : Ideal (MRing ι F)) (d : ℕ) (hVd : ReciprocityTheory.ChartRestriction.G.AI.I1.IsProjVarF V d) {r : ℕ}
     (deg : Fin r → K → ℤ) (H : MvPolynomial (Fin r) ℤ) :
     IndefiniteRowSideFullHecke.NumbersDVR.Bundles.polyNum (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.fieldNum F (Sum.elim ι ptIdx))
                               (V.map (rename (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.liftVar (ι := ι) ptIdx))) d
@@ -83,7 +82,7 @@ theorem polyNum_join (hV : JoinVariety.Statement) (hN : JoinIntNum.Statement) (F
 
 theorem vEval_join (hV : JoinVariety.Statement) (hN : JoinIntNum.Statement) {O : Type} [CommRing O]
     [IsDomain O] [IsDiscreteValuationRing O] (d : ℕ) {r : ℕ} (deg : Fin r → K → ℤ)
-    (H : MvPolynomial (Fin r) ℤ) (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) →₀ ℤ)
+    (H : MvPolynomial (Fin r) ℤ) (Z : Ideal (MRing ι O) →₀ ℤ)
     (hZ : ∀ W, Z W ≠ 0 → ReciprocityTheory.ChartRestriction.G.AI.I1.IsProjVarF (specialIdeal W) d) :
     IndefiniteRowSideFullHecke.NumbersDVR.Bundles.vEval O (fun V => IndefiniteRowSideFullHecke.NumbersDVR.Bundles.polyNum
                               (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.fieldNum (IsLocalRing.ResidueField O) (Sum.elim ι ptIdx)) V d
@@ -99,8 +98,8 @@ theorem vEval_join (hV : JoinVariety.Statement) (hN : JoinIntNum.Statement) {O :
   rw [polyNum_join hV hN _ (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.redIdeal O W) d (hZ W (Finsupp.mem_support_iff.mp hW))
     deg H]
 
-theorem mem_divSupp_of_ne {R : Type} [CommRing R] [IsNoetherianRing R] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι))
-    (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (h : ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s W ≠ 0) :
+theorem mem_divSupp_of_ne {R : Type} [CommRing R] [IsNoetherianRing R] (P : Ideal (MRing ι R))
+    (s : MRing ι R) (W : Ideal (MRing ι R)) (h : ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s W ≠ 0) :
     W ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P s := by
   classical
   by_contra hW
@@ -109,7 +108,7 @@ theorem mem_divSupp_of_ne {R : Type} [CommRing R] [IsNoetherianRing R] (P : Idea
   rw [if_neg hW]
 
 theorem intCycle_join (hD : JoinDivCycle.Statement) {R : Type} [CommRing R] [IsNoetherianRing R]
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+    (P : Ideal (MRing ι R)) (s : MRing ι R) :
     Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero (ReciprocityTheory.ChartRestriction.G.Geo.divCycle
         (P.map (rename (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.liftVar (ι := ι) ptIdx)))
         (rename (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.liftVar (ι := ι) ptIdx) s)) =
@@ -133,7 +132,7 @@ theorem proof (hI : JoinPointIdeal.Statement) (hD : JoinDivCycle.Statement)
       rw [intCycle_join hD, intCycle_join hD, Finsupp.mapDomain_sub]
     rw [hc]
     refine vEval_join hV hN d deg H _ fun W hW => ?_
-    have hvert : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W :=
+    have hvert : (C ϖ : MRing ι O) ∈ W :=
       hdiv.vertical W (by rwa [← BundleExamples.ratCyc_eq])
     obtain ⟨bf, bg, hf, hg, -⟩ := hdiv.degrees
     have hor : ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O y) f W ≠ 0 ∨
@@ -149,7 +148,7 @@ theorem proof (hI : JoinPointIdeal.Statement) (hD : JoinDivCycle.Statement)
     · have hs := mem_divSupp_of_ne _ _ _ h
       obtain ⟨h1, h2⟩ := hF O ϖ hϖ K ι (pointIdeal O y) d hM g bg hg hdiv.den_not_mem W hs.1 hs.2 hvert
       exact ⟨(Objects.isMultiProjPrime_iff _).mp h1, h2⟩
-  · have hC : (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ptIdx)) =
+  · have hC : (C a : MRing (Sum.elim ι ptIdx) O) =
         rename (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.liftVar (ι := ι) ptIdx) (C a) := (rename_C _ _).symm
     rw [hC, intCycle_join hD]
     refine vEval_join hV hN d deg H _ fun W hW => ?_
@@ -159,13 +158,13 @@ theorem proof (hI : JoinPointIdeal.Statement) (hD : JoinDivCycle.Statement)
       simp [h0]
     have hs := mem_divSupp_of_ne _ _ _ h
     have hWp : W.IsPrime := hs.1.1.1
-    have hCa : (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W := hs.1.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self _))
-    have hnP : (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ pointIdeal O y := by
+    have hCa : (C a : MRing ι O) ∈ W := hs.1.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self _))
+    have hnP : (C a : MRing ι O) ∉ pointIdeal O y := by
       intro hmem
-      have hmem' : a ∈ (pointIdeal O y).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := hmem
+      have hmem' : a ∈ (pointIdeal O y).comap (C : O →+* MRing ι O) := hmem
       rw [hM.noTorsion, Ideal.mem_bot] at hmem'
       exact ha hmem'
-    have hvert : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W := by
+    have hvert : (C ϖ : MRing ι O) ∈ W := by
       obtain ⟨n, u, hu⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible ha hϖ
       rw [hu, C_mul, C_pow] at hCa
       rcases hWp.mem_or_mem hCa with h1 | h1

@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsChowFormSectionPerfect
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -18,4 +17,6 @@ def SectionCycleReduced.Statement : Prop :=
     (∀ P ∈ J.minimalPrimes, ∀ Q ∈ J.minimalPrimes,
       ringKrullDim (MvPolynomial (Fin n) F ⧸ P) = ringKrullDim (MvPolynomial (Fin n) F ⧸ Q)) →
     (∀ P ∈ J.minimalPrimes, linForm u ∉ P) →
-      fundCycle (J ⊔ Ideal.span {linForm u}) = ∑ P ∈ (fundCycle J).support, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P u) end : ℤ) GroundTheory.Heights₂.Heights
+      fundCycle (J ⊔ Ideal.span {linForm u}) = ∑ P ∈ (fundCycle J).support, divCycle P u
+
+end GroundTheory.Heights₂.Heights

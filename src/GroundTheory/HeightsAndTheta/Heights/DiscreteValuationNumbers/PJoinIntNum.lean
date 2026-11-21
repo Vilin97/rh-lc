@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsJoinIntNum
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PEventualValueFacts
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -47,11 +46,11 @@ variable {F : Type} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K →
 def newVar : (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) := ⟨.inr (), (0 : Fin 1)⟩
 
 
-def dropPt : (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι
+def dropPt : (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) → MRing ι F
   | ⟨.inl k, i⟩ => X ⟨k, i⟩
   | ⟨.inr _, _⟩ => 1
 
-theorem dropPt_rename (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
+theorem dropPt_rename (f : MRing ι F) :
     aeval (dropPt F) (rename (liftVar (ι := ι) ptIdx) f) = f := by
   rw [aeval_rename]
   have : (dropPt F ∘ liftVar (ι := ι) ptIdx) = X := by
@@ -59,7 +58,7 @@ theorem dropPt_rename (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F 
     rfl
   rw [this, aeval_X_left_apply]
 
-theorem mul_pow_mem_map_iff (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (t : ℕ) :
+theorem mul_pow_mem_map_iff (V : Ideal (MRing ι F)) (f : MRing ι F) (t : ℕ) :
     rename (liftVar (ι := ι) ptIdx) f * X newVar ^ t ∈ V.map (rename (liftVar (ι := ι) ptIdx)) ↔
       f ∈ V := by
   constructor
@@ -99,7 +98,7 @@ theorem rename_dropPt_monomial (d : (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) →
   | single_add a b f _ _ ih =>
     have hsplit : monomial (Finsupp.single a b + f) c = X a ^ b * monomial f c := by
       rw [X_pow_eq_monomial, monomial_mul, one_mul]
-    have key : rename (liftVar (ι := ι) ptIdx) (aeval (dropPt F) (X a ^ b : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (Sum.elim ι ptIdx))) *
+    have key : rename (liftVar (ι := ι) ptIdx) (aeval (dropPt F) (X a ^ b : MRing (Sum.elim ι ptIdx) F)) *
         X newVar ^ (Finsupp.single a b newVar) = X a ^ b := by
       rcases a with ⟨k | u, i⟩
       · have hne : (⟨.inl k, i⟩ : Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) ≠ newVar := by
@@ -107,7 +106,7 @@ theorem rename_dropPt_monomial (d : (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) →
           exact Sum.inl_ne_inr (congrArg Sigma.fst h)
         rw [Finsupp.single_eq_of_ne hne.symm]
         simp only [map_pow, aeval_X, pow_zero, mul_one]
-        show (rename (liftVar (ι := ι) ptIdx) (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) ^ b = _
+        show (rename (liftVar (ι := ι) ptIdx) (X ⟨k, i⟩ : MRing ι F)) ^ b = _
         rw [rename_X]
         rfl
       · cases u
@@ -115,13 +114,13 @@ theorem rename_dropPt_monomial (d : (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) →
         show _ * X newVar ^ (Finsupp.single newVar b newVar) = X newVar ^ b
         simp [dropPt, newVar]
     rw [hsplit, map_mul, map_mul, Finsupp.add_apply, pow_add]
-    calc _ = (rename (liftVar (ι := ι) ptIdx) (aeval (dropPt F) (X a ^ b : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (Sum.elim ι ptIdx))) *
+    calc _ = (rename (liftVar (ι := ι) ptIdx) (aeval (dropPt F) (X a ^ b : MRing (Sum.elim ι ptIdx) F)) *
           X newVar ^ (Finsupp.single a b newVar)) *
           (rename (liftVar (ι := ι) ptIdx) (aeval (dropPt F) (monomial f c)) *
           X newVar ^ (f newVar)) := by ring
       _ = _ := by rw [key, ih]
 
-theorem rename_dropPt_of_homog {g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (Sum.elim ι ptIdx)} {M : K ⊕ Unit → ℕ}
+theorem rename_dropPt_of_homog {g : MRing (Sum.elim ι ptIdx) F} {M : K ⊕ Unit → ℕ}
     (hg : IsWeightedHomogeneous (blockWeight (Sum.elim ι ptIdx)) g M) :
     rename (liftVar (ι := ι) ptIdx) (aeval (dropPt F) g) * X newVar ^ (M (.inr ())) = g := by
   conv_rhs => rw [g.as_sum]
@@ -147,7 +146,7 @@ def restrictFirst : (K ⊕ Unit → ℕ) →+ (K → ℕ) where
   map_zero' := rfl
   map_add' _ _ := rfl
 
-theorem rename_homog {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {m : K → ℕ}
+theorem rename_homog {f : MRing ι F} {m : K → ℕ}
     (hf : IsWeightedHomogeneous (blockWeight ι) f m) :
     IsWeightedHomogeneous (blockWeight (Sum.elim ι ptIdx))
       (rename (liftVar (ι := ι) ptIdx) f) (extendZero m) := by
@@ -161,7 +160,7 @@ theorem rename_homog {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F �
   rw [e]
   exact isWeightedHomogeneous_X F _ _
 
-theorem dropPt_homog {g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (Sum.elim ι ptIdx)} {M : K ⊕ Unit → ℕ}
+theorem dropPt_homog {g : MRing (Sum.elim ι ptIdx) F} {M : K ⊕ Unit → ℕ}
     (hg : IsWeightedHomogeneous (blockWeight (Sum.elim ι ptIdx)) g M) :
     IsWeightedHomogeneous (blockWeight ι) (aeval (dropPt F) g) (restrictFirst M) := by
   refine isWeightedHomogeneous_algHom _ _ restrictFirst _ (fun s => ?_) hg
@@ -205,7 +204,7 @@ theorem homogSubmodule_eq_map (M : K ⊕ Unit → ℕ) :
     rw [e] at h
     exact h
 
-theorem finrank_gradedPiece (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (M : K ⊕ Unit → ℕ) :
+theorem finrank_gradedPiece (V : Ideal (MRing ι F)) (M : K ⊕ Unit → ℕ) :
     Module.finrank F (gradedPiece (V.map (rename (liftVar (ι := ι) ptIdx))) M) =
       Module.finrank F (gradedPiece V (restrictFirst M)) := by
   set ψ := (LinearMap.mulRight F (X newVar ^ M (.inr ()))).comp
@@ -222,7 +221,7 @@ theorem finrank_gradedPiece (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo
     unfold gradedPiece
     rw [homogSubmodule_eq_map, ← Submodule.map_comp]
   have hB : gradedPiece V (restrictFirst M) = H.map B := rfl
-  have e : ∀ {N : Type} [AddCommGroup N] [Module F N] (C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →ₗ[F] N),
+  have e : ∀ {N : Type} [AddCommGroup N] [Module F N] (C : MRing ι F →ₗ[F] N),
       H.map C = LinearMap.range (C ∘ₗ H.subtype) := by
     intro N _ _ C
     rw [LinearMap.range_comp, Submodule.range_subtype]
@@ -233,7 +232,7 @@ theorem finrank_gradedPiece (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo
   rw [hA, hB, e, e, ← (LinearMap.quotKerEquivRange _).finrank_eq,
     ← (LinearMap.quotKerEquivRange _).finrank_eq, hk2]
 
-theorem hilbFn_map (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m' : K ⊕ Unit → ℤ) :
+theorem hilbFn_map (V : Ideal (MRing ι F)) (m' : K ⊕ Unit → ℤ) :
     hilbFn (V.map (rename (liftVar (ι := ι) ptIdx))) m' =
       if 0 ≤ m' (.inr ()) then hilbFn V (fun k => m' (.inl k)) else 0 := by
   unfold hilbFn
@@ -271,7 +270,7 @@ theorem foldr_diffStep_pullDeg (L : List (K → ℤ)) (h : (K → ℤ) → ℤ)
     rw [h1, h2]
     split_ifs <;> simp
 
-theorem mixedDiff_map (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {n : ℕ} (bs : Fin n → K → ℤ) (m' : K ⊕ Unit → ℤ) :
+theorem mixedDiff_map (V : Ideal (MRing ι F)) {n : ℕ} (bs : Fin n → K → ℤ) (m' : K ⊕ Unit → ℤ) :
     mixedDiff (fun j => pullDeg (K' := Unit) (bs j))
         (hilbFn (V.map (rename (liftVar (ι := ι) ptIdx)))) m' =
       if 0 ≤ m' (.inr ()) then mixedDiff bs (hilbFn V) (fun k => m' (.inl k)) else 0 := by

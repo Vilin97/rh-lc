@@ -9,7 +9,6 @@ public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CycNumIn
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CycleNumberLinearStatement
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CycleNumberMulExpandStatement
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CycleNumberRenameStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,12 +16,12 @@ open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.Compan
 
 namespace GlobalTheory.CompanionTheory.Ar.Num
 
-theorem val_psumExpansion_mul : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (σ : Type) [Fintype σ] [DecidableEq σ] (T : LocPair ι O σ) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (r k : ℕ) (e : Fin r → σ) (G : MvPolynomial (σ ⊕ σ) ℝ), T.val P (fun i => (∑ a ∈ Finset.univ.filter (fun a => e a = i), rename (Sum.map e e) (MvPolynomial.map (Int.castRingHom ℝ) (psumExpansion r k a))) * G) = ∑ μ ∈ G.support, G.coeff μ * (((T.comp e).ck P k (classList (Sum.elim T.x T.x') μ) : ℤ) : ℝ) := by
+theorem val_psumExpansion_mul : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (σ : Type) [Fintype σ] [DecidableEq σ] (T : LocPair ι O σ) (P : Ideal (MRing ι O)) (r k : ℕ) (e : Fin r → σ) (G : MvPolynomial (σ ⊕ σ) ℝ), T.val P (fun i => (∑ a ∈ Finset.univ.filter (fun a => e a = i), rename (Sum.map e e) (MvPolynomial.map (Int.castRingHom ℝ) (psumExpansion r k a))) * G) = ∑ μ ∈ G.support, G.coeff μ * (((T.comp e).ck P k (classList (Sum.elim T.x T.x') μ) : ℤ) : ℝ) := by
   intro O _ _ _ K _ _ ι _ σ _ _ T P r k e G
   have hcomp : (Sum.elim T.x T.x') ∘ Sum.map e e = Sum.elim (T.x ∘ e) (T.x' ∘ e) := by
     funext s
     cases s <;> rfl
-  have hfin : ∀ f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, (Function.support (ratDiv P f g)).Finite := fun f g =>
+  have hfin : ∀ f g : MRing ι O, (Function.support (ratDiv P f g)).Finite := fun f g =>
     ratDiv_support_finite DivCycleFiniteSupport.full P f g
   have hterm : ∀ (i : σ) (L : List (K → ℤ)),
       cycNum (ratDiv P (T.f i) (T.g i)) (Sum.elim T.x T.x')

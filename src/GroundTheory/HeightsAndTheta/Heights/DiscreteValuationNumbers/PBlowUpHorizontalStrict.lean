@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpHorizontal
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LiftFormNotMemBlowUpOf
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -23,7 +22,7 @@ set_option linter.unusedSectionVars false
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {J : Type} {R : Type*} [CommRing R]
 
-theorem blowUpOf_mono {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (h : P ≤ W) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+theorem blowUpOf_mono {P W : Ideal (MRing ι R)} (h : P ≤ W) (u : J → MRing ι R) :
     blowUpOf P u ≤ blowUpOf W u := by
   intro F hF
   let φ := Polynomial.mapRingHom (Ideal.Quotient.factor h)
@@ -41,28 +40,28 @@ theorem blowUpOf_mono {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRi
   rw [blowUpOf, RingHom.mem_ker] at hF ⊢
   rw [← e, hF, map_zero]
 
-theorem blowUpOf_isPrime {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hW : W.IsPrime) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+theorem blowUpOf_isPrime {W : Ideal (MRing ι R)} (hW : W.IsPrime) (u : J → MRing ι R) :
     (blowUpOf W u).IsPrime := by
   have := hW
   exact RingHom.ker_isPrime _
 
-theorem blowUpOf_comap_le {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {H : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))}
+theorem blowUpOf_comap_le {P : Ideal (MRing ι R)} {u : J → MRing ι R} {H : Ideal (MRing (extIdx ι J) R)}
     (hH : H.IsPrime) (hPH : blowUpOf P u ≤ H) {j₀ : J}
     (hj₀ : u j₀ ∉ H.comap (liftForm (ι := ι) (J := J) (R := R))) :
     blowUpOf (H.comap (liftForm (ι := ι) (J := J) (R := R))) u ≤ H := by
   have := hH
-  let L := FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ H)
-  let q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) →+* L := (algebraMap _ L).comp (Ideal.Quotient.mk H)
+  let L := FractionRing (MRing (extIdx ι J) R ⧸ H)
+  let q : MRing (extIdx ι J) R →+* L := (algebraMap _ L).comp (Ideal.Quotient.mk H)
   have hq : ∀ y, q y = 0 ↔ y ∈ H := by
     intro y
     simp only [q, RingHom.comp_apply]
     rw [map_eq_zero_iff _ (IsFractionRing.injective _ L), Ideal.Quotient.eq_zero_iff_mem]
   have hu₀ : q (liftForm (u j₀)) ≠ 0 := fun h0 => hj₀ ((hq _).mp h0)
-  let ψ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ H.comap (liftForm (ι := ι) (J := J) (R := R)) →+* L :=
+  let ψ : MRing ι R ⧸ H.comap (liftForm (ι := ι) (J := J) (R := R)) →+* L :=
     Ideal.Quotient.lift _ (q.comp (liftForm (ι := ι) (J := J) (R := R)).toRingHom) fun a ha => (hq _).mpr ha
-  let ε : Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ H.comap (liftForm (ι := ι) (J := J) (R := R))) →+* L :=
+  let ε : Polynomial (MRing ι R ⧸ H.comap (liftForm (ι := ι) (J := J) (R := R))) →+* L :=
     Polynomial.eval₂RingHom ψ (q (newVar j₀) / q (liftForm (u j₀)))
-  have hψ : ∀ a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι, ψ (Ideal.Quotient.mk _ a) = q (liftForm a) := fun a =>
+  have hψ : ∀ a : MRing ι R, ψ (Ideal.Quotient.mk _ a) = q (liftForm a) := fun a =>
     Ideal.Quotient.lift_mk _ _ _
 
   have hrelq : ∀ j : J, q (newVar j) * q (liftForm (u j₀)) = q (liftForm (u j)) * q (newVar j₀) := by
@@ -107,7 +106,7 @@ theorem BlowUpHorizontalStrict.full : BlowUpHorizontalStrict.Statement.{u} := by
   obtain ⟨j₀, hj₀⟩ := hj
   obtain ⟨hWp, hBW, -⟩ := le_and_isRelevant_of_divCycle_ne_zero hW
   have hmin : W ∈ (blowUpOf P u ⊔ Ideal.span {liftForm x}).minimalPrimes := by
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
+    unfold divCycle at hW
     split_ifs at hW with h
     · exact h.1
     · exact absurd rfl hW

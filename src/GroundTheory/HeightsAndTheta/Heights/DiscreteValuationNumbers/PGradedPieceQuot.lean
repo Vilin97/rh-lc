@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -43,9 +42,9 @@ theorem GradedPieceQuot.proof : GradedPieceQuot.Statement.{u} := by
   intro F _ K _ _ ι _ I m
   have := finiteDimensional_weightedHomogeneousSubmodule F ι m
   set S := weightedHomogeneousSubmodule F (blockWeight ι) m with hS
-  set J : Submodule F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) := I.restrictScalars F with hJ
-  let π : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →ₗ[F] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I := (Ideal.Quotient.mkₐ F I).toLinearMap
-  let q : S →ₗ[F] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I := π ∘ₗ S.subtype
+  set J : Submodule F (MRing ι F) := I.restrictScalars F with hJ
+  let π : MRing ι F →ₗ[F] MRing ι F ⧸ I := (Ideal.Quotient.mkₐ F I).toLinearMap
+  let q : S →ₗ[F] MRing ι F ⧸ I := π ∘ₗ S.subtype
   have hrange : LinearMap.range q = gradedPiece I m := by
     rw [LinearMap.range_comp, Submodule.range_subtype]
     rfl

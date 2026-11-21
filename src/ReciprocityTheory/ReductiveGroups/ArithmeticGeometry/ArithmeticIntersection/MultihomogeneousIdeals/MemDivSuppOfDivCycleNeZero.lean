@@ -3,7 +3,6 @@ module
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.IsFieldIntersection
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.LengthCokerEqKerAddDimOneOrderSum
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.CycDim
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -16,7 +15,7 @@ open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo
 variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)] {F : Type*} [Field F]
 
 theorem mem_divSupp_of_divCycle_ne_zero {V W : Ideal (MRingOver F ι)} {f : MRingOver F ι}
-    (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) ≠ 0) : W ∈ divSupp V f := by
+    (h : divCycle V f W ≠ 0) : W ∈ divSupp V f := by
   classical
   by_contra hW
   exact h (by simp [divCycle, Finsupp.ofSupportFinite_coe, hW])
@@ -200,7 +199,7 @@ theorem locLen_quot_eq_zero {V : Ideal R} {g : R} (p : PrimeSpectrum R) (hg : g 
 end DivMul2
 
 theorem divCycle_mul {V : Ideal (MRingOver F ι)} (hV : V.IsPrime) {f g : MRingOver F ι}
-    (hf : f ∉ V) (hg : g ∉ V) : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V (f * g)) W : ℤ)) = divCycle V f + (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V g) W : ℤ)) := by
+    (hf : f ∉ V) (hg : g ∉ V) : divCycle V (f * g) = divCycle V f + divCycle V g := by
   classical
   ext W
   simp only [Finsupp.add_apply, divCycle, Finsupp.ofSupportFinite_coe]
@@ -230,7 +229,7 @@ theorem ratDiv_mul {V : Ideal (MRingOver F ι)} (hV : V.IsPrime) {f g f' g' : MR
     Finsupp.mapRange_add (hf := Nat.cast_zero) (fun a b => Nat.cast_add a b)]
   abel
 
-theorem divCycle_one (V : Ideal (MRingOver F ι)) : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V (1 : MRingOver F ι)) W : ℤ)) = 0 := by
+theorem divCycle_one (V : Ideal (MRingOver F ι)) : divCycle V (1 : MRingOver F ι) = 0 := by
   classical
   ext W
   have h : W ∉ divSupp V (1 : MRingOver F ι) := by

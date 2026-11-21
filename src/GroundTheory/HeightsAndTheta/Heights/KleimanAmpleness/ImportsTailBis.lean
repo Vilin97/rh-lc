@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SegreLiftVal
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -11,16 +10,16 @@ set_option maxSynthPendingDepth 1
 namespace GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization
 
 open MvPolynomial
-open GroundTheory.Heights₂.Heights.NumbersDVR (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver intNum IsMultiProjPrime)
+open GroundTheory.Heights₂.Heights.NumbersDVR (MRing IsMultiProjPrime intNum)
 open GroundTheory.Heights₂.Heights.FieldNumbers (relDim)
 open ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH (mIdealOver)
 
 def SegreLiftPrime.Statement : Prop :=
   ∀ (F : Type) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime W →
+    [∀ k, Fintype (ι k)] (W : Ideal (MRing ι F)), IsMultiProjPrime W →
       IsMultiProjPrime (segreLift ι F W)
 
-theorem SegreLiftPrime.hyps : IsMultiProjPrime (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => Fin 2))) :=
+theorem SegreLiftPrime.hyps : IsMultiProjPrime (⊥ : Ideal (MRing (fun _ : Unit => Fin 2) ℚ)) :=
   NumbersDVR.isMultiProjPrime_bot
 
 end GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization

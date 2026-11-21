@@ -13,7 +13,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSym
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.NumericalSegreClosed
 public import Development.WeilBound.CoreStatements.IdealCycleValues.ProjIdealIndependentOfBasis
 public import Development.WeilBound.CoreStatements.HodgeTatePoints.PflagZ
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 
 @[expose] public section
@@ -39,7 +38,7 @@ theorem aeval_neg_hsymm (N a : ℕ) :
 
 section
 variable (F : Type) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-  [∀ k, Fintype (ι k)] (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))
+  [∀ k, Fintype (ι k)] (V : Ideal (MRing ι F))
 
 theorem swap_num {N : ℕ} (b u : Fin N → K → ℤ) (G H : MvPolynomial (Fin N) ℝ) (Q : List (K → ℤ)) :
     ∑ μ ∈ G.support, G.coeff μ * genNum F V u H (classList b μ ++ Q) =
@@ -165,8 +164,8 @@ theorem cast_num {N : ℕ} (b : Fin N → K → ℤ) (G : MvPolynomial (Fin N) �
 end
 
 private theorem relDim_eq_of_ringKrullDim_quotient (F : Type) [Field F] (K : Type) [Fintype K] (ι : K → Type)
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (e : ℕ)
-    (hdim : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞)) :
+    (P : Ideal (MRing ι F)) (e : ℕ)
+    (hdim : ringKrullDim (MRing ι F ⧸ P) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞)) :
     GroundTheory.Heights₂.Heights.FieldNumbers.relDim P = ((e : ℕ) : WithBot (WithTop ℤ)) := by
   unfold GroundTheory.Heights₂.Heights.FieldNumbers.relDim
   rw [hdim]
@@ -186,7 +185,7 @@ private theorem relDim_eq_of_ringKrullDim_quotient (F : Type) [Field F] (K : Typ
 private theorem shift_agree_lemma_5 (F : Type) [Field F] (Ω : Type) [Field Ω] [Algebra F Ω] (K : Type)
     [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (y : (Σ k, ι k) → Ω) (e : ℕ)
     (hP : IsMultiProjPrime (pointIdeal F y))
-    (hdim : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞))
+    (hdim : ringKrullDim (MRing ι F ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞))
     (N : ℕ) (hN : 0 < N) (V : Type) [AddCommGroup V] [Module Ω V] (B : ChartBundle F (segreVec y) N V)
     (w v : Module.Basis (Fin N) Ω V) (b u : Fin N → K → ℤ) (hw : IsFlagFrame y B w b)
     (hv : IsFlagFrame y B v u) (a : K → ℤ) (M : ℕ) (φ : Fin M → Module.Dual Ω V)
@@ -214,7 +213,7 @@ private theorem shift_agree_lemma_5 (F : Type) [Field F] (Ω : Type) [Field Ω] 
   exact h1.symm
 
 private theorem negs_agree_lemma_6 (F : Type) [Field F] (K : Type) [Fintype K] [DecidableEq K]
-    (ι : K → Type) [∀ k, Fintype (ι k)] (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (hP : IsMultiProjPrime W) (d : ℕ)
+    (ι : K → Type) [∀ k, Fintype (ι k)] (W : Ideal (MRing ι F)) (hP : IsMultiProjPrime W) (d : ℕ)
     (hrel : GroundTheory.Heights₂.Heights.FieldNumbers.relDim W = ((d : ℕ) : WithBot (WithTop ℤ)))
     (N : ℕ) (hN : 0 < N) (b u : Fin N → K → ℤ) (a : K → ℤ)
     (hS : ∀ (r : ℕ) (Y : List (K → ℤ)), r + Y.length = d →
@@ -255,7 +254,7 @@ private theorem negs_agree_lemma_6 (F : Type) [Field F] (K : Type) [Fintype K] [
   simpa using h0
 
 private theorem genNum_smul (F : Type) [Field F] (K : Type) [Fintype K] [DecidableEq K]
-    (ι : K → Type) [∀ k, Fintype (ι k)] (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {N : ℕ} (b : Fin N → K → ℤ)
+    (ι : K → Type) [∀ k, Fintype (ι k)] (W : Ideal (MRing ι F)) {N : ℕ} (b : Fin N → K → ℤ)
     (c : ℝ) (P : MvPolynomial (Fin N) ℝ) (Q : List (K → ℤ)) :
     genNum F W b (c • P) Q = c * genNum F W b P Q := by
   classical
@@ -265,8 +264,8 @@ private theorem genNum_smul (F : Type) [Field F] (K : Type) [Fintype K] [Decidab
   rw [coeff_smul, smul_eq_mul, mul_assoc]
 
 private theorem genNum_hsymm_eq_of_intNumL_rootList_sum_eq (F : Type) [Field F] (K : Type) [Fintype K] [DecidableEq K]
-    (ι : K → Type) [∀ k, Fintype (ι k)] (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (e : ℕ) (hP : IsMultiProjPrime W)
-    (hdim : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞))
+    (ι : K → Type) [∀ k, Fintype (ι k)] (W : Ideal (MRing ι F)) (e : ℕ) (hP : IsMultiProjPrime W)
+    (hdim : ringKrullDim (MRing ι F ⧸ W) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞))
     (N : ℕ) (b u : Fin N → K → ℤ)
     (hneg : ∀ (r : ℕ) (Y : List (K → ℤ)), r + Y.length = e →
       ∑ α ∈ Finset.Nat.antidiagonalTuple N r, intNumL F W (rootList (-b) α ++ Y) =
@@ -285,7 +284,7 @@ private theorem genNum_hsymm_eq_of_intNumL_rootList_sum_eq (F : Type) [Field F] 
   rw [key b, key u] at h2
   exact mul_left_cancel₀ (pow_ne_zero _ (by norm_num)) h2
 
-theorem field_flag_indep : ∀ (F : Type) [Field F] (Ω : Type) [Field Ω] [Algebra F Ω] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (y : (Σ k, ι k) → Ω) (e : ℕ), IsMultiProjPrime (pointIdeal F y) → ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) → ∀ (N : ℕ) (V : Type) [AddCommGroup V] [Module Ω V] (B : ChartBundle F (segreVec y) N V) (w v : Module.Basis (Fin N) Ω V) (b u : Fin N → K → ℤ), IsFlagFrame y B w b → IsFlagFrame y B v u → ∀ (c : ℕ) (G : MvPolynomial (Fin N) ℤ), G.IsSymmetric → G.IsHomogeneous c → ∀ Y : List (K → ℤ), Y.length + c = e → ∑ μ ∈ G.support, G.coeff μ * intNumL F (pointIdeal F y) (classList b μ ++ Y) = ∑ μ ∈ G.support, G.coeff μ * intNumL F (pointIdeal F y) (classList u μ ++ Y) := by
+theorem field_flag_indep : ∀ (F : Type) [Field F] (Ω : Type) [Field Ω] [Algebra F Ω] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (y : (Σ k, ι k) → Ω) (e : ℕ), IsMultiProjPrime (pointIdeal F y) → ringKrullDim (MRing ι F ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) → ∀ (N : ℕ) (V : Type) [AddCommGroup V] [Module Ω V] (B : ChartBundle F (segreVec y) N V) (w v : Module.Basis (Fin N) Ω V) (b u : Fin N → K → ℤ), IsFlagFrame y B w b → IsFlagFrame y B v u → ∀ (c : ℕ) (G : MvPolynomial (Fin N) ℤ), G.IsSymmetric → G.IsHomogeneous c → ∀ Y : List (K → ℤ), Y.length + c = e → ∑ μ ∈ G.support, G.coeff μ * intNumL F (pointIdeal F y) (classList b μ ++ Y) = ∑ μ ∈ G.support, G.coeff μ * intNumL F (pointIdeal F y) (classList u μ ++ Y) := by
   intro F _ Ω _ _ K _ _ ι _ y e hP hdim N V _ _ B w v b u hw hv c G hsymG hG Y hY
   classical
   rcases Nat.eq_zero_or_pos N with hN0 | hN

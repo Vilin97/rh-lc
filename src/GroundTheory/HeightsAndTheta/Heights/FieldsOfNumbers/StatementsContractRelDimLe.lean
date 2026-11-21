@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsExamples
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -19,7 +18,7 @@ universe u
 def ContractRelDimLe.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K K' : Type) [Fintype K] [DecidableEq K] [Fintype K']
     [DecidableEq K'] (j : K ↪ K') (ι' : K' → Type) [∀ k, Fintype (ι' k)]
-    (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')), IsMultiProjPrime P' → relDim (contractPrime j P') ≤ relDim P'
+    (P' : Ideal (MRing ι' F)), IsMultiProjPrime P' → relDim (contractPrime j P') ≤ relDim P'
 
 end
 

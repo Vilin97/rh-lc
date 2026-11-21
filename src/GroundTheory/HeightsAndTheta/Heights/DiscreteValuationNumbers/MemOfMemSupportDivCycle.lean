@@ -38,7 +38,7 @@ def specCyc (ϖ : O) (P : Ideal (MRingOver O ι)) : Ideal (MRingOver O ι) →�
   divCycle P (C ϖ)
 
 def divO (P : Ideal (MRingOver O ι)) (f g : MRingOver O ι) : Ideal (MRingOver O ι) →₀ ℤ :=
-  intCyc ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ))) - intCyc ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ)))
+  intCyc (divCycle P f) - intCyc (divCycle P g)
 
 def redEval (J : Ideal (MRingOver (IsLocalRing.ResidueField O) ι) → ℤ)
     (Z : Ideal (MRingOver O ι) →₀ ℤ) : ℤ :=

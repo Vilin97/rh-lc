@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -19,10 +18,10 @@ namespace BlockAdjoinPrime
 variable {R : Type*} [CommRing R] {K : Type*} {ι : K → Type*}
 
 
-def killB (B : Set K) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →ₐ[R] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι :=
+def killB (B : Set K) : MRing ι R →ₐ[R] MRing ι R :=
   aeval fun v => if v.1 ∈ B then 0 else X v
 
-def varIdeal (B : Set K) : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :=
+def varIdeal (B : Set K) : Ideal (MRing ι R) :=
   Ideal.span {p | ∃ v : Σ k, ι k, v.1 ∈ B ∧ p = X v}
 
 theorem killB_X_of_mem (B : Set K) {v : Σ k, ι k} (hv : v.1 ∈ B) :
@@ -51,7 +50,7 @@ theorem killB_monomial (B : Set K) (d : (Σ k, ι k) →₀ ℕ) (a : R) :
     rw [if_pos hB, zero_pow (Finsupp.mem_support_iff.mp hv)]
 
 open Classical in
-theorem coeff_killB (B : Set K) (p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (d : (Σ k, ι k) →₀ ℕ) :
+theorem coeff_killB (B : Set K) (p : MRing ι R) (d : (Σ k, ι k) →₀ ℕ) :
     AddMonoidAlgebra.coeff (killB B p) d = if ∀ v ∈ d.support, v.1 ∉ B then AddMonoidAlgebra.coeff p d else 0 := by
   induction p using MvPolynomial.induction_on' with
   | monomial e a =>
@@ -64,7 +63,7 @@ theorem coeff_killB (B : Set K) (p : ReciprocityTheory.ChartRestriction.G.Geo.MR
     rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq]
     split_ifs <;> simp
 
-theorem sub_killB_mem (B : Set K) (p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) : p - killB B p ∈ varIdeal (R := R) B := by
+theorem sub_killB_mem (B : Set K) (p : MRing ι R) : p - killB B p ∈ varIdeal (R := R) B := by
   classical
   induction p using MvPolynomial.induction_on with
   | C a => simp
@@ -104,8 +103,8 @@ theorem weight_eq_zero_iff (d : (Σ k, ι k) →₀ ℕ) (B : Set K) :
     have hik : i.1 ≠ k := fun e => h i hi (e ▸ hk)
     simp [Ne.symm hik]
 
-theorem killB_mem {Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hQ : IsMultiHomogIdeal Q) (B : Set K)
-    {q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hq : q ∈ Q) : killB B q ∈ Q := by
+theorem killB_mem {Q : Ideal (MRing ι R)} (hQ : IsMultiHomogIdeal Q) (B : Set K)
+    {q : MRing ι R} (hq : q ∈ Q) : killB B q ∈ Q := by
   classical
   let M := (q.support.image (Finsupp.weight (blockWeight ι))).filter (fun m => ∀ k ∈ B, m k = 0)
   have key : killB B q = ∑ m ∈ M, weightedHomogeneousComponent (blockWeight ι) m q := by
@@ -126,7 +125,7 @@ theorem killB_mem {Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver
   rw [key]
   exact Q.sum_mem fun m _ => hQ q hq m
 
-theorem sup_eq_comap {Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hQ : IsMultiHomogIdeal Q) (B : Set K) :
+theorem sup_eq_comap {Q : Ideal (MRing ι R)} (hQ : IsMultiHomogIdeal Q) (B : Set K) :
     Q ⊔ varIdeal B = Q.comap (killB B) := by
   apply le_antisymm
   · refine sup_le (fun q hq => killB_mem hQ B hq) ?_

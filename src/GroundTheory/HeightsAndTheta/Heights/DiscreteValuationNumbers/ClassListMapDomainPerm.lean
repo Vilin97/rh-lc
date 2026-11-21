@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Inst
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsVerticalDivOfIsVerticalDivisor
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PVocabMultiHomog
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PVocabMultiHomogIdeal
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -37,7 +36,7 @@ section Model
 variable (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem isMultiProjPrime_iff (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+theorem isMultiProjPrime_iff (P : Ideal (MRing ι O)) :
     ReciprocityTheory.ChartRestriction.G.Geo.IsMultiProjPrime P ↔ IsMultiProjPrime P := by
   have hI := VocabMultiHomogIdeal.proof VocabMultiHomog.proof O K ι P
   constructor
@@ -46,7 +45,7 @@ theorem isMultiProjPrime_iff (P : Ideal (ReciprocityTheory.ChartRestriction.G.Ge
   · rintro ⟨hp, hh, hr⟩
     exact ⟨hp, hI.2 hh, hr⟩
 
-theorem isModelOver_iff (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ) :
+theorem isModelOver_iff (P : Ideal (MRing ι O)) (d : ℕ) :
     IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsModelOver O P d ↔ Nonempty K ∧ IsModelOver P d := by
   rw [IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsModelOver, isMultiProjPrime_iff]
   constructor
@@ -92,16 +91,16 @@ section Cycles
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem ratCyc_eq (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :
+theorem ratCyc_eq (P : Ideal (MRing ι O)) (f g : MRing ι O) :
     ⇑(IndefiniteRowSideFullHecke.NumbersDVR.Bundles.ratCyc O P f g) = ratDiv P f g := by
   funext W
   simp [IndefiniteRowSideFullHecke.NumbersDVR.Bundles.ratCyc, ratDiv, FlagTypings.divCycle_eq]
 
-theorem redIdeal_eq (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+theorem redIdeal_eq (W : Ideal (MRing ι O)) :
     IndefiniteRowSideFullHecke.NumbersDVR.Bundles.redIdeal O W = specialIdeal W := rfl
 
 theorem vEval_eq (J : Ideal (MRing ι (IsLocalRing.ResidueField O)) → ℤ)
-    (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) →₀ ℤ) :
+    (Z : Ideal (MRing ι O) →₀ ℤ) :
     IndefiniteRowSideFullHecke.NumbersDVR.Bundles.vEval O J Z = cycEval (fun W => J (specialIdeal W)) ⇑Z := by
   rw [FlagTypings.cycEval_finsupp]
   rfl
@@ -117,7 +116,7 @@ theorem monoList_eq {r : ℕ} {A : Type*} (deg : Fin r → A) (μ : Fin r →₀
   simp [IndefiniteRowSideFullHecke.NumbersDVR.Bundles.monoList, IndefiniteRowSideFullHecke.NumbersDVR.monoList, List.map_flatMap,
     List.map_replicate]
 
-theorem intNum_get_cast (F : Type*) [Field F] (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (L : List (K → ℤ)) (n : ℕ)
+theorem intNum_get_cast (F : Type*) [Field F] (V : Ideal (MRing ι F)) (L : List (K → ℤ)) (n : ℕ)
     (h : L.length = n) : intNum F V (fun j => L.get (Fin.cast h.symm j)) = intNumL F V L := by
   subst h
   rfl
@@ -130,7 +129,7 @@ theorem classList_mapDomain_perm {σ τ : Type*} (e : σ → τ) (cls : τ → K
 theorem polyNum_eq_classNum {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     {m : ℕ} (deg : Fin m → K → ℤ) {τ : Type*} [DecidableEq τ] (e : Fin m ≃ τ) (cls : τ → K → ℤ)
     (hcls : cls ∘ e = deg) {H : MvPolynomial (Fin m) ℤ} {d : ℕ} (hH : H.IsHomogeneous d)
-    (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (W : Ideal (MRing ι O)) :
     IndefiniteRowSideFullHecke.NumbersDVR.Bundles.polyNum (fun V _ L => intNum (IsLocalRing.ResidueField O) V L)
                               (specialIdeal W) d deg H = classNum cls (rename e H) [] W := by
   unfold IndefiniteRowSideFullHecke.NumbersDVR.Bundles.polyNum classNum
@@ -205,7 +204,7 @@ theorem isHomogeneous_divDiff {r : ℕ} (l : Fin r) {G : MvPolynomial (Fin r) �
     omega
 
 theorem pairNum_eq {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ) {r : ℕ} (y y' : Fin r → K → ℤ) (f g : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
+    (P : Ideal (MRing ι O)) (d : ℕ) {r : ℕ} (y y' : Fin r → K → ℤ) (f g : Fin r → MRing ι O)
     {G : MvPolynomial (Fin r) ℤ} (hG : G.IsHomogeneous (d + 1)) :
     IndefiniteRowSideFullHecke.NumbersDVR.Bundles.pairNum O (fun V _ L => intNum (IsLocalRing.ResidueField O) V L) P d
                               y y' f g G =
@@ -247,7 +246,7 @@ theorem joinCoords_eq {Ω : Type*} [Field Ω] (y : (Σ k, ι k) → Ω) (y' : (�
   funext p
   obtain ⟨k | k, i⟩ := p <;> rfl
 
-theorem joinForm_eq {R : Type*} [CommRing R] (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+theorem joinForm_eq {R : Type*} [CommRing R] (f : MRing ι R) :
     joinForm (ι' := ι') f = rename (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.liftVar ι') f := rfl
 
 end Joins

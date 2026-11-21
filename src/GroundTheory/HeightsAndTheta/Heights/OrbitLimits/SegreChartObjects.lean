@@ -4,7 +4,6 @@ public import Mathlib
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSheet
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StokesObjects
 public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.Statements
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -14,7 +13,7 @@ noncomputable section
 
 namespace GroundTheory.Heights₂.Heights
 
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver segre mcPts PBlk)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing mcPts segre PBlk)
 
 section Chart
 

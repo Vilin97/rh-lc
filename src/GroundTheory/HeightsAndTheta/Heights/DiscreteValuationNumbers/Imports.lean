@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.CutIdentityRightSideCongrOfSubMem
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -25,16 +24,16 @@ theorem CommonFactorInduction.proof (hpos : ExcessPositive.Statement.{u}) (havoi
 
   obtain ⟨e, h, hh, hhP, hle, hhH, hhG, hh0, hmulε⟩ :=
     havoid O ϖ hϖ K ι P d hP b f g hD (fun k => (b k).toNat)
-  have hdiv : ∀ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (s * h)) W : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) + ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P h) W : ℤ) := fun W => by
+  have hdiv : ∀ W, divCycle P (s * h) W = divCycle P s W + divCycle P h W := fun W => by
     rw [hmul O K ι P s h hPp hsP hhP]; rfl
   have hshP : s * h ∉ P := fun hm => (hPp.mem_or_mem hm).elim hsP hhP
-  have hshH : ∀ H, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (s * h)) H : ℤ) ≠ 0 → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H → IsVerticalDivisor H ϖ b f g := by
+  have hshH : ∀ H, divCycle P (s * h) H ≠ 0 → (C ϖ : MRing ι O) ∉ H → IsVerticalDivisor H ϖ b f g := by
     intro H hH hϖH
     rw [hdiv] at hH
-    by_cases h1 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) H : ℤ) = 0
+    by_cases h1 : divCycle P s H = 0
     · exact hhH H (by rwa [h1, zero_add] at hH) hϖH
     · exact hsH H h1 hϖH
-  have hcommon' : ∃ G, (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ G ∧ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (s * h)) G : ℤ) ≠ 0 ∧ ratDiv P f g G ≠ 0 := by
+  have hcommon' : ∃ G, (C ϖ : MRing ι O) ∈ G ∧ divCycle P (s * h) G ≠ 0 ∧ ratDiv P f g G ≠ 0 := by
     obtain ⟨G, hG, hsG, hDG⟩ := hcommon
     exact ⟨G, hG, by rwa [hdiv, hhG G hG hDG, add_zero], hDG⟩
 

@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LocCycle
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PMinimalPrimeMultiHomog
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSupSpanMultiHomog
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,10 +16,10 @@ open MvPolynomial
 universe u
 
 theorem divCycle_ne_zero_facts {O : Type u} [CommRing O] {K : Type} [Fintype K] [DecidableEq K]
-    {ι : K → Type} {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hP : IsMultiHomogIdeal P) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {e : K → ℕ}
-    (hf : IsMultiHomog f e) {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0) :
+    {ι : K → Type} {P : Ideal (MRing ι O)} (hP : IsMultiHomogIdeal P) {f : MRing ι O} {e : K → ℕ}
+    (hf : IsMultiHomog f e) {W : Ideal (MRing ι O)} (h : divCycle P f W ≠ 0) :
     W.IsPrime ∧ IsRelevant W ∧ P ≤ W ∧ IsMultiHomogIdeal W := by
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
+  unfold divCycle at h
   split_ifs at h with hW
   · obtain ⟨hmin, hrel⟩ := hW
     refine ⟨hmin.1.1, hrel, le_trans le_sup_left hmin.1.2, ?_⟩
@@ -32,11 +31,11 @@ theorem LeftTermSupport.proof : LeftTermSupport.Statement.{u} := by
   by_contra hne
   apply hU
   have hG : ratDiv P f g G ≠ 0 := left_ne_zero_of_mul hne
-  have hU' : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) U : ℤ) ≠ 0 := right_ne_zero_of_mul hne
-  have hϖG : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ G := hD.vertical G hG
+  have hU' : divCycle G s U ≠ 0 := right_ne_zero_of_mul hne
+  have hϖG : (C ϖ : MRing ι O) ∈ G := hD.vertical G hG
   obtain ⟨bf, bg, hf, hg, -⟩ := hD.degrees
   have hGfacts : P ≤ G ∧ IsMultiHomogIdeal G := by
-    have : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) G : ℤ) ≠ 0 ∨ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) G : ℤ) ≠ 0 := by
+    have : divCycle P f G ≠ 0 ∨ divCycle P g G ≠ 0 := by
       by_contra h
       rw [not_or, not_not, not_not] at h
       exact hG (by unfold ratDiv; rw [h.1, h.2, sub_zero])

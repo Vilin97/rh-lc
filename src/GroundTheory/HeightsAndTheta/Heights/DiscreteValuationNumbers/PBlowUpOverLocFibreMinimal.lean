@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpOverLocPointLoc
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.OfSteps
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -79,19 +78,19 @@ theorem BlowUpOverLocFibreMinimal.proof (h₁ : BlowUpOverLocPointLoc.Statement.
     have hs : (s : blowUpOverLoc P W u) ∈ 𝔫.primeCompl := hqn ▸ s.2
     obtain ⟨v, hv⟩ : IsUnit (algebraMap (blowUpOverLoc P W u) (blowUpLocRing P u W') s) :=
       IsLocalization.map_units (M := 𝔫.primeCompl) _ ⟨s, hs⟩
-    have e1 : z * ((s : blowUpOverLoc P W u) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) =
-        ((b : blowUpOverLoc P W u) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) := by
+    have e1 : z * ((s : blowUpOverLoc P W u) : FractionRing (MRing ι O ⧸ P)) =
+        ((b : blowUpOverLoc P W u) : FractionRing (MRing ι O ⧸ P)) := by
       have := congrArg Subtype.val (IsLocalization.mk'_spec (blowUpLocRing P u Q₀) b s)
       rw [hbs] at this
       exact this
-    have e2 : ((s : blowUpOverLoc P W u) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) *
-        (((v⁻¹ : (blowUpLocRing P u W')ˣ) : blowUpLocRing P u W') : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) = 1 := by
+    have e2 : ((s : blowUpOverLoc P W u) : FractionRing (MRing ι O ⧸ P)) *
+        (((v⁻¹ : (blowUpLocRing P u W')ˣ) : blowUpLocRing P u W') : FractionRing (MRing ι O ⧸ P)) = 1 := by
       have := congrArg Subtype.val v.mul_inv
       rw [hv] at this
       exact this
     have e3 : z = ((algebraMap (blowUpOverLoc P W u) (blowUpLocRing P u W') b *
         ((v⁻¹ : (blowUpLocRing P u W')ˣ) : blowUpLocRing P u W') : blowUpLocRing P u W') :
-          FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) := by
+          FractionRing (MRing ι O ⧸ P)) := by
       rw [Subring.coe_mul, ← mul_one z, ← e2, ← mul_assoc, e1]
       rfl
     rw [e3]

@@ -5,7 +5,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Stat
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PBlowUpLocRingIso
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PBlowUpLocalChart
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LiftFormNotMemBlowUpOf
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -51,9 +50,9 @@ theorem prime_eq_or_eq_of_le_mem_minimalPrimes_sup_span {A : Type*} [CommRing A]
   norm_num at e4
 
 theorem eq_blowUpOf_of_comap_liftForm_le {K : Type} [DecidableEq K] {ι : K → Type} {J : Type} {R : Type*}
-    [CommRing R] {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))}
+    [CommRing R] {P : Ideal (MRing ι R)} {u : J → MRing ι R} {Q : Ideal (MRing (extIdx ι J) R)}
     (hQp : Q.IsPrime) (hQh : IsMultiHomogIdeal Q) (hle : blowUpOf P u ≤ Q) {j : J}
-    (hj : (newVar j : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) ∉ Q)
+    (hj : (newVar j : MRing (extIdx ι J) R) ∉ Q)
     (hc : Q.comap (liftForm (ι := ι) (J := J) (R := R)) ≤ P) : Q = blowUpOf P u := by
   classical
   refine le_antisymm (fun F hF => ?_) hle

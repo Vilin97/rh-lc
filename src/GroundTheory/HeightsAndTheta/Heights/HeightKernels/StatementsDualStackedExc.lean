@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualStackedGraph
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStackedDegree
 public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualLatticeIndex
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -34,10 +33,10 @@ def DualStackedExcCycle.Statement : Prop :=
     (∀ t, (b t : Fin i → K) = a t • (b' t : Fin i → K)) →
     ∃ E : Ideal (MRing (stackedBlocks T)), IsStackedExc b' a E ∧ ¬ IsHorizontal E ∧
       ∀ t : T,
-        ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (stackedGraph b' a) (C (a t) * graphFirst t)) E : ℤ) : ℤ) =
-            ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (stackedGraph b' a) (graphSecond t)) E : ℤ) + 1) ∧
+        ((divCycle (stackedGraph b' a) (C (a t) * graphFirst t) E : ℤ) =
+            divCycle (stackedGraph b' a) (graphSecond t) E + 1) ∧
         ∀ W : Ideal (MRing (stackedBlocks T)), ¬ IsHorizontal W → W ≠ E →
-          ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (stackedGraph b' a) (C (a t) * graphFirst t)) W : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (stackedGraph b' a) (graphSecond t)) W : ℤ)
+          divCycle (stackedGraph b' a) (C (a t) * graphFirst t) W = divCycle (stackedGraph b' a) (graphSecond t) W
 
 def DualStackedExcGeoSecond.Statement : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (i : ℕ) (F F' : HermLattice K i) (T : Type) [Fintype T]

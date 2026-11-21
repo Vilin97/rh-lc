@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsExamples
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -19,11 +18,11 @@ universe u
 def DivPushForward.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K K' : Type) [Fintype K] [DecidableEq K] [Fintype K']
     [DecidableEq K'] (j : K ↪ K') (ι' : K' → Type) [∀ k, Fintype (ι' k)]
-    (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) (hP' : IsMultiProjPrime P') (n : ℕ), relDim P' = (n + 1 : ℕ) →
+    (P' : Ideal (MRing ι' F)) (hP' : IsMultiProjPrime P') (n : ℕ), relDim P' = (n + 1 : ℕ) →
     relDim (contractPrime j P') = (n + 1 : ℕ) →
-    ∀ (c : K → ℕ) (a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))), IsMultiHomog a c →
+    ∀ (c : K → ℕ) (a : MRing (fun k => ι' (j k)) F), IsMultiHomog a c →
     a ∉ contractPrime j P' →
-    ∀ (N' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι') → ℤ) (N : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))) → ℤ),
+    ∀ (N' : Ideal (MRing ι' F) → ℤ) (N : Ideal (MRing (fun k => ι' (j k)) F) → ℤ),
       (∀ W' (hW' : IsMultiProjPrime W'), relDim W' = (n : ℕ) →
         relDim (contractPrime j W') = (n : ℕ) →
         haveI := hW'.isPrime
@@ -31,8 +30,8 @@ def DivPushForward.Statement : Prop :=
       (∀ W', IsMultiProjPrime W' → relDim W' = (n : ℕ) → relDim (contractPrime j W') < (n : ℕ) →
         N' W' = 0) →
       haveI := hP'.isPrime
-      cycEval N' ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P' (rename (blockIncl j ι') a)) W : ℤ))) =
-        relDeg j P' * cycEval N ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (contractPrime j P') a) W : ℤ)))
+      cycEval N' (divCycle P' (rename (blockIncl j ι') a)) =
+        relDeg j P' * cycEval N (divCycle (contractPrime j P') a)
 
 
 end

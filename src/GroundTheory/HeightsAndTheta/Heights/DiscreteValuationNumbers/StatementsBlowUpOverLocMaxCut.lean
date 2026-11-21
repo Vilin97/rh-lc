@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpFibreSemilocalCut
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PBlowUpModel
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialIdealCorresp
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -30,7 +29,7 @@ def BlowUpOverLocMaxPoint.Statement : Prop :=
       IsRelevant W →
       haveI := hP.multiProj.isPrime
       ∀ (𝔫 : Ideal (blowUpOverLoc P W u)) (h𝔫 : 𝔫.IsMaximal),
-        ∃ W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)),
+        ∃ W' : Ideal (MRing (extIdx ι J) O),
           (W' ∈ (blowUpOf P u ⊔ Ideal.span {liftForm x}).minimalPrimes ∧ IsRelevant W' ∧
             W'.comap (liftForm (ι := ι) (J := J) (R := O)) = W) ∧
           (∃ h : blowUpOverLoc P W u ≤ blowUpLocRing P u W',
@@ -48,7 +47,7 @@ def BlowUpOverLocPointMax.Statement : Prop :=
     ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W → W ∈ (P ⊔ Ideal.span {x}).minimalPrimes →
       IsRelevant W →
       haveI := hP.multiProj.isPrime
-      ∀ W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)), W' ∈ (blowUpOf P u ⊔ Ideal.span {liftForm x}).minimalPrimes →
+      ∀ W' : Ideal (MRing (extIdx ι J) O), W' ∈ (blowUpOf P u ⊔ Ideal.span {liftForm x}).minimalPrimes →
         IsRelevant W' → W'.comap (liftForm (ι := ι) (J := J) (R := O)) = W →
         ∃ (h : blowUpOverLoc P W u ≤ blowUpLocRing P u W') (𝔫 : Ideal (blowUpOverLoc P W u))
           (h𝔫 : 𝔫.IsMaximal),
@@ -58,7 +57,7 @@ def BlowUpOverLocPointMax.Statement : Prop :=
 
 def BlowUpLocRingInj.Statement : Prop :=
   ∀ (R : Type u) [CommRing R] (K : Type) [DecidableEq K] (ι : K → Type) (J : Type)
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime] (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (Q Q' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))),
+    (P : Ideal (MRing ι R)) [P.IsPrime] (u : J → MRing ι R) (Q Q' : Ideal (MRing (extIdx ι J) R)),
     Q.IsPrime → IsMultiHomogIdeal Q → IsRelevant Q → blowUpOf P u ≤ Q →
     Q'.IsPrime → IsMultiHomogIdeal Q' → IsRelevant Q' → blowUpOf P u ≤ Q' →
     blowUpLocRing P u Q = blowUpLocRing P u Q' → Q = Q'

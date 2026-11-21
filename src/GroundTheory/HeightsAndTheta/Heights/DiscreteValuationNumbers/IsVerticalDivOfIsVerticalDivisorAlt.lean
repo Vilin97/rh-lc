@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.MemOfMemSupportDivCycle
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -31,7 +30,7 @@ theorem weight_blockWeight_apply (m : (Σ k, ι k) →₀ ℕ) (k : K) :
     Finset.sum_apply, Fintype.sum_sigma]
   simp [blockWeight, Pi.single_apply]
 
-theorem isMultiHomog_iff (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (b : K → ℕ) :
+theorem isMultiHomog_iff (f : MRing ι R) (b : K → ℕ) :
     IsMultiHomog f b ↔ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog f b := by
   constructor
   · intro h m hm k
@@ -42,7 +41,7 @@ theorem isMultiHomog_iff (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver
 
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
-theorem isMultiHomogIdeal_iff (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
+theorem isMultiHomogIdeal_iff (I : Ideal (MRing ι R)) :
     IsMultiHomogIdeal I ↔ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomogIdeal I := by
   classical
   constructor
@@ -60,7 +59,7 @@ theorem isMultiHomogIdeal_iff (I : Ideal (ReciprocityTheory.ChartRestriction.G.G
       exact ⟨a, (mem_weightedHomogeneousSubmodule _ _ _ _).mpr ((isMultiHomog_iff x a).mpr ha)⟩
     exact weightedHomogeneousComponent_mem_of_mem R (blockWeight ι) hI hf b
 
-theorem isMultiProjPrime_iff (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
+theorem isMultiProjPrime_iff (P : Ideal (MRing ι R)) :
     IsMultiProjPrime P ↔ ReciprocityTheory.ChartRestriction.G.Geo.IsMultiProjPrime P :=
   ⟨fun h => ⟨h.isPrime, (isMultiHomogIdeal_iff P).mp h.multiHomog, h.relevant⟩,
     fun h => ⟨h.1, (isMultiHomogIdeal_iff P).mpr h.2.1, h.2.2⟩⟩

@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -18,9 +17,9 @@ universe u
 
 def GenericDimGe.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (K : Type) [Fintype K]
-    [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)),
-    P.IsPrime → P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = ⊥ →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) ≤ ringKrullDim (MRing ι (FractionRing O) ⧸ genFib P) + 1
+    [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)),
+    P.IsPrime → P.comap (C : O →+* MRing ι O) = ⊥ →
+    ringKrullDim (MRing ι O ⧸ P) ≤ ringKrullDim (MRing ι (FractionRing O) ⧸ genFib P) + 1
 
 end
 

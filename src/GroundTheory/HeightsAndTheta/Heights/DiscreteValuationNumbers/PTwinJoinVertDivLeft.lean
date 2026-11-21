@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerLast
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsVerticalDivOfIsVerticalDivisorAlt
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -107,7 +106,7 @@ theorem rename_weightedHomogeneousComponent [DecidableEq K] [DecidableEq K'] [De
         (Sum.elim (fun k => c (.inl k)) (Sum.elim (fun k => c (.inr k)) 0)) (rename (assocVar ι₂) h) := by
   induction h using MvPolynomial.induction_on' with
   | monomial d r =>
-    have hm : IsMultiHomog (monomial d r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (Sum.elim ι ι'))
+    have hm : IsMultiHomog (monomial d r : MRing (Sum.elim ι ι') R)
         (Finsupp.weight (blockWeight (Sum.elim ι ι')) d) :=
       isWeightedHomogeneous_monomial _ _ _ rfl
     have hj := isMultiHomog_rename_assocVar' (ι₂ := ι₂) hm

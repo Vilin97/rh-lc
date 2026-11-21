@@ -11,7 +11,6 @@ public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PPtsSheetOnlyNull
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PCriticalFibreInfinite
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridgeB
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegrableOnSourceIffOfDensity
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -30,7 +29,7 @@ namespace GlobalTheory.CompanionTheory.MixZ.ArchEq.Crit
 
 open Filter Topology
 open GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.PtsSheetOnlyNull
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver sameOrbit_of_segre fibreFinite mem_mcPts_of_sameOrbit)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing fibreFinite sameOrbit_of_segre mem_mcPts_of_sameOrbit)
 
 section Family
 

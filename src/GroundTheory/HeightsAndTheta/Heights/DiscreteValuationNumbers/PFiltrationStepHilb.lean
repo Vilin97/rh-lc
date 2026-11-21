@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -40,7 +39,7 @@ theorem finiteDimensional_piece (n : K → ℕ) :
   exact Module.Finite.of_basis (basisRestrictSupport F {d | Finsupp.weight (blockWeight ι) d = n})
 
 
-theorem component_mul {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {s : K → ℕ} (hf : IsMultiHomog f s) (c : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)
+theorem component_mul {f : MRing ι F} {s : K → ℕ} (hf : IsMultiHomog f s) (c : MRing ι F)
     (n : K → ℕ) :
     weightedHomogeneousComponent (blockWeight ι) n (f * c) =
       if s ≤ n then f * weightedHomogeneousComponent (blockWeight ι) (n - s) c else 0 := by
@@ -50,10 +49,10 @@ theorem component_mul {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F 
   exact h
 
 
-theorem mem_sup_span {L : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {s : K → ℕ}
-    (hL : IsMultiHomogIdeal L) (hf : IsMultiHomog f s) {n : K → ℕ} {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
+theorem mem_sup_span {L : Ideal (MRing ι F)} {f : MRing ι F} {s : K → ℕ}
+    (hL : IsMultiHomogIdeal L) (hf : IsMultiHomog f s) {n : K → ℕ} {x : MRing ι F}
     (hx : x ∈ weightedHomogeneousSubmodule F (blockWeight ι) n) (hx' : x ∈ L ⊔ Ideal.span {f}) :
-    ∃ c : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, x - (if s ≤ n then f * weightedHomogeneousComponent (blockWeight ι) (n - s) c
+    ∃ c : MRing ι F, x - (if s ≤ n then f * weightedHomogeneousComponent (blockWeight ι) (n - s) c
       else 0) ∈ L := by
   obtain ⟨l, hl, y, hy, rfl⟩ := Submodule.mem_sup.mp hx'
   obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.mp hy
@@ -64,7 +63,7 @@ theorem mem_sup_span {L : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingO
   exact hL l hl n
 
 
-theorem finrank_step (L : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (s : K → ℕ)
+theorem finrank_step (L : Ideal (MRing ι F)) (f : MRing ι F) (s : K → ℕ)
     (hL : IsMultiHomogIdeal L) (hf : IsMultiHomog f s) (n : K → ℕ) :
     Module.finrank F (gradedPiece L n) =
       Module.finrank F (gradedPiece (L ⊔ Ideal.span {f}) n) +
@@ -79,8 +78,8 @@ theorem finrank_step (L : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingO
     unfold gradedPiece
     rw [← Submodule.map_comp]
     rfl
-  have hker_mem : ∀ a : gradedPiece L n, g a = 0 → ∃ c : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι,
-      (a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ L) = Ideal.Quotient.mk L
+  have hker_mem : ∀ a : gradedPiece L n, g a = 0 → ∃ c : MRing ι F,
+      (a : MRing ι F ⧸ L) = Ideal.Quotient.mk L
         (if s ≤ n then f * weightedHomogeneousComponent (blockWeight ι) (n - s) c else 0) := by
     rintro ⟨a, ha⟩ hga
     obtain ⟨x, hx, rfl⟩ := Submodule.mem_map.mp ha
@@ -105,15 +104,15 @@ theorem finrank_step (L : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingO
       ext y
       simp only [LinearMap.mem_ker]
       rw [← Subtype.coe_inj]
-      change Ideal.Quotient.mk L (f * (y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) = 0 ↔
-        Ideal.Quotient.mk (L.colon {f}) (y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) = 0
+      change Ideal.Quotient.mk L (f * (y : MRing ι F)) = 0 ↔
+        Ideal.Quotient.mk (L.colon {f}) (y : MRing ι F) = 0
       rw [Ideal.Quotient.eq_zero_iff_mem, Ideal.Quotient.eq_zero_iff_mem,
         Submodule.mem_colon_singleton, smul_eq_mul, mul_comm]
     have hμg : LinearMap.range μ = LinearMap.ker g := by
       apply le_antisymm
       · rintro _ ⟨y, rfl⟩
         rw [LinearMap.mem_ker]
-        change Ideal.Quotient.mk (L ⊔ Ideal.span {f}) (f * (y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) = 0
+        change Ideal.Quotient.mk (L ⊔ Ideal.span {f}) (f * (y : MRing ι F)) = 0
         rw [Ideal.Quotient.eq_zero_iff_mem]
         exact Ideal.mem_sup_right (Ideal.mem_span_singleton'.mpr ⟨y, mul_comm _ _⟩)
       · intro a ha

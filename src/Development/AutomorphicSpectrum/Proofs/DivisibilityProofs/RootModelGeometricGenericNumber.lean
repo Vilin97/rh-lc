@@ -5,7 +5,6 @@ public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.Loc
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagIndependence
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.LogIntegralEqGenericIntersectionStatement
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PNumericalSegre
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -16,7 +15,7 @@ namespace GlobalTheory.CompanionTheory.Ar.Num.GeoModel
 
 variable {Ψ : Type} [Fintype Ψ] {N : ℕ}
 
-theorem intNumL_ofFn' {K : Type} [DecidableEq K] {ι : K → Type} (F : Type) [Field F] (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {n : ℕ}
+theorem intNumL_ofFn' {K : Type} [DecidableEq K] {ι : K → Type} (F : Type) [Field F] (Q : Ideal (MRing ι F)) {n : ℕ}
     (b : Fin n → K → ℤ) : intNumL F Q (List.ofFn b) = intNum F Q b := by
   unfold intNumL intNum mixedDiff
   rw [List.ofFn_get]

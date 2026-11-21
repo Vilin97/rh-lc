@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagCutSpecialize
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTruncSpecialize
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagCutTools
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -143,12 +142,12 @@ theorem SegreFlagCutSpecialize.proof : SegreFlagCutSpecialize.Statement := by
     have h0 : eval₂ (C.comp algA) (fun p => C (cA (k + 1) p) * X p.1) s = 0 :=
       map_injective _ hev (hs.trans (map_zero _).symm)
     rw [← ksub, h0, map_zero, map_zero]
-  · have val : ∀ (j : ℕ) (v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')),
+  · have val : ∀ (j : ℕ) (v : MRing (bundleIdx (bundleIdx ι M) M') O),
         aeval (flagClosurePt y w e φ φ' t j) v = ev (eval₂ algA (cA j) v) := by
       intro j v
       rw [aeval_def, ← AlgHom.coe_toRingHom, eval₂_comp_left, hevA, hcoord]
       rfl
-    have vsub : ∀ v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'),
+    have vsub : ∀ v : MRing (bundleIdx (bundleIdx ι M) M') O,
         sub (eval₂ algA (cA (k + 1)) v) = eval₂ algA (cA k) v := by
       intro v
       rw [← AlgHom.coe_toRingHom, eval₂_comp_left, hsubA]

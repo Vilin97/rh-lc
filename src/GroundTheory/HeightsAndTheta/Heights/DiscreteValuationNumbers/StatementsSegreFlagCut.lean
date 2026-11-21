@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagClosure
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 
 @[expose] public section
@@ -39,13 +38,13 @@ def SegreFlagCutSection.Statement : Prop :=
       IsTwistedDualGens y B a₀ φ → IsTwistedDualGens y B' a₀' φ' →
     ∀ (Φ : Type) [Field Φ] [Algebra Ω Φ] [Algebra O Φ] [IsScalarTower O Ω Φ]
       (e : Module.Basis (Fin N) Ω E) (t : Fin N → Φ), AlgebraicIndependent Ω t →
-    ∀ (k : ℕ) (hk : k < N) (r : ℕ) (a : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), (∀ j, a j ∉ pointIdeal O y) →
-      ∃ (cs ch : Option (Option K) → ℕ) (s h f₃ g₃ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')),
+    ∀ (k : ℕ) (hk : k < N) (r : ℕ) (a : Fin r → MRing ι O), (∀ j, a j ∉ pointIdeal O y) →
+      ∃ (cs ch : Option (Option K) → ℕ) (s h f₃ g₃ : MRing (bundleIdx (bundleIdx ι M) M') O),
         IsMultiHomog s cs ∧ IsMultiHomog h ch ∧
         (fun o => (cs o : ℤ) - ch o) = zetaSecond a₀' + liftPairDeg (x' ⟨k, hk⟩) ∧
         s ∉ pointIdeal O (flagClosurePt y w e φ φ' t (k + 1)) ∧ h ∉ pointIdeal O (flagClosurePt y w e φ φ' t (k + 1)) ∧
         aeval (flagClosurePt y w e φ φ' t (k + 1)) s = flagLineCoord w' w e t (k + 1) ⟨k, hk⟩ * aeval (flagClosurePt y w e φ φ' t (k + 1)) h ∧
-        (∀ W, (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∉ W →
+        (∀ W, (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∉ W →
           ratDiv (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1))) s h W =
             if 0 < k ∧ W = pointIdeal O (flagClosurePt y w e φ φ' t k) then 1 else 0) ∧
         IsVerticalDivisor (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1))) ϖ (zetaFirst a₀ - zetaSecond a₀') f₃ g₃ ∧
@@ -53,8 +52,8 @@ def SegreFlagCutSection.Statement : Prop :=
         (0 < k → f₃ ∉ pointIdeal O (flagClosurePt y w e φ φ' t k) ∧
           g₃ ∉ pointIdeal O (flagClosurePt y w e φ φ' t k) ∧
           aeval (flagClosurePt y w e φ φ' t k) f₃ = aeval (flagClosurePt y w e φ φ' t k) g₃) ∧
-        ∀ H, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1))) s) H : ℤ) ≠ 0 ∨ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1))) h) H : ℤ) ≠ 0) →
-          (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∉ H →
+        ∀ H, (divCycle (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1))) s H ≠ 0 ∨ divCycle (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1))) h H ≠ 0) →
+          (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∉ H →
           f₃ ∉ H ∧ g₃ ∉ H ∧ ∀ j, liftPairForm M M' (a j) ∉ H
 
 def SegreFlagCutContraction.Statement : Prop :=

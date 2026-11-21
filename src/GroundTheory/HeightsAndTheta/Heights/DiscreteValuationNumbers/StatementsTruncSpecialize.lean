@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagBundleSectionDiv
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -21,7 +20,7 @@ def TruncSpecialize.Statement : Prop :=
     (M : ℕ) (φ : Fin M → Module.Dual Ω E) (Φ : Type) [Field Φ] [Algebra Ω Φ] (t : Fin N → Φ),
     AlgebraicIndependent Ω t → ∀ i : Fin N,
       projIdeal F y w φ (truncCoord t ((i : ℕ) + 1)) ≤ projIdeal F y w φ (truncCoord t i) ∧
-      ∀ x z : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M),
+      ∀ x z : MRing (bundleIdx ι M) F,
         eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ (truncCoord t ((i : ℕ) + 1))) x =
           t i * eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω))
             (projCoord y w φ (truncCoord t ((i : ℕ) + 1))) z →

@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -96,13 +95,13 @@ end More
 open NumbersDVR ReciprocityTheory.ChartRestriction.G.Geo
 
 structure IsRegularSection {K : Type*} [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) : Prop where
+    (P : Ideal (MRing ι F)) (b : K → ℤ) (f g : MRing ι F) : Prop where
   degrees : ∃ bf bg : K → ℕ, IsMultiHomog f bf ∧ IsMultiHomog g bg ∧
     (fun k => (bf k : ℤ) - bg k) = b
   num_not_mem : f ∉ P
   den_not_mem : g ∉ P
-  regular : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiProjPrime W → P ≤ W →
-    ∃ u v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, u ∉ W ∧ u * f - v * g ∈ P
+  regular : ∀ W : Ideal (MRing ι F), IsMultiProjPrime W → P ≤ W →
+    ∃ u v : MRing ι F, u ∉ W ∧ u * f - v * g ∈ P
 
 def DominatingDVR.Statement : Prop :=
   ∀ (A : Type) [CommRing A] [IsDomain A] [IsNoetherianRing A] [IsLocalRing A], ¬ IsField A →
@@ -149,9 +148,9 @@ def LatticesAgree.Statement : Prop :=
 
 def SectionNef.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-    (F : Type) [Field F] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime P →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) = ((1 + Fintype.card K : ℕ) : WithBot ℕ∞) →
-    ∀ (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsRegularSection P b f g → 0 ≤ intNum F P ![b]
+    (F : Type) [Field F] (P : Ideal (MRing ι F)), IsMultiProjPrime P →
+    ringKrullDim (MRing ι F ⧸ P) = ((1 + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    ∀ (b : K → ℤ) (f g : MRing ι F), IsRegularSection P b f g → 0 ≤ intNum F P ![b]
 
 def MertensUpper.Statement : Prop :=
   ∃ C : ℝ, ∀ B : ℝ, 2 ≤ B →

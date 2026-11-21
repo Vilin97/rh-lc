@@ -47,6 +47,7 @@ theorem ordAt_integerUnit_eq_of_associated {a b : 𝓞 F} (ha : a ≠ 0) (hb : b
   simp [ordAt, valuation_of_unit_eq]
 
 
+open scoped Classical in
 theorem ordAt_placeUnit (v w : HeightOneSpectrum (𝓞 F)) :
     ordAt w (GroundTheory.Global.SUnit.placeUnit v) = if w = v then (classNumber F : ℤ) else 0 := by
   rw [ordAt, GroundTheory.Global.SUnit.valuationOfNeZero_placeUnit]
@@ -61,6 +62,7 @@ def primeNZD (v : HeightOneSpectrum (𝓞 F)) : (Ideal (𝓞 F))⁰ :=
   ⟨v.asIdeal, mem_nonZeroDivisors_of_ne_zero v.ne_bot⟩
 
 
+open scoped Classical in
 theorem exists_ordAt_eq_of_mk0_eq {v p : HeightOneSpectrum (𝓞 F)}
     (h : ClassGroup.mk0 (primeNZD v) = ClassGroup.mk0 (primeNZD p)) :
     ∃ x : Fˣ, ∀ w, ordAt w x = (if w = v then 1 else 0) - (if w = p then 1 else 0) := by
@@ -126,6 +128,7 @@ theorem classNumber_nsmul_sPic (c : sPic S) : classNumber F • c = 0 := by
     ring
 
 
+open scoped Classical in
 noncomputable def sPicGen (c : ClassGroup (𝓞 F)) : sPic S :=
   if h : ∃ v : {v : HeightOneSpectrum (𝓞 F) // v ∉ S}, ClassGroup.mk0 (primeNZD v.1) = c then
     sPicMk S (Finsupp.single h.choose 1)
@@ -152,7 +155,7 @@ theorem closure_range_sPicGen : AddSubgroup.closure (Set.range (sPicGen S)) = �
   obtain ⟨D, rfl⟩ := QuotientAddGroup.mk'_surjective (divS S).range c
   induction D using Finsupp.induction_linear with
   | zero => rw [map_zero]; exact zero_mem _
-  | add f g hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
+  | add f g hf hg => rw [map_add (sPicMk S)]; exact add_mem hf hg
   | single v m =>
     rw [← Finsupp.smul_single_one, map_zsmul]
     refine AddSubgroup.zsmul_mem _ ?_ m

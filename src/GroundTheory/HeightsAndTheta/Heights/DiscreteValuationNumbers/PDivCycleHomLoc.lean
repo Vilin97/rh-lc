@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDiv
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PMinimalPrimeMultiHomog
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PCutByForm
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PPolynomialLocalizedLength
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -30,9 +29,9 @@ theorem length_quotient_of_surjective {S C : Type*} [CommRing S] [CommRing C] [A
   Module.length_eq_of_surjective h
 
 variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} {R : Type*} [CommRing R]
-  {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} [P.IsPrime] [W.IsPrime]
+  {P W : Ideal (MRing ι R)} [P.IsPrime] [W.IsPrime]
 
-theorem multAt_eq_length_locC (hPW : P ≤ W) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+theorem multAt_eq_length_locC (hPW : P ≤ W) (x : MRing ι R) :
     multAt (P ⊔ Ideal.span {x}) W =
       Module.length (locC hPW) (locC hPW ⧸ Ideal.span {algQC hPW (Ideal.Quotient.mk P x)}) := by
   letI := (algQC hPW).toAlgebra
@@ -40,19 +39,19 @@ theorem multAt_eq_length_locC (hPW : P ≤ W) (x : ReciprocityTheory.ChartRestri
   haveI := locC_isLocalization hPW
   set J := P ⊔ Ideal.span {x}
   set I : Ideal (locC hPW) := Ideal.span {algQC hPW (Ideal.Quotient.mk P x)}
-  set θ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* locC hPW := (algQC hPW).comp (Ideal.Quotient.mk P) with hθ
-  have hne : ∀ {g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}, g ∉ W → fr P g ≠ 0 := fun hg => fr_ne_zero fun h => hg (hPW h)
-  have hunit : ∀ {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}, s ∉ W → IsUnit (θ s) := fun hs =>
+  set θ : MRing ι R →+* locC hPW := (algQC hPW).comp (Ideal.Quotient.mk P) with hθ
+  have hne : ∀ {g : MRing ι R}, g ∉ W → fr P g ≠ 0 := fun hg => fr_ne_zero fun h => hg (hPW h)
+  have hunit : ∀ {s : MRing ι R}, s ∉ W → IsUnit (θ s) := fun hs =>
     (IsLocalization.AtPrime.isUnit_to_map_iff (locC hPW) (W.map (Ideal.Quotient.mk P)) _).mpr
       fun h => hs ((Ideal.mem_quotient_iff_mem hPW).mp h)
   obtain ⟨θW, hθWdef⟩ : ∃ φ : Localization.AtPrime W →+* locC hPW,
       φ = IsLocalization.lift (M := W.primeCompl) (g := θ) fun s => hunit s.2 := ⟨_, rfl⟩
-  have hθW : ∀ f, θW (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (Localization.AtPrime W) f) = θ f := fun f => by
+  have hθW : ∀ f, θW (algebraMap (MRing ι R) (Localization.AtPrime W) f) = θ f := fun f => by
     rw [hθWdef]
     exact IsLocalization.lift_eq _ _
 
-  have hval : ∀ (a s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (hs : s ∈ W.primeCompl),
-      (θW (IsLocalization.mk' (Localization.AtPrime W) a ⟨s, hs⟩) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) *
+  have hval : ∀ (a s : MRing ι R) (hs : s ∈ W.primeCompl),
+      (θW (IsLocalization.mk' (Localization.AtPrime W) a ⟨s, hs⟩) : FractionRing (MRing ι R ⧸ P)) *
         fr P s = fr P a := by
     intro a s hs
     have := congrArg θW (IsLocalization.mk'_spec (Localization.AtPrime W) a ⟨s, hs⟩)
@@ -75,7 +74,7 @@ theorem multAt_eq_length_locC (hPW : P ≤ W) (x : ReciprocityTheory.ChartRestri
     obtain ⟨c, rfl⟩ := Ideal.Quotient.mk_surjective q
     obtain ⟨y, rfl⟩ := hsurj c
     exact ⟨y, hf y⟩
-  have hker : RingHom.ker f = J.map (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (Localization.AtPrime W)) := by
+  have hker : RingHom.ker f = J.map (algebraMap (MRing ι R) (Localization.AtPrime W)) := by
     apply le_antisymm
     · intro y hy
       rw [RingHom.mem_ker, hf, Ideal.Quotient.eq_zero_iff_mem, Ideal.mem_span_singleton'] at hy
@@ -102,10 +101,10 @@ theorem multAt_eq_length_locC (hPW : P ≤ W) (x : ReciprocityTheory.ChartRestri
           (Ideal.mem_sup_right (Ideal.mul_mem_left _ _ (Ideal.subset_span rfl)))
       have hst : s * t ∈ W.primeCompl := fun h => (Ideal.IsPrime.mem_or_mem ‹_› h).elim hs htW
       have heq : IsLocalization.mk' (Localization.AtPrime W) a (⟨s, hs⟩ : W.primeCompl) *
-          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (Localization.AtPrime W) (s * t) =
-            algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (Localization.AtPrime W) (a * t) := by
+          algebraMap (MRing ι R) (Localization.AtPrime W) (s * t) =
+            algebraMap (MRing ι R) (Localization.AtPrime W) (a * t) := by
         rw [map_mul, ← mul_assoc, IsLocalization.mk'_spec, map_mul]
-      have hu : IsUnit (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (Localization.AtPrime W) (s * t)) :=
+      have hu : IsUnit (algebraMap (MRing ι R) (Localization.AtPrime W) (s * t)) :=
         IsLocalization.map_units (Localization.AtPrime W) (⟨s * t, hst⟩ : W.primeCompl)
       rw [← Ideal.mul_unit_mem_iff_mem _ hu, heq]
       exact Ideal.mem_map_of_mem _ hatJ

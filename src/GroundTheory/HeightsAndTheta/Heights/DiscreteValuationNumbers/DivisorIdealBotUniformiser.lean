@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.SpanTwoIsPrimeRelevant
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialQuotDim
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -21,7 +20,7 @@ section Defs
 
 variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 
-def divisorIdeal (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :=
+def divisorIdeal (P : Ideal (MRing ι R)) (f g : MRing ι R) : Ideal (MRing ι R) :=
   (P ⊔ Ideal.span {f}).colon {g}
 
 end Defs
@@ -31,28 +30,28 @@ section Lemmas
 def VNumCut.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-      (G : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (n : ℕ), G.IsPrime → IsMultiHomogIdeal G → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ G →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) < ((n + 2 + Fintype.card K : ℕ) : WithBot ℕ∞) →
-    ∀ (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (c : K → ℕ), IsMultiHomog s c → s ∉ G →
+      (G : Ideal (MRing ι O)) (n : ℕ), G.IsPrime → IsMultiHomogIdeal G → (C ϖ : MRing ι O) ∈ G →
+    ringKrullDim (MRing ι O ⧸ G) < ((n + 2 + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    ∀ (s : MRing ι O) (c : K → ℕ), IsMultiHomog s c → s ∉ G →
     ∀ bs : Fin n → K → ℤ,
-      vNum G (Matrix.vecCons (fun k => (c k : ℤ)) bs) = cycEval (fun U => vNum U bs) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) W : ℤ)))
+      vNum G (Matrix.vecCons (fun k => (c k : ℤ)) bs) = cycEval (fun U => vNum U bs) (divCycle G s)
 
 def DivisorIdealCycle.Statement : Prop :=
   ∀ (R : Type u) [CommRing R] [IsNoetherianRing R] (K : Type) [Fintype K] [DecidableEq K]
-    (ι : K → Type) [∀ k, Fintype (ι k)] (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (f g u v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι),
+    (ι : K → Type) [∀ k, Fintype (ι k)] (P W : Ideal (MRing ι R)) (f g u v : MRing ι R),
     P.IsPrime → W.IsPrime → P ≤ W → g ∉ P →
-    (∀ U : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι), U.IsPrime → W ≤ U → IsRelevant U →
-      ∃ u' v' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι, u' ∉ U ∧ u' * f - v' * g ∈ P) →
+    (∀ U : Ideal (MRing ι R), U.IsPrime → W ≤ U → IsRelevant U →
+      ∃ u' v' : MRing ι R, u' ∉ U ∧ u' * f - v' * g ∈ P) →
     u ∉ W → v ∉ W → u * f - v * g ∈ P →
     ratDiv W v u = idealCycle (W ⊔ divisorIdeal P f g)
 
 def VertCutEff.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-      (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (n : ℕ), IsModelOver P (n + 1) →
-    ∀ (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsEffectiveVertical P ϖ b f g →
-    ∀ (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), x ∉ P → W ∈ (P ⊔ Ideal.span {x}).minimalPrimes →
-      IsRelevant W → IsMultiHomogIdeal W → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W → ratDiv P f g W = 0 →
+      (P : Ideal (MRing ι O)) (n : ℕ), IsModelOver P (n + 1) →
+    ∀ (b : K → ℤ) (f g : MRing ι O), IsEffectiveVertical P ϖ b f g →
+    ∀ (W : Ideal (MRing ι O)) (x : MRing ι O), x ∉ P → W ∈ (P ⊔ Ideal.span {x}).minimalPrimes →
+      IsRelevant W → IsMultiHomogIdeal W → (C ϖ : MRing ι O) ∈ W → ratDiv P f g W = 0 →
     ∀ L : Fin n → K → ℤ,
       vNum W (Matrix.vecCons b L) =
         cycEval (fun U => vNum U L) (idealCycle (W ⊔ divisorIdeal P f g))
@@ -60,13 +59,13 @@ def VertCutEff.Statement : Prop :=
 def LeftExpansion.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-      (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ), IsModelOver P (d + 1) →
-    ∀ (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsVerticalDivisor P ϖ b f g →
-    ∀ (c : K → ℕ) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog s c → s ∉ P →
-    (∀ G, (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ G → ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) G : ℤ) ≠ 0 → ratDiv P f g G = 0) →
+      (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P (d + 1) →
+    ∀ (b : K → ℤ) (f g : MRing ι O), IsVerticalDivisor P ϖ b f g →
+    ∀ (c : K → ℕ) (s : MRing ι O), IsMultiHomog s c → s ∉ P →
+    (∀ G, (C ϖ : MRing ι O) ∈ G → divCycle P s G ≠ 0 → ratDiv P f g G = 0) →
     ∀ L : Fin d → K → ℤ,
       cycEval (fun G => vNum G (Matrix.vecCons (fun k => (c k : ℤ)) L)) (ratDiv P f g) =
-        cycEval (fun U => vNum U L) (fun U => cycEval (fun G => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) U : ℤ)) (ratDiv P f g))
+        cycEval (fun U => vNum U L) (fun U => cycEval (fun G => divCycle G s U) (ratDiv P f g))
 
 
 def RightExpansion.Statement : Prop :=
@@ -78,24 +77,24 @@ def RightExpansion.Statement : Prop :=
     (∀ H, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) H : ℤ) ≠ 0 → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H → IsVerticalDivisor H ϖ b f g) →
     (∀ G, (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ G → ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) G : ℤ) ≠ 0 → ratDiv P f g G = 0) →
     ∀ L : Fin d → K → ℤ,
-      cycEval (fun W => if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then vNum W (Matrix.vecCons b L)
-          else cycEval (fun G => vNum G L) (ratDiv W f g)) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))) =
+      cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then vNum W (Matrix.vecCons b L)
+          else cycEval (fun G => vNum G L) (ratDiv W f g)) (divCycle P s) =
         cycEval (fun U => vNum U L)
-          (fun U => cycEval (fun W => idealCycle (W ⊔ divisorIdeal P f g) U) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))))
+          (fun U => cycEval (fun W => idealCycle (W ⊔ divisorIdeal P f g) U) (divCycle P s))
 
 def LocalCoefficient.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-      (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ), IsModelOver P (d + 1) →
-    ∀ (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsEffectiveVertical P ϖ b f g →
-    ∀ (c : K → ℕ) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog s c → s ∉ P →
-    (∀ H, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) H : ℤ) ≠ 0 → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H → IsVerticalDivisor H ϖ b f g) →
-    (∀ G, (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ G → ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) G : ℤ) ≠ 0 → ratDiv P f g G = 0) →
-    ∀ U : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
-      (U.IsPrime → IsMultiHomogIdeal U → IsRelevant U → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ U →
-        ((d + Fintype.card K : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ U)) →
-      cycEval (fun G => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) U : ℤ)) (ratDiv P f g) =
-        cycEval (fun W => idealCycle (W ⊔ divisorIdeal P f g) U) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ)))
+      (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P (d + 1) →
+    ∀ (b : K → ℤ) (f g : MRing ι O), IsEffectiveVertical P ϖ b f g →
+    ∀ (c : K → ℕ) (s : MRing ι O), IsMultiHomog s c → s ∉ P →
+    (∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H → IsVerticalDivisor H ϖ b f g) →
+    (∀ G, (C ϖ : MRing ι O) ∈ G → divCycle P s G ≠ 0 → ratDiv P f g G = 0) →
+    ∀ U : Ideal (MRing ι O),
+      (U.IsPrime → IsMultiHomogIdeal U → IsRelevant U → (C ϖ : MRing ι O) ∈ U →
+        ((d + Fintype.card K : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (MRing ι O ⧸ U)) →
+      cycEval (fun G => divCycle G s U) (ratDiv P f g) =
+        cycEval (fun W => idealCycle (W ⊔ divisorIdeal P f g) U) (divCycle P s)
 
 end Lemmas
 

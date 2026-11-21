@@ -7,7 +7,6 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ArF
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NontrivialIsomClassInt
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.BlowupProjections.BlowupProjStatement
 public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsPullHermPullLine
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -20,7 +19,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 open GlobalTheory.AbLaw GlobalTheory.CechPic GlobalTheory.ProjSpace GlobalTheory.CxPts GlobalTheory.Cartier GlobalTheory.ArInt
 open GroundTheory.Arith.SchemeCoh GroundTheory.Arith.SchemeCoh.ProjSpace
 
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver HermLine IsMultiHomog IsSmoothHerm IsHorizontal divSupp multAt geoNum charOf ptsIntegral
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsMultiHomog HermLine IsSmoothHerm IsHorizontal divSupp multAt geoNum charOf ptsIntegral
   IsIntersectionFamily IntersectionSystem)
 open ReciprocityTheory.ChartRestriction.G.AI.I2 (IsRatSectionOn logNormRat)
 open GlobalTheory.CompanionTheory.MPDict
@@ -64,7 +63,9 @@ end Line
 
 variable {m : ℕ} {n : Fin (m + 1) → ℕ}
 
-abbrev Pol (n : Fin (m + 1) → ℕ) := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver def (Bk n) dehomog (c : ∀ k, Bk n k) : Pol n →+* Γ(MP ℤ m n, mchart c) :=
+abbrev Pol (n : Fin (m + 1) → ℕ) := MRing (Bk n)
+
+def dehomog (c : ∀ k, Bk n k) : Pol n →+* Γ(MP ℤ m n, mchart c) :=
   eval₂Hom (Int.castRingHom _) fun q => resG _ (mchart_le c q.1) (pullRatio (prB n q.1) _ (c q.1) le_rfl q.2)
 
 def RepBy (M : HermLB (mpStr ℤ m n)) (A : HermLine (Bk n))

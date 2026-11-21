@@ -10,7 +10,6 @@ public import ReciprocityTheory.AnalyticForms.RegularLocalRings.BaseChangeC
 public import ReciprocityTheory.AnalyticForms.RegularLocalRings.BaseChangeCB
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSt
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -22,7 +21,7 @@ namespace GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter
 
 open MvPolynomial MeasureTheory Topology
 open scoped ContDiff
-open GroundTheory.Heights₂.Heights.NumbersDVR (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsMultiHomogIdeal IsMultiHomog IsRelevant IsMultiProjPrime
+open GroundTheory.Heights₂.Heights.NumbersDVR (MRing IsMultiHomog IsMultiHomogIdeal IsRelevant IsMultiProjPrime
   divCycle intNum)
 open ReciprocityTheory.AnForm.M (FinHolAtlas LocPot IsPotential IsSection IsSNC HoloMap mInt MIntegrable
   logNormSec)
@@ -38,9 +37,9 @@ abbrev MCone (ι : K → Type) := (Σ k, ι k) → ℂ
 def logH (L : HLine ι) : MCone ι → ℝ := fun z => Real.log (L.h z)
 
 
-structure Res (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)) (e : ℕ) where
+structure Res (P : Ideal (MRing ι ℂ)) (e : ℕ) where
 
-  D : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)
+  D : Ideal (MRing ι ℂ)
   homog : IsMultiHomogIdeal D
   not_le : ¬ D ≤ P
 
@@ -48,7 +47,7 @@ structure Res (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ
 
 namespace Res
 
-variable {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℂ ι)} {e : ℕ} (R : Res ι P e)
+variable {P : Ideal (MRing ι ℂ)} {e : ℕ} (R : Res ι P e)
 
 end Res
 

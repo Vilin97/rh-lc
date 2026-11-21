@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsEventualPolynomial
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -21,7 +20,7 @@ universe u
 theorem MultigradedHilbertPolynomial.proof (h : EventualPolynomial.Statement) :
     MultigradedHilbertPolynomial.Statement.{u} := by
   intro F _ K _ _ ι _ q d hq hdim
-  have hlt : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) < (((d + 1) + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+  have hlt : ringKrullDim (MRing ι F ⧸ q) < (((d + 1) + Fintype.card K : ℕ) : WithBot ℕ∞) := by
     rw [hdim]
     exact_mod_cast (by omega : d + Fintype.card K < d + 1 + Fintype.card K)
   have hdeg : DegLT (hilbFn q) (d + 1) :=

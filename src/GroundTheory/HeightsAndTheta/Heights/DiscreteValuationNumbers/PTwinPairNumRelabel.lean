@@ -9,7 +9,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSeg
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTwinJoinPointNumbers
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ClassListMapDomainPerm
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsFieldIntersectionExample
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -61,8 +60,8 @@ theorem pairNum_eq_intNum (hF : VerticalComponentFibre.Statement)
     {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
     (I : IFamily (IsLocalRing.ResidueField O) ι) (hI : IsFieldIntersection I)
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ) (hP : IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsModelOver O P d)
-    {r : ℕ} (y y' : Fin r → K → ℤ) (f g : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
+    (P : Ideal (MRing ι O)) (d : ℕ) (hP : IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsModelOver O P d)
+    {r : ℕ} (y y' : Fin r → K → ℤ) (f g : Fin r → MRing ι O)
     (hv : ∀ l, IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsVertDiv O P (y l - y' l) (f l) (g l))
     (G : MvPolynomial (Fin r) ℤ) :
     IndefiniteRowSideFullHecke.NumbersDVR.Bundles.pairNum O I P d y y' f g G =
@@ -76,7 +75,7 @@ theorem pairNum_eq_intNum (hF : VerticalComponentFibre.Statement)
   unfold IndefiniteRowSideFullHecke.NumbersDVR.Bundles.vEval
   refine Finsupp.sum_congr fun W hW => ?_
   have hW0 := Finsupp.mem_support_iff.mp hW
-  have hvert : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W := hdiv.vertical W (by rwa [← BundleExamples.ratCyc_eq])
+  have hvert : (C ϖ : MRing ι O) ∈ W := hdiv.vertical W (by rwa [← BundleExamples.ratCyc_eq])
   obtain ⟨bf, bg, hf, hg, -⟩ := hdiv.degrees
   have hvar : ReciprocityTheory.ChartRestriction.G.AI.I1.IsProjVarF (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.redIdeal O W) d := by
     have hor : ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (f l) W ≠ 0 ∨ ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (g l) W ≠ 0 := by

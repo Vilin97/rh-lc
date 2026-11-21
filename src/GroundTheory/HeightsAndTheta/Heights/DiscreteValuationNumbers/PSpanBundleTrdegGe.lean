@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSpanBundleTrdegGe
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -106,8 +105,8 @@ theorem SpanBundleTrdegGe.proof : SpanBundleTrdegGe.Statement := by
   have : IsScalarTower F Ω Φ := IsScalarTower.of_algebraMap_eq fun _ => rfl
   set z := projCoord y (Pi.basisFun Ω (Fin i))
     (fun l => LinearMap.proj l ∘ₗ (Matrix.of G).mulVecLin) s with hz
-  change Algebra.trdeg F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ pointIdeal F y) + i ≤
-    Algebra.trdeg F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) ⧸ pointIdeal F z)
+  change Algebra.trdeg F (MRing ι F ⧸ pointIdeal F y) + i ≤
+    Algebra.trdeg F (MRing (bundleIdx ι M) F ⧸ pointIdeal F z)
   have hzn : ∀ m, z ⟨none, m⟩ = ∑ j, s j * algebraMap Ω Φ (G m j) := by
     intro m
     simp [hz, projCoord, Matrix.col]
@@ -132,15 +131,15 @@ theorem SpanBundleTrdegGe.proof : SpanBundleTrdegGe.Statement := by
 
   have : (pointIdeal F y).IsPrime := RingHom.ker_isPrime _
   have : (pointIdeal F z).IsPrime := RingHom.ker_isPrime _
-  set Ay := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ pointIdeal F y
-  set Az := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) ⧸ pointIdeal F z
+  set Ay := MRing ι F ⧸ pointIdeal F y
+  set Az := MRing (bundleIdx ι M) F ⧸ pointIdeal F z
   let qy : Ay →ₐ[F] MvPolynomial K Ω := Ideal.kerLiftAlg (pointConeMap F y)
   have hqy : Function.Injective qy := Ideal.kerLiftAlg_injective _
   let qz : Az →ₐ[F] MvPolynomial (Option K) Φ := Ideal.kerLiftAlg (pointConeMap F z)
   let emb : MvPolynomial K Ω →+* MvPolynomial (Option K) Φ :=
     (rename (R := Φ) some).toRingHom.comp (map (algebraMap Ω Φ))
   let σ' : (Σ k, ι k) → (Σ o, bundleIdx ι M o) := fun p => ⟨some p.1, p.2⟩
-  have hE1 : ∀ g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, pointConeMap F z (rename σ' g) = emb (pointConeMap F y g) := by
+  have hE1 : ∀ g : MRing ι F, pointConeMap F z (rename σ' g) = emb (pointConeMap F y g) := by
     intro g
     induction g using MvPolynomial.induction_on with
     | C a => simp [pointConeMap, emb, MvPolynomial.algebraMap_eq, RingHom.algebraMap_toAlgebra]
@@ -148,7 +147,7 @@ theorem SpanBundleTrdegGe.proof : SpanBundleTrdegGe.Statement := by
     | mul_X p q hp =>
       simp only [map_mul, hp, rename_X]
       simp [pointConeMap, emb, σ', hzs]
-  have hle : pointIdeal F y ≤ (pointIdeal F z).comap (rename σ' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →ₐ[F] _) := by
+  have hle : pointIdeal F y ≤ (pointIdeal F z).comap (rename σ' : MRing ι F →ₐ[F] _) := by
     intro g hg
     simp only [Ideal.mem_comap, pointIdeal, RingHom.mem_ker] at hg ⊢
     rw [hE1, hg, map_zero]

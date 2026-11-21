@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -43,14 +42,14 @@ theorem IntNumAssoc.proof (h1 : PrimeFiltration.Statement.{u})
   classical
   intro F _ K _ _ ι _ n J hJ hdim bs
   obtain ⟨l, hl, hhilb, hmult⟩ := h1 F K ι J hJ
-  have hdimp : ∀ p ∈ l, ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ p.1) <
+  have hdimp : ∀ p ∈ l, ringKrullDim (MRing ι F ⧸ p.1) <
       ((n + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) := fun p hp =>
     lt_of_le_of_lt (ringKrullDim_le_of_surjective (Ideal.Quotient.factor (hl p hp).2.2)
       (Ideal.Quotient.factor_surjective (hl p hp).2.2)) hdim
   have hdeg : ∀ p ∈ l, DegLT (hilbFn p.1) (n + 1) := fun p hp =>
     h6 F K ι (n + 1) p.1 (hl p hp).1 (hl p hp).2.1 (hdimp p hp)
   rw [h2 F K ι n J l hdeg hhilb bs]
-  have hfin := Ideal.finite_minimalPrimes_of_isNoetherianRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) J
+  have hfin := Ideal.finite_minimalPrimes_of_isNoetherianRing (MRing ι F) J
   have hp : ∀ p ∈ l, intNum F p.1 bs =
       ∑ W ∈ hfin.toFinset, if p.1 = W then (if IsRelevant W then intNum F W bs else 0) else 0 := by
     intro p hpl
@@ -62,10 +61,10 @@ theorem IntNumAssoc.proof (h1 : PrimeFiltration.Statement.{u})
       have hrel : IsRelevant p.1 := by
         by_contra hr
         exact hz (h4 F K ι n p.1 (hl p hpl).1 (hl p hpl).2.1 (Or.inl hr) bs)
-      have hbig : ¬ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ p.1) <
+      have hbig : ¬ ringKrullDim (MRing ι F ⧸ p.1) <
           ((n + Fintype.card K : ℕ) : WithBot ℕ∞) := fun hs =>
         hz (h4 F K ι n p.1 (hl p hpl).1 (hl p hpl).2.1 (Or.inr hs) bs)
-      have hJ' : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ J) <
+      have hJ' : ringKrullDim (MRing ι F ⧸ J) <
           ((n + Fintype.card K + 1 : ℕ) : WithBot ℕ∞) := by
         have e : n + Fintype.card K + 1 = n + 1 + Fintype.card K := by omega
         rw [e]
@@ -77,7 +76,7 @@ theorem IntNumAssoc.proof (h1 : PrimeFiltration.Statement.{u})
     List.map_congr_left hp
   rw [hl2, IntNumAssoc.list_sum_finset_sum]
   have hsupp : Function.support (fun W => idealCycle J W * intNum F W bs) ⊆
-      (hfin.toFinset : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))) := by
+      (hfin.toFinset : Set (Ideal (MRing ι F))) := by
     intro W hW
     rw [Finset.mem_coe, Set.Finite.mem_toFinset]
     by_contra hn

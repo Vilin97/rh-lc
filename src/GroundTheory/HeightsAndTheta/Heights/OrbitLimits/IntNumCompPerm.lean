@@ -5,7 +5,6 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticInt
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsFieldIntersectionExample
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StatementsSymmRelabel
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -18,7 +17,7 @@ open ReciprocityTheory.ChartRestriction.G.AI.I1 GroundTheory.Heights₂.Heights.
 universe u v w
 
 theorem intNum_comp_perm {K : Type*} [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {n : ℕ} (bs : Fin n → K → ℤ) (σ : Equiv.Perm (Fin n)) :
+    (P : Ideal (MRing ι F)) {n : ℕ} (bs : Fin n → K → ℤ) (σ : Equiv.Perm (Fin n)) :
     intNum F P (bs ∘ σ) = intNum F P bs := by
   unfold intNum
   rw [FieldNumbers.mixedDiff_comp_perm]

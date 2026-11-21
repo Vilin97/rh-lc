@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsFi
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PIntNumRatSection
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StatementsFnDegRelDeg
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -47,7 +46,7 @@ def blockVarEquiv (hb : ReciprocityTheory.ChartRestriction.G.AI.I1.IsBlockMap κ
       exact ⟨p, hI ((blockIncl_blockVar hb p).trans hp)⟩)
 
 theorem imageVar_eq_comap {F : Type u} [Field F] (hb : ReciprocityTheory.ChartRestriction.G.AI.I1.IsBlockMap κ v)
-    (V' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) :
+    (V' : Ideal (MRing ι' F)) :
     ReciprocityTheory.ChartRestriction.G.AI.I1.imageVar F v V' =
       (contractPrime ⟨κ, hb.1⟩ V').comap (rename (blockVarEquiv hb)) := by
   ext f
@@ -80,11 +79,11 @@ theorem ProjDeg.of_found (hPF : ProjectionFormulaDegree.Statement.{u})
     (blockVarEquiv hb) (fun _ => rfl) (contractPrime j V') e L
   have hdimP : relDim (contractPrime j V') = (e : WithBot (WithTop ℤ)) := by
     refine relDim_eq_of_ringKrullDim _ e ?_
-    have eq : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ (contractPrime j V').comap (rename (blockVarEquiv hb)) ≃+*
-        ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (κ k)) ⧸ contractPrime j V' :=
+    have eq : MRing ι F ⧸ (contractPrime j V').comap (rename (blockVarEquiv hb)) ≃+*
+        MRing (fun k => ι' (κ k)) F ⧸ contractPrime j V' :=
       Ideal.quotientEquiv _ _ (renameEquiv F (blockVarEquiv hb)).toRingEquiv
         (Ideal.map_comap_of_surjective _ (renameEquiv F (blockVarEquiv hb)).surjective _).symm
-    have h2 : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ (contractPrime j V').comap (rename (blockVarEquiv hb))) =
+    have h2 : ringKrullDim (MRing ι F ⧸ (contractPrime j V').comap (rename (blockVarEquiv hb))) =
         ((e + Fintype.card K : ℕ) : WithBot ℕ∞) := by
       rw [← himg]
       exact hV.2

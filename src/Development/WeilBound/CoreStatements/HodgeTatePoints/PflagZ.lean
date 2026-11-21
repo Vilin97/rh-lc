@@ -10,7 +10,6 @@ public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.GenNumPr
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.GenNumLinearSubst
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.HsymmDualRootsTrivNumZero
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.HasExpansionOfMemSpan
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -66,7 +65,7 @@ theorem isHomogeneous_hsymm_real (N a : ℕ) : (hsymm (Fin N) ℝ a).IsHomogeneo
 
 section
 variable (F : Type) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-  [∀ k, Fintype (ι k)] (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))
+  [∀ k, Fintype (ι k)] (V : Ideal (MRing ι F))
 
 theorem genNum_hsymm {N : ℕ} (x : Fin N → K → ℤ) (a : ℕ) (Q : List (K → ℤ)) :
     genNum F V x (hsymm (Fin N) ℝ a) Q =
@@ -104,7 +103,7 @@ theorem genNum_hsymm {N : ℕ} (x : Fin N → K → ℤ) (a : ℕ) (Q : List (K 
     simp [classList, Multiset.toFinsupp_toMultiset]
 
 theorem genNum_neg (d : ℕ) (hV : IsMultiProjPrime V)
-    (hd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞)) {N : ℕ}
+    (hd : ringKrullDim (MRing ι F ⧸ V) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞)) {N : ℕ}
     (b : Fin N → K → ℤ) (H : MvPolynomial (Fin N) ℝ) (m : ℕ) (hH : H.IsHomogeneous m)
     (Q : List (K → ℤ)) (hQ : m + Q.length = d) :
     genNum F V b (aeval (fun i => (-X i : MvPolynomial (Fin N) ℝ)) H) Q =

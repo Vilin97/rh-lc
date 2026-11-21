@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsMChart
 public import GroundTheory.ArithmeticGeometry.AbelianVarieties.JacobianSmoothness.RingKrullDimLeRingKrullDimQuotientAddOne
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -24,7 +23,7 @@ variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K �
 theorem chartMonomial_isMultiHomog (u : ∀ k, ι k) (b : K → ℕ) :
     IsMultiHomog (chartMonomial (F := F) u b) b := by
   have h := IsWeightedHomogeneous.prod (R := F) (w := blockWeight ι) Finset.univ
-    (fun k => (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ b k) (fun k => b k • blockWeight ι ⟨k, u k⟩)
+    (fun k => (X ⟨k, u k⟩ : MRing ι F) ^ b k) (fun k => b k • blockWeight ι ⟨k, u k⟩)
     (fun k _ => (isWeightedHomogeneous_X F _ _).pow (b k))
   have hb : ∑ k, b k • blockWeight ι ⟨k, u k⟩ = b := by
     funext j
@@ -32,36 +31,36 @@ theorem chartMonomial_isMultiHomog (u : ∀ k, ι k) (b : K → ℕ) :
   unfold IsMultiHomog chartMonomial
   rwa [hb] at h
 
-variable (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime]
+variable (P : Ideal (MRing ι F)) [P.IsPrime]
 
 
-theorem map_eq_zero_iff (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
-    algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P f) = 0 ↔ f ∈ P := by
+theorem map_eq_zero_iff (f : MRing ι F) :
+    algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P f) = 0 ↔ f ∈ P := by
   rw [IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
 
 
 theorem map_chartMonomial (u : ∀ k, ι k) (b : K → ℕ) :
-    algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P (chartMonomial u b)) =
-      ∏ k, algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P))
+    algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P (chartMonomial u b)) =
+      ∏ k, algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P))
         (Ideal.Quotient.mk P (X ⟨k, u k⟩)) ^ b k := by
   simp [chartMonomial, map_prod, map_pow]
 
 
-theorem map_chartMonomial_ne_zero (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ P)
+theorem map_chartMonomial_ne_zero (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ P)
     (b : K → ℕ) :
-    algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P))
+    algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P))
       (Ideal.Quotient.mk P (chartMonomial u b)) ≠ 0 := by
   rw [map_chartMonomial]
   exact Finset.prod_ne_zero_iff.2 fun k _ => pow_ne_zero _ fun h => hu k ((map_eq_zero_iff P _).1 h)
 
 theorem algebraicIndependent (hH : MChartHomog.Statement.{u}) (hP : IsMultiHomogIdeal P)
-    (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ P) :
-    AlgebraicIndependent (chartMap P u).range (fun k => algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)
-      (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P (X ⟨k, u k⟩))) := by
+    (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ P) :
+    AlgebraicIndependent (chartMap P u).range (fun k => algebraMap (MRing ι F ⧸ P)
+      (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P (X ⟨k, u k⟩))) := by
   classical
-  set L := FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)
-  set φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* L := (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) L).comp (Ideal.Quotient.mk P) with hφ
-  have hφapp : ∀ f, φ f = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) L (Ideal.Quotient.mk P f) := fun _ => rfl
+  set L := FractionRing (MRing ι F ⧸ P)
+  set φ : MRing ι F →+* L := (algebraMap (MRing ι F ⧸ P) L).comp (Ideal.Quotient.mk P) with hφ
+  have hφapp : ∀ f, φ f = algebraMap (MRing ι F ⧸ P) L (Ideal.Quotient.mk P f) := fun _ => rfl
   rw [algebraicIndependent_iff]
   intro p hp
 
@@ -92,7 +91,7 @@ theorem algebraicIndependent (hH : MChartHomog.Statement.{u}) (hP : IsMultiHomog
     have hp' := hp
     rw [aeval_def, eval₂_eq'] at hp'
     calc φ G = ∑ m ∈ s, φ (chartMonomial u N) * (algebraMap (chartMap P u).range L (p.coeff m) *
-          ∏ k, algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) L (Ideal.Quotient.mk P (X ⟨k, u k⟩)) ^ m k) := by
+          ∏ k, algebraMap (MRing ι F ⧸ P) L (Ideal.Quotient.mk P (X ⟨k, u k⟩)) ^ m k) := by
           set_option synthInstance.maxHeartbeats 100000 in
             simp only [G, map_sum, map_mul, hval]
           refine Finset.sum_congr rfl fun m hm => ?_
@@ -143,11 +142,11 @@ theorem algebraicIndependent (hH : MChartHomog.Statement.{u}) (hP : IsMultiHomog
   exact hne (by simpa using hzero m (mem_support_iff.2 (by simpa using hne)))
 
 
-theorem isAlgebraic_adjoin (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ P) :
+theorem isAlgebraic_adjoin (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ P) :
     Algebra.IsAlgebraic (Algebra.adjoin (chartMap P u).range (Set.range fun k =>
-      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P (X ⟨k, u k⟩))))
-      (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) := by
-  set R := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P
+      algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P (X ⟨k, u k⟩))))
+      (FractionRing (MRing ι F ⧸ P)) := by
+  set R := MRing ι F ⧸ P
   set L := FractionRing R
   set A₀ := (chartMap P u).range
   set S' := Algebra.adjoin A₀ (Set.range fun k => algebraMap R L (Ideal.Quotient.mk P (X ⟨k, u k⟩)))
@@ -192,7 +191,7 @@ end MChartTrdeg
 
 theorem MChartTrdeg.proof (hH : MChartHomog.Statement.{u}) : MChartTrdeg.Statement.{u} := by
   intro F _ K _ _ ι _ P _ hP u hu
-  set R := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P
+  set R := MRing ι F ⧸ P
   set L := FractionRing R
   set A₀ := (chartMap P u).range
   have hb : IsTranscendenceBasis A₀ (fun k => algebraMap R L (Ideal.Quotient.mk P (X ⟨k, u k⟩))) :=
@@ -204,7 +203,7 @@ theorem MChartTrdeg.proof (hH : MChartHomog.Statement.{u}) : MChartTrdeg.Stateme
     (faithfulSMul_iff_algebraMap_injective _ _).2 Subtype.val_injective
   have : FaithfulSMul F A₀ :=
     (faithfulSMul_iff_algebraMap_injective _ _).2 (algebraMap F A₀).injective
-  rw [show Algebra.trdeg F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ chartIdeal P u) = Algebra.trdeg F A₀ from
+  rw [show Algebra.trdeg F (MRing ι F ⧸ chartIdeal P u) = Algebra.trdeg F A₀ from
       (Ideal.quotientKerEquivRange (chartMap P u)).trdeg_eq, ← h1, trdeg_add_eq F A₀ (A := L),
     GroundTheory.Arith.Abelian.Jacobian.trdeg_eq_of_isFractionRing (k := F) (A := R) L]
 

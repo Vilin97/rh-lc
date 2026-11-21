@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LocalizedQuotientIsSimpleModuleOfMul
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -32,7 +31,7 @@ def ResidualDisjoint.Statement : Prop :=
       (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∈ G' →
       0 < ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P (blowUpGens s g f m e)) (liftForm s)) G' : ℤ) →
       0 < ratDiv (blowUpOf P (blowUpGens s g f m e)) (newVar (some none)) (liftForm m) G' →
-      (newVar none : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∉ G'
+      (newVar none : MRing (extIdx ι (BlowUpIdx ι)) O) ∉ G'
 
 def ResidualContraction.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
@@ -48,9 +47,9 @@ def ResidualContraction.Statement : Prop :=
       (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∈ G' →
       0 < ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P (blowUpGens s g f m e)) (liftForm s)) G' : ℤ) →
       0 < ratDiv (blowUpOf P (blowUpGens s g f m e)) (newVar (some none)) (liftForm m) G' →
-      ∀ x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, x ∉ P →
-        ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P (blowUpGens s g f m e)) (liftForm x)) G' : ℤ) ≤
-          ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) (G'.comap (liftForm (J := BlowUpIdx ι) (ι := ι) (R := O))) : ℤ)
+      ∀ x : MRing ι O, x ∉ P →
+        divCycle (blowUpOf P (blowUpGens s g f m e)) (liftForm x) G' ≤
+          divCycle P x (G'.comap (liftForm (J := BlowUpIdx ι) (ι := ι) (R := O)))
 
 end Lemmas
 

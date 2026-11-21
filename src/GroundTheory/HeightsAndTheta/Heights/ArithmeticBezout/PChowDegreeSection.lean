@@ -5,7 +5,6 @@ public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsCh
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PIntChowFormExists
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ChowDegree
 public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PChowFormHomog
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -63,12 +62,12 @@ theorem ChowDegreeSection.proof (h : ChowFormSectionPerfect.Statement) : ChowDeg
   have hfδ : IsMultiHomog (chowDegree I (e + 2)) f := Vertical.ChowFormHomog.proof F n (e + 2) I f hf
   obtain ⟨c, hc, g, hg, hfu⟩ := h F n (e + 1) I f u hI hf hu
   have hsδ : IsMultiHomog (chowDegree I (e + 2)) (specFirst f u) := isMultiHomog_specFirst u hfδ
-  have hne : C c * ∏ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, g W ^ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))) W ≠ 0 := by
+  have hne : C c * ∏ W ∈ (divCycle I u).support, g W ^ (divCycle I u) W ≠ 0 := by
     refine mul_ne_zero (C_ne_zero.mpr hc) (Finset.prod_ne_zero_iff.mpr fun W hW => ?_)
     exact pow_ne_zero _ (hg W hW).1
   rw [hfu] at hsδ
   obtain ⟨δW, hδW, hsum⟩ :=
-    exists_degrees_of_chowFormCycle (Nat.succ_pos e) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))) c g hg hsδ hne
+    exists_degrees_of_chowFormCycle (Nat.succ_pos e) (divCycle I u) c g hg hsδ hne
   rw [← hsum, Finsupp.sum]
   refine Finset.sum_congr rfl fun W hW => ?_
   congr 1

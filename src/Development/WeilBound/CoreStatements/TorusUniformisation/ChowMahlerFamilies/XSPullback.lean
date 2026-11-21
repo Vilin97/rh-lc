@@ -13,7 +13,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PCon
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTwinBirationalJoin
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.MultiProjectivePrimeIntersectionStatement
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.FieldExtensionIntersectionInvarianceStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -28,7 +27,7 @@ section Expand
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
   {K : Type} [DecidableEq K] {ι : K → Type}
 
-theorem vNumL_perm (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) {l₁ l₂ : List (K → ℤ)} (h : l₁.Perm l₂) :
+theorem vNumL_perm (W : Ideal (MRing ι O)) {l₁ l₂ : List (K → ℤ)} (h : l₁.Perm l₂) :
     vNumL W l₁ = vNumL W l₂ := by
   have : LeftCommutative (diffStep (K := K)) := ⟨fun a b h => by
     funext m
@@ -39,11 +38,11 @@ theorem vNumL_perm (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOve
   rw [h.foldr_eq]
 
 
-noncomputable def vertEval (ϖ : O) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (l : List (K → ℤ)) : ℤ :=
-  cycEval (fun W => if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then vNumL W l else 0) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ)))
+noncomputable def vertEval (ϖ : O) (P : Ideal (MRing ι O)) (f : MRing ι O) (l : List (K → ℤ)) : ℤ :=
+  cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then vNumL W l else 0) (divCycle P f)
 
-theorem cycEval_expand [Fintype K] [∀ k, Fintype (ι k)] (ϖ : O) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι))
-    (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (hv : ∀ W, ratDiv P f g W ≠ 0 → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W)
+theorem cycEval_expand [Fintype K] [∀ k, Fintype (ι k)] (ϖ : O) (P : Ideal (MRing ι O))
+    (f g : MRing ι O) (hv : ∀ W, ratDiv P f g W ≠ 0 → (C ϖ : MRing ι O) ∈ W)
     {σ : Type} (cls : σ → K → ℤ) (H : MvPolynomial σ ℤ) (Q : List (K → ℤ)) :
     cycEval (fun W => classNum cls H Q W) (ratDiv P f g) =
       ∑ μ ∈ H.support, H.coeff μ *
@@ -51,14 +50,14 @@ theorem cycEval_expand [Fintype K] [∀ k, Fintype (ι k)] (ϖ : O) (P : Ideal (
   classical
   have hf := DivCycleFiniteSupport.proof O K ι P f
   have hg := DivCycleFiniteSupport.proof O K ι P g
-  set S : Finset (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) := hf.toFinset ∪ hg.toFinset with hS
-  have hSf : ∀ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0 → W ∈ S := fun W hW => by
+  set S : Finset (Ideal (MRing ι O)) := hf.toFinset ∪ hg.toFinset with hS
+  have hSf : ∀ W, divCycle P f W ≠ 0 → W ∈ S := fun W hW => by
     simp only [hS, Finset.mem_union, Set.Finite.mem_toFinset, Function.mem_support]
     exact Or.inl hW
-  have hSg : ∀ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) ≠ 0 → W ∈ S := fun W hW => by
+  have hSg : ∀ W, divCycle P g W ≠ 0 → W ∈ S := fun W hW => by
     simp only [hS, Finset.mem_union, Set.Finite.mem_toFinset, Function.mem_support]
     exact Or.inr hW
-  have key : ∀ (n Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ), (∀ W, Z W ≠ 0 → W ∈ S) →
+  have key : ∀ (n Z : Ideal (MRing ι O) → ℤ), (∀ W, Z W ≠ 0 → W ∈ S) →
       cycEval n Z = ∑ W ∈ S, Z W * n W := by
     intro n Z hZ
     refine finsum_eq_sum_of_support_subset _ fun W hW => ?_
@@ -66,10 +65,10 @@ theorem cycEval_expand [Fintype K] [∀ k, Fintype (ι k)] (ϖ : O) (P : Ideal (
   have hSr : ∀ W, ratDiv P f g W ≠ 0 → W ∈ S := fun W hW => by
     by_contra hn
     apply hW
-    have h1 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = 0 := by
+    have h1 : divCycle P f W = 0 := by
       by_contra h
       exact hn (hSf W h)
-    have h2 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) = 0 := by
+    have h2 : divCycle P g W = 0 := by
       by_contra h
       exact hn (hSg W h)
     simp [ratDiv, h1, h2]
@@ -85,7 +84,7 @@ theorem cycEval_expand [Fintype K] [∀ k, Fintype (ι k)] (ϖ : O) (P : Ideal (
   · rw [if_pos (hv W h0)]
     ring
 
-theorem vertEval_perm (ϖ : O) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) {l₁ l₂ : List (K → ℤ)}
+theorem vertEval_perm (ϖ : O) (P : Ideal (MRing ι O)) (f : MRing ι O) {l₁ l₂ : List (K → ℤ)}
     (h : l₁.Perm l₂) : vertEval ϖ P f l₁ = vertEval ϖ P f l₂ := by
   simp only [vertEval, vNumL_perm _ h]
 
@@ -167,7 +166,7 @@ theorem trdeg_fnField [∀ k, Fintype (ι k)] {y : (Σ k, ι k) → Ω} {d : ℕ
     (h : IsModelOver (pointIdeal O y) d) :
     Cardinal.toENat (Algebra.trdeg O (Algebra.adjoin O (fnField O y : Set Ω))) = d := by
   have h1 := DvrConeDimTrdeg.proof O K ι _ h.multiProj h.noTorsion
-  have h2 : Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) = _ :=
+  have h2 : Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) = _ :=
     ConeTrdegFnField.proof O Ω (algebraMap_inj h) K ι y (exists_coord_ne h)
   rw [h.dim, h2, map_add (f := _), map_natCast] at h1
   generalize Cardinal.toENat (Algebra.trdeg O (Algebra.adjoin O (fnField O y : Set Ω))) = t at h1
@@ -248,17 +247,17 @@ variable [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)]
 
 theorem vertEval_contract {ϖ : O} (hϖ : Irreducible ϖ) {y : (Σ k, ι k) → Ω} {y' : (Σ k, ι' k) → Ω}
     {d r : ℕ} (hr : 0 < r) (hy : IsModelOver (pointIdeal O y) d)
-    (hj : IsModelOver (pointIdeal O (joinCoords y y')) (d + r)) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {b : K → ℕ}
+    (hj : IsModelOver (pointIdeal O (joinCoords y y')) (d + r)) {f : MRing ι O} {b : K → ℕ}
     (hf : IsMultiHomog f b) (hfP : f ∉ pointIdeal O y) {l : List (K → ℤ)} (hl : l.length = d + r) :
     vertEval ϖ (pointIdeal O (joinCoords y y')) (joinForm f) (l.map pullDeg) = 0 := by
   classical
   unfold vertEval cycEval
   refine finsum_eq_zero_of_forall_eq_zero fun W => ?_
-  by_cases h0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O (joinCoords y y')) (joinForm f)) W : ℤ) = 0
+  by_cases h0 : divCycle (pointIdeal O (joinCoords y y')) (joinForm f) W = 0
   · rw [h0, zero_mul]
   refine mul_eq_zero_of_right _ ?_
   beta_reduce
-  by_cases hW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ι')) ∈ W
+  by_cases hW : (C ϖ : MRing (Sum.elim ι ι') O) ∈ W
   swap
   · exact if_neg hW
   refine (if_pos hW).trans ?_
@@ -278,7 +277,7 @@ theorem vertEval_contract {ϖ : O} (hϖ : Irreducible ϖ) {y : (Σ k, ι k) → 
 theorem vertEval_push {ϖ : O} (hϖ : Irreducible ϖ) {y : (Σ k, ι k) → Ω} {y' : (Σ k, ι' k) → Ω}
     {d : ℕ} (hy : IsModelOver (pointIdeal O y) d)
     (hj : IsModelOver (pointIdeal O (joinCoords y y')) d)
-    (hF : fnField O (joinCoord y y') = fnField O y) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {b : K → ℕ}
+    (hF : fnField O (joinCoord y y') = fnField O y) {f : MRing ι O} {b : K → ℕ}
     (hf : IsMultiHomog f b) (hfP : f ∉ pointIdeal O y) {l : List (K → ℤ)} (hl : l.length = d) :
     vertEval ϖ (pointIdeal O (joinCoords y y')) (joinForm f) (l.map pullDeg) =
       vertEval ϖ (pointIdeal O y) f l := by

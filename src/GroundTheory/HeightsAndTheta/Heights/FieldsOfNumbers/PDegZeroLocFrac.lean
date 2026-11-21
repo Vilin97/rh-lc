@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocFrac
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.RelevantMinimalOfDivCycleNeZero
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -22,7 +21,7 @@ theorem DegZeroLocFrac.proof : DegZeroLocFrac.Statement.{u} := by
   have := hP.isPrime
   intro x hx
 
-  let E : IntermediateField F (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) :=
+  let E : IntermediateField F (FractionRing (MRing ι F ⧸ P)) :=
     { carrier := {x | ∃ y ∈ degZeroLoc P 𝒲, ∃ z ∈ degZeroLoc P 𝒲, z ≠ 0 ∧ x = y / z}
       mul_mem' := by
         rintro _ _ ⟨y₁, hy₁, z₁, hz₁, hz₁0, rfl⟩ ⟨y₂, hy₂, z₂, hz₂, hz₂0, rfl⟩
@@ -63,8 +62,8 @@ theorem DegZeroLocFrac.proof : DegZeroLocFrac.Statement.{u} := by
   have hgm : IsMultiHomog (g * m) e := by
     have := IsWeightedHomogeneous.mul hg hm
     rwa [add_tsub_cancel_of_le hbe] at this
-  have hq0 : ∀ a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, a ∉ P →
-      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P a) ≠ 0 :=
+  have hq0 : ∀ a : MRing ι F, a ∉ P →
+      algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P a) ≠ 0 :=
     fun a ha => by
       rw [Ne, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
       exact ha

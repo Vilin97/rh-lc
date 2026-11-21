@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -19,8 +18,8 @@ universe u
 section Objects
 
 variable {K : Type*} [DecidableEq K] (ι : K → Type*) {F : Type*} [Field F]
-variable {M : Type*} [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module F M]
-  [IsScalarTower F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M]
+variable {M : Type*} [AddCommGroup M] [Module (MRing ι F) M] [Module F M]
+  [IsScalarTower F (MRing ι F) M]
 
 
 variable {ι}
@@ -36,7 +35,7 @@ end Support
 section Cycle
 
 variable {K : Type*} [Fintype K] [DecidableEq K] (ι : K → Type*) (F : Type*) [Field F]
-variable (M : Type*) [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M]
+variable (M : Type*) [AddCommGroup M] [Module (MRing ι F) M]
 
 end Cycle
 
@@ -44,13 +43,13 @@ section Statements
 
 def HilbertIncrement.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (d : ℕ) (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (b : K) (i : ι b),
-    IsMultiProjPrime q → ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) →
-    1 ≤ d → (X ⟨b, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ q →
+    [∀ k, Fintype (ι k)] (d : ℕ) (q : Ideal (MRing ι F)) (b : K) (i : ι b),
+    IsMultiProjPrime q → ringKrullDim (MRing ι F ⧸ q) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    1 ≤ d → (X ⟨b, i⟩ : MRing ι F) ∉ q →
     (∀ a : K → ℤ, hilbFn q a - hilbFn q (a - Pi.single b 1) =
-        hilbFn (q ⊔ Ideal.span {(X ⟨b, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}) a) ∧
-    ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiProjPrime W → q ⊔ Ideal.span {(X ⟨b, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} ≤ W →
-      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) ≤ ((d - 1 + Fintype.card K : ℕ) : WithBot ℕ∞)
+        hilbFn (q ⊔ Ideal.span {(X ⟨b, i⟩ : MRing ι F)}) a) ∧
+    ∀ W : Ideal (MRing ι F), IsMultiProjPrime W → q ⊔ Ideal.span {(X ⟨b, i⟩ : MRing ι F)} ≤ W →
+      ringKrullDim (MRing ι F ⧸ W) ≤ ((d - 1 + Fintype.card K : ℕ) : WithBot ℕ∞)
 
 end Statements
 

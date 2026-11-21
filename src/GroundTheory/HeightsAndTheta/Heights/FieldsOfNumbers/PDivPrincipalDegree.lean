@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
 public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomogIdealIff
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.CycDim
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -22,8 +21,8 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
   {F : Type u} [Field F]
 
 
-theorem relDim_of_ringKrullDim_eq (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (d : ℕ)
-    (h : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) = (d : WithBot ℕ∞)) :
+theorem relDim_of_ringKrullDim_eq (I : Ideal (MRing ι F)) (d : ℕ)
+    (h : ringKrullDim (MRing ι F ⧸ I) = (d : WithBot ℕ∞)) :
     relDim I = (((d : ℤ) - Fintype.card K : ℤ) : WithBot (WithTop ℤ)) := by
   unfold relDim
   rw [h]

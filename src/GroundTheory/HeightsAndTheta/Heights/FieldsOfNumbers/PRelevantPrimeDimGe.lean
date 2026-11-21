@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegreeBound
 public import GroundTheory.ArithmeticGeometry.AbelianVarieties.JacobianSmoothness.RingKrullDimLeRingKrullDimQuotientAddOne
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -23,7 +22,7 @@ theorem RelevantPrimeDimGe.proof : RelevantPrimeDimGe.Statement.{u} := by
   classical
   choose i hi using hP.relevant
   let j : K → (Σ k, ι k) := fun k => ⟨k, i k⟩
-  let x : K → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P := fun k => Ideal.Quotient.mk P (X (j k))
+  let x : K → MRing ι F ⧸ P := fun k => Ideal.Quotient.mk P (X (j k))
   have key : ∀ p : MvPolynomial K F, aeval x p = Ideal.Quotient.mk P (rename j p) := by
     intro p
     induction p using MvPolynomial.induction_on with
@@ -74,7 +73,7 @@ theorem RelevantPrimeDimGe.proof : RelevantPrimeDimGe.Statement.{u} := by
   have h1 := hind.lift_cardinalMk_le_trdeg
   simp only [Cardinal.mk_fintype, Cardinal.lift_natCast, Cardinal.lift_uzero] at h1
   rw [GroundTheory.Arith.Abelian.Jacobian.ringKrullDim_eq_trdeg F]
-  have h2 : (Fintype.card K : ℕ∞) ≤ (Algebra.trdeg F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)).toENat :=
+  have h2 : (Fintype.card K : ℕ∞) ≤ (Algebra.trdeg F (MRing ι F ⧸ P)).toENat :=
     Cardinal.natCast_le_toENat.mpr h1
   exact_mod_cast h2
 

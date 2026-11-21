@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagIndependence
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 
 @[expose] public section
@@ -40,8 +39,8 @@ def liftPairDeg (L : K → ℤ) : Option (Option K) → ℤ
   | some (some k) => L k
   | _ => 0
 
-def liftPairForm {R : Type*} [CommRing R] (M M' : ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
-    ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (bundleIdx (bundleIdx ι M) M') :=
+def liftPairForm {R : Type*} [CommRing R] (M M' : ℕ) (f : MRing ι R) :
+    MRing (bundleIdx (bundleIdx ι M) M') R :=
   rename (fun p : Σ k, ι k => (⟨some (some p.1), p.2⟩ : Σ o, bundleIdx (bundleIdx ι M) M' o)) f
 
 end Objects
@@ -61,7 +60,7 @@ def GenericProjClosureModel.Statement : Prop :=
     ∃ (M M' : ℕ) (a₀ a₀' : K → ℤ) (φ : Fin M → Module.Dual Ω E) (φ' : Fin M' → Module.Dual Ω E),
       IsTwistedDualGens y B a₀ φ ∧ IsTwistedDualGens y B' a₀' φ' ∧
       IsModelOver (pointIdeal O (pairProjCoord y e φ φ' t)) (d + (N - 1)) ∧
-      ∃ f₀ g₀ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'),
+      ∃ f₀ g₀ : MRing (bundleIdx (bundleIdx ι M) M') O,
         IsVerticalDivisor (pointIdeal O (pairProjCoord y e φ φ' t)) ϖ
           (zetaFirst a₀ - zetaSecond a₀') f₀ g₀ ∧
         aeval (pairProjCoord y e φ φ' t) f₀ = aeval (pairProjCoord y e φ φ' t) g₀

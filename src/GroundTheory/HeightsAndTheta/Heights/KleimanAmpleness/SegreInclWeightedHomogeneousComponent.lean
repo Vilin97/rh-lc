@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsSideLast
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -33,7 +32,7 @@ theorem segre_weight_mapDomain (e : (Σ k, ι k) →₀ ℕ) :
   · simp [Finsupp.sum, Finset.sum_apply, NumbersDVR.blockWeight]
   · simp [Finsupp.sum, Finset.sum_apply, NumbersDVR.blockWeight, Pi.single_apply]
 
-theorem segreIncl_weightedHomogeneousComponent (b : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
+theorem segreIncl_weightedHomogeneousComponent (b : K → ℕ) (f : MRing ι F) :
     segreIncl ι F (weightedHomogeneousComponent (NumbersDVR.blockWeight ι) b f) =
       weightedHomogeneousComponent (NumbersDVR.blockWeight (segreIdx ι)) (Sum.elim (fun _ => 0) b)
         (segreIncl ι F f) := by
@@ -60,7 +59,7 @@ theorem segreIncl_weightedHomogeneousComponent (b : K → ℕ) (f : ReciprocityT
     · rw [coeff_rename_eq_zero _ _ _ fun u hu => absurd hu (he u)]
     · rfl
 
-theorem segreLiftVal_eq (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (v : Σ c, segreIdx ι c) :
+theorem segreLiftVal_eq (W : Ideal (MRing ι F)) (v : Σ c, segreIdx ι c) :
     ∃ β, segreLiftVal ι F W v =
       Polynomial.X ^ (NumbersDVR.blockWeight (segreIdx ι) v (Sum.inl ())) * Polynomial.C β := by
   rcases v with ⟨⟨⟨⟩⟩ | k, i⟩
@@ -68,7 +67,7 @@ theorem segreLiftVal_eq (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRi
       simp [segreLiftVal, NumbersDVR.blockWeight]⟩
   · exact ⟨Ideal.Quotient.mk W (X ⟨k, i⟩), by simp [segreLiftVal, NumbersDVR.blockWeight]⟩
 
-theorem segreLiftMap_monomial (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (s : (Σ c, segreIdx ι c) →₀ ℕ) :
+theorem segreLiftMap_monomial (W : Ideal (MRing ι F)) (s : (Σ c, segreIdx ι c) →₀ ℕ) :
     ∀ r : F, ∃ a, segreLiftMap ι F W (monomial s r) =
       Polynomial.X ^ (Finsupp.weight (NumbersDVR.blockWeight (segreIdx ι)) s (Sum.inl ())) *
         Polynomial.C a := by
@@ -80,14 +79,14 @@ theorem segreLiftMap_monomial (W : Ideal (ReciprocityTheory.ChartRestriction.G.G
     obtain ⟨a, ha⟩ := ih r
     obtain ⟨β, hβ⟩ := segreLiftVal_eq W v
     refine ⟨β ^ n * a, ?_⟩
-    have hm : (monomial (Finsupp.single v n + s) r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (segreIdx ι)) =
+    have hm : (monomial (Finsupp.single v n + s) r : MRing (segreIdx ι) F) =
         X v ^ n * monomial s r := by
       rw [X_pow_eq_monomial, monomial_mul, one_mul]
     rw [hm, map_mul, map_pow, ha, segreLiftMap, aeval_X, hβ, map_add (f := _), Pi.add_apply,
       Finsupp.weight_single, Pi.smul_apply, smul_eq_mul, map_mul, map_pow]
     ring
 
-theorem segreLiftMap_of_isWeightedHomogeneous (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (segreIdx ι)}
+theorem segreLiftMap_of_isWeightedHomogeneous (W : Ideal (MRing ι F)) {f : MRing (segreIdx ι) F}
     {e : Unit ⊕ K → ℕ} (hf : IsWeightedHomogeneous (NumbersDVR.blockWeight (segreIdx ι)) f e) :
     ∃ a, segreLiftMap ι F W f = Polynomial.X ^ e (Sum.inl ()) * Polynomial.C a := by
   classical
@@ -118,9 +117,9 @@ theorem SegreLiftComap.proof : SegreLiftComap.Statement := by
 
   choose c' hc using fun k => hW'.relevant (Sum.inr k)
   let c : ∀ k, ι k := c'
-  let D := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (segreIdx ι) ⧸ W'
+  let D := MRing (segreIdx ι) F ⧸ W'
   let L := FractionRing D
-  let π : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (segreIdx ι) →+* L := (algebraMap D L).comp (Ideal.Quotient.mk W')
+  let π : MRing (segreIdx ι) F →+* L := (algebraMap D L).comp (Ideal.Quotient.mk W')
   have hπ : ∀ f, π f = 0 ↔ f ∈ W' := by
     intro f
     rw [← Ideal.Quotient.eq_zero_iff_mem]
@@ -140,16 +139,16 @@ theorem SegreLiftComap.proof : SegreLiftComap.Statement := by
   have hMc : π (segreMon c) ≠ 0 := fun h => hmc ((hπ _).mp h)
   let u : L := π (segreY c) / π (segreMon c)
   have hu : u ≠ 0 := div_ne_zero (fun h => hYc ((hπ _).mp h)) hMc
-  let j : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W →+* D :=
-    Ideal.quotientMap W' (segreIncl ι F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (segreIdx ι)) le_rfl
+  let j : MRing ι F ⧸ W →+* D :=
+    Ideal.quotientMap W' (segreIncl ι F : MRing ι F →+* MRing (segreIdx ι) F) le_rfl
   have hj : Function.Injective j := Ideal.quotientMap_injective' le_rfl
   have hjmk : ∀ x, j (Ideal.Quotient.mk W x) = Ideal.Quotient.mk W' (segreIncl ι F x) :=
     fun x => Ideal.quotientMap_mk
-  let Φ : Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) →+* L := Polynomial.eval₂RingHom ((algebraMap D L).comp j) u
+  let Φ : Polynomial (MRing ι F ⧸ W) →+* L := Polynomial.eval₂RingHom ((algebraMap D L).comp j) u
   have hΦ : ∀ a, Φ (Polynomial.C a) = algebraMap D L (j a) := fun a => by
     simp [Φ]
   have hkey : ∀ f, Φ (segreLiftMap ι F W f) = π f := by
-    have : Φ.comp (segreLiftMap ι F W : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (segreIdx ι) →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W)) = π := by
+    have : Φ.comp (segreLiftMap ι F W : MRing (segreIdx ι) F →+* Polynomial (MRing ι F ⧸ W)) = π := by
       refine MvPolynomial.ringHom_ext (fun r => ?_) (fun v => ?_)
       · simp only [RingHom.comp_apply, RingHom.coe_coe, segreLiftMap, aeval_C,
           Polynomial.algebraMap_apply, hΦ]

@@ -7,7 +7,6 @@ public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.Intersec
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.DivCycleMapLocalisation
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.IsMultiProjPrimeExtTo
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.VerticalNumberZeroOfHorizontalStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -30,7 +29,7 @@ theorem nonempty_residue_equiv (p : Nat.Primes) [Fact (p : ℕ).Prime] :
   exact ⟨(Int.quotientSpanNatEquivZMod (p : ℕ)).symm.trans
     (IsLocalization.AtPrime.equivQuotMaximalIdeal (Ideal.span {((p : ℕ) : ℤ)}) (ZP p))⟩
 
-theorem map_extTo {R S : Type} [CommRing R] [CommRing S] (g : R →+* S) (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) :
+theorem map_extTo {R S : Type} [CommRing R] [CommRing S] (g : R →+* S) (Q : Ideal (MRing ι ℤ)) :
     (extTo R Q).map (MvPolynomial.map g) = extTo S Q := by
   unfold extTo
   rw [Ideal.map_map]
@@ -40,7 +39,7 @@ theorem map_extTo {R S : Type} [CommRing R] [CommRing S] (g : R →+* S) (Q : Id
   · simp
 
 theorem vNumL_extTo [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] (p : Nat.Primes)
-    [Fact (p : ℕ).Prime] (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) (l : List (K → ℤ)) :
+    [Fact (p : ℕ).Prime] (Q : Ideal (MRing ι ℤ)) (l : List (K → ℤ)) :
     vNumL (extTo (ZP p) Q) l = intNumL (ZMod (p : ℕ)) (extTo (ZMod (p : ℕ)) Q) l := by
   obtain ⟨e⟩ := nonempty_residue_equiv p
   have h : specialIdeal (extTo (ZP p) Q) =
@@ -53,30 +52,30 @@ theorem vNumL_extTo [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] (p : Nat
   rfl
 
 theorem divCycle_extTo [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] (p : Nat.Primes)
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) (W' : Ideal (MRing ι (ZP p))) (hW' : W'.IsPrime) :
-    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (extTo (ZP p) P) (MvPolynomial.map (Int.castRingHom (ZP p)) f)) W' : ℤ) =
-      ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) (W'.comap (MvPolynomial.map (Int.castRingHom (ZP p)))) : ℤ) := by
+    (P : Ideal (MRing ι ℤ)) (f : MRing ι ℤ) (W' : Ideal (MRing ι (ZP p))) (hW' : W'.IsPrime) :
+    divCycle (extTo (ZP p) P) (MvPolynomial.map (Int.castRingHom (ZP p)) f) W' =
+      divCycle P f (W'.comap (MvPolynomial.map (Int.castRingHom (ZP p)))) := by
   have h := divCycle_map_localisation K ι ℤ (ZP p) (Ideal.span {((p : ℕ) : ℤ)}).primeCompl P f W' hW'
   have e : algebraMap ℤ (ZP p) = Int.castRingHom (ZP p) := RingHom.ext_int _ _
   rw [e] at h
   exact h
 
-theorem isPrime_of_ne {R : Type} [CommRing R] {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
-    {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0) : W.IsPrime := by
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
+theorem isPrime_of_ne {R : Type} [CommRing R] {P : Ideal (MRing ι R)} {f : MRing ι R}
+    {W : Ideal (MRing ι R)} (h : divCycle P f W ≠ 0) : W.IsPrime := by
+  unfold divCycle at h
   split_ifs at h with hc
   · exact hc.1.1.1
   · exact absurd rfl h
 
-theorem disjoint_consts_of_mem (p : Nat.Primes) {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)} (hW : W.IsPrime)
-    (hp : (C ((p : ℕ) : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ W) :
-    Disjoint (ZpModel.consts ι p : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) (W : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) := by
+theorem disjoint_consts_of_mem (p : Nat.Primes) {W : Ideal (MRing ι ℤ)} (hW : W.IsPrime)
+    (hp : (C ((p : ℕ) : ℤ) : MRing ι ℤ) ∈ W) :
+    Disjoint (ZpModel.consts ι p : Set (MRing ι ℤ)) (W : Set (MRing ι ℤ)) := by
   refine Set.disjoint_left.2 ?_
   rintro _ ⟨s, hs, rfl⟩ hmem
   have hs' : s ∉ Ideal.span {((p : ℕ) : ℤ)} := hs
   have hdvd : ¬ ((p : ℕ) : ℤ) ∣ s := fun h => hs' (Ideal.mem_span_singleton.2 h)
   obtain ⟨u, v, huv⟩ := (Nat.prime_iff_prime_int.1 p.2).irreducible.coprime_iff_not_dvd.2 hdvd
-  have h1 : (C (u * ((p : ℕ) : ℤ) + v * s) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ W := by
+  have h1 : (C (u * ((p : ℕ) : ℤ) + v * s) : MRing ι ℤ) ∈ W := by
     rw [C_add, C_mul, C_mul]
     exact W.add_mem (W.mul_mem_left _ hp) (W.mul_mem_left _ hmem)
   rw [huv, C_1] at h1
@@ -95,12 +94,12 @@ theorem extTo_comap (p : Nat.Primes) (W' : Ideal (MRing ι (ZP p))) :
   exact IsLocalization.map_comap (ZpModel.consts ι p) (MRing ι (ZP p)) W'
 
 theorem bijOn_comap [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] (p : Nat.Primes)
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) :
+    (P : Ideal (MRing ι ℤ)) (f : MRing ι ℤ) :
     Set.BijOn (fun W' : Ideal (MRing ι (ZP p)) => W'.comap (MvPolynomial.map (Int.castRingHom (ZP p))))
-      {W' | ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (extTo (ZP p) P) (MvPolynomial.map (Int.castRingHom (ZP p)) f)) W' : ℤ) ≠ 0 ∧
+      {W' | divCycle (extTo (ZP p) P) (MvPolynomial.map (Int.castRingHom (ZP p)) f) W' ≠ 0 ∧
         (C ((p : ℕ) : ZP p) : MRing ι (ZP p)) ∈ W'}
-      {W | ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0 ∧ (C ((p : ℕ) : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ W} := by
-  have hCmap : MvPolynomial.map (Int.castRingHom (ZP p)) (C ((p : ℕ) : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) =
+      {W | divCycle P f W ≠ 0 ∧ (C ((p : ℕ) : ℤ) : MRing ι ℤ) ∈ W} := by
+  have hCmap : MvPolynomial.map (Int.castRingHom (ZP p)) (C ((p : ℕ) : ℤ) : MRing ι ℤ) =
       (C ((p : ℕ) : ZP p) : MRing ι (ZP p)) := by
     rw [map_C]
     simp
@@ -110,7 +109,7 @@ theorem bijOn_comap [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] (p : Nat
     refine ⟨?_, ?_⟩
     · rw [← divCycle_extTo p P f W' (isPrime_of_ne hW')]
       exact hW'
-    · show MvPolynomial.map (Int.castRingHom (ZP p)) (C ((p : ℕ) : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ W'
+    · show MvPolynomial.map (Int.castRingHom (ZP p)) (C ((p : ℕ) : ℤ) : MRing ι ℤ) ∈ W'
       rwa [hCmap]
   · rintro W₁ - W₂ - h
     calc W₁ = extTo (ZP p) (W₁.comap (MvPolynomial.map (Int.castRingHom (ZP p)))) := (extTo_comap p W₁).symm
@@ -137,7 +136,7 @@ end
 end GlobalTheory.CompanionTheory.Ar.Num.ZpVert
 
 
-theorem GlobalTheory.CompanionTheory.Ar.Num.vertAt_eq_cycList : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) (D : ℕ), IsArithVar P (D + 1) → ∀ (p : Nat.Primes) (a : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι), IsMultiHomog f a → f ∉ P → ∀ l : List (K → ℤ), l.length = D → vertAt p P f l = cycList ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (extTo (ZP p) P) (MvPolynomial.map (Int.castRingHom (ZP p)) f)) W : ℤ))) l := by
+theorem GlobalTheory.CompanionTheory.Ar.Num.vertAt_eq_cycList : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι ℤ)) (D : ℕ), IsArithVar P (D + 1) → ∀ (p : Nat.Primes) (a : K → ℕ) (f : MRing ι ℤ), IsMultiHomog f a → f ∉ P → ∀ l : List (K → ℤ), l.length = D → vertAt p P f l = cycList (divCycle (extTo (ZP p) P) (MvPolynomial.map (Int.castRingHom (ZP p)) f)) l := by
   intro K _ _ ι _ P D hP p a f hf hfP l hl
   classical
   haveI : Fact (p : ℕ).Prime := ⟨p.2⟩
@@ -149,15 +148,15 @@ theorem GlobalTheory.CompanionTheory.Ar.Num.vertAt_eq_cycList : ∀ (K : Type) [
     refine hf fun h0 => hd ?_
     rw [coeff_map, h0, map_zero]
   unfold vertAt cycList cycEval
-  rw [finsum_eq_mem _ {W | ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0 ∧ (C ((p : ℕ) : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ W},
-    finsum_eq_mem _ {W' | ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (extTo (ZP p) P) (MvPolynomial.map (Int.castRingHom (ZP p)) f)) W' : ℤ) ≠ 0 ∧
+  rw [finsum_eq_mem _ {W | divCycle P f W ≠ 0 ∧ (C ((p : ℕ) : ℤ) : MRing ι ℤ) ∈ W},
+    finsum_eq_mem _ {W' | divCycle (extTo (ZP p) P) (MvPolynomial.map (Int.castRingHom (ZP p)) f) W' ≠ 0 ∧
         (C ((p : ℕ) : ZP p) : MRing ι (ZP p)) ∈ W'}]
   · symm
     refine finsum_mem_eq_of_bijOn _ (bijOn_comap p P f) ?_
     rintro W' ⟨hW', hp⟩
     have hWp : W'.IsPrime := isPrime_of_ne hW'
-    have hQp : (C ((p : ℕ) : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ W'.comap (MvPolynomial.map (Int.castRingHom (ZP p))) := by
-      show MvPolynomial.map (Int.castRingHom (ZP p)) (C ((p : ℕ) : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ W'
+    have hQp : (C ((p : ℕ) : ℤ) : MRing ι ℤ) ∈ W'.comap (MvPolynomial.map (Int.castRingHom (ZP p))) := by
+      show MvPolynomial.map (Int.castRingHom (ZP p)) (C ((p : ℕ) : ℤ) : MRing ι ℤ) ∈ W'
       rw [map_C]
       simpa using hp
     rw [divCycle_extTo p P f W' hWp]

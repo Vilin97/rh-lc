@@ -83,30 +83,30 @@ instance continuousConstSMul_linearEquiv :
   ⟨fun L => (L.toLinearMap).continuous_on_pi⟩
 
 
-def box : Set (ι → F) := Set.univ.pi fun _ => (𝒪[F] : Set F)
+noncomputable def box : Set (ι → F) := Set.univ.pi fun _ => (𝒪[F] : Set F)
 
-theorem mem_box {x : ι → F} : x ∈ box F ι ↔ ∀ i, x i ∈ 𝒪[F] := by
+theorem mem_box {x : ι → F} : x ∈ box (F := F) (ι := ι) ↔ ∀ i, x i ∈ 𝒪[F] := by
   simp [box]
 
-theorem isOpen_box : IsOpen (box F ι) :=
+theorem isOpen_box : IsOpen (box (F := F) (ι := ι)) :=
   isOpen_set_pi Set.finite_univ fun _ _ => Valuation.isOpen_integer
 
-theorem isCompact_box : IsCompact (box F ι) :=
+theorem isCompact_box : IsCompact (box (F := F) (ι := ι)) :=
   isCompact_univ_pi fun _ => isCompact_iff_compactSpace.mpr (inferInstanceAs (CompactSpace 𝒪[F]))
 
-theorem zero_mem_box : (0 : ι → F) ∈ box F ι := fun _ _ => (𝒪[F]).zero_mem
+theorem zero_mem_box : (0 : ι → F) ∈ box (F := F) (ι := ι) := fun _ _ => (𝒪[F]).zero_mem
 
 theorem distribHaarChar_eq_one_of_image_box {L : (ι → F) ≃ₗ[F] (ι → F)}
-    (h : L '' box F ι = box F ι) : distribHaarChar (ι → F) L = 1 := by
+    (h : L '' box (F := F) (ι := ι) = box (F := F) (ι := ι)) : distribHaarChar (ι → F) L = 1 := by
   borelize (ι → F)
   let μ : Measure (ι → F) := Measure.addHaar
-  refine distribHaarChar_eq_of_measure_smul_eq_mul (μ := μ) (s := box F ι)
+  refine distribHaarChar_eq_of_measure_smul_eq_mul (μ := μ) (s := box (F := F) (ι := ι))
     (isOpen_box.measure_ne_zero μ ⟨0, zero_mem_box⟩) isCompact_box.measure_lt_top.ne ?_
-  have : L • box F ι = L '' box F ι := rfl
+  have : L • box (F := F) (ι := ι) = L '' box (F := F) (ι := ι) := rfl
   rw [this, h, ENNReal.coe_one, one_mul]
 
 theorem distribHaarChar_eq_one_of_mapsTo_box {L : (ι → F) ≃ₗ[F] (ι → F)}
-    (h₁ : ∀ x ∈ box F ι, L x ∈ box F ι) (h₂ : ∀ x ∈ box F ι, L.symm x ∈ box F ι) :
+    (h₁ : ∀ x ∈ box (F := F) (ι := ι), L x ∈ box (F := F) (ι := ι)) (h₂ : ∀ x ∈ box (F := F) (ι := ι), L.symm x ∈ box (F := F) (ι := ι)) :
     distribHaarChar (ι → F) L = 1 := by
   refine distribHaarChar_eq_one_of_image_box (Set.Subset.antisymm ?_ fun x hx => ?_)
   · rintro _ ⟨x, hx, rfl⟩
@@ -116,7 +116,7 @@ theorem distribHaarChar_eq_one_of_mapsTo_box {L : (ι → F) ≃ₗ[F] (ι → F
 variable [DecidableEq ι]
 
 theorem mulVec_mem_box {A : Matrix ι ι F} (hA : ∀ i j, A i j ∈ 𝒪[F]) {x : ι → F}
-    (hx : x ∈ box F ι) : A.mulVec x ∈ box F ι :=
+    (hx : x ∈ box (F := F) (ι := ι)) : A.mulVec x ∈ box (F := F) (ι := ι) :=
   mem_box.2 fun i => Subring.sum_mem _ fun j _ => Subring.mul_mem _ (hA i j) (mem_box.1 hx j)
 
 noncomputable def modulus : F →*₀ ℝ≥0 where
@@ -197,7 +197,8 @@ theorem distribHaarChar_glEquiv_diagonal {D : ι → F} (h : (Matrix.diagonal D)
   borelize F
   let ν : Measure F := Measure.addHaar
   let μ : Measure (ι → F) := Measure.pi fun _ => ν
-  have himage : glEquiv (Matrix.GeneralLinearGroup.mkOfDetNeZero _ h) • box F ι =
+  letI : Regular μ := Measure.Regular.of_sigmaCompactSpace_of_isLocallyFiniteMeasure μ
+  have himage : glEquiv (Matrix.GeneralLinearGroup.mkOfDetNeZero _ h) • box (F := F) (ι := ι) =
       Set.univ.pi fun i => u i • (𝒪[F] : Set F) := by
     ext x
     simp only [Set.mem_pi, Set.mem_univ, true_implies]
@@ -211,7 +212,7 @@ theorem distribHaarChar_glEquiv_diagonal {D : ι → F} (h : (Matrix.diagonal D)
       refine ⟨y, mem_box.2 hy, funext fun i => ?_⟩
       simpa [LinearEquiv.smul_def, glEquiv_apply, u, Matrix.GeneralLinearGroup.mkOfDetNeZero,
         Matrix.mulVec_diagonal, Units.smul_def] using hyx i
-  refine distribHaarChar_eq_of_measure_smul_eq_mul (μ := μ) (s := box F ι)
+  refine distribHaarChar_eq_of_measure_smul_eq_mul (μ := μ) (s := box (F := F) (ι := ι))
     (isOpen_box.measure_ne_zero μ ⟨0, zero_mem_box⟩) isCompact_box.measure_lt_top.ne ?_
   rw [himage, box, Measure.pi_pi, Measure.pi_pi, ENNReal.ofNNReal_finsetProd,
     ← Finset.prod_mul_distrib]

@@ -11,7 +11,6 @@ public import Development.AutomorphicSpectrum.Proofs.MetricProofs.FlagCoverArith
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsBlockDiagMapGenBlock
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.BlockDiagonalMinorVanishing
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridgeB
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -51,7 +50,7 @@ section Points
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem fstPt_mem {k₀ : K} {P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K => ι (o.getD k₀))} {Q : Ideal (MRing ι)}
+theorem fstPt_mem {k₀ : K} {P' : Ideal (MRing fun o : Option K => ι (o.getD k₀))} {Q : Ideal (MRing ι)}
     (hI : imageZ (fun p : (Σ k, ι k) => (⟨some p.1, p.2⟩ : Σ o : Option K, ι (o.getD k₀))) P' = Q)
     {z : (Σ o : Option K, ι (o.getD k₀)) → ℂ} (hz : z ∈ mcPts P') : fstPt k₀ z ∈ mcPts Q := by
   subst hI

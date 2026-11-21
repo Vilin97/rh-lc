@@ -1,7 +1,6 @@
 module
 
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.ExistsUniqueStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -56,7 +55,7 @@ variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)] {F :
 
 theorem inh_divCycle_of_supp (P : Ideal (MRingOver F ι)) (s : MRingOver F ι) (Q : Ideal (MRingOver F ι))
     (hsupp : divSupp P s = {Q}) :
-    (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ)) = Finsupp.single Q (multAt (P ⊔ Ideal.span {s}) Q) := by
+    divCycle P s = Finsupp.single Q (multAt (P ⊔ Ideal.span {s}) Q) := by
   classical
   ext W
   rw [divCycle, Finsupp.ofSupportFinite_coe, Finsupp.single_apply, hsupp, Set.mem_singleton_iff]
@@ -65,7 +64,7 @@ theorem inh_divCycle_of_supp (P : Ideal (MRingOver F ι)) (s : MRingOver F ι) (
   · rw [if_neg h, if_neg (Ne.symm h)]
 
 theorem inh_divCycle_of_supp_empty (P : Ideal (MRingOver F ι)) (s : MRingOver F ι)
-    (hsupp : divSupp P s = ∅) : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ)) = 0 := by
+    (hsupp : divSupp P s = ∅) : divCycle P s = 0 := by
   classical
   ext W
   rw [divCycle, Finsupp.ofSupportFinite_coe, hsupp]
@@ -78,7 +77,7 @@ theorem inh_divCycle_one (P : Ideal (MRingOver F ι)) : divCycle P 1 = 0 := by
 
 theorem inh_divCycle_prime (P : Ideal (MRingOver F ι)) (s : MRingOver F ι) (Q : Ideal (MRingOver F ι))
     [Q.IsPrime] (hQ : P ⊔ Ideal.span {s} = Q) (hrel : IsRelevant Q) :
-    (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ)) = Finsupp.single Q 1 := by
+    divCycle P s = Finsupp.single Q 1 := by
   rw [inh_divCycle_of_supp P s Q, hQ, inh_multAt_self]
   ext W
   simp only [divSupp, hQ, Ideal.minimalPrimes_eq_subsingleton_self, Set.mem_singleton_iff,

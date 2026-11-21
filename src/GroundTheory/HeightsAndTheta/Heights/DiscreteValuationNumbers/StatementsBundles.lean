@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Statements
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -20,7 +19,7 @@ def NumericalSegre.Statement : Prop :=
     (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (y : (Σ k, ι k) → Ω) (e : ℕ),
     IsMultiProjPrime (pointIdeal F y) →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    ringKrullDim (MRing ι F ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
     ∀ (N : ℕ), 0 < N → ∀ (E : Type) [AddCommGroup E] [Module Ω E]
       (B : ChartBundle F (segreVec y) N E) (w : Module.Basis (Fin N) Ω E) (b : Fin N → K → ℤ),
       IsFlagFrame y B w b →
@@ -41,7 +40,7 @@ def FlagIndependence.Statement : Prop :=
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E] (B B' : ChartBundle O (segreVec y) N E),
       SameGenericFibre ϖ B B' →
     ∀ (w w' v v' : Module.Basis (Fin N) Ω E) (x x' u u' : Fin N → K → ℤ)
-      (f g f₂ g₂ : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+      (f g f₂ g₂ : Fin N → MRing ι O),
       IsFlagPair ϖ y B B' w w' x x' f g → IsFlagPair ϖ y B B' v v' u u' f₂ g₂ →
     ∀ (m : ℕ) (G : MvPolynomial (Fin N) ℤ), G.IsHomogeneous m → G.IsSymmetric →
     ∀ (Gs Hs : Fin N → MvPolynomial (Fin N ⊕ Fin N) ℤ), IsPairExpansion m G Gs →
@@ -56,7 +55,7 @@ def PairNumberPullback.Statement : Prop :=
       (K' : Type) [Fintype K'] [DecidableEq K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)]
       (y : (Σ k, ι k) → Ω) (y' : (Σ k, ι' k) → Ω) (d r : ℕ),
       IsModelOver (pointIdeal O y) d → IsModelOver (pointIdeal O (joinCoords y y')) (d + r) →
-    ∀ (N : ℕ) (x x' : Fin N → K → ℤ) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+    ∀ (N : ℕ) (x x' : Fin N → K → ℤ) (f g : Fin N → MRing ι O),
       (∀ i, IsVerticalDivisor (pointIdeal O y) ϖ (x i - x' i) (f i) (g i)) →
     ∀ (m : ℕ) (G : MvPolynomial (Fin N) ℤ), G.IsHomogeneous m →
     ∀ Gs : Fin N → MvPolynomial (Fin N ⊕ Fin N) ℤ, IsPairExpansion m G Gs →
@@ -76,7 +75,7 @@ def PairCocycle.Statement : Prop :=
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E] (B B' B'' : ChartBundle O (segreVec y) N E),
       SameGenericFibre ϖ B B' → SameGenericFibre ϖ B' B'' →
     ∀ (w w' w'' : Module.Basis (Fin N) Ω E) (x x' x'' : Fin N → K → ℤ)
-      (f g f' g' f'' g'' : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+      (f g f' g' f'' g'' : Fin N → MRing ι O),
       IsFlagPair ϖ y B B' w w' x x' f g → IsFlagPair ϖ y B' B'' w' w'' x' x'' f' g' →
       IsFlagPair ϖ y B B'' w w'' x x'' f'' g'' →
     ∀ (k : ℕ) (Gs Gs' Gs'' : Fin N → MvPolynomial (Fin N ⊕ Fin N) ℤ),
@@ -85,7 +84,7 @@ def PairCocycle.Statement : Prop :=
     ∀ Q : List (K → ℤ), Q.length + k = d + 1 →
       pairNum (pointIdeal O y) x x'' f'' g'' Gs'' Q =
           pairNum (pointIdeal O y) x x' f g Gs Q + pairNum (pointIdeal O y) x' x'' f' g' Gs' Q ∧
-        ∀ (fr gr : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (Gr : Fin N → MvPolynomial (Fin N ⊕ Fin N) ℤ),
+        ∀ (fr gr : Fin N → MRing ι O) (Gr : Fin N → MvPolynomial (Fin N ⊕ Fin N) ℤ),
           IsFlagPair ϖ y B' B w' w x' x fr gr → IsPairExpansion k (psum (Fin N) ℤ k) Gr →
           pairNum (pointIdeal O y) x' x fr gr Gr Q = -pairNum (pointIdeal O y) x x' f g Gs Q
 
@@ -106,10 +105,10 @@ def SubQuotient.Statement : Prop :=
         (∀ q, q ∈ BV'.lat c ↔ ∃ z ∈ B'.lat c, π z = q)) →
     ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
       IsFlagPair ϖ y B B' w w' x x' f g →
-    ∀ (wU wU' : Module.Basis (Fin r) Ω U) (xU xU' : Fin r → K → ℤ) (fU gU : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+    ∀ (wU wU' : Module.Basis (Fin r) Ω U) (xU xU' : Fin r → K → ℤ) (fU gU : Fin r → MRing ι O),
       IsFlagPair ϖ y BU BU' wU wU' xU xU' fU gU →
     ∀ (wV wV' : Module.Basis (Fin (N - r)) Ω V) (xV xV' : Fin (N - r) → K → ℤ)
-      (fV gV : Fin (N - r) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+      (fV gV : Fin (N - r) → MRing ι O),
       IsFlagPair ϖ y BV BV' wV wV' xV xV' fV gV →
     ∀ (k : ℕ) (Gs : Fin N → MvPolynomial (Fin N ⊕ Fin N) ℤ)
       (GsU : Fin r → MvPolynomial (Fin r ⊕ Fin r) ℤ)
@@ -136,12 +135,12 @@ def ScalarQuotient.Statement : Prop :=
     ∀ Q : List (K → ℤ), Q.length + k = d + 1 →
       pairNum (pointIdeal O y) x x' f g Gs Q =
         (k : ℤ) * n * cycEval (fun W => classNum x (psum (Fin N) ℤ (k - 1)) Q W)
-          ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (pointIdeal O y) (C ϖ)) W : ℤ)))
+          (divCycle (pointIdeal O y) (C ϖ))
 
 section Examples
 
 theorem isVerticalDivisor_one {K : Type*} [DecidableEq K] {ι : K → Type*} {O : Type*} [CommRing O]
-    [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O) (H : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) [H.IsPrime] :
+    [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O) (H : Ideal (MRing ι O)) [H.IsPrime] :
     IsVerticalDivisor H ϖ 0 1 1 where
   degrees := ⟨0, 0, isWeightedHomogeneous_one _ _, isWeightedHomogeneous_one _ _, by
     funext k; simp⟩

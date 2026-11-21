@@ -10,7 +10,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpe
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialIdealCorresp
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialIdealMultiHomog
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialDimBound
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -28,11 +27,11 @@ section Helpers
 
 variable {K : Type*} [DecidableEq K] {ι : K → Type*} {R : Type*} [CommRing R]
 
-theorem exists_form_pair_left {P H : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} [hP : P.IsPrime]
-    (hPm : IsMultiHomogIdeal P) (hPH : P ≤ H) {f g u v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {bf bg : K → ℕ}
+theorem exists_form_pair_left {P H : Ideal (MRing ι R)} [hP : P.IsPrime]
+    (hPm : IsMultiHomogIdeal P) (hPH : P ≤ H) {f g u v : MRing ι R} {bf bg : K → ℕ}
     (hf : IsMultiHomog f bf) (hg : IsMultiHomog g bg) (hfP : f ∉ P) (hu : u ∉ H)
     (h : u * f - v * g ∈ P) :
-    ∃ (u' v' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (e d : K → ℕ), IsMultiHomog u' e ∧ IsMultiHomog v' d ∧
+    ∃ (u' v' : MRing ι R) (e d : K → ℕ), IsMultiHomog u' e ∧ IsMultiHomog v' d ∧
       d + bg = e + bf ∧ u' ∉ H ∧ u' * f - v' * g ∈ P := by
   classical
   obtain ⟨e, he⟩ := exists_component_not_mem hu
@@ -75,8 +74,8 @@ theorem VertCutEff.proof (h1 : VNumCut.Statement.{u}) (h2 : DivisorIdealCycle.St
       ⟨⟨hWp, sup_le hPW ((Ideal.span_singleton_le_iff_mem _).mpr hvW)⟩, fun Q hQ hQW =>
         hmul.2 ⟨hQ.1, sup_le (le_sup_left.trans hQ.2) ((Ideal.span_singleton_le_iff_mem _).mpr
           (Q.mul_mem_left x (hQ.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self v)))))⟩ hQW⟩
-    have hpos : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P v) W : ℤ) ≠ 0 := by
-      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+    have hpos : divCycle P v W ≠ 0 := by
+      unfold divCycle
       rw [dite_eq_left ⟨hWv, hrel⟩]
       have hne := length_localizedQuot_ne_top (P ⊔ Ideal.span {v}) W hWv
       have hnz : multAt (P ⊔ Ideal.span {v}) W ≠ 0 := by
@@ -90,8 +89,8 @@ theorem VertCutEff.proof (h1 : VNumCut.Statement.{u}) (h2 : DivisorIdealCycle.St
       have htn : (multAt (P ⊔ Ideal.span {v}) W).toNat ≠ 0 :=
         fun h0 => (ENat.toNat_eq_zero.mp h0).elim hnz hne
       exact_mod_cast htn
-    have hu0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P u) W : ℤ) = 0 := by
-      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+    have hu0 : divCycle P u W = 0 := by
+      unfold divCycle
       rw [dite_eq_right]
       rintro ⟨h, -⟩
       exact huW (h.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self u)))
@@ -102,14 +101,14 @@ theorem VertCutEff.proof (h1 : VNumCut.Statement.{u}) (h2 : DivisorIdealCycle.St
     unfold ratDiv at hcyc
     omega
 
-  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
+  have hϖP : (C ϖ : MRing ι O) ∉ P := by
     intro h
-    have h' : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
+    have h' : ϖ ∈ P.comap (C : O →+* MRing ι O) := h
     rw [hmodel.noTorsion, Ideal.mem_bot] at h'
     exact hϖ.ne_zero h'
   have hlt : P < W := lt_of_le_of_ne hPW (fun h => hϖP (h ▸ hϖW))
-  have hdim : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ W) < ((n + 2 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
-    have h' := DimStrictDrop.proof (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P W hlt
+  have hdim : ringKrullDim (MRing ι O ⧸ W) < ((n + 2 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+    have h' := DimStrictDrop.proof (MRing ι O) P W hlt
     rw [hmodel.dim, show n + 1 + 1 + Fintype.card K = n + 2 + Fintype.card K by omega] at h'
     exact withBotENat_lt_of_add_one_le h'
 

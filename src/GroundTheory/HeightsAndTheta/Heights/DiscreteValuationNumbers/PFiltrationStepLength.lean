@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -12,11 +11,11 @@ namespace GroundTheory.Heights₂.Heights.NumbersDVR
 
 theorem FiltrationStepLength.proof : FiltrationStepLength.Statement := by
   intro R _ K ι L W _ f
-  let g₁ : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ L.colon {f}) →ₗ[ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ L :=
-    Submodule.mapQ _ _ (LinearMap.mulRight (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) f) (fun x hx => by
+  let g₁ : (MRing ι R ⧸ L.colon {f}) →ₗ[MRing ι R] MRing ι R ⧸ L :=
+    Submodule.mapQ _ _ (LinearMap.mulRight (MRing ι R) f) (fun x hx => by
       have := Submodule.mem_colon_singleton.mp hx
       simpa [smul_eq_mul] using this)
-  let g₂ : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ L) →ₗ[ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ (L ⊔ Ideal.span {f}) :=
+  let g₂ : (MRing ι R ⧸ L) →ₗ[MRing ι R] MRing ι R ⧸ (L ⊔ Ideal.span {f}) :=
     Submodule.mapQ _ _ LinearMap.id (fun x hx => Submodule.mem_sup_left hx)
   have hinj : Function.Injective g₁ := by
     rw [← LinearMap.ker_eq_bot, eq_bot_iff]

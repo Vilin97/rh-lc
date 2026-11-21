@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -19,8 +18,8 @@ universe u u' v v' w
 section Objects
 
 def HasRelDim {F : Type u} [Field F] {K : Type v} [Fintype K] {ι : K → Type w}
-    (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (n : ℕ) : Prop :=
-  ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) = ((n + Fintype.card K : ℕ) : WithBot ℕ∞)
+    (I : Ideal (MRing ι F)) (n : ℕ) : Prop :=
+  ringKrullDim (MRing ι F ⧸ I) = ((n + Fintype.card K : ℕ) : WithBot ℕ∞)
 
 
 

@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegreeBound
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -73,10 +72,10 @@ theorem exists_nat_of_nonneg_of_lt {x : WithBot (WithTop ℤ)} {n : ℕ} (h0 : 0
 variable [Fintype K] [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
 
 
-theorem relDim_nonneg_of_card_le (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))
-    (h : ((Fintype.card K : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I)) : 0 ≤ relDim I := by
+theorem relDim_nonneg_of_card_le (I : Ideal (MRing ι F))
+    (h : ((Fintype.card K : ℕ) : WithBot ℕ∞) ≤ ringKrullDim (MRing ι F ⧸ I)) : 0 ≤ relDim I := by
   unfold relDim
-  generalize ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) = x at h ⊢
+  generalize ringKrullDim (MRing ι F ⧸ I) = x at h ⊢
   induction x using WithBot.recBotCoe with
   | bot => exact absurd h (not_le.mpr (WithBot.bot_lt_coe _))
   | coe y =>
@@ -89,7 +88,7 @@ theorem relDim_nonneg_of_card_le (I : Ideal (ReciprocityTheory.ChartRestriction.
         exact_mod_cast (by omega : (0 : ℤ) ≤ (e : ℤ) - Fintype.card K)
       exact WithBot.coe_le_coe.mpr this
 
-theorem hilbFn_eventually_zero_of_not_relevant (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (hI : ¬ IsRelevant I) :
+theorem hilbFn_eventually_zero_of_not_relevant (I : Ideal (MRing ι F)) (hI : ¬ IsRelevant I) :
     ∀ᶠ m in atTop, hilbFn I m = 0 := by
   simp only [IsRelevant, not_forall, not_exists, not_not] at hI
   obtain ⟨k, hk⟩ := hI
@@ -116,12 +115,12 @@ theorem hilbFn_eventually_zero_of_not_relevant (I : Ideal (ReciprocityTheory.Cha
       have hle : Finsupp.single v 1 ≤ s := by
         rw [Finsupp.single_le_iff]
         exact Nat.one_le_iff_ne_zero.mpr (Finsupp.mem_support_iff.mp hv)
-      have hX : (X v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∈ I := by
+      have hX : (X v : MRing ι F) ∈ I := by
         obtain ⟨k', i⟩ := v
         subst hvk
         exact hk i
       have e : monomial s (AddMonoidAlgebra.coeff f s) = X v * monomial (s - Finsupp.single v 1) (AddMonoidAlgebra.coeff f s) := by
-        rw [show (X v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) = monomial (Finsupp.single v 1) 1 from rfl, monomial_mul,
+        rw [show (X v : MRing ι F) = monomial (Finsupp.single v 1) 1 from rfl, monomial_mul,
           one_mul, add_tsub_cancel_of_le hle]
       rw [e]
       exact I.mul_mem_right _ hX
@@ -138,8 +137,8 @@ theorem MultEqualsCoeff.proof (h1 : PrimeFiltration.Statement.{u})
   intro F _ K _ _ ι _ I hI hrel n hn bs
   classical
   obtain ⟨r, Q, c, hQ, hsum, hmult, hcase⟩ := h1 F K ι I hI
-  let top : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) → Prop := fun W => W ∈ I.minimalPrimes ∧ IsRelevant W ∧ relDim W = n
-  let val : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) → ℤ := fun W => if top W then intNum F W bs else 0
+  let top : Ideal (MRing ι F) → Prop := fun W => W ∈ I.minimalPrimes ∧ IsRelevant W ∧ relDim W = n
+  let val : Ideal (MRing ι F) → ℤ := fun W => if top W then intNum F W bs else 0
   have hpiece : ∀ j, ∀ᶠ m in atTop,
       mixedDiff bs (hilbFn (Q j)) (m - fun k => (c j k : ℤ)) = val (Q j) := by
     intro j
@@ -179,7 +178,7 @@ theorem MultEqualsCoeff.proof (h1 : PrimeFiltration.Statement.{u})
     obtain ⟨m, ha, hb⟩ := (((h2 F K ι I hI hrel n hn).1 bs).and hI').exists
     rw [← ha, hb]
   have hsupp : (Function.support fun W => topCycle I n W * intNum F W bs) ⊆
-      (Finset.univ.image Q : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))) := by
+      (Finset.univ.image Q : Set (Ideal (MRing ι F))) := by
     intro W hW
     by_contra hWQ
     apply hW

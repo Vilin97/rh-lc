@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsBisAlt
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -22,7 +21,7 @@ set_option linter.unusedSectionVars false
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {R : Type*} [CommRing R]
 
-theorem isMultiHomog_liftForm {J : Type} {p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {c : K → ℕ} (h : IsMultiHomog p c) :
+theorem isMultiHomog_liftForm {J : Type} {p : MRing ι R} {c : K → ℕ} (h : IsMultiHomog p c) :
     IsMultiHomog (liftForm (J := J) p) (liftMDeg c) := by
   have key : ∀ a : (Σ k, ι k) →₀ ℕ,
       Finsupp.weight (blockWeight (extIdx ι J))
@@ -42,8 +41,8 @@ theorem isMultiHomog_liftForm {J : Type} {p : ReciprocityTheory.ChartRestriction
   rw [key, h ha']
 
 theorem isMultiHomog_powMonomial (e : K → ℕ) (i : ∀ k, ι k) :
-    IsMultiHomog (powMonomial e i : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) e := by
-  have h := IsWeightedHomogeneous.prod Finset.univ (fun k => (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ^ e k)
+    IsMultiHomog (powMonomial e i : MRing ι R) e := by
+  have h := IsWeightedHomogeneous.prod Finset.univ (fun k => (X ⟨k, i k⟩ : MRing ι R) ^ e k)
     (fun k => e k • blockWeight ι ⟨k, i k⟩) (fun k _ => (isWeightedHomogeneous_X R _ _).pow (e k))
   unfold IsMultiHomog powMonomial
   convert h using 1
@@ -51,27 +50,27 @@ theorem isMultiHomog_powMonomial (e : K → ℕ) (i : ∀ k, ι k) :
   simp [Finset.sum_apply, blockWeight, Pi.single_apply]
 
 theorem liftForm_X {J : Type} (v : Σ k, ι k) :
-    liftForm (J := J) (X v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) = X ⟨some v.1, v.2⟩ := by
+    liftForm (J := J) (X v : MRing ι R) = X ⟨some v.1, v.2⟩ := by
   simp [liftForm, rename_X]
 
-theorem liftForm_C {J : Type} (r : R) : liftForm (J := J) (C r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) = C r := by
+theorem liftForm_C {J : Type} (r : R) : liftForm (J := J) (C r : MRing ι R) = C r := by
   simp [liftForm]
 
 variable {J : Type}
 
-theorem liftForm_mem_blowUpOf {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (h : p ∈ P) :
+theorem liftForm_mem_blowUpOf {P : Ideal (MRing ι R)} {u : J → MRing ι R} {p : MRing ι R} (h : p ∈ P) :
     liftForm p ∈ blowUpOf P u := by
   rw [blowUpOf, RingHom.mem_ker, aeval_blowUpSubst_liftForm, Ideal.Quotient.eq_zero_iff_mem.mpr h,
     map_zero]
 
-theorem liftForm_not_mem_blowUpOf {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
+theorem liftForm_not_mem_blowUpOf {P : Ideal (MRing ι R)} {u : J → MRing ι R} {p : MRing ι R}
     (h : p ∉ P) : liftForm (J := J) p ∉ blowUpOf P u := by
   rw [blowUpOf, RingHom.mem_ker, aeval_blowUpSubst_liftForm, Polynomial.C_eq_zero,
     Ideal.Quotient.eq_zero_iff_mem]
   exact h
 
-theorem newVar_not_mem_blowUpOf {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {j : J} (h : u j ∉ P) :
-    (newVar j : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) ∉ blowUpOf P u := by
+theorem newVar_not_mem_blowUpOf {P : Ideal (MRing ι R)} {u : J → MRing ι R} {j : J} (h : u j ∉ P) :
+    (newVar j : MRing (extIdx ι J) R) ∉ blowUpOf P u := by
   rw [blowUpOf, RingHom.mem_ker, newVar, aeval_X]
   change ¬ (Polynomial.C (Ideal.Quotient.mk P (u j)) * Polynomial.X = 0)
   intro h0
@@ -79,8 +78,8 @@ theorem newVar_not_mem_blowUpOf {P : Ideal (ReciprocityTheory.ChartRestriction.G
   simp only [Polynomial.coeff_C_mul_X, if_true, Polynomial.coeff_zero] at h1
   exact h (Ideal.Quotient.eq_zero_iff_mem.mp h1)
 
-theorem mem_blowUpOf_of_sub {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {j j' : J}
-    {a a' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (h : u j * a - u j' * a' ∈ P) :
+theorem mem_blowUpOf_of_sub {P : Ideal (MRing ι R)} {u : J → MRing ι R} {j j' : J}
+    {a a' : MRing ι R} (h : u j * a - u j' * a' ∈ P) :
     newVar j * liftForm a - newVar j' * liftForm a' ∈ blowUpOf P u := by
   rw [blowUpOf, RingHom.mem_ker]
   simp only [map_sub, map_mul, newVar, aeval_X, blowUpSubst, aeval_blowUpSubst_liftForm]
@@ -90,17 +89,17 @@ theorem mem_blowUpOf_of_sub {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo
     simp only [map_sub, map_mul]; ring
   rw [e, Ideal.Quotient.eq_zero_iff_mem.mpr h, map_zero, zero_mul]
 
-theorem comap_liftForm_facts {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
-    {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))} (hW : W.IsPrime) (hQW : blowUpOf P u ≤ W) (hrel : IsRelevant W) :
+theorem comap_liftForm_facts {P : Ideal (MRing ι R)} {u : J → MRing ι R}
+    {W : Ideal (MRing (extIdx ι J) R)} (hW : W.IsPrime) (hQW : blowUpOf P u ≤ W) (hrel : IsRelevant W) :
     (W.comap (liftForm (J := J))).IsPrime ∧ P ≤ W.comap (liftForm (J := J)) ∧
-      IsRelevant (W.comap (liftForm (J := J))) ∧ ∃ j, (newVar j : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) ∉ W := by
+      IsRelevant (W.comap (liftForm (J := J))) ∧ ∃ j, (newVar j : MRing (extIdx ι J) R) ∉ W := by
   refine ⟨Ideal.comap_isPrime _ _, fun p hp => hQW (liftForm_mem_blowUpOf hp), fun k => ?_, ?_⟩
   · obtain ⟨i, hi⟩ := hrel (some k)
     exact ⟨i, by rw [Ideal.mem_comap, liftForm_X]; exact hi⟩
   · obtain ⟨j, hj⟩ := hrel none
     exact ⟨j, hj⟩
 
-theorem powMonomial_not_mem {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hW : W.IsPrime) (hrel : IsRelevant W) (e : K → ℕ) :
+theorem powMonomial_not_mem {W : Ideal (MRing ι R)} (hW : W.IsPrime) (hrel : IsRelevant W) (e : K → ℕ) :
     ∃ i : ∀ k, ι k, powMonomial e i ∉ W := by
   choose i hi using hrel
   refine ⟨i, fun hmem => ?_⟩
@@ -108,12 +107,12 @@ theorem powMonomial_not_mem {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo
     W.primeCompl.prod_mem fun k _ => W.primeCompl.pow_mem (hi k) _
   exact h hmem
 
-def blowUpCof (s m : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (e : K → ℕ) (u₀ v₀ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) : BlowUpIdx ι → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι
+def blowUpCof (s m : MRing ι R) (e : K → ℕ) (u₀ v₀ : MRing ι R) : BlowUpIdx ι → MRing ι R
   | none => u₀ * s
   | some none => v₀ * m
   | some (some i) => v₀ * powMonomial e i
 
-theorem blowUpCof_spec {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {s g f m u₀ v₀ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (e : K → ℕ)
+theorem blowUpCof_spec {P : Ideal (MRing ι R)} {s g f m u₀ v₀ : MRing ι R} (e : K → ℕ)
     (h : u₀ * f - v₀ * g ∈ P) (j : BlowUpIdx ι) :
     u₀ * blowUpGens s g f m e j - g * blowUpCof s m e u₀ v₀ j ∈ P := by
   rcases j with _ | _ | i
@@ -128,7 +127,7 @@ theorem blowUpCof_spec {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRin
       powMonomial e i * (u₀ * f - v₀ * g) by ring]
     exact P.mul_mem_left _ h
 
-theorem blowUpCof_relation {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hP : P.IsPrime) {s g f m u₀ v₀ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
+theorem blowUpCof_relation {P : Ideal (MRing ι R)} (hP : P.IsPrime) {s g f m u₀ v₀ : MRing ι R}
     (e : K → ℕ) (hg : g ∉ P) (h : u₀ * f - v₀ * g ∈ P) (j j' : BlowUpIdx ι) :
     newVar j * liftForm (blowUpCof s m e u₀ v₀ j') - newVar j' * liftForm (blowUpCof s m e u₀ v₀ j) ∈
       blowUpOf P (blowUpGens s g f m e) := by
@@ -144,9 +143,9 @@ theorem blowUpCof_relation {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.
     exact P.sub_mem (P.mul_mem_left _ h1) (P.mul_mem_left _ h2)
   exact (hP.mem_or_mem key).resolve_left hg
 
-theorem blowUp_offSpecial {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hP : P.IsPrime) {s g f m : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (e : K → ℕ)
-    (hg : g ∉ P) {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι (BlowUpIdx ι)))} (hW : W.IsPrime)
-    (hQW : blowUpOf P (blowUpGens s g f m e) ≤ W) (hrel : IsRelevant W) {u₀ v₀ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
+theorem blowUp_offSpecial {P : Ideal (MRing ι R)} (hP : P.IsPrime) {s g f m : MRing ι R} (e : K → ℕ)
+    (hg : g ∉ P) {W : Ideal (MRing (extIdx ι (BlowUpIdx ι)) R)} (hW : W.IsPrime)
+    (hQW : blowUpOf P (blowUpGens s g f m e) ≤ W) (hrel : IsRelevant W) {u₀ v₀ : MRing ι R}
     (hv : liftForm v₀ ∉ W) (h : u₀ * f - v₀ * g ∈ P) :
     ∃ i : ∀ k, ι k, liftForm (powMonomial e i) ∉ W ∧ newVar (some (some i)) ∉ W ∧
       (liftForm m ∉ W → newVar (some none) ∉ W) := by
@@ -192,16 +191,16 @@ theorem BlowUpDecomposition.proof (hmodel : BlowUpModel.Statement.{u})
   have hmod := hmodel O K ι (BlowUpIdx ι) P (d + 1) hP (c + bg) (blowUpGens s g f m e) hgens
     ⟨none, hsgP⟩
   have hQp : Q.IsPrime := hmod.multiProj.isPrime
-  have hY₁ : (newVar (some none) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∉ Q :=
+  have hY₁ : (newVar (some none) : MRing (extIdx ι (BlowUpIdx ι)) O) ∉ Q :=
     newVar_not_mem_blowUpOf (u := blowUpGens s g f m e) (j := some none) hfmP
 
   have hdegRes : ∃ bf' bg' : Option K → ℕ, IsMultiHomog (newVar (some none) :
-      ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) bf' ∧ IsMultiHomog (liftForm (J := BlowUpIdx ι) m) bg' ∧
+      MRing (extIdx ι (BlowUpIdx ι)) O) bf' ∧ IsMultiHomog (liftForm (J := BlowUpIdx ι) m) bg' ∧
       (fun k => (bf' k : ℤ) - bg' k) = residualDeg e :=
     ⟨Pi.single none 1, liftMDeg e, isWeightedHomogeneous_X _ _ _, isMultiHomog_liftForm hm, by
       funext o; cases o <;> simp [residualDeg, liftDeg, liftMDeg]⟩
   have hdegExc : ∃ bf' bg' : Option K → ℕ, IsMultiHomog (liftForm (J := BlowUpIdx ι) (f * m)) bf' ∧
-      IsMultiHomog (liftForm g * newVar (some none) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) bg' ∧
+      IsMultiHomog (liftForm g * newVar (some none) : MRing (extIdx ι (BlowUpIdx ι)) O) bg' ∧
       (fun k => (bf' k : ℤ) - bg' k) = exceptionalDeg b e := by
     refine ⟨liftMDeg (bf + e), liftMDeg bg + Pi.single none 1, isMultiHomog_liftForm (hf.mul hm),
       (isMultiHomog_liftForm hg).mul (isWeightedHomogeneous_X _ _ _), ?_⟩
@@ -213,8 +212,8 @@ theorem BlowUpDecomposition.proof (hmodel : BlowUpModel.Statement.{u})
       simp [exceptionalDeg, liftDeg, liftMDeg]
       omega
 
-  have hoff : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))), W.IsPrime → Q ≤ W → IsRelevant W →
-      (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∉ W →
+  have hoff : ∀ W : Ideal (MRing (extIdx ι (BlowUpIdx ι)) O), W.IsPrime → Q ≤ W → IsRelevant W →
+      (C ϖ : MRing (extIdx ι (BlowUpIdx ι)) O) ∉ W →
       (∃ u v, u ∉ W ∧ v ∉ W ∧ u * newVar (some none) - v * liftForm m ∈ Q) ∧
       (∃ u v, u ∉ W ∧ v ∉ W ∧ u * liftForm (f * m) - v * (liftForm g * newVar (some none)) ∈ Q) ∧
       (liftForm m ∉ W → newVar (some none) ∉ W) := by
@@ -272,9 +271,9 @@ theorem BlowUpDecomposition.proof (hmodel : BlowUpModel.Statement.{u})
         exact P.mul_mem_left _ h4)
     convert h3 using 1; simp only [map_mul]; ring
 
-  have hhor : ∀ H : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))),
-      (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∉ H →
-      (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (liftForm s)) H : ℤ) ≠ 0 ∨ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (newVar none)) H : ℤ) ≠ 0) →
+  have hhor : ∀ H : Ideal (MRing (extIdx ι (BlowUpIdx ι)) O),
+      (C ϖ : MRing (extIdx ι (BlowUpIdx ι)) O) ∉ H →
+      (divCycle Q (liftForm s) H ≠ 0 ∨ divCycle Q (newVar none) H ≠ 0) →
       IsVerticalDivisor H ϖ (residualDeg e) (newVar (some none)) (liftForm m) ∧
       IsVerticalDivisor H ϖ (exceptionalDeg b e) (liftForm (f * m)) (liftForm g * newVar (some none)) := by
     intro H hϖH hH
@@ -285,18 +284,18 @@ theorem BlowUpDecomposition.proof (hmodel : BlowUpModel.Statement.{u})
     obtain ⟨hHp, hQH, hHrel⟩ := hsupp
     have mnm : ∀ {x y}, x ∉ H → y ∉ H → x * y ∉ H := fun hx hy hxy => (hHp.mem_or_mem hxy).elim hx hy
     have h0 := hst O ϖ hϖ K ι P d hP b f g hDv s hsP e m H hϖH hH
-    have hϖH₀ : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H.comap (liftForm (J := BlowUpIdx ι)) := by
+    have hϖH₀ : (C ϖ : MRing ι O) ∉ H.comap (liftForm (J := BlowUpIdx ι)) := by
       rw [Ideal.mem_comap, liftForm_C]; exact hϖH
     have hvH₀ := hsH _ h0 hϖH₀
     have hmH : liftForm m ∉ H := hmH _ h0 hϖH₀
     have hfH : liftForm f ∉ H := hvH₀.num_not_mem
     have hgH : liftForm g ∉ H := hvH₀.den_not_mem
     have hY₁H := (hoff H hHp hQH hHrel hϖH).2.2 hmH
-    have tr : ∀ {F G : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))},
-        (∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))), W.IsPrime → Q ≤ W → IsRelevant W →
-          (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∉ W → ∃ u v, u ∉ W ∧ v ∉ W ∧ u * F - v * G ∈ Q) →
-        ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))), W.IsPrime → H ≤ W → IsRelevant W →
-          (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∉ W → ∃ u v, u ∉ W ∧ v ∉ W ∧ u * F - v * G ∈ H := by
+    have tr : ∀ {F G : MRing (extIdx ι (BlowUpIdx ι)) O},
+        (∀ W : Ideal (MRing (extIdx ι (BlowUpIdx ι)) O), W.IsPrime → Q ≤ W → IsRelevant W →
+          (C ϖ : MRing (extIdx ι (BlowUpIdx ι)) O) ∉ W → ∃ u v, u ∉ W ∧ v ∉ W ∧ u * F - v * G ∈ Q) →
+        ∀ W : Ideal (MRing (extIdx ι (BlowUpIdx ι)) O), W.IsPrime → H ≤ W → IsRelevant W →
+          (C ϖ : MRing (extIdx ι (BlowUpIdx ι)) O) ∉ W → ∃ u v, u ∉ W ∧ v ∉ W ∧ u * F - v * G ∈ H := by
       intro F G hF W hW hHW hrel hϖW
       obtain ⟨u', v', hu', hv', h'⟩ := hF W hW (hQH.trans hHW) hrel hϖW
       exact ⟨u', v', hu', hv', hQH h'⟩

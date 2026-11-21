@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PSectionComp
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridgeB
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRedF
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -18,7 +17,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights.Targets
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar HermLine IsSectionOn divSupp IsHorizontal IsRelevant IsMultiHomogIdeal mcPts
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsArithVar IsSectionOn divSupp IsHorizontal IsRelevant IsMultiHomogIdeal mcPts
   segre divSupp_finite divSuppArith mcPts_smul)
 open GroundTheory.Heights₂.Heights (segreChartSet segreChartIdeal segreChartComponents mem_segreChartComponents chartLift
   chartLift_segre_apply segre_chartLift chartLift_blockNonzero)

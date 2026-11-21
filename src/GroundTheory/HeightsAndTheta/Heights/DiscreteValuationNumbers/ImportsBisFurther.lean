@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Inst
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.SameGenericSymm
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyBridgeFull
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsBisLast
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -28,7 +27,7 @@ def flagFurtherTerm_independent.Statement : Prop :=
     ∀ (φ₁ φ₂ : IndefiniteRowSideFullHecke.NumbersDVR.Bundles.FlagPair O x E E')
       (I : IFamily (IsLocalRing.ResidueField O) ι), IsFieldIntersection I →
     ∀ G : MvPolynomial (Fin N) ℤ, G.IsSymmetric →
-    ∀ (r : ℕ) (y y' : Fin r → K → ℤ) (f g : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+    ∀ (r : ℕ) (y y' : Fin r → K → ℤ) (f g : Fin r → MRing ι O),
       (∀ l, IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsVertDiv O (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.mcIdeal O x) (y l - y' l)
         (f l) (g l)) →
     ∀ (c : ℕ) (Q : MvPolynomial (Fin r) ℤ), c ≤ d + 1 → G.IsHomogeneous c →

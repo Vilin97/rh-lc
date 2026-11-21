@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocUnits
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsSemilocalLengthSum
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PDegZeroLocQuot
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -21,8 +20,8 @@ universe u
 theorem DegZeroLocUnits.proof : DegZeroLocUnits.Statement.{u} := by
   intro F _ K _ _ ι _ P hP 𝒲 h𝒲ne h𝒲
   have := hP.isPrime
-  have hne : ∀ g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, g ∉ P →
-      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P g) ≠ 0 :=
+  have hne : ∀ g : MRing ι F, g ∉ P →
+      algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P g) ≠ 0 :=
     fun g hg => by
       rw [Ne, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
       exact hg

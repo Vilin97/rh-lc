@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDiv
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDimStrictDrop
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSupSpanMultiHomog
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PMinimalPrimeMultiHomog
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -52,21 +51,21 @@ theorem LeftExpansion.proof (hcut : VNumCut.Statement.{u}) : LeftExpansion.State
   have : P.IsPrime := hP.multiProj.isPrime
 
   have key : ∀ G, ratDiv P f g G ≠ 0 →
-      vNum G (Matrix.vecCons (fun k => (c k : ℤ)) L) = cycEval (fun U => vNum U L) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) W : ℤ))) := by
+      vNum G (Matrix.vecCons (fun k => (c k : ℤ)) L) = cycEval (fun U => vNum U L) (divCycle G s) := by
     intro G hG
-    have hmin : ∃ h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, h ∉ P ∧ (∃ e : K → ℕ, IsMultiHomog h e) ∧
+    have hmin : ∃ h : MRing ι O, h ∉ P ∧ (∃ e : K → ℕ, IsMultiHomog h e) ∧
         G ∈ (P ⊔ Ideal.span {h}).minimalPrimes ∧ IsRelevant G := by
       obtain ⟨bf, bg, hf, hg, -⟩ := hD.degrees
-      by_cases hfG : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) G : ℤ) = 0
-      · have hgG : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) G : ℤ) ≠ 0 := by
+      by_cases hfG : divCycle P f G = 0
+      · have hgG : divCycle P g G ≠ 0 := by
           intro h0
           apply hG
           simp [ratDiv, hfG, h0]
-        unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hgG
+        unfold divCycle at hgG
         split_ifs at hgG with hW
         · exact ⟨g, hD.den_not_mem, ⟨bg, hg⟩, hW.1, hW.2⟩
         · exact absurd rfl hgG
-      · unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hfG
+      · unfold divCycle at hfG
         split_ifs at hfG with hW
         · exact ⟨f, hD.num_not_mem, ⟨bf, hf⟩, hW.1, hW.2⟩
         · exact absurd rfl hfG
@@ -78,9 +77,9 @@ theorem LeftExpansion.proof (hcut : VNumCut.Statement.{u}) : LeftExpansion.State
     have hGmh : IsMultiHomogIdeal G :=
       MinimalPrimeMultiHomog.proof O K ι _ G
         (SupSpanMultiHomog.proof O K ι P h e hP.multiProj.multiHomog he) hGmin
-    have hϖG : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ G := hD.vertical G hG
-    have hdim : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ G) < ((d + 2 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
-      have hdrop := DimStrictDrop.proof (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P G hPltG
+    have hϖG : (C ϖ : MRing ι O) ∈ G := hD.vertical G hG
+    have hdim : ringKrullDim (MRing ι O ⧸ G) < ((d + 2 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+      have hdrop := DimStrictDrop.proof (MRing ι O) P G hPltG
       rw [hP.dim] at hdrop
       have hN : d + 1 + 1 + Fintype.card K = d + 2 + Fintype.card K := by omega
       rw [hN] at hdrop
@@ -93,13 +92,13 @@ theorem LeftExpansion.proof (hcut : VNumCut.Statement.{u}) : LeftExpansion.State
         have hsQ : s ∈ Q := hQ.2 (Ideal.mem_sup_right (Ideal.subset_span rfl))
         exact h1.2 ⟨hQ.1, sup_le (le_sup_left.trans hQ.2)
           ((Ideal.span_singleton_le_iff_mem _).mpr (Q.mul_mem_left h hsQ))⟩ hQG
-      have hne : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) G : ℤ) ≠ 0 := by
-        unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+      have hne : divCycle P s G ≠ 0 := by
+        unfold divCycle
         rw [dite_eq_left ⟨hGs, hGrel⟩]
         have := localizedQuot_nontrivial_of_le (P ⊔ Ideal.span {s}) G hGs.1.2
         have h0 : multAt (P ⊔ Ideal.span {s}) G ≠ 0 :=
           (Module.length_pos (R := Localization.AtPrime G)
-            (M := LocalizedModule G.primeCompl (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ (P ⊔ Ideal.span {s})))).ne'
+            (M := LocalizedModule G.primeCompl (MRing ι O ⧸ (P ⊔ Ideal.span {s})))).ne'
         have htop := length_localizedQuot_ne_top _ G hGs
         exact_mod_cast (ENat.toNat_pos h0 htop).ne'
       exact hG (hno G hϖG hne)
@@ -112,14 +111,14 @@ theorem LeftExpansion.proof (hcut : VNumCut.Statement.{u}) : LeftExpansion.State
         simp only [Set.mem_union, Function.mem_support, not_or, not_not] at hc
         exact hG (by simp [ratDiv, hc.1, hc.2]))
   set A := hfinR.toFinset with hAdef
-  have hfinB : (⋃ G ∈ A, Function.support ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) W : ℤ)))).Finite :=
+  have hfinB : (⋃ G ∈ A, Function.support (divCycle G s)).Finite :=
     A.finite_toSet.biUnion (fun G _ => DivCycleFiniteSupport.proof O K ι G s)
   set B := hfinB.toFinset with hBdef
   have hA : ∀ G, ratDiv P f g G ≠ 0 → G ∈ A := fun G hG => hfinR.mem_toFinset.mpr hG
-  have hB : ∀ G ∈ A, ∀ U, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) U : ℤ) ≠ 0 → U ∈ B :=
+  have hB : ∀ G ∈ A, ∀ U, divCycle G s U ≠ 0 → U ∈ B :=
     fun G hGA U hU => hfinB.mem_toFinset.mpr (Set.mem_biUnion hGA hU)
   have eL : cycEval (fun G => vNum G (Matrix.vecCons (fun k => (c k : ℤ)) L)) (ratDiv P f g) =
-      ∑ G ∈ A, ∑ U ∈ B, ratDiv P f g G * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) U : ℤ) * vNum U L := by
+      ∑ G ∈ A, ∑ U ∈ B, ratDiv P f g G * divCycle G s U * vNum U L := by
     unfold cycEval
     rw [finsum_eq_sum_of_support_subset _ (s := A) (fun G hG => hA G (left_ne_zero_of_mul hG))]
     refine Finset.sum_congr rfl fun G _ => ?_
@@ -128,14 +127,14 @@ theorem LeftExpansion.proof (hcut : VNumCut.Statement.{u}) : LeftExpansion.State
     · rw [key G hr, cycEval, finsum_eq_sum_of_support_subset _ (s := B)
         (fun U hU => hB G (hA G hr) U (left_ne_zero_of_mul hU)), Finset.mul_sum]
       exact Finset.sum_congr rfl fun U _ => by ring
-  have eR : cycEval (fun U => vNum U L) (fun U => cycEval (fun G => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) U : ℤ)) (ratDiv P f g)) =
-      ∑ U ∈ B, ∑ G ∈ A, ratDiv P f g G * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) U : ℤ) * vNum U L := by
+  have eR : cycEval (fun U => vNum U L) (fun U => cycEval (fun G => divCycle G s U) (ratDiv P f g)) =
+      ∑ U ∈ B, ∑ G ∈ A, ratDiv P f g G * divCycle G s U * vNum U L := by
     unfold cycEval
     have hsub : Function.support (fun U =>
-        (∑ᶠ G, ratDiv P f g G * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) U : ℤ)) * vNum U L) ⊆ ↑B := by
+        (∑ᶠ G, ratDiv P f g G * divCycle G s U) * vNum U L) ⊆ ↑B := by
       intro U hU
       have h1 := left_ne_zero_of_mul hU
-      obtain ⟨G, hG⟩ : ∃ G, ratDiv P f g G * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) U : ℤ) ≠ 0 := by
+      obtain ⟨G, hG⟩ : ∃ G, ratDiv P f g G * divCycle G s U ≠ 0 := by
         by_contra hc
         push Not at hc
         exact h1 (finsum_eq_zero_of_forall_eq_zero hc)

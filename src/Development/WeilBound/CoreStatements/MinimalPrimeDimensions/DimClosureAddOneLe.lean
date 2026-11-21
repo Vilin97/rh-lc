@@ -6,7 +6,6 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.Topol
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsChowDegreeSection
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsChowDegreeClosedPoint
 public import GroundTheory.HeightsAndTheta.Heights.ChowForms.PConeDimComponent
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -170,7 +169,7 @@ theorem field_case (h1 : StPts) (h2 : StPull) (h3 : StDiv) (hS : ChowDegreeSecti
         (finiteCohTwists_of_isProjOver hf _ hp), e₂]
       show _ = ((chowDegree _ (e + 2) : ℕ) : ℤ)
       rw [hsec, Finsupp.sum, Nat.cast_sum]
-      have hval (z : Z) (hz : z ∈ T) : ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P (genericPoint Z)) u) (P z) : ℤ) : ℕ) : ℤ) =
+      have hval (z : Z) (hz : z ∈ T) : ((divCycle (P (genericPoint Z)) u (P z) : ℕ) : ℤ) =
           (divOfSec hE.isLB (s k) hk).mult z := by
         rw [d₂ z ((hT z).1 hz), divCycle, GroundTheory.Heights₂.Heights.fundCycle, Finsupp.onFinset_apply,
           if_pos ((d₁ z).1 ((hT z).1 hz))]

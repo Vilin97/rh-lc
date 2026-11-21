@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -18,7 +17,7 @@ universe u
 
 theorem relDim_bot {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [∀ k, Fintype (ι k)]
     {F : Type*} [Field F] :
-    relDim (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) =
+    relDim (⊥ : Ideal (MRing ι F)) =
       (((Fintype.card (Σ k, ι k) : ℤ) - Fintype.card K : ℤ) : WithTop ℤ) := by
   unfold relDim
   rw [ringKrullDim_eq_of_ringEquiv (RingEquiv.quotientBot _),
@@ -29,7 +28,7 @@ theorem relDim_bot {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [�
 abbrev ProjIdx (N : ℕ) : Unit → Type := fun _ => Fin (N + 1)
 
 theorem relDim_projectiveSpace {F : Type*} [Field F] (N : ℕ) :
-    relDim (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx N))) = (N : WithBot (WithTop ℤ)) := by
+    relDim (⊥ : Ideal (MRing (ProjIdx N) F)) = (N : WithBot (WithTop ℤ)) := by
   rw [relDim_bot]
   simp [Fintype.card_sigma]
   rfl
@@ -59,10 +58,10 @@ theorem weight_projIdx (N : ℕ) (d : (Σ _ : Unit, ProjIdx N ()) →₀ ℕ) :
   simp [blockWeight]
 
 theorem finrank_gradedPiece_projectiveSpace (F : Type*) [Field F] (N a : ℕ) :
-    Module.finrank F (gradedPiece (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx N))) (fun _ => a)) =
+    Module.finrank F (gradedPiece (⊥ : Ideal (MRing (ProjIdx N) F)) (fun _ => a)) =
       (a + N).choose N := by
   have hinj : Function.Injective
-      (Ideal.Quotient.mkₐ F (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx N)))).toLinearMap := by
+      (Ideal.Quotient.mkₐ F (⊥ : Ideal (MRing (ProjIdx N) F))).toLinearMap := by
     intro x y h
     simpa [Ideal.Quotient.mkₐ_eq_mk, Ideal.Quotient.eq, sub_eq_zero] using h
   unfold gradedPiece
@@ -89,7 +88,7 @@ theorem finrank_gradedPiece_projectiveSpace (F : Type*) [Field F] (N a : ℕ) :
   rw [add_comm, Nat.choose_symm_add]
 
 theorem hilbFn_projectiveSpace (F : Type*) [Field F] (N : ℕ) (m : Unit → ℤ) :
-    hilbFn (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx N))) m = binomFn N (m ()) := by
+    hilbFn (⊥ : Ideal (MRing (ProjIdx N) F)) m = binomFn N (m ()) := by
   unfold hilbFn binomFn
   by_cases hm : 0 ≤ m ()
   · rw [if_pos (fun k => hm), if_pos hm]
@@ -109,8 +108,8 @@ theorem foldr_diffStep_binomFn (j N : ℕ) :
     exact binomFn_sub N (m ())
 
 theorem intNum_projectiveSpace (F : Type*) [Field F] (N : ℕ) :
-    intNum F (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx N))) (fun _ : Fin N => (1 : Unit → ℤ)) = 1 := by
-  have hh : hilbFn (⊥ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (ProjIdx N))) = fun m => binomFn (0 + N) (m ()) := by
+    intNum F (⊥ : Ideal (MRing (ProjIdx N) F)) (fun _ : Fin N => (1 : Unit → ℤ)) = 1 := by
+  have hh : hilbFn (⊥ : Ideal (MRing (ProjIdx N) F)) = fun m => binomFn (0 + N) (m ()) := by
     funext m
     rw [zero_add, hilbFn_projectiveSpace]
   unfold intNum mixedDiff

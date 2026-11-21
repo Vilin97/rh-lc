@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsGenDegMatAct
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -136,12 +135,12 @@ theorem mem_weighted_linSubst (B : Matrix (Ix κ) (Ix κ) ℚ) {m : Unit → ℕ
   exact isHomogeneous_linSubst B hf
 
 theorem hilbFn_comap [DecidableEq κ] (B B' : Matrix (Ix κ) (Ix κ) ℚ) (h₁ : B * B' = 1) (h₂ : B' * B = 1)
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (GlobalTheory κ))) : NumbersDVR.hilbFn (P.comap (linSubst B)) = NumbersDVR.hilbFn P := by
+    (P : Ideal (MRing (GlobalTheory κ) ℚ)) : NumbersDVR.hilbFn (P.comap (linSubst B)) = NumbersDVR.hilbFn P := by
   set e := linEquiv B B' h₁ h₂
   have hc : P.comap (linSubst B) = P.comap e := by
     ext f
     rfl
-  have hIJ : P = (P.comap e).map (e : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (GlobalTheory κ) →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (GlobalTheory κ)) :=
+  have hIJ : P = (P.comap e).map (e : MRing (GlobalTheory κ) ℚ →+* MRing (GlobalTheory κ) ℚ) :=
     (Ideal.map_comap_of_surjective _ e.surjective P).symm
   set E := Ideal.quotientEquivAlg (R₁ := ℚ) (P.comap e) P e hIJ
   have hpiece : ∀ m : Unit → ℕ, (NumbersDVR.gradedPiece (P.comap e) m).map E.toLinearEquiv.toLinearMap = NumbersDVR.gradedPiece P m := by

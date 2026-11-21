@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSegreHilb
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -31,7 +30,7 @@ theorem blockWeight_unit (v : Σ _ : Unit, ∀ k, ι k) :
   simp [blockWeight]
 
 
-theorem segreMap_isMultiHomog {m : ℕ} {p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ∀ k, ι k)}
+theorem segreMap_isMultiHomog {m : ℕ} {p : MRing (fun _ : Unit => ∀ k, ι k) F}
     (hp : IsWeightedHomogeneous (blockWeight (fun _ : Unit => ∀ k, ι k)) p (fun _ => m)) :
     IsWeightedHomogeneous (blockWeight ι) (segreMap F p) (fun _ => m) := by
   classical
@@ -40,10 +39,10 @@ theorem segreMap_isMultiHomog {m : ℕ} {p : ReciprocityTheory.ChartRestriction.
   | add p q _ _ hp hq => rw [map_add (f := _)]; exact hp.add hq
   | monomial d r hr =>
     have hX : ∀ v : Σ _ : Unit, ∀ k, ι k,
-        IsWeightedHomogeneous (blockWeight ι) (∏ k, (X ⟨k, v.2 k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (fun _ => 1) := by
+        IsWeightedHomogeneous (blockWeight ι) (∏ k, (X ⟨k, v.2 k⟩ : MRing ι F)) (fun _ => 1) := by
       intro v
       have h := IsWeightedHomogeneous.prod (R := F) (w := blockWeight ι) Finset.univ
-        (fun k => (X ⟨k, v.2 k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (fun k => blockWeight ι ⟨k, v.2 k⟩)
+        (fun k => (X ⟨k, v.2 k⟩ : MRing ι F)) (fun k => blockWeight ι ⟨k, v.2 k⟩)
         (fun k _ => isWeightedHomogeneous_X _ _ _)
       convert h using 1
       funext j
@@ -102,7 +101,7 @@ theorem monomial_mem_map_segreMap (m : ℕ) :
       have h2 : ∑ i, s ⟨k, i⟩ = 1 := by simp [hs]
       omega
     obtain ⟨g, hg, hge⟩ := ih (e - s) he'
-    have hsX : monomial s (1 : F) = ∏ k, (X ⟨k, f k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) := by
+    have hsX : monomial s (1 : F) = ∏ k, (X ⟨k, f k⟩ : MRing ι F) := by
       rw [monomial_eq, C_1, one_mul, Finsupp.prod_fintype _ _ (fun _ => pow_zero _),
         Fintype.prod_sigma]
       refine Finset.prod_congr rfl fun k _ => ?_
@@ -134,19 +133,19 @@ theorem map_segreMap_weightedHomogeneousSubmodule (m : ℕ) :
       have h := Submodule.smul_mem _ r (monomial_mem_map_segreMap F m d hd)
       rwa [smul_monomial, smul_eq_mul, mul_one] at h
 
-def segreQuotMap (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) :
-    ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ∀ k, ι k) ⧸ segrePrime F q →ₐ[F] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q :=
+def segreQuotMap (q : Ideal (MRing ι F)) :
+    MRing (fun _ : Unit => ∀ k, ι k) F ⧸ segrePrime F q →ₐ[F] MRing ι F ⧸ q :=
   Ideal.quotientMapₐ (I := segrePrime F q) q (segreMap F) fun _ h => h
 
 
-theorem segreQuotMap_injective (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) : Function.Injective (segreQuotMap F q) := by
+theorem segreQuotMap_injective (q : Ideal (MRing ι F)) : Function.Injective (segreQuotMap F q) := by
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro a ha
   obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective a
   change Ideal.Quotient.mk q (segreMap F x) = 0 at ha
   exact Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mem_comap.mpr (Ideal.Quotient.eq_zero_iff_mem.mp ha))
 
-def segreGradedPieceEquiv (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m : ℕ) :
+def segreGradedPieceEquiv (q : Ideal (MRing ι F)) (m : ℕ) :
     gradedPiece (segrePrime F q) (fun _ : Unit => m) ≃ₗ[F] gradedPiece q (fun _ : K => m) :=
   have hinj : Function.Injective (segreQuotMap F q).toLinearMap := segreQuotMap_injective F q
   have hmap : (gradedPiece (segrePrime F q) (fun _ : Unit => m)).map (segreQuotMap F q).toLinearMap =

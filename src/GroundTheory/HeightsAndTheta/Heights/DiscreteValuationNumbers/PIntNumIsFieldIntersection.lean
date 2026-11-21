@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBridge
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -18,7 +17,7 @@ universe u
 
 private theorem isMultiProjPrime_of_vocab (h2 : VocabMultiHomogIdeal.Statement.{u})
     {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-    [∀ k, Fintype (ι k)] {V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}
+    [∀ k, Fintype (ι k)] {V : Ideal (MRing ι F)}
     (hV : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiProjPrime V) : IsMultiProjPrime V :=
   ⟨hV.1, (h2 F K ι V).1 hV.2.1, hV.2.2⟩
 

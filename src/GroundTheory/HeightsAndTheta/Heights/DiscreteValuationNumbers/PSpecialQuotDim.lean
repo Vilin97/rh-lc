@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -14,7 +13,7 @@ open MvPolynomial
 
 theorem SpecialQuotDim.proof : SpecialQuotDim.Statement := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ W hW
-  let π : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* MRing ι (IsLocalRing.ResidueField O) :=
+  let π : MRing ι O →+* MRing ι (IsLocalRing.ResidueField O) :=
     MvPolynomial.map (IsLocalRing.residue O)
   have hsurj : Function.Surjective π :=
     MvPolynomial.map_surjective _ IsLocalRing.residue_surjective

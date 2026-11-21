@@ -4,7 +4,6 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticInt
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.ExistsMonomialNotMem
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.MemMinimalPrimesOfMemDivSuppDivSupp
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.IsHomogeneousOfIsMultiHomogIdeal
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -57,10 +56,10 @@ theorem mem_of_ratDiv_ne_zero {V W : Ideal (MRingOver F ι)} {f g : MRingOver F 
   by_contra hc
   rw [not_or] at hc
   apply h
-  have hf : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) = 0 := by
+  have hf : divCycle V f W = 0 := by
     by_contra h'
     exact hc.1 (mem_divSupp_of_divCycle_ne_zero h')
-  have hg : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V g) W : ℤ) = 0 := by
+  have hg : divCycle V g W = 0 := by
     by_contra h'
     exact hc.2 (mem_divSupp_of_divCycle_ne_zero h')
   simp [ratDiv, hf, hg]

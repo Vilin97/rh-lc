@@ -124,8 +124,8 @@ def ChartLength.Statement : Prop :=
         Module.length (Localization.AtPrime p) (ChartLoc I t e p ⧸ LinearMap.range
             (LinearMap.mulLeft (Localization.AtPrime p)
               (algebraMap (ChartInc I t e) (ChartLoc I t e p) (chartLin I t e u)))) =
-          ∑ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support with Ideal.span {q} = incIdeal W e,
-            ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ) : ℕ) : ℕ∞)
+          ∑ W ∈ (divCycle I u).support with Ideal.span {q} = incIdeal W e,
+            ((divCycle I u W : ℕ) : ℕ∞)
 
 def LengthFiniteAlgebra.Statement : Prop :=
   ∀ (O B : Type) [CommRing O] [IsLocalRing O] [IsNoetherianRing O] [CommRing B] [Algebra O B]
@@ -141,7 +141,7 @@ def ChartMaxIdeals.Statement : Prop :=
     IsProjPrime I → IsChowForm I (e + 1) f → linForm u ∉ I → Prime q → p = Ideal.span {q} →
       ¬ q ∣ specFirst f t →
         Set.BijOn (chartIdeal I t e p)
-          {W | W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support ∧ Ideal.span {q} = incIdeal W e}
+          {W | W ∈ (divCycle I u).support ∧ Ideal.span {q} = incIdeal W e}
           {𝔓 | 𝔓.IsMaximal ∧
             algebraMap (ChartInc I t e) (ChartLoc I t e p) (chartLin I t e u) ∈ 𝔓}
 

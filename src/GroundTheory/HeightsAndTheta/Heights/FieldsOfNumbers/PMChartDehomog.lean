@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsMChart
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -30,8 +29,8 @@ theorem prod_pow_blockWeight {K : Type} [Fintype K] [DecidableEq K] {ι : K → 
 
 theorem MChartDehomog.proof : MChartDehomog.Statement := by
   intro F _ K _ _ ι P _ u hu f b hf
-  set L := FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)
-  let φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* L := (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) L).comp (Ideal.Quotient.mk P)
+  set L := FractionRing (MRing ι F ⧸ P)
+  let φ : MRing ι F →+* L := (algebraMap (MRing ι F ⧸ P) L).comp (Ideal.Quotient.mk P)
   let w : K → L := fun k => φ (X ⟨k, u k⟩)
   have hw : ∀ k, w k ≠ 0 := fun k => by
     simp only [w, φ, RingHom.comp_apply, ne_eq, IsFractionRing.to_map_eq_zero_iff,

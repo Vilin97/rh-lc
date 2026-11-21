@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PHom
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PHomLocRingMem
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LiftFormNotMemBlowUpOf
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.OfSteps
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -22,9 +21,9 @@ noncomputable section
 universe u
 
 theorem blowUpEval_ne_zero_of_not_mem {K : Type} [DecidableEq K] {ι : K → Type} {J : Type} {O : Type u}
-    [CommRing O] {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} [P.IsPrime] {u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)}
+    [CommRing O] {P : Ideal (MRing ι O)} [P.IsPrime] {u : J → MRing ι O} {F : MRing (extIdx ι J) O}
     {b : Option K → ℕ} (hF : IsMultiHomog F b) (hFb : F ∉ blowUpOf P u) :
-    algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u F) ≠ 0 := by
+    algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u F) ≠ 0 := by
   rw [Ne, map_eq_zero_iff _ (IsFractionRing.injective _ _)]
   intro h
   apply hFb
@@ -69,10 +68,10 @@ theorem BlowUpOverLocPointLoc.proof (hfin : BlowUpOverLocFinite.Statement.{u})
       have hfW' : liftForm (J := J) f ∈ W' := by rw [← hW'W] at hfW; exact hfW
       have hlf := isMultiHomog_liftForm (J := J) hf
       have hlg := isMultiHomog_liftForm (J := J) hg
-      have hz' : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)
-            (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ (liftForm f)) /
-          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)
-            (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ (liftForm g)) ∈
+      have hz' : algebraMap (MRing (extIdx ι J) O ⧸ blowUpOf P u)
+            (FractionRing (MRing (extIdx ι J) O ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ (liftForm f)) /
+          algebraMap (MRing (extIdx ι J) O ⧸ blowUpOf P u)
+            (FractionRing (MRing (extIdx ι J) O ⧸ blowUpOf P u)) (Ideal.Quotient.mk _ (liftForm g)) ∈
           homLocRing (blowUpOf P u) W' :=
         Subring.subset_closure ⟨liftMDeg b, _, _, hlf, hlg, hgW', rfl⟩
       have hnu : ¬ IsUnit (⟨_, hz'⟩ : homLocRing (blowUpOf P u) W') :=
@@ -108,21 +107,21 @@ theorem BlowUpOverLocPointLoc.proof (hfin : BlowUpOverLocFinite.Statement.{u})
     intro z hz
     obtain ⟨⟨b, s⟩, hbs⟩ := IsLocalization.surj 𝔫.primeCompl (⟨z, hz⟩ : blowUpLocRing P u W₁)
     obtain ⟨t, ht⟩ := (hunitB s s.2).exists_right_inv
-    have e₁ : z * ((s : blowUpOverLoc P W u) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) = ((b : blowUpOverLoc P W u) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) :=
+    have e₁ : z * ((s : blowUpOverLoc P W u) : FractionRing (MRing ι O ⧸ P)) = ((b : blowUpOverLoc P W u) : FractionRing (MRing ι O ⧸ P)) :=
       congrArg Subtype.val hbs
-    have e₂ : ((s : blowUpOverLoc P W u) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) * (t : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) = 1 := congrArg Subtype.val ht
-    have hzt : z = ((b : blowUpOverLoc P W u) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) * t := by
-      calc z = z * (((s : blowUpOverLoc P W u) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) * t) := by rw [e₂, mul_one]
-        _ = (z * ((s : blowUpOverLoc P W u) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P))) * t := by ring
-        _ = ((b : blowUpOverLoc P W u) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) * t := by rw [e₁]
+    have e₂ : ((s : blowUpOverLoc P W u) : FractionRing (MRing ι O ⧸ P)) * (t : FractionRing (MRing ι O ⧸ P)) = 1 := congrArg Subtype.val ht
+    have hzt : z = ((b : blowUpOverLoc P W u) : FractionRing (MRing ι O ⧸ P)) * t := by
+      calc z = z * (((s : blowUpOverLoc P W u) : FractionRing (MRing ι O ⧸ P)) * t) := by rw [e₂, mul_one]
+        _ = (z * ((s : blowUpOverLoc P W u) : FractionRing (MRing ι O ⧸ P))) * t := by ring
+        _ = ((b : blowUpOverLoc P W u) : FractionRing (MRing ι O ⧸ P)) * t := by rw [e₁]
     rw [hzt]
     exact (blowUpLocRing P u W').mul_mem (hBR b.2) t.2
 
-  have hdom : ∀ (y : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (hy₁ : y ∈ blowUpLocRing P u W₁) (hy' : y ∈ blowUpLocRing P u W'),
+  have hdom : ∀ (y : FractionRing (MRing ι O ⧸ P)) (hy₁ : y ∈ blowUpLocRing P u W₁) (hy' : y ∈ blowUpLocRing P u W'),
       IsUnit (⟨y, hy'⟩ : blowUpLocRing P u W') → IsUnit (⟨y, hy₁⟩ : blowUpLocRing P u W₁) := by
     intro y hy₁ hy' hyu
     obtain ⟨⟨b, s⟩, hbs⟩ := IsLocalization.surj 𝔫.primeCompl (⟨y, hy₁⟩ : blowUpLocRing P u W₁)
-    have e₁ : y * ((s : blowUpOverLoc P W u) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) = ((b : blowUpOverLoc P W u) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) :=
+    have e₁ : y * ((s : blowUpOverLoc P W u) : FractionRing (MRing ι O ⧸ P)) = ((b : blowUpOverLoc P W u) : FractionRing (MRing ι O ⧸ P)) :=
       congrArg Subtype.val hbs
     have hb : b ∉ 𝔫 := by
       intro hb
@@ -142,32 +141,32 @@ theorem BlowUpOverLocPointLoc.proof (hfin : BlowUpOverLocFinite.Statement.{u})
     rintro z ⟨d, F, G, hF, hG, hGW', rfl⟩
     obtain ⟨i, hi⟩ := powMonomial_not_mem hW₁p hW₁r d
     have hH := isMultiHomog_powMonomial (R := O) d i
-    have hσH : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u (powMonomial d i)) ≠ 0 :=
+    have hσH : algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u (powMonomial d i)) ≠ 0 :=
       blowUpEval_ne_zero_of_not_mem hH (fun h => hi (hW₁b h))
-    have hσG : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u G) ≠ 0 := blowUpEval_ne_zero_of_not_mem hG (fun h => hGW' (hbl h))
-    have hy₁ : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u G) / algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u (powMonomial d i)) ∈ blowUpLocRing P u W₁ :=
+    have hσG : algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u G) ≠ 0 := blowUpEval_ne_zero_of_not_mem hG (fun h => hGW' (hbl h))
+    have hy₁ : algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u G) / algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u (powMonomial d i)) ∈ blowUpLocRing P u W₁ :=
       Subring.subset_closure ⟨d, G, _, hG, hH, hi, rfl⟩
-    have hFH : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u F) / algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u (powMonomial d i)) ∈ blowUpLocRing P u W₁ :=
+    have hFH : algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u F) / algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u (powMonomial d i)) ∈ blowUpLocRing P u W₁ :=
       Subring.subset_closure ⟨d, F, _, hF, hH, hi, rfl⟩
-    have hinv : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u (powMonomial d i)) / algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u G) ∈ blowUpLocRing P u W' :=
+    have hinv : algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u (powMonomial d i)) / algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u G) ∈ blowUpLocRing P u W' :=
       Subring.subset_closure ⟨d, _, G, hH, hG, hGW', rfl⟩
     have hyu : IsUnit (⟨_, h3 hy₁⟩ : blowUpLocRing P u W') := by
       refine IsUnit.of_mul_eq_one (⟨_, hinv⟩ : blowUpLocRing P u W') (Subtype.ext ?_)
-      show algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u G) / algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u (powMonomial d i)) * (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u (powMonomial d i)) / algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u G)) = 1
+      show algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u G) / algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u (powMonomial d i)) * (algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u (powMonomial d i)) / algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u G)) = 1
       field_simp
     obtain ⟨v, hv⟩ := hdom _ hy₁ (h3 hy₁) hyu
-    have e : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u G) / algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u (powMonomial d i)) *
-        (((v⁻¹ : (blowUpLocRing P u W₁)ˣ) : blowUpLocRing P u W₁) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) = 1 := by
+    have e : algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u G) / algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u (powMonomial d i)) *
+        (((v⁻¹ : (blowUpLocRing P u W₁)ˣ) : blowUpLocRing P u W₁) : FractionRing (MRing ι O ⧸ P)) = 1 := by
       have := congrArg Subtype.val v.mul_inv
       rw [hv] at this
       exact this
-    have hz : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u F) / algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u G) = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u F) / algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u (powMonomial d i)) *
-        (((v⁻¹ : (blowUpLocRing P u W₁)ˣ) : blowUpLocRing P u W₁) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) := by
-      calc algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u F) / algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u G)
-          = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u F) / algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u G) * (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u G) / algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u (powMonomial d i)) *
-            (((v⁻¹ : (blowUpLocRing P u W₁)ˣ) : blowUpLocRing P u W₁) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P))) := by rw [e, mul_one]
-        _ = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u F) / algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u (powMonomial d i)) *
-            (((v⁻¹ : (blowUpLocRing P u W₁)ˣ) : blowUpLocRing P u W₁) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) :=
+    have hz : algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u F) / algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u G) = algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u F) / algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u (powMonomial d i)) *
+        (((v⁻¹ : (blowUpLocRing P u W₁)ˣ) : blowUpLocRing P u W₁) : FractionRing (MRing ι O ⧸ P)) := by
+      calc algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u F) / algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u G)
+          = algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u F) / algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u G) * (algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u G) / algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u (powMonomial d i)) *
+            (((v⁻¹ : (blowUpLocRing P u W₁)ˣ) : blowUpLocRing P u W₁) : FractionRing (MRing ι O ⧸ P))) := by rw [e, mul_one]
+        _ = algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u F) / algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u (powMonomial d i)) *
+            (((v⁻¹ : (blowUpLocRing P u W₁)ˣ) : blowUpLocRing P u W₁) : FractionRing (MRing ι O ⧸ P)) :=
           div_mul_div_mul_cancel_of_ne_zero _ _ _ _ hσG
     rw [hz]
     exact (blowUpLocRing P u W₁).mul_mem hFH (Subtype.property _)

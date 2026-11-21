@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.CutIdentityRightSideCongrOfSubMem
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -18,12 +17,12 @@ section Avoid
 
 variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} {R : Type*} [CommRing R]
 
-theorem exists_multiHomog_not_mem_of_isRelevant {H : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hH : H.IsPrime)
-    (hrel : IsRelevant H) (c : K → ℕ) : ∃ m : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι, IsMultiHomog m c ∧ m ∉ H := by
+theorem exists_multiHomog_not_mem_of_isRelevant {H : Ideal (MRing ι R)} (hH : H.IsPrime)
+    (hrel : IsRelevant H) (c : K → ℕ) : ∃ m : MRing ι R, IsMultiHomog m c ∧ m ∉ H := by
   choose i hi using hrel
   refine ⟨∏ k, X ⟨k, i k⟩ ^ c k, ?_, ?_⟩
   · have hprod := IsWeightedHomogeneous.prod (w := blockWeight ι) Finset.univ
-      (fun k => (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ^ c k) (fun k => c k • blockWeight ι ⟨k, i k⟩)
+      (fun k => (X ⟨k, i k⟩ : MRing ι R) ^ c k) (fun k => c k • blockWeight ι ⟨k, i k⟩)
       (fun k _ => (isWeightedHomogeneous_X R _ _).pow _)
     have hc : (∑ k, c k • blockWeight ι ⟨k, i k⟩) = c := by
       funext k'
@@ -34,9 +33,9 @@ theorem exists_multiHomog_not_mem_of_isRelevant {H : Ideal (ReciprocityTheory.Ch
     obtain ⟨k, -, hk⟩ := hH.prod_mem_iff.mp hm
     exact hi k (hH.mem_of_pow_mem _ hk)
 
-theorem exists_multiHomog_not_mem_finset [Infinite R] (c : K → ℕ) (S : Finset (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)))
+theorem exists_multiHomog_not_mem_finset [Infinite R] (c : K → ℕ) (S : Finset (Ideal (MRing ι R)))
     (hS : ∀ Q ∈ S, Q.IsPrime ∧ IsRelevant Q ∧ ∀ a : R, C a ∈ Q → a = 0) :
-    ∃ m : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι, IsMultiHomog m c ∧ ∀ Q ∈ S, m ∉ Q := by
+    ∃ m : MRing ι R, IsMultiHomog m c ∧ ∀ Q ∈ S, m ∉ Q := by
   classical
   induction S using Finset.induction_on with
   | empty => exact ⟨0, isWeightedHomogeneous_zero _ _ _, by simp⟩
@@ -85,21 +84,21 @@ theorem HorizontalAvoidingForm.proof : HorizontalAvoidingForm.Statement.{u} := b
   have : Infinite O :=
     Infinite.of_injective _ (pow_injective_of_not_isUnit hϖ.not_isUnit hϖ.ne_zero)
 
-  have hfin : (Function.support ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ)))).Finite := by
+  have hfin : (Function.support (divCycle P s)).Finite := by
     apply Set.Finite.subset (Ideal.finite_minimalPrimes_of_isNoetherianRing _ (P ⊔ Ideal.span {s}))
     intro W hW
     by_contra hmin
     apply hW
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+    unfold divCycle
     rw [dite_eq_right]
     exact fun h => hmin h.1
 
-  have hT : ∀ Q ∈ insert P (hfin.toFinset.filter fun H => (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H),
+  have hT : ∀ Q ∈ insert P (hfin.toFinset.filter fun H => (C ϖ : MRing ι O) ∉ H),
       Q.IsPrime ∧ IsRelevant Q ∧ ∀ a : O, C a ∈ Q → a = 0 := by
     intro Q hQ
     rcases Finset.mem_insert.mp hQ with rfl | hQ
     · refine ⟨hP.multiProj.isPrime, hP.multiProj.relevant, fun a ha => ?_⟩
-      have h : a ∈ Q.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := ha
+      have h : a ∈ Q.comap (C : O →+* MRing ι O) := ha
       rw [hP.noTorsion] at h
       exact (Submodule.mem_bot O).mp h
     · obtain ⟨hQs, hϖQ⟩ := Finset.mem_filter.mp hQ

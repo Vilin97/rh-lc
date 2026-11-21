@@ -4,7 +4,6 @@ public import Mathlib
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MixedFieldContraction.ContractMixedFieldStatement
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsArith
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.ProjLineRankTwoPushforwardHypotheses
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -22,7 +21,7 @@ variable {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
 def IsIsometricOn (P : Ideal (MRing ι)) (A B : HermLine ι) : Prop :=
   ∃ (f g : MRing ι) (α β : K → ℕ), IsMultiHomog f α ∧ IsMultiHomog g β ∧ f ∉ P ∧ g ∉ P ∧
-    (∀ k, (α k : ℤ) - β k = A.a k - B.a k) ∧ (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ)) = (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ)) ∧
+    (∀ k, (α k : ℤ) - β k = A.a k - B.a k) ∧ divCycle P f = divCycle P g ∧
     ∀ z ∈ mcPts P, ‖eval z (map (Int.castRingHom ℂ) f)‖ * B.h z = ‖eval z (map (Int.castRingHom ℂ) g)‖ * A.h z
 
 end Objects

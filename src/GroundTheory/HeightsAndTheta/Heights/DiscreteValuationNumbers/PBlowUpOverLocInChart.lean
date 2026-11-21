@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpOverLocFiniteCut
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PBlowUpModel
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PHomLocRingMem
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -100,7 +99,7 @@ section Lift
 
 variable {K : Type} [DecidableEq K] {ι : K → Type} {J : Type} {R : Type*} [CommRing R]
 
-theorem component_liftForm (g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (c : K → ℕ) :
+theorem component_liftForm (g : MRing ι R) (c : K → ℕ) :
     weightedHomogeneousComponent (blockWeight (extIdx ι J)) (liftMDeg c) (liftForm g) =
       liftForm (weightedHomogeneousComponent (blockWeight ι) c g) := by
   classical
@@ -135,16 +134,16 @@ end BlowUpOverLocInChart
 
 theorem BlowUpOverLocInChart.proof : BlowUpOverLocInChart.Statement.{u} := by
   intro R _ K _ _ ι J P W _ hPh hW hPW hrel N u hu j huj
-  set L := FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)
-  let ev : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* L := (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) L).comp (Ideal.Quotient.mk P)
-  have hev : ∀ g, ev g = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) L (Ideal.Quotient.mk P g) := fun _ => rfl
+  set L := FractionRing (MRing ι R ⧸ P)
+  let ev : MRing ι R →+* L := (algebraMap (MRing ι R ⧸ P) L).comp (Ideal.Quotient.mk P)
+  have hev : ∀ g, ev g = algebraMap (MRing ι R ⧸ P) L (Ideal.Quotient.mk P g) := fun _ => rfl
   have hne : ∀ g, g ∉ W → ev g ≠ 0 := fun g hg =>
     HomLocRingMem.algebraMap_mk_ne_zero P (fun h => hg (hPW h))
   obtain ⟨Cr, hCr⟩ : ∃ Cr : Subring L, Cr = Subring.closure ((homLocRing P W : Set L) ∪ Set.range fun k =>
-      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) L (Ideal.Quotient.mk P (u k)) /
-        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) L (Ideal.Quotient.mk P (u j))) := ⟨_, rfl⟩
+      algebraMap (MRing ι R ⧸ P) L (Ideal.Quotient.mk P (u k)) /
+        algebraMap (MRing ι R ⧸ P) L (Ideal.Quotient.mk P (u j))) := ⟨_, rfl⟩
   rw [← hCr]
-  have hgen : ∀ (c : K → ℕ) (x y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι), IsMultiHomog x c → IsMultiHomog y c → y ∉ W →
+  have hgen : ∀ (c : K → ℕ) (x y : MRing ι R), IsMultiHomog x c → IsMultiHomog y c → y ∉ W →
       ev x / ev y ∈ Cr := fun c x y hx hy hyW => by
     rw [hCr]
     exact Subring.subset_closure (Or.inl (Subring.subset_closure ⟨c, x, y, hx, hy, hyW, rfl⟩))
@@ -152,7 +151,7 @@ theorem BlowUpOverLocInChart.proof : BlowUpOverLocInChart.Statement.{u} := by
     rw [hCr]
     exact Subring.subset_closure (Or.inr ⟨l, rfl⟩)
   clear hCr
-  have h1W : (1 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ∉ W := fun h => hW.ne_top ((Ideal.eq_top_iff_one W).mpr h)
+  have h1W : (1 : MRing ι R) ∉ W := fun h => hW.ne_top ((Ideal.eq_top_iff_one W).mpr h)
   intro f hf
   by_contra hfC
 
@@ -202,7 +201,7 @@ theorem BlowUpOverLocInChart.proof : BlowUpOverLocInChart.Statement.{u} := by
     ⟨(ev.comp C).codRestrict Cr hcst, fun _ => rfl⟩
   obtain ⟨ψ, hψ⟩ : ∃ ψ : MvPolynomial (Σ o, extIdx ι J o) R →+* MvPolynomial (Option K) Cr,
       ψ = eval₂Hom (C.comp fC) fun v => C (aC v) * X v.1 := ⟨_, rfl⟩
-  obtain ⟨Q, hQdef⟩ : ∃ Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)),
+  obtain ⟨Q, hQdef⟩ : ∃ Q : Ideal (MRing (extIdx ι J) R),
       Q = RingHom.ker ((MvPolynomial.map (Ideal.Quotient.mk 𝔮)).comp ψ) := ⟨_, rfl⟩
   have memQ : ∀ F, F ∈ Q ↔ ∀ e : Option K →₀ ℕ,
       eval₂ fC aC (weightedHomogeneousComponent (blockWeight (extIdx ι J)) ⇑e F) ∈ 𝔮 := by
@@ -210,10 +209,10 @@ theorem BlowUpOverLocInChart.proof : BlowUpOverLocInChart.Statement.{u} := by
     simp only [hQdef, hψ, RingHom.mem_ker, RingHom.comp_apply, MvPolynomial.ext_iff, coeff_map, coeff_zero,
       Ideal.Quotient.eq_zero_iff_mem, coe_eval₂Hom, coeff_eval₂_C_mul_X_fst]
 
-  have hσ : ∀ F, eval₂ (ev.comp C) x F = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) L (blowUpEval P u F) := by
+  have hσ : ∀ F, eval₂ (ev.comp C) x F = algebraMap (MRing ι R ⧸ P) L (blowUpEval P u F) := by
     intro F
-    have h : (eval₂Hom (ev.comp C) x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) →+* L) =
-        (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) L).comp (blowUpEval P u) := by
+    have h : (eval₂Hom (ev.comp C) x : MRing (extIdx ι J) R →+* L) =
+        (algebraMap (MRing ι R ⧸ P) L).comp (blowUpEval P u) := by
       apply MvPolynomial.ringHom_ext
       · intro r
         simp [ev, blowUpEval]
@@ -221,8 +220,8 @@ theorem BlowUpOverLocInChart.proof : BlowUpOverLocInChart.Statement.{u} := by
       · rintro ⟨o, l⟩
         cases o <;> simp [x, ev, blowUpEval, blowUpAtOne, blowUpSubst]
     exact DFunLike.congr_fun h F
-  have hval : ∀ (F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) (b : Option K → ℕ), IsMultiHomog F b →
-      ((eval₂ fC aC F : Cr) : L) = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) L (blowUpEval P u F) * ∏ o, Dinv o ^ b o := by
+  have hval : ∀ (F : MRing (extIdx ι J) R) (b : Option K → ℕ), IsMultiHomog F b →
+      ((eval₂ fC aC F : Cr) : L) = algebraMap (MRing ι R ⧸ P) L (blowUpEval P u F) * ∏ o, Dinv o ^ b o := by
     intro F b hF
     have e1 : ((eval₂ fC aC F : Cr) : L) = eval₂ (ev.comp C) aL F := by
       have h := eval₂_comp_left Cr.subtype fC aC F
@@ -234,7 +233,7 @@ theorem BlowUpOverLocInChart.proof : BlowUpOverLocInChart.Statement.{u} := by
       · funext v
         simp [haC]
     rw [e1, eval₂_mul_fst_of_homog (ev.comp C) x Dinv hF, hσ]
-  have hcomp : ∀ (F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) (b : Option K → ℕ) (e : Option K →₀ ℕ), IsMultiHomog F b →
+  have hcomp : ∀ (F : MRing (extIdx ι J) R) (b : Option K → ℕ) (e : Option K →₀ ℕ), IsMultiHomog F b →
       eval₂ fC aC F ∈ 𝔮 → eval₂ fC aC (weightedHomogeneousComponent (blockWeight (extIdx ι J)) ⇑e F) ∈ 𝔮 := by
     intro F b e hF h
     rw [weightedHomogeneousComponent_of_mem ((mem_weightedHomogeneousSubmodule _ _ _ _).mpr hF)]
@@ -252,7 +251,7 @@ theorem BlowUpOverLocInChart.proof : BlowUpOverLocInChart.Statement.{u} := by
     have := hF (Finsupp.equivFunOnFinite.symm b)
     rwa [Finsupp.coe_equivFunOnFinite_symm] at this
   have hQr : IsRelevant Q := by
-    have hXnot : ∀ (o : Option K) (l : extIdx ι J o), aL ⟨o, l⟩ = 1 → (X ⟨o, l⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) ∉ Q := by
+    have hXnot : ∀ (o : Option K) (l : extIdx ι J o), aL ⟨o, l⟩ = 1 → (X ⟨o, l⟩ : MRing (extIdx ι J) R) ∉ Q := by
       intro o l h1 hmem
       rw [hQdef, RingHom.mem_ker, RingHom.comp_apply] at hmem
       simp only [hψ, coe_eval₂Hom, eval₂_X, map_mul, map_C, map_X] at hmem
@@ -302,7 +301,7 @@ theorem BlowUpOverLocInChart.proof : BlowUpOverLocInChart.Statement.{u} := by
     rw [Finsupp.coe_equivFunOnFinite_symm, component_liftForm] at hmem
     set gc := weightedHomogeneousComponent (blockWeight ι) c g with hgc_def
     have hgc : IsMultiHomog gc c := weightedHomogeneousComponent_isWeightedHomogeneous _ _
-    have hmW : (powMonomial c i : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ∉ W := fun h =>
+    have hmW : (powMonomial c i : MRing ι R) ∉ W := fun h =>
       (W.primeCompl.prod_mem fun k _ => W.primeCompl.pow_mem (hi k) _) h
     have hinv := hgen c _ _ (isMultiHomog_powMonomial c i) hgc hc
     have hv := hval _ _ (isMultiHomog_liftForm (J := J) hgc)
@@ -334,18 +333,18 @@ theorem BlowUpOverLocInChart.proof : BlowUpOverLocInChart.Statement.{u} := by
     · rintro _ ⟨b, F, G, hF, hG, hGQ, rfl⟩
       have hd : eval₂ fC aC G ∉ 𝔮 := fun h => hGQ ((memQ G).mpr fun e => hcomp G b e hG h)
       refine ⟨eval₂ fC aC G, hd, ?_⟩
-      have hG0 : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) L (blowUpEval P u G) ≠ 0 := by
+      have hG0 : algebraMap (MRing ι R ⧸ P) L (blowUpEval P u G) ≠ 0 := by
         intro h0
         apply hd
         have : eval₂ fC aC G = 0 := Subtype.ext (by rw [hval G b hG, h0, zero_mul, ZeroMemClass.coe_zero])
         rw [this]
         exact 𝔮.zero_mem
       have e2 : ((eval₂ fC aC G : Cr) : L) *
-          (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) L (blowUpEval P u F) / algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) L (blowUpEval P u G)) =
+          (algebraMap (MRing ι R ⧸ P) L (blowUpEval P u F) / algebraMap (MRing ι R ⧸ P) L (blowUpEval P u G)) =
           ((eval₂ fC aC F : Cr) : L) := by
         rw [hval G b hG, hval F b hF]
-        generalize algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) L (blowUpEval P u G) = g at hG0 ⊢
-        calc _ = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) L (blowUpEval P u F) * (∏ o, Dinv o ^ b o) * (g * g⁻¹) := by
+        generalize algebraMap (MRing ι R ⧸ P) L (blowUpEval P u G) = g at hG0 ⊢
+        calc _ = algebraMap (MRing ι R ⧸ P) L (blowUpEval P u F) * (∏ o, Dinv o ^ b o) * (g * g⁻¹) := by
               ring
           _ = _ := by rw [mul_inv_cancel₀ hG0, mul_one]
       rw [e2]

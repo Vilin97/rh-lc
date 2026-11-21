@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpFibreSemilocalCut
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -29,12 +28,12 @@ section Lemmas
 
 def BlowUpOverLocInChart.Statement : Prop :=
   ∀ (R : Type u) [CommRing R] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) (J : Type)
-    (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime], IsMultiHomogIdeal P → W.IsPrime → P ≤ W → IsRelevant W →
-    ∀ (N : K → ℕ) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι), (∀ j, IsMultiHomog (u j) N) → ∀ j, u j ∉ P →
-      blowUpOverLoc P W u ≤ Subring.closure ((homLocRing P W : Set (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P))) ∪
+    (P W : Ideal (MRing ι R)) [P.IsPrime], IsMultiHomogIdeal P → W.IsPrime → P ≤ W → IsRelevant W →
+    ∀ (N : K → ℕ) (u : J → MRing ι R), (∀ j, IsMultiHomog (u j) N) → ∀ j, u j ∉ P →
+      blowUpOverLoc P W u ≤ Subring.closure ((homLocRing P W : Set (FractionRing (MRing ι R ⧸ P))) ∪
         Set.range fun k =>
-          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P (u k)) /
-            algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P (u j)))
+          algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P (u k)) /
+            algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P (u j)))
 
 def ChartsInColon.Statement : Prop :=
   ∀ (A : Type u) [CommRing A] (L : Type u) [Field L] [Algebra A L] (J : Type) [Fintype J] (a : J → A) (f : L),

@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocNoetherian
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocQuot
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -22,15 +21,15 @@ theorem DegZeroLocNoetherian.proof (h : DegZeroLocQuot.Statement.{u}) :
   intro F _ K _ _ ι _ P hP W hW hPW
   have := hP.isPrime
   have := hW.isPrime
-  let φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →ₐ[F] FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) :=
-    (IsScalarTower.toAlgHom F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) _).comp (Ideal.Quotient.mkₐ F P)
+  let φ : MRing ι F →ₐ[F] FractionRing (MRing ι F ⧸ P) :=
+    (IsScalarTower.toAlgHom F (MRing ι F ⧸ P) _).comp (Ideal.Quotient.mkₐ F P)
   have hφ : ∀ f, f ∉ P → φ f ≠ 0 := fun f hf h0 => hf (by
     rwa [AlgHom.comp_apply, IsScalarTower.coe_toAlgHom', IsFractionRing.to_map_eq_zero_iff,
       Ideal.Quotient.mkₐ_eq_mk, Ideal.Quotient.eq_zero_iff_mem] at h0)
   choose v hv using hW.relevant
-  let e : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →ₐ[F] FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) :=
+  let e : MRing ι F →ₐ[F] FractionRing (MRing ι F ⧸ P) :=
     aeval fun x => φ (X x) / φ (X ⟨x.1, v x.1⟩)
-  let c : (K → ℕ) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι := fun b => ∏ k, (X ⟨k, v k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ b k
+  let c : (K → ℕ) → MRing ι F := fun b => ∏ k, (X ⟨k, v k⟩ : MRing ι F) ^ b k
   have hcW : ∀ b, c b ∉ W := by
     intro b
     rw [Ideal.IsPrime.prod_mem_iff]
@@ -39,7 +38,7 @@ theorem DegZeroLocNoetherian.proof (h : DegZeroLocQuot.Statement.{u}) :
   have hc : ∀ b, IsMultiHomog (c b) b := by
     intro b
     have hprod := IsWeightedHomogeneous.prod (w := blockWeight ι) Finset.univ
-      (fun k => (X ⟨k, v k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ b k) (fun k => b k • blockWeight ι ⟨k, v k⟩)
+      (fun k => (X ⟨k, v k⟩ : MRing ι F) ^ b k) (fun k => b k • blockWeight ι ⟨k, v k⟩)
       (fun k _ => (isWeightedHomogeneous_X F (blockWeight ι) _).pow (b k))
     have hb : (∑ k, b k • blockWeight ι ⟨k, v k⟩) = b := by
       funext k'
@@ -58,7 +57,7 @@ theorem DegZeroLocNoetherian.proof (h : DegZeroLocQuot.Statement.{u}) :
       have hs : φ (monomial (Finsupp.single x n) 1) = e (monomial (Finsupp.single x n) 1) *
           φ (c (Finsupp.weight (blockWeight ι) (Finsupp.single x n))) := by
         rw [Finsupp.weight_single, ← X_pow_eq_monomial, map_pow, map_pow, aeval_X]
-        have hcs : c (n • blockWeight ι x) = (X ⟨x.1, v x.1⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ n := by
+        have hcs : c (n • blockWeight ι x) = (X ⟨x.1, v x.1⟩ : MRing ι F) ^ n := by
           simp only [c, blockWeight]
           rw [Finset.prod_eq_single x.1]
           · simp
@@ -69,7 +68,7 @@ theorem DegZeroLocNoetherian.proof (h : DegZeroLocQuot.Statement.{u}) :
       rw [← mul_one (1 : F), ← monomial_mul, map_mul, map_mul, ih, map_add (f := _), hcadd, map_mul, hs]
       ring
 
-  have hhom : ∀ (b : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog f b → φ f = e f * φ (c b) := by
+  have hhom : ∀ (b : K → ℕ) (f : MRing ι F), IsMultiHomog f b → φ f = e f * φ (c b) := by
     intro b f hf
     conv_lhs => rw [f.as_sum]
     conv_rhs => rw [f.as_sum]
@@ -100,7 +99,7 @@ theorem DegZeroLocNoetherian.proof (h : DegZeroLocQuot.Statement.{u}) :
       (fun W' hW' => (Set.mem_singleton_iff.mp hW') ▸ hW.isPrime) z.1 z.2
     have hgW' : g ∉ W := hgW W rfl
     have hcb : φ (c b) ≠ 0 := hφ _ fun hm => hcW b (hPW hm)
-    have hz' : (z : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) = φ f / φ g := hz
+    have hz' : (z : FractionRing (MRing ι F ⧸ P)) = φ f / φ g := hz
     have heg : e g ≠ 0 := by
       intro h0
       apply hφ g hgP
@@ -115,7 +114,7 @@ theorem DegZeroLocNoetherian.proof (h : DegZeroLocQuot.Statement.{u}) :
     have hunit : (⟨e g, g, rfl⟩ : e.range) ∈ M :=
       isUnit_iff_exists_inv.mpr ⟨⟨(e g)⁻¹, hinv⟩, Subtype.ext (mul_inv_cancel₀ heg)⟩
     refine ⟨(⟨e f, f, rfl⟩, ⟨⟨e g, g, rfl⟩, hunit⟩), Subtype.ext ?_⟩
-    change (z : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) * e g = e f
+    change (z : FractionRing (MRing ι F ⧸ P)) * e g = e f
     rw [hz', hhom b f hf, hhom b g hg]
     field_simp
   exact IsLocalization.isNoetherianRing M _ inferInstance

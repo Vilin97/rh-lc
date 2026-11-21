@@ -14,7 +14,6 @@ public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.RootMode
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.RootPowerSumMixedExpansionStatement
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.PowerSumTermDiscreteValuationStatement
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.IsometricFamilyIntersectionEqStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -24,7 +23,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo (HermLine IsSmoothHerm IsArithVar 
 namespace GlobalTheory.CompanionTheory.Ar.Num.Prop6Model
 
 theorem arNum_mixDiff {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
-    (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) {σ : Type}
+    (I : Ideal (MRing ι ℤ) → (n : ℕ) → (Fin n → HermLine ι) → ℝ) (P : Ideal (MRing ι ℤ)) {σ : Type}
     (A A' : σ → HermLine ι) (F : MvPolynomial σ ℝ) :
     arNum I P (Sum.elim A A') (mixDiff F) = arNum I P A F - arNum I P A' F := by
   obtain ⟨hadd, hsmul, -, -, hren⟩ := arNum_linear_arList_symm.1 K ι I P (σ ⊕ σ) (Sum.elim A A')

@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PMin
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.PointIdealComapPrimeLiftStatement
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.LocalizationModelOverPlaceStatement
 public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.ResidueModelAtPrimeStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,29 +16,29 @@ open ReciprocityTheory.ChartRestriction.G.Geo (HermLine IsSmoothHerm IsArithVar 
 namespace GlobalTheory.CompanionTheory.Ar.Num
 
 theorem mem_minimalPrimes_map_iff_comap {K : Type} {ι : K → Type} {R R' : Type} [CommRing R] [CommRing R']
-    [Algebra R R'] (Mo : Submonoid R) [IsLocalization Mo R'] (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R' ι)) :
-    W' ∈ (J.map (MvPolynomial.map (algebraMap R R') : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R' ι)).minimalPrimes ↔
-      W'.comap (MvPolynomial.map (algebraMap R R') : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R' ι) ∈ J.minimalPrimes := by
+    [Algebra R R'] (Mo : Submonoid R) [IsLocalization Mo R'] (J : Ideal (MRing ι R)) (W' : Ideal (MRing ι R')) :
+    W' ∈ (J.map (MvPolynomial.map (algebraMap R R') : MRing ι R →+* MRing ι R')).minimalPrimes ↔
+      W'.comap (MvPolynomial.map (algebraMap R R') : MRing ι R →+* MRing ι R') ∈ J.minimalPrimes := by
   letI := MvPolynomial.algebraMvPolynomial (σ := (Σ k, ι k)) (R := R) (S := R')
-  haveI : IsLocalization (Mo.map (C (σ := (Σ k, ι k)) (R := R))) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R' ι) :=
+  haveI : IsLocalization (Mo.map (C (σ := (Σ k, ι k)) (R := R))) (MRing ι R') :=
     MvPolynomial.isLocalization Mo R'
-  have h := IsLocalization.minimalPrimes_map (Mo.map (C (σ := (Σ k, ι k)) (R := R))) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R' ι) J
-  have e : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R' ι) = MvPolynomial.map (algebraMap R R') := rfl
+  have h := IsLocalization.minimalPrimes_map (Mo.map (C (σ := (Σ k, ι k)) (R := R))) (MRing ι R') J
+  have e : algebraMap (MRing ι R) (MRing ι R') = MvPolynomial.map (algebraMap R R') := rfl
   rw [e] at h
   rw [h]
   rfl
 
 theorem mem_fibre_minimalPrimes_iff {K : Type} {ι : K → Type} {A O : Type} [CommRing A] [CommRing O]
     [IsLocalRing O] [Algebra A O] (m : Ideal A) [m.IsPrime] [IsLocalization.AtPrime O m]
-    (Pa : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι)) (W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
-    W' ∈ (Pa.map (MvPolynomial.map (algebraMap A O) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ⊔
-        (IsLocalRing.maximalIdeal O).map (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)).minimalPrimes ↔
-      W'.comap (MvPolynomial.map (algebraMap A O) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈
-        (Pa ⊔ m.map (C : A →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι)).minimalPrimes := by
-  have e : Pa.map (MvPolynomial.map (algebraMap A O) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ⊔
-      (IsLocalRing.maximalIdeal O).map (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) =
-      (Pa ⊔ m.map (C : A →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι)).map
-        (MvPolynomial.map (algebraMap A O) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := by
+    (Pa : Ideal (MRing ι A)) (W' : Ideal (MRing ι O)) :
+    W' ∈ (Pa.map (MvPolynomial.map (algebraMap A O) : MRing ι A →+* MRing ι O) ⊔
+        (IsLocalRing.maximalIdeal O).map (C : O →+* MRing ι O)).minimalPrimes ↔
+      W'.comap (MvPolynomial.map (algebraMap A O) : MRing ι A →+* MRing ι O) ∈
+        (Pa ⊔ m.map (C : A →+* MRing ι A)).minimalPrimes := by
+  have e : Pa.map (MvPolynomial.map (algebraMap A O) : MRing ι A →+* MRing ι O) ⊔
+      (IsLocalRing.maximalIdeal O).map (C : O →+* MRing ι O) =
+      (Pa ⊔ m.map (C : A →+* MRing ι A)).map
+        (MvPolynomial.map (algebraMap A O) : MRing ι A →+* MRing ι O) := by
     rw [Ideal.map_sup, Ideal.map_map, ← IsLocalization.AtPrime.map_eq_maximalIdeal m O, Ideal.map_map,
       MvPolynomial.map_comp_C]
   rw [e]
@@ -57,7 +56,7 @@ theorem mem_minimalPrimes_of_unique_contraction {S T : Type} [CommRing S] [CommR
   exact (hu Q hQ.1 (hP.trans hQ.2) (le_antisymm h1 h2)).ge
 
 theorem isMultiHomogIdeal_map_C {K : Type} [DecidableEq K] {ι : K → Type} {R : Type} [CommRing R] (I : Ideal R) :
-    IsMultiHomogIdeal (I.map (C : R →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) := by
+    IsMultiHomogIdeal (I.map (C : R →+* MRing ι R)) := by
   classical
   intro f hf b
   rw [MvPolynomial.mem_map_C_iff] at hf ⊢
@@ -107,13 +106,13 @@ theorem pointConeMap_monomial_isWeightedHomogeneous {K : Type} [DecidableEq K] {
   exact ((isWeightedHomogeneous_X (R := Φ) (coneWt K) p.1).C_mul (z p)).pow (d p)
 
 theorem pointConeMap_component {K : Type} [DecidableEq K] {ι : K → Type} {O : Type} [CommRing O] {Φ : Type}
-    [Field Φ] [Algebra O Φ] (z : (Σ k, ι k) → Φ) (b : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :
+    [Field Φ] [Algebra O Φ] (z : (Σ k, ι k) → Φ) (b : K → ℕ) (f : MRing ι O) :
     weightedHomogeneousComponent (coneWt K) b (pointConeMap O z f) =
       pointConeMap O z (weightedHomogeneousComponent (blockWeight ι) b f) := by
   induction f using MvPolynomial.induction_on' with
   | monomial d a =>
     have h1 := pointConeMap_monomial_isWeightedHomogeneous (K := K) (O := O) z d a
-    have h2 : IsWeightedHomogeneous (blockWeight ι) (monomial d a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
+    have h2 : IsWeightedHomogeneous (blockWeight ι) (monomial d a : MRing ι O)
         (Finsupp.weight (blockWeight ι) d) := isWeightedHomogeneous_monomial _ _ _ rfl
     by_cases h : b = Finsupp.weight (blockWeight ι) d
     · subst h
@@ -123,7 +122,7 @@ theorem pointConeMap_component {K : Type} [DecidableEq K] {ι : K → Type} {O :
 
 theorem isMultiHomogIdeal_pointIdeal_sup_map_C {K : Type} [DecidableEq K] {ι : K → Type} {O : Type} [CommRing O]
     {Φ : Type} [Field Φ] [Algebra O Φ] (z : (Σ k, ι k) → Φ) (I : Ideal O) :
-    IsMultiHomogIdeal (pointIdeal O z ⊔ I.map (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) := by
+    IsMultiHomogIdeal (pointIdeal O z ⊔ I.map (C : O →+* MRing ι O)) := by
   intro f hf b
   obtain ⟨u, hu, v, hv, rfl⟩ := Submodule.mem_sup.mp hf
   rw [map_add (f := _)]
@@ -134,21 +133,21 @@ theorem isMultiHomogIdeal_pointIdeal_sup_map_C {K : Type} [DecidableEq K] {ι : 
   exact h.symm
 
 theorem isPrime_map_and_comap_map {K : Type} {ι : K → Type} {A O : Type} [CommRing A] [CommRing O]
-    [Algebra A O] (Mo : Submonoid A) [IsLocalization Mo O] {Wa : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι)} (hWa : Wa.IsPrime)
-    (hd : ∀ s ∈ Mo, (C s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι) ∉ Wa) :
-    (Wa.map (MvPolynomial.map (algebraMap A O) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)).IsPrime ∧
-      (Wa.map (MvPolynomial.map (algebraMap A O) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)).comap
-        (MvPolynomial.map (algebraMap A O) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = Wa := by
+    [Algebra A O] (Mo : Submonoid A) [IsLocalization Mo O] {Wa : Ideal (MRing ι A)} (hWa : Wa.IsPrime)
+    (hd : ∀ s ∈ Mo, (C s : MRing ι A) ∉ Wa) :
+    (Wa.map (MvPolynomial.map (algebraMap A O) : MRing ι A →+* MRing ι O)).IsPrime ∧
+      (Wa.map (MvPolynomial.map (algebraMap A O) : MRing ι A →+* MRing ι O)).comap
+        (MvPolynomial.map (algebraMap A O) : MRing ι A →+* MRing ι O) = Wa := by
   letI := MvPolynomial.algebraMvPolynomial (σ := (Σ k, ι k)) (R := A) (S := O)
-  haveI : IsLocalization (Mo.map (C (σ := (Σ k, ι k)) (R := A))) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :=
+  haveI : IsLocalization (Mo.map (C (σ := (Σ k, ι k)) (R := A))) (MRing ι O) :=
     MvPolynomial.isLocalization Mo O
-  have hdisj : Disjoint ((Mo.map (C (σ := (Σ k, ι k)) (R := A)) : Submonoid (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι)) : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι))
-      (Wa : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι)) := by
+  have hdisj : Disjoint ((Mo.map (C (σ := (Σ k, ι k)) (R := A)) : Submonoid (MRing ι A)) : Set (MRing ι A))
+      (Wa : Set (MRing ι A)) := by
     refine Set.disjoint_left.2 ?_
     rintro _ ⟨s, hs, rfl⟩ hmem
     exact hd s hs hmem
   exact ⟨IsLocalization.isPrime_of_isPrime_disjoint (Mo.map (C (σ := (Σ k, ι k)) (R := A))) _ Wa hWa hdisj,
-    IsLocalization.under_map_of_isPrime_disjoint (Mo.map (C (σ := (Σ k, ι k)) (R := A))) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) hWa hdisj⟩
+    IsLocalization.under_map_of_isPrime_disjoint (Mo.map (C (σ := (Σ k, ι k)) (R := A))) (MRing ι O) hWa hdisj⟩
 
 theorem exists_card_quotient_eq_pow {A : Type} [CommRing A] [Module.Finite ℤ A] (p : ℕ) [Fact p.Prime]
     (m : Ideal A) [m.IsMaximal] (hpm : (p : A) ∈ m) : ∃ fd : ℕ, Nat.card (A ⧸ m) = p ^ fd := by
@@ -173,10 +172,10 @@ theorem intNumL_of_isFibreComp {K : Type} [Fintype K] [DecidableEq K] {ι : K �
     [Module.Finite ℤ A] (hconst : HasConstants ℤ A y) (p : ℕ) [Fact p.Prime] (m : Ideal A) [m.IsPrime]
     (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Algebra A O] [IsLocalization.AtPrime O m]
     [Algebra O Ω] [IsScalarTower A O Ω] (hpm : (p : A) ∈ m) (fd : ℕ) (hcard : Nat.card (A ⧸ m) = p ^ fd)
-    {W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hW : IsFibreComp (pointIdeal O y) W') (l : List (K → ℤ)) :
+    {W' : Ideal (MRing ι O)} (hW : IsFibreComp (pointIdeal O y) W') (l : List (K → ℤ)) :
     intNumL (ZMod p) (extTo (ZMod p) (W'.comap (MvPolynomial.map (Int.castRingHom O)))) l =
       (fd : ℤ) * vNumL W' l := by
-  have hJ : IsMultiHomogIdeal (pointIdeal O y ⊔ (IsLocalRing.maximalIdeal O).map (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :=
+  have hJ : IsMultiHomogIdeal (pointIdeal O y ⊔ (IsLocalRing.maximalIdeal O).map (C : O →+* MRing ι O)) :=
     isMultiHomogIdeal_pointIdeal_sup_map_C y _
   have hWh : IsMultiHomogIdeal W' := MinimalPrimeMultiHomog.proof.{0} O K ι _ W' hJ hW.1
   exact GlobalTheory.T.residue_model_at_prime K ι Ω y A hconst p m O hpm fd hcard W' hW.1.1.1 hWh (le_sup_left.trans hW.1.1.2)
@@ -184,7 +183,7 @@ theorem intNumL_of_isFibreComp {K : Type} [Fintype K] [DecidableEq K] {ι : K �
 
 theorem classNum_eq_zero_of_vNumL_eq {K : Type} [DecidableEq K] {ι : K → Type} {O O' : Type} [CommRing O]
     [IsDomain O] [IsDiscreteValuationRing O] [CommRing O'] [IsDomain O'] [IsDiscreteValuationRing O']
-    {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O' ι)} (c : ℤ) (h : ∀ l, vNumL W l = c * vNumL W' l)
+    {W : Ideal (MRing ι O)} {W' : Ideal (MRing ι O')} (c : ℤ) (h : ∀ l, vNumL W l = c * vNumL W' l)
     {σ : Type} (cls : σ → K → ℤ) (H : MvPolynomial σ ℤ) (Q : List (K → ℤ)) (h0 : classNum cls H Q W' = 0) :
     classNum cls H Q W = 0 := by
   have e : classNum cls H Q W = c * classNum cls H Q W' := by
@@ -207,7 +206,7 @@ theorem powerSumsVanish_extTo_of_atPlacesOver : ∀ (K : Type) [Fintype K] [Deci
   have hcastZ : algebraMap ℤ (ZP p) = Int.castRingHom (ZP p) := RingHom.ext_int _ _
   have hP0 : pointIdeal ℤ y = mCoordIdeal y := by
     have h := (GlobalTheory.T.point_ideal_comap_prime_lift K ι Ω y ℤ (fun c _ a => Subalgebra.algebraMap_mem _ a)).1
-    have e : (MvPolynomial.map (Int.castRingHom ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) = RingHom.id _ := by
+    have e : (MvPolynomial.map (Int.castRingHom ℤ) : MRing ι ℤ →+* MRing ι ℤ) = RingHom.id _ := by
       rw [show Int.castRingHom ℤ = RingHom.id ℤ from RingHom.ext_int _ _]
       exact RingHom.ext fun f => MvPolynomial.map_id f
     rw [e, Ideal.comap_id] at h
@@ -223,7 +222,7 @@ theorem powerSumsVanish_extTo_of_atPlacesOver : ∀ (K : Type) [Fintype K] [Deci
   rw [hZ'] at hWmin
   have hW0min := (mem_fibre_minimalPrimes_iff (Ideal.span {((p : ℕ) : ℤ)}) _ W).1 hWmin
   rw [hcastZ] at hW0min
-  obtain ⟨W₀, hW₀⟩ : ∃ W₀, W₀ = W.comap (MvPolynomial.map (Int.castRingHom (ZP p)) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι →+* MRing ι (ZP p)) := ⟨_, rfl⟩
+  obtain ⟨W₀, hW₀⟩ : ∃ W₀, W₀ = W.comap (MvPolynomial.map (Int.castRingHom (ZP p)) : MRing ι ℤ →+* MRing ι (ZP p)) := ⟨_, rfl⟩
   rw [← hW₀] at hW0min
   have hW0p : W₀.IsPrime := hW0min.1.1
   have hW0rel : IsRelevant W₀ := by
@@ -235,11 +234,11 @@ theorem powerSumsVanish_extTo_of_atPlacesOver : ∀ (K : Type) [Fintype K] [Deci
   have hle : mCoordIdeal y ≤ W₀ := le_sup_left.trans hW0min.1.2
   obtain ⟨hcomp, hex, -⟩ := GlobalTheory.T.point_ideal_comap_prime_lift K ι Ω y A hconst
   obtain ⟨Wa, ⟨hWap, hWapt, hWac⟩, hu⟩ := hex W₀ hW0p hW0rel hle
-  obtain ⟨m, hm⟩ : ∃ m, m = Wa.comap (C : A →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι) := ⟨_, rfl⟩
+  obtain ⟨m, hm⟩ : ∃ m, m = Wa.comap (C : A →+* MRing ι A) := ⟨_, rfl⟩
   haveI hmp : m.IsPrime := hm ▸ Ideal.comap_isPrime _ _
-  have hCp : (C ((p : ℕ) : ℤ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι) ∈ W₀ :=
+  have hCp : (C ((p : ℕ) : ℤ) : MRing ι ℤ) ∈ W₀ :=
     (le_sup_right.trans hW0min.1.2) (Ideal.mem_map_of_mem _ (Ideal.mem_span_singleton_self _))
-  have hmapC : ∀ n : ℤ, (MvPolynomial.map (Int.castRingHom A) (C n : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι)) = C (n : A) := by
+  have hmapC : ∀ n : ℤ, (MvPolynomial.map (Int.castRingHom A) (C n : MRing ι ℤ)) = C (n : A) := by
     intro n
     rw [map_C]
     rfl
@@ -261,23 +260,23 @@ theorem powerSumsVanish_extTo_of_atPlacesOver : ∀ (K : Type) [Fintype K] [Deci
     IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain A hmne (Localization.AtPrime m)
   obtain ⟨algO, towO⟩ := exists_algebra_of_injective A Ω hinj m (Localization.AtPrime m)
   have hO := (GlobalTheory.T.localization_model_over_place K ι Ω y A hinj hconst D harith m (Localization.AtPrime m)).1
-  have hWaMin : Wa ∈ (pointIdeal A y ⊔ m.map (C : A →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι)).minimalPrimes := by
+  have hWaMin : Wa ∈ (pointIdeal A y ⊔ m.map (C : A →+* MRing ι A)).minimalPrimes := by
     refine mem_minimalPrimes_of_unique_contraction
-      (MvPolynomial.map (Int.castRingHom A) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι) hW0min hWap
+      (MvPolynomial.map (Int.castRingHom A) : MRing ι ℤ →+* MRing ι A) hW0min hWap
       (sup_le hWapt (Ideal.map_le_iff_le_comap.2 hm.le)) hWac ?_ le_sup_left
       (fun Q hQ hPQ hc => hu Q ⟨hQ, hPQ, hc⟩)
     refine sup_le (hcomp.ge.trans (Ideal.comap_mono le_sup_left)) (Ideal.map_le_iff_le_comap.2 ?_)
     rw [Ideal.span_singleton_le_iff_mem, Ideal.mem_comap, Ideal.mem_comap, hmapC]
     refine Ideal.mem_sup_right ?_
-    have h := Ideal.mem_map_of_mem (C : A →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι) hpm
+    have h := Ideal.mem_map_of_mem (C : A →+* MRing ι A) hpm
     simpa using h
   obtain ⟨hW'p, hW'c⟩ := isPrime_map_and_comap_map (O := Localization.AtPrime m) m.primeCompl hWap
     (fun s hs h => hs (show s ∈ m by rw [hm, Ideal.mem_comap]; exact h))
   obtain ⟨W', hW'⟩ : ∃ W', W' = Wa.map (MvPolynomial.map (algebraMap A (Localization.AtPrime m)) :
-      ReciprocityTheory.ChartRestriction.G.Geo.MRingOver A ι →+* MRing ι (Localization.AtPrime m)) := ⟨_, rfl⟩
+      MRing ι A →+* MRing ι (Localization.AtPrime m)) := ⟨_, rfl⟩
   rw [← hW'] at hW'p hW'c
   have hcomp' : (MvPolynomial.map (Int.castRingHom (Localization.AtPrime m)) :
-      ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℤ ι →+* MRing ι (Localization.AtPrime m)) =
+      MRing ι ℤ →+* MRing ι (Localization.AtPrime m)) =
       (MvPolynomial.map (algebraMap A (Localization.AtPrime m))).comp
         (MvPolynomial.map (Int.castRingHom A)) := by
     refine MvPolynomial.ringHom_ext (fun r => ?_) (fun i => ?_) <;> simp

@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagBundleForms
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagBundleSectionFormsTools
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -49,7 +48,7 @@ theorem FlagBundleSectionForms.proof : FlagBundleSectionForms.Statement := by
     refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun j _ => ?_
     simp only [chartPow, Pi.neg_apply]
     ring
-  obtain ⟨n, U, hUh, hUe⟩ : ∃ (n : ℕ) (U : Fin M → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)),
+  obtain ⟨n, U, hUh, hUe⟩ : ∃ (n : ℕ) (U : Fin M → MRing (bundleIdx ι M) F),
       (∀ l, IsMultiHomog (U l) (liftNat fun _ => n)) ∧
       ∀ l, eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ (truncCoord t ((i : ℕ) + 1)))
         (U l) = algebraMap Ω Φ (u l * segreVec y c ^ n) := by
@@ -80,8 +79,8 @@ theorem FlagBundleSectionForms.proof : FlagBundleSectionForms.Statement := by
     have h4 := neg_abs_le (b i k)
     simp only [Pi.add_apply, Pi.neg_apply, α, β]
     omega
-  let f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) := ∑ l, U l * chartMono M c α * X ⟨none, l⟩
-  let g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) := chartMono M c β
+  let f : MRing (bundleIdx ι M) F := ∑ l, U l * chartMono M c α * X ⟨none, l⟩
+  let g : MRing (bundleIdx ι M) F := chartMono M c β
   have hg : eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ (truncCoord t ((i : ℕ) + 1))) g
       = algebraMap Ω Φ (∏ k, y ⟨k, c k⟩ ^ β k) := eval_chartMono y w φ _ c β
   have hp : algebraMap Ω Φ (chartPow y c (b i)) ≠ 0 :=

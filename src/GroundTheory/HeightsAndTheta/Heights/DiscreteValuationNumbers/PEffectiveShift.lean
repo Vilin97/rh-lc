@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -16,13 +15,13 @@ theorem EffectiveShift.proof : EffectiveShift.Statement := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P e hP b f g hD
   classical
   have hPr : P.IsPrime := hP.multiProj.isPrime
-  have hCP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
+  have hCP : (C ϖ : MRing ι O) ∉ P := by
     intro h
-    have h' : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
+    have h' : ϖ ∈ P.comap (C : O →+* MRing ι O) := h
     rw [hP.noTorsion, Ideal.mem_bot] at h'
     exact hϖ.ne_zero h'
 
-  let J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :=
+  let J : Ideal (MRing ι O) :=
     { carrier := {u | ∃ v, u * f - v * g ∈ P}
       add_mem' := by
         rintro a c ⟨v, hv⟩ ⟨w, hw⟩
@@ -34,14 +33,14 @@ theorem EffectiveShift.proof : EffectiveShift.Statement := by
   have hJ : ∀ u, u ∈ J ↔ ∃ v, u * f - v * g ∈ P := fun u => Iff.rfl
   have hPJ : P ≤ J := fun p hp => (hJ p).2 ⟨0, by simpa using P.mul_mem_right f hp⟩
 
-  let 𝔞 : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :=
-    ∏ k : K, Ideal.span (Set.range fun i : ι k => (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι))
-  let I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := Ideal.span {(C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} * 𝔞
+  let 𝔞 : Ideal (MRing ι O) :=
+    ∏ k : K, Ideal.span (Set.range fun i : ι k => (X ⟨k, i⟩ : MRing ι O))
+  let I : Ideal (MRing ι O) := Ideal.span {(C ϖ : MRing ι O)} * 𝔞
   have hIJ : I ≤ J.radical := by
     rw [Ideal.radical_eq_sInf]
     refine le_sInf fun W hW => ?_
     obtain ⟨hJW, hWp⟩ := hW
-    by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W
+    by_cases hϖW : (C ϖ : MRing ι O) ∈ W
     · exact Ideal.mul_le_left.trans ((Ideal.span_singleton_le_iff_mem W).2 hϖW)
     · have hrel : ¬ IsRelevant W := by
         intro hrel
@@ -55,7 +54,7 @@ theorem EffectiveShift.proof : EffectiveShift.Statement := by
       rintro _ ⟨i, rfl⟩
       exact hk i
   obtain ⟨N, hN⟩ := Ideal.exists_pow_le_of_le_radical_of_fg hIJ (IsNoetherian.noetherian I)
-  have hCN : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ N ∉ P := fun h => hCP (hPr.mem_of_pow_mem N h)
+  have hCN : (C ϖ : MRing ι O) ^ N ∉ P := fun h => hCP (hPr.mem_of_pow_mem N h)
   refine ⟨N, ?_, ?_⟩
   · obtain ⟨bf, bg, hf, hg, hb⟩ := hD.degrees
     refine IsVerticalDivisor.of_unit_off_special ⟨bf, bg, ?_, hg, hb⟩ ?_ hD.den_not_mem ?_
@@ -70,16 +69,16 @@ theorem EffectiveShift.proof : EffectiveShift.Statement := by
       · convert P.mul_mem_left (C ϖ ^ N) huv using 1; ring
   · intro W hW hPW hrel
     choose i hi using hrel
-    have hz : (∏ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) ∉ W := by
+    have hz : (∏ k, (X ⟨k, i k⟩ : MRing ι O)) ∉ W := by
       rw [hW.prod_mem_iff]
       rintro ⟨k, -, hk⟩
       exact hi k hk
-    have hz𝔞 : (∏ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) ∈ 𝔞 :=
+    have hz𝔞 : (∏ k, (X ⟨k, i k⟩ : MRing ι O)) ∈ 𝔞 :=
       Ideal.prod_mem_prod fun k _ => Ideal.subset_span ⟨i k, rfl⟩
-    have hmem : (C ϖ * ∏ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) ^ N ∈ J :=
+    have hmem : (C ϖ * ∏ k, (X ⟨k, i k⟩ : MRing ι O)) ^ N ∈ J :=
       hN (Ideal.pow_mem_pow (Ideal.mul_mem_mul (Ideal.mem_span_singleton_self _) hz𝔞) N)
     obtain ⟨v, hv⟩ := (hJ _).1 hmem
-    refine ⟨(∏ k, (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) ^ N, v, fun h => hz (hW.mem_of_pow_mem N h), ?_⟩
+    refine ⟨(∏ k, (X ⟨k, i k⟩ : MRing ι O)) ^ N, v, fun h => hz (hW.mem_of_pow_mem N h), ?_⟩
     convert hv using 1
     ring
 

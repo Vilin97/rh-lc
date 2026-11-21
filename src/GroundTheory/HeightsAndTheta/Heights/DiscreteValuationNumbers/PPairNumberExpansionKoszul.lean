@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagIndependenceAlgebra
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PMixedDiffLinear
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.OfSteps
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -207,12 +206,12 @@ section Numbers
 variable {K : Type*} [DecidableEq K] {ι : K → Type*}
   {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-theorem vNumL_eq_foldr (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (l : List (K → ℤ)) :
+theorem vNumL_eq_foldr (W : Ideal (MRing ι O)) (l : List (K → ℤ)) :
     vNumL W l = eventualValue (l.foldr diffStep (hilbFn (specialIdeal W))) := by
   unfold vNumL vNum intNum mixedDiff
   rw [List.ofFn_get]
 
-theorem vNum_vecCons_eq (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) {k : ℕ} (b : K → ℤ) (L : Fin k → K → ℤ) :
+theorem vNum_vecCons_eq (W : Ideal (MRing ι O)) {k : ℕ} (b : K → ℤ) (L : Fin k → K → ℤ) :
     vNum W (Matrix.vecCons b L) = vNumL W (b :: List.ofFn L) := by
   rw [vNumL_eq_foldr]
   unfold vNum intNum mixedDiff
@@ -230,7 +229,7 @@ theorem foldr_diffStep_perm {l₁ l₂ : List (K → ℤ)} (hl : l₁.Perm l₂)
     exact diffStep_comm' _ _ _
   | trans _ _ ih₁ ih₂ => exact ih₁.trans ih₂
 
-theorem vNumL_perm (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) {l₁ l₂ : List (K → ℤ)} (hl : l₁.Perm l₂) :
+theorem vNumL_perm (W : Ideal (MRing ι O)) {l₁ l₂ : List (K → ℤ)} (hl : l₁.Perm l₂) :
     vNumL W l₁ = vNumL W l₂ := by
   rw [vNumL_eq_foldr, vNumL_eq_foldr, foldr_diffStep_perm hl]
 
@@ -254,7 +253,7 @@ theorem classList_length_of_mem_support {σ : Type*} (cls : σ → K → ℤ) {H
   exact h
 
 theorem classNum_X_mul {σ : Type*} [DecidableEq σ] (cls : σ → K → ℤ) (s : σ) (H : MvPolynomial σ ℤ)
-    (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     classNum cls (X s * H) Q W =
       ∑ μ ∈ H.support, H.coeff μ * vNumL W (cls s :: (classList cls μ ++ Q)) := by
   conv_lhs => rw [H.as_sum, Finset.mul_sum]
@@ -273,34 +272,34 @@ section Additivity
 
 theorem vNumL_add_of_ratDiv_ne_zero {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     {ϖ : O} (hϖ : Irreducible ϖ) {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-    [∀ k, Fintype (ι k)] {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {e : ℕ} (hP : IsModelOver P (e + 1))
-    {b : K → ℤ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hD : IsVerticalDivisor P ϖ b f g) {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}
+    [∀ k, Fintype (ι k)] {P : Ideal (MRing ι O)} {e : ℕ} (hP : IsModelOver P (e + 1))
+    {b : K → ℤ} {f g : MRing ι O} (hD : IsVerticalDivisor P ϖ b f g) {W : Ideal (MRing ι O)}
     (hW : ratDiv P f g W ≠ 0) (a₁ a₂ : K → ℤ) (l : List (K → ℤ)) (hl : e ≤ l.length) :
     vNumL W ((a₁ + a₂) :: l) = vNumL W (a₁ :: l) + vNumL W (a₂ :: l) := by
   obtain ⟨bf, bg, hbf, hbg, -⟩ := hD.degrees
   have hPmh : IsMultiHomogIdeal P := hP.multiProj.multiHomog
   have : P.IsPrime := hP.multiProj.isPrime
-  have hmh : ∀ (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (c : K → ℕ), IsMultiHomog h c → ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P h) W : ℤ) ≠ 0 →
+  have hmh : ∀ (h : MRing ι O) (c : K → ℕ), IsMultiHomog h c → divCycle P h W ≠ 0 →
       IsMultiHomogIdeal W ∧ W.IsPrime ∧ P ≤ W := by
     intro h c hc hW'
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW'
+    unfold divCycle at hW'
     split_ifs at hW' with hW''
     · exact ⟨MinimalPrimeMultiHomog.full O K ι _ W (SupSpanMultiHomog.full O K ι P h c hPmh hc)
         hW''.1, hW''.1.1.1, le_sup_left.trans hW''.1.1.2⟩
     · exact absurd rfl hW'
-  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
+  have hϖP : (C ϖ : MRing ι O) ∉ P := by
     intro h
-    have h' : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
+    have h' : ϖ ∈ P.comap (C : O →+* MRing ι O) := h
     rw [hP.noTorsion, Ideal.mem_bot] at h'
     exact hϖ.ne_zero h'
-  have hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W := hD.vertical W hW
+  have hϖW : (C ϖ : MRing ι O) ∈ W := hD.vertical W hW
   obtain ⟨hWm, hWp, hPW⟩ : IsMultiHomogIdeal W ∧ W.IsPrime ∧ P ≤ W := by
-    by_cases hWf : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = 0
+    by_cases hWf : divCycle P f W = 0
     · exact hmh g bg hbg (fun hWg => hW (by simp [ratDiv, hWf, hWg]))
     · exact hmh f bf hbf hWf
   have := hWp
   have hlt : P < W := lt_of_le_of_ne hPW (fun h => hϖP (h ▸ hϖW))
-  have hdrop := DimStrictDrop.full (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P W hlt
+  have hdrop := DimStrictDrop.full (MRing ι O) P W hlt
   rw [hP.dim] at hdrop
   have hdim : ringKrullDim (MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal W) <
       ((l.length + 2 + Fintype.card K : ℕ) : WithBot ℕ∞) := by

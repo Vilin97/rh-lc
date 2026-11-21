@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.SegreChartProjObjects
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsGenericCount
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -13,7 +12,7 @@ noncomputable section
 
 namespace GroundTheory.Heights₂.Heights
 
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsGoodProj IsArithVar mcPts segre PBlk)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsArithVar IsGoodProj mcPts segre PBlk)
 open ComplexSets
 
 section Chart

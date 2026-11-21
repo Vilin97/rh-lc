@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -171,11 +170,11 @@ section Forms
 
 variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 
-theorem divCycle_eq_toNat_multAt {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)
-    {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} [W.IsPrime] (hW : W ∈ (P ⊔ Ideal.span {g}).minimalPrimes)
+theorem divCycle_eq_toNat_multAt {P : Ideal (MRing ι R)} (f g : MRing ι R)
+    {W : Ideal (MRing ι R)} [W.IsPrime] (hW : W ∈ (P ⊔ Ideal.span {g}).minimalPrimes)
     (hrel : IsRelevant W) (hle : P ⊔ Ideal.span {g} ≤ P ⊔ Ideal.span {f}) :
-    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = ((multAt (P ⊔ Ideal.span {f}) W).toNat : ℤ) := by
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+    divCycle P f W = ((multAt (P ⊔ Ideal.span {f}) W).toNat : ℤ) := by
+  unfold divCycle
   by_cases hfW : P ⊔ Ideal.span {f} ≤ W
   · have hm : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes :=
       ⟨⟨hW.1.1, hfW⟩, fun Q hQ hQW => hW.2 ⟨hQ.1, hle.trans hQ.2⟩ hQW⟩

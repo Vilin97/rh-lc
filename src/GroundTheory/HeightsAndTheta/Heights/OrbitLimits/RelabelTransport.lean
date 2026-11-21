@@ -4,7 +4,6 @@ public import Mathlib
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.ExistsUniqueStatement
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.MemMinimalPrimesOfMemDivSuppDivSupp
 public import GroundTheory.HeightsAndTheta.Heights.Antisymmetric.PNefOnFibresRelabel
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -183,8 +182,8 @@ theorem multAt_map (J W : Ideal (MRingOver F ι)) :
     rw [dite_eq_right hW, dite_eq_right hW']
 
 theorem divCycle_map_apply (V W : Ideal (MRingOver F ι)) (f : MRingOver F ι) :
-    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (V.map (ringEquiv F e h)) (ringEquiv F e h f)) (W.map (ringEquiv F e h)) : ℤ) =
-      ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) := by
+    divCycle (V.map (ringEquiv F e h)) (ringEquiv F e h f) (W.map (ringEquiv F e h)) =
+      divCycle V f W := by
   by_cases hs : W ∈ divSupp V f
   · rw [DivisorCycleSwap.divCycle_apply_of_mem hs,
       DivisorCycleSwap.divCycle_apply_of_mem ((mem_divSupp_map_iff e h V W f).2 hs), sup_span_map, multAt_map]

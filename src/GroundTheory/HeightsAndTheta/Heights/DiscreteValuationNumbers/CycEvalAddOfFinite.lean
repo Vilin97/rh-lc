@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.CutIdentityRightSideCongrOfSubMem
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,7 +16,7 @@ noncomputable section
 universe u
 
 private theorem cycEval_add_of_finite {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
-    (φ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) {Z₁ Z₂ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ}
+    (φ : Ideal (MRing ι R) → ℤ) {Z₁ Z₂ : Ideal (MRing ι R) → ℤ}
     (h₁ : (Function.support Z₁).Finite) (h₂ : (Function.support Z₂).Finite) :
     cycEval φ (Z₁ + Z₂) = cycEval φ Z₁ + cycEval φ Z₂ := by
   unfold cycEval

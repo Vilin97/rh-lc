@@ -2,7 +2,6 @@ module
 
 public import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.MemMinimalPrimesIff
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LowerBoundConditional
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -134,20 +133,20 @@ open Classical in
 theorem divCycle_eq (hi : Function.Injective Pt)
     (hS : ∀ W, W ∈ relComps (P ⊔ Ideal.span {linForm u}) ↔ ∃ z ∈ S, Pt z = W)
     (hμ : ∀ z ∈ S, μ z = localMult (P ⊔ Ideal.span {linForm u}) (Pt z)) (hμ0 : ∀ z ∈ S, μ z ≠ 0) :
-    (∀ z ∈ S, (Pt z).comap CC = ⊥ → (Pt z).map φ ∈ (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P.map φ) fun) j : ℤ) => (u j : K)).support) ∧
+    (∀ z ∈ S, (Pt z).comap CC = ⊥ → (Pt z).map φ ∈ (divCycle (P.map φ) fun j => (u j : K)).support) ∧
     ∀ F : Ideal (MvPolynomial (Fin m) K) → ℝ,
-      ∑ W ∈ (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P.map φ) fun) j : ℤ) => (u j : K)).support, ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P.map φ) fun) j : ℤ) => (u j : K)) W : ℝ) * F W =
+      ∑ W ∈ (divCycle (P.map φ) fun j => (u j : K)).support, ((divCycle (P.map φ) fun j => (u j : K)) W : ℝ) * F W =
         ∑ z ∈ S with (Pt z).comap CC = ⊥, (μ z : ℝ) * F ((Pt z).map φ) := by
   have hJ : P.map φ ⊔ Ideal.span {linForm fun j => (u j : K)} = (P ⊔ Ideal.span {linForm u}).map φ := by
     rw [Ideal.map_sup, Ideal.map_span, Set.image_singleton, map_linForm]
   have hp (z) (hz : z ∈ S) : (Pt z).IsPrime := ((hS _).2 ⟨z, hz, rfl⟩).1.1.1
   have hval (z) (hz : z ∈ S) (h : (Pt z).comap CC = ⊥) :
-      ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P.map φ) fun) j : ℤ) => (u j : K)) ((Pt z).map φ) : ℤ) = μ z := by
+      ((divCycle (P.map φ) fun j => (u j : K)) ((Pt z).map φ) : ℤ) = μ z := by
     have := isPrime_map (hp z hz) h
     rw [divCycle, hJ, fundCycle_apply, if_pos (mem_relComps_map.2 (by
       rw [comap_map (hp z hz) h]; exact (hS _).2 ⟨z, hz, rfl⟩)), localMult_map', comap_map (hp z hz) h, hμ z hz]
   have hmem (z) (hz : z ∈ S) (h : (Pt z).comap CC = ⊥) :
-      (Pt z).map φ ∈ (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P.map φ) fun) j : ℤ) => (u j : K)).support :=
+      (Pt z).map φ ∈ (divCycle (P.map φ) fun j => (u j : K)).support :=
     Finsupp.mem_support_iff.2 fun e => hμ0 z hz ((hval z hz h).symm.trans (by rw [e]; rfl))
   refine ⟨hmem, fun F => (Finset.sum_bij (fun z _ => (Pt z).map φ) (fun z hz => ?_) (fun z hz z' hz' e => ?_)
     (fun W hW => ?_) fun z hz => ?_).symm⟩

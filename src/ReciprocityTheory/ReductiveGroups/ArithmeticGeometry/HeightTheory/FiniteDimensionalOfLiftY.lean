@@ -47,8 +47,8 @@ theorem toFracY_injective : Function.Injective (toFracY A σ) := by
 
 set_option synthInstance.maxHeartbeats 400000 in
 theorem isFractionRing_toFracY :
-    letI := (toFracY A σ).toAlgebra
-    IsFractionRing (MvPolynomial σ A) (FractionRing (MvPolynomial σ (FractionRing A))) := by
+    @IsFractionRing (MvPolynomial σ A) _ (FractionRing (MvPolynomial σ (FractionRing A))) _
+      (toFracY A σ).toAlgebra := by
   letI := (toFracY A σ).toAlgebra
   refine ⟨?_, ?_, ?_⟩
   · intro y

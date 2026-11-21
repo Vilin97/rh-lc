@@ -5,7 +5,6 @@ public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDeg
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocLocal
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocNoetherian
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocDim
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -20,12 +19,12 @@ noncomputable section
 universe u
 
 theorem ringKrullDim_eq_of_relDim {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-    {F : Type u} [Field F] {Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} {m : ℕ} (h : relDim Q = (m : ℕ)) :
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) = ((m + Fintype.card K : ℕ) : WithBot ℕ∞) := by
+    {F : Type u} [Field F] {Q : Ideal (MRing ι F)} {m : ℕ} (h : relDim Q = (m : ℕ)) :
+    ringKrullDim (MRing ι F ⧸ Q) = ((m + Fintype.card K : ℕ) : WithBot ℕ∞) := by
   have hm : ((m : ℕ) : WithBot (WithTop ℤ)) = (((m : ℤ) : WithTop ℤ) : WithBot (WithTop ℤ)) := rfl
   unfold relDim at h
   rw [hm] at h
-  cases hd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) with
+  cases hd : ringKrullDim (MRing ι F ⧸ Q) with
   | bot =>
     rw [hd] at h
     exact absurd h (by simp)

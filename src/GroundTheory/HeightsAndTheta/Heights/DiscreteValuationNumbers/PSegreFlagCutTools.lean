@@ -5,7 +5,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Stat
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PGenericProjClosureDivisor
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PPairCocycle
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PPairNumSectionCut
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -26,7 +25,7 @@ theorem liftPairDeg_sub (a b : K → ℤ) : liftPairDeg (a - b) = liftPairDeg a 
   funext o
   rcases o with _ | _ | k <;> simp [liftPairDeg]
 
-theorem isMultiHomog_liftPairForm [DecidableEq K] {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {b : K → ℕ} (hf : IsMultiHomog f b) :
+theorem isMultiHomog_liftPairForm [DecidableEq K] {f : MRing ι O} {b : K → ℕ} (hf : IsMultiHomog f b) :
     IsMultiHomog (liftPairForm M M' f) (vdeg b) := by
   intro d hd
   obtain ⟨u, rfl, hu⟩ := coeff_rename_ne_zero _ f d hd
@@ -92,7 +91,7 @@ theorem liftPairForm_mem_iff {y : (Σ k, ι k) → Ω} {pt : (Σ o, bundleIdx (b
 
 theorem IsVerticalDivisor.liftPair [DecidableEq K] {y : (Σ k, ι k) → Ω} {pt : (Σ o, bundleIdx (bundleIdx ι M) M' o) → Φ}
     (hpt : ∀ p : Σ k, ι k, pt ⟨some (some p.1), p.2⟩ = algebraMap Ω Φ (y p)) {ϖ : O} {b : K → ℤ}
-    {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hD : IsVerticalDivisor (pointIdeal O y) ϖ b f g) :
+    {f g : MRing ι O} (hD : IsVerticalDivisor (pointIdeal O y) ϖ b f g) :
     IsVerticalDivisor (pointIdeal O pt) ϖ (liftPairDeg b) (liftPairForm M M' f) (liftPairForm M M' g) := by
   obtain ⟨bf, bg, hbf, hbg, hb⟩ := hD.degrees
   refine IsVerticalDivisor.of_unit_off_special ⟨vdeg bf, vdeg bg, isMultiHomog_liftPairForm hbf,
@@ -102,7 +101,7 @@ theorem IsVerticalDivisor.liftPair [DecidableEq K] {y : (Σ k, ι k) → Ω} {pt
     funext o
     rcases o with _ | _ | k <;> simp [vdeg, liftPairDeg]
   · intro W hW hPW hrel hϖ
-    let σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M') := (rename fun p : Σ k, ι k =>
+    let σ : MRing ι O →+* MRing (bundleIdx (bundleIdx ι M) M') O := (rename fun p : Σ k, ι k =>
       (⟨some (some p.1), p.2⟩ : Σ o, bundleIdx (bundleIdx ι M) M' o)).toRingHom
     have hσ : ∀ a, σ a = liftPairForm M M' a := fun _ => rfl
     have hW' : (W.comap σ).IsPrime := Ideal.comap_isPrime σ W
@@ -116,7 +115,7 @@ theorem IsVerticalDivisor.liftPair [DecidableEq K] {y : (Σ k, ι k) → Ω} {pt
       refine ⟨i, ?_⟩
       rw [Ideal.mem_comap, hσ]
       simpa [liftPairForm] using hi
-    have hϖ' : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W.comap σ := by
+    have hϖ' : (C ϖ : MRing ι O) ∉ W.comap σ := by
       rw [Ideal.mem_comap, hσ]
       simpa [liftPairForm] using hϖ
     obtain ⟨u, v, hu, hv, h⟩ := hD.unit_off_special _ hW' hPW' hrel' hϖ'
@@ -134,7 +133,7 @@ section Divisors
 
 variable {K : Type} [DecidableEq K] {ι : K → Type} {O : Type} [CommRing O]
 
-theorem IsVerticalDivisor.restrict {P H : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {ϖ : O} {b : K → ℤ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
+theorem IsVerticalDivisor.restrict {P H : Ideal (MRing ι O)} {ϖ : O} {b : K → ℤ} {f g : MRing ι O}
     (hD : IsVerticalDivisor P ϖ b f g) (hPH : P ≤ H) (hf : f ∉ H) (hg : g ∉ H) :
     IsVerticalDivisor H ϖ b f g :=
   IsVerticalDivisor.of_unit_off_special hD.degrees hf hg fun W hW hHW hrel hϖ => by
@@ -144,7 +143,7 @@ theorem IsVerticalDivisor.restrict {P H : Ideal (ReciprocityTheory.ChartRestrict
 variable [IsDomain O] [IsDiscreteValuationRing O] [Fintype K] [∀ k, Fintype (ι k)]
 
 
-theorem ratDiv_eq_of_sub_mem {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} [P.IsPrime] {f g f' g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hf : f ∉ P)
+theorem ratDiv_eq_of_sub_mem {P : Ideal (MRing ι O)} [P.IsPrime] {f g f' g' : MRing ι O} (hf : f ∉ P)
     (hg : g ∉ P) (hf' : f' ∉ P) (hg' : g' ∉ P) (h : f * g' - f' * g ∈ P) :
     ratDiv P f g = ratDiv P f' g' := by
   have e := divCycle_eq_of_sub_mem h
@@ -219,11 +218,11 @@ section Slots
 
 variable {K : Type} {ι : K → Type} {R : Type} [CommRing R] {M M' m : ℕ}
 
-theorem closureForm_zero (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (bundleIdx (bundleIdx ι M) M')) (F : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+theorem closureForm_zero (h : MRing (bundleIdx (bundleIdx ι M) M') R) (F : Fin m → MRing ι R) :
     closureForm M M' h F (Fin.castAdd m 0) = h := by
   simp [closureForm]
 
-theorem closureForm_natAdd (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (bundleIdx (bundleIdx ι M) M')) (F : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (j : Fin m) :
+theorem closureForm_natAdd (h : MRing (bundleIdx (bundleIdx ι M) M') R) (F : Fin m → MRing ι R) (j : Fin m) :
     closureForm M M' h F (Fin.natAdd 1 j) = liftPairForm M M' (F j) := by
   simp [closureForm]
 
@@ -242,21 +241,21 @@ section Numbers
 variable {K : Type} [DecidableEq K] {ι : K → Type} {O : Type} [CommRing O] [IsDomain O]
   [IsDiscreteValuationRing O]
 
-theorem cycEval_zero_fun (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ) : cycEval (fun _ => 0) Z = 0 := by
+theorem cycEval_zero_fun (Z : Ideal (MRing ι O) → ℤ) : cycEval (fun _ => 0) Z = 0 := by
   simp [cycEval]
 
-theorem cycEval_congr_cycle {n Z Z' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ} (h : ∀ W, Z W * n W = Z' W * n W) :
+theorem cycEval_congr_cycle {n Z Z' : Ideal (MRing ι O) → ℤ} (h : ∀ W, Z W * n W = Z' W * n W) :
     cycEval n Z = cycEval n Z' := by
   unfold cycEval
   exact finsum_congr h
 
-theorem cycEval_add_fun (n₁ n₂ Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ) (hZ : (Function.support Z).Finite) :
+theorem cycEval_add_fun (n₁ n₂ Z : Ideal (MRing ι O) → ℤ) (hZ : (Function.support Z).Finite) :
     cycEval (fun W => n₁ W + n₂ W) Z = cycEval n₁ Z + cycEval n₂ Z := by
   rw [cycEval_eq_sum hZ, cycEval_eq_sum hZ, cycEval_eq_sum hZ, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun W _ => ?_
   ring
 
-theorem cycEval_sub_fun (n₁ n₂ Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ) (hZ : (Function.support Z).Finite) :
+theorem cycEval_sub_fun (n₁ n₂ Z : Ideal (MRing ι O) → ℤ) (hZ : (Function.support Z).Finite) :
     cycEval (fun W => n₁ W - n₂ W) Z = cycEval n₁ Z - cycEval n₂ Z := by
   rw [cycEval_eq_sum hZ, cycEval_eq_sum hZ, cycEval_eq_sum hZ, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun W _ => ?_
@@ -272,7 +271,7 @@ theorem eq_C_of_isHomogeneous_zero {σ : Type*} {A : MvPolynomial σ ℤ} (hA : 
   · exact hA.coeff_eq_zero (by rwa [Ne, Finsupp.degree_eq_zero_iff, eq_comm])
 
 theorem classNum_of_isHomogeneous_zero {σ : Type*} (z z' : σ → K → ℤ) {A : MvPolynomial σ ℤ}
-    (hA : A.IsHomogeneous 0) (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (hA : A.IsHomogeneous 0) (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     classNum z A Q W = classNum z' A Q W := by
   unfold classNum
   refine Finset.sum_congr rfl fun μ hμ => ?_
@@ -284,14 +283,14 @@ theorem classNum_of_isHomogeneous_zero {σ : Type*} (z z' : σ → K → ℤ) {A
 
 variable [Fintype K] [∀ k, Fintype (ι k)]
 
-theorem pairNum_congr_ratDiv {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {r : ℕ} {z z' : Fin r → K → ℤ}
-    {F G F' G' : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (h : ∀ i, ratDiv P (F i) (G i) = ratDiv P (F' i) (G' i))
+theorem pairNum_congr_ratDiv {P : Ideal (MRing ι O)} {r : ℕ} {z z' : Fin r → K → ℤ}
+    {F G F' G' : Fin r → MRing ι O} (h : ∀ i, ratDiv P (F i) (G i) = ratDiv P (F' i) (G' i))
     (Gs : Fin r → MvPolynomial (Fin r ⊕ Fin r) ℤ) (Q : List (K → ℤ)) :
     pairNum P z z' F G Gs Q = pairNum P z z' F' G' Gs Q := by
   unfold pairNum
   simp only [h]
 
-theorem pairNum_single {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {r : ℕ} (z z' : Fin r → K → ℤ) (F G : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
+theorem pairNum_single {P : Ideal (MRing ι O)} {r : ℕ} (z z' : Fin r → K → ℤ) (F G : Fin r → MRing ι O)
     (j : Fin r) (H : MvPolynomial (Fin r ⊕ Fin r) ℤ) (Q : List (K → ℤ)) :
     pairNum P z z' F G (Pi.single j H) Q = cycEval (fun W => classNum (Sum.elim z z') H Q W) (ratDiv P (F j) (G j)) := by
   unfold pairNum
@@ -303,8 +302,8 @@ theorem pairNum_single {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRin
     exact cycEval_zero_fun _
   · simp
 
-theorem pairNum_mul_pairSum {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {e : ℕ} (hP : IsModelOver P (e + 1))
-    {r : ℕ} (z z' : Fin r → K → ℤ) (fs gs : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
+theorem pairNum_mul_pairSum {ϖ : O} (hϖ : Irreducible ϖ) {P : Ideal (MRing ι O)} {e : ℕ} (hP : IsModelOver P (e + 1))
+    {r : ℕ} (z z' : Fin r → K → ℤ) (fs gs : Fin r → MRing ι O)
     (hD : ∀ i, IsVerticalDivisor P ϖ (z i - z' i) (fs i) (gs i)) (a b : Fin r) {t : ℕ}
     {Bs : Fin r → MvPolynomial (Fin r ⊕ Fin r) ℤ} (hBs : ∀ i, (Bs i).IsHomogeneous t) (Q : List (K → ℤ))
     (hQ : e ≤ t + Q.length) :

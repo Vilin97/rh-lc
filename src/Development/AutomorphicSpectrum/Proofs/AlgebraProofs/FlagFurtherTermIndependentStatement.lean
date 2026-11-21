@@ -11,7 +11,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsFi
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ClassListMapDomainPerm
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.SumIntNumLClassListEqOfIsSymmetricStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -21,7 +20,7 @@ open MvPolynomial GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Height
 
 theorem polyNum_eq_sum {F : Type} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
     [∀ k, Fintype (ι k)] (I : ReciprocityTheory.ChartRestriction.G.AI.I1.IFamily F ι)
-    (hI : ReciprocityTheory.ChartRestriction.G.AI.I1.IsFieldIntersection I) (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (e : ℕ)
+    (hI : ReciprocityTheory.ChartRestriction.G.AI.I1.IsFieldIntersection I) (V : Ideal (MRing ι F)) (e : ℕ)
     (hV : ReciprocityTheory.ChartRestriction.G.AI.I1.IsProjVarF V e) {N : ℕ} (d : Fin N → K → ℤ)
     (G : MvPolynomial (Fin N) ℤ) (c n : ℕ) (Y : Fin n → K → ℤ) (hG : G.IsHomogeneous c)
     (hcn : c + n = e) :

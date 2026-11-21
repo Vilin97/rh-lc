@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PPairNumberExpansionKoszul
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -19,7 +18,7 @@ section ClassNumPairDiff
 variable {K : Type*} [DecidableEq K] {ι : K → Type*}
   {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-theorem classNum_pairDiff_mul {n e : ℕ} {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}
+theorem classNum_pairDiff_mul {n e : ℕ} {W : Ideal (MRing ι O)}
     (hadd : ∀ (a₁ a₂ : K → ℤ) (l : List (K → ℤ)), e ≤ l.length →
       vNumL W ((a₁ + a₂) :: l) = vNumL W (a₁ :: l) + vNumL W (a₂ :: l))
     (z z' : Fin n → K → ℤ) (j : Fin n) {H : MvPolynomial (Fin n ⊕ Fin n) ℤ} {t : ℕ}
@@ -47,8 +46,8 @@ end ClassNumPairDiff
 
 theorem cycEval_vNumL_comm (hC2 : VerticalDivisorsCommute.Statement.{0}) {O : Type} [CommRing O]
     [IsDomain O] [IsDiscreteValuationRing O] {ϖ : O} (hϖ : Irreducible ϖ) {K : Type} [Fintype K]
-    [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)] {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (l : List (K → ℤ))
-    (hP : IsModelOver P (l.length + 1)) {b b' : K → ℤ} {f g f' g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
+    [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)] {P : Ideal (MRing ι O)} (l : List (K → ℤ))
+    (hP : IsModelOver P (l.length + 1)) {b b' : K → ℤ} {f g f' g' : MRing ι O}
     (hD : IsVerticalDivisor P ϖ b f g) (hD' : IsVerticalDivisor P ϖ b' f' g') :
     cycEval (fun W => vNumL W (b' :: l)) (ratDiv P f g) =
       cycEval (fun W => vNumL W (b :: l)) (ratDiv P f' g') := by

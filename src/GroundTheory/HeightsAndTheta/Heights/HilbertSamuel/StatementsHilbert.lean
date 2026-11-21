@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -24,22 +23,22 @@ def unitDeg (k : K) : K → ℤ := Pi.single k 1
 
 variable [Fintype K] {ι : K → Type*} {F : Type*} [Field F]
 
-structure IsMultigrading (ι : K → Type*) (M : Type*) [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module F M]
+structure IsMultigrading (ι : K → Type*) (M : Type*) [AddCommGroup M] [Module (MRing ι F) M] [Module F M]
     (piece : (K → ℤ) → Submodule F M) : Prop where
   internal : DirectSum.IsInternal piece
   smul_mem : ∀ (v : Σ k, ι k) (m : K → ℤ) (x : M), x ∈ piece m →
-    (X v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) • x ∈ piece (m + unitDeg v.1)
+    (X v : MRing ι F) • x ∈ piece (m + unitDeg v.1)
 
-def modMultAt {R : Type*} [CommRing R] (M : Type*) [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) M]
-    (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [W.IsPrime] : ℕ∞ :=
+def modMultAt {R : Type*} [CommRing R] (M : Type*) [AddCommGroup M] [Module (MRing ι R) M]
+    (W : Ideal (MRing ι R)) [W.IsPrime] : ℕ∞ :=
   Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl M)
 
 
-def topCycleNum (F : Type*) [Field F] (ι : K → Type*) (M : Type*) [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] (d : ℕ) (bs : Fin d → K → ℤ) :
+def topCycleNum (F : Type*) [Field F] (ι : K → Type*) (M : Type*) [AddCommGroup M] [Module (MRing ι F) M] (d : ℕ) (bs : Fin d → K → ℤ) :
     ℤ :=
-  ∑ᶠ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι),
-    if h : IsMultiProjPrime W ∧ Module.annihilator (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M ≤ W ∧
-        ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) then
+  ∑ᶠ W : Ideal (MRing ι F),
+    if h : IsMultiProjPrime W ∧ Module.annihilator (MRing ι F) M ≤ W ∧
+        ringKrullDim (MRing ι F ⧸ W) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) then
       haveI : W.IsPrime := h.1.isPrime
       ((modMultAt M W).toNat : ℤ) * intNum F W bs
     else 0
@@ -51,29 +50,29 @@ def MultigradedFiltration.Statement : Prop :=
     [∀ k, Fintype (ι k)] (M : Type v) [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module F M]
     [IsScalarTower F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module.Finite (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M]
     (piece : (K → ℤ) → Submodule F M), IsMultigrading ι M piece →
-    ∃ (n : ℕ) (N : Fin (n + 1) → Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M) (x : Fin n → M) (c : Fin n → K → ℤ)
-      (q : Fin n → Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)),
+    ∃ (n : ℕ) (N : Fin (n + 1) → Submodule (MRing ι F) M) (x : Fin n → M) (c : Fin n → K → ℤ)
+      (q : Fin n → Ideal (MRing ι F)),
       N 0 = ⊥ ∧ N (Fin.last n) = ⊤ ∧
       (∀ j : Fin n, x j ∈ piece (c j) ∧
-        N j.succ = N j.castSucc ⊔ Submodule.span (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) {x j} ∧
+        N j.succ = N j.castSucc ⊔ Submodule.span (MRing ι F) {x j} ∧
         (q j).IsPrime ∧ IsMultiHomogIdeal (q j) ∧
-        ∀ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, s • x j ∈ N j.castSucc ↔ s ∈ q j) ∧
-      ∀ (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (hW : W ∈ (Module.annihilator (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M).minimalPrimes),
+        ∀ s : MRing ι F, s • x j ∈ N j.castSucc ↔ s ∈ q j) ∧
+      ∀ (W : Ideal (MRing ι F)) (hW : W ∈ (Module.annihilator (MRing ι F) M).minimalPrimes),
         (((Finset.univ.filter fun j => q j = W).card : ℕ) : ℕ∞) =
           haveI : W.IsPrime := hW.1.1
           modMultAt M W
 
 def HilbertDimZero.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime q →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) = ((Fintype.card K : ℕ) : WithBot ℕ∞) →
+    [∀ k, Fintype (ι k)] (q : Ideal (MRing ι F)), IsMultiProjPrime q →
+    ringKrullDim (MRing ι F ⧸ q) = ((Fintype.card K : ℕ) : WithBot ℕ∞) →
     ∃ a₀ : ℕ, ∀ a : K → ℕ, (∀ k, a₀ ≤ a k) →
       hilbFn q (fun k => (a k : ℤ)) = intNum F q (![] : Fin 0 → K → ℤ)
 
 def HilbertPrime.AtDim (d : ℕ) : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime q →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    [∀ k, Fintype (ι k)] (q : Ideal (MRing ι F)), IsMultiProjPrime q →
+    ringKrullDim (MRing ι F ⧸ q) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) →
     ∃ (a₀ : ℕ) (C : ℝ), ∀ a : K → ℕ, (∀ k, a₀ ≤ a k) →
       |(hilbFn q (fun k => (a k : ℤ)) : ℝ) -
           (intNum F q (fun _ : Fin d => fun k => (a k : ℤ)) : ℝ) / d.factorial| ≤
@@ -86,8 +85,8 @@ def HilbertModule.AtDim (d : ℕ) : Prop :=
     [∀ k, Fintype (ι k)] (M : Type v) [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module F M]
     [IsScalarTower F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module.Finite (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M]
     (piece : (K → ℤ) → Submodule F M), IsMultigrading ι M piece →
-    (∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiProjPrime W → Module.annihilator (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M ≤ W →
-      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) ≤ ((d + Fintype.card K : ℕ) : WithBot ℕ∞)) →
+    (∀ W : Ideal (MRing ι F), IsMultiProjPrime W → Module.annihilator (MRing ι F) M ≤ W →
+      ringKrullDim (MRing ι F ⧸ W) ≤ ((d + Fintype.card K : ℕ) : WithBot ℕ∞)) →
     ∃ (a₀ : ℕ) (C : ℝ), ∀ a : K → ℕ, (∀ k, a₀ ≤ a k) →
       |(Module.finrank F (piece fun k => (a k : ℤ)) : ℝ) -
           (topCycleNum F ι M d (fun _ : Fin d => fun k => (a k : ℤ)) : ℝ) / d.factorial| ≤
@@ -99,8 +98,8 @@ def ModulesFromPrimes.Statement : Prop :=
 def HilbertIncrement.Statement : Prop :=
   ∀ d : ℕ, HilbertModule.AtDim.{u, u} d →
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime q →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) = ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    [∀ k, Fintype (ι k)] (q : Ideal (MRing ι F)), IsMultiProjPrime q →
+    ringKrullDim (MRing ι F ⧸ q) = ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) →
     ∀ b : K, ∃ (a₀ : ℕ) (C : ℝ), ∀ a : K → ℕ, (∀ k, a₀ ≤ a k) →
       |((hilbFn q (fun k => (a k : ℤ)) - hilbFn q ((fun k => (a k : ℤ)) - unitDeg b) : ℤ) : ℝ) -
           (intNum F q (Matrix.vecCons (unitDeg b) fun _ : Fin d => fun k => (a k : ℤ)) : ℝ) /
@@ -110,15 +109,15 @@ def HilbertIncrement.Statement : Prop :=
 
 def IntersectionRecursion.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (d : ℕ), IsMultiProjPrime q →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) = ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) →
-    ∀ (b : K) (i : ι b), (X ⟨b, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ q → ∀ bs : Fin d → K → ℤ,
+    [∀ k, Fintype (ι k)] (q : Ideal (MRing ι F)) (d : ℕ), IsMultiProjPrime q →
+    ringKrullDim (MRing ι F ⧸ q) = ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    ∀ (b : K) (i : ι b), (X ⟨b, i⟩ : MRing ι F) ∉ q → ∀ bs : Fin d → K → ℤ,
       intNum F q (Matrix.vecCons (unitDeg b) bs) =
-        ∑ᶠ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι),
-          if h : IsMultiProjPrime W ∧ q ⊔ Ideal.span {(X ⟨b, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} ≤ W ∧
-              ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) then
+        ∑ᶠ W : Ideal (MRing ι F),
+          if h : IsMultiProjPrime W ∧ q ⊔ Ideal.span {(X ⟨b, i⟩ : MRing ι F)} ≤ W ∧
+              ringKrullDim (MRing ι F ⧸ W) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞) then
             haveI : W.IsPrime := h.1.isPrime
-            ((multAt (q ⊔ Ideal.span {(X ⟨b, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}) W).toNat : ℤ) * intNum F W bs
+            ((multAt (q ⊔ Ideal.span {(X ⟨b, i⟩ : MRing ι F)}) W).toNat : ℤ) * intNum F W bs
           else 0
 
 def MixedNumberPolynomial.Statement : Prop :=
@@ -139,9 +138,9 @@ def MultigradedHilbertPolynomial.Statement : Prop :=
         (hilbFn q (fun k => (a k : ℤ)) : ℚ) = MvPolynomial.eval (fun k => (a k : ℚ)) p
 
 def RankOfSections.Statement : Prop :=
-  ∀ (ι₀ : Type) [Fintype ι₀] (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => ι₀))) (D : ℕ),
+  ∀ (ι₀ : Type) [Fintype ι₀] (q : Ideal (MRing (fun _ : Unit => ι₀) ℚ)) (D : ℕ),
     IsMultiProjPrime q →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => ι₀) ⧸ q) = ((D + 1 : ℕ) : WithBot ℕ∞) →
+    ringKrullDim (MRing (fun _ : Unit => ι₀) ℚ ⧸ q) = ((D + 1 : ℕ) : WithBot ℕ∞) →
     ∃ C : ℝ, ∀ n : ℕ,
       |(hilbFn q (fun _ => (n : ℤ)) : ℝ) -
           (intNum ℚ q (fun _ : Fin D => fun _ => (1 : ℤ)) : ℝ) * (n : ℝ) ^ D / D.factorial| ≤
@@ -154,16 +153,16 @@ variable {F : Type u} [Field F]
 
 def intWeight : (Σ k, ι k) → K → ℤ := fun v => unitDeg v.1
 
-def ringPiece (m : K → ℤ) : Submodule F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :=
+def ringPiece (m : K → ℤ) : Submodule F (MRing ι F) :=
   weightedHomogeneousSubmodule F (intWeight (ι := ι)) m
 
 
-theorem isMultigrading_ring : IsMultigrading ι (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (ringPiece (F := F) (ι := ι)) where
+theorem isMultigrading_ring : IsMultigrading ι (MRing ι F) (ringPiece (F := F) (ι := ι)) where
   internal := (weightedDecomposition F (intWeight (ι := ι))).isInternal
   smul_mem := by
     intro v m x hx
     rw [smul_eq_mul]
-    have hX : IsWeightedHomogeneous (intWeight (ι := ι)) (X v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (unitDeg v.1) :=
+    have hX : IsWeightedHomogeneous (intWeight (ι := ι)) (X v : MRing ι F) (unitDeg v.1) :=
       isWeightedHomogeneous_X F _ v
     have := hX.mul hx
     change X v * x ∈ weightedHomogeneousSubmodule F intWeight (m + unitDeg v.1)

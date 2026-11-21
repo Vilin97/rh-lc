@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagBundleChartSection
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagBundleChartSectionTools
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -37,9 +36,9 @@ theorem FlagBundleChartSection.proof : FlagBundleChartSection.Statement := by
   let γ₁ : K → ℕ := fun k => (b i k - a k).toNat
   let γ₂ : K → ℕ := fun k => (a k - b i k).toNat
   let δ : K → ℕ := β + fun k => n₂ + γ₁ k
-  let u : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) := chartMono M c δ
-  let Y : Fin M → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) := fun l => u * X ⟨none, l⟩ - R l * chartMono M c γ₂ * f
-  let g : (Σ o, bundleIdx ι M o) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) := fun v =>
+  let u : MRing (bundleIdx ι M) F := chartMono M c δ
+  let Y : Fin M → MRing (bundleIdx ι M) F := fun l => u * X ⟨none, l⟩ - R l * chartMono M c γ₂ * f
+  let g : (Σ o, bundleIdx ι M o) → MRing (bundleIdx ι M) F := fun v =>
     match v with
     | ⟨none, l⟩ => Y l
     | ⟨some k, p⟩ => X ⟨some k, p⟩
@@ -132,7 +131,7 @@ theorem FlagBundleChartSection.proof : FlagBundleChartSection.Statement := by
     · rw [eval₂_X]
       rfl
 
-  have hform : ∀ (d : Option K → ℕ) (q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)), IsMultiHomog q d →
+  have hform : ∀ (d : Option K → ℕ) (q : MRing (bundleIdx ι M) F), IsMultiHomog q d →
       q ∈ projIdeal F y w φ (truncCoord t i) →
       u ^ d none * q ∈ projIdeal F y w φ (truncCoord t ((i : ℕ) + 1)) ⊔ Ideal.span {f} := by
     intro d q hq hqI
@@ -163,7 +162,7 @@ theorem FlagBundleChartSection.proof : FlagBundleChartSection.Statement := by
   refine ⟨dl, liftNat β, f, chartMono M c β, β, rfl, hfh, chartMono_homog M c β, hdeg, hfv, ?_⟩
   intro q hq
 
-  have hsat : ∀ d, ∃ n : ℕ, (∏ k, (X ⟨some k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M))) ^ n *
+  have hsat : ∀ d, ∃ n : ℕ, (∏ k, (X ⟨some k, c k⟩ : MRing (bundleIdx ι M) F)) ^ n *
       weightedHomogeneousComponent (blockWeight (bundleIdx ι M)) d q ∈
       projIdeal F y w φ (truncCoord t ((i : ℕ) + 1)) ⊔ Ideal.span {f} := by
     intro d

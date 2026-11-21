@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PfContractedHypothesesExample
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.HomFracDegZeroEqFunField
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PRenameMultiHomog
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -23,7 +22,7 @@ universe u
 section SplitRelDeg
 
 variable {F : Type u} [Field F] {K K' : Type} (j : K ↪ K') {ι' : K' → Type}
-  (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [P'.IsPrime]
+  (P' : Ideal (MRing ι' F)) [P'.IsPrime]
 
 theorem contractFracMap_mk (f : MRing (fun k => ι' (j k)) F) :
     contractFracMap j P' (algebraMap _ _ (Ideal.Quotient.mk (contractPrime j P') f)) =

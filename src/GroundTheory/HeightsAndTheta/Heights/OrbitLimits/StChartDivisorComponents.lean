@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSt
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartSection
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -14,7 +13,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights.Targets
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar HermLine IsSectionOn divSupp IsHorizontal PBlk fsLine Xc)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsArithVar IsSectionOn divSupp IsHorizontal PBlk fsLine Xc)
 open GroundTheory.Heights₂.Heights (segreChartComponents)
 
 def ChartDivisorComponents.Statement : Prop :=

@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpe
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialMultAt
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialIdealMultiHomog
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialCycleEval
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -21,9 +20,9 @@ universe u
 
 theorem VNumCut.proof (h : CutByForm.Statement.{u}) : VNumCut.Statement.{u} := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ G n hGp hGh hϖG hdim s c hs hsG bs
-  set π : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* MRing ι (IsLocalRing.ResidueField O) :=
+  set π : MRing ι O →+* MRing ι (IsLocalRing.ResidueField O) :=
     MvPolynomial.map (IsLocalRing.residue O) with hπ
-  have hsp : ∀ V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), specialIdeal V = V.map π := fun V => rfl
+  have hsp : ∀ V : Ideal (MRing ι O), specialIdeal V = V.map π := fun V => rfl
   have hsurj : Function.Surjective π :=
     MvPolynomial.map_surjective _ IsLocalRing.residue_surjective
   have hker : RingHom.ker π = Ideal.span {C ϖ} := ker_map_residue_eq_span hϖ
@@ -51,7 +50,7 @@ theorem VNumCut.proof (h : CutByForm.Statement.{u}) : VNumCut.Statement.{u} := b
   have hJ : G ⊔ Ideal.span {s} ⊔ Ideal.span {C ϖ} = G ⊔ Ideal.span {s} := by
     rw [sup_eq_left, Ideal.span_le, Set.singleton_subset_iff]
     exact Ideal.mem_sup_left hϖG
-  have hdiv : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) W : ℤ)) = (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (G ⊔ Ideal.span {s}) (C ϖ)) W : ℤ)) := by
+  have hdiv : divCycle G s = divCycle (G ⊔ Ideal.span {s}) (C ϖ) := by
     rw [divCycle_eq_idealCycle, divCycle_eq_idealCycle, hJ]
   have hmapJ : specialIdeal (G ⊔ Ideal.span {s}) = specialIdeal G ⊔ Ideal.span {π s} := by
     rw [hsp, hsp, Ideal.map_sup, Ideal.map_span, Set.image_singleton]
@@ -60,7 +59,7 @@ theorem VNumCut.proof (h : CutByForm.Statement.{u}) : VNumCut.Statement.{u} := b
     (fun V => intNum (IsLocalRing.ResidueField O) V bs)
   rw [hmapJ, ← divCycle_eq_idealCycle] at htr
   show intNum (IsLocalRing.ResidueField O) (specialIdeal G) _ =
-    cycEval (fun U => intNum (IsLocalRing.ResidueField O) (specialIdeal U) bs) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle G s) W : ℤ)))
+    cycEval (fun U => intNum (IsLocalRing.ResidueField O) (specialIdeal U) bs) (divCycle G s)
   rw [hcut, hdiv, htr]
 
 end GroundTheory.Heights₂.Heights.NumbersDVR

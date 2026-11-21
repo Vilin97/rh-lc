@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.InhabitAlt
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.InhabitBis
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -206,7 +205,7 @@ theorem value_self {x : (Σ k, ι k) → Ω} {d N : ℕ} {V : Type} [AddCommGrou
         (rename Fin.castSucc Q * X (Fin.last q)) =
       vEval O (fun W => polyNum I W d (Fin.append F.flag.deg fun l => pullDeg (K' := F.K') (L l))
           (rename (Fin.castAdd q) G * rename (Fin.natAdd N) Q))
-        (Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mcIdeal O (joinCoord x F.z)) (C a)) W : ℤ)))) := by
+        (Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero (divCycle (mcIdeal O (joinCoord x F.z)) (C a))) := by
   have h0 : ∀ (J : Ideal (MRingOver (kap O) (Sum.elim ι F.ι')) → ℤ)
       (h : MRingOver O (Sum.elim ι F.ι')), vEval O J (ratCyc O (mcIdeal O (joinCoord x F.z)) h h) = 0 := by
     intro J h
@@ -218,7 +217,7 @@ theorem value_self {x : (Σ k, ι k) → Ω} {d N : ℕ} {V : Type} [AddCommGrou
     intro u v w t hu hv hw
     rw [hu, hv, hw, zero_add, zero_add]
   have hr : ratCyc O (mcIdeal O (joinCoord x F.z)) (rename (liftVar F.ι') (C a)) (rename (liftVar F.ι') 1) =
-      Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mcIdeal O (joinCoord x F.z)) (C a)) W : ℤ))) := by
+      Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero (divCycle (mcIdeal O (joinCoord x F.z)) (C a)) := by
     rw [ratCyc, rename_C, map_one, divCycle_one, Finsupp.mapRange_zero, sub_zero]
   refine e _ _ _ _ (Finset.sum_eq_zero fun i _ => h0 _ _) (Finset.sum_eq_zero fun j _ => h0 _ _) ?_
   refine (congrArg (vEval O _) hr).trans (congrArg (fun J => vEval O J _) (funext fun W => ?_))

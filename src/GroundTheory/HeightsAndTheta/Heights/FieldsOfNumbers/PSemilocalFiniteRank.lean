@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsFibreFinite
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsSemilocalFinite
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocFrac
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -59,7 +58,7 @@ theorem finrank_eq_relfinrank_of_div (φ : L₀ →ₐ[F] L) {K₀ : Intermediat
 end Rank
 
 theorem mem_homFracDegZero_of_mem_degZeroLoc {K : Type*} [DecidableEq K] {ι : K → Type*}
-    {F : Type*} [Field F] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] (𝒲 : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))) :
+    {F : Type*} [Field F] (P : Ideal (MRing ι F)) [P.IsPrime] (𝒲 : Set (Ideal (MRing ι F))) :
     ∀ x ∈ degZeroLoc P 𝒲, x ∈ homFracDegZero P := by
   intro x hx
   refine (Algebra.adjoin_le (S := (homFracDegZero P).toSubalgebra) ?_) hx

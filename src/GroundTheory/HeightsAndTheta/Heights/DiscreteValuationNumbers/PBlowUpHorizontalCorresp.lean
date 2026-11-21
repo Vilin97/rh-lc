@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpHorizontal
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -26,18 +25,18 @@ theorem BlowUpHorizontalCorresp.proof (hsat : BlowUpHorizontalSat.Statement.{u})
   have mult := hmult O ϖ hϖ K ι J P n hP N u hu hex hloc c x hx hxP
   have lift := hlift O ϖ hϖ K ι J P n hP N u hu hex hloc c x hx hxP
   have strict := hstrict O ϖ hϖ K ι J P n hP N u hu hex hloc c x hx hxP
-  have hC : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)),
-      (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W.comap (liftForm (ι := ι) (J := J) (R := O)) ↔
-        (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)) ∈ W := by
+  have hC : ∀ W : Ideal (MRing (extIdx ι J) O),
+      (C ϖ : MRing ι O) ∈ W.comap (liftForm (ι := ι) (J := J) (R := O)) ↔
+        (C ϖ : MRing (extIdx ι J) O) ∈ W := by
     intro W
     rw [Ideal.mem_comap]
     simp [liftForm]
   refine ⟨fun h => ?_, fun W hW hϖW => ⟨by rw [mult W hW hϖW]; exact hW, strict W hW hϖW⟩⟩
   classical
   unfold cycEval
-  let s : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J))) :=
-    {W | ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P u) (liftForm x)) W : ℤ) ≠ 0 ∧ (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)) ∉ W}
-  let t : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) := {W | ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ) ≠ 0 ∧ (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W}
+  let s : Set (Ideal (MRing (extIdx ι J) O)) :=
+    {W | divCycle (blowUpOf P u) (liftForm x) W ≠ 0 ∧ (C ϖ : MRing (extIdx ι J) O) ∉ W}
+  let t : Set (Ideal (MRing ι O)) := {W | divCycle P x W ≠ 0 ∧ (C ϖ : MRing ι O) ∉ W}
   rw [finsum_eq_finsum_mem_of_support_subset' _ (s := s) ?hs,
     finsum_eq_finsum_mem_of_support_subset' _ (s := t) ?ht]
   case hs =>

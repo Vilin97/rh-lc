@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsSemipositiveOn
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -416,7 +415,7 @@ theorem homogeneousComponent_mem_primeOf {f : Poly S N} (hf : f ∈ primeOf x) (
   coneGen_homogeneousComponent x hf d
 
 
-def oneBlock : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver S (fun _ : Unit => Fin (N + 1)) →ₐ[S] Poly S N := rename fun v => v.2
+def oneBlock : MRing (fun _ : Unit => Fin (N + 1)) S →ₐ[S] Poly S N := rename fun v => v.2
 
 def primeOfOne : Ideal (NumbersDVR.MRing (fun _ : Unit => Fin (N + 1)) S) :=
   (primeOf (S := S) x).comap (oneBlock (S := S) (N := N))

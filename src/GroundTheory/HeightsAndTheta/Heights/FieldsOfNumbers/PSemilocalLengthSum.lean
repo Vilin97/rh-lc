@@ -5,7 +5,6 @@ public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsFib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocalRing
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsFiniteAlgebraLengthSum
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsSemilocalMaxIdeals
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -48,8 +47,8 @@ theorem SemilocalLengthSum.proof (h1 : FibreFinite.Statement.{u})
   split_ifs with haW'
   · rfl
   rw [Ring.ord_of_isUnit, zero_mul]
-  have hne : ∀ g, g ∉ contractPrime j P' → algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P')
-      (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P')) (Ideal.Quotient.mk P' (rename (blockIncl j ι') g)) ≠ 0 :=
+  have hne : ∀ g, g ∉ contractPrime j P' → algebraMap (MRing ι' F ⧸ P')
+      (FractionRing (MRing ι' F ⧸ P')) (Ideal.Quotient.mk P' (rename (blockIncl j ι') g)) ≠ 0 :=
     fun g hg => by
       rw [Ne, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
       exact hg
@@ -57,7 +56,7 @@ theorem SemilocalLengthSum.proof (h1 : FibreFinite.Statement.{u})
   refine IsUnit.of_mul_eq_one ⟨_, div_mem_degZeroLoc P' {W'.1} (isMultiHomog_rename j ι' hh)
     (isMultiHomog_rename j ι' ha) haP (fun W'' hW'' => (Set.mem_singleton_iff.mp hW'') ▸ haW')⟩ ?_
   apply Subtype.ext
-  change (β W'.1 : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P')) * _ = 1
+  change (β W'.1 : FractionRing (MRing ι' F ⧸ P')) * _ = 1
   rw [hβ W'.1 W'.2, hα, map_div₀, contractFracMap_algebraMap, contractFracMap_algebraMap]
   have := hne h hhP
   have := hne a haP

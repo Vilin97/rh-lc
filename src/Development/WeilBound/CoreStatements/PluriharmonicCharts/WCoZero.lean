@@ -4,7 +4,6 @@ public import Mathlib
 public import Development.WeilBound.CoreStatements.PluriharmonicCharts.PullDegSome
 public import Development.WeilBound.CoreStatements.PluriharmonicCharts.XCWArith
 public import Development.WeilBound.CoreStatements.PluriharmonicCharts.XCWLine
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -29,11 +28,11 @@ theorem wCo_zero (M : FlagModel y Ψ N j) {p : Ψ × Fin N} {k₀ : K} (hk : M.b
 def mkAlg (M : FlagModel y Ψ N j) {d : ℕ} {τ : Ψ} {a b : Fin N} {k₀ : K} {ca cb : Fin N} (hb : (b : ℕ) = a + 1)
     (hab : (b : ℕ) < j ∨ j ≤ (a : ℕ)) (hk : M.blk (τ, a) = some k₀) (hca : (ca : ℕ) = lastCol N j a)
     (hcb : (cb : ℕ) = ca + 1) (hy : IsArithVar (mCoordIdeal y) (d + 2)) (xi2 : K → ℤ) (hxi : xi2 k₀ = -2)
-    (g h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K => ι (o.getD k₀)) (dg dh : Option K → ℕ) (hg : IsMultiHomog g dg)
+    (g h : MRing fun o : Option K => ι (o.getD k₀)) (dg dh : Option K → ℕ) (hg : IsMultiHomog g dg)
     (hh : IsMultiHomog h dh) (hgn : g ∉ mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X))
     (hhn : h ∉ mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X))
     (hdeg : ∀ o : Option K, (dg o : ℤ) - dh o = o.elim 1 fun k => -xi2 k - (if M.blk (τ, a) = some k then 1 else 0))
-    (hdiv : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X)) g) W : ℤ)) =
+    (hdiv : divCycle (mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X)) g =
       divCycle (mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X)) h +
         Finsupp.single (mCoordIdeal (M.wCo (τ, a) k₀ ca cb 0)) 1) :
     AlgSq (mCoordIdeal y) d k₀ xi2 where

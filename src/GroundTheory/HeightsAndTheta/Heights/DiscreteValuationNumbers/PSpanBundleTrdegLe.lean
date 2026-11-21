@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSpanBundleTrdegLe
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -31,18 +30,18 @@ theorem SpanBundleTrdegLe.proof : SpanBundleTrdegLe.Statement := by
   let gy : (Σ k, ι k) → FractionRing (MvPolynomial (Option K) Φ) := fun p => κ (y p) * Xo (some p.1)
 
   have hAy : Algebra.trdeg F (Algebra.adjoin F (Set.range gy)) ≤
-      Algebra.trdeg F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ pointIdeal F y) := by
-    have hθ : ∀ f, (aeval gy : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →ₐ[F] FractionRing (MvPolynomial (Option K) Φ)) f =
+      Algebra.trdeg F (MRing ι F ⧸ pointIdeal F y) := by
+    have hθ : ∀ f, (aeval gy : MRing ι F →ₐ[F] FractionRing (MvPolynomial (Option K) Φ)) f =
         algebraMap (MvPolynomial (Option K) Φ) (FractionRing (MvPolynomial (Option K) Φ))
           (rename some (map (algebraMap Ω Φ) (pointConeMap F y f))) := by
       intro f
       have e := MvPolynomial.ringHom_ext
-        (f := ((aeval gy : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →ₐ[F] FractionRing (MvPolynomial (Option K) Φ)) :
-          ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* FractionRing (MvPolynomial (Option K) Φ)))
+        (f := ((aeval gy : MRing ι F →ₐ[F] FractionRing (MvPolynomial (Option K) Φ)) :
+          MRing ι F →+* FractionRing (MvPolynomial (Option K) Φ)))
         (g := ((algebraMap (MvPolynomial (Option K) Φ) (FractionRing (MvPolynomial (Option K) Φ))).comp
           (((rename some : MvPolynomial K Φ →ₐ[Φ] MvPolynomial (Option K) Φ) :
             MvPolynomial K Φ →+* MvPolynomial (Option K) Φ).comp
-            ((map (algebraMap Ω Φ)).comp (pointConeMap F y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* MvPolynomial K Ω)))))
+            ((map (algebraMap Ω Φ)).comp (pointConeMap F y : MRing ι F →+* MvPolynomial K Ω)))))
         (fun r => by
           simp [pointConeMap, MvPolynomial.algebraMap_eq, RingHom.algebraMap_toAlgebra, κ, κΦ])
         (fun p => by simp [pointConeMap, gy, κ, κΦ, Xo])
@@ -153,15 +152,15 @@ theorem SpanBundleTrdegLe.proof : SpanBundleTrdegLe.Statement := by
     · rw [hsome k j]
       exact ⟨C ⟨gy ⟨k, j⟩, IntermediateField.subset_adjoin _ _ ⟨_, rfl⟩⟩, by simp⟩
 
-  have hz : ∀ f, (aeval gz : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) →ₐ[F] FractionRing (MvPolynomial (Option K) Φ)) f =
+  have hz : ∀ f, (aeval gz : MRing (bundleIdx ι M) F →ₐ[F] FractionRing (MvPolynomial (Option K) Φ)) f =
       algebraMap (MvPolynomial (Option K) Φ) (FractionRing (MvPolynomial (Option K) Φ))
         (eval₂Hom (C.comp ((algebraMap Ω Φ).comp (algebraMap F Ω)))
           (fun p => C (projCoord y (Pi.basisFun Ω (Fin i))
             (fun l => LinearMap.proj l ∘ₗ (Matrix.of G).mulVecLin) s p) * X p.1) f) := by
     intro f
     have e := MvPolynomial.ringHom_ext
-      (f := ((aeval gz : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) →ₐ[F] FractionRing (MvPolynomial (Option K) Φ)) :
-        ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) →+* FractionRing (MvPolynomial (Option K) Φ)))
+      (f := ((aeval gz : MRing (bundleIdx ι M) F →ₐ[F] FractionRing (MvPolynomial (Option K) Φ)) :
+        MRing (bundleIdx ι M) F →+* FractionRing (MvPolynomial (Option K) Φ)))
       (g := (algebraMap (MvPolynomial (Option K) Φ) (FractionRing (MvPolynomial (Option K) Φ))).comp
         (eval₂Hom (C.comp ((algebraMap Ω Φ).comp (algebraMap F Ω)))
           (fun p => C (projCoord y (Pi.basisFun Ω (Fin i))
@@ -169,14 +168,14 @@ theorem SpanBundleTrdegLe.proof : SpanBundleTrdegLe.Statement := by
       (fun r => by simp [RingHom.algebraMap_toAlgebra, κ, κΦ])
       (fun p => by simp [gz])
     exact congrArg (fun φ => φ f) e
-  let φT : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) →ₐ[F] T := aeval fun p => ⟨gz p, hgzT p⟩
+  let φT : MRing (bundleIdx ι M) F →ₐ[F] T := aeval fun p => ⟨gz p, hgzT p⟩
   have hφT : ∀ f, (φT f : FractionRing (MvPolynomial (Option K) Φ)) = aeval gz f := by
     intro f
     have e := MvPolynomial.ringHom_ext
       (f := (T.val : T →+* FractionRing (MvPolynomial (Option K) Φ)).comp
-        (φT : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) →+* T))
-      (g := ((aeval gz : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) →ₐ[F] FractionRing (MvPolynomial (Option K) Φ)) :
-        ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) →+* FractionRing (MvPolynomial (Option K) Φ)))
+        (φT : MRing (bundleIdx ι M) F →+* T))
+      (g := ((aeval gz : MRing (bundleIdx ι M) F →ₐ[F] FractionRing (MvPolynomial (Option K) Φ)) :
+        MRing (bundleIdx ι M) F →+* FractionRing (MvPolynomial (Option K) Φ)))
       (fun r => by simp [φT])
       (fun p => by simp [φT])
     exact congrArg (fun φ => φ f) e
@@ -185,7 +184,7 @@ theorem SpanBundleTrdegLe.proof : SpanBundleTrdegLe.Statement := by
     intro f
     rw [projIdeal, RingHom.mem_ker, ← Subtype.val_inj, hφT, hz, ZeroMemClass.coe_zero,
       map_eq_zero_iff _ hinj]
-  have hAz : Algebra.trdeg F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) ⧸ projIdeal F y (Pi.basisFun Ω (Fin i))
+  have hAz : Algebra.trdeg F (MRing (bundleIdx ι M) F ⧸ projIdeal F y (Pi.basisFun Ω (Fin i))
       (fun l => LinearMap.proj l ∘ₗ (Matrix.of G).mulVecLin) s) ≤ Algebra.trdeg F T := by
     refine trdeg_le_of_injective (Ideal.Quotient.liftₐ _ φT fun f hf => (hmem f).2 hf) ?_
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]

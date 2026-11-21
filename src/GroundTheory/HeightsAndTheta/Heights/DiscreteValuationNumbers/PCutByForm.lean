@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,8 +16,8 @@ noncomputable section
 universe u
 
 theorem weightedHomogeneousComponent_mem_span_of_isMultiHomog {R : Type*} [CommRing R] {K : Type*}
-    [DecidableEq K] {ι : K → Type*} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {c : K → ℕ} (hs : IsMultiHomog s c)
-    {t : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (ht : t ∈ Ideal.span {s}) (b : K → ℕ) :
+    [DecidableEq K] {ι : K → Type*} {s : MRing ι R} {c : K → ℕ} (hs : IsMultiHomog s c)
+    {t : MRing ι R} (ht : t ∈ Ideal.span {s}) (b : K → ℕ) :
     weightedHomogeneousComponent (blockWeight ι) b t ∈ Ideal.span {s} := by
   obtain ⟨a, rfl⟩ := Ideal.mem_span_singleton'.mp ht
   set_option synthInstance.maxHeartbeats 100000 in
@@ -35,7 +34,7 @@ theorem weightedHomogeneousComponent_mem_span_of_isMultiHomog {R : Type*} [CommR
     exact Ideal.zero_mem _
 
 theorem isMultiHomogIdeal_sup_span_of_form {R : Type*} [CommRing R] {K : Type*} [DecidableEq K]
-    {ι : K → Type*} {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hI : IsMultiHomogIdeal I) {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
+    {ι : K → Type*} {I : Ideal (MRing ι R)} (hI : IsMultiHomogIdeal I) {s : MRing ι R}
     {c : K → ℕ} (hs : IsMultiHomog s c) : IsMultiHomogIdeal (I ⊔ Ideal.span {s}) := by
   intro f hf b
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hf
@@ -65,7 +64,7 @@ theorem CutByForm.proof (h1 : IntNumAssoc.Statement.{u}) (h2 : HilbFnCut.Stateme
     (h3 : MixedDiffLinear.Statement) : CutByForm.Statement.{u} := by
   intro F _ K _ _ ι _ n G hGp hG hdim s c hs hsG bs
   have : G.IsPrime := hGp
-  set J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) := G ⊔ Ideal.span {s} with hJdef
+  set J : Ideal (MRing ι F) := G ⊔ Ideal.span {s} with hJdef
   set c' : K → ℤ := fun k => (c k : ℤ) with hc'
 
   have hnzd : ∀ y, s * y ∈ G → y ∈ G := fun y hy => (hGp.mem_or_mem hy).resolve_left hsG
@@ -81,14 +80,14 @@ theorem CutByForm.proof (h1 : IntNumAssoc.Statement.{u}) (h2 : HilbFnCut.Stateme
   have hJ : IsMultiHomogIdeal J := isMultiHomogIdeal_sup_span_of_form hG hs
 
   have hle : G ≤ J := le_sup_left
-  have hr : Ideal.Quotient.mk G s ∈ nonZeroDivisors (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ G) :=
+  have hr : Ideal.Quotient.mk G s ∈ nonZeroDivisors (MRing ι F ⧸ G) :=
     mem_nonZeroDivisors_of_ne_zero fun h => hsG (Ideal.Quotient.eq_zero_iff_mem.mp h)
-  have hsucc : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ J) + 1 ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ G) :=
+  have hsucc : ringKrullDim (MRing ι F ⧸ J) + 1 ≤ ringKrullDim (MRing ι F ⧸ G) :=
     ringKrullDim_succ_le_of_surjective (Ideal.Quotient.factor hle)
       (Ideal.Quotient.factor_surjective hle) hr (by
         rw [Ideal.Quotient.factor_mk, Ideal.Quotient.eq_zero_iff_mem]
         exact Ideal.mem_sup_right (Ideal.subset_span rfl))
-  have hdimJ : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ J) <
+  have hdimJ : ringKrullDim (MRing ι F ⧸ J) <
       ((n + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
     apply withBot_lt_of_add_one_lt
     have he : n + 1 + Fintype.card K + 1 = n + 2 + Fintype.card K := by omega

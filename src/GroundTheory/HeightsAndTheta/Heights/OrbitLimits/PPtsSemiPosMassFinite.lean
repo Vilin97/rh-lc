@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartAbsIn
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreChartProjFinite
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreCoordGoodProj
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.PSheetHessPSD
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -19,7 +18,7 @@ namespace GroundTheory.Heights₂.Heights
 
 open MeasureTheory
 open scoped ComplexOrder
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSmoothHerm HermLine IsArithVar IsGoodProj pot sheetDensity fibre mcPts segre
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar IsGoodProj pot sheetDensity fibre mcPts segre
   maDensity cxHessian IsSheet)
 
 namespace PtsSemiPosMassFinite

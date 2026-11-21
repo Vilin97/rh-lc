@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsFiltrationHilbSum
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFiltrationStepHilb
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PGradedPieceQuot
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -21,12 +20,12 @@ universe u v
 namespace FiltrationHilbSum
 
 variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-  {M : Type v} [AddCommGroup M] [Module (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] [Module F M]
-  [IsScalarTower F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M] {piece : (K → ℤ) → Submodule F M}
+  {M : Type v} [AddCommGroup M] [Module (MRing ι F) M] [Module F M]
+  [IsScalarTower F (MRing ι F) M] {piece : (K → ℤ) → Submodule F M}
 
 theorem monomial_smul_mem (hM : IsMultigrading ι M piece) (d : (Σ k, ι k) →₀ ℕ) (a : F)
     {m : K → ℤ} {y : M} (hy : y ∈ piece m) :
-    (monomial d a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) • y ∈
+    (monomial d a : MRing ι F) • y ∈
       piece (m + fun k => (Finsupp.weight (blockWeight ι) d k : ℤ)) := by
   induction d using Finsupp.induction generalizing m y with
   | zero =>
@@ -37,7 +36,7 @@ theorem monomial_smul_mem (hM : IsMultigrading ι M piece) (d : (Σ k, ι k) →
     exact (piece m).smul_mem a hy
   | single_add v k d' _ _ ih =>
     have hpow : ∀ (e : ℕ) (m' : K → ℤ) (z : M), z ∈ piece m' →
-        (X v ^ e : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) • z ∈ piece (m' + e • unitDeg v.1) := by
+        (X v ^ e : MRing ι F) • z ∈ piece (m' + e • unitDeg v.1) := by
       intro e
       induction e with
       | zero => intro m' z hz; simpa using hz
@@ -53,7 +52,7 @@ theorem monomial_smul_mem (hM : IsMultigrading ι M piece) (d : (Σ k, ι k) →
       Nat.cast_add, Nat.cast_mul, blockWeight, unitDeg, Pi.single_apply]
     split_ifs <;> push_cast <;> ring
 
-theorem form_smul_mem (hM : IsMultigrading ι M piece) {b : K → ℕ} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
+theorem form_smul_mem (hM : IsMultigrading ι M piece) {b : K → ℕ} {f : MRing ι F}
     (hf : f ∈ weightedHomogeneousSubmodule F (blockWeight ι) b) {m : K → ℤ} {y : M}
     (hy : y ∈ piece m) : f • y ∈ piece (m + fun k => (b k : ℤ)) := by
   rw [f.as_sum, Finset.sum_smul]
@@ -73,7 +72,7 @@ theorem comp_apply [DirectSum.Decomposition piece] (m : K → ℤ) (y : M) :
 
 
 theorem comp_smul (hM : IsMultigrading ι M piece) [DirectSum.Decomposition piece] {c : K → ℤ}
-    {x : M} (hx : x ∈ piece c) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (m : K → ℤ) :
+    {x : M} (hx : x ∈ piece c) (s : MRing ι F) (m : K → ℤ) :
     comp (piece := piece) m (s • x) =
       (∑ d ∈ s.support with (fun k => (Finsupp.weight (blockWeight ι) d k : ℤ)) = m - c,
         monomial d (AddMonoidAlgebra.coeff s d)) • x := by
@@ -92,14 +91,14 @@ theorem comp_smul (hM : IsMultigrading ι M piece) [DirectSum.Decomposition piec
 
 theorem comp_mem_span (hM : IsMultigrading ι M piece) [DirectSum.Decomposition piece]
     {c : K → ℤ} {x : M} (hx : x ∈ piece c) {y : M}
-    (hy : y ∈ Submodule.span (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) {x}) (m : K → ℤ) :
-    comp (piece := piece) m y ∈ Submodule.span (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) {x} := by
+    (hy : y ∈ Submodule.span (MRing ι F) {x}) (m : K → ℤ) :
+    comp (piece := piece) m y ∈ Submodule.span (MRing ι F) {x} := by
   obtain ⟨s, rfl⟩ := Submodule.mem_span_singleton.mp hy
   rw [comp_smul hM hx]
   exact Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self x)
 
 
-theorem comp_mem_sup [DirectSum.Decomposition piece] {N₁ N₂ : Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M}
+theorem comp_mem_sup [DirectSum.Decomposition piece] {N₁ N₂ : Submodule (MRing ι F) M}
     (h₁ : ∀ y ∈ N₁, ∀ m, comp (piece := piece) m y ∈ N₁)
     (h₂ : ∀ y ∈ N₂, ∀ m, comp (piece := piece) m y ∈ N₂) :
     ∀ y ∈ N₁ ⊔ N₂, ∀ m, comp (piece := piece) m y ∈ N₁ ⊔ N₂ := by
@@ -110,9 +109,9 @@ theorem comp_mem_sup [DirectSum.Decomposition piece] {N₁ N₂ : Submodule (Rec
 
 
 theorem step [∀ k, Fintype (ι k)] (hM : IsMultigrading ι M piece) [DirectSum.Decomposition piece]
-    {N N' : Submodule (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M} {x : M} {c : K → ℤ} {q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}
-    (hx : x ∈ piece c) (hN' : N' = N ⊔ Submodule.span (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) {x})
-    (hq : ∀ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, s • x ∈ N ↔ s ∈ q)
+    {N N' : Submodule (MRing ι F) M} {x : M} {c : K → ℤ} {q : Ideal (MRing ι F)}
+    (hx : x ∈ piece c) (hN' : N' = N ⊔ Submodule.span (MRing ι F) {x})
+    (hq : ∀ s : MRing ι F, s • x ∈ N ↔ s ∈ q)
     (hgr : ∀ y ∈ N, ∀ m, comp (piece := piece) m y ∈ N) (m : K → ℤ)
     [FiniteDimensional F ↥(N.restrictScalars F ⊓ piece m)] :
     FiniteDimensional F ↥(N'.restrictScalars F ⊓ piece m) ∧
@@ -121,7 +120,7 @@ theorem step [∀ k, Fintype (ι k)] (hM : IsMultigrading ι M piece) [DirectSum
   set A := N.restrictScalars F ⊓ piece m with hA
   have hNN' : N ≤ N' := hN' ▸ le_sup_left
   have hAB : A ≤ N'.restrictScalars F ⊓ piece m := inf_le_inf_right _ hNN'
-  have hdec : ∀ y ∈ N'.restrictScalars F ⊓ piece m, ∃ n ∈ A, ∃ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι,
+  have hdec : ∀ y ∈ N'.restrictScalars F ⊓ piece m, ∃ n ∈ A, ∃ s : MRing ι F,
       y = n + comp (piece := piece) m (s • x) := by
     intro y hy
     obtain ⟨hy1, hy2⟩ := Submodule.mem_inf.mp hy
@@ -142,7 +141,7 @@ theorem step [∀ k, Fintype (ι k)] (hM : IsMultigrading ι M piece) [DirectSum
       simp only [Pi.sub_apply] at this
       simp only [hbdef, Pi.add_apply, Pi.sub_apply]
       omega
-    let ψ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →ₗ[F] M := (LinearMap.toSpanSingleton (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) M x).restrictScalars F
+    let ψ : MRing ι F →ₗ[F] M := (LinearMap.toSpanSingleton (MRing ι F) M x).restrictScalars F
     have hψ : ∀ s, ψ s = s • x := fun s => rfl
     set P := weightedHomogeneousSubmodule F (blockWeight ι) b with hP
     set Q := P ⊓ q.restrictScalars F with hQ
@@ -200,7 +199,7 @@ theorem step [∀ k, Fintype (ι k)] (hM : IsMultigrading ι M piece) [DirectSum
     have k1 := LinearMap.finrank_range_add_finrank_ker (ψ.domRestrict P)
     have k2 := LinearMap.finrank_range_add_finrank_ker (ψ.domRestrict Q)
     rw [LinearMap.range_domRestrict] at k1 k2
-    have hker : ∀ R : Submodule F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), Module.finrank F ↥(LinearMap.ker (ψ.domRestrict R)) =
+    have hker : ∀ R : Submodule F (MRing ι F), Module.finrank F ↥(LinearMap.ker (ψ.domRestrict R)) =
         Module.finrank F ↥(R ⊓ LinearMap.ker ψ) := by
       intro R
       rw [LinearMap.ker_domRestrict, ← Submodule.finrank_map_subtype_eq, Submodule.map_comap_subtype]

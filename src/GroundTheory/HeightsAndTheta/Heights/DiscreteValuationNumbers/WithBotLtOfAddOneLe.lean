@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.CutIdentityRightSideCongrOfSubMem
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -18,14 +17,14 @@ namespace AdditivityInDivisor
 
 variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 
-theorem cycEval_add_cycle {n Z₁ Z₂ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ} (h₁ : (Function.support Z₁).Finite)
+theorem cycEval_add_cycle {n Z₁ Z₂ : Ideal (MRing ι R) → ℤ} (h₁ : (Function.support Z₁).Finite)
     (h₂ : (Function.support Z₂).Finite) : cycEval n (Z₁ + Z₂) = cycEval n Z₁ + cycEval n Z₂ := by
   unfold cycEval
   rw [← finsum_add_distrib (h₁.subset (Function.support_mul_subset_left _ _))
     (h₂.subset (Function.support_mul_subset_left _ _))]
   exact finsum_congr fun W => by simp [add_mul]
 
-theorem cycEval_add_fn {n n₁ n₂ Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ} (hZ : (Function.support Z).Finite)
+theorem cycEval_add_fn {n n₁ n₂ Z : Ideal (MRing ι R) → ℤ} (hZ : (Function.support Z).Finite)
     (h : ∀ W, Z W ≠ 0 → n W = n₁ W + n₂ W) : cycEval n Z = cycEval n₁ Z + cycEval n₂ Z := by
   unfold cycEval
   rw [← finsum_add_distrib (hZ.subset (Function.support_mul_subset_left _ _))
@@ -35,8 +34,8 @@ theorem cycEval_add_fn {n n₁ n₂ Z : Ideal (ReciprocityTheory.ChartRestrictio
   · simp [hW]
   · rw [h W hW, mul_add]
 
-theorem ratDiv_support_finite {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
-    (hf : (Function.support ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ)))).Finite) (hg : (Function.support ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ)))).Finite) :
+theorem ratDiv_support_finite {P : Ideal (MRing ι R)} {f g : MRing ι R}
+    (hf : (Function.support (divCycle P f)).Finite) (hg : (Function.support (divCycle P g)).Finite) :
     (Function.support (ratDiv P f g)).Finite := by
   refine (hf.union hg).subset fun W hW => ?_
   by_contra h
@@ -62,8 +61,8 @@ theorem withBot_lt_of_add_one_le {x : WithBot ℕ∞} {n : ℕ} (hx : x + 1 ≤ 
       simpa using h3
 
 theorem ratDiv_mul_mul (hmul : DivCycleMul.Statement.{u}) {O : Type u} [CommRing O] [IsNoetherianRing O]
-    {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} (hP : P.IsPrime)
-    {f₁ g₁ f₂ g₂ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hf₁ : f₁ ∉ P) (hf₂ : f₂ ∉ P) (hg₁ : g₁ ∉ P) (hg₂ : g₂ ∉ P) :
+    {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {P : Ideal (MRing ι O)} (hP : P.IsPrime)
+    {f₁ g₁ f₂ g₂ : MRing ι O} (hf₁ : f₁ ∉ P) (hf₂ : f₂ ∉ P) (hg₁ : g₁ ∉ P) (hg₂ : g₂ ∉ P) :
     ratDiv P (f₁ * f₂) (g₁ * g₂) = ratDiv P f₁ g₁ + ratDiv P f₂ g₂ := by
   funext W
   simp only [ratDiv, Pi.add_apply, hmul O K ι P f₁ f₂ hP hf₁ hf₂, hmul O K ι P g₁ g₂ hP hg₁ hg₂]
@@ -78,7 +77,7 @@ theorem AdditivityInDivisor.proof (hmul : DivCycleMul.Statement.{u}) (hfin : Div
     (hdrop : DimStrictDrop.Statement.{u}) : AdditivityInDivisor.Statement.{u} := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP b₁ b₂ f₁ g₁ f₂ g₂ hD₁ hD₂ c s hs hsP hsH L
   have hPp : P.IsPrime := hP.multiProj.isPrime
-  have rfin : ∀ (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (x y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), (Function.support (ratDiv Q x y)).Finite :=
+  have rfin : ∀ (Q : Ideal (MRing ι O)) (x y : MRing ι O), (Function.support (ratDiv Q x y)).Finite :=
     fun Q x y => ratDiv_support_finite (hfin O K ι Q x) (hfin O K ι Q y)
   refine ⟨?_, ?_⟩
   · unfold cutIdentityLeftSide
@@ -90,7 +89,7 @@ theorem AdditivityInDivisor.proof (hmul : DivCycleMul.Statement.{u}) (hfin : Div
     split_ifs with hϖW
     ·
       have hWmin : W ∈ (P ⊔ Ideal.span {s}).minimalPrimes := by
-        unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
+        unfold divCycle at hW
         split_ifs at hW with h
         · exact h.1
         · exact absurd rfl hW
@@ -98,7 +97,7 @@ theorem AdditivityInDivisor.proof (hmul : DivCycleMul.Statement.{u}) (hfin : Div
         hmin O K ι _ W (hsup O K ι P s c hP.multiProj.multiHomog hs) hWmin
       have hsW : s ∈ W := hWmin.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self s))
       have hlt : P < W := lt_of_le_of_ne hPW fun h => hsP (h ▸ hsW)
-      have hdim := hdrop (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P W hlt
+      have hdim := hdrop (MRing ι O) P W hlt
       rw [hP.dim, ← hqd O ϖ hϖ K ι W hϖW,
         show d + 1 + 1 + Fintype.card K = d + 2 + Fintype.card K by ring] at hdim
       exact hadd _ K ι d (specialIdeal W) (hcor O ϖ hϖ K ι P W hWp hϖW).1 (hspm O K ι W hWh)

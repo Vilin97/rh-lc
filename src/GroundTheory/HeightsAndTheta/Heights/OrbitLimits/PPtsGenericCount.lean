@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StGoodChartModel
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StComponentsGenericCount
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSheetLift
 public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PDiscriminantSheetCover
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,7 +16,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MeasureTheory Filter Topology Matrix ComplexSets
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsGoodProj IsArithVar mcPts segre fibre IsSheet)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsArithVar IsGoodProj mcPts segre fibre IsSheet)
 
 namespace PtsGenericCount
 

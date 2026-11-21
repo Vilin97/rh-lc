@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegreeBound
 public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomogIdealIff
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -23,9 +22,9 @@ variable {F : Type u} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K �
   [∀ k, Fintype (ι k)]
 
 
-theorem mem_of_isMultiHomog_of_block_le {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} {k : K}
-    (hk : ∀ i : ι k, (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∈ I) {b : K → ℕ} (hb : 1 ≤ b k)
-    {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hf : IsWeightedHomogeneous (blockWeight ι) f b) : f ∈ I := by
+theorem mem_of_isMultiHomog_of_block_le {I : Ideal (MRing ι F)} {k : K}
+    (hk : ∀ i : ι k, (X ⟨k, i⟩ : MRing ι F) ∈ I) {b : K → ℕ} (hb : 1 ≤ b k)
+    {f : MRing ι F} (hf : IsWeightedHomogeneous (blockWeight ι) f b) : f ∈ I := by
   rw [f.as_sum]
   refine Ideal.sum_mem _ fun d hd => ?_
   have hw := hf (mem_support_iff.mp hd)
@@ -40,9 +39,9 @@ theorem mem_of_isMultiHomog_of_block_le {I : Ideal (ReciprocityTheory.ChartRestr
   rw [← tsub_add_cancel_of_le hle, monomial_add_single, pow_one]
   exact Ideal.mul_mem_left _ _ (hk i)
 
-theorem gradedPiece_eq_bot_of_not_isRelevant {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : ¬ IsRelevant I)
+theorem gradedPiece_eq_bot_of_not_isRelevant {I : Ideal (MRing ι F)} (hI : ¬ IsRelevant I)
     {m : K → ℕ} (hm : ∀ k, 1 ≤ m k) : gradedPiece I m = ⊥ := by
-  obtain ⟨k, hk⟩ : ∃ k, ∀ i : ι k, (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∈ I := by
+  obtain ⟨k, hk⟩ : ∃ k, ∀ i : ι k, (X ⟨k, i⟩ : MRing ι F) ∈ I := by
     by_contra h
     exact hI fun k => by
       by_contra h'

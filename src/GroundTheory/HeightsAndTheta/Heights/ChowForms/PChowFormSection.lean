@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.ChowForms.Statements
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -66,29 +65,29 @@ theorem ChowFormSection.proof (h₁ : ConeDimOfChowForm.Statement) (h₂ : ConeD
   classical
   obtain ⟨hh0, hord⟩ := h₅ F n e I f u hI hf hu
   have hdim := h₁ F n (e + 1) I f hI hf
-  have hcomp : ∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, W ∈ relComps (I ⊔ Ideal.span {linForm u}) := by
+  have hcomp : ∀ W ∈ (divCycle I u).support, W ∈ relComps (I ⊔ Ideal.span {linForm u}) := by
     intro W hW
     rw [Finsupp.mem_support_iff] at hW
     by_contra h
     exact hW (by simp [divCycle, fundCycle, Finsupp.onFinset_apply, h])
-  have hW1 : ∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, IsProjPrime W ∧
+  have hW1 : ∀ W ∈ (divCycle I u).support, IsProjPrime W ∧
       ringKrullDim (MvPolynomial (Fin n) F ⧸ W) = ((e : ℕ) : WithBot ℕ∞) := fun W hW =>
     h₂ F n e I W u hI hdim hu (hcomp W hW)
-  have hex : ∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, ∃ g, IsChowForm W e g := fun W hW =>
+  have hex : ∀ W ∈ (divCycle I u).support, ∃ g, IsChowForm W e g := fun W hW =>
     h₃ F n e W (hW1 W hW).1 (hW1 W hW).2
   let g : Ideal (MvPolynomial (Fin n) F) → MvPolynomial (Fin e × Fin n) F :=
     fun W => if h : ∃ g, IsChowForm W e g then h.choose else 1
-  have hg : ∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, IsChowForm W e (g W) := fun W hW => by
+  have hg : ∀ W ∈ (divCycle I u).support, IsChowForm W e (g W) := fun W hW => by
     simp only [g, dif_pos (hex W hW)]
     exact (hex W hW).choose_spec
-  have hspan : ∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, incIdeal W e = Ideal.span {g W} := fun W hW =>
+  have hspan : ∀ W ∈ (divCycle I u).support, incIdeal W e = Ideal.span {g W} := fun W hW =>
     (isChowForm_iff.mp (hg W hW)).2
-  have hgprime : ∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, Prime (g W) := by
+  have hgprime : ∀ W ∈ (divCycle I u).support, Prime (g W) := by
     intro W hW
     have hp := h₄ F n e W (hW1 W hW).1.isPrime (hW1 W hW).1.isRelevant
     rw [hspan W hW] at hp
     exact (Ideal.span_singleton_prime (isChowForm_iff.mp (hg W hW)).1).mp hp
-  set Pr := ∏ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))).support, g W ^ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))) W with hPr
+  set Pr := ∏ W ∈ (divCycle I u).support, g W ^ (divCycle I u) W with hPr
   have hPr0 : Pr ≠ 0 :=
     Finset.prod_ne_zero_iff.mpr fun W hW => pow_ne_zero _ (hgprime W hW).ne_zero
   have hmult : ∀ q, Irreducible q → emultiplicity q Pr = emultiplicity q (specFirst f u) := by

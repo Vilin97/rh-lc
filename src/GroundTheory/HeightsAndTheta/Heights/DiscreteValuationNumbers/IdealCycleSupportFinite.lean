@@ -5,7 +5,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Divi
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSupSpanMultiHomog
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PMinimalPrimeMultiHomog
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivCycleFiniteSupport
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -18,7 +17,7 @@ open MvPolynomial
 universe u
 
 theorem idealCycle_support_finite {R : Type*} [CommRing R] {K : Type*} {ι : K → Type*}
-    [IsNoetherianRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)] (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
+    [IsNoetherianRing (MRing ι R)] (J : Ideal (MRing ι R)) :
     (Function.support (idealCycle J)).Finite := by
   apply Set.Finite.subset (Ideal.finite_minimalPrimes_of_isNoetherianRing _ J)
   intro W hW
@@ -67,17 +66,17 @@ theorem RightExpansion.proof (hV : VertCutEff.Statement.{u})
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hmodel b f g heff c s hs hsP hhor hnc L
   have hPmh : IsMultiHomogIdeal (P ⊔ Ideal.span {s}) :=
     SupSpanMultiHomog.proof O K ι P s c hmodel.multiProj.multiHomog hs
-  have key : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
-      ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) * (if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then vNum W (Matrix.vecCons b L)
+  have key : ∀ W : Ideal (MRing ι O),
+      divCycle P s W * (if (C ϖ : MRing ι O) ∈ W then vNum W (Matrix.vecCons b L)
           else cycEval (fun G => vNum G L) (ratDiv W f g)) =
-        ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) * cycEval (fun U => vNum U L) (idealCycle (W ⊔ divisorIdeal P f g)) := by
+        divCycle P s W * cycEval (fun U => vNum U L) (idealCycle (W ⊔ divisorIdeal P f g)) := by
     intro W
-    by_cases hW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = 0
+    by_cases hW : divCycle P s W = 0
     · rw [hW, zero_mul, zero_mul]
     congr 1
     obtain ⟨hWp, hPW, hWrel⟩ := le_and_isRelevant_of_divCycle_ne_zero hW
     have hWmin : W ∈ (P ⊔ Ideal.span {s}).minimalPrimes := by
-      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
+      unfold divCycle at hW
       split_ifs at hW with h
       · exact h.1
       · exact absurd rfl hW

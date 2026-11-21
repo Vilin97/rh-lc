@@ -6,7 +6,6 @@ public import Development.AutomorphicSpectrum.Statements.MetricStatements.Agreem
 public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.GenFibreExists
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.IsMultiHomogIdealChain
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRedF
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,16 +16,16 @@ namespace PositivityTheory.Xgp.lemma_v
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem divCycle_of_mem {P : Ideal (MRing ι)} {s : MRing ι} {W : Ideal (MRing ι)} (h : W ∈ divSupp P s) :
-    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = multAt (P ⊔ Ideal.span {s}) W := by
+    divCycle P s W = multAt (P ⊔ Ideal.span {s}) W := by
   simp [divCycle, Finsupp.ofSupportFinite_coe, h]
 
 theorem divCycle_of_notMem {P : Ideal (MRing ι)} {s : MRing ι} {W : Ideal (MRing ι)} (h : W ∉ divSupp P s) :
-    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = 0 := by
+    divCycle P s W = 0 := by
   simp [divCycle, Finsupp.ofSupportFinite_coe, h]
 
 theorem finsum_eq_sum (P : Ideal (MRing ι)) (s : MRing ι) (F : Ideal (MRing ι) → ℝ) (S : Finset (Ideal (MRing ι)))
     (hS : (divSupp_finite P s).toFinset ⊆ S) :
-    ∑ᶠ W ∈ divSupp P s, (multAt (P ⊔ Ideal.span {s}) W : ℝ) * F W = ∑ W ∈ S, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) : ℝ) * F W := by
+    ∑ᶠ W ∈ divSupp P s, (multAt (P ⊔ Ideal.span {s}) W : ℝ) * F W = ∑ W ∈ S, (divCycle P s W : ℝ) * F W := by
   rw [finsum_mem_eq_finite_toFinset_sum _ (divSupp_finite P s), ← Finset.sum_subset hS]
   · refine Finset.sum_congr rfl fun W hW => ?_
     rw [divCycle_of_mem ((Set.Finite.mem_toFinset _).1 hW)]
@@ -110,15 +109,15 @@ theorem PositivityTheory.Xgp.t_lemma_v : Inputs → ∀ (II : IntersectionSystem
     T.biUnion fun p => (divSupp_finite P (C (p : ℤ) : MRing ι)).toFinset with hS
   have hrhs : (∑ p ∈ T, α p * Real.log p) * ptsIntegral P (pot L) (fun _ => 1) =
       ∑ W ∈ S, ∑ p ∈ T, α p * Real.log p *
-        ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C (p : ℤ))) W : ℤ) : ℝ) * (geoNum D W (fun j => (L j).a) : ℝ)) := by
+        ((divCycle P (C (p : ℤ)) W : ℝ) * (geoNum D W (fun j => (L j).a) : ℝ)) := by
     rw [Finset.sum_comm, Finset.sum_mul]
     refine Finset.sum_congr rfl fun p hp => ?_
     rw [hIn.degree K ι P D L p hP hL (hT p hp).1, PositivityTheory.Xgp.lemma_v.finsum_eq_sum P _ _ S, Finset.mul_sum]
     exact (Finset.subset_biUnion_of_mem (fun p : ℕ => (divSupp_finite P (C (p : ℤ) : MRing ι)).toFinset) hp).trans
       Finset.subset_union_right
-  have hpos : ∀ W, ∀ p ∈ T, 0 ≤ (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C (p : ℤ))) W : ℤ) : ℝ) * (geoNum D W (fun j => (L j).a) : ℝ) ∧
-      (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C (p : ℤ))) W : ℤ) : ℝ) * |(geoNum D W (fun j => (L j).a) : ℝ)| =
-        (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C (p : ℤ))) W : ℤ) : ℝ) * (geoNum D W (fun j => (L j).a) : ℝ) := by
+  have hpos : ∀ W, ∀ p ∈ T, 0 ≤ (divCycle P (C (p : ℤ)) W : ℝ) * (geoNum D W (fun j => (L j).a) : ℝ) ∧
+      (divCycle P (C (p : ℤ)) W : ℝ) * |(geoNum D W (fun j => (L j).a) : ℝ)| =
+        (divCycle P (C (p : ℤ)) W : ℝ) * (geoNum D W (fun j => (L j).a) : ℝ) := by
     intro W p hp
     by_cases hW : W ∈ divSupp P (C (p : ℤ))
     · have h0 : (0 : ℝ) ≤ (geoNum D W (fun j => (L j).a) : ℝ) := by
@@ -127,7 +126,7 @@ theorem PositivityTheory.Xgp.t_lemma_v : Inputs → ∀ (II : IntersectionSystem
     · rw [PositivityTheory.Xgp.lemma_v.divCycle_of_notMem hW]
       simp
   have hterm : ∀ W, ∀ p ∈ T, 0 ≤ α p * Real.log p *
-      ((((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C (p : ℤ))) W : ℤ) : ℝ) * (geoNum D W (fun j => (L j).a) : ℝ)) := fun W p hp =>
+      ((divCycle P (C (p : ℤ)) W : ℝ) * (geoNum D W (fun j => (L j).a) : ℝ)) := fun W p hp =>
     mul_nonneg (mul_nonneg (hT p hp).2 (Real.log_natCast_nonneg p)) (hpos W p hp).1
   rw [hrhs]
   unfold cycR

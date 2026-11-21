@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PPairNumberExpansionIndependence
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -18,7 +17,7 @@ section CycEval
 
 variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 
-theorem cycEval_congr_support {n n' Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ} (h : ∀ W, Z W ≠ 0 → n W = n' W) :
+theorem cycEval_congr_support {n n' Z : Ideal (MRing ι R) → ℤ} (h : ∀ W, Z W ≠ 0 → n W = n' W) :
     cycEval n Z = cycEval n' Z := by
   unfold cycEval
   refine finsum_congr fun W => ?_
@@ -26,14 +25,14 @@ theorem cycEval_congr_support {n n' Z : Ideal (ReciprocityTheory.ChartRestrictio
   · rw [hW, zero_mul, zero_mul]
   · rw [h W hW]
 
-theorem cycEval_mul_left (c : ℤ) (n Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) (hZ : (Function.support Z).Finite) :
+theorem cycEval_mul_left (c : ℤ) (n Z : Ideal (MRing ι R) → ℤ) (hZ : (Function.support Z).Finite) :
     cycEval (fun W => c * n W) Z = c * cycEval n Z := by
   rw [cycEval_eq_sum hZ, cycEval_eq_sum hZ, Finset.mul_sum]
   refine Finset.sum_congr rfl fun W _ => ?_
   ring
 
-theorem cycEval_finset_sum {α : Type*} (S : Finset α) (F : α → Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ)
-    (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) (hZ : (Function.support Z).Finite) :
+theorem cycEval_finset_sum {α : Type*} (S : Finset α) (F : α → Ideal (MRing ι R) → ℤ)
+    (Z : Ideal (MRing ι R) → ℤ) (hZ : (Function.support Z).Finite) :
     cycEval (fun W => ∑ a ∈ S, F a W) Z = ∑ a ∈ S, cycEval (F a) Z := by
   rw [cycEval_eq_sum hZ]
   simp only [Finset.mul_sum]
@@ -41,13 +40,13 @@ theorem cycEval_finset_sum {α : Type*} (S : Finset α) (F : α → Ideal (Recip
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [cycEval_eq_sum hZ]
 
-theorem cycEval_sub_cycle (n Z₁ Z₂ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) (h₁ : (Function.support Z₁).Finite)
+theorem cycEval_sub_cycle (n Z₁ Z₂ : Ideal (MRing ι R) → ℤ) (h₁ : (Function.support Z₁).Finite)
     (h₂ : (Function.support Z₂).Finite) :
     cycEval n Z₁ - cycEval n Z₂ = cycEval n (Z₁ - Z₂) := by
   have h₃ : (Function.support (Z₁ - Z₂)).Finite :=
     (h₁.union h₂).subset (Function.support_sub Z₁ Z₂)
   let S := h₁.toFinset ∪ h₂.toFinset
-  have e : ∀ Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ, Function.support Z ⊆ S → cycEval n Z = ∑ W ∈ S, Z W * n W := by
+  have e : ∀ Z : Ideal (MRing ι R) → ℤ, Function.support Z ⊆ S → cycEval n Z = ∑ W ∈ S, Z W * n W := by
     intro Z hZS
     unfold cycEval
     refine finsum_eq_sum_of_support_subset _ fun W hW => hZS (Function.support_mul_subset_left _ _ hW)
@@ -65,19 +64,19 @@ section Additivity
 
 theorem vNumL_add_of_divCycle_ne_zero {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     {ϖ : O} (hϖ : Irreducible ϖ) {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-    [∀ k, Fintype (ι k)] {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {e : ℕ} (hP : IsModelOver P (e + 1))
-    {c : K → ℕ} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hs : IsMultiHomog s c) {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}
-    (hW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) ≠ 0) (hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W) (a₁ a₂ : K → ℤ) (l : List (K → ℤ))
+    [∀ k, Fintype (ι k)] {P : Ideal (MRing ι O)} {e : ℕ} (hP : IsModelOver P (e + 1))
+    {c : K → ℕ} {s : MRing ι O} (hs : IsMultiHomog s c) {W : Ideal (MRing ι O)}
+    (hW : divCycle P s W ≠ 0) (hϖW : (C ϖ : MRing ι O) ∈ W) (a₁ a₂ : K → ℤ) (l : List (K → ℤ))
     (hl : e ≤ l.length) :
     vNumL W ((a₁ + a₂) :: l) = vNumL W (a₁ :: l) + vNumL W (a₂ :: l) := by
   have hPmh : IsMultiHomogIdeal P := hP.multiProj.multiHomog
   have : P.IsPrime := hP.multiProj.isPrime
-  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
+  have hϖP : (C ϖ : MRing ι O) ∉ P := by
     intro h
-    have h' : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
+    have h' : ϖ ∈ P.comap (C : O →+* MRing ι O) := h
     rw [hP.noTorsion, Ideal.mem_bot] at h'
     exact hϖ.ne_zero h'
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
+  unfold divCycle at hW
   split_ifs at hW with hW''
   swap
   · exact absurd rfl hW
@@ -86,7 +85,7 @@ theorem vNumL_add_of_divCycle_ne_zero {O : Type} [CommRing O] [IsDomain O] [IsDi
   have hWp : W.IsPrime := hW''.1.1.1
   have hPW : P ≤ W := le_sup_left.trans hW''.1.1.2
   have hlt : P < W := lt_of_le_of_ne hPW (fun h => hϖP (h ▸ hϖW))
-  have hdrop := DimStrictDrop.full (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P W hlt
+  have hdrop := DimStrictDrop.full (MRing ι O) P W hlt
   rw [hP.dim] at hdrop
   have hdim : ringKrullDim (MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal W) <
       ((l.length + 2 + Fintype.card K : ℕ) : WithBot ℕ∞) := by
@@ -111,32 +110,32 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {ϖ : 
   {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 
-theorem cut_list (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : Irreducible ϖ) {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}
-    {b : K → ℤ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hD : IsVerticalDivisor P ϖ b f g) {c : K → ℕ} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
+theorem cut_list (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : Irreducible ϖ) {P : Ideal (MRing ι O)}
+    {b : K → ℤ} {f g : MRing ι O} (hD : IsVerticalDivisor P ϖ b f g) {c : K → ℕ} {s : MRing ι O}
     (hs : IsMultiHomog s c) (hsP : s ∉ P)
-    (hgen : ∀ H, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) H : ℤ) ≠ 0 → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H → IsVerticalDivisor H ϖ b f g)
+    (hgen : ∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H → IsVerticalDivisor H ϖ b f g)
     (l : List (K → ℤ)) (hP : IsModelOver P (l.length + 1)) :
     cycEval (fun G => vNumL G ((fun k => (c k : ℤ)) :: l)) (ratDiv P f g) =
-      cycEval (fun W => if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then vNumL W (b :: l)
-        else cycEval (fun G => vNumL G l) (ratDiv W f g)) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))) := by
+      cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then vNumL W (b :: l)
+        else cycEval (fun G => vNumL G l) (ratDiv W f g)) (divCycle P s) := by
   have h := hC3 O ϖ hϖ K ι P l.length hP b f g hD c s hs hsP hgen l.get
   simp only [vNum_vecCons_eq, List.ofFn_get] at h
   exact h
 
 
 theorem cut_list_ratDiv (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : Irreducible ϖ)
-    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {b : K → ℤ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hD : IsVerticalDivisor P ϖ b f g)
-    {cs ch : K → ℕ} {s h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hs : IsMultiHomog s cs) (hh : IsMultiHomog h ch) (hsP : s ∉ P)
+    {P : Ideal (MRing ι O)} {b : K → ℤ} {f g : MRing ι O} (hD : IsVerticalDivisor P ϖ b f g)
+    {cs ch : K → ℕ} {s h : MRing ι O} (hs : IsMultiHomog s cs) (hh : IsMultiHomog h ch) (hsP : s ∉ P)
     (hhP : h ∉ P)
     (hgen : ∀ H, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) H : ℤ) ≠ 0 ∨ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P h) H : ℤ) ≠ 0) → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H →
       IsVerticalDivisor H ϖ b f g)
     (l : List (K → ℤ)) (hP : IsModelOver P (l.length + 1)) :
     cycEval (fun G => vNumL G ((fun k => (cs k : ℤ) - ch k) :: l)) (ratDiv P f g) =
-      cycEval (fun W => if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then vNumL W (b :: l)
+      cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then vNumL W (b :: l)
         else cycEval (fun G => vNumL G l) (ratDiv W f g)) (ratDiv P s h) := by
   have e1 := cut_list hC3 hϖ hD hs hsP (fun H hH => hgen H (Or.inl hH)) l hP
   have e2 := cut_list hC3 hϖ hD hh hhP (fun H hH => hgen H (Or.inr hH)) l hP
-  have hr : ratDiv P s h = divCycle P s - (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P h) W : ℤ)) := rfl
+  have hr : ratDiv P s h = divCycle P s - divCycle P h := rfl
   have hfg := ratDiv_finite_support P f g
   rw [hr, ← cycEval_sub_cycle _ _ _ (divCycle_finite_support P s) (divCycle_finite_support P h), ← e1, ← e2,
     cycEval_eq_sum hfg, cycEval_eq_sum hfg, cycEval_eq_sum hfg, ← Finset.sum_sub_distrib]
@@ -153,16 +152,16 @@ theorem cut_list_ratDiv (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : Irred
 
 
 theorem pairNum_cut_section (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : Irreducible ϖ)
-    {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} {e : ℕ} (hP : IsModelOver P (e + 1)) {r : ℕ} (z z' : Fin r → K → ℤ)
-    (fs gs : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (hD : ∀ i, IsVerticalDivisor P ϖ (z i - z' i) (fs i) (gs i))
-    {cs ch : K → ℕ} {s h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hs : IsMultiHomog s cs) (hh : IsMultiHomog h ch) (hsP : s ∉ P)
+    {P : Ideal (MRing ι O)} {e : ℕ} (hP : IsModelOver P (e + 1)) {r : ℕ} (z z' : Fin r → K → ℤ)
+    (fs gs : Fin r → MRing ι O) (hD : ∀ i, IsVerticalDivisor P ϖ (z i - z' i) (fs i) (gs i))
+    {cs ch : K → ℕ} {s h : MRing ι O} (hs : IsMultiHomog s cs) (hh : IsMultiHomog h ch) (hsP : s ∉ P)
     (hhP : h ∉ P)
     (hgen : ∀ H, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) H : ℤ) ≠ 0 ∨ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P h) H : ℤ) ≠ 0) → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H →
       ∀ i, IsVerticalDivisor H ϖ (z i - z' i) (fs i) (gs i))
     {m : ℕ} (hm : 1 ≤ m) {A : MvPolynomial (Fin r) ℤ} {Bs : Fin r → MvPolynomial (Fin r ⊕ Fin r) ℤ}
     (hBs : IsPairExpansion m A Bs) (Q : List (K → ℤ)) (hQ : Q.length + m = e + 1) :
     pairNum P z z' fs gs Bs ((fun k => (cs k : ℤ) - ch k) :: Q) =
-      cycEval (fun W => if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then classNum z A Q W - classNum z' A Q W
+      cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then classNum z A Q W - classNum z' A Q W
         else pairNum W z z' fs gs Bs Q) (ratDiv P s h) := by
   set c : K → ℤ := fun k => (cs k : ℤ) - ch k with hc
   set cl : Fin r ⊕ Fin r → K → ℤ := Sum.elim z z' with hcl
@@ -174,7 +173,7 @@ theorem pairNum_cut_section (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : I
 
   have step : ∀ i, ∀ μ ∈ (Bs i).support,
       cycEval (fun G => vNumL G (c :: (classList cl μ ++ Q))) (ratDiv P (fs i) (gs i)) =
-        cycEval (fun W => if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then vNumL W ((z i - z' i) :: (classList cl μ ++ Q))
+        cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then vNumL W ((z i - z' i) :: (classList cl μ ++ Q))
           else cycEval (fun G => vNumL G (classList cl μ ++ Q)) (ratDiv W (fs i) (gs i))) (ratDiv P s h) := by
     intro i μ hμ
     refine cut_list_ratDiv hC3 hϖ (hD i) hs hh hsP hhP (fun H hH hϖH => hgen H hH hϖH i) _ ?_
@@ -185,8 +184,8 @@ theorem pairNum_cut_section (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : I
       cycEval (fun G => vNumL G (c :: (classList cl μ ++ Q))) (ratDiv P (fs i) (gs i)) := by
     unfold pairNum
     refine Finset.sum_congr rfl fun i _ => ?_
-    have e1 : (fun W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) => classNum (Sum.elim z z') (Bs i) (c :: Q) W) =
-        fun W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) => ∑ μ ∈ (Bs i).support, (Bs i).coeff μ * vNumL W (c :: (classList cl μ ++ Q)) := by
+    have e1 : (fun W : Ideal (MRing ι O) => classNum (Sum.elim z z') (Bs i) (c :: Q) W) =
+        fun W : Ideal (MRing ι O) => ∑ μ ∈ (Bs i).support, (Bs i).coeff μ * vNumL W (c :: (classList cl μ ++ Q)) := by
       funext W
       unfold classNum
       refine Finset.sum_congr rfl fun μ _ => ?_
@@ -198,7 +197,7 @@ theorem pairNum_cut_section (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : I
   have hR : ∑ i, ∑ μ ∈ (Bs i).support, (Bs i).coeff μ *
       cycEval (fun G => vNumL G (c :: (classList cl μ ++ Q))) (ratDiv P (fs i) (gs i)) =
       cycEval (fun W => ∑ i, ∑ μ ∈ (Bs i).support, (Bs i).coeff μ *
-        (if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then vNumL W ((z i - z' i) :: (classList cl μ ++ Q))
+        (if (C ϖ : MRing ι O) ∈ W then vNumL W ((z i - z' i) :: (classList cl μ ++ Q))
           else cycEval (fun G => vNumL G (classList cl μ ++ Q)) (ratDiv W (fs i) (gs i)))) (ratDiv P s h) := by
     rw [cycEval_finset_sum _ _ _ hsh]
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -207,14 +206,14 @@ theorem pairNum_cut_section (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : I
     rw [cycEval_mul_left _ _ _ hsh, step i μ hμ]
   rw [hR]
   refine cycEval_congr_support fun W hW => ?_
-  by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W
+  by_cases hϖW : (C ϖ : MRing ι O) ∈ W
   · simp only [if_pos hϖW]
 
     have hadd : ∀ (a₁ a₂ : K → ℤ) (l : List (K → ℤ)), e ≤ l.length →
         vNumL W ((a₁ + a₂) :: l) = vNumL W (a₁ :: l) + vNumL W (a₂ :: l) := by
       intro a₁ a₂ l hl
-      by_cases h1 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = 0
-      · have h2 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P h) W : ℤ) ≠ 0 := by
+      by_cases h1 : divCycle P s W = 0
+      · have h2 : divCycle P h W ≠ 0 := by
           intro h2
           apply hW
           simp [ratDiv, h1, h2]
@@ -239,8 +238,8 @@ theorem pairNum_cut_section (hC3 : CutByEffectiveDivisor.Statement.{0}) (hϖ : I
   · simp only [if_neg hϖW]
     unfold pairNum
     refine Finset.sum_congr rfl fun i _ => ?_
-    have e1 : (fun G : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) => classNum (Sum.elim z z') (Bs i) Q G) =
-        fun G : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) => ∑ μ ∈ (Bs i).support, (Bs i).coeff μ * vNumL G (classList cl μ ++ Q) := rfl
+    have e1 : (fun G : Ideal (MRing ι O) => classNum (Sum.elim z z') (Bs i) Q G) =
+        fun G : Ideal (MRing ι O) => ∑ μ ∈ (Bs i).support, (Bs i).coeff μ * vNumL G (classList cl μ ++ Q) := rfl
     rw [e1, cycEval_finset_sum _ _ _ (ratDiv_finite_support W (fs i) (gs i))]
     refine Finset.sum_congr rfl fun μ _ => ?_
     rw [cycEval_mul_left _ _ _ (ratDiv_finite_support W (fs i) (gs i))]

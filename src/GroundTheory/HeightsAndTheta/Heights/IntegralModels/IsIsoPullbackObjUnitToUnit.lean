@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.ArithmeticGeometry.SchemeCohomology.InvertibleSheaf
 public import GroundTheory.ArithmeticGeometry.SchemeCohomology.WeilDivisor
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 

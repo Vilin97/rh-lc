@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -53,7 +52,7 @@ theorem proof (h1 : MixedDiffLinear.Statement) (h2 : DegLTEventuallyConst.Statem
   have hfun : hilbFn J = fun m => (l.map fun p => hilbFn p.1 (m - fun k => (p.2 k : ℤ))).sum :=
     funext hJ
   have hev := eventually_mixedDiff_sum h1 h3 bs
-    (fun p : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) × (K → ℕ) => hilbFn p.1) (fun p k => (p.2 k : ℤ)) l
+    (fun p : Ideal (MRing ι F) × (K → ℕ) => hilbFn p.1) (fun p k => (p.2 k : ℤ)) l
     (fun p hp => h2 K n (hilbFn p.1) (hdeg p hp) bs)
   unfold intNum
   rw [hfun]

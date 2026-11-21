@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PGradedFinite
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -139,7 +138,7 @@ theorem mem_map_of_coeffForm {I : Ideal (MvPolynomial σ F)} {f : MvPolynomial �
 
 variable {K : Type*} {ι : K → Type*}
 
-theorem isMultiHomogIdeal_map [DecidableEq K] {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : IsMultiHomogIdeal I) :
+theorem isMultiHomogIdeal_map [DecidableEq K] {I : Ideal (MRing ι F)} (hI : IsMultiHomogIdeal I) :
     IsMultiHomogIdeal (I.map (map (algebraMap F F'))) := by
   intro f hf b
   apply mem_map_of_coeffForm
@@ -147,7 +146,7 @@ theorem isMultiHomogIdeal_map [DecidableEq K] {I : Ideal (ReciprocityTheory.Char
   rw [coeffForm_weightedHomogeneousComponent]
   exact hI _ (coeffForm_mem φ hf) b
 
-theorem isRelevant_map {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : IsRelevant I) :
+theorem isRelevant_map {I : Ideal (MRing ι F)} (hI : IsRelevant I) :
     IsRelevant (I.map (map (algebraMap F F'))) := by
   intro k
   obtain ⟨i, hi⟩ := hI k
@@ -161,7 +160,7 @@ section Hilbert
 variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [∀ k, Fintype (ι k)]
 
 
-theorem gradedPiece_eq_span (E : Type*) [Field E] (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver E ι)) (m : K → ℕ) :
+theorem gradedPiece_eq_span (E : Type*) [Field E] (J : Ideal (MRing ι E)) (m : K → ℕ) :
     gradedPiece J m = Submodule.span E ((fun d => Ideal.Quotient.mk J (monomial d (1 : E))) ''
       {d : (Σ k, ι k) →₀ ℕ | Finsupp.weight (blockWeight ι) d = m}) := by
   have hspan : weightedHomogeneousSubmodule E (blockWeight ι) m = Submodule.span E
@@ -183,14 +182,14 @@ theorem gradedPiece_eq_span (E : Type*) [Field E] (J : Ideal (ReciprocityTheory.
   rfl
 
 omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
-theorem smul_mk_monomial (E : Type*) [Field E] (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver E ι)) (d : (Σ k, ι k) →₀ ℕ)
+theorem smul_mk_monomial (E : Type*) [Field E] (J : Ideal (MRing ι E)) (d : (Σ k, ι k) →₀ ℕ)
     (c : E) : c • Ideal.Quotient.mk J (monomial d (1 : E)) = Ideal.Quotient.mk J (monomial d c) := by
   have h := map_smul (Ideal.Quotient.mkₐ E J) c (monomial d (1 : E))
   rw [smul_monomial, smul_eq_mul, mul_one, Ideal.Quotient.mkₐ_eq_mk] at h
   exact h.symm
 
 omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
-theorem sum_smul_mk_monomial (E : Type*) [Field E] (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver E ι)) {B : Type*} [Fintype B]
+theorem sum_smul_mk_monomial (E : Type*) [Field E] (J : Ideal (MRing ι E)) {B : Type*} [Fintype B]
     (lift : B → (Σ k, ι k) →₀ ℕ) (c : B → E) :
     ∑ x, c x • Ideal.Quotient.mk J (monomial (lift x) (1 : E)) =
       Ideal.Quotient.mk J (∑ x, monomial (lift x) (c x)) := by
@@ -200,7 +199,7 @@ theorem sum_smul_mk_monomial (E : Type*) [Field E] (J : Ideal (ReciprocityTheory
 
 variable {F : Type*} [Field F] {F' : Type*} [Field F'] [Algebra F F']
 
-theorem finrank_gradedPiece_map (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m : K → ℕ) :
+theorem finrank_gradedPiece_map (I : Ideal (MRing ι F)) (m : K → ℕ) :
     Module.finrank F' (gradedPiece (I.map (map (algebraMap F F'))) m) =
       Module.finrank F (gradedPiece I m) := by
   classical
@@ -247,7 +246,7 @@ theorem finrank_gradedPiece_map (I : Ideal (ReciprocityTheory.ChartRestriction.G
     · rw [Submodule.span_le]
       rintro _ ⟨d, hd, rfl⟩
       have hmem : Ideal.Quotient.mk I (monomial d (1 : F)) ∈
-          Submodule.span F (Set.range ((↑) : B → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I)) := by
+          Submodule.span F (Set.range ((↑) : B → MRing ι F ⧸ I)) := by
         rw [Subtype.range_coe, hBspan]
         exact Submodule.subset_span ⟨d, hd, rfl⟩
       obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun F).mp hmem
@@ -266,7 +265,7 @@ theorem finrank_gradedPiece_map (I : Ideal (ReciprocityTheory.ChartRestriction.G
       exact Submodule.sum_mem _ fun x _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨x, rfl⟩)
   rw [← hspan', finrank_span_eq_card hind', hF]
 
-theorem hilbFn_map (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m : K → ℤ) :
+theorem hilbFn_map (I : Ideal (MRing ι F)) (m : K → ℤ) :
     hilbFn (I.map (map (algebraMap F F'))) m = hilbFn I m := by
   unfold hilbFn
   split_ifs

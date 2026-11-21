@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsMultiHomogIdealMap
 public import Development.WeilBound.CoreStatements.PluriharmonicCharts.BlockFnFieldCompLe
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -69,7 +68,7 @@ variable {M : FlagModel y Ψ N j} {M' : FlagModel y' Ψ N j} {τ : Ψ} {a b : Fi
 
 theorem exists_homog_eval_eq_zero_of_relW (Cv : FlagCover M' M) (S : Sw M τ a b k₀ ca cb) (S' : Sw M' τ a b k₀' ca cb)
     (hy : IsArithVar (mCoordIdeal y) (d + 2)) (hy' : IsArithVar (mCoordIdeal y') (d + 2))
-    (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K' => ι' (o.getD k₀'))) (hJ : IsMultiHomogIdeal J)
+    (J : Ideal (MRing fun o : Option K' => ι' (o.getD k₀'))) (hJ : IsMultiHomogIdeal J)
     (hn : ¬ J ≤ mCoordIdeal (M'.wCo (τ, a) k₀' ca cb RatFunc.X)) :
     ∃ (g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K => ι (o.getD k₀)) (dg : Option K → ℕ), IsMultiHomog g dg ∧
       g ∉ mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X) ∧
@@ -82,9 +81,9 @@ theorem exists_homog_eval_eq_zero_of_relW (Cv : FlagCover M' M) (S : Sw M τ a b
 
 theorem pull_alt (Cv : FlagCover M' M) (S : Sw M τ a b k₀ ca cb) (S' : Sw M' τ a b k₀' ca cb)
     (hy : IsArithVar (mCoordIdeal y) (d + 2)) (hy' : IsArithVar (mCoordIdeal y') (d + 2))
-    (G : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K => ι (o.getD k₀)) (dG : Option K → ℕ) (hG : IsMultiHomog G dG)
+    (G : MRing fun o : Option K => ι (o.getD k₀)) (dG : Option K → ℕ) (hG : IsMultiHomog G dG)
     (hn : G ∉ mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X)) :
-    ∃ (g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K' => ι' (o.getD k₀')) (dg : Option K' → ℕ), IsMultiHomog g dg ∧
+    ∃ (g : MRing fun o : Option K' => ι' (o.getD k₀')) (dg : Option K' → ℕ), IsMultiHomog g dg ∧
       g ∉ mCoordIdeal (M'.wCo (τ, a) k₀' ca cb RatFunc.X) ∧
       ∀ z ∈ mcPts (mCoordIdeal (M'.wCo (τ, a) k₀' ca cb RatFunc.X)),
         ∀ w ∈ mcPts (mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X)), RelW Cv k₀ k₀' z w →
@@ -114,7 +113,7 @@ theorem mapsTo_twoFlagFramesOrthogonal_of_isometry (hRes : ResExistsStatement) (
     {X : Type} [TopologicalSpace X] [CompactSpace X] [T2Space X] (A : FinHolAtlas (d + 2) X)
     (RW : AnLogRes (mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X)) ⊤ (d + 2)) (e : RW.X → X)
     (he : HoloMap RW.A A e) (hdeg : IsDegreeOff A RW.A e 1 ∅) :
-    ∃ (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K' => ι' (o.getD k₀')))
+    ∃ (J : Ideal (MRing fun o : Option K' => ι' (o.getD k₀')))
       (R' : AnLogRes (mCoordIdeal (M'.wCo (τ, a) k₀' ca cb RatFunc.X)) J (d + 2)) (g : R'.X → RW.X) (br : Set X),
       HoloMap R'.A RW.A g ∧ IsDegreeOff A R'.A (e ∘ g) Cv.deg br ∧
         ∀ x, RelW Cv k₀ k₀' (R'.lift x x) (RW.lift (g x) (g x)) := by
@@ -131,7 +130,7 @@ theorem mapsTo_twoFlagFramesOrthogonal_of_isometry (hRes : ResExistsStatement) (
     intro z h
     have := h.2 1 trivial
     simp at this
-  have htop : IsMultiHomogIdeal (⊤ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K' => ι' (o.getD k₀'))) := by
+  have htop : IsMultiHomogIdeal (⊤ : Ideal (MRing fun o : Option K' => ι' (o.getD k₀'))) := by
     refine ⟨{1}, fun f hf => ⟨0, ?_⟩, by simp⟩
     rw [Set.mem_singleton_iff.mp hf]
     intro m hm k

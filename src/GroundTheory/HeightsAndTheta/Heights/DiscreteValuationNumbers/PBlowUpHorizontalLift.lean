@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpHorizontal
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AevalChartSubstMemOfMemBlowUpOf
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -23,7 +22,7 @@ theorem BlowUpHorizontalLift.full : BlowUpHorizontalLift.Statement.{u} := by
   have hPp : P.IsPrime := hP.multiProj.isPrime
   obtain ⟨hWp, hPW, hrelW⟩ := le_and_isRelevant_of_divCycle_ne_zero hW
   have hWmin : W ∈ (P ⊔ Ideal.span {x}).minimalPrimes := by
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
+    unfold divCycle at hW
     split_ifs at hW with h
     · exact h.1
     · exact absurd rfl hW
@@ -41,8 +40,8 @@ theorem BlowUpHorizontalLift.full : BlowUpHorizontalLift.Statement.{u} := by
     · exact hvW j (hPW h2)
     · exact hj h2
 
-  set V : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι := ∏ j, v j with hV
-  set a : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι := fun j => w j * ∏ i ∈ Finset.univ.erase j, v i with ha_def
+  set V : MRing ι O := ∏ j, v j with hV
+  set a : J → MRing ι O := fun j => w j * ∏ i ∈ Finset.univ.erase j, v i with ha_def
   have hVW : V ∉ W := by
     intro h
     obtain ⟨j, -, hj⟩ := Ideal.IsPrime.prod_mem_iff.mp h
@@ -62,8 +61,8 @@ theorem BlowUpHorizontalLift.full : BlowUpHorizontalLift.Statement.{u} := by
     exact (hPp.mem_or_mem h1).resolve_right hu₀
   have haW : a j₀ ∉ W := fun h => hVW (by simpa using W.add_mem (hPW hVa) h)
 
-  set Wt : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)) :=
-    (Ideal.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) W).comap
+  set Wt : Ideal (MRing (extIdx ι J) O) :=
+    (Ideal.map (Polynomial.C : MRing ι O →+* Polynomial (MRing ι O)) W).comap
       (aeval (R := O) (chartSubst a)) with hWt
   have hWtp : Wt.IsPrime := Ideal.comap_isPrime _ _
   have hcomap : ∀ s, liftForm (J := J) s ∈ Wt ↔ s ∈ W := by
@@ -108,7 +107,7 @@ theorem BlowUpHorizontalLift.full : BlowUpHorizontalLift.Statement.{u} := by
       exact P.sub_mem (ha j) (P.mul_mem_left _ hVa)
   refine ⟨Wt, ?_, fun h => hϖW ((hcomap _).1 (by rw [liftForm_C]; exact h)), ?_⟩
   ·
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+    unfold divCycle
     rw [dite_eq_left ⟨hmin, hrelWt⟩]
     have hne := length_localizedQuot_ne_top (blowUpOf P u ⊔ Ideal.span {liftForm x}) Wt hmin
     have hnz : multAt (blowUpOf P u ⊔ Ideal.span {liftForm x}) Wt ≠ 0 := by

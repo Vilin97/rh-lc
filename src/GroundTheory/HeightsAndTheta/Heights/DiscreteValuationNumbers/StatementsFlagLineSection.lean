@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagBundle
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 
 @[expose] public section
@@ -20,14 +19,14 @@ def FlagLineSection.Statement : Prop :=
     (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
     (y : (Σ k, ι k) → Ω) (e : ℕ),
     IsMultiProjPrime (pointIdeal F y) →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    ringKrullDim (MRing ι F ⧸ pointIdeal F y) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E]
       (B : ChartBundle F (segreVec y) N E) (w : Module.Basis (Fin N) Ω E) (b : Fin N → K → ℤ),
       IsFlagFrame y B w b →
     ∀ (M : ℕ) (a : K → ℤ) (φ : Fin M → Module.Dual Ω E), IsTwistedDualGens y B a φ →
     ∀ (Φ : Type) [Field Φ] [Algebra Ω Φ] (t : Fin N → Φ), AlgebraicIndependent Ω t →
     ∀ h0 : 0 < N,
-      ∃ (bf bg : Option K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)),
+      ∃ (bf bg : Option K → ℕ) (f g : MRing (bundleIdx ι M) F),
         IsMultiHomog f bf ∧ IsMultiHomog g bg ∧
         f ∉ projIdeal F y w φ (truncCoord t 1) ∧ g ∉ projIdeal F y w φ (truncCoord t 1) ∧
         (fun o => (bf o : ℤ) - bg o) = zetaDeg - liftDeg (a - b ⟨0, h0⟩) ∧

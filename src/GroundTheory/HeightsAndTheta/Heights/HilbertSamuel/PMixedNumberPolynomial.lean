@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -46,7 +45,7 @@ theorem mixedDiff_cons {n : ℕ} (v : K → ℤ) (t : Fin n → K → ℤ) (h : 
     mixedDiff (Fin.cons v t : Fin (n + 1) → K → ℤ) h = gStep v (mixedDiff t h) := by
   simp only [mixedDiff_eq, List.ofFn_succ, Fin.cons_zero, Fin.cons_succ, List.foldr_cons]
 
-theorem intNum_perm (F : Type*) [Field F] {ι : K → Type*} (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {d : ℕ}
+theorem intNum_perm (F : Type*) [Field F] {ι : K → Type*} (q : Ideal (MRing ι F)) {d : ℕ}
     (σ : Equiv.Perm (Fin d)) (bs : Fin d → K → ℤ) : intNum F q (bs ∘ σ) = intNum F q bs := by
   unfold intNum
   rw [mixedDiff_eq, mixedDiff_eq, (σ.ofFn_comp_perm bs).foldr_eq]
@@ -80,7 +79,7 @@ theorem eventualValue_step_add (G : (K → ℤ) → ℤ) (x y : K → ℤ)
   rw [show m - x - y = m - (x + y) from sub_sub m x y]
   abel
 
-theorem intNum_update_add (F : Type*) [Field F] {ι : K → Type*} (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) {d : ℕ}
+theorem intNum_update_add (F : Type*) [Field F] {ι : K → Type*} (q : Ideal (MRing ι F)) {d : ℕ}
     (hex : ∀ bs : Fin d → K → ℤ, ∃ c, ∀ᶠ m in atTop, mixedDiff bs (hilbFn q) m = c)
     (bs : Fin d → K → ℤ) (j : Fin d) (x y : K → ℤ) :
     intNum F q (Function.update bs j (x + y)) =
@@ -245,8 +244,8 @@ end Polynomials
 
 theorem exists_eventually_const (h : MultigradedHilbertPolynomial.Statement.{u}) (F : Type u)
     [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-    (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (d : ℕ) (hq : IsMultiProjPrime q)
-    (hdim : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞))
+    (q : Ideal (MRing ι F)) (d : ℕ) (hq : IsMultiProjPrime q)
+    (hdim : ringKrullDim (MRing ι F ⧸ q) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞))
     (bs : Fin d → K → ℤ) : ∃ c, ∀ᶠ m in atTop, mixedDiff bs (hilbFn q) m = c := by
   obtain ⟨p, a₀, hdeg, hp⟩ := h F K ι q d hq hdim
   have hev : ∀ᶠ m in atTop, ((hilbFn q m : ℤ) : ℚ) = eval (fun k => (m k : ℚ)) p := by

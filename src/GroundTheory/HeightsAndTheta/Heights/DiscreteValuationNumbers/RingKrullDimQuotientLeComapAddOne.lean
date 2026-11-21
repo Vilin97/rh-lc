@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.CutIdentityRightSideCongrOfSubMem
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDimStrictDrop
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -15,14 +14,14 @@ open MvPolynomial
 
 theorem ringKrullDim_quotient_le_comap_add_one {K : Type} [Fintype K] {ι : K → Type}
     [∀ k, Fintype (ι k)] {J : Type} {R : Type*} [CommRing R] [IsNoetherianRing R]
-    (G' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))) [G'.IsPrime] (j₀ : J)
-    (hY : ∀ j, j ≠ j₀ → (newVar j : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) ∈ G') :
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ G') ≤
-      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ G'.comap (liftForm (J := J) (ι := ι) (R := R))) + 1 := by
+    (G' : Ideal (MRing (extIdx ι J) R)) [G'.IsPrime] (j₀ : J)
+    (hY : ∀ j, j ≠ j₀ → (newVar j : MRing (extIdx ι J) R) ∈ G') :
+    ringKrullDim (MRing (extIdx ι J) R ⧸ G') ≤
+      ringKrullDim (MRing ι R ⧸ G'.comap (liftForm (J := J) (ι := ι) (R := R))) + 1 := by
   set G := G'.comap (liftForm (J := J) (ι := ι) (R := R)) with hGdef
-  let φ : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ G) →+* (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ G') :=
+  let φ : (MRing ι R ⧸ G) →+* (MRing (extIdx ι J) R ⧸ G') :=
     Ideal.quotientMap G' (liftForm (J := J) (ι := ι) (R := R)).toRingHom le_rfl
-  let ψ : Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ G) →+* (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ G') :=
+  let ψ : Polynomial (MRing ι R ⧸ G) →+* (MRing (extIdx ι J) R ⧸ G') :=
     Polynomial.eval₂RingHom φ (Ideal.Quotient.mk G' (newVar j₀))
   have hψ : Function.Surjective ψ := by
     intro y
@@ -54,9 +53,9 @@ theorem ringKrullDim_quotient_le_comap_add_one {K : Type} [Fintype K] {ι : K �
         rw [map_mul, ha, map_mul]
         congr 1
         simp [ψ, φ, Ideal.quotientMap_mk, liftForm, rename_X]
-  calc ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ G')
-      ≤ ringKrullDim (Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ G)) := ringKrullDim_le_of_surjective ψ hψ
-    _ = ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ G) + 1 := Polynomial.ringKrullDim_of_isNoetherianRing
+  calc ringKrullDim (MRing (extIdx ι J) R ⧸ G')
+      ≤ ringKrullDim (Polynomial (MRing ι R ⧸ G)) := ringKrullDim_le_of_surjective ψ hψ
+    _ = ringKrullDim (MRing ι R ⧸ G) + 1 := Polynomial.ringKrullDim_of_isNoetherianRing
 
 theorem mem_minimalPrimes_of_ringKrullDim {A : Type*} [CommRing A] (P G : Ideal A) [P.IsPrime]
     [G.IsPrime] (s : A) (hsP : s ∉ P) (N : ℕ) (hP : ringKrullDim (A ⧸ P) = (N : WithBot ℕ∞))

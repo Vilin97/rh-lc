@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,7 +16,7 @@ noncomputable section
 universe u
 
 def MultAtOfSaturated.Statement : Prop :=
-  ∀ (R : Type u) [CommRing R] (K : Type) (ι : K → Type) (J Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [Q.IsPrime],
+  ∀ (R : Type u) [CommRing R] (K : Type) (ι : K → Type) (J Q : Ideal (MRing ι R)) [Q.IsPrime],
     J ≤ Q → (∀ q ∈ Q, ∃ s ∉ Q, s * q ∈ J) → Q ∈ J.minimalPrimes ∧ multAt J Q = 1
 
 end

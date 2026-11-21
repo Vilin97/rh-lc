@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagCutLiesOver
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -16,7 +15,7 @@ noncomputable section
 
 namespace SegreFlagCutProjection
 
-theorem relDim_anti {F : Type*} [Field F] {K : Type*} [Fintype K] {ι : K → Type*} {I J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}
+theorem relDim_anti {F : Type*} [Field F] {K : Type*} [Fintype K] {ι : K → Type*} {I J : Ideal (MRing ι F)}
     (hIJ : I ≤ J) : FieldNumbers.relDim J ≤ FieldNumbers.relDim I := by
   have hmono : Monotone (fun x : WithBot ℕ∞ =>
       WithBot.map (fun d : ℕ∞ => WithTop.map (fun e : ℕ => (e : ℤ) - Fintype.card K) d) x) :=
@@ -26,7 +25,7 @@ theorem relDim_anti {F : Type*} [Field F] {K : Type*} [Fintype K] {ι : K → Ty
 
 theorem specialIdeal_le_contractPrime {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
     {K K' : Type*} [DecidableEq K] [DecidableEq K'] (j : K ↪ K') {ι' : K' → Type*}
-    {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (fun k => ι' (j k)))} {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι')}
+    {I : Ideal (MRing (fun k => ι' (j k)) O)} {W : Ideal (MRing ι' O)}
     (h : I ≤ W.comap (rename (FieldNumbers.blockIncl j ι'))) :
     specialIdeal I ≤ FieldNumbers.contractPrime j (specialIdeal W) := by
   refine Ideal.map_le_iff_le_comap.mpr fun f hf => ?_

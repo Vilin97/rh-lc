@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -20,7 +19,7 @@ section SlopeTestRemainingChoices
 
 variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 
-theorem cycEval_eq_add_mul_of_cycle (φ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) {Z₀ Z₁ Z₂ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ}
+theorem cycEval_eq_add_mul_of_cycle (φ : Ideal (MRing ι R) → ℤ) {Z₀ Z₁ Z₂ : Ideal (MRing ι R) → ℤ}
     (k : ℤ) (h₀ : (Function.support Z₀).Finite) (h₂ : (Function.support Z₂).Finite)
     (h : ∀ W, Z₁ W = Z₀ W + k * Z₂ W) :
     cycEval φ Z₁ = cycEval φ Z₀ + k * cycEval φ Z₂ := by
@@ -34,7 +33,7 @@ theorem cycEval_eq_add_mul_of_cycle (φ : Ideal (ReciprocityTheory.ChartRestrict
   rw [h W]
   ring
 
-theorem cycEval_eq_add_mul_of_fun {φ₀ φ₁ φ₂ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ} {Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ}
+theorem cycEval_eq_add_mul_of_fun {φ₀ φ₁ φ₂ : Ideal (MRing ι R) → ℤ} {Z : Ideal (MRing ι R) → ℤ}
     (k : ℤ) (hZ : (Function.support Z).Finite) (h : ∀ W, Z W ≠ 0 → φ₁ W = φ₀ W + k * φ₂ W) :
     cycEval φ₁ Z = cycEval φ₀ Z + k * cycEval φ₂ Z := by
   unfold cycEval
@@ -56,7 +55,7 @@ section VNum
 variable {K : Type*} [DecidableEq K] {ι : K → Type*}
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-theorem vNum_vecCons_zero (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) {d : ℕ} (L : Fin d → K → ℤ) :
+theorem vNum_vecCons_zero (W : Ideal (MRing ι O)) {d : ℕ} (L : Fin d → K → ℤ) :
     vNum W (Matrix.vecCons (0 : K → ℤ) L) = 0 := by
   unfold vNum intNum
   have hm : mixedDiff (Matrix.vecCons (0 : K → ℤ) L) (hilbFn (specialIdeal W)) = fun _ => 0 := by
@@ -75,16 +74,16 @@ end VNum
 theorem ShiftByUniformiser.proof (h₁ : DivCycleMul.Statement.{u})
     (h₂ : DivCycleFiniteSupport.Statement.{u}) : ShiftByUniformiser.Statement.{u} := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP b f g hD c s _ hsP hH L n hI₁ hI₂
-  have hfin : ∀ (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), (Function.support ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q x) W : ℤ)))).Finite :=
+  have hfin : ∀ (Q : Ideal (MRing ι O)) (x : MRing ι O), (Function.support (divCycle Q x)).Finite :=
     fun Q x => h₂ O K ι Q x
-  have hrat : ∀ (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (x y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), (Function.support (ratDiv Q x y)).Finite :=
+  have hrat : ∀ (Q : Ideal (MRing ι O)) (x y : MRing ι O), (Function.support (ratDiv Q x y)).Finite :=
     fun Q x y => ((hfin Q x).union (hfin Q y)).subset fun W hW => by
       by_contra hc
       simp only [Set.mem_union, Function.mem_support, not_or, not_not] at hc
       exact hW (by simp [ratDiv, hc.1, hc.2])
 
-  have hpow : ∀ (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)), Q.IsPrime → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ Q → f ∉ Q → ∀ m : ℕ,
-      ∀ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (C ϖ ^ m * f)) W : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q f) W : ℤ) + m * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (C ϖ)) W : ℤ) := by
+  have hpow : ∀ (Q : Ideal (MRing ι O)), Q.IsPrime → (C ϖ : MRing ι O) ∉ Q → f ∉ Q → ∀ m : ℕ,
+      ∀ W, divCycle Q (C ϖ ^ m * f) W = divCycle Q f W + m * divCycle Q (C ϖ) W := by
     intro Q hQ hϖQ hfQ m
     induction m with
     | zero => intro W; simp
@@ -92,40 +91,40 @@ theorem ShiftByUniformiser.proof (h₁ : DivCycleMul.Statement.{u})
       intro W
       have hm : C ϖ ^ m * f ∉ Q := fun h =>
         (hQ.mem_or_mem h).elim (fun h' => hϖQ (hQ.mem_of_pow_mem _ h')) hfQ
-      have e : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ (m + 1) * f = C ϖ * (C ϖ ^ m * f) := by ring
+      have e : (C ϖ : MRing ι O) ^ (m + 1) * f = C ϖ * (C ϖ ^ m * f) := by ring
       rw [e, congrFun (h₁ O K ι Q (C ϖ) (C ϖ ^ m * f) hQ hϖQ hm) W, Pi.add_apply, ih W]
       push_cast
       ring
-  have hshift : ∀ (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)), Q.IsPrime → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ Q → f ∉ Q → ∀ W,
+  have hshift : ∀ (Q : Ideal (MRing ι O)), Q.IsPrime → (C ϖ : MRing ι O) ∉ Q → f ∉ Q → ∀ W,
       ratDiv Q (C ϖ ^ n * f) g W = ratDiv Q f g W + (n : ℤ) * ratDiv Q (C ϖ) 1 W := by
     intro Q hQ hϖQ hfQ W
     simp only [ratDiv, divCycle_one, sub_zero]
     rw [hpow Q hQ hϖQ hfQ n W]
     ring
   have hPp : P.IsPrime := hP.multiProj.isPrime
-  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
+  have hϖP : (C ϖ : MRing ι O) ∉ P := by
     intro h
-    have h' : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
+    have h' : ϖ ∈ P.comap (C : O →+* MRing ι O) := h
     rw [hP.noTorsion, Ideal.mem_bot] at h'
     exact hϖ.ne_zero h'
   unfold cutIdentity at hI₁ hI₂ ⊢
   rw [cycEval_eq_add_mul_of_cycle _ (n : ℤ) (hrat P f g) (hrat P (C ϖ) 1)
       (hshift P hPp hϖP hD.num_not_mem)] at hI₁
   classical
-  have hR : cycEval (fun W => if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then vNum W (Matrix.vecCons b L)
-        else cycEval (fun G => vNum G L) (ratDiv W (C ϖ ^ n * f) g)) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))) =
-      cycEval (fun W => if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then vNum W (Matrix.vecCons b L)
-        else cycEval (fun G => vNum G L) (ratDiv W f g)) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))) +
-      (n : ℤ) * cycEval (fun W => if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then vNum W (Matrix.vecCons (0 : K → ℤ) L)
-        else cycEval (fun G => vNum G L) (ratDiv W (C ϖ) 1)) ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ))) := by
+  have hR : cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then vNum W (Matrix.vecCons b L)
+        else cycEval (fun G => vNum G L) (ratDiv W (C ϖ ^ n * f) g)) (divCycle P s) =
+      cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then vNum W (Matrix.vecCons b L)
+        else cycEval (fun G => vNum G L) (ratDiv W f g)) (divCycle P s) +
+      (n : ℤ) * cycEval (fun W => if (C ϖ : MRing ι O) ∈ W then vNum W (Matrix.vecCons (0 : K → ℤ) L)
+        else cycEval (fun G => vNum G L) (ratDiv W (C ϖ) 1)) (divCycle P s) := by
     refine cycEval_eq_add_mul_of_fun (n : ℤ) (hfin P s) fun W hW => ?_
-    by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W
+    by_cases hϖW : (C ϖ : MRing ι O) ∈ W
     · simp only [if_pos hϖW, vNum_vecCons_zero]
       ring
     · simp only [if_neg hϖW]
       have hV := hH W hW hϖW
       have hWp : W.IsPrime := by
-        unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
+        unfold divCycle at hW
         split_ifs at hW with hm
         · exact hm.1.1.1
         · exact absurd rfl hW

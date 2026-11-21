@@ -5,7 +5,6 @@ public import GroundTheory.HeightsAndTheta.Heights.Intersections.Statements
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.AnalyticResolutionHypothesesProjectiveLine
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsVerticalDivOfIsVerticalDivisorAlt
 public import ReciprocityTheory.AnalyticForms.RegularLocalRings.IntToRat
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 

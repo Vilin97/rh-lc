@@ -17,7 +17,6 @@ public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChartBundleSh
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.FlagPairBaseExtensionStatement
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChernClassOnFlagPairStatement
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.SubQuotientStatementStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -123,7 +122,7 @@ def CkAdd (x : (Σ k, ι k) → Ω) (d : ℕ) (E E' : ChartBundle O (mseg x) N V
 
 def HasFlag {M : ℕ} {W : Type} [AddCommGroup W] [Module Ω W] (ϖ : O) (x : (Σ k, ι k) → Ω)
     (B B' : ChartBundle O (mseg x) M W) : Prop :=
-  ∃ (w w' : Module.Basis (Fin M) Ω W) (b b' : Fin M → K → ℤ) (f g : Fin M → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+  ∃ (w w' : Module.Basis (Fin M) Ω W) (b b' : Fin M → K → ℤ) (f g : Fin M → MRing ι O),
     IsFlagPair ϖ x B B' w w' b b' f g
 
 theorem HasFlag.pull {M : ℕ} {W : Type} [AddCommGroup W] [Module Ω W] {ϖ : O}

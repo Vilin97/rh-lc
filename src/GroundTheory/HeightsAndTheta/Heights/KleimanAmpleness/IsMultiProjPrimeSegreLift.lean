@@ -8,7 +8,6 @@ public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSegreFibres
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SegreInclWeightedHomogeneousComponent
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SegreLiftMapMap
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PModelGenericPoint
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,7 +16,7 @@ set_option maxSynthPendingDepth 1
 namespace GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization
 
 open MvPolynomial
-open GroundTheory.Heights₂.Heights.NumbersDVR (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver intNum IsMultiProjPrime)
+open GroundTheory.Heights₂.Heights.NumbersDVR (MRing IsMultiProjPrime intNum)
 open GroundTheory.Heights₂.Heights.FieldNumbers (relDim)
 open ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.KH (mIdealOver)
 
@@ -35,9 +34,9 @@ theorem map_id_ideal {σ : Type*} (I : Ideal (MvPolynomial σ F)) :
     RingHom.ext MvPolynomial.map_id
   rw [h, Ideal.map_id]
 
-theorem comap_segreLift (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) : (segreLift ι F W).comap (segreIncl ι F) = W := by
+theorem comap_segreLift (W : Ideal (MRing ι F)) : (segreLift ι F W).comap (segreIncl ι F) = W := by
   have h : (segreLiftMap ι F W).comp (segreIncl ι F) =
-      (Polynomial.CAlgHom : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) →ₐ[F] Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W)).comp
+      (Polynomial.CAlgHom : (MRing ι F ⧸ W) →ₐ[F] Polynomial (MRing ι F ⧸ W)).comp
         (Ideal.Quotient.mkₐ F W) := by
     apply MvPolynomial.algHom_ext
     intro p
@@ -49,7 +48,7 @@ theorem comap_segreLift (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRi
   rw [hg, Polynomial.CAlgHom_apply, Polynomial.C_eq_zero, Ideal.Quotient.mkₐ_eq_mk,
     Ideal.Quotient.eq_zero_iff_mem]
 
-theorem genPt_block_ne_zero (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [W.IsPrime] (hW : IsMultiProjPrime W) :
+theorem genPt_block_ne_zero (W : Ideal (MRing ι F)) [W.IsPrime] (hW : IsMultiProjPrime W) :
     ∀ k, ∃ i, ModelGenericPoint.genPt W ⟨k, i⟩ ≠ 0 := fun k => by
   obtain ⟨i, hi⟩ := hW.relevant k
   exact ⟨i, (ModelGenericPoint.genPt_ne_zero W _).mpr hi⟩
@@ -60,7 +59,7 @@ theorem segreJoin_block_ne_zero {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω)
       show ∏ k, y ⟨k, (hy k).choose⟩ ≠ 0 from Finset.prod_ne_zero_iff.mpr fun k _ => (hy k).choose_spec⟩
   | Sum.inr k => hy k
 
-theorem segreLift_eq_mIdealOver (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [W.IsPrime] (hW : IsMultiProjPrime W) :
+theorem segreLift_eq_mIdealOver (W : Ideal (MRing ι F)) [W.IsPrime] (hW : IsMultiProjPrime W) :
     segreLift ι F W = mIdealOver F (segreJoin (ModelGenericPoint.genPt W)) := by
   have hy : mIdealOver F (ModelGenericPoint.genPt W) = W :=
     ModelGenericPoint.mIdealOver_genPt W hW.multiHomog
@@ -77,7 +76,7 @@ theorem segreLift_eq_mIdealOver (W : Ideal (ReciprocityTheory.ChartRestriction.G
         rw [hc]
     _ = _ := ((SegreLiftComap.proof F K ι _ hP' hrel).2).symm
 
-theorem isMultiProjPrime_segreLift (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (hW : IsMultiProjPrime W) :
+theorem isMultiProjPrime_segreLift (W : Ideal (MRing ι F)) (hW : IsMultiProjPrime W) :
     IsMultiProjPrime (segreLift ι F W) := by
   have := hW.isPrime
   rw [segreLift_eq_mIdealOver W hW]

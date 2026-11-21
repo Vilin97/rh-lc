@@ -10,7 +10,6 @@ public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeIntegra
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsConeFibre
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeChartArea
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterFib
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -21,7 +20,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial MeasureTheory Matrix Set
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk IsGoodProj IsSheet fibre)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar IsGoodProj IsSheet fibre)
 
 open scoped ENNReal ComplexOrder
 

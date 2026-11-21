@@ -16,7 +16,7 @@ namespace ObjectsChow
 namespace VerticalPartMultiplicity
 
 open MvPolynomial NumberField
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver Xc PBlk)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk Xc)
 
 theorem length_localizedModule_quotient {A : Type*} [CommRing A] (K W : Ideal A) [W.IsPrime] :
     Module.length (Localization.AtPrime W) (LocalizedModule W.primeCompl (A ⧸ K)) =

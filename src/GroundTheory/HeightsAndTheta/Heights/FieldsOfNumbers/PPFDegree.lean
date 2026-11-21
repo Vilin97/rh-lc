@@ -5,7 +5,6 @@ public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDivPushForward
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PExistsForm
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PCutRational
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -77,7 +76,7 @@ theorem weight_blockIncl (d : (Σ k, ι' (j k)) →₀ ℕ) :
 
 variable {F : Type u} [Field F]
 
-theorem isMultiHomog_rename {a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))} {c : K → ℕ} (ha : IsMultiHomog a c) :
+theorem isMultiHomog_rename {a : MRing (fun k => ι' (j k)) F} {c : K → ℕ} (ha : IsMultiHomog a c) :
     IsMultiHomog (rename (blockIncl j ι') a) (Function.extend j c 0) := by
   classical
   have ha' : IsWeightedHomogeneous (blockWeight (fun k => ι' (j k))) a c := ha
@@ -88,7 +87,7 @@ theorem isMultiHomog_rename {a : ReciprocityTheory.ChartRestriction.G.Geo.MRingO
   obtain ⟨d, hd, rfl⟩ := Finset.mem_image.mp hmem
   rw [weight_blockIncl, ha' (mem_support_iff.mp hd)]
 
-theorem rename_component (a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))) (b : K → ℕ) :
+theorem rename_component (a : MRing (fun k => ι' (j k)) F) (b : K → ℕ) :
     rename (blockIncl j ι') (weightedHomogeneousComponent (blockWeight (fun k => ι' (j k))) b a) =
       weightedHomogeneousComponent (blockWeight ι') (Function.extend j b 0)
         (rename (blockIncl j ι') a) := by
@@ -108,7 +107,7 @@ theorem rename_component (a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver
       coeff_rename_eq_zero _ a d' (fun u hu => absurd hu (hd u))]
     simp
 
-theorem isMultiProjPrime_contractPrime {P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')} (hP' : IsMultiProjPrime P') :
+theorem isMultiProjPrime_contractPrime {P' : Ideal (MRing ι' F)} (hP' : IsMultiProjPrime P') :
     IsMultiProjPrime (contractPrime j P') where
   isPrime := by
     have := hP'.isPrime
@@ -127,19 +126,19 @@ theorem isMultiProjPrime_contractPrime {P' : Ideal (ReciprocityTheory.ChartRestr
     exact hi
 
 
-theorem contractFracMap_algebraMap (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [P'.IsPrime]
-    (a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))) :
+theorem contractFracMap_algebraMap (P' : Ideal (MRing ι' F)) [P'.IsPrime]
+    (a : MRing (fun k => ι' (j k)) F) :
     contractFracMap j P' (algebraMap _ _ (Ideal.Quotient.mk (contractPrime j P') a)) =
-      algebraMap _ (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P'))
+      algebraMap _ (FractionRing (MRing ι' F ⧸ P'))
         (Ideal.Quotient.mk P' (rename (blockIncl j ι') a)) := by
   unfold contractFracMap
   exact IsFractionRing.lift_algebraMap
-    (g := ((IsScalarTower.toAlgHom F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P'))).comp
+    (g := ((IsScalarTower.toAlgHom F (MRing ι' F ⧸ P') (FractionRing (MRing ι' F ⧸ P'))).comp
       (contractQuot j P')).toRingHom)
-    ((IsFractionRing.injective (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P') (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P'))).comp
+    ((IsFractionRing.injective (MRing ι' F ⧸ P') (FractionRing (MRing ι' F ⧸ P'))).comp
       Ideal.quotientMap_injective) _
 
-theorem map_homFracDegZero_le (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [P'.IsPrime] :
+theorem map_homFracDegZero_le (P' : Ideal (MRing ι' F)) [P'.IsPrime] :
     (homFracDegZero (contractPrime j P')).map (contractFracMap j P') ≤ homFracDegZero P' := by
   unfold homFracDegZero
   rw [IntermediateField.adjoin_map, IntermediateField.adjoin_le_iff]

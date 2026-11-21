@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsSemilocalLength
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,7 +16,7 @@ noncomputable section
 universe u
 
 theorem degZeroLoc_anti {K : Type*} [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] {𝒲₁ 𝒲₂ : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))} (h𝒲 : 𝒲₁ ⊆ 𝒲₂) :
+    (P : Ideal (MRing ι F)) [P.IsPrime] {𝒲₁ 𝒲₂ : Set (Ideal (MRing ι F))} (h𝒲 : 𝒲₁ ⊆ 𝒲₂) :
     degZeroLoc P 𝒲₂ ≤ degZeroLoc P 𝒲₁ := by
   unfold degZeroLoc
   apply Algebra.adjoin_mono
@@ -29,11 +28,11 @@ section Fibre
 variable {K K' : Type} [DecidableEq K] [DecidableEq K'] {F : Type*} [Field F]
   (j : K ↪ K') {ι' : K' → Type}
 
-theorem exists_fibreLift (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [P'.IsPrime]
-    (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k)))) (α : degZeroLoc (contractPrime j P') {W}) :
-    ∃ β : (W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) → degZeroLoc P' {W'},
+theorem exists_fibreLift (P' : Ideal (MRing ι' F)) [P'.IsPrime]
+    (W : Ideal (MRing (fun k => ι' (j k)) F)) (α : degZeroLoc (contractPrime j P') {W}) :
+    ∃ β : (W' : Ideal (MRing ι' F)) → degZeroLoc P' {W'},
       ∀ W' ∈ fibrePrimes j P' W,
-        (β W' : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P')) = contractFracMap j P' (α : _) := by
+        (β W' : FractionRing (MRing ι' F ⧸ P')) = contractFracMap j P' (α : _) := by
   classical
   refine ⟨fun W' => if hm : contractFracMap j P' (α : _) ∈ degZeroLoc P' {W'} then ⟨_, hm⟩ else 0,
     fun W' hW' => ?_⟩
@@ -43,7 +42,7 @@ theorem exists_fibreLift (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.M
   simp only [dif_pos hm]
 
 theorem exists_relDegFn :
-    ∃ d : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι') → ℕ, ∀ W' (hW' : IsMultiProjPrime W'),
+    ∃ d : Ideal (MRing ι' F) → ℕ, ∀ W' (hW' : IsMultiProjPrime W'),
       haveI := hW'.isPrime
       d W' = relDeg j W' := by
   classical
@@ -56,26 +55,26 @@ end Fibre
 def SemilocalLengthSum.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K K' : Type) [Fintype K] [DecidableEq K] [Fintype K']
     [DecidableEq K'] (j : K ↪ K') (ι' : K' → Type) [∀ k, Fintype (ι' k)]
-    (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) (hP' : IsMultiProjPrime P') (n : ℕ), relDim P' = (n + 1 : ℕ) →
+    (P' : Ideal (MRing ι' F)) (hP' : IsMultiProjPrime P') (n : ℕ), relDim P' = (n + 1 : ℕ) →
     relDim (contractPrime j P') = (n + 1 : ℕ) →
-    ∀ (c : K → ℕ) (a h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))), IsMultiHomog a c → IsMultiHomog h c →
+    ∀ (c : K → ℕ) (a h : MRing (fun k => ι' (j k)) F), IsMultiHomog a c → IsMultiHomog h c →
     a ∉ contractPrime j P' →
-    ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))), IsMultiProjPrime W → relDim W = (n : ℕ) →
+    ∀ W : Ideal (MRing (fun k => ι' (j k)) F), IsMultiProjPrime W → relDim W = (n : ℕ) →
     contractPrime j P' ≤ W → h ∉ W →
-    ∀ d : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι') → ℕ,
+    ∀ d : Ideal (MRing ι' F) → ℕ,
       (∀ W' (hW' : IsMultiProjPrime W'), contractPrime j W' = W →
         haveI := hW'.isPrime
         d W' = relDeg j W') →
       haveI := hP'.isPrime
       ∀ α : degZeroLoc (contractPrime j P') {W},
-        (α : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k)) ⧸ contractPrime j P')) =
-            algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k)) ⧸ contractPrime j P') _
+        (α : FractionRing (MRing (fun k => ι' (j k)) F ⧸ contractPrime j P')) =
+            algebraMap (MRing (fun k => ι' (j k)) F ⧸ contractPrime j P') _
                 (Ideal.Quotient.mk (contractPrime j P') a) /
-              algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k)) ⧸ contractPrime j P') _
+              algebraMap (MRing (fun k => ι' (j k)) F ⧸ contractPrime j P') _
                 (Ideal.Quotient.mk (contractPrime j P') h) →
-      ∀ β : (W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) → degZeroLoc P' {W'},
+      ∀ β : (W' : Ideal (MRing ι' F)) → degZeroLoc P' {W'},
         (∀ W' ∈ fibrePrimes j P' W,
-          (β W' : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ P')) = contractFracMap j P' (α : _)) →
+          (β W' : FractionRing (MRing ι' F ⧸ P')) = contractFracMap j P' (α : _)) →
         ∃ hfin : (fibrePrimes j P' W).Finite,
           Module.length (degZeroLoc (contractPrime j P') {W})
               (degZeroLoc P' (fibrePrimes j P' W) ⧸

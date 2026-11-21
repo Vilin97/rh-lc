@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.CutIdentityRightSideCongrOfSubMem
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.OfSteps
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -22,16 +21,16 @@ theorem LeftSideAdditiveInDegree.proof : LeftSideAdditiveInDegree.Statement.{u} 
   obtain ⟨bf, bg, hbf, hbg, -⟩ := hD.degrees
   have hPmh : IsMultiHomogIdeal P := hP.multiProj.multiHomog
   have : P.IsPrime := hP.multiProj.isPrime
-  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
+  have hϖP : (C ϖ : MRing ι O) ∉ P := by
     intro h
-    have h' : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
+    have h' : ϖ ∈ P.comap (C : O →+* MRing ι O) := h
     rw [hP.noTorsion, Ideal.mem_bot] at h'
     exact hϖ.ne_zero h'
 
-  have hmh : ∀ (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (e : K → ℕ), IsMultiHomog h e → ∀ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P h) W : ℤ) ≠ 0 →
+  have hmh : ∀ (h : MRing ι O) (e : K → ℕ), IsMultiHomog h e → ∀ W, divCycle P h W ≠ 0 →
       IsMultiHomogIdeal W ∧ W.IsPrime ∧ P ≤ W := by
     intro h e he W hW
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
+    unfold divCycle at hW
     split_ifs at hW with hW'
     · exact ⟨MinimalPrimeMultiHomog.full O K ι _ W (SupSpanMultiHomog.full O K ι P h e hPmh he) hW'.1,
         hW'.1.1.1, le_sup_left.trans hW'.1.1.2⟩
@@ -42,13 +41,13 @@ theorem LeftSideAdditiveInDegree.proof : LeftSideAdditiveInDegree.Statement.{u} 
         vNum W (Matrix.vecCons (fun k => (c₁ k : ℤ)) L) +
           vNum W (Matrix.vecCons (fun k => (c₂ k : ℤ)) L) := by
     intro W hW
-    have hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W := hD.vertical W hW
+    have hϖW : (C ϖ : MRing ι O) ∈ W := hD.vertical W hW
     obtain ⟨hWm, hWp, hPW⟩ : IsMultiHomogIdeal W ∧ W.IsPrime ∧ P ≤ W := by
-      by_cases hWf : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = 0
+      by_cases hWf : divCycle P f W = 0
       · exact hmh g bg hbg W fun hWg => hW (by simp [ratDiv, hWf, hWg])
       · exact hmh f bf hbf W hWf
     have hlt : P < W := lt_of_le_of_ne hPW (fun e => hϖP (e ▸ hϖW))
-    have hdrop := DimStrictDrop.full (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P W hlt
+    have hdrop := DimStrictDrop.full (MRing ι O) P W hlt
     rw [hP.dim] at hdrop
     have hdim : ringKrullDim (MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal W) <
         ((d + 2 + Fintype.card K : ℕ) : WithBot ℕ∞) := by

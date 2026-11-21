@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import Development.AutomorphicSpectrum.Proofs.MetricProofs.PullbackPullback
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 

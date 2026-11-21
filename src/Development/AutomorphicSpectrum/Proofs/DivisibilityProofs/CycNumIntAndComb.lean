@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.BundleChernComparison
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagIndependence
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -12,8 +11,8 @@ open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.Compan
 namespace GlobalTheory.CompanionTheory.Ar.Num
 
 theorem cycEval_eq_sum {K : Type} {ι : K → Type} {R : Type} [CommRing R]
-    (n Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) (T : Finset (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)))
-    (hT : Function.support Z ⊆ (T : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)))) :
+    (n Z : Ideal (MRing ι R) → ℤ) (T : Finset (Ideal (MRing ι R)))
+    (hT : Function.support Z ⊆ (T : Set (Ideal (MRing ι R)))) :
     cycEval n Z = ∑ W ∈ T, Z W * n W := by
   unfold cycEval
   refine finsum_eq_sum_of_support_subset _ ?_
@@ -24,13 +23,13 @@ theorem cycEval_eq_sum {K : Type} {ι : K → Type} {R : Type} [CommRing R]
   simp [h0]
 
 theorem cycEval_comb {K : Type} {ι : K → Type} {R : Type} [CommRing R]
-    (n : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) {α : Type} (s : Finset α) (c : α → ℤ)
-    (Z : α → Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) → ℤ) (hZ : ∀ a, (Function.support (Z a)).Finite) :
+    (n : Ideal (MRing ι R) → ℤ) {α : Type} (s : Finset α) (c : α → ℤ)
+    (Z : α → Ideal (MRing ι R) → ℤ) (hZ : ∀ a, (Function.support (Z a)).Finite) :
     cycEval n (fun W => ∑ a ∈ s, c a * Z a W) = ∑ a ∈ s, c a * cycEval n (Z a) := by
   classical
-  set T : Finset (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) := s.biUnion fun a => (hZ a).toFinset with hTdef
+  set T : Finset (Ideal (MRing ι R)) := s.biUnion fun a => (hZ a).toFinset with hTdef
   have hsum : Function.support (fun W => ∑ a ∈ s, c a * Z a W) ⊆
-      (T : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι))) := by
+      (T : Set (Ideal (MRing ι R))) := by
     intro W hW
     by_contra hWT
     apply hW
@@ -57,12 +56,12 @@ theorem cycEval_comb {K : Type} {ι : K → Type} {R : Type} [CommRing R]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun W _ => ?_
   ring
 
-theorem cycNum_int_and_comb : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (σ : Type) (cls : σ → K → ℤ) (Q : List (K → ℤ)), (∀ (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ), (Function.support Z).Finite → ∀ H : MvPolynomial σ ℤ, cycNum Z cls (MvPolynomial.map (Int.castRingHom ℝ) H) Q = ((cycEval (fun W => classNum cls H Q W) Z : ℤ) : ℝ)) ∧ (∀ (α : Type) (s : Finset α) (c : α → ℤ) (Z : α → Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ), (∀ a, (Function.support (Z a)).Finite) → ∀ H : MvPolynomial σ ℝ, cycNum (fun W => ∑ a ∈ s, c a * Z a W) cls H Q = ∑ a ∈ s, (c a : ℝ) * cycNum (Z a) cls H Q) := by
+theorem cycNum_int_and_comb : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (σ : Type) (cls : σ → K → ℤ) (Q : List (K → ℤ)), (∀ (Z : Ideal (MRing ι O) → ℤ), (Function.support Z).Finite → ∀ H : MvPolynomial σ ℤ, cycNum Z cls (MvPolynomial.map (Int.castRingHom ℝ) H) Q = ((cycEval (fun W => classNum cls H Q W) Z : ℤ) : ℝ)) ∧ (∀ (α : Type) (s : Finset α) (c : α → ℤ) (Z : α → Ideal (MRing ι O) → ℤ), (∀ a, (Function.support (Z a)).Finite) → ∀ H : MvPolynomial σ ℝ, cycNum (fun W => ∑ a ∈ s, c a * Z a W) cls H Q = ∑ a ∈ s, (c a : ℝ) * cycNum (Z a) cls H Q) := by
   intro O _ _ _ K _ _ ι _ σ cls Q
   refine ⟨?_, ?_⟩
   · intro Z hZ H
     have hinj : Function.Injective (Int.castRingHom ℝ) := Int.cast_injective
-    have hT : Function.support Z ⊆ (hZ.toFinset : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι))) := by simp
+    have hT : Function.support Z ⊆ (hZ.toFinset : Set (Ideal (MRing ι O))) := by simp
     have key : cycEval (fun W => classNum cls H Q W) Z =
         ∑ μ ∈ H.support, H.coeff μ * cycList Z (classList cls μ ++ Q) := by
       unfold cycList

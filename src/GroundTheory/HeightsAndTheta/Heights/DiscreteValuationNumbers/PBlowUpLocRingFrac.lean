@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpLocRingFracCut
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PHomLocRingLocal
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.OfSteps
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -37,26 +36,26 @@ theorem BlowUpLocRingFrac.proof (hiso : BlowUpLocRingIso.Statement.{u})
   have : (blowUpOf P u).IsPrime := RingHom.ker_isPrime _
   obtain ⟨φ, hφ⟩ := hiso O K ι J P u W' hbl
 
-  have hne : ∀ (d : Option K → ℕ) (H : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)), IsMultiHomog H d → H ∉ W' →
-      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u H) ≠ 0 := by
+  have hne : ∀ (d : Option K → ℕ) (H : MRing (extIdx ι J) O), IsMultiHomog H d → H ∉ W' →
+      algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u H) ≠ 0 := by
     intro d H hH hHW h0
     have h1 := hφ d H H hH hH hHW
     rw [h0, div_zero] at h1
     have h2 : (⟨_, Subring.subset_closure ⟨d, H, H, hH, hH, hHW, rfl⟩⟩ :
         homLocRing (blowUpOf P u) W') = 1 := by
       apply Subtype.ext
-      show _ / _ = (1 : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J) ⧸ blowUpOf P u))
+      show _ / _ = (1 : FractionRing (MRing (extIdx ι J) O ⧸ blowUpOf P u))
       apply div_self
       rw [Ne, map_eq_zero_iff _ (IsFractionRing.injective _ _), Ideal.Quotient.eq_zero_iff_mem]
       exact fun h => hHW (hbl h)
     rw [h2, map_one] at h1
     exact one_ne_zero h1
 
-  have hgen : ∀ (b : Option K → ℕ) (F G : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)), IsMultiHomog F b → IsMultiHomog G b →
+  have hgen : ∀ (b : Option K → ℕ) (F G : MRing (extIdx ι J) O), IsMultiHomog F b → IsMultiHomog G b →
       G ∉ W' → ∃ bb ∈ blowUpOverLoc P W u, ∃ s ∈ blowUpOverLoc P W u,
         (∃ t ∈ blowUpLocRing P u W', s * t = 1) ∧
-        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u F) /
-          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u G) * s = bb := by
+        algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u F) /
+          algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u G) * s = bb := by
     intro b F G hF hG hGW
     set k := ∑ o, b o with hk
     obtain ⟨M, hM, hMW⟩ := homLocRing_form_not_mem hW'p hW'rel (fun o => k * e o - b o)
@@ -69,12 +68,12 @@ theorem BlowUpLocRingFrac.proof (hiso : BlowUpLocRingIso.Statement.{u})
     have hFM : IsMultiHomog (F * M) (k • e) := hdeg ▸ hF.mul hM
     have hGM : IsMultiHomog (G * M) (k • e) := hdeg ▸ hG.mul hM
     have hLk : IsMultiHomog (L ^ k) (k • e) := hL.pow k
-    have hLkQ : ∀ Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)), Q.IsPrime ∧ IsMultiHomogIdeal Q ∧ IsRelevant Q ∧
+    have hLkQ : ∀ Q : Ideal (MRing (extIdx ι J) O), Q.IsPrime ∧ IsMultiHomogIdeal Q ∧ IsRelevant Q ∧
         blowUpOf P u ≤ Q ∧ Q.comap (liftForm (ι := ι) (J := J) (R := O)) ≤ W → L ^ k ∉ Q :=
       fun Q hQ h => hLQ Q hQ (hQ.1.mem_of_pow_mem k h)
     have hmemB : ∀ H, IsMultiHomog H (k • e) →
-        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u H) /
-          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (blowUpEval P u (L ^ k)) ∈
+        algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u H) /
+          algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (blowUpEval P u (L ^ k)) ∈
           blowUpOverLoc P W u := fun H hH =>
       Subring.mem_iInf.mpr fun Q => Subring.mem_iInf.mpr fun hQ =>
         Subring.subset_closure ⟨k • e, H, L ^ k, hH, hLk, hLkQ Q hQ, rfl⟩

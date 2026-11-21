@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsJoinDivCycle
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PPolynomialLocalizedLength
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PExistsUniqueRelabel
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -38,7 +37,7 @@ def joinIdxEquiv : (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) ≃ Option (Σ k, ι
   right_inv := by
     rintro (_ | ⟨k, i⟩) <;> rfl
 
-def joinPolyEquiv : MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R ≃+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :=
+def joinPolyEquiv : MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R ≃+* Polynomial (MRing ι R) :=
   ((renameEquiv R (joinIdxEquiv (ι := ι))).trans (optionEquivLeft R (Σ k, ι k))).toRingEquiv
 
 theorem joinPolyEquiv_comp_rename :
@@ -61,29 +60,29 @@ theorem rename_eq_symm_comp_C :
 theorem joinPolyEquiv_rename (x : MRing ι R) : joinPolyEquiv (ε x) = Polynomial.C x :=
   RingHom.congr_fun joinPolyEquiv_comp_rename x
 
-theorem map_rename_eq (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
-    I.map ε = (I.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* _)).comap (joinPolyEquiv (R := R) (ι := ι)).toRingHom := by
+theorem map_rename_eq (I : Ideal (MRing ι R)) :
+    I.map ε = (I.map (Polynomial.C : MRing ι R →+* _)).comap (joinPolyEquiv (R := R) (ι := ι)).toRingHom := by
   have h : I.map ε = I.map (ε).toRingHom := rfl
   rw [h, rename_eq_symm_comp_C, ← Ideal.map_map]
   exact Ideal.map_symm _
 
-theorem mem_map_rename_iff (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (x) :
-    x ∈ I.map ε ↔ joinPolyEquiv x ∈ I.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* _) := by
+theorem mem_map_rename_iff (I : Ideal (MRing ι R)) (x) :
+    x ∈ I.map ε ↔ joinPolyEquiv x ∈ I.map (Polynomial.C : MRing ι R →+* _) := by
   rw [map_rename_eq]
   rfl
 
-theorem rename_mem_map_rename_iff (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) : ε x ∈ I.map ε ↔ x ∈ I := by
+theorem rename_mem_map_rename_iff (I : Ideal (MRing ι R)) (x : MRing ι R) : ε x ∈ I.map ε ↔ x ∈ I := by
   rw [mem_map_rename_iff, joinPolyEquiv_rename, ← Ideal.mem_comap, comap_C_map_C_polynomial]
 
-theorem comap_map_rename (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) : (I.map ε).comap ε = I := by
+theorem comap_map_rename (I : Ideal (MRing ι R)) : (I.map ε).comap ε = I := by
   ext x
   exact rename_mem_map_rename_iff I x
 
-theorem isPrime_map_rename (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [Q.IsPrime] : (Q.map ε).IsPrime := by
+theorem isPrime_map_rename (Q : Ideal (MRing ι R)) [Q.IsPrime] : (Q.map ε).IsPrime := by
   rw [map_rename_eq]
   infer_instance
 
-theorem mem_minimalPrimes_map_rename_iff (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι))
+theorem mem_minimalPrimes_map_rename_iff (J : Ideal (MRing ι R))
     (W : Ideal (MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R)) :
     W ∈ (J.map ε).minimalPrimes ↔ ∃ Q ∈ J.minimalPrimes, Q.map ε = W := by
   constructor
@@ -100,7 +99,7 @@ theorem mem_minimalPrimes_map_rename_iff (J : Ideal (ReciprocityTheory.ChartRest
     have h1 : W.comap ε ≤ Q := (Ideal.comap_mono hWle).trans (comap_map_rename Q).le
     exact Ideal.map_le_iff_le_comap.mpr (hQ.2 ⟨inferInstance, Ideal.map_le_iff_le_comap.mp hW.2⟩ h1)
 
-theorem isRelevant_map_rename_iff (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (hQ : Q ≠ ⊤) :
+theorem isRelevant_map_rename_iff (Q : Ideal (MRing ι R)) (hQ : Q ≠ ⊤) :
     ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (Q.map ε) ↔ ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant Q := by
   constructor
   · intro h k
@@ -127,28 +126,28 @@ theorem isRelevant_map_rename_iff (Q : Ideal (ReciprocityTheory.ChartRestriction
       rw [Polynomial.coeff_X_one] at h1
       exact (Ideal.eq_top_iff_one Q).mpr h1
 
-theorem multAt_map_rename (P Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [Q.IsPrime] (hPQ : P ≤ Q) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+theorem multAt_map_rename (P Q : Ideal (MRing ι R)) [Q.IsPrime] (hPQ : P ≤ Q) (f : MRing ι R) :
     ReciprocityTheory.ChartRestriction.G.Geo.multAt (P.map ε ⊔ Ideal.span {ε f}) (Q.map ε) =
       ReciprocityTheory.ChartRestriction.G.Geo.multAt (P ⊔ Ideal.span {f}) Q := by
-  have hm : ∀ I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι),
-      I.map ε = (I.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* _)).map ((ψ).symm : Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) →+* MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R) := by
+  have hm : ∀ I : Ideal (MRing ι R),
+      I.map ε = (I.map (Polynomial.C : MRing ι R →+* _)).map ((ψ).symm : Polynomial (MRing ι R) →+* MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R) := by
     intro I
     rw [map_rename_eq]
     exact (Ideal.map_symm (joinPolyEquiv (R := R) (ι := ι))).symm
   have hf : ε f = (ψ).symm (Polynomial.C f) := by
     rw [← joinPolyEquiv_rename, RingEquiv.symm_apply_apply]
-  haveI : (Q.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* _)).IsPrime := Ideal.isPrime_map_C_of_isPrime
-  have hQp : ((Q.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* _)).map ((ψ).symm : Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) →+* MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R)).IsPrime := by
+  haveI : (Q.map (Polynomial.C : MRing ι R →+* _)).IsPrime := Ideal.isPrime_map_C_of_isPrime
+  have hQp : ((Q.map (Polynomial.C : MRing ι R →+* _)).map ((ψ).symm : Polynomial (MRing ι R) →+* MvPolynomial (Σ k : K ⊕ Unit, Sum.elim ι ptIdx k) R)).IsPrime := by
     rw [← hm]
     exact isPrime_map_rename Q
   haveI := hQp
   have key := GroundTheory.Heights₂.Heights.Targets.ExistsUniqueRelabel.length_map (ψ).symm
-    (P.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* _)) (Q.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* _)) (Ideal.map_mono hPQ)
+    (P.map (Polynomial.C : MRing ι R →+* _)) (Q.map (Polynomial.C : MRing ι R →+* _)) (Ideal.map_mono hPQ)
     (Polynomial.C f)
-  have hsup : P.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* _) ⊔ Ideal.span {Polynomial.C f} =
-      (P ⊔ Ideal.span {f}).map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* _) := by
+  have hsup : P.map (Polynomial.C : MRing ι R →+* _) ⊔ Ideal.span {Polynomial.C f} =
+      (P ⊔ Ideal.span {f}).map (Polynomial.C : MRing ι R →+* _) := by
     rw [Ideal.map_sup, Ideal.map_span, Set.image_singleton]
-  rw [hsup, PolynomialLocalizedLength.full (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) Q (P ⊔ Ideal.span {f})] at key
+  rw [hsup, PolynomialLocalizedLength.full (MRing ι R) Q (P ⊔ Ideal.span {f})] at key
   rw [hm P, hm Q, hf]
   unfold ReciprocityTheory.ChartRestriction.G.Geo.multAt
   rw [dite_eq_left hQp, dite_eq_left ‹Q.IsPrime›]
@@ -180,7 +179,7 @@ theorem JoinDivCycle.proof : JoinDivCycle.Statement := by
     · rintro ⟨hQ, hr⟩
       exact ⟨⟨Q, hQ, rfl⟩, (isRelevant_map_rename_iff Q hQ.1.1.ne_top).2 hr⟩
   ext W
-  by_cases hW : ∃ Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι), Q.map (rename (R := R) (liftVar (ι := ι) ptIdx)) = W
+  by_cases hW : ∃ Q : Ideal (MRing ι R), Q.map (rename (R := R) (liftVar (ι := ι) ptIdx)) = W
   · obtain ⟨Q, rfl⟩ := hW
     rw [Finsupp.mapDomain_apply_of_injective hinj]
     simp only [ReciprocityTheory.ChartRestriction.G.Geo.divCycle, Finsupp.ofSupportFinite_coe]

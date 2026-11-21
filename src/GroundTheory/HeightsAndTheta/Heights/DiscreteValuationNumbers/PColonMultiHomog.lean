@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -13,7 +12,7 @@ namespace GroundTheory.Heights₂.Heights.NumbersDVR
 open MvPolynomial
 
 theorem component_mul_multiHomog {R : Type*} [CommRing R] {K : Type} [DecidableEq K]
-    {ι : K → Type} (y f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (b s : K → ℕ) (hf : IsMultiHomog f s) :
+    {ι : K → Type} (y f : MRing ι R) (b s : K → ℕ) (hf : IsMultiHomog f s) :
     weightedHomogeneousComponent (blockWeight ι) b y * f =
       weightedHomogeneousComponent (blockWeight ι) (b + s) (y * f) := by
   classical

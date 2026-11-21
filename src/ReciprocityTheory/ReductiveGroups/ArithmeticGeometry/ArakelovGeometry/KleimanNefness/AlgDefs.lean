@@ -24,8 +24,9 @@ abbrev CechC (S : Type*) [CommRing S] {K : Type*} [Fintype K] (ι : K → Type*)
 
 def cellRes (S : Type*) [CommRing S] {K : Type*} {ι : K → Type*} (M : Type*) [AddCommGroup M]
     [Module (MRingOver S ι) M] (J I : ∀ k, Finset (ι k)) :
-    LocalizedModule (cellMon S J) M →ₗ[MRingOver S ι] LocalizedModule (cellMon S I) M :=
-  if h : cellMon S J ≤ cellMon S I then LocalizedModule.liftOfLE _ _ h else 0
+    LocalizedModule (cellMon S J) M →ₗ[MRingOver S ι] LocalizedModule (cellMon S I) M := by
+  classical
+  exact if h : cellMon S J ≤ cellMon S I then LocalizedModule.liftOfLE _ _ h else 0
 
 def faceSign {K : Type*} [Fintype K] [LinearOrder K] {ι : K → Type*} [∀ k, LinearOrder (ι k)]
     (I : ∀ k, Finset (ι k)) (k : K) (i : ι k) : ℤ :=

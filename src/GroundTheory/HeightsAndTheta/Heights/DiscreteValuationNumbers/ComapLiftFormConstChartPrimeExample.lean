@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LocalizedQuotientIsSimpleModuleOfMul
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -20,26 +19,26 @@ section Lemmas
 
 def BlowUpOrderLe.Statement : Prop :=
   ∀ (R : Type u) [CommRing R] [IsNoetherianRing R] (K : Type) [Fintype K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (J : Type) [Fintype J] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)), P.IsPrime →
-    ∀ (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (G' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))) (y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)),
+    [∀ k, Fintype (ι k)] (J : Type) [Fintype J] (P : Ideal (MRing ι R)), P.IsPrime →
+    ∀ (u : J → MRing ι R) (G' : Ideal (MRing (extIdx ι J) R)) (y : MRing (extIdx ι J) R),
       y ∉ blowUpOf P u → G' ∈ (blowUpOf P u ⊔ Ideal.span {y}).minimalPrimes → IsRelevant G' →
-    ∀ x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι, x ∉ P → G'.comap (liftForm (J := J)) ∈ (P ⊔ Ideal.span {x}).minimalPrimes →
-    ∀ z : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι, z ∉ P →
-      ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P u) (liftForm z)) G' : ℤ) ≤ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P z) (G'.comap (liftForm (J := J))) : ℤ)
+    ∀ x : MRing ι R, x ∉ P → G'.comap (liftForm (J := J)) ∈ (P ⊔ Ideal.span {x}).minimalPrimes →
+    ∀ z : MRing ι R, z ∉ P →
+      divCycle (blowUpOf P u) (liftForm z) G' ≤ divCycle P z (G'.comap (liftForm (J := J)))
 
 def ExceptionalContraction.Statement : Prop :=
   ∀ (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ →
     ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)]
-      (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ), IsModelOver P (d + 1) →
-    ∀ (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsEffectiveVertical P ϖ b f g →
-    ∀ (c : K → ℕ) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog s c → s ∉ P →
-    (∀ H, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) H : ℤ) ≠ 0 → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H → IsVerticalDivisor H ϖ b f g) →
+      (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P (d + 1) →
+    ∀ (b : K → ℤ) (f g : MRing ι O), IsEffectiveVertical P ϖ b f g →
+    ∀ (c : K → ℕ) (s : MRing ι O), IsMultiHomog s c → s ∉ P →
+    (∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H → IsVerticalDivisor H ϖ b f g) →
     ∀ e : K → ℕ, (∀ k, (c k : ℤ) = b k + e k) →
-    ∀ m : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, IsMultiHomog m e → m ∉ P →
-    (∀ H, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) H : ℤ) ≠ 0 → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ H → m ∉ H) →
-    ∀ G' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))),
-      (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∈ G' →
-      0 < ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (blowUpOf P (blowUpGens s g f m e)) (newVar none)) G' : ℤ) →
+    ∀ m : MRing ι O, IsMultiHomog m e → m ∉ P →
+    (∀ H, divCycle P s H ≠ 0 → (C ϖ : MRing ι O) ∉ H → m ∉ H) →
+    ∀ G' : Ideal (MRing (extIdx ι (BlowUpIdx ι)) O),
+      (C ϖ : MRing (extIdx ι (BlowUpIdx ι)) O) ∈ G' →
+      0 < divCycle (blowUpOf P (blowUpGens s g f m e)) (newVar none) G' →
       0 < ratDiv (blowUpOf P (blowUpGens s g f m e)) (liftForm (f * m))
         (liftForm g * newVar (some none)) G' →
       G'.comap (liftForm (J := BlowUpIdx ι)) ∈ (P ⊔ Ideal.span {s}).minimalPrimes

@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsFibreRelDim
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PContractRelDimLe
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -37,8 +36,8 @@ theorem FibreRelDim.proof : FibreRelDim.Statement.{u} := by
     have h2 := WithTop.coe_injective (WithBot.coe_injective this)
     omega
   obtain ⟨f, hfW', hfP'⟩ := Set.not_subset.mp hne
-  have hstab : ∀ {Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')}, IsMultiProjPrime Q →
-      ∀ (T : Finset K') (q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι'), q ∈ Q → killBlocks T q ∈ Q :=
+  have hstab : ∀ {Q : Ideal (MRing ι' F)}, IsMultiProjPrime Q →
+      ∀ (T : Finset K') (q : MRing ι' F), q ∈ Q → killBlocks T q ∈ Q :=
     fun hQ T _ hq => killBlocks_mem_of_isMultiHomogIdeal hQ.multiHomog T hq
   obtain ⟨D', -, hD'⟩ := exists_ringKrullDim_eq (hstab hP') hP'.relevant
   obtain ⟨D, -, hD⟩ := exists_ringKrullDim_eq (hstab hW'm) hW'm.relevant

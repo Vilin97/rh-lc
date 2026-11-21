@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Asse
 public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomogIdealIff
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.ContractRelevant
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.TableDegreeThreeBase
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -53,7 +52,7 @@ theorem exists_dim {V : Ideal (MRingOver F ι)} (hV : IsMultiProjPrime V) :
     (fun T q hq => FieldNumbers.PFContracted.killBlocks_mem_of_isMultiHomogIdeal hmh T hq) hV.2.2
 
 theorem mem_divSupp_of_ne_zero {P : Ideal (MRingOver F ι)} {s : MRingOver F ι} {W : Ideal (MRingOver F ι)}
-    (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) ≠ 0) : W ∈ divSupp P s := by
+    (h : divCycle P s W ≠ 0) : W ∈ divSupp P s := by
   classical
   by_contra hW
   apply h
@@ -62,7 +61,7 @@ theorem mem_divSupp_of_ne_zero {P : Ideal (MRingOver F ι)} {s : MRingOver F ι}
 theorem component [DecidableEq K'] {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (hv : IsBlockMap κ v)
     {V' : Ideal (MRingOver F ι')} {n d₀ : ℕ} (hV' : IsProjVarF V' (n + 1))
     (hI : IsProjVarF (imageVar F v V') d₀) {t : MRingOver F ι} {a : K → ℕ} (ht : IsMultiHomog t a)
-    (htV : t ∉ imageVar F v V') {W : Ideal (MRingOver F ι')} (hW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V' (rename v t)) W : ℤ) ≠ 0) :
+    (htV : t ∉ imageVar F v V') {W : Ideal (MRingOver F ι')} (hW : divCycle V' (rename v t) W ≠ 0) :
     IsProjVarF W n ∧ ∃ d₁ : ℕ, d₁ < d₀ ∧ IsProjVarF (imageVar F v W) d₁ := by
   classical
   have hWs := mem_divSupp_of_ne_zero hW
@@ -142,7 +141,7 @@ theorem intNum_eq_zero [DecidableEq K'] {κ : K → K'} {v : (Σ k, ι k) → (�
     refine Finset.sum_eq_zero fun W hW => ?_
     rw [Finsupp.mem_support_iff] at hW
     suffices h0 : NumbersDVR.intNum F W (Fin.init (bs ∘ σ)) = 0 by simp only [h0, mul_zero]
-    have hcases : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V' (rename v f)) W : ℤ) ≠ 0 ∨ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V' (rename v g)) W : ℤ) ≠ 0 := by
+    have hcases : divCycle V' (rename v f) W ≠ 0 ∨ divCycle V' (rename v g) W ≠ 0 := by
       by_contra hc
       push Not at hc
       apply hW

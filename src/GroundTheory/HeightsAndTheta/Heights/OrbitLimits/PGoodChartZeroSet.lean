@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StGoodChartZeroSet
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreChartZeroSet
 public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.EvalSmulOfIsHomogeneousAlt
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -15,7 +14,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial Finset
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver mcPts IsMultiHomogIdeal segre scaleBlock scaleBlock_mem_zeroLocus)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsMultiHomogIdeal mcPts segre scaleBlock scaleBlock_mem_zeroLocus)
 open ComplexSets
 
 namespace GoodChartZeroSet

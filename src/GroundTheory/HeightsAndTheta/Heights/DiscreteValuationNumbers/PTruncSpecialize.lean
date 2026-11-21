@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsTruncSpecialize
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -102,13 +101,13 @@ theorem TruncSpecialize.proof : TruncSpecialize.Statement := by
     have h0 : eval₂ (C.comp algA) (fun p => C (cA ((i : ℕ) + 1) p) * X p.1) x = 0 :=
       map_injective _ hev (hx.trans (map_zero _).symm)
     rw [← ksub, h0, map_zero, map_zero]
-  · have val : ∀ (j : ℕ) (v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)),
+  · have val : ∀ (j : ℕ) (v : MRing (bundleIdx ι M) F),
         eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ (truncCoord t j)) v =
           ev (eval₂ algA (cA j) v) := by
       intro j v
       rw [← AlgHom.coe_toRingHom, eval₂_comp_left, hevA, hcoord]
       rfl
-    have vsub : ∀ v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M),
+    have vsub : ∀ v : MRing (bundleIdx ι M) F,
         sub (eval₂ algA (cA ((i : ℕ) + 1)) v) = eval₂ algA (cA i) v := by
       intro v
       rw [← AlgHom.coe_toRingHom, eval₂_comp_left, hsubA]

@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsHomLocRingLocal
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PHomLocRingLocal
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PMultiHomogPrimeCriterion
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -22,56 +21,56 @@ namespace HomLocRingDimLe
 
 variable {R : Type u} [CommRing R] {K : Type} [DecidableEq K] {ι : K → Type}
 
-def frac (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime] (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) :=
-  algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (Ideal.Quotient.mk P h)
+def frac (P : Ideal (MRing ι R)) [P.IsPrime] (h : MRing ι R) : FractionRing (MRing ι R ⧸ P) :=
+  algebraMap (MRing ι R ⧸ P) (FractionRing (MRing ι R ⧸ P)) (Ideal.Quotient.mk P h)
 
-theorem frac_zero (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime] : frac P 0 = 0 := by
+theorem frac_zero (P : Ideal (MRing ι R)) [P.IsPrime] : frac P 0 = 0 := by
   simp [frac]
 
-theorem frac_one (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime] : frac P 1 = 1 := by
+theorem frac_one (P : Ideal (MRing ι R)) [P.IsPrime] : frac P 1 = 1 := by
   simp [frac]
 
-theorem frac_add (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime] (x y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+theorem frac_add (P : Ideal (MRing ι R)) [P.IsPrime] (x y : MRing ι R) :
     frac P (x + y) = frac P x + frac P y := by
   simp [frac]
 
-theorem frac_mul (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime] (x y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+theorem frac_mul (P : Ideal (MRing ι R)) [P.IsPrime] (x y : MRing ι R) :
     frac P (x * y) = frac P x * frac P y := by
   simp [frac]
 
-variable (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) [P.IsPrime]
+variable (P W : Ideal (MRing ι R)) [P.IsPrime]
 
-def ValIn (q : Ideal (homLocRing P W)) (z : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) : Prop :=
-  ∃ a ∈ q, (a : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) = z
+def ValIn (q : Ideal (homLocRing P W)) (z : FractionRing (MRing ι R ⧸ P)) : Prop :=
+  ∃ a ∈ q, (a : FractionRing (MRing ι R ⧸ P)) = z
 
-def primeSet (q : Ideal (homLocRing P W)) : Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :=
-  {h | ∀ (b : K → ℕ) (g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι), IsMultiHomog g b → g ∉ W →
+def primeSet (q : Ideal (homLocRing P W)) : Set (MRing ι R) :=
+  {h | ∀ (b : K → ℕ) (g : MRing ι R), IsMultiHomog g b → g ∉ W →
     ValIn P W q (frac P (weightedHomogeneousComponent (blockWeight ι) b h) / frac P g)}
 
 variable {P W}
 
-theorem frac_ne_zero (hPW : P ≤ W) {g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hg : g ∉ W) : frac P g ≠ 0 := by
+theorem frac_ne_zero (hPW : P ≤ W) {g : MRing ι R} (hg : g ∉ W) : frac P g ≠ 0 := by
   simp only [frac, ne_eq, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
   exact fun h => hg (hPW h)
 
-theorem div_mem {b : K → ℕ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hf : IsMultiHomog f b) (hg : IsMultiHomog g b)
+theorem div_mem {b : K → ℕ} {f g : MRing ι R} (hf : IsMultiHomog f b) (hg : IsMultiHomog g b)
     (hgW : g ∉ W) : frac P f / frac P g ∈ homLocRing P W :=
   Subring.subset_closure ⟨b, f, g, hf, hg, hgW, rfl⟩
 
 theorem valIn_zero (q : Ideal (homLocRing P W)) : ValIn P W q 0 := ⟨0, q.zero_mem, rfl⟩
 
-theorem valIn_add {q : Ideal (homLocRing P W)} {z w : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)}
+theorem valIn_add {q : Ideal (homLocRing P W)} {z w : FractionRing (MRing ι R ⧸ P)}
     (hz : ValIn P W q z) (hw : ValIn P W q w) : ValIn P W q (z + w) := by
   obtain ⟨a, ha, rfl⟩ := hz
   obtain ⟨c, hc, rfl⟩ := hw
   exact ⟨a + c, q.add_mem ha hc, rfl⟩
 
-theorem valIn_mul {q : Ideal (homLocRing P W)} {z w : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)}
+theorem valIn_mul {q : Ideal (homLocRing P W)} {z w : FractionRing (MRing ι R ⧸ P)}
     (hz : ValIn P W q z) (hw : w ∈ homLocRing P W) : ValIn P W q (z * w) := by
   obtain ⟨a, ha, rfl⟩ := hz
   exact ⟨a * ⟨w, hw⟩, q.mul_mem_right _ ha, rfl⟩
 
-theorem valIn_change (hPW : P ≤ W) {q : Ideal (homLocRing P W)} {b : K → ℕ} {f g g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
+theorem valIn_change (hPW : P ≤ W) {q : Ideal (homLocRing P W)} {b : K → ℕ} {f g g' : MRing ι R}
     (hg : IsMultiHomog g b) (hg' : IsMultiHomog g' b) (hgW : g ∉ W) (hg'W : g' ∉ W)
     (h : ValIn P W q (frac P f / frac P g)) : ValIn P W q (frac P f / frac P g') := by
   have e : frac P f / frac P g' = frac P f / frac P g * (frac P g / frac P g') := by
@@ -81,7 +80,7 @@ theorem valIn_change (hPW : P ≤ W) {q : Ideal (homLocRing P W)} {b : K → ℕ
 
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
-theorem comp_mul_add [Fintype K] {c d : K → ℕ} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hs : IsMultiHomog s c) (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+theorem comp_mul_add [Fintype K] {c d : K → ℕ} {s : MRing ι R} (hs : IsMultiHomog s c) (h : MRing ι R) :
     weightedHomogeneousComponent (blockWeight ι) (c + d) (s * h) =
       s * weightedHomogeneousComponent (blockWeight ι) d h := by
   have key := DirectSum.coe_decompose_mul_add_of_left_mem
@@ -90,7 +89,7 @@ theorem comp_mul_add [Fintype K] {c d : K → ℕ} {s : ReciprocityTheory.ChartR
   rw [MultiHomogPrimeCriterion.coe_decompose, MultiHomogPrimeCriterion.coe_decompose] at key
   exact key
 
-theorem comp_mul_of_ne [Fintype K] {c b : K → ℕ} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hs : IsMultiHomog s c) (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)
+theorem comp_mul_of_ne [Fintype K] {c b : K → ℕ} {s : MRing ι R} (hs : IsMultiHomog s c) (h : MRing ι R)
     (hb : ∀ d, b ≠ c + d) : weightedHomogeneousComponent (blockWeight ι) b (s * h) = 0 := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← sum_weightedHomogeneousComponent (blockWeight ι) h,
@@ -98,19 +97,19 @@ theorem comp_mul_of_ne [Fintype K] {c b : K → ℕ} {s : ReciprocityTheory.Char
   exact Finset.sum_eq_zero fun d _ => IsWeightedHomogeneous.weightedHomogeneousComponent_ne b
     (IsWeightedHomogeneous.mul hs (weightedHomogeneousComponent_isWeightedHomogeneous d h)) (hb d)
 
-theorem zero_mem_primeSet (q : Ideal (homLocRing P W)) : (0 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ∈ primeSet P W q := by
+theorem zero_mem_primeSet (q : Ideal (homLocRing P W)) : (0 : MRing ι R) ∈ primeSet P W q := by
   intro b g _ _
   rw [map_zero, frac_zero, zero_div]
   exact valIn_zero q
 
-theorem add_mem_primeSet {q : Ideal (homLocRing P W)} {x y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hx : x ∈ primeSet P W q)
+theorem add_mem_primeSet {q : Ideal (homLocRing P W)} {x y : MRing ι R} (hx : x ∈ primeSet P W q)
     (hy : y ∈ primeSet P W q) : x + y ∈ primeSet P W q := by
   intro b g hg hgW
   rw [map_add (f := _), frac_add, add_div]
   exact valIn_add (hx b g hg hgW) (hy b g hg hgW)
 
 theorem form_mul_mem_primeSet [Fintype K] (hPW : P ≤ W) (hW : W.IsPrime) (hrel : IsRelevant W)
-    {q : Ideal (homLocRing P W)} {c : K → ℕ} {s h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hs : IsMultiHomog s c)
+    {q : Ideal (homLocRing P W)} {c : K → ℕ} {s h : MRing ι R} (hs : IsMultiHomog s c)
     (hh : h ∈ primeSet P W q) : s * h ∈ primeSet P W q := by
   intro b g hg hgW
   by_cases hcb : ∃ d, b = c + d
@@ -131,7 +130,7 @@ theorem form_mul_mem_primeSet [Fintype K] (hPW : P ≤ W) (hW : W.IsPrime) (hrel
     exact valIn_zero q
 
 theorem mul_mem_primeSet [Fintype K] (hPW : P ≤ W) (hW : W.IsPrime) (hrel : IsRelevant W)
-    {q : Ideal (homLocRing P W)} (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hh : h ∈ primeSet P W q) :
+    {q : Ideal (homLocRing P W)} (s : MRing ι R) {h : MRing ι R} (hh : h ∈ primeSet P W q) :
     s * h ∈ primeSet P W q := by
   rw [← sum_weightedHomogeneousComponent (blockWeight ι) s,
     finsum_eq_sum _ (weightedHomogeneousComponent_finsupp s), Finset.sum_mul]
@@ -140,13 +139,13 @@ theorem mul_mem_primeSet [Fintype K] (hPW : P ≤ W) (hW : W.IsPrime) (hrel : Is
       form_mul_mem_primeSet hPW hW hrel (weightedHomogeneousComponent_isWeightedHomogeneous c s) hh
 
 def primeAbove [Fintype K] (hPW : P ≤ W) (hW : W.IsPrime) (hrel : IsRelevant W) (q : Ideal (homLocRing P W)) :
-    Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) where
+    Ideal (MRing ι R) where
   carrier := primeSet P W q
   zero_mem' := zero_mem_primeSet q
   add_mem' := add_mem_primeSet
   smul_mem' s _ hh := mul_mem_primeSet hPW hW hrel s hh
 
-theorem form_mem_primeSet (hPW : P ≤ W) {q : Ideal (homLocRing P W)} {s : K → ℕ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
+theorem form_mem_primeSet (hPW : P ≤ W) {q : Ideal (homLocRing P W)} {s : K → ℕ} {f g : MRing ι R}
     (hf : IsMultiHomog f s) (hg : IsMultiHomog g s) (hgW : g ∉ W)
     (h : ValIn P W q (frac P f / frac P g)) : f ∈ primeSet P W q := by
   intro b g' hg' hg'W
@@ -157,14 +156,14 @@ theorem form_mem_primeSet (hPW : P ≤ W) {q : Ideal (homLocRing P W)} {s : K �
   · rw [IsWeightedHomogeneous.weightedHomogeneousComponent_ne b hf hsb, frac_zero, zero_div]
     exact valIn_zero q
 
-theorem valIn_of_form_mem {q : Ideal (homLocRing P W)} {s : K → ℕ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
+theorem valIn_of_form_mem {q : Ideal (homLocRing P W)} {s : K → ℕ} {f g : MRing ι R}
     (hf : IsMultiHomog f s) (hg : IsMultiHomog g s) (hgW : g ∉ W) (h : f ∈ primeSet P W q) :
     ValIn P W q (frac P f / frac P g) := by
   have := h s g hg hgW
   rwa [IsWeightedHomogeneous.weightedHomogeneousComponent_same hf] at this
 
 theorem mem_primeAbove [Fintype K] (hPW : P ≤ W) (hW : W.IsPrime) (hrel : IsRelevant W)
-    (q : Ideal (homLocRing P W)) (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+    (q : Ideal (homLocRing P W)) (h : MRing ι R) :
     h ∈ primeAbove hPW hW hrel q ↔ h ∈ primeSet P W q := Iff.rfl
 
 theorem primeAbove_multiHomog [Fintype K] (hPW : P ≤ W) (hW : W.IsPrime) (hrel : IsRelevant W)
@@ -184,10 +183,10 @@ theorem primeAbove_isPrime [Fintype K] (hPW : P ≤ W) (hW : W.IsPrime) (hrel : 
     (q : Ideal (homLocRing P W)) [hq : q.IsPrime] : (primeAbove hPW hW hrel q).IsPrime := by
   refine MultiHomogPrimeCriterion.proof R K ι _ (primeAbove_multiHomog hPW hW hrel q) ?_ ?_
   · intro htop
-    have h1 : (1 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ∈ primeSet P W q := by
+    have h1 : (1 : MRing ι R) ∈ primeSet P W q := by
       rw [← mem_primeAbove hPW hW hrel, htop]
       exact Submodule.mem_top
-    have hW1 : (1 : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ∉ W := fun h => hW.ne_top ((Ideal.eq_top_iff_one W).2 h)
+    have hW1 : (1 : MRing ι R) ∉ W := fun h => hW.ne_top ((Ideal.eq_top_iff_one W).2 h)
     obtain ⟨a, ha, hav⟩ := valIn_of_form_mem (isWeightedHomogeneous_one R (blockWeight ι))
       (isWeightedHomogeneous_one R (blockWeight ι)) hW1 h1
     rw [frac_one, div_one] at hav
@@ -258,7 +257,7 @@ theorem HomLocRingDimLe.proof (h₁ : HomLocRingMem.Statement.{u})
     (h₂ : HomLocRingIsLocal.Statement.{u}) : HomLocRingDimLe.Statement.{u} := by
   intro R _ K _ _ ι _ P W _ hP hW hrel hPW
   haveI := hW
-  let Φ : PrimeSpectrum (homLocRing P W) → PrimeSpectrum (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) := fun q =>
+  let Φ : PrimeSpectrum (homLocRing P W) → PrimeSpectrum (MRing ι R ⧸ P) := fun q =>
     haveI := primeAbove_isPrime hPW hW hrel q.asIdeal
     ⟨(primeAbove hPW hW hrel q.asIdeal).map (Ideal.Quotient.mk P),
       Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective
@@ -278,7 +277,7 @@ theorem HomLocRingDimLe.proof (h₁ : HomLocRingMem.Statement.{u})
       sup_eq_left.mpr hPq, sup_eq_left.mpr hPq'] at this
   haveI hWq : (W.map (Ideal.Quotient.mk P)).IsPrime :=
     Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective (by rw [Ideal.mk_ker]; exact hPW)
-  let w : PrimeSpectrum (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) := ⟨W.map (Ideal.Quotient.mk P), hWq⟩
+  let w : PrimeSpectrum (MRing ι R ⧸ P) := ⟨W.map (Ideal.Quotient.mk P), hWq⟩
   have hΦw : ∀ q, Φ q ≤ w := fun q => by
     rw [← PrimeSpectrum.asIdeal_le_asIdeal]
     exact Ideal.map_mono (primeAbove_le h₂ hPW hW hrel q.asIdeal)

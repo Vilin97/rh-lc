@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsSheetSimpleNull
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsPosPartProjIndep
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -14,7 +13,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MeasureTheory
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSmoothHerm HermLine IsArithVar IsGoodProj mcPts segre pot PBlk oneLine
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar IsGoodProj mcPts segre pot PBlk oneLine
   isSmoothHerm_oneLine)
 
 def PtsPosPartLocal.Statement : Prop :=

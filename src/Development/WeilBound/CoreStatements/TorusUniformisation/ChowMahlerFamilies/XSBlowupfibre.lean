@@ -31,7 +31,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PPri
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PMultiHomogPrimeAvoid
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSpecialIdealCorresp
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PPFDegree
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -109,8 +108,8 @@ theorem exists_residue {S F E : Type*} [CommRing S] [Field F] [Field E] (ev : S 
         ← hrep]; rfl), map_add, map_mul, map_mul, map_mul, div_add_div _ _ hx hy]
 
 theorem homog_map {O k K : Type} [CommRing O] [CommRing k] [DecidableEq K] {ι : K → Type}
-    (π : O →+* k) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {b : K → ℕ} (hf : IsMultiHomog f b) :
-    IsMultiHomog (MvPolynomial.map π f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι) b := by
+    (π : O →+* k) {f : MRing ι O} {b : K → ℕ} (hf : IsMultiHomog f b) :
+    IsMultiHomog (MvPolynomial.map π f : MRing ι k) b := by
   intro d hd
   apply hf
   intro h
@@ -118,8 +117,8 @@ theorem homog_map {O k K : Type} [CommRing O] [CommRing k] [DecidableEq K] {ι :
   rw [coeff_map, h, map_zero]
 
 theorem exists_homog_lift {O k K : Type} [CommRing O] [CommRing k] [DecidableEq K] {ι : K → Type}
-    (π : O →+* k) (hπ : Function.Surjective π) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι} {b : K → ℕ} (hf : IsMultiHomog f b) :
-    ∃ f' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, IsMultiHomog f' b ∧ MvPolynomial.map π f' = f := by
+    (π : O →+* k) (hπ : Function.Surjective π) {f : MRing ι k} {b : K → ℕ} (hf : IsMultiHomog f b) :
+    ∃ f' : MRing ι O, IsMultiHomog f' b ∧ MvPolynomial.map π f' = f := by
   classical
   obtain ⟨f₀, rfl⟩ := MvPolynomial.map_surjective π hπ f
   refine ⟨weightedHomogeneousComponent (blockWeight ι) b f₀,
@@ -135,16 +134,16 @@ theorem exists_homog_lift {O k K : Type} [CommRing O] [CommRing k] [DecidableEq 
 set_option synthInstance.maxHeartbeats 400000 in
 set_option maxHeartbeats 1000000 in
 theorem exists_residue_hom {O k K : Type} [CommRing O] [Field k] [DecidableEq K] {ι : K → Type}
-    (π : O →+* k) (hπ : Function.Surjective π) (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) [P.IsPrime]
-    (hPW : P ≤ W) (V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι)) [V.IsPrime]
-    (hV : ∀ f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, MvPolynomial.map π f ∈ V ↔ f ∈ W) :
-    ∃ ρ : homLocRing P W →+* FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ V),
-      (∀ (x : homLocRing P W) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), g ∉ W →
-        (x : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) =
-          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) _ (Ideal.Quotient.mk P f) /
-            algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) _ (Ideal.Quotient.mk P g) →
-        ρ x = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ V) _ (Ideal.Quotient.mk V (MvPolynomial.map π f)) /
-            algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ V) _ (Ideal.Quotient.mk V (MvPolynomial.map π g))) ∧
+    (π : O →+* k) (hπ : Function.Surjective π) (P W : Ideal (MRing ι O)) [P.IsPrime]
+    (hPW : P ≤ W) (V : Ideal (MRing ι k)) [V.IsPrime]
+    (hV : ∀ f : MRing ι O, MvPolynomial.map π f ∈ V ↔ f ∈ W) :
+    ∃ ρ : homLocRing P W →+* FractionRing (MRing ι k ⧸ V),
+      (∀ (x : homLocRing P W) (f g : MRing ι O), g ∉ W →
+        (x : FractionRing (MRing ι O ⧸ P)) =
+          algebraMap (MRing ι O ⧸ P) _ (Ideal.Quotient.mk P f) /
+            algebraMap (MRing ι O ⧸ P) _ (Ideal.Quotient.mk P g) →
+        ρ x = algebraMap (MRing ι k ⧸ V) _ (Ideal.Quotient.mk V (MvPolynomial.map π f)) /
+            algebraMap (MRing ι k ⧸ V) _ (Ideal.Quotient.mk V (MvPolynomial.map π g))) ∧
       (∀ x, ρ x ≠ 0 → IsUnit x) ∧
       ∀ z, z ∈ homFracDegZero V ↔ ∃ x, ρ x = z := by
   have hW : W.IsPrime := by
@@ -152,16 +151,16 @@ theorem exists_residue_hom {O k K : Type} [CommRing O] [Field k] [DecidableEq K]
       ext f; rw [Ideal.mem_comap, hV]
     rw [this]
     exact Ideal.comap_isPrime _ _
-  let ev : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) :=
-    (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) _).comp (Ideal.Quotient.mk P)
-  let r : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ V) :=
-    ((algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ V) _).comp (Ideal.Quotient.mk V)).comp (MvPolynomial.map π)
+  let ev : MRing ι O →+* FractionRing (MRing ι O ⧸ P) :=
+    (algebraMap (MRing ι O ⧸ P) _).comp (Ideal.Quotient.mk P)
+  let r : MRing ι O →+* FractionRing (MRing ι k ⧸ V) :=
+    ((algebraMap (MRing ι k ⧸ V) _).comp (Ideal.Quotient.mk V)).comp (MvPolynomial.map π)
   have hr : ∀ f, r f = 0 ↔ f ∈ W := fun f => by
-    show algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ V) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ V))
+    show algebraMap (MRing ι k ⧸ V) (FractionRing (MRing ι k ⧸ V))
       (Ideal.Quotient.mk V (MvPolynomial.map π f)) = 0 ↔ _
     rw [IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem, hV]
   have hev : ∀ f, ev f = 0 ↔ f ∈ P := fun f => by
-    show algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P))
+    show algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P))
       (Ideal.Quotient.mk P f) = 0 ↔ _
     rw [IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
   have hmem := HomLocRingMem.proof O K ι P W hW hPW
@@ -170,7 +169,7 @@ theorem exists_residue_hom {O k K : Type} [CommRing O] [Field k] [DecidableEq K]
     (homLocRing P W) (fun z hz => by
       obtain ⟨b, f, g, -, -, hg, rfl⟩ := (hmem z).mp hz
       exact ⟨f, g, fun h => hg ((hr g).mp h), rfl⟩)
-  have hρ' : ∀ (x : homLocRing P W) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), g ∉ W → (x : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) =
+  have hρ' : ∀ (x : homLocRing P W) (f g : MRing ι O), g ∉ W → (x : FractionRing (MRing ι O ⧸ P)) =
       ev f / ev g → ρ x = r f / r g := fun x f g hg hx => hρ x f g (fun h => hg ((hr g).mp h)) hx
   have hu : ∀ x, ρ x ≠ 0 → IsUnit x := by
     rintro ⟨x, hx⟩ h0
@@ -180,9 +179,9 @@ theorem exists_residue_hom {O k K : Type} [CommRing O] [Field k] [DecidableEq K]
     apply h0
     rw [hρ' _ f g hgW rfl, (hr f).mpr hfW, zero_div]
   refine ⟨ρ, hρ', hu, fun z => ⟨fun hz => ?_, ?_⟩⟩
-  · have hgen : ∀ (b : K → ℕ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι), IsMultiHomog f b → IsMultiHomog g b → g ∉ V →
-        ∃ x, ρ x = algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ V) _ (Ideal.Quotient.mk V f) /
-          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ V) _ (Ideal.Quotient.mk V g) := by
+  · have hgen : ∀ (b : K → ℕ) (f g : MRing ι k), IsMultiHomog f b → IsMultiHomog g b → g ∉ V →
+        ∃ x, ρ x = algebraMap (MRing ι k ⧸ V) _ (Ideal.Quotient.mk V f) /
+          algebraMap (MRing ι k ⧸ V) _ (Ideal.Quotient.mk V g) := by
       intro b f g hf hg hgV
       obtain ⟨f, hf', rfl⟩ := exists_homog_lift π hπ hf
       obtain ⟨g, hg', rfl⟩ := exists_homog_lift π hπ hg
@@ -197,7 +196,7 @@ theorem exists_residue_hom {O k K : Type} [CommRing O] [Field k] [DecidableEq K]
       obtain ⟨x, hx⟩ := hgen 0 (C c) 1 (isWeightedHomogeneous_C _ _) (isWeightedHomogeneous_one _ _)
         ((Ideal.ne_top_iff_one V).mp Ideal.IsPrime.ne_top')
       refine ⟨x, hx.trans ?_⟩
-      rw [map_one, map_one, div_one, IsScalarTower.algebraMap_apply k (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι ⧸ V),
+      rw [map_one, map_one, div_one, IsScalarTower.algebraMap_apply k (MRing ι k ⧸ V),
         ← Ideal.Quotient.mk_algebraMap, MvPolynomial.algebraMap_eq]
     | add x y _ _ hx hy =>
       obtain ⟨x, rfl⟩ := hx
@@ -223,11 +222,11 @@ set_option synthInstance.maxHeartbeats 400000 in
 set_option maxHeartbeats 2000000 in
 theorem inertiaDeg_eq_relDeg {O k K : Type} [CommRing O] [Field k] [Fintype K] [DecidableEq K]
     {ι : K → Type} {J : Type}
-    (π : O →+* k) (hπ : Function.Surjective π) (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) [P.IsPrime]
-    (hPW : P ≤ W) (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)))
+    (π : O →+* k) (hπ : Function.Surjective π) (P W : Ideal (MRing ι O)) [P.IsPrime]
+    (hPW : P ≤ W) (u : J → MRing ι O) (W' : Ideal (MRing (extIdx ι J) O))
     (hbl : blowUpOf P u ≤ W') (hW' : W'.comap (liftForm (ι := ι) (J := J) (R := O)) = W)
-    (V' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k (extIdx ι J))) [V'.IsPrime]
-    (hV' : ∀ f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J), MvPolynomial.map π f ∈ V' ↔ f ∈ W')
+    (V' : Ideal (MRing (extIdx ι J) k)) [V'.IsPrime]
+    (hV' : ∀ f : MRing (extIdx ι J) O, MvPolynomial.map π f ∈ V' ↔ f ∈ W')
     (h : blowUpOverLoc P W u ≤ blowUpLocRing P u W') (𝔫 : Ideal (blowUpOverLoc P W u))
     (h𝔫 : 𝔫.IsMaximal)
     (hloc : letI := (Subring.inclusion h).toAlgebra
@@ -237,12 +236,12 @@ theorem inertiaDeg_eq_relDeg {O k K : Type} [CommRing O] [Field k] [Fintype K] [
   let _ := (Subring.inclusion h).toAlgebra
   have := h𝔫.isPrime
   have : (blowUpOf P u).IsPrime := RingHom.ker_isPrime _
-  have hml : ∀ f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, (MvPolynomial.map π (liftForm (J := J) f) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k (extIdx ι J)) =
+  have hml : ∀ f : MRing ι O, (MvPolynomial.map π (liftForm (J := J) f) : MRing (extIdx ι J) k) =
       rename (blockIncl Function.Embedding.some (extIdx ι J)) (MvPolynomial.map π f) :=
     fun f => MvPolynomial.map_rename _ _ _
-  let V : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k ι) := contractPrime Function.Embedding.some V'
+  let V : Ideal (MRing ι k) := contractPrime Function.Embedding.some V'
   have : V.IsPrime := contractPrime.isPrime Function.Embedding.some V'
-  have hV : ∀ f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, MvPolynomial.map π f ∈ V ↔ f ∈ W := fun f => by
+  have hV : ∀ f : MRing ι O, MvPolynomial.map π f ∈ V ↔ f ∈ W := fun f => by
     rw [← hW', Ideal.mem_comap, ← hV', hml]
     rfl
   have hW : W.IsPrime := by
@@ -253,9 +252,9 @@ theorem inertiaDeg_eq_relDeg {O k K : Type} [CommRing O] [Field k] [Fintype K] [
   obtain ⟨ρ, hρ, hρu, hρr⟩ := exists_residue_hom π hπ (blowUpOf P u) W' hbl V' hV'
   obtain ⟨ρA, hρA, -, hρAr⟩ := exists_residue_hom π hπ P W hPW V hV
   obtain ⟨φ, hφ⟩ := BlowUpLocRingIso.proof O K ι J P u W' hbl
-  let ρ' : blowUpLocRing P u W' →+* FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k (extIdx ι J) ⧸ V') :=
+  let ρ' : blowUpLocRing P u W' →+* FractionRing (MRing (extIdx ι J) k ⧸ V') :=
     ρ.comp φ.symm.toRingHom
-  let τ : blowUpOverLoc P W u →+* FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver k (extIdx ι J) ⧸ V') :=
+  let τ : blowUpOverLoc P W u →+* FractionRing (MRing (extIdx ι J) k ⧸ V') :=
     ρ'.comp (algebraMap (blowUpOverLoc P W u) (blowUpLocRing P u W'))
   have hτ : ∀ b, τ b = ρ' (algebraMap (blowUpOverLoc P W u) (blowUpLocRing P u W') b) := fun _ => rfl
   have hker : ∀ b, b ∈ 𝔫 ↔ τ b = 0 := by
@@ -342,7 +341,7 @@ theorem hdeg : BlowUpOverLocPointDeg.Statement.{0} := by
   obtain ⟨h, 𝔫, h𝔫, hl⟩ := hptmax O ϖ hϖ K ι J P n hP N u hu hu' c x hx hxP W hϖW hWmin hWrel
     W' hW'min hW'rel hW'W
   refine ⟨h, 𝔫, h𝔫, hl, ?_⟩
-  have hϖW' : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι J)) ∈ W' := by
+  have hϖW' : (C ϖ : MRing (extIdx ι J) O) ∈ W' := by
     rw [← hW'W, Ideal.mem_comap] at hϖW
     simpa [liftForm] using hϖW
   have hp : (specialIdeal W').IsPrime :=

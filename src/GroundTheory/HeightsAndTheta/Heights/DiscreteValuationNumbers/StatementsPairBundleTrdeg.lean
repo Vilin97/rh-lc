@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsGenericProjClosureDim
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 
 @[expose] public section
@@ -26,8 +25,8 @@ def PairBundleTrdeg.Statement : Prop :=
       IsTwistedDualGens y B a₀ φ → IsTwistedDualGens y B' a₀' φ' →
     ∀ (Φ : Type) [Field Φ] [Algebra Ω Φ] [Algebra O Φ] [IsScalarTower O Ω Φ]
       (e : Module.Basis (Fin N) Ω E) (t : Fin N → Φ), AlgebraicIndependent Ω t →
-      Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M') ⧸ pointIdeal O (pairProjCoord y e φ φ' t)) =
-        Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) + ((N + 1 : ℕ) : Cardinal)
+      Algebra.trdeg O (MRing (bundleIdx (bundleIdx ι M) M') O ⧸ pointIdeal O (pairProjCoord y e φ φ' t)) =
+        Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) + ((N + 1 : ℕ) : Cardinal)
 
 section Examples
 

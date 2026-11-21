@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Objects
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.Bundle
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -20,10 +19,10 @@ section Point
 variable {K : Type*} {ι : K → Type*} {Ω : Type*} [Field Ω]
 
 def pointConeMap (R : Type*) [CommRing R] [Algebra R Ω] (y : (Σ k, ι k) → Ω) :
-    ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →ₐ[R] MvPolynomial K Ω :=
+    MRing ι R →ₐ[R] MvPolynomial K Ω :=
   aeval fun p => C (y p) * X p.1
 
-def pointIdeal (R : Type*) [CommRing R] [Algebra R Ω] (y : (Σ k, ι k) → Ω) : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :=
+def pointIdeal (R : Type*) [CommRing R] [Algebra R Ω] (y : (Σ k, ι k) → Ω) : Ideal (MRing ι R) :=
   RingHom.ker (pointConeMap R y)
 
 end Point
@@ -87,7 +86,7 @@ def projCoord (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E) (φ : Fi
 
 def projIdeal (F : Type*) [Field F] [Algebra F Ω] (y : (Σ k, ι k) → Ω)
     (w : Module.Basis (Fin N) Ω E) (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) :
-    Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) :=
+    Ideal (MRing (bundleIdx ι M) F) :=
   RingHom.ker (eval₂Hom (C.comp ((algebraMap Ω Φ).comp (algebraMap F Ω)))
     (fun p => C (projCoord y w φ t p) * X p.1))
 
@@ -101,7 +100,7 @@ section Numbers
 
 variable {K : Type*} [DecidableEq K] {ι : K → Type*}
 
-def intNumL (F : Type*) [Field F] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (l : List (K → ℤ)) : ℤ :=
+def intNumL (F : Type*) [Field F] (P : Ideal (MRing ι F)) (l : List (K → ℤ)) : ℤ :=
   intNum F P l.get
 
 def rootList {N : ℕ} (x : Fin N → K → ℤ) (α : Fin N → ℕ) : List (K → ℤ) :=
@@ -112,11 +111,11 @@ def classList {σ : Type*} (cls : σ → K → ℤ) (μ : σ →₀ ℕ) : List 
 
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-def vNumL (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (l : List (K → ℤ)) : ℤ :=
+def vNumL (W : Ideal (MRing ι O)) (l : List (K → ℤ)) : ℤ :=
   vNum W l.get
 
 def classNum {σ : Type*} (cls : σ → K → ℤ) (H : MvPolynomial σ ℤ) (Q : List (K → ℤ))
-    (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) : ℤ :=
+    (W : Ideal (MRing ι O)) : ℤ :=
   ∑ μ ∈ H.support, H.coeff μ * vNumL W (classList cls μ ++ Q)
 
 structure IsPairExpansion {N : ℕ} (m : ℕ) (G : MvPolynomial (Fin N) ℤ)
@@ -124,7 +123,7 @@ structure IsPairExpansion {N : ℕ} (m : ℕ) (G : MvPolynomial (Fin N) ℤ)
   expansion : rename Sum.inl G - rename Sum.inr G = ∑ i, (X (Sum.inl i) - X (Sum.inr i)) * Gs i
   homogeneous : ∀ i, (Gs i).IsHomogeneous (m - 1)
 
-def pairNum {N : ℕ} (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (x x' : Fin N → K → ℤ) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
+def pairNum {N : ℕ} (P : Ideal (MRing ι O)) (x x' : Fin N → K → ℤ) (f g : Fin N → MRing ι O)
     (Gs : Fin N → MvPolynomial (Fin N ⊕ Fin N) ℤ) (Q : List (K → ℤ)) : ℤ :=
   ∑ i, cycEval (fun W => classNum (Sum.elim x x') (Gs i) Q W) (ratDiv P (f i) (g i))
 
@@ -137,7 +136,7 @@ variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Alge
 variable {N : ℕ} {E : Type*} [AddCommGroup E] [Module Ω E]
 
 structure IsFlagPair (ϖ : O) (y : (Σ k, ι k) → Ω) (B B' : ChartBundle O (segreVec y) N E)
-    (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) : Prop where
+    (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → MRing ι O) : Prop where
   flag : IsFlagFrame y B w x
   flag' : IsFlagFrame y B' w' x'
   sameFlag : ∀ i j : Fin N, i < j → w.repr (w' i) j = 0
@@ -155,7 +154,7 @@ def joinCoords (y : (Σ k, ι k) → Ω) (y' : (Σ k, ι' k) → Ω) :
   | ⟨Sum.inl k, i⟩ => y ⟨k, i⟩
   | ⟨Sum.inr k, i⟩ => y' ⟨k, i⟩
 
-def joinForm {R : Type*} [CommRing R] (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (Sum.elim ι ι') :=
+def joinForm {R : Type*} [CommRing R] (f : MRing ι R) : MRing (Sum.elim ι ι') R :=
   rename (fun p : (Σ k, ι k) => (⟨Sum.inl p.1, p.2⟩ : Σ s : K ⊕ K', Sum.elim ι ι' s)) f
 
 def joinDeg (b : K → ℤ) : K ⊕ K' → ℤ := Sum.elim b 0

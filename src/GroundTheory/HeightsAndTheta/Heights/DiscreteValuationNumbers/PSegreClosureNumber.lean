@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagClosure
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagIndependenceAlgebra
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -125,13 +124,13 @@ section PairNum
 variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} [∀ k, Fintype (ι k)]
   {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-theorem pairNum_add_expansion {m : ℕ} (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (x x' : Fin m → K → ℤ)
-    (f g : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (Gs Hs : Fin m → MvPolynomial (Fin m ⊕ Fin m) ℤ) (Q : List (K → ℤ)) :
+theorem pairNum_add_expansion {m : ℕ} (P : Ideal (MRing ι O)) (x x' : Fin m → K → ℤ)
+    (f g : Fin m → MRing ι O) (Gs Hs : Fin m → MvPolynomial (Fin m ⊕ Fin m) ℤ) (Q : List (K → ℤ)) :
     pairNum P x x' f g (Gs + Hs) Q = pairNum P x x' f g Gs Q + pairNum P x x' f g Hs Q :=
   (pairNumHom P x x' f g Q).map_add Gs Hs
 
-theorem pairNum_zero_expansion {m : ℕ} (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (x x' : Fin m → K → ℤ)
-    (f g : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (Q : List (K → ℤ)) : pairNum P x x' f g 0 Q = 0 :=
+theorem pairNum_zero_expansion {m : ℕ} (P : Ideal (MRing ι O)) (x x' : Fin m → K → ℤ)
+    (f g : Fin m → MRing ι O) (Q : List (K → ℤ)) : pairNum P x x' f g 0 Q = 0 :=
   (pairNumHom P x x' f g Q).map_zero
 
 end PairNum
@@ -180,7 +179,7 @@ theorem SegreClosureNumber.proof (hExp : PairNumberExpansionIndependence.Stateme
     fun m G hG Gs Hs hGs hHs Q' hQ' =>
       hExp O ϖ hϖ K ι (pointIdeal O y) d hV (N + n) _ _ _ _ hvert m G hG Gs Hs hGs hHs Q' hQ'
 
-  have stepCore : ∀ (k : ℕ) (hk : k < N) (f₁ g₁ f₂ g₂ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')),
+  have stepCore : ∀ (k : ℕ) (hk : k < N) (f₁ g₁ f₂ g₂ : MRing (bundleIdx (bundleIdx ι M) M') O),
       IsVerticalDivisor (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1))) ϖ
         (zetaFirst a₀ - zetaSecond a₀') f₁ g₁ →
       aeval (flagClosurePt y w e φ φ' t (k + 1)) f₁ = aeval (flagClosurePt y w e φ φ' t (k + 1)) g₁ →
@@ -317,7 +316,7 @@ theorem SegreClosureNumber.proof (hExp : PairNumberExpansionIndependence.Stateme
       ·
         rw [if_neg (by omega), if_neg (by omega), if_neg (by omega), sub_zero]
 
-  have claim : ∀ (k : ℕ) (hk : k < N) (f₁ g₁ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')),
+  have claim : ∀ (k : ℕ) (hk : k < N) (f₁ g₁ : MRing (bundleIdx (bundleIdx ι M) M') O),
       IsVerticalDivisor (pointIdeal O (flagClosurePt y w e φ φ' t (k + 1))) ϖ
         (zetaFirst a₀ - zetaSecond a₀') f₁ g₁ →
       aeval (flagClosurePt y w e φ φ' t (k + 1)) f₁ = aeval (flagClosurePt y w e φ φ' t (k + 1)) g₁ →

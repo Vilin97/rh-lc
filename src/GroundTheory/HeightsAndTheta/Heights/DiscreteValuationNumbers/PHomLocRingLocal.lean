@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsHomLocRingLocal
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,14 +16,14 @@ noncomputable section
 universe u
 
 theorem homLocRing_form_not_mem {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-    {R : Type u} [CommRing R] {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hW : W.IsPrime) (hrel : IsRelevant W)
-    (c : K → ℕ) : ∃ g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι, IsMultiHomog g c ∧ g ∉ W := by
+    {R : Type u} [CommRing R] {W : Ideal (MRing ι R)} (hW : W.IsPrime) (hrel : IsRelevant W)
+    (c : K → ℕ) : ∃ g : MRing ι R, IsMultiHomog g c ∧ g ∉ W := by
   choose i hi using hrel
   refine ⟨∏ k, X ⟨k, i k⟩ ^ c k, ?_, ?_⟩
   · have hc : c = ∑ k, c k • blockWeight ι ⟨k, i k⟩ := by
       funext j
       simp [blockWeight, Finset.sum_apply, Pi.single_apply]
-    have h := IsWeightedHomogeneous.prod Finset.univ (fun k => (X ⟨k, i k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ^ c k)
+    have h := IsWeightedHomogeneous.prod Finset.univ (fun k => (X ⟨k, i k⟩ : MRing ι R) ^ c k)
       (fun k => c k • blockWeight ι ⟨k, i k⟩)
       fun k _ => (isWeightedHomogeneous_X R (blockWeight ι) _).pow _
     rw [← hc] at h
@@ -48,8 +47,8 @@ theorem HomLocRingLocal.proof (hloc : HomLocRingIsLocal.Statement.{u})
     have h1 := Ideal.map_height_le_one_of_mem_minimalPrimes hW
     exact_mod_cast h1
   · obtain ⟨g, hg, hgW⟩ := homLocRing_form_not_mem hWp hWrel c
-    have hz : algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.Quotient.mk P x) /
-        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P)) (Ideal.Quotient.mk P g) ∈
+    have hz : algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (Ideal.Quotient.mk P x) /
+        algebraMap (MRing ι O ⧸ P) (FractionRing (MRing ι O ⧸ P)) (Ideal.Quotient.mk P g) ∈
           homLocRing P W :=
       Subring.subset_closure ⟨c, x, g, hx, hg, hgW, rfl⟩
     have hnu : ¬ IsUnit (⟨_, hz⟩ : homLocRing P W) :=

@@ -5,7 +5,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Inha
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ClassListMapDomainPerm
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTwinPlainPairNum
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagIndependenceAlgebra
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -23,7 +22,7 @@ variable {K : Type} [DecidableEq K] {ι : K → Type}
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 theorem classNum_rename_mul {N q : ℕ} (x : Fin N → K → ℤ) (L : Fin q → K → ℤ)
-    (G : MvPolynomial (Fin N) ℤ) (Q : MvPolynomial (Fin q) ℤ) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (G : MvPolynomial (Fin N) ℤ) (Q : MvPolynomial (Fin q) ℤ) (W : Ideal (MRing ι O)) :
     classNum (Sum.elim x L) (rename Sum.inl G * rename Sum.inr Q) [] W =
       ∑ μ ∈ Q.support, Q.coeff μ * classNum x G (classList L μ) W := by
   classical
@@ -70,10 +69,10 @@ theorem RootPolynomialNumber.proof : RootPolynomialNumber.Statement := by
       simp
     rw [map_mul, rename_rename, rename_rename, e1, e2]
   have hZ : ⇑(Finsupp.mapRange (fun n : ℕ => (n : ℤ)) Nat.cast_zero
-      (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C a))) = (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C a)) W : ℤ)) := by
+      (ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C a))) = divCycle P (C a) := by
     funext W
     simp [FlagTypings.divCycle_eq]
-  have hW : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+  have hW : ∀ W : Ideal (MRing ι O),
       IndefiniteRowSideFullHecke.NumbersDVR.Bundles.polyNum (fun V _ bs => intNum (IsLocalRing.ResidueField O) V bs)
                                 (specialIdeal W) d (Fin.append x L) (rename (Fin.castAdd q) G * rename (Fin.natAdd N) Q) =
         ∑ μ ∈ Q.support, Q.coeff μ * classNum x G (classList L μ) W := by
@@ -82,7 +81,7 @@ theorem RootPolynomialNumber.proof : RootPolynomialNumber.Statement := by
       hren, RootPolynomialNumber.classNum_rename_mul]
   rw [BundleExamples.vEval_eq, hZ]
   simp only [hW]
-  have hfin : (Function.support ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (C a)) W : ℤ)))).Finite := by
+  have hfin : (Function.support (divCycle P (C a))).Finite := by
     rw [← hZ, Finsupp.fun_support_eq]
     exact Finset.finite_toSet _
   rw [cycEval_eq_sum hfin]

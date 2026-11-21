@@ -18,7 +18,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial MeasureTheory Matrix Metric Set
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar PBlk IsGoodProj IsSheet fibre mcPts)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing PBlk IsArithVar IsGoodProj IsSheet fibre mcPts)
 
 theorem integral_indicator_ball_norm_pow (e : ℕ) {R : ℝ} (hR : 0 ≤ R) :
     ∫ t : ℂ, (ball (0 : ℂ) R).indicator (fun t => ‖t‖ ^ (2 * e)) t =

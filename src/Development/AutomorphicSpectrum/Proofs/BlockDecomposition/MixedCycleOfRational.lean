@@ -15,7 +15,6 @@ public import GroundTheory.HeightsAndTheta.Heights.Intersections.PDiagOrd
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FinsumLengthMulLogCardEqNegLogAdicAbvNorm
 public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitChartMult
 public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MinimalPrimesMap
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -25,7 +24,7 @@ open CategoryTheory AlgebraicGeometry Limits TopologicalSpace MvPolynomial
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open GlobalTheory.AbLaw GlobalTheory.CechPic GlobalTheory.ProjSpace GlobalTheory.CxPts GlobalTheory.Cartier GlobalTheory.ArInt
 open GroundTheory.Arith.SchemeCoh GroundTheory.Arith.SchemeCoh.ProjSpace
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsMultiHomog HermLine IsMultiHomogIdeal IsRelevant IsMultiProjPrime divSupp multAt)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsMultiHomog IsMultiHomogIdeal IsRelevant IsMultiProjPrime divSupp multAt)
 open ReciprocityTheory.ChartRestriction.G.AI.I2 (IsRatSectionOn)
 open GlobalTheory.CompanionTheory.MPDict GlobalTheory.CompanionTheory.MixZ
 

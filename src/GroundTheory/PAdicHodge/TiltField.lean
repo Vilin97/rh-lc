@@ -18,6 +18,11 @@ open Filter Topology NNReal
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [Fact p.Prime] [IsPerfectoidField K p]
 
+local notation "𝒪" => normInteger K
+local notation "𝒪♭" => PreTilt 𝒪 p
+local notation "K♭" => FractionRing 𝒪♭
+local notation "♮" x:arg => ((PreTilt.untilt x : 𝒪) : K)
+
 instance isDomain_preTilt_of_isPerfectoidField : IsDomain 𝒪♭ :=
   IsPerfectoidField.isDomain_preTilt p
 

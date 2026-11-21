@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -36,17 +35,17 @@ theorem isWeightedHomogeneous_of_map_coeff {R S σ M : Type*} [CommSemiring R] [
   rw [coeff_map]
   exact (map_ne_zero_iff f hf).mpr hd
 
-def genFibQuot (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
-    (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) →ₐ[O] (MRing ι (FractionRing O) ⧸ genFib P) :=
+def genFibQuot (P : Ideal (MRing ι O)) :
+    (MRing ι O ⧸ P) →ₐ[O] (MRing ι (FractionRing O) ⧸ genFib P) :=
   Ideal.quotientMapₐ (genFib P) (mapAlgHom (Algebra.ofId O (FractionRing O)))
     (fun _ hx => Ideal.mem_comap.mpr (Ideal.mem_map_of_mem _ hx))
 
 omit [IsDomain O] [DecidableEq K] in
-theorem genFibQuot_mk (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :
+theorem genFibQuot_mk (P : Ideal (MRing ι O)) (g : MRing ι O) :
     genFibQuot P (Ideal.Quotient.mk P g) =
       Ideal.Quotient.mk (genFib P) (map (algebraMap O (FractionRing O)) g) := rfl
 
-def genFibPiece (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (m : K → ℕ) :
+def genFibPiece (P : Ideal (MRing ι O)) (m : K → ℕ) :
     gradedPieceR P m →ₗ[O] gradedPiece (genFib P) m where
   toFun x := ⟨genFibQuot P x.1, by
     obtain ⟨g, hg, hgx⟩ := Submodule.mem_map.mp x.2
@@ -58,7 +57,7 @@ def genFibPiece (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O
   map_add' x y := Subtype.ext (map_add (genFibQuot P) x.1 y.1)
   map_smul' c x := Subtype.ext ((genFibQuot P).toLinearMap.map_smul c x.1)
 
-theorem isLocalizedModule_genFibPiece (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (m : K → ℕ) :
+theorem isLocalizedModule_genFibPiece (P : Ideal (MRing ι O)) (m : K → ℕ) :
     IsLocalizedModule (nonZeroDivisors O) (genFibPiece P m) where
   map_units x := by
     rw [Module.End.isUnit_iff]

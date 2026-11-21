@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsRename
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.IntNumRelabel
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -18,7 +17,7 @@ noncomputable section
 universe u
 
 theorem map_comap_renameEquiv {F : Type u} [Field F] {S K' : Type} {κ : S → Type}
-    {ι' : K' → Type} (σ : (Σ s, κ s) ≃ (Σ k', ι' k')) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) :
+    {ι' : K' → Type} (σ : (Σ s, κ s) ≃ (Σ k', ι' k')) (P : Ideal (MRing ι' F)) :
     (P.comap (rename σ)).map (renameEquiv F σ) = P := by
   have h : P.comap (rename σ) = P.comap (renameEquiv F σ) := rfl
   rw [h]

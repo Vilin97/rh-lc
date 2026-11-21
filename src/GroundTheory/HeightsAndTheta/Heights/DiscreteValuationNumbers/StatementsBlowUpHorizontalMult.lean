@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpHorizontal
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -45,11 +44,11 @@ def BlowUpHorizontalChartLength.Statement : Prop :=
       multAt (blowUpOf P u ⊔ Ideal.span {liftForm x}) W =
         Module.length
           (Localization.AtPrime ((W.comap (liftForm (ι := ι) (J := J) (R := O))).map
-            (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι))))
+            (Polynomial.C : MRing ι O →+* Polynomial (MRing ι O))))
           (LocalizedModule ((W.comap (liftForm (ι := ι) (J := J) (R := O))).map
-              (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι))).primeCompl
-            (Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ⧸
-              (P ⊔ Ideal.span {x}).map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι))))
+              (Polynomial.C : MRing ι O →+* Polynomial (MRing ι O))).primeCompl
+            (Polynomial (MRing ι O) ⧸
+              (P ⊔ Ideal.span {x}).map (Polynomial.C : MRing ι O →+* Polynomial (MRing ι O))))
 
 def PolynomialLocalizedLength.Statement : Prop :=
   ∀ (R : Type u) [CommRing R] (q : Ideal R) [q.IsPrime] (I : Ideal R),

@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartIntegralPoints
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.ExistsIsSheetFinZero
 public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PPointIntegral
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -15,7 +14,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights.Targets
 
 open MvPolynomial Filter Topology
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsArithVar HermLine IsMultiHomogIdeal ptsIntegral pot segre mcPts SameOrbit
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsArithVar IsMultiHomogIdeal ptsIntegral pot segre mcPts SameOrbit
   segre_smul mcPts_smul sameOrbit_of_segre)
 open GroundTheory.Heights₂.Heights (varInt IsDegZeroSmooth segreChartSet segreChartComponents segreChartIdeal chartLift
   chartLift_segre_apply mem_segreChartComponents)

@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -20,17 +19,17 @@ section Drop
 
 variable {K : Type*} {ι : K → Type*} {F : Type*} [Field F]
 
-theorem ringKrullDim_add_one_le {P Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [P.IsPrime] (hPQ : P ≤ Q)
-    {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hfP : f ∉ P) (hfQ : f ∈ Q) :
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) + 1 ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) := by
+theorem ringKrullDim_add_one_le {P Q : Ideal (MRing ι F)} [P.IsPrime] (hPQ : P ≤ Q)
+    {f : MRing ι F} (hfP : f ∉ P) (hfQ : f ∈ Q) :
+    ringKrullDim (MRing ι F ⧸ Q) + 1 ≤ ringKrullDim (MRing ι F ⧸ P) := by
   refine ringKrullDim_succ_le_of_surjective (Ideal.Quotient.factor hPQ)
     (Ideal.Quotient.factor_surjective hPQ) (r := Ideal.Quotient.mk P f) ?_ ?_
   · exact mem_nonZeroDivisors_of_ne_zero (by rwa [ne_eq, Ideal.Quotient.eq_zero_iff_mem])
   · rw [Ideal.Quotient.factor_mk, Ideal.Quotient.eq_zero_iff_mem]
     exact hfQ
 
-theorem ringKrullDim_lt_top [Finite K] [∀ k, Finite (ι k)] (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) :
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) < ⊤ := by
+theorem ringKrullDim_lt_top [Finite K] [∀ k, Finite (ι k)] (Q : Ideal (MRing ι F)) :
+    ringKrullDim (MRing ι F ⧸ Q) < ⊤ := by
   refine lt_of_le_of_lt (ringKrullDim_quotient_le Q) ?_
   rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, ringKrullDim_eq_zero_of_field, zero_add]
   exact WithBot.coe_lt_coe.mpr (ENat.natCast_lt_top _)
@@ -41,7 +40,7 @@ section Kill
 
 variable {K : Type*} [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
 
-def killBlocks (T : Finset K) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →ₐ[F] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι :=
+def killBlocks (T : Finset K) : MRing ι F →ₐ[F] MRing ι F :=
   aeval fun v => if v.1 ∈ T then 0 else X v
 
 theorem killBlocks_X (T : Finset K) (v : Σ k, ι k) :
@@ -76,7 +75,7 @@ theorem killBlocks_monomial (T : Finset K) (d : (Σ k, ι k) →₀ ℕ) (c : F)
     dsimp only
     rw [if_pos hT, zero_pow (Finsupp.mem_support_iff.mp hv)]
 
-theorem coeff_killBlocks (T : Finset K) (q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (d : (Σ k, ι k) →₀ ℕ) :
+theorem coeff_killBlocks (T : Finset K) (q : MRing ι F) (d : (Σ k, ι k) →₀ ℕ) :
     AddMonoidAlgebra.coeff (killBlocks T q) d = if ∀ v ∈ d.support, v.1 ∉ T then AddMonoidAlgebra.coeff q d else 0 := by
   classical
   induction q using MvPolynomial.induction_on' with
@@ -103,7 +102,7 @@ theorem weight_apply_eq_zero_iff (d : (Σ k, ι k) →₀ ℕ) (k : K) :
   · intro h
     rw [if_neg (fun hk => h hk.symm)]
 
-theorem killBlocks_of_isMultiHomog (T : Finset K) {p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {b : K → ℕ}
+theorem killBlocks_of_isMultiHomog (T : Finset K) {p : MRing ι F} {b : K → ℕ}
     (hp : IsMultiHomog p b) : killBlocks T p = if ∀ k ∈ T, b k = 0 then p else 0 := by
   ext d
   rw [coeff_killBlocks]
@@ -124,8 +123,8 @@ theorem killBlocks_of_isMultiHomog (T : Finset K) {p : ReciprocityTheory.ChartRe
     · rw [if_pos (key.mpr hb), if_pos hb]
     · rw [if_neg (fun h => hb (key.mp h)), if_neg hb, coeff_zero]
 
-theorem killBlocks_mem_of_isMultiHomogIdeal {Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hQ : IsMultiHomogIdeal Q)
-    (T : Finset K) {q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hq : q ∈ Q) : killBlocks T q ∈ Q := by
+theorem killBlocks_mem_of_isMultiHomogIdeal {Q : Ideal (MRing ι F)} (hQ : IsMultiHomogIdeal Q)
+    (T : Finset K) {q : MRing ι F} (hq : q ∈ Q) : killBlocks T q ∈ Q := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [← sum_weightedHomogeneousComponent (blockWeight ι) q,
     finsum_eq_sum _ (weightedHomogeneousComponent_finsupp q), map_sum]
@@ -135,12 +134,12 @@ theorem killBlocks_mem_of_isMultiHomogIdeal {Q : Ideal (ReciprocityTheory.ChartR
   · exact hQ q hq b
   · exact Q.zero_mem
 
-def killIdeal (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (T : Finset K) : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :=
+def killIdeal (Q : Ideal (MRing ι F)) (T : Finset K) : Ideal (MRing ι F) :=
   Q.comap (killBlocks T)
 
-theorem card_le_ringKrullDim [Fintype K] {Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [hQp : Q.IsPrime]
-    (hQ : ∀ (T : Finset K) (q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), q ∈ Q → killBlocks T q ∈ Q) (hrel : IsRelevant Q) :
-    (Fintype.card K : WithBot ℕ∞) ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) := by
+theorem card_le_ringKrullDim [Fintype K] {Q : Ideal (MRing ι F)} [hQp : Q.IsPrime]
+    (hQ : ∀ (T : Finset K) (q : MRing ι F), q ∈ Q → killBlocks T q ∈ Q) (hrel : IsRelevant Q) :
+    (Fintype.card K : WithBot ℕ∞) ≤ ringKrullDim (MRing ι F ⧸ Q) := by
   choose i hi using hrel
   have hmono : ∀ {T T' : Finset K}, T ⊆ T' → killIdeal Q T ≤ killIdeal Q T' := by
     intro T T' h q hq
@@ -149,8 +148,8 @@ theorem card_le_ringKrullDim [Fintype K] {Q : Ideal (ReciprocityTheory.ChartRest
     exact hQ T' _ hq
   have hprime : ∀ T, (killIdeal Q T).IsPrime := fun T => Ideal.comap_isPrime _ _
   have hchain : ∀ T : Finset K,
-      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ killIdeal Q T) + (T.card : WithBot ℕ∞) ≤
-        ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) := by
+      ringKrullDim (MRing ι F ⧸ killIdeal Q T) + (T.card : WithBot ℕ∞) ≤
+        ringKrullDim (MRing ι F ⧸ Q) := by
     intro T
     induction T using Finset.induction_on with
     | empty =>
@@ -170,18 +169,18 @@ theorem card_le_ringKrullDim [Fintype K] {Q : Ideal (ReciprocityTheory.ChartRest
           change killBlocks (insert k T) (X ⟨k, i k⟩) ∈ Q
           rw [killBlocks_X, if_pos (Finset.mem_insert_self k T)]
           exact Q.zero_mem)
-      calc ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ killIdeal Q (insert k T)) + ((insert k T).card : WithBot ℕ∞)
-          = (ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ killIdeal Q (insert k T)) + 1) + (T.card : WithBot ℕ∞) := by
+      calc ringKrullDim (MRing ι F ⧸ killIdeal Q (insert k T)) + ((insert k T).card : WithBot ℕ∞)
+          = (ringKrullDim (MRing ι F ⧸ killIdeal Q (insert k T)) + 1) + (T.card : WithBot ℕ∞) := by
             rw [Finset.card_insert_of_notMem hk, Nat.cast_add, Nat.cast_one, add_assoc,
               add_comm (1 : WithBot ℕ∞)]
-        _ ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ killIdeal Q T) + (T.card : WithBot ℕ∞) := by gcongr
+        _ ≤ ringKrullDim (MRing ι F ⧸ killIdeal Q T) + (T.card : WithBot ℕ∞) := by gcongr
         _ ≤ _ := ih
   have := hprime Finset.univ
-  have h0 := ringKrullDim_nonneg_of_nontrivial (R := ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ killIdeal Q Finset.univ)
+  have h0 := ringKrullDim_nonneg_of_nontrivial (R := MRing ι F ⧸ killIdeal Q Finset.univ)
   have := hchain Finset.univ
   rw [Finset.card_univ] at this
   calc (Fintype.card K : WithBot ℕ∞) = 0 + (Fintype.card K : WithBot ℕ∞) := (zero_add _).symm
-    _ ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ killIdeal Q Finset.univ) + (Fintype.card K : WithBot ℕ∞) := by
+    _ ≤ ringKrullDim (MRing ι F ⧸ killIdeal Q Finset.univ) + (Fintype.card K : WithBot ℕ∞) := by
         gcongr
     _ ≤ _ := this
 

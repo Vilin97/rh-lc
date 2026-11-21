@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBundles
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -20,7 +19,7 @@ variable {K : Type*} [DecidableEq K] {ι : K → Type*}
   {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 theorem classNum_rename {σ τ : Type*} (e : σ → τ) (he : Function.Injective e) (cls : τ → K → ℤ)
-    (H : MvPolynomial σ ℤ) (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (H : MvPolynomial σ ℤ) (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     classNum cls (rename e H) Q W = classNum (cls ∘ e) H Q W := by
   classical
   unfold classNum
@@ -38,9 +37,9 @@ theorem rename_psumExpansion {M N : ℕ} (e : Fin M → Fin N) (k : ℕ) (i : Fi
   set_option synthInstance.maxHeartbeats 100000 in
     simp [psumExpansion, map_sum, rename_X]
 
-theorem pairNum_join {r m N : ℕ} (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (e : Fin r ⊕ Fin m ≃ Fin N)
-    (xU xU' : Fin r → K → ℤ) (xV xV' : Fin m → K → ℤ) (fU gU : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)
-    (fV gV : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (k : ℕ) (Q : List (K → ℤ)) :
+theorem pairNum_join {r m N : ℕ} (P : Ideal (MRing ι O)) (e : Fin r ⊕ Fin m ≃ Fin N)
+    (xU xU' : Fin r → K → ℤ) (xV xV' : Fin m → K → ℤ) (fU gU : Fin r → MRing ι O)
+    (fV gV : Fin m → MRing ι O) (k : ℕ) (Q : List (K → ℤ)) :
     pairNum P (fun i => Sum.elim xU xV (e.symm i)) (fun i => Sum.elim xU' xV' (e.symm i))
         (fun i => Sum.elim fU fV (e.symm i)) (fun i => Sum.elim gU gV (e.symm i))
         (psumExpansion N k) Q =
@@ -154,9 +153,9 @@ theorem isFlagPair_join (ϖ : O) (y : (Σ k, ι k) → Ω) (B B' : ChartBundle O
     (hV : ∀ c, segreVec y c ≠ 0 → ∀ q,
       (q ∈ BV.lat c ↔ ∃ z ∈ B.lat c, (φ.symm z).2 = q) ∧
         (q ∈ BV'.lat c ↔ ∃ z ∈ B'.lat c, (φ.symm z).2 = q))
-    {wU wU' : Module.Basis (Fin r) Ω U} {xU xU' : Fin r → K → ℤ} {fU gU : Fin r → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
+    {wU wU' : Module.Basis (Fin r) Ω U} {xU xU' : Fin r → K → ℤ} {fU gU : Fin r → MRing ι O}
     (hpU : IsFlagPair ϖ y BU BU' wU wU' xU xU' fU gU)
-    {wV wV' : Module.Basis (Fin m) Ω V} {xV xV' : Fin m → K → ℤ} {fV gV : Fin m → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
+    {wV wV' : Module.Basis (Fin m) Ω V} {xV xV' : Fin m → K → ℤ} {fV gV : Fin m → MRing ι O}
     (hpV : IsFlagPair ϖ y BV BV' wV wV' xV xV' fV gV) :
     IsFlagPair ϖ y B B' (((wU.prod wV).map φ).reindex e) (((wU'.prod wV').map φ).reindex e)
       (fun i => Sum.elim xU xV (e.symm i)) (fun i => Sum.elim xU' xV' (e.symm i))

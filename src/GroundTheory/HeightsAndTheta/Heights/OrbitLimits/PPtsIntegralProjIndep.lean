@@ -6,7 +6,6 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeo
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsIntegralProjIndep
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsPosPartProjIndep
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsPosDensIntegrable
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,7 +16,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MeasureTheory Filter
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSmoothHerm HermLine IsArithVar IsGoodProj IsSheet ptsIntegralAt sheetDensity
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar IsGoodProj IsSheet ptsIntegralAt sheetDensity
   fibre pot mcPts fibreFinite isOpen_blockNonzero)
 
 section

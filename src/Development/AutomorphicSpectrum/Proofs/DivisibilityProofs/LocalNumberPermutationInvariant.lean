@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Cart
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterNamed
 public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.HeckeSectionsIsotropicCommutatorPairingPower
 public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.IsCompactUnitaryPointsAtPlaceFstMemCompact
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -24,7 +23,7 @@ theorem classList_mapDomain {K σ τ : Type} (cls : τ → K → ℤ) (e : σ �
 
 theorem classNum_rename {K : Type} [DecidableEq K] {ι : K → Type} {O : Type} [CommRing O] [IsDomain O]
     [IsDiscreteValuationRing O] {σ τ : Type} (cls : τ → K → ℤ) (e : σ → τ) (he : Function.Injective e)
-    (H : MvPolynomial σ ℤ) (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (H : MvPolynomial σ ℤ) (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     classNum cls (rename e H) Q W = classNum (cls ∘ e) H Q W := by
   classical
   unfold classNum
@@ -38,14 +37,14 @@ theorem rename_psumExpansion {r : ℕ} (e : Equiv.Perm (Fin r)) (k : ℕ) (i : F
   set_option synthInstance.maxHeartbeats 100000 in
     simp [psumExpansion, map_sum, rename_X]
 
-theorem root_perm : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (r : ℕ) (e : Equiv.Perm (Fin r)) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (k : ℕ) (Q : List (K → ℤ)), (∀ (a : O) (x : Fin r → K → ℤ), laNum P a (x ∘ e) k Q = laNum P a x k Q) ∧ ∀ T : LocPair ι O (Fin r), (T.comp e).ck P k Q = T.ck P k Q := by
+theorem root_perm : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (r : ℕ) (e : Equiv.Perm (Fin r)) (P : Ideal (MRing ι O)) (k : ℕ) (Q : List (K → ℤ)), (∀ (a : O) (x : Fin r → K → ℤ), laNum P a (x ∘ e) k Q = laNum P a x k Q) ∧ ∀ T : LocPair ι O (Fin r), (T.comp e).ck P k Q = T.ck P k Q := by
   intro O _ _ _ K _ _ ι _ r e P k Q
   refine ⟨fun a x => ?_, fun T => ?_⟩
-  · have h : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), classNum (x ∘ e) (psum (Fin r) ℤ (k - 1)) Q W =
+  · have h : ∀ W : Ideal (MRing ι O), classNum (x ∘ e) (psum (Fin r) ℤ (k - 1)) Q W =
         classNum x (psum (Fin r) ℤ (k - 1)) Q W := fun W => by
       rw [← classNum_rename x e e.injective, rename_psum]
     simp only [laNum, h]
-  · have h : ∀ (i : Fin r) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)),
+  · have h : ∀ (i : Fin r) (W : Ideal (MRing ι O)),
         classNum (Sum.elim (T.x ∘ e) (T.x' ∘ e)) (psumExpansion r k i) Q W =
           classNum (Sum.elim T.x T.x') (psumExpansion r k (e i)) Q W := fun i W => by
       have hc : Sum.elim T.x T.x' ∘ Sum.map e e = Sum.elim (T.x ∘ e) (T.x' ∘ e) := by

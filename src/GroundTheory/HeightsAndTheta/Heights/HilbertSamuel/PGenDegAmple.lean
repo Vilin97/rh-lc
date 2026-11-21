@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsGener
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsMultiDegreePositive
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PGenDegTwist
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PIntersectionRecursion
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -23,7 +22,7 @@ namespace GenDegAmple
 open GroundTheory.Heights₂.Heights.NumbersDVR
 
 theorem hilbFn_nonneg {F : Type} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-    [∀ k, Fintype (ι k)] (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (m : K → ℤ) : 0 ≤ hilbFn q m := by
+    [∀ k, Fintype (ι k)] (q : Ideal (MRing ι F)) (m : K → ℤ) : 0 ≤ hilbFn q m := by
   unfold hilbFn
   split_ifs
   · exact Int.natCast_nonneg _
@@ -39,8 +38,8 @@ theorem eventualValue_nonneg {K : Type} [Fintype K] (f : (K → ℤ) → ℤ) (h
   · exact le_rfl
 
 theorem unit_nonneg {F : Type} [Field F] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-    [∀ k, Fintype (ι k)] (e : ℕ) : ∀ q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), NumbersDVR.IsMultiProjPrime q →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
+    [∀ k, Fintype (ι k)] (e : ℕ) : ∀ q : Ideal (MRing ι F), NumbersDVR.IsMultiProjPrime q →
+    ringKrullDim (MRing ι F ⧸ q) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞) →
     ∀ r : Fin e → K, 0 ≤ intNum F q (fun j => unitDeg (r j)) := by
   induction e with
   | zero =>
@@ -51,7 +50,7 @@ theorem unit_nonneg {F : Type} [Field F] {K : Type} [Fintype K] [DecidableEq K] 
   | succ e ih =>
     intro q hq hd r
     obtain ⟨i, hX⟩ := hq.relevant (r 0)
-    have hd' : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) = ((e + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) := hd
+    have hd' : ringKrullDim (MRing ι F ⧸ q) = ((e + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) := hd
     have hsplit : (fun j : Fin (e + 1) => unitDeg (r j)) =
         Matrix.vecCons (unitDeg (r 0)) (fun j : Fin e => unitDeg (r j.succ)) := by
       funext j

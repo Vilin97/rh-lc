@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagBundleForms
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagBundleSectionDiv
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PIntNumSymm
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -19,7 +18,7 @@ noncomputable section
 namespace FlagBundleCutProof
 
 theorem intNumL_cons_eq_snoc {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-    [∀ k, Fintype (ι k)] {F : Type} [Field F] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (x : K → ℤ)
+    [∀ k, Fintype (ι k)] {F : Type} [Field F] (P : Ideal (MRing ι F)) (x : K → ℤ)
     (L : List (K → ℤ)) :
     intNumL F P (x :: L) = intNum F P (Fin.snoc (α := fun _ => K → ℤ) L.get x) := by
   have hget : (x :: L).get = Fin.cons (α := fun _ => K → ℤ) x L.get := by
@@ -31,7 +30,7 @@ theorem intNumL_cons_eq_snoc {K : Type} [Fintype K] [DecidableEq K] {ι : K → 
   rfl
 
 theorem cycEval_single {K : Type} {ι : K → Type} {F : Type} [Field F]
-    (n : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) → ℤ) (Z : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) :
+    (n : Ideal (MRing ι F) → ℤ) (Z : Ideal (MRing ι F)) :
     cycEval n (fun W => by classical exact if W = Z then 1 else 0) = n Z := by
   classical
   unfold cycEval

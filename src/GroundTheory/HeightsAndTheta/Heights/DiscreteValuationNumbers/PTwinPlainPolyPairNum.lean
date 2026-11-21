@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.InhabitMore
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTwinPlainPairNum
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagIndependenceAlgebra
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -138,7 +137,7 @@ variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 theorem classNum_mul_tail {σ : Type*} [DecidableEq σ] {q : ℕ} (cls : σ → K → ℤ)
     (L : Fin q → K → ℤ) (z : Fin q → σ) (hz : cls ∘ z = L) (A : MvPolynomial σ ℤ)
-    (Q : MvPolynomial (Fin q) ℤ) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (Q : MvPolynomial (Fin q) ℤ) (W : Ideal (MRing ι O)) :
     classNum cls (A * rename z Q) [] W = ∑ μ ∈ Q.support, Q.coeff μ * classNum cls A (classList L μ) W := by
   have hadd : ∀ H : MvPolynomial σ ℤ, classNum cls H [] W = classNumAddHom cls [] W H := fun _ => rfl
   conv_lhs => rw [Q.as_sum]
@@ -160,7 +159,7 @@ theorem proof : plainPolynomialPairNumber.Statement := by
   rw [BundleExamples.pairNum_eq P d _ _ _ _ hH]
   unfold pairNum
   have hr : ratDiv P 1 1 = fun _ => 0 := funext fun W => sub_self _
-  have hz : ∀ n : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ, cycEval n (fun _ => 0) = 0 := by
+  have hz : ∀ n : Ideal (MRing ι O) → ℤ, cycEval n (fun _ => 0) = 0 := by
     intro n
     simp [cycEval]
   rw [Fin.sum_univ_add]

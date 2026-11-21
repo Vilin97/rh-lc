@@ -7,7 +7,6 @@ public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.Plu
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBundles
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.SameGenericSymm
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PGenericProjClosureDivisor
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -20,22 +19,22 @@ namespace PositivityTheory.Xgn.A_forms_exist
 variable {O : Type} [CommRing O] {Ω : Type} [Field Ω] [Algebra O Ω] {K : Type} [Fintype K] [DecidableEq K]
   {ι : K → Type}
 
-theorem shift (x : (Σ k, ι k) → Ω) (t : ∀ k, ι k) (e : K → ℕ) {F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {d : K → ℕ}
+theorem shift (x : (Σ k, ι k) → Ω) (t : ∀ k, ι k) (e : K → ℕ) {F : MRing ι O} {d : K → ℕ}
     (hF : IsMultiHomog F d) :
-    ∃ G : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, IsMultiHomog G (d + e) ∧ aeval x G = aeval x F * ∏ k, x ⟨k, t k⟩ ^ e k := by
+    ∃ G : MRing ι O, IsMultiHomog G (d + e) ∧ aeval x G = aeval x F * ∏ k, x ⟨k, t k⟩ ^ e k := by
   have h := IsWeightedHomogeneous.prod (Finset.univ : Finset K)
-    (fun k => (X ⟨k, t k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ e k) (fun k => e k • blockWeight ι ⟨k, t k⟩)
+    (fun k => (X ⟨k, t k⟩ : MRing ι O) ^ e k) (fun k => e k • blockWeight ι ⟨k, t k⟩)
     (w := blockWeight ι)
     (fun k _ => (isWeightedHomogeneous_X O (blockWeight ι) ⟨k, t k⟩).pow (e k))
   have he : ∑ k, e k • blockWeight ι ⟨k, t k⟩ = e := by
     ext k'
     simp [blockWeight, Finset.sum_apply, Pi.single_apply]
   rw [he] at h
-  refine ⟨F * ∏ k, (X ⟨k, t k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ e k, IsWeightedHomogeneous.mul hF h, ?_⟩
+  refine ⟨F * ∏ k, (X ⟨k, t k⟩ : MRing ι O) ^ e k, IsWeightedHomogeneous.mul hF h, ?_⟩
   simp [map_prod]
 
 def fracs (O : Type) [CommRing O] [Algebra O Ω] (x : (Σ k, ι k) → Ω) (s : ∀ k, ι k) : Subalgebra O Ω where
-  carrier := {v | ∃ (d : K → ℕ) (F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog F d ∧ aeval x F = v * ∏ k, x ⟨k, s k⟩ ^ d k}
+  carrier := {v | ∃ (d : K → ℕ) (F : MRing ι O), IsMultiHomog F d ∧ aeval x F = v * ∏ k, x ⟨k, s k⟩ ^ d k}
   mul_mem' := by
     rintro v w ⟨d, F, hF, eF⟩ ⟨e, G, hG, eG⟩
     refine ⟨d + e, F * G, IsWeightedHomogeneous.mul hF hG, ?_⟩
@@ -56,9 +55,9 @@ theorem chartRing_le_fracs (x : (Σ k, ι k) → Ω) (s : ∀ k, ι k) (hs : mse
   unfold chartRing
   rw [Algebra.adjoin_le_iff]
   rintro _ ⟨j, rfl⟩
-  refine ⟨fun _ => 1, ∏ k, (X ⟨k, j k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), ?_, ?_⟩
+  refine ⟨fun _ => 1, ∏ k, (X ⟨k, j k⟩ : MRing ι O), ?_, ?_⟩
   · have h := IsWeightedHomogeneous.prod (Finset.univ : Finset K)
-      (fun k => (X ⟨k, j k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (fun k => blockWeight ι ⟨k, j k⟩)
+      (fun k => (X ⟨k, j k⟩ : MRing ι O)) (fun k => blockWeight ι ⟨k, j k⟩)
       (w := blockWeight ι) (fun k _ => isWeightedHomogeneous_X O (blockWeight ι) ⟨k, j k⟩)
     have he : ∑ k, blockWeight ι ⟨k, j k⟩ = fun _ => 1 := by
       ext k'

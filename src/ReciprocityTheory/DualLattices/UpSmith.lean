@@ -179,14 +179,14 @@ theorem det_colop {b : ℕ} (X : Matrix (Fin (b + 1)) (Fin (b + 1)) R) (j0 : Fin
     simp only [Matrix.of_apply, Matrix.mul_apply, hV]
     by_cases hl : l = j0
     · simp [hl]
-    · simp only [hl, if_false, mul_sub, Finset.sum_sub_distrib, mul_ite, mul_one, mul_zero,
-        Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    · simp only [hl, ite_false, mul_sub, Finset.sum_sub_distrib, mul_ite, mul_one, mul_zero,
+        Finset.sum_ite_eq', Finset.mem_univ, ite_true]
       ring
   have hV1 : V.det = 1 := by
     rw [Matrix.det_succ_column V j0, Finset.sum_eq_single j0]
     · have hsub : V.submatrix j0.succAbove j0.succAbove = 1 := by
         ext k l
-        simp only [Matrix.submatrix_apply, hV, Matrix.of_apply, Fin.succAbove_ne, if_false,
+        simp only [Matrix.submatrix_apply, hV, Matrix.of_apply, Fin.succAbove_ne, ite_false,
           sub_zero, Matrix.one_apply, (Fin.succAbove_right_injective).eq_iff]
       rw [hsub, Matrix.det_one]
       simp [hV, ← two_mul, pow_mul]
@@ -253,7 +253,7 @@ theorem smith_sq (hv : v.Integers R) : ∀ (b : ℕ) (X : Matrix (Fin b) (Fin b)
       · have hsub : (Matrix.of fun i j => if j = j0 then X i j0 else X i j - s j * X i j0).submatrix
             i0.succAbove j0.succAbove = X'' := by
           ext k l
-          simp only [Matrix.submatrix_apply, Matrix.of_apply, Fin.succAbove_ne, if_false, hX'', hh,
+          simp only [Matrix.submatrix_apply, Matrix.of_apply, Fin.succAbove_ne, ite_false, hX'', hh,
             hg, Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
           have : X (i0.succAbove k) j0 = a * u (i0.succAbove k) := by
             have := congrFun hj0 (i0.succAbove k)
@@ -262,7 +262,7 @@ theorem smith_sq (hv : v.Integers R) : ∀ (b : ℕ) (X : Matrix (Fin b) (Fin b)
         have hX0 : X i0 j0 = a := by
           have := congrFun hj0 i0
           simpa [hg, hu] using this
-        simp only [Matrix.of_apply, if_true, hsub, hX0, map_mul, map_pow, map_neg, map_one]
+        simp only [Matrix.of_apply, ite_true, hsub, hX0, map_mul, map_pow, map_neg, map_one]
         simp
       · intro j _ hj
         have hX0 : X i0 j0 = a := by

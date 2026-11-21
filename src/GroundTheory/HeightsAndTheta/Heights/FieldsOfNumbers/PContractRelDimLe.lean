@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsContractRelDimLe
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PPFContracted
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -23,11 +22,11 @@ section Chain
 
 variable {K : Type*} [DecidableEq K] {ι : K → Type*} {F : Type*} [Field F]
 
-theorem ringKrullDim_killIdeal_add_card_le {Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [Q.IsPrime]
-    (hQ : ∀ (T : Finset K) (q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), q ∈ Q → killBlocks T q ∈ Q) (hrel : IsRelevant Q)
+theorem ringKrullDim_killIdeal_add_card_le {Q : Ideal (MRing ι F)} [Q.IsPrime]
+    (hQ : ∀ (T : Finset K) (q : MRing ι F), q ∈ Q → killBlocks T q ∈ Q) (hrel : IsRelevant Q)
     (T : Finset K) :
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ killIdeal Q T) + (T.card : WithBot ℕ∞) ≤
-      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) := by
+    ringKrullDim (MRing ι F ⧸ killIdeal Q T) + (T.card : WithBot ℕ∞) ≤
+      ringKrullDim (MRing ι F ⧸ Q) := by
   choose i hi using hrel
   have hmono : ∀ {T T' : Finset K}, T ⊆ T' → killIdeal Q T ≤ killIdeal Q T' := by
     intro T T' h q hq
@@ -52,11 +51,11 @@ theorem ringKrullDim_killIdeal_add_card_le {Q : Ideal (ReciprocityTheory.ChartRe
         change killBlocks (insert k T) (X ⟨k, i k⟩) ∈ Q
         rw [killBlocks_X, if_pos (Finset.mem_insert_self k T)]
         exact Q.zero_mem)
-    calc ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ killIdeal Q (insert k T)) + ((insert k T).card : WithBot ℕ∞)
-        = (ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ killIdeal Q (insert k T)) + 1) + (T.card : WithBot ℕ∞) := by
+    calc ringKrullDim (MRing ι F ⧸ killIdeal Q (insert k T)) + ((insert k T).card : WithBot ℕ∞)
+        = (ringKrullDim (MRing ι F ⧸ killIdeal Q (insert k T)) + 1) + (T.card : WithBot ℕ∞) := by
           rw [Finset.card_insert_of_notMem hk, Nat.cast_add, Nat.cast_one, add_assoc,
             add_comm (1 : WithBot ℕ∞)]
-      _ ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ killIdeal Q T) + (T.card : WithBot ℕ∞) := by gcongr
+      _ ≤ ringKrullDim (MRing ι F ⧸ killIdeal Q T) + (T.card : WithBot ℕ∞) := by gcongr
       _ ≤ _ := ih
 
 end Chain
@@ -75,8 +74,8 @@ theorem killBlocks_compl_rename :
   simp [killBlocks_X, blockIncl]
 
 
-theorem exists_rename_eq_killBlocks_compl (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι') :
-    ∃ a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k)),
+theorem exists_rename_eq_killBlocks_compl (x : MRing ι' F) :
+    ∃ a : MRing (fun k => ι' (j k)) F,
       rename (blockIncl j ι') a = killBlocks (Finset.univ.map j)ᶜ x := by
   induction x using MvPolynomial.induction_on with
   | C c => exact ⟨C c, by simp [killBlocks]⟩
@@ -95,10 +94,10 @@ theorem exists_rename_eq_killBlocks_compl (x : ReciprocityTheory.ChartRestrictio
       obtain ⟨k, rfl⟩ := h
       exact ⟨a * X ⟨k, i⟩, by rw [map_mul, rename_X]; rfl⟩
 
-theorem ringKrullDim_contract_eq_killIdeal (P' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) :
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k)) ⧸ contractPrime j P') =
-      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ killIdeal P' (Finset.univ.map j)ᶜ) := by
-  set f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k)) →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι' ⧸ killIdeal P' (Finset.univ.map j)ᶜ :=
+theorem ringKrullDim_contract_eq_killIdeal (P' : Ideal (MRing ι' F)) :
+    ringKrullDim (MRing (fun k => ι' (j k)) F ⧸ contractPrime j P') =
+      ringKrullDim (MRing ι' F ⧸ killIdeal P' (Finset.univ.map j)ᶜ) := by
+  set f : MRing (fun k => ι' (j k)) F →+* MRing ι' F ⧸ killIdeal P' (Finset.univ.map j)ᶜ :=
     (Ideal.Quotient.mk _).comp (rename (blockIncl j ι')).toRingHom
   have hsurj : Function.Surjective f := by
     intro y
@@ -124,7 +123,7 @@ end Contract
 theorem proof : ContractRelDimLe.Statement.{u} := by
   intro F _ K K' _ _ _ _ j ι' _ P' hP'
   have := hP'.isPrime
-  have hstab : ∀ (T : Finset K') (q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι'), q ∈ P' → killBlocks T q ∈ P' :=
+  have hstab : ∀ (T : Finset K') (q : MRing ι' F), q ∈ P' → killBlocks T q ∈ P' :=
     fun T _ hq => killBlocks_mem_of_isMultiHomogIdeal hP'.multiHomog T hq
   obtain ⟨D', -, hD'⟩ := exists_ringKrullDim_eq hstab hP'.relevant
   obtain ⟨D, -, hD⟩ := exists_ringKrullDim_eq (Q := contractPrime j P')

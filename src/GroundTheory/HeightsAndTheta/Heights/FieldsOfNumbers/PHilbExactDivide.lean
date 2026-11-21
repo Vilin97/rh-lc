@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PGradedFinite
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -24,8 +23,8 @@ variable {K : Type} [DecidableEq K] {ι : K → Type} {F : Type u} [Field F]
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
 
-theorem component_mul_form {c : K → ℕ} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hs : IsMultiHomog s c)
-    (t : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (n : K → ℕ) :
+theorem component_mul_form {c : K → ℕ} {s : MRing ι F} (hs : IsMultiHomog s c)
+    (t : MRing ι F) (n : K → ℕ) :
     weightedHomogeneousComponent (blockWeight ι) n (t * s) =
       if c ≤ n then weightedHomogeneousComponent (blockWeight ι) (n - c) t * s else 0 := by
   have hs' : s ∈ weightedHomogeneousSubmodule F (blockWeight ι) c :=
@@ -35,9 +34,9 @@ theorem component_mul_form {c : K → ℕ} {s : ReciprocityTheory.ChartRestricti
   rw [← weightedDecomposition.decompose'_apply, ← weightedDecomposition.decompose'_apply]
   exact this
 
-theorem exists_sub_component_mem {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : IsMultiHomogIdeal I)
-    {s f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {n : K → ℕ} (hf : IsMultiHomog f n) (hfL : f ∈ I ⊔ Ideal.span {s}) :
-    ∃ t : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, f - weightedHomogeneousComponent (blockWeight ι) n (t * s) ∈ I := by
+theorem exists_sub_component_mem {I : Ideal (MRing ι F)} (hI : IsMultiHomogIdeal I)
+    {s f : MRing ι F} {n : K → ℕ} (hf : IsMultiHomog f n) (hfL : f ∈ I ⊔ Ideal.span {s}) :
+    ∃ t : MRing ι F, f - weightedHomogeneousComponent (blockWeight ι) n (t * s) ∈ I := by
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hfL
   obtain ⟨t, rfl⟩ := Ideal.mem_span_singleton'.mp hb
   refine ⟨t, ?_⟩
@@ -50,7 +49,7 @@ theorem exists_sub_component_mem {I : Ideal (ReciprocityTheory.ChartRestriction.
   exact hI a ha n
 
 
-theorem mem_colon_span_iff {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} {s g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} :
+theorem mem_colon_span_iff {I : Ideal (MRing ι F)} {s g : MRing ι F} :
     g ∈ I.colon (Ideal.span {s}) ↔ g * s ∈ I := by
   rw [Submodule.mem_colon]
   constructor
@@ -63,14 +62,14 @@ theorem mem_colon_span_iff {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.
 
 
 theorem finrank_eq (h1 : GradedFinite.Statement.{u}) [Fintype K] [∀ k, Fintype (ι k)]
-    {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : IsMultiHomogIdeal I) {c : K → ℕ} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
+    {I : Ideal (MRing ι F)} (hI : IsMultiHomogIdeal I) {c : K → ℕ} {s : MRing ι F}
     (hs : IsMultiHomog s c) (n : K → ℕ) :
     Module.finrank F (gradedPiece I n) =
       Module.finrank F (gradedPiece (I ⊔ Ideal.span {s}) n) +
         (if c ≤ n then Module.finrank F (gradedPiece (I.colon (Ideal.span {s})) (n - c))
           else 0) := by
   have hIL : I ≤ I ⊔ Ideal.span {s} := le_sup_left
-  let π : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) →ₗ[F] (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ (I ⊔ Ideal.span {s})) :=
+  let π : (MRing ι F ⧸ I) →ₗ[F] (MRing ι F ⧸ (I ⊔ Ideal.span {s})) :=
     (Ideal.Quotient.liftₐ I (Ideal.Quotient.mkₐ F (I ⊔ Ideal.span {s}))
       (fun a ha => by
         rw [Ideal.Quotient.mkₐ_eq_mk, Ideal.Quotient.eq_zero_iff_mem]
@@ -85,8 +84,8 @@ theorem finrank_eq (h1 : GradedFinite.Statement.{u}) [Fintype K] [∀ k, Fintype
     congr 1
 
   have hkerdesc : ∀ y ∈ LinearMap.ker (π.domRestrict (gradedPiece I n)),
-      ∃ f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IsMultiHomog f n ∧ f ∈ I ⊔ Ideal.span {s} ∧
-        ((y : gradedPiece I n) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) = Ideal.Quotient.mk I f := by
+      ∃ f : MRing ι F, IsMultiHomog f n ∧ f ∈ I ⊔ Ideal.span {s} ∧
+        ((y : gradedPiece I n) : MRing ι F ⧸ I) = Ideal.Quotient.mk I f := by
     rintro ⟨y, hy⟩ hker
     obtain ⟨f, hf, rfl⟩ := Submodule.mem_map.mp hy
     refine ⟨f, (mem_weightedHomogeneousSubmodule _ _ _ _).mp hf, ?_, rfl⟩
@@ -98,9 +97,9 @@ theorem finrank_eq (h1 : GradedFinite.Statement.{u}) [Fintype K] [∀ k, Fintype
   by_cases hc : c ≤ n
   · rw [if_pos hc]
     let W := weightedHomogeneousSubmodule F (blockWeight ι) (n - c)
-    let α : W →ₗ[F] (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I.colon (Ideal.span {s})) :=
+    let α : W →ₗ[F] (MRing ι F ⧸ I.colon (Ideal.span {s})) :=
       (Ideal.Quotient.mkₐ F (I.colon (Ideal.span {s}))).toLinearMap ∘ₗ W.subtype
-    let β : W →ₗ[F] (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) :=
+    let β : W →ₗ[F] (MRing ι F ⧸ I) :=
       (Ideal.Quotient.mkₐ F I).toLinearMap ∘ₗ (LinearMap.mulRight F s) ∘ₗ W.subtype
     have hker : LinearMap.ker α = LinearMap.ker β := by
       ext g
@@ -131,7 +130,7 @@ theorem finrank_eq (h1 : GradedFinite.Statement.{u}) [Fintype K] [∀ k, Fintype
         refine ⟨⟨weightedHomogeneousComponent (blockWeight ι) (n - c) t,
           weightedHomogeneousComponent_mem _ _ _⟩, ?_⟩
         change Ideal.Quotient.mk I (weightedHomogeneousComponent (blockWeight ι) (n - c) t * s) =
-          ((y : gradedPiece I n) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I)
+          ((y : gradedPiece I n) : MRing ι F ⧸ I)
         rw [hyf, Ideal.Quotient.eq]
         simpa using I.neg_mem ht
     have eα : LinearMap.range α ≃ₗ[F] LinearMap.range β :=

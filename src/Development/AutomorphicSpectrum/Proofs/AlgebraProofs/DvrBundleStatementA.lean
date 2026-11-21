@@ -12,7 +12,6 @@ public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.SameGenericBu
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.SameGenericFlagComparisonStatement
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChartBundleBaseExtensionUniqueStatement
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.PairCocycleStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -80,7 +79,7 @@ theorem main : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing
     intro i j hij
     simp [Module.Basis.repr_self, Finsupp.single_apply, ne_of_lt hij]
   have pair : ∀ i j, SameGeneric O (joinCoord x z) (EB i) (EB j) →
-      SameGenericFibre ϖ (EB i) (EB j) ∧ ∃ f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ι'),
+      SameGenericFibre ϖ (EB i) (EB j) ∧ ∃ f g : Fin N → MRing (Sum.elim ι ι') O,
         IsFlagPair ϖ (joinCoord x z) (EB i) (EB j) w w (b i) (b j) f g := fun i j hs =>
     GlobalTheory.T.same_generic_flag_comparison O Ω (K ⊕ K') (Sum.elim ι ι') (joinCoord x z) ϖ hϖ d hM' N V (EB i) (EB j) hs
       w w (b i) (b j) (fr i) (fr j) tri
@@ -91,7 +90,7 @@ theorem main : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing
   obtain ⟨g12, f12, d12, c12⟩ := pair 1 2 s12
   obtain ⟨-, f02, d02, c02⟩ := pair 0 2 s02
   obtain ⟨-, f10, d10, c10⟩ := pair 1 0 (sameGeneric_flip s01)
-  have num : ∀ {A B : ChartBundle O (mseg x) N V} (i j : Fin 3) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ι')),
+  have num : ∀ {A B : ChartBundle O (mseg x) N V} (i j : Fin 3) (f g : Fin N → MRing (Sum.elim ι ι') O),
       SameGeneric O x A B → IsPull O x z A (EB i) → IsPull O x z B (EB j) →
       IsFlagPair ϖ (joinCoord x z) (EB i) (EB j) w w (b i) (b j) f g →
       ck O x d N A B k L Q = ∑ μ ∈ Q.support, Q.coeff μ *

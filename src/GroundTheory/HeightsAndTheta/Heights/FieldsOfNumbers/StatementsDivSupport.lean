@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsExamples
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -18,9 +17,9 @@ universe u
 
 def DivCycleSupport.Statement : Prop :=
   ∀ (F : Type u) [Field F] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)), IsMultiProjPrime P →
-    ∀ n : ℕ, relDim P = (n + 1 : ℕ) → ∀ (c : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog f c → f ∉ P →
-    ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0 → IsMultiProjPrime W ∧ relDim W = (n : ℕ)
+    [∀ k, Fintype (ι k)] (P : Ideal (MRing ι F)), IsMultiProjPrime P →
+    ∀ n : ℕ, relDim P = (n + 1 : ℕ) → ∀ (c : K → ℕ) (f : MRing ι F), IsMultiHomog f c → f ∉ P →
+    ∀ W : Ideal (MRing ι F), divCycle P f W ≠ 0 → IsMultiProjPrime W ∧ relDim W = (n : ℕ)
 
 end
 

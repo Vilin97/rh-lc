@@ -9,7 +9,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Same
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTwinJoinTwoModels
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PConeTrdegFnField
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PAdjoinTrdegAdd
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -74,19 +73,19 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
 
 
 theorem comap_eq_ker (y : (Σ k, ι k) → Ω) :
-    (pointIdeal O y).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = RingHom.ker (algebraMap O Ω) := by
+    (pointIdeal O y).comap (C : O →+* MRing ι O) = RingHom.ker (algebraMap O Ω) := by
   ext a
   simp [pointIdeal, RingHom.mem_ker, pointConeMap, MvPolynomial.algebraMap_apply]
 
 theorem dim_eq (hinj : Function.Injective (algebraMap O Ω)) (y : (Σ k, ι k) → Ω)
     (hy : ∀ k, ∃ i, y ⟨k, i⟩ ≠ 0) :
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) =
+    ringKrullDim (MRing ι O ⧸ pointIdeal O y) =
       (((Algebra.trdeg O (Algebra.adjoin O (fnField O y : Set Ω))).toENat +
         ((1 + Fintype.card K : ℕ) : ℕ∞) : ℕ∞) : WithBot ℕ∞) := by
   have h1 := DvrConeDimTrdeg.proof O K ι (pointIdeal O y)
     (GenericProjClosureDim.isMultiProjPrime_pointIdeal (R := O) _ hy)
     (by rw [comap_eq_ker]; exact (RingHom.injective_iff_ker_eq_bot _).1 hinj)
-  have h2 : Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) = _ := ConeTrdegFnField.proof O Ω hinj K ι y hy
+  have h2 : Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) = _ := ConeTrdegFnField.proof O Ω hinj K ι y hy
   rw [h1, h2, map_add (f := _), map_natCast]
   congr 1
   push_cast

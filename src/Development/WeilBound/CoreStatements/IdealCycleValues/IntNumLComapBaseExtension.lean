@@ -4,7 +4,6 @@ public import Mathlib
 public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.LocalAtPlaces
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagIndependence
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PEventualValueFacts
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -55,7 +54,7 @@ noncomputable def ex (c : ∀ k, ι k) (n : ℕ) : (Σ k, ι k) →₀ ℕ := �
 
 omit [DecidableEq K] in
 theorem chart_pow {R : Type} [CommRing R] (c : ∀ k, ι k) (n : ℕ) :
-    ((∏ k, X ⟨k, c k⟩) ^ n : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) = monomial (ex c n) 1 := by
+    ((∏ k, X ⟨k, c k⟩) ^ n : MRing ι R) = monomial (ex c n) 1 := by
   rw [ex, monomial_sum_one, ← Finset.prod_pow]
   exact Finset.prod_congr rfl fun k _ => X_pow_eq_monomial
 
@@ -115,10 +114,10 @@ end Charts
 section Fields
 
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type}
-  {F F' : Type} [Field F] [Field F'] [Algebra F F'] (V' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F' ι))
+  {F F' : Type} [Field F] [Field F'] [Algebra F F'] (V' : Ideal (MRing ι F'))
 
 def Good (n : ℕ) (c : ∀ k, ι k) (a : F') : Prop :=
-  ∃ G : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IsMultiHomog G (fun _ => n) ∧
+  ∃ G : MRing ι F, IsMultiHomog G (fun _ => n) ∧
     C a * (∏ k, X ⟨k, c k⟩) ^ n - MvPolynomial.map (algebraMap F F') G ∈ V'
 
 variable {V'}
@@ -151,7 +150,7 @@ theorem exists_uniform [∀ k, Fintype (ι k)] [FiniteDimensional F F']
   · have h1 : ∑ i, C (algebraMap F F' (b.repr a i)) *
         (C (b i) * (∏ k, X ⟨k, c k⟩) ^ n - MvPolynomial.map (algebraMap F F') (G i)) ∈ V' :=
       Ideal.sum_mem _ fun i _ => V'.mul_mem_left _ (hV i)
-    have h2 : (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F' ι) = ∑ i, C (algebraMap F F' (b.repr a i)) * C (b i) := by
+    have h2 : (C a : MRing ι F') = ∑ i, C (algebraMap F F' (b.repr a i)) * C (b i) := by
       conv_lhs => rw [← b.sum_repr a]
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [map_sum, Algebra.smul_def, map_mul]
@@ -161,11 +160,11 @@ theorem exists_uniform [∀ k, Fintype (ι k)] [FiniteDimensional F F']
       simp only [map_sum, map_mul, map_C, mul_sub, Finset.sum_sub_distrib, Finset.sum_mul, mul_assoc]
 
 theorem lift_form [∀ k, Fintype (ι k)] {n : ℕ} (h : ∀ c a, Good (F := F) V' n c a) {m : K → ℕ}
-    (hm : ∀ k, n * Fintype.card (ι k) < m k) {q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F' ι} (hq : IsMultiHomog q m) :
-    ∃ p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IsMultiHomog p m ∧ q - MvPolynomial.map (algebraMap F F') p ∈ V' := by
+    (hm : ∀ k, n * Fintype.card (ι k) < m k) {q : MRing ι F'} (hq : IsMultiHomog q m) :
+    ∃ p : MRing ι F, IsMultiHomog p m ∧ q - MvPolynomial.map (algebraMap F F') p ∈ V' := by
   rw [q.as_sum]
   refine Finset.sum_induction _
-    (fun q => ∃ p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IsMultiHomog p m ∧ q - MvPolynomial.map (algebraMap F F') p ∈ V') ?_ ?_ ?_
+    (fun q => ∃ p : MRing ι F, IsMultiHomog p m ∧ q - MvPolynomial.map (algebraMap F F') p ∈ V') ?_ ?_ ?_
   · rintro q₁ q₂ ⟨p₁, h₁, k₁⟩ ⟨p₂, h₂, k₂⟩
     refine ⟨p₁ + p₂, IsWeightedHomogeneous.add h₁ h₂, ?_⟩
     convert V'.add_mem k₁ k₂ using 1
@@ -185,7 +184,7 @@ theorem lift_form [∀ k, Fintype (ι k)] {n : ℕ} (h : ∀ c a, Good (F := F) 
       rw [h2] at h1
       exact h1
     · have h1 := V'.mul_mem_right (monomial d' 1) hV
-      have h2 : (monomial d (AddMonoidAlgebra.coeff q d) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F' ι) =
+      have h2 : (monomial d (AddMonoidAlgebra.coeff q d) : MRing ι F') =
           C (AddMonoidAlgebra.coeff q d) * (∏ k, X ⟨k, c k⟩) ^ n * monomial d' 1 := by
         rw [chart_pow, mul_assoc, monomial_mul, ← hd', C_mul_monomial]
         simp
@@ -194,14 +193,14 @@ theorem lift_form [∀ k, Fintype (ι k)] {n : ℕ} (h : ∀ c a, Good (F := F) 
 
 omit [Fintype K] in
 theorem finrank_piece {m : K → ℕ}
-    (h : ∀ q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F' ι, IsMultiHomog q m →
-      ∃ p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IsMultiHomog p m ∧ q - MvPolynomial.map (algebraMap F F') p ∈ V') :
+    (h : ∀ q : MRing ι F', IsMultiHomog q m →
+      ∃ p : MRing ι F, IsMultiHomog p m ∧ q - MvPolynomial.map (algebraMap F F') p ∈ V') :
     Module.finrank F (gradedPiece (V'.comap (MvPolynomial.map (algebraMap F F'))) m) =
       Module.finrank F F' * Module.finrank F' (gradedPiece V' m) := by
   set V := V'.comap (MvPolynomial.map (algebraMap F F')) with hVdef
-  have hφ : ∀ p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, mapAlgHom (Algebra.ofId F F') p = MvPolynomial.map (algebraMap F F') p :=
+  have hφ : ∀ p : MRing ι F, mapAlgHom (Algebra.ofId F F') p = MvPolynomial.map (algebraMap F F') p :=
     fun p => rfl
-  let ψ : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ V) →ₐ[F] (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F' ι ⧸ V') :=
+  let ψ : (MRing ι F ⧸ V) →ₐ[F] (MRing ι F' ⧸ V') :=
     Ideal.Quotient.liftₐ V ((Ideal.Quotient.mkₐ F V').comp (mapAlgHom (Algebra.ofId F F')))
       (fun p hp => Ideal.Quotient.eq_zero_iff_mem.2 hp)
   have hψ : ∀ p, ψ (Ideal.Quotient.mk V p) =

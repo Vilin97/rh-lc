@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Cartier
 public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomogIdealIff
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PChangeOfModel
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -51,7 +50,7 @@ theorem mem_divSupp_and_multAt_eq {P W : Ideal (MRing κ)} {f g u v : MRing κ} 
 theorem divCycle_eq_of_local {P : Ideal (MRing κ)} {f g : MRing κ}
     (h : ∀ W : Ideal (MRing κ), W.IsPrime → P ≤ W → IsRelevant W →
       ∃ u v, u ∉ W ∧ v ∉ W ∧ u * f - v * g ∈ P) :
-    (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ)) = (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ)) := by
+    divCycle P f = divCycle P g := by
   ext W
   simp only [divCycle, Finsupp.ofSupportFinite_coe]
   by_cases hf : W ∈ divSupp P f

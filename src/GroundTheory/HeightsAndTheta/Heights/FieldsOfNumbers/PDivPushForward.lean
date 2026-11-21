@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsCon
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDivPushForwardLocal
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PDivCycleSupport
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PPFDegree
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -29,21 +28,21 @@ theorem DivPushForward.proof (hC : ContractRelDimLe.Statement.{u})
   have hsup' := DivCycleSupport.proof F K' ι' P' hP' n hdim _ (rename (blockIncl j ι') a)
     (isMultiHomog_rename j ι' ha) haP
   have hsup := DivCycleSupport.proof F K _ _ hP n hdimP c a ha haP
-  set D' := ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P' (rename (blockIncl j ι') a)) with : ℤ) hD'
-  set D := ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (contractPrime j P') a) with : ℤ) hD
+  set D' := divCycle P' (rename (blockIncl j ι') a) with hD'
+  set D := divCycle (contractPrime j P') a with hD
   have hfin : (Function.support D').Finite := by
     refine (Ideal.finite_minimalPrimes_of_isNoetherianRing _
       (P' ⊔ Ideal.span {rename (blockIncl j ι') a})).subset fun W' hW' => ?_
     by_contra h
     exact hW' (by rw [hD', divCycle, dite_eq_right (fun h' => h h'.1)])
 
-  let rd : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι') → ℤ := fun W' =>
+  let rd : Ideal (MRing ι' F) → ℤ := fun W' =>
     if h : W'.IsPrime then haveI := h; (relDeg j W' : ℤ) else 0
-  let M : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k))) → Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι') → ℤ := fun W W' =>
+  let M : Ideal (MRing (fun k => ι' (j k)) F) → Ideal (MRing ι' F) → ℤ := fun W W' =>
     if contractPrime j W' = W ∧ relDim W = (n : ℕ) then rd W' else 0
   have hM0 : ∀ W W', ¬ (contractPrime j W' = W ∧ relDim W = (n : ℕ)) → M W W' = 0 :=
     fun _ _ h => if_neg h
-  have hM1 : ∀ (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun k => ι' (j k)))) (W' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι')) [hW' : W'.IsPrime], contractPrime j W' = W → relDim W = (n : ℕ) →
+  have hM1 : ∀ (W : Ideal (MRing (fun k => ι' (j k)) F)) (W' : Ideal (MRing ι' F)) [hW' : W'.IsPrime], contractPrime j W' = W → relDim W = (n : ℕ) →
       M W W' = (relDeg j W' : ℤ) :=
     fun _ _ hW' hc hd => (if_pos ⟨hc, hd⟩).trans (dif_pos hW')
 

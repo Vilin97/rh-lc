@@ -6,7 +6,6 @@ public import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.ResGAp
 public import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.LeDimQuotientHorizontal
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ResidueDegreeOfIsClosedImmersion
 public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PCharacterised
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -20,7 +19,7 @@ open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)
 open ReciprocityTheory.ChartRestriction.G.DVR.FlatBC (algX)
 open GlobalTheory GlobalTheory.Points GlobalTheory.CechPic GlobalTheory.CxPts GlobalTheory.Cartier
 open GroundTheory.Heights₂.Heights (IsProjPrime IsChowForm IsMultiHomog relComps localMult chowDegree reduceMod
-  HermNorm ArchData fsLog cycleIntegral fundCycle chowHt (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle vertTerm specFirst) W : ℤ)))
+  HermNorm ArchData fsLog cycleIntegral fundCycle chowHt divCycle vertTerm specFirst)
 
 namespace ChowFormHeightComparison₂.CF.M
 
@@ -576,7 +575,8 @@ private theorem core_lemma (hV : StVert) (hA : StArch) (hR : GroundTheory.Height
         exact GroundTheory.Heights₂.Heights.not_isChowForm_zero hPt
           (isProjPrime_map (ChowFormHeightComparison₂.CF.P.isProjPrime hE _) hzc) _ (hg _ hW)
       rw [hempty, Finset.sum_empty]
-      have hsupp : ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle ((ptIdeal p s (i (genericPoint Z))).map φ) (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))) W : ℤ))).support = ∅ := by
+      have hsupp : (divCycle ((ptIdeal p s (i (genericPoint Z))).map φ)
+          (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))).support = ∅ := by
         have h1 := hdc.2 (fun _ => 1)
         rw [hempty, Finset.sum_empty] at h1
         simp only [mul_one] at h1
@@ -588,12 +588,14 @@ private theorem core_lemma (hV : StVert) (hA : StArch) (hR : GroundTheory.Height
       rw [hspec, hsupp, Finset.prod_empty, mul_one,
         GroundTheory.Heights₂.Heights.chowHt_zero_groups_eq_zero H δ hCc, mul_zero]
     · obtain ⟨e', rfl⟩ := Nat.exists_eq_succ_of_ne_zero he
-      have hdeg : ∀ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle ((ptIdeal p s (i (genericPoint Z))).map φ) (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))) W : ℤ))).support, ∃ a, IsMultiHomog a (g W) := by
+      have hdeg : ∀ W ∈ (divCycle ((ptIdeal p s (i (genericPoint Z))).map φ)
+          (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))).support, ∃ a, IsMultiHomog a (g W) := by
         intro W hW
         refine exists_isMultiHomog_of_isChowForm_dvd (hg W hW) (hδ.specFirst _) hspec0 ?_
         rw [hspec]
         exact Dvd.dvd.mul_left ((dvd_pow_self (g W) (Finsupp.mem_support_iff.mp hW)).trans
-          (Finset.dvd_prod_of_mem (fun W => g W ^ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle ((ptIdeal p s (i (genericPoint Z))).map φ) (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))) W : ℤ))) W) hW)) _
+          (Finset.dvd_prod_of_mem (fun W => g W ^ (divCycle ((ptIdeal p s (i (genericPoint Z))).map φ)
+            (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))) W) hW)) _
       choose! δW hδW using hdeg
       have hIH : ∀ z ∈ hSfin.toFinset, (ptIdeal p s (i z)).comap CC = ⊥ →
           h (i z) = (Module.finrank ℚ K : ℝ) * chowHt H (e' + 1) (δW ((ptIdeal p s (i z)).map φ))
@@ -612,13 +614,18 @@ private theorem core_lemma (hV : StVert) (hA : StArch) (hR : GroundTheory.Height
                 rw [hgen]; exact hg _ hW) (hδW _ hW)
         rw [hgen] at key
         exact key
-      have hprodH : IsMultiHomog (∑ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle ((ptIdeal p s (i (genericPoint Z))).map φ) (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))) W : ℤ))).support,
-            ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle ((ptIdeal p s (i (genericPoint Z))).map φ) (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))) W : ℤ))) W * δW W)
-          (MvPolynomial.C c * ∏ W ∈ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle ((ptIdeal p s (i (genericPoint Z))).map φ) (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))) W : ℤ))).support,
-              g W ^ ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle ((ptIdeal p s (i (genericPoint Z))).map φ) (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))) W : ℤ))) W) := by
+      have hprodH : IsMultiHomog (∑ W ∈ (divCycle ((ptIdeal p s (i (genericPoint Z))).map φ)
+          (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))).support,
+            (divCycle ((ptIdeal p s (i (genericPoint Z))).map φ)
+              (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))) W * δW W)
+          (MvPolynomial.C c * ∏ W ∈ (divCycle ((ptIdeal p s (i (genericPoint Z))).map φ)
+            (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))).support,
+              g W ^ (divCycle ((ptIdeal p s (i (genericPoint Z))).map φ)
+                (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))) W) := by
         have h1 := (MvPolynomial.isWeightedHomogeneous_C (GroundTheory.Heights₂.Heights.groupWeight (e' + 1) m) c).mul
           (MvPolynomial.IsWeightedHomogeneous.prod _ _ _ (fun W hW => (hδW W hW).pow
-            (((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle ((ptIdeal p s (i (genericPoint Z))).map φ) (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))) W : ℤ))) W)))
+            ((divCycle ((ptIdeal p s (i (genericPoint Z))).map φ)
+              (fun k => ((Pi.single j 1 : Fin m → 𝓞 K) k : K))) W)))
         unfold IsMultiHomog
         convert h1 using 1
         funext x

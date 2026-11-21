@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsMChart
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocQuot
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsNoetherIntegralClosure
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -101,28 +100,28 @@ theorem isMultiHomog_chartMonomial (u : ∀ k, ι k) (b : K → ℕ) :
     funext k
     simp [blockWeight, Finset.sum_apply, Pi.single_apply]
   have h := IsWeightedHomogeneous.prod (w := blockWeight ι) Finset.univ
-    (fun k => (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ b k) (fun k => b k • blockWeight ι ⟨k, u k⟩)
+    (fun k => (X ⟨k, u k⟩ : MRing ι F) ^ b k) (fun k => b k • blockWeight ι ⟨k, u k⟩)
     fun k _ => (isWeightedHomogeneous_X F (blockWeight ι) ⟨k, u k⟩).pow (b k)
   unfold IsMultiHomog chartMonomial
   convert h using 1
   exact hb.symm
 
 
-theorem chartMonomial_not_mem_of_notMem (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [W.IsPrime] (u : ∀ k, ι k)
-    (hu : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ W) (b : K → ℕ) : chartMonomial u b ∉ W :=
+theorem chartMonomial_not_mem_of_notMem (W : Ideal (MRing ι F)) [W.IsPrime] (u : ∀ k, ι k)
+    (hu : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ W) (b : K → ℕ) : chartMonomial u b ∉ W :=
   (Submonoid.prod_mem _ fun k _ => Submonoid.pow_mem _ (hu k) _ : chartMonomial u b ∈ W.primeCompl)
 
 theorem degZeroLoc_map_eq_mul_inv (hQ : DegZeroLocQuot.Statement.{u})
-    (hD : MChartDehomog.Statement.{u}) (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [P.IsPrime] [W.IsPrime]
-    (hPW : P ≤ W) (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ W) {Ω : Type*} [Field Ω]
-    [Algebra F Ω] (φ : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) →ₐ[F] Ω) :
+    (hD : MChartDehomog.Statement.{u}) (P W : Ideal (MRing ι F)) [P.IsPrime] [W.IsPrime]
+    (hPW : P ≤ W) (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ W) {Ω : Type*} [Field Ω]
+    [Algebra F Ω] (φ : FractionRing (MRing ι F ⧸ P) →ₐ[F] Ω) :
     Algebra.adjoin F (Set.range fun v => φ (chartMap P u (X v))) ≤ (degZeroLoc P {W}).map φ ∧
       ∀ a ∈ (degZeroLoc P {W}).map φ,
         ∃ r ∈ Algebra.adjoin F (Set.range fun v => φ (chartMap P u (X v))),
         ∃ d ∈ Algebra.adjoin F (Set.range fun v => φ (chartMap P u (X v))),
           d ≠ 0 ∧ d⁻¹ ∈ (degZeroLoc P {W}).map φ ∧ a = r * d⁻¹ := by
-  have huP : ∀ k, (X ⟨k, u k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ P := fun k h => hu k (hPW h)
-  have hW1 : ∀ W' ∈ ({W} : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))), W'.IsPrime := fun W' h => by
+  have huP : ∀ k, (X ⟨k, u k⟩ : MRing ι F) ∉ P := fun k h => hu k (hPW h)
+  have hW1 : ∀ W' ∈ ({W} : Set (Ideal (MRing ι F))), W'.IsPrime := fun W' h => by
     rw [Set.mem_singleton_iff.mp h]; infer_instance
   have hmem : ∀ p, φ (chartMap P u p) ∈
       Algebra.adjoin F (Set.range fun v => φ (chartMap P u (X v))) := fun p => by
@@ -131,7 +130,7 @@ theorem degZeroLoc_map_eq_mul_inv (hQ : DegZeroLocQuot.Statement.{u})
     change aeval _ p = (φ.comp (chartMap P u)) p
     rw [chartMap, comp_aeval]
     simp
-  have hq : ∀ g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, g ∉ P → algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P))
+  have hq : ∀ g : MRing ι F, g ∉ P → algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P))
       (Ideal.Quotient.mk P g) ≠ 0 := fun g hg => by
     rw [Ne, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
     exact hg

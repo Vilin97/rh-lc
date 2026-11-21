@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.CutIdentityRightSideCongrOfSubMem
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,7 +16,7 @@ universe u
 theorem CommonFactorRemoval.proof (hmul : DivCycleMul.Statement.{u}) : CommonFactorRemoval.Statement.{u} := by
   intro O _ _ _ ϖ _ K _ _ ι _ P d hP b f g q s hf hg hq _ hH c L
 
-  have hrat : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), W.IsPrime → f ∉ W → g ∉ W → q ∉ W →
+  have hrat : ∀ W : Ideal (MRing ι O), W.IsPrime → f ∉ W → g ∉ W → q ∉ W →
       ratDiv W (f * q) (g * q) = ratDiv W f g := by
     intro W hW hfW hgW hqW
     funext G
@@ -29,7 +28,7 @@ theorem CommonFactorRemoval.proof (hmul : DivCycleMul.Statement.{u}) : CommonFac
   · unfold cutIdentityRightSide cycEval
     congr 1
     funext W
-    by_cases hW : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = 0
+    by_cases hW : divCycle P s W = 0
     · simp [hW]
     · dsimp only
       split_ifs with hϖ

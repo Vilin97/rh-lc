@@ -5,7 +5,6 @@ public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDiv
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PDivPrincipalDegree
 public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.IsMultiHomogIdealIff
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.CycDim
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -28,7 +27,7 @@ theorem DivCycleSupport.proof : DivCycleSupport.Statement.{u} := by
       ((Bridge.isMultiHomogIdeal_iff P).mp hP.multiHomog) ((Bridge.isMultiHomog_iff f c).mp hf) hmin)
   refine ⟨⟨hmin.1.1, hWh, hrel⟩, ?_⟩
   have := hP.isPrime
-  have hPd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) = ((Fintype.card K + n + 1 : ℕ) : WithBot ℕ∞) := by
+  have hPd : ringKrullDim (MRing ι F ⧸ P) = ((Fintype.card K + n + 1 : ℕ) : WithBot ℕ∞) := by
     apply relDim_map_injective (K := K)
     change relDim P = _
     rw [hdim]
@@ -37,7 +36,7 @@ theorem DivCycleSupport.proof : DivCycleSupport.Statement.{u} := by
     congr 1
     push_cast
     ring
-  have key : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W) + 1 = ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) :=
+  have key : ringKrullDim (MRing ι F ⧸ W) + 1 = ringKrullDim (MRing ι F ⧸ P) :=
     ReciprocityTheory.ChartRestriction.G.AI.I1.cyc_dim_quot_minimal_add_one hfP hmin (fun h => by
       rw [hPd] at h
       exact ENat.natCast_ne_top _ (WithBot.coe_injective h))

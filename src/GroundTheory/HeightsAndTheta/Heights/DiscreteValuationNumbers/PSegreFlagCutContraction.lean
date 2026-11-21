@@ -5,7 +5,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Stat
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyCN
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.OfSteps
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -48,36 +47,36 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
   {K' : Type} [Fintype K'] [DecidableEq K'] {ι' : K' → Type} [∀ o, Fintype (ι' o)]
 
 
-theorem ratDiv_support {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι')} (hPm : IsMultiHomogIdeal P) {cs ch : K' → ℕ}
-    {s h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι'} (hs : IsMultiHomog s cs) (hh : IsMultiHomog h ch) (hW : ratDiv P s h W ≠ 0) :
+theorem ratDiv_support {P W : Ideal (MRing ι' O)} (hPm : IsMultiHomogIdeal P) {cs ch : K' → ℕ}
+    {s h : MRing ι' O} (hs : IsMultiHomog s cs) (hh : IsMultiHomog h ch) (hW : ratDiv P s h W ≠ 0) :
     W.IsPrime ∧ P ≤ W ∧ IsMultiHomogIdeal W := by
-  have key : ∀ {c : K' → ℕ} {u : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι'}, IsMultiHomog u c → ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P u) W : ℤ) ≠ 0 →
+  have key : ∀ {c : K' → ℕ} {u : MRing ι' O}, IsMultiHomog u c → divCycle P u W ≠ 0 →
       W.IsPrime ∧ P ≤ W ∧ IsMultiHomogIdeal W := by
     intro c u hu hne
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hne
+    unfold divCycle at hne
     split_ifs at hne with hW'
     · exact ⟨hW'.1.1.1, le_sup_left.trans hW'.1.1.2,
         MinimalPrimeMultiHomog.full O K' ι' _ W (SupSpanMultiHomog.full O K' ι' P u c hPm hu) hW'.1⟩
     · exact absurd rfl hne
-  by_cases h1 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = 0
+  by_cases h1 : divCycle P s W = 0
   · exact key hh fun h2 => hW (by simp [ratDiv, h1, h2])
   · exact key hs h1
 
-theorem vNumL_eq_zero_of_contract {ϖ : O} (hϖ : Irreducible ϖ) {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι')} {n : ℕ}
+theorem vNumL_eq_zero_of_contract {ϖ : O} (hϖ : Irreducible ϖ) {P W : Ideal (MRing ι' O)} {n : ℕ}
     (hP : IsModelOver P n) [hWp : W.IsPrime] (hPW : P ≤ W) (hWm : IsMultiHomogIdeal W)
-    (hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι') ∈ W) {K : Type} [Fintype K] [DecidableEq K] (j : K ↪ K')
+    (hϖW : (C ϖ : MRing ι' O) ∈ W) {K : Type} [Fintype K] [DecidableEq K] (j : K ↪ K')
     (hcon : FieldNumbers.relDim (FieldNumbers.contractPrime j (specialIdeal W)) < ((n : ℕ) : WithBot (WithTop ℤ)))
     (l : List (K' → ℤ)) (hl : l.length = n) (hlj : ∀ b ∈ l, ∀ o, o ∉ Set.range j → b o = 0) :
     vNumL W l = 0 := by
   subst hl
   have : P.IsPrime := hP.multiProj.isPrime
-  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι') ∉ P := by
+  have hϖP : (C ϖ : MRing ι' O) ∉ P := by
     intro h
-    have h' : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι') := h
+    have h' : ϖ ∈ P.comap (C : O →+* MRing ι' O) := h
     rw [hP.noTorsion, Ideal.mem_bot] at h'
     exact hϖ.ne_zero h'
   have hlt : P < W := lt_of_le_of_ne hPW (fun h => hϖP (h ▸ hϖW))
-  have hdrop := DimStrictDrop.full (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι') P W hlt
+  have hdrop := DimStrictDrop.full (MRing ι' O) P W hlt
   rw [hP.dim] at hdrop
   obtain ⟨hQp, -, -, -⟩ := SpecialIdealCorresp.full O ϖ hϖ K' ι' P W hWp hϖW
   have hQm := SpecialIdealMultiHomog.full O K' ι' W hWm

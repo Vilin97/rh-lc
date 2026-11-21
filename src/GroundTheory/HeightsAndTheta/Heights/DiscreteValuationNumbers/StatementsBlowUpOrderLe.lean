@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ComapLiftFormConstChartPrimeExample
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -40,20 +39,20 @@ def IntermediateRingQuotLength.Statement : Prop :=
 
 def BlowUpLocalChart.Statement : Prop :=
   ∀ (R : Type u) [CommRing R] [IsNoetherianRing R] (K : Type) [Fintype K] (ι : K → Type)
-    [∀ k, Fintype (ι k)] (J : Type) [Fintype J] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)), P.IsPrime →
-    ∀ (u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (G' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))) (y : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)),
+    [∀ k, Fintype (ι k)] (J : Type) [Fintype J] (P : Ideal (MRing ι R)), P.IsPrime →
+    ∀ (u : J → MRing ι R) (G' : Ideal (MRing (extIdx ι J) R)) (y : MRing (extIdx ι J) R),
       y ∉ blowUpOf P u → G' ∈ (blowUpOf P u ⊔ Ideal.span {y}).minimalPrimes → IsRelevant G' →
-    ∀ x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι, x ∉ P → G'.comap (liftForm (J := J)) ∈ (P ⊔ Ideal.span {x}).minimalPrimes →
-    ∀ (G₀ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) [G₀.IsPrime],
+    ∀ x : MRing ι R, x ∉ P → G'.comap (liftForm (J := J)) ∈ (P ⊔ Ideal.span {x}).minimalPrimes →
+    ∀ (G₀ : Ideal (MRing ι R ⧸ P)) [G₀.IsPrime],
       G₀.comap (Ideal.Quotient.mk P) = G'.comap (liftForm (J := J)) →
-    ∀ (W₀ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ blowUpOf P u)) [W₀.IsPrime],
+    ∀ (W₀ : Ideal (MRing (extIdx ι J) R ⧸ blowUpOf P u)) [W₀.IsPrime],
       W₀.comap (Ideal.Quotient.mk (blowUpOf P u)) = G' →
     ∃ (C : Subring (Localization.AtPrime W₀)) (f : Localization.AtPrime G₀ →+* C),
       Function.Injective f ∧ (∀ c : C, ∃ a, a ≠ 0 ∧ f a * c ∈ Set.range f) ∧
-      (∀ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι,
-        (f (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P) (Localization.AtPrime G₀) (Ideal.Quotient.mk P s)) :
+      (∀ s : MRing ι R,
+        (f (algebraMap (MRing ι R ⧸ P) (Localization.AtPrime G₀) (Ideal.Quotient.mk P s)) :
             Localization.AtPrime W₀) =
-          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ blowUpOf P u) (Localization.AtPrime W₀)
+          algebraMap (MRing (extIdx ι J) R ⧸ blowUpOf P u) (Localization.AtPrime W₀)
             (Ideal.Quotient.mk (blowUpOf P u) (liftForm s))) ∧
       IsLocalRing.maximalIdeal (Localization.AtPrime W₀) ≤
         ((IsLocalRing.maximalIdeal (Localization.AtPrime W₀)).comap C.subtype).map C.subtype
@@ -63,9 +62,9 @@ end Lemmas
 section Examples
 
 theorem BlowUpLocalChart.exists_quotient_primes {R : Type*} [CommRing R] {K : Type*} {ι : K → Type}
-    {J : Type} {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {u : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} {G' : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J))}
+    {J : Type} {P : Ideal (MRing ι R)} {u : J → MRing ι R} {G' : Ideal (MRing (extIdx ι J) R)}
     (hG' : G'.IsPrime) (hQ : blowUpOf P u ≤ G') (hP : P ≤ G'.comap (liftForm (J := J))) :
-    ∃ (G₀ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι ⧸ P)) (W₀ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) ⧸ blowUpOf P u)),
+    ∃ (G₀ : Ideal (MRing ι R ⧸ P)) (W₀ : Ideal (MRing (extIdx ι J) R ⧸ blowUpOf P u)),
       G₀.IsPrime ∧ W₀.IsPrime ∧ G₀.comap (Ideal.Quotient.mk P) = G'.comap (liftForm (J := J)) ∧
         W₀.comap (Ideal.Quotient.mk (blowUpOf P u)) = G' := by
   refine ⟨(G'.comap (liftForm (J := J))).map (Ideal.Quotient.mk P), G'.map (Ideal.Quotient.mk _),

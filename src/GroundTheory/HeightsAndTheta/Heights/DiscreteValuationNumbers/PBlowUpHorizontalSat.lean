@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpHorizontal
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AevalChartSubstMemOfMemBlowUpOf
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -21,22 +20,22 @@ section Saturation
 
 variable {K : Type*} {ι : K → Type} {J : Type} {R : Type*} [CommRing R]
 
-theorem exists_pow_mul_mem_of_aeval_chartSubst_mem {P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {u a : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
-    {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (j₀ : J)
+theorem exists_pow_mul_mem_of_aeval_chartSubst_mem {P : Ideal (MRing ι R)} {u a : J → MRing ι R}
+    {W : Ideal (MRing ι R)} (j₀ : J)
     (hrel : ∀ j, newVar j * liftForm (a j₀) - newVar j₀ * liftForm (a j) ∈ blowUpOf P u)
-    {F : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)}
-    (hF : aeval (chartSubst a) F ∈ Ideal.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) W) :
+    {F : MRing (extIdx ι J) R}
+    (hF : aeval (chartSubst a) F ∈ Ideal.map (Polynomial.C : MRing ι R →+* Polynomial (MRing ι R)) W) :
     ∃ n : ℕ, liftForm (a j₀ ^ n) * F ∈
-      blowUpOf P u ⊔ Ideal.map (liftForm (J := J) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →ₐ[R] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) W := by
-  set B' := blowUpOf P u ⊔ Ideal.map (liftForm (J := J) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →ₐ[R] ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J)) W
+      blowUpOf P u ⊔ Ideal.map (liftForm (J := J) : MRing ι R →ₐ[R] MRing (extIdx ι J) R) W := by
+  set B' := blowUpOf P u ⊔ Ideal.map (liftForm (J := J) : MRing ι R →ₐ[R] MRing (extIdx ι J) R) W
   let π := Ideal.Quotient.mk B'
   let x₀ := π (liftForm (a j₀))
   let L := Localization.Away x₀
-  let q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (extIdx ι J) →+* L := (algebraMap _ L).comp π
+  let q : MRing (extIdx ι J) R →+* L := (algebraMap _ L).comp π
   let t : L := IsLocalization.Away.invSelf x₀
   have hinv : q (liftForm (a j₀)) * t = 1 := IsLocalization.Away.mul_invSelf x₀
-  let ψ : Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) →+* L :=
-    Polynomial.eval₂RingHom (q.comp (liftForm (J := J) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →ₐ[R] _).toRingHom) (q (newVar j₀) * t)
+  let ψ : Polynomial (MRing ι R) →+* L :=
+    Polynomial.eval₂RingHom (q.comp (liftForm (J := J) : MRing ι R →ₐ[R] _).toRingHom) (q (newVar j₀) * t)
   have key : ψ.comp (aeval (R := R) (chartSubst a)).toRingHom = q := by
     apply MvPolynomial.ringHom_ext
     · intro r
@@ -55,7 +54,7 @@ theorem exists_pow_mul_mem_of_aeval_chartSubst_mem {P : Ideal (ReciprocityTheory
         change q (liftForm (a i)) * (q (newVar j₀) * t) = q (newVar i)
         linear_combination (-t) * h1 + q (newVar i) * hinv
       · simp [ψ, chartSubst, liftForm]
-  have hle : Ideal.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) W ≤ RingHom.ker ψ := by
+  have hle : Ideal.map (Polynomial.C : MRing ι R →+* Polynomial (MRing ι R)) W ≤ RingHom.ker ψ := by
     rw [Ideal.map_le_iff_le_comap]
     intro p hp
     rw [Ideal.mem_comap, RingHom.mem_ker]
@@ -86,7 +85,7 @@ theorem BlowUpHorizontalSat.full : BlowUpHorizontalSat.Statement.{u} := by
   have hBW : blowUpOf P u ≤ W := le_sup_left.trans hmin.1.2
   set W₀ := W.comap (liftForm (ι := ι) (J := J) (R := O)) with hW₀
   obtain ⟨hW₀p, hPW₀, hrel₀, -⟩ := comap_liftForm_facts hWp hBW hWrel
-  have hϖW₀ : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W₀ := by rw [Ideal.mem_comap, liftForm_C]; exact hϖW
+  have hϖW₀ : (C ϖ : MRing ι O) ∉ W₀ := by rw [Ideal.mem_comap, liftForm_C]; exact hϖW
   obtain ⟨j₀, hj₀⟩ := hloc W₀ hW₀p hPW₀ hrel₀ hϖW₀
   choose v w hv hvw using hj₀
 
@@ -98,7 +97,7 @@ theorem BlowUpHorizontalSat.full : BlowUpHorizontalSat.Statement.{u} := by
       rwa [sub_add_cancel] at this
     exact hj ((hPp.mem_or_mem h1).resolve_left fun h' => hv j (hPW₀ h'))
 
-  obtain ⟨u₀, a, hu₀W, hrelP⟩ : ∃ (u₀ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (a : J → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), u₀ ∉ W₀ ∧
+  obtain ⟨u₀, a, hu₀W, hrelP⟩ : ∃ (u₀ : MRing ι O) (a : J → MRing ι O), u₀ ∉ W₀ ∧
       ∀ j, u₀ * u j - u j₀ * a j ∈ P := by
     have := hW₀p
     refine ⟨∏ j, v j, fun j => w j * ∏ j' ∈ Finset.univ.erase j, v j',
@@ -127,7 +126,7 @@ theorem BlowUpHorizontalSat.full : BlowUpHorizontalSat.Statement.{u} := by
     exact (hPp.mem_or_mem h1).resolve_left hu₀P
 
   have := hW₀p
-  let Q' := (Ideal.map (Polynomial.C : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) W₀).comap
+  let Q' := (Ideal.map (Polynomial.C : MRing ι O →+* Polynomial (MRing ι O)) W₀).comap
     (aeval (R := O) (chartSubst a))
   have hQ'p : Q'.IsPrime := Ideal.comap_isPrime _ _
   have hxW : liftForm x ∈ W := hmin.1.2 (Ideal.mem_sup_right (Ideal.mem_span_singleton_self _))

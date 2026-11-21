@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -78,7 +77,7 @@ theorem bound_of_eventually (f : ℕ → ℝ) (r : ℝ) (a₀ : ℕ) (C : ℝ)
 theorem proof (hP : HilbertPrime.Statement.{0}) (hM : MixedNumberPolynomial.Statement.{0}) :
     RankOfSections.Statement := by
   intro ι₀ _ q D hq hdim
-  have hdim' : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ℚ (fun _ : Unit => ι₀) ⧸ q) =
+  have hdim' : ringKrullDim (MRing (fun _ : Unit => ι₀) ℚ ⧸ q) =
       ((D + Fintype.card Unit : ℕ) : WithBot ℕ∞) := by
     simpa using hdim
   obtain ⟨a₀, C, hC⟩ := hP D ℚ Unit (fun _ => ι₀) q hq hdim'

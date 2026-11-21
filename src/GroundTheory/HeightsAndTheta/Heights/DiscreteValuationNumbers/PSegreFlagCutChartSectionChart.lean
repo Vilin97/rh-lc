@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSegreFlagCutChartSectionTools
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 
 @[expose] public section
@@ -53,7 +52,7 @@ theorem flagClosurePt_eq_aeval (y : (Σ k, ι k) → Ω) (w e : Module.Basis (Fi
 theorem aeval_flagProjPt_eq_zero {K' : Type} (j : K' ↪ Option (Option K)) (y : (Σ k, ι k) → Ω)
     (w e : Module.Basis (Fin N) Ω E) (φ : Fin M → Module.Dual Ω E) (φ' : Fin M' → Module.Dual Ω E)
     {t : Fin N → Φ} (ht : AlgebraicIndependent Ω t) (k : ℕ)
-    {q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (fun o => bundleIdx (bundleIdx ι M) M' (j o))}
+    {q : MRing (fun o => bundleIdx (bundleIdx ι M) M' (j o)) O}
     (hq : q ∈ pointIdeal O (flagProjPt j y w e φ φ' t k)) (t' : Fin N → Φ) :
     aeval (flagProjPt j y w e φ φ' t' k) q = 0 := by
   let G : (Σ o, bundleIdx (bundleIdx ι M) M' (j o)) → MvPolynomial (Fin N) Ω :=
@@ -101,7 +100,7 @@ theorem chartMonoZ_add (c : ∀ k, ι k) (α β : K → ℕ) :
 
 theorem chartMonoZ_dvd (c : ∀ k, ι k) (δ : K → ℕ) :
     chartMonoZ O M M' c δ ∣
-      (∏ j, (X ⟨some (some j), c j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))) ^ (∑ j, δ j) := by
+      (∏ j, (X ⟨some (some j), c j⟩ : MRing (bundleIdx (bundleIdx ι M) M') O)) ^ (∑ j, δ j) := by
   refine ⟨chartMonoZ O M M' c (fun j => ∑ i, δ i - δ j), ?_⟩
   rw [← chartMonoZ_add]
   unfold chartMonoZ
@@ -134,12 +133,12 @@ theorem chart_data (y : (Σ k, ι k) → Ω) (B₁ : ChartBundle O (segreVec y) 
     (ψ : Fin L → Module.Dual Ω E) (hψ : IsTwistedDualGens y B₁ a₁ ψ)
     (φ : Fin M → Module.Dual Ω E) (φ' : Fin M' → Module.Dual Ω E) (t : Fin N → Φ) (k : ℕ) (hk : k < N)
     (c : ∀ k, ι k) (hc : segreVec y c ≠ 0) (b : Option (Option K))
-    (Xv : Fin L → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))
+    (Xv : Fin L → MRing (bundleIdx (bundleIdx ι M) M') O)
     (hXv : ∀ l, IsWeightedHomogeneous (blockWeight (bundleIdx (bundleIdx ι M) M')) (Xv l) (Pi.single b 1))
     (hXval : ∀ l, aeval (flagClosurePt y w e φ φ' t (k + 1)) (Xv l) =
       genVal w (flagCoord w e t (k + 1)) (ψ l)) :
-    ∃ (β δ : K → ℕ) (lam : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))
-      (Y : Fin L → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) (c'' : Fin N → Φ),
+    ∃ (β δ : K → ℕ) (lam : MRing (bundleIdx (bundleIdx ι M) M') O)
+      (Y : Fin L → MRing (bundleIdx (bundleIdx ι M) M') O) (c'' : Fin N → Φ),
       (∀ j, 0 ≤ (β j : ℤ) + (x₁ ⟨k, hk⟩ j - a₁ j)) ∧
       IsMultiHomog lam (Pi.single b 1 + vdeg (fun j => (β j + (x₁ ⟨k, hk⟩ j - a₁ j)).toNat)) ∧
       aeval (flagClosurePt y w e φ φ' t (k + 1)) lam =
@@ -182,7 +181,7 @@ theorem chart_data (y : (Σ k, ι k) → Ω) (B₁ : ChartBundle O (segreVec y) 
   simp only [pow_zero, map_one, one_mul] at hval
   let ρ : K → ℕ := fun j => (a₁ j - x₁ ⟨k, hk⟩ j).toNat
   let β : K → ℕ := bH + ρ
-  obtain ⟨lam, hlam⟩ : ∃ lam : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'),
+  obtain ⟨lam, hlam⟩ : ∃ lam : MRing (bundleIdx (bundleIdx ι M) M') O,
       lam = (∑ l, Xv l * G l) * chartMonoZ O M M' c ρ := ⟨_, rfl⟩
   have hβ0 : ∀ j, 0 ≤ (β j : ℤ) + (x₁ ⟨k, hk⟩ j - a₁ j) := by
     intro j
@@ -231,7 +230,7 @@ theorem chart_data (y : (Σ k, ι k) → Ω) (B₁ : ChartBundle O (segreVec y) 
     (flagCoord w e t (k + 1)) c hc r hrA
   let γ₁ : K → ℕ := fun j => (x₁ ⟨k, hk⟩ j - a₁ j).toNat
   let δ : K → ℕ := β + fun j => n₂ + γ₁ j
-  obtain ⟨Y, hYdef⟩ : ∃ Y : Fin L → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'),
+  obtain ⟨Y, hYdef⟩ : ∃ Y : Fin L → MRing (bundleIdx (bundleIdx ι M) M') O,
       Y = fun l => chartMonoZ O M M' c δ * Xv l - U l * chartMonoZ O M M' c ρ * lam := ⟨_, rfl⟩
   let A : Ω := ∏ j, y ⟨j, c j⟩ ^ δ j
   let τ : Φ := flagLineCoord w₁ w e t (k + 1) ⟨k, hk⟩

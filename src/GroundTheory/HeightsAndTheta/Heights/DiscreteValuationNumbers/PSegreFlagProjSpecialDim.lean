@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagProjSpecialDimSteps
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDvrConeDimTrdeg
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -56,9 +55,9 @@ theorem specialIdeal_dim_add_one_le {O : Type*} [CommRing O] [IsDomain O] [IsDis
   rwa [ringKrullDim_eq_of_ringEquiv e2, ringKrullDim_eq_of_ringEquiv e1] at hle
 
 theorem relDim_specialIdeal_lt {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {ϖ : O}
-    (hϖ : Irreducible ϖ) {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) [P.IsPrime]
-    (hPC : P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = ⊥) (n : ℕ)
-    (hdim : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ P) ≤ ((n + Fintype.card K : ℕ) : WithBot ℕ∞)) :
+    (hϖ : Irreducible ϖ) {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} (P : Ideal (MRing ι O)) [P.IsPrime]
+    (hPC : P.comap (C : O →+* MRing ι O) = ⊥) (n : ℕ)
+    (hdim : ringKrullDim (MRing ι O ⧸ P) ≤ ((n + Fintype.card K : ℕ) : WithBot ℕ∞)) :
     FieldNumbers.relDim (specialIdeal P) < ((n : ℕ) : WithBot (WithTop ℤ)) := by
   have h := (specialIdeal_dim_add_one_le hϖ P hPC).trans hdim
   unfold FieldNumbers.relDim specialIdeal
@@ -85,19 +84,19 @@ theorem SegreFlagProjSpecialDim.proof (hDim : PrimeDimLeTrdeg.Statement) (hTr : 
     e t ht k hk
   obtain ⟨h1, h2⟩ := hTr O ϖ hϖ Ω K ι y d hV N E B B' hBB' w w' x x' f g hfl M M' a₀ a₀' φ φ' hφ hφ' Φ e t ht k hk
 
-  have hVt : (Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y)).toENat = ((d + Fintype.card K : ℕ) : ℕ∞) := by
+  have hVt : (Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y)).toENat = ((d + Fintype.card K : ℕ) : ℕ∞) := by
     have h := DvrConeDimTrdeg.proof O K ι _ hV.multiProj hV.noTorsion
     rw [hV.dim] at h
-    have h0 : ((d + 1 + Fintype.card K : ℕ) : ℕ∞) = (Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y)).toENat + 1 := by
+    have h0 : ((d + 1 + Fintype.card K : ℕ) : ℕ∞) = (Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y)).toENat + 1 := by
       exact_mod_cast h
-    have h' : ((d + Fintype.card K : ℕ) : ℕ∞) + 1 = (Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y)).toENat + 1 := by
+    have h' : ((d + Fintype.card K : ℕ) : ℕ∞) + 1 = (Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y)).toENat + 1 := by
       rw [← h0]; push_cast; ring
     exact (WithTop.add_right_cancel ENat.one_ne_top h').symm
 
   have hOΩ : Function.Injective (algebraMap O Ω) := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro a ha
-    have hmem : a ∈ (pointIdeal O y).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := by
+    have hmem : a ∈ (pointIdeal O y).comap (C : O →+* MRing ι O) := by
       simp [Ideal.mem_comap, pointIdeal, RingHom.mem_ker, pointConeMap, ha]
     rwa [hV.noTorsion, Ideal.mem_bot] at hmem
   have hOΦ : Function.Injective (algebraMap O Φ) := by
@@ -105,8 +104,8 @@ theorem SegreFlagProjSpecialDim.proof (hDim : PrimeDimLeTrdeg.Statement) (hTr : 
     exact (algebraMap Ω Φ).injective.comp hOΩ
 
   have key : ∀ {K' : Type} [Fintype K'] [DecidableEq K'] (j : K' ↪ Option (Option K)), Fintype.card K' = Fintype.card K + 1 →
-      Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (fun o => bundleIdx (bundleIdx ι M) M' (j o)) ⧸
-          pointIdeal O (flagProjPt j y w e φ φ' t k)) ≤ Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) + (k : Cardinal) →
+      Algebra.trdeg O (MRing (fun o => bundleIdx (bundleIdx ι M) M' (j o)) O ⧸
+          pointIdeal O (flagProjPt j y w e φ φ' t k)) ≤ Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) + (k : Cardinal) →
       FieldNumbers.relDim (specialIdeal (pointIdeal O (flagProjPt j y w e φ φ' t k))) <
         ((d + k : ℕ) : WithBot (WithTop ℤ)) := by
     intro K' _ _ j hcard hle
@@ -117,7 +116,7 @@ theorem SegreFlagProjSpecialDim.proof (hDim : PrimeDimLeTrdeg.Statement) (hTr : 
     refine relDim_specialIdeal_lt hϖ _ hPC (d + k) ((hDim O K' _ _ hP hPC).trans ?_)
     have ht : Cardinal.toENat _ ≤ Cardinal.toENat _ := OrderHomClass.mono Cardinal.toENat hle
     simp only [map_add (f := _), map_natCast, hVt] at ht
-    have : ((Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (fun o => bundleIdx (bundleIdx ι M) M' (j o)) ⧸
+    have : ((Algebra.trdeg O (MRing (fun o => bundleIdx (bundleIdx ι M) M' (j o)) O ⧸
         pointIdeal O (flagProjPt j y w e φ φ' t k))).toENat + 1 : ℕ∞) ≤ ((d + k + Fintype.card K' : ℕ) : ℕ∞) := by
       rw [hcard]
       calc _ ≤ ((d + Fintype.card K : ℕ) : ℕ∞) + (k : ℕ∞) + 1 := by gcongr

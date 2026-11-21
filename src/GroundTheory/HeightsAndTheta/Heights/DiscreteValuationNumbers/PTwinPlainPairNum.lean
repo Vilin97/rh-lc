@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.InstFintypeSumElim
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ClassListMapDomainPerm
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -26,7 +25,7 @@ variable {K : Type} [DecidableEq K] {ι : K → Type}
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
 theorem classNum_rename {σ τ : Type*} (e : σ → τ) (he : Function.Injective e) (cls : τ → K → ℤ)
-    (H : MvPolynomial σ ℤ) (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (H : MvPolynomial σ ℤ) (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     classNum cls (rename e H) Q W = classNum (cls ∘ e) H Q W := by
   classical
   unfold classNum
@@ -39,7 +38,7 @@ theorem classNum_rename {σ τ : Type*} (e : σ → τ) (he : Function.Injective
   rw [← Finsupp.toMultiset_map, Multiset.map_map]
 
 theorem classNum_eq_sum_of_subset {σ : Type*} (cls : σ → K → ℤ) (H : MvPolynomial σ ℤ)
-    (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) {S : Finset (σ →₀ ℕ)} (hS : H.support ⊆ S) :
+    (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) {S : Finset (σ →₀ ℕ)} (hS : H.support ⊆ S) :
     classNum cls H Q W = ∑ μ ∈ S, H.coeff μ * vNumL W (classList cls μ ++ Q) :=
   Finset.sum_subset hS fun μ _ hμ => by
     rw [mem_support_iff, not_not] at hμ
@@ -53,7 +52,7 @@ theorem classList_add_perm {σ : Type*} (cls : σ → K → ℤ) (μ ν : σ →
 
 
 theorem classNum_mul_monomial {σ : Type*} [DecidableEq σ] (cls : σ → K → ℤ) (A : MvPolynomial σ ℤ)
-    (t : σ →₀ ℕ) (Q : List (K → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
+    (t : σ →₀ ℕ) (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     classNum cls (A * monomial t 1) Q W = classNum cls A (classList cls t ++ Q) W := by
   have hsub : (A * monomial t 1).support ⊆ A.support.image (· + t) := by
     intro ν hν

@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ComapLiftFormConstChartPrimeExample
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivCycleMul
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -21,19 +20,19 @@ section Helpers
 
 variable {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
 
-private theorem divCycle_eq_zero_of_not_mem' {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (h : x ∉ W) :
-    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ) = 0 := by
+private theorem divCycle_eq_zero_of_not_mem' {P W : Ideal (MRing ι R)} {x : MRing ι R} (h : x ∉ W) :
+    divCycle P x W = 0 := by
   by_contra h'
   exact h (form_mem_of_divCycle_ne_zero h')
 
-private theorem divCycle_nonneg' (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
-    0 ≤ ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ) := by
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+private theorem divCycle_nonneg' (P : Ideal (MRing ι R)) (x : MRing ι R) (W : Ideal (MRing ι R)) :
+    0 ≤ divCycle P x W := by
+  unfold divCycle
   split_ifs <;> positivity
 
-private theorem facts_of_divCycle_ne_zero' {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι}
-    (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ) ≠ 0) : W ∈ (P ⊔ Ideal.span {x}).minimalPrimes ∧ IsRelevant W := by
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
+private theorem facts_of_divCycle_ne_zero' {P W : Ideal (MRing ι R)} {x : MRing ι R}
+    (h : divCycle P x W ≠ 0) : W ∈ (P ⊔ Ideal.span {x}).minimalPrimes ∧ IsRelevant W := by
+  unfold divCycle at h
   split_ifs at h with hc
   · exact hc
   · exact absurd rfl h
@@ -45,9 +44,9 @@ section Rel
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {R : Type u} [CommRing R]
   [IsNoetherianRing R]
 
-private theorem ratDiv_eq_of_rel {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} (hP : P.IsPrime) (hPW : P ≤ W)
-    {f g a v : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (hf : f ∉ P) (hg : g ∉ P) (ha : a ∉ W) (h : a * f - v * g ∈ P) :
-    v ∉ P ∧ ratDiv P f g W = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P v) W : ℤ) := by
+private theorem ratDiv_eq_of_rel {P W : Ideal (MRing ι R)} (hP : P.IsPrime) (hPW : P ≤ W)
+    {f g a v : MRing ι R} (hf : f ∉ P) (hg : g ∉ P) (ha : a ∉ W) (h : a * f - v * g ∈ P) :
+    v ∉ P ∧ ratDiv P f g W = divCycle P v W := by
   have haP : a ∉ P := fun h' => ha (hPW h')
   have hv : v ∉ P := by
     intro hv
@@ -85,18 +84,18 @@ theorem ExceptionalComparison.proof (h₁ : BlowUpDecomposition.Statement.{u}) (
     refine ⟨i, fun h => hi ?_⟩
     rw [hGdef, Ideal.mem_comap] at h
     simpa [liftForm, rename_X] using h
-  have hlift : ∀ {p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}, p ∉ P → liftForm (J := BlowUpIdx ι) p ∉ Q := by
+  have hlift : ∀ {p : MRing ι O}, p ∉ P → liftForm (J := BlowUpIdx ι) p ∉ Q := by
     intro p hp h
     rw [hQdef, blowUpOf, RingHom.mem_ker, aeval_blowUpSubst_liftForm, Polynomial.C_eq_zero,
       Ideal.Quotient.eq_zero_iff_mem] at h
     exact hp h
-  have hliftP : ∀ {p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}, p ∈ P → liftForm (J := BlowUpIdx ι) p ∈ Q := by
+  have hliftP : ∀ {p : MRing ι O}, p ∈ P → liftForm (J := BlowUpIdx ι) p ∈ Q := by
     intro p hp
     rw [hQdef, blowUpOf, RingHom.mem_ker, aeval_blowUpSubst_liftForm,
       Ideal.Quotient.eq_zero_iff_mem.mpr hp, map_zero]
   have hfP : f ∉ P := hD.1.num_not_mem
   have hgP : g ∉ P := hD.1.den_not_mem
-  have hY₁Q : (newVar (some none) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∉ Q := hD₁.1.num_not_mem
+  have hY₁Q : (newVar (some none) : MRing (extIdx ι (BlowUpIdx ι)) O) ∉ Q := hD₁.1.num_not_mem
   have hmul := DivCycleMul.proof O (Option K) (extIdx ι (BlowUpIdx ι)) Q
   have hnm : ∀ {x y}, x ∉ Q → y ∉ Q → x * y ∉ Q := fun hx hy h => (hQp.mem_or_mem h).elim hx hy
 
@@ -111,7 +110,7 @@ theorem ExceptionalComparison.proof (h₁ : BlowUpDecomposition.Statement.{u}) (
     simp only [Pi.add_apply]
     ring
   have eE' : ratDiv Q (liftForm (f * m)) (liftForm g * newVar (some none)) G' =
-      ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (liftForm s)) G' : ℤ) - ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (newVar none)) G' : ℤ) := by
+      divCycle Q (liftForm s) G' - divCycle Q (newVar none) G' := by
     unfold ratDiv
     rw [hmul _ _ hQp (hlift hgP) hY₁Q]
     simp only [Pi.add_apply]
@@ -123,7 +122,7 @@ theorem ExceptionalComparison.proof (h₁ : BlowUpDecomposition.Statement.{u}) (
     have hW : G' ∈ (Q ⊔ Ideal.span {newVar (some none)}).minimalPrimes ∧ IsRelevant G' ∨
         G' ∈ (Q ⊔ Ideal.span {liftForm m}).minimalPrimes ∧ IsRelevant G' := by
       unfold ratDiv at h0
-      by_cases h1 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q (newVar (some none))) G' : ℤ) = 0
+      by_cases h1 : divCycle Q (newVar (some none)) G' = 0
       · right; exact facts_of_divCycle_ne_zero' (fun h2 => h0 (by rw [h1, h2, sub_zero]))
       · left; exact facts_of_divCycle_ne_zero' h1
     have hW' : G'.IsPrime ∧ Q ≤ G' ∧ IsRelevant G' := by

@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.BundleChernComparison
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagIndependence
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -23,7 +22,7 @@ noncomputable def polyCoord (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) 
 
 noncomputable def polyCone (F : Type) [Field F] [Algebra F Ω] (y : (Σ k, ι k) → Ω)
     (w : Module.Basis (Fin N) Ω E) (φ : Fin M → Module.Dual Ω E) :
-    ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) →+* MvPolynomial (Option K) (MvPolynomial (Fin N) Ω) :=
+    MRing (bundleIdx ι M) F →+* MvPolynomial (Option K) (MvPolynomial (Fin N) Ω) :=
   eval₂Hom (C.comp ((C : Ω →+* MvPolynomial (Fin N) Ω).comp (algebraMap F Ω)))
     (fun p => C (polyCoord y w φ p) * X p.1)
 

@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTail
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivCycleMul
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -31,7 +30,7 @@ theorem ResidualComparison.proof (hpieces : BlowUpDecomposition.Statement.{u})
   have hmul₀ := DivCycleMul.proof O K ι P
   have nm : ∀ x y, x ∉ P' → y ∉ P' → x * y ∉ P' := fun x y hx hy h =>
     (hP'prime.mem_or_mem h).elim hx hy
-  have hzero : ∀ x, x ∉ G' → ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P' x) G' : ℤ) = 0 := fun x hx => by
+  have hzero : ∀ x, x ∉ G' → divCycle P' x G' = 0 := fun x hx => by
     by_contra h; exact hx (form_mem_of_divCycle_ne_zero h)
 
   have hG'supp : G' ∈ (P' ⊔ Ideal.span {liftForm s}).minimalPrimes ∧ IsRelevant G' := by
@@ -46,7 +45,7 @@ theorem ResidualComparison.proof (hpieces : BlowUpDecomposition.Statement.{u})
   have hGrel : IsRelevant G := fun k => by
     obtain ⟨i, hi⟩ := hG'supp.2 (some k)
     exact ⟨i, fun h => hi (by simpa [hGdef, liftForm] using h)⟩
-  have hϖG : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ G := by
+  have hϖG : (C ϖ : MRing ι O) ∈ G := by
     rw [hGdef, Ideal.mem_comap, liftForm_const]; exact hϖG'
 
   obtain ⟨u, v, huG, huv⟩ := hD.2 G hGprime hPG hGrel
@@ -58,10 +57,10 @@ theorem ResidualComparison.proof (hpieces : BlowUpDecomposition.Statement.{u})
       rw [show u * f = (u * f - v * g) + v * g by ring]
       exact P.add_mem huv (P.mul_mem_right g hv)
     exact (hPprime.mem_or_mem h).elim huP hfP
-  have hdown : ratDiv P f g G = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P v) G : ℤ) := by
+  have hdown : ratDiv P f g G = divCycle P v G := by
     have h1 := congrFun (divCycle_congr_of_sub_mem huv) G
     rw [hmul₀ u f hPprime huP hfP, hmul₀ v g hPprime hvP hgP] at h1
-    have hu0 : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P u) G : ℤ) = 0 := by
+    have hu0 : divCycle P u G = 0 := by
       by_contra h; exact huG (form_mem_of_divCycle_ne_zero h)
     simp only [Pi.add_apply] at h1
     unfold ratDiv; omega
@@ -78,16 +77,16 @@ theorem ResidualComparison.proof (hpieces : BlowUpDecomposition.Statement.{u})
         liftForm v * liftForm g by ring]
       exact P'.add_mem hluv (P'.mul_mem_right _ hv)
     exact nm _ _ hluP' hlfP' h
-  have hup : ratDiv P' (liftForm f) (liftForm g) G' = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P' (liftForm v)) G' : ℤ) := by
+  have hup : ratDiv P' (liftForm f) (liftForm g) G' = divCycle P' (liftForm v) G' := by
     have h1 := congrFun (divCycle_congr_of_sub_mem hluv) G'
     rw [hmul _ _ hP'prime hluP' hlfP', hmul _ _ hP'prime hlvP' hlgP'] at h1
     have hu0 := hzero _ huG
     simp only [Pi.add_apply] at h1
     unfold ratDiv; omega
 
-  have hY₁P' : (newVar (some none) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∉ P' := hres.1.num_not_mem
+  have hY₁P' : (newVar (some none) : MRing (extIdx ι (BlowUpIdx ι)) O) ∉ P' := hres.1.num_not_mem
   have hlmP' : liftForm (J := BlowUpIdx ι) m ∉ P' := hres.1.den_not_mem
-  have hY₀P' : (newVar none : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (extIdx ι (BlowUpIdx ι))) ∉ P' := fun h => hY₀G' (hP'G' h)
+  have hY₀P' : (newVar none : MRing (extIdx ι (BlowUpIdx ι)) O) ∉ P' := fun h => hY₀G' (hP'G' h)
   have hrel := congrFun (divCycle_congr_of_sub_mem (blowUp_relation P s g f m e)) G'
   rw [map_mul, map_mul, hmul _ _ hP'prime (nm _ _ hsP' hlgP') hY₁P',
     hmul _ _ hP'prime (nm _ _ hlfP' hlmP') hY₀P', hmul _ _ hP'prime hsP' hlgP',

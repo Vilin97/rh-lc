@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsRename
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -36,7 +35,7 @@ theorem weight_mapDomain (hσ : ∀ v, (σ v).1 = E v.1) (d : (Σ s, κ s) →�
       Equiv.symm_apply_eq, smul_eq_mul]
 
 theorem rename_weightedHomogeneousComponent {R : Type u} [CommRing R]
-    (hσ : ∀ v, (σ v).1 = E v.1) (b : S → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R κ) :
+    (hσ : ∀ v, (σ v).1 = E v.1) (b : S → ℕ) (f : MRing κ R) :
     rename σ (weightedHomogeneousComponent (blockWeight κ) b f) =
       weightedHomogeneousComponent (blockWeight ι') (b ∘ E.symm) (rename σ f) := by
   classical

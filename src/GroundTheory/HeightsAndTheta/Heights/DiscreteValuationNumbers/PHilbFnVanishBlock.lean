@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -27,10 +26,10 @@ theorem exists_block_var_of_weight_pos {K : Type} [DecidableEq K] {ι : K → Ty
   omega
 
 theorem mem_of_block_vars_mem {F : Type u} [Field F] {K : Type} [DecidableEq K] {ι : K → Type}
-    (Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (k : K) (hX : ∀ i, (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∈ Q) (m : K → ℕ)
-    (hm : 1 ≤ m k) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (hf : f ∈ weightedHomogeneousSubmodule F (blockWeight ι) m) :
+    (Q : Ideal (MRing ι F)) (k : K) (hX : ∀ i, (X ⟨k, i⟩ : MRing ι F) ∈ Q) (m : K → ℕ)
+    (hm : 1 ≤ m k) (f : MRing ι F) (hf : f ∈ weightedHomogeneousSubmodule F (blockWeight ι) m) :
     f ∈ Q := by
-  have hspan : Ideal.span ((X : (Σ k, ι k) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) '' {v | v.1 = k}) ≤ Q := by
+  have hspan : Ideal.span ((X : (Σ k, ι k) → MRing ι F) '' {v | v.1 = k}) ≤ Q := by
     rw [Ideal.span_le]
     rintro _ ⟨⟨k', i⟩, hv, rfl⟩
     simp only [Set.mem_ofPred_eq] at hv

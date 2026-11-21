@@ -5,7 +5,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Stat
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsDvrConeDimTrdeg
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsPairBundleTrdeg
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTwistedDualGensSpan
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -24,7 +23,7 @@ variable {R : Type*} [CommRing R] {L : Type*} [Field L] [Algebra R L] {K : Type*
 
 def tWeight (K : Type*) [DecidableEq K] : K → K → ℕ := fun k => Pi.single k 1
 
-theorem coneMap_component (z : (Σ k, ι k) → L) (b : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :
+theorem coneMap_component (z : (Σ k, ι k) → L) (b : K → ℕ) (f : MRing ι R) :
     weightedHomogeneousComponent (tWeight K) b (pointConeMap R z f) =
       pointConeMap R z (weightedHomogeneousComponent (blockWeight ι) b f) := by
   induction f using MvPolynomial.induction_on' with
@@ -36,7 +35,7 @@ theorem coneMap_component (z : (Σ k, ι k) → L) (b : K → ℕ) (f : Reciproc
       refine IsWeightedHomogeneous.C_mul ?_ _
       refine IsWeightedHomogeneous.prod _ _ _ fun p _ => ?_
       exact ((isWeightedHomogeneous_X (R := L) (tWeight K) p.1).C_mul (z p)).pow (d p)
-    have h2 : IsWeightedHomogeneous (blockWeight ι) (monomial d a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)
+    have h2 : IsWeightedHomogeneous (blockWeight ι) (monomial d a : MRing ι R)
         (Finsupp.weight (blockWeight ι) d) := isWeightedHomogeneous_monomial _ _ _ rfl
     by_cases h : b = Finsupp.weight (blockWeight ι) d
     · subst h
@@ -112,7 +111,7 @@ theorem GenericProjClosureDim.proof (hDim : DvrConeDimTrdeg.Statement) (hTr : Pa
     intro a ha
     rw [Ideal.mem_comap, pointIdeal, RingHom.mem_ker, pointConeMap, aeval_C, MvPolynomial.algebraMap_apply,
       C_eq_zero, IsScalarTower.algebraMap_apply O Ω Φ, map_eq_zero_iff _ (FaithfulSMul.algebraMap_injective Ω Φ)] at ha
-    have hy : a ∈ (pointIdeal O y).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := by
+    have hy : a ∈ (pointIdeal O y).comap (C : O →+* MRing ι O) := by
       rw [Ideal.mem_comap, pointIdeal, RingHom.mem_ker, pointConeMap, aeval_C, MvPolynomial.algebraMap_apply, ha,
         map_zero]
     rw [hV.noTorsion] at hy
@@ -121,9 +120,9 @@ theorem GenericProjClosureDim.proof (hDim : DvrConeDimTrdeg.Statement) (hTr : Pa
 
   have hdy := hDim O K ι (pointIdeal O y) hV.multiProj hV.noTorsion
   rw [hV.dim] at hdy
-  have hty : Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) = ((d + Fintype.card K : ℕ) : Cardinal) := by
+  have hty : Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) = ((d + Fintype.card K : ℕ) : Cardinal) := by
     have h1 : (((d + Fintype.card K : ℕ) : ℕ∞) + 1) =
-        (Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y)).toENat + 1 := by
+        (Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y)).toENat + 1 := by
       have := WithBot.coe_injective hdy
       rw [← this]
       push_cast

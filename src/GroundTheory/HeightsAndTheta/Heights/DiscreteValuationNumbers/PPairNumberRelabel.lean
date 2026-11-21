@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.IntNumRelabel
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PRenameMultiHomog
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PRenameMultiProjPrime
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PExistsUniqueRelabel
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -25,33 +24,33 @@ section Ring
 variable {K₁ K₂ : Type} {ι₁ : K₁ → Type} {ι₂ : K₂ → Type} {R : Type} [CommRing R]
   (σ : (Σ k, ι₁ k) ≃ (Σ k, ι₂ k))
 
-abbrev ren : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ ≃+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂ := (renameEquiv R σ).toRingEquiv
+abbrev ren : MRing ι₁ R ≃+* MRing ι₂ R := (renameEquiv R σ).toRingEquiv
 
-theorem ren_apply (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁) : ren (R := R) σ f = rename σ f := rfl
+theorem ren_apply (f : MRing ι₁ R) : ren (R := R) σ f = rename σ f := rfl
 
-theorem map_rename_eq (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁)) :
-    I.map (rename σ) = I.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂) := rfl
+theorem map_rename_eq (I : Ideal (MRing ι₁ R)) :
+    I.map (rename σ) = I.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R) := rfl
 
-theorem map_renameEquiv_eq (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁)) :
-    I.map (renameEquiv R σ) = I.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂) := rfl
+theorem map_renameEquiv_eq (I : Ideal (MRing ι₁ R)) :
+    I.map (renameEquiv R σ) = I.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R) := rfl
 
-theorem rename_mem_map_iff (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁)) (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁) :
-    rename σ x ∈ I.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂) ↔ x ∈ I :=
+theorem rename_mem_map_iff (I : Ideal (MRing ι₁ R)) (x : MRing ι₁ R) :
+    rename σ x ∈ I.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R) ↔ x ∈ I :=
   GroundTheory.Heights₂.Heights.Targets.ExistsUniqueRelabel.mem_map_iff (ren σ) I x
 
-def idealEquiv : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁) ≃ Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂) where
-  toFun W := W.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂)
-  invFun W := W.map ((ren (R := R) σ).symm : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁)
+def idealEquiv : Ideal (MRing ι₁ R) ≃ Ideal (MRing ι₂ R) where
+  toFun W := W.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R)
+  invFun W := W.map ((ren (R := R) σ).symm : MRing ι₂ R →+* MRing ι₁ R)
   left_inv W := Ideal.map_of_equiv (I := W) (ren (R := R) σ)
   right_inv W := by
     have := Ideal.map_of_equiv (I := W) (ren (R := R) σ).symm
     rwa [RingEquiv.symm_symm] at this
 
-theorem idealEquiv_apply (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁)) :
-    idealEquiv (R := R) σ W = W.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂) := rfl
+theorem idealEquiv_apply (W : Ideal (MRing ι₁ R)) :
+    idealEquiv (R := R) σ W = W.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R) := rfl
 
-theorem isRelevant_iff' {K : Type} {ι : K → Type} (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)) :
-    IsRelevant W ↔ ∀ k, ∃ p : Σ k, ι k, p.1 = k ∧ (X p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) ∉ W := by
+theorem isRelevant_iff' {K : Type} {ι : K → Type} (W : Ideal (MRing ι R)) :
+    IsRelevant W ↔ ∀ k, ∃ p : Σ k, ι k, p.1 = k ∧ (X p : MRing ι R) ∉ W := by
   refine ⟨fun h k => ?_, fun h k => ?_⟩
   · obtain ⟨i, hi⟩ := h k
     exact ⟨⟨k, i⟩, rfl, hi⟩
@@ -60,9 +59,9 @@ theorem isRelevant_iff' {K : Type} {ι : K → Type} (W : Ideal (ReciprocityTheo
 
 variable (e : K₁ ≃ K₂)
 
-theorem isRelevant_map_iff (hσ : ∀ v, (σ v).1 = e v.1) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁)) :
-    IsRelevant (W.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂)) ↔ IsRelevant W := by
-  have hX : ∀ q : Σ k, ι₂ k, (X q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂) = rename σ (X (σ.symm q)) := fun q => by
+theorem isRelevant_map_iff (hσ : ∀ v, (σ v).1 = e v.1) (W : Ideal (MRing ι₁ R)) :
+    IsRelevant (W.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R)) ↔ IsRelevant W := by
+  have hX : ∀ q : Σ k, ι₂ k, (X q : MRing ι₂ R) = rename σ (X (σ.symm q)) := fun q => by
     rw [rename_X, Equiv.apply_symm_apply]
   rw [isRelevant_iff', isRelevant_iff']
   constructor
@@ -76,33 +75,34 @@ theorem isRelevant_map_iff (hσ : ∀ v, (σ v).1 = e v.1) (W : Ideal (Reciproci
     refine ⟨σ p, by rw [hσ, hp, Equiv.apply_symm_apply], ?_⟩
     rwa [← rename_X, rename_mem_map_iff]
 
-theorem divCycle_map (hσ : ∀ v, (σ v).1 = e v.1) (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁)) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁) :
-    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (P.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R)) (rename σ f)) (W.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R)) : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) := by
-  have hsup : P.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂) ⊔ Ideal.span {rename σ f} =
-      (P ⊔ Ideal.span {f}).map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂) := by
+theorem divCycle_map (hσ : ∀ v, (σ v).1 = e v.1) (P W : Ideal (MRing ι₁ R)) (f : MRing ι₁ R) :
+    divCycle (P.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R)) (rename σ f)
+        (W.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R)) = divCycle P f W := by
+  have hsup : P.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R) ⊔ Ideal.span {rename σ f} =
+      (P ⊔ Ideal.span {f}).map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R) := by
     rw [Ideal.map_sup, Ideal.map_span, Set.image_singleton]
     rfl
-  have hiff : (W.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂) ∈
-        (P.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂) ⊔ Ideal.span {rename σ f}).minimalPrimes ∧
-        IsRelevant (W.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂))) ↔
+  have hiff : (W.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R) ∈
+        (P.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R) ⊔ Ideal.span {rename σ f}).minimalPrimes ∧
+        IsRelevant (W.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R))) ↔
       (W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W) := by
     rw [hsup]
     exact and_congr (GroundTheory.Heights₂.Heights.Targets.ExistsUniqueRelabel.map_mem_minimalPrimes_iff _)
       (isRelevant_map_iff σ e hσ W)
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+  unfold divCycle
   by_cases h : W ∈ (P ⊔ Ideal.span {f}).minimalPrimes ∧ IsRelevant W
   · rw [dite_eq_left h, dite_eq_left (hiff.2 h)]
     have : W.IsPrime := h.1.1.1
-    have : (W.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂)).IsPrime := (hiff.2 h).1.1.1
+    have : (W.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R)).IsPrime := (hiff.2 h).1.1.1
     have hl := GroundTheory.Heights₂.Heights.Targets.ExistsUniqueRelabel.length_map (ren (R := R) σ) P W
       (le_sup_left.trans h.1.1.2) f
     unfold multAt
     exact congrArg (fun n : ℕ∞ => ((n.toNat : ℕ) : ℤ)) hl
   · rw [dite_eq_right h, dite_eq_right (mt hiff.1 h)]
 
-theorem ratDiv_map (hσ : ∀ v, (σ v).1 = e v.1) (P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁)) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁) :
-    ratDiv (P.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂)) (rename σ f) (rename σ g)
-        (W.map (ren (R := R) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι₂)) = ratDiv P f g W := by
+theorem ratDiv_map (hσ : ∀ v, (σ v).1 = e v.1) (P W : Ideal (MRing ι₁ R)) (f g : MRing ι₁ R) :
+    ratDiv (P.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R)) (rename σ f) (rename σ g)
+        (W.map (ren (R := R) σ : MRing ι₁ R →+* MRing ι₂ R)) = ratDiv P f g W := by
   unfold ratDiv
   rw [divCycle_map σ e hσ, divCycle_map σ e hσ]
 
@@ -128,14 +128,14 @@ theorem foldr_diffStep_perm {l₁ l₂ : List (K → ℤ)} (p : l₁.Perm l₂) 
   | swap x y l => simp only [List.foldr_cons]; exact diffStep_comm y x _
   | trans _ _ ih₁ ih₂ => exact ih₁.trans ih₂
 
-theorem intNum_get_eq {F : Type*} [Field F] (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (l : List (K → ℤ)) :
+theorem intNum_get_eq {F : Type*} [Field F] (I : Ideal (MRing ι F)) (l : List (K → ℤ)) :
     intNum F I l.get = eventualValue (l.foldr diffStep (hilbFn I)) := by
   unfold intNum mixedDiff
   rw [List.ofFn_get]
 
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
 
-theorem vNumL_perm (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) {l₁ l₂ : List (K → ℤ)} (p : l₁.Perm l₂) :
+theorem vNumL_perm (W : Ideal (MRing ι O)) {l₁ l₂ : List (K → ℤ)} (p : l₁.Perm l₂) :
     vNumL W l₁ = vNumL W l₂ := by
   unfold vNumL vNum
   rw [intNum_get_eq, intNum_get_eq, foldr_diffStep_perm p]
@@ -149,8 +149,8 @@ variable {K₁ K₂ : Type} [DecidableEq K₁] [DecidableEq K₂] {ι₁ : K₁ 
   (e : K₁ ≃ K₂) (σ : (Σ k, ι₁ k) ≃ (Σ k, ι₂ k))
 
 
-theorem specialIdeal_map (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁)) :
-    specialIdeal (W.map (ren (R := O) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂)) =
+theorem specialIdeal_map (W : Ideal (MRing ι₁ O)) :
+    specialIdeal (W.map (ren (R := O) σ : MRing ι₁ O →+* MRing ι₂ O)) =
       (specialIdeal W).map (renameEquiv (IsLocalRing.ResidueField O) σ) := by
   rw [map_renameEquiv_eq]
   unfold specialIdeal
@@ -159,8 +159,8 @@ theorem specialIdeal_map (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MR
   refine RingHom.ext fun p => ?_
   simp only [RingHom.comp_apply, RingEquiv.coe_toRingHom, ren_apply, map_rename]
 
-theorem vNumL_map (hσ : ∀ v, (σ v).1 = e v.1) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁)) (l : List (K₂ → ℤ)) :
-    vNumL (W.map (ren (R := O) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂)) l = vNumL W (l.map (· ∘ e)) := by
+theorem vNumL_map (hσ : ∀ v, (σ v).1 = e v.1) (W : Ideal (MRing ι₁ O)) (l : List (K₂ → ℤ)) :
+    vNumL (W.map (ren (R := O) σ : MRing ι₁ O →+* MRing ι₂ O)) l = vNumL W (l.map (· ∘ e)) := by
   unfold vNumL vNum
   rw [specialIdeal_map, GroundTheory.Heights₂.Heights.FieldNumbers.Relabel.intNum_map_rename e σ hσ,
     intNum_get_eq]
@@ -172,8 +172,8 @@ theorem vNumL_map (hσ : ∀ v, (σ v).1 = e v.1) (W : Ideal (ReciprocityTheory.
   rw [hl]
 
 theorem classNum_map (hσ : ∀ v, (σ v).1 = e v.1) {S : Type*} (cls : S → K₂ → ℤ)
-    (H : MvPolynomial S ℤ) (Q : List (K₂ → ℤ)) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁)) :
-    classNum cls H Q (W.map (ren (R := O) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂)) =
+    (H : MvPolynomial S ℤ) (Q : List (K₂ → ℤ)) (W : Ideal (MRing ι₁ O)) :
+    classNum cls H Q (W.map (ren (R := O) σ : MRing ι₁ O →+* MRing ι₂ O)) =
       classNum (fun s => cls s ∘ e) H (Q.map (· ∘ e)) W := by
   unfold classNum
   refine Finset.sum_congr rfl fun μ _ => ?_
@@ -188,7 +188,7 @@ theorem classNum_map (hσ : ∀ v, (σ v).1 = e v.1) {S : Type*} (cls : S → K�
   rfl
 
 
-theorem isMultiHomog_rename (hσ : ∀ v, (σ v).1 = e v.1) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁} {a : K₁ → ℕ}
+theorem isMultiHomog_rename (hσ : ∀ v, (σ v).1 = e v.1) {f : MRing ι₁ O} {a : K₁ → ℕ}
     (h : IsMultiHomog f a) : IsMultiHomog (rename σ f) (a ∘ e.symm) := by
   have h' := GroundTheory.Heights₂.Heights.FieldNumbers.RenameMultiHomog.proof O K₁ K₂ e.toEmbedding ι₁ ι₂ σ
     (fun v => hσ v) f a h
@@ -201,8 +201,8 @@ theorem isMultiHomog_rename (hσ : ∀ v, (σ v).1 = e v.1) {f : ReciprocityTheo
 
 
 theorem isModelOver_map [Fintype K₁] [Fintype K₂] (hσ : ∀ v, (σ v).1 = e v.1)
-    (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁)) (d : ℕ) (h : IsModelOver P d) :
-    IsModelOver (P.map (ren (R := O) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂)) d := by
+    (P : Ideal (MRing ι₁ O)) (d : ℕ) (h : IsModelOver P d) :
+    IsModelOver (P.map (ren (R := O) σ : MRing ι₁ O →+* MRing ι₂ O)) d := by
   obtain ⟨hmp, hnt, hdim⟩ := h
   have hσ' : ∀ v, (σ.symm v).1 = e.symm v.1 := by
     intro v
@@ -222,9 +222,9 @@ theorem isModelOver_map [Fintype K₁] [Fintype K₂] (hσ : ∀ v, (σ v).1 = e
       Fintype.card_congr e]
 
 
-theorem isVerticalDivisor_map (hσ : ∀ v, (σ v).1 = e v.1) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁)) (ϖ : O)
-    (b : K₂ → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁) (h : IsVerticalDivisor P ϖ (b ∘ e) f g) :
-    IsVerticalDivisor (P.map (ren (R := O) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂)) ϖ b (rename σ f)
+theorem isVerticalDivisor_map (hσ : ∀ v, (σ v).1 = e v.1) (P : Ideal (MRing ι₁ O)) (ϖ : O)
+    (b : K₂ → ℤ) (f g : MRing ι₁ O) (h : IsVerticalDivisor P ϖ (b ∘ e) f g) :
+    IsVerticalDivisor (P.map (ren (R := O) σ : MRing ι₁ O →+* MRing ι₂ O)) ϖ b (rename σ f)
       (rename σ g) := by
   obtain ⟨⟨bf, bg, hf, hg, hb⟩, hfP, hgP, hv, hu⟩ := h
   refine ⟨⟨bf ∘ e.symm, bg ∘ e.symm, isMultiHomog_rename e σ hσ hf, isMultiHomog_rename e σ hσ hg,
@@ -240,15 +240,15 @@ theorem isVerticalDivisor_map (hσ : ∀ v, (σ v).1 = e v.1) (P : Ideal (Recipr
     rw [← rename_C σ ϖ]
     exact Ideal.mem_map_of_mem _ (hv W hW')
   · intro W' hW'p hPW' hrel hϖ
-    set W := W'.comap (ren (R := O) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂) with hWdef
-    have hWW' : W.map (ren (R := O) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂) = W' :=
+    set W := W'.comap (ren (R := O) σ : MRing ι₁ O →+* MRing ι₂ O) with hWdef
+    have hWW' : W.map (ren (R := O) σ : MRing ι₁ O →+* MRing ι₂ O) = W' :=
       Ideal.map_comap_of_surjective _ (ren (R := O) σ).surjective W'
     have hWp : W.IsPrime := Ideal.comap_isPrime _ _
     have hPW : P ≤ W := Ideal.map_le_iff_le_comap.1 hPW'
     have hWrel : IsRelevant W := by
       rw [← isRelevant_map_iff σ e hσ W, hWW']
       exact hrel
-    have hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁) ∉ W := by
+    have hϖW : (C ϖ : MRing ι₁ O) ∉ W := by
       intro hm
       apply hϖ
       rw [← hWW', ← rename_C σ ϖ]
@@ -259,13 +259,13 @@ theorem isVerticalDivisor_map (hσ : ∀ v, (σ v).1 = e v.1) (P : Ideal (Recipr
       exact (rename_mem_map_iff σ W u).1 hm
     · rw [← hWW'] at hm
       exact (rename_mem_map_iff σ W v).1 hm
-    · have := Ideal.mem_map_of_mem (ren (R := O) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂) huv
+    · have := Ideal.mem_map_of_mem (ren (R := O) σ : MRing ι₁ O →+* MRing ι₂ O) huv
       simpa only [map_sub, map_mul, RingEquiv.coe_toRingHom, ren_apply] using this
 
-theorem pairNum_map (hσ : ∀ v, (σ v).1 = e v.1) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁)) {n : ℕ}
-    (x x' : Fin n → K₂ → ℤ) (f g : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁)
+theorem pairNum_map (hσ : ∀ v, (σ v).1 = e v.1) (P : Ideal (MRing ι₁ O)) {n : ℕ}
+    (x x' : Fin n → K₂ → ℤ) (f g : Fin n → MRing ι₁ O)
     (Gs : Fin n → MvPolynomial (Fin n ⊕ Fin n) ℤ) (Q : List (K₂ → ℤ)) :
-    pairNum (P.map (ren (R := O) σ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₁ →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι₂)) x x' (fun i => rename σ (f i))
+    pairNum (P.map (ren (R := O) σ : MRing ι₁ O →+* MRing ι₂ O)) x x' (fun i => rename σ (f i))
         (fun i => rename σ (g i)) Gs Q =
       pairNum P (fun i => x i ∘ e) (fun i => x' i ∘ e) f g Gs (Q.map (· ∘ e)) := by
   have hcls : (fun s => Sum.elim x x' s ∘ e) =

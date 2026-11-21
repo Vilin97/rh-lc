@@ -5,7 +5,6 @@ public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticInt
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.KappaSt
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MixedFieldContraction.ContractMixedFieldStatement
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsArith
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -70,7 +69,10 @@ structure ProjectiveLineBundle (D : ℕ) where
   metric : IsEEMetric G
   n : ℕ
 
-  g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver h (T.wwIdx ι ν κ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver g_deg (T.wwIdx ι ν κ) : IsMultiHomog g (T.wwDeg n 1)
+  g : MRing (T.wwIdx ι ν κ)
+
+  h : MRing (T.wwIdx ι ν κ)
+  g_deg : IsMultiHomog g (T.wwDeg n 1)
   h_deg : IsMultiHomog h (T.wwDeg (n + 3) 0)
   h_nmem : h ∉ T.wwIdeal x δ e φ (a 0) (a 1)
   quot : aeval (T.wwCoord x δ e φ (a 0) (a 1)) g =

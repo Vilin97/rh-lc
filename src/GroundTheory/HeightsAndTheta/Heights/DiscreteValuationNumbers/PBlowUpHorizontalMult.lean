@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBlowUpHorizontalMult
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.LiftFormNotMemBlowUpOf
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PPolynomialLocalizedLength
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -24,13 +23,13 @@ theorem BlowUpHorizontalMult.proof (hmin : BlowUpHorizontalMinimal.Statement.{u}
   obtain ⟨-, -, hrel₀, -⟩ := comap_liftForm_facts hWp hBW hrel
   have hcond : W ∈ (blowUpOf P u ⊔ Ideal.span {liftForm x}).minimalPrimes ∧ IsRelevant W := by
     by_contra h
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
+    unfold divCycle at hW
     rw [dite_eq_right h] at hW
     exact hW rfl
   have hch := hchart O ϖ hϖ K ι J P n hP N u hu hex hloc c x hx hxP W hW hϖW hWp
   have := hWp
-  have hp := PolynomialLocalizedLength.full (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (W.comap (liftForm (ι := ι) (J := J) (R := O))) (P ⊔ Ideal.span {x})
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+  have hp := PolynomialLocalizedLength.full (MRing ι O) (W.comap (liftForm (ι := ι) (J := J) (R := O))) (P ⊔ Ideal.span {x})
+  unfold divCycle
   rw [dite_eq_left ⟨hm, hrel₀⟩, dite_eq_left hcond]
   congr 2
   exact (hp.symm.trans hch.symm : _)

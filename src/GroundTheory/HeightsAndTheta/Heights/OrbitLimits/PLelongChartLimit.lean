@@ -11,7 +11,6 @@ public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartDim
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartSection
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLelongPolyLimit
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDivisor
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -23,7 +22,7 @@ namespace GroundTheory.Heights₂.Heights.Targets
 
 open MvPolynomial Filter Topology
 open scoped ContDiff
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSmoothHerm HermLine IsArithVar IsSectionOn ptsIntegral pot segre mcPts
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar IsSectionOn ptsIntegral pot segre mcPts
   isOpen_blockNonzero)
 open GroundTheory.Heights₂.Heights (segreChartSet segreChartComponents mem_segreChartComponents chartLift
   contDiff_chartLift chartLift_blockNonzero segre_chartLift chart_coord_eq_one)

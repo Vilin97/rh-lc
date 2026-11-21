@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSegre
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSegreDimGe
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PDegreePositive
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -46,8 +45,8 @@ theorem mixedDiff_diag {K : Type} [DecidableEq K] (h : (K → ℤ) → ℤ) (g :
     simp only [diffStep, e1, ih]
 
 theorem pos_of_isEmpty {F : Type} [Field F] {K : Type} [Fintype K] [DecidableEq K] [IsEmpty K]
-    {ι : K → Type} [∀ k, Fintype (ι k)] (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (e : ℕ) (hq : IsMultiProjPrime q)
-    (hd : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ q) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞)) :
+    {ι : K → Type} [∀ k, Fintype (ι k)] (q : Ideal (MRing ι F)) (e : ℕ) (hq : IsMultiProjPrime q)
+    (hd : ringKrullDim (MRing ι F ⧸ q) = ((e + Fintype.card K : ℕ) : WithBot ℕ∞)) :
     0 < intNum F q (fun _ : Fin e => fun _ : K => (1 : ℤ)) := by
   have hle := (ringKrullDim_quotient_le q).trans_eq
     (MvPolynomial.ringKrullDim_of_isNoetherianRing (R := F) (ι := Σ k, ι k))
@@ -92,9 +91,9 @@ theorem MultiDegreePositive.proof (hPrime : SegrePrime.Statement) (hHilb : Segre
       (ι := Σ _ : Unit, ∀ k, ι k))
   rw [ringKrullDim_eq_zero_of_field, zero_add] at hle
 
-  obtain ⟨D, hD, heD⟩ : ∃ D : ℕ, ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ∀ k, ι k) ⧸
+  obtain ⟨D, hD, heD⟩ : ∃ D : ℕ, ringKrullDim (MRing (fun _ : Unit => ∀ k, ι k) F ⧸
       segrePrime F q) = ((D + 1 : ℕ) : WithBot ℕ∞) ∧ e ≤ D := by
-    generalize ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ∀ k, ι k) ⧸ segrePrime F q) = x at hge hle ⊢
+    generalize ringKrullDim (MRing (fun _ : Unit => ∀ k, ι k) F ⧸ segrePrime F q) = x at hge hle ⊢
     induction x using WithBot.recBotCoe with
     | bot => exact absurd hge (by simp)
     | coe x =>

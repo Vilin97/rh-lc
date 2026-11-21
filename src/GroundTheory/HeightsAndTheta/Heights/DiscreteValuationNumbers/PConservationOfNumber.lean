@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Statements
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsCN
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -22,9 +21,9 @@ theorem ConservationOfNumber.proof (h1 : IntNumAssoc.Statement.{u})
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP a
 
   have hPprime : P.IsPrime := hP.multiProj.isPrime
-  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ P := by
+  have hϖP : (C ϖ : MRing ι O) ∉ P := by
     intro h
-    have hmem : ϖ ∈ P.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := h
+    have hmem : ϖ ∈ P.comap (C : O →+* MRing ι O) := h
     rw [hP.noTorsion, Ideal.mem_bot] at hmem
     exact hϖ.ne_zero hmem
   have htors : ∀ x, C ϖ * x ∈ P → x ∈ P := fun x hx =>

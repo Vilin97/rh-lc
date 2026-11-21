@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsConeVarNumerator
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocQuot
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -24,21 +23,21 @@ theorem ConeVarNumerator.proof (hDZ : DegZeroLocQuot.Statement.{u}) :
   have := hP.isPrime
   have := hW.isPrime
   intro p
-  have hne : ∀ g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, g ∉ W →
-      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P g) ≠ 0 := by
+  have hne : ∀ g : MRing ι F, g ∉ W →
+      algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P g) ≠ 0 := by
     intro g hg
     rw [Ne, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
     exact fun h' => hg (hPW h')
-  have h𝒲 : ∀ W' ∈ ({W} : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))), W'.IsPrime := by
+  have h𝒲 : ∀ W' ∈ ({W} : Set (Ideal (MRing ι F))), W'.IsPrime := by
     intro W' hW'
     rw [Set.mem_singleton_iff.mp hW']
     infer_instance
 
-  have step : ∀ D : Finset (K →₀ ℕ), ∃ (b : K → ℕ) (g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (hn : (K →₀ ℕ) → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι),
+  have step : ∀ D : Finset (K →₀ ℕ), ∃ (b : K → ℕ) (g : MRing ι F) (hn : (K →₀ ℕ) → MRing ι F),
       IsMultiHomog g b ∧ g ∉ W ∧ (∀ d, IsMultiHomog (hn d) b) ∧ (∀ d, d ∉ D → hn d = 0) ∧
-      ∀ d ∈ D, ((p.coeff d : degZeroLoc P {W}) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) =
-        algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P (hn d)) /
-          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) _ (Ideal.Quotient.mk P g) := by
+      ∀ d ∈ D, ((p.coeff d : degZeroLoc P {W}) : FractionRing (MRing ι F ⧸ P)) =
+        algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P (hn d)) /
+          algebraMap (MRing ι F ⧸ P) _ (Ideal.Quotient.mk P g) := by
     intro D
     induction D using Finset.induction_on with
     | empty =>
@@ -77,9 +76,9 @@ theorem ConeVarNumerator.proof (hDZ : DegZeroLocQuot.Statement.{u}) :
       simp
 
   have hφ : ∀ x : MvPolynomial K (degZeroLoc P {W}),
-      ((coneVarMap P W hPW v x : coneLocal P W hPW) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) =
-        eval₂ (degZeroLoc P {W}).val.toRingHom (fun k => algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)
-          (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P (X ⟨k, v k⟩))) x := by
+      ((coneVarMap P W hPW v x : coneLocal P W hPW) : FractionRing (MRing ι F ⧸ P)) =
+        eval₂ (degZeroLoc P {W}).val.toRingHom (fun k => algebraMap (MRing ι F ⧸ P)
+          (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P (X ⟨k, v k⟩))) x := by
     intro x
     induction x using MvPolynomial.induction_on with
     | C a =>

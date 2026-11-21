@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.SwapLoc
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ExistsUnique
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -104,7 +103,9 @@ include hσ
 
 
 
-end ReciprocityTheory.ChartRestriction.G.Geo.MRingOver ExistsUniqueRelabel end
+end MRing
+
+end ExistsUniqueRelabel
 
 universe u v w v' w'
 

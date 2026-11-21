@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsConeVarUnit
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsConeVarNumerator
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocQuot
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -25,8 +24,8 @@ theorem ConeVarUnit.proof (hDZ : DegZeroLocQuot.Statement.{u})
   have := hW.isPrime
   intro p e he
   obtain ⟨b, g, h, hg, hgW, hh, hcoeff, himg⟩ := hNum F K ι P hP W hW hPW v hv p
-  have hne : ∀ x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, x ∉ W →
-      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P x) ≠ 0 :=
+  have hne : ∀ x : MRing ι F, x ∉ W →
+      algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P x) ≠ 0 :=
     fun x hx h0 => hx (hPW ((Ideal.Quotient.eq_zero_iff_mem).mp
       ((IsFractionRing.to_map_eq_zero_iff).mp h0)))
 
@@ -35,7 +34,7 @@ theorem ConeVarUnit.proof (hDZ : DegZeroLocQuot.Statement.{u})
     obtain ⟨y, hy⟩ := he.exists_right_inv
     obtain ⟨b', f', g', -, -, -, hg'W, hy'⟩ :=
       hDZ F K ι P {W} (fun W' hW' => (Set.mem_singleton_iff.mp hW') ▸ hW.isPrime) y y.2
-    have h1 : ((p.coeff e : degZeroLoc P {W}) : FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) * y = 1 := by
+    have h1 : ((p.coeff e : degZeroLoc P {W}) : FractionRing (MRing ι F ⧸ P)) * y = 1 := by
       rw [← Subalgebra.coe_mul, hy, Subalgebra.coe_one]
     rw [hcoeff e, hy', div_mul_div_comm, div_eq_one_iff_eq (mul_ne_zero (hne g hgW)
       (hne g' (hg'W W rfl))), ← map_mul, ← map_mul, ← map_mul, ← map_mul] at h1
@@ -46,23 +45,23 @@ theorem ConeVarUnit.proof (hDZ : DegZeroLocQuot.Statement.{u})
     rcases hW.isPrime.mem_or_mem h3 with h4 | h4
     exacts [hgW h4, hg'W W rfl h4]
 
-  have hu : ∀ d : K →₀ ℕ, IsMultiHomog (∏ k, (X ⟨k, v k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ d k) (⇑d) := by
+  have hu : ∀ d : K →₀ ℕ, IsMultiHomog (∏ k, (X ⟨k, v k⟩ : MRing ι F) ^ d k) (⇑d) := by
     intro d
-    have := IsWeightedHomogeneous.prod Finset.univ (fun k => (X ⟨k, v k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ d k)
+    have := IsWeightedHomogeneous.prod Finset.univ (fun k => (X ⟨k, v k⟩ : MRing ι F) ^ d k)
       (fun k => d k • blockWeight ι ⟨k, v k⟩) (fun k _ => (isWeightedHomogeneous_X F _ _).pow _)
     have hdeg : (∑ k, d k • blockWeight ι ⟨k, v k⟩) = ⇑d := by
       ext j
       simp [blockWeight, Finset.sum_apply, Pi.single_apply]
     rw [hdeg] at this
     exact this
-  have huW : ∀ d : K →₀ ℕ, (∏ k, (X ⟨k, v k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ d k) ∉ W := by
+  have huW : ∀ d : K →₀ ℕ, (∏ k, (X ⟨k, v k⟩ : MRing ι F) ^ d k) ∉ W := by
     intro d hd
     obtain ⟨k, -, hk⟩ := Ideal.IsPrime.prod_mem_iff.mp hd
     exact hv k (hW.isPrime.mem_of_pow_mem _ hk)
 
-  set N := ∑ d ∈ p.support, h d * ∏ k, (X ⟨k, v k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ d k with hNdef
+  set N := ∑ d ∈ p.support, h d * ∏ k, (X ⟨k, v k⟩ : MRing ι F) ^ d k with hNdef
   have hcomp : weightedHomogeneousComponent (blockWeight ι) (b + ⇑e) N =
-      h e * ∏ k, (X ⟨k, v k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ e k := by
+      h e * ∏ k, (X ⟨k, v k⟩ : MRing ι F) ^ e k := by
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hNdef, map_sum, Finset.sum_eq_single e]
     · exact ((hh e).mul (hu e)).weightedHomogeneousComponent_same
@@ -78,13 +77,13 @@ theorem ConeVarUnit.proof (hDZ : DegZeroLocQuot.Statement.{u})
     rcases hW.isPrime.mem_or_mem this with h4 | h4
     exacts [heW h4, huW e h4]
 
-  have hunit : ∀ x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, x ∉ W →
-      IsUnit (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P x)) :=
+  have hunit : ∀ x : MRing ι F, x ∉ W →
+      IsUnit (algebraMap (MRing ι F ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P x)) :=
     fun x hx => IsLocalization.map_units (coneLocal P W hPW)
       (⟨_, Submonoid.mem_map_of_mem _ hx⟩ : W.primeCompl.map (Ideal.Quotient.mk P))
   have heq : coneVarMap P W hPW v p *
-      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P g) =
-      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P N) := by
+      algebraMap (MRing ι F ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P g) =
+      algebraMap (MRing ι F ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P N) := by
     apply Subtype.ext
     rw [Subalgebra.coe_mul, Subalgebra.coe_algebraMap, Subalgebra.coe_algebraMap, himg,
       div_mul_cancel₀ _ (hne g hgW)]

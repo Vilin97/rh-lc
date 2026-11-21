@@ -57,6 +57,7 @@ theorem act_mul (g h : K → GL (Fin d) ℂ) (x : K × Fin d → ℂ) : act (g *
 variable [Fintype K]
 
 
+variable (d) in
 def MH (n : K → ℕ) : Submodule ℂ (MvPolynomial (K × Fin d) ℂ) where
   carrier := {P | ∀ (s : K → ℂ) (x : K × Fin d → ℂ), eval (fun p => s p.1 * x p) P = (∏ v, s v ^ n v) * eval x P}
   add_mem' h h' s x := by rw [map_add (f := _), map_add (f := _), h, h', mul_add]
@@ -71,6 +72,7 @@ theorem sbs_mem {n : K → ℕ} (g : K → GL (Fin d) ℂ) {P : MvPolynomial (K 
   simp [act, Finset.mul_sum, mul_assoc]
 
 
+variable (d) in
 def mRep (n : K → ℕ) : Representation ℂ (K → GL (Fin d) ℂ) (MH d n) where
   toFun g := (sbs g).toLinearMap.restrict fun _ h => sbs_mem g h
   map_one' := by
@@ -92,20 +94,24 @@ section Bi
 variable {I : Type} {d : ℕ}
 
 
+variable (d) in
 def dbl : (I → GL (Fin d) ℂ) →* (I × Bool → GL (Fin d) ℂ) where
   toFun g k := if k.2 then invT ℂ d (g k.1) else g k.1
   map_one' := by funext k; by_cases h : k.2 <;> simp [h]
   map_mul' g h := by funext k; by_cases hk : k.2 <;> simp [hk]
 
 
+variable (I d) in
 def flip (p : (I × Bool) × Fin d) : (I × Bool) × Fin d := ((p.1.1, !p.1.2), p.2)
 
 variable [Fintype I]
 
 
+variable (d) in
 abbrev Bi (n : I → ℕ) : Submodule ℂ (MvPolynomial ((I × Bool) × Fin d) ℂ) := MH d fun k : I × Bool => n k.1
 
 
+variable (d) in
 def biRep (n : I → ℕ) : Representation ℂ (I → GL (Fin d) ℂ) (Bi d n) := (mRep d _).comp (dbl d)
 
 theorem flip_mem {n : I → ℕ} {P : MvPolynomial ((I × Bool) × Fin d) ℂ} (h : P ∈ Bi d n) : rename (flip I d) P ∈ Bi d n := by
@@ -117,6 +123,7 @@ theorem flip_mem {n : I → ℕ} {P : MvPolynomial ((I × Bool) × Fin d) ℂ} (
   simp [Fintype.prod_prod_type, mul_comm]
 
 
+variable (d) in
 def swp (n : I → ℕ) : Module.End ℂ (Bi d n) := (rename (flip I d)).toLinearMap.restrict fun _ h => flip_mem h
 
 def dg (j : ℕ) (S : I → Bool) (v : I) : ℕ := if S v then j - 1 else j
@@ -124,15 +131,18 @@ def dg (j : ℕ) (S : I → Bool) (v : I) : ℕ := if S v then j - 1 else j
 def sg (S : I → Bool) : ℂ := ∏ v, if S v then -1 else 1
 
 
+variable (I) in
 abbrev VG (j : ℕ) : Type := ∀ S : I → Bool, Bi 3 (dg j S)
 
 
+variable (I) in
 def repG (j : ℕ) : Representation ℂ (I → GL (Fin 3) ℂ) (VG I j) where
   toFun g := LinearMap.pi fun S => (biRep 3 (dg j S) g).comp (LinearMap.proj S)
   map_one' := by refine LinearMap.ext fun P => funext fun S => ?_; simp
   map_mul' g h := by refine LinearMap.ext fun P => funext fun S => ?_; simp
 
 
+variable (I) in
 def thG (j : ℕ) : Module.End ℂ (VG I j) := LinearMap.pi fun S => (sg S • swp 3 (dg j S)).comp (LinearMap.proj S)
 
 theorem repG_apply (j : ℕ) (g : I → GL (Fin 3) ℂ) (P : VG I j) (S : I → Bool) : repG I j g P S = biRep 3 (dg j S) g (P S) := rfl

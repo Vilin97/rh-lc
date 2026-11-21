@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsSwap
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.NotRelevantOfDimZero
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.MemMinimalPrimesOfMemDivSuppDivSupp
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -117,16 +116,16 @@ theorem mem_minimalPrimes_of_mem_divSupp_divSupp {P W U : Ideal (MRing ι)} [P.I
   exact DivisorCycleSwap.not_lt_of_dim_eq (hQ'Q.trans_lt hlt) h2 hUd
 
 theorem divCycle_of_mem {V W : Ideal (MRing ι)} {f : MRing ι} (hW : W ∈ divSupp V f) :
-    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) = multAt (V ⊔ Ideal.span {f}) W := by
+    divCycle V f W = multAt (V ⊔ Ideal.span {f}) W := by
   classical
   simp [divCycle, Finsupp.ofSupportFinite_coe, hW]
 
 theorem divCycle_of_not_mem {V W : Ideal (MRing ι)} {f : MRing ι} (hW : W ∉ divSupp V f) :
-    ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) = 0 := by
+    divCycle V f W = 0 := by
   classical
   simp [divCycle, Finsupp.ofSupportFinite_coe, hW]
 
-theorem mem_divSupp_of_ne_zero {V W : Ideal (MRing ι)} {f : MRing ι} (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) ≠ 0) :
+theorem mem_divSupp_of_ne_zero {V W : Ideal (MRing ι)} {f : MRing ι} (h : divCycle V f W ≠ 0) :
     W ∈ divSupp V f := by
   by_contra hW
   exact h (divCycle_of_not_mem hW)
@@ -138,10 +137,10 @@ theorem cast_multAt {J W : Ideal (MRing ι)} [hW : W.IsPrime] (hJ : W ∈ J.mini
   rfl
 
 theorem sum_apply_eq (V Z : Ideal (MRing ι)) (f t : MRing ι) :
-    (((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ))).sum fun W m => m • (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W t) W : ℤ))) Z =
-      ∑ W ∈ (divSupp_finite V f).toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W t) Z : ℤ) := by
+    ((divCycle V f).sum fun W m => m • divCycle W t) Z =
+      ∑ W ∈ (divSupp_finite V f).toFinset, divCycle V f W * divCycle W t Z := by
   classical
-  have hs : ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ))).support ⊆ (divSupp_finite V f).toFinset := by
+  have hs : (divCycle V f).support ⊆ (divSupp_finite V f).toFinset := by
     intro W hW
     rw [Finsupp.mem_support_iff] at hW
     exact (divSupp_finite V f).mem_toFinset.mpr (mem_divSupp_of_ne_zero hW)
@@ -152,7 +151,7 @@ theorem sum_eq_zero_of_not {P U : Ideal (MRing ι)} [P.IsPrime] {s s' : MRing ι
     (hP : ringKrullDim (MRing ι ⧸ P) = ((m + 2 : ℕ) : WithBot ℕ∞)) (hs : s ∉ P) (hs' : s' ∉ P)
     (hnc : ∀ W, W ∈ divSupp P s → W ∉ divSupp P s')
     (hU : ¬ (IsRelevant U ∧ U ∈ (P ⊔ Ideal.span {s} ⊔ Ideal.span {s'}).minimalPrimes)) :
-    ∑ W ∈ (divSupp_finite P s).toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W s') U : ℤ) = 0 := by
+    ∑ W ∈ (divSupp_finite P s).toFinset, divCycle P s W * divCycle W s' U = 0 := by
   refine Finset.sum_eq_zero fun W hW => ?_
   rw [Set.Finite.mem_toFinset] at hW
   by_contra hne
@@ -166,11 +165,11 @@ theorem sum_eq_finsum {V Z : Ideal (MRing ι)} [V.IsPrime] [Z.IsPrime] {A : Type
       ∃ p : Ideal A, p.IsPrime ∧ p.comap (algebraMap (MRing ι) A) = Q)
     {f t : MRing ι} (hZr : IsRelevant Z)
     (hZ : Z ∈ (V ⊔ Ideal.span {f} ⊔ Ideal.span {t}).minimalPrimes) (hfV : f ∉ V) :
-    ((∑ W ∈ (divSupp_finite V f).toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W t) Z : ℤ) : ℕ) : ℕ∞) =
+    ((∑ W ∈ (divSupp_finite V f).toFinset, divCycle V f W * divCycle W t Z : ℕ) : ℕ∞) =
       ∑ᶠ (p : PrimeSpectrum A) (_ : p.asIdeal.height = 1 ∧ algebraMap (MRing ι) A f ∈ p.asIdeal),
         ordLoc p (algebraMap (MRing ι) A f) * ordMod p (algebraMap (MRing ι) A t) := by
   classical
-  have hterm : ∀ W ∈ (divSupp_finite V f).toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle V f) W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W t) Z : ℤ) =
+  have hterm : ∀ W ∈ (divSupp_finite V f).toFinset, divCycle V f W * divCycle W t Z =
       if W ≤ Z then multAt (V ⊔ Ideal.span {f}) W * multAt (W ⊔ Ideal.span {t}) Z else 0 := by
     intro W hW
     rw [Set.Finite.mem_toFinset] at hW
@@ -208,8 +207,8 @@ theorem sum_eq_finsum {V Z : Ideal (MRing ι)} [V.IsPrime] [Z.IsPrime] {A : Type
 theorem coeff_eq (hlen2 : LocalLengthMultiplicativity.{0}) {P U : Ideal (MRing ι)} [P.IsPrime] {s s' : MRing ι}
     {m : ℕ} (hP : ringKrullDim (MRing ι ⧸ P) = ((m + 2 : ℕ) : WithBot ℕ∞)) (hs : s ∉ P)
     (hs' : s' ∉ P) (hnc : ∀ W, W ∈ divSupp P s → W ∉ divSupp P s') :
-    ∑ W ∈ (divSupp_finite P s).toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W s') U : ℤ) =
-      ∑ W ∈ (divSupp_finite P s').toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s') W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W s) U : ℤ) := by
+    ∑ W ∈ (divSupp_finite P s).toFinset, divCycle P s W * divCycle W s' U =
+      ∑ W ∈ (divSupp_finite P s').toFinset, divCycle P s' W * divCycle W s U := by
   classical
   have hnc' : ∀ W, W ∈ divSupp P s' → W ∉ divSupp P s := fun W hW h => hnc W h hW
   by_cases hU : IsRelevant U ∧ U ∈ (P ⊔ Ideal.span {s} ⊔ Ideal.span {s'}).minimalPrimes
@@ -231,8 +230,8 @@ theorem coeff_eq (hlen2 : LocalLengthMultiplicativity.{0}) {P U : Ideal (MRing �
       (h.maximalIdeal_mem_minimalPrimes (hex U inferInstance hPU le_rfl) hUm)
     have key := (hlen2 _ _ _ hdim (fun e => hs ((h.map_eq_zero_iff hPU s).mp e))
       (fun e => hs' ((h.map_eq_zero_iff hPU s').mp e)) hlen).2.2
-    have e : ((∑ W ∈ (divSupp_finite P s).toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W s') U : ℤ) : ℕ) : ℕ∞) =
-        ((∑ W ∈ (divSupp_finite P s').toFinset, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s') W : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W s) U : ℤ) : ℕ) : ℕ∞) := by
+    have e : ((∑ W ∈ (divSupp_finite P s).toFinset, divCycle P s W * divCycle W s' U : ℕ) : ℕ∞) =
+        ((∑ W ∈ (divSupp_finite P s').toFinset, divCycle P s' W * divCycle W s U : ℕ) : ℕ∞) := by
       rw [sum_eq_finsum h hPU hex hUr hUm hs, sum_eq_finsum h hPU hex hUr hUm' hs']
       exact key
     exact_mod_cast e
@@ -243,7 +242,7 @@ theorem divCycle_eq_zero_of_lt_two {P W : Ideal (MRing ι)} [P.IsPrime] {b b' : 
     {c c' : K → ℕ} {d : ℕ} (hPmh : IsMultiHomogIdeal P)
     (hPd : ringKrullDim (MRing ι ⧸ P) = ((d + Fintype.card K : ℕ) : WithBot ℕ∞)) (hd : d < 2)
     (hb : IsMultiHomog b c) (hb' : IsMultiHomog b' c') (hbP : b ∉ P) (hW : W ∈ divSupp P b)
-    (hb'W : b' ∉ W) : (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W b') W : ℤ)) = 0 := by
+    (hb'W : b' ∉ W) : divCycle W b' = 0 := by
   classical
   ext U
   rw [Finsupp.coe_zero, Pi.zero_apply]
@@ -274,7 +273,7 @@ theorem SwapCycles.proof (hlen2 : LocalLengthMultiplicativity.{0}) : SwapCycles.
   haveI := hPp
   rcases Nat.lt_or_ge d 2 with hd | hd
   · have hz : ∀ (b b' : MRing ι) (c c' : K → ℕ), IsMultiHomog b c → IsMultiHomog b' c' → b ∉ P →
-        (∀ W ∈ divSupp P b, b' ∉ W) → (((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P b) W : ℤ))).sum fun W m => m • (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle W b') W : ℤ))) = 0 := by
+        (∀ W ∈ divSupp P b, b' ∉ W) → ((divCycle P b).sum fun W m => m • divCycle W b') = 0 := by
       intro b b' c c' hb hb' hbP hno
       refine Finset.sum_eq_zero fun W hW => ?_
       have hWd := mem_divSupp_of_ne_zero (Finsupp.mem_support_iff.mp hW)

@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsDegreePositive
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,9 +16,9 @@ noncomputable section
 universe u
 
 def ProjDegreePositive.Statement : Prop :=
-  ∀ (F : Type u) [Field F] (ι₀ : Type) [Fintype ι₀] (q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ι₀)))
+  ∀ (F : Type u) [Field F] (ι₀ : Type) [Fintype ι₀] (q : Ideal (MRing (fun _ : Unit => ι₀) F))
     (D : ℕ), IsMultiProjPrime q →
-    ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (fun _ : Unit => ι₀) ⧸ q) = ((D + 1 : ℕ) : WithBot ℕ∞) →
+    ringKrullDim (MRing (fun _ : Unit => ι₀) F ⧸ q) = ((D + 1 : ℕ) : WithBot ℕ∞) →
     0 < intNum F q (fun _ : Fin D => fun _ => (1 : ℤ))
 
 end

@@ -13,7 +13,6 @@ public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.SameGenericBu
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.SameGenericFlagComparisonStatement
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChartBundleBaseExtensionUniqueStatement
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ScalarQuotientStatementStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -25,10 +24,10 @@ namespace GlobalTheory.CompanionTheory.Ar.Num.Constants
 
 theorem cycEval_natCast_mul {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
     {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]
-    (F : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) → ℤ) (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (c : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (n : ℕ) :
-    cycEval F (fun W => (n : ℤ) * ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P c) W : ℤ)) = (n : ℤ) * cycEval F ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P c) W : ℤ))) := by
+    (F : Ideal (MRing ι O) → ℤ) (P : Ideal (MRing ι O)) (c : MRing ι O) (n : ℕ) :
+    cycEval F (fun W => (n : ℤ) * divCycle P c W) = (n : ℤ) * cycEval F (divCycle P c) := by
   unfold cycEval
-  have hfin : (Function.support fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P c) W : ℤ) * F W).Finite :=
+  have hfin : (Function.support fun W => divCycle P c W * F W).Finite :=
     (ScalarQuotient.divCycle_support_finite P c).subset fun W hW => by
       rw [Function.mem_support] at hW ⊢
       exact fun h0 => hW (by rw [h0, zero_mul])
@@ -80,9 +79,9 @@ theorem main : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing
   have hroot := hnum.2 (k - 1) (psum (Fin N) ℤ (k - 1)) (psum_isSymmetric _ _ _)
     (isHomogeneous_psum N (k - 1)) (by omega) q L Q hQ'
   have hP : (pointIdeal O (joinCoord x z)).IsPrime := hmodJ.multiProj.isPrime
-  have hC : ∀ a : O, a ≠ 0 → (C a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ι')) ∉ pointIdeal O (joinCoord x z) := by
+  have hC : ∀ a : O, a ≠ 0 → (C a : MRing (Sum.elim ι ι') O) ∉ pointIdeal O (joinCoord x z) := by
     intro a ha hmem
-    have h1 : a ∈ (pointIdeal O (joinCoord x z)).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (Sum.elim ι ι')) := hmem
+    have h1 : a ∈ (pointIdeal O (joinCoord x z)).comap (C : O →+* MRing (Sum.elim ι ι') O) := hmem
     rw [hmodJ.noTorsion] at h1
     exact ha (Ideal.mem_bot.mp h1)
   have hdiv : ∀ (v : Oˣ) (m : ℕ),

@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsFlagBundleForms
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -163,7 +162,7 @@ variable {M N : ℕ} {E : Type} [AddCommGroup E] [Module Ω E] {Φ : Type} [Fiel
 
 def liftNat (α : K → ℕ) : Option K → ℕ := fun o => Option.elim o 0 α
 
-def chartMono (M : ℕ) (c : ∀ k, ι k) (α : K → ℕ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M) :=
+def chartMono (M : ℕ) (c : ∀ k, ι k) (α : K → ℕ) : MRing (bundleIdx ι M) F :=
   ∏ k, X (⟨some k, c k⟩ : Σ o, bundleIdx ι M o) ^ α k
 
 theorem chartMono_homog (M : ℕ) (c : ∀ k, ι k) (α : K → ℕ) :
@@ -189,7 +188,7 @@ theorem eval_chartMono (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
 theorem chartRing_forms (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
     (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) (c : ∀ k, ι k) (hc : segreVec y c ≠ 0) {u : Ω}
     (hu : u ∈ chartRing F (segreVec y) c) :
-    ∃ (n : ℕ) (U : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)), IsMultiHomog U (liftNat fun _ => n) ∧
+    ∃ (n : ℕ) (U : MRing (bundleIdx ι M) F), IsMultiHomog U (liftNat fun _ => n) ∧
       eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ t) U =
         algebraMap Ω Φ (u * segreVec y c ^ n) := by
   have hlift : ∀ n n' : ℕ, liftNat (K := K) (fun _ => n + n') = liftNat (fun _ => n) + liftNat (fun _ => n') := by
@@ -232,7 +231,7 @@ theorem chartRing_forms (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E
       ring
 
 theorem eval_eq_zero_of_mem_projIdeal (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E)
-    (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)}
+    (φ : Fin M → Module.Dual Ω E) (t : Fin N → Φ) {f : MRing (bundleIdx ι M) F}
     (hf : f ∈ projIdeal F y w φ t) :
     eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω)) (projCoord y w φ t) f = 0 := by
   have h : (MvPolynomial.eval (fun _ : Option K => (1 : Φ))).comp

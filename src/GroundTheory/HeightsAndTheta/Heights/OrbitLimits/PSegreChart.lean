@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChart
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartDim
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartIntegral
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -16,7 +15,7 @@ namespace GroundTheory.Heights₂.Heights
 
 open Filter Topology
 open scoped ContDiff
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSmoothHerm HermLine IsArithVar ptsIntegral pot segre isOpen_blockNonzero)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar ptsIntegral pot segre isOpen_blockNonzero)
 
 def expLine {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fintype (ι k)]
     (v : ((Σ k, ι k) → ℂ) → ℝ) (hv : IsDegZeroSmooth v) : HermLine ι :=

@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsSegreFlagCut
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 
 @[expose] public section
@@ -22,7 +21,7 @@ def SegreFlagCutSpecialize.Statement : Prop :=
       (y : (Σ k, ι k) → Ω) (d : ℕ), IsModelOver (pointIdeal O y) d →
     ∀ (N : ℕ) (E : Type) [AddCommGroup E] [Module Ω E]
       (B B' : ChartBundle O (segreVec y) N E), SameGenericFibre ϖ B B' →
-    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+    ∀ (w w' : Module.Basis (Fin N) Ω E) (x x' : Fin N → K → ℤ) (f g : Fin N → MRing ι O),
       IsFlagPair ϖ y B B' w w' x x' f g →
     ∀ (M M' : ℕ) (a₀ a₀' : K → ℤ) (φ : Fin M → Module.Dual Ω E) (φ' : Fin M' → Module.Dual Ω E),
       IsTwistedDualGens y B a₀ φ → IsTwistedDualGens y B' a₀' φ' →
@@ -30,7 +29,7 @@ def SegreFlagCutSpecialize.Statement : Prop :=
       (e : Module.Basis (Fin N) Ω E) (t : Fin N → Φ), AlgebraicIndependent Ω t →
     ∀ (k : ℕ) (hk : k < N),
       pointIdeal O (flagClosurePt y w e φ φ' t (k + 1)) ≤ pointIdeal O (flagClosurePt y w e φ φ' t k) ∧
-      ∀ s h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'),
+      ∀ s h : MRing (bundleIdx (bundleIdx ι M) M') O,
         aeval (flagClosurePt y w e φ φ' t (k + 1)) s =
             flagLineCoord w' w e t (k + 1) ⟨k, hk⟩ * aeval (flagClosurePt y w e φ φ' t (k + 1)) h →
           aeval (flagClosurePt y w e φ φ' t k) s = 0

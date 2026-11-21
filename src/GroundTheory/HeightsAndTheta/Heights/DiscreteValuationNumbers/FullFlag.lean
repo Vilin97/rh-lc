@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsBisFurther
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -44,7 +43,7 @@ def FullFlagVerticalSymmetric.Statement : Prop :=
     ∀ (fl₁ fl₂ : IndefiniteRowSideFullHecke.NumbersDVR.Bundles.FullFlag O x B)
       (I : IFamily (IsLocalRing.ResidueField O) ι), IsFieldIntersection I →
     ∀ G : MvPolynomial (Fin N) ℤ, G.IsSymmetric →
-    ∀ (n : ℕ) (Y : Fin n → K → ℤ) (R : MvPolynomial (Fin n) ℤ) (b : K → ℤ) (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
+    ∀ (n : ℕ) (Y : Fin n → K → ℤ) (R : MvPolynomial (Fin n) ℤ) (b : K → ℤ) (f g : MRing ι O),
       IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsVertDiv O (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.mcIdeal O x) b f g →
       IndefiniteRowSideFullHecke.NumbersDVR.Bundles.vEval O
                                 (fun W => IndefiniteRowSideFullHecke.NumbersDVR.Bundles.polyNum I W d (Fin.append fl₁.deg Y)

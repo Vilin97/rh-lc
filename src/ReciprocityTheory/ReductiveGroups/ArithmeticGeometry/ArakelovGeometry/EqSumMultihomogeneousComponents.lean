@@ -1,7 +1,6 @@
 module
 
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.DoubleBlock
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -41,7 +40,7 @@ theorem isMultiHomog_iff_coeff (s : MRing ι) (a : K → ℕ) :
   · intro h m hm k
     exact congrFun (h m (mem_support_iff.mp hm)) k
 
-def i2compHom (a : K → ℕ) : MRing ι →+ ReciprocityTheory.ChartRestriction.G.Geo.MRingOver where ι
+def i2compHom (a : K → ℕ) : MRing ι →+ MRing ι where
   toFun := i2comp a
   map_zero' := by
     classical

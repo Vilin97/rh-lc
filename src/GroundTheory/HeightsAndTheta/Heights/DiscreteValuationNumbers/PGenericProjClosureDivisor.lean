@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsGenericProjClosureDivisor
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsTwistedDualGensExpress
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Cartier
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
 
 @[expose] public section
@@ -25,7 +24,7 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
   {O : Type} [CommRing O] {Φ : Type} [Field Φ] [Algebra O Φ]
 
 
-theorem aeval_eq_zero_of_mem {z : (Σ k, ι k) → Φ} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} (hf : f ∈ pointIdeal O z) :
+theorem aeval_eq_zero_of_mem {z : (Σ k, ι k) → Φ} {f : MRing ι O} (hf : f ∈ pointIdeal O z) :
     aeval z f = 0 := by
   have key : ((aeval (fun _ : K => (1 : Φ))).restrictScalars O).comp (pointConeMap O z) = aeval z := by
     apply MvPolynomial.algHom_ext
@@ -37,7 +36,7 @@ theorem aeval_eq_zero_of_mem {z : (Σ k, ι k) → Φ} {f : ReciprocityTheory.Ch
   have hf' : pointConeMap O z f = 0 := hf
   rw [hf', map_zero]
 
-theorem pointConeMap_of_homog (z : (Σ k, ι k) → Φ) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {b : K → ℕ} (hf : IsMultiHomog f b) :
+theorem pointConeMap_of_homog (z : (Σ k, ι k) → Φ) {f : MRing ι O} {b : K → ℕ} (hf : IsMultiHomog f b) :
     pointConeMap O z f = C (aeval z f) * ∏ k, X k ^ b k := by
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
@@ -63,11 +62,11 @@ theorem pointConeMap_of_homog (z : (Σ k, ι k) → Φ) {f : ReciprocityTheory.C
     rw [Finset.prod_pow_eq_pow_sum, hw k]
   rw [hB, MvPolynomial.algebraMap_apply]
 
-theorem mem_of_homog {z : (Σ k, ι k) → Φ} {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {b : K → ℕ} (hf : IsMultiHomog f b)
+theorem mem_of_homog {z : (Σ k, ι k) → Φ} {f : MRing ι O} {b : K → ℕ} (hf : IsMultiHomog f b)
     (h0 : aeval z f = 0) : f ∈ pointIdeal O z := by
   rw [pointIdeal, RingHom.mem_ker, pointConeMap_of_homog z hf, h0, map_zero, zero_mul]
 
-theorem cross_mem {z : (Σ k, ι k) → Φ} {f g f' g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {bf bg bf' bg' : K → ℕ}
+theorem cross_mem {z : (Σ k, ι k) → Φ} {f g f' g' : MRing ι O} {bf bg bf' bg' : K → ℕ}
     (hf : IsMultiHomog f bf) (hg : IsMultiHomog g bg) (hf' : IsMultiHomog f' bf')
     (hg' : IsMultiHomog g' bg') (hdeg : ∀ k, (bf k : ℤ) - bg k = bf' k - bg' k)
     (hv : aeval z f = aeval z g) (hv' : aeval z f' = aeval z g') :
@@ -106,7 +105,7 @@ theorem vdeg_add (α β : K → ℕ) : vdeg (α + β) = vdeg α + vdeg β := by
   rcases o with _ | _ | k <;> simp [vdeg]
 
 def chartMonoZ (O : Type) [CommRing O] (M M' : ℕ) (c : ∀ k, ι k) (α : K → ℕ) :
-    ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M') :=
+    MRing (bundleIdx (bundleIdx ι M) M') O :=
   ∏ k, X (⟨some (some k), c k⟩ : Σ o, bundleIdx (bundleIdx ι M) M' o) ^ α k
 
 theorem chartMonoZ_homog (c : ∀ k, ι k) (α : K → ℕ) :
@@ -153,7 +152,7 @@ theorem aeval_chartMonoZ (y : (Σ k, ι k) → Ω) (e : Module.Basis (Fin N) Ω 
 theorem chart_form (y : (Σ k, ι k) → Ω) (e : Module.Basis (Fin N) Ω E)
     (φ : Fin M → Module.Dual Ω E) (φ' : Fin M' → Module.Dual Ω E) (t : Fin N → Φ) (c : ∀ k, ι k)
     (hc : segreVec y c ≠ 0) {u : Ω} (hu : u ∈ chartRing O (segreVec y) c) :
-    ∃ (n : ℕ) (U : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')), IsMultiHomog U (vdeg fun _ => n) ∧
+    ∃ (n : ℕ) (U : MRing (bundleIdx (bundleIdx ι M) M') O), IsMultiHomog U (vdeg fun _ => n) ∧
       aeval (pairProjCoord y e φ φ' t) U = algebraMap Ω Φ (u * segreVec y c ^ n) := by
   have hQ : ∀ (j : ∀ k, ι k) (n : ℕ), aeval (pairProjCoord y e φ φ' t) (chartMonoZ O M M' j (fun _ => n)) =
       algebraMap Ω Φ (segreVec y j ^ n) := by
@@ -198,7 +197,7 @@ theorem chart_form (y : (Σ k, ι k) → Ω) (e : Module.Basis (Fin N) Ω E)
 theorem chart_forms_uniform (y : (Σ k, ι k) → Ω) (e : Module.Basis (Fin N) Ω E)
     (φ : Fin M → Module.Dual Ω E) (φ' : Fin M' → Module.Dual Ω E) (t : Fin N → Φ) (c : ∀ k, ι k)
     (hc : segreVec y c ≠ 0) {L : ℕ} (r : Fin L → Ω) (hr : ∀ l, r l ∈ chartRing O (segreVec y) c) :
-    ∃ (n : ℕ) (U : Fin L → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')), ∀ l,
+    ∃ (n : ℕ) (U : Fin L → MRing (bundleIdx (bundleIdx ι M) M') O), ∀ l,
       IsMultiHomog (U l) (vdeg fun _ => n) ∧
         aeval (pairProjCoord y e φ φ' t) (U l) = algebraMap Ω Φ (r l * segreVec y c ^ n) := by
   choose n U hU hUe using fun l => chart_form (O := O) (M := M) (M' := M') y e φ φ' t c hc (hr l)
@@ -220,7 +219,7 @@ theorem express_forms (y : (Σ k, ι k) → Ω) (e : Module.Basis (Fin N) Ω E)
     (hc : segreVec y c ≠ 0) (ϖ : O) {L : ℕ} (ψ : Fin L → Module.Dual Ω E) (χ : Module.Dual Ω E)
     (a a' : K → ℤ) (n : ℕ) (r : Fin L → Ω) (hr : ∀ l, r l ∈ chartRing O (segreVec y) c)
     (h : algebraMap O Ω ϖ ^ n • χ = ∑ l, (r l * ∏ k, y ⟨k, c k⟩ ^ (a' k - a k)) • ψ l) :
-    ∃ (bG bH : K → ℕ) (G : Fin L → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')),
+    ∃ (bG bH : K → ℕ) (G : Fin L → MRing (bundleIdx (bundleIdx ι M) M') O),
       (∀ l, IsMultiHomog (G l) (vdeg bG)) ∧ (∀ k, (bG k : ℤ) - bH k = a' k - a k) ∧
       aeval (pairProjCoord y e φ φ' t) (C (ϖ ^ n) * chartMonoZ O M M' c bH) * genVal e t χ =
         ∑ l, aeval (pairProjCoord y e φ φ' t) (G l) * genVal e t (ψ l) := by
@@ -271,13 +270,13 @@ theorem express_forms (y : (Σ k, ι k) → Ω) (e : Module.Basis (Fin N) Ω E)
 variable [∀ k, Fintype (ι k)]
 
 def IsZPair (a₀ a₀' : K → ℤ) (z : (Σ o, bundleIdx (bundleIdx ι M) M' o) → Φ)
-    (f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) : Prop :=
+    (f g : MRing (bundleIdx (bundleIdx ι M) M') O) : Prop :=
   (∃ bf bg : Option (Option K) → ℕ, IsMultiHomog f bf ∧ IsMultiHomog g bg ∧
     (fun o => (bf o : ℤ) - bg o) = zetaFirst a₀ - zetaSecond a₀') ∧ aeval z f = aeval z g
 
 
 theorem IsZPair.cross {a₀ a₀' : K → ℤ} {z : (Σ o, bundleIdx (bundleIdx ι M) M' o) → Φ}
-    {f g f' g' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')} (h : IsZPair a₀ a₀' z f g)
+    {f g f' g' : MRing (bundleIdx (bundleIdx ι M) M') O} (h : IsZPair a₀ a₀' z f g)
     (h' : IsZPair a₀ a₀' z f' g') : f * g' - f' * g ∈ pointIdeal O z := by
   obtain ⟨⟨bf, bg, hf, hg, hd⟩, hv⟩ := h
   obtain ⟨⟨bf', bg', hf', hg', hd'⟩, hv'⟩ := h'
@@ -285,9 +284,9 @@ theorem IsZPair.cross {a₀ a₀' : K → ℤ} {z : (Σ o, bundleIdx (bundleIdx 
 
 
 theorem val_pair {z : (Σ o, bundleIdx (bundleIdx ι M) M' o) → Φ} {L : ℕ}
-    {xs : Fin L → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')} {v : Fin L → Φ} (hxs : ∀ l, aeval z (xs l) = v l)
-    (G : Fin L → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')} {w : Φ}
-    (hx : aeval z x = w) (H : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))
+    {xs : Fin L → MRing (bundleIdx (bundleIdx ι M) M') O} {v : Fin L → Φ} (hxs : ∀ l, aeval z (xs l) = v l)
+    (G : Fin L → MRing (bundleIdx (bundleIdx ι M) M') O) {x : MRing (bundleIdx (bundleIdx ι M) M') O} {w : Φ}
+    (hx : aeval z x = w) (H : MRing (bundleIdx (bundleIdx ι M) M') O)
     (hval : aeval z H * w = ∑ l, aeval z (G l) * v l) :
     aeval z (∑ l, xs l * G l) = aeval z (x * H) := by
   set_option synthInstance.maxHeartbeats 100000 in
@@ -299,15 +298,15 @@ theorem pairs_at (hexp : TwistedDualGensExpress.Statement) {ϖ : O} (y : (Σ k, 
     (φ : Fin M → Module.Dual Ω E) (φ' : Fin M' → Module.Dual Ω E)
     (hφ : IsTwistedDualGens y B a₀ φ) (hφ' : IsTwistedDualGens y B' a₀' φ')
     (e : Module.Basis (Fin N) Ω E) (t : Fin N → Φ)
-    (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M'))) (hW : W.IsPrime)
+    (W : Ideal (MRing (bundleIdx (bundleIdx ι M) M') O)) (hW : W.IsPrime)
     (hPW : pointIdeal O (pairProjCoord y e φ φ' t) ≤ W) (hWr : IsRelevant W)
-    (hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∉ W) :
+    (hϖW : (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∉ W) :
     (∃ f g, IsZPair a₀ a₀' (pairProjCoord y e φ φ' t) f g ∧ g ∉ W) ∧
       (∃ f g, IsZPair a₀ a₀' (pairProjCoord y e φ φ' t) f g ∧ f ∉ W) := by
   choose c hc using fun k : K => hWr (some (some k))
   obtain ⟨l₀, hl₀⟩ := hWr (some none)
   obtain ⟨m₁, hm₁⟩ := hWr none
-  have nz : ∀ p, (X p : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∉ W → pairProjCoord y e φ φ' t p ≠ 0 := by
+  have nz : ∀ p, (X p : MRing (bundleIdx (bundleIdx ι M) M') O) ∉ W → pairProjCoord y e φ φ' t p ≠ 0 := by
     intro p hp h0
     exact hp (hPW (mem_of_homog (isWeightedHomogeneous_X O _ p) (by rw [aeval_X]; exact h0)))
   have hyc : segreVec y c ≠ 0 := by
@@ -378,10 +377,10 @@ end Forms
 theorem proof (hexp : TwistedDualGensExpress.Statement) : GenericProjClosureDivisor.Statement := by
   intro O _ _ _ ϖ hϖ Ω _ _ K _ _ ι _ y d hV N hN E _ _ B B' hB M M' a₀ a₀' φ φ' hφ hφ' Φ _ _ _ _ e t ht hZ
   have hP : (pointIdeal O (pairProjCoord y e φ φ' t)).IsPrime := hZ.multiProj.isPrime
-  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∉ pointIdeal O (pairProjCoord y e φ φ' t) := by
+  have hϖP : (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∉ pointIdeal O (pairProjCoord y e φ φ' t) := by
     intro hm
     have h1 : ϖ ∈ (pointIdeal O (pairProjCoord y e φ φ' t)).comap
-        (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) := hm
+        (C : O →+* MRing (bundleIdx (bundleIdx ι M) M') O) := hm
     rw [hZ.noTorsion, Ideal.mem_bot] at h1
     exact hϖ.ne_zero h1
   have pairs := pairs_at hexp y B B' hB a₀ a₀' φ φ' hφ hφ' e t

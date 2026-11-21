@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Cart
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTwinGradedFrameIff
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.MemSpanOverOfMem
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.LocFreeMapMkQIff
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -312,7 +311,7 @@ variable {O Ω O' Ω' : Type} [CommRing O] [Field Ω] [Algebra O Ω] [CommRing O
   [IsScalarTower O Ω Ω'] {K : Type} {J : K → Type}
 
 open GroundTheory.Heights₂.Heights.NumbersDVR in
-theorem pointConeMap_map (y : (Σ k, J k) → Ω) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O J) :
+theorem pointConeMap_map (y : (Σ k, J k) → Ω) (f : MRing J O) :
     pointConeMap O' (bcPt Ω' y) (MvPolynomial.map (algebraMap O O') f) =
       MvPolynomial.map (algebraMap Ω Ω') (pointConeMap O y f) := by
   induction f using MvPolynomial.induction_on with
@@ -325,7 +324,7 @@ theorem pointConeMap_map (y : (Σ k, J k) → Ω) (f : ReciprocityTheory.ChartRe
     simp [pointConeMap]
 
 open GroundTheory.Heights₂.Heights.NumbersDVR in
-theorem map_mem_pointIdeal_iff (y : (Σ k, J k) → Ω) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O J) :
+theorem map_mem_pointIdeal_iff (y : (Σ k, J k) → Ω) (f : MRing J O) :
     MvPolynomial.map (algebraMap O O') f ∈ pointIdeal O' (bcPt Ω' y) ↔ f ∈ pointIdeal O y := by
   simp only [pointIdeal, RingHom.mem_ker, pointConeMap_map]
   exact map_eq_zero_iff _ (MvPolynomial.map_injective _ (algebraMap Ω Ω').injective)
@@ -341,7 +340,7 @@ theorem aeval_map (y : (Σ k, J k) → Ω) (f : GroundTheory.Heights₂.Heights.
 variable [DecidableEq K]
 
 open GroundTheory.Heights₂.Heights.NumbersDVR in
-theorem isMultiHomog_map {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O J} {b : K → ℕ} (h : IsMultiHomog f b) :
+theorem isMultiHomog_map {f : MRing J O} {b : K → ℕ} (h : IsMultiHomog f b) :
     IsMultiHomog (MvPolynomial.map (algebraMap O O') f) b := by
   intro d hd
   rw [coeff_map] at hd
@@ -351,7 +350,7 @@ theorem isMultiHomog_map {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver
 theorem isVerticalDivisor_ext [Fintype K] [IsDomain O] [IsDiscreteValuationRing O] [IsDomain O']
     [IsDiscreteValuationRing O'] (y : (Σ k, J k) → Ω)
     (hinj : Function.Injective (algebraMap O Ω)) {ϖ : O} {ϖ' : O'} (hϖ : Irreducible ϖ)
-    (hϖ' : Irreducible ϖ') {b : K → ℤ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O J}
+    (hϖ' : Irreducible ϖ') {b : K → ℤ} {f g : MRing J O}
     (hD : IsVerticalDivisor (pointIdeal O y) ϖ b f g) :
     IsVerticalDivisor (pointIdeal O' (bcPt Ω' y)) ϖ' b (MvPolynomial.map (algebraMap O O') f)
       (MvPolynomial.map (algebraMap O O') g) := by
@@ -367,7 +366,7 @@ theorem isVerticalDivisor_ext [Fintype K] [IsDomain O] [IsDiscreteValuationRing 
       apply (algebraMap Ω Ω').injective
       rw [← IsScalarTower.algebraMap_apply O Ω Ω', ← IsScalarTower.algebraMap_apply O Ω Ω',
         IsScalarTower.algebraMap_apply O O' Ω', IsScalarTower.algebraMap_apply O O' Ω', haa]
-    let φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O J →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O' J := MvPolynomial.map (algebraMap O O')
+    let φ : MRing J O →+* MRing J O' := MvPolynomial.map (algebraMap O O')
     have hφ : ∀ h, MvPolynomial.map (algebraMap O O') h = φ h := fun _ => rfl
     have hle : pointIdeal O y ≤ W.comap φ := fun h hh => by
       rw [Ideal.mem_comap]
@@ -379,12 +378,12 @@ theorem isVerticalDivisor_ext [Fintype K] [IsDomain O] [IsDiscreteValuationRing 
     have hϖ0 : algebraMap O O' ϖ ≠ 0 := fun h0 =>
       hϖ.ne_zero (hinj' (by rw [h0, map_zero]))
     obtain ⟨n, hn⟩ := IsDiscreteValuationRing.associated_pow_irreducible hϖ0 hϖ'
-    have hϖ1 : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O J) ∉ W.comap φ := by
+    have hϖ1 : (C ϖ : MRing J O) ∉ W.comap φ := by
       rw [Ideal.mem_comap]
       intro hm
       apply hϖW
       obtain ⟨t, ht⟩ := hn
-      have hpow : (C ϖ' : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O' J) ^ n ∈ W := by
+      have hpow : (C ϖ' : MRing J O') ^ n ∈ W := by
         rw [← C_pow, ← ht, C_mul]
         exact W.mul_mem_right _ (by simpa [φ] using hm)
       exact hW.mem_of_pow_mem n hpow

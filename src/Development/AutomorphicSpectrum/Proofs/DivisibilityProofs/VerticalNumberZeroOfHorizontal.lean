@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Stat
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.AssemblyCN
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.OfSteps
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -15,11 +14,11 @@ open MvPolynomial GroundTheory.Heights₂.Heights.NumbersDVR GlobalTheory.Compan
 namespace GlobalTheory.CompanionTheory.Ar.Num
 
 theorem relDim_lt_of_dim_lt {F : Type} [Field F] {K : Type} [Fintype K] [DecidableEq K]
-    {ι : K → Type} (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (n : ℕ)
-    (h : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) < ((n + Fintype.card K : ℕ) : WithBot ℕ∞)) :
+    {ι : K → Type} (I : Ideal (MRing ι F)) (n : ℕ)
+    (h : ringKrullDim (MRing ι F ⧸ I) < ((n + Fintype.card K : ℕ) : WithBot ℕ∞)) :
     GroundTheory.Heights₂.Heights.FieldNumbers.relDim I < ((n : ℕ) : WithBot (WithTop ℤ)) := by
   unfold GroundTheory.Heights₂.Heights.FieldNumbers.relDim
-  generalize ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) = a at h ⊢
+  generalize ringKrullDim (MRing ι F ⧸ I) = a at h ⊢
   induction a using WithBot.recBotCoe with
   | bot => exact WithBot.bot_lt_coe _
   | coe a =>
@@ -61,36 +60,36 @@ theorem dim_lt_of_two_drops {a b : WithBot ℕ∞} {n : ℕ} (h₁ : a + 1 ≤ b
 
 theorem specialIdeal_dim_add_one_le {O : Type} [CommRing O] [IsDomain O]
     [IsDiscreteValuationRing O] {ϖ : O} (hϖ : Irreducible ϖ) {K : Type} [Fintype K] [DecidableEq K]
-    {ι : K → Type} [∀ k, Fintype (ι k)] (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) [W.IsPrime]
-    (hW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W) :
+    {ι : K → Type} [∀ k, Fintype (ι k)] (W : Ideal (MRing ι O)) [W.IsPrime]
+    (hW : (C ϖ : MRing ι O) ∉ W) :
     ringKrullDim (MRing ι (IsLocalRing.ResidueField O) ⧸ specialIdeal W) + 1 ≤
-      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ W) := by
+      ringKrullDim (MRing ι O ⧸ W) := by
   have hres : IsLocalRing.residue O ϖ = 0 :=
     (IsLocalRing.residue_eq_zero_iff ϖ).2
       ((IsLocalRing.mem_maximalIdeal ϖ).2 hϖ.not_isUnit)
-  have hsp : specialIdeal (W ⊔ Ideal.span {(C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}) = specialIdeal W := by
+  have hsp : specialIdeal (W ⊔ Ideal.span {(C ϖ : MRing ι O)}) = specialIdeal W := by
     unfold specialIdeal
     rw [Ideal.map_sup, Ideal.map_span, Set.image_singleton, MvPolynomial.map_C, hres, map_zero]
     simp
-  have hdim := SpecialQuotDim.full O ϖ hϖ K ι (W ⊔ Ideal.span {(C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)})
+  have hdim := SpecialQuotDim.full O ϖ hϖ K ι (W ⊔ Ideal.span {(C ϖ : MRing ι O)})
     (Ideal.mem_sup_right (Ideal.subset_span rfl))
   rw [hsp] at hdim
   rw [hdim]
   have hne : Ideal.Quotient.mk W (C ϖ) ≠ 0 := fun h => hW (Ideal.Quotient.eq_zero_iff_mem.1 h)
   have h1 := ringKrullDim_quotient_succ_le_of_nonZeroDivisor (mem_nonZeroDivisors_of_ne_zero hne)
-  have he : ringKrullDim ((ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ W) ⧸ Ideal.span {Ideal.Quotient.mk W (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}) =
-      ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ (W ⊔ Ideal.span {(C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)})) := by
+  have he : ringKrullDim ((MRing ι O ⧸ W) ⧸ Ideal.span {Ideal.Quotient.mk W (C ϖ : MRing ι O)}) =
+      ringKrullDim (MRing ι O ⧸ (W ⊔ Ideal.span {(C ϖ : MRing ι O)})) := by
     refine ringKrullDim_eq_of_ringEquiv ?_
-    have hm : (Ideal.span {(C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)}).map (Ideal.Quotient.mk W) =
-        Ideal.span {Ideal.Quotient.mk W (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)} := by
+    have hm : (Ideal.span {(C ϖ : MRing ι O)}).map (Ideal.Quotient.mk W) =
+        Ideal.span {Ideal.Quotient.mk W (C ϖ : MRing ι O)} := by
       rw [Ideal.map_span, Set.image_singleton]
     exact (Ideal.quotEquivOfEq hm.symm).trans (DoubleQuot.quotQuotEquivQuotSup _ _)
   rwa [he] at h1
 
-theorem horizontal_vNumL_eq_zero : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) (d : ℕ), IsModelOver P d → ∀ (a : K → ℕ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog f a → f ∉ P → ∀ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) ≠ 0 → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W → ∀ l : List (K → ℤ), l.length = d → vNumL W l = 0 := by
+theorem horizontal_vNumL_eq_zero : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (ϖ : O), Irreducible ϖ → ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι O)) (d : ℕ), IsModelOver P d → ∀ (a : K → ℕ) (f : MRing ι O), IsMultiHomog f a → f ∉ P → ∀ W, divCycle P f W ≠ 0 → (C ϖ : MRing ι O) ∉ W → ∀ l : List (K → ℤ), l.length = d → vNumL W l = 0 := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P d hP a f hf hfP W hW hϖW l hl
   have hPp : P.IsPrime := hP.multiProj.isPrime
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hW
+  unfold divCycle at hW
   split_ifs at hW with hW'
   swap
   · exact absurd rfl hW
@@ -102,9 +101,9 @@ theorem horizontal_vNumL_eq_zero : ∀ (O : Type) [CommRing O] [IsDomain O] [IsD
   have hPW : P ≤ W := le_sup_left.trans hWmin.1.2
   have hfW : f ∈ W := hWmin.1.2 (Ideal.mem_sup_right (Ideal.subset_span rfl))
   have hlt : P < W := lt_of_le_of_ne hPW (fun e => hfP (e ▸ hfW))
-  have hdrop := DimStrictDrop.full (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) P W hlt
+  have hdrop := DimStrictDrop.full (MRing ι O) P W hlt
   rw [hP.dim] at hdrop
-  have hdrop' : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ W) + 1 ≤ ((d + Fintype.card K + 1 : ℕ) : WithBot ℕ∞) := by
+  have hdrop' : ringKrullDim (MRing ι O ⧸ W) + 1 ≤ ((d + Fintype.card K + 1 : ℕ) : WithBot ℕ∞) := by
     have e : d + 1 + Fintype.card K = d + Fintype.card K + 1 := by omega
     rwa [e] at hdrop
   have hdim := dim_lt_of_two_drops (specialIdeal_dim_add_one_le hϖ W hϖW) hdrop'

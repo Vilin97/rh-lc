@@ -1,7 +1,6 @@
 module
 
 public import Mathlib
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -212,7 +211,7 @@ def ChowFormSection.Statement : Prop :=
   ∀ (F : Type) [Field F] [CharZero F] (n e : ℕ) (I : Ideal (MvPolynomial (Fin n) F))
     (f : MvPolynomial (Fin (e + 1) × Fin n) F) (u : Fin n → F),
     IsProjPrime I → IsChowForm I (e + 1) f → linForm u ∉ I →
-      IsChowFormCycle ((fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle I u) W : ℤ))) e (specFirst f u)
+      IsChowFormCycle (divCycle I u) e (specFirst f u)
 
 def ChowFormSectionVertical.Statement : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (n e : ℕ) (I : Ideal (MvPolynomial (Fin n) K))

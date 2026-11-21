@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PFlagLineSectionSplit
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Cartier
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -21,8 +20,8 @@ namespace FlagLineSectionProof
 
 variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type} {F : Type*} [Field F] {M : ℕ}
 
-theorem chartMon_not_mem {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M))} [hW : W.IsPrime] {c : ∀ k, ι k}
-    (hc : ∀ k, (X ⟨some k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) ∉ W) (α : K → ℕ) :
+theorem chartMon_not_mem {W : Ideal (MRing (bundleIdx ι M) F)} [hW : W.IsPrime] {c : ∀ k, ι k}
+    (hc : ∀ k, (X ⟨some k, c k⟩ : MRing (bundleIdx ι M) F) ∉ W) (α : K → ℕ) :
     chartMon F M c α ∉ W := by
   unfold chartMon
   rw [Ideal.IsPrime.prod_mem_iff]
@@ -40,7 +39,7 @@ theorem FlagLineSection.proof : FlagLineSection.Statement := by
     rw [projMap_X_none, sum_truncCoord_one t h0]
   have ht0 : t ⟨0, h0⟩ ≠ 0 := fun h => ht.transcendental ⟨0, h0⟩ (h ▸ isAlgebraic_zero)
 
-  have hyne : ∀ k (i : ι k), (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ pointIdeal F y → y ⟨k, i⟩ ≠ 0 := by
+  have hyne : ∀ k (i : ι k), (X ⟨k, i⟩ : MRing ι F) ∉ pointIdeal F y → y ⟨k, i⟩ ≠ 0 := by
     intro k i hX h
     apply hX
     rw [pointIdeal, RingHom.mem_ker]
@@ -92,13 +91,13 @@ theorem FlagLineSection.proof : FlagLineSection.Statement := by
       simp [liftN, zetaDeg, liftDeg]
       linarith
   · funext W
-    show ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle _ _) W : ℤ) - ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle _ _) W : ℤ) = 0
+    show divCycle _ _ W - divCycle _ _ W = 0
     by_cases hW : W.IsPrime ∧ projIdeal F y w φ (truncCoord t 1) ≤ W ∧ IsRelevant W
     · obtain ⟨hWp, hPW, hWrel⟩ := hW
       choose cc hcc using fun k => hWrel (some k)
       let c : ∀ k, ι k := cc
-      have hcW : ∀ k, (X ⟨some k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) ∉ W := hcc
-      obtain ⟨l1, hl1⟩ : ∃ l1 : Fin M, (X ⟨none, l1⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) ∉ W := hWrel none
+      have hcW : ∀ k, (X ⟨some k, c k⟩ : MRing (bundleIdx ι M) F) ∉ W := hcc
+      obtain ⟨l1, hl1⟩ : ∃ l1 : Fin M, (X ⟨none, l1⟩ : MRing (bundleIdx ι M) F) ∉ W := hWrel none
       have live : ∀ k, y ⟨k, c k⟩ ≠ 0 := by
         intro k h
         apply hcW k
@@ -143,7 +142,7 @@ theorem FlagLineSection.proof : FlagLineSection.Statement := by
       have h21 : X ⟨none, l2⟩ * Ξ l1 ∉ W := fun h => h12 (by
         have := W.add_mem (hPW hR1) h
         rwa [sub_add_cancel] at this)
-      have hx2 : (X ⟨none, l2⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F (bundleIdx ι M)) ∉ W := fun h => h21 (W.mul_mem_right _ h)
+      have hx2 : (X ⟨none, l2⟩ : MRing (bundleIdx ι M) F) ∉ W := fun h => h21 (W.mul_mem_right _ h)
       obtain ⟨α, β, hαβ⟩ : ∃ α β : K → ℕ, ∀ k, (β k : ℤ) - α k = m + (b ⟨0, h0⟩ k - a k) :=
         ⟨fun k => (-(m + (b ⟨0, h0⟩ k - a k))).toNat, fun k => (m + (b ⟨0, h0⟩ k - a k)).toNat,
           fun k => Int.toNat_sub_toNat_neg _⟩
@@ -203,7 +202,7 @@ theorem FlagLineSection.proof : FlagLineSection.Statement := by
               simp only [map_mul]
               ring
       rw [divCycle_eq_of_mul_sub_mem hne1 hne2 hcross, sub_self]
-    · have hz : ∀ h, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (projIdeal F y w φ (truncCoord t 1)) h) W : ℤ) = 0 := by
+    · have hz : ∀ h, divCycle (projIdeal F y w φ (truncCoord t 1)) h W = 0 := by
         intro h
         by_contra hne
         exact hW (le_and_isRelevant_of_divCycle_ne_zero hne)

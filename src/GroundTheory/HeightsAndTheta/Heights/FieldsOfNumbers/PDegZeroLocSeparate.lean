@@ -4,7 +4,6 @@ public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDegZeroLocSeparate
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PDegZeroLocQuot
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.RelevantMinimalOfDivCycleNeZero
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -44,8 +43,8 @@ theorem DegZeroLocSeparate.proof : DegZeroLocSeparate.Statement.{u} := by
     rwa [add_tsub_cancel_of_le hce] at this
   have hfmW₂ : f * m ∉ W₂ := fun h' => (hW₂p.isPrime.mem_or_mem h').elim hfW₂ hmW₂
   have hfmP : f * m ∉ P := fun h' => hfmW₂ (hPW₂ h')
-  have hq0 : ∀ a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, a ∉ P →
-      algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) (FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)) (Ideal.Quotient.mk P a) ≠ 0 :=
+  have hq0 : ∀ a : MRing ι F, a ∉ P →
+      algebraMap (MRing ι F ⧸ P) (FractionRing (MRing ι F ⧸ P)) (Ideal.Quotient.mk P a) ≠ 0 :=
     fun a ha => by
       rw [Ne, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
       exact ha

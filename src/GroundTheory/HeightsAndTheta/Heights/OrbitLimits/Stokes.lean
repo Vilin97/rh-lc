@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.Statement
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsBilinear
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegrePartition
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChart
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -14,7 +13,7 @@ set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights
 
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSmoothHerm HermLine IsArithVar ptsIntegral pot segre)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar ptsIntegral pot segre)
 
 theorem StokesStatement.of_found (hBil : PtsBilinear.Statement) (hPart : SegrePartition.Statement)
     (hChart : SegreChart.Statement) (hSV : StokesOnVariety.Statement) :

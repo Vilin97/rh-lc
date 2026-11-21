@@ -3,7 +3,6 @@ module
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsValuativeCentre
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PMChartDehomog
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -22,10 +21,10 @@ section Graded
 variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {F : Type*} [Field F]
   {κ : Type*} [CommRing κ]
 
-def blockSpecial (ρ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* κ) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* MvPolynomial K κ :=
+def blockSpecial (ρ : MRing ι F →+* κ) : MRing ι F →+* MvPolynomial K κ :=
   eval₂Hom (C.comp (ρ.comp C)) fun v => C (ρ (X v)) * X v.1
 
-theorem blockSpecial_monomial (ρ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* κ) (d : (Σ k, ι k) →₀ ℕ) (a : F) :
+theorem blockSpecial_monomial (ρ : MRing ι F →+* κ) (d : (Σ k, ι k) →₀ ℕ) (a : F) :
     blockSpecial ρ (monomial d a) = C (ρ (monomial d a)) *
       monomial (Finsupp.equivFunOnFinite.symm (Finsupp.weight (blockWeight ι) d)) 1 := by
   have hT : (monomial (Finsupp.equivFunOnFinite.symm (Finsupp.weight (blockWeight ι) d)) (1 : κ)) =
@@ -38,7 +37,7 @@ theorem blockSpecial_monomial (ρ : ReciprocityTheory.ChartRestriction.G.Geo.MRi
   simp only [RingHom.comp_apply, mul_pow, map_pow]
   rw [Finsupp.prod_mul, mul_assoc]
 
-theorem coeff_blockSpecial (ρ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* κ) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (e : K →₀ ℕ) :
+theorem coeff_blockSpecial (ρ : MRing ι F →+* κ) (f : MRing ι F) (e : K →₀ ℕ) :
     AddMonoidAlgebra.coeff (blockSpecial ρ f) e = ρ (weightedHomogeneousComponent (blockWeight ι) (⇑e) f) := by
   classical
   conv_lhs => rw [f.as_sum]
@@ -59,21 +58,21 @@ theorem ValuativeCentre.proof : ValuativeCentre.Statement.{u} := by
   intro F _ K _ _ ι _ P hP
   have := hP.isPrime
   intro R hF
-  set L := FractionRing (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P)
-  let φ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* L := (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ P) L).comp (Ideal.Quotient.mk P)
+  set L := FractionRing (MRing ι F ⧸ P)
+  let φ : MRing ι F →+* L := (algebraMap (MRing ι F ⧸ P) L).comp (Ideal.Quotient.mk P)
   have hφ : ∀ p, φ p = 0 ↔ p ∈ P := fun p => by
     simp only [φ, RingHom.comp_apply, IsFractionRing.to_map_eq_zero_iff, Ideal.Quotient.eq_zero_iff_mem]
 
-  have hmax : ∀ k, ∃ i, (X ⟨k, i⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ P ∧
+  have hmax : ∀ k, ∃ i, (X ⟨k, i⟩ : MRing ι F) ∉ P ∧
       ∀ j, R.valuation (φ (X ⟨k, j⟩)) ≤ R.valuation (φ (X ⟨k, i⟩)) := by
     intro k
     classical
     obtain ⟨i₀, hi₀⟩ := hP.relevant k
     obtain ⟨i, hi, hmx⟩ := Finset.exists_max_image
-      (Finset.univ.filter fun j => (X ⟨k, j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∉ P)
+      (Finset.univ.filter fun j => (X ⟨k, j⟩ : MRing ι F) ∉ P)
       (fun j => R.valuation (φ (X ⟨k, j⟩))) ⟨i₀, by simp [hi₀]⟩
     refine ⟨i, (Finset.mem_filter.mp hi).2, fun j => ?_⟩
-    by_cases hj : (X ⟨k, j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ∈ P
+    by_cases hj : (X ⟨k, j⟩ : MRing ι F) ∈ P
     · rw [(hφ _).mpr hj, map_zero]; exact zero_le
     · exact hmx j (by simp [hj])
   choose c hcP hcmax using hmax
@@ -90,10 +89,10 @@ theorem ValuativeCentre.proof : ValuativeCentre.Statement.{u} := by
       have h0 : R.valuation (φ (X ⟨v.1, c v.1⟩)) ≠ 0 := by
         rw [Ne, Valuation.zero_iff, hφ]; exact hcP v.1
       exact (div_le_one₀ (zero_lt_iff.mpr h0)).mpr (hcmax v.1 v.2)
-  let χ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* R := (chartMap P c).toRingHom.codRestrict R hchart
+  let χ : MRing ι F →+* R := (chartMap P c).toRingHom.codRestrict R hchart
   have hχ : ∀ p, (χ p : L) = chartMap P c p := fun p => rfl
-  let ρ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* IsLocalRing.ResidueField R := (IsLocalRing.residue R).comp χ
-  let θ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι →+* MvPolynomial K (IsLocalRing.ResidueField R) := blockSpecial ρ
+  let ρ : MRing ι F →+* IsLocalRing.ResidueField R := (IsLocalRing.residue R).comp χ
+  let θ : MRing ι F →+* MvPolynomial K (IsLocalRing.ResidueField R) := blockSpecial ρ
   have hdeh : ∀ f b, IsMultiHomog f b → chartMap P c f = φ f / φ (chartMonomial c b) :=
     fun f b hf => MChartDehomog.proof F K ι P c hcP f b hf
   have hmon : ∀ b, φ (chartMonomial c b) ≠ 0 := fun b => by

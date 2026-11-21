@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartInteg
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreCoordGoodProj
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsIntegralProjIndep
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsIntegralSegreChartProj
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -18,7 +17,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open Filter Topology
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver IsSmoothHerm HermLine IsArithVar IsGoodProj IsSheet ptsIntegral
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing HermLine IsSmoothHerm IsArithVar IsGoodProj IsSheet ptsIntegral
   ptsIntegralAt sheetDensity fibre maDensity mixedDisc cxHessian pot segre mcPts goodProjExists)
 
 theorem maDensity_eq_zero_of_eventuallyEq_zero {D : ℕ} (φ : Fin (D + 1) → (Fin (D + 1) → ℂ) → ℝ)

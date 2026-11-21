@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsSideSide
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -21,11 +20,11 @@ namespace SegreFibreIdeal
 variable {O : Type} [CommRing O] {Ω : Type} [Field Ω] [Algebra O Ω]
   {K : Type} [Fintype K] {ι : K → Type}
 
-def thetaVal (ι : K → Type) (R : Type) [CommRing R] : (Σ k, segreIdx ι k) → Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)
+def thetaVal (ι : K → Type) (R : Type) [CommRing R] : (Σ k, segreIdx ι k) → Polynomial (MRing ι R)
   | ⟨Sum.inl _, c⟩ => Polynomial.X * Polynomial.C (∏ k, X ⟨k, c k⟩)
   | ⟨Sum.inr k, i⟩ => Polynomial.C (X ⟨k, i⟩)
 
-def theta (ι : K → Type) (R : Type) [CommRing R] : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R (segreIdx ι) →+* Polynomial (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) :=
+def theta (ι : K → Type) (R : Type) [CommRing R] : MRing (segreIdx ι) R →+* Polynomial (MRing ι R) :=
   eval₂Hom (Polynomial.C.comp C) (thetaVal ι R)
 
 def chi (K : Type) [Fintype K] : MvPolynomial (Unit ⊕ K) Ω →+* Polynomial (MvPolynomial K Ω) :=
@@ -44,7 +43,7 @@ theorem map_cone_theta (y : (Σ k, ι k) → Ω) :
       ring
     · simp [theta, thetaVal, chi, mConeMapOver, segreJoin, IndefiniteRowSideFullHecke.Kleiman2.joinVec]
 
-theorem segreLiftMap_map (F : Type) [Field F] (φ : O →+* F) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) :
+theorem segreLiftMap_map (F : Type) [Field F] (φ : O →+* F) (W : Ideal (MRing ι F)) :
     (segreLiftMap ι F W).toRingHom.comp (MvPolynomial.map φ) =
       (Polynomial.mapRingHom ((Ideal.Quotient.mk W).comp (MvPolynomial.map φ))).comp (theta ι O) := by
   apply MvPolynomial.ringHom_ext
@@ -63,7 +62,7 @@ theorem SegreFibreIdeal.proof : SegreFibreIdeal.Statement := by
   intro O _ Ω _ _ F _ φ K _ _ ι _ y
   refine ⟨?_, ?_, ?_⟩
   · rintro g ⟨c, d, rfl⟩
-    have hm : (segreY c * segreMon d - segreY d * segreMon c : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (segreIdx ι)) ∈
+    have hm : (segreY c * segreMon d - segreY d * segreMon c : MRing (segreIdx ι) O) ∈
         mIdealOver O (segreJoin y) := by
       simp only [mIdealOver, RingHom.mem_ker, map_sub, map_mul, map_prod, segreY, segreMon,
         mConeMapOver, aeval_X, segreJoin, IndefiniteRowSideFullHecke.Kleiman2.joinVec, IndefiniteRowSideFullHecke.Kleiman2.oneBlock,

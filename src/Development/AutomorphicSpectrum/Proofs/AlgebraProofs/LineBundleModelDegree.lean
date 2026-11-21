@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.Stat
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.SameGenericSymm
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ClassListMapDomainPerm
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChernClassOnFlagPairStatement
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -44,7 +43,7 @@ section Forms
 
 variable {O : Type*} [CommRing O] {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem sum_block_eq {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {b : K → ℕ} (hf : IsMultiHomog f b) {m : (Σ k, ι k) →₀ ℕ}
+theorem sum_block_eq {f : MRing ι O} {b : K → ℕ} (hf : IsMultiHomog f b) {m : (Σ k, ι k) →₀ ℕ}
     (hm : m ∈ f.support) (k : K) : ∑ i, m ⟨k, i⟩ = b k := by
   have h := congrFun (hf (mem_support_iff.mp hm)) k
   rw [← h, Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp)]
@@ -53,7 +52,7 @@ theorem sum_block_eq {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O �
   simp
 
 theorem aeval_scale {A : Type*} [CommRing A] [Algebra O A] (y : (Σ k, ι k) → A) (t : K → A)
-    {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {b : K → ℕ} (hf : IsMultiHomog f b) :
+    {f : MRing ι O} {b : K → ℕ} (hf : IsMultiHomog f b) :
     aeval (fun p : Σ k, ι k => y p * t p.1) f = aeval y f * ∏ k, t k ^ b k := by
   rw [aeval_def, aeval_def, eval₂_eq', eval₂_eq', Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
@@ -65,7 +64,7 @@ theorem aeval_scale {A : Type*} [CommRing A] [Algebra O A] (y : (Σ k, ι k) →
   simp only [mul_pow, Finset.prod_mul_distrib, hX, mul_assoc]
 
 theorem map_aeval_of {A B : Type*} [CommRing A] [CommRing B] [Algebra O A] [Algebra O B] (π : A →+* B)
-    (hπ : ∀ c : O, π (algebraMap O A c) = algebraMap O B c) (w : (Σ k, ι k) → A) (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :
+    (hπ : ∀ c : O, π (algebraMap O A c) = algebraMap O B c) (w : (Σ k, ι k) → A) (f : MRing ι O) :
     π (aeval w f) = aeval (fun p => π (w p)) f := by
   induction f using MvPolynomial.induction_on with
   | C c => simp [hπ]
@@ -79,7 +78,7 @@ section Chart
 variable {O : Type*} [CommRing O] {Ω : Type*} [Field Ω] [Algebra O Ω]
   {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-theorem aeval_ne_zero (x : (Σ k, ι k) → Ω) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {b : K → ℕ} (hf : IsMultiHomog f b)
+theorem aeval_ne_zero (x : (Σ k, ι k) → Ω) {f : MRing ι O} {b : K → ℕ} (hf : IsMultiHomog f b)
     (hP : f ∉ pointIdeal O x) : aeval x f ≠ 0 := by
   intro h0
   apply hP
@@ -115,24 +114,24 @@ theorem ratio_mem (x : (Σ k, ι k) → Ω) {s : ∀ k, ι k} (hs : mseg x s ≠
   rwa [h2] at h1
 
 def chartHom (x : (Σ k, ι k) → Ω) {s : ∀ k, ι k} (hs : mseg x s ≠ 0) :
-    ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι →ₐ[O] chartRing O (mseg x) s :=
+    MRing ι O →ₐ[O] chartRing O (mseg x) s :=
   aeval fun p => ⟨x p / x ⟨p.1, s p.1⟩, ratio_mem x hs p⟩
 
-theorem chartHom_coe (x : (Σ k, ι k) → Ω) {s : ∀ k, ι k} (hs : mseg x s ≠ 0) (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) :
+theorem chartHom_coe (x : (Σ k, ι k) → Ω) {s : ∀ k, ι k} (hs : mseg x s ≠ 0) (h : MRing ι O) :
     ((chartHom (O := O) x hs h : chartRing O (mseg x) s) : Ω) =
       aeval (fun p : Σ k, ι k => x p / x ⟨p.1, s p.1⟩) h := by
   have := map_aeval_of (O := O) (chartRing O (mseg x) s).val.toRingHom (fun c => rfl)
     (fun p => (⟨x p / x ⟨p.1, s p.1⟩, ratio_mem x hs p⟩ : chartRing O (mseg x) s)) h
   exact this
 
-theorem chartHom_form (x : (Σ k, ι k) → Ω) {s : ∀ k, ι k} (hs : mseg x s ≠ 0) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
+theorem chartHom_form (x : (Σ k, ι k) → Ω) {s : ∀ k, ι k} (hs : mseg x s ≠ 0) {f : MRing ι O}
     {b : K → ℕ} (hf : IsMultiHomog f b) :
     ((chartHom (O := O) x hs f : chartRing O (mseg x) s) : Ω) =
       aeval x f * ∏ k, (x ⟨k, s k⟩)⁻¹ ^ b k := by
   rw [chartHom_coe, ← aeval_scale x (fun k => (x ⟨k, s k⟩)⁻¹) hf]
   simp only [div_eq_mul_inv]
 
-theorem chartHom_eq_zero (x : (Σ k, ι k) → Ω) {s : ∀ k, ι k} (hs : mseg x s ≠ 0) {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
+theorem chartHom_eq_zero (x : (Σ k, ι k) → Ω) {s : ∀ k, ι k} (hs : mseg x s ≠ 0) {h : MRing ι O}
     (hP : h ∈ pointIdeal O x) : chartHom (O := O) x hs h = 0 := by
   have h0 : pointConeMap O x h = 0 := RingHom.mem_ker.mp hP
   have h1 := map_aeval_of (O := O) (eval fun k : K => (x ⟨k, s k⟩)⁻¹)
@@ -163,12 +162,12 @@ theorem chartMon_relation (x : (Σ k, ι k) → Ω) {s : ∀ k, ι k} (hs : mseg
   have := hb k
   linarith
 
-theorem line_step (ϖ : O) (x : (Σ k, ι k) → Ω) {u u' : Ω} {a a' : K → ℤ} {f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι}
+theorem line_step (ϖ : O) (x : (Σ k, ι k) → Ω) {u u' : Ω} {a a' : K → ℤ} {f g : MRing ι O}
     {bf bg : K → ℕ} (hf : IsMultiHomog f bf) (hg : IsMultiHomog g bg)
     (hb : ∀ k, (bf k : ℤ) - bg k = a k - a' k) (hG : aeval x g ≠ 0)
     (hgen : aeval x f * u = aeval x g * u')
-    (hU : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), W.IsPrime → pointIdeal O x ≤ W → IsRelevant W →
-      (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W → ∃ c e : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, e ∉ W ∧ c * f - e * g ∈ pointIdeal O x)
+    (hU : ∀ W : Ideal (MRing ι O), W.IsPrime → pointIdeal O x ≤ W → IsRelevant W →
+      (C ϖ : MRing ι O) ∉ W → ∃ c e : MRing ι O, e ∉ W ∧ c * f - e * g ∈ pointIdeal O x)
     {L L' : (∀ k, ι k) → AddSubgroup Ω} (hL : IsLine O x u a L) (hL' : IsLine O x u' a' L')
     {s : ∀ k, ι k} (hs : mseg x s ≠ 0) {v : Ω} (hv : v ∈ L s) :
     ∃ n : ℕ, algebraMap O Ω ϖ ^ n • v ∈ L' s := by
@@ -180,7 +179,7 @@ theorem line_step (ϖ : O) (x : (Σ k, ι k) → Ω) {u u' : Ω} {a a' : K → �
           rw [Ideal.mem_comap, chartHom_eq_zero x hs hh]
           exact p.zero_mem)
         (fun k => ⟨s k, by
-          have h1 : chartHom (O := O) x hs (X ⟨k, s k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) = 1 := by
+          have h1 : chartHom (O := O) x hs (X ⟨k, s k⟩ : MRing ι O) = 1 := by
             apply Subtype.ext
             rw [chartHom_coe]
             simp [div_self (coord_ne_zero x hs k)]
@@ -188,7 +187,7 @@ theorem line_step (ϖ : O) (x : (Σ k, ι k) → Ω) {u u' : Ω} {a a' : K → �
           exact (Ideal.ne_top_iff_one p).mp hp.ne_top⟩)
         (fun h => hw (by
           rw [Ideal.mem_comap] at h
-          have h1 : chartHom (O := O) x hs (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) =
+          have h1 : chartHom (O := O) x hs (C ϖ : MRing ι O) =
               algebraMap O (chartRing O (mseg x) s) ϖ := (chartHom (O := O) x hs).commutes ϖ
           rwa [h1] at h))
       refine ⟨chartHom (O := O) x hs e, chartHom (O := O) x hs c, he, ?_⟩
@@ -260,7 +259,7 @@ theorem isFlagFrame_line (x : (Σ k, ι k) → Ω) (A : ChartBundle O (mseg x) 1
 
 end Lines
 
-theorem main : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (Ω : Type) [Field Ω] [Algebra O Ω] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (x : (Σ k, ι k) → Ω) (ϖ : O), Irreducible ϖ → ∀ d : ℕ, GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsModelOver O (mcIdeal O x) d → ∀ (A A' : ChartBundle O (mseg x) 1 Ω) (u u' : Ω) (a a' : K → ℤ), IsLine O x u a A.lat → IsLine O x u' a' A'.lat → ∀ f g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, IsVerticalDivisor (pointIdeal O x) ϖ (a - a') f g → aeval x f * u = aeval x g * u' → SameGeneric O x A A' ∧ ∀ (k : ℕ), 1 ≤ k → k ≤ d + 1 → ∀ (q : ℕ) (L : Fin q → K → ℤ) (Q : MvPolynomial (Fin q) ℤ), Q.IsHomogeneous (d + 1 - k) → ck O x d 1 A A' k L Q = ∑ μ ∈ Q.support, Q.coeff μ * pairNum (pointIdeal O x) (fun _ : Fin 1 => a) (fun _ => a') (fun _ => f) (fun _ => g) (psumExpansion 1 k) (classList L μ) := by
+theorem main : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (Ω : Type) [Field Ω] [Algebra O Ω] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (x : (Σ k, ι k) → Ω) (ϖ : O), Irreducible ϖ → ∀ d : ℕ, GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.NumbersDVR.Bundles.IsModelOver O (mcIdeal O x) d → ∀ (A A' : ChartBundle O (mseg x) 1 Ω) (u u' : Ω) (a a' : K → ℤ), IsLine O x u a A.lat → IsLine O x u' a' A'.lat → ∀ f g : MRing ι O, IsVerticalDivisor (pointIdeal O x) ϖ (a - a') f g → aeval x f * u = aeval x g * u' → SameGeneric O x A A' ∧ ∀ (k : ℕ), 1 ≤ k → k ≤ d + 1 → ∀ (q : ℕ) (L : Fin q → K → ℤ) (Q : MvPolynomial (Fin q) ℤ), Q.IsHomogeneous (d + 1 - k) → ck O x d 1 A A' k L Q = ∑ μ ∈ Q.support, Q.coeff μ * pairNum (pointIdeal O x) (fun _ : Fin 1 => a) (fun _ => a') (fun _ => f) (fun _ => g) (psumExpansion 1 k) (classList L μ) := by
   intro O _ _ _ Ω _ _ K _ _ ι _ x ϖ hϖ d hM A A' u u' a a' hA hA' f g hD hgen
   obtain ⟨hK, hModel⟩ := (BundleExamples.isModelOver_iff O (mcIdeal O x) d).1 hM
   obtain ⟨bf, bg, hf, hg, hb⟩ := hD.degrees

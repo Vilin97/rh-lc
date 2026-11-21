@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PRep
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDivCycleMul
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PSupSpanMultiHomog
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PMinimalPrimeMultiHomog
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -22,9 +21,9 @@ section Avoid
 
 variable {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} {R : Type*} [CommRing R]
 
-theorem exists_form_avoid_primes (S : Finset (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)))
+theorem exists_form_avoid_primes (S : Finset (Ideal (MRing ι R)))
     (hS : ∀ W ∈ S, W.IsPrime ∧ IsMultiHomogIdeal W ∧ IsRelevant W) (e₀ : K → ℕ) :
-    ∃ (e : K → ℕ) (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι), IsMultiHomog h e ∧ e₀ ≤ e ∧ ∀ W ∈ S, h ∉ W := by
+    ∃ (e : K → ℕ) (h : MRing ι R), IsMultiHomog h e ∧ e₀ ≤ e ∧ ∀ W ∈ S, h ∉ W := by
   classical
   set T := S.filter (fun W => ∀ W' ∈ S, W ≤ W' → W' = W) with hT
   have hTS : ∀ W ∈ T, W ∈ S := fun W hW => (Finset.mem_filter.mp hW).1
@@ -33,7 +32,7 @@ theorem exists_form_avoid_primes (S : Finset (Ideal (ReciprocityTheory.ChartRest
     intro W hW
     obtain ⟨W', hWW', hW'⟩ := (S.finite_toSet).exists_le_maximal hW
     exact ⟨W', Finset.mem_filter.mpr ⟨hW'.prop, fun W'' hW'' h => le_antisymm (hW'.2 hW'' h) h⟩, hWW'⟩
-  have hsep : ∀ W ∈ T, ∃ (a : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι) (A : K → ℕ), IsMultiHomog a A ∧ a ∉ W ∧
+  have hsep : ∀ W ∈ T, ∃ (a : MRing ι R) (A : K → ℕ), IsMultiHomog a A ∧ a ∉ W ∧
       ∀ W' ∈ T.erase W, a ∈ W' := by
     intro W hW
     have := (hS W (hTS W hW)).1
@@ -44,7 +43,7 @@ theorem exists_form_avoid_primes (S : Finset (Ideal (ReciprocityTheory.ChartRest
   set e : K → ℕ := e₀ + ∑ W ∈ T, A W with he
   have hAe : ∀ W ∈ T, A W ≤ e := fun W hW =>
     le_add_left (Finset.single_le_sum (f := A) (fun _ _ => fun _ => Nat.zero_le _) hW)
-  have hmon : ∀ W ∈ T, ∃ m : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι, IsMultiHomog m (e - A W) ∧ m ∉ W := by
+  have hmon : ∀ W ∈ T, ∃ m : MRing ι R, IsMultiHomog m (e - A W) ∧ m ∉ W := by
     intro W hW
     have := (hS W (hTS W hW)).1
     exact exists_form_not_mem_of_isRelevant (hS W (hTS W hW)).2.2 _
@@ -102,9 +101,9 @@ theorem mem_minimalPrimes_sup_span_of_mem {A : Type*} [CommRing A] [IsNoetherian
   exact hy this
 
 theorem relevant_minimal_of_divCycle_ne_zero {K : Type*} {ι : K → Type*} {R : Type*} [CommRing R]
-    {P W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι)} {x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver R ι} (h : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P x) W : ℤ) ≠ 0) :
+    {P W : Ideal (MRing ι R)} {x : MRing ι R} (h : divCycle P x W ≠ 0) :
     W ∈ (P ⊔ Ideal.span {x}).minimalPrimes ∧ IsRelevant W := by
-  unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
+  unfold divCycle at h
   split_ifs at h with hW
   · exact hW
   · exact absurd rfl h
@@ -115,9 +114,9 @@ theorem AvoidingFormExists.proof : AvoidingFormExists.Statement.{u} := by
   have hD1 := hD.1
   obtain ⟨bf, bg, hf, hg, -⟩ := hD1.degrees
 
-  have hfin : ∀ x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, {W | W ∈ (P ⊔ Ideal.span {x}).minimalPrimes ∧ IsRelevant W}.Finite :=
+  have hfin : ∀ x : MRing ι O, {W | W ∈ (P ⊔ Ideal.span {x}).minimalPrimes ∧ IsRelevant W}.Finite :=
     fun x => (Ideal.finite_minimalPrimes_of_isNoetherianRing _ _).subset fun W hW => hW.1
-  have hmin : ∀ (x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (c : K → ℕ), IsMultiHomog x c →
+  have hmin : ∀ (x : MRing ι O) (c : K → ℕ), IsMultiHomog x c →
       ∀ W ∈ {W | W ∈ (P ⊔ Ideal.span {x}).minimalPrimes ∧ IsRelevant W},
         W.IsPrime ∧ IsMultiHomogIdeal W ∧ IsRelevant W := fun x c hx W hW =>
     ⟨hW.1.1.1, MinimalPrimeMultiHomog.proof O K ι _ W
@@ -136,19 +135,19 @@ theorem AvoidingFormExists.proof : AvoidingFormExists.Statement.{u} := by
   have hhg : ∀ W ∈ (P ⊔ Ideal.span {g}).minimalPrimes, IsRelevant W → h ∉ W := fun W hW hr =>
     hS W (Finset.mem_insert_of_mem (Finset.mem_union_right _ ((hfin g).mem_toFinset.mpr ⟨hW, hr⟩)))
 
-  have hG : ∀ G, ratDiv P f g G ≠ 0 → ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P h) G : ℤ) = 0 := by
+  have hG : ∀ G, ratDiv P f g G ≠ 0 → divCycle P h G = 0 := by
     intro G hG
     by_contra hhG
     have hhG' : h ∈ G := (relevant_minimal_of_divCycle_ne_zero hhG).1.1.2
       (Ideal.mem_sup_right (Ideal.mem_span_singleton_self h))
-    by_cases hfG : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) G : ℤ) = 0
-    · have hgG : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) G : ℤ) ≠ 0 := fun h0 => hG (by unfold ratDiv; rw [hfG, h0, sub_zero])
+    by_cases hfG : divCycle P f G = 0
+    · have hgG : divCycle P g G ≠ 0 := fun h0 => hG (by unfold ratDiv; rw [hfG, h0, sub_zero])
       obtain ⟨hm, hr⟩ := relevant_minimal_of_divCycle_ne_zero hgG
       exact hhg G hm hr hhG'
     · obtain ⟨hm, hr⟩ := relevant_minimal_of_divCycle_ne_zero hfG
       exact hhf G hm hr hhG'
-  have hterm : ∀ s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, ∀ G, ratDiv P f g G ≠ 0 →
-      ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P (s * h)) G : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) G : ℤ) ∨ s ∈ P := by
+  have hterm : ∀ s : MRing ι O, ∀ G, ratDiv P f g G ≠ 0 →
+      divCycle P (s * h) G = divCycle P s G ∨ s ∈ P := by
     intro s G hr
     by_cases hsP : s ∈ P
     · exact Or.inr hsP

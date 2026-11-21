@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.Intersections.IsSmoothMetricO
 public import ReciprocityTheory.AnalyticForms.RegularLocalRings.ConeChart
 public import ReciprocityTheory.AnalyticForms.RegularLocalRings.BaseChangeC
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.KleimanNefness.AlgDim
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -17,7 +16,7 @@ noncomputable section
 namespace GroundTheory.Heights₂.Heights
 
 open MvPolynomial
-open ReciprocityTheory.ChartRestriction.G.Geo (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver mcPts IsArithVar segre)
+open ReciprocityTheory.ChartRestriction.G.Geo (MRing IsArithVar mcPts segre)
 
 namespace SegreChartDim
 

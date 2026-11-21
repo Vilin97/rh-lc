@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.IsMultiHomogIdealSpanSingleton
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -142,15 +141,15 @@ section DVR
 variable {K : Type*} {ι : K → Type*} {O : Type*} [CommRing O] [IsDomain O]
   [IsDiscreteValuationRing O]
 
-theorem disjoint_nonZeroDivisors {ϖ : O} (hϖ : Irreducible ϖ) (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) [W.IsPrime]
-    (hW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W) :
-    Disjoint (((nonZeroDivisors O).map (C (σ := (Σ k, ι k)) (R := O)) : Submonoid (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) :
-      Set (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) W := by
+theorem disjoint_nonZeroDivisors {ϖ : O} (hϖ : Irreducible ϖ) (W : Ideal (MRing ι O)) [W.IsPrime]
+    (hW : (C ϖ : MRing ι O) ∉ W) :
+    Disjoint (((nonZeroDivisors O).map (C (σ := (Σ k, ι k)) (R := O)) : Submonoid (MRing ι O)) :
+      Set (MRing ι O)) W := by
   rw [Set.disjoint_left]
   rintro _ ⟨a, ha, rfl⟩ haW
   have ha0 : a ≠ 0 := nonZeroDivisors.ne_zero ha
   obtain ⟨k, u, hu⟩ := IsDiscreteValuationRing.associated_pow_irreducible ha0 hϖ
-  have hpow : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ k ∈ W := by
+  have hpow : (C ϖ : MRing ι O) ^ k ∈ W := by
     rw [← map_pow, ← hu, map_mul]
     exact W.mul_mem_right _ haW
   exact hW (‹W.IsPrime›.mem_of_pow_mem k hpow)
@@ -163,90 +162,90 @@ end GenericCycleCorresp
 theorem GenericCycleCorresp.proof : GenericCycleCorresp.Statement.{u} := by
   intro O _ _ _ ϖ hϖ K _ _ ι _ P s _ _ _ n
   classical
-  let M : Submonoid (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := (nonZeroDivisors O).map (C (σ := (Σ k, ι k)) (R := O))
-  have hgen : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι),
-      genFib W = W.map (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (MRing ι (FractionRing O))) := fun _ => rfl
+  let M : Submonoid (MRing ι O) := (nonZeroDivisors O).map (C (σ := (Σ k, ι k)) (R := O))
+  have hgen : ∀ W : Ideal (MRing ι O),
+      genFib W = W.map (algebraMap (MRing ι O) (MRing ι (FractionRing O))) := fun _ => rfl
   set J := P ⊔ Ideal.span {s}
   set s' := MvPolynomial.map (algebraMap O (FractionRing O)) s
   have hJ : genFib P ⊔ Ideal.span {s'} =
-      J.map (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (MRing ι (FractionRing O))) := by
+      J.map (algebraMap (MRing ι O) (MRing ι (FractionRing O))) := by
     rw [Ideal.map_sup, Ideal.map_span, Set.image_singleton]
     rfl
-  have hϖM : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ M := ⟨ϖ, mem_nonZeroDivisors_of_ne_zero hϖ.ne_zero, rfl⟩
-  have hcorr : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), W.IsPrime → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W →
+  have hϖM : (C ϖ : MRing ι O) ∈ M := ⟨ϖ, mem_nonZeroDivisors_of_ne_zero hϖ.ne_zero, rfl⟩
+  have hcorr : ∀ W : Ideal (MRing ι O), W.IsPrime → (C ϖ : MRing ι O) ∉ W →
       (genFib W).IsPrime ∧
-        (genFib W).comap (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (MRing ι (FractionRing O))) = W := by
+        (genFib W).comap (algebraMap (MRing ι O) (MRing ι (FractionRing O))) = W := by
     intro W hWp hWϖ
     have hd := GenericCycleCorresp.disjoint_nonZeroDivisors hϖ W hWϖ
     exact ⟨IsLocalization.isPrime_of_isPrime_disjoint M _ W hWp hd,
       IsLocalization.under_map_of_isPrime_disjoint M (MRing ι (FractionRing O)) hWp hd⟩
-  have hmin : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), W ∈ J.minimalPrimes → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W →
+  have hmin : ∀ W : Ideal (MRing ι O), W ∈ J.minimalPrimes → (C ϖ : MRing ι O) ∉ W →
       genFib W ∈ (genFib P ⊔ Ideal.span {s'}).minimalPrimes := by
     intro W hWm hWϖ
     rw [hJ, IsLocalization.minimalPrimes_map M]
-    show (genFib W).comap (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (MRing ι (FractionRing O))) ∈ J.minimalPrimes
+    show (genFib W).comap (algebraMap (MRing ι O) (MRing ι (FractionRing O))) ∈ J.minimalPrimes
     rw [(hcorr W hWm.1.1 hWϖ).2]
     exact hWm
-  have hkey : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), W ∈ J.minimalPrimes → (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W →
-      ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (genFib P) s') (genFib W) : ℤ) := by
+  have hkey : ∀ W : Ideal (MRing ι O), W ∈ J.minimalPrimes → (C ϖ : MRing ι O) ∉ W →
+      divCycle P s W = divCycle (genFib P) s' (genFib W) := by
     intro W hWm hWϖ
     haveI hWp : W.IsPrime := hWm.1.1
     obtain ⟨hWp', hcomap⟩ := hcorr W hWp hWϖ
     have hrel : IsRelevant (genFib W) ↔ IsRelevant W := by
       refine forall_congr' fun k => exists_congr fun i => not_congr ?_
       have hX : (X ⟨k, i⟩ : MRing ι (FractionRing O)) =
-          algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (MRing ι (FractionRing O)) (X ⟨k, i⟩) := (MvPolynomial.map_X _ _).symm
+          algebraMap (MRing ι O) (MRing ι (FractionRing O)) (X ⟨k, i⟩) := (MvPolynomial.map_X _ _).symm
       rw [hX, ← Ideal.mem_comap, hcomap]
     have hl : ∀ (h₁ : W.IsPrime) (h₂ : (genFib W).IsPrime),
         @multAt _ _ _ _ J W h₁ = @multAt _ _ _ _ (genFib P ⊔ Ideal.span {s'}) (genFib W) h₂ := by
       intro h₁ h₂
       unfold multAt
       rw [hJ]
-      haveI : (W.map (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (MRing ι (FractionRing O)))).IsPrime := h₂
+      haveI : (W.map (algebraMap (MRing ι O) (MRing ι (FractionRing O)))).IsPrime := h₂
       exact GenericCycleCorresp.length_eq M J W
         (GenericCycleCorresp.disjoint_nonZeroDivisors hϖ W hWϖ)
-    unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+    unfold divCycle
     by_cases hr : IsRelevant W
     · rw [dite_eq_left ⟨hWm, hr⟩, dite_eq_left ⟨hmin W hWm hWϖ, hrel.mpr hr⟩, hl]
     · rw [dite_eq_right (fun h => hr h.2), dite_eq_right (fun h => hr (hrel.mp h.2))]
   have hsupp : ∀ (Q : Ideal (MRing ι (FractionRing O))) (x) (W : Ideal (MRing ι (FractionRing O))),
-      ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle Q x) W : ℤ) ≠ 0 → W ∈ (Q ⊔ Ideal.span {x}).minimalPrimes := by
+      divCycle Q x W ≠ 0 → W ∈ (Q ⊔ Ideal.span {x}).minimalPrimes := by
     intro Q x W h
     unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
     split_ifs at h with hh
     · exact hh.1
     · exact absurd rfl h
-  have hsupp0 : ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) ≠ 0 → W ∈ J.minimalPrimes := by
+  have hsupp0 : ∀ W : Ideal (MRing ι O), divCycle P s W ≠ 0 → W ∈ J.minimalPrimes := by
     intro W h
     unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at h
     split_ifs at h with hh
     · exact hh.1
     · exact absurd rfl h
   unfold cycEval
-  let A : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι)) := {W | W ∈ J.minimalPrimes ∧ (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W}
+  let A : Set (Ideal (MRing ι O)) := {W | W ∈ J.minimalPrimes ∧ (C ϖ : MRing ι O) ∉ W}
   let B : Set (Ideal (MRing ι (FractionRing O))) := (genFib P ⊔ Ideal.span {s'}).minimalPrimes
-  have hA : (∑ᶠ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) * (if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then 0 else n (genFib W))) =
-      ∑ᶠ W ∈ A, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) * (if (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W then 0 else n (genFib W)) := by
+  have hA : (∑ᶠ W, divCycle P s W * (if (C ϖ : MRing ι O) ∈ W then 0 else n (genFib W))) =
+      ∑ᶠ W ∈ A, divCycle P s W * (if (C ϖ : MRing ι O) ∈ W then 0 else n (genFib W)) := by
     rw [finsum_mem_def]
     congr 1
     funext W
     symm
     rw [Set.indicator_apply_eq_self]
     intro hW
-    by_cases hϖW : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W
+    by_cases hϖW : (C ϖ : MRing ι O) ∈ W
     · rw [if_pos hϖW, mul_zero]
-    · have : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) = 0 := by
+    · have : divCycle P s W = 0 := by
         by_contra h
         exact hW ⟨hsupp0 W h, hϖW⟩
       rw [this, zero_mul]
-  have hB : (∑ᶠ W, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (genFib P) s') W : ℤ) * n W) = ∑ᶠ W ∈ B, ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (genFib P) s') W : ℤ) * n W := by
+  have hB : (∑ᶠ W, divCycle (genFib P) s' W * n W) = ∑ᶠ W ∈ B, divCycle (genFib P) s' W * n W := by
     rw [finsum_mem_def]
     congr 1
     funext W
     symm
     rw [Set.indicator_apply_eq_self]
     intro hW
-    have : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (genFib P) s') W : ℤ) = 0 := by
+    have : divCycle (genFib P) s' W = 0 := by
       by_contra h
       exact hW (hsupp _ _ W h)
     rw [this, zero_mul]
@@ -262,7 +261,7 @@ theorem GenericCycleCorresp.proof : GenericCycleCorresp.Statement.{u} := by
     have hW'm := hW'
     change W' ∈ (genFib P ⊔ Ideal.span {s'}).minimalPrimes at hW'm
     rw [hJ, IsLocalization.minimalPrimes_map M] at hW'm
-    refine ⟨W'.comap (algebraMap (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (MRing ι (FractionRing O))), ⟨hW'm, ?_⟩, ?_⟩
+    refine ⟨W'.comap (algebraMap (MRing ι O) (MRing ι (FractionRing O))), ⟨hW'm, ?_⟩, ?_⟩
     · intro h
       rw [Ideal.mem_comap] at h
       exact hW'p.ne_top (Ideal.eq_top_of_isUnit_mem _ h

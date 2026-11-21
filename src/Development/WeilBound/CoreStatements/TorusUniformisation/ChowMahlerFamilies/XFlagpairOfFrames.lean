@@ -7,7 +7,6 @@ public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.Plu
 public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.MonomialRatioIntegralModelStatement
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBundles
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.SameGenericSymm
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -79,9 +78,9 @@ end PositivityTheory.Xgn.A_flagpair_of_frames
 
 private theorem isMultiHomog_prod_X_pow' {O : Type} [CommRing O] {K : Type} [Fintype K] [DecidableEq K]
     {ι : K → Type} (c : (k : K) → ι k) (e : K → ℕ) :
-    IsMultiHomog (∏ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ e k) e := by
+    IsMultiHomog (∏ k, (X ⟨k, c k⟩ : MRing ι O) ^ e k) e := by
   have hXpow : ∀ (q : (k : K) × ι k) (n : ℕ),
-      IsMultiHomog ((X q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ n) (n • blockWeight ι q) := by
+      IsMultiHomog ((X q : MRing ι O) ^ n) (n • blockWeight ι q) := by
     intro q n
     induction n with
     | zero =>
@@ -90,7 +89,7 @@ private theorem isMultiHomog_prod_X_pow' {O : Type} [CommRing O] {K : Type} [Fin
     | succ n ih =>
       rw [pow_succ, succ_nsmul]
       exact IsWeightedHomogeneous.mul ih (isWeightedHomogeneous_X O (blockWeight ι) q)
-  have h := IsWeightedHomogeneous.prod Finset.univ (fun k => (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ e k)
+  have h := IsWeightedHomogeneous.prod Finset.univ (fun k => (X ⟨k, c k⟩ : MRing ι O) ^ e k)
     (fun k => e k • blockWeight ι ⟨k, c k⟩) (fun k _ => hXpow _ _)
   have hsum : (∑ k, e k • blockWeight ι ⟨k, c k⟩) = e := by
     funext k'
@@ -101,8 +100,8 @@ private theorem isMultiHomog_prod_X_pow' {O : Type} [CommRing O] {K : Type} [Fin
 private theorem exists_multiHomog_aeval_eq_mul_mseg_pow {O : Type} [CommRing O] {Ω : Type} [Field Ω] [Algebra O Ω]
     {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} (x : (k : K) × ι k → Ω)
     (c : (k : K) → ι k) (hc : mseg x c ≠ 0) (a : Ω) (ha : a ∈ chartRing O (mseg x) c) :
-    ∃ (p : ℕ) (h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), IsMultiHomog h (fun _ => p) ∧ aeval x h = a * mseg x c ^ p := by
-  have hdeg : ∀ {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {d d' : K → ℕ}, IsMultiHomog h d → d = d' → IsMultiHomog h d' :=
+    ∃ (p : ℕ) (h : MRing ι O), IsMultiHomog h (fun _ => p) ∧ aeval x h = a * mseg x c ^ p := by
+  have hdeg : ∀ {h : MRing ι O} {d d' : K → ℕ}, IsMultiHomog h d → d = d' → IsMultiHomog h d' :=
     fun h e => e ▸ h
   have hmc : ∀ q : ℕ, mseg x c ^ q = ∏ k, x ⟨k, c k⟩ ^ q := by
     intro q
@@ -112,7 +111,7 @@ private theorem exists_multiHomog_aeval_eq_mul_mseg_pow {O : Type} [CommRing O] 
   induction ha using Algebra.adjoin_induction with
   | mem u hu =>
     obtain ⟨s, rfl⟩ := hu
-    refine ⟨1, ∏ k, (X ⟨k, s k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ (fun _ : K => 1) k, isMultiHomog_prod_X_pow' (O := O) s _, ?_⟩
+    refine ⟨1, ∏ k, (X ⟨k, s k⟩ : MRing ι O) ^ (fun _ : K => 1) k, isMultiHomog_prod_X_pow' (O := O) s _, ?_⟩
     rw [pow_one, div_mul_cancel₀ _ hc]
     simp [mseg, map_prod]
   | algebraMap r =>
@@ -121,8 +120,8 @@ private theorem exists_multiHomog_aeval_eq_mul_mseg_pow {O : Type} [CommRing O] 
   | add u v _ _ hu hv =>
     obtain ⟨p1, h1, hh1, he1⟩ := hu
     obtain ⟨p2, h2, hh2, he2⟩ := hv
-    refine ⟨p1 + p2, h1 * (∏ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ (fun _ : K => p2) k) +
-      h2 * (∏ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ (fun _ : K => p1) k), ?_, ?_⟩
+    refine ⟨p1 + p2, h1 * (∏ k, (X ⟨k, c k⟩ : MRing ι O) ^ (fun _ : K => p2) k) +
+      h2 * (∏ k, (X ⟨k, c k⟩ : MRing ι O) ^ (fun _ : K => p1) k), ?_, ?_⟩
     · refine IsWeightedHomogeneous.add
         (hdeg (IsWeightedHomogeneous.mul hh1 (isMultiHomog_prod_X_pow' (O := O) c _)) ?_)
         (hdeg (IsWeightedHomogeneous.mul hh2 (isMultiHomog_prod_X_pow' (O := O) c _)) ?_)
@@ -141,9 +140,9 @@ private theorem exists_multiHomog_aeval_eq_mul_mseg_pow {O : Type} [CommRing O] 
     ring
 
 open PositivityTheory.Xgn.A_flagpair_of_frames in
-theorem PositivityTheory.Xgn.t_flagpair_of_frames : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (Ω : Type) [Field Ω] [Algebra O Ω] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (x : (Σ k, ι k) → Ω) (ϖ : O), Irreducible ϖ → ∀ d : ℕ, IsModelOver (pointIdeal O x) d → ∀ (N : ℕ) (V : Type) [AddCommGroup V] [Module Ω V] (E E' : ChartBundle O (mseg x) N V), SameGeneric O x E E' → ∀ (w w' : Module.Basis (Fin N) Ω V) (b b' : Fin N → K → ℤ), IsFlagFrame x E w b → IsFlagFrame x E' w' b' → (∀ i j : Fin N, i < j → w.repr (w' i) j = 0) → SameGenericFibre ϖ E E' ∧ ∃ f g : Fin N → ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι, IsFlagPair ϖ x E E' w w' b b' f g := by
+theorem PositivityTheory.Xgn.t_flagpair_of_frames : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (Ω : Type) [Field Ω] [Algebra O Ω] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (x : (Σ k, ι k) → Ω) (ϖ : O), Irreducible ϖ → ∀ d : ℕ, IsModelOver (pointIdeal O x) d → ∀ (N : ℕ) (V : Type) [AddCommGroup V] [Module Ω V] (E E' : ChartBundle O (mseg x) N V), SameGeneric O x E E' → ∀ (w w' : Module.Basis (Fin N) Ω V) (b b' : Fin N → K → ℤ), IsFlagFrame x E w b → IsFlagFrame x E' w' b' → (∀ i j : Fin N, i < j → w.repr (w' i) j = 0) → SameGenericFibre ϖ E E' ∧ ∃ f g : Fin N → MRing ι O, IsFlagPair ϖ x E E' w w' b b' f g := by
   intro O _ _ _ Ω _ _ K _ _ ι _ x ϖ hϖ d hP N V _ _ E E' hSG w w' b b' hE hE' htri
-  have hdeg : ∀ {h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι} {d d' : K → ℕ}, IsMultiHomog h d → d = d' → IsMultiHomog h d' :=
+  have hdeg : ∀ {h : MRing ι O} {d d' : K → ℕ}, IsMultiHomog h d → d = d' → IsMultiHomog h d' :=
     fun h e => e ▸ h
   have hSGF : SameGenericFibre ϖ E E' := by
     intro s hs
@@ -163,11 +162,11 @@ theorem PositivityTheory.Xgn.t_flagpair_of_frames : ∀ (O : Type) [CommRing O] 
   have hx0 : ∀ c : (k : K) → ι k, mseg x c ≠ 0 → ∀ k, x ⟨k, c k⟩ ≠ 0 :=
     fun c hc k => Finset.prod_ne_zero_iff.mp hc k (Finset.mem_univ k)
   have hdata : ∀ c : (k : K) → ι k, mseg x c ≠ 0 → ∀ i : Fin N,
-      ∃ (F G : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (bf bg : K → ℕ), IsMultiHomog F bf ∧ IsMultiHomog G bg ∧
+      ∃ (F G : MRing ι O) (bf bg : K → ℕ), IsMultiHomog F bf ∧ IsMultiHomog G bg ∧
         (fun k => (bf k : ℤ) - bg k) = b i - b' i ∧
         aeval x F = w.repr (w' i) i * aeval x G ∧
-        ∀ W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι), W.IsPrime → pointIdeal O x ≤ W → C ϖ ∉ W →
-          (∀ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W) → F ∉ W ∧ G ∉ W := by
+        ∀ W : Ideal (MRing ι O), W.IsPrime → pointIdeal O x ≤ W → C ϖ ∉ W →
+          (∀ k, (X ⟨k, c k⟩ : MRing ι O) ∉ W) → F ∉ W ∧ G ∉ W := by
     intro c hc i
     have hm : (∏ k, x ⟨k, c k⟩ ^ b i k) ≠ 0 :=
       Finset.prod_ne_zero_iff.mpr fun k _ => zpow_ne_zero _ (hx0 c hc k)
@@ -216,8 +215,8 @@ theorem PositivityTheory.Xgn.t_flagpair_of_frames : ∀ (O : Type) [CommRing O] 
       intro q
       rw [Finset.prod_pow]
       rfl
-    refine ⟨h * ∏ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ (b i k - b' i k).toNat,
-      C (ϖ ^ n) * ∏ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ (p + (-(b i k - b' i k)).toNat),
+    refine ⟨h * ∏ k, (X ⟨k, c k⟩ : MRing ι O) ^ (b i k - b' i k).toNat,
+      C (ϖ ^ n) * ∏ k, (X ⟨k, c k⟩ : MRing ι O) ^ (p + (-(b i k - b' i k)).toNat),
       fun k => p + (b i k - b' i k).toNat, fun k => p + (-(b i k - b' i k)).toNat, ?_, ?_, ?_, ?_, ?_⟩
     · exact hdeg (IsWeightedHomogeneous.mul hh (isMultiHomog_prod_X_pow' (O := O) c (fun k => (b i k - b' i k).toNat)))
         (by funext k; simp)
@@ -241,15 +240,15 @@ theorem PositivityTheory.Xgn.t_flagpair_of_frames : ∀ (O : Type) [CommRing O] 
       linear_combination (-(α * ∏ k, x ⟨k, c k⟩ ^ p)) * eq2 +
         (-((∏ k, x ⟨k, c k⟩ ^ p) * ∏ k, x ⟨k, c k⟩ ^ (-(b i k - b' i k)).toNat)) * eq1
     · intro W hW hPW hϖW hXW
-      have hXc : ∀ e : K → ℕ, (∏ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ e k) ∈ W.primeCompl :=
+      have hXc : ∀ e : K → ℕ, (∏ k, (X ⟨k, c k⟩ : MRing ι O) ^ e k) ∈ W.primeCompl :=
         fun e => prod_mem fun k _ => pow_mem (Ideal.mem_primeCompl_iff.mpr (hXW k)) _
-      have hCpow : ∀ q : ℕ, (C (ϖ ^ q) : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∈ W.primeCompl := by
+      have hCpow : ∀ q : ℕ, (C (ϖ ^ q) : MRing ι O) ∈ W.primeCompl := by
         intro q
         rw [map_pow]
         exact pow_mem (Ideal.mem_primeCompl_iff.mpr hϖW) q
       have hhW : h ∉ W := by
         intro hhW
-        have hrel : h * h' - C (ϖ ^ (n + n2)) * ∏ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ (fun _ : K => p + p') k
+        have hrel : h * h' - C (ϖ ^ (n + n2)) * ∏ k, (X ⟨k, c k⟩ : MRing ι O) ^ (fun _ : K => p + p') k
             ∈ pointIdeal O x := by
           refine GenericProjClosureDivisor.mem_of_homog (b := fun _ => p + p') ?_ ?_
           · refine IsWeightedHomogeneous.sub
@@ -260,7 +259,7 @@ theorem PositivityTheory.Xgn.t_flagpair_of_frames : ∀ (O : Type) [CommRing O] 
             simp only [map_prod, map_pow, aeval_X]
             rw [show (∏ k, x ⟨k, c k⟩ ^ (p + p')) = mseg x c ^ (p + p') by rw [Finset.prod_pow]; rfl]
             linear_combination (mseg x c ^ (p + p')) * hαα
-        have hmemW : C (ϖ ^ (n + n2)) * ∏ k, (X ⟨k, c k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ^ (fun _ : K => p + p') k ∈ W := by
+        have hmemW : C (ϖ ^ (n + n2)) * ∏ k, (X ⟨k, c k⟩ : MRing ι O) ^ (fun _ : K => p + p') k ∈ W := by
           have h1 : h * h' ∈ W := W.mul_mem_right h' hhW
           have h2 := hPW hrel
           have h3 := W.sub_mem h1 h2
@@ -268,16 +267,16 @@ theorem PositivityTheory.Xgn.t_flagpair_of_frames : ∀ (O : Type) [CommRing O] 
         exact (Ideal.mem_primeCompl_iff.mp (mul_mem (hCpow _) (hXc _))) hmemW
       exact ⟨fun hF => (hW.mem_or_mem hF).elim hhW (Ideal.mem_primeCompl_iff.mp (hXc _)),
         Ideal.mem_primeCompl_iff.mp (mul_mem (hCpow n) (hXc _))⟩
-  have hXnotP : ∀ q : (k : K) × ι k, (X q : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ pointIdeal O x → x q ≠ 0 := by
+  have hXnotP : ∀ q : (k : K) × ι k, (X q : MRing ι O) ∉ pointIdeal O x → x q ≠ 0 := by
     intro q hq hx
     exact hq (GenericProjClosureDivisor.mem_of_homog (b := blockWeight ι q)
       (isWeightedHomogeneous_X O (blockWeight ι) q) (by simp [hx]))
-  have hrelP : ∀ k, ∃ j : ι k, (X ⟨k, j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ pointIdeal O x := hP.multiProj.relevant
+  have hrelP : ∀ k, ∃ j : ι k, (X ⟨k, j⟩ : MRing ι O) ∉ pointIdeal O x := hP.multiProj.relevant
   choose c0 hc0 using hrelP
   have hmc0 : mseg x c0 ≠ 0 := Finset.prod_ne_zero_iff.mpr fun k _ => hXnotP _ (hc0 k)
-  have hCϖ : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ pointIdeal O x := by
+  have hCϖ : (C ϖ : MRing ι O) ∉ pointIdeal O x := by
     intro hmem
-    have hcm : ϖ ∈ Ideal.comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) (pointIdeal O x) := hmem
+    have hcm : ϖ ∈ Ideal.comap (C : O →+* MRing ι O) (pointIdeal O x) := hmem
     rw [hP.noTorsion] at hcm
     exact hϖ.ne_zero (Ideal.mem_bot.mp hcm)
   have hPprime : (pointIdeal O x).IsPrime := hP.multiProj.isPrime
@@ -286,7 +285,7 @@ theorem PositivityTheory.Xgn.t_flagpair_of_frames : ∀ (O : Type) [CommRing O] 
   refine IsVerticalDivisor.of_unit_off_special ⟨bf i, bg i, hF i, hG i, hdiff i⟩
     (hnot i _ hPprime le_rfl hCϖ hc0).1 (hnot i _ hPprime le_rfl hCϖ hc0).2 ?_
   intro W hW hPW hRW hϖW
-  have hRW' : ∀ k, ∃ j : ι k, (X ⟨k, j⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) ∉ W := hRW
+  have hRW' : ∀ k, ∃ j : ι k, (X ⟨k, j⟩ : MRing ι O) ∉ W := hRW
   choose cW hcW using hRW'
   have hmcW : mseg x cW ≠ 0 :=
     Finset.prod_ne_zero_iff.mpr fun k _ => hXnotP _ (fun hm => hcW k (hPW hm))

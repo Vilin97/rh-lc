@@ -6,7 +6,6 @@ public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSectionPointVa
 public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsSemilocRing
 public import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.LiftOldChartMonomialMemPrimeCompl
 public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ImageCoord
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -27,7 +26,7 @@ section Cycle
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
 theorem divCycle_eq_zero_of_not {P W : Ideal (MRing ι)} (f : MRing ι)
-    (h : ¬ (W.IsPrime ∧ IsRelevant W ∧ P ≤ W)) : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = 0 := by
+    (h : ¬ (W.IsPrime ∧ IsRelevant W ∧ P ≤ W)) : divCycle P f W = 0 := by
   simp only [divCycle, Finsupp.ofSupportFinite_coe]
   rw [if_neg]
   intro hW
@@ -35,7 +34,7 @@ theorem divCycle_eq_zero_of_not {P W : Ideal (MRing ι)} (f : MRing ι)
   exact h ⟨hW.1.1.1, hW.2, le_sup_left.trans hW.1.1.2⟩
 
 theorem divCycle_apply_eq_of_cross (P : Ideal (MRing ι)) {f g f' g' : MRing ι} {W : Ideal (MRing ι)} [hW : W.IsPrime]
-    (hf' : f' ∉ W) (hg' : g' ∉ W) (hrel : f * g' - f' * g ∈ P) : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ) = ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ) := by
+    (hf' : f' ∉ W) (hg' : g' ∉ W) (hrel : f * g' - f' * g ∈ P) : divCycle P f W = divCycle P g W := by
   set J := P ⊔ Ideal.span {f * g'} with hJdef
   have hfg : f * g' ∈ J := Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)
   have hIJ : P ≤ J := le_sup_left
@@ -82,7 +81,7 @@ theorem divCycle_apply_eq_of_cross (P : Ideal (MRing ι)) {f g f' g' : MRing ι}
 theorem divCycle_eq_of_forall_cross (P : Ideal (MRing ι)) {f g : MRing ι}
     (h : ∀ W : Ideal (MRing ι), W.IsPrime → IsRelevant W → P ≤ W →
       ∃ f' g' : MRing ι, f' ∉ W ∧ g' ∉ W ∧ f * g' - f' * g ∈ P) :
-    (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P f) W : ℤ)) = (fun W => ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P g) W : ℤ)) := by
+    divCycle P f = divCycle P g := by
   ext W
   by_cases hW : W.IsPrime ∧ IsRelevant W ∧ P ≤ W
   · obtain ⟨hp, hr, hle⟩ := hW

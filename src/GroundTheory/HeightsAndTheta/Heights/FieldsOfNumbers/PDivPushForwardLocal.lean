@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsDeg
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsSemilocalFiniteRank
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.StatementsSemilocalLength
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.KrullDimQuotientEqOneIffEqBot
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -22,13 +21,13 @@ noncomputable section
 universe u
 
 theorem exists_form_not_mem {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} {F : Type u}
-    [Field F] {W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hW : IsMultiProjPrime W) (c : K → ℕ) :
-    ∃ h : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι, IsMultiHomog h c ∧ h ∉ W := by
+    [Field F] {W : Ideal (MRing ι F)} (hW : IsMultiProjPrime W) (c : K → ℕ) :
+    ∃ h : MRing ι F, IsMultiHomog h c ∧ h ∉ W := by
   choose v hv using hW.relevant
   have := hW.isPrime
-  refine ⟨∏ k, (X ⟨k, v k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ c k, ?_, ?_⟩
+  refine ⟨∏ k, (X ⟨k, v k⟩ : MRing ι F) ^ c k, ?_, ?_⟩
   · have hprod := IsWeightedHomogeneous.prod (w := blockWeight ι) Finset.univ
-      (fun k => (X ⟨k, v k⟩ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) ^ c k) (fun k => c k • blockWeight ι ⟨k, v k⟩)
+      (fun k => (X ⟨k, v k⟩ : MRing ι F) ^ c k) (fun k => c k • blockWeight ι ⟨k, v k⟩)
       (fun k _ => (isWeightedHomogeneous_X F (blockWeight ι) _).pow (c k))
     have hc : (∑ k, c k • blockWeight ι ⟨k, v k⟩) = c := by
       funext k'
@@ -67,7 +66,7 @@ theorem DivPushForwardLocal.proof (h1 : DivCycleMinimal.Statement.{u})
       M hM1 hM0 α rfl
     obtain ⟨hmin, hfinm⟩ := h1 F K _ _ hP.isPrime n hdimP a haP W hW.isPrime hWd hPW
     have hcone := h2 F K _ _ hP W hW hPle c a h ha hh hhW α rfl
-    have hdc : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (contractPrime j P') a) W : ℤ) =
+    have hdc : divCycle (contractPrime j P') a W =
         ((multAt (contractPrime j P' ⊔ Ideal.span {a}) W).toNat : ℤ) := by
       unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
       rw [dite_eq_left ⟨hmin, hW.relevant⟩]
@@ -79,18 +78,18 @@ theorem DivPushForwardLocal.proof (h1 : DivCycleMinimal.Statement.{u})
     rw [hNm, ENat.toNat_natCast]
     push_cast
     rfl
-  · have hR : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle (contractPrime j P') a) W : ℤ) = 0 := by
-      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle
+  · have hR : divCycle (contractPrime j P') a W = 0 := by
+      unfold divCycle
       rw [dite_eq_right]
       rintro ⟨h, -⟩
       exact hPW h.1.2
     rw [hR, mul_zero]
     unfold cycEval
     refine finsum_eq_zero_of_forall_eq_zero fun W' => ?_
-    by_cases hD : ((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P' (rename (blockIncl j ι') a)) W' : ℤ) = 0
+    by_cases hD : divCycle P' (rename (blockIncl j ι') a) W' = 0
     · rw [hD, zero_mul]
     · refine mul_eq_zero_of_right _ (hM0 W' fun hc => hPW ?_)
-      unfold ReciprocityTheory.ChartRestriction.G.Geo.divCycle at hD
+      unfold divCycle at hD
       split_ifs at hD with hm
       · rw [← hc]
         refine sup_le (Ideal.comap_mono (le_trans le_sup_left hm.1.1.2)) ?_

@@ -7,7 +7,6 @@ public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PDvr
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PGenericProjClosureDim
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PGenericProjClosureDivisor
 public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTwistedDualGensExpress
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -102,7 +101,7 @@ theorem SegreFlagClosureModel.proof (hTr : SegreFlagClosureTrdeg.Statement) :
     intro a ha
     rw [Ideal.mem_comap, pointIdeal, RingHom.mem_ker, pointConeMap, aeval_C, MvPolynomial.algebraMap_apply,
       C_eq_zero, IsScalarTower.algebraMap_apply O Ω Φ, map_eq_zero_iff _ (FaithfulSMul.algebraMap_injective Ω Φ)] at ha
-    have hy : a ∈ (pointIdeal O y).comap (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι) := by
+    have hy : a ∈ (pointIdeal O y).comap (C : O →+* MRing ι O) := by
       rw [Ideal.mem_comap, pointIdeal, RingHom.mem_ker, pointConeMap, aeval_C, MvPolynomial.algebraMap_apply, ha,
         map_zero]
     rw [hV.noTorsion] at hy
@@ -110,9 +109,9 @@ theorem SegreFlagClosureModel.proof (hTr : SegreFlagClosureTrdeg.Statement) :
 
   have hdy := DvrConeDimTrdeg.proof O K ι (pointIdeal O y) hV.multiProj hV.noTorsion
   rw [hV.dim] at hdy
-  have hty : Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y) = ((d + Fintype.card K : ℕ) : Cardinal) := by
+  have hty : Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) = ((d + Fintype.card K : ℕ) : Cardinal) := by
     have h1 : (((d + Fintype.card K : ℕ) : ℕ∞) + 1) =
-        (Algebra.trdeg O (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O ι ⧸ pointIdeal O y)).toENat + 1 := by
+        (Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y)).toENat + 1 := by
       have := WithBot.coe_injective hdy
       rw [← this]
       push_cast
@@ -129,11 +128,11 @@ theorem SegreFlagClosureModel.proof (hTr : SegreFlagClosureTrdeg.Statement) :
 
   rw [hpt] at hZ ⊢
   have hP' : (pointIdeal O (pairProjCoord y w φ φ' (flagCoord w e t k))).IsPrime := hZ.multiProj.isPrime
-  have hϖP : (C ϖ : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) ∉
+  have hϖP : (C ϖ : MRing (bundleIdx (bundleIdx ι M) M') O) ∉
       pointIdeal O (pairProjCoord y w φ φ' (flagCoord w e t k)) := by
     intro hm
     have h1 : ϖ ∈ (pointIdeal O (pairProjCoord y w φ φ' (flagCoord w e t k))).comap
-        (C : O →+* ReciprocityTheory.ChartRestriction.G.Geo.MRingOver O (bundleIdx (bundleIdx ι M) M')) := hm
+        (C : O →+* MRing (bundleIdx (bundleIdx ι M) M') O) := hm
     rw [hZ.noTorsion, Ideal.mem_bot] at h1
     exact hϖ.ne_zero h1
   have pairs := pairs_at TwistedDualGensExpress.proof y B B' hB a₀ a₀' φ φ' hφ hφ' w (flagCoord w e t k)

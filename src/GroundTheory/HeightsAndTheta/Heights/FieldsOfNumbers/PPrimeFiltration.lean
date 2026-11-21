@@ -2,7 +2,6 @@ module
 
 public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
-public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
 
 @[expose] public section
 
@@ -53,24 +52,24 @@ theorem weight_lexWeight (d : (Σ k, ι k) →₀ ℕ) :
   simp only [Finsupp.weight_apply, map_finsuppSum, map_nsmul, lexWeight]
 
 abbrev lexGrading (ι : K → Type) (F : Type u) [Field F] :
-    Lex (Fin (Fintype.card K) → ℕ) → Submodule F (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :=
+    Lex (Fin (Fintype.card K) → ℕ) → Submodule F (MRing ι F) :=
   weightedHomogeneousSubmodule F (lexWeight (ι := ι))
 
 open Classical in
-theorem component_lex (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (b : K → ℕ) :
+theorem component_lex (f : MRing ι F) (b : K → ℕ) :
     weightedHomogeneousComponent (lexWeight (ι := ι)) (lexEmb K b) f =
       weightedHomogeneousComponent (blockWeight ι) b f := by
   ext d
   simp only [coeff_weightedHomogeneousComponent, weight_lexWeight, lexEmb_injective.eq_iff]
 
 open Classical in
-theorem component_lex_of_ne (f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (m : Lex (Fin (Fintype.card K) → ℕ))
+theorem component_lex_of_ne (f : MRing ι F) (m : Lex (Fin (Fintype.card K) → ℕ))
     (hm : ∀ b, lexEmb K b ≠ m) :
     weightedHomogeneousComponent (lexWeight (ι := ι)) m f = 0 := by
   ext d
   simp [coeff_weightedHomogeneousComponent, weight_lexWeight, hm]
 
-theorem component_lex_mem {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : IsMultiHomogIdeal I) {f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
+theorem component_lex_mem {I : Ideal (MRing ι F)} (hI : IsMultiHomogIdeal I) {f : MRing ι F}
     (hf : f ∈ I) (m : Lex (Fin (Fintype.card K) → ℕ)) :
     weightedHomogeneousComponent (lexWeight (ι := ι)) m f ∈ I := by
   by_cases h : ∃ b, lexEmb K b = m
@@ -83,7 +82,7 @@ theorem component_lex_mem {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.M
 
 attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
-theorem isHomogeneous_of_multiHomog {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hI : IsMultiHomogIdeal I) :
+theorem isHomogeneous_of_multiHomog {I : Ideal (MRing ι F)} (hI : IsMultiHomogIdeal I) :
     I.IsHomogeneous (lexGrading ι F) := by
   classical
   have e : I = Ideal.span
@@ -101,20 +100,20 @@ theorem isHomogeneous_of_multiHomog {I : Ideal (ReciprocityTheory.ChartRestricti
   obtain ⟨f, -, m, rfl⟩ := hx
   exact ⟨m, weightedHomogeneousComponent_isWeightedHomogeneous m f⟩
 
-theorem multiHomog_of_isHomogeneous {I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}
+theorem multiHomog_of_isHomogeneous {I : Ideal (MRing ι F)}
     (h : I.IsHomogeneous (lexGrading ι F)) : IsMultiHomogIdeal I := by
   classical
   intro f hf b
   rw [← component_lex]
   exact weightedHomogeneousComponent_mem_of_mem (h := h) (hp := hf) (m := lexEmb K b)
 
-theorem mem_lexGrading {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {c : K → ℕ} (hs : IsMultiHomog s c) :
+theorem mem_lexGrading {s : MRing ι F} {c : K → ℕ} (hs : IsMultiHomog s c) :
     s ∈ lexGrading ι F (lexEmb K c) := by
   rw [mem_weightedHomogeneousSubmodule]
   intro d hd
   rw [weight_lexWeight, hs hd]
 
-theorem exists_multiHomog_of_mem {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} {m : Lex (Fin (Fintype.card K) → ℕ)}
+theorem exists_multiHomog_of_mem {s : MRing ι F} {m : Lex (Fin (Fintype.card K) → ℕ)}
     (hs : s ∈ lexGrading ι F m) (h0 : s ≠ 0) : ∃ c : K → ℕ, IsMultiHomog s c := by
   rw [mem_weightedHomogeneousSubmodule] at hs
   obtain ⟨d, hd⟩ := MvPolynomial.ne_zero_iff.mp h0
@@ -122,8 +121,8 @@ theorem exists_multiHomog_of_mem {s : ReciprocityTheory.ChartRestriction.G.Geo.M
   apply lexEmb_injective
   rw [← weight_lexWeight, ← weight_lexWeight, hs hd', hs hd]
 
-theorem component_mul_form {c : K → ℕ} {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} (hs : IsMultiHomog s c)
-    (t : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (b : K → ℕ) :
+theorem component_mul_form {c : K → ℕ} {s : MRing ι F} (hs : IsMultiHomog s c)
+    (t : MRing ι F) (b : K → ℕ) :
     weightedHomogeneousComponent (blockWeight ι) (b + c) (t * s) =
       weightedHomogeneousComponent (blockWeight ι) b t * s := by
   have hs' : s ∈ weightedHomogeneousSubmodule F (blockWeight ι) c :=
@@ -134,26 +133,26 @@ theorem component_mul_form {c : K → ℕ} {s : ReciprocityTheory.ChartRestricti
   exact this
 
 omit [Fintype K] [DecidableEq K] in
-theorem mem_colon_iff {J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} {s f : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι} :
+theorem mem_colon_iff {J : Ideal (MRing ι F)} {s f : MRing ι F} :
     f ∈ J.colon (Ideal.span {s}) ↔ f * s ∈ J := by
   rw [Submodule.mem_colon_span_singleton, smul_eq_mul]
 
-theorem multiHomog_colon {J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hJ : IsMultiHomogIdeal J) {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
+theorem multiHomog_colon {J : Ideal (MRing ι F)} (hJ : IsMultiHomogIdeal J) {s : MRing ι F}
     {c : K → ℕ} (hs : IsMultiHomog s c) : IsMultiHomogIdeal (J.colon (Ideal.span {s})) := by
   intro f hf b
   rw [mem_colon_iff] at hf ⊢
   rw [← component_mul_form hs]
   exact hJ _ hf _
 
-theorem exists_colon_isPrime [∀ k, Fintype (ι k)] {J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)}
+theorem exists_colon_isPrime [∀ k, Fintype (ι k)] {J : Ideal (MRing ι F)}
     (hJ : IsMultiHomogIdeal J) (hJt : J ≠ ⊤) :
-    ∃ (c : K → ℕ) (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι), IsMultiHomog s c ∧ s ∉ J ∧
+    ∃ (c : K → ℕ) (s : MRing ι F), IsMultiHomog s c ∧ s ∉ J ∧
       (J.colon (Ideal.span {s})).IsPrime ∧ IsMultiHomogIdeal (J.colon (Ideal.span {s})) := by
-  let 𝒮 : Set (Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) :=
+  let 𝒮 : Set (Ideal (MRing ι F)) :=
     {P | ∃ s, (∃ i, s ∈ lexGrading ι F i) ∧ s ∉ J ∧ P = J.colon (Ideal.span {s})}
   have hne : 𝒮.Nonempty :=
     ⟨_, 1, ⟨0, SetLike.GradedOne.one_mem⟩, (Ideal.ne_top_iff_one J).mp hJt, rfl⟩
-  have hnoeth : IsNoetherian (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) := inferInstance
+  have hnoeth : IsNoetherian (MRing ι F) (MRing ι F) := inferInstance
   obtain ⟨P, hP, hmax⟩ := set_has_maximal_iff_noetherian.mpr hnoeth 𝒮 hne
   obtain ⟨s, ⟨i, hsi⟩, hsJ, hPs⟩ := hP
   subst hPs
@@ -184,7 +183,7 @@ theorem exists_colon_isPrime [∀ k, Fintype (ι k)] {J : Ideal (ReciprocityTheo
       exact mem_colon_iff.mp hxy
   exact ⟨c, s, hc, hsJ, hprime, hmh⟩
 
-theorem multiHomog_sup_span {J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} (hJ : IsMultiHomogIdeal J) {s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι}
+theorem multiHomog_sup_span {J : Ideal (MRing ι F)} (hJ : IsMultiHomogIdeal J) {s : MRing ι F}
     {c : K → ℕ} (hs : IsMultiHomog s c) : IsMultiHomogIdeal (J ⊔ Ideal.span {s}) := by
   refine multiHomog_of_isHomogeneous ((isHomogeneous_of_multiHomog hJ).sup ?_)
   refine Ideal.homogeneous_span _ _ ?_
@@ -197,13 +196,13 @@ section Length
 
 variable {K : Type} {ι : K → Type} {F : Type u} [Field F]
 
-theorem smul_quot_mk (I : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (r x : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
+theorem smul_quot_mk (I : Ideal (MRing ι F)) (r x : MRing ι F) :
     r • Ideal.Quotient.mk I x = Ideal.Quotient.mk I (r * x) := by
   exact (Submodule.Quotient.mk_smul I r x).symm
 
-theorem multAt_eq_zero {A W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [W.IsPrime] (h : ¬ A ≤ W) : multAt A W = 0 := by
+theorem multAt_eq_zero {A W : Ideal (MRing ι F)} [W.IsPrime] (h : ¬ A ≤ W) : multAt A W = 0 := by
   obtain ⟨q, hqA, hqW⟩ := Set.not_subset.mp h
-  have hz : ∀ z : LocalizedModule W.primeCompl (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ A), z = 0 := by
+  have hz : ∀ z : LocalizedModule W.primeCompl (MRing ι F ⧸ A), z = 0 := by
     intro z
     induction z using LocalizedModule.induction_on with
     | h m t =>
@@ -213,18 +212,18 @@ theorem multAt_eq_zero {A W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MR
       rw [smul_zero, smul_zero, Submonoid.smul_def, Submonoid.smul_def, smul_smul,
         smul_quot_mk, Ideal.Quotient.eq_zero_iff_mem]
       exact A.mul_mem_right _ (A.mul_mem_right _ hqA)
-  have : Subsingleton (LocalizedModule W.primeCompl (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ A)) :=
+  have : Subsingleton (LocalizedModule W.primeCompl (MRing ι F ⧸ A)) :=
     ⟨fun x y => by rw [hz x, hz y]⟩
   exact Module.length_eq_zero
 
-theorem multAt_self (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [hW : W.IsPrime] : multAt W W = 1 := by
+theorem multAt_self (W : Ideal (MRing ι F)) [hW : W.IsPrime] : multAt W W = 1 := by
   unfold multAt
   have hφ : ∀ x : Localization.AtPrime W,
       LinearMap.toSpanSingleton (Localization.AtPrime W)
-        (LocalizedModule W.primeCompl (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W))
+        (LocalizedModule W.primeCompl (MRing ι F ⧸ W))
         (LocalizedModule.mk 1 1) x = x • LocalizedModule.mk 1 1 := fun x => rfl
   have hsurj : Function.Surjective (LinearMap.toSpanSingleton (Localization.AtPrime W)
-      (LocalizedModule W.primeCompl (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W)) (LocalizedModule.mk 1 1)) := by
+      (LocalizedModule W.primeCompl (MRing ι F ⧸ W)) (LocalizedModule.mk 1 1)) := by
     intro z
     induction z using LocalizedModule.induction_on with
     | h m t =>
@@ -234,14 +233,14 @@ theorem multAt_self (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOv
         smul_quot_mk, mul_one]
   have hle : IsLocalRing.maximalIdeal (Localization.AtPrime W) ≤ LinearMap.ker
       (LinearMap.toSpanSingleton (Localization.AtPrime W)
-        (LocalizedModule W.primeCompl (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W)) (LocalizedModule.mk 1 1)) := by
+        (LocalizedModule W.primeCompl (MRing ι F ⧸ W)) (LocalizedModule.mk 1 1)) := by
     rw [← Localization.AtPrime.map_eq_maximalIdeal, Ideal.map_le_iff_le_comap]
     intro w hw
     rw [Ideal.mem_comap, LinearMap.mem_ker, hφ, algebraMap_smul, LocalizedModule.smul'_mk,
       ← map_one (Ideal.Quotient.mk W), smul_quot_mk, mul_one,
       (Ideal.Quotient.eq_zero_iff_mem).mpr hw, LocalizedModule.zero_mk]
   have hne : LinearMap.ker (LinearMap.toSpanSingleton (Localization.AtPrime W)
-      (LocalizedModule W.primeCompl (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W)) (LocalizedModule.mk 1 1)) ≠ ⊤ := by
+      (LocalizedModule W.primeCompl (MRing ι F ⧸ W)) (LocalizedModule.mk 1 1)) ≠ ⊤ := by
     intro h
     have h1 := (LinearMap.mem_ker).mp (h ▸ Submodule.mem_top : (1 : Localization.AtPrime W) ∈ _)
     rw [hφ, one_smul, ← LocalizedModule.zero_mk 1, LocalizedModule.mk_eq] at h1
@@ -254,20 +253,20 @@ theorem multAt_self (W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOv
   rw [← (LinearMap.quotKerEquivOfSurjective _ hsurj).length_eq]
   have : IsSimpleModule (Localization.AtPrime W) (Localization.AtPrime W ⧸ LinearMap.ker
       (LinearMap.toSpanSingleton (Localization.AtPrime W)
-        (LocalizedModule W.primeCompl (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W)) (LocalizedModule.mk 1 1))) := by
+        (LocalizedModule W.primeCompl (MRing ι F ⧸ W)) (LocalizedModule.mk 1 1))) := by
     rw [isSimpleModule_iff_isCoatom, hker]
     exact Ideal.isMaximal_def.mp (IsLocalRing.maximalIdeal.isMaximal _)
   exact Module.length_eq_one _ _
 
-theorem multAt_colon_add (J W : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) [W.IsPrime] (s : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) :
+theorem multAt_colon_add (J W : Ideal (MRing ι F)) [W.IsPrime] (s : MRing ι F) :
     multAt J W = multAt (J.colon (Ideal.span {s})) W + multAt (J ⊔ Ideal.span {s}) W := by
-  let f : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ J.colon (Ideal.span {s})) →ₗ[ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι] (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ J) :=
-    Submodule.liftQ _ (J.mkQ ∘ₗ LinearMap.mulRight (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι) s) (by
+  let f : (MRing ι F ⧸ J.colon (Ideal.span {s})) →ₗ[MRing ι F] (MRing ι F ⧸ J) :=
+    Submodule.liftQ _ (J.mkQ ∘ₗ LinearMap.mulRight (MRing ι F) s) (by
       intro x hx
       rw [LinearMap.mem_ker, LinearMap.comp_apply, Submodule.mkQ_apply,
         Submodule.Quotient.mk_eq_zero, LinearMap.mulRight_apply]
       exact (PrimeFiltration.mem_colon_iff).mp hx)
-  let g : (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ J) →ₗ[ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι] (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ (J ⊔ Ideal.span {s})) :=
+  let g : (MRing ι F ⧸ J) →ₗ[MRing ι F] (MRing ι F ⧸ (J ⊔ Ideal.span {s})) :=
     Submodule.factor le_sup_left
   have hf : Function.Injective f := by
     rw [← LinearMap.ker_eq_bot]
@@ -341,13 +340,13 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
   {F : Type u} [Field F]
 
 
-theorem relDim_cases {I Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)} [hQ : Q.IsPrime] (hIQ : I ≤ Q) :
+theorem relDim_cases {I Q : Ideal (MRing ι F)} [hQ : Q.IsPrime] (hIQ : I ≤ Q) :
     relDim Q < relDim I ∨ (Q ∈ I.minimalPrimes ∧ relDim Q = relDim I) := by
   have hmono : StrictMono (fun x : WithBot ℕ∞ =>
       WithBot.map (fun d : ℕ∞ => WithTop.map (fun e : ℕ => (e : ℤ) - Fintype.card K) d) x) :=
     WithBot.strictMono_map_iff.2 (WithTop.strictMono_map_iff.2 (fun a b h =>
       Int.sub_lt_sub_right (by exact_mod_cast h) _))
-  have hle : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ Q) ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) :=
+  have hle : ringKrullDim (MRing ι F ⧸ Q) ≤ ringKrullDim (MRing ι F ⧸ I) :=
     ringKrullDim_le_of_surjective (Ideal.Quotient.factor hIQ) (Ideal.Quotient.factor_surjective hIQ)
   by_cases hmin : Q ∈ I.minimalPrimes
   · rcases hle.lt_or_eq with h | h
@@ -357,22 +356,22 @@ theorem relDim_cases {I Q : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRin
     apply hmono
     obtain ⟨W', hW', hW'Q⟩ := Ideal.exists_minimalPrimes_le hIQ
     have hW'p : W'.IsPrime := hW'.1.1
-    have hlt : (⟨W', hW'p⟩ : PrimeSpectrum (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) < ⟨Q, hQ⟩ :=
+    have hlt : (⟨W', hW'p⟩ : PrimeSpectrum (MRing ι F)) < ⟨Q, hQ⟩ :=
       lt_of_le_of_ne hW'Q (fun h => hmin (by
         have : W' = Q := congrArg PrimeSpectrum.asIdeal h
         exact this ▸ hW'))
     have h1 := Order.coheight_add_one_le hlt
-    have h2 : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W') ≤ ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ I) :=
+    have h2 : ringKrullDim (MRing ι F ⧸ W') ≤ ringKrullDim (MRing ι F ⧸ I) :=
       ringKrullDim_le_of_surjective (Ideal.Quotient.factor hW'.1.2)
         (Ideal.Quotient.factor_surjective hW'.1.2)
-    have h3 : ringKrullDim (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ W') ≤ Nat.card (Σ k, ι k) :=
+    have h3 : ringKrullDim (MRing ι F ⧸ W') ≤ Nat.card (Σ k, ι k) :=
       (ringKrullDim_quotient_le W').trans (ringKrullDim_mvPolynomial_le F _)
     rw [ringKrullDim_quotient_prime W'] at h2 h3
     rw [ringKrullDim_quotient_prime Q]
-    have h3' : Order.coheight (⟨W', hW'p⟩ : PrimeSpectrum (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) ≤
+    have h3' : Order.coheight (⟨W', hW'p⟩ : PrimeSpectrum (MRing ι F)) ≤
         (Nat.card (Σ k, ι k) : ℕ∞) := by
       exact_mod_cast h3
-    have hfin : Order.coheight (⟨Q, hQ⟩ : PrimeSpectrum (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) ≠ ⊤ := by
+    have hfin : Order.coheight (⟨Q, hQ⟩ : PrimeSpectrum (MRing ι F)) ≠ ⊤ := by
       intro htop
       rw [htop, top_add] at h1
       exact absurd (h1.trans h3') (not_le.mpr (ENat.natCast_lt_top _))
@@ -387,8 +386,8 @@ variable {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintyp
   {F : Type u} [Field F]
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
-theorem hilbFn_top (m : K → ℤ) : hilbFn (⊤ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) m = 0 := by
-  have : Subsingleton (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι ⧸ (⊤ : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))) :=
+theorem hilbFn_top (m : K → ℤ) : hilbFn (⊤ : Ideal (MRing ι F)) m = 0 := by
+  have : Subsingleton (MRing ι F ⧸ (⊤ : Ideal (MRing ι F))) :=
     Ideal.Quotient.subsingleton_iff.mpr rfl
   unfold hilbFn
   split_ifs
@@ -396,9 +395,9 @@ theorem hilbFn_top (m : K → ℤ) : hilbFn (⊤ : Ideal (ReciprocityTheory.Char
   · rfl
 
 
-theorem filtration (h1 : HilbExactDivide.Statement.{u}) (J : Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι))
+theorem filtration (h1 : HilbExactDivide.Statement.{u}) (J : Ideal (MRing ι F))
     (hJ : IsMultiHomogIdeal J) :
-    ∃ (r : ℕ) (Q : Fin r → Ideal (ReciprocityTheory.ChartRestriction.G.Geo.MRingOver F ι)) (c : Fin r → K → ℕ),
+    ∃ (r : ℕ) (Q : Fin r → Ideal (MRing ι F)) (c : Fin r → K → ℕ),
       (∀ j, (Q j).IsPrime ∧ IsMultiHomogIdeal (Q j) ∧ J ≤ Q j) ∧
       (∀ m, hilbFn J m = ∑ j, hilbFn (Q j) (m - fun k => (c j k : ℤ))) ∧
       (∀ W (hW : W ∈ J.minimalPrimes),
