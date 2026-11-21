@@ -132,8 +132,6 @@ def injectiveSequenceMap (φ : F ⟶ G) : injectiveSequence F ⟶ injectiveSeque
         (injectiveExtend φ) (ι_injectiveExtend φ)
     exact (cokernel.π_desc _ _ _).symm
 
-lemma injectiveSequenceMap_τ₁ (φ : F ⟶ G) : (injectiveSequenceMap φ).τ₁ = φ := rfl
-
 end InjectiveMap
 
 section Step
@@ -254,10 +252,6 @@ def cechHLinearEquivH (F : X.Modules) [F.IsQuasicoherent] (n : ℕ) :
   (cechHAddEquivH U hU hUaff F n).toLinearEquiv fun a x =>
     cechHAddEquivH_naturality U hU hUaff (smulHom F (algebraMap A Γ(X, ⊤) a)) n x
 
-lemma cechHLinearEquivH_apply (F : X.Modules) [F.IsQuasicoherent] (n : ℕ)
-    (x : cechH (modulesAb F).obj U n) :
-    cechHLinearEquivH U hU hUaff A F n x = cechHAddEquivH U hU hUaff F n x := rfl
-
 theorem cechHLinearEquivH_naturality {F G : X.Modules} [F.IsQuasicoherent] [G.IsQuasicoherent]
     (φ : F ⟶ G) (n : ℕ) (x : cechH (modulesAb F).obj U n) :
     cechHLinearEquivH U hU hUaff A G n (cechH.linearMap U A φ n x) =
@@ -273,33 +267,6 @@ variable {X : Scheme.{u}} {ι : Type w}
   (U : ι → X.Opens) (hU : iSup U = ⊤)
   (hUaff : ∀ (n : ℕ) (i : Fin (n + 1) → ι), IsAffineOpen (⨅ a, U (i a)))
   (A : Type*) [CommRing A] [Algebra A Γ(X, ⊤)]
-
-def cechModuleFunctor (n : ℕ) : X.Modules ⥤ ModuleCat.{max w u} A where
-  obj F := ModuleCat.of A (cechH (modulesAb F).obj U n)
-  map φ := ModuleCat.ofHom (cechH.linearMap U A φ n)
-  map_id F := by
-    ext x
-    change cechHMap U (modulesAbMap (𝟙 F)).hom n x = x
-    rw [modulesAbMap_id]
-    exact cechHMap_id U n x
-  map_comp φ ψ := by
-    ext x
-    change cechHMap U (modulesAbMap (φ ≫ ψ)).hom n x = _
-    rw [modulesAbMap_comp]
-    exact cechHMap_comp U _ _ n x
-
-def isQuasicoherent : ObjectProperty X.Modules := fun F => F.IsQuasicoherent
-
-def cechHNatIso (n : ℕ) :
-    isQuasicoherent.ι ⋙ cechModuleFunctor U A n ≅ isQuasicoherent.ι ⋙ H.moduleFunctor A n :=
-  NatIso.ofComponents
-    (fun F => haveI : F.obj.IsQuasicoherent := F.property
-      (cechHLinearEquivH U hU hUaff A F.obj n).toModuleIso)
-    (fun {F G} φ => by
-      have : F.obj.IsQuasicoherent := F.property
-      have : G.obj.IsQuasicoherent := G.property
-      ext x
-      exact cechHLinearEquivH_naturality U hU hUaff A φ.hom n x)
 
 end NatIso
 

@@ -6,8 +6,6 @@ namespace GroundTheory.Global
 
 open IsDedekindDomain NumberField IntermediateField IdeleGroup AdeleBaseChange
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 section MaxAbelian
@@ -153,11 +151,6 @@ theorem range_ideleClassNorm_maxAbelian :
     have := Nat.eq_of_mul_eq_mul_right (Nat.pos_of_ne_zero hne) (hrel.trans (one_mul _).symm)
     exact this
   exact le_antisymm (Subgroup.relIndex_eq_one.1 h1) hle
-
-theorem index_range_ideleClassNorm_eq_card_abelianization :
-    (ideleClassNorm K M).range.index = Nat.card (Abelianization Gal(M/K)) := by
-  rw [← range_ideleClassNorm_maxAbelian, index_range_ideleClassNorm_eq_finrank_of_isMulCommutative,
-    finrank_maxAbelian]
 
 omit [IsGalois K M] in
 

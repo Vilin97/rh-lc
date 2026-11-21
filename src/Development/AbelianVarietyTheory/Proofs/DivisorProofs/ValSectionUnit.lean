@@ -1,6 +1,8 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnifAfterFin
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.E8invTranspose
+import Development.AbelianVarietyTheory.Definitions.Divisors.FormalEnd
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
+import Development.AbelianVarietyTheory.Definitions.Degenerations.AdmissibleBaseOfCompleteDvr
+import Development.AbelianVarietyTheory.Proofs.CharacterTheory.W8AddTransposeEqE8
 
 noncomputable section
 

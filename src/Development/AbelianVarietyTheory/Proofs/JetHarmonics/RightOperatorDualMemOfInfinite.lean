@@ -14,23 +14,11 @@ section module
 
 variable {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
 
-theorem IsPol.map {f : ℂ → V} (hf : IsPol f) (φ : V →ₗ[ℂ] W) : IsPol fun y => φ (f y) := by
-  induction hf with
-  | const a => exact IsPol.const _
-  | add _ _ h1 h2 => simpa only [map_add] using h1.add h2
-  | xsmul _ h => simpa only [map_smul] using h.xsmul
-
 end module
 
 section alg
 
 variable {A : Type} [Ring A] [Algebra ℂ A]
-
-theorem IsPol.mul {f g : ℂ → A} (hf : IsPol f) (hg : IsPol g) : IsPol fun y => f y * g y := by
-  induction hf with
-  | const a => exact hg.map (LinearMap.mulLeft ℂ a)
-  | add _ _ h1 h2 => simpa only [add_mul] using h1.add h2
-  | xsmul _ h => simpa only [smul_mul_assoc] using h.xsmul
 
 end alg
 

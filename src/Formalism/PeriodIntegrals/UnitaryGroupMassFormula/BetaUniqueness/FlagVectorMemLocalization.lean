@@ -49,9 +49,6 @@ section Loc
 
 variable {W : Type} [AddCommGroup W] [Module (𝓞 E) W]
 
-theorem mem_locP (p : Ideal (𝓞 E)) [p.IsPrime] (M : Submodule (𝓞 E) W) (x : W) :
-    x ∈ Formalism.HermitianLatticesTheory.localization₂ p M ↔ ∃ s : 𝓞 E, s ∉ p ∧ s • x ∈ M := Iff.rfl
-
 theorem le_locP (p : Ideal (𝓞 E)) [p.IsPrime] (M : Submodule (𝓞 E) W) : M ≤ Formalism.HermitianLatticesTheory.localization₂ p M :=
   fun x hx => ⟨1, p.primeCompl.one_mem, by simpa using hx⟩
 
@@ -173,9 +170,6 @@ theorem coe_smul (o : 𝓞 E) (x : S.V) : ((o : E)) • x = o • x := algebraMa
 
 theorem frame_castSucc {r : ℕ} {T : E} (F : LFlag S r T) (a : Fin r) :
     frame F (Fin.castSucc a) = F.fl.e a := by
-  simp [frame, FlagG.fvec]
-
-theorem frame_last {r : ℕ} {T : E} (F : LFlag S r T) : frame F (Fin.last r) = F.fl.z := by
   simp [frame, FlagG.fvec]
 
 theorem flag_vector_mem_localization {g r : ℕ} {T T' : E} {F : LFlag S r T} {F' : LFlag S r T'}

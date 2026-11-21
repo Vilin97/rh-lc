@@ -251,17 +251,9 @@ theorem scal_exists (R : RealDat D A Ks) : ∃ kap lam, (R.upd6 kap lam).IsScal 
 
 variable (D A Ks) in
 
-def SeedExists (F : Face D A) : Prop := ∃ R : RealDat D A Ks, R.Pre0 F
-
 variable (D A Ks) in
 
-def ModelsExist (F : Face D A) : Prop := ∀ R : RealDat D A Ks, R.Pre0 F → ∃ R' : RealDat D A Ks, R'.Pre1 F
-
 variable (D A Ks) in
-
-def ArithExists (F : Face D A) : Prop :=
-  ∀ R : RealDat D A Ks, R.Pre1 F → R.IsChain → R.FullY → R.IsThP → R.FullP →
-    ∃ nW FW mu twPl err0, (R.upd5 nW FW mu twPl err0).grp_chiW ∧ (R.upd5 nW FW mu twPl err0).IsTup F
 
 end Stages4
 

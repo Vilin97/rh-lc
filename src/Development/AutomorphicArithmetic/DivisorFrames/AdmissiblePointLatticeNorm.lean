@@ -270,15 +270,3 @@ private theorem count_core {E : Type} [Field E] [NumberField E] [IsCMField E] {H
     have k1 : θ.comp (μ ⟨C, m, hl⟩).φ = ι := gptInj _ k
     have k2 := spInj ((hs C θ).symm.trans (hw' ▸ hws))
     exact ⟨⟨⟨C, m, hl⟩, θ⟩, ⟨k1, k2⟩, hw'.symm⟩
-
-theorem UpperTheory.admissible_point_lattice_norm :
-    ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A N j) (κ : Lv A) (s : FinalTheorems S κ) (fl : s.Flag), (∀ k, (fl.C k).Y.dim = Formalism.DegreeFormula.dimFl D.what₂.Tau N) → ∀ (p : ℕ) (hp : p.Prime) (W : ValuationSubring ℂ) (hW : (p : ℂ) ∈ W.nonunits) (z : AdmAt S κ hp hW) [IsDiscreteValuationRing (z.Z.i.c.V W)] (ε : D.what₂.LL →+* z.Z.i.c.F) (b : 𝓞 D.what₂.LL →+* z.Z.i.c.V W), (∀ x, ((ε x : z.Z.i.c.F) : ℂ) = D.what₂.embLL x) → (∀ x : 𝓞 D.what₂.LL, ((b x : z.Z.i.c.V W) : z.Z.i.c.F) = ε (x : D.what₂.LL)) → ∀ (c : s.Comp) (μ : ∀ j : {C : (nmodel z.Z).Comp // ∃ μ : Match (fl.C c).Y b ((nmodel z.Z).comp C), Link z.Z C (fl.C c) μ}, Match (fl.C c).Y b ((nmodel z.Z).comp j.1)), (∀ j, Link z.Z j.1 (fl.C c) (μ j)) → Count μ ε z.Z.i.c.F.val.toRingHom (cov z) := by
-  intro D A N j S κ s fl hd p hp W hW z _ ε b hε hb c μ hμ
-  have hpq : 1 ≤ S.Dw.p + S.Dw.q := by
-    have := S.rank_eq
-    have := S.two_le
-    omega
-  exact count_core (Z := z.Z) fl hpq z.full b c
-    (fun L ι w => UpperTheory.admissible_level_match D A N j S κ s fl hd p hp W hW z L c ℂ ι w)
-    (UpperTheory.admissible_point_discrete_valuation D A N j S κ s fl hd p hp W hW z ε b hε hb) μ hμ ε
-    (RingHom.ext fun x => (hε x).trans (κ.e_emb x).symm)

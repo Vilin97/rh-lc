@@ -40,9 +40,6 @@ def pair {s : L →+* L} {h : V → V → L} (hH : IsHerm s h) (x : V) : V →�
   map_add' := hH.1 x
   map_smul' a y := by simp [hH.2.1]
 
-@[simp] theorem pair_apply {s : L →+* L} {h : V → V → L} (hH : IsHerm s h) (x y : V) :
-    pair hH x y = h x y := rfl
-
 theorem add_left {s : L →+* L} {h : V → V → L} (hH : IsHerm s h) (x x' y : V) :
     h (x + x') y = h x y + h x' y := by
   rw [hH.2.2.1 y (x + x'), hH.1, map_add, ← hH.2.2.1, ← hH.2.2.1]

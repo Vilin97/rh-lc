@@ -46,8 +46,6 @@ abbrev Bd (I : Type) : Type := lp (fun _ : I => ℂ) ∞
 def mkBd {I : Type} (f : I → ℂ) (h : ∃ C, ∀ i, ‖f i‖ ≤ C) : Bd I :=
   ⟨f, memℓp_infty (by obtain ⟨C, hC⟩ := h; exact ⟨C, by rintro _ ⟨i, rfl⟩; exact hC i⟩)⟩
 
-@[simp] theorem mkBd_apply {I : Type} (f : I → ℂ) (h : ∃ C, ∀ i, ‖f i‖ ≤ C) (i : I) : mkBd f h i = f i := rfl
-
 theorem apply_le {I : Type} (F : Bd I) (i : I) : ‖F i‖ ≤ ‖F‖ := lp.norm_apply_le_norm (by simp) F i
 
 theorem wcomp_le {I : Type} {c : I → ℂ} {B : ℝ} (hB : ∀ i, ‖c i‖ ≤ B) (φ : I → I) (F : Bd I) (i : I) :

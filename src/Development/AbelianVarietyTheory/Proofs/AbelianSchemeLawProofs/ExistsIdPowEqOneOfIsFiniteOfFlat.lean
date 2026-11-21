@@ -29,9 +29,6 @@ def postcomp (h : C →ₐ[R] F) : WithConv (B →ₗ[R] C) →+* WithConv (B �
   map_zero' := by ext c; simp
   map_add' f g := by ext c; simp
 
-@[simp] theorem postcomp_apply (h : C →ₐ[R] F) (f : WithConv (B →ₗ[R] C)) (c : B) :
-    postcomp B h f c = h (f c) := rfl
-
 variable [Algebra C F] [IsScalarTower R C F]
 
 theorem pow_card_eq_one {ι : Type*} [Fintype ι] (b : Module.Basis ι C F) (τ : F ≃ₐ[C] F)

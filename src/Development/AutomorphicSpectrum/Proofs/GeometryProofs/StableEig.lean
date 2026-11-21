@@ -18,11 +18,9 @@ def zPt {S : Type} [CommRing S] [Algebra c.F S] (z : Formalism.L2.Pj.FrPt Xo c S
     simp only [Formalism.L2.Pj.sOf, spMap, ← Spec.map_comp]
     rfl)
 
-@[reassoc (attr := simp)]
 theorem zPt_fst {S : Type} [CommRing S] [Algebra c.F S] (z : Formalism.L2.Pj.FrPt Xo c S) :
     zPt z ≫ pullback.fst _ _ = z.x := pullback.lift_fst _ _ _
 
-@[reassoc (attr := simp)]
 theorem zPt_snd {S : Type} [CommRing S] [Algebra c.F S] (z : Formalism.L2.Pj.FrPt Xo c S) :
     zPt z ≫ pullback.snd _ _ = spMap (algebraMap c.F S) := pullback.lift_snd _ _ _
 

@@ -15,8 +15,6 @@ def toPl {P Q : Pre} (h : P = Q) (v : HeightOneSpectrum (𝓞 P.host.F)) : Heigh
   subst h
   exact v
 
-@[simp] theorem toPl_rfl {P : Pre} (v : HeightOneSpectrum (𝓞 P.host.F)) : toPl rfl v = v := rfl
-
 theorem leastSplitAuxiliaryPrime_congr_preData {s s' : Stages} (h : s.B.toPre = s'.B.toPre) : GlobalTheory.ChiGrid.q0 s.toD7 = GlobalTheory.ChiGrid.q0 s'.toD7 := by
   obtain ⟨B, C, W, V, S, N, Gj⟩ := s
   obtain ⟨B', C', W', V', S', N', Gj'⟩ := s'

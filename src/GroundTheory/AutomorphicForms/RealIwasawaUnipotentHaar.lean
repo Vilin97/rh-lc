@@ -47,14 +47,6 @@ def unipotentLeftLinear (w : StrictUpperIndex n → 𝕜) :
   map_smul' c v := by
     rw [strictUpperMatrix_smul, Matrix.mul_smul, strictUpperCoords_smul, RingHom.id_apply]
 
-def unipotentRightLinear (w : StrictUpperIndex n → 𝕜) :
-    (StrictUpperIndex n → 𝕜) →ₗ[𝕜] (StrictUpperIndex n → 𝕜) where
-  toFun v := strictUpperCoords (strictUpperMatrix v * strictUpperMatrix w)
-  map_add' v v' := by
-    rw [strictUpperMatrix_add, Matrix.add_mul, strictUpperCoords_add]
-  map_smul' c v := by
-    rw [strictUpperMatrix_smul, Matrix.smul_mul, strictUpperCoords_smul, RingHom.id_apply]
-
 theorem isStrictUpper_mul (v w : StrictUpperIndex n → 𝕜) :
     IsStrictUpper (strictUpperMatrix v * strictUpperMatrix w) :=
   (isStrictUpper_strictUpperMatrix v).mul_right (isStrictUpper_strictUpperMatrix w).isUpperTriangular
@@ -70,18 +62,6 @@ theorem unipotentLeftLinear_pow_apply (w : StrictUpperIndex n → 𝕜) (k : ℕ
       strictUpperMatrix (strictUpperCoords (strictUpperMatrix w * strictUpperMatrix v))) = _
     rw [strictUpperMatrix_strictUpperCoords (isStrictUpper_mul w v), ← Matrix.mul_assoc, ← pow_succ]
 
-theorem unipotentRightLinear_pow_apply (w : StrictUpperIndex n → 𝕜) (k : ℕ)
-    (v : StrictUpperIndex n → 𝕜) :
-    (unipotentRightLinear w ^ k) v = strictUpperCoords (strictUpperMatrix v * strictUpperMatrix w ^ k) := by
-  induction k generalizing v with
-  | zero => simp
-  | succ k ih =>
-    rw [pow_succ, Module.End.mul_apply, ih]
-    show strictUpperCoords (
-      strictUpperMatrix (strictUpperCoords (strictUpperMatrix v * strictUpperMatrix w)) *
-        strictUpperMatrix w ^ k) = _
-    rw [strictUpperMatrix_strictUpperCoords (isStrictUpper_mul v w), Matrix.mul_assoc, ← pow_succ']
-
 theorem restrictScalars_pow_apply (L : (StrictUpperIndex n → 𝕜) →ₗ[𝕜] (StrictUpperIndex n → 𝕜))
     (k : ℕ) (v : StrictUpperIndex n → 𝕜) : ((L.restrictScalars ℝ) ^ k) v = (L ^ k) v := by
   induction k generalizing v with
@@ -95,13 +75,6 @@ theorem isNilpotent_unipotentLeftLinear (w : StrictUpperIndex n → 𝕜) :
     (isStrictUpper_strictUpperMatrix w).pow_card_eq_zero, Matrix.zero_mul]
   rfl
 
-theorem isNilpotent_unipotentRightLinear (w : StrictUpperIndex n → 𝕜) :
-    IsNilpotent ((unipotentRightLinear w).restrictScalars ℝ) := by
-  refine ⟨Fintype.card n, LinearMap.ext fun v => ?_⟩
-  rw [restrictScalars_pow_apply, unipotentRightLinear_pow_apply, (isStrictUpper_strictUpperMatrix w).pow_card_eq_zero,
-    Matrix.mul_zero]
-  rfl
-
 theorem unipotentOfCoords_mul_eq_left (w v : StrictUpperIndex n → 𝕜) :
     unipotentOfCoords w * unipotentOfCoords v =
       unipotentOfCoords (w + (1 + (unipotentLeftLinear w).restrictScalars ℝ) v) := by
@@ -110,15 +83,6 @@ theorem unipotentOfCoords_mul_eq_left (w v : StrictUpperIndex n → 𝕜) :
   show w + v + strictUpperCoords (strictUpperMatrix w * strictUpperMatrix v) =
     w + (v + strictUpperCoords (strictUpperMatrix w * strictUpperMatrix v))
   rw [add_assoc]
-
-theorem unipotentOfCoords_mul_eq_right (v w : StrictUpperIndex n → 𝕜) :
-    unipotentOfCoords v * unipotentOfCoords w =
-      unipotentOfCoords (w + (1 + (unipotentRightLinear w).restrictScalars ℝ) v) := by
-  rw [unipotentOfCoords_mul]
-  congr 1
-  show v + w + strictUpperCoords (strictUpperMatrix v * strictUpperMatrix w) =
-    w + (v + strictUpperCoords (strictUpperMatrix v * strictUpperMatrix w))
-  abel
 
 noncomputable def diagScaleLinear (a : PosDiag n) :
     (StrictUpperIndex n → 𝕜) →ₗ[ℝ] (StrictUpperIndex n → 𝕜) :=
@@ -203,24 +167,6 @@ theorem unipotentLebesgue_map_mul_left (u : upperUnipotentSubgroup n 𝕜) :
     map_affine_addHaar_eq _ w _ (det_one_add_linearMap_of_isNilpotent
       (isNilpotent_unipotentLeftLinear w))]
 
-theorem unipotentLebesgue_map_mul_right (u : upperUnipotentSubgroup n 𝕜) :
-    Measure.map (· * u) (unipotentLebesgue (𝕜 := 𝕜) (n := n)) = unipotentLebesgue := by
-  set w := unipotentCoordsHomeomorph.symm u
-  have hu : u = unipotentCoordsHomeomorph w := (unipotentCoordsHomeomorph.apply_symm_apply u).symm
-  have e : (· * u) ∘ unipotentCoordsHomeomorph = unipotentCoordsHomeomorph ∘
-      (fun v => w + (1 + (unipotentRightLinear w).restrictScalars ℝ) v) := by
-    funext v
-    apply Subtype.ext
-    simp only [Function.comp_apply, Subgroup.coe_mul, hu, coe_unipotentCoordsHomeomorph]
-    exact unipotentOfCoords_mul_eq_right v w
-  have hT : Measurable (fun v : StrictUpperIndex n → 𝕜 =>
-      w + (1 + (unipotentRightLinear w).restrictScalars ℝ) v) :=
-    (continuous_const.add (LinearMap.continuous_of_finiteDimensional _)).measurable
-  rw [unipotentLebesgue, Measure.map_map (measurable_mul_const u)
-    unipotentCoordsHomeomorph.measurable, e, ← Measure.map_map unipotentCoordsHomeomorph.measurable hT,
-    map_affine_addHaar_eq _ w _ (det_one_add_linearMap_of_isNilpotent
-      (isNilpotent_unipotentRightLinear w))]
-
 instance isHaarMeasure_unipotentLebesgue : (unipotentLebesgue (𝕜 := 𝕜) (n := n)).IsHaarMeasure where
   map_mul_left_eq_self u := unipotentLebesgue_map_mul_left u
   lt_top_of_isCompact := by
@@ -232,10 +178,6 @@ instance isHaarMeasure_unipotentLebesgue : (unipotentLebesgue (𝕜 := 𝕜) (n 
     exact (hU.preimage unipotentCoordsHomeomorph.continuous).measure_ne_zero _
       (hne.preimage unipotentCoordsHomeomorph.surjective)
 
-instance isMulRightInvariant_unipotentLebesgue :
-    (unipotentLebesgue (𝕜 := 𝕜) (n := n)).IsMulRightInvariant :=
-  ⟨unipotentLebesgue_map_mul_right⟩
-
 theorem exists_eq_smul_unipotentLebesgue (μ : Measure (upperUnipotentSubgroup n 𝕜))
     [μ.IsHaarMeasure] : ∃ c : ℝ≥0, c ≠ 0 ∧ μ = c • unipotentLebesgue := by
   refine ⟨haarScalarFactor μ unipotentLebesgue, ?_, isMulLeftInvariant_eq_smul μ _⟩
@@ -244,11 +186,6 @@ theorem exists_eq_smul_unipotentLebesgue (μ : Measure (upperUnipotentSubgroup n
   rw [h0, zero_smul] at h
   exact (IsHaarMeasure.toIsOpenPosMeasure (μ := μ)).open_pos univ isOpen_univ univ_nonempty
     (by rw [h]; rfl)
-
-instance isMulRightInvariant_upperUnipotent (μ : Measure (upperUnipotentSubgroup n 𝕜))
-    [μ.IsHaarMeasure] : μ.IsMulRightInvariant := by
-  obtain ⟨c, -, rfl⟩ := exists_eq_smul_unipotentLebesgue μ
-  infer_instance
 
 def diagConj (a : diagPosSubgroup n 𝕜) (u : upperUnipotentSubgroup n 𝕜) :
     upperUnipotentSubgroup n 𝕜 :=

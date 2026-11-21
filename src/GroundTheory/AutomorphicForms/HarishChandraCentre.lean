@@ -5,7 +5,6 @@ import GroundTheory.AutomorphicForms.HarishChandraCentre.VermaCoordEqZeroOfMemNP
 import GroundTheory.AutomorphicForms.HarishChandraCentre.LeadingTerm
 import GroundTheory.AutomorphicForms.HarishChandraCentre.Symmetric
 import GroundTheory.AutomorphicForms.HarishChandraCentre.Capelli
-import GroundTheory.AutomorphicForms.HarishChandraCentre.Consequences
 
 namespace GroundTheory.Automorphic.HarishChandra
 

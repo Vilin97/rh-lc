@@ -190,12 +190,7 @@ def KOff (S : Finset (HeightOneSpectrum (𝓞 D.host.F))) : Subgroup (GfC V) :=
 
 variable {V}
 
-theorem mem_KOff {S : Finset (HeightOneSpectrum (𝓞 D.host.F))} {g : GfC V} : g ∈ KOff V S ↔ (g : GA D V) ∈ KsphC V S := by
-  rw [KsphC_eq]; rfl
-
 @[simp] theorem coe_locFin (v : HeightOneSpectrum (𝓞 D.host.F)) (x : Gv V v) : (locFin V v x : GA D V) = embV V v x := rfl
-
-@[simp] theorem coe_archInf (w : InfinitePlace D.host.F) (x : Gw V w) : (archInf V w x : GA D V) = embW V w x := rfl
 
 theorem toInf_mul_toFin (g : GA D V) : (toInf V g : GA D V) * toFin V g = g := ofInf_projInf_mul_ofFin_projFin _ _ g
 
@@ -226,22 +221,8 @@ variable {H X W : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [Normed
 
 section Components
 
-def HasLocComp (v : HeightOneSpectrum (𝓞 D.host.F)) (δ : Gv V v →* (X →L[ℂ] X)) (π : GA D V →* (H →L[ℂ] H)) : Prop :=
-  IsIsotypic δ (π.comp (embV V v))
-
 def HasArchComp (w : InfinitePlace D.host.F) (δ : Gw V w →* (X →L[ℂ] X)) (π : GA D V →* (H →L[ℂ] H)) : Prop :=
   IsIsotypic δ (π.comp (embW V w))
-
-def HasFinComp (δ : GfC V →* (X →L[ℂ] X)) (π : GA D V →* (H →L[ℂ] H)) : Prop := IsIsotypic δ (π.comp (GfC V).subtype)
-
-def HasInfComp (δ : GinfC V →* (X →L[ℂ] X)) (π : GA D V →* (H →L[ℂ] H)) : Prop :=
-  IsIsotypic δ (π.comp (GinfC V).subtype)
-
-def HasLocCompSm (v : HeightOneSpectrum (𝓞 D.host.F)) (σ : Representation ℂ (Gv V v) W)
-    (π : GA D V →* (H →L[ℂ] H)) : Prop := IsIsotypicDense σ (π.comp (embV V v))
-
-def HasFinCompSm (σ : Representation ℂ (GfC V) W) (π : GA D V →* (H →L[ℂ] H)) : Prop :=
-  IsIsotypicDense σ (π.comp (GfC V).subtype)
 
 def FinHasLocComp {Y : Type} [AddCommGroup Y] [Module ℂ Y] (v : HeightOneSpectrum (𝓞 D.host.F))
     (σv : Representation ℂ (Gv V v) Y) (σ : Representation ℂ (GfC V) W) : Prop := IsIsotypicAlg σv (σ.comp (locFin V v))
@@ -249,19 +230,6 @@ def FinHasLocComp {Y : Type} [AddCommGroup Y] [Module ℂ Y] (v : HeightOneSpect
 abbrev IsFinFactorisation {N : HeightOneSpectrum (𝓞 D.host.F) → Type} [∀ v, AddCommGroup (N v)] [∀ v, Module ℂ (N v)]
     (σs : ∀ v, Representation ℂ (Gv V v) (N v)) (s : ∀ v, N v) (σ : Representation ℂ (GfC V) W) : Prop :=
   IsRestrTensorAlg (finLoc V) σs s σ
-
-def IsFinInf {Y : Type} [NormedAddCommGroup Y] [InnerProductSpace ℂ Y] (πf : GfC V →* (Y →L[ℂ] Y))
-    (πi : GinfC V →* (X →L[ℂ] X)) (π : GA D V →* (H →L[ℂ] H)) : Prop := ∃ J, IsTensorMap (toFin V) (toInf V) πf πi π J
-
-abbrev finInf {Y : Type} [NormedAddCommGroup Y] [InnerProductSpace ℂ Y] (πf : GfC V →* (Y →L[ℂ] Y))
-    (πi : GinfC V →* (X →L[ℂ] X)) : GA D V →* (HTensor Y X →L[ℂ] HTensor Y X) := hTensor (toFin V) (toInf V) πf πi
-
-def IsInfTensor {Hs : InfinitePlace D.host.F → Type} [∀ w, NormedAddCommGroup (Hs w)] [∀ w, InnerProductSpace ℂ (Hs w)]
-    (δs : ∀ w, Gw V w →* (Hs w →L[ℂ] Hs w)) (δ : GinfC V →* (X →L[ℂ] X)) : Prop :=
-  ∃ B, IsRestrTensor (infArch V) δs 0 δ B
-
-abbrev IsCopyFinInf (σ : Representation ℂ (GfC V) W) (δ : GinfC V →* (X →L[ℂ] X)) (ρ : GA D V →* (H →L[ℂ] H))
-    (U : Submodule ℂ H) : Prop := IsTensorCopy (GfC V).subtype (GinfC V).subtype σ δ ρ U
 
 variable {V}
 
@@ -302,12 +270,6 @@ theorem mem_homDS {θ : InfF D} (hθ : IsInfFam θ) {M : DSModel V S} {ρ : GA D
 
 variable {Y : Type} [NormedAddCommGroup Y] [InnerProductSpace ℂ Y] {πf : GfC V →* (Y →L[ℂ] Y)}
   {πi : GinfC V →* (X →L[ℂ] X)} {π ρ : GA D V →* (H →L[ℂ] H)} {U : Submodule ℂ H}
-
-theorem IsFinInf.isUnitaryRep (h : IsFinInf V πf πi π) (hf : IsUnitaryRep πf) (hi : IsUnitaryRep πi) : IsUnitaryRep π :=
-  let ⟨_, h⟩ := h
-  h.isUnitaryRep (continuous_toFin V) (continuous_toInf V) hf hi
-
-theorem IsFinInf.uEquiv [CompleteSpace H] (h : IsFinInf V πf πi π) : UEquiv (finInf V πf πi) π := h.choose_spec.uEquiv
 
 def finPart (δ : GinfC V →* (X →L[ℂ] X)) (hU : IsSubrep ρ U) :
     Representation ℂ (GfC V) (homIn δ (ρ.comp (GinfC V).subtype) U) :=

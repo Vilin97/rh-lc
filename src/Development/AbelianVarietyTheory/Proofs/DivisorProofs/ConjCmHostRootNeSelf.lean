@@ -49,9 +49,6 @@ theorem tauEmb_bijective (D : D7) (Q : Par D) (hQ : Q.PinHost) :
 def tauPsi (D : D7) (Q : Par D) (hQ : Q.PinHost) : D.what₂.Tau ≃ Psi Q.H :=
   Equiv.ofBijective _ (tauEmb_bijective D Q hQ)
 
-@[simp] theorem tauPsi_val (D : D7) (Q : Par D) (hQ : Q.PinHost) (t : D.what₂.Tau) :
-    (tauPsi D Q hQ t).1 = DV.tauEmb D t := rfl
-
 theorem sigW_add (D : D7) (i : Fin D.R.m) :
     (D.R.sigW ((i : ℕ) + 1)).1 + (D.R.sigW ((i : ℕ) + 1)).2 = D.R.r := by
   have := i.2

@@ -1,7 +1,6 @@
 import Mathlib
 import PositivityTheory.PublishedTheorems.TowerLemmas.FormalTowerLemmas.Imports
 import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.FormalAlgebraisation
-
 import PositivityTheory.PublishedTheorems.UnitKilling.UnitAnnihilation.UnitAnnihilators.ExistsUnitKillsOfIdempotent
 set_option autoImplicit false
 

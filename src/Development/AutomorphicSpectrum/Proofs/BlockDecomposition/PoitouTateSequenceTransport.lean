@@ -85,11 +85,6 @@ def piE {I I' : Type*} {A : I' → Type*} {B : I → Type*} [∀ i, AddCommGroup
     (eI : I ≃ I') (e : ∀ i, A (eI i) ≃ₗ[R] B i) : (∀ i', A i') ≃ₗ[R] ∀ i, B i :=
   (LinearEquiv.piCongrLeft R A eI).symm ≪≫ₗ LinearEquiv.piCongrRight e
 
-@[simp] theorem piE_apply {I I' : Type*} {A : I' → Type*} {B : I → Type*}
-    [∀ i, AddCommGroup (A i)] [∀ i, Module R (A i)] [∀ i, AddCommGroup (B i)]
-    [∀ i, Module R (B i)] (eI : I ≃ I') (e : ∀ i, A (eI i) ≃ₗ[R] B i) (x : ∀ i', A i') (i : I) :
-    piE eI e x i = e i (x (eI i)) := rfl
-
 end Ladder
 
 section Main

@@ -110,8 +110,6 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 variable {n : ℕ} {ε : Fin n → Bool}
 
-local notation "JJ" => Formalism.REAL.Jm
-
 theorem slm_JJ (ε : Fin n → Bool) (X : Matrix (Fin n) (Fin n) ℂ) : JJ ε * (JJ ε * X) = X := by
   rw [← Matrix.mul_assoc]
   have h : Formalism.REAL.Jm ε * Formalism.REAL.Jm ε = 1 := by

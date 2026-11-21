@@ -192,21 +192,15 @@ instance : Module ℂ (HeckeAlgebraLevel μ K hKc hKo) :=
 def val (h : HeckeAlgebraLevel μ K hKc hKo) : HeckeAlgebra μ :=
   (show biInvariant μ K from h).1
 
-instance : CoeOut (HeckeAlgebraLevel μ K hKc hKo) (HeckeAlgebra μ) := ⟨val hKc hKo⟩
-
 theorem val_mem (h : HeckeAlgebraLevel μ K hKc hKo) : (h : HeckeAlgebra μ) ∈ biInvariant μ K :=
   (show biInvariant μ K from h).2
 
 def mk (f : HeckeAlgebra μ) (hf : f ∈ biInvariant μ K) : HeckeAlgebraLevel μ K hKc hKo :=
   (⟨f, hf⟩ : biInvariant μ K)
 
-@[simp] theorem val_mk (f : HeckeAlgebra μ) (hf : f ∈ biInvariant μ K) :
-    ((mk hKc hKo f hf : HeckeAlgebraLevel μ K hKc hKo) : HeckeAlgebra μ) = f := rfl
-
 theorem val_injective : Function.Injective (val hKc hKo : HeckeAlgebraLevel μ K hKc hKo → _) :=
   fun _ _ h => Subtype.ext h
 
-@[ext] theorem ext {a b : HeckeAlgebraLevel μ K hKc hKo} (h : (a : HeckeAlgebra μ) = b) : a = b :=
   val_injective hKc hKo h
 
 @[simp] theorem val_mul (a b : HeckeAlgebraLevel μ K hKc hKo) :
@@ -216,10 +210,6 @@ theorem val_injective : Function.Injective (val hKc hKo : HeckeAlgebraLevel μ K
 @[simp] theorem val_zero : ((0 : HeckeAlgebraLevel μ K hKc hKo) : HeckeAlgebra μ) = 0 := rfl
 @[simp] theorem val_smul (c : ℂ) (a : HeckeAlgebraLevel μ K hKc hKo) :
     ((c • a : HeckeAlgebraLevel μ K hKc hKo) : HeckeAlgebra μ) = c • (a : HeckeAlgebra μ) := rfl
-@[simp] theorem val_neg (a : HeckeAlgebraLevel μ K hKc hKo) :
-    ((-a : HeckeAlgebraLevel μ K hKc hKo) : HeckeAlgebra μ) = -(a : HeckeAlgebra μ) := rfl
-@[simp] theorem val_sub (a b : HeckeAlgebraLevel μ K hKc hKo) :
-    ((a - b : HeckeAlgebraLevel μ K hKc hKo) : HeckeAlgebra μ) = a - b := rfl
 
 instance : Ring (HeckeAlgebraLevel μ K hKc hKo) :=
   { (inferInstance : NonUnitalRing (HeckeAlgebraLevel μ K hKc hKo)) with

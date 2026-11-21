@@ -34,13 +34,6 @@ def ThNe0 (nab : NabV Xo c) : Prop :=
 open AlgebraicGeometry CategoryTheory MonoidalCategory CartesianMonoidalCategory MonObj in
 attribute [local instance] Over.cartesianMonoidalCategory in
 
-def NabZero (nab : NabV Xo c) : Prop :=
-  ∀ (S : Type) [CommRing S] [Algebra c.F S] (y : FrPt Xo c S) (k : ℤ)
-    (F : LB.Sec (ReciprocityTheory.ChartRestriction.G.Out.LPow Xo.univ.t.G Xo.univ.t.PP.L k (ptO Xo y.x))),
-    ReciprocityTheory.ChartRestriction.G.Out.IsValueAt Xo.univ.t.G Xo.univ.t.PP.L k F 1
-      (ReciprocityTheory.ChartRestriction.G.Out.rigT Xo.univ.t.G Xo.univ.t.PP.L Xo.univ.t.PP.rig (ptO Xo y.x) k)
-      (toΓ S (nab y k F 0))
-
 theorem existsUnique_thRule (nab : NabV Xo c) (h : ThValTot Xo c nab) {a : (E →+* ℂ) × ℕ → ℕ} {n : ℕ}
     (x : Fin n → Dw.La) {P : MvPolynomial (LtN Dw n) c.F} (hP : P ∈ harmA c a n) :
     ∃! f : Rul Xo c, IsThRule Xo c nab x P f := by

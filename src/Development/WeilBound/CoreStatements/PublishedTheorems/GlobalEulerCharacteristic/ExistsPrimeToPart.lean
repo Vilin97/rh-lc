@@ -6,8 +6,6 @@ open NumberField IsDedekindDomain CategoryTheory GroundTheory.ProfCoh GroundTheo
 
 namespace PositivityTheory.Lit1.GEN.GlobalEulerCharacteristicAlt
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 set_option maxHeartbeats 1000000 in
 theorem exists_prime_to_part (ℓ : ℕ) [Fact ℓ.Prime]
     (K : FiniteSubfield) (S : Set (HeightOneSpectrum (𝓞 K.1)))

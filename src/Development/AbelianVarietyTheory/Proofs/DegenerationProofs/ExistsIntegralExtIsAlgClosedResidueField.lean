@@ -10,53 +10,6 @@ def Unram (π : W) (R : Subalgebra W Ω) : Prop :=
   (∀ x ∈ R, IsIntegral W x) ∧ (algebraMap W Ω π)⁻¹ ∉ R ∧
     ∀ x ∈ R, x ≠ 0 → ∃ (n : ℕ) (u : Ω), u ∈ R ∧ u⁻¹ ∈ R ∧ x = algebraMap W Ω π ^ n * u
 
-theorem Unram.isUnit {R : Subalgebra W Ω} {u : Ω} (hu : u ∈ R) (hu' : u⁻¹ ∈ R) (h0 : u ≠ 0) :
-    IsUnit (⟨u, hu⟩ : R) :=
-  IsUnit.of_mul_eq_one ⟨u⁻¹, hu'⟩ (Subtype.ext (mul_inv_cancel₀ h0))
-
-theorem Unram.factor {π : W} {R : Subalgebra W Ω} (h : Unram π R) (x : R) (hx : x ≠ 0) :
-    ∃ (n : ℕ) (u : Rˣ), algebraMap W R π ^ n * u = x := by
-  have hx' : (x : Ω) ≠ 0 := fun e => hx (Subtype.ext e)
-  obtain ⟨n, u, hu, hu', e⟩ := h.2.2 x x.2 hx'
-  have h0 : u ≠ 0 := by
-    rintro rfl
-    exact hx' (by simpa using e)
-  refine ⟨n, (Unram.isUnit hu hu' h0).unit, Subtype.ext ?_⟩
-  simp [e]
-
-theorem Unram.irreducible {π : W} {R : Subalgebra W Ω} (h : Unram π R)
-    (h0 : algebraMap W Ω π ≠ 0) : Irreducible (algebraMap W R π) := by
-  have h0' : algebraMap W R π ≠ 0 := fun e => h0 (congrArg Subtype.val e)
-  have hnu : ¬ IsUnit (algebraMap W R π) := by
-    intro hu
-    obtain ⟨v, hv⟩ := hu.exists_right_inv
-    have hv' : algebraMap W Ω π * (v : Ω) = 1 := congrArg Subtype.val hv
-    exact h.2.1 (eq_inv_of_mul_eq_one_right hv' ▸ v.2)
-  refine ⟨hnu, fun a b hab => ?_⟩
-  have ha : a ≠ 0 := by
-    rintro rfl
-    exact h0' (by simpa using hab)
-  have hb : b ≠ 0 := by
-    rintro rfl
-    exact h0' (by simpa using hab)
-  obtain ⟨n, u, rfl⟩ := h.factor a ha
-  obtain ⟨m, v, rfl⟩ := h.factor b hb
-  rcases n with _ | n
-  · left; simp
-  rcases m with _ | m
-  · right; simp
-  exfalso
-  refine hnu (IsUnit.of_mul_eq_one (algebraMap W R π ^ (n + m) * u * v) ?_)
-  refine mul_left_cancel₀ h0' ?_
-  rw [mul_one]
-  conv_rhs => rw [hab]
-  ring
-
-theorem Unram.dvr {π : W} {R : Subalgebra W Ω} (h : Unram π R)
-    (h0 : algebraMap W Ω π ≠ 0) : IsDiscreteValuationRing R :=
-  IsDiscreteValuationRing.ofHasUnitMulPowIrreducibleFactorization
-    ⟨_, h.irreducible h0, fun {x} hx => h.factor x hx⟩
-
 open Polynomial IsLocalRing in
 variable {W Ω : Type} [CommRing W] [Field Ω] [Algebra W Ω] in
 private lemma exists_maximal_unram_subalgebra (π : W) (h0 : _root_.GlobalTheory.ClosedResidueExt.Unram π (⊥ : Subalgebra W Ω)) :

@@ -20,11 +20,6 @@ def uliftIntLinearMap {A B : Type*} [AddCommGroup A] [AddCommGroup B] (f : A →
     change f (r.down • x) = r.down • f x
     exact map_zsmul f r.down x
 
-@[simp]
-theorem uliftIntLinearMap_apply {A B : Type*} [AddCommGroup A] [AddCommGroup B] (f : A →+ B)
-    (x : A) : uliftIntLinearMap.{u} f x = f x :=
-  rfl
-
 end ULiftInt
 
 variable (K L : Type u) [Field K] [Field L] [Algebra K L]
@@ -64,10 +59,6 @@ variable [IsGalois K L]
 noncomputable abbrev galoisBrauerGroup : ModuleCat.{u} (ULift.{u} ℤ) :=
   cohomology (galUnits.{u} K L) 2
 
-noncomputable abbrev cohomologicalBrauerGroup (Ksep : Type u) [Field Ksep] [Algebra K Ksep]
-    [IsSepClosure K Ksep] : ModuleCat.{u} (ULift.{u} ℤ) :=
-  galoisBrauerGroup K Ksep
-
 end Brauer
 
 section Inflation
@@ -81,13 +72,6 @@ noncomputable def unitsRestrictHom (E : IntermediateField K L) [Normal K E] :
     (Units.map ((algebraMap E L : E →+* L) : E →* L))), fun σ => by
     ext x
     exact AlgEquiv.restrictNormal_commutes σ E ((Additive.toMul (α := Eˣ) x : Eˣ) : E)⟩
-
-@[simp]
-theorem unitsRestrictHom_hom_apply (E : IntermediateField K L) [Normal K E]
-    (x : Additive Eˣ) :
-    ((Additive.toMul (α := Lˣ) ((unitsRestrictHom E).hom x) : Lˣ) : L) =
-      ((Additive.toMul (α := Eˣ) x : Eˣ) : E) :=
-  rfl
 
 theorem isLocallyConstant_unitsInflation (E : IntermediateField K L) [FiniteDimensional K E]
     [Normal K E] {n : ℕ} (x : (Fin n → Gal(E/K)) → Additive Eˣ) :
@@ -120,13 +104,6 @@ noncomputable def unitsInflationCochains (E : IntermediateField K L) [FiniteDime
     rw [← cancel_mono ((cochainsComplexι (galUnits.{u} K L)).f j), Category.assoc,
       Category.assoc, ← (cochainsComplexι (galUnits.{u} K L)).comm i j, ← Category.assoc,
       unitsInflationCochainsX_comp_ι, unitsInflationCochainsX_comp_ι, HomologicalComplex.Hom.comm]
-
-theorem unitsInflationCochains_comp_cochainsComplexι (E : IntermediateField K L)
-    [FiniteDimensional K E] [Normal K E] :
-    unitsInflationCochains E ≫ cochainsComplexι (galUnits.{u} K L) =
-      groupCohomology.cochainsMap (AlgEquiv.restrictNormalHom E) (unitsRestrictHom E) := by
-  ext n : 1
-  exact unitsInflationCochainsX_comp_ι E n
 
 @[simp]
 theorem unitsInflationCochains_f_hom_apply (E : IntermediateField K L) [FiniteDimensional K E]

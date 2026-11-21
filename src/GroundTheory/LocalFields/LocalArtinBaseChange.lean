@@ -15,10 +15,6 @@ variable {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω] (E : IntermediateFie
 def restrictScalarsHom : (Ω ≃ₐ[E] Ω) →* (Ω ≃ₐ[K] Ω) :=
   (E.fixingSubgroup.subtype).comp (IntermediateField.fixingSubgroupEquiv E).symm.toMonoidHom
 
-@[simp]
-theorem restrictScalarsHom_apply (σ : Ω ≃ₐ[E] Ω) (x : Ω) : restrictScalarsHom E σ x = σ x :=
-  rfl
-
 variable [FiniteDimensional K E]
 
 theorem continuous_restrictScalarsHom : Continuous (restrictScalarsHom (K := K) (Ω := Ω) E) := by

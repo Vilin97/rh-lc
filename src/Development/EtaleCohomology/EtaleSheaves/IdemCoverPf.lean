@@ -93,7 +93,6 @@ theorem approx (r : Ideal (D C)) [r.IsPrime] (s : D C) :
 
 section Loc
 variable (r : Ideal (D C)) [r.IsPrime]
-local notation "L" => Localization.AtPrime r
 
 theorem unit_of (x : D C) (hx : x ∉ r) : IsUnit (algebraMap (D C) L x) :=
   IsLocalization.map_units L (⟨x, hx⟩ : r.primeCompl)

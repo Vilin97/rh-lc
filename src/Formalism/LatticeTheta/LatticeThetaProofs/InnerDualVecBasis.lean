@@ -64,7 +64,4 @@ def dualEquiv (e : Module.Basis ι ℝ V) : (ι → ℤ) ≃ dual (Submodule.spa
       obtain ⟨m, hm⟩ := dualVec_surjective e μ μ.2
       exact ⟨m, Subtype.ext hm⟩⟩
 
-@[simp] theorem dualEquiv_apply (e : Module.Basis ι ℝ V) (m : ι → ℤ) :
-    ((dualEquiv e m : dual (Submodule.span ℤ (Set.range e))) : V) = dualVec e m := rfl
-
 end Formalism.H

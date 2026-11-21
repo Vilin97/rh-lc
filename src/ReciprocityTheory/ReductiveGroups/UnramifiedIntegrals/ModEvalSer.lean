@@ -87,16 +87,6 @@ theorem Conv.pow {f : PowerSeries ℂ} (hf : Conv f) (n : ℕ) : Conv (f ^ n) :=
   | zero => rw [pow_zero]; exact conv_one
   | succ n ih => rw [pow_succ]; exact ih.mul hf
 
-theorem Conv.prod {α : Type*} (s : Finset α) (f : α → PowerSeries ℂ) (hf : ∀ t ∈ s, Conv (f t)) :
-    Conv (∏ t ∈ s, f t) := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => rw [Finset.prod_empty]; exact conv_one
-  | @insert a s ha ih =>
-    rw [Finset.prod_insert ha]
-    exact (hf a (Finset.mem_insert_self a s)).mul
-      (ih fun t ht => hf t (Finset.mem_insert_of_mem ht))
-
 theorem Conv.C_mul {f : PowerSeries ℂ} (hf : Conv f) (c : ℂ) : Conv (PowerSeries.C c * f) := by
   intro x hx
   refine ((hf x hx).mul_left ‖c‖).congr fun n => ?_

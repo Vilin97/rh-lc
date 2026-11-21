@@ -72,7 +72,6 @@ def mvL (g : Matrix ι ι ℂ) : (ι → ℂ) →L[ℝ] (ι → ℂ) :=
   LinearMap.toContinuousLinearMap ((Matrix.mulVecLin g).restrictScalars ℝ)
 
 omit [DecidableEq ι] in
-@[simp] theorem mvL_apply (g : Matrix ι ι ℂ) (v : ι → ℂ) : mvL g v = g *ᵥ v := rfl
 
 omit [DecidableEq ι] in
 theorem form_mulVec (H a : Matrix ι ι ℂ) (x y : ι → ℂ) :

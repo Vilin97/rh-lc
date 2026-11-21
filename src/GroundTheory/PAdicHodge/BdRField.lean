@@ -33,12 +33,6 @@ namespace IsPerfectoidField
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
 
-local notation "𝒪" => normInteger K
-local notation "𝔸" => Localization.Away (p : WittVector p (PreTilt (normInteger K) p))
-local notation "𝔹" => BDeRhamPlus (normInteger K) p
-local notation "𝔹dR" => BDeRham (normInteger K) p
-local notation "J" => RingHom.ker (fontaineThetaInvertP (normInteger K) p)
-
 theorem maximalIdeal_eq_span_of_ker_eq_span {a : 𝔸} (ha : J = span {a}) :
     maximalIdeal 𝔹 = span {toBDeRhamPlus 𝒪 p a} := by
   rw [← map_ker_fontaineThetaInvertP K p, ha, Ideal.map_span, Set.image_singleton]
@@ -152,9 +146,6 @@ theorem fil_antitone : Antitone (fil K p) := by
 
 variable (K p) in
 
-theorem fil_zero : fil K p 0 = 1 := by
-  rw [fil, zpow_zero, Submodule.one_eq_span]
-
 variable (K p) in
 
 theorem mem_fil_zero_iff {x : 𝔹dR} : x ∈ fil K p 0 ↔ ∃ b : 𝔹, x = algebraMap 𝔹 𝔹dR b := by
@@ -210,14 +201,6 @@ theorem iSup_fil : ⨆ i, fil K p i = ⊤ := by
 
 variable (K p) in
 
-theorem fil_mul_fil (i j : ℤ) : fil K p i * fil K p j = fil K p (i + j) := by
-  rw [fil, fil, fil, Submodule.span_mul_span, Set.singleton_mul_singleton,
-    ← zpow_add₀ (algebraMap_ne_zero_of_maximalIdeal_eq_span (maximalIdeal_eq_span_varpi K p))]
-
-theorem mul_mem_fil {i j : ℤ} {x y : 𝔹dR} (hx : x ∈ fil K p i) (hy : y ∈ fil K p j) :
-    x * y ∈ fil K p (i + j) :=
-  fil_mul_fil K p i j ▸ Submodule.mul_mem_mul hx hy
-
 def filMk {π : 𝔹} (hπ : maximalIdeal 𝔹 = span {π}) (i : ℤ) : 𝔹 →ₗ[𝔹] fil K p i where
   toFun b := ⟨algebraMap 𝔹 𝔹dR π ^ i * algebraMap 𝔹 𝔹dR b, (mem_fil_iff hπ).2 ⟨b, rfl⟩⟩
   map_add' a b := Subtype.ext (by simp only [map_add, mul_add, Submodule.coe_add])
@@ -257,14 +240,6 @@ theorem grMap_mk {π : 𝔹} (hπ : maximalIdeal 𝔹 = span {π}) {i : ℤ} (b 
     grMap hπ i ⟨algebraMap 𝔹 𝔹dR π ^ i * algebraMap 𝔹 𝔹dR b, h⟩ = thetaBDeRhamPlusField p b := by
   rw [grMap_apply, filEquiv_mk]
 
-theorem grMap_smul {π : 𝔹} (hπ : maximalIdeal 𝔹 = span {π}) {i : ℤ} (c : 𝔹) (x : fil K p i) :
-    grMap hπ i (c • x) = thetaBDeRhamPlusField p c * grMap hπ i x := by
-  rw [grMap_apply, grMap_apply, map_smul, smul_eq_mul, map_mul]
-
-theorem grMap_surjective {π : 𝔹} (hπ : maximalIdeal 𝔹 = span {π}) (i : ℤ) :
-    Function.Surjective (grMap (K := K) hπ i) :=
-  (surjective_thetaBDeRhamPlusField p).comp (filEquiv hπ i).surjective
-
 theorem grMap_eq_zero_iff {π : 𝔹} (hπ : maximalIdeal 𝔹 = span {π}) {i : ℤ} (x : fil K p i) :
     grMap hπ i x = 0 ↔ (x : 𝔹dR) ∈ fil K p (i + 1) := by
   have hne := algebraMap_ne_zero_of_maximalIdeal_eq_span (K := K) hπ
@@ -279,28 +254,11 @@ theorem grMap_eq_zero_iff {π : 𝔹} (hπ : maximalIdeal 𝔹 = span {π}) {i :
     rw [map_mul]
     exact mul_left_cancel₀ (zpow_ne_zero i hne) hc
 
-theorem ker_grMap {π : 𝔹} (hπ : maximalIdeal 𝔹 = span {π}) (i : ℤ) :
-    (grMap hπ i).ker = ((fil K p (i + 1)).comap (fil K p i).subtype).toAddSubgroup := by
-  ext x
-  rw [AddMonoidHom.mem_ker, grMap_eq_zero_iff]
-  rfl
-
-def grEquiv {π : 𝔹} (hπ : maximalIdeal 𝔹 = span {π}) (i : ℤ) :
-    (fil K p i) ⧸ ((fil K p (i + 1)).comap (fil K p i).subtype) ≃+ K :=
-  (QuotientAddGroup.quotientAddEquivOfEq (ker_grMap hπ i).symm).trans
-    (QuotientAddGroup.quotientKerEquivOfSurjective _ (grMap_surjective hπ i))
-
-theorem grEquiv_mk {π : 𝔹} (hπ : maximalIdeal 𝔹 = span {π}) {i : ℤ} (x : fil K p i) :
-    grEquiv hπ i (Submodule.Quotient.mk x) = grMap hπ i x := rfl
-
 end IsPerfectoidField
 
 section Galois
 
 variable {p : ℕ} [Fact p.Prime] {L : IntermediateField ℚ_[p] (PadicAlgCl p)}
-
-local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
-local notation "𝔹dR" => BDeRham (normInteger ℂ_[p]) p
 
 def galBdRField (σ : Gal(PadicAlgCl p/L)) : 𝔹dR ≃+* 𝔹dR :=
   IsFractionRing.ringEquivOfRingEquiv (galBdR σ)
@@ -358,12 +316,6 @@ theorem gal_smul_mem_fil (σ : Gal(PadicAlgCl p/L)) {i : ℤ} {x : 𝔹dR}
   obtain ⟨b, rfl⟩ := (IsPerfectoidField.mem_fil_iff hϖ).1 hx
   refine (IsPerfectoidField.mem_fil_iff (maximalIdeal_eq_span_gal_smul σ hϖ)).2 ⟨σ • b, ?_⟩
   rw [gal_smul_bDeRham_def, map_mul, map_zpow₀, galBdRField_algebraMap, galBdRField_algebraMap]
-
-theorem gal_smul_mem_fil_iff (σ : Gal(PadicAlgCl p/L)) (i : ℤ) (x : 𝔹dR) :
-    σ • x ∈ IsPerfectoidField.fil ℂ_[p] p i ↔ x ∈ IsPerfectoidField.fil ℂ_[p] p i := by
-  refine ⟨fun h => ?_, gal_smul_mem_fil σ⟩
-  have := gal_smul_mem_fil σ⁻¹ h
-  rwa [inv_smul_smul] at this
 
 end Galois
 

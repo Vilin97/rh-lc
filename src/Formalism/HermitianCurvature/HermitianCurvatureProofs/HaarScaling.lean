@@ -28,13 +28,6 @@ theorem haar_smul {k r : ℕ} {U : Set (Mat k r)} {μ : Measure (Mt k r)} (h : I
     · exact absurd (by exact_mod_cast h2 : c = 0) hc.ne'
     · exact Measure.measure_univ_eq_zero.mp h2
 
-theorem AB_le (k r : ℕ) (A : ℝ) (h : 2 * ((2 * r + k + 1 : ℕ) : ℝ) ^ 2 < A) : AB k r ≤ A := by
-  have hk : (0 : ℝ) ≤ k := Nat.cast_nonneg k
-  have hr : (0 : ℝ) ≤ r := Nat.cast_nonneg r
-  unfold AB
-  push_cast at h
-  nlinarith [mul_nonneg hk hr, mul_nonneg hk hk, mul_nonneg hr hr]
-
 section
 variable {k r : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp]
   [NormedAddCommGroup Wq] [InnerProductSpace ℂ Wq]
@@ -85,9 +78,6 @@ theorem betaInf_scale (D : RealPlaceData k r Wp Wq) (c : ℝ≥0) (hc : 0 < c) (
 theorem beta_scale (D : RealPlaceData k r Wp Wq) (c : ℝ≥0) (hc : 0 < c) (F F' : Mat k r → (Wq →L[ℂ] Wp)) :
     beta (scaleG D c hc) F F' = beta D F F' := rfl
 
-theorem normSq_scale (D : RealPlaceData k r Wp Wq) (c : ℝ≥0) (hc : 0 < c) (F : Mat k r → (Wq →L[ℂ] Wp)) :
-    normSq (scaleG D c hc) F = normSq D F := rfl
-
 end
 
 end Formalism.FourierDecayAlt.P.HaarScaling
@@ -99,10 +89,6 @@ open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt.B Fo
 theorem lemma_b_normalised_of_parts : Formalism.FourierDecayAlt.B2.LemmaBNormFromParts := by
   intro hC hJ hD hI k r Wp Wq _ _ _ _ _ _ D A hA hF
   exact hC k r Wp Wq D A hA hF (hJ k r Wp Wq D) (hD k r Wp Wq D) (hI k r Wp Wq D A hA)
-
-theorem lemma_b_crude_of_parts : Formalism.FourierDecayAlt.B2.LemmaBCrudeFromParts := by
-  intro hC hJ hD hI k r Wp Wq _ _ _ _ _ _ D A hA hF
-  exact hC k r Wp Wq D A (AB_le k r A hA) hF (hJ k r Wp Wq D) (hD k r Wp Wq D) (hI k r Wp Wq D A hA)
 
 theorem lemma_b_any_measure_from_normalised : Formalism.FourierDecayAlt.B2.LemmaBAnyFromNorm := by
   intro hN hB k r Wp Wq _ _ _ _ _ _ D A hA

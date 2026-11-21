@@ -82,7 +82,6 @@ end GlobalTheory.IsoTermMean
 
 namespace GlobalTheory.IsoTermMean
 variable {D : D7}
-local infixl:70 " ⬝ₘ " => HMul.hMul
 
 theorem mt_mul_frame (V : HSp D) {r : ℕ} (C : Matrix (Fin V.rank) (Fin r) D.host.E) {g : GA D V}
     (hg : g ∈ NI V C) : mt V g ⬝ₘ (C.map (incA D) : Matrix (Fin V.rank) (Fin r) (AE D)) = C.map (incA D) := by
@@ -145,7 +144,6 @@ end GlobalTheory.IsoTermMean
 namespace GlobalTheory.IsoTermMean
 open GlobalTheory.IndefiniteRowSideFullHecke.AdjointIsotropicDecomposition
 variable {D : D7}
-local infixl:70 " ⬝ₘ " => HMul.hMul
 
 theorem mt_one (V : HSp D) : mt V 1 = 1 := by simp [Formalism.L2.Theta.mt]
 
@@ -157,7 +155,6 @@ end GlobalTheory.IsoTermMean
 namespace GlobalTheory.IsoTermMean
 open GlobalTheory.IndefiniteRowSideFullHecke.AdjointIsotropicDecomposition
 variable {D : D7}
-local infixl:70 " ⬝ₘ " => HMul.hMul
 
 theorem map_frame_decomp (V V' : HSp D) {r : ℕ} (C C' : Matrix (Fin V.rank) (Fin r) D.host.E)
     (B : Matrix (Fin V.rank) (Fin V'.rank) D.host.E) (hs : IsIsoSplit V V' C B) (h1 : adj D C * V.gram * C' = 1)
@@ -209,7 +206,6 @@ end GlobalTheory.IsoTermMean
 namespace GlobalTheory.IsoTermMean
 open GlobalTheory.IndefiniteRowSideFullHecke.AdjointIsotropicDecomposition
 variable {D : D7}
-local infixl:70 " ⬝ₘ " => HMul.hMul
 
 theorem term_eq_aux (V V' W : HSp D) (r : ℕ) (C C' : Matrix (Fin V.rank) (Fin r) D.host.E)
     (B : Matrix (Fin V.rank) (Fin V'.rank) D.host.E) (hs : IsIsoSplit V V' C B) (h1 : adj D C * V.gram * C' = 1)
@@ -258,7 +254,6 @@ end GlobalTheory.IsoTermMean
 namespace GlobalTheory.IsoTermMean
 open GlobalTheory.IndefiniteRowSideFullHecke.AdjointIsotropicDecomposition
 variable {D : D7}
-local infixl:70 " ⬝ₘ " => HMul.hMul
 
 theorem iso_read_periodic (V' W : HSp D) (ψ : AddChar (AF D.host.F) ℂ) {s : ℕ} (L : Matrix (Fin W.rank) (Fin s) D.host.E)
     (hL : IsIsoFrame W L) (G : WO V' W → ℂ) (hG : IsThetaFunO ψ V' W G) :

@@ -20,7 +20,6 @@ variable {o} {G : Type} [Group G] [Fintype G] {Pl0 I0 T : Type} {A3 : FamIn3 o.L
   {cG : G0 R.Pg o.L.D.R.r ≃* G0g o.L.D.nd} {S : RatDat o.L.D.ntw} {YS : NExpRealS R cG S}
   {v₀ : ∀ (j : Fin o.L.D.R.m) (σ : o.L.D.what₂.LL →+* ℂ), (R.MW j σ).Vec}
 set_option hygiene false in
-local notation "bb" => Oth.L (o2 o V' S')
 end GlobalTheory.LayerMove.SerUp
 end
 end

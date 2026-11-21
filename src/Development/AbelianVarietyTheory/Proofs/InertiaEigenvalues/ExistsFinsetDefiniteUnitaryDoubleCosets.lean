@@ -63,8 +63,6 @@ section CM
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
-local notation "F₀" => maximalRealSubfield E
-
 theorem conjFin_adMap (a : FiniteAdeleRing (𝓞 F₀) F₀) :
     conjFin (IsCMField.complexConj E).toRingEquiv (GlobalTheory.AdeleBaseChange.adMap F₀ E a) =
       GlobalTheory.AdeleBaseChange.adMap F₀ E a := by
@@ -139,8 +137,6 @@ namespace GlobalTheory.UnitaryBC.ClassTransport
 section CM
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
-
-local notation "F₀" => maximalRealSubfield E
 
 theorem psi_mem {n : ℕ}
     (x : HA (FiniteAdeleRing (𝓞 F₀) F₀) (IsCMField.complexConj E : E →ₐ[F₀] E) (1 : Matrix (Fin n) (Fin n) E)) :

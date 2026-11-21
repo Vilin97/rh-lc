@@ -45,10 +45,6 @@ noncomputable def tensorRightMor (m : M) (hm : ∀ g : G, M.ρ g m = m) : T ⟶ 
     simp [Representation.tprod_apply, hm g]⟩
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] in
-@[simp]
-theorem tensorRightMor_hom_apply (m : M) (hm : ∀ g : G, M.ρ g m = m) (t : T) :
-    (tensorRightMor T m hm).hom t = t ⊗ₜ[k] m :=
-  rfl
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] in
 
@@ -59,10 +55,6 @@ noncomputable def tensorFormMor (f : M →ₗ[k] k) (hf : ∀ (g : G) (m : M), f
     simp [Representation.tprod_apply, hf g]⟩
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] in
-@[simp]
-theorem tensorFormMor_hom_tmul (f : M →ₗ[k] k) (hf : ∀ (g : G) (m : M), f (M.ρ g m) = f m)
-    (t : T) (m : M) : (tensorFormMor T f hf).hom (t ⊗ₜ[k] m) = f m • t := by
-  simp [tensorFormMor]
 
 end Morphisms
 

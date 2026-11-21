@@ -260,8 +260,6 @@ theorem rowOp_mem_geDeg {t : ℕ} (i j : Fin n) {f : Poly n} (hf : f ∈ geDeg t
 noncomputable def iterPd (w : List (Fin n × Fin n)) (f : Poly n) : Poly n :=
   w.foldr (fun a g => pderiv (a.2, a.1) g) f
 
-@[simp] theorem iterPd_nil (f : Poly n) : iterPd [] f = f := rfl
-
 @[simp] theorem iterPd_cons (a : Fin n × Fin n) (w : List (Fin n × Fin n)) (f : Poly n) :
     iterPd (a :: w) f = pderiv (a.2, a.1) (iterPd w f) := rfl
 

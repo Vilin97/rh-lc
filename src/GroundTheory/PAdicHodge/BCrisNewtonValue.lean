@@ -14,9 +14,6 @@ open _root_.WittVector Laurent Polynomial WittTilt
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
-local notation "𝔸" => Localization.Away (p : AInf ℂ_[p] p)
-local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
-
 variable (p) in
 
 def sig (ρ : ℝ) : ℝ := Real.log ρ / Real.log (p : ℝ)⁻¹

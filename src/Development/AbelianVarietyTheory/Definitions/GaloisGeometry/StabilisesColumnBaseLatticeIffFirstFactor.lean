@@ -1,5 +1,5 @@
 import Mathlib
-import Formalism.LocalToGlobal.GroupLattices.LevelCharts.ClsSEqIffExistsLevCSmul
+import Formalism.LocalToGlobal.GroupLattices.LevelCharts.ClsSEqIffExistsGMapPrPSRatAS
 import Formalism.LocalToGlobal.GroupLattices.LevelCharts.FiniteClassSetOfFiniteIndex
 import Formalism.LocalToGlobal.GroupLattices.LevelCharts.SplitStab
 import Formalism.LocalToGlobal.GroupLattices.LevelCharts.SplitIntPI
@@ -9,7 +9,7 @@ import Formalism.SharpRestriction.GrowthBounds.ChartComparison.PStabEq
 import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.LocalClassDataOfTrivialStabilizers
 import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePtOneRec
 import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.RecAct
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.TiedCls
+import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ClsChartedLabAt
 import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.CompInjLocJ
 import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.CompanionOfBaseTied
 import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.GramLevelZeroEqReindex

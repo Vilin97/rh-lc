@@ -67,12 +67,10 @@ def sqMap : (G' ⊗ G').left ⟶ (G ⊗ G).left := (lift (pushHom h _ (fst G' G'
 
 omit [IsCommMonObj G] [IsCommMonObj G'] in
 
-@[reassoc] theorem sqMap_fst : sqMap h ≫ (fst G G).left = (fst G' G').left ≫ φ :=
   congrArg (fun q => q.left) (lift_fst (pushHom h _ (fst G' G')) (pushHom h _ (snd G' G')))
 
 omit [IsCommMonObj G] [IsCommMonObj G'] in
 
-@[reassoc] theorem sqMap_snd : sqMap h ≫ (snd G G).left = (snd G' G').left ≫ φ :=
   congrArg (fun q => q.left) (lift_snd (pushHom h _ (fst G' G')) (pushHom h _ (snd G' G')))
 
 omit [GrpObj G] [IsCommMonObj G] in
@@ -163,7 +161,6 @@ variable {R : Type} [CommRing R] (I : Ideal R) (e : ℕ)
     thickMap R I e G ≫ pullback.fst G.hom (thick R I (e + 1)) = pullback.fst G.hom (thick R I e) :=
   (pullback.lift_fst _ _ _).trans (Category.comp_id _)
 
-@[reassoc] theorem thickMap_snd (G : Over (Sp R)) :
     thickMap R I e G ≫ pullback.snd G.hom (thick R I (e + 1)) = pullback.snd G.hom (thick R I e) ≫ thickTrans R I e :=
   pullback.lift_snd _ _ _
 
@@ -194,10 +191,6 @@ def abPartAct : OAct (𝓞 E) U.D.toPre.P.A := letI := H.starRing; ofRingAct U.o
 
 abbrev abTens : Over (Sp R) := Λ.obj (abPartAct U)
 
-def abPartLB : RigLB U.D.toPre.P.A := ⟨U.D.toPre.P.L, U.D.toPre.rig, U.D.toPre.P.isLB, U.D.toPre.rig_gen⟩
-
-def abTensLB : RigLB (abTens U Λ) := Λ.thetaOn (abPartAct U) H.w0 (abPartLB U)
-
 theorem isLinearHom_q (e : ℕ) : IsLinearHom (t.act.pullback (thick R I e) _) ((abPartAct U).pullback (thick R I e) _)
     (U.U.gt e).q :=
   letI := H.starRing
@@ -206,9 +199,6 @@ theorem isLinearHom_q (e : ℕ) : IsLinearHom (t.act.pullback (thick R I e) _) (
 def qTens (e : ℕ) : thickObj R I e (tens t Λ).G ⟶ thickObj R I e (abTens U Λ) :=
   ((tens.isTensor t Λ).pullback (thick R I e)).mapRight ((Λ.isTensor (abPartAct U)).pullback (thick R I e))
     (isLinearHom_q U e)
-
-theorem isLinearHom_qTens (e : ℕ) : IsLinearHom ((tens t Λ).act.pullback (thick R I e) _)
-    ((Λ.act (abPartAct U)).pullback (thick R I e) _) (qTens U Λ e) := IsTensor.isLinearHom_mapRight _ _ _
 
 theorem q_thickMap (e : ℕ) : (U.U.gt e).q.left ≫ thickMap R I e _ = thickMap R I e _ ≫ (U.U.gt (e + 1)).q.left := by
   apply pullback.hom_ext
@@ -239,13 +229,6 @@ abbrev gPt : Over (Sp ↥(intO ↥C.S)) := (Over.pullback (spMap A.f)).obj (tens
 
 abbrev bPt : Over (Sp ↥(intO ↥C.S)) := (Over.pullback (spMap A.f)).obj (abTens A.U Λ)
 
-def gPtIsTensor : IsTensor (gPt A Λ) ((tens A.t Λ).act.pullback (spMap A.f) _) ((Over.pullback (spMap A.f)).obj A.t.G)
-    (A.t.act.pullback (spMap A.f) _) Λ.L := (tens.isTensor A.t Λ).pullback _
-
-def bPtIsTensor : IsTensor (bPt A Λ) ((Λ.act (abPartAct A.U)).pullback (spMap A.f) _)
-    ((Over.pullback (spMap A.f)).obj A.U.D.toPre.P.A) ((abPartAct A.U).pullback (spMap A.f) _) Λ.L :=
-  (Λ.isTensor (abPartAct A.U)).pullback _
-
 abbrev gtLev (e : ℕ) : Over (Sp (↥(intO ↥C.S) ⧸ defIdeal A ^ (e + 1))) := thickObj _ (defIdeal A) e (gPt A Λ)
 
 abbrev bLev (e : ℕ) : Over (Sp (↥(intO ↥C.S) ⧸ defIdeal A ^ (e + 1))) := thickObj _ (defIdeal A) e (bPt A Λ)
@@ -260,7 +243,6 @@ theorem isGrpPullback_levToDat (G : Over (Sp A.R)) [GrpObj G] (e : ℕ) :
       (sE A.f le_rfl e) (levToDat A G e) :=
   @Out.PullGtPf.isGrpPullback_hMap _ _ _ _ _ _ _ _ A.f le_rfl e G _ _ _ (Iso.refl _) (inferInstanceAs (IsMonHom (𝟙 _)))
 
-@[reassoc] theorem levToDat_fst (G : Over (Sp A.R)) (e : ℕ) :
     levToDat A G e ≫ pullback.fst _ _ = pullback.fst _ _ ≫ pullback.fst G.hom (spMap A.f) :=
   (Out.PullGtPf.hMap_fst _ _ _).trans (congrArg _ (Category.id_comp _))
 
@@ -272,11 +254,6 @@ def prLev (e : ℕ) : gtLev A Λ e ⟶ bLev A Λ e :=
 @[reassoc] theorem prLev_levToDat (e : ℕ) :
     (prLev A Λ e).left ≫ levToDat A _ e = levToDat A _ e ≫ (qTens A.U Λ e).left :=
   (isGrpPullback_levToDat A (abTens A.U Λ) e).1.lift_fst _ _ _
-
-instance isMonHom_prLev (e : ℕ) : IsMonHom (prLev A Λ e) :=
-  have := (isLinearHom_qTens A.U Λ e).1
-  Out.PullGtPf.isMonHom_of_grpPullback (isGrpPullback_levToDat A _ e) (isGrpPullback_levToDat A _ e) (qTens A.U Λ e) _
-    (prLev_levToDat A Λ e)
 
 def prPt (e : ℕ) : (gtLev A Λ e).left ⟶ (bPt A Λ).left := (prLev A Λ e).left ≫ pullback.fst _ _
 
@@ -301,9 +278,6 @@ def prPullPt (M : SmallPic (bPt A Λ).left) : GtPic A Λ := fpull (prPt A Λ) (g
 def completePt (L : SmallPic (gPt A Λ).left) : GtPic A Λ :=
   fpull (fun _ => pullback.fst _ _) (fun e => thickMap_fst _ e _) L
 
-def mmPt : SmallPic (bPt A Λ).left :=
-  smallPull (pullback.fst (abTens A.U Λ).hom (spMap A.f)) (smallCls _ (abTensLB A.U Λ).isLB)
-
 variable {X : Scheme.{0}} {π : X ⟶ Y.X} {t : SAB H X} (m : SABMap t Y.t π) (z : Sp ↥(intO ↥C.S) ⟶ X) (hz : z ≫ π = P.yt)
 
 include hz in
@@ -314,9 +288,6 @@ theorem isGrpPullback_gPt_base : IsGrpPullback (gPt A Λ) (tens Y.t Λ).G (z ≫
 def gPtTo : (gPt A Λ).left ⟶ (tens t Λ).G.left :=
   (tens.map Λ m).cart.1.lift (pullback.fst _ _ ≫ (tens.map Λ A.m).φ) ((gPt A Λ).hom ≫ z)
     (by rw [(isGrpPullback_gPt_base A Λ z hz).1.w, Category.assoc])
-
-theorem gPtTo_φ : gPtTo A Λ m z hz ≫ (tens.map Λ m).φ = pullback.fst _ _ ≫ (tens.map Λ A.m).φ :=
-  (tens.map Λ m).cart.1.lift_fst _ _ _
 
 end Point
 
@@ -360,19 +331,6 @@ def thbTrue (ct : At S κ p) : ThbSt ct (uniTrue ct) where
   PPq_def Λ := (tens.diag_poiCls ct.Xm.tQ Λ).symm
 
 variable (ct : At S κ p) (Λ : (uniTrue ct).Unim)
-
-example (P : (thbTrue ct).StrictHenselianAcyclic Λ) : (thbTrue ct).dg P = diagCls ((tens ct.Xm.t Λ).act.act (BoundaryLocalData.w0 D)) P := by
-  rw [← amb_w0_eq_boundaryLocalData_w0 A]; rfl
-
-example (P : (thbTrue ct).StrictHenselianAcyclic Λ) : (thbTrue ct).rigG ((thbTrue ct).dg P) :=
-  haveI := (tens ct.Xm.t Λ).act.hom A.H.w0
-  isRigCls_diagCls _ P
-
-example (y : ct.Pt ct.Xm) (L : (thbTrue ct).LBG Λ) (M : (thbTrue ct).LBB y Λ)
-    (h : (thbTrue ct).resGt L y = (thbTrue ct).prPull M) (e : ℕ) :
-    smallPull (pullback.fst _ _) (smallPull (gPtTo (ct.dat y) Λ ct.Xm.tMap y.z y.z_π) L) =
-      smallPull (prPt (ct.dat y) Λ e) M :=
-  (level_fpull _ _ e _).symm.trans ((congrArg (level e) h).trans (level_fpull _ _ e _))
 
 end Record
 

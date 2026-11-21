@@ -140,11 +140,6 @@ theorem Bd.prod {ι : Type} {k : ℕ} (S : Finset ι) (f : ι → K) (h : ∀ i 
     rw [Finset.prod_mul_distrib, Finset.prod_const, ← pow_mul, mul_comm k]
   unfold Bd; rw [this]; exact R.prod_mem h
 
-theorem Bd.pow {k : ℕ} {x : K} (hx : Bd R ϖ k x) (n : ℕ) : Bd R ϖ (n * k) (x ^ n) := by
-  have : (ϖ : K) ^ (n * k) * x ^ n = ((ϖ : K) ^ k * x) ^ n := by
-    rw [mul_pow, ← pow_mul, mul_comm k]
-  unfold Bd; rw [this]; exact R.pow_mem hx n
-
 theorem sm_zero_iff {x : K} : Sm R ϖ 0 x ↔ x ∈ R := by
   constructor
   · rintro ⟨r, hr, rfl⟩; simpa using hr
@@ -169,9 +164,6 @@ theorem Sm.add {k : ℕ} {x y : K} (hx : Sm R ϖ k x) (hy : Sm R ϖ k y) : Sm R 
 theorem Sm.neg {k : ℕ} {x : K} (hx : Sm R ϖ k x) : Sm R ϖ k (-x) := by
   obtain ⟨r, hr, rfl⟩ := hx
   exact ⟨-r, R.neg_mem hr, by ring⟩
-
-theorem Sm.sub {k : ℕ} {x y : K} (hx : Sm R ϖ k x) (hy : Sm R ϖ k y) : Sm R ϖ k (x - y) := by
-  rw [sub_eq_add_neg]; exact hx.add hy.neg
 
 theorem Sm.sum {ι : Type} {k : ℕ} (S : Finset ι) (f : ι → K) (h : ∀ i ∈ S, Sm R ϖ k (f i)) :
     Sm R ϖ k (∑ i ∈ S, f i) := by

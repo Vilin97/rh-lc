@@ -20,8 +20,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     [CommRing O] [Algebra O LL] {v : AddValuation LL (WithTop ℚ)} {n : ℕ}
     (W : LocWach PD LL O v n)
 
-local notation "mkI" y => Ideal.Quotient.mk (DualFramesAlt.eigenRingInvariants.Ia y)
-
 theorem u2ringPfD_main [IsDomain O] [IsDiscreteValuationRing O] [CharZero O]
     [IsAdicComplete (IsLocalRing.maximalIdeal O) O]
     {e s' : ℕ} {π' : LetA O n} {E : ZMod n → Polynomial O}

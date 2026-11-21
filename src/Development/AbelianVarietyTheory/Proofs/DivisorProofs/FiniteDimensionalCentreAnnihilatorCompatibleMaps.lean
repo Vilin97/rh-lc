@@ -44,9 +44,6 @@ def postZ (z : Module.End ℂ (Sm E a)) (hz : z ∈ Zalg E a) : Module.End ℂ (
   map_add' T T' := by ext; simp
   map_smul' c T := by ext; simp
 
-@[simp] theorem postZ_apply (z : Module.End ℂ (Sm E a)) (hz : z ∈ Zalg E a) (T : mapsJ φ L) :
-    (postZ φ L z hz T).1 = z ∘ₗ T.1 := rfl
-
 def postZAlg : Zalg E a →ₐ[ℂ] Module.End ℂ (mapsJ φ L) where
   toFun z := postZ φ L z.1 z.2
   map_one' := by ext; simp

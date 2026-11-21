@@ -1,5 +1,6 @@
 import Mathlib
-import GroundTheory.PAdicHodge.BCrisEigenFixed
+import GroundTheory.PAdicHodge.BCrisNewton
+import GroundTheory.PAdicHodge.GalSmulAlgebraMapPadicPlus
 set_option maxSynthPendingDepth 1
 
 noncomputable section
@@ -9,9 +10,6 @@ namespace GroundTheory.PAdicHodge
 namespace ACris
 
 variable {p : ℕ} [hp : Fact p.Prime]
-
-local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
-local notation "𝔹dR" => BDeRham (normInteger ℂ_[p]) p
 
 variable {ε : PreTilt (normInteger ℂ_[p]) p} (hε : PreTilt.untilt ε = 1)
   (hζ : PreTilt.untilt ((_root_.frobeniusEquiv (PreTilt (normInteger ℂ_[p]) p) p).symm ε) ≠ 1)
@@ -43,9 +41,6 @@ variable {L : IntermediateField ℚ_[p] (PadicAlgCl p)}
 
 include hζ in
 set_option maxHeartbeats 1600000 in
-theorem galB_eq_of_smul_iotaB (σ : Gal(PadicAlgCl p/L)) {B : BCris hε}
-    (h : σ • iotaB hε hζ B = iotaB hε hζ B) : galB hε σ B = B :=
-  iotaB_injective hε hζ ((iotaB_galB (K := L) hε hζ σ B).trans h)
 
 include hζ in
 set_option maxHeartbeats 3200000 in

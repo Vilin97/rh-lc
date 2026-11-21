@@ -64,12 +64,6 @@ def continuousUnitsEquiv (hBopen : ∀ i, IsOpen (B i : Set (R i))) :
   continuous_toFun := continuous_unitsEquiv hBopen
   continuous_invFun := continuous_unitsEquiv_symm
 
-@[simp]
-theorem continuousUnitsEquiv_apply (hBopen : ∀ i, IsOpen (B i : Set (R i)))
-    (x : (Πʳ i, [R i, B i])ˣ) (i : ι) :
-    ((continuousUnitsEquiv hBopen x i : (R i)ˣ) : R i) = (x : Πʳ i, [R i, B i]) i :=
-  rfl
-
 end RestrictedProduct
 
 namespace IdeleGroup
@@ -87,12 +81,6 @@ def finiteUnitsEquiv :
   RestrictedProduct.continuousUnitsEquiv (R := fun v : HeightOneSpectrum (𝓞 K) ↦ v.adicCompletion K)
     (B := fun v ↦ v.adicCompletionIntegers K)
     (fun v ↦ Valued.isOpen_valuationSubring (v.adicCompletion K))
-
-@[simp]
-theorem finiteUnitsEquiv_apply (x : (FiniteAdeleRing (𝓞 K) K)ˣ) (v : HeightOneSpectrum (𝓞 K)) :
-    ((finiteUnitsEquiv K x v : (v.adicCompletion K)ˣ) : v.adicCompletion K) =
-      (x : FiniteAdeleRing (𝓞 K) K) v :=
-  rfl
 
 def prodRestrictedEquiv :
     IdeleGroup K ≃ₜ* (InfiniteAdeleRing K)ˣ × Πʳ v : HeightOneSpectrum (𝓞 K),

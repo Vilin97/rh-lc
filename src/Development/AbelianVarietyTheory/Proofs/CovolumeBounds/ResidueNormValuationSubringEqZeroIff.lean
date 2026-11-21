@@ -8,8 +8,6 @@ section
 
 variable {C : Type*} [NormedField C] [IsUltrametricDist C] {σ : Type*}
 
-local notation "𝒪" => Valuation.valuationSubring (NormedField.valuation (K := C))
-
 theorem mem_normValuationSubring_iff (x : C) : x ∈ 𝒪 ↔ ‖x‖ ≤ 1 := by
   rw [Valuation.mem_valuationSubring_iff, NormedField.valuation_apply]
   rfl
@@ -353,11 +351,6 @@ theorem bounded_series_integral_of_dense [CompleteSpace C] [Infinite (IsLocalRin
 
 end
 
-theorem exists_lt_norm_lt_one_of_densely {C : Type*} [DenselyNormedField C] (r : ℝ) (hr : r < 1) :
-    ∃ x : C, r < ‖x‖ ∧ ‖x‖ < 1 := by
-  obtain ⟨x, h1, h2⟩ := NormedField.exists_lt_norm_lt C (le_max_right r 0) (max_lt hr one_pos)
-  exact ⟨x, (le_max_left r 0).trans_lt h1, h2⟩
-
 theorem exists_lt_norm_lt_one_of_isAlgClosed {C : Type*} [NontriviallyNormedField C]
     [IsAlgClosed C] (r : ℝ) (hr : r < 1) : ∃ x : C, r < ‖x‖ ∧ ‖x‖ < 1 := by
   obtain ⟨y, hy0, hy1⟩ := NormedField.exists_norm_lt_one C
@@ -384,21 +377,5 @@ theorem bounded_series_integral {C : Type*} [NontriviallyNormedField C] [IsUltra
         MvPowerSeries.map (NormedField.valuation (K := C)).valuationSubring.subtype g₀ = g) :=
   haveI := infinite_residueField_of_isAlgClosed (C := C)
   bounded_series_integral_of_dense exists_lt_norm_lt_one_of_isAlgClosed g hg
-
-theorem norm_coeff_le_of_hasSum_of_isAlgClosed {C : Type*} [NontriviallyNormedField C]
-    [IsUltrametricDist C] [IsAlgClosed C] {σ : Type*} {g : MvPowerSeries σ C} {f : (σ → C) → C}
-    (hf : ∀ z : σ → C, (∀ i, ‖z i‖ < 1) →
-      HasSum (fun t : σ →₀ ℕ => coeff t g * t.prod (z · ^ ·)) (f z)) {M : ℝ}
-    (h : ∀ z : σ → C, (∀ i, ‖z i‖ < 1) → ‖f z‖ ≤ M) (t : σ →₀ ℕ) : ‖coeff t g‖ ≤ M :=
-  haveI := infinite_residueField_of_isAlgClosed (C := C)
-  norm_coeff_le_of_hasSum exists_lt_norm_lt_one_of_isAlgClosed (fun _ hx z hz =>
-    ⟨_, hf z fun i => (hz i).trans_lt hx, h z fun i => (hz i).trans_lt hx⟩) t
-
-example (p : ℕ) [Fact p.Prime] (n : ℕ) (z : Fin n → ℂ_[p]) (hz : ∀ i, ‖z i‖ < 1) :
-    ‖seriesValue (fun _ => 1 : MvPowerSeries (Fin n) ℂ_[p]) z‖ ≤ 1 := by
-  have h : ∀ t, ‖coeff t (fun _ => 1 : MvPowerSeries (Fin n) ℂ_[p])‖ ≤ 1 := fun t =>
-    norm_one.le
-  exact ((bounded_series_integral _ fun r h0 h1 => (isRestricted_const_iff _ r).1
-    (isRestricted_of_norm_coeff_le h h0 h1)).2.2.1 1).2 h z hz
 
 end GlobalTheory

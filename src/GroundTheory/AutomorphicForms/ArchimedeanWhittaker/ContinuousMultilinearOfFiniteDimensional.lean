@@ -20,8 +20,6 @@ noncomputable def wordOp : {k : ℕ} → (Fin k → 𝔤) → E → E
   | 0, _, v => v
   | _ + 1, Y, v => h.derivOp π (Y 0) (wordOp (Fin.tail Y) v)
 
-@[simp] theorem wordOp_zero' (Y : Fin 0 → 𝔤) (v : E) : h.wordOp π Y v = v := rfl
-
 theorem wordOp_succ {k : ℕ} (Y : Fin (k + 1) → 𝔤) (v : E) :
     h.wordOp π Y v = h.derivOp π (Y 0) (h.wordOp π (Fin.tail Y) v) := rfl
 
@@ -30,33 +28,7 @@ theorem isSmoothVector_wordOp {v : E} (hv : h.IsSmoothVector π v) :
   | 0, _ => hv
   | _ + 1, Y => h.isSmoothVector_derivOp π (isSmoothVector_wordOp hv (Fin.tail Y)) (Y 0)
 
-theorem wordOp_add {v w : E} (hv : h.IsSmoothVector π v) (hw : h.IsSmoothVector π w) :
-    ∀ {k : ℕ} (Y : Fin k → 𝔤), h.wordOp π Y (v + w) = h.wordOp π Y v + h.wordOp π Y w
-  | 0, _ => rfl
-  | _ + 1, Y => by
-    rw [wordOp_succ, wordOp_add hv hw (Fin.tail Y),
-      h.derivOp_add π (h.isSmoothVector_wordOp π hv _) (h.isSmoothVector_wordOp π hw _)]
-    rfl
-
-theorem wordOp_smul {v : E} (hv : h.IsSmoothVector π v) (c : ℂ) :
-    ∀ {k : ℕ} (Y : Fin k → 𝔤), h.wordOp π Y (c • v) = c • h.wordOp π Y v
-  | 0, _ => rfl
-  | _ + 1, Y => by
-    rw [wordOp_succ, wordOp_smul hv c (Fin.tail Y),
-      h.derivOp_smul π (h.isSmoothVector_wordOp π hv _)]
-    rfl
-
 theorem isSmoothVector_zero : h.IsSmoothVector π (0 : E) := (h.smoothVectors π).zero_mem
-
-theorem wordOp_neg {v : E} (hv : h.IsSmoothVector π v) {k : ℕ} (Y : Fin k → 𝔤) :
-    h.wordOp π Y (-v) = -h.wordOp π Y v := by
-  have := h.wordOp_smul π hv (-1) Y
-  simpa using this
-
-theorem wordOp_sub {v w : E} (hv : h.IsSmoothVector π v) (hw : h.IsSmoothVector π w)
-    {k : ℕ} (Y : Fin k → 𝔤) : h.wordOp π Y (v - w) = h.wordOp π Y v - h.wordOp π Y w := by
-  have hw' : h.IsSmoothVector π (-w) := (h.smoothVectors π).neg_mem hw
-  rw [sub_eq_add_neg, h.wordOp_add π hv hw', h.wordOp_neg π hw, ← sub_eq_add_neg]
 
 theorem Ad_Ad_inv (g : G) (X : 𝔤) : h.Ad g (h.Ad g⁻¹ X) = X := by
   have := h.Ad_inv_Ad g⁻¹ X
@@ -303,20 +275,6 @@ theorem hasDerivAt_wordOp_expG (hπ : ∀ g, ‖π g‖ ≤ 1) {v : E} (hv : h.I
   rw [hsum, hc0, hΦ, h.derivOp_wordOp π hv X Y]
   abel
 
-theorem hasDerivAt_wordOp_map_expG (hπ : ∀ g, ‖π g‖ ≤ 1) {v : E} (hv : h.IsSmoothVector π v)
-    (X : 𝔤) (g : G) {k : ℕ} (Y : Fin k → 𝔤) :
-    HasDerivAt (fun t : ℝ => h.wordOp π Y (π g (π (h.expG (t • X)) v)))
-      (h.wordOp π Y (π g (h.derivOp π X v))) 0 := by
-  have e : (fun t : ℝ => h.wordOp π Y (π g (π (h.expG (t • X)) v))) =
-      fun t => ((π g).restrictScalars ℝ)
-        (h.wordOp π (fun i => h.Ad g⁻¹ (Y i)) (π (h.expG (t • X)) v)) := by
-    funext t
-    rw [h.wordOp_map π (h.isSmoothVector_map π hv _)]
-    rfl
-  rw [e, h.wordOp_map π (h.isSmoothVector_derivOp π hv X)]
-  exact ((π g).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt (0 : ℝ)
-    (h.hasDerivAt_wordOp_expG π hπ hv X _)
-
 theorem continuous_Ad_apply (X : 𝔤) : Continuous fun g : G => h.Ad g X := by
   refine Continuous.subtype_mk ?_ _
   have h1 : Continuous fun g : G => ((g : 𝔸ˣ) : 𝔸) := continuous_val_val G
@@ -353,23 +311,6 @@ theorem continuous_wordOp_map (hπ : ∀ g, ‖π g‖ ≤ 1) {v : E} (hv : h.Is
   rw [e]
   refine continuous_apply_apply π hπ continuous_id (Φ.cont.comp ?_)
   exact continuous_pi fun i => (h.continuous_Ad_apply (Y i)).comp continuous_inv
-
-theorem exists_norm_wordOp_map_le (hπ : ∀ g, ‖π g‖ ≤ 1) {v : E} (hv : h.IsSmoothVector π v)
-    {k : ℕ} (Y : Fin k → 𝔤) : ∃ C, ∀ g : G, ‖h.wordOp π Y (π g v)‖ ≤ C * ‖h.AdL g⁻¹‖ ^ k := by
-  obtain ⟨Φ, hΦ⟩ := h.exists_wordOp_cml π hv k
-  refine ⟨‖Φ‖ * ∏ i, ‖Y i‖, fun g => ?_⟩
-  rw [h.wordOp_map π hv, ← hΦ]
-  calc ‖π g (Φ (fun i => h.Ad g⁻¹ (Y i)))‖ ≤ ‖π g‖ * ‖Φ (fun i => h.Ad g⁻¹ (Y i))‖ :=
-        ContinuousLinearMap.le_opNorm _ _
-    _ ≤ 1 * ‖Φ (fun i => h.Ad g⁻¹ (Y i))‖ := by gcongr; exact hπ _
-    _ = ‖Φ (fun i => h.Ad g⁻¹ (Y i))‖ := one_mul _
-    _ ≤ ‖Φ‖ * ∏ i, ‖h.Ad g⁻¹ (Y i)‖ := Φ.le_opNorm _
-    _ ≤ ‖Φ‖ * ∏ i, (‖h.AdL g⁻¹‖ * ‖Y i‖) := by
-        gcongr with i
-        exact (h.AdL g⁻¹).le_opNorm (Y i)
-    _ = (‖Φ‖ * ∏ i, ‖Y i‖) * ‖h.AdL g⁻¹‖ ^ k := by
-        rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
-        ring
 
 end IsExpLieAlgebra
 

@@ -171,44 +171,8 @@ theorem conjAd_algebraMap (x : E) :
     rfl
   · exact conjFin_algebraMap _ x
 
-theorem isAutRepU_const : IsAutRepU (Submodule.span ℂ {(fun _ => 1 : UA E n → ℂ)}) := by
-  have h0 : (fun _ => 1 : UA E n → ℂ) ≠ 0 := fun h => one_ne_zero (congrFun h 1)
-  have hc : ∀ φ ∈ Submodule.span ℂ {(fun _ => 1 : UA E n → ℂ)}, ∀ x, RU E n x φ = φ := fun φ hφ x => by
-    obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hφ
-    rfl
-  refine ⟨fun φ hφ => ⟨?_, ?_, ?_, ?_⟩, fun x φ hφ => by rwa [hc φ hφ], by simpa using h0,
-    fun W hW _ => (nonzero_span_atom _ h0).le_iff.1 hW⟩
-  · obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hφ
-    exact continuous_const
-  · obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hφ
-    exact fun _ _ _ => rfl
-  · rw [Set.eq_univ_of_forall (s := {k : finU E n | RU E n k φ = φ}) fun k => hc φ hφ k]
-    exact isOpen_univ
-  · refine FiniteDimensional.span_of_finite ℂ ((Set.finite_singleton φ).subset ?_)
-    rintro _ ⟨k, rfl⟩
-    exact hc φ hφ k
-
-theorem isUnramU_const (w : HeightOneSpectrum (𝓞 E)) :
-    IsUnramU (Submodule.span ℂ {(fun _ => 1 : UA E n → ℂ)}) w :=
-  ⟨_, Submodule.mem_span_singleton_self _, fun h => one_ne_zero (congrFun h 1), fun _ _ _ => rfl⟩
-
 theorem isDiscrete_of_cuspSub (P : CuspSub E a) (h : ∀ φ ∈ P.V, IsSqInt φ.1) : IsDiscrete P.V :=
   ⟨fun φ hφ => (P.cusp φ hφ).1, h, P.stable, P.ne_bot, P.irred⟩
-
-theorem isCsdGL_const : IsCsdGL (Submodule.span ℂ {oneFn E a}) := by
-  refine ⟨.refl _ _, fun o φ ψ h => ?_⟩
-  obtain ⟨c, hc⟩ := Submodule.mem_span_singleton.1 φ.2
-  change ψ.1 = act o φ.1
-  rw [h, ← hc, map_smul, map_smul, act_oneFn, act_oneFn]
-  cases o <;> rfl
-
-theorem isDiscrete_const (h : ∀ c : ℂ, IsSqInt fun _ : GA E a => c * 1) :
-    IsDiscrete (Submodule.span ℂ {oneFn E a}) :=
-  ⟨fun _ => isAutForm_const, fun φ hφ => by
-      obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hφ
-      exact h c,
-    isStable_const, fun e => oneFn_ne_zero (Submodule.span_singleton_eq_bot.1 e),
-    fun W hW _ => (nonzero_span_atom _ oneFn_ne_zero).le_iff.1 hW⟩
 
 theorem cuspSub_iff (P : CuspSub E a) :
     (IsCsdGL P.V ↔ P.IsCsd) ∧ (∀ w σ, IsLocCompGL P.V w σ ↔ P.IsLocComp w σ) ∧

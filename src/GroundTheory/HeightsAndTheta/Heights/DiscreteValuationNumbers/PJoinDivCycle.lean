@@ -52,11 +52,7 @@ theorem rename_eq_symm_comp_C :
 
 set_option hygiene false in
 
-local notation "ψ" => joinPolyEquiv (R := R) (ι := ι)
-
 set_option hygiene false in
-
-local notation "ε" => rename (R := R) (liftVar (ι := ι) ptIdx)
 
 theorem joinPolyEquiv_rename (x : MRing ι R) : joinPolyEquiv (ε x) = Polynomial.C x :=
   RingHom.congr_fun joinPolyEquiv_comp_rename x

@@ -28,11 +28,9 @@ noncomputable def toV : src fU fV A BU qU ⟶ pullback A.hom fV :=
     simp only [Category.assoc] at h1 h2 h3 ⊢
     rw [h1, ← h4, Category.assoc, reassoc_of% h2, h3])
 
-@[reassoc (attr := simp)]
 lemma toV_fst : toV fU fV A BU qU ≫ pullback.fst A.hom fV =
     pullback.fst _ _ ≫ pullback.fst A.hom fU := pullback.lift_fst _ _ _
 
-@[reassoc (attr := simp)]
 lemma toV_snd : toV fU fV A BU qU ≫ pullback.snd A.hom fV =
     pullback.snd _ _ ≫ pullback.snd _ _ := pullback.lift_snd _ _ _
 

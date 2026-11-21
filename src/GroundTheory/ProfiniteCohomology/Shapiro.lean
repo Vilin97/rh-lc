@@ -63,7 +63,6 @@ variable [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] (U : OpenS
 
 section Naturality
 
-@[reassoc]
 theorem shapiroMap_naturality {B B' : Rep.{u} k (U : Subgroup G)} [IsDiscreteRep B]
     [IsDiscreteRep B'] (g : B ⟶ B') (n : ℕ) :
     cohomologyMap (Rep.coindMap (U : Subgroup G).subtype g) n ≫ shapiroMap U B' n =
@@ -275,11 +274,6 @@ instance isIso_shapiroMap' (B : Rep.{u} k (U : Subgroup G)) [IsDiscreteRep B] (n
 noncomputable def shapiroIso (B : Rep.{u} k (U : Subgroup G)) [IsDiscreteRep B] (n : ℕ) :
     cohomology (Rep.coind (U : Subgroup G).subtype B) n ≅ cohomology B n :=
   asIso (shapiroMap U B n)
-
-@[simp]
-theorem shapiroIso_hom (B : Rep.{u} k (U : Subgroup G)) [IsDiscreteRep B] (n : ℕ) :
-    (shapiroIso U B n).hom = shapiroMap U B n :=
-  rfl
 
 end Shapiro
 

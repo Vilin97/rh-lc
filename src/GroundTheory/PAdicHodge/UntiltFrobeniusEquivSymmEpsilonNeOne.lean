@@ -28,13 +28,6 @@ section Cp
 
 variable {p : ℕ} [Fact p.Prime]
 
-local notation "𝒪" => normInteger ℂ_[p]
-local notation "𝒪♭" => PreTilt (normInteger ℂ_[p]) p
-local notation "𝕎𝒪♭" => WittVector p (PreTilt (normInteger ℂ_[p]) p)
-local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
-local notation "𝔪" => maximalIdeal (BDeRhamPlus (normInteger ℂ_[p]) p)
-local notation "φi" => RingEquiv.symm (_root_.frobeniusEquiv (PreTilt (normInteger ℂ_[p]) p) p)
-
 variable (p) in
 
 def muBdR (ε : PreTilt (normInteger ℂ_[p]) p) : BDeRhamPlus (normInteger ℂ_[p]) p :=
@@ -56,16 +49,6 @@ theorem fontaineT_sub_sum_mem {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) (n : 
     fontaineT ε hε - ∑ i ∈ Finset.Ico 1 n, algebraMap ℚ 𝔹 ((-1) ^ (i + 1) / i) * muBdR p ε ^ i ∈
       𝔪 ^ n :=
   logOnePlus_sub_sum_mem _ n
-
-theorem tendsto_fontaineT {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) :
-    @Filter.Tendsto ℕ 𝔹
-      (fun n => ∑ i ∈ Finset.range n,
-        algebraMap ℚ 𝔹 (PowerSeries.coeff i (PowerSeries.log ℚ)) * muBdR p ε ^ i)
-      Filter.atTop (@nhds 𝔹 (Ideal.adicTopology (maximalIdeal (BDeRhamPlus (normInteger ℂ_[p]) p))) (fontaineT ε hε)) :=
-  tendsto_seriesEval _ _
-
-theorem fontaineT_mem {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) : fontaineT ε hε ∈ 𝔪 :=
-  logOnePlus_mem _
 
 theorem isUnit_of_sub_one_mem {u : 𝔹} (hu : u - 1 ∈ 𝔪) : IsUnit u := by
   by_contra h

@@ -384,7 +384,4 @@ theorem datDom_holds (D : D7) (j : ℕ) (hj : 1 ≤ j ∧ j ≤ D.R.m) (hI : Dat
     · exact absurd ⟨hI, by rwa [one_smul] at hd⟩ h
     · exact hd
 
-def datumW (D : D7) (j : ℕ) (hj : 1 ≤ j ∧ j ≤ D.R.m) : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Datum (hostOfRecord D) :=
-  datumOfRecord D j hj Formalism.IndefR.Fin.factPrincipalDatum (datDom_holds D j hj _)
-
 end Formalism.L2.Pj

@@ -15,8 +15,6 @@ section Matrices
 
 variable {r : ℕ}
 
-local notation "Mat" => Matrix (Fin r) (Fin r) ℂ
-
 def cj (M : Mat) : Mat := M.map conj
 
 theorem cj_mul (M N : Mat) : cj (M * N) = cj M * cj N := Matrix.map_mul
@@ -32,8 +30,6 @@ theorem cj_inv (M : Mat) : cj M⁻¹ = (cj M)⁻¹ := by
   rwa [transpose_nonsing_inv] at h
 
 theorem det_cj (M : Mat) : (cj M).det = conj M.det := ((starRingEnd ℂ).map_det M).symm
-
-theorem cj_smul (c : ℂ) (M : Mat) : cj (c • M) = conj c • cj M := by ext; simp [cj]
 
 def mix (p : ℕ) (M N : Mat) : Mat := Matrix.of fun a c => if (a : ℕ) < p then M a c else N a c
 

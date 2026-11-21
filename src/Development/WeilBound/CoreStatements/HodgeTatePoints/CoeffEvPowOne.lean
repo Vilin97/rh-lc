@@ -13,8 +13,6 @@ variable {R : Type} [CommRing R] {σ : Type} [Finite σ]
 
 def scl (w : σ → ℕ) (m : σ →₀ ℕ) : σ →₀ ℕ := Finsupp.equivFunOnFinite.symm fun s => w s * m s
 
-@[simp] theorem scl_apply (w : σ → ℕ) (m : σ →₀ ℕ) (s : σ) : scl w m s = w s * m s := rfl
-
 theorem scl_inj {w : σ → ℕ} (hw : ∀ s, w s ≠ 0) : Function.Injective (scl w) := fun m m' h => by
   ext s
   have := congrArg (fun f => f s) h

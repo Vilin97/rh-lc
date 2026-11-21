@@ -163,18 +163,3 @@ private theorem pr_ext {K : Type} [CommRing K] (y y' : K ⊗[ℤ] Dw.La) (h : �
   simp only [h]
 
 end SlopeTestRemainingChoices
-
-theorem UpperTheory.tate_module_pairing_congruence :
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (p : ℕ) [Fact p.Prime] (n : ℕ) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (P : PtP E p) (f : Dw.La →+ P.T) (u : ℤ_[p]), 1 ≤ n → Submodule.span ℤ_[p] (Set.range f) = ⊤ → (∀ (o : 𝓞 E) a, f (o • a) = P.actT o (f a)) → IsUnit u → (∀ a b, (p : ℤ_[p]) ^ n ∣ pairT P.A P.eps (f a) (f b) - u * (Dw.EF a b : ℤ_[p])) → ∃ B : P.V →ₗ[ℂ_[p]] ℂ_[p] ⊗[ℤ] Dw.La, (∀ w a, pr Dw (B w) a = -P.pairV w (1 ⊗ₜ f a)) ∧ (∀ w (σ : 𝓞 E →+* ℂ_[p]), (∀ o, P.actV o w = σ o • w) → IsEigL Dw σ (B w)) ∧ ∀ w w', P.pairV w w' = 0 → (∀ a, ‖pr Dw (B w) a‖ ≤ 1) → (∀ a, ‖pr Dw (B w') a‖ ≤ 1) → ‖Dw.EF.baseChange ℂ_[p] (B w) (B w')‖ ≤ (p : ℝ)⁻¹ ^ n := by
-  intro E _ _ _ H Dw p _ n _ hstar P f u _ hspan hact _ hcong
-  obtain ⟨B, hB'⟩ := exists_lin Dw (K := ℂ_[p]) (V := P.V)
-    (-(P.pairV.flip.toAddMonoidHom.comp ((TensorProduct.mk ℤ_[p] ℂ_[p] P.T 1).toAddMonoidHom.comp f)))
-  have hB : ∀ w x, pr Dw (B w) x = -P.pairV w (1 ⊗ₜ f x) := hB'
-  refine ⟨B, hB, fun w σ hw o => pr_ext Dw _ _ fun x => ?_, fun w w' h0 hw hw' => ?_⟩
-  · rw [pr_act, pr_smul, hB, hB, hact, ← hstar]
-    have e : P.pairV w (1 ⊗ₜ P.actT (star o) (f x)) = P.pairV (P.actV o w) (1 ⊗ₜ f x) :=
-      (P.pairV_act o w (1 ⊗ₜ f x)).symm
-    rw [e, hw, map_smul, LinearMap.smul_apply, smul_eq_mul, mul_neg]
-  · obtain ⟨k, e, t, -, ht⟩ := P.exists_dual_bases
-    have h0' : P.pairV w' w = 0 := by rw [P.pairV_swap w' w, h0, neg_zero]
-    exact isot Dw p n (pairT P.A P.eps) f u hspan hcong e t ht B hB w w' h0' hw hw'

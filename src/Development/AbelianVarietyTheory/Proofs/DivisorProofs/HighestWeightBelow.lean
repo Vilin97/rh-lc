@@ -122,8 +122,6 @@ open Finset
 
 variable (D : D7) (C : ℝ) (τ : D.what₂.Tau)
 
-local notation "Γ" => num D C τ
-
 theorem num_e {l : ℕ} (h1 : 1 ≤ l) (h2 : l ≤ D.R.m) : (((Γ).e l : ℤ) : ℚ) = (D.hc τ).e ⟨l - 1, by omega⟩ := by
   obtain ⟨l, rfl⟩ : ∃ l', l = l' + 1 := ⟨l - 1, by omega⟩
   exact GridData.extend_cast 1 (D.hc τ).e_int ⟨l, by omega⟩
@@ -300,8 +298,6 @@ section Grid
 open Finset
 
 variable (D : D7) (C : ℝ) (τ : D.what₂.Tau)
-
-local notation "Γ" => num D C τ
 
 theorem entries_shift (h : ℚ) (S : SPar) : entries (shift h S) = (entries S).image (· + h) := by
   simp only [GlobalTheory.SignedHC.entries, shift, image_image]

@@ -95,8 +95,6 @@ variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
 open ReciprocityTheory.Aut
 
-local notation3 "L⁺" => maximalRealSubfield L
-
 theorem conj_entry (x : GA L n) (i j : Fin n) :
     conjAL L ((x.1 : Matrix (Fin n) (Fin n) (AL L)) i j) =
       (((x⁻¹ : GA L n).1 : GL (Fin n) (AL L)) : Matrix (Fin n) (Fin n) (AL L)) j i := by

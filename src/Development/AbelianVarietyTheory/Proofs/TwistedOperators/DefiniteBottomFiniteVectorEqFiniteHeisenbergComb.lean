@@ -35,8 +35,6 @@ open StandardFirstTheta.GlobalTheory.CompanionTheory.StdFstTheta GlobalTheory.In
 
 variable {D : D7}
 
-local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
-
 theorem eToEAf_mem (α : 𝓞 D.host.E) : eToEAf D (α : D.host.E) ∈ OO := (oToS D.host.F D.host.E α).2
 
 theorem exists_nat_den (a : D.host.E) : ∃ q : ℕ, 0 < q ∧ (q : EAf D) * eToEAf D a ∈ OO := by

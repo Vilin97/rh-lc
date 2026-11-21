@@ -19,9 +19,6 @@ def IsInertNbr (P : Ideal (𝓞 E)) (s : List ℕ) (N N' : Submodule (𝓞 E) (S
 theorem IsInertNbr.symm {P : Ideal (𝓞 E)} {s : List ℕ} {N N' : Submodule (𝓞 E) (Sp E n)}
     (h : IsInertNbr P s N N') : IsInertNbr P s N' N := ⟨h.2, h.1⟩
 
-theorem isInertNbr_comm {P : Ideal (𝓞 E)} {s : List ℕ} {N N' : Submodule (𝓞 E) (Sp E n)} :
-    IsInertNbr P s N N' ↔ IsInertNbr P s N' N := ⟨IsInertNbr.symm, IsInertNbr.symm⟩
-
 theorem IsInertNbr.gmap {P : Ideal (𝓞 E)} {s : List ℕ} {N N' : Submodule (𝓞 E) (Sp E n)}
     (h : IsInertNbr P s N N') (g : Sp E n ≃ₗ[E] Sp E n) : IsInertNbr P s (gmap g N) (gmap g N') := by
   obtain ⟨⟨e1⟩, ⟨e2⟩⟩ := h
@@ -64,9 +61,6 @@ open Classical in
 
 def DecoSet.inertNb (P : Ideal (𝓞 E)) (s : List ℕ) (d : DecoSet E n ST SG) : Finset (DecoSet E n ST SG) :=
   if h : (d.inertSet P s).Finite then h.toFinset else ∅
-
-theorem DecoSet.inertSet_symm {P : Ideal (𝓞 E)} {s : List ℕ} {d e : DecoSet E n ST SG} :
-    e ∈ d.inertSet P s ↔ d ∈ e.inertSet P s := ⟨fun h => ⟨h.1.symm, h.2.1.symm, h.2.2.symm⟩, fun h => ⟨h.1.symm, h.2.1.symm, h.2.2.symm⟩⟩
 
 theorem DecoSet.smul_mem_inertSet {P : Ideal (𝓞 E)} {s : List ℕ} (a : UF E n × GLG E n SG)
     {d e : DecoSet E n ST SG} (h : e ∈ d.inertSet P s) : a • e ∈ (a • d).inertSet P s := by
@@ -158,9 +152,6 @@ abbrev HeckeIx (S0 : Set (HeightOneSpectrum (𝓞 E))) : Type :=
 def heckeFamAll (c : DecoPts S E n ST SG) (S0 : Set (HeightOneSpectrum (𝓞 E))) :
     HeckeIx ST SG S0 → End K S.EqFun :=
   Sum.elim (heckeFam c S0) (heckeFamI c S0)
-
-def heckeAlgAll (c : DecoPts S E n ST SG) (S0 : Set (HeightOneSpectrum (𝓞 E))) : Subalgebra K (End K S.EqFun) :=
-  hAlg K (heckeFamAll c S0)
 
 def HeckeCommAll (c : DecoPts S E n ST SG) (S0 : Set (HeightOneSpectrum (𝓞 E))) : Prop :=
   PairComm (heckeFamAll c S0)

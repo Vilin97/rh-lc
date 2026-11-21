@@ -1,4 +1,5 @@
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InjectiveICRows
+import Development.AbelianVarietyTheory.Definitions.Divisors.TieTest
+import Formalism.LocalToGlobal.IndefiniteReal.CxLemmas
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CohomologicalCsdTempered
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.Realised
 

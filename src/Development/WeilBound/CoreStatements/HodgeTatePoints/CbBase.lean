@@ -21,8 +21,6 @@ theorem Z_zero : Z (0 : Pt R n d) := fun i => by simp
 theorem ZZ_nil : ZZ (![] : Fin 0 → Pt R n d) := fun j => j.elim0
 theorem ZZ_cons {x : Pt R n d} {b : Fin m → Pt R n d} (hx : Z x) (hb : ZZ b) : ZZ (Matrix.vecCons x b) :=
   LogPf.CZ.cons hx hb
-theorem Z_ep {b : Fin m → Pt R n d} {x : Pt R m d} (hb : ZZ b) (hx : Z x) : Z (ep b x) :=
-  fun i => LogPf.constantCoeff_ev hb (hx i)
 theorem Z_add (G : FGLaw R d) {x y : Pt R n d} (hx : Z x) (hy : Z y) : Z (G.add x y) :=
   fun i => LogPf.constantCoeff_ev (ZZ_cons hx (ZZ_cons hy ZZ_nil)) (G.const i)
 theorem Z_comp1 {φ : Pt R 1 d} {x : Pt R n d} (hφ : Z φ) (hx : Z x) : Z (comp1 φ x) :=
@@ -30,10 +28,6 @@ theorem Z_comp1 {φ : Pt R 1 d} {x : Pt R n d} (hφ : Z φ) (hx : Z x) : Z (comp
 theorem Z_act {O : Type} [CommRing O] {G : FGLaw R d} (A : OAct O G) (a : O) : Z (A.act a) := A.const a
 theorem Z_ptPow (p : ℕ) [hp : Fact p.Prime] (j : Fin n) : Z (ptPow R d p j) := fun i => by
   simp [ptPow, hp.out.ne_zero]
-
-macro "zz" : tactic => `(tactic| repeat' with_reducible first
-  | assumption | exact Z_pt _ | exact Z_zero | exact Z_act _ _ | exact ZZ_nil | exact Z_ptPow _ _
-  | apply Z_add | apply Z_comp1 | apply ZZ_cons | apply Z_ep)
 
 theorem evm {b : Fin m → Pt R n d} (hb : ZZ b) (f g : PS R m d) : ev b (f * g) = ev b f * ev b g :=
   LogPf.ev_mul hb f g
@@ -78,10 +72,6 @@ theorem ep_ptPow (p : ℕ) {b : Fin m → Pt R n d} (hb : ZZ b) (j : Fin m) :
     ep b (ptPow R d p j) = fun i => b j i ^ p :=
   funext fun i => by rw [ep, ptPow, evpow hb, LogPf.ev_X hb]
 
-macro "evs" loc:(Lean.Parser.Tactic.location)? : tactic => `(tactic|
-  simp (disch := zz) only [evm, eva, evz, evsum, evprod, evpow, ev_one, ev1, ev2, ev3, ep_pt, ep_zero, ep_add,
-    ep_comp1, Matrix.cons_val, Matrix.cons_val_zero, Matrix.cons_val_one] $[$loc]?)
-
 theorem germComp1_zero_of_noConstantCoeff {φ : Pt R 1 d} (hφ : Z φ) : comp1 φ (0 : Pt R n d) = 0 := by
   funext i
   have : (![(0 : Pt R n d)] : Fin 1 → Pt R n d) = fun _ _ => 0 := by funext j; fin_cases j; rfl
@@ -115,13 +105,6 @@ theorem p_add_comm (hx : Z x) (hy : Z y) : G.add x y = G.add y x := by
   evs at this
   exact this.symm
 
-theorem p_add_assoc (hx : Z x) (hy : Z y) (hz : Z z) : G.add (G.add x y) z = G.add x (G.add y z) := by
-  have h : G.add (G.add (pt R (n := 3) d 0) (pt R d 1)) (pt R d 2) =
-      G.add (pt R d 0) (G.add (pt R d 1) (pt R d 2)) := funext G.assoc
-  have := congrArg (ep ![x, y, z]) h
-  evs at this
-  exact this
-
 theorem p_add_zero (hx : Z x) : G.add x 0 = x := by
   rw [p_add_comm G hx Z_zero, p_zero_add G hx]
 
@@ -144,10 +127,6 @@ theorem mul_act (a b : O) (hx : Z x) : comp1 (A.act (a * b)) x = comp1 (A.act a)
 theorem act_comm (a b : O) (hx : Z x) :
     comp1 (A.act a) (comp1 (A.act b) x) = comp1 (A.act b) (comp1 (A.act a) x) := by
   rw [← mul_act A a b hx, ← mul_act A b a hx, mul_comm]
-
-theorem succ_act (k : ℕ) (hx : Z x) :
-    comp1 (A.act ((k + 1 : ℕ) : O)) x = G.add (comp1 (A.act (k : O)) x) x := by
-  rw [Nat.cast_succ, add_act A _ _ hx, A.one_act, germ_comp1_zero_point_left _ hx]
 
 end Law
 
@@ -184,10 +163,6 @@ theorem coeff_lin_ev {φ : Pt R 1 d} (hφ : Z φ) (f : PS R 1 d) (j : Fin d) :
   rw [← cc_pderiv, d1 hφ, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_mul, ccev (by zz), cc_pderiv, cc_pderiv, lin]
-
-theorem lin_comp1 (φ : Pt R 1 d) {ψ : Pt R 1 d} (hψ : Z ψ) : lin (comp1 φ ψ) 1 = lin φ 1 * lin ψ 1 := by
-  ext i j
-  exact coeff_lin_ev hψ (φ i) j
 
 theorem lin_add (G : FGLaw R d) {φ ψ : Pt R 1 d} (hφ : Z φ) (hψ : Z ψ) :
     lin (G.add φ ψ) 1 = lin φ 1 + lin ψ 1 := by
@@ -247,9 +222,6 @@ theorem act_zero : A.act 0 = 0 := by
   rw [← hN] at h5 h6
   norm_cast at h5 h6
   omega
-
-theorem zero_act {x : Pt R n d} (hx : Z x) : comp1 (A.act 0) x = 0 := by
-  rw [act_zero]; exact ep_zero (b := ![x]) (by zz)
 
 end Act
 

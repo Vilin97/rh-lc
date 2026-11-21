@@ -24,8 +24,6 @@ variable {q}
 def pu {A : Type} [CommRing A] (ζ : Prim q A) : Aˣ :=
   Units.ofPowEqOne ζ.1 q ((GlobalTheory.EtC.PrimBasic.prim_basic q A).1 ζ) (NeZero.ne q)
 
-@[simp] theorem pu_val {A : Type} [CommRing A] (ζ : Prim q A) : (pu ζ : A) = ζ.1 := rfl
-
 theorem pu_pow {A : Type} [CommRing A] (ζ : Prim q A) : pu ζ ^ q = 1 :=
   Units.ext (by simp [(GlobalTheory.EtC.PrimBasic.prim_basic q A).1 ζ])
 

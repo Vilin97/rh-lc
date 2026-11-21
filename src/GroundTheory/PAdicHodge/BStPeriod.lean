@@ -14,11 +14,6 @@ section Cp
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
-local notation "𝒪" => normInteger ℂ_[p]
-local notation "𝒪♭" => PreTilt (normInteger ℂ_[p]) p
-local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
-local notation "𝔪" => maximalIdeal (BDeRhamPlus (normInteger ℂ_[p]) p)
-
 variable (p) in
 
 def pRootSeq : ℕ → ℂ_[p]
@@ -86,8 +81,6 @@ theorem qBdR_mem : qBdR (p := p) ∈ 𝔪 := by
 variable (p) in
 
 def uBdR : 𝔹 := logOnePlus 𝔪 (qBdR (p := p)) qBdR_mem
-
-theorem uBdR_mem : uBdR p ∈ 𝔪 := logOnePlus_mem qBdR_mem
 
 variable {K : IntermediateField ℚ_[p] (PadicAlgCl p)}
 

@@ -1,5 +1,6 @@
 import Mathlib
-import Formalism.PeriodIntegrals.HodgeOfFon
+import Formalism.WeaklyAdmissibleFiltrations.Statement
+import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
 
 namespace PI.HodgeOfFon.W.Triv
 

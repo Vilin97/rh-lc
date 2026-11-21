@@ -91,9 +91,6 @@ def archOp {κ : archGroup K n → ℂ} (hκ : (isExpLieAlgebra K n).IsTestFunct
     (∫ a, ‖κ a‖ ∂ν) fun x =>
       (isExpLieAlgebra K n).norm_integrated_le (archRepT μ) ν (norm_archRepT_le μ) hκ x
 
-@[simp] theorem archOp_apply {κ : archGroup K n → ℂ} (hκ : (isExpLieAlgebra K n).IsTestFunction κ)
-    (x : CuspL2 μ) : archOp μ ν hκ x = (archRepT μ).integrated ν κ x := rfl
-
 theorem archOp_eq_integral {κ : archGroup K n → ℂ} (hκ : (isExpLieAlgebra K n).IsTestFunction κ)
     (x : CuspL2 μ) : archOp μ ν hκ x = ∫ a, κ a • archRepT μ a x ∂ν := rfl
 

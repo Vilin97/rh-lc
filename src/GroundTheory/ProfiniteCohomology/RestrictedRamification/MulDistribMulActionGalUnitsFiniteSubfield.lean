@@ -14,8 +14,6 @@ open CategoryTheory NumberField IsDedekindDomain IntermediateField GroundTheory.
 
 open scoped Pointwise
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 section CoboundaryUnits

@@ -524,9 +524,6 @@ structure IsDefUnimod (hc : CMData F E) (J : Matrix (Fin n) (Fin n) E) (L : Subm
   lat : Submodule.IsLattice E L
   selfdual : dualSet (hc.sig : E →+* E) J L = (L : Set (Fin n → E))
 
-def IsPosUnimod (hc : CMData F E) (J : Matrix (Fin n) (Fin n) E) (L : Submodule (𝓞 E) (Fin n → E)) : Prop :=
-  IsDefUnimod hc J L ∧ IsTotPosDef hc.sig J
-
 abbrev UR (hc : CMData F E) (J : Matrix (Fin n) (Fin n) E) : Subgroup (GL (Fin n) E) := UJ (hc.sig : E →+* E) J
 
 abbrev UA (hc : CMData F E) (J : Matrix (Fin n) (Fin n) E) : Subgroup (GL (Fin n) (E ⊗[F] Af F)) :=
@@ -534,12 +531,6 @@ abbrev UA (hc : CMData F E) (J : Matrix (Fin n) (Fin n) E) : Subgroup (GL (Fin n
 
 abbrev UQ (hc : CMData F E) (J : Matrix (Fin n) (Fin n) E) : Subgroup (UA hc J) :=
   (ratPts hc.sig J (Af F)).subgroupOf (UA hc J)
-
-theorem UA_gram (hc : CMData F E) (S : HSpace E) : UA hc S.gram = UAf hc S := rfl
-
-theorem UQ_gram (hc : CMData F E) (S : HSpace E) : UQ hc S.gram = UFin hc S := rfl
-
-theorem UR_gram (hc : CMData F E) (S : HSpace E) : UR hc S.gram = UF hc S := rfl
 
 end Spaces
 
@@ -840,11 +831,6 @@ theorem conjIn_apply (y : GL (Fin n) (E ⊗[F] Af F)) (γ : UR hc J) :
 
 def Gam (c : Cl hc J K) : Subgroup (UR hc J) :=
   K.comap (conjIn hc J ((rep c : UA hc J) : GL (Fin n) (E ⊗[F] Af F)))
-
-def gamTo (c : Cl hc J K) : Gam c →* K :=
-  ((conjIn hc J ((rep c : UA hc J) : GL (Fin n) (E ⊗[F] Af F))).comp (Gam c).subtype).codRestrict K (fun x => x.2)
-
-def gamChar {LL : Type} [CommRing LL] (lam : K →* LLˣ) (c : Cl hc J K) : Gam c →* LLˣ := lam.comp (gamTo c)
 
 def minkExp (N p : ℕ) : ℕ := ∑ i ∈ Finset.range (N + 1), N / (p ^ i * (p - 1))
 

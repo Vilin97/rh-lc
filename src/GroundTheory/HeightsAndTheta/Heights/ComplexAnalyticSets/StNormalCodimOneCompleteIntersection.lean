@@ -16,12 +16,6 @@ def NormalCodimOneCompleteIntersection.Statement : Prop :=
         c + (e + 1) = Fintype.card σ ∧ (∀ j, f j ∈ P) ∧ h ∉ Q ∧
           ∀ p ∈ P, ∃ k : ℕ, h ^ k * p ∈ Ideal.span (Set.range f)
 
-def lineOriginIdeal : Ideal (MvPolynomial (Fin 1 ⊕ Fin 1) ℂ) :=
-  RingHom.ker (eval (0 : Fin 1 ⊕ Fin 1 → ℂ))
-
-instance lineOriginIdeal_isMaximal : lineOriginIdeal.IsMaximal :=
-  RingHom.ker_isMaximal_of_surjective _ fun c ↦ ⟨C c, eval_C c⟩
-
 end
 
 end GroundTheory.Heights₂.Heights

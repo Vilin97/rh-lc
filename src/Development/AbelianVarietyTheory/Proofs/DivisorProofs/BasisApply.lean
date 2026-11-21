@@ -46,10 +46,6 @@ theorem zsmul_apply (n : ℤ) (x : Lat ρ g) (i : Fin r) : (n • x) i = n • x
 
 theorem neg_apply (x : Lat ρ g) (i : Fin r) : (-x) i = -x i := rfl
 
-theorem zero_apply (i : Fin r) : (0 : Lat ρ g) i = 0 := rfl
-
-@[ext] theorem ext {x y : Lat ρ g} (h : ∀ i, x i = y i) : x = y := funext h
-
 variable (ρ g)
 
 def coordEquiv : Lat ρ g ≃ₗ[ℤ] (Fin r × (Fin g ⊕ Fin g) → ℤ) where

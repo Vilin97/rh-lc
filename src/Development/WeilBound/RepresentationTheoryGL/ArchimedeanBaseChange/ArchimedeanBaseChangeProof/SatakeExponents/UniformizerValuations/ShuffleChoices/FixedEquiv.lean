@@ -39,12 +39,6 @@ theorem fixed_equiv {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W
 
 end SlopeTestRemainingChoices
 
-theorem choiceM : ChoiceM := by
-  intro E _ _ _ n w K' k D _
-  refine ⟨(Finset.univ.sup fun j => Module.finrank ℂ (fixed (prodAt (D j) w) K')) + 1, fun j => ?_⟩
-  exact Nat.lt_succ_of_le
-    (Finset.le_sup (f := fun j => Module.finrank ℂ (fixed (prodAt (D j) w) K')) (Finset.mem_univ j))
-
 theorem choiceS_of
     (hI : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (w : Pl E),
       PositivityTheory.Rg.BcN.F2.IsolateAt (w.adicCompletion E) (Fin n))

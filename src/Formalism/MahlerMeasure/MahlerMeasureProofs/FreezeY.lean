@@ -7,8 +7,6 @@ open MvPolynomial Finset
 section Parts
 variable {N r : ℕ}
 
-def ev (N : ℕ) (c : Fin r) : Fin (N + 1) × Fin r := (Fin.last N, c)
-
 noncomputable def llPart (m : Fin (N + 1) × Fin r →₀ ℕ) : Fin N × Fin r →₀ ℕ :=
   Finsupp.equivFunOnFinite.symm (fun x => m (Fin.castSucc x.1, x.2))
 

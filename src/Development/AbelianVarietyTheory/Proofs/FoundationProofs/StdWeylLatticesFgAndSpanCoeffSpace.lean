@@ -10,8 +10,6 @@ namespace GlobalTheory.StdLatSpan
 
 variable (K : Type) [Field K] [NumberField K]
 
-theorem toK_apply {σ : Type} (f : MvPolynomial σ (𝓞 K)) : toK K σ f = map (algebraMap (𝓞 K) K) f := rfl
-
 open NumberField MvPolynomial Pointwise in
 variable (K : Type) [Field K] [NumberField K] in
 private lemma nabStd_fg' (K : Type) [Field K] [NumberField K] (ι : Type) [Fintype ι] (n : ℕ)

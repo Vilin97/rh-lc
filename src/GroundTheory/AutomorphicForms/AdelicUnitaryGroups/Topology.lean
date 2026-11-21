@@ -199,9 +199,6 @@ def matrixCoordsHomeomorph : Matrix ι ι (R ⊗[K] E) ≃ₜ (ι × ι × κ �
     rw [this]
     exact (tensorCoordsHomeomorph R b).symm.continuous.comp (continuous_pi fun k => continuous_apply _)
 
-theorem matrixCoordsHomeomorph_apply (M : Matrix ι ι (R ⊗[K] E)) :
-    matrixCoordsHomeomorph R b M = matrixCoords b R M := rfl
-
 theorem continuous_conjBase : Continuous (conjBase K E R) :=
   IsModuleTopology.continuous_of_linearMap
     (show R ⊗[K] E →ₐ[R] R ⊗[K] E from
@@ -284,10 +281,6 @@ theorem isClosedEmbedding_coe_unitaryPoints (hH : IsUnit H.det) [T2Space R] :
 theorem isClosedEmbedding_unitaryCoords (hH : IsUnit H.det) [T2Space R] :
     IsClosedEmbedding (unitaryCoords H R b) :=
   (matrixCoordsHomeomorph R b).isClosedEmbedding.comp (isClosedEmbedding_coe_unitaryPoints H R hH)
-
-theorem t2Space_unitaryPoints (hH : IsUnit H.det) [T2Space R] :
-    T2Space (unitaryPoints K E H R) :=
-  (isEmbedding_unitaryCoords H R (Module.finBasis K E) hH).t2Space
 
 theorem locallyCompactSpace_unitaryPoints (hH : IsUnit H.det) [T2Space R]
     [LocallyCompactSpace R] : LocallyCompactSpace (unitaryPoints K E H R) :=
@@ -396,11 +389,6 @@ def unitaryProdEquiv (hH : IsUnit H.det) :
         (((continuous_apply p).comp (continuous_unitaryCoords H S b)).comp continuous_snd))
       (fun y => (congrFun this y).symm)
 
-@[simp]
-theorem unitaryProdEquiv_apply (hH : IsUnit H.det) (g : unitaryPoints K E H (R × S)) :
-    unitaryProdEquiv K H R S hH g =
-      (unitaryMap K E H (AlgHom.fst K R S) g, unitaryMap K E H (AlgHom.snd K R S) g) := rfl
-
 variable {J : Type*} (T : J → Type*) [∀ j, CommRing (T j)] [∀ j, Algebra K (T j)]
   [∀ j, TopologicalSpace (T j)] [∀ j, IsTopologicalRing (T j)]
 
@@ -454,10 +442,6 @@ def unitaryPiEquiv (hH : IsUnit H.det) :
     exact Continuous.congr (continuous_pi fun p => continuous_pi fun j =>
       ((continuous_apply p).comp (continuous_unitaryCoords H (T j) b)).comp (continuous_apply j))
       (fun y => (congrFun this y).symm)
-
-@[simp]
-theorem unitaryPiEquiv_apply (hH : IsUnit H.det) (g : unitaryPoints K E H (∀ j, T j)) (j : J) :
-    unitaryPiEquiv K H T hH g j = unitaryMap K E H (Pi.evalAlgHom K T j) g := rfl
 
 end Products
 

@@ -36,9 +36,6 @@ def push (I : Ideal R) (e : ℕ) (G : Over (Spec (CommRingCat.of R))) [GrpObj G]
     (T ⟶ thickObj R I e G) →* ((Over.map (thick R I e)).obj T ⟶ G) :=
   pushHom (isGrpPullback_pullback G (thick R I e)) T
 
-theorem push_left (e : ℕ) {T : Over (Spec (CommRingCat.of (R ⧸ I ^ (e + 1))))} (y : T ⟶ thickObj R I e G) :
-    (push I e G T y).left = y.left ≫ (fstG I e G).left := rfl
-
 theorem push_inj (e : ℕ) (T : Over (Spec (CommRingCat.of (R ⧸ I ^ (e + 1))))) :
     Function.Injective (push I e G T) := fun y y' h =>
   Over.OverMorphism.ext (pullback.hom_ext (congrArg (fun q => q.left) h) ((Over.w y).trans (Over.w y').symm))

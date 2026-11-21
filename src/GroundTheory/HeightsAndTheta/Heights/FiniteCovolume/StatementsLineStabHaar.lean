@@ -75,10 +75,6 @@ instance locallyCompactSpace_lineStab (h : HermitianForm F E W) (v : Basis ι E 
     LocallyCompactSpace (lineStab h v x₀) :=
   (isClosed_lineStab h v x₀).isClosedEmbedding_subtypeVal.locallyCompactSpace
 
-instance secondCountableTopology_lineStab (h : HermitianForm F E W) (v : Basis ι E W) (x₀ : W) :
-    SecondCountableTopology (lineStab h v x₀) :=
-  TopologicalSpace.Subtype.secondCountableTopology _
-
 end LineStab
 
 variable {F E : Type*} [Field F] [Field E] [NumberField F] [NumberField E] [Algebra F E]

@@ -257,10 +257,6 @@ def torsionIso (n : ℕ) :
     torsion (splitTorus S X) n ≅ splitTorus S (X ⧸ (nsmulAddMonoidHom n : X →+ X).range) :=
   (isPullback_torsion S n).isoPullback.symm
 
-theorem torsionIso_inv_ι (n : ℕ) : (torsionIso S X n).inv ≫ torsion.ι _ n =
-    diagMap S (QuotientAddGroup.mk' (nsmulAddMonoidHom n : X →+ X).range) :=
-  (isPullback_torsion S n).isoPullback_hom_fst
-
 theorem torsionIso_hom_diagMap (n : ℕ) : (torsionIso S X n).hom ≫
     diagMap S (QuotientAddGroup.mk' (nsmulAddMonoidHom n : X →+ X).range) = torsion.ι _ n :=
   (isPullback_torsion S n).isoPullback_inv_fst
@@ -268,9 +264,6 @@ theorem torsionIso_hom_diagMap (n : ℕ) : (torsionIso S X n).hom ≫
 theorem of_ringMap (P : MorphismProperty Scheme.{u}) [P.IsStableUnderBaseChange] (u : Y →+ X)
     (h : P (Spec.map (ringMap u))) : P (diagMap S u).left :=
   P.of_isPullback (isPullback_diagMap S u) h
-
-instance isAffineHom_diagMap (u : Y →+ X) : IsAffineHom (diagMap S u).left :=
-  of_ringMap S @IsAffineHom u inferInstance
 
 theorem isClosedImmersion_diagMap {u : Y →+ X} (hu : Function.Surjective u) :
     IsClosedImmersion (diagMap S u).left :=

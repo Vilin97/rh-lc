@@ -16,8 +16,6 @@ variable {F : Type} [Field F] [Fintype F] {k : ℕ}
 def IsUTm (A : Matrix (Fin k) (Fin k) F) : Prop :=
   (∀ i, A i i = 1) ∧ ∀ i j, j < i → A i j = 0
 
-theorem isUni_iff (x : GL (Fin k) F) : IsUni k x ↔ IsUTm (x : Matrix (Fin k) (Fin k) F) := Iff.rfl
-
 theorem IsUTm.mul {A B : Matrix (Fin k) (Fin k) F} (hA : IsUTm A) (hB : IsUTm B) : IsUTm (A * B) := by
   refine ⟨fun i => ?_, fun i j hij => ?_⟩
   · rw [Matrix.mul_apply, Finset.sum_eq_single i]

@@ -825,11 +825,6 @@ theorem append_length (hinv : ComapIsoInvariance.{u}) :
     (s.append t hinv).toBlowupSequenceData.length =
       s.toBlowupSequenceData.length + t.toBlowupSequenceData.length := rfl
 
-@[simp]
-theorem append_toMarkedSequence_length (hinv : ComapIsoInvariance.{u}) :
-    (s.append t hinv).toMarkedSequenceOfBlowups.toSequenceOfBlowups.length =
-      s.toBlowupSequenceData.length + t.toBlowupSequenceData.length := rfl
-
 theorem append_projectionToBase (hinv : ComapIsoInvariance.{u}) (i : ℕ) :
     (s.append t hinv).proj i = s.appendProjectionToBase t i := rfl
 

@@ -14,11 +14,7 @@ variable {n e : ℕ} (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin (e 
 
 set_option hygiene false in
 
-local notation "𝕂" => FractionRing (MvPolynomial (Fin (e + 1)) ℂ)
-
 set_option hygiene false in
-
-local notation "ℝt" => MvPolynomial (Fin (e + 1)) ℂ
 
 theorem projVar_ne_zero (i : Fin (e + 1)) : projVar e i ≠ 0 :=
   (map_ne_zero_iff _ (IsFractionRing.injective ℝt 𝕂)).2 (X_ne_zero i)

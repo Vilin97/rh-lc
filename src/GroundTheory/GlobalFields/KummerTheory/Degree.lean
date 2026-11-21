@@ -38,11 +38,6 @@ noncomputable def radicalQuotientEquiv (Δ : Subgroup Kˣ) :
   (QuotientGroup.quotientMulEquivOfEq (ker_toRadicalClasses K n Δ).symm).trans
     (QuotientGroup.quotientKerEquivOfSurjective _ (toRadicalClasses_surjective K n Δ))
 
-@[simp] lemma radicalQuotientEquiv_mk (Δ : Subgroup Kˣ) (a : Δ) :
-    (radicalQuotientEquiv K n Δ (a : Δ ⧸ (unitsPow K n).subgroupOf Δ) : UnitsModPow K n) =
-      ((a : Kˣ) : UnitsModPow K n) :=
-  rfl
-
 def kummerExtension (Ω : Type*) [Field Ω] [Algebra K Ω] (Δ : Subgroup Kˣ) :
     IntermediateField K Ω :=
   adjoin K {α : Ω | ∃ a ∈ Δ, α ^ n = algebraMap K Ω a}

@@ -92,9 +92,6 @@ theorem isCompact_Ov (v : HeightOneSpectrum (𝓞 F)) :
   have := compactSpace_integer v
   exact isCompact_iff_compactSpace.mpr this
 
-instance compactSpace_Ov (v : HeightOneSpectrum (𝓞 F)) : CompactSpace (v.adicCompletionIntegers F) :=
-  isCompact_iff_compactSpace.mp (isCompact_Ov v)
-
 def Ohat (F : Type) [Field F] [NumberField F] : Set (FiniteAdeleRing (𝓞 F) F) :=
   {a | ∀ v, a v ∈ v.adicCompletionIntegers F}
 

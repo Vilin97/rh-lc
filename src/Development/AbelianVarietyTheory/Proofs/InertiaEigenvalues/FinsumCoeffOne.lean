@@ -29,9 +29,6 @@ theorem smulS_def (T : LocLat G Qp LL O) (a : LL ⊗[Qp] B) (m : T.V ⊗[Qp] B) 
 scoped instance towS (T : LocLat G Qp LL O) : IsScalarTower LL (LL ⊗[Qp] B) (T.V ⊗[Qp] B) :=
   ⟨fun c a m => by rw [smulS_def, smulS_def, map_smul, LinearMap.smul_apply]⟩
 
-scoped instance commS (T : LocLat G Qp LL O) : SMulCommClass (LL ⊗[Qp] B) LL (T.V ⊗[Qp] B) :=
-  ⟨fun a c m => by rw [smulS_def, smulS_def, map_smul]⟩
-
 variable {R : WSer Γ} {b₀ : LetA O n →+* LL ⊗[Qp] B} {tS zS : BdR}
     {Zl Ai : Type} [CommRing Zl] [CommRing Ai] [Algebra Zl O] [Algebra Zl Ai]
     {RW : Type} [CommRing RW] [Algebra O RW]

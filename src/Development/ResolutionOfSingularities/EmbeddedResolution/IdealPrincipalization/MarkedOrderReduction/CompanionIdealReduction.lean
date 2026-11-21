@@ -92,15 +92,6 @@ def continuationByCompanionIdeal (hG : PrincipalizationGeometryHypotheses.{u}) {
     (s.proj s.length ≫ T.structMap) (s.ideal s.length) T.mult (s.boundary s.length)
     (isMarked_seqAtEnd_companionIdeal hG hT A s hcont)
 
-@[simp]
-theorem continuationByCompanionIdeal_length (hG : PrincipalizationGeometryHypotheses.{u}) {T : MarkedIdealWithBoundary.{u}} (hT : T.IsAdmissible)
-    (A : PrincipalizationAssignment.{u}) (s : MarkedBlowupSequenceData T.structMap T.ideal T.mult T.boundary)
-    (hcont : CompanionIdealReductionContinues T s) :
-    (continuationByCompanionIdeal hG hT A s hcont).length =
-      (principalizationSeqAtEnd T (principalizationOfDimLe T A) s (companionIdeal T s) (T.mult * maxOrderNonMonomialOnOrderLocus T s)
-        (tripleAtLength_dim_le hG hT s _ _)).length :=
-  rfl
-
 private theorem orderAtLeastLocus_eq_empty_of_comap_iso {k : Type u} [Field k] [CharZero k]
     {X Y : Scheme.{u}} (p : X ⟶ Spec (CommRingCat.of k)) [AlgebraicGeometry.Smooth p]
     (e : Y ≅ X) (J : X.IdealSheafData) (c : ℕ)

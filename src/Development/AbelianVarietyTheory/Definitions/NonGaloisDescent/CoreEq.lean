@@ -55,9 +55,6 @@ theorem TwJoin.Sb_eq {hL : GlobalTheory.Published.LocalLanglandsGL} {D : D7} {nc
   cases h2; cases h3; cases h8; cases hA; cases hR
   rfl
 
-def TwOf (hL : GlobalTheory.Published.LocalLanglandsGL) : NExt hL := fun _ B _ T w Z _ _ t nch _ xd c =>
-  TwJoin hL (w.st Z).toD7 nch xd (T = TwDat.untw B T.pl) t.r.z.R t.r.z.F t.r.z.cG t.r.z.geo _ c.row.nexp (TC.cf w.I w.l Z)
-
 end GlobalTheory.TwInputs
 
 end

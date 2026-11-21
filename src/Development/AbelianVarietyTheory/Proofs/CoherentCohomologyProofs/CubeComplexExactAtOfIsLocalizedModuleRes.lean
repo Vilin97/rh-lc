@@ -286,58 +286,14 @@ theorem toLocCube_empty_bijective : Function.Bijective (toLocCube f M ∅) := by
     obtain ⟨n, x, hx⟩ := IsLocalizedModule.Away.surj (toLocCube f M ∅) (∏ i ∈ (∅ : Finset ι), f i) y
     exact ⟨x, by simpa using hx.symm⟩
 
-noncomputable def locCubeEmptyEquiv : M ≃ₗ[R] (locCube f M).obj ∅ :=
-  LinearEquiv.ofBijective _ (toLocCube_empty_bijective f M)
-
-@[simp]
-theorem locCubeEmptyEquiv_apply (m : M) : locCubeEmptyEquiv f M m = toLocCube f M ∅ m := rfl
-
 theorem isLocalizedModule_toLocCube_singleton (i : ι) :
     IsLocalizedModule.Away (f i) (toLocCube f M {i}) := by
   have := isLocalizedModule_toLocCube f M {i}
   rwa [Finset.prod_singleton] at this
 
-noncomputable def locCubeIso (A : Cube.{max u v} ι R) (g : ∀ s, M →ₗ[R] A.obj s)
-    [hg : ∀ s, IsLocalizedModule.Away (∏ i ∈ s, f i) (g s)]
-    (hres : ∀ {s t : Finset ι} (h : s ⊆ t) (m : M), Cube.res A h (g s m) = g t m) :
-    locCube f M ≅ A :=
-  Cube.isoMk (fun s => IsLocalizedModule.linearEquiv (.powers (∏ i ∈ s, f i)) (toLocCube f M s) (g s))
-    fun {s t} h x => by
-      have := IsLocalizedModule.ext (.powers (∏ i ∈ s, f i)) (toLocCube f M s)
-        (isUnit_powers_of_dvd (Finset.prod_dvd_prod_of_subset s t f h) (g t))
-        (j := (IsLocalizedModule.linearEquiv (.powers (∏ i ∈ t, f i))
-          (toLocCube f M t) (g t)).toLinearMap ∘ₗ Cube.res _ h)
-        (k := Cube.res A h ∘ₗ (IsLocalizedModule.linearEquiv (.powers (∏ i ∈ s, f i))
-          (toLocCube f M s) (g s)).toLinearMap) (by ext m; simp [hres])
-      exact congr($this x)
-
 variable {M} in
 
-noncomputable def locCubeMap {N : Type v} [AddCommGroup N] [Module R N] (φ : M →ₗ[R] N) :
-    locCube f M ⟶ locCube f N :=
-  Cube.homMk (fun s => IsLocalizedModule.map (.powers (∏ i ∈ s, f i)) (toLocCube f M s)
-      (toLocCube f N s) φ)
-    fun {s t} h x => by
-      have := IsLocalizedModule.ext (.powers (∏ i ∈ s, f i)) (toLocCube f M s)
-        (isUnit_powers_of_dvd (Finset.prod_dvd_prod_of_subset s t f h) (toLocCube f N t))
-        (j := IsLocalizedModule.map (.powers (∏ i ∈ t, f i)) (toLocCube f M t)
-          (toLocCube f N t) φ ∘ₗ Cube.res _ h)
-        (k := Cube.res _ h ∘ₗ IsLocalizedModule.map (.powers (∏ i ∈ s, f i)) (toLocCube f M s)
-          (toLocCube f N s) φ) (by ext m; simp)
-      exact congr($this x)
-
 variable {M} in
-
-@[simp]
-theorem locCubeMap_app_toLocCube {N : Type v} [AddCommGroup N] [Module R N] (φ : M →ₗ[R] N)
-    (s : Finset ι) (m : M) :
-    ((locCubeMap f φ).app s).hom (toLocCube f M s m) = toLocCube f N s (φ m) :=
-  IsLocalizedModule.map_apply _ _ _ φ m
-
-@[simp]
-theorem locCubeMap_id : locCubeMap f (LinearMap.id : M →ₗ[R] M) = 𝟙 _ := by
-  refine NatTrans.ext (funext fun s => ModuleCat.hom_ext ?_)
-  exact IsLocalizedModule.map_id _ (toLocCube f M s)
 
 variable [LinearOrder ι] [Finite ι]
 
@@ -349,40 +305,9 @@ theorem locCube_exactAt (hf : Ideal.span (Set.range f) = ⊤) (p : ℕ) :
 
 variable (f) in
 
-noncomputable def locCubeAug : M →ₗ[R] Cube.Term (locCube f M) 1 :=
-  LinearMap.pi fun s => toLocCube f M s.1
-
 end Loc
 
 section Examples
-
-example (p : ℕ) : (cubeComplex (locCube ![(2 : ℤ), 3] ℤ)).ExactAt p := by
-  refine locCube_exactAt ℤ ((Ideal.eq_top_iff_one _).2 ?_) p
-  have := Ideal.sub_mem _ (Ideal.subset_span (s := Set.range ![(2 : ℤ), 3]) ⟨1, rfl⟩)
-    (Ideal.subset_span ⟨0, rfl⟩)
-  exact this
-
-example : ¬ (cubeComplex (locCube (fun _ : Fin 1 => (2 : ℤ)) ℤ)).ExactAt 1 := by
-  rw [cubeComplex_exactAt_one_iff]
-  intro h
-  haveI := Cube.subsingleton_term (locCube (fun _ : Fin 1 => (2 : ℤ)) ℤ) (p := 2) (by simp)
-  have hl := isLocalizedModule_toLocCube_singleton (fun _ : Fin 1 => (2 : ℤ)) ℤ 0
-  let y := IsLocalizedModule.mk' (toLocCube (fun _ : Fin 1 => (2 : ℤ)) ℤ {0}) 1
-    (⟨2, 1, pow_one 2⟩ : Submonoid.powers (2 : ℤ))
-  obtain ⟨a, ha⟩ := (h (Cube.termOneEquiv _ (Fin.cases y fun i => i.elim0))).1
-    (Subsingleton.elim _ _)
-  obtain ⟨m, rfl⟩ := (toLocCube_empty_bijective _ ℤ).2 a
-  have h1 := congrFun ha ⟨{0}, Finset.card_singleton _⟩
-  rw [Cube.aug_apply, res_toLocCube, Cube.termOneEquiv_apply] at h1
-  have h2 : toLocCube (fun _ : Fin 1 => (2 : ℤ)) ℤ {0} 1 =
-      toLocCube (fun _ : Fin 1 => (2 : ℤ)) ℤ {0} ((2 : ℤ) • m) :=
-    (IsLocalizedModule.mk'_eq_iff.1 (show y = _ from h1.symm)).trans
-      ((toLocCube (fun _ : Fin 1 => (2 : ℤ)) ℤ {0}).map_smul (2 : ℤ) m).symm
-  obtain ⟨n, hn⟩ := IsLocalizedModule.Away.exists_of_eq (2 : ℤ) h2
-  simp only [smul_eq_mul, mul_eq_mul_left_iff] at hn
-  rcases hn with hn | hn
-  · omega
-  · exact absurd hn (by positivity)
 
 end Examples
 

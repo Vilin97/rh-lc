@@ -2,7 +2,8 @@ import Mathlib
 import Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.MidDefs
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProductIrreducibleAppendEquivStatement
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ParabolicInductionInStagesProductOfProducts
-import BuildAid.D4
+import Lean.LibrarySuggestions.Basic
+import Lean.Elab.Command
 
 noncomputable section
 
@@ -43,17 +44,6 @@ theorem stage3_iso (A M B : List (IrrGL k)) {N nA nM nB m' : ℕ} (hd : ∑ a, (
     (two_congr h1 (iso_refl _) (pr_app M.get B.get _ (by simp only [List.ofFn_get]) hM hB hMB h2))
 
 unseal GlobalTheory.ProdFlatten.one GlobalTheory.ProdFlatten.two GlobalTheory.ProdFlatten.mp GlobalTheory.ProdFlatten.pr GlobalTheory.ProdFlatten.Iso in
-theorem equiv_triple_product_of_iso {c a m b N nA nM nB m' : ℕ} (z : Fin c → IrrGL k) (A : Fin a → IrrGL k) (M : Fin m → IrrGL k) (B : Fin b → IrrGL k)
-    (hd : ∑ a, (z a).1 = N) (hA : ∑ a, (A a).1 = nA) (hM : ∑ a, (M a).1 = nM) (hB : ∑ a, (B a).1 = nB)
-    (h2 : nM + nB = m') (h1 : nA + m' = N) (H : Iso (pr z hd) (two h1 (pr A hA) (two h2 (pr M hM) (pr B hB)))) :
-    Nonempty ((prodIrr z hd).Equiv (T3 h2 h1 (prodIrr A hA) (prodIrr B hB) (prodIrr M hM))) := H
-
-theorem stage3 (A M B : List (IrrGL k)) {N nA nM nB m' : ℕ} (hd : ∑ a, ((A ++ M ++ B).get a).1 = N)
-    (hA : ∑ a, (A.get a).1 = nA) (hM : ∑ a, (M.get a).1 = nM) (hB : ∑ a, (B.get a).1 = nB)
-    (h2 : nM + nB = m') (h1 : nA + m' = N) :
-    Nonempty ((prodIrr (A ++ M ++ B).get hd).Equiv
-      (T3 h2 h1 (prodIrr A.get hA) (prodIrr B.get hB) (prodIrr M.get hM))) :=
-  equiv_triple_product_of_iso _ _ _ _ hd hA hM hB h2 h1 (stage3_iso A M B hd hA hM hB h2 h1)
 
 end PositivityTheory.Exh
 

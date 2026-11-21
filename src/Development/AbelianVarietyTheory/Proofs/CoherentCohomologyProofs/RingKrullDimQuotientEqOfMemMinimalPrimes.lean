@@ -550,13 +550,6 @@ theorem exists_topologicalKrullDim_fibres_eq_of_isEmbedding
     (topologicalKrullDim_preimage_genericPoint_eq f hd),
     fun Z hZ ↦ topologicalKrullDim_eq_of_mem_irreducibleComponents_of_trdeg_eq f hi hr hZ hd⟩
 
-theorem topologicalKrullDim_component_fiber_eq {Z : Set (f.fiber (closedPoint O))}
-    (hZ : Z ∈ irreducibleComponents (f.fiber (closedPoint O))) :
-    topologicalKrullDim Z = topologicalKrullDim (f.fiber (genericPoint (Spec (.of O)))) := by
-  obtain ⟨d, h₁, h₂⟩ := exists_topologicalKrullDim_fibres_eq_of_isEmbedding f
-    (f.fiberι _).isEmbedding (f.range_fiberι _) (f.fiberι _).isEmbedding (f.range_fiberι _)
-  rw [h₁, h₂ Z hZ]
-
 omit [IsDomain O] [IsDiscreteValuationRing O] [IsIntegral Y] [LocallyOfFiniteType f] [Flat f] in
 
 theorem isEmbedding_and_range_eq_of_isPullback {T P : Scheme.{u}} {g : T ⟶ Spec (.of O)}
@@ -606,13 +599,5 @@ theorem exists_topologicalKrullDim_fibres_eq_of_isPullback
     ringKrullDim_stalk_eq_one_of_mem_irreducibleComponents f e₀ r₀ hZ hz⟩⟩
 
 end Fibres
-
-example (O : Type u) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {ϖ : O}
-    (hϖ : Irreducible ϖ) : (Ideal.span {algebraMap O (Polynomial O) ϖ}).height = 1 := by
-  have : (Ideal.span {algebraMap O (Polynomial O) ϖ}).IsPrime :=
-    (Ideal.span_singleton_prime (by simpa using hϖ.ne_zero)).mpr
-      (Polynomial.prime_C_iff.mpr hϖ.prime)
-  exact (height_eq_one_and_ringKrullDim_eq_of_flat_canonical O (Polynomial O) hϖ _
-    (by rw [Ideal.minimalPrimes_eq_subsingleton_self]; rfl)).1
 
 end GlobalTheory

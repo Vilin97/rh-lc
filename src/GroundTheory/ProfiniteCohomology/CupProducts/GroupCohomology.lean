@@ -18,16 +18,6 @@ section Comparison
 
 variable {A B : Rep.{u} k G} [IsDiscreteRep A] [IsDiscreteRep B] {p q n : ℕ}
 
-theorem cohomologyToGroupCohomology_cohomologyπ (x : cocycles A p) :
-    cohomologyToGroupCohomology A p (cohomologyπ A p x) =
-      groupCohomology.π A p (HomologicalComplex.cyclesMap (cochainsComplexι A) p x) :=
-  ConcreteCategory.congr_hom (HomologicalComplex.homologyπ_naturality (cochainsComplexι A) p) x
-
-theorem iCocycles_cyclesMap_cochainsComplexι (x : cocycles A p) :
-    groupCohomology.iCocycles A p (HomologicalComplex.cyclesMap (cochainsComplexι A) p x) =
-      cochainOf A (cocycleι A p x) :=
-  ConcreteCategory.congr_hom (HomologicalComplex.cyclesMap_i (cochainsComplexι A) p) x
-
 end Comparison
 
 section Levels

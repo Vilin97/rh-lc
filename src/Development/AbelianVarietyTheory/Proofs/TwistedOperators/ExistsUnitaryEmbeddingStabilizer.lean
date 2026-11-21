@@ -94,8 +94,6 @@ namespace GlobalTheory.UnitaryEmbeddingGroup
 
 variable {D : D7}
 
-local infixl:70 " ⋆ₘ " => HMul.hMul
-
 theorem unit_gen {R : Type} [CommRing R] (σ : R →+* R) {n r : ℕ} (J : Matrix (Fin n) (Fin n) R)
     (P : Matrix (Fin n) (Fin r) R) (X : Matrix (Fin r) (Fin r) R) (g : Matrix (Fin n) (Fin n) R) (hPX : P * X = g * P)
     (hg : Formalism.UG.cT σ g * J * g = J) :

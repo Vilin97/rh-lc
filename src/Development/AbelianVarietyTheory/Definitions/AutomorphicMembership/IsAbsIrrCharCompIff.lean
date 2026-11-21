@@ -76,9 +76,6 @@ def lev1 : Subgroup (Gc B px) := (Formalism.L2.Col.rPsymF (R := B.R) I.Ch).grp
 
 def chr1 : lev1 I →* B.LLˣ := (Formalism.L2.Col.rPsymF (R := B.R) I.Ch).chr
 
-theorem famC_A (hX : B.fields.Ok) (U : Set I.ι) (Xg : Finset (Gc B px → B.LL)) (tr tr' : TrI B px) :
-    (famC I hX U Xg tr).A = (famC I hX U Xg tr').A := rfl
-
 def usedOf (T : Top.TwDat B) (Wt : Set B.places.Pl) : Set I.ι := {a | ∃ w ∈ Wt, I.xi a = T.xiTw I.C w}
 
 def SelHalf : Prop :=
@@ -133,21 +130,6 @@ section Fields
 
 variable (hX : B.fields.Ok) (U : Set I.ι) (Xg : Finset (Gc B px → B.LL)) (tr : TrI B px)
 
-theorem family_infinitePlace : (famC I hX U Xg tr).A.v0 = InfinitePlace.mk B.embLL := rfl
-
-theorem famC_μ0 : (famC I hX U Xg tr).A.μ0 = mu0F (X := B.fields) (tuOf I U) := rfl
-
-theorem famC_X : (famC I hX U Xg tr).A.X = Xg := rfl
-
-theorem famC_r : (famC I hX U Xg tr).A.r = B.R.r := rfl
-
-theorem famC_A_t : (famC I hX U Xg tr).A.t = B.R.t := rfl
-
-theorem famC_trI : (famC I hX U Xg tr).trI = tr := rfl
-
-theorem famC_muVal (j : Fin B.R.m) (t : TupU I U) (P : PlS B px) :
-    (famC I hX U Xg tr).A.muVal j t P = I.Ch.muVal j P.1 * xiValOf I t.1 P.1 := rfl
-
 end Fields
 
 theorem embLL_xiValOf (a : I.ι) (P : HeightOneSpectrum (𝓞 B.fields.E))
@@ -168,28 +150,9 @@ theorem psiC_of_mem {PP : Pl B.host.E} (h : PP ∈ (B.primes px).vGs) : psiC I P
   unfold psiC
   rw [dif_pos h]
 
-theorem psiC_of_notMem {PP : Pl B.host.E} (h : PP ∉ (B.primes px).vGs) : psiC I PP = 1 := by
-  unfold psiC
-  rw [dif_neg h]
-
 theorem ValsIn.embLL_xiValOf {I : ColIn B px} (h : ValsIn I) (a : I.ι) (P : HeightOneSpectrum (𝓞 B.fields.E))
     (hP : (I.xi a).UnrAt P) : B.embLL (xiValOf I (I.tup a) P : B.LL) = (((I.xi a).val P : ℂˣ) : ℂ) :=
   GlobalTheory.Mem.R3.embLL_xiValOf I a P (h.1 a P hP)
-
-example : tuOf I ∅ = ∅ := by
-  refine Finset.eq_empty_of_forall_notMem fun τ h => ?_
-  obtain ⟨a, ha, -⟩ := (mem_tuOf I).1 h
-  exact ha
-
-example : (1 : Tup B.fields.F B.fields.E B.fields.K I.S) ∈ tuOf I {I.mu0} := (mem_tuOf I).2 ⟨_, rfl, I.trueColumn_tuple_trivial_eq_one⟩
-
-example (h : I.Ok) (P : HeightOneSpectrum (𝓞 B.fields.E)) : B.embLL (xiValOf I (I.tup I.mu0) P : B.LL) = 1 := by
-  have e : (((I.xi I.mu0).val P : ℂˣ) : ℂ) = 1 := by
-    rw [h.trueColumnChoices_heckeChar_reference_eq_one]
-    rfl
-  rw [embLL_xiValOf I I.mu0 P ⟨1, by rw [e, map_one]⟩, e]
-
-example (T : Top.TwDat B) : usedOf I T ∅ = ∅ := Set.eq_empty_of_forall_notMem fun _ ⟨_, h, _⟩ => h
 
 end Base
 
@@ -235,15 +198,9 @@ theorem goodSet_iff (eR : Gc X.B px ≃* G0g X.toD7.nd) (Xg : Finset (Gc X.B px 
   rw [Formalism.L2.Col.mem_XgE, ← Equiv.sum_comp eR.toEquiv, isAbsIrrChar_comp_iff eR.symm]
   simp
 
-theorem GoodSet.unique {eR : Gc X.B px ≃* G0g X.toD7.nd} {Xg Xg' : Finset (Gc X.B px → X.B.LL)}
-    (h : GoodSet X (px := px) eR Xg) (h' : GoodSet X (px := px) eR Xg') : Xg = Xg' :=
-  Finset.ext fun χ => (h.1 χ).trans (h'.1 χ).symm
-
 theorem GoodSet.irr {eR : Gc X.B px ≃* G0g X.toD7.nd} {Xg : Finset (Gc X.B px → X.B.LL)}
     (h : GoodSet X (px := px) eR Xg) : ∀ χ ∈ Xg, IsAbsIrrChar χ :=
   fun χ hχ => ((((goodSet_iff X eR Xg).1 h).1 χ).1 hχ).1
-
-theorem isIdG_refl : IsPlacewiseIdentity X (px := px) (Pg := (X.B.primes px).vGs) (MulEquiv.refl _) := fun _ _ _ _ => rfl
 
 structure GrpAt : Prop where
 

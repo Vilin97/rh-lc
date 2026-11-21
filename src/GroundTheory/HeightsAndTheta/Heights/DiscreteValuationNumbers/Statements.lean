@@ -11,8 +11,6 @@ noncomputable section
 
 universe u v
 
-abbrev LengthFormulaDimOne.Statement : Prop := ReciprocityTheory.ChartRestriction.G.AI.LocalLengthAdditivity.{u, v}
-
 abbrev LengthFormulaDimTwo.Statement : Prop := ReciprocityTheory.ChartRestriction.G.AI.LocalLengthMultiplicativity.{u}
 
 def ConservationOfNumber.Statement : Prop :=
@@ -55,13 +53,6 @@ theorem isPrime_of_divCycle_ne_zero {K : Type*} {ι : K → Type*} {R : Type*} [
   split_ifs at h with hW
   · exact hW.1.1.1
   · exact absurd rfl h
-
-def dimTwoExampleIdeal : Ideal (Polynomial ℤ_[2]) :=
-  RingHom.ker (Polynomial.eval₂RingHom (PadicInt.toZMod : ℤ_[2] →+* ZMod 2) 0)
-
-instance : dimTwoExampleIdeal.IsPrime := RingHom.ker_isPrime _
-
-abbrev DimTwoExample : Type := Localization.AtPrime dimTwoExampleIdeal
 
 end Examples
 

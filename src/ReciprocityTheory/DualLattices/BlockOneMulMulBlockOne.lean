@@ -62,8 +62,6 @@ def bd1 {N M : ℕ} (P : Matrix (Fin N) (Fin M) R) : Matrix (Fin (N + 1)) (Fin (
 @[simp] theorem blockOne_zero_zero_alt {N M : ℕ} (P : Matrix (Fin N) (Fin M) R) : bd1 P 0 0 = 1 := rfl
 @[simp] theorem blockOne_zero_succ_alt {N M : ℕ} (P : Matrix (Fin N) (Fin M) R) (k : Fin M) :
     bd1 P 0 k.succ = 0 := rfl
-@[simp] theorem blockOne_succ_zero_alt {N M : ℕ} (P : Matrix (Fin N) (Fin M) R) (l : Fin N) :
-    bd1 P l.succ 0 = 0 := rfl
 @[simp] theorem blockOne_succ_succ_alt {N M : ℕ} (P : Matrix (Fin N) (Fin M) R) (l : Fin N) (k : Fin M) :
     bd1 P l.succ k.succ = P l k := rfl
 

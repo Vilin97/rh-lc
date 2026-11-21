@@ -46,10 +46,6 @@ theorem exists_zsmul (h : IsLatticeEmb φ) (v : Fin r → K) :
     ∃ n : ℤ, n ≠ 0 ∧ ∃ x, φ x = n • v :=
   exists_zsmul_mem_of_isLattice h.2 v
 
-theorem finite (h : IsLatticeEmb φ) : Module.Finite (𝓞 K) M := by
-  have : Module.Finite (𝓞 K) (LinearMap.range φ) := Module.Finite.iff_fg.mpr h.2.1
-  exact Module.Finite.equiv (LinearEquiv.ofInjective φ h.1).symm
-
 theorem isLocalizedModule_int (h : IsLatticeEmb φ) :
     IsLocalizedModule ℤ⁰ (φ.restrictScalars ℤ) where
   map_units s := by
@@ -64,32 +60,8 @@ theorem isLocalizedModule_int (h : IsLatticeEmb φ) :
     exact ⟨(x, ⟨n, mem_nonZeroDivisors_of_ne_zero hn⟩), hx.symm⟩
   exists_of_eq hxy := ⟨1, by rw [h.1 hxy]⟩
 
-theorem isLocalizedModule (h : IsLatticeEmb φ) : IsLocalizedModule (𝓞 K)⁰ φ where
-  map_units s := by
-    have hs : ((s : 𝓞 K) : K) ≠ 0 := by exact_mod_cast nonZeroDivisors.coe_ne_zero s
-    rw [Module.End.isUnit_iff]
-    have : ⇑(algebraMap (𝓞 K) (Module.End (𝓞 K) (Fin r → K)) s) = fun v => ((s : 𝓞 K) : K) • v := by
-      funext v; rw [Module.algebraMap_end_apply, ← algebraMap_smul K]
-    rw [this]
-    exact MulAction.bijective (Units.mk0 _ hs)
-  surj v := by
-    obtain ⟨n, hn, x, hx⟩ := h.exists_zsmul v
-    refine ⟨(x, ⟨(n : 𝓞 K), mem_nonZeroDivisors_of_ne_zero (by exact_mod_cast hn)⟩), ?_⟩
-    rw [hx, Submonoid.smul_def, Int.cast_smul_eq_zsmul]
-  exists_of_eq hxy := ⟨1, by rw [h.1 hxy]⟩
-
 theorem isBaseChange_rat (h : IsLatticeEmb φ) : IsBaseChange ℚ (φ.restrictScalars ℤ) :=
   (isLocalizedModule_iff_isBaseChange ℤ⁰ ℚ _).mp h.isLocalizedModule_int
-
-theorem isBaseChange (h : IsLatticeEmb φ) : IsBaseChange K φ :=
-  (isLocalizedModule_iff_isBaseChange (𝓞 K)⁰ K _).mp h.isLocalizedModule
-
-theorem finrank_eq (h : IsLatticeEmb φ) : Module.finrank (𝓞 K) M = r := by
-  rw [← h.isBaseChange.finrank_eq, Module.finrank_fin_fun]
-
-theorem finrank_int_eq (h : IsLatticeEmb φ) : Module.finrank ℤ M = r * Module.finrank ℚ K := by
-  rw [← h.isBaseChange_rat.finrank_eq, Module.finrank_pi_fintype]
-  simp
 
 theorem bilin_ext (h : IsLatticeEmb φ) {B B' : LinearMap.BilinForm ℚ (Fin r → K)}
     (hB : ∀ x y, B (φ x) (φ y) = B' (φ x) (φ y)) : B = B' := by
@@ -99,38 +71,6 @@ theorem bilin_ext (h : IsLatticeEmb φ) {B B' : LinearMap.BilinForm ℚ (Fin r �
   have := hB x y
   simp only [hx, hy, map_zsmul, LinearMap.smul_apply] at this
   exact smul_right_injective ℚ hm (smul_right_injective ℚ hn this)
-
-theorem matrix_ext {s : ℕ} (h : IsLatticeEmb φ) {A A' : Matrix (Fin s) (Fin r) K}
-    (hA : ∀ x, A *ᵥ φ x = A' *ᵥ φ x) : A = A' := by
-  refine Matrix.ext_of_mulVec_single fun i => ?_
-  obtain ⟨n, hn, x, hx⟩ := h.exists_zsmul (Pi.single i 1)
-  have := hA x
-  rw [hx, mulVec_smul, mulVec_smul] at this
-  exact smul_right_injective _ hn this
-
-theorem exists_matrix {s : ℕ} (h : IsLatticeEmb φ) (g : M →ₗ[𝓞 K] (Fin s → K)) :
-    ∃ A : Matrix (Fin s) (Fin r) K, ∀ x, A *ᵥ φ x = g x :=
-  ⟨LinearMap.toMatrix' (h.isBaseChange.lift g), fun x => by
-    rw [← Matrix.toLin'_apply, Matrix.toLin'_toMatrix', IsBaseChange.lift_eq]⟩
-
-theorem existsUnique_GL {φ' : M' →ₗ[𝓞 K] (Fin r → K)} (h : IsLatticeEmb φ) (h' : IsLatticeEmb φ')
-    (g : M ≃ₗ[𝓞 K] M') :
-    ∃! γ : GL (Fin r) K, ∀ x, (γ : Matrix (Fin r) (Fin r) K) *ᵥ φ x = φ' (g x) := by
-  obtain ⟨A, hA⟩ := h.exists_matrix (φ' ∘ₗ g.toLinearMap)
-  obtain ⟨A', hA'⟩ := h'.exists_matrix (φ ∘ₗ g.symm.toLinearMap)
-  refine ⟨⟨A, A', h'.matrix_ext fun x => ?_, h.matrix_ext fun x => ?_⟩, hA, fun γ hγ => ?_⟩
-  · rw [← mulVec_mulVec, hA', one_mulVec]; simp [hA]
-  · rw [← mulVec_mulVec, hA, one_mulVec]; simp [hA']
-  · exact Units.ext (h.matrix_ext fun x => by rw [hγ]; exact (hA x).symm)
-
-theorem comp_GL (h : IsLatticeEmb φ) (γ : GL (Fin r) K) :
-    IsLatticeEmb (((γ : Matrix (Fin r) (Fin r) K).mulVecLin.restrictScalars (𝓞 K)) ∘ₗ φ) := by
-  have hγ : Function.Bijective (γ : Matrix (Fin r) (Fin r) K).mulVecLin :=
-    ⟨mulVec_injective_iff_isUnit.mpr γ.isUnit, mulVec_surjective_iff_isUnit.mpr γ.isUnit⟩
-  refine ⟨hγ.1.comp h.1, ?_, ?_⟩
-  · rw [LinearMap.range_comp]; exact h.2.1.map _
-  · rw [LinearMap.range_comp, Submodule.map_coe, LinearMap.coe_restrictScalars,
-      ← Submodule.map_span, h.2.2, Submodule.map_top, LinearMap.range_eq_top.mpr hγ.2]
 
 def extend (h : IsLatticeEmb φ) (β : LinearMap.BilinForm ℤ M) :
     LinearMap.BilinForm ℚ (Fin r → K) :=
@@ -204,16 +144,5 @@ theorem exists_isLatticeEmb [Module.Finite (𝓞 K) M] [Module.IsTorsionFree (�
     rw [this, Submodule.map_top, LinearEquiv.range]
 
 end Lattice
-
-example {K : Type} [Field K] [NumberField K] :
-    IsLatticeEmb ((Algebra.linearMap (𝓞 K) K).compLeft (Fin r)) := by
-  refine isLatticeEmb_of_span (fun x y h => funext fun i => RingOfIntegers.ext (congrFun h i)) ?_
-  rw [eq_top_iff, ← (Pi.basisFun K (Fin r)).span_eq]
-  refine Submodule.span_mono ?_
-  rintro _ ⟨i, rfl⟩
-  refine ⟨Pi.single i 1, funext fun j => ?_⟩
-  by_cases h : j = i
-  · subst h; simp
-  · simp [h]
 
 end GlobalTheory

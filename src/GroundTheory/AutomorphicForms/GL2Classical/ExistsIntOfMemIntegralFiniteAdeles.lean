@@ -16,8 +16,6 @@ open AdelicGLn
 
 set_option linter.unusedSectionVars false
 
-local notation "𝔸f" => FiniteAdeleRing (𝓞 ℚ) ℚ
-
 theorem exists_int_of_mem_integralFiniteAdeles {x : ℚ}
     (hx : algebraMap ℚ 𝔸f x ∈ integralFiniteAdeles (𝓞 ℚ) ℚ) : ∃ m : ℤ, x = m := by
   obtain ⟨z, hz⟩ := exists_eq_of_forall_mem_adicCompletionIntegers ℚ x fun v => hx v
@@ -124,10 +122,6 @@ theorem isOpen_Gamma0Level : IsOpen (Gamma0Level N : Set (FiniteAdelicGL ℚ 2))
   rw [this]
   exact (isOpen_integralFiniteGL ℚ 2).inter ((isOpen_levelIdeal N).preimage
     ((Units.continuous_val (M := Matrix (Fin 2) (Fin 2) 𝔸f)).matrix_elem 1 0))
-
-theorem Gamma0Level_one : Gamma0Level 1 = integralFiniteGL ℚ 2 := by
-  refine le_antisymm (Gamma0Level_le_integralFiniteGL 1) fun g hg => ⟨hg, ?_⟩
-  exact ⟨_, ((mem_integralFiniteGL_iff ℚ 2).1 hg).1 1 0, by rw [Nat.cast_one, one_mul]⟩
 
 theorem diagonalGL_mem_Gamma0Level {a : 𝔸fˣ} (ha : a ∈ finiteLevel 0) :
     diagonalGL (Pi.mulSingle (0 : Fin 2) a) ∈ Gamma0Level N := by

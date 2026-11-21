@@ -18,10 +18,6 @@ section Basic
 
 variable {σ : Type*}
 
-theorem Low.mono {m k : ℕ} {x : MvPowerSeries σ K} (h : Low m x) (hk : k ≤ m) : Low k x := by
-  intro d hd
-  exact h d (lt_of_lt_of_le hd hk)
-
 theorem Low.mul {m k : ℕ} {x y : MvPowerSeries σ K} (hx : Low m x) (hy : Low k y) :
     Low (m + k) (x * y) := by
   classical

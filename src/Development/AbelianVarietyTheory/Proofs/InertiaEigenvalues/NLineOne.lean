@@ -1,5 +1,5 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsInhabitants
+import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.LinearDescent
 
 noncomputable section
 namespace GlobalTheory.UnitLemma

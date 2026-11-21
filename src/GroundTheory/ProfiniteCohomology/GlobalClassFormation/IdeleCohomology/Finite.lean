@@ -83,11 +83,6 @@ noncomputable def finiteProjAboveRep : ideleRep K L ⟶ Rep.of (finiteUnitsAbove
       rw [finiteProjAbove_smul]
       rfl⟩
 
-@[simp]
-theorem finiteProjAboveRep_hom_apply (x : ideleRep K L) (w : PlacesOver L v) :
-    (finiteProjAboveRep v).hom x w = Additive.ofMul (finiteProjAbove v x.toMul w) :=
-  rfl
-
 noncomputable def finiteEmbedAboveRep : Rep.of (finiteUnitsAboveRep L v) ⟶ ideleRep K L :=
   Rep.ofHom ⟨AddMonoidHom.toIntLinearMap
     { toFun := fun y => Additive.ofMul (finiteEmbedAbove v fun w => (y w).toMul)
@@ -103,11 +98,6 @@ noncomputable def finiteEmbedAboveRep : Rep.of (finiteUnitsAboveRep L v) ⟶ ide
       change Additive.ofMul (finiteEmbedAbove v (σ • fun w => (y w).toMul)) = _
       rw [finiteEmbedAbove_smul]
       rfl⟩
-
-@[simp]
-theorem finiteEmbedAboveRep_hom_apply (y : ∀ w : PlacesOver L v, Additive (w.1.adicCompletion L)ˣ) :
-    (finiteEmbedAboveRep v).hom y = Additive.ofMul (finiteEmbedAbove v fun w => (y w).toMul) :=
-  rfl
 
 theorem finiteEmbedAboveRep_comp_finiteProjAboveRep :
     finiteEmbedAboveRep (L := L) v ≫ finiteProjAboveRep (L := L) v = 𝟙 _ := by

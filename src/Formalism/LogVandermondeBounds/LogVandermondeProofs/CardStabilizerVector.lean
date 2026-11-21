@@ -83,9 +83,6 @@ theorem cardUnitriangular : CardUnitriangular := by
 
 def RowVec (F : Type) (n : ℕ) : Type := Fin n → F
 
-instance rowVecFinite (F : Type) [Finite F] (n : ℕ) : Finite (RowVec F n) :=
-  inferInstanceAs (Finite (Fin n → F))
-
 instance rowAction (F : Type) [Field F] (n : ℕ) : MulAction (GL (Fin n) F) (RowVec F n) where
   smul g v := Matrix.vecMul (v : Fin n → F) ((g⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F)
   one_smul v := by

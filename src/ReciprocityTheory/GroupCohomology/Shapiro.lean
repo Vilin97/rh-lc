@@ -235,8 +235,6 @@ def coindTr (g : G) : coindSub U M →ₗ[R] coindSub U M where
   map_add' f f' := rfl
   map_smul' c f := rfl
 
-@[simp] theorem coindTr_apply (g : G) (f : coindSub U M) (h : G) : (coindTr g f).1 h = f.1 (h * g) := rfl
-
 variable (U M)
 
 def coindRho : Representation R G (coindSub U M) where
@@ -285,10 +283,6 @@ theorem coindEv_isCoind : IsCoind U M (coindRep U M) (coindEv U M) := by
   rw [one_mul]
 
 end Coind
-
-theorem coind_holds : CoindStatement.{u} := by
-  intro R _ G _ _ _ _ U M
-  exact ⟨coindRep U M, coindEv U M, coindEv_isCoind U M⟩
 
 end
 

@@ -25,8 +25,6 @@ def subrepIncl (Y : Subrepresentation ρ) :
   isIntertwining' _ := rfl
 
 omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
-theorem subrepIncl_apply (Y : Subrepresentation ρ) (y : Y.toSubmodule) :
-    subrepIncl Y y = (y : U) := rfl
 
 theorem isSmooth_toRepresentation (hρ : IsSmooth ρ) (Y : Subrepresentation ρ) :
     IsSmooth Y.toRepresentation := by
@@ -55,9 +53,6 @@ def piRep (m : ℕ) : Representation ℂ (GL (Fin n) F) (Fin m → V) where
   map_mul' g h := by ext; simp
 
 omit [ValuativeRel F] [IsNonarchimedeanLocalField F] [TopologicalSpace F] in
-@[simp]
-theorem piRep_apply (m : ℕ) (g : GL (Fin n) F) (x : Fin m → V) (i : Fin m) :
-    piRep π m g x i = π g (x i) := rfl
 
 theorem isSmooth_piRep (hπ : IsSmooth π) (m : ℕ) : IsSmooth (piRep π m) := by
   intro x
@@ -85,15 +80,9 @@ def piIncl (m : ℕ) (i : Fin m) : Representation.IntertwiningMap π (piRep π m
 
 variable (π) in
 
-def piProj (m : ℕ) (i : Fin m) : Representation.IntertwiningMap (piRep π m) π where
-  toLinearMap := LinearMap.proj i
-  isIntertwining' _ := rfl
+omit [ValuativeRel F] [IsNonarchimedeanLocalField F] [TopologicalSpace F] in
 
 omit [ValuativeRel F] [IsNonarchimedeanLocalField F] [TopologicalSpace F] in
-theorem piIncl_apply (m : ℕ) (i : Fin m) (x : V) : piIncl π m i x = Pi.single i x := rfl
-
-omit [ValuativeRel F] [IsNonarchimedeanLocalField F] [TopologicalSpace F] in
-theorem piProj_apply (m : ℕ) (i : Fin m) (x : Fin m → V) : piProj π m i x = x i := rfl
 
 end Constructions
 
@@ -222,16 +211,6 @@ theorem apply_mem_isotypicPart (t : Representation.IntertwiningMap π ρ) (x : V
     ⟨x, rfl⟩
 
 omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
-
-theorem isotypicPart_stable (g : GL (Fin n) F) {u : U} (hu : u ∈ isotypicPart π ρ) :
-    ρ g u ∈ isotypicPart π ρ := by
-  have hle : isotypicPart π ρ ≤ (isotypicPart π ρ).comap (ρ g) := by
-    refine iSup_le fun t => ?_
-    rintro _ ⟨x, rfl⟩
-    rw [Submodule.mem_comap, Representation.IntertwiningMap.toLinearMap_apply,
-      ← Representation.IntertwiningMap.isIntertwining]
-    exact apply_mem_isotypicPart t (π g x)
-  exact hle hu
 
 omit [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] in
 

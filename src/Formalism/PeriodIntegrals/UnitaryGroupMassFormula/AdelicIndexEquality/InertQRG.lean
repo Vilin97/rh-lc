@@ -9,8 +9,6 @@ open NumberField IsDedekindDomain
 open scoped TensorProduct
 open Formalism.MainNotions.S
 
-theorem sig_apply (I : AutInst) (e : I.E) : I.cm.sig e = star e := rfl
-
 theorem sigV_tmul (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (x : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv I.F v)
     (e : I.E) : sigV I v (x ⊗ₜ e) = x ⊗ₜ star e := by
   change (Algebra.TensorProduct.map (AlgHom.id I.F _) I.cm.sig) (x ⊗ₜ e) = _

@@ -39,10 +39,6 @@ theorem Z_add {n : ℕ} (G : FGLaw R d) {a b : Pt R n d} (ha : Z a) (hb : Z b) :
 
 theorem Z_act {O : Type} [CommRing O] {G : FGLaw R d} (A : OAct O G) (a : O) : Z (A.act a) := A.const a
 
-macro "ztac" : tactic => `(tactic| repeat' (first
-  | assumption | exact ZZ_nil | exact Z_pt _ | exact Z_zero | exact Z_act _ _
-  | apply ZZ_cons | apply Z_comp1 | apply Z_add))
-
 theorem ev_ev {l m n : ℕ} {b : Fin m → Pt R n d} {a : Fin l → Pt R m d} (hb : ZZ b) (ha : ZZ a)
     (f : PS R l d) : ev b (ev a f) = ev (evV b a) f :=
   subst_comp_subst_apply (hasSubst_ev a ha) (hasSubst_ev b hb) f
@@ -77,9 +73,6 @@ theorem evalPoints_add {m n : ℕ} {b : Fin m → Pt R n d} (hb : ZZ b) (F : Fin
   funext i
   change ev b (ev ![x, y] (F i)) = ev ![evP b x, evP b y] (F i)
   rw [ev_ev hb (ZZ_cons hx (ZZ_cons hy ZZ_nil)), evV_cons, evV_cons, evV_nil]
-
-macro "evs" " at " h:ident : tactic => `(tactic| simp (disch := ztac) only [FGLaw.add, ev_mul', ev_one, ev_ev, evV_cons,
-  evV_nil, evalPoints_coordinatePoint, evalPoints_zero, evalPoints_comp, evalPoints_add, Matrix.cons_val] at $h:ident)
 
 theorem comp1_eq_evalPoint {n : ℕ} (φ : Pt R 1 d) (x : Pt R n d) : comp1 φ x = evP ![x] φ := rfl
 
@@ -128,11 +121,6 @@ theorem sy_law_at {x z w : Pt R n d} (hx : Z x) (hz : Z z) (hw : Z w) :
     ev ![x, z, w] B.ph2 * ev ![x, z] B.sy * ev ![x, w] B.sy =
       ev ![x, addOf B.G.F z w] B.sy * ev ![z, w, x] B.ph1 := by
   have h := congrArg (ev ![x, z, w]) B.sy_law
-  evs at h
-  exact h
-
-theorem sy_inv_at {x z : Pt R n d} (hx : Z x) (hz : Z z) : ev ![x, z] B.sy * ev ![z, x] B.sy = 1 := by
-  have h := congrArg (ev ![x, z]) B.sy_inv
   evs at h
   exact h
 

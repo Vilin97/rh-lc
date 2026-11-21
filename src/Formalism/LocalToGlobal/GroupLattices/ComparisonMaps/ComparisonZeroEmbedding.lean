@@ -16,8 +16,6 @@ def cmpSl : ((D.fm u).lat 0).V →ₛₗ[c.embW u w h] (D.gat u w h).Fn where
   map_add' := (c.cmp u w h).map_add
   map_smul' := c.cmp_smul u w h
 
-@[simp] theorem cmpSl_apply (x : ((D.fm u).lat 0).V) : cmpSl c u w h x = c.cmp u w h x := rfl
-
 def cmpZero : ((Tw.fm u (D.what₂.muAt w)).lat 0).V →ₛₗ[c.embW u w h] (D.gat u w h).Fn :=
   (cmpSl c u w h).comp (Tw.e0 u (D.what₂.muAt w)).symm.toLinearMap
 
@@ -154,36 +152,6 @@ def kerAtP_of {D : D7} (Gt : GatTies D) {c : LatCmp D} {Tw : TwForms D} {u : D.w
   cmp_zero := comparison_zero_embedding c Tw u w h
   cmp_int := cmpZero_int c Tw u w h
   cmp_K := chainFirst_cmp_K K.up.maps
-
-theorem kernelAtPrime_comparisonMaps_integral {D : D7} (Gt : GatTies D) {c : LatCmp D} {Tw : TwForms D} {u : D.what₂.Word} {w : D.what₂.places.Pl}
-    [Fact (D.what₂.places.resChar w).Prime]
-    {h : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)} {Fl : Fills (D.gat u w h)} {Lv : Levels Fl}
-    (K : KerData D c Tw u w h Lv) : (kerAtP_of Gt K).CmpIntAll := by
-  rintro (_ | j) hj
-  · exact cmpZero_int c Tw u w h
-  · exact K.intS j hj
-
-def KerData.ofKer {D : D7} {Gt : GatTies D} {c : LatCmp D} {Tw : TwForms D} {u : D.what₂.Word} {w : D.what₂.places.Pl}
-    [Fact (D.what₂.places.resChar w).Prime]
-    {h : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)} {Fl : Fills (D.gat u w h)} {Lv : Levels Fl}
-    {Ch : Chain Lv} (Kp : LocalToGlobal₂ D Gt c Tw u w h Ch)
-    (hli : ∀ j, j + 1 ≤ D.R.m → LinearIndependent (D.gat u w h).Kf
-      fun a => Kp.cmp (j + 1) (((Tw.fm u (D.what₂.muAt w)).lat (j + 1)).b a))
-    (hI : Kp.CmpIntAll) : KerData D c Tw u w h Lv where
-  fl_t := Kp.fl_t
-  fl_m := Kp.fl_m
-  lam := Kp.lam
-  iK := Kp.iK
-  iLL_lam := Kp.iLL_lam
-  iw := Kp.iw
-  glob := Kp.glob
-  glob_loc := Kp.glob_loc
-  cls := Kp.cls
-  cls_iff := Kp.cls_iff
-  cls_surj := Kp.cls_surj
-  Th := Kp.Th
-  up := ⟨fun j => Kp.cmp (j + 1), hli⟩
-  intS := fun j hj => hI (j + 1) hj
 
 def withFirst {D : D7} (c : LatCmp D) (Tw : TwForms D) (Y : LatInst D)
     (M : ∀ u w hg, CmpMaps c Tw u w hg (Y.Lv u w hg)) : LatInst D :=

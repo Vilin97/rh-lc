@@ -53,10 +53,6 @@ theorem genFix_of_dense (S : Sit) (hT2 : ∀ T : LocLat S.G S.Qp S.LL S.O, T2Spa
 
 variable {l : ℕ} [Fact l.Prime]
 
-local instance contMulLL (LL : FinExt l) : ContinuousMul ↥LL.1 :=
-  ⟨continuous_induced_rng.2 ((continuous_subtype_val.comp continuous_fst).mul
-    (continuous_subtype_val.comp continuous_snd))⟩
-
 local instance contAddLL (LL : FinExt l) : ContinuousAdd ↥LL.1 :=
   ⟨continuous_induced_rng.2 ((continuous_subtype_val.comp continuous_fst).add
     (continuous_subtype_val.comp continuous_snd))⟩

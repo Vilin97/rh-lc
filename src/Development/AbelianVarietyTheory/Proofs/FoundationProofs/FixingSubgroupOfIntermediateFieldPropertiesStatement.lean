@@ -1,6 +1,5 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FixingSubgroupOfIntermediateFieldProperties
-import Development.AbelianVarietyTheory.Definitions.Foundations.IsOneCocycleOnSubgroup
 import Development.AbelianVarietyTheory.Definitions.Foundations.IsTopWTopWOfExists
 open GlobalTheory.KCoh Polynomial
 set_option maxHeartbeats 1000000 in

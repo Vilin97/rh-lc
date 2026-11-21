@@ -2,9 +2,7 @@ import Mathlib
 import Formalism.LocalRingCardinality.Params
 import Formalism.HarderNarasimhan.StatementPl
 import Formalism.HarderNarasimhan.QuotRealize
-import Formalism.HarderNarasimhan.StatementFrame
-import Formalism.LatticeLocalGlobal.Statement
-import Formalism.LatticeLocalGlobal.LatticeLocalGlobalOfGlobal
+import Formalism.CorankShare.StatementFR
 
 open Module NumberField IsDedekindDomain
 
@@ -173,16 +171,9 @@ def R : ℕ := Rsum D.Nu
 
 def s : ℝ := sFrame D.Nu D.h
 
-def uF [Nonempty Words] : ℝ := uFrame D.Nu D.h
-
 def AllGood : Prop := D.RR.Good ∧ ∀ u, (D.Nu u).Good
 
 def OneMapIntoCC : Prop := ∀ u, (D.Nu u).L.map ((D.Bk u).restrictScalars (𝓞 K)) ≤ D.cc
-
-def HBound : Prop :=
-  ∀ u, Formalism.HN.htMap (D.Nu u).b (D.Nu u).X D.RR.dualB D.RR.dualX (D.Bk u) ≤ D.h u
-
-def DelPNonneg : Prop := 0 ≤ D.delP
 
 end DivData
 

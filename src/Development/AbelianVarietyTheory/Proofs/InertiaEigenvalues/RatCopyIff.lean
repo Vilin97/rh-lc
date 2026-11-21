@@ -13,8 +13,6 @@ set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 1600000
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-local macro:max "kc% " e:term:max : term => `((by kexactB $e))
-
 namespace GlobalTheory.TwInputs.Move.RatUp
 
 variable {D : D7} (r : Rest D)

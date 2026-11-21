@@ -111,7 +111,6 @@ noncomputable def bcHom {T : Scheme.{0}} (t : T ⟶ Sp k) : pullback (g₀ ≫ q
   pullback.lift (pullback.fst _ _ ≫ g₀) (pullback.snd _ _)
     (by rw [Category.assoc, pullback.condition])
 
-@[reassoc]
 theorem bcHom_fst {T : Scheme.{0}} (t : T ⟶ Sp k) :
     bcHom g₀ q t ≫ pullback.fst _ _ = pullback.fst _ _ ≫ g₀ := pullback.lift_fst _ _ _
 

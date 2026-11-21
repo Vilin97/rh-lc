@@ -9,8 +9,6 @@ namespace GroundTheory.ProfCoh
 open CategoryTheory NumberField IntermediateField GroundTheory.Global GroundTheory.Global.AdeleBaseChange
   FiniteSubfield IdeleLimit
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable (K : FiniteSubfield)
@@ -32,8 +30,6 @@ variable {K}
 instance (p : GLevel K) : Fact (K ≤ p.1) := ⟨p.2.1⟩
 
 instance (p : GLevel K) : p.1.1.fixingSubgroup.Normal := p.2.2
-
-theorem le_def {p q : GLevel K} : p ≤ q ↔ p.1 ≤ q.1 := Iff.rfl
 
 instance : IsDirectedOrder (GLevel K) where
   directed p q := by
@@ -101,11 +97,6 @@ variable (K F) in
 def levelMor [F.1.fixingSubgroup.Normal] : Rep.res (restrictHom (F := K) (E := F)) (ideleRep K.1 F.1) ⟶ limitRep K :=
   Rep.ofHom ⟨(MonoidHom.toAdditive (of F)).toIntLinearMap, fun g => LinearMap.ext fun x =>
     congrArg Additive.ofMul (smul_of_restrictHom g x.toMul).symm⟩
-
-@[simp]
-theorem levelMor_hom_apply [F.1.fixingSubgroup.Normal] (x : Additive (IdeleGroup F.1)) :
-    (levelMor K F).hom x = Additive.ofMul (of F x.toMul) :=
-  rfl
 
 variable (K F) in
 

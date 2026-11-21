@@ -30,8 +30,6 @@ instance ptCat (s : X ⟶ Sp R) : Category.{0} (Pt s) where
   comp_id _ := hom_ext' fun _ ↦ rfl
   assoc _ _ _ := hom_ext' fun _ ↦ rfl
 
-@[ext] theorem hom_ext {s : X ⟶ Sp R} {P Q : Pt s} {φ ψ : P ⟶ Q} (h : ∀ b, φ.ρ b = ψ.ρ b) : φ = ψ := hom_ext' h
-
 @[reducible] def FP (s : X ⟶ Sp R) : Pt s ⥤ CommAlgCat.{0} R where
   obj P := CommAlgCat.of R P.B
   map φ := CommAlgCat.ofHom φ.ρ
@@ -106,59 +104,8 @@ theorem toP_eq_zero_iff (c : FirstDeRham s) : toP s c = 0 ↔ c ∈ F1 s := by
     rw [map_zero]
     exact (f.2 (Pt.Hom.triv φ) rfl rfl).symm
 
-theorem H1OnPoints_eq_zero_of_isIso (s : X ⟶ Sp R) [IsIso s] (c : H1OnPoints s) : c = 0 := by
-  have hx : inv s ≫ s = spMap (algebraMap R R) := by rw [IsIso.inv_hom_id]; exact (GlobalTheory.Cris.spMap_id R).symm
-  refine H1.eq_zero_of_isInitial _ (T₀ := ⟨R, inv s, hx⟩)
-    (Limits.IsInitial.ofUniqueHom (fun T ↦ (⟨Algebra.ofId R T.B, ?_⟩ : Pt.Hom ⟨R, inv s, hx⟩ T)) fun T m ↦ ?_) c
-  · rw [IsIso.comp_inv_eq]; exact T.w.symm
-  · exact hom_ext fun b ↦ (m.ρ.commutes b).trans ((Algebra.ofId R T.B).commutes b).symm
-
-def epsFn {Y : Scheme.{0}} (t : Y ⟶ Sp (DualNumber R)) : Γ(Y, ⊤) :=
-  GlobalTheory.AbLaw.cst t ⊤ DualNumber.eps
-
-theorem epsFn_sq {Y : Scheme.{0}} (t : Y ⟶ Sp (DualNumber R)) : epsFn t * epsFn t = 0 := by
-  rw [epsFn, ← map_mul, DualNumber.eps_mul_eps, map_zero]
-
-abbrev ETy : Type 1 := ∀ {R : Type} [CommRing R] {X : Scheme.{0}} (s : X ⟶ Sp R) (_ : H1OnPoints s) {Y : Scheme.{0}}
-  (_ : Y ⟶ X) (ν : Γ(Y, ⊤)) (_ : ν * ν = 0), Pic Y
-
-structure IsE (E : ETy) : Prop where
-  nat : ∀ {R : Type} [CommRing R] {X : Scheme.{0}} (s : X ⟶ Sp R) (c : H1OnPoints s) {Y Y' : Scheme.{0}} (π : Y ⟶ X)
-    (ν : Γ(Y, ⊤)) (hν : ν * ν = 0) (ψ : Y' ⟶ Y) (ν' : Γ(Y', ⊤)) (hν' : ν' * ν' = 0), ν' = ψ.appTop.hom ν →
-    GlobalTheory.CechPic.pull ψ (E s c π ν hν) = E s c (ψ ≫ π) ν' hν'
-  add : ∀ {R : Type} [CommRing R] {X : Scheme.{0}} (s : X ⟶ Sp R) (c c' : H1OnPoints s) {Y : Scheme.{0}} (π : Y ⟶ X)
-    (ν : Γ(Y, ⊤)) (hν : ν * ν = 0), E s (c + c') π ν hν = E s c π ν hν + E s c' π ν hν
-  smul : ∀ {R : Type} [CommRing R] {X : Scheme.{0}} (s : X ⟶ Sp R) (c : H1OnPoints s) (r : R) {Y : Scheme.{0}} (π : Y ⟶ X)
-    (ν : Γ(Y, ⊤)) (hν : ν * ν = 0) (ν' : Γ(Y, ⊤)) (hν' : ν' * ν' = 0), ν' = GlobalTheory.AbLaw.cst (π ≫ s) ⊤ r * ν →
-    E s (r • c) π ν hν = E s c π ν' hν'
-  chg : ∀ {R R' : Type} [CommRing R] [CommRing R'] {X X' : Scheme.{0}} {s : X ⟶ Sp R} {s' : X' ⟶ Sp R'}
-    {σ : R →+* R'} {φ : X' ⟶ X} (h : φ ≫ s = s' ≫ spMap σ) (c : H1OnPoints s) {Y : Scheme.{0}} (π : Y ⟶ X')
-    (ν : Γ(Y, ⊤)) (hν : ν * ν = 0), E s' (pullP h c) π ν hν = E s c (π ≫ φ) ν hν
-  zero : ∀ {R : Type} [CommRing R] {X : Scheme.{0}} (s : X ⟶ Sp R) (c : H1OnPoints s) {Y : Scheme.{0}} (π : Y ⟶ X)
-    (ν : Γ(Y, ⊤)) (hν : ν * ν = 0), ν = 0 → E s c π ν hν = 0
-  inj : ∀ {R : Type} [CommRing R] {X : Scheme.{0}} (s : X ⟶ Sp R) (c : H1OnPoints s) {Y : Scheme.{0}} (π : Y ⟶ X)
-    (t : Y ⟶ Sp (DualNumber R)), IsPullback π t s (spMap (algebraMap R (DualNumber R))) →
-    E s c π (epsFn t) (epsFn_sq t) = 0 → c = 0
-
 def SurjAll : Prop :=
   ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (g : ℕ), IsAbelianScheme A →
     SmoothOfRelativeDimension g A.hom → Function.Surjective (toP (A.hom ≫ 𝟙 _))
-
-def IsoAll : Prop :=
-  ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (g : ℕ), IsAbelianScheme A →
-    SmoothOfRelativeDimension g A.hom → ∀ (L : LB A.left), L.IsLB → ∀ ψ : LinearMap.BilinForm R (HdR A),
-      IsPolForm (dp0 R) (𝟙 _) A L ψ → ∀ x ∈ Fil A, ∀ y ∈ Fil A, ψ x y = 0
-
-def PerfField : Prop :=
-  ∀ (K : Type) [Field K] (A : Over (Sp K)) [GrpObj A] (g : ℕ), IsAbelianScheme A →
-    SmoothOfRelativeDimension g A.hom → ∀ (L : LB A.left), L.IsLB → ∀ ψ : LinearMap.BilinForm K (HdR A),
-      IsPolForm (dp0 K) (𝟙 _) A L ψ → ReciprocityTheory.ChartRestriction.G.Out.KTriv A L → LinearMap.IsPerfPair ψ
-
-def AddEps : Prop :=
-  ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A], IsAbelianScheme A →
-    ∀ (M : LB (A ⊗ epsR R).left) (hM : M.IsLB),
-      (∀ (Y : Over (Sp R)) (t : Y ⟶ epsR R), GlobalTheory.AbDual.evc hM (1 : Y ⟶ A) t = 0) →
-      (∀ (Y : Over (Sp R)) (a : Y ⟶ A) (t : Y ⟶ epsR R), t.left = Y.hom ≫ GlobalTheory.DeRham.epsRed R →
-        GlobalTheory.AbDual.evc hM a t = 0) → GlobalTheory.AbDual.IsAdditive M
 
 end CrystallinePoints.Pd

@@ -71,12 +71,10 @@ noncomputable def mapOfHomotopy (h : Homotopy (f ≫ β) (α ≫ f')) :
     mappingCoconeNat f ⟶ mappingCoconeNat f' :=
   CochainComplex.ofHom (mapOfHomotopyF h) (mapOfHomotopyF_comm h)
 
-@[reassoc (attr := simp)]
 theorem mapOfHomotopy_fst (h : Homotopy (f ≫ β) (α ≫ f')) :
     mapOfHomotopy h ≫ fst f' = fst f ≫ α :=
   HomologicalComplex.hom_ext _ _ fun _ => ModuleCat.hom_ext (LinearMap.ext fun _ => rfl)
 
-@[reassoc (attr := simp)]
 theorem inr_mapOfHomotopy (h : Homotopy (f ≫ β) (α ≫ f')) :
     inr f ≫ mapOfHomotopy h = shiftNegOneMap β ≫ inr f' := by
   ext n : 1

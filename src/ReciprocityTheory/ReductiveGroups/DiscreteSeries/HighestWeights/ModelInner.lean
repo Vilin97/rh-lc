@@ -24,9 +24,6 @@ def MV.mk {ε : Fin n → Bool} {m : Fin n → ℤ} (f : KG ε → ℂ) (hf : f 
 theorem MV.mem {ε : Fin n → Bool} {m : Fin n → ℤ} (f : MV ε m) : f.fn ∈ Vsp ε m := by
   exact (show ↥(Vsp ε m) from f).2
 
-@[simp] theorem MV.fn_mk {ε : Fin n → Bool} {m : Fin n → ℤ} (f : KG ε → ℂ) (hf : f ∈ Vsp ε m) :
-    (MV.mk f hf).fn = f := rfl
-
 theorem MV.ext {ε : Fin n → Bool} {m : Fin n → ℤ} {f g : MV ε m} (h : f.fn = g.fn) : f = g := by
   exact Subtype.ext h
 
@@ -117,7 +114,5 @@ instance (ε : Fin n → Bool) (m : Fin n → ℤ) : FiniteDimensional ℂ (MV �
   finiteDimensional_Vsp ε m
 
 instance (ε : Fin n → Bool) (m : Fin n → ℤ) : CompleteSpace (MV ε m) := FiniteDimensional.complete ℂ _
-
-theorem MV.inner_def {ε : Fin n → Bool} {m : Fin n → ℤ} (f g : MV ε m) : inner ℂ f g = mvInner f g := rfl
 
 end ReciprocityTheory.ChartRestriction.DS.HW

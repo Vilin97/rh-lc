@@ -28,7 +28,4 @@ theorem SegreLiftComap.hyps :
   obtain rfl : c = d := Subsingleton.elim _ _
   simp
 
-example (h : SegreLiftComap.Statement) :=
-  h ℚ Unit (fun _ => Fin 1) ⊥ SegreLiftComap.hyps.1 SegreLiftComap.hyps.2
-
 end GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization

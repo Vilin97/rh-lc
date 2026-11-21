@@ -1,6 +1,10 @@
 import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsNormalFr
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.FrameTopAlt
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.RatioOKOfRootOfUnity
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.PairForm
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.TailRd
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.NotBadPrimeBase
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ValuationEqZeroOfRootOfSUnitRatio
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ChainParSucc
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsNormLeHeightPow
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.AdmissibleDiscreteSeriesOfHasParam
@@ -97,9 +101,6 @@ def extR (ι κ : Type) : (κ → D.host.E) →ₗ[D.host.E] (ι ⊕ κ → D.ho
   toFun v := Sum.elim (fun _ => 0) v
   map_add' v w := by ext (i | i) <;> simp
   map_smul' c v := by ext (i | i) <;> simp
-
-@[simp] theorem extL_apply {ι κ : Type} (v : ι → D.host.E) : extL (D := D) ι κ v = Sum.elim v (fun _ => 0) := rfl
-@[simp] theorem extR_apply {ι κ : Type} (v : κ → D.host.E) : extR (D := D) ι κ v = Sum.elim (fun _ => 0) v := rfl
 
 def sumLat {ι κ : Type} (ΛA : Submodule (𝓞 D.host.E) (ι → D.host.E)) (ΛB : Submodule (𝓞 D.host.E) (κ → D.host.E)) :
     Submodule (𝓞 D.host.E) (ι ⊕ κ → D.host.E) :=

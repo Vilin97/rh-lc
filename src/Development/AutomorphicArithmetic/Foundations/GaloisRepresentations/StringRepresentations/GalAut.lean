@@ -202,6 +202,4 @@ theorem galoisRep_definiteUnitary : type_of% @GlobalTheory.GalAut.galoisRep_defi
           (GlobalTheory.GalAut.charpoly_eq_of_one ha0 _).symm
       rw [← hprod w' hs' hl' σ' T' hc' ht'' B g hB hg, e3, hρch, e4, mul_comm]
 
-example : type_of% @GlobalTheory.T.cm_galois_representation_of_polarizedCuspidal := @galoisRep_definiteUnitary
-
 end UpperTheory.GalN

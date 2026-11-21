@@ -26,8 +26,6 @@ def ball : Subring K where
     simp only [Set.mem_ofPred_eq] at *
     rwa [norm_neg]
 
-theorem mem_ball {x : K} : x ∈ (ball : Subring K) ↔ ‖x‖ ≤ 1 := Iff.rfl
-
 theorem veluGx_mem (W : WeierstrassCurve K) (hW : IntegralModel W) {x y : K}
     (hx : x ∈ (ball : Subring K)) (hy : y ∈ (ball : Subring K)) :
     veluGx W x y ∈ (ball : Subring K) := by

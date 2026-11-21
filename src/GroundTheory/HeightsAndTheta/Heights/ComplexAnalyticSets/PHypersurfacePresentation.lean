@@ -192,8 +192,6 @@ section Main
 
 variable {σ ι : Type} [Finite σ] [Finite ι] (K : Ideal (MvPolynomial ι (MvPolynomial σ ℂ))) [K.IsPrime]
 
-local notation "𝔸" => MvPolynomial ι (MvPolynomial σ ℂ) ⧸ K
-
 omit [Finite σ] in
 set_option synthInstance.maxHeartbeats 400000 in
 

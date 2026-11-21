@@ -69,15 +69,6 @@ theorem isUnramified_tower_iff :
     IsUnramified K M ↔ IsUnramified K L ∧ IsUnramified L M := by
   simp only [isUnramified_iff, ramificationIndex_tower K L M, mul_eq_one]
 
-theorem IsUnramified.trans [IsUnramified K L] [IsUnramified L M] : IsUnramified K M :=
-  (isUnramified_tower_iff K L M).2 ⟨inferInstance, inferInstance⟩
-
-theorem IsUnramified.of_tower_left [IsUnramified K M] : IsUnramified K L :=
-  ((isUnramified_tower_iff K L M).1 inferInstance).1
-
-theorem IsUnramified.of_tower_right [IsUnramified K M] : IsUnramified L M :=
-  ((isUnramified_tower_iff K L M).1 inferInstance).2
-
 end Tower
 
 end GroundTheory.LocalField

@@ -2,7 +2,7 @@ import Mathlib
 import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.TwistPlacesOffPrimeQZero
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NonemptyVertices
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GridFirstColumnSpaceRankSignatureSelfDual
-import Formalism.LocalToGlobal.IndefiniteReal.HeckeNonvanishing.Imports
+import Lean
 import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique
 import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.NormSmall
 import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.DictAt
@@ -68,15 +68,6 @@ theorem firstCore (L : LevCh D T) (μ0 : T) (h : L.Is μ0) : ∃ Z : LSp D, Z.Is
   rw [e1, e2]; exact hZ
 
 abbrev recOf (_L : LevCh D T) : D7 := D
-
-local macro:max "kd% " e:term:max : term => `((by kexactB $e))
-
-local macro "copyDec% " d:term:max : term =>
-  `({ ι := ($d).ι, isom := (by kexactB ($d).isom), a := ($d).a, gram := (by kexactB ($d).gram),
-      perp := (by kexactB ($d).perp), rank := (by kexactB ($d).rank) })
-
-local macro "copyIsV% " h:term:max : term =>
-  `(⟨(by kexactB ($h).rank), (by kexactB ($h).sigOK), (by kexactB ($h).sig), (by kexactB ($h).sd)⟩)
 
 theorem carryG : CarryG := by
   intro X X' T T' L L' μ₀ μ₀' ι hA sc G

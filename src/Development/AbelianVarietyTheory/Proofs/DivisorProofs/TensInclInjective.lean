@@ -56,18 +56,11 @@ variable {V Z : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup Z] [Module �
 
 open Classical in
 
-def leftInv (Φ : V →ₗ[ℂ] Z) : Z →ₗ[ℂ] V :=
-  if h : Function.Injective Φ then Classical.choose (Φ.exists_leftInverse_of_injective (LinearMap.ker_eq_bot.2 h)) else 0
-
 end Maps
 
 section Fock
 
 variable {F : Type} [Field F] [NumberField F] {P Q R S : ℕ} {κ₁ κ : Type} [Fintype κ₁] [Fintype κ]
-
-def fockIncl (Φ₁ : Tens F P Q R S →ₗ[ℂ] SInf F κ₁) (Φ : Tens F P Q (R + 1) (S + 1) →ₗ[ℂ] SInf F κ) (r₀ : Fin (R + 1))
-    (s₀ : Fin (S + 1)) : SInf F κ₁ →ₗ[ℂ] SInf F κ :=
-  Φ ∘ₗ tensIncl F P Q r₀ s₀ ∘ₗ leftInv Φ₁
 
 end Fock
 

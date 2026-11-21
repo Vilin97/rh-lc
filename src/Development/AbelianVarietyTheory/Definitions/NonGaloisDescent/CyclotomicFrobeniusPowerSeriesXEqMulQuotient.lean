@@ -48,8 +48,6 @@ def Xs (s : ℕ) : R⟦X⟧ := (1 + X) ^ (l ^ (s - 1)) - 1
 
 def Qs (s : ℕ) : R⟦X⟧ := ∑ k ∈ Finset.range l, (1 + Xs l R s) ^ k
 
-def es (s : ℕ) : ℕ := l ^ (s - 1) * (l - 1)
-
 theorem X_mul_qq : X * qq l R = (1 + X) ^ l - 1 := by
   rw [← mul_geom_sum, add_sub_cancel_left, qq]
 
@@ -59,8 +57,6 @@ theorem cyclotomicFrobeniusPowerSeries_pow_apply_X (m : ℕ) : (phi0 l R ^ m) X 
   induction m with
   | zero => simp
   | succ m ih => rw [pow_succ', AlgHom.mul_apply, ih]; simp [← pow_mul, pow_succ']
-
-theorem Xs_eq (s : ℕ) : Xs l R s = (phi0 l R ^ (s - 1)) X := (cyclotomicFrobeniusPowerSeries_pow_apply_X l R _).symm
 
 theorem cyclotomicFrobenius_iteratedVariable_eq_mul (s : ℕ) : phi0 l R (Xs l R s) = Xs l R s * Qs l R s := by
   have h := mul_geom_sum (1 + Xs l R s) l
@@ -188,11 +184,6 @@ theorem gam_l : gam R (l : ℤ_[l]) = phi0 l R := algHom_ext_X (by simp) (by sim
 theorem cyclotomicFrobenius_comm_gammaAction (c : ℤ_[l]) (a : R⟦X⟧) : phi0 l R (gam R c a) = gam R c (phi0 l R a) := by
   rw [← gam_l, ← gam_mul, ← gam_mul, mul_comm]
 
-def gamAut : ℤ_[l]ˣ →* (R⟦X⟧ ≃ₐ[R] R⟦X⟧) :=
-  (AlgEquiv.algHomUnitsEquiv R R⟦X⟧).toMonoidHom.comp (Units.map (gamHom R))
-
-@[simp] theorem gamAut_apply (c : ℤ_[l]ˣ) (a : R⟦X⟧) : gamAut R c a = gam R (c : ℤ_[l]) a := rfl
-
 def vser (c : ℤ_[l]) : R⟦X⟧ := PowerSeries.mk fun k => Ring.choose c (k + 1) • (1 : R)
 
 theorem gam_X_eq (c : ℤ_[l]) : gam R c X = X * vser R c := by
@@ -247,14 +238,6 @@ def ofLoc : Localization.Away (X : R⟦X⟧) →+* completedLocalizedPowerSeries
 abbrev ιE : R⟦X⟧ →+* completedLocalizedPowerSeriesRing l R := algebraMap _ _
 
 theorem ofLoc_alg (a : R⟦X⟧) : ofLoc l R (algebraMap _ _ a) = ιE l R a := rfl
-
-instance towEE1 {Z : Type} [CommRing Z] [Algebra Z R⟦X⟧] : IsScalarTower Z R⟦X⟧ (completedLocalizedPowerSeriesRing l R) :=
-  IsScalarTower.of_algebraMap_eq fun _ => rfl
-
-instance towEE1' {Z : Type} [CommRing Z] [Algebra Z R] : IsScalarTower Z R (completedLocalizedPowerSeriesRing l R) :=
-  IsScalarTower.of_algebraMap_eq fun z => by
-    rw [IsScalarTower.algebraMap_apply Z R⟦X⟧ (completedLocalizedPowerSeriesRing l R), IsScalarTower.algebraMap_apply R R⟦X⟧ (completedLocalizedPowerSeriesRing l R),
-      IsScalarTower.algebraMap_apply Z R R⟦X⟧]
 
 theorem algebraMap_completedLocalization (r : R) : algebraMap R (completedLocalizedPowerSeriesRing l R) r = ιE l R (C r) := rfl
 
@@ -350,12 +333,6 @@ def liftE {B : Type} [CommRing B] [LComplete l B] (f : R⟦X⟧ →+* B) (hf : I
   exact (congrArg (AdicCompletion.ofAlgEquiv (Ideal.span {(l : B)})).symm h).trans
     ((AdicCompletion.ofAlgEquiv (Ideal.span {(l : B)})).symm.commutes _)
 
-def mapE {R' : Type} [CommRing R'] (h : R →+* R') : completedLocalizedPowerSeriesRing l R →+* completedLocalizedPowerSeriesRing l R' :=
-  liftE ((ιE l R').comp (PowerSeries.map h)) (by simpa using isUnit_ιE_X l R')
-
-@[simp] theorem mapE_ιE {R' : Type} [CommRing R'] (h : R →+* R') (a : R⟦X⟧) :
-    mapE h (ιE l R a) = ιE l R' (PowerSeries.map h a) := liftE_ιE _ _ _
-
 variable [Fact l.Prime]
 
 variable (l R) in
@@ -382,21 +359,9 @@ def completedLocalizedLinearFrobenius : completedLocalizedPowerSeriesRing l R �
 
 variable (l R) in
 
-theorem isUnit_ιE_phi_pow (m : ℕ) : IsUnit (ιE l R ((phi0 l R ^ m) X)) := by
-  induction m with
-  | zero => exact isUnit_ιE_X l R
-  | succ m ih => rw [pow_succ', AlgHom.mul_apply, ← completedLocalizedLinearFrobenius_comp]; exact ih.map _
-
 variable (l R) in
 
-theorem isUnit_ιE_Xs (s : ℕ) : IsUnit (ιE l R (Xs l R s)) := Xs_eq l R s ▸ isUnit_ιE_phi_pow l R _
-
 variable (l R) in
-
-theorem isUnit_ιE_Qs (s : ℕ) : IsUnit (ιE l R (Qs l R s)) := by
-  have h := (isUnit_ιE_Xs l R s).map (completedLocalizedLinearFrobenius l R)
-  rw [completedLocalizedLinearFrobenius_comp, cyclotomicFrobenius_iteratedVariable_eq_mul, map_mul] at h
-  exact isUnit_of_mul_isUnit_right h
 
 variable [Algebra ℤ_[l] R]
 
@@ -503,22 +468,5 @@ theorem gamEE_ext (c : ℤ_[l]ˣ) (a : LetA O n) : gamEE O n c (algebraMap (LetA
     algebraMap (LetA O n) _ (gamA O n (c : ℤ_[l]) a) := funext fun _ => completedLocalizedGammaAction_comp _ _
 
 end Letters
-
-example : phi0 2 ℤ X = X ^ 2 + 2 * X := by rw [cyclotomicFrobeniusPowerSeries_X]; ring
-
-example : Qs 2 ℤ 2 = X ^ 2 + 2 * X + 2 := by simp [Qs, Xs, Finset.sum_range_succ]; ring
-
-example (l : ℕ) [Fact l.Prime] : (1 + gam ℤ_[l] (-1 : ℤ_[l]) X) * (1 + X) = 1 := by
-  have h := binomialSeries_nat (R := ℤ_[l]) (A := ℤ_[l]) 1
-  rw [pow_one] at h
-  rw [gam_X, add_sub_cancel, ← h, ← binomialSeries_add]
-  simp
-
-example (l : ℕ) [Fact l.Prime] : (l : completedLocalizedPowerSeriesRing l ℤ_[l]) ≠ 0 := by
-  have : IsHausdorff (Ideal.span {(l : ℤ_[l])}) ℤ_[l] := by
-    rw [← PadicInt.maximalIdeal_eq_span_p]; infer_instance
-  rw [← map_natCast (ιE l ℤ_[l]), map_ne_zero_iff _ ιE_injective]
-  rw [← map_natCast (C : ℤ_[l] →+* _), map_ne_zero_iff _ C_injective]
-  exact_mod_cast (Fact.out : l.Prime).ne_zero
 
 end GlobalTheory.Fon

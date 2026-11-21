@@ -108,11 +108,6 @@ theorem center_tensorProduct_eq_map_includeLeft [Algebra.IsCentral K A] :
   rw [← e.apply_symm_apply x, ← hbx]
   simp [e]
 
-instance isCentral_tensorProduct [Algebra.IsCentral K A] [Algebra.IsCentral K B] :
-    Algebra.IsCentral K (A ⊗[K] B) where
-  out := by
-    rw [center_tensorProduct_eq_map_includeRight, Algebra.IsCentral.center_eq_bot, Algebra.map_bot]
-
 end Central
 
 section Simple
@@ -228,12 +223,6 @@ section CSA
 universe u v
 
 variable {K : Type u} [Field K]
-
-noncomputable def tensorCSA (A B : CSA.{u, v} K) : CSA.{u, v} K where
-  toAlgCat := AlgCat.of K (A ⊗[K] B)
-
-@[simp]
-theorem tensorCSA_carrier (A B : CSA.{u, v} K) : (tensorCSA A B : Type v) = (A ⊗[K] B) := rfl
 
 end CSA
 

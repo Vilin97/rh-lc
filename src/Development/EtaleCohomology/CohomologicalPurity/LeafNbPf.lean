@@ -63,5 +63,3 @@ theorem nb (hE : LeafExc) : Cl.LeafNb := by
   rw [← hr]; rfl
 
 end LateralTheory.CohomologicalPurity.NbPf
-
-theorem LateralTheory.CohomologicalPurity.Cl.LeafNb_of (hE : LateralTheory.CohomologicalPurity.LeafExc) : LateralTheory.CohomologicalPurity.Cl.LeafNb := LateralTheory.CohomologicalPurity.NbPf.nb hE

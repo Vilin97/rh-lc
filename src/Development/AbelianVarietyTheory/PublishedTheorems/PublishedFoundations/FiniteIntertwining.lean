@@ -108,12 +108,6 @@ def sumRep (lam : DomWeight N) : Representation ℂ H (⨁ mu : Below h lam, nab
 def mult (lam : DomWeight N) (mu : DomWeight n) : ℕ :=
   Module.finrank ℂ ((smallRep ι mu).IntertwiningMap (resRep ι h lam))
 
-instance finite_intertwining (lam : DomWeight N) (mu : DomWeight n) :
-    FiniteDimensional ℂ ((smallRep ι mu).IntertwiningMap (resRep ι h lam)) := by
-  let L : (smallRep ι mu).IntertwiningMap (resRep ι h lam) →ₗ[ℂ] (nablaSq ℂ n mu →ₗ[ℂ] nablaSq ℂ N lam) :=
-    { toFun := fun f => f.toLinearMap, map_add' := fun _ _ => rfl, map_smul' := fun _ _ => rfl }
-  exact FiniteDimensional.of_injective L fun _ _ e => Representation.IntertwiningMap.ext e
-
 def BranchesAlong (lam : DomWeight N) : Prop :=
   Nonempty ((sumRep ι h lam).Equiv (resRep ι h lam)) ∧
     ∀ mu : DomWeight n, (Interlace h lam mu → mult ι h lam mu = 1) ∧ (¬ Interlace h lam mu → mult ι h lam mu = 0)

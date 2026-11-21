@@ -9,8 +9,6 @@ namespace Formalism.L2.SG.lowerTriangularModel
 
 variable {m : ℕ} (w : Equiv.Perm (Fin m))
 
-local notation "L" => Formalism.FourierDecayAlt.P.Dx2.Rad.low w
-
 def ht (q : Formalism.FourierDecayAlt.C2.Lstidx w) : ℕ := q.1.1.val - q.1.2.val
 
 theorem low_upper (y : Formalism.FourierDecayAlt.C2.Lstidx w → ℂ) (i j : Fin m) (h : i < j) : L y i j = 0 := by

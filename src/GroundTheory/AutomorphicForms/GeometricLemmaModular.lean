@@ -33,10 +33,6 @@ abbrev leviPar : Subgroup (GL (Fin n) F) := levi F n γ ⊓ blockUpper F n δ
 
 variable {F n γ δ}
 
-theorem mem_lieLeviPar {A : Matrix (Fin n) (Fin n) F} :
-    A ∈ lieLeviPar F n γ δ ↔ ∀ i j, ¬ (γ i = γ j ∧ ¬ δ j < δ i) → A i j = 0 :=
-  Iff.rfl
-
 theorem mem_leviPar_iff {g : GL (Fin n) F} :
     g ∈ leviPar F n γ δ ↔ (g : Matrix (Fin n) (Fin n) F) ∈ lieLeviPar F n γ δ := by
   rw [Subgroup.mem_inf, mem_levi, mem_blockUpper]
@@ -137,16 +133,6 @@ noncomputable def mulRightLeviPar (l : leviPar F n γ δ) :
     · refine ⟨A * ((l⁻¹ : leviPar F n γ δ) : GL (Fin n) F),
         mul_mem_lieLeviPar hA (mem_leviPar_iff.1 (l⁻¹).2), ?_⟩
       simp [mul_assoc])
-
-@[simp] theorem coe_mulLeftLeviPar (l : leviPar F n γ δ) (A : lieLeviPar F n γ δ) :
-    ((mulLeftLeviPar F n γ δ l A : lieLeviPar F n γ δ) : Matrix (Fin n) (Fin n) F) =
-      ((l : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) * A :=
-  rfl
-
-@[simp] theorem coe_mulRightLeviPar (l : leviPar F n γ δ) (A : lieLeviPar F n γ δ) :
-    ((mulRightLeviPar F n γ δ l A : lieLeviPar F n γ δ) : Matrix (Fin n) (Fin n) F) =
-      A * ((l : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) :=
-  rfl
 
 noncomputable def adLeviPar (l : leviPar F n γ δ) :
     lieLeviPar F n γ δ ≃ₗ[F] lieLeviPar F n γ δ :=

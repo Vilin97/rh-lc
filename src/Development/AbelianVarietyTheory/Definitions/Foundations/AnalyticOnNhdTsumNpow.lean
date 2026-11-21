@@ -46,9 +46,6 @@ theorem cosetConv_mul_left (h : LeftInv (P ⊓ Γ) Φ) {γ : G} (hγ : γ ∈ Γ
 theorem cosetSum_mul_right (Φ : G → ℂ) (k g : G) : cosetSum P Γ (fun x => Φ (x * k)) g = cosetSum P Γ Φ (g * k) := by
   simp only [cosetSum, term, mul_assoc]
 
-theorem cosetConv_mul_right (Φ : G → ℂ) (k g : G) : CosetConv P Γ (fun x => Φ (x * k)) g ↔ CosetConv P Γ Φ (g * k) := by
-  simp only [CosetConv, term, mul_assoc]
-
 theorem cosetSum_eq_tsum (h : LeftInv (P ⊓ Γ) Φ) {ι : Type} {r : ι → Γ}
     (hr : Function.Bijective fun i => mk (P.subgroupOf Γ) (r i)) (g : G) : cosetSum P Γ Φ g = ∑' i, Φ (r i * g) :=
   ((Equiv.ofBijective _ hr).tsum_eq _).symm.trans (tsum_congr fun i => term_mk h g (r i))
@@ -95,12 +92,6 @@ theorem cosetSum_indicator (g : G) : LeftInv (P ⊓ Γ) (indicator ((P ⊓ Γ : 
       indicator_of_notMem (fun e => hg ((Γ.mul_mem_cancel_left q.out.2).1 e.2)) _
     rw [CosetConv, cosetSum, h0, indicator_of_notMem hg]
     exact ⟨h, by simpa using summable_zero, tsum_zero⟩
-
-example (Φ : G → ℂ) (g : G) : cosetSum ⊥ Γ Φ g = orbitSum Γ Φ g :=
-  cosetSum_eq_tsum (fun γ hγ x => by rw [Subgroup.mem_bot.1 hγ.1, one_mul]) (r := id)
-    ⟨fun x y e => by
-      obtain ⟨γ, rfl⟩ := mk_eq_iff.1 e
-      rw [show (γ : Γ) = 1 from Subtype.ext γ.2, one_mul, id], fun q => ⟨q.out, q.out_eq⟩⟩ g
 
 end Sums
 

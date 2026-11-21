@@ -117,9 +117,6 @@ def ringAct : O →+* Module.End ℤ u.Λ where
       (fun z => by rw [LinearMap.add_apply, u.ex_add, lift_spec, lift_spec, act.add, comp_mul'])]
     rfl
 
-@[simp] theorem ringAct_val (c : O) (x : u.Λ) :
-    ((ringAct u hl act c x : u.Λ) : Fin P.g → ℂ) = lift u hl (act.act c) (act.hom c) x := rfl
-
 end Ring
 
 section Main

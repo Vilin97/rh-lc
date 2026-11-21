@@ -96,8 +96,6 @@ theorem thickMap_fst (e : ℕ) : thickMap R I e G ≫ (fstG I (e + 1) G).left = 
 theorem thickMap_prBe (e : ℕ) : thickMap R I e D.P.A ≫ (D.prBe I (e + 1)).left = (D.prBe I e).left :=
   (pullback.lift_fst _ _ _).trans (Category.comp_id _)
 
-theorem pG_left {e : ℕ} (g : GtCoord I D e G) : g.pG.left = g.q.left ≫ (D.prBe I e).left := rfl
-
 theorem q_thickMap (U : PreU I D A G) (e : ℕ) :
     (U.gt e).q.left ≫ thickMap R I e D.P.A = thickMap R I e G ≫ (U.gt (e + 1)).q.left := by
   refine pullback.hom_ext ?_ ?_

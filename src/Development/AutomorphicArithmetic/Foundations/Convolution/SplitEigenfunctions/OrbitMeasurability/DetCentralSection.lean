@@ -150,8 +150,6 @@ private theorem scale_int (q : ℚˣ) (g : 𝔸[ℚ] → ℂ) (hg : ∀ (c : ℚ
   rw [h1]
   exact mp.setIntegral_preimage_emb (Homeomorph.smul (IdeleGroup.diagonal ℚ q)).measurableEmbedding g _
 
-local notation "Dt" => Matrix.GeneralLinearGroup.det
-
 private def dq (q : ℚˣ) : GL (Fin 2) ℚ :=
   ⟨!![(q : ℚ), 0; 0, 1], !![((q⁻¹ : ℚˣ) : ℚ), 0; 0, 1],
     by ext i j; fin_cases i <;> fin_cases j <;> simp, by ext i j; fin_cases i <;> fin_cases j <;> simp⟩
@@ -184,8 +182,6 @@ private theorem det_centralSection (s : {r : ℝ // 0 < r}) : Dt (centralSection
   simp [Fin.prod_univ_two, pow_two]
 
 private def toS (y : GL (Fin 2) (A ℚ)) (h : Dt y = 1) : G1 ℚ := ⟨y.val, congrArg Units.val h⟩
-
-private theorem gl_toS (y : GL (Fin 2) (A ℚ)) (h : Dt y = 1) : gl (toS y h) = y := Units.ext rfl
 
 private theorem toS_eq {y y' : GL (Fin 2) (A ℚ)} {h : Dt y = 1} {h' : Dt y' = 1} (g : G1 ℚ) (e : y = gl g * y') :
     toS y h = g * toS y' h' := Subtype.ext (congrArg Units.val e)

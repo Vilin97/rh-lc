@@ -33,8 +33,6 @@ def ratCent {m : Type} (S : m → Matrix ι ι (K ⊗[K] E)) : Subgroup (GL ι (
       _ = ↑a⁻¹ * (↑a * S k) * ↑a⁻¹ := by rw [h]
       _ = S k * ↑a⁻¹ := by simp
 
-local notation "𝒩'" => Fintype.card (ι × Fin (Module.finrank K E))
-
 theorem exists_isCompact_trHom_centralizer (hH : IsUnit H.det) {m : Type} [Finite m]
     (S : m → Matrix ι ι (K ⊗[K] E)) (G₀ : Subgroup (GL ι (𝔸[K] ⊗[K] E)))
     (hU : G₀ ≤ unitaryPoints K E H 𝔸[K])

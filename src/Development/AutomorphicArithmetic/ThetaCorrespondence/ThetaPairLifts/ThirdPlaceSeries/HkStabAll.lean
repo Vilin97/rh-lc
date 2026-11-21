@@ -9,10 +9,6 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 open scoped TensorProduct
 noncomputable section
 namespace GlobalTheory.HeightCounting.HeckeLat
-local instance  (D : D7) (T : TwR D.LL0 D.nd) (i : T.Tw) (b : Bool) : Algebra (T.O i) (KT D T i b) :=
-  inferInstanceAs (Algebra (T.O i) (FractionRing (T.O i)))
-local instance  (D : D7) (T : TwR D.LL0 D.nd) (i : T.Tw) (b : Bool) : IsFractionRing (T.O i) (KT D T i b) :=
-  inferInstanceAs (IsFractionRing (T.O i) (FractionRing (T.O i)))
 end GlobalTheory.HeightCounting.HeckeLat
 open GlobalTheory.HeightCounting.HeckeLat in
 theorem GlobalTheory.HeightCounting.FormsStep.hkStab_of_ringSpec_of_subset : ∀ (D : D7) (cf : CharFrame D) (jE : D.host.E →+* Qb) (A : _root_.GlobalTheory.HeightCounting.CharFrameHostEmbedding D cf jE) (S : RatDat D.ntw)

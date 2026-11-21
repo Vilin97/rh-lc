@@ -101,11 +101,6 @@ section Cp
 
 variable {p : ℕ} [hp : Fact p.Prime] {K : IntermediateField ℚ_[p] (PadicAlgCl p)}
 
-local notation "𝒪♭" => PreTilt (normInteger ℂ_[p]) p
-local notation "𝔸" => Localization.Away (p : AInf ℂ_[p] p)
-local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
-local notation "θ" => fontaineTheta (normInteger ℂ_[p]) p
-
 def galS (σ : Gal(PadicAlgCl p/K)) (m : ℕ) : acrisQ ℂ_[p] p m →+* acrisQ ℂ_[p] p m :=
   ((galQuot σ m).comp (acrisQ ℂ_[p] p m).subtype).codRestrict (acrisQ ℂ_[p] p m) fun s => by
     obtain ⟨y, hy, hys⟩ := s.2
@@ -192,14 +187,6 @@ theorem iota_periodT {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) :
     ring
   rw [e]
   ring
-
-theorem periodT_ne_zero {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
-    (hζ : PreTilt.untilt ((_root_.frobeniusEquiv 𝒪♭ p).symm ε) ≠ 1) :
-    periodT hε ≠ 0 := by
-  intro h
-  have h1 := iota_periodT hε
-  rw [h, map_zero] at h1
-  exact fontaineT_ne_zero hε hζ h1.symm
 
 end Cp
 

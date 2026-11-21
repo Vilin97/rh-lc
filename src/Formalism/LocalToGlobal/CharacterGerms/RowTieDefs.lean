@@ -43,8 +43,6 @@ namespace RawChart
 
 variable {d : ℕ} {I : Fin 2 → Type} [∀ g, Fintype (I g)] {κ : Type} [Fintype κ] (X : RawChart C d I κ)
 
-instance (g : Fin 2) : Fintype (JJ I g) := inferInstanceAs (Fintype (I (1 - g)))
-
 def sg (v : κ → C) : MvPowerSeries κ C :=
   fun μ => -∑ i, v i * MvPowerSeries.coeff
     (μ.mapDomain (fun x : κ => ((0 : Fin 2), x)) + Finsupp.single ((1 : Fin 2), i) 1) X.h

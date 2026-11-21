@@ -54,9 +54,6 @@ def prFst : WithLp 2 (M₁ × M₂) →ₗ[ℂ] M₁ := LinearMap.fst ℂ M₁ M
 
 def prSnd : WithLp 2 (M₁ × M₂) →ₗ[ℂ] M₂ := LinearMap.snd ℂ M₁ M₂ ∘ₗ (WithLp.linearEquiv 2 ℂ (M₁ × M₂)).toLinearMap
 
-@[simp] theorem prFst_apply (x : WithLp 2 (M₁ × M₂)) : prFst x = (WithLp.ofLp x).1 := rfl
-@[simp] theorem prSnd_apply (x : WithLp 2 (M₁ × M₂)) : prSnd x = (WithLp.ofLp x).2 := rfl
-
 theorem prod_ext {x y : WithLp 2 (M₁ × M₂)} (h₁ : prFst x = prFst y) (h₂ : prSnd x = prSnd y) : x = y :=
   WithLp.ofLp_injective 2 (Prod.ext h₁ h₂)
 

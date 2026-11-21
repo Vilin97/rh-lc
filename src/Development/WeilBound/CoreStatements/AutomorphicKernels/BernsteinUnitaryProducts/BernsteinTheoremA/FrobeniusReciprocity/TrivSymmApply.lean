@@ -33,9 +33,6 @@ variable (hp : ∀ (g : G) (x : X), p (g • x) = g • p x) (σ : Sec H)
 def zpart (x : X) : Fib p :=
   ⟨(σ.s (p x))⁻¹ • x, by rw [hp]; exact σ.inv_smul (p x)⟩
 
-@[simp]
-theorem zpart_val (x : X) : (zpart hp σ x).1 = (σ.s (p x))⁻¹ • x := rfl
-
 include hp in
 theorem p_smul_fib (g : G) (z : Fib p) : p (g • z.1) = (g : G ⧸ H) := by
   have hz : p z.1 = ((1 : G) : G ⧸ H) := z.2
@@ -75,10 +72,6 @@ def triv : X × H ≃ₜ G × Fib p where
     refine Continuous.prodMk (continuous_fst.smul (continuous_subtype_val.comp continuous_snd)) ?_
     exact Continuous.subtype_mk
       (((σ.cont.comp (QuotientGroup.continuous_mk.comp continuous_fst)).inv).mul continuous_fst) _
-
-@[simp]
-theorem triv_apply (q : X × H) :
-    triv hp σ hpc q = (σ.s (p q.1) * q.2, fibSmul hp q.2⁻¹ (zpart hp σ q.1)) := rfl
 
 @[simp]
 theorem triv_symm_apply (r : G × Fib p) :

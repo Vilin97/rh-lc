@@ -26,10 +26,6 @@ theorem val_sI {n : ℕ} (i : Fin (n + 1)) (t : Fin (n + 1 + 1)) :
   · rw [if_pos (by simpa [Fin.lt_def] using h), if_pos h]; rfl
   · rw [if_neg (by simpa [Fin.lt_def] using h), if_neg h]; rfl
 
-macro "fin_order'" : tactic =>
-  `(tactic| (apply Fin.ext; simp only [OrderHom.comp_coe, Function.comp_apply, OrderHom.id_coe, id_eq, val_dl, val_fr, cst_apply,
-    val_sI, val_predAbove, Fin.val_succ, Fin.val_zero, Fin.val_one]; grind))
-
 theorem shuffle_cup1_product_formula {R : Type} [CommRing R] {C : Type} [Category.{0} C] (F : C ⥤ CommAlgCat.{0} R) (n : ℕ)
     (u : Cn (box F) 1) (w : Cn (box F) (n + 1)) :
     Sh F (n + 1) (cup1 (box F) (n + 1) u w) =

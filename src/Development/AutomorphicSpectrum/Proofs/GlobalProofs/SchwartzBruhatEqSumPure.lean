@@ -159,23 +159,6 @@ theorem crd_zero {R : Type} [CommRing R] [Algebra F R] (k : Fin d) :
     crd b R (0 : R ⊗[F] E) k = 0 := by
   simp [crd]
 
-def lv (v : HeightOneSpectrum (𝓞 F)) (P : AddSubgroup (Fv F v)) (M : ℕ) :
-    AddSubgroup (Fin 1 → Fin M → Fv F v ⊗[F] E) where
-  carrier := {Z | ∀ a i k, crd b (Fv F v) (Z a i) k ∈ P}
-  add_mem' hx hy a i k := by
-    rw [Pi.add_apply, Pi.add_apply, crd_add]
-    exact add_mem (hx a i k) (hy a i k)
-  zero_mem' a i k := by
-    rw [Pi.zero_apply, Pi.zero_apply, crd_zero]
-    exact zero_mem P
-  neg_mem' hx a i k := by
-    rw [Pi.neg_apply, Pi.neg_apply, crd_neg]
-    exact neg_mem (hx a i k)
-
-def cosV (v : HeightOneSpectrum (𝓞 F)) (P : OpenAddSubgroup (Fv F v)) {M : ℕ}
-    (a : Fin 1 → Fin M → Fv F v ⊗[F] E) : Set (Fin 1 → Fin M → Fv F v ⊗[F] E) :=
-  {Z | Z - a ∈ lv b v (P : AddSubgroup (Fv F v)) M}
-
 end GlobalTheory.CompanionTheory.Hypotheses₂.OneV.Coef.Dec
 
 namespace GlobalTheory.CompanionTheory.Hypotheses₂.OneV.Coef

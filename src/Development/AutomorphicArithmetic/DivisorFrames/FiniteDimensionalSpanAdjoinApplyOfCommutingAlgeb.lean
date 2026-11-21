@@ -1,5 +1,8 @@
 import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.ULieDefs
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DifferentiableOfIsSm
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.InducedSectionZFinite
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsBlockEmb
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ContinuousConjFin
 
 open NumberField Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.UAut GlobalTheory.ULie
 open scoped TensorProduct

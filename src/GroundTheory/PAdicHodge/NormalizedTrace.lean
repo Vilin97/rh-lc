@@ -68,15 +68,8 @@ def normTraceFₗ : Ω →ₗ[F] F where
 
 def normTraceₗ : Ω →ₗ[F] Ω := (Algebra.linearMap F Ω).comp (normTraceFₗ F)
 
-@[simp] theorem normTraceFₗ_apply (y : Ω) : normTraceFₗ F y = normTraceF F y := rfl
-
-@[simp] theorem normTraceₗ_apply (y : Ω) : normTraceₗ F y = normTrace F y := rfl
-
 theorem normTrace_add (y z : Ω) : normTrace F (y + z) = normTrace F y + normTrace F z :=
   map_add (normTraceₗ F) y z
-
-theorem normTrace_sub (y z : Ω) : normTrace F (y - z) = normTrace F y - normTrace F z :=
-  map_sub (normTraceₗ F) y z
 
 @[simp] theorem normTrace_zero : normTrace F (0 : Ω) = 0 := map_zero (normTraceₗ F)
 

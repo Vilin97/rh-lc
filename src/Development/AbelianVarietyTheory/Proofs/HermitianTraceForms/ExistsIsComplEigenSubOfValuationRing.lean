@@ -57,10 +57,6 @@ def IsEquivariant.eigenLinearEquiv {ρ : O →+* Module.End R N} {ρ' : O →+* 
     eigenSub ρ χ ≃ₗ[R] eigenSub ρ' χ :=
   e.ofSubmodules _ _ (he.map_eigenSub χ)
 
-@[simp] theorem IsEquivariant.coe_eigenLinearEquiv {ρ : O →+* Module.End R N}
-    {ρ' : O →+* Module.End R N'} {e : N ≃ₗ[R] N'} (he : IsEquivariant ρ ρ' (e : N →ₗ[R] N'))
-    (χ : O →+* R) (x : eigenSub ρ χ) : (he.eigenLinearEquiv χ x : N') = e x := rfl
-
 end Saturation
 
 section FlatBaseChange
@@ -141,8 +137,6 @@ noncomputable def extendTensor : S ⊗[A] N →ₗ[S] T ⊗[A] N :=
   TensorProduct.AlgebraTensorModule.map (Algebra.linearMap S T) LinearMap.id
 
 variable {A S N} in
-@[simp] theorem extendTensor_tmul (s : S) (x : N) :
-    extendTensor A S T N (s ⊗ₜ x) = algebraMap S T s ⊗ₜ x := rfl
 
 theorem isBaseChange_extendTensor : IsBaseChange T (extendTensor A S T N) :=
   isBaseChange_tensorProduct_map T (IsBaseChange.linearMap S T)
@@ -745,14 +739,5 @@ theorem eigenBundle {E : Type*} [Field E] [NumberField E]
     (card_embeddings_of_splits hL) ρ
 
 open EigenSplit in
-
-example (E : Type) [Field E] [NumberField E] :
-    ∃ r : (E →+* ℂ) → ℕ, ∀ i, Module.rank (𝓞 ℂ) (eigenSub (baseChangeAction (𝓞 ℂ)
-      (Algebra.lmul ℤ (𝓞 E)).toRingHom) (conjugateHom ℂ (𝓞 ℂ) i)) = r i := by
-  classical
-  have : Module.Flat ℤ (𝓞 ℂ) := flat_int_iff_charZero.2 inferInstance
-  obtain ⟨r, hr, -⟩ := eigenBundle.{0, 0} (L := ℂ) (A := 𝓞 ℂ) (fun _ => IsAlgClosed.splits _)
-    (baseChangeAction (𝓞 ℂ) (Algebra.lmul ℤ (𝓞 E)).toRingHom)
-  exact ⟨r, hr⟩
 
 end GlobalTheory

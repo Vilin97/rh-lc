@@ -9,8 +9,6 @@ open NumberField GroundTheory.Global FiniteSubfield NumberField.InfinitePlace.Co
 
 open scoped NumberField.LiesOver
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield} {v : NumberField.InfinitePlace K.1}

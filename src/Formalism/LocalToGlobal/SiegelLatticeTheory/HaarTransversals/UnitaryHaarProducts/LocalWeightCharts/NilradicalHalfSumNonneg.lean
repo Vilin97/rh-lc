@@ -97,8 +97,6 @@ theorem opn_conjTranspose (A : Mat k r) : opn Aᴴ = opn A := by
 
 local instance instAlgCLM (n : ℕ) :
     Algebra ℂ (EuclideanSpace ℂ (Fin n) →L[ℂ] EuclideanSpace ℂ (Fin n)) := ContinuousLinearMap.algebra
-local instance instModCLM (n : ℕ) :
-    Module ℂ (EuclideanSpace ℂ (Fin n) →L[ℂ] EuclideanSpace ℂ (Fin n)) := ContinuousLinearMap.module
 
 theorem opn_continuous : Continuous (fun M : Mat k r => opn M) := by
   unfold opn

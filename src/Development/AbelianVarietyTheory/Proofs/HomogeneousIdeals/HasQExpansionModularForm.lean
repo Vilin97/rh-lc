@@ -7,8 +7,6 @@ noncomputable section
 
 namespace GlobalTheory
 
-local notation "𝕢" => Function.Periodic.qParam
-
 def HasQExpansion (h : ℝ) (f : ℍ → ℂ) (φ : PowerSeries ℂ) : Prop :=
   ∀ τ : ℍ, HasSum (fun m ↦ coeff m φ * 𝕢 h τ ^ m) (f τ)
 
@@ -67,10 +65,6 @@ lemma mdifferentiable (hh : 0 < h) (hf : HasQExpansion h f φ) : MDiff f := by
 
 lemma congr (hf : HasQExpansion h f φ) (hfg : ∀ τ, g τ = f τ) : HasQExpansion h g φ :=
   fun τ ↦ hfg τ ▸ hf τ
-
-lemma add (hf : HasQExpansion h f φ) (hg : HasQExpansion h g ψ) :
-    HasQExpansion h (fun τ ↦ f τ + g τ) (φ + ψ) := fun τ ↦ by
-  simpa [add_mul] using (hf τ).add (hg τ)
 
 lemma sub (hf : HasQExpansion h f φ) (hg : HasQExpansion h g ψ) :
     HasQExpansion h (fun τ ↦ f τ - g τ) (φ - ψ) := fun τ ↦ by

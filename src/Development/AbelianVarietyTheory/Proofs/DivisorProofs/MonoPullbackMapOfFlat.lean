@@ -73,24 +73,11 @@ def skyFunctor : ModuleCat.{u} (X.presheaf.stalk x) ⥤ X.Modules where
     (M₂ := skyPresheafOfModules x N) (skyPresheafMap g)
     fun U r m ↦ funext fun h ↦ g.hom.map_smul _ (m h)⟩
 
-@[simp]
-theorem skyFunctor_map_app {M N : ModuleCat.{u} (X.presheaf.stalk x)} (g : M ⟶ N) (U : X.Opens)
-    (m : Γ(sky x M, U)) (h : PLift (x ∈ U)) :
-    ((skyFunctor x).map g).app U m h = g (m h) := rfl
-
-@[simp]
-theorem sky_map_apply {U V : X.Opens} (i : V ⟶ U) (m : Γ(sky x M, U)) (h : PLift (x ∈ V)) :
-    (sky x M).presheaf.map i.op m h = m ⟨leOfHom i h.down⟩ := rfl
-
 def stalkFunctor : X.Modules ⥤ ModuleCat.{u} (X.presheaf.stalk x) where
   obj F := ModuleCat.of _ (F.presheaf.stalk x)
   map φ := ModuleCat.ofHom (GlobalTheory.QCoh.stalkLinear φ x)
   map_id F := by ext1; exact GlobalTheory.QCoh.stalkLinear_id F x
   map_comp φ ψ := by ext1; exact GlobalTheory.QCoh.stalkLinear_comp φ ψ x
-
-@[simp]
-theorem stalkFunctor_map {F G : X.Modules} (φ : F ⟶ G) :
-    (stalkFunctor x).map φ = ModuleCat.ofHom (GlobalTheory.QCoh.stalkLinear φ x) := rfl
 
 end GlobalTheory.SkyMod
 
@@ -110,10 +97,6 @@ def unitApp (F : X.Modules) : F ⟶ sky x (ModuleCat.of _ (F.presheaf.stalk x)) 
         funext h
         exact F.presheaf.germ_res_apply i.unop x h.down s }
     (fun U r s ↦ funext fun h ↦ GlobalTheory.QCoh.germ_smul F x h.down r s)⟩
-
-@[simp]
-theorem unitApp_app (F : X.Modules) (U : X.Opens) (s : Γ(F, U)) (h : PLift (x ∈ U)) :
-    (unitApp x F).app U s h = F.presheaf.germ U x h.down s := rfl
 
 def counitAb (M : ModuleCat.{u} (X.presheaf.stalk x)) :
     (sky x M).presheaf.stalk x ⟶ AddCommGrpCat.of M :=

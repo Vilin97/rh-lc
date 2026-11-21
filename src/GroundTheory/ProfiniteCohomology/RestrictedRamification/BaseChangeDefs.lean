@@ -36,11 +36,6 @@ def fieldEquivOfRestrictScalarsEq : E ≃ₐ[F] E' where
   commutes' _ := rfl
 
 @[simp]
-theorem coe_fieldEquivOfRestrictScalarsEq (x : E) :
-    ((fieldEquivOfRestrictScalarsEq h x : E') : Ω) = x :=
-  rfl
-
-@[simp]
 theorem coe_fieldEquivOfRestrictScalarsEq_symm (y : E') :
     (((fieldEquivOfRestrictScalarsEq h).symm y : E) : Ω) = y :=
   rfl
@@ -52,10 +47,6 @@ def embeddingOfRestrictScalarsEq : L →ₐ[F] E :=
 @[simp]
 theorem coe_embeddingOfRestrictScalarsEq (x : L) :
     ((embeddingOfRestrictScalarsEq h x : E) : Ω) = algebraMap L Ω x :=
-  rfl
-
-theorem fieldEquivOfRestrictScalarsEq_embedding (x : L) :
-    fieldEquivOfRestrictScalarsEq h (embeddingOfRestrictScalarsEq h x) = algebraMap L E' x :=
   rfl
 
 def fixingOfRestrictScalarsEq : Subgroup Gal(E/F) :=
@@ -102,11 +93,6 @@ def fixingMulEquivOfRestrictScalarsEq : fixingOfRestrictScalarsEq h ≃* Gal(E'/
 theorem coe_fixingMulEquivOfRestrictScalarsEq_apply (σ : fixingOfRestrictScalarsEq h) (x : E') :
     ((fixingMulEquivOfRestrictScalarsEq h σ x : E') : Ω) =
       ((σ : Gal(E/F)) ((fieldEquivOfRestrictScalarsEq h).symm x) : Ω) :=
-  rfl
-
-theorem fieldEquivOfRestrictScalarsEq_apply_apply (σ : fixingOfRestrictScalarsEq h) (x : E) :
-    fieldEquivOfRestrictScalarsEq h ((σ : Gal(E/F)) x) =
-      fixingMulEquivOfRestrictScalarsEq h σ (fieldEquivOfRestrictScalarsEq h x) :=
   rfl
 
 theorem coe_fixingMulEquivOfRestrictScalarsEq_symm_apply (τ : Gal(E'/L)) (x : E) :
@@ -308,10 +294,6 @@ def gsBaseChange : (gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside F Ω S)
     continuous_toFun := e.symm.continuous
     continuous_invFun := hc }
 
-theorem gsBaseChange_toMulEquiv : (gsBaseChange S hL).toMulEquiv =
-    fixingMulEquivOfRestrictScalarsEq (restrictScalars_maxUnramifiedOutside_eq S hL) :=
-  rfl
-
 variable {S}
 
 theorem coe_gsBaseChange_apply (σ : (gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside F Ω S)))
@@ -319,11 +301,6 @@ theorem coe_gsBaseChange_apply (σ : (gsOpenSubgroup S hL : Subgroup (galUnramif
     ((gsBaseChange S hL σ x : maxUnramifiedOutside L Ω (placesOver S)) : Ω) =
       ((σ : galUnramifiedOutside F Ω S) ((gsFieldEquiv hL).symm x) : Ω) :=
   coe_fixingMulEquivOfRestrictScalarsEq_apply _ σ x
-
-theorem gsFieldEquiv_apply_apply (σ : (gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside F Ω S)))
-    (x : maxUnramifiedOutside F Ω S) :
-    gsFieldEquiv hL ((σ : galUnramifiedOutside F Ω S) x) = gsBaseChange S hL σ (gsFieldEquiv hL x) :=
-  fieldEquivOfRestrictScalarsEq_apply_apply _ σ x
 
 theorem coe_gsBaseChange_symm_apply (τ : galUnramifiedOutside L Ω (placesOver S))
     (x : maxUnramifiedOutside F Ω S) :

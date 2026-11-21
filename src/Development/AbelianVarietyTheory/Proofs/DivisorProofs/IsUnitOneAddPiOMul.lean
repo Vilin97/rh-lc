@@ -19,9 +19,6 @@ theorem mem_intL_of {σ : L →+* L} (hσ : ∀ x, Valued.v (σ x) = Valued.v x)
 def sigO (σ : L →+* L) (hσ : ∀ x, Valued.v (σ x) = Valued.v x) : intL L →+* intL L :=
   σ.restrict (intL L) (intL L) fun _ hx => mem_intL_of hσ hx
 
-@[simp] theorem coe_sigO (σ : L →+* L) (hσ : ∀ x, Valued.v (σ x) = Valued.v x) (x : intL L) :
-    ((sigO σ hσ x : intL L) : L) = σ x := rfl
-
 def piO {ϖ : L} {σ : L →+* L} {q : ℕ} (h : IsUnramInv ϖ σ q) : intL L :=
   ⟨ϖ, by
     change Valued.v ϖ ≤ 1

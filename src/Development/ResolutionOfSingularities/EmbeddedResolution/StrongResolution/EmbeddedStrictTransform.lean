@@ -168,11 +168,6 @@ def discardedUnion (i : ℕ) : Scheme.{u} :=
   Nat.rec (motive := fun _ => Scheme.{u}) (⊥_ Scheme.{u})
     (fun j ih => ih ⨿ S.discardedSubscheme j) i
 
-@[simp] theorem discardedUnion_zero : S.discardedUnion 0 = ⊥_ Scheme.{u} := rfl
-
-@[simp] theorem discardedUnion_succ (i : ℕ) :
-    S.discardedUnion (i + 1) = (S.discardedUnion i ⨿ S.discardedSubscheme i) := rfl
-
 abbrev totalSpace (i : ℕ) : Scheme.{u} := S.strictTransform i ⨿ S.discardedUnion i
 
 def transitionMap (i : ℕ) : S.totalSpace (i + 1) ⟶ S.totalSpace i :=
@@ -251,8 +246,6 @@ theorem totalSpaceZeroIso_spec :
 def tower : ℕᵒᵖ ⥤ Scheme.{u} :=
   (Functor.ofSequence (fun i => (S.transitionMap i).op)).leftOp
 
-theorem tower_obj (i : ℕ) : S.tower.obj (Opposite.op i) = S.totalSpace i := rfl
-
 theorem tower_map_succ (i : ℕ) :
     S.tower.map (homOfLE (Nat.le_succ i)).op = S.transitionMap i := by
   show ((Functor.ofSequence fun j => (S.transitionMap j).op).map (homOfLE (Nat.le_succ i))).unop
@@ -269,15 +262,6 @@ def blowupSequence (h : S.TransitionsAreBlowups) : SequenceOfBlowups Y where
   isoZero := S.totalSpaceZeroIso
   center := S.centerOnTotalSpace
   isBlowup := h
-
-@[simp] theorem blowupSequence_length (h : S.TransitionsAreBlowups) : (S.blowupSequence h).length = S.ambientLength := rfl
-
-@[simp] theorem blowupSequence_tower (h : S.TransitionsAreBlowups) : (S.blowupSequence h).tower = S.tower := rfl
-
-theorem blowupSequence_isoObjZero (h : S.TransitionsAreBlowups) : (S.blowupSequence h).isoZero = S.totalSpaceZeroIso := rfl
-
-@[simp] theorem blowupSequence_center (h : S.TransitionsAreBlowups) (i : ℕ) :
-    (S.blowupSequence h).center i = S.centerOnTotalSpace i := rfl
 
 def blowupSequenceWithoutIsos (h : S.TransitionsAreBlowups) : SequenceOfBlowups Y := (S.blowupSequence h).withoutIsoBlowups
 

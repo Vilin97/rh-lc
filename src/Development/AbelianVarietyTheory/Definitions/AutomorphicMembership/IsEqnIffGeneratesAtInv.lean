@@ -320,8 +320,6 @@ def principal (g : X.functionFieldˣ) : CartierDiv X :=
 
 theorem isEqn_principal (g : X.functionFieldˣ) (x : X) : (principal g).IsEqn x g := rfl
 
-theorem principal_one : principal (1 : X.functionFieldˣ) = 0 := rfl
-
 theorem principal_mul (g g' : X.functionFieldˣ) :
     principal (g * g') = principal g + principal g' := rfl
 
@@ -507,12 +505,6 @@ theorem IsEqn.mem_supp_iff (h : D.IsEqn x g) : x ∈ D.supp ↔ ¬ UnitAt x g :=
 theorem notMem_supp_iff : x ∉ D.supp ↔ D.GeneratesAt x 1 := by
   obtain ⟨g, hg⟩ := D.exists_isEqn x
   rw [hg.mem_supp_iff, not_not, hg.generatesAt_iff, one_mul]
-
-theorem Eff.mem_supp_iff (h : D.Eff) : x ∈ D.supp ↔ D.VanishesAt x 1 := by
-  obtain ⟨g, hg⟩ := D.exists_isEqn x
-  rw [hg.mem_supp_iff, hg.vanishesAt_iff, one_mul, zeroAt_iff]
-  have r := eff_iff.1 h x g hg
-  exact ⟨fun hn => ⟨r, hn⟩, fun hz => hz.2⟩
 
 theorem genericPoint_notMem_supp (D : CartierDiv X) : genericPoint X ∉ D.supp := notMem_supp_iff.2 (generatesAt_genericPoint D one_ne_zero)
 

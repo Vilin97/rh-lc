@@ -22,7 +22,6 @@ instance (X : Data E r) : IsTopologicalGroup (Torus X) :=
   inferInstanceAs (IsTopologicalGroup (X.Ψ → Fin r → Circle))
 instance (X : Data E r) : CompactSpace (Torus X) :=
   inferInstanceAs (CompactSpace (X.Ψ → Fin r → Circle))
-instance (X : Data E r) : T2Space (Torus X) := inferInstanceAs (T2Space (X.Ψ → Fin r → Circle))
 instance (X : Data E r) : MeasurableSpace (Torus X) := borel _
 instance (X : Data E r) : BorelSpace (Torus X) := ⟨rfl⟩
 

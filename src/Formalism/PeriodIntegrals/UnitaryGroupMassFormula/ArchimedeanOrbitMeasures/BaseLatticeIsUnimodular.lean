@@ -47,9 +47,6 @@ namespace HSpace
 
 variable {E : Type} [Field E] [NumberField E] [StarRing E]
 
-def gram (S : HSpace E) : Matrix (Fin S.rank) (Fin S.rank) E :=
-  fun i j => S.hT (S.frame i) (S.frame j)
-
 end HSpace
 
 namespace Spaces

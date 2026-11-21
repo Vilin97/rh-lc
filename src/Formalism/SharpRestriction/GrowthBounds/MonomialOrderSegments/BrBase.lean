@@ -182,8 +182,6 @@ theorem valS_eq {L : Type} [DecidableEq L] {r : ℕ} [NeZero r] (sg : L → Bool
 
 theorem PolK_eq {L : Type} (r : ℕ) (d : L → ℕ) : PolK K r d = Formalism.MainNotions.G.Pol K r d := rfl
 
-theorem fock_eq {σ : Type} (F G : MvPolynomial σ K) : fock F G = Formalism.MainNotions.G.fock F G := rfl
-
 theorem ddiv_eq_divDer {σ : Type} (M : σ →₀ ℕ) (F : MvPolynomial σ K) : ddiv M F = Formalism.MainNotions.G.divDer M F := by
   unfold ddiv Formalism.MainNotions.G.divDer
   refine Finset.sum_congr rfl fun α _ => ?_

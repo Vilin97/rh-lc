@@ -12,8 +12,6 @@ noncomputable section
 
 namespace GlobalTheory.MBLow.ScaleJet
 
-local notation "cF" => ReciprocityTheory.ChartRestriction.G.Geo.Tor.constFn
-
 variable {R : Type} [CommRing R]
 
 theorem res_cst {X : Scheme.{0}} (q : X ⟶ Sp R) {U V : X.Opens} (h : V ≤ U) (a : R) :
@@ -84,8 +82,6 @@ end Twist
 end GlobalTheory.MBLow.ScaleJet
 
 namespace GlobalTheory.MBLow.ScaleJet
-
-local notation "cF" => ReciprocityTheory.ChartRestriction.G.Geo.Tor.constFn
 
 theorem polAVSectionInverseImage_mulConstant {R : Type} [CommRing R] (P : PolAV (Sp R)) (T : Over (Sp R)) (s : P.L.Sec)
     (t : LB.Sec (LPow P.A P.L ((1 : ℕ) : ℤ) T)) (c : R) (h : IsPolAVSectionInverseImage P T s t) :

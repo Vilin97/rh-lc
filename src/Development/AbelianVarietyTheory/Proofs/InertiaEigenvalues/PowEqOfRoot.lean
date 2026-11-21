@@ -143,23 +143,6 @@ theorem finrank_Kunr : Module.finrank ℚ_[l] ↥(Kunr l a) = a := by
     Subtype.ext (GlobalTheory.TameFrob.iotaO_algebraMap l a u).symm
   rw [Algebra.IsAlgebraic.finrank_of_isFractionRing ℤ_[l] ℚ_[l] (Wq l a) ↥(Kunr l a), finrank_Wq]
 
-theorem exists_thetaW [HasUnr a K] (h : Nat.card (ResidueField ↥(OL K)) = l ^ a) (x : ↥(OL K)) :
-    ∃ w : Wq l a, residue _ (thetaW a K w) = residue _ x := by
-  obtain ⟨y, hy, hx⟩ := exists_teich h x
-  rw [← hx]
-  rcases eq_or_ne y 0 with rfl | h0
-  · exact ⟨0, by rw [map_zero]⟩
-  obtain ⟨z, ω, hω, hz, -⟩ := exists_gen l a
-  have h1 := one_lt_pow_l l a
-  have : NeZero (l ^ a - 1) := ⟨by omega⟩
-  have h2 : y ^ (l ^ a - 1) = 1 :=
-    mul_right_cancel₀ h0 (by rw [← pow_succ, Nat.sub_add_cancel h1.le, hy, one_mul])
-  obtain ⟨k, -, hk⟩ := hω.eq_pow_of_pow_eq_one (ξ := toOm K y) (by rw [← map_pow, h2, map_one])
-  refine ⟨WittVector.teichmuller l z ^ k, congrArg _ (intToOC_injective K (Subtype.ext ?_))⟩
-  rw [intToOC_thetaW, map_pow, map_pow, wA_teich, WittVector.fontaineTheta_teichmuller, SubmonoidClass.coe_pow,
-    GlobalTheory.MemLoc.IsTiltOf.untilt_eq hz]
-  exact (map_pow (algebraMap (Om l) ℂ_[l]) ω k).symm.trans (congrArg _ hk)
-
 variable (K)
 
 def fK : ℕ := Module.finrank ℚ_[l] ↥(K0 K)
@@ -174,8 +157,6 @@ theorem card_res' : fK K ≠ 0 ∧ Nat.card (ResidueField ↥(OL K)) = l ^ fK K 
 instance : NeZero (fK K) := ⟨(card_res' K).1⟩
 
 theorem card_res : Nat.card (ResidueField ↥(OL K)) = l ^ fK K := (card_res' K).2
-
-instance : HasUnr (fK K) K := hasUnr (card_res K)
 
 theorem Kunr_fK : Kunr l (fK K) = K0 K := Kunr_eq (card_res K)
 

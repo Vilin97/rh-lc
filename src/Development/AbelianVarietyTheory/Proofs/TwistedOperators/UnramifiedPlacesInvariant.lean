@@ -85,23 +85,4 @@ theorem vac_fixed_split : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
   rw [hc1, one_smul] at hact
   exact hact
 
-theorem vac_fixed_cofinite : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
-    (B : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Base F E) (a a' : ℕ) (G : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Geo σ a a') (X : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Chars F E)
-    (om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ G.V G.W) (om' : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ G.V' G.W), GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsTriple B G X om om' →
-    ∃ S₀ : Finset (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F), ∀ v, v ∉ S₀ → ∀ k ∈ GlobalTheory.InertSph.KAt σ G.W v,
-      GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.AdelicU.evFin F v) (om (1, k)) (G.M.vac v) (G.M.vac v) := by
-  intro _ F E _ _ _ _ _ σ B a a' G X om om' hT
-  classical
-  refine ⟨X.T ∪ (bad_finite F).toFinset, ?_⟩
-  intro v hv k hk
-  simp only [Finset.mem_union, Set.Finite.mem_toFinset, Set.mem_setOf_eq, not_or] at hv
-  obtain ⟨hvT, hd, h6⟩ := hv
-  have hψ := GlobalTheory.StdCharUnrF.psiUnr_of_not_le F B.ψ hT.base.std v hd
-  obtain ⟨h2, h3⟩ := two_three_of_six v h6
-  by_cases hin : ∃ w : HeightOneSpectrum (𝓞 E), Formalism.UG.IsInertAt F E v w
-  · obtain ⟨w, hw⟩ := hin
-    exact GlobalTheory.T.inert_place_lattice_stabiliser_fixes_vacuum F E σ B a a' G X om om' hT v w hw hvT k hk
-  · push_neg at hin
-    exact vac_fixed_split F E σ B a a' G X om om' hT v hin hvT hψ h2 h3 k hk
-
 end GlobalTheory.LocVacFix

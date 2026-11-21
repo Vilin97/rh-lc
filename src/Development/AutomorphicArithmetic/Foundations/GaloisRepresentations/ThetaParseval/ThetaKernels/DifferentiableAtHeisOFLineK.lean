@@ -13,9 +13,6 @@ noncomputable section
 namespace GlobalTheory.HeisLineDiffF
 open Formalism.IndefR.DatumF
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-local instance  : IsModuleTopology (AF F) (AF F ⊗[F] E) := ⟨rfl⟩
-local instance : FiniteDimensional F E := finiteDimensional_FE
-local instance  : IsTopologicalRing (AF F ⊗[F] E) := IsModuleTopology.isTopologicalRing (AF F) _
 variable (σ : E →ₐ[F] E) {nS nT : ℕ} (JS : Matrix (Fin nS) (Fin nS) E) (JT : Matrix (Fin nT) (Fin nT) E)
 end GlobalTheory.HeisLineDiffF
 open Formalism.IndefR.DatumF in

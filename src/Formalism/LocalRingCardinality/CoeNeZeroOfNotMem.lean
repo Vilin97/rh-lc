@@ -508,18 +508,6 @@ section Herm
 variable {K : Type} [Field K] [NumberField K] [StarRing K]
 variable {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
-def IsStarPl (w w' : HeightOneSpectrum (𝓞 K)) : Prop :=
-  ∀ x y : 𝓞 K, (y : K) = star (x : K) → (x ∈ w'.asIdeal ↔ y ∈ w.asIdeal)
-
-theorem IsStarPl.symm {w w' : HeightOneSpectrum (𝓞 K)} (h : IsStarPl w w') : IsStarPl w' w :=
-  fun x y hxy => (h y x (by rw [hxy, star_star])).symm
-
-theorem h_smul_left (h : V →ₗ⋆[K] V →ₗ[K] K) (t : 𝓞 K) (x y : V) : h (t • x) y = star (t : K) * h x y := by
-  rw [← algebraMap_smul K t x, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul]; rfl
-
-theorem h_smul_right (h : V →ₗ⋆[K] V →ₗ[K] K) (t : 𝓞 K) (x y : V) : h x (t • y) = (t : K) * h x y := by
-  rw [← algebraMap_smul K t y, map_smul, smul_eq_mul]
-
 theorem vAdd_inv (w : HeightOneSpectrum (𝓞 K)) (x : K) : vAdd w x⁻¹ = - vAdd w x := by
   unfold vAdd
   rw [map_inv₀, WithZero.log_inv]
@@ -541,26 +529,6 @@ end Formalism.BasicNotions.SkeletonIndexLemmas
 namespace Formalism.BasicNotions.Idx
 
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.HermitianLatticesTheory SkeletonIndexLemmas
-
-theorem jMt_inj (D : D7) (μ : D.what₂.Tup) (j : ℕ) : Function.Injective (D.what₂.jMt μ j) := by
-  have hli := (D.what₂.jMt_basis μ j (Module.Free.chooseBasis _ _)).1
-  have : Fintype (Module.Free.ChooseBasisIndex D.what₂.LL (D.what₂.MtL μ j)) := @Fintype.ofFinite _ hli.finite
-  exact inj_of_li D.what₂.embLL (D.what₂.jMt μ j) (Module.Free.chooseBasis _ _) hli
-
-def hSes (D : D7) (h : HermRat D) (μ : D.what₂.Tup) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) :
-    D.what₂.MtL μ j →ₗ⋆[D.what₂.LL] D.what₂.MtL μ j →ₗ[D.what₂.LL] D.what₂.LL :=
-  LinearMap.mk₂'ₛₗ (starRingEnd D.what₂.LL) (RingHom.id D.what₂.LL) (hLL D μ j)
-    (fun x y z => D.what₂.embLL.injective (by
-      simp only [map_add, hLL_spec D h μ j h1 h2, inner_add_left]))
-    (fun c x y => D.what₂.embLL.injective (by
-      rw [smul_eq_mul, map_mul, hLL_spec D h μ j h1 h2, hLL_spec D h μ j h1 h2, LinearMap.map_smulₛₗ,
-        inner_smul_left]
-      exact congrArg (· * _) (D.starLL_cx c).symm))
-    (fun x y z => D.what₂.embLL.injective (by
-      simp only [map_add, hLL_spec D h μ j h1 h2, inner_add_right]))
-    (fun c x y => D.what₂.embLL.injective (by
-      rw [RingHom.id_apply, smul_eq_mul, map_mul, hLL_spec D h μ j h1 h2, hLL_spec D h μ j h1 h2,
-        LinearMap.map_smulₛₗ, inner_smul_right]))
 
 theorem factStepBz {D : D7} (X : DivX D) : FactStepBz X := by
   intro hθ μ j w h1 h2 n b b0 Z hb hb0 hli0 hsp0 hli hZ

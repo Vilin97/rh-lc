@@ -69,37 +69,6 @@ theorem selfDual_of_covolOne {m : ℕ} {T : Matrix (Fin m) (Fin m) D.host.E} (hT
     unfold GramMatrixBlocks.pairing GramMatrixBlocks.trA GramMatrixBlocks.gramQ GramMatrixBlocks.mmul
     rw [Matrix.mul_add, Matrix.trace_add, map_add, AddChar.map_add_eq_mul]
 
-theorem mem_siegelParabolic_of_lowerLeft_entries_eq_zero {g : G D n}
-    (h : ∀ i j, mat g (finSumFinEquiv (.inr i)) (finSumFinEquiv (.inl j)) = 0)
-    (h' : ∀ i j, mat g⁻¹ (finSumFinEquiv (.inr i)) (finSumFinEquiv (.inl j)) = 0) : g ∈ P D n := by
-  have key : ∀ g : G D n, (∀ i j, mat g (finSumFinEquiv (.inr i)) (finSumFinEquiv (.inl j)) = 0) →
-      ∀ x ∈ upperHalf D n, (mat g).mulVec x ∈ upperHalf D n := by
-    intro g h x hx
-    ext i
-    have hx' : ∀ j, x (finSumFinEquiv (Sum.inr j : Fin n ⊕ Fin n)) = 0 := fun j => congrFun hx j
-    simp only [LinearMap.funLeft_apply, Matrix.mulVec, dotProduct, Pi.zero_apply]
-    rw [← finSumFinEquiv.sum_comp, Fintype.sum_sum_type]
-    simp only [h, hx', zero_mul, mul_zero, Finset.sum_const_zero, add_zero]
-  refine fun x => ⟨key g h x, fun hx => ?_⟩
-  have := key _ h' _ hx
-  change (mat g⁻¹).mulVec ((mat g).mulVec x) ∈ _ at this
-  rwa [Matrix.mulVec_mulVec, show mat g⁻¹ * mat g = mat (g⁻¹ * g) from rfl, inv_mul_cancel,
-    show mat (1 : G D n) = 1 from rfl, Matrix.one_mulVec] at this
-
-theorem siegel_eq : GramMatrixBlocks.siegel D n = P D n := by
-  have lower : ∀ g : G D n, g ∈ GramMatrixBlocks.siegel D n →
-      ∀ i j, mat g (finSumFinEquiv (.inr i)) (finSumFinEquiv (.inl j)) = 0 := fun g hg i j =>
-    hg (by simp [GramMatrixBlocks.blockIdx])
-  ext g
-  refine ⟨fun hg => mem_siegelParabolic_of_lowerLeft_entries_eq_zero (lower g hg) (lower _ ((GramMatrixBlocks.siegel D n).inv_mem hg)), fun hg i j hij => ?_⟩
-  obtain ⟨i, rfl⟩ := finSumFinEquiv.surjective i
-  obtain ⟨j, rfl⟩ := finSumFinEquiv.surjective j
-  rcases i with i | i <;> rcases j with j | j
-  · simp [GramMatrixBlocks.blockIdx] at hij
-  · simp [GramMatrixBlocks.blockIdx] at hij
-  · exact lower_eq_zero hg i j
-  · simp [GramMatrixBlocks.blockIdx] at hij
-
 theorem hE_equivFun (V : HSp D) (x y : V.V) :
     hE D.sp.cm.sig V.gram (V.frame.equivFun x) (V.frame.equivFun y) = V.hT x y := by
   conv_rhs => rw [← V.frame.sum_equivFun x, ← V.frame.sum_equivFun y]
@@ -128,8 +97,6 @@ variable {V : HSp D} {θ : InfFam D} {ψ : AddChar (AF D.host.F) ℂ} {χ : (AE 
 
 theorem gramQ_eq (x y : Mx D V.rank n) : GramMatrixBlocks.gramQ V.gram x y = StdUnn.inner V x y := Matrix.mul_assoc _ _ _
 
-def resG (ω : GramMatrixBlocks.Rep θ n V.gram) : G D n →* Module.End ℂ (schwartzA θ V.rank n) := ω.comp (MonoidHom.inl _ _)
-
 theorem isWeilSch_unique {μ : Measure (Mx D V.rank n)} {ω ω' : G D n →* Module.End ℂ (schwartzA θ V.rank n)}
     (h : IsWeilSch ψ χ θ V μ ω) (h' : IsWeilSch ψ χ θ V μ ω') : ω = ω' := by
   have := GlobalTheory.T.unitaryUnn_subgroup_eq_top_of_leviUnipotentWeyl D n (ω.toHomUnits.eqLocus ω'.toHomUnits)
@@ -143,19 +110,6 @@ theorem isWeilSch_unique {μ : Measure (Mx D V.rank n)} {ω ω' : G D n →* Mod
   have hg : g ∈ ω.toHomUnits.eqLocus ω'.toHomUnits := this ▸ Subgroup.mem_top g
   exact congrArg Units.val hg
 
-theorem sect_eq (ω : GramMatrixBlocks.Rep θ n V.gram) (H : G D n → ℝ≥0) (Φ : schwartzA θ V.rank n) (z : ℂ) :
-    GramMatrixBlocks.sect H ω Φ z = sect (resG ω) H Φ z := rfl
-
-theorem summable_iff (ω : GramMatrixBlocks.Rep θ n V.gram) (H : G D n → ℝ≥0) (Φ : schwartzA θ V.rank n) (g : G D n) (z : ℂ) :
-    (Summable fun γ => ‖GramMatrixBlocks.eisTerm H ω Φ g z γ‖) ↔ Eis.CosetConv (P D n) (GF D n) (sect (resG ω) H Φ z) g := by
-  rw [← siegel_eq]
-  rfl
-
-theorem tsum_eq (ω : GramMatrixBlocks.Rep θ n V.gram) (H : G D n → ℝ≥0) (Φ : schwartzA θ V.rank n) (g : G D n) (z : ℂ) :
-    ∑' γ, GramMatrixBlocks.eisTerm H ω Φ g z γ = Eis.cosetSum (P D n) (GF D n) (sect (resG ω) H Φ z) g := by
-  rw [← siegel_eq]
-  rfl
-
 theorem leftInv_theta (ω : G D n →* Module.End ℂ (schwartzA θ V.rank n)) (Φ : schwartzA θ V.rank n) (g : G D n) :
     LeftInv (GQ V) (theta ω Φ g) := by
   intro γ hγ h
@@ -168,29 +122,6 @@ theorem leftInv_theta (ω : G D n →* Module.End ℂ (schwartzA θ V.rank n)) (
   have : mt V (γ * h)⁻¹ = mt V h⁻¹ * mt V γ⁻¹ := by rw [mul_inv_rev]; rfl
   rw [this, hu, Matrix.mul_assoc, ← rat_mul]
   rfl
-
-def ContinuesAt {m : ℕ} {T : Matrix (Fin m) (Fin m) D.host.E} (α : GramMatrixBlocks.GG D n → ℝ≥0) (ω : GramMatrixBlocks.Rep θ n T)
-    (Φ : GramMatrixBlocks.Sch θ m n) (g : GramMatrixBlocks.GG D n) : Prop :=
-  ∃ E : ℂ → ℂ, MeromorphicOn E Set.univ ∧ ∀ s : ℂ, (n : ℝ) / 2 < s.re → E s = ∑' γ, GramMatrixBlocks.eisTerm α ω Φ g s γ
-
-def SecondOnCommonRange : Prop :=
-  ∀ (D : D7) (n : ℕ) (V : HSp D), n < V.rank → V.rank ≤ 2 * n → n + Formalism.MainNotions.SchurIrreducible.wittIdx V < V.rank →
-    GramMatrixBlocks.FormulaFor n V.gram
-
-def WeilExists : Prop :=
-  ∀ (D : D7) (n : ℕ) (V : HSp D), n < V.rank → V.rank ≤ 2 * n → n + Formalism.MainNotions.SchurIrreducible.wittIdx V < V.rank →
-  ∀ (ψ : AddChar (AF D.host.F) ℂ) (χ : (AE D)ˣ →* Circle) (θ : InfFam D),
-    IsCharAF D.host.F ψ → IsHeckeChar D χ → ResEta D χ V.rank → IsInfFam θ →
-    ∃ ω : GramMatrixBlocks.Rep θ n V.gram, GramMatrixBlocks.IsWeil ψ χ ω
-
-def PlaneContinuation : Prop :=
-  ∀ (D : D7) (n : ℕ) (V : HSp D), n < V.rank → V.rank ≤ 2 * n → n + Formalism.MainNotions.SchurIrreducible.wittIdx V < V.rank →
-  ∀ (ψ : AddChar (AF D.host.F) ℂ) (χ : (AE D)ˣ →* Circle) (θ : InfFam D),
-    IsCharAF D.host.F ψ → IsHeckeChar D χ → ResEta D χ V.rank → IsInfFam θ →
-  ∀ ω : GramMatrixBlocks.Rep θ n V.gram, GramMatrixBlocks.IsWeil ψ χ ω → ∀ α : GramMatrixBlocks.GG D n → ℝ≥0, GramMatrixBlocks.IsAbsLevi α →
-  ∀ c : D.what₂.Tau → ℝ, GramMatrixBlocks.IsRealPart ψ θ c →
-  ∀ s : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ, (∀ τ, IsCartanInv (V.gram.map (tauE D τ)) (s τ)) →
-  ∀ Φ : GramMatrixBlocks.Sch θ V.rank n, Φ.1 ∈ GramMatrixBlocks.fockSpace θ n V.gram c s → ∀ g, ContinuesAt α ω Φ g
 
 end GlobalTheory.SiegelWeilLitCompare
 

@@ -27,26 +27,5 @@ def U0 (a : GeoAll W u) (j : ℕ) (hj : j + 1 = B.R.m) : Subgroup (GA (I.rec7 l 
     relax h.choose_spec.choose j hj h.choose_spec.choose_spec.2.some
   else ⊥
 
-theorem relax_le (J : QJ a t) (j : ℕ) (hj : j + 1 = B.R.m) (α : J.Ch j) : relax J j hj α ≤ GfC _ :=
-  fun _ hg => (Subgroup.mem_inf.1 (Subgroup.mem_inf.1 hg).1).2
-
-theorem tuple_free_level_le_compact (a : GeoAll W u) (j : ℕ) (hj : j + 1 = B.R.m) : U0 a j hj ≤ GfC _ := by
-  unfold U0
-  split_ifs
-  · exact relax_le _ _ _ _
-  · exact bot_le
-
-theorem mem_relax_iff (J : QJ a t) (j : ℕ) (hj : j + 1 = B.R.m) (α : J.Ch j) (g : GA (I.rec7 l Z) ((I.rec7 l Z).sp.X j)) :
-    g ∈ relax J j hj α ↔ g ∈ J.A.U j (J.ι j α) ⊔ GlobalTheory.FinPl.grpAt _ (GlobalTheory.PenBridge.plF J) ∧ g ∈ GfC _ ∧
-      ∀ i, GlobalTheory.PenBridge.rd J j hj g i ∈ KO (J.G i).k _ := by
-  simp only [relax, Subgroup.mem_inf, Subgroup.mem_comap, Subgroup.mem_pi, Set.mem_univ, true_implies, and_assoc]
-
-theorem tuple_free_level_eq_relaxed (J : QJ a t) (j : ℕ) (hj : j + 1 = B.R.m) (hJ : J.Reads) (α : J.Ch j) :
-    ∃ (t₀ : W.P.T) (J₀ : QJ a t₀) (α₀ : J₀.Ch j), J₀.Reads ∧ U0 a j hj = relax J₀ j hj α₀ := by
-  have h : ∃ t, ∃ J : QJ a t, J.Reads ∧ Nonempty (J.Ch j) := ⟨t, J, hJ, ⟨α⟩⟩
-  refine ⟨h.choose, h.choose_spec.choose, h.choose_spec.choose_spec.2.some, h.choose_spec.choose_spec.1, ?_⟩
-  unfold U0
-  rw [dif_pos h]
-
 end GlobalTheory.PenLev
 end

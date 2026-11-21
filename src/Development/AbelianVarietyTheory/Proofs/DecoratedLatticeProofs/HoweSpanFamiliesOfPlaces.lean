@@ -254,5 +254,3 @@ theorem GlobalTheory.KJInf.howeSpan_all : ∀ (ι : Type) [Fintype ι], HoweSpan
   obtain ⟨v, rfl⟩ := hF
   have := hrep v
   simpa [Q'] using this
-
-example : ∀ (ι : Type) [Fintype ι], HoweSpan ι := GlobalTheory.KJInf.howeSpan_all

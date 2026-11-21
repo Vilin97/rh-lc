@@ -63,9 +63,6 @@ def evMap : (extTensor (homRep τ ρ) ρ).IntertwiningMap τ where
       homRep_apply_coe]
     rw [φ.2 h v, ← apply_pair]
 
-@[simp] theorem evMap_tmul (φ : homSpace τ ρ) (v : Y) :
-    evMap τ ρ (φ ⊗ₜ v) = (φ : Y →ₗ[ℂ] X) v := rfl
-
 end GlobalTheory.TensorFactor
 
 namespace GlobalTheory.TensorFactor

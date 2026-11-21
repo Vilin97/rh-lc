@@ -14,7 +14,11 @@ import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.Mono0OfLpDim
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.RootsCharpolySmulMatrix
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsGenericOfIsLocComp
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NontrivialTwJacquetOfSurjective
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsComplOfTempered
+import Development.AbelianVarietyTheory.Proofs.SatakeParameters.WeilRepEquivOfCharpolyEq
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsPurePairIffMonodromyFiltration
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MonodromyZeroOfWeilDeligneRepClassIff
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.LocalLanglandsGL
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsPowEqPowOfWeilDegreeEqSmoothStatement
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.TemperedRepTemperedParameter
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RecProductSpehSatake
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.LocalComponentUnitarisableTwist
@@ -53,10 +57,6 @@ theorem charPol_lpTw (x : WD h) (s : ℝ) (g : Weil h) :
   obtain ⟨n, b, rfl⟩ := x.exists_rep
   rw [WD.lpTw, WD.lpTwist_mk, WD.charPol_mk, WD.charPol_mk, WDRep.twist_ρ,
     charpoly_smul_scaleRoots _ (Units.ne_zero _)]
-
-theorem charPol_lpTw_congr {x y : WD h} (H : ∀ g, x.charPol g = y.charPol g) (s : ℝ) (g : Weil h) :
-    (x.lpTw s).charPol g = (y.lpTw s).charPol g := by
-  rw [charPol_lpTw, charPol_lpTw, H]
 
 theorem isGeneric_nu {x : IrrGL (w.adicCompletion E)} (hx : IsGeneric x.rep) (s : ℂ) : IsGeneric (x.nu s).rep :=
   (isGeneric_congr (IrrGL.twEquiv x _ _)).1 ((isGeneric_twist_iff _).2 hx)

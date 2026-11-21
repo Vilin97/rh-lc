@@ -39,11 +39,6 @@ def tp (A : V →L[ℝ] V) (B : F →L[ℝ] F) {q : ℕ} (w : V → V [⋀^Fin q
 theorem tp_apply (A : V →L[ℝ] V) (B : F →L[ℝ] F) {q : ℕ} (w : V → V [⋀^Fin q]→L[ℝ] F) (p : V) (v : Fin q → V) :
     tp A B w p v = B (w (A p) fun i => A (v i)) := rfl
 
-theorem tp_tp (A A' : V →L[ℝ] V) (B B' : F →L[ℝ] F) {q : ℕ} (w : V → V [⋀^Fin q]→L[ℝ] F) :
-    tp A B (tp A' B' w) = tp (A' * A) (B * B') w := rfl
-
-theorem tp_one {q : ℕ} (w : V → V [⋀^Fin q]→L[ℝ] F) : tp 1 1 w = w := rfl
-
 end An
 
 section Geo
@@ -55,8 +50,6 @@ def Inv {q : ℕ} (w : G.Om q) : Prop := ∀ γ, G.act q γ w = w
 def IsFun (Φ : S → V → ℝ) : Prop :=
   (∀ s, ContDiffOn ℝ ∞ (Φ s) G.Y) ∧ (∀ γ s, ∀ p ∈ G.Y, Φ (G.σ γ s) (G.ρ γ p) = Φ s p) ∧
     ∀ s (t : ℝ), 0 < t → ∀ p ∈ G.Y, Φ s (t • p) = Φ s p
-
-theorem isFun_zero : IsFun G 0 := ⟨fun _ => contDiffOn_const, fun _ _ _ _ => rfl, fun _ _ _ _ _ => rfl⟩
 
 end Geo
 

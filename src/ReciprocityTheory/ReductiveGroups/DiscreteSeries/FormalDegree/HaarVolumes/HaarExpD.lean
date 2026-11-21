@@ -40,8 +40,6 @@ abbrev gV (ε : Fin n → Bool) : Submodule ℝ (Matrix (Fin n) (Fin n) ℂ) := 
 
 def gE (ε : Fin n → Bool) : GCo ε ≃ₗ[ℝ] gV ε := LinearEquiv.ofInjective (gL ε) (gL_injective ε)
 
-theorem gE_apply (ε : Fin n → Bool) (s : GCo ε) : ((gE ε s : gV ε) : Matrix (Fin n) (Fin n) ℂ) = gMat s := rfl
-
 def ujMat (ε : Fin n → Bool) : UJ ε →* Matrix (Fin n) (Fin n) ℂ :=
   (Units.coeHom _).comp (UJ ε).subtype
 

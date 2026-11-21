@@ -52,9 +52,6 @@ namespace ProjSpace
 
 variable (A : Type u) [CommRing A] {n : ℕ} (i : Fin (n + 1))
 
-local notation "Pn" => MvPolynomial (Fin (n + 1)) A
-local notation "xinv" => IsLocalization.Away.invSelf (S := ChartLoc A i) (X i : MvPolynomial (Fin (n + 1)) A)
-
 lemma algebraMap_X_mul_invSelf :
     algebraMap (MvPolynomial (Fin (n + 1)) A) (ChartLoc A i) (X i) * xinv = 1 :=
   IsLocalization.Away.mul_invSelf _
@@ -152,15 +149,6 @@ lemma polyToChart_chartToPoly : (polyToChart A i).comp (chartToPoly A i) = RingH
 def chartEquiv : Chart A i ≃+* MvPolynomial {j // j ≠ i} A :=
   RingEquiv.ofRingHom (chartToPoly A i) (polyToChart A i) (chartToPoly_polyToChart A i)
     (polyToChart_chartToPoly A i)
-
-instance [IsDomain A] : IsDomain (Chart A i) :=
-  (chartEquiv A i).toMulEquiv.isDomain
-
-instance [IsNoetherianRing A] : IsNoetherianRing (Chart A i) :=
-  isNoetherianRing_of_ringEquiv _ (chartEquiv A i).symm
-
-instance {k : Type u} [Field k] : UniqueFactorizationMonoid (Chart k i) :=
-  (chartEquiv k i).toMulEquiv.symm.uniqueFactorizationMonoid inferInstance
 
 end ProjSpace
 

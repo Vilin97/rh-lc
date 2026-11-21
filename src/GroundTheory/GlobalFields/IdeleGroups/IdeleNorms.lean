@@ -22,8 +22,6 @@ variable {K}
 
 @[simp] theorem adele_fst_one_apply (w : InfinitePlace K) : (1 : 𝔸[K]).1 w = 1 := rfl
 
-@[simp] theorem adele_snd_one_apply (v : HeightOneSpectrum (𝓞 K)) : (1 : 𝔸[K]).2 v = 1 := rfl
-
 theorem norm_eq_one_of_mul_eq_one {v : HeightOneSpectrum (𝓞 K)} {a b : v.adicCompletion K}
     (hab : a * b = 1) (ha : a ∈ v.adicCompletionIntegers K)
     (hb : b ∈ v.adicCompletionIntegers K) : ‖a‖ = 1 := by

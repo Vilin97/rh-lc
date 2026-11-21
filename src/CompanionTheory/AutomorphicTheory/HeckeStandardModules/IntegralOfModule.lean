@@ -11,8 +11,6 @@ namespace CompanionTheory.L3H
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W]
 
-local notation3 "L⁺" => maximalRealSubfield L
-
 section Loc
 
 variable (s : SplitPlace L) (n)
@@ -135,10 +133,6 @@ end Same
 section Int
 
 variable {R : Type} [CommRing R] [Algebra R ℂ]
-
-theorem integral_of_module [Module R W] [IsScalarTower R ℂ W] [IsNoetherianRing R] (N : Submodule R W) (hN : N ≠ ⊥)
-    (hfg : N.FG) (ν : ℂ) (hν : ∀ w ∈ N, ν • w ∈ N) : IsIntegral R ν :=
-  isIntegral_of_smul_mem_submodule N hN hfg ν hν
 
 end Int
 

@@ -1,4 +1,53 @@
-import Formalism.WachLatticeTwists.RealDisplaySplitting.GaloisTheoremThirdForms
+import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapSecondPlace
+import Formalism.WachLatticeTwists.SplitClassesAll.Statement
+import Formalism.WachLatticeTwists.SplitLocalLifts.Statement
+import Mathlib
+import Formalism.CoboundaryTransfers.Statement
+import Formalism.CoboundaryTransfers.StatementAPI
+import Formalism.WachLatticeTwists.LagrangeExtensionCocycles.StatementTop
+import Formalism.WachLatticeTwists.CharacterSplitJumps.WachTwistTheoremFromTorsionBound
+import Formalism.WachLatticeTwists.CoprimeLiftBounds.StatBridgeChiOne
+import Formalism.WachLatticeTwists.Statement
+import Formalism.WachLatticeTwists.HodgeTateChains.HodgeTateFiltrations.MinimalExponentAttained
+import Formalism.WachLatticeTwists.HodgeTateChains.InvariantsCohomologyData
+import Formalism.CharacterColumnKernels.Statement
+import Formalism.WachLatticeTwists.HodgeTateChains.HodgeTateFiltrations.Imports
+import Formalism.WachLatticeTwists.HodgeTateChains.HodgeTateFiltrations.Complete
+import Formalism.WachLatticeTwists.TorsionLengthCounts.SubmoduleLengthBoundStatement
+import Formalism.WachLatticeTwists.HodgeTateChains.H2KilledByTateDuality
+import Formalism.WachLatticeTwists.HodgeTateChains.Statement
+import Formalism.WindowSums.AnnihilatorPolynomials.ZpowVal
+import Formalism.WachLatticeTwists.RamifiedBlockRings.ChainFromPrimitiveData
+import Formalism.WachLatticeTwists.RealDisplaySplitting.SurjectionRankOneIdempotent
+import Formalism.WachLatticeTwists.RamifiedBlockRings.LocalToDisplayFree
+import Formalism.WachLatticeTwists.SplitLocalLifts.Cocycles1MapOfEquivariant
+import Formalism.WachLatticeTwists.LagrangeExtensionCocycles.DualWByLettersExtended
+import Formalism.WachLatticeTwists.SplitLocalLifts.SplitLocalLiftProofs.LocLift
+import Formalism.WachLatticeTwists.LatticeDualFibres.LatticeDualProofs.LocDualOrth
+import Formalism.WachLatticeTwists.LatticeDualFibres.LatticeDualProofs.QuotLen
+import Formalism.WachLatticeTwists.LatticeDualFibres.Statement
+import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
+import Formalism.WachLatticeTwists.LatticeDualFibres.FibreDualStable
+import Formalism.WachLatticeTwists.LatticeDualFibres.LatticeDualProofs.ExistsPowSmulIntegral
+import Formalism.WachLatticeTwists.LatticeDualFibres.StatDualFibreLattice
+import Formalism.WachLatticeTwists.CharacterSplitJumps.CharacterJumpProofs.MemAnnih
+import Formalism.WachLatticeTwists.CoprimeLiftBounds.CoprimeLiftProofs.FirstSummandActionMem
+import Formalism.WachLatticeTwists.CoprimeLiftBounds.CoprimeLiftProofs.TheoremNFiveDeltaClause
+import Formalism.WachLatticeTwists.CharacterSplitJumps.CharacterJumpProofs.PropLocBK
+import Formalism.WachLatticeTwists.CoprimeLiftBounds.CoprimeLiftProofs.Bridge
+import Formalism.CharacterColumnKernels.IdempotentNormalForms.CharacterColumnKernelsOfBlockChiCOfBlockChiOne
+import Formalism.WachLatticeTwists.TorsionLengthCounts.RowCol
+import Formalism.CharacterColumnKernels.CharacterColumnKernelEqualityForm
+import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthKerOfDetEqZero
+import Formalism.CharacterColumnKernels.IdempotentNormalForms.SingleEqSmul
+import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.TheoremNFiveReal
+import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.InRowRealOf
+import Formalism.LagrangeIdealLifts.Statement
+import Formalism.CoboundaryTransfers.GammaStableTransfers.MemCoboundariesOfIsOneCoboundary
+import Formalism.CoboundaryTransfers.GammaStableTransfers.GammaStableOfGammaQUnitHolds
+import Formalism.CoboundaryTransfers.GammaStableTransfers.DiffOneSmulOfTower
+import Formalism.WachLatticeTwists.RealDisplaySplitting.RealDisplayProofs.IdempotentRankOneAtPoint
+import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.TheoremNFiveRealAllLiftThird
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 
@@ -72,25 +121,11 @@ end Blocks
 section ZlStr
 variable {ℓ : ℕ} [Fact ℓ.Prime]
 
-abbrev zlMod (O : Type) [CommRing O] [Algebra ℤ_[ℓ] O] (M : Type) [AddCommGroup M] [Module O M] : Module ℤ_[ℓ] M :=
-  Module.compHom M (algebraMap ℤ_[ℓ] O)
-
-theorem zlTower (O : Type) [CommRing O] [Algebra ℤ_[ℓ] O] (M : Type) [AddCommGroup M] [Module O M] :
-    @IsScalarTower ℤ_[ℓ] O M _ _ (zlMod O M).toSMul :=
-  @IsScalarTower.mk ℤ_[ℓ] O M _ _ (zlMod O M).toSMul fun a b m => by
-    show (a • b) • m = algebraMap ℤ_[ℓ] O a • (b • m)
-    rw [Algebra.smul_def, mul_smul]
-
 end ZlStr
 
 section Lat
 variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {A : Type} [Ring A] [Algebra O A]
   {n : Type} [Fintype n] [DecidableEq n]
-
-instance {ℓ : ℕ} [Fact ℓ.Prime] [Algebra ℤ_[ℓ] O] (ρ : A →ₐ[O] Matrix n n O) :
-    Module ℤ_[ℓ] (LatM O O n ρ.toRingHom) := zlMod O _
-instance {ℓ : ℕ} [Fact ℓ.Prime] [Algebra ℤ_[ℓ] O] (ρ : A →ₐ[O] Matrix n n O) :
-    IsScalarTower ℤ_[ℓ] O (LatM O O n ρ.toRingHom) := zlTower O _
 
 def vOne (ρ : A →ₐ[O] Matrix n n O) (e₁ : A) (h : SurjectionRankOneIdempotent O A n ρ.toRingHom e₁) : LatM O O n ρ.toRingHom := h.choose
 
@@ -124,17 +159,13 @@ def lv (p : LeftId O x) : A := @Subtype.val A (· ∈ Submodule.span A ({x} : Se
 def lmk (a : A) (h : a ∈ Submodule.span A ({x} : Set A)) : LeftId O x := ⟨a, h⟩
 
 theorem lv_lmk (a : A) (h : a ∈ Submodule.span A ({x} : Set A)) : lv O x (lmk O x a h) = a := rfl
-theorem lv_add (p q : LeftId O x) : lv O x (p + q) = lv O x p + lv O x q := rfl
 theorem lv_smul (c : O) (p : LeftId O x) : lv O x (c • p) = c • lv O x p := rfl
-theorem lv_smulA (a : A) (p : LeftId O x) : lv O x (a • p) = a * lv O x p := rfl
 theorem lv_mem (p : LeftId O x) : lv O x p ∈ Submodule.span A ({x} : Set A) := p.2
 
 instance : SMulCommClass A O (LeftId O x) :=
   ⟨fun a c p => Subtype.ext (by
     show a * (c • lv O x p) = c • (a * lv O x p)
     exact mul_smul_comm c a _)⟩
-instance {ℓ : ℕ} [Fact ℓ.Prime] [Algebra ℤ_[ℓ] O] : Module ℤ_[ℓ] (LeftId O x) := zlMod O _
-instance {ℓ : ℕ} [Fact ℓ.Prime] [Algebra ℤ_[ℓ] O] : IsScalarTower ℤ_[ℓ] O (LeftId O x) := zlTower O _
 
 def incl : LeftId O x →ₗ[A] A := (Submodule.span A ({x} : Set A)).subtype
 
@@ -252,9 +283,6 @@ def gamM (ρ : A →ₐ[O] Matrix n n O) : (n → O) →ₗ[O] LatQ O n ρ.toRin
       rw [Finset.smul_sum]
       exact Finset.sum_congr rfl fun a _ => smul_comm _ _ _)
 
-theorem gamM_apply (ρ : A →ₐ[O] Matrix n n O) (t : n → O) (m : LatQ O n ρ.toRingHom) :
-    gamM ρ t m = ∑ a, t a • (m a : KO O) := rfl
-
 def lamM (ρ : A →ₐ[O] Matrix n n O) (w : n → O) : LatQ O n ρ.toRingHom →ₗ[O] KO O := gamM ρ w
 
 def piM (ρ : A →ₐ[O] Matrix n n O) (e₁ : A) (w : n → O) : FirstSummandSubmodule O e₁ →ₗ[O] (n → O) where
@@ -317,10 +345,6 @@ instance submoduleContinuousConstSMul {O M : Type} [Semiring O] [AddCommMonoid M
 section Top
 variable {O : Type} [CommRing O] {A : Type} [Ring A] [Algebra O A] [TopologicalSpace A] [IsTopologicalAddGroup A]
   [ContinuousConstSMul O A] (e₁ : A)
-
-example : TopologicalSpace (FirstSummandSubmodule O e₁) := inferInstance
-example : IsTopologicalAddGroup (FirstSummandSubmodule O e₁) := inferInstance
-example : ContinuousConstSMul O (FirstSummandSubmodule O e₁) := inferInstance
 
 theorem inc_cont : Continuous (FirstSummandSubmodule O e₁).subtype := continuous_subtype_val
 
@@ -433,14 +457,6 @@ variable {ℓ : ℕ} [Fact ℓ.Prime] {O : Type} [CommRing O] [IsDomain O] [IsDi
   {A : Type} [Ring A] [Algebra O A] [TopologicalSpace A] [IsTopologicalAddGroup A] [ContinuousConstSMul O A]
   {n : Type} [Fintype n] [DecidableEq n] (ρ : A →ₐ[O] Matrix n n O) (x e₁ : A)
 
-example : Module ℤ_[ℓ] (LatM O O n ρ.toRingHom) := inferInstance
-example : IsScalarTower ℤ_[ℓ] O (LatM O O n ρ.toRingHom) := inferInstance
-example : SMulCommClass A O (LeftId O x) := inferInstance
-example : Module ℤ_[ℓ] (LeftId O x) := inferInstance
-example : IsScalarTower ℤ_[ℓ] O (LeftId O x) := inferInstance
-example : IsTopologicalAddGroup (FirstSummandSubmodule O e₁) := inferInstance
-example : ContinuousConstSMul O (FirstSummandSubmodule O e₁) := inferInstance
-
 end Checks
 
 section Cont
@@ -468,10 +484,6 @@ theorem piM_cont (hO : PadicCoeff ℓ O) (hA : IsFGTop O A) (ρ : A →ₐ[O] Ma
     Continuous (piM ρ e₁ w) := by
   have := hO.ring
   exact (lin_cont hO hA (piA ρ w)).comp continuous_subtype_val
-
-theorem rho_cont (hO : PadicCoeff ℓ O) (hA : IsFGTop O A) (ρ : A →ₐ[O] Matrix n n O) : Continuous ρ := by
-  have := hO.ring
-  exact lin_cont hO hA ρ.toLinearMap
 
 end Cont
 

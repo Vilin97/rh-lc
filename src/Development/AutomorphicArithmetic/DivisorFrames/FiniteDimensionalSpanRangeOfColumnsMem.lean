@@ -1,6 +1,9 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.Gl2LocalToAdelicEmbedding
-import Development.AutomorphicArithmetic.LocalEmbeddings.ULieDefs
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DifferentiableOfIsSm
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.InducedSectionZFinite
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsBlockEmb
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ContinuousConjFin
 import Development.AbelianVarietyTheory.Definitions.Foundations.T2SpaceTensorProductFiniteExtension
 
 open scoped TensorProduct NNReal Matrix ComplexConjugate ContDiff

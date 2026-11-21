@@ -177,12 +177,6 @@ end Paths
 
 namespace Paths
 
-def chg {n : ℕ} (μ : ℕ → Fin n → ℤ) (c : ℤ) (N : ℕ) (i : ℕ) : Prop :=
-  colHeight (μ (i + 1)) c ≠ colHeight (μ i) c ∨ N ≤ i
-
-instance {n : ℕ} (μ : ℕ → Fin n → ℤ) (c : ℤ) (N : ℕ) : DecidablePred (chg μ c N) := fun i => by
-  unfold chg; infer_instance
-
 end Paths
 
 namespace Paths

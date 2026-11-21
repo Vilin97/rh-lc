@@ -229,15 +229,4 @@ def hodgeZeroZeroEquiv : letI := algΓ s; hodgeH s 0 0 ≃ₗ[k] Γ(X, ⊤) :=
 
 end Zero2
 
-example (s : X ⟶ Sp k) : Module k (hodgeH s 2 1) := inferInstance
-
-example : Nontrivial (hodgeH (𝟙 (Sp ℤ)) 0 0) :=
-  letI : Nontrivial Γ(Sp ℤ, ⊤) :=
-    (Scheme.ΓSpecIso (CommRingCat.of ℤ)).commRingCatIsoToRingEquiv.toEquiv.nontrivial
-  (hodgeZeroZeroEquiv (𝟙 (Sp ℤ))).toEquiv.nontrivial
-
-example {X' : Scheme.{0}} (s : X ⟶ Sp k) (f : X' ⟶ X) (r : k) (x : hodgeH s 1 1) :
-    hodgePull (s' := f ≫ s) rfl 1 1 (r • x) = r • hodgePull (s' := f ≫ s) rfl 1 1 x :=
-  map_smul _ r x
-
 end GlobalTheory.HodgeCoh

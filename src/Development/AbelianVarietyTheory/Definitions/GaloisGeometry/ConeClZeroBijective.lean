@@ -122,9 +122,6 @@ variable {R B : Type} [CommRing R] [CommRing B] [Algebra R B]
 def coneTerm (q : ℕ) : Om R B q →ₗ[R] Term F 0 q :=
   LinearMap.pi fun s ↦ (SemiHom.of_algHom (e (s.obj (Fin.last 0)))).mOm q
 
-theorem coneTerm_apply {q : ℕ} (ω : Om R B q) (s : ComposableArrows C 0) :
-    coneTerm e q ω s = (SemiHom.of_algHom (e (s.obj (Fin.last 0)))).mOm q ω := rfl
-
 include he in
 
 theorem dH_coneTerm {q : ℕ} (ω : Om R B q) : dH F 0 q (coneTerm e q ω) = 0 := by
@@ -239,25 +236,6 @@ variable {R : Type} [CommRing R] {C : Type u} [Category.{v} C] (F : C ⥤ CommAl
 
 def fn0 (B : Type) [CommRing B] [Algebra R B] : Om R B 0 ≃ₗ[R] B :=
   (exteriorPower.zeroEquiv B Ω[B⁄R]).restrictScalars R
-
-def fm1 (B : Type) [CommRing B] [Algebra R B] : Om R B 1 ≃ₗ[R] Ω[B⁄R] :=
-  (exteriorPower.oneEquiv B Ω[B⁄R]).restrictScalars R
-
-def toTot1 : Tot F 1 →ₗ[R] Tot1 F where
-  toFun c := (fun _ T' φ ↦ fn0 (F.obj T') (c ⟨(1, 0), rfl⟩ (ComposableArrows.mk₁ φ)),
-    fun T ↦ fm1 (F.obj T) (c ⟨(0, 1), rfl⟩ (ComposableArrows.mk₀ T)))
-  map_add' _ _ := Tot1.ext (fun _ T' _ ↦ map_add (fn0 (F.obj T')) _ _)
-    fun T ↦ map_add (fm1 (F.obj T)) _ _
-  map_smul' _ _ := Tot1.ext (fun _ _ _ ↦ LinearEquiv.map_smul _ _ _) fun _ ↦ LinearEquiv.map_smul _ _ _
-
-def toTot2 : Tot F 2 →ₗ[R] Tot2 F where
-  toFun c := (fun _ _ T'' φ ψ ↦ fn0 (F.obj T'') (c ⟨(2, 0), rfl⟩ (ComposableArrows.mk₂ φ ψ)),
-    fun _ T' φ ↦ fm1 (F.obj T') (c ⟨(1, 1), rfl⟩ (ComposableArrows.mk₁ φ)),
-    fun T ↦ c ⟨(0, 2), rfl⟩ (ComposableArrows.mk₀ T))
-  map_add' _ _ := Tot2.ext (fun _ _ T'' _ _ ↦ map_add (fn0 (F.obj T'')) _ _)
-    (fun _ T' _ ↦ map_add (fm1 (F.obj T')) _ _) fun _ ↦ rfl
-  map_smul' _ _ := Tot2.ext (fun _ _ _ _ _ ↦ LinearEquiv.map_smul _ _ _)
-    (fun _ _ _ ↦ LinearEquiv.map_smul _ _ _) fun _ ↦ rfl
 
 end Low
 

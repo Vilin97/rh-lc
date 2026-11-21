@@ -15,10 +15,6 @@ instance (B : Scheme.{0}) (q : ℕ) : HasSheafify (EtTop B) (ModuleCat.{1} (ULif
   have : EssentiallySmall.{1} B.Etale := inferInstance
   infer_instance
 
-instance (B : Scheme.{0}) (q : ℕ) : IsGrothendieckAbelian.{1} (SShv B q) := by
-  have : EssentiallySmall.{1} B.Etale := inferInstance
-  exact Sheaf.isGrothendieckAbelian_of_essentiallySmall _ _
-
 noncomputable instance (B : Scheme.{0}) (q : ℕ) : HasDerivedCategory.{2} (SShv B q) := HasDerivedCategory.standard _
 
 def OU (B : Scheme.{0}) (q : ℕ) : B.Etale ⥤ DerivedCategory (SShv B q) :=

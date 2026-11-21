@@ -18,9 +18,6 @@ def den {T O : Type} [CommRing T] [CommRing O] [Algebra T O] (t : nonZeroDivisor
     Algebra.algebraMapSubmonoid O (nonZeroDivisors T) :=
   ⟨algebraMap T O t, Submonoid.mem_map_of_mem _ t.2⟩
 
-@[simp] theorem den_coe {T O : Type} [CommRing T] [CommRing O] [Algebra T O] (t : nonZeroDivisors T) :
-    ((den (O := O) t : Algebra.algebraMapSubmonoid O (nonZeroDivisors T)) : O) = algebraMap T O t := rfl
-
 theorem exists_mk' {T O : Type} [CommRing T] [CommRing O] [Algebra T O] (x : GenFib T O) :
     ∃ (a : O) (t : nonZeroDivisors T), x = IsLocalization.mk' (GenFib T O) a (den t) := by
   obtain ⟨⟨a, m⟩, rfl⟩ := IsLocalization.mk'_surjective

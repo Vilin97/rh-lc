@@ -49,18 +49,11 @@ theorem mk' (hG : Finite G) (hfin : IsFinite π) (het : Etale π) (hon : Surject
     simp [← this]
 
 theorem finite (h : IsGal π hπ G act) : Finite G := GlobalTheory.ZM.IsGaloisCover.finite h
-theorem isFinite (h : IsGal π hπ G act) : IsFinite π := GlobalTheory.ZM.IsGaloisCover.fin h
 theorem etale (h : IsGal π hπ G act) : Etale π := GlobalTheory.ZM.IsGaloisCover.etale h
 theorem surjective (h : IsGal π hπ G act) : Surjective π := GlobalTheory.ZM.IsGaloisCover.onto h
 
 theorem act_comp (h : IsGal π hπ G act) (g : G) : act g ≫ π = π := by
   simpa using GlobalTheory.ZM.IsGaloisCover.inv h g⁻¹
-
-theorem act_mul (h : IsGal π hπ G act) (g g' : G) : act (g * g') = act g' ≫ act g := by
-  simpa using GlobalTheory.ZM.IsGaloisCover.mul h g'⁻¹ g⁻¹
-
-theorem act_one (h : IsGal π hπ G act) : act 1 = 𝟙 W := by
-  simpa using GlobalTheory.ZM.IsGaloisCover.one h
 
 theorem fibre (h : IsGal π hπ G act) (K : Type) [Field K] [IsAlgClosed K] (a b : Sp K ⟶ W) :
     a ≫ π = b ≫ π ↔ ∃! g : G, b = a ≫ act g := by
@@ -73,27 +66,6 @@ theorem fibre (h : IsGal π hπ G act) (K : Type) [Field K] [IsAlgClosed K] (a b
   · rintro ⟨g, hg, -⟩
     rw [hg, Category.assoc, h.act_comp]
 
-theorem fibre_cx (h : IsGal π hπ G act) (a b : CxPts sW (RingHom.id ℂ)) :
-    a.1 ≫ π = b.1 ≫ π ↔ ∃! g : G, b.1 = a.1 ≫ act g :=
-  h.fibre ℂ a.1 b.1
-
 end IsGal
-
-example : IsGal (Z := Sp ℂ) (W := Sp ℂ) (s := 𝟙 _) (sW := 𝟙 _) (𝟙 _) (by simp) Unit (fun _ => 𝟙 _) :=
-  IsGal.mk' inferInstance inferInstance inferInstance inferInstance (fun _ => by simp) (fun _ _ => by simp) rfl
-    (fun _ _ _ a b e => ⟨(), by simpa using e.symm, fun _ _ => rfl⟩)
-
-example (G : Type) [Group G] : ¬ IsGal (Z := Sp ℂ) (W := (∅ : Scheme.{0})) (s := 𝟙 _) (sW := Scheme.emptyTo _)
-    (Scheme.emptyTo _) (by simp) G (fun _ => 𝟙 _) := by
-  intro h
-  have := h.surjective
-  obtain ⟨x, -⟩ := (Scheme.emptyTo (Sp ℂ)).surjective (IsLocalRing.closedPoint ℂ)
-  exact isEmptyElim x
-
-example : ¬ IsGal (Z := Sp ℂ) (W := Sp ℂ) (s := 𝟙 _) (sW := 𝟙 _) (𝟙 _) (by simp) ℤˣ (fun _ => 𝟙 _) := by
-  intro h
-  obtain ⟨g, -, hu⟩ := (h.fibre ℂ (𝟙 _) (𝟙 _)).1 rfl
-  have := (hu 1 (by simp)).trans (hu (-1) (by simp)).symm
-  exact absurd this (by decide)
 
 end GlobalTheory.W1

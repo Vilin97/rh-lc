@@ -89,10 +89,6 @@ theorem awayMap_awayFrac (f : A) (φ : M →ₗ[A] N) (k : ℕ) (m : M) :
   rw [awayFrac_apply, awayFrac_apply]
   exact IsLocalizedModule.map_LocalizedModules _ _ _ _
 
-@[simp]
-theorem awayMap_id (f : A) : awayMap f (LinearMap.id : M →ₗ[A] M) = LinearMap.id :=
-  away_ext fun k m => by simp
-
 theorem awayMap_comp (f : A) (ψ : N →ₗ[A] P) (φ : M →ₗ[A] N) :
     awayMap f (ψ ∘ₗ φ) = awayMap f ψ ∘ₗ awayMap f φ :=
   away_ext fun k m => by simp
@@ -343,18 +339,9 @@ def homLocEmptyEquiv (n : ℤ) : ℳ n ≃ₗ[R] homLoc ℳ (∅ : Finset ι) n 
       rintro ⟨_, k, m, hm, rfl⟩
       exact ⟨⟨m, by simpa using hm⟩, Subtype.ext (awayFrac_eq_iff.2 ⟨0, by simp⟩)⟩⟩
 
-@[simp]
-theorem homLocEmptyEquiv_apply (n : ℤ) (m : ℳ n) :
-    homLocEmptyEquiv ι ℳ n m = toHomLoc ℳ ∅ n m := rfl
-
 def homLocSMul {p : MvPolynomial ι R} {d : ℤ} (hp : p ∈ polyGrading ι R d) (s : Finset ι)
     (n : ℤ) : homLoc ℳ s n →ₗ[R] homLoc ℳ s (n + d) :=
   (isGradedMap_lsmul (homLoc ℳ s) hp).piece n
-
-@[simp]
-theorem coe_homLocSMul {p : MvPolynomial ι R} {d : ℤ} (hp : p ∈ polyGrading ι R d) (s : Finset ι)
-    (n : ℤ) (z : homLoc ℳ s n) :
-    (homLocSMul ℳ hp s n z : LocalizedModule.Away (xProd R s) M) = p • z.1 := rfl
 
 theorem homLocSMul_bijective [Decomposition ℳ] {p : MvPolynomial ι R} {d : ℤ}
     (hp : p ∈ polyGrading ι R d) {s : Finset ι} {k : ℕ} (h : p ∣ xProd R s ^ k) (n : ℤ) :
@@ -372,11 +359,6 @@ def homLocMap {f : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMap ℳ 𝒩 f) 
     homLoc ℳ s n →ₗ[R] homLoc 𝒩 s n := (hf.awayMap s).piece n
 
 @[simp]
-theorem coe_homLocMap {f : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMap ℳ 𝒩 f) (s : Finset ι)
-    (n : ℤ) (z : homLoc ℳ s n) :
-    (homLocMap hf s n z : LocalizedModule.Away (xProd R s) N) = awayMap _ f z := rfl
-
-@[simp]
 theorem homLocMap_homLocMk {f : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMap ℳ 𝒩 f) (s : Finset ι)
     (n : ℤ) (k : ℕ) (m : ℳ (n + k * s.card)) :
     homLocMap hf s n (homLocMk ℳ s n k m) = homLocMk 𝒩 s n k (hf.piece _ m) :=
@@ -391,11 +373,6 @@ theorem homLocMap_homLocRes {f : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMa
     {s t : Finset ι} (h : s ⊆ t) (n : ℤ) (z : homLoc ℳ s n) :
     homLocMap hf t n (homLocRes ℳ h n z) = homLocRes 𝒩 h n (homLocMap hf s n z) :=
   Subtype.ext (awayMap_locRes X h f z.1)
-
-@[simp]
-theorem homLocMap_id (h : IsGradedMap ℳ ℳ (LinearMap.id : M →ₗ[MvPolynomial ι R] M))
-    (s : Finset ι) (n : ℤ) (z : homLoc ℳ s n) : homLocMap h s n z = z :=
-  Subtype.ext congr($(awayMap_id (M := M) (xProd R s)) z.1)
 
 theorem homLocMap_comp {g : N →ₗ[MvPolynomial ι R] P} {f : M →ₗ[MvPolynomial ι R] N}
     (hg : IsGradedMap 𝒩 𝒬 g) (hf : IsGradedMap ℳ 𝒩 f) (s : Finset ι) (n : ℤ) (z : homLoc ℳ s n) :
@@ -556,10 +533,6 @@ def homLocPiEquiv (s : Finset ι) (n : ℤ) :
     homLoc (grPi ℳ) s n ≃ₗ[R] ∀ k, homLoc (ℳ k) s n :=
   LinearEquiv.ofBijective _ (homLocMap_piProj_bijective ℳ s n)
 
-@[simp]
-theorem homLocPiEquiv_apply (s : Finset ι) (n : ℤ) (z : homLoc (grPi ℳ) s n) (k : κ) :
-    homLocPiEquiv ℳ s n z k = homLocMap (isGradedMap_piProj ι ℳ k) s n z := rfl
-
 end Pi
 
 section Cech
@@ -597,11 +570,6 @@ def grCubeMap {f : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMap ℳ 𝒩 f) 
     grCube ι ℳ n ⟶ grCube ι 𝒩 n :=
   Cube.homMk (fun s => homLocMap hf s n) fun h => homLocMap_homLocRes hf h n
 
-@[simp]
-theorem grCubeMap_id (h : IsGradedMap ℳ ℳ (LinearMap.id : M →ₗ[MvPolynomial ι R] M)) (n : ℤ) :
-    grCubeMap h n = 𝟙 _ :=
-  NatTrans.ext (funext fun s => ModuleCat.hom_ext (LinearMap.ext (homLocMap_id h s n)))
-
 theorem grCubeMap_comp {g : N →ₗ[MvPolynomial ι R] P} {f : M →ₗ[MvPolynomial ι R] N}
     (hg : IsGradedMap 𝒩 𝒬 g) (hf : IsGradedMap ℳ 𝒩 f) (n : ℤ) :
     grCubeMap (hg.comp hf) n = grCubeMap hf n ≫ grCubeMap hg n :=
@@ -615,15 +583,6 @@ theorem grCubeMap_zero (h : IsGradedMap ℳ 𝒩 (0 : M →ₗ[MvPolynomial ι R
 theorem grCubeMap_congr {f g : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMap ℳ 𝒩 f)
     (hg : IsGradedMap ℳ 𝒩 g) (h : f = g) (n : ℤ) : grCubeMap hf n = grCubeMap hg n := by
   subst h; rfl
-
-def grCubeIso [Decomposition ℳ] [Decomposition 𝒩] {e : M ≃ₗ[MvPolynomial ι R] N}
-    (he : IsGradedMap ℳ 𝒩 e.toLinearMap) (n : ℤ) : grCube ι ℳ n ≅ grCube ι 𝒩 n where
-  hom := grCubeMap he n
-  inv := grCubeMap he.symm n
-  hom_inv_id := by
-    rw [← grCubeMap_comp, grCubeMap_congr _ (IsGradedMap.id ι ℳ) (by simp), grCubeMap_id]
-  inv_hom_id := by
-    rw [← grCubeMap_comp, grCubeMap_congr _ (IsGradedMap.id ι 𝒩) (by simp), grCubeMap_id]
 
 variable [LinearOrder ι]
 
@@ -643,14 +602,6 @@ def grCechMap {f : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMap ℳ 𝒩 f) 
 abbrev grHMap {f : M →ₗ[MvPolynomial ι R] N} (hf : IsGradedMap ℳ 𝒩 f) (n : ℤ) (p : ℕ) :
     grH ι ℳ n p ⟶ grH ι 𝒩 n p := HomologicalComplex.homologyMap (grCechMap hf n) p
 
-@[simp]
-theorem grCechMap_id (h : IsGradedMap ℳ ℳ (LinearMap.id : M →ₗ[MvPolynomial ι R] M)) (n : ℤ) :
-    grCechMap h n = 𝟙 _ := congrArg cechComplexMap (grCubeMap_id h n)
-
-@[simp]
-theorem grCechMap_zero (h : IsGradedMap ℳ 𝒩 (0 : M →ₗ[MvPolynomial ι R] N)) (n : ℤ) :
-    grCechMap h n = 0 := congrArg cechComplexMap (grCubeMap_zero h n)
-
 theorem isIso_grCechMap [Decomposition ℳ] [Decomposition 𝒩] {f : M →ₗ[MvPolynomial ι R] N}
     (hf : IsGradedMap ℳ 𝒩 f)
     (h₁ : ∀ (i : ι) m, f m = 0 → ∃ k : ℕ, (X i : MvPolynomial ι R) ^ k • m = 0)
@@ -660,13 +611,7 @@ theorem isIso_grCechMap [Decomposition ℳ] [Decomposition 𝒩] {f : M →ₗ[M
 
 variable (ℳ) in
 
-def grCechShiftIso (d n : ℤ) : grCech ι (grShift ℳ d) n ≅ grCech ι ℳ (n + d) :=
-  (cechFunctor ι R).mapIso (grCubeShiftIso ℳ d n)
-
 variable (ℳ) in
-
-def grHShiftIso (d n : ℤ) (p : ℕ) : grH ι (grShift ℳ d) n p ≅ grH ι ℳ (n + d) p :=
-  HomologicalComplex.homologyMapIso (grCechShiftIso ℳ d n) p
 
 variable (ι ℳ) in
 
@@ -759,10 +704,6 @@ abbrev cubes (n : ℤ) : ShortComplex (Cube.{u} ι R) :=
 
 variable [LinearOrder ι]
 
-abbrev cech (n : ℤ) : ShortComplex (CochainComplex (ModuleCat.{u} R) ℕ) :=
-  ShortComplex.mk (grCechMap h.graded_f n) (grCechMap h.graded_g n)
-    ((h.cubes n).map (cechFunctor ι R)).zero
-
 variable [Decomposition ℳ] [Decomposition 𝒩] [Decomposition 𝒬]
 
 omit [LinearOrder ι] in
@@ -773,22 +714,6 @@ theorem cubes_shortExact (n : ℤ) (s : Finset ι) :
 
 theorem cubeComplex_shortExact (n : ℤ) : ((h.cubes n).map (cubeFunctor ι R)).ShortExact :=
   cubeFunctor_shortExact _ (h.cubes_shortExact n)
-
-theorem cech_shortExact (n : ℤ) : (h.cech n).ShortExact :=
-  cechFunctor_shortExact _ fun s _ => h.cubes_shortExact n s
-
-def δ (n : ℤ) (p : ℕ) : grH ι 𝒬 n p ⟶ grH ι ℳ n (p + 1) :=
-  (h.cech_shortExact n).δ p (p + 1) rfl
-
-theorem exact_δ_map (n : ℤ) (p : ℕ) :
-    Function.Exact (h.δ n p).hom (grHMap h.graded_f n (p + 1)).hom :=
-  (ShortComplex.ShortExact.moduleCat_exact_iff_function_exact _).1
-    ((h.cech_shortExact n).homology_exact₁ p (p + 1) rfl)
-
-theorem exact_map_δ (n : ℤ) (p : ℕ) :
-    Function.Exact (grHMap h.graded_g n p).hom (h.δ n p).hom :=
-  (ShortComplex.ShortExact.moduleCat_exact_iff_function_exact _).1
-    ((h.cech_shortExact n).homology_exact₃ p (p + 1) rfl)
 
 end GradedShortExact
 
@@ -810,18 +735,9 @@ variable [LinearOrder ι]
 
 variable (ι) in
 
-def grCechPiIso (n : ℤ) :
-    grCech ι (grPi ℳ) n ≅ cechComplex (Cube.directSum fun k => grCube ι (ℳ k) n) :=
-  (cechFunctor ι R).mapIso (grCubePiIso ι ℳ n)
-
 variable [Finite ι]
 
 variable (ι) in
-
-def grHPiEquiv [DecidableEq κ] (n : ℤ) (p : ℕ) :
-    grH ι (grPi ℳ) n p ≃ₗ[R] ⨁ k, grH ι (ℳ k) n p :=
-  (HomologicalComplex.homologyMapIso (grCechPiIso ι ℳ n) p).toLinearEquiv ≪≫ₗ
-    (cechHomologyDirectSumEquiv (fun k => grCube ι (ℳ k) n) p).symm
 
 theorem cubeComplex_grPi_exactAt_iff (n : ℤ) (p : ℕ) :
     (cubeComplex (grCube ι (grPi ℳ) n)).ExactAt p ↔
@@ -840,82 +756,11 @@ theorem xProd_smul_injective (s : Finset ι) :
     Function.Injective fun p : MvPolynomial ι R => xProd R s • p :=
   (IsRegular.prod fun _ _ => MvPolynomial.isRegular_X).left
 
-example (d : Fin 3 → ℤ) : Nonempty (Decomposition (grFree ι R d)) ∧
-    PolyGradedSMul ι (grFree ι R d) := ⟨⟨inferInstance⟩, inferInstance⟩
-
-example (d : ℤ) (i : ι) : (1 : MvPolynomial ι R) ∈ grShift (polyGrading ι R) (-d) d ∧
-    (X i : MvPolynomial ι R) ∈ grShift (polyGrading ι R) d (1 - d) :=
-  ⟨by simpa using SetLike.one_mem_graded _, by simpa using X_mem_polyGrading i⟩
-
-example (i j : ι) : awayFrac _ (xProd R {i}) 1 (X j) ∈ homLoc (polyGrading ι R) {i} 0 :=
-  awayFrac_mem_homLoc (X_mem_polyGrading j) (by simp)
-
-example [Nontrivial R] (i : ι) :
-    awayFrac _ (xProd R {i}) 1 1 ∈ homLoc (polyGrading ι R) {i} (-1) ∧
-      awayFrac (MvPolynomial ι R) (xProd R {i}) 1 1 ≠ 0 ∧
-      awayFrac _ (xProd R {i}) 1 1 ∉ homLoc (polyGrading ι R) {i} 1 := by
-  have h₁ : awayFrac _ (xProd R {i}) 1 1 ∈ homLoc (polyGrading ι R) {i} (-1) :=
-    awayFrac_mem_homLoc (SetLike.one_mem_graded _) (by simp)
-  have h₂ : awayFrac (MvPolynomial ι R) (xProd R {i}) 1 1 ≠ 0 :=
-    (map_ne_zero_iff _ (awayFrac_injective (xProd_smul_injective _) 1)).2 one_ne_zero
-  exact ⟨h₁, h₂, fun h => absurd (degree_eq_of_mem_mem _ h₁ h h₂) (by decide)⟩
-
-example : locRes (X : Fin 2 → MvPolynomial (Fin 2) ℤ) (MvPolynomial (Fin 2) ℤ)
-    (show ({0} : Finset (Fin 2)) ⊆ {0, 1} by decide) (awayFrac _ _ 1 1) =
-    awayFrac _ _ 1 (X 1) := by
-  rw [locRes_awayFrac X _ (c := X 1) (by simp [mul_comm])]
-  simp
-
-example : ¬ Limits.IsZero (grH (Fin 1) (polyGrading (Fin 1) ℤ) (-1) 0) := by
-  rw [← HomologicalComplex.exactAt_iff_isZero_homology, cochainComplex_exactAt_zero_iff,
-    grCech_d _ _ 0]
-  intro h
-  have := Cube.subsingleton_term (grCube (Fin 1) (polyGrading (Fin 1) ℤ) (-1)) (p := 2) (by simp)
-  let z : Cube.Term (grCube (Fin 1) (polyGrading (Fin 1) ℤ) (-1)) 1 := fun s =>
-    ⟨awayFrac _ _ 1 1, awayFrac_mem_homLoc (SetLike.one_mem_graded _) (by simp [s.2])⟩
-  have hz : z = 0 := h (Subsingleton.elim (α := Cube.Term _ 2) _ _)
-  exact (map_ne_zero_iff _ (awayFrac_injective (xProd_smul_injective {0}) 1)).2 one_ne_zero
-    (congrArg Subtype.val (congrFun hz ⟨{0}, rfl⟩))
-
-example : ¬ Limits.IsZero (grH (Fin 2) (polyGrading (Fin 2) ℤ) (-2) 1) := by
-  rw [← HomologicalComplex.exactAt_iff_isZero_homology, grCech_eq, cechComplex_exactAt_succ_iff _ 0]
-  intro h
-  have := Cube.subsingleton_term (grCube (Fin 2) (polyGrading (Fin 2) ℤ) (-2)) (p := 3) (by simp)
-  let z : homLoc (polyGrading (Fin 2) ℤ) ({0, 1} : Finset (Fin 2)) (-2) :=
-    ⟨awayFrac _ _ 1 1, awayFrac_mem_homLoc (SetLike.one_mem_graded _) (by simp)⟩
-  obtain ⟨x, hx⟩ := (h ((Cube.termTwoFinTwo (grCube (Fin 2) (polyGrading (Fin 2) ℤ) (-2))).symm
-    z)).1 (Subsingleton.elim _ _)
-  have e := Cube.d_one_finTwo _ x
-  rw [hx] at e
-  replace e := (LinearEquiv.apply_symm_apply _ _).symm.trans e
-  obtain ⟨a, ha⟩ := exists_awayFrac_of_mem_homLoc _ (Cube.termOneFinTwo _ x).1.2
-  obtain ⟨b, hb⟩ := exists_awayFrac_of_mem_homLoc _ (Cube.termOneFinTwo _ x).2.2
-  obtain ⟨p, -, hp⟩ := ha (1 + (a + b)) (by omega)
-  obtain ⟨q, -, hq⟩ := hb (1 + (a + b)) (by omega)
-  have e' : z.1 = locRes X _ (by decide) (Cube.termOneFinTwo _ x).2.1 -
-      locRes X _ (by decide) (Cube.termOneFinTwo _ x).1.1 := congrArg Subtype.val e
-  rw [← hp, ← hq, locRes_awayFrac X _ (c := X 0) (by simp),
-    locRes_awayFrac X _ (c := X 1) (by simp [mul_comm]), ← map_sub] at e'
-  have e'' := congrArg (coeff (Finsupp.single 0 (a + b) + Finsupp.single 1 (a + b)))
-    (awayFrac_injective (xProd_smul_injective _) _
-      ((awayFrac_add_pow_smul _ 1 (a + b) 1).trans e'))
-  clear * - e''
-  generalize a + b = c at e''
-  rw [smul_eq_mul, smul_eq_mul, smul_eq_mul, coeff_sub, X_pow_eq_monomial, X_pow_eq_monomial,
-    coeff_monomial_mul', coeff_monomial_mul', if_neg (by rw [Finsupp.single_le_iff]; simp),
-    if_neg (by rw [Finsupp.single_le_iff]; simp)] at e''
-  simp [xProd, mul_pow, X_pow_eq_monomial] at e''
-
 variable (ι R) in
 
 theorem operatorsCommute_id :
     OperatorsCommute (ι := ι) (R := R) (A := fun _ => R) fun _ _ => LinearMap.id :=
   fun _ _ _ _ => rfl
-
-example (n : ℤ) : PolyGradedSMul ι (GrSum.grading (operatorsCommute_id ι R)) ∧
-    Nonempty (Decomposition (GrSum.grading (operatorsCommute_id ι R))) ∧
-    Nonempty (R ≃ₗ[R] GrSum.grading (operatorsCommute_id ι R) n) :=
-  ⟨inferInstance, ⟨inferInstance⟩, ⟨GrSum.pieceEquiv (operatorsCommute_id ι R) n⟩⟩
 
 end Examples
 

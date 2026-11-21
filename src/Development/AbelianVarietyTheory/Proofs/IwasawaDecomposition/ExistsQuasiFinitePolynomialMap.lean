@@ -130,10 +130,6 @@ section lead
 variable {k : Type*} [Field k] {n : ℕ} (f : MvPolynomial (Fin (n + 1)) k)
 variable (v w : Fin (n + 1) →₀ ℕ)
 
-local notation3 "up" => 2 + f.totalDegree
-local notation3 "r" => fun (i : Fin (n + 1)) ↦ up ^ i.1
-local notation3 "T" => shear k n (2 + f.totalDegree)
-
 variable {f v} in
 private lemma lt_up (vlt : ∀ i, v i < up) : ∀ l ∈ List.ofFn v, l < up := by
   grind

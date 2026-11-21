@@ -29,10 +29,6 @@ open Classical in
 def psi0 {N : ℕ} (χ : DirichletCharacter ℂ N) (u : ℝ) : ℂ :=
   (∑ n ∈ Finset.Icc 1 ⌊u⌋₊, (abelian₂ n : ℂ) * χ (n : ZMod N)) - (if χ = 1 then (u : ℂ) else 0)
 
-def cn (x : ℝ) (n : ℕ) : ℝ := abelian₂ n * min 1 (x / n)
-
-def zz (x : ℝ) : ℝ := x ^ (400 : ℕ)
-
 def X1 (x eps : ℝ) : ℝ := Real.exp (x ^ (eps / 5))
 
 def X2 (x eps : ℝ) : ℝ := Real.exp (x ^ (eps / 5) * Real.log x ^ 2)
@@ -65,10 +61,6 @@ def chi0 (q d : ℕ) : Fin 4 → ℕ → ℂ
   | 2 => psDir q
   | 3 => fun a => chDir d a * psDir q a
 
-def IsCharE (n q d : ℕ) {N : ℕ} (χ : DirichletCharacter ℂ N) : Prop :=
-  χ.IsPrimitive ∧ ∃ (i : Fin 4) (ξ : DirichletCharacter ℂ (4 * n)), ξ.Even ∧
-    ∀ a : ℕ, a.Coprime (4 * n * q * d) → χ (a : ZMod N) = chi0 q d i a * ξ (a : ZMod (4 * n))
-
 def IsCharED (D : D7) {N : ℕ} (χ : DirichletCharacter ℂ N) : Prop :=
   χ.IsPrimitive ∧ ∃ ψ : D.R.GG →* ℂˣ, ∀ (a : ℕ) (h : a.Coprime D.host.condN),
     χ (a : ZMod N) = ((ψ (D.host.art (ZMod.unitOfCoprime a h)) : ℂˣ) : ℂ)
@@ -81,10 +73,6 @@ def BoxE (D : D7) (x eps : ℝ) : Prop :=
     (D.host.q ∣ N → ¬ D.host.d ∣ N → GoodFor (8 * (oddQS D : ℝ) * X1 x eps) χ)
 
 def NE (D : D7) : ℕ := D.host.QS * D.host.q * D.host.d
-
-def TailSum {N : ℕ} (χ : DirichletCharacter ℂ N) (z : ℝ) (S : ℂ) : Prop :=
-  Filter.Tendsto (fun M : ℕ => ∑ n ∈ Finset.Ioc ⌊z⌋₊ M, (abelian₂ n : ℂ) * χ (n : ZMod N) / n)
-    Filter.atTop (nhds S)
 
 theorem G_eq_Gfun (y : ℝ) : G y = Gfun y := by
   unfold G Gfun

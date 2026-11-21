@@ -15,8 +15,6 @@ open PositivityTheory.SiegelWeilFormula.TBij.Adp PositivityTheory.SiegelWeilForm
 local instance (priority := high) measTup' {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] :
     MeasurableSpace (κ → AF F) := borel _
 
-local instance borelTup' {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] : BorelSpace (κ → AF F) := ⟨rfl⟩
-
 private theorem integral_mul_star_eq_of_lintegral_norm_sq_eq {α : Type*} [MeasurableSpace α] {μ : Measure α} {u v u' v' : α → ℂ}
     (hu : MemLp u 2 μ) (hv : MemLp v 2 μ) (hu' : MemLp u' 2 μ) (hv' : MemLp v' 2 μ)
     (h : ∀ k : ℂ, ∫⁻ x, ‖v x + k * u x‖ₑ ^ 2 ∂μ = ∫⁻ x, ‖v' x + k * u' x‖ₑ ^ 2 ∂μ) :

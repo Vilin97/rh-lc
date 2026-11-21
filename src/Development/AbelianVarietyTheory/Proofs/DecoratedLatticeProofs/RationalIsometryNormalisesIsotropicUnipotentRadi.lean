@@ -16,8 +16,6 @@ namespace GlobalTheory.FrameNorm
 
 open Formalism.L2.Theta (mt)
 
-local infixl:70 " ⋆ₘ " => HMul.hMul
-
 set_option maxHeartbeats 1600000 in
 
 theorem norm : ∀ (D : D7) (V : HSp D) (r : ℕ) (C : Matrix (Fin V.rank) (Fin r) D.host.E), ∀ δ ∈ GQ V,

@@ -55,12 +55,6 @@ theorem nsmul_mod {n : ℕ} (a : ℕ) (y : A n) : a • y = (a % l ^ n) • y :=
   rw [add_nsmul, mul_comm, mul_nsmul, hA.pow_nsmul_eq_zero]
   simp
 
-theorem map_smul {m n : ℕ} (h : n ≤ m) (r : ℤ_[l]) (x : A m) : ρ m n (r • x) = r • ρ m n x := by
-  have : NeZero (l ^ m) := ⟨pow_ne_zero _ (Fact.out : l.Prime).ne_zero⟩
-  rw [hA.smul m, hA.smul n, map_nsmul, hA.nsmul_mod (PadicInt.toZModPow m r).val]
-  congr 1
-  rw [← PadicInt.cast_toZModPow n m h r, ZMod.cast_eq_val, ZMod.val_natCast]
-
 theorem exists_sec (P : ∀ m, A m → Prop) (hP : ∀ m n w, n ≤ m → P m w → P n (ρ m n w)) (hne : ∀ m, ∃ w, P m w) :
     ∃ y : ∀ m, A m, (∀ m, P m (y m)) ∧ ∀ m, ρ (m + 1) m (y (m + 1)) = y m := by
   have := hA.fin

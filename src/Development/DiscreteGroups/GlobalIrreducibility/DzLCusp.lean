@@ -112,8 +112,4 @@ namespace DiscreteGroups.sglob.DzType
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
-theorem lCusp : LCusp := by
-  intro E _ _ w g _ i hi n hn τ hτ σ hs
-  exact GlobalTheory.LocGL.IrrGL.isCusp_of.2 ⟨hn, DiscreteGroups.sglob.DzLc.isCuspidal_of_inflates i hi τ hτ σ hs⟩
-
 end DiscreteGroups.sglob.DzType

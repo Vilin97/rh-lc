@@ -266,16 +266,6 @@ theorem stable (α : 𝓞 E) (y : Vsp (dimPer Y.toData)) (hy : y ∈ lat (basis 
   obtain ⟨v, hv, rfl⟩ := (mem_lat_basis hx y).1 hy
   exact (mem_lat_basis hx _).2 ⟨(α : E) • v, Y.Λ.smul_mem α hv, scaled_smul _ x α v⟩
 
-theorem integral (y z : Vsp (dimPer Y.toData)) (hy : y ∈ lat (basis hx))
-    (hz : z ∈ lat (basis hx)) : ∃ k : ℤ, (Hf y z).im = k := by
-  obtain ⟨u, hu, rfl⟩ := (mem_lat_basis hx y).1 hy
-  obtain ⟨v, hv, rfl⟩ := (mem_lat_basis hx z).1 hz
-  obtain ⟨k, hk⟩ := Y.EF_int u hu v hv
-  rw [im_Hf_scaled hx]
-  rcases EF_eq_or Y.toData with h | h
-  · exact ⟨k, by rw [h, hk, Rat.cast_intCast]⟩
-  · exact ⟨-k, by rw [h, hk]; simp⟩
-
 theorem perfect (ψ : lat (basis hx) →+ ℤ) : ∃ y ∈ lat (basis hx), ∀ z : lat (basis hx),
     (ψ z : ℝ) = (Hf y (z : Vsp (dimPer Y.toData))).im := by
   let j : Y.Λ →+ lat (basis hx) :=
@@ -299,26 +289,6 @@ theorem perfect (ψ : lat (basis hx) →+ ℤ) : ∃ y ∈ lat (basis hx), ∀ z
 variable {w₀ : 𝓞 E} (hw : (w₀ : E) + cc (w₀ : E) = 1)
 
 include hw in
-theorem coe_one_sub : ((1 - w₀ : 𝓞 E) : E) = cc (w₀ : E) := by
-  rw [← sub_eq_iff_eq_add'.2 hw.symm]
-  simp
-
-theorem even_im_hermitian_sub : ∀ y ∈ lat (basis hx), ∀ z ∈ lat (basis hx), ∃ k : ℤ,
-    (Hf y (act w₀ z)).im - (Hf y (act (1 - w₀) z)).im - (Hf y z).im = 2 * k := by
-  intro y hy z hz
-  obtain ⟨k, hk⟩ := integral hx y _ hy (stable hx (1 - w₀) z hz)
-  have h : z = act w₀ z + act (1 - w₀) z := by
-    ext i
-    simp [act]
-    ring
-  refine ⟨-k, ?_⟩
-  have h2 := im_Hf_add_right y (act w₀ z) (act (1 - w₀) z)
-  rw [← h] at h2
-  push_cast
-  linarith
-
-def perTorus : PT E :=
-  torus r (dimPer_add Y.toData) (coe_one_sub hw) (stable hx) (even_im_hermitian_sub hx) (perfect hx)
 
 end Torus
 

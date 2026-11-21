@@ -51,10 +51,6 @@ theorem rlt_compact_int (v : HeightOneSpectrum (𝓞 F)) : CompactSpace 𝒪[v.a
   · exact (Valued.isClosed_integer (v.adicCompletion F)).isComplete.completeSpace_coe
   · exact inferInstanceAs (IsDiscreteValuationRing (v.adicCompletionIntegers F))
 
-theorem rlt_isCompact_int (v : HeightOneSpectrum (𝓞 F)) :
-    IsCompact (v.adicCompletionIntegers F : Set (v.adicCompletion F)) :=
-  isCompact_iff_compactSpace.2 (rlt_compact_int v)
-
 theorem rlt_isOpen_intAd : IsOpen (Formalism.UG.intAd F : Set (FiniteAdeleRing (𝓞 F) F)) := by
   have := RestrictedProduct.isOpen_forall_mem (R := fun v : HeightOneSpectrum (𝓞 F) => v.adicCompletion F)
     (A := fun v => (v.adicCompletionIntegers F : Set (v.adicCompletion F)))
@@ -83,9 +79,6 @@ end LocalCompact
 section Tens
 
 variable (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-
-local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
-local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
 
 attribute [local instance] Algebra.TensorProduct.rightAlgebra
 
@@ -197,8 +190,6 @@ section Alg
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E))
 
-local notation "𝒜" => E ⊗[F] Formalism.L2.Herm.Af F
-
 theorem rlt_inv_eq {u : GL (Fin n) 𝒜} (hu : u ∈ UAd hc n) :
     ((u⁻¹ : GL (Fin n) 𝒜) : Matrix (Fin n) (Fin n) 𝒜) =
       Formalism.UG.cT (Formalism.UG.sigR hc.sig (Formalism.L2.Herm.Af F)) (u : Matrix (Fin n) (Fin n) 𝒜) := by
@@ -279,8 +270,6 @@ section GLTop
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] (ST SG : Finset (Pl E)) (H : Subgroup (GLG E n SG))
-
-local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
 
 attribute [local instance] rlt_top rlt_topRing adeles_t2Space
 

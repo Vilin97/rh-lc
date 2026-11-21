@@ -39,17 +39,9 @@ noncomputable def shiftNegOneMap (β : L ⟶ L') : shiftNegOne L ⟶ shiftNegOne
       (shiftNegOneMapF_comm β n)).trans
       (congrArg (· ≫ shiftNegOneMapF β (n + 1)) (shiftNegOne_d L n)).symm
 
-@[reassoc]
 theorem shiftNegOneSuccHom_shiftNegOneMap_f (β : L ⟶ L') (n : ℕ) :
     shiftNegOneSuccHom L n ≫ (shiftNegOneMap β).f (n + 1) = β.f n ≫ shiftNegOneSuccHom L' n :=
   ModuleCat.hom_ext (LinearMap.ext fun _ => rfl)
-
-@[simp]
-theorem shiftNegOneMap_id : shiftNegOneMap (𝟙 L) = 𝟙 (shiftNegOne L) := by
-  ext n : 1
-  cases n with
-  | zero => exact ModuleCat.hom_ext (LinearMap.ext fun _ => rfl)
-  | succ n => rfl
 
 @[reassoc]
 theorem shiftNegOneHomologyHom_naturality (β : L ⟶ L') (n : ℕ) :
@@ -96,14 +88,6 @@ noncomputable def map (α : K ⟶ K') (β : L ⟶ L') (w : f ≫ β = α ≫ f')
     mappingCoconeNat f ⟶ mappingCoconeNat f' :=
   CochainComplex.ofHom (mapF α β) (mapF_comm α β w)
 
-@[simp]
-theorem map_id : map (𝟙 K) (𝟙 L) (by simp) = 𝟙 (mappingCoconeNat f) := by
-  ext n : 1
-  refine ModuleCat.hom_ext (LinearMap.ext fun (p : K.X n × shiftNegOneX L n) => Prod.ext rfl ?_)
-  cases n with
-  | zero => rfl
-  | succ n => rfl
-
 theorem map_comp (α : K ⟶ K') (β : L ⟶ L') (w : f ≫ β = α ≫ f') (α' : K' ⟶ K'')
     (β' : L' ⟶ L'') (w' : f' ≫ β' = α' ≫ f'') :
     map (α ≫ α') (β ≫ β') (by rw [reassoc_of% w, w', Category.assoc]) =
@@ -114,19 +98,12 @@ theorem map_comp (α : K ⟶ K') (β : L ⟶ L') (w : f ≫ β = α ≫ f') (α'
   | zero => rfl
   | succ n => rfl
 
-@[reassoc (attr := simp)]
-theorem map_fst (α : K ⟶ K') (β : L ⟶ L') (w : f ≫ β = α ≫ f') :
-    map α β w ≫ fst f' = fst f ≫ α :=
-  HomologicalComplex.hom_ext _ _ fun _ => ModuleCat.hom_ext (LinearMap.ext fun _ => rfl)
-
-@[reassoc (attr := simp)]
 theorem inr_map (α : K ⟶ K') (β : L ⟶ L') (w : f ≫ β = α ≫ f') :
     inr f ≫ map α β w = shiftNegOneMap β ≫ inr f' := by
   ext n : 1
   refine ModuleCat.hom_ext (LinearMap.ext fun y => Prod.ext ?_ rfl)
   exact (α.f n).hom.map_zero
 
-@[reassoc]
 theorem homologyδ_naturality (α : K ⟶ K') (β : L ⟶ L') (w : f ≫ β = α ≫ f') (n : ℕ) :
     homologyδ f n ≫ HomologicalComplex.homologyMap (map α β w) (n + 1) =
       HomologicalComplex.homologyMap β n ≫ homologyδ f' n := by

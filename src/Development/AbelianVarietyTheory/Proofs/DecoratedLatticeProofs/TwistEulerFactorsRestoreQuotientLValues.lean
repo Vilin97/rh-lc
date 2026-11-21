@@ -259,6 +259,3 @@ theorem restore_hval : ∀ (D : D7) (c : Com D) (w : Twist D), w.Is c → ∀ k 
     exact (hΛ i hi).2.2 n this.1 this.2
 
 end GlobalTheory.ChainTw.EulerAtTwist
-
-example : ∀ (D : D7) (c : Com D) (w : Twist D), w.Is c → ∀ k < D.R.m, (∀ H H₀, IsHval c (c.S : Set _) k H → IsHval c w.S₀ k H₀ → H₀ = H * ∏ PP ∈ w.Q, blockL c k PP) ∧ ∃ H₀, H₀ ≠ 0 ∧ IsHval c w.S₀ k H₀ :=
-  GlobalTheory.ChainTw.EulerAtTwist.restore_hval

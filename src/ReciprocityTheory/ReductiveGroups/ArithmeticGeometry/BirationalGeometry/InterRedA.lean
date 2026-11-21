@@ -126,21 +126,4 @@ theorem smooth_diag (R : AnLogRes P J e) {B : HermLine ι} (hB : IsSmoothHerm B)
     Real.log (B.h (R.lift ((R.A.chart j).symm y) ((R.A.chart j).symm y')))
   rw [h_eq_of_sameOrbit hB0 (R.compat _ _ _ ⟨R.mem_U _, hy'.2.2⟩)]
 
-theorem potOf_germ (R : AnLogRes P J e) {B : HermLine ι} (hB0 : B.a = 0) (j : Fin R.A.n)
-    (y : Fin e → ℂ) (hy : y ∈ (R.A.chart j).target) :
-    (fun y' => (potOf R B).φ ((R.A.chart j).symm y) ((R.A.chart j).symm y')) =ᶠ[𝓝 y]
-      fun y' => (LocPot.ofFun fun x => Real.log (B.h (R.lift x x))).φ ((R.A.chart j).symm y)
-        ((R.A.chart j).symm y') := by
-  have hev : ∀ᶠ y' in 𝓝 y, (R.A.chart j).symm y' ∈ R.U ((R.A.chart j).symm y) :=
-    ((R.A.chart j).continuousAt_symm hy).preimage_mem_nhds
-      ((R.isOpen_U _).mem_nhds (R.mem_U _))
-  filter_upwards [hev] with y' hy'
-  change Real.log (B.h (R.lift ((R.A.chart j).symm y) ((R.A.chart j).symm y'))) =
-    Real.log (B.h (R.lift ((R.A.chart j).symm y') ((R.A.chart j).symm y')))
-  rw [h_eq_of_sameOrbit hB0 (R.compat _ _ _ ⟨hy', R.mem_U _⟩)]
-
-def PotOfPotentialStatement : Prop :=
-  ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P J : Ideal (MRing ι)) (e : ℕ)
-    (R : AnLogRes P J e) (L : HermLine ι), IsSmoothHerm L → IsPotential R.A (potOf R L)
-
 end ReciprocityTheory.ChartRestriction.G.Geo

@@ -66,17 +66,11 @@ def precomp [IsCocomm R C] [IsCocomm R D] (A : Type*) [CommRing A] [Bialgebra R 
   map_one' := toPts_injective (map_one (pointsMap A h))
   map_mul' f g := toPts_injective (map_mul (pointsMap A h) (toPts f) (toPts g))
 
-@[simp] theorem precomp_ofConv [IsCocomm R C] [IsCocomm R D] (h : D →ₐc[R] C)
-    (f : WithConv (C →ₐc[R] A)) : (precomp A h f).ofConv = f.ofConv.comp h := rfl
-
 def postcomp (C : Type*) [CommRing C] [Bialgebra R C] [IsCocomm R C] (h : A →ₐc[R] B) :
     WithConv (C →ₐc[R] A) →* WithConv (C →ₐc[R] B) where
   toFun f := toConv (h.comp f.ofConv)
   map_one' := toPts_injective (map_one (ptsPush C (h : A →ₐ[R] B)))
   map_mul' f g := toPts_injective (map_mul (ptsPush C (h : A →ₐ[R] B)) (toPts f) (toPts g))
-
-@[simp] theorem postcomp_ofConv [IsCocomm R C] (h : A →ₐc[R] B)
-    (f : WithConv (C →ₐc[R] A)) : (postcomp C h f).ofConv = h.comp f.ofConv := rfl
 
 variable (R A) in
 
@@ -284,9 +278,6 @@ def dualMonoidHom :
     rfl
 
 omit [IsCocomm R A] in
-
-@[simp] theorem dualMonoidHom_ofConv (f : WithConv (C →ₐc[R] A)) :
-    (dualMonoidHom R A C f).ofConv = CartierDual.map f.ofConv := rfl
 
 theorem dual_mulBy (n : ℕ) : CartierDual.map (mulBy R A n) = mulBy R (CartierDual R A) n :=
   congrArg ofConv (map_pow (dualMonoidHom R A A) (toConv (BialgHom.id R A)) n)

@@ -50,61 +50,6 @@ theorem hTensor_coe (g : G) (a : H₁ ⊗[ℂ] H₂) :
     hTensor p₁ p₂ π₁ π₂ g a = TensorProduct.mapL (π₁ (p₁ g)) (π₂ (p₂ g)) a :=
   ContinuousLinearMap.completion_apply_coe _ a
 
-theorem IsTensorMap.apply (h : IsTensorMap p₁ p₂ π₁ π₂ π J) (g : G) (a : H₁ ⊗[ℂ] H₂) :
-    π g (J a) = J (TensorProduct.mapL (π₁ (p₁ g)) (π₂ (p₂ g)) a) := by
-  induction a using TensorProduct.induction_on with
-  | zero => simp
-  | tmul x y => exact h.2 g x y
-  | add a b ha hb => simp only [map_add, ha, hb]
-
-theorem isUnitaryRep_of_dense [TopologicalSpace G] (h1 : ∀ g v, ‖π g v‖ = ‖v‖) {A : Set H}
-    (hA : (Submodule.span ℂ A).topologicalClosure = ⊤) (h2 : ∀ v ∈ A, Continuous fun g => π g v) : IsUnitaryRep π := by
-  refine ⟨h1, fun v => ?_⟩
-  have h3 : ∀ v ∈ Submodule.span ℂ A, Continuous fun g => π g v := fun v hv => by
-    induction hv using Submodule.span_induction with
-    | mem v hv => exact h2 v hv
-    | zero => simpa only [map_zero] using continuous_const
-    | add a b _ _ ha hb => simp only [map_add]; exact ha.add hb
-    | smul c a _ ha => simp only [map_smul]; exact ha.const_smul c
-  have hv : v ∈ closure (Submodule.span ℂ A : Set H) := hA.ge Submodule.mem_top
-  refine TendstoUniformly.continuous (F := fun w g => π g w) (p := nhds v) ?_ ((mem_closure_iff_frequently.1 hv).mono h3)
-  refine Metric.tendstoUniformly_iff.2 fun ε hε => ?_
-  filter_upwards [Metric.ball_mem_nhds v hε] with w h g
-  rw [dist_eq_norm, ← map_sub, h1, ← dist_eq_norm, dist_comm]
-  exact h
-
-theorem IsTensorMap.dense_span (h : IsTensorMap p₁ p₂ π₁ π₂ π J) :
-    (Submodule.span ℂ {v | ∃ x y, v = J (x ⊗ₜ y)}).topologicalClosure = ⊤ :=
-  eq_top_iff.2 fun v _ => closure_mono (s := Set.range J) (by
-    rintro _ ⟨a, rfl⟩
-    induction a using TensorProduct.induction_on with
-    | zero => rw [map_zero]; exact zero_mem _
-    | tmul x y => exact Submodule.subset_span ⟨x, y, rfl⟩
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb) (h.1 v)
-
-theorem IsTensorMap.isUnitaryRep [TopologicalSpace G] [TopologicalSpace G₁] [TopologicalSpace G₂]
-    (h : IsTensorMap p₁ p₂ π₁ π₂ π J) (hp₁ : Continuous p₁) (hp₂ : Continuous p₂) (h₁ : IsUnitaryRep π₁)
-    (h₂ : IsUnitaryRep π₂) : IsUnitaryRep π := by
-  refine isUnitaryRep_of_dense (fun g v => ?_) h.dense_span ?_
-  · refine h.1.induction_on v (isClosed_eq (π g).continuous.norm continuous_norm) fun a => ?_
-    rw [h.apply, J.norm_map, J.norm_map, TensorProduct.mapL_apply]
-    exact TensorProduct.norm_map (⟨(π₁ (p₁ g) : H₁ →ₗ[ℂ] H₁), h₁.norm_apply _⟩ : H₁ →ₗᵢ[ℂ] H₁)
-      (⟨(π₂ (p₂ g) : H₂ →ₗ[ℂ] H₂), h₂.norm_apply _⟩ : H₂ →ₗᵢ[ℂ] H₂) a
-  · rintro _ ⟨x, y, rfl⟩
-    simp only [h.2]
-    exact J.continuous.comp ((TensorProduct.mkL ℂ H₁ H₂).continuous₂.comp
-      (((h₁.continuous_apply x).comp hp₁).prodMk ((h₂.continuous_apply y).comp hp₂)))
-
-theorem IsTensorMap.uEquiv [CompleteSpace H] (h : IsTensorMap p₁ p₂ π₁ π₂ π J) : UEquiv (hTensor p₁ p₂ π₁ π₂) π := by
-  let e : HTensor H₁ H₂ →ₗᵢ[ℂ] H := ⟨J.toContinuousLinearMap.fromCompletion.toLinearMap, fun z =>
-    Completion.induction_on z (isClosed_eq J.toContinuousLinearMap.fromCompletion.continuous.norm continuous_norm)
-      fun a => by simp⟩
-  have he : ∀ a : H₁ ⊗[ℂ] H₂, e a = J a := J.toContinuousLinearMap.fromCompletion_apply_coe
-  refine ⟨.ofSurjective e fun v => h.1.induction_on v e.isometry.isClosedEmbedding.isClosed_range fun a => ⟨a, he a⟩,
-    fun g z => Completion.induction_on z (isClosed_eq (by fun_prop) (by fun_prop)) fun a => ?_⟩
-  change e _ = π g (e a)
-  rw [hTensor_coe, he, he, h.apply]
-
 end Two
 
 section Many
@@ -144,10 +89,6 @@ theorem IsRestrTensor.finite_mulSupport (h : IsRestrTensor p δ ξ π B) (hy : R
     by_contra hn
     simp only [Set.mem_union, Set.mem_setOf_eq, Set.mem_compl_iff, not_or, not_not] at hn
     exact hi (by beta_reduce; rw [hn.1.1, hn.1.2, inner_self_eq_norm_sq_to_K, hn.2]; simp)
-
-theorem IsRestrTensor.inner_apply (h : IsRestrTensor p δ ξ π B) (hy : Restr ξ y) (hy' : Restr ξ y') (g : G) :
-    ⟪B y', π g (B y)⟫_ℂ = ∏ᶠ i, ⟪y' i, δ i (p i g) (y i)⟫_ℂ := by
-  rw [h.apply_pure g y hy, h.inner_pure _ _ (restr_map (f := fun i => δ i (p i g)) (h.fixed g) hy) hy']
 
 theorem IsRestrTensor.ext (h : IsRestrTensor p δ ξ π B) {v w : H} (e : ∀ y, Restr ξ y → ⟪B y, v⟫_ℂ = ⟪B y, w⟫_ℂ) :
     v = w := by
@@ -189,12 +130,6 @@ def restrRep (p : ∀ i, G →* Γ i) (σ : ∀ i, Representation ℂ (Γ i) (N 
     map_mul' := fun g g' => LinearMap.ext fun z => Subtype.ext (funext fun l => congrArg z.1 (Subtype.ext
       (funext fun i => by simp only [a, map_mul]; rfl))) }
 
-theorem pureT_ne_zero {s y : ∀ i, N i} (hy : Restr s y) (h0 : ∀ i, y i ≠ 0) : pureT s y ≠ 0 := fun e => by
-  choose l hl using fun i => Module.Projective.exists_dual_eq_one ℂ (h0 i)
-  obtain ⟨Λ, hΛ⟩ := pureT_sep s l (Set.Finite.subset hy fun i hi e' => hi (e' ▸ hl i))
-  have := hΛ y hy
-  simp [e, hl] at this
-
 def IsRestrTensorAlg (p : ∀ i, G →* Γ i) (σ : ∀ i, Representation ℂ (Γ i) (N i)) (s : ∀ i, N i)
     (ρ : Representation ℂ G W) : Prop :=
   (∀ᶠ i in cofinite, s i ≠ 0) ∧
@@ -214,25 +149,8 @@ def postRep (ρ : G →* (K →L[ℂ] K)) : Representation ℂ G (H →L[ℂ] K)
   map_one' := by ext; simp
   map_mul' a b := by ext; simp
 
-def homTensor (j₁ : G₁ →* G) (j₂ : G₂ →* G) (σ : Representation ℂ G₁ W) (δ : G₂ →* (H →L[ℂ] H))
-    (ρ : G →* (K →L[ℂ] K)) (U : Submodule ℂ K) : Submodule ℂ (W →ₗ[ℂ] (H →L[ℂ] K)) :=
-  homInto σ (postRep H (ρ.comp j₁)) (homIn δ (ρ.comp j₂) U)
-
-def multTensor (j₁ : G₁ →* G) (j₂ : G₂ →* G) (σ : Representation ℂ G₁ W) (δ : G₂ →* (H →L[ℂ] H))
-    (ρ : G →* (K →L[ℂ] K)) (U : Submodule ℂ K) : Cardinal := Module.rank ℂ (homTensor j₁ j₂ σ δ ρ U)
-
-def IsTensorCopy (j₁ : G₁ →* G) (j₂ : G₂ →* G) (σ : Representation ℂ G₁ W) (δ : G₂ →* (H →L[ℂ] H))
-    (ρ : G →* (K →L[ℂ] K)) (U : Submodule ℂ K) : Prop :=
-  ∃ T ∈ homTensor j₁ j₂ σ δ ρ ⊤, Function.Injective T ∧
-    (Submodule.span ℂ {v | ∃ w y, v = T w y}).topologicalClosure = U
-
 variable {j₁ : G₁ →* G} {j₂ : G₂ →* G} {σ : Representation ℂ G₁ W} {δ : G₂ →* (H →L[ℂ] H)} {ρ : G →* (K →L[ℂ] K)}
   {U U' : Submodule ℂ K} {T : W →ₗ[ℂ] (H →L[ℂ] K)}
-
-theorem mem_homTensor : T ∈ homTensor j₁ j₂ σ δ ρ U ↔ (∀ w y, T w y ∈ U) ∧
-    (∀ g w y, T (σ g w) y = ρ (j₁ g) (T w y)) ∧ ∀ g w y, T w (δ g y) = ρ (j₂ g) (T w y) :=
-  ⟨fun h => ⟨fun w => (h.1 w).1, fun g w y => DFunLike.congr_fun (h.2 g w) y, fun g w => (h.1 w).2 g⟩,
-    fun h => ⟨fun w => ⟨h.1 w, fun g => h.2.2 g w⟩, fun g w => ContinuousLinearMap.ext (h.2.1 g w)⟩⟩
 
 theorem injective_of_mem_homInto {X : Type} [AddCommGroup X] [Module ℂ X] {τ : Representation ℂ G₁ X}
     {C : Submodule ℂ X} {f : W →ₗ[ℂ] X} (hσ : σ.IsIrreducible) (hf : f ∈ homInto σ τ C) (h0 : f ≠ 0) :
@@ -377,12 +295,6 @@ theorem isRestrTensor_charRep {ι G : Type} {Γ : ι → Type} [Group G] [∀ i,
   apply_pure g y hy := by
     change (ψ g : ℂ) * ∏ᶠ i, y i = ∏ᶠ i, (χ i (p i g) : ℂ) * y i
     rw [finprod_mul_distrib (Set.Finite.subset (h g) fun i hi e => hi (by simp [show χ i (p i g) = 1 from e])) hy, hψ]
-
-example {G₁ G₂ : Type} [Group G₁] [Group G₂] (χ : G₁ →* Circle) (ψ : G₂ →* Circle) (g : G₁ × G₂) :
-    hTensor (.fst _ _) (.snd _ _) (charRep χ) (charRep ψ) g ((1 : ℂ) ⊗ₜ[ℂ] (1 : ℂ) : ℂ ⊗[ℂ] ℂ) =
-      (((χ g.1 : ℂ) * ψ g.2) • (1 : ℂ) ⊗ₜ[ℂ] (1 : ℂ) : ℂ ⊗[ℂ] ℂ) := by
-  rw [hTensor_coe, TensorProduct.mapL_tmul, ← TensorProduct.smul_tmul_smul]
-  rfl
 
 end GlobalTheory.AutMult
 

@@ -172,13 +172,6 @@ theorem heckeAct_eq_sum {f : G → ℂ} {v : V} (hfin : (range fun g => f g • 
 
 omit [IsTopologicalGroup G] [BorelSpace G] in
 
-theorem heckeAct_mem_of_forall {f : G → ℂ} {v : V} (hfin : (range fun g => f g • ρ g v).Finite)
-    {X : Submodule ℂ V} (hX : ∀ g, f g • ρ g v ∈ X) : heckeAct μ ρ f v ∈ X := by
-  rw [heckeAct_eq_sum hfin]
-  refine Submodule.sum_mem _ fun w hw => Submodule.smul_mem _ _ ?_
-  obtain ⟨g, rfl⟩ := (Set.Finite.mem_toFinset _).1 hw
-  exact hX g
-
 variable (μ) in
 
 theorem dual_heckeAct [IsFiniteMeasureOnCompacts μ] {f : G → ℂ}
@@ -367,14 +360,12 @@ def mk (f : G → ℂ) (hf : f ∈ locallyConstantCompactSupport G ℂ ℂ) : He
 theorem coe_mk (f : G → ℂ) (hf : f ∈ locallyConstantCompactSupport G ℂ ℂ) :
     (mk μ f hf : G → ℂ) = f := rfl
 
-@[ext]
 theorem ext {f g : HeckeAlgebra μ} (h : ∀ x, f x = g x) : f = g := DFunLike.ext _ _ h
 
 @[simp] theorem coe_add (f g : HeckeAlgebra μ) : ((f + g : HeckeAlgebra μ) : G → ℂ) = f + g := rfl
 @[simp] theorem coe_zero : ((0 : HeckeAlgebra μ) : G → ℂ) = 0 := rfl
 @[simp] theorem coe_smul (c : ℂ) (f : HeckeAlgebra μ) :
     ((c • f : HeckeAlgebra μ) : G → ℂ) = c • (f : G → ℂ) := rfl
-@[simp] theorem coe_neg (f : HeckeAlgebra μ) : ((-f : HeckeAlgebra μ) : G → ℂ) = -f := rfl
 @[simp] theorem coe_sub (f g : HeckeAlgebra μ) : ((f - g : HeckeAlgebra μ) : G → ℂ) = f - g := rfl
 
 instance : Mul (HeckeAlgebra μ) := ⟨fun f g => mk μ (groupConv μ f g) (groupConv_mem μ f.mem g.mem)⟩

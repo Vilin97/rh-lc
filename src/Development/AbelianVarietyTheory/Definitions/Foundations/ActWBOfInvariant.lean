@@ -249,34 +249,4 @@ theorem shArg_mem_fixMu [IsAlgClosure ℚ Ω] (M : ℕ) [NeZero M] (s : Ω ≃�
   rw [AlgEquiv.mul_apply, AlgEquiv.mul_apply, repM_apply M _ hz, cycM_apply M s (hz' _), hp, ← Units.val_mul,
     inv_mul_cancel_right, ← repM_apply (Ω := Ω) M y hz, ← AlgEquiv.mul_apply, inv_mul_cancel, AlgEquiv.one_apply]
 
-example : (sigN 3 5 : Matrix (Fin 2) (Fin 2) ℤ) = !![-35, 204; 6, -35] := by
-  have h : crtF 3 5 = 6 := by
-    haveI : Fact (Nat.Prime 5) := ⟨by norm_num⟩
-    have e : (((3 : ℕ) : ZMod 5))⁻¹ = 2 := inv_eq_of_mul_eq_one_right (by decide +revert)
-    rw [crtF, e]
-    rfl
-  simp [sigN, h]
-
-example (l N : ℕ) [Fact l.Prime] (hN : (N : ZMod l) ≠ 0) (r₀ : ZMod l) :
-    (![-r₀, -1] : Fin 2 → ZMod l) ᵥ* ((GlobalTheory.ZetaB.gR l N r₀ : Matrix (Fin 2) (Fin 2) ℤ).map (Int.castRingHom (ZMod l))) =
-      -![0, 1] := by
-  rw [← vecMul_gR l N hN r₀, ← Matrix.neg_vecMul]
-  congr 1
-  ext i
-  fin_cases i <;> simp
-
-example (l N : ℕ) (r₀ : ZMod l) :
-    (![1, 0] : Fin 2 → ℤ) ᵥ* (GlobalTheory.ZetaB.gR l N r₀ : Matrix (Fin 2) (Fin 2) ℤ) = ![1, 0] := by
-  ext i
-  fin_cases i <;> simp [GlobalTheory.ZetaB.gR, Matrix.vecMul, dotProduct, Fin.sum_univ_two]
-
-example (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (a : X.K) :
-    secT X l 1 a ![1, 0] = GlobalTheory.ZetaB.clsHat X l a ∧ secT X l 1 a ![0, 1] = 0 := by
-  simp [secT]
-
-example (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (s : Ω ≃ₐ[ℚ] Ω) (w : ℕ) (a : X.K) :
-    X.galB l s (secT X l w a) = secT X l w (X.gal s a) := by
-  unfold secT
-  rw [galB_section_zero, kmap_clsHat]
-
 end GlobalTheory.K4

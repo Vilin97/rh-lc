@@ -85,7 +85,6 @@ theorem y_comp_mulN (n : ℕ) : t.y n ≫ mulN A (p ^ n) = toUnit _ ≫ η[A] :=
 def toTorsion (n : ℕ) : SpAlg O (G.A n) ⟶ torsion A (p ^ n) :=
   pullback.lift (t.y n) (toUnit _) (t.y_comp_mulN n)
 
-@[reassoc (attr := simp)] theorem toTorsion_ι (n : ℕ) : t.toTorsion n ≫ torsion.ι A (p ^ n) = t.y n :=
   pullback.lift_fst _ _ _
 
 end PDivGroup.TorsionTower
@@ -153,13 +152,8 @@ def torsionIso (n : ℕ) : SpAlg O (G.A n) ≅ torsion A (p ^ n) :=
   haveI := t.isIso_toTorsion n
   asIso (t.toTorsion n)
 
-@[reassoc (attr := simp)] theorem torsionIso_hom_ι (n : ℕ) :
     (t.torsionIso n).hom ≫ torsion.ι A (p ^ n) = t.y n :=
   t.toTorsion_ι n
-
-@[reassoc (attr := simp)] theorem torsionIso_inv_y (n : ℕ) :
-    (t.torsionIso n).inv ≫ t.y n = torsion.ι A (p ^ n) := by
-  rw [Iso.inv_comp_eq, torsionIso_hom_ι]
 
 theorem isPullback_y : ∀ (p : ℕ) (O : Type) [CommRing O] (G : GlobalTheory.PDivGroup p O) (A : Over (Sp O))
     [GrpObj A] (t : G.TorsionTower A) (n : ℕ), IsPullback (t.y n) (toUnit _) (mulN A (p ^ n)) η[A] := by

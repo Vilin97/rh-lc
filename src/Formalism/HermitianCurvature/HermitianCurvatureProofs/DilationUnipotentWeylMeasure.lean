@@ -99,10 +99,6 @@ lemma dg_last (k r : ℕ) (t : ℝ) (a : Fin r) (h : ¬ a.val + 1 < r) :
 
 variable {k r : ℕ} {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
 
-lemma inLie_zero : inLie k r (0 : Mat k r) := by
-  unfold inLie
-  simp
-
 lemma inLie_add {X Y : Mat k r} (hX : inLie k r X) (hY : inLie k r Y) : inLie k r (X + Y) := by
   unfold inLie at *
   rw [Matrix.conjTranspose_add, add_mul, mul_add]
@@ -192,8 +188,6 @@ def mulR (X : Mat k r) : Mat k r →L[ℝ] Mat k r :=
 
 lemma mulL_apply (X g : Mat k r) : mulL X g = X * g := rfl
 
-lemma mulR_apply (X g : Mat k r) : mulR X g = g * X := rfl
-
 def vf (b : Bool) (X : Mat k r) : Mat k r →L[ℝ] Mat k r :=
   match b with
   | true => -(mulL X)
@@ -273,11 +267,6 @@ lemma natCast_succ_le (m : ℕ) :
   first
     | exact le_of_eq (by norm_cast)
     | exact le_of_eq (by simp)
-    | simp
-
-lemma one_le_cast (m : ℕ) : (1 : WithTop ℕ∞) ≤ (((m + 1 : ℕ) : ℕ∞) : WithTop ℕ∞) := by
-  first
-    | exact_mod_cast Nat.succ_le_succ (Nat.zero_le m)
     | simp
 
 lemma cast_ne_zero (m : ℕ) : (((m + 1 : ℕ) : ℕ∞) : WithTop ℕ∞) ≠ 0 := by
@@ -508,11 +497,6 @@ lemma W_smul (w : List (Bool × Mat k r)) (a : ℂ) (f : Mat k r → E) : W w (a
   induction w with
   | nil => rfl
   | cons x w ih => rw [W_cons, W_cons, ih, op_smul]
-
-lemma W_rsmul (w : List (Bool × Mat k r)) (a : ℝ) (f : Mat k r → E) : W w (a • f) = a • W w f := by
-  induction w with
-  | nil => rfl
-  | cons x w ih => rw [W_cons, W_cons, ih, op_rsmul]
 
 lemma W_sub {f f₂ : Mat k r → E} (w : List (Bool × Mat k r)) (hw : AllLie w)
     (hf : CkOn ((w.length : ℕ) : ℕ∞) (GV k r) f) (hf₂ : CkOn ((w.length : ℕ) : ℕ∞) (GV k r) f₂) :

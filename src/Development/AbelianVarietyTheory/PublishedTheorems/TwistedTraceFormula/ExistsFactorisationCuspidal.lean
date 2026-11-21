@@ -47,27 +47,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {H H' : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
   [NormedAddCommGroup H'] [InnerProductSpace ℂ H'] {π : GAd σ J →* (H →L[ℂ] H)} {π' : GAd σ J →* (H' →L[ℂ] H')}
 
-theorem isIsotypic_of_uEquiv {G X : Type} [Group G] [NormedAddCommGroup X] [InnerProductSpace ℂ X]
-    {δ : G →* (X →L[ℂ] X)} {ρ : G →* (H →L[ℂ] H)} {ρ' : G →* (H' →L[ℂ] H')} (e : UEquiv ρ ρ') (h : IsIsotypic δ ρ) :
-    IsIsotypic δ ρ' := by
-  obtain ⟨e, he⟩ := e
-  refine eq_top_iff.2 fun y _ => ?_
-  obtain ⟨x, rfl⟩ := e.surjective y
-  have : isoPart δ ρ ⊤ ≤ (isoPart δ ρ' ⊤).comap (e.toLinearEquiv : H →ₗ[ℂ] H') :=
-    isoPart_le ((Submodule.isClosed_topologicalClosure _).preimage e.continuous) fun T hT x =>
-      apply_mem_isoPart (T := (e : H →L[ℂ] H') ∘L T)
-        (mem_homIn_top.2 fun g x => (congrArg e (hT.2 g x)).trans (he g _)) x
-  exact this (h.ge Submodule.mem_top)
-
-theorem unique (hπ : IsIrrUnitary π) (e : UEquiv π' π) {R R' : ∀ v, IrrU (GPl σ J v)} {ξ : ∀ v, (R v).H}
-    {ξ' : ∀ v, (R' v).H} {B : (∀ v, (R v).H) → H} {B' : (∀ v, (R' v).H) → H'}
-    (h : IsFactorisation σ J (fun v => (R v).π) ξ π B) (h' : IsFactorisation σ J (fun v => (R' v).π) ξ' π' B')
-    (v : Pl F) : UEquiv (R v).π (R' v).π :=
-  haveI := hπ.complete
-  haveI := hπ.irred.1
-  IsIsotypic.uEquiv (R v).isIrr (R' v).isIrr (isUnitaryRep_comp hπ.unitary (continuous_embPl σ J v)) (h.hasCompPl v)
-    (isIsotypic_of_uEquiv (e.comp _) (h'.hasCompPl v))
-
 theorem exists_hasCompPl (h : FlathFactorisation) (hc : IsCMExt F E σ) (hJ : IsHermND σ J) (hπ : IsIrrUnitary π)
     (v : Pl F) : ∃ δ : IrrU (GPl σ J v), HasCompPl σ J v δ.π π :=
   let ⟨R, _, _, hR⟩ := h F E σ hc n J hJ H π hπ
@@ -129,11 +108,6 @@ theorem isUnramFactorisation_charRep (χ : ∀ v, GPl σ J v →* Circle) (hχ :
   refine ⟨hf, fun v => smRep_charRep (G := GLoc σ J v) (ho v), fun L _ => (hf.eventually_fixed L).mono fun v hv => ?_⟩
   refine le_antisymm (fun z _ => Submodule.mem_span_singleton.2 ⟨z, mul_one (z : ℂ)⟩)
     ((Submodule.span_singleton_le_iff_mem _ _).2 (LGrp.mem_fixed.2 hv))
-
-example : IsIrrUnitary (charRep (1 : GAd σ J →* Circle)) ∧ ∃ (R : ∀ v, IrrU (GPl σ J v)) (ξ : ∀ v, (R v).H)
-    (B : (∀ v, (R v).H) → ℂ), IsUnramFactorisation R ξ (charRep 1) B :=
-  ⟨isIrrUnitary_charRep continuous_const, _, _, _, isUnramFactorisation_charRep (fun _ => 1) (fun _ => continuous_const)
-    (fun _ => by simp) 1 (fun _ => .of_forall fun _ => rfl) fun _ => by simp⟩
 
 end Flath
 

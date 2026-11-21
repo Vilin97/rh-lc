@@ -19,8 +19,6 @@ variable {K : Type} [NormedField K]
 
 def Sim (f g : K⟦X⟧) : Prop := ∃ ρ : K, ‖ρ‖ = 1 ∧ f = C ρ * g
 
-theorem Sim.refl (f : K⟦X⟧) : Sim f f := ⟨1, norm_one, by simp⟩
-
 theorem Sim.symm {f g : K⟦X⟧} (h : Sim f g) : Sim g f := by
   obtain ⟨ρ, hρ, rfl⟩ := h
   have hne : ρ ≠ 0 := by

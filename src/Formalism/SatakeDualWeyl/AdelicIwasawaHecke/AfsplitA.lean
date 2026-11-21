@@ -9,8 +9,6 @@ open Formalism.UG
 section Adele
 variable {F : Type} [Field F] [NumberField F]
 
-local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
-
 theorem afsplit_add_apply (a b : 𝔸) (w : HeightOneSpectrum (𝓞 F)) : (a + b) w = a w + b w := rfl
 theorem afsplit_mul_apply (a b : 𝔸) (w : HeightOneSpectrum (𝓞 F)) : (a * b) w = a w * b w := rfl
 theorem afsplit_sub_apply (a b : 𝔸) (w : HeightOneSpectrum (𝓞 F)) : (a - b) w = a w - b w := rfl

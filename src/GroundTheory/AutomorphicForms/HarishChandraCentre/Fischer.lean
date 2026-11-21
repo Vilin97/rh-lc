@@ -36,8 +36,6 @@ noncomputable def rowDer (i j : Fin n) : Derivation ℂ (Poly n) (Poly n) :=
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
     ring
 
-@[simp] theorem rowDer_coe (i j : Fin n) : (rowDer i j : Module.End ℂ (Poly n)) = rowOp i j := rfl
-
 theorem rowDer_apply (i j : Fin n) (f : Poly n) : rowDer i j f = rowOp i j f := rfl
 
 theorem rowOp_comm_self (a i j : Fin n) :

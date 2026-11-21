@@ -201,8 +201,6 @@ theorem isAdmissibleBoxForCharacter_of_subset {s : kˣ} {g : (n → k) → ℂ}
   fun η hη t ht => h ht η (subset_tsupport _ hη)
 
 omit [MeasurableSpace k] [BorelSpace k] in
-theorem admitted.mono {s s' : kˣ} {g : (n → k) → ℂ} (h : admitted χ s g) (hs : box n s' ⊆ box n s) : admitted χ s' g :=
-  fun η hη t ht => h η hη t (hs ht)
 
 theorem ratio_indep (hχ : HasConductor χ c) (μ : Measure (n → k)) [μ.IsAddHaarMeasure]
     (B : SB (n → k) →ₗ[ℂ] SB (n → k) →ₗ[ℂ] ℂ)

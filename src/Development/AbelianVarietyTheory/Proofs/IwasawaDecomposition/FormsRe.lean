@@ -1,8 +1,7 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RedivisionStructureEq
 import Formalism.LocalToGlobal.GroupLattices.Joint0
-import Formalism.LocalToGlobal.NumberFieldFamilies.OwnStruct
-import Formalism.LocalToGlobal.IndefiniteReal.HeckeNonvanishing.Imports
+import Lean
 
 noncomputable section
 

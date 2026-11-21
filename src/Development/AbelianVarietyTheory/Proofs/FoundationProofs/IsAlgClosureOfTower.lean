@@ -123,10 +123,6 @@ theorem S_sub (ε : Ω →+* ℂ) (b : ℚ) {d : ℚ} (hd : 0 < d) (χ ψ : Hahn
     sub ε 1 b d (χ - ψ) = sub ε 1 b d χ - sub ε 1 b d ψ := by
   ext r; rw [HahnSeries.coeff_sub, coeff_S ε b hd, coeff_S ε b hd, coeff_S ε b hd, HahnSeries.coeff_sub, mul_sub]
 
-theorem S_smul (ε : Ω →+* ℂ) (b : ℚ) {d : ℚ} (hd : 0 < d) (c : Ω) (χ : HahnSeries ℚ Ω) :
-    sub ε 1 b d (c • χ) = c • sub ε 1 b d χ := by
-  ext r; rw [HahnSeries.coeff_smul, coeff_S ε b hd, coeff_S ε b hd, HahnSeries.coeff_smul, smul_eq_mul, smul_eq_mul]; ring
-
 theorem S_int [IsAlgClosed Ω] (ε : Ω →+* ℂ) (A : ValuationSubring Ω) (b : ℚ) {d : ℚ} (hd : 0 < d)
     {χ : HahnSeries ℚ Ω} (h : ∀ r, χ.coeff r ∈ A) (r : ℚ) : (sub ε 1 b d χ).coeff r ∈ A := by
   rw [coeff_S ε b hd]; exact mul_mem (eOm_mem ε A _) (h _)
@@ -210,12 +206,6 @@ theorem dv_inv [Algebra ℚ Ω] {A : ValuationSubring Ω} {l m : ℕ} (hl : 0 < 
   rw [sub_zero] at e ⊢
   rw [HahnSeries.C_mul_eq_smul, HahnSeries.coeff_smul, e, smul_eq_mul, pow_succ]
   field_simp
-
-theorem dv_of_succ {A : ValuationSubring Ω} {l m : ℕ} {χ : HahnSeries ℚ Ω} (h1 : Dv A l (m + 1) χ) : Dv A l m χ := by
-  intro r
-  obtain ⟨z, hz, e⟩ := h1 r
-  refine ⟨l * z, mul_mem (natCast_mem A l) hz, ?_⟩
-  rw [e, pow_succ]; ring
 
 theorem int_prod [Algebra ℚ Ω] {A : ValuationSubring Ω} (S : Finset ℕ) (F : ℕ → HahnSeries ℚ Ω) (h : ∀ j, ∀ r, (F j).coeff r ∈ A) :
     ∀ r, (∏ j ∈ S, F j).coeff r ∈ A := by
@@ -398,7 +388,3 @@ theorem dl_norm_uq : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosed Ω
     ring
 
 end GlobalTheory.UlCusp
-
-example : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosed Ω] (ε : Ω →+* ℂ) (X : Tower Ω ε) (A : ValuationSubring Ω) (l : ℕ) [Fact l.Prime] (n : ℕ), (l : Ω) ∈ A.nonunits →
-  ∀ (f : X.K) (φ : HahnSeries ℚ Ω), X.sl (ofSL ModularGroup.T) f = f → IsDl X A l (n + 1) 1 f φ →
-    IsDl X A l n 1 (nrmT X l (X.sl (toGQ !![1, 0; 0, (l : ℤ)]) f)) (uq l φ) := GlobalTheory.UlCusp.dl_norm_uq

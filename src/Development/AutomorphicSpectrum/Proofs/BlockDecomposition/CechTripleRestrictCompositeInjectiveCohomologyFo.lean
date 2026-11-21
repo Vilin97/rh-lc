@@ -15,10 +15,6 @@ def secA {X X' : Scheme.{0}} {s : X ⟶ Sp R} {s' : X' ⟶ Sp R} {φ : X' ⟶ X}
     (h : φ ≫ s = s' ≫ spMap (RingHom.id R)) (p : Pair φ) : Sec s p.1.2.1 →ₐ[R] Sec s' p.1.1.1 :=
   { secPull s s' p with commutes' := (semiHom_secPull h p).map_algebraMap }
 
-theorem secA_apply {X X' : Scheme.{0}} {s : X ⟶ Sp R} {s' : X' ⟶ Sp R} {φ : X' ⟶ X}
-    (h : φ ≫ s = s' ≫ spMap (RingHom.id R)) (p : Pair φ) (x : Sec s p.1.2.1) :
-    secA h p x = secPull s s' p x := rfl
-
 theorem kunneth_open (A B : Over (Sp R)) (U : A.left.affineOpens) (V : B.left.affineOpens) :
     ∃ hV : IsAffineOpen ((fst A B).left ⁻¹ᵁ U.1 ⊓ (snd A B).left ⁻¹ᵁ V.1),
       Function.Bijective (Algebra.TensorProduct.lift
@@ -325,8 +321,6 @@ def toAlg (m : CoefMap (RingHom.id R) F G) (T : D) : F.obj (m.G.obj T) →ₐ[R]
       rw [Algebra.algebraMap_eq_smul_one, m.smul, map_one, ← Algebra.algebraMap_eq_smul_one]
       rfl }
 
-theorem toAlg_apply (m : CoefMap (RingHom.id R) F G) (T : D) (x : F.obj (m.G.obj T)) :
-    toAlg m T x = m.α T x := rfl
 end
 
 section Main2

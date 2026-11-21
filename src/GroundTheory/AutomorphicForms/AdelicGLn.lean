@@ -30,12 +30,6 @@ abbrev InfiniteAdelicGL : Type _ := GL (Fin n) (InfiniteAdeleRing K)
 
 abbrev FiniteAdelicGL : Type _ := GL (Fin n) (FiniteAdeleRing (𝓞 K) K)
 
-theorem isTopologicalGroup : IsTopologicalGroup (AdelicGL K n) :=
-  inferInstance
-
-theorem t2Space : T2Space (AdelicGL K n) :=
-  inferInstance
-
 theorem locallyCompactSpace : LocallyCompactSpace (AdelicGL K n) :=
   inferInstance
 
@@ -117,17 +111,6 @@ def restrictedProductEquiv :
       continuous_invFun := ((infiniteEquiv K n).symm.continuous.comp continuous_fst).prodMk
         ((finiteRestrictedEquiv K n).symm.continuous.comp continuous_snd) }
 
-@[simp]
-theorem restrictedProductEquiv_apply_fst (g : AdelicGL K n) (w : InfinitePlace K) (a b : Fin n) :
-    (restrictedProductEquiv K n g).1 w a b = (g a b).1 w :=
-  rfl
-
-@[simp]
-theorem restrictedProductEquiv_apply_snd (g : AdelicGL K n) (v : HeightOneSpectrum (𝓞 K))
-    (a b : Fin n) :
-    ((restrictedProductEquiv K n g).2 v : GL (Fin n) (v.adicCompletion K)) a b = (g a b).2 v :=
-  rfl
-
 theorem eventually_mem_integralGL (g : AdelicGL K n) :
     ∀ᶠ v in cofinite, (restrictedProductEquiv K n g).2 v ∈
       GLnLocal.integralGL (v.adicCompletion K) n :=
@@ -207,10 +190,6 @@ theorem isCompact_integralFiniteGL :
   simp only [SetLike.mem_coe, integralFiniteGL, Submonoid.mem_units_iff, Set.mem_preimage,
     Set.mem_prod, Units.embedProduct_apply, Subring.mem_toSubmonoid]
   exact Iff.rfl
-
-def integralFiniteOpenSubgroup : OpenSubgroup (FiniteAdelicGL K n) where
-  toSubgroup := integralFiniteGL K n
-  isOpen' := isOpen_integralFiniteGL K n
 
 theorem totallyDisconnectedSpace_of_injective {X Y : Type*} [TopologicalSpace X]
     [TopologicalSpace Y] [TotallyDisconnectedSpace Y] {f : X → Y} (hf : Continuous f)

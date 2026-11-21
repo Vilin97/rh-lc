@@ -171,8 +171,6 @@ theorem apply_coe_mem (τ : E →ₐ[F] Fv F v) (x : 𝓞 E) : τ x ∈ v.adicCo
 def splitInt (τ : E →ₐ[F] Fv F v) : 𝓞 E →+* v.adicCompletionIntegers F :=
   ((τ : E →+* Fv F v).comp (algebraMap (𝓞 E) E)).codRestrict _ (apply_coe_mem τ)
 
-@[simp] theorem coe_splitInt (τ : E →ₐ[F] Fv F v) (x : 𝓞 E) : (splitInt τ x : Fv F v) = τ x := rfl
-
 theorem mem_maximalIdeal_iff_valued {a : v.adicCompletionIntegers F} :
     a ∈ IsLocalRing.maximalIdeal (v.adicCompletionIntegers F) ↔ Valued.v (a : Fv F v) < 1 :=
   Valuation.mem_maximalIdeal_iff _ _

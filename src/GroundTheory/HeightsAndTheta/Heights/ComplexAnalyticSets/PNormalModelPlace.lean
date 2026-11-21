@@ -172,21 +172,13 @@ end NormalModelPlace
 end
 
 set_option hygiene false in
-local notation "𝒜" => MvPolynomial (Fin n) ℂ
 set_option hygiene false in
-local notation "ℬ" => MvPolynomial (Fin n ⊕ Fin M.m) ℂ
 set_option hygiene false in
-local notation "𝒪" => curveLocalRing J (IndefiniteRowSideFullHecke.ComplexSets.firstCoords w)
 set_option hygiene false in
-local notation "𝒪̄" => curveNormalisation J (IndefiniteRowSideFullHecke.ComplexSets.firstCoords w)
 set_option hygiene false in
-local notation "𝒯" => pointLocalRing M.ideal w
 set_option hygiene false in
-local notation "𝒦" => FractionRing (curveLocalRing J (IndefiniteRowSideFullHecke.ComplexSets.firstCoords w))
 set_option hygiene false in
-local notation "ℱ" => FractionRing (pointLocalRing M.ideal w)
 set_option hygiene false in
-local notation "𝔏" => Localization.AtPrime (RingHom.ker (eval w : MvPolynomial (Fin n ⊕ Fin M.m) ℂ →+* ℂ))
 
 noncomputable section
 

@@ -342,10 +342,7 @@ def mk (x : Ω) (hx : valuation Ω x < 1) : IdealPoint Ω F := ⟨x, hx⟩
 @[simp]
 theorem val_mk (x : Ω) (hx : valuation Ω x < 1) : (mk x hx : IdealPoint Ω F).val = x := rfl
 
-@[ext]
 theorem ext {x y : IdealPoint Ω F} (h : x.val = y.val) : x = y := Subtype.ext h
-
-theorem val_injective : Function.Injective (val : IdealPoint Ω F → Ω) := fun _ _ => ext
 
 end IdealPoint
 
@@ -386,9 +383,6 @@ instance : Neg (IdealPoint Ω F) where
 theorem IdealPoint.val_add (x y : IdealPoint Ω F) :
     (x + y).val = psEval F.toPowerSeries ![x.val, y.val] := rfl
 
-theorem IdealPoint.val_neg (x : IdealPoint Ω F) :
-    (-x).val = psEval (inv F : MvPowerSeries Unit 𝒪[K]) fun _ => x.val := rfl
-
 def evalPoint {σ : Type*} [Finite σ] (x : σ → IdealPoint Ω F) (p : F.Point σ) :
     IdealPoint Ω F :=
   IdealPoint.mk (psEval p.val fun i => (x i).val)
@@ -427,12 +421,6 @@ theorem evalPoint_neg {σ : Type*} [Finite σ] (x : σ → IdealPoint Ω F) (p :
   rw [evalPoint_val, FormalGroup.neg_point_val, PowerSeries.subst,
     psEval_subst' (fun _ => constantCoeff_point_val p) _ _ fun i => (x i).valuation_lt_one]
   rfl
-
-theorem psEval_apply_val {σ : Type*} [Finite σ] (φ : Hom F G) (p : F.Point σ) (x : σ → Ω)
-    (hx : ∀ i, valuation Ω (x i) < 1) :
-    psEval (φ.apply p).val x = psEval φ.toPowerSeries fun _ => psEval p.val x := by
-  rw [Hom.apply_val, PowerSeries.subst,
-    psEval_subst' (fun _ => constantCoeff_point_val p) _ _ hx]
 
 instance instAddGroup : AddGroup (IdealPoint Ω F) where
   add_assoc a b c := by
@@ -527,9 +515,6 @@ def endPointMap [F.IsComm] : Hom F F →+* AddMonoid.End (IdealPoint Ω F) where
   map_zero' := AddMonoidHom.ext fun x => Hom.pointMap_zero x
   map_add' f g := AddMonoidHom.ext fun x => Hom.pointMap_add f g x
 
-theorem endPointMap_apply [F.IsComm] (φ : Hom F F) (x : IdealPoint Ω F) :
-    endPointMap Ω F φ x = φ.pointMap x := rfl
-
 def Iso.pointEquiv (e : Iso F G) : IdealPoint Ω F ≃+ IdealPoint Ω G where
   toFun := e.hom.pointMap
   invFun := e.inv.pointMap
@@ -571,10 +556,6 @@ variable {π : 𝒪[K]} {hπ : Irreducible π} {f g : PowerSeries 𝒪[K]}
 noncomputable instance instModuleLubinTate {hf : IsLubinTateSeries π f} :
     Module 𝒪[K] (IdealPoint Ω (lubinTateFormalGroup hπ hf)) :=
   Module.compHom _ ((endPointMap Ω _).comp (lubinTateEndRingHom hπ hf))
-
-theorem lubinTate_smul_eq (hf : IsLubinTateSeries π f) (a : 𝒪[K])
-    (x : IdealPoint Ω (lubinTateFormalGroup hπ hf)) :
-    a • x = (lubinTateHom hπ hf hf a).pointMap x := rfl
 
 theorem lubinTate_smul_val (hf : IsLubinTateSeries π f) (a : 𝒪[K])
     (x : IdealPoint Ω (lubinTateFormalGroup hπ hf)) :

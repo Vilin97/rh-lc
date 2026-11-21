@@ -33,13 +33,4 @@ theorem rt0_ne_zero {E : Type} [Field E] [NumberField E] [IsCMField E] (H : Host
   simp at hsq
   exact H.d_prime.ne_zero hsq
 
-theorem comp_s_eq_spMap_of_isOver {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Tor.Level H}
-    {Xo : Moduli D l} {c : Coeff l} {Y : Model Xo c (algebraMap (𝓞 c.F) c.F)} {S : Finset ℕ} {Ω : Type} [Field Ω]
-    {K : Type} [Fintype K] {J : K → Type} {y : (Σ k, J k) → Ω} {𝔐 : HodgeCpt Y S y} {z : Sp ℂ ⟶ 𝔐.X} {κ : c.F →+* ℂ}
-    {p : Sp ℂ ⟶ Xo.X} (h : IsOver 𝔐 z κ p) :
-    p ≫ Xo.s = spMap (κ.comp (IntermediateField.inclusion c.le).toRingHom) := by
-  obtain ⟨x, -, rfl, h₂⟩ := h
-  rw [Category.assoc, pullback.condition, ← Category.assoc, h₂]
-  exact (Spec.map_comp _ _).symm
-
 end GlobalTheory.CompanionTheory.Ar.Cusp.FamEx

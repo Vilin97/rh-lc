@@ -9,8 +9,6 @@ namespace LateralTheory.E.TruncationInclusionIso
 section Gen
 variable {C : Type*} [Category C] [HasZeroMorphisms C] [HasZeroObject C]
 
-local notation "eG" => ComplexShape.embeddingUpIntGE
-
 abbrev sT (K : CochainComplex C ℤ) (a : ℤ) : CochainComplex C ℤ := (K.restriction (eG a)).extend (eG a)
 
 def comp (K : CochainComplex C ℤ) (a : ℤ) {k : ℕ} {i : ℤ} (hk : (eG a).f k = i) : (sT K a).X i ⟶ K.X i :=

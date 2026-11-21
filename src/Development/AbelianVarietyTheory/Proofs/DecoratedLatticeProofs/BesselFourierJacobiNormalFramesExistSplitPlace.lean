@@ -71,8 +71,6 @@ namespace Place
 variable {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (p : Place D k)
 variable {n : Type} [Fintype n] [DecidableEq n] {ρ : ℕ} {s : k}
 
-theorem pr_eq : p.pr = ⇑(p.π.comp (incA D)) := rfl
-
 theorem xi_ne_zero : p.xi ≠ 0 := (map_ne_zero (p.π.comp (incA D))).2 (GlobalTheory.DualPairCompare.embedding_xi_zero_ne_zero D)
 
 theorem hz_ne_zero (B : BesLev D ρ) : p.hz B ≠ 0 := (map_ne_zero (p.π.comp (incA D))).2 B.line.2

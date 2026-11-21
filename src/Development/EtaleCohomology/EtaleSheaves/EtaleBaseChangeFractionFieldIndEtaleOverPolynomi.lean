@@ -51,11 +51,6 @@ theorem RE.of_comp_right {q : ℕ} {i : ℤ} {A B C : CommRingCat.{0}} {f : A �
   have := hfg n
   rw [h] at this; exact (Function.Bijective.of_comp_iff' (hg n) _).1 this
 
-theorem RE.id (q : ℕ) (i : ℤ) (A : CommRingCat.{0}) : RE q i (𝟙 A) := fun n => by
-  have h : ⇑(pull _ (sch.map (Spec.map (𝟙 A))) (tw q i) n) = _root_.id := by
-    funext x; rw [Spec.map_id, CategoryTheory.Functor.map_id, pull_id]; rfl
-  rw [h]; exact Function.bijective_id
-
 theorem RE.of_isIso (q : ℕ) (i : ℤ) {A B : CommRingCat.{0}} (f : A ⟶ B) [IsIso f] : RE q i f := fun n => by
   have h1 : ∀ x, pull _ (sch.map (Spec.map (inv f))) (tw q i) n (pull _ (sch.map (Spec.map f)) (tw q i) n x) = x := fun x => by
     rw [← pull_comp, ← Functor.map_comp, ← Spec.map_comp, IsIso.hom_inv_id, Spec.map_id, CategoryTheory.Functor.map_id, pull_id]

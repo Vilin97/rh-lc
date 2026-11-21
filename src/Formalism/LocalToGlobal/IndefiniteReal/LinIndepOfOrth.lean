@@ -129,8 +129,6 @@ section Fin
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-local instance instCMHostN (D : Formalism.BasicNotions.D7) : IsCMField D.host.E := D.host.isCMField_hostE
-
 variable {D : Formalism.BasicNotions.D7} {Y : Formalism.BasicNotions.TH.HSp D} {n : ℕ} {Sp : D.what₂.Tau → SPar}
 variable (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))
 

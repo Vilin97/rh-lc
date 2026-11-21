@@ -28,8 +28,6 @@ variable [Algebra R A] [Algebra R B] {D E : Type} [CommRing D] [Algebra R D] [Co
 def ev (x : A →ₐ[R] D) (z : B →ₐ[R] D) : A ⊗[R] B →ₐ[R] D :=
   Algebra.TensorProduct.lift x z fun _ _ => Commute.all _ _
 
-@[simp] theorem ev_tmul (x : A →ₐ[R] D) (z : B →ₐ[R] D) (a : A) (b : B) : ev x z (a ⊗ₜ b) = x a * z b := rfl
-
 theorem ev_comp_left (x : A →ₐ[R] D) (z : B →ₐ[R] D) : (ev x z).comp Algebra.TensorProduct.includeLeft = x :=
   AlgHom.ext fun a => by simp
 
@@ -249,28 +247,6 @@ theorem exists_of_cubical [IsCommMonObj (A ⊗ B)] (hAB : IsAbelianScheme (A ⊗
   exact ⟨w, fun n => ⟨U n, (UU.cubWeil_iff_weilIs globalFns_holds hAB (hU n).1 (hU n).2.1 _).1 (hU n),
     fun χ => (hw n χ).trans (tensorToHom_apply _ _)⟩⟩
 
-theorem exists_of_isDual (hC : GlobalTheory.Published.CubeTheorem) (hA : IsAbelianScheme A) (hB : IsAbelianScheme B)
-    {P : LB (A ⊗ B).left} (hP : IsDual A B P) {𝒜 ℬ : PDivGroup p R} (t : 𝒜.TorsionTower A)
-    (s : ℬ.TorsionTower B) : ∃ w : 𝒜 ⟶ ℬ.dual, IsWeilHom t s P w := by
-  have hAB := AbelianSchemeGerms.isAbelianScheme_tensor A B hA hB
-  have := hAB.comm
-  obtain ⟨r, hr⟩ : AbLaw.Triv (P.pull (eSec (A ⊗ B))) := by
-    have e := (AbDual.triv_ev_iff hP.isLB _ _).2
-      (AbDual.evc_one_right hP.isLB hP.zero (1 : 𝟙_ (Over (Sp R)) ⟶ A))
-    have e' : CartesianMonoidalCategory.lift (1 : 𝟙_ (Over (Sp R)) ⟶ A) (1 : 𝟙_ (Over (Sp R)) ⟶ B) = η[A ⊗ B] := by
-      ext <;> simp [Hom.one_def]
-    rw [AbDual.ev, e'] at e
-    exact e
-  obtain ⟨τ, hτ⟩ := triv_theta hC hAB hP.isLB
-  obtain ⟨τ', hτ', hn⟩ := AbLaw.Cube.exists_normalised hP.isLB τ hτ
-  exact exists_of_cubical hAB
-    (AbLaw.Cube.cubicalOfNormalised globalFns_holds hAB ⟨P, r, hP.isLB, hr⟩ τ' hτ' hn) t s
-
 end Geo
-
-theorem exists_isWeilHom : GlobalTheory.Published.CubeTheorem → ∀ (p : ℕ) [Fact p.Prime] (K : Type) [Field K] (A : Over (Sp K))
-    [GrpObj A], IsAbelianScheme A → ∀ (P : LB (A ⊗ A).left), IsDual A A P →
-    ∀ (𝒜 : PDivGroup p K) (t : 𝒜.TorsionTower A), ∃ w : 𝒜 ⟶ 𝒜.dual, IsWeilHom t t P w :=
-  fun hC _ _ _ _ _ _ hA _ hP _ t => exists_of_isDual hC hA hA hP t t
 
 end GlobalTheory.WeilHom

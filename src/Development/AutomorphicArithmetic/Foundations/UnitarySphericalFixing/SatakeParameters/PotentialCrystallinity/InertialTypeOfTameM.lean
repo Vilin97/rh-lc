@@ -48,8 +48,6 @@ theorem inertialType_of_tame_m : ∀ (R : Ranks) (H : Host R) (what₂ : Rows.Da
     rw [T.inePol _ _ _ hσ, eV, WeilDeligne.WD.inePol_sum, inePol_of_unr u1 hσ,
       inePol_char_of_unr u2 (L.dim 1 c) hσ hz, L.dim, L.dim]
 
-example : type_of% @inertialType_of_tame := @inertialType_of_tame_m
-
 end GlobalTheory.TameType
 end
 
@@ -75,8 +73,6 @@ theorem locDZ_of_split_reg_m : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL
     exact ⟨hm1, WD.unr_mono0 _ hu⟩
   · unfold labAt at hl1 hlab ⊢
     rw [e1, WD.lab_lpSum, e2, lab_lpChar_of_unr _ _ _ _ hu (L.dim _ _) u hlab, hl1, L.dim]
-
-example : type_of% @locDZ_of_split_reg := @locDZ_of_split_reg_m
 
 end GlobalTheory.DepthZeroAssembly
 end

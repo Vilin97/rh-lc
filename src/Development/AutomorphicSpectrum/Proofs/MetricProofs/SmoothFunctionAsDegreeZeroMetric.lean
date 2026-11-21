@@ -16,8 +16,6 @@ namespace GlobalTheory.CompanionTheory.Ar.PB
 open GroundTheory.Heights₂.Heights.LowerBoundFree
 open scoped Manifold
 
-local notation "𝕟" => ((⊤ : ℕ∞) : WithTop ℕ∞)
-
 namespace SmoothExt
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]

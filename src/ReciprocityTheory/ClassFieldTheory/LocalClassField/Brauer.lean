@@ -92,6 +92,4 @@ theorem invBr_res (hK : FiniteDimensional ℚ_[p] K) (hL : FiniteDimensional ℚ
 
 variable (p K) in
 
-noncomputable def h2EquivBrauer : H2 (kbarRep p K) ≃+ Br p K := (lowEquiv2 (kbarT p K)).symm.toAddEquiv
-
 end ReciprocityTheory.DiscreteGroups.LocalClassField

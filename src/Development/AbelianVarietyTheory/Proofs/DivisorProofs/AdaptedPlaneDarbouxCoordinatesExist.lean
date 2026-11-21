@@ -34,9 +34,6 @@ def colSplit : Matrix (Fin n) (Fin (d₁ + 2)) A ≃ₗ[R] Matrix (Fin n) (Fin d
     rcases w with ⟨Z, b, a⟩
     ext <;> simp
 
-@[simp] theorem colSplit_apply (Y : Matrix (Fin n) (Fin (d₁ + 2)) A) : colSplit (R := R) Y =
-    (Matrix.of fun i a => Y i (Fin.castAdd 2 a), (fun i => Y i (Fin.natAdd d₁ 1), fun i => Y i (Fin.natAdd d₁ 0))) := rfl
-
 def glueC (e₁ : Matrix (Fin n) (Fin d₁) A ≃ₗ[R] (Fin n × Fin d₁ → R) × (Fin n × Fin d₁ → R))
     (p q : (Fin n → A) ≃ₗ[R] (Fin n × Fin 2 → R)) :
     Matrix (Fin n) (Fin (d₁ + 2)) A ≃ₗ[R] (Fin n × Fin (d₁ + 2) → R) × (Fin n × Fin (d₁ + 2) → R) :=

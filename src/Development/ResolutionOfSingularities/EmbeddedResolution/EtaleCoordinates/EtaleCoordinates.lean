@@ -156,37 +156,6 @@ theorem eq_sum_smul_partialDeriv [Fintype ι] (D : Derivation k S S) :
     ← partialDeriv_apply]
   exact mul_comm _ _
 
-private theorem exists_basisDerivation [Fintype ι] [DecidableEq ι] :
-    ∃ b : Module.Basis ι S (Derivation k S S), ∀ i : ι, b i = partialDeriv k ι S i := by
-  have hli : LinearIndependent S (partialDeriv k ι S) := by
-    rw [linearIndependent_iff']
-    intro s g hg j hj
-    have h0 : (∑ i ∈ s, g i • partialDeriv k ι S i) (coord k ι S j) = 0 := by
-      rw [hg]
-      simp
-    rw [sum_smul_derivation_apply k ι S g (partialDeriv k ι S)
-      (coord k ι S j) s] at h0
-    have key : ∑ i ∈ s, g i * partialDeriv k ι S i (coord k ι S j)
-        = g j * partialDeriv k ι S j (coord k ι S j) := by
-      refine Finset.sum_eq_single j ?_ ?_
-      · intro i _ hij
-        rw [partialDeriv_coord_of_ne k ι S i j hij, mul_zero]
-      · intro hj'
-        exact absurd hj hj'
-    rw [key, partialDeriv_coord_self, mul_one] at h0
-    exact h0
-  have hsp : ⊤ ≤ Submodule.span S (Set.range (partialDeriv k ι S)) :=
-    (span_range_partialDeriv k ι S).ge
-  exact ⟨Module.Basis.mk hli hsp, fun i => Module.Basis.mk_apply hli hsp i⟩
-
-noncomputable def basisDerivation [Fintype ι] [DecidableEq ι] :
-    Module.Basis ι S (Derivation k S S) :=
-  (exists_basisDerivation k ι S).choose
-
-@[simp] theorem basisDerivation_apply [Fintype ι] [DecidableEq ι] (i : ι) :
-    basisDerivation k ι S i = partialDeriv k ι S i :=
-  (exists_basisDerivation k ι S).choose_spec i
-
 end
 
 end EtaleCoordinates

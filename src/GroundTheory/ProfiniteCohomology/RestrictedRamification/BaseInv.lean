@@ -9,8 +9,6 @@ open IsDedekindDomain NumberField CategoryTheory GroundTheory.Global
 
 open scoped DirectSum
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1))) (n : ℕ)

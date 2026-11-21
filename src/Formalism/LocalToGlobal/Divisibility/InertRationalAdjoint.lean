@@ -68,12 +68,6 @@ structure InertRationalAdjoint : Prop where
     B.S.csum (D.opI k f : B.S.Cl → B.S.V) (g : B.S.Cl → B.S.V) =
       B.S.csum (f : B.S.Cl → B.S.V) (D.opI k' g : B.S.Cl → B.S.V)
 
-structure OkLat3 : Prop where
-
-  nab : ∀ k, ∀ x ∈ B.S.nabLat, (LinearMap.toMatrix B.S.basis B.S.basis (D.opI k)).mulVec x ∈ B.S.nabLat
-
-  del : ∀ k, ∀ x ∈ B.S.delLat, (LinearMap.toMatrix B.S.basis B.S.basis (D.opI k)).mulVec x ∈ B.S.delLat
-
 def Stable3 (Z : Submodule K B.S.Forms) : Prop := ∀ i, Z ≤ Z.comap (D.opAll i)
 
 end InertDat3
@@ -146,10 +140,6 @@ structure Ok3 (s : ℕ) : Prop where
 
 def IsType3 {B : BlockDat K G Pl0} (D : InertDat3 B I0 Ty) (f : Typ3 K Pl0 I0 Ty → Typ3 K Pl0 I0 Ty) (x : D.OpIx → K) : Prop :=
   ∃ p ∈ (F3.RI F3.F.μ0).ixFin3 F3.F.X, D.HasRes3 (f p) x
-
-def SameTypes3 (P : Subgroup G) (ψ : P →* Kˣ) (Zs : DefSub F3.amb3) : Prop :=
-  ∀ j, (F3.F.L j F3.F.μ0).Z0 (F3.F.lvlA P ψ) (Zs.Zl j F3.F.μ0) ≤
-    (F3.F.L j F3.F.μ0).inV0 (F3.F.lvlA P ψ) (Col.eigSum (F3.LI j F3.F.μ0).opAll (F3.IsType3 (F3.LI j F3.F.μ0) (F3.tr3 j)))
 
 def TypesSep3 : Prop :=
   ∀ p ∈ (F3.RI F3.F.μ0).ixFin3 F3.F.X, ∀ p' ∈ (F3.RI F3.F.μ0).ixFin3 F3.F.X, p ≠ p' →

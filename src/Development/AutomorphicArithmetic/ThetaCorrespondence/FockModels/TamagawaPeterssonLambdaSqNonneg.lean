@@ -683,6 +683,3 @@ end GlobalTheory.CovTop.LamCore
 
 end
 end
-
-example : type_of% @UpperTheory.Lit.Tam.tamagawa_weight_bound = type_of% @GlobalTheory.T.antitone_weight_log_bound := rfl
-example : type_of% @UpperTheory.Lit.Tam.integral_cusp_slope_power_bound = type_of% @GlobalTheory.T.slope_max_squared_bound := rfl

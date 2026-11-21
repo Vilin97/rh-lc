@@ -16,9 +16,6 @@ private lemma sι_eq {n : ℕ} (C : Fin n → Type) [∀ i, CommRing (C i)] (i :
     sι C i = Sigma.ι (fun i => Spec (CommRingCat.of (C i))) i ≫ sigmaSpec (fun i => CommRingCat.of (C i)) :=
   (ι_sigmaSpec (fun i => CommRingCat.of (C i)) i).symm
 
-private instance {n : ℕ} (C : Fin n → Type) [∀ i, CommRing (C i)] (i : Fin n) : IsOpenImmersion (sι C i) := by
-  rw [sι_eq]; infer_instance
-
 private theorem bijective_sheaf_sigma_restrict {P : Scheme.{0}ᵒᵖ ⥤ Type 1}
     (hP : Presieve.IsSheaf Scheme.zariskiTopology P) {n : ℕ} (X : Fin n → Scheme.{0}) :
     Function.Bijective (fun (s : P.obj (op (∐ X))) (i : Fin n) => P.map (Sigma.ι X i).op s) := by

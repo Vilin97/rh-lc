@@ -59,11 +59,6 @@ theorem isUnimod_permR {k : ℕ} (σ : Equiv.Perm (Fin k)) :
 def blk {m n : ℕ} (a : L) (A : Matrix (Fin m) (Fin n) L) : Matrix (Fin (m+1)) (Fin (n+1)) L :=
   Matrix.of fun i j => Fin.cases (Fin.cases a (fun _ => 0) j) (fun i' => Fin.cases 0 (fun j' => A i' j') j) i
 
-@[simp] theorem blk_zero_zero {m n : ℕ} (a : L) (A : Matrix (Fin m) (Fin n) L) : blk a A 0 0 = a := rfl
-@[simp] theorem blk_zero_succ {m n : ℕ} (a : L) (A : Matrix (Fin m) (Fin n) L) (j : Fin n) :
-    blk a A 0 j.succ = 0 := rfl
-@[simp] theorem blk_succ_zero {m n : ℕ} (a : L) (A : Matrix (Fin m) (Fin n) L) (i : Fin m) :
-    blk a A i.succ 0 = 0 := rfl
 @[simp] theorem blk_succ_succ {m n : ℕ} (a : L) (A : Matrix (Fin m) (Fin n) L) (i : Fin m) (j : Fin n) :
     blk a A i.succ j.succ = A i j := rfl
 

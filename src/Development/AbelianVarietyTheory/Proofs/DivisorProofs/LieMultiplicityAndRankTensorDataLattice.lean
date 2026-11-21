@@ -4,7 +4,7 @@ import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.HomLieEquivScal
 import Development.AbelianVarietyTheory.Statements.FundamentalDomains.ExistsIsAddFundamentalDomain
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankIntEqFinrankRingOfIntegersMulStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsTorsionFreeRingOfIntegersOfIsTorsionFreeIntStatement
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.MumfordConstruction
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
 import Development.AbelianVarietyTheory.Definitions.Degenerations.AdmissibleBaseOfCompleteDvr
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj IsLocalRing NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor
@@ -44,9 +44,6 @@ def endOf : 𝓞 E →+* Module.End (𝓞 ℚ) (Fin r → 𝓞 ℚ) :=
 instance : Module (𝓞 E) (Lat ρ) := Module.compHom (Fin r → 𝓞 ℚ) (endOf ρ)
 
 def latEquiv : Lat ρ ≃ₗ[𝓞 ℚ] (Fin r → 𝓞 ℚ) := LinearEquiv.refl _ _
-
-theorem smul_def (c : 𝓞 E) (v : Lat ρ) :
-    c • v = ((ρ c).map (Int.cast : ℤ → 𝓞 ℚ)) *ᵥ (show Fin r → 𝓞 ℚ from v) := rfl
 
 instance : IsScalarTower (𝓞 ℚ) (𝓞 E) (Lat ρ) := by
   refine ⟨fun q c v => ?_⟩

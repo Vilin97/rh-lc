@@ -256,8 +256,6 @@ variable {F : Type} [Field F] {r : ℕ}
 
 def refl (M : Matrix (Fin r) (Fin r) F) : Matrix (Fin r) (Fin r) F := M.transpose.submatrix Fin.revPerm Fin.revPerm
 
-theorem refl_apply (M : Matrix (Fin r) (Fin r) F) (a b : Fin r) : refl M a b = M b.rev a.rev := rfl
-
 theorem refl_mul (M N : Matrix (Fin r) (Fin r) F) : refl (M * N) = refl N * refl M := by
   unfold refl
   rw [Matrix.transpose_mul, Matrix.submatrix_mul_equiv]

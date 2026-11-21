@@ -539,24 +539,6 @@ theorem zhat_move {T T' : E} (F : LFlag S r T) (F' : LFlag S r T') {s : S.V ≃�
     RingHom.id_apply]
   ring
 
-theorem frame_coef_unique {T T' : E} (F : LFlag S r T) (F' : LFlag S r T') (hdet : (ZhatL F F').det ≠ 0)
-    {x y : Fin (r + 1) → E} (h : ∑ c, x c • frame F c = ∑ c, y c • frame F c) : x = y := by
-  have hz : ∀ d, ∑ c, star (x c - y c) * ZhatL F F' c d = 0 := by
-    intro d
-    have h0 : ∑ c, (x c - y c) • frame F c = 0 := by
-      simp only [sub_smul, Finset.sum_sub_distrib, h, sub_self]
-    have : S.hT (∑ c, (x c - y c) • frame F c) (frame F' d) = 0 := by rw [h0]; simp
-    rw [map_sum, LinearMap.sum_apply] at this
-    simp only [LinearMap.map_smulₛₗ₂, smul_eq_mul] at this
-    exact this
-  have hv : Matrix.vecMul (fun c => star (x c - y c)) (ZhatL F F') = 0 := by
-    ext d; simp only [Matrix.vecMul, dotProduct, Pi.zero_apply]; exact hz d
-  have := Matrix.eq_zero_of_vecMul_eq_zero hdet hv
-  funext c
-  have hc := congrFun this c
-  simp only [Pi.zero_apply, star_eq_zero] at hc
-  exact sub_eq_zero.mp hc
-
 end Frame
 
 section Big
@@ -565,10 +547,6 @@ variable {K : Type} [Field K] {N : ℕ}
 
 theorem det_loUni {L : Matrix (Fin N) (Fin N) K} (h : IsLoUni L) : L.det = 1 := by
   rw [Matrix.det_of_isLowerTriangular L (fun i j hij => (h i j).1 hij)]
-  exact Finset.prod_eq_one fun i _ => (h i i).2 rfl
-
-theorem det_upUni {U : Matrix (Fin N) (Fin N) K} (h : IsUpUni U) : U.det = 1 := by
-  rw [Matrix.det_of_isUpperTriangular (fun i j hij => (h i j).1 hij)]
   exact Finset.prod_eq_one fun i _ => (h i i).2 rfl
 
 theorem ptMat_sq (p : Point K N) :
@@ -585,28 +563,10 @@ theorem det_ptMat_ne (p : Point K N) : (ptMat p).det ≠ 0 := by
   rw [Matrix.det_mul, h0, zero_mul, Matrix.det_diagonal] at this
   exact (Finset.prod_ne_zero_iff.mpr fun i _ => mul_ne_zero (pv_ne' p i) (pv_ne' p _)) this.symm
 
-theorem pσ_big : ∀ bs : List (K × ℕ), (∀ b ∈ bs, b.2 = 1) → ∀ i, pσ bs i = i
-  | [], _, _ => rfl
-  | (t, s) :: bs, h, i => by
-    have hs : s = 1 := h (t, s) (by simp)
-    subst hs
-    simp only [pσ]
-    split_ifs with hi
-    · omega
-    · rw [pσ_big bs (fun b hb => h b (by simp [hb])) (i - 1)]; omega
-
-theorem fσ_big (p : Point K N) (h : ∀ b ∈ p.1, b.2 = 1) (a : Fin N) : fσ p a = a :=
-  Fin.ext (pσ_big p.1 h a)
-
 theorem zhatOM_eq_pv {r : ℕ} (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) K) :
     ZhatOM Z = Z * Matrix.diagonal (fun b : Fin (r + 1) => (-1 : K) ^ (r - b.val)) := by
   ext a b
   simp [ZhatOM, Matrix.mul_diagonal, mul_comm]
-
-theorem conjT_loUni [StarRing K] {u : Matrix (Fin N) (Fin N) K} (h : IsUpUni u) : IsLoUni u.conjTranspose := by
-  intro i j
-  simp only [Matrix.conjTranspose_apply]
-  exact ⟨fun hij => by rw [(h j i).1 hij, star_zero], fun hij => by subst hij; rw [(h i i).2 rfl, star_one]⟩
 
 end Big
 
@@ -636,29 +596,6 @@ def AutLzFin : Prop :=
     (Λ : Submodule (𝓞 D.host.E) (VS D).V), IsRowLat D F0 Λ → (autLz D F0 Λ).Finite
 
 variable (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (what₂ : Finset (Submodule (𝓞 D.host.E) (VS D).V))
-
-def BigCellIdx : Prop :=
-  ∀ (δ : ∀ p : Formalism.MainNotions.S.LocalSplitGroups.PlF D, (D.s.atP p).Fp)
-    (M : ∀ p : Formalism.MainNotions.S.LocalSplitGroups.PlF D, Formalism.MainNotions.S.Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep),
-    (∀ p, Formalism.MainNotions.S.LocalSplitGroups.Agree δ M p) → ∀ (t : Term D u u' F0 what₂) (w : Point D.host.E (D.R.rS + 1))
-      (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L U : MatR D),
-      t.relevant → t.generic → NormRep t w F' L U → BigCell w → volIdx D u u' F0 what₂ δ M t w F' L = 1
-
-def VolOrbit : Prop :=
-  ∀ (δ : ∀ p : Formalism.MainNotions.S.LocalSplitGroups.PlF D, (D.s.atP p).Fp)
-    (M : ∀ p : Formalism.MainNotions.S.LocalSplitGroups.PlF D, Formalism.MainNotions.S.Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep),
-    (∀ p, Formalism.MainNotions.S.LocalSplitGroups.Agree δ M p) → ∃ wt : MatR D → ℝ, ∀ (t : Term D u u' F0 what₂)
-      (w : Point D.host.E (D.R.rS + 1)) (F' : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L U : MatR D),
-      t.relevant → t.generic → NormRep t w F' L U →
-        vRdef D u u' F0 what₂ δ M t = ((orbT D u u' F0 what₂ t (ZhatL (lf D F0) F')).ncard : ℝ) * wt (ZhatL (lf D F0) F')
-
-def VolIdxRep : Prop :=
-  ∀ (δ : ∀ p : Formalism.MainNotions.S.LocalSplitGroups.PlF D, (D.s.atP p).Fp)
-    (M : ∀ p : Formalism.MainNotions.S.LocalSplitGroups.PlF D, Formalism.MainNotions.S.Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep),
-    (∀ p, Formalism.MainNotions.S.LocalSplitGroups.Agree δ M p) → ∀ (t : Term D u u' F0 what₂) (w : Point D.host.E (D.R.rS + 1))
-      (F₁ F₂ : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (L₁ U₁ L₂ U₂ : MatR D),
-      t.relevant → t.generic → NormRep t w F₁ L₁ U₁ → NormRep t w F₂ L₂ U₂ →
-        volIdx D u u' F0 what₂ δ M t w F₁ L₁ = volIdx D u u' F0 what₂ δ M t w F₂ L₂
 
 end Steps
 

@@ -95,7 +95,6 @@ section ResLE
 
 variable (A : Rep.{u} k G) [IsDiscreteRep A]
 
-@[reassoc]
 theorem cohomologyResLE_comp {U V W : Subgroup G} (hVU : V ≤ U) (hWV : W ≤ V) (n : ℕ) :
     cohomologyResLE A hVU n ≫ cohomologyResLE A hWV n = cohomologyResLE A (hWV.trans hVU) n := by
   rw [cohomologyResLE, cohomologyResLE, cohomologyResLE, ← cohomologyMapAlong_comp]
@@ -204,18 +203,6 @@ end PreClassFormation
 namespace ClassFormation
 
 variable {C : Rep.{u} k G} [IsDiscreteRep C] (F : ClassFormation C)
-
-noncomputable def invEquiv (U : OpenSubgroup G) : H2Open C U ≃+ QZ :=
-  AddEquiv.ofBijective (F.inv U) (F.inv_bijective U)
-
-@[simp]
-theorem invEquiv_apply (U : OpenSubgroup G) (x : H2Open C U) : F.invEquiv U x = F.inv U x :=
-  rfl
-
-def toClassFormationAt (P : Set Nat.Primes) : ClassFormationAt P C where
-  toPreClassFormation := F.toPreClassFormation
-  inv_injective U := (F.inv_bijective U).1
-  primaryComponent_le_range U _ _ x _ := (F.inv_bijective U).2 x
 
 end ClassFormation
 

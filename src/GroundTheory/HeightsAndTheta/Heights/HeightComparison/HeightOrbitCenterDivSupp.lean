@@ -34,25 +34,4 @@ theorem exists_finitePlace_two_lt_one (K : Type) [Field K] [NumberField K] :
   exact (FinitePlace.norm_lt_one_iff_mem (K := K)
     (v := (⟨Q, hQ, hne⟩ : IsDedekindDomain.HeightOneSpectrum (𝓞 K))) (2 : 𝓞 K)).mpr h2
 
-example : ∃ v : FinitePlace (coordField samplePoint), BlockNonzero samplePoint ∧
-    Geo.IsMultiHomog (ι := blockIdx (fun _ : Unit ↦ 1)) (chartMonomial (fun _ ↦ 1) 1) 1 ∧
-    chartMonomial (fun _ ↦ 1) 1 ∉ orbitIdeal samplePoint ∧
-    chartMonomial (fun _ ↦ 1) 1 ∈ orbitCenter samplePoint v := by
-  obtain ⟨v, hv⟩ := exists_finitePlace_two_lt_one (coordField samplePoint)
-  refine ⟨v, samplePoint_blockNonzero,
-    (geoMultiHomog_iff _ _).mpr (isWeightedHomogeneous_chartMonomial _ _),
-    chartMonomial_notMem_orbitIdeal _ _ (fun _ ↦ by simp [samplePoint]) 1, ?_⟩
-  have hX : chartMonomial (n := fun _ : Unit ↦ 1) (fun _ ↦ 1) 1 = X ⟨(), 1⟩ := by
-    simp [chartMonomial]
-  rw [hX]
-  refine X_mem_orbitCenter _ _ () 1 ?_
-  have h1 : coordVec samplePoint () 1 = 2 :=
-    Subtype.ext (by simp [coordVec, samplePoint]; rfl)
-  have h0 : coordVec samplePoint () 0 = 1 := Subtype.ext (by simp [coordVec, samplePoint])
-  rw [h1]
-  calc v 2 < 1 := hv
-    _ = v (coordVec samplePoint () 0) := by rw [h0, map_one]
-    _ ≤ ⨆ j, v (coordVec samplePoint () j) :=
-      le_ciSup (f := fun j ↦ v (coordVec samplePoint () j)) (Set.finite_range _).bddAbove 0
-
 end GroundTheory.Heights₂.Heights

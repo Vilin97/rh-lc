@@ -17,8 +17,6 @@ namespace GlobalTheory.UnitaryEmbeddingLattice
 
 variable {D : D7} {Y V : HSp D}
 
-local notation "inc" => Formalism.UG.inclE (F := D.host.F) (E := D.host.E) (Formalism.L2.Herm.Af D.host.F)
-
 def phiRow (d : HermitianOrthogonalExtensionData Y V 1 1) : Matrix (Fin 1) (Fin V.rank) D.host.E :=
   Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) d.a * V.gram
 
@@ -116,8 +114,6 @@ end GlobalTheory.UnitaryEmbeddingLattice
 namespace GlobalTheory.UnitaryEmbeddingLattice
 
 variable {D : D7} {Y V : HSp D}
-
-local notation "inc" => Formalism.UG.inclE (F := D.host.F) (E := D.host.E) (Formalism.L2.Herm.Af D.host.F)
 
 theorem mulVec_incl {m n : ℕ} (M : Matrix (Fin m) (Fin n) D.host.E) (v : Fin n → D.host.E) :
     M.map inc *ᵥ (fun i => inc (v i)) = fun i => inc ((M *ᵥ v) i) := by

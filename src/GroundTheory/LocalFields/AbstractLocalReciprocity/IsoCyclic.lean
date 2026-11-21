@@ -583,11 +583,6 @@ theorem reciprocity_bijective_of_isCyclic
 
 variable (D) in
 
-noncomputable def reciprocityEquiv
-    (hcyc : IsCyclic ((K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K)) :
-    (K : Subgroup G) ⧸ (L : Subgroup G).subgroupOf K ≃* tateZero A (K : Subgroup G) (L : Subgroup G) :=
-  MulEquiv.ofBijective _ (reciprocity_bijective_of_isCyclic (D := D) hLK hax hcyc)
-
 end Cyclic
 
 end ClassFieldData

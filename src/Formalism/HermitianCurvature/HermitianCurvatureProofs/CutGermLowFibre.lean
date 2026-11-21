@@ -75,5 +75,3 @@ theorem glFibre : GLFibre := by
 end
 
 end Formalism.FourierDecayAlt.P.CutBP
-
-theorem Formalism.FourierDecayAlt.P.CutBP.low_level_fibre : Formalism.FourierDecayAlt.P.CutBP.GLFibre := Formalism.FourierDecayAlt.P.CutBP.glFibre

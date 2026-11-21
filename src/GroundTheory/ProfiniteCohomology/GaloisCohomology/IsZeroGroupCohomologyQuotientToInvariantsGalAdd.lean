@@ -19,11 +19,6 @@ def uliftIntLinearEquiv {A B : Type*} [AddCommGroup A] [AddCommGroup B] (e : A �
     left_inv := e.left_inv
     right_inv := e.right_inv }
 
-@[simp]
-theorem uliftIntLinearEquiv_apply {A B : Type*} [AddCommGroup A] [AddCommGroup B] (e : A ≃+ B)
-    (x : A) : uliftIntLinearEquiv.{u} e x = e x :=
-  rfl
-
 end ULiftInt
 
 section Profinite
@@ -94,13 +89,6 @@ noncomputable def invariantsGalUnitsAddEquiv :
   left_inv _ := Subtype.ext (Additive.toMul.injective (Units.ext rfl))
   right_inv _ := Additive.toMul.injective (Units.ext (Subtype.ext rfl))
   map_add' _ _ := Additive.toMul.injective (Units.ext (Subtype.ext rfl))
-
-@[simp]
-theorem coe_invariantsGalUnitsAddEquiv_apply
-    (v : Representation.invariants ((galUnits.{u} K L).ρ.comp H.subtype)) :
-    (((Additive.toMul (invariantsGalUnitsAddEquiv H v) : (fixedField H)ˣ) : fixedField H) : L) =
-      ((Additive.toMul (α := Lˣ) v.1 : Lˣ) : L) :=
-  rfl
 
 variable [IsGalois K L]
 

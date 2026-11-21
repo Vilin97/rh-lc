@@ -43,8 +43,6 @@ def thConj (c : R ≃ₐ[k] R) (x d : GL (Fin n) R) : GL (Fin n) R := x⁻¹ * d
 
 def cong (c : R ≃ₐ[k] R) (y : GL (Fin n) R) (J : Matrix (Fin n) (Fin n) R) : Matrix (Fin n) (Fin n) R := ct c y * J * (y : Matrix (Fin n) (Fin n) R)
 
-def IsHerm (c : R ≃ₐ[k] R) (J : Matrix (Fin n) (Fin n) R) : Prop := ct c J = J ∧ IsUnit J.det
-
 def IsCsr (c : R ≃ₐ[k] R) (n : ℕ) (P : R[X]) : Prop :=
   P.Monic ∧ P.natDegree = n ∧ IsUnit (P.coeff 0) ∧ reflect n (P.map (c : R →+* R)) = C (c (P.coeff 0)) * P
 
@@ -84,21 +82,12 @@ def IsNm {A : Type} [CommRing A] [Algebra F A] (x : A) : Prop := ∃ z : A ⊗[F
 
 open Classical in
 
-def sgn {A : Type} [CommRing A] [Algebra F A] (x : A) : ℤˣ := if IsNm F E x then 1 else -1
-
 variable {F E}
 
 def ext (k : Type) [CommRing k] [Algebra F k] (σ : E ≃ₐ[F] E) : k ⊗[F] E ≃ₐ[k] k ⊗[F] E :=
   Algebra.TensorProduct.congr AlgEquiv.refl σ
 
 def inc (k : Type) [CommRing k] [Algebra F k] : E →+* k ⊗[F] E := Algebra.TensorProduct.includeRight.toRingHom
-
-def incL (k : Type) [CommRing k] [Algebra F k] (A : Type) [CommRing A] [Algebra F A] :
-    E ⊗[F] A →ₐ[F] (k ⊗[F] E) ⊗[k] (k ⊗[F] A) :=
-  Algebra.TensorProduct.lift
-    ((Algebra.TensorProduct.includeLeft (S := F)).comp Algebra.TensorProduct.includeRight)
-    (((Algebra.TensorProduct.includeRight : k ⊗[F] A →ₐ[k] (k ⊗[F] E) ⊗[k] (k ⊗[F] A)).restrictScalars F).comp
-      Algebra.TensorProduct.includeRight) fun _ _ => Commute.all _ _
 
 end Norms
 

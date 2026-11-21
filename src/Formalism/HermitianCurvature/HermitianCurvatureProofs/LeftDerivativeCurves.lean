@@ -24,8 +24,6 @@ def mulL {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ) :
     Matrix (Fin n) (Fin n) ℂ →L[ℝ] Matrix (Fin n) (Fin n) ℂ :=
   LinearMap.toContinuousLinearMap (LinearMap.mulLeft ℝ X)
 
-theorem mulL_apply {n : ℕ} (X h : Matrix (Fin n) (Fin n) ℂ) : mulL X h = X * h := rfl
-
 theorem lcurve_hasDeriv (X g : Mx k r) :
     HasDerivAt (fun t : ℝ => NormedSpace.exp ((t : ℂ) • X) * g) (X * g) 0 := by
   have h0 := Formalism.FourierDecayAlt.P.B5.curve_hasDerivAt (1 : Mx k r) X 0
@@ -224,10 +222,6 @@ theorem good_LZ (hD : IsOpen D) {Z : Mx k r} (h1 : inLieLev k r i (hpart1 (Hpk k
 theorem good_rop (hD : IsOpen D) {Z : Mx k r} (h1 : inLieLev k r i (hpart1 (Hpk k r) Z))
     (h2 : inLieLev k r i (hpart2 (Hpk k r) Z)) (c : ℂ) : Good k r i D (rop (E := E) k r c Z) := by
   exact (good_RZ hD h1 h2).add (Qx2.good_id.smul c)
-
-theorem good_lop (hD : IsOpen D) {Z : Mx k r} (h1 : inLieLev k r i (hpart1 (Hpk k r) Z))
-    (h2 : inLieLev k r i (hpart2 (Hpk k r) Z)) (c : ℂ) : Good k r i D (lop (E := E) k r c Z) := by
-  exact (good_LZ hD h1 h2).add (Qx2.good_id.smul c)
 
 theorem comm_rd_ld {X Y : Mx k r} (hX : inLieLev k r i X) (hY : inLieLev k r i Y) :
     Comm (E := E) k r i D (fun f => RdV Y f) (fun f => LdV X f) := fun f hf x hx => rd_ld_comm hf hX hY hx

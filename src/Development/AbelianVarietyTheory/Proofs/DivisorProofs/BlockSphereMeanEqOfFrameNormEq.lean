@@ -1,6 +1,6 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.AevalEqZeroOfMemConeIdeal
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.SjIffJensenInequality
+import ReciprocityTheory.SemistableReduction.SphereLogIntegrableStatement
 
 set_option autoImplicit false
 
@@ -11,15 +11,6 @@ open MvPolynomial NumberField Module GlobalTheory.ChowHt GlobalTheory.CompHt Mea
 namespace GlobalTheory.SphereMeanFrame
 
 open GlobalTheory.IndefiniteRowSideFullHecke.UnitSphereMeasure
-
-def sphereHomeo {N : ℕ} (e : EuclideanSpace ℂ (Fin (N + 1)) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (Fin (N + 1))) :
-    UnitSphere N ≃ₜ UnitSphere N where
-  toFun := sphereMap e
-  invFun := sphereMap e.symm
-  left_inv z := Subtype.ext (e.symm_apply_apply z.1)
-  right_inv z := Subtype.ext (e.apply_symm_apply z.1)
-  continuous_toFun := Continuous.subtype_mk (e.continuous.comp continuous_subtype_val) _
-  continuous_invFun := Continuous.subtype_mk (e.symm.continuous.comp continuous_subtype_val) _
 
 set_option autoImplicit false in
 open MvPolynomial NumberField Module MeasureTheory in

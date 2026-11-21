@@ -38,11 +38,6 @@ theorem Low.add {m : ℕ} {x y : MvPowerSeries ι K} (hx : Low m x) (hy : Low m 
   intro d hd
   rw [map_add, hx d hd, hy d hd, add_zero]
 
-theorem Low.sub {m : ℕ} {x y : MvPowerSeries ι K} (hx : Low m x) (hy : Low m y) :
-    Low m (x - y) := by
-  intro d hd
-  rw [map_sub, hx d hd, hy d hd, sub_zero]
-
 theorem low_zero (x : MvPowerSeries ι K) : Low 0 x := by
   intro d hd
   exact absurd hd (Nat.not_lt_zero _)

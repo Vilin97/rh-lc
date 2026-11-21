@@ -80,8 +80,6 @@ theorem toUnits_barK (k : Kinf E a) : Unitary.toUnits (barK k) = invT a (Cinf E)
 
 omit [NumberField E] [IsTotallyComplex E] in
 
-theorem barK_apply (k : Kinf E a) (i j : Fin a) : (barK k).1 i j = star (k.1 i j) := rfl
-
 theorem det_invT {R : Type} [CommRing R] (g : GL (Fin a) R) :
     GeneralLinearGroup.det (invT a R g) = (GeneralLinearGroup.det g)⁻¹ := by
   rw [← map_inv]
@@ -155,38 +153,6 @@ theorem dualIsConjBy_line_iff (ha : a ≤ 1) (μ ψ : HChar L) :
     | lie X => exact add_right_cancel ((sc_lie μ X).trans (h3 X).symm)
   · intro h
     exact ⟨fun k => h _ ▸ sc_fin μ k, fun k => h _ ▸ sc_cpt μ k, fun X => h _ ▸ sc_lie μ X⟩
-
-theorem dualIsConj_line_iff (ha : a ≤ 1) (μ : HChar L) : DualIsConj (line ha μ) ↔ (line ha μ).IsCsd := by
-  rw [← dualIsConjBy_one, dualIsConjBy_line_iff, isConjDualBy_one]
-
-theorem polarizedPair_line_iff (ha : a ≤ 1) (μ : HChar L) (χ : HChar (maximalRealSubfield L)) :
-    PolarizedPair (line ha μ) χ ↔ IsPolarized (line ha μ) χ :=
-  ⟨fun h => ⟨h.sign, (dualIsConjBy_line_iff ha μ _).1 h.dual⟩, fun h => ⟨h.sign, (dualIsConjBy_line_iff ha μ _).2 h.dual⟩⟩
-
-theorem dualIsConj_abs_iff (s : ℂ) : DualIsConj (line le_rfl (CuspRep.Model.absC L s)) ↔ s = 0 := by
-  rw [dualIsConj_line_iff]
-  exact CuspRep.Model.isCsd_absC s
-
-theorem polarizedPair_triv : PolarizedPair (CuspSub.triv L (le_refl 1)) (quadChar L ^ 1) := by
-  have h := (polarizedPair_line_iff (L := L) (le_refl 1) 1 (quadChar L ^ 1)).2
-  rw [line, CuspSub.twist_one] at h
-  exact h isPolarized_triv.1
-
-theorem not_polarizedPair_one (π : CuspSub L 1) : ¬ PolarizedPair π 1 := fun h => by
-  obtain ⟨v⟩ : Nonempty (InfinitePlace (maximalRealSubfield L)) := inferInstance
-  have h1 : (1 : ℂˣ) = (-1) ^ 1 := h.sign v
-  have h2 := congrArg Units.val h1
-  norm_num at h2
-
-theorem polarizedPair_absPow (s : ℝ) : ∃ χ, PolarizedPair (line le_rfl (GlobalTheory.HeckeGal.Model.absPow L s)) χ := by
-  have h : (CuspSub.triv L (le_refl 1)).IsCsd := by
-    have h2 := (dualIsConj_line_iff (L := L) (le_refl 1) 1).1 (by
-      refine (paired_line_iff _ _ _ _).2 ⟨fun k => ?_, fun k => sc_barK 1 k, fun X => ?_⟩
-      · simp [sc, conjOp, opMul, opTriv, opAdd, chiDet]
-      · have h0 : dchi (1 : HChar L) = 0 := fderiv_extZero (continuous_chiInf 1) fun z => by simp [chiInf]
-        simp [sc, conjOp, opTriv, opAdd, h0])
-    rwa [line, CuspSub.twist_one] at h2
-  exact ⟨_, (polarizedPair_line_iff _ _ _).2 (GlobalTheory.HeightCounting.Blocks.isPolarized_twist_absPow h s)⟩
 
 theorem dualIsConjBy_resReal (μ : HChar L) :
     DualIsConjBy (line le_rfl μ) (compNorm L (GlobalTheory.HeightCounting.Blocks.resReal μ)) := by

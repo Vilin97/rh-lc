@@ -27,10 +27,6 @@ theorem rtt_entry (QQ : ℂ → Matrix (Fin 2) (Fin 2) A) (h : Formalism.Fourier
       Fintype.sum_prod_type, Fin.sum_univ_two, sub_mul, mul_sub] at h0 ⊢ <;>
     (rw [smul_sub]; linear_combination (norm := abel) h0)
 
-macro "distrib_module" : tactic =>
-  `(tactic| (simp only [mul_sub, sub_mul, mul_add, add_mul, smul_mul_assoc, mul_smul_comm, mul_assoc, smul_sub, smul_add,
-      smul_smul]; module))
-
 theorem idempotent_mul_comm (r s t : Matrix (Fin 2) (Fin 2) A) (D : ℂ)
     (hst : ∀ a b c d, (1 : ℂ) • (s a b * t c d - t c d * s a b) = s c b * t a d - t c b * s a d)
     (hts : ∀ a b c d, (-1 : ℂ) • (t a b * s c d - s c d * t a b) = t c b * s a d - s c b * t a d)
@@ -538,8 +534,6 @@ open scoped ComplexConjugate
 
 variable {k r : ℕ}
 
-local notation "⟪" u ", " v "⟫" => herm (Hpk k r) u v
-
 lemma Hh : (Hpk k r)ᴴ = Hpk k r := B2x8.Hpk_herm k r
 
 lemma herm_bvec_right (u : Fin (2 * r + k + 1) → ℂ) (j : Fin (2 * r + k + 1)) :
@@ -591,9 +585,6 @@ lemma h_es_e (a b : Fin r) : ⟪bvec (esI k r a), bvec (eI k r b)⟫ = if a = b 
   · rw [if_neg h, if_neg (Ne.symm h)]
 
 variable {l : Fin r}
-
-local notation "𝐞" => bvec (eI k r l)
-local notation "𝐬" => bvec (esI k r l)
 
 lemma weyl_cell_apply_dual_basis (c : ℂ) (q : Fin (2 * r + k + 1)) :
     w1 k r l c (esI k r l) q = if q = eI k r l then c else 0 := by

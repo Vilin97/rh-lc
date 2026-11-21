@@ -27,8 +27,4 @@ theorem units_valuation_eq_one_mem_nhds_one {k : Type} [Field k] [ValuativeRel k
       ((Valuation.isOpen_integer (R := k)).preimage Units.continuous_coe_inv)
   exact hopen.mem_nhds (by simp)
 
-example : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k],
-    {x : kˣ | ValuativeRel.valuation k (x : k) = 1} ∈ 𝓝 (1 : kˣ) :=
-  GlobalTheory.units_valuation_eq_one_mem_nhds_one
-
 end GlobalTheory

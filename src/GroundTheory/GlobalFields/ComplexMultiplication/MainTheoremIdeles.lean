@@ -15,8 +15,6 @@ noncomputable section
 
 variable {K : Type} [Field K] [NumberField K]
 
-local notation "𝓘" => (FractionalIdeal (𝓞 K)⁰ K)ˣ
-
 namespace Modulus
 
 def ofNat (m : ℕ) (hm : m ≠ 0) : Modulus K where
@@ -229,12 +227,6 @@ theorem mem_diagonal_smul_iff (a : Kˣ) (J : 𝓘) (k : K) :
     rwa [← mul_assoc, inv_mul_cancel₀ a.ne_zero, one_mul]
   · intro h
     exact ⟨_, h, by rw [← mul_assoc, mul_inv_cancel₀ a.ne_zero, one_mul]⟩
-
-@[simp]
-theorem coe_primeIdealUnit_inv_mul (𝔭 : HeightOneSpectrum (𝓞 K)) (𝔞 : 𝓘) :
-    (((primeIdealUnit 𝔭)⁻¹ * 𝔞 : 𝓘) : FractionalIdeal (𝓞 K)⁰ K) =
-      (𝔭.asIdeal : FractionalIdeal (𝓞 K)⁰ K)⁻¹ * 𝔞 := by
-  rw [Units.val_mul, Units.val_inv_eq_inv_val, coe_primeIdealUnit]
 
 end
 

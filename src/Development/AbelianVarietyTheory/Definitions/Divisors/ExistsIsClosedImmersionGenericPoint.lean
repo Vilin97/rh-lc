@@ -182,25 +182,6 @@ theorem IsCInf.contDiffAt (h : φ.IsCInf) (c : AlgChart p σ D) {y : CxPts p σ}
   ((contDiffOn_chart (h i) c).contDiffAt
     ((isOpen_over c.e (isOpen_ptsIn _)).mem_nhds (mem_over c.e hy hi))).of_le (by norm_cast)
 
-theorem semiPosReg_iff (h : φ.IsCInf) (R : AnRead p σ D) : φ.SemiPosReg D ↔ φ.SemiPos R := by
-  refine ⟨fun H i c => H i _, fun H i c y hy ξ => ?_⟩
-  obtain ⟨a, ha⟩ := R.cover y
-  set c' := R.chart a
-  have ho := isOpen_over c.e c'.e.open_source
-  have hm := mem_over c.e hy.1 ha
-  have e : (fun v => (φ.φ i (c.e.symm v) : ℂ)) =ᶠ[𝓝 (c.e y)]
-      (fun v => (φ.φ i (c'.e.symm v) : ℂ)) ∘ c'.e ∘ c.e.symm :=
-    eventually_of_mem (ho.mem_nhds hm) fun v hv => by
-      simp only [Function.comp_apply, c'.e.left_inv hv.2]
-  have e₂ : (c'.e ∘ c.e.symm) (c.e y) = c'.e y := congrArg c'.e (c.e.left_inv hy.1)
-  have hd : ContDiffAt ℂ 2 (c'.e ∘ c.e.symm) (c.e y) := contDiffAt_euclidean.2 fun b =>
-    ((ReciprocityTheory.L2DbarEstimates.contDiffOn_of_differentiableOn D _ _ ho
-      (differentiableOn_euclidean.1 (c.holo_trans c') b)).contDiffAt (ho.mem_nhds hm)).of_le
-      (by norm_cast)
-  rw [ReciprocityTheory.L2DbarEstimates.leviV_congr e, ReciprocityTheory.L2DbarEstimates.Y.leviV_comp (e₂ ▸
-    Complex.ofRealCLM.contDiff.contDiffAt.comp _ (h.contDiffAt c' ha hy.2)) hd, e₂]
-  exact H i a y ⟨ha, hy.2⟩ _
-
 end Weight
 
 namespace AlgChart
@@ -473,11 +454,6 @@ theorem logNorm_eq (φ : Weight q σ L) (hr : IsRatSec L r)
     norm_mul, Real.log_mul (norm_ne_zero_iff.2 (ev_ne_zero hij (Units.isUnit _)))
       (norm_ne_zero_iff.2 (ratVal_ne_zero hu)), Real.log_pow, CxPts.gv]
   push_cast
-  ring
-
-theorem logNorm_addFn (φ : Weight q σ L) (u : CxPts q σ → ℝ) (r : L.ι → Z.functionFieldˣ)
-    (y : CxPts q σ) : logNorm (φ.addFn u) r y = logNorm φ r y - u y / 2 := by
-  simp only [logNorm, Weight.addFn]
   ring
 
 theorem exists_isRatSec (hL : L.IsLB) : ∃ r, IsRatSec L r :=
@@ -769,9 +745,6 @@ theorem zero_mem_smallSec : 0 ∈ L.smallSec := fun σ y => by
 def SemiPos (D : ℕ) : Prop := ∀ σ, (L.φ σ).SemiPosReg D
 
 variable {L} in
-
-theorem semiPos_iff {D : ℕ} (R : ∀ σ, AnRead p σ D) : L.SemiPos D ↔ ∀ σ, (L.φ σ).SemiPos (R σ) :=
-  forall_congr' fun σ => Weight.semiPosReg_iff (L.cInf σ) (R σ)
 
 end HermLB
 
@@ -1067,25 +1040,6 @@ theorem curveDeg_sec
 
 end HermLB
 
-example (c : AlgChart p σ 1) {y : CxPts p σ} (hy : y ∈ c.e.source) :
-    c.chernDens (Weight.ofFun fun z => Complex.normSq (c.e z 0)) y = 1 / Real.pi := by
-  have e : (fun v => ((Complex.normSq (c.e (c.e.symm v) 0) : ℝ) : ℂ)) =ᶠ[𝓝 (c.e y)]
-      fun v : V 1 => ((Complex.normSq (v 0) : ℝ) : ℂ) :=
-    eventually_of_mem (c.e.open_target.mem_nhds (c.e.map_source hy)) fun v hv => by
-      simp only [c.e.right_inv hv]
-  have hg := (EuclideanSpace.proj (𝕜 := ℂ) (0 : Fin 1) : V 1 →L[ℂ] ℂ).contDiff.contDiffAt (n := 2)
-    (x := c.e y)
-  have h := ReciprocityTheory.L2DbarEstimates.leviV_normSq_comp hg fun _ => 1
-  rw [AlgChart.chernDens, AlgChart.hess]
-  erw [ReciprocityTheory.L2DbarEstimates.Y.cmpb_cHess_congr e]
-  simp only [leviV, Finset.univ_unique, Finset.sum_singleton, map_one, mul_one,
-    ReciprocityTheory.L2DbarEstimates.wd_of_differentiableAt (hg.differentiableAt two_ne_zero),
-    ContinuousLinearMap.fderiv] at h
-  rw [Matrix.det_unique]
-  erw [show cHess 1 (fun v : V 1 => ((Complex.normSq (v 0) : ℝ) : ℂ)) (c.e y) default default = _
-    from h]
-  simp [ReciprocityTheory.L2DbarEstimates.bas]
-
 namespace Weight
 
 variable {B : LB X} {D : ℕ}
@@ -1208,16 +1162,6 @@ def hermitianTwistingSheaf : HermLB (PSpace.str k N) :=
     fun _ => ⟨1, one_mem _, by rw [mul_one, Matrix.map_one _ (map_zero _) (map_one _)]⟩
 
 theorem hermitianTwistingSheaf_weight (σ : k →+* ℂ) : (hermitianTwistingSheaf k N).φ σ = ProjAn.fsO1 k σ N := rfl
-
-example : GenSmooth (PSpace.str k N) N ∧ (hermitianTwistingSheaf k N).SemiPos N ∧
-    ∀ a, coord k N a ∈ (hermitianTwistingSheaf k N).smallSec := by
-  refine ⟨genSmooth_of_smooth _ _, HermLB.semiPos_fs _ _ _ _ _ _, fun a σ y => ?_⟩
-  have e (a) : Weight.combVal (PSpace.str k N) σ (coord k N) 1 a = secVal _ σ (coord k N a) := by
-    simp [Weight.combVal, Matrix.one_apply]
-  refine le_of_le_of_eq ?_ (Weight.sum_nsq_fs (hB := O1_isLB k N) (he := fun a => e a ▸ secVal_mem _)
-    (h := Weight.noCommonZero_combVal (iSup_nonzeroLocus_coord k N) (M := 1) (by simp)) y)
-  exact le_of_eq_of_le (congrArg (Weight.nsq _ · y) (e a).symm)
-    (Finset.single_le_sum (fun b _ => Weight.nsq_nonneg _ _ y) (Finset.mem_univ a))
 
 end ProjSpace
 
@@ -1439,11 +1383,6 @@ theorem isArithHeight_trivShift (t : ℝ) : (trivShift t).IsArithHeight fun x =>
 theorem isSelfInter_trivShift (t : ℝ) : (trivShift t).IsSelfInter t :=
   ⟨_, isArithHeight_trivShift t, if_pos (Ideal.ext fun n =>
     (mem_asIdeal_iff (𝟙 (Sp ℤ)) n).trans (have := isArithVar_int.charZero; Int.cast_eq_zero))⟩
-
-example {t : ℝ} (ht : t < 0) : ¬ (trivShift t).IsNef 0 := fun h => by
-  obtain ⟨f, hf, e⟩ := isSelfInter_trivShift t
-  exact (((hf.isNef_iff isArithVar_int).1 h).2 _ (𝟙 _) isArithVar_int.dim_eq).not_gt
-    (e.symm ▸ ht)
 
 end ArithBase
 

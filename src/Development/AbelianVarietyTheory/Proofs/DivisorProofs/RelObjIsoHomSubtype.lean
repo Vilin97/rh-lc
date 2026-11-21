@@ -122,7 +122,6 @@ lemma ι_toRel (H : QCohSub f F) (U : Y.affineOpens) :
 
 def fromRel (H : QCohSub f F) : relSpec H ⟶ Y := (glueData H).toBase
 
-@[reassoc]
 lemma ι_fromRel (H : QCohSub f F) (U : Y.affineOpens) :
     (relCover H).f U ≫ fromRel H =
       Spec.map ((diagramMap H).app (.op U)) ≫ U.2.fromSpec :=
@@ -134,7 +133,6 @@ lemma fromRel_preimage (H : QCohSub f F) (U : Y.affineOpens) :
   simpa using! (glueData H).toBase_preimage_eq_opensRange_ι U
 
 set_option backward.isDefEq.respectTransparency false in
-@[reassoc (attr := simp)]
 lemma toRel_fromRel (H : QCohSub f F) : toRel H ≫ fromRel H = f := by
   refine Scheme.Cover.hom_ext (X.openCoverOfIsOpenCover _
     (.comap (iSup_affineOpens_eq_top Y) f.base.1)) _ _ fun U ↦ ?_

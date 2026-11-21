@@ -51,10 +51,6 @@ def toZModRep {R H Q : Type*} [CommRing R] [Group H] [AddCommGroup Q] [Module R 
   map_one' := LinearMap.ext fun x => by simp
   map_mul' g h := LinearMap.ext fun x => by simp [Module.End.mul_apply]
 
-@[simp] theorem toZModRep_apply {R H Q : Type*} [CommRing R] [Group H] [AddCommGroup Q]
-    [Module R Q] (m : ℕ) [Module (ZMod m) Q] (τ : Representation R H Q) (h : H) (x : Q) :
-    toZModRep m τ h x = τ h x := rfl
-
 section Transport
 
 variable {R G H Q : Type*} [CommRing R] [Group G] [TopologicalSpace G] [Group H]

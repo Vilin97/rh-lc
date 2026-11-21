@@ -74,9 +74,6 @@ private theorem notSq (hu : ∀ w' : P E, w'.asIdeal.LiesOver v.asIdeal → w' =
   obtain ⟨a, b, hab, ha, hb⟩ := GlobalTheory.QNorm.two_places_of_isSquare F E D.δ D.θ D.σ (isQuad D) v h
   exact hab ((hu a ((below_eq_iff a v).1 ha)).trans (hu b ((below_eq_iff b v).1 hb)).symm)
 
-local notation "ι" => completionMap v w
-local notation "θw" => algebraMap E (Kv w) D.θ
-
 private theorem iota_delta : ι (algebraMap F (Kv v) D.δ) = θw ^ 2 := by
   rw [completionMap_algebraMap, IsScalarTower.algebraMap_apply F E (Kv w), ← D.sq, map_pow]
 
@@ -145,9 +142,6 @@ end Ext
 section Fin2
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 variable (D : Dat F E) (v : P F) (w : P E) [hl : w.asIdeal.LiesOver v.asIdeal]
-
-local notation "ι" => completionMap v w
-local notation "θw" => algebraMap E (Kv w) D.θ
 
 private theorem normV_eq : normV w = normV v ^ w.asIdeal.inertiaDeg (𝓞 F) := by
   have e : v = below F w := ((below_eq_iff w v).2 hl).symm

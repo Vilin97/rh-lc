@@ -21,8 +21,6 @@ section Continuity
 
 variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
 
-local notation "Γ₁" => rationalGLOne K n
-
 theorem continuous_thetaPairing {φ₁ φ₂ Ξ : AdelicGLn.AdelicGL K n → ℂ} (hφ₁ : Continuous φ₁)
     (hφ₂ : Continuous φ₂)
     (hcont : Continuous fun p : {r : ℝ // 0 < r} × AdelicGLn.AdelicGL K n × AdelicGLn.AdelicGL K n =>
@@ -98,8 +96,6 @@ end Continuity
 section Symmetry
 
 variable (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]
-
-local notation "Γ₁" => rationalGLOne K n
 
 theorem coe_mul_diagonal_mul (t : {r : ℝ // 0 < r}) (a b : AdelicGLn.AdelicGL K n)
     (γ : GL (Fin n) K) :

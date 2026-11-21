@@ -8,13 +8,6 @@ variable {G : Type*} [Group G] [TopologicalSpace G]
 def IsTopologicalGenerator (σ : G) : Prop :=
   Dense (Subgroup.zpowers σ : Set G)
 
-structure IsZHatGenerator (σ : G) : Prop where
-
-  dense : IsTopologicalGenerator σ
-
-  exists_hom : ∀ n : ℕ, 0 < n → ∃ φ : G →* Multiplicative (ZMod n),
-    IsOpen (φ.ker : Set G) ∧ φ σ = Multiplicative.ofAdd 1
-
 theorem _root_.IsLocallyConstant.eq_of_eqOn_dense {X Y : Type*} [TopologicalSpace X] {f g : X → Y}
     (hf : IsLocallyConstant f) (hg : IsLocallyConstant g) {s : Set X} (hs : Dense s)
     (h : Set.EqOn f g s) : f = g := by

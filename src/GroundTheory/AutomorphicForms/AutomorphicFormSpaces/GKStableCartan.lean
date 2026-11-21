@@ -91,11 +91,6 @@ theorem mixedTraceL_trace_conjTranspose_mul_self_pos {A : Matrix (Fin n) (Fin n)
 
 def mat (X : ArchMatrix K n) : Matrix (Fin n) (Fin n) (mixedSpace K) := X
 
-@[simp] theorem mat_add (X Y : ArchMatrix K n) : mat (X + Y) = mat X + mat Y := rfl
-@[simp] theorem mat_sub (X Y : ArchMatrix K n) : mat (X - Y) = mat X - mat Y := rfl
-@[simp] theorem mat_neg (X : ArchMatrix K n) : mat (-X) = -mat X := rfl
-@[simp] theorem mat_mul (X Y : ArchMatrix K n) : mat (X * Y) = mat X * mat Y := rfl
-@[simp] theorem mat_smul (r : ℝ) (X : ArchMatrix K n) : mat (r • X) = r • mat X := rfl
 @[simp] theorem mat_zero : mat (0 : ArchMatrix K n) = 0 := rfl
 @[simp] theorem mat_one : mat (1 : ArchMatrix K n) = 1 := rfl
 
@@ -107,8 +102,6 @@ variable (X Y : (isExpLieAlgebra K n).lieSubalgebra) (r : ℝ)
     mat (X : ArchMatrix K n) - mat (Y : ArchMatrix K n) := rfl
 @[simp] theorem mat_coe_smul : mat ((r • X : (isExpLieAlgebra K n).lieSubalgebra) : ArchMatrix K n) =
     r • mat (X : ArchMatrix K n) := rfl
-@[simp] theorem mat_coe_zero :
-    mat ((0 : (isExpLieAlgebra K n).lieSubalgebra) : ArchMatrix K n) = 0 := rfl
 end Coe
 
 theorem mat_injective : Function.Injective (mat : ArchMatrix K n → _) := fun _ _ h => h
@@ -324,8 +317,6 @@ def matHom : ArchMatrix K n →+* Matrix (Fin n) (Fin n) (mixedSpace K) where
   map_mul' _ _ := rfl
   map_zero' := rfl
   map_add' _ _ := rfl
-
-@[simp] theorem matHom_apply (X : ArchMatrix K n) : matHom X = mat X := rfl
 
 theorem continuous_matHom : Continuous (matHom : ArchMatrix K n →+* _) := continuous_id
 

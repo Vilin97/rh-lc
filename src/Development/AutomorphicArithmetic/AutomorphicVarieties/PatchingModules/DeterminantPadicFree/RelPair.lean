@@ -12,10 +12,6 @@ private abbrev Quad (F : Type) (n m : ℕ) :=
   Matrix (Fin n) (Fin n) F × (Fin m → Matrix (Fin n) (Fin n) F) × (Fin m → Matrix (Fin n) (Fin n) F) ×
     Matrix (Fin n) (Fin n) F
 
-private def mulQ (x y : Quad F n m) : Quad F n m :=
-  (x.1 * y.1, fun k => x.2.1 k * y.1 + x.1 * y.2.1 k, fun k => x.2.2.1 k * y.1 + x.1 * y.2.2.1 k,
-    x.2.2.2 * y.1 + x.1 * y.2.2.2 + ∑ k, (x.2.1 k * y.2.2.1 k + x.2.2.1 k * y.2.1 k))
-
 end Quad
 
 end UpperTheory.V.Pa.Det

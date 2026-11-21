@@ -10,8 +10,6 @@ namespace GlobalTheory.CompanionTheory.WaveCurve
 
 open PositivityTheory.RgBcC.Fc
 
-local notation "sg(" y ")" => (((y : ℝ) : ℂ) ^ (1 / 2 : ℂ))
-
 lemma sg_eq (y : ℝ) :
     sg(y) = (Real.sqrt (max y 0) : ℂ) + (Real.sqrt (max (-y) 0) : ℂ) * Complex.I := by
   rcases le_total 0 y with hy | hy

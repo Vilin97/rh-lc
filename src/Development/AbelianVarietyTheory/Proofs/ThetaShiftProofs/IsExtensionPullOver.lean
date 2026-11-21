@@ -20,9 +20,6 @@ def constHom (π : Y ⟶ Spec (CommRingCat.of R)) (U : Y.Opens) : R →+* Γ(Y, 
   ((Y.presheaf.map (homOfLE le_top).op).hom.comp π.appTop.hom).comp
     (Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom
 
-theorem constHom_apply (π : Y ⟶ Spec (CommRingCat.of R)) (U : Y.Opens) (c : R) :
-    constHom π U c = resTop U (scal π c) := rfl
-
 def constVal (π : Z ⟶ Spec (CommRingCat.of R)) (z : Z) (c : R) : Z.presheaf.stalk z :=
   gs π z ⊤ ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom c)
 

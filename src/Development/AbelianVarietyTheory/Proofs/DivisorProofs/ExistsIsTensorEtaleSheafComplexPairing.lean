@@ -108,8 +108,6 @@ namespace GlobalTheory.EtC.TensEx
 
 variable {R : Type} [CommRing R]
 
-theorem smap_zero {F G : Shv R} {U : Scheme.{0}} (a : Sec F U) : Sec.map (0 : F ⟶ G) a = 0 := rfl
-
 def D (I J : Cx R) (w : ℤ) : pre I J w ⟶ pre I J (w + 1) where
   app U := ModuleCat.ofHom (dT I J U.unop w)
   naturality U V g := by

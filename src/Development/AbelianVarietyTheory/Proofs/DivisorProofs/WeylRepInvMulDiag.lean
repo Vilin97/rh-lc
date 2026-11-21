@@ -7,8 +7,6 @@ namespace GlobalTheory.GKFactor
 
 variable {k : Type} [Field k] {n : ℕ}
 
-local notation "M" x:max => ((x : GL (Fin n) k) : Matrix (Fin n) (Fin n) k)
-
 theorem weylRep_inv_mul_diag {w : Equiv.Perm (Fin n)} {x : GL (Fin n) k} (hx : IsWeylRep w x) (p : Fin n) :
     (M x⁻¹) p (w p) * (M x) (w p) p = 1 := by
   have h : (M (x⁻¹ * x)) p p = (M (1 : GL (Fin n) k)) p p := by rw [inv_mul_cancel]

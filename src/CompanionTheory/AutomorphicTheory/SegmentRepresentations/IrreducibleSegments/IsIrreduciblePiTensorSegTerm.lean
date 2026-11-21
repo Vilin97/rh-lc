@@ -1,5 +1,5 @@
 import Mathlib
-import CompanionTheory.AutomorphicTheory.SegmentRepresentations.IrreducibleSegments.SegmentRepresentationLit
+import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.SegmentRepresentation
 import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.JacquetMultiplicityPosOfSocle
 
 noncomputable section

@@ -52,30 +52,12 @@ theorem pullbackIndexSymm_val (T : MarkedIdealWithBoundary.{u}) (Y : Scheme.{u})
   rfl
 
 @[simp]
-theorem pullbackIndexSymm_pullbackIndex (T : MarkedIdealWithBoundary.{u}) (Y : Scheme.{u}) (k' : Type u) [Field k']
-    (q : Y ⟶ Spec (CommRingCat.of k')) (g : Y ⟶ T.scheme) (j : Fin T.boundary.length) :
-    pullbackIndexSymm T Y k' q g (pullbackIndex T Y k' q g j) = j := by
-  apply Fin.val_injective
-  rw [pullbackIndexSymm_val, pullbackIndex_val]
-
-@[simp]
 theorem pullbackIndex_pullbackIndexSymm (T : MarkedIdealWithBoundary.{u}) (Y : Scheme.{u}) (k' : Type u) [Field k']
     (q : Y ⟶ Spec (CommRingCat.of k')) (g : Y ⟶ T.scheme)
     (j : Fin (T.pullbackOverField Y k' q g).boundary.length) :
     pullbackIndex T Y k' q g (pullbackIndexSymm T Y k' q g j) = j := by
   apply Fin.val_injective
   rw [pullbackIndex_val, pullbackIndexSymm_val]
-
-def pullbackAlongIndex (T : MarkedIdealWithBoundary.{u}) (Y : Scheme.{u})
-    (q : Y ⟶ Spec (CommRingCat.of T.base)) (g : Y ⟶ T.scheme) :
-    Fin T.boundary.length → Fin (T.pullbackAlong Y q g).boundary.length :=
-  EmbeddedResolution.pullbackAlongIndex T Y q g
-
-@[simp]
-theorem pullbackAlongIndex_val (T : MarkedIdealWithBoundary.{u}) (Y : Scheme.{u})
-    (q : Y ⟶ Spec (CommRingCat.of T.base)) (g : Y ⟶ T.scheme) (j : Fin T.boundary.length) :
-    ((pullbackAlongIndex T Y q g j : Fin (T.pullbackAlong Y q g).boundary.length) : ℕ) = (j : ℕ) :=
-  EmbeddedResolution.pullbackAlongIndex_val T Y q g j
 
 structure IsComponentCompatiblePullback (T : MarkedIdealWithBoundary.{u}) (Y : Scheme.{u}) (k' : Type u) [Field k']
     (q : Y ⟶ Spec (CommRingCat.of k')) (g : Y ⟶ T.scheme) : Prop where

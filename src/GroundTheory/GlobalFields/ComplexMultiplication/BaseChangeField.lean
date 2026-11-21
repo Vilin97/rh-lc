@@ -308,11 +308,6 @@ theorem constMap_pointHomOver [PerfectField F] [IsAlgClosed Ω] [DecidableEq F] 
 
 omit [DecidableEq Ω] in
 
-theorem _root_.GroundTheory.Arith.Abelian.Isogeny.map_injective {F' : Type u} [Field F'] (σ : F →+* F')
-    {φ ψ : Isogeny E E'} (h : φ.map σ = ψ.map σ) : φ = ψ :=
-  Isogeny.ext_xy ((ffMap σ E).injective (by rw [← Isogeny.map_x, h, Isogeny.map_x]))
-    ((ffMap σ E).injective (by rw [← Isogeny.map_y, h, Isogeny.map_y]))
-
 end OverF
 
 end GroundTheory.Global

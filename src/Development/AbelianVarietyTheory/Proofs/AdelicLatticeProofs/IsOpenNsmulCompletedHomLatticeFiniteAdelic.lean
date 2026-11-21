@@ -39,9 +39,6 @@ theorem zero_mem_intAf (F : Type) [Field F] [NumberField F] : (0 : Af F) ∈ int
 
 variable {D : D7}
 
-theorem finPart_tmul (a : AF D.host.F) (x : D.host.E) :
-    finPart D (a ⊗ₜ[D.host.F] x) = sndA D.host.F a ⊗ₜ[D.host.F] x := rfl
-
 theorem finPart_eq_sum {ι : Type} [Fintype ι] (b : Module.Basis ι D.host.F D.host.E) (z : AE D) :
     finPart D z = ∑ k, sndA D.host.F ((Algebra.TensorProduct.basis (AF D.host.F) b).coord k z) ⊗ₜ[D.host.F] b k := by
   conv_lhs => rw [← (Algebra.TensorProduct.basis (AF D.host.F) b).sum_repr z]

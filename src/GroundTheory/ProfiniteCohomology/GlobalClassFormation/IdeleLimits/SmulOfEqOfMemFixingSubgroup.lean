@@ -7,8 +7,6 @@ namespace GroundTheory.ProfCoh
 
 open NumberField IntermediateField GroundTheory.Global GroundTheory.Global.AdeleBaseChange
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 namespace IdeleLimit
@@ -86,10 +84,6 @@ theorem exists_of₂ (z w : IdeleLimit) : ∃ (F : FiniteSubfield) (x y : IdeleG
   obtain ⟨F, x, y, rfl, rfl⟩ := DirectLimit.exists_eq_mk₂ (f := fun _ _ h ↦ ideleMap h) z w
   exact ⟨F, x, y, rfl, rfl⟩
 
-theorem of_eq_of_iff {F E M : FiniteSubfield} (hF : F ≤ M) (hE : E ≤ M) (x : IdeleGroup F.1)
-    (y : IdeleGroup E.1) : of F x = of E y ↔ ideleMap hF x = ideleMap hE y := by
-  rw [← of_ideleMap hF x, ← of_ideleMap hE y, (of_injective M).eq_iff]
-
 section lift
 
 variable {A : Type*} [CommGroup A] (g : ∀ F : FiniteSubfield, IdeleGroup F.1 →* A)
@@ -108,18 +102,7 @@ def lift : IdeleLimit →* A where
     rw [← map_mul]
     exact map_mul (g F) x y
 
-@[simp]
-theorem lift_of (F : FiniteSubfield) (x : IdeleGroup F.1) : lift g compat (of F x) = g F x :=
-  rfl
-
 end lift
-
-@[ext]
-theorem hom_ext {A : Type*} [Monoid A] {φ ψ : IdeleLimit →* A}
-    (h : ∀ F : FiniteSubfield, φ.comp (of F) = ψ.comp (of F)) : φ = ψ := by
-  ext z
-  obtain ⟨F, x, rfl⟩ := exists_of z
-  exact DFunLike.congr_fun (h F) x
 
 theorem of_ideleEquiv_congr {F E E' : FiniteSubfield} (τ : F.1 ≃+* E.1) (τ' : F.1 ≃+* E'.1)
     (h : ∀ x : F.1, (τ x : ℚ̄) = τ' x) (x : IdeleGroup F.1) :
@@ -177,9 +160,6 @@ instance : MulDistribMulAction (ℚ̄ ≃ₐ[ℚ] ℚ̄) IdeleLimit where
   mul_smul := galoisHom_mul
   smul_one σ := map_one (galoisHom σ)
   smul_mul σ := map_mul (galoisHom σ)
-
-theorem smul_def (σ : ℚ̄ ≃ₐ[ℚ] ℚ̄) (z : IdeleLimit) : σ • z = galoisHom σ z :=
-  rfl
 
 theorem smul_of (σ : ℚ̄ ≃ₐ[ℚ] ℚ̄) (F : FiniteSubfield) (x : IdeleGroup F.1) :
     σ • of F x = of (map σ F) (ideleEquiv (mapEquiv σ F) x) :=

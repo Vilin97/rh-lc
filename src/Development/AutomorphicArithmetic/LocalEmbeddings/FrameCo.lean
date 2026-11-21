@@ -79,36 +79,6 @@ theorem trAt_spMap (φ : K →+* K') {x : Sp K ⟶ X} (c c' : Chart M r) (h : �
   ext a b
   exact evalPt_spMap_comp φ x _ hW hW' _
 
-theorem evalPt_appLE (x : Sp K ⟶ X') (π : X' ⟶ X) {U : X.Opens} {T : X'.Opens} (hT : T ≤ π ⁻¹ᵁ U) (h : ⊤ ≤ x ⁻¹ᵁ T)
-    (h' : ⊤ ≤ (x ≫ π) ⁻¹ᵁ U) (s : Γ(X, U)) : evalPt x T h (π.appLE U T hT s) = evalPt (x ≫ π) U h' s := by
-  have := congrArg (fun φ => ((φ ≫ (Scheme.ΓSpecIso (CommRingCat.of K)).hom).hom s))
-    (Scheme.Hom.appLE_comp_appLE x π U T ⊤ hT h)
-  exact this
-
-theorem trAt_pull (hM : IsVB M r) (π : X' ⟶ X) {x : Sp K ⟶ X'} (c c' : Chart M r) (h : ⊤ ≤ (x ≫ π) ⁻¹ᵁ c.U)
-    (h' : ⊤ ≤ (x ≫ π) ⁻¹ᵁ c'.U) : trAt x (c.pull hM π) (c'.pull hM π) = trAt (x ≫ π) c c' := by
-  have := hM.isQuasicoherent
-  have hW := le_inf_pre h h'
-  have hW' : ⊤ ≤ x ⁻¹ᵁ (π ⁻¹ᵁ (c.U ⊓ c'.U)) := hW
-  have l₁ : π ⁻¹ᵁ (c.U ⊓ c'.U) ≤ (c.pull hM π).U := fun p hp => hp.1
-  have l₂ : π ⁻¹ᵁ (c.U ⊓ c'.U) ≤ (c'.pull hM π).U := fun p hp => hp.2
-  ext a b
-  rw [trAt_apply _ _ l₁ l₂ hW', trAt_apply c c' inf_le_left inf_le_right hW, ← evalPt_appLE x π le_rfl hW' hW,
-    ← c.isFrame.pullback_basis_repr π inf_le_left le_rfl]
-  refine congrArg (fun t => evalPt x _ hW' (((c.isFrame.pullback π).basis l₁).repr t a)) ?_
-  exact (QCoh.res_pullbackSections π M le_rfl l₂ _).trans (QCoh.pullbackSections_res π M le_rfl inf_le_right _).symm
-
-theorem trAt_cx {k : Type} [CommRing k] {p : X ⟶ Sp k} {σ : k →+* ℂ} (z : CxPts p σ) (c c' : Chart M r)
-    (h : z ∈ CxPts.ptsIn p σ c.U) (h' : z ∈ CxPts.ptsIn p σ c'.U) : trAt z.1 c c' = c.tr p σ c' z := by
-  have hW := CxPts.mem_ptsIn_inf.2 ⟨h, h'⟩
-  have hW' : ⊤ ≤ z.1 ⁻¹ᵁ (c.U ⊓ c'.U) := fun q _ => by
-    rw [show q = IsLocalRing.closedPoint ℂ from Subsingleton.elim (α := PrimeSpectrum ℂ) _ _]
-    exact CxPts.mem_ptsIn.1 hW
-  ext a b
-  rw [trAt_apply c c' inf_le_left inf_le_right hW', Chart.tr, of_apply, c.crd_eq _ inf_le_right inf_le_left hW,
-    CxPts.ev_eq hW]
-  rfl
-
 theorem lieMat_mul (dual : Bool) (A B : Matrix (Fin r) (Fin r) K) : lieMat dual (A * B) = lieMat dual A * lieMat dual B := by
   cases dual
   · rfl
@@ -138,27 +108,6 @@ theorem lieMat_map (dual : Bool) (φ : K →+* K') {A : Matrix (Fin r) (Fin r) K
 
 theorem pos_pos (dual : Bool) (i : Fin r) : pos dual (pos dual i) = i := by
   cases dual <;> simp [pos]
-
-theorem IsCo.exists_pull {F F' : Type} [Field F] [Field F'] (hM : IsVB M r) {ξ : Sp F ⟶ X}
-    {A : Chart M r → Matrix (Fin r) (Fin r) F} (hA : IsCo ξ A) (π : X' ⟶ X) (ξ' : Sp F' ⟶ X') (φ : F →+* F')
-    (hξ : ξ' ≫ π = spMap φ ≫ ξ) (D : Matrix (Fin r) (Fin r) F') (hD : IsUnit D.det) :
-    ∃ A' : Chart ((Scheme.Modules.pullback π).obj M) r → Matrix (Fin r) (Fin r) F', IsCo ξ' A' ∧
-      ∀ c : Chart M r, ⊤ ≤ ξ ⁻¹ᵁ c.U → A' (c.pull hM π) = D * (A c).map φ := by
-  obtain ⟨U, e, hx, he⟩ := hM (ξ (IsLocalRing.closedPoint F))
-  let c₀ : Chart M r := ⟨U, e, he⟩
-  have h₀ : ⊤ ≤ ξ ⁻¹ᵁ c₀.U := fun q _ => by
-    rw [show q = IsLocalRing.closedPoint F from Subsingleton.elim (α := PrimeSpectrum F) _ _]
-    exact hx
-  have up : ∀ c : Chart M r, ⊤ ≤ ξ ⁻¹ᵁ c.U → ⊤ ≤ (ξ' ≫ π) ⁻¹ᵁ c.U := fun c h => by
-    rw [hξ]; exact fun p _ => h (x := spMap φ p) trivial
-  have h₀' : ⊤ ≤ ξ' ⁻¹ᵁ (c₀.pull hM π).U := up c₀ h₀
-  refine ⟨fun c' => D * (A c₀).map φ * trAt ξ' (c₀.pull hM π) c', ⟨fun c' h => ?_, fun c' c'' h h' => ?_⟩, fun c h => ?_⟩
-  · rw [det_mul, det_mul, ← RingHom.mapMatrix_apply, ← RingHom.map_det]
-    exact (hD.mul ((hA.1 c₀ h₀).map φ)).mul (isUnit_det_trAt _ _ h₀' h)
-  · rw [Matrix.mul_assoc (D * _), trAt_mul _ _ _ h₀' h h']
-  · beta_reduce
-    rw [trAt_pull hM π c₀ c (up c₀ h₀) (up c h), hξ, trAt_spMap φ c₀ c h₀ h, Matrix.mul_assoc, ← Matrix.map_mul,
-      ← hA.2 c₀ c h₀ h]
 
 end GlobalTheory.BcLie
 

@@ -9,8 +9,6 @@ namespace GlobalTheory.SnMass.VolN.GNGroup
 
 variable {E : Type} [Field E]
 
-local notation:70 A:70 " ⬝ " B:71 => @HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid A B
-
 theorem cT_mul (σ : E →+* E) {n : ℕ} (A B : Matrix (Fin n) (Fin n) E) :
     cT σ (A * B) = cT σ B * cT σ A := by
   simp only [cT, Matrix.map_mul, Matrix.transpose_mul]

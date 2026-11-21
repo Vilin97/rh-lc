@@ -18,7 +18,4 @@ def eigIdxFiniteTypes (D : D7) (X : DivX D) : EigIdx D X where
     have h' : π = π' := h
     rw [h']
 
-@[simp] theorem eigIdxFiniteTypes_cOf (D : D7) (X : DivX D) (π : D.what₂.FT) :
-    (eigIdxFiniteTypes D X).cOf π = π := rfl
-
 end GlobalTheory

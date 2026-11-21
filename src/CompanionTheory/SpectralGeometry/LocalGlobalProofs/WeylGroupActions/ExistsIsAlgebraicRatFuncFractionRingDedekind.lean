@@ -1,5 +1,7 @@
 import Mathlib
-import CompanionTheory.SpectralGeometry.LocalGlobalProofs.WeylGroupActions.HasDerivAtExpReal
+import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutMP2
+import Formalism.FormalDegreeBessel.FormalDegreeRatio.CapelliHighestWeightConjugated
+import CompanionTheory.HarishChandraModules.NonemptyRepresentations.ExpEntry
 import Formalism.HermitianCurvature.HermitianCurvatureProofs.OperatorRepresentations
 import Formalism.HermitianCurvature.HermitianCurvatureProofs.DifferentialOperatorBracket
 

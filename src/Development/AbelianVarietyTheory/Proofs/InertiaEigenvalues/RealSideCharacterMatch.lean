@@ -60,54 +60,7 @@ theorem stabK_mul' {y : G} (a b : stab ι J y) : stabK ι (a * b) = stabK ι b *
 variable (P : ClassPres ι S σ ρ J χ) (χ' : J →* ℂˣ) (hχ' : ∀ k, ∃ b : K, σ b = (χ' k : ℂ))
   (hρ : ∀ γ x, ∃ x', P.coef x' = ρ γ (P.coef x))
 
-def rhoF (c : S.Cl) (g : S.Gam c) (x : S.V) : W :=
-  (χ' (stabK ι (P.stabI c g)) : ℂ) • ρ (P.stabI c g : Γ) (P.coef x)
-
 include hχ' hρ in
-theorem rhoF_rg (c : S.Cl) (g : S.Gam c) (x : S.V) : InRg P (rhoF P χ' c g x) := by
-  obtain ⟨x', hx'⟩ := hρ (P.stabI c g : Γ) x
-  exact InRg.smul (hχ' _) ⟨x', hx'⟩
-
-def rhoE (c : S.Cl) (g : S.Gam c) : Module.End K S.V where
-  toFun x := cinv P (rhoF P χ' c g x)
-  map_add' x x' := by
-    apply coef_injective P
-    rw [map_add, coef_cinv P (rhoF_rg P χ' hχ' hρ _ _ _), coef_cinv P (rhoF_rg P χ' hχ' hρ _ _ _),
-      coef_cinv P (rhoF_rg P χ' hχ' hρ _ _ _)]
-    simp only [rhoF, map_add, smul_add]
-  map_smul' b x := by
-    apply coef_injective P
-    rw [map_smulₛₗ, coef_cinv P (rhoF_rg P χ' hχ' hρ _ _ _), coef_cinv P (rhoF_rg P χ' hχ' hρ _ _ _)]
-    simp only [rhoF, map_smulₛₗ, RingHom.id_apply, map_smul]
-    rw [smul_comm]
-
-theorem coef_rhoE (c : S.Cl) (g : S.Gam c) (x : S.V) :
-    P.coef (rhoE P χ' hχ' hρ c g x) = rhoF P χ' c g x :=
-  coef_cinv P (rhoF_rg P χ' hχ' hρ _ _ _)
-
-def rhoNew (c : S.Cl) : S.Gam c →* Module.End K S.V where
-  toFun := rhoE P χ' hχ' hρ c
-  map_one' := by
-    apply LinearMap.ext; intro x
-    apply coef_injective P
-    rw [coef_rhoE]
-    simp [rhoF, stabK_one']
-  map_mul' g g' := by
-    apply LinearMap.ext; intro x
-    apply coef_injective P
-    rw [Module.End.mul_apply, coef_rhoE, coef_rhoE]
-    simp only [rhoF, coef_rhoE, map_mul, stabK_mul', Subgroup.coe_mul, Units.val_mul, Module.End.mul_apply, map_smul,
-      smul_smul, mul_comm]
-
-def presNew : ClassPres ι ({ S with ρ := rhoNew P χ' hχ' hρ } : CSD K) σ ρ J χ' where
-  y := P.y
-  reps := P.reps
-  stabI := P.stabI
-  coef := P.coef
-  coef_li := P.coef_li
-  coef_span := P.coef_span
-  coef_pair := P.coef_pair
-  coef_act c g x := coef_rhoE P χ' hχ' hρ c g x
 
 end Gen
 
@@ -368,30 +321,8 @@ variable (P : ClassPres ι S σ ρ J χ) (hχ : ∀ k, ∃ b : K, σ b = (χ k :
     ∀ k : J, (k : G) ∈ Lc → χ k = 1)
 
 include hloc in
-theorem keeps_dc (i : I) (hi : inR i) : Keeps P (dcL (W := W) (H.hA i)) := by
-  obtain ⟨Lc, hL1, hL2, hL3⟩ := hloc i hi
-  intro F hF hv
-  refine ⟨dcOp_mem (H.hDC i hi) Lc (fun a ha => hL1 _ (H.hA_loc i hi a ha)) hL2 hL3 hF, fun h => ?_⟩
-  exact InRg.sum _ _ fun a _ => hv _
 
 open Classical in
-
-def opNew (one : I → Prop) (i : I) : Module.End K S.Forms :=
-  if hi : inR i then trE P hχ hρ (keeps_dc P H hloc i hi) else if one i then 1 else 0
-
-def heckeNew (one : I → Prop) : HeckeTie ι P (opNew P hχ hρ H hloc one) inR isT isLoc where
-  hx := H.hx
-  hA := H.hA
-  hx_ok := H.hx_ok
-  hA_loc := H.hA_loc
-  chi_loc i hi k hk := by
-    obtain ⟨Lc, hL1, _, hL3⟩ := hloc i hi
-    exact hL3 k (hL1 _ hk)
-  hDC := H.hDC
-  op_eq i hi f := by
-    unfold opNew
-    rw [dif_pos hi, ext_trE]
-    rfl
 
 end Hecke
 

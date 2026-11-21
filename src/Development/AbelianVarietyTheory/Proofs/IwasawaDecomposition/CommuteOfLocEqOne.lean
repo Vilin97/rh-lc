@@ -11,8 +11,6 @@ namespace GlobalTheory.SplitLocComm
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
-local notation3 "L⁺" => maximalRealSubfield L
-
 theorem map_compAt_eq_one {n : ℕ} (s : SplitPlace L) (x : GA L n) (hx : s.loc n x = 1) :
     (x.1 : Matrix (Fin n) (Fin n) (AL L)).map (compAt L s.v) = 1 := by
   have hx' : s.loc n x⁻¹ = 1 := by rw [map_inv, hx, inv_one]

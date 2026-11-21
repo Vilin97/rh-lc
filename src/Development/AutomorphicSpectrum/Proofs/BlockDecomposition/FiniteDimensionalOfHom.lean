@@ -35,10 +35,6 @@ noncomputable def sandwich {W H : Type} [AddCommGroup W] [Module ℂ W]
   map_add' f g := by ext v; simp
   map_smul' c f := by ext v; simp
 
-@[simp] theorem sandwich_apply {W H : Type} [AddCommGroup W] [Module ℂ W]
-    [AddCommGroup H] [Module ℂ H] (a : H →ₗ[ℂ] H) (b : W →ₗ[ℂ] W) (f : W →ₗ[ℂ] H) :
-    sandwich a b f = a ∘ₗ f ∘ₗ b := rfl
-
 theorem trace_sandwich {W H : Type} [AddCommGroup W] [Module ℂ W]
     [AddCommGroup H] [Module ℂ H] [FiniteDimensional ℂ W] [FiniteDimensional ℂ H]
     (a : H →ₗ[ℂ] H) (b : W →ₗ[ℂ] W) :

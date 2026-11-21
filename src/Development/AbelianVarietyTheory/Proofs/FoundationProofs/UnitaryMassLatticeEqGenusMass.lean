@@ -16,12 +16,6 @@ namespace GlobalTheory.Mass.Genus
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
 
-local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
-local notation "𝒜" => E ⊗[F] FiniteAdeleRing (𝓞 F) F
-local notation "𝒮" => tensInt (F := F) (FiniteAdeleRing (𝓞 F) F) (intOE E) (intAd F)
-local notation "ιA" => inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
-local notation "𝓛" => latS (F := F) (FiniteAdeleRing (𝓞 F) F) 𝒮
-
 omit [NumberField F] [Algebra F E] in
 
 theorem exists_den (Λ N : Submodule (𝓞 E) (Fin n → E)) (hΛ : Λ.FG)
@@ -210,9 +204,6 @@ theorem exists_globLat_eq (hfix : ∀ e : E, σ e = e → ∃ a : F, algebraMap 
         exact zsmul_mem (hbΛ _ hx) _
   have lg := (Formalism.HermitianLatticesTheory.locBasic (𝓞 E) E (Fin n → E) RingOfIntegers.coe_injective).2.2.1
   exact ⟨g, hg, le_antisymm (lg _ _ fun p hp => (key p hp).le) (lg _ _ fun p hp => (key p hp).ge)⟩
-
-local notation "Γ" => Subgroup.subgroupOf (ratPts σ J 𝔸) (UPts σ J 𝔸)
-local notation "𝒦" => Subgroup.subgroupOf (levelAfL σ J Λ) (UPts σ J 𝔸)
 
 theorem mk_eq_iff (hΛ : Module.Finite (𝓞 E) Λ) (hsp : Submodule.span E (Λ : Set (Fin n → E)) = ⊤)
     (g g' : UPts σ J 𝔸) :

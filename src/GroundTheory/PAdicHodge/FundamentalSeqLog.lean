@@ -15,14 +15,6 @@ section PD
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
 
-local notation "𝒪" => normInteger K
-local notation "𝒪♭" => PreTilt (normInteger K) p
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔸" => Localization.Away (p : AInf K p)
-local notation "φ" => WittVector.frobeniusEquiv p (PreTilt (normInteger K) p)
-local notation "𝔭" => Ideal.span {(p : ACris K p)}
-local notation "𝔭₀" => Ideal.span {(p : ACrisZero K p)}
-
 theorem dpow_zero_right {n : ℕ} (hn : n ≠ 0) : dpow n (0 : AInf K p) = 0 := by
   rw [dpow, map_zero, zero_pow hn, mul_zero]
 
@@ -42,9 +34,6 @@ def pdIdeal : Ideal (AInf K p) where
     simp only [Set.mem_ofPred_eq] at hx ⊢
     rw [smul_eq_mul, mul_comm, dpow_mul]
     exact Subalgebra.mul_mem _ (hx n) (Subalgebra.pow_mem _ (Subalgebra.algebraMap_mem _ c) n)
-
-theorem mem_pdIdeal {x : AInf K p} : x ∈ pdIdeal K p ↔ ∀ n, dpow n x ∈ ACrisZero K p :=
-  Iff.rfl
 
 theorem ker_le_pdIdeal : RingHom.ker θ ≤ pdIdeal K p := fun _ hx n => dpow_mem hx n
 
@@ -212,12 +201,6 @@ section Theta
 
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
-
-local notation "𝒪" => normInteger K
-local notation "𝒪♭" => PreTilt (normInteger K) p
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔸" => Localization.Away (p : AInf K p)
-local notation "𝔭" => Ideal.span {(p : ACris K p)}
 
 theorem thetaZero_logTermJ_zero {x : AInf K p} (hx : x ∈ pdIdeal K p) :
     thetaZero K p (logTermJ hx 0) = θ x := by

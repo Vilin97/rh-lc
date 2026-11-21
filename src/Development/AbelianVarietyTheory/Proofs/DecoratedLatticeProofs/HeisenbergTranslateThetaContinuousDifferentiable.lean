@@ -2,7 +2,9 @@ import Mathlib
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsQuasiFam
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.RealSizeNonneg
 import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.UnifModGrowthOfIsUnifModerate
-import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.ThetaAbsoluteSum
+import Formalism.LocalToGlobal.IndefiniteReal.OrthogonalComplementCharacterisation
+import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.ExistsHeightLeTwoMulQuotHeight
+import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.WittDecompSymplInclIsotropicInclAnisotropic
 import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.TransvectionAction
 import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.WeilDatumExistence
 import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.EqZeroOfLintegralEqZero
@@ -49,14 +51,8 @@ theorem supN_ne_top (hψ : IsStdChar D ψ (-1)) {φ : WO S T → ℂ} (h : IsThe
   rw [← ofReal_norm_eq_enorm]
   exact ENNReal.ofReal_le_ofReal (hC w)
 
-theorem heisO_add' (u : WO S T) (φ φ' : WO S T → ℂ) : heisO ψ S T u (φ + φ') = heisO ψ S T u φ + heisO ψ S T u φ' := by
-  funext w; simp only [heisO, Pi.add_apply, mul_add]
-
 theorem heisO_sub' (u : WO S T) (φ φ' : WO S T → ℂ) : heisO ψ S T u (φ - φ') = heisO ψ S T u φ - heisO ψ S T u φ' := by
   funext w; simp only [heisO, Pi.sub_apply, mul_sub]
-
-theorem heisO_smul' (u : WO S T) (c : ℂ) (φ : WO S T → ℂ) : heisO ψ S T u (c • φ) = c • heisO ψ S T u φ := by
-  funext w; simp only [heisO, Pi.smul_apply, smul_eq_mul]; ring
 
 theorem supN_le_ofReal {φ : WO S T → ℂ} {C : ℝ} (h : ∀ w, ‖φ w‖ ≤ C) : supN φ ≤ ENNReal.ofReal C :=
   iSup_le fun w => by

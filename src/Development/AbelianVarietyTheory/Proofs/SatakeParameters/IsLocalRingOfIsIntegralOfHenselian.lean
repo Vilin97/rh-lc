@@ -1,6 +1,7 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.DivisorSupportCondition
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsSepClosedResidueFieldPowerSeriesComplex
+import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsMatrixForm
+import Development.AbelianVarietyTheory.BlockTheory.CMModuli.ProjectiveSpaceOverSpec
 import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.GaloisOfPrimePowerDegree
 open CategoryTheory Limits AlgebraicGeometry IsLocalRing GlobalTheory.EtC TensorProduct
 
@@ -16,10 +17,5 @@ theorem isLocalRing_of_isIntegral_of_henselian (O : Type) [CommRing O] [Henselia
     (⟨a, Algebra.self_mem_adjoin_singleton O a⟩ : Algebra.adjoin O {a}) with h | h
   · exact Or.inl (h.map (Algebra.adjoin O {a}).val)
   · exact Or.inr (by simpa using h.map (Algebra.adjoin O {a}).val)
-
-theorem isLocalRing_integralClosure : ∀ (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K] [Algebra O K] [IsFractionRing O K], SH O → ∀ (Ω : Type) [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] [Algebra O Ω] [IsScalarTower O K Ω], IsLocalRing (integralClosure O Ω) := by
-  intro O K _ _ _ _ _ _ hSH Ω _ _ _ _ _
-  obtain ⟨hH, -⟩ := hSH
-  exact isLocalRing_of_isIntegral_of_henselian O (integralClosure O Ω)
 
 end GlobalTheory.IntClLocal

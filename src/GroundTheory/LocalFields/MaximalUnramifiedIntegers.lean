@@ -55,11 +55,6 @@ def integerInclusion [ValuativeRel K] [ValuativeExtension K Ω] {E F : Intermedi
   map_add' _ _ := rfl
   commutes' _ := rfl
 
-@[simp]
-theorem coe_integerInclusion [ValuativeRel K] [ValuativeExtension K Ω] {E F : IntermediateField K Ω}
-    (h : E ≤ F) (x : 𝒪[E]) : (((integerInclusion h x : 𝒪[F]) : F) : Ω) = ((x : E) : Ω) :=
-  rfl
-
 theorem integerInclusion_injective [ValuativeRel K] [ValuativeExtension K Ω]
     {E F : IntermediateField K Ω} (h : E ≤ F) : Function.Injective (integerInclusion h) := by
   intro x y hxy
@@ -79,8 +74,6 @@ section Discrete
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω]
   [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] [HasUnramifiedRoots K Ω]
-
-local notation "𝔼" => maximalUnramifiedExtension K Ω
 
 theorem exists_valuation_eq_algebraMap {x : Ω} (hx : x ∈ 𝔼) (hx0 : x ≠ 0) :
     ∃ a : K, a ≠ 0 ∧ valuation Ω x = valuation Ω (algebraMap K Ω a) := by
@@ -223,8 +216,6 @@ section Frobenius
 variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω]
   [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] [HasUnramifiedRoots K Ω]
-
-local notation "𝔼" => maximalUnramifiedExtension K Ω
 
 omit [TopologicalSpace Ω] [IsValuativeTopology Ω] [Algebra.IsAlgebraic K Ω] in
 
@@ -385,8 +376,6 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
   {Ω : Type*} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValuativeTopology Ω]
   [Algebra K Ω] [ValuativeExtension K Ω] [Algebra.IsAlgebraic K Ω] [HasUnramifiedRoots K Ω]
 
-local notation "𝔼" => maximalUnramifiedExtension K Ω
-
 theorem exists_pow_card_pow_eq_self (y : 𝓀[𝔼]) :
     ∃ n : ℕ, n ≠ 0 ∧ y ^ (Nat.card 𝓀[K] ^ n) = y := by
   obtain ⟨x, rfl⟩ := residue_surjective y
@@ -402,12 +391,6 @@ instance isAlgebraic_residueField : Algebra.IsAlgebraic 𝓀[K] 𝓀[𝔼] := by
 
 instance isAlgClosed_residueField : IsAlgClosed 𝓀[𝔼] :=
   isAlgClosed_of_isPrimitiveRoot (k := 𝓀[K]) fun _ hm ↦ exists_isPrimitiveRoot_residue hm
-
-instance isAlgClosure_residueField :
-    letI : Module.IsTorsionFree 𝓀[K] 𝓀[𝔼] := DivisionSemiring.to_moduleIsTorsionFree
-    IsAlgClosure 𝓀[K] 𝓀[𝔼] :=
-  letI : Module.IsTorsionFree 𝓀[K] 𝓀[𝔼] := DivisionSemiring.to_moduleIsTorsionFree
-  ⟨isAlgClosed_residueField, isAlgebraic_residueField⟩
 
 end Residue
 

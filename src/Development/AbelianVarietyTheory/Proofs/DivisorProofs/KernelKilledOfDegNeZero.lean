@@ -102,8 +102,4 @@ theorem kernel_killed_of_deg_ne_zero (K : Type) [Field K] (A B : AbVar K) (f : A
     haveI : CharZero K := CharP.charP_to_charZero K
     exact ⟨n0, by exact_mod_cast hn0.ne', hkill⟩
 
-example : ∀ (K : Type) [Field K] (A B : AbVar K) (f : A ⟶ B), IsIsogeny f → ((deg f : ℕ) : K) ≠ 0 →
-    ∃ n : ℕ, (n : K) ≠ 0 ∧ ∀ (T : Over (Sp K)) (x : T ⟶ A.X), x ≫ f.hom = 1 → x ^ n = 1 :=
-  kernel_killed_of_deg_ne_zero
-
 end GlobalTheory.AV.KerInv

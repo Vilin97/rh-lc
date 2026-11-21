@@ -122,6 +122,4 @@ theorem defect_le (η : ℝ) (hη : 0 < η) (hη1 : η ≤ 1) : ∃ ρ : ℝ, 0 
 
 end Matrices
 
-theorem mat_mul {P Q : ℕ} (g h : UpqT P Q) : UpqT.mat (g * h) = UpqT.mat g * UpqT.mat h := rfl
-
 end GlobalTheory.ExpBallSandwich

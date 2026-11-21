@@ -61,7 +61,6 @@ instance : MeasurableSpace (Grp G hG) := inferInstanceAs (MeasurableSpace {x : M
 instance : BorelSpace (Grp G hG) := inferInstanceAs (BorelSpace {x : MtM m // x ∈ amb G})
 instance : SecondCountableTopology (Grp G hG) :=
   inferInstanceAs (SecondCountableTopology {x : MtM m // x ∈ amb G})
-instance : T2Space (Grp G hG) := inferInstanceAs (T2Space {x : MtM m // x ∈ amb G})
 
 def inc (x : Grp G hG) : MtM m := x.1
 

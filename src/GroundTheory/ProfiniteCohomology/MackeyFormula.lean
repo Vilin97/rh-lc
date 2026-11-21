@@ -143,11 +143,6 @@ noncomputable def mackeyEquiv :
   left_inv f := mackeyLift_mackeyProj U ι N f
   right_inv F := funext fun d => mackeyProj_mackeyLift U ι N F d
 
-theorem mackeyEquiv_apply_ρ (f : Rep.coind U.subtype N) (h₀ : H) (d : MackeyDoubleCoset U ι) :
-    mackeyEquiv U ι N ((Rep.coind U.subtype N).ρ (ι h₀) f) d =
-      (mackeySummand U ι N d.out).ρ h₀ (mackeyEquiv U ι N f d) :=
-  Rep.hom_comm_apply (mackeyProj U ι N d.out) h₀ f
-
 theorem mackeyLift_single_ρ [DecidableEq (MackeyDoubleCoset U ι)] (d : MackeyDoubleCoset U ι)
     (F : mackeySummand U ι N d.out) (h₀ : H) :
     mackeyLift U ι N (Pi.single d ((mackeySummand U ι N d.out).ρ h₀ F)) =
@@ -209,42 +204,6 @@ theorem sum_mackeyProj_comp_mackeyIncl :
   rw [Finset.sum_congr rfl fun d _ => mackeyIncl_hom_apply U ι N d _, ← map_sum,
     Finset.univ_sum_single]
   exact mackeyLift_mackeyProj U ι N f
-
-noncomputable def mackeyBicone :
-    Bicone (fun d : MackeyDoubleCoset U ι => mackeySummand U ι N d.out) where
-  pt := Rep.res ι (Rep.coind U.subtype N)
-  π d := mackeyProj U ι N d.out
-  ι d := mackeyIncl U ι N d
-  ι_π d d' := by
-    split_ifs with h
-    · subst h
-      simpa using mackeyIncl_comp_mackeyProj U ι N d
-    · exact mackeyIncl_comp_mackeyProj_of_ne U ι N h
-
-noncomputable def mackeyBiconeIsBilimit : (mackeyBicone U ι N).IsBilimit :=
-  isBilimitOfTotal _ (sum_mackeyProj_comp_mackeyIncl U ι N)
-
-instance hasBiproduct_mackeySummand :
-    HasBiproduct fun d : MackeyDoubleCoset U ι => mackeySummand U ι N d.out :=
-  HasBiproduct.mk ⟨_, mackeyBiconeIsBilimit U ι N⟩
-
-noncomputable def mackeyIso :
-    Rep.res ι (Rep.coind U.subtype N) ≅ ⨁ fun d : MackeyDoubleCoset U ι => mackeySummand U ι N d.out :=
-  biproduct.uniqueUpToIso _ (mackeyBiconeIsBilimit U ι N)
-
-@[reassoc (attr := simp)]
-theorem mackeyIso_hom_π (d : MackeyDoubleCoset U ι) :
-    (mackeyIso U ι N).hom ≫ biproduct.π (fun d : MackeyDoubleCoset U ι => mackeySummand U ι N d.out) d =
-      mackeyProj U ι N d.out := by
-  rw [mackeyIso, biproduct.uniqueUpToIso_hom]
-  exact biproduct.lift_π _ _
-
-@[reassoc (attr := simp)]
-theorem ι_mackeyIso_inv (d : MackeyDoubleCoset U ι) :
-    biproduct.ι (fun d : MackeyDoubleCoset U ι => mackeySummand U ι N d.out) d ≫ (mackeyIso U ι N).inv =
-      mackeyIncl U ι N d := by
-  rw [mackeyIso, biproduct.uniqueUpToIso_inv]
-  exact biproduct.ι_desc _ _
 
 end Finite
 

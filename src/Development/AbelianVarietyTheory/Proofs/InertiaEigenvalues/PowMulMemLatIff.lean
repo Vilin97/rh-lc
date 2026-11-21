@@ -237,20 +237,10 @@ theorem Lifts.act {w : Ainf l} {c : ↥(K0 K)} (h : Lifts AI K w c) {g : GQ l}
   rw [io_act, h.io_eq, P.actQdR_Om]
   exact congrArg (oB P) (hg c)
 
-theorem Lifts.add {w w' : Ainf l} {c c' : ↥(K0 K)} (h : Lifts AI K w c) (h' : Lifts AI K w' c') :
-    Lifts AI K (w + w') (c + c') := by
-  unfold Lifts at h h' ⊢
-  rw [map_add, map_add, h, h']
-
 theorem Lifts.sub {w w' : Ainf l} {c c' : ↥(K0 K)} (h : Lifts AI K w c) (h' : Lifts AI K w' c') :
     Lifts AI K (w - w') (c - c') := by
   unfold Lifts at h h' ⊢
   rw [map_sub, map_sub, h, h']
-
-theorem Lifts.mul {w w' : Ainf l} {c c' : ↥(K0 K)} (h : Lifts AI K w c) (h' : Lifts AI K w' c') :
-    Lifts AI K (w * w') (c * c') := by
-  unfold Lifts at h h' ⊢
-  rw [map_mul, map_mul, h, h']
 
 theorem Lifts.unique {w w' : Ainf l} {c : ↥(K0 K)} (h : Lifts AI K w c) (h' : Lifts AI K w' c) :
     w = w' := AI.ιA_inj (h.trans h'.symm)

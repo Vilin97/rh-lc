@@ -6,7 +6,11 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDiagonalLagra
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProductFunctionOnSumCoordsMemAdelicSchwartzSpace
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilRepresentationPreservesSchwartz
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StarMemAdelicSchwartzSpaceNumberField
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SeesawPairRestrictionGaussian
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardTraceAddCharIsStandardCharOfAdmissibleCM
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSchwartzNe
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjLinApply
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewAdaptedPlanePairConverse
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzTensorLeftFactor
 
 open scoped TensorProduct NNReal Matrix
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
@@ -98,9 +102,6 @@ variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
 attribute [local instance] GlobalTheory.AdelicUnitaryTop.locallyCompact_finiteAdele
   GlobalTheory.AdelicUnitaryTop.secondCountable_finiteAdele GlobalTheory.AdelicUnitaryTop.t2Space_finiteAdeleRing_of_numberField
-
-local instance measAfW : MeasurableSpace (FiniteAdeleRing (𝓞 F) F) := borel _
-local instance borelAfW : BorelSpace (FiniteAdeleRing (𝓞 F) F) := ⟨rfl⟩
 
 theorem pureA_glue (f : SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ) (g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ)
     (p : DiagForm.Vi F κ × DiagForm.Vf F κ) : pureA F f g (DiagForm.glue p) = f (DiagForm.eI F κ p.1) * g p.2 := by

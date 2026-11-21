@@ -20,11 +20,6 @@ instance integerUnitsAction : MulDistribMulAction (L ≃ₐ[K] L) 𝒪[L]ˣ wher
   smul_mul σ u w := map_mul (Units.map (integerAlgEquiv K L σ : 𝒪[L] →* 𝒪[L])) u w
   smul_one σ := map_one (Units.map (integerAlgEquiv K L σ : 𝒪[L] →* 𝒪[L]))
 
-@[simp]
-theorem coe_smul_integerUnits (σ : L ≃ₐ[K] L) (u : 𝒪[L]ˣ) :
-    (((σ • u : 𝒪[L]ˣ) : 𝒪[L]) : L) = σ ((u : 𝒪[L]) : L) :=
-  rfl
-
 theorem unitsIncl_smul (σ : L ≃ₐ[K] L) (u : 𝒪[L]ˣ) :
     unitsIncl L (σ • u) = σ • unitsIncl L u := by
   ext

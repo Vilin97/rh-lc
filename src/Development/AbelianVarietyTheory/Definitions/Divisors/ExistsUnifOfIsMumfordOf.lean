@@ -115,12 +115,7 @@ def IsMumfordOf [IsLocalRing R] (ξ : Sp R ⟶ S) (Q : Data R) : Prop :=
 
 variable {F j e} in
 
-theorem IsMumfordOf.isCN [IsLocalRing R] {ξ : Sp R ⟶ S} {Q : Data R} (h : IsMumfordOf F j e ξ Q) : IsCN R := h.1
-
 variable {F j e} in
-
-theorem IsMumfordOf.isPos [IsLocalRing R] {ξ : Sp R ⟶ S} {Q : Data R} (h : IsMumfordOf F j e ξ Q) :
-    Q.IsPos (maximalIdeal R) := h.2.1
 
 variable {F j e} in
 
@@ -255,25 +250,7 @@ def tate (k : ℤ) : Data InhTate.R where
       (Eq.trans ?_ (congrArg₂ (· * ·) (gm_res _ z _ (hJ.mem _ _) _) (gm_res _ z _ (hJ.mem _ _) _)).symm)
     rw [_root_.mul_one, ← map_mul, ← zpow_add, mul_add, add_mul]
 
-instance (k : ℤ) : Nontrivial (tate k).X := inferInstanceAs (Nontrivial ℤ)
-
 open InhTate in
-
-theorem tate_isMonomialTau (k : ℤ) : (tate k).IsMonomialTau ![PowerSeries.X] ![k • mulForm] := fun (a b : ℤ) => by
-  refine ⟨piK ^ (k * a * b), ?_, cg _ _ 1, cg_isGen _ _ _, fun z J hJ => ?_⟩
-  · rw [Fin.prod_univ_one, _root_.mul_assoc]; exact Units.val_zpow_eq_zpow_val _ _
-  refine (gm_res _ z _ (hJ.mem _ _) _).trans (Eq.trans ?_
-    (congrArg (_ * ·) ((gm_res _ z _ (hJ.mem _ _) _).trans (map_one _))).symm)
-  rw [_root_.mul_one]
-  exact congrArg (gm (𝟙 _) z ⊤) (map_zpow _ _ _).symm
-
-theorem tate_isPos {k : ℤ} (hk : 0 < k) : (tate k).IsPos (maximalIdeal (PowerSeries ℚ)) :=
-  (tate_isMonomialTau k).isPos
-    (fun i => by
-      rw [Subsingleton.elim i 0, PowerSeries.maximalIdeal_eq_span_X]; exact Ideal.mem_span_singleton_self _)
-    (fun i (y : ℤ) => by
-      rw [Subsingleton.elim i 0]; exact (mul_nonneg hk.le (mul_self_nonneg y) : 0 ≤ k * (y * y)))
-    (fun (y : ℤ) hy => ⟨0, (mul_pos hk (mul_self_pos.2 hy) : 0 < k * (y * y))⟩)
 
 open InhTate in
 
@@ -303,33 +280,6 @@ theorem not_isPos_tate_zero : ¬ (tate 0).IsPos (maximalIdeal (PowerSeries ℚ))
   exact (mem_maximalIdeal r).1 hr (IsUnit.of_mul_eq_one x (IsFractionRing.injective _ _ e').symm)
 
 open InhTate in
-
-theorem refines_tate : Refines (tate 2) (RingHom.id _) tatePre (AddEquiv.refl _) := by
-  obtain ⟨β, β₂, w, h₁, h₂, h₃, h₄, h₅⟩ := refines_ofDeg tatePre tauBimult
-  refine ⟨β, β₂, w, h₁, h₂, h₃, h₄, fun κ hκ a b z J J' hJ hJ' => (h₅ κ hκ a b z J J' hJ hJ').trans (congrArg (_ * ·) ?_)⟩
-  refine ((exists_tau tatePre a b).choose_spec.2 _ κ z J hJ).trans ?_
-  refine Eq.trans ?_ (gm_res κ z _ (hJ.mem _ _) _).symm
-  unfold val
-  erw [tau_isConst a b]
-  exact gm_res _ z _ (hJ.mem _ _) _
-
-theorem isCN_powerSeries : IsCN (PowerSeries ℚ) :=
-  ⟨inferInstance, inferInstance, inferInstance, algebraRat.charZero _⟩
-
-theorem exists_pos_refined : ∃ (Q : Data (PowerSeries ℚ)) (D : DegData (PowerSeries ℚ) (maximalIdeal _))
-    (ε : D.toPre.X ≃+ Q.X), Nontrivial Q.X ∧ IsCN (PowerSeries ℚ) ∧ Q.IsPos (maximalIdeal _) ∧
-      Refines Q (RingHom.id _) D.toPre ε :=
-  ⟨tate 2, ⟨InhTate.tatePre, InhTate.psiEven, InhTate.tauBimult,
-    by rw [PowerSeries.maximalIdeal_eq_span_X]; exact InhTate.tateData.psi_pos,
-    by rw [PowerSeries.maximalIdeal_eq_span_X]; exact InhTate.tateData.psi_tendsto⟩, AddEquiv.refl _,
-    inferInstance, isCN_powerSeries, tate_isPos two_pos, refines_tate⟩
-
-theorem exists_unif_of_isMumfordOf {o : Type} [CommRing o] {ζ : o} {g n : ℕ} (F : SFam g n ζ) {S : Scheme.{0}} (j : F.X ⟶ S)
-    {G : Over S} [GrpObj G] (e : F.univ.A.left ⟶ G.left) [IsLocalRing R] (ξ : Sp R ⟶ S)
-    (D : DegData R (maximalIdeal R)) (h : IsMumfordOf F j e ξ (ofDeg D.toPre D.tau_bimult)) :
-    ∃ (G' : Over (Sp R)) (_ : GrpObj G') (_ : IsCommMonObj G') (π : G'.left ⟶ G.left) (A : PolAV (Sp (FractionRing R)))
-      (U : Unif (maximalIdeal R) D A G'), IsUnifOf F j e (spMap (RingHom.id R) ≫ ξ) π U :=
-  h.unif R (RingHom.id R) h.isCN Function.injective_id (RingHom.Finite.id R) D _ (refines_ofDeg _ _)
 
 end Wit
 

@@ -94,6 +94,4 @@ theorem coreLe_of_gram_meas_rat : Gram → Meas → GlobalTheory.CovTop.Rat → 
   exact ⟨x0, fun x hx hle ι p hp i =>
     coreAt_of p i C ((h x hx hle ι p hp).1.1 i) ((h x hx hle ι p hp).1.2 i) ((h x hx hle ι p hp).2 i)⟩
 
-example : Gram → Meas → GlobalTheory.CovTop.Rat → CoreLe := coreLe_of_gram_meas_rat
-
 end GlobalTheory.CoreSlope

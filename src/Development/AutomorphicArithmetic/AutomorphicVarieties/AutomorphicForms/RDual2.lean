@@ -39,8 +39,6 @@ def dualFn : Sm E a ≃ₗ[ℂ] Sm E a where
 
 @[simp] theorem dualFn_apply (φ : Sm E a) (g : GA E a) : (dualFn E a φ).1 g = φ.1 (invT a (Ad E) g) := rfl
 
-@[simp] theorem dualFn_dualFn (φ : Sm E a) : dualFn E a (dualFn E a φ) = φ := (dualFn E a).left_inv φ
-
 theorem rt_dualFn (h : GA E a) (φ : Sm E a) : rt E a h (dualFn E a φ) = dualFn E a (rt E a (invT a (Ad E) h) φ) :=
   Subtype.ext <| funext fun g => congrArg φ.1 (map_mul (invT a (Ad E)) g h)
 
@@ -163,9 +161,6 @@ theorem isAutForm_dualFn {φ : Sm E a} (h : IsAutForm φ) : IsAutForm (dualFn E 
 theorem isCuspForm_dualFn {φ : Sm E a} (h : IsCuspForm φ) : IsCuspForm (dualFn E a φ) :=
   ⟨isAutForm_dualFn h.1, isCuspidal_invT h.1.left h.2⟩
 
-theorem dualFn_mulChi (χ : HChar E) (φ : Sm E a) : dualFn E a (mulChi a χ φ) = mulChi a χ⁻¹ (dualFn E a φ) :=
-  Subtype.ext <| funext fun g => by simp only [dualFn_apply, mulChi_apply, chiDet_invT]
-
 namespace CuspSub
 
 variable (π : CuspSub E a)
@@ -188,12 +183,7 @@ def dual : CuspSub E a where
     have e := Submodule.map_comap_eq_of_surjective (f := (dualFn E a).toLinearMap) (dualFn E a).surjective W
     exact h.imp (fun h => by rw [← e, h, Submodule.map_bot]) fun h => by rw [← e, h]
 
-theorem mem_dual {φ : Sm E a} : φ ∈ π.dual.V ↔ dualFn E a φ ∈ π.V :=
-  ⟨fun ⟨ψ, h, e⟩ => by rw [← e]; exact (dualFn_dualFn ψ).symm ▸ h, fun h => ⟨_, h, dualFn_dualFn φ⟩⟩
-
 def toDual : π.V ≃ₗ[ℂ] π.dual.V := (dualFn E a).submoduleMap π.V
-
-@[simp] theorem toDual_val (φ : π.V) : (toDual π φ).1 = dualFn E a φ.1 := rfl
 
 theorem op_toDual (o : Op E a) (φ : π.V) : π.dual.op o (toDual π φ) = toDual π (π.op (invTOp o) φ) :=
   Subtype.ext (act_dualFn o φ.1)
@@ -205,22 +195,7 @@ theorem locRep_toDual (w : HeightOneSpectrum (𝓞 E)) (g : GL (Fin a) (w.adicCo
     π.dual.locRep w g (toDual π φ) = toDual π (π.locRep w (invT a _ g) φ) :=
   (finPart_toDual π (locGL E a w g) φ).trans (by rw [← locGL_invT]; rfl)
 
-@[simp] theorem dual_dual : dual π.dual = π := CuspSub.ext <| by
-  ext φ
-  rw [mem_dual, mem_dual, dualFn_dualFn]
-
-theorem dual_twist (χ : HChar E) : dual (π.twist χ) = π.dual.twist χ⁻¹ := CuspSub.ext <| by
-  change (π.V.map _).map _ = (π.V.map _).map _
-  rw [← Submodule.map_comp, ← Submodule.map_comp]
-  exact congrArg (fun f => π.V.map f) (LinearMap.ext (dualFn_mulChi χ))
-
 variable {π} {π' : CuspSub E a}
-
-theorem Iso.dual (h : π.Iso π') : π.dual.Iso π'.dual := by
-  obtain ⟨T, hT⟩ := h
-  refine ⟨((toDual π).symm.trans T).trans (toDual π'), fun o φ => ?_⟩
-  obtain ⟨φ, rfl⟩ := (toDual π).surjective φ
-  simp only [op_toDual, LinearEquiv.trans_apply, LinearEquiv.symm_apply_apply, hT]
 
 theorem HasInfChar.dual {τ : InfinitePlace E} {m : Multiset ℂ} (h : π.HasInfChar τ m) :
     π.dual.HasInfChar τ (m.map Neg.neg) := by
@@ -237,29 +212,6 @@ theorem HasInfChar.dual {τ : InfinitePlace E} {m : Multiset ℂ} (h : π.HasInf
 theorem HasSat.dual {w : HeightOneSpectrum (𝓞 E)} {B : Multiset ℂˣ} (h : π.HasSat w B) :
     π.dual.HasSat w (B.map (·⁻¹)) :=
   hasSatGL_invT (toDual π) (locRep_toDual π w) h
-
-theorem IsLocComp.dual {w : HeightOneSpectrum (𝓞 E)} {σ : SmIrr (GL (Fin a) (w.adicCompletion E))}
-    (h : π.IsLocComp w σ) : π.dual.IsLocComp w (smIrrInvT σ) := by
-  obtain ⟨f, h0, hf⟩ := h
-  refine ⟨(toDual π).toLinearMap ∘ₗ f, fun h => h0 (LinearMap.ext fun v => (toDual π).injective ?_), fun g v => ?_⟩
-  · rw [LinearMap.zero_apply, map_zero]; exact LinearMap.congr_fun h v
-  · change toDual π (f (σ.ρ (invT a _ g) v)) = π.dual.locRep w g (toDual π (f v))
-    rw [locRep_toDual]
-    exact congrArg _ (hf _ v)
-
-theorem hasFixed_dual {U : Subgroup (GL (Fin a) (Af E))} (hU : ∀ u ∈ U, invT a (Af E) u ∈ U)
-    (h : Af.HasFixed π.finPart U) : Af.HasFixed π.dual.finPart U :=
-  hasFixed_invT (toDual π) (finPart_toDual π) hU h
-
-theorem hasFixed_KLev_dual {M : ℕ} (h : Af.HasFixed π.finPart (Af.KLev E a M)) :
-    Af.HasFixed π.dual.finPart (Af.KLev E a M) := hasFixed_dual (fun _ => invT_mem_KLev) h
-
-theorem IsRegAlg.dual (h : π.IsRegAlg) : π.dual.IsRegAlg := fun v => by
-  obtain ⟨m, h1, h2, h3⟩ := h v
-  refine ⟨_, h1.dual, h2.map neg_injective, fun z hz => ?_⟩
-  obtain ⟨y, hy, rfl⟩ := Multiset.mem_map.1 hz
-  obtain ⟨k, rfl⟩ := h3 y hy
-  exact ⟨-k - (a - 1), by push_cast; ring⟩
 
 theorem isSelfDualBy_of_iso {χ : HChar E} (B : π.V →ₗ[ℂ] π.V →ₗ[ℂ] ℂ) (h1 : ∀ φ, (∀ ψ, B φ ψ = 0) → φ = 0)
     (h2 : ∀ ψ, (∀ φ, B φ ψ = 0) → ψ = 0)

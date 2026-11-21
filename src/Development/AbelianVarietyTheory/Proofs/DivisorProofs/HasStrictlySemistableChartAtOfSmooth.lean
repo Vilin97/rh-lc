@@ -9,9 +9,6 @@ open MvPolynomial
 noncomputable def subst {O : Type} [CommRing O] (ϖ : O) (n : ℕ) (i : Fin (n + 1)) : MvPolynomial (Fin n) O :=
   Fin.cases (C ϖ) (fun j => X j) i
 
-@[simp] theorem subst_zero {O : Type} [CommRing O] (ϖ : O) (n : ℕ) : subst ϖ n 0 = C ϖ := rfl
-@[simp] theorem subst_succ {O : Type} [CommRing O] (ϖ : O) (n : ℕ) (j : Fin n) : subst ϖ n j.succ = X j := rfl
-
 theorem prod_lt_one {O : Type} [CommRing O] (n : ℕ) :
     (∏ i ∈ Finset.univ.filter (fun i : Fin (n + 1) => (i : ℕ) < 1), (X i : MvPolynomial (Fin (n + 1)) O)) = X 0 := by
   have : Finset.univ.filter (fun i : Fin (n + 1) => (i : ℕ) < 1) = {0} := by

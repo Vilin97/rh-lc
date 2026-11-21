@@ -308,16 +308,6 @@ theorem integrandT_periodic {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (y 
     wittDecomp_sympl_inclIsotropic_inclAnisotropic, zero_add, add_zero]
   rw [add_comm (symplOH S T (d.incX S γ) _), add_neg_cancel_right]
 
-theorem integrableOn_mixT (hψ : Continuous ψ) {μ : Measure (Mx D ρ S.rank)} {𝓕 : Set (Mx D ρ S.rank)}
-    (hμ : IsCovolOne (ratMx D ρ S.rank) μ 𝓕) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (y : Mx D S.rank ρ)
-    (w₀ : WO S T₀) : IntegrableOn
-      (fun ξ => heisO ψ S T (d.incX S ξ) (heisO ψ S T (d.incAdj S y) (heisO ψ S T (d.inc0 S w₀) f)) 0) 𝓕 μ := by
-  refine covolOne_integrableOn hμ _ ?_ (d.integrandT_periodic hf y w₀)
-  have hc : Continuous (d.incX S) := continuous_const.matrix_mul continuous_id
-  simp only [integrandT_eq]
-  exact (hψ.comp (GlobalTheory.OrientedHeis.continuous_symplOH hc continuous_const)).mul
-    (hf.cont.comp ((hc.add continuous_const).add continuous_const))
-
 end Target
 
 end HypDec
@@ -352,11 +342,6 @@ theorem col_gram {N : ℕ} (neg : Fin N → Bool) (a b : Matrix (Fin N) (Fin 1) 
   simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply]
 
 omit [CharZero E] in
-theorem plane_gram (a b : Matrix (Fin 2) (Fin 1) E) (ha : a = !![1; 0]) (hb : b = !![0; 1]) :
-    aᴴ * sgnM E ![false, true] * a = sgnM E ![false] ∧ bᴴ * sgnM E ![false, true] * b = sgnM E ![true] ∧
-    bᴴ * sgnM E ![false, true] * a = 0 := by
-  subst ha hb
-  refine ⟨col_gram E _ _ _ _ ?_, col_gram E _ _ _ _ ?_, col_gram E _ _ _ _ ?_⟩ <;> simp [Fin.sum_univ_two, Examples₂.sgn]
 
 theorem three_gram (e e' i : Matrix (Fin 3) (Fin 1) E) (he : e = !![0; 1; 1]) (he' : e' = !![0; 1 / 2; -(1 / 2)])
     (hi : i = !![1; 0; 0]) :
@@ -369,15 +354,6 @@ theorem three_gram (e e' i : Matrix (Fin 3) (Fin 1) E) (he : e = !![0; 1; 1]) (h
   norm_num
 
 end Field
-
-def orthDecPlane (D : D7) :
-    OrthDec (diagSp D 2 ![false, true] 1 1) (diagSp D 1 ![false] 1 0) (diagSp D 1 ![true] 0 1) where
-  iA := (!![1; 0] : Matrix (Fin 2) (Fin 1) D.host.E)
-  iB := (!![0; 1] : Matrix (Fin 2) (Fin 1) D.host.E)
-  isoA := (gram_check _ _ _ (plane_gram D.host.E _ _ rfl rfl).1).trans (diagSp_gram 1 _ 1 0).symm
-  isoB := (gram_check _ _ _ (plane_gram D.host.E _ _ rfl rfl).2.1).trans (diagSp_gram 1 _ 0 1).symm
-  orth := gram_check _ _ _ (plane_gram D.host.E _ _ rfl rfl).2.2
-  rank_add := rfl
 
 def hypDecThree (D : D7) : HypDec (diagSp D 3 ![false, false, true] 2 1) (diagSp D 1 ![false] 1 0) 1 where
   e := (!![0; 1; 1] : Matrix (Fin 3) (Fin 1) D.host.E)
@@ -398,12 +374,6 @@ theorem pairS_plus (S₀ T : HSp D) {ρ : ℕ} (x : Mx D T.rank ρ) (b b' : Mx D
 
 theorem trHalf_half (z : AE D) : trHalf D (half D * z) + trHalf D (half D * z) = trHalf D z := by
   rw [← map_add, ← add_mul, half_add_half, one_mul]
-
-example {S S₀ T : HSp D} (d : HypDec S S₀ 0) (ψ : AddChar (AF D.host.F) ℂ) (f : WO S T → ℂ) (x a : Mx D T.rank 0)
-    (w₀ : WO S₀ T) :
-    heisO ψ S T (d.extY T a) (heisO ψ S T (d.extX T x) (heisO ψ S T (d.ext0 T w₀) f)) 0 = f (d.ext0 T w₀) := by
-  rw [d.integrandS_eq, Subsingleton.elim a 0, Subsingleton.elim x 0, map_zero, map_zero, symplOH_zero_left,
-    AddChar.map_zero_eq_one, one_mul, zero_add, zero_add]
 
 end Examples
 

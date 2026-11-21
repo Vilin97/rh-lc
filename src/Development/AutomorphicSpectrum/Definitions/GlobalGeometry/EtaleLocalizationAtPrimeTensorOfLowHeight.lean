@@ -33,8 +33,6 @@ def map (L : Lat ξ E) (f : E →ₗ[Ω] E') : Lat ξ E' := fun p => (L p).map (
 
 def comap (L : Lat ξ E') (f : E →ₗ[Ω] E') : Lat ξ E := fun p => (L p).comap (f.restrictScalars (regAt ξ p))
 
-def prod (L : Lat ξ E) (L' : Lat ξ E') : Lat ξ (E × E') := fun p => (L p).prod (L' p)
-
 def scale (L : Lat ξ E) (a : Ω) : Lat ξ E := L.map (a • LinearMap.id)
 
 def dual (L : Lat ξ E) : Lat ξ (Module.Dual Ω E) := fun p =>

@@ -21,9 +21,6 @@ section Compl
 variable {R : Type} [CommRing R] [IsDedekindDomain R] {L : Type} [Field L] [Algebra R L]
   [IsFractionRing R L] (w : HeightOneSpectrum R)
 
-local notation "Lw" => adicCompletion L w
-local notation "Ow" => adicCompletionIntegers L w
-
 lemma v_algebraMap (l : L) : Valued.v (algebraMap L Lw l) = w.valuation L l :=
   valuedAdicCompletion_eq_valuation' w l
 
@@ -209,11 +206,6 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
   {Xo : Moduli Dw l} {c : Coeff l}
-
-theorem algPtLa_of_numPt (hN : XoNumPt Xo c) : AlgPtLa Xo c := algPtLa_of hN locFld
-
-theorem intFrNe_of_numPt (hN : XoNumPt Xo c) (hE : IntFrExt Xo c) : IntFrNe Xo c (algCls Xo c) :=
-  intFrNe_of' hN locFld hE
 
 end Cor
 

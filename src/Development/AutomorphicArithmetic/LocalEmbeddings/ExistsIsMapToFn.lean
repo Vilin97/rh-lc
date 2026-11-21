@@ -59,15 +59,6 @@ def IsLat : Prop := ∀ ch : Chart M (Dw.mult τ), LatOn g₀ τ j ch.U (lieMat 
 
 variable {q : X ⟶ Sp (𝓞 F)} (G : ∀ σ : c.F →+* ℂ, EigMet Z σ) (h : VMetric q M (Dw.mult τ))
 
-def MetOn (ch : Chart M (Dw.mult τ)) : Prop :=
-  ∀ (σ : F →+* ℂ) (p : Pts Y σ) (z : CxPts q (σ.comp (algebraMap (𝓞 F) F))), z.1 = p.1 ≫ j →
-    z ∈ CxPts.ptsIn q _ ch.U → ∀ φ f, Fits g₀ τ (Var.base p) φ f (lieMat dual (A ch)) →
-    ∀ (yc : CxPts (genStr Z) (embOf e σ)), yc.1 = p.1 ≫ ρ → ∀ g : EigFrame Z (embOf e σ) (yc.1 ≫ genι Z),
-      f.IsMap (Var.evStalk p) g →
-      (h.met _).G ch z = cond dual ((G _).gram yc g τ)⁻¹ ((G _).gram yc g τ)ᵀ
-
-def IsMet : Prop := ∀ ch, MetOn g₀ τ j dual A G h ch
-
 def IsFlag {K : Type} [CommRing K] {r : ℕ} (ξ : Sp K ⟶ X) (dual : Bool) (A : Chart M r → Matrix (Fin r) (Fin r) K)
     (fl : Vert.Flag M r) : Prop :=
   ∀ ch : Chart M r, IsAdapted fl ch → ⊤ ≤ ξ ⁻¹ᵁ ch.U → IsTri ((A ch).submatrix (pos dual) id)
@@ -78,20 +69,6 @@ def IsGrSec {r : ℕ} (dual : Bool) (A : Chart M r → Matrix (Fin r) (Fin r) Y.
     ∀ (t : Γ(fl.F i.succ, ch.U)), (fl.ι i.succ).app ch.U t = ch.e i →
     ∀ ht : IsFrame fun _ : Fin 1 => (fl.π i).app ch.U t,
       (s (fun _ => (⟨ch.U, _, ht⟩ : Chart (fl.gr i) 1)) : Y.Fn) * A ch (pos dual i) i = 1
-
-def SplitOn (ρ' : X ⟶ Z.X) (V : X.Opens) (P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn) : Prop :=
-  ∃ (hV : IsAffineOpen V) (hξ : ⊤ ≤ (genericPt Y ≫ j) ⁻¹ᵁ V) (g : ℕ)
-    (b : Fin g → (Sp (DualNumber Γ(X, V)) ⟶ Z.t.G.left)) (S : Matrix (Fin g) (Fin (Dw.mult τ)) Γ(X, V))
-    (S' : Matrix (Fin (Dw.mult τ)) (Fin g) Γ(X, V)),
-    IsTanBasis Z.t (R := Γ(X, V)) (hV.fromSpec ≫ ρ') b ∧ S' * S = 1 ∧ IsUnit P.det ∧
-    ∀ i, ∃ w, IsCombAtG Z.t (genericPt Y ≫ ρ ≫ genι Z) (g₀.v τ) (fun a => P a i) w ∧
-      IsCombAtG Z.t (genericPt Y ≫ ρ ≫ genι Z) (fun k => spMap (dualMap (evalPt _ V hξ)) ≫ b k)
-        (fun k => evalPt _ V hξ (S k i)) w
-
-def ValAt {K : Type} [Field K] (x : Sp K ⟶ Y.X) (P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn)
-    {χ : c.F →+* K} {x₀ : Sp K ⟶ Z.X} (g : EigFrame Z χ x₀) : Prop :=
-  x₀ = x ≫ ρ ≫ genι Z ∧ ∃ φ f, Fits g₀ τ (below x) φ f P ∧ χ = (Scheme.stalkClosedPointTo x).hom.comp φ ∧
-    f.IsMap (Scheme.stalkClosedPointTo x).hom g
 
 variable {g₀ τ}
 
@@ -188,24 +165,6 @@ theorem Fits.exists_mul {y : Y.X} {φ : c.F →+* Y.X.presheaf.stalk y} {f : Sta
 
 omit [NumberField F] in
 
-theorem exists_fits (hρ : ρ ≫ genStr Z ≫ spMap e.toRingHom = Y.str) (g₀ : GenFrame e ρ) (τ : E →+* ℂ) (y : Y.X) :
-    ∃ φ f P, Fits g₀ τ y φ f P := by
-  let φ : c.F →+* Y.X.presheaf.stalk y := (Spec.preimage ((stalkPt Y y ≫ ρ) ≫ genStr Z)).hom
-  have hφ : (stalkPt Y y ≫ ρ) ≫ genStr Z = spMap φ := (Spec.map_preimage _).symm
-  obtain ⟨f₁⟩ := EigLoc.exists_eigFrame E H Dw l Xo c O β Z _ φ _ hφ
-  have f : EigFrame Z φ (stalkPt Y y ≫ ρ ≫ genι Z) := by rw [← Category.assoc]; exact f₁
-  have h : constF e Y = (toFn y).comp φ := EigLoc.spMap_inj (by
-    have h1 : genericPt Y ≫ Y.str = spMap (algebraMap F Y.Fn) := (GlobalTheory.FlagBundle.ratOf Y).pt_s
-    have h2 : spMap e.toRingHom ≫ spMap e.symm.toRingHom = 𝟙 _ := by
-      refine (Spec.map_comp _ _).symm.trans ((congrArg Spec.map ?_).trans (Spec.map_id _))
-      exact CommRingCat.hom_ext (RingHom.ext fun a => e.apply_symm_apply a)
-    have h3 : spMap ((toFn y).comp φ) = spMap (toFn y) ≫ spMap φ := by rw [← Spec.map_comp]; rfl
-    have h4 : spMap (constF e Y) = spMap (algebraMap F Y.Fn) ≫ spMap e.symm.toRingHom := by rw [← Spec.map_comp]; rfl
-    rw [h3, h4, ← hφ, ← h1, ← hρ, ← spMap_toFn y]
-    simp only [Category.assoc, h2, Category.comp_id])
-  obtain ⟨f', hf'⟩ := exists_isMap_toFn (e := e) f h
-  exact ⟨φ, f, _, (fits_iff h hf').2 rfl⟩
-
 omit [NumberField F] in
 theorem stalk_le {y : Y.X} {U : X.Opens} (h : j y ∈ U) : ⊤ ≤ (stalkPt Y y ≫ j) ⁻¹ᵁ U := fun p _ => by
   have h₁ : stalkPt Y y p ∈ Set.range (Y.X.fromSpecStalk y) := ⟨p, rfl⟩
@@ -236,14 +195,6 @@ theorem Fits.change (hA : IsCo (genericPt Y ≫ j) A) {y : Y.X} {ch ch' : Chart 
 
 omit [NumberField F] in
 
-theorem isLie_of_exists (hA : IsCo (genericPt Y ≫ j) A)
-    (h : ∀ y : Y.X, ∃ ch : Chart M (Dw.mult τ), j y ∈ ch.U ∧ ∃ φ f, Fits g₀ τ y φ f (lieMat dual (A ch))) :
-    IsLie g₀ τ j dual A := by
-  refine ⟨hA, fun ch y hy => ?_⟩
-  obtain ⟨ch₀, h₀, φ, f, hf⟩ := h y
-  obtain ⟨f', -, hf'⟩ := hf.change hA h₀ hy
-  exact ⟨φ, f', hf'⟩
-
 variable (e) in
 
 def IsOver {B : Var F} (ρB : B.X ⟶ gen Z) (ρ : Y.X ⟶ gen Z) (f : Y.X ⟶ B.X) (φ : B.Fn →+* Y.Fn) : Prop :=
@@ -268,8 +219,6 @@ theorem IsOver.toFn_comp (h : IsOver e ρB ρ f φ) (y : Y.X) :
     rw [h₁, h₂, Category.assoc, Category.assoc, spMap_stalkMap, spMap_toFn, ← Category.assoc, spMap_toFn, h.2.2.1]))
 
 omit [NumberField F] in
-theorem IsOver.exists_isMap (h : IsOver e ρB ρ f φ) (g : GenFrame e ρB) : ∃ g' : GenFrame e ρ, g.IsMap φ g' :=
-  g.exists_isMap φ h.2.2.2 (by rw [← h.1, Category.assoc, ← Category.assoc, h.2.2.1, Category.assoc])
 
 omit [NumberField F] in
 
@@ -290,32 +239,7 @@ theorem Fits.pull (h : IsOver e ρB ρ f φ) {g : GenFrame e ρB} {g' : GenFrame
   rw [← g₁.co_mul g', hg.co τ hm (by rw [← h.1, Category.assoc, ← Category.assoc, h.2.2.1, Category.assoc]),
     (fits_iff hk.1 hk').1 hk]
 
-def IsPullCo {XB : Scheme.{0}} (jB : B.X ⟶ XB) (π : X ⟶ XB) {N : XB.Modules} (hN : IsVB N (Dw.mult τ)) (dual : Bool)
-    (φ : B.Fn →+* Y.Fn) (g' g₁ : GenFrame e ρ)
-    (A : Chart N (Dw.mult τ) → Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) B.Fn)
-    (A' : Chart ((Scheme.Modules.pullback π).obj N) (Dw.mult τ) → Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn) : Prop :=
-  ∀ ch : Chart N (Dw.mult τ), ⊤ ≤ (genericPt B ≫ jB) ⁻¹ᵁ ch.U →
-    A' (ch.pull hN π) = lieMat dual (g₁.co g' τ) * (A ch).map φ
-
 omit [NumberField F] in
-
-theorem IsLie.exists_pull (h : IsOver e ρB ρ f φ) {g : GenFrame e ρB} {g' : GenFrame e ρ} (hg : g.IsMap φ g')
-    (g₁ : GenFrame e ρ) {XB : Scheme.{0}} {jB : B.X ⟶ XB} (π : X ⟶ XB) (j : Y.X ⟶ X) (hj : j ≫ π = f ≫ jB) {N : XB.Modules}
-    (hN : IsVB N (Dw.mult τ)) {A : Chart N (Dw.mult τ) → Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) B.Fn}
-    (hA : IsLie g τ jB dual A) : ∃ A', IsLie g₁ τ j dual A' ∧ IsPullCo jB π hN dual φ g' g₁ A A' := by
-  obtain ⟨A', h₁, h₂⟩ := hA.1.exists_pull hN π (genericPt Y ≫ j) φ
-    (by rw [Category.assoc, hj, ← Category.assoc, h.2.2.1, Category.assoc]) _
-    (isUnit_det_lieMat dual (g₁.isUnit_det_co g' τ))
-  refine ⟨A', isLie_of_exists h₁ fun y => ?_, h₂⟩
-  obtain ⟨U, s, hU, hs⟩ := hN (jB (f y))
-  let ch : Chart N (Dw.mult τ) := ⟨U, s, hs⟩
-  obtain ⟨φ₀, k, hk⟩ := hA.2 ch (f y) hU
-  obtain ⟨k₁, -, hk₁⟩ := hk.pull h hg g₁
-  refine ⟨ch.pull hN π, ?_, _, k₁, ?_⟩
-  · change π (j y) ∈ U
-    rwa [← Scheme.Hom.comp_apply, hj, Scheme.Hom.comp_apply]
-  · rwa [h₂ ch (gen_le jB hU), lieMat_mul, lieMat_lieMat _ (g₁.isUnit_det_co g' τ),
-      lieMat_map _ _ (hA.1.1 ch (gen_le jB hU))]
 
 end Pull
 

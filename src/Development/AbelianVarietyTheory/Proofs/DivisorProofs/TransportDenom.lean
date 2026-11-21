@@ -7,8 +7,8 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzBruhatInvar
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzBruhatSupportBoundedDenominators
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousCharacterTrivialOnSmallIdeles
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzBruhatLevelConductorCompatible
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardCharacterTrivialImpliesIntegralTraceStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TraceDualLatticeBoundedDenominatorStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardAdelicCharacterNontrivialAtPlaces
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TraceDualLatticeBoundedDenominator
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteAbsMatrixProductLeHeightsStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinearFormBoundedByLocalConstantsStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatrixEntriesBoundedAlmostEverywhereStatement
@@ -20,25 +20,6 @@ open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.Inde
 open scoped TensorProduct NNReal Matrix
 
 namespace GlobalTheory.ThetaDenom
-
-theorem std_char_denom : ∀ {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → ∃ D : ℕ, 0 < D ∧
-    ∀ ξ : F, (∀ t : AF F, t.1 = 0 → (∀ v, ‖evFin F v t‖ ≤ 1) → ψ (algebraMap F (AF F) ξ * t) = 1) →
-      ∃ o : 𝓞 F, (D : F) * ξ = o := by
-  intro F _ _ ψ hψ
-  obtain ⟨D, hD, h⟩ := GlobalTheory.T.trace_dual_lattice_bounded_denominator (F := F)
-  refine ⟨D, hD, fun ξ hξ => h ξ fun o => GlobalTheory.T.standard_character_trivial_implies_integral_trace ψ hψ _ fun t ht0 ht1 => ?_⟩
-  have e : algebraMap F (AF F) (ξ * o) * t = algebraMap F (AF F) ξ * (algebraMap F (AF F) o * t) := by
-    rw [map_mul, mul_assoc]
-  rw [e]
-  refine hξ _ ?_ fun v => ?_
-  · rw [show (algebraMap F (AF F) (o : F) * t).1 = (algebraMap F (AF F) (o : F)).1 * t.1 from rfl, ht0, mul_zero]
-  · rw [map_mul, AlgHom.commutes, norm_mul]
-    refine mul_le_one₀ ?_ (norm_nonneg _) (ht1 v)
-    refine Valued.toNormedField.norm_le_one_iff.2 ?_
-    first
-      | (rw [show algebraMap F (Fv F v) (o:F) = ((o : F) : v.adicCompletion F) from rfl, HeightOneSpectrum.valuedAdicCompletion_eq_valuation]; exact v.valuation_le_one o)
-      | (rw [show algebraMap F (Fv F v) (o:F) = ((o : F) : v.adicCompletion F) from rfl, HeightOneSpectrum.valuedAdicCompletion_eq_valuation']; exact v.valuation_le_one o)
-      | (exact (HeightOneSpectrum.coe_mem_adicCompletionIntegers v o))
 
 open Formalism.UG in
 

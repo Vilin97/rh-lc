@@ -27,7 +27,5 @@ theorem nontrivial_and_hasFiniteLength : ∀ {k : Type} [Field k] [ValuativeRel 
       (hasFiniteLength_of_isIrreducible (isIrreducible_ofChar _))
       (hasFiniteLength_of_isIrreducible (isIrreducible_ofChar _)) s₁ s₂
 
-example : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k], GlobalTheory.Published.BernsteinZelevinskyFiniteness → ∀ (χ₁ χ₂ : kˣ →* ℂˣ), IsSmoothChar χ₁ → IsSmoothChar χ₂ → ∀ (u v : ℕ), Nontrivial (IndSp (two (stdSum (rfl : u + v = u + v))) ((extTensor (detRep (Fin u) χ₁) (detRep (Fin v) χ₂)).comp (leviTwo k (Fin u) (Fin v)).symm.toMonoidHom)) ∧ HasFiniteLength (prod₂ (detRep (Fin u) χ₁) (detRep (Fin v) χ₂)) := nontrivial_and_hasFiniteLength
-
 end GlobalTheory.DetProdNonzero
 end

@@ -7,8 +7,16 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdemSmulUnitary
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DOpMemDStep
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MulRealAdEqZero
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ArchHeisenbergDerivativesExist
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardEvaluationGoodModel
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConfigurationAGaussianIntegral
+import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocCharEqValZpow
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ActsDIffDOp
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEigenIntertwinerModels
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ArchHeisenbergDerivativesExistStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenIntertwinerGoodModelsStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsArchimedeanAdeleCMPrescribedEmbeddingValue
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RealScalarArchimedeanAdeleSmulMatrixRealPlace
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinHasTemperateGrowth
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewHermitianCartanInvolutionSystemsConjugateArc
 open scoped TensorProduct NNReal Matrix ENNReal
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.ThK.ConeEuler
@@ -121,42 +129,3 @@ private theorem line_core {F : Type} [Field F] [NumberField F] {κ : Type} [Fint
     rw [hS]
     simp
   simpa only [e1, e0] using key
-
-theorem _root_.GlobalTheory.T.configuration_a_local_evaluation : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
-    (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a') (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a'))
-    (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), CfgA B G G₁ H H' → IsTriple B G X om om' →
-    G₁.M.IsGood B.ψ → ∀ e, IsEv B G.M G₁.M H.ι H'.ι (isoA H H') e →
-    ∀ (ei : SInf F (Fin (b + 2) × Fin (b + 2 + a')) →L[ℂ] SInf F (Fin b × Fin (b + a')))
-      (ev : ∀ v : Pl F, ((Fin (b + 2) × Fin (b + 2 + a') → Fv F v) → ℂ) →ₗ[ℂ] (Fin b × Fin (b + a') → Fv F v) → ℂ),
-      (∀ v, ev v (G.M.vac v) = G₁.M.vac v) →
-      (∀ f φ, (∀ v, φ v ∈ SB _) → (∀ᶠ v in cofinite, φ v = G.M.vac v) → e (pure f φ) = pure (ei f) fun v => ev v (φ v)) →
-    ∀ l ∈ idelesAt E (evI F), ∀ g, GaussD G.M B.emb g →
-      ∃ c : ℂ, ei (locOpInf (G.M.co.rho B.ψ (partInf F (shiftA H H' l))) g) = c • ei g := by
-  intro F E _ _ _ _ _ σ B b a' G G₁ H H' X om om' hC hT hG e hE ei ev hev hpe l _ g hg
-  have hψ : IsStd B.ψ := hT.base.std
-  have hM : G.M.IsGood B.ψ := hT.geo.hM
-  obtain ⟨y, z, hv⟩ := GlobalTheory.ThK.VacDualPart.dOp_dual_vac F E σ B b a' G G₁ H H' X om om' hC hT g hg (l.1 • incV F H.x) 0
-  have hs : Matrix.vecMulVec (l.1 • incV F H.x) (incV F H'.y) +
-      Matrix.vecMulVec (incV F H.y) (incM F H'.ι *ᵥ (0 : Fin (b + a') → AE F E)) = shiftA H H' l := by
-    rw [Matrix.mulVec_zero]
-    ext i j
-    simp only [shiftA, Matrix.add_apply, Matrix.vecMulVec_apply, Matrix.smul_apply, Pi.smul_apply, Pi.zero_apply,
-      smul_eq_mul]
-    rw [mul_assoc]
-    exact (congrArg _ (mul_zero (incV F H.y i))).trans (add_zero _)
-  rw [hs] at hv
-  have k := GlobalTheory.ThK.EvPolKill.ei_dOp_coordI_eq_zero F E σ B _ _ _ _ G.V G.W G₁.V G₁.W G.M G₁.M H.ι H'.ι (isoA H H') e hψ hM hG hE ei ev hev hpe
-  have h1 := k (Matrix.vecMulVec y (incV F H'.x)) (fun t => Or.inl ⟨realAd F t • y, by rw [Matrix.smul_vecMulVec]⟩)
-  have h2 := k (Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ z))
-    (fun t => Or.inr ⟨realAd F t • z, by rw [Matrix.mulVec_smul, Matrix.vecMulVec_smul]⟩)
-  have hadd : ∀ (p q p' q' : Fin (b + 2) × Fin (b + 2 + a') → mixedEmbedding.mixedSpace F) f,
-      dOp (p + p') (q + q') f = dOp p q f + dOp p' q' f := fun p q p' q' f => by
-    ext x
-    simp only [dOp_apply, SchwartzMap.add_apply, map_add, lin, Pi.add_apply, mul_add, Finset.sum_add_distrib]
-    push_cast
-    ring
-  obtain ⟨c, hc⟩ := line_core _ _ _ _ _ g _ hv (locOpInf_rho G.M.co hψ (shiftA H H' l) g).2
-  refine ⟨c, SchwartzMap.ext fun x => ?_⟩
-  refine hc (((BoundedContinuousFunction.evalCLM ℂ x).comp
-    (SchwartzMap.toBoundedContinuousFunctionCLM ℂ _ ℂ)).comp ei) fun f => ?_
-  rw [ContinuousLinearMap.comp_apply, coordI_add, Prod.fst_add, Prod.snd_add, hadd, map_add, h1, h2, add_zero, map_zero]

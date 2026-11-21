@@ -1,7 +1,10 @@
 import Mathlib
 import GroundTheory.ProfiniteCohomology.RestrictedRamification.FiniteRoots
 import GroundTheory.ProfiniteCohomology.RestrictedRamification.FiniteOpen
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChange
+import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangeDefs
+import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangeModules
+import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangePlaces
+import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangeMackey
 import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing.Devissage
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FiniteCohomologyOfTrivialOfCyclic
 set_option maxSynthPendingDepth 1
@@ -11,8 +14,6 @@ noncomputable section
 namespace GroundTheory.ProfCoh
 
 open NumberField IsDedekindDomain CategoryTheory GroundTheory.Global FiniteSubfield
-
-local notation "ℚ̄" => AlgebraicClosure ℚ
 
 attribute [local instance 2000] Rep.hV2
 

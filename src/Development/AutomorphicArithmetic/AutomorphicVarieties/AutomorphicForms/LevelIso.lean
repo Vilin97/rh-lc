@@ -57,10 +57,6 @@ theorem PotCrysAt.of_iso {A : ValuationSubring Ω} (H : PotCrysAt r A) (h : RepI
   obtain ⟨O, i1, i2, i3, Bw, hj, hp⟩ := H
   exact ⟨O, i1, i2, i3, Bw, hj, (GlobalTheory.T.padicHodgeProperties_conj_invariant l (Loc.PP l) F Ω O _ Bw n _ _ g fun s => hg s).2.2.1 hp⟩
 
-theorem LevelAway.of_iso {M : ℕ} (H : LevelAway l M r) (h : RepIso r r') : LevelAway l M r' := fun w hw => by
-  obtain ⟨A, hA, χ, h1, h2⟩ := H w hw
-  exact ⟨A, hA, χ, h1, h2.of_iso h⟩
-
 theorem LevelAt.of_iso {M : ℕ} {m : Fin n → ℤ} (H : LevelAt l M m r) (h : RepIso r r') : LevelAt l M m r' := fun w hw => by
   obtain ⟨A, hA, χ, κ, h1, h2, h3, h4⟩ := H w hw
   exact ⟨A, hA, χ, κ, h1, h2.of_iso h, h3, h4.imp id fun h5 => h5.of_iso h⟩
@@ -70,9 +66,6 @@ theorem continuous_of_iso (H : Continuous r) (h : RepIso r r') : Continuous r' :
   have e : (r' : G F Ω → GL (Fin n) (Qbar l)) = fun s => g * r s * g⁻¹ := funext hg
   rw [e]
   exact (continuous_const.mul H).mul continuous_const
-
-theorem Level.of_iso {M : ℕ} {m : Fin n → ℤ} (H : Level l M m r) (h : RepIso r r') : Level l M m r' :=
-  ⟨continuous_of_iso H.cont h, H.away.of_iso h, H.above.of_iso h⟩
 
 variable (F l) in
 

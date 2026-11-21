@@ -12,15 +12,6 @@ section Blocks
 
 variable {K : Type} [CommRing K] {M : ℕ}
 
-@[simp] lemma blockOne_zero_zero (t : K) (A : Matrix (Fin M) (Fin M) K) :
-    blockOne t A 0 0 = t := rfl
-@[simp] lemma blockOne_zero_succ (t : K) (A : Matrix (Fin M) (Fin M) K) (j : Fin M) :
-    blockOne t A 0 j.succ = 0 := rfl
-@[simp] lemma blockOne_succ_zero (t : K) (A : Matrix (Fin M) (Fin M) K) (i : Fin M) :
-    blockOne t A i.succ 0 = 0 := rfl
-@[simp] lemma blockOne_succ_succ (t : K) (A : Matrix (Fin M) (Fin M) K) (i j : Fin M) :
-    blockOne t A i.succ j.succ = A i j := rfl
-
 lemma blockOne_mul (a b : K) (A B : Matrix (Fin M) (Fin M) K) :
     blockOne a A * blockOne b B = blockOne (a * b) (A * B) := by
   ext i j

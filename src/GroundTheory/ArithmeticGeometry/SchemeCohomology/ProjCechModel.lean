@@ -111,10 +111,6 @@ lemma cochain_ext {k : ℤ} {p : ℕ} {σ τ : Cochain (twistAb A n k) (cover A 
     lval (0 : Cochain (twistAb A n k) (cover A n) p) i = 0 := by
   simp [lval]
 
-@[simp] lemma lval_sub {k : ℤ} {p : ℕ} (σ τ : Cochain (twistAb A n k) (cover A n) p) (i) :
-    lval (σ - τ) i = lval σ i - lval τ i := by
-  simp [lval]
-
 def ofL {k : ℤ} {p : ℕ} (f : ∀ i : Fin (p + 1) → Fin (n + 1), LDeg A (Set.range i) k) :
     Cochain (twistAb A n k) (cover A n) p :=
   fun i => theta i k (f i)

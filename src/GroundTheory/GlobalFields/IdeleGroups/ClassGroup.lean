@@ -253,13 +253,6 @@ def quotientEquivClassGroup :
   (QuotientGroup.quotientMulEquivOfEq ker_toClassGroup.symm).trans
     (QuotientGroup.quotientKerEquivOfSurjective _ toClassGroup_surjective)
 
-@[simp]
-theorem quotientEquivClassGroup_mk (x : IdeleGroup K) :
-    quotientEquivClassGroup (QuotientGroup.mk x :
-      IdeleGroup K ⧸ ((diagonal K).range ⊔ standardOpenSubgroup K)) =
-      ClassGroup.mk K (toFractionalIdeal x) :=
-  rfl
-
 end IdeleGroup
 
 namespace IdeleClassGroup

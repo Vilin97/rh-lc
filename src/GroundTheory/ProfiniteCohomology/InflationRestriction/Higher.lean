@@ -85,7 +85,6 @@ section ShortComplex
 
 variable (A : Rep.{u} k G) [IsDiscreteRep A] (N : Subgroup G) [N.Normal]
 
-@[simps X₁ X₂ X₃ f g]
 noncomputable def infResShortComplex (n : ℕ) : ShortComplex (ModuleCat k) where
   X₁ := cohomology (A.quotientToInvariants N) (n + 1)
   X₂ := cohomology A (n + 1)

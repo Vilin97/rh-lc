@@ -1,7 +1,8 @@
 import Mathlib
 import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.ZariskiEtaleLifting.MapAcrFromBase
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FrobeniusElementAlt
-import BuildAid.D2
+import Lean.LibrarySuggestions.Basic
+import Lean.Elab.Command
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -89,9 +90,6 @@ def ptTw (hσ : ∀ x, galOC σ (κ x) = κ x) : F.pt κ ⟶ twF σ ⋙ F.pt κ 
       RingHom.ext fun x => (twUEquiv σ A').symm_apply_eq.2
         ((twU_mapU σ f _).trans (congrArg (mapU f) ((twUEquiv σ A).apply_symm_apply x))).symm
     exact map_sq F.Pt _ _ _ _ e _
-
-theorem schFn_ptTw {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of O)) (hσ : ∀ x, galOC σ (κ x) = κ x) :
-    ptTw (schFn q) κ σ hσ = pxTw q κ σ hσ := rfl
 
 end Gal
 

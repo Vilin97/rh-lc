@@ -127,14 +127,6 @@ def emb {m : ℕ} (Y : Matrix (Fin m) (Fin m) k) : Matrix (Fin (m + 1)) (Fin (m 
   Matrix.of fun i j =>
     Fin.cases (Fin.cases 1 (fun _ => 0) j) (fun i' => Fin.cases 0 (fun j' => Y i' j') j) i
 
-@[simp] theorem emb_zero_zero {m : ℕ} (Y : Matrix (Fin m) (Fin m) k) : emb Y 0 0 = 1 := rfl
-@[simp] theorem emb_zero_succ {m : ℕ} (Y : Matrix (Fin m) (Fin m) k) (j : Fin m) :
-    emb Y 0 j.succ = 0 := rfl
-@[simp] theorem emb_succ_zero {m : ℕ} (Y : Matrix (Fin m) (Fin m) k) (i : Fin m) :
-    emb Y i.succ 0 = 0 := rfl
-@[simp] theorem emb_succ_succ {m : ℕ} (Y : Matrix (Fin m) (Fin m) k) (i j : Fin m) :
-    emb Y i.succ j.succ = Y i j := rfl
-
 theorem one_succ_succ {m : ℕ} (i j : Fin m) :
     (1 : Matrix (Fin (m + 1)) (Fin (m + 1)) k) i.succ j.succ = (1 : Matrix (Fin m) (Fin m) k) i j := by
   simp [Matrix.one_apply]

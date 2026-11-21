@@ -14,9 +14,6 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 variable {R : Type} [CommRing R] {d d' : ℕ}
 
-local notation "eX" => ReciprocityTheory.ChartRestriction.G.TB.WickVanishing.eXv
-local notation "eZ'" => ReciprocityTheory.ChartRestriction.G.TB.WickVanishing.eZ
-
 theorem eval_first_point_eq_rename (φ : PS R 1 d) : ev (n := 2) ![pt R d 0] φ = MvPowerSeries.rename (eX d) φ := by
   rw [MvPowerSeries.rename_eq_subst]
   unfold ev

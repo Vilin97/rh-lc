@@ -28,9 +28,6 @@ theorem ext2 {i : ι} (hi : ∀ x, x = i) {M N : Matrix (ι ⊕ ι) (ι ⊕ ι) 
   ext r c
   rcases r with r | r <;> rcases c with c | c <;> rw [hi r, hi c] <;> assumption
 
-@[simp] theorem tri_inl_inl (a b : K) (i j : ι) : (tri a b : Matrix (ι ⊕ ι) (ι ⊕ ι) K) (.inl i) (.inl j) = a := rfl
-@[simp] theorem cechTripleProjFirstSecond (a b : K) (i j : ι) : (tri a b : Matrix (ι ⊕ ι) (ι ⊕ ι) K) (.inl i) (.inr j) = b := rfl
-@[simp] theorem triangular_lower_left (a b : K) (i j : ι) : (tri a b : Matrix (ι ⊕ ι) (ι ⊕ ι) K) (.inr i) (.inl j) = 0 := rfl
 @[simp] theorem triangular_lower_right_diag (a b : K) (i : ι) : (tri a b : Matrix (ι ⊕ ι) (ι ⊕ ι) K) (.inr i) (.inr i) = 1 := by
   simp [tri]
 

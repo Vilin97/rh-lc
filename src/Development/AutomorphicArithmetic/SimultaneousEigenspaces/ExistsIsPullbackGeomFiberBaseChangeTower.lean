@@ -22,7 +22,6 @@ private def uu (p : X ⟶ S) (a : A ⟶ S) (b : B ⟶ S) (c : D ⟶ A) (d : D �
     (p' : pullback p b ⟶ B) (hp : p' = pullback.snd p b) :
     uu p a b c d w p' hp ≫ pullback.fst p a = pullback.fst p' d ≫ pullback.fst p b := pullback.lift_fst _ _ _
 
-@[reassoc] private theorem uu_snd (p : X ⟶ S) (a : A ⟶ S) (b : B ⟶ S) (c : D ⟶ A) (d : D ⟶ B) (w : c ≫ a = d ≫ b)
     (p' : pullback p b ⟶ B) (hp : p' = pullback.snd p b) :
     uu p a b c d w p' hp ≫ pullback.snd p a = pullback.snd p' d ≫ c := pullback.lift_snd _ _ _
 

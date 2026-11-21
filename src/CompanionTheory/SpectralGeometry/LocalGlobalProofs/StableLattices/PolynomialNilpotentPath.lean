@@ -1,7 +1,7 @@
 import Mathlib
 import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.DiscreteSeriesExhaustion.MatrixCoefficientDecay.HilbertSchmidtDecay.AbsoluteL2Bound
 import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.DiscreteSeriesExhaustion.MatrixCoefficientDecay.InfinitesimalCharacterPaths.TensDecomp
-import CompanionTheory.AutomorphicTheory.TemperedLocalSpectra.AffineGL.GenSpace
+import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsSpanFormsNeBot
 import Development.AutomorphicSpectrum.Proofs.GlobalProofs.GlRelationsDerivativePreserved
 import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.QuantumDeterminantCoefficientsExpansion
 import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.JacquetBasis
@@ -192,8 +192,6 @@ end Abstract
 section Grading
 
 open CompanionTheory.RgExh CompanionTheory.RgExh.Dec.J
-
-local notation "aM" => ReciprocityTheory.ChartRestriction.DS.actM
 
 section Act
 

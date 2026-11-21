@@ -5,8 +5,6 @@ open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC CochainCo
 
 namespace LateralTheory.CohomologicalPurity.TubeCut
 
-instance discPL : PreservesLimitsOfSize.{0, 0} disc :=
-  inferInstanceAs (PreservesLimitsOfSize.{0, 0} (Functor.const SimplexCategoryᵒᵖ : PSh ⥤ _))
 instance discPC : PreservesColimitsOfSize.{0, 0} disc :=
   inferInstanceAs (PreservesColimitsOfSize.{0, 0} (Functor.const SimplexCategoryᵒᵖ : PSh ⥤ _))
 

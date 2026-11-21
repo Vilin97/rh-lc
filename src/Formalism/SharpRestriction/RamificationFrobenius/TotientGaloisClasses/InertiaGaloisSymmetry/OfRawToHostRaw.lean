@@ -41,8 +41,6 @@ theorem HostRaw.der {φ : Frame} (H : HostRaw φ) : HostDer H :=
 
 def HostAx.ofRaw {φ : Frame} (H : HostRaw φ) : HostAx φ := ⟨H, H.der⟩
 
-@[simp] theorem HostAx.ofRaw_toHostRaw {φ : Frame} (H : HostRaw φ) : (HostAx.ofRaw H).toHostRaw = H := rfl
-
 end Formalism.HC
 
 end

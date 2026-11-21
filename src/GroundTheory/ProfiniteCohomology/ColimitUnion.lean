@@ -39,14 +39,12 @@ theorem subrepInclusion_comp_subtype {i j : ι} (h : i ≤ j) :
 
 variable [TopologicalSpace G] [IsTopologicalGroup G] [IsDiscreteRep A]
 
-@[simps]
 noncomputable def subrepCochains : ι ⥤ CochainComplex (ModuleCat k) ℕ where
   obj i := cochainsComplex (A.subrepresentation (W i) (hstable i))
   map h := cochainsMap (subrepInclusion A W hW hstable (leOfHom h))
   map_id i := by rw [subrepInclusion_refl, cochainsMap_id]
   map_comp f g := by rw [← cochainsMap_comp, ← subrepInclusion_trans]
 
-@[simps]
 noncomputable def subrepCochainsCocone : Cocone (subrepCochains A W hW hstable) where
   pt := cochainsComplex A
   ι :=
@@ -55,23 +53,6 @@ noncomputable def subrepCochainsCocone : Cocone (subrepCochains A W hW hstable) 
         refine (cochainsMap_comp _ _).symm.trans ?_
         rw [subrepInclusion_comp_subtype]
         exact (Category.comp_id _).symm }
-
-noncomputable abbrev subrepCohomology (n : ℕ) : ι ⥤ ModuleCat k :=
-  subrepCochains A W hW hstable ⋙ HomologicalComplex.homologyFunctor (ModuleCat k) (ComplexShape.up ℕ) n
-
-noncomputable abbrev subrepCohomologyCocone (n : ℕ) : Cocone (subrepCohomology A W hW hstable n) :=
-  (HomologicalComplex.homologyFunctor (ModuleCat k) (ComplexShape.up ℕ) n).mapCocone
-    (subrepCochainsCocone A W hW hstable)
-
-theorem subrepCohomology_map (n : ℕ) {i j : ι} (h : i ⟶ j) :
-    (subrepCohomology A W hW hstable n).map h =
-      cohomologyMap (subrepInclusion A W hW hstable (leOfHom h)) n :=
-  rfl
-
-theorem subrepCohomologyCocone_ι_app (n : ℕ) (i : ι) :
-    (subrepCohomologyCocone A W hW hstable n).ι.app i =
-      cohomologyMap (Rep.subtype A (W i) (hstable i)) n :=
-  rfl
 
 theorem subrepCochainsCocone_inj (n : ℕ) (i : ι)
     (y : ((subrepCochains A W hW hstable).obj i).X n)
@@ -140,18 +121,6 @@ theorem exists_cohomologyMap_subrepInclusion_eq_zero [Nonempty ι] [IsDirectedOr
     (subrepCochainsCocone_surj A W hW hstable hunion _)
     (subrepCochainsCocone_inj A W hW hstable n) i y hy
   exact ⟨j, leOfHom f, hf⟩
-
-noncomputable def isColimitSubrepCohomologyCocone [Nonempty ι] [IsDirectedOrder ι]
-    (hunion : ∀ a : A, ∃ i, a ∈ W i) (n : ℕ) :
-    IsColimit (subrepCohomologyCocone A W hW hstable n) :=
-  isColimitHomologyMapCocone (subrepCochainsCocone A W hW hstable) n
-    (subrepCochainsCocone_surj A W hW hstable hunion) (subrepCochainsCocone_inj A W hW hstable)
-
-noncomputable def cohomologyIsoColimitSubrep [Nonempty ι] [IsDirectedOrder ι]
-    (hunion : ∀ a : A, ∃ i, a ∈ W i) (n : ℕ) :
-    cohomology A n ≅ colimit (subrepCohomology A W hW hstable n) :=
-  (isColimitSubrepCohomologyCocone A W hW hstable hunion n).coconePointUniqueUpToIso
-    (colimit.isColimit _)
 
 end Union
 

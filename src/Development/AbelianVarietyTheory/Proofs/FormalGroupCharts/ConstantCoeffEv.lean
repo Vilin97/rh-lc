@@ -29,12 +29,6 @@ def evHom {a : Fin m → Pt k n d} (ha : CZ a) : PS k m d →+* PS k n d :=
 theorem evHom_apply {a : Fin m → Pt k n d} (ha : CZ a) (f : PS k m d) : evHom ha f = ev a f := by
   simp [evHom, ev]
 
-theorem ev_sub {a : Fin m → Pt k n d} (ha : CZ a) (f g : PS k m d) : ev a (f - g) = ev a f - ev a g := by
-  simp only [← evHom_apply ha, map_sub]
-
-theorem ev_neg {a : Fin m → Pt k n d} (ha : CZ a) (f : PS k m d) : ev a (-f) = -ev a f := by
-  simp only [← evHom_apply ha, map_neg]
-
 theorem ev_sum {a : Fin m → Pt k n d} (ha : CZ a) {ι : Type} (s : Finset ι) (f : ι → PS k m d) :
     ev a (∑ x ∈ s, f x) = ∑ x ∈ s, ev a (f x) := by
   simp only [← evHom_apply ha, map_sum]

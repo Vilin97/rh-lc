@@ -30,7 +30,6 @@ abbrev Et : MorphismProperty CommRingCat.{0} := RingHom.toMorphismProperty RingH
 
 instance : Et.IsStableUnderCobaseChange :=
   RingHom.isStableUnderCobaseChange_toMorphismProperty_iff.2 RingHom.Etale.isStableUnderBaseChange
-instance : Et.RespectsIso := RingHom.toMorphismProperty_respectsIso_iff.1 RingHom.Etale.respectsIso
 instance : Et.IsStableUnderComposition where
   comp_mem f g hf hg := RingHom.Etale.stableUnderComposition f.hom g.hom hf hg
 instance : Et.ContainsIdentities where

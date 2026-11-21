@@ -3,7 +3,16 @@ import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LevChiLift
 import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.UnitProductRescaleDisjointFinsets
 import Development.AbelianVarietyTheory.Proofs.FlagMeasures.AdelicTransportMeasureSecond
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ExistsDatOfTower
-import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsReadsG
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.NotBadPrimeBase
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.TopLevExists
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsMemMultT
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.TopFormula
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.MiPinnedWithFinIff
+import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MapFnOfEqValC
+import Formalism.LocalRingCardinality.PosOfIsomEmb
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsDefiniteOfAllPlus
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MultValueLeftContLevel
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RepMemSm
 
 noncomputable section
 
@@ -199,23 +208,6 @@ theorem rowOf_same (hCR : GlobalTheory.Published.CuspRapidDecay) (hl : R.toLevCh
     (rowOf P hCR hl hm hc hT u g t).Same (rowOf P hCR hl hm hc hT u g t') :=
   ⟨fun _ _ _ => ⟨rfl, rfl, rfl⟩, fun _ _ _ => ⟨rfl, rfl, rfl⟩⟩
 
-structure LiftLaws {c : Comm D} (t : Tup c) : Prop where
-  sBF : ∀ j ρ h, (t.sBF j ρ h).om = t.om j ∧ (t.sBF j ρ h).vW = c.vol (j + 1)
-  sFB : ∀ j σ h, (t.sFB j σ h).om = t.om (j + 1) ∧ (t.sFB j σ h).vW = c.vol (j + 1 + 1)
-  pt : ∀ j, j + 1 < D.R.m → ∀ P, IsThetaFunO c.ψ _ _ (t.pt j P)
-  ptT : ∀ j h P, IsThetaFunO c.ψ _ _ (t.ptT j h P)
-  CC : ∀ j, j < D.R.m → ∃ J χ, t.CC j ≤ MultT c.θ (c.M j) J χ
-  CT : ∃ J χ, t.CT ≤ MultT c.θ c.MT J χ
-  io : ∀ j, j + 1 < D.R.m → ∀ (G : t.CC (j + 1)) P v,
-    liftS (t.om j) (c.vol (j + 1)).μ (c.vol (j + 1)).𝓕 (G.1 v) (t.pt j P) = t.cI j • (t.io j G).1 (c.It j P v)
-  ioT : ∀ j h (F : t.CT) P v,
-    liftS (t.omT j h) c.volT.μ c.volT.𝓕 (F.1 v) (t.ptT j h P) = t.cI (j + 1) • (t.ioT j h F).1 (c.ItT j h P v)
-  cI : ∀ j, j < D.R.m → t.cI j ≠ 0
-
-def volSmul {V : HSp D} {ν : Measure (GA D V)} {𝓕 : Set (GA D V)} (h : ν.IsHaarMeasure ∧ IsFundamentalDomain (GQ V) 𝓕 ν)
-    {c : ENNReal} (hc : c ≠ 0 ∧ c ≠ ⊤) : Vol V :=
-  ⟨c • ν, 𝓕, by haveI := h.1; exact Measure.IsHaarMeasure.smul ν hc.1 hc.2, h.2.mono Measure.smul_absolutelyContinuous⟩
-
 section Read
 
 variable {u : D.what₂.Word} {C : ColumnChain D.R D.what₂.Tau (D.hcW u)} {At : ColumnsAtT D.R C} {Pm : PeriodMap D.R C}
@@ -223,9 +215,6 @@ variable {u : D.what₂.Word} {C : ColumnChain D.R D.what₂.Tau (D.hcW u)} {At 
   (K : ClassesAtPrimes M bad)
 
 variable {K}
-
-def valG {K : ClsPTied u} (V : ValPTied u K) : ValuationAtPrimes K.toG fun _ => False :=
-  ⟨V.sg, V.eW, V.ptC, V.ipP, V.rat, fun _ h => h.elim⟩
 
 end Read
 
@@ -236,27 +225,7 @@ open GlobalTheory.MiS
 variable {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts}
   {Yd : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Yd cX} (W : RealPack ex) (u : D.what₂.Word)
 
-def colBase (ψ : (D.chTw u D.what₂.mu0).cls D.R.m → (D.chTw u D.what₂.mu0).Y D.R.m → ℂ) :
-    (D.mem u).C.cls D.R.m → (D.mem u).C.Y D.R.m → ℂ :=
-  Eq.rec (motive := fun C _ => C.cls D.R.m → C.Y D.R.m → ℂ) ψ (D.memberColumns_twistedChain_base u)
-
 variable {W}
-
-theorem topMult : Formalism.IndefR.RecTie.TopMultH (pk W) :=
-  (GlobalTheory.DefiniteMult.topMult_and_extV_injective D _ _ _ _ _ (pk W) _ W.Q.charW.base).1
-
-def colOne (C : ColumnChain D.R D.what₂.Tau (D.hcW u)) (om : ∀ j, Om (D.sp.X j) (D.sp.X (j + 1))) : ColCh u C where
-  kom := om
-  Ch _ := Unit
-  dd _ _ _ := Finsupp.single 0 1
-  e _ _ := Finsupp.single 1 1
-  eT _ _ _ := Finsupp.single 1 1
-  Ram _ := Set.univ
-  S _ := id
-  rd _ _ _ _ := 0
-  cV _ := 1
-  cK _ := 1
-  cP := 1
 
 end Real
 

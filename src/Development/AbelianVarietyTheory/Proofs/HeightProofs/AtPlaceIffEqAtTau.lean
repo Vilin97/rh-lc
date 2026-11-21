@@ -41,10 +41,6 @@ theorem tauE_cm (σ : D.host.E →+* ℂ) :
   rw [hc, key, key]
   exact Formalism.L2.Geo.mem_Psi_iff_mul_cc_notMem g
 
-theorem infMat_eq (V : HSp D) (θ : Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ) (h : GA D V) :
-    letI := D.host.cmStar
-    infMat D.sp.cm.sig V.gram θ h = Formalism.L2.Pj.archM V θ h := rfl
-
 theorem archM_mul (V : HSp D) (θ : Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ) (a b : GA D V) :
     Formalism.L2.Pj.archM V θ (a * b) = Formalism.L2.Pj.archM V θ a * Formalism.L2.Pj.archM V θ b := by
   unfold Formalism.L2.Pj.archM

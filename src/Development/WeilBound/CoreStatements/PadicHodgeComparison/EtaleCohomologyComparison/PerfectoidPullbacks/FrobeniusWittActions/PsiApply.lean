@@ -49,8 +49,4 @@ def psi (c : A →+* C₀) (k : K₀ →+* C₀) (hk : ∀ w : W, k (algebraMap 
   map_zero' := by ext f; simp
   map_add' x y := by ext f; simp [mul_add]
 
-theorem psi_apply (c : A →+* C₀) (k : K₀ →+* C₀) (hk : ∀ w : W, k (algebraMap W K₀ w) = c (algebraMap W A w)) (u : C₀)
-    {Λ : Type*} [AddCommGroup Λ] (α : Λ →+ A ⊗[W] L) (x : Λ) (f : Module.Dual K₀ (K₀ ⊗[W] L)) :
-    psi c k hk u α x f = u * T c k hk f (α x) := rfl
-
 end CrystallineSemistableComparison.Pb.Psi

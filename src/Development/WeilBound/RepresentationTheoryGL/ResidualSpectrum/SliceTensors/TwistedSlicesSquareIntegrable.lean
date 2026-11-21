@@ -7,9 +7,6 @@ open GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.SmGL GlobalTheory.
 
 namespace PositivityTheory.Rg.Rs
 
-def ExhReg : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ), 1 ≤ N → ∀ V : Submodule ℂ (Sm E N), IsDiscrete V → ∀ τ, RegInt V τ →
-  ∃ (a d : ℕ) (π : CuspSub E a), π.IsUnitary ∧ IsNormalised π ∧ IsSpehOf V π d
-
 def Dich : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ), 1 ≤ N → ∀ V : Submodule ℂ (Sm E N), IsDiscrete V →
   (∃ π : CuspSub E N, π.IsUnitary ∧ IsNormalised π ∧ ∀ π', π.Iso π' → AscEmb V π' 1) ∨ ∃ r, 0 < r ∧ r < N ∧ (ExpV r V).Nonempty
 
@@ -107,9 +104,6 @@ def Stages : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex 
   (V₂ : Submodule ℂ (Sm E s)) (π : CuspSub E a), IsDiscrete V → IsDiscrete V₁ → IsDiscrete V₂ →
   Emb V (MemInd2 (tw V₁ (((s : ℂ) - d₂) / 2)) (tw V₂ (((d₁ : ℂ) - r) / 2))) → AscEmb V₁ π d₁ → AscEmb V₂ π d₂ →
   AscEmb V π (d₁ + d₂)
-
-def Dual : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N a d : ℕ), 1 ≤ N → ∀ (V : Submodule ℂ (Sm E N)) (π : CuspSub E a), IsDiscrete V → π.IsUnitary →
-  IsNormalised π → AscEmb V π d → IsSpehOf V π d
 
 def AscAll : Prop := ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (N : ℕ), 1 ≤ N → ∀ V : Submodule ℂ (Sm E N), IsDiscrete V → ∀ τ, RegInt V τ →
   ∃ (a d : ℕ) (π : CuspSub E a), π.IsUnitary ∧ IsNormalised π ∧ ∀ π', π.Iso π' → AscEmb V π' d

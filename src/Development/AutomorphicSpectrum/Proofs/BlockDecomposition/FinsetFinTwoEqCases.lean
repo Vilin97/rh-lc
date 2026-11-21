@@ -30,15 +30,6 @@ def dg (u : Matrix (Fin M) (Fin M) A) : Matrix (Fin (M + 2)) (Fin (M + 2)) A :=
 
 section DgEntries
 variable (u : Matrix (Fin M) (Fin M) A)
-@[simp] theorem dg_zero_zero : dg u 0 0 = 1 := rfl
-@[simp] theorem dg_zero_one : dg u 0 1 = 0 := rfl
-@[simp] theorem dg_one_zero : dg u 1 0 = 0 := rfl
-@[simp] theorem dg_one_one : dg u 1 1 = 1 := rfl
-@[simp] theorem dg_zero_rest (j : Fin M) : dg u 0 j.succ.succ = 0 := rfl
-@[simp] theorem dg_one_rest (j : Fin M) : dg u 1 j.succ.succ = 0 := rfl
-@[simp] theorem dg_rest_zero (i : Fin M) : dg u i.succ.succ 0 = 0 := rfl
-@[simp] theorem dg_rest_one (i : Fin M) : dg u i.succ.succ 1 = 0 := rfl
-@[simp] theorem dg_rest_rest (i j : Fin M) : dg u i.succ.succ j.succ.succ = u i j := rfl
 end DgEntries
 
 theorem finset_fin_two_eq_cases {p : Fin (M + 2) → Prop} (h0 : p 0) (h1 : p 1) (h2 : ∀ i : Fin M, p i.succ.succ)
@@ -59,21 +50,11 @@ theorem mat_ext2 {P Q : Matrix (Fin (M + 2)) (Fin (M + 2)) A}
   · exact finset_fin_two_eq_cases (p := fun j => P 1 j = Q 1 j) h10 h11 h1r j
   · exact finset_fin_two_eq_cases (p := fun j => P i.succ.succ j = Q i.succ.succ j) (hr0 i) (hr1 i) (hrr i) j
 
-@[simp] theorem one_zero_zero : (1 : Matrix (Fin (M + 2)) (Fin (M + 2)) A) 0 0 = 1 := rfl
-@[simp] theorem one_one_one : (1 : Matrix (Fin (M + 2)) (Fin (M + 2)) A) 1 1 = 1 :=
-  Matrix.one_apply_eq _
-@[simp] theorem one_zero_one : (1 : Matrix (Fin (M + 2)) (Fin (M + 2)) A) 0 1 = 0 :=
-  Matrix.one_apply_ne (by simp [Fin.ext_iff])
-@[simp] theorem one_one_zero : (1 : Matrix (Fin (M + 2)) (Fin (M + 2)) A) 1 0 = 0 :=
-  Matrix.one_apply_ne (by simp [Fin.ext_iff])
 @[simp] theorem one_zero_rest (j : Fin M) :
     (1 : Matrix (Fin (M + 2)) (Fin (M + 2)) A) 0 j.succ.succ = 0 :=
   Matrix.one_apply_ne (by simp [Fin.ext_iff])
 @[simp] theorem one_one_rest (j : Fin M) :
     (1 : Matrix (Fin (M + 2)) (Fin (M + 2)) A) 1 j.succ.succ = 0 :=
-  Matrix.one_apply_ne (by simp [Fin.ext_iff])
-@[simp] theorem one_rest_zero (i : Fin M) :
-    (1 : Matrix (Fin (M + 2)) (Fin (M + 2)) A) i.succ.succ 0 = 0 :=
   Matrix.one_apply_ne (by simp [Fin.ext_iff])
 @[simp] theorem one_rest_one (i : Fin M) :
     (1 : Matrix (Fin (M + 2)) (Fin (M + 2)) A) i.succ.succ 1 = 0 :=
@@ -217,10 +198,6 @@ def piG : stabG s J →* GL (Fin M) A :=
         exact blk_one })
     (fun g h => Units.ext (blk_mul_stabG g.2 h.2))
 
-theorem piG_val (g : stabG s J) :
-    ((piG s J g : GL (Fin M) A) : Matrix (Fin M) (Fin M) A) =
-      blk ((g : GL (Fin (M + 2)) A) : Matrix (Fin (M + 2)) (Fin (M + 2)) A) := rfl
-
 theorem piG_mem (g : stabG s J) : piG s J g ∈ UJ s J :=
   blk_unitary s J (stabG_unit g.2) (stabG_col g.2)
 
@@ -230,10 +207,6 @@ def dgHom : Matrix (Fin M) (Fin M) A →* Matrix (Fin (M + 2)) (Fin (M + 2)) A w
   map_mul' := dg_mul
 
 def dgGL : GL (Fin M) A →* GL (Fin (M + 2)) A := Units.map dgHom
-
-theorem dgGL_val (u : GL (Fin M) A) :
-    ((dgGL u : GL (Fin (M + 2)) A) : Matrix (Fin (M + 2)) (Fin (M + 2)) A) =
-      dg (u : Matrix (Fin M) (Fin M) A) := rfl
 
 theorem dgGL_mem {u : GL (Fin M) A} (hu : u ∈ UJ s J) : dgGL u ∈ stabG s J := by
   refine ⟨dg_unitary s J _ hu, fun i => ?_⟩
@@ -248,13 +221,6 @@ def nM (s : A →+* A) (J : Matrix (Fin M) (Fin M) A) (w : Fin M → A) (z : A) 
 
 section NEntries
 variable (s J) (w : Fin M → A) (z : A)
-@[simp] theorem nM_zero_zero : nM s J w z 0 0 = 1 := rfl
-@[simp] theorem nM_zero_one : nM s J w z 0 1 = z := rfl
-@[simp] theorem nM_one_zero : nM s J w z 1 0 = 0 := rfl
-@[simp] theorem nM_one_one : nM s J w z 1 1 = 1 := rfl
-@[simp] theorem nM_zero_rest (j : Fin M) : nM s J w z 0 j.succ.succ = -rowv s J w j := rfl
-@[simp] theorem nM_one_rest (j : Fin M) : nM s J w z 1 j.succ.succ = 0 := rfl
-@[simp] theorem nM_rest_zero (i : Fin M) : nM s J w z i.succ.succ 0 = 0 := rfl
 @[simp] theorem nM_rest_one (i : Fin M) : nM s J w z i.succ.succ 1 = w i := rfl
 @[simp] theorem nM_rest_rest (i j : Fin M) :
     nM s J w z i.succ.succ j.succ.succ = (1 : Matrix (Fin M) (Fin M) A) i j := rfl
@@ -394,8 +360,6 @@ variable {B : Type} [CommRing B] (φ : A →+* B)
 theorem dg_map (u : Matrix (Fin M) (Fin M) A) : (dg u).map φ = dg (u.map φ) := by
   refine mat_ext2 ?_ ?_ ?_ ?_ ?_ ?_ ?_ ?_ ?_ <;> intros <;> simp
 
-theorem blk_map (P : Matrix (Fin (M + 2)) (Fin (M + 2)) A) : blk (P.map φ) = (blk P).map φ := rfl
-
 theorem rowv_map {s' : B →+* B} (hφ : ∀ x, φ (s x) = s' (φ x)) (w : Fin M → A) (b : Fin M) :
     φ (rowv s J w b) = rowv s' (J.map φ) (fun i => φ (w i)) b := by
   simp [rowv, hφ]
@@ -467,18 +431,11 @@ variable (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E)
 
 def mkH (g : GL (Fin M) (R ⊗[F] E)) (hg : g ∈ HR R σ J) : HA R σ J := (⟨g, hg⟩ : HR R σ J)
 
-theorem mat_mkH (g : GL (Fin M) (R ⊗[F] E)) (hg : g ∈ HR R σ J) :
-    HA.mat R σ J (mkH R σ J g hg) = g := rfl
-
 theorem mat_mem (h : HA R σ J) : HA.mat R σ J h ∈ HR R σ J :=
   Subtype.property (show HR R σ J from h)
 
 theorem HA_ext {g h : HA R σ J} (e : HA.mat R σ J g = HA.mat R σ J h) : g = h :=
   Subtype.ext (p := fun x => x ∈ HR R σ J) e
-
-theorem mat_mul' (g h : HA R σ J) : HA.mat R σ J (g * h) = HA.mat R σ J g * HA.mat R σ J h := rfl
-
-theorem mat_one' : HA.mat R σ J 1 = 1 := rfl
 
 theorem mulVec_first (P : Matrix (Fin (M + 2)) (Fin (M + 2)) (R ⊗[F] E)) (i : Fin (M + 2)) :
     (P *ᵥ (Fin.cons 1 fun _ => 0 : Fin (M + 2) → R ⊗[F] E)) i = P i 0 := by
@@ -734,10 +691,6 @@ def nP (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = J i j) (w : Fin 
 theorem toMatrix_unipotent (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = J i j) (w : Fin M → R ⊗[F] E)
     (z : R ⊗[F] E) (hz : z + sigR R σ z + hv (sigR R σ) (JR R J) w w = 0) :
     matP R σ J (nP hσ hJ w z hz) = nM (sigR R σ) (JR R J) w z := rfl
-
-theorem toMatrix_unipotent_inv (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = J i j) (w : Fin M → R ⊗[F] E)
-    (z : R ⊗[F] E) (hz : z + sigR R σ z + hv (sigR R σ) (JR R J) w w = 0) :
-    matP R σ J (nP hσ hJ w z hz)⁻¹ = nM (sigR R σ) (JR R J) (-w) (sigR R σ z) := rfl
 
 theorem nP_mem_ker (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = J i j) (w : Fin M → R ⊗[F] E)
     (z : R ⊗[F] E) (hz : z + sigR R σ z + hv (sigR R σ) (JR R J) w w = 0) :

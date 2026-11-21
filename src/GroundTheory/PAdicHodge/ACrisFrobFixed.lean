@@ -16,12 +16,6 @@ section General
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
 
-local notation "𝒪" => normInteger K
-local notation "𝒪♭" => PreTilt (normInteger K) p
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔸" => Localization.Away (p : AInf K p)
-local notation "φ" => WittVector.frobeniusEquiv p (PreTilt (normInteger K) p)
-
 theorem exists_dpow_frobenius_eq_p_mul {x : AInf K p} (hx : x ∈ RingHom.ker θ) {n : ℕ}
     (hn : n ≠ 0) : ∃ z ∈ ACrisZero K p, dpow n (φ x) = (p : 𝔸) * z := by
   obtain ⟨y, hy⟩ := exists_frobenius_eq x

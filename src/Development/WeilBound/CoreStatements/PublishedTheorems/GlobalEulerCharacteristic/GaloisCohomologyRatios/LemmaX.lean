@@ -6,8 +6,6 @@ open NumberField IsDedekindDomain CategoryTheory GroundTheory.ProfCoh GroundTheo
 
 namespace PositivityTheory.Lit1.GEN.X
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 theorem lemmaX : PositivityTheory.Lit1.GEN.GlobalEulerCharCoprime := by
   intro K S hS ℓ _ hℓS L _ hL hPn hcop hζ hK ιr M _ _ hMl hMP
   have : Finite S := hS

@@ -1,6 +1,18 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ParOpApply
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsWeilFormulas
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsCompactIsOpenUnitsAt
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HaarVectorScalingIdele
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ModerateGrowthOfHasCompactSupport
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatHomOfGAdSymm
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralAdaptedTriangularBounded
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsWittBasisCompactStabiliser
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAdmittedFormEqAdelicThetaDistribution
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConstantTermUnipotentIntegral
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAdelicSchwartzNeZeroAtOriginStatement
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicSchwartzSpaceTranslateMem
+import Development.AbelianVarietyTheory.Definitions.Divisors.DblActId
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RestrictsToQuadraticPowOfRestrictsToQuadraticSig
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsContOnOfLocal
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StableRangeOneDetUnitElementary
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModulusOfNormEqAbs
 
@@ -21,18 +33,6 @@ variable {R : Type} [CommRing R] {A : Type} [CommRing A] [Algebra R A] {α β ν
   [AddCommGroup X] [Module R X] {e : ν ⊕ ν ≃ α}
 
 omit [DecidableEq β] in
-
-def lmul [Fintype α] [DecidableEq α] (β : Type) (t : GL α A) : Matrix α β A ≃ₗ[R] Matrix α β A where
-  toFun w := (t : Matrix α α A) * w
-  invFun w := ((t⁻¹ : GL α A) : Matrix α α A) * w
-  map_add' _ _ := Matrix.mul_add _ _ _
-  map_smul' c w := by
-    simp only [RingHom.id_apply]
-    exact Matrix.mul_smul _ c w
-  left_inv w := by
-    simp only [← Matrix.mul_assoc, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.one_mul]
-  right_inv w := by
-    simp only [← Matrix.mul_assoc, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.one_mul]
 
 variable [Invertible (2 : R)] {D : Matrix α β A ≃ₗ[R] X × X} (hΔ : ∀ w, LinAct.Del e w → (D w).1 = 0)
   (hN : ∀ w, LinAct.Nab e w → (D w).2 = 0)

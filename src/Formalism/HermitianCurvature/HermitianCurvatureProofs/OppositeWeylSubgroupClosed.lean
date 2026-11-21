@@ -200,9 +200,6 @@ instance : TopologicalSpace (Grp U h) := inferInstanceAs (TopologicalSpace U)
 instance : MeasurableSpace (Grp U h) := borel _
 instance : BorelSpace (Grp U h) := ⟨rfl⟩
 
-lemma val_mul (a b : Grp U h) : (a * b).val = a.val * b.val := rfl
-lemma val_inv (a : Grp U h) : (a⁻¹).val = a.val⁻¹ := rfl
-
 lemma emb : IsClosedEmbedding (val : Grp U h → Mat k r) := h.closed.isClosedEmbedding_subtypeVal
 
 lemma range_val : Set.range (val : Grp U h → Mat k r) = U := Subtype.range_val
@@ -224,7 +221,6 @@ instance : IsTopologicalGroup (Grp U h) where
 instance : LocallyCompactSpace (Grp U h) :=
   have : LocallyCompactSpace (Mat k r) := inferInstanceAs (LocallyCompactSpace (Mt k r))
   emb.locallyCompactSpace
-instance : T2Space (Grp U h) := emb.isEmbedding.t2Space
 
 end Grp
 
@@ -267,11 +263,6 @@ lemma wI_midx {i : Fin (2 * r + k + 1)} (hi : mid k r i) : wI k r (midx hi) = i 
 lemma mid_wI (m : Fin (k + 1)) : mid k r (wI k r m) := by
   have := m.isLt
   constructor <;> simp only [wI] <;> omega
-
-lemma midx_wI (m : Fin (k + 1)) : midx (mid_wI (r := r) m) = m := by
-  apply Fin.ext
-  simp only [wI, midx]
-  omega
 
 lemma wI_inj {a b : Fin (k + 1)} (h : wI k r a = wI k r b) : a = b := by
   have := congrArg Fin.val h

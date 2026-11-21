@@ -9,8 +9,6 @@ open CategoryTheory NumberField IntermediateField GroundTheory.Global FiniteSubf
 
 open scoped DirectSum Pointwise
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield}
@@ -44,11 +42,6 @@ theorem decompHom_eq_restrictHom_globalDecomp (F : FiniteSubfield) [Fact (K ≤ 
 def unitsLocalMor : Rep.res (globalDecomp Kv ι) (unitsLimitRep K) ⟶ galUnitsZ Kv Ωv :=
   Rep.ofHom ⟨(MonoidHom.toAdditive (Units.map ι.toRingHom.toMonoidHom)).toIntLinearMap,
     fun σ => LinearMap.ext fun _ => congrArg Additive.ofMul (Units.ext (globalDecomp_apply Kv ι σ _))⟩
-
-@[simp]
-theorem unitsLocalMor_hom_apply (x : Additive ℚ̄ˣ) :
-    ((Additive.toMul ((unitsLocalMor Kv ι).hom x) : Ωvˣ) : Ωv) = ι (x.toMul : ℚ̄) :=
-  rfl
 
 def unitsLocalRes (n : ℕ) : cohomology (unitsLimitRep K) n ⟶ cohomology (galUnitsZ Kv Ωv) n :=
   cohomologyMapAlong (globalDecomp Kv ι) (continuous_globalDecomp Kv ι) (unitsLocalMor Kv ι) n

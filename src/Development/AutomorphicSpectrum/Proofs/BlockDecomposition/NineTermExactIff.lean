@@ -91,8 +91,4 @@ def subgroupIso {A B : Type} [Group A] [TopologicalSpace A] [Group B] [Topologic
   continuous_toFun := (Φ.continuous.comp continuous_subtype_val).subtype_mk _
   continuous_invFun := (Φ.symm.continuous.comp continuous_subtype_val).subtype_mk _
 
-@[simp] theorem subgroupIso_coe {A B : Type} [Group A] [TopologicalSpace A] [Group B]
-    [TopologicalSpace B] (Φ : A ≃ₜ* B) (H : Subgroup A) (K : Subgroup B)
-    (h : ∀ a, a ∈ H ↔ Φ a ∈ K) (a : H) : ((subgroupIso Φ H K h a : K) : B) = Φ a := rfl
-
 end GlobalTheory.CompanionTheory.PTIso

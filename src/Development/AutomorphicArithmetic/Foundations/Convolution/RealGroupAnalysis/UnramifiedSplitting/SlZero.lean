@@ -10,8 +10,6 @@ open scoped Classical
 
 namespace UpperTheory.ConvolutionTheory.R2.H
 
-local notation "Γv" => WithZero (Multiplicative ℤ)
-
 private def eV : Γv := ((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) : Γv)
 
 private lemma val_le_one_of (m : Γv) (h : eV * m ^ 2 ≤ 1) : m ≤ 1 := by

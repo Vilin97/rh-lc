@@ -1,7 +1,26 @@
 import Mathlib
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
-import Development.AbelianVarietyTheory.BlockTheory.CMModuli.FractionLevelCorrespondence
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.TorsionIsoIffAt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.Clauses
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.QkToAkU
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.DegOUnif
+import Development.AbelianVarietyTheory.BlockTheory.CMModuli.TorusGraphMaps
+import Development.AbelianVarietyTheory.BlockTheory.CMModuli.UniformTorsionIsomorphism
+import Development.AbelianVarietyTheory.BlockTheory.CMModuli.TateUniformizationInput
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.PsiGenOnInteriorOfPsiUnitOn
+import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.RelationsAreFunctions
+import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.CubicalOfNormalised
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CubeVal
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.UnifUniqSt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.IsNsmul
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.PhiGenPf
+import Development.AbelianVarietyTheory.Definitions.Uniformization.PointEqOfSubsingleton
+import Development.AbelianVarietyTheory.Definitions.Uniformization.WCompat
+import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.ForallGeometricallyIntegralOfSmoothOfGeometrical
+import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.ExistsGenOfLocalOnBase
+import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.ExistsUniqueGeneratorExtendDiscreteValuationRing
+import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.CubicalExtendsAndExtendGen
+import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.RigidifiedIsoRespectsCubeAndSymmetry
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.NotWeilIsGrpPullbackNoncomm
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.InjectiveOfIsAlgebraic
 import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.GenRelNeZero
 import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsDescOfPoints
@@ -69,9 +88,6 @@ variable (x : TateUniformizationInput.ArcInput D c β O' b) (hf : Function.Injec
   (Δ : UniformTorsionIsomorphism.OData H I) (φ : Δ.D.toPre.P.A.left ⟶ x.P.P.A.left) (w : LB.Iso Δ.D.toPre.P.L (x.P.P.L.pull φ))
   (e : x.P.X ≃ₗ[𝓞 E] Δ.D.toPre.X)
 
-@[reducible] def fracAlg (hf : Function.Injective f) : Algebra (FractionRing O') (FractionRing R) :=
-  (FractionLevelCorrespondence.fracMap f hf).toAlgebra
-
 end Twist
 
 variable {Xo : Moduli D l} (Y : Model Xo c β)
@@ -80,30 +96,8 @@ section Level
 
 variable {I : Ideal R} {χ : Sp R ⟶ Y.X} {t : SAB H (Sp R)} (m : SABMap t Y.t χ) (P : PELUnif I t)
 
-def LevelAt (a : ArcIn D l β O' b) (f : O' →+* R) (u : R) {φ : P.D.toPre.P.A.left ⟶ a.D₀.P.A.left}
-    (w : LB.Iso P.D.toPre.P.L (a.D₀.P.L.pull φ)) (e : a.D₀.X ≃ₗ[𝓞 E] P.D.toPre.X) (k : ℕ)
-    (p₀ : QkPt a.D₀ (FractionRing O') k) (σ : 𝟙_ (Over (Xo.XF c)) ⟶ Y.oF.t.G) : Prop :=
-  ∀ (F : Type) [Field F] [IsAlgClosed F] [Algebra (FractionRing R) F] [Algebra (FractionRing O') F] (uF : F),
-    (∀ x, algebraMap (FractionRing O') F (algebraMap O' _ x) = algebraMap (FractionRing R) F (algebraMap R _ (f x))) →
-    uF = algebraMap (FractionRing R) F (algebraMap R _ u) →
-    ∀ yF : Sp F ⟶ Xo.XF c, yF ≫ Y.j = jFK (R := R) F ≫ jK R ≫ χ →
-      ∀ (q₀ : QkPt a.D₀ F k) (q : QkPt P.D.toPre F k) (x : TFK (R := R) F ⟶ P.A.A),
-        QkExt (algebraMap _ F) p₀ q₀ → MatchRigid.IsTransport a w e uF q₀ q →
-        x.left ≫ PelUnifCompare.genMap P ≫ m.φ = yF ≫ σ.left ≫ Y.m.φ → P.ToA F k q x
-
 variable {Y m P}
 
 end Level
-
-def ArcCond (a : ArcIn D l β O' b) (π : O') (χ : Sp (PowerSeries O') ⟶ Y.X) : Prop :=
-  χ ≫ Y.s = spMap (PowerSeries.C (R := O')) ≫ spMap b ∧
-  (∀ x : Sp (PowerSeries O'), χ x ∈ abLocus Y.t.G ↔ PowerSeries.X ∉ x.asIdeal) ∧
-  (∀ x : Sp (PowerSeries O'), PowerSeries.C π * PowerSeries.X ∉ x.asIdeal → χ x ∈ Set.range Y.j) ∧
-  Y.HasArcData a (Ideal.span {PowerSeries.X}) (PowerSeries.C (R := O')) PowerSeries.X χ
-
-def ValueCond (a : ArcIn D l β O' b) (π : O') (χ : Sp (PowerSeries O') ⟶ Y.X) : Prop :=
-  ∀ (y' : Sp O' ⟶ Y.X) (ev : PowerSeries O' →+* O'), y' ≫ Y.s = spMap b →
-    Set.range (jK O' ≫ y') ⊆ Set.range Y.j → Y.HasArcData a (Ideal.span {π}) (RingHom.id O') π y' →
-    (∀ x, ev (PowerSeries.C x) = x) → ev PowerSeries.X = π → spMap ev ≫ χ = y'
 
 end GlobalTheory.ArcClauseCompare

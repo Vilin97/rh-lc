@@ -65,8 +65,6 @@ theorem ι_injective : Function.Injective (ι f ξ l M) := Subtype.val_injective
 
 def ofW : W →+* A f ξ l M := f.codRestrict (sub f ξ l M) fun w => Subring.subset_closure (Or.inl ⟨w, rfl⟩)
 
-instance : Algebra W (A f ξ l M) := (ofW f ξ l M).toAlgebra
-
 theorem ι_ofW (w : W) : ι f ξ l M (ofW f ξ l M w) = f w := rfl
 
 def dpA (i : ℕ) : A f ξ l M := ⟨dpE f ξ l M i, Subring.subset_closure (Or.inr ⟨i, rfl⟩)⟩
@@ -83,8 +81,6 @@ def γ (h : DPClosed (ι f ξ l M) (γB f ξ)) : DividedPowers (I f ξ l M) := d
 
 theorem ι_γ (h : DPClosed (ι f ξ l M) (γB f ξ)) {n : ℕ} {x : A f ξ l M} (hx : x ∈ I f ξ l M) :
     ι f ξ l M ((γ f ξ l M h).dpow n x) = (γB f ξ).dpow n (ι f ξ l M x) := dpComap_dpow _ h hx
-
-def mapM {M M' : ℕ} (h : sub f ξ l M ≤ sub f ξ l M') : A f ξ l M →+* A f ξ l M' := Subring.inclusion h
 
 structure Hyp (m : ℕ) : Prop where
   one_le : 1 ≤ m

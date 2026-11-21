@@ -40,7 +40,6 @@ theorem transitionMap_succ (d : BlowupSequenceData X) (i : ℕ) : d.transitionMa
     d.toSequenceOfBlowups.blowupMorphism_eq_transitionMap i
   exact h2.symm.trans h1
 
-@[reassoc]
 theorem transitionMap_zero_comp_isoObjZero_hom (d : BlowupSequenceData X) (n : ℕ) :
     d.transitionMap (Nat.zero_le n) ≫ d.isoZero.hom = d.projectionToBase n := by
   have h := d.toSequenceOfBlowups.projectionToBase_def n
@@ -104,7 +103,6 @@ theorem append_blowupMorphism_comp_concatObjAddIso (s : BlowupSequenceData X) (t
   | zero => exact append_blowupMorphism_zero_comp_concatObjAddIso s t
   | succ k => exact append_blowupMorphism_succ_comp_concatObjAddIso s t k
 
-@[reassoc]
 theorem append_transitionMap_comp_concatObjAddIso (s : BlowupSequenceData X) (t : BlowupSequenceData (s.obj s.length)) {i i' : ℕ}
     (h : i ≤ i') :
     (s.append t).transitionMap (Nat.add_le_add_left h s.length) ≫ (concatObjAddIso s t i).hom =
@@ -281,7 +279,6 @@ theorem index_length_eq_length {d' : BlowupSequenceData X'} {d : BlowupSequenceD
     (c : SequenceOfBlowupsPullback φ d'.toSequenceOfBlowups d.toSequenceOfBlowups) : c.idx d'.length = d.length := by
   simpa only [BlowupSequenceData.toSequenceOfBlowups_length] using c.idx_length
 
-@[reassoc]
 theorem blowupSequenceData_blowupMorphism_comp_map {d' : BlowupSequenceData X'} {d : BlowupSequenceData X}
     (c : SequenceOfBlowupsPullback φ d'.toSequenceOfBlowups d.toSequenceOfBlowups) (j : ℕ) (hj : j < d'.length) :
     d'.map j ≫ c.map j (le_of_lt hj) =

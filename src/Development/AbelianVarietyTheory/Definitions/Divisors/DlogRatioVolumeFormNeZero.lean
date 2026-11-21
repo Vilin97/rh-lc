@@ -37,13 +37,7 @@ structure IsBundle (L : Finset (Fin (d + 1)) → Submodule k W) : Prop where
   proj : ∀ i, Module.Projective (rA k x {i}) (Submodule.span (rA k x {i}) (L {i} : Set W))
   loc : ∀ I, ∀ i ∈ I, L I = (Submodule.span (rA k x I) (L {i} : Set W)).restrictScalars k
 
-def dualFam (β : W →ₗ[F] W' →ₗ[F] F) (L : Finset (Fin (d + 1)) → Submodule k W) (I : Finset (Fin (d + 1))) : Submodule k W' :=
-  ⨅ w ∈ L I, (omA k x I).comap ((β w).restrictScalars k)
-
 def kpair (ρ : F →ₗ[k] k) (β : W →ₗ[F] W' →ₗ[F] F) : W →ₗ[k] W' →ₗ[k] k := (β.restrictScalars₁₂ k k).compr₂ ρ
-
-def SD (ρ : F →ₗ[k] k) (β : W →ₗ[F] W' →ₗ[F] F) (L : Finset (Fin (d + 1)) → Submodule k W) : Prop :=
-  Perf (cech L) (cech (dualFam k x β L)) (cupPair (kpair k ρ β)) d
 
 end Proj
 
@@ -63,11 +57,6 @@ variable {K} {ι : Type} [LinearOrder ι]
 
 def tot (B : Finset ι → Subalgebra k K) (a b : ℕ) : Cx k (Finset ι → DR k K) :=
   ⟨totC (fun q s => omB k K (B s) q) a b, totD (trunc k K b ∘ₗ dDR k K)⟩
-
-def formPair [Fintype ι] (t : DR k K →ₗ[k] k) : (Finset ι → DR k K) →ₗ[k] (Finset ι → DR k K) →ₗ[k] k :=
-  ∑ j : ι, ((LinearMap.mul k (DR k K)).compr₂ t).compl₁₂
-    ((sg k K ^ ((Finset.univ.filter (j ≤ ·)).card - 1)).toLinearMap ∘ₗ LinearMap.proj (Finset.univ.filter (· ≤ j)))
-    (LinearMap.proj (Finset.univ.filter (j ≤ ·)))
 
 variable (K) {F : Type} [Field F] [Algebra k F] [Algebra F K] [IsScalarTower k F K] {d : ℕ} (x : Fin (d + 1) → F)
 
@@ -183,8 +172,6 @@ theorem IsFinCover.dlogRatioVolumeForm_ne_zero (h : IsFinCover k K x) : vol0 k K
   have h1 := hτ.1
   rw [h0, map_zero] at h1
   exact zero_ne_one h1
-
-example (h : IsFinCover k K x) : Algebra.IsSeparable F K ∧ vol0 k K x ≠ 0 := ⟨h.sep, h.dlogRatioVolumeForm_ne_zero⟩
 
 end API
 

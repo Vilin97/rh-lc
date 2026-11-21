@@ -8,8 +8,6 @@ namespace GroundTheory.Global
 open NumberField IntermediateField GroundTheory.LocalField.Abstract
 open scoped GroundTheory.LocalField.Abstract
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 namespace IdeleClassLimit

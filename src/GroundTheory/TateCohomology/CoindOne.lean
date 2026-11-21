@@ -14,9 +14,6 @@ noncomputable def coindOneRep : Representation k G (G → X) where
   map_one' := by ext; simp
   map_mul' g h := by ext; simp [mul_assoc]
 
-@[simp]
-lemma coindOneRep_apply (g : G) (F : G → X) (x : G) : coindOneRep k G X g F x = F (x * g) := rfl
-
 noncomputable abbrev coindOne : Rep k G := Rep.of (coindOneRep k G X)
 
 instance : Subsingleton (⊥ : Subgroup G) :=

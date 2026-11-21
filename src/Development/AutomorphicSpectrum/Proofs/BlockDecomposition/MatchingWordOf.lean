@@ -198,24 +198,6 @@ theorem word_ct (d : LocData E n) (a : ℕ) (ha : a ≤ n) {w : Pl E} (hCt : MT.
           ← mul hTk hA]
         exact key
 
-theorem matchLMWordOf : PositivityTheory.Rg.BcB.F.MLM.MatchLMWordOf := by
-  intro hS hCt hSp _ E _ _ _ hE n d hd a ha w hG l
-  have hP : w ∉ d.P := by simp [LocData.P, hG.2.1, hG.2.2.1]
-  have htr : (wordL d a ha w l).tr d.P d.one w = (wordL d a ha w l).s w := if_neg hP
-  obtain ⟨hW, A, B, -, -, hs, ht, hm⟩ := word_ct d a ha hCt hSp hE hd hG l
-  rw [htr, hs, ht, hm]
-  have hμ := hG.2.2.2.2
-  have hw := hG.1
-  have h1 := hS E n a ha w hw (d.μ w) hμ _ hW 1 le_rfl
-  have hone : IsHecke (KL n w) (lone (KL n w)) := GlobalTheory.CompanionTheory.MatchUnit.isHecke_lone_KL hE
-  have e1 : lpow (KL n w) (wordU d w l) 1 = wordU d w l := lconv_lone_right hW
-  have e2 : mconv (ctMu (Nat.add_sub_cancel' ha) w (d.μ w) (wordU d w l))
-      (ctMu (Nat.add_sub_cancel' ha) w (d.μ w) (lone (KL n w))) =
-      ctMu (Nat.add_sub_cancel' ha) w (d.μ w) (wordU d w l) := by
-    rw [← hCt E n a ha w hw (d.μ w) hμ _ _ hW hone, lconv_lone_right hW]
-  rw [e1] at h1
-  exact e2 ▸ h1
-
 end GlobalTheory.CompanionTheory.MatchWord
 
 end

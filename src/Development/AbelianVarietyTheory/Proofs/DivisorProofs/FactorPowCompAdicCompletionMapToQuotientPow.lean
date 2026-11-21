@@ -59,9 +59,6 @@ def galAlg {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R'] (σ : GlobalT
     R' →ₐ[R] R' :=
   { σ.1.toRingHom with commutes' := σ.2 }
 
-@[simp] theorem galAlg_apply {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R']
-    (σ : GlobalTheory.Mum.Gal (algebraMap R R')) (x : R') : galAlg σ x = σ.1 x := rfl
-
 def galTensor {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R'] (O : Type) [CommRing O] [Algebra R O]
     (σ : GlobalTheory.Mum.Gal (algebraMap R R')) : TensorProduct R O R' →ₐ[O] TensorProduct R O R' :=
   Algebra.TensorProduct.map (AlgHom.id O O) (galAlg σ)

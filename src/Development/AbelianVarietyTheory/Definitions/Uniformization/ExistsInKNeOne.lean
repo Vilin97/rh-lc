@@ -29,11 +29,6 @@ theorem inK_iff_locGen (x : T ⟶ B) : InK B L x ↔
 
 variable (B L) in
 
-theorem kTriv_iff_inK : KTriv B L ↔
-    ∀ (R : Type) [CommRing R] (t : Spec (CommRingCat.of R) ⟶ S) (x : Over.mk t ⟶ B),
-      InK B L x → x = toUnit _ ≫ η[B] :=
-  Iff.rfl
-
 theorem inK_one (hL : L.IsLB) (T : Over S) : InK B L (1 : T ⟶ B) := memKL_one hL T
 
 theorem InK.comp {x : T ⟶ B} (hx : InK B L x) (u : T' ⟶ T) : InK B L (u ≫ x) := MemKL.comp hx u
@@ -75,8 +70,6 @@ def kSubgroup (hL : L.IsLB) (T : Over S) : Subgroup (T ⟶ B) where
   mul_mem' := fun hx hy => InK.mul hL hx hy
   inv_mem' := fun hx => InK.inv hL hx
 
-@[simp] theorem mem_kSubgroup (hL : L.IsLB) {x : T ⟶ B} : x ∈ kSubgroup B hL T ↔ InK B L x := Iff.rfl
-
 theorem InK.eq_one (hK : KTriv B L) {x : T ⟶ B} (hx : InK B L x) : x = 1 :=
   KerPow.eq_one_of_locGen hK x ((inK_iff_locGen x).1 hx)
 
@@ -98,14 +91,6 @@ theorem inK_triv (x : T ⟶ B) : InK B (Inh.trivLB B.left) x := by
   intro i j
   exact (map_one _).trans
     ((congrArg₂ (· * ·) (Inh.linComb_triv_g _ _ i j) (map_one _)).trans (_root_.one_mul _)).symm
-
-example (T : Over S) : kSubgroup B (Inh.trivLB_isLB B.left) T = ⊤ :=
-  eq_top_iff.2 fun x _ => inK_triv B x
-
-example (P : PolAV S) (T : Over S) : kSubgroup P.A P.isLB T = ⊥ :=
-  (Subgroup.eq_bot_iff_forall _).2 fun _ hx => InK.eq_one P.ktriv hx
-
-example (P : PolAV S) (x : T ⟶ P.A) (hx : x ≠ 1) : ¬ InK P.A P.L x := fun h => hx (h.eq_one P.ktriv)
 
 end GlobalTheory.UU
 end

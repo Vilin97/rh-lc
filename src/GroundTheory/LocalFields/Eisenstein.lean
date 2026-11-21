@@ -192,15 +192,6 @@ theorem residueDegree_eq_one_of_ramificationIndex_eq_finrank
   rw [h] at h1 h2
   exact (Nat.mul_eq_left h2.ne').mp h1
 
-theorem exists_sub_algebraMap_mem_maximalIdeal (h : residueDegree K L = 1) (w : 𝒪[L]) :
-    ∃ c : 𝒪[K], w - algebraMap 𝒪[K] 𝒪[L] c ∈ IsLocalRing.maximalIdeal 𝒪[L] := by
-  rw [residueDegree_eq_finrank, finrank_eq_one_iff_of_nonzero' (1 : 𝓀[L]) one_ne_zero] at h
-  obtain ⟨c, hc⟩ := h (IsLocalRing.residue 𝒪[L] w)
-  obtain ⟨c', rfl⟩ := IsLocalRing.residue_surjective c
-  refine ⟨c', ?_⟩
-  rw [← IsLocalRing.residue_eq_zero_iff, map_sub, ← hc, Algebra.smul_def, mul_one,
-    IsLocalRing.ResidueField.algebraMap_residue, sub_self]
-
 end TotallyRamified
 
 section Eisenstein
@@ -250,22 +241,6 @@ theorem finrank_adjoin_le_of_isEisensteinAt {f : 𝒪[K][X]}
     exact hf.leading (by simp)
   rw [IntermediateField.adjoin.finrank hint, ← natDegree_map_eq_of_injective hinj f]
   exact natDegree_le_of_dvd (minpoly.dvd K α (by rw [aeval_map_algebraMap, hα])) hne
-
-theorem minpoly_eq_of_isEisensteinAt {f : 𝒪[K][X]}
-    (hf : f.IsEisensteinAt (IsLocalRing.maximalIdeal 𝒪[K])) (hn : 0 < f.natDegree) {α : L}
-    (hα : aeval α f = 0) :
-    minpoly K α = C (algebraMap 𝒪[K] K f.leadingCoeff)⁻¹ * f.map (algebraMap 𝒪[K] K) := by
-  have hinj : Function.Injective (algebraMap 𝒪[K] K) := IsFractionRing.injective 𝒪[K] K
-  have hc : algebraMap 𝒪[K] K f.leadingCoeff ≠ 0 := by
-    rw [Ne, map_eq_zero_iff _ hinj]
-    rintro h
-    exact hf.leading (by rw [h]; exact zero_mem _)
-  refine (minpoly.eq_of_irreducible_of_monic ?_ ?_ ?_).symm
-  · rw [irreducible_isUnit_mul (isUnit_C.mpr (IsUnit.mk0 _ (inv_ne_zero hc)))]
-    exact irreducible_map_of_isEisensteinAt hf hn
-  · rw [map_mul, aeval_map_algebraMap, hα, mul_zero]
-  · refine monic_C_mul_of_mul_leadingCoeff_eq_one ?_
-    rw [leadingCoeff_map_of_injective hinj, inv_mul_cancel₀ hc]
 
 end Eisenstein
 
@@ -378,136 +353,6 @@ variable {K L : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
   (h : ramificationIndex K L = Module.finrank K L) {ϖ : 𝒪[L]} (hϖ : Irreducible ϖ)
 include h hϖ
-
-theorem addVal_term_of_totallyRamified (g : 𝒪[K][X]) (i : ℕ) :
-    (∀ k, g.coeff i ∈ IsLocalRing.maximalIdeal 𝒪[K] ^ k →
-      ((Module.finrank K L * k + i : ℕ) : ℕ∞) ≤
-        addVal 𝒪[L] (algebraMap 𝒪[K] 𝒪[L] (g.coeff i) * ϖ ^ i)) ∧
-    (IsUnit (g.coeff i) → addVal 𝒪[L] (algebraMap 𝒪[K] 𝒪[L] (g.coeff i) * ϖ ^ i) = i) := by
-  have hval : addVal 𝒪[L] (algebraMap 𝒪[K] 𝒪[L] (g.coeff i) * ϖ ^ i) =
-      Module.finrank K L * addVal 𝒪[K] (g.coeff i) + i := by
-    rw [addVal_mul, addVal_algebraMap_integer, h, hϖ.addVal_pow]
-  refine ⟨fun k hk => ?_, fun hu => ?_⟩
-  · rw [mem_maximalIdeal_pow_iff_le_addVal] at hk
-    rw [hval]
-    push_cast
-    gcongr
-  · rw [hval, addVal_eq_zero_iff.mpr hu, mul_zero, zero_add]
-
-theorem minpoly_isEisensteinAt_of_irreducible :
-    (minpoly 𝒪[K] (ϖ : L)).IsEisensteinAt (IsLocalRing.maximalIdeal 𝒪[K]) ∧
-      (minpoly 𝒪[K] (ϖ : L)).natDegree = Module.finrank K L := by
-  set g := minpoly 𝒪[K] (ϖ : L) with hg_def
-  set n := Module.finrank K L with hn_def
-  have hint : IsIntegral 𝒪[K] (ϖ : L) := (isIntegral_iff K L _).mpr ϖ.2
-  have hmon : g.Monic := minpoly.monic hint
-  set d := g.natDegree with hd_def
-  have hd0 : 0 < d := minpoly.natDegree_pos hint
-  have hmap : minpoly K (ϖ : L) = g.map (algebraMap 𝒪[K] K) :=
-    minpoly.isIntegrallyClosed_eq_field_fractions' K hint
-  have hdn : d ≤ n := by
-    have := minpoly.natDegree_le (A := K) (ϖ : L)
-    rwa [hmap, hmon.natDegree_map] at this
-  have hn0 : 0 < n := Module.finrank_pos
-  have hroot : aeval ϖ g = 0 := by
-    have := aeval_integer_eq_zero (f := g) ϖ.2 (minpoly.aeval 𝒪[K] (ϖ : L))
-    simpa using this
-  set t : ℕ → 𝒪[L] := fun i => algebraMap 𝒪[K] 𝒪[L] (g.coeff i) * ϖ ^ i with ht
-  have hsum : ∑ i ∈ Finset.range (d + 1), t i = 0 := by
-    rw [← hroot, aeval_eq_sum_range]
-    simp [t, Algebra.smul_def, d]
-  have hterm := addVal_term_of_totallyRamified h hϖ g
-  have hne : ∀ i, IsUnit (g.coeff i) → t i ≠ 0 := by
-    intro i hu h0
-    have := (hterm i).2 hu
-    simp only [t] at h0
-    rw [h0, addVal_zero] at this
-    exact ENat.top_ne_natCast _ this
-  have hlow : ∀ i, ((i : ℕ) : ℕ∞) ≤ addVal 𝒪[L] (t i) := by
-    intro i
-    have := (hterm i).1 0 (by simp)
-    rw [mul_zero, zero_add] at this
-    exact this
-
-  have hmem : ∀ i < d, g.coeff i ∈ IsLocalRing.maximalIdeal 𝒪[K] := by
-    by_contra hcon
-    push Not at hcon
-    have hex : ∃ j, j < d ∧ g.coeff j ∉ IsLocalRing.maximalIdeal 𝒪[K] := hcon
-    classical
-    let j := Nat.find hex
-    have hj : j < d ∧ g.coeff j ∉ IsLocalRing.maximalIdeal 𝒪[K] := Nat.find_spec hex
-    have hu : IsUnit (g.coeff j) := IsLocalRing.notMem_maximalIdeal.mp hj.2
-    refine hne j hu (eq_zero_of_addVal_lt_of_sum_eq_zero hsum
-      (Finset.mem_range.mpr (by omega)) fun i hi hij => ?_)
-    rw [(hterm j).2 hu]
-    rcases lt_or_gt_of_ne hij with hlt | hgt
-    · have hi' : g.coeff i ∈ IsLocalRing.maximalIdeal 𝒪[K] := by
-        by_contra hc
-        exact Nat.find_min hex hlt ⟨by omega, hc⟩
-      have := (hterm i).1 1 (by rwa [pow_one])
-      refine lt_of_lt_of_le ?_ this
-      exact_mod_cast (by omega : j < n * 1 + i)
-    · exact lt_of_lt_of_le (by exact_mod_cast hgt) (hlow i)
-  have htop : t d = ϖ ^ d := by
-    simp only [t]
-    rw [show g.coeff d = 1 from hmon]
-    simp
-  have htop_val : addVal 𝒪[L] (t d) = d := by rw [htop, hϖ.addVal_pow]
-  have htop_ne : t d ≠ 0 := by
-    rw [htop]
-    exact pow_ne_zero _ hϖ.ne_zero
-
-  have hmid : ∀ i, 0 < i → i < d → ((n + 1 : ℕ) : ℕ∞) ≤ addVal 𝒪[L] (t i) := by
-    intro i hi0 hid
-    have := (hterm i).1 1 (by rw [pow_one]; exact hmem i hid)
-    refine le_trans ?_ this
-    exact_mod_cast (by omega : n + 1 ≤ n * 1 + i)
-
-  have hsq : g.coeff 0 ∉ IsLocalRing.maximalIdeal 𝒪[K] ^ 2 := by
-    intro hc
-    refine htop_ne (eq_zero_of_addVal_lt_of_sum_eq_zero hsum (Finset.self_mem_range_succ d)
-      fun i hi hid => ?_)
-    have hid' : i < d := lt_of_le_of_ne (Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)) hid
-    rw [htop_val]
-    rcases Nat.eq_zero_or_pos i with rfl | hi0
-    · refine lt_of_lt_of_le ?_ ((hterm 0).1 2 hc)
-      exact_mod_cast (by omega : d < n * 2 + 0)
-    · exact lt_of_lt_of_le (by exact_mod_cast (by omega : d < n + 1)) (hmid i hi0 hid')
-  have Heisenberg₂ : g.IsEisensteinAt (IsLocalRing.maximalIdeal 𝒪[K]) :=
-    { leading := by
-        rw [hmon.leadingCoeff]
-        exact fun h1 => (IsLocalRing.maximalIdeal.isMaximal 𝒪[K]).ne_top
-          ((Ideal.eq_top_iff_one _).mpr h1)
-      mem := fun hi => hmem _ hi
-      notMem := hsq }
-  refine ⟨Heisenberg₂, le_antisymm hdn ?_⟩
-
-  by_contra hlt
-  rw [not_le] at hlt
-  have h0val : addVal 𝒪[L] (t 0) = n := by
-    simp only [t]
-    rw [addVal_mul, addVal_algebraMap_integer, h,
-      addVal_eq_one_of_mem_of_notMem_sq (hmem 0 hd0) hsq]
-    simp
-  refine htop_ne (eq_zero_of_addVal_lt_of_sum_eq_zero hsum (Finset.self_mem_range_succ d)
-    fun i hi hid => ?_)
-  have hid' : i < d := lt_of_le_of_ne (Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)) hid
-  rw [htop_val]
-  rcases Nat.eq_zero_or_pos i with rfl | hi0
-  · rw [h0val]
-    exact_mod_cast hlt
-  · exact lt_of_lt_of_le (by exact_mod_cast (by omega : d < n + 1)) (hmid i hi0 hid')
-
-theorem minpoly_eq_map_of_irreducible :
-    minpoly K (ϖ : L) = (minpoly 𝒪[K] (ϖ : L)).map (algebraMap 𝒪[K] K) :=
-  minpoly.isIntegrallyClosed_eq_field_fractions' K ((isIntegral_iff K L _).mpr ϖ.2)
-
-theorem adjoin_eq_top_of_irreducible : K⟮(ϖ : L)⟯ = ⊤ := by
-  have hint : IsIntegral K (ϖ : L) := ((isIntegral_iff K L _).mpr ϖ.2).tower_top
-  refine IntermediateField.eq_of_le_of_finrank_eq le_top ?_
-  rw [IntermediateField.finrank_top', IntermediateField.adjoin.finrank hint, minpoly_eq_map_of_irreducible h hϖ,
-    (minpoly.monic ((isIntegral_iff K L _).mpr ϖ.2)).natDegree_map]
-  exact (minpoly_isEisensteinAt_of_irreducible h hϖ).2
 
 end Converse
 

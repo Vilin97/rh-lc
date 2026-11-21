@@ -16,8 +16,6 @@ theorem conj_conj' (D : D7) (x : D.host.E) : D.host.conj (D.host.conj x) = x := 
   let _ := D.host.cmStar
   rw [← h2, ← h1, star_star]
 
-theorem cO_coe (D : D7) (x : 𝓞 D.host.E) : ((cO D x : 𝓞 D.host.E) : D.host.E) = D.host.conj (x : D.host.E) := rfl
-
 theorem lowB_YY (D : D7) {N N' : ℕ} (L : Submodule (𝓞 D.host.E) (Fin N → D.host.E))
     (L' : Submodule (𝓞 D.host.E) (Fin N' → D.host.E)) (h : admitted D N N' L L') :
     ∃ d : 𝓞 D.host.E, d ≠ 0 ∧ LowB d (YYl D L L' : Set (Matrix (Fin N') (Fin N) D.host.E)) := by

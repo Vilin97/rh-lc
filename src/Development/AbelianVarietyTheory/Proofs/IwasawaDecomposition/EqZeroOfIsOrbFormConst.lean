@@ -203,10 +203,6 @@ theorem isTwInv_orbFun (H : Host E) (v : LinearMap.BilinForm ℤ X₀) : IsTwInv
 
 end Host
 
-example : (orbFun ℤ 0 mulForm).evalZ mulForm = 1 ∧ (orbFun ℤ 0 mulForm).evalZ (0 : LinearMap.BilinForm ℤ ℤ) = 0 := by
-  refine ⟨orbFun_evalZ_self 0 (fun h => by simpa using LinearMap.congr_fun₂ h 1 1) fun y z => by simp [mul_comm], ?_⟩
-  exact orbFun_evalZ_zero 0 fun h => by simpa using LinearMap.congr_fun₂ h 1 1
-
 end OrbMark
 
 end GlobalTheory.PolFan

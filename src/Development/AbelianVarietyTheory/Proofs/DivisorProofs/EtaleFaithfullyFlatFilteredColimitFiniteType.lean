@@ -35,9 +35,6 @@ def arrF : Under j ⥤ Arrow CommRingCat.{0} where
     · simp
     · apply pushout.hom_ext <;> simp
 
-@[simp] lemma arrF_obj_left (k : Under j) : ((arrF D0 j g').obj k).left = D0.obj k.right := rfl
-@[simp] lemma arrF_obj_right (k : Under j) : ((arrF D0 j g').obj k).right = pushout g' (D0.map k.hom) := rfl
-@[simp] lemma arrF_obj_hom (k : Under j) : ((arrF D0 j g').obj k).hom = pushout.inr g' (D0.map k.hom) := rfl
 @[simp] lemma arrF_map_left {k k' : Under j} (φ : k ⟶ k') : ((arrF D0 j g').map φ).left = D0.map φ.right := rfl
 @[simp] lemma arrF_map_right {k k' : Under j} (φ : k ⟶ k') : ((arrF D0 j g').map φ).right = pmap D0 j g' φ := rfl
 
@@ -60,9 +57,6 @@ def coc : arrF D0 j g' ⟶ (Functor.const (Under j)).obj (Arrow.mk g) where
       · simp only [pdesc, inr_pmap_assoc, pushout.inr_desc]
         rw [ι0.naturality_assoc φ.right]
         simp
-
-@[simp] lemma coc_app_left (k : Under j) : ((coc D0 j g' ι0 g h hnat).app k).left = ι0.app k.right := rfl
-@[simp] lemma coc_app_right (k : Under j) : ((coc D0 j g' ι0 g h hnat).app k).right = pdesc D0 j g' ι0 g h hnat k := rfl
 
 lemma snd_coc (k : Under j) : (Comma.snd (𝟭 _) (𝟭 _)).map ((coc D0 j g' ι0 g h hnat).app k) = pdesc D0 j g' ι0 g h hnat k := rfl
 

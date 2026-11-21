@@ -1,6 +1,9 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PlacesBelowSplitCoprimeConductorOfAdmissible
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFinSetSplitPlacesCoprimeConductor
+import Development.AbelianVarietyTheory.Definitions.Divisors.IsFinSetSplitPlacesCoprimeConductor
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsUnitaryCharOfOpenSubgroupAndHom
+import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.WithZeroEqOfLeExpIff
+import Formalism.LocalToGlobal.ProjectiveLattices.UnramBridgeHolds
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CompletelySplitPrimeHostPlaceProperties
 import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsNormSubEqOne
 
@@ -177,11 +180,5 @@ theorem exists_gen_bound (h : ClassTermBound) (ht : IsToricElt X) : ∃ N0 : X.T
   ring
 
 end Record
-
-theorem bounded_denominators (h : ClassTermBound) :
-    (∀ (D : D7) (N : NData D.R D.host D.what₂) (X : NTw D.R D.host D.what₂ D.LL0 N), IsToricElt X →
-      ∃ N0 : X.Tw → ℕ, BlochKatoReduction.Gen.adm9 X N0) ∧
-    ∀ D : D7, IsToricElt D.ntw → ∃ N0 : D.ntw.Tw → ℕ, BlochKatoReduction.adm9 D N0 :=
-  ⟨fun _ _ X ht => exists_gen_bound X h ht, fun D ht => exists_gen_bound D.ntw h ht⟩
 
 end GlobalTheory.ToricDenom

@@ -10,10 +10,6 @@ class IsUnitBall (O K : Type) [CommRing O] [NormedField K] [Algebra O K] : Prop 
   inj : Function.Injective (algebraMap O K)
   mem_range_iff : ∀ x : K, x ∈ Set.range (algebraMap O K) ↔ ‖x‖ ≤ 1
 
-instance (l : ℕ) [Fact l.Prime] : IsUnitBall ℤ_[l] ℚ_[l] where
-  inj := Subtype.val_injective
-  mem_range_iff x := ⟨fun ⟨y, h⟩ => h ▸ y.2, fun h => ⟨⟨x, h⟩, rfl⟩⟩
-
 section Weights
 
 variable {K : Type} [NormedField K] [IsUltrametricDist K]
@@ -226,9 +222,6 @@ class HasK (B : Subalgebra O K⟦X⟧) : Prop where
 instance (B : Subalgebra O K⟦X⟧) [HasK B] : Algebra K B :=
   ((C : K →+* K⟦X⟧).codRestrict B HasK.C_mem).toAlgebra
 
-@[simp] theorem coe_algebraMap_K {B : Subalgebra O K⟦X⟧} [HasK B] (c : K) :
-    (algebraMap K B c : K⟦X⟧) = C c := rfl
-
 instance (B : Subalgebra O K⟦X⟧) [HasK B] : IsScalarTower K B K⟦X⟧ :=
   IsScalarTower.of_algebraMap_eq fun _ => rfl
 
@@ -236,9 +229,6 @@ instance (B : Subalgebra O K⟦X⟧) [HasK B] : IsScalarTower O K B :=
   IsScalarTower.of_algebraMap_eq fun c => Subtype.ext (algebraMap_eq_C c)
 
 instance (B : Subalgebra O K⟦X⟧) (s : B) [HasU B] : HasU (away B s) := ⟨le_away B s HasU.X_mem⟩
-
-instance (B : Subalgebra O K⟦X⟧) (s : B) [HasK B] : HasK (away B s) :=
-  ⟨fun c => le_away B s (HasK.C_mem c)⟩
 
 variable (K) in
 
@@ -382,12 +372,6 @@ theorem frob_mem_R (l : ℕ) [Fact l.Prime] {k : ℝ} (hk : 0 ≤ k) {f : K⟦X�
     (frob_bound l (fun n => pow_nonneg (rad_nonneg l k) n)
       (fun _ _ h => pow_le_pow_of_le_one (rad_nonneg l k) (rad_le_one l hk) h) f)
     ((mem_R.1 hf).comp (Nat.tendsto_div_const_atTop (Fact.out : l.Prime).ne_zero))
-
-theorem R_mono (l : ℕ) [Fact l.Prime] {k k' : ℝ} (h : k ≤ k') : R O K l k ≤ R O K l k' := fun f hf =>
-  mem_R.2 <| squeeze_zero (fun n => mul_nonneg (norm_nonneg _) (pow_nonneg (rad_nonneg l k') n))
-    (fun n => mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (rad_nonneg l k')
-      (Real.rpow_le_rpow_of_exponent_le (by exact_mod_cast (Fact.out : l.Prime).one_le)
-        (by linarith)) n) (norm_nonneg _)) (mem_R.1 hf)
 
 theorem A_le_R (l : ℕ) [Fact l.Prime] {k : ℝ} (hk : 0 < k) : A O K ≤ R O K l k := fun f hf =>
   mem_R.2 <| squeeze_zero (fun n => mul_nonneg (norm_nonneg _) (pow_nonneg (rad_nonneg l k) n))
@@ -629,13 +613,8 @@ theorem Ediv_mem_Fil (e : ℕ) [NeZero e] {j i : ℕ} (h : j ≤ i) :
   FilPre_le_Fil l e j (Ideal.subset_span ⟨i, h, rfl⟩)
 
 omit [Fact l.Prime] [NormedAlgebra ℚ_[l] K] in
-theorem Fil_anti (e : ℕ) {i j : ℕ} (h : i ≤ j) : Fil O K l e j ≤ Fil O K l e i :=
-  iInf_mono fun _ => sup_le_sup_right
-    (Ideal.span_mono (by rintro x ⟨k, hk, hx⟩; exact ⟨k, h.trans hk, hx⟩)) _
 
 omit [Fact l.Prime] [NormedAlgebra ℚ_[l] K] in
-theorem Fil_zero (e : ℕ) : Fil O K l e 0 = ⊤ :=
-  (Ideal.eq_top_iff_one _).2 (FilPre_le_Fil l e 0 (Ideal.subset_span ⟨0, le_rfl, by simp [Ediv]⟩))
 
 end Padic
 

@@ -9,36 +9,6 @@ open MvPolynomial NumberField
 
 noncomputable section
 
-def HeightLowerBound.Statement : Prop :=
-  ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (n : ι → ℕ) (P : ArithVariety n) (A : HermLine n)
-    (J : Type) [Fintype J] (s : J → IntegralSection P A.deg) (C : ℝ),
-    (∀ j, (s j).SupNormLE A C) →
-    (∀ x ∈ P.points (AlgebraicClosure ℚ), ∃ j, (s j).NonzeroAt x) →
-    ∀ x ∈ P.points (AlgebraicClosure ℚ), -C ≤ height A x
-
-def HeightMetricChange.Statement : Prop :=
-  ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (n : ι → ℕ) (P : ArithVariety n) (A A' : HermLine n),
-    A.deg = A'.deg → ∀ B : ℝ,
-    (∀ z ∈ P.points ℂ, |Real.log (A.metric z) - Real.log (A'.metric z)| ≤ B) →
-    ∀ x ∈ P.points (AlgebraicClosure ℚ), |height A x - height A' x| ≤ B
-
-def HeightLocalAgreement.Statement : Prop :=
-  ∀ (ι ι' : Type) [Fintype ι] [DecidableEq ι] [Fintype ι'] [DecidableEq ι'] (n : ι → ℕ)
-    (n' : ι' → ℕ) (A : HermLine n) (A' : HermLine n') (x : Cone n (AlgebraicClosure ℚ))
-    (x' : Cone n' (AlgebraicClosure ℚ)), BlockNonzero x → BlockNonzero x' →
-    ∀ (L : IntermediateField ℚ (AlgebraicClosure ℚ)) [NumberField L] (hx : ∀ k i, x k i ∈ L)
-      (hx' : ∀ k i, x' k i ∈ L),
-      (∀ v : FinitePlace L, finiteTerm A v (coordIn L x hx) = finiteTerm A' v (coordIn L x' hx')) →
-      (∀ σ : L →+* ℂ, A.metric (fun k i ↦ σ (coordIn L x hx k i)) =
-        A'.metric (fun k i ↦ σ (coordIn L x' hx' k i))) →
-      height A x = height A' x'
-
-def HeightPullback.Statement : Prop :=
-  ∀ (ι ι' : Type) [Fintype ι] [DecidableEq ι] [Fintype ι'] [DecidableEq ι'] (n' : ι' → ℕ)
-    (j : ι → ι') (hj : Function.Injective j) (A : HermLine (n' ∘ j))
-    (x : Cone n' (AlgebraicClosure ℚ)), BlockNonzero x →
-    height (A.pullback j hj) x = height A (HermLine.project j x)
-
 def HeightComparison.Statement : Prop :=
   ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (n : ι → ℕ) (P : ArithVariety n) (A : HermLine n),
     ∃ (k : ℕ) (C : ℝ), ∀ x ∈ P.points (AlgebraicClosure ℚ),
@@ -52,12 +22,6 @@ def DenseBoundedHeight.Statement : Prop :=
 def SlopeMaxExtension.Statement : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (E' E E'' : HermitianBundle.{0} K),
     HermitianExtension E' E E'' → E.slopeMax ≤ max E'.slopeMax E''.slopeMax
-
-def FlagDegreeBound.Statement : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (E : HermitianBundle.{0} K) (r : ℕ)
-    (F : Fin (r + 1) → Submodule (𝓞 K) E.carrier), Monotone F → (∀ i, E.Saturated (F i)) →
-    (∀ i, E.rank (F i) = i) →
-    ∀ i, -((E.normDegree (F i) : ℝ) : EReal) ≥ -(((i : ℕ) : EReal) * E.slopeMax)
 
 section Inhabitants
 

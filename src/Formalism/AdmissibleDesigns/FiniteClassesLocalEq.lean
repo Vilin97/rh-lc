@@ -61,9 +61,6 @@ def latT (heO : ∀ a : O, algebraMap Ow LL (eO a) = e (algebraMap O (FractionRi
     show tr e (j (eO.symm c • a)) = c • tr e (j a)
     rw [smul_Ow heO, map_smul]
 
-theorem mem_latT (heO : ∀ a : O, algebraMap Ow LL (eO a) = e (algebraMap O (FractionRing O) a))
-    (v : TrV e V) : v ∈ latT e eO j heO ↔ ∃ m, tr e (j m) = v := Iff.rfl
-
 def MO (_eO : O ≃+* Ow) (M : Type) : Type := M
 
 instance : AddCommGroup (MO eO M) := ‹AddCommGroup M›

@@ -52,8 +52,6 @@ theorem detChar_rat {V : HSp D} {χ : (AE D)ˣ →* A} (hF : ∀ a, χ (idF D a)
   obtain ⟨x, hx⟩ := (GlobalTheory.Member.isDetRoot_laws D V).2.2.1 γ hγ
   rw [detChar_eq hF hx, hE]
 
-@[simp] theorem detChar_one (V : HSp D) (g : GA D V) : detChar V (1 : (AE D)ˣ →* A) g = 1 := rfl
-
 theorem muVal_detChar (V : HSp D) {χ : (AE D)ˣ →* Circle} (hF : ∀ a, χ (idF D a) = 1) :
     Formalism.L2.Pj.MuVal V χ fun g => ((detChar V χ g : Circle) : ℂ) :=
   ⟨(GlobalTheory.Member.isDetRoot_laws D V).1, fun _ _ hz => by beta_reduce; rw [detChar_eq hF hz]⟩
@@ -191,11 +189,6 @@ def UnivTwist.spec (u : UnivTwist D C) (Q : Finset (Pl D.host.E)) (χ : Multipli
   res PP := if h : PP ∈ Q then
       χ.comp ((AddMonoidHom.toMultiplicative (AddMonoidHom.single (fun _ : ↥Q => C) ⟨PP, h⟩)).comp (u.kap PP))
     else 1
-
-theorem UnivTwist.good_empty (u : UnivTwist D C) : u.Good ∅ := ⟨splitSet_empty, fun _ h => absurd h (Finset.notMem_empty _)⟩
-
-theorem UnivTwist.Good.mono {u : UnivTwist D C} {Q Q' : Finset (Pl D.host.E)} (h : u.Good Q) (hQ : Q' ⊆ Q) : u.Good Q' :=
-  ⟨h.1.mono hQ, fun PP hPP => h.2 PP (hQ hPP)⟩
 
 theorem UnivTwist.Good.delQ_real {u : UnivTwist D C} {Q : Finset (Pl D.host.E)} (h : u.Good Q) (a : (AF D.host.F)ˣ) :
     u.delQ Q (idF D a) = 1 := by

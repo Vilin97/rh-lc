@@ -1,6 +1,9 @@
 import Mathlib
 import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseTransport
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChange
+import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangeDefs
+import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangeModules
+import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangePlaces
+import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangeMackey
 import GroundTheory.ProfiniteCohomology.PoincarePairs.IsDiscreteRepResHomCoindRes
 set_option maxSynthPendingDepth 1
 
@@ -24,9 +27,6 @@ def zmodRepResIso (n : ℕ) : Rep.res θ.toMulEquiv.toMonoidHom (zmodRep.{u} G' 
   inv := Rep.ofHom ⟨LinearMap.id, fun _ => rfl⟩
 
 omit [IsTopologicalGroup G] [IsTopologicalGroup G'] in
-theorem zmodRepResIso_hom_apply (n : ℕ) (a : ULift.{u} (ZMod n)) :
-    (zmodRepResIso θ n).hom.hom (a : zmodRep.{u} G' n) = (a : zmodRep.{u} G n) :=
-  rfl
 
 omit [IsTopologicalGroup G] [IsTopologicalGroup G'] in
 

@@ -117,11 +117,6 @@ def invariantsToQuotient (a : A.ρ.invariants) : (A.quotientToInvariants S).ρ.i
     induction q using QuotientGroup.induction_on with
     | H g => exact Subtype.ext (a.2 g)⟩
 
-@[simp]
-theorem coe_coe_invariantsToQuotient (a : A.ρ.invariants) :
-    (invariantsToQuotient S a).1.1 = (a : A) :=
-  rfl
-
 end Inflation
 
 end GroundTheory.ProfCoh

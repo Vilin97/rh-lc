@@ -53,9 +53,6 @@ def thLAut (w : Pl E) (hw : ¬ IsSplitAt w) (n : ℕ) : MulAut (GLw n w) where
   right_inv := thL_invol w hw n
   map_mul' := (thL n w).map_mul
 
-@[simp] theorem thLAut_apply (w : Pl E) (hw : ¬ IsSplitAt w) (n : ℕ) (g : GLw n w) :
-    thLAut w hw n g = thL n w g := rfl
-
 theorem thLAut_sq (w : Pl E) (hw : ¬ IsSplitAt w) (n : ℕ) : thLAut w hw n ^ 2 = 1 := by
   refine MulEquiv.ext fun g => ?_
   rw [pow_two, MulAut.mul_apply, MulAut.one_apply]

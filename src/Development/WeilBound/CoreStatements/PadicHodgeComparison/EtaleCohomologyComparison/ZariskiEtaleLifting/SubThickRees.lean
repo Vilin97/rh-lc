@@ -152,8 +152,6 @@ structure RootExt (p : ℕ) (D : Type) [CommRing D] {d : ℕ} (t : Fin d → D) 
 
 attribute [instance] RootExt.ring RootExt.alg
 
-def Raises {Λ : Type} [CommRing Λ] (I : ℕ → Ideal Λ) (ξ : Λ) : Prop := ∀ r, ∀ x ∈ I r, ξ * x ∈ I (r + 1)
-
 def Slow (ρ : ℕ → ℕ) : Prop := ρ 0 = 0 ∧ ∀ r, ρ (r + 1) ≤ ρ r + 1
 
 section Thick
@@ -257,8 +255,6 @@ def subThick : Thick (V.fn.cr b ht κ) ⥤ Thick (F.cr b ht κ) where
   map_comp _ _ := rfl
 
 variable {Λ : Type} [CommRing Λ] (c : Λ →+* b.R)
-
-theorem subThick_OM : subThick V b ht κ ⋙ OM _ c = OM _ c := rfl
 
 theorem subThick_rees (ρ : ℕ → ℕ) (hρ : Slow ρ) (μ : Λ) (hμ : c μ ∈ b.I) :
     subThick V b ht κ ⋙ (pdFlt _ c ρ hρ μ hμ).rees = (pdFlt _ c ρ hρ μ hμ).rees := rfl

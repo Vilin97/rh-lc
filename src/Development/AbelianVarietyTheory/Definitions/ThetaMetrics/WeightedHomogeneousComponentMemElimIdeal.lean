@@ -285,10 +285,6 @@ theorem isBlockHomogeneous_iff [Fintype σ] {f : MvPolynomial (β × σ) K} {a :
   simp only [IsBlockHomogeneous, IsWeightedHomogeneous, mem_support_iff, funext_iff,
     weight_blockWeight]
 
-theorem IsBlockHomogeneous.mul {f g : MvPolynomial (β × σ) K} {a b : β → ℕ}
-    (hf : IsBlockHomogeneous f a) (hg : IsBlockHomogeneous g b) :
-    IsBlockHomogeneous (f * g) (a + b) := IsWeightedHomogeneous.mul hf hg
-
 theorem IsBlockHomogeneous.unique {f : MvPolynomial (β × σ) K} {a b : β → ℕ} (h : f ≠ 0)
     (ha : IsBlockHomogeneous f a) (hb : IsBlockHomogeneous f b) : a = b :=
   IsWeightedHomogeneous.inj_right h ha hb

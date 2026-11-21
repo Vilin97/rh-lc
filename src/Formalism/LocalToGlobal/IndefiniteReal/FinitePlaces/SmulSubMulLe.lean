@@ -50,11 +50,6 @@ theorem IsInv.out_mk {k : ℕ} {H : AddSubgroup W} {g : W → ℂ} (hg : IsInv k
     g (((QuotientAddGroup.mk x : Qt k H).out : H) : W) = g x :=
   hg.mk_eq (QuotientAddGroup.out_eq' _)
 
-theorem IsInv.mul {k : ℕ} {H : AddSubgroup W} {g : W → ℂ} (hg : IsInv k H g) (j : ℕ) : IsInv (k * j) H g := by
-  intro t ht u hu
-  rw [← smul_smul]
-  exact hg t ht _ (H.nsmul_mem hu j)
-
 theorem avg_eq_sum (k : ℕ) (H : AddSubgroup W) [Fintype (Qt k H)] (g : W → ℂ) :
     avg k H g = (Fintype.card (Qt k H) : ℂ)⁻¹ * ∑ q : Qt k H, g ((q.out : H) : W) := by
   rw [avg, finsum_eq_sum_of_fintype, Nat.card_eq_fintype_card]
@@ -129,13 +124,6 @@ theorem integ_congr {g g' : W → ℂ} (h : ∀ t ∈ H, g t = g' t) : integ H g
     rw [integ, dif_neg hg, integ, dif_neg hg']
 
 omit hfin in
-theorem IsInv.add {k k' : ℕ} {g g' : W → ℂ} (hg : IsInv k H g) (hg' : IsInv k' H g') :
-    IsInv (k * k') H (fun t => g t + g' t) := by
-  have h1 := hg.mul k'
-  have h2 := hg'.mul k
-  rw [Nat.mul_comm] at h2
-  intro t ht u hu
-  simp only [h1 t ht u hu, h2 t ht u hu]
 
 omit hfin in
 theorem IsInv.cmul {k : ℕ} {g : W → ℂ} (hg : IsInv k H g) (c : ℂ) : IsInv k H (fun t => c * g t) := by

@@ -282,14 +282,7 @@ theorem laws : Laws H F h := by
 
 set_option maxHeartbeats 1000000 in
 
-example : (LatL H F h (laws H F h)).N (H.W K s LL h).one = (H.W K s LL h).N (H.W K s LL h).one :=
-  latL_N H F h _ (laws H F h).one
-
 set_option maxHeartbeats 1000000 in
-
-example (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) :
-    (EtL H F h (laws H F h)).φD T = (H.W K s LL h).φD T ∧ (ClL H F h (laws H F h)).cl T = (H.W K s LL h).cl T :=
-  ⟨rfl, rfl⟩
 
 end Holds
 

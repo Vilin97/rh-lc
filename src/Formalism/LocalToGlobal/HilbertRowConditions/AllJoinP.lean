@@ -30,8 +30,6 @@ section Rec
 variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : MainNotions.G.Inst D L} {Gl : MainNotions.G.LatInst D} {K : MainNotions.G.Consts} {Y : DivX D}
   {cX : ExtraC} {ex : Extra D L hT Gi Gl K Y cX}
 
-def AllJoin (_R : Formalism.L2.RecT ex) (A : AllRows D) : Prop := LabelCountGoodInjective A ∧ AllJoinA A
-
 end Rec
 
 end Formalism.L2.GlobalTheoryTheory.AllJoin

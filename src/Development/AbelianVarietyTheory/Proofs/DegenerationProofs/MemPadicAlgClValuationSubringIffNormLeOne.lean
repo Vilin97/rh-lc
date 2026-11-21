@@ -5,9 +5,6 @@ import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuat
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry
 open scoped CategoryTheory.Obj
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-local notation "OO" p:max => (Valuation.valuationSubring (Valued.v : Valuation (PadicAlgCl p) NNReal))
-local notation "cPt" p:max => (IsLocalRing.closedPoint (OO p) : Sp (OO p))
-local notation "gPt" p:max => spMap (ValuationSubring.subtype (OO p))
 
 namespace GlobalTheory
 
@@ -25,11 +22,6 @@ noncomputable def integralClosureToPadicAlgClIntegers
   (K.val.toRingHom.comp (integralClosure ℤ_[p] K).val.toRingHom).codRestrict (OO p) fun x =>
     (mem_padicAlgCl_valuationSubring_iff_norm_le_one _).mpr
       ((mem_integralClosure_padicInt_iff K _).mp x.2)
-
-theorem coe_integralClosureToPadicAlgClIntegers (K : IntermediateField ℚ_[p] (PadicAlgCl p))
-    (x : integralClosure ℤ_[p] K) :
-    ((integralClosureToPadicAlgClIntegers K x : OO p) : PadicAlgCl p) =
-      ((x : K) : PadicAlgCl p) := rfl
 
 theorem isLocalHom_integralClosureToPadicAlgClIntegers
     (K : IntermediateField ℚ_[p] (PadicAlgCl p)) :

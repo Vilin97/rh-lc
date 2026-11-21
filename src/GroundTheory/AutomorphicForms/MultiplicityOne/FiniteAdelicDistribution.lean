@@ -1,5 +1,10 @@
 import Mathlib
-import GroundTheory.AutomorphicForms.MultiplicityOne.FiniteAdelicGroups
+import GroundTheory.AutomorphicForms.WhittakerLocal
+import GroundTheory.AutomorphicForms.AdelicGLn
+import GroundTheory.GlobalFields.LocalFieldAtPlace
+import GroundTheory.GlobalFields.TateThesis.SchwartzBruhatDual
+import GroundTheory.GlobalFields.TateThesis.AdeleIdealMeasure
+import GroundTheory.GlobalFields.TateThesis.AdelicCharDual
 
 open IsDedekindDomain IsDedekindDomain.HeightOneSpectrum NumberField Topology Filter Set
 
@@ -17,10 +22,6 @@ def pullL {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y] (e : X ≃ₜ 
     ⟨φ.2.1.comp_continuous e.continuous, φ.2.2.comp_homeomorph e⟩⟩
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
-
-@[simp] theorem coe_pullL {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y] (e : X ≃ₜ Y)
-    (φ : locallyConstantCompactSupport Y ℂ ℂ) :
-    ((pullL e φ : locallyConstantCompactSupport X ℂ ℂ) : X → ℂ) = (φ : Y → ℂ) ∘ e := rfl
 
 variable (K : Type*) [Field K] [NumberField K] (n : ℕ)
 

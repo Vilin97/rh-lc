@@ -370,15 +370,6 @@ open Formalism.MainNotions.TaylorLogMetric hiding admitted AdmittedStatements Al
 theorem relative_determinant_norm_one (D : Car) : DetIdealsKernelNormOne D :=
   DN.determinant_norm_one_of_unit_disc D (DN.unitDisc D)
 
-theorem character_unit_on_determinant (D : Car) (χ : IdE D → ℂ) (hχ : IsChi D χ) : ChiUnitDet D χ :=
-  chi_unit_of_det_norm_one D (relative_determinant_norm_one D) χ hχ
-
-theorem LinkThIndep_of_IopIso
-    (hI : ∀ D : Car, ∀ cc : Ideal (𝓞 D.host.K), IsCurveIdeal D cc → ∀ δ : ℂ, IsDiscriminantTwelfthRootOfIdealLattice D cc δ →
-      IopIso D (tor0 D cc δ)) :
-    LinkThIndep :=
-  theta_norm_indep_of_det_norm_one hI relative_determinant_norm_one
-
 end Formalism.L2.Ker.Cd.IntegralLatticeDensity
 
 end

@@ -42,22 +42,6 @@ theorem ellFam_nontrivial : (fun _ ↦ Complex.I) ∈ ellFam.V ∧
   · funext i
     simp [ellFam]
 
-theorem ellFam_free (l : ℤ × ℤ) (z : Fin 1 → ℂ) (hz : z ∈ ellFam.V) (h : ellFam.τ l z = 0) : l = 0 := by
-  have hz' : 0 < (z 0).im := hz
-  have h0 : ((l.1 : ℂ) * z 0 + l.2) = 0 := by
-    have := congrFun h 0
-    simpa [ellFam] using this
-  have him : (l.1 : ℝ) * (z 0).im = 0 := by
-    have := congrArg Complex.im h0
-    simpa using this
-  have h1 : l.1 = 0 := by
-    have : (l.1 : ℝ) = 0 := (mul_eq_zero.1 him).resolve_right hz'.ne'
-    exact_mod_cast this
-  have h2 : l.2 = 0 := by
-    rw [h1] at h0
-    simpa using h0
-  exact Prod.ext h1 h2
-
 variable {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup Λ]
 
 def Fam.shift (F : Fam I g Λ) (l : Λ) (p : Tot I g) : Tot I g := (p.1, p.2 + F.τ l p.1)
@@ -266,8 +250,6 @@ theorem hom_ext {T T' : K.Obj} {f f' : T ⟶ T'} (h : ∀ c, f.φ c = f'.φ c) (
 
 @[simp] theorem comp_deg {T T' T'' : K.Obj} (f : T ⟶ T') (f' : T' ⟶ T'') : (f ≫ f').deg = f.deg + f'.deg := rfl
 
-@[simp] theorem id_deg (T : K.Obj) : Hom.deg (𝟙 T) = 0 := rfl
-
 variable (K) in
 
 @[reducible] def Oc : K.Obj ⥤ CommAlgCat.{0} (Hol F.V) where
@@ -325,8 +307,6 @@ theorem Fam.allCharts_rich (F : Fam I g Λ) : F.allCharts.Rich := by
 def Fam.transl (F : Fam I g Λ) (l : Λ) : F.allCharts.triv F.totChart ⟶ F.allCharts.triv F.totChart :=
   Charts.ptHom (l := l) (F.allCharts.triv F.totChart) (fun _ h ↦ h)
 
-theorem Fam.transl_deg (F : Fam I g Λ) (l : Λ) : (F.transl l).deg = l := rfl
-
 def Charts.dualAt {F : Fam I g Λ} (K : Charts F) (k : K.K) (p : Tot I g) (hp : p ∈ K.W k) : K.Obj where
   k := k
   C := DualNumber ℂ
@@ -379,13 +359,5 @@ def Charts.tangentHom {F : Fam I g Λ} (K : Charts F) (k : K.K) (a : Fin g) (p :
       rw [show (K.dualAt k p hp).ρ.comp (Charts.sh (K.le_refl k)) = (K.dualAt k p hp).ρ from
         RingHom.ext fun f ↦ congrArg (K.dualAt k p hp).ρ (Charts.sh_refl _ f)]
       exact Relation.ReflTransGen.single (step_tangentAt a p hp))
-
-example : ∃ (T T' : ellFam.allCharts.Obj) (f : T ⟶ T'), T'.J ≠ ⊥ ∧ f.deg = (0, 1) :=
-  ⟨_, _, ellFam.transl (0, 1) ≫
-      ellFam.allCharts.tangentHom ellFam.totChart 0 (fun _ ↦ Complex.I, 0) ellFam_nontrivial.1,
-    Charts.dualAt_J_ne_bot _ _ _ _, add_zero _⟩
-
-example (F : Fam I g Λ) (per : Λ →+ Hol F.V) (l : Λ) :
-    (F.allCharts.perZ per).1 _ _ (F.transl l) = F.allCharts.cst F.totChart (per l) := rfl
 
 end GlobalTheory.AnPer

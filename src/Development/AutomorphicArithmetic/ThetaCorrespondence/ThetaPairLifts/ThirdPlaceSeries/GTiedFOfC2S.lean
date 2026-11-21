@@ -1,4 +1,4 @@
-import Formalism.LocalToGlobal.ClassSLinks
+import Formalism.LocalToGlobal.ClassS
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CohomologicalCsdTempered
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.LinkedFamiliesFixedValues
 

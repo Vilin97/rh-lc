@@ -56,9 +56,6 @@ noncomputable def diagEquiv {c : σ → K} (hc : ∀ t, c t ≠ 0) :
       simp only [AlgHom.comp_apply, diag_X, map_mul, algHom_C, algebraMap_eq, AlgHom.id_apply]
       rw [← mul_assoc, ← C_mul, mul_inv_cancel₀ (hc t), C_1, one_mul])
 
-@[simp] theorem diagEquiv_apply {c : σ → K} (hc : ∀ t, c t ≠ 0) (g : MvPolynomial σ K) :
-    diagEquiv hc g = diag c g := rfl
-
 theorem eq_mul_C_of_dvd {g h : MvPolynomial σ K} (hd : g ∣ h)
     (hdeg : h.totalDegree = g.totalDegree) (hh : h ≠ 0) : ∃ a : K, h = C a * g := by
   obtain ⟨q, rfl⟩ := hd
@@ -173,9 +170,6 @@ noncomputable def translEquiv (a : Fin (N + 1) → K) :
   AlgEquiv.ofAlgHom (transl a) (transl (-a))
     (algHom_ext fun t => by by_cases h : t.1 = 0 <;> simp [transl_X, h])
     (algHom_ext fun t => by by_cases h : t.1 = 0 <;> simp [transl_X, h])
-
-@[simp] theorem translEquiv_apply (a : Fin (N + 1) → K)
-    (g : MvPolynomial (Fin (D + 1) × Fin (N + 1)) K) : translEquiv a g = transl a g := rfl
 
 theorem eval_transl (z : Fin (D + 1) × Fin (N + 1) → K)
     (f : MvPolynomial (Fin (D + 1) × Fin (N + 1)) K) :

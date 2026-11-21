@@ -118,8 +118,6 @@ end Abstract
 
 variable (l : ℕ) [Fact l.Prime]
 
-local notation "Acris" => ACris.ACris ℂ_[l] l
-
 def cD : Acris →+* Per6.BdR l := (algebraMap (Per6.BdRp l) (Per6.BdR l)).comp (ACris.iota ℂ_[l] l)
 
 theorem cD_injective : Function.Injective (cD l) :=
@@ -268,8 +266,6 @@ variable {l} in
 def galT (g : GQ l) : OCb l →+* OCb l :=
   (tiltInv l).comp ((preTiltMap l (galCp (Per6.toBot g) : ℂ_[l] →+* ℂ_[l])
     (AInf.norm_galCp_toRingHom (Per6.toBot g))).comp (Per6.tiltMap l))
-
-def ζO (n : ℕ) : OC l := (Per6.intEquiv l).symm (rootSeqInt l n)
 
 def εO : OCb l := tiltInv l (epsilon l)
 

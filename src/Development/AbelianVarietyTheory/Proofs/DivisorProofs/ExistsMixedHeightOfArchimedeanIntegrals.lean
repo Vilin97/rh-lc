@@ -20,6 +20,3 @@ theorem exists_isMix_of_arch : ArchInteg → ArchRecip →
   exact key m k Y q h
 
 end GlobalTheory.MixHt
-
-example : ArchInteg → ArchRecip → (∀ (k : Type) [CommRing k] (Y : Scheme.{0}) (q : Y ⟶ Sp k), IsAmb q → ∀ m : ℕ, ∃ T, IsMix q m T) :=
-  GlobalTheory.MixHt.exists_isMix_of_arch

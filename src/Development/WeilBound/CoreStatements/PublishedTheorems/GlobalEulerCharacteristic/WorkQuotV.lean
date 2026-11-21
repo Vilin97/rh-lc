@@ -4,8 +4,6 @@ open NumberField IsDedekindDomain CategoryTheory GroundTheory.ProfCoh GroundTheo
 
 namespace PositivityTheory.Lit1.GEN.QuotientActionGlobalEulerCharacteristic
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 open W_killed_c
 
 def addAct {G : Type} [Group G] (M : Rep.{0} (ULift.{0} ℤ) G) : G →* AddMonoid.End M where

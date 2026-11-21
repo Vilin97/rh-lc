@@ -22,10 +22,6 @@ def invT : GL n A →* GL n A where
   map_one' := Units.ext (by simp)
   map_mul' a b := Units.ext (by simp [Matrix.transpose_mul])
 
-theorem invT_val (g : GL n A) : ((invT g : GL n A) : Matrix n n A) = ((g⁻¹ : GL n A) : Matrix n n A)ᵀ := rfl
-
-theorem invT_inv_val (g : GL n A) : (((invT g)⁻¹ : GL n A) : Matrix n n A) = (g : Matrix n n A)ᵀ := rfl
-
 theorem invT_invT (g : GL n A) : invT (invT g) = g := Units.ext rfl
 
 theorem bc_invT {B : Type} [CommRing B] (φ : A →+* B) (g : GL n A) :

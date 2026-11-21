@@ -13,13 +13,6 @@ abbrev IdeleGroup : Type _ := (𝔸[K])ˣ
 
 namespace IdeleGroup
 
-theorem isEmbedding_val_inv :
-    IsEmbedding (fun x : IdeleGroup K ↦ ((x : 𝔸[K]), ((x⁻¹ : IdeleGroup K) : 𝔸[K]))) :=
-  ((Homeomorph.refl (𝔸[K])).prodCongr MulOpposite.opHomeomorph.symm).isEmbedding.comp
-    (Units.isEmbedding_embedProduct (M := 𝔸[K]))
-
-example : IsTopologicalGroup (IdeleGroup K) := inferInstance
-
 def prodEquiv :
     IdeleGroup K ≃ₜ* (InfiniteAdeleRing K)ˣ × (FiniteAdeleRing (𝓞 K) K)ˣ where
   toMulEquiv := MulEquiv.prodUnits
@@ -27,14 +20,6 @@ def prodEquiv :
     (β := FiniteAdeleRing (𝓞 K) K)).continuous_toFun
   continuous_invFun := (Homeomorph.prodUnits (α := InfiniteAdeleRing K)
     (β := FiniteAdeleRing (𝓞 K) K)).continuous_invFun
-
-@[simp]
-theorem prodEquiv_apply_fst (x : IdeleGroup K) :
-    ((prodEquiv K x).1 : InfiniteAdeleRing K) = (x : 𝔸[K]).1 := rfl
-
-@[simp]
-theorem prodEquiv_apply_snd (x : IdeleGroup K) :
-    ((prodEquiv K x).2 : FiniteAdeleRing (𝓞 K) K) = (x : 𝔸[K]).2 := rfl
 
 def toInfinite : IdeleGroup K →* (InfiniteAdeleRing K)ˣ :=
   (MonoidHom.fst _ _).comp (prodEquiv K).toMulEquiv.toMonoidHom
@@ -65,10 +50,6 @@ end IdeleGroup
 abbrev IdeleClassGroup : Type _ := IdeleGroup K ⧸ (IdeleGroup.diagonal K).range
 
 namespace IdeleClassGroup
-
-example : CommGroup (IdeleClassGroup K) := inferInstance
-
-example : IsTopologicalGroup (IdeleClassGroup K) := inferInstance
 
 def mk : IdeleGroup K →* IdeleClassGroup K := QuotientGroup.mk' _
 

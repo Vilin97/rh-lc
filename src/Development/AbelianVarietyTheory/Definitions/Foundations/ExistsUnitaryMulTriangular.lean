@@ -234,21 +234,7 @@ def IsStandard {la : Fin N → ℕ} (T : Tableau la) : Prop :=
     ∀ (c c' : Fin (width la)), c ≤ c' → ∀ (p : ℕ) (h : p < colLen la c) (h' : p < colLen la c'),
       T c ⟨p, h⟩ ≤ T c' ⟨p, h'⟩
 
-def StdTableau (la : Fin N → ℕ) : Type := {T : Tableau la // IsStandard T}
-
-instance (la : Fin N → ℕ) : Finite (StdTableau la) := by unfold StdTableau; infer_instance
-
-instance (la : Fin N → ℕ) : Fintype (StdTableau la) := Fintype.ofFinite _
-
 def canon (la : Fin N → ℕ) : Tableau la := fun c => Fin.castLE (colLen_le la c)
-
-theorem isStandard_canon (la : Fin N → ℕ) : IsStandard (canon la) :=
-  ⟨fun _ => Fin.strictMono_castLE _, fun _ _ _ _ _ _ => le_rfl⟩
-
-instance (la : Fin N → ℕ) : Inhabited (StdTableau la) := ⟨⟨canon la, isStandard_canon la⟩⟩
-
-def bideterminant (la : Fin N → ℕ) (R : Type) [CommRing R] (T : Tableau la) : Pol N R :=
-  Formalism.GradedWeylDivisibility.bideterminant R (fun c : Fin (width la) => colLen la c) (fun c => colLen_le la c) T
 
 def extremal (la : Fin N → ℕ) (R : Type) [CommRing R] : Pol N R := hw R le_rfl la
 
@@ -291,9 +277,6 @@ def rho (la : Fin N → ℕ) (R : Type) [CommRing R] : Representation R (Matrix 
     change rowAct R (g * h)ᵀ f.1 = rowAct R gᵀ (rowAct R hᵀ f.1)
     rw [Matrix.transpose_mul, ← Formalism.GradedWeylDivisibility.rowActMul R N N]
     rfl
-
-def rhoGL (la : Fin N → ℕ) (R : Type) [CommRing R] : Representation R (GL (Fin N) R) (nabla la R) :=
-  (rho la R).comp (Units.coeHom _)
 
 def baseChange (la : Fin N → ℕ) {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) :
     nabla la R →ₛₗ[φ] nabla la S where
@@ -383,8 +366,6 @@ def haarU (N : ℕ) : Measure (UN N) := haarProb (UN N)
 instance : (haarU N).IsHaarMeasure := haarProb_isHaarMeasure _
 
 instance : IsProbabilityMeasure (haarU N) := haarProb_isProbabilityMeasure _
-
-instance : (haarU N).IsMulRightInvariant := haarProb_isMulRightInvariant
 
 def form (la : Fin N → ℕ) (f f' : Pol N ℂ) : ℂ :=
   (dim la : ℂ) * ∫ g : UN N, evalAt g.1 f * conj (evalAt g.1 f') ∂haarU N
@@ -555,8 +536,6 @@ theorem norm_toSpace_sq (f : nabla la ℂ) : ‖toSpace la f‖ ^ 2 = normSq la 
   rw [← form_self, ← inner_toSpace, inner_self_eq_norm_sq_to_K]
   simp
 
-theorem finrank_space : Module.finrank ℂ (Space la) = dim la := rfl
-
 theorem rhoSpace_toSpace (u : UN N) (f : nabla la ℂ) : rhoSpace la u (toSpace la f) = toSpace la (rhoU la u f) := rfl
 
 theorem norm_rhoSpace (u : UN N) (v : Space la) : ‖rhoSpace la u v‖ = ‖v‖ := by
@@ -609,28 +588,9 @@ end Space
 def onBasis (la : Fin N → ℕ) : OrthonormalBasis (Idx la) ℂ (Space la) :=
   (stdOrthonormalBasis ℂ (Space la)).reindex (Fintype.equivFinOfCardEq (dim_eq_card la).symm).symm
 
-def IsOrthoFrame (H X : Matrix (Fin N) (Fin N) ℂ) : Prop := Xᵀ * H * X.map conj = 1
-
-def covFrame (la : Fin N → ℕ) (X : Matrix (Fin N) (Fin N) ℂ) : Matrix (Idx la) (Idx la) ℂ :=
-  (basis la ℂ).toMatrix fun j => rho la ℂ X ((toSpace la).symm (onBasis la j))
-
-def funFrame (la : Fin N → ℕ) (X : Matrix (Fin N) (Fin N) ℂ) : Matrix (Idx la) (Idx la) ℂ := covFrame la (X⁻¹)ᵀ
-
 section Frames
 
 variable {K : Type} [Field K] {la : Fin N → ℕ}
-
-def covForm (la : Fin N → ℕ) (σ : K →+* ℂ) (X : Matrix (Fin N) (Fin N) ℂ) (f f' : nabla la K) : ℂ :=
-  form la (rho la ℂ X⁻¹ (baseChange la σ f)).1 (rho la ℂ X⁻¹ (baseChange la σ f')).1
-
-def covNormSq (la : Fin N → ℕ) (σ : K →+* ℂ) (X : Matrix (Fin N) (Fin N) ℂ) (f : nabla la K) : ℝ :=
-  normSq la (rho la ℂ X⁻¹ (baseChange la σ f)).1
-
-def funForm (la : Fin N → ℕ) (σ : K →+* ℂ) (X : Matrix (Fin N) (Fin N) ℂ) (f f' : nabla la K) : ℂ :=
-  form la (rowAct ℂ X (map σ f.1)) (rowAct ℂ X (map σ f'.1))
-
-def funNormSq (la : Fin N → ℕ) (σ : K →+* ℂ) (X : Matrix (Fin N) (Fin N) ℂ) (f : nabla la K) : ℝ :=
-  normSq la (rowAct ℂ X (map σ f.1))
 
 variable [NumberField K]
 
@@ -645,15 +605,6 @@ def stdLat (la : Fin N → ℕ) (K : Type) [Field K] [NumberField K] : Submodule
   ((nabla la (𝓞 K)).map (toK K _)).comap ((nabla la K).subtype.restrictScalars (𝓞 K))
 
 variable {K : Type} [Field K] [NumberField K] {la : Fin N → ℕ}
-
-def covLat (la : Fin N → ℕ) (L : Submodule (𝓞 K) (Fin N → K)) : Submodule (𝓞 K) (nabla la K) :=
-  ⨅ (w : HeightOneSpectrum (𝓞 K)) (B : GL (Fin N) K) (_ : IsBasisAt w L B),
-    (localization₂ w.asIdeal (stdLat la K)).comap ((rhoGL la K B⁻¹).restrictScalars (𝓞 K))
-
-def funLat (la : Fin N → ℕ) (L : Submodule (𝓞 K) (Fin N → K)) : Submodule (𝓞 K) (nabla la K) :=
-  ⨅ (w : HeightOneSpectrum (𝓞 K)) (B : GL (Fin N) K) (_ : IsBasisAt w L B),
-    (localization₂ w.asIdeal (stdLat la K)).comap
-      ((rho la K (B : Matrix (Fin N) (Fin N) K)ᵀ).restrictScalars (𝓞 K))
 
 theorem baseChange_mem_stdLat (f : nabla la (𝓞 K)) : baseChange la (algebraMap (𝓞 K) K) f ∈ stdLat la K :=
   ⟨f.1, f.2, rfl⟩
@@ -741,73 +692,10 @@ theorem mem_colLat_iff (B : GL (Fin N) K) (x : Fin N → K) :
   funext a
   simp [Matrix.mulVec, dotProduct, Algebra.smul_def, mul_comm]
 
-theorem isLattice_colLat (B : GL (Fin N) K) : Submodule.IsLattice K (colLat B) := by
-  refine ⟨Submodule.fg_span (Set.finite_range _), ?_⟩
-  unfold colLat
-  rw [Submodule.span_span_of_tower]
-  have h : LinearIndependent K (B : Matrix (Fin N) (Fin N) K).col :=
-    Matrix.linearIndependent_cols_iff_isUnit.mpr B.isUnit
-  exact h.span_eq_top_of_card_eq_finrank' (by simp)
-
 variable [StarRing K]
-
-def baseHLat (X : InfinitePlace K → Matrix (Fin N) (Fin N) ℂ) (L : Submodule (𝓞 K) (Fin N → K)) : Formalism.BasicNotions.HLat K where
-  V := Fin N → K
-  ι := Fin N
-  b := Pi.basisFun K (Fin N)
-  X := X
-  L := L
-
-def covHLat (la : Fin N → ℕ) (X : InfinitePlace K → Matrix (Fin N) (Fin N) ℂ) (L : Submodule (𝓞 K) (Fin N → K)) :
-    Formalism.BasicNotions.HLat K where
-  V := nabla la K
-  ι := Idx la
-  b := basis la K
-  X := fun v => covFrame la (X v)
-  L := covLat la L
-
-def funHLat (la : Fin N → ℕ) (X : InfinitePlace K → Matrix (Fin N) (Fin N) ℂ) (L : Submodule (𝓞 K) (Fin N → K)) :
-    Formalism.BasicNotions.HLat K where
-  V := nabla la K
-  ι := Idx la
-  b := basis la K
-  X := fun v => funFrame la (X v)
-  L := funLat la L
 
 variable {X : InfinitePlace K → Matrix (Fin N) (Fin N) ℂ} {L : Submodule (𝓞 K) (Fin N → K)}
 
 end Lattices
-
-example : width ![2, 1] = 2 ∧ colLen ![2, 1] 0 = 2 ∧ colLen ![2, 1] 1 = 1 ∧ size ![2, 1] = 3 := by decide
-
-example (y : Matrix (Fin 2) (Fin 2) ℤ) : evalAt y (extremal ![1, 1] ℤ) = y 0 0 * y 1 1 - y 0 1 * y 1 0 := by
-  simp [extremal, hw, nuNext, lpMinor, Fin.prod_univ_two, Matrix.det_fin_two]
-
-example : extremal ![1, 0] ℤ = X (0, 0) := by
-  simp [extremal, hw, nuNext, lpMinor, Fin.prod_univ_two]
-
-example : (X (0, 1) : Pol 2 ℤ) ∉ nabla ![0, 1] ℤ := by
-  intro h
-  rw [nabla, Formalism.GradedWeylDivisibility.dualWeylNonDom ℤ 2 2 _ ⟨0, 1, by decide, by decide⟩] at h
-  exact X_ne_zero _ ((Submodule.mem_bot ℤ).mp h)
-
-example : (∃ T : Tableau ![1, 0], IsStandard T ∧ T ≠ canon _) ∧ ¬ IsStandard (la := ![1, 1]) fun _ _ => 0 := by
-  refine ⟨⟨fun _ _ => 1, ⟨fun c p q hpq => ?_, fun _ _ _ _ _ _ => le_rfl⟩, fun h => ?_⟩, fun h => ?_⟩
-  · exfalso
-    revert c
-    decide
-  · revert h
-    decide
-  · have := h.1
-    revert this
-    decide
-
-example : normSq ![1, 1] (extremal ![1, 1] ℂ) = dim ![1, 1] := by
-  have h : ∀ g : UN 2, ‖evalAt g.1 (extremal ![1, 1] ℂ)‖ = 1 := fun g => by
-    have h1 : evalAt g.1 (extremal ![1, 1] ℂ) = g.1.det := by
-      simp [extremal, hw, nuNext, lpMinor, Fin.prod_univ_two, Matrix.det_fin_two]
-    rw [h1]
-    exact CStarRing.norm_of_mem_unitary (Matrix.det_of_mem_unitary g.2)
-  simp [normSq, h]
 
 end GlobalTheory.DualWeyl

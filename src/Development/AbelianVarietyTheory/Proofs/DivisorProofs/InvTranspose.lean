@@ -1,6 +1,6 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsProjOverWeierstrass
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.MumfordConstruction
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
 import Development.AbelianVarietyTheory.Definitions.Degenerations.AdmissibleBaseOfCompleteDvr
 
 noncomputable section
@@ -71,8 +71,6 @@ instance : StarRing (TensO s) where
 theorem star_def (a : TensO s) : star a = ofMat s (((s.1⁻¹ : (Matrix (Fin r) (Fin r) ℤ)ˣ) : Matrix (Fin r) (Fin r) ℤ) *
     (mat s a).transpose * (s.1 : Matrix (Fin r) (Fin r) ℤ)) := rfl
 
-@[simp] theorem mat_mul (a b : TensO s) : mat s (a * b) = mat s a * mat s b := rfl
-@[simp] theorem mat_add (a b : TensO s) : mat s (a + b) = mat s a + mat s b := rfl
 @[simp] theorem mat_one : mat s (1 : TensO s) = 1 := rfl
 
 end TensO

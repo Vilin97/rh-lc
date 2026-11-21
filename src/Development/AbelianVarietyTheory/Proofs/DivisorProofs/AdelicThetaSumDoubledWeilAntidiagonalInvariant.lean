@@ -12,9 +12,6 @@ variable {κ : Type}
 
 def negSnd {M : Type} [Neg M] (x : κ ⊕ κ → M) : κ ⊕ κ → M := Sum.elim (fun i => x (Sum.inl i)) (fun i => -x (Sum.inr i))
 
-@[simp] theorem negSnd_inl {M : Type} [Neg M] (x : κ ⊕ κ → M) (i : κ) : negSnd x (Sum.inl i) = x (Sum.inl i) := rfl
-@[simp] theorem negSnd_inr {M : Type} [Neg M] (x : κ ⊕ κ → M) (i : κ) : negSnd x (Sum.inr i) = -x (Sum.inr i) := rfl
-
 theorem negSnd_negSnd {M : Type} [InvolutiveNeg M] (x : κ ⊕ κ → M) : negSnd (negSnd x) = x :=
   funext fun i => by cases i <;> simp
 

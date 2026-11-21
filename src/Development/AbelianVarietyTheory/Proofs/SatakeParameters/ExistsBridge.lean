@@ -28,9 +28,6 @@ def decRes (A : ValuationSubring Ω) : ↥(Dec (F := L) A) →* ↥(Dec (F := K)
   map_one' := rfl
   map_mul' _ _ := rfl
 
-@[simp] theorem decRes_apply (A : ValuationSubring Ω) (g : ↥(Dec (F := L) A)) (z : Ω) :
-    ((decRes (K := K) A g : ↥(Dec (F := K) A)) : G K Ω) z = (g : G L Ω) z := rfl
-
 end Res
 
 end GlobalTheory.AboveLRes

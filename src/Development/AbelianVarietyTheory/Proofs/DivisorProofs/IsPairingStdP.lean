@@ -35,11 +35,6 @@ structure Setup (P : V → V → ℝ) (P₁ : V₁ → V₁ → ℝ) (j : V₁ �
   orth : ∀ l ∈ L, ∀ w, omega P l (j w) = 0
   max : ∀ v, (∀ l ∈ L, omega P v l = 0) → (∀ w, omega P v (j w) = 0) → v ∈ L
 
-def Laws (P : V → V → ℝ) (P₁ : V₁ → V₁ → ℝ) (j : V₁ × V₁ → V × V) (L : Set (V × V))
-    (T : 𝓢(V, ℂ) →L[ℂ] 𝓢(V₁, ℂ)) : Prop :=
-  (∀ w (f f₁ : 𝓢(V, ℂ)) (f₂ : 𝓢(V₁, ℂ)), ⇑f₁ = schrF P (j w) ⇑f → ⇑f₂ = schrF P₁ w ⇑(T f) → T f₁ = f₂) ∧
-  ∀ l ∈ L, ∀ f f₁ : 𝓢(V, ℂ), ⇑f₁ = schrF P l ⇑f → T f₁ = T f
-
 def stdP (P₁ : V₁ → V₁ → ℝ) (k : ℕ) (x y : V₁ × (Fin k → ℝ)) : ℝ := P₁ x.1 y.1 + ∑ i, x.2 i * y.2 i
 
 def jStd (k : ℕ) (w : V₁ × V₁) : (V₁ × (Fin k → ℝ)) × (V₁ × (Fin k → ℝ)) := ((w.1, 0), (w.2, 0))
@@ -127,9 +122,6 @@ theorem isPairing_mul : IsPairing (fun x y : ℝ => x * y) where
   nondegL x hx := by simpa using hx 1
   nondegR y hy := by simpa using hy 1
 
-example : Setup (stdP (fun x y : ℝ => x * y) 1) (fun x y : ℝ => x * y) (jStd 1) (LStd ℝ 1) :=
-  setup_std isPairing_mul 1
-
 end Real
 
 section Adelic
@@ -151,16 +143,6 @@ def liftV {κ : Type} (y : κ → mixedEmbedding.mixedSpace F) : κ → AF F :=
 
 variable {E : Type} [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 variable {n d d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {W₁ : Spc F E d₁}
-
-def jMap (M : Model σ X W) (M₁ : Model σ X W₁) (H' : Plane E d d₁)
-    (w : (Fin n × Fin d₁ → mixedEmbedding.mixedSpace F) × (Fin n × Fin d₁ → mixedEmbedding.mixedSpace F)) :
-    (Fin n × Fin d → mixedEmbedding.mixedSpace F) × (Fin n × Fin d → mixedEmbedding.mixedSpace F) :=
-  let c := M.co.e (incM F (1 : Matrix (Fin n) (Fin n) E) * M₁.co.e.symm (liftV w.1, liftV w.2) * (incM F H'.ι)ᵀ)
-  (locV c.1, locV c.2)
-
-def LSet (M : Model σ X W) {d₁ : ℕ} (H' : Plane E d d₁) :
-    Set ((Fin n × Fin d → mixedEmbedding.mixedSpace F) × (Fin n × Fin d → mixedEmbedding.mixedSpace F)) :=
-  {l | ∃ u ∈ GlobalTheory.ThK.iso0 (F := F) n H', At (evI F) u ∧ l = (locV (M.co.e u).1, locV (M.co.e u).2)}
 
 end Adelic
 

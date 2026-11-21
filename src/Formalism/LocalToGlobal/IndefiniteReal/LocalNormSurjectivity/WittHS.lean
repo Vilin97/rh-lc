@@ -8,8 +8,6 @@ section HS
 
 variable {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))]
 
-local notation "vv" => (Valued.v : Valuation L (WithZero (Multiplicative ℤ)))
-
 def newtonSq (u : L) : ℕ → L
   | 0 => 1
   | k + 1 => newtonSq u k - (newtonSq u k * newtonSq u k - u) / (2 * newtonSq u k)
@@ -103,8 +101,6 @@ end HS
 section HS2
 
 variable {L : Type} [Field L] [Valued L (WithZero (Multiplicative ℤ))]
-
-local notation "vv" => (Valued.v : Valuation L (WithZero (Multiplicative ℤ)))
 
 variable (u : L)
 

@@ -19,17 +19,11 @@ open GlobalTheory.SelfDualGenus ReciprocityTheory.ChartRestriction.G.FD Formalis
 variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 attribute [local instance] IsCMField.starRing
 
-local notation "𝔽" => maximalRealSubfield E
-local notation "𝔸" => E ⊗[maximalRealSubfield E] Formalism.L2.Herm.Af (maximalRealSubfield E)
-local notation "𝕆" => Formalism.L2.Herm.intAf (maximalRealSubfield E) E
-
 def ev (v : HeightOneSpectrum (𝓞 𝔽)) : 𝔸 →+* LocAlg v :=
   (Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV 𝔽 v) (AlgHom.id 𝔽 E)).toRingHom.comp
     (Algebra.TensorProduct.comm 𝔽 E (Formalism.L2.Herm.Af 𝔽)).toAlgHom.toRingHom
 
 omit [IsCMField E] in
-theorem ev_tmul (v : HeightOneSpectrum (𝓞 𝔽)) (x : E) (a : Formalism.L2.Herm.Af 𝔽) :
-    ev v (x ⊗ₜ a) = (a v) ⊗ₜ x := rfl
 
 omit [IsCMField E] in
 theorem ev_ext {z z' : 𝔸} (h : ∀ v, ev v z = ev v z') : z = z' :=
@@ -37,8 +31,6 @@ theorem ev_ext {z z' : 𝔸} (h : ∀ v, ev v z = ev v z') : z = z' :=
     (GlobalTheory.LatticeLocalGlobal.ext_components _ _ h)
 
 omit [IsCMField E] in
-theorem ev_inclE (v : HeightOneSpectrum (𝓞 𝔽)) (x : E) :
-    ev v (Formalism.UG.inclE (F := 𝔽) (Formalism.L2.Herm.Af 𝔽) x) = locEmb v x := rfl
 
 theorem ev_sigR (hc : CMData 𝔽 E) (v : HeightOneSpectrum (𝓞 𝔽)) (z : 𝔸) :
     ev v (Formalism.UG.sigR hc.sig (Formalism.L2.Herm.Af 𝔽) z) = locConj v (ev v z) := by

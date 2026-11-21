@@ -1,5 +1,4 @@
 import Mathlib
-import Mathlib
 import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.NormSmall
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RatInOfUnit
 import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
@@ -22,8 +21,6 @@ namespace GlobalTheory.frameChangeUnitDeterminant
 open Formalism.IndefR.Datum
 
 variable {D : D7}
-
-local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
 
 private theorem isIntM_mul {b a c : ℕ} {N : Matrix (Fin b) (Fin a) (EAf D)} {κ : Matrix (Fin a) (Fin c) (EAf D)}
     (hN : IsIntM N) (hκ : IsIntM κ) : IsIntM (N * κ) := fun i j => by
@@ -74,8 +71,6 @@ namespace GlobalTheory.frameChangeUnitDeterminant
 open Formalism.IndefR.Datum GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle
 
 variable {D : D7}
-
-local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
 
 private theorem det_int {k : ℕ} {N : Matrix (Fin k) (Fin k) (EAf D)} (hN : IsIntM N) : N.det ∈ OO := by
   let A : Matrix (Fin k) (Fin k) OO := fun i j => ⟨N i j, hN i j⟩
@@ -149,8 +144,6 @@ namespace GlobalTheory.frameChangeUnitDeterminant
 open Formalism.IndefR.Datum GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle
 
 variable {D : D7}
-
-local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
 
 private theorem half_mul {e : AE D} {m m' n : ℕ} (P : Matrix (Fin m) (Fin m') (AE D)) {y : Mx D m' n} (h : IsHalf e y) :
     IsHalf e (P * y : Mx D m n) := fun i j => by

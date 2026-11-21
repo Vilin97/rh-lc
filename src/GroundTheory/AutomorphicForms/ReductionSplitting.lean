@@ -111,10 +111,6 @@ def glNormOneSplitting (hn : 0 < n) :
     continuous_centralSection (detModule_centralSection hn) centralSection_mul_comm (normOneGL K n)
     (fun _ => mem_normOneGL_iff_detModule)
 
-@[simp] theorem glNormOneSplitting_symm_apply (hn : 0 < n) (p : normOneGL K n × {r : ℝ // 0 < r}) :
-    (glNormOneSplitting (K := K) hn).symm p = (p.1 : AdelicGLn.AdelicGL K n) * centralSection K n p.2 := by
-  rfl
-
 theorem exists_measure_eq_mul_measure_image (hn : 0 < n)
     [SecondCountableTopology (AdelicGLn.AdelicGL K n)] [MeasurableSpace (AdelicGLn.AdelicGL K n)]
     [BorelSpace (AdelicGLn.AdelicGL K n)]

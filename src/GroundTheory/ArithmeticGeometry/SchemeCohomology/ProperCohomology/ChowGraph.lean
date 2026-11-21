@@ -25,11 +25,9 @@ def gP : (W U).toScheme ⟶ ProjSpace.MP A k n :=
     (fun i => X.homOfLE (iInf_le U i) ≫ c i ≫ (ProjSpace.stdOpen A (n i) 0).ι) (fun i => by
       rw [Category.assoc, Category.assoc, hc i, ← Category.assoc, Scheme.homOfLE_ι])
 
-@[reassoc (attr := simp)]
 lemma gP_mpStr : gP s n U c hc ≫ ProjSpace.mpStr A k n = (W U).ι ≫ s :=
   ProjSpace.lift_mpStr _ _ _ _ _
 
-@[reassoc (attr := simp)]
 lemma gP_pr (i : Fin (k + 1)) : gP s n U c hc ≫ ProjSpace.pr A k n i =
     X.homOfLE (iInf_le U i) ≫ c i ≫ (ProjSpace.stdOpen A (n i) 0).ι :=
   ProjSpace.lift_pr _ _ _ _ _ i
@@ -39,7 +37,6 @@ abbrev G : Scheme.{u} := pullback s (ProjSpace.mpStr A k n)
 def g : (W U).toScheme ⟶ G s n :=
   pullback.lift (W U).ι (gP s n U c hc) (gP_mpStr s n U c hc).symm
 
-@[reassoc (attr := simp)]
 lemma g_fst : g s n U c hc ≫ pullback.fst _ _ = (W U).ι := pullback.lift_fst _ _ _
 
 @[reassoc (attr := simp)]
@@ -215,7 +212,6 @@ def gQ : (g s n U c hc ⁻¹ᵁ O s n i).toScheme ⟶ Q s n U c hc i :=
       Category.assoc, Scheme.homOfLE_ι, morphismRestrict_ι_assoc, g_fst])
 
 omit [IsProper (ProjSpace.mpStr A k n)] [QuasiCompact (g s n U c hc)] [IsSeparated s] in
-@[reassoc]
 lemma gQ_Qo : gQ s n U c hc i ≫ Qo s n U c hc i = g s n U c hc ∣_ O s n i := by
   simp only [gQ, Qo, eqLocusLift_ι_assoc, gE]
   exact pullback.lift_snd _ _ _

@@ -5,8 +5,6 @@ open NumberField IsDedekindDomain CategoryTheory GroundTheory.ProfCoh GroundTheo
 
 namespace PositivityTheory.Lit1.GEN.W_coinf_b
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 theorem uliftInt_smul {A : Type} [AddCommGroup A] (inst : Module (ULift.{0} ℤ) A) (c : ULift.{0} ℤ) (a : A) :
     inst.smul c a = c.down • a := by
   obtain ⟨n⟩ := c

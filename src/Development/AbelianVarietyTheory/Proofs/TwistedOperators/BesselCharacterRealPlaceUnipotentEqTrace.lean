@@ -144,8 +144,6 @@ namespace GlobalTheory.BesselCoords
 
 open GlobalTheory.BesselChar
 
-local infixl:70 " *ₘ " => HMul.hMul
-
 set_option maxHeartbeats 1000000 in
 
 theorem besChar_atTau_coords : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (ψ : AddChar (AF D.host.F) ℂ) (A B : HSp D) (ι : A.V →ₗ[D.host.E] B.V) (d : BesDat A B ι) (τ : D.what₂.Tau) (u : Matrix (Fin B.rank) (Fin B.rank) ℂ),

@@ -30,8 +30,6 @@ open GlobalTheory.Dec.FormF GlobalTheory.Dec.PsiEig Filter Topology
 
 variable {n : ℕ} {ε : Fin n → Bool}
 
-local notation "Mt" => Matrix (Fin n) (Fin n) ℂ
-
 section Local
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 

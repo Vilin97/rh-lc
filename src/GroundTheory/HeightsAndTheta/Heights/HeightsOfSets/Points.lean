@@ -60,13 +60,6 @@ def whole : ArithVariety n where
 
 omit [Fintype ι] in
 
-theorem mem_points_whole {F : Type*} [CommRing F] {z : Cone n F} (hz : BlockNonzero z) :
-    z ∈ (whole n).points F := by
-  refine ⟨hz, fun f hf ↦ ?_⟩
-  change f ∈ (⊥ : Ideal _) at hf
-  rw [Submodule.mem_bot] at hf
-  rw [hf, evalCone, eval₂_zero]
-
 end ArithVariety
 
 variable (n) in
@@ -96,10 +89,6 @@ theorem vectorL2Norm_const_mul {m : ℕ} (c : ℂ) (w : Fin m → ℂ) :
   simp only [l2Norm, norm_mul, mul_pow, ← Finset.mul_sum]
   rw [Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq (norm_nonneg _)]
 
-theorem vectorL2Norm_conj {m : ℕ} (w : Fin m → ℂ) :
-    l2Norm (fun i ↦ starRingEnd ℂ (w i)) = l2Norm w := by
-  simp only [l2Norm, Complex.norm_conj]
-
 omit [DecidableEq ι] in
 theorem contDiffOn_l2Norm_block (k : ι) :
     ContDiffOn ℝ ∞ (fun z : Cone n ℂ ↦ l2Norm (z k)) {z | BlockNonzero z} := by
@@ -122,42 +111,7 @@ def standard : HermLine n where
     simp only [vectorL2Norm_const_mul, zpow_one, Finset.prod_mul_distrib]
   metric_smooth := contDiffOn_prod fun k _ ↦ contDiffOn_l2Norm_block k
 
-def scale (A : HermLine n) (t : ℝ) (ht : 0 < t) : HermLine n where
-  deg := A.deg
-  metric z := t * A.metric z
-  metric_pos z hz := mul_pos ht (A.metric_pos z hz)
-  metric_smul c z hc hz := by
-    rw [A.metric_smul c z hc hz]
-    ring
-  metric_smooth := contDiffOn_const.mul A.metric_smooth
-
-def project {ι' : Type} {n' : ι' → ℕ} (j : ι → ι') {F : Type*} (z : Cone n' F) :
-    Cone (n' ∘ j) F :=
-  fun k ↦ z (j k)
-
 omit [DecidableEq ι] in
-theorem prod_extend_zpow {ι' : Type} [Fintype ι'] {j : ι → ι'} (hj : Function.Injective j)
-    (a : ι → ℤ) (r : ι' → ℝ) :
-    ∏ k', r k' ^ Function.extend j a 0 k' = ∏ k, r (j k) ^ a k := by
-  classical
-  symm
-  refine Fintype.prod_of_injective j hj _ _ (fun k' hk' ↦ ?_) (fun k ↦ ?_)
-  · rw [Function.extend_apply' _ _ _ (fun ⟨k, hk⟩ ↦ hk' ⟨k, hk⟩), Pi.zero_apply, zpow_zero]
-  · rw [hj.extend_apply]
-
-def pullback {ι' : Type} [Fintype ι'] {n' : ι' → ℕ} (j : ι → ι') (hj : Function.Injective j)
-    (A : HermLine (n' ∘ j)) : HermLine n' where
-  deg := Function.extend j A.deg 0
-  metric z := A.metric (project j z)
-  metric_pos z hz := A.metric_pos _ fun k ↦ hz (j k)
-  metric_smul c z hc hz := by
-    have h := A.metric_smul (fun k ↦ c (j k)) (project j z) (fun k ↦ hc (j k)) (fun k ↦ hz (j k))
-    rw [prod_extend_zpow hj A.deg (fun k' ↦ ‖c k'‖)]
-    exact h
-  metric_smooth := by
-    have hp : ContDiff ℝ ∞ (fun z : Cone n' ℂ ↦ project j z) :=
-      contDiff_pi.2 fun k ↦ contDiff_pi.1 contDiff_id (j k)
-    exact A.metric_smooth.comp hp.contDiffOn fun z hz k ↦ hz (j k)
 
 end HermLine
 
@@ -182,10 +136,6 @@ def height (A : HermLine n) (x : Cone n (AlgebraicClosure ℚ)) : ℝ :=
     ((∑ᶠ v : FinitePlace (coordField x),
         ∑ k, (A.deg k : ℝ) * Real.log (⨆ i, v (coordVec x k i))) +
       ∑ σ : coordField x →+* ℂ, Real.log (A.metric fun k i ↦ σ (coordVec x k i)))
-
-def coordIn (L : IntermediateField ℚ (AlgebraicClosure ℚ)) (z : Cone n (AlgebraicClosure ℚ))
-    (hz : ∀ k i, z k i ∈ L) : Cone n L :=
-  fun k i ↦ ⟨z k i, hz k i⟩
 
 def finiteTerm {L : Type*} [Field L] [NumberField L] (A : HermLine n) (v : FinitePlace L)
     (y : Cone n L) : ℝ :=
@@ -244,10 +194,6 @@ def chartSection (c : (k : ι) → Fin (n k + 1)) : IntegralSection P (fun _ ↦
   den_not_mem := (Ideal.ne_top_iff_one _).mp P.isPrime.ne_top
   regular _ _ := ⟨0, chartMonomial c 1,
     ⟨⟨1, isWeightedHomogeneous_chartMonomial c 1, fun k ↦ by simp⟩, by simp [chartMonomial]⟩⟩
-
-def NonzeroAt (s : IntegralSection P a) (x : Cone n (AlgebraicClosure ℚ)) : Prop :=
-  ∃ (c : (k : ι) → Fin (n k + 1)) (d : ι → ℕ) (e : MvPolynomial (Coord n) ℤ),
-    IsChartForm P a s.num s.den c d e ∧ (∀ k, x k (c k) ≠ 0) ∧ evalCone x e ≠ 0
 
 def SupNormLE (A : HermLine n) (s : IntegralSection P A.deg) (C : ℝ) : Prop :=
   ∀ z ∈ P.points ℂ, ∀ (c : (k : ι) → Fin (n k + 1)) (d : ι → ℕ) (e : MvPolynomial (Coord n) ℤ),

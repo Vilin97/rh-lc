@@ -14,8 +14,6 @@ namespace GlobalTheory.SwapRule
 
 open MvPolynomial
 
-local notation "FP" => Formalism.BasicNotions.TH.Pol
-
 variable {p q r s : ℕ}
 
 theorem rename_swap_swap (P : FP p q r s) :
@@ -71,8 +69,6 @@ end GlobalTheory.SwapRule
 namespace GlobalTheory.SwapRule
 
 open MvPolynomial
-
-local notation "FP" => Formalism.BasicNotions.TH.Pol
 
 variable {p q r s : ℕ}
 
@@ -152,8 +148,6 @@ end GlobalTheory.SwapRule
 namespace GlobalTheory.SwapRule
 
 open MvPolynomial
-
-local notation "FP" => Formalism.BasicNotions.TH.Pol
 
 variable {p q r s : ℕ}
 

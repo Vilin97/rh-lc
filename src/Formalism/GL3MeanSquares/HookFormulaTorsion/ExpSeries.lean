@@ -218,30 +218,6 @@ theorem integral_of_mul_eq_one [IsUltrametricDist K] {u v : MvPowerSeries σ K} 
   intro d
   exact key _ d rfl
 
-def CT (F : ℕ → MvPowerSeries σ K) (f : MvPowerSeries σ K) : Prop :=
-  ∀ n, Filter.Tendsto (fun k => MvPowerSeries.coeff n (F k)) Filter.atTop
-    (nhds (MvPowerSeries.coeff n f))
-
-theorem CT.mul {F G : ℕ → MvPowerSeries σ K} {f g : MvPowerSeries σ K} (hF : CT F f)
-    (hG : CT G g) : CT (fun k => F k * G k) (f * g) := by
-  classical
-  intro n
-  simp only [MvPowerSeries.coeff_mul]
-  apply tendsto_finset_sum
-  intro p _
-  exact (hF p.1).mul (hG p.2)
-
-theorem CT.pow {F : ℕ → MvPowerSeries σ K} {f : MvPowerSeries σ K} (hF : CT F f) (n : ℕ) :
-    CT (fun k => F k ^ n) (f ^ n) := by
-  induction n with
-  | zero =>
-    intro d
-    simp only [pow_zero]
-    exact tendsto_const_nhds
-  | succ n ih =>
-    simp only [pow_succ]
-    exact ih.mul hF
-
 theorem inLam_zero [IsUltrametricDist K] [Algebra ℚ K] : InLam (0 : MvPowerSeries σ K) := by
   refine ⟨map_zero _, ?_⟩
   classical

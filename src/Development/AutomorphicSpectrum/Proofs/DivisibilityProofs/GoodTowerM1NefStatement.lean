@@ -1,6 +1,6 @@
 import Mathlib
 import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.GoodTowerM1Nef
-import Development.AutomorphicSpectrum.Statements.TowerExistence.GoodTowerExists
+import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.GoodOrigin
 import Development.AutomorphicSpectrum.Statements.GeometryStatements.HodgeLatticeFlagBound
 import Development.AutomorphicSpectrum.Statements.GeometryStatements.TrivFlagOnHodge
 import Development.AutomorphicSpectrum.Statements.GeometryStatements.FlatDegree

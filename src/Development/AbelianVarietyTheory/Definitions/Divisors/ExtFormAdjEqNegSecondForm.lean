@@ -292,9 +292,6 @@ def conn (H : E → Matrix n n ℂ) (z ξ : E) : Matrix n n ℂ := (H z)ᵀ⁻¹
 
 def curv (H : E → Matrix n n ℂ) (z ξ η : E) : Matrix n n ℂ := -mdbar (fun x => conn H x ξ) z η
 
-def covDel (H : E → Matrix n n ℂ) (s : E → n → ℂ) (z ξ : E) : n → ℂ :=
-  (fun a => del (fun x => s x a) z ξ) + conn H z ξ *ᵥ s z
-
 def dualGram (H : Matrix n n ℂ) : Matrix n n ℂ := H⁻¹ᵀ
 
 variable {U : Set E} {H H' : E → Matrix n n ℂ} {z : E} {j k : WithTop ℕ∞}
@@ -317,9 +314,6 @@ theorem IsHermFrame.two (h : IsHermFrame U H) (hz : z ∈ U) : MContDiffAt 2 H z
 
 omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 
-theorem IsHermFrame.one (h : IsHermFrame U H) (hz : z ∈ U) : MContDiffAt 1 H z :=
-  (h.mContDiffAt hz).of_le (by norm_cast)
-
 omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 
 theorem IsHermFrame.eventually_herm (h : IsHermFrame U H) (hz : z ∈ U) :
@@ -338,12 +332,6 @@ theorem IsHermFrame.isPosFrame (h : IsHermFrame U H) (h' : ∀ z ∈ U, (H z).Po
 
 omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 
-theorem IsHermFrame.dual (h : IsHermFrame U H) : IsHermFrame U fun x => dualGram (H x) :=
-  .of_mContDiffAt h.isOpen (fun z hz => ((h.mContDiffAt hz).inv (h.isUnit z hz)).transpose)
-    (fun z hz => (h.herm z hz).inv.transpose)
-    fun z hz => by
-      rw [dualGram, det_transpose]; exact isUnit_nonsing_inv_det _ (h.isUnit z hz)
-
 theorem conn_eq_of_isSymm (h : ∀ᶠ x in 𝓝 z, (H x).IsSymm) (ξ : E) :
     conn H z ξ = (H z)⁻¹ * mdel H z ξ := by
   rw [conn, h.self_of_nhds.eq, ← mdel_transpose, mdel_congr (h.mono fun x hx => hx.eq)]
@@ -361,32 +349,6 @@ theorem eq_conn_of_compatible (hu : IsUnit (H z).det) {ξ : E} {T : Matrix n n �
     (h : Tᵀ * H z = mdel H z ξ) : T = conn H z ξ := by
   rw [conn, ← h, transpose_mul, transpose_transpose,
     nonsing_inv_mul_cancel_left _ _ (by rwa [det_transpose])]
-
-theorem del_form (hH : MContDiffAt 1 H z) (hu : IsUnit (H z).det) {s t : E → n → ℂ}
-    (hs : ∀ a, ContDiffAt ℝ 1 (fun x => s x a) z) (ht : ∀ a, ContDiffAt ℝ 1 (fun x => t x a) z)
-    (ξ : E) : del (fun x => form (H x) (s x) (t x)) z ξ =
-      form (H z) (covDel H s z ξ) (t z) + form (H z) (s z) fun a => dbar (fun x => t x a) z ξ := by
-  let S : E → Matrix n Unit ℂ := fun x => replicateCol Unit (s x)
-  let T : E → Matrix n Unit ℂ := fun x => replicateCol Unit (t x)
-  have hS : MContDiffAt 1 S z := fun a _ => hs a
-  have hT : MContDiffAt 1 T z := fun a _ => ht a
-  have e : ∀ (K : Matrix n n ℂ) (P Q : Matrix n Unit ℂ),
-      (Pᵀ * K * Qᴴᵀ) () () = form K (fun a => P a ()) fun a => Q a () := fun K P Q => by
-    rw [form_eq_sum, Finset.sum_comm]
-    simp [mul_apply, Finset.sum_mul]
-  have h := congrFun (congrFun (mdel_mul (hS.transpose.mul hH) hT.conjTranspose.transpose ξ) ()) ()
-  rw [mdel_mul hS.transpose hH, mdel_transpose (fun x => (T x)ᴴ), mdel_conjTranspose,
-    mdel_transpose, Matrix.add_mul, ← conn_transpose_mul hu, ← Matrix.mul_assoc, ← transpose_mul,
-    mdel_apply] at h
-  simp only [Matrix.add_apply, e] at h
-  refine h.trans ?_
-  rw [covDel, form_add_left]
-  have : (fun a => (conn H z ξ * S z) a ()) = conn H z ξ *ᵥ s z := rfl
-  rw [this]
-  change _ + (_ + form (H z) (fun a => del (fun x => s x a) z ξ) (t z)) = _
-  change form (H z) (s z) (fun a => dbar (fun x => t x a) z ξ) +
-    (form (H z) (conn H z ξ *ᵥ s z) (t z) + _) = _
-  ring
 
 theorem conn_add_vec (H : E → Matrix n n ℂ) (z ξ ξ' : E) :
     conn H z (ξ + ξ') = conn H z ξ + conn H z ξ' := by
@@ -576,55 +538,9 @@ def ddc (u : E → ℝ) (z ξ η : E) : ℂ := kappa * leviForm u z ξ η
 
 def diagVal {V : Type*} (α : V → V → ℂ) (ξ : V) : ℝ := (-I * α ξ ξ).re
 
-def FormLe {V : Type*} (α β : V → V → ℂ) : Prop := ∀ ξ, diagVal α ξ ≤ diagVal β ξ
-
-def FormAbsLe {V : Type*} (α : V → V → ℂ) (C : ℝ) (β : V → V → ℂ) : Prop :=
-  FormLe (fun ξ η => -C * β ξ η) α ∧ FormLe α fun ξ η => C * β ξ η
-
-theorem formAbsLe_iff {V : Type*} {α β : V → V → ℂ} {C : ℝ} :
-    FormAbsLe α C β ↔ ∀ ξ, |diagVal α ξ| ≤ C * diagVal β ξ := by
-  have h : ∀ (c : ℝ) ξ, diagVal (fun ξ η => c * β ξ η) ξ = c * diagVal β ξ := fun c ξ => by
-    rw [diagVal, diagVal, mul_left_comm, re_ofReal_mul]
-  simp only [FormAbsLe, FormLe, ← ofReal_neg, h, abs_le, forall_and, neg_mul]
-
 section Tangent
 
 variable {ι : Type*} [Fintype ι]
-
-def formOf (G : Matrix ι ι ℂ) (ξ η : ι → ℂ) : ℂ := I * form G ξ η
-
-theorem diagVal_formOf (G : Matrix ι ι ℂ) (ξ : ι → ℂ) :
-    diagVal (formOf G) ξ = (form G ξ ξ).re := by
-  rw [diagVal, formOf, ← mul_assoc, neg_mul, I_mul_I, neg_neg, one_mul]
-
-theorem diagVal_formOf_eq_gnorm_sq {G : Matrix ι ι ℂ} (hG : G.PosSemidef) (ξ : ι → ℂ) :
-    diagVal (formOf G) ξ = gnorm G ξ ^ 2 := by rw [diagVal_formOf, gnorm_sq hG]
-
-theorem leviForm_self_eq_levi {u : (ι → ℂ) → ℝ} {z : ι → ℂ} (hu : ContDiffAt ℝ 2 u z)
-    (ξ : ι → ℂ) : leviForm u z ξ ξ = ReciprocityTheory.AnForm.levi u z ξ := by
-  rw [leviForm_apply_self hu, ReciprocityTheory.AnForm.levi]; congr 1; ring
-
-theorem diagVal_ddc {u : (ι → ℂ) → ℝ} {z : ι → ℂ} (hu : ContDiffAt ℝ 2 u z) (ξ : ι → ℂ) :
-    diagVal (ddc u z) ξ = ReciprocityTheory.AnForm.levi u z ξ / (2 * Real.pi) := by
-  have : -I * (kappa * (ReciprocityTheory.AnForm.levi u z ξ : ℂ)) =
-      ((ReciprocityTheory.AnForm.levi u z ξ / (2 * Real.pi) : ℝ) : ℂ) := by
-    rw [kappa]; push_cast; linear_combination (-(ReciprocityTheory.AnForm.levi u z ξ : ℂ) /
-      (2 * Real.pi)) * I_mul_I
-  rw [diagVal, ddc, leviForm_self_eq_levi hu, this, ofReal_re]
-
-theorem leviForm_eq_form_hessC {D : ℕ} {u : (Fin D → ℂ) → ℝ} {z : Fin D → ℂ}
-    (hu : ContDiffAt ℝ 2 u z) (ξ η : Fin D → ℂ) :
-    leviForm u z ξ η = form (ReciprocityTheory.AnForm.hessC u z) ξ η := by
-  have h : ∀ i j, ReciprocityTheory.AnForm.hessC u z i j =
-      leviForm u z (Pi.single i 1) (Pi.single j 1) := fun i j => by
-    rw [leviForm_apply hu, ReciprocityTheory.AnForm.hessC]; push_cast; ring
-  have e : ∀ v : Fin D → ℂ, v = ∑ i, v i • (Pi.single i 1 : Fin D → ℂ) := fun v => by
-    ext j; simp [Pi.single_apply]
-  conv_lhs => rw [e ξ, e η]
-  simp only [form_eq_sum, h, map_sum, map_smul, map_smulₛₗ, ContinuousLinearMap.sum_apply,
-    ContinuousLinearMap.smul_apply, smul_eq_mul, RingHom.id_apply, Finset.mul_sum]
-  rw [Finset.sum_comm]
-  exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
 variable [Fintype n]
 
@@ -640,22 +556,11 @@ def TwoFormBound (U : Set (ι → ℂ)) (H : (ι → ℂ) → Matrix n n ℂ) (G
 
 variable {U : Set (ι → ℂ)} {H : (ι → ℂ) → Matrix n n ℂ} {G : (ι → ℂ) → Matrix ι ι ℂ} {C C' : ℝ}
 
-theorem OneFormBound.mono {A : (ι → ℂ) → (ι → ℂ) → Matrix n n ℂ} (h : OneFormBound U H G A C)
-    (hC : C ≤ C') : OneFormBound U H G A C' := fun z hz =>
-  ⟨(h z hz).1, (h z hz).2.1, fun ξ => ((h z hz).2.2 ξ).trans
-    (mul_le_mul_of_nonneg_right hC (gnorm_nonneg _ _))⟩
-
 theorem TwoFormBound.mono {F : (ι → ℂ) → (ι → ℂ) → (ι → ℂ) → Matrix n n ℂ}
     (h : TwoFormBound U H G F C) (hC : C ≤ C') : TwoFormBound U H G F C' := fun z hz =>
   ⟨(h z hz).1, (h z hz).2.1, fun ξ η => ((h z hz).2.2 ξ η).trans
     (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right hC (gnorm_nonneg _ _))
       (gnorm_nonneg _ _))⟩
-
-theorem TwoFormBound.norm_form_le {F : (ι → ℂ) → (ι → ℂ) → (ι → ℂ) → Matrix n n ℂ}
-    (h : TwoFormBound U H G F C) {z : ι → ℂ} (hz : z ∈ U) (ξ : ι → ℂ) (v : n → ℂ) :
-    ‖form (H z) (F z ξ ξ *ᵥ v) v‖ ≤ C * gnorm (G z) ξ ^ 2 * gnorm (H z) v ^ 2 :=
-  (norm_form_mulVec_le (h z hz).1 _ v).trans (mul_le_mul_of_nonneg_right
-    (((h z hz).2.2 ξ ξ).trans_eq (by ring)) (sq_nonneg _))
 
 theorem twoFormBound_curv_two_mul [DecidableEq n] (hH : IsPosFrame U H)
     (hG : ∀ z ∈ U, (G z).PosSemidef) (hC : 0 ≤ C)
@@ -669,60 +574,11 @@ theorem twoFormBound_curv_two_mul [DecidableEq n] (hH : IsPosFrame U H)
 
 end Tangent
 
-def wedge {V : Type*} (α β : V → V → ℂ) (ξ₁ η₁ ξ₂ η₂ : V) : ℂ :=
-  α ξ₁ η₁ * β ξ₂ η₂ + α ξ₂ η₂ * β ξ₁ η₁ - α ξ₁ η₂ * β ξ₂ η₁ - α ξ₂ η₁ * β ξ₁ η₂
-
-theorem wedge_comm {V : Type*} (α β : V → V → ℂ) : wedge α β = wedge β α := by
-  ext; simp only [wedge]; ring
-
-def ddcForm (α : E → E → E → ℂ) (z ξ₁ η₁ ξ₂ η₂ : E) : ℂ :=
-  kappa * (ddbar (fun x => α x ξ₂ η₂) z ξ₁ η₁ + ddbar (fun x => α x ξ₁ η₁) z ξ₂ η₂
-    - ddbar (fun x => α x ξ₂ η₁) z ξ₁ η₂ - ddbar (fun x => α x ξ₁ η₂) z ξ₂ η₁)
-
 section Chern
 
 variable [Fintype n] [DecidableEq n]
 
 def chernOne (H : E → Matrix n n ℂ) (z ξ η : E) : ℂ := kappa * (curv H z ξ η).trace
-
-def curvMinor (H : E → Matrix n n ℂ) (z : E) (a b : n) (ξ₁ η₁ ξ₂ η₂ : E) : ℂ :=
-  wedge (fun ξ η => curv H z ξ η a a) (fun ξ η => curv H z ξ η b b) ξ₁ η₁ ξ₂ η₂
-    - wedge (fun ξ η => curv H z ξ η a b) (fun ξ η => curv H z ξ η b a) ξ₁ η₁ ξ₂ η₂
-
-def chernTwo (H : E → Matrix n n ℂ) (z ξ₁ η₁ ξ₂ η₂ : E) : ℂ :=
-  kappa ^ 2 * (1 / 2 * ∑ a, ∑ b, curvMinor H z a b ξ₁ η₁ ξ₂ η₂)
-
-def chTwo (H : E → Matrix n n ℂ) (z ξ₁ η₁ ξ₂ η₂ : E) : ℂ :=
-  kappa ^ 2 / 2 *
-    ∑ a, ∑ b, wedge (fun ξ η => curv H z ξ η a b) (fun ξ η => curv H z ξ η b a) ξ₁ η₁ ξ₂ η₂
-
-def lineCurv (H : E → Matrix n n ℂ) (z : E) (w : n → ℂ) (ξ η : E) : ℂ :=
-  kappa * (form (H z) (curv H z ξ η *ᵥ w) w / form (H z) w w)
-
-theorem lineCurv_smul (H : E → Matrix n n ℂ) (z : E) (w : n → ℂ) {c : ℂ} (hc : c ≠ 0) :
-    lineCurv H z (c • w) = lineCurv H z w := by
-  ext ξ η
-  have hc' : conj c ≠ 0 := by simpa using hc
-  simp only [lineCurv, mulVec_smul, form_smul_left, form_smul_right, mul_div_mul_left _ _ hc,
-    mul_div_mul_left _ _ hc']
-
-theorem curvMinor_comm (H : E → Matrix n n ℂ) (z : E) (a b : n) :
-    curvMinor H z a b = curvMinor H z b a := by
-  ext; simp only [curvMinor, wedge]; ring
-
-theorem curvMinor_self (H : E → Matrix n n ℂ) (z : E) (a : n) (ξ₁ η₁ ξ₂ η₂ : E) :
-    curvMinor H z a a ξ₁ η₁ ξ₂ η₂ = 0 := sub_self _
-
-theorem chTwo_eq (H : E → Matrix n n ℂ) (z ξ₁ η₁ ξ₂ η₂ : E) :
-    chTwo H z ξ₁ η₁ ξ₂ η₂ =
-      (wedge (chernOne H z) (chernOne H z) ξ₁ η₁ ξ₂ η₂ - 2 * chernTwo H z ξ₁ η₁ ξ₂ η₂) / 2 := by
-  have h : wedge (chernOne H z) (chernOne H z) ξ₁ η₁ ξ₂ η₂ = kappa ^ 2 * ∑ a, ∑ b,
-      wedge (fun ξ η => curv H z ξ η a a) (fun ξ η => curv H z ξ η b b) ξ₁ η₁ ξ₂ η₂ := by
-    simp only [wedge, chernOne, trace, diag_apply, Finset.sum_add_distrib, Finset.sum_sub_distrib,
-      ← Finset.sum_mul_sum]
-    ring
-  simp only [h, chTwo, chernTwo, curvMinor, Finset.sum_sub_distrib]
-  ring
 
 theorem chernOne_line [Unique n] {H : E → Matrix n n ℂ} {z : E} {f : E → ℝ}
     (hf : ContDiffAt ℝ 2 f z) (hf0 : f z ≠ 0) (hH : ∀ᶠ x in 𝓝 z, H x default default = f x)
@@ -774,12 +630,6 @@ theorem IsHermFrame.sub (h : IsHermFrame U H) (hu : ∀ z ∈ U, IsUnit (subGram
 
 omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 
-theorem IsHermFrame.quot (h : IsHermFrame U H) (hu : ∀ z ∈ U, IsUnit (subGram (H z)).det) :
-    IsHermFrame U fun x => quotGram (H x) :=
-  .of_mContDiffAt h.isOpen (fun z hz => (h.mContDiffAt hz).quotGram (hu z hz))
-    (fun z hz => isHermitian_quotGram (h.herm z hz))
-    fun z hz => isUnit_det_quotGram (h.isUnit z hz) (hu z hz)
-
 omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 
 theorem IsPosFrame.sub (h : IsPosFrame U H) : IsPosFrame U fun x => subGram (H x) :=
@@ -789,24 +639,8 @@ theorem IsPosFrame.sub (h : IsPosFrame U H) : IsPosFrame U fun x => subGram (H x
 
 omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 
-theorem IsPosFrame.quot (h : IsPosFrame U H) : IsPosFrame U fun x => quotGram (H x) :=
-  (h.isHermFrame.quot fun z hz =>
-    (isUnit_iff_isUnit_det _).1 (posDef_subGram (h.posDef z hz)).isUnit).isPosFrame
-    fun z hz => posDef_quotGram (h.posDef z hz)
-
 theorem secondForm_eq (H : E → Matrix (m ⊕ l) (m ⊕ l) ℂ) (z ξ : E) :
     secondForm H z ξ = (conn H z ξ).toBlocks₂₁ := blockQS_eq _
-
-theorem form_secondForm (hh : (H z).IsHermitian) (hu : IsUnit (subGram (H z)).det) (ξ : E)
-    (s : m → ℂ) (q : l → ℂ) : form (quotGram (H z)) (secondForm H z ξ *ᵥ s) q =
-      form (subGram (H z)) s (secondFormAdj H z ξ *ᵥ q) :=
-  form_adj (isHermitian_subGram hh) hu (isHermitian_quotGram hh) _ s q
-
-theorem form_secondFormAdj_mul (hh : (H z).IsHermitian) (hu : IsUnit (subGram (H z)).det) (ξ : E)
-    (s : m → ℂ) : form (subGram (H z)) (-(secondFormAdj H z ξ * secondForm H z ξ) *ᵥ s) s =
-      -form (quotGram (H z)) (secondForm H z ξ *ᵥ s) (secondForm H z ξ *ᵥ s) := by
-  rw [← conj_form (isHermitian_quotGram hh), form_secondForm hh hu,
-    conj_form (isHermitian_subGram hh), mulVec_mulVec, neg_mulVec, form, form, neg_dotProduct]
 
 theorem extForm_eq_neg_mdbar (H : E → Matrix (m ⊕ l) (m ⊕ l) ℂ) (z η : E) :
     extForm H z η = -mdbar (fun x => orthCoeff (H x)) z η := by
@@ -876,9 +710,6 @@ theorem curv_submatrix_equiv [Fintype n] [DecidableEq n] (K : E → Matrix n n �
   simp only [curv, conn_submatrix_equiv]
   rfl
 
-def firstSecondForm {N j : ℕ} (hj : j ≤ N) (K : E → Matrix (Fin N) (Fin N) ℂ) (z ξ : E) :
-    Matrix (Fin (N - j)) (Fin j) ℂ := secondForm (fun x => adapt hj (K x)) z ξ
-
 end Sub
 
 section Examples
@@ -912,39 +743,8 @@ theorem curv_tautGram_zero (e : ℕ) (ξ η : Fin e → ℂ) :
   rw [h, leviForm_log_normSq_add_comp φ.contDiff.contDiffAt (by simp), φ.fderiv]
   simp [φ, PiLp.inner_apply]
 
-example (ξ : Fin 1 → ℂ) :
-    diagVal (chernOne (tautGram 1) 0) ξ = -‖ξ 0‖ ^ 2 / (2 * Real.pi) := by
-  have : -I * chernOne (tautGram 1) 0 ξ ξ = ((-‖ξ 0‖ ^ 2 / (2 * Real.pi) : ℝ) : ℂ) := by
-    simp only [chernOne, curv_tautGram_zero, kappa, Fin.sum_univ_one, mul_conj', trace_smul,
-      trace_one, Fintype.card_fin, smul_eq_mul]
-    push_cast
-    linear_combination ((‖ξ 0‖ : ℂ) ^ 2 / (2 * Real.pi)) * I_mul_I
-  rw [diagVal, this, ofReal_re]
-
-example : ¬ TwoFormBound {0} (tautGram 1) (fun _ => 1) (curv (tautGram 1)) 0 := fun h => by
-  have := h.norm_form_le rfl (fun _ => 1) fun _ => 1
-  simp [curv_tautGram_zero, form_eq_sum, tautGram, neg_mulVec] at this
-  exact absurd this (by norm_num)
-
-example : IsHermFrame Set.univ (fun z => -tautGram 1 z) ∧
-    ¬ IsPosFrame Set.univ (fun z => -tautGram 1 z) := by
-  have h := (isPosFrame_tautGram 1).isHermFrame
-  refine ⟨⟨isOpen_univ, fun a b => (h.smooth a b).neg, fun z hz => (h.herm z hz).neg,
-    fun z hz => ?_⟩, fun h' => ?_⟩
-  · rw [det_neg]; exact (isUnit_one.neg.pow _).mul (h.isUnit z hz)
-  · have := (h'.posDef 0 trivial).diag_pos (i := 0)
-    simp [tautGram] at this
-    exact absurd this (by norm_num)
-
 def tautPairGram (z : ℂ) : Matrix (Unit ⊕ Unit) (Unit ⊕ Unit) ℂ :=
   fromBlocks (of fun _ _ => 1 + z * conj z) (of fun _ _ => z) (of fun _ _ => conj z) 1
-
-example (ξ : ℂ) : secondForm tautPairGram 0 ξ () () = ξ := by
-  have h : tautPairGram 0 = 1 := by
-    rw [← fromBlocks_one]; ext (a | a) (b | b) <;> simp [tautPairGram]
-  rw [secondForm_eq, conn, h, transpose_one, inv_one, Matrix.one_mul]
-  change del (fun x : ℂ => x) 0 ξ = ξ
-  rw [del_eq_fderiv differentiableAt_fun_id]; simp
 
 end Examples
 

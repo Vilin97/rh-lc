@@ -93,94 +93,11 @@ section UnitsChart
 
 variable (𝕂 : Type*) [RCLike 𝕂] {𝔸 : Type*} [NormedRing 𝔸] [NormedAlgebra 𝕂 𝔸] [CompleteSpace 𝔸]
 
-local notation "𝔢" => expPartialHomeomorph 𝕂 𝔸
-
-noncomputable def expChartUnits (g : 𝔸ˣ) : OpenPartialHomeomorph 𝔸ˣ 𝔸 where
-  toFun x := (𝔢).symm ((g⁻¹ * x : 𝔸ˣ) : 𝔸)
-  invFun X := g * expUnit 𝕂 𝔸 X
-  source := {x | ((g⁻¹ * x : 𝔸ˣ) : 𝔸) ∈ (𝔢).target}
-  target := (𝔢).source
-  map_source' x hx := (𝔢).map_target hx
-  map_target' X hX := by
-    simp only [mem_ofPred_eq, inv_mul_cancel_left, coe_expUnit]
-    exact (𝔢).map_source hX
-  left_inv' x hx := by
-    have h2 : exp ((𝔢).symm ((g⁻¹ * x : 𝔸ˣ) : 𝔸)) = ((g⁻¹ * x : 𝔸ˣ) : 𝔸) := (𝔢).right_inv hx
-    apply Units.ext
-    show (g : 𝔸) * exp ((𝔢).symm ((g⁻¹ * x : 𝔸ˣ) : 𝔸)) = x
-    rw [h2, ← Units.val_mul, mul_inv_cancel_left]
-  right_inv' X hX := by
-    simp only [inv_mul_cancel_left, coe_expUnit]
-    exact (𝔢).left_inv hX
-  open_source := (𝔢).open_target.preimage (Units.continuous_val.comp (continuous_const.mul continuous_id))
-  open_target := (𝔢).open_source
-  continuousOn_toFun := (𝔢).continuousOn_symm.comp
-    (Units.continuous_val.comp (continuous_const.mul continuous_id)).continuousOn (fun _ hx => hx)
-  continuousOn_invFun := (continuous_const.mul (continuous_expUnit 𝕂 𝔸)).continuousOn
-
-theorem mem_expChartUnits_source (g : 𝔸ˣ) : g ∈ (expChartUnits 𝕂 g).source := by
-  show ((g⁻¹ * g : 𝔸ˣ) : 𝔸) ∈ (𝔢).target
-  simpa using one_mem_expPartialHomeomorph_target 𝕂 𝔸
-
-theorem expChartUnits_self (g : 𝔸ˣ) : expChartUnits 𝕂 g g = 0 := by
-  show (𝔢).symm ((g⁻¹ * g : 𝔸ˣ) : 𝔸) = 0
-  simpa using expPartialHomeomorph_symm_one 𝕂 𝔸
-
-theorem expChartUnits_symm_apply (g : 𝔸ˣ) (X : 𝔸) :
-    (((expChartUnits 𝕂 g).symm X : 𝔸ˣ) : 𝔸) = g * exp X := rfl
-
-theorem expChartUnits_mem_maximalAtlas (g : 𝔸ˣ) (n : WithTop ℕ∞) :
-    expChartUnits 𝕂 g ∈ IsManifold.maximalAtlas 𝓘(𝕂, 𝔸) n 𝔸ˣ := by
-  rw [IsManifold.mem_maximalAtlas_iff]
-  intro e' he'
-  obtain rfl : e' = _ := he'
-  have h1 : (expChartUnits 𝕂 g).symm ≫ₕ
-      Units.isOpenEmbedding_val.toOpenPartialHomeomorph (Units.val : 𝔸ˣ → 𝔸) ∈
-      contDiffGroupoid n 𝓘(𝕂, 𝔸) := by
-    rw [contDiffGroupoid, mem_groupoid_of_pregroupoid]
-    constructor
-    · simp only [contDiffPregroupoid, modelWithCornersSelf_coe, modelWithCornersSelf_coe_symm,
-        Function.id_comp, Function.comp_id, preimage_id_eq, range_id, inter_univ]
-      exact (contDiff_const.mul (contDiff_exp 𝕂 𝔸)).contDiffOn.congr (fun X _ => rfl)
-    · simp only [contDiffPregroupoid, modelWithCornersSelf_coe, modelWithCornersSelf_coe_symm,
-        Function.id_comp, Function.comp_id, preimage_id_eq, range_id, inter_univ]
-      set e0 := Units.isOpenEmbedding_val.toOpenPartialHomeomorph (Units.val : 𝔸ˣ → 𝔸)
-      have hmaps : MapsTo (fun a : 𝔸 => ((g⁻¹ : 𝔸ˣ) : 𝔸) * a)
-          ((expChartUnits 𝕂 g).symm ≫ₕ e0).symm.source (𝔢).target := by
-        intro a ha
-        rw [OpenPartialHomeomorph.symm_source, OpenPartialHomeomorph.trans_target] at ha
-        have hr : ((e0.symm a : 𝔸ˣ) : 𝔸) = a := e0.right_inv ha.1
-        have := ha.2
-        simp only [mem_preimage] at this
-        change (((g⁻¹ * e0.symm a : 𝔸ˣ) : 𝔸)) ∈ (𝔢).target at this
-        rwa [Units.val_mul, hr] at this
-      refine ((contDiffOn_expPartialHomeomorph_symm 𝕂 𝔸).comp
-        (contDiff_const.mul contDiff_id).contDiffOn hmaps).congr ?_
-      intro a ha
-      rw [OpenPartialHomeomorph.symm_source, OpenPartialHomeomorph.trans_target] at ha
-      have hr : ((e0.symm a : 𝔸ˣ) : 𝔸) = a := e0.right_inv ha.1
-      show (𝔢).symm (((g⁻¹ * e0.symm a : 𝔸ˣ) : 𝔸)) = _
-      rw [Units.val_mul, hr]; rfl
-  refine ⟨h1, ?_⟩
-  have := (contDiffGroupoid n 𝓘(𝕂, 𝔸)).symm h1
-  rwa [OpenPartialHomeomorph.trans_symm_eq_symm_trans_symm, OpenPartialHomeomorph.symm_symm] at this
-
 end UnitsChart
 
 section GeneralLinear
 
 open scoped Matrix.Norms.L2Operator
-
-theorem lieGroup_GL (𝕂 : Type*) [RCLike 𝕂] (n : ℕ) (k : WithTop ℕ∞) :
-    LieGroup 𝓘(𝕂, Matrix (Fin n) (Fin n) 𝕂) k (GL (Fin n) 𝕂) := inferInstance
-
-theorem lieGroup_GL_complex_real (n : ℕ) (k : WithTop ℕ∞) :
-    LieGroup 𝓘(ℝ, Matrix (Fin n) (Fin n) ℂ) k (GL (Fin n) ℂ) := inferInstance
-
-theorem expChart_GL_mem_maximalAtlas (𝕂 : Type*) [RCLike 𝕂] (n : ℕ) (g : GL (Fin n) 𝕂)
-    (k : WithTop ℕ∞) :
-    expChartUnits 𝕂 g ∈ IsManifold.maximalAtlas 𝓘(𝕂, Matrix (Fin n) (Fin n) 𝕂) k (GL (Fin n) 𝕂) :=
-  expChartUnits_mem_maximalAtlas 𝕂 g k
 
 end GeneralLinear
 
@@ -210,8 +127,6 @@ theorem continuous_val_val (G : Subgroup 𝔸ˣ) : Continuous (fun x : G => ((x 
 namespace IsExpLieAlgebra
 
 variable {G : Subgroup 𝔸ˣ} {𝔤 : Submodule ℝ 𝔸} (h : IsExpLieAlgebra G 𝔤)
-
-local notation "𝔢" => expPartialHomeomorph ℝ 𝔸
 
 def nhd : Set 𝔸 := h.exists_nhds.choose
 
@@ -290,8 +205,6 @@ end IsExpLieAlgebra
 namespace IsExpLieAlgebra
 
 variable {G : Subgroup 𝔸ˣ} {𝔤 : Submodule ℝ 𝔸} (h : IsExpLieAlgebra G 𝔤)
-
-local notation "𝔢" => expPartialHomeomorph ℝ 𝔸
 
 @[instance_reducible]
 noncomputable def chartedSpace : ChartedSpace 𝔤 G where
@@ -448,8 +361,6 @@ open scoped Matrix.Norms.L2Operator
 
 variable (p q : ℕ)
 
-local notation "𝔐" => Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ
-
 theorem mem_indefiniteUnitaryLieAlgebra_iff {X : 𝔐} :
     X ∈ indefiniteUnitaryLieAlgebra p q ↔ Xᴴ = -(indefJ p q * X * indefJ p q) := by
   change Xᴴ * indefJ p q + indefJ p q * X = 0 ↔ _
@@ -510,13 +421,6 @@ theorem isExpLieAlgebra_indefiniteUnitary :
             · exact norm_indefJ_le p q
         _ < ε := by simpa using hX')
     exact (expPartialHomeomorph ℝ 𝔐).injOn hs1 hs2 h2
-
-noncomputable instance : ChartedSpace (indefiniteUnitaryLieAlgebra p q) (indefiniteUnitaryGroup p q) :=
-  (isExpLieAlgebra_indefiniteUnitary p q).chartedSpace
-
-instance lieGroup_indefiniteUnitary (n : WithTop ℕ∞) :
-    LieGroup 𝓘(ℝ, indefiniteUnitaryLieAlgebra p q) n (indefiniteUnitaryGroup p q) :=
-  (isExpLieAlgebra_indefiniteUnitary p q).lieGroup n
 
 end IndefiniteUnitaryLie
 

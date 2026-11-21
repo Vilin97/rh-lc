@@ -93,8 +93,6 @@ theorem eq_smul_of_proj_eq {z w : (Σ k, ι k) → ℂ} (hz : z ∈ blocksNe ι)
   have e : z = torusSmul (coefAt z w) w := by rw [← secAt_proj, h, secAt_proj_self hz]
   exact ⟨coefAt z w, coef_ne_zero (e ▸ hz), e⟩
 
-local notation "𝕟" => ((⊤ : ℕ∞) : WithTop ℕ∞)
-
 theorem isOpen_blocksNe : IsOpen (blocksNe ι) := by
   have : blocksNe ι = ⋂ k, ⋃ i, {z : (Σ k, ι k) → ℂ | z ⟨k, i⟩ ≠ 0} := by
     ext z; simp [blocksNe]

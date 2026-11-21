@@ -34,8 +34,6 @@ def sndHom : SD M G →* G where
   map_one' := rfl
   map_mul' _ _ := rfl
 
-@[simp] lemma sndHom_apply (p : SD M G) : sndHom p = p.2 := rfl
-
 lemma pow_fst_of_fixed (p : SD M G) (h : p.2 • p.1 = p.1) (n : ℕ) :
     (p ^ n).1 = n • p.1 := by
   have hs : ∀ k : ℕ, (p ^ k).2 = p.2 ^ k := fun k => by

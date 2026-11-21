@@ -1,5 +1,8 @@
 import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.WeightedSumBounds.PeriodValuationTheory
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.WeightedSumBounds.TypicalCurveStructureConstants
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.WeightedSumBounds.RootStatement
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.WeightedSumBounds.FactorialWeightedSumBound
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.WeightedSumBounds.OmBStatement
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.WeightedSumBounds.WtSubOneLe
 import Development.AbelianVarietyTheory.Definitions.Foundations.IsSatFrame
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsExpEqOfSubstLg
@@ -37,12 +40,6 @@ theorem mfact_fintype {σ : Type} [Fintype σ] (α : σ →₀ ℕ) :
     (mfact α : C) = ∏ i, ((α i).factorial : C) :=
   Finsupp.prod_fintype _ _ (by simp)
 
-theorem mfact_mem {σ : Type} (α : σ →₀ ℕ) : (mfact α : C) ∈ intSub v :=
-  Subring.prod_mem _ fun _ _ => natCast_mem _ _
-
-theorem mvIsInt_iff {σ : Type} (g : MvPowerSeries σ C) : MvIsInt v g ↔ ∀ α, coeff α g ∈ intSub v :=
-  Iff.rfl
-
 theorem mvIsInt_mul {σ : Type} {g h : MvPowerSeries σ C} (hg : MvIsInt v g) (hh : MvIsInt v h) :
     MvIsInt v (g * h) := by
   classical
@@ -55,13 +52,6 @@ theorem mvIsInt_sum {σ ι : Type} (s : Finset ι) {g : ι → MvPowerSeries σ 
   intro α
   rw [← mem_intSub, map_sum]
   exact Subring.sum_mem _ fun i _ => hg i α
-
-theorem hurInt_of_mvIsInt {σ : Type} {g : MvPowerSeries σ C} (hg : MvIsInt v g) : HurInt v g :=
-  fun α => Subring.mul_mem _ (mfact_mem α) (hg α)
-
-theorem hurInt_add {σ : Type} {g h : MvPowerSeries σ C} (hg : HurInt v g) (hh : HurInt v h) :
-    HurInt v (g + h) := fun α => by
-  rw [map_add, mul_add]; exact Subring.add_mem _ (hg α) (hh α)
 
 theorem hurInt_zero {σ : Type} : HurInt v (0 : MvPowerSeries σ C) := fun α => by simp
 
@@ -78,10 +68,6 @@ theorem hurInt_sum {σ ι : Type} (s : Finset ι) {g : ι → MvPowerSeries σ C
   intro α
   rw [map_sum, Finset.mul_sum]
   exact Subring.sum_mem _ fun i hi => hg i hi α
-
-theorem hurInt_C_mul {σ : Type} {c : C} (hc : c ∈ intSub v) {g : MvPowerSeries σ C}
-    (hg : HurInt v g) : HurInt v (MvPowerSeries.C c * g) := fun α => by
-  rw [coeff_C_mul, mul_left_comm]; exact Subring.mul_mem _ hc (hg α)
 
 theorem hurInt_mul {σ : Type} [Fintype σ] {g h : MvPowerSeries σ C} (hg : HurInt v g)
     (hh : HurInt v h) : HurInt v (g * h) := by

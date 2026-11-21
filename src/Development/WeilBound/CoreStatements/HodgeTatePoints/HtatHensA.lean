@@ -105,8 +105,6 @@ attribute [instance] commRing algebra etale
 
 variable {R K}
 
-instance : CoeSort (PointedEtale R K) (Type u) := ⟨carrier⟩
-
 @[ext]
 structure Hom (X Y : PointedEtale R K) where
 
@@ -118,16 +116,8 @@ instance : Category (PointedEtale R K) where
   id X := ⟨AlgHom.id R X, by ext; rfl⟩
   comp f g := ⟨g.alg.comp f.alg, by rw [← AlgHom.comp_assoc, g.comm, f.comm]⟩
 
-@[ext]
 theorem hom_ext {X Y : PointedEtale R K} {f g : X ⟶ Y} (h : f.alg = g.alg) : f = g :=
   Hom.ext h
-
-@[simp]
-theorem id_alg (X : PointedEtale R K) : (𝟙 X : X ⟶ X).alg = AlgHom.id R X := rfl
-
-@[simp]
-theorem comp_alg {X Y Z : PointedEtale R K} (f : X ⟶ Y) (g : Y ⟶ Z) :
-    (f ≫ g).alg = g.alg.comp f.alg := rfl
 
 theorem pt_alg {X Y : PointedEtale R K} (f : X ⟶ Y) (x : X) : Y.pt (f.alg x) = X.pt x :=
   congr($(f.comm) x)
@@ -162,9 +152,6 @@ noncomputable def toAway (X : PointedEtale R K) (s : X) (hs : IsUnit (X.pt s)) :
     X ⟶ X.away s hs :=
   ⟨(IsScalarTower.toAlgHom R X (Localization.Away s) : X →ₐ[R] Localization.Away s), by
     ext x; exact IsLocalization.Away.lift_eq s hs x⟩
-
-theorem toAway_alg_apply (X : PointedEtale R K) (s : X) (hs : IsUnit (X.pt s)) (x : X) :
-    (X.toAway s hs).alg x = algebraMap X (Localization.Away s) x := rfl
 
 theorem isUnit_toAway (X : PointedEtale R K) (s : X) (hs : IsUnit (X.pt s)) :
     IsUnit ((X.toAway s hs).alg s) :=
@@ -250,10 +237,6 @@ noncomputable def diagram : PointedEtale R K ⥤ CommRingCat.{u} where
   obj X := CommRingCat.of X
   map f := CommRingCat.ofHom f.alg.toRingHom
 
-@[simp]
-theorem diagram_map_apply {X Y : PointedEtale R K} (f : X ⟶ Y) (x : X) :
-    (diagram R K).map f x = f.alg x := rfl
-
 end PointedEtale
 
 end Pointed
@@ -319,8 +302,6 @@ theorem toK_of (X : PointedEtale R K) (x : X) : toK (of X x) = X.pt x :=
 
 noncomputable instance : Algebra R (etaleColimit R K) := (of (base : PointedEtale R K)).toAlgebra
 
-theorem algebraMap_eq_of_base : algebraMap R (etaleColimit R K) = of base := rfl
-
 @[simp]
 theorem toK_algebraMap (r : R) : toK (algebraMap R (etaleColimit R K) r) = algebraMap R K r :=
   toK_of base r
@@ -334,12 +315,6 @@ noncomputable def ofAlgHom (X : PointedEtale R K) : X →ₐ[R] etaleColimit R K
 
 @[simp]
 theorem ofAlgHom_apply (X : PointedEtale R K) (x : X) : ofAlgHom X x = of X x := rfl
-
-noncomputable def toKAlgHom : etaleColimit R K →ₐ[R] K :=
-  { toK with commutes' := fun r ↦ (toK_of base r).trans rfl }
-
-@[simp]
-theorem toKAlgHom_apply (y : etaleColimit R K) : toKAlgHom y = toK y := rfl
 
 theorem isUnit_of_toK_ne_zero {y : etaleColimit R K} (hy : toK y ≠ 0) : IsUnit y := by
   obtain ⟨X, x, rfl⟩ := exists_of y
@@ -363,9 +338,6 @@ instance isLocalRing : IsLocalRing (etaleColimit R K) :=
 theorem maximalIdeal_eq : maximalIdeal (etaleColimit R K) = RingHom.ker toK := by
   ext y
   rw [mem_maximalIdeal, mem_nonunits_iff, isUnit_iff_toK_ne_zero, not_not, RingHom.mem_ker]
-
-theorem residue_eq_zero_iff_toK_eq_zero (y : etaleColimit R K) : residue _ y = 0 ↔ toK y = 0 := by
-  rw [IsLocalRing.residue_eq_zero_iff, maximalIdeal_eq, RingHom.mem_ker]
 
 theorem exists_monic_lift (F : (etaleColimit R K)[X]) (hF : F.Monic) :
     ∃ (X : PointedEtale R K) (q : X[X]), q.Monic ∧ q.map (of X) = F := by

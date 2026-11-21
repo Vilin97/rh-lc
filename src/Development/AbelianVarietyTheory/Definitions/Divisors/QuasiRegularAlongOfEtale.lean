@@ -107,15 +107,9 @@ theorem Fil_le : Fil I a V ≤ V := inf_le_left
 
 theorem Fil_le_filTop : Fil I a V ≤ filTop p B O I a := inf_le_right
 
-@[simp] theorem Fil_top : Fil I a (⊤ : Submodule k (H0 p B O)) = filTop p B O I a := top_inf_eq _
-
-@[simp] theorem Fil_zero : Fil I 0 V = V := inf_eq_left.2 fun f _ => vanishesTo_zero f
-
 theorem Fil_anti (e : a ≤ b) : Fil I b V ≤ Fil I a V := fun _ h => ⟨h.1, VanishesTo.mono h.2 e⟩
 
 variable (I a V) in
-
-abbrev gr : Type := Fil I a V ⧸ (Fil I (a + 1) V).submoduleOf (Fil I a V)
 
 variable (p I B) in
 
@@ -282,25 +276,6 @@ theorem VanishesTo.mulMono (s : ι → L.Sec) (α : MonoDeg ι a) (h : n + a = l
 theorem vanishesTo_mulMono (s : ι → L.Sec) (α : MonoDeg ι a) (h : n + a = l)
     (m : H0 p (tw M L n) O) : VanishesTo (cutIdeal hL s) a (mulMono hM hL s α h m) :=
   (vanishesTo_zero m).mulMono hM hL s α h
-
-theorem zone_f (j : (lbZPow L 0).ι) : (Twist.zone L).f j = 1 := by
-  rw [Twist.f_eq_zfun, Twist.zfun_zone, map_one]
-
-theorem nonzeroLocus_zone : nonzeroLocus (Twist.zone L) = ⨆ j, L.U j := by
-  refine le_antisymm (fun y hy => ?_) (iSup_le fun j y hj => ?_)
-  · obtain ⟨j, hj⟩ := exists_chart_of_mem_nonzeroLocus hy
-    exact Opens.mem_iSup.2 ⟨_, Twist.zpow_U_le j hj⟩
-  · exact (isUnit_ger_iff (i := fun _ => j) _ (mem_zpow_U.2 hj)).1
-      (zone_f (L := L) _ ▸ isUnit_one.map _)
-
-def toTwZero : H0 p M O ≃ₗ[k] H0 p (tw M L 0) O :=
-  (baseChart hM hL 0).mulEquiv (σ := H0.ofSec p O (Twist.zone L)) fun y hy i hi => by
-    rw [germ_ofSec, isUnit_ger_iff, nonzeroLocus_zone, hL.cover]
-    trivial
-
-def toTwZeroOn : sectionsOnClosedSubscheme p M I ≃ₗ[k] sectionsOnClosedSubscheme p (tw M L 0) I :=
-  ((baseChart hM hL 0).pull I.subschemeι).mulEquiv (σ := secOn p I (Twist.zone L))
-    (nowhereZero_secOn fun y _ => by rw [nonzeroLocus_zone, hL.cover]; trivial)
 
 end Mul
 
@@ -708,10 +683,6 @@ theorem sym_eq_zero_iff (f : Fil (cutIdeal hL s) a V) :
 
 variable (V) in
 
-theorem ker_sym : LinearMap.ker (sym K hL hA hB s hS e he hO h V) =
-    (Fil (cutIdeal hL s) (a + 1) V).submoduleOf (Fil (cutIdeal hL s) a V) :=
-  Submodule.ext (sym_eq_zero_iff K hL hA hB s hS e he hO h)
-
 theorem sym_sum (m : MonoDeg (Fin D) a → H0 p (tw (tens K.bundle A) L n) O)
     (f : Fil (cutIdeal hL s) a V) (hf : f.1 = ∑ α, mulMono (isLB_tens K.isLB hA) hL s α h (m α)) :
     sym K hL hA hB s hS e he hO h V f = fun α => Res K hL hA hB s hS n e he hO (m α) := by
@@ -729,9 +700,6 @@ theorem sym_mulMono (α : MonoDeg (Fin D) a) (m : H0 p (tw (tens K.bundle A) L n
       (by simp), Pi.single_eq_same]
 
 variable (V) in
-
-def symGr : gr (cutIdeal hL s) a V →ₗ[k] SymTarget p B hL s a n :=
-  Submodule.liftQ _ (sym K hL hA hB s hS e he hO h V) (ker_sym K hL hA hB s hS e he hO h V).ge
 
 end Symbol
 
@@ -955,27 +923,6 @@ theorem det_mul_valOn_Res {R : Type} [CommRing R] {g : Fin D → MvPolynomial (F
     (evalPt_res _ le_top le_top _ _))).trans (key _ hx).2)
   exact congrArg (· * _) ((key _ hx).1.symm.trans ((one_mul _).symm.trans
     (congrArg (· * _) ((congrArg _ (map_one _)).trans (map_one _)).symm)))
-
-example : VanishesTo (ideal X) 2 (H0.ofSec (affStr ℚ 2) ⊤ (polySec (X 0 * X 1))) ∧
-    ¬ VanishesTo (ideal X) 3 (H0.ofSec (affStr ℚ 2) ⊤ (polySec (X 0 * X 1))) := by
-  simp only [vanishesTo_iff]
-  refine ⟨?_, fun h => ?_⟩
-  · rw [pow_two]
-    exact Ideal.mul_mem_mul (Ideal.subset_span ⟨0, rfl⟩) (Ideal.subset_span ⟨1, rfl⟩)
-  have := (mem_pow_idealOfVars_iff' 3 _).1 h (Finsupp.single 0 1 + Finsupp.single 1 1) (by simp)
-  simp [X, monomial_mul] at this
-
-example {R : Type} [CommRing R] (hS : Etale ((ideal ![X 1, X 0]).subschemeι ≫ affStr k 2))
-    (f : MvPolynomial (Fin 2) k) (x : Sp R ⟶ (ideal ![X 1, X 0]).subscheme)
-    (φ : MvPolynomial (Fin 2) k →+* R) (hx : x ≫ (ideal ![X 1, X 0]).subschemeι = spMap φ) :
-    valOn x (twIdx 0 PUnit.unit PUnit.unit) (fun _ _ => mem_tw_triv _ _)
-      (Res (affineSpace k 2) isLB_triv isLB_triv isLB_triv _ hS 0 one (suppIn_one _) suppIn_top
-        (form 0 f)) = -φ f := by
-  rw [← det_mul_valOn_Res hS 0 f x φ hx]
-  simp [Matrix.det_fin_two]
-
-example : Etale ((ideal ![X 1, X 0]).subschemeι ≫ affStr k 2) :=
-  etale_of_span (congrArg Ideal.span (by simp [Set.pair_comm, Set.ext_iff, Fin.exists_fin_two, eq_comm, or_comm]))
 
 end AffineExample
 

@@ -170,69 +170,6 @@ theorem yv_rat {j : Fin D.R.m} {j' : ℕ} {hj : j.1 + 1 = j'} {Y : RowMod D P.re
   rw [yv_apply, yv_apply]
   exact lift_left _ _ hm _ γ hγ x
 
-theorem lamI_inv : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (D : D7) (P : Pin hL D) (X : GlobalTheory.NJoin.RealAt D P.cf P.C P.tp) (A : GlobalTheory.NJoin.Agree X P.M P.rep) (i : D.nd.Loc) (j : Fin D.R.m) (hj : j.1 + 1 = D.nd.j i) (Y : RowMod D P.rep (D.nd.j i)) (hc : GlobalTheory.NJoin.IsCanon X j hj Y) (hμ : Formalism.IndefR.RecTie.Used0 D (D.nd.mu i)) (h : GAf D.host.E D.R.nV) (g : GAf D.host.E D.R.r) (φ : (X.R.cV j).W →ₗ[ℂ] (Formalism.IndefR.Datum.WO (Formalism.IndefR.Links.Vc D j) (Formalism.IndefR.Links.Wc D j) → ℂ)), φ ∈ GlobalTheory.ThetaTri.OmI A i j hj hc hμ → ∀ (F F' : ↥(NG.AFall D.host.E D.R.nV (P.M.loc i).wt.ρ)) (y y' : ↥Y.C), (F' : GAf D.host.E D.R.nV → (P.M.loc i).wt.W) = NG.rt D.host.E D.R.nV h F → (y' : Y.A) = Y.ρ g y → GlobalTheory.ThetaTri.lamI A i j hj hc hμ (GlobalTheory.ThetaTri.valAct1 (GlobalTheory.ThetaTri.omStd A j (X.tupT (D.nd.mu i))) (h, g) φ) F' y' = GlobalTheory.ThetaTri.lamI A i j hj hc hμ φ F y := by
-  intro hL D P X A i j hj Y hc hμ h g φ hφ F F' y y' hF hy
-  have hcore := X.given.core
-  have hW := hcore.thP.ωP j (X.tupT (D.nd.mu i))
-  have hcv : (X.R.cV j).Is := hcore.models.cV j
-  have hth : ∀ v, IsThetaFunO X.R.ψ (Vc D j) (Wc D j) (φ v) := by
-    intro v
-    have := (hφ 1).1 v
-    simpa [valAct1_apply] using this
-  have hV := hcore.models.νV j (X.tupT (D.nd.mu i))
-  have hWm := hcore.models.νW j
-  haveI : (X.R.νV j (X.tupT (D.nd.mu i))).IsHaarMeasure := hV.1.1
-  haveI : (X.R.νV j (X.tupT (D.nd.mu i))).IsMulRightInvariant :=
-    GlobalTheory.AdelicPointsUnimod.isMulRightInvariant_of_isHaarMeasure D _ _ hV.1.1
-  haveI : (X.R.νW j).IsHaarMeasure := hWm.1.1
-  haveI : (X.R.νW j).IsMulRightInvariant :=
-    GlobalTheory.AdelicPointsUnimod.isMulRightInvariant_of_isHaarMeasure D _ _ hWm.1.1
-  haveI : Countable (GQ (Vc D j)) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.countableGamma D.sp.cm.sig (Vc D j).gram
-  haveI : Countable (GQ (Wc D j)) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.countableGamma D.sp.cm.sig (Wc D j).gram
-  have inner : ∀ g₀, thIn (X.R.ωP j (X.tupT (D.nd.mu i))) (fV A i j hj hμ) (X.R.νV j (X.tupT (D.nd.mu i)))
-      (X.R.fdV j (X.tupT (D.nd.mu i))) (valAct1 (omStd A j (X.tupT (D.nd.mu i))) (h, g) φ) F' g₀ =
-      thIn (X.R.ωP j (X.tupT (D.nd.mu i))) (fV A i j hj hμ) (X.R.νV j (X.tupT (D.nd.mu i)))
-      (X.R.fdV j (X.tupT (D.nd.mu i))) φ F (g₀ * (X.PW j).ψ g) := by
-    intro g₀
-    unfold thIn
-    have e1 : ∀ h₀, thetaKO (X.R.ωP j (X.tupT (D.nd.mu i))) h₀ g₀
-        (valAct1 (omStd A j (X.tupT (D.nd.mu i))) (h, g) φ (fV A i j hj hμ F' h₀)) =
-        thetaKO (X.R.ωP j (X.tupT (D.nd.mu i))) (h₀ * (A.PV j).ψ h) (g₀ * (X.PW j).ψ g)
-          (φ (fV A i j hj hμ F (h₀ * (A.PV j).ψ h))) := by
-      intro h₀
-      rw [valAct1_apply, fV_rt A i j hj hμ hcv h F F' hF h₀]
-      exact thetaKO_act _ _ _ _ _
-    simp only [e1]
-    refine (Formalism.IndefR.Eqv.rightInv_holds _ (GQ (Vc D j)) _ _ hV.2
-      (fun h₁ => thetaKO (X.R.ωP j (X.tupT (D.nd.mu i))) h₁ (g₀ * (X.PW j).ψ g) (φ (fV A i j hj hμ F h₁))) ?_ _).2
-    intro γ hγ h₁
-    rw [fV_rat A i j hj hμ F γ hγ h₁]
-    have := (GlobalTheory.thetaKO_rat_left_and_eigen_right _ _ _ _ _ _ hW _ (hth (fV A i j hj hμ F h₁))).1 γ hγ 1
-      (one_mem _) h₁ (g₀ * (X.PW j).ψ g)
-    rwa [one_mul] at this
-  unfold lamI lamV
-  congr 1
-  have e2 : ∀ g₀, star (yv hc y' g₀) * thIn (X.R.ωP j (X.tupT (D.nd.mu i))) (fV A i j hj hμ)
-      (X.R.νV j (X.tupT (D.nd.mu i))) (X.R.fdV j (X.tupT (D.nd.mu i)))
-      (valAct1 (omStd A j (X.tupT (D.nd.mu i))) (h, g) φ) F' g₀ =
-      star (yv hc y (g₀ * (X.PW j).ψ g)) * thIn (X.R.ωP j (X.tupT (D.nd.mu i))) (fV A i j hj hμ)
-      (X.R.νV j (X.tupT (D.nd.mu i))) (X.R.fdV j (X.tupT (D.nd.mu i))) φ F (g₀ * (X.PW j).ψ g) := by
-    intro g₀
-    rw [inner, yv_rt hc g y y' hy]
-  simp only [e2]
-  refine (Formalism.IndefR.Eqv.rightInv_holds _ (GQ (Wc D j)) _ _ hWm.2
-    (fun g₁ => star (yv hc y g₁) * thIn (X.R.ωP j (X.tupT (D.nd.mu i))) (fV A i j hj hμ)
-      (X.R.νV j (X.tupT (D.nd.mu i))) (X.R.fdV j (X.tupT (D.nd.mu i))) φ F g₁) ?_ _).2
-  intro γ hγ g₁
-  rw [yv_rat hc y γ hγ g₁]
-  congr 1
-  unfold thIn
-  congr 1
-  funext h₁
-  have := (GlobalTheory.thetaKO_rat_left_and_eigen_right _ _ _ _ _ _ hW _ (hth (fV A i j hj hμ F h₁))).1 1 (one_mem _) γ hγ
-    h₁ g₁
-  rwa [one_mul] at this
-
 end GlobalTheory.ThetaTri
 
 end

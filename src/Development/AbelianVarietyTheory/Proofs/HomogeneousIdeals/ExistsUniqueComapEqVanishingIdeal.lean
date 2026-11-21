@@ -112,22 +112,8 @@ noncomputable def twist (σ : L →ₐ[K] L) : Y ⟶ Y :=
 @[reassoc (attr := simp)]
 theorem twist_fst (σ : L →ₐ[K] L) : twist H σ ≫ π = π := H.lift_fst _ _ _
 
-@[reassoc (attr := simp)]
 theorem twist_snd (σ : L →ₐ[K] L) :
     twist H σ ≫ q = q ≫ Spec.map (CommRingCat.ofHom σ.toRingHom) := H.lift_snd _ _ _
-
-@[simp]
-theorem twist_id : twist H (AlgHom.id K L) = 𝟙 Y := by
-  apply H.hom_ext
-  · simp
-  · rw [twist_snd, Category.id_comp]
-    exact (congrArg (q ≫ ·) (Spec.map_id _)).trans (Category.comp_id _)
-
-theorem twist_comp (σ τ : L →ₐ[K] L) : twist H (σ.comp τ) = twist H σ ≫ twist H τ := by
-  apply H.hom_ext
-  · simp
-  · rw [twist_snd, Category.assoc, twist_snd, twist_snd_assoc, ← Spec.map_comp]
-    rfl
 
 theorem idealSheaf_stable_iff_exists_comap (s : G → L →ₐ[K] L)
     (hs : ∀ x, (∀ g, s g x = x) → x ∈ Set.range (algebraMap K L)) (I : Y.IdealSheafData) :
@@ -139,17 +125,5 @@ theorem idealSheaf_stable_iff_exists_comap (s : G → L →ₐ[K] L)
     exact ⟨_, h1, fun J hJ => idealSheaf_comap_injective H (hJ.trans h1.symm)⟩
   · rintro ⟨J, rfl, -⟩ g
     rw [← Scheme.IdealSheafData.comap_comp, twist_fst]
-
-theorem existsUnique_comap_eq_vanishingIdeal (s : G → L →ₐ[K] L)
-    (hs : ∀ x, (∀ g, s g x = x) → x ∈ Set.range (algebraMap K L)) (Z : Closeds Y)
-    (hZ : ∀ g, ∀ y ∈ Z, twist H (s g) y ∈ Z) :
-    ∃! J : X.IdealSheafData, J.comap π = Scheme.IdealSheafData.vanishingIdeal Z := by
-  refine (idealSheaf_stable_iff_exists_comap H s hs _).1 fun g => ?_
-  rw [← Scheme.IdealSheafData.le_support_iff_le_vanishingIdeal,
-    Scheme.IdealSheafData.support_comap]
-  intro y hy
-  change twist H (s g) y ∈ ((Scheme.IdealSheafData.vanishingIdeal Z).support : Set Y)
-  rw [Scheme.IdealSheafData.coe_support_vanishingIdeal]
-  exact hZ g y hy
 
 end GlobalTheory.GaloisDescent

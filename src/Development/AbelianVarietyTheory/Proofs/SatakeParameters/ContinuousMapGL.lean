@@ -243,23 +243,6 @@ theorem isCuspidal_pull {φ : GA E a → ℂ} (hφ : IsCuspidal φ) : IsCuspidal
   rw [map_mul, barA, map_unip]
   rfl
 
-def barSub (π : CuspSub E a) : CuspSub E a where
-  V := π.V.map (pull E a).toLinearMap
-  cusp := by rintro _ ⟨φ, hφ, rfl⟩; exact ⟨isAutForm_pull (π.cusp φ hφ).1, isCuspidal_pull (π.cusp φ hφ).2⟩
-  stable := by
-    rintro o _ ⟨φ, hφ, rfl⟩
-    exact ⟨_, π.stable _ φ hφ, (act_pull o φ).symm⟩
-  ne_bot h := π.ne_bot ((Submodule.map_eq_bot_iff (e := pull E a)).1 h)
-  irred W hW hs := by
-    have h := π.irred (W.comap (pull E a).toLinearMap) (fun φ hφ => by
-      obtain ⟨ψ, h1, h2⟩ := hW hφ
-      rwa [← (pull E a).injective h2]) fun o φ hφ => by
-      change pull E a (act o φ) ∈ W
-      rw [pull_act]
-      exact hs _ _ hφ
-    have e := Submodule.map_comap_eq_of_surjective (f := (pull E a).toLinearMap) (pull E a).surjective W
-    exact h.imp (fun h => by rw [← e, h, Submodule.map_bot]) fun h => by rw [← e, h]
-
 end GlobalTheory.BarPull
 
 end

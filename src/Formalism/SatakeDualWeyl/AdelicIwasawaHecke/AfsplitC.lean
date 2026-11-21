@@ -11,10 +11,6 @@ section Mat
 variable {F : Type} [Field F] [NumberField F] {E : Type} [CommRing E] [Algebra F E]
   {n : Type} [Fintype n] [DecidableEq n] (v : HeightOneSpectrum (𝓞 F))
 
-local notation "𝔸" => FiniteAdeleRing (𝓞 F) F
-local notation "Rv" => E ⊗[F] v.adicCompletion F
-local notation "R" => E ⊗[F] 𝔸
-
 def afsplitC (M : Matrix n n Rv) (N : Matrix n n R) : Matrix n n R :=
   M.map (afsplitIE v) + (1 - afsplitEps E v) • N
 
@@ -79,11 +75,6 @@ theorem afsplitC_prV_ne (w : HeightOneSpectrum (𝓞 F)) (h : w ≠ v) (M : Matr
   ext i j
   simp only [Matrix.add_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, map_sub,
     map_one, afsplit_prV_IE_ne v w h, afsplit_prV_eps_ne v w h, sub_zero, one_mul, zero_add]
-
-theorem afsplitC_C (M M' : Matrix n n Rv) (N : Matrix n n R) :
-    afsplitC v M (afsplitC v M' N) = afsplitC v M N := by
-  unfold afsplitC
-  rw [smul_add, afsplit_smul_map, zero_add, smul_smul, afsplit_om_idem]
 
 theorem afsplitC_cT (σ : E →ₐ[F] E) (M : Matrix n n Rv) (N : Matrix n n R) :
     cT (sigR σ 𝔸) (afsplitC v M N) =

@@ -1,5 +1,6 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.OneSubOfIsIrreducible
+import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsParahoricVec
+import Development.AbelianVarietyTheory.Definitions.Foundations.SecondCountableAndT2LocalField
 import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.WeilTensorLiftConclusion
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ParIndJacPlacing
 
@@ -38,21 +39,6 @@ end General
 section Matrices
 
 variable {k : Type} [Field k]
-
-theorem invTranspose_invTranspose (n : ℕ) (g : GL (Fin n) k) :
-    invTranspose n k (invTranspose n k g) = g := by
-  apply Units.ext
-  show ((invTranspose n k g)⁻¹ : GL (Fin n) k).valᵀ = g.val
-  rw [← map_inv]
-  show ((g⁻¹)⁻¹ : GL (Fin n) k).valᵀᵀ = g.val
-  rw [inv_inv, transpose_transpose]
-
-def swapT (k : Type) [Field k] (a c : ℕ) : GL (Fin a) k × GL (Fin c) k ≃* GL (Fin c) k × GL (Fin a) k where
-  toFun g := (invTranspose c k g.2, invTranspose a k g.1)
-  invFun g := (invTranspose a k g.2, invTranspose c k g.1)
-  left_inv g := Prod.ext (invTranspose_invTranspose _ _) (invTranspose_invTranspose _ _)
-  right_inv g := Prod.ext (invTranspose_invTranspose _ _) (invTranspose_invTranspose _ _)
-  map_mul' g g' := Prod.ext (map_mul (invTranspose c k) g.2 g'.2) (map_mul (invTranspose a k) g.1 g'.1)
 
 section Blocks
 

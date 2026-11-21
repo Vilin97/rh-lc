@@ -22,12 +22,6 @@ noncomputable def unitsResHomU :
       ext x
       exact algebraMap_galRestrict_apply K K' L L' σ _⟩
 
-@[simp]
-theorem unitsResHomU_hom_apply (x : Additive Lˣ) :
-    ((Additive.toMul (α := L'ˣ) ((unitsResHomU K K' L L').hom x) : L'ˣ) : L') =
-      algebraMap L L' ((Additive.toMul (α := Lˣ) x : Lˣ) : L) :=
-  rfl
-
 noncomputable abbrev unitsResH2Lift :
     groupCohomology (galUnits K L) 2 ⟶ groupCohomology (galUnits K' L') 2 :=
   groupCohomology.map (galRestrict K K' L L') (unitsResHomU K K' L L') 2
@@ -86,10 +80,6 @@ def galUnitsResScalars :
     fun σ => by
       ext x
       rfl⟩
-
-@[simp]
-theorem galUnitsResScalars_hom_apply (x : Additive Ωˣ) : (galUnitsResScalars F F' Ω).hom x = x :=
-  rfl
 
 variable [IsGalois F Ω] [IsGalois F' Ω]
 

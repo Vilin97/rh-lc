@@ -37,7 +37,6 @@ def multiProjEmb (k : ℕ) (n : Fin (k + 1) → ℕ) :
     MP A k n ⟶ projectiveSpace A (multiProjDim k n) :=
   (multiProjEmbOverBase A k n).1
 
-@[reassoc (attr := simp)]
 lemma multiProjEmb_toSpecBase (k : ℕ) (n : Fin (k + 1) → ℕ) :
     multiProjEmb A k n ≫ toSpecBase A (multiProjDim k n) = mpStr A k n :=
   (multiProjEmbOverBase A k n).2

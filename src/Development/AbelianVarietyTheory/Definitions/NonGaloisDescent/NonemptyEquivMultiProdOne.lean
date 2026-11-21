@@ -213,8 +213,6 @@ def Inert (x y : IrrGL k) : Prop := ∃ (μ : kˣ →* ℂˣ) (hμ : IsUnram μ)
 
 def IsUnramChar (x : IrrGL k) : Prop := ∃ (μ : kˣ →* ℂˣ) (hμ : IsUnram μ), x = ofChar μ (isSmoothChar_of_isUnram hμ)
 
-@[simp] theorem tw_fst (x : IrrGL k) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) : (x.tw χ hχ).1 = x.1 := rfl
-
 @[simp] theorem nu_fst (x : IrrGL k) (s : ℂ) : (x.nu s).1 = x.1 := rfl
 
 def twEquiv (x : IrrGL k) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
@@ -319,16 +317,6 @@ theorem inert_equivalence : Equivalence (Inert (k := k)) where
     exact ⟨μ * μ', isUnram_mul hμ hμ', tw_tw _ _ _ _ _⟩
 
 theorem inert_nu (x : IrrGL k) (s : ℂ) : Inert x (x.nu s) := ⟨absPow k s, isUnram_absPow k s, rfl⟩
-
-theorem inert_of {N : ℕ} {π : Representation ℂ (GL (Fin N) k) V} {hs : IsSmooth π} {hi : π.IsIrreducible}
-    {σ : Representation ℂ (GL (Fin N) k) W} {hs' : IsSmooth σ} {hi' : σ.IsIrreducible} :
-    Inert (of π hs hi) (of σ hs' hi') ↔ InertEquiv π σ := by
-  constructor
-  · rintro ⟨μ, hμ, h⟩
-    rw [tw_of, of_eq_of] at h
-    exact ⟨μ, hμ, h⟩
-  · rintro ⟨μ, hμ, h⟩
-    exact ⟨μ, hμ, by rw [tw_of, of_eq_of]; exact h⟩
 
 end IrrGL
 
@@ -509,18 +497,6 @@ theorem Linked.symm {Δ Δ' : Segment k} (h : Linked Δ Δ') : Linked Δ' Δ := 
 
 theorem not_linked_self (Δ : Segment k) : ¬ Linked Δ Δ := fun h => h.2.1 (Set.Subset.refl _)
 
-theorem inert_of_mem {Δ : Segment k} {x : IrrGL k} (h : x ∈ Δ.carrier) : IrrGL.Inert Δ.first x := by
-  obtain ⟨a, -, rfl⟩ := mem_carrier.1 h
-  exact IrrGL.inert_nu _ _
-private theorem first_mem_carrier' (Δ : Segment k) : Δ.first ∈ Δ.carrier :=
-  ⟨⟨0, Δ.len_pos⟩, by simp [Segment.term]⟩
-
-theorem Linked.inert {Δ Δ' : Segment k} (h : Linked Δ Δ') : IrrGL.Inert Δ.first Δ'.first := by
-  obtain ⟨⟨Γ, hΓ⟩, -, -⟩ := h
-  have h1 : Δ.first ∈ Γ.carrier := hΓ ▸ Or.inl (first_mem_carrier' Δ)
-  have h2 : Δ'.first ∈ Γ.carrier := hΓ ▸ Or.inr (first_mem_carrier' Δ')
-  exact IrrGL.inert_equivalence.trans (IrrGL.inert_equivalence.symm (inert_of_mem h1)) (inert_of_mem h2)
-
 end GlobalTheory.SmGL.Segment
 
 namespace GlobalTheory.LocGL
@@ -531,8 +507,6 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 def msupp (𝔪 : Multiset (Segment k)) : Multiset (IrrGL k) := 𝔪.bind Segment.ms
 
 def Unlinked (𝔪 𝔫 : Multiset (Segment k)) : Prop := ∀ Δ ∈ 𝔪, ∀ Δ' ∈ 𝔫, ¬ Δ.Linked Δ'
-
-def TotallyUnlinked (𝔪 : Multiset (Segment k)) : Prop := Unlinked 𝔪 𝔪
 
 def IsOrderedForm (Δ : Fin h → Segment k) (𝔪 : Multiset (Segment k)) : Prop :=
   Finset.univ.val.map Δ = 𝔪 ∧ ∀ i j, i < j → ¬ (Δ i).Precedes (Δ j)
@@ -620,18 +594,9 @@ theorem IsLSeg.of_equiv (h : IsLSeg Δ π) (φ : π.Equiv σ) : IsLSeg Δ σ := 
   obtain ⟨hd, hs⟩ := h
   exact ⟨hd, hs.of_equiv φ (Representation.Equiv.refl _)⟩
 
-theorem IsZ.of_equiv (h : IsZ 𝔪 π) (φ : π.Equiv σ) : IsZ 𝔪 σ := by
-  obtain ⟨h, x, hd, hz, hs⟩ := h
-  exact ⟨h, x, hd, hz, hs.of_equiv φ (Representation.Equiv.refl _)⟩
-
 theorem IsL.of_equiv (h : IsL 𝔪 π) (φ : π.Equiv σ) : IsL 𝔪 σ := by
   obtain ⟨h, x, hd, hz, hs⟩ := h
   exact ⟨h, x, hd, hz, hs.of_equiv φ (Representation.Equiv.refl _)⟩
-
-theorem IsZSeg.unique (h : IsZSeg Δ π) (h' : IsZSeg Δ σ) : Nonempty (σ.Equiv π) := by
-  obtain ⟨hd, hs⟩ := h
-  obtain ⟨hd', hs'⟩ := h'
-  exact IsSocle.unique hs hs'
 
 theorem IsLSeg.unique (h : IsLSeg Δ π) (h' : IsLSeg Δ σ) : Nonempty (σ.Equiv π) := by
   obtain ⟨hd, hs⟩ := h
@@ -655,10 +620,6 @@ theorem IsZSeg.deg_eq (h : IsZSeg Δ π) : Δ.deg = N := by
 theorem IsLSeg.deg_eq (h : IsLSeg Δ π) : Δ.deg = N := by
   obtain ⟨hd, -⟩ := h
   exact Δ.sum_term_fst.symm.trans hd
-
-theorem IsZ.irr_smooth (h : IsZ 𝔪 π) : π.IsIrreducible ∧ IsSmooth π := by
-  obtain ⟨h, x, hd, -, hs⟩ := h
-  exact ⟨hs.1, hs.isSubquotient.isSmooth (isSmooth_prodIrr x hd)⟩
 
 theorem IsL.irr_smooth (h : IsL 𝔪 π) : π.IsIrreducible ∧ IsSmooth π := by
   obtain ⟨h, x, hd, -, hs⟩ := h
@@ -879,19 +840,5 @@ theorem isSpeh_one (x : IrrGL k) : IsSpeh x 1 x.rep := by
   exact ⟨hd, (isCosocle_self x.2.rep.irr).of_equiv (.refl _) e⟩
 
 omit [ValuativeRel k] [IsNonarchimedeanLocalField k] in
-
-theorem isGenericFor_one (ψ : AddChar k Circle) (χ : kˣ →* ℂˣ) : IsGenericFor ψ (detRep (Fin 1) χ) := by
-  have hu : ∀ u : unipB k (Fin 1), u = 1 := by
-    intro u
-    have hd := (mem_unipRad.1 u.2).2
-    refine Subtype.ext (Matrix.GeneralLinearGroup.ext fun i j => ?_)
-    rw [Subsingleton.elim i 0, Subsingleton.elim j 0]
-    simpa using hd 0 () ()
-  have hbot : twKer (detRep (Fin 1) χ) (unipB k (Fin 1)) (whitChar ψ 1) = ⊥ := by
-    refine le_bot_iff.1 (Submodule.span_le.2 ?_)
-    rintro _ ⟨u, v, rfl⟩
-    rw [hu u]
-    simp
-  exact (Submodule.quotEquivOfEqBot _ hbot).toEquiv.nontrivial
 
 end GlobalTheory.LocGL

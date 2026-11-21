@@ -66,11 +66,6 @@ section Loc
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] {ST : Finset (Pl E)} {π : 𝓞 E} (v : HeightOneSpectrum (𝓞 F))
 
-local notation "Rv" => E ⊗[F] v.adicCompletion F
-local notation "ιv" => inclE (F := F) (E := E) (v.adicCompletion F)
-local notation "𝒪v" => Formalism.BasicNotions.intV E v
-local notation "pE" => algebraMap (𝓞 E) E π
-
 theorem sig_sig (x : Rv) : sigR hc.sig (v.adicCompletion F) (sigR hc.sig (v.adicCompletion F) x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
@@ -191,11 +186,6 @@ section Stab
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
 variable (hc : Formalism.BasicNotions.CMData F E) (n : ℕ) [NeZero n] {ST : Finset (Pl E)} {π : 𝓞 E} (v : HeightOneSpectrum (𝓞 F))
-
-local notation "Rv" => E ⊗[F] v.adicCompletion F
-local notation "ιv" => inclE (F := F) (E := E) (v.adicCompletion F)
-local notation "𝒪v" => Formalism.BasicNotions.intV E v
-local notation "pE" => algebraMap (𝓞 E) E π
 
 variable (h : BasePi ST π)
 include h

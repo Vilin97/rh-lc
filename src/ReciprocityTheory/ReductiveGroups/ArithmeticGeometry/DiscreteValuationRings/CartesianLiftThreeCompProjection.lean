@@ -40,7 +40,6 @@ lemma lf_pull (h : T' ⟶ T) (F : (T ⟶ A) →₀ ℤ) :
   rfl
 
 lemma padd_eq_mul (a b : T ⟶ A) : padd A a b = a * b := rfl
-lemma pzero_eq_one : pzero A T = 1 := rfl
 
 lemma comp_psum {n : ℕ} (h : T' ⟶ T) (x : Fin n → (T ⟶ A)) (I : Finset (Fin n)) :
     h ≫ psum A x I = psum A (fun k => h ≫ x k) I := by
@@ -59,12 +58,6 @@ def lamP (u v : T ⟶ A) : (T ⟶ A) →₀ ℤ :=
   Finsupp.single (u * v) 1 - Finsupp.single u 1 - Finsupp.single v 1 + Finsupp.single 1 1
 
 open scoped Classical in
-lemma univ_finset_powerset_fin_three : (Finset.univ : Finset (Finset (Fin 3))) =
-    {∅, {0}, {1}, {2}, {0, 1}, {0, 2}, {1, 2}, {0, 1, 2}} := by
-  first
-  | decide
-  | rfl
-  | (ext I; fin_cases I <;> simp)
 
 private lemma fsum_eq_sum_single {X Y : Scheme} {K : Type} [Fintype K] (φ : K → (Y ⟶ X)) (ε : K → ℤ) :
     fsum φ ε = ∑ k, Finsupp.single (φ k) (ε k) := rfl
@@ -148,16 +141,6 @@ lemma mapDomain_add' {α β : Type} (f : α → β) (F G : α →₀ ℤ) :
 lemma mapDomain_sub' {α β : Type} (f : α → β) (F G : α →₀ ℤ) :
     Finsupp.mapDomain f (F - G) = Finsupp.mapDomain f F - Finsupp.mapDomain f G := by
   exact map_sub (Finsupp.mapDomain.addMonoidHom f) F G
-
-lemma mapDomain_lamP (h : T' ⟶ T) (u v : T ⟶ A) :
-    Finsupp.mapDomain (fun x => h ≫ x) (lamP u v) = lamP (h ≫ u) (h ≫ v) := by
-  unfold lamP
-  have hs : ∀ (P Q : (T ⟶ A) →₀ ℤ), Finsupp.mapDomain (fun x => h ≫ x) (P - Q) =
-      Finsupp.mapDomain (fun x => h ≫ x) P - Finsupp.mapDomain (fun x => h ≫ x) Q :=
-    fun P Q => map_sub (Finsupp.mapDomain.addMonoidHom _) P Q
-  rw [Finsupp.mapDomain_add, hs, hs, Finsupp.mapDomain_single,
-    Finsupp.mapDomain_single, Finsupp.mapDomain_single, Finsupp.mapDomain_single, MonObj.comp_mul,
-    MonObj.comp_one]
 
 lemma single_two {α : Type} (a : α) : Finsupp.single a (2 : ℤ) = Finsupp.single a 1 + Finsupp.single a 1 := by
   rw [← Finsupp.single_add]

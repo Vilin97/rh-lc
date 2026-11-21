@@ -1,14 +1,33 @@
 import Mathlib
 import Development.AutomorphicArithmetic.LocalEmbeddings.VertCmp
 import Development.AutomorphicArithmetic.DivisorFrames.ExistsNormalVerticalModel
-import Development.AutomorphicArithmetic.DivisorFrames.VerticalModelMatchCompat
 import Development.AutomorphicArithmetic.DivisorFrames.UnitAtPowDivFnMapOfReadsOfGReads
 import Development.AutomorphicArithmetic.DivisorFrames.VerticalDegreeRationalSection
 import Development.AutomorphicArithmetic.DivisorFrames.VerticalModelDimensionMatch
 import Development.AutomorphicArithmetic.DivisorFrames.NormalModelComplexCompat
 import Development.AutomorphicArithmetic.DivisorFrames.PullClassRationalPower
 import Development.AutomorphicArithmetic.DivisorFrames.PdegSmulPower
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CapDegreeFinitePullback
+import Development.AbelianVarietyTheory.Definitions.Divisors.SemiposAtOfPositive
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.AdmissibleRepresentationFactorisation
+import Development.AbelianVarietyTheory.Definitions.Divisors.ToIThCapDegOfAddNsmulDivP
+import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsFrobGBaseChange
+import Formalism.SharpRestriction.Divisibility.LatticeTransfer
+import Development.AbelianVarietyTheory.Definitions.Divisors.ToKnownTheoremsOf
+import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.MemNonzeroLocusIffPowFn
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.IsFiniteLengthOfIsArtinianRingAnnihilator
+import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.AlgStep
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.BaseChangeKernels.Affine
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClosedComplementDimBound
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SupportPullbackEqPreimage
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModuleLengthDisjointSupport
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteFlatQuasicoherentLocal
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteFlatAffineAvoiding
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteMapClosedFibre
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PullbackTwistedSectionIso
+import Development.AbelianVarietyTheory.Definitions.AbelianSchemeLaws.NotExistsOfSubsingleton
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.RestrictPullbackIsoHomAppPullbackSections
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsIsGenOfUniqueFactorizationMonoid
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteSetDimDropClosedStatement
 open CategoryTheory Limits AlgebraicGeometry IsLocalRing NumberField IsDedekindDomain
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj
 open GlobalTheory GlobalTheory.Cartier GlobalTheory.CechPic GlobalTheory.ProjVar GlobalTheory.TrueGeo GlobalTheory.Vert GlobalTheory.ShFam GlobalTheory.ShFam.Pad GlobalTheory.LocM GlobalTheory.Toroidal
@@ -216,34 +235,3 @@ private theorem onT (F : Type) [Field F] [NumberField F] (Y : Var F) (v : Height
   refine mul_right_cancel₀ (mul_ne_zero he hf) ?_
   rw [mul_assoc _ _ (_ * _), key, mul_right_comm]
   congr!
-
-theorem UpperTheory.normal_model_complex_compat_alt :
-    ∀ (F : Type) [Field F] [NumberField F] (Y : Var F) (v : HeightOneSpectrum (𝓞 F)) (p : ℕ) [Fact p.Prime], (p : 𝓞 F) ∈ v.asIdeal → ∀ (F' : Type) [Field F'] [NumberField F'] (ε : F →+* F') (O : ValuationSubring F') [IsDiscreteValuationRing O] [CharP (ResidueField O) p] (b : 𝓞 F →+* O), IsUp v ε O b → ∀ (σ : F' →+* ℂ) (Q : TrueGeo.Model Y) [IsIntegral Q.X] [IsLocallyNoetherian Q.X], ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsNormalScheme Q.X → ∀ (d : ℕ), Y.dim = d → ∀ (m : ℕ) (M : LB Q.X) (hM : M.IsLB) (r : M.ι → Q.X.functionFieldˣ) (hr : IsRatSec M r) (l₀ : Ext v → AlgPt Y → ℝ), GReads Q v M r (fun e y => (m : ℝ) * l₀ e y) → ∀ (N : Fin d → LB Q.X), (∀ k, (N k).IsLB) → ∀ (s : ∀ k, (N k).ι → Q.X.functionFieldˣ) (l : Fin d → Ext v → AlgPt Y → ℝ), (∀ k, GReads Q v (N k) (s k) (fun e y => (m : ℝ) * l k e y)) → ∀ (J : Type) [Fintype J] (B : J → Vert.Model O), (∀ j, GlobalTheory.IsNormalScheme (B j).X) → (∀ j, (B j).relDim = d) → ∀ (μ : ∀ j, Match Y b (B j)) (n : ℕ), 0 < n → Count μ ε σ n → ∀ (P : ∀ j, VertDiv (B j)) (t : ∀ j, (P j).M.ι → (B j).X.functionFieldˣ), (∀ j, IsSecOf (P j) (t j)) → (∀ j, Reads (μ j) v (P j).M (t j) l₀) → ∀ (L : ∀ j, Fin d → LB (B j).X) (hL : ∀ j k, (L j k).IsLB) (u : ∀ j k, (L j k).ι → (B j).X.functionFieldˣ), (∀ j k, Reads (μ j) v (L j k) (u j k) (l k)) → (m : ℝ) ^ (d + 1) * placeDeg p v * ∑ j, (((B j).capDeg_vp p (Vert.Model.toQ (P j).cls) (∏ k, Vert.c1 (L j k) (hL j k)) : ℚ) : ℝ) = (n : ℝ) * ∑ᶠ z : Q.X, if (Q.p z).asIdeal = v.asIdeal then (((divOfRatSec hM hr).mult z * pdeg p N z : ℤ) : ℝ) else 0 := by
-  intro F _ _ Y v p _ hp F' _ _ ε O _ _ b hb σ Q _ _ hQ d hd m M hM r hr l₀ hl₀ N hN s l hl J _ B hB hBd μ n hn hc
-    P t hP ht L hL u hu
-  have hfin : Finite (ResidueField O) := by
-    refine (GlobalTheory.isDiscreteValuationRing_and_finite_residueField_of_numberField O (Fact.out : p.Prime).ne_zero ?_).2
-    have h : ((p : ℕ) : O) ∈ maximalIdeal O := by
-      have := (hb.2 p).1 hp
-      rwa [map_natCast] at this
-    have := O.coe_mem_nonunits_iff.2 h
-    simpa using this
-  choose T f μ' g hf f' hT hf0 hf1 hbij hφ h1 h2 hE hg using fun j => UpperTheory.exists_normal_vertical_model F Y O b (B j) (μ j) Q
-  have hpb := fun j => UpperTheory.vertical_model_match_compat F Y O b (B j) (T j) (μ j) (μ' j) (f j) (hf j) (f' j) (h1 j) (h2 j)
-  have hc' : Count μ' ε σ n := fun ι hι =>
-    (card_transport (fun j => SmallSec.fnMap (f j).f (hf j)) hbij (fun j => (μ j).φ) (fun j => (μ' j).φ)
-      (fun j => cst (B j)) (fun j => cst (T j)) hφ (fun j => (hpb j).2.2) ι _).trans (hc ι hι)
-  have key := onT F Y v p hp F' ε O b hb σ Q hQ d hd m M hM r hr l₀ hl₀ N hN s l hl J T hT
-    (fun j => by rw [← (f j).relDim_add, hf0, hBd, add_zero]) μ' g hg hE n hn hc'
-    (fun j => (P j).pull (f j).comp_str) _ (fun j => (hpb j).2.1 (P j) (t j) (hP j))
-    (fun j => (hpb j).1 v (P j).M (t j) l₀ (ht j)) (fun j k => (L j k).pull (f j).f)
-    (fun j k => LB.isLB_pull (hL j k) (f j).f) _ (fun j k => (hpb j).1 v (L j k) (u j k) (l k) (hu j k))
-  rw [← key]
-  congr 1
-  refine Finset.sum_congr rfl fun j _ => ?_
-  congr 1
-  have h := (GlobalTheory.VertDegProj.capDeg_vp_vPullQ O p (B j) (hB j) (T j) (f j) (hf0 j)).2
-    (Vert.Model.toQ (P j).cls) (∏ k, Vert.c1 (L j k) (hL j k))
-  rw [hf1, one_mul, Vert.Model.vPullQ_toQ, ← VertDiv.cls_pull, map_prod] at h
-  rw [← h]
-  simp only [pullback_firstChern (f j).f (hL j _) (LB.isLB_pull (hL j _) (f j).f)]

@@ -26,10 +26,6 @@ def fl : Lr n ≃ Lr n where
 
 @[simp] theorem fl_fl (l : Lr n) : fl (fl l) = l := by simp [fl]
 
-@[simp] theorem fl_fst (l : Lr n) : (fl l).1 = !l.1 := rfl
-
-@[simp] theorem fl_snd (l : Lr n) : (fl l).2 = l.2 := rfl
-
 def flS (A : Finset (Lr n)) : Finset (Lr n) := A.map fl.toEmbedding
 
 theorem mem_flS {l : Lr n} {A : Finset (Lr n)} : l ∈ flS A ↔ fl l ∈ A := by

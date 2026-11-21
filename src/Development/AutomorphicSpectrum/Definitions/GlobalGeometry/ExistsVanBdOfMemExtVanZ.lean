@@ -14,21 +14,6 @@ open GlobalTheory.CechPic GlobalTheory.TangentOrigin GlobalTheory.Vanishing Glob
 open GlobalTheory.AllWt (secZ exOf)
 open GlobalTheory.FlagMod (FlagCover)
 
-theorem evalPt_mem_maximalIdeal_iff {Y : Scheme.{0}} {V : Type} [CommRing V] [IsLocalRing V] (x : Sp V ⟶ Y)
-    (W : Y.Opens) (h : ⊤ ≤ x ⁻¹ᵁ W) (g : Γ(Y, W)) (hy : x (IsLocalRing.closedPoint V) ∈ W) :
-    evalPt x W h g ∈ IsLocalRing.maximalIdeal V ↔
-      ger _ hy g ∈ IsLocalRing.maximalIdeal (Y.presheaf.stalk (x (IsLocalRing.closedPoint V))) := by
-  have key := Scheme.germ_stalkClosedPointTo (R := CommRingCat.of V) x W hy
-  have e : (Scheme.stalkClosedPointTo (R := CommRingCat.of V) x).hom (ger _ hy g) = evalPt x W h g := by
-    have := congrArg (fun φ => φ.hom g) key
-    simp only [CommRingCat.hom_comp, RingHom.comp_apply] at this
-    refine this.trans ?_
-    simp only [evalPt, Scheme.Hom.appLE, Iso.trans_hom, Functor.mapIso_hom, Iso.op_hom, eqToIso.hom,
-      CommRingCat.hom_comp, RingHom.comp_apply, Category.assoc]
-    congr!
-  exact ⟨fun hg hu => hg (e ▸ hu.map _),
-    fun hg hu => hg (isUnit_of_map_unit (Scheme.stalkClosedPointTo (R := CommRingCat.of V) x).hom _ (e ▸ hu))⟩
-
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
   {Xo : Moduli Dw l} {c : Coeff l}
 
@@ -109,16 +94,7 @@ theorem extVanZ_le_secZ : extVanZ X e ≤ secZ Xo c e := (extVanZ_le_extZ X e).t
 
 variable (X e) in
 
-def vanOutEquiv : vanOut X e ≃ₗ[c.F] extVanZ X e :=
-  Submodule.equivMapOfInjective _ (ruleTop_injective X e) _
-
-@[simp] theorem coe_vanOutEquiv (s : vanOut X e) : (vanOutEquiv X e s : Rul Xo c) = ruleTop X e s := rfl
-
 variable (X e) in
-
-def extEquiv : H0 (flagStr X) (X.LL e) ⊤ ≃ₗ[c.F] extZ X e := LinearEquiv.ofInjective _ (ruleTop_injective X e)
-
-@[simp] theorem coe_extEquiv (s : H0 (flagStr X) (X.LL e) ⊤) : (extEquiv X e s : Rul Xo c) = ruleTop X e s := rfl
 
 theorem germ_pull_inc₀_mem {s : H0 (flagStr X) (X.LL e) ⊤} (hs : s ∈ vanOut X e) (Z : Comp Xo c) :
     ∀ y ∈ bd₀ X Z, ∀ i hi, germ (B := LL₀ X Z e) i y (memTop y) hi (H0.pull (inc₀ X Z) le_top s) ∈
@@ -194,8 +170,6 @@ variable (T : TorFlag Xo c) (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ)
 theorem extVan_le_sec : extVan T a n ≤ sec Xo c a n :=
   (extVanZ_le_secZ T.X _).trans (AllWt.secZ_nat Xo c a n).le
 
-def extVanEquiv : (vanOut T.X fun i => (ex Dw a n i : ℤ)) ≃ₗ[c.F] extVan T a n := vanOutEquiv T.X _
-
 theorem ex_zero : (fun i => (ex Dw 0 0 i : ℤ)) = 0 := by
   funext i; cases i <;> rfl
 
@@ -203,25 +177,5 @@ theorem one_mem_extVan_iff : (1 : Rul Xo c) ∈ extVan T 0 0 ↔ flagOpen T.X = 
   rw [extVan, ex_zero, one_mem_extVanZ_iff]
 
 open Classical in
-
-example : T.X.LL (fun i => (ex Dw 0 1 i : ℤ)) = T.X.F.de := by
-  rw [← T.X.F.LL_single_none]
-  congr 1
-  funext i; cases i <;> simp [ex]
-
-example : (0 : Rul Xo c) ∈ extVan T a n ∧ (flagOpen T.X = ⊤ → (1 : Rul Xo c) ∈ extVan T 0 0) :=
-  ⟨zero_mem _, (one_mem_extVan_iff T).2⟩
-
-example (y : T.X.YY) (hy : y ∉ flagOpen T.X) : extVan T 0 0 < sec Xo c 0 0 :=
-  lt_of_le_of_ne (extVan_le_sec T 0 0) fun h => hy (((one_mem_extVan_iff T).1
-    (h.ge ((AllWt.secZ_nat Xo c 0 0).le (ex_zero (Dw := Dw) ▸ AllWt.one_mem_secZ)))).ge (memTop y))
-
-example (h : flagOpen T.X = ⊤) (y : T.X.YY) : extVan T 0 0 ≠ ⊥ := fun hb => by
-  have h₁ : (1 : Rul Xo c) = 0 := hb.le ((one_mem_extVan_iff T).2 h)
-  have h₂ : oneTop T.X = 0 := ruleTop_injective T.X 0 (by rw [ruleTop_oneTop, h₁, map_zero])
-  obtain ⟨k, hk⟩ := (commonLL T.X).cover y
-  have h₃ := germ_oneTop k y hk
-  rw [h₂, map_zero] at h₃
-  exact zero_ne_one h₃
 
 end GlobalTheory.CompanionTheory.Ar.OntoDef

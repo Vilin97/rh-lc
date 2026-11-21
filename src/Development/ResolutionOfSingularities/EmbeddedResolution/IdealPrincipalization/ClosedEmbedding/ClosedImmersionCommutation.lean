@@ -114,21 +114,11 @@ theorem isNoetherian_disjointUnion [AlgebraicGeometry.LocallyOfFiniteType p]
     AlgebraicGeometry.IsNoetherian C.toCoverData.disjointUnion :=
   isNoetherian_of_locallyOfFiniteType (C.projection ≫ p)
 
-instance instIsNoetherianTotal [AlgebraicGeometry.LocallyOfFiniteType p]
-    (C : MaximalContactCover p τ I c) :
-    AlgebraicGeometry.IsNoetherian C.toCoverData.disjointUnion :=
-  isNoetherian_disjointUnion C
-
 theorem isNoetherian_subscheme_iInfImageIdeal [AlgebraicGeometry.LocallyOfFiniteType p]
     (C : MaximalContactCover p τ I c) :
     AlgebraicGeometry.IsNoetherian C.toCoverData.iInfImageIdeal.subscheme := by
   have := isNoetherian_disjointUnion C
   exact isNoetherian_of_locallyOfFiniteType C.toCoverData.iInfImageIdeal.subschemeι
-
-instance instIsNoetherianSubschemeGlueIdeal [AlgebraicGeometry.LocallyOfFiniteType p]
-    (C : MaximalContactCover p τ I c) :
-    AlgebraicGeometry.IsNoetherian C.toCoverData.iInfImageIdeal.subscheme :=
-  isNoetherian_subscheme_iInfImageIdeal C
 
 end MaximalContactCover
 

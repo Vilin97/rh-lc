@@ -63,39 +63,3 @@ private theorem int_prod {ι : Type} [Fintype ι] {n : ℕ} (η : Fin n × ι �
       _ = _ := by
           rw [pow_add (1 + ‖s‖)]
           field_simp
-
-theorem UpperTheory.convolution_decay_integrable_fourier :
-    ∀ {ι : Type} [Fintype ι] {n : ℕ} (κ : ι → ℤ) (e : ℕ) (η : Fin n × ι → ℂ) (φ : (ι → ℂ) → ℂ), Continuous φ →
-        (∀ N : ℕ, ∃ C : ℝ, ∀ s, ‖φ s‖ ≤ C / (1 + ‖s‖) ^ N) →
-        ∀ h : (Fin n × ι → ℂ) → ℂ, Continuous h → (∀ N : ℕ, Integrable fun v => (1 + ‖v‖) ^ N * ‖h v‖) →
-        Integrable (fun s => ∫ v, h v * φ (s + pr v η)) ∧ Integrable (fun s => (∫ v, h v * φ (s + pr v η)) * wt κ e s) ∧
-          ∀ y, FT (fun s => ∫ v, h v * φ (s + pr v η)) y = FT h (-sc y η) * FT φ y := by
-  intro ι _ n κ e η φ hφ hd h hh hi
-  have key := int_prod η φ hφ hd h hh hi
-  refine ⟨?_, ?_, fun y => ?_⟩
-  · have := (key (fun _ => 1) measurable_const 0 (by simp)).integral_prod_right
-    simpa using this
-  · have := (key (wt κ e) (measurable_wt κ e) _ (norm_wt_le κ e)).integral_prod_right
-    simpa only [integral_mul_const] using this
-  · have hm : Measurable fun s : ι → ℂ => ec (s * y) :=
-      (continuous_ec.comp (continuous_id.mul continuous_const)).measurable
-    have k := key (fun s => ec (s * y)) hm 0 (by simp [norm_ec])
-    unfold FT
-    simp only [← integral_mul_const]
-    rw [← integral_integral_swap (f := fun v s => h v * φ (s + pr v η) * ec (s * y)) k]
-    refine integral_congr_ae (Filter.Eventually.of_forall fun v => ?_)
-    simp only
-    rw [← integral_const_mul,
-      ← integral_add_right_eq_self (fun s => h v * ec (v * -sc y η) * (φ s * ec (s * y))) (pr v η)]
-    refine integral_congr_ae (Filter.Eventually.of_forall fun s => ?_)
-    simp only
-    have e1 : ec (v * -sc y η) * ec ((s + pr v η) * y) = ec (s * y) := by
-      unfold ec
-      rw [← Complex.exp_add, ← mul_add, ← Complex.ofReal_add, ← Complex.add_re]
-      congr 4
-      simp only [Pi.mul_apply, Pi.neg_apply, Pi.add_apply, add_mul, Finset.sum_add_distrib, pr, sc, mul_neg,
-        Finset.sum_neg_distrib, Fintype.sum_prod_type_right, Finset.sum_mul]
-      have : ∑ w, ∑ i, v (i, w) * (y w * η (i, w)) = ∑ w, ∑ i, v (i, w) * η (i, w) * y w :=
-        Finset.sum_congr rfl fun w _ => Finset.sum_congr rfl fun i _ => by ring
-      rw [this]; ring
-    rw [← e1]; ring

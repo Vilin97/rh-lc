@@ -27,8 +27,6 @@ theorem lbIso_pull_pull {X Y : Scheme.{0}} {L L' : LB X} (h : LBIso L L') (f : Y
     LBIso (L.pull f) (L'.pull f) :=
   LBIso.chartPull (chartPullPull L f) (chartPullPull L' f) h
 
-macro "lbt" : tactic => `(tactic| (repeat (first | assumption | apply pull_isLB)))
-
 theorem isProper_of_finiteType : ∀ (S : Scheme.{0}) [IsLocallyNoetherian S] (A B : Over S) [GrpObj A] [IsCommMonObj A] [GrpObj B] [IsCommMonObj B] (L : LB A.left) (M : LB B.left) (R : HomFixRep A B L M), IsAbelianScheme A → IsAbelianScheme B → L.IsLB → M.IsLB → Out.Rigidified A L → Out.Rigidified B M → QuasiCompact R.π → IsSeparated R.π → LocallyOfFiniteType R.π → IsProper R.π := by
   intro S _ A B _ _ _ _ L M R hA hB hL hM _ _ hqc hsep hlft
   have hex : ValuativeCriterion.Existence R.π := by

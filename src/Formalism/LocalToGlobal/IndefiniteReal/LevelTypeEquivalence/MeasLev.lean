@@ -15,13 +15,9 @@ theorem upq_mat_one {p q : ℕ} : UpqT.mat (1 : UpqT p q) = 1 := rfl
 theorem upq_mat_inv_mul {p q : ℕ} (a : UpqT p q) : UpqT.mat a⁻¹ * UpqT.mat a = 1 := by
   rw [← upq_mat_mul, inv_mul_cancel, upq_mat_one]
 
-theorem upq_mat_mul_inv {p q : ℕ} (a : UpqT p q) : UpqT.mat a * UpqT.mat a⁻¹ = 1 := by
-  rw [← upq_mat_mul, mul_inv_cancel, upq_mat_one]
-
 variable {D : D7} {V : HSp D}
 
 set_option quotPrecheck false in
-local notation "ρv" v => (Formalism.L2.Host.tauPl D).symm v
 
 theorem cond_change {p q : ℕ} (A₀ A : Matrix (Fin p ⊕ Fin q) (Fin V.rank) ℂ) (u : UpqT p q)
     (hu : A = UpqT.mat u * A₀) (B : Set (UpqT p q)) (X : Matrix (Fin V.rank) (Fin V.rank) ℂ) :

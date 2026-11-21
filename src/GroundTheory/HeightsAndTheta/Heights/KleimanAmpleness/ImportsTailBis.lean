@@ -17,6 +17,4 @@ def SegreLiftPrime.Statement : Prop :=
 theorem SegreLiftPrime.hyps : IsMultiProjPrime (⊥ : Ideal (MRing (fun _ : Unit => Fin 2) ℚ)) :=
   NumbersDVR.isMultiProjPrime_bot
 
-example (h : SegreLiftPrime.Statement) := h ℚ Unit (fun _ => Fin 2) ⊥ SegreLiftPrime.hyps
-
 end GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization

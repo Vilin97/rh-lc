@@ -71,20 +71,6 @@ end Len
 section Fields
 variable {l : ℕ} [Fact l.Prime]
 
-theorem good_one {K : FinExt l} {s : ℕ} {LL : FinExt l} (h : Good K s LL) (hK : K.1 ≤ Ks K 1)
-    (hl : l ≠ 2) : Good K 1 LL := by
-  refine ⟨le_rfl, fun h2 => absurd h2 hl, hK, ?_⟩
-  intro τ x
-  obtain ⟨φ, hφ⟩ := IsAlgClosed.surjective_domRestrict_of_isAlgebraic (K := ℚ_[l])
-    (L := ↥(Ks K 1)) (M := Om l) (E := Om l) τ
-  have hx : (x : Om l) ∈ Ks K s := Ks_mono K h.1 x.2
-  have := h.2.2.2 (φ.comp (Ks K s).val) ⟨x, hx⟩
-  have e : τ x = φ (x : Om l) := by
-    rw [← hφ]
-    rfl
-  rw [e]
-  exact this
-
 end Fields
 end GlobalTheory.TBLocal
 

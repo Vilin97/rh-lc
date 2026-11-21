@@ -48,9 +48,6 @@ lemma _root_.GlobalTheory.PerMove.map_cc (τ : E →+* ℂ) (z : E) : τ (_root_
   NumberField.IsCMField.complexEmbedding_complexConj (K := E) τ z
 
 omit [NumberField E] [IsCMField E] in
-lemma hermC_eq (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (u w : Fin r → ℂ) :
-    FD.hermC τ G u w = u ⬝ᵥ (G.map τ *ᵥ star w) := by
-  simp [FD.hermC, dotProduct, Matrix.mulVec, Finset.mul_sum, mul_assoc]
 
 open NumberField Matrix in
 open scoped nonZeroDivisors in

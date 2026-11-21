@@ -21,8 +21,6 @@ def cell (ϖ : kˣ) (a : Fin m → ℤ) : Set (GL (Fin m) k) :=
 
 variable (m) in
 
-def wt (a : Fin m → ℤ) : ℤ := ∑ i : Fin m, ((m : ℤ) - 1 - 2 * (i : ℕ)) * a i
-
 theorem val_tD (ϖ : kˣ) (a : Fin m → ℤ) : (tD ϖ a).val = Matrix.diagonal fun i => ((ϖ ^ a i : kˣ) : k) :=
   val_diagT k _
 
@@ -31,9 +29,6 @@ theorem tD_add (ϖ : kˣ) (a b : Fin m → ℤ) : tD ϖ (a + b) = tD ϖ a * tD �
   congr 1
   funext i
   simp [_root_.zpow_add]
-
-theorem mul_mem_cell {ϖ : kˣ} {a : Fin m → ℤ} {u : GL (Fin m) k} (hu : u ∈ unipB k (Fin m)) {κ : GL (Fin m) k}
-    (hκ : κ ∈ KO k (Fin m)) : u * tD ϖ a * κ ∈ cell ϖ a := ⟨u, hu, κ, hκ, rfl⟩
 
 variable [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 

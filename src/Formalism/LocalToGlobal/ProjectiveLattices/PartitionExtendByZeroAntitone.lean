@@ -34,8 +34,6 @@ namespace Par
 
 variable (Q : Par D)
 
-abbrev K : Type := Q.c.F
-
 def PinHost : Prop :=
   Q.H.d = D.host.d ∧ (Q.H.rt : D.host.E) = D.host.sqrtMinusD ∧ Q.H.rt0 = D.host.φ₀ D.host.sqrtMinusD ∧
     ∀ t : D.what₂.Tau, DV.tauEmb D t (Q.H.rt : D.host.E) = Q.H.rt0

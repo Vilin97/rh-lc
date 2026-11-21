@@ -1,7 +1,8 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.ExistsPowMulPowEqOfIsZeroCechH
 import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.ExistsHomLocBijectiveGrSum
-import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.AwayEquivAwayFracEqIff
+import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.ExistsAwayFracOfMemHomLoc
+import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.EventuallyExistsResMEqMulSecOfEqZpowSec
 
 set_option autoImplicit false
 
@@ -132,17 +133,7 @@ theorem gammaRes_gammaRes (h : V ≤ U) (h' : W ≤ V) (y : GammaStar R x F U) :
 
 variable {F} in
 
-def gammaMap (φ : F ⟶ G) (V : X.Opens) :
-    GammaStar R x F V →ₗ[MvPolynomial ι R] GammaStar R x G V :=
-  GrSum.map _ _ (fun n => sectionsOn.map R (map (lbZPow L n) φ) V) fun j n a =>
-    congr(sectionsOn.map R $((mulSecOfEq_naturality (zofSec (x j)) (n := n) rfl φ).symm) V a)
-
 variable {F} in
-
-@[simp] theorem gammaMap_gammaOf (φ : F ⟶ G) (a : sectionsOn (twistZ F L n) V) :
-    gammaMap R x φ V (gammaOf R x F V n a) =
-      gammaOf R x G V n (sectionsOn.map R (map (lbZPow L n) φ) V a) := by
-  rw [gammaMap, GrSum.map_of]
 
 variable (V) in
 
@@ -311,10 +302,6 @@ def gammaCechIso [LinearOrder ι] (n : ℤ) : grCech ι (gammaGrading R x F W) n
   (cechFunctor ι R).mapIso (gammaCubeIso R x F hL hW hW' n)
 
 end Loc
-
-example (hL : L.IsLB) [Nontrivial Γ(F, V)] : Nontrivial (GammaStar R x F V) :=
-  ((GrSum.of_injective (gammaOp_commute R x F V) 0).comp
-    (ConcreteCategory.bijective_of_isIso ((twistZZeroIso F hL).hom.app V)).1).nontrivial
 
 end Twist
 

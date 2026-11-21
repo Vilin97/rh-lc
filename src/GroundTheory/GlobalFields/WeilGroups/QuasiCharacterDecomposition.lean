@@ -26,10 +26,6 @@ theorem mul_modulePow_zero (ψ : QuasiCharacter K) : ψ * modulePow (0 : ℂ) = 
   ext c
   simp
 
-theorem ofUnitary_one_mul (ψ : QuasiCharacter K) : ofUnitary 1 * ψ = ψ := by
-  ext c
-  simp
-
 theorem norm_ofUnitary_mul_modulePow (χ : HeckeCharacter K) (σ : ℝ) (c : IdeleClassGroup K) :
     ‖(((ofUnitary χ * modulePow (σ : ℂ) : QuasiCharacter K) c : ℂˣ) : ℂ)‖ =
       (IdeleClassGroup.ideleModule K c : ℝ) ^ σ := by
@@ -96,33 +92,6 @@ theorem norm_apply (c : IdeleClassGroup K) :
     ‖((ψ c : ℂˣ) : ℂ)‖ = (IdeleClassGroup.ideleModule K c : ℝ) ^ ψ.exponent := by
   conv_lhs => rw [← ψ.ofUnitary_unitaryPart_mul_modulePow_exponent]
   exact norm_ofUnitary_mul_modulePow _ _ _
-
-@[simp]
-theorem unitaryPart_ofUnitary_mul_modulePow (χ : HeckeCharacter K) (σ : ℝ) :
-    (ofUnitary χ * modulePow (σ : ℂ)).unitaryPart = χ :=
-  (eq_of_ofUnitary_mul_modulePow_eq
-    (ofUnitary_unitaryPart_mul_modulePow_exponent (ofUnitary χ * modulePow (σ : ℂ)))).1
-
-@[simp]
-theorem exponent_ofUnitary_mul_modulePow (χ : HeckeCharacter K) (σ : ℝ) :
-    (ofUnitary χ * modulePow (σ : ℂ)).exponent = σ :=
-  (eq_of_ofUnitary_mul_modulePow_eq
-    (ofUnitary_unitaryPart_mul_modulePow_exponent (ofUnitary χ * modulePow (σ : ℂ)))).2
-
-@[simp]
-theorem unitaryPart_ofUnitary (χ : HeckeCharacter K) : (ofUnitary χ).unitaryPart = χ := by
-  have h := unitaryPart_ofUnitary_mul_modulePow χ 0
-  rwa [Complex.ofReal_zero, mul_modulePow_zero] at h
-
-@[simp]
-theorem exponent_ofUnitary (χ : HeckeCharacter K) : (ofUnitary χ).exponent = 0 := by
-  have h := exponent_ofUnitary_mul_modulePow χ 0
-  rwa [Complex.ofReal_zero, mul_modulePow_zero] at h
-
-@[simp]
-theorem exponent_modulePow (σ : ℝ) : (modulePow (σ : ℂ) : QuasiCharacter K).exponent = σ := by
-  have h := exponent_ofUnitary_mul_modulePow (1 : HeckeCharacter K) σ
-  rwa [ofUnitary_one_mul] at h
 
 end QuasiCharacter
 

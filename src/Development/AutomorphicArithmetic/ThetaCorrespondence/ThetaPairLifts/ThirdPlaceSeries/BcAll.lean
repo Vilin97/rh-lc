@@ -17,7 +17,6 @@ variable (D : D7)
 end AtPlace
 section OnMt
 variable (D : D7) (μ : D.what₂.Tup) (j : ℕ)
-local notation "CZ" => Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd))
 end OnMt
 section Record
 variable {D : D7}
@@ -30,7 +29,6 @@ theorem isBCV_of_isBCV_of_same_ptV (hT0 : SumRepresentations.tie0 D) (hG : _root
 end Record
 section Series
 variable {D : D7}
-local notation "CZ" => Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd))
 end Series
 section Main
 end Main

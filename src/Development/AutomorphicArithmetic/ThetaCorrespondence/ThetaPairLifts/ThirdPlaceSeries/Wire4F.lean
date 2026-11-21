@@ -1,4 +1,6 @@
-import Formalism.LocalToGlobal.Wire4F
+import Formalism.LocalToGlobal.FiniteTOf
+import Formalism.LocalToGlobal.PtKOfReal
+import Formalism.LocalToGlobal.Divisibility.SumLeEtaSumNum
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CohomologicalCsdTempered
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.TSelF
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.IndefiniteRealisationChoice

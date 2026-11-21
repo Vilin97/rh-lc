@@ -142,33 +142,6 @@ theorem simeqRules : SimeqRules := by
     rw [← MvPowerSeries.subst_sub hs, ← subst_mvExp' hs h.1]
     exact ⟨MvPowerSeries.constantCoeff_subst_eq_zero hs h0 h.1, integral_subst' h0 hφ h.2⟩
 
-theorem traceDual : TraceDual := by
-  intro F L ι _ _ _ _ _ _ _ b σ τ
-  classical
-  let A : Matrix ι (L ≃ₐ[F] L) L := fun r ρ =>
-    ρ ((Algebra.traceForm F L).dualBasis (traceForm_nondegenerate F L) b r)
-  let B : Matrix (L ≃ₐ[F] L) ι L := fun ρ r => ρ (b r)
-  have hAB : A * B = 1 := by
-    ext r s
-    rw [Matrix.mul_apply]
-    have e : ∑ ρ : L ≃ₐ[F] L, A r ρ * B ρ s = algebraMap F L (Algebra.trace F L
-        ((Algebra.traceForm F L).dualBasis (traceForm_nondegenerate F L) b r * b s)) := by
-      rw [trace_eq_sum_automorphisms]
-      exact Finset.sum_congr rfl fun ρ _ => (map_mul ρ _ _).symm
-    rw [e, ← Algebra.traceForm_apply, LinearMap.BilinForm.apply_dualBasis_left, Matrix.one_apply]
-    by_cases h : r = s
-    · rw [if_pos h, if_pos h.symm, map_one]
-    · rw [if_neg h, if_neg (Ne.symm h), map_zero]
-  have e : ι ≃ (L ≃ₐ[F] L) := Fintype.equivOfCardEq (by
-    rw [← Module.finrank_eq_card_basis b, ← IsGalois.card_aut_eq_finrank, Nat.card_eq_fintype_card])
-  have hBA : B * A = 1 := (Matrix.mul_eq_one_comm_of_equiv e).1 hAB
-  have key : ∑ r, σ ((Algebra.traceForm F L).dualBasis (traceForm_nondegenerate F L) b r) * τ (b r) =
-      (1 : Matrix (L ≃ₐ[F] L) (L ≃ₐ[F] L) L) τ σ := by
-    rw [← hBA, Matrix.mul_apply]
-    exact Finset.sum_congr rfl fun r _ => mul_comm _ _
-  rw [key]
-  exact ⟨fun h => by rw [h, Matrix.one_apply_eq], fun h => Matrix.one_apply_ne (Ne.symm h)⟩
-
 theorem ps_map_subst {R S : Type} [CommRing R] [CommRing S] (h : R →+* S) {a : PowerSeries R}
     (ha : PowerSeries.HasSubst a) (f : PowerSeries R) :
     PowerSeries.map h (PowerSeries.subst a f : PowerSeries R) =
@@ -290,8 +263,6 @@ theorem norm_lamF_sub {K : Type} [NormedField K] [IsUltrametricDist K] {p : ℕ}
 
 def altR (R : Type) [CommRing R] (p : ℕ) : PowerSeries R :=
   PowerSeries.mk fun n => ∑ l ∈ range (n + 1), if n = (p ^ 2) ^ l then (-1 : R) ^ l else 0
-
-theorem altF_eq_altR (K : Type) [Field K] (p : ℕ) : altF K p = altR K p := rfl
 
 theorem map_altR {R S : Type} [CommRing R] [CommRing S] (h : R →+* S) (p : ℕ) :
     PowerSeries.map h (altR R p) = altR S p := by
@@ -479,7 +450,5 @@ theorem equivalence_rules : SimeqRules := LogarithmEquivalence.simeqRules
 theorem log_rescale_alt : LogRescale := LogarithmEquivalence.logRescale
 
 theorem log_rescale_unique : LogRescaleUnique := LogarithmEquivalence.logRescaleUnique
-
-theorem trace_duality : TraceDual := LogarithmEquivalence.traceDual
 
 end Formalism.InvariantFactorPaths.G7

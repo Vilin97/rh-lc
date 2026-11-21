@@ -1,6 +1,33 @@
 import Mathlib
 import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.TranscendentalPeriodUnits.CrystallineSemistableComparison
-import GroundTheory.PAdicHodge.WAFracB
+import GroundTheory.PAdicHodge.BCrisNewtonLift
+import GroundTheory.PAdicHodge.AInfGalois
+import GroundTheory.PAdicHodge.AInfXi
+import GroundTheory.PAdicHodge.TiltAlgClosed
+import GroundTheory.PAdicHodge.TiltAlgebra
+import GroundTheory.PAdicHodge.TateCpTwist
+import GroundTheory.PAdicHodge.ExtRobbaBounded
+import GroundTheory.PAdicHodge.RobbaSeries
+import GroundTheory.PAdicHodge.HighIndexSingleZeroOne
+import GroundTheory.PAdicHodge.PerfectoidField
+import GroundTheory.PAdicHodge.SemilinearResidue
+import GroundTheory.PAdicHodge.SlopeRobbaDegree
+import GroundTheory.PAdicHodge.BCrisEigenWitt
+import GroundTheory.PAdicHodge.BStPeriod
+import GroundTheory.PAdicHodge.ACrisBdR
+import GroundTheory.PAdicHodge.BdRGalois
+import GroundTheory.PAdicHodge.ACrisBdRGalois
+import GroundTheory.PAdicHodge.InstMulSemiringActionGalPlus
+import GroundTheory.PAdicHodge.BCrisNewtonApprox
+import GroundTheory.PAdicHodge.UnramifiedFrob
+import GroundTheory.PAdicHodge.BdRTGalois
+import GroundTheory.PAdicHodge.BCrisPlusInvariants
+import GroundTheory.PAdicHodge.BCrisRegularFinal
+import GroundTheory.PAdicHodge.ACrisGalois
+import GroundTheory.PAdicHodge.FundamentalSeqSurj
+import GroundTheory.PAdicHodge.FontaineLemmaInvariants
+import GroundTheory.PAdicHodge.ExistsNormLeOfNormLtOneFinite
+import GroundTheory.PAdicHodge.BCrisNewton
 
 set_option backward.isDefEq.respectTransparency false
 
@@ -12,17 +39,9 @@ namespace CrystallineSemistableComparison
 
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 
-instance charZero_bdR : CharZero (BdR l) := ⟨fun a b h => by
-  have : qQ l (a : ℚ_[l]) = qQ l (b : ℚ_[l]) := by rw [map_natCast, map_natCast]; exact h
-  exact Nat.cast_injective ((qQ l).injective this)⟩
-
 variable (l) in
 
 abbrev Fr : Subfield (BdR l) :=
   ACris.fracBCris (untilt_epsilon (p := l)) untilt_frobeniusEquiv_symm_epsilon_ne_one
-
-def cK (g : K.fixingSubgroup) : BdR l := qQ l (period_ring_base.κ g.1) * tQ l
-
-theorem σ_uQ (g : K.fixingSubgroup) : σD g.1 (uQ l) = uQ l + cK g := (period_ring_base.base l).σ_u g.1
 
 end CrystallineSemistableComparison

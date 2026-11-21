@@ -1,6 +1,14 @@
 import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.StatementsFlZArithVar
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.StatementsFlZIdealEqCoord
+import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FlagIndices.InstFintypeFlIdx
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ArithmeticHilbertSamuelLowerBound
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MixedFieldContraction.GenericFibreKerTarget
+import GroundTheory.HeightsAndTheta.Heights.Intersections.ProjLineRankTwoPushforwardHypotheses
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.MoriwakiSt
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.HSClosing
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.DoubleBlock
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.EqZeroOfSecTraceMulEqZero
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRedA
+import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsArith
 import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PFlagArithVar
 import GroundTheory.HeightsAndTheta.Heights.Intersections.PBlockRatioAlg
 set_option maxSynthPendingDepth 1
@@ -75,38 +83,10 @@ end Rename
 
 variable (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ)
 
-def setIncrEquiv (q : FlBlock Ψ N) : IndefiniteRowSideFullHecke.LowerBoundFree.Nine.FlZBlk Ψ N q ≃ FlIdx Ψ N q where
-  toFun S := ⟨S.1.orderEmbOfFin S.2, (S.1.orderEmbOfFin S.2).strictMono⟩
-  invFun A := ⟨Finset.univ.image A.1, by rw [Finset.card_image_of_injective _ A.2.injective, Finset.card_fin]⟩
-  left_inv S := by
-    apply Subtype.ext
-    simp only
-    exact Finset.image_orderEmbOfFin_univ S.1 S.2
-  right_inv A := by
-    apply Subtype.ext
-    exact (Finset.orderEmbOfFin_unique _ (fun x => Finset.mem_image_of_mem _ (Finset.mem_univ x)) A.2).symm
-
 omit [Fintype Ψ] [DecidableEq Ψ] in
 
-theorem flZIncr_eq : flZIncr Ψ N = Equiv.sigmaCongrRight (setIncrEquiv Ψ N) := rfl
-
 omit [Fintype Ψ] [DecidableEq Ψ] in
-
-theorem flZIncr_isBlockMap : IsBlockMap id (flZIncr Ψ N) := by
-  rw [flZIncr_eq]
-  refine ⟨Function.injective_id, (Equiv.sigmaCongrRight _).injective, fun _ => rfl, fun q _ => ?_⟩
-  exact (Equiv.sigmaCongrRight (setIncrEquiv Ψ N)).surjective q
 
 end FlZArithVar
-
-theorem FlZArithVar.proof (h : FlZIdealEqCoord.Statement) : FlZArithVar.Statement := by
-  intro Ψ _ _ _ N hN
-  have hA := FlagArithVar.proof Ψ N hN
-  have hI : IndefiniteRowSideFullHecke.LowerBoundFree.Nine.FlZIdeal Ψ N = imageZ (flZIncr Ψ N) (PFl Ψ N) := by
-    rw [h Ψ N, PFl]
-    exact GroundTheory.Heights₂.Heights.Inter.BlockRatioAlgebraic.mCoordIdeal_comp_v
-      (FlZArithVar.flZIncr_isBlockMap Ψ N) (yFl Ψ N)
-  rw [hI, imageZ, FlZArithVar.flZIncr_eq]
-  exact FlZArithVar.isArithVar_comap_rename_sigma (FlZArithVar.setIncrEquiv Ψ N) hA
 
 end GroundTheory.Heights₂.Heights.LowerBoundFree

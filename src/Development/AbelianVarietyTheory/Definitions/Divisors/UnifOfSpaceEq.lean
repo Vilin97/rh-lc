@@ -46,9 +46,6 @@ variable {D : D7} {j : ℕ} {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Ho
   {c : Coeff l} {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ D.R.r}
   {dict : ∀ σ : c.F →+* ℂ, GA D (D.sp.W j) → Σ k, Frame ((U σ).X k).Ψ D.R.r}
 
-theorem Laws.evalWD (_ : Laws D j Xo c U dict) : EvalWD (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) :=
-  GlobalTheory.TransferCompare.evalWD_framed Xo c
-
 theorem Laws.unTest (_ : Laws D j Xo c U dict) : ∀ σ, GoodEmb c σ → ∀ k x,
     FromTest (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) ((U σ).un k x) := fun σ _ k x =>
   haveI : IsReduced (CAt σ) := inferInstanceAs (IsReduced ℂ)
@@ -129,12 +126,6 @@ theorem one_le_multBd {ε : ℝ} (hε : 0 < ε) : 1 ≤ multBd E r ε := by
   refine one_le_pow₀ (le_add_of_nonneg_right ?_)
   have : 0 ≤ dE E := abs_nonneg _
   positivity
-
-example : dimFl E 1 = 0 := by simp [dimFl]
-
-example : dimFl E 2 = fdeg E := by simp [dimFl]
-
-example (d M : ℕ) (w : ℝ) : epsLev E d M w ≤ 1 := min_le_left _ _
 
 end Consts
 

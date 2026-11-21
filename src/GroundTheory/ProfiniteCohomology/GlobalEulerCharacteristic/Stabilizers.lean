@@ -7,8 +7,6 @@ namespace GroundTheory.ProfCoh
 open NumberField IsDedekindDomain GroundTheory.Global MulAction NumberField.InfinitePlace.Completion
 open scoped NumberField.LiesOver
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 section Complex

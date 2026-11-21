@@ -14,8 +14,6 @@ namespace GlobalTheory.CompanionTheory.RsWhittaker
 
 open Ad3 Ad3.R
 
-local notation "𝔸f" => FiniteAdeleRing (𝓞 ℚ) ℚ
-
 theorem unipotent_eq_adelic_unipotent (x : 𝔸[ℚ]) : (uni2 x : G2) = unipAdele x := by
   refine Units.ext (Matrix.ext fun a b => ?_)
   change (uni2 x : GL (Fin 2) 𝔸[ℚ]).val a b = unipMatrix (n := 2) (r := 1) (fun _ => x) a b

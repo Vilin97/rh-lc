@@ -24,8 +24,6 @@ variable (G : Type) [Group G] (A : Type) [AddCommGroup A]
 
 abbrev trivRep : Rep.{0} (ULift.{0} ℤ) G := Rep.of (intRep.{0} (1 : G →* AddMonoid.End A))
 
-theorem trivRep_ρ_apply (g : G) (a : A) : (trivRep G A).ρ g a = a := rfl
-
 instance isDiscreteRep_trivRep [TopologicalSpace G] [IsTopologicalGroup G] :
     IsDiscreteRep (trivRep G A) :=
   ⟨fun a => by
@@ -157,9 +155,6 @@ def divFunMap {B : Type} [AddCommGroup B] (g : A →+ B) : divFunRep φ A ⟶ di
       map_zero' := Subtype.ext (funext fun _ => funext fun _ => map_zero g)
       map_add' := fun f₁ f₂ => Subtype.ext (funext fun _ => funext fun _ => map_add g _ _) },
     fun _ => LinearMap.ext fun _ => rfl⟩
-
-theorem coe_divFunMap_hom_apply {B : Type} [AddCommGroup B] (g : A →+ B) (f : divFun φ A) :
-    (((divFunMap φ A g).hom f : divFun φ B) : I → G → B) = fun i x => g ((f : I → G → A) i x) := rfl
 
 abbrev ratToQZ : ℚ →+ QZ := QuotientAddGroup.mk' (AddSubgroup.zmultiples (1 : ℚ))
 
@@ -296,16 +291,6 @@ theorem exists_coprime_smul_cohomology_eq_zero (M : Rep.{0} (ULift.{0} ℤ) G) [
   rw [← map_nsmul, hz, map_zero]
 
 omit [TotallyDisconnectedSpace G] in
-
-theorem eq_zero_of_pow_smul_eq_zero_of_coprime (M : Rep.{0} (ULift.{0} ℤ) G) [IsDiscreteRep M] (ℓ : ℕ)
-    (hM : ∀ m : M.V, ∃ N : ℕ, N.Coprime ℓ ∧ N • m = 0) (n : ℕ) (x : cohomology M n) (k : ℕ)
-    (hx : ℓ ^ k • x = 0) : x = 0 := by
-  obtain ⟨N, hN, hNx⟩ := exists_coprime_smul_cohomology_eq_zero M ℓ hM n x
-  have h1 : addOrderOf x ∣ N := addOrderOf_dvd_of_nsmul_eq_zero hNx
-  have h2 : addOrderOf x ∣ ℓ ^ k := addOrderOf_dvd_of_nsmul_eq_zero hx
-  have h3 : addOrderOf x = 1 :=
-    Nat.Coprime.eq_one_of_dvd (Nat.Coprime.coprime_dvd_left h1 (hN.pow_right k)) h2
-  exact AddMonoid.addOrderOf_eq_one_iff.1 h3
 
 variable {I : Type} {H : I → Type} [∀ i, Group (H i)] [∀ i, TopologicalSpace (H i)]
   [∀ i, IsTopologicalGroup (H i)] [∀ i, CompactSpace (H i)] [∀ i, TotallyDisconnectedSpace (H i)]

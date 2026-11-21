@@ -74,9 +74,6 @@ theorem isTheta_sum {ι : Type} (s : Finset ι) (F : ι → WO S T → ℂ) (h :
     rw [Finset.sum_insert hi]
     exact isTheta_add (h i (Finset.mem_insert_self i s)) (ih fun j hj => h j (Finset.mem_insert_of_mem hj))
 
-def trig (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (s : Finset (ratL T S)) (c : ratL T S → ℂ) : WO S T → ℂ :=
-  ∑ γ ∈ s, c γ • chi ψ S T γ
-
 theorem lintegral_sq_le {G : Type} [MeasurableSpace G] (ν : Measure G) {u : G → ℂ} {ε B : ℝ}
     (h : ∀ w, ‖u w‖ ≤ ε * B) : ∫⁻ w, ‖u w‖ₑ ^ 2 ∂ν ≤ ENNReal.ofReal (ε ^ 2) * (ENNReal.ofReal (B ^ 2) * ν Set.univ) := by
   have hpt : ∀ w, ‖u w‖ₑ ^ 2 ≤ ENNReal.ofReal (ε ^ 2) * ENNReal.ofReal (B ^ 2) := by
@@ -317,10 +314,6 @@ theorem isThetaCont_mul (hψ : IsExpChar ψ) {ℓ : (WO S T → ℂ) →ₗ[ℂ]
     rw [heisO_one_mul, hΦU u (AddSubgroup.mem_inf.1 hu).1 hu0, hVg u (AddSubgroup.mem_inf.1 hu).2 hu0]
   have := hC (Φ * g) (isTheta_one_mul hΦ hg) hlev (C' * B) (mul_nonneg hC' hB) (hb Φ hΦ B hB hΦB)
   simpa [LinearMap.comp_apply, LinearMap.mulRight_apply, mul_assoc] using this
-
-def coef (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (μ : Measure (WO S T)) (𝓕 : Set (WO S T)) (Φ : WO S T → ℂ)
-    (γ : WO S T) : ℂ :=
-  ∫ y in 𝓕, Φ y * starRingEnd ℂ (chi ψ S T γ y) ∂μ
 
 theorem eq_mul_of_chi (hψ : IsCharAF D.host.F ψ) {m : (WO S T → ℂ) →ₗ[ℂ] ℂ} (hm : IsThetaCont 1 S T m) {κ : ℂ}
     (hκ : ∀ γ ∈ ratL T S, m (chi ψ S T γ) = κ) {Φ : WO S T → ℂ} (hΦ : IsThetaFunO 1 S T Φ) : m Φ = κ * Φ 0 := by

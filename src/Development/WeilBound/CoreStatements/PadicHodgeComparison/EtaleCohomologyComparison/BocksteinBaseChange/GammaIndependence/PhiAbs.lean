@@ -44,10 +44,6 @@ def hom (hlin : ∀ (c : A) (x : H) (φ : Q), κ (c • x) φ = i c * κ x φ) (
         _ = F i t κ n x y φ + F i t κ n x y' φ := by
             rw [← e, map_add, AddMonoidHom.add_apply, F, F, mul_add])
 
-theorem hom_apply (hlin : ∀ (c : A) (x : H) (φ : Q), κ (c • x) φ = i c * κ x φ) (ht : IsUnit (i t))
-    (hinj : ∃ n₀ : ℕ, ∀ x, β x = 0 → t ^ n₀ • x = 0) (n : ℕ) (x : N → H) (hx : ∀ y, β (x y) = t ^ n • y) (y : N) (φ : Q) :
-    hom hlin ht hinj n x hx y φ = F i t κ n x y φ := rfl
-
 theorem hom_key (hlin : ∀ (c : A) (x : H) (φ : Q), κ (c • x) φ = i c * κ x φ) (ht : IsUnit (i t))
     (hinj : ∃ n₀ : ℕ, ∀ x, β x = 0 → t ^ n₀ • x = 0) (n : ℕ) (x : N → H) (hx : ∀ y, β (x y) = t ^ n • y)
     {c : A} {x' : H} {y : N} (h : β x' = c • y) (φ : Q) : κ x' φ = i c * hom hlin ht hinj n x hx y φ :=
@@ -77,12 +73,5 @@ variable {ρ g}
 theorem ext_tmul (hg : ∀ (r : ℤ_[p]) (v : T) (f : Q), g (r • v) f = ρ (algebraMap ℤ_[p] ℚ_[p] r) * g v f)
     (z : ℚ_[p]) (v : T) (f : Q) : ext ρ g hg (z ⊗ₜ v) f = ρ z * g v f := by
   simp [ext]
-
-theorem ext_smul (hg : ∀ (r : ℤ_[p]) (v : T) (f : Q), g (r • v) f = ρ (algebraMap ℤ_[p] ℚ_[p] r) * g v f)
-    (z : ℚ_[p]) (w : ℚ_[p] ⊗[ℤ_[p]] T) (f : Q) : ext ρ g hg (z • w) f = ρ z * ext ρ g hg w f := by
-  induction w using TensorProduct.induction_on with
-  | zero => simp
-  | tmul a v => rw [TensorProduct.smul_tmul', ext_tmul, ext_tmul, smul_eq_mul, map_mul, mul_assoc]
-  | add u w hu hw => rw [smul_add, map_add, AddMonoidHom.add_apply, hu, hw, map_add, AddMonoidHom.add_apply, mul_add]
 
 end CrystallineSemistableComparison.ExtV

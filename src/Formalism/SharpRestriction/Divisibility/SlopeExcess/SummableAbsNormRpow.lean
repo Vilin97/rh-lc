@@ -1,5 +1,9 @@
 import Mathlib
-import Formalism.SharpRestriction.Divisibility.FunctionModelRallisFromInputs
+import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+import Formalism.LocalRingCardinality.DataTheta
+import Formalism.SharpRestriction.Divisibility.SchurIrreducible
+import Formalism.SharpRestriction.Divisibility.ZetaProductPairs
+import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
 
 noncomputable section
 open NumberField IsDedekindDomain Filter Topology Asymptotics
@@ -122,10 +126,6 @@ namespace Formalism.MainNotions.DIV.Proofs.QuadraticNormBounds
 section Euler
 variable {ι : Type} (q : ι → ℕ) (ε : ι → ℕ → ℂ) (n : ℕ)
 
-def at' (i : ι) (j : ℕ) (s : ℂ) : ℂ := ε i j * ((q i : ℕ) : ℂ) ^ (-(2 * s + (j : ℂ)))
-
-def ell (i : ι) (s : ℂ) : ℂ := ∑ j ∈ Finset.Icc 1 n, -Complex.log (1 - at' q ε i j s)
-
 variable {q ε}
 
 variable (hsum : ∀ σ : ℝ, 1 < σ → Summable (fun i => (q i : ℝ) ^ (-σ)))
@@ -140,30 +140,9 @@ open Formalism.MainNotions.SchurIrreducible Formalism.MainNotions.PDVS MeasureTh
 section Tail
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-def qS (S : Finset (Pl F)) : {w : HeightOneSpectrum (𝓞 F) // Sum.inr w ∉ S} → ℕ := fun w => qNorm w.1
-
 variable (E) in
 
-def εS (n M : ℕ) (S : Finset (Pl F)) : {w : HeightOneSpectrum (𝓞 F) // Sum.inr w ∉ S} → ℕ → ℂ :=
-  fun w j => etaV (E := E) w.1 ^ (M + n - j)
-
 variable (E) in
-
-def LL (n M : ℕ) (S : Finset (Pl F)) (s : ℂ) : ℂ := ∑' w, ell (qS S) (εS E n M S) n w s
-
-lemma εS_le (n M : ℕ) (S : Finset (Pl F)) : ∀ w j, ‖εS E n M S w j‖ ≤ 1 := by
-  intro w j
-  simp only [εS, norm_pow]
-  unfold etaV
-  split_ifs <;> simp
-
-def eqv (S : Finset (Pl F)) (hinf : ∀ v : NumberField.InfinitePlace F, Sum.inl v ∈ S) :
-    {w : HeightOneSpectrum (𝓞 F) // Sum.inr w ∉ S} ≃ {v : Pl F // v ∉ S} :=
-  Equiv.ofBijective (fun w => ⟨Sum.inr w.1, w.2⟩)
-    ⟨fun a b h => Subtype.ext (Sum.inr_injective (congrArg Subtype.val h)), fun ⟨v, hv⟩ => by
-      cases v with
-      | inl x => exact absurd (hinf x) hv
-      | inr w => exact ⟨⟨w, hv⟩, rfl⟩⟩
 
 end Tail
 

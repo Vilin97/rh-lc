@@ -17,8 +17,6 @@ def eqv (D : D7) : (D.sp.X 0).V ≃ₗ[D.host.E] (Fin (D.R.N 0) → D.host.E) :=
   (D.sp.X 0).frame.equivFun.trans
     (LinearEquiv.funCongrLeft D.host.E D.host.E (finCongr (Formalism.L2.Forms.rankN D 0 (Nat.zero_le _))).symm)
 
-theorem eqv_apply (y : (D.sp.X 0).V) : eqv D y = crd y := rfl
-
 theorem mem_clsCrd_iff {u : D.what₂.Word} (c : (D.mem u).C.cls 0) (z : Fin (D.R.N 0) → D.host.E) :
     z ∈ Formalism.L2.Forms.clsCrd D u 0 (Nat.zero_le _) c ↔ (eqv D).symm z ∈ D.clsLat u 0 c := by
   unfold Formalism.L2.Forms.clsCrd
@@ -32,11 +30,6 @@ theorem mem_clsCrd_iff {u : D.what₂.Word} (c : (D.mem u).C.cls 0) (z : Fin (D.
 
 def vcol (Y : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) (a : Fin (D.R.N 0)) : (D.sp.X 0).V :=
   (eqv D).symm fun r => Y r a
-
-theorem crd_vcol (Y : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) (a : Fin (D.R.N 0)) :
-    crd (vcol Y a) = fun r => Y r a := by
-  rw [← eqv_apply]
-  exact (eqv D).apply_symm_apply _
 
 variable {u : D.what₂.Word} (B : ColBase D u)
 

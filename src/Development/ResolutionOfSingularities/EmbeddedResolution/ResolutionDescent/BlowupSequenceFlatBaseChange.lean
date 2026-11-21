@@ -28,13 +28,11 @@ instance instIsIsoStructMapZero (s : SequenceOfBlowups X) : IsIso (s.projectionT
   rw [s.projectionToBase_zero]
   infer_instance
 
-@[reassoc, simp]
 theorem pullbackTransitionMap_comp_fst (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X) {i i' : ℕ}
     (h : i ≤ i') :
     s.pullbackTransitionMap φ h ≫ pullback.fst φ (s.projectionToBase i) = pullback.fst φ (s.projectionToBase i') :=
   s.pullbackTransitionMap_fst φ h
 
-@[reassoc, simp]
 theorem pullbackTransitionMap_comp_snd (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X) {i i' : ℕ}
     (h : i ≤ i') :
     s.pullbackTransitionMap φ h ≫ pullback.snd φ (s.projectionToBase i) =
@@ -63,15 +61,6 @@ def baseChangeTower (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X) 
   map_comp {_ _ _} f g :=
     pullbackTransitionMap_eq_comp s φ (leOfHom f.unop) (leOfHom g.unop) (leOfHom (f ≫ g).unop)
 
-@[simp]
-theorem baseChangeTower_obj (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X) (i : ℕ) :
-    (s.baseChangeTower φ).obj (op i) = pullback φ (s.projectionToBase i) := rfl
-
-@[simp]
-theorem baseChangeTower_map (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X) {i i' : ℕ}
-    (h : i ≤ i') :
-    (s.baseChangeTower φ).map (homOfLE h).op = s.pullbackTransitionMap φ h := rfl
-
 theorem isIso_pullback_fst_projectionToBase_zero (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X) :
     IsIso (pullback.fst φ (s.projectionToBase 0)) := by
   have hcomm : (𝟙 X') ≫ φ = (φ ≫ inv (s.projectionToBase 0)) ≫ s.projectionToBase 0 := by
@@ -90,10 +79,6 @@ instance instIsIsoPullbackFstStructMapZero (s : SequenceOfBlowups X) {X' : Schem
 def baseChangeTowerObjZeroIso (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X) :
     (s.baseChangeTower φ).obj (op 0) ≅ X' :=
   @asIso Scheme.{u} _ _ _ (pullback.fst φ (s.projectionToBase 0)) (s.isIso_pullback_fst_projectionToBase_zero φ)
-
-@[simp]
-theorem baseChangeTowerObjZeroIso_hom (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X) :
-    (s.baseChangeTowerObjZeroIso φ).hom = pullback.fst φ (s.projectionToBase 0) := rfl
 
 theorem isPullback_pullbackTransitionMap (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X) (i : ℕ) :
     IsPullback (pullback.snd φ (s.projectionToBase (i + 1))) (s.pullbackTransitionMap φ (Nat.le_succ i))
@@ -132,11 +117,6 @@ def baseChange (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X) [Alge
 @[simp]
 theorem baseChange_length (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X)
     [AlgebraicGeometry.Flat φ] : (s.baseChange φ).length = s.length := rfl
-
-@[simp]
-theorem baseChange_schemeAt (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X)
-    [AlgebraicGeometry.Flat φ] (i : ℕ) :
-    (s.baseChange φ).schemeAt i = pullback φ (s.projectionToBase i) := rfl
 
 @[simp]
 theorem baseChange_blowupMorphism (s : SequenceOfBlowups X) {X' : Scheme.{u}} (φ : X' ⟶ X)

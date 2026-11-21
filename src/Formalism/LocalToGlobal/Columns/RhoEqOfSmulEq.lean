@@ -1,5 +1,5 @@
 import Mathlib
-import Formalism.LocalToGlobal.Divisibility.ClassSumBridge
+import Formalism.LocalToGlobal.Divisibility.ClassSumLemmas
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder
@@ -121,10 +121,6 @@ def intNab : Submodule (𝓞 K) S.EqFun := S.intOf S.Nab
 
 def intDel : Submodule (𝓞 K) S.EqFun := S.intOf S.Del
 
-theorem mem_intOf (N : S.D → Submodule (𝓞 K) S.V) (φ : S.EqFun) :
-    φ ∈ S.intOf N ↔ ∀ d, (φ : S.D → S.V) d ∈ N d := by
-  exact Iff.rfl
-
 theorem mem_intNab (φ : S.EqFun) : φ ∈ S.intNab ↔ ∀ d, (φ : S.D → S.V) d ∈ S.Nab d := by
   exact Iff.rfl
 
@@ -194,9 +190,6 @@ def res (h : S.Ok) : S.EqFun ≃ₗ[K] (S.toCSD h).Forms := S.resOf h S.outSec
 
 theorem resOf_apply (h : S.Ok) (s : S.Sec) (φ : S.EqFun) (c : S.Cl) :
     ((S.resOf h s φ).1 : S.Cl → S.V) c = (φ : S.D → S.V) (s.rep c) := rfl
-
-theorem resOf_symm_apply (h : S.Ok) (s : S.Sec) (f : (S.toCSDOf h s).Forms) (d : S.D) :
-    (((S.resOf h s).symm f : S.EqFun) : S.D → S.V) d = S.ρ (s.mv d) ((f.1 : S.Cl → S.V) (S.cls d)) := rfl
 
 def ipOf (h : S.Ok) (s : S.Sec) (φ ψ : S.D → S.V) : K :=
   (S.toCSDOf h s).csum (fun c => φ (s.rep c)) (fun c => ψ (s.rep c))
@@ -399,8 +392,6 @@ def opOf (h : S.Ok) (s : S.Sec) : S.EqFun →ₗ[K] S'.EqFun where
 
 def op (h : S.Ok) : S.EqFun →ₗ[K] S'.EqFun := A.opOf h S.outSec
 
-def atReps (s : S.Sec) (s' : S'.Sec) : S.Cl → S'.Cl → (S.V →ₗ[K] S'.V) := fun c c' => A.k (s.rep c) (s'.rep c')
-
 end ClsKer
 
 structure GSD.Iso (S S' : GSD K) where
@@ -447,9 +438,6 @@ def onForms : S.EqFun ≃ₗ[K] S'.EqFun where
     show e.eV (e.eV.symm ((ψ : S'.D → S'.V) (e.eD (e.eD.symm d')))) = (ψ : S'.D → S'.V) d'
     rw [LinearEquiv.apply_symm_apply, Equiv.apply_symm_apply]
 
-theorem onForms_apply (φ : S.EqFun) (d' : S'.D) :
-    ((e.onForms φ : S'.EqFun) : S'.D → S'.V) d' = e.eV ((φ : S.D → S.V) (e.eD.symm d')) := rfl
-
 def onCl : S.Cl ≃ S'.Cl where
   toFun := Quotient.map' e.eD (by
     rintro a b ⟨g, rfl⟩
@@ -470,60 +458,9 @@ def onCl : S.Cl ≃ S'.Cl where
 
 end GSD.Iso
 
-@[reducible] def GSD.triv (K : Type) [Field K] [NumberField K] [StarRing K] (G D : Type) [Group G] [MulAction G D] : GSD K where
-  G := G
-  D := D
-  V := K
-  ιV := Unit
-  bV := Basis.singleton Unit K
-  pair := CSD.pairOne K
-  ρ := 1
-  Nab := fun _ => 1
-  Del := fun _ => 1
-
 namespace GSD
 
 variable (K) (G D : Type) [Group G] [MulAction G D]
-
-theorem triv_ok (h1 : Finite (MulAction.orbitRel.Quotient G D)) (h2 : ∀ d : D, Finite (MulAction.stabilizer G d)) :
-    (triv K G D).Ok where
-  fin_orb := h1
-  fin_stab := h2
-  nab_smul := by
-    intro g d
-    show (1 : Submodule (𝓞 K) K) = (1 : Submodule (𝓞 K) K).map ((1 : Module.End K K).restrictScalars (𝓞 K))
-    exact (Submodule.map_id _).symm
-  del_smul := by
-    intro g d
-    show (1 : Submodule (𝓞 K) K) = (1 : Submodule (𝓞 K) K).map ((1 : Module.End K K).restrictScalars (𝓞 K))
-    exact (Submodule.map_id _).symm
-  inv := by
-    intro g x y
-    rfl
-
-theorem triv_good (h1 : Finite (MulAction.orbitRel.Quotient G D))
-    (h2 : ∀ d : D, Finite (MulAction.stabilizer G d)) : (triv K G D).Good 1 where
-  ok := triv_ok K G D h1 h2
-  symm := (CSD.one_good K).symm
-  nondeg := (CSD.one_good K).nondeg
-  nab_lat := fun _ => (CSD.one_good K).nab_lat ()
-  del_le := fun _ => le_rfl
-  s_pos := Nat.one_pos
-  dual_le := fun _ => (CSD.one_good K).dual_le ()
-  del_dual := fun _ => (CSD.one_good K).del_dual ()
-
-def trivOne : (triv K G D).EqFun := ⟨fun _ => (1 : K), fun _ _ => rfl⟩
-
-theorem trivOne_mem : trivOne K G D ∈ (triv K G D).intDel := by
-  intro d
-  show (1 : K) ∈ (1 : Submodule (𝓞 K) K)
-  exact Submodule.one_le.mp le_rfl
-
-theorem trivOne_ne_zero [Nonempty D] : trivOne K G D ≠ 0 := by
-  intro h
-  obtain ⟨d⟩ := ‹Nonempty D›
-  have h' := congrArg (fun φ : (triv K G D).EqFun => (φ : D → K) d) h
-  simp [trivOne] at h'
 
 end GSD
 
@@ -550,34 +487,6 @@ structure BiPair (S S' : GSD K) where
 namespace BiPair
 
 variable {S S' : GSD K} (P : BiPair S S')
-
-def sumOf (h' : S'.Ok) (s' : S'.Sec) (φ : S.D → S.V) (ψ : S'.D → S'.V) : K :=
-  S'.csOf h' s' fun d' => P.B (φ (P.p d')) (ψ d')
-
-def formOf (h' : S'.Ok) (s' : S'.Sec) : S.EqFun →ₗ[K] S'.EqFun →ₗ[K] K :=
-  LinearMap.mk₂ K (fun φ ψ => P.sumOf h' s' φ ψ)
-    (by
-      intro φ φ' ψ
-      show S'.csOf h' s' (fun d' => P.B ((φ : S.D → S.V) (P.p d') + (φ' : S.D → S.V) (P.p d')) _) = _
-      unfold sumOf GSD.csOf
-      simp only [map_add, LinearMap.add_apply, smul_add, Finset.sum_add_distrib])
-    (by
-      intro a φ ψ
-      show S'.csOf h' s' (fun d' => P.B (a • (φ : S.D → S.V) (P.p d')) _) = _
-      unfold sumOf GSD.csOf
-      simp only [map_smul, LinearMap.smul_apply, Finset.smul_sum]
-      exact Finset.sum_congr rfl fun c _ => smul_comm _ _ _)
-    (by
-      intro φ ψ ψ'
-      show S'.csOf h' s' (fun d' => P.B _ ((ψ : S'.D → S'.V) d' + (ψ' : S'.D → S'.V) d')) = _
-      unfold sumOf GSD.csOf
-      simp only [map_add, smul_add, Finset.sum_add_distrib])
-    (by
-      intro a φ ψ
-      show S'.csOf h' s' (fun d' => P.B _ (a • (ψ : S'.D → S'.V) d')) = _
-      unfold sumOf GSD.csOf
-      simp only [map_smul, Finset.smul_sum]
-      exact Finset.sum_congr rfl fun c _ => smul_comm _ _ _)
 
 end BiPair
 

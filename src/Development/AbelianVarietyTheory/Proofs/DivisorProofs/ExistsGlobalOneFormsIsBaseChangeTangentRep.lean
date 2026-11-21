@@ -90,12 +90,6 @@ theorem sumHom_isSum (α : B →+* B') (f : M →+ M') (hf : ∀ (b : B) (m : M)
     IsSum (sumHom α f hf) α f :=
   ⟨fun b ↦ by ext <;> simp [sumHom], fun m ↦ by ext <;> simp [sumHom]⟩
 
-@[simp] theorem sumHom_fst (α : B →+* B') (f : M →+ M') (hf : ∀ (b : B) (m : M), f (b • m) = α b • f m)
-    (x : TrivSqZeroExt B M) : (sumHom α f hf x).fst = α x.fst := by simp [sumHom]
-
-@[simp] theorem sumHom_snd (α : B →+* B') (f : M →+ M') (hf : ∀ (b : B) (m : M), f (b • m) = α b • f m)
-    (x : TrivSqZeroExt B M) : (sumHom α f hf x).snd = f x.snd := by simp [sumHom]
-
 end Sum
 
 @[reducible] def opMod (B M : Type) [CommRing B] [AddCommGroup M] [Module B M] : Module Bᵐᵒᵖ M :=

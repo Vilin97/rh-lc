@@ -21,19 +21,12 @@ abbrev modulus (N : ℕ) [NeZero N] : ℕ+ := ⟨N, Nat.pos_of_neZero N⟩
 def unitsMod (N : ℕ) [NeZero N] : ℤ̂ˣ →* (ZMod N)ˣ :=
   Units.map (ProfiniteInteger.proj (modulus N)).toMonoidHom
 
-theorem coe_unitsMod (u : ℤ̂ˣ) :
-    ((unitsMod N u : (ZMod N)ˣ) : ZMod N) = ProfiniteInteger.proj (modulus N) (u : ℤ̂) :=
-  rfl
-
 def toCircle : (ZMod N)ˣ →* Circle where
   toFun a := ⟨χ a, mem_sphere_zero_iff_norm.2 (χ.unit_norm_eq_one a)⟩
   map_one' := Circle.ext (by simp)
   map_mul' a b := Circle.ext (by simp only [Units.val_mul, map_mul]; rfl)
 
 omit [NeZero N] in
-@[simp]
-theorem coe_toCircle (a : (ZMod N)ˣ) : (toCircle χ a : ℂ) = χ a :=
-  rfl
 
 def galoisCharacter : Gal(maxCyclotomic/ℚ) →* Circle :=
   (toCircle χ).comp ((unitsMod N).comp cycCharacter.toMonoidHom)

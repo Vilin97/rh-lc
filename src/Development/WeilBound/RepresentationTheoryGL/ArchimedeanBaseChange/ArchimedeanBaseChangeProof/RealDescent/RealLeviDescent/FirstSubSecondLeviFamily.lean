@@ -34,9 +34,6 @@ theorem Intw.sub {f f' g g'} (h : Intw π f g) (h' : Intw π f' g') : Intw π (f
 theorem Intw.mul {f f' g g'} (h : Intw π f g) (h' : Intw π f' g') : Intw π (f * f') (g * g') := fun x => by
   simp [h' x, h (f' x)]
 
-theorem Intw.smul {f g} (c : ℂ) (h : Intw π f g) : Intw π (c • f) (c • g) := fun x => by
-  simp [h x]
-
 theorem Intw.zero : Intw π (0 : Module.End ℂ V) 0 := fun x => by simp
 
 theorem Intw.algebraMap (c : ℂ) : Intw π (algebraMap ℂ (Module.End ℂ V) c) (algebraMap ℂ (Module.End ℂ W) c) :=
@@ -63,14 +60,6 @@ theorem Intw.ofFn {t : ℕ} {f : Fin t → Module.End ℂ V} {g : Fin t → Modu
     Intw π (List.ofFn f).prod (List.ofFn g).prod := by
   have := Intw.listMap (List.finRange t) h
   simpa [List.ofFn_eq_map] using this
-
-theorem Intw.lift {X : Type} {G : X → Module.End ℂ V} {G' : X → Module.End ℂ W} (h : ∀ p, Intw π (G p) (G' p))
-    (z : FreeAlgebra ℂ X) : Intw π (FreeAlgebra.lift ℂ G z) (FreeAlgebra.lift ℂ G' z) := by
-  induction z using FreeAlgebra.induction with
-  | grade0 r => simpa using Intw.algebraMap (π := π) r
-  | grade1 p => simpa using h p
-  | mul a b ha hb => simpa using ha.mul hb
-  | add a b ha hb => simpa using ha.add hb
 
 theorem Intw.qminor {F : Fin n → Fin n → Module.End ℂ V} {G : Fin n → Fin n → Module.End ℂ W}
     (h : ∀ a b, Intw π (F a b) (G a b)) {t : ℕ} (r c : Fin t → Fin n) (u : ℂ) :

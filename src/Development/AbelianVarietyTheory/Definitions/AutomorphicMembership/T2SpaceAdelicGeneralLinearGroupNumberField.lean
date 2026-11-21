@@ -378,9 +378,6 @@ section RankOne
 
 omit [IsTotallyComplex E] in
 
-theorem mul_comm_one (g h : GA E 1) : g * h = h * g := by
-  rw [← toGL_det E (g * h), ← toGL_det E (h * g), map_mul GeneralLinearGroup.det, map_mul GeneralLinearGroup.det, mul_comm (GeneralLinearGroup.det g)]
-
 variable {μ : Measure (GA E 1)} [μ.IsHaarMeasure]
 
 theorem memL2_of_rank_one {φ : GA E 1 → ℂ} (hc : Continuous φ) (h : LeftInv (latticeGL E 1) φ) : MemL2Quotient (latticeGL E 1) μ φ := by
@@ -398,21 +395,6 @@ theorem exists_one_mem_L2cusp : ∃ F ∈ L2cusp μ, F ≠ 0 ∧ lift (latticeGL
     toL2_ne_zero h continuous_const fun e => one_ne_zero (congrFun e 1), h.lift_toL2_ae_eq⟩
 
 end RankOne
-
-example (μ : Measure (GA E 1)) [μ.IsHaarMeasure] :
-    classes (CuspSub.triv E le_rfl).V μ ≠ ⊥ ∧ classes (CuspSub.triv E le_rfl).V μ ≤ L2cusp μ := by
-  obtain ⟨F, -, h0, e⟩ := exists_one_mem_L2cusp μ
-  refine ⟨(Submodule.ne_bot_iff _).2 ⟨F, ⟨oneFn E 1, Submodule.mem_span_singleton_self _, e⟩, h0⟩,
-    classes_le_L2cusp (CuspSub.triv E le_rfl).cusp fun φ hφ t g => ?_⟩
-  obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hφ
-  rfl
-
-example : (fun _ => (1 : ℂ)) ∉ cuspCont E 2 := fun h => absurd (one_mem_cuspCont_iff.1 h) (by norm_num)
-
-example (γ : GL (Fin 1) E) : ratGL E 1 γ ≠ splitCentre E 1 1 := fun e => by
-  have h := congrArg (fun g => ideleNorm (E := E) (GeneralLinearGroup.det g)) e
-  simp only [det_ratGL, det_splitCentre] at h
-  exact (one_lt_ideleNorm_eIdele E).ne ((ideleNorm_principalIdele _).symm.trans h)
 
 end GlobalTheory.CuspRep.CuspidalL2GL
 

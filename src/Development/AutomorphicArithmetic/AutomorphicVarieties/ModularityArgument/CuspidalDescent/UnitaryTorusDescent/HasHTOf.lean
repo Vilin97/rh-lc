@@ -26,6 +26,4 @@ theorem woTypeT {h : IsPlaceOver A w} {y : WD h} (k : WOT ι r y) (χ : Fin n �
 
 omit [IsAlgClosure L Ω] in
 
-def HtEx (r : G L Ω →* GL (Fin n) (Qbar l)) : Prop := ∃ HT, Af.HasHT r HT
-
 end UpperTheory.V.Z.Desc.P

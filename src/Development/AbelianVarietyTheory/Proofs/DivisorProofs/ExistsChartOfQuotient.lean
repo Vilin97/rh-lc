@@ -148,15 +148,6 @@ theorem map_chartIdeal (φ : S →ₐ[A] S') (c : Fin N → Fin r → S) :
       ell e σ (fun m k => φ (c m k)) := funext (map_ell e σ φ c)
   rw [this]
 
-theorem IsChart.map {c : Fin N → Fin r → S} (hc : IsChart e σ c) (φ : S →ₐ[A] S') :
-    IsChart e σ (fun m k => φ (c m k)) := by
-  refine ⟨fun k k' => ?_, fun a m k => ?_⟩
-  · show φ (c (σ k) k') = _
-    rw [hc.1]; by_cases h : k' = k <;> simp [Pi.single_apply, h]
-  · have : mulDefect e σ (fun m k => φ (c m k)) a m k = φ (mulDefect e σ c a m k) := by
-      simp [mulDefect, map_sub, map_sum, map_mul, AlgHom.commutes]
-    rw [this, hc.2, map_zero]
-
 theorem eq_of_chartIdeal_le {c d : Fin N → Fin r → S} (hc : IsChart e σ c)
     (h : chartIdeal e σ d ≤ chartIdeal e σ c) : c = d := by
   funext m

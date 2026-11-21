@@ -43,12 +43,6 @@ theorem tame_id : Tame ψ θ j r fun x => x := by
   rw [ENNReal.coe_one, one_mul]
   exact sobO_mono (Nat.le_add_right d r)
 
-theorem Tame.mono (h : Tame ψ θ j r S) (hr : r ≤ r') : Tame ψ θ j r' S := by
-  obtain ⟨hlev, c, hc⟩ := h
-  refine ⟨hlev, c, fun μ 𝓕 d x hx => (hc μ 𝓕 d x hx).trans ?_⟩
-  gcongr
-  exact sobO_mono (Nat.add_le_add_left hr d)
-
 theorem Tame.smul (a : ℂ) (h : Tame ψ θ j r S) : Tame ψ θ j r fun x => a • S x := by
   obtain ⟨hlev, c, hc⟩ := h
   refine ⟨fun U x hx => ?_, ‖a‖₊ * c, fun μ 𝓕 d x hx => ?_⟩

@@ -1,4 +1,21 @@
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CasimirVolumeRatios.DensDefs
+import Formalism.PeriodIntegrals.LatCountG
+import Formalism.HarderNarasimhan.StatementPl
+import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.SphericalFunctionIntegrableOfLocal
+import Formalism.FlagUnipotentLattices.HalfDifferenceL1Bound
+import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.ExtensionInterSubspace
+import Formalism.LogSumExpBounds.StatementD
+import Formalism.LatticeRigidity.HeightMinimum.PackingCountGeometricMean
+import Mathlib
+import Formalism.LatticeRigidity.HeightMinimum.PowFinrankEqZeroOfTracePow
+import Formalism.GelfandTransference.EnergyIdentity
+import Formalism.NormUnitaryBounds.DetPolynomialWeights.ShortIndependentVectorsOfDualMinimum
+import Formalism.LatticeTheta.ThetaShiftInversion
+import Formalism.LatticeRigidity.StatementC
+import Formalism.LatticeRigidity.HeightMinimum.SqrtAbsNormLeProd
+import Formalism.SharpRestriction.CuspSpanNormBounds.PlaceDegreeData
+import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.TraceConjMulEqHilbertSchmidt
+import Formalism.RealPlaceAnalysis.RealPlaceTaylor.IndefiniteUnitaryPreservesForm
+import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.InclusionInjective
 import Formalism.SatakeDualWeyl.KpqSubgroupCompact
 
 noncomputable section
@@ -63,14 +80,6 @@ def ratReal (I : AutInst) (γ : GL (Fin I.n) I.E) (hγ : γ ∈ Formalism.UG.UJ 
     congr 1
     simp only [← Matrix.mul_assoc]
     rw [hu]⟩
-
-theorem ratPoint_holds (I : AutInst) : RatPoint I := by
-  intro g hg
-  have hf : Formalism.UG.bc (Formalism.UG.inclE (F := I.F) (Af I.F)) g ∈ Formalism.UG.UPts I.cm.sig I.J (Af I.F) :=
-    Formalism.UG.Final.RatPtsLe I.F I.E (Fin I.n) I.cm.sig I.J (Af I.F) (Subgroup.mem_map_of_mem _ hg)
-  let x : I.GA := (fun v => ratReal I g hg v, ⟨_, hf⟩)
-  have hx : x ∈ I.GFset := ⟨g, hg, fun v => rfl, rfl⟩
-  exact ⟨x, hx, ratM_eq I hx g rfl⟩
 
 end Formalism.L2.S.S7.DensRat
 

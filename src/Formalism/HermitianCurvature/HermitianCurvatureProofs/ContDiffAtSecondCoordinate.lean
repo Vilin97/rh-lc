@@ -7,8 +7,6 @@ open scoped ComplexConjugate
 
 noncomputable section
 
-local notation "∞'" => ((⊤ : ℕ∞) : WithTop ℕ∞)
-
 section generic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] {x : E}

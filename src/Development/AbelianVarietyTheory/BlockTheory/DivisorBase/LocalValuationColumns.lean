@@ -81,12 +81,6 @@ def ColsExist (p : ℕ) (la : PointsOfFlagModel.abelian₂ p c) : Prop :=
 
 variable (Dw c) in
 
-def ColsHarmonic (p : ℕ) (la : PointsOfFlagModel.abelian₂ p c) : Prop :=
-  ∀ (T : CDVR) (io : c.F →+* T.Fr) (e : ℕ), OverLa la.1 T.V io e →
-    ∀ (a : (E →+* ℂ) × ℕ → ℕ), (∀ τ, Antitone fun i => a (τ, i)) →
-      ∀ (n : ℕ) (B : ∀ f : Lt1 Dw, Fin (rk f) → Fin n → T.V), IsCols c T io p (gap Dw a) B →
-        polyT B (gap Dw a) ∈ FFV (Dw := Dw) T a n
-
 variable (Xo c) in
 
 def LocalDepth (p : ℕ) [Fact p.Prime] (la : PointsOfFlagModel.abelian₂ p c) : Prop :=
@@ -97,23 +91,6 @@ def LocalDepth (p : ℕ) [Fact p.Prime] (la : PointsOfFlagModel.abelian₂ p c) 
 
 variable (Xo c) in
 
-def ChoiceOfP : Prop :=
-  (∀ a : 𝓞 E, star a = H.bar a) → ∀ (p : ℕ) [Fact p.Prime] (la : PointsOfFlagModel.abelian₂ p c),
-    ColsExist Dw c p la ∧ ColsHarmonic Dw c p la ∧ LocalDepth Xo c p la
-
-example {p : ℕ} [Fact p.Prime] {la : PointsOfFlagModel.abelian₂ p c} (h : LocalDepth Xo c p la) {T : CDVR} {io : c.F →+* T.Fr} {e : ℕ}
-    (ho : OverLa la.1 T.V io e) {y : IntFr Xo c T io} (Ch : IntegralChartA3 Xo c T io y) {a : (E →+* ℂ) × ℕ → ℕ}
-    (ha : ∀ τ, Antitone fun i => a (τ, i)) {n : ℕ} {B : ∀ f : Lt1 Dw, Fin (rk f) → Fin n → T.V}
-    (hB : IsCols c T io p (gap Dw a) B) (k ep : ℕ) (hp : vV T.V (p : T.Fr) = ep) :
-    nuLocC Ch ep k a n ≤ nuP p y (gap Dw a) := by
-  obtain ⟨X⟩ := nonempty_valExt_of_overLa (p := p) la ho
-  rw [← (h T io e ho y Ch X _ n B hB).2.2.2.1 k ep hp]
-  exact nuLocC_le_nuLocOf Ch ep k ha hB
-
 omit [StarRing (𝓞 E)] in
-
-example (C : Type) [Field C] : polyH (Dw := Dw) C (fun _ => 0) = 1 := by
-  have : IsEmpty {f : Lt1 Dw // (fun _ => 0 : Lt1 Dw → ℕ) f ≠ 0} := ⟨fun f => f.2 rfl⟩
-  simp [polyH]
 
 end GlobalTheory.IndefiniteRowSideFullHecke.LocalValuationColumns

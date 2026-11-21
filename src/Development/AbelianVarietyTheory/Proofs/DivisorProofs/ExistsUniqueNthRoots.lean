@@ -179,7 +179,4 @@ theorem isSymBasis_mul : IsSymBasis (fun _ : Fin 1 => (LinearMap.mul ℤ ℤ : L
     rw [hx, hy, LinearMap.map_smul₂, LinearMap.map_smul]
     simp only [smul_eq_mul]; ring
 
-example (s s' : ℚˣ) (h : ∀ x y : ℤ, s ^ ((3 : ℤ) * (x * y)) = s' ^ ((3 : ℤ) * (x * y))) : s ^ 3 = s' ^ 3 :=
-  pow_eq_pow_of_prod isSymBasis_mul 3 (fun _ => s) (fun _ => s') (fun x y => by simpa using h x y) 0
-
 end GlobalTheory.PerRoot

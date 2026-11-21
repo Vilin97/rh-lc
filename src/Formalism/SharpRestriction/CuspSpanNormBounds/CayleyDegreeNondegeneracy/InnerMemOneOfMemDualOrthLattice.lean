@@ -17,8 +17,6 @@ variable {D : D7} {u : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ)
   (hprim : ∀ c : D.host.E, c • F0.z ∈ Lsub Λ (lf D F0) → ∃ o : 𝓞 D.host.E, (o : D.host.E) = c)
   (hT : Tu D u ≠ 0)
 
-local notation "t" => ((Tu D u : ℕ) : D.host.E)
-
 theorem z_mem_orth_isotropic : F0.z ∈ orth (hS D) (Xsp (lf D F0)) := a_orth_of_frame F0.e F0.z F0.z_orth
 
 include he hΛ hu hzΛ hprim hT in

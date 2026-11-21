@@ -574,13 +574,6 @@ theorem inhabitants (hψ : IsStdChar D ψ (-1)) {V V₀ W W₀ : HSp D} {ρ : �
     rw [k1, GlobalTheory.FinPl.Inhab.incAdj_smul, e, ← GlobalTheory.FinPl.Inhab.mem_intGrp, ← GlobalTheory.FinPl.Inhab.int_cA_iff, ← k2, Prod.forall]
     rfl
 
-example (D : D7) : ∃ (ψ : AddChar (AF D.host.F) ℂ) (V V₀ : HSp D) (d : HypDec V V₀ 1) (p : Pieces V₀ V V₀ 1 1), 0 < V₀.rank ∧
-    IsStdChar D ψ (-1) ∧ p.Is d d (xZero d) ψ := by
-  obtain ⟨ψ, hψ⟩ := GlobalTheory.StdAdelicChar.exists_isStdChar D
-  obtain ⟨p, -, -, -, -, -, -, -, -, h, -⟩ := inhabitants hψ (hypDecThree D) (hypDecThree D) (z₀ := fun _ => 1)
-    fun h => one_ne_zero (congrFun h ⟨0, Nat.one_pos⟩)
-  exact ⟨ψ, _, _, _, p, Nat.one_pos, hψ, h⟩
-
 end GlobalTheory.AscFinWit
 
 end

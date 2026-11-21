@@ -54,10 +54,6 @@ structure LogFun (k : Type) [CommRing k] (τ : k) : Type 1 where
 
 attribute [instance] LogFun.fin
 
-def LogFun.Covers {k : Type} [CommRing k] {τ : k} (L : LogFun k τ) : Prop :=
-  ∀ (B : CommRingCat.{0}) (y : L.Pt.obj B), ∃ (s : Finset B), Ideal.span (s : Set B) = ⊤ ∧
-    ∀ g ∈ s, ∃ α, L.In α (L.Pt.map (CommRingCat.ofHom (algebraMap B (Localization.Away g))) y)
-
 abbrev Base.Fun (b : Base) : Type 1 := LogFun (b.R ⧸ b.I) (Ideal.Quotient.mk _ b.t)
 
 variable {b : Base} (L : b.Fun)
@@ -406,9 +402,6 @@ abbrev node (k : Type) [CommRing k] (τ : k) : LogFun k τ where
   prod_f {_ _ y} _ := by simpa [Fin.prod_univ_two] using y.2
   prod_g _ _ := by simp
 
-theorem node_covers (k : Type) [CommRing k] (τ : k) : (node k τ).Covers :=
-  fun _ _ => ⟨{1}, by simp, fun _ _ => ⟨(), trivial⟩⟩
-
 abbrev nodeL : base.Fun := node _ _
 
 abbrev D := DualNumber ℚ
@@ -444,12 +437,6 @@ def T : Thick nodeL where
   hs := by simp [Fin.prod_univ_two, DualNumber.eps_mul_eps, base]
   hv := by simp
 
-theorem T_J_ne_bot : T.J ≠ ⊥ := by
-  intro h
-  have : (DualNumber.eps : D) ∈ (⊥ : Ideal D) := h ▸ Ideal.subset_span rfl
-  have h0 : (DualNumber.eps : D) = 0 := (Submodule.mem_bot _).1 this
-  simpa using congrArg TrivSqZeroExt.snd h0
-
 def sq : Mor nodeL nodeL (RingHom.id ℚ) where
   hp := rfl
   hI := isDPMorphism_bot _ _
@@ -471,16 +458,6 @@ def sq : Mor nodeL nodeL (RingHom.id ℚ) where
   hf i _ _ _ := by fin_cases i <;> simp [Fin.prod_univ_two, nodeL, node, nodePt]
   hg _ _ _ := by simp
   hw _ := by simp
-
-example : Nonempty (Thick nodeL) := ⟨T⟩
-
-example : (sq.functor.obj T).x 0 = 0 := by
-  show ∏ j, T.x j ^ sq.e 0 j = 0
-  rw [Fin.prod_univ_two]
-  simp [sq, pow_two]
-  exact DualNumber.eps_mul_eps
-
-example : ((Mor.id nodeL).functor.obj T).B = D := rfl
 
 end Ex
 

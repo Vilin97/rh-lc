@@ -32,8 +32,6 @@ def compL (σ : E →+* ℂ) (a : Y) : (Y →ₗ[ℤ] ℝ) →ₗ[ℝ] ℂ where
   map_add' η ζ := comp_fadd η ζ σ a
   map_smul' r η := by rw [comp_fsmul, RingHom.id_apply, Complex.real_smul]
 
-theorem compL_apply (σ : E →+* ℂ) (a : Y) (η : Y →ₗ[ℤ] ℝ) : compL σ a η = comp η σ a := rfl
-
 theorem key_exp (u : 𝓞 E) (j : Free.ChooseBasisIndex ℤ (𝓞 E)) :
     ∑ i, (((RingOfIntegers.basis E).repr (RingOfIntegers.basis E i * u) j : ℤ) : E) * ed E i =
       ed E j * (u : E) := by

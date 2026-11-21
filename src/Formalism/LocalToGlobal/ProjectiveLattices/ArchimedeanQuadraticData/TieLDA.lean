@@ -28,9 +28,6 @@ variable {U : Type*} [AddCommGroup U] [Module K U]
 
 theorem smulT_def (T : Subring K₁) (t : T) (l : K₁ ⊗[K] U) : t • l = (t : K₁) • l := rfl
 
-instance scalarT (T : Subring K₁) : IsScalarTower T K₁ (K₁ ⊗[K] U) :=
-  ⟨fun t k l => by rw [smulT_def, Subring.smul_def, smul_eq_mul, mul_smul]⟩
-
 theorem smulK_eq (k : K) (l : K₁ ⊗[K] U) : k • l = algebraMap K K₁ k • l := by
   induction l using TensorProduct.induction_on with
   | zero => simp

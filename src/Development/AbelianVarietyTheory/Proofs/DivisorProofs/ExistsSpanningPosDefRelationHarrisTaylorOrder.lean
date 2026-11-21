@@ -147,8 +147,6 @@ variable {p : ℕ} [Fact p.Prime]
 def htStar (D : Datum p) : D.O →+ D.O :=
   (MulOpposite.opAddEquiv.symm.toAddMonoidHom).comp D.star.toAddMonoidHom
 
-@[simp] theorem htStar_apply (D : Datum p) (a : D.O) : htStar D a = (D.star a).unop := rfl
-
 noncomputable def htTrace (D : Datum p) : D.O →+ ℤ where
   toFun a := LinearMap.trace ℤ D.La (DistribMulAction.toLinearMap ℤ D.La a)
   map_zero' := by

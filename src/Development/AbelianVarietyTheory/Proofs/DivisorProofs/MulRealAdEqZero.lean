@@ -70,26 +70,6 @@ theorem isPairing_trP (κ : Type) [Fintype κ] : IsPairing (trP F κ) where
     have h := hy (Pi.single i b)
     simpa [trP, Pi.single_apply, ite_mul, Finset.sum_ite_eq', mul_comm] using h
 
-theorem omega_nondeg {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] {P : V → V → ℝ} (h : IsPairing P)
-    (v : V × V) (hv : ∀ w, omega P v w = 0) : v = 0 := by
-  have h0L : ∀ y, P 0 y = 0 := fun y => by
-    have h3 := h.addL 0 0 y
-    simp only [add_zero] at h3
-    linarith
-  have h0R : ∀ x, P x 0 = 0 := fun x => by
-    have h3 := h.addR x 0 0
-    simp only [add_zero] at h3
-    linarith
-  have h1 : v.1 = 0 := h.nondegL _ fun y => by
-    have h3 : P v.1 y - P 0 v.2 = 0 := hv (0, y)
-    rw [h0L, sub_zero] at h3
-    exact h3
-  have h2 : v.2 = 0 := h.nondegR _ fun x => by
-    have h3 : P v.1 0 - P x v.2 = 0 := hv (x, 0)
-    rw [h0R, zero_sub, neg_eq_zero] at h3
-    exact h3
-  exact Prod.ext h1 h2
-
 variable (F) in
 
 def evH : AF F →+* mixedEmbedding.mixedSpace F :=
@@ -140,17 +120,6 @@ theorem lift_loc (x : κ → AF F) : liftV (locV x) = realAd F 1 • x := by
   rw [Pi.smul_apply, smul_eq_mul]
   simp only [liftV, locV, evI, RingEquiv.symm_apply_apply, realAd, LinearMap.inl_apply, map_one]
   exact Prod.ext (one_mul _).symm (zero_mul _).symm
-
-theorem mul_realAd_eq_zero (a : AF F) (ha : evI F a = 0) : a * realAd F 1 = 0 := by
-  have h1 : a.1 = 0 := by
-    have h2 := congrArg (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm ha
-    simp only [evI, RingEquiv.symm_apply_apply, map_zero] at h2
-    exact h2
-  refine Prod.ext ?_ ?_
-  · show a.1 * (realAd F 1).1 = 0
-    rw [h1, zero_mul]
-  · show a.2 * (realAd F 1).2 = 0
-    simp only [realAd, LinearMap.inl_apply, mul_zero]
 
 end Trace
 
@@ -247,20 +216,6 @@ theorem omega_coordI (u u' : Matrix (Fin n) (Fin d) (AE F E)) :
   rw [show sympM (σ := σ) X W u u' = _ from M.co.form u u']
   simp only [omega, trP, coordI, locV, dotProduct, map_sub, map_sum, map_mul, evI_eq]
 
-theorem sympM_add_right (M : Model σ X W) (u v v' : Matrix (Fin n) (Fin d) (AE F E)) :
-    sympM (σ := σ) X W u (v + v') = sympM (σ := σ) X W u v + sympM (σ := σ) X W u v' := by
-  simp only [sympM]
-  unfold symp hTens
-  simp only [Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
-
-theorem sympM_anti (M : Model σ X W) (u v : Matrix (Fin n) (Fin d) (AE F E)) :
-    sympM (σ := σ) X W u v = -sympM (σ := σ) X W v u := by
-  have h1 := M.co.form u v
-  have h2 := M.co.form v u
-  simp only [sympM]
-  rw [h1, h2]
-  ring
-
 theorem sympM_eq_zero {p q : Type} [Fintype p] [Fintype q] (P : Matrix (Fin d) p E) (Q : Matrix (Fin d) q E)
     (h : Pᵀ * W.J * Q.map σ = 0) (a : Matrix (Fin n) p (AE F E)) (b : Matrix (Fin n) q (AE F E)) :
     sympM (σ := σ) X W (a * (incM F P)ᵀ) (b * (incM F Q)ᵀ) = 0 := by
@@ -295,28 +250,6 @@ theorem gram_xx (hA : H'.IsAdapted σ B W W₁ i₀ i₁) :
   ext i j
   rw [gram_apply, Matrix.zero_apply]
   exact hA.xx
-
-theorem gram_yy (hA : H'.IsAdapted σ B W W₁ i₀ i₁) :
-    (Matrix.replicateCol Unit H'.y)ᵀ * W.J * (Matrix.replicateCol Unit H'.y).map σ = 0 := by
-  ext i j
-  rw [gram_apply, Matrix.zero_apply]
-  exact hA.yy
-
-theorem gram_ιx (hA : H'.IsAdapted σ B W W₁ i₀ i₁) :
-    H'.ιᵀ * W.J * (Matrix.replicateCol Unit H'.x).map σ = 0 := by
-  ext i j
-  rw [gram_apply, Matrix.zero_apply]
-  have h := (hA.orth (Pi.single i 1)).1
-  rw [Matrix.mulVec_single_one] at h
-  exact h
-
-theorem gram_ιy (hA : H'.IsAdapted σ B W W₁ i₀ i₁) :
-    H'.ιᵀ * W.J * (Matrix.replicateCol Unit H'.y).map σ = 0 := by
-  ext i j
-  rw [gram_apply, Matrix.zero_apply]
-  have h := (hA.orth (Pi.single i 1)).2
-  rw [Matrix.mulVec_single_one] at h
-  exact h
 
 theorem span_plane (hS : W.IsSkew σ B r' s') (hA : H'.IsAdapted σ B W W₁ i₀ i₁) (z : Fin d → E) :
     ∃ (s t : E) (u : Fin d₁ → E), z = s • H'.x + H'.ι *ᵥ u + t • H'.y := by
@@ -371,8 +304,6 @@ theorem decomp (hS : W.IsSkew σ B r' s') (hA : H'.IsAdapted σ B W W₁ i₀ i�
   have hincT : ∀ {p q : Type} (A : Matrix p q E), incM F Aᵀ = (incM F A)ᵀ := fun A => (Matrix.transpose_map).symm
   have hincA : ∀ {p q : Type} (A B : Matrix p q E), incM F (A + B) = incM F A + incM F B := fun A B => Matrix.map_add _ (map_add _) A B
   simp only [Matrix.mul_assoc, ← hincT, ← hinc, ← Matrix.mul_add, ← hincA, ← hone, incM_one', Matrix.mul_one]
-
-abbrev trI (a : AF F) : ℝ := Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evH F a)
 
 end Final
 

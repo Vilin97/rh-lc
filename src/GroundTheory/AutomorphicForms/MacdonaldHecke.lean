@@ -17,8 +17,6 @@ open scoped ValuativeRel Pointwise
 variable {F : Type*} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   {n : ℕ}
 
-local notation "π" => (GLnLocal.uniformizer F : F)
-
 noncomputable local instance fintypeResidue : Fintype 𝓀[F] := Fintype.ofFinite _
 
 theorem torusPow_mul_mul_neg_apply (l : Fin n → ℤ) (g : GL (Fin n) F) (a b : Fin n) :

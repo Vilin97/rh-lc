@@ -216,9 +216,6 @@ def PolEta (η : ℕ) : Submodule K P.Pol := (divE l e η P.Man).map P.cls
 def mulPol (f : Rpi O K l e) : Module.End K P.Pol :=
   P.Man.mapQ P.Man (mulV K a ι f) fun _ => P.smul_mem_Man f.2
 
-@[simp] theorem mulPol_cls (f : Rpi O K l e) (v : Vec K a ι) :
-    P.mulPol f (P.cls v) = P.cls ((f : K⟦X⟧) • v) := rfl
-
 def vPol : Module.End K P.Pol := P.mulPol (uIn _ ^ e)
 
 @[simp] theorem vPol_cls (v : Vec K a ι) : P.vPol (P.cls v) = P.cls ((X : K⟦X⟧) ^ e • v) := rfl
@@ -366,12 +363,6 @@ theorem app_mem_EM {η : ℕ} {y : Vec K a ι} (hy : y ∈ P.EM η) : F.app y �
   rw [mem_divE, ← map_smul]
   exact F.app_mem_M hy
 
-theorem onPol_mem_PolEta {η : ℕ} {w : P.Pol} (hw : w ∈ P.PolEta η) : F.onPol w ∈ Q.PolEta η := by
-  obtain ⟨y, hy, rfl⟩ := hw
-  refine ⟨F.app y, ?_, rfl⟩
-  rw [SetLike.mem_coe, mem_divE, ← map_smul]
-  exact F.app_mem_Mext (A_le_Rpi l e) hy
-
 omit [NormedAlgebra ℚ_[l] K] [NeZero e]
 
 def imM : Submodule (A O K) (Vec K a κ) := P.M.map (F.app.restrictScalars (A O K))
@@ -379,8 +370,6 @@ def imM : Submodule (A O K) (Vec K a κ) := P.M.map (F.app.restrictScalars (A O 
 def imL : Submodule (A O K) (Vec K a κ) := P.L.map (F.app.restrictScalars (A O K))
 
 abbrev coker : Type := Q.M ⧸ F.imM.submoduleOf Q.M
-
-abbrev cokerL : Type := Q.L ⧸ F.imL.submoduleOf Q.L
 
 end Hom
 

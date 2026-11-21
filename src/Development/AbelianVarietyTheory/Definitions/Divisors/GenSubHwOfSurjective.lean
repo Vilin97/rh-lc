@@ -114,20 +114,12 @@ def HasRDer (γ : Multiplicative ℝ →* UA σ J) (f f' : UA σ J → ℂ) : Pr
 
 variable (σ J) in
 
-def SmoothAt (f : UA σ J → ℂ) : Prop :=
-  ∃ T : Submodule ℂ (UA σ J → ℂ), f ∈ T ∧ ∀ φ ∈ T, ∀ γ ∈ LinesAt σ J τ w, ∃ φ' ∈ T, HasRDer γ φ φ'
-
 variable {w} in
 
 def IsGenAt (τ : EmbOver E w) (C : Matrix (Fin n) (Ix R S) ℂ) (γ : Multiplicative ℝ →* UA σ J) (X : Mat R S) : Prop :=
   ∀ t : ℝ, cmp τ (γ (Multiplicative.ofAdd t)) * C = C * NormedSpace.exp (t • X)
 
 variable (σ) in
-
-def KAt (Y : Spc F E n) : Set (UA σ Y.J) := {k | k ∈ GAt σ Y.J τ w ∧ Commute (cmp (τ w) k) (Y.θ w)}
-
-def TAt (C : Matrix (Fin n) (Ix R S) ℂ) : Set (UA σ J) :=
-  {k | k ∈ GAt σ J τ w ∧ ∃ d : Ix R S → ℂ, cmp (τ w) k * C = C * Matrix.diagonal d}
 
 def IsAdapted (Y : Spc F E n) (C : Matrix (Fin n) (Ix R S) ℂ) : Prop :=
   IsFrame (herm Y.J (τ w)) C ∧ Y.θ w * C = C * Jm R S
@@ -151,21 +143,7 @@ def GenBy (C : Matrix (Fin n) (Ix R S) ℂ) (T : Submodule ℂ (UA σ J → ℂ)
 
 variable (σ) in
 
-def IsKFinAt (Y : Spc F E n) (f : UA σ Y.J → ℂ) : Prop :=
-  FiniteDimensional ℂ (Submodule.span ℂ {φ | ∃ k ∈ KAt σ τ w Y, φ = rT k f})
-
-def isoK (Y : Spc F E n) {T : Submodule ℂ (UA σ Y.J → ℂ)} (act : Mat R S →ₗ[ℂ] Module.End ℂ T) (Λ : Ix R S → ℚ) :
-    Submodule ℂ (UA σ Y.J → ℂ) :=
-  Submodule.span ℂ {φ | ∃ k ∈ KAt σ τ w Y, ∃ v ∈ hwSub act Λ, φ = rT k (v : UA σ Y.J → ℂ)}
-
 variable {τ w} {C : Matrix (Fin n) (Ix R S) ℂ} {T : Submodule ℂ (UA σ J → ℂ)}
-
-def IsGKAt.toGKMod {act : Mat R S →ₗ[ℂ] Module.End ℂ T} (h : IsGKAt τ w C T act) : GKMod R S where
-  V := T
-  act := act
-  lie := h.lie
-  kfin := h.kfin
-  wts := h.wts
 
 theorem genBy_iff_hw {Λ : Ix R S → ℚ} :
     GenBy τ w C T Λ ↔ ∃ act, IsGKAt τ w C T act ∧ genSub act (hwSub act Λ) = ⊤ := by
@@ -313,47 +291,13 @@ theorem genBy_range (hCM : IsCMExt F E σ) (hC : IsFrame (herm J (τ w)) C) (M :
   obtain ⟨act, h, e⟩ := exists_isGKAt_range hCM hC M φ hφ
   exact genBy_iff_hw.2 ⟨act, h, genSub_hw_of_surjective φ.surjective_rangeRestrict e hΛ⟩
 
-def c₁ (a a' p q : ℕ) : ℚ := ((a : ℚ) + a' - 2 * (p + q)) / 2
-
-def c₂ (a p : ℕ) : ℚ := ((a : ℚ) - 2 * p) / 2
-
-def x₁ (a a' p q : ℕ) (κ : ℤ) : ℚ := (κ : ℚ) / 2 - c₁ a a' p q + c₂ a p
-
-def x₂ (a p : ℕ) : ℚ := c₂ a p
-
-def y₁ (a a' p q : ℕ) (κ : ℤ) : ℚ := (κ : ℚ) / 2 + c₁ a a' p q - c₂ a p
-
-def y₂ (a p : ℕ) : ℚ := -c₂ a p
-
 abbrev laC (R S a p i : ℕ) (κ : ℤ) : Ix R S → ℚ := lam (a - p - i) (p - i) R S κ
-
-def laAt (B : Base F E) (w : InfinitePlace F) (R S a p i : ℕ) : Ix R S → ℚ :=
-  fun c => laC R S a p i (B.mα w - B.mβ w) c + (B.mβ w : ℚ) / 2
 
 section Entries
 
 variable {a a' p q i j : ℕ} (κ : ℤ)
 
-theorem cPair_eq_c₁ (hR : R + (p + q) + (i + j) = a + a') (hS : S + (i + j) = p + q) : cPair R S = c₁ a a' p q := by
-  have h1 := congrArg (Nat.cast : ℕ → ℚ) hR
-  have h2 := congrArg (Nat.cast : ℕ → ℚ) hS
-  push_cast at h1 h2
-  rw [cPair, c₁]; linear_combination (h1 - h2) / 2
-
-theorem cPair_eq_c₂ (hi : i ≤ p) (ha : p + i ≤ a) : cPair (a - p - i) (p - i) = c₂ a p := by
-  rw [cPair, c₂, Nat.sub_sub, Nat.cast_sub ha, Nat.cast_sub hi]; push_cast; ring
-
-theorem x₂_lt_x₁ (hκ : ((a + a' : ℕ) : ℤ) < κ) (hy : 2 * (p + q) ≤ a + a') :
-    x₂ a p < x₁ a a' p q κ ∧ y₂ a p < y₁ a a' p q κ := by
-  have h1 : ((a : ℚ) + a') < κ := by exact_mod_cast hκ
-  have h2 : 2 * ((p : ℚ) + q) ≤ a + a' := by exact_mod_cast hy
-  have h3 : (0 : ℚ) ≤ p + q := by positivity
-  constructor <;> simp only [x₁, y₁, x₂, y₂, c₁] <;> linarith
-
 end Entries
-
-example : (List.ofFn fun k : Fin 5 => laC 5 1 4 1 0 8 (.inl k)) = [3, 3, 3, 1, 1] ∧ laC 5 1 4 1 0 8 (.inr 0) = 5 := by
-  simp [lam, cPair, List.ofFn_succ]; norm_num
 
 def stdWt (c : Ix R S) : Ix R S → ℚ := fun d => if d = c then 1 else 0
 
@@ -450,20 +394,6 @@ theorem exists_stable_hyp (hCM : IsCMExt F E σ) : ∃ T : Submodule ℂ (UA σ 
       (Eab (.inr 0) (.inl 0) *ᵥ Pi.single (.inl 0) 1)) 0 := congrFun (congrArg Subtype.val e1) 1
   rw [cmp_one, Matrix.one_mul] at e2
   simp [Eab, hypFrame, Matrix.mulVec, dotProduct, Matrix.single_apply] at e2
-
-example : ∃ (F E : Type) (_ : Field F) (_ : NumberField F) (_ : Field E) (_ : NumberField E) (_ : Algebra F E)
-    (σ : E →ₐ[F] E) (τ : ∀ w : InfinitePlace F, EmbOver E w) (w : InfinitePlace F)
-    (T : Submodule ℂ (UA σ (hypPlane F E).J → ℂ)), IsCMExt F E σ ∧ Stable τ w (hypPlane F E) hypFrame T ∧
-      GenBy τ w hypFrame T (stdWt (.inl 0)) ∧ ∀ act, IsRightAct τ w hypFrame T act → act (Eab (.inr 0) (.inl 0)) ≠ 0 := by
-  haveI : IsCyclotomicExtension {3} ℚ (CyclotomicField 3 ℚ) := CyclotomicField.isCyclotomicExtension 3 ℚ
-  haveI : IsCMField (CyclotomicField 3 ℚ) := IsCyclotomicExtension.Rat.isCMField _ (S := {3}) ⟨3, rfl, by norm_num⟩
-  have hCM : IsCMExt (maximalRealSubfield (CyclotomicField 3 ℚ)) (CyclotomicField 3 ℚ)
-      (IsCMField.complexConj (CyclotomicField 3 ℚ)).toAlgHom :=
-    ⟨inferInstance, inferInstance, Algebra.IsQuadraticExtension.finrank_eq_two _ _,
-      fun τ x => IsCMField.complexEmbedding_complexConj _ τ x⟩
-  obtain ⟨w⟩ : Nonempty (InfinitePlace (maximalRealSubfield (CyclotomicField 3 ℚ))) := inferInstance
-  obtain ⟨T, hT⟩ := exists_stable_hyp (τ := fun _ => Classical.arbitrary _) (w := w) hCM
-  exact ⟨_, _, _, _, _, _, _, _, _, w, T, hCM, hT⟩
 
 end GlobalTheory.ThK.RealK
 

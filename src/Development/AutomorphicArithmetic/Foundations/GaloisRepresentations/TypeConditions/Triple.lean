@@ -11,10 +11,6 @@ noncomputable section
 namespace UpperTheory.GalS
 open Formalism.BasicNotions Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.TripleLocal
 
-theorem galW {D : D7} {a : ℕ} {π : D.naut.CG a} {l : ℕ} [Fact l.Prime] {ι : Qbar l ≃+* ℂ}
-    {r : GlobalTheory.IndefiniteRowSideFullHecke.RayClassPrimeCounting.GalE D →* GL (Fin a) (Qbar l)} (h : GlobalTheory.IndefiniteRowSideFullHecke.RayClassPrimeCounting.IsGaloisRepOf D π l ι r) :
-    IsGaloisRepOfN D π l ι r := ⟨h.1, h.2.1, fun w hw => ⟨fun _ => (h.2.2 w hw).1,
-      fun u => (h.2.2 w hw).2.1.1 ((D.naut.monomial_twist_iff _ _).2 (D.naut.unr_mono0 _ u)), (h.2.2 w hw).2.2⟩⟩
 theorem galW' {D : D7} {a : ℕ} {π : D.naut.CG a} {l : ℕ} [Fact l.Prime] {ι : Qbar l ≃+* ℂ}
     {r : GlobalTheory.IndefiniteRowSideFullHecke.RayClassPrimeCounting.GalE D →* GL (Fin a) (Qbar l)} (h : IsGaloisRepOfN D π l ι r) : IsGaloisRepOfN D π l ι r := h
 

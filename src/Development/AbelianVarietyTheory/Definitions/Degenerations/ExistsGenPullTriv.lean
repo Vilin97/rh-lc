@@ -138,17 +138,5 @@ theorem torusAlg_repWt (I : Ideal R) (X : Type) [AddCommGroup X] (χ : X) (e : �
     (((torusTower I X).l e).Q.q.left ≫ (torusAlg I X).b e) (chV (bcIso (thick R I e) X).inv χ)
   exact ⟨t, ht, fun j => (congrArg (fun a => IsWt _ _ (Units.val a) χ) (hs j)).mpr (hu.res le_top)⟩
 
-example : Nonempty (torusTower (Ideal.span {(PowerSeries.X : PowerSeries ℚ)}) ℤ).Alg := ⟨torusAlg _ _⟩
-
-example (e : ℕ) : (torusAlg (Ideal.span {(PowerSeries.X : PowerSeries ℚ)}) ℤ).RepWt 1 (1 : ℤ) e :=
-  torusAlg_repWt _ _ _ _
-
-example {V : Type} [CommRing V] [IsDomain V] [IsLocalRing V] {A : PolAV (Spec (CommRingCat.of (FractionRing V)))}
-    {H : Over (Spec (CommRingCat.of V))} [GrpObj H] [IsCommMonObj H] (s : HidaSetting V A H) :
-    Tower s ≃ TowerR (IsLocalRing.maximalIdeal V) s.P s.X where
-  toFun t := ⟨t.l, t.tor, t.β, t.β_pb, t.β_q⟩
-  invFun t := ⟨t.l, t.tor, t.β, t.β_pb, t.β_q⟩
-  left_inv _ := rfl
-  right_inv _ := rfl
 end GlobalTheory.LN
 end

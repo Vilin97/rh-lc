@@ -802,31 +802,9 @@ section GlobalTheory
 
 variable {A A' : Type} [CommRing A] [CommRing A'] {n : ℕ}
 
-def kr_blk (W : Fin n → A) (Dm : Matrix (Fin n) (Fin n) A) : Matrix (Fin (n + 1)) (Fin (n + 1)) A :=
-  fun i j => Fin.cases (motive := fun _ => A) (Fin.cases (motive := fun _ => A) 1 W j)
-    (fun i' => Fin.cases (motive := fun _ => A) 0 (fun j' => Dm i' j') j) i
-
-def kr_lowM (γ : A) (v : Fin n → A) (b' : Matrix (Fin n) (Fin n) A) : Matrix (Fin (n + 1)) (Fin (n + 1)) A :=
-  fun i j => Fin.cases (motive := fun _ => A) (Fin.cases (motive := fun _ => A) γ (fun _ => 0) j)
-    (fun i' => Fin.cases (motive := fun _ => A) (v i') (fun j' => b' i' j') j) i
-
 variable (W : Fin n → A) (Dm : Matrix (Fin n) (Fin n) A) (γ : A) (v : Fin n → A) (b' : Matrix (Fin n) (Fin n) A)
 
-@[simp] theorem blk_00 : kr_blk W Dm 0 0 = 1 := rfl
-@[simp] theorem blk_0s (j : Fin n) : kr_blk W Dm 0 j.succ = W j := rfl
-@[simp] theorem cornerScalarBlockMatrix_apply_succ_zero (i : Fin n) : kr_blk W Dm i.succ 0 = 0 := rfl
-@[simp] theorem blk_ss (i j : Fin n) : kr_blk W Dm i.succ j.succ = Dm i j := rfl
-@[simp] theorem lowM_00 : kr_lowM γ v b' 0 0 = γ := rfl
-@[simp] theorem lowM_0s (j : Fin n) : kr_lowM γ v b' 0 j.succ = 0 := rfl
-@[simp] theorem lowerMatrix_succ_zero (i : Fin n) : kr_lowM γ v b' i.succ 0 = v i := rfl
-@[simp] theorem lowM_ss (i j : Fin n) : kr_lowM γ v b' i.succ j.succ = b' i j := rfl
-
 end GlobalTheory
-
-def kr_genD (O : Type) [CommRing O] (r : ℕ) :
-    Matrix (Fin (r + 1)) (Fin (r + 1)) (MvPolynomial (Fin (r + 1)) (GLCoord O (r + 1))) :=
-  (genMat O (r + 1)).map ((C : GLCoord O (r + 1) →+* MvPolynomial (Fin (r + 1)) (GLCoord O (r + 1))).comp
-    (algebraMap (MvPolynomial (Fin (r + 1) × Fin (r + 1)) O) (GLCoord O (r + 1))))
 
 section Eval
 
@@ -839,19 +817,8 @@ theorem kr_evalG_algebraMap {n : ℕ} (g : Matrix (Fin n) (Fin n) A)
 
 variable {r : ℕ}
 
-def kr_resEv (W : Fin (r + 1) → A) (Dm : Matrix (Fin (r + 1)) (Fin (r + 1)) A)
-    (hD : IsUnit (aeval (fun x : Fin (r + 1) × Fin (r + 1) => Dm x.1 x.2) (genMat O (r + 1)).det)) :
-    MvPolynomial (Fin (r + 1)) (GLCoord O (r + 1)) →ₐ[O] A :=
-  { eval₂Hom (evalG (R := O) Dm hD) W with
-    commutes' := fun c => by
-      show eval₂Hom (evalG (R := O) Dm hD) W (algebraMap O _ c) = algebraMap O A c
-      rw [MvPolynomial.algebraMap_apply, eval₂Hom_C, kr_evalG_algebraMap] }
-
 def kr_cellW {n : ℕ} (g : Matrix (Fin (n + 1)) (Fin (n + 1)) A) (γ : Aˣ) : Fin n → A :=
   fun j => ((γ⁻¹ : Aˣ) : A) * g 0 j.succ
-
-def kr_cellD {n : ℕ} (g : Matrix (Fin (n + 1)) (Fin (n + 1)) A) (γ : Aˣ) : Matrix (Fin n) (Fin n) A :=
-  fun i j => g i.succ j.succ - g i.succ 0 * kr_cellW g γ j
 
 end Eval
 
@@ -866,29 +833,6 @@ instance kr_instDomGL : IsDomain (GLCoord O n) :=
 
 theorem kr_GL_inj : Function.Injective (algebraMap (MvPolynomial (Fin n × Fin n) O) (GLCoord O n)) :=
   IsLocalization.injective _ (powers_le_nonZeroDivisors_of_noZeroDivisors (kr_genMat_det_ne O n))
-
-def kr_genG : Matrix (Fin n) (Fin n) (GLCoord O n) :=
-  (genMat O n).map (algebraMap (MvPolynomial (Fin n × Fin n) O) (GLCoord O n))
-
-def topLeftCoordinate : GLCoord O (n + 1) := algebraMap (MvPolynomial (Fin (n + 1) × Fin (n + 1)) O) (GLCoord O (n + 1)) (X (0, 0))
-
-theorem corner_entry_ne_zero_alt : topLeftCoordinate O n ≠ 0 := by
-  intro h
-  exact X_ne_zero (R := O) _ (kr_GL_inj O (n + 1) (h.trans (map_zero _).symm))
-
-abbrev kr_CA := Localization.Away (topLeftCoordinate O n)
-
-instance kr_instDomCA : IsDomain (kr_CA O n) :=
-  IsLocalization.isDomain_localization (powers_le_nonZeroDivisors_of_noZeroDivisors (corner_entry_ne_zero_alt O n))
-
-def kr_iotaA : GLCoord O (n + 1) →ₐ[O] kr_CA O n := IsScalarTower.toAlgHom O (GLCoord O (n + 1)) (kr_CA O n)
-
-def kr_genA : Matrix (Fin (n + 1)) (Fin (n + 1)) (kr_CA O n) := (kr_genG O (n + 1)).map (kr_iotaA O n)
-
-def kr_gam : (kr_CA O n)ˣ := (IsLocalization.Away.algebraMap_isUnit (S := kr_CA O n) (topLeftCoordinate O n)).unit
-
-def kr_cW : Fin n → kr_CA O n := kr_cellW (kr_genA O n) (kr_gam O n)
-def kr_cD : Matrix (Fin n) (Fin n) (kr_CA O n) := kr_cellD (kr_genA O n) (kr_gam O n)
 
 end Generic
 
@@ -974,9 +918,6 @@ end Primes
 section Coeff
 
 variable {O : Type} [CommRing O] {A : Type} [CommRing A] [Algebra O A] {r : ℕ}
-
-def kr_cAlg (O : Type) [CommRing O] (A : Type) [CommRing A] [Algebra O A] (σ : Type) : A →ₐ[O] MvPolynomial σ A :=
-  IsScalarTower.toAlgHom O A (MvPolynomial σ A)
 
 end Coeff
 

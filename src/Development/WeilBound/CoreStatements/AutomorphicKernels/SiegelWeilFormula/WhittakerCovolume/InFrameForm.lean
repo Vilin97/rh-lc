@@ -27,8 +27,6 @@ def latM (v : HeightOneSpectrum (𝓞 F)) {n : ℕ} (M : Matrix (Fin n) (Fin n) 
     AddSubgroup (Fin n → v.adicCompletion F ⊗[F] E) :=
   (lat E v n).map M.mulVecLin.toAddMonoidHom
 
-local notation:70 X:70 " ⬝ " Y:71 => @HMul.hMul _ _ _ Matrix.instHMulOfFintypeOfMulOfAddCommMonoid X Y
-
 theorem par_topleft (d : SD σ) (p : d.G) (t : GL (Fin d.n) (AE F E)) (hp : IsPar p t) :
     ∃ tb : GL (Fin d.n) E, (inFrame d.b p).toBlocks₁₁ = incM F (tb⁻¹).1 * t.1 * incM F tb.1 := by
   obtain ⟨-, tb, htb⟩ := d.ok.frame

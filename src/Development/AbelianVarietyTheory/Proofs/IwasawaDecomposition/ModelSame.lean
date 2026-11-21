@@ -17,9 +17,6 @@ def ModelSame {D D' : D7} {V : HSp D} {V' : HSp D'} {S : D.what₂.Tau → SPar}
     (M : DSModel V S) (M' : DSModel V' S') : Prop :=
   HEq M'.H M.H ∧ HEq M'.nacg M.nacg ∧ HEq M'.ips M.ips ∧ HEq M'.σ M.σ ∧ HEq M'.lam M.lam ∧ HEq M'.ε M.ε ∧ HEq M'.fr M.fr
 
-theorem ModelSame.refl {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) : ModelSame M M :=
-  ⟨HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl⟩
-
 section Two
 
 variable {D D' : D7} {G G' : Type} [Group G] [Fintype G] [Group G'] [Fintype G'] {Pl0 T0 Pl0' T0' : Type}

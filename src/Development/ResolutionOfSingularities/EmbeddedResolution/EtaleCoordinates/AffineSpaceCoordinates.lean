@@ -29,16 +29,6 @@ def coordVectorInl {k : Type u} [Field k] {Y : Scheme.{u}} (n m : ℕ)
     ULift.{u} (Fin n ⊕ Fin m) → Γ(Y, ⊤) :=
   fun i => Sum.elim (fun a => pullbackCoord f (ULift.up a)) (fun _ => 0) i.down
 
-@[simp]
-theorem coordVectorInl_inl {k : Type u} [Field k] {Y : Scheme.{u}} (n m : ℕ)
-    (f : Y ⟶ affineSpaceIndexedBy k (ULift.{u} (Fin n))) (a : Fin n) :
-    coordVectorInl n m f (ULift.up (Sum.inl a)) = pullbackCoord f (ULift.up a) := rfl
-
-@[simp]
-theorem coordVectorInl_inr {k : Type u} [Field k] {Y : Scheme.{u}} (n m : ℕ)
-    (f : Y ⟶ affineSpaceIndexedBy k (ULift.{u} (Fin n))) (b : Fin m) :
-    coordVectorInl n m f (ULift.up (Sum.inr b)) = 0 := rfl
-
 def coordVectorInr {k : Type u} [Field k] {Y : Scheme.{u}} (n m : ℕ)
     (f : Y ⟶ affineSpaceIndexedBy k (ULift.{u} (Fin m))) :
     ULift.{u} (Fin n ⊕ Fin m) → Γ(Y, ⊤) :=

@@ -101,14 +101,4 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.Glob
 open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-theorem exists_isConjAt_isUnramInv : ∀ {D : D7} (P : HeightOneSpectrum (𝓞 D.host.E)), Formalism.HermitianLatticesTheory.conjIdeal (K := D.host.E) P.asIdeal = P.asIdeal → ∃ (σ : P.adicCompletion D.host.E →+* P.adicCompletion D.host.E) (ϖ : P.adicCompletion D.host.E) (q : ℕ), IsConjAt P σ ∧ Formalism.UG.IsUnramInv ϖ σ q := by
-  intro D P hP
-  haveI := D.host.isCMField_hostE
-  haveI := GlobalTheory.PlaceComp.unramified (E := D.host.E) D.sp.cm
-  have h := isInertAt_under P fun x hx => by
-    rw [← hP, Formalism.L2.Col.mem_conjIdeal]
-    exact hx
-  obtain ⟨σ, ϖ, h1, h2⟩ := exists_isUnramInv _ P h
-  exact ⟨σ, ϖ, _, h1, h2⟩
-
 end GlobalTheory.FixedPrime

@@ -50,21 +50,11 @@ def fixedFieldConj (g : (U : Subgroup Gal(Ksep/K))) :
   map_add' x y := Subtype.ext (map_add (g : Gal(Ksep/K)) (x : Ksep) y)
   commutes' c := Subtype.ext ((g : Gal(Ksep/K)).commutes c)
 
-@[simp]
-theorem coe_fixedFieldConj_apply (g : (U : Subgroup Gal(Ksep/K))) (x : fixedField (V : Subgroup Gal(Ksep/K))) :
-    ((fixedFieldConj h g x : fixedField (V : Subgroup Gal(Ksep/K))) : Ksep) = (g : Gal(Ksep/K)) (x : Ksep) :=
-  rfl
-
 def fixedFieldConjHom :
     (U : Subgroup Gal(Ksep/K)) →* (fixedField (V : Subgroup Gal(Ksep/K)) ≃ₐ[K] fixedField (V : Subgroup Gal(Ksep/K))) where
   toFun := fixedFieldConj h
   map_one' := AlgEquiv.ext fun _ => Subtype.ext rfl
   map_mul' _ _ := AlgEquiv.ext fun _ => Subtype.ext rfl
-
-@[simp]
-theorem fixedFieldConjHom_apply (g : (U : Subgroup Gal(Ksep/K))) :
-    fixedFieldConjHom h g = fixedFieldConj h g :=
-  rfl
 
 end FixedField
 
@@ -76,12 +66,6 @@ variable {K Ksep : Type} [Field K] [Field Ksep] [Algebra K Ksep]
 def unitOfMemFixedField (a : Ksepˣ) (ha : (a : Ksep) ∈ fixedField (V : Subgroup Gal(Ksep/K))) :
     (fixedField (V : Subgroup Gal(Ksep/K)))ˣ :=
   Units.mk0 ⟨a, ha⟩ fun h0 => a.ne_zero (congrArg Subtype.val h0)
-
-@[simp]
-theorem coe_unitOfMemFixedField (a : Ksepˣ) (ha : (a : Ksep) ∈ fixedField (V : Subgroup Gal(Ksep/K))) :
-    (((unitOfMemFixedField a ha : (fixedField (V : Subgroup Gal(Ksep/K)))ˣ) :
-      fixedField (V : Subgroup Gal(Ksep/K))) : Ksep) = a :=
-  rfl
 
 include h in
 
@@ -109,12 +93,6 @@ noncomputable def unitsInvariantsOpenEquiv :
   left_inv _ := Additive.toMul.injective (Units.ext (Subtype.ext rfl))
   right_inv _ := Subtype.ext (Additive.toMul.injective (Units.ext rfl))
   map_add' _ _ := Subtype.ext (Additive.toMul.injective (Units.ext rfl))
-
-@[simp]
-theorem coe_unitsInvariantsOpenEquiv_apply (u : Additive (fixedField (V : Subgroup Gal(Ksep/K)))ˣ) :
-    (((Additive.toMul ((unitsInvariantsOpenEquiv h u : _) : Additive Ksepˣ)) : Ksepˣ) : Ksep) =
-      ((u.toMul : (fixedField (V : Subgroup Gal(Ksep/K)))ˣ) : Ksep) :=
-  rfl
 
 noncomputable def rootsInvariantsOpenEquiv (l : ℕ) :
     (Rep.res ((V : Subgroup Gal(Ksep/K)).subgroupOf (U : Subgroup Gal(Ksep/K))).subtype
@@ -144,15 +122,6 @@ noncomputable def rootsInvariantsOpenEquiv (l : ℕ) :
   left_inv ζ := Subtype.ext (Additive.toMul.injective (Subtype.ext (Units.ext rfl)))
   right_inv x := Subtype.ext (Additive.toMul.injective (Units.ext (Subtype.ext rfl)))
   map_add' a b := Subtype.ext (Additive.toMul.injective (Units.ext (Subtype.ext rfl)))
-
-@[simp]
-theorem coe_rootsInvariantsOpenEquiv_apply (l : ℕ)
-    (ζ : (Rep.res ((V : Subgroup Gal(Ksep/K)).subgroupOf (U : Subgroup Gal(Ksep/K))).subtype
-        (Rep.res (U : Subgroup Gal(Ksep/K)).subtype (galRootsOfUnity.{0} K Ksep l))).ρ.invariants) :
-    ((((rootsInvariantsOpenEquiv h l ζ : TorsN _ l) : Additive (fixedField (V : Subgroup Gal(Ksep/K)))ˣ).toMul :
-      fixedField (V : Subgroup Gal(Ksep/K))) : Ksep) =
-      (((Additive.toMul (ζ : Additive (rootsOfUnity l Ksep)) : rootsOfUnity l Ksep) : Ksepˣ) : Ksep) :=
-  rfl
 
 end Invariants
 

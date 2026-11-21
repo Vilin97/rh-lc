@@ -39,8 +39,6 @@ theorem cjD_sum {ι : Type} (s : Finset ι) (f : ι → (DQ P).R) : cjD P (∑ i
   | empty => rw [Finset.sum_empty, Finset.sum_empty, cjD_zero]
   | insert a s ha ih => rw [Finset.sum_insert ha, Finset.sum_insert ha, cjD_add, ih]
 
-theorem multiplierPair_fst (f fb g : (DQ P).R) : ((DQ P).fnP f fb).1 g = f * g := rfl
-
 theorem multiplierPair_mul (f fb g gb : (DQ P).R) :
     (DQ P).fnP f fb * (DQ P).fnP g gb = (DQ P).fnP (f * g) (fb * gb) := by
   refine Prod.ext ?_ ?_
@@ -309,8 +307,6 @@ theorem cjD_βR (hTT : 0 ≤ P.TT) : cjD P (βR P) = βRb P := extD P fun q => b
     Complex.conj_conj]
 
 theorem cjD_βDb (hTT : 0 ≤ P.TT) : cjD P (βDb P) = βD P := by rw [← cjD_βD hTT, cjD_cjD]
-
-theorem cjD_βRb (hTT : 0 ≤ P.TT) : cjD P (βRb P) = βR P := by rw [← cjD_βR hTT, cjD_cjD]
 
 theorem prod_norm_ne (q : Qp P.r P.TT) : ∏ l, ‖q.1.1 l‖ ≠ 0 :=
   Finset.prod_ne_zero_iff.2 fun l _ => norm_ne_zero_iff.2 (q.2.1 l)

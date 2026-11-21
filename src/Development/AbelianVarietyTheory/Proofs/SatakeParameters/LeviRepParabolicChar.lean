@@ -20,9 +20,6 @@ section Avg
 
 variable {H W W' : Type} [Group H] [AddCommGroup W] [Module ℂ W] [AddCommGroup W'] [Module ℂ W']
 
-def avgOp (σ : Representation ℂ H W) (θ : H →* ℂˣ) (U : Subgroup H) [Fintype (H ⧸ U)] : W →ₗ[ℂ] W :=
-  ∑ q : H ⧸ U, (((θ q.out)⁻¹ : ℂˣ) : ℂ) • σ q.out
-
 end Avg
 
 section Tensor

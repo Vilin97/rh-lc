@@ -13,8 +13,6 @@ namespace GlobalTheory.TowerForm
 
 variable {D : D7}
 
-local infixl:70 " ⬝ " => HMul.hMul
-
 def ad {m n : ℕ} (A : Mx D m n) : Mx D n m := Formalism.UG.cT (cA D) A
 
 theorem ad_mul {l m n : ℕ} (A : Mx D l m) (B : Mx D m n) :
@@ -88,10 +86,6 @@ theorem hO_mul_mul (V W : HSp D) {m n : ℕ} (y₁ : Mx D W.rank m) (y₂ : Mx D
 theorem adj_zero {m n : ℕ} : adj D (0 : Matrix (Fin m) (Fin n) D.host.E) = 0 := by
   unfold adj Formalism.UG.cT
   simp
-
-theorem gram_sandwich (V : HSp D) {m n : ℕ} (A : Matrix (Fin m) (Fin V.rank) D.host.E)
-    (B' : Matrix (Fin V.rank) (Fin n) D.host.E) : A * V.gram * V.gram⁻¹ * (V.gram * B') = A * V.gram * B' := by
-  rw [Matrix.mul_nonsing_inv_cancel_right (h := GlobalTheory.LatVac.gram_det_isUnit V), Matrix.mul_assoc]
 
 section Split
 

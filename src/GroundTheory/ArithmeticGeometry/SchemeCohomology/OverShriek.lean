@@ -36,7 +36,6 @@ lemma shriek_of_eq_of {Y : C} {V : Over U} {t t' : Y ⟶ U} (h : t = t') (a : Ov
   subst h
   rw [Over.OverMorphism.ext ha]
 
-@[simps]
 noncomputable def shriekPresheaf : Cᵒᵖ ⥤ AddCommGrpCat.{v} where
   obj X := AddCommGrpCat.of (⨁ s : X.unop ⟶ U, shriekSummand P X.unop s)
   map g := AddCommGrpCat.ofHom (shriekMap P g.unop)
@@ -60,7 +59,6 @@ noncomputable def shriekPresheaf : Cᵒᵖ ⥤ AddCommGrpCat.{v} where
 
 variable {P} in
 
-@[simps]
 noncomputable def shriekPresheafMap {Q : (Over U)ᵒᵖ ⥤ AddCommGrpCat.{v}} (φ : P ⟶ Q) :
     shriekPresheaf P ⟶ shriekPresheaf Q where
   app X := AddCommGrpCat.ofHom (DirectSum.toAddMonoid fun s =>
@@ -89,7 +87,6 @@ end Presheaf
 
 variable (U) in
 
-@[simps]
 noncomputable def shriekFunctor : ((Over U)ᵒᵖ ⥤ AddCommGrpCat.{v}) ⥤ (Cᵒᵖ ⥤ AddCommGrpCat.{v}) where
   obj P := shriekPresheaf P
   map φ := shriekPresheafMap φ
@@ -119,7 +116,6 @@ section Adjunction
 
 variable {P : (Over U)ᵒᵖ ⥤ AddCommGrpCat.{v}} {Q : Cᵒᵖ ⥤ AddCommGrpCat.{v}}
 
-@[simps]
 noncomputable def shriekHomToRestrict (α : shriekPresheaf P ⟶ Q) :
     P ⟶ (Over.forget U).op ⋙ Q where
   app V := AddCommGrpCat.ofHom ((α.app (op V.unop.left)).hom.comp
@@ -145,7 +141,6 @@ lemma shriekHomOfRestrictApp_of (β : P ⟶ (Over.forget U).op ⋙ Q) (X : Cᵒ�
       β.app (op (Over.mk s)) x :=
   DirectSum.toAddMonoid_of _ _ _
 
-@[simps]
 noncomputable def shriekHomOfRestrict (β : P ⟶ (Over.forget U).op ⋙ Q) :
     shriekPresheaf P ⟶ Q where
   app X := AddCommGrpCat.ofHom (shriekHomOfRestrictApp β X)

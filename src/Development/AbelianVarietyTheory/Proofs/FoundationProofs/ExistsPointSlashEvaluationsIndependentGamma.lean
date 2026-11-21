@@ -24,9 +24,6 @@ def evHom (Γ : Subgroup SL(2, ℤ)) (x : SL(2, ℤ)) (τ : ℍ) : mfMonoid Γ �
     show ((p.1.2 * q.1.2) ∣[Multiplicative.toAdd (p.1.1 * q.1.1)] x) τ = _
     rw [toAdd_mul, ModularForm.mul_slash_SL2]; rfl
 
-@[simp] theorem evHom_apply (Γ : Subgroup SL(2, ℤ)) (x : SL(2, ℤ)) (τ : ℍ) (p : mfMonoid Γ) :
-    evHom Γ x τ p = (p.1.2 ∣[Multiplicative.toAdd p.1.1] x) τ := rfl
-
 open UpperHalfPlane Filter in
 open ModularForm (E₄ E₆) in
 open scoped MatrixGroups ModularForm Manifold Topology in

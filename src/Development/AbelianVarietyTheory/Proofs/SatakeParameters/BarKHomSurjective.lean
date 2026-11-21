@@ -21,7 +21,6 @@ def barKHom : Kinf E a →* Kinf E a where
     simp [Matrix.mul_apply, Matrix.star_apply, mul_comm])
 
 omit [NumberField E] [IsTotallyComplex E] in
-@[simp] theorem barKHom_apply (k : Kinf E a) : barKHom E a k = barK k := rfl
 
 omit [NumberField E] [IsTotallyComplex E] in
 
@@ -41,9 +40,6 @@ def cptOn (π : CuspSub E a) : Representation ℂ (Kinf E a) π.V where
   map_mul' k k' := by
     ext φ
     simp [CuspSub.op, act, map_mul]
-
-@[simp] theorem cptOn_apply (π : CuspSub E a) (k : Kinf E a) (φ : π.V) :
-    cptOn π k φ = π.op (.cpt k) φ := rfl
 
 @[simp] theorem cptOn_val (π : CuspSub E a) (k : Kinf E a) (φ : π.V) :
     (cptOn π k φ).1 = cptRep E a k φ.1 := rfl

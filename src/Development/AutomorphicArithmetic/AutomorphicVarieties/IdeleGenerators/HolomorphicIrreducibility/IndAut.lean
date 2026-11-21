@@ -311,39 +311,3 @@ private theorem infOf_add {m m' : Fin 2 → ℤ} (h : Function.Injective ![m 0, 
   refine ⟨Finset.univ.nodup.map fun i j hij => h (Int.cast_injective (add_left_cancel hij)), fun z hz => ?_⟩
   obtain ⟨i, -, rfl⟩ := Multiset.mem_map.1 hz
   exact ⟨![m 0, m 1, m' 0, m' 1] i - 1, by push_cast; ring⟩
-
-theorem UpperTheory.V.Sd.indAut :
-    UpperTheory.V.Af.Hypotheses₂ → UpperTheory.V.Published.QuadInduction → UpperTheory.V.Sd.IndAut := by
-  intro hP hQ E Ω _ _ _ _ _ _ _ h2 l _ ι π r m m' hatt ⟨v, v', hvv, hv, hv'⟩ hinj R hR H
-  haveI : IsAlgClosure E Ω := ⟨IsAlgClosure.isAlgClosed ℚ, Algebra.IsAlgebraic.tower_top (K := ℚ) E⟩
-  obtain ⟨hnd, hint⟩ := infOf_add hinj
-  rcases hQ ℚ E h2 2 one_le_two π with ⟨h, -⟩ | ⟨P, hinf, hfin⟩
-  · have e := (h v v' _ (Subsingleton.elim _ _) hv).unique hv'
-    rw [← e, Multiset.nodup_add] at hnd
-    exact (Multiset.disjoint_left.1 hnd.2.2 (show 1 / 2 + (m 0 : ℂ) ∈ _ by simp [infOf_two]) (by simp [infOf_two])).elim
-  obtain ⟨δ, -, hδ1, hδ, hδu⟩ := UpperTheory.exists_quadratic_sign_character ℚ E Ω l h2
-  obtain ⟨t, ht⟩ : ∃ t, t ∉ (galEmb ℚ E Ω).range := by
-    by_contra h
-    exact hδ1 (MonoidHom.ext fun s => (hδ.1 s).2 (not_not.1 fun hs => h ⟨s, hs⟩))
-  obtain ⟨x, y, hne, hxy⟩ := exists_moved h2 (range_galEmb ℚ E Ω ▸ ht)
-  have H' : IndCh (galEmb ℚ E Ω) r R := fun u hu => H u (range_galEmb ℚ E Ω ▸ hu)
-  have key : IsAutR ι (tw R (cycBar ℚ Ω l)⁻¹) := by
-    refine ⟨P, fun u => ⟨_, ?_, hnd, hint⟩, (UpperTheory.galoisRep_irreducibility_criterion.1 _ (G ℚ Ω) _ 4 R).2.2 _ hR, ?_⟩
-    · rw [Subsingleton.elim u (v.comap (algebraMap ℚ E))]
-      exact hinf v v' _ _ hvv (Subsingleton.elim _ _) hv hv'
-    · filter_upwards [hδu, ev_over (F := ℚ) hatt.2, ev_over (F := ℚ) hfin, ev_over (F := ℚ) (ev_notMem hne),
-        ev_notMem (E := ℚ) (a := (l : 𝓞 ℚ)) (Nat.cast_ne_zero.2 (Fact.out : l.Prime).ne_zero)] with u ha hb hc hd hl
-      have h3 := loc ι h2 hδ ht hxy hR H' (sat := π.HasSat) (fun _ _ _ => TR.CuspSub.HasSat.unique) (satP := P.HasSat) ha hb hc hd
-      obtain ⟨A₀, hA₀⟩ := exists_isPlaceOver Ω u
-      obtain ⟨σ₀, hσ₀⟩ := ReciprocityTheory.Gal.exists_isFrob hA₀
-      obtain ⟨B, hB, -⟩ := (h3 A₀ hA₀).2 σ₀ hσ₀
-      refine ⟨B, hB, ?_⟩
-      rw [algSat_four]
-      refine UpperTheory.frobenius_eigenvalues_twist ℚ Ω l ι 4 _ _ u _ _ (fun A hA => ⟨(h3 A hA).1, fun σ hσ => ?_⟩) (charEig_cyc_inv ι u hl)
-      obtain ⟨B', hB', e⟩ := (h3 A hA).2 σ hσ
-      rw [hB.unique hB', e]
-  have h4 := UpperTheory.V.Sd.twR hP ℚ Ω l ι 4 _ _ ((UpperTheory.V.Sd.algCyc hP ℚ Ω l ι).1 1 1 (by simp)) key
-  convert h4 using 1
-  refine MonoidHom.ext fun s => Units.ext ?_
-  rw [tw_val, tw_val, smul_smul, ← Units.val_mul]
-  simp

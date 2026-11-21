@@ -59,8 +59,6 @@ def lpScaleHom : ℚˣ →* (LaurentPolynomial ℚ ≃ₐ[ℚ] LaurentPolynomial
   map_mul' c d := AlgEquiv.ext fun f => LaurentPolynomial.ext fun m => by
     simp [lpScaleE_coeff, AlgEquiv.mul_apply, mul_zpow, mul_assoc]
 
-@[simp] lemma lpScaleHom_apply (c : ℚˣ) : lpScaleHom c = lpScaleE c := rfl
-
 def lpTwo : ℚˣ := Units.mk0 2 (by norm_num)
 
 @[simp] lemma lpTwo_val : (lpTwo : ℚ) = 2 := rfl

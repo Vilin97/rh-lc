@@ -108,10 +108,6 @@ variable {E : Frame Φ (d + 1)}
 
 theorem hom_ext {X Y : Cut E} {f g : X ⟶ Y} (h : f.1 = g.1) : f = g := Subtype.ext h
 
-@[simp] theorem comp_val {X Y Z : Cut E} (f : X ⟶ Y) (g : Y ⟶ Z) : (f ≫ g).1 = f.1 ≫ g.1 := rfl
-
-@[simp] theorem id_val (X : Cut E) : (𝟙 X : X ⟶ X).1 = 𝟙 X.T := rfl
-
 variable (E)
 
 def U : Cut E ⥤ C where

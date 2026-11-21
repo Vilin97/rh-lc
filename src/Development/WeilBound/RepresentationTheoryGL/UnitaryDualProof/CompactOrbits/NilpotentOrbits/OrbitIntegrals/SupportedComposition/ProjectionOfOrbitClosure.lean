@@ -310,18 +310,10 @@ section Supp
 
 local instance instT2k'' : T2Space k := GlobalTheory.SplitWeil.t2Space k
 local instance instTDk : TotallyDisconnectedSpace k := GroundTheory.Automorphic.Whittaker.totallyDisconnectedSpace_localField
-local instance instSCk : SecondCountableTopology k := GlobalTheory.SplitWeil.secondCountable k
 local instance instTDM : TotallyDisconnectedSpace (Matrix (Fin n) (Fin n) k) :=
   inferInstanceAs (TotallyDisconnectedSpace (Fin n → Fin n → k))
-local instance instSCM : SecondCountableTopology (Matrix (Fin n) (Fin n) k) :=
-  inferInstanceAs (SecondCountableTopology (Fin n → Fin n → k))
 
 variable {Z : Subalgebra k (Matrix (Fin n) (Fin n) k)}
-
-example : LocallyCompactSpace (Sp k n) := inferInstance
-example : TotallyDisconnectedSpace (Sp k n) := inferInstance
-example : LocallyCompactSpace (GL (Fin n) k) := inferInstance
-example : SecondCountableTopology (Matrix (Fin n) (Fin n) k) := inferInstance
 
 theorem support_in_orbit_closure (h1 : ZNClosed (k := k)) (h2 : FibZN (k := k)) (hZ : CR Z) {c : Matrix (Fin n) (Fin n) k}
     (hc : c ∈ Z) {ξ : (Sp k n → ℂ) →ₗ[ℂ] ℂ} (hs : Supp ξ (Fib Z (qZ Z c))) (hk : Kills ξ (UU ∩ {p | p.1 ∉ ZN Z})) :
@@ -365,9 +357,6 @@ end Supp
 section Baire
 
 local instance instT2k3 : T2Space k := GlobalTheory.SplitWeil.t2Space k
-local instance instSCk3 : SecondCountableTopology k := GlobalTheory.SplitWeil.secondCountable k
-local instance instSCM3 : SecondCountableTopology (Matrix (Fin n) (Fin n) k) :=
-  inferInstanceAs (SecondCountableTopology (Fin n → Fin n → k))
 
 variable {Z : Subalgebra k (Matrix (Fin n) (Fin n) k)}
 
@@ -597,8 +586,6 @@ theorem main_ind (h2 : FibZN (k := k)) (h4 : StepMod (k := k)) (hZ : CR Z) (t : 
 end Main
 
 section Final
-
-local instance instT2k6 : T2Space k := GlobalTheory.SplitWeil.t2Space k
 
 variable (k) in
 

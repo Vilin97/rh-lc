@@ -58,10 +58,6 @@ theorem etale_pullback_snd_map (c₁ c₂ : EtaleChart q V n) :
   have h2 : AlgebraicGeometry.Etale c₂.map := c₂.isEtale
   exact inferInstance
 
-instance instEtalePullbackSndChart (c₁ c₂ : EtaleChart q V n) :
-    AlgebraicGeometry.Etale (pullback.snd c₁.map c₂.map) :=
-  etale_pullback_snd_map c₁ c₂
-
 private theorem etale_comp {A B C : Scheme.{u}} (f : A ⟶ B) (g : B ⟶ C)
     (hf : AlgebraicGeometry.Etale f) (hg : AlgebraicGeometry.Etale g) :
     AlgebraicGeometry.Etale (f ≫ g) := by

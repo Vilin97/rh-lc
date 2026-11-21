@@ -54,8 +54,6 @@ theorem J.mem {h : Setup I π p α} (x : J h) : x.val ∈ I.map (algebraMap R B'
 
 def J.mk (h : Setup I π p α) (x : B') (hx : x ∈ I.map (algebraMap R B')) : J h := (⟨x, hx⟩ : ↥(I.map (algebraMap R B')))
 
-@[simp] theorem J.val_mk (h : Setup I π p α) (x : B') (hx) : (J.mk h x hx).val = x := rfl
-
 theorem J.ext {h : Setup I π p α} {x y : J h} (e : x.val = y.val) : x = y := Subtype.ext e
 
 @[simp] theorem J.val_add {h : Setup I π p α} (x y : J h) : (x + y).val = x.val + y.val := rfl

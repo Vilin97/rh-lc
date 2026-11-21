@@ -27,8 +27,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {T f : ℕ} {bad : Set (HeightOneSpectrum (𝓞 F))}
   {ι : Type} [Fintype ι]
 
-local notation "ιA" => inclE (F := F) (FiniteAdeleRing (𝓞 F) F)
-
 omit [NumberField E] in
 theorem atInf_mul (emb : ι → E →+* ℂ) (γ δ : GL (Fin n) E) (τ : ι) :
     atInf emb ((γ * δ : GL (Fin n) E) : Matrix (Fin n) (Fin n) E) τ =
@@ -113,8 +111,6 @@ section Cls
 
 variable {X : Fields} (hc : CMData X.F X.E) {n : ℕ} [NeZero n] {SG Q : Finset (HeightOneSpectrum (𝓞 X.E))}
   (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) (pref : DecoF X.E n ∅ SG Q → Prop) (σ : X.K →+* ℂ)
-
-local notation "ιA" => inclE (F := X.F) (FiniteAdeleRing (𝓞 X.F) X.F)
 
 abbrev stp : GStep X.E X.K n := stepY ∅ (Ys.triv X n) Unit (fun _ => Λ) (fun _ => Θ) pref
 

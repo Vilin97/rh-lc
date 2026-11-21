@@ -234,21 +234,10 @@ theorem IsOrderedForm.tw {h : ℕ} {Δ : Fin h → Segment k} (H : IsOrderedForm
   · rw [← hm, Multiset.map_map]; rfl
   · rw [Segment.precedes_tw_iff]; exact hp i j hij
 
-theorem ZFactors.tw {h : ℕ} {x : Fin h → IrrGL k} (H : ZFactors 𝔪 x) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
-    ZFactors (𝔪.map (·.tw χ hχ)) fun a => (x a).tw χ hχ := by
-  obtain ⟨Δ, hΔ, hz⟩ := H
-  exact ⟨fun i => (Δ i).tw χ hχ, hΔ.tw χ hχ, fun i => ((hz i).tw χ hχ).of_equiv ((x i).twEquiv χ hχ)⟩
-
 theorem LFactors.tw {h : ℕ} {x : Fin h → IrrGL k} (H : LFactors 𝔪 x) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
     LFactors (𝔪.map (·.tw χ hχ)) fun a => (x a).tw χ hχ := by
   obtain ⟨Δ, hΔ, hz⟩ := H
   exact ⟨fun i => (Δ i).tw χ hχ, hΔ.tw χ hχ, fun i => ((hz i).tw χ hχ).of_equiv ((x i).twEquiv χ hχ)⟩
-
-theorem IsZ.tw (h : IsZ 𝔪 π) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
-    IsZ (𝔪.map (·.tw χ hχ)) (twist π (detChar (Fin N) χ)) := by
-  obtain ⟨h', x, hd, hz, hs⟩ := h
-  exact ⟨h', fun a => (x a).tw χ hχ, hd, hz.tw χ hχ,
-    (hs.twist _).of_equiv (.refl _) (prodIrrTwistEquiv x hd χ hχ)⟩
 
 theorem IsL.tw (h : IsL 𝔪 π) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ) :
     IsL (𝔪.map (·.tw χ hχ)) (twist π (detChar (Fin N) χ)) := by

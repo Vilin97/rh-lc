@@ -247,18 +247,6 @@ theorem SameExport.good {D D' : D7} (h : SameExport D D') {I : TwIn D} {I' : TwI
   exact ⟨⟨fun j hj b => (h9 j hj b).1, fun j hj b => (h9 j hj b).2⟩,
     goodTw_transfer h.gal h.set h.frm (B := BlochKatoReduction.bk0 D) (B' := BlochKatoReduction.bk0 D') h.br rfl rfl hE hN h3 _ (h8 _ _ hS).1 h.avRec h4 k h6 hg.2⟩
 
-structure SameField (D D' : D7) : Prop where
-  LL : D.what₂.LL = D'.what₂.LL
-  instLL : HEq D.what₂.instLL D'.what₂.instLL
-  places : HEq D.what₂.places D'.what₂.places
-  LL0 : HEq D.LL0 D'.LL0
-  emb0 : HEq D.ntw.emb0 D'.ntw.emb0
-  emb0b : HEq D.ntw.emb0b D'.ntw.emb0b
-  tw : ∀ w w', HEq w w' → (TwistedAt D w ↔ TwistedAt D' w')
-
-theorem SameField.refl (D : D7) : SameField D D :=
-  ⟨rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, fun _ _ h => by rw [eq_of_heq h]⟩
-
 end GlobalTheory.TwistChoice
 
 end

@@ -9,9 +9,6 @@ namespace QnGlevImageW
 
 open Formalism.QuantumDeterminants Formalism.FourierDecayAlt.Q
 
-local macro "ifarith" : tactic =>
-  `(tactic| (split_ifs <;> first | rfl | (exfalso; omega)))
-
 lemma mulVec_bvec {m : ℕ} (g : Matrix (Fin m) (Fin m) ℂ) (q : Fin m) :
     g *ᵥ bvec q = fun p => g p q := by
   ext p

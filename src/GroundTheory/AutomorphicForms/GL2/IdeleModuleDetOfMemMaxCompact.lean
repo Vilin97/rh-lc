@@ -19,9 +19,6 @@ def adeleMeasure2 : Measure (Fin 2 → 𝔸[K]) := Measure.pi fun _ => adeleMeas
 instance : (adeleMeasure2 K).IsAddHaarMeasure := by
   unfold adeleMeasure2; infer_instance
 
-instance : SigmaFinite (adeleMeasure2 K) := by
-  unfold adeleMeasure2; infer_instance
-
 variable {K}
 
 def vecMulHomeomorph (g : GL (Fin 2) 𝔸[K]) : (Fin 2 → 𝔸[K]) ≃ₜ (Fin 2 → 𝔸[K]) where

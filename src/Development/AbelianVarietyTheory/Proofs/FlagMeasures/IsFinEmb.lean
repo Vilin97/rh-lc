@@ -26,9 +26,6 @@ structure Sib (I : AutInst) where
   P_unit : ∀ v, IsUnit (P v)
   P_spec : ∀ v, (P v)ᴴ * J.map (I.φ v) * P v = Formalism.REAL.Jm (ε v)
 
-def Sib.self (I : AutInst) : Sib I :=
-  ⟨I.n, I.J, I.J_herm, I.J_det, I.L, I.L_span, I.L_fg, I.L_dual, I.ε, I.P, I.P_unit, I.P_spec⟩
-
 variable {I : AutInst}
 
 def Sib.frames (D : Sib I) : AutInst :=
@@ -109,7 +106,5 @@ def stabF (I : AutInst) (x : Fin I.n → I.E) : Set I.GA :=
 
 def Ksub (I : AutInst) : Subgroup I.Gf :=
   (Formalism.UG.stabGL I.Lf).comap (Formalism.UG.UPts I.cm.sig I.J (Af I.F)).subtype
-
-theorem coe_Ksub (I : AutInst) : (Ksub I : Set I.Gf) = I.Kset := rfl
 
 end GlobalTheory.StabUnfold

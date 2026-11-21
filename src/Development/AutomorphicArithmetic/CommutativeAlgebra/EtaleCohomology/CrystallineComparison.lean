@@ -12,8 +12,6 @@ section Factor
 
 variable {R : Type} [CommRing R] {e : R}
 
-local notation "Q" e:max => Ideal.Quotient.mk (Ideal.span {1 - e})
-
 private theorem mk_eq_iff (he : IsIdempotentElem e) (a b : R) :
     (Q e) a = (Q e) b ↔ e * a = e * b := by
   rw [Ideal.Quotient.eq, Ideal.mem_span_singleton]

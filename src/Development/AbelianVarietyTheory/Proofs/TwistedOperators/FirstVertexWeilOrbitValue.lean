@@ -505,17 +505,4 @@ theorem scalar_of_is {G : GridData L sc} {W : G.Weil} {U : Set T} (S : GridChoic
   have h2 := chi_mul_endLam S hL hk hk'
   linear_combination c * h2 + h1
 
-theorem scalar : GlobalTheory.FunPr.Hypotheses₂ → SumOKK → Big fun {D} {_Γ} _ _ {_Pl0} {T} {_A} {_Ks} _ _ _ {R} ch =>
-    ∀ (t : T) (k : FinPt ch.G (.grid 0 D.R.m)), finG (ch.G.V (.grid 0 D.R.m)) k ∈ ch.S.levRow t 0 (Nat.zero_le _) →
-    ∀ (hk : toXf k ∈ (levEnv D.sp.X' R.βX (R.datXt t)).J) (c : ℂ),
-      ch.W.om (.chi (GlobalTheory.FirstRowVertex.firstIx D) D.R.m : Pair T) (ch.G.toPair (.chi (GlobalTheory.FirstRowVertex.firstIx D) D.R.m : Pair T) ((ch.S.N.u (.grid 0 D.R.m))⁻¹ * k * ch.S.N.u (.grid 0 D.R.m)).1 1) (ch.S.Z.vac (.chi (GlobalTheory.FirstRowVertex.firstIx D) D.R.m : Pair T)) = c • ch.S.Z.vac (.chi (GlobalTheory.FirstRowVertex.firstIx D) D.R.m : Pair T) →
-      (((levEnv D.sp.X' R.βX (R.datXt t)).χ ⟨toXf k, hk⟩ : ℂˣ) : ℂ) * c *
-          ∏ w : locPl ch.G t, GlobalTheory.FirstRowEndLaw.endLam ch.G t w.1 (GlobalTheory.FirstRowTermLaw.kapAt ch.S.toGridChoice t w.1 k) =
-        ∏ w : locPl ch.G t, (locGrid ch.G t w).edgeFactor .one
-          (Pi.mulSingle (0, D.R.m) (GlobalTheory.FirstRowTermLaw.kapAt ch.S.toGridChoice t w k)) (.ex 0 D.R.m) := by
-  intro _ _
-  refine ⟨0, fun ε CF _ => ⟨0, ?_⟩⟩
-  intro D large₂ _ _ Γ _ _ Pl0 T A Ks _ _ _ R F hS ch _ _ t k hk hk' c hc
-  exact scalar_of_is ch.S.toGridChoice hS.core.lev t k hk hk' c hc
-
 end GlobalTheory.FirstRowScalar

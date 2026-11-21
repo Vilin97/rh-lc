@@ -47,9 +47,6 @@ def mat3 (p : Fin (N + 2) → L) (M : Fin N → Fin (N + 2) → L) (l : Fin (N +
     Matrix (Fin (N + 2)) (Fin (N + 2)) L :=
   Matrix.of (Fin.cons (α := fun _ => Fin (N + 2) → L) p (Fin.snoc (α := fun _ => Fin (N + 2) → L) M l))
 
-@[simp] theorem blockMatrix_first (p : Fin (N + 2) → L) (M : Fin N → Fin (N + 2) → L) (l : Fin (N + 2) → L) :
-    mat3 p M l 0 = p := rfl
-
 @[simp] theorem blockMatrix_middle (p : Fin (N + 2) → L) (M : Fin N → Fin (N + 2) → L) (l : Fin (N + 2) → L) (j : Fin N) :
     mat3 p M l (mid j) = M j := by
   show (Fin.cons (α := fun _ => Fin (N + 2) → L) p (Fin.snoc (α := fun _ => Fin (N + 2) → L) M l)) (mid j) = M j

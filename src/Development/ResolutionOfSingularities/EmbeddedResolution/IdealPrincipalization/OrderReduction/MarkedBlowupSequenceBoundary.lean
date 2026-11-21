@@ -41,12 +41,6 @@ section
 
 variable {k : Type u} [Field k] {X : Scheme.{u}} {p : X ⟶ Spec (CommRingCat.of k)}
 
-@[simp]
-theorem EtaleChart.map_restrict {U : X.Opens} {n : ℕ} (c : EtaleChart p U n)
-    {V : X.Opens} (hVU : V ≤ U) :
-    (c.restrict hVU).map = X.homOfLE hVU ≫ c.map :=
-  c.restrict_map hVU
-
 theorem EtaleChart.coordIdeal_restrict {U : X.Opens} {n : ℕ} (c : EtaleChart p U n)
     {V : X.Opens} (hVU : V ≤ U) (S : Finset (Fin n)) :
     (c.restrict hVU).coordIdeal S = (c.coordIdeal S).comap (X.homOfLE hVU) := by

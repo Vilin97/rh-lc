@@ -1,5 +1,4 @@
 import Mathlib
-import Mathlib
 import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.NormSmall
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RatInOfUnit
 import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
@@ -24,8 +23,6 @@ namespace GlobalTheory.SndFrames
 open GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle
 
 variable {D : D7}
-
-local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
 
 private theorem smul_mul_eq_of {n m p : Type} [Fintype m] {R : Type} [CommRing R] (c : R) (M : Matrix n m R)
     (N N' : Matrix m p R) (hM : c • M = M) (h : ∀ i j, c * N i j = c * N' i j) : M * N = M * N' := by

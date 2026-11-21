@@ -38,12 +38,6 @@ theorem resTensorHom_tmul {A B : Rep.{u} k G} {A' B' : Rep.{u} k H} (f : Rep.res
 def resTensorIso (A B : Rep.{u} k G) : Rep.res φ (A ⊗ B) ≅ Rep.res φ A ⊗ Rep.res φ B :=
   Iso.refl (Rep.res φ A ⊗ Rep.res φ B)
 
-@[simp]
-theorem resTensorIso_hom_tmul (A B : Rep.{u} k G) (a : A) (b : B) :
-    (resTensorIso φ A B).hom.hom (a ⊗ₜ[k] b : (A ⊗ B : Rep k G)) =
-      (a ⊗ₜ[k] b : (Rep.res φ A ⊗ Rep.res φ B : Rep k H)) :=
-  rfl
-
 end Tensor
 
 variable [TopologicalSpace G] [TopologicalSpace H] [IsTopologicalGroup G] [IsTopologicalGroup H]
@@ -147,12 +141,6 @@ def invariantsTensorLinearMap :
       exact Submodule.add_mem _ hx hy
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] in
-@[simp]
-theorem coe_invariantsTensorLinearMap_tmul (a : A.quotientToInvariants N)
-    (b : B.quotientToInvariants N) :
-    (invariantsTensorLinearMap A B N (a ⊗ₜ[k] b) : (A ⊗ B : Rep k G)) =
-      ((a : A) ⊗ₜ[k] (b : B) : (A ⊗ B : Rep k G)) :=
-  rfl
 
 def invariantsTensorHom :
     A.quotientToInvariants N ⊗ B.quotientToInvariants N ⟶ (A ⊗ B).quotientToInvariants N :=
@@ -163,17 +151,8 @@ def invariantsTensorHom :
     exact Subtype.ext rfl⟩
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] in
-@[simp]
-theorem invariantsTensorHom_tmul (a : A.quotientToInvariants N) (b : B.quotientToInvariants N) :
-    ((invariantsTensorHom A B N).hom (a ⊗ₜ[k] b) : (A ⊗ B : Rep k G)) =
-      ((a : A) ⊗ₜ[k] (b : B) : (A ⊗ B : Rep k G)) :=
-  rfl
 
 variable {A B} [IsDiscreteRep A] [IsDiscreteRep B] {p q n : ℕ}
-
-instance isDiscreteRep_quotientToInvariants_tensor :
-    IsDiscreteRep ((A ⊗ B).quotientToInvariants N) :=
-  isDiscreteRep_quotientToInvariants_of_normal (A ⊗ B) N
 
 end Inflation
 

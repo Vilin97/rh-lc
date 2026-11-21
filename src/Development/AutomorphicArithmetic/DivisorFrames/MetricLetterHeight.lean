@@ -53,28 +53,3 @@ private theorem expo_single (a : Sym E) (x : Letter Dw) (hx : letterOf Dw a.2.2 
   simp
 
 end SlopeTestRemainingChoices
-
-theorem UpperTheory.metric_letter_height :
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (T : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β) (F : Type) [Field F] [NumberField F] (e : F ≃+* c.F) (Φ : FlagCpt T e) (Cx : CxSt F) (hm : Mets Φ Cx) (a : ℕ → Bool) (R : Option ℝ) (st : ((E →+* ℂ) × ℕ) ⊕ ℕ) (x : Pad.Letter Dw), letterOf Dw st = some x → ∀ (v : HeightOneSpectrum (𝓞 F)) (ε : TrueGeo.Ext v) (y : AlgPt Φ.Y), below y.1 ∉ (Φ.gr x.1 x.2).supp → UnitAt (below y.1) (GlobalTheory.LineNorm.dg Φ (below y.1) x.1 x.2 : Φ.Y.Fn) ∧ lam (adlOf Φ hm (Finsupp.single (a, R, st) 1)) v ε y = Real.log (ε.w (TrueGeo.valAt y.1 (GlobalTheory.LineNorm.dg Φ (below y.1) x.1 x.2 : Φ.Y.Fn))) + GlobalTheory.LineNorm.symLog Φ a st v ε y := by
-  intro E _ _ _ H Dw l Xo c O _ β T F _ _ e Φ Cx hm a R st x hx v ε y hy
-  have he := expo_single (Dw := Dw) (a, R, st) x hx
-  have hd : divOf Φ (expo Dw (Finsupp.single (a, R, st) 1)) = Φ.gr x.1 x.2 := by
-    unfold divOf
-    rw [Finset.sum_eq_single x]
-    · rw [he, if_pos rfl, one_smul]
-    · intro x' _ h
-      rw [he, if_neg (Ne.symm h), zero_smul]
-    · intro h
-      exact absurd (Finset.mem_univ x) h
-  have hp : (∏ x' : Letter Dw, LineNorm.dg Φ (below y.1) x'.1 x'.2 ^ expo Dw (Finsupp.single (a, R, st) 1) x') =
-      LineNorm.dg Φ (below y.1) x.1 x.2 := by
-    rw [Finset.prod_eq_single x]
-    · rw [he, if_pos rfl, zpow_one]
-    · intro x' _ h
-      rw [he, if_neg (Ne.symm h), zpow_zero]
-    · intro h
-      exact absurd (Finset.mem_univ x) h
-  have h1 : (Φ.gr x.1 x.2).IsEqn (below y.1) 1 := not_not.1 hy
-  refine ⟨not_not.1 fun h => hy (((LineNorm.fr_spec Φ (below y.1)).2 x.1 x.2).mem_supp_iff.2 h), ?_⟩
-  rw [lam_eq Φ hm _ v ε y (hd ▸ h1), hp, Finsupp.support_single_ne_zero _ one_ne_zero, Finset.sum_singleton,
-    Finsupp.single_eq_same, Int.cast_one, one_mul]

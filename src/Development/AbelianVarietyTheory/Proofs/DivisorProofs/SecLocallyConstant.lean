@@ -20,9 +20,6 @@ def preQ {S T : DiscreteQuotient X} (h : T ≤ S) : (S → B) →+* (T → B) wh
   map_zero' := rfl
   map_add' _ _ := rfl
 
-@[simp] theorem preQ_apply {S T : DiscreteQuotient X} (h : T ≤ S) (g : S → B) (t : T) :
-    preQ X B h g t = g (DiscreteQuotient.ofLE h t) := rfl
-
 def stage : (DiscreteQuotient X)ᵒᵖ ⥤ CommRingCat.{0} where
   obj S := CommRingCat.of (S.unop → B)
   map f := CommRingCat.ofHom (preQ X B (leOfHom f.unop))
@@ -39,8 +36,6 @@ def pullQ (S : DiscreteQuotient X) : (S → B) →+* LocallyConstant X B where
   map_mul' _ _ := rfl
   map_zero' := rfl
   map_add' _ _ := rfl
-
-@[simp] theorem pullQ_apply (S : DiscreteQuotient X) (g : S → B) (x : X) : pullQ X B S g x = g (S.proj x) := rfl
 
 def lcCocone : Cocone (stage X B) where
   pt := CommRingCat.of (LocallyConstant X B)

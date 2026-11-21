@@ -1,6 +1,10 @@
 import Formalism.LocalToGlobal.Columns.ChainLawLev
-import Formalism.LocalToGlobal.Columns.ChainLawXiStmt
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.KerEquivStmt
+import Formalism.LocalToGlobal.Columns.ChainInst
+import Formalism.LocalToGlobal.Columns.ChainLawPhi
+import Mathlib
+import Formalism.LocalToGlobal.KernelLattices.ColInst
+import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
+import Formalism.LocalToGlobal.Columns.ChainInstY
 import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ThDistC
 import Formalism.LocalToGlobal.Columns.RecLevelSym
 import Formalism.LocalToGlobal.Columns.ChainOne

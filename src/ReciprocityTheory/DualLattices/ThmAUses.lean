@@ -1,4 +1,5 @@
-import ReciprocityTheory.DualLattices.StThmAFull
+import ReciprocityTheory.DualLattices.NsetExpInjectiveSurjective
+import ReciprocityTheory.DualLattices.SmallLevelClassSet
 import ReciprocityTheory.DualLattices.VDetEqOneOfIntegral
 
 noncomputable section

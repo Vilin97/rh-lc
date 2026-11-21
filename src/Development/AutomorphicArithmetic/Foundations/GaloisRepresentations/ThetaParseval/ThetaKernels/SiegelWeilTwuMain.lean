@@ -18,9 +18,6 @@ open NumberField MeasureTheory Formalism.MainNotions.GlobalTheoryTheory.GenusMas
 namespace PositivityTheory.SiegelWeilFormula.TW.Twu
 attribute [-instance] CStarMatrix.instHMulOfFintypeOfMulOfAddCommMonoid
 open PositivityTheory.SiegelWeilFormula.TBij.Adp PositivityTheory.SiegelWeilFormula.KTunit
-local instance (priority := high)  {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] :
-    MeasurableSpace (κ → AF F) := borel _
-local instance  {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] : BorelSpace (κ → AF F) := ⟨rfl⟩
 theorem uniq_k : _root_.PositivityTheory.SiegelWeilFormula.TW.Uniq_k := by
   classical
   intro F E _ _ _ _ _ σ d ν hν Λ hΛ hinv

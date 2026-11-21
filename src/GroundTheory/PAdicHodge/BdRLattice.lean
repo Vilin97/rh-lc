@@ -41,12 +41,6 @@ namespace IsPerfectoidField
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [Fact p.Prime] [IsPerfectoidField K p] [CharZero K]
 
-local notation "𝒪" => normInteger K
-local notation "𝕎𝒪♭" => WittVector p (PreTilt (normInteger K) p)
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔹" => BDeRhamPlus (normInteger K) p
-local notation "𝔸" => Localization.Away (p : WittVector p (PreTilt (normInteger K) p))
-
 omit [CharZero K] in
 
 theorem eq_zero_of_forall_mem_span_p_pow {b : 𝒪} (h : ∀ M : ℕ, b ∈ span {(p : 𝒪) ^ M}) : b = 0 := by

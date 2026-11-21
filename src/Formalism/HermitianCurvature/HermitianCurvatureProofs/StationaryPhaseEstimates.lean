@@ -11,9 +11,6 @@ instance sigmaFinite_mu (β : ℂ) : SigmaFinite (mu β) := by unfold mu; infer_
 instance sigmaFinite_muPi (β : ℂ) (ι : Type) [Fintype ι] : SigmaFinite (muPi β ι) := by
   unfold muPi; infer_instance
 
-instance sigmaFinite_muXY (β : ℂ) (m : ℕ) : SigmaFinite (muXY β m) := by
-  unfold muXY; infer_instance
-
 section
 
 variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V]

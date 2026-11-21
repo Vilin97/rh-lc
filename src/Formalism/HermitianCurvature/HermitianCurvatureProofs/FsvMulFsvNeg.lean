@@ -133,14 +133,6 @@ variable {V : Type*} [AddCommGroup V] [Module ℂ V]
 theorem pr_ext {a b : Pr V} (h1 : a.1 = b.1) (h2 : a.2.unop = b.2.unop) : a = b :=
   Prod.ext h1 (MulOpposite.unop_injective h2)
 
-@[simp] theorem mkPair_fst' (X Xs : Module.End ℂ V) : (mkP X Xs : Pr V).1 = X := rfl
-@[simp] theorem mkPair_snd' (X Xs : Module.End ℂ V) : (mkP X Xs : Pr V).2.unop = Xs := rfl
-@[simp] theorem pr_mul_fst (a b : Pr V) : (a * b).1 = a.1 * b.1 := rfl
-@[simp] theorem pr_mul_snd (a b : Pr V) : (a * b).2.unop = b.2.unop * a.2.unop := rfl
-@[simp] theorem pr_add_fst (a b : Pr V) : (a + b).1 = a.1 + b.1 := rfl
-@[simp] theorem pr_add_snd (a b : Pr V) : (a + b).2.unop = a.2.unop + b.2.unop := rfl
-@[simp] theorem pr_one_fst : (1 : Pr V).1 = 1 := rfl
-@[simp] theorem pr_one_snd : (1 : Pr V).2.unop = 1 := rfl
 @[simp] theorem pr_alg_fst (w : ℂ) : (algebraMap ℂ (Pr V) w).1 = algebraMap ℂ (Module.End ℂ V) w := rfl
 @[simp] theorem pr_alg_snd (w : ℂ) :
     (algebraMap ℂ (Pr V) w).2.unop = algebraMap ℂ (Module.End ℂ V) (conj w) := rfl

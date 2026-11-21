@@ -1,5 +1,5 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.MatchMu
+import Development.AbelianVarietyTheory.Definitions.Divisors.HasDivPlace
 import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsD
 import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrExtC
 open Matrix GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.BCFL

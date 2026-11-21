@@ -10,8 +10,6 @@ open CategoryTheory NumberField IntermediateField GroundTheory.Global FiniteSubf
 
 open scoped DirectSum GroundTheory.Global.SemiLocal
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 theorem idelesToClasses_idelesResField (K E : FiniteSubfield) [Fact (K ≤ E)] (y : cohomology (limitRep K) 2) :
@@ -143,12 +141,6 @@ theorem sumPlaceInv_eq_zero_iff (y : ⨁ v : Place K.1, localGaloisCohomology K 
     exact ⟨x, by rw [brauerLocal_apply, hx, AddEquiv.apply_symm_apply]⟩
   · rintro ⟨x, rfl⟩
     exact brauerSumInv_eq_zero ι x
-
-theorem albertBrauerHasseNoether :
-    Function.Injective (brauerLocal ι) ∧
-      (∀ y : ⨁ v : Place K.1, localGaloisCohomology K 2 v, sumPlaceInv K y = 0 ↔ ∃ x, brauerLocal ι x = y) ∧
-      Function.Surjective (sumPlaceInv K) :=
-  ⟨brauerLocal_injective ι, sumPlaceInv_eq_zero_iff ι, sumPlaceInv_surjective K⟩
 
 end
 

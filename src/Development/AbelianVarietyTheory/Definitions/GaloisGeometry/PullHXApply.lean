@@ -1,7 +1,7 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.PullHlComp
 import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsContinuousForgetForget
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.PullPreservesFiniteLimits
+import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsMatrixForm
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FiniteMaximalSpectrumOfFiniteOfIsLocalRing
 
 noncomputable section
@@ -91,55 +91,16 @@ variable (R : Type) [CommRing R]
 section Flat
 variable {Z Y U Z' Y' U' : Scheme.{0}}
 
-def transFlat {a : Z ⟶ Z'} {i' : Z' ⟶ Y'} {j' : U' ⟶ Y'} {i : Z ⟶ Y} {j : U ⟶ Y} {b : Y ⟶ Y'} {c : U ⟶ U'}
-    (α : bc i' ⋙ bc a ⟶ bc b ⋙ bc i) (hc : c ≫ j' = j ≫ b) :
-    nb R i' j' ⋙ Rel.pull R a ⟶ nb R i j :=
-  Functor.whiskerRight (trans R α hc) (Rel.pull R a) ≫ Functor.whiskerLeft (nb R i j) (adj (R := R) a).counit
-
 def nbC (i : Z ⟶ Y) (j : U ⟶ Y) (F : Shv R) : CochainComplex (ShvS R Z) ℤ :=
   ((nb R i j).mapHomologicalComplex _).obj (GlobalTheory.EtC.res R F)
 
 def nbCMap (i : Z ⟶ Y) (j : U ⟶ Y) {F G : Shv R} (φ : F ⟶ G) : nbC R i j F ⟶ nbC R i j G :=
   ((nb R i j).mapHomologicalComplex _).map (resMap R φ)
 
-def transC {a : Z ⟶ Z'} {i' : Z' ⟶ Y'} {j' : U' ⟶ Y'} {i : Z ⟶ Y} {j : U ⟶ Y} {b : Y ⟶ Y'} {c : U ⟶ U'}
-    (α : bc i' ⋙ bc a ⟶ bc b ⋙ bc i) (hc : c ≫ j' = j ≫ b) (F : Shv R) :
-    (pullC R a).obj (nbC R i' j' F) ⟶ nbC R i j F :=
-  (NatTrans.mapHomologicalComplex (transFlat R α hc) _).app (GlobalTheory.EtC.res R F)
-
 end Flat
 
 section HX
 variable {Z Z' : Scheme.{0}}
-
-instance (a : Z ⟶ Z') : PreservesFiniteLimits (Rel.pull R a) := pull_preservesFiniteLimits R a
-
-instance (a : Z ⟶ Z') : PreservesFiniteColimits (Rel.pull R a) := by
-  have : PreservesColimitsOfSize.{0, 0} (Rel.pull R a) := (adj (R := R) a).leftAdjoint_preservesColimits
-  exact PreservesColimitsOfSize.preservesFiniteColimits _
-
-def cmpCst (a : Z ⟶ Z') : (Rel.pull R a).obj (Rel.cst R Z') ⟶ Rel.cst R Z :=
-  ((adj (R := R) a).homEquiv _ _).symm ((resUnit R a).app (coef R))
-
-def cmpCstInv (a : Z ⟶ Z') : Rel.cst R Z ⟶ (Rel.pull R a).obj (Rel.cst R Z') := by
-  classical
-  exact if h : IsIso (cmpCst R a) then inv (cmpCst R a) else 0
-
-def pullHX (a : Z ⟶ Z') (L : DerivedCategory (ShvS R Z')) (n : ℤ) :
-    HX R Z' L n →+ HX R Z ((Rel.pull R a).mapDerivedCategory.obj L) n :=
-  (Preadditive.leftComp _ ((DerivedCategory.singleFunctor (ShvS R Z) 0).map (cmpCstInv R a) ≫
-      ((Rel.pull R a).mapDerivedCategorySingleFunctor 0).inv.app (Rel.cst R Z'))).comp
-    ((Preadditive.rightComp _ (((Rel.pull R a).mapDerivedCategory.commShiftIso n).hom.app L)).comp
-      (Rel.pull R a).mapDerivedCategory.mapAddHom)
-
-def postHX {L L' : DerivedCategory (ShvS R Z)} (φ : L ⟶ L') (n : ℤ) : HX R Z L n →+ HX R Z L' n where
-  toFun x := x ≫ φ⟦n⟧'
-  map_zero' := zero_comp
-  map_add' x y := Preadditive.add_comp _ _ _ _ _ _
-
-def pullHXC (a : Z ⟶ Z') (K : CochainComplex (ShvS R Z') ℤ) (n : ℤ) :
-    HXC R Z' K n →+ HXC R Z ((pullC R a).obj K) n :=
-  (postHX R (((Rel.pull R a).mapDerivedCategoryFactors).hom.app K) n).comp (pullHX R a _ n)
 
 end HX
 

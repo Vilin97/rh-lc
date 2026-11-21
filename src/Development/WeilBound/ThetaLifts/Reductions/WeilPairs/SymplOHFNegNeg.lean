@@ -18,10 +18,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem topR_add (x y : WOF F E nS (nT + nT)) : topR (x + y) = topR x + topR y := rfl
 theorem botR_add (x y : WOF F E nS (nT + nT)) : botR (x + y) = botR x + botR y := rfl
-theorem topR_neg (x : WOF F E nS (nT + nT)) : topR (-x) = -topR x := rfl
-theorem botR_neg (x : WOF F E nS (nT + nT)) : botR (-x) = -botR x := rfl
-theorem topR_zero : topR (0 : WOF F E nS (nT + nT)) = 0 := rfl
-theorem botR_zero : botR (0 : WOF F E nS (nT + nT)) = 0 := rfl
 
 theorem continuous_topR : Continuous (topR : WOF F E nS (nT + nT) → WOF F E nS nT) :=
   continuous_id.matrix_submatrix _ _
@@ -104,8 +100,5 @@ theorem theta_delta {ψ : AddChar (AF F) ℂ} (hψ : ∀ a, ‖ψ a‖ = 1) {f�
     refine (show (fun t => deltaT f₁ f₂ (w + L t)) = _ from funext fun t => ?_) ▸ a3
     simp only [deltaT_apply, topR_add, botR_add, neg_add]
     rfl
-
-theorem psi_norm {B : Base F E} (hB : B.IsGood σ) : ∀ a, ‖B.ψ a‖ = 1 :=
-  (GlobalTheory.StdCharWeilDatum.isStdCharF_of_isGood F E σ B hB).1.2.1
 
 end PositivityTheory.ThKW.Dbl

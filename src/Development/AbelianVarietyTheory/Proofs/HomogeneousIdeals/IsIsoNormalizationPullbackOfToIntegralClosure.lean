@@ -52,7 +52,6 @@ theorem toNormalization_normalizationLift :
     f.toNormalization ≫ normalizationLift f a g b H = a := by
   simp [normalizationLift, pullback.lift_fst]
 
-@[reassoc (attr := simp)]
 theorem normalizationLift_comp :
     normalizationLift f a g b H ≫ g = f.fromNormalization ≫ b := by
   simp [normalizationLift, pullback.condition]
@@ -62,11 +61,6 @@ theorem eq_normalizationLift {m : f.normalization ⟶ T} (h₁ : f.toNormalizati
   normalization_hom_ext f g (by simp [h₁]) (by simp [h₂])
 
 include H in
-
-theorem existsUnique_normalizationLift :
-    ∃! m : f.normalization ⟶ T, f.toNormalization ≫ m = a ∧ m ≫ g = f.fromNormalization ≫ b :=
-  ⟨normalizationLift f a g b H, ⟨by simp, by simp⟩,
-    fun _ h ↦ eq_normalizationLift f a g b H h.1 h.2⟩
 
 instance isIntegralHom_normalizationLift [IsIntegralHom b] :
     IsIntegralHom (normalizationLift f a g b H) :=
@@ -104,12 +98,6 @@ theorem eq_normalizationMap {m : f₁.normalization ⟶ f₂.normalization}
     m = normalizationMap f₁ f₂ a b H :=
   eq_normalizationLift f₁ _ _ _ _ h₁ h₂
 
-@[simp]
-theorem normalizationMap_id :
-    normalizationMap f₁ f₁ (𝟙 _) (𝟙 _) (by simp) = 𝟙 _ :=
-  (eq_normalizationMap f₁ f₁ _ _ _ (by simp) (by simp)).symm
-
-@[reassoc]
 theorem normalizationMap_comp (a' : X₂ ⟶ X₃) (b' : Y₂ ⟶ Y₃) (H' : a' ≫ f₃ = f₂ ≫ b') :
     normalizationMap f₁ f₂ a b H ≫ normalizationMap f₂ f₃ a' b' H' =
       normalizationMap f₁ f₃ (a ≫ a') (b ≫ b') (by simp [H', reassoc_of% H]) :=
@@ -137,10 +125,6 @@ noncomputable def normalizationMapIso (a : X₁ ≅ X₂) (b : Y₁ ≅ Y₂)
     (H : a.hom ≫ f₂ = f₁ ≫ b.hom) : f₁.normalization ≅ f₂.normalization :=
   asIso (normalizationMap f₁ f₂ a.hom b.hom H)
 
-@[simp]
-theorem normalizationMapIso_hom (a : X₁ ≅ X₂) (b : Y₁ ≅ Y₂) (H : a.hom ≫ f₂ = f₁ ≫ b.hom) :
-    (normalizationMapIso f₁ f₂ a b H).hom = normalizationMap f₁ f₂ a.hom b.hom H := rfl
-
 end Map
 
 section Trans
@@ -152,12 +136,10 @@ variable {X T Y : Scheme.{u}} (f₁ : X ⟶ T) (f₂ : T ⟶ Y) [IsIntegralHom f
 noncomputable def normalizationTransIso : f₁.normalization ≅ f.normalization :=
   asIso (normalizationMap f₁ f (𝟙 X) f₂ (by simp [H]))
 
-@[reassoc (attr := simp)]
 theorem toNormalization_normalizationTransIso_hom :
     f₁.toNormalization ≫ (normalizationTransIso f₁ f₂ f H).hom = f.toNormalization := by
   simp [normalizationTransIso]
 
-@[reassoc (attr := simp)]
 theorem normalizationTransIso_hom_fromNormalization :
     (normalizationTransIso f₁ f₂ f H).hom ≫ f.fromNormalization = f₁.fromNormalization ≫ f₂ := by
   simp [normalizationTransIso]
@@ -167,7 +149,6 @@ theorem toNormalization_normalizationTransIso_inv :
     f.toNormalization ≫ (normalizationTransIso f₁ f₂ f H).inv = f₁.toNormalization := by
   simp [Iso.comp_inv_eq]
 
-@[reassoc (attr := simp)]
 theorem normalizationTransIso_inv_fromNormalization :
     (normalizationTransIso f₁ f₂ f H).inv ≫ f₁.fromNormalization =
       f.normalizationDesc f₁ f₂ H :=
@@ -340,7 +321,6 @@ section BaseChange
 variable {X X' Y Y' : Scheme.{u}} {f : X ⟶ Y} {f' : X' ⟶ Y'} {a : X' ⟶ X} {b : Y' ⟶ Y}
   [QuasiCompact f] [QuasiSeparated f] [QuasiCompact f'] [QuasiSeparated f']
 
-@[reassoc]
 theorem normalizationPullback_fst (f : X ⟶ Y) (b : Y' ⟶ Y) [QuasiCompact f] [QuasiSeparated f] :
     f.normalizationPullback b ≫ pullback.fst _ _ =
       normalizationMap (pullback.snd f b) f (pullback.fst f b) b pullback.condition :=
@@ -352,10 +332,6 @@ theorem isPullback_normalizationMap (h : IsPullback a f' f b) [PreservesNormaliz
   refine IsPullback.of_iso_pullback ⟨by simp⟩ (asIso (e ≫ f.normalizationPullback b)) ?_ ?_
   · simp [e, normalizationPullback_fst, normalizationMap_comp]
   · simp [e]
-
-theorem isPullback_toNormalization (h : IsPullback a f' f b) [PreservesNormalization b] :
-    IsPullback a f'.toNormalization f.toNormalization (normalizationMap f' f a b h.w) :=
-  IsPullback.of_bot (by simpa using h) (by simp) (isPullback_normalizationMap h)
 
 theorem PreservesNormalization.of_isPullback (b : Y' ⟶ Y)
     (hb : ∀ {X : Scheme.{u}} (f : X ⟶ Y) [QuasiCompact f] [QuasiSeparated f],
@@ -440,23 +416,7 @@ theorem isOpenImmersion_lift_toNormalization_of_mono [QuasiCompact f'] [LocallyQ
 
 include H in
 
-theorem isPullback_normalizationMap_of_mono [QuasiCompact f'] [QuasiSeparated f'] :
-    IsPullback (normalizationMap f' f (𝟙 X) b (by simp [H])) f'.fromNormalization
-      f.fromNormalization b :=
-  isPullback_normalizationMap (isPullback_id_of_mono f' b f H)
-
 end Mono
-
-theorem isPullback_normalizationMap_of_isIntegralHom_of_mono {X T V Y : Scheme.{u}} (f₁ : X ⟶ T)
-    (c : T ⟶ V) [IsIntegralHom c] (b : V ⟶ Y) [Mono b] [PreservesNormalization b] (f : X ⟶ Y)
-    (H : f = f₁ ≫ c ≫ b) [QuasiCompact f] [QuasiSeparated f] [QuasiCompact f₁]
-    [QuasiSeparated f₁] :
-    IsPullback (normalizationMap f₁ f (𝟙 X) (c ≫ b) (by simp [H])) (f₁.fromNormalization ≫ c)
-      f.fromNormalization b :=
-  (isPullback_normalizationMap_of_mono (f₁ ≫ c) b f (by simp [H])).of_iso
-    (normalizationTransIso f₁ c (f₁ ≫ c) rfl).symm (.refl _) (.refl _) (.refl _)
-    (by simp [Iso.eq_inv_comp, normalizationTransIso, normalizationMap_comp])
-    (by simp [Iso.eq_inv_comp]) (by simp) (by simp)
 
 section Localization
 
@@ -472,14 +432,6 @@ theorem isPreimmersion_of_isPullback_localization
   MorphismProperty.of_isPullback (P := @IsPreimmersion) hb.flip (.of_isLocalization M)
 
 include M in
-
-theorem isPullback_normalizationMap_of_isLocalization
-    (hb : IsPullback b t s (Spec.map (CommRingCat.ofHom (algebraMap R R'))))
-    {X X' : Scheme.{u}} {f : X ⟶ Y} {f' : X' ⟶ Y'} {a : X' ⟶ X} [QuasiCompact f]
-    [QuasiSeparated f] [QuasiCompact f'] [QuasiSeparated f'] (h : IsPullback a f' f b) :
-    IsPullback (normalizationMap f' f a b h.w) f'.fromNormalization f.fromNormalization b :=
-  have := PreservesNormalization.of_isPullback_localization M hb
-  isPullback_normalizationMap h
 
 include M in
 
@@ -510,11 +462,6 @@ theorem isOpenImmersion_lift_toNormalization_of_isLocalization
   isOpenImmersion_lift_toNormalization_of_mono f' b f H
 
 end Localization
-
-example : PreservesNormalization (Spec.map (CommRingCat.ofHom (algebraMap ℤ ℚ))) :=
-  .of_isPullback_localization (nonZeroDivisors ℤ) (IsPullback.of_id_snd)
-
-example {Y S : Scheme.{u}} (g : Y ⟶ S) [Etale g] : PreservesNormalization g := inferInstance
 
 theorem isIso_toNormalization_morphismRestrict {X Y : Scheme.{u}} (f : X ⟶ Y) [QuasiCompact f]
     [QuasiSeparated f] (V : Y.Opens) [IsIntegralHom (f ∣_ V)] :
@@ -584,11 +531,6 @@ theorem flat_normalization [IsDedekindDomain R] (p : f.normalization ⟶ Spec (.
   flat_of_isSchemeTheoreticallyDominant
     (fun _ _ _ h ↦ IsDedekindDomain.flat_iff_torsion_eq_bot.mpr h) f.toNormalization p
 
-theorem flat_normalization_of_isBezout [IsDomain R] [IsBezout R]
-    (p : f.normalization ⟶ Spec (.of R)) [Flat (f.toNormalization ≫ p)] : Flat p :=
-  flat_of_isSchemeTheoreticallyDominant
-    (fun _ _ _ h ↦ Module.Flat.flat_iff_torsion_eq_bot_of_isBezout.mpr h) f.toNormalization p
-
 theorem flat_of_fractionRing [IsDomain R] (K : Type u) [Field K] [Algebra R K] [IsFractionRing R K]
     (c : X ⟶ Spec (.of K)) : Flat (c ≫ Spec.map (CommRingCat.ofHom (algebraMap R K))) :=
   have : Flat (Spec.map (CommRingCat.ofHom (algebraMap R K))) :=
@@ -606,25 +548,6 @@ theorem flat_fromNormalization_comp [IsDedekindDomain R] (K : Type u) [Field K] 
     (hc : f ≫ s = c ≫ Spec.map (CommRingCat.ofHom (algebraMap R K))) :
     Flat (f.fromNormalization ≫ s) :=
   flat_normalization_of_fractionRing f K _ c (by simpa using hc)
-
-theorem existsUnique_normalization_to_spec [IsDedekindDomain R] (K : Type u) [Field K]
-    [Algebra R K] [IsFractionRing R K] {R₀ : Type u} [CommRing R₀] [Algebra R₀ R]
-    [Algebra.IsIntegral R₀ R] (s : Y ⟶ Spec (.of R₀)) (c : X ⟶ Spec (.of K))
-    (hc : f ≫ s = c ≫ Spec.map (CommRingCat.ofHom (algebraMap R K)) ≫
-      Spec.map (CommRingCat.ofHom (algebraMap R₀ R))) :
-    (∃! p : f.normalization ⟶ Spec (.of R),
-      f.toNormalization ≫ p = c ≫ Spec.map (CommRingCat.ofHom (algebraMap R K))) ∧
-    ∀ p : f.normalization ⟶ Spec (.of R),
-      f.toNormalization ≫ p = c ≫ Spec.map (CommRingCat.ofHom (algebraMap R K)) →
-        Flat p ∧ p ≫ Spec.map (CommRingCat.ofHom (algebraMap R₀ R)) = f.fromNormalization ≫ s := by
-  have : IsIntegralHom (Spec.map (CommRingCat.ofHom (algebraMap R₀ R))) :=
-    IsIntegralHom.SpecMap_iff.mpr (algebraMap_isIntegral_iff.mpr inferInstance)
-  refine ⟨⟨normalizationLift f (c ≫ Spec.map (CommRingCat.ofHom (algebraMap R K)))
-    (Spec.map (CommRingCat.ofHom (algebraMap R₀ R))) s (by simpa using hc.symm), by simp, fun p hp ↦ ?_⟩,
-    fun p hp ↦ ⟨flat_normalization_of_fractionRing f K p c hp, ?_⟩⟩
-  · exact normalization_hom_ext f (terminal.from _) (by simp [hp]) (terminal.hom_ext _ _)
-  · exact normalization_hom_ext f (terminal.from _) (by simp [reassoc_of% hp, hc])
-      (terminal.hom_ext _ _)
 
 end Flat
 
@@ -730,7 +653,6 @@ variable (ρ : G →* Aut X) (σ : G →* Aut Y) (H : ∀ g, (ρ g).hom ≫ f = 
 theorem normalizationAction_hom (g : G) :
     (normalizationAction f ρ σ H g).hom = normalizationMap f f (ρ g).hom (σ g).hom (H g) := rfl
 
-@[reassoc (attr := simp)]
 theorem toNormalization_normalizationAction (g : G) :
     f.toNormalization ≫ (normalizationAction f ρ σ H g).hom = (ρ g).hom ≫ f.toNormalization := by
   simp [normalizationAction_hom]
@@ -740,12 +662,6 @@ theorem normalizationAction_fromNormalization (g : G) :
     (normalizationAction f ρ σ H g).hom ≫ f.fromNormalization =
       f.fromNormalization ≫ (σ g).hom := by
   simp [normalizationAction_hom]
-
-theorem eq_normalizationAction (τ : G →* Aut f.normalization)
-    (h₁ : ∀ g, f.toNormalization ≫ (τ g).hom = (ρ g).hom ≫ f.toNormalization)
-    (h₂ : ∀ g, (τ g).hom ≫ f.fromNormalization = f.fromNormalization ≫ (σ g).hom) :
-    τ = normalizationAction f ρ σ H :=
-  MonoidHom.ext fun g ↦ Iso.ext (eq_normalizationMap f f _ _ (H g) (h₁ g) (h₂ g))
 
 end
 
@@ -760,7 +676,6 @@ theorem toNormalization_normalizationActionOver (g : G) :
     f.toNormalization ≫ (normalizationActionOver f ρ H g).hom = (ρ g).hom ≫ f.toNormalization :=
   toNormalization_normalizationAction ..
 
-@[reassoc (attr := simp)]
 theorem normalizationActionOver_fromNormalization (g : G) :
     (normalizationActionOver f ρ H g).hom ≫ f.fromNormalization = f.fromNormalization :=
   (normalizationAction_fromNormalization ..).trans (Category.comp_id _)
@@ -938,7 +853,6 @@ variable (f : X ⟶ Y) (f' : X' ⟶ Y) [QuasiCompact f] [QuasiSeparated f] [Quas
 
 include hπ in
 
-@[reassoc]
 theorem normalizationActionOver_normalizationMap (g : G) :
     (normalizationActionOver f ρ hρ g).hom ≫ normalizationMap f f' π (𝟙 Y) hf =
       normalizationMap f f' π (𝟙 Y) hf :=
@@ -1090,87 +1004,5 @@ theorem normalization_quotient_spec (G : Type v) [Group G] [Finite G] (R A B : T
   have := isSchemeTheoreticallyDominant_spec_algebraMap A B
   normalization_quotient _ _ _ _ _ (specAction_comp G A B) _
     fun _ ↦ ⟨⊤, isAffineOpen_top _, trivial, mem_range_spec_app_of_isInvariant G A B ⊤⟩
-
-example (K L : Type) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L] [IsGalois K L] :=
-  normalization_quotient_spec Gal(L/K) ℤ K L
-
-theorem normalization_trans_baseChange {X Y : Scheme.{u}} (f : X ⟶ Y) [QuasiCompact f]
-    [QuasiSeparated f] :
-    (∀ {T : Scheme.{u}} (f₁ : X ⟶ T) (f₂ : T ⟶ Y) [IsIntegralHom f₂] [QuasiCompact f₁]
-      [QuasiSeparated f₁], f = f₁ ≫ f₂ → ∃ e : f₁.normalization ≅ f.normalization,
-        f₁.toNormalization ≫ e.hom = f.toNormalization ∧
-        e.hom ≫ f.fromNormalization = f₁.fromNormalization ≫ f₂) ∧
-    (∀ (V : Y.Opens) [IsFinite (f ∣_ V)],
-      IsIso (f.toNormalization ∣_ (f.fromNormalization ⁻¹ᵁ V))) ∧
-    (∀ (R K : Type u) [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K] [IsFractionRing R K]
-      (s : Y ⟶ Spec (.of R)) (c : X ⟶ Spec (.of K)),
-      f ≫ s = c ≫ Spec.map (CommRingCat.ofHom (algebraMap R K)) →
-        Flat (f.fromNormalization ≫ s)) ∧
-    (∀ {X' : Scheme.{u}} (f' : X' ⟶ Y) [QuasiCompact f'] [QuasiSeparated f'] (a : X ⟶ X'),
-      a ≫ f' = f → ∃! m : f.normalization ⟶ f'.normalization,
-        f.toNormalization ≫ m = a ≫ f'.toNormalization ∧
-        m ≫ f'.fromNormalization = f.fromNormalization) ∧
-    (∀ (G : Type v) [Group G] [Finite G] (ρ : G →* Aut X), (∀ g, (ρ g).hom ≫ f = f) →
-      (∃! τ : G →* Aut f.normalization, ∀ g,
-        f.toNormalization ≫ (τ g).hom = (ρ g).hom ≫ f.toNormalization ∧
-        (τ g).hom ≫ f.fromNormalization = f.fromNormalization) ∧
-      ∀ (τ : G →* Aut f.normalization), (∀ g,
-        f.toNormalization ≫ (τ g).hom = (ρ g).hom ≫ f.toNormalization ∧
-        (τ g).hom ≫ f.fromNormalization = f.fromNormalization) →
-      ∀ {X' : Scheme.{u}} (f' : X' ⟶ Y) [QuasiCompact f'] [QuasiSeparated f'] (π : X ⟶ X'),
-        (∀ g, (ρ g).hom ≫ π = π) →
-        (∀ W : X'.Opens, Function.Injective (π.app W) ∧
-          Set.range (π.app W) = {s | IsInvariantSection ρ (π ⁻¹ᵁ W) s}) →
-        ∀ q : f.normalization ⟶ f'.normalization,
-          f.toNormalization ≫ q = π ≫ f'.toNormalization →
-          q ≫ f'.fromNormalization = f.fromNormalization →
-          (∀ g, (τ g).hom ≫ q = q) ∧ IsIntegralHom q ∧ Surjective q ∧
-            (∀ x y, q x = q y ↔ ∃ g, (τ g).hom x = y) ∧
-            ∀ W : f'.normalization.Opens, Function.Injective (q.app W) ∧
-              Set.range (q.app W) = {s | IsInvariantSection τ (q ⁻¹ᵁ W) s}) ∧
-    (∀ (R R' : Type u) [CommRing R] [CommRing R'] [Algebra R R'] (M : Submonoid R)
-      [IsLocalization M R'] {X' Y' : Scheme.{u}} (f' : X' ⟶ Y') [QuasiCompact f']
-      [QuasiSeparated f'] (a : X' ⟶ X) (b : Y' ⟶ Y) (t : Y' ⟶ Spec (.of R'))
-      (s : Y ⟶ Spec (.of R)), IsPullback b t s (Spec.map (CommRingCat.ofHom (algebraMap R R'))) →
-      IsPullback a f' f b → ∃ m : f'.normalization ⟶ f.normalization,
-        f'.toNormalization ≫ m = a ≫ f.toNormalization ∧
-        IsPullback m f'.fromNormalization f.fromNormalization b) ∧
-    (∀ {X' Y' : Scheme.{u}} (f' : X' ⟶ Y') [QuasiCompact f'] [QuasiSeparated f'] (a : X' ⟶ X)
-      (b : Y' ⟶ Y) [Smooth b], IsPullback a f' f b →
-      ∃ m : f'.normalization ⟶ f.normalization,
-        f'.toNormalization ≫ m = a ≫ f.toNormalization ∧
-        IsPullback m f'.fromNormalization f.fromNormalization b) := by
-  refine ⟨fun f₁ f₂ _ _ _ H ↦ ⟨normalizationTransIso f₁ f₂ f H, by simp, by simp⟩,
-    fun V _ ↦ isIso_toNormalization_morphismRestrict f V,
-    fun R K _ _ _ _ _ s c hc ↦ flat_fromNormalization_comp f K s c hc,
-    fun f' _ _ a H ↦ ⟨normalizationMap f f' a (𝟙 Y) (by simp [H]), ⟨by simp, by simp⟩,
-      fun m hm ↦ eq_normalizationMap f f' _ _ _ hm.1 (by simp [hm.2])⟩,
-    fun G _ _ ρ hρ ↦ ?_,
-    fun R R' _ _ _ M _ _ _ f' _ _ a b t s hb h ↦
-      ⟨_, by simp, isPullback_normalizationMap_of_isLocalization M hb h⟩,
-    fun f' _ _ a b _ h ↦ ⟨_, by simp, isPullback_normalizationMap h⟩⟩
-  have huniq (τ : G →* Aut f.normalization) (hτ : ∀ g,
-      f.toNormalization ≫ (τ g).hom = (ρ g).hom ≫ f.toNormalization ∧
-      (τ g).hom ≫ f.fromNormalization = f.fromNormalization) :
-      τ = normalizationActionOver f ρ hρ :=
-    eq_normalizationAction f ρ 1 _ τ (fun g ↦ (hτ g).1)
-      fun g ↦ (hτ g).2.trans (Category.comp_id _).symm
-  refine ⟨⟨normalizationActionOver f ρ hρ, fun g ↦ ⟨by simp, by simp⟩, huniq⟩,
-    fun τ hτ X' f' _ _ π hπ hW q hq₁ hq₂ ↦ ?_⟩
-  have hf : π ≫ f' = f ≫ 𝟙 Y := by
-    rw [← f'.toNormalization_fromNormalization, ← reassoc_of% hq₁, hq₂]
-    simp
-  obtain rfl := huniq τ hτ
-  obtain rfl := eq_normalizationMap f f' π (𝟙 Y) hf hq₁ (by simp [hq₂])
-  have : QuasiCompact (π ≫ f') := by rw [hf]; infer_instance
-  have : QuasiCompact π := .of_comp π f'
-  have : IsSchemeTheoreticallyDominant π := ⟨Scheme.IdealSheafData.ext (funext fun W ↦ by
-    rw [Scheme.Hom.ker_apply, Scheme.IdealSheafData.ideal_bot, Pi.bot_apply,
-      ← RingHom.injective_iff_ker_eq_bot]
-    exact (hW W).1)⟩
-  refine normalization_quotient f f' π hf ρ hπ hρ fun y ↦ ?_
-  obtain ⟨_, ⟨W, hW', rfl⟩, hy, -⟩ :=
-    X'.isBasis_affineOpens.exists_subset_of_mem_open (Set.mem_univ y) isOpen_univ
-  exact ⟨W, hW', hy, fun s hs ↦ (hW W).2.ge hs⟩
 
 end GlobalTheory

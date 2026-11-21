@@ -35,10 +35,6 @@ theorem integral_add {f g : MvPowerSeries ι K} (hf : Integral f) (hg : Integral
 theorem integral_neg {f : MvPowerSeries ι K} (hf : Integral f) : Integral (-f) := fun n => by
   rw [map_neg, norm_neg]; exact hf n
 
-theorem integral_sub {f g : MvPowerSeries ι K} (hf : Integral f) (hg : Integral g) :
-    Integral (f - g) := by
-  rw [sub_eq_add_neg]; exact integral_add hf (integral_neg hg)
-
 theorem integral_sum {α : Type} (s : Finset α) (F : α → MvPowerSeries ι K)
     (h : ∀ a ∈ s, Integral (F a)) : Integral (∑ a ∈ s, F a) := fun n => by
   rw [map_sum]
@@ -77,11 +73,6 @@ theorem small_mul {c : ℝ} (hc : 0 ≤ c) {a h : MvPowerSeries ι K} (ha : Inte
 
 theorem cg_refl (p : ℕ) (f : MvPowerSeries ι K) : Cg p f f := fun n => by
   rw [sub_self, map_zero, norm_zero]; exact pinv_nonneg p
-
-theorem cg_of_eq {p : ℕ} {f g : MvPowerSeries ι K} (h : f = g) : Cg p f g := h ▸ cg_refl p f
-
-theorem cg_symm {p : ℕ} {f g : MvPowerSeries ι K} (h : Cg p f g) : Cg p g f := fun n => by
-  rw [← neg_sub, map_neg, norm_neg]; exact h n
 
 theorem cg_trans {p : ℕ} {f g k : MvPowerSeries ι K} (h1 : Cg p f g) (h2 : Cg p g k) :
     Cg p f k := fun n => by

@@ -375,26 +375,4 @@ theorem kzero_theta {W₀ : Type} [CommRing W₀] (W : Matrix (Fin 8) (Fin 8) �
     (sharp_bundle W ρ Q D pr w hw B₀ M₀ hM₀ β₂ w₀ hw₀)
   exact ⟨u, hu, kzero_theta_of_iso W ρ ib Q D pr hpr huniv B₀ M₀ hM₀ β β₂ hβ hsq θ hθ u hu K ev k₀ hk₀ hk⟩
 
-example {W₀ : Type} [CommRing W₀] [IsLocalRing V₁] (hV : IsCN V₁) (W : Matrix (Fin 8) (Fin 8) ℤ) (Q : Data V)
-    (ρ : V →+* V₁) (D : DegPre V₁) (e : (Fin 8 → Q.X) ≃+ D.X) (τ₀ : Gens Q) (ib : W₀ →+* V)
-    (h₁ : SharpRef W Q ρ D e) (h₂ : FromBase Q τ₀ ib) (K : Type) [Field K] [IsAlgClosed K] (ev : V₁ →+* K)
-    (k₀ : Subfield K) (hk₀ : IsAlgClosed k₀) (hk : ∀ a, ev (ρ (ib a)) ∈ k₀) :
-    ∃ (θ : LB.Sec (LB.LinComb D.P.L (D.famφB 0) (DegPre.famε 1)))
-      (pr : Fin 8 → (D.P.A ⟶ (Over.pullback (spMap ρ)).obj Q.B)) (B₀ : Over (Sp W₀)) (_ : GrpObj B₀)
-      (_ : IsCommMonObj B₀) (M₀ : LB B₀.left) (β : Q.B.left ⟶ B₀.left) (β₂ : (G2 Q.B).left ⟶ (G2 B₀).left)
-      (u : LB.Iso (LB.LinComb D.P.L (D.famφB 0) (DegPre.famε 1))
-        (LB.LinComb (abelian₂ B₀ M₀) (K := Fin 8 × Fin 8) (fun p => sharpPair ρ Q D pr p.1 p.2 ≫ β₂) (fun p => W p.1 p.2))),
-      (∃ j, (GlobalTheory.Poinc.ThetaOne.pullTo D ev θ).f j ≠ 0) ∧ u.IsGen ∧ ∃ κ : K, κ ≠ 0 ∧
-        ∀ r : Sp K ⟶ D.P.A.left, r ≫ D.P.A.hom = spMap ev →
-        (∀ a, DefOver k₀ (r ≫ (pr a).left ≫ pullback.fst Q.B.hom (spMap ρ) ≫ β)) →
-        ∀ (z : Sp K) (J : (Sp K ⟶ D.P.A.left) → D.P.L.ι) (J₀ : (Sp K ⟶ (G2 B₀).left) → (abelian₂ B₀ M₀).ι),
-          Good D.P.L z J → Good (abelian₂ B₀ M₀) z J₀ →
-          ∃ c ∈ k₀, (gm r z _ (u.s (fun p => J₀ (r ≫ sharpPair ρ Q D pr p.1 p.2 ≫ β₂),
-            fun i => J (r ≫ D.famφB 0 i)))).val * sval θ r z J = toStk z (κ * c) := by
-  obtain ⟨pr, w, hpr, huniv, hw, -, -⟩ := h₁
-  obtain ⟨B₀, iG, iC, M₀, -, -, β, β₂, w₀, -, hM₀, hβ, hsq, hw₀, -, -, -⟩ := h₂
-  obtain ⟨θ, hθ, hnz, -, -, -⟩ := GlobalTheory.Poinc.ThetaOne.main hV D
-  obtain ⟨u, hu, rest⟩ := kzero_theta W ρ ib Q D pr hpr huniv w hw B₀ M₀ hM₀ β β₂ hβ hsq w₀ hw₀ θ hθ K ev k₀ hk₀ hk
-  exact ⟨θ, pr, B₀, iG, iC, M₀, β, β₂, u, hnz K ev, hu, rest⟩
-
 end GlobalTheory.Poinc.Sep

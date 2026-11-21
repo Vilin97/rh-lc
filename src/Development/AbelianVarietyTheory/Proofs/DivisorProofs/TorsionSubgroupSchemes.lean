@@ -61,8 +61,6 @@ theorem ι_mulN : torsion.ι A n ≫ mulN A n = toUnit _ ≫ η[A] := by
 def torsEta : 𝟙_ (Over S) ⟶ torsion A n :=
   pullback.lift η[A] (𝟙 _) (by rw [IsMonHom.one_hom, Category.id_comp])
 
-@[reassoc (attr := simp)] theorem torsEta_ι : torsEta n ≫ torsion.ι A n = η[A] := pullback.lift_fst _ _ _
-
 theorem mono_ι : Mono (torsion.ι A n) := by
   have := mono_of_unit η[A]
   exact pullback.fst_of_mono
@@ -71,7 +69,6 @@ def torsAct (f : A ⟶ A) [IsMonHom f] (hf : f ≫ mulN A n = mulN A n ≫ f) : 
   pullback.lift (torsion.ι A n ≫ f) (toUnit _) (by
     rw [Category.assoc, hf, ← Category.assoc, ι_mulN, Category.assoc, IsMonHom.one_hom])
 
-@[reassoc (attr := simp)] theorem torsAct_ι (f : A ⟶ A) [IsMonHom f] (hf : f ≫ mulN A n = mulN A n ≫ f) :
     torsAct n f hf ≫ torsion.ι A n = torsion.ι A n ≫ f := pullback.lift_fst _ _ _
 
 theorem exists_openClosed {Ix : Type} [DecidableEq Ix] (act : Ix → (A ⟶ A)) [∀ a, IsMonHom (act a)]

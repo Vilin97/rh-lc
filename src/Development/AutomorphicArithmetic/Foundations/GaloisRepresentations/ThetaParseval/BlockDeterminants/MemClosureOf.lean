@@ -237,8 +237,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 private abbrev Θ : AE (maximalRealSubfield E) E ≃+* Ad E := adeleEquiv (cmE (E := E))
 
-private theorem Θ_apply (z : AE (maximalRealSubfield E) E) : Θ z = toAdele _ E z := rfl
-
 private theorem toAdele_symm (y : Ad E) : toAdele (maximalRealSubfield E) E (Θ.symm y) = y := Θ.apply_symm_apply y
 
 private def th (n : ℕ) : GL (Fin n) (Ad E) →* GL (Fin n) (AE (maximalRealSubfield E) E) :=

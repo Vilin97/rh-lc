@@ -1,7 +1,8 @@
 import Mathlib
 import CompanionTheory.AutomorphicTheory.ProductFormulaTheory.CuspidalExhaustion.MidDefs
 import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsIrreducibleSubquotientTwoBlockConstituents
-import BuildAid.D1
+import Lean.LibrarySuggestions.Basic
+import Lean.Elab.Command
 
 noncomputable section
 

@@ -12,33 +12,11 @@ open NumberField IntermediateField GroundTheory.Global GroundTheory.Global.Cyclo
 
 open scoped GroundTheory.LocalField.Abstract Pointwise GroundTheory.Global.SemiLocal
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 namespace CyclotomicLayer
 
 section TotallyReal
-
-theorem isReal_zhatLayer (r : ℕ+) (φ : (zhatLayer r).1 →+* ℂ) : ComplexEmbedding.IsReal φ := by
-  let _ : Algebra (zhatLayer r).1 ℂ := φ.toAlgebra
-  have : Algebra.IsAlgebraic (zhatLayer r).1 ℚ̄ := Algebra.IsAlgebraic.tower_top (K := ℚ) (zhatLayer r).1
-  let ι : ℚ̄ →ₐ[(zhatLayer r).1] ℂ := IsAlgClosed.lift
-  obtain ⟨σ, hσ⟩ := exists_algEquiv_conj ι.toRingHom
-  have hdeg : σ ∈ (degreeMod r).ker := by
-    rw [MonoidHom.mem_ker, degreeMod, MonoidHom.comp_apply, degree_of_isComplexConjugation ⟨_, hσ⟩,
-      map_one]
-  rw [ComplexEmbedding.isReal_iff]
-  ext x
-  rw [ComplexEmbedding.conjugate_coe_eq]
-  have hx : σ (x : ℚ̄) = x := (mem_fixedField_iff _ _).1 x.2 σ hdeg
-  have h1 : ι (x : ℚ̄) = φ x := ι.commutes x
-  have h2 := hσ (x : ℚ̄)
-  simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, hx, h1] at h2
-  exact h2.symm
-
-instance isTotallyReal_zhatLayer (r : ℕ+) : IsTotallyReal (zhatLayer r).1 :=
-  ⟨fun _ => InfinitePlace.isReal_iff.2 (isReal_zhatLayer r _)⟩
 
 end TotallyReal
 

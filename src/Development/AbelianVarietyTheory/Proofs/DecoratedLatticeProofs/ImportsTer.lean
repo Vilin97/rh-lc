@@ -1,5 +1,9 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.AtOneInt
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.IsCombAt
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ToOneSucc
+import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ValLastX
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ValQOfValQr
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsReindexIff
 import Development.AbelianVarietyTheory.Definitions.LatticeFrames.CombAtSingleZero
 import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsJointlySmoothBiThetaTwoVarCombination
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum MeasureTheory IsDedekindDomain NumberField Matrix

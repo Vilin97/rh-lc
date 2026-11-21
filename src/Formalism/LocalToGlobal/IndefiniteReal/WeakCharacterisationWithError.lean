@@ -70,8 +70,6 @@ def EigOff (i : Fin D.R.m) (p : A3.fam3.base3.Ix) (v : InfinitePlace D.what₂.L
 
 variable {R}
 
-theorem toCx3_updS (kap lam) : (R.updS kap lam).toCx3 F = reScal (R.toCx3 F) (fun _ => kap) lam := rfl
-
 theorem base_eigenvalue_unique {i t p} (l l' : ℝ) (h : R.Eig0 i t p l) (h' : R.Eig0 i t p l') : l = l' := by
   obtain ⟨hb, hl⟩ := h
   obtain ⟨-, hl'⟩ := h'
@@ -172,12 +170,6 @@ theorem scalars_exist (R : RealDat3 D A3 Ks) : ∃ kap lam, (R.updS kap lam).IsS
     rw [hlam, hlam, if_neg hv, if_neg hv]
 
 variable (D A3 Ks) in
-
-def ThreeFaceBaseDatumExists (F : Face3 D A3) : Prop := ∃ R : RealDat3 D A3 Ks, R.toRealDat.Pre0 F.lv2 ∧ R.IsInert ∧ R.IsTup ∧ R.AllPlaces
-
-def FormsExist (F : Face3 D A3) (Geo : RealDat D A3.A Ks → Prop) : Prop :=
-  ∀ R : RealDat3 D A3 Ks, R.toRealDat.Pre1 F.lv2 → R.toRealDat.IsChainW → R.toRealDat.IsThPW → R.toRealDat.FullY → R.toRealDat.FullP →
-    ∃ nW FW err0, (R.toRealDat.upd5 nW FW R.mu R.twPl err0).grp_chiW ∧ Geo (R.toRealDat.upd5 nW FW R.mu R.twPl err0)
 
 end Three
 

@@ -32,7 +32,6 @@ variable {Ω : Type} [CommRing Ω]
 
 def swap (x : Sp Ω ⟶ Xo.X) : Gx x ≅ pullback Xo.univ.t.G.hom x := pullbackSymmetry x Xo.univ.t.G.hom
 
-@[reassoc] theorem swap_hom_fst (x : Sp Ω ⟶ Xo.X) :
     (swap x).hom ≫ pullback.fst _ _ = (snd (Over.mk x) Xo.univ.t.G).left := pullbackSymmetry_hom_comp_fst _ _
 
 @[reassoc] theorem swap_hom_snd (x : Sp Ω ⟶ Xo.X) :
@@ -42,7 +41,6 @@ def swap (x : Sp Ω ⟶ Xo.X) : Gx x ≅ pullback Xo.univ.t.G.hom x := pullbackS
     (swap x).inv ≫ (fst (Over.mk x) Xo.univ.t.G).left = pullback.snd _ _ := by
   rw [← swap_hom_snd, Iso.inv_hom_id_assoc]
 
-@[reassoc] theorem swap_inv_snd (x : Sp Ω ⟶ Xo.X) :
     (swap x).inv ≫ (snd (Over.mk x) Xo.univ.t.G).left = pullback.fst _ _ := by
   rw [← swap_hom_fst, Iso.inv_hom_id_assoc]
 
@@ -64,18 +62,15 @@ theorem gx_ext {x : Sp Ω ⟶ Xo.X} {T : Scheme.{0}} {f g : T ⟶ Gx x}
 @[reassoc] theorem lift_l_fst {S : Scheme.{0}} {T X Y : Over S} (a : T ⟶ X) (b : T ⟶ Y) :
     (lift a b).left ≫ (fst X Y).left = a.left := by rw [← Over.comp_left, lift_fst]
 
-@[reassoc] theorem lift_l_snd {S : Scheme.{0}} {T X Y : Over S} (a : T ⟶ X) (b : T ⟶ Y) :
     (lift a b).left ≫ (snd X Y).left = b.left := by rw [← Over.comp_left, lift_snd]
 
 @[reassoc] theorem toFib_fst (x : Sp Ω ⟶ Xo.X) {T : Scheme.{0}} (t : T ⟶ Sp Ω)
     (a : Over.mk (t ≫ x) ⟶ Xo.univ.t.G) : toFib x t a ≫ (fst (Over.mk x) Xo.univ.t.G).left = t :=
   lift_l_fst _ _
 
-@[reassoc] theorem toFib_snd (x : Sp Ω ⟶ Xo.X) {T : Scheme.{0}} (t : T ⟶ Sp Ω)
     (a : Over.mk (t ≫ x) ⟶ Xo.univ.t.G) : toFib x t a ≫ (snd (Over.mk x) Xo.univ.t.G).left = a.left :=
   lift_l_snd _ _
 
-@[reassoc] theorem snd_hom (x : Sp Ω ⟶ Xo.X) : (snd (Over.mk x) Xo.univ.t.G).left ≫ Xo.univ.t.G.hom =
     (fst (Over.mk x) Xo.univ.t.G).left ≫ x :=
   (Over.w (snd (Over.mk x) Xo.univ.t.G)).trans (Over.w (fst (Over.mk x) Xo.univ.t.G)).symm
 
@@ -296,13 +291,6 @@ theorem level_ne_zero (l : Level H) : l.M' ≠ 0 :=
 
 end Level
 
-theorem pointHom_unique {Ω : Type} [Field Ω] [IsAlgClosed Ω] {p : ℕ} {x x' : Sp Ω ⟶ Xo.X}
-    {C : Subgroup (Over.mk x ⟶ Xo.univ.t.G)} {ψ : pullback Xo.univ.t.G.hom x ⟶ pullback Xo.univ.t.G.hom x'}
-    {f g : (Over.mk x ⟶ Xo.univ.t.G) →* (Over.mk x' ⟶ Xo.univ.t.G)} (hf : IsHkIsog p x x' C ψ f)
-    (hg : IsHkIsog p x x' C ψ g) : f = g :=
-  MonoidHom.ext fun a =>
-    sends_unique ((sends_conj_iff ψ _ _).2 (hf.2.2.1 a)) ((sends_conj_iff ψ _ _).2 (hg.2.2.1 a))
-
 theorem isog_iff {Ω : Type} [Field Ω] [IsAlgClosed Ω] {p : ℕ} (hp : p.Coprime l.M') (x x' : Sp Ω ⟶ Xo.X)
     (C : Subgroup (Over.mk x ⟶ Xo.univ.t.G)) (ψ : pullback Xo.univ.t.G.hom x ⟶ pullback Xo.univ.t.G.hom x') :
     (∃ ψp, IsHkIsog p x x' C ψ ψp) ↔ IsHeckeIsog p C (conj x x' ψ) := by
@@ -372,9 +360,6 @@ theorem lie_iff {Ω : Type} [Field Ω] {p : ℕ} (hp : (p : Ω) ≠ 0) {x x' : S
     · rw [← hpush, ← h, ← Category.assoc, eps_cancel (inv_mul_cancel₀ hp), Category.id_comp]
 
 variable {c : Coeff l} {𝔓 : Ideal (𝓞 E)} {p : ℕ}
-
-theorem idx_eq (h : IsSplitOff l 𝔓 p) (i : ℕ) (Ω : Type) [Field Ω] [IsAlgClosed Ω] [Algebra c.F Ω]
-    (y : FrPt Xo c Ω) : hkKer (Xo := Xo) 𝔓 p i Ω y = HeckeIdx Xo c h i Ω y := rfl
 
 theorem hkPt_iff (h : IsSplitOff l 𝔓 p) {Ω : Type} [Field Ω] [IsAlgClosed Ω] [Algebra c.F Ω]
     (sTr : ∀ (y z : FrPt Xo c Ω), (pullback Xo.univ.t.G.hom y.x ⟶ pullback Xo.univ.t.G.hom z.x) → Prop)

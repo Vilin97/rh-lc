@@ -513,20 +513,6 @@ noncomputable instance : Ring (isogEnd E) :=
 
 theorem isogEnd_mul_def (a b : isogEnd E) : a * b = homComp a b := rfl
 
-instance : IsDomain (isogEnd E) := by
-  have : NoZeroDivisors (isogEnd E) := by
-    refine ⟨fun {a b} hab => ?_⟩
-    by_contra hne
-    push_neg at hne
-    have hb : IsGenPt E b.1 := isGenPt_of_mem_isogHom b.2 (fun h => hne.2 (Subtype.ext h))
-    have ha : IsGenPt E a.1 := isGenPt_of_mem_isogHom a.2 (fun h => hne.1 (Subtype.ext h))
-    have := congrArg Subtype.val hab
-    rw [isogEnd_mul_def, homComp_of_isGenPt _ _ hb] at this
-    exact isGenPt_ne_zero E (isGenPt_map E _ ha) this
-  have : Nontrivial (isogEnd E) := ⟨⟨1, 0, fun h =>
-    isGenPt_ne_zero E (isGenPt_genericPoint (E := E)) (congrArg Subtype.val h)⟩⟩
-  exact NoZeroDivisors.to_isDomain _
-
 end AlgClosed
 
 end GroundTheory.Arith.Abelian

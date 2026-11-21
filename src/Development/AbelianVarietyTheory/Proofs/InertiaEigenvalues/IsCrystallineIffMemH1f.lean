@@ -26,8 +26,6 @@ variable (Qp F R LL) in
 def incl : LL ⊗[Qp] F →ₗ[LL] LL ⊗[Qp] R :=
   AlgebraTensorModule.map (LinearMap.id : LL →ₗ[LL] LL) (IsScalarTower.toAlgHom Qp F R).toLinearMap
 
-@[simp] theorem incl_tmul (a : LL) (k : F) : incl Qp F R LL (a ⊗ₜ k) = a ⊗ₜ algebraMap F R k := rfl
-
 theorem incl_injective [Nontrivial R] : Function.Injective (incl Qp F R LL) :=
   Module.Flat.lTensor_preserves_injective_linearMap (M := LL)
     (IsScalarTower.toAlgHom Qp F R).toLinearMap (algebraMap F R).injective

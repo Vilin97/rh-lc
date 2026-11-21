@@ -1,6 +1,6 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.TateProductRigidificationTrivial
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.MumfordConstruction
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
 import Development.AbelianVarietyTheory.Definitions.Degenerations.AdmissibleBaseOfCompleteDvr
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsChartMember
 import Development.AbelianVarietyTheory.Definitions.ModuliSpaces.ExistsArBaseAway
@@ -62,27 +62,6 @@ theorem relAmple_diag_lam {R : Type} [CommRing R] [IsLocalRing R] [IsNoetherianR
   abel
 
 open SiegelOfPolarised PrimNorm in
-
-def siegOne (hG : Out.GlobalFnsSt) {R : Type} [CommRing R] {B : Over (Sp R)} [GrpObj B] [IsCommMonObj B]
-    (hB : IsAbelianScheme B) {M : LB B.left} (hM : M.IsLB) (g : ℕ) :
-    SiegPre g 1 ((1 : Rˣ) : R) (𝟙 (Sp R)) where
-  A := B
-  ab := hB
-  P := abelian₂ B M
-  isLB := LB.isLB_linComb hM _ _
-  rig₁ := hasGen_lam_pull hM _ _ (by simp [diff₂])
-  rig₂ := hasGen_lam_pull hM _ _ (by simp [diff₂])
-  symm := lbIso_lam_pull hM _ _ (diff₂_comm _ _)
-  lev := fun _ => 1
-  lev_add := fun _ _ => (_root_.mul_one _).symm
-  lev_tors := fun _ => one_pow _
-  geom := by
-    intro K _ _ x β z _ hz
-    obtain rfl : z = 1 := Units.ext (by simpa using hz)
-    refine ⟨fun a => ⟨fun _ => ⟨a, (one_smul _ _).symm⟩, fun _ => MonObj.comp_one _⟩,
-      fun y hy => ⟨0, (MonObj.comp_one _).trans ((pow_one y).symm.trans hy).symm⟩, fun a b => ?_⟩
-    rw [MonObj.comp_one, one_zpow, show unitOn (1 : Kˣ) = 1 from map_one _]
-    exact EighthPowerFactor.weilIs_one_one hG hB (pull_isLB (LB.isLB_linComb hM _ _) _) _
 
 end GlobalTheory.EighthPowerLocal
 

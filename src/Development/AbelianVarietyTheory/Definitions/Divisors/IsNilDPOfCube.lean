@@ -118,71 +118,11 @@ instance : Mul (Bi R B) := ⟨fun x y ↦ mk (x.1 * y.1) (x.1 • y.2.1 + y.1 �
 
 instance : One (Bi R B) := ⟨mk 1 0 0 0⟩
 
-@[ext] theorem ext' {x y : Bi R B} (h0 : x.1 = y.1) (h1 : x.2.1 = y.2.1) (h2 : x.2.2.1 = y.2.2.1)
     (h3 : x.2.2.2 = y.2.2.2) : x = y := Prod.ext h0 (Prod.ext h1 (Prod.ext h2 h3))
 
 section
 variable (b : B) (α β : Ω[B⁄R]) (η : Om R B 2) (x y : Bi R B) (r : R)
 
-@[simp] theorem mk_0 : (mk b α β η).1 = b := rfl
-
-@[simp] theorem mul_0 : (x * y).1 =
-    x.1 * y.1 := rfl
-
-@[simp] theorem add_0 : (x + y).1 = x.1 + y.1 := rfl
-
-@[simp] theorem sub_0 : (x - y).1 = x.1 - y.1 := rfl
-
-@[simp] theorem smul_0 : (r • x).1 = r • x.1 := rfl
-
-@[simp] theorem zero_0 : (0 : Bi R B).1 = 0 := rfl
-
-@[simp] theorem one_0 : (1 : Bi R B).1 = 1 := rfl
-
-@[simp] theorem mk_1 : (mk b α β η).2.1 = α := rfl
-
-@[simp] theorem mul_1 : (x * y).2.1 =
-    x.1 • y.2.1 + y.1 • x.2.1 := rfl
-
-@[simp] theorem add_1 : (x + y).2.1 = x.2.1 + y.2.1 := rfl
-
-@[simp] theorem sub_1 : (x - y).2.1 = x.2.1 - y.2.1 := rfl
-
-@[simp] theorem smul_1 : (r • x).2.1 = r • x.2.1 := rfl
-
-@[simp] theorem zero_1 : (0 : Bi R B).2.1 = 0 := rfl
-
-@[simp] theorem one_1 : (1 : Bi R B).2.1 = 0 := rfl
-
-@[simp] theorem mk_2 : (mk b α β η).2.2.1 = β := rfl
-
-@[simp] theorem mul_2 : (x * y).2.2.1 =
-    x.1 • y.2.2.1 + y.1 • x.2.2.1 := rfl
-
-@[simp] theorem add_2 : (x + y).2.2.1 = x.2.2.1 + y.2.2.1 := rfl
-
-@[simp] theorem sub_2 : (x - y).2.2.1 = x.2.2.1 - y.2.2.1 := rfl
-
-@[simp] theorem smul_2 : (r • x).2.2.1 = r • x.2.2.1 := rfl
-
-@[simp] theorem zero_2 : (0 : Bi R B).2.2.1 = 0 := rfl
-
-@[simp] theorem one_2 : (1 : Bi R B).2.2.1 = 0 := rfl
-
-@[simp] theorem mk_3 : (mk b α β η).2.2.2 = η := rfl
-
-@[simp] theorem mul_3 : (x * y).2.2.2 =
-    x.1 • y.2.2.2 + y.1 • x.2.2.2 + wedge R B x.2.1 y.2.2.1 + wedge R B y.2.1 x.2.2.1 := rfl
-
-@[simp] theorem add_3 : (x + y).2.2.2 = x.2.2.2 + y.2.2.2 := rfl
-
-@[simp] theorem sub_3 : (x - y).2.2.2 = x.2.2.2 - y.2.2.2 := rfl
-
-@[simp] theorem smul_3 : (r • x).2.2.2 = r • x.2.2.2 := rfl
-
-@[simp] theorem zero_3 : (0 : Bi R B).2.2.2 = 0 := rfl
-
-@[simp] theorem one_3 : (1 : Bi R B).2.2.2 = 0 := rfl
 end
 
 instance : CommRing (Bi R B) :=

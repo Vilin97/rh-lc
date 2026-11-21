@@ -242,6 +242,4 @@ theorem HPsymF_not_le_HU [Nontrivial κ] {n k rS : ℕ} (hn : n = k + 2 * rS + 1
 
 end SymNonVac
 
-example : ¬ HPsymF (ZMod 2) 4 1 1 ≤ HU (ZMod 2) 4 := HPsymF_not_le_HU rfl le_rfl le_rfl
-
 end Formalism.L2.Col

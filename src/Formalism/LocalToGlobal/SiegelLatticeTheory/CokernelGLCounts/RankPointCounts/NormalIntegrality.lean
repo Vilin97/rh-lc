@@ -14,11 +14,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 variable {D : D7}
 
-local notation "FI" => FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E
-
 instance instCM (D : D7) : IsCMField D.host.E := D.host.isCMField_hostE
-
-theorem star_eq_conj (x : D.host.E) : star x = IsCMField.complexConj D.host.E x := rfl
 
 def Jsub (Λ : Submodule (𝓞 D.host.E) (VS D).V) (X : Submodule D.host.E (VS D).V) (y0 : (VS D).V) :
     Submodule (𝓞 D.host.E) D.host.E where

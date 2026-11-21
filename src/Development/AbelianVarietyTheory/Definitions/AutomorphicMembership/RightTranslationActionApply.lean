@@ -127,9 +127,6 @@ structure IsSubLev (Λ Λ' : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) (H 
 theorem isSubLev_top (Λ : LevFam X.E X.K n SG) (Θ : LevQFam X.E X.K n Q) : IsSubLev Λ Λ Θ ⊤ :=
   ⟨fun g => iff_of_true trivial g.2.1.2, fun k => ⟨k.2, rfl⟩⟩
 
-theorem IsSubLev.rat {Λ Λ' : LevFam X.E X.K n SG} {Θ : LevQFam X.E X.K n Q} {H : Subgroup (FrmG Λ Θ)} (h : IsSubLev Λ Λ' Θ H)
-    (γ : UF X.E n) : ((γ, 1) : FrmG Λ Θ) ∈ H := (h.mem _).2 (one_mem _)
-
 variable {Λ Λ' : LevFam X.E X.K n SG} {Θ : LevFam X.E X.K n Q} {H : Subgroup (FrmG Λ (levRedFam Θ))}
   (hH : IsSubLev Λ Λ' (levRedFam Θ) H) (hd : Disjoint SG Q)
 include hH hd
@@ -209,25 +206,12 @@ theorem mem_MtP_iff (F : RowPt Pr R sel mu → Pol ℂ X.Tau (R.N R.m - 1)) : F 
 
 theorem MtP_le_MtC : MtP W Ch sel mu P σ ≤ MtC W Ch sel mu σ := fun F h => ((mem_MtP_iff W Ch sel mu P σ F).1 h).1
 
-def toMtC : (mtildeKGSD W Ch sel mu).EqFun →ₛₗ[σ] MtC W Ch sel mu σ := toCForm σ W.sgTrue _ _
-
 def toMtP : MtildeV W Ch sel mu P →ₛₗ[σ] MtP W Ch sel mu P σ := toCForm σ W.sgTrue _ _
-
-theorem toMtilde_apply (φ : MtildeV W Ch sel mu P) (d : RowPt Pr R sel mu) :
-    (toMtP W Ch sel mu P σ φ).1 d = MvPolynomial.map σ (φ.1 d).1 := rfl
 
 theorem toMtilde_injective : Function.Injective (toMtP W Ch sel mu P σ) := toCForm_injective σ W.sgTrue _ _
 
 def rowKH : Subgroup (FrmG (rowTyG Ch P) (levQX R sel mu)) :=
   (rowTyK Ch).grp.comap ((rowTyG Ch P).grp.subtype.comp ((MonoidHom.fst _ _).comp (MonoidHom.snd _ _)))
-
-theorem isSubLev_rowKH : IsSubLev (rowTyG Ch P) (rowTyK Ch) (levQX R sel mu) (rowKH Ch sel mu P) := by
-  refine ⟨fun _ => Iff.rfl, fun k => ?_⟩
-  have h := fun w => (HPar_split (r_le_X' R) (List.replicate R.m R.t) (P w).H (P w).lam (chiAt Ch w)).sub (k.1 w)
-    ((rowTyK Ch).mem_at k w)
-  refine ⟨fun w _ => (h w).1, ?_⟩
-  rw [LevFam.chr_ev, LevFam.chr_ev]
-  exact Finset.prod_congr rfl fun w _ => (h w).2
 
 end Rows
 
@@ -272,78 +256,18 @@ def perAtH (H : Subgroup (FrmG (rowTyG Ch P) (levQX R sel mu))) :
 def perAt : PerIn (chainAt sel mu cst L (topLev Ch sel mu cst P) u rho rho' cD Th) :=
   perAtH W Ch sel mu cst L P u rho rho' cD Th ⊤
 
-def perAtK : PerIn (chainAt sel mu cst L (topLev Ch sel mu cst P) u rho rho' cD Th) :=
-  perAtH W Ch sel mu cst L P u rho rho' cD Th (rowKH Ch sel mu P)
-
 section Gen
 
 variable (H : Subgroup (FrmG (rowTyG Ch P) (levQX R sel mu))) (σ : X.K →+* ℂ)
 
-theorem mem_perAtH_Mt (F : ∀ b, (stepX Ch sel mu P).D b → Pol ℂ X.Tau (R.N R.m - 1)) :
-    F ∈ (perAtH W Ch sel mu cst L P u rho rho' cD Th H).Mt X.emb σ ↔
-      FrLaw σ W.sgTrue (rowTyG Ch P) (levQX R sel mu) H fun p : XPt Pr R sel mu => F () (trivPt X _ _ _ _ p) := by
-  constructor
-  · intro h p
-    refine ⟨(h () _).1, fun g hg => ?_⟩
-    show F () (trivPt X _ _ _ _ (g • p)) = _
-    rw [← stepX_smul_trivPt]
-    exact (h () (trivPt X _ _ _ _ p)).2 g hg
-  · rintro h ⟨⟩ d
-    obtain ⟨p, rfl⟩ := (trivPt X _ ∅ Pr.vGs (QE sel (mu : Chr X.F X.E X.K))).surjective d
-    refine ⟨(h p).1, fun g hg => ?_⟩
-    exact (congrArg (F ()) (stepX_smul_trivPt Ch sel mu P g p)).trans ((h p).2 g hg)
-
 variable {H} {Λ' : LevFam X.E X.K (R.N R.m - 1) Pr.vGs} (hH : IsSubLev (rowTyG Ch P) Λ' (levQX R sel mu) H)
   (hd : Disjoint Pr.vGs (QE sel (mu : Chr X.F X.E X.K)))
-
-def mtEquivH : cForms ∅ σ W.sgTrue (Λ'.glue (rowTyQ R (mu : Chr X.F X.E X.K) (QE sel (mu : Chr X.F X.E X.K)))).inv ≃ₗ[ℂ]
-    (perAtH W Ch sel mu cst L P u rho rho' cD Th H).Mt X.emb σ :=
-  LinearEquiv.ofBijective
-    { toFun := fun F => ⟨fun _ p => F.1 (toRow sel mu p.1.1),
-        (mem_perAtH_Mt W Ch sel mu cst L P u rho rho' cD Th H σ _).2 ((frLaw_comp_iff σ W.sgTrue hH hd F.1).2 F.2)⟩
-      map_add' := fun _ _ => rfl
-      map_smul' := fun _ _ => rfl }
-    ⟨fun F G h => Subtype.ext (funext fun d => by
-      obtain ⟨p, rfl⟩ := toRow_surjective sel mu d
-      exact congrFun (congrFun (congrArg Subtype.val h) ()) (trivPt X _ _ _ _ p)),
-    fun F => by
-      obtain ⟨G, hG, e⟩ := ((mem_perAtH_Mt W Ch sel mu cst L P u rho rho' cD Th H σ F.1).1 F.2).exists_form σ W.sgTrue hH hd
-      refine ⟨⟨G, hG⟩, Subtype.ext (funext fun _ => funext fun p => (e p.1.1).trans ?_)⟩
-      exact congrArg (F.1 ()) ((trivPt X _ ∅ Pr.vGs (QE sel (mu : Chr X.F X.E X.K))).apply_symm_apply p)⟩
 
 end Gen
 
 variable (σ : X.K →+* ℂ)
 
 variable (hd : Disjoint Pr.vGs (QE sel (mu : Chr X.F X.E X.K)))
-
-def mtEquiv : MtP W Ch sel mu P σ ≃ₗ[ℂ] (perAt W Ch sel mu cst L P u rho rho' cD Th).Mt X.emb σ :=
-  mtEquivH W Ch sel mu cst L P u rho rho' cD Th σ (isSubLev_top _ _) hd
-
-def mtEquivK : MtC W Ch sel mu σ ≃ₗ[ℂ] (perAtK W Ch sel mu cst L P u rho rho' cD Th).Mt X.emb σ :=
-  mtEquivH W Ch sel mu cst L P u rho rho' cD Th σ (isSubLev_rowKH Ch sel mu P) hd
-
-theorem mtEquiv_apply (F : MtP W Ch sel mu P σ) (p : (stepX Ch sel mu P).D ()) :
-    (mtEquiv W Ch sel mu cst L P u rho rho' cD Th σ hd F).1 () p = F.1 (toRow sel mu p.1.1) := rfl
-
-example (g : FrmG (rowTyG Ch P) (levQX R sel mu)) :
-    FrmG.incl _ _ (show TopG Ch sel mu cst P from (perAt W Ch sel mu cst L P u rho rho' cD Th).ext () g) =
-      (extUH (N_m_succ R) g.1, extGH (N_m_succ R) g.2.1.1, extQ X.E (N_m_succ R) _ g.2.2.1) := rfl
-
-example (F : MtP W Ch sel mu P σ) (h : (rowTy Ch sel mu P).grp) (d : RowPt Pr R sel mu) :
-    σ ((rowTy Ch sel mu P).chr h : X.Kˣ) • F.1 (((1 : UF X.E (R.N R.m - 1)), h.1) • d) = F.1 d := by
-  have e := ((mem_cForms σ _ _ _).1 F.2 d).2 1 ⟨h.1, h.2⟩
-  rw [e, LevFam.inv_chr, map_one, smul_smul, ← map_mul, ← Units.val_mul, mul_inv_cancel]
-  simp
-
-example : MtP W Ch sel mu (rKg X Pr R) σ = MtC W Ch sel mu σ := by
-  refine le_antisymm (MtP_le_MtC W Ch sel mu _ σ) fun F h => (mem_MtP_iff W Ch sel mu _ σ F).2 ⟨h, fun a => ?_⟩
-  obtain rfl : a = 1 := Subtype.ext (funext fun w => a.2 w (Set.mem_univ w))
-  simp
-
-example (p : (stepX Ch sel mu P).D ()) :
-    (topLev Ch sel mu cst P).pref u R.m ((perAt W Ch sel mu cst L P u rho rho' cD Th).til () p).1.1 :=
-  (topLev_pref_m Ch sel mu cst P u _).2 ⟨p.1.1, rfl⟩
 
 end Per
 

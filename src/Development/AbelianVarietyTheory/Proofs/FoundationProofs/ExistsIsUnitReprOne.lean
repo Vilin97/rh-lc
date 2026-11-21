@@ -99,17 +99,6 @@ theorem trep_one_apply (g : Gen.GE N) (m : Fin D.R.r → KmodO (X.Ok i k)) (a : 
     Trep i s k 1 g m a = ∑ j, phiK X i k (Tmat i s g a j) • m j := by
   simp [Trep, twRep, matAct, Tmat, Finset.smul_sum, smul_smul]
 
-def bkGen (v : HeightOneSpectrum (𝓞 D.host.E)) (hv : v ∈ placesOver D.host.E (X.l i)) :
-    Set (H1 ((Trep i s k 1).comp (DecV N v).subtype)) :=
-  {x | ∃ (z : Z1 ((Trep i s k 1).comp (DecV N v).subtype))
-      (c : ↥(Loc.GK (bkP.br i v hv).Kw) → Fin D.R.r → ↥(bkP.br i v hv).LL.1)
-      (y : ↥(DecV N v) → Fin D.R.r → FractionRing (X.Ok i k)),
-      c ∈ Formalism.WeaklyAdmissibleFiltrations.finiteCocycles (PDv bkP i v hv) (Gen.repV bkP i v hv (Tgl i s)) ∧
-      (∀ g a, IsImgK bkP i v hv k (c ((bkP.br i v hv).e g) a) (y g a)) ∧
-      (∀ g a, (z : ↥(DecV N v) → Fin D.R.r → Formalism.BasicNotions.KmodO (X.Ok i k)) g a =
-        Submodule.Quotient.mk (y g a)) ∧
-      x = Submodule.Quotient.mk z}
-
 variable [Algebra (X.Ok i k) (X.Ok i k')] [IsScalarTower (X.O i) (X.Ok i k) (X.Ok i k')]
 
 theorem phiK_eq (a : X.O0 i) :

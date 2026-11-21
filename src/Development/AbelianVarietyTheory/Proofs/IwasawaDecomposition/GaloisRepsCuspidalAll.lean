@@ -18,13 +18,4 @@ theorem galoisRepsCusp_of_galEx {D : D7} (h : GalEx D) : GlobalTheory.BlockCompl
 set_option maxHeartbeats 4000000 in
 set_option synthInstance.maxHeartbeats 400000 in
 
-theorem galoisRepsCusp_thirdSt : PrN → ∀ hL : GlobalTheory.Published.LocalLanglandsGL, AllSt fun _ _ _ _ _ _ x => ∀ l : LC hL x,
-    GlobalTheory.CoefDuty.EvO l.a.A l.mt.M l.c.ch l.c.tp.tup fun D' => GlobalTheory.BlockComplement.GaloisRepsCusp D' := by
-  intro hP hL
-  refine StepW.of_all fun K B f T w _ _ _ P x l => ?_
-  refine ⟨fun _ => ∅, fun L _ => ?_⟩
-  let T' : GlobalTheory.RowTie.WDTie (withLoc L).nd (withLoc L).naut := { l.a.A.wdT with }
-  have cg : CGTrue hL (withLoc L) T' := { l.a.cg with }
-  exact galoisRepsCusp_of_galEx (cg.galEx hL hP.what₂.fin hP.what₂.gal)
-
 end GlobalTheory.HeightCounting.Up

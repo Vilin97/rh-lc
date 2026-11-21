@@ -26,17 +26,6 @@ structure SameGeo (D D' : D7) : Prop where
 theorem CopyTw.sameGeo {D D' : D7} {ι : D.what₂.LL →+* D'.what₂.LL} {e : ↥D'.LL0 ≃+* ↥D.LL0} (h : CopyTw D D' ι e) :
     SameGeo D D' := ⟨h.gal.R, h.gal.host, h.sp, h.Tau, h.instTau, h.eTau, h.hc⟩
 
-scoped macro "geo_cases " h:ident D:ident D':ident : tactic =>
-  `(tactic| (
-    obtain ⟨a1, a2, a3, a4, a5, a6, a7⟩ := $h
-    cases $D:ident with | mk R host sp vol volp what₂ eTau hc => ?_
-    cases $D':ident with | mk R' host' sp' vol' volp' rows' eTau' hc' => ?_
-    dsimp only at a1 a2 a3 a4 a5 a6 a7
-    subst a1; subst a2; subst a3
-    cases what₂; cases rows'
-    dsimp only at a4 a5 a6 a7
-    subst a4; subst a5; subst a6; subst a7))
-
 variable {D D' : D7}
 
 structure RecipRel {Ω Ω' : Type} [Field Ω] [Algebra D.host.E Ω] [Field Ω'] [Algebra D'.host.E Ω'] (a : Recip D Ω) (a' : Recip D' Ω') :
@@ -90,14 +79,6 @@ theorem TwistRel.good (h : SameGeo D D') {A : Type} [CommGroup A] {t : Twist D A
   obtain ⟨r1, r2, r3⟩ := r
   cases r1; cases r2; cases r3
   exact ⟨g.1, g.2, g.3, g.4, g.5, g.6⟩
-
-scoped macro "base_cases " r:ident B:ident B':ident : tactic =>
-  `(tactic| (
-    obtain ⟨hr, ⟨_, _, _, _, _, _, _, _, _, _⟩, ⟨_, _, _⟩, ⟨_, _, _⟩, ⟨_, _, _, _, _, _⟩, _, _⟩ := $B
-    obtain ⟨hr', ⟨_, _, _, _, _, _, _, _, _, _⟩, ⟨_, _, _⟩, ⟨_, _, _⟩, ⟨_, _, _, _, _, _⟩, _, _⟩ := $B'
-    obtain ⟨⟨f1, f2, f3, f4, f5, f6, f7, f8, f9, f10⟩, ⟨g1, g2, g3⟩, ⟨d1, d2, d3⟩, ⟨w1, w2, w3, w4, w5, w6⟩, m1, m2⟩ := $r
-    dsimp only at f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 g1 g2 g3 d1 d2 d3 w1 w2 w3 w4 w5 w6 m1 m2
-    subst f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 g1 g2 g3 d1 d2 d3 w1 w2 w3 w4 w5 w6 m1 m2))
 
 theorem BaseRel.good (h : SameGeo D D') {S T : HSp D} {S' T' : HSp D'} (hS : HEq S S') (hT : HEq T T') {B : Base S T}
     {B' : Base S' T'} (r : BaseRel B B') (g : B.Good) : B'.Good := by
@@ -217,41 +198,6 @@ theorem TwistRel.eq {A : Type} [CommGroup A] {t t' : Twist D A} (r : TwistRel t 
   obtain ⟨r1, r2, r3⟩ := r
   cases r1; cases r2; cases r3
   rfl
-
-theorem BaseRel.refl {S T : HSp D} (B : Base S T) : BaseRel B B :=
-  ⟨by constructor <;> rfl, by constructor <;> rfl, by constructor <;> rfl, by constructor <;> rfl, .rfl, .rfl⟩
-
-theorem BaseRel.eq {S T : HSp D} {B B' : Base S T} (r : BaseRel B B') : B = B' := by
-  base_cases r B B'
-  rfl
-
-theorem SetupRel.refl {N : NData D.R D.host D.what₂} {X : NTw D.R D.host D.what₂ D.LL0 N} (ρ : Setup X) : SetupRel ρ ρ where
-  rc := ⟨.rfl, .rfl⟩
-  ch := .rfl
-  bad := .rfl
-  e := .rfl
-  ek := .rfl
-  B i i' hi j j' hj b := by cases hi; cases Fin.ext hj; exact .refl _
-  om := .rfl
-  Cl i i' hi j j' hj b t t' ht := by cases hi; cases Fin.ext hj; cases ht.eq; rfl
-  rep i i' hi j j' hj b t t' ht := by cases hi; cases Fin.ext hj; cases ht.eq; rfl
-  β := .rfl
-  eG i i' hi j j' hj b := by cases hi; cases Fin.ext hj; rfl
-
-theorem SetupRel.eq {N : NData D.R D.host D.what₂} {X : NTw D.R D.host D.what₂ D.LL0 N} {ρ ρ' : Setup X} (r : SetupRel ρ ρ') :
-    ρ = ρ' := by
-  obtain ⟨⟨κ, art⟩, ch, bad, e, ek, B, om, Cl, rep, β, eG⟩ := ρ
-  obtain ⟨⟨κ', art'⟩, ch', bad', e', ek', B', om', Cl', rep', β', eG'⟩ := ρ'
-  obtain ⟨⟨r1, r2⟩, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12⟩ := r
-  dsimp only at r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12
-  subst r1 r2 r3 r4 r5 r6 r8 r11
-  obtain rfl : B = B' := funext fun i => funext fun j => funext fun b => (r7 i i .rfl j j rfl b).eq
-  obtain rfl : Cl = Cl' := funext fun i => funext fun j => funext fun b => funext fun t => r9 i i .rfl j j rfl b t t ⟨.rfl, .rfl, .rfl⟩
-  obtain rfl : rep = rep' := funext fun i => funext fun j => funext fun b => funext fun t =>
-    eq_of_heq (r10 i i .rfl j j rfl b t t ⟨.rfl, .rfl, .rfl⟩)
-  obtain rfl : eG = eG' := funext fun i => funext fun j => funext fun b => eq_of_heq (r12 i i .rfl j j rfl b)
-  congr 1
-  exact Subsingleton.elim _ _
 
 end GlobalTheory.TwInputs.Move
 

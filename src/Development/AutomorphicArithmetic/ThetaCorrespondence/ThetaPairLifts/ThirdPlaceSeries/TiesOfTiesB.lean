@@ -1,4 +1,6 @@
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.TiesOfTiesB
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.HeightFunctions.OntoAlong
+import Development.AbelianVarietyTheory.Proofs.HeightProofs.PathCoreConditionsOfParametersFreeConditionsStatement
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CohomologicalCsdTempered
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.Realised
 

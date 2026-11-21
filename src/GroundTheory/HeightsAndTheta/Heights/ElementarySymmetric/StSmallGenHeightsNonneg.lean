@@ -1,5 +1,9 @@
 import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.Dominated
+import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.FirstPointNeSecondPoint
+import GroundTheory.HeightsAndTheta.Heights.FubiniStudy
+import GroundTheory.HeightsAndTheta.Heights.Regularisation.Statements
+import GroundTheory.HeightsAndTheta.Heights.FubiniStudyCharts
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.ExistsNatMulMemConeRingIntFin
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

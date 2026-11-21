@@ -25,8 +25,6 @@ noncomputable instance : CoeFun (BanachRep G E) (fun _ => G → E →L[ℂ] E) :
 
 variable (π : BanachRep G E)
 
-theorem coe_apply (g : G) : π g = π.toHom g := rfl
-
 theorem continuous_orbit (v : E) : Continuous fun g => π g v := π.continuous_orbit' v
 
 @[simp] theorem map_one : π 1 = 1 := π.toHom.map_one
@@ -38,19 +36,10 @@ theorem map_mul_apply (g g' : G) (v : E) : π (g * g') v = π g (π g' v) := by
 
 @[simp] theorem map_one_apply (v : E) : π 1 v = v := by rw [map_one]; rfl
 
-@[simp] theorem map_inv_apply_map (g : G) (v : E) : π g⁻¹ (π g v) = v := by
-  rw [← map_mul_apply, inv_mul_cancel, map_one_apply]
-
-@[simp] theorem map_apply_map_inv (g : G) (v : E) : π g (π g⁻¹ v) = v := by
-  rw [← map_mul_apply, mul_inv_cancel, map_one_apply]
-
 noncomputable def ofUnitary {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     [CompleteSpace H] (σ : UnitaryRep G H) : BanachRep G H where
   toHom := (unitary (H →L[ℂ] H)).subtype.comp σ.toHom
   continuous_orbit' v := σ.continuous_orbit' v
-
-@[simp] theorem ofUnitary_apply {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
-    [CompleteSpace H] (σ : UnitaryRep G H) (g : G) : ofUnitary σ g = σ g := rfl
 
 end BanachRep
 
@@ -167,8 +156,6 @@ def smoothVectors : Submodule ℂ E where
     show h.IsSmoothVector π (c • v)
     rw [isSmoothVector_iff] at hv ⊢
     rw [expOrbit_smul]; exact hv.const_smul c
-
-theorem mem_smoothVectors {v : E} : v ∈ h.smoothVectors π ↔ h.IsSmoothVector π v := Iff.rfl
 
 theorem expOrbit_map (g : G) (v : E) :
     h.expOrbit π (π g v) = fun Y => π g (h.expOrbit π v (h.Ad g⁻¹ Y)) := by
@@ -349,9 +336,6 @@ noncomputable def smoothOp (g : G) : h.smoothVectors π →ₗ[ℂ] h.smoothVect
   map_add' v w := by ext; simp
   map_smul' c v := by ext; simp
 
-@[simp] theorem coe_smoothOp (g : G) (v : h.smoothVectors π) :
-    ((h.smoothOp π g v : h.smoothVectors π) : E) = π g v := rfl
-
 noncomputable def derivEnd (X : 𝔤) : Module.End ℂ (h.smoothVectors π) where
   toFun v := ⟨h.derivOp π X v, h.isSmoothVector_derivOp π v.2 X⟩
   map_add' v w := by ext; exact h.derivOp_add π v.2 w.2 X
@@ -375,9 +359,6 @@ noncomputable def derivLie : h.lieSubalgebra →ₗ⁅ℝ⁆ Module.End ℂ (h.s
     ext v
     rw [h.ofLie_lie, Ring.lie_def]
     exact h.derivOp_bracket π v.2 _ _
-
-@[simp] theorem derivLie_apply (X : h.lieSubalgebra) : h.derivLie π X = h.derivEnd π (h.ofLie X) :=
-  rfl
 
 noncomputable def uAction :
     UniversalEnvelopingAlgebra ℝ h.lieSubalgebra →ₐ[ℝ] Module.End ℂ (h.smoothVectors π) :=

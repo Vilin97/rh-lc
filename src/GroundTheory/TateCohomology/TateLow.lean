@@ -86,10 +86,6 @@ noncomputable def kerNormMap {X Y : Rep.{u} R G} (f : X ⟶ Y) :
     simp only [LinearMap.mem_ker] at hx ⊢
     rw [show f.hom.toLinearMap x = f.hom x from rfl, ← repHom_norm_apply, hx, map_zero])
 
-@[simp]
-lemma kerNormMap_apply {X Y : Rep.{u} R G} (f : X ⟶ Y) (x : LinearMap.ker X.ρ.norm) :
-    (kerNormMap f x : Y) = f.hom x := rfl
-
 variable (R G) in
 
 noncomputable def tateNegOneFunctor : Rep.{u} R G ⥤ ModuleCat.{u} R where
@@ -102,25 +98,6 @@ noncomputable def tateNegOneFunctor : Rep.{u} R G ⥤ ModuleCat.{u} R where
   map_comp f g := by
     ext x
     rfl
-
-@[simp]
-lemma tateZeroFunctor_obj (M : Rep.{u} R G) :
-    (tateZeroFunctor R G).obj M = ModuleCat.of R (M.ρ.invariants ⧸ normRangeInvariants M) := rfl
-
-@[simp]
-lemma tateZeroFunctor_map_mk {X Y : Rep.{u} R G} (f : X ⟶ Y) (x : X.ρ.invariants) :
-    ((tateZeroFunctor R G).map f).hom (Submodule.Quotient.mk x) =
-      Submodule.Quotient.mk (((Rep.invariantsFunctor R G).map f).hom x) := rfl
-
-@[simp]
-lemma tateNegOneFunctor_obj (M : Rep.{u} R G) :
-    (tateNegOneFunctor R G).obj M =
-      ModuleCat.of R (LinearMap.ker M.ρ.norm ⧸ augmentationKerNorm M) := rfl
-
-@[simp]
-lemma tateNegOneFunctor_map_mk {X Y : Rep.{u} R G} (f : X ⟶ Y) (x : LinearMap.ker X.ρ.norm) :
-    ((tateNegOneFunctor R G).map f).hom (Submodule.Quotient.mk x) =
-      Submodule.Quotient.mk (kerNormMap f x) := rfl
 
 end Tate
 
@@ -341,15 +318,6 @@ noncomputable def tateCohomologyNegOneIso :
         (by norm_num) (by norm_num)) ≪≫
     NatIso.ofComponents (fun M => (tateNegOneData M).homologyIso)
       (fun {X Y} f => (tateNegOneMapData f).homologyMap_comm)
-
-lemma tateCohomologyNegOneIso_hom_homologyπ (M : Rep.{u} R G) (z : (tateComplex M).cycles (-1))
-    (x : LinearMap.ker M.ρ.norm)
-    (hx : (chainsIso₀ M).inv.hom x = ((tateComplex M).iCycles (-1)).hom z) :
-    ((tateCohomologyNegOneIso R G).app M).hom.hom (((tateComplex M).homologyπ (-1)).hom z) =
-      Submodule.Quotient.mk x :=
-  homologyFunctorIso'_moduleLeftHomologyData_apply (tateComplex M) (-2) (-1) 0 (by norm_num)
-    (by norm_num) (LinearMap.ker M.ρ.norm) (tateNegOneι M) (tateNegOneι_injective M)
-    (tateNegOneι_range M) (augmentationKerNorm M) (tateNegOne_mem_iff M) z x hx
 
 theorem isZero_tateCohomology_neg_one_iff (M : Rep.{u} R G) :
     IsZero (tateCohomology M (-1)) ↔ LinearMap.ker M.ρ.norm = Coinvariants.ker M.ρ := by

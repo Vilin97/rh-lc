@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.PairsModuloNormFixedQuadruple
+import Formalism.SharpRestriction.CuspSpanNormBounds.MassAndBranchingHypotheses
+import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.FamilyPacketOfEquivalentStatement
+import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.MinkowskiDividesFactorialOfBound
+import Formalism.FlagUnipotentLattices.CardSubgroupsOfIndexLe
+import Formalism.SharpRestriction.CuspSpanNormBounds.AutLzFiniteOfLoop
 
 noncomputable section
 
@@ -171,9 +175,6 @@ theorem c3eqv_NLam_symm {n : S.V ≃ₗ[E] S.V} (hn : n ∈ NLam Λ F) : n.symm 
       rw [LinearEquiv.apply_symm_apply]; abel
     rw [e]
     exact Submodule.neg_mem _ (hn2 _ hy)
-
-def isUnitriangularIntegral {N : ℕ} (ξ : Matrix (Fin N) (Fin N) (𝓞 E)) : Prop :=
-  (∀ a b, b < a → ξ a b = 0) ∧ ∀ a, ξ a a = 1
 
 end Gen
 

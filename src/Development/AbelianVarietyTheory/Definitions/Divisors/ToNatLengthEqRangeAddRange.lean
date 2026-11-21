@@ -460,11 +460,6 @@ theorem topForm_eq_add {χ : G → ℤ} (h : DiffVanish (d + 1) χ) (h₁ : Diff
       multiDiff_translate, h₁.multiDiff_eq_of_le_card hn.ge g _ 0, Int.cast_add]
   · simp
 
-example : topForm (diffVanish_pow_int 2).1 (∏ _i : Fin 2, symOf 1) = 2 ∧
-    topForm (diffVanish_pow_int 2).1 (∏ _i : Fin 1, symOf 1) = 0 := by
-  rw [topForm_prod, topForm_prod, multiDiff_pow]
-  simp
-
 end Sym
 
 section SmallPic
@@ -518,16 +513,6 @@ def c1 (L : LB X) (hL : L.IsLB) : PicSym X := symOf (smallCls L hL)
 
 def firstChernPic : Pic X →+ PicSym X := symOf.comp (smallPicEquiv X).symm.toAddMonoidHom
 
-@[simp] theorem firstChernPic_class (L : LB X) (hL : L.IsLB) : firstChernPic (cls L hL) = c1 L hL := rfl
-
-theorem firstChernTensor {L M : LB X} (hL : L.IsLB) (hM : M.IsLB) (h : (tens L M).IsLB) :
-    c1 (tens L M) h = c1 L hL + c1 M hM := map_add firstChernPic (cls L hL) (cls M hM)
-
-theorem firstChern_trivial (h : (LB.triv X).IsLB) : c1 (LB.triv X) h = 0 := map_zero firstChernPic
-
-theorem firstChernCongr {L M : LB X} (hL : L.IsLB) (hM : M.IsLB) (h : LBIso L M) : c1 L hL = c1 M hM :=
-  congrArg symOf ((smallCls_eq_iff hL hM).2 h)
-
 def picSymPull (f : Y ⟶ X) : PicSym X →ₐ[ℚ] PicSym Y := symMap (smallPull f)
 
 theorem pullback_firstChern (f : Y ⟶ X) {L : LB X} (hL : L.IsLB) (h : (L.pull f).IsLB) :
@@ -558,15 +543,6 @@ theorem picForm_eq_add {χ : Pic X → ℤ} (h : DiffVanish (d + 1) χ) (h₁ : 
     (h₂ : DiffVanish (d + 1) ψ) (a : Pic X) (e : ∀ x, χ x = φ (a + x) + ψ x) :
     picForm h = picForm h₁ + picForm h₂ :=
   topForm_eq_add _ _ _ ((smallPicEquiv X).symm a) fun x => by simpa using e _
-
-theorem picForm_comap (f : Y ⟶ X) {χ : Pic Y → ℤ} (h : DiffVanish (d + 1) χ) (x : PicSym X) :
-    picForm (h.comap (pull f)) x = picForm h (picSymPull f x) := by
-  refine LinearMap.congr_fun (picSym_linearMap_ext
-    (l' := picForm h ∘ₗ (picSymPull f).toLinearMap) fun n g => ?_) x
-  simp only [LinearMap.comp_apply, AlgHom.toLinearMap_apply, map_prod, picSymPull_c1Pic,
-    picForm_prod]
-  rw [multiDiff_comap, Function.comp_apply, map_zero]
-  rfl
 
 theorem picForm_eq_zero (h : DiffVanish (d + 1) φ) {n : ℕ} (hn : n ≠ d) {x : PicSym X}
     (hx : x ∈ symDeg (SmallPic X) n) : picForm h x = 0 := topForm_eq_zero _ hn hx

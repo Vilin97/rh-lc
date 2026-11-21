@@ -16,16 +16,6 @@ def reImCoord (g : ℕ) : (Fin g → ℂ) ≃ₗ[ℝ] (Fin g ⊕ Fin g → ℝ) 
   left_inv z := rfl
   right_inv p := by ext (i | i) <;> rfl
 
-@[simp] theorem reImCoord_inl {g : ℕ} (z : Fin g → ℂ) (i : Fin g) : reImCoord g z (Sum.inl i) = (z i).re := rfl
-
-@[simp] theorem reImCoord_inr {g : ℕ} (z : Fin g → ℂ) (i : Fin g) : reImCoord g z (Sum.inr i) = (z i).im := rfl
-
-@[simp] theorem reImCoord_symm_re {g : ℕ} (p : Fin g ⊕ Fin g → ℝ) (i : Fin g) :
-    ((reImCoord g).symm p i).re = p (Sum.inl i) := rfl
-
-@[simp] theorem reImCoord_symm_im {g : ℕ} (p : Fin g ⊕ Fin g → ℝ) (i : Fin g) :
-    ((reImCoord g).symm p i).im = p (Sum.inr i) := rfl
-
 theorem volume_fundamentalDomain_reImCoord (g : ℕ) :
     volume (ZSpan.fundamentalDomain (Module.Basis.ofEquivFun (reImCoord g))) = 1 := by
   have h : ZSpan.fundamentalDomain (Module.Basis.ofEquivFun (reImCoord g)) =

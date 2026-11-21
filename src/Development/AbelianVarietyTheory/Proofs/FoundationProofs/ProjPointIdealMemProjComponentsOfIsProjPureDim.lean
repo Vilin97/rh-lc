@@ -518,12 +518,6 @@ theorem cutsProperly_bot {f : MvPolynomial ι k} (hf : f ≠ 0) :
     sup_bot_eq, Ideal.minimalPrimes_eq_subsingleton_self, Set.mem_singleton_iff] at h
   simpa [h] using hf
 
-example {f : MvPolynomial (Fin 2) k} {d : ℕ} (hf : f.IsHomogeneous d) (h0 : f ≠ 0) :
-    {y : Projectivization k (Fin 2 → k) | MvPolynomial.eval y.rep f = 0}.ncard ≤ d := by
-  have := ((bezout_bound_ideal (Ideal.IsHomogeneous.bot _)).2.1 1 ![d] ![f] (isProjPureDim_bot 1)
-    (by simpa using hf) (cutsProperly_bot h0)).2
-  simpa [projSetDegree_bot, projPoints] using this
-
 end Space
 
 end GlobalTheory

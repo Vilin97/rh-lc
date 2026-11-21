@@ -13,10 +13,6 @@ section Cp
 
 variable {p : ℕ} [hp : Fact p.Prime]
 
-local notation "𝒪" => normInteger ℂ_[p]
-local notation "𝒪♭" => PreTilt (normInteger ℂ_[p]) p
-local notation "φi" => RingEquiv.symm (_root_.frobeniusEquiv (PreTilt (normInteger ℂ_[p]) p) p)
-
 local instance instNeZeroPowPrime (n : ℕ) : NeZero (p ^ n) := ⟨pow_ne_zero n hp.out.ne_zero⟩
 
 theorem tilt_ext_untilt {x y : 𝒪♭}
@@ -86,18 +82,6 @@ theorem epsPow_add {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) (a b : ℤ_[p]) 
     untilt_iterate_epsPow, ← pow_add, map_add]
   refine pow_eq_pow_of_mod_eq (untilt_iterate_pow_eq_one hε n) ?_
   rw [ZMod.val_add, Nat.mod_mod]
-
-theorem epsPow_natCast {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) (m : ℕ) : epsPow hε (m : ℤ_[p]) = ε ^ m := by
-  refine tilt_ext_untilt fun n => ?_
-  rw [untilt_iterate_epsPow, iterate_frobSymm_pow, map_pow, map_natCast]
-  refine pow_eq_pow_of_mod_eq (untilt_iterate_pow_eq_one hε n) ?_
-  rw [ZMod.val_natCast, Nat.mod_mod]
-
-theorem epsPow_one {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) : epsPow hε 1 = ε := by
-  simpa using epsPow_natCast hε 1
-
-theorem epsPow_zero {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) : epsPow hε 0 = 1 := by
-  simpa using epsPow_natCast hε 0
 
 theorem isPrimitiveRoot_untilt_iterate {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
     (hζ : PreTilt.untilt (φi ε) ≠ 1) (n : ℕ) :
@@ -248,10 +232,6 @@ theorem kummerC_mul {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) (hζ : PreTilt.
     (σ τ : Gal(PadicAlgCl p/K)) :
     kummerC hε hζ (σ * τ) = kummerC hε hζ σ + (cycloChar K σ : ℤ_[p]) * kummerC hε hζ τ :=
   kummerCocycle_mul hε hζ pFlat_ne_zero gal_smul_coe_untilt_pFlat σ τ
-
-local notation "𝕎𝒪♭" => WittVector p (PreTilt (normInteger ℂ_[p]) p)
-local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
-local notation "𝔪" => maximalIdeal (BDeRhamPlus (normInteger ℂ_[p]) p)
 
 theorem fontaineT_congr {η η' : 𝒪♭} (h : η = η') (hη : PreTilt.untilt η = 1)
     (hη' : PreTilt.untilt η' = 1) : fontaineT η hη = fontaineT η' hη' := by

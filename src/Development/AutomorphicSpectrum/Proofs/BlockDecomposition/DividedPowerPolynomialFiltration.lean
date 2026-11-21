@@ -98,9 +98,6 @@ def coefIdeal (δ : DividedPowers J) (Q : PDPoly B) (r : ℕ) : Ideal Q.P where
     intro c x hx
     simpa using mul_mem_coefFil δ Q (mem_coefFil_zero δ Q c) hx
 
-theorem mem_coefIdeal (δ : DividedPowers J) (Q : PDPoly B) (r : ℕ) (z : Q.P) :
-    z ∈ coefIdeal δ Q r ↔ z ∈ coefFil δ Q r := Iff.rfl
-
 theorem algebraMap_mem_coefFil (δ : DividedPowers J) (Q : PDPoly B) {r : ℕ} {b : B}
     (hb : b ∈ GlobalTheory.PDA.fil δ r) : algebraMap B Q.P b ∈ coefFil δ Q r := by
   have : algebraMap B Q.P b = b • Q.e 0 := by

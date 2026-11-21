@@ -17,8 +17,6 @@ noncomputable def lineDerivList : List E → (E → V) → E → V
 
 variable {𝕜}
 
-@[simp] theorem lineDerivList_nil (F : E → V) : lineDerivList 𝕜 [] F = F := rfl
-
 theorem lineDerivList_cons (v : E) (l : List E) (F : E → V) :
     lineDerivList 𝕜 (v :: l) F = fun z => lineDeriv 𝕜 (lineDerivList 𝕜 l F) z v := rfl
 

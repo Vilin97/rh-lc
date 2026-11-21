@@ -26,9 +26,6 @@ abbrev restr {j : Y ⟶ X} (hj : Topology.IsOpenEmbedding j) : AbSheaf X ⥤ AbS
   haveI := hj.functor_isContinuous
   hj.functor.sheafPushforwardContinuous AddCommGrpCat.{u} _ _
 
-lemma restr_eq {j : Y ⟶ X} (hj : Topology.IsOpenEmbedding j) :
-    restr hj = hj.sheafPullback AddCommGrpCat.{u} := rfl
-
 instance (f : Y ⟶ X) : (push f).IsRightAdjoint :=
   inferInstanceAs (TopCat.Sheaf.pushforward AddCommGrpCat.{u} f).IsRightAdjoint
 
@@ -150,18 +147,6 @@ theorem pull_restrUnit_bijective (F : AbSheaf X) (n : ℕ) {V : Opens X} {W : Op
       (subsingleton_H'_of_injective _ n V)
       (subsingleton_H'_of_isFlasque _ (hF := isFlasque_restr hj _ hI) n W)
 
-def restrEquiv (F : AbSheaf X) (n : ℕ) (V : Opens Y) :
-    Sheaf.H'.{w} F n (hj.functor.obj V) ≃+ Sheaf.H'.{w'} ((restr hj).obj F) n V :=
-  AddEquiv.ofBijective
-    (pull.{w, w'} j ((restrUnit hj).app F) n (hj.isOpenMap.adjunction.unit.app V))
-    (pull_restrUnit_bijective hj F n _ le_rfl)
-
-theorem restrEquiv_δ {S : ShortComplex (AbSheaf X)} (hS : S.ShortExact) (n : ℕ) (V : Opens Y)
-    (x : Sheaf.H'.{w} S.X₃ n (hj.functor.obj V)) :
-    restrEquiv.{w, w'} hj S.X₁ (n + 1) V (δ hS n _ x) =
-      δ (shortExact_map_restr hj hS) n V (restrEquiv.{w, w'} hj S.X₃ n V x) :=
-  sitePull_δ _ hS (shortExact_map_restr hj hS) (S.mapNatTrans (restrUnit hj)) n _ x
-
 end Open
 
 section Push
@@ -178,18 +163,6 @@ theorem pushComparison_map {G G' : AbSheaf Y} (t : G ⟶ G') (n : ℕ) (V : Open
       map t n _ (pushComparison.{w, w'} f G n V x) :=
   (sitePull_map _ _ _ n _ x).trans ((congrArg (pull f · n _ x)
     ((Category.comp_id _).trans (Category.id_comp _).symm)).trans (map_sitePull _ _ _ n _ x).symm)
-
-theorem pushComparison_δ {S : ShortComplex (AbSheaf Y)} (hS : S.ShortExact)
-    (hS' : (S.map (push f)).ShortExact) (n : ℕ) (V : Opens X)
-    (x : Sheaf.H'.{w} ((push f).obj S.X₃) n V) :
-    pushComparison.{w, w'} f S.X₁ (n + 1) V (δ hS' n V x) =
-      δ hS n _ (pushComparison.{w, w'} f S.X₃ n V x) :=
-  sitePull_δ _ hS' hS (𝟙 _) n _ x
-
-theorem pull_eq {F : AbSheaf X} {G : AbSheaf Y} (φ : F ⟶ (push f).obj G) (n : ℕ)
-    {V : Opens X} {W : Opens Y} (i : W ⟶ (Opens.map f).obj V) (x : Sheaf.H'.{w} F n V) :
-    pull.{w, w'} f φ n i x = res G n i (pushComparison.{w, w'} f G n V (map φ n V x)) := by
-  rw [sitePull_map, res_sitePull, Category.comp_id, Category.comp_id]
 
 theorem pushComparison_bijective_zero (G : AbSheaf Y) (V : Opens X) :
     Function.Bijective (pushComparison.{w, w'} f G 0 V) := by
@@ -246,9 +219,6 @@ theorem HigherDirectImagesVanish.epi {S : ShortComplex (AbSheaf Y)} (hS : S.Shor
   rw [AddEquiv.symm_apply_eq, equivZero_res, AddEquiv.apply_symm_apply]
 
 omit [HasExt.{w} (AbSheaf X)] in
-theorem HigherDirectImagesVanish.shortExact {S : ShortComplex (AbSheaf Y)} (hS : S.ShortExact)
-    (h : HigherDirectImagesVanish.{w'} f S.X₁) : (S.map (push f)).ShortExact :=
-  shortExact_map_push f hS (h.epi hS)
 
 omit [HasExt.{w} (AbSheaf X)] in
 
@@ -271,24 +241,6 @@ theorem pushComparison_bijective_of_isClosedEmbedding (hf : Topology.IsClosedEmb
     Function.Bijective (pushComparison.{w, w'} f G n V) :=
   pushComparison_bijective_of_class f (fun _ ↦ True)
     (fun _ hS _ _ ↦ ⟨(shortExact_map_push_of_isClosedEmbedding hf hS).epi_g, trivial⟩) G trivial n V
-
-def pushEquiv {G : AbSheaf Y} (h : HigherDirectImagesVanish.{w'} f G) (n : ℕ) (V : Opens X) :
-    Sheaf.H'.{w} ((push f).obj G) n V ≃+ Sheaf.H'.{w'} G n ((Opens.map f).obj V) :=
-  AddEquiv.ofBijective _ (pushComparison_bijective.{w, w'} h n V)
-
-@[simp]
-lemma pushEquiv_apply {G : AbSheaf Y} (h : HigherDirectImagesVanish.{w'} f G) (n : ℕ)
-    (V : Opens X) (x : Sheaf.H'.{w} ((push f).obj G) n V) :
-    pushEquiv.{w, w'} h n V x = pushComparison.{w, w'} f G n V x := rfl
-
-def closedEquiv (hf : Topology.IsClosedEmbedding f) (G : AbSheaf Y) (n : ℕ) (V : Opens X) :
-    Sheaf.H'.{w} ((push f).obj G) n V ≃+ Sheaf.H'.{w'} G n ((Opens.map f).obj V) :=
-  AddEquiv.ofBijective _ (pushComparison_bijective_of_isClosedEmbedding.{w, w'} hf G n V)
-
-@[simp]
-lemma closedEquiv_apply (hf : Topology.IsClosedEmbedding f) (G : AbSheaf Y) (n : ℕ)
-    (V : Opens X) (x : Sheaf.H'.{w} ((push f).obj G) n V) :
-    closedEquiv.{w, w'} hf G n V x = pushComparison.{w, w'} f G n V x := rfl
 
 end Push
 
@@ -368,16 +320,6 @@ section Scheme
 open AlgebraicGeometry SheafLES
 
 variable {X Y : Scheme.{u}}
-
-def modulesRestrEquiv (j : Y ⟶ X) [IsOpenImmersion j] (M : X.Modules) (n : ℕ) (V : Y.Opens) :
-    Sheaf.H'.{u} ((toAbSheaf X).obj M) n (j ''ᵁ V) ≃+
-      Sheaf.H'.{u} ((toAbSheaf Y).obj (M.restrict j)) n V :=
-  restrEquiv.{u, u} j.isOpenEmbedding ((toAbSheaf X).obj M) n V
-
-def modulesClosedEquiv (f : Y ⟶ X) [IsClosedImmersion f] (M : Y.Modules) (n : ℕ) (V : X.Opens) :
-    Sheaf.H'.{u} ((toAbSheaf X).obj ((Scheme.Modules.pushforward f).obj M)) n V ≃+
-      Sheaf.H'.{u} ((toAbSheaf Y).obj M) n (f ⁻¹ᵁ V) :=
-  closedEquiv.{u, u} f.isClosedEmbedding ((toAbSheaf Y).obj M) n V
 
 end Scheme
 

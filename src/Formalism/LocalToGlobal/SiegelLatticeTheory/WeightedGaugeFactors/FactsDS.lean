@@ -30,12 +30,6 @@ instance factExists : Fact DiscreteSeriesWeylDimension.DiscreteSeriesExistsG := 
 
 instance factMultOne : Fact DiscreteSeriesWeylDimension.LowKMultOneG := ⟨ReciprocityTheory.ChartRestriction.DS.final_lowKMultOneG⟩
 
-instance factUniq : Fact BridgeLemma₂.deg_DSUniqG := ⟨ReciprocityTheory.ChartRestriction.DS.final_deg_DSUniqG⟩
-
-instance factDiscreteSeriesUnique : Fact LeviCoordinates.DiscreteSeriesUniqueBesselGapped := ⟨ReciprocityTheory.ChartRestriction.DS.discrete_series_unique_large_gap⟩
-
-instance factHCMult : Fact BridgeCPX.HCMultDSG := ⟨ReciprocityTheory.ChartRestriction.DS.final_HCMultDSG⟩
-
 instance factHighestWeight : Fact DiscreteSeriesWeylDimension.HighestWeightExists :=
   ⟨fun k u h => ReciprocityTheory.ChartRestriction.DS.HW.highest_weight_exists k u h⟩
 

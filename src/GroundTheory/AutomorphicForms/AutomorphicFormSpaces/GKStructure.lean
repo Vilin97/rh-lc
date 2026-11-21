@@ -60,9 +60,6 @@ theorem smoothKZ_le_archSmooth : smoothKZ K n ≤ archSmooth K n := fun _ hφ =>
 
 def toArchSmooth : smoothKZ K n →ₗ[ℂ] archSmooth K n := Submodule.inclusion smoothKZ_le_archSmooth
 
-@[simp] theorem coe_toArchSmooth (φ : smoothKZ K n) :
-    ((toArchSmooth φ : archSmooth K n) : AdelicGLn.AdelicGL K n → ℂ) = φ := rfl
-
 variable (K n) in
 
 def uActionKZ : UEnv K n →ₐ[ℝ] Module.End ℂ (smoothKZ K n) where
@@ -92,15 +89,6 @@ def uActionKZ : UEnv K n →ₐ[ℝ] Module.End ℂ (smoothKZ K n) where
 
 variable (K n) in
 
-def finRepKZ : Representation ℂ (AdelicGLn.FiniteAdelicGL K n) (smoothKZ K n) where
-  toFun h := (rightTranslateL (finEmb K n h)).restrict fun _ hφ => hφ.rightTranslate_finEmb h
-  map_one' := LinearMap.ext fun φ => Subtype.ext (funext fun g => by
-    simp [GroundTheory.Automorphic.rightTranslate])
-  map_mul' h₁ h₂ := LinearMap.ext fun φ => Subtype.ext (funext fun g => by
-    show (φ : AdelicGLn.AdelicGL K n → ℂ) (g * finEmb K n (h₁ * h₂)) =
-      (φ : AdelicGLn.AdelicGL K n → ℂ) (g * finEmb K n h₁ * finEmb K n h₂)
-    rw [map_mul, mul_assoc])
-
 variable (K n) in
 
 def archCompactRepKZ : Representation ℂ (archCompact K n) (smoothKZ K n) where
@@ -112,20 +100,6 @@ def archCompactRepKZ : Representation ℂ (archCompact K n) (smoothKZ K n) where
       (φ : AdelicGLn.AdelicGL K n → ℂ) (g * infEmb K n k₁ * infEmb K n k₂)
     rw [Subgroup.coe_mul, map_mul, mul_assoc])
 
-@[simp] theorem coe_finRepKZ (h : AdelicGLn.FiniteAdelicGL K n) (φ : smoothKZ K n) :
-    ((finRepKZ K n h φ : smoothKZ K n) : AdelicGLn.AdelicGL K n → ℂ) =
-      rightTranslate (finEmb K n h) (φ : AdelicGLn.AdelicGL K n → ℂ) := rfl
-
-@[simp] theorem coe_archCompactRepKZ (k : archCompact K n) (φ : smoothKZ K n) :
-    ((archCompactRepKZ K n k φ : smoothKZ K n) : AdelicGLn.AdelicGL K n → ℂ) =
-      rightTranslate (infEmb K n k) (φ : AdelicGLn.AdelicGL K n → ℂ) := rfl
-
-theorem uActionKZ_finRepKZ (u : UEnv K n) (h : AdelicGLn.FiniteAdelicGL K n) (φ : smoothKZ K n) :
-    uActionKZ K n u (finRepKZ K n h φ) = finRepKZ K n h (uActionKZ K n u φ) := by
-  apply Subtype.ext
-  have := congrArg Subtype.val (uAction_rtFin u h (toArchSmooth φ))
-  exact this
-
 theorem archCompactRepKZ_uActionKZ (k : archCompact K n) (u : UEnv K n) (φ : smoothKZ K n) :
     archCompactRepKZ K n k (uActionKZ K n u φ) =
       uActionKZ K n ((isExpLieAlgebra K n).AdU (k : archGroup K n) u) (archCompactRepKZ K n k φ) := by
@@ -134,14 +108,6 @@ theorem archCompactRepKZ_uActionKZ (k : archCompact K n) (u : UEnv K n) (φ : sm
     (k : archGroup K n) (toArchSmooth φ))
   rw [IsExpLieAlgebra.AdU_inv_apply] at this
   exact this.symm
-
-theorem archCompactRepKZ_finRepKZ (k : archCompact K n) (h : AdelicGLn.FiniteAdelicGL K n)
-    (φ : smoothKZ K n) :
-    archCompactRepKZ K n k (finRepKZ K n h φ) = finRepKZ K n h (archCompactRepKZ K n k φ) := by
-  apply Subtype.ext
-  funext g
-  simp only [coe_finRepKZ, coe_archCompactRepKZ, GroundTheory.Automorphic.rightTranslate, mul_assoc,
-    infEmb_mul_finEmb_comm]
 
 theorem exists_linearMap_eval_eq (W : Submodule ℂ (smoothKZ K n)) [FiniteDimensional ℂ W]
     (φ : Module.Dual ℂ (smoothKZ K n)) :
@@ -276,22 +242,6 @@ def gkModule : (isExpLieAlgebra K n).GKModule (archCompact K n) (smoothKZ K n) w
   hasContinuousCoeff := hasContinuousCoeff_archCompactRepKZ
   hasDerivAt_coeff X hX φ v := hasDerivAt_archCompactRepKZ X hX φ v
   map_ρ k X v := archCompactRepKZ_uActionKZ_ι k X v
-
-@[simp] theorem gkModule_ρ_apply (X : (isExpLieAlgebra K n).lieSubalgebra) (v : smoothKZ K n) :
-    (gkModule K n).ρ X v = uActionKZ K n (UniversalEnvelopingAlgebra.ι ℝ X) v := rfl
-
-@[simp] theorem gkModule_σ_apply (k : archCompact K n) (v : smoothKZ K n) :
-    (gkModule K n).σ k v = archCompactRepKZ K n k v := rfl
-
-theorem gkModule_ρ_finRepKZ (X : (isExpLieAlgebra K n).lieSubalgebra)
-    (h : AdelicGLn.FiniteAdelicGL K n) (v : smoothKZ K n) :
-    (gkModule K n).ρ X (finRepKZ K n h v) = finRepKZ K n h ((gkModule K n).ρ X v) :=
-  uActionKZ_finRepKZ _ h v
-
-theorem gkModule_σ_finRepKZ (k : archCompact K n) (h : AdelicGLn.FiniteAdelicGL K n)
-    (v : smoothKZ K n) :
-    (gkModule K n).σ k (finRepKZ K n h v) = finRepKZ K n h ((gkModule K n).σ k v) :=
-  archCompactRepKZ_finRepKZ k h v
 
 end GK
 

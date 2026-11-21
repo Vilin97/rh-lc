@@ -79,15 +79,6 @@ theorem toLocal_smul (a : 𝓞 K) (x : V) :
     ← algebraMap_smul (v.adicCompletion K) (algebraMap (𝓞 K) K a) (toLocal v x)]
   congr 1
 
-def latticeOfLocal
-    (N : ∀ v : HeightOneSpectrum (𝓞 K),
-      Submodule (v.adicCompletionIntegers K) (v.adicCompletion K ⊗[K] V)) :
-    Submodule (𝓞 K) V where
-  carrier := {x | ∀ v, toLocal v x ∈ N v}
-  add_mem' hx hy v := by rw [map_add]; exact (N v).add_mem (hx v) (hy v)
-  zero_mem' v := by rw [map_zero]; exact (N v).zero_mem
-  smul_mem' a x hx v := by rw [toLocal_smul]; exact (N v).smul_mem _ (hx v)
-
 end Local
 
 end

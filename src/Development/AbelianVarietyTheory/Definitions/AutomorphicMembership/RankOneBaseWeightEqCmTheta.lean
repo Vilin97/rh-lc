@@ -72,15 +72,6 @@ theorem complexConj_eq_conj (D : D7) (x : D.host.E) : IsCMField.complexConj D.ho
   apply D.host.φ₀.injective
   rw [NumberField.IsCMField.complexEmbedding_complexConj, Formalism.HC.HostAx.conjE_apply]
 
-theorem rankOne_base_weight_eq_cmTheta (A : Amb D) : A.H.w0 = w0 D := by
-  apply RingOfIntegers.ext
-  have h := congrArg (algebraMap (𝓞 D.host.E) D.host.E) A.H.two_weight_eq_one_add_root
-  rw [map_mul, map_add, map_one, map_ofNat] at h
-  have h₂ : algebraMap (𝓞 D.host.E) D.host.E A.H.rt = D.host.sqrtMinusD := A.rt_eq
-  change algebraMap (𝓞 D.host.E) D.host.E A.H.w0 = (1 + D.host.sqrtMinusD) / 2
-  rw [← h₂, ← h]
-  ring
-
 namespace At
 
 variable (ct : At S κ p) {Z : ct.Mdl} (y : ct.Pt Z)
@@ -102,15 +93,6 @@ def mulConst (a b : ct.Ylat y) : ((ct.fld y).C)ˣ :=
     ⟨(ct.evidence y).t a b, (ct.evidence y).isVal a b⟩
 
 def abDim : ℕ := (ct.dat y).U.D.toPre.P.g
-
-theorem smooth_abDim : SmoothOfRelativeDimension (ct.abDim y) (ct.dat y).U.D.toPre.P.A.hom :=
-  (ct.dat y).U.D.toPre.P.smoothDim
-
-theorem beLin_apply (a b : ct.Ylat y) : ct.beLin y a b = (ct.dat y).beta a b := rfl
-
-theorem isTauVal_tauVal (a b : ct.Ylat y) :
-    Per.IsTauVal (ct.dat y).f ((ct.evidence y).e a b) ((ct.tauVal y a (ct.phi y b) : ((ct.fld y).C)ˣ) : (ct.fld y).C) :=
-  (ct.evidence y).isVal a b
 
 theorem isTauVal_mulConst (a b : ct.Ylat y) :
     Per.IsTauVal (ct.dat y).f ((ct.evidence y).e a b) ((ct.mulConst y a b : ((ct.fld y).C)ˣ) : (ct.fld y).C) :=
@@ -174,26 +156,6 @@ theorem motTrue_psiV_half (a : ct.Ylat y) : (motTrue ct).psiV y a = (motTrue ct)
   rw [sub_smul, one_smul, map_sub, (motTrue ct).be_symm y (w0 D • a)] at h
   rw [motTrue_psiV_eq_be]
   linarith
-
-theorem motTrue_psiV_eq_vPsiAt (a : ct.Ylat y) :
-    (motTrue ct).psiV y a = vPsiAt (ct.dat y).U.D.toPre (DatAtCheck.fC (ct.dat y)) p a := by
-  have h := (BetaAdd.main _ (ct.dat y).U.D _ (DatAtCheck.fC (ct.dat y)) p (ct.dat y).normal (DatAtCheck.norm_le _)
-    (DatAtCheck.coord_ne_zero _)).2 a
-  rw [motTrue_psiV_half]
-  exact (congrArg (· / 2) h).trans (mul_div_cancel_left₀ _ two_ne_zero)
-
-example (χ : ct.chX y) : (motTrue ct).tau y 0 χ = 1 := by
-  have h := (motTrue ct).tau_add_left y 0 0 χ
-  rw [add_zero] at h
-  exact left_eq_mul.1 h
-
-example (a : ct.Ylat y) (ha : a ≠ 0) : 0 < (motTrue ct).psiV y a := by
-  rw [motTrue_psiV_half]
-  exact half_pos (DatAtCheck.beta_self_pos ct.hp.one_lt (ct.dat y) a ha)
-
-example (y : ct.Pt ct.Xm) [Subsingleton (ct.Ylat y)] : (motTrue ct).dimB y = D.R.f * N := by
-  have h := (motTrue ct).dimB_add y
-  rwa [Module.finrank_zero_of_subsingleton, add_zero] at h
 
 end Api
 

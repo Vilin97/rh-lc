@@ -191,9 +191,6 @@ theorem ofSingleBlowup_schemeAt_succ (i : ℕ) :
 theorem ofSingleBlowup_schemeAt_zero :
     (ofSingleBlowup p I m E Z hsm hsnc hord hdiv).toBlowupSequenceData.obj 0 = X := rfl
 
-theorem ofSingleBlowup_blowupMorphism_zero :
-    (ofSingleBlowup p I m E Z hsm hsnc hord hdiv).toBlowupSequenceData.map 0 = Blowup.blowup.proj Z := rfl
-
 theorem ofSingleBlowup_projectionToBase_one :
     (ofSingleBlowup p I m E Z hsm hsnc hord hdiv).proj 1 = Blowup.blowup.proj Z := rfl
 

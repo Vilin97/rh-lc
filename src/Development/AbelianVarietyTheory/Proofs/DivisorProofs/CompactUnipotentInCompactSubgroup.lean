@@ -1,5 +1,6 @@
 import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LongWConjApply
+import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsGenericIffIsGenericFor
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ParIndJacPlacing
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsCompactSubgroup
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.EventuallyDeepSubset
 

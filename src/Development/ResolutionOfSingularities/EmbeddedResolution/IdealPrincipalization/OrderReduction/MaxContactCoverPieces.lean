@@ -105,11 +105,6 @@ theorem ker_subschemeι_comp_comap_eq_top_of_disjoint {X X' Y : Scheme.{u}} (f :
 
 variable (T : MarkedIdealWithBoundary.{u}) (hv : T.IsAdmissible)
 
-instance instIsClosedImmersionStarι (i : (MaxContactCoverData.chosenCoverData T hv).idx) :
-    IsClosedImmersion (MaxContactOpenCover.coverPieceι T hv i) :=
-  FunctorialResolution.Blowup.isClosedImmersion_sigmaι
-    (fun j : (MaxContactCoverData.chosenCoverData T hv).idx => MaxContactOpenCover.coverPiece T hv j) i
-
 theorem quasiCompact_coverPieceι (i : (MaxContactCoverData.chosenCoverData T hv).idx) :
     QuasiCompact (MaxContactOpenCover.coverPieceι T hv i) :=
   FunctorialResolution.Blowup.quasiCompact_sigmaι

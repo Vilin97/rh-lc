@@ -21,9 +21,6 @@ def ofComplex : ℂ ≃ₐ[ℂ] ComplexAt σ := AlgEquiv.refl
 instance : Algebra (𝓞 K) (ComplexAt σ) :=
   ((ofComplex σ).toRingHom.comp (σ.comp (algebraMap (𝓞 K) K))).toAlgebra
 
-theorem algebraMap_apply (a : 𝓞 K) :
-    algebraMap (𝓞 K) (ComplexAt σ) a = ofComplex σ (σ (a : K)) := rfl
-
 theorem smul_def (a : 𝓞 K) (z : ComplexAt σ) : a • z = ofComplex σ (σ (a : K)) * z := rfl
 
 theorem complex_smul_def (c : ℂ) (z : ComplexAt σ) : c • z = ofComplex σ c * z := rfl
@@ -31,8 +28,6 @@ theorem complex_smul_def (c : ℂ) (z : ComplexAt σ) : c • z = ofComplex σ c
 instance : SMulCommClass (𝓞 K) ℂ (ComplexAt σ) where
   smul_comm a c z := by
     rw [smul_def, complex_smul_def, complex_smul_def, smul_def, mul_left_comm]
-
-instance : SMulCommClass ℂ (𝓞 K) (ComplexAt σ) := SMulCommClass.symm _ _ _
 
 def conj : ComplexAt σ →+* ComplexAt (conjugate σ) :=
   (ofComplex (conjugate σ)).toRingHom.comp ((starRingEnd ℂ).comp (ofComplex σ).symm.toRingHom)
@@ -46,8 +41,6 @@ def conjLinear : ComplexAt σ →ₗ[𝓞 K] ComplexAt (conjugate σ) where
   map_smul' a z := by
     rw [smul_def, map_mul, RingHom.id_apply, smul_def, conj_ofComplex]
     rfl
-
-theorem conjLinear_apply (z : ComplexAt σ) : conjLinear σ z = conj σ z := rfl
 
 theorem conj_smul (c : ℂ) (z : ComplexAt σ) : conj σ (c • z) = starRingEnd ℂ c • conj σ z := by
   rw [complex_smul_def, map_mul, conj_ofComplex, complex_smul_def]
@@ -207,8 +200,6 @@ end Examples
 
 abbrev GaussianField : Type := CyclotomicField 4 ℚ
 
-example : NumberField GaussianField := inferInstance
-
 def ratIntegers : HermitianBundle ℚ := HermitianBundle.integers ℚ
 
 def ratStandard (n : ℕ) : HermitianBundle ℚ := HermitianBundle.standard ℚ n
@@ -231,11 +222,6 @@ theorem HermitianMetric.standard_inner_single (K : Type*) [Field K] [NumberField
   · simp
 
 def ratEmbedding : ℚ →+* ℂ := Rat.castHom ℂ
-
-example : ((HermitianMetric.standard ℚ (Fin 2)).form ratEmbedding).inner
-    ((1 : ComplexAt ratEmbedding) ⊗ₜ[𝓞 ℚ] (Pi.single 0 1 : Fin 2 → 𝓞 ℚ))
-    ((1 : ComplexAt ratEmbedding) ⊗ₜ[𝓞 ℚ] (Pi.single 0 1 : Fin 2 → 𝓞 ℚ)) = 1 :=
-  HermitianMetric.standard_inner_single ℚ 2 ratEmbedding 0
 
 end
 

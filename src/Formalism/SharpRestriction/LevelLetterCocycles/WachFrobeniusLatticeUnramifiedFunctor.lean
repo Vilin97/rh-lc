@@ -85,9 +85,6 @@ def latD (I : BaseId W) (T : LocLat G Qp LL O) : Formalism.ExponentWindows.E.Lat
 @[simp] theorem latD_φ (I : BaseId W) (T : LocLat G Qp LL O) (i : ZMod n) (x : DV I T) :
     ((latD I T).φ i x).d = W.φD T x.d := rfl
 
-@[simp] theorem latD_γ (I : BaseId W) (T : LocLat G Qp LL O) (i : ZMod n) (x : DV I T) :
-    ((latD I T).γ i x).d = W.γD T W.gamK x.d := rfl
-
 theorem mem_sm_latD (I : BaseId W) (T : LocLat G Qp LL O) (i : ZMod n) (a : PowerSeries O) (x : DV I T) :
     x ∈ Formalism.ExponentWindows.E.sm a ((latD I T).N i) ↔
       ∃ y ∈ W.NΔ T, (letE i : LetA O n) • y = y ∧ x.d = I.d a • y := by

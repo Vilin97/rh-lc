@@ -102,11 +102,6 @@ def transportFieldEquiv (M : IntermediateField K Ω) : M ≃+* transportField e 
   map_mul' _ _ := Subtype.ext (map_mul ε _ _)
   map_add' _ _ := Subtype.ext (map_add ε _ _)
 
-@[simp]
-theorem coe_transportFieldEquiv (M : IntermediateField K Ω) (x : M) :
-    (transportFieldEquiv e ε hε M x : Ω') = ε x :=
-  rfl
-
 theorem transportFieldEquiv_algebraMap (M : IntermediateField K Ω) (x : K) :
     transportFieldEquiv e ε hε M (algebraMap K M x) = algebraMap K' (transportField e ε hε M) (e x) :=
   Subtype.ext (hε x)
@@ -150,11 +145,6 @@ def maximalAbelianExtensionTransport :
   (transportFieldEquiv e ε hε _).trans
     (IntermediateField.equivOfEq (transportField_maximalAbelianExtension e ε hε)).toRingEquiv
 
-@[simp]
-theorem coe_maximalAbelianExtensionTransport (y : maximalAbelianExtension K Ω) :
-    (maximalAbelianExtensionTransport e ε hε y : Ω') = ε y :=
-  rfl
-
 theorem maximalAbelianExtensionTransport_algebraMap (x : K) :
     maximalAbelianExtensionTransport e ε hε (algebraMap K _ x) = algebraMap K' _ (e x) :=
   Subtype.ext (hε x)
@@ -190,9 +180,6 @@ def integerEquivOfVle : 𝒪[K] ≃+* 𝒪[K'] where
 
 omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [TopologicalSpace K']
   [IsNonarchimedeanLocalField K'] in
-@[simp]
-theorem coe_integerEquivOfVle (x : 𝒪[K]) : (integerEquivOfVle e he x : K') = e x :=
-  rfl
 
 def residueFieldEquivOfVle : 𝓀[K] ≃+* 𝓀[K'] :=
   IsLocalRing.ResidueField.mapEquiv (integerEquivOfVle e he)

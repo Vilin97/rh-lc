@@ -66,9 +66,6 @@ def BlowupChart.restrict (B : BlowupChart π c S s) (V : X₁.Opens) (hV : V ≤
 @[simp] theorem BlowupChart.restrict_domain (B : BlowupChart π c S s) (V : X₁.Opens)
     (hV : V ≤ B.domain) : (B.restrict V hV).domain = V := rfl
 
-theorem BlowupChart.restrict_chart (B : BlowupChart π c S s) (V : X₁.Opens)
-    (hV : V ≤ B.domain) : (B.restrict V hV).chart = B.chart.restrict hV := rfl
-
 theorem BlowupChart.exists_isAffineOpen_mem_le_domain (B : BlowupChart π c S s) (x : X₁)
     (hx : x ∈ B.domain) :
     ∃ V : X₁.Opens, V ≤ B.domain ∧ IsAffineOpen V ∧ x ∈ V := by
@@ -337,17 +334,6 @@ def BlowupChart.restrictToStrictTransform (B : BlowupChart π c S s)
         (B.restrictIdeal_strictTransform_of_mem_of_ne Z H hs hZ a ha has hH)).isEtale }
   comm :=
     restrictToSubscheme_map_comp_coordBlowupSubstMap B hU hB Z H hs hZ a ha has hH s' hs' q hq
-
-@[simp] theorem BlowupChart.restrictToStrictTransform_domain (B : BlowupChart π c S s)
-    (hU : IsAffineOpen U) (hB : IsAffineOpen B.domain) (Z H : X.IdealSheafData)
-    [QuasiCompact (strictTransformι π Z H)]
-    (hs : s ∈ S) (hZ : restrictIdeal Z U = c.coordIdeal S)
-    (a : Fin m) (ha : a ∈ S) (has : a ≠ s) (hH : restrictIdeal H U = c.coordIdeal {a})
-    (s' : Fin (m - ({a} : Finset (Fin m)).card)) (hs' : complOrderEmb m {a} s' = s)
-    (q : (Blowup.strictTransform π Z H).subscheme ⟶ H.subscheme)
-    (hq : q ≫ H.subschemeι = (Blowup.strictTransform π Z H).subschemeι ≫ π) :
-    (B.restrictToStrictTransform hU hB Z H hs hZ a ha has hH s' hs' q hq).domain =
-      (Blowup.strictTransform π Z H).subschemeι ⁻¹ᵁ B.domain := rfl
 
 theorem BlowupChart.restrictToStrictTransform_chart_map (B : BlowupChart π c S s)
     (hU : IsAffineOpen U) (hB : IsAffineOpen B.domain) (Z H : X.IdealSheafData)

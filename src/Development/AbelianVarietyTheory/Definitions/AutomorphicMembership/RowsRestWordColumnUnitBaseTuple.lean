@@ -180,7 +180,6 @@ attribute [instance] RowsRest.instEE RowsRest.instEEi RowsRest.instEEf RowsRest.
 
 instance {B : Base} {C : Cols B} (W : RowsRest B C) : NumberField W.what₂.LL := B.nfLL
 instance {B : Base} {C : Cols B} (W : RowsRest B C) : StarRing W.what₂.LL := B.starLL
-instance {B : Base} {C : Cols B} (W : RowsRest B C) : Fintype W.what₂.Word := B.wordFin
 
 end GlobalTheory.Mem
 

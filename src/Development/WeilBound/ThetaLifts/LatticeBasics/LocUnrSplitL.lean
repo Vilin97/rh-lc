@@ -11,9 +11,7 @@ open MeasureTheory Matrix GlobalTheory.CompanionTheory.QL
 namespace GlobalTheory.ThK.Dbl.Split
 
 set_option hygiene false in
-local notation "𝟙" => (1 : Matrix (Fin n) (Fin n) k)
 set_option hygiene false in
-local notation "𝟘" => (0 : Matrix (Fin n) (Fin n) k)
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {O : Subring k} {ϖ : kˣ}
   {nrm : AbsoluteValue k ℝ} {q n : ℕ}

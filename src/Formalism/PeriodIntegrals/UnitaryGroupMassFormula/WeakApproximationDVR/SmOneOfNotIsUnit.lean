@@ -32,9 +32,6 @@ lemma Sm.neg {k : ℤ} {a : Q} (ha : Sm Q ϖ k a) : Sm Q ϖ k (-a) := by
   obtain ⟨c, rfl⟩ := ha
   exact ⟨-c, by rw [map_neg]; ring⟩
 
-lemma Sm.sub {k : ℤ} {a b : Q} (ha : Sm Q ϖ k a) (hb : Sm Q ϖ k b) : Sm Q ϖ k (a - b) := by
-  rw [sub_eq_add_neg]; exact ha.add hb.neg
-
 lemma Sm.zero (k : ℤ) : Sm Q ϖ k (0 : Q) := ⟨0, by simp⟩
 
 lemma Sm.alg (w : W) : Sm Q ϖ 0 (algebraMap W Q w) := ⟨w, by simp⟩
@@ -166,9 +163,5 @@ lemma small_one_add_pow (hϖ : Irreducible ϖ) {q : Q} (h : Sm Q ϖ 1 q) {r : �
   obtain ⟨h1, h2⟩ := one_add_of_sm hϖ (ht.mono hϖ (by exact_mod_cast hr))
   refine ⟨h1, ?_⟩
   simpa using ht.mul hϖ h2
-
-lemma Sm.of_toNat (hϖ : Irreducible ϖ) {k : ℤ} {a : Q} (ha : Sm Q ϖ (k.toNat : ℤ) a) :
-    Sm Q ϖ k a :=
-  ha.mono hϖ (Int.self_le_toNat k)
 
 end PI.WADVR

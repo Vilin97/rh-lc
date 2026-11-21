@@ -14,12 +14,6 @@ section
 variable {n : ℕ} {Y : Type} [TopologicalSpace Y] [T2Space Y] [SecondCountableTopology Y]
   [MeasurableSpace Y] [BorelSpace Y] {ι La : Type} [AddCommGroup La]
 
-theorem g_self (A : WeightedAtlas n Y ι La) (la : La) (i : ι) (y : Y)
-    (hy : y ∈ (A.chart i).source) : A.g la i i y = 1 := by
-  have h := A.g_cocycle la i i i y hy hy hy
-  have hg := A.g_ne la i i y hy hy
-  exact (mul_eq_left₀ hg).mp h.symm
-
 end
 
 open MeasureTheory Filter Topology Metric in

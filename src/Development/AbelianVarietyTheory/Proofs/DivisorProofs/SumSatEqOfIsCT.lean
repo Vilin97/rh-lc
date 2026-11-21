@@ -1,13 +1,19 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.Divisors.IsSquareIntegrableAutomorphicSpace
-import Development.AbelianVarietyTheory.Definitions.Divisors.OfIsBaseChange
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.CuspidalMultiplicityOne
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.SquareIntegrableSegment
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.LanglandsMultisegments
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.StandardCosocleGL
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.IsComplementaryProductOfIsCuspidal
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCuspFormOperatorAct
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AutomorphicRestrictionSecondBlock
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AutomorphicFormsFiniteGL
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConstantTermFiniteDimensionalSpan
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConstantTermFiniteDimensionalSpanParabolic
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteDimensionalFormsGlInductiveRank
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemSpanGenEigenOfFiniteDimensionalOrbit
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsExpand
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConstantTermCenterActionSmoothForm
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HarishChandraFiniteFormsGLSingleCharSpanMem
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeckeOperatorConstantTermSum
 
 open NumberField IsDedekindDomain MeasureTheory Formalism.L2.Host GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.DiscSpec GlobalTheory.ResW GlobalTheory.Published
@@ -76,16 +82,6 @@ end Lin
 variable {ϖ : v.adicCompletion E}
 
 variable (v) in
-
-noncomputable def Eig : (u : List (Letter E)) → Vec u → Multiset ℂˣ → Prop
-  | [], _, B => B = 0
-  | x :: u, f, B => ∃ C B', IsSatVecGL v (locR x.1 v) f.1.1 C ∧ Eig u f.2 B' ∧ B = C + B'
-
-theorem Eig.card : ∀ (u : List (Letter E)) (f : Vec u) (B : Multiset ℂˣ), Eig v u f B → B.card = wsize u
-  | [], _, B, H => by rw [show B = 0 from H]; rfl
-  | x :: u, f, _, ⟨C, B', h1, h2, h3⟩ => by
-    rw [h3, Multiset.card_add, h1.2.2.1, Eig.card u f.2 B' h2]
-    simp [wsize]
 
 end GlobalTheory.ResW.SatWordAt
 

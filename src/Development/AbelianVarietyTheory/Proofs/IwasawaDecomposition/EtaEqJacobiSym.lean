@@ -41,8 +41,6 @@ section CM
 
 variable (K : Type) [Field K] [NumberField K] [IsCMField K]
 
-local notation3 "K⁺" => maximalRealSubfield K
-
 theorem frob_eq
     (hunr : ∀ P : Ideal (𝓞 K), P.IsPrime → P ≠ ⊥ →
       ¬ ∀ x : 𝓞 K, IsCMField.complexConj K • x - x ∈ P)

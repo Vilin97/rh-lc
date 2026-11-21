@@ -43,8 +43,6 @@ structure Lbl where
   D : List (ℕ × ℕ)
   L : List (ℕ × ℕ)
 
-instance : Inhabited Lbl := ⟨⟨2, [], []⟩⟩
-
 namespace Lbl
 
 def rk (a : Lbl) : ℕ := deg a.D + deg a.L

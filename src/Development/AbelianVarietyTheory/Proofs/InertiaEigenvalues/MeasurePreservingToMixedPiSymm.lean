@@ -252,9 +252,6 @@ theorem adelicFourierPi_thetaFn (f : 𝓢(Fin n → Cinf E, ℂ)) (J : (Fraction
 omit [IsTotallyComplex E] in
 variable (E) in
 
-def differentUnit : (FractionalIdeal (𝓞 E)⁰ E)ˣ :=
-  FractionalIdeal.mk0 E ⟨differentIdeal ℤ (𝓞 E), mem_nonZeroDivisors_of_ne_zero (differentIdeal_ne_bot (A := ℤ))⟩
-
 end Complex
 
 end GlobalTheory.ThetaPoisson

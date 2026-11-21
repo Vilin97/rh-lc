@@ -2,7 +2,8 @@ import Mathlib
 import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.HodgeTateResidues.MulSubMulTo
 import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.HodgeTateResidues.EtDefs
 import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.AtlasGroupActions.TowerSmulZero
-import BuildAid.D2
+import Lean.LibrarySuggestions.Basic
+import Lean.Elab.Command
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

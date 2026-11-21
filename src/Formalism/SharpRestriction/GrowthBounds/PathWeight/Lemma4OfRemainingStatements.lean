@@ -13,8 +13,6 @@ section Asm
 variable {p n' r K : ℕ} [Fact p.Prime] [NeZero n'] [NeZero r] [NeZero K] {O : Type} [CommRing O] [IsDomain O]
     [IsDiscreteValuationRing O] [Algebra (WF p n') O] (X : Ctx p n' r K O)
 
-local notation "PP" => MvPolynomial (TV n' (r + K)) (KK O)
-
 theorem SyS_of_span (hW2 : GeneratorImageIsSymbol) (j : ℤ) {P : SegRing O r K} (hP : P ∈ Submodule.span O (PGen X.Fr j O K)) :
     MvPolynomial.map (algebraMap O (KK O)) (phSeg O K p X.Fr j P) ∈ X.SyS := by
   induction hP using Submodule.span_induction with
@@ -98,14 +96,5 @@ theorem lemma4_of_remaining_statements (D : Formalism.BasicNotions.D7) (CLa CD C
   · exact inWPow_zero_mul (inWPow_zero_mul (bc_inWj_monomial S.w mon) hSg0) hY0
   · intro m hm
     exact ho m (support_map_subset _ _ hm)
-
-theorem stmt_of_rests (D : Formalism.BasicNotions.D7) (CLa Ck Crk Cdeg CLa' CD Csz : ℝ)
-    (h : admitted D CLa Ck Crk Cdeg → RestModel ∧ RestDivM CLa' CD Csz ∧ GeneratorSpanInclusion ∧ GeneratorImageIsSymbol ∧ RestMon ∧ RestPh) :
-    Stmt D CLa Ck Crk Cdeg CLa' CD Csz := by
-  intro hA
-  obtain ⟨h1, h2, h3, h4, h5, h6⟩ := h hA
-  obtain ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, hE, _⟩ := hA
-  exact ⟨theta_kernel_expansion D, splitting_package_holds D, segment_statement_holds D, order_lemma_holds D,
-    divisibility_of_field_lemma D hE, lemma4_of_remaining_statements D CLa' CD Csz h1 h2 h3 h4 h5 h6⟩
 
 end Formalism.MainNotions.G.symbolGeneratorData

@@ -1,4 +1,23 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IwasawaMeasureExistence.SecondCountableOfOpenSubgroups
+import Formalism.PeriodIntegrals.LatCountG
+import Formalism.HarderNarasimhan.StatementPl
+import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.SphericalFunctionIntegrableOfLocal
+import Formalism.FlagUnipotentLattices.HalfDifferenceL1Bound
+import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.ExtensionInterSubspace
+import Formalism.LogSumExpBounds.StatementD
+import Formalism.LatticeRigidity.HeightMinimum.PackingCountGeometricMean
+import Mathlib
+import Formalism.LatticeRigidity.HeightMinimum.PowFinrankEqZeroOfTracePow
+import Formalism.GelfandTransference.EnergyIdentity
+import Formalism.NormUnitaryBounds.DetPolynomialWeights.ShortIndependentVectorsOfDualMinimum
+import Formalism.LatticeTheta.ThetaShiftInversion
+import Formalism.LatticeRigidity.StatementC
+import Formalism.LatticeRigidity.HeightMinimum.SqrtAbsNormLeProd
+import Formalism.SharpRestriction.CuspSpanNormBounds.PlaceDegreeData
+import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.TraceConjMulEqHilbertSchmidt
+import Formalism.RealPlaceAnalysis.RealPlaceTaylor.IndefiniteUnitaryPreservesForm
+import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.InclusionInjective
+import Formalism.LocalToGlobal.SiegelLatticeTheory.CasimirVolumeRatios.DetNorm
+import Formalism.HermitianLattices.StatementMass
 
 noncomputable section
 
@@ -366,10 +385,5 @@ theorem t2Space_finite_adeles_ext : @T2Space (AEf I) (tAf I) := by
   intro N hN
   obtain ⟨k, rfl⟩ : ∃ k, N = k + 1 := ⟨N - 1, by omega⟩
   exact hcon _ ((hasBasis_nhds_zero_tAf I).mem_of_mem trivial)
-
-theorem isUnit_natCast (c : ℕ) (hc : 1 ≤ c) : IsUnit (c : AEf I) := by
-  have h0 : (c : I.F) ≠ 0 := Nat.cast_ne_zero.mpr (by omega)
-  have := h0.isUnit.map (algebraMap I.F (AEf I))
-  rwa [map_natCast] at this
 
 end PI.IwaMeasEx.AfT

@@ -74,12 +74,6 @@ theorem spanCovol_span {v : ι → E} (hv : LinearIndependent ℤ v) :
   rw [spanCovol_eq_sqrt_det_gram (Basis.span hv)]
   simp
 
-@[simp]
-theorem spanCovol_bot : spanCovol (⊥ : Submodule ℤ E) = 1 := by
-  have := spanCovol_span (E := E) (ι := Empty) (v := Empty.elim) linearIndependent_empty_type
-  rw [Set.range_eq_empty, span_empty] at this
-  simpa using this
-
 theorem spanCovol_map_linearIsometry {L : Submodule ℤ E} (hL : L.FG) (T : E →ₗᵢ[ℝ] F) :
     spanCovol (L.map (T.toLinearMap.restrictScalars ℤ)) = spanCovol L := by
   have : Module.Finite ℤ L := .of_fg hL
@@ -160,9 +154,6 @@ theorem spanCovol_eq_covolume_comap_span [MeasurableSpace E] [BorelSpace E] (L :
     [DiscreteTopology L] :
     spanCovol L = ZLattice.covolume (ZLattice.comap ℝ L (span ℝ (L : Set E)).subtype) := by
   rw [← spanCovol_eq_covolume, spanCovol_comap_subtype L _ subset_span]
-
-noncomputable def projAlong (L N : Submodule ℤ E) : Submodule ℤ E :=
-  L.map ((span ℝ (N : Set E))ᗮ.starProjection.toLinearMap.restrictScalars ℤ)
 
 end Main
 

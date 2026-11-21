@@ -214,9 +214,6 @@ def lowU (D : D7) (u : D.what₂.Word) (w : D.what₂.places.Pl) : ℝ :=
 def unitBoundAtTwistedPlaces (D : D7) (L : SizeData₂ D) (X : Inst D L) (Y : LatInst D) (K : Consts) : Prop :=
   UnitBoundLowTerm D L X Y K (lowU D)
 
-def UnitBoundDifferenceTerm (D : D7) (L : SizeData₂ D) (X : Inst D L) (Y : LatInst D) (K : Consts) : Prop :=
-  UnitBoundLowTerm D L X Y K (lowFE L)
-
 def admG1 (D : D7) (L : SizeData₂ D) (X : Inst D L) (Y : LatInst D) (K : Consts) : Prop :=
   ∀ hT : GatTies D, LatTied hT X Y → ∀ (u : D.what₂.Word) (w : D.what₂.places.Pl)
     (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)),
@@ -245,13 +242,6 @@ def admitted (D : D7) (L : SizeData₂ D) (X : Inst D L) (Y : LatInst D) (K : Co
 
 def Conclusion₂ (D : D7) (L : SizeData₂ D) (X : Inst D L) (K : Consts) (C bo : ℝ) : Prop :=
   Conclusion1 D L X K C bo ∧ Conclusion2 D L X K ∧ PointsLemma D L X K ∧ WeightVectorExists D L X K ∧ Conclusion0 D L X ∧ WeightedPrimeSumBound D L X K C
-
-def Stmt (D : D7) (L : SizeData₂ D) (K : Consts) (A : AConsts) (C bo : ℝ) : Prop :=
-  K.Nonneg → ∀ (X : Inst D L) (Y : LatInst D), admitted D L X Y K A → Conclusion₂ D L X K C bo
-
-def ClosedFormOfAdmitted (D : D7) (L : SizeData₂ D) : Prop :=
-  ∀ K : Consts, K.Nonneg → ∀ A : AConsts, ∃ C bo : ℝ, 0 ≤ C ∧ 0 ≤ bo ∧
-    ∀ (X : Inst D L) (Y : LatInst D), admitted D L X Y K A → Conclusion₂ D L X K C bo
 
 def AdmF {eps : ℝ} (Fm : FamP eps) (K : Consts) (X : ∀ x (i : Fm.Ix x), Inst (Fm.D x i) (Fm.L x i))
     (Y : ∀ x (i : Fm.Ix x), LatInst (Fm.D x i)) : Prop :=

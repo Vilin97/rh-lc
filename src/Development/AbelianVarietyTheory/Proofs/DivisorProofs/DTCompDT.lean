@@ -18,8 +18,6 @@ theorem bop_comp {n m p q r s : ℕ} (α : SimplexCategory.mk p ⟶ SimplexCateg
   simp only [mul_one] at this
   exact this
 
-theorem bop_id (n m : ℕ) : bop (𝟙 (SimplexCategory.mk n)) (𝟙 (SimplexCategory.mk m)) = 𝟙 (bo n m) := rfl
-
 theorem idc_self (n : ℕ) : idc n n = 𝟙 _ := by
   ext j
   have hj : (j : ℕ) < n + 1 := j.isLt

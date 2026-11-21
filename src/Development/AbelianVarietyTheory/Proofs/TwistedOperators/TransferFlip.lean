@@ -1,5 +1,5 @@
 import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.TwistPlacesOffPrimeQZero
-import Formalism.LocalToGlobal.IndefiniteReal.HeckeNonvanishing.Imports
+import Lean
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsCosetSameLocalCosetSetsOtherBaseLatticeStatement
 import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique
 import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.NormSmall
@@ -24,8 +24,6 @@ open GlobalTheory.FunObj Matrix GlobalTheory.SplitFlip GlobalTheory.SplitWeil Gl
 open scoped TensorProduct nonZeroDivisors Pointwise
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField GlobalTheory.FunObj.borelKw GlobalTheory.FunObj.borelSpaceKw
-
-local macro:max "kc% " e:term:max : term => `((by kexactB $e))
 
 def SameD : Prop := ∀ {D : D7} {T T' : Type} {L : LevCh D T} {L' : LevCh D T'} {sc : Consts} (G : GridData L sc) (G' : GridData L' sc)
     (B : FunObj.Frames G) (B' : FunObj.Frames G') (ι : T' → T),
@@ -150,11 +148,6 @@ theorem flips_tensor_heq {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace
   subst hΓ hψ he
   cases hS
   rfl
-
-theorem tflip_eq {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (W : G.Weil) (B : FunObj.Frames G)
-    (t : T) (Φ : G.Datum) (w : Pl D.host.E) : FunObj.Tflip W B t Φ w =
-      ((FunObj.givenStage t w B Φ).flips .one (FunObj.psiAt W w) (FunObj.unifAt w) (FunObj.depthAt G w)
-        (FunObj.flipOrder D.R.m)).tensor := rfl
 
 theorem lsp_eq {D : D7} {x : LSp D} {s : HSp D} {l : Submodule (𝓞 D.host.E) (Fin s.rank → D.host.E)} (hs : s = x.sp)
     (hl : HEq l x.lat) : (⟨s, l⟩ : LSp D) = x := by

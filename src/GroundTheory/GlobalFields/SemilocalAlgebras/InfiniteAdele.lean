@@ -30,11 +30,6 @@ def piPlacesOverEquiv :
   map_add' x y := rfl
   commutes' l := rfl
 
-@[simp]
-theorem piPlacesOverEquiv_apply (x : (v : InfinitePlace K) → PiPlacesOver (L := L) v)
-    (w : InfinitePlace L) :
-    piPlacesOverEquiv x w = x (w.comap (algebraMap K L)) ⟨w, liesOver_comap w⟩ := rfl
-
 variable [NumberField K] [NumberField L]
 
 open scoped Classical in

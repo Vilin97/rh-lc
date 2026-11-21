@@ -1,5 +1,6 @@
 import Mathlib
-import GroundTheory.PAdicHodge.BCrisEigenFixed
+import GroundTheory.PAdicHodge.BCrisNewton
+import GroundTheory.PAdicHodge.GalSmulAlgebraMapPadicPlus
 import GroundTheory.PAdicHodge.BCrisEigenChar
 import GroundTheory.PAdicHodge.BCrisEigenMaps
 set_option maxSynthPendingDepth 1
@@ -13,9 +14,6 @@ namespace ACris
 open GroundTheory.LocalField EigenWitt EigenChar
 
 variable {p : ℕ} [hp : Fact p.Prime]
-
-local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
-local notation "𝔹dR" => BDeRham (normInteger ℂ_[p]) p
 
 variable {ε : PreTilt (normInteger ℂ_[p]) p} (hε : PreTilt.untilt ε = 1)
   (hζ : PreTilt.untilt ((_root_.frobeniusEquiv (PreTilt (normInteger ℂ_[p]) p) p).symm ε) ≠ 1)
@@ -256,20 +254,6 @@ theorem isUnit_of_forall_galB_eq_mul (hST : SenTateCharacters p)
 include hζ in
 set_option maxHeartbeats 3200000 in
 set_option synthInstance.maxHeartbeats 400000 in
-
-theorem isRegular_bCris (hST : SenTateCharacters p) {K : IntermediateField ℚ_[p] (PadicAlgCl p)}
-    [FiniteDimensional ℚ_[p] K] :
-    letI := isDomain_bCris hε hζ
-    letI := galBAction (K := K) hε
-    haveI := smulCommClass_galBAction (K := K) hε
-    IsRegular Gal(PadicAlgCl p/K) ℚ_[p] (BCris hε) :=
-  letI := isDomain_bCris hε hζ
-  letI := galBAction (K := K) hε
-  haveI := smulCommClass_galBAction (K := K) hε
-  { image_fixedPoints := image_fixedPoints_fractionRing (K := K) hε hζ
-    isUnit_of_mem_span := fun b hb0 hb => isUnit_of_forall_galB_eq_mul hε hζ hST hb0 fun σ => by
-      obtain ⟨q, hq⟩ := Submodule.mem_span_singleton.1 (hb σ)
-      exact ⟨q, (hq.symm.trans (Algebra.smul_def q b) :)⟩ }
 
 end ACris
 

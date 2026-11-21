@@ -172,12 +172,4 @@ theorem Laws.eq_iff (H : Laws a ha ε rc) {n : ℕ} (π π' : IrrRep (GL (Fin n)
   H.bij.1.eq_iff.trans (IrrGL.of_eq_of (π := π.ρ) (σ := π'.ρ) (hs := π.smooth) (hi := π.irr) (hs' := π'.smooth)
     (hi' := π'.irr))
 
-theorem Laws.exists_rep (H : Laws a ha ε rc) (y : WD h) :
-    ∃ π : IrrRep (GL (Fin y.lpDim) (w.adicCompletion E)), rc (cls π) = y := by
-  obtain ⟨⟨n, c⟩, rfl⟩ := H.bij.2 y
-  have key : ∀ m, m = n → ∃ π : IrrRep (GL (Fin m) (w.adicCompletion E)), rc (cls π) = rc ⟨n, c⟩ := by
-    rintro _ rfl
-    exact ⟨c.rep, congrArg rc (congrArg (Sigma.mk _) c.cl_rep)⟩
-  exact key _ (H.dim _)
-
 end GlobalTheory.LocLanglands

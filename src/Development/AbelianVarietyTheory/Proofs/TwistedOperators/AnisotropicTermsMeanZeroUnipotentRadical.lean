@@ -91,7 +91,6 @@ end GlobalTheory.AnisoMean
 
 namespace GlobalTheory.AnisoMean
 variable {D : D7}
-local infixl:70 " ⬝ " => HMul.hMul
 
 theorem exists_fin_add_real {S T : HSp D} (w : WO S T) :
     ∃ u v : WO S T, u.map (infPart D) = 0 ∧ v.map (finPart D) = 0 ∧ w = u + v := by
@@ -256,9 +255,6 @@ end GlobalTheory.AnisoMean
 
 namespace GlobalTheory.AnisoMean
 variable {D : D7}
-local infixl:70 " ⬝ " => HMul.hMul
-
-local notation "𝕚⟨" M "⟩" => (Matrix.map M (incA D) : Matrix _ _ (AE D))
 
 theorem decomp_generic {A : Type*} [CommRing A] {w N n' r : ℕ} (T : Matrix (Fin w) (Fin N) A)
     (g : Matrix (Fin N) (Fin N) A) (C C' : Matrix (Fin N) (Fin r) A) (B : Matrix (Fin N) (Fin n') A)
@@ -315,12 +311,6 @@ theorem cA_one (N : ℕ) (i j : Fin N) :
   rcases eq_or_ne i j with rfl | h
   · simp
   · rw [Matrix.one_apply_ne h, Matrix.one_apply_ne h.symm, map_zero]
-
-private theorem cA_incA_apply_eq_incA_star (e : D.host.E) : cA D (incA D e) = incA D (star e) := by
-  show Algebra.TensorProduct.map (AlgHom.id _ _) D.sp.cm.sig ((1 : AF D.host.F) ⊗ₜ[D.host.F] e) =
-    (1 : AF D.host.F) ⊗ₜ[D.host.F] star e
-  rw [Algebra.TensorProduct.map_tmul]
-  rfl
 
 set_option maxHeartbeats 1000000 in
 theorem exists_central (V : HSp D) (X : Matrix (Fin V.rank) (Fin V.rank) D.host.E) (hXX : X * X = 0)
@@ -424,7 +414,6 @@ end GlobalTheory.AnisoMean
 
 namespace GlobalTheory.AnisoMean
 variable {D : D7}
-local infixl:70 " ⬝ " => HMul.hMul
 
 theorem sq_zero_generic {R : Type*} [Ring R] {N r : ℕ} (C : Matrix (Fin N) (Fin r) R) (S₀ : Matrix (Fin r) (Fin r) R)
     (P : Matrix (Fin r) (Fin N) R) (h : P * C = 0) : (C * S₀ * P) * (C * S₀ * P) = 0 := by

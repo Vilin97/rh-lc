@@ -134,14 +134,8 @@ theorem fock_neg_left (F G : MvPolynomial σ K) : fock (-F) G = -fock F G := by
   have := fock_smul_left (-1 : K) F G
   simpa using this
 
-theorem fock_neg_right (F G : MvPolynomial σ K) : fock F (-G) = -fock F G := by
-  rw [fock_comm, fock_neg_left, fock_comm]
-
 theorem fock_sub_left (F F' G : MvPolynomial σ K) : fock (F - F') G = fock F G - fock F' G := by
   rw [sub_eq_add_neg, fock_add_left, fock_neg_left, ← sub_eq_add_neg]
-
-theorem fock_sub_right (F G G' : MvPolynomial σ K) : fock F (G - G') = fock F G - fock F G' := by
-  rw [sub_eq_add_neg, fock_add_right, fock_neg_right, ← sub_eq_add_neg]
 
 theorem fock_sum_left {ι : Type} (s : Finset ι) (f : ι → MvPolynomial σ K) (G : MvPolynomial σ K) :
     fock (∑ i ∈ s, f i) G = ∑ i ∈ s, fock (f i) G := by

@@ -620,10 +620,6 @@ def IsCsd {L : Type} [Field L] [NumberField L] [IsCMField L] (π : CG L a) : Pro
 
 def ofChar (χ : HChar E) : CG E 1 := mk ((CuspSub.triv E le_rfl).twist χ)
 
-instance : Inhabited (CG E 1) := ⟨ofChar 1⟩
-
-instance : Inhabited (CG E 0) := ⟨mk (CuspSub.triv E zero_le_one)⟩
-
 theorem twist_ofChar (χ χ' : HChar E) : (ofChar χ).twist χ' = ofChar (χ * χ') :=
   congrArg mk (CuspSub.twist_mul _ χ χ').symm
 
@@ -664,8 +660,6 @@ def toChar (σ : CG E 1) : HChar E := Function.invFun ofChar σ
 @[simp] theorem toChar_ofChar (χ : HChar E) : toChar (ofChar χ) = χ := Function.leftInverse_invFun ofChar_injective χ
 
 def tw (π : CG E a) (σ : CG E 1) : CG E a := π.twist (toChar σ)
-
-@[simp] theorem tw_ofChar (π : CG E a) (χ : HChar E) : π.tw (ofChar χ) = π.twist χ := by rw [tw, toChar_ofChar]
 
 theorem hasInfChar_ofChar (χ : HChar E) (τ : E →+* ℂ) : (ofChar χ).HasInfChar τ {expo χ τ} := by
   have h : (CuspSub.triv E (le_refl 1)).HasInfChar τ {0} := ⟨rfl, fun u φ hφ => by
@@ -762,13 +756,6 @@ end CM
 theorem expo_one (τ : E →+* ℂ) : expo (1 : HChar E) τ = 0 :=
   expo_eq_of_exp 1 τ 0 0 fun z => by simp [chiInf]
 
-example : (ofChar (1 : HChar E)).IsRegAlg := (isRegAlg_ofChar 1).2 fun τ => ⟨0, by simp [expo_one]⟩
-
-example (χ : HChar E) (τ : E →+* ℂ)
-    (h : ∀ z, ((chiInf χ (expU (atEmb τ z)) : ℂˣ) : ℂ) = Complex.exp z * starRingEnd ℂ (Complex.exp z)) :
-    (ofChar χ).infChar τ = {1} := by
-  rw [infChar_ofChar, expo_eq_of_exp χ τ 1 1 fun z => by rw [h, ← Complex.exp_conj, ← Complex.exp_add]; simp]
-
 end CG
 
 theorem host_isCMField {R : Formalism.BasicNotions.Ranks} (H : Formalism.BasicNotions.Host R) : IsCMField H.E :=
@@ -780,8 +767,5 @@ theorem host_complexConj {R : Formalism.BasicNotions.Ranks} (H : Formalism.Basic
   apply H.φ₀.injective
   rw [NumberField.IsCMField.complexEmbedding_complexConj]
   exact (H.toHostAx.conjE_apply H.φ₀ z).symm
-
-abbrev HostCG {R : Formalism.BasicNotions.Ranks} (H : Formalism.BasicNotions.Host R) (a : ℕ) : Type :=
-  haveI := host_isCMField H; CG H.E a
 
 end GlobalTheory.CuspRep

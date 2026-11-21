@@ -149,46 +149,12 @@ section Galois
 variable (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (L : IntermediateField K (PadicAlgCl p))
   [Normal K L]
 
-theorem restrictNormalHom_surjective :
-    Function.Surjective (AlgEquiv.restrictNormalHom L : Gal(PadicAlgCl p/K) →* Gal(L/K)) :=
-  AlgEquiv.restrictNormalHom_surjective _
-
-theorem ker_restrictNormalHom :
-    (AlgEquiv.restrictNormalHom L : Gal(PadicAlgCl p/K) →* Gal(L/K)).ker = L.fixingSubgroup :=
-  L.restrictNormalHom_ker
-
-instance fixingSubgroup_normal : L.fixingSubgroup.Normal := by
-  rw [← ker_restrictNormalHom K L]
-  exact MonoidHom.normal_ker _
-
-def galQuotientEquiv : Gal(PadicAlgCl p/K) ⧸ L.fixingSubgroup ≃* Gal(L/K) :=
-  QuotientGroup.liftEquiv _ (restrictNormalHom_surjective K L) L.restrictNormalHom_ker.symm
-
 end Galois
 
 section Examples
 
 variable (K : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] K]
   (L : IntermediateField K (PadicAlgCl p)) [FiniteDimensional K L]
-
-example : IsNonarchimedeanLocalField K := inferInstance
-example : ValuativeExtension ℚ_[p] K := inferInstance
-example : IsNonarchimedeanLocalField L := inferInstance
-example : ValuativeExtension K L := inferInstance
-example : Algebra 𝒪[K] 𝒪[L] := inferInstance
-example : Algebra.IsSeparable K L := inferInstance
-example : Normal K (PadicAlgCl p) := inferInstance
-example (i : ℤ) : Subgroup Gal(L/K) := GroundTheory.LocalField.lowerRamificationGroup K L i
-example : ℕ := GroundTheory.LocalField.differentExponent K L
-example : differentIdeal 𝒪[K] 𝒪[L] = 𝓂[L] ^ GroundTheory.LocalField.differentExponent K L :=
-  GroundTheory.LocalField.differentIdeal_eq_maximalIdeal_pow K L
-example [IsGalois K L] (v : ℝ) : Subgroup Gal(L/K) := GroundTheory.LocalField.upperRamificationGroup K L v
-example {K' L' : IntermediateField ℚ_[p] (PadicAlgCl p)} (h : K' ≤ L') [FiniteDimensional ℚ_[p] K']
-    [FiniteDimensional ℚ_[p] L'] : ℕ :=
-  letI := (IntermediateField.inclusion h).toRingHom.toAlgebra
-  haveI := valuativeExtension_inclusion h
-  haveI := finiteDimensional_inclusion h
-  GroundTheory.LocalField.differentExponent K' L'
 
 end Examples
 

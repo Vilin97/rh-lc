@@ -7,8 +7,6 @@ open scoped InnerProductSpace FourierTransform ComplexConjugate
 section
 variable {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] [FiniteDimensional ℂ V] [CompleteSpace V]
 
-local notation "adj" => ContinuousLinearMap.adjoint
-
 private theorem cnt [TopologicalSpace.SeparableSpace H] {ι : Type} {v : ι → H} (hv : Orthonormal ℂ v) : Countable ι := by
   refine Pairwise.countable_of_isOpen_disjoint (s := fun i => Metric.ball (v i) (1 / 2)) (fun i j hij => ?_)
     (fun _ => Metric.isOpen_ball) fun i => Metric.nonempty_ball.2 (by norm_num)

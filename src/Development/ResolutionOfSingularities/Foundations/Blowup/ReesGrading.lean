@@ -134,11 +134,6 @@ noncomputable instance instGradedAlgebraReesGrading (I : Ideal R) :
   left_inv := leftInverse_coeAddMonoidHom_reesGrading I
   right_inv := rightInverse_coeAddMonoidHom_reesGrading I
 
-theorem algebraMap_mem_reesGrading_zero (I : Ideal R) (r : R) :
-    algebraMap R ↥(reesAlgebra I) r ∈ reesGrading I 0 := by
-  rw [Algebra.algebraMap_eq_smul_one]
-  exact Submodule.smul_mem _ r (reesGrading_one_mem I)
-
 noncomputable def reesMonomial (I : Ideal R) (n : ℕ) (r : R) (hr : r ∈ I ^ n) :
     ↥(reesAlgebra I) :=
   ⟨Polynomial.monomial n r, reesAlgebra.monomial_mem.mpr hr⟩
@@ -153,9 +148,6 @@ theorem reesMonomial_mem_reesGrading (I : Ideal R) {n : ℕ} {r : R} (hr : r ∈
 
 noncomputable def reesDegreeOneMonomial (I : Ideal R) (a : R) (ha : a ∈ I) : ↥(reesAlgebra I) :=
   reesMonomial I 1 a (mem_pow_one I ha)
-
-@[simp] theorem reesDegreeOneMonomial_coe (I : Ideal R) (a : R) (ha : a ∈ I) :
-    ((reesDegreeOneMonomial I a ha : ↥(reesAlgebra I)) : R[X]) = Polynomial.monomial 1 a := rfl
 
 theorem reesDegreeOneMonomial_mem_reesGrading (I : Ideal R) {a : R} (ha : a ∈ I) :
     reesDegreeOneMonomial I a ha ∈ reesGrading I 1 :=

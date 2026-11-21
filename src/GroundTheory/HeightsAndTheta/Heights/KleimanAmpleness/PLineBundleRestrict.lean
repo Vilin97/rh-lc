@@ -1,5 +1,5 @@
 import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.LineBundleRestrictSt
+import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.GenericPointSectionHypotheses
 import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.RestrictionBundle
 set_option maxSynthPendingDepth 1
 
@@ -172,18 +172,6 @@ theorem redSys_invertible (hγ0 : γ ≠ 0) (hg : RedGood hxy Q.toSubSystem γ) 
     exact this.2
 
 omit hsp in
-
-theorem LineBundleRestrict.proof : LineBundleRestrict.Statement.{u, w} := by
-  intro k _ Ω _ _ N x K' _ _ y hxy hsp Q
-  obtain ⟨γ, hγ0, hg, hb⟩ := exists_restrict_gen hsp hxy Q
-  refine ⟨LineBundle.mk (SubFamily.mk (redSys hxy Q.toSubSystem γ) (redSys_mem_iff hsp hxy hg)) ?_ ?_,
-    _, restrictData_redSys hsp hxy hg _ rfl⟩
-  · intro I
-    obtain ⟨s, hs⟩ := Q.fg (liftChart hxy I)
-    rw [redSys_sub_eq_span hsp hxy hg I hs]
-    exact Submodule.fg_span (s.finite_toSet.image _)
-  · intro I
-    exact redSys_invertible hsp hxy hγ0 hg I (hb I)
 
 end
 

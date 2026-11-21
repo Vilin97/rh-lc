@@ -1,12 +1,12 @@
 import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.ULieDefs
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DifferentiableOfIsSm
+import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.InducedSectionZFinite
+import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsBlockEmb
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ContinuousConjFin
 import Development.AbelianVarietyTheory.Proofs.JetHarmonics.QdetTopThreeOrders
 
 open NumberField Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.UAut GlobalTheory.ULie
 open scoped TensorProduct
-
-private noncomputable def UpperTheory.prodComplLinearPoly (n : ℕ) (S : Finset (Fin n)) : Polynomial ℂ :=
-  ∏ k ∈ Sᶜ, (Polynomial.X - Polynomial.C (k : ℂ))
 
 private theorem UpperTheory.coeff_mem_span_range_of_polynomial_eq {A : Type} [Ring A] [Algebra ℂ A] (f : ℂ → A) (q : ℕ → A)
     (m : ℕ) (hf : ∀ u : ℂ, f u = ∑ k ∈ Finset.range m, u ^ k • q k) :

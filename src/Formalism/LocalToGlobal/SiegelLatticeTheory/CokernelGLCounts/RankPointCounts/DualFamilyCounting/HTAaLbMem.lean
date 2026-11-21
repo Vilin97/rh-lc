@@ -17,8 +17,6 @@ open Alg
 
 variable {D : D7}
 
-local notation "FI" => FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E
-
 def SS (I : FI) : Prop := ∀ x ∈ I, star x ∈ I
 
 theorem SS_one : SS (1 : FI) := by

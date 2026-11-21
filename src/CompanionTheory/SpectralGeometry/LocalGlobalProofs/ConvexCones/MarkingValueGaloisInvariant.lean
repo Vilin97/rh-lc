@@ -16,8 +16,6 @@ variable {O : Type} [CommRing O]
 def twPi (σ : O ≃+* O) (n : ℕ) : (Fin n → O) ≃+ (Fin n → O) :=
   AddEquiv.piCongrRight fun _ => σ.toAddEquiv
 
-@[simp] theorem twPi_apply (σ : O ≃+* O) (n : ℕ) (a : Fin n → O) : twPi σ n a = fun j => σ (a j) := rfl
-
 def twForm (σ : O ≃+* O) (n : ℕ) :
     LinearMap.BilinForm ℤ (Fin n → O) ≃+ LinearMap.BilinForm ℤ (Fin n → O) where
   toFun β := β.compl₁₂ (twPi σ n).toIntLinearEquiv.toLinearMap (twPi σ n).toIntLinearEquiv.toLinearMap

@@ -1,4 +1,5 @@
-import Formalism.LocalToGlobal.InpAtOf
+import Formalism.LocalToGlobal.PtKOfReal
+import Formalism.LocalToGlobal.Divisibility.SumLeEtaSumNum
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.CohomologicalCsdTempered
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.LayerTwoFamilyClass
 import Development.AutomorphicArithmetic.ThetaCorrespondence.ThetaPairLifts.ThirdPlaceSeries.STiesR

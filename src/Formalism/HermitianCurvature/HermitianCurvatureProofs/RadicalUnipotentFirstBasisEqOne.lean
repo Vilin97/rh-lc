@@ -153,14 +153,6 @@ theorem star_uu' (x : U.RC k j (1 + ρ)) (y : U.RC k 1 ρ) (a : Fin j) : star (u
   rw [Matrix.conjTranspose_apply] at this
   rw [← this]; simp; ring
 
-theorem star_nn (y : U.RC k 1 ρ) : star (nn y) = nn y := by
-  simp only [nn, Matrix.vecMul, dotProduct, star_sum, star_mul', star_star, Pi.star_apply, Finset.sum_mul]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl; intro i _; apply Finset.sum_congr rfl; intro l _
-  have := congrFun (congrFun (hH k ρ) l) i
-  rw [Matrix.conjTranspose_apply] at this
-  rw [← this]; simp; ring
-
 theorem CX_zero (x : U.RC k j (1 + ρ)) (y : U.RC k 1 ρ) (v : Fin (2 * ρ + k + 1)) : CX x y v 0 = cy y v := rfl
 theorem CX_succ (x : U.RC k j (1 + ρ)) (y : U.RC k 1 ρ) (v : Fin (2 * ρ + k + 1)) (b : Fin j) :
     CX x y v b.succ = cm x v b + cy y v * cb x b := rfl
@@ -409,10 +401,6 @@ open Dx2.Split
 
 theorem hs' (k j ρ : ℕ) : j + (1 + ρ) = (j + 1) + ρ := by omega
 
-local macro "blks" : tactic => `(tactic| simp only [Ux3.block3_apply, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,
-  Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂, Matrix.fromRows_apply_inl, Matrix.fromRows_apply_inr,
-  Matrix.fromCols_apply_inl, Matrix.fromCols_apply_inr])
-
 theorem M1 (x : U.RC k j (1 + ρ)) (y : U.RC k 1 ρ) :
     D.castM (hs' k j ρ) (U.embG k j (1 + ρ) (U.Rn k 1 ρ y) * U.Rn k j (1 + ρ) x) =
       U.muP k (j + 1) ρ (qL x) * U.Rn k (j + 1) ρ (XC x y) := by
@@ -522,10 +510,6 @@ variable {k j ρ : ℕ}
 section M2
 
 open Dx2.Split
-
-local macro "blks" : tactic => `(tactic| simp only [Ux3.block3_apply, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,
-  Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂, Matrix.fromRows_apply_inl, Matrix.fromRows_apply_inr,
-  Matrix.fromCols_apply_inl, Matrix.fromCols_apply_inr])
 
 def Z1 (c : ℂ) : G.Mat 1 := fun _ _ => c
 

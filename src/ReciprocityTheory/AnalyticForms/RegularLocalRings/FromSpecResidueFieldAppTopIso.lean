@@ -14,8 +14,6 @@ def constSec (U : S.Opens) : ℂ →+* Γ(S, U) :=
 def constRes (x : S) : ℂ →+* S.residueField x :=
   (S.evaluation ⊤ x trivial).hom.comp (constSec s ⊤)
 
-def CPt (S : Scheme.{0}) : Type := {x : S // IsClosed ({x} : Set S)}
-
 open Classical in
 
 def valHom (x : S) : S.residueField x → ℂ :=
@@ -109,13 +107,6 @@ theorem residueFieldMap_constRes {T : Scheme.{0}} (t : T ⟶ Spec (CommRingCat.o
   rw [Scheme.evaluation_naturality g x (V := ⊤) trivial, ← hg, Scheme.Hom.comp_appTop,
     Category.assoc]
   rfl
-
-theorem existsUnique_valHom [LocallyOfFiniteType s] (x : S) (hx : IsClosed ({x} : Set S)) :
-    (∃! φ : S.residueField x →+* ℂ, φ.comp (constRes s x) = RingHom.id ℂ) ∧
-      Function.Bijective (valHom s x) := by
-  refine ⟨⟨_, valHom_spec s x hx, fun ψ hψ => valHom_unique s x hx ψ hψ⟩, ?_⟩
-  rw [valHom_eq s x hx]
-  exact (residueFieldIsoBase s x hx).commRingCatIsoToRingEquiv.bijective
 
 theorem val_ringHom [LocallyOfFiniteType s] (U : S.Opens) (x : S) (hx : x ∈ U)
     (hc : IsClosed ({x} : Set S)) :

@@ -13,7 +13,5 @@ theorem integral_inert_of_weakApprox (h : WeakApproxAndOrthonormalBases) : IntIn
       (MMOnb.globONB_of h.2.1) AlgP.zero_value_algebraic)
 
 variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
-theorem jets_inert_of_weakApprox (h : WeakApproxAndOrthonormalBases) (hJ : PhiJetInt) : JetsInert :=
-  jetsInert_of_int (integral_inert_of_weakApprox h) (orthBasisExists_of (MMOnb.globONB_of h.2.1) (weakApprox_of h.1)) hJ
 
 end Formalism.L2.KerInert

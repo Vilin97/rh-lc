@@ -10,7 +10,6 @@ namespace LateralTheory.E.LeafMapFPPf
 section
 variable {k Ω : Type} [Field k] [Field Ω] [Algebra k Ω]
 
-@[reassoc]
 theorem incl_comp {R S T : Subalgebra k Ω} (h1 : R ≤ S) (h2 : S ≤ T) :
     incl h2 ≫ incl h1 = incl (h1.trans h2) := by
   simp only [incl, ← Spec.map_comp]

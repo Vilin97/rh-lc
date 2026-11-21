@@ -1038,28 +1038,10 @@ theorem locReprodStep_of (hS : LocScalarStep) : LocReprodStep := by
   refine ⟨(hc xv).1, ?_⟩
   rw [(hc xv).2, h1, one_smul]
 
-theorem wuDecay_of_gap_steps (hB : BesselNVGap) (hC : CoefWeightedLoc) (hW : WlocExists)
-    (hBW : Formalism.L2.SG.LocWSOf.BesselOfW) (hM1 : Formalism.L2.SG.LitS.BesselMultOne)
-    (hQ : QuotAll) (hR : LocReprodStep) (hU : LocUniqStep) : Formalism.L2.SG.Pf.WuDecayOfGap :=
-  wuDecayOfGap_of_steps hC hQ (locDecayStep_of hB hC hW hBW hM1 hR hU)
-
-theorem wuDecay_of_gap (hB : BesselNVGap) (hC : CoefWeightedLoc) (hW : WlocExists)
-    (hBW : Formalism.L2.SG.LocWSOf.BesselOfW) (hM1 : Formalism.L2.SG.LitS.BesselMultOne)
-    (hQK : Formalism.L2.SG.Pf.WFL.QuotProdK) (hHN : Formalism.L2.SG.Pf.WFL.LocHNProps) (hNU : Formalism.L2.SG.Pf.WFL.NUnimodLoc)
-    (hR : LocReprodStep) (hU : LocUniqStep) : Formalism.L2.SG.Pf.WuDecayOfGap :=
-  wuDecay_of_gap_steps hB hC hW hBW hM1 (quotAll_of hQK hHN hNU) hR hU
-
 end Formalism.L2.SG.Pf.WuDec
 
 namespace Formalism.L2.SG.Pf
 
 open Formalism.L2.SG.SplitPrimeNormLemmas Formalism.L2.SG.Pf.WuDec
-
-theorem wuDecay_of_gap (hB : BesselNVGap) (hC : CoefWeightedLoc) (hW : WlocExists)
-    (hBW : Formalism.L2.SG.LocWSOf.BesselOfW) (hM1 : Formalism.L2.SG.LitS.BesselMultOne)
-    (hQK : Formalism.L2.SG.Pf.WFL.QuotProdK) (hHN : Formalism.L2.SG.Pf.WFL.LocHNProps) (hNU : Formalism.L2.SG.Pf.WFL.NUnimodLoc)
-    (hS : LocScalarStep) (hU : LocUniqStep) : WuDecayOfGap :=
-  WuDec.wuDecay_of_gap_steps hB hC hW hBW hM1 (quotAll_of hQK hHN hNU)
-    (locReprodStep_of hS) hU
 
 end Formalism.L2.SG.Pf

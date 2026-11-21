@@ -67,7 +67,6 @@ def pr : (k : ℕ) → (n : Fin (k + 1) → ℕ) → (i : Fin (k + 1)) →
       (pullback.fst (toSpecBase A (n 0)) (mpStr A k (Fin.tail n)))
       (fun j => pullback.snd (toSpecBase A (n 0)) (mpStr A k (Fin.tail n)) ≫ pr k (Fin.tail n) j) i
 
-@[reassoc]
 lemma pr_toSpecBase : (k : ℕ) → (n : Fin (k + 1) → ℕ) → (i : Fin (k + 1)) →
     pr A k n i ≫ toSpecBase A (n i) = mpStr A k n
   | 0, n, i => by
@@ -85,9 +84,6 @@ lemma pr_toSpecBase : (k : ℕ) → (n : Fin (k + 1) → ℕ) → (i : Fin (k + 
 variable {A}
 
 @[simp] lemma pr_zero_zero (n : Fin 1 → ℕ) : pr A 0 n 0 = 𝟙 _ := rfl
-
-@[simp] lemma pr_succ_zero (k : ℕ) (n : Fin (k + 2) → ℕ) :
-    pr A (k + 1) n 0 = pullback.fst (toSpecBase A (n 0)) (mpStr A k (Fin.tail n)) := rfl
 
 @[simp] lemma pr_succ_succ (k : ℕ) (n : Fin (k + 2) → ℕ) (j : Fin (k + 1)) :
     pr A (k + 1) n j.succ =
@@ -108,13 +104,11 @@ def lift (k : ℕ) (n : Fin (k + 1) → ℕ) {T : Scheme.{u}} (t : T ⟶ Spec (.
     T ⟶ MP A k n :=
   (liftAux k n t a ha).1
 
-@[reassoc (attr := simp)]
 lemma lift_mpStr (k : ℕ) (n : Fin (k + 1) → ℕ) {T : Scheme.{u}} (t : T ⟶ Spec (.of A))
     (a : ∀ i, T ⟶ projectiveSpace A (n i)) (ha : ∀ i, a i ≫ toSpecBase A (n i) = t) :
     lift k n t a ha ≫ mpStr A k n = t :=
   (liftAux k n t a ha).2
 
-@[reassoc (attr := simp)]
 lemma lift_pr : (k : ℕ) → (n : Fin (k + 1) → ℕ) → {T : Scheme.{u}} → (t : T ⟶ Spec (.of A)) →
     (a : ∀ i, T ⟶ projectiveSpace A (n i)) → (ha : ∀ i, a i ≫ toSpecBase A (n i) = t) →
     (i : Fin (k + 1)) → lift k n t a ha ≫ pr A k n i = a i

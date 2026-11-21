@@ -80,13 +80,6 @@ theorem branchesAlong_all (n N : ℕ) (h : n + 1 = N) (lam : DomWeight N) :
   ⟨branchesAlong_of_irreducible _ h lam (isIrreducible_smallRep_id n) (intertwining_id_eq_zero n),
     branchesAlong_of_irreducible _ h lam (isIrreducible_smallRep_unitary n) (intertwining_unitary_eq_zero n)⟩
 
-instance finite_cointertwining {H : Type} [Group H] {n N : ℕ} (ι : H →* GL (Fin n) ℂ) (h : n + 1 = N)
-    (lam : DomWeight N) (mu : DomWeight n) :
-    FiniteDimensional ℂ ((resRep ι h lam).IntertwiningMap (smallRep ι mu)) := by
-  let L : (resRep ι h lam).IntertwiningMap (smallRep ι mu) →ₗ[ℂ] (nablaSq ℂ N lam →ₗ[ℂ] nablaSq ℂ n mu) :=
-    { toFun := fun f => f.toLinearMap, map_add' := fun _ _ => rfl, map_smul' := fun _ _ => rfl }
-  exact FiniteDimensional.of_injective L fun _ _ e => Representation.IntertwiningMap.ext e
-
 theorem comult_of_irreducible {H : Type} [Group H] {n N : ℕ} (ι : H →* GL (Fin n) ℂ) (h : n + 1 = N)
     (lam : DomWeight N) (hirr : ∀ mu : DomWeight n, (smallRep ι mu).IsIrreducible)
     (hz : ∀ mu nu : DomWeight n, mu ≠ nu → ∀ φ : (smallRep ι mu).IntertwiningMap (smallRep ι nu), φ = 0)

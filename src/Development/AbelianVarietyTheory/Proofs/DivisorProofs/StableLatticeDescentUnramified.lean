@@ -21,10 +21,8 @@ def consZero (n : ℕ) : (Fin n → R') →ₗ[R'] (Fin (n + 1) → R') where
     refine Fin.cases ?_ ?_ i <;> simp
 
 omit [Algebra R R'] in
-@[simp] lemma consZero_zero (n : ℕ) (w : Fin n → R') : consZero n w 0 = 0 := rfl
 
 omit [Algebra R R'] in
-@[simp] lemma consZero_succ (n : ℕ) (w : Fin n → R') (j : Fin n) : consZero n w j.succ = w j := rfl
 
 theorem scalar_descent [IsDomain R'] (D : Set (R' ≃ₐ[R] R')) (ϖ : R)
     (hπ : algebraMap R R' ϖ ≠ 0)

@@ -9,8 +9,6 @@ namespace GlobalTheory.CompanionTheory.DiagProperProof
 
 variable {n : ℕ}
 
-local notation "θ" => thetaR (starRingEnd ℂ) _
-
 theorem th_val (g : GL (Fin n) ℂ) : (θ g).val = ((g⁻¹ : GL (Fin n) ℂ).val)ᴴ := by
   ext i j
   simp [thetaR_val, Matrix.conjTranspose_apply]

@@ -10,10 +10,14 @@ import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsIdentityPullba
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.PullPointIdentityDegeneration
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsBaseChangeUniformization
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.SameUniformizationIdentityPullback
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.UniformizationPowerGroup
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.IotaPointsAdditive
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.ProdExpPf
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.UnifPowOf3
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.WeightedChartPullback.CancelSecAct
+import Development.AbelianVarietyTheory.BlockTheory.CMModuli.FlatIsoUnitGenerator
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
+import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.IsNsmul
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsSmulPtSmulPt
 import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.TauBalOfIsPullDeg
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.TorsionFiniteFlatIff
 
 set_option autoImplicit false
 
@@ -47,10 +51,6 @@ end Flat
 section Move
 
 variable {I : Ideal R} {t t' : SAB H (Sp R)}
-
-def withUnif (P : PELUnif I t) (U' : Unif I P.D P.A t'.G) (hb : U'.LG = t'.PP)
-    (hl : letI := H.starRing; U'.toUnifPre.OLinear (𝓞 E) P.oD P.oA t'.act.toRingAct) : PELUnif I t' :=
-  { D := P.D, mod := P.mod, oD := P.oD, A := P.A, oA := P.oA, U := U', bundle := hb, lin := hl, w0 := P.w0 }
 
 end Move
 

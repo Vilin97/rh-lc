@@ -1,7 +1,9 @@
 import Mathlib
 import Formalism.LocalToGlobal.ProjectiveLattices.CuspFree
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.SiegelSpaceAlgebraHolds
-import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.CuspMultiplicationClosed
+import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
+import Formalism.LocalToGlobal.ProjectiveLattices.JFDFree
+import Formalism.LocalToGlobal.ProjectiveLattices.IsCombAt
 
 noncomputable section
 

@@ -89,26 +89,6 @@ theorem normGroup_eq_comap (L : IntermediateField K Ω) [FiniteDimensional K L] 
 
 variable (L : IntermediateField K Ω) [FiniteDimensional K L]
 
-noncomputable def maximalAbelianSubextension : IntermediateField K Ω :=
-  IntermediateField.fixedField (maxAbelian (le_top : fixingOpenSubgroup L ≤ ⊤) : Subgroup (Ω ≃ₐ[K] Ω))
-
-instance finiteDimensional_maximalAbelianSubextension :
-    FiniteDimensional K (maximalAbelianSubextension L) :=
-  finiteDimensional_fixedField_openSubgroup _
-
-theorem fixingOpenSubgroup_maximalAbelianSubextension :
-    fixingOpenSubgroup (maximalAbelianSubextension L) = maxAbelian (le_top : fixingOpenSubgroup L ≤ ⊤) :=
-  fixingOpenSubgroup_fixedField _
-
-theorem isAbelianExtension_fixingOpenSubgroup_maximalAbelianSubextension :
-    IsAbelianExtension ⊤ (fixingOpenSubgroup (maximalAbelianSubextension L)) := by
-  rw [fixingOpenSubgroup_maximalAbelianSubextension]
-  exact isAbelianExtension_maxAbelian _
-
-instance isGalois_maximalAbelianSubextension : IsGalois K (maximalAbelianSubextension L) :=
-  ((isAbelianExtension_fixingOpenSubgroup_iff _).1
-    (isAbelianExtension_fixingOpenSubgroup_maximalAbelianSubextension L)).1
-
 end Dictionary
 
 section Correspondence

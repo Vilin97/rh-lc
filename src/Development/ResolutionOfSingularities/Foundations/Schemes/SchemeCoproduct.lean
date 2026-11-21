@@ -22,26 +22,11 @@ theorem isClosed_range_coprod_inl (X Y : Scheme.{u}) :
   rw [← isOpen_compl_iff, h.compl_eq]
   exact hopen
 
-private theorem isOpen_range_coprod_inl (X Y : Scheme.{u}) :
-    IsOpen (Set.range ⇑(coprod.inl : X ⟶ X ⨿ Y).base) :=
-  (coprod.inl : X ⟶ X ⨿ Y).isOpenEmbedding.isOpen_range
-
-theorem isClosed_range_coprod_inr (X Y : Scheme.{u}) :
-    IsClosed (Set.range ⇑(coprod.inr : Y ⟶ X ⨿ Y).base) := by
-  rw [range_coprod_inr_eq_compl X Y, isClosed_compl_iff]
-  exact isOpen_range_coprod_inl X Y
-
 instance instIsClosedImmersionCoprodInl (X Y : Scheme.{u}) :
     IsClosedImmersion (coprod.inl : X ⟶ X ⨿ Y) := by
   constructor
   exact ⟨(coprod.inl : X ⟶ X ⨿ Y).isOpenEmbedding.toIsEmbedding,
     isClosed_range_coprod_inl X Y⟩
-
-instance instIsClosedImmersionCoprodInr (X Y : Scheme.{u}) :
-    IsClosedImmersion (coprod.inr : Y ⟶ X ⨿ Y) := by
-  constructor
-  exact ⟨(coprod.inr : Y ⟶ X ⨿ Y).isOpenEmbedding.toIsEmbedding,
-    isClosed_range_coprod_inr X Y⟩
 
 private theorem isClosedEmbedding_coprod_inl_base (X Y : Scheme.{u}) :
     Topology.IsClosedEmbedding ⇑(coprod.inl : X ⟶ X ⨿ Y).base :=
@@ -52,16 +37,6 @@ instance instQuasiCompactCoprodInl (X Y : Scheme.{u}) :
   constructor
   intro U _ hU
   exact (isClosedEmbedding_coprod_inl_base X Y).isCompact_preimage hU
-
-private theorem isClosedEmbedding_coprod_inr_base (X Y : Scheme.{u}) :
-    Topology.IsClosedEmbedding ⇑(coprod.inr : Y ⟶ X ⨿ Y).base :=
-  ⟨(coprod.inr : Y ⟶ X ⨿ Y).isOpenEmbedding.toIsEmbedding, isClosed_range_coprod_inr X Y⟩
-
-instance instQuasiCompactCoprodInr (X Y : Scheme.{u}) :
-    QuasiCompact (coprod.inr : Y ⟶ X ⨿ Y) := by
-  constructor
-  intro U _ hU
-  exact (isClosedEmbedding_coprod_inr_base X Y).isCompact_preimage hU
 
 section
 
@@ -124,13 +99,6 @@ theorem isClosed_range_sigmaι (j : ι) : IsClosed (Set.range ⇑(Sigma.ι X j).
   intro hmem
   obtain ⟨w, hw⟩ := hmem
   exact sigmaι_base_ne X hij z w hw.symm
-
-theorem isClosedImmersion_sigmaι (j : ι) : IsClosedImmersion (Sigma.ι X j) := by
-  constructor
-  exact ⟨(Sigma.ι X j).isOpenEmbedding.toIsEmbedding, isClosed_range_sigmaι X j⟩
-
-instance instIsClosedImmersionSigmaι (j : ι) : IsClosedImmersion (Sigma.ι X j) :=
-  isClosedImmersion_sigmaι X j
 
 private theorem isClosedEmbedding_sigmaι_base {κ : Type u} (Y : κ → Scheme.{u})
     [HasCoproduct Y] (j : κ) (hc : IsClosed (Set.range ⇑(Sigma.ι Y j).base)) :

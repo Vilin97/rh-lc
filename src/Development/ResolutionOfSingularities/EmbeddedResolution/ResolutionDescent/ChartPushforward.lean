@@ -15,16 +15,6 @@ noncomputable section
 
 namespace FunctorialResolution.EmbeddedResolution
 
-def subschemeIsoOfEq {V : Scheme.{u}} {I J : V.IdealSheafData} (h : I = J) :
-    I.subscheme ≅ J.subscheme :=
-  eqToIso (congrArg (fun K : V.IdealSheafData => K.subscheme) h)
-
-@[reassoc (attr := simp)]
-theorem subschemeIsoOfEq_hom_subschemeι {V : Scheme.{u}} {I J : V.IdealSheafData} (h : I = J) :
-    (subschemeIsoOfEq h).hom ≫ J.subschemeι = I.subschemeι := by
-  subst h
-  simp [subschemeIsoOfEq]
-
 variable {k : Type u} [Field k] [CharZero k] {Y : Scheme.{u}} [AlgebraicGeometry.IsAffine Y]
   {pY : Y ⟶ Spec (CommRingCat.of k)} [AlgebraicGeometry.LocallyOfFiniteType pY]
 
@@ -55,10 +45,6 @@ namespace ChartPushforward
 section
 
 variable {S S' : EmbeddedBlowupSequence k Y pY}
-
-instance instIsClosedImmersionAmbientMap (P : ChartPushforward S S') :
-    AlgebraicGeometry.IsClosedImmersion P.ambientMap :=
-  P.isClosedImmersion_ambientMap
 
 instance instIsClosedImmersionLevelMap (P : ChartPushforward S S') (i : ℕ) (hi : i ≤ S'.length) :
     AlgebraicGeometry.IsClosedImmersion (P.levelMap i hi) :=
@@ -116,10 +102,6 @@ def ofIsPushforwardSeq (hemb : S.emb ≫ f = S'.emb)
   levelMap_blowdown := fun i hi => blowdown_comm_of_isPushforwardBlowupSeq S S' f h i hi
   ambientCenter_eq := fun i hi => ambientCenter_eq_imageIdealSheaf_of_isPushforwardBlowupSeq S S' f h i hi
   ker_levelMap_succ := fun i hi => ker_succ_eq_strictTransform_of_isPushforwardBlowupSeq S S' f h i hi
-
-theorem ofIsPushforwardSeq_ambientMap (hemb : S.emb ≫ f = S'.emb)
-    (h : IsPushforwardBlowupSeq f S.ambientSeq S'.ambientSeq) :
-    (ofIsPushforwardSeq S S' f hemb h).ambientMap = f := rfl
 
 end
 
@@ -185,7 +167,6 @@ def strictTransformIso (P : ChartPushforward S S') (i : ℕ) (hi : i ≤ S'.leng
     S.strictTransform i ≅ S'.strictTransform i :=
   (P.exists_strictTransform_iso i hi).choose
 
-@[reassoc (attr := simp)]
 theorem strictTransformIso_hom_comp_strictTransformι (P : ChartPushforward S S') (i : ℕ) (hi : i ≤ S'.length) :
     (P.strictTransformIso i hi).hom ≫ S'.strictTransformι i = S.strictTransformι i ≫ P.levelMap i hi :=
   (P.exists_strictTransform_iso i hi).choose_spec

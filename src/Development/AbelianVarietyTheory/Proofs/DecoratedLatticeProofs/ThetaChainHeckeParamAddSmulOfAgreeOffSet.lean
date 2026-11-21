@@ -154,5 +154,3 @@ theorem isPar_add_smul : ∀ (D : D7) (c : Com D) (s : PiLocalization₂ D), (�
     exact paramFun_smul (hu.2 v hu0) (by simpa using ha)
 
 end GlobalTheory.ChainOnto
-
-example : ∀ (D : D7) (c : GlobalTheory.ChainOnto.Com D) (s : GlobalTheory.ChainOnto.PiLocalization₂ D), (∀ (u u' : s.CC c) B B' (a : ℂ), GlobalTheory.ChainOnto.IsPar u B → GlobalTheory.ChainOnto.IsPar u' B' → (∀ w ∉ (GlobalTheory.LFun.above D.host.E (c.S : Set (HeightOneSpectrum (𝓞 D.host.F)))), B w = B' w) → u + a • u' ≠ 0 → GlobalTheory.ChainOnto.IsPar (u + a • u') B) ∧ ∀ (u : s.CC c) B (a : ℂ), GlobalTheory.ChainOnto.IsPar u B → a ≠ 0 → GlobalTheory.ChainOnto.IsPar (a • u) B := GlobalTheory.ChainOnto.isPar_add_smul

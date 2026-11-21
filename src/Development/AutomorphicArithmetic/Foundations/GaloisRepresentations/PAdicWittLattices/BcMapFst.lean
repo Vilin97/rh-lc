@@ -120,25 +120,6 @@ structure Tower (B : Scheme.{0}) (G : Type) [Group G] where
   free : ∀ i j, K i ≤ K j → ∀ k ∈ K j, ∀ a b (Ω : Type) [Field Ω] [IsAlgClosed Ω] (x : sp Ω ⟶ Z i),
     x ≫ tr i i k a b = x → k ∈ K i
 
-def Tower.triv {B X : Scheme.{0}} (p : X ⟶ B) : Tower B Unit where
-  ι := Unit
-  K _ := ⊤
-  Δ := ⊤
-  K_le _ _ _ := trivial
-  deep _ _ := ⟨(), le_rfl, fun _ _ _ _ => trivial, fun _ _ _ _ => trivial⟩
-  idx _ _ := by simp
-  Z _ := X
-  q _ := p
-  tr _ _ _ _ _ := 𝟙 X
-  tr_q _ _ _ _ _ := Category.id_comp _
-  tr_self _ _ _ _ _ := rfl
-  tr_mul _ _ _ _ _ _ _ _ _ _ _ := Category.id_comp _
-  fin _ _ _ _ := inferInstance
-  etale _ _ _ _ := inferInstance
-  onto _ _ _ _ := inferInstance
-  trans _ _ _ _ _ _ _ _ x y h := ⟨(), trivial, trivial, fun _ _ => trivial, by simpa using h.symm⟩
-  free _ _ _ _ _ _ _ _ _ _ _ _ := trivial
-
 def conv {G R : Type} [Group G] [Field R] (K : Subgroup G) (f f' : G → R) (x : G) : R :=
   ∑ᶠ y : G ⧸ K, f y.out * f' (y.out⁻¹ * x)
 
@@ -168,13 +149,6 @@ open Classical in
 
 def hecke (j : X.ι) (f : G → R) : Module.End R (T.H (X.q j)) :=
   if h : ∃ A, X.IsHop T j f A then h.choose else 0
-
-structure Endo where
-  e : ∀ i, X.Z i ⟶ X.Z i
-  e_q : ∀ i, e i ≫ X.q i = X.q i
-  comm : ∀ i j h a b, e i ≫ X.tr i j h a b = X.tr i j h a b ≫ e j
-
-def Endo.id : X.Endo := ⟨fun _ => 𝟙 _, fun _ => Category.id_comp _, fun _ _ _ _ _ => by simp⟩
 
 end Tower
 

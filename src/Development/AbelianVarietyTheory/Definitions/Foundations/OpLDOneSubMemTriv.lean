@@ -40,11 +40,6 @@ def admitted (N l : ℕ) : Letter → Prop
 def LetAlg (R : Type) [CommRing R] (S : Letter → Prop) : Subalgebra R (FreeAlgebra R Letter) :=
   Algebra.adjoin R (FreeAlgebra.ι R '' {T | S T})
 
-def SSPot (N l w : ℕ) (lam : Letter → ℂ) : Prop :=
-  ∃ P ∈ LetAlg ℂ (admitted N l), FreeAlgebra.lift ℂ lam P = 1 ∧ ∀ F ∈ Pot ℂ w (Gam N l), ∀ T : Letter, admitted N l T →
-    (opL ℂ N l T - lam T • (1 : Module.End ℂ (ℂ → MvPolynomial (Fin 2) ℂ)))
-      (FreeAlgebra.lift ℂ (opL ℂ N l) P F) ∈ Triv ℂ w (Gam N l)
-
 variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ}
 
 def FrobAt (q : ℕ) (s : Ω ≃ₐ[ℚ] Ω) : Prop :=
@@ -61,10 +56,6 @@ def Tower.opV (X : Tower Ω ε) (N l : ℕ) [Fact l.Prime] (E : Type) [Field E] 
 def Tower.galV (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (E : Type) [Field E] [Algebra ℤ_[l] E] (s : Ω ≃ₐ[ℚ] Ω) :
     Module.End E (E ⊗[ℤ_[l]] X.Fn l) :=
   LinearMap.baseChange E (X.galB l s)
-
-def Tower.SSB (X : Tower Ω ε) (N l w : ℕ) [Fact l.Prime] (E : Type) [Field E] [Algebra ℤ_[l] E] (lam : Letter → E) : Prop :=
-  ∃ P ∈ LetAlg E (admitted N l), FreeAlgebra.lift E lam P = 1 ∧ ∀ x ∈ X.VB N l w E, ∀ T : Letter, admitted N l T →
-    (X.opV N l E T - lam T • (1 : Module.End E (E ⊗[ℤ_[l]] X.Fn l))) (FreeAlgebra.lift E (X.opV N l E) P x) = 0
 
 namespace Betti
 
@@ -193,44 +184,7 @@ def potSub (R : Type) [CommRing R] (w : ℕ) (Γ : Subgroup SL(2, ℤ)) : Submod
     refine ⟨c • p, fun z hz => ?_⟩
     rw [← hp z hz]; simp only [Pi.smul_apply, map_smul, smul_sub]
 
-def trivSub (R : Type) [CommRing R] (w : ℕ) (Γ : Subgroup SL(2, ℤ)) : Submodule R (ℂ → MvPolynomial (Fin 2) R) where
-  carrier := Triv R w Γ
-  zero_mem' := ⟨0, 0, fun _ _ _ _ => by simp, fun _ _ => by simp⟩
-  add_mem' := by
-    rintro F G ⟨ψ, p, h1, h2⟩ ⟨ψ', p', h1', h2'⟩
-    refine ⟨ψ + ψ', p + p', fun γ hγ z hz => ?_, fun z hz => ?_⟩
-    · simp [h1 γ hγ z hz, h1' γ hγ z hz]
-    · simp only [Pi.add_apply, h2 z hz, h2' z hz]; ring
-  smul_mem' := by
-    rintro c F ⟨ψ, p, h1, h2⟩
-    refine ⟨c • ψ, c • p, fun γ hγ z hz => ?_, fun z hz => ?_⟩
-    · simp [h1 γ hγ z hz]
-    · simp [h2 z hz]
-
-@[simp] theorem mem_potSub {F : ℂ → MvPolynomial (Fin 2) R} : F ∈ potSub R w Γ ↔ F ∈ Pot R w Γ := by exact Iff.rfl
-
-@[simp] theorem mem_trivSub {F : ℂ → MvPolynomial (Fin 2) R} : F ∈ trivSub R w Γ ↔ F ∈ Triv R w Γ := by exact Iff.rfl
-
 end Slash
-
-example : slP (R := ℤ) !![1, 2; 0, 3] (MvPolynomial.X 0) = MvPolynomial.X 0 + 2 * MvPolynomial.X 1 := by
-  simp [slP_X, MvPolynomial.smul_eq_C_mul]
-
-example : admitted 5 3 (Letter.T 2) ∧ ¬ admitted 5 3 (Letter.T 0) ∧ ¬ admitted 5 3 (Letter.T 1) ∧ ¬ admitted 5 3 (Letter.T 3) ∧
-    ¬ admitted 5 3 (Letter.T 4) ∧ admitted 5 3 (Letter.D 3) ∧ ¬ admitted 5 3 (Letter.D 0) := by
-  simp only [admitted]; decide
-
-example : FreeAlgebra.ι ℂ (Letter.T 0) ∉ LetAlg ℂ (admitted 5 3) := by
-  intro h
-  have := lift_congr (f := fun _ => (0 : ℂ)) (g := fun T => match T with | Letter.T 0 => 1 | _ => 0) (fun T hT => by
-    rcases T with (_ | q) | _ | d
-    · exact absurd hT.1 Nat.not_prime_zero
-    all_goals rfl) h
-  simp at this
-
-example (s : Ω ≃ₐ[ℚ] Ω) : ¬ FrobAt 1 s := by
-  rintro ⟨V, h, -⟩
-  simp [ValuationSubring.mem_nonunits_iff] at h
 
 end Betti
 

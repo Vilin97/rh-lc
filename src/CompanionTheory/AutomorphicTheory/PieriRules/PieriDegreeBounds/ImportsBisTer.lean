@@ -1,3 +1,4 @@
-import Development.AbelianVarietyTheory.Definitions.Jets.TauZero
-import CompanionTheory.AutomorphicTheory.PieriRules.PieriDegreeBounds.Imports
+import Mathlib
+import Development.AbelianVarietyTheory.Definitions.Jets.SideFam
 import Formalism.HermitianCurvature.StatementTBB
+import CompanionTheory.AutomorphicTheory.PieriRules.PieriDegreeBounds.Imports

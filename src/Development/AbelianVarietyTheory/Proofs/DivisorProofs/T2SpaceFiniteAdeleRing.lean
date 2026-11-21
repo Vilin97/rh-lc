@@ -40,20 +40,8 @@ def prjM (T : Finset (Pl E)) :
 def prjG (T : Finset (Pl E)) : GL (Fin n) (FiniteAdeleRing (𝓞 E) E) →* GL (Fin n) (FiniteAdeleRing (𝓞 E) E) :=
   Units.map (prjM E n T)
 
-def Gam (w : Pl E) : Subgroup (GL (Fin n) (FiniteAdeleRing (𝓞 E) E)) := (prjG E n (orb E w)).range
-
-def pfU (w : Pl E) : GL (Fin n) (FiniteAdeleRing (𝓞 E) E) →* Gam E n w := (prjG E n (orb E w)).rangeRestrict
-
-def thU (w : Pl E) : Gam E n w →* Gam E n w := (pfU E n w).comp ((thF E n).comp (Gam E n w).subtype)
-
 def Kglob : Subgroup (GL (Fin n) (FiniteAdeleRing (𝓞 E) E)) :=
   ⨅ w : Pl E, (GlobalTheory.LFun.KGL w n).comap (GeneralLinearGroup.map (pLoc E w))
-
-def KU (w : Pl E) : Subgroup (Gam E n w) := (Kglob E n).subgroupOf (Gam E n w)
-
-def FU (S : Set (Pl E)) (φ : ∀ w : Pl E, GLw n w → ℂ) (w : Pl E) (y : Gam E n w) : ℂ :=
-  (∏ᶠ u ∈ S ∩ ↑(orb E w), φ u (GeneralLinearGroup.map (pLoc E u) y.1)) *
-    ∏ᶠ u ∈ Sᶜ ∩ ↑(orb E w), (GlobalTheory.LFun.KGL u n : Set (GLw n u)).indicator 1 (GeneralLinearGroup.map (pLoc E u) y.1)
 
 instance t2Space_finiteAdeleRing : T2Space (FiniteAdeleRing (𝓞 E) E) :=
   T2Space.of_injective_continuous (f := fun x : FiniteAdeleRing (𝓞 E) E => (x : ∀ v : Pl E, v.adicCompletion E))

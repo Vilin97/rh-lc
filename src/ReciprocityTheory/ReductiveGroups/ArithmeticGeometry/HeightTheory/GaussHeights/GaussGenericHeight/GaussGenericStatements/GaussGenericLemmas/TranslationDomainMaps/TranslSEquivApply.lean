@@ -118,9 +118,6 @@ noncomputable def translSEquiv (j₀ : Fin (N + 1)) (a : Fin (N + 1) → Ω) :
     (algHom_ext fun s => by by_cases h : blk s = 0 <;> simp [translS_X, h])
     (algHom_ext fun s => by by_cases h : blk s = 0 <;> simp [translS_X, h])
 
-@[simp] theorem translSEquiv_apply (j₀ : Fin (N + 1)) (a : Fin (N + 1) → Ω)
-    (g : MvPolynomial (SVar D N) Ω) : translSEquiv j₀ a g = translS j₀ a g := rfl
-
 theorem lift_transl {K : Type} [Field K] [Algebra K Ω] (j₀ : Fin (N + 1)) (x : Fin N → Ω)
     (a : Fin (N + 1) → K) (t : TVar D N) :
     translS j₀ (fun j => algebraMap K Ω (a j)) (Pimg j₀ x t) =

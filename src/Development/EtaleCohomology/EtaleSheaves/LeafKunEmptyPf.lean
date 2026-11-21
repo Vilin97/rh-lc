@@ -1,4 +1,4 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafKunGlobalCut
+import Development.AbelianVarietyTheory.Definitions.Divisors.DivisorSupportCondition
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite
@@ -49,9 +49,5 @@ theorem H_sub (Z : Scheme.{0}) [IsEmpty Z] (F : Shv R) (n : ℤ) : Subsingleton 
   apply Cochain.ext
   intro p q hpq
   exact (chains_zero (R := R) Z p).eq_of_src _ _
-
-instance botEmpty {X : Scheme.{0}} : IsEmpty (⊥ : X.Opens).toScheme := ⟨fun x => by
-  have h : (⊥ : X.Opens).ι.base x ∈ Set.range (⊥ : X.Opens).ι.base := ⟨x, rfl⟩
-  rw [Scheme.Opens.range_ι] at h; simp at h⟩
 
 end LateralTheory.E.LeafKunEmptyPf

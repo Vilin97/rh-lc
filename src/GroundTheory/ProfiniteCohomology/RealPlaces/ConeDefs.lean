@@ -66,12 +66,10 @@ noncomputable def prodLift {P : CochainComplex (ModuleCat.{u} k) ℕ} (f : P ⟶
       exact Prod.ext (hom_apply_hom_apply_eq_of_comp_eq (f.comm n (n + 1)) x)
         (hom_apply_hom_apply_eq_of_comp_eq (g.comm n (n + 1)) x))
 
-@[reassoc (attr := simp)]
 theorem prodLift_prodFst {P : CochainComplex (ModuleCat.{u} k) ℕ} (f : P ⟶ M) (g : P ⟶ N) :
     prodLift f g ≫ prodFst M N = f :=
   HomologicalComplex.hom_ext _ _ fun _ => ModuleCat.hom_ext (LinearMap.ext fun _ => rfl)
 
-@[reassoc (attr := simp)]
 theorem prodLift_prodSnd {P : CochainComplex (ModuleCat.{u} k) ℕ} (f : P ⟶ M) (g : P ⟶ N) :
     prodLift f g ≫ prodSnd M N = g :=
   HomologicalComplex.hom_ext _ _ fun _ => ModuleCat.hom_ext (LinearMap.ext fun _ => rfl)

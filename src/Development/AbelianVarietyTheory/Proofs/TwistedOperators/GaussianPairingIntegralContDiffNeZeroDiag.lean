@@ -187,7 +187,6 @@ def toCont (N : V →ₗ[ℝ] V →ₗ[ℝ] ℂ) : V →L[ℝ] V →L[ℝ] ℂ :
     ((LinearMap.toContinuousLinearMap : (V →ₗ[ℝ] ℂ) ≃ₗ[ℝ] (V →L[ℝ] ℂ)).toLinearMap ∘ₗ N)
 
 omit [MeasurableSpace V] [BorelSpace V] in
-@[simp] theorem toCont_apply (N : V →ₗ[ℝ] V →ₗ[ℝ] ℂ) (x y : V) : toCont N x y = N x y := rfl
 
 omit [MeasurableSpace V] [BorelSpace V] in
 

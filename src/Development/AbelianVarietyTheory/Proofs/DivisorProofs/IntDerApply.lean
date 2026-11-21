@@ -35,9 +35,6 @@ def intDer {S A : Type} [CommRing S] [CommRing A] [Algebra S A] (δ : Derivation
   map_one_eq_zero' := δ.map_one_eq_zero
   leibniz' := δ.leibniz
 
-@[simp] theorem intDer_apply {S A : Type} [CommRing S] [CommRing A] [Algebra S A] (δ : Derivation S A A) (a : A) :
-    intDer δ a = δ a := rfl
-
 theorem iterOp_zero {A : Type} {n : ℕ} (ds : Fin n → A → A) (f : A) : iterOp ds 0 f = f := by
   unfold iterOp
   induction (List.finRange n) with

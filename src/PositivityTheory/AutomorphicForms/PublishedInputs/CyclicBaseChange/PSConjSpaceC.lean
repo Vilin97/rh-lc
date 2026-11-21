@@ -139,18 +139,6 @@ theorem Lx_symm (σ : E ≃+* E) (x : Cinf E) : Lx σ (Lx σ.symm x) = x :=
 theorem Lx_symm' (σ : E ≃+* E) (x : Cinf E) : Lx σ.symm (Lx σ x) = x := by
   simpa using Lx_symm σ.symm x
 
-def LE (σ : E ≃+* E) : Cinf E ≃+* Cinf E where
-  toFun := Lx σ
-  invFun := Lx σ.symm
-  left_inv := Lx_symm' σ
-  right_inv := Lx_symm σ
-  map_mul' := map_mul _
-  map_add' := map_add _
-
-theorem LE_apply (σ : E ≃+* E) (x : Cinf E) : LE σ x = Lx σ x := rfl
-
-theorem LE_symm_apply (σ : E ≃+* E) (x : Cinf E) : (LE σ).symm x = Lx σ.symm x := rfl
-
 theorem continuous_Lx (σ : E ≃+* E) : Continuous (Lx σ) :=
   continuous_pi fun w => continuous_cc _
 
@@ -233,12 +221,6 @@ def GD.symm (d : GD E) : GD E where
     rw [h, RingEquiv.symm_apply_apply]
   rat x := by
     rw [RingEquiv.symm_apply_eq, d.rat, RingEquiv.apply_symm_apply]
-
-theorem GD.symm_alt (d : GD E) : d.symm.s = d.s.symm := rfl
-
-theorem GD.symm_σ (d : GD E) : d.symm.σ = d.σ.symm := rfl
-
-theorem GD.symm_c (d : GD E) : d.symm.c = d.c.symm := rfl
 
 theorem pInf_sInf (z : Cinf E) : pInf E (sInf E z) = z := (infEq E).symm_apply_apply z
 

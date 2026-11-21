@@ -157,11 +157,6 @@ theorem map_minorProd [Fintype T] (f : R →+* S) (c : T → Fin p → ℕ) (c' 
   · exact Finset.prod_congr rfl fun i _ => by
       rw [ringHom_yMinor _ t i (φ t) (fun a => f ∘ φ t a) fun a b => map_yForm _ _ _ _]
 
-theorem IsPerp.map (f : R →+* S) {ε : T → Fin p → κ → R} {φ : T → Fin q → κ → R}
-    (h : IsPerp ε φ) : IsPerp (fun t a => f ∘ ε t a) (fun t b => f ∘ φ t b) := fun t a b => by
-  have := congrArg f (h t a b)
-  simpa [dotProduct] using this
-
 end Forms
 
 section Degree
@@ -250,13 +245,6 @@ theorem minorProd_isWeightedHomogeneous [Fintype T] (w : T → Fin p ⊕ Fin q �
     exact det_isWeightedHomogeneous _ _ _ fun a b => rowForm_isWeightedHomogeneous w t _ _
   · refine IsWeightedHomogeneous.prod _ _ _ fun i _ => IsWeightedHomogeneous.pow ?_ _
     exact det_isWeightedHomogeneous _ _ _ fun a b => rowForm_isWeightedHomogeneous w t _ _
-
-theorem minorProd_isHomogeneous [Fintype T] (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ)
-    (ε : T → Fin p → κ → R) (φ : T → Fin q → κ → R) :
-    (minorProd c c' ε φ).IsHomogeneous (typeDegree c c') := by
-  have := minorProd_isWeightedHomogeneous (fun _ _ => (1 : ℕ)) c c' ε φ
-  simp only [smul_eq_mul, mul_one, sum_partOf] at this
-  exact this
 
 end Degree
 
@@ -408,9 +396,6 @@ noncomputable def colRep : Representation R (T → GL κ R) (Poly R T p q κ) wh
   map_one' := by rw [map_one]; rfl
   map_mul' g h := by rw [map_mul]; rfl
 
-@[simp] theorem colRep_apply (g : T → GL κ R) (P : Poly R T p q κ) :
-    colRep R T p q κ g P = colAct R T p q κ g P := rfl
-
 theorem colAct_xForm (g : T → GL κ R) (t : T) (a : Fin p) (ε : κ → R) :
     colAct R T p q κ g (xForm t a ε) = xForm t a (covecAct (g t) ε) := colSubst_xForm _ _ _ _ _
 
@@ -495,10 +480,6 @@ theorem colAct_mem_orbitSpan (g : T → GL (Fin n) R) {P : Poly R T p q (Fin n)}
 
 variable (R) in
 
-noncomputable def orbitSubrep : Subrepresentation (colRep R T p q (Fin n)) where
-  toSubmodule := orbitSpan R h c c'
-  apply_mem_toSubmodule g _ hP := colAct_mem_orbitSpan h c c' g hP
-
 theorem map_basePoly (f : R →+* S) : MvPolynomial.map f (basePoly R h c c') = basePoly S h c c' := by
   rw [basePoly, map_minorProd, basePoly]
   congr 1
@@ -527,50 +508,6 @@ theorem basePoly_ne_zero [Nontrivial R] : basePoly R h c c' ≠ 0 := fun e => by
   rw [e, map_zero] at this
   exact zero_ne_one this
 
-theorem totalDegree_basePoly [Nontrivial R] :
-    (basePoly R h c c').totalDegree = typeDegree c c' :=
-  (minorProd_isHomogeneous c c' _ _).totalDegree (basePoly_ne_zero h c c')
-
 end Base
-
-example : IsHarmonic (X (xVar () 0 0) * X (yVar () 0 0) - X (xVar () 0 1) * X (yVar () 0 1) :
-    Poly ℤ Unit 1 1 (Fin 2)) := by
-  rintro ⟨⟩ a b
-  obtain rfl := Subsingleton.elim a 0
-  obtain rfl := Subsingleton.elim b 0
-  simp only [← xForm_single, ← yForm_single, map_sub, laplacian_xForm_mul_yForm]
-  simp
-
-example : laplacian () 0 0 (X (xVar () 0 0) * X (yVar () 0 0) : Poly ℤ Unit 1 1 (Fin 2)) = 1 := by
-  simp only [← xForm_single, ← yForm_single, laplacian_xForm_mul_yForm]
-  simp
-
-example : basePoly ℤ (show 1 + 1 ≤ 2 from le_rfl) (fun (_ : Unit) _ => 2) (fun _ _ => 1) =
-    X (xVar () 0 0) ^ 2 * X (yVar () 0 1) := by
-  simp [basePoly, minorProd, xMinor, yMinor, baseCovec, baseVec]
-
-example : basePoly ℤ (show 2 + 0 ≤ 2 from le_rfl) (fun (_ : Unit) => ![0, 1]) (fun _ _ => 0) =
-    X (xVar () 0 0) * X (xVar () 1 1) - X (xVar () 0 1) * X (xVar () 1 0) := by
-  have : (xMinor () 1 (baseCovec ℤ (show 2 + 0 ≤ 2 from le_rfl)) : Poly ℤ Unit 2 0 (Fin 2)) =
-      X (xVar () 0 0) * X (xVar () 1 1) - X (xVar () 0 1) * X (xVar () 1 0) := by
-    refine (det_fin_two _).trans ?_
-    simp only [baseCovec, of_apply, xForm_single]; rfl
-  simp [basePoly, minorProd, this]
-
-example : typeDegree (fun _ : Unit => ![2, 1]) (fun _ => ![2]) = 6 ∧ partOf ![2, 1] = ![3, 1] := by
-  decide
-
-example (u : Rˣ) (k : Fin n) :
-    colAct R Unit 1 1 (Fin n) (fun _ => Matrix.GeneralLinearGroup.scalar (Fin n) u)
-        (X (xVar () 0 k)) = (↑u⁻¹ : R) • X (xVar () 0 k) ∧
-    colAct R Unit 1 1 (Fin n) (fun _ => Matrix.GeneralLinearGroup.scalar (Fin n) u)
-        (X (yVar () 0 k)) = (u : R) • X (yVar () 0 k) := by
-  simp only [← xForm_single, ← yForm_single, colAct_xForm, colAct_yForm, ← map_smul]
-  constructor
-  · congr 1
-    rw [covecAct, ← map_inv]
-    ext l; simp [Matrix.GeneralLinearGroup.scalar, Pi.single_apply, diagonal_apply, eq_comm]
-  · congr 1
-    ext l; simp [vecAct, Matrix.GeneralLinearGroup.scalar, Pi.single_apply, diagonal_apply, eq_comm]
 
 end GlobalTheory.Harm

@@ -10,8 +10,6 @@ open CategoryTheory NumberField IntermediateField IsDedekindDomain GroundTheory.
 
 open scoped Pointwise NumberField.LiesOver
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K F E : FiniteSubfield} [Fact (K ≤ F)] [Fact (K ≤ E)] [Fact (F ≤ E)]
@@ -80,13 +78,6 @@ def completionUnitsRep :
     fun σ => LinearMap.ext fun a => congrArg Additive.ofMul (Units.ext
       (completionMap_decomposition_smul w w' σ
         (Additive.toMul (α := (w.1.adicCompletion F.1)ˣ) a : w.1.adicCompletion F.1)))⟩
-
-@[simp]
-theorem completionUnitsRep_hom_apply (a : Additive (w.1.adicCompletion F.1)ˣ) :
-    ((Additive.toMul (α := (w'.1.adicCompletion E.1)ˣ) ((completionUnitsRep (w := w) (w' := w')).hom a) :
-      (w'.1.adicCompletion E.1)ˣ) : w'.1.adicCompletion E.1) =
-      completionMap w.1 w'.1 (Additive.toMul (α := (w.1.adicCompletion F.1)ˣ) a : w.1.adicCompletion F.1) :=
-  rfl
 
 variable (K F E) in
 
@@ -166,14 +157,6 @@ def infCompletionUnitsRep :
     fun σ => LinearMap.ext fun a => congrArg Additive.ofMul (Units.ext
       (infCompletionMap_decomposition_smul w w' σ
         (Additive.toMul (α := (w.1.Completion)ˣ) a : w.1.Completion)))⟩
-
-@[simp]
-theorem infCompletionUnitsRep_hom_apply (a : Additive (w.1.Completion)ˣ) :
-    ((Additive.toMul (α := (w'.1.Completion)ˣ) ((infCompletionUnitsRep (w := w) (w' := w')).hom a) :
-      (w'.1.Completion)ˣ) : w'.1.Completion) =
-      NumberField.LiesOver.completionMap (v := w.1) (w := w'.1)
-        (Additive.toMul (α := (w.1.Completion)ˣ) a : w.1.Completion) :=
-  rfl
 
 variable (K F E) in
 

@@ -21,8 +21,6 @@ open Classical in
 def ballFn (a r : k) : OnePoint k → ℂ := fun x =>
   x.elim 0 fun y => if valuation k (y - a) ≤ valuation k r then 1 else 0
 
-@[simp] theorem ballFn_infty (a r : k) : ballFn a r ∞ = 0 := rfl
-
 open Classical in
 
 theorem ballFn_coe (a r x : k) :

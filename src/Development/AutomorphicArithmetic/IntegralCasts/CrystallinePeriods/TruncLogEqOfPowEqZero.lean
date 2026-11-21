@@ -106,8 +106,6 @@ instance : IsScalarTower (Ainf p R) (AinfInv p R) (BdRPlus p R) :=
 instance : IsScalarTower ℚ_[p] (AinfInv p R) (BdRPlus p R) :=
   IsScalarTower.of_algebraMap_eq fun _ => rfl
 
-theorem eq_bDeRhamPlus : BdRPlus p R = BDeRhamPlus R p := rfl
-
 def eval (n : ℕ) : BdRPlus p R →+* AinfInv p R ⧸ AinfInv.kerTheta p R ^ n :=
   (AdicCompletion.evalₐ (AinfInv.kerTheta p R) n).toRingHom
 
@@ -328,8 +326,6 @@ instance : IsScalarTower ℚ_[p] (Bcris p R) (Bst p R) :=
 def mk : MvPolynomial (PFlat p R) (Bcris p R) →ₐ[Bcris p R] Bst p R :=
   Ideal.Quotient.mkₐ (Bcris p R) (Bst.relations p R)
 
-theorem mk_surjective : Function.Surjective (mk p R) := Ideal.Quotient.mk_surjective
-
 variable {p R}
 
 theorem mk_eq_zero_iff (f : MvPolynomial (PFlat p R) (Bcris p R)) :
@@ -356,11 +352,6 @@ def lift {B : Type*} [CommRing B] (f : Bcris p R →+* B) (l : PFlat p R → B)
     lift f l h (algebraMap _ _ x) = f x :=
   (Ideal.Quotient.lift_mk _ _ _).trans (MvPolynomial.eval₂Hom_C f l x)
 
-@[simp] theorem lift_logFlat {B : Type*} [CommRing B] (f : Bcris p R →+* B) (l : PFlat p R → B)
-    (h : ∀ η ϖ, l (PFlat.twist η ϖ) = f (Bcris.logTeich η) + l ϖ) (ϖ : PFlat p R) :
-    lift f l h (logFlat ϖ) = l ϖ :=
-  (Ideal.Quotient.lift_mk _ _ _).trans (MvPolynomial.eval₂Hom_X' f l ϖ)
-
 theorem hom_ext {B : Type*} [CommRing B] {f g : Bst p R →+* B}
     (h₁ : ∀ x : Bcris p R, f (algebraMap _ _ x) = g (algebraMap _ _ x))
     (h₂ : ∀ ϖ, f (logFlat ϖ) = g (logFlat ϖ)) : f = g :=
@@ -368,46 +359,9 @@ theorem hom_ext {B : Type*} [CommRing B] {f g : Bst p R →+* B}
 
 variable (p R) in
 
-def monodromyDerivation : Derivation (Bcris p R) (MvPolynomial (PFlat p R) (Bcris p R))
-    (MvPolynomial (PFlat p R) (Bcris p R)) :=
-  MvPolynomial.mkDerivation (Bcris p R) fun _ => -1
-
-theorem monodromyDerivation_mem {f : MvPolynomial (PFlat p R) (Bcris p R)} (hf : f ∈ Bst.relations p R) :
-    monodromyDerivation p R f ∈ Bst.relations p R := by
-  induction hf using Submodule.span_induction with
-  | mem f hf => obtain ⟨η, ϖ, rfl⟩ := hf; simp [monodromyDerivation]
-  | zero => simp
-  | add f g _ _ hf hg => rw [map_add]; exact add_mem hf hg
-  | smul a f h hf =>
-    rw [smul_eq_mul, Derivation.leibniz, smul_eq_mul, smul_eq_mul]
-    exact add_mem (Ideal.mul_mem_left _ _ hf) (Ideal.mul_mem_right _ _ h)
-
 variable (p R) in
 
-def monodromyLin : Bst p R →ₗ[Bcris p R] Bst p R :=
-  (Submodule.Quotient.restrictScalarsEquiv (Bcris p R) (Bst.relations p R)).toLinearMap ∘ₗ
-    Submodule.mapQ ((Bst.relations p R).restrictScalars (Bcris p R))
-      ((Bst.relations p R).restrictScalars (Bcris p R)) (monodromyDerivation p R).toLinearMap
-      (fun _ hf => monodromyDerivation_mem hf) ∘ₗ
-    (Submodule.Quotient.restrictScalarsEquiv (Bcris p R) (Bst.relations p R)).symm.toLinearMap
-
-theorem monodromyLin_mk (f : MvPolynomial (PFlat p R) (Bcris p R)) :
-    monodromyLin p R (mk p R f) = mk p R (monodromyDerivation p R f) := rfl
-
 variable (p R) in
-
-def monodromy : Derivation (Bcris p R) (Bst p R) (Bst p R) :=
-  Derivation.mk' (monodromyLin p R) (by
-    intro a b
-    obtain ⟨a, rfl⟩ := mk_surjective p R a
-    obtain ⟨b, rfl⟩ := mk_surjective p R b
-    rw [← map_mul, monodromyLin_mk, monodromyLin_mk, monodromyLin_mk, Derivation.leibniz]
-    simp)
-
-@[simp] theorem monodromy_logFlat (ϖ : PFlat p R) : monodromy p R (logFlat ϖ) = -1 := by
-  change monodromyLin p R (mk p R _) = _
-  rw [monodromyLin_mk]
-  simp [monodromyDerivation]
 
 end Bst
 

@@ -17,8 +17,6 @@ namespace GlobalTheory.Jet.SchmidIntegral
 
 variable {n : ℕ}
 
-local notation "Mt" => Matrix (Fin n) (Fin n) ℂ
-
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 lemma continuous_inv_toMK (ε : Fin n → Bool) : Continuous (fun k : KG ε => (toMK k)⁻¹) := by

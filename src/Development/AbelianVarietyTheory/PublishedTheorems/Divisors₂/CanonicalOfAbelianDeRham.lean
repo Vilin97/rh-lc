@@ -175,11 +175,6 @@ theorem canonical_of_abelianDeRham (P : AbelianDeRham) (hκ : IsNilDP κ)
     obtain ⟨c, hc, rfl⟩ := hc
     exact (e c).trans (by rw [(Submodule.mem_dualAnnihilator _).1 hx c hc, map_zero])
 
-theorem at_dualNumber (H : GrothendieckMessing) {p : ℕ} (hp : p.Prime) (hR : IsNilpotent (p : R)) :
-    At (epsDP R) (TrivSqZeroExt.fstHom R R R).toRingHom :=
-  H p hp _ (by simpa using hR.map (algebraMap R (DualNumber R))) _ _ (isDPNilpotent_squareZero _) R _
-    (fun r ↦ ⟨TrivSqZeroExt.inl r, rfl⟩) rfl
-
 end GrothendieckMessing
 
 end GlobalTheory.Published

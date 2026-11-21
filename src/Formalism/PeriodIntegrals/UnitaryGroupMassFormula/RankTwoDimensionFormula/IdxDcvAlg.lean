@@ -67,13 +67,6 @@ def Q (e f : Fin r → n → A) (z y : n → A) : n → A :=
   (-Formalism.UG.hform σ J z z) • (y - ∑ a, (Formalism.UG.hform σ J (f a) y • e a + Formalism.UG.hform σ J (e a) y • f a)) +
     Formalism.UG.hform σ J z y • z
 
-structure Hyp (e f : Fin r → n → A) (z : n → A) : Prop where
-  ee : ∀ a b, Formalism.UG.hform σ J (e a) (e b) = 0
-  ff : ∀ a b, Formalism.UG.hform σ J (f a) (f b) = 0
-  ef : ∀ a b, Formalism.UG.hform σ J (e a) (f b) = if a = b then 1 else 0
-  ez : ∀ a, Formalism.UG.hform σ J (e a) z = 0
-  fz : ∀ a, Formalism.UG.hform σ J (f a) z = 0
-
 private theorem Q_eq_hform_expansion (e f : Fin r → n → A) (z y w : n → A) :
     Formalism.UG.hform σ J w (Q σ J e f z y) =
       -Formalism.UG.hform σ J z z * (Formalism.UG.hform σ J w y - ∑ a, (Formalism.UG.hform σ J (f a) y * Formalism.UG.hform σ J w (e a) +

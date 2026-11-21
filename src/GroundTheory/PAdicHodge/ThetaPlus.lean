@@ -114,19 +114,12 @@ theorem isDiscreteValuationRing_of_isAdicComplete {π : B} [IsAdicComplete (span
   obtain ⟨n, u, rfl⟩ := exists_eq_pow_mul_unit_of_isAdicComplete hmax hx
   exact ⟨n, u, rfl⟩
 
-theorem maximalIdeal_eq_span_of_isMaximal [IsLocalRing B] {π : B} (hmax : (span {π}).IsMaximal) :
-    maximalIdeal B = span {π} :=
-  (IsLocalRing.eq_maximalIdeal hmax).symm
-
 end Abstract
 
 section General
 
 variable (R : Type*) [CommRing R] (p : ℕ) [Fact p.Prime] [Fact ¬IsUnit (p : R)]
   [IsAdicComplete (span {(p : R)}) R]
-
-local notation "𝕎R♭" => WittVector p (PreTilt R p)
-local notation "𝔸" => Localization.Away (p : WittVector p (PreTilt R p))
 
 def toBDeRhamPlus : 𝔸 →+* BDeRhamPlus R p :=
   algebraMap 𝔸 (AdicCompletion (RingHom.ker (fontaineThetaInvertP R p)) 𝔸)
@@ -137,11 +130,6 @@ def wittToBDeRhamPlus : 𝕎R♭ →+* BDeRhamPlus R p :=
 def thetaBDeRhamPlus : BDeRhamPlus R p →+* Localization.Away (p : R) :=
   (RingHom.kerLift (fontaineThetaInvertP R p)).comp
     (AdicCompletion.evalOneₐ (RingHom.ker (fontaineThetaInvertP R p))).toRingHom
-
-@[simp]
-theorem thetaBDeRhamPlus_toBDeRhamPlus (x : 𝔸) :
-    thetaBDeRhamPlus R p (toBDeRhamPlus R p x) = fontaineThetaInvertP R p x :=
-  rfl
 
 @[simp]
 theorem fontaineThetaInvertP_algebraMap (x : 𝕎R♭) :
@@ -287,9 +275,6 @@ section DVR
 variable {R : Type*} [CommRing R] {p : ℕ} [Fact p.Prime] [Fact ¬IsUnit (p : R)]
   [IsAdicComplete (span {(p : R)}) R]
 
-local notation "𝕎R♭" => WittVector p (PreTilt R p)
-local notation "𝔸" => Localization.Away (p : WittVector p (PreTilt R p))
-
 theorem isMaximal_ker_thetaBDeRhamPlus (hF : Function.Surjective (frobenius (ModP R p) p))
     (hK : IsField (Localization.Away (p : R))) : (RingHom.ker (thetaBDeRhamPlus R p)).IsMaximal :=
   Ideal.Quotient.maximal_of_isField _ (MulEquiv.isField hK
@@ -368,33 +353,12 @@ theorem maximalIdeal_bDeRhamPlus_eq_span {ξ : 𝕎R♭}
     maximalIdeal (BDeRhamPlus R p) = span {wittToBDeRhamPlus R p ξ} :=
   (maximalIdeal_bDeRhamPlus hξ hF hK).trans (ker_thetaBDeRhamPlus hξ)
 
-def residueFieldBDeRhamPlusEquiv {ξ : 𝕎R♭} (hξ : RingHom.ker (fontaineTheta R p) = span {ξ})
-    (hF : Function.Surjective (frobenius (ModP R p) p)) (hK : IsField (Localization.Away (p : R))) :
-    haveI := isLocalRing_bDeRhamPlus hξ hF hK
-    ResidueField (BDeRhamPlus R p) ≃+* Localization.Away (p : R) :=
-  haveI := isLocalRing_bDeRhamPlus hξ hF hK
-  (Ideal.quotEquivOfEq (maximalIdeal_bDeRhamPlus hξ hF hK)).trans
-    (RingHom.quotientKerEquivOfSurjective (surjective_thetaBDeRhamPlus R p hF))
-
-theorem residueFieldBDeRhamPlusEquiv_residue {ξ : 𝕎R♭}
-    (hξ : RingHom.ker (fontaineTheta R p) = span {ξ})
-    (hF : Function.Surjective (frobenius (ModP R p) p)) (hK : IsField (Localization.Away (p : R)))
-    (x : BDeRhamPlus R p) :
-    haveI := isLocalRing_bDeRhamPlus hξ hF hK
-    residueFieldBDeRhamPlusEquiv hξ hF hK (residue (BDeRhamPlus R p) x) = thetaBDeRhamPlus R p x :=
-  rfl
-
 end DVR
 
 namespace IsPerfectoidField
 
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable (p : ℕ) [Fact p.Prime] [IsPerfectoidField K p]
-
-local notation "𝒪" => normInteger K
-local notation "𝕎𝒪♭" => WittVector p (PreTilt (normInteger K) p)
-local notation "θ" => fontaineTheta (normInteger K) p
-local notation "𝔹" => BDeRhamPlus (normInteger K) p
 
 theorem isLocalization_away [CharZero K] : IsLocalization.Away (p : 𝒪) K := by
   rw [IsLocalization.Away, isLocalization_iff]
@@ -497,14 +461,6 @@ theorem irreducible_wittToBDeRhamPlus {ξ : 𝕎𝒪♭} (hξ : RingHom.ker θ =
 theorem isAdicComplete_maximalIdeal_bDeRhamPlus : IsAdicComplete (maximalIdeal 𝔹) 𝔹 := by
   rw [maximalIdeal_bDeRhamPlus_eq_span (ker_fontaineTheta_eq_span_kerThetaGenerator K p)]
   exact isAdicComplete_bDeRhamPlus (ker_fontaineTheta_eq_span_kerThetaGenerator K p)
-
-def residueFieldBDeRhamPlusEquiv : ResidueField 𝔹 ≃+* K :=
-  (Ideal.quotEquivOfEq (maximalIdeal_bDeRhamPlus (K := K) (p := p))).trans
-    (RingHom.quotientKerEquivOfSurjective (surjective_thetaBDeRhamPlusField (K := K) p))
-
-theorem residueFieldBDeRhamPlusEquiv_residue (x : 𝔹) :
-    residueFieldBDeRhamPlusEquiv (residue 𝔹 x) = thetaBDeRhamPlusField p x :=
-  rfl
 
 end IsPerfectoidField
 

@@ -19,8 +19,6 @@ namespace GlobalTheory.UnramDict
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ}
 
-local notation3 "L⁺" => maximalRealSubfield L
-
 theorem kappa_tmul (F : FinIso L n) (x : L) (a : AFplus L) :
     F.κ.toRingHom (x ⊗ₜ[L⁺] a) = algebraMap L _ x * GlobalTheory.AdeleBaseChange.adMap L⁺ L a := by
   rw [Model.kappa_eq F (Model.finIso L n)]

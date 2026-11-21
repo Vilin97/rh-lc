@@ -92,9 +92,6 @@ def analyticSubring {d : ℕ} (y₀ : Fin d → ℂ) : Subring ((Fin d → ℂ) 
 def evalAt {d : ℕ} (y₀ y : Fin d → ℂ) : analyticSubring y₀ →+* ℂ :=
   (Pi.evalRingHom (fun _ : Fin d → ℂ => ℂ) y).comp (analyticSubring y₀).subtype
 
-@[simp] theorem evalAt_apply {d : ℕ} (y₀ y : Fin d → ℂ) (f : analyticSubring y₀) :
-    evalAt y₀ y f = (f : (Fin d → ℂ) → ℂ) y := rfl
-
 def pev {d : ℕ} {y₀ : Fin d → ℂ} (y : Fin d → ℂ) (t : ℂ) : (analyticSubring y₀)[X] →+* ℂ :=
   (Polynomial.evalRingHom t).comp (Polynomial.mapRingHom (evalAt y₀ y))
 

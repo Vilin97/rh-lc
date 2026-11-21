@@ -1,4 +1,5 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.StatementB
+import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.IsHypPair
+import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.StatementG
 import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.UniformGaussModelCondition
 import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.SecondLevelOfNorm
 import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.BiextensionRelation

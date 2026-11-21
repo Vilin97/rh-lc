@@ -123,10 +123,6 @@ namespace QkPtW
 
 variable {D W} {ψW : PsiOn D W} {k : ℕ} {T : Over W.toScheme}
 
-def Equiv (p p' : QkPtW D W ψW k T) : Prop :=
-  ∃ z : D.X, p'.y = p.y + k • z ∧
-    ∃ h : GtPt D (overW W T), GtPt.IsIotaW ψW z h ∧ GtPt.IsAdd p.g h p'.g
-
 def IsAdd (p p' p'' : QkPtW D W ψW k T) : Prop :=
   p''.y = p.y + p'.y ∧ GtPt.IsAdd p.g p'.g p''.g
 

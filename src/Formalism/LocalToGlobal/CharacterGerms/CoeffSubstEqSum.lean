@@ -108,15 +108,6 @@ theorem Tends.add {s t : ℕ → C} {x y : C} (hs : Tends V s x) (ht : Tends V t
   rw [e]
   exact ge_add_lemma_2 (h1 n (le_of_max_le_left hn)) (h2 n (le_of_max_le_right hn))
 
-theorem Tends.neg {s : ℕ → C} {x : C} (hs : Tends V s x) : Tends V (fun n => -s n) (-x) := by
-  intro w
-  obtain ⟨n0, h0⟩ := hs w
-  refine ⟨n0, fun n hn => ?_⟩
-  have e : -x - -s n = -(x - s n) := by ring
-  show V.Ge w (-x - -s n)
-  rw [e]
-  exact ge_neg_lemma_3 (h0 n hn)
-
 theorem Tends.sub {s t : ℕ → C} {x y : C} (hs : Tends V s x) (ht : Tends V t y) :
     Tends V (fun n => s n - t n) (x - y) := by
   intro w
@@ -275,10 +266,6 @@ theorem Ord.mul {k k' : ℕ} {f g : MvPowerSeries σ C} (hf : Ord k f) (hg : Ord
 theorem Ord.one : Ord 0 (1 : MvPowerSeries σ C) := by
   intro μ h
   exact absurd h (Nat.not_lt_zero _)
-
-theorem Ord.mono {k k' : ℕ} {f : MvPowerSeries σ C} (hf : Ord k f) (h : k' ≤ k) : Ord k' f := by
-  intro μ hμ
-  exact hf μ (lt_of_lt_of_le hμ h)
 
 theorem Ord.pow {k : ℕ} {f : MvPowerSeries σ C} (hf : Ord k f) (e : ℕ) : Ord (k * e) (f ^ e) := by
   induction e with

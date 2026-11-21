@@ -29,8 +29,6 @@ def toHom : NumD.Hom (RingHom.id O) N N' where
   c_eq := J.c_eq
   ψ_eq := J.ψ_eq
 
-theorem rel_iff (g : N.Gt) (g' : N'.Gt) : (toHom J).Rel g g' ↔ J.Rel g g' := Iff.rfl
-
 def TR {k : ℕ} (p : N.QT k) (p' : N'.QT k) : Prop :=
   p'.1.1.toAdd = J.e p.1.1.toAdd ∧ J.Rel p.1.2 p'.1.2
 

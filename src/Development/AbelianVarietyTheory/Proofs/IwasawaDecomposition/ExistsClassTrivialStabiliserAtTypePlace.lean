@@ -73,8 +73,6 @@ theorem eq_one_of_finOrder {R : Type} [CommRing R] [IsDomain R] {P : Ideal R} (h
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
-local notation3 "L⁺" => NumberField.maximalRealSubfield L
-
 theorem monomial {n : ℕ} {g : GL (Fin n) L} (hg : g ∈ GQ0 L n)
     (hint : ∀ i j, IsIntegral ℤ ((g : Matrix (Fin n) (Fin n) L) i j)) (i : Fin n) :
     ∃ j, IsOfFinOrder ((g : Matrix (Fin n) (Fin n) L) i j) ∧ ∀ k, k ≠ j → (g : Matrix (Fin n) (Fin n) L) i k = 0 := by

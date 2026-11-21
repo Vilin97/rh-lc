@@ -19,8 +19,6 @@ theorem _root_.PositivityTheory.SiegelWeilFormula.SD_k.bb1 : incM F d.b.1 * incM
   rw [← incM_mul', ← Units.val_mul, mul_inv_cancel, Units.val_one, incM_one']
 theorem _root_.PositivityTheory.SiegelWeilFormula.SD_k.bb2 : incM F (d.b⁻¹).1 * incM F d.b.1 = 1 := by
   rw [← incM_mul', ← Units.val_mul, inv_mul_cancel, Units.val_one, incM_one']
-theorem _root_.PositivityTheory.SiegelWeilFormula.SD_k.matrixRep_mul (x y : d.G) : mat2 (x * y) = mat2 x * mat2 y := rfl
-theorem _root_.PositivityTheory.SiegelWeilFormula.SD_k.matrixRep_one : mat2 (1 : d.G) = 1 := rfl
 theorem _root_.PositivityTheory.SiegelWeilFormula.SD_k.inFrame_mul (x y : d.G) : inFrame d.b (x * y) = inFrame d.b x * inFrame d.b y := by
   simp only [inFrame, _root_.PositivityTheory.SiegelWeilFormula.SD_k.matrixRep_mul]
   calc incM F (d.b⁻¹).1 * (mat2 x * mat2 y) * incM F d.b.1

@@ -21,11 +21,6 @@ variable {k G : Type u} [CommRing k] [Group G]
 def dualEvalPairing (D M : Rep.{u} k G) : dualRep D M ⊗ M ⟶ D :=
   (β_ (dualRep D M) M).hom ≫ evalPairing D M
 
-@[simp]
-theorem dualEvalPairing_tmul (D M : Rep.{u} k G) (f : M →ₗ[k] D) (m : M) :
-    (dualEvalPairing D M).hom ((f : dualRep D M) ⊗ₜ[k] m : (dualRep D M ⊗ M : Rep k G)) = f m :=
-  rfl
-
 variable {H : Type u} [Group H]
 
 theorem resFunctor_map_comp_id (ψ : H →* G) {A B C : Rep.{u} k G} (μ : A ⊗ B ⟶ C) :

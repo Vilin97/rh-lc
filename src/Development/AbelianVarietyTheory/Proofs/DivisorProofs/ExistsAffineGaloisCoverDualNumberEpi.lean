@@ -24,9 +24,6 @@ theorem dualMap_apply (g : A →+* B) (x : DualNumber A) :
 @[simp] theorem dualMap_fst (g : A →+* B) (x : DualNumber A) : (dualMap g x).fst = g x.fst := by
   simp [dualMap_apply]
 
-@[simp] theorem dualMap_snd (g : A →+* B) (x : DualNumber A) : (dualMap g x).snd = g x.snd := by
-  simp [dualMap_apply]
-
 end GlobalTheory.DualCover
 
 namespace GlobalTheory.DualCover

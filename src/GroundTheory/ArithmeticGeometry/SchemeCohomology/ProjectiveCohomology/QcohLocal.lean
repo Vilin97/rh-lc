@@ -359,10 +359,6 @@ theorem isCoherent_of_affineCover (F : X.Modules) [F.IsQuasicoherent] {ι : Type
 
 section Kernel
 
-instance toPresheaf_preservesZeroMorphisms :
-    (Scheme.Modules.toPresheaf X).PreservesZeroMorphisms :=
-  ⟨fun _ _ => by ext; rfl⟩
-
 instance toPresheaf_eval_preservesZeroMorphisms (W : X.Opens) :
     (Scheme.Modules.toPresheaf X ⋙ (evaluation _ AddCommGrpCat.{u}).obj (op W)).PreservesZeroMorphisms :=
   ⟨fun _ _ => rfl⟩

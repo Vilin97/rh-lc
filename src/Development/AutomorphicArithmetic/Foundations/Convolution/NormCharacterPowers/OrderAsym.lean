@@ -14,18 +14,12 @@ structure Cover (l : ℕ) {W W' : Type} (q : W → ℕ) (q' : W' → ℕ) (u : W
   fib : ∀ v, (Nat.card {w // u w = v} = l ∧ (∀ w, u w = v → f w = 1) ∧ c v = 1) ∨
     (Nat.card {w // u w = v} = 1 ∧ (∀ w, u w = v → f w = l) ∧ IsPrimitiveRoot (c v) l)
 
-theorem Cover.triv {W : Type} (q : W → ℕ) : Cover 1 q q id (fun _ => 1) (fun _ => 1) :=
-  ⟨fun _ => (pow_one _).symm, fun v => Or.inl ⟨by simp, fun _ _ => rfl, rfl⟩⟩
-
 def OrderAsym : Prop := ∀ (F : ℂ → ℂ) (S : ℝ → ℂ) (δ : ℕ), AnalyticAt ℂ F 1 →
   (∀ σ₁ : ℝ, 1 < σ₁ → ∃ M : ℝ, ∀ σ : ℝ, σ₁ ≤ σ → ‖S σ‖ ≤ M) →
   (∀ σ : ℝ, 1 < σ → F σ = ((σ : ℂ) - 1) ^ δ * Complex.exp (S σ)) →
     ∃ (k : ℕ) (M : ℝ), ∀ σ : ℝ, 1 < σ → σ ≤ 2 → |(S σ).re - ((δ : ℝ) - k) * (-Real.log (σ - 1))| ≤ M
 
 open Classical in
-
-def ExpRight : Prop := ForSys fun q X _ A => ∀ x y : X, ∃ F : ℂ → ℂ, AnalyticAt ℂ F 1 ∧ ∀ σ : ℝ, 1 < σ →
-  F σ = ((σ : ℂ) - 1) ^ (if x = y then 1 else 0) * Complex.exp (∑' p, lterm q (A x) (A y) σ p)
 
 open Classical in
 

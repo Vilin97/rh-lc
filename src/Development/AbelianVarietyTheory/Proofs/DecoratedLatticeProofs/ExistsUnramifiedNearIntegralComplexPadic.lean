@@ -10,9 +10,6 @@ namespace GlobalTheory.ResidueUnr
 
 open Polynomial
 
-local notation "PX" => (Polynomial.X)
-local notation "PC" => (Polynomial.C)
-
 variable {l : ℕ} [Fact l.Prime]
 
 theorem norm_algebraMap_padicInt (z : ℤ_[l]) : ‖algebraMap ℤ_[l] (PadicAlgCl l) z‖ ≤ 1 := by

@@ -18,14 +18,6 @@ abbrev projBlocks (K : Type) [Field K] [NumberField K] (i : ℕ) : Unit → Type
 
 abbrev ProjField (K : Type) [Field K] (i : ℕ) : Type := FractionRing (MvPolynomial (Fin i) K)
 
-def projSpaceCoord (K : Type) [Field K] [NumberField K] (i : ℕ) :
-    (Σ _ : Unit, ProjIdx K i) → ProjField K i :=
-  fun p => algebraMap (MvPolynomial (Fin i) K) (ProjField K i)
-    (C (integralBasis K p.2.1) * X p.2.2)
-
-def projSpaceIdeal (K : Type) [Field K] [NumberField K] (i : ℕ) : Ideal (MRing (projBlocks K i)) :=
-  mCoordIdeal (projSpaceCoord K i)
-
 open scoped Classical in
 
 def embComp {K : Type} [Field K] [NumberField K] {i : ℕ} (σ : K →+* ℂ) (z : ProjIdx K i → ℂ) :
@@ -116,39 +108,6 @@ def latticeLine {K : Type} [Field K] [NumberField K] {i : ℕ} (F : HermLattice 
 
 def LineOfLargeDegreeFromZ.Statement : Prop :=
   SuccessiveMinimaLowerBound → SuccessiveMinimaUpperBound → ReciprocityTheory.ChartRestriction.G.AI.I2.ExistsStatement → LineOfLargeDegree.Statement
-
-def ProjArithVar.Statement : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (i : ℕ), 1 ≤ i → IsArithVar (projSpaceIdeal K i) i
-
-def LatticeLineSemipositive.Statement : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (i : ℕ) (F : HermLattice K i),
-    IsSemipositiveRel ⊥ (projSpaceIdeal K i) (latticeLine F)
-
-def LatticeLineConj.Statement : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (i : ℕ) (F : HermLattice K i),
-    IsConjInvariantH (latticeLine F)
-
-def PointLineDegree.Statement : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (i : ℕ) (F : HermLattice K i) (II : IntersectionSystem),
-    IsIntersectionSystem II → ∀ W : Ideal (MRing (projBlocks K i)), IsArithVar W 1 →
-      projSpaceIdeal K i ≤ W → 0 < degC W ∧
-        ∃ (K' : Type) (_ : Field K') (_ : NumberField K') (_ : Algebra K K') (v : Fin i → K'),
-          v ≠ 0 ∧ F.lineDegree K' v = -II Unit (projBlocks K i) W 1 ![latticeLine F] / degC W
-
-def TopLatticeBound.Statement : Prop :=
-  SuccessiveMinimaUpperBound → ∀ (K : Type) [Field K] [NumberField K] (i : ℕ) (F : HermLattice K i)
-    (II : IntersectionSystem), 1 ≤ i → IsIntersectionSystem II →
-    II Unit (projBlocks K i) (projSpaceIdeal K i) i (fun _ => latticeLine F) ≤
-      (i : ℝ) * (-F.slope + 1 / 2 * Real.log i) *
-        geomDeg (projSpaceIdeal K i) (latticeLine F) (i - 1)
-
-def GeomDegPos.Statement : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (i : ℕ) (F : HermLattice K i), 1 ≤ i →
-    0 < geomDeg (projSpaceIdeal K i) (latticeLine F) (i - 1)
-
-example : HermLine (projBlocks ℚ 2) := latticeLine (HermLattice.standard ℚ 2)
-
-example : (latticeLine (HermLattice.standard ℚ 2)).a = fun _ => 1 := rfl
 
 end
 

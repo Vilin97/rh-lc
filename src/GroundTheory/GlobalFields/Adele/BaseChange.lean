@@ -53,25 +53,7 @@ def adeleTensorHomeomorph :
         (IsModuleTopology.continuous_of_linearMap (tmulLeft (Module.finBasis K L i))).comp
           (continuous_coord _ i) }
 
-@[simp]
-theorem adeleTensorHomeomorph_apply (t : L ⊗[K] 𝔸[K]) :
-    adeleTensorHomeomorph K L t = adeleTensorEquiv K L t :=
-  rfl
-
 variable (K L) in
-
-def adeleTensorContinuousAlgEquiv :
-    letI := moduleTopology 𝔸[K] (L ⊗[K] 𝔸[K])
-    L ⊗[K] 𝔸[K] ≃A[L] 𝔸[L] :=
-  letI := moduleTopology 𝔸[K] (L ⊗[K] 𝔸[K])
-  { adeleTensorEquiv K L with
-    continuous_toFun := (adeleTensorHomeomorph K L).continuous_toFun
-    continuous_invFun := (adeleTensorHomeomorph K L).continuous_invFun }
-
-@[simp]
-theorem adeleTensorContinuousAlgEquiv_apply (t : L ⊗[K] 𝔸[K]) :
-    adeleTensorContinuousAlgEquiv K L t = adeleTensorEquiv K L t :=
-  rfl
 
 scoped instance algebraAdeleRing : Algebra 𝔸[K] 𝔸[L] :=
   (adeleMap K L).toAlgebra
@@ -89,20 +71,7 @@ def adeleTensorAlgEquivAdele : L ⊗[K] 𝔸[K] ≃ₐ[𝔸[K]] 𝔸[L] :=
     change adeleTensorEquiv K L (1 ⊗ₜ a) = adeleMap K L a
     rw [adeleTensorEquiv_tmul, map_one, one_mul]
 
-@[simp]
-theorem adeleTensorAlgEquivAdele_apply (t : L ⊗[K] 𝔸[K]) :
-    adeleTensorAlgEquivAdele K L t = adeleTensorEquiv K L t :=
-  rfl
-
 variable (K L) in
-
-def adeleTensorContinuousAlgEquivAdele :
-    letI := moduleTopology 𝔸[K] (L ⊗[K] 𝔸[K])
-    L ⊗[K] 𝔸[K] ≃A[𝔸[K]] 𝔸[L] :=
-  letI := moduleTopology 𝔸[K] (L ⊗[K] 𝔸[K])
-  { adeleTensorAlgEquivAdele K L with
-    continuous_toFun := (adeleTensorHomeomorph K L).continuous_toFun
-    continuous_invFun := (adeleTensorHomeomorph K L).continuous_invFun }
 
 theorem isModuleTopology_adeleRing : IsModuleTopology 𝔸[K] 𝔸[L] := by
   let := moduleTopology 𝔸[K] (L ⊗[K] 𝔸[K])
@@ -161,55 +130,7 @@ theorem continuous_adeleRetraction : Continuous (adeleRetraction K L) := by
 theorem adeleMap_injective : Function.Injective (adeleMap K L) :=
   Function.LeftInverse.injective (g := adeleRetraction K L) adeleRetraction_adeleMap
 
-theorem isClosedEmbedding_adeleMap : IsClosedEmbedding (adeleMap K L) :=
-  haveI : T2Space (FiniteAdeleRing (𝓞 L) L) := inferInstanceAs (T2Space
-    (Πʳ w : HeightOneSpectrum (𝓞 L), [w.adicCompletion L, w.adicCompletionIntegers L]))
-  haveI : T2Space (InfiniteAdeleRing L) :=
-    inferInstanceAs (T2Space ((w : NumberField.InfinitePlace L) → w.Completion))
-  haveI : T2Space 𝔸[L] := inferInstanceAs (T2Space (InfiniteAdeleRing L × FiniteAdeleRing (𝓞 L) L))
-  Function.LeftInverse.isClosedEmbedding (f := adeleRetraction K L) adeleRetraction_adeleMap
-    continuous_adeleRetraction continuous_adeleMap
-
-def finiteTmulLeft (l : L) :
-    FiniteAdeleRing (𝓞 K) K →ₗ[FiniteAdeleRing (𝓞 K) K] L ⊗[K] FiniteAdeleRing (𝓞 K) K where
-  toFun x := l ⊗ₜ x
-  map_add' x y := TensorProduct.tmul_add _ _ _
-  map_smul' c x := by
-    change l ⊗ₜ (c * x) = (1 ⊗ₜ c) * (l ⊗ₜ x)
-    rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul]
-
 variable (K L) in
-
-def finiteTensorHomeomorph :
-    letI := moduleTopology (FiniteAdeleRing (𝓞 K) K) (L ⊗[K] FiniteAdeleRing (𝓞 K) K)
-    L ⊗[K] FiniteAdeleRing (𝓞 K) K ≃ₜ FiniteAdeleRing (𝓞 L) L :=
-  letI := moduleTopology (FiniteAdeleRing (𝓞 K) K) (L ⊗[K] FiniteAdeleRing (𝓞 K) K)
-  haveI : IsModuleTopology (FiniteAdeleRing (𝓞 K) K) (L ⊗[K] FiniteAdeleRing (𝓞 K) K) := ⟨rfl⟩
-  haveI := IsModuleTopology.toContinuousAdd (FiniteAdeleRing (𝓞 K) K)
-    (L ⊗[K] FiniteAdeleRing (𝓞 K) K)
-  { toEquiv := (finiteTensorEquiv K L).toEquiv
-    continuous_toFun := by
-      let φ : L ⊗[K] FiniteAdeleRing (𝓞 K) K →ₛₗ[finiteAdeleMap K L] FiniteAdeleRing (𝓞 L) L :=
-        { toFun := finiteTensorEquiv K L
-          map_add' := map_add _
-          map_smul' := fun c t ↦ by
-            change finiteTensorEquiv K L ((1 ⊗ₜ c) * t) = finiteAdeleMap K L c * _
-            rw [map_mul, finiteTensorEquiv_tmul, map_one, one_mul] }
-      exact IsModuleTopology.continuous_of_linearMapₛₗ continuous_finiteAdeleMap φ
-    continuous_invFun := by
-      have h : ∀ y, (finiteTensorEquiv K L).symm y = ∑ i, finiteTmulLeft (Module.finBasis K L i)
-          (finiteCoord (Module.finBasis K L) i y) :=
-        finiteTensorEquiv_symm_apply (Module.finBasis K L)
-      change Continuous fun y ↦ (finiteTensorEquiv K L).symm y
-      simp_rw [h]
-      exact continuous_finsetSum _ fun i _ ↦
-        (IsModuleTopology.continuous_of_linearMap (finiteTmulLeft (Module.finBasis K L i))).comp
-          (continuous_finiteCoord _ i) }
-
-@[simp]
-theorem finiteTensorHomeomorph_apply (t : L ⊗[K] FiniteAdeleRing (𝓞 K) K) :
-    finiteTensorHomeomorph K L t = finiteTensorEquiv K L t :=
-  rfl
 
 end AdeleBaseChange
 

@@ -32,11 +32,6 @@ variable {K L : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [Fact p.Prime] [IsPerfectoidField K p] [IsPerfectoidField L p]
 variable (φ : K →+* L) (hφ : ∀ x, ‖φ x‖ = ‖x‖)
 
-local notation "𝒪K♭" => PreTilt (normInteger K) p
-local notation "𝒪L♭" => PreTilt (normInteger L) p
-local notation "K♭" => Tilt K NormedField.valuation (normInteger K) normInteger_integers p
-local notation "L♭" => Tilt L NormedField.valuation (normInteger L) normInteger_integers p
-
 def modPMap : ModP (normInteger K) p →+* ModP (normInteger L) p :=
   Ideal.quotientMap _ (integerMap φ hφ) (Ideal.span_le.2 (Set.singleton_subset_iff.2 (by
     rw [SetLike.mem_coe, Ideal.mem_comap, map_natCast]
@@ -91,36 +86,10 @@ theorem preTiltMap_injective : Function.Injective (preTiltMap p φ hφ) := by
     map_eq_zero_iff φ φ.injective] at h1
   exact (IsPerfectoidField.untilt_eq_zero_iff p).1 (Subtype.ext h1)
 
-theorem norm_preTiltMap (x : 𝒪K♭) : ‖preTiltMap p φ hφ x‖ = ‖x‖ := by
-  rw [preTilt_norm_def, preTilt_norm_def, coe_untilt_preTiltMap, hφ]
-
 variable (p) in
 
 def tiltMap : K♭ →+* L♭ :=
   IsFractionRing.map (preTiltMap_injective (p := p) φ hφ)
-
-@[simp]
-theorem tiltMap_algebraMap (a : 𝒪K♭) :
-    tiltMap p φ hφ (algebraMap 𝒪K♭ K♭ a) = algebraMap 𝒪L♭ L♭ (preTiltMap p φ hφ a) :=
-  IsLocalization.map_eq (M := nonZeroDivisors 𝒪K♭) (S := K♭) (T := nonZeroDivisors 𝒪L♭)
-    (Q := L♭)
-    (nonZeroDivisors_le_comap_nonZeroDivisors_of_injective _ (preTiltMap_injective φ hφ)) a
-
-theorem tiltSharp_tiltMap (x : K♭) : tiltSharp L p (tiltMap p φ hφ x) = φ (tiltSharp K p x) := by
-  obtain ⟨a, b, hb, h⟩ := exists_mul_algebraMap_eq x
-  have hb' : preTiltMap p φ hφ b ≠ 0 :=
-    (map_ne_zero_iff _ (preTiltMap_injective φ hφ)).2 hb
-  have h' : tiltMap p φ hφ x * algebraMap 𝒪L♭ L♭ (preTiltMap p φ hφ b) =
-      algebraMap 𝒪L♭ L♭ (preTiltMap p φ hφ a) := by
-    rw [← tiltMap_algebraMap, ← tiltMap_algebraMap, ← map_mul, h]
-  rw [tiltSharp_eq hb' h', tiltSharp_eq hb h, map_div₀, coe_untilt_preTiltMap,
-    coe_untilt_preTiltMap]
-
-theorem norm_tiltMap (x : K♭) : ‖tiltMap p φ hφ x‖ = ‖x‖ := by
-  rw [← norm_tiltSharp, tiltSharp_tiltMap, hφ, norm_tiltSharp]
-
-theorem tiltMap_injective : Function.Injective (tiltMap p φ hφ) :=
-  (tiltMap p φ hφ).injective
 
 theorem ringHom_ext_wittVector_preTilt {f g : WittVector p 𝒪K♭ →+* normInteger L}
     (h : ∀ a, f (WittVector.teichmuller p a) = g (WittVector.teichmuller p a)) : f = g := by

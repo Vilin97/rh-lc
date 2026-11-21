@@ -148,11 +148,6 @@ def torsNMap (f : A →+ B) : TorsN A n →ₗ[ZMod n] TorsN B n :=
       rw [mem_ker_lsmul_iff] at hx ⊢
       simp [← map_nsmul, hx])).toAddMonoidHom.toZModLinearMap n
 
-@[simp]
-theorem coe_torsNMap_apply (f : A →+ B) (x : TorsN A n) :
-    ((torsNMap n f x : TorsN B n) : B) = f x :=
-  rfl
-
 def modNMap (f : A →+ B) : ModN A n →ₗ[ZMod n] ModN B n :=
   (Submodule.mapQ _ _ f.toIntLinearMap (by
     rintro _ ⟨x, rfl⟩
@@ -222,9 +217,6 @@ noncomputable def connecting : TorsN C n →ₗ[ZMod n] ModN A n :=
     { toFun := connectingFun f h hh
       map_zero' := connectingFun_zero hh hfh hf
       map_add' := connectingFun_add hh hfh hf }
-
-theorem connecting_apply (c : TorsN C n) : connecting hh hfh hf c = connectingFun f h hh c :=
-  rfl
 
 theorem connecting_spec (c : TorsN C n) (b : B) (a : A) (hb : h b = c) (ha : f a = n • b) :
     connecting hh hfh hf c = Submodule.Quotient.mk a :=
@@ -360,10 +352,6 @@ theorem finite_modN_of_exact (hh : Function.Surjective h) (hfh : Function.Exact 
 theorem finite_torsN_of_injective (hf : Function.Injective f) [Finite (TorsN B n)] :
     Finite (TorsN A n) :=
   Finite.of_injective _ (torsNMap_injective hf)
-
-theorem finite_modN_of_surjective (hh : Function.Surjective h) [Finite (ModN B n)] :
-    Finite (ModN C n) :=
-  Finite.of_surjective _ (modNMap_surjective hh)
 
 end Finiteness
 

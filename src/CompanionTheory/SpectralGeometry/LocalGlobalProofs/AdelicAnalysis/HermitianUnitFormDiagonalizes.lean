@@ -15,9 +15,6 @@ def bd (a : A) (M : Matrix (Fin m) (Fin m) A) : Matrix (Fin (m + 1)) (Fin (m + 1
   fun i j => Fin.cases (Fin.cases a (fun _ => 0) j)
     (fun i' => Fin.cases 0 (fun j' => M i' j') j) i
 
-@[simp] lemma bd_zero_zero (a : A) (M : Matrix (Fin m) (Fin m) A) : bd a M 0 0 = a := rfl
-@[simp] lemma bd_zero_succ (a : A) (M : Matrix (Fin m) (Fin m) A) (j : Fin m) :
-    bd a M 0 j.succ = 0 := rfl
 @[simp] lemma bd_succ_zero (a : A) (M : Matrix (Fin m) (Fin m) A) (i : Fin m) :
     bd a M i.succ 0 = 0 := rfl
 @[simp] lemma bd_succ_succ (a : A) (M : Matrix (Fin m) (Fin m) A) (i j : Fin m) :
@@ -51,12 +48,6 @@ lemma bd_diagonal (a : A) (d : Fin m → A) :
 def uni (r : Fin m → A) : Matrix (Fin (m + 1)) (Fin (m + 1)) A :=
   fun i j => Fin.cases (Fin.cases 1 r j)
     (fun i' => Fin.cases 0 (fun j' => (1 : Matrix (Fin m) (Fin m) A) i' j') j) i
-
-@[simp] lemma uni_zero_zero (r : Fin m → A) : uni r 0 0 = 1 := rfl
-@[simp] lemma uni_zero_succ (r : Fin m → A) (j : Fin m) : uni r 0 j.succ = r j := rfl
-@[simp] lemma uni_succ_zero (r : Fin m → A) (i : Fin m) : uni r i.succ 0 = 0 := rfl
-@[simp] lemma uni_succ_succ (r : Fin m → A) (i j : Fin m) :
-    uni r i.succ j.succ = (1 : Matrix (Fin m) (Fin m) A) i j := rfl
 
 lemma det_uni (r : Fin m → A) : (uni r).det = 1 := by
   rw [Matrix.det_succ_column_zero, Fin.sum_univ_succ]

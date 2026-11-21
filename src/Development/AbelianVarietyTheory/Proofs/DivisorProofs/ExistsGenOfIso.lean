@@ -24,9 +24,6 @@ structure IsPart (N : LB X) (M : LB X₁) (e : X₁ ⟶ X) (π : N.ι → M.ι) 
 def rs {N : LB X} {M : LB X₁} (e : X₁ ⟶ X) (π : N.ι → M.ι) (J : (Z ⟶ X) → N.ι) : (Z ⟶ X₁) → M.ι :=
   fun ψ => π (J (ψ ≫ e))
 
-theorem IsPart.refl (M : LB X) : IsPart M M (𝟙 X) id :=
-  ⟨fun _ _ => Iff.rfl, fun _ ψ _ _ _ _ _ => by rw [Category.comp_id]; rfl⟩
-
 theorem IsPart.trans {N : LB X} {M : LB X₁} {M' : LB X₂} {e : X₁ ⟶ X} {π : N.ι → M.ι} {e' : X₂ ⟶ X₁} {π' : M.ι → M'.ι}
     (h : IsPart N M e π) (h' : IsPart M M' e' π') : IsPart N M' (e' ≫ e) (π' ∘ π) :=
   ⟨fun i x => (h.mem i (e' x)).trans (h'.mem _ x), fun Z ψ z i j hi hj => by

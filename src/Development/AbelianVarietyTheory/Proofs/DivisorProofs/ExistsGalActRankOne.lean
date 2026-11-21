@@ -16,17 +16,6 @@ namespace GlobalTheory.Mum
 section
 variable {R : Type} [CommRing R] [IsLocalRing R] {S : Scheme.{0}}
 
-def Near.pull (π : S ⟶ Sp R) (G : Over (Sp R)) [Smooth G.hom] [IsSeparated G.hom] [QuasiCompact G.hom] :
-    Near π ((Over.pullback π).obj G) where
-  U := G
-  smooth := inferInstance
-  separated := inferInstance
-  quasiCompact := inferInstance
-  u := 𝟙 _
-  isOpen := inferInstanceAs (IsOpenImmersion (𝟙 (pullback G.hom π)))
-  u_over := Category.id_comp _
-  all := fun g _ => ⟨g, rfl⟩
-
 end
 
 open GlobalTheory.TorsionFormCompare in

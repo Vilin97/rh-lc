@@ -22,12 +22,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
 
 def pol (Xo : Moduli D l) : PolAV Xo.X := GlobalTheory.Obj.toPolAV Xo.univ
 
-@[simp] theorem pol_A (Xo : Moduli D l) : (pol Xo).A = Xo.univ.t.G := rfl
-
-@[simp] theorem pol_L (Xo : Moduli D l) : (pol Xo).L = Xo.univ.t.PP.L := rfl
-
-@[simp] theorem pol_g (Xo : Moduli D l) : (pol Xo).g = Module.finrank ℚ E / 2 * (D.p + D.q) := rfl
-
 theorem smooth (Xo : Moduli D l) : Smooth Xo.s :=
   haveI := Xo.smooth
   SmoothOfRelativeDimension.smooth D.dim Xo.s

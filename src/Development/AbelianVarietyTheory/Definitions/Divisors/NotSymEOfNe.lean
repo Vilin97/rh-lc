@@ -46,15 +46,6 @@ def MinorAt (S : ThetaSys o Ω) (X M : RatModel o Ω) (U₀ : M.Z.Opens) (EE : M
 def SameScale (M : RatModel o Ω) {I J : Type} (a : I → Ω) (b : J → Ω) (D : ℕ) : Prop :=
   ∀ z i, M.Div a i z → ∃ j, M.Div b j z ∧ a i ^ D / b j ∈ M.O z ∧ b j / a i ^ D ∈ M.O z
 
-theorem ThAt.card {P : PolAV F.X} {rig : LB.Gen (P.L.pull (eSec P.A))} {m N : ℕ} {f : F.X ⟶ PSpace (cycAway n) N}
-    (h : ThAt F W P rig m f) : N + 1 = m ^ (4 * (8 * g)) := h.2.2.2.2.2.2.1
-
-theorem SymE.card {S : ThetaSys o Ω} {ρ : S.Real} {m N : ℕ} {e : Fin N → Ω} (h : SymE ρ m e) : N = m ^ (4 * S.g) := h.1
-
-theorem SymE.cast_ne_zero {S : ThetaSys o Ω} {ρ : S.Real} {m N : ℕ} {e : Fin N → Ω} (h : SymE ρ m e) : (m : Ω) ≠ 0 := h.2.1
-
-example {S : ThetaSys o Ω} (ρ : S.Real) {N : ℕ} (e : Fin N → Ω) : ¬ SymE ρ 0 e := fun h => h.cast_ne_zero (by simp)
-
 end GlobalTheory.SiegTh
 
 end

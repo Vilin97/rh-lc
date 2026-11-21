@@ -44,17 +44,7 @@ instance isIso_imageRestrictLift [IsClosedImmersion (f ∣_ W)] :
 
 omit [QuasiCompact f] in
 
-def imageLift {C : Scheme.{u}} (c : C ⟶ Z) [IsClosedImmersion c] (g : Y ⟶ C) (hg : g ≫ c = f) :
-    f.image ⟶ C :=
-  IsClosedImmersion.lift c f.imageι (by
-    rw [Scheme.IdealSheafData.ker_subschemeι, ← hg]
-    exact Scheme.Hom.le_ker_comp g c)
-
 omit [QuasiCompact f] in
-@[reassoc (attr := simp)]
-lemma imageLift_fac {C : Scheme.{u}} (c : C ⟶ Z) [IsClosedImmersion c] (g : Y ⟶ C)
-    (hg : g ≫ c = f) : imageLift f c g hg ≫ c = f.imageι :=
-  IsClosedImmersion.lift_fac _ _ _
 
 end SchemeImage
 
@@ -73,7 +63,6 @@ instance : IsClosedImmersion (eqLocusι p g h hgh) := by
 
 omit [IsSeparated p] in
 
-@[reassoc]
 lemma eqLocusι_comp_eq : eqLocusι p g h hgh ≫ g = eqLocusι p g h hgh ≫ h := by
   have h₁ := congrArg (· ≫ pullback.fst p p) (pullback.condition (f := pullback.diagonal p)
     (g := pullback.lift g h hgh))

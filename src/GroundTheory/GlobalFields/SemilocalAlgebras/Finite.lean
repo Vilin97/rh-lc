@@ -129,20 +129,6 @@ instance isModuleTopology_completionsOver :
     IsModuleTopology (v.adicCompletion K) (CompletionsOver L v) :=
   isModuleTopologyOfFiniteDimensional
 
-def tensorHomeomorph [TopologicalSpace (v.adicCompletion K ⊗[K] L)]
-    [IsModuleTopology (v.adicCompletion K) (v.adicCompletion K ⊗[K] L)] :
-    v.adicCompletion K ⊗[K] L ≃ₜ CompletionsOver L v where
-  toEquiv := (tensorEquiv L v).toEquiv
-  continuous_toFun :=
-    IsModuleTopology.continuous_of_linearMap (tensorEquiv L v).toLinearEquiv.toLinearMap
-  continuous_invFun := by
-    have := IsModuleTopology.toContinuousAdd (v.adicCompletion K) (v.adicCompletion K ⊗[K] L)
-    exact IsModuleTopology.continuous_of_linearMap (tensorEquiv L v).symm.toLinearEquiv.toLinearMap
-
-@[simp] theorem tensorHomeomorph_apply [TopologicalSpace (v.adicCompletion K ⊗[K] L)]
-    [IsModuleTopology (v.adicCompletion K) (v.adicCompletion K ⊗[K] L)]
-    (y : v.adicCompletion K ⊗[K] L) : tensorHomeomorph L v y = tensorEquiv L v y := rfl
-
 end SemiLocal
 
 end

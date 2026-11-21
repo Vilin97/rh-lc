@@ -4,8 +4,8 @@ import Formalism.LocalToGlobal.Columns.LocWLemmas
 import Formalism.LocalToGlobal.Columns.AtTLemmas
 import Formalism.LocalToGlobal.Columns.DiamondPreservesRamified
 import Formalism.LocalToGlobal.Columns.AtTRank
-import Formalism.LogVandermondeBounds.LogVandermondeProofs.RamifiedLatticeOperatorIdentity
-import Formalism.LogVandermondeBounds.LogVandermondeProofs.FourierIsometryOnNormKernel
+import Formalism.LogVandermondeBounds.FinrankFiberSumZero
+import Formalism.LogVandermondeBounds.GaussOperatorProductFormula
 
 open NumberField IsDedekindDomain Module
 
@@ -20,21 +20,6 @@ section CoordLemmas
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {P : HeightOneSpectrum (𝓞 E)}
   {N : Submodule (𝓞 E) (Sp E n)}
 
-theorem FunAt.zero {f : Sp E n → 𝓞 E ⧸ P.asIdeal} (h : FunAt P N f) : f 0 = 0 := by
-  have := h.smul 0 0 (Submodule.zero_mem _)
-  simpa using this
-
-theorem FunAt.sum {f : Sp E n → 𝓞 E ⧸ P.asIdeal} (h : FunAt P N f) {ι : Type} (s : Finset ι) (v : ι → Sp E n)
-    (hv : ∀ i ∈ s, v i ∈ localization₂ P.asIdeal N) : f (∑ i ∈ s, v i) = ∑ i ∈ s, f (v i) := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simpa using h.zero
-  | insert a s ha ih =>
-    rw [Finset.sum_insert ha, Finset.sum_insert ha,
-      h.add _ (hv a (Finset.mem_insert_self _ _)) _
-        (Submodule.sum_mem _ fun i hi => hv i (Finset.mem_insert_of_mem hi)),
-      ih fun i hi => hv i (Finset.mem_insert_of_mem hi)]
-
 theorem FunAt.of_smul_mem {f : Sp E n → 𝓞 E ⧸ P.asIdeal} (h : FunAt P N f) {z : Sp E n}
     (hz : z ∈ P.asIdeal • N) : f z = 0 := by
   have key : z ∈ N ∧ f z = 0 := by
@@ -45,15 +30,6 @@ theorem FunAt.of_smul_mem {f : Sp E n → 𝓞 E ⧸ P.asIdeal} (h : FunAt P N f
       rw [h.add y (le_locP _ _ hy.1) y' (le_locP _ _ hy'.1), hy.2, hy'.2, add_zero]
   exact key.2
 
-theorem FunAt.ext_on {f g : Sp E n → 𝓞 E ⧸ P.asIdeal} (hf : FunAt P N f) (hg : FunAt P N g)
-    (h : ∀ z ∈ N, f z = g z) : f = g := by
-  funext y
-  by_cases hy : y ∈ localization₂ P.asIdeal N
-  · obtain ⟨s, hs, hsy⟩ := (mem_locP _ _ _).1 hy
-    apply mul_left_cancel₀ (mk_ne_zero hs)
-    rw [← hf.smul s y hy, ← hg.smul s y hy, h _ hsy]
-  · rw [hf.off y hy, hg.off y hy]
-
 variable {co : Sp E n → (Fin n → 𝓞 E ⧸ P.asIdeal)}
 
 theorem CoordAt.comp (h : CoordAt P N co) (i : Fin n) : FunAt P N fun y => co y i where
@@ -61,20 +37,8 @@ theorem CoordAt.comp (h : CoordAt P N co) (i : Fin n) : FunAt P N fun y => co y 
   smul a x hx := by rw [h.smul a x hx]; rfl
   off x hx := by rw [h.off x hx]; rfl
 
-theorem CoordAt.zero (h : CoordAt P N co) : co 0 = 0 := funext fun i => (h.comp i).zero
-
 theorem CoordAt.of_smul_mem (h : CoordAt P N co) {z : Sp E n} (hz : z ∈ P.asIdeal • N) : co z = 0 :=
   funext fun i => (h.comp i).of_smul_mem hz
-
-theorem CoordAt.sub (h : CoordAt P N co) {x y : Sp E n} (hx : x ∈ localization₂ P.asIdeal N)
-    (hy : y ∈ localization₂ P.asIdeal N) : co (x - y) = co x - co y := by
-  have h1 : x - y = x + (-1 : 𝓞 E) • y := by rw [neg_smul, one_smul, sub_eq_add_neg]
-  rw [h1, h.add x hx _ (Submodule.smul_mem _ _ hy), h.smul _ y hy, map_neg, map_one, neg_smul, one_smul,
-    sub_eq_add_neg]
-
-theorem CoordAt.sub_mem (h : CoordAt P N co) {x y : Sp E n} (hx : x ∈ N) (hy : y ∈ N) (e : co x = co y) :
-    x - y ∈ P.asIdeal • N :=
-  h.ker _ (N.sub_mem hx hy) (by rw [h.sub (le_locP _ _ hx) (le_locP _ _ hy), e, sub_self])
 
 end CoordLemmas
 

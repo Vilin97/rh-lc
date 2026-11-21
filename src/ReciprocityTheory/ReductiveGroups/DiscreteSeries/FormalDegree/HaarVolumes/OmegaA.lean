@@ -139,19 +139,6 @@ instance instHaarUCoOm : (volume : Measure (UCo N)).IsAddHaarMeasure := by
 instance instHaarUCo2Om : (volume : Measure (UCo N × UCo N)).IsAddHaarMeasure := by
   rw [Measure.volume_eq_prod]; exact Measure.prod.instIsAddHaarMeasure _ _
 
-theorem isClosed_unitaryLie :
-    IsClosed (Formalism.BasicNotions.lieU N 0 : Set (Matrix (Fin N ⊕ Fin 0) (Fin N ⊕ Fin 0) ℂ)) := by
-  have hc : Continuous (fun X : Matrix (Fin N ⊕ Fin 0) (Fin N ⊕ Fin 0) ℂ =>
-      Xᴴ * Formalism.UG.Jpq N 0 + Formalism.UG.Jpq N 0 * X) :=
-    (continuous_id.matrix_conjTranspose.matrix_mul continuous_const).add
-      (continuous_const.matrix_mul continuous_id)
-  exact isClosed_eq hc continuous_const
-
-instance instLocallyCompactSpaceUnitaryLie : LocallyCompactSpace (Formalism.BasicNotions.lieU N 0) :=
-  haveI : LocallyCompactSpace (Matrix (Fin N ⊕ Fin 0) (Fin N ⊕ Fin 0) ℂ) :=
-    inferInstanceAs (LocallyCompactSpace (Fin N ⊕ Fin 0 → Fin N ⊕ Fin 0 → ℂ))
-  isClosed_unitaryLie.isClosedEmbedding_subtypeVal.locallyCompactSpace
-
 instance instSecondCountableTopologyUnitaryLie : SecondCountableTopology (Formalism.BasicNotions.lieU N 0) :=
   haveI : SecondCountableTopology (Matrix (Fin N ⊕ Fin 0) (Fin N ⊕ Fin 0) ℂ) :=
     inferInstanceAs (SecondCountableTopology (Fin N ⊕ Fin 0 → Fin N ⊕ Fin 0 → ℂ))

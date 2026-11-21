@@ -19,11 +19,6 @@ theorem maDensity_congr_of_eventuallyEq {D : ℕ} {φ ψ : Fin D → (Fin D → 
     rw [h2 k]
   simp only [maDensity, hH]
 
-local instance instRealIPS : InnerProductSpace ℝ E := InnerProductSpace.rclikeToReal ℂ E
-
-def affL (b : E) : (Fin 1 → ℂ) →L[ℝ] E :=
-  (ContinuousLinearMap.proj (R := ℝ) (φ := fun _ : Fin 1 => ℂ) 0).smulRight b
-
 theorem mixedDisc_one (A : Fin 1 → Matrix (Fin 1) (Fin 1) ℂ) : mixedDisc A = A 0 0 0 := by
   unfold mixedDisc
   rw [← Finset.powerset_univ, Finset.univ_unique, ← Finset.insert_empty,

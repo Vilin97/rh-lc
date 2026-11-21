@@ -188,14 +188,6 @@ theorem replaceLastCoord_comp_projLeft (k : Type u) [Field k] (M : ℕ)
     replaceLastCoord k M G s ≫ projLeft k M 1 = (pullbackBasicOpen k M G).ι ≫ projLeft k M 1 :=
   (exists_replaceLastCoord k M G s).choose_spec.2.2.2
 
-@[simp]
-theorem replaceLastCoord_comp_projLeft_assoc (k : Type u) [Field k] (M : ℕ)
-    (G : ↑((affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))).presheaf.obj (Opposite.op ⊤)))
-    (s : ↑((↑(pullbackBasicOpen k M G) : Scheme.{u}).presheaf.obj (Opposite.op ⊤))) {Z : Scheme.{u}}
-    (g : affineSpaceIndexedBy k (ULift.{u, 0} (Fin M)) ⟶ Z) :
-    replaceLastCoord k M G s ≫ projLeft k M 1 ≫ g = (pullbackBasicOpen k M G).ι ≫ projLeft k M 1 ≫ g := by
-  rw [← Category.assoc, replaceLastCoord_comp_projLeft, Category.assoc]
-
 private theorem mem_pullbackBasicOpen_iff (k : Type u) [Field k] (M : ℕ)
     (G : ↑((affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))).presheaf.obj (Opposite.op ⊤)))
     (y : ↥(affineSpaceTimesLine k M)) :

@@ -30,6 +30,3 @@ theorem surjective_of_isProjOver (o Ω : Type) [CommRing o] [Field Ω] [Algebra 
   exact ⟨y, hy⟩
 
 end GlobalTheory.ProjModelSurj
-
-example : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] (X M : RatModel o Ω) (f : M.Z ⟶ X.Z),
-    X.IsHom M (AlgHom.id o Ω) f → IsProjOver M.s → Function.Surjective f := GlobalTheory.ProjModelSurj.surjective_of_isProjOver

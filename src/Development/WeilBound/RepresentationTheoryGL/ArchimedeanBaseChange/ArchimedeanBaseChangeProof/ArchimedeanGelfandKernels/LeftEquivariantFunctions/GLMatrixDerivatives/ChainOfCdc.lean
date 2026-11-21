@@ -21,8 +21,6 @@ def mulRL (c : Mat n) : Mat n →L[ℝ] Mat n := LinearMap.toContinuousLinearMap
 def mulLRL (a c : Mat n) : Mat n →L[ℝ] Mat n :=
   LinearMap.toContinuousLinearMap ((LinearMap.mulLeft ℝ a).comp (LinearMap.mulRight ℝ c))
 
-@[simp] theorem mulLRL_apply (a c y : Mat n) : mulLRL a c y = a * (y * c) := rfl
-
 theorem mem_GLs_mul {x y : Mat n} (hx : x ∈ GLs n) (hy : y ∈ GLs n) : x * y ∈ GLs n := by
   simp only [GLs, Set.mem_ofPred_eq, Matrix.det_mul] at *
   exact mul_ne_zero hx hy

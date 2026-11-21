@@ -101,19 +101,6 @@ theorem continuous_adeleRingEquiv (τ : L ≃+* L') : Continuous (adeleRingEquiv
           RingHom.id_apply] }
   exact IsModuleTopology.continuous_of_linearMap f
 
-def adeleHomeomorph (τ : L ≃+* L') : 𝔸[L] ≃ₜ 𝔸[L'] where
-  toEquiv := (adeleRingEquiv τ).toEquiv
-  continuous_toFun := continuous_adeleRingEquiv τ
-  continuous_invFun := by
-    change Continuous (adeleRingEquiv τ).symm
-    rw [← adeleRingEquiv_symm]
-    exact continuous_adeleRingEquiv τ.symm
-
-@[simp]
-theorem adeleHomeomorph_apply (τ : L ≃+* L') (x : 𝔸[L]) :
-    adeleHomeomorph τ x = adeleRingEquiv τ x :=
-  rfl
-
 end Transport
 
 section Relative
@@ -138,11 +125,6 @@ variable (K) in
 
 def adeleAlgEquiv (τ : L ≃ₐ[K] L') : 𝔸[L] ≃ₐ[𝔸[K]] 𝔸[L'] :=
   AlgEquiv.ofRingEquiv (f := adeleRingEquiv (τ : L ≃+* L')) fun a ↦ adeleRingEquiv_adeleMap τ a
-
-@[simp]
-theorem adeleAlgEquiv_apply (τ : L ≃ₐ[K] L') (x : 𝔸[L]) :
-    adeleAlgEquiv K τ x = adeleRingEquiv (τ : L ≃+* L') x :=
-  rfl
 
 theorem norm_adeleRingEquiv (τ : L ≃ₐ[K] L') (x : 𝔸[L]) :
     Algebra.norm 𝔸[K] (adeleRingEquiv (τ : L ≃+* L') x) = Algebra.norm 𝔸[K] x :=
@@ -235,20 +217,9 @@ variable {K L L' : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [F
   [NumberField L'] [Algebra K L] [Algebra K L']
 
 @[simp]
-theorem ideleEquiv_ideleEmbedding (τ : L ≃ₐ[K] L') (x : IdeleGroup K) :
-    ideleEquiv (τ : L ≃+* L') (ideleEmbedding K L x) = ideleEmbedding K L' x :=
-  Units.ext (adeleRingEquiv_adeleMap τ (x : 𝔸[K]))
-
-@[simp]
 theorem ideleNorm_ideleEquiv (τ : L ≃ₐ[K] L') (x : IdeleGroup L) :
     ideleNorm K L' (ideleEquiv (τ : L ≃+* L') x) = ideleNorm K L x :=
   Units.ext (norm_adeleRingEquiv τ (x : 𝔸[L]))
-
-@[simp]
-theorem ideleClassEquiv_ideleClassMap (τ : L ≃ₐ[K] L') (c : IdeleClassGroup K) :
-    ideleClassEquiv (τ : L ≃+* L') (ideleClassMap K L c) = ideleClassMap K L' c := by
-  obtain ⟨x, rfl⟩ := IdeleClassGroup.mk_surjective K c
-  rw [ideleClassMap_mk, ideleClassEquiv_mk, ideleEquiv_ideleEmbedding, ideleClassMap_mk]
 
 @[simp]
 theorem ideleClassNorm_ideleClassEquiv (τ : L ≃ₐ[K] L') (c : IdeleClassGroup L) :

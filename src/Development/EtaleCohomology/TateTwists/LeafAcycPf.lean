@@ -20,12 +20,6 @@ def cone {p N : ℕ} (a : SimplexCategory.mk p ⟶ SimplexCategory.mk N) :
 def v0 {N : ℕ} : SimplexCategory.mk 0 ⟶ SimplexCategory.mk N :=
   SimplexCategory.mkHom ⟨fun _ => 0, fun _ _ _ => le_rfl⟩
 
-@[simp] lemma cone_zero {p N : ℕ} (a : SimplexCategory.mk p ⟶ SimplexCategory.mk N) :
-    (cone a).toOrderHom 0 = 0 := rfl
-@[simp] lemma cone_succ {p N : ℕ} (a : SimplexCategory.mk p ⟶ SimplexCategory.mk N) (j : Fin (p + 1)) :
-    (cone a).toOrderHom j.succ = a.toOrderHom j := rfl
-@[simp] lemma vertex_zero_apply {N : ℕ} (j : Fin 1) : (v0 (N := N)).toOrderHom j = 0 := rfl
-
 lemma δ0_cone {p N : ℕ} (a : SimplexCategory.mk p ⟶ SimplexCategory.mk N) :
     SimplexCategory.δ 0 ≫ cone a = a := by
   ext j

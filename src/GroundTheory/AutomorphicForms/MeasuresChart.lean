@@ -157,8 +157,6 @@ noncomputable def rightModulusHom : G →* ℝ≥0 where
 
 @[simp] theorem leftModulusHom_apply (g : G) : C.leftModulusHom g = C.leftModulus g := rfl
 
-@[simp] theorem rightModulusHom_apply (g : G) : C.rightModulusHom g = C.rightModulus g := rfl
-
 theorem leftModulus_eq_one_of_preimage {g : G} {s : Set G} (hs : MeasurableSet s)
     (hgs : (g * ·) ⁻¹' s = s) (h0 : μ₀.comap C.toFun s ≠ 0) (hT : μ₀.comap C.toFun s ≠ ∞) :
     C.leftModulus g = 1 := by

@@ -29,8 +29,6 @@ open GlobalTheory.StdRead.CharVal
 
 variable {D : D7}
 
-local notation "𝔸" => Formalism.MainNotions.StandardLatticesGL3.AE
-
 def invM {a : ℕ} (k : Formalism.MainNotions.StandardLatticesGL3.GA D a) : Matrix (Fin a) (Fin a) (𝔸 D) :=
   (((k : GL (Fin a) (𝔸 D))⁻¹ : GL (Fin a) (𝔸 D)) : Matrix (Fin a) (Fin a) (𝔸 D))
 

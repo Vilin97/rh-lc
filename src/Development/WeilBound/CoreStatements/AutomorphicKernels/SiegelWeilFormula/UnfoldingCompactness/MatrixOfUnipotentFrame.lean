@@ -1,7 +1,7 @@
 import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.AuxiliaryPrimeFunction
 import Development.WeilBound.CoreStatements.AutomorphicKernels.EisensteinSeriesG2.G2HaarMeasure.CountableRationalPointsDoubled
 import Development.WeilBound.CoreStatements.AutomorphicKernels.EisensteinSeriesG2.G2HaarMeasure.ContinuousInFrame
-import Development.WeilBound.CoreStatements.AutomorphicKernels.EisensteinSeriesG2.G2HaarMeasure.IsHaarMeasureDoubledGroup
+import Development.WeilBound.CoreStatements.AutomorphicKernels.EisensteinSeriesG2.UnitsBorelSpace.BorelSpaceDoubledGroup
 import Development.WeilBound.ThetaLifts.LatticeBasics.ContinuousFlat
 import Development.WeilBound.ThetaLifts.LatticeBasics.IsCompactOfUnits
 import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.UnfoldingCompactness.IncMTranspose
@@ -25,7 +25,6 @@ instance matBorel : BorelSpace (Matrix (Fin n) (Fin n) (AE F E)) := inferInstanc
 instance nATop : IsTopologicalAddGroup (nA σ Y b) := inferInstance
 instance nASC : SecondCountableTopology (nA σ Y b) := TopologicalSpace.Subtype.secondCountableTopology _
 instance nABorel : BorelSpace (nA σ Y b) := Subtype.borelSpace _
-instance borelSpaceDoubledGroup : BorelSpace (G2 σ Y) := GlobalTheory.EisBL.DoubledGroupTopology.borelSpace_doubled_group_eq σ Y
 
 theorem matrix_eq_inFrame_conj (b : GL (Fin n ⊕ Fin n) E) (x : G2 σ Y) :
     mat2 x = incM F b.1 * inFrame b x * incM F (b⁻¹).1 := by

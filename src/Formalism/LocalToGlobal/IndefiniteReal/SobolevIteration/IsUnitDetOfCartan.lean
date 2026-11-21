@@ -12,9 +12,6 @@ namespace Formalism.IndefR.Tow.SobPf.Avg
 
 variable {n : ℕ}
 
-theorem mem_UH_iff {G g : Matrix (Fin n) (Fin n) ℂ} : g ∈ Formalism.QuantumDeterminants.UH G ↔ gᴴ * G * g = G := by
-  exact Iff.rfl
-
 theorem isUnit_det_of_cartan {G s : Matrix (Fin n) (Fin n) ℂ} (hs : IsCartanInv G s) : IsUnit G.det := by
   unfold Formalism.IndefR.Datum.IsCartanInv at hs
   obtain ⟨_, _, hp⟩ := hs
@@ -117,13 +114,6 @@ def appL (d d' : ℕ) : (Fin d → ℝ) →L[ℝ] (Fin (d + d') → ℝ) :=
       map_smul' := fun c a => by
         funext i
         refine Fin.addCases (fun i => ?_) (fun i => ?_) i <;> simp }
-
-theorem append_eq_appL {d d' : ℕ} (t : Fin d → ℝ) (s : Fin d' → ℝ) :
-    Fin.append t s = appL d d' t + Fin.append (0 : Fin d → ℝ) s := by
-  funext i
-  refine Fin.addCases (fun i => ?_) (fun i => ?_) i
-  · simp [appL]
-  · simp [appL]
 
 end Formalism.IndefR.Tow.SobPf.Avg
 

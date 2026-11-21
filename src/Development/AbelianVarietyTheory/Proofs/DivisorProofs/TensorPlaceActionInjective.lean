@@ -73,15 +73,4 @@ theorem contr_atPl (w₀ : ι) (μ : ι → Module.Dual ℂ V) (L : Module.End �
       simp [Function.update_of_ne (Finset.ne_of_mem_erase hk)]
   | add a b ha hb => simp only [map_add, ha, hb]
 
-theorem atPl_noCommonKernel : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (V : Type) [AddCommGroup V] [Module ℂ V] (J : Type)
-    (L : J → Module.End ℂ V) (w₀ : ι), (∀ v : V, (∀ j, L j v = 0) → v = 0) →
-    ∀ T : ⨂[ℂ] _ : ι, V, (∀ j, GlobalTheory.RealLift.atPl (V := fun _ : ι => V) w₀ (L j) T = 0) → T = 0 := by
-  intro ι _ _ V _ _ J L w₀ hL T hT
-  apply GlobalTheory.PiTensorCommute.eq_zero_of_forall_dualDistrib (M := fun _ : ι => V)
-  intro f
-  have hv : contr w₀ f T = 0 := hL _ fun j => by rw [← contr_atPl, hT j, map_zero]
-  have h := dual_contr w₀ f (f w₀) T
-  rw [hv, map_zero, Function.update_eq_self] at h
-  exact h.symm
-
 end GlobalTheory.FactorKernel

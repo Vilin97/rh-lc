@@ -9,8 +9,6 @@ open CategoryTheory NumberField IntermediateField IsDedekindDomain GroundTheory.
 
 open scoped Pointwise NumberField.LiesOver NumberField.AdeleRing
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 set_option synthInstance.maxHeartbeats 200000

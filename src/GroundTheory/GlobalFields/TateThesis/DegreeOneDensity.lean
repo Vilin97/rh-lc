@@ -83,11 +83,6 @@ variable {K L : Type*} [Field K] [NumberField K] [Field L] [NumberField L] [Alge
 
 variable (K L) in
 
-theorem hasDirichletDensity_higherDegreePrimes :
-    (higherDegreePrimes K L).HasDirichletDensity 0 :=
-  hasDirichletDensity_zero_of_isBoundedUnder
-    (isBoundedUnder_primeIdealZetaSum_higherDegreePrimes K L)
-
 variable (K) in
 
 theorem hasDirichletDensity_inter_degreeOnePrimes_iff (S : Set (HeightOneSpectrum (𝓞 L)))

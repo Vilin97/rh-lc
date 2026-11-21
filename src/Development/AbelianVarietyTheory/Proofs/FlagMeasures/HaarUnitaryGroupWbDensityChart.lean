@@ -16,8 +16,6 @@ open PI.RhsWLim PI.RhsWLim.W PI.RhsWLim.W.HU
 
 variable {k r : ℕ}
 
-instance : T2Space (Gp k r) := inferInstanceAs (T2Space {x : Mt k r // x ∈ amb k r})
-
 instance : LocallyCompactSpace (Gp k r) :=
   (amb_closed (k := k) (r := r)).isClosedEmbedding_subtypeVal.locallyCompactSpace
 

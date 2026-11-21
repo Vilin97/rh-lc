@@ -23,8 +23,6 @@ def opL (s : Sym m n) : Module.End ℂ (PX m n) where
   map_add' f g := by simp [op, opMono_add, smul_add, Finset.sum_add_distrib]
   map_smul' r f := by simp [op, opMono_smul, Finset.smul_sum, smul_comm r]
 
-@[simp] theorem opL_apply (s : Sym m n) (f : PX m n) : opL s f = op s f := rfl
-
 theorem op_eq (s : Sym m n) (T : Finset _) (h : s.support ⊆ T) (f : PX m n) :
     op s f = ∑ t ∈ T, s.coeff t • opMono t f := by
   unfold op

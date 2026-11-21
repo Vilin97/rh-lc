@@ -249,8 +249,6 @@ section Adelic
 
 variable {D : D7}
 
-local infixl:70 " *ₘ " => HMul.hMul
-
 theorem mt_mul (B : HSp D) (g h : GA D B) : Formalism.L2.Theta.mt B (g * h) = Formalism.L2.Theta.mt B g * Formalism.L2.Theta.mt B h := by
   simp [Formalism.L2.Theta.mt]
 

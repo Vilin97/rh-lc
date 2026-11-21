@@ -23,8 +23,6 @@ namespace GlobalTheory.CompanionTheory.StdFstTheta
 
 variable {D : D7}
 
-local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
-
 theorem hom_sum {R R' ι : Type} [CommRing R] [CommRing R'] (f : R →+* R') (p : ι → R) (s : Finset ι) :
     f (∑ i ∈ s, p i) = ∑ i ∈ s, f (p i) := map_sum f p s
 
@@ -168,8 +166,6 @@ open GlobalTheory.Grid GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle 
 namespace GlobalTheory.CompanionTheory.StdFstTheta
 
 variable {D : D7}
-
-local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
 
 theorem coe_nat {R : Type} [CommRing R] (A : Subring R) (n : ℕ) : (((n : A)) : R) = n := map_natCast A.subtype n
 
@@ -338,8 +334,6 @@ open GlobalTheory.Grid GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle 
 namespace GlobalTheory.CompanionTheory.StdFstTheta
 
 variable {D : D7}
-
-local notation "OO" => Formalism.L2.Herm.intAf D.host.F D.host.E
 
 set_option maxHeartbeats 1000000 in
 

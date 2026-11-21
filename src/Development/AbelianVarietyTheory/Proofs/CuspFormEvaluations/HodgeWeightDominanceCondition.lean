@@ -15,22 +15,6 @@ namespace GlobalTheory.FrameRead
 open NumberField MvPolynomial ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj Formalism.BasicNotions Formalism.L2.DIV
 open scoped Classical Matrix
 
-def hhaSub {T : Type} (r : T → ℕ) (n : ℕ) (k : Type) [Field k] (cc : T → T) (isX : T → Prop) (a : T → ℕ → ℕ) :
-    Submodule k (MvPolynomial (Letter T r n) k) where
-  carrier := HHa r n k cc isX a
-  zero_mem' := ⟨zero_mem _, fun _ _ _ _ _ => map_zero _, fun m hm => by simp at hm⟩
-  add_mem' := by
-    intro P Q hP hQ
-    refine ⟨add_mem hP.1 hQ.1, fun σ i i' h t => ?_, fun m hm => ?_⟩
-    · rw [map_add, hP.2.1 σ i i' h t, hQ.2.1 σ i i' h t]
-    · rcases Finset.mem_union.1 (support_add hm) with h | h
-      · exact hP.2.2 m h
-      · exact hQ.2.2 m h
-  smul_mem' := by
-    intro c P hP
-    refine ⟨Submodule.smul_mem _ c hP.1, fun σ i i' h t => ?_, fun m hm => hP.2.2 m (support_smul hm)⟩
-    rw [map_smul, hP.2.1 σ i i' h t]
-
 theorem det_gen_ne_zero {K : Type} [Field K] {Ix : Type} {n : ℕ} (t : Ix) : (gen K n t).det ≠ 0 := by
   intro h
   have h2 := congrArg (MvPolynomial.eval (fun v : Ix × Fin n × Fin n => (1 : Matrix (Fin n) (Fin n) K) v.2.1 v.2.2)) h

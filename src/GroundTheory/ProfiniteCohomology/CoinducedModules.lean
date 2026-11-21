@@ -61,32 +61,6 @@ noncomputable def coindEval : LocallyConstant G X →ₗ[k] X where
   map_smul' _ _ := rfl
 
 omit [IsTopologicalGroup G] in
-@[simp]
-theorem coindEval_apply (f : LocallyConstant G X) : coindEval k G X f = f 1 :=
-  rfl
-
-noncomputable def invariantsDiscreteCoindEquiv :
-    (discreteCoindRep k G X).invariants ≃ₗ[k] X where
-  toFun f := (f : LocallyConstant G X) 1
-  invFun x := ⟨LocallyConstant.const G x, fun _ => rfl⟩
-  map_add' _ _ := rfl
-  map_smul' _ _ := rfl
-  left_inv f := Subtype.ext <| LocallyConstant.ext fun x => by
-    have h := congrArg (fun φ : LocallyConstant G X => φ 1) (f.2 x)
-    simp only [discreteCoindRep_apply, one_mul] at h
-    simp [h]
-  right_inv _ := rfl
-
-@[simp]
-theorem invariantsDiscreteCoindEquiv_apply (f : (discreteCoindRep k G X).invariants) :
-    invariantsDiscreteCoindEquiv k G X f = (f : LocallyConstant G X) 1 :=
-  rfl
-
-@[simp]
-theorem invariantsDiscreteCoindEquiv_symm_apply (x : X) :
-    ((invariantsDiscreteCoindEquiv k G X).symm x : LocallyConstant G X) =
-      LocallyConstant.const G x :=
-  rfl
 
 section Embedding
 
@@ -100,11 +74,6 @@ noncomputable def coindEmbedding (A : Rep.{u} k G) [IsDiscreteRep A] : A ⟶ dis
       isIntertwining' := fun h => LinearMap.ext fun a => LocallyConstant.ext fun x => by
         change A.ρ x (A.ρ h a) = A.ρ (x * h) a
         rw [map_mul, Module.End.mul_apply] }
-
-@[simp]
-theorem coindEmbedding_hom_apply (A : Rep.{u} k G) [IsDiscreteRep A] (a : A) (g : G) :
-    ((coindEmbedding A).hom a : LocallyConstant G A) g = A.ρ g a :=
-  rfl
 
 @[simp]
 theorem coindEval_coindEmbedding (A : Rep.{u} k G) [IsDiscreteRep A] (a : A) :
@@ -122,10 +91,6 @@ instance (A : Rep.{u} k G) [IsDiscreteRep A] : Mono (coindEmbedding A) :=
 noncomputable def coindEmbeddingRange (A : Rep.{u} k G) [IsDiscreteRep A] :
     Submodule k (LocallyConstant G A) :=
   LinearMap.range (coindEmbedding A).hom.toLinearMap
-
-theorem mem_coindEmbeddingRange (A : Rep.{u} k G) [IsDiscreteRep A] (f : LocallyConstant G A) :
-    f ∈ coindEmbeddingRange A ↔ ∃ a : A, (coindEmbedding A).hom a = f :=
-  Iff.rfl
 
 theorem coindEmbeddingRange_le_comap (A : Rep.{u} k G) [IsDiscreteRep A] (g : G) :
     coindEmbeddingRange A ≤ (coindEmbeddingRange A).comap ((discreteCoind k G A).ρ g) := by
@@ -165,32 +130,6 @@ theorem coindShortComplex_shortExact (A : Rep.{u} k G) [IsDiscreteRep A] :
     change Mono (coindEmbedding A)
     infer_instance
   epi_g := (Rep.epi_iff_surjective _).2 (Submodule.mkQ_surjective _)
-
-noncomputable def coindCokernelSection (A : Rep.{u} k G) [IsDiscreteRep A] :
-    (LocallyConstant G A ⧸ coindEmbeddingRange A) →ₗ[k] LocallyConstant G A :=
-  (coindEmbeddingRange A).liftQ
-    (LinearMap.id - (coindEmbedding A).hom.toLinearMap ∘ₗ coindEval k G A) <| by
-      rintro _ ⟨a, rfl⟩
-      rw [LinearMap.mem_ker]
-      change (coindEmbedding A).hom a -
-        (coindEmbedding A).hom (coindEval k G A ((coindEmbedding A).hom a)) = 0
-      rw [coindEval_coindEmbedding, sub_self]
-
-theorem coindCokernelSection_mk (A : Rep.{u} k G) [IsDiscreteRep A] (f : LocallyConstant G A) :
-    coindCokernelSection A (Submodule.Quotient.mk f) =
-      f - (coindEmbedding A).hom (coindEval k G A f) :=
-  rfl
-
-theorem coindCokernelπ_coindCokernelSection (A : Rep.{u} k G) [IsDiscreteRep A]
-    (c : LocallyConstant G A ⧸ coindEmbeddingRange A) :
-    (coindCokernelπ A).hom (coindCokernelSection A c) = c := by
-  induction c using Submodule.Quotient.induction_on with
-  | H f =>
-    rw [coindCokernelSection_mk]
-    change Submodule.Quotient.mk _ = Submodule.Quotient.mk _
-    rw [Submodule.Quotient.mk_sub,
-      (Submodule.Quotient.mk_eq_zero _).2
-        ((mem_coindEmbeddingRange A _).2 ⟨coindEval k G A f, rfl⟩), sub_zero]
 
 end Embedding
 

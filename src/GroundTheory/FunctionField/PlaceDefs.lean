@@ -373,11 +373,6 @@ def heightOneSpectrum : IsDedekindDomain.HeightOneSpectrum v.ring where
   isPrime := (IsLocalRing.maximalIdeal.isMaximal v.ring).isPrime
   ne_bot := IsDiscreteValuationRing.not_a_field v.ring
 
-@[simp]
-theorem heightOneSpectrum_asIdeal :
-    v.heightOneSpectrum.asIdeal = IsLocalRing.maximalIdeal v.ring :=
-  rfl
-
 noncomputable def valuation : Valuation K ℤᵐ⁰ := v.heightOneSpectrum.valuation K
 
 theorem valuation_le_one_iff (x : K) : v.valuation x ≤ 1 ↔ x ∈ v.ring := by
@@ -450,14 +445,6 @@ theorem ord_nonneg_iff {x : K} (hx : x ≠ 0) : 0 ≤ v.ord x ↔ x ∈ v.ring :
     WithZero.exp_le_exp]
   omega
 
-theorem ord_pos_iff {x : K} (hx : x ≠ 0) : 0 < v.ord x ↔ v.ring.valuation x < 1 := by
-  rw [← v.valuation_lt_one_iff, v.valuation_eq_exp_neg_ord hx, ← WithZero.exp_zero,
-    WithZero.exp_lt_exp]
-  omega
-
-theorem ord_algebraMap {c : k} (hc : c ≠ 0) : v.ord (algebraMap k K c) = 0 := by
-  rw [ord, v.valuation_algebraMap' hc, WithZero.log_one, neg_zero]
-
 theorem min_le_ord_add {x y : K} (hx : x ≠ 0) (hy : y ≠ 0) (hxy : x + y ≠ 0) :
     min (v.ord x) (v.ord y) ≤ v.ord (x + y) := by
   have h := Valuation.map_add v.valuation x y
@@ -470,16 +457,6 @@ theorem exists_ord_eq_one : ∃ π : K, v.ord π = 1 := by
   refine ⟨π, ?_⟩
   change -WithZero.log (v.heightOneSpectrum.valuation K π) = 1
   rw [hπ, WithZero.log_exp, neg_neg]
-
-noncomputable def ordHom : Kˣ →* Multiplicative ℤ where
-  toFun x := Multiplicative.ofAdd (v.ord x)
-  map_one' := by simp
-  map_mul' x y := by
-    simp only [Units.val_mul, v.ord_mul x.ne_zero y.ne_zero, ofAdd_add]
-
-@[simp]
-theorem ordHom_apply (x : Kˣ) : v.ordHom x = Multiplicative.ofAdd (v.ord x) :=
-  rfl
 
 end Valuation
 

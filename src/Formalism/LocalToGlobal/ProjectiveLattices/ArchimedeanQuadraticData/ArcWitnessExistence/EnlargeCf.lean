@@ -30,7 +30,4 @@ theorem arcDet_ne_zero (K₁ : Type) [Field K₁] : arcDet Dw K₁ ≠ 0 := by
       exact Prod.ext (congrArg Prod.fst hpq) (congrArg Prod.snd hpq))
   exact Matrix.det_mvPolynomialX_ne_zero (Fin (Dw.mult τ)) (LaurentSeries K₁) (hinj (h0.trans (map_zero _).symm))
 
-instance (K₁ : Type) [Field K₁] : IsDomain (ArcS Dw K₁) :=
-  IsLocalization.isDomain_of_le_nonZeroDivisors _ (powers_le_nonZeroDivisors_of_noZeroDivisors (arcDet_ne_zero (Dw := Dw) K₁))
-
 end Formalism.L2.Pj.QAt

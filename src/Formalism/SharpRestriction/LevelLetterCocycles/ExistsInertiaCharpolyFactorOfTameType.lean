@@ -1414,13 +1414,6 @@ theorem SplitI_of_TY (A : NAut N) (hr : GoodR N i r) (w : PlE H) (hw : w ∉ pla
       rfl)
   exact ⟨Pm, fun γ hγ => hPm ⟨γ, hγ⟩⟩
 
-theorem split_inertia_of_hypotheses (A : NAut N) (hr : GoodR N i r) (hTY : At.MonodromyInertiaType N A) (w : PlE H)
-    (hSQ : w ∈ N.S i ∨ w ∈ N.Q i)
-    (hcond : w ∈ N.Q i ∨ (At.Del N i ∧
-      (w ∈ placesOver H.E H.pde ∨ (N.l i = H.pde ∧ w ∈ placesOver H.E H.pde'))))
-    (hL : At.LGCat N r A w) (x : N.X i) : SplitI N r w x :=
-  SplitI_of_TY N r A hr w (N.SQ_l i w hSQ) hL (fun P => hTY.1 i P w hSQ hcond) x
-
 end G5a
 
 section H0
@@ -1638,20 +1631,6 @@ def G3a (i : N.Loc) (r : N.X i → (G H.E N.Om →* GL (Fin R.nV) (N.O i))) : Pr
         W₁ ⊓ W₂ = ⊥ →
         ¬ IsoSub (mapRep ((algebraMap (Kf N i) K').comp (algebraMap (N.O i) (Kf N i))) (r x)) W₁ W₂
 
-def ReducedFamilyProposition (i : N.Loc) : Prop :=
-  (∃ rq : N.X i → (G H.E N.Om →* GL (Fin R.nV) (Qbar (N.l i))), ∀ x, IsHeckeGaloisQ N A i x (rq x)) ∧
-  (∀ P P' : A.AV i, A.ptV i P ≠ none → A.ptV i P = A.ptV i P' →
-    (∀ Pa Pa', IsBCV N A i P Pa → IsBCV N A i P' Pa' → Pa.Perm Pa') ∧
-    ∀ w, w ∉ N.S i → w ∉ N.Q i →
-      (IsSplitPl H w → A.locV i P w = A.locV i P' w) ∧
-      (¬ IsSplitPl H w → ubc R.nV (A.satV i P w) = ubc R.nV (A.satV i P' w))) ∧
-  ∀ r, GoodR N i r → G2 N A i r ∧ G3a N i r ∧ G4 N i r
-
-theorem proposition_families_iff (hC : Cheb N) (hO : OLarge N A) (i : N.Loc) : Conclusion41 N A i ↔ ReducedFamilyProposition N A i :=
-  ⟨fun h => ⟨h.1.1, h.2.1, fun r hr => ⟨(h.2.2 r hr).2.1, (h.2.2 r hr).2.2.1.1, (h.2.2 r hr).2.2.2⟩⟩,
-    fun h => ⟨⟨h.1, exists_GoodR N A hO i h.1⟩, h.2.1, fun r hr => ⟨charpoly_clause_of_chebotarev N hC i r hr, (h.2.2 r hr).1,
-      ⟨(h.2.2 r hr).2.1, residual_charpoly_of_chebotarev_clause N i r (charpoly_clause_of_chebotarev N hC i r hr)⟩, (h.2.2 r hr).2.2⟩⟩⟩
-
 def ReducedGaloisClause (i : N.Loc) : Prop :=
   HG N A i → ∀ r, GoodR N i r → ∀ w : PlE H, (w ∈ N.S i ∨ w ∈ N.Q i) →
     w ∉ placesOver H.E (N.l i) →
@@ -1689,28 +1668,6 @@ theorem galois_clause_iff_reduced (i : N.Loc) (hDel : Del N i) : ConclusionG5 N 
       · rw [if_neg hlp] at hp
         exact Or.inr (Or.inl hp)
 
-def SufficientGaloisClause (i : N.Loc) : Prop :=
-  HG N A i → ∀ r, GoodR N i r → ∀ w : PlE H, (w ∈ N.S i ∨ w ∈ N.Q i) →
-    LGCat N r A w ∧
-    (w ∈ N.S i → (∃ rb, IsRhoBar N i rb) ∧ ∀ rb, IsRhoBar N i rb →
-      ¬ (((rb (N.gam0 i w) : GL _ _) : Matrix (Fin R.r) (Fin R.r) _).charpoly).IsRoot
-        (IsLocalRing.residue (N.O i) (chi1 N i (N.gam0 i w))) ∧
-      ∀ e : ℤ, HOneTwoZero N i w (Formalism.MainNotions.N.twistRep (Formalism.MainNotions.N.glRep rb) (chiEpsBar N i e)))
-
-theorem galois_clause_of_sufficient (hC : Cheb N) (hT : TieGal N A) (hTY : MonodromyInertiaType N A) (i : N.Loc) (hDel : Del N i)
-    (h : SufficientGaloisClause N A i) : ConclusionG5 N A i := by
-  rw [galois_clause_iff_reduced N A i hDel]
-  intro hg r hr w hw hl
-  obtain ⟨hL, hS⟩ := h hg r hr w hw
-  refine ⟨fun hq x => split_inertia_of_hypotheses N r A hr hTY w hw ?_ hL x, fun hgk hS' => ?_,
-    fun hS' rb hrb e => ?_⟩
-  · rcases hq with hq | hq
-    · exact Or.inl hq
-    · exact Or.inr ⟨hDel, hq⟩
-  · obtain ⟨⟨rb, hrb⟩, hall⟩ := hS hS'
-    exact exists_inertia_charpoly_factor_of_tame_type N r A hC hr hT hTY w hS' hgk hL rb hrb (hall rb hrb).1
-  · exact (HStarZero_iff N rb w hl ((hS hS').2 rb hrb).1 e).2 (((hS hS').2 rb hrb).2 e)
-
 end At
 
 def ReducedAutomorphicHypotheses (D : D7) : Prop := At.ReducedAutomorphicNoBrauerNesbitt D.nd D.naut
@@ -1719,21 +1676,13 @@ theorem condition_iff_additive_maps (D : D7) : adm5 D ↔ ReducedAutomorphicHypo
 
 def tieLab (D : D7) : Prop := At.TieLab D.nd D.naut
 
-def ReducedFamilyProposition (D : D7) : Prop := ∀ i, At.ReducedFamilyProposition D.nd D.naut i
 def ReducedParameterProposition (D : D7) : Prop := ∀ i, At.ReducedParameterProposition D.nd D.naut i
 def ReducedGaloisClause (D : D7) : Prop := ∀ i, At.ReducedGaloisClause D.nd D.naut i
-def SufficientGaloisClause (D : D7) : Prop := ∀ i, At.SufficientGaloisClause D.nd D.naut i
-
-theorem proposition_families_iff (D : D7) (h5 : adm5 D) (hO : hypO D) : Conclusion41 D ↔ ReducedFamilyProposition D :=
-  forall_congr' fun i => At.proposition_families_iff D.nd D.naut h5.2.2.1 hO i
 
 theorem proposition_parameters_iff_reduced (D : D7) (hT : tieLab D) : Conclusion42 D ↔ ReducedParameterProposition D :=
   forall_congr' fun i => parameter_proposition_iff D.nd D.naut hT i
 
 theorem galois_clause_iff_reduced (D : D7) : ConclusionG5 D ↔ ReducedGaloisClause D :=
   forall_congr' fun i => At.galois_clause_iff_reduced D.nd D.naut i (Del_holds D i)
-
-theorem galois_clause_of_sufficient (D : D7) (h : AdmA D) (ho : SufficientGaloisClause D) : ConclusionG5 D := fun i =>
-  At.galois_clause_of_sufficient D.nd D.naut h.2.2.2.2.2.2.2.2.1 h.1.2.2 h.2.2.2.2.2.1 i (Del_holds D i) (ho i)
 
 end Formalism.MainNotions.SumRepresentations

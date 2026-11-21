@@ -33,20 +33,6 @@ theorem nc_of_map (hf : Function.Injective f) {n : ℕ} {a : Pt R n d} (h : NoCo
   rw [mapPt, MvPowerSeries.constantCoeff_map] at this
   rw [this, map_zero]
 
-local macro "no_const" : tactic =>
-  `(tactic| repeat' first
-    | exact nc_zero
-    | exact nc_pt _
-    | exact nc_law _
-    | exact nc_act _ _
-    | assumption
-    | apply nc_comp1
-    | apply nc_addOf)
-
-local macro "push_map" : tactic =>
-  `(tactic| simp (disch := no_const) only [map_mul, map_one, map_ev1, map_ev2, map_ev3,
-    mapPt_zero, mapPt_pt, mapPt_comp1, mapPt_addOf, FGLaw.add])
-
 theorem exists_law (hf : Function.Injective f) (G : FGLaw k d) (F : Pt R 2 d) (hF : G.F = mapPt f F) :
     ∃ G' : FGLaw R d, G'.F = F := by
   have c : NoConst F := nc_of_map hf (hF ▸ nc_law G)

@@ -60,15 +60,6 @@ theorem fieldCoord_injective (σ : K →+* ℂ) : Function.Injective (fieldCoord
   intro s t h
   rw [eq_fieldCoord_tmul_one σ s, eq_fieldCoord_tmul_one σ t, h]
 
-theorem fieldCoord_conjMap (σ : K →+* ℂ) (t : Fibre σ K) :
-    fieldCoord (conjugate σ) (conjMap σ K t) = starRingEnd ℂ (fieldCoord σ t) := by
-  induction t using TensorProduct.induction_on with
-  | zero => simp only [map_zero]
-  | tmul z x =>
-    rw [conjMap_tmul, fieldCoord_tmul, fieldCoord_tmul, map_mul]
-    rfl
-  | add s t hs ht => rw [map_add, map_add, hs, ht, map_add, map_add]
-
 def fieldStdCoord (σ : K →+* ℂ) (n : ℕ) : Fibre σ (Fin n → K) →ₗ[ℂ] EuclideanSpace ℂ (Fin n) :=
   (WithLp.linearEquiv 2 ℂ (Fin n → ℂ)).symm.toLinearMap ∘ₗ
     (LinearMap.pi fun i ↦ fieldCoord σ ∘ₗ LinearMap.proj i) ∘ₗ
@@ -114,8 +105,6 @@ def FullLattice.standard (n : ℕ) : FullLattice K (Fin n → K) where
         Set.range (Pi.basisFun K (Fin n)) :=
       congrArg Set.range (funext fun i ↦ (Pi.basisFun_apply K (Fin n) i).symm)
     rw [Submodule.span_span_of_tower, e, (Pi.basisFun K (Fin n)).span_eq]
-
-example : HermitianBundle K := (HermitianNorms.standard K 2).bundle (FullLattice.standard K 2)
 
 section Local
 

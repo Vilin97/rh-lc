@@ -380,9 +380,6 @@ def pull (h : T' ⟶ T) :
       liftHom A _ _ * pa (h ▷ A).left (chart_le A L a h j) (s.1 j)
     rw [map_mul, pa_liftHom]
 
-theorem pull_apply (h : T' ⟶ T) (s : SecM A L a T) (j : Fin 1 → L.ι) :
-    (pull A L a h s).1 j = pa (h ▷ A).left (chart_le A L a h j) (s.1 j) := rfl
-
 theorem pull_pull (h : T' ⟶ T) (k : T'' ⟶ T') (s : SecM A L a T) :
     pull A L a k (pull A L a h s) = pull A L a (k ≫ h) s := by
   ext j

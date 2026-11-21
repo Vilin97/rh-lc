@@ -38,8 +38,6 @@ section Tens
 
 variable (F : Type) [Field F] [NumberField F] (E : Type) [Field E] [Algebra F E] [FiniteDimensional F E]
 
-local notation "A" => FiniteAdeleRing (𝓞 F) F
-
 noncomputable def coordEquiv : (A ⊗[F] E) ≃ₗ[A] (Module.Free.ChooseBasisIndex F E → A) :=
   (Algebra.TensorProduct.basis A (Module.Free.chooseBasis F E)).equivFun
 

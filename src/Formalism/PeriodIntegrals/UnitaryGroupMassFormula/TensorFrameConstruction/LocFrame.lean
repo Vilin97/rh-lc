@@ -66,11 +66,6 @@ variable (I : Formalism.MainNotions.S.AutInst) {r k : ℕ} (e f : Fin r → Fin 
       ∀ a, (∀ c, hJ (I.ε v) (rv I v (e c)) (w a) = 0 ∧ hJ (I.ε v) (rv I v (f c)) (w a) = 0) ∧
         hJ (I.ε v) (rv I v z) (w a) = 0)
 
-@[simp] lemma locFrame_e : (locFrame I e f z hn hF hz v w hw).e = fun a => rv I v (e a) := rfl
-@[simp] lemma locFrame_f : (locFrame I e f z hn hF hz v w hw).f = fun a => rv I v (f a) := rfl
-@[simp] lemma locFrame_z : (locFrame I e f z hn hF hz v w hw).z = rv I v z := rfl
-@[simp] lemma locFrame_w : (locFrame I e f z hn hF hz v w hw).w = w := rfl
-
 end Simp
 
 end PI.ScPiBuildW.Rv

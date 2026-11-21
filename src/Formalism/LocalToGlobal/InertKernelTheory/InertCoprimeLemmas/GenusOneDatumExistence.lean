@@ -208,10 +208,4 @@ theorem genus_one_datum_exists (hInv : Formalism.L2.KerInert.Sigma.InvAlg) : For
 
 variable [Fact _root_.Formalism.L2.Th1.CM.CM2] in
 
-theorem genus_one_datum_exists_lattice (hInv : Formalism.L2.KerInert.Sigma.InvAlg) : Formalism.L2.KerInert.GenusOneModelExistsLattice := by
-  intro D cc δ hcurve hδ12 p _ h5 hIn lam
-  obtain ⟨cc', δ', hc', hd', hcop, hlat⟩ := Formalism.L2.KerInert.curve_ideal_prime D cc δ hcurve hδ12 p hIn
-  obtain ⟨g, hgl, hAt, hM, hLT⟩ := genus_one_datum_exists hInv D cc' δ' hc' hd' p hcop h5 hIn lam
-  exact ⟨cc', δ', g, hc', hd', hlat.symm, hgl, hAt, hM, hLT⟩
-
 end Formalism.L2.KerInert.GenusOneDatumExistence

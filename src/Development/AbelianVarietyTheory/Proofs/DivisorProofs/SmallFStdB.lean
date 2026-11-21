@@ -9,10 +9,6 @@ open GlobalTheory.Doubling (absE)
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
-noncomputable local instance measFvZetaB {F : Type} [Field F] [NumberField F] (v : Pl F) : MeasurableSpace (Fv F v) := borel _
-
-local instance borelFvZetaB {F : Type} [Field F] [NumberField F] (v : Pl F) : BorelSpace (Fv F v) := ⟨rfl⟩
-
 open GlobalTheory.SplitFlip GlobalTheory.SplitWeil
 
 noncomputable section

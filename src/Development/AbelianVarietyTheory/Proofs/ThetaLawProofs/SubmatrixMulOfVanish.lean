@@ -10,20 +10,8 @@ def HasDeg (deg : Ix → ℕ) (k : ℤ) (X : Matrix Ix Ix R) : Prop :=
   ∀ p q, (deg p : ℤ) ≠ deg q + k → X p q = 0
 
 omit [DecidableEq Ix] in
-theorem HasDeg.mul {deg : Ix → ℕ} {k l : ℤ} {X Y : Matrix Ix Ix R}
-    (hX : HasDeg deg k X) (hY : HasDeg deg l Y) : HasDeg deg (k + l) (X * Y) := by
-  intro p q hpq
-  rw [Matrix.mul_apply]
-  refine Finset.sum_eq_zero fun r _ => ?_
-  by_cases h : (deg p : ℤ) = deg r + k
-  · rw [hY r q (by omega), mul_zero]
-  · rw [hX p r h, zero_mul]
 
 omit [Fintype Ix] [DecidableEq Ix] in
-theorem HasDeg.sub {deg : Ix → ℕ} {k : ℤ} {X Y : Matrix Ix Ix R}
-    (hX : HasDeg deg k X) (hY : HasDeg deg k Y) : HasDeg deg k (X - Y) := by
-  intro p q hpq
-  rw [Matrix.sub_apply, hX p q hpq, hY p q hpq, sub_zero]
 
 variable {R Ix : Type} [CommRing R] [Fintype Ix] [DecidableEq Ix] in
 private lemma submatrix_mul_eq_of_vanishing_off {ι κ : Type} (X Y : Matrix Ix Ix R) (Q : Ix → Prop)

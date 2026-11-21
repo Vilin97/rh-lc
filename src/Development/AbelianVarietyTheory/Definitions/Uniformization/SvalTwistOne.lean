@@ -89,11 +89,6 @@ def PreU.ProdExp (U : PreU I D A G) (T : Over (Spec (CommRingCat.of R))) {k l : 
           ∑ α ∈ s', sval (g α) rB z J * (val ((U.gt e).t α) x z J).val
 section Inhabitants
 
-theorem Lvl.precomp {R : Type} [CommRing R] {I : Ideal R} {e : ℕ} {Z Z' : Scheme.{0}}
-    {p : Z ⟶ Spec (CommRingCat.of R)} (h : Lvl I e p) (q : Z' ⟶ Z) : Lvl I e (q ≫ p) := by
-  obtain ⟨ρ, hρ⟩ := h
-  exact ⟨q ≫ ρ, by rw [Category.assoc, hρ]⟩
-
 theorem sval_twist {W : Type} [CommRing W] [Algebra R W] {k : ℕ} (a : Multiplicative D.X →* Wˣ)
     (f : ∀ α, SecBT D (TA R W) k α) (α : D.X) {Z : Scheme.{0}} (r : Z ⟶ (TA R W ⊗ D.P.A).left) (z : Z) {J}
     (hJ : Good D.P.L z J) :

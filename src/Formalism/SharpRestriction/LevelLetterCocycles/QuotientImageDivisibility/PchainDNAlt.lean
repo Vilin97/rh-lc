@@ -47,9 +47,6 @@ def Kc (i : ZMod n) : Submodule O ↥(Formalism.MainNotions.RamifiedCoefficientC
     rw [cmpD_osmul W T o (NDl_N W T z.2), show Formalism.MainNotions.ArcLiftingSetup.cmpD W T (z : W.DD T) = 0 from hz,
       smul_zero]
 
-theorem mem_Kc {i : ZMod n} (z : ↥(Formalism.MainNotions.RamifiedCoefficientChains.S9.NDl W T i)) :
-    z ∈ Kc W T i ↔ Formalism.MainNotions.ArcLiftingSetup.cmpD W T (z : W.DD T) = 0 := Iff.rfl
-
 theorem Kc_le [IsDomain O] (i : ZMod n) (k : ℕ) (h3 : Formalism.MainNotions.DeltaInvariantLattices.p3 W T)
     (hmod : Formalism.MainNotions.DeltaInvariantLattices.wachModuleOverLetters W T W.π₀) (hR : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP W) :
     Kc W T i ≤ (Xd W T i k).comap (Formalism.MainNotions.RamifiedCoefficientChains.S9.NDl W T i).subtype := by

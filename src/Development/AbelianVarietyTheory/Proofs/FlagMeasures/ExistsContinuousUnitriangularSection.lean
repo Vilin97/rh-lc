@@ -157,8 +157,6 @@ theorem hermitian_flag_dual_basis (hσ : ∀ e, σ (σ e) = e) (hJ : IsHermND σ
     · subst h; simp
     · simp [h, Fin.castSucc_inj]
 
-local notation "hA" => Formalism.UG.hform (sigR R σ) (JR R J)
-
 variable (x : {p : Fin (r + 1) × Fin (r + 1) // p.1 < p.2} → R ⊗[F] E)
 
 theorem yv_perp (hP : P.IsStd σ J T) (b c : Fin (r + 1)) :

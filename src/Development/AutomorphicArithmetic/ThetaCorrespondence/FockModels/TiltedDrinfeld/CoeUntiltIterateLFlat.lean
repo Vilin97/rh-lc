@@ -10,10 +10,6 @@ namespace UpperTheory.Lit.Drps.Kum
 
 variable {l : ℕ} [Fact l.Prime]
 
-local notation "𝒪" => normInteger ℂ_[l]
-local notation "𝒪♭" => PreTilt (normInteger ℂ_[l]) l
-local notation "φi" => RingEquiv.symm (_root_.frobeniusEquiv (PreTilt (normInteger ℂ_[l]) l) l)
-
 variable {P : Formalism.BasicNotions.LocPrime l} (AI : Formalism.BasicNotions.LocAinf l P)
 
 def zeta (n : ℕ) : 𝒪 := Formalism.Per6.intEquiv l (AI.ζ n)
@@ -88,8 +84,6 @@ theorem tiltGal_lFlat (g : Formalism.BasicNotions.Loc.GQ l) :
   rw [GlobalTheory.Pst.isKummer_kummer P g n, mul_comm]
   push_cast [coe_pow']
   rfl
-
-local notation "ε₀" => epsilon l
 
 theorem untilt_lFlat : ((PreTilt.untilt (lFlat l) : 𝒪) : ℂ_[l]) = l := by
   have := coe_untilt_iterate_lFlat (l := l) 0

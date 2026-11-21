@@ -464,13 +464,3 @@ private theorem main : GlobalTheory.CovTop.Hypotheses2 → GlobalTheory.CovHt.Hy
 end GlobalTheory.TorusPart
 
 end TorusPartProof
-
-theorem _root_.GlobalTheory.T.exists_cover_semiabelian_polarization : GlobalTheory.CovTop.Hypotheses2 → GlobalTheory.CovHt.HypothesesH → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E)
-  (q : ℕ) [Fact q.Prime] (k : Type) [Field k] [IsAlgClosed k] [CharP k q] (C : Scheme.{0}) [Algebra k Γ(C, ⊤)] [IsIntegral C],
-  IsSmoothProjCurve k C → ∀ (G : Over C) [GrpObj G] [IsSemiAbelian G] (i : OAct (𝓞 E) G), PolGen (H.bar : 𝓞 E →+* 𝓞 E) i →
-  ∃ (C₁ : Scheme.{0}) (_ : Algebra k Γ(C₁, ⊤)) (_ : IsIntegral C₁) (π : C₁ ⟶ C), IsSmoothProjCurve k C₁ ∧ IsCover k π ∧
-    ∃ (G₁ : Over C₁) (_ : GrpObj G₁) (_ : IsSemiAbelian G₁) (i₁ : OAct (𝓞 E) G₁) (φ : G₁.left ⟶ G.left), IsActPull i₁ i π φ ∧
-    ∃ (G' : Over C₁) (_ : GrpObj G') (_ : IsSemiAbelian G') (i' : OAct (𝓞 E) G') (ρ : G₁ ⟶ G') (_ : IsMonHom ρ),
-      (∀ a, i₁.act a ≫ ρ = ρ ≫ i'.act a) ∧ Epi (lieMap ρ) ∧
-      (∃ r : ℕ, Nonempty (kernel (lieMap ρ) ≅ GlobalTheory.QCoh.freeModule C₁ (Fin r))) ∧ AbGen (H.bar : 𝓞 E →+* 𝓞 E) i' :=
-  GlobalTheory.TorusPart.main

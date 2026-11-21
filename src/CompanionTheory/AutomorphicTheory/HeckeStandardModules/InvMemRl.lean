@@ -8,8 +8,6 @@ namespace CompanionTheory.L3H
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W]
 
-local notation3 "L⁺" => maximalRealSubfield L
-
 theorem ent_mul (x y : GA L n) : ent (x * y) = ent x * ent y := rfl
 
 theorem mat_mem {S : Subring (AL L)} {A B : Matrix (Fin n) (Fin n) (AL L)} (hA : ∀ i j, A i j ∈ S) (hB : ∀ i j, B i j ∈ S)

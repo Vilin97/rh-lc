@@ -10,8 +10,6 @@ namespace GroundTheory.ProfCoh
 
 open CategoryTheory NumberField IntermediateField GroundTheory.Global FiniteSubfield
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 section Res
@@ -36,10 +34,6 @@ def quotGalEquiv :
     (K.1.fixingSubgroup ⧸ E.1.fixingSubgroup.subgroupOf K.1.fixingSubgroup) ≃* Gal(E.1/K.1) :=
   (QuotientGroup.quotientMulEquivOfEq (ker_restrictHom (F := K) (E := E)).symm).trans
     (QuotientGroup.quotientKerEquivOfSurjective _ (restrictHom_surjective (F := K) (E := E)))
-
-theorem quotGalEquiv_mk (g : K.1.fixingSubgroup) :
-    quotGalEquiv K E (QuotientGroup.mk g) = restrictHom (E := E) g :=
-  rfl
 
 instance isDiscreteRep_res_classLimitRep (S : Subgroup K.1.fixingSubgroup) :
     IsDiscreteRep (Rep.res S.subtype (classLimitRep K)) :=
@@ -66,11 +60,6 @@ def classInvMor : Rep.res (quotGalEquiv K E).toMonoidHom (ideleClassRep K.1 E.1)
           (restrictHom (E := E) g • Additive.toMul (α := IdeleClassGroup E.1) c)) =
         Additive.ofMul ((g : ℚ̄ ≃ₐ[ℚ] ℚ̄) • IdeleClassLimit.of E (Additive.toMul (α := IdeleClassGroup E.1) c))
       rw [IdeleClassLimit.smul_of_of_normal]⟩
-
-theorem classInvMor_hom_apply (c : Additive (IdeleClassGroup E.1)) :
-    (classInvMor K E).hom c = ⟨Additive.ofMul (IdeleClassLimit.of E (Additive.toMul c)),
-      mem_invariants_of (Additive.toMul c)⟩ :=
-  rfl
 
 theorem classInvMor_bijective : Function.Bijective (classInvMor K E).hom := by
   constructor

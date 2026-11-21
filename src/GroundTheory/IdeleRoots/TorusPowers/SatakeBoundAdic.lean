@@ -1,5 +1,4 @@
 import Mathlib
-import Formalism.UnipotentAdelicQuotients.ThmBInSatake
 import GroundTheory.IdeleRoots.TorusPowers.SatakeBoundReps
 import GroundTheory.GlobalFields.LocalFieldAtPlace
 import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
@@ -37,15 +36,7 @@ theorem valued_le_one_of_mem {x : w.adicCompletion K} (hx : x ∈ 𝒪[w.adicCom
   (HeightOneSpectrum.mem_adicCompletionIntegers (R := 𝓞 K) K w).1
     ((GroundTheory.Global.mem_valuationInteger_iff w x).1 hx)
 
-theorem mem_of_valued_le_one {x : w.adicCompletion K} (hx : Valued.v x ≤ 1) :
-    x ∈ 𝒪[w.adicCompletion K] :=
-  (GroundTheory.Global.mem_valuationInteger_iff w x).2
-    ((HeightOneSpectrum.mem_adicCompletionIntegers (R := 𝓞 K) K w).2 hx)
-
 variable {w}
-
-def diagU {n : ℕ} (a : (w.adicCompletion K)ˣ) (d : Fin n → ℤ) : GL (Fin n) (w.adicCompletion K) :=
-  diagGL (w.adicCompletion K) n fun i => a ^ d i
 
 end SatakeBound
 

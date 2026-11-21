@@ -379,10 +379,6 @@ def ofSummand (V : Submodule ℂ (CuspL2 μ)) [CompleteSpace V] (hV : (cuspRepT 
       · exact Or.inl hW0
       · exact Or.inr (eq_summandCuspForms hVc hV hirr hW hWρ hWσ hWτ hW0))
 
-@[simp] theorem carrier_ofSummand (V : Submodule ℂ (CuspL2 μ)) [CompleteSpace V]
-    (hV : (cuspRepT μ).IsInvariant V) (hirr : ((cuspRepT μ).restrict V hV).IsIrreducible)
-    (hne : summandCuspForms V ≠ ⊥) : (ofSummand V hV hirr hne).carrier = summandCuspForms V := rfl
-
 theorem topologicalClosure_map_ofSummand (V : Submodule ℂ (CuspL2 μ)) [CompleteSpace V]
     (hV : (cuspRepT μ).IsInvariant V) (hirr : ((cuspRepT μ).restrict V hV).IsIrreducible)
     (hne : summandCuspForms V ≠ ⊥) :

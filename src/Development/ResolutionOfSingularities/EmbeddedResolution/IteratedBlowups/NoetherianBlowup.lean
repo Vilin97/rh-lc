@@ -62,10 +62,6 @@ theorem isNoetherian_schemeAt {X : Scheme.{u}} (B : SequenceOfBlowups X)
     exact @isNoetherian_of_isBlowupAlongIdealSheaf (B.schemeAt n) (B.schemeAt (n + 1)) (ih (le_of_lt hn)) _ _
       (B.isBlowupAlongIdealSheaf_blowupMorphism n hn)
 
-instance SequenceOfBlowups.instIsNoetherianTop {X : Scheme.{u}} (B : SequenceOfBlowups X)
-    [AlgebraicGeometry.IsNoetherian X] : AlgebraicGeometry.IsNoetherian B.lastObj :=
-  isNoetherian_schemeAt B B.length le_rfl
-
 theorem isNoetherian_ambientLevel {k : Type u} [Field k] [CharZero k] {Y : Scheme.{u}}
     [AlgebraicGeometry.IsAffine Y] {pY : Y ⟶ Spec (CommRingCat.of k)}
     [AlgebraicGeometry.LocallyOfFiniteType pY] (S : AffineSpacePrincipalizationData k Y pY) (i : ℕ)

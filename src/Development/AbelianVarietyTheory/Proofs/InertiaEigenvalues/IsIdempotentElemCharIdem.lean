@@ -130,9 +130,6 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
   [AddCommGroup X] [Module ℂ X] {π : Representation ℂ (GL n k) V} {σ : Representation ℂ (GL n k) W}
   {ρ : Representation ℂ (GL n k) X}
 
-@[simp] theorem levelZeroMap_apply (f : π.IntertwiningMap σ) (v : fixed π (KOne k n)) :
-    (levelZeroMap f v : W) = f v := rfl
-
 theorem levelZeroMap_injective {f : π.IntertwiningMap σ} (hf : Function.Injective f) :
     Function.Injective (levelZeroMap f) :=
   fun _ _ h => Subtype.ext (hf (congrArg Subtype.val h))

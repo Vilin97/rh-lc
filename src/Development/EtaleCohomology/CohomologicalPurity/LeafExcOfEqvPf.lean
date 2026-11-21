@@ -18,11 +18,6 @@ theorem ij_cond : P'.hom ≫ ii φ = (P'.hom ≫ φ.right) ≫ jj φ := pushout.
 
 def rr : MM φ ⟶ P.right := pushout.desc φ.right (𝟙 _) (by simp)
 
-@[reassoc] theorem jj_rr : jj φ ≫ rr φ = 𝟙 _ := pushout.inr_desc _ _ _
-@[reassoc] theorem ii_rr : ii φ ≫ rr φ = φ.right := pushout.inl_desc _ _ _
-@[reassoc] theorem jj_gM : jj φ ≫ gM φ = dbl.inr P := pushout.inr_desc _ _ _
-@[reassoc] theorem ii_gM : ii φ ≫ gM φ = φ.right ≫ dbl.inl P := pushout.inl_desc _ _ _
-
 def QQ : Arrow Spc := Arrow.mk (jj φ)
 
 def chi : P' ⟶ QQ φ := Arrow.homMk (P'.hom ≫ φ.right) (ii φ) (ij_cond φ).symm
@@ -31,9 +26,6 @@ def sig : dbl (QQ φ) ⟶ MM φ :=
   pushout.desc (𝟙 _) (rr φ ≫ jj φ) (by
     change jj φ ≫ 𝟙 _ = jj φ ≫ rr φ ≫ jj φ
     rw [jj_rr_assoc, Category.comp_id])
-
-@[reassoc] theorem inl_sig : dbl.inl (QQ φ) ≫ sig φ = 𝟙 _ := pushout.inl_desc _ _ _
-@[reassoc] theorem inr_sig : dbl.inr (QQ φ) ≫ sig φ = rr φ ≫ jj φ := pushout.inr_desc _ _ _
 
 theorem inr_sig_gM : dbl.inr (QQ φ) ≫ sig φ ≫ gM φ = rr φ ≫ dbl.inr P := by
   refine (Category.assoc _ _ _).symm.trans ?_

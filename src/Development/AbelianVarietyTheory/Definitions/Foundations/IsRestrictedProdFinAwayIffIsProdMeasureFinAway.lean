@@ -27,9 +27,6 @@ def archFinEquiv : GAd σ J ≃ₜ* (∀ w, GArch σ J w) × GFin σ J where
   continuous_invFun := ((continuous_ofInf σ J).comp ((continuous_embArchPi σ J).comp continuous_fst)).mul
     ((continuous_ofFin σ J).comp continuous_snd)
 
-theorem archFinEquiv_apply (g : GAd σ J) :
-    archFinEquiv σ J g = (fun w => projArch σ J w g, projFin σ J g) := rfl
-
 theorem archFinEquiv_symm_apply (p : (∀ w, GArch σ J w) × GFin σ J) :
     (archFinEquiv σ J).symm p = ofInf σ J (embArchPi σ J p.1) * ofFin σ J p.2 := rfl
 
@@ -54,16 +51,6 @@ def IsRestrictedProdFin (μf : ∀ v, Measure (GLoc σ J v)) (μ : Measure (GFin
 
 def IsRestrictedProdFinPts (μf : ∀ v, Measure (GLoc σ J v)) (μ : Measure (finPts σ J)) : Prop :=
   IsHaarProdFin (fun v => (proj σ J v).comp (finPts σ J).subtype) (stabLoc σ J L) μf μ
-
-def IsRestrictedProdAway (S : Finset (HeightOneSpectrum (𝓞 F))) (μa : ∀ w, Measure (GArch σ J w))
-    (μf : ∀ v : {v // v ∉ S}, Measure (GLoc σ J v)) (μ : Measure (awayPts σ J S)) : Prop :=
-  IsHaarProd (fun w => (projArch σ J w).comp (awayPts σ J S).subtype)
-    (fun v : {v // v ∉ S} => (proj σ J v).comp (awayPts σ J S).subtype) (fun v => stabLoc σ J L v) μa μf μ
-
-def IsRestrictedProdFinAway (S : Finset (HeightOneSpectrum (𝓞 F)))
-    (μf : ∀ v : {v // v ∉ S}, Measure (GLoc σ J v)) (μ : Measure (finAwayPts σ J S)) : Prop :=
-  IsHaarProdFin (fun v : {v // v ∉ S} => (proj σ J v).comp (finAwayPts σ J S).subtype)
-    (fun v => stabLoc σ J L v) μf μ
 
 section Unfold
 
@@ -181,12 +168,6 @@ theorem restrGroup_finPts :
     (fun a => a.elim) Function.injective_id (finPts σ J) fun x => by simp [mem_finPts_iff_forall]
   exact h.noArch
 
-theorem restrGroup_awayPts (S : Finset (HeightOneSpectrum (𝓞 F))) :
-    RestrMeas.IsRestrGroup (fun w => (projArch σ J w).comp (awayPts σ J S).subtype)
-      (fun v : {v // v ∉ S} => (proj σ J v).comp (awayPts σ J S).subtype) fun v => stabLoc σ J L v := by
-  exact (restrGroup_GAd σ J L).subgroup (i := id) (j := Subtype.val) Function.injective_id Subtype.val_injective
-    (awayPts σ J S) fun x => by simp [mem_awayPts]
-
 section Exist
 
 variable (S : Finset (HeightOneSpectrum (𝓞 F))) (μa : ∀ w, Measure (GArch σ J w)) (μf : ∀ v, Measure (GLoc σ J v))
@@ -202,18 +183,10 @@ theorem existsUnique_isRestrictedProdFin (h : ∀ᶠ v in cofinite, μf v (stabL
 theorem existsUnique_isRestrictedProdFinPts (h : ∀ᶠ v in cofinite, μf v (stabLoc σ J L v) = 1) :
     ∃! μ, IsRestrictedProdFinPts σ J L μf μ := (restrGroup_finPts σ J L).existsUnique_isHaarProd (fun w => w.elim) μf (ha := fun w => w.elim) h
 
-theorem existsUnique_isRestrictedProdAway (h : ∀ᶠ v in cofinite, νf v (stabLoc σ J L v) = 1) :
-    ∃! μ, IsRestrictedProdAway σ J L S μa νf μ := (restrGroup_awayPts σ J L S).existsUnique_isHaarProd μa νf h
-
 end Exist
 
 theorem exists_isRestrictedProd : ∃ μ, IsRestrictedProd σ J L (fun _ => haar) (haarLoc σ J L) μ := (existsUnique_isRestrictedProd σ J L (fun _ => haar) (haarLoc σ J L)
     (Filter.Eventually.of_forall fun v => haarLoc_stabLoc σ J L v)).exists
-
-theorem exists_isRestrictedProd_of_haar (μ : Measure (GAd σ J)) [μ.IsHaarMeasure] :
-    ∃ μa, IsRestrictedProd σ J L μa (haarLoc σ J L) μ := by
-  obtain ⟨μa, h⟩ := exists_isProdMeasure_of_haar L μ
-  exact ⟨μa, isRestrictedProd_iff_isProdMeasure.2 h⟩
 
 section Api
 
@@ -228,11 +201,6 @@ section Indep
 variable (L' : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L']
 
 end Indep
-
-theorem IsRestrictedProd.smul (h : IsRestrictedProd σ J L μa μf μ) (c : InfinitePlace F → ℝ≥0)
-    (d : HeightOneSpectrum (𝓞 F) → ℝ≥0) (hc : ∀ w, c w ≠ 0) (hd0 : ∀ v, d v ≠ 0)
-    (T : Finset (HeightOneSpectrum (𝓞 F))) (hd : ∀ v ∉ T, d v = 1) :
-    IsRestrictedProd σ J L (fun w => c w • μa w) (fun v => d v • μf v) (((∏ w, c w) * ∏ v ∈ T, d v) • μ) := IsHaarProd.smul h (isOpen_stabLoc σ J L) c d hc hd0 T hd
 
 theorem IsRestrictedProd.smul_arch [DecidableEq (InfinitePlace F)] (h : IsRestrictedProd σ J L μa μf μ)
     (w : InfinitePlace F) {x : ℝ≥0} (hx : x ≠ 0) :
@@ -260,44 +228,6 @@ theorem IsRestrictedProdFin.measure_level {ν : Measure (GFin σ J)} (h : IsRest
   ext g
   simp [mem_levelOffFin]
 
-theorem IsRestrictedProdFinAway.measure_level {ν : Measure (finAwayPts σ J S)}
-    (h : IsRestrictedProdFinAway σ J L S νf ν) :
-    ν {g | g.1 ∈ levelOff σ J L S} = ∏ᶠ v : {v // v ∉ S}, νf v (stabLoc σ J L v) := by
-  unfold IsRestrictedProdFinAway IsHaarProdFin IsHaarProd at h
-  have hm := h.2.2.2.measure_level (fun v => (isOpen_stabLoc σ J L v.1).measurableSet) (A := fun w => w.elim)
-    (fun w => w.elim)
-  simp only [Finset.univ_eq_empty, Finset.prod_empty, one_mul] at hm
-  rw [← hm]
-  congr 1
-  ext g
-  have hg := mem_finAwayPts.1 g.2
-  simp only [Set.mem_setOf_eq, mem_levelOff]
-  constructor
-  · rintro ⟨-, -, h3⟩
-    exact ⟨fun w => w.elim, fun v => h3 v v.2⟩
-  · rintro ⟨-, h3⟩
-    exact ⟨hg.1, hg.2, fun v hv => h3 ⟨v, hv⟩⟩
-
-private theorem atAwayContEquiv_symm_apply (p : (∀ v : S, GLoc σ J v) × awayPts σ J S) :
-    (atAwayContEquiv σ J S).symm p = embAt σ J S p.1 * p.2 :=
-  atAwayEquiv_symm_apply σ J S p
-
-theorem IsRestrictedProdAway.prod [∀ v, (μf v).IsHaarMeasure] {ν : Measure (awayPts σ J S)}
-    (h : IsRestrictedProdAway σ J L S μa (fun v => μf v) ν) :
-    IsRestrictedProd σ J L μa μf
-      (((Measure.pi fun v : S => μf v).prod ν).map (atAwayContEquiv σ J S).symm) := by
-  unfold IsRestrictedProdAway at h
-  unfold IsRestrictedProd
-  have hat : ∀ p : (∀ v : S, GLoc σ J v) × awayPts σ J S, ∀ w, projArch σ J w (embAt σ J S p.1) = 1 :=
-    fun p w => mem_finPts_iff_forall.1 (mem_atPts.1 (embAt_mem σ J S p.1)).1 w
-  refine IsHaarProd.prod_away (K := stabLoc σ J L) (μf := μf) h (isOpen_stabLoc σ J L) (atAwayContEquiv σ J S).symm
-    (fun w p => ?_) (fun v p => ?_) (fun v p => ?_)
-  · rw [atAwayContEquiv_symm_apply, map_mul, hat p w, one_mul]
-    rfl
-  · rw [atAwayContEquiv_symm_apply, map_mul, proj_embAt, mem_awayPts.1 p.2.2 v v.2, mul_one]
-  · rw [atAwayContEquiv_symm_apply, map_mul, (mem_atPts.1 (embAt_mem σ J S p.1)).2 v v.2, one_mul]
-    rfl
-
 theorem map_map_symm {X Y : Type} [Group X] [Group Y] [TopologicalSpace X] [TopologicalSpace Y] [MeasurableSpace X]
     [MeasurableSpace Y] [BorelSpace X] [BorelSpace Y] (e : X ≃ₜ* Y) (m : Measure Y) :
     (m.map e.symm).map e = m := by
@@ -306,23 +236,6 @@ theorem map_map_symm {X Y : Type} [Group X] [Group Y] [TopologicalSpace X] [Topo
   rw [Measure.map_map h1 h2]
   have hid : (e ∘ e.symm) = id := funext fun y => e.apply_symm_apply y
   rw [hid, Measure.map_id]
-
-theorem IsRestrictedProd.map_atAway (h : IsRestrictedProd σ J L μa μf μ) {ν : Measure (awayPts σ J S)}
-    (h' : IsRestrictedProdAway σ J L S μa (fun v => μf v) ν) :
-    μ.map (atAwayContEquiv σ J S) = (Measure.pi fun v : S => μf v).prod ν := by
-  have := h.haar_loc
-  rw [h.unique (IsRestrictedProdAway.prod h')]
-  exact map_map_symm (atAwayContEquiv σ J S) _
-
-theorem IsRestrictedProd.exists_away (h : IsRestrictedProd σ J L μa μf μ) (S : Finset (HeightOneSpectrum (𝓞 F))) :
-    ∃ ν, IsRestrictedProdAway σ J L S μa (fun v => μf v) ν ∧
-      μ.map (atAwayContEquiv σ J S) = (Measure.pi fun v : S => μf v).prod ν := by
-  have := h.haar_arch
-  have := h.haar_loc
-  obtain ⟨ν, hν, -⟩ := existsUnique_isRestrictedProdAway σ J L S μa (fun v => μf v)
-    (Subtype.val_injective.tendsto_cofinite.eventually (p := fun v => μf v (stabLoc σ J L v) = 1)
-      h.eventually_eq_one)
-  exact ⟨ν, hν, h.map_atAway hν⟩
 
 omit [Submodule.IsLattice E L] in
 
@@ -353,28 +266,7 @@ theorem IsRestrictedProdFin.map_finPts {ν : Measure (GFin σ J)} (h : IsRestric
   show proj σ J v (finPtsEquiv σ J y : GAd σ J) = projFinLoc σ J v y
   rw [finPtsEquiv_apply, proj_ofFin]
 
-theorem IsRestrictedProd.isMulRightInvariant (h : IsRestrictedProd σ J L μa μf μ) [∀ w, (μa w).IsMulRightInvariant]
-    [∀ v, (μf v).IsMulRightInvariant] : μ.IsMulRightInvariant := IsHaarProd.isMulRightInvariant h (restrGroup_GAd σ J L)
-
 end Api
-
-example : ∃ ν, IsRestrictedProdFin σ J L (haarLoc σ J L) ν ∧ ν (levelOffFin σ J L ∅) = 1 := by
-  obtain ⟨ν, hν⟩ := (existsUnique_isRestrictedProdFin σ J L _ (Eventually.of_forall (haarLoc_stabLoc σ J L))).exists
-  exact ⟨ν, hν, by simp [hν.measure_level]⟩
-
-example {μa : ∀ w, Measure (GArch σ J w)} {μf : ∀ v, Measure (GLoc σ J v)} {μ : Measure (GAd σ J)}
-    (h : IsRestrictedProd σ J L μa μf μ) : ¬ IsRestrictedProd σ J L μa μf ((2 : ℝ≥0) • μ) := fun h' => by
-  have := h.haar
-  let C : TopologicalSpace.PositiveCompacts (GAd σ J) := Classical.arbitrary _
-  have e := congrArg (fun m : Measure (GAd σ J) => m C) (h'.unique h)
-  simp only [Measure.smul_apply, ENNReal.smul_def, smul_eq_mul] at e
-  have := (ENNReal.mul_left_inj (measure_pos_of_nonempty_interior μ C.interior_nonempty).ne'
-    C.isCompact.measure_lt_top.ne).1 (e.trans (one_mul _).symm)
-  norm_num at this
-
-example : ∃ μa μf μ, IsRestrictedProd σ J (stdLattice E n) μa μf μ :=
-  haveI := isLattice_stdLattice (E := E) (n := n)
-  ⟨_, _, (exists_isRestrictedProd σ J _).choose, (exists_isRestrictedProd σ J _).choose_spec⟩
 
 end GlobalTheory.AdelicU
 

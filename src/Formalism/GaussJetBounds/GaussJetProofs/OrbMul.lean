@@ -47,9 +47,6 @@ section Exps
 
 variable {ι₁ ι₂ : Type}
 
-def jn (a : ι₁ →₀ ℕ) (b : ι₂ →₀ ℕ) : ι₁ ⊕ ι₂ →₀ ℕ :=
-  a.mapDomain Sum.inl + b.mapDomain Sum.inr
-
 end Exps
 
 section Along

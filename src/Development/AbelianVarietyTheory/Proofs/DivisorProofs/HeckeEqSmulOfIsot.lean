@@ -63,8 +63,6 @@ open ReciprocityTheory.Aut
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
-local notation3 "L⁺" => NumberField.maximalRealSubfield L
-
 def incO : 𝓞 L →+* AL L :=
   (Algebra.TensorProduct.includeLeftRingHom (R := L⁺) (A := L) (B := AFplus L)).comp (algebraMap (𝓞 L) L)
 

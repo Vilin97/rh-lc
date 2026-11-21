@@ -34,15 +34,7 @@ lemma ext {x y : SqExt O M} (h1 : x.fst = y.fst) (h2 : x.snd = y.snd) : x = y :=
   Prod.ext h1 h2
 
 omit [CommRing O] [AddCommGroup M] [Module O M] in
-@[simp] lemma fst_mk (a : O) (m : M) : (mk a m).fst = a := rfl
 omit [CommRing O] [AddCommGroup M] [Module O M] in
-@[simp] lemma snd_mk (a : O) (m : M) : (mk a m).snd = m := rfl
-@[simp] lemma fst_add (x y : SqExt O M) : (x + y).fst = x.fst + y.fst := rfl
-@[simp] lemma snd_add (x y : SqExt O M) : (x + y).snd = x.snd + y.snd := rfl
-@[simp] lemma fst_zero : (0 : SqExt O M).fst = 0 := rfl
-@[simp] lemma snd_zero : (0 : SqExt O M).snd = 0 := rfl
-@[simp] lemma fst_one : (1 : SqExt O M).fst = 1 := rfl
-@[simp] lemma snd_one : (1 : SqExt O M).snd = 0 := rfl
 @[simp] lemma fst_mul (x y : SqExt O M) : (x * y).fst = x.fst * y.fst := rfl
 @[simp] lemma snd_mul (x y : SqExt O M) : (x * y).snd = x.fst • y.snd + y.fst • x.snd := rfl
 

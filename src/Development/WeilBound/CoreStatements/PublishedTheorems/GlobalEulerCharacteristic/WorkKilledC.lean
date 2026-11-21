@@ -9,8 +9,6 @@ open NumberField IsDedekindDomain CategoryTheory GroundTheory.ProfCoh GroundTheo
 
 namespace PositivityTheory.Lit1.GEN.W_killed_c
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 section Infl
 
 variable {G : Type} [Group G] [TopologicalSpace G] (Q : OpenSubgroup G) [(Q : Subgroup G).Normal]

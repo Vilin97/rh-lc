@@ -1,5 +1,6 @@
 import Mathlib
-import Development.AutomorphicArithmetic.ThetaCorrespondence.LocalComparison.CoeTo1
+import Development.AutomorphicArithmetic.ThetaCorrespondence.LocalComparison.LocTied6
+import Development.AutomorphicArithmetic.ThetaCorrespondence.LocalComparison.LocTiedOf6
 import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.HeckeLAdicCharacterDeRham
 import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.DeRhamJacobian.IsdRJ
 import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HasPeriods

@@ -70,11 +70,6 @@ variable {R}
 
 abbrev Bc (W : Scheme.{0}) (I : Cx R) : Cx R := ((pw R W).mapHomologicalComplex _).obj I
 
-instance (W : Scheme.{0}) (I : Cx R) [I.IsStrictlyGE 0] : (Bc W I).IsStrictlyGE 0 := by
-  rw [CochainComplex.isStrictlyGE_iff]
-  intro i hi
-  exact (pw R W).map_isZero (I.isZero_of_isStrictlyGE 0 i hi)
-
 def Supp (Q : Scheme.{0} → Prop) (P : PSh) : Prop := ∀ U : Scheme.{0}, Nonempty (P.obj (op U)) → Q U
 
 def Acy (Q : Scheme.{0} → Prop) (F : Shv ℤ) : Prop :=

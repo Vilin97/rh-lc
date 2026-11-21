@@ -14,8 +14,6 @@ namespace GlobalTheory.CompanionTheory.Ar.LinFlat
 open Matrix
 open scoped ComplexOrder
 
-local notation "HF" => ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm
-
 theorem hermForm_sum_left {g : ℕ} {κ : Type*} [Fintype κ] (Hm : Matrix (Fin g) (Fin g) ℂ)
     (c : κ → ℂ) (V : κ → Fin g → ℂ) (w : Fin g → ℂ) :
     HF Hm (∑ i, c i • V i) w = ∑ i, c i * HF Hm (V i) w := by

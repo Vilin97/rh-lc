@@ -27,8 +27,6 @@ theorem sep_char : ∀ {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F)
 
 variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 
-local notation "Ô" => GroundTheory.Global.integralFiniteAdeles (𝓞 F) F
-
 def Lev (d : 𝓞 F) (u : κ → FiniteAdeleRing (𝓞 F) F) : Prop :=
   ∀ i, algebraMap F (FiniteAdeleRing (𝓞 F) F) ((d : F)⁻¹) * u i ∈ Ô
 
@@ -37,10 +35,6 @@ theorem int_mem (r : 𝓞 F) : algebraMap F (FiniteAdeleRing (𝓞 F) F) (r : F)
 
 theorem lev_zero (d : 𝓞 F) : Lev d (0 : κ → FiniteAdeleRing (𝓞 F) F) := fun i => by
   simp only [Pi.zero_apply, mul_zero]; exact zero_mem _
-
-theorem lev_add {d : 𝓞 F} {u u' : κ → FiniteAdeleRing (𝓞 F) F} (h : Lev d u) (h' : Lev d u') :
-    Lev d (u + u') := fun i => by
-  simp only [Pi.add_apply, mul_add]; exact add_mem (h i) (h' i)
 
 theorem lev_of_mul {d e : 𝓞 F} (he : e ≠ 0) {u : κ → FiniteAdeleRing (𝓞 F) F} (h : Lev (d * e) u) :
     Lev d u := fun i => by

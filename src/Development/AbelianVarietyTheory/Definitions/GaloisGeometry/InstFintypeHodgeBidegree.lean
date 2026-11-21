@@ -48,8 +48,6 @@ def oneOm : Om R B 0 := ⟨1, by
   change _ ∈ LinearMap.range _ ^ 0
   rw [pow_zero]; exact Submodule.one_le.1 le_rfl⟩
 
-@[simp] theorem coe_oneOm : (oneOm R B : DR R B) = 1 := rfl
-
 theorem dOm_oneOm : dOm R B 0 (oneOm R B) = 0 := Subtype.ext (by
   change dDR R B 1 = 0
   rw [← map_one (algebraMap B (DR R B)), dDR_algebraMap, Derivation.map_one_eq_zero, map_zero])
@@ -364,12 +362,6 @@ theorem Hyp.one_cup {n : ℕ} (h : 0 + n = n) (x : Hyp F n) : Hyp.cup F h (Hyp.o
   obtain ⟨x, rfl⟩ := Hyp.mk_surjective F n x
   exact congrArg (Hyp.mk F n) (Subtype.ext (Tot.one_cup h x.1))
 
-theorem Hyp.one_ne_zero (T : C) [Nontrivial (F.obj T)] : Hyp.one F ≠ 0 := fun h ↦ by
-  have h1 : Tot.one F = 0 := Hyp.mk_eq_zero.1 h
-  have h2 := (Tot.sg_same rfl (oneTerm F)).symm.trans (congrFun h1 ⟨(0, 0), rfl⟩)
-  exact _root_.one_ne_zero (α := DR R (F.obj T))
-    (congrArg Subtype.val (congrFun h2 (ComposableArrows.mk₀ T)))
-
 end Total
 
 section Pull
@@ -443,19 +435,5 @@ theorem HdR.pointEquiv_cup (x y : k) :
     ((map_mul _ _ _).symm.trans (coe_functionsZero_symm (x * y)).symm)
 
 end Scheme
-
-example : HdR.cup (algStr ℤ ℤ) rfl (HdR.pointEquiv ℤ 2) (HdR.pointEquiv ℤ 3) = HdR.pointEquiv ℤ 6 :=
-  HdR.pointEquiv_cup 2 3
-
-example : HdR.cup (algStr (ZMod 2) (Polynomial (ZMod 2))) rfl (HdR.one _)
-    (HdR.ofForm 1 (tdtForm (ZMod 2))) ≠ 0 := by
-  rw [HdR.one_cup]; exact HdR.ofForm_tdt_ne_zero rfl
-
-example {R : Type} [CommRing R] {C : Type} [Category.{0} C] (F : C ⥤ CommAlgCat.{0} R)
-    (ω : Term F 0 1) (g : Term F 1 0) :
-    Tot.cup F (show 1 + 1 = 2 from rfl) (Tot.sg F (zero_add 1) ω) (Tot.sg F (add_zero 1) g) ⟨(1, 1), rfl⟩ =
-      -cupTerm F rfl rfl ω g := by
-  rw [Tot.cup_sg (A := 1) (Q := 1) _ (zero_add 1) (add_zero 1) rfl rfl rfl, Pi.smul_apply, Tot.sg_same]
-  simp
 
 end GlobalTheory.HodgeCoh

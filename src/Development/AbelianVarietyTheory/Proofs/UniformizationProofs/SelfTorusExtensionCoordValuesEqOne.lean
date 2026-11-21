@@ -533,10 +533,4 @@ namespace GlobalTheory
 
 open SelfUnif in
 
-theorem exists_unif_abelianScheme : GlobalFnsSt → SecBaseChangeSt → CubeSt → ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] [IsNoetherianRing R] (I : Ideal R) [IsAdicComplete I R] (P : PolAV (Spec (CommRingCat.of R))) (A : PolAV (Spec (CommRingCat.of (FractionRing R)))) (eA : (Over.pullback (jK R)).obj P.A ≅ A.A), IsMonHom eA.hom → (∃ w : LB.Iso (A.L.pull eA.hom.left) (P.L.pull (pullback.fst P.A.hom (jK R))), w.IsGen) → ∃ D : DegData R I, D.toPre.P = P ∧ Subsingleton D.toPre.X ∧ Nonempty (Unif I D A P.A) := by
-  intro hG _ hC R _ _ _ _ I _ P A eA hA hw
-  obtain ⟨D, rfl, hX⟩ := exists_degData hC I P
-  exact ⟨D, rfl, hX, ⟨⟨selfPre D A eA hA hw, fun k _ =>
-    expBij D A eA hA hw hG (IsAdicComplete.le_jacobson_bot I) k⟩⟩⟩
-
 end GlobalTheory

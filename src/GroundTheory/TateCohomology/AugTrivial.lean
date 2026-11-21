@@ -16,19 +16,12 @@ noncomputable def augHom : Rep.leftRegular k G ⟶ Rep.trivial k G k :=
     change augmentation k G ((Rep.leftRegular k G).ρ g x) = augmentation k G x
     exact augmentation_ρ g x⟩
 
-@[simp] theorem augHom_apply (x : Rep.leftRegular k G) :
-    (augHom k G).hom x = augmentation k G x := rfl
-
 theorem augIdealι_augHom : augIdealι k G ≫ augHom k G = 0 := by
   ext x
   exact LinearMap.mem_ker.1 x.2
 
 noncomputable def augTrivSES : ShortComplex (Rep.{u} k G) :=
   ShortComplex.mk (augIdealι k G) (augHom k G) (augIdealι_augHom k G)
-
-@[simp] theorem augTrivSES_X₁ : (augTrivSES k G).X₁ = augIdeal k G := rfl
-@[simp] theorem augTrivSES_X₂ : (augTrivSES k G).X₂ = Rep.leftRegular k G := rfl
-@[simp] theorem augTrivSES_X₃ : (augTrivSES k G).X₃ = Rep.trivial k G k := rfl
 
 theorem augTrivSES_shortExact : (augTrivSES k G).ShortExact := by
   refine shortExact_of_linear (fun a b h => Subtype.ext h)
@@ -110,8 +103,6 @@ noncomputable def augCocycle : cocycles₁ (Rep.res φ (augIdeal k G)) :=
     rw [map_sub, Representation.ofMulAction_single, Representation.ofMulAction_single, smul_eq_mul,
       smul_eq_mul, mul_one, map_mul]
     abel⟩
-
-@[simp] theorem augCocycle_apply (h : H) : augCocycle k φ h = augIdealSubOne (φ h) := rfl
 
 theorem augTrivSES_res_shortExact : ((augTrivSES k G).map (resFunctor φ)).ShortExact :=
   (shortExact_res φ).2 (augTrivSES_shortExact k G)

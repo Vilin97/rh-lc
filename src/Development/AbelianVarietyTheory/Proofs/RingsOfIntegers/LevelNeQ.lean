@@ -1,8 +1,7 @@
 import Mathlib
 import Formalism.LocalRingCardinality.DataParams
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.ShortPlace
-import Development.AbelianVarietyTheory.BlockTheory.GoodPlaces.ShortAtLevelPrime
-import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.OwnPrimeIntegralOfBqd
+import Formalism.LocalToGlobal.ProjectiveLattices.FullExists
+import Formalism.LocalToGlobal.ProjectiveLattices.RecPJThAllNeBot
 
 noncomputable section
 

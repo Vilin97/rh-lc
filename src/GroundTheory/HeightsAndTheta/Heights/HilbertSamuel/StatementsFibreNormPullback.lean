@@ -34,14 +34,6 @@ def FibreNormPullback.Statement : Prop :=
 
 open ProjLine in
 
-theorem FibreNormPullback.hyps_inhabited :
-    (IsArithVar (mCoordIdeal (ι := GlobalTheory (Fin 2)) y) (1 + 1) ∧ Birational (ι := GlobalTheory (Fin 2)) y) ∧
-    (∀ k : Unit, 1 ≤ (fun _ : Unit => 1) k) ∧
-      (∀ j : Fin 2, IsMultiHomog (X ⟨(), j⟩ : MRing (GlobalTheory (Fin 2))) (fun _ => 1)) ∧
-      ∀ z ∈ mcPts (mCoordIdeal (ι := GlobalTheory (Fin 2)) y), ∃ j : Fin 2,
-        eval z (map (Int.castRingHom ℂ) (X ⟨(), j⟩ : MRing (GlobalTheory (Fin 2)))) ≠ 0 :=
-  ⟨FibreNormMax.hyps_inhabited, FibreNormMax.coords_inhabited⟩
-
 end
 
 end GroundTheory.Heights₂.Heights.HilbertSamuel

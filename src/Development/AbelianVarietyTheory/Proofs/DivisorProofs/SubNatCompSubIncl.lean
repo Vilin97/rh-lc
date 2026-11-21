@@ -69,7 +69,6 @@ lemma res_mem_sub {W W₁ : X.Opens} (h : W₁ ≤ W) {b : F.obj (op W)} (hb : b
 def subMap (W : X.Opens) : Γ(X, W) →+* sub F α V T W :=
   (α.app (op W)).hom.codRestrict _ (algebraMap_mem_sub F α V T W)
 
-@[simps obj]
 def subFunctor : X.AffineZariskiSiteᵒᵖ ⥤ CommRingCat where
   obj W := CommRingCat.of (sub F α V T W.unop.1)
   map {W W₁} f := CommRingCat.ofHom

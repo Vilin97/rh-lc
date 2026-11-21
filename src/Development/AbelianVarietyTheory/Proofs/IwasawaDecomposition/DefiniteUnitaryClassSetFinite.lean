@@ -16,8 +16,6 @@ section Base
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
 
-local notation "AF" => Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F
-
 theorem adMap_eq_complMap {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpectrum (𝓞 E)} (h : w.under (𝓞 F) = v) (a : AF) :
     (GlobalTheory.AdeleBaseChange.adMap F E a) w = complMap h (a v) := by
   subst h

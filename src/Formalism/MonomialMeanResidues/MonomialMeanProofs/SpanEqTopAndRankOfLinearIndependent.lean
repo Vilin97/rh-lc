@@ -14,13 +14,6 @@ section GammaDefs
 
 variable {K : Type} [Field K] [NumberField K]
 
-def stepLat {n δ : ℕ} (w : Fin n → Fin δ → K) (Λ : Submodule (𝓞 K) (Fin δ → K)) :
-    Submodule (𝓞 K) (Fin δ → K) :=
-  ⨆ k, Λ.map (LinearMap.mulLeft (𝓞 K) (w k))
-
-def ptLat {n δ : ℕ} (w : Fin n → Fin δ → K) (y : Fin δ) : Submodule (𝓞 K) (Fin 1 → K) :=
-  Submodule.span (𝓞 K) (Set.range fun k => (fun _ : Fin 1 => w k y))
-
 end GammaDefs
 
 section BCDefs
@@ -40,9 +33,6 @@ open IsDedekindDomain
 section W1
 
 variable {K : Type} [Field K] [NumberField K]
-
-def w1I {n δ : ℕ} (w : Fin n → Fin δ → K) (y : Fin δ) : FractionalIdeal (𝓞 K)⁰ K :=
-  FractionalIdeal.spanFinset (𝓞 K) Finset.univ (fun k => w k y)
 
 end W1
 

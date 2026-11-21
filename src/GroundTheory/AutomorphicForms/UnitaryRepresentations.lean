@@ -1,7 +1,5 @@
 import Mathlib
 import GroundTheory.AutomorphicForms.UnitaryRepresentations.IsInvariantIffCommuteStarProjection
-import GroundTheory.AutomorphicForms.UnitaryRepresentations.ExistsEqAlgebraMapOfIsSelfAdjoint
-import GroundTheory.AutomorphicForms.UnitaryRepresentations.DirectSum
 import GroundTheory.AutomorphicForms.UnitaryRepresentations.Integrated
 
 namespace GroundTheory.Automorphic
@@ -27,27 +25,9 @@ lemma IsInvariant.iSup {ι : Sort*} {V : ι → Submodule ℂ H} (h : ∀ i, π.
 
 variable (π) in
 
-def isotypic (σ : UnitaryRep G K) : Submodule ℂ H :=
-  (⨆ T ∈ σ.intertwiners π, LinearMap.range (T : K →ₗ[ℂ] H)).topologicalClosure
-
-lemma isClosed_isotypic (σ : UnitaryRep G K) : IsClosed (π.isotypic σ : Set H) := by
-  unfold isotypic
-  exact Submodule.isClosed_topologicalClosure _
-
-instance (σ : UnitaryRep G K) : CompleteSpace (π.isotypic σ) :=
-  (isClosed_isotypic σ).completeSpace_coe
-
 section decomposition
 
 variable {J : Type*} {V : J → Submodule ℂ H} [∀ j, CompleteSpace (V j)]
-
-lemma top_le_topologicalClosure_iSup
-    (hV : IsHilbertSum ℂ (fun j => V j) fun j => (V j).subtypeₗᵢ) :
-    ⊤ ≤ (⨆ j, V j).topologicalClosure := by
-  have h1 : LinearMap.range hV.OrthogonalFamily.linearIsometry.toLinearMap = ⊤ :=
-    LinearMap.range_eq_top.mpr hV.surjective_isometry
-  rw [hV.OrthogonalFamily.range_linearIsometry] at h1
-  simpa [Submodule.subtypeₗᵢ_toLinearMap, Submodule.range_subtype] using h1.ge
 
 end decomposition
 

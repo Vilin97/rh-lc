@@ -152,11 +152,4 @@ theorem exists_pow_mem_conj {H : Type} [Group H] (K K₀ : Subgroup H) (g y : H)
   refine ⟨m, hm0, k ^ m, ?_, by simp [map_pow]⟩
   simpa [Subgroup.mem_subgroupOf] using hm
 
-instance numberField (P : Pair G) [Fact (Irreducible P.pol)] : NumberField (FM P) := by
-  haveI : CharZero (FM P) := charZero_of_injective_algebraMap (algebraMap G.F (FM P)).injective
-  haveI : Module.Finite G.F (FM P) :=
-    (AdjoinRoot.powerBasis (minpoly.ne_zero (IsIntegral.of_finite G.F (P.γ : G.C)))).finite
-  haveI : Module.Finite ℚ (FM P) := Module.Finite.trans G.F (FM P)
-  exact ⟨⟩
-
 end GlobalTheory.StabFin

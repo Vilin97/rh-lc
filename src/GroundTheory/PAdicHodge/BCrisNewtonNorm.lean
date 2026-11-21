@@ -15,12 +15,6 @@ open _root_.WittVector Laurent
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K]
 variable {p : ℕ} [hp : Fact p.Prime] [IsPerfectoidField K p]
 
-local notation "𝒪" => normInteger K
-local notation "𝒪♭" => PreTilt (normInteger K) p
-local notation "K♭" => Tilt K NormedField.valuation (normInteger K) normInteger_integers p
-local notation "𝔸" => Localization.Away (p : AInf K p)
-local notation "θ" => fontaineTheta (normInteger K) p
-
 theorem norm_zcoeff_incl_le_one (x : AInf K p) (n : ℤ) :
     ‖(teichLift K p).zcoeff (incl K p x) n‖ ≤ 1 := by
   unfold TeichLift.zcoeff

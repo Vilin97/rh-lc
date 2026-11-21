@@ -150,9 +150,6 @@ def ptMap (hw : φ ≫ G.hom = A.hom ≫ y) (q : 𝟙_ (Over (Sp ℂ)) ⟶ A) : 
     show (q.left ≫ φ) ≫ G.hom = y
     rw [Category.assoc, hw, ← Category.assoc, h, Category.id_comp])
 
-@[simp] theorem ptMap_left (hw : φ ≫ G.hom = A.hom ≫ y) (q : 𝟙_ (Over (Sp ℂ)) ⟶ A) :
-    (ptMap hw q).left = q.left ≫ φ := rfl
-
 theorem ptMap_mul (hp : IsGrpPullback A G y φ) (q q' : 𝟙_ (Over (Sp ℂ)) ⟶ A) :
     ptMap hp.1.w (q * q') = ptMap hp.1.w q * ptMap hp.1.w q' := by
   let ρ : Over.mk y ⟶ Over.mk ((𝟙_ (Over (Sp ℂ))).hom ≫ y) := Over.homMk (𝟙 _) (by

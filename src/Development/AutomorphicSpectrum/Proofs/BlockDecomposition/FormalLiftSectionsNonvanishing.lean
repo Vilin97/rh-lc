@@ -328,11 +328,6 @@ def genPow (τ : SecOn (pw N d) V) (y : SecOn (pw N (-d)) V)
       simp only [mul_zpow, ← zpow_mul, ← map_zpow] at e
       exact congrArg Units.val e)
 
-@[simp] theorem coord_genPow (τ : SecOn (pw N d) V) (y : SecOn (pw N (-d)) V)
-    (hy : secMulOn rfl τ y = oneOn N (add_neg_cancel d) V) (n c : ℤ) (hc : c = d * n) (i : N.ι) :
-    GlobalTheory.LB.coord (L := pw N c) (genPow τ y hy n c hc) i =
-      ((genU τ y hy i ^ n : Γ(X, V ⊓ N.U i)ˣ) : Γ(X, V ⊓ N.U i)) := rfl
-
 end Core
 end GlobalTheory.CompanionTheory.FormalAlg.Lift
 

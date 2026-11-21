@@ -392,8 +392,6 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     {LL O : Type} [Field LL] [Algebra Qp LL] [TopologicalSpace LL] [CommRing O] [Algebra O LL]
     {v : AddValuation LL (WithTop ℚ)} {n : ℕ} (W : LocWach PD LL O v n)
 
-local notation "ιE" => algebraMap (LetA O n) W.EE
-
 section Sec
 
 variable {a : ZMod n} {e : ℕ} {d : ℕ} {cond : (ℕ → ℤ) → (Fin d → O) → Prop}
@@ -787,9 +785,5 @@ theorem universal_general_of_frame_sections (D : D7) (HW : HWOf D.loc) (F : FonO
   refine ⟨univNN _, fun {_} => ?_⟩
   exact univCore_of _ _ (Formalism.MainNotions.WachCoordinates.Br.isUnit_π₀ hR) (KF.psStable_of _ hR) (hAdm.2.2.1 l K LL hA h5)
     (hFr l K LL hG hA h5) (hSec l K LL hG hA h5) (hGen l K LL hG hA h5) (hLift l K LL hG hA h5)
-
-theorem univNNL (D : D7) (HW : HWOf D.loc) : AtCaseA fun l _ K LL hG =>
-    UnivNNCore ((HW l).W K 1 LL hG) :=
-  fun _ _ _ _ _ _ _ => univNN _
 
 end Formalism.MainNotions.UnusedSlot80

@@ -78,10 +78,6 @@ variable (ιs : ∀ v : S, Ω →ₐ[F] AlgebraicClosure ((v : HeightOneSpectrum
 def gsDecompGroup (v : S) : Subgroup (L ≃ₐ[F] L) :=
   ((gsRestrictGal hL).comp (gsFinFamily S ιs v).toMonoidHom).range
 
-theorem mem_gsDecompGroup_iff (v : S) (τ : L ≃ₐ[F] L) :
-    τ ∈ gsDecompGroup hL ιs v ↔ ∃ g, gsRestrictGal hL (gsFinFamily S ιs v g) = τ :=
-  Iff.rfl
-
 theorem map_range_gsQuotientGalEquiv
     [(gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside F Ω S)).Normal] (v : S) :
     ((QuotientGroup.mk' (gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside F Ω S))).comp
@@ -94,8 +90,6 @@ end Restrict
 
 section Real
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
   (ιr : ∀ v : {v : InfinitePlace K.1 // v.IsReal}, ℚ̄ →ₐ[K.1] AlgebraicClosure v.1.Completion)
   {L : FiniteSubfield} [Fact (K ≤ L)] [Normal K.1 L.1]
@@ -103,10 +97,6 @@ variable {K : FiniteSubfield} (S : Set (HeightOneSpectrum (𝓞 K.1)))
 
 def gsRealDecompGroup (v : {v : InfinitePlace K.1 // v.IsReal}) : Subgroup (L.1 ≃ₐ[K.1] L.1) :=
   ((gsRestrictGal hL).comp (gsRealFamily S ιr v).toMonoidHom).range
-
-theorem mem_gsRealDecompGroup_iff (v : {v : InfinitePlace K.1 // v.IsReal}) (τ : L.1 ≃ₐ[K.1] L.1) :
-    τ ∈ gsRealDecompGroup S ιr hL v ↔ ∃ g, gsRestrictGal hL (gsRealFamily S ιr v g) = τ :=
-  Iff.rfl
 
 end Real
 

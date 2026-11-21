@@ -62,9 +62,6 @@ theorem _root_.GlobalTheory.Harm.mem_conjLattice {v : Fin n → E} :
   · intro hv
     exact ⟨_, hv, _root_.GlobalTheory.Harm.conjVec_conjVec v⟩
 
-@[simp] theorem conjLattice_conjLattice : conjLattice (conjLattice Λ) = Λ := by
-  ext v; rw [mem_conjLattice, mem_conjLattice, conjVec_conjVec]
-
 open NumberField in
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} in
 variable {Λ : Submodule (𝓞 E) (Fin n → E)} in

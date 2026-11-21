@@ -234,13 +234,4 @@ def perfTriv (f : X ⟶ Spec (CommRingCat.of R)) [IsIso f] : Perf f (Inh.trivLB 
     exact rs_cst f' _ _
   exact := fun R' _ g X' π f' _ _ w _ => ⟨0, Subsingleton.elim _ _⟩
 
-example (R : Type) [CommRing R] :
-    Nonempty (Perf (𝟙 (Spec (CommRingCat.of R))) (Inh.trivLB _)) := ⟨perfTriv _⟩
-
-example (R : Type) [CommRing R] : (perfTriv (𝟙 (Spec (CommRingCat.of R)))).a = 1 := rfl
-
-example : IsProjBy (𝟙 (Spec (CommRingCat.of ℤ))) := isProjBy_id ℤ
-
-example : FirstCohomologyVanishes (Inh.trivLB (Spec (CommRingCat.of ℚ))) := firstCohomologyVanishes_spec_of_isLocalRing _
-
 end GlobalTheory.AbLaw

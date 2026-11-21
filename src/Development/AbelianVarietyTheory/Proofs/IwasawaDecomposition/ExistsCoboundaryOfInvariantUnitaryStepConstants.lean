@@ -35,8 +35,6 @@ def Bin (a b a' b' : E) : Prop :=
 
 section
 variable {n : ℕ} (a b : E) (J K : Matrix (Fin n) (Fin n) E)
-@[simp] theorem blk_00 : blk a J 0 0 = a := rfl
-@[simp] theorem blk_0s (j : Fin n) : blk a J 0 j.succ = 0 := rfl
 @[simp] theorem cornerScalarBlockMatrix_apply_succ_zero (i : Fin n) : blk a J i.succ 0 = 0 := rfl
 @[simp] theorem blk_ss (i j : Fin n) : blk a J i.succ j.succ = J i j := rfl
 

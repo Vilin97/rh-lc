@@ -143,11 +143,6 @@ def infiniteDecompositionAlgEquiv (σ : MulAction.stabilizer Gal(L/K) w) :
   AlgEquiv.ofRingEquiv (f := MulSemiringAction.toRingEquiv _ w.Completion σ)
     (infiniteDecomposition_smul_algebraMap v w σ)
 
-@[simp]
-theorem infiniteDecompositionAlgEquiv_apply (σ : MulAction.stabilizer Gal(L/K) w)
-    (x : w.Completion) : infiniteDecompositionAlgEquiv v w σ x = σ • x :=
-  rfl
-
 def infiniteDecompositionToLocal :
     MulAction.stabilizer Gal(L/K) w →* Gal(w.Completion/v.Completion) where
   toFun := infiniteDecompositionAlgEquiv v w
@@ -193,11 +188,6 @@ def infiniteDecompositionMulEquiv :
     MulAction.stabilizer Gal(L/K) w ≃* Gal(w.Completion/v.Completion) :=
   MulEquiv.ofBijective (infiniteDecompositionToLocal v w)
     (infiniteDecompositionToLocal_bijective v w)
-
-@[simp]
-theorem infiniteDecompositionMulEquiv_apply (σ : MulAction.stabilizer Gal(L/K) w)
-    (x : w.Completion) : infiniteDecompositionMulEquiv v w σ x = σ • x :=
-  rfl
 
 end Local
 

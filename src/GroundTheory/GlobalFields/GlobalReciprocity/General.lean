@@ -6,8 +6,6 @@ namespace GroundTheory.Global
 
 open IsDedekindDomain NumberField IntermediateField IdeleGroup AdeleBaseChange
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 namespace FiniteSubfield
@@ -236,11 +234,6 @@ variable (K L) in
 def reciprocityMapEquiv : IdeleClassGroup K ⧸ (ideleClassNorm K L).range ≃* (L ≃ₐ[K] L) :=
   (QuotientGroup.quotientMulEquivOfEq (ker_reciprocityMap (K := K) (L := L)).symm).trans
     (QuotientGroup.quotientKerEquivOfSurjective _ reciprocityMap_surjective)
-
-@[simp]
-theorem reciprocityMapEquiv_mk (x : IdeleGroup K) :
-    reciprocityMapEquiv K L (QuotientGroup.mk (IdeleClassGroup.mk K x)) = ideleSymbol K L x :=
-  rfl
 
 theorem index_range_ideleClassNorm_eq_finrank_of_isMulCommutative : (ideleClassNorm K L).range.index = Module.finrank K L := by
   rw [Subgroup.index, Nat.card_congr (reciprocityMapEquiv K L).toEquiv, IsGalois.card_aut_eq_finrank]

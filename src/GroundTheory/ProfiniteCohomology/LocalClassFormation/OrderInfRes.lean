@@ -23,10 +23,6 @@ def galRestrictScalars : Gal(M/F) →* Gal(M/K) where
   map_one' := rfl
   map_mul' _ _ := rfl
 
-@[simp]
-theorem galRestrictScalars_apply (σ : Gal(M/F)) (x : M) : galRestrictScalars K F M σ x = σ x :=
-  rfl
-
 theorem galRestrictScalars_injective : Function.Injective (galRestrictScalars K F M) :=
   fun _ _ h => AlgEquiv.ext fun x => DFunLike.congr_fun h x
 
@@ -89,10 +85,6 @@ noncomputable def galFixingEquiv : Gal(M/F) ≃* galFixing K F M :=
     (MulEquiv.subgroupCongr (range_galRestrictScalars K F M))
 
 omit [FiniteDimensional K M] [IsGalois K M] in
-@[simp]
-theorem coe_galFixingEquiv_apply (σ : Gal(M/F)) (x : M) :
-    (galFixingEquiv K F M σ : Gal(M/K)) x = σ x :=
-  rfl
 
 noncomputable def galFixingCohomologyIso (n : ℕ) :
     groupCohomology (galUnits.{u} F M) n ≅

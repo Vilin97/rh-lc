@@ -12,10 +12,6 @@ variable (E : Type) [Field E] [NumberField E]
 
 instance : (volume : Measure (Cinf E)).IsAddHaarMeasure := Measure.pi.isAddHaarMeasure _
 
-instance (a : ℕ) : (volume : Measure (Fin a → Cinf E)).IsAddHaarMeasure := Measure.pi.isAddHaarMeasure _
-
-instance (a : ℕ) : (volume : Measure (Lie E a)).IsAddHaarMeasure := Measure.pi.isAddHaarMeasure _
-
 def tr : Cinf E →ₗ[ℝ] ℝ where
   toFun x := ∑ w, 2 * (x w).re
   map_add' x y := by simp only [Pi.add_apply, Complex.add_re, mul_add, Finset.sum_add_distrib]

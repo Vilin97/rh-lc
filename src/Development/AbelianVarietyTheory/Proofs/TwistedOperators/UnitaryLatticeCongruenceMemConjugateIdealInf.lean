@@ -108,9 +108,6 @@ end Forms
 
 variable {D : D7}
 
-local notation "σA" => Formalism.UG.sigR D.sp.cm.sig (Formalism.L2.Herm.Af D.host.F)
-local notation "ιA" => Formalism.UG.inclE (F := D.host.F) (Formalism.L2.Herm.Af D.host.F)
-
 theorem conjI_eq (𝔪 : Ideal (𝓞 D.host.E)) : GlobalTheory.SW.conjI 𝔪 = D.host.conj • 𝔪 := by
   show _ = 𝔪.map (MulSemiringAction.toRingHom _ _ D.host.conj)
   unfold GlobalTheory.SW.conjI

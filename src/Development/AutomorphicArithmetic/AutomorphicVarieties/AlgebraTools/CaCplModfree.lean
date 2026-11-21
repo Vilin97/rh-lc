@@ -1,10 +1,9 @@
 import Mathlib
 import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.IsCplAtSelf
 import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplFin
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplFree
+import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplMap
 import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplQuot
 import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplFlat
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FinQuotAnn
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FlatnessPrecompleteProducts
 
 open IsLocalRing UpperTheory.V.AlgebraTools
@@ -37,21 +36,6 @@ private theorem mult_operator_shifts_twist {Λ R B M : Type} [CommRing Λ] [Comm
   apply (TensorProduct.AlgebraTensorModule.assoc Λ R R B M N).injective
   apply h2
   rw [← h3, ← h3, hxy]
-
-private theorem fin_of_killed {L B N : Type} [CommRing L] [CommRing B] [Algebra L B]
-    [AddCommGroup N] [Module B N] [Module L N] [IsScalarTower L B N] [Module.Finite B N]
-    (J : Ideal B) [Module.Finite L (B ⧸ J)] (hJ : Module.IsTorsionBySet B N J) :
-    Module.Finite L N := by
-  letI : Module (B ⧸ J) N := hJ.module
-  haveI : IsScalarTower B (B ⧸ J) N := hJ.isScalarTower
-  haveI : IsScalarTower L (B ⧸ J) N := hJ.isScalarTower
-  haveI : Module.Finite (B ⧸ J) N := Module.Finite.of_restrictScalars_finite B _ _
-  exact Module.Finite.trans (B ⧸ J) N
-
-private theorem fin_quot_ann {Λ R M : Type} [CommRing Λ] [IsNoetherianRing Λ] [CommRing R]
-    [Algebra Λ R] [AddCommGroup M] [Module R M] [Module Λ M] [IsScalarTower Λ R M]
-    [Module.Finite Λ M] : Module.Finite Λ (R ⧸ Module.annihilator R M) :=
-  _root_.UpperTheory.Reformulated.B.Qi2b.fin_quot_ann
 
 theorem UpperTheory.V.AlgebraTools.IsCplAt.finite_free_baseChange :
     ∀ (Λ R : Type) [CommRing Λ] [IsNoetherianRing Λ] [CommRing R] [IsNoetherianRing R] [Algebra Λ R]

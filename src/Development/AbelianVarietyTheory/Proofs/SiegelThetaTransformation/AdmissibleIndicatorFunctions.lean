@@ -11,8 +11,6 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n N : ℕ}
 
 open Classical in
 
-def indFam : Fam E n N := fun Λ x => if ColsIn Λ x then 1 else 0
-
 theorem mem_stdL {x : Fin n → E} : x ∈ stdL E n ↔ ∀ a, IsIntegral ℤ (x a) := by
   constructor
   · intro hx

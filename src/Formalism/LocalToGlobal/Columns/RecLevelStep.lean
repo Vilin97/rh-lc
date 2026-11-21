@@ -68,15 +68,6 @@ theorem rls_T_notUnder (hPr : Pr.Ok) (u : Pr.Word) (v : HeightOneSpectrum (𝓞 
 theorem rls_vT_iff (hX : X.Ok) (hPr : Pr.Ok) (u : Pr.Word) (P : Pl X.E) : P ∈ Pr.vT u ↔ Pr.piT u ∈ P.asIdeal :=
   mem_divs (basePi_of_ok hX hPr u).ne_zero P
 
-def colStep (hc : Formalism.BasicNotions.CMData X.F X.E) (hX : X.Ok) (hPr : Pr.Ok) (Ch : Chars X Pr R.m) (σ₀ : X.K →+* ℂ) (u : Pr.Word) (j : ℕ) :
-    Formalism.L2.Forms.StepLevel X.F X.E hc.sig (1 : Matrix (Fin (R.N j)) (Fin (R.N j)) X.E) (Pr.T u) X.f (plUnder X.F Pr.vGs) :=
-  stepOf hc (R.N j) (fun w => (colLev Ch j w).H) (basePi_of_ok hX hPr u) (hPr.piT_norm u) (rls_vT_iff hX hPr u)
-    (fun P hP => (hPr.vT_norm u P hP : Ideal.absNorm P.asIdeal = Pr.T u)) (rls_T_notUnder hPr u)
-    (colBase_index hc (R.N j) hPr u) ((Units.map σ₀.toMonoidHom).comp (colLev Ch j).chr)
-
-theorem colStep_U (hc : Formalism.BasicNotions.CMData X.F X.E) (hX : X.Ok) (hPr : Pr.Ok) (Ch : Chars X Pr R.m) (σ₀ : X.K →+* ℂ) (u : Pr.Word) (j : ℕ) :
-    (colStep hc hX hPr Ch σ₀ u j).U = colU hc Ch u j := rfl
-
 end Col
 
 end Formalism.L2.Col

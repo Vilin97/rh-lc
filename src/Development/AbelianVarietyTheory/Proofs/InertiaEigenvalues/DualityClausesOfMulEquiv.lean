@@ -21,8 +21,6 @@ def rh0 : H0 σ →ₗ[R] H0 σ' :=
     show σ' g m = m
     rw [hσ]; exact hm (φ g)
 
-@[simp] theorem rh0_coe (m : H0 σ) : ((rh0 σ σ' φ hσ m : H0 σ') : N) = m := rfl
-
 variable (hφ : Continuous φ)
 
 def rz1 : Z1 σ →ₗ[R] Z1 σ' where

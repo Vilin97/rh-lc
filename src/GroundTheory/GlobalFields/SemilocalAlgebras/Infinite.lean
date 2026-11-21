@@ -58,11 +58,6 @@ theorem norm_pi (x : ∀ i, A i) : Algebra.norm R x = ∏ i, Algebra.norm R (x i
     GroundTheory.Global.Matrix.det_blockDiagonal']
   exact Finset.prod_congr rfl fun i _ => (Algebra.norm_eq_matrix_det (b i) (x i)).symm
 
-theorem trace_pi (x : ∀ i, A i) : Algebra.trace R _ x = ∑ i, Algebra.trace R (A i) (x i) := by
-  let b := fun i => Module.Free.chooseBasis R (A i)
-  rw [Algebra.trace_eq_matrix_trace (Pi.basis b), leftMulMatrix_pi, Matrix.trace_blockDiagonal']
-  exact Finset.sum_congr rfl fun i _ => (Algebra.trace_eq_matrix_trace (b i) (x i)).symm
-
 end Algebra
 
 namespace InfinitePlace
@@ -177,26 +172,6 @@ theorem tensorPiEquiv_apply (x : v.Completion ⊗[K] L) :
 
 omit [NumberField K] in
 
-theorem isModuleTopology_piPlacesOver : IsModuleTopology v.Completion (PiPlacesOver (L := L) v) :=
-  isModuleTopologyOfFiniteDimensional
-
-def tensorPiHomeomorph :
-    letI := moduleTopology v.Completion (v.Completion ⊗[K] L)
-    v.Completion ⊗[K] L ≃ₜ PiPlacesOver (L := L) v :=
-  letI := moduleTopology v.Completion (v.Completion ⊗[K] L)
-  haveI : IsModuleTopology v.Completion (v.Completion ⊗[K] L) := ⟨rfl⟩
-  haveI := isModuleTopology_piPlacesOver (L := L) v
-  haveI := IsModuleTopology.toContinuousAdd v.Completion (v.Completion ⊗[K] L)
-  { toEquiv := (tensorPiEquiv (L := L) v).toEquiv
-    continuous_toFun :=
-      IsModuleTopology.continuous_of_linearMap (tensorPiEquiv (L := L) v).toLinearMap
-    continuous_invFun :=
-      IsModuleTopology.continuous_of_linearMap (tensorPiEquiv (L := L) v).symm.toLinearMap }
-
-@[simp]
-theorem tensorPiHomeomorph_apply (x : v.Completion ⊗[K] L) :
-    tensorPiHomeomorph (L := L) v x = tensorPiHom v x := rfl
-
 def tensorPiEquivLeft : L ⊗[K] v.Completion ≃ₐ[L] PiPlacesOver (L := L) v :=
   AlgEquiv.ofRingEquiv
     (f := ((Algebra.TensorProduct.comm K L v.Completion).trans
@@ -209,81 +184,13 @@ theorem tensorPiEquivLeft_tmul (l : L) (x : v.Completion) (w : v.placesOver L) :
       (l : (w : InfinitePlace L).Completion) * algebraMap v.Completion _ x := by
   simp [tensorPiEquivLeft, mul_comm]
 
-def tensorPiEquivRight :
-    letI := Algebra.TensorProduct.rightAlgebra (R := K) (A := L) (B := v.Completion)
-    L ⊗[K] v.Completion ≃ₐ[v.Completion] PiPlacesOver (L := L) v :=
-  letI := Algebra.TensorProduct.rightAlgebra (R := K) (A := L) (B := v.Completion)
-  AlgEquiv.ofRingEquiv (f := (tensorPiEquivLeft (L := L) v).toRingEquiv)
-    (fun x => by
-      funext w
-      change tensorPiEquivLeft (L := L) v (1 ⊗ₜ x) w = _
-      rw [tensorPiEquivLeft_tmul, Completion.coe_one, one_mul]
-      rfl)
-
-def tensorPiHomeomorphRight :
-    letI := Algebra.TensorProduct.rightAlgebra (R := K) (A := L) (B := v.Completion)
-    letI := moduleTopology v.Completion (L ⊗[K] v.Completion)
-    L ⊗[K] v.Completion ≃ₜ PiPlacesOver (L := L) v :=
-  letI := Algebra.TensorProduct.rightAlgebra (R := K) (A := L) (B := v.Completion)
-  letI := moduleTopology v.Completion (L ⊗[K] v.Completion)
-  haveI : IsModuleTopology v.Completion (L ⊗[K] v.Completion) := ⟨rfl⟩
-  haveI := isModuleTopology_piPlacesOver (L := L) v
-  haveI := IsModuleTopology.toContinuousAdd v.Completion (L ⊗[K] v.Completion)
-  { toEquiv := (tensorPiEquivRight (L := L) v).toEquiv
-    continuous_toFun :=
-      IsModuleTopology.continuous_of_linearMap (tensorPiEquivRight (L := L) v).toLinearMap
-    continuous_invFun :=
-      IsModuleTopology.continuous_of_linearMap (tensorPiEquivRight (L := L) v).symm.toLinearMap }
-
-@[simp]
-theorem tensorPiHomeomorphRight_tmul (l : L) (x : v.Completion) (w : v.placesOver L) :
-    tensorPiHomeomorphRight (L := L) v (l ⊗ₜ x) w =
-      (l : (w : InfinitePlace L).Completion) * algebraMap v.Completion _ x :=
-  tensorPiEquivLeft_tmul v l x w
-
-theorem algebraMap_norm_eq_norm_tmul (l : L) :
-    algebraMap K v.Completion (Algebra.norm K l) =
-      Algebra.norm v.Completion ((1 : v.Completion) ⊗ₜ[K] l) := by
-  rw [Algebra.norm_apply, Algebra.norm_apply, ← Algebra.baseChange_lmul, LinearMap.det_baseChange]
-
-theorem algebraMap_trace_eq_trace_tmul (l : L) :
-    algebraMap K v.Completion (Algebra.trace K L l) =
-      Algebra.trace v.Completion _ ((1 : v.Completion) ⊗ₜ[K] l) := by
-  rw [Algebra.trace_apply, Algebra.trace_apply, ← Algebra.baseChange_lmul,
-    LinearMap.trace_baseChange]
+open scoped Classical in
 
 open scoped Classical in
 
-theorem norm_tensor_eq_prod (x : v.Completion ⊗[K] L) :
-    Algebra.norm v.Completion x =
-      ∏ w : v.placesOver L, Algebra.norm v.Completion (tensorPiHom v x w) := by
-  rw [← Algebra.norm_eq_of_algEquiv (tensorPiEquiv (L := L) v) x, tensorPiEquiv_apply,
-    GroundTheory.Global.Algebra.norm_pi]
-
 open scoped Classical in
 
-theorem trace_tensor_eq_sum (x : v.Completion ⊗[K] L) :
-    Algebra.trace v.Completion _ x =
-      ∑ w : v.placesOver L, Algebra.trace v.Completion _ (tensorPiHom v x w) := by
-  rw [← Algebra.trace_eq_of_algEquiv (tensorPiEquiv (L := L) v) x, tensorPiEquiv_apply,
-    GroundTheory.Global.Algebra.trace_pi]
-
 open scoped Classical in
-
-theorem algebraMap_norm_eq_prod (l : L) :
-    algebraMap K v.Completion (Algebra.norm K l) =
-      ∏ w : v.placesOver L, Algebra.norm v.Completion (l : (w : InfinitePlace L).Completion) := by
-  rw [algebraMap_norm_eq_norm_tmul, norm_tensor_eq_prod]
-  simp
-
-open scoped Classical in
-
-theorem algebraMap_trace_eq_sum (l : L) :
-    algebraMap K v.Completion (Algebra.trace K L l) =
-      ∑ w : v.placesOver L,
-        Algebra.trace v.Completion _ (l : (w : InfinitePlace L).Completion) := by
-  rw [algebraMap_trace_eq_trace_tmul, trace_tensor_eq_sum]
-  simp
 
 end InfinitePlace
 

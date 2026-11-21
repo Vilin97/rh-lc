@@ -15,8 +15,6 @@ variable {R : Type} [CommRing R] {M N P M' N' : Type} [CommRing M] [Algebra R M]
 def pair (x : M →ₐ[R] R) (y : N →ₐ[R] R) : M ⊗[R] N →ₐ[R] R :=
   Algebra.TensorProduct.lift x y (fun _ _ => Commute.all _ _)
 
-@[simp] theorem pair_tmul (x : M →ₐ[R] R) (y : N →ₐ[R] R) (a : M) (b : N) : pair x y (a ⊗ₜ b) = x a * y b := rfl
-
 theorem pair_map (x : M →ₐ[R] R) (y : N →ₐ[R] R) (f : M' →ₐ[R] M) (g : N' →ₐ[R] N) (z : M' ⊗[R] N') :
     pair x y (Algebra.TensorProduct.map f g z) = pair (x.comp f) (y.comp g) z := by
   induction z <;> simp_all

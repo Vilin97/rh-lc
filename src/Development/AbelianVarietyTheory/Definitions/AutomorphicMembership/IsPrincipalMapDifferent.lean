@@ -32,27 +32,16 @@ structure LatChart (L : Lat B) : Type where
 
   g : Z.X ⟶ B.X
 
-  isMap : IsMap Z B g
-
   U : Z.X.Opens
 
-  aff : IsAffineOpen U
-
   V : B.X.Opens
-
-  le : U ≤ g ⁻¹ᵁ V
 
   n : ℕ
 
   m : Fin n → Γ(L.N.toMod, V)
 
-  frame : VB.IsFrame m
-
   c : ∀ σ, Fin (Dw.mult σ) → Fin n → Γ(Z.X, U)
 
-  ext : ∀ σ, ∃ (a : GL (Fin n) Γ(Z.X, U)) (e : Fin (Dw.mult σ) ↪ Fin n), ∀ i l, a (e i) l = c σ i l
-
-  adapted : ∀ (k : Type) [Field k] (x : Sp k ⟶ Z.X), ⊤ ≤ x ⁻¹ᵁ U → Set.range x ⊆ Z.opn →
     ∃ u, Z.FlagAt x u ∧ HasCoord g L m x u fun σ i l => valR x U (c σ i l)
 
 variable (Z) in
@@ -67,10 +56,6 @@ namespace LatChart
 def FrameAt (q : LatChart Z L) {k : Type} [Field k] (x : Sp k ⟶ Z.X) (u : Vecs Dw (Y Z.i).t k) : Prop :=
   ⊤ ≤ x ⁻¹ᵁ q.U ∧ Z.FlagAt x u ∧ HasCoord q.g L q.m x u fun σ i l => valR x q.U (q.c σ i l)
 
-theorem exists_frameAt (q : LatChart Z L) {k : Type} [Field k] {x : Sp k ⟶ Z.X} (h : ⊤ ≤ x ⁻¹ᵁ q.U)
-    (ho : Set.range x ⊆ Z.opn) : ∃ u, q.FrameAt x u :=
-  (q.adapted k x h ho).imp fun _ hu => ⟨h, hu⟩
-
 def IsTr (q q' : LatChart Z L) (e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ) (a : Γ(Z.X, q.U ⊓ q'.U)) : Prop :=
   ∀ (k : Type) [Field k] (x : Sp k ⟶ Z.X) (u u' : Vecs Dw (Y Z.i).t k) (d : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → k),
     q.FrameAt x u → q'.FrameAt x u' → (∀ σ, DiagAt (Y Z.i).t (x ≫ Z.π) (u' σ) (u σ) (d σ)) →
@@ -80,11 +65,6 @@ open Classical in
 
 def tr (q q' : LatChart Z L) (e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ) : Γ(Z.X, q.U ⊓ q'.U)ˣ :=
   if h : ∃ a : Γ(Z.X, q.U ⊓ q'.U)ˣ, q.IsTr q' e a.val then h.choose else 1
-
-theorem isTr_tr {q q' : LatChart Z L} {e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ}
-    (h : ∃ a : Γ(Z.X, q.U ⊓ q'.U)ˣ, q.IsTr q' e a.val) : q.IsTr q' e (q.tr q' e).val := by
-  rw [tr, dif_pos h]
-  exact h.choose_spec
 
 end LatChart
 
@@ -120,9 +100,6 @@ instance isPrincipal_map_different {l : Level H} (c : Coeff l) (W : ValuationSub
 
 def diffGen {l : Level H} (c : Coeff l) (W : ValuationSubring ℂ) (σ : E →+* ℂ) : c.V W :=
   Submodule.IsPrincipal.generator ((differentIdeal ℤ (𝓞 E)).map (embV c W σ))
-
-theorem span_diffGen {l : Level H} (c : Coeff l) (W : ValuationSubring ℂ) (σ : E →+* ℂ) :
-    Ideal.span {diffGen c W σ} = (differentIdeal ℤ (𝓞 E)).map (embV c W σ) := Ideal.span_singleton_generator _
 
 def Descends {B : Mdl Y i₀} (Z : Mdl Y i₀) (L : Lat B) (l : Level H) (e : ∀ σ : E →+* ℂ, Fin (Dw.mult σ) → ℤ)
     (b : (E →+* ℂ) → ℤ) : Prop :=

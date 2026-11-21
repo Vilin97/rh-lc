@@ -8,9 +8,6 @@ open scoped Real Manifold Topology ModularForm
 
 namespace GlobalTheory.EisWronskian
 
-local notation "𝕢" => Periodic.qParam
-local notation "D" => Derivative.normalizedDerivOfComplex
-
 private lemma qParam_add_one (z : ℂ) : 𝕢 1 (z + 1) = 𝕢 1 z := by
   simp only [Periodic.qParam, Complex.ofReal_one, div_one, mul_add, mul_one, Complex.exp_add,
     Complex.exp_two_pi_mul_I]

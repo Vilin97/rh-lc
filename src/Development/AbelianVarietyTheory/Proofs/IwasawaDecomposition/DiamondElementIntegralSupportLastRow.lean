@@ -116,8 +116,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {S : Formalism.L2.Forms.StepLevel F E hc.sig (1 : Matrix (Fin n) (Fin n) E) T f bad}
   {π : 𝓞 E} {P : HeightOneSpectrum (𝓞 E)} {v : HeightOneSpectrum (𝓞 F)}
 
-local notation "ι" => Formalism.UG.inclE (F := F) (v.adicCompletion F)
-
 theorem hform_single_left (c : E) (y : Fin n → E) (j : Fin n) :
     hform (hc.sig : E →+* E) (1 : Matrix (Fin n) (Fin n) E) (Pi.single j c) y = star c * y j := by
   classical
@@ -264,8 +262,6 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {hc : Formalism.BasicNotions.CMData F E} {n T f : ℕ} {bad : Set (HeightOneSpectrum (𝓞 F))}
   {S : Formalism.L2.Forms.StepLevel F E hc.sig (1 : Matrix (Fin n) (Fin n) E) T f bad}
   {π : 𝓞 E} {P : HeightOneSpectrum (𝓞 E)} {v : HeightOneSpectrum (𝓞 F)}
-
-local notation "ι" => Formalism.UG.inclE (F := F) (v.adicCompletion F)
 
 theorem val_coord_le (hLb : IsBase S π) (hP : P.under (𝓞 F) = v) (h3 : π ∉ (conjPrime₂ P).asIdeal)
     {s : Fin n → E ⊗[F] v.adicCompletion F}

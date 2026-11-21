@@ -142,11 +142,6 @@ theorem EN_mem_divE {n : ℕ} {y : Vec K a ι} (hy : y ∈ divE l e n D.Man) :
     (mul_mem (natCast_mem _ n) (N_mem (derivative_mem_R l (E_mem l e _)))) hy)
 
 omit [NeZero e] in
-theorem conn_bas_mem (i : ι) : D.conn (bas i) ∈ D.Mext (RpiE O K l e) :=
-  D.mem_Mext_invE_of_mem_divE (n := 1) (by rw [pow_one]; exact D.EN_mem _ (D.bas_mem_M i))
-
-theorem hatTot_conn [CompleteSpace K] {v : Vec K a ι} (hv : v ∈ D.Mext (RpiE O K l e)) :
-    D.hatTot (D.conn v) = D.connHat (D.hatTot v) := D.toPhiMod.hatTot_conn D.conn_bas_mem hv
 
 omit [NeZero e] in
 
@@ -170,8 +165,6 @@ theorem actPol_Lc (g : TameGal K l e a) (w : D.Pol) :
 theorem Lc_mem_Zl {w : D.Pol} (hw : w ∈ D.Zl) : D.Lc w ∈ D.Zl :=
   ⟨D.Lc_mem_PolEta hw.1, fun g => by rw [actPol_Lc, hw.2 g]⟩
 
-def LcEta : Module.End K (D.PolEta η) := D.Lc.restrict fun _ => D.Lc_mem_PolEta
-
 def LcZ : Module.End K D.Zl := D.Lc.restrict fun _ => D.Lc_mem_Zl
 
 @[simp] theorem coe_LcZ (w : D.Zl) : (D.LcZ w : D.Pol) = D.Lc w := rfl
@@ -182,13 +175,6 @@ theorem Mon_eq (y : Vec K a ι) : D.Mon y = D.Lc (D.cls y) - D.cls (E K l e • 
 theorem Mon_add_phi_sub (y : Vec K a ι) {m : Vec K a ι} (hm : m ∈ D.Man) :
     D.Mon (y + (D.phi m - m)) = D.Mon y := by
   rw [map_add, PhiMod.Mon_phi_sub, D.cls_eq_zero_iff.2 (D.EN_mem_Man hm), neg_zero, add_zero]
-
-theorem Mon_mem_Zl_of_zeta_mem {y : Vec K a ι} (hy : y ∈ D.Yl)
-    (hz : D.zeta y ∈ D.ext (Rpi O K l e)) : D.Mon y ∈ D.Zl := by
-  refine ⟨⟨_, sub_mem (D.EN_mem_divE ?_) ?_, rfl⟩, D.desc.Mon_mem_invariants hy.2⟩
-  · exact D.Mext_mono (invL_A_le_Rpi l e) hy.1
-  · rw [mem_divE, Module.End.mul_apply, mulV_apply, smul_comm]
-    exact D.smul_mem_Man (E_mem l e _) (D.smul_mem_Mext (A_le_Rpi l e) hz)
 
 theorem _root_.GlobalTheory.BK.BKHom.onPol_Lc {D : BKDat O K l e a ι η H} {D' : BKDat O K l e a κ η' H'}
     (F : BKHom D D') (w : D.Pol) : F.onPol (D.Lc w) = D'.Lc (F.onPol w) := by
@@ -211,14 +197,6 @@ theorem plusMod_upper (hy : y ∈ D.Y) : ∀ v ∈ (plusMod hy).L, E K l e ^ η 
   D.plus_upper _ D.upper hy.1
 
 omit [NeZero e] in
-
-theorem plusMod_lower (hy : y ∈ D.Y) :
-    ∀ v ∈ (plusMod hy).M, E K l e ^ (H + η) • v ∈ (plusMod hy).L :=
-  D.plus_lower _ (fun v hv => by
-    rw [pow_add, mul_smul]
-    exact D.lower _ (D.M.smul_mem (EIn l e (A O K) ^ η) hv)) (by
-    rw [pow_add, mul_smul]
-    exact D.lower _ hy.1)
 
 def plusDat (hy : y ∈ D.Y) (hMon : D.Mon y = 0) (hz : ∃ w ∈ D.MM, D.zeta y = (X : K⟦X⟧) • w)
     (hH : E K l e ^ H • y ∈ D.L) : BKDat O K l e a (ι ⊕ Unit) η H where
@@ -271,8 +249,6 @@ theorem map_avg {V : Type} [AddCommGroup V] [Module K V] (f : Vec K a ι →ₗ[
   have h0 : (Nat.card (TameGal K l e a) : K) ≠ 0 := norm_ne_zero_iff.1 (by rw [norm_card]; simp)
   simp only [avg, LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum, h, Finset.sum_const,
     Finset.card_univ, ← Nat.card_eq_fintype_card, ← Nat.cast_smul_eq_nsmul K, inv_smul_smul₀ h0]
-
-theorem avg_of_mem_inv {v : Vec K a ι} (hv : v ∈ Δ.inv) : Δ.avg v = v := Δ.map_avg LinearMap.id hv
 
 theorem avg_mem (W : Submodule O (Vec K a ι)) {v : Vec K a ι} (h : ∀ g, Δ.act g v ∈ W) :
     Δ.avg v ∈ W := by
@@ -400,40 +376,7 @@ def splitDat (χ : TameGal K l e a →* O) : BKDat O K l e a (Unit ⊕ Unit) η 
   BKDat.plusDat (D := rankOneDat O K l e a η H j h₁ h₂ χ) (y := 0) (zero_mem _) (map_zero _)
     ⟨0, zero_mem _, by simp⟩ (by simp)
 
-example (χ : TameGal K l e a →* O) :
-    BKHom (rankOneDat O K l e a η H j h₁ h₂ χ) (splitDat h₁ h₂ χ) :=
-  Descent.plusInl _ _ (zero_mem _)
-
 end Examples
-
-example : BKDat ℤ_[3] ℚ_[3] 3 2 1 Unit 1 2 := rankOneDat _ _ _ _ _ 1 2 (-1) (by simp) (by simp) 1
-
-def Descent.plusProj {P : PhiMod O K l e a ι} (Δ : Descent P) {y : Vec K a ι}
-    (hy : y ∈ P.Mext (invE l e (A O K))) (hinv : y ∈ Δ.inv) :
-    Descent.Hom (Δ.plus hy hinv) (rankOneDesc 0 1) where
-  toHom := P.plusProj hy
-  app_act g w := by
-    rw [← join_eta w, Descent.plus_act_join, P.plusProj_app, P.plusProj_app]
-    ext τ i : 2
-    refine Eq.trans ?_ (rankOneDesc_act 0 1 g _ τ).symm
-    simp [ringAct_apply]
-
-theorem isOfType_rankOneDat [CompleteSpace K] {j : ℤ} (h₁ : -(η : ℤ) ≤ j) (h₂ : j ≤ H) :
-    (rankOneDat O K l e a η H j h₁ h₂ 1).IsOfType {0} {j} where
-  chars_subset := by
-    rintro τ c ⟨d, hd, h⟩
-    obtain ⟨ζ, hζ⟩ := TameDescentExponentData.prim (K := K) (l := l) (e := e) (a := a)
-    have h1 := congrFun (h (powL l τ (rootsOfUnity.mkOfPowEq ζ hζ.pow_eq_one))) ()
-    have h2 := (congrArg constantCoeff (rankOneDesc_act j 1 _ _ τ)).symm.trans h1
-    have h3 : (TameGal.inertia (powL l τ (rootsOfUnity.mkOfPowEq ζ hζ.pow_eq_one)) :
-        TameGal K l e a).root τ = ζ := by
-      rw [TameGal.root, SemidirectProduct.left_inl, ← powL_add, neg_add_cancel, powL_zero]
-      rfl
-    have h4 : d τ () ≠ 0 := fun h0 => hd (funext fun _ => h0)
-    rw [h3, ← coeff_zero_eq_constantCoeff_apply] at h2
-    have h5 : ζ ^ c.val = 1 := by simpa [h4, eq_comm] using h2
-    exact (ZMod.val_eq_zero c).1 (Nat.eq_zero_of_dvd_of_lt ((hζ.pow_eq_one_iff_dvd _).1 h5) c.val_lt)
-  jumps_subset := (jumps_rankOne j).le
 
 section Omega
 
@@ -442,28 +385,10 @@ omit [NeZero a] [TameDescentExponentData K l e a]
 variable [TameDescentExponentData K l e 1]
 
 omit [IsUltrametricDist K] in
-theorem exists_algebraMap_eq_root (g : TameGal K l e 1) : ∃ c : O, algebraMap O K c = g.root 0 :=
-  (IsUnitBall.mem_range_iff (O := O) (g.root 0)).2 (g.norm_root 0).le
 
 variable (O) in
 
-def omegaOne : TameGal K l e 1 →* O where
-  toFun g := (exists_algebraMap_eq_root g).choose
-  map_one' := IsUnitBall.inj (K := K) (by
-    rw [(exists_algebraMap_eq_root _).choose_spec, TameGal.root_one, map_one])
-  map_mul' g h := IsUnitBall.inj (K := K) (by
-    rw [map_mul, (exists_algebraMap_eq_root _).choose_spec, (exists_algebraMap_eq_root _).choose_spec,
-      (exists_algebraMap_eq_root _).choose_spec, TameGal.root_mul, Subsingleton.elim (0 - g.shift) 0])
-
 omit [IsUltrametricDist K] in
-theorem algebraMap_omegaOne (g : TameGal K l e 1) : algebraMap O K (omegaOne O g) = g.root 0 :=
-  (exists_algebraMap_eq_root g).choose_spec
-
-theorem mem_chars_rankOneDesc (j : ℤ) (c : ZMod e) :
-    c ∈ (rankOneDesc (K := K) (l := l) j (omegaOne O ^ c.val)).chars 0 := by
-  refine ⟨fun _ _ => 1, fun h => one_ne_zero (congrFun h ()), fun ζ => funext fun i => ?_⟩
-  refine (congrArg constantCoeff (rankOneDesc_act j _ _ _ 0)).trans ?_
-  simp [algebraMap_omegaOne]
 
 end Omega
 

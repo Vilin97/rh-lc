@@ -3,7 +3,8 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.LocPoly
 import GroundTheory.AutomorphicForms.MacdonaldWhittakerHecke
 import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.SmoothRepresentationsGL.SphDict
 import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.SmoothRepresentationsGL.MemIffLocal
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralCosetsDetFiniteSum
+import GroundTheory.AutomorphicForms.SphericalIntegral
+import Development.AbelianVarietyTheory.Proofs.TwistedOperators.HermiteReductionUnipotent
 import Formalism.ArtinHasse.ArtinHasseProofs.SymmSeries
 
 noncomputable section
@@ -20,10 +21,6 @@ open GroundTheory.Automorphic.Spherical GLnLocal Iwasawa HeckeAlgebra
 variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] {n : ℕ}
 
 variable (F n) in
-
-def intShell (k : ℕ) : Set (GL (Fin n) F) :=
-  {g | (∀ i j, g.val i j ∈ (ValuativeRel.valuation F).integer) ∧
-    ValuativeRel.valuation F g.val.det = ValuativeRel.valuation F (GLnLocal.uniformizer F : F) ^ k}
 
 end General
 

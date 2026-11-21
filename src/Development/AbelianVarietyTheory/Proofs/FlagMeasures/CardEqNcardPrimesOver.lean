@@ -1,7 +1,8 @@
 import Mathlib
 import Development.AbelianVarietyTheory.BlockTheory.SiegelWeilLocal.HermitianPerpSubgroup
-import Development.AbelianVarietyTheory.BlockTheory.SiegelWeilLocal.ColumnDimensionRational
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MulVecMemHatSmul
+import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
+import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
+import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FrameLats
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsIrreducible
 
 open NumberField IsDedekindDomain MeasureTheory Matrix

@@ -11,8 +11,6 @@ namespace GlobalTheory.FinTypCount
 
 variable {L : Type} [Field L] [NumberField L] [IsCMField L]
 
-local notation3 "L⁺" => NumberField.maximalRealSubfield L
-
 theorem countable_field : Countable L :=
   (Module.finBasis ℚ L).equivFun.toEquiv.injective.countable
 

@@ -1,5 +1,6 @@
 import Mathlib
-import GroundTheory.AutomorphicForms.L2LocalComponents.LocalComponents
+import GroundTheory.AutomorphicForms.L2LocalComponents.Summand
+import GroundTheory.AutomorphicForms.SupercuspidalCoefficients
 import GroundTheory.AutomorphicForms.L2LocalComponents.NonEmpty
 
 open MeasureTheory
@@ -22,10 +23,6 @@ def ofL2Summand (V : Submodule ℂ (CuspL2 μ)) [CompleteSpace V] (hV : (cuspRep
     (hirr : ((cuspRepT μ).restrict V hV).IsIrreducible) : CuspidalAutomorphicRepresentation K n :=
   ofSummand V hV hirr (summandCuspForms_ne_bot μ V hV hirr)
 
-@[simp] theorem carrier_ofL2Summand (V : Submodule ℂ (CuspL2 μ)) [CompleteSpace V]
-    (hV : (cuspRepT μ).IsInvariant V) (hirr : ((cuspRepT μ).restrict V hV).IsIrreducible) :
-    (ofL2Summand V hV hirr).carrier = summandCuspForms V := rfl
-
 theorem topologicalClosure_map_ofL2Summand (V : Submodule ℂ (CuspL2 μ)) [CompleteSpace V]
     (hV : (cuspRepT μ).IsInvariant V) (hirr : ((cuspRepT μ).restrict V hV).IsIrreducible) :
     ((ofL2Summand V hV hirr).carrier.map (cuspVecL μ)).topologicalClosure = V :=
@@ -41,11 +38,6 @@ end CuspidalAutomorphicRepresentation
 open CuspidalAutomorphicRepresentation
 
 variable {μ : Measure (Reduction.normOneGL K n)} [μ.IsHaarMeasure]
-
-def L2SummandIsSupercuspidalAt (V : Submodule ℂ (CuspL2 μ)) [CompleteSpace V] (hV : (cuspRepT μ).IsInvariant V)
-    (hirr : ((cuspRepT μ).restrict V hV).IsIrreducible)
-    (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)) : Prop :=
-  (ofL2Summand V hV hirr).IsSupercuspidalAt v
 
 end AutomorphicForm
 

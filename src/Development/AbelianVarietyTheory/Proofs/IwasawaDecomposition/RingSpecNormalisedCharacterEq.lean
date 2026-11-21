@@ -23,16 +23,11 @@ structure CopyAll (D D' : D7) (ι : D.what₂.LL →+* D'.what₂.LL) (e : ↥D'
   qs : HEq D.ntw.qs D'.ntw.qs
   pl : HEq D.naut.plGw D'.naut.plGw
 
-theorem CopyAll.refl (D : D7) : CopyAll D D (RingHom.id _) (RingEquiv.refl _) :=
-  ⟨CopyTw.refl D, .rfl, .rfl, .rfl, .rfl, .rfl, .rfl⟩
-
 structure SameFrame {D D' : D7} (cf : CharFrame D) (cf' : CharFrame D') : Prop where
   mu0 : HEq cf.mu0 cf'.mu0
   eta : HEq cf.eta cf'.eta
   del : HEq cf.del cf'.del
   del' : HEq cf.del' cf'.del'
-
-theorem SameFrame.refl {D : D7} (cf : CharFrame D) : SameFrame cf cf := ⟨.rfl, .rfl, .rfl, .rfl⟩
 
 structure RingPart (D : D7) (cf : CharFrame D) (low : Finset ℕ) where
   twF : TwFrameC D
@@ -71,25 +66,6 @@ def RowEig (D : D7) (S : RatDat D.ntw) (eig : ℕ → D.what₂.FT → ℕ → P
         (show FractionRing (D.ntw.O i) from readLL0 S i (D.ntw.side i s) (eig (D.ntw.jS i s) (rowS i s) k P))
 
 set_option hygiene false in
-
-scoped macro "copy_cases " h:ident D:ident D':ident : tactic => `(tactic| (
-  obtain ⟨⟨⟨⟨a1, a2, a3, nOm, ninstOm, nalgOm, nplOm, nPlG⟩, ⟨xcc, xTw, xl, fixedFieldTransport_baseIntegerRing_heq, fixedFieldTransport_baseIntegerCommRing_heq, fixedFieldTransport_baseIntegerAlgebra_heq, fixedFieldTransport_baseIntegerTopology_heq, xO, xcrO, xalgO, xOk, xcrOk, xalgOk, xzk, xpD, xchi1, xSig, xfinSig, xjS, xside, xrhoS, fixedFieldTransport_initialPlaceSet_heq, xhEig, xLam, xsideL, xRCG, xgrpRCG, xfinRCG, xart, xth⟩,
-    ⟨yFm, yacgFm, ymodFmK, ymodFmO, yactG, yU, ypsiU, yeAlg, yDat, yth, ylev, ythPsi, yMtV, yacgMt, ymodMtK, ymodMtO, yMtLat, ythP, yhkF⟩, hbr, hav⟩, hsp, hTau, heTau, hhc, hembLL, hLL0, hemb0, hemb0b, hinW1, xdelta, xB, xacgB, xmodB, xTheta, xhk, yBsup, yembB, ythU, ydelU⟩,
-    xjL, xs2, xlamG, xXv, xqs, hpl⟩ := $h
-  have nfin : HEq (NData.finPlG (D7.nd $D)) (NData.finPlG (D7.nd $D')) :=
-    Subsingleton.helim (congrArg (fun P : Fin 2 → Type => ∀ k, Fintype (P k)) (eq_of_heq nPlG)) _ _
-  cases $D:ident; cases $D':ident
-  dsimp only at a1 a2 a3
-  subst a1; subst a2; subst a3
-  rename NData _ _ _ => n1; cases n1; rename NData _ _ _ => n2; cases n2
-  dsimp only at nOm ninstOm nalgOm nplOm nPlG nfin
-  subst nOm; subst ninstOm; subst nalgOm; subst nplOm; subst nPlG; subst nfin
-  rename NTw _ _ _ _ _ => n1; cases n1; rename NTw _ _ _ _ _ => n2; cases n2
-  dsimp only at xcc xTw xl fixedFieldTransport_baseIntegerRing_heq fixedFieldTransport_baseIntegerCommRing_heq fixedFieldTransport_baseIntegerAlgebra_heq fixedFieldTransport_baseIntegerTopology_heq xO xcrO xalgO xOk xcrOk xalgOk xzk xpD xchi1 xSig xfinSig xjS xside xrhoS fixedFieldTransport_initialPlaceSet_heq xhEig xLam xsideL xRCG xgrpRCG xfinRCG xart xth xdelta xB xacgB xmodB xTheta xhk xjL xs2 xlamG xXv xqs
-  subst xcc; subst xTw; subst xl; subst fixedFieldTransport_baseIntegerRing_heq; subst fixedFieldTransport_baseIntegerCommRing_heq; subst fixedFieldTransport_baseIntegerAlgebra_heq; subst fixedFieldTransport_baseIntegerTopology_heq; subst xO; subst xcrO; subst xalgO; subst xOk; subst xcrOk; subst xalgOk; subst xzk; subst xpD; subst xchi1; subst xSig; subst xfinSig; subst xjS; subst xside; subst xrhoS; subst fixedFieldTransport_initialPlaceSet_heq; subst xhEig; subst xLam; subst xsideL; subst xRCG; subst xgrpRCG; subst xfinRCG; subst xart; subst xth; subst xdelta; subst xB; subst xacgB; subst xmodB; subst xTheta; subst xhk; subst xjL; subst xs2; subst xlamG; subst xXv; subst xqs
-  rename NExp _ _ _ _ _ _ => n1; cases n1; rename NExp _ _ _ _ _ _ => n2; cases n2
-  dsimp only at yFm yacgFm ymodFmK ymodFmO yactG yU ypsiU yeAlg yDat yth ylev ythPsi yMtV yacgMt ymodMtK ymodMtO yMtLat ythP yhkF yBsup yembB ythU ydelU
-  subst yFm; subst yacgFm; subst ymodFmK; subst ymodFmO; subst yactG; subst yU; subst ypsiU; subst yeAlg; subst yDat; subst yth; subst ylev; subst ythPsi; subst yMtV; subst yacgMt; subst ymodMtK; subst ymodMtO; subst yMtLat; subst ythP; subst yhkF; subst yBsup; subst yembB; subst ythU; subst ydelU))
 
 set_option maxHeartbeats 4000000 in
 set_option maxRecDepth 100000 in

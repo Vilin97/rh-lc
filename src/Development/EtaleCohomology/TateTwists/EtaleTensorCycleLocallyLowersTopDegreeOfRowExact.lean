@@ -6,11 +6,6 @@ open scoped TensorProduct DirectSum
 
 namespace LateralTheory.EtaleFoundations
 
-local macro "TI " w:term:max : term => `({p : ℤ × ℤ // p.1 + p.2 = $w})
-
-local macro "TF " C:term:max J:term:max U:term:max w:term:max : term =>
-  `(fun q : {p : ℤ × ℤ // p.1 + p.2 = $w} => Sec (HomologicalComplex.X $C q.1.1) $U ⊗[ULift.{1} _] Sec (HomologicalComplex.X $J q.1.2) $U)
-
 def stD {R : Type} [CommRing R] (C J : Cx R) (U : Scheme.{0}) (w w' : ℤ) (h : w + 1 = w') :
     Tens C J U w →ₗ[ULift.{1} R] Tens C J U w' :=
   DirectSum.toModule _ _ _ fun p =>

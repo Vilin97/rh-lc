@@ -102,6 +102,4 @@ theorem sumInterlacedBound : Interlace := by
   · linarith [hb.1]
   · linarith [hb.2]
 
-def chi (n : ℕ) : ℝ := if n = 0 then -1 else 0
-
 end Formalism.LatticeIndexTer

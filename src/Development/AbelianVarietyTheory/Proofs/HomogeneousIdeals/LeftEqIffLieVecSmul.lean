@@ -302,12 +302,6 @@ theorem isLieComb_iff {n : ℕ} (a : Fin n → R) (c : Fin n → (X →+ R))
 
 variable (R X) in
 
-def lieEquiv : {w : epsR R ⟶ splitTorus (Sp R) X // IsTangent w} ≃ (X →+ R) where
-  toFun w := epsCoeff w.1 ((isTangent_iff_charVal _).1 w.2)
-  invFun c := ⟨lieVec c, isTangent_lieVec c⟩
-  left_inv _ := Subtype.ext (epsVec_epsCoeff _ _)
-  right_inv _ := epsVec_injective (epsVec_epsCoeff _ _)
-
 theorem isLieBasis_iff {n : ℕ} (c : Fin n → (X →+ R)) :
     IsLieBasis (fun i => lieVec (c i)) ↔
       LinearIndependent R c ∧ ⊤ ≤ Submodule.span R (Set.range c) := by
@@ -416,13 +410,6 @@ instance free_addHom [Module.Free ℤ X] [Module.Finite ℤ X] : Module.Free R (
 
 instance finite_addHom [Module.Free ℤ X] [Module.Finite ℤ X] : Module.Finite R (X →+ R) :=
   Module.Finite.of_basis (dualBasis R (Module.Free.chooseBasis ℤ X))
-
-theorem charpoly_transpose [Module.Free ℤ X] [Module.Finite ℤ X] (u : X →+ X) :
-    (transpose R u).charpoly = u.toIntLinearMap.charpoly.map (Int.castRingHom R) := by
-  classical
-  let b := Module.Free.chooseBasis ℤ X
-  rw [← LinearMap.charpoly_toMatrix (transpose R u) (dualBasis R b), toMatrix_transpose b b u,
-    Matrix.charpoly_transpose, Matrix.charpoly_map, LinearMap.charpoly_toMatrix]
 
 theorem isLieBasis_dualBasis {n : ℕ} (b : Module.Basis (Fin n) ℤ X) :
     IsLieBasis (fun i => lieVec (dualBasis R b i)) := isLieBasis_of_basis (dualBasis R b)

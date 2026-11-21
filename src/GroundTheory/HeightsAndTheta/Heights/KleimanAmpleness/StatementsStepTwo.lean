@@ -71,8 +71,6 @@ section Hypotheses
 
 variable (k : Type u) [Field k]
 
-def pt01 : Fin (1 + 1) → k := fun i => if i = 0 then 0 else 1
-
 end Hypotheses
 
 end

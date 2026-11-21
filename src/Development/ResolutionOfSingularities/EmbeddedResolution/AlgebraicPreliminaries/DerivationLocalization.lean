@@ -52,16 +52,6 @@ private theorem exists_liftToLocalization (D : Derivation R S N) (M : Submonoid 
   rw [← KaehlerDifferential.map_D R R S S' s, key]
   exact D.liftKaehlerDifferential_comp_D s
 
-noncomputable def liftToLocalization (D : Derivation R S N) (M : Submonoid S)
-    [IsLocalization M S'] : Derivation R S' N :=
-  (exists_liftToLocalization (S' := S') D M).choose
-
-@[simp]
-theorem liftToLocalization_algebraMap (D : Derivation R S N) (M : Submonoid S)
-    [IsLocalization M S'] (s : S) :
-    (D.liftToLocalization (S' := S') M) (algebraMap S S' s) = D s :=
-  (exists_liftToLocalization (S' := S') D M).choose_spec s
-
 private theorem exists_mapToLocalization (D : Derivation R S S) (M : Submonoid S)
     [IsLocalization M S'] :
     ∃ D' : Derivation R S' S', ∀ s : S,

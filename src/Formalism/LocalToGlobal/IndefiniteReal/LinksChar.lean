@@ -419,20 +419,7 @@ structure Char : Prop where
   scal : R.IsScal F
   tup : R.IsTup F
 
-structure RealCol where
-
-  ζ : (F.Dc (R.toCx F).zs).Mem → T → D.what₂.LL
-
-  sEE : (R.toCx F).EE →ₗ⋆[ℂ] (F.Sp (R.toCx F).zs).HH
-
 variable {R F}
-
-def RealCol.toCol (Y : RealCol R F) : CxData.CxCol (fc := F.fc) (R.toCx F) := (R.toCx F).colDef (fun u t => (Y.ζ u t)⁻¹) Y.sEE
-
-structure RealCol.Char (Y : RealCol R F) : Prop where
-  zeta : ∀ u t, ∃ n : ℕ, 0 < n ∧ Y.ζ u t ^ n = 1
-  zeta0 : ∀ u, Y.ζ u A.μ0 = 1
-  sE : ∀ x ∈ (R.toCx F).EEl true, ‖Y.sEE x‖ ^ 2 = (nP F true)⁻¹ * ‖x‖ ^ 2 ∧ Y.sEE x ∈ (F.Sp (R.toCx F).zs).Rw
 
 end RealDat
 

@@ -21,12 +21,6 @@ noncomputable def unitsTowerHom :
     ext x
     exact AlgEquiv.restrictNormal_commutes σ E ((Additive.toMul (α := Eˣ) x : Eˣ) : E)⟩
 
-@[simp]
-theorem unitsTowerHom_hom_apply (x : Additive Eˣ) :
-    ((Additive.toMul (α := Fˣ) ((unitsTowerHom K E F).hom x) : Fˣ) : F) =
-      algebraMap E F ((Additive.toMul (α := Eˣ) x : Eˣ) : E) :=
-  rfl
-
 noncomputable def unitsInflationTower (n : ℕ) :
     groupCohomology (galUnits.{u} K E) n ⟶ groupCohomology (galUnits.{u} K F) n :=
   groupCohomology.map (AlgEquiv.restrictNormalHom E) (unitsTowerHom K E F) n
@@ -54,12 +48,6 @@ noncomputable def unitsOfLE :
   letI : Algebra E F := (IntermediateField.inclusion h).toRingHom.toAlgebra
   haveI : IsScalarTower K E F := IsScalarTower.of_algebraMap_eq' rfl
   unitsTowerHom K E F
-
-@[simp]
-theorem coe_unitsOfLE_hom_apply (x : Additive Eˣ) :
-    (((Additive.toMul (α := Fˣ) ((unitsOfLE h).hom x) : Fˣ) : F) : L) =
-      (((Additive.toMul (α := Eˣ) x : Eˣ) : E) : L) :=
-  rfl
 
 noncomputable def unitsInflationOfLE (n : ℕ) :
     groupCohomology (galUnits.{u} K E) n ⟶ groupCohomology (galUnits.{u} K F) n :=

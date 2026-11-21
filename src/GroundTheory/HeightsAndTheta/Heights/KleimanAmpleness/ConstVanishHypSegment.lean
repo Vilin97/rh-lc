@@ -31,7 +31,4 @@ theorem constVanish_hyp_segment :
   have hc : (I.1 ()).card ≤ 2 := by simpa using Finset.card_le_univ (I.1 ())
   omega
 
-example (h : CechConstVanish.Statement) :=
-  h Unit (fun _ => Fin 2) ℤ (fun _ => Finset.univ) (fun _ => 1) constVanish_hyp_segment
-
 end GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization

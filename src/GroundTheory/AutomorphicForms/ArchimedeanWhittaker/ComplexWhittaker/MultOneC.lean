@@ -165,9 +165,6 @@ theorem inner_map_iotaC {n : ℕ} {q : ℤ} {x y : H} (hx : x ∈ W σ n q) (hy 
   refine Finset.sum_congr rfl fun i _ => ?_
   ring
 
-instance completeSpace_alt (n : ℕ) (q : ℤ) : CompleteSpace (W σ n q) :=
-  (isClosed_divisorComponent σ n q).completeSpace_coe
-
 noncomputable def compr (n : ℕ) (q : ℤ) (g : GL2C) : W σ n q →L[ℂ] W σ n q :=
   ((PL σ n q).comp ((σ g).comp (W σ n q).subtypeL)).codRestrict (W σ n q)
     (fun _ => P_mem_alt σ n q _)

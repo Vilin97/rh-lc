@@ -27,9 +27,4 @@ def PhiAt (y : Y₀ X Z) (ν : Valuation ((Y₀ X Z).presheaf.stalk y) (WithZero
       Spec.map (CommRingCat.ofHom ((algebraMap T.V T.Fr).comp g)) ≫ (Y₀ X Z).fromSpecStalk y ≫ inc₀ X Z) ∧
     ∀ a, ν a ≠ 0 → -((WithZero.log (ν a) : ℤ) : ℝ) = ρ * (vV T.V (algebraMap T.V T.Fr (g a)) : ℝ)
 
-theorem PhiAt.nonneg {y : Y₀ X Z} {ν : Valuation ((Y₀ X Z).presheaf.stalk y) (WithZero (Multiplicative ℤ))} {φ : ℝ}
-    (h : PhiAt X Z y ν φ) : 0 ≤ φ := by
-  obtain ⟨T, io, y', g, ρ, φT, hρ, hφ, rfl, -, -⟩ := h
-  exact mul_nonneg hρ.le hφ.nonneg
-
 end GlobalTheory.HSApp

@@ -8,8 +8,6 @@ set_option backward.isDefEq.respectTransparency false
 
 namespace GlobalTheory.EZ.Cone
 
-local notation "Δ" n => SimplexCategory.mk n
-
 theorem homExt {m a : ℕ} {f g : (Δ m) ⟶ (Δ a)}
     (h : ∀ j : Fin (m + 1), (f.toOrderHom j : ℕ) = g.toOrderHom j) : f = g :=
   SimplexCategory.Hom.ext _ _ (OrderHom.ext _ _ (funext fun j => Fin.ext (h j)))

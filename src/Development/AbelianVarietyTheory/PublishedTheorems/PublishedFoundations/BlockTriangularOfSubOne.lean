@@ -156,10 +156,6 @@ def restrictMirab {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Representatio
     Representation ℂ (mirabSub k n) V :=
   ρ.comp (mirabSub k n).subtype
 
-@[simp] theorem restrictMirab_apply {V : Type} [AddCommGroup V] [Module ℂ V]
-    (ρ : Representation ℂ (GL (Fin (n + 1)) k) V) (h : mirabSub k n) :
-    restrictMirab n ρ h = ρ (h : GL (Fin (n + 1)) k) := rfl
-
 end Generic
 
 section Examples

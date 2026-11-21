@@ -36,12 +36,6 @@ noncomputable def unitsResHom :
       ext x
       exact algebraMap_galRestrict_apply K K' L L' σ _⟩
 
-@[simp]
-theorem unitsResHom_hom_apply (x : Additive Lˣ) :
-    ((Additive.toMul ((unitsResHom K K' L L').hom x) : L'ˣ) : L') =
-      algebraMap L L' (x.toMul : L) :=
-  rfl
-
 noncomputable abbrev unitsResH2 :
     groupCohomology (galUnitsZ K L) 2 ⟶ groupCohomology (galUnitsZ K' L') 2 :=
   groupCohomology.map (galRestrict K K' L L') (unitsResHom K K' L L') 2

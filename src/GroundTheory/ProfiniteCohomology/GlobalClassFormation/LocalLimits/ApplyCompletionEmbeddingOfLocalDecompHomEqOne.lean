@@ -8,8 +8,6 @@ namespace GroundTheory.ProfCoh
 open Polynomial IsDedekindDomain NumberField IntermediateField GroundTheory.Global GroundTheory.Global.SemiLocal
   FiniteSubfield
 
-local notation "ℚ̄" => AlgebraicClosure ℚ
-
 noncomputable section
 
 variable {K : FiniteSubfield} {v : HeightOneSpectrum (𝓞 K.1)}

@@ -13,9 +13,6 @@ section AlgCl
 
 variable (p : ℕ) [Fact p.Prime]
 
-local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
-local notation "𝔪" => maximalIdeal (BDeRhamPlus (normInteger ℂ_[p]) p)
-
 instance isAdicComplete_maximalIdeal_bDeRhamPlus_padicComplex :
     IsAdicComplete (maximalIdeal (BDeRhamPlus (normInteger ℂ_[p]) p))
       (BDeRhamPlus (normInteger ℂ_[p]) p) :=
@@ -74,14 +71,6 @@ theorem thetaQuot_factorₐ {k n : ℕ} (hle : k ≤ n) (y : 𝔹 ⧸ 𝔪 ^ (n 
   obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective y
   rfl
 
-theorem factorₐ_comp_factorₐ {a b c : ℕ} (hab : a ≤ b) (hbc : b ≤ c) :
-    (Ideal.Quotient.factorₐ ℚ_[p] (Ideal.pow_le_pow_right hab) : 𝔹 ⧸ 𝔪 ^ b →ₐ[ℚ_[p]] 𝔹 ⧸ 𝔪 ^ a).comp
-      (Ideal.Quotient.factorₐ ℚ_[p] (Ideal.pow_le_pow_right hbc)) =
-      Ideal.Quotient.factorₐ ℚ_[p] (Ideal.pow_le_pow_right (hab.trans hbc)) := by
-  ext y
-  obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective y
-  rfl
-
 theorem factorₐ_comp_algClToQuot {k n : ℕ} (hle : k ≤ n) :
     (Ideal.Quotient.factorₐ ℚ_[p] (Ideal.pow_le_pow_right (Nat.succ_le_succ hle))).comp
       (algClToQuot p n) = algClToQuot p k :=
@@ -133,8 +122,6 @@ end AlgCl
 section Galois
 
 variable {p : ℕ} [Fact p.Prime] {K : IntermediateField ℚ_[p] (PadicAlgCl p)}
-
-local notation "𝔹" => BDeRhamPlus (normInteger ℂ_[p]) p
 
 theorem gal_smul_padicIntToWitt (σ : Gal(PadicAlgCl p/K)) (x : ℤ_[p]) :
     σ • IsPerfectoidField.padicIntToWitt (K := ℂ_[p]) p x =

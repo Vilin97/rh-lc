@@ -88,9 +88,6 @@ theorem exists_sec_four (hpq : 1 ≤ Dw.p + Dw.q) {σ : c.F →+* ℂ} (y : FrPt
 
 open Classical in
 
-def flatFour (τ : Psi H) : (E →+* ℂ) × ℕ → ℕ :=
-  fun x => if x.1 = τ.1 then 3 else if x.1 = conjEmb τ.1 then 5 else 4
-
 variable {σ : c.F →+* ℂ} {r : ℕ} {U : Unf Xo c σ r}
 
 end Hol

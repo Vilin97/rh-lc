@@ -74,8 +74,6 @@ def scal {R : Type} (ι : Type) [CommRing R] (t : R) : (ι → R) →+ (ι → R
   map_zero' := by funext i; simp
   map_add' x y := by funext i; simp [mul_add]
 
-@[simp] theorem scal_apply {R ι : Type} [CommRing R] (t : R) (y : ι → R) (i : ι) : scal ι t y i = t * y i := rfl
-
 end GlobalTheory.CompanionTheory.Equi.LatSum
 
 open GlobalTheory.CompanionTheory.Equi.LatSum in

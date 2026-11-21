@@ -2,8 +2,9 @@ import Mathlib
 import ReciprocityTheory.Hypotheses.GalCoh
 import ReciprocityTheory.GaloisValuations.ArithOfA
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CardDualZmodModuleEqCard
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.IsAlgClosureAlgebraicClosureRat
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.IsLocallyConstantRed
+import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.ScaledValuations.ValuationApplyLtOneIff
+import ReciprocityTheory.GaloisValuations.GlobalB
+import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.CocyclesCyclotomicFinrankThree
 
 noncomputable section
 
@@ -20,13 +21,7 @@ variable {n : ℕ} [NeZero n] {G : Type} [Group G] [TopologicalSpace G] {R : Typ
 
 variable (n) in
 
-def mulRep (γ : G →* Rˣ) : Representation (ZMod n) G R where
-  toFun g := LinearMap.mul (ZMod n) R (γ g)
-  map_one' := by ext; simp
-  map_mul' g h := by ext; simp [mul_assoc]
-
 omit [NeZero n] [TopologicalSpace G] [Finite R] [TopologicalSpace R] [DiscreteTopology R] in
-@[simp] theorem mulRep_apply (γ : G →* Rˣ) (g : G) (x : R) : mulRep n γ g x = (γ g : R) * x := rfl
 
 end Abstract
 

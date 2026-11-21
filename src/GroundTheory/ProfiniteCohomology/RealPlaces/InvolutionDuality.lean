@@ -173,11 +173,6 @@ def fixedSubCongr (e : M ≃+ N) {σ : M →+ M} {τ : N →+ N} (he : ∀ x, e 
   right_inv y := Subtype.ext (e.apply_symm_apply (y : N))
   map_add' x y := Subtype.ext (map_add e (x : M) (y : M))
 
-@[simp]
-theorem coe_fixedSubCongr_apply (e : M ≃+ N) {σ : M →+ M} {τ : N →+ N}
-    (he : ∀ x, e (σ x) = τ (e x)) (x : fixedSub σ) : (fixedSubCongr e he x : N) = e (x : M) :=
-  rfl
-
 def tateQuotCongr (e : M ≃+ N) {σ : M →+ M} {τ : N →+ N} (he : ∀ x, e (σ x) = τ (e x)) :
     tateQuot σ ≃+ tateQuot τ :=
   QuotientAddGroup.congr _ _ (fixedSubCongr e he) (by

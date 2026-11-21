@@ -12,8 +12,6 @@ variable (P Q : ℕ)
 
 abbrev MM : Type := Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ
 
-local notation "J" => Formalism.UG.Jpq P Q
-
 instance instBorelLie : BorelSpace (lieU P Q) := ⟨rfl⟩
 instance instBorelU : BorelSpace (UpqT P Q) := ⟨rfl⟩
 instance instTopGroupU : IsTopologicalGroup (UpqT P Q) :=

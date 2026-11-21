@@ -201,9 +201,6 @@ theorem d_oneCochain :
 
 variable (k G) in
 
-def oneClass : groupCohomology (𝟙_ (Rep k G)) 0 :=
-  π _ 0 (cocyclesMk oneCochain d_oneCochain)
-
 end Cohomology
 
 end GroundTheory.GroupCoh

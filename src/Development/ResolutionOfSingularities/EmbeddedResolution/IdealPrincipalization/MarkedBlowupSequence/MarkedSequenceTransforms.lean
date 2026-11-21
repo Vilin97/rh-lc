@@ -142,24 +142,8 @@ def transformAt (T : MarkedIdealWithBoundary.{u}) (s : T.SequenceOfBlowups) (i :
   boundary := s.boundary i
 
 @[simp]
-theorem transformAt_baseField (T : MarkedIdealWithBoundary.{u}) (s : T.SequenceOfBlowups) (i : ℕ) :
-    (T.transformAt s i).base = T.base := rfl
-
-@[simp]
-theorem transformAt_scheme (T : MarkedIdealWithBoundary.{u}) (s : T.SequenceOfBlowups) (i : ℕ) :
-    (T.transformAt s i).scheme = s.toSequenceOfBlowups.schemeAt i := rfl
-
-@[simp]
 theorem transformAt_structureMorphism (T : MarkedIdealWithBoundary.{u}) (s : T.SequenceOfBlowups) (i : ℕ) :
     (T.transformAt s i).structMap = s.projectionToSpec i := rfl
-
-@[simp]
-theorem transformAt_ideal (T : MarkedIdealWithBoundary.{u}) (s : T.SequenceOfBlowups) (i : ℕ) :
-    (T.transformAt s i).ideal = s.ideal i := rfl
-
-@[simp]
-theorem transformAt_mult (T : MarkedIdealWithBoundary.{u}) (s : T.SequenceOfBlowups) (i : ℕ) :
-    (T.transformAt s i).mult = T.mult := rfl
 
 @[simp]
 theorem transformAt_boundary (T : MarkedIdealWithBoundary.{u}) (s : T.SequenceOfBlowups) (i : ℕ) :

@@ -26,10 +26,6 @@ theorem integral_count_Xi (f : Xi F → ℂ) : ∫ ξ, f ξ ∂(Measure.count : 
     rw [integrable_count_iff] at hi
     exact hf (summable_norm_iff.mp hi)
 
-instance isFiniteMeasure_restrict_fd :
-    IsFiniteMeasure ((normOneMeasure F).restrict (normOneFundamentalDomain F)) :=
-  isFiniteMeasure_restrict.mpr (normOneMeasure_normOneFundamentalDomain_lt_top (K := F)).ne
-
 theorem integral_iter_eq (S : Set {r : ℝ // 0 < r}) (hS : MeasurableSet S) {h : Pp F × Xi F → ℂ}
     (hh : Integrable h (μS F S)) :
     IntegrableOn (fun t => ∫ u in normOneFundamentalDomain F, ∑' ξ : Xi F, h ((t, u), ξ) ∂normOneMeasure F)

@@ -65,16 +65,12 @@ noncomputable def embSeminorm (τ : E →+* ℂ) : RingSeminorm E where
   neg' x := by simp
   mul_le' x y := by simp
 
-@[simp] theorem embSeminorm_apply (τ : E →+* ℂ) (x : E) : embSeminorm τ x = ‖τ x‖ := rfl
-
 noncomputable def embVec (τ : E →+* ℂ) : (κ → E) →+ EuclideanSpace ℂ κ where
   toFun v := WithLp.toLp 2 fun k => τ (v k)
   map_zero' := by ext k; simp
   map_add' v w := by ext k; simp
 
 omit [Fintype κ] in
-
-@[simp] theorem embVec_apply (τ : E →+* ℂ) (v : κ → E) (k : κ) : embVec τ v k = τ (v k) := rfl
 
 omit [Fintype κ] in
 

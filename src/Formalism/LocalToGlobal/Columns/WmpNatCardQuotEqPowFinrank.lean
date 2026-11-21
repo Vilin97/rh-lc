@@ -105,9 +105,6 @@ theorem wmp_isHeckeNbr_symm {P : HeightOneSpectrum (𝓞 E)} {i : ℕ} {N N₁ :
   · rw [wmp_card_quot, ← wmp_relIndex_inf_eq hN hN₁ hu hu₁ hB, ← wmp_card_quot, inf_comm,
       Nat.card_congr e.toEquiv, Nat.card_fun, Nat.card_eq_fintype_card (α := Fin i), Fintype.card_fin, card_quot_conjP]
 
-def WmpInt (Q : HeightOneSpectrum (𝓞 E)) (y : E) : Prop :=
-  ∃ s : 𝓞 E, s ∉ Q.asIdeal ∧ ∃ r : 𝓞 E, algebraMap (𝓞 E) E s * y = algebraMap (𝓞 E) E r
-
 theorem wmp_hStd_osmul_right (u z : Sp E n) (s : 𝓞 E) :
     hStd E n u (s • z) = algebraMap (𝓞 E) E s * hStd E n u z := by
   rw [← algebraMap_smul E s z, map_smul, smul_eq_mul]
@@ -116,13 +113,6 @@ theorem wmp_hStd_osmul_left (u z : Sp E n) (s : 𝓞 E) :
     hStd E n (s • u) z = algebraMap (𝓞 E) E (cO E s) * hStd E n u z := by
   rw [← algebraMap_smul E s u, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, algebraMap_cO]
   rfl
-
-theorem localization_le_of_le_localization₃ {Q : HeightOneSpectrum (𝓞 E)} {M L : Submodule (𝓞 E) (Sp E n)} (h : M ≤ localization₂ Q.asIdeal L) :
-    localization₂ Q.asIdeal M ≤ localization₂ Q.asIdeal L := by
-  intro x hx
-  obtain ⟨s, hs, hsx⟩ := (mem_locP Q M x).1 hx
-  obtain ⟨t, ht, htx⟩ := (mem_locP Q L _).1 (h hsx)
-  exact (mem_locP Q L x).2 ⟨t * s, fun hm => (Q.isPrime.mem_or_mem hm).elim ht hs, by rw [mul_smul]; exact htx⟩
 
 theorem wmp_exists_unif (P : HeightOneSpectrum (𝓞 E)) :
     ∃ a ∈ P.asIdeal, ∃ c : 𝓞 E, c ∉ P.asIdeal ∧ ∀ p ∈ P.asIdeal, ∃ t : 𝓞 E, c * p = a * t := by
@@ -134,9 +124,6 @@ open NumberField IsDedekindDomain Formalism.HermitianLatticesTheory Module Point
 
 section WmPUp
 variable {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ} {SG : Finset (HeightOneSpectrum (𝓞 E))}
-
-def wmpC (P : HeightOneSpectrum (𝓞 E)) (a : 𝓞 E) (N N₁ : Submodule (𝓞 E) (Sp E n)) : Submodule (𝓞 E) (Sp E n) :=
-  Ideal.span {a} • N₁ ⊔ P.asIdeal • N
 
 end WmPUp
 
@@ -192,14 +179,6 @@ open NumberField IsDedekindDomain Formalism.HermitianLatticesTheory Module
 section LemU
 
 variable {κ K : Type} [CommRing κ] [Field K]
-
-def wmpkTop {r n : ℕ} (h : r ≤ n) (bl : List ℕ) (g : GL (Fin n) κ) (hg : g ∈ blockUT n κ r bl) : GL (Fin r) κ where
-  val := restr h g
-  inv := restr h (g⁻¹ : GL (Fin n) κ)
-  val_inv := by
-    rw [← restr_mul h bl _ (Subgroup.inv_mem _ hg), ← Units.val_mul, mul_inv_cancel, Units.val_one, restr_one]
-  inv_val := by
-    rw [← restr_mul h bl _ hg, ← Units.val_mul, inv_mul_cancel, Units.val_one, restr_one]
 
 end LemU
 

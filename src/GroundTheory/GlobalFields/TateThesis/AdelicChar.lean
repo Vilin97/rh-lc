@@ -101,11 +101,6 @@ def localInvDifferent (v : HeightOneSpectrum (𝓞 K)) : AddSubgroup (v.adicComp
     rw [neg_mul]
     exact neg_mem (ha y hy)
 
-theorem mem_localInvDifferent {v : HeightOneSpectrum (𝓞 K)} {x : v.adicCompletion K} :
-    x ∈ localInvDifferent v ↔ ∀ y ∈ differentIdeal ℤ (𝓞 K),
-      x * ((algebraMap (𝓞 K) K y : K) : v.adicCompletion K) ∈ v.adicCompletionIntegers K :=
-  Iff.rfl
-
 theorem coe_algebraMap_mem_adicCompletionIntegers (v : HeightOneSpectrum (𝓞 K)) (y : 𝓞 K) :
     ((algebraMap (𝓞 K) K y : K) : v.adicCompletion K) ∈ v.adicCompletionIntegers K := by
   rw [coe_mem_adicCompletionIntegers_iff, valuation_of_algebraMap]
@@ -153,12 +148,6 @@ theorem forall_coe_mem_localInvDifferent_iff (k : K) :
     rw [← hz, valuation_of_algebraMap]
     exact v.intValuation_le_one z
 
-@[simp] theorem adeleRing_add_fst (x y : 𝔸[K]) : (x + y).1 = x.1 + y.1 := rfl
-@[simp] theorem adeleRing_add_snd (x y : 𝔸[K]) : (x + y).2 = x.2 + y.2 := rfl
-@[simp] theorem adeleRing_sub_fst (x y : 𝔸[K]) : (x - y).1 = x.1 - y.1 := rfl
-@[simp] theorem adeleRing_sub_snd (x y : 𝔸[K]) : (x - y).2 = x.2 - y.2 := rfl
-@[simp] theorem adeleRing_zero_fst : (0 : 𝔸[K]).1 = 0 := rfl
-@[simp] theorem adeleRing_zero_snd : (0 : 𝔸[K]).2 = 0 := rfl
 @[simp] theorem adeleRing_algebraMap_fst (k : K) :
     (algebraMap K 𝔸[K] k).1 = algebraMap K (InfiniteAdeleRing K) k := rfl
 @[simp] theorem adeleRing_algebraMap_snd (k : K) :
@@ -218,28 +207,6 @@ theorem mem_invDifferentAdeles {x : 𝔸[K]} :
 
 variable (K) in
 
-theorem isOpen_invDifferentAdeles : IsOpen (invDifferentAdeles K : Set 𝔸[K]) := by
-  have : (invDifferentAdeles K : Set 𝔸[K]) =
-      Prod.snd ⁻¹' (finiteInvDifferent K : Set (FiniteAdeleRing (𝓞 K) K)) := by
-    ext x
-    exact mem_invDifferentAdeles
-  rw [this]
-  exact (isOpen_finiteInvDifferent K).preimage continuous_snd
-
-theorem exists_sub_mem_invDifferentAdeles (x : 𝔸[K]) :
-    ∃ k : K, x - algebraMap K 𝔸[K] k ∈ invDifferentAdeles K := by
-  obtain ⟨k, hk⟩ := exists_sub_mem_finiteInvDifferent x.2
-  exact ⟨k, mem_invDifferentAdeles.mpr hk⟩
-
-theorem algebraMap_mem_invDifferentAdeles_iff (k : K) :
-    algebraMap K 𝔸[K] k ∈ invDifferentAdeles K ↔
-      k ∈ Submodule.traceDual ℤ ℚ (1 : Submodule (𝓞 K) K) := by
-  rw [mem_invDifferentAdeles, Submodule.mem_traceDual]
-  refine (algebraMap_mem_finiteInvDifferent_iff k).trans ⟨fun h a ha => ?_, fun h a => ?_⟩
-  · obtain ⟨b, rfl⟩ := Submodule.mem_one.mp ha
-    simpa [Algebra.traceForm_apply] using h b
-  · simpa [Algebra.traceForm_apply] using h _ (Submodule.mem_one.mpr ⟨a, rfl⟩)
-
 theorem fourierChar_infiniteTrace_eq (x : InfiniteAdeleRing K) (a : FiniteAdeleRing (𝓞 K) K)
     {k k' : K} (hk : a - algebraMap K _ k ∈ finiteInvDifferent K)
     (hk' : a - algebraMap K _ k' ∈ finiteInvDifferent K) :
@@ -286,8 +253,6 @@ def adelicChar : AddChar 𝔸[K] Circle where
     congr 1
     simp only [adeleRing_add_fst, map_add, map_sub]
     ring
-
-theorem adelicChar_apply (x : 𝔸[K]) : adelicChar K x = adelicCharFun K x := rfl
 
 theorem adelicChar_eq (x : 𝔸[K]) {k : K}
     (hk : x.2 - algebraMap K _ k ∈ finiteInvDifferent K) :

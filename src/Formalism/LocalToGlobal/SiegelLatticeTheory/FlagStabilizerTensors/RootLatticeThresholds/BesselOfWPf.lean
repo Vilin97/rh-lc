@@ -235,7 +235,4 @@ theorem besselOfW_of_local_decomposition (hDI : Formalism.FourierDecayAlt.ThreeD
 
 variable [Fact Formalism.FourierDecayAlt.ThreeDimData.DecLow] in
 
-theorem besselOfW_of_jsz (hJ : PI.BesselMapUniq.BesselMapUniq) : Formalism.L2.SG.LocWSOf.BesselOfW :=
-  besselOfW_of_local_decomposition Formalism.L2.SG.BesselDiscreteSeries.decInf hJ
-
 end Formalism.MainNotions.BridgeCS3dBOW

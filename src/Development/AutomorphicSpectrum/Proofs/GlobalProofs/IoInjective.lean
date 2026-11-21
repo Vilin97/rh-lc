@@ -41,9 +41,6 @@ def der (hθ : IsInfFam θ) (τ : D.what₂.Tau) {X : Matrix (Fin V.rank) (Fin V
   map_add' f g := Subtype.ext (Rder_add (mem_Mc_iff.1 f.2).1.smooth (mem_Mc_iff.1 g.2).1.smooth hX)
   map_smul' c f := Subtype.ext (Rder_smul c f.1 τ X)
 
-@[simp] theorem der_coe (hθ : IsInfFam θ) (τ : D.what₂.Tau) {X : Matrix (Fin V.rank) (Fin V.rank) ℂ}
-    (hX : X ∈ lieAt V τ) (φ : Mc θ V) : (der hθ τ hX φ : GA D V → ℂ) = Rder θ V τ X φ.1 := rfl
-
 def io (μ : Measure (GA D V)) [μ.IsHaarMeasure] (hθ : IsInfFam θ) : Mc θ V →ₗ[ℂ] L2cusp V μ :=
   cuspToL2 ⊥ μ (GlobalTheory.Grow.cuspRapidDecay_of_bound GlobalTheory.CuspGeo.cuspDecayBound) hθ
 

@@ -147,11 +147,6 @@ def lowEquiv (A : Fin (R + 1)) : {i : Fin R // (i : ℕ) < A} ⊕ Unit ≃ {i : 
           rw [Fin.succAbove_of_castSucc_lt _ _ (by rw [Fin.lt_def]; simpa using hjA)]
           rfl)
 
-@[simp] theorem lowEquiv_inl (A : Fin (R + 1)) (i : {i : Fin R // (i : ℕ) < A}) :
-    (lowEquiv A (.inl i) : Fin (R + 1)) = A.succAbove i.1 := rfl
-
-@[simp] theorem lowEquiv_inr (A : Fin (R + 1)) (u : Unit) : (lowEquiv A (.inr u) : Fin (R + 1)) = A := rfl
-
 theorem leadMinor_extM (A : Fin (R + 1)) (g : Matrix (Ix R S) (Ix R S) ℂ) (c : ℂ) :
     GlobalTheory.HwCoef.leadMinor ((A : ℕ) + 1) (extM A g c) = GlobalTheory.HwCoef.leadMinor A g * c := by
   unfold GlobalTheory.HwCoef.leadMinor

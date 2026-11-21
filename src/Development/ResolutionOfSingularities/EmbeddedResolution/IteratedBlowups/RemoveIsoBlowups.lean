@@ -217,9 +217,6 @@ noncomputable def withoutIsoBlowups (s : SequenceOfBlowups X) : SequenceOfBlowup
 
 @[simp] theorem withoutIsoBlowups_length (s : SequenceOfBlowups X) : s.withoutIsoBlowups.length = s.lengthWithoutIsoBlowups := rfl
 
-@[simp] theorem withoutIsoBlowups_schemeAt (s : SequenceOfBlowups X) (j : ℕ) :
-    s.withoutIsoBlowups.schemeAt j = s.schemeAt (s.nontrivialIndex j) := rfl
-
 @[simp] theorem withoutIsoBlowups_center (s : SequenceOfBlowups X) (j : ℕ) :
     s.withoutIsoBlowups.center j = s.center (s.nontrivialIndex j) := rfl
 

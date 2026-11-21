@@ -62,10 +62,6 @@ theorem isRayField_self_top_iff : IsRayField K K ⊤ ↔ IsPrincipalIdealRing (�
   · rw [hI]; infer_instance
   · exact (h.2.2.2 I hI).1 (h1 I)
 
-example : IsTotallyComplex (CyclotomicField 3 ℚ) ∧ IsRayField (CyclotomicField 3 ℚ) (CyclotomicField 3 ℚ) ⊤ :=
-  have := IsCyclotomicExtension.Rat.isTotallyComplex (n := 3) (CyclotomicField 3 ℚ) (by norm_num)
-  ⟨this, isRayField_self_top_iff.2 (IsCyclotomicExtension.Rat.three_pid _)⟩
-
 omit [NumberField K] [IsTotallyComplex K] in
 
 theorem isPrincipal_map_of_algHom {L M : Type} [Field L] [Algebra K L] [Field M] [Algebra K M] (f : L →ₐ[K] M)

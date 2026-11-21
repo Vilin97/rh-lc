@@ -208,12 +208,6 @@ def sUnitsToInvariants : Additive (S.unit F) →+ (galSUnits S E).ρ.invariants 
   map_zero' := Subtype.ext (Additive.toMul.injective (Subtype.ext (Units.ext (map_one _))))
   map_add' _ _ := Subtype.ext (Additive.toMul.injective (Subtype.ext (Units.ext (map_mul _ _ _))))
 
-@[simp]
-theorem coe_sUnitsToInvariants_apply (a : Additive (S.unit F)) :
-    (((Additive.toMul (α := sUnitsOf S E) (sUnitsToInvariants S E a).1 : sUnitsOf S E) : Eˣ) : E) =
-      algebraMap F E ((Additive.toMul a : S.unit F) : Fˣ) :=
-  rfl
-
 theorem sUnitsToInvariants_injective : Function.Injective (sUnitsToInvariants S E) := by
   intro a b h
   apply Additive.toMul.injective
@@ -239,20 +233,6 @@ theorem sUnitsToInvariants_surjective [IsGalois F E] :
     exact (Additive.toMul (α := sUnitsOf S E) v.1).2
   exact ⟨Additive.ofMul ⟨Units.mk0 a ha0, hS⟩,
     Subtype.ext (Additive.toMul.injective (Subtype.ext hmap))⟩
-
-noncomputable def sUnitsInvariantsEquiv [IsGalois F E] :
-    Additive (S.unit F) ≃+ (galSUnits S E).ρ.invariants :=
-  AddEquiv.ofBijective (sUnitsToInvariants S E)
-    ⟨sUnitsToInvariants_injective S E, sUnitsToInvariants_surjective S E⟩
-
-@[simp]
-theorem sUnitsInvariantsEquiv_apply [IsGalois F E] (a : Additive (S.unit F)) :
-    sUnitsInvariantsEquiv S E a = sUnitsToInvariants S E a :=
-  rfl
-
-noncomputable def h0SUnitsEquiv [IsGalois F E] :
-    cohomology (galSUnits S E) 0 ≃+ Additive (S.unit F) :=
-  (H0Iso (galSUnits S E)).toLinearEquiv.toAddEquiv.trans (sUnitsInvariantsEquiv S E).symm
 
 end Invariants
 

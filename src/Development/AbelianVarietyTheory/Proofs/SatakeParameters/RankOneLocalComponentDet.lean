@@ -63,38 +63,6 @@ theorem locPar_ofChar_frob (hL : GlobalTheory.Published.LocalLanglandsGL) (χ : 
 
 end Char
 
-theorem locG_rankOne_eq_rcAt : GlobalTheory.Published.AutomorphicFormsFiniteGL → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (D : D7) (P : Pin hL D),
-    ∀ (π : D.naut.CG 1) (w : PlE D.host) (ξ : (w.adicCompletion D.host.E)ˣ →* ℂˣ) (h : IsComp (P.chr.e1 π).1 w ξ),
-    P.T.e w (D.naut.locG π w) = rcAt hL D w 1 (Irr.ofDet 1 ξ h.1) := by
-  intro _ hL D P π w ξ h
-  haveI := host_isCMField D.host
-  set χ' := (CGu.equivChar D.host.E (P.cg.e 1 π)).1 with hχ'
-  set χ := (P.chr.e1 π).1 with hχ
-  have hloc : ∀ v, P.T.e v (D.naut.locG π v) = ParLaws.locPar hL (CG.ofChar χ') (D.nd.plOm.2 v) := fun v => by
-    rw [P.cg.loc, hχ', CGu.ofChar_equivChar]; rfl
-  have unr' : ∀ v, D.naut.unr (D.naut.locG π v) ↔ χ'.UnrAt v := fun v => by
-    rw [P.T.unr, hloc v]; exact locPar_ofChar_unr_iff hL χ' _
-  have hchar : χ' = χ := by
-    rw [← mul_inv_eq_one]
-    apply GlobalTheory.HeckeSplitRow.eq_one_of_split D.host
-    filter_upwards [D.naut.locG_unr_ae π] with v hv _
-    have u1 := (P.chr.unr_iff π v).1 hv
-    have u2 := (unr' v).1 hv
-    refine ⟨fun x hx => ?_, ?_⟩
-    · rw [HChar.loc_mul, HChar.loc_inv, u1 x hx, u2 x hx, inv_one, mul_one]
-    · have hf := P.chr.frob π v u1
-      have hf' : D.naut.frobEig (D.naut.locG π v) = {(((χ'.val v)⁻¹ : ℂˣ) : ℂ)} := by
-        rw [P.T.frobEig _ _ hv, hloc v]; exact locPar_ofChar_frob hL χ' _ u2
-      rw [hf', Multiset.singleton_inj, Units.val_inj, inv_inj] at hf
-      rw [HChar.val_mul, HChar.val_inv, hf, mul_inv_cancel]
-  have hcomp : IsComp χ w (χ.loc w) := ⟨ParLaws.isSmoothChar_loc χ w, fun x => rfl⟩
-  obtain ⟨ξ₀, -, huniq, -⟩ := GlobalTheory.T.heckeChar_localComponent_exists_unique_unitary D.host.E χ w
-  have hξ : ξ = χ.loc w := (huniq _ h).trans (huniq _ hcomp).symm
-  subst hξ
-  rw [hloc, ParLaws.locPar_ofChar, rcAt]
-  rw [hchar]
-  rfl
-
 end GlobalTheory.RankOneComp
 
 end

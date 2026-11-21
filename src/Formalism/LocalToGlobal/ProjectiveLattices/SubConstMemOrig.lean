@@ -53,9 +53,6 @@ theorem X_mem_orig {ι' : Type} (i : ι') : (X i : MvPolynomial ι' R) ∈ orig 
 def jetIn {K : Type} (k : K) : Jet R ι m →ₐ[R] Jet R (K × ι) m :=
   jetMap (fun i => X (k, i)) fun i => X_mem_orig (k, i)
 
-def jetSum {K : Type} (I : Finset K) : Jet R ι m →ₐ[R] Jet R (K × ι) m :=
-  jetMap (fun i => ∑ k ∈ I, X (k, i)) fun i => Ideal.sum_mem _ fun k _ => X_mem_orig (k, i)
-
 def jetScale (c : ι → R) : Jet R ι m →ₐ[R] Jet R ι m :=
   jetMap (fun i => C (c i) * X i) fun i => Ideal.mul_mem_left _ _ (X_mem_orig i)
 

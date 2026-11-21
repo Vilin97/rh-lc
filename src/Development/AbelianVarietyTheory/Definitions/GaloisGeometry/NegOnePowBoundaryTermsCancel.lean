@@ -40,8 +40,6 @@ def mult : CatH.Mult (O L) where
   map_mul {X Y} f x y := map_mul f.φ (show X.B from x) y
   map_one f := map_one f.φ
 
-theorem mult_mul (T : Thick L) (x y : T.B) : (mult L).mul T x y = x * y := rfl
-
 end GlobalTheory.LogCris
 
 namespace GlobalTheory.CatH
@@ -72,10 +70,6 @@ theorem map_ev {n k : ℕ} (s : ComposableArrows C k) (p : Fin (n + 1) → Fin (
     (F.map_comp (s.map (homOfLE h)) (s.map (homOfLE hj))).symm).trans
     (congrArg (fun φ : s.obj (p (Fin.last n)) ⟶ s.obj j' => (F.map φ).hom (x (hp.functor ⋙ s))) e)
 
-theorem ev_sub {n m k : ℕ} (s : ComposableArrows C k) (q : Fin (m + 1) → Fin (k + 1)) (hq : Monotone q)
-    (p : Fin (n + 1) → Fin (m + 1)) (hp : Monotone p) (j : Fin (m + 1)) (h : p (Fin.last n) ≤ j) (x : Cn F n) :
-    ev (hq.functor ⋙ s) p hp j h x = ev s (q ∘ p) (hq.comp hp) (q j) (hq h) x := rfl
-
 theorem d_apply_ev {n : ℕ} (x : Cn F n) (s : ComposableArrows C (n + 1)) :
     d F n x s = ∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) •
       ev s (Fin.succAboveOrderEmb i) (Fin.succAboveOrderEmb i).monotone (Fin.last _) (Fin.le_last _) x := rfl
@@ -99,10 +93,6 @@ def bk (m n k : ℕ) (h : m + n ≤ k) : Fin (n + 1) → Fin (k + 1) := fun b =>
 theorem bk_mono (m n k : ℕ) (h : m + n ≤ k) : Monotone (bk m n k h) := fun a b hab =>
   show m + (a : ℕ) ≤ m + b from Nat.add_le_add_left hab m
 
-@[simp] theorem val_fr (m k : ℕ) (h : m ≤ k) (a : Fin (m + 1)) : (fr m k h a : ℕ) = a := rfl
-
-@[simp] theorem val_bk (m n k : ℕ) (h : m + n ≤ k) (b : Fin (n + 1)) : (bk m n k h b : ℕ) = m + b := rfl
-
 theorem val_succAbove_lt {n : ℕ} (i : Fin (n + 2)) (a : Fin (n + 1)) (h : (a : ℕ) < i) :
     (i.succAbove a : ℕ) = a := by
   rw [Fin.succAbove_of_castSucc_lt _ _ (by simpa [Fin.lt_def] using h)]; simp
@@ -110,14 +100,6 @@ theorem val_succAbove_lt {n : ℕ} (i : Fin (n + 2)) (a : Fin (n + 1)) (h : (a :
 theorem val_succAbove_ge {n : ℕ} (i : Fin (n + 2)) (a : Fin (n + 1)) (h : (i : ℕ) ≤ a) :
     (i.succAbove a : ℕ) = a + 1 := by
   rw [Fin.succAbove_of_le_castSucc _ _ (by simpa [Fin.le_def] using h)]; simp [Fin.val_succ]
-
-macro "fin_index_simp" : tactic => `(tactic| (
-  simp (disch := (simp only [finCongr_apply, Fin.coe_cast, Fin.coe_castAdd, Fin.coe_natAdd, Fin.coe_castSucc,
-      Fin.val_succ, GlobalTheory.CatH.val_bk, GlobalTheory.CatH.val_fr, Fin.val_last, Fin.val_zero, Fin.succAboveOrderEmb_apply,
-      Function.comp_apply]; omega)) only [Function.comp_apply, Fin.succAboveOrderEmb_apply, GlobalTheory.CatH.val_fr,
-    GlobalTheory.CatH.val_bk, GlobalTheory.CatH.val_succAbove_lt, GlobalTheory.CatH.val_succAbove_ge, finCongr_apply, Fin.coe_cast,
-    Fin.coe_castAdd, Fin.coe_natAdd, Fin.coe_castSucc, Fin.val_succ, Fin.val_last, Fin.val_zero]
-  try omega))
 
 section Cup
 
@@ -236,9 +218,6 @@ def cupZ {m n k : ℕ} (h : m + n = k) :
     (fun f g g' => Subtype.ext (by simp only [Submodule.coe_add, map_add]))
     (fun r f g => Subtype.ext (by simp only [Submodule.coe_smul, map_smul]))
 
-@[simp] theorem cupZ_val {m n k : ℕ} (h : m + n = k) (f : LinearMap.ker (d F m)) (g : LinearMap.ker (d F n)) :
-    (cupZ μ h f g : Cn F k) = cupC μ h f g := rfl
-
 def cupProductCocycleClass {m n k : ℕ} (h : m + n = k) (f : LinearMap.ker (d F m)) : H F n →ₗ[R] H F k :=
   Submodule.liftQ _ (Submodule.mkQ _ ∘ₗ cupZ μ h f) fun g hg => by
     rw [LinearMap.mem_ker, LinearMap.comp_apply, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
@@ -260,9 +239,6 @@ def cup {m n k : ℕ} (h : m + n = k) : H F m →ₗ[R] H F n →ₗ[R] H F k :=
         Submodule.liftQ_apply, LinearMap.zero_comp, LinearMap.zero_apply, Submodule.Quotient.mk_eq_zero]
       exact cupC_mem_left μ h hf (LinearMap.mem_ker.1 g.2)
 
-theorem cup_mk {m n k : ℕ} (h : m + n = k) (f : LinearMap.ker (d F m)) (g : LinearMap.ker (d F n)) :
-    cup μ h (Submodule.Quotient.mk f) (Submodule.Quotient.mk g) = Submodule.Quotient.mk (cupZ μ h f g) := rfl
-
 def oneC : Cn F 0 := fun s => μ.one _
 
 theorem d_oneC : d F 0 (oneC μ) = 0 := by
@@ -275,40 +251,12 @@ def oneZ : LinearMap.ker (d F 0) := ⟨oneC μ, LinearMap.mem_ker.2 (d_oneC μ)�
 
 def oneH : H F 0 := Submodule.Quotient.mk (oneZ μ)
 
-theorem oneH_ne_zero (s : ComposableArrows C 0) (h : μ.one (s.obj (Fin.last 0)) ≠ 0) : oneH μ ≠ 0 := by
-  intro h0
-  have h1 := (Submodule.Quotient.mk_eq_zero _).1 h0
-  have h2 : (oneZ μ : Cn F 0) = 0 := (Submodule.mem_bot R).1 h1
-  exact h (congrFun h2 s)
-
 end Cup
 
 namespace Mor
 
 variable {R' : Type} [CommRing R'] {C' : Type u'} [Category.{v'} C'] {F' : C' ⥤ ModuleCat.{0} R'}
   {σ : R →+* R'}
-
-def IsMult (M : Mor F F' σ) (μ : Mult F) (μ' : Mult F') : Prop :=
-  ∀ (T : C') (a b : F.obj (M.G.obj T)), M.τ T (μ.mul _ a b) = μ'.mul T (M.τ T a) (M.τ T b)
-
-theorem τ_ev (M : Mor F F' σ) {n k : ℕ} (s : ComposableArrows C' k) (p : Fin (n + 1) → Fin (k + 1))
-    (hp : Monotone p) (j : Fin (k + 1)) (h : p (Fin.last n) ≤ j) (x : Cn F n) :
-    M.τ _ (ev (s ⋙ M.G) p hp j h x) = ev s p hp j h (M.pullC n x) :=
-  M.nat _ _
-
-theorem pullC_cupC (M : Mor F F' σ) {μ : Mult F} {μ' : Mult F'} (hM : M.IsMult μ μ') {m n k : ℕ}
-    (h : m + n = k) (f : Cn F m) (g : Cn F n) :
-    M.pullC k (cupC μ h f g) = cupC μ' h (M.pullC m f) (M.pullC n g) := by
-  funext s
-  refine (hM _ _ _).trans ?_
-  exact congrArg₂ (fun x y => μ'.mul _ x y) (M.τ_ev _ _ _ _ _ f) (M.τ_ev _ _ _ _ _ g)
-
-theorem pull_cup (M : Mor F F' σ) {μ : Mult F} {μ' : Mult F'} (hM : M.IsMult μ μ') {m n k : ℕ}
-    (h : m + n = k) (x : H F m) (y : H F n) :
-    M.pull k (cup μ h x y) = cup μ' h (M.pull m x) (M.pull n y) := by
-  refine Submodule.Quotient.induction_on _ x fun f => ?_
-  refine Submodule.Quotient.induction_on _ y fun g => ?_
-  exact congrArg Submodule.Quotient.mk (Subtype.ext (M.pullC_cupC hM h f g))
 
 end Mor
 
@@ -321,10 +269,6 @@ variable {b : Base} (L : b.Fun)
 def cup {m n k : ℕ} (h : m + n = k) : H L m →ₗ[b.R] H L n →ₗ[b.R] H L k := CatH.cup (mult L) h
 
 def one : H L 0 := CatH.oneH (mult L)
-
-theorem Mor.pull_cup {b' : Base} {L' : b'.Fun} {σ : b.R →+* b'.R} (M : Mor L L' σ) {m n k : ℕ} (h : m + n = k)
-    (x : H L m) (y : H L n) : M.pull k (cup L h x y) = cup L' h (M.pull m x) (M.pull n y) :=
-  CatH.Mor.pull_cup _ (μ := mult L) (μ' := mult L') (fun _ _ _ => rfl) h x y
 
 structure LB where
 
@@ -345,12 +289,6 @@ def triv : LB L where
   g_self _ := rfl
   g_comp _ _ _ := mul_one 1
 
-def ofComp (i : L.ι) : LB L where
-  g α β _ y := L.g α β i y
-  g_map := fun {_ _ _ _} φ {_} h1 h2 => L.g_map i φ h1 h2
-  g_self h := L.g_self i h
-  g_comp h1 h2 h3 := L.g_comp i h1 h2 h3
-
 def mul (E E' : LB L) : LB L where
   g α β _ y := E.g α β y * E'.g α β y
   g_map := fun {_ _ _ _} φ {_} h1 h2 => by
@@ -358,18 +296,6 @@ def mul (E E' : LB L) : LB L where
     rw [E.g_map φ h1 h2, E'.g_map φ h1 h2, map_mul]
   g_self h := by rw [E.g_self h, E'.g_self h, mul_one]
   g_comp h1 h2 h3 := by rw [mul_mul_mul_comm, E.g_comp h1 h2 h3, E'.g_comp h1 h2 h3]
-
-def pull {b' : Base} {L' : b'.Fun} {σ : b.R →+* b'.R} (M : Mor L L' σ) (E : LB L) : LB L' where
-  g β γ B y := E.g (M.c β) (M.c γ) (M.pt.app B y)
-  g_map := fun {β γ B B'} φ {y} h1 h2 => by
-    have e : M.pt.app B' (L'.Pt.map φ y) = L.Pt.map φ (M.pt.app B y) := by
-      first
-        | exact NatTrans.naturality_apply M.pt φ y
-        | simpa using ConcreteCategory.congr_hom (M.pt.naturality φ) y
-    change E.g (M.c β) (M.c γ) (M.pt.app B' (L'.Pt.map φ y)) = _
-    rw [e, E.g_map φ (M.inc h1) (M.inc h2)]
-  g_self h := E.g_self (M.inc h)
-  g_comp h1 h2 h3 := E.g_comp (M.inc h1) (M.inc h2) (M.inc h3)
 
 end LB
 
@@ -402,25 +328,5 @@ theorem firstChernClass_trivialBundle : IsFirstChernClassOfLineBundle (LB.triv :
   have e : chainUnit (fun _ => 1) s = 1 := by simp [chainUnit]
   rw [e]
   exact isDPLog_one (s.obj (Fin.last 2)).δ
-
-def Mor.catMor {b' : Base} {L' : b'.Fun} {σ : b.R →+* b'.R} (M : Mor L L' σ) : CatH.Mor (O L) (O L') σ where
-  G := M.functor
-  τ _ := { toFun := fun z => z, map_add' := fun _ _ => rfl, map_smul' := fun _ _ => rfl }
-  nat _ _ := rfl
-
-theorem Mor.pull_eq {b' : Base} {L' : b'.Fun} {σ : b.R →+* b'.R} (M : Mor L L' σ) (n : ℕ) :
-    M.pull n = M.catMor.pull n := rfl
-
-theorem IsFirstChernClassOfLineBundle.pull {b' : Base} {L' : b'.Fun} {σ : b.R →+* b'.R} (M : Mor L L' σ) {E : LB L} {z : H L 2}
-    (hz : IsFirstChernClassOfLineBundle E z) : IsFirstChernClassOfLineBundle (E.pull M) (M.pull 2 z) := by
-  obtain ⟨u, ℓ, hu, hℓ, rfl⟩ := hz
-  exact ⟨fun φ => u (M.map φ), M.catMor.pullZ 2 ℓ, fun φ => hu (M.map φ), fun s => hℓ (s ⋙ M.functor), rfl⟩
-
-theorem one_node_ne_zero : (one Ex.nodeL : H Ex.nodeL 0) ≠ 0 :=
-  CatH.oneH_ne_zero _ (ComposableArrows.mk₀ Ex.T) (one_ne_zero (α := Ex.D))
-
-example : IsFirstChernClassOfLineBundle (LB.triv : LB Ex.nodeL) 0 := firstChernClass_trivialBundle
-
-example (T : Thick L) (x y : T.B) : (mult L).mul T x y = x * y := rfl
 
 end GlobalTheory.LogCris

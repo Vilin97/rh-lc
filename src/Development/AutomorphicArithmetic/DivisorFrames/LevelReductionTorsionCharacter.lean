@@ -7,7 +7,18 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateSchemeFini
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateSchemeFlatStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateDifferenceSectionStatement
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HodgeTateGluedSection
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitTorsAlgClosedFractionField
+import Mathlib
+import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsFlagFrame
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IdealEqBotOfFlatQuotientOfMapMaximalIdeal
+import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.FlatOfIsFiniteOfFlatGeometricFibres
+import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsIntegralNthRootTestModelPoint
+import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.CardTorsionTranslateZerosLt
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.IsUnitNatCastSections
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.LocallyQuasiFiniteOfFiniteGeometricPoints
+import Development.AbelianVarietyTheory.Proofs.ModuliProofs.FiniteTorsionSemiAbelian
+import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsUniqueOfIsAdicComplete
+import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.EqOneOfPowEqOneOfCompEqOne
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsIntegrallyClosedInFractionFieldPowerSeries
 open CategoryTheory AlgebraicGeometry NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open Formalism.BasicNotions Formalism.L2.Pj GlobalTheory GlobalTheory.Cartier GlobalTheory.ProjVar GlobalTheory.TrueGeo GlobalTheory.Mean4O GlobalTheory.ShFam GlobalTheory.ShFam.Pad GlobalTheory.TrivFlag GlobalTheory.LineNorm
 open Formalism.MainNotions.DIV.Cons (intO)
@@ -190,18 +201,3 @@ private theorem generalized_bernoulli_change_level {E : Type} [Field E] [NumberF
   have h4 : (GlobalTheory.IndefiniteRowSideFullHecke.HodgeTateKernel.alLeft P tt).1 x = -((P.al₀ tt).1 x) := rfl
   rw [h4, Ideal.Quotient.eq, sub_neg_eq_add] at h3
   exact h3
-
-theorem UpperTheory.level_reduction_torsion_character :
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) [IsLocallyNoetherian X], X.IsSeparated → ∀ (p : ℕ) [Fact p.Prime] (n : ℕ) [StarRing (𝓞 E)] (P : PtP E p) (yb : Sp 𝓞_ℂ_[p] ⟶ X) (π : P.G.left ⟶ t.G.left), IsGrpPullback P.G t.G yb π → GlobalTheory.IndefiniteRowSideFullHecke.HodgeTateKernel.LevelReduction P → ∀ (tt : P.T) (χ : TorsChar t yb (p ^ n)), (∀ (w : Over.mk (spMap (algebraMap 𝓞_ℂ_[p] 𝓞_ℂ_[p]) ≫ yb) ⟶ t.G) (z : GlobalTheory.ChTor.Pts P.A.A), w ^ (p ^ n) = 1 → z.left ≫ P.gen ≫ π = spMap (algebraMap 𝓞_ℂ_[p] ℂ_[p]) ≫ w.left → algebraMap 𝓞_ℂ_[p] ℂ_[p] (χ.χ 𝓞_ℂ_[p] w : 𝓞_ℂ_[p]ˣ) = (weil P.A (p ^ n) (tt.lev n) z : ℂ_[p])) → ∀ (g : ℕ) (e : Fin g → (Sp (DualNumber 𝓞_ℂ_[p]) ⟶ t.G.left)) (h : Fin g → 𝓞_ℂ_[p]), (∀ i, IsTanAtG t yb (e i)) → DlogIs t p n χ e h → ∀ (k : Fin g) (x : LieG P.Gt), ITie P π x (e k) → h k + (P.al₀ tt).1 x ∈ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n} := by
-  intro E _ _ _ H X t _ _ p _ n _ P yb π hg hLR tt χ hW g e h he hD k x hI
-  have hq : p ^ n ≠ 0 := pow_ne_zero n (Fact.out : p.Prime).ne_zero
-  haveI : IsAlgClosed (FractionRing 𝓞_ℂ_[p]) :=
-    IsAlgClosed.of_ringEquiv ℂ_[p] _ (FractionRing.algEquiv 𝓞_ℂ_[p] ℂ_[p]).symm.toRingEquiv
-  haveI : CharZero 𝓞_ℂ_[p] := (algebraMap 𝓞_ℂ_[p] ℂ_[p]).charZero
-  obtain ⟨P', hP'⟩ := GlobalTheory.HTMap.ex_full hq (splitTors_of_isAlgClosed E H X t _ yb _ hq)
-    (IsLocalRing.maximalIdeal 𝓞_ℂ_[p]) inferInstance
-  have hu : IsUnit (RingHom.id 𝓞_ℂ_[p] P'.f) := by
-    by_contra hn
-    exact hP'.1 ((IsLocalRing.mem_maximalIdeal _).2 hn)
-  refine generalized_bernoulli_change_level P' (RingHom.id _) hu P yb ?_ π hg hLR tt χ hW e h he hD k x hI
-  rw [show spMap (RingHom.id 𝓞_ℂ_[p]) = 𝟙 _ from Spec.map_id _, Category.id_comp]

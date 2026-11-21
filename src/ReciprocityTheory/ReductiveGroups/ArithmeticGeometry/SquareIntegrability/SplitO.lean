@@ -13,8 +13,6 @@ variable {E : Type} [Field E] [NumberField E]
 
 def soPsi (x : E) : EuclideanSpace ℂ (E →+* ℂ) := WithLp.toLp 2 fun σ => σ x
 
-@[simp] theorem soPsi_apply (x : E) (σ : E →+* ℂ) : soPsi x σ = σ x := rfl
-
 theorem soPsi_add (x y : E) : soPsi (x + y) = soPsi x + soPsi y := by
   ext σ; simp
 

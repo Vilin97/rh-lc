@@ -101,13 +101,6 @@ theorem rep_id : Rep H (fun x => x) 1 := And.intro good_id hat_id
 
 theorem rep_zero : Rep H (fun _ => (0 : X)) 0 := And.intro good_zero hat_zero
 
-theorem Rep.sum {ι : Type*} (s : Finset ι) {T : ι → X → X} {b : ι → Module.End ℂ H.V}
-    (h : ∀ j ∈ s, Rep H (T j) (b j)) : Rep H (fun x => ∑ j ∈ s, T j x) (∑ j ∈ s, b j) := by
-  have hg : ∀ j ∈ s, H.Good (T j) := fun j hj => (h j hj).1
-  refine And.intro (good_sum s hg) ?_
-  rw [hat_sum s hg]
-  exact Finset.sum_congr rfl (fun j hj => (h j hj).2)
-
 theorem Rep.apply {T : X → X} {b : Module.End ℂ H.V} (h : Rep H T b) {x : X} (hx : x ∈ H.G) :
     H.N (T x) = ((b (H.toV x hx) : H.V) : X) := by
   obtain ⟨h1, h2⟩ := h
@@ -482,13 +475,6 @@ theorem mulB_smul (ho : IsOpen (UU Dc)) {a : Fn k r ℂ} (ha : SmoothFam k r L (
   funext Φ c g
   simp only [mulF, Pi.smul_apply, mul_smul]
 
-theorem mulB_zero (ho : IsOpen (UU Dc)) : mulB E L ho (fun _ _ => 0) = 0 := by
-  show (sfData E L ho).hat (mulF (fun _ _ => 0)) = 0
-  rw [← HatData.hat_zero (H := sfData E L ho)]
-  congr 1
-  funext Φ c g
-  simp [mulF]
-
 theorem mulB_grp_comm (ho : IsOpen (UU Dc)) {α : (Fin r → ℂ) → ℂ} (hα : SmoothFam k r L (UU Dc) (fun c _ => α c))
     {T : (Mx k r → E) → Mx k r → E} (hP : Qx3.Pres L (UU Dc) T) (hLL : ∀ c ∈ OmX r, Qx2.LL k r L (Dc c) T) :
     Commute (mulB E L ho (fun c _ => α c)) ((sfData E L ho).hat (grp T)) := by
@@ -787,30 +773,9 @@ theorem int_one : IntQ ρ VL 1 1 := by
   refine And.intro (fun F hF => hF) (fun F _ => ?_)
   rfl
 
-theorem int_zero : IntQ ρ VL 0 0 := by
-  refine And.intro (fun F _ => VL.zero_mem) (fun F _ => ?_)
-  show ρ 0 = 0
-  exact map_zero ρ
-
 theorem int_algebraMap (s : ℂ) : IntQ ρ VL (algebraMap ℂ _ s) (algebraMap ℂ _ s) := by
   rw [Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one]
   exact IntQ.smul int_one s
-
-theorem int_intCast (n : ℤ) : IntQ ρ VL (n : Module.End ℂ V₀) (n : Module.End ℂ V₁) := by
-  rw [← map_intCast (algebraMap ℂ (Module.End ℂ V₀)) n, ← map_intCast (algebraMap ℂ (Module.End ℂ V₁)) n]
-  exact int_algebraMap _
-
-theorem IntQ.sum {ι : Type*} (s : Finset ι) {T : ι → Module.End ℂ V₀} {T' : ι → Module.End ℂ V₁}
-    (h : ∀ j ∈ s, IntQ ρ VL (T j) (T' j)) : IntQ ρ VL (∑ j ∈ s, T j) (∑ j ∈ s, T' j) := by
-  classical
-  revert h
-  refine Finset.induction_on s ?_ ?_
-  · intro _
-    simp only [Finset.sum_empty]
-    exact int_zero
-  · intro j s hj ih h
-    simp only [Finset.sum_insert hj]
-    exact (h j (Finset.mem_insert_self j s)).add (ih fun i hi => h i (Finset.mem_insert_of_mem hi))
 
 end IntGen
 
@@ -1660,11 +1625,6 @@ theorem cell_fvec (z : Fin (2 * r + k + 1) → ℂ) (l : Fin r) : fvec k r z l.c
   rw [dif_pos (by simp)]
   rfl
 
-theorem cell_posL_inj {i : Fin (r + 1)} {j j' : Fin (mdim k r i)} (h : posL k r i j = posL k r i j') : j = j' := by
-  have h' := congrArg Fin.val h
-  simp only [posL] at h'
-  exact Fin.ext (by omega)
-
 theorem cell_posL_e (l : Fin r) (j : Fin (mdim k r l.castSucc)) :
     posL k r l.castSucc j = eI k r l ↔ j = e0 k l := by
   constructor
@@ -2177,12 +2137,6 @@ section TForm
 variable {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {l : Fin r} {D : Set (Mx k r)}
   (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (Y : ℂ)
 
-local notation "ho" => ho1 l hD
-local notation "tt" => tB E l.succ (ho1 l hD) z z' Y
-local notation "Ci" => mulB E l.succ (ho1 l hD) (aCi k l)
-local notation "Cbi" => mulB E l.succ (ho1 l hD) (aCbi k l)
-local notation "uu" => uC k r l.castSucc Y
-
 theorem signed_sum_mulB_mB_eq_neg_tt_zero_one (A X : Module.End ℂ (sfData E l.succ ho).V) :
     (∑ w : Fin (mdim k r l.succ), ∑ x : Fin (mdim k r l.succ), ((((-1 : ℤ) ^ ((w : ℕ) + (x : ℕ)) : ℤ)) : ℂ) •
       (A * mulB E l.succ ho (aYb z l.succ w) * mB E l.succ ho (skip1 w) (skip1 x) (uu - 2) * X *
@@ -2406,10 +2360,6 @@ section Keys
 variable {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {l : Fin r} {D : Set (Mx k r)}
   (hD : IsOpen D) (z z' : Fin (2 * r + k + 1) → ℂ) (Y : ℂ)
 
-local notation "tt" => tB E l.succ (ho1 l hD) z z' Y
-local notation "mm" => mulB E l.succ (ho1 l hD)
-local notation "uu" => uC k r l.castSucc Y
-
 theorem stp_keys :
     mm (aG k l) * capelliDetSecondFactorOrder E l hD z z' uu =
       (bTss E l hD Y * (tt 0 0 * bTee E l hD Y + tt 0 1 * mm (aCi k l)) +
@@ -2466,10 +2416,6 @@ variable {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {z z' : Fin (2 * 
   {J : Mx k r → E} (hs : SmoothLev k r l.castSucc D J) (hl : LeftEq k r z l.castSucc D J)
   (hr : RightEq k r z' l.castSucc D J) (Y : ℂ) {c : Fin r → ℂ} (hc : c ∈ OmX r) {g : Mx k r}
   (hg : g ∈ Glev k r l.succ) (hgD : g ∈ Dc1 l D c)
-
-local notation "mm" => mulB E l.succ (ho1 l (And.left hD))
-local notation "uu" => uC k r l.castSucc Y
-local notation "ev" => evP (ho1 l (And.left hD)) (rho E (Rules.w R) l (And.left hD) (J0 (And.left hD) hs)) c g
 
 include hz hz' hl hr hc hg hgD in
 theorem tL_zero_zero_w1_mul_eq_capelliDet (hB : BorderFull) :
@@ -2535,8 +2481,6 @@ theorem chain_descent_from_rules : Formalism.FourierDecayAlt.Q.ChainStepFromRule
 theorem qx_chainStepBoth : Formalism.FourierDecayAlt.Q.ChainStepRaw ∧ Formalism.FourierDecayAlt.Q.ChainStep :=
   chain_descent_from_rules border_first_expansion border_last_expansion border_full_expansion generator_gl_level
     generator_action_preserved quantum_minor_left_hermitian right_action_rule left_action_rule torus_action_rule weyl_level_element_properties
-
-theorem chain_descent_relation_raw : Formalism.FourierDecayAlt.Q.ChainStepRaw := qx_chainStepBoth.1
 
 theorem chain_descent_relation : Formalism.FourierDecayAlt.Q.ChainStep := qx_chainStepBoth.2
 

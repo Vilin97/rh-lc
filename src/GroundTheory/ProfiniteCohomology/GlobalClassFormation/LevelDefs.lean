@@ -15,8 +15,4 @@ variable {K L}
 
 omit [NumberField K] in
 
-theorem ideleClassRep_ρ_apply (σ : Gal(L/K)) (x : Additive (IdeleClassGroup L)) :
-    (ideleClassRep K L).ρ σ x = Additive.ofMul (σ • Additive.toMul x) :=
-  rfl
-
 end GroundTheory.ProfCoh

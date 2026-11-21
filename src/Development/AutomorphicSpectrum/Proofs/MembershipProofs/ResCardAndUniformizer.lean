@@ -1,5 +1,7 @@
 import Mathlib
-import Development.AutomorphicSpectrum.Proofs.MembershipProofs.SwapCApply
+import Development.AutomorphicSpectrum.Definitions.MembershipCriteria.GoodChar
+import Development.AbelianVarietyTheory.Definitions.Foundations.MatrixMeasurableSpace
+import Development.AutomorphicSpectrum.Definitions.MembershipCriteria.LaEqSqrtSmulLam
 import GroundTheory.GlobalFields.LocalFieldAtPlace
 open GlobalTheory.CompanionTheory.VacLoc GlobalTheory.CompanionTheory.FinHeis GlobalTheory.WeilM MeasureTheory Matrix ValuativeRel NumberField IsDedekindDomain GlobalTheory.CompanionTheory.IdxAd
 open scoped TensorProduct

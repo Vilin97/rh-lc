@@ -17,12 +17,8 @@ instance (σ : K →+* ℂ) : Module.IsTorsionFree (𝓞 K) (ComplexAt σ) := by
   simp only [smul_def] at hzw
   exact mul_left_cancel₀ (M₀ := ℂ) h1 hzw
 
-example (σ : K →+* ℂ) : Module.Flat (𝓞 K) (ComplexAt σ) := inferInstance
-
 variable {E : Type*} [AddCommGroup E] [Module (𝓞 K) E] [Module.Finite (𝓞 K) E]
   [Module.Projective (𝓞 K) E]
-
-example : Module.IsTorsionFree (𝓞 K) E := inferInstance
 
 omit [Module.Projective (𝓞 K) E] in
 
@@ -337,13 +333,6 @@ theorem arithDegree_line (h : HermitianMetric K E) (hE : Module.finrank (𝓞 K)
   rw [hv, Real.log_pow]
   push_cast; ring
 
-theorem degree_line_indep (h : HermitianMetric K E) (hE : Module.finrank (𝓞 K) E = 1) {s t : E}
-    (hs : s ≠ 0) (ht : t ≠ 0) :
-    Real.log (Nat.card (E ⧸ Submodule.span (𝓞 K) {s})) - ∑ σ : K →+* ℂ, Real.log ‖fibreVec h σ s‖ =
-      Real.log (Nat.card (E ⧸ Submodule.span (𝓞 K) {t})) -
-        ∑ σ : K →+* ℂ, Real.log ‖fibreVec h σ t‖ := by
-  rw [← arithDegree_line h hE hs, ← arithDegree_line h hE ht]
-
 theorem arithDegree_integers : arithDegree (HermitianMetric.integers K) = 0 := by
   rw [arithDegree_line _ (Module.finrank_self (𝓞 K)) one_ne_zero]
   have h1 : Submodule.span (𝓞 K) {(1 : 𝓞 K)} = ⊤ := by
@@ -394,10 +383,6 @@ def HermitianMetric.scale (h : HermitianMetric K E) (c : ℝ) (hc : 0 < c) : Her
   form_conj σ x y := by
     rw [coreScale_inner, coreScale_inner, h.form_conj, map_mul, Complex.conj_ofReal]
 
-theorem HermitianMetric.scale_inner (h : HermitianMetric K E) (c : ℝ) (hc : 0 < c)
-    (σ : K →+* ℂ) (x y : Fibre σ E) :
-    ((h.scale c hc).form σ).inner x y = ((c ^ 2 : ℝ) : ℂ) * (h.form σ).inner x y := rfl
-
 theorem gramDet_scale (h : HermitianMetric K E) (c : ℝ) (hc : 0 < c) (σ : K →+* ℂ) {ι : Type*}
     [Fintype ι] [DecidableEq ι] (s : ι → E) :
     gramDet (h.scale c hc) σ s = c ^ (2 * Fintype.card ι) * gramDet h σ s := by
@@ -427,15 +412,6 @@ theorem arithDegree_ratIntegers_scale (c : ℝ) (hc : 0 < c) :
     arithDegree ((HermitianMetric.integers ℚ).scale c hc) = -Real.log c := by
   rw [arithDegree_scale, arithDegree_integers, Module.finrank_self, Module.finrank_self]
   simp
-
-example (c : ℝ) (hc : 0 < c) (n : 𝓞 ℚ) (hn : n ≠ 0) :
-    Real.log (Nat.card (𝓞 ℚ ⧸ Submodule.span (𝓞 ℚ) {n})) -
-      ∑ σ : ℚ →+* ℂ, Real.log ‖fibreVec ((HermitianMetric.integers ℚ).scale c hc) σ n‖ =
-      -Real.log c := by
-  rw [← arithDegree_line _ (Module.finrank_self (𝓞 ℚ)) hn, arithDegree_ratIntegers_scale]
-
-example : arithDegree ((HermitianMetric.integers ℚ).scale 2 two_pos) = -Real.log 2 :=
-  arithDegree_ratIntegers_scale 2 two_pos
 
 end
 

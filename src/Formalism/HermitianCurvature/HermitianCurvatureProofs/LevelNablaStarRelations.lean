@@ -213,9 +213,6 @@ theorem p_ci (l : Fin r) : pP l * ciP l = ciP l * pP l - ciP l := by
   · field_simp [coord_ne r (vc l)]
   · field_simp [coord_ne r (vcb l)]
 
-theorem nabA_eq (P : Par) : nabA P = Matrix.diagonal fun π => nabE (aC P π) P.TT := rfl
-theorem nabsA_eq (P : Par) : nabsA P = Matrix.diagonal fun π => nabsE (aC P π) P.TT := rfl
-
 theorem eulerComm : EulerComm := by
   intro r v w
   ext f γ
@@ -349,9 +346,6 @@ theorem nab_cf (a TT : ℝ) (f fb : Fn r) (h1 : euler vz f = 0) (h2 : euler vzb 
 theorem nabs_cf (a TT : ℝ) (f fb : Fn r) (h1 : euler vzb f = 0) (h2 : euler vz fb = 0) :
     nabsE a TT * fnP f fb = fnP f fb * nabsE a TT := by
   rw [nabsE_fn, h1, h2, mul_zero, mul_zero, multiplierPair_zero, sub_zero]
-
-local macro "mx2_dg" : tactic => `(tactic| (simp only [pA, pbA, cA, ciA, cbA, cbiA, zA, ziA, zbA, zbiA, ggA, ggiA, nabA_eq, nabsA_eq, sc,
-  Matrix.scalar_apply, Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, Matrix.diagonal_sub, ← Matrix.diagonal_one]; congr 1; funext π))
 
 theorem levNab : LevNab := by
   intro P
@@ -536,13 +530,6 @@ end Formalism.FourierDecayAlt.P.Mx2
 
 namespace Formalism.FourierDecayAlt.P
 
-theorem level_function_relations : Formalism.FourierDecayAlt.M.LevFns := Mx2.levFns
-theorem level_p_relations : Formalism.FourierDecayAlt.M.LevP := Mx2.levP
-theorem level_pb_relations : Formalism.FourierDecayAlt.M.LevPb := Mx2.levPb
-theorem level_pp_relations : Formalism.FourierDecayAlt.M.LevPP := Mx2.levPP
-theorem level_nabla_relations : Formalism.FourierDecayAlt.M.LevNab := Mx2.levNab
-theorem level_nabla_star_relations : Formalism.FourierDecayAlt.M.LevNabs := Mx2.levNabs
 theorem level_exists_model : Formalism.FourierDecayAlt.M.LevelExists := Mx2.levelExists
-theorem level_assemble : Formalism.FourierDecayAlt.M.LevelAssemble := Mx2.levelAssemble
 
 end Formalism.FourierDecayAlt.P

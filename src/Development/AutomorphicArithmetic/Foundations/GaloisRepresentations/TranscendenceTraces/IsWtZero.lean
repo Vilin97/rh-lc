@@ -114,8 +114,6 @@ structure Corr (S Y : Scheme.{0}) : Type 1 where
   fin : IsFinite p
   wt : IsWt p w
 
-def Corr.zero {S Y : Scheme.{0}} (f : S ⟶ Y) : Corr S Y := ⟨S, 𝟙 S, f, Wt.const S 0, inferInstance, isWt_zero _⟩
-
 def Corr.cyc {S Y : Scheme.{0}} (c : Corr S Y) (Ω : Type) [Field Ω] [IsAlgClosed Ω] (x : gp Ω ⟶ S) (y : gp Ω ⟶ Y) : ℤ :=
   ∑ᶠ z ∈ {z : gp Ω ⟶ c.Z | z ≫ c.p = x ∧ z ≫ c.f = y}, c.w Ω z
 

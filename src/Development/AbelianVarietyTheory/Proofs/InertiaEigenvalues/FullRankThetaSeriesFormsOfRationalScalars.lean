@@ -1,6 +1,7 @@
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.ExistsIsScalar
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ComplexRationalTmulCoord
+import Formalism.SharpRestriction.LevelLetterCocycles.IntegralHeckeForms
+import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
 import Formalism.LocalToGlobal.IndefiniteReal.OrthogonalComplementCharacterisation
 import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.UnivChar
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsNormLeHeightPow
@@ -30,9 +31,6 @@ variable {O O' V : Type} [CommRing O] [IsDomain O] [CommRing O'] [Algebra O O'] 
   [Module (FractionRing O) V] [Module O V] [IsScalarTower O (FractionRing O) V]
 
 variable (O') in
-
-def scR (a : FractionRing O) : O' ⊗[O] V →ₗ[O'] O' ⊗[O] V :=
-  ((a • LinearMap.id : Module.End (FractionRing O) V).restrictScalars O).baseChange O'
 
 end Lin
 

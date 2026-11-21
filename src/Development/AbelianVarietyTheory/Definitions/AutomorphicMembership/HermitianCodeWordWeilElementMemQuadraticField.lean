@@ -228,13 +228,6 @@ theorem fockOpNorm_congr {lam lam' : DomWeight N} {sg sg' : DomWeight n} (h : la
     fockOpNorm lam sg b = fockOpNorm lam' sg' b := by
   simp only [fockOpNorm, fockRatios, normFock, extremal, delSq, h, h']
 
-example : fockOpNorm lam lam LinearMap.id = 1 := by
-  refine le_antisymm (fockOpNorm_le _ _ _ zero_le_one fun f _ => by simp) ?_
-  obtain ⟨_, f, ⟨hf, h0⟩, rfl⟩ := fockRatios_nonempty lam lam LinearMap.id
-  have h := le_csSup (fockRatios_bddAbove lam lam LinearMap.id) ⟨f, ⟨hf, h0⟩, rfl⟩
-  dsimp only at h
-  rwa [LinearMap.id_apply, div_self (normFock_self_pos lam h0).ne', Real.sqrt_one] at h
-
 end Br
 
 section Conj
@@ -308,27 +301,9 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks}
     (stepAt sel mu cst L Tp u (i + 1)).D b' → VCx X.Tau (R.N i) (R.N (i + 1)) → ℂ)
   (xi0 : X.E) (du : ℕ) (Ds Gp : ℝ)
 
-def atAt : AtIn (chainAt sel mu cst L Tp u rho rho' cD Th) where
-  T := Pr.T u
-  ST := Pr.vT u
-  A := tdatAt sel mu cst L Tp u
-  psi P := psiWeil P.1 xi0
-  duStar := du
-  Dstar := Ds
-  GamP := Gp
-
 variable (hPr : Pr.Ok) (W : Wts X Pr.Word R) (A : Amb X) {Pl : Rows.Places X.K} (plEq : Pl.Pl ≃ HeightOneSpectrum (𝓞 X.K))
 
 open Classical in
-
-def fmAt : FmIn (atAt sel mu cst L Tp u rho rho' cD Th xi0 du Ds Gp) Pl where
-  tauOf w := tauAt hPr u (plEq w)
-  seenP w := decide (seenC Pr u (plEq w))
-  beOn τ := brNorm (N_m_succ R) (W.lamTrue u R.m τ) (W.sgTrue τ)
-  beOn_nonneg _ := fockOpNorm_nonneg _ _ _
-  thFree i s c c' := eNorm A s (GStep.rep (stepAt sel mu cst L Tp u i) c).1.1.deco.1.N
-    (GStep.rep (stepAt sel mu cst L Tp u (i + 1)) c').1.1.deco.1.N
-  thFree_nonneg _ _ _ _ := eNorm_nonneg _ _ _ _
 
 section Val
 
@@ -463,46 +438,9 @@ variable (J : AmbIn B.host) (χ : Submodule (𝓞 B.host.E) B.host.E → ℂ)
 
 variable (C : Cols B) (W : RowsRest B C) (V : DivStage B C W) (S : SStage B C W) (N : NStage B C W) (G : GJStage B C)
 
-abbrev torAt (s : B.LL →+* ℂ) : TaylorLogMetric.Tor (assemble B C W V S N G) :=
-  TaylorLogMetric.torConj _ (TaylorLogMetric.tor0 (assemble B C W V S N G) ⊤ J.δ) TaylorLogMetric.Qbar (embQbar B.embLL s)
-
 variable {J}
 
-theorem crv_of_ok (hJ : J.Ok) : StandardLatticesGL3.Crv (assemble B C W V S N G) ⊤ J.δ :=
-  ⟨⟨top_ne_bot, by rw [Ideal.absNorm_top]; exact Nat.coprime_one_left _⟩, hJ.delta⟩
-
-theorem admissible_assembled_evenRanks (i j : ℕ) {ST SG ST' SG' : Finset (HeightOneSpectrum (𝓞 B.fields.E))} :
-    letI := B.fields.starE
-    ∀ (d : DecoSet B.fields.E (B.R.N i) ST SG) (d' : DecoSet B.fields.E (B.R.N j) ST' SG'),
-      TaylorLogMetric.admitted (assemble B C W V S N G) (B.R.N i) (B.R.N j) d.1.N d'.1.N :=
-  letI := B.fields.starE
-  fun d d' => ⟨(N_even B.R i).elim fun a h => ⟨a, h.trans (two_mul a)⟩, (N_even B.R j).elim fun a h => ⟨a, h.trans (two_mul a)⟩,
-    GlobalTheory.SeamSelfDual.isSDLat_of_isSdLat _ ⟨d.2.lat, d.2.uni⟩, GlobalTheory.SeamSelfDual.isSDLat_of_isSdLat _ ⟨d'.2.lat, d'.2.uni⟩⟩
-
 end OverBase
-
-example {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum (𝓞 E)) {T : ℕ} (hT : T.Prime)
-    (h : Ideal.absNorm P.asIdeal = T) : psiWeil P 1 1 = Complex.exp (2 * Real.pi * Complex.I / (T : ℂ)) := by
-  have := psiWeil_apply hT h 1 1 1 (by
-    rw [← map_one (algebraMap (𝓞 E) E), reduction_coe]
-    simp)
-  simpa using this
-
-example (B : Base) (X : PreX B.toPre) (u : B.Word) (P : (B.primes X).vT u) : psiWeil P.1 B.host.xi0 ≠ 1 :=
-  psiWeil_ne_one (xiUnitAt_vT B X u P).2
-
-example (B : Base) (X : PreX B.toPre) :
-    ∃ Ps : CharT B.fields (B.primes X), Ps.Ok ∧ ∀ u P c, B.embLL (Ps.psiT u P c) = psiWeil P.1 B.host.xi0 c :=
-  exists_charT (FieldsLaws.fields_ok B) (GlobalTheory.BasePrimes.primes_ok B X).1 (hermitianCodeWord_weil_element_mem_quadraticField B) B.embLL
-    (fun u z hz => by
-      obtain ⟨y, hy⟩ := B.roots_LL u
-      have h0 := (B.T_prime u).ne_zero
-      exact GlobalTheory.TrueChars.roots_of_isPrimitiveRoot B.embLL h0
-        ((hy ▸ Complex.isPrimitiveRoot_exp _ h0 : IsPrimitiveRoot (B.embLL y) _).of_map_of_injective B.embLL.injective) z hz)
-    (xiUnitAt_vT B X)
-
-example {X : Fields} {Pr : Primes X} (hX : X.AbelianUnramifiedExtensionConditions) (hPr : Pr.Ok) (u : Pr.Word) (w : HeightOneSpectrum (𝓞 X.K))
-    (hs : seenC Pr u w) (P : Pr.vT u) : pullW (tauAt hPr u w P) w = P.1 := seesP_tauAt hPr u hX hs P
 
 end GlobalTheory.Mem.Col2
 

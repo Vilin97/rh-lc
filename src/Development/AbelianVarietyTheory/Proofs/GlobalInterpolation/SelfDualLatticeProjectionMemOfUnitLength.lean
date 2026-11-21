@@ -30,12 +30,6 @@ def proj (x : Fin M → Ev F E v) (b : Ev F E v) :
     (Fin M → Ev F E v) →ₗ[Ev F E v] (Fin M → Ev F E v) :=
   LinearMap.id - (b • formAt σ J v x).smulRight x
 
-theorem proj_apply (x : Fin M → Ev F E v) (b : Ev F E v) (y : Fin M → Ev F E v) :
-    proj σ J v x b y = y - (b * hR (Fv F v) σ J x y) • x := rfl
-
-theorem mem_perp (x y : Fin M → Ev F E v) : y ∈ perp σ J v x ↔ hR (Fv F v) σ J x y = 0 :=
-  Iff.rfl
-
 open scoped TensorProduct Matrix in
 open NumberField IsDedekindDomain in
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]

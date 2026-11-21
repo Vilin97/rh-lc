@@ -35,6 +35,3 @@ theorem exists_sh_indEt (A : Type) [CommRing A] (p : Ideal A) [p.IsPrime] :
 end GlobalTheory.StrictHensPrime
 
 end
-
-example : ∀ (A : Type) [CommRing A] (p : Ideal A) [p.IsPrime], ∃ (O : Type) (_ : CommRing O) (_ : Algebra A O) (_ : IsLocalRing O), SH O ∧ IndEt A O ∧ (IsLocalRing.maximalIdeal O).comap (algebraMap A O) = p :=
-  GlobalTheory.StrictHensPrime.exists_sh_indEt

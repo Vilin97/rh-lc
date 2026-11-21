@@ -85,11 +85,6 @@ theorem conj_mem_Wild {φ σ : G E Ω} (hφ : φ ∈ Dec (F := E) A) (hσ : σ �
   rw [← valuation_apply_lt_one_iff hφ, map_sub, map_div₀, mul_inv_apply, map_one] at h
   exact h
 
-theorem tameGenAt_iff {γ : G E Ω} : TameGenAt A γ ↔ γ ∈ Ine (F := E) A ∧
-    ((Ine (F := E) A : Subgroup (G E Ω)) : Set (G E Ω)) ⊆
-      closure ((Subgroup.closure (insert γ (Wild E A : Set (G E Ω))) : Subgroup (G E Ω)) :
-        Set (G E Ω)) := Iff.rfl
-
 variable [IsAlgClosure E Ω]
 
 theorem tame_relation {γ φ : G E Ω} {q : ℕ} (hγ : γ ∈ Ine (F := E) A) (hφ : IsFrob A q φ) :
@@ -133,12 +128,6 @@ def tamePart (a : WDRep h V) : WDRep h a.tameSpace where
   nilpotent := End.isNilpotent.restrict a.N_mem_tameSpace a.nilpotent
   comm σ := LinearMap.ext fun v => Subtype.ext (a.comm_apply σ v)
 
-@[simp] theorem coe_tamePart_ρ (a : WDRep h V) (σ : Weil h) (v : a.tameSpace) :
-    (a.tamePart.ρ σ v : V) = a.ρ σ v := rfl
-
-@[simp] theorem coe_tamePart_N (a : WDRep h V) (v : a.tameSpace) :
-    (a.tamePart.N v : V) = a.N v := rfl
-
 theorem tamePart_ρ_of_wild (a : WDRep h V) {σ : Weil h} (hσ : (σ : G E Ω) ∈ Wild E A) :
     a.tamePart.ρ σ = 1 :=
   LinearMap.ext fun v => Subtype.ext (a.mem_tameSpace.mp v.2 σ hσ)
@@ -161,9 +150,6 @@ def tameEquiv {a : WDRep h V} {b : WDRep h V'} (e : V ≃ₗ[ℂ] V')
     rw [Submodule.mem_map_equiv, e.symm_apply_apply, mem_tameSpace, mem_tameSpace]
     refine forall₂_congr fun σ hσ => ?_
     rw [← he σ (Wild_le_Ine hσ), e.injective.eq_iff])
-
-@[simp] theorem coe_tameEquiv {a : WDRep h V} {b : WDRep h V'} (e : V ≃ₗ[ℂ] V') (he)
-    (v : a.tameSpace) : (tameEquiv (a := a) (b := b) e he v : V') = e v := rfl
 
 theorem Iso.tamePart {a : WDRep h V} {b : WDRep h V'} (hab : a.Iso b) :
     a.tamePart.Iso b.tamePart := by
@@ -567,33 +553,7 @@ theorem lab_lpOfChar_eq_iff (H : TeichmullerInertiaLabelCondition A w τ γ) {χ
     Multiset.singleton_inj]
   exact and_iff_right (monic_X_sub_C c)
 
-theorem lab_lpOfChar_of_wild (τ : Fbar g →* ℂ) (γ : G E Ω) {χ : Weil h →* ℂˣ} (hχ : IsSmooth χ)
-    {σ : Weil h} (hσ : (σ : G E Ω) ∈ Wild E A) (h1 : χ σ ≠ 1) : lab τ γ (lpOfChar h χ hχ) = 1 := by
-  have hd : lpDim (lpOfChar h χ hχ) = 1 := by simp [lpOfChar]
-  have h2 := natDegree_lab_le τ γ (lpOfChar h χ hχ)
-  have h3 : (lab τ γ (lpOfChar h χ hχ)).natDegree ≠ lpDim (lpOfChar h χ hχ) := fun e => by
-    have := congrFun (LinearMap.congr_fun
-      ((tame_mk _).mp (tame_of_natDegree_lab e) σ hσ) fun _ => 1) 0
-    exact h1 (Units.ext (by simpa using this))
-  exact (lab_monic τ γ _).natDegree_eq_zero.mp (by omega)
-
 end WD
-
-theorem IsSmooth.eq_one_of_tameGenAt {h : IsPlaceOver A w} {M : Type*} [Monoid M]
-    {f : Weil h →* M} (hf : IsSmooth f) {γ : G E Ω} (hγ : TameGenAt A γ)
-    (h1 : f (ineIncl h ⟨γ, hγ.1⟩) = 1) (h2 : ∀ σ : Weil h, (σ : G E Ω) ∈ Wild E A → f σ = 1)
-    (σ : Ine (F := E) A) : f (ineIncl h σ) = 1 := by
-  let K : Subgroup (Ine (F := E) A) := (f.comp (ineIncl h)).ker
-  have hK : IsClosed ((K.map (Ine (F := E) A).subtype : Subgroup (G E Ω)) : Set (G E Ω)) :=
-    (isClosed_Ine A).isClosedEmbedding_subtypeVal.isClosedMap _ (K.isClosed_of_isOpen hf)
-  have hle : Subgroup.closure (insert γ (Wild E A : Set (G E Ω))) ≤
-      K.map (Ine (F := E) A).subtype := by
-    rw [Subgroup.closure_le]
-    rintro u (rfl | hu)
-    · exact ⟨⟨u, hγ.1⟩, h1, rfl⟩
-    · exact ⟨⟨u, Wild_le_Ine hu⟩, h2 _ hu, rfl⟩
-  obtain ⟨u, hu, e⟩ := closure_minimal (SetLike.coe_subset_coe.mpr hle) hK (hγ.2 σ.2)
-  rwa [← Subtype.ext (a1 := u) (a2 := σ) e]
 
 theorem exists_tameInertiaSetting (h : IsPlaceOver A w) (hw : normV w = g) :
     ∃ (τ : Fbar g →* ℂ) (γ : G E Ω), TameGenAt A γ ∧ TeichmullerInertiaLabelCondition A w τ γ := by
@@ -612,51 +572,6 @@ theorem exists_normV_eq (g : ℕ) (hg : g.Prime) : ∃ v : HeightOneSpectrum (�
 
 open Classical in
 
-def sqrtChar (h : IsPlaceOver A w) {x : Ω} {a : E} (hx : x ^ 2 = algebraMap E Ω a) :
-    Weil h →* ℂˣ :=
-  MonoidHom.mk' (fun σ => if (σ : G E Ω) x = x then 1 else -1) fun σ σ' => by
-    have : CharZero Ω := charZero_of_injective_algebraMap (algebraMap E Ω).injective
-    have key : ∀ u : G E Ω, u x = x ∨ u x = -x := fun u =>
-      sq_eq_sq_iff_eq_or_eq_neg.mp (by rw [← map_pow, hx, AlgEquiv.commutes])
-    rcases eq_or_ne x 0 with rfl | h0
-    · simp
-    have hne : -x ≠ x := fun e => h0 (CharZero.neg_eq_self_iff.mp e)
-    rcases key σ with h1 | h1 <;> rcases key σ' with h2 | h2 <;> simp [h1, h2, hne]
-
 omit [IsAlgClosure E Ω] in
-
-theorem sqrtChar_eq_one_iff (h : IsPlaceOver A w) {x : Ω} {a : E} (hx : x ^ 2 = algebraMap E Ω a)
-    (σ : Weil h) : sqrtChar h hx σ = 1 ↔ (σ : G E Ω) x = x := by
-  simp only [sqrtChar, MonoidHom.mk'_apply, ite_eq_left_iff]
-  refine ⟨fun e => by_contra fun hc => ?_, fun e hc => absurd e hc⟩
-  have := congrArg Units.val (e hc)
-  norm_num at this
-
-theorem isSmooth_sqrtChar (h : IsPlaceOver A w) {x : Ω} {a : E} (hx : x ^ 2 = algebraMap E Ω a) :
-    IsSmooth (sqrtChar h hx) :=
-  .of_open ((isOpen_setOf_apply (F := E) x fun t => t = x).preimage continuous_subtype_val) rfl
-    fun _ hσ => (sqrtChar_eq_one_iff h hx _).mpr hσ
-
-example (K : Type) [Field K] [Algebra ℚ K] [IsAlgClosure ℚ K] :
-    ∃ (v : HeightOneSpectrum (𝓞 ℚ)) (B : ValuationSubring K)
-      (hB : IsPlaceOver B v) (τ : Fbar g →* ℂ) (γ : G ℚ K), TameGenAt B γ ∧
-      WD.lab τ γ (WD.lpSum (WD.lpSp hB 2) (WD.lpSp hB 1)) = (X - 1) ^ 3 := by
-  obtain ⟨v, hv⟩ := exists_normV_eq g Fact.out
-  have hB := isPlaceOver_placeOf K v
-  obtain ⟨τ, γ, hγ, H⟩ := exists_tameInertiaSetting hB hv
-  exact ⟨v, _, hB, τ, γ, hγ, by rw [WD.lab_lpSum, WD.lab_lpSp H, WD.lab_lpSp H, ← pow_add]⟩
-
-example {h : IsPlaceOver A w} {τ : Fbar g →* ℂ} {γ : G E Ω} (H : TeichmullerInertiaLabelCondition A w τ γ)
-    {χ : Weil h →* ℂˣ} (hχ : IsSmooth χ) (ht : ∀ σ : Weil h, (σ : G E Ω) ∈ Wild E A → χ σ = 1)
-    (c : ZMod g) (hc : (χ ⟨γ, Ine_le_Weil h H.2.1⟩ : ℂ) = τ (algebraMap _ _ c)) :
-    WD.lab τ γ (WD.lpOfChar h χ hχ) = X - C c :=
-  (WD.lab_lpOfChar_eq_iff H hχ ht c).mpr hc.symm
-
-example (p : ℕ) (hp : p.Prime) (h : IsPlaceOver A w) (τ : Fb p hp →* ℂ) (γ : G E Ω) (x : WD h) :
-    haveI : Fact p.Prime := ⟨hp⟩
-    (WD.lab τ γ x).natDegree = x.lpDim →
-      x.inePol γ = ((rootsBar (WD.lab τ γ x)).map fun y => X - C (τ y)).prod :=
-  haveI : Fact p.Prime := ⟨hp⟩
-  WD.inePol_eq_of_natDegree_lab τ γ x
 
 end GlobalTheory.WeilDeligne

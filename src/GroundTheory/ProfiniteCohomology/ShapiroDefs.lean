@@ -24,11 +24,6 @@ noncomputable def coindEvalOne (B : Rep.{u} k U) :
       rw [one_mul]
       simpa using f.2 u 1⟩
 
-@[simp]
-theorem coindEvalOne_hom_apply (B : Rep.{u} k U) (f : Rep.coind U.subtype B) :
-    (coindEvalOne U B).hom f = f.1 1 :=
-  rfl
-
 noncomputable def coindUnit (A : Rep.{u} k G) :
     A ⟶ Rep.coind U.subtype (Rep.res U.subtype A) :=
   Rep.resCoindToHom U.subtype A (Rep.res U.subtype A) (𝟙 _)

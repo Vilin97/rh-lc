@@ -27,9 +27,6 @@ def sgn : DR R B →ₐ[B] DR R B := CliffordAlgebra.involute
 
 @[simp] theorem sgn_sgn (x : DR R B) : sgn (sgn x) = x := CliffordAlgebra.involute_involute x
 
-theorem sgn_smul (r : R) (x : DR R B) : sgn (r • x) = r • sgn x := by
-  rw [← algebraMap_smul B r x, map_smul, algebraMap_smul]
-
 theorem ι_mul_ι_swap (a b : Ω[B⁄R]) : ι1 a * ι1 b = -(ι1 b * ι1 a) :=
   eq_neg_of_add_eq_zero_left (ExteriorAlgebra.ι_add_mul_swap a b)
 
@@ -77,12 +74,6 @@ instance : One (Tw R B) := ⟨(1, 0)⟩
 
 def mk (x y : DR R B) : Tw R B := (x, y)
 
-@[simp] theorem mk_1 (x y : DR R B) : (mk x y).1 = x := rfl
-
-@[simp] theorem mk_2 (x y : DR R B) : (mk x y).2 = y := rfl
-
-@[ext] theorem ext' {a b : Tw R B} (h1 : a.1 = b.1) (h2 : a.2 = b.2) : a = b := Prod.ext h1 h2
-
 @[simp] theorem mul_1 (a b : Tw R B) : (a * b).1 = a.1 * b.1 := rfl
 
 @[simp] theorem mul_2 (a b : Tw R B) : (a * b).2 = sgn a.1 * b.2 + a.2 * b.1 := rfl
@@ -90,14 +81,6 @@ def mk (x y : DR R B) : Tw R B := (x, y)
 @[simp] theorem add_1 (a b : Tw R B) : (a + b).1 = a.1 + b.1 := rfl
 
 @[simp] theorem add_2 (a b : Tw R B) : (a + b).2 = a.2 + b.2 := rfl
-
-@[simp] theorem zero_1 : (0 : Tw R B).1 = 0 := rfl
-
-@[simp] theorem zero_2 : (0 : Tw R B).2 = 0 := rfl
-
-@[simp] theorem one_1 : (1 : Tw R B).1 = 1 := rfl
-
-@[simp] theorem one_2 : (1 : Tw R B).2 = 0 := rfl
 
 instance : Ring (Tw R B) :=
   { (inferInstance : AddCommGroup (Tw R B)), (inferInstance : Mul (Tw R B)),
@@ -120,10 +103,6 @@ def ofFun : B →+* Tw R B where
     · simp
     · simp [← Algebra.smul_def, ← Algebra.commutes b]
 
-@[simp] theorem ofFun_1 (b : B) : (ofFun (R := R) b).1 = algebraMap B _ b := rfl
-
-@[simp] theorem ofFun_2 (b : B) : (ofFun (R := R) b).2 = ι1 (D R B b) := rfl
-
 instance : Algebra B (Tw R B) := (ofFun (R := R)).toAlgebra' fun b x ↦ by
   ext
   · simp [Algebra.commutes]
@@ -132,10 +111,6 @@ instance : Algebra B (Tw R B) := (ofFun (R := R)).toAlgebra' fun b x ↦ by
 theorem smul_def' (b : B) (x : Tw R B) : b • x = ofFun b * x := rfl
 
 instance : Module R (Tw R B) := inferInstanceAs (Module R (DR R B × DR R B))
-
-@[simp] theorem smul_1 (r : R) (a : Tw R B) : (r • a).1 = r • a.1 := rfl
-
-@[simp] theorem smul_2 (r : R) (a : Tw R B) : (r • a).2 = r • a.2 := rfl
 
 instance : IsScalarTower R B (Tw R B) := ⟨fun r b x ↦ by
   ext <;> simp [smul_def', ← Algebra.smul_def]⟩
@@ -293,12 +268,7 @@ def dTwo : Om R B 2 →ₗ[R] Om R B 3 := dOm R B 2
 
 @[simp] theorem coe_dOne (ω : Ω[B⁄R]) : (dOne R B ω : DR R B) = dDR R B (ι1 ω) := rfl
 
-@[simp] theorem coe_dTwo (x : Om R B 2) : (dTwo R B x : DR R B) = dDR R B x := rfl
-
 theorem dOne_eq_dOm (ω : Ω[B⁄R]) : dOne R B ω = dOm R B 1 ⟨ι1 ω, ι_mem ω⟩ := rfl
-
-theorem dOm_zero (b : B) (h : algebraMap B (DR R B) b ∈ ⋀[B]^0 Ω[B⁄R]) :
-    dOm R B 0 ⟨_, h⟩ = ⟨ι1 (D R B b), ι_mem _⟩ := Subtype.ext (dDR_algebraMap b)
 
 variable (R B) in
 

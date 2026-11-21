@@ -1,12 +1,14 @@
 import Mathlib
 import Formalism.WindowSums.PowerSeriesRelationList
-import Formalism.WachModuleLifts.WachModuleProofs.LemmaCLower
-import Formalism.WachModuleLifts.WachModuleProofs.LemmaCSharp
-import Formalism.WachModuleLifts.WachModuleProofs.LemmaCSharpOddUnitInvHolds
-import Formalism.WachModuleLifts.WachModuleProofs.LemmaCSharpG
-import Formalism.WachModuleLifts.WachModuleProofs.LemmaCSharpOddG
 import Formalism.WachLatticeTwists.LagrangeExtensionCocycles.DualWByLettersExtended
-import Formalism.GaussValuationBounds.NokLemmaCVal
+import Formalism.GaussValuationBounds.Statement
+import Formalism.GaussValuationBounds.GaussValueContraction.TruncationExponentBounds
+import Formalism.GaussValuationBounds.GaussValueContraction.PhiIterXProof
+import Formalism.GaussValuationBounds.GaussValueContraction.GaussValueContractionProofFactBis
+import Formalism.GaussValuationBounds.GaussValueContraction.KapBoundProof
+import Formalism.GaussValuationBounds.GaussValueContraction.GaussMul
+import Formalism.GaussValuationBounds.GaussValueContraction.GaussBasic
+import Formalism.GaussValuationBounds.GaussUnit
 import Formalism.GaussValuationBounds.GaussValueContraction.ScaledPowMemSpanCeil
 import Formalism.WeaklyAdmissibleFiltrations.PhtGalois
 import Formalism.SharpRestriction.LevelLetterCocycles.LiftingTheory
@@ -163,8 +165,6 @@ theorem gam_zl {K : FinExt l} {s : ℕ} {LL : FinExt l} (h : Good K s LL) :
   exact_mod_cast hg
 
 end Zl
-
-example {l : ℕ} [Fact l.Prime] (LL : FinExt l) : IsDomain ↥(OL LL) := inferInstance
 
 end Formalism.MainNotions.LiftingTheory
 
@@ -3745,10 +3745,6 @@ theorem gammaA_comm' (W : LocWach PD LL O v n) (g g' : W.Gam) (a : LetA O n) :
   have h2 : W.γ₀ g' (W.γ₀ g (a i)) = (W.γ₀ (g' * g)) (a i) := by rw [map_mul]; rfl
   change W.γ₀ g (W.γ₀ g' (a i)) = W.γ₀ g' (W.γ₀ g (a i))
   rw [h1, h2, mul_comm]
-
-theorem gammaD_comm (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) (g g' : W.Gam) (x : W.DD T) :
-    W.γD T g (W.γD T g' x) = W.γD T g' (W.γD T g x) := by
-  rw [← W.γD_mul, ← W.γD_mul, mul_comm]
 
 theorem delta_mul_mem (W : LocWach PD LL O v n) {δ δ' : W.Gam} (h : δ ∈ W.DelF) (h' : δ' ∈ W.DelF) :
     δ * δ' ∈ W.DelF := by

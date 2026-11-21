@@ -482,16 +482,6 @@ theorem isModerate_sum_thFr (hs : IsSympl X bas) (hn : Even n) {J : Type*} (s : 
   rw [norm_mul, mul_assoc, mul_assoc]
   exact mul_le_mul_of_nonneg_left (hC j hj x hx) (norm_nonneg _)
 
-example : HyperbolicCusp.flagData.IsModerate
-    (wtOf HyperbolicCusp.flagData Gauss.hr (fun _ _ => 0) (fun _ _ => 0) 2)
-    (thFr HyperbolicCusp.flagData Gauss.hr Gauss.bas Gauss.idx 2 0 0 1) ∧
-    thFr HyperbolicCusp.flagData Gauss.hr Gauss.bas Gauss.idx 2 0 0 1 Gauss.one ≠ 0 :=
-  ⟨isModerate_thFr _ _ _ _ Gauss.isSympl_bas even_two (by
-    simpa [Harm.minorProd] using Harm.minorProd_mem_rowHighest (R := ℂ) (κ := Fin 2)
-      (fun (_ : HyperbolicCusp.flagData.Ψ) (_ : Fin 1) => 0)
-      (fun _ (_ : Fin HyperbolicCusp.flagData.p0) => 0) (ε := 0) (φ := 0)
-      (fun _ _ _ => by simp)), Gauss.thFr_one_ne_zero 2⟩
-
 end
 
 end GlobalTheory.ThFr

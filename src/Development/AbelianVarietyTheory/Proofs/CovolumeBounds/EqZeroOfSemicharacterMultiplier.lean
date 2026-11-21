@@ -454,18 +454,6 @@ def thetaLevelCharBasis (a b : ι → ℝ) (hτ : τ ∈ SiegelH ι) (hN : 0 < N
     (thetaLevelCharBasis a b hτ hN hr k : (ι → ℂ) → ℂ) = levelTheta a b N τ (r k) := by
   simp [thetaLevelCharBasis]
 
-def thetaLevelBasis (hτ : τ ∈ SiegelH ι) (hN : 0 < N) {κ : Type*}
-    {r : κ → ι → ℤ} (hr : Function.Bijective fun k i => (r k i : ZMod N)) :
-    Module.Basis κ ℂ (thetaLevel N τ) :=
-  (thetaLevelCharBasis 0 0 hτ hN hr).map (LinearEquiv.ofEq _ _ (thetaLevelChar_zero N τ))
-
-@[simp] theorem thetaLevelBasis_apply (hτ : τ ∈ SiegelH ι) (hN : 0 < N) {κ : Type*}
-    {r : κ → ι → ℤ} (hr : Function.Bijective fun k i => (r k i : ZMod N)) (k : κ) :
-    (thetaLevelBasis hτ hN hr k : (ι → ℂ) → ℂ) =
-      fun z => theta (fun i => (r k i : ℝ) / N) 0 ((N : ℂ) • z) ((N : ℂ) • τ) := by
-  funext z
-  simp [thetaLevelBasis, levelTheta_zero_zero]
-
 omit [Fintype ι] in
 
 theorem bijective_fin_zmod (hN : 0 < N) :
@@ -563,9 +551,5 @@ theorem exists_half_char_of_sign {α : (ι → ℤ) → (ι → ℤ) → ℂ}
   have : ofRealVec (fun i => (((-q) i : ℤ) : ℝ) / 2) = -ofRealVec (fun i => (q i : ℝ) / 2) := by
     funext i; simp [ofRealVec, neg_div]
   rw [this, neg_dotProduct]; ring
-
-example : Module.finrank ℂ (thetaLevel 3 !![1 + 2 * I, 1 / 2 + I; 1 / 2 + I, 2 * I]) = 9 := by
-  rw [finrank_thetaLevel ⟨isSiegel_example.1, isSiegel_example.2⟩ (by norm_num)]
-  simp
 
 end GlobalTheory

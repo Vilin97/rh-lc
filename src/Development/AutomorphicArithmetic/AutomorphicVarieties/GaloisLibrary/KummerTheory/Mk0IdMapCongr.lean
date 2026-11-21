@@ -198,8 +198,6 @@ abbrev Xinf (N : ℕ) (U : Subgroup (G F Ω)) : Type := Dinf l N U →ₗ[ℤ_[l
 
 end Tower
 
-def errTwo (l : ℕ) : ℕ∞ := if l = 2 then 1 else 0
-
 section Res
 
 def resTriv {R Γ M U : Type} [CommRing R] [Group Γ] [TopologicalSpace Γ] [AddCommGroup M] [Module R M]
@@ -226,9 +224,6 @@ def zmTw (D : LData F Ω l) (r : ℕ) (e : ℤ) :
 
 def ShaZm (D : LData F Ω l) (r : ℕ) (e : ℤ) : Submodule (ZMod (l ^ r)) (H1 (zmTw D r e)) :=
   Sha1 (zmTw D r e) (locFam D.S D.A) (continuous_locFam D.S D.A)
-
-def resZm (D : LData F Ω l) (r : ℕ) : H1 (zmTw D r 0) →ₗ[ZMod (l ^ r)] (G F Ω → ZMod (l ^ r)) :=
-  resTriv (zmTw D r 0) (toGS Ω _) fun u m => by simp [zmTw]
 
 end Res
 
