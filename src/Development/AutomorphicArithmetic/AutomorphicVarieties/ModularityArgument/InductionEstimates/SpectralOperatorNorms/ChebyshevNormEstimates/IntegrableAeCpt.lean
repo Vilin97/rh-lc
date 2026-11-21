@@ -231,7 +231,7 @@ private theorem amp_fix [_root_.NumberField.IsTotallyComplex K] (𝔞 : Amp μ) 
 end Amp
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.genZk :
-    ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : Fam 𝔢) (y : Ix E (2 + 2)), ∃ f : CC E (2 + 2), 𝔵.D.Hecke f ∧ Rop μ f = 𝔢.toAmp.Z y := by
+    ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {μ : Measure (normOneGL (K := E) (n := (2 + 2)))} [μ.IsHaarMeasure] {θ : Twist μ} {𝔢 : Side θ 2} (𝔵 : _root_.UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.Fam 𝔢) (y : Ix E (2 + 2)), ∃ f : CC E (2 + 2), 𝔵.D.Hecke f ∧ Rop μ f = 𝔢.toAmp.Z y := by
   intro E _ _ _ μ _ θ 𝔢 𝔵 y
   haveI := 𝔵.D.prob
   obtain ⟨P, hP, hf⟩ := two_sided (rightRegularRep (Gam E (2 + 2)) μ) μ (typeFin 𝔵.D).1 𝔵.D.supp 𝔵.D.inv 𝔵.D.cont 𝔵.D.idem
