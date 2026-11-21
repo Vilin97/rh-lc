@@ -21,12 +21,16 @@ theorem push_coords (g : A₀ ⟶ A₀) [IsMonHom g] {d : Crys (epsDP k) (Global
     (c : primDR A₀) :
     push (epsDP k) (GlobalTheory.DeRham.epsRed k) g d ((constMor A₀).pull c) =
       TrivSqZeroExt.inl (push (dp0 k) (𝟙 _) g u c) + TrivSqZeroExt.inr (push (dp0 k) (𝟙 _) g v c) := by
-  have k' := (homMor (dp0 k) (𝟙 _) g).comp (constMor A₀)
-  have e1 : primPull (epsDP k) (GlobalTheory.DeRham.epsRed k) g ((constMor A₀).pull c) = k'.pull c :=
-    GrpMor.pull_pull (constMor A₀) (homMor _ _ g) k' (fun _ => rfl) (by simp) c
-  have e2 : (constMor A₀).pull (primPull (dp0 k) (𝟙 _) g c) = k'.pull c :=
-    GrpMor.pull_pull (homMor _ _ g) (constMor A₀) k' (fun _ => rfl) rfl c
-  rw [push_apply, e1, ← e2, h]
+  have e : primPull (epsDP k) (GlobalTheory.DeRham.epsRed k) g ((constMor A₀).pull c) =
+      (constMor A₀).pull (primPull (dp0 k) (𝟙 _) g c) := by
+    apply Subtype.ext
+    have m := (homMor (dp0 k) (𝟙 _) g).isMor
+    have n := (constMor A₀).isMor
+    have q := m.comp n
+    exact ((IsMor.pullback1_comp m n q (fun _ => rfl) rfl c.1).trans
+      (IsMor.pullback1_comp n (homMor (epsDP k) (GlobalTheory.DeRham.epsRed k) g).isMor q
+        (fun _ => rfl) (by simp) c.1).symm).symm
+  rw [push_apply, e, h]
   rfl
 
 theorem smul_coords (r : k) {d : Crys (epsDP k) (GlobalTheory.DeRham.epsRed k) A₀} {u v : HdR A₀}

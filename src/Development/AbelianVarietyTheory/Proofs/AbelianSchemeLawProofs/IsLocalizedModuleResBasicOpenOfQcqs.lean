@@ -249,7 +249,7 @@ variable [Algebra R R']
 
 def secCubeBaseChange (w : π ≫ f = f' ≫ Spec.map (CommRingCat.ofHom (algebraMap R R'))) :
     GlobalTheory.Cube.baseChange R' (secCube f M D) ⟶ secCube f' (M.pull π) fun i => π ⁻¹ᵁ D i :=
-  GlobalTheory.Cube.homMk (fun s => SecOnR.baseChangeHom M w _ _ (preimage_biInf D π s).ge)
+  GlobalTheory.Cube.homMk κ R' (fun s => SecOnR.baseChangeHom M w _ _ (preimage_biInf D π s).ge)
     fun {s t} h x => SecOnR.baseChangeHom_restrict w (iInf_le_iInf_of_subset D h)
       (iInf_le_iInf_of_subset (fun i => π ⁻¹ᵁ D i) h) (preimage_biInf D π s).ge
       (preimage_biInf D π t).ge x

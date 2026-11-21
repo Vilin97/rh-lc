@@ -160,6 +160,9 @@ theorem exists_coord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
       rw [hΦ, LinearEquiv.apply_symm_apply, LinearEquiv.apply_symm_apply] at h1
       exact h1).comp co₀.e.bijective
     convert this using 1
+    funext z
+    change Φ z = Φ (co₀.e.symm (co₀.e z))
+    rw [LinearEquiv.symm_apply_apply]
   let co : Darboux (symp (R := AF F) (cA σ) (-1) (incM F W.J) J') ((Fin n × Fin d) ⊕ (Fin n × Fin d)) :=
     ⟨LinearEquiv.ofBijective Φ hbij, hΦ⟩
   have hco : ∀ z, co.e z = (glue ε (p z) (dd₁.e (π z)).1, glue ε (q z) (dd₁.e (π z)).2) := fun z => rfl

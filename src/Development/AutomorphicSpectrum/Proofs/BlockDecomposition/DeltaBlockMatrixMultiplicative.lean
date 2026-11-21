@@ -155,7 +155,7 @@ theorem relIndex_lam_sup {m : ℕ} (c : Matrix (Fin m) (Fin m) E) (u : Fin m →
       Submodule.Quotient.mk_eq_zero]
   rw [hsup, AddSubgroup.relIndex_sup_left, ← AddSubgroup.relIndex_comap, hcomap,
     AddSubgroup.relIndex_top_right]
-  rfl
+  exact (Ideal.absNorm_eq_index _).symm
 
 def lastInc (E : Type) [Field E] [NumberField E] (m : ℕ) : E →+ (Fin (m + 1) → E) :=
   (LinearMap.single (𝓞 E) (fun _ : Fin (m + 1) => E) (Fin.last m)).toAddMonoidHom

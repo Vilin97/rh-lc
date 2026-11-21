@@ -43,7 +43,7 @@ def PK (K : Type) [Field K] [NumberField K] : Subgroup (G1 K (2 + 2)) := (ParΓ 
 
 abbrev Cos (K : Type) [Field K] [NumberField K] : Type := Quotient (QuotientGroup.rightRel (ParΓ K 2 2))
 
-abbrev nn (X : UPos (2 + 2) 2 → 𝔸[K]) : G1 K (2 + 2) := unipOne K (2 + 2) 2 X
+abbrev nn (X : UPos (2 + 2) 2 → 𝔸[K]) : G1 K (2 + 2) := unipOne 2 X
 
 abbrev HH (g : G1 K (2 + 2)) : ℝ := HP 2 2 g
 
@@ -59,8 +59,8 @@ structure PFun (F : G1 K (2 + 2) → ℂ) : Prop where
   bdd : ∃ C : ℝ, ∀ g, ‖F g‖ ≤ C
   unip : ∀ X g, F (nn X * g) = F g
   rat : ∀ γ ∈ PK K, ∀ g, F (γ * g) = F g
-  cusp₁ : ∀ g, ∫ Y in unipFundamentalDomain K 2 1, F (lv (unipOne K 2 1 Y) 1 0 * g) ∂unipMeasure K 2 1 = 0
-  cusp₂ : ∀ g, ∫ Y in unipFundamentalDomain K 2 1, F (lv 1 (unipOne K 2 1 Y) 0 * g) ∂unipMeasure K 2 1 = 0
+  cusp₁ : ∀ g, ∫ Y in unipFundamentalDomain K 2 1, F (lv (unipOne 1 Y) 1 0 * g) ∂unipMeasure K 2 1 = 0
+  cusp₂ : ∀ g, ∫ Y in unipFundamentalDomain K 2 1, F (lv 1 (unipOne 1 Y) 0 * g) ∂unipMeasure K 2 1 = 0
 
 def InBand (F : G1 K (2 + 2) → ℂ) : Prop := ∃ R : ℝ, ∀ g, F g ≠ 0 → |HH g| ≤ R
 
@@ -72,7 +72,7 @@ structure Rd {μ₂ : Measure (G1 K 2)} (τ : Submodule ℂ (L2 μ₂)) (φ : G1
   cont : Continuous φ
   rep : ∃ v ∈ τ, Reps μ₂ v φ
   rat : ∀ γ ∈ Gam K 2, ∀ m, φ (γ * m) = φ m
-  cusp : ∀ m, ∫ Y in unipFundamentalDomain K 2 1, φ (unipOne K 2 1 Y * m) ∂unipMeasure K 2 1 = 0
+  cusp : ∀ m, ∫ Y in unipFundamentalDomain K 2 1, φ (unipOne 1 Y * m) ∂unipMeasure K 2 1 = 0
   decay : ∀ N : ℕ, ∃ C : ℝ, ∀ m, ‖φ m‖ * qht m ^ N ≤ C
 
 abbrev fd {n : ℕ} (μ : Measure (G1 K n)) : Measure (G1 K n) := μ.restrict (fundamentalDomain (Gam K n))
@@ -114,7 +114,7 @@ def tChi (μ : Measure (G1 K (2 + 2))) (a : CC K (2 + 2)) (χ : ℝ → ℂ) (f 
   ∫ g, a g * χ (HH (x * g) - HH x) * Complex.exp (2 * ((HH (x * g) - HH x : ℝ) : ℂ)) * f (x * g) ∂μ
 
 def Dies (F : G1 K (2 + 2) → ℂ) (r : ℕ) (γ : G1 K (2 + 2)) (X₀ : UPos (2 + 2) r → K) : Prop :=
-  ∀ x, ∫ y in GroundTheory.Global.fundamentalSet K, F (γ * unipOne K (2 + 2) r (fun p => y * algebraMap K 𝔸[K] (X₀ p)) * x)
+  ∀ x, ∫ y in GroundTheory.Global.fundamentalSet K, F (γ * unipOne r (fun p => y * algebraMap K 𝔸[K] (X₀ p)) * x)
     ∂GroundTheory.Global.adeleMeasure K = 0
 
 section Steps

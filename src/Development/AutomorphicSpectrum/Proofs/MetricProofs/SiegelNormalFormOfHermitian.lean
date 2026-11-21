@@ -127,7 +127,7 @@ theorem symm_posDef_of_relations (G Z : Matrix I I ℂ) (hG : G.PosDef)
   have mapmul : ∀ A B : Matrix I I ℂ, (A * B).map star = A.map star * B.map star := by
     intro A B; ext i j; simp [Matrix.mul_apply]
   have mapone : (1 : Matrix I I ℂ).map star = 1 := by
-    ext i j; by_cases h : i = j <;> simp [one_apply, h]
+    ext i j; by_cases h : i = j <;> simp [Matrix.one_apply, h]
   have mapsub : ∀ A B : Matrix I I ℂ, (A - B).map star = A.map star - B.map star := by
     intro A B; ext i j; simp
   have mapneg : ∀ A : Matrix I I ℂ, (-A).map star = -A.map star := by

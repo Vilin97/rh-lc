@@ -377,7 +377,7 @@ theorem jm_mul_prod_jmL_le : ∀ {k : Type} [Field k] [ValuativeRel k] [Topologi
   obtain ⟨φR⟩ := piTensor_flatHom_equiv g t (fun a b => GL (Fin (d' a b)) k) _ ρ'
   obtain ⟨φS⟩ := GlobalTheory.JacStagesProof.jac_refinePlace_equiv k g N d e t d' e' V π
   rw [jhMult_congr_left φR, jhMult_congr_right _ φS]
-  obtain ⟨φT⟩ := relJacD_piTensor_equiv k g d t d' e' _ fun a => (y a).rep
+  obtain ⟨φT⟩ := GlobalTheory.JacPiTensor.relJacD_piTensor e' (fun a => (y a).rep)
   refine le_trans (mul_le_mul' le_rfl ?_) (jhMult_mul_relJacD_le k g d t d' e' _ _ _ (piTensor fun a => (y a).rep) (jac e π)
     (piTensor fun a => piTensor (ρ' a)) (isSmooth_piTensor fun a => (y a).2.rep.smooth) (isSmooth_jac e hπ))
   rw [jhMult_congr_right _ φT]

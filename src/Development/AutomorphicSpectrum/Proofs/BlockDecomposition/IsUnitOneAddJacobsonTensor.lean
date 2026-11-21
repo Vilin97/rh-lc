@@ -29,7 +29,10 @@ theorem main (O O' R : Type) [CommRing O] [CommRing O'] [Algebra O O'] [Module.F
     rw [Ideal.mem_comap, Ideal.jacobson, Submodule.mem_sInf]
     rintro m ⟨-, hm⟩
     have hc : (Ideal.comap (algebraMap R (O' ⊗[O] R)) m).IsMaximal :=
-      Ideal.isMaximal_comap_of_isIntegral_of_isMaximal m
+      by
+        letI : Algebra.IsIntegral R (O' ⊗[O] R) := hint
+        letI : Ideal.IsMaximal m := hm
+        exact Ideal.isMaximal_under_of_isIntegral_of_isMaximal m
     rw [← Ideal.mem_comap]
     exact (sInf_le (show _ ∈ {J : Ideal R | (⊥ : Ideal R) ≤ J ∧ J.IsMaximal} from ⟨bot_le, hc⟩) : (⊥ : Ideal R).jacobson ≤ _) hr
   have hx' : x ∈ (⊥ : Ideal (O' ⊗[O] R)).jacobson := hle hx

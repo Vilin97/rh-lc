@@ -27,7 +27,7 @@ theorem nontrivial_piTensorProduct_of_nontrivial {ι : Type} [Fintype ι] {V : �
     exact hv i ((Module.forall_dual_apply_eq_zero_iff ℂ (v i)).1
       fun f => not_not.1 (not_exists.1 hc f))
   choose f hf using hf
-  let F : MultilinearMap ℂ V ℂ := (MultilinearMap.mkPiAlgebra ℂ ι ℂ).compLinearMap f
+  let F : (Π i, V i) →ₘₗ[ℂ] ℂ := (MultilinearMap.mkPiAlgebra ℂ ι ℂ).compLinearMap f
   have hF : PiTensorProduct.lift F (PiTensorProduct.tprod ℂ v) ≠ 0 := by
     rw [PiTensorProduct.lift.tprod]
     simpa [F] using Finset.prod_ne_zero_iff.2 fun i _ => hf i

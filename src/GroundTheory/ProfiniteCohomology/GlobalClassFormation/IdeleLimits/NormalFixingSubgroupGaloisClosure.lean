@@ -14,6 +14,8 @@ namespace GroundTheory.ProfCoh
 open CategoryTheory NumberField IntermediateField GroundTheory.Global GroundTheory.Global.AdeleBaseChange
   FiniteSubfield IdeleLimit
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 noncomputable section
 
 variable (K : FiniteSubfield)

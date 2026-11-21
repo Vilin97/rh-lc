@@ -133,7 +133,7 @@ variable {K : Type} [CommRing K] [TopologicalSpace K] [IsTopologicalRing K]
 theorem continuous_bet (s : K →+* K) {M : ℕ} (J : Matrix (Fin M) (Fin M) K) (x : Fin M → K) :
     Continuous (bet s J x) := by
   unfold bet hform
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact continuous_const.mul ((continuous_apply j).comp (continuous_apply 0))
 
 theorem continuous_jx {M : ℕ} (x : Fin M → K) : Continuous (jx x) := by

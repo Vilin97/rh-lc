@@ -57,6 +57,7 @@ theorem lintegral_translate [MeasurableSpace (GA E N)] [BorelSpace (GA E N)] (μ
   ring
 
 theorem centReGlue_holds : CentReGlue := by
+  set_option synthInstance.maxHeartbeats 200000 in
   intro hS hM E _ _ _ N φ z hφ hne hL hz
   letI : MeasurableSpace (GA E N) := borel _
   haveI : BorelSpace (GA E N) := ⟨rfl⟩

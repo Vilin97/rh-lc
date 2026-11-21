@@ -21,7 +21,7 @@ theorem exists_homogeneous_coeff_mem {σ R : Type} [CommRing R] (J : Ideal R) (i
       (∀ m, AddMonoidAlgebra.coeff G m ∈ J) ∧ (X i - 1 : MvPolynomial σ R) ∣ G - g := by
   let Q : MvPolynomial σ R → Prop := fun p => ∃ e : ℕ, ∀ d, e ≤ d → ∃ G : MvPolynomial σ R, G.IsHomogeneous d ∧
       (∀ m, AddMonoidAlgebra.coeff G m ∈ J) ∧ (X i - 1 : MvPolynomial σ R) ∣ G - p
-  have h0 : Q 0 := ⟨0, fun d _ => ⟨0, isHomogeneous_zero _ _ _, fun m => by rw [coeff_zero]; exact J.zero_mem,
+  have h0 : Q 0 := ⟨0, fun d _ => ⟨0, isHomogeneous_zero _ _ _, fun m => by exact J.zero_mem,
     by rw [sub_zero]; exact dvd_zero _⟩⟩
   have hadd : ∀ p q, Q p → Q q → Q (p + q) := by
     rintro p q ⟨e, he⟩ ⟨e', he'⟩
@@ -95,40 +95,41 @@ end GlobalTheory.FormalAlg.PolyLoc
 
 
 theorem GlobalTheory.FormalAlg.exists_X_pow_mul_sub_mem_vanIdeal : ∀ (R : Type) [CommRing R] (J : Ideal R) (X X' : Scheme.{0}) (f : X ⟶ Spec (CommRingCat.of R)) (β : X' ⟶ X) (q : X' ⟶ Spec (CommRingCat.of (R ⧸ J))), IsPullback β q f (Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk J))) → ∀ (H : LB X) (H' : LB X') (w : LB.Iso H' (H.pull β)) (n : ℕ) (s : Fin (n + 1) → LB.Sec H) (s' : Fin (n + 1) → LB.Sec H'), H.IsLB → H'.IsLB → w.IsGen → (∀ j, Rel β w (s j) (s' j)) → VeryAmpleBy f H s → ∀ (t : ℕ) (F : MvPolynomial (Fin (n + 1)) R), F.IsHomogeneous t → F ∈ vanIdeal (β ≫ f) s' → ∀ i, ∃ (N : ℕ) (G : MvPolynomial (Fin (n + 1)) R), G.IsHomogeneous (t + N) ∧ (∀ m, AddMonoidAlgebra.coeff G m ∈ J) ∧ MvPolynomial.X i ^ N * F - G ∈ vanIdeal f s := by
-  intro R _ J X X' f β q hpb H H' w n s s' hH hH' _ hrel hva t F hF h0 i
-  obtain ⟨hc, hva⟩ := hva
-  choose ha r hr hsur using hva
-  have hR : ∀ j, IsRatioFamily s j (r j) := hr
-  set φ := eval₂Hom (AbLaw.cst f (nonzeroLocus (s i))) (r i) with hφ
-  have hker := ((GlobalTheory.T.baseChange_quotient_closedImmersion_idealSheaf R J X X' f β q hpb).2.2 _ (ha i)).2
-  have hβ : (β.app (nonzeroLocus (s i))).hom (φ F) = 0 := app_eval_eq_zero f β hH hH' hrel i (r i) (hR i) hF h0
-  have hJ : φ F ∈ (Ideal.map (C : R →+* MvPolynomial (Fin (n + 1)) R) J).map φ := by
-    have h2 : φ F ∈ J.map (AbLaw.cst f (nonzeroLocus (s i))) := hker ▸ (RingHom.mem_ker.2 hβ)
-    have h3 : AbLaw.cst f (nonzeroLocus (s i)) = φ.comp C := by
-      ext a
-      simp [hφ]
-    rwa [h3, ← Ideal.map_map] at h2
-  obtain ⟨g, hg, hgF⟩ := (Ideal.mem_map_iff_of_surjective φ (hsur i)).1 hJ
-  rw [MvPolynomial.mem_map_C_iff] at hg
-  obtain ⟨e, he⟩ := exists_homogeneous_coeff_mem J i g hg
-  obtain ⟨G₁, hG₁, hG₁J, hdvd⟩ := he (t + e) (Nat.le_add_left e t)
-  have hQ : (MvPolynomial.X i ^ e * F - G₁).IsHomogeneous (t + e) := by
-    have := (isHomogeneous_X_pow i e).mul hF
-    rw [Nat.add_comm e t] at this
-    exact this.sub hG₁
-  have hφQ : φ (MvPolynomial.X i ^ e * F - G₁) = 0 := by
-    obtain ⟨P, hP⟩ := hdvd
-    have hx : φ (MvPolynomial.X i) = 1 := by rw [hφ, eval₂Hom_X']; exact (hR i).self_eq_one
-    have hG : G₁ = g + (MvPolynomial.X i - 1) * P := by rw [← hP]; ring
-    rw [hG, map_sub, map_mul, map_pow, hx, one_pow, _root_.one_mul, map_add (f := _), map_mul, map_sub, hx, map_one, sub_self,
-      zero_mul, add_zero, hgF, sub_self]
-  obtain ⟨c, hc'⟩ := exists_X_pow_mul_mem_vanIdeal f hc ha r hR i hQ hφQ
-  refine ⟨c + e, MvPolynomial.X i ^ c * G₁, ?_, fun m => ?_, ?_⟩
-  · have := (isHomogeneous_X_pow i c).mul hG₁
-    convert this using 1
-    ring
-  · have h4 : MvPolynomial.X i ^ c * G₁ ∈ Ideal.map (C : R →+* MvPolynomial (Fin (n + 1)) R) J :=
-      Ideal.mul_mem_left _ _ (mem_map_C_iff.2 hG₁J)
-    exact mem_map_C_iff.1 h4 m
-  · convert hc' using 1
-    ring
+  open MvPolynomial GlobalTheory.FormalAlg.PolyLoc in
+    intro R _ J X X' f β q hpb H H' w n s s' hH hH' _ hrel hva t F hF h0 i
+    obtain ⟨hc, hva⟩ := hva
+    choose ha r hr hsur using hva
+    have hR : ∀ j, IsRatioFamily s j (r j) := hr
+    set φ := MvPolynomial.eval₂Hom (AbLaw.cst f (nonzeroLocus (s i))) (r i) with hφ
+    have hker := ((GlobalTheory.T.baseChange_quotient_closedImmersion_idealSheaf R J X X' f β q hpb).2.2 _ (ha i)).2
+    have hβ : (β.app (nonzeroLocus (s i))).hom (φ F) = 0 := app_eval_eq_zero f β hH hH' hrel i (r i) (hR i) hF h0
+    have hJ : φ F ∈ (Ideal.map (C : R →+* MvPolynomial (Fin (n + 1)) R) J).map φ := by
+      have h2 : φ F ∈ J.map (AbLaw.cst f (nonzeroLocus (s i))) := hker ▸ (RingHom.mem_ker.2 hβ)
+      have h3 : AbLaw.cst f (nonzeroLocus (s i)) = φ.comp C := by
+        ext a
+        simp [hφ]
+      rwa [h3, ← Ideal.map_map] at h2
+    obtain ⟨g, hg, hgF⟩ := (Ideal.mem_map_iff_of_surjective φ (hsur i)).1 hJ
+    rw [MvPolynomial.mem_map_C_iff] at hg
+    obtain ⟨e, he⟩ := exists_homogeneous_coeff_mem J i g hg
+    obtain ⟨G₁, hG₁, hG₁J, hdvd⟩ := he (t + e) (Nat.le_add_left e t)
+    have hQ : (MvPolynomial.X i ^ e * F - G₁).IsHomogeneous (t + e) := by
+      have := (isHomogeneous_X_pow i e).mul hF
+      rw [Nat.add_comm e t] at this
+      exact this.sub hG₁
+    have hφQ : φ (MvPolynomial.X i ^ e * F - G₁) = 0 := by
+      obtain ⟨P, hP⟩ := hdvd
+      have hx : φ (MvPolynomial.X i) = 1 := by rw [hφ, eval₂Hom_X']; exact (hR i).self_eq_one
+      have hG : G₁ = g + (MvPolynomial.X i - 1) * P := by rw [← hP]; ring
+      rw [hG, map_sub, map_mul, map_pow, hx, one_pow, _root_.one_mul, map_add (f := _), map_mul, map_sub, hx, map_one, sub_self,
+        zero_mul, add_zero, hgF, sub_self]
+    obtain ⟨c, hc'⟩ := exists_X_pow_mul_mem_vanIdeal f hc ha r hR i hQ hφQ
+    refine ⟨c + e, MvPolynomial.X i ^ c * G₁, ?_, fun m => ?_, ?_⟩
+    · have := (isHomogeneous_X_pow i c).mul hG₁
+      convert this using 1
+      ring
+    · have h4 : MvPolynomial.X i ^ c * G₁ ∈ Ideal.map (C : R →+* MvPolynomial (Fin (n + 1)) R) J :=
+        Ideal.mul_mem_left _ _ (mem_map_C_iff.2 hG₁J)
+      exact mem_map_C_iff.1 h4 m
+    · convert hc' using 1
+      ring

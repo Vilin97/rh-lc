@@ -56,9 +56,14 @@ theorem exists_eigenform_of_commute {Q : Type} [AddCommGroup Q] [Module ℂ Q] [
   have hcomm : ∀ a ∈ Set.range A, ∀ b ∈ Set.range A, a * b = b * a := by
     rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩
     exact hc i j
-  letI : CommRing (Algebra.adjoin ℂ (Set.range A)) := Algebra.adjoinCommRingOfComm ℂ hcomm
+  letI : IsMulCommutative (Algebra.adjoin ℂ (Set.range A)) :=
+    Algebra.isMulCommutative_adjoin ℂ (fun a ha b hb _ => hcomm a ha b hb)
+  letI : CommRing (Algebra.adjoin ℂ (Set.range A)) := by
+    open scoped IsMulCommutative in exact inferInstance
   obtain ⟨μ, hμ0, hμ⟩ := exists_form_of_faithful (k := ℂ) (Q := Q) (Algebra.adjoin ℂ (Set.range A))
-    (fun r hr => Subtype.ext (LinearMap.ext hr)) q₀ h0
+    (fun r hr => Subtype.ext (LinearMap.ext fun x => by
+      change (r : Module.End ℂ Q) x = 0 at *
+      exact hr x)) q₀ h0
   refine ⟨μ, hμ0, fun i x => ?_⟩
   exact hμ ⟨A i, Algebra.subset_adjoin ⟨i, rfl⟩⟩ (ξ i) (hq i) x
 

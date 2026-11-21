@@ -97,7 +97,7 @@ theorem exists_lift (y : ∀ v : PlF E, GL (Fin n) (Av v)) (hy : ∀ᶠ v : PlF 
   let Y : ∀ w : Pl E, GLw n w := fun w => ev (⟨w, rfl⟩ : Above (un w)) (y (un w))
   have hc : ∀ᶠ w : Pl E in cofinite, Y w ∈ GlobalTheory.LFun.KGL w (n := n) := by
     have hB := eventually_cofinite.1 hy
-    refine eventually_cofinite.2 ((hB.biUnion fun v _ => Set.finite_coe_iff.1 (finite_above v)).subset ?_)
+    refine eventually_cofinite.2 ((hB.biUnion fun v _ => (Set.finite_coe_iff (s := {w : Pl E | un w = v})).1 (finite_above v)).subset ?_)
     intro w hw
     refine Set.mem_iUnion₂.2 ⟨un w, fun h => hw (mem_Kn.1 h ⟨w, rfl⟩), rfl⟩
   let M : Matrix (Fin n) (Fin n) (Af E) := Matrix.of fun i j =>

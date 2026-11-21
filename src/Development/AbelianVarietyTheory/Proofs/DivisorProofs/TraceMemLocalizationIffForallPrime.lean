@@ -61,7 +61,7 @@ theorem different_exponent (π : A) (hπ : IsLocalRing.maximalIdeal A = Ideal.sp
     exact hπ0 ((FaithfulSMul.algebraMap_injective A B) (by simpa using hπQ))
   haveI : Q.IsMaximal := hQ.isMaximal h0
   haveI : Q.LiesOver (IsLocalRing.maximalIdeal A) :=
-    ⟨(IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal Q)).symm⟩
+    ⟨(IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := A) Q)).symm⟩
   obtain ⟨h1, h2⟩ := exact_exponent Q h0 s hsQ hs e _ a r ha hr h
   rw [GlobalTheory.TameDifferent.pow_dvd_differentIdeal_iff_pow_succ_dvd_map A B Q, GlobalTheory.TameDifferent.pow_dvd_differentIdeal_iff_pow_succ_dvd_map A B Q, hπ, Ideal.map_span, Set.image_singleton, Nat.sub_add_cancel he,
     Ideal.dvd_span_singleton, Ideal.dvd_span_singleton]
@@ -211,6 +211,7 @@ theorem trace_mem_localization_iff (A F K : Type) [CommRing A] [IsDomain A] [IsN
         ∀ (s : integralClosure A K) (e : ℕ), 1 ≤ e → s ∈ Q → (∀ y ∈ Q, ∃ c r, r ∉ Q ∧ r * y = c * s) →
           (∃ a r : integralClosure A K, a ∉ Q ∧ r ∉ Q ∧ r * algebraMap A _ t = a * s ^ e) →
           ∃ c r : integralClosure A K, r ∉ Q ∧ (r : K) * ((s : K) ^ (e - 1) * z) = c := by
+  set_option synthInstance.maxHeartbeats 200000 in
   let Ap := Localization.subalgebra.ofField F p.primeCompl p.primeCompl_le_nonZeroDivisors
   haveI : IsLocalization.AtPrime Ap p := inferInstance
   haveI : IsDiscreteValuationRing Ap := GlobalTheory.isDiscreteValuationRing_of_height_eq_one p hp1 Ap
@@ -275,7 +276,7 @@ theorem trace_mem_localization_iff (A F K : Type) [CommRing A] [IsDomain A] [IsN
     refine (mem_range_iff (A' := Ap) p _).1 (core_mpr F K _ hπ z (fun Q' hQ' => ?_) (algebraMap B Bp b))
     have hQp : (Q'.under B).under A = p := by
       have h1 : Q'.under Ap = IsLocalRing.maximalIdeal Ap :=
-        IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal Q')
+        IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_under_of_isIntegral_of_isMaximal (R := Ap) Q')
       rw [Ideal.under_under, ← Ideal.under_under (B := Ap), h1]
       ext x
       exact IsLocalization.AtPrime.to_map_mem_maximal_iff Ap p x

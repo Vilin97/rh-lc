@@ -33,8 +33,8 @@ theorem exists_relLen_of_smul_le (C : Type) [Field C] (v : AddValuation C (WithT
         exact htf r _ hr h'
   haveI := hX
   haveI := hX'
-  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (Int0 v) X
-  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (Int0 v) X'
+  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (R := Int0 v) (M := X)
+  haveI := GlobalTheory.free_of_finite_of_isTorsionFree_of_valuationRing (R := Int0 v) (M := X')
   let ι : X' →ₗ[Int0 v] X := Submodule.inclusion hle
   have hι : Function.Injective ι := Submodule.inclusion_injective hle
   let μ : X →ₗ[Int0 v] X' :=

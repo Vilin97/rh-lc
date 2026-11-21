@@ -15,6 +15,8 @@ namespace GlobalTheory.FormDict.Model
 
 variable (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ)
 
+local notation3 "F₀" => maximalRealSubfield L
+
 def kappa : AL L ≃+* FiniteAdeleRing (𝓞 L) L :=
   (Algebra.TensorProduct.comm F₀ L (FiniteAdeleRing (𝓞 F₀) F₀)).toRingEquiv.trans (GlobalTheory.LFun.finAdEquiv F₀ L)
 
@@ -27,8 +29,18 @@ theorem kappa_conj (y : AL L) :
   induction y using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, map_zero]
   | tmul x a =>
+    have hAd : conjFin (IsCMField.complexConj L).toRingEquiv
+        (GlobalTheory.AdeleBaseChange.adMap F₀ L a) = GlobalTheory.AdeleBaseChange.adMap F₀ L a := by
+      have := GlobalTheory.AdelicUnitaryTop.t2Space_finiteAdeleRing_of_numberField L
+      refine congrFun ((GlobalTheory.AdeleCharTwist.denseRange_fin (F := F₀)).equalizer
+        ((continuous_conjFin _).comp (continuous_adMap F₀ L)) (continuous_adMap F₀ L)
+        (funext fun k => ?_)) a
+      simp only [Function.comp_apply]
+      rw [GlobalTheory.AdeleBaseChange.adMap_algebraMap, conjFin_algebraMap]
+      congr 1
+      exact IsCMField.complexConj_apply_eq_self L k
     change kappa L ((IsCMField.complexConj L x) ⊗ₜ a) = _
-    rw [kappa_tmul, kappa_tmul, map_mul, conjFin_adMap, conjFin_algebraMap]
+    rw [kappa_tmul, kappa_tmul, map_mul, hAd, conjFin_algebraMap]
     rfl
   | add y z hy hz => rw [map_add (f := _), map_add (f := _), map_add (f := _), hy, hz, map_add (f := _)]
 

@@ -224,6 +224,8 @@ theorem thetaTr_eqF {ψ : AddChar (AF F) ℂ} {N : ℕ} (τ : κ ≃ Fin N) (Φ 
   rw [e]
   simp only [GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr, comp_equiv_dotProduct_comp_equiv]
   congr 2
+  ext i
+  simp
 
 theorem thetaTr_smulF {ψ : AddChar (AF F) ℂ} (c : ℂ) (Φ : (κ → AF F) → ℂ) :
     GlobalTheory.WeilSchrodinger.thetaTr F co ψ (c • Φ) = c • GlobalTheory.WeilSchrodinger.thetaTr F co ψ Φ := by

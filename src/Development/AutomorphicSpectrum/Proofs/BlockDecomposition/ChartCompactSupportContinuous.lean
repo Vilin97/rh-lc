@@ -97,7 +97,7 @@ theorem continuous_hR [IsTopologicalRing (R ⊗[F] E)] (hsig : Continuous (sigR 
     {m : ℕ} (J : Matrix (Fin m) (Fin m) E) {u v : A → Fin m → R ⊗[F] E} (hu : Continuous u) (hv : Continuous v) :
     Continuous fun p => hR R σ J (u p) (v p) := by
   unfold hR hform
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact ((hsig.comp ((continuous_apply i).comp hu)).mul continuous_const).mul ((continuous_apply j).comp hv)
 
 theorem continuousOn_hR [IsTopologicalRing (R ⊗[F] E)] (hsig : Continuous (sigR R σ)) {A : Type}

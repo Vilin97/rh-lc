@@ -17,7 +17,7 @@ theorem torusExp : PositivityTheory.Rg.BcB.F.Tail.PExp.TorusExp := by
   unfold PositivityTheory.Rg.BcB.F.Tail.PExp.TorusExp
   intro k _ _ _ _ n V _ _ π ϖ hϖ ξ c y hy hfix hx t
   have hord : ord k ϖ = 1 := by
-    exact ord_eq_one hϖ
+    exact GlobalTheory.SmGL.ord_eq_one hϖ
   refine GlobalTheory.CompanionTheory.ExtCharU.extChar k n _ (jacB π) y ϖ ξ c hy hord ?_ ?_ t
   · intro s hs
     have h1 : ((deltaHalf k fun _ : Fin n => Unit).comp (leviTorus k (Fin n)).toMonoidHom) s = 1 := by

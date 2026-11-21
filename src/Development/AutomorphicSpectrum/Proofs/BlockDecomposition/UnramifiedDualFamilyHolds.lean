@@ -94,7 +94,7 @@ theorem algebraMap_le_one {a : k} (ha : valuation k a ≤ 1) :
   have h1 : (a : k) ≤ᵥ 1 := by
     rw [← map_one (valuation k)] at ha
     exact (Valuation.Compatible.vle_iff_le (v := valuation k) a 1).2 ha
-  have h2 : algebraMap k E a ≤ᵥ algebraMap k E 1 := (ValuativeExtension.vle_iff_vle a 1).2 h1
+  have h2 : algebraMap k E a ≤ᵥ algebraMap k E 1 := ValuativeExtension.vle_iff_vle.2 h1
   have h3 := (Valuation.Compatible.vle_iff_le (v := valuation E) _ _).1 h2
   simpa using h3
 

@@ -93,8 +93,8 @@ theorem continuous_symplOHF (ξ₀ : E) (w : WOF F E nS nT) {X : Type} [Topologi
   have hy' : ∀ i j, Continuous fun t => cAF σ (y t i j) := fun i j =>
     (continuous_sigR_AF σ).comp ((continuous_apply j).comp ((continuous_apply i).comp hy))
   have hh : Continuous fun t => hOF σ JS JT w (y t) :=
-    continuous_finset_sum _ fun _ _ => continuous_finset_sum _ fun _ _ => continuous_finset_sum _ fun _ _ =>
-      continuous_finset_sum _ fun _ _ => ((continuous_const.mul (hy' _ _)).mul continuous_const).mul continuous_const
+    continuous_finsetSum _ fun _ _ => continuous_finsetSum _ fun _ _ => continuous_finsetSum _ fun _ _ =>
+      continuous_finsetSum _ fun _ _ => ((continuous_const.mul (hy' _ _)).mul continuous_const).mul continuous_const
   have ht : Continuous (Algebra.trace (AF F) (AEF F E)) := IsModuleTopology.continuous_of_linearMap _
   exact continuous_const.mul (ht.comp (continuous_const.mul hh))
 
@@ -107,7 +107,7 @@ theorem exists_log {Tau : Type} [Fintype Tau] {tauE : Tau → (E →+* ℂ)} {ψ
       map_zero' := by simp only [map_zero, TensorProduct.zero_tmul, Finset.sum_const_zero, mul_zero]
       map_add' := fun a b => by simp only [map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib, mul_add] }
   refine ⟨lam, ?_, fun a ha => ?_⟩
-  · exact continuous_const.mul (continuous_finset_sum _ fun ρ _ => (hθ ρ).2.comp continuous_fst)
+  · exact continuous_const.mul (continuous_finsetSum _ fun ρ _ => (hθ ρ).2.comp continuous_fst)
   · have hc := hψ.2.2 θ hθ (fstA F a)
     have e : pairA F (fstA F a) 0 = a := Prod.ext rfl ha.symm
     rw [psiInf, e] at hc

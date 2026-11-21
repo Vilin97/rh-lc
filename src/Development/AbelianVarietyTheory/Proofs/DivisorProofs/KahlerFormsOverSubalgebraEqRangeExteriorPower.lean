@@ -57,7 +57,7 @@ theorem omB_eq_range_exteriorPower : ∀ (k K : Type) [Field k] [Field K] [Algeb
     intro x y hxy
     obtain ⟨c, hc⟩ := IsLocalizedModule.exists_of_eq (S := nonZeroDivisors B) hxy
     exact (Module.IsTorsionFree.isSMulRegular (M := ⋀[B]^q Ω[B⁄k])
-      (isRegular_of_ne_zero (nonZeroDivisors.coe_ne_zero c))) hc
+      (IsRegular.of_ne_zero (nonZeroDivisors.coe_ne_zero c))) hc
   let e : (⋀[B]^q Ω[B⁄k]) →ₗ[B] DR k K := ((⋀[K]^q Ω[K⁄k]).subtype.restrictScalars B) ∘ₗ E
   have hι : ∀ a : Fin q → Ω[B⁄k], e (exteriorPower.ιMulti B q a) =
       ExteriorAlgebra.ιMulti K q fun j => φ (a j) := by
@@ -92,7 +92,7 @@ theorem omB_eq_range_exteriorPower : ∀ (k K : Type) [Field k] [Field K] [Algeb
       rw [hιD]
       exact ιMulti_D_mem_omB_regForms B q w
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add _ _ _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
+    | add _ _ _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
     | smul b z _ h => rw [map_smul, hB]; exact smul_mem_omB_regForms B q b.2 h
 
 end GlobalTheory.PD

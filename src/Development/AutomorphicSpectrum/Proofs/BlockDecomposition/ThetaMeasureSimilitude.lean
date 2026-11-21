@@ -168,7 +168,7 @@ theorem theta_map (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) {M n : ℕ} (J : M
     rw [← He.restrict_map, Measure.map_map He.measurable He.symm.measurable]
     simp
   unfold thetaMeas
-  rw [Measure.map_smul, hmass]
+  rw [Measure.map_smul, hmass] <;> try exact hmG.aemeasurable
   congr 1
   set_option synthInstance.maxHeartbeats 100000 in
     rw [Measure.map_sum hmG.aemeasurable, ← SWIsom.sum_reindex (gramEquiv σ J g c hc hg T)]

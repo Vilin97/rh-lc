@@ -143,7 +143,9 @@ theorem local_bound (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (hψ : ∀ x, ‖�
         (((continuous_apply i).comp ((continuous_finV F).comp continuous_fst)).sub continuous_const)
     · refine ⟨by simp, Set.mem_iInter.2 fun i => ?_⟩
       intro v
-      simp [x₀]
+      simp only [x₀, sub_self, mul_zero]
+      change (0 : v.adicCompletion F) ∈ HeightOneSpectrum.adicCompletionIntegers F v
+      exact zero_mem _
   refine ⟨s, hs, S.indicator fun ξ => B * ((1 + R) ^ k * C * ((1 + ‖(fun i => mixedEmbedding F (ξ i))‖) ^ k)⁻¹),
     ?_, ?_⟩
   · rw [← summable_subtype_iff_indicator]

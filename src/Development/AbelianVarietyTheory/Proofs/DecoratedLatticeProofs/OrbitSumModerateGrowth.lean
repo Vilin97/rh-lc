@@ -52,7 +52,8 @@ theorem orbit_sum_moderate_growth : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ
       exact ENNReal.tsum_mul_left
     have h2 : ∑' y : Orb W x₀, ‖term ψ d W vS (om (n.1 * g, h) Φ) y.1‖ₑ ≤
         ∑' x : Matrix (Fin W.rank) (Fin ρ) D.host.E, ‖term ψ d W vS (om (n.1 * g, h) Φ) x‖ₑ :=
-      ENNReal.tsum_comp_le_tsum_of_injective Subtype.val_injective _
+      ENNReal.tsum_comp_le_tsum_of_injective (f := fun y : Orb W x₀ => y.1)
+        Subtype.val_injective (fun x => ‖term ψ d W vS (om (n.1 * g, h) Φ) x‖ₑ)
     have hq0 : 0 ≤ quotHeight W h ^ A := pow_nonneg (quotHeight_pos W h).le _
     have h3 : ∑' x : Matrix (Fin W.rank) (Fin ρ) D.host.E, ‖term ψ d W vS (om (n.1 * g, h) Φ) x‖ₑ ≤
         ENNReal.ofReal (max C 0 * height V g ^ A * quotHeight W h ^ A) := by

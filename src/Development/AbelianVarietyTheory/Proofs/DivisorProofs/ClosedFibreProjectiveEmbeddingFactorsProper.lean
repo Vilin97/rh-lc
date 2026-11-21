@@ -40,7 +40,9 @@ theorem closedFibre_chart : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRin
   haveI := hc
   have hf : a ≫ c ≫ b'' = X.ι ≫ E.f := by
     rw [← Category.assoc, hac, Category.assoc, Category.assoc, hab, ← Category.assoc i, hiν, ← hk]
-    simp only [Category.assoc]
+    simp only [← Category.assoc]
+    rw [Category.assoc (k ≫ H'.ι)]
+    erw [pullback.lift_fst]
   have hX : ∀ z : E.H.toScheme, M.π (G'.hom (E.H.ι z)) = closedPoint R → z ∈ X := by
     intro z hz
     have hz' : z ∈ H' := hZ hz

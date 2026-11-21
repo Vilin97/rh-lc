@@ -53,7 +53,7 @@ theorem Rd_lTr (x : G n) {f : Mat n → V} (hf : ContDiffOn ℝ ∞ f (GLs n)) (
     (hd.hasFDerivAt.comp g (mulL x.val).hasFDerivAt).fderiv
   show fderiv ℝ (f ∘ mulL x.val) g (g * X) = fderiv ℝ f (x.val * g) (x.val * g * X)
   rw [hc]
-  simp [Matrix.mul_assoc]
+  simp [mulL, Matrix.mul_assoc]
 
 theorem contDiffOn_Rw (hR : RCalc) {f : Mat n → V} (hf : ContDiffOn ℝ ∞ f (GLs n))
     (w : List (Bool × Fin n × Fin n)) : ContDiffOn ℝ ∞ (Rw w f) (GLs n) := by

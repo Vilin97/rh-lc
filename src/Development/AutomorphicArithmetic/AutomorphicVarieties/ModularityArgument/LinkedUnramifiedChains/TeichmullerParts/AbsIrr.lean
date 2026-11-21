@@ -38,7 +38,7 @@ def box (ρ : Representation ℂ G W) (τ : Representation ℂ H W') : Represent
 
 def piRep {I : Type} {Gi Wi : I → Type} [∀ i, Group (Gi i)] [∀ i, AddCommGroup (Wi i)] [∀ i, Module ℂ (Wi i)]
     (τ : ∀ i, Representation ℂ (Gi i) (Wi i)) : Representation ℂ (∀ i, Gi i) (⨂[ℂ] i, Wi i) :=
-  PiTensorProduct.mapMonoidHom.comp (Pi.monoidHom fun i => (τ i).comp (Pi.evalMonoidHom Gi i))
+  PiTensorProduct.mapMonoidHom.comp (MonoidHom.pi fun i => (τ i).comp (Pi.evalMonoidHom Gi i))
 
 def invT {m : ℕ} (K₁ : Subgroup G) (K₂ : Subgroup H) (τ₀ : K₁ →* GL (Fin m) ℂ) (ρ : Representation ℂ (G × H) W) :
     Submodule ℂ (Fin m → W) where
@@ -90,7 +90,7 @@ variable {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L] [NumberField L] [IsCMF
 
 abbrev GS : Type := GV n (wt s) × GLw n (s.w s.v0)
 
-def toGS : Ga l L n →* GS n s := MonoidHom.prod (Pi.monoidHom fun u : s.St => cmp n (s.w u)) (cmp n (s.w s.v0))
+def toGS : Ga l L n →* GS n s := MonoidHom.prod (MonoidHom.pi fun u : s.St => cmp n (s.w u)) (cmp n (s.w s.v0))
 
 def GaS : Subgroup (Ga l L n) :=
   ⨅ (w : Plc L) (_ : w.under (𝓞 (Lp L)) ∉ s.St ∧ w.under (𝓞 (Lp L)) ≠ s.v0), (cmp n w).ker

@@ -119,7 +119,8 @@ theorem exists_haar_map (hF : IsTotallyReal F) (e : Ainf F ≃+* (InfinitePlace 
   have h2 : (e : Ainf F → _) ∘ eA = id := by
     funext y
     exact e.apply_symm_apply y
-  rw [Measure.map_smul, Measure.map_map he.continuous.measurable hAc.measurable, h2, Measure.map_id]
+  rw [Measure.map_smul _ he.continuous.measurable.aemeasurable,
+    Measure.map_map he.continuous.measurable hAc.measurable, h2, Measure.map_id]
 
 end SlopeTestRemainingChoices
 

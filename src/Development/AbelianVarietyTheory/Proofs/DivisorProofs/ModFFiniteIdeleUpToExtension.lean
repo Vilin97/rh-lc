@@ -68,6 +68,7 @@ theorem valued_finiteCompletionMap (w : HeightOneSpectrum (𝓞 E)) (x : (w.unde
     simp only [u, mul_assoc, inv_mul_cancel₀ hc0, mul_one]
   conv_lhs => rw [hxu, map_mul, map_mul, hfu, one_mul, finiteCompletionMap_coe, valued_algebraMap,
     ← HeightOneSpectrum.valuation_liesOver E (w.under (𝓞 K)) w k, hvk]
+  rw [Ideal.ramificationIdx'_eq_ramificationIdx _ _ (w.under (𝓞 K)).ne_bot]
 
 theorem factor_upIdele (t : (Af K)ˣ) (w : HeightOneSpectrum (𝓞 E)) :
     ((Ideal.absNorm w.asIdeal : ℕ) : ℝ) ^ WithZero.log (Valued.v ((upIdele K E t : Af E) w)) =

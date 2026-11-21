@@ -82,7 +82,7 @@ lemma exists_nilpotent_ideal (p q : B) (ν : ℕ → B) (hp : IsNilpotent p) (hq
   obtain ⟨N, hN⟩ := hN
   let S : Set B := {p, q - 1} ∪ ν '' {m | 2 ≤ m ∧ m < N}
   have hS : S.Finite :=
-    (Set.toFinite _).union (((Set.finite_Iio N).subset fun m hm => hm.2).image ν)
+    (Set.toFinite _).union (((Set.finite_Iio N).subset (show {m : ℕ | 2 ≤ m ∧ m < N} ⊆ Set.Iio N from fun _ hm => hm.2)).image ν)
   refine ⟨Ideal.span S, ?_, Ideal.subset_span (by simp [S]), Ideal.subset_span (by simp [S]), ?_⟩
   · rw [Ideal.FG.isNilpotent_iff_le_nilradical (Submodule.fg_span hS), Ideal.span_le]
     rintro x (hx | ⟨m, hm, rfl⟩)

@@ -168,14 +168,9 @@ theorem continuous_coeff_pp {Ω : Type*} [TopologicalSpace Ω] (u v : Ω → Fin
       ∑ i, X i * C ⟨fun q => v q i, (continuous_apply i).comp hv⟩]
   have hw : ![dp u, dp v] = fun r => mapAlgHom φ (w r) := by
     funext r
-    fin_cases r
     set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [Fin.zero_eta, Matrix.cons_val_zero, w, dp, mapAlgHom_apply, map_sum, map_mul, map_X, map_C]
-      rfl
-    set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val_fin_one, w, dp, mapAlgHom_apply, map_sum,
-        map_mul, map_X, map_C]
-      rfl
+      fin_cases r <;> simp [w, dp, mapAlgHom_apply] <;>
+        apply Finset.sum_congr rfl <;> intro i hi <;> congr 2 <;> funext q <;> rfl
   rw [pp, hw, ← comp_aeval, AlgHom.comp_apply, mapAlgHom_apply, coeff_map]
   exact (AddMonoidAlgebra.coeff (aeval w Q) m).continuous
 
@@ -183,7 +178,7 @@ theorem continuous_ell (ℓ : MvPolynomial (Fin 3) ℝ →ₗ[ℝ] ℝ) (Q : MvP
     Continuous fun p : (Fin 3 → ℝ) × (Fin 3 → ℝ) => ℓ (aeval ![lin3 p.1, lin3 p.2] Q) := by
   have h := ell_pp ℓ (Prod.fst : (Fin 3 → ℝ) × (Fin 3 → ℝ) → _) Prod.snd Q
   simp only [h]
-  exact continuous_finset_sum _ fun m _ =>
+  exact continuous_finsetSum _ fun m _ =>
     (continuous_coeff_pp _ _ continuous_fst continuous_snd Q m).mul continuous_const
 
 def ker (p : (Fin 3 → ℝ) × (Fin 3 → ℝ)) : ℝ := (1 / 2) * Real.log ((1 - ∑ i, p.1 i * p.2 i) / 2)

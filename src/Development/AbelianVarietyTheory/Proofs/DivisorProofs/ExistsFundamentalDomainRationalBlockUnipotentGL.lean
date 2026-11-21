@@ -18,10 +18,10 @@ namespace GlobalTheory.CuspRep
 theorem discreteTopology_ratN (E : Type) [Field E] [NumberField E] (a s : ℕ) :
     DiscreteTopology (ratN E a s) := by
   refine discreteTopology_of_isOpen_singleton_zero ?_
-  have hU : IsOpen (Set.univ.pi fun _ : BlockIx a s => Formalism.IndefR.Eqv.G5.adlNbhd E) :=
+  have hU : IsOpen (Set.univ.pi fun _ : BlockIx a s => Formalism.IndefR.Eqv.G5.adlNbhd (F := E)) :=
     isOpen_set_pi Set.finite_univ fun _ _ => Formalism.IndefR.Eqv.G5.adl_isOpen_nbhd
   have h : ({0} : Set (ratN E a s)) =
-      Subtype.val ⁻¹' (Set.univ.pi fun _ : BlockIx a s => Formalism.IndefR.Eqv.G5.adlNbhd E) := by
+      Subtype.val ⁻¹' (Set.univ.pi fun _ : BlockIx a s => Formalism.IndefR.Eqv.G5.adlNbhd (F := E)) := by
     ext ⟨x, q, hq⟩
     constructor
     · intro hx p _

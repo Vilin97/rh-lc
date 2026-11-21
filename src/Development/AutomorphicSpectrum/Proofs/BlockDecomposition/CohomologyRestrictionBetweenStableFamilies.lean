@@ -316,11 +316,9 @@ theorem bij_of_upTo {M N : Type*} [AddCommGroup M] [AddCommGroup N] [Module R M]
     exact ⟨x, by simpa using hx⟩⟩
 
 theorem onto {Q₁ : ObjectProperty (Thick (nlFun γ p X q κ))} (h : Q₁ ≤ Q') :
-    B.Onto (ObjectProperty.ιOfLE h) (fun T : Q'.FullSubcategory => Q₁ T.obj) where
-  full := inferInstance
-  faithful := inferInstance
-  mem T := T.property
-  ess T hT := ⟨⟨T.obj, hT⟩, ⟨Iso.refl _⟩⟩
+    B.Onto (ObjectProperty.ιOfLE h) (fun T : Q'.FullSubcategory => Q₁ T.obj) :=
+  ⟨ObjectProperty.full_ιOfLE h, ObjectProperty.faithful_ιOfLE h,
+    fun T => T.property, fun T hT => ⟨⟨T.obj, hT⟩, ⟨Iso.refl _⟩⟩⟩
 
 theorem mor_eq {C C' : Type 1} [Category.{0} C] [Category.{0} C'] {F : C ⥤ ModuleCat.{0} R} {F' : C' ⥤ ModuleCat.{0} R}
     (G : C' ⥤ C) (m m' : CH.Mor F F' (RingHom.id R)) (h1 : m.G = G) (h2 : m'.G = G)

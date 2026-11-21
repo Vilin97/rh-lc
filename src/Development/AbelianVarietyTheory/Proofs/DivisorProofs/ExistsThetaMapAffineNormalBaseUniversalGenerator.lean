@@ -48,7 +48,11 @@ theorem theta_map_aff : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonO
     rw [← he _ i pt c hl j]
     have hM' : e j ∈ M := hle (Ideal.subset_span ⟨j, rfl⟩)
     simp [i, Ideal.Quotient.eq_zero_iff_mem.2 hM']
-  have hstr := GlobalTheory.ProjSpace.pt_str β e hspan
+  have hstr : GlobalTheory.ProjSpace.pt β e hspan ≫ PSpace.str o n = spMap β := by
+    rw [GlobalTheory.ProjSpace.pt, PSpace.str, ProjPoint.ofHom_toSpecZero_assoc, ← Spec.map_comp]
+    congr 1
+    ext1
+    exact RingHom.ext fun r => MvPolynomial.eval₂Hom_C β e r
   have hf : PCrd (GlobalTheory.ProjSpace.pt β e hspan) e := (GlobalTheory.UMin.CrdUniq.pCrd_iff _ β hstr e).2 ⟨hspan, rfl⟩
   refine ⟨GlobalTheory.ProjSpace.pt β e hspan, hstr, ?_⟩
   intro K _ x' c ⟨θ', pt, hθ', hl⟩

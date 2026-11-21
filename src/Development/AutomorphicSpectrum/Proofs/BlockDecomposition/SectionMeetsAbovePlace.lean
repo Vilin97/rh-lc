@@ -22,7 +22,8 @@ theorem exists_above_mem_section : ∀ (E : Type) [Field E] [NumberField E] [IsC
     (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]; exact bot_le)
   have hQ0 : Q ≠ ⊥ := by
     rintro rfl
-    rw [Ideal.comap_bot_of_injective _ hinj] at hQv
+    rw [(show Ideal.under (𝓞 (maximalRealSubfield E)) (⊥ : Ideal (𝓞 E)) = ⊥ from
+      Ideal.comap_bot_of_injective _ hinj)] at hQv
     exact v.ne_bot hQv.symm
   obtain ⟨u, ⟨hu, huw⟩, -⟩ := hS (⟨Q, hQ, hQ0⟩ : Pl E)
   exact ⟨⟨u, huw.trans (HeightOneSpectrum.ext hQv)⟩, hu⟩

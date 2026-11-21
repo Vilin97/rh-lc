@@ -107,7 +107,7 @@ theorem exists_small_of_curve {R B : Type*} [CommRing R] [IsDomain R] [IsIntegra
   have hF := minpoly.monic hint
   have h0 : (Ψ ((minpoly R u).coeff 0)).eval 0 = 0 := by
     have h := congrArg p (minpoly.aeval R u)
-    rw [aeval_def, hom_eval₂, hu, eval₂_at_zero, hp, map_zero] at h
+    rw [aeval_def, hom_eval₂, hu, eval₂_at_zero, hp, p.map_zero] at h
     exact h
   have h1 : ∀ᶠ s in 𝓝 (0 : ℂ),
       ‖(Ψ ((minpoly R u).coeff 0)).eval s‖ < ε ^ (minpoly R u).natDegree :=

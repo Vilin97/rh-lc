@@ -55,7 +55,8 @@ theorem toL_invT (y : GL (Fin a) (Cinf E)) :
     toL (invT a (Cinf E) y).val = trL E a (GlobalTheory.ThetaPull.invL (toL y.val)) := by
   rw [trL_apply, GlobalTheory.ThetaPull.invL]
   change toL ((y⁻¹ : GL (Fin a) (Cinf E)).val)ᵀ = toL (Matrix.of (Matrix.of.symm (Matrix.of.symm y.val |> Matrix.of)⁻¹))ᵀ
-  simp [Matrix.coe_units_inv]
+  change toL ((y⁻¹ : GL (Fin a) (Cinf E)).val)ᵀ = toL (y.val⁻¹)ᵀ
+  rw [Matrix.coe_units_inv]
 
 theorem chart_star_invT (φ : GA E a → ℂ) (g : GA E a) {x : Lie E a} (hx : x ∈ invSet E a) :
     chart (fun g => star (φ (invT a (Ad E) g))) g x =
@@ -80,7 +81,6 @@ theorem lieD_star_invT (X : Lie E a) {φ : GA E a → ℂ} (hφ : φ ∈ Sm E a)
   rw [e.fderiv_eq, h3.fderiv]
   have e2 : toL (-(Matrix.of X)ᵀ) = -(toL (Matrix.of X)ᵀ : Lie E a) := rfl
   simp [trL_apply]
-  rw [e2, map_neg, map_neg]
 
 theorem act_star_invT (o : Op E a) (φ ψ χ : Sm E a)
     (hψ : ∀ g, ψ.1 g = star (φ.1 (invT a (Ad E) g)))

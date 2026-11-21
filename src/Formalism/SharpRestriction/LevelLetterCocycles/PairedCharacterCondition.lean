@@ -235,7 +235,8 @@ def tieIne : Prop :=
           ∃ d ∈ (pc (D.loc (D.nd.l i)) h hN hF hS).Dpcris ((D.nbr i w hw).rep (r.comp (decS D.nd w))),
             d ≠ 0 ∧
             actVB ((D.loc (D.nd.l i)).PD (D.nbr i w hw).Kw) ((D.nbr i w hw).rep (r.comp (decS D.nd w)))
-              ((D.nbr i w hw).e σ) d = (D.nbr i w hw).toLL a • d)
+              ((D.nbr i w hw).e σ) d =
+                @SMul.smul _ _ TensorProduct.leftHasSMul ((D.nbr i w hw).toLL a) d)
 
 def tieChi : Prop :=
   ∀ (i : D.nd.Loc) (k : Fin 2), D.nd.l i = D.host.g k → ∀ v : D.nd.PlG k,

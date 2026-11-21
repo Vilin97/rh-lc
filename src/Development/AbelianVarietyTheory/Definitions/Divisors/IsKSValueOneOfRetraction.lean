@@ -88,11 +88,13 @@ private theorem mul_left_eq_lift_comp_mu {X : Scheme.{0}} {G : Over X} [GrpObj G
   rw [Hom.mul_def, Over.comp_left, Over.lift_left]
 
 theorem of_hom {u : S ⟶ Sp R'} {B : Over S} [GrpObj B] (hσ : IsDPMorphism κ κ' σ)
-    (hb : t = u ≫ spMap σ) (f : B ⟶ A) [IsMonHom f] : GrpMor κ t A κ' u B σ (𝟙 S) f.left where
-  dp := hσ
-  base := by rw [Category.id_comp]; exact hb
-  w := by rw [Category.comp_id]; exact Over.w f
-  mul T x y x₀ y₀ hx hy := by
+    (hb : t = u ≫ spMap σ) (f : B ⟶ A) [IsMonHom f] : GrpMor κ t A κ' u B σ (𝟙 S) f.left := by
+  refine { dp := hσ, base := ?_, w := ?_, mul := ?_ }
+  · rw [Category.id_comp]
+    exact hb
+  · rw [Category.comp_id]
+    exact Over.w f
+  · intro T x y x₀ y₀ hx hy
     rw [← Over.comp_left, MonObj.mul_comp, mul_left_eq_lift_comp_mu, mul_left_eq_lift_comp_mu]
     congr 1
     apply pullback.hom_ext
@@ -143,11 +145,11 @@ theorem pull_pull {τ : R' →+* R''} {b' : S'' ⟶ S'} {ψ : A''.left ⟶ A'.le
 
 theorem comp {τ : R' →+* R''} {b' : S'' ⟶ S'} {ψ : A''.left ⟶ A'.left}
     (m : GrpMor κ t A κ' t' A' σ b φ) (m' : GrpMor κ' t' A' κ'' t'' A'' τ b' ψ) :
-    GrpMor κ t A κ'' t'' A'' (τ.comp σ) (b' ≫ b) (ψ ≫ φ) where
-  dp := IsDPMorphism.comp _ m'.dp m.dp
-  base := by rw [Category.assoc, m.base, ← Category.assoc, m'.base, Category.assoc, Cris.spMap_comp]
-  w := by rw [Category.assoc, m.w, ← Category.assoc, m'.w, Category.assoc]
-  mul T x y x₀ y₀ hx hy := by
+    GrpMor κ t A κ'' t'' A'' (τ.comp σ) (b' ≫ b) (ψ ≫ φ) := by
+  refine { dp := IsDPMorphism.comp _ m'.dp m.dp, base := ?_, w := ?_, mul := ?_ }
+  · rw [Category.assoc, m.base, ← Category.assoc, m'.base, Category.assoc, Cris.spMap_comp]
+  · rw [Category.assoc, m.w, ← Category.assoc, m'.w, Category.assoc]
+  · intro T x y x₀ y₀ hx hy
     let x₁ : Over.mk (T.hom ≫ b') ⟶ A' := Over.homMk (x.left ≫ ψ) (by
       simp only [Over.mk_hom, Category.assoc]; rw [m'.w, reassoc_of% (Over.w x)])
     let y₁ : Over.mk (T.hom ≫ b') ⟶ A' := Over.homMk (y.left ≫ ψ) (by

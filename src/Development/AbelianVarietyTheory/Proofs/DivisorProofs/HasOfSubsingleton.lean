@@ -28,7 +28,8 @@ theorem has_of_subsingleton : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalR
   intro R _ _ _ hR D hX
   haveI : IsNoetherianRing R := hR.1
   let A : PolAV (Spec (CommRingCat.of (FractionRing R))) := GlobalTheory.AmpleSpecialisation.baseChange D.toPre.P (jK R)
-  let eA : (Over.pullback (jK R)).obj D.toPre.P.A ≅ A.A := Iso.refl _
+  let eA : (Over.pullback (jK R)).obj D.toPre.P.A ≅ A.A := by
+    with_unfolding_all exact Iso.refl _
   have hA : IsMonHom eA.hom := by
     refine ⟨?_, ?_⟩
     · exact Category.comp_id _

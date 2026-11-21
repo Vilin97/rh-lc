@@ -55,7 +55,7 @@ theorem dRel_pull : ∀ (R R' : Type) [CommRing R] [CommRing R'] (X X' : Scheme.
     intro T T' T'' a b
     have e1 : D R' _ (f'.1 T T'' (a ≫ b)) =
         p1 (OAff s') b (D R' _ (f'.1 T T' a)) + D R' _ (f'.1 T' T'' b) := by
-      rw [Z1.comp, Derivation.map_add (f := _), p1_D]
+      rw [Z1.comp, Derivation.map_add (D := _), p1_D]
     have e2 : ∀ k, (g' k).1 T T'' (a ≫ b) • (w' k).1 T'' =
         p1 (OAff s') b ((g' k).1 T T' a • (w' k).1 T') + (g' k).1 T' T'' b • (w' k).1 T'' := by
       intro k; rw [Z1.comp, add_smul, oneFormsMapOfFunctorMorphism_smul, ← (w' k).2 b]
@@ -85,7 +85,7 @@ theorem dRel_pull : ∀ (R R' : Type) [CommRing R] [CommRing R'] (X X' : Scheme.
       rw [hB', oneFormsMapOfFunctorMorphism_smul, ← hW k, add_smul, sub_smul]
       abel
     simp only [θP]
-    rw [hA', Derivation.map_add (f := _), Derivation.map_sub, ← p1_D, e1, Finset.sum_congr rfl fun k _ ↦ e2 k]
+    rw [hA', Derivation.map_add (D := _), Derivation.map_sub, ← p1_D, e1, Finset.sum_congr rfl fun k _ ↦ e2 k]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib, map_sub, map_add (f := _), map_sum]
     abel

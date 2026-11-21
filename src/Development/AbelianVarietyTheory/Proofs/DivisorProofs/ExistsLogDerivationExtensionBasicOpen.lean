@@ -55,7 +55,7 @@ theorem map_mem_map {A B : Type} [CommRing A] [CommRing B] (φ : A →+* B) (D :
     rw [h]
     exact Ideal.mem_map_of_mem φ (hJ g hg)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | smul a x hx hE =>
     rw [smul_eq_mul, E.leibniz, smul_eq_mul, smul_eq_mul]
     exact add_mem (Ideal.mul_mem_left _ a hE) (Ideal.mul_mem_right _ _ hx)

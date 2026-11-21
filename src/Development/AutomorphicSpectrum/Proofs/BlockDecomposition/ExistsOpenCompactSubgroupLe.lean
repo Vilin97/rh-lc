@@ -28,7 +28,8 @@ theorem exists_compact_open_level_le (E : Type) [Field E] [NumberField E] [IsCMF
     GroundTheory.Automorphic.AdelicGLn.isCompact_integralFiniteGL E N
   have hSc : IsClosed (S : Set (GL (Fin N) (Af E))) := Subgroup.isClosed_of_isOpen S hS
   refine ⟨S ⊓ K, inf_le_left, ?_, ?_⟩
-  · simpa using hS.inter hKo
+  · change IsOpen ((S : Set (GL (Fin N) (Af E))) ∩ (K : Set (GL (Fin N) (Af E))))
+    exact hS.inter hKo
   · have : ((S ⊓ K : Subgroup _) : Set (GL (Fin N) (Af E))) =
         (K : Set (GL (Fin N) (Af E))) ∩ (S : Set (GL (Fin N) (Af E))) := by
       ext x; simp [and_comm]

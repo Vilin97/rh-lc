@@ -51,7 +51,7 @@ theorem torMatch_of_onTorus : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalR
         GlobalTheory.TorusPart.thickLift hr hp' ≫ ((Over.pullback (thick R (maximalIdeal R) 0)).map p).left := by
       apply pullback.hom_ext
       · rw [Category.assoc, GlobalTheory.TorusPart.thickLift_fst, e, Category.assoc]
-        simp only [GlobalTheory.TorusPart.thickLift, Over.pullback_map_left]
+        simp only [GlobalTheory.TorusPart.thickLift, Over.pullback_map_left, ← Category.assoc, pullback.lift_fst]
       · have w := Over.w ((Over.pullback (spMap (residue R))).map p)
         simp only [GlobalTheory.TorusPart.thickLift]
         rw [Category.assoc, pullback.lift_snd, Category.assoc, ← Category.assoc _ _ (GlobalTheory.TorusPart.thickPt 0 hr), w]

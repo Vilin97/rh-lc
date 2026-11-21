@@ -23,9 +23,9 @@ variable (K : FiniteSubfield)
 
 structure LocalEmbeddings where
 
-  fin : ∀ v : HeightOneSpectrum (𝓞 K.1), ℚ̄ →ₐ[K.1] AlgebraicClosure (v.adicCompletion K.1)
+  fin : ∀ v : HeightOneSpectrum (𝓞 K.1), AlgebraicClosure ℚ →ₐ[K.1] AlgebraicClosure (v.adicCompletion K.1)
 
-  inf : ∀ v : InfinitePlace K.1, ℚ̄ →ₐ[K.1] AlgebraicClosure v.Completion
+  inf : ∀ v : InfinitePlace K.1, AlgebraicClosure ℚ →ₐ[K.1] AlgebraicClosure v.Completion
 
 theorem nonempty_localEmbeddings : Nonempty (LocalEmbeddings K) :=
   ⟨⟨fun _ => Classical.choice nonempty_algHom_of_isSepClosed,

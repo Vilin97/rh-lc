@@ -22,8 +22,30 @@ theorem mem_Km_of_entries {N : ℕ} (m : ℕ) (g : GL (Fin N) k)
     (h2 : ∀ i j, ((g⁻¹ : GL (Fin N) k) : Matrix (Fin N) (Fin N) k) i j ∈ 𝒪[k])
     (h3 : ∀ i j, ∃ y ∈ 𝒪[k], y * (((Zls.unif k ^ m : 𝒪[k])) : k) =
       (g : Matrix (Fin N) (Fin N) k) i j - (1 : Matrix (Fin N) (Fin N) k) i j) :
-    g ∈ Zls.Km k N m :=
-  GlobalTheory.CuspNF.KprOpen.mem_map_ker 𝒪[k] (Zls.unif k ^ m) g h1 h2 h3
+    g ∈ Zls.Km k N m := by
+  let S := 𝒪[k]
+  let c : S := Zls.unif k ^ m
+  let P : Matrix (Fin N) (Fin N) S := Matrix.of fun i j => ⟨_, h1 i j⟩
+  let Q : Matrix (Fin N) (Fin N) S := Matrix.of fun i j => ⟨_, h2 i j⟩
+  have hinj : Function.Injective (S.subtype.mapMatrix : Matrix (Fin N) (Fin N) S →+* Matrix (Fin N) (Fin N) k) := fun x y h => by
+    ext i j
+    exact congrFun (congrFun h i) j
+  have hP : S.subtype.mapMatrix P = (g : Matrix (Fin N) (Fin N) k) := rfl
+  have hQ : S.subtype.mapMatrix Q = ((g⁻¹ : GL (Fin N) k) : Matrix (Fin N) (Fin N) k) := rfl
+  let u : GL (Fin N) S := ⟨P, Q, hinj (by rw [map_mul, hP, hQ, map_one, Units.mul_inv]),
+    hinj (by rw [map_mul, hP, hQ, map_one, Units.inv_mul])⟩
+  refine ⟨u, ?_, Units.ext rfl⟩
+  refine Units.ext ?_
+  ext i j
+  obtain ⟨y, hy, e⟩ := h3 i j
+  have key : Ideal.Quotient.mk (Ideal.span {c}) (P i j) = Ideal.Quotient.mk (Ideal.span {c}) ((1 : Matrix (Fin N) (Fin N) S) i j) := by
+    refine Ideal.Quotient.eq.2 (Ideal.mem_span_singleton'.2 ⟨⟨y, hy⟩, Subtype.ext ?_⟩)
+    change y * (c : k) = (g : Matrix (Fin N) (Fin N) k) i j - _
+    rw [e]
+    by_cases h : i = j <;> simp [Matrix.one_apply, h]
+  change Ideal.Quotient.mk (Ideal.span {c}) (P i j) = (1 : Matrix (Fin N) (Fin N) _) i j
+  rw [key]
+  by_cases h : i = j <;> simp [Matrix.one_apply, h]
 
 theorem Km_le_KO (N m : ℕ) : Zls.Km k N m ≤ KO k (Fin N) := by
   rintro _ ⟨u, -, rfl⟩

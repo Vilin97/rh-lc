@@ -32,18 +32,36 @@ theorem exists_frame (ν : Fin n → ℤ) :
     ∃ (d : ℕ) (e : (Jd n ν → ℂ) ≃ₗ[ℂ] EuclideanSpace ℂ (Fin d)),
       ∀ (k : Matrix.unitaryGroup (Fin n) ℂ) (x y : Jd n ν → ℂ),
         ⟪e (Rm ν k.1 *ᵥ x), e (Rm ν k.1 *ᵥ y)⟫_ℂ = ⟪e x, e y⟫_ℂ := by
+  have hunit (k : Matrix.unitaryGroup (Fin n) ℂ) :
+      Rm ν k.1 = LinearMap.toMatrix (wb ν) (wb ν)
+        (GlobalTheory.Branching.sqRep ℂ n (dw ν) (GlobalTheory.Branching.unitaryIncl n k)) := by
+    have h : IsUnit k.1.det := (Matrix.isUnit_iff_isUnit_det _).1 (GlobalTheory.Branching.unitaryIncl n k).isUnit
+    have e : Matrix.nonsingInvUnit k.1 h = GlobalTheory.Branching.unitaryIncl n k := Units.ext rfl
+    rw [Rm, dite_eq_left h, e]
+  have hone : Rm ν (1 : Matrix.unitaryGroup (Fin n) ℂ).1 = 1 := by
+    rw [hunit, map_one, map_one]
+    exact LinearMap.toMatrix_id _
+  have hmul (a b : Matrix.unitaryGroup (Fin n) ℂ) : Rm ν (a * b).1 = Rm ν a.1 * Rm ν b.1 := by
+    rw [hunit, hunit, hunit, map_mul, map_mul, Module.End.mul_eq_comp]
+    exact LinearMap.toMatrix_comp _ _ _ _ _
   let ρ : Representation ℂ (Matrix.unitaryGroup (Fin n) ℂ) (Jd n ν → ℂ) :=
     { toFun := fun k => Matrix.mulVecLin (Rm ν k.1)
       map_one' := by
         show Matrix.mulVecLin (Rm ν (1 : Matrix.unitaryGroup (Fin n) ℂ).1) = 1
-        rw [GlobalTheory.CompanionTheory.CxAvg.Rm_one, Matrix.mulVecLin_one]
+        rw [hone, Matrix.mulVecLin_one]
         rfl
       map_mul' := fun a b => by
         show Matrix.mulVecLin (Rm ν (a * b).1) = _
-        rw [GlobalTheory.CompanionTheory.CxAvg.Rm_mul, Matrix.mulVecLin_mul]
+        rw [hmul, Matrix.mulVecLin_mul]
         rfl }
+  have hcont : Continuous fun k : Matrix.unitaryGroup (Fin n) ℂ => Rm ν k.1 := by
+    simp only [hunit]
+    refine continuous_matrix fun i j => ?_
+    simp only [LinearMap.toMatrix_apply]
+    exact (GlobalTheory.CompanionTheory.WInfCont.continuous_sqRep_coeff (dw ν) (wb ν j) ((wb ν).coord i)).comp
+      GlobalTheory.CompanionTheory.CxAvg.continuous_unitaryIncl
   have hρc : ∀ v, Continuous fun k => ρ k v := fun v =>
-    (GlobalTheory.CompanionTheory.CxAvg.continuous_Rm ν).matrix_mulVec continuous_const
+    hcont.matrix_mulVec continuous_const
   obtain ⟨c, hc⟩ := GlobalTheory.exists_invariant_core ρ hρc
   obtain ⟨d, τ, e, hτ, he⟩ := GlobalTheory.ThetaCplV.UnitaryTrick.exists_isURep_of_core ρ
     (fun φ v => (LinearMap.continuous_of_finiteDimensional φ).comp (hρc v)) c hc
@@ -268,14 +286,26 @@ theorem frame_model (hν : Antitone ν) :
   obtain ⟨v0, hv0, hup, hwt⟩ := HW.exists_hw n ν (holRm n ν) hν
   generalize hc : ((wb ν).repr v0 : Jd n ν → ℂ) = c0 at hup hwt
   have hc0 : c0 ≠ 0 := fun h => hv0 ((wb ν).repr.map_eq_zero_iff.1 (DFunLike.coe_injective (hc.trans h)))
+  have hunit (k : Matrix.unitaryGroup (Fin n) ℂ) :
+      Rm ν k.1 = LinearMap.toMatrix (wb ν) (wb ν)
+        (GlobalTheory.Branching.sqRep ℂ n (dw ν) (GlobalTheory.Branching.unitaryIncl n k)) := by
+    have h : IsUnit k.1.det := (Matrix.isUnit_iff_isUnit_det _).1 (GlobalTheory.Branching.unitaryIncl n k).isUnit
+    have e : Matrix.nonsingInvUnit k.1 h = GlobalTheory.Branching.unitaryIncl n k := Units.ext rfl
+    rw [Rm, dite_eq_left h, e]
+  have hone : Rm ν (1 : Matrix.unitaryGroup (Fin n) ℂ).1 = 1 := by
+    rw [hunit, map_one, map_one]
+    exact LinearMap.toMatrix_id _
+  have hmul (a b : Matrix.unitaryGroup (Fin n) ℂ) : Rm ν (a * b).1 = Rm ν a.1 * Rm ν b.1 := by
+    rw [hunit, hunit, hunit, map_mul, map_mul, Module.End.mul_eq_comp]
+    exact LinearMap.toMatrix_comp _ _ _ _ _
   let σ : Matrix.unitaryGroup (Fin n) ℂ →* (L →ₗ[ℂ] L) :=
     { toFun := fun k => frameL e (Rm ν k.1)
       map_one' := by
         show frameL e (Rm ν (1 : Matrix.unitaryGroup (Fin n) ℂ).1) = 1
-        rw [GlobalTheory.CompanionTheory.CxAvg.Rm_one, frameL_one]
+        rw [hone, frameL_one]
       map_mul' := fun a b => by
         show frameL e (Rm ν (a * b).1) = _
-        rw [GlobalTheory.CompanionTheory.CxAvg.Rm_mul, frameL_mul] }
+        rw [hmul, frameL_mul] }
   have hσ : ∀ k x, σ k (e x) = e (Rm ν k.1 *ᵥ x) := fun k x => frameL_apply e _ x
   refine ⟨σ, fun a b => frameL e (Xu ν a b), e c0, glRel_frame e, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro a b x y

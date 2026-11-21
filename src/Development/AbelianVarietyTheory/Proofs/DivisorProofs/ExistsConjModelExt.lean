@@ -69,6 +69,9 @@ theorem ext_transfer (he : ∀ a, ε' a = ε a.rev) (T : H' ≃ₗᵢ⋆[ℂ] H)
       (T.symm (σ (pM (prm ε ε')) w)) := by
   have h1 := wt_transfer (sg_symm he) T.symm (symm_inter T h) (isWtOn_perm hU (prm ε ε') (eps_prm he) hw)
   convert h1 using 1
+  funext a
+  rw [lowK_rev he]
+  simp [nr, revNeg_prm]
 
 end Gen
 

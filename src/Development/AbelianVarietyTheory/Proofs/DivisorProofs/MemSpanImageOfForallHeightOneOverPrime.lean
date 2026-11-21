@@ -70,7 +70,7 @@ theorem span_test : ∀ (R₁ F₁ : Type) [CommRing R₁] [IsDomain R₁] [IsNo
     refine GlobalTheory.dvd_of_forall_height_eq_one ((map_ne_zero_iff _ hinj).mpr ha) fun Q hQ h1 haQ => ?_
     obtain ⟨hq, hd⟩ := (IsLocalization.isPrime_iff_isPrime_disjoint S A Q).mp hQ
     obtain ⟨s, hs, t', g', ht', e'⟩ := hloc (Q.comap (algebraMap R₁ A)) hq
-      (by rw [IsLocalization.height_comap S Q, h1]) haQ hd
+      (by rw [IsLocalization.height_under S Q, h1]) haQ hd
     have h0 := hind (fun j => t' * s * g j - t * a * g' j) (by
       simp only [map_sub, map_mul, sub_mul, mul_assoc, Finset.sum_sub_distrib, ← Finset.mul_sum, ← e, ← e']
       ring)

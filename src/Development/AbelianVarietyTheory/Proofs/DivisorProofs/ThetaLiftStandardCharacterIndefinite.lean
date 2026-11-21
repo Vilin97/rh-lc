@@ -86,8 +86,8 @@ theorem continuous_symplOHF (σ : E →ₐ[F] E) {nS nT : ℕ} (JS : Matrix (Fin
   have hx' : ∀ i j, Continuous fun t => x t i j := fun i j =>
     (continuous_apply j).comp ((continuous_apply i).comp hx)
   have hh : Continuous fun t => hOF σ JS JT (x t) (y t) :=
-    continuous_finset_sum _ fun _ _ => continuous_finset_sum _ fun _ _ => continuous_finset_sum _ fun _ _ =>
-      continuous_finset_sum _ fun _ _ => ((continuous_const.mul (hy' _ _)).mul continuous_const).mul (hx' _ _)
+    continuous_finsetSum _ fun _ _ => continuous_finsetSum _ fun _ _ => continuous_finsetSum _ fun _ _ =>
+      continuous_finsetSum _ fun _ _ => ((continuous_const.mul (hy' _ _)).mul continuous_const).mul (hx' _ _)
   have ht : Continuous (Algebra.trace (AF F) (AEF F E)) := IsModuleTopology.continuous_of_linearMap _
   exact continuous_const.mul (ht.comp (continuous_const.mul hh))
 

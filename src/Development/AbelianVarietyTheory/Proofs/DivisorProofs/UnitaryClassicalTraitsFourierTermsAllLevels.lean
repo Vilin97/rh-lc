@@ -32,7 +32,7 @@ theorem posW_one_one : PosW (!![1] : Matrix (Fin 1) (Fin 1) ℤ) := by
   unfold PosW
   have : ((!![1] + (!![1] : Matrix (Fin 1) (Fin 1) ℤ).transpose).map (Int.cast : ℤ → ℝ)) = Matrix.diagonal fun _ => 2 := by
     ext i j
-    fin_cases i; fin_cases j; simp
+    fin_cases i; fin_cases j; simp [Matrix.vecHead, Function.swap]
   rw [this, Matrix.posDef_diagonal_iff]
   intro _; norm_num
 

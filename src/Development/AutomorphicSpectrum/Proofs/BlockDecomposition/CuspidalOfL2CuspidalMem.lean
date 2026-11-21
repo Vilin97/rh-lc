@@ -44,11 +44,14 @@ theorem exists_lintegral_enorm_lift_le {G : Type} [Group G] [TopologicalSpace G]
     refine (ENNReal.rpow_le_rpow h2 (by simp)).trans (le_of_eq ?_)
     rw [ENNReal.mul_rpow_of_nonneg _ _ (by simp)]
     simp
+    exact Lp.aestronglyMeasurable F
+    exact hm.restrict
   have h4 := eLpNorm_le_eLpNorm_mul_rpow_measure_univ (μ := μ.restrict C) (p := 1) (q := 2) (by norm_num) hm.restrict
   have e : (1 / (1 : ℝ≥0∞).toReal - 1 / (2 : ℝ≥0∞).toReal) = (1 / 2 : ℝ) := by norm_num
   rw [eLpNorm_one_eq_lintegral_enorm, e, Measure.restrict_apply_univ] at h4
   calc _ ≤ N ^ (1 / 2 : ℝ) * ‖F‖ₑ * μ C ^ (1 / 2 : ℝ) := h4.trans (by gcongr)
     _ = _ := by ring
+  exact hm.restrict
 
 section Adelic
 

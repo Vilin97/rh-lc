@@ -55,7 +55,7 @@ theorem det_smul_eq_sum (x : Module.Basis (Fin r) ℤ O) (b : LinearMap.BilinFor
       refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_
       rw [hA]; ring
     rw [e, adjugate_mul]
-    simp [Matrix.smul_apply, one_apply]
+    simp [Matrix.smul_apply, Matrix.one_apply]
   rw [Finset.sum_comm]
   simp_rw [← Finset.sum_smul, key]
   conv_lhs => rw [hv]

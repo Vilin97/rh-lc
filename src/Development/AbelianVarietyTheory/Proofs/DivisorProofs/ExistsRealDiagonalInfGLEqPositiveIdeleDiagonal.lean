@@ -34,6 +34,8 @@ theorem exists_diag_infGL (E : Type) [Field E] [NumberField E] [IsTotallyComplex
         GlobalTheory.CuspBoundSiegel.posIdele_exp]
       change 1 - sInf E 1 + sInf E _ = _
       congr 2
+      funext w
+      change Complex.exp (Real.log (r i) : ℂ) = (r i : ℂ)
       rw [← Complex.ofReal_exp, Real.exp_log (hr i)]
     refine Units.ext ?_
     rw [coe_diagUnits]

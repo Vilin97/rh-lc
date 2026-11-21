@@ -198,7 +198,7 @@ theorem exists_quotient : ∀ (S : Scheme.{0}) (A : Over S) [GrpObj A] [IsCommMo
     rw [transl_mul]; rfl
   have hS : ∀ a, ρ a ≫ A.hom = A.hom := fun a => Over.w _
   let τ := GlobalTheory.ZM.autOfRightAction ρ h1 hm
-  have hτ : ∀ a, (τ a).hom ≫ A.hom = A.hom := fun a => hS a⁻¹
+  have hτ : ∀ a, (τ a).asIso.hom ≫ A.hom = A.hom := fun a => hS a⁻¹
   have : OrbitsInAffineOpens τ := OrbitsInAffineOpens.of_locally_on_base τ A.hom hτ fun s => by
     obtain ⟨_, ⟨U, hU, rfl⟩, hsU, -⟩ :=
       S.isBasis_affineOpens.exists_subset_of_mem_open (Set.mem_univ s) isOpen_univ
@@ -215,15 +215,15 @@ theorem exists_quotient : ∀ (S : Scheme.{0}) (A : Over S) [GrpObj A] [IsCommMo
     have h2 : toUnit (Over.mk (y ≫ A.hom)) ≫ a.1 = 1 := mul_eq_left.mp e
     exact Subtype.ext (hfree k (y ≫ A.hom) a.1 a.2 h2)
   have hf : IsFreeAction τ := .of_isAlgClosed fun k _ _ y a h ↦ inv_eq_one.mp (hfreeρ k y a⁻¹ h)
-  let ψ : A ⟶ Over.mk (finiteQuotient.desc τ A.hom hτ) :=
-    Over.homMk (finiteQuotient.π τ) (finiteQuotient.π_desc τ A.hom hτ)
+  obtain ⟨Y, π, hQ⟩ := (GlobalTheory.exists_isAffineQuotient_iff τ).mpr ‹OrbitsInAffineOpens τ›
+  let ψ : A ⟶ Over.mk (hQ.desc A.hom hτ) :=
+    Over.homMk π (hQ.comp_desc A.hom hτ)
   have hc : GlobalTheory.ZM.IsGaloisCover H ρ ψ.left := by
-    refine ⟨hH, h1, hm, fun a ↦ ?_, finiteQuotient.isFinite_π_of_isFreeAction hf,
-      finiteQuotient.etale_π hf, inferInstanceAs (Surjective (finiteQuotient.π τ)),
-      fun k _ _ y y' e ↦ ?_⟩
-    · have := finiteQuotient.comp_π τ a⁻¹
+    refine ⟨hH, h1, hm, fun a ↦ ?_, hQ.isFinite_of_isFreeAction hf,
+      hQ.etale_of_isFreeAction hf, hQ.surjective, fun k _ _ y y' e ↦ ?_⟩
+    · have := hQ.comp_eq a⁻¹
       rwa [GlobalTheory.ZM.autOfRightAction_hom, inv_inv] at this
-    · obtain ⟨a, ha⟩ := (finiteQuotient.comp_π_eq_iff τ y y').mp e
+    · obtain ⟨a, ha⟩ := (hQ.comp_eq_comp_iff y y').mp e
       have ha : y ≫ ρ a⁻¹ = y' := ha
       refine ⟨a⁻¹, ha, fun c hc ↦ ?_⟩
       have hc : y ≫ ρ c = y' := hc

@@ -112,7 +112,9 @@ theorem sFinite_nuD (d : ℕ) : SFinite (nuD E k d) := by
   | succ d ih => change SFinite (Measure.map _ _); infer_instance
 
 theorem measurable_blkMul (j : ℕ) : Measurable (fun p : (UnipotentBlockColumnIndex k j j → Ad E) × GA E k => blkU p.1 * p.2) :=
-  ((continuous_posU _).measurable.comp measurable_fst).mul measurable_snd
+  by
+    set_option synthInstance.maxHeartbeats 400000 in
+      exact (((continuous_posU _).comp continuous_fst).mul continuous_snd).measurable
 
 theorem nuD_conj (t : GA E k) (u : Fin k → (Ad E)ˣ) (ht : t.val = diagonal fun i => (u i : Ad E)) {q : ℝ} (hq : 0 < q)
     (e : Fin k → ℤ) (hmod : ∀ a b, ((GroundTheory.Global.IdeleGroup.ideleModule E (u a * (u b)⁻¹) : ℝ))⁻¹ = q ^ (e a - e b))

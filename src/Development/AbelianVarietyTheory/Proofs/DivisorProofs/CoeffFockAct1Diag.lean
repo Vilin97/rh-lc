@@ -98,7 +98,7 @@ theorem lowShape : ∀ (P Q R S : ℕ) (x : ℚ) (k k' : ℕ), x - Formalism.Bas
     have h2 : α.degree ≤ f.totalDegree := le_totalDegree hα
     omega
   refine ⟨fun l hl => ?_, fun d hd => ?_⟩
-  · obtain ⟨α, hα, hl⟩ := mem_vars l |>.1 hl
+  · obtain ⟨α, hα, hl⟩ := mem_vars_iff_mem_support l |>.1 hl
     obtain ⟨⟨h1, h2⟩, -⟩ := key α hα
     rw [Finsupp.mem_support_iff] at hl
     rcases l with ⟨a | a, c | c⟩

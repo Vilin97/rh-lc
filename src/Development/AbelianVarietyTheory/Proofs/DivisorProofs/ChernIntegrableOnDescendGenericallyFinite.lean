@@ -77,7 +77,7 @@ theorem chernIntegrableOn_descend : ∀ (k : Type) [CommRing k] (Y : Scheme.{0})
       _ ≤ ∫⁻ z, ‖f (PtsOver.map ρ (rfl : ρ ≫ q = ρ ≫ q) (spMap σ) z)‖ₑ
           ∂((((N.φ σ).pull ρ rfl).chernPart e ε).restrict
             (PtsOver.map ρ (rfl : ρ ≫ q = ρ ≫ q) (spMap σ) ⁻¹' (ptsIn q σ U ∩ ptsIn q σ V))) :=
-          lintegral_map_le _ _
+          lintegral_map_le _ hFm.aemeasurable
       _ ≤ _ := by
           refine lintegral_mono' (Measure.restrict_mono ?_ le_rfl) le_rfl
           rw [← hpre U]

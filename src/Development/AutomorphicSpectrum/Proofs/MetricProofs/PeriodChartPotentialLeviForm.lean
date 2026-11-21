@@ -124,8 +124,8 @@ theorem inFlagDomain_base {j : ℕ} : InFlagDomain N j 1 := by
 
 theorem continuous_cellMat (N : ℕ) : Continuous (cellMat N) := by
   unfold cellMat
-  refine continuous_finset_sum _ fun k _ => (continuous_const_smul _).comp (Continuous.pow ?_ k)
-  refine continuous_finset_sum _ fun p _ => ?_
+  refine continuous_finsetSum _ fun k _ => (continuous_const_smul _).comp (Continuous.pow ?_ k)
+  refine continuous_finsetSum _ fun p _ => ?_
   refine continuous_matrix fun a b => ?_
   simp only [Matrix.single_apply]
   split_ifs
@@ -204,9 +204,10 @@ theorem levi_of_cell {j : ℕ} (hj : j ≤ N) (i : Fin N) {z0 : Fin e → ℂ} {
     simp only [Function.comp_apply, φ, one_mul]
     linarith
   refine ⟨(hc.add (contDiffAt_const.mul hHR)).congr_of_eventuallyEq hfe, fun v => ?_⟩
-  rw [levi_congr hfe v, levi_add_smul 1 hc hHR v, levi_comp v hz hφ', levi_re_analytic hH v, hz0,
-    (GlobalTheory.T.flag_potential_levi_form_cell N j hj i (fderiv ℂ z z0 v)).2]
-  simp [rel]
+  rw [levi_congr hfe v, levi_add_smul 1 hc hHR v, levi_comp v hz hφ', levi_re_analytic hH v, hz0]
+  have hlev := (GlobalTheory.T.flag_potential_levi_form_cell N j hj i (fderiv ℂ z z0 v)).2
+  simp [φ, rel] at hlev ⊢
+  exact hlev
 
 theorem rel_lt {j : ℕ} (hj : j ≤ N) (a : Fin N) : rel N j a < N := by
   have := a.2

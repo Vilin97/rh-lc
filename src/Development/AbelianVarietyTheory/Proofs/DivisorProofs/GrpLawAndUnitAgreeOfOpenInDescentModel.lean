@@ -127,7 +127,8 @@ theorem mul_agree {S₁ S₂ : Scheme.{0}} (s₁ : S₁ ⟶ Sp σ.R) (s₂ : S�
   have eT₁ : π ≫ ya ≫ fb ≫ h₁ = ρ ≫ h₂ := by
     have := hT.w =≫ pullback.fst E.p s₂
     simp only [Category.assoc] at this
-    exact this
+    rw [pullback.lift_fst, pullback.lift_fst] at this
+    simpa only [Category.assoc] using this
   have eT₂ : π ≫ ya' ≫ H₂.hom = ρ ≫ H₂.hom := by
     have := hT.w =≫ pullback.snd E.p s₂
     simp only [Category.assoc] at this

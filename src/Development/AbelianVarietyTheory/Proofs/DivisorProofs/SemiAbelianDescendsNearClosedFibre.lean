@@ -41,6 +41,6 @@ theorem descends_near_closed_fibre : ∀ (R : Type) [CommRing R] [IsDomain R] [I
     (GlobalTheory.T.descentDatum_carries_translateChart S π G' N n a x (fun i => (hx i).2) φ hφ)
   refine ⟨G, β, Over.homMk (ψ none) (hψ none).2.1, ?_, hpb, (hψ none).1, ?_, hφβ⟩
   · exact smooth_of_charts_cover _ _ _ _ ψ G.hom N.U.hom (fun j => (hψ j).1) hcovG (fun j => (hψ j).2.1) N.smooth
-  · simpa using (hψ none).2.2
+  · simpa [Near.chart] using (hψ none).2.2
 
 end GlobalTheory.Mum

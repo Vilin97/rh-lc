@@ -106,7 +106,13 @@ theorem resD_pureA (f : SchwartzMap (κ ⊕ κ → mixedEmbedding.mixedSpace F) 
     resD F κ (pureA F f g) p = compD F κ f p.1 * g (Sum.elim p.2 p.2) := by
   change f (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F (Sum.elim (glue p) (glue p) i).1) *
       g (fun i => (Sum.elim (glue p) (glue p) i).2) = f (dI F κ p.1) * g (Sum.elim p.2 p.2)
-  congr 2 <;> funext i <;> cases i <;> simp [glue, dI_apply]
+  congr 2
+  · funext i
+    cases i <;> change InfiniteAdeleRing.ringEquiv_mixedSpace F
+      ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (eI F κ p.1 _)) = _ <;>
+      exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
+  · funext i
+    cases i <;> rfl
 
 theorem integrable_diag_SB {g : (κ ⊕ κ → FiniteAdeleRing (𝓞 F) F) → ℂ}
     (hg : g ∈ SB (κ ⊕ κ → FiniteAdeleRing (𝓞 F) F)) :

@@ -165,7 +165,8 @@ theorem levi_kill : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E
       rw [eval_multiset_prod, Multiset.map_map, map_multiset_prod, Multiset.map_map]
       congr 1
       refine Multiset.map_congr rfl fun x _ => ?_
-      simp
+      change (X + C (algebraMap ℂ S x)).eval (algebraMap ℂ S u) = algebraMap ℂ S (u + x)
+      rw [eval_add, eval_X, eval_C, (algebraMap ℂ S).map_add]
     rw [eval_sub, eval_mul, eP, map_sub, sub_eq_zero]
     have hG := hleft v.1 v.2 F hFN
     have h1 := GlobalTheory.CompanionTheory.CTFin.CapFactor.cap_levi E r s τ u (v.1 F) hG q

@@ -30,8 +30,8 @@ theorem nonempty_equiv_of_generic_subquotients (k : Type) [Field k] [ValuativeRe
   obtain ⟨C, D, hDC, ⟨e₂⟩⟩ := GlobalTheory.T.subquotient_realised_by_subreps ρ σ hσρ
   have hiAB : (subQuot A B).IsIrreducible := GlobalTheory.Parabolic.isIrreducible_of_equiv e₁ hπ
   have hiCD : (subQuot C D).IsIrreducible := GlobalTheory.Parabolic.isIrreducible_of_equiv e₂ hσ
-  have hAB := (GlobalTheory.T.generic_subquotient_iff_whittaker_quotient k ψ hψ N ρ hρ A B hBA).1 (hgπ.of_equiv e₁)
-  have hCD := (GlobalTheory.T.generic_subquotient_iff_whittaker_quotient k ψ hψ N ρ hρ C D hDC).1 (hgσ.of_equiv e₂)
+  have hAB := (GlobalTheory.T.generic_subquotient_iff_whittaker_quotient k ψ hψ N ρ hρ A B hBA).1 (IsGenericFor.of_equiv hgπ e₁)
+  have hCD := (GlobalTheory.T.generic_subquotient_iff_whittaker_quotient k ψ hψ N ρ hρ C D hDC).1 (IsGenericFor.of_equiv hgσ e₂)
   obtain ⟨e⟩ := GlobalTheory.T.nonempty_equiv_subQuot_of_not_le_sup ρ (twKer ρ (unipB k (Fin N)) (whitChar ψ N)) hrank
     (GlobalTheory.T.twisted_kernel_sup_distributes_subreps k ψ hψ N ρ hρ) A B C D hBA hDC hiAB hiCD hAB hCD
   exact ⟨(e₁.trans e).trans e₂.symm⟩

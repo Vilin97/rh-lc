@@ -85,8 +85,10 @@ theorem exists_normalised {A : Type} [Finite A] (x : (Σ k, J k) → Ω) (c : �
     exact hnot a
   · have hV : IsOpen {w | w ∈ T₁ ∧ ∀ a, eval (bl w) (map (Int.castRingHom ℂ) (h a)) ≠ 0} :=
       isOpen_forall_ne hT₁o hevh
-    refine AnalyticOnNhd.congr hV (((analytic_eval hblq (g a)).mono fun w hw => hw.1).div
-      ((hevh a).mono fun w hw => hw.1) fun w hw => hw.2 a) fun w hw => ?_
+    have hsub : {w | w ∈ T₁ ∧ ∀ a, eval (bl w) (map (Int.castRingHom ℂ) (h a)) ≠ 0} ⊆ T₁ :=
+      fun w hw => hw.1
+    refine AnalyticOnNhd.congr hV (((analytic_eval hblq (g a)).mono hsub).div
+      ((hevh a).mono hsub) fun w hw => hw.2 a) fun w hw => ?_
     have hz : bl w ∈ mcPts (mCoordIdeal x) := mem_mcPts_of_sameOrbit
       (GroundTheory.Heights₂.Heights.CoordinateConeArithVar.isMultiHomogIdeal x) (orbit_symm (horb w hw.1)) (hmem w hw.1.1)
     exact (valAt_eq hz ⟨d a, g a, h a, hg a, hh a, hx a, heq a, hw.2 a, rfl⟩).symm

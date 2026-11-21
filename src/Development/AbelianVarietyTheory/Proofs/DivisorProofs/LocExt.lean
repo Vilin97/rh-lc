@@ -54,7 +54,7 @@ theorem locExt {k : Type} [CommRing k] {X Y : Scheme.{0}} {p : X ⟶ Sp k} {q : 
     obtain ⟨N, i, hi, rfl⟩ := hp
     exact ⟨N, π ≫ i, inferInstance, by rw [Category.assoc, hπ]⟩
   have hemb : IsClosedEmbedding (ptMap π hπ σ) := by
-    have := CxPts.compactSpace σ hq
+    have : CompactSpace (CxPts q σ) := GlobalTheory.CxPts.compactSpace σ hq
     have hc : Continuous (ptMap π hπ σ) := continuous_of_comp (f := π) fun _ => rfl
     refine hc.isClosedEmbedding fun y y' h => Subtype.ext ?_
     exact (cancel_mono π).1 (congrArg Subtype.val h)

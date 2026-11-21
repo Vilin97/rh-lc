@@ -143,13 +143,16 @@ theorem perCoord_exists : ∀ (O : Type) [Ring O] (bar : O → O) (g : ℕ) (ρ 
       (hc α) (fun b hb => nonsing_inv_mul _ (isUnit_iff_ne_zero.2 (hs _ (hnear b hb)).1))
     refine differentiableOn_pi.2 fun k => ?_
     show DifferentiableOn ℂ (fun b => π (((colMat α (P b))⁻¹ * colMat β (P b))ᵀ * M₀) k) B'
-    rw [show (fun b => π (((colMat α (P b))⁻¹ * colMat β (P b))ᵀ * M₀) k) = fun b => ∑ i, ∑ j,
-      (((colMat α (P b))⁻¹ * colMat β (P b))ᵀ * M₀) i j * π (Matrix.single i j 1) k from
-      funext fun b => coords_sum π _ k]
-    simp only [mul_apply, transpose_apply]
-    exact DifferentiableOn.fun_sum fun i _ => DifferentiableOn.fun_sum fun j _ =>
-      (DifferentiableOn.fun_sum fun l _ => (DifferentiableOn.fun_sum fun n _ =>
-        (hinv _ _).mul (hc β _ _)).mul_const _).mul_const _
+    have hd : DifferentiableOn ℂ (fun b => ∑ i : Fin g, ∑ j : Fin g,
+        (∑ l : Fin g, (∑ n : Fin g, (colMat α (P b))⁻¹ l n * colMat β (P b) n i) * M₀ l j) *
+          π (Matrix.single i j 1) k) B' :=
+      DifferentiableOn.fun_sum fun i _ => DifferentiableOn.fun_sum fun j _ =>
+        (DifferentiableOn.fun_sum fun l _ => (DifferentiableOn.fun_sum fun n _ =>
+          (hinv _ _).mul (hc β _ _)).mul_const _).mul_const _
+    apply hd.congr
+    intro b _
+    simpa only [Matrix.mul_apply, Matrix.transpose_apply] using
+      (coords_sum π (((colMat α (P b))⁻¹ * colMat β (P b))ᵀ * M₀) k)
 
 end
 

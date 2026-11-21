@@ -315,7 +315,7 @@ theorem degBdd_of : WedgeF → WedgeI → MulF → MulI → SzFin → FinSupp �
       rw [hsp] at h
       exact h.symm
     rw [h]
-    refine ((continuous_finset_sum _ fun v _ => ?_).add (continuous_fin_part hF _)).neg
+    refine ((continuous_finsetSum _ fun v _ => ?_).add (continuous_fin_part hF _)).neg
     exact continuous_inf_part v _ fun x =>
       (hFS E (Fin n) (Fin k) _ _ (rows_mul_frame x M s hs)).1 v
 

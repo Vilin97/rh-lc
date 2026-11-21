@@ -375,11 +375,12 @@ theorem exists_div_E_pow (m : ℕ) {f : K⟦X⟧} (hf : f ∈ Rpi O K l e) :
 variable (O K) in
 theorem sameJets : SameJets
     (Subalgebra.inclusion (invL_A_le_Rpi (O := O) (K := K) l e)).toRingHom
-    (EIn l e (invL l (A O K))) where
-  div m x := by
+    (EIn l e (invL l (A O K))) := by
+  constructor
+  · intro m x
     obtain ⟨g, hg, h, hh, hx⟩ := exists_div_E_pow l e m x.2
     exact ⟨⟨g, hg⟩, ⟨h, hh⟩, Subtype.ext hx⟩
-  dvd m g h hx := by
+  · intro m g h hx
     have hx' : (g : K⟦X⟧) = E K l e ^ m * h := congrArg Subtype.val hx
     exact ⟨⟨h, mem_invL_A_of_E_pow_mul l e m h.2 (hx' ▸ g.2)⟩, Subtype.ext hx'⟩
 
@@ -408,16 +409,16 @@ variable [Fact l.Prime] [NormedAlgebra ℚ_[l] K]
 
 def derAl : Derivation K (invL l (A O K)) (invL l (A O K)) :=
   Derivation.mk'
-    { toFun := fun f => ⟨PowerSeries.derivative K f,
+    { toFun := fun f => ⟨PowerSeries.derivative (f : K⟦X⟧),
         derivative_mem_away _ (fun _ => derivative_mem_A) f.2⟩
-      map_add' := fun f g => Subtype.ext (map_add (PowerSeries.derivative K) _ _)
+      map_add' := fun f g => Subtype.ext (map_add (PowerSeries.derivative (R := K)) f.1 g.1)
       map_smul' := fun c f => Subtype.ext (by
-        change PowerSeries.derivative K (C c * (f : K⟦X⟧)) = C c * PowerSeries.derivative K f
-        simp) }
-    fun f g => Subtype.ext ((PowerSeries.derivative K).leibniz f g)
+        change PowerSeries.derivative (C c * f.1) = C c * PowerSeries.derivative f.1
+        simpa only [smul_eq_C_mul] using (PowerSeries.derivative (R := K)).map_smul c f.1) }
+    fun f g => Subtype.ext ((PowerSeries.derivative (R := K)).leibniz f.1 g.1)
 
 @[simp] theorem coe_derAl (f : invL l (A O K)) :
-    (derAl O K l f : K⟦X⟧) = PowerSeries.derivative K f := rfl
+    (derAl O K l f : K⟦X⟧) = PowerSeries.derivative (f : K⟦X⟧) := rfl
 
 def dHat : Derivation K (Ahat O K l e) (Ahat O K l e) := complDer _ (derAl O K l)
 

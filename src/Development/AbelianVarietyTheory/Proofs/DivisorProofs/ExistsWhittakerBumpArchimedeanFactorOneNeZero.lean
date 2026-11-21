@@ -26,7 +26,7 @@ variable {E} {n : ℕ}
 
 theorem continuous_sdM_of : Continuous fun x : Lie E n => sdM (Matrix.of x) := by
   unfold sdM
-  exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     (continuous_apply j).comp (continuous_apply i)
 
 theorem sdM_one : sdM (1 : Matrix (Fin n) (Fin n) (Cinf E)) = 0 := by

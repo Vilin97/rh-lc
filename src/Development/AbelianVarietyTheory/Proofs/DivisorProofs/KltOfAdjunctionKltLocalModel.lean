@@ -88,6 +88,7 @@ theorem klt_of_adjKlt_locModel : GlobalTheory.Published.Principalisation → ∀
       (Finsupp.mapDomain e.symm (φ + Finsupp.single f 1)) =
       E.disc (dForm c x) (φ + Finsupp.single f 1) := fun E => by
     rw [Place.disc, Place.disc, (hΦ E).2.2.1, (hΦ E).2.2.2 n x hx]
+    rfl
   have hψ : ∀ E : Place c, E.disc (dForm c x) (φ + Finsupp.single f 1) =
       E.disc (dForm c x) φ - E.ord f := fun E => by
     simp only [Place.disc, map_add (f := _), Place.ordQ_single]

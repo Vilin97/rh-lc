@@ -392,7 +392,7 @@ theorem par_of_family (hS : Stein F) {W : Type} [AddCommGroup W] [Module R W] (g
     simpa using LinearMap.congr_fun e ξ
   have hcomp : ∀ k ⦃T T' : C⦄ (φ : T ⟶ T') (ξ : Ω[F.obj T⁄R]),
       mp F φ (abelian₂ k T ξ) = abelian₂ k T' (p1 F φ ξ) := fun k T T' φ ξ ↦ by
-    refine (hu T).inductionOn ξ _ (by simp) (fun w ↦ ?_) (fun s n hn ↦ ?_) (fun a b ha hb ↦ ?_)
+    refine (hu T).inductionOn ξ (fun w ↦ ?_) (fun s n hn ↦ ?_) (fun a b ha hb ↦ ?_)
     · rw [← hc φ w, hLam, hLam]
       exact (mp F φ).commutes _
     · rw [(abelian₂ k T).map_smul, oneFormsMapOfFunctorMorphism_smul, (abelian₂ k T').map_smul, smul_eq_mul, smul_eq_mul, map_mul, hn]

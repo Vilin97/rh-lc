@@ -21,7 +21,7 @@ variable {K : Type} [Field K] [NumberField K]
 
 theorem norm_algebraMap_apply (x : K) (v : InfinitePlace K) :
     ‖(algebraMap K (InfiniteAdeleRing K) x) v‖ = v x := by
-  exact InfinitePlace.Completion.norm_coe v ((WithAbs.equiv v.1).symm x)
+  simp [InfiniteAdeleRing.algebraMap_apply, AbsoluteValue.Completion.norm_coe, InfinitePlace.coe_apply]
 
 theorem norm_eq_of_cont (χ : InfiniteAdeleRing K →+* ℂ) (hχ : Continuous χ) (φ : K →+* ℂ)
     (h : ∀ x, χ (algebraMap K _ x) = φ x) (a : InfiniteAdeleRing K) :

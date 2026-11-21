@@ -342,10 +342,10 @@ theorem exists_reading (hU : IsClosed (U : Set (Xo.XF c))) {σb : RuleY Y} {σ :
       (LinearIndependent.of_comp h.toLinearMap iV) (LinearIndependent.of_comp h.toLinearMap iW) eV eW hC⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [← map_smul, ← map_sum, ← map_sub]
-    refine (hh _ _).trans (herm_eq_zero hP hE (fun n hn => ?_) (eV j))
-    have := hC k n
-    rw [if_pos hn] at this
-    simp [this]
+      refine (hh _ _).trans (herm_eq_zero hP hE (fun n hn => ?_) (eV j))
+      have := hC k n
+      rw [if_pos hn] at this
+      simp [this]
   · refine congrArg (fun M => Matrix.det (Matrix.of M)) (funext fun k => congrArg (Sum.elim · _) (funext fun j => ?_))
     exact congrArg (_ * ·) (hh _ _).symm
 

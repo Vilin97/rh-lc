@@ -26,7 +26,7 @@ variable {n : ℕ}
 
 theorem continuous_hOf : Continuous (hOf (n := n)) := by
   unfold hOf
-  refine continuous_finset_sum _ fun p _ => ?_
+  refine continuous_finsetSum _ fun p _ => ?_
   exact (Complex.continuous_ofReal.comp (continuous_apply p)).smul continuous_const
 
 theorem continuous_detRe : Continuous fun v : Fin n × Fin n → ℝ => (hOf v).det.re :=

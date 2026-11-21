@@ -24,7 +24,7 @@ theorem restrict_bijective (E : Type) [Field E] [NumberField E] :
   · intro s
     refine ⟨embOf s, ?_⟩
     ext a
-    simp [embOf]
+    exact IsFractionRing.lift_algebraMap (intEmb_injective s) a
 
 theorem natCard_intEmb (E : Type) [Field E] [NumberField E] :
     Nat.card (𝓞 E →+* ℂ) = Module.finrank ℚ E := by

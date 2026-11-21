@@ -218,6 +218,8 @@ theorem klt_of_tower (hP : GlobalTheory.Published.Principalisation) (r : ℕ) :
           Finsupp.mapDomain (fun g : T => ((ψ g : R) : K)) θ := by
         rw [← Finsupp.mapDomain_comp]
         congr 1
+        funext g
+        simp [hψπ']
       rw [e]
       exact hk
     have ih' := ih cK cL' n R T' ι' ψ' (fun i => π (τ (Fin.castSucc i))) x φ θ' h' hx hφ hθ' hE hkR

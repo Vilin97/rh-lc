@@ -379,11 +379,15 @@ theorem sliceTerm_of (hM : Mahler) : SliceTerm := by
     funext y
     rw [cutTerm, ← quotIntegral_const_mul]
     congr 1
+    funext x
+    simp only [hFdef, ht₁, ht₂]
     ring
   · congr 1
     funext x
     rw [cutTerm, ← quotIntegral_const_mul]
     congr 1
+    funext y
+    simp only [hFdef, ht₁, ht₂]
     ring
 
 end Main

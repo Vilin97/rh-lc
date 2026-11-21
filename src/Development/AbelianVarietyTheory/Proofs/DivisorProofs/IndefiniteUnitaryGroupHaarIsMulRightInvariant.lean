@@ -15,6 +15,8 @@ theorem haar_UJ_isMulRightInvariant : ∀ (n : ℕ) (ε : Fin n → Bool) (μ : 
   intro n ε μ _
   have hR : (Formalism.REAL.muG ε).IsMulRightInvariant := ⟨fun g => Formalism.REAL.indefinite_unitary_unimodular n ε g⟩
   rw [Measure.isMulLeftInvariant_eq_smul μ (Formalism.REAL.muG ε)]
-  exact ⟨fun g => by rw [Measure.map_smul, hR.map_mul_right_eq_self]⟩
+  exact ⟨fun g => by
+    rw [Measure.map_smul, hR.map_mul_right_eq_self]
+    exact (measurable_mul_const g).aemeasurable⟩
 
 end GlobalTheory

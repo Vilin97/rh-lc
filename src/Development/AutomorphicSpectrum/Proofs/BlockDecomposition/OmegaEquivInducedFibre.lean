@@ -44,7 +44,9 @@ theorem rank_topR (e : c ⊕ d ≃ b) (y : Matrix c a k) : (topR e y).rank = y.r
   · have h : topR e y = ((1 : Matrix b b k).submatrix id fun i => e (.inl i)) * y := by
       ext i l
       obtain ⟨i | i, rfl⟩ := e.surjective i
-      · simp [Matrix.mul_apply, one_apply]
+      · rw [topR_inl, Matrix.mul_apply]
+        change y i l = ∑ j, (1 : Matrix b b k) (e (.inl i)) (e (.inl j)) * y j l
+        simp [Matrix.one_apply, e.injective.eq_iff]
       · simp [Matrix.mul_apply, one_apply]
     rw [h]
     exact rank_mul_le_right _ _

@@ -179,4 +179,5 @@ theorem GlobalTheory.CompanionTheory.Conc.translate_sq_mean_close : ∀ (E : Typ
   intro E _ _ _ N _ _ μ _ α δ F hα hs hδ hF η hη
   haveI : μ.IsMulRightInvariant := GlobalTheory.T.haar_right_invariant_totally_complex E N μ
   haveI : Countable (latticeGL E N) := GlobalTheory.DiscreteUnit.countable_latticeGL
-  exact GlobalTheory.CompanionTheory.Conc.WeightedCauchySchwarzLintegral.exists_nhds_sq_mean_le μ (latticeGL E N) hα hs hδ hF hη
+  set_option synthInstance.maxHeartbeats 200000 in
+    exact GlobalTheory.CompanionTheory.Conc.WeightedCauchySchwarzLintegral.exists_nhds_sq_mean_le μ (latticeGL E N) hα hs hδ hF hη

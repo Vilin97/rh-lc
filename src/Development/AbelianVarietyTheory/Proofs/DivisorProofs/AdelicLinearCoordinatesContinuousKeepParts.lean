@@ -84,7 +84,7 @@ theorem secF_finPart (z : AE D) : secF D (finPart D z) = pairA D.host.F 0 1 • 
   | tmul a b =>
     have h1 : finPart D (a ⊗ₜ b) = sndA D.host.F a ⊗ₜ b := rfl
     rw [h1, secF, TensorProduct.map_tmul, LinearMap.id_apply, incF_sndA, TensorProduct.smul_tmul', smul_eq_mul]
-  | add x y hx hy => rw [(finPart D).map_add (f := _), (secF D).map_add (f := _), hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (finPart D), map_add (secF D), hx, hy, smul_add]
 
 theorem secI_infPart (z : AE D) : secI D (infPart D z) = pairA D.host.F 1 0 • z := by
   induction z using TensorProduct.induction_on with
@@ -92,7 +92,7 @@ theorem secI_infPart (z : AE D) : secI D (infPart D z) = pairA D.host.F 1 0 • 
   | tmul a b =>
     have h1 : infPart D (a ⊗ₜ b) = fstA D.host.F a ⊗ₜ b := rfl
     rw [h1, secI, TensorProduct.map_tmul, LinearMap.id_apply, incI_fstA, TensorProduct.smul_tmul', smul_eq_mul]
-  | add x y hx hy => rw [(infPart D).map_add (f := _), (secI D).map_add (f := _), hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (infPart D), map_add (secI D), hx, hy, smul_add]
 
 theorem finPart_smul (z : AE D) : finPart D (pairA D.host.F 0 1 • z) = finPart D z := by
   rw [Algebra.smul_def, (finPart D).map_mul]

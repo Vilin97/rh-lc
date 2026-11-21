@@ -59,20 +59,49 @@ theorem exists_satAt : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n
   have hfin := fun h hh => GlobalTheory.SatInd.CosetFin.finite_inert_support L n v w Dv
     (GlobalTheory.SatInd.DCoset.finite_dcoset Dv.ϖ Dv.σw _ n Dv.unram)
     (GlobalTheory.InertUmax.mem_Umax_of_trivOutside_of_loc_integral L n v w Dv) U hU h hh
+  have hsum : ∀ h ∈ Formalism.UG.Hecke ℂ (Formalism.UG.KU Dv.σw n),
+      ∃ (C : Finset (GAf L n ⧸ U)) (a : GAf L n ⧸ U → ℂ) (x : GAf L n ⧸ U → GAf L n),
+        ∀ (W : Type) [AddCommGroup W] [Module ℂ W] (φ : GAf L n → W),
+          heckeFunI L n U Dv h φ = ∑ c ∈ C, a c • NG.rt L n (x c) φ := by
+    intro h hh
+    let hf := hfin h hh
+    refine ⟨hf.toFinset,
+      fun c => if hc : ∃ x : GAf L n, (x : GAf L n ⧸ U) = c ∧ TrivOutside {v} x then
+        Dv.hval h (Dv.loc hc.choose) else 0,
+      fun c => if hc : ∃ x : GAf L n, (x : GAf L n ⧸ U) = c ∧ TrivOutside {v} x then
+        hc.choose else 1, fun W _ _ φ => ?_⟩
+    funext g
+    unfold heckeFunI
+    rw [finsum_eq_sum_of_support_subset (s := hf.toFinset)]
+    · rw [Finset.sum_apply]
+      refine Finset.sum_congr rfl fun c _ => ?_
+      by_cases hc : ∃ x : GAf L n, (x : GAf L n ⧸ U) = c ∧ TrivOutside {v} x
+      · simp only [dif_pos hc]
+        rfl
+      · simp only [dif_neg hc, zero_smul]
+        rfl
+    · intro c hc0
+      rw [Function.mem_support] at hc0
+      by_cases hc : ∃ x : GAf L n, (x : GAf L n ⧸ U) = c ∧ TrivOutside {v} x
+      · rw [dif_pos hc] at hc0
+        rw [Set.Finite.coe_toFinset]
+        refine ⟨hc.choose, hc.choose_spec.1, hc.choose_spec.2, fun h0 => hc0 ?_⟩
+        rw [h0, zero_smul]
+      · exact absurd (dif_neg hc) hc0
   have hmemV : ∀ h ∈ Formalism.UG.Hecke ℂ (Formalism.UG.KU Dv.σw n), ∀ f ∈ V, heckeFunI L n U Dv h f ∈ V := by
     intro h hh f hf
     refine ⟨?_, GlobalTheory.T.inertHeckeOperator_preserves_productLevel_invariance L n v w Dv U hU hdec' π.W h hh f hf.2⟩
-    obtain ⟨C, a, x, hC⟩ := GlobalTheory.SatIso.heckeFunI_eq_sum Dv U h (hfin h hh)
+    obtain ⟨C, a, x, hC⟩ := hsum h hh
     rw [hC]
     exact π.S.sum_mem fun c _ => π.S.smul_mem _ (π.irrS.1.stable _ _ hf.1)
   let T : (Formalism.UG.GU Dv.σw n → ℂ) → Module.End ℂ V := fun h =>
     if hh : h ∈ Formalism.UG.Hecke ℂ (Formalism.UG.KU Dv.σw n) then
       { toFun := fun f => ⟨heckeFunI L n U Dv h f, hmemV h hh f f.2⟩
         map_add' := fun f f' => Subtype.ext (by
-          obtain ⟨C, a, x, hC⟩ := GlobalTheory.SatIso.heckeFunI_eq_sum Dv U h (hfin h hh)
+          obtain ⟨C, a, x, hC⟩ := hsum h hh
           simp only [Submodule.coe_add, hC, map_add (f := _), smul_add, Finset.sum_add_distrib])
         map_smul' := fun c f => Subtype.ext (by
-          obtain ⟨C, a, x, hC⟩ := GlobalTheory.SatIso.heckeFunI_eq_sum Dv U h (hfin h hh)
+          obtain ⟨C, a, x, hC⟩ := hsum h hh
           simp only [Submodule.coe_smul, hC, map_smul, RingHom.id_apply, Finset.smul_sum]
           exact Finset.sum_congr rfl fun c' _ => smul_comm _ _ _) }
     else 0

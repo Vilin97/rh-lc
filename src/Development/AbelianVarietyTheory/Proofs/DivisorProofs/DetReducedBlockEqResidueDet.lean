@@ -110,10 +110,10 @@ theorem valued_sub_le (ι : (Af D.host.F ⊗[D.host.F] D.host.E) ≃+* FiniteAde
       simpa using this
     · simp
     · intro x y _ _ hx hy
-      rw [map_add (f := _)]
+      rw [φ.map_add x y]
       exact Valuation.map_add_le _ hx hy
     · intro c x _ hx
-      rw [smul_eq_mul, map_mul, map_mul]
+      rw [smul_eq_mul, map_mul φ, map_mul]
       calc _ ≤ 1 * WithZero.exp (-1 : ℤ) := mul_le_mul' ((h2 _).1 (unswap_int c) P) hx
         _ = _ := one_mul _
   have hm : X - oToS D.host.F D.host.E a ∈ idS D.host.F P.asIdeal := by

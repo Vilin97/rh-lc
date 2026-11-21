@@ -54,7 +54,7 @@ theorem phaseB_pairB_props : ∀ (F E : Type) [Field F] [NumberField F] [Field E
       (Continuous.matrix_mul continuous_const ?_)))
     refine continuous_matrix fun a c => ?_
     simp only [gram2, hR, Formalism.UG.hform]
-    refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
     exact continuous_const.mul ((continuous_apply j).comp (continuous_apply c))
 
 end GlobalTheory.CompanionTheory.SiegelND.Integ.Weyl

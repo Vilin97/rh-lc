@@ -115,12 +115,14 @@ theorem continuous_frameEquiv (χ : Chr F E) (ε : ℤˣ) (b : GL (Fin n ⊕ Fin
     (hb : b.1ᵀ * dbl Y.J * b.1.map σ = Matrix.fromBlocks 0 1 (((ε : ℤ) : E) • 1) 0) :
     Continuous (frameEquiv χ ε b hb) := by
   refine Continuous.subtype_mk ?_ _
-  exact (continuous_const.mul continuous_subtype_val).mul continuous_const
+  set_option synthInstance.maxHeartbeats 400000 in
+    exact (continuous_const.mul continuous_subtype_val).mul continuous_const
 
 theorem continuous_frameEquiv_symm (χ : Chr F E) (ε : ℤˣ) (b : GL (Fin n ⊕ Fin n) E)
     (hb : b.1ᵀ * dbl Y.J * b.1.map σ = Matrix.fromBlocks 0 1 (((ε : ℤ) : E) • 1) 0) :
     Continuous (frameEquiv χ ε b hb).symm := by
   refine Continuous.subtype_mk ?_ _
-  exact (continuous_const.mul continuous_subtype_val).mul continuous_const
+  set_option synthInstance.maxHeartbeats 400000 in
+    exact (continuous_const.mul continuous_subtype_val).mul continuous_const
 
 end GlobalTheory.CompanionTheory.SiegelFrame

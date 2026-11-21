@@ -97,14 +97,17 @@ theorem dot_adeleJoin_zero {κ : Type} [Fintype κ] (v : κ → AdeleRing (𝓞 
   refine Prod.ext ?_ ?_
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [e1, dotProduct, map_sum]
-    refine Finset.sum_eq_zero fun i _ => ?_
-    rw [map_mul, adeleJoin_zero]
-    exact mul_zero _
+      change (∑ i, p1 (v i * GlobalTheory.WeilCont.adeleJoin F 0 y i)) = 0
+      refine Finset.sum_eq_zero fun i _ => ?_
+      rw [map_mul, adeleJoin_zero]
+      exact mul_zero _
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [e2, dotProduct, map_sum]
-    refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_mul, adeleJoin_zero]
-    rfl
+      change (∑ i, p2 (v i * GlobalTheory.WeilCont.adeleJoin F 0 y i)) = _
+      unfold dotProduct
+      refine Finset.sum_congr rfl fun i _ => ?_
+      rw [map_mul, adeleJoin_zero]
+      rfl
 
 theorem exists_fix_pure (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (hψ : Continuous ψ) (κ : Type) [Fintype κ]
     (f : SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ) (g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ)

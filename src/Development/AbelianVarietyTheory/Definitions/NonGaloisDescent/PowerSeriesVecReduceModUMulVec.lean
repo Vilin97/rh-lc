@@ -61,7 +61,7 @@ def frobTot (l : ℕ) [Fact l.Prime] : (ZMod a → K⟦X⟧) →ₐ[K] (ZMod a �
   AlgHom.pi fun τ => (frob K l).comp (Pi.evalAlgHom K (fun _ : ZMod a => K⟦X⟧) (τ - 1))
 
 @[simp] theorem frobTot_apply (l : ℕ) [Fact l.Prime] (f : ZMod a → K⟦X⟧) (τ : ZMod a) :
-    frobTot l f τ = frob K l (f (τ - 1)) := rfl
+    frobTot K a l f τ = frob K l (f (τ - 1)) := rfl
 
 theorem powerSeriesVecReduceModU_mulVec {κ : Type} [Fintype ι] (Y : Matrix κ ι K⟦X⟧) (v : ι → K⟦X⟧) :
     red0 (Y *ᵥ v) = Y.map constantCoeff *ᵥ red0 v := by
@@ -240,7 +240,7 @@ theorem phi_apply (v : Vec K a ι) (τ : ZMod a) :
     P.phi v τ = P.mx τ *ᵥ frobV l (v (τ - 1)) := rfl
 
 theorem phi_smul_tot (f : ZMod a → K⟦X⟧) (v : Vec K a ι) :
-    P.phi (f • v) = frobTot l f • P.phi v := by
+    P.phi (f • v) = frobTot K a l f • P.phi v := by
   ext1 τ
   rw [Pi.smul_apply', phi_apply, phi_apply, ← Matrix.mulVec_smul]
   congr 1
@@ -383,7 +383,7 @@ section Hat
 
 variable [Fact l.Prime] [NormedAlgebra ℚ_[l] K] [NeZero e] [CompleteSpace K]
 
-
+variable {K} in
 open Classical in
 def hat (f : K⟦X⟧) : AhatE O K l e :=
   if h : f ∈ RpiE O K l e then toHatE O K l e ⟨f, h⟩ else 0

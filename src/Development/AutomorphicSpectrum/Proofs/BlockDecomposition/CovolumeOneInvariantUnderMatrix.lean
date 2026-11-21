@@ -50,7 +50,7 @@ theorem map_eq_of_isFD {V : Type} [AddCommGroup V] [TopologicalSpace V] [IsTopol
   have h : P.map e = c • P := Measure.isAddLeftInvariant_eq_smul _ P
   have hm : MeasurableEmbedding e := e.toHomeomorph.measurableEmbedding
   have hpre : IsAddFundamentalDomain G (e ⁻¹' D) P := by
-    refine hD.preimage_of_equiv (f := e) ⟨hm.measurable, ?_⟩
+    refine hD.preimage_of_equiv (f := e) ⟨hm.measurable.aemeasurable, ?_⟩
       (e := fun b : G => (⟨e.symm b, hG _ b.2⟩ : G)) ⟨fun b b' h => ?_, fun a => ?_⟩ fun b v => ?_
     · rw [h]; exact Measure.smul_absolutelyContinuous
     · exact Subtype.ext (e.symm.injective (congrArg Subtype.val h))

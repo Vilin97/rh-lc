@@ -136,8 +136,8 @@ theorem dualMat_mul (hx : IsPerBasis Di x hm) (h : PerData c e Di Hm P W Q) :
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [part, Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, perMat, dualMat, Finset.sum_mul,
         Finset.mul_sum, map_sum, map_mul, Complex.conj_conj, ← Finset.sum_neg_distrib]
-      rw [Finset.sum_comm]
-      exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
+        rw [Finset.sum_comm]
+        exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
 def IsCoef (x : Hor.Idx D τ → Di.La) (Q : Di.La →+ (Pad.Letter D → ℂ)) (t : Hor.Idx D τ → ℂ)
     (s : Pad.Letter D → ℂ) : Prop :=

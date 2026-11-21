@@ -23,7 +23,7 @@ theorem thV_invV_eq : ∀ (F : Type) [Field F] [NumberField F] (N : ℕ) [Invert
   have hPc : Continuous P := by
     refine (hf.comp (Continuous.prodMk continuous_const continuous_id)).mul (hψc.comp ?_)
     refine (continuous_const.mul ?_).neg
-    exact continuous_finset_sum _ fun l _ => continuous_const.mul (continuous_apply l)
+    fun_prop
   have hPper : ∀ (ξ : Fin N → F) u, P (rat ξ + u) = P u := fun ξ u => integrand_periodic hq x u ξ
   have hcoef : ∀ ξ : Fin N → F, ∫ u in 𝓓, P u * ψ (-(Bd (AF F) (half F N) u (rat ξ))) ∂(muV N ν) =
       invV ψ ν 𝓓 f (rat ξ + x) := by

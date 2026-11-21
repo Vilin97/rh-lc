@@ -23,14 +23,11 @@ open GlobalTheory.Cartier (IsRegularFn IsRegularSec SecMaps germ_resG ext_germK)
 namespace GlobalTheory.Vert
 
 theorem shortExact_cokernel_comp {C : Type*} [Category C] [Abelian C] {A B E : C} (f : A ⟶ B)
-    (g : B ⟶ E) [Mono g] : (kernelCokernelCompSequence.snakeInput f g).L₃.ShortExact where
-  exact := (kernelCokernelCompSequence.snakeInput f g).L₃_exact
-  mono_f := (kernelCokernelCompSequence.snakeInput f g).L₂'_exact.mono_g
-    ((isZero_kernel_of_mono g).eq_of_src _ _)
-  epi_g :=
-    have : Epi (kernelCokernelCompSequence.snakeInput f g).L₂.g :=
-      inferInstanceAs (Epi (biprod.snd : B ⊞ E ⟶ E))
-    (kernelCokernelCompSequence.snakeInput f g).epi_L₃_g
+    (g : B ⟶ E) [Mono g] : (kernelCokernelCompSequence.snakeInput f g).L₃.ShortExact := by
+  let S := kernelCokernelCompSequence.snakeInput f g
+  have : Epi S.L₂.g := inferInstanceAs (Epi (biprod.snd : B ⊞ E ⟶ E))
+  exact ShortComplex.ShortExact.mk' S.L₃_exact
+    (S.L₂'_exact.mono_g ((isZero_kernel_of_mono g).eq_of_src _ _)) S.epi_L₃_g
 
 section Divisor
 

@@ -98,7 +98,7 @@ theorem summable_delta_rpow : ∀ (F E : Type) [Field F] [NumberField F] [Field 
     intro s _
     haveI : Subsingleton (hermE σ 0) := ⟨fun a b => Subtype.ext (Matrix.ext fun i => i.elim0)⟩
     haveI : Subsingleton (hermE σ 0 ⧸ hermO σ 0) := QuotientAddGroup.mk_surjective.subsingleton
-    exact summable_of_finite_support (Set.toFinite _)
+    exact Summable.of_finite
   | succ n ih =>
     intro s hs
     push_cast at hs

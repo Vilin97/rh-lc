@@ -181,6 +181,8 @@ theorem measure_image_doubleCoset : ∀ (k : Type) [Field k] [ValuativeRel k] [T
   have hDj : (t : Matrix (Fin N) (Fin N) k) = Matrix.diagonal (fun i => ϖ ^ ((j : ℤ) * a i)) := by
     rw [ht, Units.val_pow_eq_pow_val, hD, Matrix.diagonal_pow]
     congr 1
+    funext i
+    simp only [Pi.pow_apply]
     rw [← zpow_natCast, ← zpow_mul, mul_comm]
   have hanti : Antitone fun i => (j : ℤ) * a i := fun x y hxy =>
     mul_le_mul_of_nonneg_left (ha hxy) (by positivity)

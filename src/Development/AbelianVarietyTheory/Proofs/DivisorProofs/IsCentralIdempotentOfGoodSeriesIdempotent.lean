@@ -103,7 +103,7 @@ theorem isCentralIdempotent_of_goodSeriesIdempotent {D : D7} {LL : Type} [Field 
     rw [h, h, this]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, h, ← hi, GlobalTheory.MemN.TypesInhab.coeff_mul_sum]
-    exact Finset.sum_congr rfl fun x _ => by rw [map_mul, h, h]
+      exact Finset.sum_congr rfl fun x _ => by rw [map_mul, h, h]
 
 section Sides
 

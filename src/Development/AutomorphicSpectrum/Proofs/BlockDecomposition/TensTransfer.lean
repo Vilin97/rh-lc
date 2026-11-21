@@ -170,7 +170,7 @@ theorem tens_five [∀ i, Module.Flat R (N i)]
   let g₃ : (∀ i, N i ⊗[R] M₃ i) →+ L₃ := ∑ i, (F i).comp (Pi.evalAddMonoidHom _ i)
   have hg₃ : ∀ i n x, g₃ (Pi.single i (n ⊗ₜ x)) = f₃ i n x := by
     intro i n x
-    simp only [g₃, AddMonoidHom.finset_sum_apply, AddMonoidHom.comp_apply, Pi.evalAddMonoidHom_apply]
+    simp only [g₃, AddMonoidHom.finsetSum_apply, AddMonoidHom.comp_apply, Pi.evalAddMonoidHom_apply]
     rw [Finset.sum_eq_single i]
     · simp [hF]
     · intro k _ hk

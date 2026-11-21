@@ -34,14 +34,14 @@ def EtaleAlexanderWhitneyCupLeibnizRule : Prop :=
 
 theorem ev_add' {R : Type} [CommRing R] {E : Spc} {I : Cx R} {n : ℤ} (α β : Cochain ((chains R).obj E) I n)
     (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U) :
-    ev R (α + β) p s h U x = ev R α p s h U x + ev R β p s h U x := by
+    ev (α + β) p s h U x = ev α p s h U x + ev β p s h U x := by
   unfold ev
   rw [Cochain.add_v, Preadditive.comp_add]
   rfl
 
 theorem ev_zero' {R : Type} [CommRing R] {E : Spc} {I : Cx R} {n : ℤ}
     (p : ℕ) (s : ℤ) (h : -(p : ℤ) + n = s) (U : Scheme.{0}) (x : Sx E p U) :
-    ev R (0 : Cochain ((chains R).obj E) I n) p s h U x = 0 := by
+    ev (0 : Cochain ((chains R).obj E) I n) p s h U x = 0 := by
   unfold ev
   rw [Cochain.zero_v, Limits.comp_zero]
   rfl

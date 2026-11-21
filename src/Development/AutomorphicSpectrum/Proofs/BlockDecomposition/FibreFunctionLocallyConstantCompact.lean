@@ -100,7 +100,7 @@ theorem isLocallyConstant_uM {Z : Type} (n : ℕ) (F : Mir k n → Z) (S : Set (
     IsLocallyConstant (fun y : Fin n → k => F (uM k n y * levi k n g)) := by
   rw [IsLocallyConstant.iff_exists_open]
   intro y₀
-  have hu := (GlobalTheory.T.continuous_levi_unipotent_proj k n).2.1
+  have hu := GlobalTheory.CompanionTheory.BZPsiPG.Cont.continuous_uM k n
   set L := GlobalTheory.BZMir.levi k n g
   let φ : (Fin n → k) → GlobalTheory.BZMir.Mir k n := fun y => L⁻¹ * GlobalTheory.CompanionTheory.BZPsiPG.uM k n (y - y₀) * L
   have hφ : Continuous φ :=

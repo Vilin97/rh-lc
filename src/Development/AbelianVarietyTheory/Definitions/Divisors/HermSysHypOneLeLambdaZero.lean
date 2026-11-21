@@ -227,8 +227,8 @@ structure GeoHyp {F : Type} [Field F] [NumberField F] (X : Data F) (Λ₀ : ℝ)
   big : IsBig F X.LA
   nef₂ : IsNef F X.L₂
   big₂ : IsBig F X.L₂
-  mulStable : X.MulStable
-  mulBound : X.MulBound fun _ => X.beta
+  mulStable : Data.MulStable X
+  mulBound : Data.MulBound X fun _ => X.beta
   normsLe : X.NormsLe
   one_le_Lam : 1 ≤ X.abelian₂
   hermSysHyp_one_le_lambdaZero : 1 ≤ Λ₀

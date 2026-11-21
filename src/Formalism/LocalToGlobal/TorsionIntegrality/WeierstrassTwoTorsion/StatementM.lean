@@ -40,7 +40,7 @@ def JetMem : Prop :=
 
 def WpPrimeShape : Prop :=
   ∀ (K : Type u) [Field K] [CharZero K] (W : WeierstrassCurve K),
-    dL (wpL W) = -2 * uPow (-3) + toL (derivative K (wpReg W)) ∧
+    dL (wpL W) = -2 * uPow (-3) + toL (derivative (wpReg W)) ∧
     toL ((wSer W).subst (expSer W)) * yZ W = -1
 
 end Formalism.L2.Th1.A

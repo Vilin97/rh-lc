@@ -80,6 +80,8 @@ theorem pow_mul_word_const
           simp [h', this]
   rw [key k le_rfl]
   congr 1
+  funext l
+  simp [l.isLt]
 
 end Ring
 

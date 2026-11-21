@@ -45,14 +45,14 @@ theorem main : ∀ (n : ℕ) (a b : Matrix (Fin n) (Fin n) ℂ) (P : MvPolynomia
   rw [eval]
   refine congrArg (fun x => eval₂Hom (RingHom.id ℂ) x P) (funext fun i => ?_)
   rcases i with z | z
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [Sum.elim_inl, subst, map_sum, map_mul, coe_eval₂Hom, eval₂_C, eval₂_X,
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Sum.elim_inl, subst, map_sum, map_mul, coe_eval₂Hom, eval₂_C, eval₂_X,
       RingHom.id_apply, Matrix.mul_apply, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun k _ => ?_
     ring
-  set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [Sum.elim_inr, subst, map_sum, map_mul, coe_eval₂Hom, eval₂_C, eval₂_X,
+  · set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Sum.elim_inr, subst, map_sum, map_mul, coe_eval₂Hom, eval₂_C, eval₂_X,
       RingHom.id_apply, Matrix.mul_apply, Finset.sum_mul, star_sum, star_mul']
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun k _ => ?_

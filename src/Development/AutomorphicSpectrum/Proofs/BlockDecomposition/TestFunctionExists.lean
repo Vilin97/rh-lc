@@ -45,7 +45,7 @@ theorem exists_compactOpen {W : Type} [TopologicalSpace W] [T2Space W] [LocallyC
     [IsFiniteMeasureOnCompacts ν] {U : Set W} (hU : IsOpen U) {x : W} (hx : x ∈ U) :
     ∃ A : Set W, IsCompact A ∧ IsOpen A ∧ A ⊆ U ∧ ν A ≠ 0 ∧ ν A ≠ ⊤ := by
   obtain ⟨K, hK, hxK, hKU⟩ := exists_compact_subset hU hx
-  obtain ⟨C, hC, hxC, hCK⟩ := (loc_compact_Haus_tot_disc_of_zero_dim (H := W)).exists_subset_of_mem_open hxK
+  obtain ⟨C, hC, hxC, hCK⟩ := (loc_compact_Haus_tot_disc_of_zero_dim (X := W)).exists_subset_of_mem_open hxK
     isOpen_interior
   have hCc : IsCompact C := hK.of_isClosed_subset hC.1 (hCK.trans interior_subset)
   exact ⟨C, hCc, hC.2, (hCK.trans interior_subset).trans hKU, (hC.2.measure_pos ν ⟨x, hxC⟩).ne',

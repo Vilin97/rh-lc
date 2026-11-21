@@ -74,26 +74,23 @@ theorem sigR_mem {y : Af D.host.F ⊗[D.host.F] D.host.E} (hy : y ∈ intAE D) :
     obtain ⟨y, hy⟩ := conj_int x
     exact AddSubgroup.subset_closure ⟨a, ha, y, by rw [hy]; rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | neg a _ ha => rw [map_neg]; exact neg_mem ha
 
 theorem finPart_cA (z : AE D) :
     finPart D (cA D z) = sigR (Af D.host.F) D.sp.cm.sig (finPart D z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => rw [RingHom.map_zero, RingHom.map_zero, RingHom.map_zero]
+  induction z using TensorProduct.inductionOn with
   | tmul a x => rfl
   | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
 
 theorem infPart_cA (z : AE D) :
     infPart D (cA D z) = sigR (Ainf D.host.F) D.sp.cm.sig (infPart D z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => rw [RingHom.map_zero, RingHom.map_zero, RingHom.map_zero]
+  induction z using TensorProduct.inductionOn with
   | tmul a x => rfl
   | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
 
 theorem cA_cA (z : AE D) : cA D (cA D z) = z := by
-  induction z using TensorProduct.induction_on with
-  | zero => rw [RingHom.map_zero, RingHom.map_zero]
+  induction z using TensorProduct.inductionOn with
   | tmul a x => exact congrArg (fun y : D.host.E => a ⊗ₜ[D.host.F] y) (star_star x)
   | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
 
@@ -114,8 +111,7 @@ theorem tmul_trace {F E R : Type} [Field F] [Field E] [Algebra F E] [CommRing R]
   rw [← TensorProduct.tmul_add, ← ht, TensorProduct.smul_tmul, Algebra.algebraMap_eq_smul_one]
 
 theorem trace_mem (z : AE D) : ∃ a, z + cA D z = algebraMap (AF D.host.F) (AE D) a := by
-  induction z using TensorProduct.induction_on with
-  | zero => exact ⟨0, by rw [RingHom.map_zero, RingHom.map_zero, add_zero]⟩
+  induction z using TensorProduct.inductionOn with
   | tmul a x =>
     obtain ⟨t, ht⟩ : ∃ t : D.host.F, algebraMap _ _ t = x + D.sp.cm.sig x := by
       apply (D.sp.cm.fixed _).1

@@ -24,6 +24,7 @@ theorem continuous_sm_uFam {K : Type} [Field K] [NumberField K] {n : ℕ}
       (β y : ℂ) * f (x * infEmb K n y)) := by
     refine (Complex.continuous_ofReal.comp (hβ.cont.comp continuous_snd)).mul (hf.comp ?_)
     exact continuous_fst.mul (continuous_infEmb.comp continuous_snd)
+  set_option synthInstance.maxHeartbeats 1000000 in
   have h := continuous_parametric_integral_of_continuous (μ := ν) hF hβ.cpt.isCompact
   refine h.congr fun x => ?_
   refine setIntegral_eq_integral_of_forall_compl_eq_zero fun y hy => ?_

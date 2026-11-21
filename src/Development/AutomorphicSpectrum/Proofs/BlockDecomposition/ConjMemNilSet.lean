@@ -37,6 +37,7 @@ theorem modular_comp (φ : H ≃* H) (h1 : Continuous φ) (h2 : Continuous φ.sy
       simp
     rw [this, ← Measure.map_map hm (measurable_mul_const _), map_mul_right ν g,
       Measure.map_smul]
+    exact hm.aemeasurable
   show Measure.modularCharacterFun (φ g) = Measure.modularCharacter g
   have hs : ∀ (m : Measure H) [IsFiniteMeasureOnCompacts m] [m.IsMulLeftInvariant],
       m = Measure.modularCharacter g • Measure.map φ ν →

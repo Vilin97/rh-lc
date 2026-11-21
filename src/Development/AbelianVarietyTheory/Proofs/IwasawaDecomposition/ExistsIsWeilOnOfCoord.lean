@@ -192,7 +192,7 @@ theorem map_mulGramInv {R : Type} [CommRing R] (φ : AE D →+* R) (S T : HSp D)
     rw [← (mulGramInv S T).symm_apply_apply x]
     exact (Matrix.map_mul (f := φ)).trans (by rw [h, Matrix.zero_mul])
 
-theorem isCoord_large (S T : HSp D) (hr : S.rank < T.rank) : IsCoord S T T S (mulGramInv S T) where
+theorem isCoord_large (S T : HSp D) (hr : S.rank < T.rank) : IsCoord S T T S (mulGramInv S T) := {
   cont := continuous_id.matrix_mul continuous_const
   cont' := continuous_id.matrix_mul continuous_const
   sympl x y := by
@@ -212,10 +212,10 @@ theorem isCoord_large (S T : HSp D) (hr : S.rank < T.rank) : IsCoord S T T S (mu
   fin := map_mulGramInv _ S T
   part a x h i j := by
     show a * ∑ k, x i k * incA D (S.gram⁻¹ k j) = ∑ k, x i k * incA D (S.gram⁻¹ k j)
-    simp only [Finset.mul_sum, ← mul_assoc, h]
+    simp only [Finset.mul_sum, ← mul_assoc, h] }
 
 theorem isCoord_small (S T : HSp D) (hr : S.rank < T.rank) :
-    IsCoord S T S T ((mulGramInv S T).trans (Matrix.transposeAddEquiv _ _ _)) where
+    IsCoord S T S T ((mulGramInv S T).trans (Matrix.transposeAddEquiv _ _ _)) := {
   cont := (isCoord_large S T hr).cont.matrix_transpose
   cont' := (isCoord_large S T hr).cont'.comp continuous_id.matrix_transpose
   sympl x y := ((isCoord_large S T hr).sympl x y).trans (GlobalTheory.WeilTieCheck.symplH_transpose T S hr.ne' _ _).symm
@@ -225,7 +225,7 @@ theorem isCoord_small (S T : HSp D) (hr : S.rank < T.rank) :
     ⟨fun h => congrArg Matrix.transpose h, fun h => congrArg Matrix.transpose h⟩
   fin x := ((isCoord_large S T hr).fin x).trans
     ⟨fun h => congrArg Matrix.transpose h, fun h => congrArg Matrix.transpose h⟩
-  part a x h i j := (isCoord_large S T hr).part a x h j i
+  part a x h i j := (isCoord_large S T hr).part a x h j i }
 
 theorem weilCoreEx_of_datum : ∀ D : D7, (∀ (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S T : HSp D) (χS χT : IdC D), IsHeckeChar D χS → IsHeckeChar D χT → ResEta D χS S.rank → ResEta D χT T.rank → ∃ om, Formalism.IndefR.Datum.IsWeilDatumO ψ S T χS χT om) → WeilCoreEx D := by
   intro D hO ψ hψ

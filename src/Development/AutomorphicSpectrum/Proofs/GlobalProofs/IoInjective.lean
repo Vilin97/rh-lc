@@ -30,13 +30,13 @@ variable {D : D7} {θ : GlobalTheory.Mem.Th.InfF D} {V : HSp D}
 
 
 variable (θ V) in
-abbrev Mc : Submodule ℂ (GA D V → ℂ) := cuspForms θ V ⊥
+abbrev Mc : Submodule ℂ (GA D V → ℂ) := GlobalTheory.Cusp.cuspForms θ V ⊥
 
 theorem mem_Mc_iff {φ : GA D V → ℂ} : φ ∈ Mc θ V ↔ IsAutFunSm θ V φ ∧ IsCuspFun V φ := by
   refine ⟨fun h => (mem_cuspForms.1 h).1, fun h => mem_cuspForms.2 ⟨h, ?_⟩⟩
   refine GlobalTheory.Doubling.isKFinite_iff.2 ⟨Submodule.span ℂ {φ}, inferInstance, fun k hk => ?_⟩
   rw [Subgroup.mem_bot.1 hk]
-  exact Submodule.subset_span (by simp [funext_iff])
+  exact Submodule.subset_span (by simp)
 
 def der (hθ : IsInfFam θ) (τ : D.what₂.Tau) {X : Matrix (Fin V.rank) (Fin V.rank) ℂ} (hX : X ∈ lieAt V τ) :
     Module.End ℂ (Mc θ V) where
@@ -47,7 +47,8 @@ def der (hθ : IsInfFam θ) (τ : D.what₂.Tau) {X : Matrix (Fin V.rank) (Fin V
   map_smul' c f := Subtype.ext (Rder_smul c f.1 τ X)
 
 def io (μ : Measure (GA D V)) [μ.IsHaarMeasure] (hθ : IsInfFam θ) : Mc θ V →ₗ[ℂ] L2cusp V μ :=
-  cuspToL2 ⊥ μ (GlobalTheory.Grow.cuspRapidDecay_of_bound GlobalTheory.CuspGeo.cuspDecayBound) hθ
+  GlobalTheory.Cusp.cuspToL2 ⊥ μ
+    (GlobalTheory.Grow.cuspRapidDecay_of_bound GlobalTheory.CuspGeo.cuspDecayBound) hθ
 
 theorem io_injective (μ : Measure (GA D V)) [μ.IsHaarMeasure] (hθ : IsInfFam θ) :
     Function.Injective (io (V := V) μ hθ) := cusp_form_toL2_injective _ hθ

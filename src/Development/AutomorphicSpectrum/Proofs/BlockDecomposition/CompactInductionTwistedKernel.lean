@@ -169,7 +169,7 @@ theorem local_gen (H U : Subgroup G) [U.Normal] (hUH : U ≤ H) (σ : Representa
   have hu : c⁻¹ * (n : G) * c⁻¹⁻¹ ∈ U := ‹U.Normal›.conj_mem _ hn _
   have hu' : c⁻¹ * (n : G) * c ∈ U := by simpa using hu
   refine ⟨cInd H σ (c⁻¹ * (n : G) * c) B - B,
-    Submodule.subset_span ⟨⟨_, hu'⟩, B, by simp⟩, fun b k hk => ?_, fun g hg => ?_⟩
+    Submodule.subset_span ⟨⟨_, hu'⟩, B, by simp only [MonoidHom.one_apply, Units.val_one, one_smul]⟩, fun b k hk => ?_, fun g hg => ?_⟩
   · have e1 : (cInd H σ (c⁻¹ * (n : G) * c) B - B).1.1.1 ((b : G) * c * k)
         = B.1.1.1 ((b : G) * c * k * (c⁻¹ * (n : G) * c)) - B.1.1.1 ((b : G) * c * k) := rfl
     set κ : G := c * k * c⁻¹ with hκ

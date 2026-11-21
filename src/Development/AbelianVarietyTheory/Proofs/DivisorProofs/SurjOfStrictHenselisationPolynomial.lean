@@ -31,6 +31,7 @@ theorem surj_of_strictHenselisation_polynomial : ∀ (T : Type) [CommRing T] (A 
   obtain ⟨hHA, hsepA⟩ := hSH
   let y : Ideal (Polynomial T) := (maximalIdeal A).comap (algebraMap (Polynomial T) A)
   haveI : y.IsPrime := Ideal.comap_isPrime _ _
+  set_option synthInstance.maxHeartbeats 400000 in
   obtain ⟨O, _, algRO, _, hloc, hsc, -, -, -, hind⟩ :=
     GlobalTheory.exists_strictHenselisation (Localization.AtPrime y)
       (SeparableClosure (ResidueField (Localization.AtPrime y)))

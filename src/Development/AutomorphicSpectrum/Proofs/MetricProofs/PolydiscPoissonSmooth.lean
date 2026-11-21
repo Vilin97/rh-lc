@@ -20,7 +20,7 @@ theorem contDiffOn_pker {ρ : ℝ} (hρ : 0 < ρ) :
       (fun q : ℂ × ℝ => ‖circleMap 0 ρ q.2 - 0‖ ^ 2 - ‖q.1 - 0‖ ^ 2) /
         (fun q : ℂ × ℝ => ‖circleMap 0 ρ q.2 - 0 - (q.1 - 0)‖ ^ 2) := by
     funext q
-    rfl
+    simp only [pker, poissonKernel_def, Pi.div_apply]
   rw [e]
   refine ContDiffOn.div ?_ ?_ ?_
   · exact (((contDiff_norm_sq ℝ).comp (hc.sub contDiff_const)).sub

@@ -23,7 +23,9 @@ theorem diagI_inK (ε : Fin n → Bool) (θ : Fin n → ℝ) :
   · rw [Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal, Matrix.diagonal_mul_diagonal,
       Matrix.diagonal_add, ← Matrix.diagonal_zero]
     congr 1
-    ring
+    funext a
+    simp [star_mul]
+    split_ifs <;> ring
   · rw [Matrix.diagonal_mul_diagonal, Matrix.diagonal_mul_diagonal]
     congr 1
     funext a

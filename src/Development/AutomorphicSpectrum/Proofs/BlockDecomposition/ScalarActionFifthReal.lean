@@ -494,8 +494,8 @@ theorem capPoly {R : Type} [CommRing R] [Nontrivial R] [Algebra ℂ R] {A : Type
   refine ⟨X ^ t + r, monic_X_pow_add hdeg, by rw [natDegree_add_eq_left_of_degree_lt (by rwa [degree_X_pow]), natDegree_X_pow], fun u => ?_, fun k hk => ?_⟩
   · rw [hq u, Finset.sum_range_succ, h1, eval_add, eval_pow, eval_X, map_add (f := _), map_pow, add_comm]
     congr 1
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [hr, eval_finsetSum, map_sum]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [hr, eval_finsetSum, map_sum]
       refine Finset.sum_congr rfl fun k hk => ?_
       rw [eval_mul, eval_C, eval_pow, eval_X, map_mul, map_pow, hd k (by
         have := Finset.mem_range.1 hk
@@ -687,10 +687,13 @@ theorem capScal : CapelliProductsScalar := by
       · exact (capComm n lev H F1 F2 hF p.1 q.1 p.2 q.2).2.2
       · exact (capComm n lev H F1 F2 hF q.1 p.1 q.2 p.2).2.2.symm
       · exact (capComm n lev H F1 F2 hF p.1 q.1 p.2 q.2).2.1
-    letI : CommRing (Algebra.adjoin ℂ Gs) := Algebra.adjoinCommRingOfComm ℂ hcomm
+    letI : IsMulCommutative (Algebra.adjoin ℂ Gs) :=
+      Algebra.isMulCommutative_adjoin ℂ (fun a ha b hb _ => hcomm a ha b hb)
+    letI : CommRing (Algebra.adjoin ℂ Gs) :=
+      { (inferInstance : Ring (Algebra.adjoin ℂ Gs)) with mul_comm := mul_comm' }
     exact core (Algebra.adjoin ℂ Gs).val L hL lev hlev ν σ1 σ2 hsh F1 F2
-      (fun j u => ⟨⟨_, Algebra.subset_adjoin (Or.inl ⟨(j, u), rfl⟩)⟩, rfl⟩)
-      (fun j u => ⟨⟨_, Algebra.subset_adjoin (Or.inr ⟨(j, u), rfl⟩)⟩, rfl⟩) c hsemi h1 h2 j hj u
+      (fun j u => ⟨⟨_, Algebra.subset_adjoin (show capS F1 lev j u ∈ Gs from Or.inl ⟨(j, u), rfl⟩)⟩, rfl⟩)
+      (fun j u => ⟨⟨_, Algebra.subset_adjoin (show capS F2 lev j u ∈ Gs from Or.inr ⟨(j, u), rfl⟩)⟩, rfl⟩) c hsemi h1 h2 j hj u
   · have hb : blk lev j = ∅ := Finset.filter_eq_empty_iff.2 fun a _ h => hj (h ▸ Finset.mem_image_of_mem _ (mem_univ a))
     have h0 : ∀ (t : ℕ), t = 0 → ∀ (e : Fin t → Fin n) (x : ℂ), Formalism.REAL.qminor F1 e e x = 1 := by
       rintro _ rfl e x

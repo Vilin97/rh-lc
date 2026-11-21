@@ -30,7 +30,7 @@ theorem map_smInt_translate {X Z Z' : Type} [AddCommGroup X] [TopologicalSpace X
     (hl : IsLocallyConstant φ) (hc : HasCompactSupport φ) :
     L (smInt μ (fun v => T (φ (v + m)))) = L (smInt μ φ) := by
   obtain ⟨_, h2, h3, _⟩ := SmIntEl.smInt_properties (X := X) (W := Z) (W' := Z) μ
-  have hl' : IsLocallyConstant (φ ∘ fun v => v + m) := hl.comp_continuous (continuous_add_right m)
+  have hl' : IsLocallyConstant (φ ∘ fun v => v + m) := hl.comp_continuous ((continuous_id.add continuous_const))
   have hc' : HasCompactSupport (φ ∘ fun v => v + m) :=
     hc.comp_homeomorph (Homeomorph.addRight m)
   have e1 : smInt μ (T ∘ (φ ∘ fun v => v + m)) = T (smInt μ (φ ∘ fun v => v + m)) := h2 T _ hl' hc'

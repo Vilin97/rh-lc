@@ -38,6 +38,8 @@ theorem smooth_calculus : ∀ (n : ℕ) (H : Type) [NormedAddCommGroup H] [Inner
     refine Eq.trans ?_ h2.deriv
     unfold dRep
     congr 1
+    funext t
+    simp [Function.comp_def, smul_smul]
   · have hw' : w ∈ GlobalTheory.SmVec.smSub J π := hw
     rw [GlobalTheory.SmVec.inner_dRep hG hπ hv' hw' hX', neg_neg]
   · have hw' : w ∈ GlobalTheory.SmVec.smSub J π := hw

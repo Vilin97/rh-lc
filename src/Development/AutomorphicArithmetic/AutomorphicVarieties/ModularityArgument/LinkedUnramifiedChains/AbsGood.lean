@@ -59,6 +59,8 @@ def AbsGood : Prop :=
     (J₃ : Ideal T₃.B.B), T₂.ModIn J₂ → T₃.ModIn J₃ →
     ∃ φ, T₃.IsPhi φ ∧ Function.Surjective φ ∧ AllGood T₃.S (J₃.map φ)
 
+attribute [local instance 1100] Subalgebra.toCommRing Subalgebra.algebra
+
 section Pt
 
 variable {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l : ℕ} [Fact l.Prime] {c : Coef l}

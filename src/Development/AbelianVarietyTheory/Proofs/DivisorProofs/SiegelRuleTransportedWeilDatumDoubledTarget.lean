@@ -35,7 +35,7 @@ theorem mul_diagCols_transpose {X : Type} [CommRing X] {m n : ℕ} (z : Matrix (
 
 end GlobalTheory.DblTargetSiegel
 
-set_option maxHeartbeats 1000000 in
+set_option maxHeartbeats 4000000 in
 theorem GlobalTheory.DblTargetSiegel.siegelRule_dblTarget : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) →
     ∀ (S T : HSp D) (χS : (AE D)ˣ →* Circle), IsHeckeChar D χS → ResEta D χS S.rank →
       ∀ (JB : Matrix (Fin S.rank) (Fin S.rank) D.host.E) (ξ : AF D.host.F ⊗[D.host.F] D.host.E),

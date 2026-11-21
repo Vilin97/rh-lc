@@ -61,6 +61,8 @@ theorem inner_eq_of_meanSquare {G : Type} [MeasurableSpace G] (ν : Measure G) [
     rw [← integral_const_mul, ← integral_const_mul, ← integral_const_mul, ← integral_add i1 i2,
       ← integral_add i12 i3, ← integral_add i13 i4]
     congr 1
+    funext w
+    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul]
     ring
   have key : ∀ c : ℂ, conj c * ∫ w, A f w * conj (A g w) ∂ν + c * ∫ w, A g w * conj (A f w) ∂ν =
       conj c * ∫ w, f w * conj (g w) ∂ν + c * ∫ w, g w * conj (f w) ∂ν := by

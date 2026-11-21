@@ -170,7 +170,7 @@ theorem fin_doubleCosets : ∀ (E : Type) [Field E] [NumberField E] (n a b : ℕ
       simp only [kP, hP, Subgroup.coe_mul, Subgroup.coe_inv, hp₁, hp₂]; group
     have hkK : kP ∈ K.subgroupOf P := by
       rw [Subgroup.mem_subgroupOf, hkv]; exact K.mul_mem (K.inv_mem hk₁) hk₂
-    rw [← DoubleCoset.out_eq' _ _ d₁, ← DoubleCoset.out_eq' _ _ d₂, DoubleCoset.eq]
+    rw [← DoubleCoset.out_eq' d₁, ← DoubleCoset.out_eq' d₂, DoubleCoset.eq]
     exact ⟨hP, hcP, kP, hkK, by simp only [kP]; group⟩
 
 end GlobalTheory.LeviDesc.OrbFin

@@ -22,17 +22,17 @@ section Map
 variable {P P' P'' : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}}
 
 lemma push_add (φ ψ : P ⟶ P') (n : ℕ) (σ : Cochain P U n) :
-    push P U (φ + ψ) n σ = push P U φ n σ + push P U ψ n σ := by
+    push U (φ + ψ) n σ = push U φ n σ + push U ψ n σ := by
   funext i
   simp [push]
 
 lemma push_mem_cocycles (φ : P ⟶ P') {n : ℕ} {σ : Cochain P U n} (hσ : σ ∈ cocycles P U n) :
-    push P U φ n σ ∈ cocycles P' U n := by
+    push U φ n σ ∈ cocycles P' U n := by
   rw [mem_cocycles] at hσ ⊢
   rw [← push_d, hσ, map_zero]
 
 lemma push_mem_coboundaries (φ : P ⟶ P') {n : ℕ} {σ : Cochain P U n}
-    (hσ : σ ∈ coboundaries P U n) : push P U φ n σ ∈ coboundaries P' U n := by
+    (hσ : σ ∈ coboundaries P U n) : push U φ n σ ∈ coboundaries P' U n := by
   cases n with
   | zero =>
     rw [coboundaries_zero, AddSubgroup.mem_bot] at hσ ⊢
@@ -40,10 +40,10 @@ lemma push_mem_coboundaries (φ : P ⟶ P') {n : ℕ} {σ : Cochain P U n}
   | succ n =>
     rw [coboundaries_succ] at hσ ⊢
     obtain ⟨τ, rfl⟩ := hσ
-    exact ⟨push P U φ n τ, (push_d U φ n τ).symm⟩
+    exact ⟨push U φ n τ, (push_d U φ n τ).symm⟩
 
 def cocyclesMap (φ : P ⟶ P') (n : ℕ) : cocycles P U n →+ cocycles P' U n :=
-  AddMonoidHom.codRestrict ((push P U φ n).comp (cocycles P U n).subtype) (cocycles P' U n)
+  AddMonoidHom.codRestrict ((push U φ n).comp (cocycles P U n).subtype) (cocycles P' U n)
     fun σ => push_mem_cocycles U φ σ.2
 
 def cechHMap (φ : P ⟶ P') (n : ℕ) : cechH P U n →+ cechH P' U n :=
@@ -57,7 +57,7 @@ lemma cls_congr {P : (Opens X)ᵒᵖ ⥤ AddCommGrpCat.{u}} {n : ℕ} {σ σ' : 
   rfl
 
 lemma cechHMap_cls (φ : P ⟶ P') {n : ℕ} (σ : Cochain P U n) (hσ : d P U n σ = 0) :
-    cechHMap U φ n (cls σ hσ) = cls (push P U φ n σ) (by rw [← push_d, hσ, map_zero]) := rfl
+    cechHMap U φ n (cls σ hσ) = cls (push U φ n σ) (by rw [← push_d, hσ, map_zero]) := rfl
 
 lemma cechHMap_id (n : ℕ) (x : cechH P U n) : cechHMap U (𝟙 P) n x = x := by
   obtain ⟨σ, hσ, rfl⟩ := exists_cls x
@@ -114,8 +114,8 @@ lemma IsCechShortExact.delta_naturality (n : ℕ) (σ : cocycles Q U n) :
   obtain ⟨τ, ρ, hρ, hτ, hρτ, hc⟩ := hS.delta_spec n σ
   rw [hc, cechHMap_cls]
   refine hS'.deltaRel_unique (hS'.delta_spec n _)
-    ⟨push I U α₂ n τ, push F U α₁ (n + 1) ρ, _, ?_, ?_, rfl⟩
-  · change push I' U g' n (push I U α₂ n τ) = push Q U α₃ n σ.1
+    ⟨push U α₂ n τ, push U α₁ (n + 1) ρ, _, ?_, ?_, rfl⟩
+  · change push U g' n (push U α₂ n τ) = push U α₃ n σ.1
     rw [push_comp, ← h₂₃, ← push_comp, hτ]
   · rw [push_comp, ← h₁₂, ← push_comp, hρτ, push_d]
 
@@ -160,7 +160,7 @@ lemma globalCocycleEquiv_symm_naturality (hP : Presheaf.IsSheaf (Opens.grothendi
   apply (globalCocycleEquiv P' U hP' hU).injective
   rw [AddEquiv.apply_symm_apply]
   apply Subtype.ext
-  change push P U φ 0 σ.1 = (globalCocycle P' U _).1
+  change push U φ 0 σ.1 = (globalCocycle P' U _).1
   rw [← push_globalCocycle]
   congr 2
   exact ((globalCocycleEquiv P U hP hU).apply_symm_apply σ).symm

@@ -60,6 +60,7 @@ theorem map_theta_mul {F : Type} [Field F] [NumberField F] (h : IsTotallyReal F)
     simp
   rw [hθ, ← Measure.map_map hms (hL.comp hm), ← Measure.map_map hL hm, hmapL, Measure.map_smul,
     Measure.map_map hms hm, hid, Measure.map_id, abs_of_pos (inv_pos.mpr (pow_pos hε _))]
+  exact hms.aemeasurable
 
 theorem pi_const_smul {X : Type} [MeasurableSpace X] (ι : Type) [Fintype ι] (μ : Measure X) [SigmaFinite μ]
     (c : ENNReal) [SigmaFinite (c • μ)] :

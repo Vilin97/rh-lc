@@ -74,8 +74,8 @@ theorem lbIso_of_generic {O Ω : Type} [CommRing O] [IsDomain O] [IsLocalRing O]
   have := geometricallyIntegral_of_isAbelianScheme H
   refine (GlobalTheory.CechPic.cls_eq_iff hL hL').1
     (GlobalTheory.ZH.EndoExtend.pic_ext (spMap (algebraMap O Ω)) hn H (eSec H) (Over.w η[H]) ?_ ?_)
-  · rw [GlobalTheory.DualOpen.pic_sp_local_eq_zero O (GlobalTheory.CechPic.pull (eSec H) _),
-      GlobalTheory.DualOpen.pic_sp_local_eq_zero O (GlobalTheory.CechPic.pull (eSec H) _)]
+  · rw [GlobalTheory.DualOpen.pic_sp_local_eq_zero O (GlobalTheory.CechPic.pull (eSec H) _)]
+    exact (GlobalTheory.DualOpen.pic_sp_local_eq_zero O (GlobalTheory.CechPic.pull (eSec H) _)).symm
   · exact (GlobalTheory.CechPic.cls_eq_iff (pull_isLB hL _) (pull_isLB hL' _)).2
       (GenSpread.lbIso_pull_comp hc.isoPullback.inv hc.isoPullback_inv_fst.symm hc.isoPullback_inv_fst.symm h)
 

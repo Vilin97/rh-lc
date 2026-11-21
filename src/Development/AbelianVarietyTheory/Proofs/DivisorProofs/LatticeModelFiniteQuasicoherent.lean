@@ -92,6 +92,6 @@ theorem isFiniteQC_of_latModel : ∀ (X : Scheme.{0}) [IsIntegral X] {V : Type} 
   refine QCoh.IsFiniteQC.of_restrict (fun y => (U y).ι) (fun x => ⟨x, by simpa using hy x⟩)
     fun y => ?_
   have hf := (VB.isFrame_restrict_iff (U y).ι _).2 ((he y).res ((U y).ι_image_le ⊤))
-  exact hf.isVB.isFiniteQC
+  exact (VB.IsFrame.isVB hf).isFiniteQC
 
 end GlobalTheory.LogDR.LatFinite

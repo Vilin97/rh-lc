@@ -32,7 +32,6 @@ theorem IntFam.existsUnique_over : ∀ (R : Type) [CommRing R] [IsDomain R] (I :
     rwa [e] at h
   have hov : F₀.Over (famPull D (FractionRing R) F hG k F₀.F) := fun α => by
     refine SectionScalarValuation.secScal_of_sval hL fun y J hJ => ?_
-    show _ = sval (termPull D (FractionRing R) F k α (F₀.F.s α)) (𝟙 _) y J
     refine Eq.trans ?_ (sval_pullOver _ _ _ _ hJ).symm
     refine Eq.trans ?_ (SectionScalarValuation.secScal_sval (hext α) _ y hJ)
     congr 1

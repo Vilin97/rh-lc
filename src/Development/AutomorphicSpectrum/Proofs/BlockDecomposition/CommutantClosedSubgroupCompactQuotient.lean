@@ -221,8 +221,9 @@ theorem isCompact_setOf_trHom_mem (hH : IsUnit H.det) {C : Set (GL (Fin 𝒩') �
   classical
   let b := Module.finBasis K E
   set Ω : Set (unitaryPoints K E H 𝔸[K]) := {v | trHom b 𝔸[K] (v : GL ι (𝔸[K] ⊗[K] E)) ∈ C} with hΩ
-  have hΩcl : IsClosed Ω :=
-    hC.isClosed.preimage ((continuous_trHom b 𝔸[K]).comp continuous_subtype_val)
+  have hΩcl : IsClosed Ω := by
+    set_option synthInstance.maxHeartbeats 200000 in
+    exact hC.isClosed.preimage ((continuous_trHom b 𝔸[K]).comp continuous_subtype_val)
   let Fc : Matrix (Fin 𝒩') (Fin 𝒩') 𝔸[K] → ι × ι × Fin (Module.finrank K E) → 𝔸[K] :=
     fun A p =>
     coords b 𝔸[K] ((readoff (ι := ι) b 𝔸[K] A)ᵀ p.1 p.2.1) p.2.2
@@ -232,6 +233,7 @@ theorem isCompact_setOf_trHom_mem (hH : IsUnit H.det) {C : Set (GL (Fin 𝒩') �
   set D := (unitaryCoords H 𝔸[K] b) ⁻¹' (Fc '' (Units.val '' C)) with hD
   have hDc : IsCompact D := (isClosedEmbedding_unitaryCoords H 𝔸[K] b hH).isCompact_preimage
     ((hC.image Units.continuous_val).image hFc)
+  open scoped Pointwise in
   have hsub : Ω ⊆ D⁻¹ := by
     intro v hv
     show v⁻¹ ∈ D
@@ -239,6 +241,7 @@ theorem isCompact_setOf_trHom_mem (hH : IsUnit H.det) {C : Set (GL (Fin 𝒩') �
     funext p
     simp only [Fc, trHom_val, readoff_resHom, transpose_transpose]
     rfl
+  open scoped Pointwise in
   exact hDc.inv.of_isClosed_subset hΩcl hsub
 
 theorem exists_isCompact_rational_centralizer (hH : IsUnit H.det) {m : Type} [Finite m]
@@ -318,11 +321,11 @@ theorem exists_mem_ratPts {n : ℕ} (J : Matrix (Fin n) (Fin n) E) {m : GL (Fin 
     ∃ δ ∈ ratPts (conj F E).toAlgHom J,
       matHom (AF F) (conj F E).toAlgHom J δ = diagGL (Algebra.ofId F (AF F)) m := by
   let x : unitaryPoints F E J F := ⟨m, hm⟩
-  have e : ((unitaryDiagonal F J x : unitaryPoints F E J (AF F)) : GL (Fin n) (AF F ⊗[F] E)) =
+  have e : ((unitaryMap F E J (Algebra.ofId F (AF F)) x : unitaryPoints F E J (AF F)) : GL (Fin n) (AF F ⊗[F] E)) =
       diagGL (Algebra.ofId F (AF F)) m := Units.ext rfl
   have hmem : diagGL (Algebra.ofId F (AF F)) m ∈ HR (AF F) (conj F E).toAlgHom J := by
     rw [HR_conj_eq, ← e]
-    exact (unitaryDiagonal F J x).2
+    exact (unitaryMap F E J (Algebra.ofId F (AF F)) x).2
   refine ⟨⟨_, hmem⟩, ?_, rfl⟩
   have key : diagGL (Algebra.ofId F (AF F)) m =
       Formalism.UG.bc (inclR (AF F)) (unitaryPointsRationalEquiv F E J x : GL (Fin n) E) := by

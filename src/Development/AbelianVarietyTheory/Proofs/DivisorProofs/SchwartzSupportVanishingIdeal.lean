@@ -60,19 +60,7 @@ theorem mem_span_of_vanish : ∀ {k : Type} [Field k] [ValuativeRel k] [Topologi
     rw [← hψk, h]
     simp)
   obtain ⟨n, hn, hinv, hsupp⟩ := GlobalTheory.SBUnif.sb_lattice_bounds k Y Y' φ hφ
-  have hcover : ∃ P : Finset (Matrix Y Y' k), ∀ t : Matrix Y Y' k,
-      (∀ r q, (n • t) r q ∈ 𝒪[k]) →
-      ∃ p ∈ P, ∃ u ∈ GlobalTheory.IrredSB.lat k Y Y' n, t = p + u := by
-    obtain ⟨R, hR, hRc⟩ := GlobalTheory.matrix_integers_mod_nat_finite k Y Y' (n * n) (Nat.mul_pos hn hn)
-    refine ⟨(hR.image fun s => ((n : k)⁻¹) • s).toFinset, fun t ht => ?_⟩
-    obtain ⟨s, hs, u, hu, he⟩ := hRc _ ht
-    have hn0 : (n : k) ≠ 0 := by exact_mod_cast hn.ne'
-    have hinv' : ∀ v : Matrix Y Y' k, (n : k)⁻¹ • (n • v) = v := fun v => by
-      rw [← Nat.cast_smul_eq_nsmul k, smul_smul, inv_mul_cancel₀ hn0, one_smul]
-    refine ⟨(n : k)⁻¹ • s, (Set.Finite.mem_toFinset _).2 ⟨s, hs, rfl⟩,
-      n • u, ⟨u, hu, rfl⟩, ?_⟩
-    rw [← hinv' t, he, smul_add, mul_smul, hinv']
-  obtain ⟨P, hP⟩ := hcover
+  obtain ⟨P, hP⟩ := GlobalTheory.IrredSB.cover (k := k) (Y := Y) (Y' := Y') hn hn
   have hn' : (n : k) ≠ 0 := by exact_mod_cast hn.ne'
   refine mem_of_sep (fun b t => (ψk (GlobalTheory.IrredSB.pair b t) : ℂ)) {z | ∀ r q, (r, q) ∉ I → z r q = 0}
     (fun b t u => by rw [GlobalTheory.IrredSB.pair_add_right, AddChar.map_add_eq_mul, Circle.coe_mul])

@@ -150,16 +150,16 @@ def gE (k : Bool) (n : ℕ) : (F.pt κ).Elements ⥤ Thick (Lc F κ k n) where
   map_id T := Thick.Hom.ext (RingHom.ext (mapAcr_id n)) (funext fun j => j.elim)
   map_comp f g := Thick.Hom.ext (RingHom.ext (mapAcr_comp f.1 g.1 n)) (funext fun j => j.elim)
 
-def jE (P : PAlg l ⥤ Type) : El P ⥤ P.Elements where
-  obj T := ⟨T.1.obj, T.2⟩
-  map f := ⟨f.1.hom, f.2⟩
-  map_id _ := rfl
-  map_comp _ _ := rfl
+def jE (P : PAlg l ⥤ Type) : El P ⥤ P.Elements :=
+  Functor.Elements.precomp (testι l) P
 
-instance (P : PAlg l ⥤ Type) : (jE P).Full := ⟨fun f => ⟨⟨ObjectProperty.homMk f.1, f.2⟩, rfl⟩⟩
+instance (P : PAlg l ⥤ Type) : (jE P).Full where
+  map_surjective f := ⟨Functor.Elements.homMk (ObjectProperty.homMk f.hom) (by
+    exact f.map_val), rfl⟩
 
-instance (P : PAlg l ⥤ Type) : (jE P).Faithful :=
-  ⟨fun h => Subtype.ext (ObjectProperty.hom_ext _ (congrArg Subtype.val h))⟩
+instance (P : PAlg l ⥤ Type) : (jE P).Faithful where
+  map_injective h :=
+    Functor.Elements.hom_ext (ObjectProperty.hom_ext _ (congrArg Functor.Elements.Hom.hom h))
 
 abbrev gT (k : Bool) (n : ℕ) : El (F.pt κ) ⥤ Thick (Lc F κ k n) := jE (F.pt κ) ⋙ gE F κ k n
 

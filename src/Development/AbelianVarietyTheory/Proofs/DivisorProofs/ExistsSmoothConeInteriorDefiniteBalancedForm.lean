@@ -68,7 +68,7 @@ theorem isPosDef_toReal_of_pos {X : Type} [AddCommGroup X] [Module.Free ℤ X] [
     rw [star_trivial] at h0
     refine h0.lt_of_ne fun h1 => ?_
     have h2 : G *ᵥ c = 0 := by
-      have := (hpsd.dotProduct_mulVec_zero_iff c).1
+      have := (hpsd.dotProduct_mulVec_zero_iff (x := c)).1
       rw [star_trivial] at this
       exact this h1.symm
     have h3 : G.det = 0 := Matrix.exists_mulVec_eq_zero_iff.1 ⟨c, hc, h2⟩

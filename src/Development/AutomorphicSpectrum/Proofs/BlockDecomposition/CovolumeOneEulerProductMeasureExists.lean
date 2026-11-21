@@ -38,7 +38,7 @@ theorem exists_covolOne (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) (n : ℕ) {d
   obtain ⟨t1, -, -, -, -, -, -, -, -, -⟩ := GlobalTheory.CompanionTheory.SW.TopK.topTens_props F E σ hCM (AF F)
   haveI : IsTopologicalAddGroup (Fin 1 → Fin n → AF F ⊗[F] E) := inferInstance
   let eA := e.toMeasurableEquiv
-  let μ := GroundTheory.Automorphic.GJMatrix.adeleMeasurePi F (ι := Fin 1 × (Fin n × Fin d))
+  let μ := GroundTheory.Automorphic.GJMatrix.adeleMeasurePi (K := F) (ι := Fin 1 × (Fin n × Fin d))
   have hadd : ∀ x y, e (x + y) = e x + e y := by
     intro x y
     rw [he, he, he]
@@ -119,10 +119,9 @@ theorem split_coord' (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) (M n : ℕ) (dx
   have hΘ := measurePreserving_arrowProdEquivProdArrow (InfiniteAdeleRing F) (FiniteAdeleRing (𝓞 F) F)
     (Fin n × (Fin M × Fin d)) (fun _ => l) (fun _ => lf)
   have hA' : MeasurePreserving eA dx (Measure.pi fun _ : Fin n × (Fin M × Fin d) => l.prod lf) := by
-    have e1 : GroundTheory.Automorphic.GJMatrix.adeleMeasurePi F (ι := Fin n × (Fin M × Fin d)) =
+    have e1 : GroundTheory.Automorphic.GJMatrix.adeleMeasurePi (K := F) (ι := Fin n × (Fin M × Fin d)) =
         Measure.pi fun _ : Fin n × (Fin M × Fin d) => l.prod lf := by
       rw [GroundTheory.Automorphic.GJMatrix.adeleMeasurePi, hEq]
-      rfl
     exact ⟨eA.measurable, hdxc.trans e1⟩
   let eP := eI.prodCongr eF
   haveI : SFinite (coordW (Af F) b lf n M) := sfinite_coordW σ hCM b lf hlf n M

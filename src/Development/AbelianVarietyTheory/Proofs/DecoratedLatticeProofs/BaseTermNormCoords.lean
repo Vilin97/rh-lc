@@ -72,6 +72,7 @@ theorem base_term_norm_coords : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (V
       have t1 := (hTL _ hΨ).1 x₀ b u 0
       rw [d.nC_zero, one_mul] at t1
       rw [t1, enorm_mul, hψn, one_mul]
+      rfl
     have hl := hlay _ hfm hinv
     calc ‖G h‖ₑ * ∫⁻ u, ∫⁻ b in vb.𝓕,
           ‖d.mixS W ψ vS.μ vS.𝓕 (om (g, h) Φ) (rat x₀ ⬝ u.1.1) (rat x₀ ⬝ b)‖ₑ ∂vb.μ ∂vU.ν

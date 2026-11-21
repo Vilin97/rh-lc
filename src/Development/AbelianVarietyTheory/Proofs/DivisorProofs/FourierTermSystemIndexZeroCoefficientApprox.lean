@@ -43,7 +43,7 @@ theorem mono_nsmul {s m : ℕ} (W : Matrix (Fin s) (Fin s) ℤ) {X : Type} [AddC
 theorem mem_of_forall_mem_pow_sup {V : Type} [CommRing V] [IsLocalRing V] [IsNoetherianRing V] (I : Ideal V) (x : V)
     (h : ∀ j : ℕ, x ∈ maximalIdeal V ^ j ⊔ I) : x ∈ I := by
   have hK := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (R := V) (M := V ⧸ I) (maximalIdeal V)
-    (IsLocalRing.maximalIdeal_le_jacobson ⊥)
+    (by simpa only [Ideal.jacobson_bot] using (IsLocalRing.maximalIdeal_le_jacobson (⊥ : Ideal V)))
   rw [← Ideal.Quotient.eq_zero_iff_mem]
   have hx : Ideal.Quotient.mk I x ∈ ⨅ i : ℕ, maximalIdeal V ^ i • (⊤ : Submodule V (V ⧸ I)) := by
     rw [Submodule.mem_iInf]

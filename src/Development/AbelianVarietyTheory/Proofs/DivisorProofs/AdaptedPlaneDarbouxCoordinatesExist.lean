@@ -49,7 +49,7 @@ theorem glueC_apply (e₁ : Matrix (Fin n) (Fin d₁) A ≃ₗ[R] (Fin n × Fin 
     (p q : (Fin n → A) ≃ₗ[R] (Fin n × Fin 2 → R)) (Y : Matrix (Fin n) (Fin (d₁ + 2)) A) :
     glueC e₁ p q Y = (fun k => Sum.elim (e₁ (Matrix.of fun i a => Y i (Fin.castAdd 2 a))).1 (p fun i => Y i (Fin.natAdd d₁ 1)) (idx rfl k),
       fun k => Sum.elim (e₁ (Matrix.of fun i a => Y i (Fin.castAdd 2 a))).2 (q fun i => Y i (Fin.natAdd d₁ 0)) (idx rfl k)) := by
-  ext k <;> simp [glueC, LinearEquiv.funCongrLeft_apply, LinearEquiv.sumArrowLequivProdArrow] <;> rcases idx rfl k with p | p <;> simp
+  ext k <;> simp [glueC, colSplit, LinearEquiv.funCongrLeft_apply, LinearEquiv.sumArrowLequivProdArrow] <;> rcases idx rfl k with p | p <;> simp <;> rfl
 
 theorem dot_idx (f g : Fin n × Fin d₁ → R) (f' g' : Fin n × Fin 2 → R) :
     (fun k => Sum.elim f f' (idx (n := n) (d := d₁ + 2) rfl k)) ⬝ᵥ (fun k => Sum.elim g g' (idx rfl k)) = f ⬝ᵥ g + f' ⬝ᵥ g' := by

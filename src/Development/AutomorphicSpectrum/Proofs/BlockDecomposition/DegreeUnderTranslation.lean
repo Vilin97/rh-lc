@@ -78,7 +78,7 @@ theorem inf_step (hI : MulI) (hkn : k ≤ n) (h : Matrix (Fin n) (Fin n) (Ad E))
   refine hs.trans ?_
   have h2 : Real.posLog ((n : ℝ) * n * sz (h.map (cV v)) ^ 2) ≤
       Real.posLog ((n : ℝ) * n) + Real.posLog (⨆ p : Fin n × Fin n, ‖cV v (h p.1 p.2)‖ ^ 2) :=
-    Real.posLog_mul.trans (add_le_add le_rfl (Real.posLog_le_posLog (by positivity) (sz_sq_le _)))
+    Real.posLog_mul.trans (add_le_add le_rfl (Real.posLog_le_posLog (by nlinarith [sq_nonneg (sz (h.map (cV v)))]) (sz_sq_le _)))
   have := mul_le_mul_of_nonneg_left h2 (Nat.cast_nonneg (α := ℝ) n)
   linarith
 
