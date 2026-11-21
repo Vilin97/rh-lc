@@ -392,9 +392,7 @@ theorem mem_dual_smul (I : Ideal (𝓞 E)) (D : Submodule (𝓞 E) (Sp E n)) (y 
 
 theorem lattice_between {B M D : Submodule (𝓞 E) (Sp E n)} (hB : Submodule.IsLattice E B)
     (hD : Submodule.IsLattice E D) (h1 : B ≤ M) (h2 : M ≤ D) : Submodule.IsLattice E M :=
-  ⟨Submodule.FG.of_le hD.fg h2, by
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  Submodule.IsLattice.of_fg E (Submodule.FG.of_le hD.fg h2)
 theorem glue_unimodular {I J : Ideal (𝓞 E)} (hIJ : ∀ p ∈ I, cO E p ∈ J) (hJI : ∀ p ∈ J, cO E p ∈ I)
     (hcop : ∃ e ∈ I, ∃ e' ∈ J, e + e' = 1) {N B : Submodule (𝓞 E) (Sp E n)}
     (hN : IsUnimodular (hStd E n) N) (hB : Submodule.IsLattice E B) (hBN : B ≤ N)
